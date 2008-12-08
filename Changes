@@ -1,0 +1,367 @@
+Changes for Padre.
+
+    Option to always auto-detect indentation style and adapt for each
+        open document. (SMUELLER)
+    Default to showing functions in alphabetical order. (SMUELLER)
+    Option to show functions in alphabetical order, except private methods
+        go last. (SMUELLER)
+    A bunch of autoindentation fixes. (SMUELLER)
+    AUI updates to the syntax-checker/output-window GUI elements (HJANSEN)
+    Add new Perl-specific feature: "Jump to variable declaration"
+        and the experimental "replace lexical variable". (SMUELLER)
+    The Perl-specific "find unmatched brace" feature now processes
+        the document in the background. (SMUELLER)
+    Generic Padre::Task::PPI class with tools for PPI-related
+        background tasks. (SMUELLER)
+    Experimental implementation of the Padre::TaskManager thread pool
+        and Padre::Task background-task-interface for running blocking
+        tasks in additional threads. (SMUELLER)
+    Italian translation (SBLANDIN)
+    Show methods in abc order. Allow user to set preference to 'abc' or 'original'
+        ordering of methods. (#163) (SZABGAB)
+    Open selection prompts user if nothing selected. (#143) (JQUELIN)
+    Russian translation added (Andrew Shitov)
+
+v0.20 2008.12.02
+
+    Separate tab-width from indentation-level preference (SMUELLER)
+    Expend auto-detection of indentation style to include the
+        indentation level (SMUELLER)
+    Apply automatic tab-compression if tab-indentation is used with
+        an indentation-width != tab-width (SMUELLER)
+    Reworked the autoindentation: Now with auto-de-indentation on
+        closing brace (SMUELLER)
+    Now using Class::XSAccessor for generating accessors (SMUELLER)
+    Moved the syntax checker from MainWindow.pm into
+        Padre::Wx::SyntaxChecker (SMUELLER)
+    Small improvement to startup time by not refreshing the plugin
+        menu after loading each plugin (SMUELLER)
+    French translation added (JQUELIN)
+    Some refactoring, (SZABGAB)
+    Display error when reload file failed. (SZABGAB)
+    Korean updates. (KEEDI)
+    Hungarian updates. (GYU)
+    Fix the "cannot save new file bug". (TEEJAY)
+    Save files under Mac. #160 (ChrisDolan)
+    Restor inner window layout through restart. (HJANSEN)
+
+v0.19 2008.11.28
+
+    Korean translation added (KEEDI)
+    Hungarian translation added (GYU)
+    Hebrew translation added (Omer Zak)
+    Improvement in vi Plugin (SZABGAB)
+    Locale switching no longer needs a restart (HJANSEN)
+    Moved syntax checking out from experimental state (HJANSEN)
+    Prototype of printing support (HJANSEN)
+    Adding support for document type registration (ADAMK)
+    Adding plugin_name to the Padre::Plugin API (ADAMK)
+    Advancing the version numbers of some prereqs (ADAMK)
+    Save files in the same encoding as they were read.
+
+v0.18 2008.11.23
+
+    Added a few more directories to the no_index list in Build.PL (ADAMK)
+    Implement a reusable Padre::Pod2HTML class so that Padre can develop
+        a specific look and feel for all HTML generated from Pod. (ADAMK)
+    Aggresively bump the Pod::Simple dependency so that the generated
+        HTML contains support for all the latest developments. (ADAMK)
+    Add explicit dependency on HTML::Entities because Pod::Simple
+        has now made the dependency optional. (ADAMK)
+    Aggressivly bump the HTML::Parser dependency so that we have
+        better support for our Unicode-needing users (ADAMK)
+    Recognize when file is changed on disk (#55) (JQUELIN)
+    Un/Comment now filetype-dependant (#26) (JQUELIN)
+    Moving the vi keybinding code to a Plugin (SZABGAB)
+    Jump to the last open window using menu or Ctrl-6 (#137) (SZABGAB)
+    Hide the margin of the syntax checker when it is not in use. (SZABGAB)
+    Save-as updates the window menu (#145) (JQUELIN)
+    Drag and drop file(s) open them (#42) (SZABGAB,JQUELIN)
+    padre --index no longer crashes (#79) (JQUELIN)
+    Incremental, non-intrusive search a-la Firefox (#60) (JQUELIN)
+    New Plug-in system, incompatible with the previous one.
+    Plug-in manager dialog.
+    Rename Padre::Plugin::MY to Padre::Plugin::My.
+
+v0.17 2008.11.17
+
+    Optional highlighting of current line (via background color) (HJANSEN)
+    Code folding (#61) (HJANSEN)
+    Word Wrap and "Default word wrap on for each file" in Preferences (FAYLAND)
+    Show/Hide Output or Functions (FAYLAND)
+    Fix the failing plugin manager test. (SZABGAB)
+    Add configuration option to the autoindentation (no, same_level, deep). (SZABGAB)
+    Switch to File::ShareDir::PAR 0.03. (SZABGAB)
+    Allow opening multiple files at once (#43) (JQUELIN)
+    Add Padre::Plugin::MY and set it to be a prefered plugin. (SZABGAB)
+    Join lines with Ctrl+J (#128) (JQUELIN)
+    Full screen view (#131) (JQUELIN)
+    Hide/show white spaces and tabs (#132) (JQUELIN)
+    Check minimum App::Ack version (#104). (JQUELIN)
+    Selection markers to ease selection (#133) (JQUELIN)
+    Drag-n-drop files from Filer Explorer (CORION)
+    Add experimantal and basic vi mode. (SZABGAB)
+    Fix Shift-TAB (#141) (SZABGAB)
+    Add the beginning of second generation plugin support. (ADAMK)
+    Limit the plugin names to one deep only. Second level
+        namespaces are saved for the implementation details. (SZABGAB)
+    Experimental perl -c based syntax checking. (HJANSEN)
+    Clean recent files list (#126). (FAYLAND)
+    Open all recent files (#125). (FAYLAND)
+    Alt-1, Alt-2, etc removed. (#122) (SZABGAB)
+    Initial Javascript support. (FAYLAND)
+    Enable/Disable the subs window via View menu (#100). 
+    Move between the editor, the output window 
+      and the subs window with some hot-key (#14) (SZABGAB)
+
+v0.16 2008.11.09
+
+    Fix New on the Toolbar (SZABGAB)
+    Add Diff menu item to show changes in file. (SZABGAB)
+    Change windowing system to AUI solving several requests: (SZABGAB)
+       Split view
+       Tab reordering
+       Tab close button
+    Localization and German translation. (HJANSEN)
+    Move the content of Padre::Wx::Dialog to Wx::Perl::Dialog 0.02 (SZABGAB)
+    Change back the new-file hot-key to be Ctr-N again. (SZABGAB)
+    Add experimental PPI based Perl5 syntax highlighting (FAYLAND, SZABGAB)
+    Save cursor position between runs of Padre. (FAYLAND)
+    Tab/space conversion menu items. (FAYLAND)
+    Upper/Lower case conversion menu items. (FAYLAND)
+    New icons on the toolbar adding undo/redo/cut/cop/paste/select all. (HJANSEN)
+    Also put cut/copy/paste/select all in the edit menu and in the right click menu. (HJANSEN)
+    Move Parrot plugin to separate distribution. (SZABGAB)
+    Enable switching between German and English. (SZABGAB)
+
+v0.15 2008.11.02
+
+    Don't let opening file that is already open. (SZABGAB)
+    Start UTF-8 support. (SZABGAB)
+    Switch to File::ShareDir::PAR (SMUELLER)
+    Start using File::Which to locate the perl interpreter
+       (if padre is running from a par archive). (SZABGAB)
+    Fix the Split Window menu option to really work. (SZABGAB)
+    Adding "Close All but Current Document" menu option. (SZABGAB)
+    Add autoindentation. (SZABGAB)
+    Set focus on windows. (SZABGAB)
+    Before saving, check if file has changed on disk. (SZABGAB)
+    New menu option: "Reload file". (SZABGAB)
+    Move style definition to external yaml file. (SZABGAB)
+    Separate highlighting definition for PASM files. (SZABGAB)
+    Reorganize Menus (make the Perl menu really only perl specific). (SZABGAB)
+    Allow the execution of PASM files using parrot if PARROT_PATH
+        is defined. (SZABGAB)
+    Load Parrot::Embed if it is available. (SZABGAB)
+    Add Padre::Plugin::Parrot to show how to use pir for plugin writing. (SZABGAB)
+    Allow execution of Perl 6 code using Rakudo. (SZABGAB)
+    Add copyright/license to all the .pm files as per Debian request. (SZABGAB)
+    Ctrl-T is the default new file hot-key just as in Firefox. (ADAMK)
+    Dialog cleanups. (SMUELLER, ADAMK, SZABGAB)
+    Replace the toolbar icons with icons from the Tango project. (SZABGAB)
+
+v0.14 2008.10.27
+
+    Skip the Test::Compile test if the module is not installed. (SZABGAB)
+    Make the add/remove Perl menu work without warnings. (ADAMK + SZABGAB)
+    Make brace matching (Ctrl-1) jump to the matching brace. (SZABGAB)
+    Allow preference to use tabs (or spaces) when pressing TAB. (SZABGAB)
+    Add automatic brace highlighting during. (SZABGAB)
+
+v0.13 2008.10.26
+
+    fix warning when closing Padre with no files open (BRICAS)
+    close lone unused document when opening a recent file (now works the same
+        as file->open) (BRICAS)
+    SplitWindow widgets are now used properly (ADAMK)
+    Show Output nows correctly hides away the output window when non-visible (ADAMK)
+    Refactored out output window to Padre::Wx::Output (ADAMK)
+    General refactoring pass over Padre::Wx (ADAMK)
+    Padre::Wx forces all the Wx::wxCONSTANT values to be populated,
+        so that we don't need all the use Wx qw{ wxCONSTANT } imports (ADAMK)
+    Make it clear in the main window title if running from SVN checkout (ADAMK)
+    Add Padre::PluginBuilder for Padre plugins with extra build targets (SMUELLER)
+    Create dialog abstraction in Padre::Wx::Dialog. (SZABGAB)
+    Lots of refreshing related fixes. (SZABGAB)
+    Create Padre::Documents to return the current or any other document object. (SZABGAB)
+    Stop importing Wx directly in the Padre::Wx:: modules. (SZABGAB)
+    Compile all modules if Test::Compile is available during tests. (SZABGAB)
+    Save button on toolbar is working now when the current document needs saving. (SZABGAB)
+    Use binmode :raw in order to help Windows when opening and writing files
+        fixing the bug that we used to change the newline types whem editing on Windows. (SZABGAB)
+    Run Script did not work bug fixed #76 (SZABGAB)
+    chdir to directory to be executed with Run Script #69 (SZABGAB)
+
+v0.12 2008.10.23
+
+All changes by SZABGAB unless noted.
+
+    stupid bugs left in 0.11 reported by Brian Cassidy.
+
+v0.11 2008.10.23
+
+    Updated ORLite dependency to 0.14 for create => 1 support (ADAMK)
+    Rewrote Padre::DB to auto-configure directly from Padre::Config (ADAMK)
+    All Padre.pm DBI code converted to Padre::DB calls (ADAMK)
+    Removed minor use of Class::Accessor to reduce memory overhead,
+        namespace pollution and dependency count (ADAMK)
+    Removed some superfluous code from the PIR/PASM/Perl6 documents (ADAMK)
+    Cleaned up (and shrunk the code for) the bootstrap sequence (ADAMK)
+    Moved the "recent files" internal state into the database (ADAMK)
+    Removed index pointers unrelated to the IDE from Padre.pm (ADAMK)
+    Transaction-wrap exiting to make it much much faster (ADAMK)
+    Adding shortcut methods for popup messages/errors (ADAMK)
+    Optimised away the non-Wx non-class Padre::Wx::Execute (ADAMK)
+    Created Padre::Wx::History::TextDialog so we can have a dialog
+        box that defaults to whatever the last answer was. (ADAMK)
+    Some clean up in the FindDialog window with abstraction.
+    Add support to Module::Starter and make it to be a prereq.
+    Add all the perl functions to the Calltip keyword list and move
+        it to a yaml file.
+    Fix several bugs that were probably introduced after 0.10.
+    Turn the color definition of the syntax highlighting into a hash
+        for easier maintenance.
+    Lots of code refactoring.
+
+v0.10 2008.09.22
+
+    Improve the search tool (include backward search).
+    Allow keeping the search window open (or close it and use F3).
+    Shift-F3 to jump backwards.
+    Add Search and Replace and global search and replace.
+    Setup mapping of file extensions to mime-types and to color coding.
+    Clean up the MainWindow module, move code to Document and Document::Perl.
+    Implement an experimental PASM, PIR and Perl 6 highlighting.
+    Allow experimental code to allow the user to execute code within Padre.
+    Report if file could not be saved and keep it in unsaved state (bug #74).
+    Separate the Padre::Install module from Build.PL.
+    Set default mime-type of new files to be perl.
+    Change mime-type when saving file to the appropriate new mime-type.
+
+v0.09 2008.09.17
+
+    Move various relevant menu items into a "Window" menu (ADAMK)
+    Rename "Enable CallTip" to "Show Call Tips" for consistency (ADAMK)
+    Adding more menu seperators to improve the visual look (ADAMK)
+    Always show status bar on Win32, as removing it breaks (ADAMK)
+    Added experimental Padre::Document::Perl (ADAMK)
+    Added experimental PPI intergration (ADAMK)
+    Experimental menu refresh closer to being usable (ADAMK)
+    Split out Wx-related utility functions into Padre::Wx (ADAMK)
+    Adding common platform-detection logic to Padre::Util (ADAMK)
+    If we start with a new file and then open another one,
+        implicitly close the unused new file (ADAMK)
+    Some dialog cleanups.
+    Make sure we can build stand alon executable for Linux.
+    Remove Ctrl-Shift-Z from redo as Ctrl-Y already works.
+
+v0.08 2008.09.11
+
+    Add Ctrl-Shift-O to open a file based on the selection in the current window.
+    Enable ack integration even though it is not nice yet but it is working.
+    Use real Wx:AboutDialogInfo for the about box.
+    Hide method names (in the method window) when they don't start on the first column.
+    Add menu option to close all buffers.
+    Escape $ signs by default so they will not interpolate during search.
+    Open file now opens in the directory where the current file is.
+    Add Bookmarks.
+    Add toolbar with several icons. Tested on Windows as well.
+    Add icon for the application.
+    Enable/disable regex in search.
+    Add menu option to convert line endings.
+    Replace relative path with full path on the command line.
+    Implement basic CallTips and add menu option to enable/disable them.
+
+v0.07 2008.09.04
+
+    Allow the user to change the width ot TABs as they are displayed.
+    Separate the code to show the preferences window to the Padre::Wx::Preferences module
+    Separate code to Padre::Wx::Menu, Padre::Wx::Execute, Padre::Wx::Help
+    Allow spliting windows to see two parts of the same document
+    Add Zoom-in/Zoom-out/Zoom-reset menu options to change the zoom on all documents
+    Allow the use of PAR files as plugins (SMUELLER)
+    Stop jumping on selection movement in the list of methods frame.
+    Remove Padre::Demo and distribute it separately as Wx::Perl::Dialog. Make Padre depend on it.
+    Update the status when the mouse is moved 
+    Update status works on Windows now.
+    Require threaded perl as there is experimental code in Padre to use ack.
+    Depend on App::Ack.
+    Depend on PAR.
+    Clean up the par generation.
+    Lots of code cleanup.
+
+v0.06 2008.08.28
+
+    Add some "new file" templates
+    Temporarily remove the toolbar
+    Change behavior of Padre::Demo, add wxer command line interface
+    Remove Demo::App
+    Padre::Demo add dir_selector() and password()
+    Update list of methods on save as well #54 (vincent)
+    Change the list of subs on the right hand side to be sorted
+    Set Alt-S to jump to the subs list
+    Deal with newlines in files
+    Lots of refactoring (ADAMK)
+    Remember that application was maximized (ADAMK)
+    Better choice of default size (ADAMK)
+    Adding a separate compilation test script (ADAMK)
+    Adding a ORLite interface to the database Padre::DB (ADAMK)
+    Include authors tests for Perl critic and POD in xt/ directory
+    Make commenting out and uncommenting out atomic in the undo buffer
+    Replace string search by regex search, change the GUI
+    Add case insensitive search
+    Limit the max number of recent files to 20
+
+v0.05 2008.08.17
+
+    First stab at autocompletition using Ctrl-P. (SZABGAB)
+    Allow opening files without extensions (on non-ms-windows systems). (SZABGAB)
+    Cleaning up to comply with perlcritic default settings. (ADAMK)
+    Adding basic "project" support. (ADAMK)
+    Adding Module::Inspector as prereq. (ADAMK)
+    Replace YAML with YAML::Tiny (ADAMK)
+    Moved bin/padre to script/padre. (ADAMK)
+    Moving all globals into a unified object tree. (ADAMK)
+    Created standalone Padre::Config (ADAMK)
+    Show the filetpe in the status bar. (SZABGAB)
+    remove Devel::PerlySense as prereq for now. (SZABGAB)
+    List functions of the current file on the right panel. (SZABGAB)
+    Syntax highlighting of more file types (PATSPAM)
+
+v0.04 2008.08.08
+
+    add Devel::PerlySense as prereq
+    stop checking for wx version for now
+    change the create_makefile_pl to passthrough as the traditional did not do the extra work done by Build.PL
+    Mark the buffer that is unsaved with a star.
+    stop saving the content of the loaded file and use GetModify
+       to find out if the file has been modifyed since last save
+
+    * replace the search_term by search_terms in the config file
+    allow remembering of search terms
+    replace the text dialog by a full dialog box and a Wx::ComboBox
+    Setup http://padre.perlide.org/ using trac
+    Move the repository to http://svn.perlide.org/padre/
+
+v0.03_02 2008.08.03
+    add experimental code for plugins
+    add experimental version of Padre::Plugin::PAR
+    fix the shortcuts of some of the menues in windows, thanks to Octavian Rasnita
+    replace the AppendSubMenu calls by Append calls to support older version of wxWidgets
+
+v0.03_01 2008.07.31
+    Experimental code in Build.PL to avoid test failures when wxWidgets is too old.
+    Added ToolBar
+    Experimental code to install non-perl files and then use find them using File::ShareDir
+
+v0.03 2008.07.28
+    Fix many issues reported by Octavian Rasnita
+    Rename some internal modules to get full indexing
+
+v0.02 2008.07.26
+    First public release under the name Padre
+    Slow improvements
+    Nothing special or ground breaking to mention
+
+v0.01 2008.07.20
+    First version

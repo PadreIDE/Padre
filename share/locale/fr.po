@@ -1,0 +1,1329 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: padre\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-03 18:14+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
+"Language-Team:  <jquelin@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Document.pm:254
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Document.pm:254
+#, perl-format
+msgid " Unsaved %d"
+msgstr "Non sauvegardé %d"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:551
+#: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:554
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:91
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:551
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:554
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:91
+msgid "Pl&ugins"
+msgstr "&Greffons"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:591
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1275
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1888
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:591
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1254
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1877
+msgid "Open file"
+msgstr "Ouvrir fichier"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:46
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:215
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:46
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:215
+msgid "Line"
+msgstr "Ligne"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:47
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:217
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:47
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:217
+msgid "Type"
+msgstr "Type"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:48
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:48
+msgid "Description"
+msgstr "Description"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:50
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:50
+msgid "Syntax Check"
+msgstr "Vérification syntaxique"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:50
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:50
+msgid "German"
+msgstr "Allemand"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:51
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:51
+msgid "English"
+msgstr "Anglais"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:52
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:52
+msgid "French"
+msgstr "Français"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:53
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:53
+msgid "Hebrew"
+msgstr "Hébreu"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:54
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:54
+msgid "Hungarian"
+msgstr "Hongrois"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:55
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:55
+msgid "Korean"
+msgstr "Coréen"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:56
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:56
+msgid "Italian"
+msgstr "Italien"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:108
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:108
+msgid "(running from SVN checkout)"
+msgstr "(utilisant une copie SVN)"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:265
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:265
+msgid "Files"
+msgstr "Fichiers"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:321
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:514
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:321
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:514
+msgid "Subs"
+msgstr "Fonctions"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:329
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:329
+msgid "Workspace View"
+msgstr "Espace de travail"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:332
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:332
+msgid "Methods"
+msgstr "Méthodes"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:361
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:512
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:361
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:512
+msgid "Output"
+msgstr "Sortie"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:369
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:369
+msgid "Output View"
+msgstr "Sortie"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:513
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:513
+msgid "Syntax"
+msgstr "Syntaxe"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:601
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:601
+msgid "L:"
+msgstr "L :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:601
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:601
+msgid "Ch:"
+msgstr "Car :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:735
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:735
+msgid "Command line"
+msgstr "Ligne de commande"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:736
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:736
+msgid "Run setup"
+msgstr "Configuration du lancement"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:808
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:808
+msgid "No open document"
+msgstr "Aucun document ouvert"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:822
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:822
+msgid "No execution mode was defined for this document"
+msgstr "Aucun mode d'exécution défini pour ce document"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:841
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:841
+msgid "Not a Perl document"
+msgstr "Pas un document Perl"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:847
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:847
+msgid "Only .pl files can be executed"
+msgstr "Seuls les fichiers .pl peuvent être exécutés"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:883
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:883
+msgid "Message"
+msgstr "Message"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:890
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1408
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:890
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1397
+msgid "Error"
+msgstr "Erreur"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:970
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:970
+msgid "Autocompletions error"
+msgstr "Erreur d'autocomplétion"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:981
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:981
+msgid "Line number:"
+msgstr "Numéro de ligne :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1205
+msgid "Nothing selected. Enter what should be opened:"
+msgstr "Aucune sélection. Entrez ce qu'il faut ouvrir :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1206
+msgid "Open selection"
+msgstr "Ouvrir la sélection"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1250
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1226
+#, perl-format
+msgid "Could not find file '%s'"
+msgstr "Ne peut pas trouver le fichier '%s'"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1250
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1186
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1226
+msgid "Open Selection"
+msgstr "Ouvrir la sélection"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1301
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2252
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1290
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:2241
+#, perl-format
+msgid "Could not reload file: %s"
+msgstr "Ne peut pas recharger le fichier: %s"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1321
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1310
+msgid "Save file as..."
+msgstr "Enregistrer le fichier sous..."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1335
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1324
+msgid "File already exists. Overwrite it?"
+msgstr "Le fichier existe déjà. L'écraser ?"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1336
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1325
+msgid "Exist"
+msgstr "Existe"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1398
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1387
+msgid "File changed on disk since last saved. Do you want to overwrite it?"
+msgstr "Fichier modifié sur disque depuis la dernière sauvegarde. Voulez-vous l'écraser ?"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1399
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2245
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1388
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:2234
+msgid "File not in sync"
+msgstr "Fichier non synchronisé"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1449
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1438
+msgid "File changed. Do you want to save it?"
+msgstr "Fichier modifié. Voulez-vous le sauvegarder ?"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1450
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1439
+msgid "Unsaved File"
+msgstr "Fichier non sauvegardé"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1552
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1541
+msgid "Cannot diff if file was never saved"
+msgstr "Ne peut comparer si le fichier n'a jamais été sauvé"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1558
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1547
+msgid "There are no differences\n"
+msgstr "Il n'y a pas de différences\n"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1953
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1942
+#, perl-format
+msgid "Error: %s"
+msgstr "Erreur : %s"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1953
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:987
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1942
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:999
+msgid "Self error"
+msgstr "Erreur interne"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2097
+#, perl-format
+msgid "Words: %d"
+msgstr "Mots : %d"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2098
+#, perl-format
+msgid "Lines: %d"
+msgstr "Lignes : %d"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2099
+#, perl-format
+msgid "Chars without spaces: %d"
+msgstr "Caractères (hors espaces) : %d"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2100
+#, perl-format
+msgid "Chars with spaces: %d"
+msgstr "Caractères (espaces compris) : %d"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2101
+#, perl-format
+msgid "Newline type: %s"
+msgstr "Type de retour chariot : %s"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2102
+#, perl-format
+msgid "Encoding: %s"
+msgstr "Encodage : %s"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2104
+#, perl-format
+msgid "Filename: %s"
+msgstr "Fichier : %s"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2105
+msgid "No filename"
+msgstr "Pas de nom"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2244
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:2233
+msgid "File changed on disk since last saved. Do you want to reload it?"
+msgstr "Fichier modifié depuis la dernière sauvegarde. Voulez-vous le recharger ?"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:25
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:145
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:25
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:145
+msgid "Not implemented yet"
+msgstr "Pas encore implémenté"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:26
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:145
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:26
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:145
+msgid "Not yet available"
+msgstr "Pas encore disponible"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:46
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:46
+msgid "Select Project"
+msgstr "Sélectionner un projet"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:59
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:59
+msgid "Select Project Name or type in new one"
+msgstr "Sélectionner un nom de projet ou tapez-en un nouveau"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:65
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:65
+msgid "Select Directory"
+msgstr "Choisir un répertoire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:129
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:129
+msgid "Select Project Directory"
+msgstr "Choisir le répertoire du projet"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:515
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:395
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:515
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:407
+msgid "Select all\tCtrl-A"
+msgstr "Tout sélectionner\tCtrl-A"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:557
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:483
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:557
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:495
+msgid "&Comment Selected Lines\tCtrl-M"
+msgstr "Commenter les lignes sélectionnées\tCtrl-M"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:561
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:488
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:561
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:500
+msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
+msgstr "Décommenter les lignes sélectionnées\tCtrl-Shift-M"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:570
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:857
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:570
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:869
+msgid "&Split window"
+msgstr "&Partager la fenêtre"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:22
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:22
+msgid "New File"
+msgstr "Nouveau"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:32
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:32
+msgid "Open File"
+msgstr "Ouvrir"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:37
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:37
+msgid "Save File"
+msgstr "Enregistrer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:47
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:47
+msgid "Close File"
+msgstr "Fermer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:63
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:63
+msgid "Undo"
+msgstr "Annuler"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:68
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:68
+msgid "Redo"
+msgstr "Refaire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:80
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:80
+msgid "Cut"
+msgstr "Couper"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:90
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:90
+msgid "Copy"
+msgstr "Copier"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:100
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:100
+msgid "Paste"
+msgstr "Coller"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:113
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:113
+msgid "Select all"
+msgstr "Tout sélectionner"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Output.pm:31
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Output.pm:31
+msgid "No output"
+msgstr "Pas de sortie"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:84
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:340
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:341
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:84
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:344
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:345
+msgid "&File"
+msgstr "&Fichier"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:85
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:85
+msgid "&Project"
+msgstr "&Projet"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:86
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:27
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:86
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:27
+msgid "&Edit"
+msgstr "Editio&n"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:87
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:87
+msgid "&View"
+msgstr "&Affichage"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:89
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:89
+msgid "&Run"
+msgstr "&Lancer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:90
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:90
+msgid "&Bookmarks"
+msgstr "&Signets"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:92
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:92
+msgid "&Tools"
+msgstr "&Outils"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:93
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:93
+msgid "&Window"
+msgstr "Fenê&tre"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:94
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:94
+msgid "&Help"
+msgstr "Aid&e"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:96
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:96
+msgid "E&xperimental"
+msgstr "E&xpérimental"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:237
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:237
+msgid "&New\tCtrl-N"
+msgstr "&Nouveau\tCtrl-N"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:241
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:245
+msgid "New..."
+msgstr "Nouveau..."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:243
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:247
+msgid "Perl Distribution (Module::Starter)"
+msgstr "Distribution Perl (Module::Starter)"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:249
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:253
+msgid "&Open...\tCtrl-O"
+msgstr "&Ouvrir...\tCtrl-O"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:253
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:257
+msgid "Open Selection\tCtrl-Shift-O"
+msgstr "Ouvrir la sélection\tCtrl-Shift-O"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:257
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:261
+msgid "&Close\tCtrl-W"
+msgstr "&Fermer\tCtrl-W"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:263
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:267
+msgid "Close All"
+msgstr "Tout fermer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:269
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:273
+msgid "Close All but Current Document"
+msgstr "Tout fermer sauf le document courant"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:274
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:278
+msgid "Reload file"
+msgstr "Recharger le fichier"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:282
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:286
+msgid "&Save\tCtrl-S"
+msgstr "&Sauvegarder\tCtrl-S"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:287
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:291
+msgid "Save &As..."
+msgstr "Enregistrer le fichier &sous..."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:292
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:296
+msgid "Save All"
+msgstr "Tout enregistrer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:300
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:304
+msgid "&Print..."
+msgstr "Im&primer..."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:309
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:313
+msgid "Convert..."
+msgstr "Convertir..."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:310
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:314
+msgid "EOL to Windows"
+msgstr "Utiliser les fins de ligne Windows"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:315
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:319
+msgid "EOL to Unix"
+msgstr "Utiliser les fins de ligne Unix"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:320
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:324
+msgid "EOL to Mac Classic"
+msgstr "Utiliser les fins de ligne Mac Classic"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:329
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:333
+msgid "&Recent Files"
+msgstr "Fichiers &récents"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:331
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:335
+msgid "Open All Recent Files"
+msgstr "Ouvrir tous les fichiers récents"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:335
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:339
+msgid "Clean Recent Files List"
+msgstr "Vider la liste des fichiers récents"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:357
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:369
+msgid "Doc Stats"
+msgstr "Statistiques du document"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:366
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:378
+msgid "&Quit\tCtrl-Q"
+msgstr "&Quitter\tCtrl-Q"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:380
+msgid "&Undo"
+msgstr "&Annuler"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:385
+msgid "&Redo"
+msgstr "&Refaire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:393
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:405
+msgid "Select"
+msgstr "Sélectionner"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:400
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:412
+msgid "Mark selection start\tCtrl-["
+msgstr "Marquer le début de la sélection\tCtrl-["
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:407
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:419
+msgid "Mark selection end\tCtrl-]"
+msgstr "Marquer la fin de la sélection\tCtrl-]"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:414
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:426
+msgid "Clear selection marks"
+msgstr "Effacer les marques de sélection"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:419
+msgid "&Copy\tCtrl-C"
+msgstr "&Copier\tCtrl-C"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:424
+msgid "Cu&t\tCtrl-X"
+msgstr "&Co&uper\tCtrl-X"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:429
+msgid "&Paste\tCtrl-V"
+msgstr "&C&oller\tCtrl-V"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:440
+msgid "&Find\tCtrl-F"
+msgstr "&Rechercher\tCtrl-F"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:444
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:456
+msgid "Find Next\tF3"
+msgstr "Rechercher en avant\tF3"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:448
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:460
+msgid "Find Previous\tShift-F3"
+msgstr "Rechercher en arrière\tShift-F3"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:452
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:464
+msgid "Ac&k"
+msgstr "Ac&k"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:455
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:467
+msgid "&Goto\tCtrl-G"
+msgstr "&Aller à\tCtrl-G"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:460
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:472
+msgid "&AutoComp\tCtrl-P"
+msgstr "&Auto complétion\tCtrl-P"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:465
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:477
+msgid "&Brace matching\tCtrl-1"
+msgstr "Balance des parenthèses\tCtrl-1"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:470
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:482
+msgid "&Join lines\tCtrl-J"
+msgstr "&Joindre les lignes\tCtrl-J"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:475
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:487
+msgid "Snippets\tCtrl-Shift-A"
+msgstr "Extraits\tCtrl-Shift-A"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:497
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:509
+msgid "Tabs and Spaces"
+msgstr "Tabulations et espaces"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:499
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:511
+msgid "Tabs to Spaces..."
+msgstr "Convertir les tabulations en espaces"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:503
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:515
+msgid "Spaces to Tabs..."
+msgstr "Convertir les espaces en tabulations"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:507
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:519
+msgid "Delete Trailing Spaces"
+msgstr "Supprimer les espaces en fin de ligne"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:511
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:523
+msgid "Delete Leading Spaces"
+msgstr "Supprimer les espaces en début de ligne"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:517
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:529
+msgid "Upper/Lower Case"
+msgstr "Majuscules / Minuscules"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:519
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:531
+msgid "Upper All\tCtrl-Shift-U"
+msgstr "Tout en majuscules\tCtrl-Shift-U"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:523
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:535
+msgid "Lower All\tCtrl-U"
+msgstr "Tout en minuscules\tCtrl-U"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:529
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:541
+msgid "Diff"
+msgstr "Comparer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:534
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:546
+msgid "Insert From File..."
+msgstr "Insérer un fichier..."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:543
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:71
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:22
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:555
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:71
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:22
+msgid "Preferences"
+msgstr "Préférences"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:559
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:571
+msgid "Show Output"
+msgstr "Montrer la sortie"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:568
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:580
+msgid "Show Functions"
+msgstr "Montrer les fonctions"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:579
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:591
+msgid "Show StatusBar"
+msgstr "Montrer la barre de statut"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:588
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:600
+msgid "Show Line numbers"
+msgstr "Montrer les numéros de ligne"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:593
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:605
+msgid "Show Code Folding"
+msgstr "Montrer les replis de code"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:598
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:610
+msgid "Show Newlines"
+msgstr "Montrer les retours chariot"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:603
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:615
+msgid "Show Whitespaces"
+msgstr "Montrer les espaces"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:609
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:621
+msgid "Show Indentation Guide"
+msgstr "Montrer les guides d'indentation"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:616
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:628
+msgid "Show Call Tips"
+msgstr "Montrer la syntaxe d'appel"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:621
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:633
+msgid "Show Syntax Check"
+msgstr "Montrer la vérification syntaxique"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:628
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:640
+msgid "Word-Wrap"
+msgstr "Retour à la ligne"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:637
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:649
+msgid "Highlight Current Line"
+msgstr "Surligner la ligne courante"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:645
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:657
+msgid "Increase Font Size\tCtrl-+"
+msgstr "Augmenter la taille de la fonte\tCtrl-+"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:649
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:661
+msgid "Decrease Font Size\tCtrl--"
+msgstr "Diminuer la taille de la fonte\tCtrl--"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:653
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:665
+msgid "Reset Font Size\tCtrl-/"
+msgstr "Réinitialiser la taille de la fonte\tCtrl-/"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:659
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:671
+msgid "Set Bookmark\tCtrl-B"
+msgstr "Placer un signet\tCtrl-B"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:663
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:675
+msgid "Goto Bookmark\tCtrl-Shift-B"
+msgstr "Aller au signet\tCtrl-Shift-B"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:669
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:681
+msgid "Language"
+msgstr "Langage"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:672
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:684
+msgid "System Default"
+msgstr "Valeur par défaut du système"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:694
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:706
+msgid "&Full screen\tF11"
+msgstr "&Plein écran\tF11"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:708
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:720
+msgid "Find Unmatched Brace"
+msgstr "Trouver parenthèse orpheline"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:717
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:729
+msgid "All braces appear to be matched"
+msgstr "Toutes les parenthèses semblent balancées"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:717
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:729
+msgid "Check Complete"
+msgstr "Vérification terminée"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:732
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:744
+msgid "Run Script\tF5"
+msgstr "Lancer le script\tF5"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:737
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:749
+msgid "Run Command\tCtrl-F5"
+msgstr "Lancer une commande\tCtrl-F5"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:742
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:754
+msgid "&Stop"
+msgstr "&Stop"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:772
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:45
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:784
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:45
+msgid "Plugin Manager"
+msgstr "Gestion des greffons"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:775
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:787
+msgid "Plugin Tools"
+msgstr "Outils"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:801
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:813
+msgid "Edit My Plugin"
+msgstr "Editer Mon Plugin"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:806
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:818
+msgid "Could not find the Padre::Plugin::My plugin"
+msgstr "Ne peut pas trouver le greffon Padre::Plugin::My"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:814
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:826
+msgid "Reload My Plugin"
+msgstr "Recharger Mon Greffon"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:818
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:821
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:822
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:830
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:833
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:834
+msgid "Reset My Plugin"
+msgstr "Réinitialiser Mon Greffon"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:840
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:852
+msgid "Reload All Plugins"
+msgstr "Recharger tous les greffons"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:844
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:856
+msgid "Test A Plugin From Local Dir"
+msgstr "Tester un greffon à partir d'un répertoire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:862
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:874
+msgid "Next File\tCtrl-TAB"
+msgstr "Fichier suivant\tCtrl-TAB"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:866
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:878
+msgid "Previous File\tCtrl-Shift-TAB"
+msgstr "Fichier précédent\tCtrl-Shift-TAB"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:870
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:882
+msgid "Last Visited File\tCtrl-6"
+msgstr "Dernier fichier visité\tCtrl-6"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:874
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:886
+msgid "Right Click\tAlt-/"
+msgstr "Clic droit\tAlt-/"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:886
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:898
+msgid "GoTo Subs Window\tAlt-S"
+msgstr "Aller à la fenêtre des fonctions\tAlt-S"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:894
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:906
+msgid "GoTo Output Window\tAlt-O"
+msgstr "Aller à la fenêtre de Sortie\tAlt-O"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:900
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:912
+msgid "GoTo Syntax Check Window\tAlt-C"
+msgstr "Aller à la fenêtre de vérification syntaxique\tAlt-C"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:909
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:921
+msgid "GoTo Main Window\tAlt-M"
+msgstr "Aller à la fenêtre principal\tAlt-M"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:931
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:943
+msgid "Context Help\tCtrl-Shift-H"
+msgstr "Aide contextuelle\tCtrl-Shift-H"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:945
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:957
+msgid "Visit the PerlMonks"
+msgstr "Visiter PerlMonks"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:951
+msgid "&About"
+msgstr "&A propos"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:965
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:977
+msgid "Reflow Menu/Toolbar"
+msgstr "Refactoriser menu et barre d'outil"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:977
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:989
+msgid "Recent Projects"
+msgstr "Projets récents"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:981
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:993
+msgid "Run in &Padre"
+msgstr "Lancer dans &Padre"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:987
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:999
+msgid "Error: "
+msgstr "Erreur :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:995
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1007
+msgid "Use PPI for Perl5 syntax highlighting"
+msgstr "Utiliser PPI pour la coloration syntaxique Perl 5"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:1005
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1017
+msgid "Quick Find"
+msgstr "Recherche rapide"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:1018
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1030
+msgid "Find Next\tF4"
+msgstr "Rechercher en avant\tF4"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:1022
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1034
+msgid "Find Previous\tShift-F4"
+msgstr "Rechercher précédent\tShift-F4"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:93
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:93
+msgid "Term: "
+msgstr "Terme :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:96
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:96
+msgid "Dir: "
+msgstr "Répertoire :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:101
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:101
+msgid "Pick &directory"
+msgstr "Choisir &répertoire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:150
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:150
+msgid "Select directory"
+msgstr "Sélectionner un répertoire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu/Help.pm:42
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Plugin/Vi.pm:306
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu/Help.pm:42
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Plugin/Vi.pm:306
+msgid "Copyright 2008 Gabor Szabo"
+msgstr "Copyright 2008 Gabor Szabo"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:128
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:22
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Search.pm:128
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:22
+msgid "Find:"
+msgstr "Rechercher :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:157
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Search.pm:157
+msgid "Case insensitive"
+msgstr "Insensible à la casse"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:161
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Search.pm:161
+msgid "Use regex"
+msgstr "Utiliser une regexp"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:27
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:27
+msgid "Replace With:"
+msgstr "Remplacer par :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:29
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:29
+msgid "&Replace"
+msgstr "&Remplacer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:34
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:34
+msgid "Replace &All"
+msgstr "&Tout remplacer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:37
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:37
+msgid "Case &Insensitive"
+msgstr "&Insensible à la casse"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:40
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:40
+msgid "&Use Regex"
+msgstr "&Utiliser une expression régulière"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:43
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:43
+msgid "Search &Backwards"
+msgstr "Rechercher en a&rrière"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:46
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:46
+msgid "Close Window on &hit"
+msgstr "Fermer la fenêtre à la première occurence"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:66
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:66
+msgid "Search"
+msgstr "Rechercher"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:19
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:19
+msgid "All"
+msgstr "Tout"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:23
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:23
+msgid "Class:"
+msgstr "Classe :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:24
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:125
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:24
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:125
+msgid "Snippet:"
+msgstr "Extrait :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:25
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:25
+msgid "&Insert"
+msgstr "&Insérer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:27
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:27
+msgid "&Add"
+msgstr "&Ajouter"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:39
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:39
+msgid "Snippets"
+msgstr "Extraits"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:123
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:123
+msgid "Category:"
+msgstr "Catégorie :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:124
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:124
+msgid "Name:"
+msgstr "Nom :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:126
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:126
+msgid "&Save"
+msgstr "&Enregistrer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:137
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:137
+msgid "Edit/Add Snippets"
+msgstr "Editer / Ajouter des extraits"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:18
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:18
+msgid "Use Tabs"
+msgstr "Utiliser les tabulations"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:21
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:21
+msgid "TAB display size (in spaces)"
+msgstr "Taille d'affichage des tabulations (en espaces)"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:25
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:25
+msgid "Indentation width (in columns)"
+msgstr "Largeur d'indentation (en colonnes)"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:29
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:29
+msgid "Guess from current document"
+msgstr "Deviner à partir du document courant"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:30
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:30
+msgid "Guess"
+msgstr "Deviner"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:33
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:33
+msgid "Max number of modules"
+msgstr "Nombre maximum de modules"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:37
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:37
+msgid "Min number of modules"
+msgstr "Nombre minimum de modules"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:41
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:41
+msgid "Open files:"
+msgstr "Fichiers ouverts :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:45
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:45
+msgid "Autoindent:"
+msgstr "Auto-indentation :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:49
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:49
+msgid "Methods order:"
+msgstr "Tri des méthodes"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:53
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:53
+msgid "Default word wrap on for each file"
+msgstr "Retour à la ligne automatique pour chaque fichier"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:24
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:24
+msgid "Existing bookmarks:"
+msgstr "Signets existants :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:38
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:38
+msgid "Delete &All"
+msgstr "&Tout supprimer"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:47
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:47
+msgid "Set Bookmark"
+msgstr "Placer un signet"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:47
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:47
+msgid "GoTo Bookmark"
+msgstr "Aller au signet"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:102
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:102
+#, perl-format
+msgid "%s line %s"
+msgstr "%s ligne %s"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:30
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:30
+msgid "Module Name:"
+msgstr "Nom du module :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:34
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:34
+msgid "Author:"
+msgstr "Auteur :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:38
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:38
+msgid "Email:"
+msgstr "Email :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:42
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:42
+msgid "Builder:"
+msgstr "Constructeur :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:47
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:47
+msgid "License:"
+msgstr "Licence :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:52
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:52
+msgid "Parent Directory:"
+msgstr "Répertoire parent :"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:53
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:53
+msgid "Pick parent directory"
+msgstr "Répertoire parent"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:82
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:82
+msgid "Module Start"
+msgstr "Démarrage du module"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#, perl-format
+msgid "Field %s was missing. Module not created."
+msgstr "Champ %s manquant. Module non créé."
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:125
+msgid "missing field"
+msgstr "Champ manquant"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:144
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:144
+#, perl-format
+msgid "%s apparantly created. Do you want to open it now?"
+msgstr "%s est apparemment créé. Voulez-vous l'ouvrir ?"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:145
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:145
+msgid "Done"
+msgstr "Terminé"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:101
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:101
+msgid "Disable"
+msgstr "Interdire"
+
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:107
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:107
+msgid "Enable"
+msgstr "Autoriser"
+
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1185
+msgid "Need to have something selected"
+msgstr "Il faut sélectionner quelque chose"
+
+#~ msgid "Not Yet"
+#~ msgstr "Pas encore disponible"
+#~ msgid "English (London.pm)"
+#~ msgstr "Anglais (London.pm)"
+

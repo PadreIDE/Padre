@@ -1,0 +1,3 @@
+
+"Hello ".say;
+"world".say;

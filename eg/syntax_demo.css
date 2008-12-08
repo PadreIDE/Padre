@@ -1,0 +1,14 @@
+/* a demo CSS file */
+
+#padre div.padre, {
+	height: 100px;
+	width: 150px;
+}
+
+span > a[href="http://padre.perlide.org/"] {
+	font-weight: bold;
+}
+
+div + a:hover {
+	color: lime;
+}

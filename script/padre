@@ -1,0 +1,32 @@
+#!/usr/bin/perl 
+
+use strict;
+use warnings;
+
+$| = 1;
+
+if ($ENV{PARROT_PATH}) {
+	unshift @INC, (
+		"$ENV{PARROT_PATH}/ext/Parrot-Embed/blib/lib",
+		"$ENV{PARROT_PATH}/ext/Parrot-Embed/blib/arch",
+		"$ENV{PARROT_PATH}/ext/Parrot-Embed/_build/lib",
+		);
+}
+
+unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} or grep /^(-h|--help)$/, @ARGV) {
+	exit 0 if fork();
+}
+
+require threads;
+require threads::shared;
+
+$ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP}||'';
+
+require Padre;
+my $app = Padre->new;
+$app->run;
+
+# Copyright 2008 Gabor Szabo.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

@@ -1,0 +1,124 @@
+Hacking
+
+
+This file should inculde some information that is only relevant to 
+those who want to develop Padre. We assume that they will all work in
+a workspace checked out from the SVN repository.
+
+Extra files
+------------
+
+Some extra files we have in the SVN repository that don't get distributed:
+
+
+dev.pl      is just a wrapper script to launch script/padre the main executable of 
+            setting some environment variables.
+
+../tools/release.pl                       Used to release  Padre.
+../tools/update_version_number.pl
+
+Translation files
+-----------------
+
+Currently we are using Wx::gettext so we have a po file for each additional
+language (currently only German) in the share/locale/ directory.
+
+Before release the /tools/release.pl script generates an mo file using
+
+  msgfmt -o share/locale/de.mo share/locale/de.po
+
+
+
+Version control
+----------------
+You probably already know that we use Subversion and it is located
+at http://svn.perlide.org/
+
+
+Bug tracking and Feature requests
+----------------------------------
+We are using Trac for this. The main web site of Padre is actually its
+trac http://padre.perlide.org/
+
+
+Patching
+--------
+
+Check out the trunk, http://svn.perlide.org/padre/trunk/
+and use svn diff to create your patch while your current
+working directory is  the trunk directory.
+
+Please send patches either to the padre-dev mailing list or
+add them to trac to the appropriate ticket.
+
+Branching
+------------
+
+Usuall we use the trunk for all the development work so 
+we can see issues and fix them quickly. At least some of use
+already use Padre for the development work running it from the
+workspace so if someone breaks trunk that will immediately
+effect some of the developers. So please don't do it.
+
+If you think your change is relatively large and you feel more
+comfortable working on a branch, do it.
+
+
+Changes
+---------
+
+We try to work with small changes. There are no exact rules
+what is small and what is already too big but we try not to mix
+unrelated issues in one change. If you need a styling change or
+white space change, do it it in a separate commit.
+
+Commit messages are important. If a commit relates to a ticket
+please try to remember adding the ticket number with a # sign ( #23 ).
+The GUI of Trac will turn it into a linke to the relevant ticket
+making it easier to find related information.
+
+Tickets - issues - bugs
+------------------------
+
+We are using Trac as the issue and bug tracker.
+When adding a note that relates to one of the commit in SVN please
+use the r780 format. That allows Trak to create links to the diff
+of that revision.
+
+
+Code review
+-------------
+
+We don't have formal code-review but in response to the commit messages
+we sometimes reply with comments to the padre-dev mailing list.
+You are also encourgaed to do so!
+
+
+Code style
+------------
+
+We're not overly strict about it, but please don't feel offended if
+somebody corrects your coding style. There's just a bunch of moderately
+simple rules that are more or less enforced:
+
+- Use one tab character for each indentation level.
+- After the initial indentation, do not use tabs for indentation
+  any more. Instead, use the appropriate amount of spaces to make
+  things line up. Example: (Where you put the opening brace isn't
+  important for this example!)
+
+sub baz {
+	if (foo()
+	    and bar())
+	{
+		# ...
+	}
+}
+
+- Accessors should be named "get_foo" and "set_foo". Do not use
+  mutators. Exception to this rule are attributes which get
+  initialized by the constructor once and then just return the value
+  (i.e. no setter is available). Example: Padre->plugin_manager
+- TODO: This list.
+
+

@@ -1,0 +1,592 @@
+# translation of he.po to Hebrew
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Omer Zak <w1@zak.co.il>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: he\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-03 21:24+0100\n"
+"PO-Revision-Date: 2008-11-26 21:18+0200\n"
+"Last-Translator: Omer Zak <w1@zak.co.il>\n"
+"Language-Team: Hebrew <debian-hebrew-common@lists.alioth.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: lib/Padre/Wx/Ack.pm:68
+msgid "Term: "
+msgstr "מונח: "
+
+#: lib/Padre/Wx/Ack.pm:71
+msgid "Dir: "
+msgstr "תיקיה:"
+
+#: lib/Padre/Wx/Ack.pm:76
+msgid "Pick &directory"
+msgstr "בחר תיקיה"
+
+#: lib/Padre/Wx/Ack.pm:125
+msgid "Select directory"
+msgstr "סמן תיקיה"
+
+#: lib/Padre/Wx/Dialog/Find.pm:22
+msgid "Find:"
+msgstr "חפש:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:27
+msgid "Replace With:"
+msgstr "החלף ב:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:34
+msgid "Replace &All"
+msgstr "החלף הכל"
+
+#: lib/Padre/Wx/Dialog/Find.pm:37
+msgid "Case &Insensitive"
+msgstr "לא תלוי ברישיות"
+
+#: lib/Padre/Wx/Dialog/Find.pm:40
+msgid "&Use Regex"
+msgstr "השתמש ב-Regex"
+
+#: lib/Padre/Wx/Dialog/Find.pm:43
+msgid "Search &Backwards"
+msgstr "חפש אחורה"
+
+#: lib/Padre/Wx/Dialog/Find.pm:46
+msgid "Close Window on &hit"
+msgstr "סגור חלון בפגיעה"
+
+#: lib/Padre/Wx/Dialog/Find.pm:79
+msgid "Search"
+msgstr "חפש"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:29
+msgid "Module Name:"
+msgstr "שם מודול:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:33
+msgid "Author:"
+msgstr "מאת:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:37
+msgid "Email:"
+msgstr "דואר אלקטרוני:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:41
+msgid "Builder:"
+msgstr "בונה:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:45
+msgid "License:"
+msgstr "רשיון:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:49
+msgid "Parent Directory:"
+msgstr "תיקיית אב:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:50
+msgid "Pick parent directory"
+msgstr "בחר תיקיית אב"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:74
+msgid "Module Start"
+msgstr "תחילת מודול"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:83
+msgid "perl"
+msgstr "perl"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:117
+#, perl-format
+msgid "Field %s was missing. Module not created."
+msgstr "שדה %s לא מולא. מודול לא נוצר."
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:117
+msgid "missing field"
+msgstr "שדה לא מולא"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:134
+#, perl-format
+msgid "%s apparantly created."
+msgstr "כנראה שנוצר %s."
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:134
+msgid "Done"
+msgstr "בוצע"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:19
+msgid "Use Tabs"
+msgstr "השתמש בטאבים"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:22
+msgid "TAB display size (in spaces)"
+msgstr "רוחב טאב (ברווחים)"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:26
+msgid "Max number of modules"
+msgstr "מספר מקסימלי של מודולים"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:30
+msgid "Min number of modules"
+msgstr "מספר מינימלי של מודולים"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:34
+msgid "Open files:"
+msgstr "קבצים פתוחים:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:55
+msgid "Preferences"
+msgstr "העדפות"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:24
+msgid "Existing bookmarks:"
+msgstr "סימניות קיימות:"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:45
+msgid "Set Bookmark"
+msgstr "צור סימניה"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:45
+msgid "GoTo Bookmark"
+msgstr "לך לסימניה"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:111
+#, perl-format
+msgid "%s line %s"
+msgstr "%s שורה %s"
+
+#: lib/Padre/Wx/Menu.pm:38
+msgid "New Tab\tCtrl-T"
+msgstr "טאב חדש\tCtrl-T"
+
+#: lib/Padre/Wx/Menu.pm:45
+msgid "New..."
+msgstr "חדש,,,"
+
+#: lib/Padre/Wx/Menu.pm:47
+msgid "Perl Distribution (Module::Starter)"
+msgstr "הפצת Perl (Module::Starter)"
+
+#: lib/Padre/Wx/Menu.pm:57
+msgid "Open Selection\tCtrl-Shift-O"
+msgstr "פתח בחירה\tCtrl-Shift-O"
+
+#: lib/Padre/Wx/Menu.pm:65
+msgid "Close All"
+msgstr "סגור הכל"
+
+#: lib/Padre/Wx/Menu.pm:69
+msgid "Close All but Current Document"
+msgstr "סגור הכל חוץ ממסמך נוכחי"
+
+#: lib/Padre/Wx/Menu.pm:73
+msgid "Reload file"
+msgstr "רענן קובץ"
+
+#: lib/Padre/Wx/Menu.pm:88
+msgid "Save All"
+msgstr "שמור הכל"
+
+#: lib/Padre/Wx/Menu.pm:95
+msgid "Convert..."
+msgstr "המר..."
+
+#: lib/Padre/Wx/Menu.pm:97
+msgid "EOL to Windows"
+msgstr "סוף שורה תואם Windows"
+
+#: lib/Padre/Wx/Menu.pm:101
+msgid "EOL to Unix"
+msgstr "סוף שורה תואם Unix"
+
+#: lib/Padre/Wx/Menu.pm:105
+msgid "EOL to Mac"
+msgstr "סוף שורה תואם Mac"
+
+#: lib/Padre/Wx/Menu.pm:112
+msgid "Recent Files"
+msgstr "קבצים אחרונים"
+
+#: lib/Padre/Wx/Menu.pm:130
+msgid "Recent Projects"
+msgstr "פרויקטים אחרונים"
+
+#: lib/Padre/Wx/Menu.pm:176
+msgid "&Find Next\tF3"
+msgstr "מצא הבא\tF3"
+
+#: lib/Padre/Wx/Menu.pm:180
+msgid "Find Previous\tShift-F3"
+msgstr "מצא הקודם\tShift-F3"
+
+#: lib/Padre/Wx/Menu.pm:184
+msgid "Ac&k"
+msgstr "אישור"
+
+#: lib/Padre/Wx/Menu.pm:188
+msgid "&Goto\tCtrl-G"
+msgstr "לך אל\tCtrl-G"
+
+#: lib/Padre/Wx/Menu.pm:192
+msgid "&AutoComp\tCtrl-P"
+msgstr "השלמה אוטומטית\tCtrl-P"
+
+#: lib/Padre/Wx/Menu.pm:196
+msgid "Subs\tAlt-S"
+msgstr "החלף\tAlt-S"
+
+#: lib/Padre/Wx/Menu.pm:200
+msgid "&Brace matching\tCtrl-1"
+msgstr "מצא סוגר תואם\tCtrl-1"
+
+#: lib/Padre/Wx/Menu.pm:207
+msgid "&Comment Selected Lines\tCtrl-M"
+msgstr "הפוך שורות נבחרות להערות\tCtrl-M"
+
+#: lib/Padre/Wx/Menu.pm:211
+msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
+msgstr "בטל הערות בשורות נבחרות\tCtrl-Shift-M"
+
+#: lib/Padre/Wx/Menu.pm:218
+msgid "Diff"
+msgstr "השוואה"
+
+#: lib/Padre/Wx/Menu.pm:225
+msgid "&Preferences"
+msgstr "העדפות"
+
+#: lib/Padre/Wx/Menu.pm:235
+msgid "Show Line numbers"
+msgstr "הצג מספרי שורות"
+
+#: lib/Padre/Wx/Menu.pm:240
+msgid "Show Newlines"
+msgstr "הצג תווי שורה חדשה"
+
+#: lib/Padre/Wx/Menu.pm:245
+msgid "Show Output"
+msgstr "הצג פלט"
+
+#: lib/Padre/Wx/Menu.pm:256
+msgid "Show StatusBar"
+msgstr "הצג שורת מצב"
+
+#: lib/Padre/Wx/Menu.pm:262
+msgid "Show Indentation Guide"
+msgstr "הצג מדריך זיחות"
+
+#: lib/Padre/Wx/Menu.pm:267
+#, fuzzy
+msgid "Show Call Tips"
+msgstr "Show Call Tips"
+
+#: lib/Padre/Wx/Menu.pm:275
+msgid "Increase Font Size\tCtrl-+"
+msgstr "הגדל גופן\tCtrl-+"
+
+#: lib/Padre/Wx/Menu.pm:279
+msgid "Decrease Font Size\tCtrl--"
+msgstr "הקטן גופן\tCtrl--"
+
+#: lib/Padre/Wx/Menu.pm:283
+msgid "Reset Font Size\tCtrl-/"
+msgstr "חזור לגודל גופן מקורי\tCtrl-/"
+
+#: lib/Padre/Wx/Menu.pm:289
+msgid "Set Bookmark\tCtrl-B"
+msgstr "קבע סימניה"
+
+#: lib/Padre/Wx/Menu.pm:293
+msgid "Goto Bookmark\tCtrl-Shift-B"
+msgstr "לך לסימניה"
+
+#: lib/Padre/Wx/Menu.pm:303
+msgid "Find Unmatched Brace"
+msgstr "מצא סוגר ללא תואם"
+
+#: lib/Padre/Wx/Menu.pm:324
+msgid "All braces appear to be matched"
+msgstr "נראה שלכל הסוגרים יש תואמים"
+
+#: lib/Padre/Wx/Menu.pm:324
+msgid "Check Complete"
+msgstr "בדיקה הסתיימה"
+
+#: lib/Padre/Wx/Menu.pm:334
+msgid "Run Script\tF5"
+msgstr "הרץ תסריט\tF5"
+
+#: lib/Padre/Wx/Menu.pm:339
+msgid "Run Command\tCtrl-F5"
+msgstr "הפעל פקודה\tCtrl-F5"
+
+#: lib/Padre/Wx/Menu.pm:344
+msgid "&Stop"
+msgstr "עצור"
+
+#: lib/Padre/Wx/Menu.pm:381
+msgid "&Split window"
+msgstr "חלון מפוצל"
+
+#: lib/Padre/Wx/Menu.pm:387
+msgid "Next File\tCtrl-TAB"
+msgstr "עבור לקובץ הבא\tCtrl-TAB"
+
+#: lib/Padre/Wx/Menu.pm:391
+msgid "Previous File\tCtrl-Shift-TAB"
+msgstr "עבור לקובץ הקודם\tCtrl-Shift-TAB"
+
+#: lib/Padre/Wx/Menu.pm:409
+msgid "Context Help\tCtrl-Shift-H"
+msgstr "עזרה בהתאם להקשר\tCtrl-Shift-H"
+
+#: lib/Padre/Wx/Menu.pm:436
+msgid "Reflow Menu/Toolbar"
+msgstr "סדר מחדש תפריט/פס כלים"
+
+#: lib/Padre/Wx/Menu.pm:448
+msgid "Run in &Padre"
+msgstr "הרץ ב-Padre"
+
+#: lib/Padre/Wx/Menu.pm:454
+msgid "Error: "
+msgstr "תקלה: "
+
+#: lib/Padre/Wx/Menu.pm:454 lib/Padre/Wx/MainWindow.pm:1359
+msgid "Self error"
+msgstr "תקלה פנימית"
+
+#: lib/Padre/Wx/Menu.pm:464 lib/Padre/Wx/Menu.pm:568
+msgid "&File"
+msgstr "קובץ"
+
+#: lib/Padre/Wx/Menu.pm:465 lib/Padre/Wx/Menu.pm:569
+msgid "&Project"
+msgstr "פרויקט"
+
+#: lib/Padre/Wx/Menu.pm:466 lib/Padre/Wx/Menu.pm:570
+msgid "&Edit"
+msgstr "ערוך"
+
+#: lib/Padre/Wx/Menu.pm:467 lib/Padre/Wx/Menu.pm:571
+msgid "&View"
+msgstr "הצג"
+
+#: lib/Padre/Wx/Menu.pm:469
+msgid "Run"
+msgstr "הרץ"
+
+#: lib/Padre/Wx/Menu.pm:470 lib/Padre/Wx/Menu.pm:575
+msgid "&Bookmarks"
+msgstr "סימניות"
+
+#: lib/Padre/Wx/Menu.pm:471 lib/Padre/Wx/Menu.pm:576
+msgid "Pl&ugins"
+msgstr "תוספים"
+
+#: lib/Padre/Wx/Menu.pm:472 lib/Padre/Wx/Menu.pm:577
+msgid "&Window"
+msgstr "חלונות"
+
+#: lib/Padre/Wx/Menu.pm:473 lib/Padre/Wx/Menu.pm:578
+msgid "&Help"
+msgstr "עזרה"
+
+#: lib/Padre/Wx/Menu.pm:475 lib/Padre/Wx/Menu.pm:580
+msgid "E&xperimental"
+msgstr "נסיוני"
+
+#: lib/Padre/Wx/Menu.pm:573
+msgid "Perl"
+msgstr "Perl"
+
+#: lib/Padre/Wx/Project.pm:24 lib/Padre/Wx/Project.pm:140
+msgid "Not implemented yet"
+msgstr "לא מומש עדיין"
+
+#: lib/Padre/Wx/Project.pm:24 lib/Padre/Wx/Project.pm:140
+#, fuzzy
+msgid "Not Yes"
+msgstr "לא כן"
+
+#: lib/Padre/Wx/Project.pm:41
+msgid "Select Project"
+msgstr "בחר פרויקט"
+
+#: lib/Padre/Wx/Project.pm:54
+msgid "Select Project Name or type in new one"
+msgstr "בחר שם פרויקט או הקלד שם חדש"
+
+#: lib/Padre/Wx/Project.pm:60
+msgid "Select Directory"
+msgstr "בחר תיקיה"
+
+#: lib/Padre/Wx/Project.pm:124
+msgid "Select Project Directory"
+msgstr "בחר תיקית פרויקט"
+
+#: lib/Padre/Wx/Output.pm:32
+msgid "No output"
+msgstr "אין פלט"
+
+#: lib/Padre/Wx/Menu/Help.pm:37
+msgid ""
+"Perl Application Development and Refactoring Environment\n"
+"\n"
+msgstr ""
+"Perl Application Development and Refactoring Environment\n"
+"\n"
+
+#: lib/Padre/Wx/Menu/Help.pm:38
+#, perl-format
+msgid "Based on Wx.pm %s and %s\n"
+msgstr "מבוסס על Wx.pm %s ו-%s\n"
+
+#: lib/Padre/Wx/Menu/Help.pm:39
+#, perl-format
+msgid "Config at %s\n"
+msgstr "הגדרות ב-%s\n"
+
+#: lib/Padre/Wx/Menu/Help.pm:42
+msgid "Copyright 2008 Gabor Szabo"
+msgstr "Copyright 2008 Gabor Szabo"
+
+#: lib/Padre/Wx/MainWindow.pm:54
+msgid "(running from SVN checkout)"
+msgstr "(מורץ מ-SVN checkout)"
+
+#: lib/Padre/Wx/MainWindow.pm:108
+msgid "Files"
+msgstr "קבצים"
+
+#: lib/Padre/Wx/MainWindow.pm:131
+msgid "Subs"
+msgstr "שגרות"
+
+#: lib/Padre/Wx/MainWindow.pm:135
+msgid "Methods"
+msgstr "מתודות"
+
+#: lib/Padre/Wx/MainWindow.pm:153
+msgid "Output"
+msgstr "פלט"
+
+#: lib/Padre/Wx/MainWindow.pm:463
+msgid "Command line"
+msgstr "שורת הפקודה"
+
+#: lib/Padre/Wx/MainWindow.pm:464
+msgid "Run setup"
+msgstr "הגדרות ריצה"
+
+#: lib/Padre/Wx/MainWindow.pm:544
+msgid "No open document"
+msgstr "אין מסמך פתוח"
+
+#: lib/Padre/Wx/MainWindow.pm:558
+msgid "No execution mode was defined for this document"
+msgstr "מצב ביצוע לא הוגדר למסמך זה"
+
+#: lib/Padre/Wx/MainWindow.pm:577
+msgid "Not a Perl document"
+msgstr "לא מסמך Perl"
+
+#: lib/Padre/Wx/MainWindow.pm:583
+msgid "Only .pl files can be executed"
+msgstr "ניתן להריץ רק קבצי .pl"
+
+#: lib/Padre/Wx/MainWindow.pm:619
+msgid "Message"
+msgstr "מסר"
+
+#: lib/Padre/Wx/MainWindow.pm:626 lib/Padre/Wx/MainWindow.pm:1074
+msgid "Error"
+msgstr "שגיאה"
+
+#: lib/Padre/Wx/MainWindow.pm:712
+msgid "Autocompletions error"
+msgstr "שגיאת השלמות אוטומטיות"
+
+#: lib/Padre/Wx/MainWindow.pm:723
+msgid "Line number:"
+msgstr "מספר שורה:"
+
+#: lib/Padre/Wx/MainWindow.pm:879
+msgid "Need to have something selected"
+msgstr "צריך שיהיה משהו מסומן"
+
+#: lib/Padre/Wx/MainWindow.pm:879 lib/Padre/Wx/MainWindow.pm:916
+msgid "Open Selection"
+msgstr "סימון פתוח"
+
+#: lib/Padre/Wx/MainWindow.pm:916
+#, perl-format
+msgid "Could not find file '%s'"
+msgstr "לא נמצא קובץ '%s'"
+
+#: lib/Padre/Wx/MainWindow.pm:935
+msgid "Open file"
+msgstr "פתח קובץ"
+
+#: lib/Padre/Wx/MainWindow.pm:988
+msgid "Save file as..."
+msgstr "שמור קובץ בתור..."
+
+#: lib/Padre/Wx/MainWindow.pm:1002
+msgid "File already exists. Overwrite it?"
+msgstr "קובץ כבר קיים. לדרוס אותו?"
+
+#: lib/Padre/Wx/MainWindow.pm:1003
+msgid "Exist"
+msgstr "קיים"
+
+#: lib/Padre/Wx/MainWindow.pm:1064
+msgid "File changed on disk since last saved. Do you want to overwrite it?"
+msgstr "קובץ השתנה בדיסק מאז השמירה האחרונה. האם ברצונך לדרוס אותו?"
+
+#: lib/Padre/Wx/MainWindow.pm:1065
+msgid "File not in sync"
+msgstr "קובץ לא מסונכרן"
+
+#: lib/Padre/Wx/MainWindow.pm:1107
+msgid "File changed. Do you want to save it?"
+msgstr "קובץ השתנה. האם ברצונך לשמור אותו?"
+
+#: lib/Padre/Wx/MainWindow.pm:1108
+msgid "Unsaved File"
+msgstr "קובץ שלא נשמר"
+
+#: lib/Padre/Wx/MainWindow.pm:1208
+msgid "Cannot diff if file was never saved"
+msgstr "אי אפשר לעשות השוואה לקובץ שמעולם לא נשמר"
+
+#: lib/Padre/Wx/MainWindow.pm:1213
+msgid "There are no differences\n"
+msgstr "אין הבדלים\n"
+
+#: lib/Padre/Wx/MainWindow.pm:1359
+#, perl-format
+msgid "Error: %s"
+msgstr "שגיאה: %s"
+
+#: lib/Padre/Wx/ToolBar.pm:27
+msgid "New File"
+msgstr "קובץ חדש"
+
+#: lib/Padre/Wx/ToolBar.pm:28
+msgid "Open File"
+msgstr "פתח קובץ"
+
+#: lib/Padre/Wx/ToolBar.pm:29
+msgid "Save File"
+msgstr "שמור קובץ"
+
+#: lib/Padre/Wx/ToolBar.pm:30
+msgid "Close File"
+msgstr "סגור קובץ"
+

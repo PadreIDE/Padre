@@ -1,0 +1,122 @@
+use strict;
+use warnings;
+
+use Config;
+
+if ( not $Config{usethreads} ) {
+	warn "Padre requires a perl built using threads\n";
+	exit 0;
+}
+
+check_wx_version();
+
+
+use inc::Module::Install;
+
+name           'Padre';
+license        'perl';
+author         'Gabor Szabo';
+all_from       'lib/Padre.pm';
+
+requires       'perl'                    => '5.008001';
+requires       'Carp'                    => 0;
+requires       'Class::Adapter'          => '1.05';
+requires       'Class::XSAccessor'       => '0.09';
+requires       'Cwd'                     => '3.2701';
+requires       'Data::Dumper'            => 0;
+requires       'Encode'                  => '2.12';
+requires       'File::Spec'              => '3.2701';
+requires       'File::Spec::Functions'   => '3.2701';
+requires       'File::Basename'          => 0;
+requires       'FindBin'                 => 0;
+requires       'Getopt::Long'            => 0;
+requires       'HTML::Parser'            => '3.58';
+requires       'HTML::Entities'          => '3.57';
+requires       'List::Util'              => '1.18';
+requires       'IO::Socket'              => '1.30';
+requires       'Term::ReadLine'          => 0;
+requires       'Module::Refresh'         => '0.13';
+requires       'App::Ack'                => '1.86';
+requires       'Class::Autouse'          => '1.26';
+requires       'Class::Unload'           => '0.03';
+requires       'DBD::SQLite'             => '1.10';
+requires       'DBI'                     => '1.58';
+requires       'File::Copy::Recursive'   => '0.37';
+requires       'File::Find::Rule'        => '0.30';
+requires       'File::HomeDir'           => '0.82';
+#	'File::LocalizeNewlines'  => '1.10';
+requires       'File::ShareDir'          => '1.00';
+requires       'File::ShareDir::PAR'     => '0.03';
+requires       'File::Slurp'             => '9999.13';
+requires       'File::Which'             => '0.05';
+requires       'IO::String'              => '1.08';
+requires       'Module::Inspector'       => '0.04';
+requires       'Module::Starter'         => '1.50';
+requires       'ORLite'                  => '0.15';
+requires       'Params::Util'            => '0.33';
+requires       'PAR'                     => '0.970';
+requires       'Pod::POM'                => '0.17';
+requires       'Pod::Simple'             => '3.07';
+requires       'Pod::Simple::XHTML'      => '3.04';
+requires       'Probe::Perl'             => '0.01';
+requires       'PPI'                     => '1.203';
+requires       'Storable'                => '2.15';
+requires       'Text::Diff'              => '0.35';
+requires       'Text::FindIndent'        => '0.03';
+requires       'threads'                 => '1.71';
+requires       'threads::shared'         => '1.26';
+requires       'Thread::Queue'           => '2.11';
+requires       'YAML::Tiny'              => '1.32';
+requires       'Wx'                      => '0.89';
+requires       'Wx::Perl::Dialog'        => '0.03';
+requires       'Wx::Perl::ProcessStream' => '0.11';
+
+#test_requires  'Test::Compile'             => '0.08', # does not work on Windows
+test_requires  'Test::More'                => '0.47',
+test_requires  'Test::Exception'           => '0.27',
+test_requires  'Test::NoWarnings'          => '0.084',
+test_requires  'Test::NeedsDisplay'        => '1.05',
+
+no_index       'directory'   => [ qw{ t xt eg share inc} ];
+
+install_script 'script/padre';
+
+#	meta_merge => {
+#		resources => {
+#			homepage    => 'http://padre.perlide.org/',
+#			bugtracker  => 'http://padre.perlide.org/',
+#			Repository  => 'http://svn.perlide.org/padre',
+#			MailingList => 'http://mail.perlide.org/mailman/listinfo/padre-dev',
+#		},
+
+# $builder->config('usethreads');
+
+
+WriteAll;
+
+
+
+sub check_wx_version {
+
+	eval {require Wx};
+	return if $@;  # missing Wx should be dealt by the standard prereq system
+
+	my $version = Wx::wxVERSION_STRING();
+	nono("Could not find Wx::wxVERSION_STRING") if not defined $version;
+
+	print "Found $version\n";
+	$version =~ s/wxWidgets\s+//;
+	nono("Sorry we don't known this wxWidgets version format: '$version'")
+		if $version !~ /^\d+\.\d+(\.\d+)?$/;
+	my ($major, $minor, $way_too_minor) = split /\./, $version;
+	nono("Padre needs at least version 2.8.8 of wxWidgets. this is version $version")
+		if $major < 2 or $minor < 8;
+
+	return;
+}
+
+sub nono {
+	my $msg = shift;
+	print STDERR "$msg\n";
+	exit 0;
+}
