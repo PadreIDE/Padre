@@ -13,6 +13,7 @@ plan tests => $tests;
 
 use Padre::Document;
 use Padre::PPI;
+use PPI::Document;
 
 my $editor_1 = t::lib::Padre::Editor->new;
 my $file_1   = File::Spec->catfile('t', 'files', 'missing_brace_1.pl');
