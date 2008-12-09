@@ -128,7 +128,6 @@ sub new {
 sub refresh {
 	my $self    = shift;
 	my $doc     = shift;
-
 	my $editor  = $doc ? $doc->editor : undef;
 
 	my $selection_exists = 0;
