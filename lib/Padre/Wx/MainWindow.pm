@@ -747,7 +747,9 @@ sub run_command {
 			$self,
 			sub {
 				$_[1]->Skip(1);
-				$_[0]->{gui}->{output_panel}->AppendText( $_[1]->GetLine . "\n" );
+				my $outpanel = $_[0]->{gui}->{output_panel};
+				$outpanel->style_neutral;
+				$outpanel->AppendText( $_[1]->GetLine . "\n" );
 				return;
 			},
 		);
@@ -755,7 +757,9 @@ sub run_command {
 			$self,
 			sub {
 				$_[1]->Skip(1);
-				$_[0]->{gui}->{output_panel}->AppendText( $_[1]->GetLine . "\n" );
+				my $outpanel = $_[0]->{gui}->{output_panel};
+				$outpanel->style_bad;
+				$outpanel->AppendText( $_[1]->GetLine . "\n" );
 				return;
 			},
 		);
