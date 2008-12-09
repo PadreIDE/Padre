@@ -1,23 +1,17 @@
-use strict;
-use warnings;
+use inc::Module::Install;
 
 use Config;
-
-if ( not $Config{usethreads} ) {
+unless ( $Config{usethreads} ) {
 	warn "Padre requires a perl built using threads\n";
 	exit 0;
 }
 
 check_wx_version();
 
-
-use inc::Module::Install;
-
 name           'Padre';
 license        'perl';
 author         'Gabor Szabo';
 all_from       'lib/Padre.pm';
-
 requires       'perl'                    => '5.008001';
 requires       'Carp'                    => 0;
 requires       'Class::Adapter'          => '1.05';
@@ -44,7 +38,6 @@ requires       'DBI'                     => '1.58';
 requires       'File::Copy::Recursive'   => '0.37';
 requires       'File::Find::Rule'        => '0.30';
 requires       'File::HomeDir'           => '0.82';
-#	'File::LocalizeNewlines'  => '1.10';
 requires       'File::ShareDir'          => '1.00';
 requires       'File::ShareDir::PAR'     => '0.03';
 requires       'File::Slurp'             => '9999.13';
@@ -70,15 +63,12 @@ requires       'YAML::Tiny'              => '1.32';
 requires       'Wx'                      => '0.89';
 requires       'Wx::Perl::Dialog'        => '0.03';
 requires       'Wx::Perl::ProcessStream' => '0.11';
-
-#test_requires  'Test::Compile'             => '0.08', # does not work on Windows
-test_requires  'Test::More'                => '0.47',
-test_requires  'Test::Exception'           => '0.27',
-test_requires  'Test::NoWarnings'          => '0.084',
-test_requires  'Test::NeedsDisplay'        => '1.05',
-
-no_index       'directory'   => [ qw{ t xt eg share inc} ];
-
+test_requires  'Test::Compile'           => '0.08' unless win32;
+test_requires  'Test::More'              => '0.47';
+test_requires  'Test::Exception'         => '0.27';
+test_requires  'Test::NoWarnings'        => '0.084';
+test_requires  'Test::NeedsDisplay'      => '1.05';
+no_index       'directory' => [ qw{ t xt eg share inc} ];
 install_script 'script/padre';
 
 #	meta_merge => {
@@ -89,22 +79,18 @@ install_script 'script/padre';
 #			MailingList => 'http://mail.perlide.org/mailman/listinfo/padre-dev',
 #		},
 
-# $builder->config('usethreads');
-
-
 WriteAll;
 
-
-
 sub check_wx_version {
-
-	eval {require Wx};
-	return if $@;  # missing Wx should be dealt by the standard prereq system
+	# Missing Wx should be dealt by the standard prereq system
+	eval { require Wx };
+	return if $@;
 
 	my $version = Wx::wxVERSION_STRING();
 	nono("Could not find Wx::wxVERSION_STRING") if not defined $version;
 
 	print "Found $version\n";
+	print "Found Wx.pm     $Wx::VERSION\n";
 	$version =~ s/wxWidgets\s+//;
 	nono("Sorry we don't known this wxWidgets version format: '$version'")
 		if $version !~ /^\d+\.\d+(\.\d+)?$/;
