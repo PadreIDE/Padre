@@ -21,7 +21,7 @@ use padre_interfaces {
 }
 
 sub plugin_name {
-	return 'My Plugin';
+	'My Plugin';
 }
 
 sub menu_plugins_simple {

@@ -13,12 +13,20 @@ use base 'Padre::Plugin';
 
 our $VERSION = '0.20';
 
+
+
+
+
+#####################################################################
+# Padre::Plugin Methods
+
 sub padre_interfaces {
-	'Padre::Plugin' => 0.18,
+	'Padre::Plugin' => 0.19,
+	'Padre::
 }
 
 sub plugin_name {
-	return 'Development Tools';
+	'Development Tools';
 }
 
 sub menu_plugins_simple {
@@ -29,6 +37,13 @@ sub menu_plugins_simple {
 		'About'     => sub { $self->about    },
 	];
 }
+
+
+
+
+
+#####################################################################
+# Plugin Methods
 
 sub show_inc {
 	my $self = shift;
