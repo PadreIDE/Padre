@@ -18,6 +18,17 @@ sub new {
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
+	# Disable experimental mode
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, Wx::gettext('Disable Experimental Mode') ),
+		sub {
+			Padre->ide->config->{experimental} = 0;
+			$_[0]->menu->refresh;
+			return;
+		},
+	);
+	$self->AppendSeparator;
+
 	# Force-refresh the menu
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1, Wx::gettext('Reflow Menu/Toolbar') ),
