@@ -26,7 +26,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( Wx::wxID_HELP, '' ),
 		sub {
-			$_[0]->menu->{help}->help($_[0]);
+			$_[0]->menu->help->help($_[0]);
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
@@ -35,7 +35,7 @@ sub new {
 			# TODO This feels wrong, the help menu code shouldn't
 			# populate the mainwindow hash.
 			my $selection = $_[0]->selected_text;
-			$_[0]->menu->{help}->help($_[0]);
+			$_[0]->menu->help->help($_[0]);
 			if ( $selection ) {
 				$_[0]->{help}->show( $selection );
 			}
@@ -57,7 +57,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( Wx::wxID_ABOUT, Wx::gettext("&About") ),
 		sub {
-			$_[0]->menu->{help}->about;
+			$_[0]->menu->help->about;
 		},
 	);
 

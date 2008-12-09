@@ -20,7 +20,11 @@ our $VERSION = '0.20';
 
 use Class::XSAccessor
 	getters => {
-		win => 'win',
+		win  => 'win',
+
+		# Don't add accessors to here until they have been
+		# upgraded to be fully encapsulated classes.
+		help => 'help',
 	};
 
 sub new {
