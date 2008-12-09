@@ -1,6 +1,9 @@
 package Padre::Install;
+
+use strict;
 use Module::Build;
-@ISA = qw(Module::Build);
+
+@Padre::Install::ISA = qw(Module::Build);
 
 sub ACTION_code {
     my $self = shift;
@@ -22,7 +25,6 @@ sub ACTION_exe {
 
     # temporary tool to create executable using PAR
     eval "use Module::ScanDeps 0.88; 1;" or die $@;
-
 
     my @libs    = libs();
     my @modules = modules();
