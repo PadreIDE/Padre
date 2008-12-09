@@ -112,7 +112,7 @@ sub encoding_system_default {
 		$encoding = Wx::Locale::GetSystemEncodingName();
 		$encoding =~ s/^windows-/cp/i;
 	}
-	elsif ( Padre::Util::UNIX ) {
+	elsif ( Padre::Util::LINUX ) {
 		$encoding = Wx::Locale::GetSystemEncodingName();
 		if (!$encoding) {
 			# this is not a usual case, but...
