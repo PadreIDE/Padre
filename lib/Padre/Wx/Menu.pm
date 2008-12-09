@@ -22,14 +22,15 @@ our $VERSION = '0.20';
 
 use Class::XSAccessor
 	getters => {
-		win  => 'win',
-		wx   => 'wx',
+		win     => 'win',
+		wx      => 'wx',
 
 		# Don't add accessors to here until they have been
 		# upgraded to be FULLY encapsulated classes.
-		perl => 'perl',
-		run  => 'run',
-		help => 'help',
+		perl    => 'perl',
+		run     => 'run',
+		plugins => 'plugins',
+		help    => 'help',
 	};
 
 sub new {
@@ -40,16 +41,16 @@ sub new {
 	my $experimental = $config->{experimental};
 
 	# Populate the menu
-	my $self        = bless {}, $class;
-	$self->{win}    = $win;
-	$self->{file}   = $self->menu_file( $win );
-	$self->{edit}   = $self->menu_edit( $win );
-	$self->{view}   = $self->menu_view( $win );
-	$self->{perl}   = Padre::Wx::Menu::Perl->new($win);
-	$self->{run}    = Padre::Wx::Menu::Run->new($win);
-	$self->{plugin} = $self->menu_plugin( $win );
-	$self->{window} = $self->menu_window( $win );
-	$self->{help}   = Padre::Wx::Menu::Help->new($win);
+	my $self         = bless {}, $class;
+	$self->{win}     = $win;
+	$self->{file}    = $self->menu_file( $win );
+	$self->{edit}    = $self->menu_edit( $win );
+	$self->{view}    = $self->menu_view( $win );
+	$self->{perl}    = Padre::Wx::Menu::Perl->new($win);
+	$self->{run}     = Padre::Wx::Menu::Run->new($win);
+	$self->{plugins} = Padre::Wx::Menu::Plugins->new($win);
+	$self->{window}  = $self->menu_window( $win );
+	$self->{help}    = Padre::Wx::Menu::Help->new($win);
 
 	# Create the Experimental menu
 	# All the crap that doesn't work, have a home,
@@ -83,38 +84,21 @@ sub create_main_menu_bar {
 
 	# Create and return the main menu bar
 	my $wx = $self->{wx} = Wx::MenuBar->new;
-	$wx->Append( $self->{file},     Wx::gettext("&File")      );
-	$wx->Append( $self->{project},  Wx::gettext("&Project")   );
-	$wx->Append( $self->{edit},     Wx::gettext("&Edit")      );
-	$wx->Append( $self->{view},     Wx::gettext("&View")      );
-	$wx->Append( $self->run->wx,    Wx::gettext("&Run")       );
-	$wx->Append( $self->{bookmark}, Wx::gettext("&Bookmarks") );
-	$wx->Append( $self->{plugin},   Wx::gettext("Pl&ugins")   );
-	$wx->Append( $self->{tools},    Wx::gettext("&Tools")     );
-	$wx->Append( $self->{window},   Wx::gettext("&Window")    );
-	$wx->Append( $self->help->wx,   Wx::gettext("&Help")      );
+	$wx->Append( $self->{file},      Wx::gettext("&File")      );
+	$wx->Append( $self->{project},   Wx::gettext("&Project")   );
+	$wx->Append( $self->{edit},      Wx::gettext("&Edit")      );
+	$wx->Append( $self->{view},      Wx::gettext("&View")      );
+	$wx->Append( $self->run->wx,     Wx::gettext("&Run")       );
+	$wx->Append( $self->{bookmark},  Wx::gettext("&Bookmarks") );
+	$wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins")   );
+	$wx->Append( $self->{tools},     Wx::gettext("&Tools")     );
+	$wx->Append( $self->{window},    Wx::gettext("&Window")    );
+	$wx->Append( $self->help->wx,    Wx::gettext("&Help")      );
 	if ( Padre->ide->config->{experimental} ) {
 		$wx->Append( $self->{experimental}, Wx::gettext("E&xperimental") );
 	}
 
 	return;
-}
-
-# Recursively add plugin menu items from nested array refs
-sub add_plugin_menu_items {
-	my ($self, $menu_items) = @_;
-
-	my $menu = Wx::Menu->new;
-	foreach my $m ( @{$menu_items} ) {
-		if (ref $m->[1] eq 'ARRAY') {
-			my $submenu = $self->add_plugin_menu_items($m->[1]);
-			$menu->Append(-1, $m->[0], $submenu);
-		} else {
-			Wx::Event::EVT_MENU( $self->win, $menu->Append(-1, $m->[0]), $m->[1] );
-		}
-	}
-
-	return $menu;
 }
 
 sub add_alt_n_menu {
@@ -156,16 +140,6 @@ sub remove_alt_n_menu {
 
 #####################################################################
 # Reflowing the Menu
-
-# Temporarily hard-wire this to the appropriate menu
-# should be integrated in the refresh sub
-sub disable_run {
-	my $self = shift;
-	$self->{run_run_script}->Enable(0);
-	$self->{run_run_command}->Enable(0);
-	$self->{run_stop}->Enable(1);
-	return;
-}
 
 my @has_document = qw(
 	file_close
@@ -228,12 +202,18 @@ sub refresh {
 		$self->{$_}->Enable(0) for qw(edit_undo edit_redo edit_copy edit_cut edit_paste);
 	}
 
+	# Refresh submenus
+	$self->run->refresh;
+	$self->perl->refresh;
+	$self->plugins->refresh;
+	$self->help->refresh;
+
 	return 1;
 }
 
 sub menu_file {
 	my ( $self, $win ) = @_;
-	
+
 	# Create the File menu
 	my $menu = Wx::Menu->new;
 
@@ -701,104 +681,6 @@ sub menu_view {
 	);
 
 	return $menu_view;
-}
-
-sub menu_plugin {
-	my ( $self, $win ) = @_;
-
-	# Get the list of plugins
-	my $manager = Padre->ide->plugin_manager;
-	my $plugins = $manager->plugins;
-	my @plugins = grep { $_ ne 'My' } sort keys %$plugins;
-
-	# Create the plugin menu
-	my $menu = Wx::Menu->new;
-
-	# Add the Plugin Tools menu
-	my $tools = $self->menu_plugin_tools( $win );
-	Wx::Event::EVT_MENU( $win,
-		$menu->Append( -1, Wx::gettext("Plugin Manager") ),
-		sub { Padre::Wx::Dialog::PluginManager->show(@_) },
-	);
-	$menu->Append( -1, Wx::gettext('Plugin Tools'), $tools );
-	my $need_seperator = 1;
-
-	foreach my $name ( 'My', @plugins ) {
-		next unless $plugins->{$name};
-		next unless $plugins->{$name}->{status};
-		next unless $plugins->{$name}->{status} eq 'loaded';
-
-		my @plugin = $manager->get_menu($self->win, $name);
-		next unless @plugin;
-
-		if ( $need_seperator ) {
-			$menu->AppendSeparator;
-			$need_seperator = 0;
-		}
-
-		$menu->Append( -1, @plugin );
-		if ( $name eq 'My' ) {
-			$need_seperator = 1;
-		}
-	}
-
-	return $menu;
-}
-
-sub menu_plugin_tools {
-	my ( $self, $win ) = @_;
-	
-	# Create the tools menu
-	my $menu = Wx::Menu->new;
-	Wx::Event::EVT_MENU( $win,
-		$menu->Append( -1, Wx::gettext("Edit My Plugin") ),
-		sub  {
-			my $self = shift;
-			my $file = File::Spec->catfile( Padre->ide->config_dir, 'plugins', 'Padre', 'Plugin', 'My.pm' );
-			if (not -e $file) {
-				return $self->error(Wx::gettext("Could not find the Padre::Plugin::My plugin"));
-			}
-			
-			$self->setup_editor($file);
-			$self->refresh_all;
-		},
-	);
-	Wx::Event::EVT_MENU( $win,
-		$menu->Append( -1, Wx::gettext("Reload My Plugin") ),
-		sub { Padre->ide->plugin_manager->reload_plugin('My') },
-	);
-	Wx::Event::EVT_MENU( $win,
-		$menu->Append( -1, Wx::gettext("Reset My Plugin") ),
-		sub  {
-			my $ret = Wx::MessageBox(
-				Wx::gettext("Reset My Plugin"),
-				Wx::gettext("Reset My Plugin"),
-				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
-				$win
-			);
-			if ( $ret == Wx::wxOK) {
-				my $manager = Padre->ide->plugin_manager;
-				my $target = File::Spec->catfile(
-					$manager->plugin_dir, 'Padre', 'Plugin', 'My.pm'
-				);
-				$manager->unload_plugin("My");
-				Padre::Config->copy_original_My_plugin($target);
-				$manager->load_plugin("My");
-			}
-		},
-	);
-	$menu->AppendSeparator;
-
-	Wx::Event::EVT_MENU( $win,
-		$menu->Append( -1, Wx::gettext("Reload All Plugins") ),
-		sub { Padre->ide->plugin_manager->reload_plugins; },
-	);
-	Wx::Event::EVT_MENU( $win,
-		$menu->Append( -1, Wx::gettext("Test A Plugin From Local Dir") ),
-		sub { Padre->ide->plugin_manager->test_a_plugin; },
-	);
-	
-	return $menu;
 }
 
 sub menu_window {

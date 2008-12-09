@@ -17,12 +17,13 @@ plugins, as well as providing part of the interface to plugin writers.
 
 use strict;
 use warnings;
-use Carp         qw(croak);
-use File::Path   ();
-use File::Spec   ();
-use Params::Util qw{_INSTANCE};
-use Padre::Util  ();
-use Padre::Wx    ();
+use Carp                     qw(croak);
+use File::Path               ();
+use File::Spec               ();
+use Params::Util             qw{_INSTANCE};
+use Padre::Util              ();
+use Padre::Wx                ();
+use Padre::Wx::Menu::Plugins ();
 
 our $VERSION = '0.20';
 
@@ -548,19 +549,19 @@ sub reload_plugin {
 	return 1;
 }
 
-
 # recreate the Plugins menu
+### TODO - Reimplement this in Padre::Wx::Menu::Plugins
 sub _refresh_plugin_menu {
 	my $self = shift;
 	my $main = $self->parent->wx->main_window;
 
 	# Regenerate the menu
 	my $menu    = $main->{menu};
-	my $submenu = $menu->menu_plugin($main);
+	my $submenu = Padre::Wx::Menu::Plugins->new($main);
 	my $place   = $menu->{wx}->FindMenu( Wx::gettext("Pl&ugins") );
 
 	# Update the menu
-	$menu->{wx}->Replace( $place, $submenu, Wx::gettext("Pl&ugins") );
+	$menu->{wx}->Replace( $place, $submenu->wx, Wx::gettext("Pl&ugins") );
 	$menu->refresh;
 }
 
