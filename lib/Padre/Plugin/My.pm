@@ -17,7 +17,7 @@ our $VERSION = '0.20';
 # Padre::Plugin Methods
 
 use padre_interfaces {
-	'Padre::Plugin' => '0.19',
+	'Padre::Plugin' => 0.19,
 }
 
 sub plugin_name {
