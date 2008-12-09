@@ -52,6 +52,10 @@ my %SHORTNAME = (
 
 my %NUMBER = reverse %SHORTNAME;
 
+sub languages {
+	return ( %LANGUAGE );
+}
+
 sub shortname {
 	my $config    = Padre->ide->config;
 	my $shortname = $config->{host}->{locale};

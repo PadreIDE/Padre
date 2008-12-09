@@ -676,7 +676,7 @@ sub menu_view {
 		sub { $_[0]->change_locale() },
 	);
 	$self->{view_language}->AppendSeparator;
-	my %languages = %Padre::Wx::MainWindow::languages;
+	my %languages = Padre::Locale::languages;
 	foreach my $name (sort { $languages{$a} cmp $languages{$b} }  keys %languages) {
 		my $label = $languages{$name};
 		if ( $label eq 'English' ) {
