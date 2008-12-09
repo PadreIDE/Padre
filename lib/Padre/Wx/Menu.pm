@@ -36,13 +36,11 @@ use Class::XSAccessor
 	};
 
 sub new {
-	my $class        = shift;
-	my $main         = shift;
-	my $config       = Padre->ide->config;
-	my $experimental = $config->{experimental};
+	my $class  = shift;
+	my $main   = shift;
+	my $self   = bless {}, $class;
 
 	# Generate the individual menus
-	my $self         = bless {}, $class;
 	$self->{win}     = $main;
 	$self->{file}    = $self->menu_file( $main );
 	$self->{edit}    = $self->menu_edit( $main );
@@ -63,7 +61,8 @@ sub new {
 	$self->wx->Append( $self->{window},    Wx::gettext("&Window")  );
 	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")    );
 
-	if ( $experimental ) {
+	my $config = Padre->ide->config;
+	if ( $config->{experimental} ) {
 		# Create the Experimental menu
 		# All the crap that doesn't work, have a home,
 		# or should never be seen be real users goes here.
