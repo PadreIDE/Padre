@@ -52,7 +52,9 @@ sub new {
 			return;
 		},
 	);
-	$self->{stop}->Enable(0);
+
+	# Initialise enabled
+	$self->enable;
 
 	return $self;
 }
