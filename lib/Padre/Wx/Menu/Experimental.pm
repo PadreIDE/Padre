@@ -60,8 +60,14 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{ppi_highlight},
 		sub {
+			# Update the saved config setting
 			my $config = Padre->ide->config;
 			$config->{ppi_highlight} = $_[1]->IsChecked ? 1 : 0;
+
+			# Refresh the menu (and MIME_LEXER hook)
+			$self->refresh;
+
+			# Update the colourise for each Perl editor
 			foreach my $editor ( $_[0]->pages ) {
 				my $doc = $editor->{Document};
 				next unless $doc->isa('Padre::Document::Perl');
@@ -72,6 +78,7 @@ sub new {
 					$editor->Colourise( 0, $editor->GetLength );
 				}
 			}
+
 			return;
 		}
 	);
