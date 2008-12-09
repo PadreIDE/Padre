@@ -21,8 +21,8 @@ our $VERSION = '0.20';
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	'Padre::Plugin' => 0.19,
-	'Padre::
+	'Padre::Plugin'         => 0.19,
+	'Padre::Wx::MainWindow' => 0.19,
 }
 
 sub plugin_name {
