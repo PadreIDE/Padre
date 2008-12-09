@@ -38,8 +38,7 @@ use Class::XSAccessor
 sub new {
 	my $class        = shift;
 	my $main         = shift;
-	my $ide          = Padre->ide;
-	my $config       = $ide->config;
+	my $config       = Padre->ide->config;
 	my $experimental = $config->{experimental};
 
 	# Generate the individual menus
