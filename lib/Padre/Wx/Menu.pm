@@ -677,7 +677,7 @@ sub menu_view {
 	foreach my $name (sort { $languages{$a} cmp $languages{$b} }  keys %languages) {
 		my $label = $languages{$name};
 		if ( $label eq 'English' ) {
-			$label = q{English (Queen's)};
+			$label = "English (The Queen's)";
 		}
 		my $item = $self->{view_language}->AppendRadioItem( -1, $label );
 		Wx::Event::EVT_MENU( $win,
