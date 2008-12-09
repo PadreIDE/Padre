@@ -610,9 +610,9 @@ sub refresh_methods {
 		# that should be the one we got from get_functions
 	} elsif ($config->{editor_methods} eq 'alphabetical_private_last') {
 		# ~ comes after \w
-		@methods = map { tr/_/~/; $_ } ## no critic
+		@methods = map { tr/~/_/; $_ } ## no critic
 			sort
-			map { tr/~/_/; $_ } ## no critic
+			map { tr/_/~/; $_ } ## no critic
 			@methods;
 	} else {
 		# Alphabetical (aka 'abc')
