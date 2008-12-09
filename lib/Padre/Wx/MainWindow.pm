@@ -111,7 +111,7 @@ sub new {
 
 	$self->{manager} = Wx::AuiManager->new;
 	$self->{manager}->SetManagedWindow($self);
-	$self->{_methods_} = [];
+	$self->{_methods} = [];
 
 	# do NOT use hints other than Rectangle or the app will crash on Linux/GTK
 	my $flags = $self->{manager}->GetFlags;
@@ -619,7 +619,7 @@ sub refresh_methods {
 	}
 
 	my $new = join ';', @methods;
-	my $old = join ';', @{ $self->{_methods_} };
+	my $old = join ';', @{ $self->{_methods} };
 	return if $old eq $new;
 
 	$subs_panel->DeleteAllItems;
@@ -627,7 +627,7 @@ sub refresh_methods {
 		$subs_panel->InsertStringItem(0, $method);
 	}
 	$subs_panel->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
-	$self->{_methods_} = \@methods;
+	$self->{_methods} = \@methods;
 
 	return;
 }
