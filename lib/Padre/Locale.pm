@@ -28,7 +28,7 @@ use constant DEFAULT_LOCALE => 'en';
 
 # TODO move it to some better place,
 # used in Menu.pm
-our %languages = (
+my %LANGUAGE = (
 	de => Wx::gettext('German'),
 	en => Wx::gettext('English'),
 	fr => Wx::gettext('French'),
@@ -39,7 +39,7 @@ our %languages = (
 	ru => Wx::gettext('Russian')
 );
 
-my %shortname_of = (
+my %SHORTNAME = (
 	Wx::wxLANGUAGE_GERMAN()     => 'de',
 	Wx::wxLANGUAGE_ENGLISH_US() => 'en',
 	Wx::wxLANGUAGE_FRENCH()     => 'fr',
@@ -50,19 +50,34 @@ my %shortname_of = (
 	Wx::wxLANGUAGE_RUSSIAN()    => 'ru',
 );
 
-my %number_of = reverse %shortname_of;
+my %NUMBER = reverse %SHORTNAME;
 
 sub shortname {
 	my $config    = Padre->ide->config;
 	my $shortname = $config->{host}->{locale};
 	unless ( $shortname ) {
-		$shortname = $shortname_of{ Wx::Locale::GetSystemLanguage };
+		$shortname = $SHORTNAME{ Wx::Locale::GetSystemLanguage };
 	}
 	unless ( $shortname ) {
-		$shortname = DEFAULT_LOCALE ;
+		$shortname = DEFAULT_LOCALE;
 	}
 	return $shortname;
 }
+
+sub object {
+	my $shortname = shortname();
+	my $lang      = $NUMBER{$shortname};
+	my $locale    = Wx::Locale->new($lang);
+	$locale->AddCatalogLookupPathPrefix(
+		Padre::Util::sharedir('locale')
+	);
+	unless ( $locale->IsLoaded($shortname) ) {
+		my $filename = Padre::Util::sharefile( 'locale', $shortname ) . '.mo';
+		$locale->AddCatalog($shortname) if -f $filename;
+	}
+	return $locale;
+}
+
 
 
 
@@ -135,42 +150,48 @@ sub encoding_from_string {
 	# Or, we'll use system default encode setting
 	# If we cannot get system default, then forced it to set 'utf-8'
 	#
-
-	my $encoding;
-	my $system_default = ();
-	my @guess_list     = ();
+	my $default  = '';
+	my @guess    = ();
+	my $encoding = '';
 	my $lang_shortname = shortname();
 	if ($lang_shortname eq 'ko') {      # Korean
-		@guess_list = qw/utf-8 euc-kr/;
+		@guess = qw/utf-8 euc-kr/;
 	} elsif ($lang_shortname eq 'ja') { # Japan (not yet tested)
-		@guess_list = qw/utf-8 iso8859-1 euc-jp shiftjis 7bit-jis/;
+		@guess = qw/utf-8 iso8859-1 euc-jp shiftjis 7bit-jis/;
 	} elsif ($lang_shortname eq 'cn') { # Chinese (not yet tested)
-		@guess_list = qw/utf-8 iso8859-1 euc-cn/;
+		@guess = qw/utf-8 iso8859-1 euc-cn/;
 	} else {
-		$system_default ||= encoding_system_default();
-		@guess_list = ( $system_default ) if $system_default;
+		$default ||= encoding_system_default();
+		@guess = ( $default ) if $default;
 	}
 
 	require Encode::Guess;
-	my $guess = Encode::Guess::guess_encoding($content, @guess_list);
-	if (not defined $guess) {
+	my $guess = Encode::Guess::guess_encoding($content, @guess);
+	unless ( defined $guess ) {
 		$guess = ''; # to avoid warnings
 	}
-	if ( ref($guess) and ref($guess) =~ m/^Encode::/ ) {       # Wow, nice!
+
+	# Wow, nice!
+	if ( ref($guess) and ref($guess) =~ m/^Encode::/ ) {
 		$encoding = $guess->name;
-	} elsif ($guess =~ m/utf8/) {            # utf-8 is in suggestion
+
+	# utf-8 is in suggestion
+	} elsif ($guess =~ m/utf8/) {
 		$encoding = 'utf-8';
-	} elsif ($guess =~ m/or/) {              # choose from suggestion
+
+	# Choose from suggestion
+	} elsif ($guess =~ m/or/) {
 		my @suggest_encodings = split /\sor\s/, "$guess";
 		$encoding = $suggest_encodings[0];
-	}
-	else {                                 # use system default
-		$system_default ||= encoding_system_default();
-		$encoding = $system_default;
+
+	# Use system default
+	} else {
+		$default ||= encoding_system_default();
+		$encoding = $default;
 	}
 
-	if (!$encoding) {
-		# fail to guess encoding from contents
+	unless ( $encoding ) {
+		# Failed to guess encoding from contents
 		warn "Could not find encoding. Defaulting to 'utf-8'. "
 			. "Please check it manually and report to the Padre development team.";
 		$encoding = 'utf-8';
