@@ -205,11 +205,13 @@ sub create_main_components {
 
 	# Create the menu bar
 	delete $self->{menu} if defined $self->{menu};
-	$self->{menu} = Padre::Wx::Menu->new( $self );
+	$self->{menu} = Padre::Wx::Menu->new($self);
 	$self->SetMenuBar( $self->menu->wx );
 
 	# Create the tool bar
-	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
+	$self->SetToolBar(
+		Padre::Wx::ToolBar->new($self)
+	);
 	$self->GetToolBar->Realize;
 
 	# Create the status bar
@@ -1404,7 +1406,7 @@ sub on_close {
 	# the notebook no matter what. For the other events we have to
 	# close the tab manually which we do in the close() function
 	# Hence here we don't allow the automatic closing of the window. 
-	if ($event and $event->isa('Wx::AuiNotebookEvent')) {
+	if ( $event and $event->isa('Wx::AuiNotebookEvent') ) {
 		$event->Veto;
 	}
 	$self->close;

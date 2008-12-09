@@ -10,9 +10,10 @@ our $VERSION = '0.20';
 our @ISA     = 'Wx::ToolBar';
 
 sub new {
-	my $class  = shift;
-	my $parent = shift;
-	my $self   = $class->SUPER::new( $parent, -1,
+	my $class = shift;
+	my $main  = shift;
+
+	my $self  = $class->SUPER::new( $main, -1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxNO_BORDER | Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_DOCKABLE,
@@ -26,9 +27,9 @@ sub new {
 		Wx::gettext('New File'),
 	);
 	Wx::Event::EVT_TOOL(
-		$parent,
+		$main,
 		Wx::wxID_NEW,
-		\&Padre::Wx::MainWindow::on_new,
+		sub { $_[0]->on_new },
 	);
 	$self->AddTool(
 		Wx::wxID_OPEN, '',
@@ -40,20 +41,15 @@ sub new {
 		Padre::Wx::tango( 'actions', 'document-save.png' ),
 		Wx::gettext('Save File'),
 	);
-#	$self->AddTool(
-#		Wx::wxID_PRINT, '',
-#		Padre::Wx::tango( 'actions', 'document-print.png' ),
-#		Wx::gettext('Print File'),
-#	);
 	$self->AddTool(
 		Wx::wxID_CLOSE, '',
 		Padre::Wx::tango( 'emblems', 'emblem-unreadable.png' ),
 		Wx::gettext('Close File'),
 	);
 	Wx::Event::EVT_TOOL(
-		$parent,
+		$main,
 		Wx::wxID_CLOSE,
-		\&Padre::Wx::MainWindow::on_close,
+		sub { $_[0]->on_close($_[1]) },
 	);
 	$self->AddSeparator;
 
@@ -84,9 +80,9 @@ sub new {
 		Wx::gettext('Cut'),
 	);
 	Wx::Event::EVT_TOOL(
-		$parent,
+		$main,
 		Wx::wxID_CUT,
-		sub { Padre->ide->wx->main_window->selected_editor->Cut; },
+		sub { Padre->ide->wx->main_window->selected_editor->Cut },
 	);
 	$self->AddTool(
 		Wx::wxID_COPY,  '',
@@ -94,9 +90,9 @@ sub new {
 		Wx::gettext('Copy'),
 	);
 	Wx::Event::EVT_TOOL(
-		$parent,
+		$main,
 		Wx::wxID_COPY,
-		sub { Padre->ide->wx->main_window->selected_editor->Copy; },
+		sub { Padre->ide->wx->main_window->selected_editor->Copy },
 	);
 	$self->AddTool(
 		Wx::wxID_PASTE, '',
@@ -104,7 +100,7 @@ sub new {
 		Wx::gettext('Paste'),
 	);
 	Wx::Event::EVT_TOOL(
-		$parent,
+		$main,
 		Wx::wxID_PASTE,
 		sub { 
 			my $editor = Padre->ide->wx->main_window->selected_editor or return;
@@ -117,7 +113,7 @@ sub new {
 		Wx::gettext('Select all'),
 	);
 	Wx::Event::EVT_TOOL(
-		$parent,
+		$main,
 		Wx::wxID_SELECTALL,
 		sub { \&Padre::Wx::Editor::text_select_all(@_) },
 	);
@@ -131,7 +127,7 @@ sub refresh {
 	my $editor  = $doc ? $doc->editor : undef;
 
 	my $selection_exists = 0;
-	if ($editor) {
+	if ( $editor ) {
 		my $txt = $editor->GetSelectedText;
 		if ( defined($txt) && length($txt) > 0 ) {
 			$selection_exists = 1;
@@ -146,7 +142,8 @@ sub refresh {
 	$self->EnableTool( Wx::wxID_COPY,      ( $selection_exists ));
 	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ));
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ));
-	return 1;
+
+	return;
 }
 
 1;

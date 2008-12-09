@@ -208,7 +208,7 @@ sub menu_file {
 	# Creating new things
 	Wx::Event::EVT_MENU( $main,
 		$menu->Append( Wx::wxID_NEW, Wx::gettext("&New\tCtrl-N") ),
-		\&Padre::Wx::MainWindow::on_new,
+		sub { $_[0]->on_new },
 	);
 	my $menu_file_new = Wx::Menu->new;
 	$menu->Append( -1, Wx::gettext("New..."), $menu_file_new );
