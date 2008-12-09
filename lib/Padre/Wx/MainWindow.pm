@@ -321,8 +321,8 @@ sub create_side_pane {
 		$self->{gui}->{sidepane},
 		Wx::AuiPaneInfo->new->Name('sidepane')
 			->CenterPane->Resizable(1)->PaneBorder(0)->Movable(1)
-			->CaptionVisible(1)->CloseButton(0)->DestroyOnClose(0)
-			->MaximizeButton(1)->Floatable(1)->Dockable(1)
+			->CaptionVisible(1)->CloseButton(1)->DestroyOnClose(0)
+			->MaximizeButton(0)->Floatable(1)->Dockable(1)
 			->Caption( Wx::gettext("Workspace View") )->Position(3)->Right->Layer(3)
 	);
 
