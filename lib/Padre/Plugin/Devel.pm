@@ -1,43 +1,48 @@
 package Padre::Plugin::Devel;
 
+use 5.008;
 use strict;
 use warnings;
+use File::Spec     ();
+use File::Basename ();
+use Data::Dumper   ();
+use Padre::Util    ();
+use Padre::Wx      ();
 
 use base 'Padre::Plugin';
 
 our $VERSION = '0.20';
 
-use Padre::Wx ();
-
-use Wx         ':everything';
-use Wx::Menu   ();
-use Wx::Locale qw(:default);
-
-use File::Basename ();
-use File::Spec     ();
-use Data::Dumper   ();
-use Padre::Util    ();
-
 sub padre_interfaces {
 	'Padre::Plugin' => 0.18,
 }
 
+sub plugin_name {
+	return 'Development Tools';
+}
 
-# TODO fix this
-# we need to create anonymous subs in order to makes
-# sure reloading the module changes the call as well
-# A better to replace the whole Plugins/ menu when we
-# reload plugins.
 sub menu_plugins_simple {
-	return ('Development Tools' => [
-		'Show %INC' =>      sub {show_inc(@_)},
-		'Info'      =>      sub {info(@_)},
-		'About'     =>      sub {about(@_)},
-	]);
+	my $self = shift;
+	return $self->plugin_name => [
+		'Show %INC' => sub { $self->show_inc },
+		'Info'      => sub { $self->info     },
+		'About'     => sub { $self->about    },
+	];
+}
+
+sub show_inc {
+	my $self = shift;
+	my $main = Padre->ide->wx->main_window;
+	Wx::MessageBox(
+		Data::Dumper::Dumper(\%INC),
+		'%INC',
+		Wx::wxOK | Wx::wxCENTRE,
+		$main,
+	);
 }
 
 sub about {
-	my ($main) = @_;
+	my $self = shift;
 
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName("Padre::Plugin::Devel");
@@ -45,30 +50,23 @@ sub about {
 		"A set of unrelated tools used by the Padre developers\n" .
 		"Some of these might end up in core Padre or in oter plugins"
 	);
-	#$about->SetVersion($Padre::VERSION);
+
 	Wx::AboutBox( $about );
 	return;
 }
 
 sub info {
-	my ($main) = @_;
-	my $doc = Padre::Documents->current;
-	if (not $doc) {
+	my $self = shift;
+	my $main = Padre->ide->wx->main_window;
+	my $doc  = Padre::Documents->current;
+	if ( $doc ) {
+		my $msg = '';
+		$msg   .= "Doc object: $doc\n";
+		$main->message( $msg, 'Info' );
+	} else {
 		$main->message( 'No file is open', 'Info' );
-		return;
 	}
-	my $msg = '';
-	$msg   .= "Doc object: $doc\n";
-	$main->message( $msg, 'Info' );
-
 	return;
-}
-
-sub show_inc {
-	my ($main) = @_;
-
-	Wx::MessageBox( Data::Dumper::Dumper(\%INC), '%INC', Wx::wxOK|Wx::wxCENTRE, $main );
-	
 }
 
 1;
