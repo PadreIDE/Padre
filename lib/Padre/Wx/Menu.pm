@@ -3,13 +3,14 @@ package Padre::Wx::Menu;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util          qw{_INSTANCE};
-use Padre::Util           ();
-use Padre::Wx             ();
-use Padre::Wx::Menu::Perl ();
-use Padre::Wx::Menu::Run  ();
-use Padre::Wx::Menu::Help ();
-use Padre::Documents      ();
+use Params::Util             qw{_INSTANCE};
+use Padre::Util              ();
+use Padre::Wx                ();
+use Padre::Wx::Menu::Perl    ();
+use Padre::Wx::Menu::Run     ();
+use Padre::Wx::Menu::Plugins ();
+use Padre::Wx::Menu::Help    ();
+use Padre::Documents         ();
 
 our $VERSION = '0.20';
 
