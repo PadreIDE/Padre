@@ -6,6 +6,7 @@ use warnings;
 use Params::Util          qw{_INSTANCE};
 use Padre::Util           ();
 use Padre::Wx             ();
+use Padre::Wx::Menu::Perl ();
 use Padre::Wx::Menu::Run  ();
 use Padre::Wx::Menu::Help ();
 use Padre::Documents      ();
@@ -26,8 +27,9 @@ use Class::XSAccessor
 
 		# Don't add accessors to here until they have been
 		# upgraded to be FULLY encapsulated classes.
-		help => 'help',
+		perl => 'perl',
 		run  => 'run',
+		help => 'help',
 	};
 
 sub new {
@@ -43,7 +45,7 @@ sub new {
 	$self->{file}   = $self->menu_file( $win );
 	$self->{edit}   = $self->menu_edit( $win );
 	$self->{view}   = $self->menu_view( $win );
-	$self->{perl}   = $self->menu_perl( $win );
+	$self->{perl}   = Padre::Wx::Menu::Perl->new($win);
 	$self->{run}    = Padre::Wx::Menu::Run->new($win);
 	$self->{plugin} = $self->menu_plugin( $win );
 	$self->{window} = $self->menu_window( $win );
@@ -193,7 +195,7 @@ sub refresh {
 	my $document = Padre::Documents->current;
 
 	if ( _INSTANCE($document, 'Padre::Document::Perl') and $self->{wx}->GetMenuLabel(3) ne '&Perl') {
-		$self->{wx}->Insert( 3, $self->{perl}, '&Perl' );
+		$self->{wx}->Insert( 3, $self->perl->wx, '&Perl' );
 	} elsif ( not _INSTANCE($document, 'Padre::Document::Perl') and $self->{wx}->GetMenuLabel(3) eq '&Perl') {
 		$self->{wx}->Remove( 3 );
 	}
@@ -699,62 +701,6 @@ sub menu_view {
 	);
 
 	return $menu_view;
-}
-
-sub menu_perl {
-	my ( $self, $win ) = @_;
-	
-	# Create the Perl menu
-	my $menu = Wx::Menu->new;
-
-	# Perl-Specific Searches
-	my $menu_perl_find_unmatched = $menu->Append( -1, Wx::gettext("Find Unmatched Brace") );
-	Wx::Event::EVT_MENU( $win,
-		$menu_perl_find_unmatched,
-		sub {
-			my $doc = Padre::Documents->current;
-			unless ( $doc and $doc->isa('Padre::Document::Perl') ) {
-				return;
-			}
-			$doc->find_unmatched_brace;
-		},
-	);
-	
-	my $menu_perl_find_declaration = $menu->Append( -1, Wx::gettext("Find variable declaration") );
-	Wx::Event::EVT_MENU( $win,
-		$menu_perl_find_declaration,
-		sub {
-			my $doc = Padre::Documents->current;
-			return unless $doc and $doc->isa('Padre::Document::Perl');
-			$doc->find_variable_declaration;
-		},
-	);
-
-	my $experimental = Padre->ide->config->{experimental};
-
-	if ($experimental) {
-		my $menu_perl_lexical_replace_var = $menu->Append( -1, Wx::gettext("Lexically replace variable") );
-		Wx::Event::EVT_MENU( $win,
-			$menu_perl_lexical_replace_var,
-			sub {
-				my $doc = Padre::Documents->current;
-				return unless $doc and $doc->isa('Padre::Document::Perl');
-				my $dialog = Padre::Wx::History::TextDialog->new(
-					$win,
-					Wx::gettext("Replacement"),
-					Wx::gettext("Replacement"),
-					'$foo',
-				);
-				return if $dialog->ShowModal == Wx::wxID_CANCEL;
-				my $replacement = $dialog->GetValue;
-				$dialog->Destroy;
-				return unless defined $replacement;
-
-				$doc->lexical_variable_replacement($replacement);
-			},
-		);
-	}
-	return $menu;
 }
 
 sub menu_plugin {
