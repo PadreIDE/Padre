@@ -1,7 +1,5 @@
 package Padre::Wx::MainWindow;
 
-use 5.008;
-
 # This is somewhat disturbing but necessary to prevent
 # Test::Compile from breaking. The compile tests run
 # perl -v lib/Padre/Wx/MainWindow.pm which first compiles
@@ -17,6 +15,7 @@ BEGIN {
 	$INC{"Padre/Wx/MainWindow.pm"} ||= __FILE__;
 }
 
+use 5.008;
 use strict;
 use warnings;
 use FindBin;
@@ -47,34 +46,6 @@ my $default_dir = Cwd::cwd();
 
 use constant SECONDS => 1000;
 
-use constant DEFAULT_LOCALE => 'en';
-
-# TODO move it to some better place,
-# used in Menu.pm
-our %languages = (
-	de => Wx::gettext('German'),
-	en => Wx::gettext('English'),
-	fr => Wx::gettext('French'),
-	he => Wx::gettext('Hebrew'),
-	hu => Wx::gettext('Hungarian'),
-	ko => Wx::gettext('Korean'),
-	it => Wx::gettext('Italian'),
-	ru => Wx::gettext('Russian')
-);
-
-my %shortname_of = (
-	Wx::wxLANGUAGE_GERMAN()     => 'de',
-	Wx::wxLANGUAGE_ENGLISH_US() => 'en',
-	Wx::wxLANGUAGE_FRENCH()     => 'fr',
-	Wx::wxLANGUAGE_HEBREW()     => 'he',
-	Wx::wxLANGUAGE_HUNGARIAN()  => 'hu',
-	Wx::wxLANGUAGE_ITALIAN()    => 'it',
-	Wx::wxLANGUAGE_KOREAN()     => 'ko',
-	Wx::wxLANGUAGE_RUSSIAN()    => 'ru',
-);
-
-my %number_of = reverse %shortname_of;
-
 
 
 
@@ -84,6 +55,7 @@ my %number_of = reverse %shortname_of;
 
 use Class::XSAccessor
 	getters => {
+		menu           => 'menu',
 		manager        => 'manager',
 		no_refresh     => '_no_refresh',
 		syntax_checker => 'syntax_checker',
@@ -92,13 +64,10 @@ use Class::XSAccessor
 
 sub new {
 	my $class  = shift;
-
 	my $config = Padre->ide->config;
-	Wx::InitAllImageHandlers();
 
+	Wx::InitAllImageHandlers();
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
-	#Wx::LogMessage( 'Start');
-	
 
 	# Determine the initial frame style
 	my $wx_frame_style = Wx::wxDEFAULT_FRAME_STYLE;
@@ -106,7 +75,7 @@ sub new {
 		$wx_frame_style |= Wx::wxMAXIMIZE;
 	}
 
-	# Create the main panel object
+	# Determine the window title
 	my $title = "Padre $Padre::VERSION ";
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
@@ -115,6 +84,8 @@ sub new {
 			$title .= Wx::gettext('(running from SVN checkout)');
 		}
 	}
+
+	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
@@ -129,12 +100,16 @@ sub new {
 		],
 		$wx_frame_style,
 	);
-	$self->SetDropTarget(Padre::Wx::DNDFilesDropTarget->new($self));
 
-	$self->set_locale( );
+	# Set the locale
+	$self->{locale} = Padre::Locale::object();
+
+	$self->SetDropTarget(
+		Padre::Wx::DNDFilesDropTarget->new($self)
+	);
 
 	$self->{manager} = Wx::AuiManager->new;
-	$self->{manager}->SetManagedWindow( $self );
+	$self->{manager}->SetManagedWindow($self);
 	$self->{_methods_} = [];
 
 	# do NOT use hints other than Rectangle or the app will crash on Linux/GTK
@@ -185,13 +160,13 @@ sub new {
 		$event->Skip();
 		return;
 	} );
-	
+
 	# remember the last time we show them or not
 	# TODO do we need this, given that we have self->manager->LoadPerspective below?
-	unless ( $self->{menu}->{view_output}->IsChecked ) {
+	unless ( $self->menu->{view_output}->IsChecked ) {
 		$self->{gui}->{output_panel}->Hide;
 	}
-	unless ( $self->{menu}->{view_functions}->IsChecked ) {
+	unless ( $self->menu->{view_functions}->IsChecked ) {
 		$self->{gui}->{subs_panel}->Hide;
 	}
 
@@ -221,10 +196,6 @@ sub new {
 	);
 	$timer->Start( 1, 1 );
 
-	#if ( defined $config->{host}->{aui_manager_layout} ) {
-	#	$self->manager->LoadPerspective( $config->{host}->{aui_manager_layout} );
-	#}
-
 	return $self;
 }
 
@@ -232,18 +203,16 @@ sub create_main_components {
 	my $self = shift;
 
 	# Create the menu bar
-	if ( defined $self->{menu} ) {
-		delete $self->{menu};
-	}
+	delete $self->{menu} if defined $self->{menu};
 	$self->{menu} = Padre::Wx::Menu->new( $self );
-	$self->SetMenuBar( $self->{menu}->{wx} );
+	$self->SetMenuBar( $self->menu->{wx} );
 
 	# Create the tool bar
 	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
 	$self->GetToolBar->Realize;
 
 	# Create the status bar
-	if ( ! defined $self->{gui}->{statusbar} ) {
+	unless ( defined $self->{gui}->{statusbar} ) {
 		$self->{gui}->{statusbar} = $self->CreateStatusBar( 1, Wx::wxST_SIZEGRIP|Wx::wxFULL_REPAINT_ON_RESIZE );
 		$self->{gui}->{statusbar}->SetFieldsCount(4);
 		$self->{gui}->{statusbar}->SetStatusWidths(-1, 100, 50, 100);
@@ -445,7 +414,7 @@ sub post_init {
 	Padre->ide->plugin_manager->enable_editors_for_all;
 	$self->refresh_all;
 
-	my $output = $self->{menu}->{view_output}->IsChecked;
+	my $output = $self->menu->{view_output}->IsChecked;
 	# First we show the output window and then hide it if necessary
 	# in order to avoide some weird visual artifacts (empty square at
 	# top left part of the whole application)
@@ -454,7 +423,7 @@ sub post_init {
 	$self->show_output(1);
 	$self->show_output($output) if not $output;
 
-	if ( $self->{menu}->{view_show_syntaxcheck}->IsChecked ) {
+	if ( $self->menu->{view_show_syntaxcheck}->IsChecked ) {
 		$self->syntax_checker->enable(1);
 	}
 
@@ -498,13 +467,13 @@ sub refresh_all {
 
 	return if $self->no_refresh;
 
-	my $doc  = $self->selected_document;
+	my $doc = $self->selected_document;
 	$self->refresh_menu;
 	$self->refresh_toolbar;
 	$self->refresh_status;
 	$self->refresh_methods;
 	$self->refresh_syntaxcheck;
-	
+
 	my $id = $self->nb->GetSelection();
 	if (defined $id and $id >= 0) {
 		$self->nb->GetPage($id)->SetFocus;
@@ -512,11 +481,11 @@ sub refresh_all {
 
 	# force update of list of opened files in window menu
 	# TODO: shouldn't this be in Padre::Wx::Menu::refresh()?
-	if ( defined $self->{menu}->{alt} ) {
-		foreach my $i ( 0 .. @{ $self->{menu}->{alt} } - 1 ) {
+	if ( defined $self->menu->{alt} ) {
+		foreach my $i ( 0 .. @{ $self->menu->{alt} } - 1 ) {
 			my $doc = Padre::Documents->by_id($i) or return;
 			my $file = $doc->filename || $self->nb->GetPageText($i);
-			$self->{menu}->update_alt_n_menu($file, $i);
+			$self->menu->update_alt_n_menu($file, $i);
 		}
 	}
 
@@ -524,38 +493,21 @@ sub refresh_all {
 }
 
 sub change_locale {
-	my ($self, $shortname) = @_;
-
-	my $config = Padre->ide->config;
-	$config->{host}->{locale} = $shortname;
-
-	delete $self->{locale};
-	$self->set_locale;
-
-	$self->create_main_components;
-
-	$self->refresh_all;
-
-	$self->manager->GetPane('bottompane')->Caption( Wx::gettext("Output") );
-	$self->manager->GetPane('sidepane')->Caption( Wx::gettext("Subs") );
-	return;
-}
-
-sub set_locale {
 	my $self = shift;
 
-	my $shortname = Padre::Locale::shortname();
-	my $lang      = $number_of{ $shortname };
-	$self->{locale} = Wx::Locale->new($lang);
-	$self->{locale}->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
-	my $langname = $self->{locale}->GetCanonicalName();
+	# Save the locale to the config
+	Padre->ide->config->{host}->{locale} = $_[0];
 
-	#my $shortname = $langname ? substr( $langname, 0, 2 ) : 'en'; # only providing default sublangs
-	my $filename = Padre::Util::sharefile( 'locale', $shortname ) . '.mo';
+	# Reset the locale
+	$self->{locale} = Padre::Locale::object();
 
-	unless ( $self->{locale}->IsLoaded($shortname) ) {
-		$self->{locale}->AddCatalog($shortname) if -f $filename;
-	}
+	# Refresh the interface with the new labels
+	$self->create_main_components;
+	$self->refresh_all;
+
+	# Replace the AUI component captions
+	$self->manager->GetPane('sidepane')->Caption( Wx::gettext("Subs") );
+	$self->manager->GetPane('bottompane')->Caption( Wx::gettext("Output") );
 
 	return;
 }
@@ -564,7 +516,7 @@ sub refresh_syntaxcheck {
 	my $self = shift;
 	return if $self->no_refresh;
 	return if not Padre->ide->config->{experimental};
-	return if not $self->{menu}->{view_show_syntaxcheck}->IsChecked;
+	return if not $self->menu->{view_show_syntaxcheck}->IsChecked;
 
 	Padre::Wx::SyntaxChecker::on_syntax_check_timer( $self, undef, 1 );
 
@@ -575,7 +527,7 @@ sub refresh_menu {
 	my $self = shift;
 	return if $self->no_refresh;
 
-	$self->{menu}->refresh;
+	$self->menu->refresh;
 }
 
 sub refresh_toolbar {
@@ -640,7 +592,7 @@ sub refresh_status {
 sub refresh_methods {
 	my ($self) = @_;
 	return if $self->no_refresh;
-	return unless ( $self->{menu}->{view_functions}->IsChecked );
+	return unless ( $self->menu->{view_functions}->IsChecked );
 
 	my $subs_panel = $self->{gui}->{subs_panel};
 
@@ -780,9 +732,9 @@ sub on_run_command {
 sub run_command {
 	my $self   = shift;
 	my $cmd    = shift;
-	my $config = Padre->ide->config;
 
-	$self->{menu}->disable_run;
+	# Disable access to the run menus
+	$self->menu->run->disable;
 
 	# Prepare the output window for the output
 	$self->show_output(1);
@@ -813,8 +765,7 @@ sub run_command {
 			sub {
 				$_[1]->Skip(1);
 				$_[1]->GetProcess->Destroy;
-
-				$self->{menu}->enable_run;
+				$self->menu->run->enable;
 			},
 		);
 	}
@@ -823,7 +774,7 @@ sub run_command {
 	$self->{command} = Wx::Perl::ProcessStream->OpenProcess( $cmd, 'MyName1', $self );
 	unless ( $self->{command} ) {
 		# Failed to start the command. Clean up.
-		$self->{menu}->enable_run;
+		$self->menu->run->enable;
 	}
 
 	return;
@@ -833,8 +784,9 @@ sub run_command {
 sub run_script {
 	my $self     = shift;
 	my $document = Padre::Documents->current;
-
-	return $self->error(Wx::gettext("No open document")) if not $document;
+	unless ( $document ) {
+		return $self->error(Wx::gettext("No open document"));
+	}
 
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
@@ -846,11 +798,11 @@ sub run_script {
 	} elsif ( $config->{run_save} eq 'all_buffer' ) {
 		$self->on_save_all;
 	}
-	
-	if ( not $document->can('get_command') ) {
+
+	unless ( $document->can('get_command') ) {
 		return $self->error(Wx::gettext("No execution mode was defined for this document"));
 	}
-	
+
 	my $cmd = eval { $document->get_command };
 	if ($@) {
 		chomp $@;
@@ -1211,7 +1163,7 @@ sub create_tab {
 
 	my $id  = $self->nb->GetSelection;
 	my $file_title = $file || $title;
-	$self->{menu}->add_alt_n_menu($file_title, $id);
+	$self->menu->add_alt_n_menu($file_title, $id);
 
 	$self->refresh_all;
 
@@ -1494,12 +1446,12 @@ sub close {
 	# Update the alt-n menus
 	# TODO: shouldn't this be in Padre::Wx::Menu::refresh()?
 	# TODO: why don't we call $self->refresh_all()?
-	$self->{menu}->remove_alt_n_menu;
-	foreach my $i ( 0 .. @{ $self->{menu}->{alt} } - 1 ) {
+	$self->menu->remove_alt_n_menu;
+	foreach my $i ( 0 .. @{ $self->menu->{alt} } - 1 ) {
 		my $doc = Padre::Documents->by_id($i) or return;
 		my $file = $doc->filename
 			|| $self->nb->GetPageText($i);
-		$self->{menu}->update_alt_n_menu($file, $i);
+		$self->menu->update_alt_n_menu($file, $i);
 	}
 
 	return 1;
@@ -1696,7 +1648,7 @@ sub on_toggle_syntax_check {
 
 	$self->syntax_checker->enable( $config->{editor_syntaxcheck} ? 1 : 0 );
 
-	$self->{menu}->{window_goto_syntax_check}->Enable( $config->{editor_syntaxcheck} ? 1 : 0 );
+	$self->menu->{window_goto_syntax_check}->Enable( $config->{editor_syntaxcheck} ? 1 : 0 );
 
 	return;
 }
@@ -1705,7 +1657,7 @@ sub on_toggle_indentation_guide {
 	my $self   = shift;
 
 	my $config = Padre->ide->config;
-	$config->{editor_indentationguides} = $self->{menu}->{view_indentation_guide}->IsChecked ? 1 : 0;
+	$config->{editor_indentationguides} = $self->menu->{view_indentation_guide}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
 		$editor->SetIndentationGuides( $config->{editor_indentationguides} );
@@ -1718,7 +1670,7 @@ sub on_toggle_eol {
 	my $self   = shift;
 
 	my $config = Padre->ide->config;
-	$config->{editor_eol} = $self->{menu}->{view_eol}->IsChecked ? 1 : 0;
+	$config->{editor_eol} = $self->menu->{view_eol}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
 		$editor->SetViewEOL( $config->{editor_eol} );
@@ -1737,7 +1689,7 @@ sub on_toggle_whitespaces {
 	
 	# check whether we need to show / hide spaces & tabs.
 	my $config = Padre->ide->config;
-	$config->{editor_whitespaces} = $self->{menu}->{view_whitespaces}->IsChecked
+	$config->{editor_whitespaces} = $self->menu->{view_whitespaces}->IsChecked
 		? Wx::wxSTC_WS_VISIBLEALWAYS
 		: Wx::wxSTC_WS_INVISIBLE;
 	
@@ -1751,8 +1703,8 @@ sub on_toggle_whitespaces {
 sub on_word_wrap {
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->{menu}->{view_word_wrap}->IsChecked ) {
-		$self->{menu}->{view_word_wrap}->Check($on);
+	unless ( $on == $self->menu->{view_word_wrap}->IsChecked ) {
+		$self->menu->{view_word_wrap}->Check($on);
 	}
 	
 	my $doc = $self->selected_document;
@@ -1768,8 +1720,8 @@ sub on_word_wrap {
 sub show_output {
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->{menu}->{view_output}->IsChecked ) {
-		$self->{menu}->{view_output}->Check($on);
+	unless ( $on == $self->menu->{view_output}->IsChecked ) {
+		$self->menu->{view_output}->Check($on);
 	}
 	if ( $on ) {
 		$self->{gui}->{output_panel}->Show;
@@ -1793,8 +1745,8 @@ sub show_functions {
 	             ? ($_[0] ? 1 : 0)
 	             : 1 );
 	
-	unless ( $on == $self->{menu}->{view_functions}->IsChecked ) {
-		$self->{menu}->{view_functions}->Check($on);
+	unless ( $on == $self->menu->{view_functions}->IsChecked ) {
+		$self->menu->{view_functions}->Check($on);
 	}
 	if ( $on ) {
 		$self->refresh_methods();
@@ -1815,7 +1767,7 @@ sub show_functions {
 sub show_syntaxbar {
 	my $self = shift;
 	my $on   = scalar(@_) ? $_[0] ? 1 : 0 : 1;
-	unless ( $self->{menu}->{view_show_syntaxcheck}->IsChecked ) {
+	unless ( $self->menu->{view_show_syntaxcheck}->IsChecked ) {
 		$self->{gui}->{syntaxcheck_panel}->Hide;
 		$self->check_pane_needed('bottompane');
 		$self->manager->Update;
@@ -1892,7 +1844,7 @@ sub on_toggle_status_bar {
 
 	# Update the configuration
 	my $config = Padre->ide->config;
-	$config->{main_statusbar} = $self->{menu}->{view_statusbar}->IsChecked ? 1 : 0;
+	$config->{main_statusbar} = $self->menu->{view_statusbar}->IsChecked ? 1 : 0;
 
 	# Update the status bar
 	my $status_bar = $self->GetStatusBar;
@@ -2094,20 +2046,20 @@ sub on_close_pane {
 	if ( Data::Dumper::Dumper(\$pane) eq 
 	     Data::Dumper::Dumper(\$self->{gui}->{output_panel}) )
 	{
-		$self->{menu}->{view_output}->Check(0);
+		$self->menu->{view_output}->Check(0);
 	}
 	elsif ( Data::Dumper::Dumper(\$pane) eq
 	        Data::Dumper::Dumper(\$self->{gui}->{subs_panel}) )
 	{
-		$self->{menu}->{view_functions}->Check(0);
+		$self->menu->{view_functions}->Check(0);
 	}
 }
 
 sub on_quick_find {
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->{menu}->{experimental_quick_find}->IsChecked ) {
-		$self->{menu}->{experimental_quick_find}->Check($on);
+	unless ( $on == $self->menu->{experimental_quick_find}->IsChecked ) {
+		$self->menu->{experimental_quick_find}->Check($on);
 	}
 	Padre->ide->config->{is_quick_find} = $on;
 
