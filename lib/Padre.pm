@@ -961,7 +961,7 @@ handles everythin the menu should know and do.
 the output window at the bottom of the editor displaying the output
 of running code using F5.
 
-=item L<Padre::Wx::Pod2HTML>
+=item L<Padre::Wx::HtmlWindow>
 
 =item L<Padre::Wx::PodFrame>
 

@@ -54,8 +54,8 @@ sub new {
 	$self->{panel} = Wx::Panel->new( $self, -1 );
 
 	# Create the HTML widget within the panel
-	require Padre::Wx::Pod2HTML;
-	$self->{html} = Padre::Wx::Pod2HTML->new( $self->{panel}, -1 );
+	require Padre::Wx::HtmlWindow;
+	$self->{html} = Padre::Wx::HtmlWindow->new( $self->{panel}, -1 );
 
 	return $self;
 }

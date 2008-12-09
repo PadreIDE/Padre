@@ -1,10 +1,10 @@
-package Padre::Wx::Pod2HTML;
+package Padre::Wx::HtmlWindow;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::Pod2HTML - A reusable HTML window for viewing POD
+Padre::Wx::HtmlWindow - An extended Wx::HtmlWindow that supports POD to HTML
 
 =head1 DESCRIPTION
 
