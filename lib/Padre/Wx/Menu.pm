@@ -56,13 +56,13 @@ sub new {
 
 	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
-	$self->wx->Append( $self->{file},      Wx::gettext("&File")      );
-	$self->wx->Append( $self->{edit},      Wx::gettext("&Edit")      );
-	$self->wx->Append( $self->{view},      Wx::gettext("&View")      );
-	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")       );
-	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins")   );
-	$self->wx->Append( $self->{window},    Wx::gettext("&Window")    );
-	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")      );
+	$self->wx->Append( $self->{file},      Wx::gettext("&File")    );
+	$self->wx->Append( $self->{edit},      Wx::gettext("&Edit")    );
+	$self->wx->Append( $self->{view},      Wx::gettext("&View")    );
+	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
+	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
+	$self->wx->Append( $self->{window},    Wx::gettext("&Window")  );
+	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")    );
 
 	if ( $experimental ) {
 		# Create the Experimental menu
