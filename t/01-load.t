@@ -17,8 +17,7 @@ use Class::Autouse ':devel';
 ok( $] >= 5.008, 'Perl version is new enough' );
 
 use_ok( 'Wx'                             );
-diag "Wx Version: $Wx::VERSION " . Wx::wxVERSION_STRING();
-
+diag "Tests find Wx: $Wx::VERSION " . Wx::wxVERSION_STRING();
 use_ok( 't::lib::Padre'                  );
 use_ok( 'Padre::Util'                    );
 use_ok( 'Padre::Config'                  );
@@ -26,6 +25,10 @@ use_ok( 'Padre::DB'                      );
 use_ok( 'Padre::Project'                 );
 use_ok( 'Padre::Wx'                      );
 use_ok( 'Padre::Wx::History::TextDialog' );
+use_ok( 'Padre::Wx::History::ComboBox'   );
 use_ok( 'Padre'                          );
 use_ok( 'Padre::Pod2HTML'                );
 use_ok( 'Padre::Pod::Viewer'             );
+use_ok( 'Padre::Plugin::Devel'           );
+use_ok( 'Padre::Plugin::My'              );
+use_ok( 'Padre::Plugin::JavaScript'      );

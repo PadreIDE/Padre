@@ -17,14 +17,11 @@ use Padre;
 my $app = Padre->new;
 isa_ok($app, 'Padre');
 
-diag "Wx Version: $Wx::VERSION " . Wx::wxVERSION_STRING();
-
 SCOPE: {
 	my $same = Padre->inst;
 	isa_ok($same, 'Padre');
 	is $same, $app, 'Same';
 }
-
 
 SCOPE: {
 	my $config = $app->config;
@@ -74,6 +71,3 @@ SCOPE: {
 	},
 	'defaults';
 }
-
-__END__
-
