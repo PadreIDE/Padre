@@ -64,6 +64,8 @@ sub new {
 	return $self;
 }
 
+# TODO - This violates encapsulation, a menu entry should be
+#        spawning windows and storing them in the window hash.
 sub help {
 	my $self = shift;
 	my $main = shift;
