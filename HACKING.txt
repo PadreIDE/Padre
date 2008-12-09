@@ -21,9 +21,9 @@ Translation files
 -----------------
 
 Currently we are using Wx::gettext so we have a po file for each additional
-language (currently only German) in the share/locale/ directory.
+language in the share/locale/ directory.
 
-Before release the /tools/release.pl script generates an mo file using
+Before release the /tools/release.pl script generates .mo files using
 
   msgfmt -o share/locale/de.mo share/locale/de.po
 
