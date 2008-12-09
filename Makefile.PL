@@ -1,3 +1,4 @@
+use strict;
 use inc::Module::Install;
 
 use Config;
