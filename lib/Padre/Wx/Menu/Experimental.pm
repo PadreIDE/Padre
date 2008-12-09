@@ -13,7 +13,6 @@ our $VERSION = '0.20';
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $config = Padre->ide->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
