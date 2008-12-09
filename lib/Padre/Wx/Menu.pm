@@ -775,7 +775,7 @@ sub menu_plugin {
 		sub { Padre::Wx::Dialog::PluginManager->show(@_) },
 	);
 	$menu->Append( -1, Wx::gettext('Plugin Tools'), $tools );
-	$menu->AppendSeparator;
+	my $need_seperator = 1;
 
 	foreach my $name ( 'My', @plugins ) {
 		next unless $plugins->{$name};
@@ -785,12 +785,17 @@ sub menu_plugin {
 		my @plugin = $manager->get_menu($self->win, $name);
 		next unless @plugin;
 
+		if ( $need_seperator ) {
+			$menu->AppendSeparator;
+			$need_seperator = 0;
+		}
+
 		$menu->Append( -1, @plugin );
 		if ( $name eq 'My' ) {
-			$menu->AppendSeparator;
+			$need_seperator = 1;
 		}
 	}
-	
+
 	return $menu;
 }
 
