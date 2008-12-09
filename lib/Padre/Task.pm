@@ -1,4 +1,5 @@
 package Padre::Task;
+
 use strict;
 use warnings;
 
@@ -259,11 +260,11 @@ sub finish {
 		my $userclass = $padretask->{_process_class};
 		delete $padretask->{_process_class};
 
-		no strict 'refs';
+		no strict 'refs'; ## no critic
 		my $ref = \%{"${userclass}::"};
 		use strict 'refs';
 		my $loaded = exists $ref->{"ISA"};
-		if (!$loaded and !eval "require $userclass;") {
+		unless ( $loaded or eval("require $userclass;") ) { ## no critic
 			require Carp;
 			if ($@) {
 				Carp::croak("Failed to load Padre::Task subclass '$userclass': $@");
@@ -273,7 +274,7 @@ sub finish {
 		}
 
 		# restore the main-thread-only data in the task
-		if (threads->tid() == 0 and exists $padretask->{_main_thread_data_id}) {
+		if ( threads->tid() == 0 and exists $padretask->{_main_thread_data_id} ) {
 			my $id = $padretask->{_main_thread_data_id};
 			$padretask->{main_thread_only} = $MainThreadData{$id};
 			delete $padretask->{_main_thread_data_id};

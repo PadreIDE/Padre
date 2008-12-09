@@ -1,38 +1,5 @@
 package Padre::TaskManager;
 
-# This is somewhat disturbing but necessary to prevent
-# Test::Compile from breaking. The compile tests run
-# perl -v lib/Padre/Wx/MainWindow.pm which first compiles
-# the module as a script (i.e. no %INC entry created)
-# and then again when Padre::Wx::MainWindow is required
-# from another module down the dependency chain.
-# This used to break with subroutine redefinitions.
-# So to prevent this, we force the creating of the correct
-# %INC entry when the file is first compiled. -- Steffen
-BEGIN {$INC{"Padre/TaskManager.pm"} ||= __FILE__}
-
-use strict;
-use warnings;
-
-our $VERSION = '0.20';
-
-use threads;
-use threads::shared; # according to Wx docs, this MUST be loaded before Wx, so this also happens in the script
-use Thread::Queue;
-
-require Padre;
-use Padre::Task;
-use Padre::Wx;
-use Wx::Event qw(EVT_COMMAND EVT_CLOSE);
-
-# This event is triggered by the worker thread main loop after
-# finishing a task.
-our $TASK_DONE_EVENT : shared = Wx::NewEventType;
-# Timer to reap dead workers every N milliseconds
-our $REAP_TIMER;
-# You can instantiate this class only once.
-our $SINGLETON;
-
 =pod
 
 =head1 NAME
@@ -59,8 +26,6 @@ When the load goes down, the number of extra threads is (slowly!)
 reduced down to the default.
 
 =head1 CLASS METHODS
-
-=cut
 
 =head2 new
 
@@ -97,6 +62,49 @@ worker threads. Default: 15000ms
 
 =cut
 
+use 5.008;
+use strict;
+use warnings;
+
+# This is somewhat disturbing but necessary to prevent
+# Test::Compile from breaking. The compile tests run
+# perl -v lib/Padre/Wx/MainWindow.pm which first compiles
+# the module as a script (i.e. no %INC entry created)
+# and then again when Padre::Wx::MainWindow is required
+# from another module down the dependency chain.
+# This used to break with subroutine redefinitions.
+# So to prevent this, we force the creating of the correct
+# %INC entry when the file is first compiled. -- Steffen
+BEGIN {
+	$INC{"Padre/TaskManager.pm"} ||= __FILE__;
+}
+
+our $VERSION = '0.20';
+
+use threads;
+# According to Wx docs, this MUST be loaded before Wx, so this also happens in the script
+use threads::shared;
+use Thread::Queue;
+
+require Padre;
+use Padre::Task;
+use Padre::Wx ();
+
+use Class::XSAccessor
+	getters => {
+		task_queue    => 'task_queue',
+		reap_interval => 'reap_interval',
+		use_threads   => 'use_threads',
+	};
+
+# This event is triggered by the worker thread main loop after
+# finishing a task.
+our $TASK_DONE_EVENT : shared = Wx::NewEventType;
+# Timer to reap dead workers every N milliseconds
+our $REAP_TIMER;
+# You can instantiate this class only once.
+our $SINGLETON;
+
 sub new {
 	my $class = shift;
         
@@ -108,39 +116,37 @@ sub new {
 		use_threads    => 1, # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
-		workers => [],
-		task_queue => undef,
-	} => $class;
+		workers        => [],
+		task_queue     => undef,
+	}, $class;
 
-	$self->{use_threads} = 0
-	  if Wx->VERSION < 0.89;
+	$self->{use_threads} = 0 if Wx->VERSION < 0.89;
 
-	my $mw = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main_window;
 
-	EVT_COMMAND($mw, -1, $TASK_DONE_EVENT, \&on_task_done_event);
-	EVT_CLOSE($mw, \&on_close);
+	Wx::Event::EVT_COMMAND($main, -1, $TASK_DONE_EVENT, \&on_task_done_event);
+	Wx::Event::EVT_CLOSE($main, \&on_close);
  
-	$self->{task_queue} = Thread::Queue->new();
+	$self->{task_queue} = Thread::Queue->new;
 
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
 	if (not defined $REAP_TIMER and $self->use_threads) {
 		# explicit id necessary to distinguish from startup-timer of the main window
 		my $timerid = Wx::NewId();
-		$REAP_TIMER = Wx::Timer->new( $mw, $timerid );
+		$REAP_TIMER = Wx::Timer->new( $main, $timerid );
 		Wx::Event::EVT_TIMER(
-			#$mw, $timerid, sub { $SINGLETON->reap(); },
-			$mw, $timerid, sub { $SINGLETON->reap(); },
+			$main, $timerid, sub { $SINGLETON->reap(); },
 		);
-		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS  ); # in ms
+		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS  );
 	}
 
 	return $self;
 }
 
-=head1 INSTANCE METHODS
+=pod
 
-=cut
+=head1 INSTANCE METHODS
 
 =head2 schedule
 
@@ -152,32 +158,32 @@ proxy to this method for convenience.
 =cut
 
 sub schedule {
-	my $self = shift;
+	my $self    = shift;
 	my $process = shift;
-	if (not ref($process) or not $process->isa("Padre::Task")) {
+	if ( not ref($process) or not $process->isa("Padre::Task") ) {
 		die "Invalid task scheduled!"; # TODO: grace
 	}
 
 	# cleanup old threads and refill the pool
 	$self->reap();
-
 	$process->prepare();
 
 	my $string;
 	$process->serialize(\$string);
-	if ($self->use_threads) {
+	if ( $self->use_threads ) {
 		require Time::HiRes;
 		# This is to make sure we don't indefinitely fill the
 		# queue if the CPU can't keep up. If it REALLY can't
 		# keep up, we *want* to block eventually.
 		# For now, the limit has been set to 5*NWORKERTHREADS
 		# which should be a lot.
-		while ($self->task_queue->pending > 5*$self->{max_no_workers}) {
-			Time::HiRes::usleep(10000); # sleep 10msec
+		while ( $self->task_queue->pending > 5 * $self->{max_no_workers} ) {
+			# Sleep 10msec
+			Time::HiRes::usleep(10000);
 		}
 		$self->task_queue->enqueue( $string );
-	}
-	else {
+
+	} else {
 		# TODO: Instead of this hack, consider
 		# "reimplementing" the worker loop 
 		# as a non-threading, non-queued, fake worker loop
@@ -189,6 +195,8 @@ sub schedule {
 	return 1;
 }
 
+=pod
+
 =head2 setup_workers
 
 Create more workers if necessary. Called by C<reap> which
@@ -199,24 +207,23 @@ typically need to call this.
 
 sub setup_workers {
 	my $self = shift;
-	return if not $self->use_threads;
+	return unless $self->use_threads;
 
 	@_=(); # avoid "Scalars leaked"
-	my $mw = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main_window;
 
-
-	# ensure minimum no. workers
+	# Ensure minimum no. workers
 	my $workers = $self->{workers};
 	while (@$workers < $self->{min_no_workers}) {
-		$self->_make_worker_thread($mw);
+		$self->_make_worker_thread($main);
 	}
 
-	# add workers to satisfy demand
+	# Add workers to satisfy demand
 	my $jobs_pending = $self->task_queue->pending();
 	if (@$workers < $self->{max_no_workers} and $jobs_pending > 2*@$workers) {
 		my $target = int($jobs_pending/2);
 		$target = $self->{max_no_workers} if $target > $self->{max_no_workers};
-		$self->_make_worker_thread($mw) for 1..($target-@$workers);
+		$self->_make_worker_thread($main) for 1..($target-@$workers);
 	}
 
 	return 1;
@@ -225,15 +232,17 @@ sub setup_workers {
 # short method to create a new thread
 sub _make_worker_thread {
 	my $self = shift;
-	my $mw = shift;
+	my $main = shift;
 	return if not $self->use_threads;
 
 	@_=(); # avoid "Scalars leaked"
 	my $worker = threads->create(
-	  {'exit' => 'thread_only'}, \&worker_loop, $mw, $self
+	  {'exit' => 'thread_only'}, \&worker_loop, $main, $self
 	);
 	push @{$self->{workers}}, $worker;
 }
+
+=pod
 
 =head2 reap
 
@@ -297,6 +306,8 @@ sub reap {
 	return 1;
 }
 
+=pod
+
 =head2 cleanup
 
 Stops all worker threads. Called on editor shutdown.
@@ -323,6 +334,8 @@ sub cleanup {
 	return 1;
 }
 
+=pod
+
 =head1 ACCESSORS
 
 =head2 task_queue
@@ -343,15 +356,6 @@ regulary cleanup runs.
 Returns whether running in degraded mode (no threads, false)
 or normal operation (threads, true).
 
-=cut
-
-use Class::XSAccessor
-	getters => {
-		task_queue    => 'task_queue',
-		reap_interval => 'reap_interval',
-		use_threads   => 'use_threads',
-	};
-
 =head2 workers
 
 Returns B<a list> of the worker threads.
@@ -363,9 +367,9 @@ sub workers {
 	return @{$self->{workers}};
 }
 
-=head1 EVENT HANDLERS
+=pod
 
-=cut
+=head1 EVENT HANDLERS
 
 =head2 on_close
 
@@ -375,7 +379,7 @@ Executes the cleanup method.
 =cut
 
 sub on_close {
-	my ($mw, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ($main, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
 
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
@@ -385,6 +389,8 @@ sub on_close {
 	# TODO: understand cargo cult
 	$event->Skip(1);
 }
+
+=pod
 
 =head2 on_task_done_event
 
@@ -397,18 +403,18 @@ because C<finish> most likely updates the GUI.)
 =cut
 
 sub on_task_done_event {
-	my ($mw, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ($main, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
 	my $frozen = $event->GetData;
 	my $process = Padre::Task->deserialize( \$frozen );
 
-	$process->finish($mw);
+	$process->finish($main);
 	return();
 }
 
 ##########################
 # Worker thread main loop
 sub worker_loop {
-	my ($mw, $taskmanager) = @_;  @_ = (); # hack to avoid "Scalars leaked"
+	my ($main, $taskmanager) = @_;  @_ = (); # hack to avoid "Scalars leaked"
 	my $queue = $taskmanager->task_queue;
 	require Storable;
 
@@ -430,16 +436,15 @@ sub worker_loop {
                 undef $task;
                 $process->serialize( \$task );
 		my $thread_event = Wx::PlThreadEvent->new( -1, $TASK_DONE_EVENT, $task );
-		Wx::PostEvent($mw, $thread_event);
+		Wx::PostEvent($main, $thread_event);
 
 		#warn threads->tid() . " -- done with task.";
 	}
 }
 
-
 1;
 
-__END__
+=pod
 
 =head1 TODO
 
@@ -467,8 +472,3 @@ This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl 5 itself.
 
 =cut
-
-# Copyright 2008 Gabor Szabo.
-# LICENSE
-# This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.

@@ -147,7 +147,7 @@ sub run {
 	# Handle architectural command line options
 	foreach my $M ( grep { /^-M/ } @ARGV ) {
 		my $module = substr($M, 2);
-		eval "use $module";
+		eval "use $module"; ## no critic
 		die $@ if $@;
 	}
 	@ARGV = grep { ! /^-M/ } @ARGV;

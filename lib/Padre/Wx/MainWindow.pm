@@ -1,5 +1,9 @@
 package Padre::Wx::MainWindow;
 
+use 5.008;
+use strict;
+use warnings;
+
 # This is somewhat disturbing but necessary to prevent
 # Test::Compile from breaking. The compile tests run
 # perl -v lib/Padre/Wx/MainWindow.pm which first compiles
@@ -15,9 +19,6 @@ BEGIN {
 	$INC{"Padre/Wx/MainWindow.pm"} ||= __FILE__;
 }
 
-use 5.008;
-use strict;
-use warnings;
 use FindBin;
 use Cwd                ();
 use Carp               ();
@@ -590,34 +591,31 @@ sub refresh_status {
 # necessary 
 # can that be eliminated ?
 sub refresh_methods {
-	my ($self) = @_;
+	my $self = shift;
 	return if $self->no_refresh;
-	return unless ( $self->menu->{view_functions}->IsChecked );
+	return unless $self->menu->{view_functions}->IsChecked;
 
 	my $subs_panel = $self->{gui}->{subs_panel};
 
 	my $doc = $self->selected_document;
-	if (not $doc) {
+	unless ( $doc ) {
 		$subs_panel->DeleteAllItems;
 		return;
 	}
 
 	my @methods = $doc->get_functions;
-	
-	my $config = Padre->ide->config;
+	my $config  = Padre->ide->config;
 	if ($config->{editor_methods} eq 'original') {
 		# that should be the one we got from get_functions
-	}
-	elsif ($config->{editor_methods} eq 'alphabetical_private_last') {
+	} elsif ($config->{editor_methods} eq 'alphabetical_private_last') {
 		# ~ comes after \w
-		@methods =
-			map {tr/~/_/; $_}
+		@methods = map { tr/_/~/; $_ } ## no critic
 			sort
-			map {tr/_/~/; $_}
+			map { tr/~/_/; $_ } ## no critic
 			@methods;
-	}
-	else {
-		@methods = sort @methods; # alphabetical (aka 'abc')
+	} else {
+		# Alphabetical (aka 'abc')
+		@methods = sort @methods;
 	}
 
 	my $new = join ';', @methods;
@@ -1933,10 +1931,14 @@ sub run_in_padre {
 	my $self = shift;
 	my $doc  = $self->selected_document or return;
 	my $code = $doc->text_get;
-	eval $code;
+	eval $code; ## no critic
 	if ( $@ ) {
-		Wx::MessageBox(sprintf(Wx::gettext("Error: %s"), $@), Wx::gettext("Self error"), Wx::wxOK, $self);
-		return;
+		Wx::MessageBox(
+			sprintf(Wx::gettext("Error: %s"), $@),
+			Wx::gettext("Self error"),
+			Wx::wxOK,
+			$self,
+		);
 	}
 	return;
 }
@@ -1951,7 +1953,6 @@ sub on_function_selected {
 	$self->selected_editor->SetFocus;
 	return;
 }
-
 
 ## STC related functions
 
