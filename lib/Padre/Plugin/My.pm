@@ -5,9 +5,20 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
+use base 'Padre::Plugin';
+
 our $VERSION = '0.20';
 
-use base 'Padre::Plugin';
+
+
+
+
+#####################################################################
+# Padre::Plugin Methods
+
+use padre_interfaces {
+	'Padre::Plugin' => '0.19',
+}
 
 sub plugin_name {
 	return 'My Plugin';
@@ -23,6 +34,13 @@ sub menu_plugins_simple {
 		# ],
 	];
 }
+
+
+
+
+
+#####################################################################
+# Custom Methods
 
 sub about {
 	my $self = shift;
