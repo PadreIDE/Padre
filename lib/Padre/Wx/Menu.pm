@@ -23,15 +23,16 @@ our $VERSION = '0.20';
 
 use Class::XSAccessor
 	getters => {
-		win     => 'win',
-		wx      => 'wx',
+		win          => 'win',
+		wx           => 'wx',
 
 		# Don't add accessors to here until they have been
 		# upgraded to be FULLY encapsulated classes.
-		perl    => 'perl',
-		run     => 'run',
-		plugins => 'plugins',
-		help    => 'help',
+		perl         => 'perl',
+		run          => 'run',
+		plugins      => 'plugins',
+		help         => 'help',
+		experimental => 'experimental',
 	};
 
 sub new {
@@ -41,7 +42,7 @@ sub new {
 	my $config       = $ide->config;
 	my $experimental = $config->{experimental};
 
-	# Populate the menu
+	# Generate the individual menus
 	my $self         = bless {}, $class;
 	$self->{win}     = $win;
 	$self->{file}    = $self->menu_file( $win );
@@ -53,14 +54,24 @@ sub new {
 	$self->{window}  = $self->menu_window( $win );
 	$self->{help}    = Padre::Wx::Menu::Help->new($win);
 
-	# Create the Experimental menu
-	# All the crap that doesn't work, have a home,
-	# or should never be seen be real users goes here.
-	if ( $experimental ) {
-		$self->{experimental} = $self->menu_experimental( $win );
-	}
+	# Generate the final menubar
+	$self->{wx} = Wx::MenuBar->new;
+	$self->wx->Append( $self->{file},      Wx::gettext("&File")      );
+	$self->wx->Append( $self->{edit},      Wx::gettext("&Edit")      );
+	$self->wx->Append( $self->{view},      Wx::gettext("&View")      );
+	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")       );
+	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins")   );
+	$self->wx->Append( $self->{window},    Wx::gettext("&Window")    );
+	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")      );
 
-	$self->create_main_menu_bar;
+	if ( $experimental ) {
+		# Create the Experimental menu
+		# All the crap that doesn't work, have a home,
+		# or should never be seen be real users goes here.
+		require Padre::Wx::Menu::Experimental;
+		$self->{experimental} = Padre::Wx::Menu::Experimental->new($win);
+		$self->wx->Append( $self->experimental->wx, Wx::gettext("E&xperimental") );
+	}
 
 	# Setup menu state from configuration
 	$self->{view_lines}->Check( $config->{editor_linenumbers} ? 1 : 0 );
@@ -78,28 +89,6 @@ sub new {
 	$self->{view_show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
 
 	return $self;
-}
-
-sub create_main_menu_bar {
-	my $self = shift;
-
-	# Create and return the main menu bar
-	my $wx = $self->{wx} = Wx::MenuBar->new;
-	$wx->Append( $self->{file},      Wx::gettext("&File")      );
-	$wx->Append( $self->{project},   Wx::gettext("&Project")   );
-	$wx->Append( $self->{edit},      Wx::gettext("&Edit")      );
-	$wx->Append( $self->{view},      Wx::gettext("&View")      );
-	$wx->Append( $self->run->wx,     Wx::gettext("&Run")       );
-	$wx->Append( $self->{bookmark},  Wx::gettext("&Bookmarks") );
-	$wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins")   );
-	$wx->Append( $self->{tools},     Wx::gettext("&Tools")     );
-	$wx->Append( $self->{window},    Wx::gettext("&Window")    );
-	$wx->Append( $self->help->wx,    Wx::gettext("&Help")      );
-	if ( Padre->ide->config->{experimental} ) {
-		$wx->Append( $self->{experimental}, Wx::gettext("E&xperimental") );
-	}
-
-	return;
 }
 
 sub add_alt_n_menu {
@@ -169,10 +158,10 @@ sub refresh {
 	my $self     = shift;
 	my $document = Padre::Documents->current;
 
-	if ( _INSTANCE($document, 'Padre::Document::Perl') and $self->{wx}->GetMenuLabel(3) ne '&Perl') {
-		$self->{wx}->Insert( 3, $self->perl->wx, '&Perl' );
-	} elsif ( not _INSTANCE($document, 'Padre::Document::Perl') and $self->{wx}->GetMenuLabel(3) eq '&Perl') {
-		$self->{wx}->Remove( 3 );
+	if ( _INSTANCE($document, 'Padre::Document::Perl') and $self->wx->GetMenuLabel(3) ne '&Perl') {
+		$self->wx->Insert( 3, $self->perl->wx, '&Perl' );
+	} elsif ( not _INSTANCE($document, 'Padre::Document::Perl') and $self->wx->GetMenuLabel(3) eq '&Perl') {
+		$self->wx->Remove( 3 );
 	}
 
 	if ( $document ) {
@@ -323,8 +312,8 @@ sub menu_file {
 			Padre::DB->delete_recent( 'files' );
 			# replace the whole File menu
 			my $menu = $_[0]->{menu}->menu_file($_[0]);
-			my $menu_place = $_[0]->{menu}->{wx}->FindMenu( Wx::gettext("&File") );
-			$_[0]->{menu}->{wx}->Replace( $menu_place, $menu, Wx::gettext("&File") );
+			my $menu_place = $_[0]->{menu}->wx->FindMenu( Wx::gettext("&File") );
+			$_[0]->{menu}->wx->Replace( $menu_place, $menu, Wx::gettext("&File") );
 		},
 	);
 	$self->{file_recentfiles}->AppendSeparator;
@@ -750,77 +739,6 @@ sub menu_window {
 	$menu->AppendSeparator;
 	
 	return $menu;
-}
-
-sub menu_experimental {
-	my ( $self, $win ) = @_;
-	
-	my $config = Padre->ide->config;
-	
-	my $menu_exp = Wx::Menu->new;
-	Wx::Event::EVT_MENU( $win,
-		$menu_exp->Append( -1, Wx::gettext('Reflow Menu/Toolbar') ),
-		sub {
-			$DB::single = 1;
-			my $document = Padre::Documents->current;
-			$_[0]->{menu}->refresh( $document );
-			$_[0]->SetMenuBar( $_[0]->{menu}->{wx} );
-			$_[0]->GetToolBar->refresh( $document );
-			return;
-		},
-	);
-	
-	$self->{experimental_recent_projects} = Wx::Menu->new;
-	$menu_exp->Append( -1, Wx::gettext("Recent Projects"), $self->{file_recent_projects} );
-	
-	Wx::Event::EVT_MENU(
-		$win,
-		$menu_exp->Append( -1, Wx::gettext('Run in &Padre') ),
-		sub {
-			my $self = shift;
-			my $code = Padre::Documents->current->text_get;
-			eval $code; ## no critic
-			if ($@) {
-				Wx::MessageBox(Wx::gettext("Error: ") . "$@", Wx::gettext("Self error"), Wx::wxOK, $self);
-				return;
-			}
-			return;
-		},
-	);
-
-	
-	$self->{experimental_ppi_highlight} = $menu_exp->AppendCheckItem( -1, Wx::gettext("Use PPI for Perl5 syntax highlighting") );
-	Wx::Event::EVT_MENU( $win,
-		$self->{experimental_ppi_highlight},
-		\&Padre::Wx::MainWindow::on_ppi_highlight,
-	);
-	$self->{experimental_ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
-	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
-		$config->{ppi_highlight} ? Wx::wxSTC_LEX_CONTAINER : Wx::wxSTC_LEX_PERL;
-
-	# Quick Find: Press F3 to start search with selected text
-	$self->{experimental_quick_find} = $menu_exp->AppendCheckItem( -1, Wx::gettext("Quick Find") );
-	Wx::Event::EVT_MENU( $win,
-		$self->{experimental_quick_find},
-		sub {
-			$_[0]->on_quick_find(
-				$_[0]->{menu}->{experimental_quick_find}->IsChecked
-			),
-		},
-	);
-	$self->{experimental_quick_find}->Check( $config->{is_quick_find} ? 1 : 0 );
-
-	# Incremental find (#60)
-	Wx::Event::EVT_MENU( $win,
-		$menu_exp->Append( -1, Wx::gettext("Find Next\tF4") ),
-		sub { $_[0]->find->search('next') },
-	);
-	Wx::Event::EVT_MENU( $win,
-		$menu_exp->Append( -1, Wx::gettext("Find Previous\tShift-F4") ),
-		sub { $_[0]->find->search('previous') }
-	);
-
-	return $menu_exp;
 }
 
 1;

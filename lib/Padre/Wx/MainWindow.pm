@@ -206,7 +206,7 @@ sub create_main_components {
 	# Create the menu bar
 	delete $self->{menu} if defined $self->{menu};
 	$self->{menu} = Padre::Wx::Menu->new( $self );
-	$self->SetMenuBar( $self->menu->{wx} );
+	$self->SetMenuBar( $self->menu->wx );
 
 	# Create the tool bar
 	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
@@ -1810,29 +1810,6 @@ sub check_pane_needed {
 	return;
 }
 
-sub on_ppi_highlight {
-	my ($self, $event) = @_;
-
-	my $config = Padre->ide->config;
-	$config->{ppi_highlight} = $event->IsChecked ? 1 : 0;
-	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
-		$config->{ppi_highlight} ? Wx::wxSTC_LEX_CONTAINER : Wx::wxSTC_LEX_PERL;
-		
-	foreach my $editor ( $self->pages ) {
-		#my $editor = $self->selected_editor;
-		next if not $editor->{Document}->isa('Padre::Document::Perl');
-		if ($config->{ppi_highlight}) {
-			$editor->{Document}->colorize;
-		} else {
-			$editor->{Document}->remove_color;
-			$editor->Colourise(0, $editor->GetLength);
-		}
-	}
-
-	return;
-}
-
-
 sub on_toggle_status_bar {
 	my ($self, $event) = @_;
 	if ( Padre::Util::WIN32 ) {
@@ -2059,11 +2036,10 @@ sub on_close_pane {
 sub on_quick_find {
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->{experimental_quick_find}->IsChecked ) {
-		$self->menu->{experimental_quick_find}->Check($on);
+	unless ( $on == $self->menu->experimental->{quick_find}->IsChecked ) {
+		$self->menu->experimental->{quick_find}->Check($on);
 	}
 	Padre->ide->config->{is_quick_find} = $on;
-
 	return;
 }
 
