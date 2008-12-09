@@ -361,7 +361,7 @@ sub create_bottom_pane {
 		$self->{gui}->{bottompane},
 		Wx::AuiPaneInfo->new->Name('bottompane')
 			->CenterPane->Resizable(1)->PaneBorder(0)->Movable(1)
-			->CaptionVisible(1)->CloseButton(0)->DestroyOnClose(0)
+			->CaptionVisible(1)->CloseButton(1)->DestroyOnClose(0)
 			->MaximizeButton(1)->Floatable(1)->Dockable(1)
 			->Caption( Wx::gettext("Output View") )->Position(2)->Bottom->Layer(4)
 	);
