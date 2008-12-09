@@ -19,7 +19,7 @@ our $VERSION = '0.20';
 
 sub new {
 	my $class = shift;
-	my $main  = $_[0];
+	my $main  = shift;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
