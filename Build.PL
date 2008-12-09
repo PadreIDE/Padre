@@ -5,7 +5,7 @@ use lib 'inc';
 use Padre::Install;
 use Config;
 
-if ( not $Config{usethreads} ) {
+unless ( $Config{usethreads} ) {
 	warn "Padre requires a perl built using threads\n";
 	exit 0;
 }
@@ -67,8 +67,6 @@ my %prereqs = (
 	'Wx::Perl::ProcessStream' => '0.11',
 );
 
-
-
 my $builder = Padre::Install->new(
 	module_name           => 'Padre',
 	license               => 'perl',
@@ -99,29 +97,28 @@ my $builder = Padre::Install->new(
 	},
 );
 
-#use File::Spec::Functions qw(catdir);
-#$builder->install_path->{share} = catdir($builder->install_path->{lib}, 'auto', 'share', 'dist', $builder->dist_name);
 $builder->config('usethreads');
-
 $builder->create_build_script();
 
-
-
 sub check_wx_version {
+	eval { require Wx };
 
-	eval {require Wx};
-	return if $@;  # missing Wx should be dealt by the standard prereq system
+	# Missing Wx should be dealt by the standard prereq system
+	return if $@;
 
 	my $version = Wx::wxVERSION_STRING();
 	nono("Could not find Wx::wxVERSION_STRING") if not defined $version;
 
 	print "Found $version\n";
+	print "Found Wx.pm     $Wx::VERSION\n";
 	$version =~ s/wxWidgets\s+//;
-	nono("Sorry we don't known this wxWidgets version format: '$version'")
-		if $version !~ /^\d+\.\d+(\.\d+)?$/;
+	if ( $version !~ /^\d+\.\d+(\.\d+)?$/ ) {
+		nono("Sorry we don't known this wxWidgets version format: '$version'");
+	}
 	my ($major, $minor, $way_too_minor) = split /\./, $version;
-	nono("Padre needs at least version 2.8.8 of wxWidgets. this is version $version")
-		if $major < 2 or $minor < 8;
+	if ( $major < 2 or $minor < 8 ) {
+		nono("Padre needs at least version 2.8.8 of wxWidgets. this is version $version");
+	}
 
 	return;
 }
