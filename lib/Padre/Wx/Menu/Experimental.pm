@@ -81,9 +81,8 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{quick_find},
 		sub {
-			$_[0]->on_quick_find(
-				$self->{quick_find}->IsChecked
-			),
+			Padre->ide->config->{is_quick_find} = $_[1]->IsChecked ? 1 : 0;
+			return;
 		},
 	);
 
