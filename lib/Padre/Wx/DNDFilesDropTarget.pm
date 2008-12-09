@@ -1,32 +1,24 @@
-package Padre::Wx::DNDFilesDropTarget;
+package Padre::Wx::FileDropTarget;
 
+use 5.008;
 use strict;
 use warnings;
+use Wx::DND;
 
 our $VERSION = '0.20';
-
-use Wx::DND;
-use base qw(Wx::FileDropTarget);
+our @ISA     = 'Wx::FileDropTarget';
 
 sub new {
-	my ($class, $app) = @_;
-	
-	my $self = $class->SUPER::new( );
-	$self->{APP} = $app;
-	
+	my $class     = shift;
+	my $self      = $class->SUPER::new;
+	$self->{main} = shift;
 	return $self;
 }
 
 sub OnDropFiles {
-	my( $self, $x, $y, $files ) = @_;
-	
-	my $app = $self->{APP};
-
-	#Wx::LogMessage( "Dropped files at ($x, $y)" );
-	foreach my $i ( @$files ) {
-		$app->setup_editor($i);
+	foreach my $i ( @{$_[3]} ) {
+		$_[0]->{main}->setup_editor($i);
 	}
-
 	return 1;
 }
 

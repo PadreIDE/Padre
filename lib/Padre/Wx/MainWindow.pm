@@ -20,28 +20,27 @@ BEGIN {
 }
 
 use FindBin;
-use Cwd                ();
-use Carp               ();
-use Data::Dumper       ();
-use File::Spec         ();
-use File::Basename     ();
-use File::Slurp        ();
-use List::Util         ();
-use Scalar::Util       ();
-use Params::Util       ();
-use Padre::Util        ();
-use Padre::Locale      ();
-use Padre::Wx          ();
-use Padre::Wx::Editor  ();
-use Padre::Wx::ToolBar ();
-use Padre::Wx::Output  ();
-use Padre::Document    ();
-use Padre::Documents   ();
-use Padre::Wx::DNDFilesDropTarget ();
-
-use base qw{Wx::Frame};
+use Cwd                       ();
+use Carp                      ();
+use Data::Dumper              ();
+use File::Spec                ();
+use File::Basename            ();
+use File::Slurp               ();
+use List::Util                ();
+use Scalar::Util              ();
+use Params::Util              ();
+use Padre::Util               ();
+use Padre::Locale             ();
+use Padre::Wx                 ();
+use Padre::Wx::Editor         ();
+use Padre::Wx::ToolBar        ();
+use Padre::Wx::Output         ();
+use Padre::Document           ();
+use Padre::Documents          ();
+use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.20';
+our @ISA     = 'Wx::Frame';
 
 my $default_dir = Cwd::cwd();
 
@@ -106,7 +105,7 @@ sub new {
 	$self->{locale} = Padre::Locale::object();
 
 	$self->SetDropTarget(
-		Padre::Wx::DNDFilesDropTarget->new($self)
+		Padre::Wx::FileDropTarget->new($self)
 	);
 
 	$self->{manager} = Wx::AuiManager->new;

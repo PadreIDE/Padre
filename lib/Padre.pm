@@ -934,7 +934,7 @@ This is the newer Firefox like search box. Not yet integrated.
 
 =back
 
-=item L<Padre::Wx::DNDFilesDropTarget>
+=item L<Padre::Wx::FileDropTarget>
 
 The code for drag and drop
 

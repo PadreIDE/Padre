@@ -3,15 +3,14 @@ package Padre::Wx::Editor;
 use 5.008;
 use strict;
 use warnings;
-use YAML::Tiny       ();
-use Padre::Util      ();
-use Padre::Wx        ();
-use Padre::Documents ();
-use Wx::DND;
-
-use base 'Wx::StyledTextCtrl';
+use YAML::Tiny                ();
+use Padre::Util               ();
+use Padre::Wx                 ();
+use Padre::Documents          ();
+use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.20';
+our @ISA     = 'Wx::StyledTextCtrl';
 
 our %mode = (
 	WIN  => Wx::wxSTC_EOL_CRLF,
@@ -40,7 +39,11 @@ sub new {
 	if ( Padre->ide->config->{editor_use_wordwrap} ) {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	}
-	$self->SetDropTarget(Padre::Wx::DNDFilesDropTarget->new(Padre->ide->wx->main_window));	
+	$self->SetDropTarget(
+		Padre::Wx::FileDropTarget->new(
+			Padre->ide->wx->main_window
+		)
+	);
 	return $self;
 }
 
