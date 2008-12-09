@@ -3,11 +3,12 @@ package Padre::Wx::Menu;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util           qw{_INSTANCE};
-use Padre::Util            ();
-use Padre::Wx              ();
-use Padre::Wx::Menu::Help  ();
-use Padre::Documents       ();
+use Params::Util          qw{_INSTANCE};
+use Padre::Util           ();
+use Padre::Wx             ();
+use Padre::Wx::Menu::Run  ();
+use Padre::Wx::Menu::Help ();
+use Padre::Documents      ();
 
 our $VERSION = '0.20';
 
@@ -21,10 +22,12 @@ our $VERSION = '0.20';
 use Class::XSAccessor
 	getters => {
 		win  => 'win',
+		wx   => 'wx',
 
 		# Don't add accessors to here until they have been
-		# upgraded to be fully encapsulated classes.
+		# upgraded to be FULLY encapsulated classes.
 		help => 'help',
+		run  => 'run',
 	};
 
 sub new {
@@ -34,19 +37,15 @@ sub new {
 	my $config       = $ide->config;
 	my $experimental = $config->{experimental};
 
-	# Create the menu object
-	my $self     = bless {}, $class;
-	$self->{win} = $win;
-
-	$self->{file} = $self->menu_file( $win );
-	$self->{edit} = $self->menu_edit( $win );
-	$self->{view} = $self->menu_view( $win );
-	$self->{perl} = $self->menu_perl( $win );
-	$self->{run}  = $self->menu_run(  $win );
-
-	# Create the Plugins menu if there are any plugins
-	my $menu_plugin = $self->menu_plugin( $win );
-	$self->{plugin} = $menu_plugin;
+	# Populate the menu
+	my $self        = bless {}, $class;
+	$self->{win}    = $win;
+	$self->{file}   = $self->menu_file( $win );
+	$self->{edit}   = $self->menu_edit( $win );
+	$self->{view}   = $self->menu_view( $win );
+	$self->{perl}   = $self->menu_perl( $win );
+	$self->{run}    = Padre::Wx::Menu::Run->new($win);
+	$self->{plugin} = $self->menu_plugin( $win );
 	$self->{window} = $self->menu_window( $win );
 	$self->{help}   = Padre::Wx::Menu::Help->new($win);
 
@@ -70,7 +69,6 @@ sub new {
 	}
 	$self->{view_output}->Check( $config->{main_output_panel} ? 1 : 0 );
 	$self->{view_functions}->Check( $config->{main_subs_panel} ? 1 : 0 );
-
 	$self->{view_indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{view_show_calltips}->Check( $config->{editor_calltips} ? 1 : 0 );
 	$self->{view_show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
@@ -79,26 +77,25 @@ sub new {
 }
 
 sub create_main_menu_bar {
-	my ( $self ) = @_;
-
-	my $experimental = Padre->ide->config->{experimental};
+	my $self = shift;
 
 	# Create and return the main menu bar
-	$self->{wx} = Wx::MenuBar->new;
-	$self->{wx}->Append( $self->{file},     Wx::gettext("&File")      );
-	$self->{wx}->Append( $self->{project},  Wx::gettext("&Project")   );
-	$self->{wx}->Append( $self->{edit},     Wx::gettext("&Edit")      );
-	$self->{wx}->Append( $self->{view},     Wx::gettext("&View")      );
-	#$self->{wx}->Append( $self->{perl},     Wx::gettext("Perl")       );
-	$self->{wx}->Append( $self->{run},      Wx::gettext("&Run")        );
-	$self->{wx}->Append( $self->{bookmark}, Wx::gettext("&Bookmarks") );
-	$self->{wx}->Append( $self->{plugin},   Wx::gettext("Pl&ugins")   ) if $self->{plugin};
-	$self->{wx}->Append( $self->{tools},    Wx::gettext("&Tools")    );
-	$self->{wx}->Append( $self->{window},   Wx::gettext("&Window")    );
-	$self->{wx}->Append( $self->{help}->wx, Wx::gettext("&Help")      );
-	if ( $experimental ) {
-		$self->{wx}->Append( $self->{experimental}, Wx::gettext("E&xperimental") );
+	my $wx = $self->{wx} = Wx::MenuBar->new;
+	$wx->Append( $self->{file},     Wx::gettext("&File")      );
+	$wx->Append( $self->{project},  Wx::gettext("&Project")   );
+	$wx->Append( $self->{edit},     Wx::gettext("&Edit")      );
+	$wx->Append( $self->{view},     Wx::gettext("&View")      );
+	$wx->Append( $self->run->wx,    Wx::gettext("&Run")       );
+	$wx->Append( $self->{bookmark}, Wx::gettext("&Bookmarks") );
+	$wx->Append( $self->{plugin},   Wx::gettext("Pl&ugins")   );
+	$wx->Append( $self->{tools},    Wx::gettext("&Tools")     );
+	$wx->Append( $self->{window},   Wx::gettext("&Window")    );
+	$wx->Append( $self->help->wx,   Wx::gettext("&Help")      );
+	if ( Padre->ide->config->{experimental} ) {
+		$wx->Append( $self->{experimental}, Wx::gettext("E&xperimental") );
 	}
+
+	return;
 }
 
 # Recursively add plugin menu items from nested array refs
@@ -146,12 +143,11 @@ sub update_alt_n_menu {
 }
 
 sub remove_alt_n_menu {
-	my ($self) = @_;
-
-	$self->{window}->Remove(pop @{ $self->{alt} });
-
+	my $self = shift;
+	$self->{window}->Remove( pop @{ $self->{alt} } );
 	return;
 }
+
 
 
 
@@ -163,30 +159,33 @@ sub remove_alt_n_menu {
 # should be integrated in the refresh sub
 sub disable_run {
 	my $self = shift;
-	
 	$self->{run_run_script}->Enable(0);
 	$self->{run_run_command}->Enable(0);
 	$self->{run_stop}->Enable(1);
 	return;
 }
 
-sub enable_run {
-	my $self = shift;
-
-	$self->{run_run_script}->Enable(1);
-	$self->{run_run_command}->Enable(1);
-	$self->{run_stop}->Enable(0);
-	return;
-}
-
 my @has_document = qw(
-			file_close file_close_all file_close_all_but_current file_reload_file
-			file_save file_save_as file_save_all
-			file_convert_nl_windows file_convert_nl_unix file_convert_nl_mac
-			file_docstat
-			edit_goto edit_autocomp edit_brace_match edit_join_lines edit_snippets
-			edit_comment_out edit_uncomment
-			edit_diff edit_insert_from_file
+	file_close
+	file_close_all
+	file_close_all_but_current
+	file_reload_file
+	file_save
+	file_save_as
+	file_save_all
+	file_convert_nl_windows
+	file_convert_nl_unix
+	file_convert_nl_mac
+	file_docstat
+	edit_goto
+	edit_autocomp
+	edit_brace_match
+	edit_join_lines
+	edit_snippets
+	edit_comment_out
+	edit_uncomment
+	edit_diff
+	edit_insert_from_file
 );
 
 sub refresh {
@@ -209,7 +208,7 @@ sub refresh {
 		} elsif ( $mode eq Wx::wxSTC_WRAP_NONE and $is_vwl_checked ) {
 			$self->{view_word_wrap}->Check(0);
 		}
-		
+
 		my $selection_exists = 0;
 		my $txt = $editor->GetSelectedText;
 		if ( defined($txt) && length($txt) > 0 ) {
@@ -787,7 +786,7 @@ sub menu_run {
 		},
 	);
 	$self->{run_stop}->Enable(0);
-	
+
 	return $menu_run;
 }
 
