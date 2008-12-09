@@ -47,6 +47,7 @@ sub new {
 		$self->{recent_projects},
 	);
 
+	# Launch a script INSIDE the running Padre instance
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext('Run in &Padre') ),
