@@ -757,39 +757,6 @@ sub menu_perl {
 	return $menu;
 }
 
-sub menu_run {
-	my ( $self, $win ) = @_;
-	
-	# Create the Run menu
-	my $menu_run = Wx::Menu->new;
-
-	# Script Execution
-	$self->{run_run_script} = $menu_run->Append( -1, Wx::gettext("Run Script\tF5") );
-	Wx::Event::EVT_MENU( $win,
-		$self->{run_run_script},
-		sub { $_[0]->run_script },
-	);
-	$self->{run_run_command} = $menu_run->Append( -1, Wx::gettext("Run Command\tCtrl-F5") );
-	Wx::Event::EVT_MENU( $win,
-		$self->{run_run_command},
-		sub { $_[0]->on_run_command },
-	);
-	$self->{run_stop} = $menu_run->Append( -1, Wx::gettext("&Stop") );
-	Wx::Event::EVT_MENU( $win,
-		$self->{run_stop},
-		sub {
-			if ( $_[0]->{command} ) {
-				$_[0]->{command}->TerminateProcess;
-			}
-			delete $_[0]->{command};
-			return;
-		},
-	);
-	$self->{run_stop}->Enable(0);
-
-	return $menu_run;
-}
-
 sub menu_plugin {
 	my ( $self, $win ) = @_;
 
