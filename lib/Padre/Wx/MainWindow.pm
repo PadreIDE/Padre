@@ -170,7 +170,7 @@ sub new {
 	unless ( $self->menu->{view_functions}->IsChecked ) {
 		$self->{gui}->{subs_panel}->Hide;
 	}
-
+	$self->check_pane_needed('sidepane');
 	$self->manager->Update;
 
 	# Deal with someone closing the window
@@ -1738,11 +1738,8 @@ sub show_output {
 
 sub show_functions {
 	my $self = shift;
+	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
 
-	my $on   = ( @_
-	             ? ($_[0] ? 1 : 0)
-	             : 1 );
-	
 	unless ( $on == $self->menu->{view_functions}->IsChecked ) {
 		$self->menu->{view_functions}->Check($on);
 	}
