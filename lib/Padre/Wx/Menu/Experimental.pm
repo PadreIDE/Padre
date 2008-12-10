@@ -3,12 +3,19 @@ package Padre::Wx::Menu::Experimental;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx        ();
-use Padre::Documents ();
-
-use base 'Padre::Wx::Submenu';
+use Padre::Wx          ();
+use Padre::Wx::Submenu ();
+use Padre::Documents   ();
 
 our $VERSION = '0.20';
+our @ISA     = 'Padre::Wx::Submenu';
+
+
+
+
+
+#####################################################################
+# Padre::Wx::Submenu Methods
 
 sub new {
 	my $class  = shift;

@@ -10,10 +10,18 @@ package Padre::Wx::Menu::Help;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
-use base 'Padre::Wx::Submenu';
+use Padre::Wx          ();
+use Padre::Wx::Submenu ();
 
 our $VERSION = '0.20';
+our @ISA     = 'Padre::Wx::Submenu';
+
+
+
+
+
+#####################################################################
+# Padre::Wx::Submenu Methods
 
 sub new {
 	my $class = shift;
