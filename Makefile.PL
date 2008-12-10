@@ -71,6 +71,7 @@ test_requires  'Test::NoWarnings'        => '0.084';
 test_requires  'Test::NeedsDisplay'      => '1.05';
 no_index       'directory' => [ qw{ t xt eg share inc} ];
 install_script 'script/padre';
+install_share;
 
 #	meta_merge => {
 #		resources => {
