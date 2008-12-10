@@ -1867,7 +1867,6 @@ sub on_insert_from_file {
 	
 	# popup the window
 	my $last_filename = $win->selected_filename;
-	my $default_dir;
 	if ($last_filename) {
 		$default_dir = File::Basename::dirname($last_filename);
 	}
