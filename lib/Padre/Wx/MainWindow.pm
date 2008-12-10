@@ -525,6 +525,7 @@ sub change_locale {
 	Padre->ide->config->{host}->{locale} = $_[0];
 
 	# Reset the locale
+	delete $self->{locale};
 	$self->{locale} = Padre::Locale::object();
 
 	# Refresh the interface with the new labels
