@@ -1885,10 +1885,14 @@ sub on_insert_from_file {
 	
 	my $file = File::Spec->catfile($default_dir, $filename);
 	
-	open(my $fh, '<', $file);
-	local $/ = undef;
-	my $text = <$fh>;
-	close($fh);
+	my $text;
+	if ( open(my $fh, '<', $file) ) {
+		binmode($fh);
+		local $/ = undef;
+		$text = <$fh>;
+	} else {
+		return;
+	}
 	
 	my $data = Wx::TextDataObject->new;
 	$data->SetText($text);
