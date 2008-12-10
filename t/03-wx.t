@@ -152,6 +152,8 @@ my @events = (
 			$T->diag("changing locale");
 			my $main = $ide->wx->main_window;
 			$main->change_locale('en');
+			$main->change_locale('');
+			$main->change_locale('en');
 			BEGIN { $main::tests += 0; }
 		},
 	},
