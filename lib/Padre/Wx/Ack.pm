@@ -4,6 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Wx ();
+use Padre::Wx::Dialog;
+use Wx::Locale qw(:default);
 
 my $iter;
 my %opts;
@@ -50,15 +52,26 @@ sub on_ack {
 		}
 		$ack_loaded = 1;
 	}
-	
-	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
 
-	# TODO kill the thread before closing the application
+	my $dialog = dialog();
+	$dialog->Show(1);
 
-	my $search = dialog();
+	return;
+}
+
+sub find_clicked {
+	my ($dialog, $event) = @_;
+
+	my $search = _get_data_from( $dialog );
 
 	$search->{dir} ||= '.';
 	return if not $search->{term};
+	
+	my $mainwindow = Padre->ide->wx->main_window;
+
+	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
+
+	# TODO kill the thread before closing the application
 
 	$opts{regex} = $search->{term};
 	if (-f $search->{dir}) {
@@ -79,84 +92,85 @@ sub on_ack {
 	return;
 }
 
+sub _get_data_from {
+	my ( $dialog ) = @_;
+
+	my $data = $dialog->get_data;
+	
+	my $term = $data->{_ack_term_};
+	my $dir  = $data->{_ack_dir_};
+	
+	$dialog->Destroy;
+	
+	return {
+		term => $term,
+		dir  => $dir,
+	}
+}
+
+sub get_layout {
+	my @layout = (
+		[
+			[ 'Wx::StaticText', undef,              gettext('Term:')],
+			[ 'Wx::ComboBox',   '_ack_term_',       '', [] ],
+			[ 'Wx::Button',     '_find_',           Wx::wxID_FIND ],
+		],
+		[
+			[ 'Wx::StaticText', undef,              gettext('Dir:')],
+			[ 'Wx::ComboBox',   '_ack_dir_',        '', [] ],
+			[ 'Wx::Button',     '_pick_dir_',        gettext('Pick &directory')],
+		],
+		[
+			[],
+			[],
+			[ 'Wx::Button',     '_cancel_',    Wx::wxID_CANCEL],
+		],
+	);
+	return \@layout;
+}
 
 sub dialog {
 	my ( $win, $config ) = @_;
-	my $id     = -1;
-	my $title  = "Ack";
-	my $pos    = Wx::wxDefaultPosition;
-	my $size   = Wx::wxDefaultSize;
-	my $name   = "";
-	my $style = Wx::wxDEFAULT_FRAME_STYLE;
-
-	my $dialog        = Wx::Dialog->new( $win, $id, $title, $pos, $size, $style, $name );
-	my $label_1       = Wx::StaticText->new($dialog, -1, Wx::gettext("Term: "), Wx::wxDefaultPosition, Wx::wxDefaultSize, );
-	my $term          = Wx::ComboBox->new($dialog, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize, [], Wx::wxCB_DROPDOWN);
-	my $button_search = Wx::Button->new($dialog, Wx::wxID_FIND, '');
-	my $label_2       = Wx::StaticText->new($dialog, -1, Wx::gettext("Dir: "), Wx::wxDefaultPosition, Wx::wxDefaultSize, );
-	my $dir           = Wx::ComboBox->new($dialog, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize, [], Wx::wxCB_DROPDOWN);
-	my $button_cancel = Wx::Button->new($dialog, Wx::wxID_CANCEL, '');
-	my $nothing_1     = Wx::StaticText->new($dialog, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize, );
-	my $nothing_2     = Wx::StaticText->new($dialog, -1, "", Wx::wxDefaultPosition, Wx::wxDefaultSize, );
-	my $button_dir    = Wx::Button->new($dialog, -1, Wx::gettext("Pick &directory"));
-
-	Wx::Event::EVT_BUTTON( $dialog, $button_search, sub { $dialog->EndModal(Wx::wxID_FIND) } );
-	Wx::Event::EVT_BUTTON( $dialog, $button_dir,    sub { on_pick_dir($dir, @_) } );
-	Wx::Event::EVT_BUTTON( $dialog, $button_cancel, sub { $dialog->EndModal(Wx::wxID_CANCEL) } );
-
-	#$dialog->SetTitle("frame_1");
-	$term->SetSelection(-1);
-	$dir->SetSelection(-1);
-	$button_search->SetDefault;
-
-	# layout
-	my $sizer_1 = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	my $grid_sizer_1 = Wx::GridSizer->new(4, 3, 0, 0);
-	$grid_sizer_1->Add($label_1, 0, 0, 0);
-	$grid_sizer_1->Add($term, 0, 0, 0);
-	$grid_sizer_1->Add($button_search, 0, 0, 0);
-	$grid_sizer_1->Add($label_2, 0, 0, 0);
-	$grid_sizer_1->Add($dir, 0, 0, 0);
-	$grid_sizer_1->Add($button_dir, 0, 0, 0);
-	$grid_sizer_1->Add($nothing_1, 0, 0, 0);
-	$grid_sizer_1->Add($nothing_2, 0, 0, 0);
-	$grid_sizer_1->Add($button_cancel, 0, 0, 0);
-
-	$sizer_1->Add($grid_sizer_1, 1, Wx::wxEXPAND, 0);
-
-	$dialog->SetSizer($sizer_1);
-	$sizer_1->Fit($dialog);
-	$dialog->Layout();
-
-	$term->SetFocus;
-	my $ret = $dialog->ShowModal;
-
-	if ($ret == Wx::wxID_CANCEL) {
-		 $dialog->Destroy;
-		return;
-	}
 	
-	my %search;
-	$search{term}  = $term->GetValue;
-	$search{dir}   = $dir->GetValue;
-	$dialog->Destroy;
- 
-	return \%search;
+	my $layout = get_layout();
+	my $dialog = Padre::Wx::Dialog->new(
+		parent => $win,
+		title  => gettext("Ack"),
+		layout => $layout,
+		width  => [150, 200],
+		size   => Wx::wxDefaultSize,
+		pos    => Wx::wxDefaultPosition,
+	);
+	
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_find_},        \&find_clicked);
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_pick_dir_},    \&on_pick_dir);
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_},      \&cancel_clicked      );
+	
+	$dialog->{_widgets_}{_ack_term_}->SetFocus;
+
+	return $dialog;
 }
 
 sub on_pick_dir {
-	my ($dir, $self, $event) = @_;
+	my ($dialog, $event) = @_;
 
-	my $dir_dialog = Wx::DirDialog->new( $self, Wx::gettext("Select directory"), '');
+	my $win = Padre->ide->wx->main_window;
+	my $dir_dialog = Wx::DirDialog->new( $win, Wx::gettext("Select directory"), '');
 	if ($dir_dialog->ShowModal == Wx::wxID_CANCEL) {
 		return;
 	}
-	$dir->SetValue($dir_dialog->GetPath);
+	$dialog->{_widgets_}{_ack_dir_}->SetValue($dir_dialog->GetPath);
 
 	return;
 }
 
+sub cancel_clicked {
+	my ($dialog, $event) = @_;
 
+	$dialog->Destroy;
+
+	return;
+}
 
 sub ack_done {
 	my( $mainwindow, $event ) = @_;
