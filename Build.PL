@@ -42,7 +42,6 @@ my %prereqs = (
 #	'File::LocalizeNewlines'  => '1.10',
 	'File::ShareDir'          => '1.00',
 	'File::ShareDir::PAR'     => '0.03',
-	'File::Slurp'             => '9999.13',
 	'File::Which'             => '0.05',
 	'IO::String'              => '1.08',
 	'Module::Inspector'       => '0.04',

@@ -41,7 +41,6 @@ requires       'File::Find::Rule'        => '0.30';
 requires       'File::HomeDir'           => '0.82';
 requires       'File::ShareDir'          => '1.00';
 requires       'File::ShareDir::PAR'     => '0.03';
-requires       'File::Slurp'             => '9999.13';
 requires       'File::Which'             => '0.05';
 requires       'IO::String'              => '1.08';
 requires       'Module::Inspector'       => '0.04';

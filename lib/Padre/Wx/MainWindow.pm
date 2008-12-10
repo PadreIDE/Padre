@@ -25,7 +25,6 @@ use Carp                      ();
 use Data::Dumper              ();
 use File::Spec                ();
 use File::Basename            ();
-use File::Slurp               ();
 use List::Util                ();
 use Scalar::Util              ();
 use Params::Util              ();
@@ -1886,11 +1885,10 @@ sub on_insert_from_file {
 	
 	my $file = File::Spec->catfile($default_dir, $filename);
 	
-	my $text = eval { File::Slurp::read_file($file, binmode => ':raw') };
-	if ($@) {
-		$win->error($@);
-		return;
-	}
+	open(my $fh, '<', $file);
+	local $/ = undef;
+	my $text = <$fh>;
+	close($fh);
 	
 	my $data = Wx::TextDataObject->new;
 	$data->SetText($text);
