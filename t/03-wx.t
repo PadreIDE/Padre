@@ -12,9 +12,8 @@ use Test::More;
 use Test::Builder;
 use t::lib::Padre;
 use Padre;
-use Padre::Wx;
 
-plan skip_all => 'For some reason does not work on Windows' if $^O eq 'MSWin32'; # the same as File::Spec uses
+plan skip_all => 'Windows currently has problems with Unicode files' if $^O eq 'MSWin32'; # the same as File::Spec uses
 plan tests => $tests;
 diag "PADRE_HOME: $ENV{PADRE_HOME}";
 my $home = $ENV{PADRE_HOME};
