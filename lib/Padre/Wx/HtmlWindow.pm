@@ -4,12 +4,19 @@ package Padre::Wx::HtmlWindow;
 
 =head1 NAME
 
-Padre::Wx::HtmlWindow - An extended Wx::HtmlWindow that supports POD to HTML
+Padre::Wx::HtmlWindow - Padre-enhanced version of Wx::HtmlWindow
 
 =head1 DESCRIPTION
 
-This class is intended to implement a HTML viewer that internally renders the
-HTML from standalone or embedded POD.
+L<Padre::Wx::HtmlWindow> provides a Padre-specific sub-class of
+Wx::HtmlWindow that adds some additional features, primarily
+default support for POD2HTML functionality.
+
+=head1 METHODS
+
+L<Padre::Wx::HtmlWindow> implements all the methods described in
+the documentation for L<Wx::HtmlWindow>, and adds some additional
+methods.
 
 =cut
 
@@ -29,6 +36,20 @@ our @ISA     = 'Wx::HtmlWindow';
 #####################################################################
 # Loader Methods
 
+=pod
+
+=head2 load_file
+
+  $html_window->load_file( 'my.pod' );
+
+The C<load_file> method takes a file name, loads the file, transforms
+it to HTML via the default Padre::Pod2HTML processor, and then loads
+the HTML into the window.
+
+Returns true on success, or throws an exception on error.
+
+=cut
+
 sub load_file {
 	my $self = shift;
 	my $file = shift;
@@ -42,6 +63,20 @@ sub load_file {
 	}
 	return $self->load_pod( $pod );
 }
+
+=pod
+
+=head2 load_file
+
+  $html_window->load_pod( "=head1 NAME\n" );
+
+The C<load_file> method takes a string of POD content, transforms
+it to HTML via the default Padre::Pod2HTML processor, and then loads
+the HTML into the window.
+
+Returns true on success, or throws an exception on error.
+
+=cut
 
 sub load_pod {
 	my $self = shift;
