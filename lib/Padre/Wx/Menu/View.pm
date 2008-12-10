@@ -51,16 +51,28 @@ sub new {
 		},
 	);
 
-	# On Windows disabling the status bar is broken, so don't allow it
-	$self->{view_statusbar} = $self->AppendCheckItem( -1,
-		Wx::gettext("Show StatusBar")
+	$self->{view_show_syntaxcheck} = $self->AppendCheckItem( -1,
+		Wx::gettext("Show Syntax Check")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_statusbar},
+		$self->{view_show_syntaxcheck},
 		sub {
-			$_[0]->on_toggle_status_bar($_[1]);
+			$_[0]->on_toggle_syntax_check($_[1]);
 		},
-	) unless Padre::Util::WIN32;
+	);
+
+	# On Windows disabling the status bar is broken, so don't allow it
+	unless ( Padre::Util::WIN32 ) {
+		$self->{view_statusbar} = $self->AppendCheckItem( -1,
+			Wx::gettext("Show StatusBar")
+		);
+		Wx::Event::EVT_MENU( $main,
+			$self->{view_statusbar},
+			sub {
+				$_[0]->on_toggle_status_bar($_[1]);
+			},
+		);
+	}
 
 	$self->AppendSeparator;
 
@@ -100,7 +112,7 @@ sub new {
 	);
 
 	$self->{view_currentlinebackground} = $self->AppendCheckItem( -1,
-		Wx::gettext("Highlight Current Line")
+		Wx::gettext("Show Current Line")
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{view_currentlinebackground},
@@ -157,23 +169,6 @@ sub new {
 	);
 
 	$self->AppendSeparator;	
-
-
-
-
-
-	# Miscellaneous Editor Functions
-	$self->{view_show_syntaxcheck} = $self->AppendCheckItem( -1,
-		Wx::gettext("Show Syntax Check")
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_show_syntaxcheck},
-		sub {
-			$_[0]->on_toggle_syntax_check($_[1]);
-		},
-	);
-
-	$self->AppendSeparator;
 
 
 

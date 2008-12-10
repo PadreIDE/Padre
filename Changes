@@ -1,5 +1,19 @@
 Changes for Padre.
 
+    Major menu refactoring. Each menu is now implemented in a seperate
+        class, with independant ->refresh methods and much improved
+        encapsulation as a result. (ADAMK)
+    Rewrote the Padre bootstrap sequence. Not only does Padre start in
+        a more sane order, but with some additional tweaks using
+        ->Show, ->Freeze and ->Thaw, Padre LOOKS like it starts up
+        and shuts down much much faster (ADAMK)
+    Reorganised the order and seperators for the View menu (ADAMK)
+    The Plugins menu no longer shows separators that don't separate
+        anything (ADAMK)
+    Padre's lib directory now passes all of the rules in Perl::Critic's
+        default Severity 5 policy. (ADAMK)
+    Changed the names of a number of Padre::Wx::*** classes to more-closely
+        match the underlying Wx::*** classes that they subclass. (ADAMK)
     Option to always auto-detect indentation style and adapt for each
         open document. (SMUELLER)
     Default to showing functions in alphabetical order. (SMUELLER)
