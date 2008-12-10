@@ -156,7 +156,7 @@ msgid "Close All"
 msgstr "모두 닫기"
 
 #: ../../lib/Padre/Wx/Menu.pm:273
-msgid "Close All but Current Document"
+msgid "Close All but Current"
 msgstr "현재 문서를 제외하고 모두 닫기"
 
 #: ../../lib/Padre/Wx/Menu.pm:278

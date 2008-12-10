@@ -6,6 +6,7 @@ use warnings;
 use Params::Util             qw{_INSTANCE};
 use Padre::Util              ();
 use Padre::Wx                ();
+use Padre::Wx::Menu::File    ();
 use Padre::Wx::Menu::View    ();
 use Padre::Wx::Menu::Perl    ();
 use Padre::Wx::Menu::Run     ();
@@ -29,6 +30,7 @@ use Class::XSAccessor
 
 		# Don't add accessors to here until they have been
 		# upgraded to be fully encapsulated classes.
+		file         => 'file',
 		view         => 'view',
 		perl         => 'perl',
 		run          => 'run',
@@ -44,7 +46,7 @@ sub new {
 
 	# Generate the individual menus
 	$self->{win}     = $main;
-	$self->{file}    = $self->menu_file( $main );
+	$self->{file}    = Padre::Wx::Menu::File->new($main);
 	$self->{edit}    = $self->menu_edit( $main );
 	$self->{view}    = Padre::Wx::Menu::View->new($main);
 	$self->{perl}    = Padre::Wx::Menu::Perl->new($main);
@@ -55,7 +57,7 @@ sub new {
 
 	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
-	$self->wx->Append( $self->{file},      Wx::gettext("&File")    );
+	$self->wx->Append( $self->file->wx,    Wx::gettext("&File")    );
 	$self->wx->Append( $self->{edit},      Wx::gettext("&Edit")    );
 	$self->wx->Append( $self->view->wx,    Wx::gettext("&View")    );
 	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
@@ -117,17 +119,6 @@ sub remove_alt_n_menu {
 # Reflowing the Menu
 
 my @has_document = qw(
-	file_close
-	file_close_all
-	file_close_all_but_current
-	file_reload_file
-	file_save
-	file_save_as
-	file_save_all
-	file_convert_nl_windows
-	file_convert_nl_unix
-	file_convert_nl_mac
-	file_docstat
 	edit_goto
 	edit_autocomp
 	edit_brace_match
@@ -165,7 +156,8 @@ sub refresh {
 		$self->{$_}->Enable(0) for qw(edit_undo edit_redo edit_copy edit_cut edit_paste);
 	}
 
-	# Refresh submenus
+	# Refresh encapsulated menus
+	$self->file->refresh;
 	$self->view->refresh;
 	$self->run->refresh;
 	$self->perl->refresh;
@@ -176,164 +168,6 @@ sub refresh {
 	}
 
 	return 1;
-}
-
-sub menu_file {
-	my ( $self, $main ) = @_;
-
-	# Create the File menu
-	my $menu = Wx::Menu->new;
-
-	# Creating new things
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( Wx::wxID_NEW, Wx::gettext("&New\tCtrl-N") ),
-		sub { $_[0]->on_new },
-	);
-	my $menu_file_new = Wx::Menu->new;
-	$menu->Append( -1, Wx::gettext("New..."), $menu_file_new );
-	Wx::Event::EVT_MENU( $main,
-		$menu_file_new->Append( -1, Wx::gettext('Perl Distribution (Module::Starter)') ),
-		sub { Padre::Wx::Dialog::ModuleStart->start(@_) },
-	);
-
-	# Opening and closing files
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( Wx::wxID_OPEN, Wx::gettext("&Open...\tCtrl-O") ),
-		sub { $_[0]->on_open },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( -1, Wx::gettext("Open Selection\tCtrl-Shift-O") ),
-		sub { $_[0]->on_open_selection },
-	);
-	
-	$self->{file_close} = $menu->Append( Wx::wxID_CLOSE, Wx::gettext("&Close\tCtrl-W") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_close},
-		sub { $_[0]->on_close },
-	);
-	
-	$self->{file_close_all} = $menu->Append( -1, Wx::gettext('Close All') );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_close_all},
-		sub { $_[0]->on_close_all },
-	);
-	$self->{file_close_all_but_current}
-		= $menu->Append( -1, Wx::gettext('Close All but Current Document') );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_close_all_but_current},
-		sub { $_[0]->on_close_all_but_current },
-	);
-	$self->{file_reload_file} = $menu->Append( -1, Wx::gettext('Reload file') );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_reload_file},
-		sub { $_[0]->on_reload_file },
-	);
-	$menu->AppendSeparator;
-
-	# Saving
-	$self->{file_save} = $menu->Append( Wx::wxID_SAVE, Wx::gettext("&Save\tCtrl-S") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_save},
-		sub { $_[0]->on_save },
-	);
-	$self->{file_save_as} = $menu->Append( Wx::wxID_SAVEAS, Wx::gettext('Save &As...') );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_save_as},
-		sub { $_[0]->on_save_as },
-	);
-	$self->{file_save_all} = $menu->Append( -1, Wx::gettext('Save All') );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_save_all},
-		sub { $_[0]->on_save_all },
-	);
-	$menu->AppendSeparator;
-
-	# Printing
-	$self->{file_print} = $menu->Append(
-		Wx::wxID_PRINT,
-		Wx::gettext('&Print...'),
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_print},
-		sub {
-			require Wx::Print;
-			require Padre::Wx::Printout;
-			my $printer  = Wx::Printer->new;
-			my $printout = Padre::Wx::Printout->new(
-				$_[0]->selected_editor, "Print",
-			);
-			$printer->Print( $_[0], $printout, 1 );
-			$printout->Destroy;
-			return;
-		},
-	);
-
-	$menu->AppendSeparator;
-
-	# Conversions and Transforms
-	$self->{file_convert_nl} = Wx::Menu->new;
-	$menu->Append( -1, Wx::gettext("Convert..."), $self->{file_convert_nl} );
-	$self->{file_convert_nl_windows} = $self->{file_convert_nl}->Append(-1, Wx::gettext("EOL to Windows"));
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_convert_nl_windows},
-		sub { $_[0]->convert_to("WIN") },
-	);
-	$self->{file_convert_nl_unix} = $self->{file_convert_nl}->Append(-1, Wx::gettext("EOL to Unix"));
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_convert_nl_unix},
-		sub { $_[0]->convert_to("UNIX") },
-	);
-	$self->{file_convert_nl_mac} = $self->{file_convert_nl}->Append(-1, Wx::gettext("EOL to Mac Classic"));
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_convert_nl_mac},
-		sub { $_[0]->convert_to("MAC") },
-	);
-	$menu->AppendSeparator;
-
-	# Recent things
-	$self->{file_recentfiles} = Wx::Menu->new;
-	$menu->Append( -1, Wx::gettext("&Recent Files"), $self->{file_recentfiles} );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_recentfiles}->Append(-1, Wx::gettext("Open All Recent Files")),
-		sub { $_[0]->on_open_all_recent_files },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_recentfiles}->Append(-1, Wx::gettext("Clean Recent Files List")),
-		sub {
-			Padre::DB->delete_recent( 'files' );
-			# replace the whole File menu
-			my $menu = $_[0]->{menu}->menu_file($_[0]);
-			my $menu_place = $_[0]->{menu}->wx->FindMenu( Wx::gettext("&File") );
-			$_[0]->{menu}->wx->Replace( $menu_place, $menu, Wx::gettext("&File") );
-		},
-	);
-	$self->{file_recentfiles}->AppendSeparator;
-	my $idx;
-	foreach my $f ( Padre::DB->get_recent_files ) {
-		next unless -f $f;
-		++$idx;
-		Wx::Event::EVT_MENU( $main,
-			$self->{file_recentfiles}->Append(-1, $idx < 10 ? "&$idx. $f" : "$idx. $f"), 
-			sub { $_[0]->setup_editors($f); },
-		);
-	}
-	$menu->AppendSeparator;
-	
-	# Word Stats
-	$self->{file_docstat} = $menu->Append( -1, Wx::gettext('Doc Stats') );
-	Wx::Event::EVT_MENU( $main,
-		$self->{file_docstat},
-		sub { $_[0]->on_doc_stats },
-	);
-	$menu->AppendSeparator;
-
-	# Exiting
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( Wx::wxID_EXIT, Wx::gettext("&Quit\tCtrl-Q") ),
-		sub { $_[0]->Close },
-	);
-	
-	return $menu;
 }
 
 sub menu_edit {

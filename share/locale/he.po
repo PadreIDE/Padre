@@ -181,7 +181,7 @@ msgid "Close All"
 msgstr "סגור הכל"
 
 #: lib/Padre/Wx/Menu.pm:69
-msgid "Close All but Current Document"
+msgid "Close All but Current"
 msgstr "סגור הכל חוץ ממסמך נוכחי"
 
 #: lib/Padre/Wx/Menu.pm:73

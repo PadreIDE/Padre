@@ -156,7 +156,7 @@ v0.15 2008.11.02
     Start using File::Which to locate the perl interpreter
        (if padre is running from a par archive). (SZABGAB)
     Fix the Split Window menu option to really work. (SZABGAB)
-    Adding "Close All but Current Document" menu option. (SZABGAB)
+    Adding "Close All but Current" menu option. (SZABGAB)
     Add autoindentation. (SZABGAB)
     Set focus on windows. (SZABGAB)
     Before saving, check if file has changed on disk. (SZABGAB)

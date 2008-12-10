@@ -311,7 +311,7 @@ msgid "Close All"
 msgstr "Alle schließen"
 
 #: ../../lib/Padre/Wx/Menu.pm:273
-msgid "Close All but Current Document"
+msgid "Close All but Current"
 msgstr "Alle schließen außer dem aktiven Dokument"
 
 #: ../../lib/Padre/Wx/Menu.pm:278

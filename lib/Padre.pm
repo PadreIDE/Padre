@@ -306,7 +306,7 @@ B<File/Close> checks if the file is saved, if it is closes the current tab.
 
 B<File/Close All> closes all the file (in case they are not saved yet ask for instructions).
 
-B<File/Close All but Current Document>. 
+B<File/Close All but Current>. 
 
 B<File/Reload File> is interesting if you either made changes and want to discard them
 and/or if the file has changed on the disk. If there are unsaved changes Padre will ask 

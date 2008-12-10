@@ -367,7 +367,7 @@ msgid "Close All"
 msgstr "Chiudi tutto"
 
 #: ..\..\lib\Padre\Wx\Menu.pm:273
-msgid "Close All but Current Document"
+msgid "Close All but Current"
 msgstr "Chiudi tutto tranne il documento corrente"
 
 #: ..\..\lib\Padre\Wx\Menu.pm:278

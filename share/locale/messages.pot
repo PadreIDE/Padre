@@ -547,7 +547,7 @@ msgstr ""
 
 #: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:269
 #: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:273
-msgid "Close All but Current Document"
+msgid "Close All but Current"
 msgstr ""
 
 #: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:274

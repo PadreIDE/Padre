@@ -316,7 +316,7 @@ msgid "Close All"
 msgstr "Mind bezárása"
 
 #: ../../lib/Padre/Wx/Menu.pm:273
-msgid "Close All but Current Document"
+msgid "Close All but Current"
 msgstr "Az aktuális kivételével az összes bezárása"
 
 #: ../../lib/Padre/Wx/Menu.pm:278
