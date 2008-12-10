@@ -9,6 +9,7 @@ use Wx::Locale qw(:default);
 
 my $iter;
 my %opts;
+my %stats;
 
 our $VERSION = '0.20';
 my $DONE_EVENT : shared = Wx::NewEventType;
@@ -53,6 +54,9 @@ sub on_ack {
 		$ack_loaded = 1;
 	}
 
+	# clear %stats; for every request
+	%stats = ();
+	
 	my $dialog = dialog();
 	$dialog->Show(1);
 
@@ -176,8 +180,7 @@ sub ack_done {
 	my( $mainwindow, $event ) = @_;
 
 	my $data = $event->GetData;
-	#print "Data: $data\n";
-	$mainwindow->{gui}->{output_panel}->AppendText("$data\n");
+	$mainwindow->{gui}->{output_panel}->AppendText($data);
 
 	return;
 }
@@ -188,7 +191,25 @@ sub on_ack_thread {
 
 sub print_results {
 	my ($text) = @_;
-#print $text;
+	
+	#print "$text\n";
+	
+	# the first is filename, the second is line number, the third is matched line text
+	$stats{printed_lines}++;
+	# don't print filename again if it's just printed
+	return if ( $stats{printed_lines} % 3 == 1 and
+				$stats{last_matched_filename} and
+				$stats{last_matched_filename} eq $text );
+	$stats{last_matched_filename} = $text if ( $stats{printed_lines} % 3 == 1 );
+	# new \n rules
+	# 1, add \n before $filename expect the first filename
+	if ( $stats{printed_lines} % 3 == 1 ) {
+		$text .= "\n";
+		$text = "\n$text" if ($stats{printed_lines} != 1);
+	}
+	# an extra space for line number
+	$text .= ' ' if ( $stats{printed_lines} % 3 == 2 );
+
 	#my $end = $result->get_end_iter;
 	#$result->insert($end, $text);
 
