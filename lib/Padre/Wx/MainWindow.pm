@@ -488,25 +488,26 @@ sub window_top {
 # Refresh Methods
 
 sub refresh {
-	my ($self) = @_;
-
+	my $self = shift;
 	return if $self->no_refresh;
+	$self->Freeze;
 
-	my $doc = $self->selected_document;
+	# Freeze during the subtle parts of the refresh
 	$self->refresh_menu;
 	$self->refresh_toolbar;
 	$self->refresh_status;
 	$self->refresh_methods;
 	$self->refresh_syntaxcheck;
 
-	my $id = $self->nb->GetSelection();
-	if (defined $id and $id >= 0) {
+	my $id = $self->nb->GetSelection;
+	if ( defined $id and $id >= 0 ) {
 		$self->nb->GetPage($id)->SetFocus;
 	}
 
 	# force update of list of opened files in window menu
 	# TODO: shouldn't this be in Padre::Wx::Menu::refresh()?
 	if ( defined $self->menu->{alt} ) {
+		my $doc = $self->selected_document;
 		foreach my $i ( 0 .. @{ $self->menu->{alt} } - 1 ) {
 			my $doc = Padre::Documents->by_id($i) or return;
 			my $file = $doc->filename || $self->nb->GetPageText($i);
@@ -514,6 +515,7 @@ sub refresh {
 		}
 	}
 
+	$self->Thaw;
 	return;
 }
 
@@ -551,14 +553,12 @@ sub refresh_syntaxcheck {
 sub refresh_menu {
 	my $self = shift;
 	return if $self->no_refresh;
-
 	$self->menu->refresh;
 }
 
 sub refresh_toolbar {
 	my $self = shift;
 	return if $self->no_refresh;
-
 	$self->GetToolBar->refresh($self->selected_document);
 }
 
