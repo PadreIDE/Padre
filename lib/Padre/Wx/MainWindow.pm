@@ -1042,6 +1042,12 @@ sub on_close_window {
 		}
 	}
 
+	# Immediately hide the window so that the user
+	# perceives the application as closing faster.
+	# This knocks about quarter of a second off the speed
+	# at which Padre appears to close.
+	$self->Show(0);
+
 	# Discover and save the state we want to memorize
 	$config->{host}->{main_maximized} = $self->IsMaximized ? 1 : 0;
 	unless ( $self->IsMaximized ) {
