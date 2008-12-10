@@ -136,9 +136,11 @@ sub new {
 	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
 
 	# on close pane
-	Wx::Event::EVT_AUI_PANE_CLOSE(
+	Wx::Event::EVT_AUI_PANE_CLOSE(\
 		$self,
-		\&on_close_pane
+		sub {
+			$_[0]->on_close_pane($_[1]);
+		},
 	);
 
 	# Special Key Handling
