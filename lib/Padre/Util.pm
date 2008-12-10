@@ -163,7 +163,6 @@ use constant {
 	PASM_POD      => 6,
 };
 
-
 1;
 
 =head1 SUPPORT
