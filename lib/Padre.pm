@@ -48,7 +48,6 @@ use Class::Autouse qw{
 	Padre::Wx::App
 	Padre::Wx::Dialog::Bookmarks
 	Padre::Wx::Dialog::Find
-	Padre::Wx::Dialog::ModuleStart
 	Padre::Wx::Dialog::PluginManager
 	Padre::Wx::Dialog::Preferences
 	Padre::Wx::Dialog::Search
