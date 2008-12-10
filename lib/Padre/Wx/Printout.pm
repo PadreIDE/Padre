@@ -1,4 +1,4 @@
-package Padre::Wx::Print::Printout;
+package Padre::Wx::Printout;
 
 use strict;
 use warnings;

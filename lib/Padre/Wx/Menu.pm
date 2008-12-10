@@ -257,9 +257,9 @@ sub menu_file {
 		$self->{file_print},
 		sub {
 			require Wx::Print;
-			require Padre::Wx::Print::Printout;
+			require Padre::Wx::Printout;
 			my $printer  = Wx::Printer->new;
-			my $printout = Padre::Wx::Print::Printout->new(
+			my $printout = Padre::Wx::Printout->new(
 				$_[0]->selected_editor, "Print",
 			);
 			$printer->Print( $_[0], $printout, 1 );
