@@ -156,7 +156,7 @@ sub ok_clicked {
 		my $file = File::Spec->catfile( $data->{_directory_}, $dir_name, 'lib', @parts);
 		Padre::DB->add_recent_files($file);
 		$main_window->setup_editor($file);
-		$main_window->refresh_all;
+		$main_window->refresh;
 	}
 
 	return;

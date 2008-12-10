@@ -23,13 +23,37 @@ From the main L<Padre> object, it can be accessed via the C<wx> method.
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
-
-use Wx::App ();
+use Padre::Wx ();
 
 our $VERSION = '0.20';
 our @ISA     = 'Wx::App';
+
+use Class::XSAccessor
+	getters => {
+		main_window => 'main_window',
+	};
+
+
+
+
+
+#####################################################################
+# Constructor
+
+sub new {
+	my $class = shift;
+	my $self  = $class->SUPER::new(@_);
+
+	# Immediately populate the main window
+	$self->{main_window} = Padre::Wx::MainWindow->new;
+
+	return $self;
+}
+
+sub OnInit { 1 }
 
 
 
@@ -47,23 +71,6 @@ L<Padre::Wx::MainWindow> object, representing the main editor window
 of the application.
 
 =cut
-
-sub main_window {
-	$_[0]->{main_window} or
-	$_[0]->{main_window} = Padre::Wx::MainWindow->new;
-}
-
-
-
-
-
-#####################################################################
-# Wx Methods
-
-sub OnInit {
-	$_[0]->main_window->Show(1);
-	return 1;
-}
 
 1;
 

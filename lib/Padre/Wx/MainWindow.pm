@@ -61,7 +61,6 @@ use Class::XSAccessor
 		syntax_checker => 'syntax_checker',
 	};
 
-
 sub new {
 	my $class  = shift;
 	my $config = Padre->ide->config;
@@ -163,10 +162,10 @@ sub new {
 
 	# remember the last time we show them or not
 	# TODO do we need this, given that we have self->manager->LoadPerspective below?
-	unless ( $self->menu->{view_output}->IsChecked ) {
+	unless ( $config->{main_output_panel} ) {
 		$self->{gui}->{output_panel}->Hide;
 	}
-	unless ( $self->menu->{view_functions}->IsChecked ) {
+	unless ( $config->{main_subs_panel} ) {
 		$self->{gui}->{subs_panel}->Hide;
 	}
 	$self->check_pane_needed('sidepane');
@@ -192,7 +191,9 @@ sub new {
 	Wx::Event::EVT_TIMER(
 		$self,
 		Padre::Wx::id_POST_INIT_TIMER,
-		\&post_init,
+		sub {
+			$_[0]->timer_post_init;
+		},
 	);
 	$timer->Start( 1, 1 );
 
@@ -339,7 +340,6 @@ sub create_side_pane {
 	return;
 }
 
-
 sub create_bottom_pane {
 	my $self = shift;
 
@@ -407,38 +407,56 @@ sub load_files {
 	return;
 }
 
-sub post_init { 
-	my ($self) = @_;
+sub timer_post_init { 
+	my $self = shift;
 
-	$self->load_files;
-
-	$self->on_toggle_status_bar;
-	Padre->ide->plugin_manager->enable_editors_for_all;
-	$self->refresh_all;
-
-	my $output = $self->menu->{view_output}->IsChecked;
-	# First we show the output window and then hide it if necessary
+	my $output = $self->menu->view->{view_output}->IsChecked;
+	# Show the output window and then hide it if necessary
 	# in order to avoide some weird visual artifacts (empty square at
 	# top left part of the whole application)
 	# TODO maybe some users want to make sure the output window is always
 	# off at startup.
 	$self->show_output(1);
-	$self->show_output($output) if not $output;
+	$self->show_output($output) unless $output;
 
-	if ( $self->menu->{view_show_syntaxcheck}->IsChecked ) {
+	# Do an initial Show/paint of the complete-looking main window
+	# without any files loaded. Then immediately Freeze so that the
+	# loading of the files is done in a single render pass.
+	$self->Show(1);
+	$self->Freeze;
+
+	# Load all files and refresh the application so that it
+	# represents the loaded state.
+	$self->load_files;
+	$self->on_toggle_status_bar;
+	Padre->ide->plugin_manager->enable_editors_for_all;
+	$self->refresh;
+
+	if ( $self->menu->view->{view_show_syntaxcheck}->IsChecked ) {
 		$self->syntax_checker->enable(1);
 	}
 
-	# Check for new plugins and alert if so
+	# Now we are fully loaded and can paint continuously
+	$self->Thaw;
+
+	# Check for new plugins and alert the user to them
 	my $plugins = Padre->ide->plugin_manager->alert_new;
 
 	# Start the change detection timer
 	my $timer = Wx::Timer->new( $self, Padre::Wx::id_FILECHK_TIMER );
-	Wx::Event::EVT_TIMER($self, Padre::Wx::id_FILECHK_TIMER, \&on_timer_check_overwrite);
-	$timer->Start(5 * SECONDS, 0);
+	Wx::Event::EVT_TIMER( $self,
+		Padre::Wx::id_FILECHK_TIMER,
+		sub {
+			$_[0]->timer_check_overwrite;
+		},
+	);
+	$timer->Start( 5 * SECONDS, 0 );
 
 	return;
 }
+
+
+
 
 
 #####################################################################
@@ -461,10 +479,13 @@ sub window_top {
 }
 
 
+
+
+
 #####################################################################
 # Refresh Methods
 
-sub refresh_all {
+sub refresh {
 	my ($self) = @_;
 
 	return if $self->no_refresh;
@@ -505,7 +526,7 @@ sub change_locale {
 
 	# Refresh the interface with the new labels
 	$self->create_main_components;
-	$self->refresh_all;
+	$self->refresh;
 
 	# Replace the AUI component captions
 	$self->manager->GetPane('sidepane')->Caption( Wx::gettext("Subs") );
@@ -518,7 +539,7 @@ sub refresh_syntaxcheck {
 	my $self = shift;
 	return if $self->no_refresh;
 	return if not Padre->ide->config->{experimental};
-	return if not $self->menu->{view_show_syntaxcheck}->IsChecked;
+	return if not $self->menu->view->{view_show_syntaxcheck}->IsChecked;
 
 	Padre::Wx::SyntaxChecker::on_syntax_check_timer( $self, undef, 1 );
 
@@ -594,7 +615,7 @@ sub refresh_status {
 sub refresh_methods {
 	my $self = shift;
 	return if $self->no_refresh;
-	return unless $self->menu->{view_functions}->IsChecked;
+	return unless $self->menu->view->{view_functions}->IsChecked;
 
 	my $subs_panel = $self->{gui}->{subs_panel};
 
@@ -1094,14 +1115,14 @@ sub setup_editors {
 		$self->setup_editor;
 	}
 	$self->Thaw;
-	$self->refresh_all;
+	$self->refresh;
 	return;
 }
 
 sub on_new {
 	$_[0]->Freeze;
 	$_[0]->setup_editor;
-	$_[0]->refresh_all;
+	$_[0]->refresh;
 	$_[0]->Thaw;
 	return;
 }
@@ -1168,7 +1189,7 @@ sub create_tab {
 	my $file_title = $file || $title;
 	$self->menu->add_alt_n_menu($file_title, $id);
 
-	$self->refresh_all;
+	$self->refresh;
 
 	return $id;
 }
@@ -1340,7 +1361,7 @@ sub on_save_as {
 	$doc->editor->padre_setup;
 	$doc->rebless;
 
-	$self->refresh_all;
+	$self->refresh;
 
 	return 1;
 }
@@ -1395,7 +1416,7 @@ sub _save_buffer {
 
 	Padre::DB->add_recent_files($doc->filename);
 	$page->SetSavePoint;
-	$self->refresh_all;
+	$self->refresh;
 
 	return;
 }
@@ -1413,7 +1434,7 @@ sub on_close {
 		$event->Veto;
 	}
 	$self->close;
-	$self->refresh_all;
+	$self->refresh;
 }
 
 sub close {
@@ -1448,7 +1469,7 @@ sub close {
 
 	# Update the alt-n menus
 	# TODO: shouldn't this be in Padre::Wx::Menu::refresh()?
-	# TODO: why don't we call $self->refresh_all()?
+	# TODO: why don't we call $self->refresh()?
 	$self->menu->remove_alt_n_menu;
 	foreach my $i ( 0 .. @{ $self->menu->{alt} } - 1 ) {
 		my $doc = Padre::Documents->by_id($i) or return;
@@ -1480,12 +1501,11 @@ sub _close_all {
 		next if defined $skip and $skip == $id;
 		$self->close( $id ) or return 0;
 	}
-	$self->refresh_all;
+	$self->refresh;
 	$self->Thaw;
 
 	return 1;
 }
-
 
 sub on_nth_pane {
 	my ($self, $id) = @_;
@@ -1514,6 +1534,7 @@ sub on_next_pane {
 	}
 	return;
 }
+
 sub on_prev_pane {
 	my ($self) = @_;
 	my $count = $self->nb->GetPageCount;
@@ -1579,7 +1600,6 @@ sub on_join_lines {
 	$page->LinesJoin;
 }
 
-
 ###### preferences and toggle functions
 
 sub zoom {
@@ -1602,7 +1622,6 @@ sub on_preferences {
 
 	return;
 }
-
 
 sub on_toggle_line_numbers {
 	my ($self, $event) = @_;
@@ -1660,7 +1679,7 @@ sub on_toggle_indentation_guide {
 	my $self   = shift;
 
 	my $config = Padre->ide->config;
-	$config->{editor_indentationguides} = $self->menu->{view_indentation_guide}->IsChecked ? 1 : 0;
+	$config->{editor_indentationguides} = $self->menu->view->{view_indentation_guide}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
 		$editor->SetIndentationGuides( $config->{editor_indentationguides} );
@@ -1673,7 +1692,7 @@ sub on_toggle_eol {
 	my $self   = shift;
 
 	my $config = Padre->ide->config;
-	$config->{editor_eol} = $self->menu->{view_eol}->IsChecked ? 1 : 0;
+	$config->{editor_eol} = $self->menu->view->{view_eol}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
 		$editor->SetViewEOL( $config->{editor_eol} );
@@ -1692,7 +1711,7 @@ sub on_toggle_whitespaces {
 	
 	# check whether we need to show / hide spaces & tabs.
 	my $config = Padre->ide->config;
-	$config->{editor_whitespaces} = $self->menu->{view_whitespaces}->IsChecked
+	$config->{editor_whitespaces} = $self->menu->view->{view_whitespaces}->IsChecked
 		? Wx::wxSTC_WS_VISIBLEALWAYS
 		: Wx::wxSTC_WS_INVISIBLE;
 	
@@ -1702,12 +1721,11 @@ sub on_toggle_whitespaces {
 	}
 }
 
-
 sub on_word_wrap {
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->{view_word_wrap}->IsChecked ) {
-		$self->menu->{view_word_wrap}->Check($on);
+	unless ( $on == $self->menu->view->{view_word_wrap}->IsChecked ) {
+		$self->menu->view->{view_word_wrap}->Check($on);
 	}
 	
 	my $doc = $self->selected_document;
@@ -1723,8 +1741,8 @@ sub on_word_wrap {
 sub show_output {
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->{view_output}->IsChecked ) {
-		$self->menu->{view_output}->Check($on);
+	unless ( $on == $self->menu->view->{view_output}->IsChecked ) {
+		$self->menu->view->{view_output}->Check($on);
 	}
 	if ( $on ) {
 		$self->{gui}->{output_panel}->Show;
@@ -1745,8 +1763,8 @@ sub show_functions {
 	my $self = shift;
 	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
 
-	unless ( $on == $self->menu->{view_functions}->IsChecked ) {
-		$self->menu->{view_functions}->Check($on);
+	unless ( $on == $self->menu->view->{view_functions}->IsChecked ) {
+		$self->menu->view->{view_functions}->Check($on);
 	}
 	if ( $on ) {
 		$self->refresh_methods();
@@ -1767,7 +1785,7 @@ sub show_functions {
 sub show_syntaxbar {
 	my $self = shift;
 	my $on   = scalar(@_) ? $_[0] ? 1 : 0 : 1;
-	unless ( $self->menu->{view_show_syntaxcheck}->IsChecked ) {
+	unless ( $self->menu->view->{view_show_syntaxcheck}->IsChecked ) {
 		$self->{gui}->{syntaxcheck_panel}->Hide;
 		$self->check_pane_needed('bottompane');
 		$self->manager->Update;
@@ -1821,7 +1839,7 @@ sub on_toggle_status_bar {
 
 	# Update the configuration
 	my $config = Padre->ide->config;
-	$config->{main_statusbar} = $self->menu->{view_statusbar}->IsChecked ? 1 : 0;
+	$config->{main_statusbar} = $self->menu->view->{view_statusbar}->IsChecked ? 1 : 0;
 
 	# Update the status bar
 	my $status_bar = $self->GetStatusBar;
@@ -1890,7 +1908,7 @@ sub convert_to {
 	my $doc     = $self->selected_document or return;
 	$doc->set_newline_type($newline_type);
 
-	$self->refresh_all;
+	$self->refresh;
 
 	return;
 }
@@ -1974,7 +1992,7 @@ sub on_stc_update_ui {
 	#$self->refresh_syntaxcheck;
 	# avoid refreshing the subs as that takes a lot of time
 	# TODO maybe we should refresh it on every 20s hit or so
-#	$self->refresh_all;
+#	$self->refresh;
 
 	return;
 }
@@ -2026,12 +2044,12 @@ sub on_close_pane {
 	if ( Data::Dumper::Dumper(\$pane) eq 
 	     Data::Dumper::Dumper(\$self->{gui}->{output_panel}) )
 	{
-		$self->menu->{view_output}->Check(0);
+		$self->menu->view->{view_output}->Check(0);
 	}
 	elsif ( Data::Dumper::Dumper(\$pane) eq
 	        Data::Dumper::Dumper(\$self->{gui}->{subs_panel}) )
 	{
-		$self->menu->{view_functions}->Check(0);
+		$self->menu->view->{view_functions}->Check(0);
 	}
 }
 
@@ -2174,7 +2192,7 @@ sub on_delete_leading_space {
 sub on_subs_panel_left {
 	my ($self, $event) = @_;
 	my $main  = Padre->ide->wx->main_window;
-	if ($main->{subs_panel_was_closed}) {
+	if ( $main->{subs_panel_was_closed} ) {
 		$main->show_functions(0);
 		$main->{subs_panel_was_closed} = 0;
 	}
@@ -2182,28 +2200,28 @@ sub on_subs_panel_left {
 }
 
 #
-# on_timer_check_overwrite()
+# timer_check_overwrite()
 #
 # called every 5 seconds to check if file has been overwritten outside of
 # padre.
 #
-sub on_timer_check_overwrite {
-	my ($self) = @_;
+sub timer_check_overwrite {
+	my $self = shift;
+	my $doc  = $self->selected_document or return;
 
-	my $doc = $self->selected_document;
-	return unless $doc && $doc->has_changed_on_disk;
-	return if ( $doc->{_already_popup_file_changed} );
+	return unless $doc->has_changed_on_disk;
+	return if     $doc->{_already_popup_file_changed};
 
 	$doc->{_already_popup_file_changed} = 1;
 	my $ret = Wx::MessageBox(
 		Wx::gettext("File changed on disk since last saved. Do you want to reload it?"),
 		$doc->filename || Wx::gettext("File not in sync"),
-		Wx::wxYES_NO|Wx::wxCENTRE,
+		Wx::wxYES_NO | Wx::wxCENTRE,
 		$self,
 	);
 
 	if ( $ret == Wx::wxYES ) {
-		if (not $doc->reload) {
+		unless ( $doc->reload ) {
 			$self->error(sprintf(Wx::gettext("Could not reload file: %s"), $doc->errstr));
 		} else {
 			$doc->editor->configure_editor($doc);
@@ -2212,6 +2230,8 @@ sub on_timer_check_overwrite {
 		$doc->{_timestamp} = $doc->time_on_file;
 	}
 	$doc->{_already_popup_file_changed} = 0;
+
+	return;
 }
 
 sub on_last_visited_pane {
@@ -2226,7 +2246,7 @@ sub on_last_visited_pane {
 				last;
 			}
 		}
-		#$self->refresh_all;
+		#$self->refresh;
 		$self->refresh_status;
 		$self->refresh_toolbar;
 	}
@@ -2241,7 +2261,7 @@ sub on_notebook_page_changed {
 		push @{ $_[0]->{page_history} }, $editor;
 		$editor->{Document}->set_indentation_style(); #  update indentation in case auto-update is on; TODO: encasulation?
 	}
-	$_[0]->refresh_all;
+	$_[0]->refresh;
 }
 
 1;

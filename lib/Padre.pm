@@ -44,7 +44,6 @@ use Class::Autouse qw{
 	Padre::Wx::Popup
 	Padre::Wx::Editor
 	Padre::Wx::Menu
-	Padre::Wx::Menu::Help
 	Padre::Wx::Ack
 	Padre::Wx::App
 	Padre::Wx::Dialog::Bookmarks
@@ -85,6 +84,7 @@ sub inst {
 	return $SINGLETON;
 }
 
+# The order of initialisation here is VERY important
 sub new {
 	Carp::croak("Padre->new already called. Use Padre->inst") if $SINGLETON;
 	my $class = shift;
@@ -108,20 +108,25 @@ sub new {
 
 	}, $class;
 
-	# Locate the configuration
+	# Load the first layer of permanent state (config files)
 	$self->{config_dir}  = Padre::Config->default_dir;
 	$self->{config_yaml} = Padre::Config->default_yaml;
 	$self->{config}      = Padre::Config->read(   $self->config_yaml );
 	$self->{config}    ||= Padre::Config->create( $self->config_yaml );
 
+	# Load the second layer of permanent state (database)
+	Class::Autouse->load('Padre::DB');
+
+	# Create the plugin manager
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
 
+	# Create the main window
+	$self->{wx} = Padre::Wx::App->new;
+
+	# Create the task manager
 	$self->{task_manager} = Padre::TaskManager->new(
 		use_threads => $self->config->{use_worker_threads},
 	);
-
-	# Load the database
-	Class::Autouse->load('Padre::DB');
 
 	return $self;
 }
@@ -169,6 +174,9 @@ sub run {
 		Padre::Pod::Indexer->run;
 		return;
 	}
+
+	# We can now confirm the GUI will be used
+	$self->wx->main_window->Show(1);
 
 	# FIXME: This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen

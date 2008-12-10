@@ -118,9 +118,6 @@ sub new {
 		}
 	);
 
-	# Do an initial refresh
-	$self->refresh;
-
 	return $self;
 }
 

@@ -47,7 +47,7 @@ sub new {
 				Wx::gettext("Could not find the Padre::Plugin::My plugin")
 			) unless -e $file;
 			$_[0]->setup_editor($file);
-			$_[0]->refresh_all;
+			$_[0]->refresh;
 		},
 	);
 	Wx::Event::EVT_MENU( $main,

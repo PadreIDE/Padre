@@ -6,6 +6,7 @@ use warnings;
 use Params::Util             qw{_INSTANCE};
 use Padre::Util              ();
 use Padre::Wx                ();
+use Padre::Wx::Menu::View    ();
 use Padre::Wx::Menu::Perl    ();
 use Padre::Wx::Menu::Run     ();
 use Padre::Wx::Menu::Plugins ();
@@ -27,7 +28,8 @@ use Class::XSAccessor
 		wx           => 'wx',
 
 		# Don't add accessors to here until they have been
-		# upgraded to be FULLY encapsulated classes.
+		# upgraded to be fully encapsulated classes.
+		view         => 'view',
 		perl         => 'perl',
 		run          => 'run',
 		plugins      => 'plugins',
@@ -44,7 +46,7 @@ sub new {
 	$self->{win}     = $main;
 	$self->{file}    = $self->menu_file( $main );
 	$self->{edit}    = $self->menu_edit( $main );
-	$self->{view}    = $self->menu_view( $main );
+	$self->{view}    = Padre::Wx::Menu::View->new($main);
 	$self->{perl}    = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}     = Padre::Wx::Menu::Run->new($main);
 	$self->{plugins} = Padre::Wx::Menu::Plugins->new($main);
@@ -55,7 +57,7 @@ sub new {
 	$self->{wx} = Wx::MenuBar->new;
 	$self->wx->Append( $self->{file},      Wx::gettext("&File")    );
 	$self->wx->Append( $self->{edit},      Wx::gettext("&Edit")    );
-	$self->wx->Append( $self->{view},      Wx::gettext("&View")    );
+	$self->wx->Append( $self->view->wx,    Wx::gettext("&View")    );
 	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
 	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
 	$self->wx->Append( $self->{window},    Wx::gettext("&Window")  );
@@ -70,21 +72,6 @@ sub new {
 		$self->{experimental} = Padre::Wx::Menu::Experimental->new($main);
 		$self->wx->Append( $self->experimental->wx, Wx::gettext("E&xperimental") );
 	}
-
-	# Setup menu state from configuration
-	$self->{view_lines}->Check( $config->{editor_linenumbers} ? 1 : 0 );
-	$self->{view_folding}->Check( $config->{editor_codefolding} ? 1 : 0 );
-	$self->{view_currentlinebackground}->Check( $config->{editor_currentlinebackground} ? 1 : 0 );
-	$self->{view_eol}->Check( $config->{editor_eol} ? 1 : 0 );
-	$self->{view_whitespaces}->Check( $config->{editor_whitespaces} ? 1 : 0 );
-	unless ( Padre::Util::WIN32 ) {
-		$self->{view_statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
-	}
-	$self->{view_output}->Check( $config->{main_output_panel} ? 1 : 0 );
-	$self->{view_functions}->Check( $config->{main_subs_panel} ? 1 : 0 );
-	$self->{view_indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
-	$self->{view_show_calltips}->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{view_show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
 
 	return $self;
 }
@@ -163,27 +150,15 @@ sub refresh {
 	}
 
 	if ( $document ) {
-		my $editor = $document->editor;
-		# check "wrap lines"
-		my $mode = $editor->GetWrapMode;
-		my $is_vwl_checked = $self->{view_word_wrap}->IsChecked;
-		if ( $mode eq Wx::wxSTC_WRAP_WORD and not $is_vwl_checked ) {
-			$self->{view_word_wrap}->Check(1);
-		} elsif ( $mode eq Wx::wxSTC_WRAP_NONE and $is_vwl_checked ) {
-			$self->{view_word_wrap}->Check(0);
-		}
-
-		my $selection_exists = 0;
-		my $txt = $editor->GetSelectedText;
-		if ( defined($txt) && length($txt) > 0 ) {
-			$selection_exists = 1;
-		}
+		my $editor    = $document->editor;
+		my $selected  = $editor->GetSelectedText;
+		my $selection = !! ( defined $selected and $selected ne '' );
 
 		$self->{$_}->Enable(1) for @has_document;
 		$self->{edit_undo}->Enable(  $editor->CanUndo  );
 		$self->{edit_redo}->Enable(  $editor->CanRedo  );
-		$self->{edit_copy}->Enable(  $selection_exists );
-		$self->{edit_cut}->Enable(   $selection_exists );
+		$self->{edit_copy}->Enable(  $selection        );
+		$self->{edit_cut}->Enable(   $selection        );
 		$self->{edit_paste}->Enable( $editor->CanPaste );
 	} else {
 		$self->{$_}->Enable(0) for @has_document;
@@ -191,10 +166,14 @@ sub refresh {
 	}
 
 	# Refresh submenus
+	$self->view->refresh;
 	$self->run->refresh;
 	$self->perl->refresh;
 	$self->plugins->refresh;
 	$self->help->refresh;
+	if ( $self->experimental ) {
+		$self->experimental->refresh;
+	}
 
 	return 1;
 }
@@ -518,157 +497,6 @@ sub menu_edit {
 	);
 	
 	return $menu;
-}
-
-sub menu_view {
-	my ( $self, $main ) = @_;
-	
-	my $config = Padre->ide->config;
-	
-	# Create the View menu
-	my $menu_view = Wx::Menu->new;
-
-	# GUI Elements
-	$self->{view_output} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Output") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_output},
-		sub {
-			$_[0]->show_output(
-				$_[0]->{menu}->{view_output}->IsChecked
-			),
-		},
-	);
-	$self->{view_functions} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Functions") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_functions},
-		sub {
-			$_[0]->show_functions(
-				$_[0]->{menu}->{view_functions}->IsChecked
-			),
-		},
-	);
-	unless ( Padre::Util::WIN32 ) {
-		# On Windows disabling the status bar is broken, so don't allow it
-		$self->{view_statusbar} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show StatusBar") );
-		Wx::Event::EVT_MENU( $main,
-			$self->{view_statusbar},
-			\&Padre::Wx::MainWindow::on_toggle_status_bar,
-		);
-	}
-	$menu_view->AppendSeparator;
-
-	# Editor look and feel
-	$self->{view_lines} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Line numbers") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_lines},
-		\&Padre::Wx::MainWindow::on_toggle_line_numbers,
-	);
-	$self->{view_folding} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Code Folding") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_folding},
-		\&Padre::Wx::MainWindow::on_toggle_code_folding,
-	);
-	$self->{view_eol} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Newlines") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_eol},
-		\&Padre::Wx::MainWindow::on_toggle_eol,
-	);
-	$self->{view_whitespaces} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Whitespaces") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_whitespaces},
-		\&Padre::Wx::MainWindow::on_toggle_whitespaces,
-	);
-
-	$self->{view_indentation_guide} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Indentation Guide") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_indentation_guide},
-		\&Padre::Wx::MainWindow::on_toggle_indentation_guide,
-	);
-	$menu_view->AppendSeparator;	
-
-	$self->{view_show_calltips} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Call Tips") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_show_calltips},
-		sub { $config->{editor_calltips} = $self->{view_show_calltips}->IsChecked },
-	);
-	$self->{view_show_syntaxcheck} = $menu_view->AppendCheckItem( -1, Wx::gettext("Show Syntax Check") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_show_syntaxcheck},
-		\&Padre::Wx::MainWindow::on_toggle_syntax_check,
-	);
-	$menu_view->AppendSeparator;
-	
-	$self->{view_word_wrap} = $menu_view->AppendCheckItem( -1, Wx::gettext("Word-Wrap") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_word_wrap},
-		sub {
-			$_[0]->on_word_wrap(
-				$_[0]->{menu}->{view_word_wrap}->IsChecked
-			),
-		},
-	);
-	$self->{view_currentlinebackground} = $menu_view->AppendCheckItem( -1, Wx::gettext("Highlight Current Line") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_currentlinebackground},
-		\&Padre::Wx::MainWindow::on_toggle_current_line_background,
-	);
-	$menu_view->AppendSeparator;
-
-	Wx::Event::EVT_MENU( $main,
-		$menu_view->Append( -1, Wx::gettext("Increase Font Size\tCtrl-+") ),
-		sub { $_[0]->zoom(+1) },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_view->Append( -1, Wx::gettext("Decrease Font Size\tCtrl--") ),
-		sub { $_[0]->zoom(-1) },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_view->Append( -1, Wx::gettext("Reset Font Size\tCtrl-/") ),
-		sub { $_[0]->zoom( -1 * $_[0]->selected_editor->GetZoom ) },
-	);
-
-	$menu_view->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
-		$menu_view->Append( -1, Wx::gettext("Set Bookmark\tCtrl-B") ),
-		sub { Padre::Wx::Dialog::Bookmarks->set_bookmark($_[0]) },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_view->Append( -1, Wx::gettext("Goto Bookmark\tCtrl-Shift-B") ),
-		sub { Padre::Wx::Dialog::Bookmarks->goto_bookmark($_[0]) },
-	);
-
-	$menu_view->AppendSeparator;
-	$self->{view_language} = Wx::Menu->new;
-	$menu_view->Append( -1, Wx::gettext("Language"), $self->{view_language} );
-	
-	Wx::Event::EVT_MENU( $main,
-		$self->{view_language}->AppendRadioItem( -1, Wx::gettext("System Default") ),
-		sub { $_[0]->change_locale() },
-	);
-	$self->{view_language}->AppendSeparator;
-	my %languages = Padre::Locale::languages;
-	foreach my $name (sort { $languages{$a} cmp $languages{$b} }  keys %languages) {
-		my $label = $languages{$name};
-		if ( $label eq 'English' ) {
-			$label = "English (The Queen's)";
-		}
-		my $item = $self->{view_language}->AppendRadioItem( -1, $label );
-		Wx::Event::EVT_MENU( $main,
-			$item,
-			sub { $_[0]->change_locale($name) },
-		);
-		if ($config->{host}->{locale} and $config->{host}->{locale} eq $name) {
-			$item->Check(1);
-		}
-	}
-
-	$menu_view->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
-		$menu_view->Append( -1, Wx::gettext("&Full screen\tF11") ),
-		\&Padre::Wx::MainWindow::on_full_screen,
-	);
-
-	return $menu_view;
 }
 
 sub menu_window {
