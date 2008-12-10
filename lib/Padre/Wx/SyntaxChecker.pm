@@ -1,61 +1,60 @@
 package Padre::Wx::SyntaxChecker;
+
+use 5.008;
 use strict;
 use warnings;
+use Padre::Wx ();
 
 our $VERSION = '0.20';
 
-require Padre;
-use Padre::Wx;
-
 use Class::XSAccessor
 	getters => {
-		mw => 'mw',
+		main => 'main',
 	};
 
 sub new {
 	my $class = shift;
-	my $mw = shift;
-
-	my $self = bless {
+	my $main  = shift;
+	my $self  = bless {
 		@_,
-		mw => $mw,
-	} => $class;
+		main => $main,
+	}, $class;
 
-	$self->create_syntaxbar($mw);
+	$self->create_syntaxbar($main);
+
 	return $self;
 }
 
 sub DESTROY {
-	my $self = shift;
-	delete $self->{mw};
+	delete $_[0]->{main};
 }
 
 sub create_syntaxbar {
 	my $self = shift;
-	my $mw = $self->mw;
+	my $main = $self->main;
 
-	$mw->{gui}->{syntaxcheck_panel} = Wx::ListView->new(
-		$mw->{gui}->{bottompane},
+	$main->{gui}->{syntaxcheck_panel} = Wx::ListView->new(
+		$main->{gui}->{bottompane},
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
-	my $syntaxbar = $mw->{gui}->{syntaxcheck_panel};
+	my $syntaxbar = $main->{gui}->{syntaxcheck_panel};
 
 	$syntaxbar->InsertColumn( 0, Wx::gettext('Line') );
 	$syntaxbar->InsertColumn( 1, Wx::gettext('Type') );
 	$syntaxbar->InsertColumn( 2, Wx::gettext('Description') );
 
-	$mw->{gui}->{bottompane}->InsertPage( 1, $syntaxbar, Wx::gettext("Syntax Check"), 0 );
+	$main->{gui}->{bottompane}->InsertPage( 1, $syntaxbar, Wx::gettext("Syntax Check"), 0 );
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$mw,
+		$main,
 		$syntaxbar,
 		\&on_syntax_check_msg_selected,
 	);
 
-	if ( $mw->{menu}->{view_show_syntaxcheck}->IsChecked ) {
+	if ( $main->menu->view->{view_show_syntaxcheck}->IsChecked ) {
 		$syntaxbar->Show();
 	}
 	else {
@@ -65,50 +64,47 @@ sub create_syntaxbar {
 	return;
 }
 
-
 sub syntaxbar {
-	return $_[0]->mw->{gui}->{syntaxcheck_panel};
+	return $_[0]->main->{gui}->{syntaxcheck_panel};
 }
-
 
 sub enable {
 	my $self = shift;
 	my $on   = shift;
+	my $main = $self->main;
 
-	my $mw   = $self->mw;
-
-	if ($on) {
+	if ( $on ) {
 		if (   defined( $self->{synCheckTimer} )
 			&& ref $self->{synCheckTimer} eq 'Wx::Timer'
 		) {
-			Wx::Event::EVT_IDLE( $mw, \&syntax_check_idle_timer );
-			on_syntax_check_timer( $mw, undef, 1 );
+			Wx::Event::EVT_IDLE( $main, \&syntax_check_idle_timer );
+			on_syntax_check_timer( $main, undef, 1 );
 		}
 		else {
-			$self->{synCheckTimer} = Wx::Timer->new($mw, Padre::Wx::id_SYNCHK_TIMER);
-			Wx::Event::EVT_TIMER( $mw, Padre::Wx::id_SYNCHK_TIMER, \&on_syntax_check_timer );
-			Wx::Event::EVT_IDLE( $mw, \&syntax_check_idle_timer );
+			$self->{synCheckTimer} = Wx::Timer->new($main, Padre::Wx::id_SYNCHK_TIMER);
+			Wx::Event::EVT_TIMER( $main, Padre::Wx::id_SYNCHK_TIMER, \&on_syntax_check_timer );
+			Wx::Event::EVT_IDLE( $main, \&syntax_check_idle_timer );
 		}
-		$mw->show_syntaxbar(1);
+		$main->show_syntaxbar(1);
 	}
 	else {
 		if (   defined($self->{synCheckTimer})
 			&& ref $self->{synCheckTimer} eq 'Wx::Timer'
 		) {
 			$self->{synCheckTimer}->Stop;
-			Wx::Event::EVT_IDLE( $mw, sub { return } );
+			Wx::Event::EVT_IDLE( $main, sub { return } );
 		}
-		my $page = $mw->selected_editor;
+		my $page = $main->selected_editor;
 		if ( defined($page) ) {
 			$page->MarkerDeleteAll(Padre::Wx::MarkError);
 			$page->MarkerDeleteAll(Padre::Wx::MarkWarn);
 		}
 		$self->syntaxbar->DeleteAllItems;
-		$mw->show_syntaxbar(0);
+		$main->show_syntaxbar(0);
 	}
 
 	# Setup a margin to hold fold markers
-	foreach my $editor ($mw->pages) {
+	foreach my $editor ($main->pages) {
 		if ($on) {
 			$editor->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL); # margin number 1 for symbols
 			$editor->SetMarginWidth(1, 16);                     # set margin 1 16 px wide
@@ -120,11 +116,9 @@ sub enable {
 	return;
 }
 
-
-
 sub syntax_check_idle_timer {
-	my ( $mw, $event ) = @_;
-	my $self = $mw->syntax_checker;
+	my ( $main, $event ) = @_;
+	my $self = $main->syntax_checker;
 
 	$self->{synCheckTimer}->Stop if $self->{synCheckTimer}->IsRunning;
 	$self->{synCheckTimer}->Start(500, 1);
@@ -133,12 +127,10 @@ sub syntax_check_idle_timer {
 	return;
 }
 
-
-
 sub on_syntax_check_msg_selected {
-	my ($mw, $event) = @_;
+	my ($main, $event) = @_;
 
-	my $page = $mw->selected_editor;
+	my $page = $main->selected_editor;
 
 	my $line_number = $event->GetItem->GetText;
 	return if  not defined($line_number)
@@ -152,7 +144,6 @@ sub on_syntax_check_msg_selected {
 
 	return;
 }
-
 
 sub on_syntax_check_timer {
 	my ( $win, $event, $force ) = @_;
@@ -237,9 +228,6 @@ sub on_syntax_check_timer {
 
 	return;
 }
-
-
-
 
 1;
 
