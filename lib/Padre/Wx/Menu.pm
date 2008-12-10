@@ -7,6 +7,7 @@ use Params::Util             qw{_INSTANCE};
 use Padre::Util              ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::File    ();
+use Padre::Wx::Menu::Edit    ();
 use Padre::Wx::Menu::View    ();
 use Padre::Wx::Menu::Perl    ();
 use Padre::Wx::Menu::Run     ();
@@ -31,6 +32,7 @@ use Class::XSAccessor
 		# Don't add accessors to here until they have been
 		# upgraded to be fully encapsulated classes.
 		file         => 'file',
+		edit         => 'edit',
 		view         => 'view',
 		perl         => 'perl',
 		run          => 'run',
@@ -47,7 +49,7 @@ sub new {
 	# Generate the individual menus
 	$self->{win}     = $main;
 	$self->{file}    = Padre::Wx::Menu::File->new($main);
-	$self->{edit}    = $self->menu_edit( $main );
+	$self->{edit}    = Padre::Wx::Menu::Edit->new($main);
 	$self->{view}    = Padre::Wx::Menu::View->new($main);
 	$self->{perl}    = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}     = Padre::Wx::Menu::Run->new($main);
@@ -58,7 +60,7 @@ sub new {
 	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
 	$self->wx->Append( $self->file->wx,    Wx::gettext("&File")    );
-	$self->wx->Append( $self->{edit},      Wx::gettext("&Edit")    );
+	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit")    );
 	$self->wx->Append( $self->view->wx,    Wx::gettext("&View")    );
 	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
 	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
@@ -118,233 +120,35 @@ sub remove_alt_n_menu {
 #####################################################################
 # Reflowing the Menu
 
-my @has_document = qw(
-	edit_goto
-	edit_autocomp
-	edit_brace_match
-	edit_join_lines
-	edit_snippets
-	edit_comment_out
-	edit_uncomment
-	edit_diff
-	edit_insert_from_file
-);
-
 sub refresh {
 	my $self     = shift;
-	my $document = Padre::Documents->current;
+	my $menu     = $self->wx->GetMenuLabel(3) eq '&Perl';
+	my $document = !! _INSTANCE(
+		Padre::Documents->current,
+		'Padre::Document::Perl'
+	);
 
-	if ( _INSTANCE($document, 'Padre::Document::Perl') and $self->wx->GetMenuLabel(3) ne '&Perl') {
+	# Add/Remove the Perl menu
+	if ( $document and not $menu ) {
 		$self->wx->Insert( 3, $self->perl->wx, '&Perl' );
-	} elsif ( not _INSTANCE($document, 'Padre::Document::Perl') and $self->wx->GetMenuLabel(3) eq '&Perl') {
+	} elsif ( $menu and not $document ) {
 		$self->wx->Remove( 3 );
 	}
 
-	if ( $document ) {
-		my $editor    = $document->editor;
-		my $selected  = $editor->GetSelectedText;
-		my $selection = !! ( defined $selected and $selected ne '' );
-
-		$self->{$_}->Enable(1) for @has_document;
-		$self->{edit_undo}->Enable(  $editor->CanUndo  );
-		$self->{edit_redo}->Enable(  $editor->CanRedo  );
-		$self->{edit_copy}->Enable(  $selection        );
-		$self->{edit_cut}->Enable(   $selection        );
-		$self->{edit_paste}->Enable( $editor->CanPaste );
-	} else {
-		$self->{$_}->Enable(0) for @has_document;
-		$self->{$_}->Enable(0) for qw(edit_undo edit_redo edit_copy edit_cut edit_paste);
-	}
-
-	# Refresh encapsulated menus
+	# Refresh individual menus
 	$self->file->refresh;
+	$self->edit->refresh;
 	$self->view->refresh;
 	$self->run->refresh;
 	$self->perl->refresh;
 	$self->plugins->refresh;
 	$self->help->refresh;
+
 	if ( $self->experimental ) {
 		$self->experimental->refresh;
 	}
 
 	return 1;
-}
-
-sub menu_edit {
-	my ( $self, $main ) = @_;
-	
-	# Create the Edit menu
-	my $menu = Wx::Menu->new;
-
-	# Undo/Redo
-	$self->{edit_undo} = $menu->Append( Wx::wxID_UNDO, Wx::gettext("&Undo") );
-	Wx::Event::EVT_MENU( $main, # Ctrl-Z
-		$self->{edit_undo},
-		sub { Padre::Documents->current->editor->Undo; },
-	);
-	$self->{edit_redo} = $menu->Append( Wx::wxID_REDO, Wx::gettext("&Redo") );
-	Wx::Event::EVT_MENU( $main, # Ctrl-Y
-		$self->{edit_redo},
-		sub { Padre::Documents->current->editor->Redo; },
-	);
-	$menu->AppendSeparator;
-
-	my $menu_edit_select = Wx::Menu->new;
-	$menu->Append( -1, Wx::gettext("Select"), $menu_edit_select );
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_select->Append( Wx::wxID_SELECTALL, Wx::gettext("Select all\tCtrl-A") ),
-		sub { \&Padre::Wx::Editor::text_select_all(@_) },
-	);
-	$menu_edit_select->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_select->Append( -1, Wx::gettext("Mark selection start\tCtrl-[") ),
-		sub {
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
-			$editor->text_selection_mark_start;
-		},
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_select->Append( -1, Wx::gettext("Mark selection end\tCtrl-]") ),
-		sub {
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
-			$editor->text_selection_mark_end;
-		},
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_select->Append( -1, Wx::gettext("Clear selection marks") ),
-		\&Padre::Wx::Editor::text_selection_clear_marks,
-	);
-
-
-	$self->{edit_copy} = $menu->Append( Wx::wxID_COPY, Wx::gettext("&Copy\tCtrl-C") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_copy},
-		sub { Padre->ide->wx->main_window->selected_editor->Copy; }
-	);
-	$self->{edit_cut} = $menu->Append( Wx::wxID_CUT, Wx::gettext("Cu&t\tCtrl-X") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_cut},
-		sub { Padre->ide->wx->main_window->selected_editor->Cut; }
-	);
-	$self->{edit_paste} = $menu->Append( Wx::wxID_PASTE, Wx::gettext("&Paste\tCtrl-V") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_paste},
-		sub { 
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
-			$editor->Paste;
-		},
-	);
-	$menu->AppendSeparator;
-
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( Wx::wxID_FIND, Wx::gettext("&Find\tCtrl-F") ),
-		sub { Padre::Wx::Dialog::Find->find(@_) },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( -1, Wx::gettext("Find Next\tF3") ),
-		sub { Padre::Wx::Dialog::Find->find_next(@_) },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( -1, Wx::gettext("Find Previous\tShift-F3") ),
-		sub { Padre::Wx::Dialog::Find->find_previous(@_) },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( -1, Wx::gettext("Ac&k") ),
-		\&Padre::Wx::Ack::on_ack,
-	);
-	$self->{edit_goto} = $menu->Append( -1, Wx::gettext("&Goto\tCtrl-G") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_goto},
-		\&Padre::Wx::MainWindow::on_goto,
-	);
-	$self->{edit_autocomp} = $menu->Append( -1, Wx::gettext("&AutoComp\tCtrl-P") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_autocomp},
-		\&Padre::Wx::MainWindow::on_autocompletition,
-	);
-	$self->{edit_brace_match} = $menu->Append( -1, Wx::gettext("&Brace matching\tCtrl-1") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_brace_match},
-		\&Padre::Wx::MainWindow::on_brace_matching,
-	);
-	$self->{edit_join_lines} = $menu->Append( -1, Wx::gettext("&Join lines\tCtrl-J") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_join_lines},
-		\&Padre::Wx::MainWindow::on_join_lines,
-	);
-	$self->{edit_snippets} = $menu->Append( -1, Wx::gettext("Snippets\tCtrl-Shift-A") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_snippets},
-		sub { Padre::Wx::Dialog::Snippets->snippets(@_) },
-	); 
-	$menu->AppendSeparator;
-
-	# Commenting
-	$self->{edit_comment_out} = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_comment_out},
-		\&Padre::Wx::MainWindow::on_comment_out_block,
-	);
-	$self->{edit_uncomment} = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_uncomment},
-		\&Padre::Wx::MainWindow::on_uncomment_block,
-	);
-	$menu->AppendSeparator;
-
-	# Tab And Space
-	my $menu_edit_tab = Wx::Menu->new;
-	$menu->Append( -1, Wx::gettext("Tabs and Spaces"), $menu_edit_tab );
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_tab->Append( -1, Wx::gettext("Tabs to Spaces...") ),
-		sub { $_[0]->on_tab_and_space('Tab_to_Space') },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_tab->Append( -1, Wx::gettext("Spaces to Tabs...") ),
-		sub { $_[0]->on_tab_and_space('Space_to_Tab') },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_tab->Append( -1, Wx::gettext("Delete Trailing Spaces") ),
-		sub { $_[0]->on_delete_ending_space() },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_tab->Append( -1, Wx::gettext("Delete Leading Spaces") ),
-		sub { $_[0]->on_delete_leading_space() },
-	);
-
-	# Upper and Lower Case
-	my $menu_edit_case = Wx::Menu->new;
-	$menu->Append( -1, Wx::gettext("Upper/Lower Case"), $menu_edit_case );
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_case->Append( -1, Wx::gettext("Upper All\tCtrl-Shift-U") ),
-		sub { Padre::Documents->current->editor->UpperCase; },
-	);
-	Wx::Event::EVT_MENU( $main,
-		$menu_edit_case->Append( -1, Wx::gettext("Lower All\tCtrl-U") ),
-		sub { Padre::Documents->current->editor->LowerCase; },
-	);
-	$menu->AppendSeparator;
-
-	# Diff
-	$self->{edit_diff} = $menu->Append( -1, Wx::gettext("Diff") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_diff},
-		\&Padre::Wx::MainWindow::on_diff,
-	);
-	$self->{edit_insert_from_file} = $menu->Append( -1, Wx::gettext("Insert From File...") );
-	Wx::Event::EVT_MENU( $main,
-		$self->{edit_insert_from_file},
-		\&Padre::Wx::MainWindow::on_insert_from_file,
-	);
-	$menu->AppendSeparator;
-
-	# User Preferences
-	Wx::Event::EVT_MENU( $main,
-		$menu->Append( -1, Wx::gettext("Preferences") ),
-		\&Padre::Wx::MainWindow::on_preferences,
-	);
-	
-	return $menu;
 }
 
 sub menu_window {

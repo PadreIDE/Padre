@@ -253,8 +253,8 @@ sub new {
 			Padre::DB->delete_recent( 'files' );
 
 			# Replace the whole File menu
-			my $menu       = $_[0]->{menu}->menu_file($_[0]);
-			my $menu_place = $_[0]->{menu}->wx->FindMenu(
+			my $menu       = Padre::Wx::Menu::File->new($_[0]);
+			my $menu_place = $_[0]->menu->wx->FindMenu(
 				Wx::gettext("&File")
 			);
 			$_[0]->{menu}->wx->Replace(
@@ -322,21 +322,21 @@ sub new {
 sub refresh {
 	my $self     = shift;
 	my $document = Padre::Documents->current;
-	my $show     = $document ? 1 : 0;
+	my $doc      = $document ? 1 : 0;
 
-	$self->{ open_selection        }->Enable($show);
-	$self->{ close                 }->Enable($show);
-	$self->{ close_all             }->Enable($show);
-	$self->{ close_all_but_current }->Enable($show);
-	$self->{ reload_file           }->Enable($show);
-	$self->{ save                  }->Enable($show);
-	$self->{ save_as               }->Enable($show);
-	$self->{ save_all              }->Enable($show);
-	$self->{ print                 }->Enable($show);
-	$self->{ convert_nl_windows    }->Enable($show);
-	$self->{ convert_nl_unix       }->Enable($show);
-	$self->{ convert_nl_mac        }->Enable($show);
-	$self->{ docstat               }->Enable($show);
+	$self->{ open_selection        }->Enable($doc);
+	$self->{ close                 }->Enable($doc);
+	$self->{ close_all             }->Enable($doc);
+	$self->{ close_all_but_current }->Enable($doc);
+	$self->{ reload_file           }->Enable($doc);
+	$self->{ save                  }->Enable($doc);
+	$self->{ save_as               }->Enable($doc);
+	$self->{ save_all              }->Enable($doc);
+	$self->{ print                 }->Enable($doc);
+	$self->{ convert_nl_windows    }->Enable($doc);
+	$self->{ convert_nl_unix       }->Enable($doc);
+	$self->{ convert_nl_mac        }->Enable($doc);
+	$self->{ docstat               }->Enable($doc);
 
 	return 1;
 }

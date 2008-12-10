@@ -556,7 +556,7 @@ sub _refresh_plugin_menu {
 	my $main = $self->parent->wx->main_window;
 
 	# Regenerate the menu
-	my $menu    = $main->{menu};
+	my $menu    = $main->menu;
 	my $submenu = Padre::Wx::Menu::Plugins->new($main);
 	my $place   = $menu->{wx}->FindMenu( Wx::gettext("Pl&ugins") );
 
