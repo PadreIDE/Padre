@@ -248,12 +248,26 @@ sub menu_file {
 	);
 	$menu->AppendSeparator;
 
-#	# Printing
-	$self->{file_print} = $menu->Append( Wx::wxID_PRINT, Wx::gettext('&Print...') );
+	# Printing
+	$self->{file_print} = $menu->Append(
+		Wx::wxID_PRINT,
+		Wx::gettext('&Print...'),
+	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{file_print},
-		sub { Padre::Wx::Print::OnPrint(@_) }     
-	);                                                                            
+		sub {
+			require Wx::Print;
+			require Padre::Wx::Print::Printout;
+			my $printer  = Wx::Printer->new;
+			my $printout = Padre::Wx::Print::Printout->new(
+				$_[0]->selected_editor, "Print",
+			);
+			$printer->Print( $_[0], $printout, 1 );
+			$printout->Destroy;
+			return;
+		},
+	);
+
 	$menu->AppendSeparator;
 
 	# Conversions and Transforms
