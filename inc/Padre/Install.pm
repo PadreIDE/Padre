@@ -5,21 +5,6 @@ use Module::Build;
 
 @Padre::Install::ISA = qw(Module::Build);
 
-sub ACTION_code {
-    my $self = shift;
-
-    $self->SUPER::ACTION_code(@_);
-
-    use FindBin               ();
-    use File::Spec::Functions qw(catfile catdir);
-    require File::Copy::Recursive;
-    import  File::Copy::Recursive qw(dircopy);
-
-    my $dir =  catdir($FindBin::Bin, 'blib', 'lib', 'auto', 'share', 'dist', $self->dist_name);
-    dircopy(catfile($FindBin::Bin, 'share'), $dir);
-    return;
-}
-
 sub ACTION_exe {
     my $self = shift;
 
