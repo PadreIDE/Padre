@@ -29,38 +29,6 @@ sub ACTION_exe {
     return;
 }
 
-#
-# ./Build pot
-#
-# update messages.pot file with new strings detected.
-#
-sub ACTION_pot {
-	use FindBin               qw{ $Bin };
-    use File::Spec::Functions qw{ catfile catdir };
-    use File::Find;
-
-	my $localedir = catdir ( $Bin, 'share', 'locale' );
-	my $potfile   = catfile( $localedir, 'messages.pot' );
-	my $pmfiles   = catfile( $Bin, 'files.txt' );
-
-	# build list of perl modules from where to extract strings
-	my @pmfiles;
-	find( sub {
-			return unless /\.pm$/;
-			push @pmfiles, $File::Find::name;
-		}, $Bin );
-	open my $fh, '>', $pmfiles or die "cannot open '$pmfiles': $!\n";
-	print $fh map { "$_$/" } @pmfiles;
-	close $fh;
-
-	# update pot file
-	unlink $potfile;
-	system("xgettext -o $potfile -f $pmfiles") == 0
-		or die "xgettext exited with return code " . $? >> 8;
-
-	# cleanup
-	unlink $pmfiles;
-}
 
 sub libs {
     require Alien::wxWidgets;
