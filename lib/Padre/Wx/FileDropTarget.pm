@@ -18,6 +18,7 @@ sub new {
 sub OnDropFiles {
 	foreach my $i ( @{$_[3]} ) {
 		$_[0]->{main}->setup_editor($i);
+		$_[0]->{main}->refresh;
 	}
 	return 1;
 }
