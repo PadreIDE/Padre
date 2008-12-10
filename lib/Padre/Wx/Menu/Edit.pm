@@ -26,23 +26,23 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	# Undo/Redo
-	$self->{edit_undo} = $self->Append(
+	$self->{undo} = $self->Append(
 		Wx::wxID_UNDO,
 		Wx::gettext("&Undo")
 	);
 	Wx::Event::EVT_MENU( $main, # Ctrl-Z
-		$self->{edit_undo},
+		$self->{undo},
 		sub {
 			Padre::Documents->current->editor->Undo;
 		},
 	);
 
-	$self->{edit_redo} = $self->Append(
+	$self->{redo} = $self->Append(
 		Wx::wxID_REDO,
 		Wx::gettext("&Redo")
 	);
 	Wx::Event::EVT_MENU( $main, # Ctrl-Y
-		$self->{edit_redo},
+		$self->{redo},
 		sub {
 			Padre::Documents->current->editor->Redo;
 		},
@@ -55,13 +55,13 @@ sub new {
 
 
 	# Selection
-	my $self_edit_select = Wx::Menu->new;
+	my $edit_select = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Select"),
-		$self_edit_select
+		$edit_select
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_select->Append(
+		$edit_select->Append(
 			Wx::wxID_SELECTALL,
 			Wx::gettext("Select all\tCtrl-A")
 		),
@@ -70,9 +70,9 @@ sub new {
 		},
 	);
 
-	$self_edit_select->AppendSeparator;
+	$edit_select->AppendSeparator;
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_select->Append( -1,
+		$edit_select->Append( -1,
 			Wx::gettext("Mark selection start\tCtrl-[")
 		),
 		sub {
@@ -82,7 +82,7 @@ sub new {
 	);
 
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_select->Append( -1,
+		$edit_select->Append( -1,
 			Wx::gettext("Mark selection end\tCtrl-]")
 		),
 		sub {
@@ -92,7 +92,7 @@ sub new {
 	);
 
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_select->Append( -1,
+		$edit_select->Append( -1,
 			Wx::gettext("Clear selection marks")
 		),
 		\&Padre::Wx::Editor::text_selection_clear_marks,
@@ -103,34 +103,34 @@ sub new {
 
 
 	# Cut and Paste
-	$self->{edit_copy} = $self->Append(
+	$self->{copy} = $self->Append(
 		Wx::wxID_COPY,
 		Wx::gettext("&Copy\tCtrl-C")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_copy},
+		$self->{copy},
 		sub {
 			Padre->ide->wx->main_window->selected_editor->Copy;
 		}
 	);
 
-	$self->{edit_cut} = $self->Append(
+	$self->{cut} = $self->Append(
 		Wx::wxID_CUT,
 		Wx::gettext("Cu&t\tCtrl-X")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_cut},
+		$self->{cut},
 		sub {
 			Padre->ide->wx->main_window->selected_editor->Cut;
 		}
 	);
 
-	$self->{edit_paste} = $self->Append(
+	$self->{paste} = $self->Append(
 		Wx::wxID_PASTE,
 		Wx::gettext("&Paste\tCtrl-V")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_paste},
+		$self->{paste},
 		sub { 
 			my $editor = Padre->ide->wx->main_window->selected_editor or return;
 			$editor->Paste;
@@ -179,43 +179,43 @@ sub new {
 		\&Padre::Wx::Ack::on_ack,
 	);
 
-	$self->{edit_goto} = $self->Append( -1,
+	$self->{goto} = $self->Append( -1,
 		Wx::gettext("&Goto\tCtrl-G")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_goto},
+		$self->{goto},
 		\&Padre::Wx::MainWindow::on_goto,
 	);
 
-	$self->{edit_autocomp} = $self->Append( -1,
+	$self->{autocomp} = $self->Append( -1,
 		Wx::gettext("&AutoComp\tCtrl-P")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_autocomp},
+		$self->{autocomp},
 		\&Padre::Wx::MainWindow::on_autocompletition,
 	);
 
-	$self->{edit_brace_match} = $self->Append( -1,
+	$self->{brace_match} = $self->Append( -1,
 		Wx::gettext("&Brace matching\tCtrl-1")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_brace_match},
+		$self->{brace_match},
 		\&Padre::Wx::MainWindow::on_brace_matching,
 	);
 
-	$self->{edit_join_lines} = $self->Append( -1,
+	$self->{join_lines} = $self->Append( -1,
 		Wx::gettext("&Join lines\tCtrl-J")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_join_lines},
+		$self->{join_lines},
 		\&Padre::Wx::MainWindow::on_join_lines,
 	);
 
-	$self->{edit_snippets} = $self->Append( -1,
+	$self->{snippets} = $self->Append( -1,
 		Wx::gettext("Snippets\tCtrl-Shift-A")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_snippets},
+		$self->{snippets},
 		sub {
 			Padre::Wx::Dialog::Snippets->snippets(@_);
 		},
@@ -228,19 +228,19 @@ sub new {
 
 
 	# Commenting
-	$self->{edit_comment_out} = $self->Append( -1,
+	$self->{comment_out} = $self->Append( -1,
 		Wx::gettext("&Comment Selected Lines\tCtrl-M")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_comment_out},
+		$self->{comment_out},
 		\&Padre::Wx::MainWindow::on_comment_out_block,
 	);
 
-	$self->{edit_uncomment} = $self->Append( -1,
+	$self->{uncomment} = $self->Append( -1,
 		Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_uncomment},
+		$self->{uncomment},
 		\&Padre::Wx::MainWindow::on_uncomment_block,
 	);
 	$self->AppendSeparator;
@@ -250,13 +250,13 @@ sub new {
 
 
 	# Tabs And Spaces
-	my $self_edit_tab = Wx::Menu->new;
+	my $edit_tab = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Tabs and Spaces"),
-		$self_edit_tab
+		$edit_tab
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_tab->Append( -1,
+		$edit_tab->Append( -1,
 			Wx::gettext("Tabs to Spaces...")
 		),
 		sub {
@@ -264,7 +264,7 @@ sub new {
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_tab->Append( -1,
+		$edit_tab->Append( -1,
 			Wx::gettext("Spaces to Tabs...")
 		),
 		sub {
@@ -272,7 +272,7 @@ sub new {
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_tab->Append( -1,
+		$edit_tab->Append( -1,
 			Wx::gettext("Delete Trailing Spaces")
 		),
 		sub {
@@ -280,7 +280,7 @@ sub new {
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_tab->Append( -1,
+		$edit_tab->Append( -1,
 			Wx::gettext("Delete Leading Spaces")
 		),
 		sub {
@@ -293,13 +293,13 @@ sub new {
 
 
 	# Upper and Lower Case
-	my $self_edit_case = Wx::Menu->new;
+	my $edit_case = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Upper/Lower Case"),
-		$self_edit_case
+		$edit_case
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_case->Append( -1,
+		$edit_case->Append( -1,
 			Wx::gettext("Upper All\tCtrl-Shift-U")
 		),
 		sub {
@@ -308,7 +308,7 @@ sub new {
 	);
 
 	Wx::Event::EVT_MENU( $main,
-		$self_edit_case->Append( -1,
+		$edit_case->Append( -1,
 			Wx::gettext("Lower All\tCtrl-U")
 		),
 		sub {
@@ -323,19 +323,19 @@ sub new {
 
 
 	# Diff
-	$self->{edit_diff} = $self->Append( -1,
+	$self->{diff} = $self->Append( -1,
 		Wx::gettext("Diff")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_diff},
+		$self->{diff},
 		\&Padre::Wx::MainWindow::on_diff,
 	);
 
-	$self->{edit_insert_from_file} = $self->Append( -1,
+	$self->{insert_from_file} = $self->Append( -1,
 		Wx::gettext("Insert From File...")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{edit_insert_from_file},
+		$self->{insert_from_file},
 		\&Padre::Wx::MainWindow::on_insert_from_file,
 	);
 
@@ -366,25 +366,25 @@ sub refresh {
 	my $doc      = $document ? 1 : 0;
 
 	# Handle the simple cases
-	$self->{ edit_goto             }->Enable($doc);
-	$self->{ edit_autocomp         }->Enable($doc);
-	$self->{ edit_brace_match      }->Enable($doc);
-	$self->{ edit_join_lines       }->Enable($doc);
-	$self->{ edit_snippets         }->Enable($doc);
-	$self->{ edit_comment_out      }->Enable($doc);
-	$self->{ edit_uncomment        }->Enable($doc);
-	$self->{ edit_diff             }->Enable($doc);
-	$self->{ edit_insert_from_file }->Enable($doc);
+	$self->{ goto             }->Enable($doc);
+	$self->{ autocomp         }->Enable($doc);
+	$self->{ brace_match      }->Enable($doc);
+	$self->{ join_lines       }->Enable($doc);
+	$self->{ snippets         }->Enable($doc);
+	$self->{ comment_out      }->Enable($doc);
+	$self->{ uncomment        }->Enable($doc);
+	$self->{ diff             }->Enable($doc);
+	$self->{ insert_from_file }->Enable($doc);
 
 	# Handle the complex cases
 	my $editor    = $document ? $document->editor : 0;
 	my $selected  = $editor ? $editor->GetSelectedText : '';
 	my $selection = !! ( defined $selected and $selected ne '' );
-	$self->{edit_undo}->Enable( $editor and $editor->CanUndo );
-	$self->{edit_redo}->Enable( $editor and $editor->CanRedo );
-	$self->{edit_cut}->Enable( $selection );
-	$self->{edit_copy}->Enable( $selection );
-	$self->{edit_paste}->Enable( $editor and $editor->CanPaste );
+	$self->{undo}->Enable( $editor and $editor->CanUndo );
+	$self->{redo}->Enable( $editor and $editor->CanRedo );
+	$self->{cut}->Enable( $selection );
+	$self->{copy}->Enable( $selection );
+	$self->{paste}->Enable( $editor and $editor->CanPaste );
 
 	return 1;
 }

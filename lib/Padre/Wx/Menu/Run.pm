@@ -60,6 +60,20 @@ sub new {
 	return $self;
 }
 
+sub refresh {
+	my $self     = shift;
+	my $document = Padre::Documents->current;
+
+	# Disable if not document,
+	# otherwise match run_command state
+	$self->{run_script}->Enable( $document
+		? $self->{run_command}->IsEnabled
+		: 0
+	);
+
+	return 1;
+}
+
 
 
 
