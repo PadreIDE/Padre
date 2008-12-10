@@ -55,7 +55,6 @@ use Class::Autouse qw{
 	Padre::Wx::Dialog::Snippets
 	Padre::Wx::History::TextDialog
 	Padre::Wx::MainWindow
-	Padre::Wx::Print
 	Padre::Wx::SyntaxChecker
 };
 
@@ -977,7 +976,7 @@ of running code using F5.
 
 not in use.
 
-=item L<Padre::Wx::Print>
+=item L<Padre::Wx::Printout>
 
 Implementing the printing capability of Padre.
 
