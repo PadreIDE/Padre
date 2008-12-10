@@ -1,4 +1,5 @@
 use strict;
+use lib 'privinc';
 use inc::Module::Install;
 
 use Config;
@@ -7,7 +8,7 @@ unless ( $Config{usethreads} ) {
 	exit 0;
 }
 
-check_wx_version();
+check_wx_version;
 
 name           'Padre';
 license        'perl';
@@ -68,7 +69,7 @@ test_requires  'Test::More'              => '0.47';
 test_requires  'Test::Exception'         => '0.27';
 test_requires  'Test::NoWarnings'        => '0.084';
 test_requires  'Test::NeedsDisplay'      => '1.05';
-no_index       'directory' => [ qw{ t xt eg share inc} ];
+no_index       'directory' => [ qw{ t xt eg share inc privinc} ];
 install_script 'script/padre';
 install_share;
 
@@ -80,30 +81,6 @@ install_share;
 #			MailingList => 'http://mail.perlide.org/mailman/listinfo/padre-dev',
 #		},
 
+setup_padre;
+
 WriteAll;
-
-sub check_wx_version {
-	# Missing Wx should be dealt by the standard prereq system
-	eval { require Wx };
-	return if $@;
-
-	my $version = Wx::wxVERSION_STRING();
-	nono("Could not find Wx::wxVERSION_STRING") if not defined $version;
-
-	print "Found $version\n";
-	print "Found Wx.pm     $Wx::VERSION\n";
-	$version =~ s/wxWidgets\s+//;
-	nono("Sorry we don't known this wxWidgets version format: '$version'")
-		if $version !~ /^\d+\.\d+(\.\d+)?$/;
-	my ($major, $minor, $way_too_minor) = split /\./, $version;
-	nono("Padre needs at least version 2.8.8 of wxWidgets. this is version $version")
-		if $major < 2 or $minor < 8;
-
-	return;
-}
-
-sub nono {
-	my $msg = shift;
-	print STDERR "$msg\n";
-	exit 0;
-}
