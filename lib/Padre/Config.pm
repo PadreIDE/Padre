@@ -161,6 +161,8 @@ sub new {
 		# Search and replace recent values
 		search_terms              => [],
 		replace_terms             => [],
+        ack_terms                 => [],
+        ack_dirs                  => [],
 
 		# Various things that should probably be in the database
 		bookmarks                 => {},
@@ -243,8 +245,10 @@ sub write {
 	$copy->{host}->{main_files_pos} = join( "\n", grep { defined } @{$copy->{host}->{main_files_pos}} );
 	
 	# Limit the search_terms/replace_terms
-	@{$copy->{search_terms}}  = splice(@{$copy->{search_terms}},  0, 30);
-	@{$copy->{replace_terms}} = splice(@{$copy->{replace_terms}}, 0, 30);
+	@{$copy->{search_terms}}  = splice(@{$copy->{search_terms}},  0, 20);
+	@{$copy->{replace_terms}} = splice(@{$copy->{replace_terms}}, 0, 20);
+	@{$copy->{ack_terms}}     = splice(@{$copy->{ack_terms}},  0, 20);
+	@{$copy->{ack_dirs}}      = splice(@{$copy->{ack_dirs}}, 0, 20);
 
 	# Save the host configuration
 	Padre::DB->hostconf_write( delete $copy->{host} );

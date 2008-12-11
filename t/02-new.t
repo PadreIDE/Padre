@@ -46,6 +46,8 @@ SCOPE: {
 
 		search_terms       => [],
 		replace_terms      => [],
+		ack_terms		   => [],
+		ack_dirs		   => [],
 		main_startup       => 'new',
 		main_statusbar     => 1,
 		main_output        => 0,

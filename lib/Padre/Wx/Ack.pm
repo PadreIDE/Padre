@@ -57,7 +57,10 @@ sub on_ack {
 	# clear %stats; for every request
 	%stats = ();
 	
-	my $dialog = dialog();
+	my $text   = $mainwindow->selected_text;
+	$text = '' if not defined $text;
+	
+	my $dialog = dialog($mainwindow, $text);
 	$dialog->Show(1);
 
 	return;
@@ -106,6 +109,18 @@ sub _get_data_from {
 	
 	$dialog->Destroy;
 	
+	my $config = Padre->ide->config;
+	if ( $term ) {
+		unshift @{$config->{ack_terms}}, $term;
+		my %seen;
+		@{$config->{ack_terms}} = grep {!$seen{$_}++} @{$config->{ack_terms}};
+	}
+	if ( $dir ) {
+		unshift @{$config->{ack_dirs}}, $dir;
+		my %seen;
+		@{$config->{ack_dirs}} = grep {!$seen{$_}++} @{$config->{ack_dirs}};
+	}
+	
 	return {
 		term => $term,
 		dir  => $dir,
@@ -113,15 +128,19 @@ sub _get_data_from {
 }
 
 sub get_layout {
+	my ( $term ) = shift;
+	
+	my $config = Padre->ide->config;
+	
 	my @layout = (
 		[
 			[ 'Wx::StaticText', undef,              gettext('Term:')],
-			[ 'Wx::ComboBox',   '_ack_term_',       '', [] ],
+			[ 'Wx::ComboBox',   '_ack_term_',       $term, $config->{ack_terms} ],
 			[ 'Wx::Button',     '_find_',           Wx::wxID_FIND ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('Dir:')],
-			[ 'Wx::ComboBox',   '_ack_dir_',        '', [] ],
+			[ 'Wx::ComboBox',   '_ack_dir_',        '', $config->{ack_dirs} ],
 			[ 'Wx::Button',     '_pick_dir_',        gettext('Pick &directory')],
 		],
 		[
@@ -134,9 +153,9 @@ sub get_layout {
 }
 
 sub dialog {
-	my ( $win, $config ) = @_;
+	my ( $win, $term ) = @_;
 	
-	my $layout = get_layout();
+	my $layout = get_layout($term);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $win,
 		title  => gettext("Ack"),
