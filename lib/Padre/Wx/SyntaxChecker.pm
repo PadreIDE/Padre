@@ -54,7 +54,7 @@ sub create_syntaxbar {
 		\&on_syntax_check_msg_selected,
 	);
 
-	if ( $main->menu->view->{view_show_syntaxcheck}->IsChecked ) {
+	if ( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
 		$syntaxbar->Show();
 	}
 	else {

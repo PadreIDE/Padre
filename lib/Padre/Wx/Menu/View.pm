@@ -31,31 +31,31 @@ sub new {
 
 
 	# Show or hide GUI elements
-	$self->{view_output} = $self->AppendCheckItem( -1,
+	$self->{output} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Output")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_output},
+		$self->{output},
 		sub {
 			$_[0]->show_output( $_[1]->IsChecked );
 		},
 	);
 
-	$self->{view_functions} = $self->AppendCheckItem( -1,
+	$self->{functions} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Functions")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_functions},
+		$self->{functions},
 		sub {
 			$_[0]->show_functions( $_[1]->IsChecked );
 		},
 	);
 
-	$self->{view_show_syntaxcheck} = $self->AppendCheckItem( -1,
+	$self->{show_syntaxcheck} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Syntax Check")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_show_syntaxcheck},
+		$self->{show_syntaxcheck},
 		sub {
 			$_[0]->on_toggle_syntax_check($_[1]);
 		},
@@ -63,11 +63,11 @@ sub new {
 
 	# On Windows disabling the status bar is broken, so don't allow it
 	unless ( Padre::Util::WIN32 ) {
-		$self->{view_statusbar} = $self->AppendCheckItem( -1,
+		$self->{statusbar} = $self->AppendCheckItem( -1,
 			Wx::gettext("Show StatusBar")
 		);
 		Wx::Event::EVT_MENU( $main,
-			$self->{view_statusbar},
+			$self->{statusbar},
 			sub {
 				$_[0]->on_toggle_status_bar($_[1]);
 			},
@@ -81,41 +81,41 @@ sub new {
 
 
 	# Editor Functionality
-	$self->{view_lines} = $self->AppendCheckItem( -1,
+	$self->{lines} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Line Numbers")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_lines},
+		$self->{lines},
 		sub {
 			$_[0]->on_toggle_line_numbers($_[1]);
 		},
 	);
 
-	$self->{view_folding} = $self->AppendCheckItem( -1,
+	$self->{folding} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Code Folding")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_folding},
+		$self->{folding},
 		sub {
 			$_[0]->on_toggle_code_folding($_[1]);
 		},
 	);
 
-	$self->{view_show_calltips} = $self->AppendCheckItem( -1,
+	$self->{show_calltips} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Call Tips")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_show_calltips},
+		$self->{show_calltips},
 		sub {
 			Padre->ide->config->{editor_calltips} = $_[1]->IsChecked;
 		},
 	);
 
-	$self->{view_currentlinebackground} = $self->AppendCheckItem( -1,
+	$self->{currentlinebackground} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Current Line")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_currentlinebackground},
+		$self->{currentlinebackground},
 		sub {
 			$_[0]->on_toggle_current_line_background($_[1]);
 		},
@@ -128,41 +128,41 @@ sub new {
 
 
 	# Editor Whitespace Layout
-	$self->{view_eol} = $self->AppendCheckItem( -1,
+	$self->{eol} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Newlines")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_eol},
+		$self->{eol},
 		sub {
 			$_[0]->on_toggle_eol($_[1]);
 		},
 	);
 
-	$self->{view_whitespaces} = $self->AppendCheckItem( -1,
+	$self->{whitespaces} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Whitespaces")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_whitespaces},
+		$self->{whitespaces},
 		sub {
 			$_[0]->on_toggle_whitespaces($_[1]);
 		},
 	);
 
-	$self->{view_indentation_guide} = $self->AppendCheckItem( -1,
+	$self->{indentation_guide} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Indentation Guide")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_indentation_guide},
+		$self->{indentation_guide},
 		sub {
 			$_[0]->on_toggle_indentation_guide($_[1]);
 		},
 	);
 
-	$self->{view_word_wrap} = $self->AppendCheckItem( -1,
+	$self->{word_wrap} = $self->AppendCheckItem( -1,
 		Wx::gettext("Word-Wrap")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_word_wrap},
+		$self->{word_wrap},
 		sub {
 			$_[0]->on_word_wrap( $_[1]->IsChecked );
 		},
@@ -233,19 +233,19 @@ sub new {
 
 
 	# Language Support
-	$self->{view_language} = Wx::Menu->new;
+	$self->{language} = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Language"),
-		$self->{view_language}
+		$self->{language}
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{view_language}->AppendRadioItem( -1, Wx::gettext("System Default") ),
+		$self->{language}->AppendRadioItem( -1, Wx::gettext("System Default") ),
 		sub {
 			$_[0]->change_locale;
 		},
 	);
 
-	$self->{view_language}->AppendSeparator;
+	$self->{language}->AppendSeparator;
 
 	my $config    = Padre->ide->config;
 	my %languages = Padre::Locale::languages();
@@ -255,7 +255,7 @@ sub new {
 			$label = "English (The Queen's)";
 		}
 
-		my $radio = $self->{view_language}->AppendRadioItem( -1, $label );
+		my $radio = $self->{language}->AppendRadioItem( -1, $label );
 		if ( $config->{host}->{locale} and $config->{host}->{locale} eq $name ) {
 			$radio->Check(1);
 		}
@@ -291,26 +291,26 @@ sub refresh {
 	my $config   = Padre->ide->config;
 
 	# Simple check state cases from configuration
-	$self->{view_lines}->Check( $config->{editor_linenumbers} ? 1 : 0 );
-	$self->{view_folding}->Check( $config->{editor_codefolding} ? 1 : 0 );
-	$self->{view_currentlinebackground}->Check( $config->{editor_currentlinebackground} ? 1 : 0 );
-	$self->{view_eol}->Check( $config->{editor_eol} ? 1 : 0 );
-	$self->{view_whitespaces}->Check( $config->{editor_whitespaces} ? 1 : 0 );
+	$self->{lines}->Check( $config->{editor_linenumbers} ? 1 : 0 );
+	$self->{folding}->Check( $config->{editor_codefolding} ? 1 : 0 );
+	$self->{currentlinebackground}->Check( $config->{editor_currentlinebackground} ? 1 : 0 );
+	$self->{eol}->Check( $config->{editor_eol} ? 1 : 0 );
+	$self->{whitespaces}->Check( $config->{editor_whitespaces} ? 1 : 0 );
 	unless ( Padre::Util::WIN32 ) {
-		$self->{view_statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
+		$self->{statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
 	}
-	$self->{view_output}->Check( $config->{main_output_panel} ? 1 : 0 );
-	$self->{view_functions}->Check( $config->{main_subs_panel} ? 1 : 0 );
-	$self->{view_indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
-	$self->{view_show_calltips}->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{view_show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
+	$self->{output}->Check( $config->{main_output_panel} ? 1 : 0 );
+	$self->{functions}->Check( $config->{main_subs_panel} ? 1 : 0 );
+	$self->{indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
+	$self->{show_calltips}->Check( $config->{editor_calltips} ? 1 : 0 );
+	$self->{show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
 	my $document = Padre::Documents->current;
 	if ( $document ) {
 		my $editor = $document->editor;
 		my $mode   = $editor->GetWrapMode;
-		my $wrap   = $self->{view_word_wrap};
+		my $wrap   = $self->{word_wrap};
 		if ( $mode eq Wx::wxSTC_WRAP_WORD and not $wrap->IsChecked ) {
 			$wrap->Check(1);
 		} elsif ( $mode eq Wx::wxSTC_WRAP_NONE and $wrap->IsChecked ) {

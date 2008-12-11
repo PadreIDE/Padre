@@ -165,7 +165,7 @@ my @events = (
 			my $main = $ide->wx->main_window;
 			$T->diag($main->{gui}->{syntaxcheck_panel});
 			#$T->ok(not (defined $main->{gui}->{syntaxcheck_panel}), 'syntaxcheck_panel is not yet defined');
-			$main->menu->view->{view_show_syntaxcheck}->Check(1);
+			$main->menu->view->{show_syntaxcheck}->Check(1);
 			$main->on_toggle_syntax_check(event(checked => 1));
 			$T->ok($main->{gui}->{syntaxcheck_panel}->isa('Wx::ListView'), 'is a Wx::ListView');
 			BEGIN { $main::tests += 1; }

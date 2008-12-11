@@ -5,7 +5,7 @@ package Padre::Wx::Menu::Perl;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util ();
+use Params::Util       ();
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
 
