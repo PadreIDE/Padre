@@ -46,20 +46,11 @@ sub create_syntaxbar {
 	$syntaxbar->InsertColumn( 1, Wx::gettext('Type') );
 	$syntaxbar->InsertColumn( 2, Wx::gettext('Description') );
 
-	$main->{gui}->{bottompane}->InsertPage( 1, $syntaxbar, Wx::gettext("Syntax Check"), 0 );
-
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$main,
 		$syntaxbar,
 		\&on_syntax_check_msg_selected,
 	);
-
-	if ( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
-		$syntaxbar->Show();
-	}
-	else {
-		$syntaxbar->Hide();
-	}
 
 	return;
 }

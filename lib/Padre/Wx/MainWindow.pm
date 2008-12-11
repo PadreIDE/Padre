@@ -133,6 +133,7 @@ sub new {
 	# Create the syntax checker and sidebar for syntax check messages
 	# create it AFTER the bottom pane!
 	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
+	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
 
 	# on close pane
 	Wx::Event::EVT_AUI_PANE_CLOSE(
@@ -160,17 +161,6 @@ sub new {
 		$event->Skip();
 		return;
 	} );
-
-	# remember the last time we show them or not
-	# TODO do we need this, given that we have self->manager->LoadPerspective below?
-	unless ( $config->{main_output_panel} ) {
-		$self->{gui}->{output_panel}->Hide;
-	}
-	unless ( $config->{main_subs_panel} ) {
-		$self->{gui}->{subs_panel}->Hide;
-	}
-	$self->check_pane_needed('sidepane');
-	$self->manager->Update;
 
 	# Deal with someone closing the window
 	Wx::Event::EVT_CLOSE(           $self,     \&on_close_window     );
@@ -269,12 +259,13 @@ sub create_editor_pane {
 sub create_side_pane {
 	my $self = shift;
 
-	$self->{gui}->{sidepane} = Wx::Notebook->new(
+	$self->{gui}->{sidepane} = Wx::AuiNotebook->new(
 		$self,
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::Size->new(300, 350), # used when pane is floated
-		Wx::wxNB_TOP
+		Wx::wxAUI_NB_SCROLL_BUTTONS|Wx::wxAUI_NB_WINDOWLIST_BUTTON|Wx::wxAUI_NB_TOP
+		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
 	);
 
 	# Create the right-hand sidebar
@@ -318,15 +309,14 @@ sub create_side_pane {
 		return;
 	} );
 
-	$self->{gui}->{sidepane}->AddPage( $self->{gui}->{subs_panel}, Wx::gettext("Subs"), 1 );
-
 	$self->manager->AddPane(
 		$self->{gui}->{sidepane},
 		Wx::AuiPaneInfo->new->Name('sidepane')
 			->CenterPane->Resizable(1)->PaneBorder(0)->Movable(1)
-			->CaptionVisible(1)->CloseButton(1)->DestroyOnClose(0)
+			->CaptionVisible(1)->CloseButton(0)->DestroyOnClose(0)
 			->MaximizeButton(0)->Floatable(1)->Dockable(1)
 			->Caption( Wx::gettext("Workspace View") )->Position(3)->Right->Layer(3)
+			->Hide
 	);
 
 	$self->{gui}->{subs_panel}->InsertColumn(0, Wx::gettext('Methods'));
@@ -338,18 +328,21 @@ sub create_side_pane {
 		\&on_function_selected,
 	);
 
+	$self->show_functions( Padre->ide->config->{main_subs_panel} );
+
 	return;
 }
 
 sub create_bottom_pane {
 	my $self = shift;
 
-	$self->{gui}->{bottompane} = Wx::Notebook->new(
+	$self->{gui}->{bottompane} = Wx::AuiNotebook->new(
 		$self,
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::Size->new(350, 300), # used when pane is floated
-		Wx::wxNB_TOP
+		Wx::wxAUI_NB_SCROLL_BUTTONS|Wx::wxAUI_NB_WINDOWLIST_BUTTON|Wx::wxAUI_NB_TOP
+		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
 	);
 
 	# Create the bottom-of-screen output textarea
@@ -357,16 +350,17 @@ sub create_bottom_pane {
 		$self->{gui}->{bottompane}
 	);
 
-	$self->{gui}->{bottompane}->InsertPage( 0, $self->{gui}->{output_panel}, Wx::gettext("Output"), 1 );
-
 	$self->manager->AddPane(
 		$self->{gui}->{bottompane},
 		Wx::AuiPaneInfo->new->Name('bottompane')
 			->CenterPane->Resizable(1)->PaneBorder(0)->Movable(1)
-			->CaptionVisible(1)->CloseButton(1)->DestroyOnClose(0)
+			->CaptionVisible(1)->CloseButton(0)->DestroyOnClose(0)
 			->MaximizeButton(1)->Floatable(1)->Dockable(1)
 			->Caption( Wx::gettext("Output View") )->Position(2)->Bottom->Layer(4)
+			->Hide
 	);
+
+	$self->show_output( Padre->ide->config->{main_output_panel} );
 
 	return;
 }
@@ -410,15 +404,6 @@ sub load_files {
 
 sub timer_post_init { 
 	my $self = shift;
-
-	my $output = $self->menu->view->{output}->IsChecked;
-	# Show the output window and then hide it if necessary
-	# in order to avoide some weird visual artifacts (empty square at
-	# top left part of the whole application)
-	# TODO maybe some users want to make sure the output window is always
-	# off at startup.
-	$self->show_output(1);
-	$self->show_output($output) unless $output;
 
 	# Do an initial Show/paint of the complete-looking main window
 	# without any files loaded. Then immediately Freeze so that the
@@ -1549,7 +1534,7 @@ sub on_diff {
 	if ( not $diff ) {
 		$diff = Wx::gettext("There are no differences\n");
 	}
-	$self->show_output;
+	$self->show_output(1);
 	$self->{gui}->{output_panel}->clear;
 	$self->{gui}->{output_panel}->AppendText($diff);
 	return;
@@ -1730,16 +1715,34 @@ sub show_output {
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
+
+	my $bp = \$self->{gui}->{bottompane};
+	my $op = \$self->{gui}->{output_panel};
+
 	if ( $on ) {
-		$self->{gui}->{output_panel}->Show;
-		$self->{gui}->{bottompane}->SetSelection(0);
-		$self->check_pane_needed('bottompane');
-		$self->manager->Update;
+		my $idx = ${$bp}->GetPageIndex(${$op});
+		if ( $idx >= 0 ) {
+			${$bp}->SetSelection($idx);
+		}
+		else {
+			${$bp}->InsertPage(
+				0,
+				${$op},
+				Wx::gettext("Output"),
+				1,
+			);
+			${$op}->Show;
+			$self->check_pane_needed('bottompane');
+		}
 	} else {
-		$self->{gui}->{output_panel}->Hide;
-		$self->check_pane_needed('bottompane');
-		$self->manager->Update;
+		my $idx = ${$bp}->GetPageIndex(${$op});
+		${$op}->Hide;
+		if ( $idx >= 0 ) {
+			${$bp}->RemovePage($idx);
+			$self->check_pane_needed('bottompane');
+		}
 	}
+	$self->manager->Update;
 	Padre->ide->config->{main_output_panel} = $on;
 
 	return;
@@ -1749,20 +1752,38 @@ sub show_functions {
 	my $self = shift;
 	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
 
+	my $sp = \$self->{gui}->{sidepane};
+	my $fp = \$self->{gui}->{subs_panel};
+
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
+
 	if ( $on ) {
 		$self->refresh_methods();
-		$self->{gui}->{subs_panel}->Show;
-		$self->{gui}->{sidepane}->SetSelection(0);
-		$self->check_pane_needed('sidepane');
-		$self->manager->Update;
+		my $idx = ${$sp}->GetPageIndex(${$fp});
+		if ( $idx >= 0 ) {
+			${$sp}->SetSelection($idx);
+		}
+		else {
+			${$sp}->InsertPage(
+				0,
+				${$fp},
+				Wx::gettext("Subs"),
+				1,
+			);
+			${$fp}->Show;
+			$self->check_pane_needed('sidepane');
+		}
 	} else {
-		$self->{gui}->{subs_panel}->Hide;
-		$self->check_pane_needed('sidepane');
-		$self->manager->Update;
+		my $idx = ${$sp}->GetPageIndex(${$fp});
+		${$fp}->Hide;
+		if ( $idx >= 0 ) {
+			${$sp}->RemovePage($idx);
+			$self->check_pane_needed('sidepane');
+		}
 	}
+	$self->manager->Update;
 	Padre->ide->config->{main_subs_panel} = $on;
 
 	return;
@@ -1771,23 +1792,40 @@ sub show_functions {
 sub show_syntaxbar {
 	my $self = shift;
 	my $on   = scalar(@_) ? $_[0] ? 1 : 0 : 1;
-	unless ( $self->menu->view->{show_syntaxcheck}->IsChecked ) {
-		$self->{gui}->{syntaxcheck_panel}->Hide;
-		$self->check_pane_needed('bottompane');
-		$self->manager->Update;
-		return;
+
+	my $bp = \$self->{gui}->{bottompane};
+	my $sp = \$self->{gui}->{syntaxcheck_panel};
+
+	unless ( $on == $self->menu->view->{show_syntaxcheck}->IsChecked ) {
+		$self->menu->view->{show_syntaxcheck}->Check($on);
 	}
+
 	if ( $on ) {
-		$self->{gui}->{syntaxcheck_panel}->Show;
-		$self->{gui}->{bottompane}->SetSelection(1);
-		$self->check_pane_needed('bottompane');
-		$self->manager->Update;
+		my $idx = ${$bp}->GetPageIndex(${$sp});
+		if ( $idx >= 0 ) {
+			${$bp}->SetSelection($idx);
+		}
+		else {
+			${$bp}->InsertPage(
+				1,
+				${$sp},
+				Wx::gettext("Syntax Check"),
+				1,
+			);
+			${$sp}->Show;
+			$self->check_pane_needed('bottompane');
+		}
 	}
 	else {
-		$self->{gui}->{syntaxcheck_panel}->Hide;
-		$self->check_pane_needed('bottompane');
-		$self->manager->Update;
+		my $idx = ${$bp}->GetPageIndex(${$sp});
+		${$sp}->Hide;
+		if ( $idx >= 0 ) {
+			${$bp}->RemovePage($idx);
+			$self->check_pane_needed('bottompane');
+		}
 	}
+	$self->manager->Update;
+
 	return;
 }
 
@@ -1795,7 +1833,7 @@ sub check_pane_needed {
 	my ( $self, $pane ) = @_;
 
 	my $visible = 0;
-	my $cnt = $self->{gui}->{$pane}->GetPageCount - 1;
+	my $cnt = $self->{gui}->{$pane}->GetPageCount;
 
 	foreach my $num ( 0 .. $cnt ) {
 		my $p = undef;
