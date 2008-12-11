@@ -1730,6 +1730,7 @@ sub show_output {
 				${$op},
 				Wx::gettext("Output"),
 				1,
+				# Padre::Wx::tango( 'mimetypes', 'text-x-generic.png' )
 			);
 			${$op}->Show;
 			$self->check_pane_needed('bottompane');
@@ -1811,6 +1812,7 @@ sub show_syntaxbar {
 				${$sp},
 				Wx::gettext("Syntax Check"),
 				1,
+				# Padre::Wx::tango( 'status', 'dialog-warning.png' )
 			);
 			${$sp}->Show;
 			$self->check_pane_needed('bottompane');
