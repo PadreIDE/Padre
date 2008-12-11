@@ -222,13 +222,13 @@ Padre - Perl Application Development and Refactoring Environment
 
 Padre is a text editor aimed to be an IDE for Perl.
 
-You should be able to just type in 
+You should be able to just type in
 
   padre
 
 and get the editor working.
 
-While I have been using this editor since version 0.01 myself there 
+While I have been using this editor since version 0.01 myself there
 are still lots of missing features.
 
 Not only it is missing several important feature, everything is in
@@ -242,8 +242,8 @@ Having said that you can already use it for serious editing and you
 can even get involved and add the missing features.
 
 You should also know that I am mostly working on Linux and I
-have been using vi for many years now. This means that I am 
-not that familiar with the expectations of people using 
+have been using vi for many years now. This means that I am
+not that familiar with the expectations of people using
 Windows.
 
 =head1 Getting Started
@@ -252,16 +252,16 @@ After installing Padre you can start it by typing B<padre> on the command line.
 On Windows that would be Start/Run padre.bat
 
 (TODO) By default Padre starts with an editor containing a simple Perl script
-and instructions. 
+and instructions.
 
 You can edit the file and save it using File/Save (Ctrl-S).
 
 You can run the script by pressing Run/Run Script (F5)
 
-You can start new files File/New (Ctrl-N) 
+You can start new files File/New (Ctrl-N)
 or open existing files File/Open (Ctrl-O).
 
-By default Padre uses the same perl interpreter fo 
+By default Padre uses the same perl interpreter fo
 executing code that it uses for itself but this will be configurable
 later.
 
@@ -275,7 +275,7 @@ of existing and planned features.
 
 =head2 Configuration
 
-The application maintains its configuration information in a 
+The application maintains its configuration information in a
 directory called F<.padre>.
 
 
@@ -291,11 +291,11 @@ try to locate files that match the selction. If the selection looks like a path
 Padre will try to open that path either absolute or relative.
 If it looks like a module name (Some::Thing) it will try to find the appropriate file
 Some/Thing.pm in @INC and open it.
-currently this feature opens the firs file encountered. 
+currently this feature opens the firs file encountered.
 (TODO it should find all the possibilities and if there are multiple hits
-offer the user to choose. This will be especially important if we are 
+offer the user to choose. This will be especially important if we are
 working on a module that is also already installed. Padre might
-find the installed version first while we might want to open the 
+find the installed version first while we might want to open the
 development version.)
 
 (TODO: when the file is not of perl type we should have other ways to recognize
@@ -306,10 +306,10 @@ B<File/Close> checks if the file is saved, if it is closes the current tab.
 
 B<File/Close All> closes all the file (in case they are not saved yet ask for instructions).
 
-B<File/Close All but Current>. 
+B<File/Close All but Current>.
 
 B<File/Reload File> is interesting if you either made changes and want to discard them
-and/or if the file has changed on the disk. If there are unsaved changes Padre will ask 
+and/or if the file has changed on the disk. If there are unsaved changes Padre will ask
 you if you really want to throw them away. (TODO: make a backup of the file before discarding it)
 
 B<File/Save> Ctrl-S - save the current file. If the buffer has not yet save and has no filename
@@ -355,13 +355,13 @@ B<Edit/Paste> Ctrl-V
 =head2 Mouse right click
 
 Click on the right button of the mouse brings up a context sensitive menu.
-It provides the basic editing functions and will provide other context 
+It provides the basic editing functions and will provide other context
 sensitive options.
 
 
 =head2 Projects (TODO)
 
-Padre will have the notion of a Perl project. As we would like 
+Padre will have the notion of a Perl project. As we would like
 to make things as natural as possible for the perl developer
 and we think the distribution methods used for CPAN module are
 a good way to handle any project Padre will understand a project
@@ -378,34 +378,34 @@ projects we integrated into Padre the use of L<Module::Starter>
 
 B<File/New.../Perl Distribution> will bring up a dialog box where
 you can select some of the parameters your new project has such
-as Name of the Project (e.g. My::Widgets), Author - that is probably 
+as Name of the Project (e.g. My::Widgets), Author - that is probably
 your name, e-mail (your e-mail).
 
-Builder is the tool that you project is going to use to package itself 
-and then your user will use to install the project. 
+Builder is the tool that you project is going to use to package itself
+and then your user will use to install the project.
 Currently L<Module::Build> and L<ExtUtils::MakeMaker> are supported.
 (TODO add Module::Install as well).
 
 License is one of the keywords currently listed in the META.yml spec of
 Module::Build. (TODO: update the list or make it dynamic)
 
-Once you click B<OK>, Module::Starter will create a new 
-directory called My-Widgets in the parent directory you selected 
+Once you click B<OK>, Module::Starter will create a new
+directory called My-Widgets in the parent directory you selected
 in the last field.
 
 =head2 Other
 
 On Strawberry Perl you can associate .pl file extension with
-C:\strawberry\perl\bin\wxperl and then you can start double 
+C:\strawberry\perl\bin\wxperl and then you can start double
 clicking on the application. It should work...
 
   Run This (F5) - run the current buffer with the current perl
   this currently only works with files with .pl  extensions.
-  
+
   Run Any (Ctr-F5) - run any external application
   First time it will prompt you to a command line that you have to
   type in such as
-  
+
   perl /full/path/to/my/script.pl
 
 ...then it will execute this every time you press Ctrl-F5 or the menu
@@ -426,7 +426,7 @@ to jump to that location. If the file where the bookmark belongs
 to is not open currently, it will be opened and the cursor will
 jump to the desired place.
 
-In both cases while the window is open you can select 
+In both cases while the window is open you can select
 existing bookmarks and press the B<Delete> button to remove the
 selected one or press B<Delete All> to remove all the existing
 bookmarks.
@@ -439,38 +439,38 @@ bookmarks.
   Ctr-TAB        Next Pane
   Ctr-Shift-TAB  Previous Pane
   Alt-S          Jump to list of subs window
-  
-  
+
+
   Ctr-M Ctr-Shift-M  comment/uncomment selected lines of code
-  
-  Ctr-H opens a help window where you can see the documentation of 
+
+  Ctr-H opens a help window where you can see the documentation of
   any perl module. Just use open (in the help window) and type in the name
   of a module.
-  
-  Ctr-Shift-H Highlight the name of a module in the editor and then 
-  press Ctr-Shift-H. IT will open the help window for the module 
+
+  Ctr-Shift-H Highlight the name of a module in the editor and then
+  press Ctr-Shift-H. IT will open the help window for the module
   whose name was highlighted.
-  
+
   In the help window you can also start typing the name of a module. When the
   list of the matching possible modules is small enough you'll be able
   to open the drop-down list and select the name.
-  The "small enough" is controled by two configuration options in the 
-  Edit/Setup menu: 
-  
+  The "small enough" is controled by two configuration options in the
+  Edit/Setup menu:
+
   Max Number of modules
   Min Number of modules
-  
-  This feature only works after you have indexed all the modules 
+
+  This feature only works after you have indexed all the modules
   on your computer. Indexing is currently done by running the following command:
-  
+
   padre --index
-  
+
 =head2 Rectangular Text Selection
 
-Simple text editors usually only allow you to select contiguous lines of text with your mouse. 
-Somtimes, however, it is handy to be able to select a rectangular area of text for more precise 
+Simple text editors usually only allow you to select contiguous lines of text with your mouse.
+Somtimes, however, it is handy to be able to select a rectangular area of text for more precise
 cutting/copying/pasting or performing search/replace on. You can select a rectangular area in Padre
-by holding down Ctr-Alt whilst selecting text with your mouse. 
+by holding down Ctr-Alt whilst selecting text with your mouse.
 
 For example, imagine you have the following nicely formatted hash assignment in a perl source file:
 
@@ -510,29 +510,29 @@ L<Padre::Document::Perl>.
 =head1 Command line options
 
   --index   will go over the @INC and list all the available modules in the database
- 
+
   a list of filenames can be given to be opened
- 
+
 =head1 Preferences
 
 There are several types of preferences we can think of.
 There are the current view orinted preferences such as B<Show newlines>
-or B<Show Line numbers> and there are the project and file 
+or B<Show Line numbers> and there are the project and file
 oriented preferences such as the use of TAB or whitespace
 for indentation.
 
-We would like to achive that the 
+We would like to achive that the
 
-Currently some of the preferences are accesible via the 
-B<Edit/Preferences> menu options, others via the B<View> 
+Currently some of the preferences are accesible via the
+B<Edit/Preferences> menu options, others via the B<View>
 menu option.
 
 We have to make sure that when changing the preferences via
 the GUI it change for the correct things.
 
-e.g. When changing the B<Use TABs> preference it currently 
+e.g. When changing the B<Use TABs> preference it currently
 applyes to all the files open currently or in the future.
-It should probably apply to the current file and/or the 
+It should probably apply to the current file and/or the
 current project. Such options - when changing them - might even
 be applied "retroactively". That is when I change the TAB/space
 mode of a file or a project it should ask if I want to reflow the
@@ -542,14 +542,14 @@ On the other hand the "TAB display size" is purely a local, edior
 oriented preference. It should probably apply to all files currently
 open.
 
-There are other aspects of preferences as well that might not exactly 
+There are other aspects of preferences as well that might not exactly
 overlap with the above set:
 
 The developer might work on the same project on different machines.
-In such case some of the personal preferences should apply only 
+In such case some of the personal preferences should apply only
 only on one computer while others apply in both places.
 
-In particular if Padre is installed in a Portable Perl it might 
+In particular if Padre is installed in a Portable Perl it might
 run on machines with different parameters. Screen size and resolution
 might be different along other parameters. We would like to make sure
 the relevant preferences are separated from those that are constant
@@ -597,7 +597,7 @@ so that in every block the "correct" indentation guide is highlighted.
 =item Allow experimental features
 
 In order to allow the experimental features one needs to manually turn on the
-experimental flag to 1 in config.yml. As Padre keeps overwriting this file you'll 
+experimental flag to 1 in config.yml. As Padre keeps overwriting this file you'll
 have to make this change with another editor and while Padre is B<not> open.
 
 The config.yml file is in ~/.padre/ on Linux/Unix and in general in
@@ -609,12 +609,12 @@ menu on the right side of the menu bar called B<Experimental>.
 
 =item Open file policy
 
-What files to open when launchin Padre? 
+What files to open when launchin Padre?
 nothing, new, those that were open last time?
 
 =item Max/Min number of modules to display in podviewer
 
-=item Autoindentation 
+=item Autoindentation
 
 Possible values: no/same level/deep
 
@@ -653,7 +653,7 @@ See L<Padre::Autosave>
 
 When Padre opens a file it automatically creates a copy of the original
 in ~/.padre/backup/PATH  where PATH is the same PATH as the full PATH of
-the file. On Windows the initial drive letter is converted to another 
+the file. On Windows the initial drive letter is converted to another
 subdirectory so c:\dir\file.txt  will be saved as
 ~/padre/backup/c/dir/file.txt
 
@@ -666,7 +666,7 @@ Configurable options: on/off
 
 =head2 Autosave files (Planned)
 
-Every N seconds all the files changed since the last autosave are 
+Every N seconds all the files changed since the last autosave are
 saved to a temporary place maybe ~/.padre/save.
 
 When the user closes the file, the autosaved file is removed.
@@ -675,7 +675,7 @@ Configurable options: on/off, frequency in seconds
 
 =head1 SQLite
 
-Padre is using an SQLite database (~/.padre/config.db) for two 
+Padre is using an SQLite database (~/.padre/config.db) for two
 things.
 Part of the preferences/configuration information is kept there
 and it is used for the podreader.
@@ -706,13 +706,13 @@ window that shows the list of all the plugins.
 
 TODO: What to do if a newer version of the same plugin was installed?
 
-TODO: What to do if a module was removed ? Shall we keep its data in 
+TODO: What to do if a module was removed ? Shall we keep its data in
 the configuration file or remove it?
 
 The configuration file has a plugins hash. The keys are the names of the plugins
 (sans the Padre::Plugin:: part)
 
-TODO Padre should offer an easy but simple way for plugin authors 
+TODO Padre should offer an easy but simple way for plugin authors
 to declare configuration variables and automaticly generate both configuration
 file and configuration dialog. Padre should also allow for full customization
 of both for those more advanced in wx foo.
@@ -721,7 +721,7 @@ of both for those more advanced in wx foo.
 
 =head2 Case Changes
 
-Change the case of the selected text or if there 
+Change the case of the selected text or if there
 is no selection all the text in the current file.
 
 Change all characters to upper or lower case
@@ -733,7 +733,7 @@ case leaving the rest as they were.
 
 Tab to Space and Space to Tab conversions ask the number of spaces
 each tab should substitute. It currently works everywhere.
-We probably should add a mode to operate only at the beginning of 
+We probably should add a mode to operate only at the beginning of
 the lines or better yet only at the indentation levels.
 
 Delete All Ending space does just what it sais.
@@ -753,7 +753,7 @@ Otherwise the last search string should be displayed.
 Provide option to search backwards
 
 Limit action to current block, current subroutine, current
-file (should be the default) current project, current directory 
+file (should be the default) current project, current directory
 with some file filters.
 
 When the user presses Find
@@ -793,10 +793,10 @@ Replace - if currently a match is selected then replace it find the next occuran
 
 =head2 TODO describe what to do if we have to deal with files that are not in the editor
 
-if "Replace all" was pressed then do just that 
+if "Replace all" was pressed then do just that
    1) without opening editors for the files.
    2) opening an editor for each file and keep it in unsaved state (sounds carzy having 1000 editors open...)
-if Search or Replace is clicked then we might show the next location in the lower pane. 
+if Search or Replace is clicked then we might show the next location in the lower pane.
 If the user then presses Replace we open the file in an editor window and go on.
 If the user presses Search then we show the next occurance.
 Opened and edited files will be left in a not saved state.
@@ -811,7 +811,7 @@ is the main module.
 
 =item L<Padre::Autosave>
 
-describes some of our plans for an autosave mechanism. 
+describes some of our plans for an autosave mechanism.
 It is not implemented yet. (There is also some description elsewhere in this
 document).
 
@@ -850,7 +850,7 @@ is an abstraction class to deal with a single document.
 
 aggregated the list of all currently open documents.
 
-=item L<Padre::PluginBuilder> 
+=item L<Padre::PluginBuilder>
 
 =item L<Padre::PluginManager>
 
@@ -885,7 +885,7 @@ Background tasks.
 
 Various utility functions.
 
-=back 
+=back
 
 =head2 POD viewer
 
@@ -894,9 +894,9 @@ TODO: One day we might be able to factor it out into a separate pod-viewer class
 
 =head2 Wx GUI
 
-The Padre::WX::* namespace is supposed to deal with all the 
+The Padre::WX::* namespace is supposed to deal with all the
 wx related code. Outside of that the code is not supposed to
-know about wx, but currently it still does. 
+know about wx, but currently it still does.
 
 =over 4
 
@@ -905,7 +905,7 @@ know about wx, but currently it still does.
 =item L<Padre::Wx::Ack>
 
 Implementation of the L<ack> integration in Edit/Ack menu item.
-It probably should be either under Dialog or moved out to be a 
+It probably should be either under Dialog or moved out to be a
 plug-in.
 
 =item L<Padre::Wx::App>
@@ -1018,9 +1018,9 @@ Copyright 2008 Gabor Szabo. L<http://www.szabgab.com/>
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl 5 itself.
 
-The icons were taken from 
+The icons were taken from
 http://tango.freedesktop.org/Tango_Desktop_Project
-The Tango base icon theme is licensed under the 
+The Tango base icon theme is licensed under the
 Creative Commons Attribution Share-Alike license.
 Using tango-icon-theme-0.8.1.tar.gz
 
@@ -1073,6 +1073,6 @@ Korean - Keedi Kim (KEEDI)
 
 Russian - Andrew Shitov
 
-
+Dutch - Dirk De Nijs (ddn123456)
 
 =cut

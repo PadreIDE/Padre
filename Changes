@@ -35,6 +35,7 @@ Changes for Padre.
         ordering of methods. (#163) (SZABGAB)
     Open selection prompts user if nothing selected. (#143) (JQUELIN)
     Russian translation added (Andrew Shitov)
+    Dutch translation added (Dirk De Nijs)
 
 v0.20 2008.12.02
 
@@ -58,6 +59,7 @@ v0.20 2008.12.02
     Fix the "cannot save new file bug". (TEEJAY)
     Save files under Mac. #160 (ChrisDolan)
     Restor inner window layout through restart. (HJANSEN)
+
 
 v0.19 2008.11.28
 
@@ -124,8 +126,8 @@ v0.17 2008.11.17
     Open all recent files (#125). (FAYLAND)
     Alt-1, Alt-2, etc removed. (#122) (SZABGAB)
     Initial Javascript support. (FAYLAND)
-    Enable/Disable the subs window via View menu (#100). 
-    Move between the editor, the output window 
+    Enable/Disable the subs window via View menu (#100).
+    Move between the editor, the output window
       and the subs window with some hot-key (#14) (SZABGAB)
 
 v0.16 2008.11.09
@@ -296,7 +298,7 @@ v0.07 2008.09.04
     Allow the use of PAR files as plugins (SMUELLER)
     Stop jumping on selection movement in the list of methods frame.
     Remove Padre::Demo and distribute it separately as Wx::Perl::Dialog. Make Padre depend on it.
-    Update the status when the mouse is moved 
+    Update the status when the mouse is moved
     Update status works on Windows now.
     Require threaded perl as there is experimental code in Padre to use ack.
     Depend on App::Ack.

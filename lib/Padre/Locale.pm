@@ -36,7 +36,8 @@ my %LANGUAGE = (
 	hu => Wx::gettext('Hungarian'),
 	ko => Wx::gettext('Korean'),
 	it => Wx::gettext('Italian'),
-	ru => Wx::gettext('Russian')
+	ru => Wx::gettext('Russian'),
+	nl => Wx::gettext('Dutch'),
 );
 
 my %SHORTNAME = (
@@ -48,6 +49,7 @@ my %SHORTNAME = (
 	Wx::wxLANGUAGE_ITALIAN()    => 'it',
 	Wx::wxLANGUAGE_KOREAN()     => 'ko',
 	Wx::wxLANGUAGE_RUSSIAN()    => 'ru',
+	Wx::wxLANGUAGE_DUTCH()      => 'nl',
 );
 
 my %NUMBER = reverse %SHORTNAME;

@@ -126,6 +126,7 @@ sub about {
 	$about->AddTranslator("Italian - Simone Blandino");
 	$about->AddTranslator("Korean - Keedi Kim");
 	$about->AddTranslator("Russian - Andrew Shitov");
+	$about->AddTranslator("Dutch - Dirk De Nijs");
 
 	Wx::AboutBox( $about );
 	return;
