@@ -47,7 +47,13 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{functions},
 		sub {
-			$_[0]->show_functions( $_[1]->IsChecked );
+			if ( $_[1]->IsChecked ) {
+				$_[0]->refresh_methods;
+				$_[0]->show_functions(1);
+			}
+			else {
+				$_[0]->show_functions(0);
+			}
 		},
 	);
 
