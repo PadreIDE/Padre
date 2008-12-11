@@ -173,6 +173,10 @@ sub new {
 	# As ugly as the WxPerl icon is, the new file toolbar image is uglier
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
+	if ( defined $config->{host}->{aui_manager_layout} ) {
+		$self->manager->LoadPerspective( $config->{host}->{aui_manager_layout} );
+	}
+
 	# we need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did not show
 	# the status bar which is ok, but then when we selected the menu to show it, it showed
