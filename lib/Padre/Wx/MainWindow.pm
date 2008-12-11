@@ -532,7 +532,6 @@ sub change_locale {
 sub refresh_syntaxcheck {
 	my $self = shift;
 	return if $self->no_refresh;
-	return if not Padre->ide->config->{experimental};
 	return if not $self->menu->view->{show_syntaxcheck}->IsChecked;
 
 	Padre::Wx::SyntaxChecker::on_syntax_check_timer( $self, undef, 1 );
