@@ -1641,8 +1641,6 @@ sub on_toggle_syntax_check {
 
 	$self->syntax_checker->enable( $config->{editor_syntaxcheck} ? 1 : 0 );
 
-	$self->menu->window->{goto_syntax_check}->Enable( $config->{editor_syntaxcheck} ? 1 : 0 );
-
 	return;
 }
 
