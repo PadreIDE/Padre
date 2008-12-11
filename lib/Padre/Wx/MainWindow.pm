@@ -1760,7 +1760,7 @@ sub show_functions {
 	}
 
 	if ( $on ) {
-		$self->refresh_methods();
+		# $self->refresh_methods();
 		my $idx = ${$sp}->GetPageIndex(${$fp});
 		if ( $idx >= 0 ) {
 			${$sp}->SetSelection($idx);
