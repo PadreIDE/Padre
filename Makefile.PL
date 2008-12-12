@@ -8,7 +8,12 @@ unless ( $Config{usethreads} ) {
 	exit 0;
 }
 
-check_wx_version;
+# Fedora and other rpm based build systems remove the DISPLAY by default
+# which blows up when checking the Wx version. So we disable it.
+# See  #170
+if ($^O eq 'Win32' or $ENV{DISPLAY}) {
+	check_wx_version;
+}
 
 name           'Padre';
 license        'perl';
