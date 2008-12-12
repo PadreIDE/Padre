@@ -339,7 +339,9 @@ sub check_syntax {
 			$cur->{msg} .= "\n" . $tmp;
 		}
 
-		$cur->{msg} =~ s/\x1F/$nlchar/go;
+		if (defined $cur->{msg}) {
+			$cur->{msg} =~ s/\x1F/$nlchar/go;
+		}
 
 		if ( defined $cur->{diag} ) {
 			$cur->{desc} = $diag[ $cur->{diag} ];
@@ -353,6 +355,7 @@ sub check_syntax {
 		else {
 			$cur->{severity} = 'E';
 		}
+		delete $cur->{desc};
 
 		push @{$issues}, $cur;
 	}

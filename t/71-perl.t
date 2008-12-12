@@ -104,3 +104,23 @@ SCOPE: {
 }
 
 
+my $editor_2 = t::lib::Padre::Editor->new;
+my $file_2   = File::Spec->catfile('t', 'files', 'one_char.pl');
+my $doc_2    = Padre::Document->new(
+	filename  => $file_2,
+);
+$doc_2->set_editor($editor_2);
+$editor_2->configure_editor($doc_2);
+
+SCOPE: {
+	my $msgs = $doc_2->check_syntax;
+	#diag Dumper $msgs;
+	is_deeply($msgs, [
+        {
+             'msg' => 'Useless use of a constant in void context',
+             'severity' => 'W',
+             'line' => '1'
+        }
+      ]);
+	BEGIN { $tests += 1; }
+}
