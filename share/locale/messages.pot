@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-12 23:31+0100\n"
+"POT-Creation-Date: 2008-12-13 00:20+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,13 +67,13 @@ msgstr ""
 msgid "Dutch"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:414 lib/Padre/Document/Perl.pm:437
+#: lib/Padre/Document/Perl.pm:417 lib/Padre/Document/Perl.pm:440
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:87
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:137
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:415 lib/Padre/Document/Perl.pm:438
+#: lib/Padre/Document/Perl.pm:418 lib/Padre/Document/Perl.pm:441
 msgid "Check cancelled"
 msgstr ""
 
@@ -149,7 +149,7 @@ msgstr ""
 msgid "E&xperimental"
 msgstr ""
 
-#: lib/Padre/Wx/SyntaxChecker.pm:45 lib/Padre/Wx/SyntaxChecker.pm:195
+#: lib/Padre/Wx/SyntaxChecker.pm:45 lib/Padre/Wx/SyntaxChecker.pm:201
 msgid "Line"
 msgstr ""
 
@@ -161,13 +161,13 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: lib/Padre/Wx/SyntaxChecker.pm:183 lib/Padre/Wx/SyntaxChecker.pm:198
-#: lib/Padre/Wx/SyntaxChecker.pm:199
+#: lib/Padre/Wx/SyntaxChecker.pm:189 lib/Padre/Wx/SyntaxChecker.pm:204
+#: lib/Padre/Wx/SyntaxChecker.pm:205
 msgid "Warning"
 msgstr ""
 
-#: lib/Padre/Wx/SyntaxChecker.pm:183 lib/Padre/Wx/SyntaxChecker.pm:198
-#: lib/Padre/Wx/SyntaxChecker.pm:202 lib/Padre/Wx/MainWindow.pm:875
+#: lib/Padre/Wx/SyntaxChecker.pm:189 lib/Padre/Wx/SyntaxChecker.pm:204
+#: lib/Padre/Wx/SyntaxChecker.pm:208 lib/Padre/Wx/MainWindow.pm:875
 #: lib/Padre/Wx/MainWindow.pm:1396
 msgid "Error"
 msgstr ""
@@ -270,10 +270,6 @@ msgstr ""
 
 #: lib/Padre/Wx/MainWindow.pm:826
 msgid "Not a Perl document"
-msgstr ""
-
-#: lib/Padre/Wx/MainWindow.pm:832
-msgid "Only .pl files can be executed"
 msgstr ""
 
 #: lib/Padre/Wx/MainWindow.pm:868
