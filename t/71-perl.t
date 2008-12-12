@@ -116,6 +116,9 @@ SCOPE: {
 	my $msgs = $doc_2->check_syntax;
 	#diag Dumper $msgs;
 	is_deeply($msgs, [
+	    {
+             'severity' => 'W'
+        },
         {
              'msg' => 'Useless use of a constant in void context',
              'severity' => 'W',
