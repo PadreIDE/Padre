@@ -21,6 +21,8 @@ my $home = $ENV{PADRE_HOME};
 copy catfile('eg', 'hello_world.pl'),    catfile($home, 'hello_world.pl');
 copy catfile('eg', 'cyrillic_test.pl'),  catfile($home, 'cyrillic_test.pl');
 
+copy catfile('t', 'files', 'one_char.pl'),  catfile($home, 'one_char.pl');
+
 my $ide   = Padre->ide;
 my $frame = $ide->wx->main_window;
 
@@ -170,6 +172,15 @@ my @events = (
 			$main->on_toggle_syntax_check(event(checked => 1));
 			$T->ok($main->{gui}->{syntaxcheck_panel}->isa('Wx::ListView'), 'is a Wx::ListView');
 			BEGIN { $main::tests += 1; }
+		},
+	},
+	{
+		# for now, just check if there are no warnings generated
+		delay => 100,
+		code  => sub {
+			my $main = $ide->wx->main_window;
+			$main->setup_editors( catfile($home, 'one_char.pl') );
+			BEGIN { $main::tests += 0; }
 		},
 	},
 	{

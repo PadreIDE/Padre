@@ -171,6 +171,12 @@ sub on_syntax_check_timer {
 		$syntaxbar->DeleteAllItems;
 		delete $page->{synchk_calltips};
 		my $last_hint = '';
+		
+		# eliminate some warnings
+		foreach my $m (@{$messages}) {
+			$m->{line} = 0  unless defined $m->{line};
+			$m->{msg}  = '' unless defined $m->{msg};
+		}
 		foreach my $hint ( sort { $a->{line} <=> $b->{line} } @{$messages} ) {
 			my $l = $hint->{line} - 1;
 			if ( $hint->{severity} eq 'W' ) {
