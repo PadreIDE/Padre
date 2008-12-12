@@ -108,9 +108,9 @@ sub get_command {
 
 	# Check the file name
 	my $filename = $self->filename;
-	unless ( $filename and $filename =~ /\.pl$/i ) {
-		die "Only .pl files can be executed\n";
-	}
+#	unless ( $filename and $filename =~ /\.pl$/i ) {
+#		die "Only .pl files can be executed\n";
+#	}
 
 	# Run with the same Perl that launched Padre
 	# TODO: get preferred Perl from configuration

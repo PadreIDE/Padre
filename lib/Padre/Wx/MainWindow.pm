@@ -828,9 +828,9 @@ sub debug_perl {
 
 	# Check the file name
 	my $filename = $document->filename;
-	unless ( $filename =~ /\.pl$/i ) {
-		return $self->error(Wx::gettext("Only .pl files can be executed"));
-	}
+#	unless ( $filename =~ /\.pl$/i ) {
+#		return $self->error(Wx::gettext("Only .pl files can be executed"));
+#	}
 
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
