@@ -4,12 +4,13 @@ use strict;
 use warnings;
 use Test::NeedsDisplay;
 use Test::More;
+use Test::NoWarnings;
 use File::Spec  ();
 use t::lib::Padre;
 use t::lib::Padre::Editor;
 
 my $tests;
-plan tests => $tests;
+plan tests => $tests+1;
 
 use Padre::Document;
 

@@ -4,12 +4,14 @@ use strict;
 use warnings;
 use Test::NeedsDisplay;
 use Test::More;
-use File::Spec  ();
+use Test::NoWarnings;
+use Data::Dumper qw(Dumper);
+use File::Spec   ();
 use t::lib::Padre;
 use t::lib::Padre::Editor;
 
 my $tests;
-plan tests => $tests;
+plan tests => $tests+1;
 
 use Padre::Document;
 use Padre::PPI;
@@ -20,7 +22,13 @@ my $file_1   = File::Spec->catfile('t', 'files', 'missing_brace_1.pl');
 my $doc_1    = Padre::Document->new(
 	filename  => $file_1,
 );
-	#editor    => $editor_1, 
+$doc_1->set_editor($editor_1);
+sub Padre::Document::Perl::text_get {
+	return q(print "hello);
+}
+#my $msgs = $doc_1->check_syntax;
+#diag Dumper $msgs;
+#diag $doc_1->text_get;
 
 SCOPE: {
 	isa_ok($doc_1, 'Padre::Document');

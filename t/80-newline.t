@@ -9,11 +9,12 @@ my $LF   = "\012";
 my $CRLF = "\015\012";
 
 use Test::More;
+use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::Util 'newline_type';
 
 my $tests;
-plan tests => $tests;
+plan tests => $tests+1;
 
 SCOPE: {
     is(newline_type("...") => "None", "None");

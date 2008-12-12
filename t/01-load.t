@@ -10,7 +10,8 @@ BEGIN {
 }
 
 use Test::NeedsDisplay;
-use Test::More tests => 18;
+use Test::More tests => 19;
+use Test::NoWarnings;
 use Class::Autouse ':devel';
 
 ok( $] >= 5.008, 'Perl version is new enough' );

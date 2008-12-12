@@ -4,11 +4,12 @@ use strict;
 use warnings;
 use Test::NeedsDisplay;
 use Test::More;
+use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::Util 'get_matches';
 
 my $tests;
-plan tests => $tests;
+plan tests => $tests+1;
 
 SCOPE: {
     my ($start, $end, @matches) = get_matches("abc", qr/x/, 0, 0);

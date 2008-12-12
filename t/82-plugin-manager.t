@@ -7,7 +7,8 @@ use FindBin      qw($Bin);
 use File::Spec   ();
 use Data::Dumper qw(Dumper);
 
-use Test::More tests => 24;
+use Test::More tests => 25;
+use Test::NoWarnings;
 
 use t::lib::Padre;
 use Padre;

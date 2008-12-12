@@ -67,6 +67,8 @@ SCOPE: {
 			main_files     => [],
 			main_files_pos => [],
 		},
+		main_subs_panel   => 0,
+		main_output_panel => 0,
 
 		plugins => {},
 		use_worker_threads        => 1,

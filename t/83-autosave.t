@@ -9,8 +9,9 @@ use File::Temp   ();
 use Data::Dumper qw(Dumper);
 
 use Test::More;
+use Test::NoWarnings;
 my $tests;
-plan tests => $tests;
+plan tests => $tests+1;
 
 use Padre::Autosave;
 
