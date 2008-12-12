@@ -2,6 +2,9 @@ package t::lib::Padre::Editor;
 use strict;
 use warnings;
 
+use Padre::Wx::Editor;
+our @ISA = 'Padre::Wx::Editor';
+
 sub new {
 	my $self = bless {}, shift;
 	return $self;

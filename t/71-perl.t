@@ -23,12 +23,26 @@ my $doc_1    = Padre::Document->new(
 	filename  => $file_1,
 );
 $doc_1->set_editor($editor_1);
-sub Padre::Document::Perl::text_get {
-	return q(print "hello);
+$editor_1->configure_editor($doc_1);
+
+SCOPE: {
+	my $msgs = $doc_1->check_syntax;
+	#diag Dumper $msgs;
+	is_deeply ($msgs, [
+           {
+             'msg' => 'Missing right curly or square bracket, at end of line',
+             'severity' => 'E',
+             'line' => '10'
+           },
+           {
+             'msg' => 'syntax error, at EOF',
+             'severity' => 'E',
+             'line' => '10'
+           }
+	]);
+	
+	BEGIN { $tests += 1; }
 }
-#my $msgs = $doc_1->check_syntax;
-#diag Dumper $msgs;
-#diag $doc_1->text_get;
 
 SCOPE: {
 	isa_ok($doc_1, 'Padre::Document');
