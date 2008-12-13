@@ -420,12 +420,11 @@ sub timer_post_init {
 	$self->load_files;
 	$self->on_toggle_status_bar;
 	Padre->ide->plugin_manager->enable_editors_for_all;
-	$self->refresh;
-
 	if ( $self->menu->view->{show_syntaxcheck}->IsChecked ) {
 		$self->syntax_checker->enable(1);
 	}
-
+	
+	$self->refresh;
 	# Now we are fully loaded and can paint continuously
 	$self->Thaw;
 
