@@ -1929,12 +1929,11 @@ sub convert_to {
 
 	my $editor = $self->selected_editor;
 	#$editor->SetEOLMode( $mode{$newline_type} );
-	$editor->ConvertEOLs( $Padre::Document::mode{$newline_type} );
+	$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline_type} );
 
-	my $id   = $self->nb->GetSelection;
 	# TODO: include the changing of file type in the undo/redo actions
 	# or better yet somehow fetch it from the document when it is needed.
-	my $doc     = $self->selected_document or return;
+	my $doc = $self->selected_document or return;
 	$doc->set_newline_type($newline_type);
 
 	$self->refresh;
