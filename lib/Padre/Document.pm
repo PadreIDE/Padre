@@ -458,9 +458,26 @@ sub reload {
 
 =pod
 
+=head2 check_syntax_in_background
+
+NOT IMPLEMENTED IN THE BASE CLASS
+
+Checking the syntax of documents can take a long time.
+Therefore, this method essentially works the same as
+C<check_syntax>, but works its magic in a background task
+instead. That means it cannot return the syntax-check
+structure but instead optionally calls a callback
+you pass in as the C<on_finish> parameter.
+
+If you don't specify that parameter, the default
+syntax-check-pane updating code will be run after finishing
+the check.
+
 =head2 check_syntax ( [ FORCE ] )
 
 NOT IMPLEMENTED IN THE BASE CLASS
+
+See also: C<check_syntax_in_background>!
 
 An implementation in a derived class needs to return an arrayref of
 syntax problems.
@@ -497,7 +514,6 @@ Must return the problem list even if nothing has changed when a
 param is present which evaluates to B<true>.
 
 =cut
-
 
 
 
