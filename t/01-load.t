@@ -33,4 +33,3 @@ use_ok( 'Padre::Pod2HTML'                );
 use_ok( 'Padre::Pod::Viewer'             );
 use_ok( 'Padre::Plugin::Devel'           );
 use_ok( 'Padre::Plugin::My'              );
-use_ok( 'Padre::Plugin::JavaScript'      );
