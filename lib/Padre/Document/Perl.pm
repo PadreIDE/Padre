@@ -256,7 +256,7 @@ sub _css_class {
 }
 
 # Checks the syntax of a Perl document.
-# Returns a complex area that hjansen forgot to document.
+# Documented in Padre::Document!
 sub check_syntax {
 	my $self  = shift;
 	my $force = shift;
