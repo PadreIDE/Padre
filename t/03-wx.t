@@ -187,7 +187,7 @@ my @events = (
 	},
 	{
 		# for now, just check if there are no warnings generated
-		delay => 300,
+		delay => 500,
 		code  => sub {
 			my $T = Test::Builder->new;
 			my $main = $ide->wx->main_window;
@@ -199,7 +199,20 @@ my @events = (
 		},
 	},
 	{
-		delay => 2000,
+		# for now, just check if there are no warnings generated
+		delay => 1000,
+		code  => sub {
+			my $T = Test::Builder->new;
+			my $main = $ide->wx->main_window;
+			$T->diag("setup editor for cyrillic_test.pl");
+			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
+			my @editors = $main->pages;
+			$T->is_num(scalar(@editors), 1, '2 editor');
+			BEGIN { $main::tests += 1; }
+		},
+	},
+	{
+		delay => 3000,
 		code  => sub {
 			my $T = Test::Builder->new;
 			$T->diag("exiting");

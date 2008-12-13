@@ -267,7 +267,8 @@ sub check_syntax {
 	}
 
 	require Digest::MD5;
-	my $md5 = Digest::MD5::md5($text);
+	use Encode qw(encode_utf8);
+	my $md5 = Digest::MD5::md5(encode_utf8($text));
 	unless ( $args{force} ) {
 		if ( defined( $self->{last_checked_md5} )
 		     && $self->{last_checked_md5} eq $md5
