@@ -33,18 +33,31 @@ sub new {
 			return;
 		},
 	);
+
 	$self->AppendSeparator;
 
 	# Force-refresh the menu
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1, Wx::gettext('Reflow Menu/Toolbar') ),
+		$self->Append( -1, Wx::gettext('Refresh Menu') ),
 		sub {
 			$_[0]->menu->refresh;
-			$_[0]->SetMenuBar( $_[0]->menu->wx );
-			$_[0]->GetToolBar->refresh;
 			return;
 		},
 	);
+
+	# Force-refresh the menu
+	$self->{refresh_counter} = 0;
+	$self->{refresh_count}   = $self->Append( -1,
+		Wx::gettext('Refresh Counter: ') . $self->{refresh_count}
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, $self->{refresh_count} ),
+		sub {
+			return;
+		},
+	);
+
+	$self->AppendSeparator;
 
 	# Recent projects
 	$self->{recent_projects} = Wx::Menu->new;
@@ -101,8 +114,12 @@ sub new {
 		}
 	);
 
+	$self->AppendSeparator;
+
 	# Quick Find: Press F3 to start search with selected text
-	$self->{quick_find} = $self->AppendCheckItem( -1, Wx::gettext("Quick Find") );
+	$self->{quick_find} = $self->AppendCheckItem( -1,
+		Wx::gettext("Quick Find")
+	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{quick_find},
 		sub {
@@ -132,6 +149,12 @@ sub new {
 sub refresh {
 	my $self   = shift;
 	my $config = Padre->ide->config;
+
+	# Update the refresh counter
+	$self->{refresh_counter}++;
+	$self->{refresh_count}->SetText( 
+		Wx::gettext('Refresh Counter: ') . $self->{refresh_count}
+	);
 
 	# Simple QuickFind check update
 	$self->{quick_find}->Check( $config->{is_quick_find} ? 1 : 0 );
