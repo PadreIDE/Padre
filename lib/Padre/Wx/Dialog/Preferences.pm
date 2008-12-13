@@ -54,6 +54,11 @@ sub get_layout {
 			['Wx::CheckBox',    'editor_use_wordwrap', '',
 				($config->{editor_use_wordwrap} ? 1 : 0) ],
 		],
+                [
+			[ 'Wx::StaticText', undef,              Wx::gettext('Horizontal scrollbar for new files')],
+			['Wx::CheckBox',    'editor_horizontal_scrollbar', '',
+				($config->{editor_horizontal_scrollbar} ? 1 : 0) ],
+		],
 		[
 			[ 'Wx::Button',     '_ok_',           Wx::wxID_OK     ],
 			[ 'Wx::Button',     '_cancel_',       Wx::wxID_CANCEL ],
@@ -132,7 +137,7 @@ sub run {
 	foreach my $f (qw(pod_maxlist pod_minlist editor_tabwidth editor_indentwidth)) {
 		$config->{$f} = $data->{$f};
 	}
-	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style)) {
+	foreach my $f (qw(editor_use_tabs editor_horizontal_scrollbar editor_use_wordwrap editor_auto_indentation_style)) {
 		$config->{$f} = $data->{$f} ? 1 :0;
 	}
 

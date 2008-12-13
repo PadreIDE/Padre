@@ -39,6 +39,9 @@ sub new {
 	if ( Padre->ide->config->{editor_use_wordwrap} ) {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	}
+        if ( not Padre->ide->config->{editor_horizontal_scrollbar} ) {
+            $self->SetUseHorizontalScrollBar(0);
+        }
 	$self->SetDropTarget(
 		Padre::Wx::FileDropTarget->new(
 			Padre->ide->wx->main_window

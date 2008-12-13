@@ -133,16 +133,17 @@ sub new {
 		main_startup              => 'new',
 	
 		# Look and feel preferences
-		main_statusbar            => 1,
-		main_output               => 0,
-		main_rightbar             => 1,
-		editor_linenumbers        => 0,
-		editor_eol                => 0,
-		editor_indentationguides  => 0,
-		editor_calltips           => 1,
-		editor_autoindent         => 'deep',
-		editor_whitespaces        => 0,
-		editor_methods            => 'alphabetical',
+		main_statusbar              => 1,
+		main_output                 => 0,
+		main_rightbar               => 1,
+		editor_linenumbers          => 0,
+		editor_eol                  => 0,
+		editor_indentationguides    => 0,
+		editor_calltips             => 1,
+		editor_autoindent           => 'deep',
+		editor_whitespaces          => 0,
+		editor_methods              => 'alphabetical',
+		editor_horizontal_scrollbar => 1,
 		
 		# Indentation settings
 		editor_auto_indentation_style => 0,
@@ -177,6 +178,7 @@ sub new {
 
 		# By default, don't enable experimental features
 		experimental              => 0,
+
 	);
 	%$self = (%defaults, %$self);
 

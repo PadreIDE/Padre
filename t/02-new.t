@@ -43,6 +43,7 @@ SCOPE: {
 		editor_tabwidth               => 8,
 		editor_indentwidth            => 4,
 		editor_use_tabs               => 1,
+		editor_horizontal_scrollbar   => 1,
 
 		search_terms       => [],
 		replace_terms      => [],
