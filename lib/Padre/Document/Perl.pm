@@ -22,6 +22,7 @@ our @ISA     = 'Padre::Document';
 
 # TODO watch out! These PPI methods may be VERY expensive!
 # (Ballpark: Around 1 second of *BLOCKING* CPU per 1000 lines)
+# Check out Padre::Task::PPI and its subclasses instead!
 sub ppi_get {
 	my $self = shift;
 	my $text = $self->text_get;
