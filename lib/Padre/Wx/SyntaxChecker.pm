@@ -143,8 +143,8 @@ sub on_syntax_check_timer {
 
 	my $page = $win->selected_editor;
 	if ( ! defined $page ) {
-        return;
-    }
+		return;
+	}
 
 	unless ( defined( $page->{Document} ) and $page->{Document}->can('check_syntax') ) {
 		if ( ref $page eq 'Padre::Wx::Editor' ) {
