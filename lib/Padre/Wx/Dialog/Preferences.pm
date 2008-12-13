@@ -54,8 +54,8 @@ sub get_layout {
 			['Wx::CheckBox',    'editor_use_wordwrap', '',
 				($config->{editor_use_wordwrap} ? 1 : 0) ],
 		],
-                [
-			[ 'Wx::StaticText', undef,              Wx::gettext('Horizontal scrollbar for new files')],
+		[
+			[ 'Wx::StaticText', undef,              Wx::gettext('Horizontal scrollbar for new tabs')],
 			['Wx::CheckBox',    'editor_horizontal_scrollbar', '',
 				($config->{editor_horizontal_scrollbar} ? 1 : 0) ],
 		],
