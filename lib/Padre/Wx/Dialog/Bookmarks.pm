@@ -154,7 +154,7 @@ sub goto_bookmark {
 	# go to the relevant editor and row
 	if (defined $pageid) {
 	   $main->on_nth_pane($pageid);
-	   my $page = $main->{notebook}->GetPage($pageid);
+	   my $page = $main->nb->GetPage($pageid);
 	   $page->GotoLine($line);
 	}
 
