@@ -27,7 +27,6 @@ Note: If you are having issues running Padre after upgrading to 0.21,
         match the underlying Wx::*** classes that they subclass. (ADAMK)
     Option to always auto-detect indentation style and adapt for each
         open document. (SMUELLER)
-    Option to hide the horizontal scroll bar in editor (PMURIAS)
     Default to showing functions in alphabetical order. (SMUELLER)
     Option to show functions in alphabetical order, except private methods
         go last. (SMUELLER)
