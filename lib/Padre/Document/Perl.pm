@@ -277,6 +277,15 @@ sub check_syntax {
 	}
 	$self->{last_checked_md5} = $md5;
 
+	my $nlchar = "\n";
+	if ( $self->get_newline_type eq 'WIN' ) {
+		$nlchar = "\r\n";
+	}
+	elsif ( $self->get_newline_type eq 'MAC' ) {
+		$nlchar = "\r";
+	}
+	$text =~ s/$nlchar/\n/g;
+
 	# Execute the syntax check
 	my $stderr = '';
 	SCOPE: {
