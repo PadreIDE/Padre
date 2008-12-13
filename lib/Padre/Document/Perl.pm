@@ -274,6 +274,7 @@ sub check_syntax {
 	}
 	$self->{last_checked_text} = $text;
 
+	# Execute the syntax check
 	my $stderr = '';
 	SCOPE: {
 		require File::Temp;
