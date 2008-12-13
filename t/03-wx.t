@@ -3,18 +3,25 @@
 use strict;
 use warnings;
 
+use Test::More;
+BEGIN {
+	if ( $^O eq 'MSWin32' ) {
+		plan skip_all => 'Windows currently has problems with Unicode files';
+		exit(0);
+	}
+}
+
 use File::Basename        qw(basename);
 use File::Copy            qw(copy);
 use File::Spec::Functions qw(catfile);
 use Test::NeedsDisplay;
-our $tests;
-use Test::More;
 use Test::NoWarnings;
 use Test::Builder;
 use t::lib::Padre;
 use Padre;
 
-plan skip_all => 'Windows currently has problems with Unicode files' if $^O eq 'MSWin32'; # the same as File::Spec uses
+our $tests;
+
 plan tests => $tests+1;
 diag "PADRE_HOME: $ENV{PADRE_HOME}";
 my $home = $ENV{PADRE_HOME};
