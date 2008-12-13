@@ -48,7 +48,7 @@ sub new {
 	# Force-refresh the menu
 	$self->{refresh_counter} = 0;
 	$self->{refresh_count}   = $self->Append( -1,
-		Wx::gettext('Refresh Counter: ') . $self->{refresh_count}
+		Wx::gettext('Refresh Counter: ') . $self->{refresh_counter}
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{refresh_count},
