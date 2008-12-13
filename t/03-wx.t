@@ -207,7 +207,7 @@ my @events = (
 			$T->diag("setup editor for cyrillic_test.pl");
 			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
 			my @editors = $main->pages;
-			$T->is_num(scalar(@editors), 1, '2 editor');
+			$T->is_num(scalar(@editors), 2, '2 editor');
 			BEGIN { $main::tests += 1; }
 		},
 	},
