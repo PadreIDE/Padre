@@ -145,9 +145,10 @@ sub on_syntax_check_timer {
 	if ( ! defined $page ) {
 		return;
 	}
+	my $document = $page->{Document};
 
-	unless ( defined( $page->{Document} ) and $page->{Document}->can('check_syntax') ) {
-		if ( ref $page eq 'Padre::Wx::Editor' ) {
+	unless ( defined( $document ) and $document->can('check_syntax') ) {
+		if ( defined $page and $page->isa('Padre::Wx::Editor') ) {
 			$page->MarkerDeleteAll(Padre::Wx::MarkError);
 			$page->MarkerDeleteAll(Padre::Wx::MarkWarn);
 		}
@@ -155,7 +156,7 @@ sub on_syntax_check_timer {
 		return;
 	}
 
-	my $messages = $page->{Document}->check_syntax(force => $force);
+	my $messages = $document->check_syntax(force => $force);
 	return unless defined $messages;
 
 	if ( scalar(@{$messages}) > 0 ) {
