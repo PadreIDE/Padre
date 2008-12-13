@@ -25,6 +25,7 @@ requires       'Class::Adapter'          => '1.05';
 requires       'Class::XSAccessor'       => '0.09';
 requires       'Cwd'                     => '3.2701';
 requires       'Data::Dumper'            => 0;
+requires       'Digest::MD5'             => 0;
 requires       'Encode'                  => '2.12';
 requires       'File::Spec'              => '3.2701';
 requires       'File::Spec::Functions'   => '3.2701';
