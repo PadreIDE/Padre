@@ -21,6 +21,7 @@ our @ISA     = 'Padre::Document';
 # Padre::Document::Perl Methods
 
 # TODO watch out! These PPI methods may be VERY expensive!
+# (Ballpark: Around 1 second of *BLOCKING* CPU per 1000 lines)
 sub ppi_get {
 	my $self = shift;
 	my $text = $self->text_get;
@@ -101,7 +102,6 @@ sub get_function_regex {
 	my ( $self, $sub ) = @_;
 	return qr{(^|\n)sub\s+$sub\b};
 }
-
 
 sub get_command {
 	my $self     = shift;
@@ -205,7 +205,6 @@ sub colorize {
 	}
 }
 
-
 sub _css_class {
 	my ($self, $Token) = @_;
 	if ( $Token->isa('PPI::Token::Word') ) {
@@ -255,58 +254,64 @@ sub _css_class {
 	$css;
 }
 
+# Checks the syntax of a Perl document.
+# Returns a complex area that hjansen forgot to document.
 sub check_syntax {
 	my $self  = shift;
 	my $force = shift;
 
-	my $txt = $self->text_get;
-	return [] unless defined($txt) && $txt;
+	my $text = $self->text_get;
+	unless ( defined $text and $text ne '' ) {
+		return [];
+	}
 
-	unless ($force) {
-		if (   defined( $self->{last_checked_txt} )
-			&& $self->{last_checked_txt} eq $txt
+	unless ( $force ) {
+		if (   defined( $self->{last_checked_text} )
+			&& $self->{last_checked_text} eq $text
 		) {
 			return;
 		}
 	}
-	$self->{last_checked_txt} = $txt;
+	$self->{last_checked_text} = $text;
 
-	my $report = '';
-	{
+	my $stderr = '';
+	SCOPE: {
 		require File::Temp;
-
-		my $fh = File::Temp->new();
-		my $fname = $fh->filename;
-		print $fh $txt;
-		$report = `$^X -Mdiagnostics -c $fname 2>&1 1>/dev/null`;
+		my $file = File::Temp->new;
+		$file->print( $text );
+		$file->close;
+		require IPC::Run3;
+		my @cmd = (
+			Padre->perl_interpreter,
+			'-Mdiagnostics',
+			'-c',
+			$file->filename,
+		);
+		IPC::Run3::run3( \@cmd, \undef, \undef, \$stderr );
 	}
 
 	# Don't really know where that comes from...
-	my $i = index( $report, 'Uncaught exception from user code' );
+	my $i = index( $stderr, 'Uncaught exception from user code' );
 	if ( $i > 0 ) {
-		$report = substr( $report, 0, $i );
+		$stderr = substr( $stderr, 0, $i );
 	}
 
-	my $nlchar = "\n";
-	if ( $self->get_newline_type eq 'WIN' ) {
-		$nlchar = "\r\n";
-	}
-	elsif ( $self->get_newline_type eq 'MAC' ) {
-		$nlchar = "\r";
+	# Handle the "no errors or warnings" case
+	if ( $stderr =~ /^\s+syntax OK\s+$/s ) {
+		return [];
 	}
 
-	return [] if $report =~ /\A[^\n]+syntax OK$nlchar\z/o;
-
-	$report =~ s/$nlchar$nlchar/$nlchar/go;
-	$report =~ s/$nlchar\s/\x1F /go;
-	my @msgs = split(/$nlchar/, $report);
+	# Split into message paragraphs
+	$stderr =~ s/\n\n/\n/go;
+	$stderr =~ s/\n\s/\x1F /go;
+	my @messages = split(/\n/, $stderr);
 
 	my $issues = [];
-	my @diag = ();
-	foreach my $msg ( @msgs ) {
-		if (   index( $msg, 'has too many errors' )    > 0
-			or index( $msg, 'had compilation errors' ) > 0
-			or index( $msg, 'syntax OK' ) > 0
+	my @diag   = ();
+	foreach my $message ( @messages ) {
+		if (   index( $message, 'has too many errors' )    > 0
+			or index( $message, 'had compilation errors' ) > 0
+			or index( $message, 'syntax OK' ) > 0
 		) {
 			last;
 		}
@@ -314,25 +319,25 @@ sub check_syntax {
 		my $cur = {};
 		my $tmp = '';
 
-		if ( $msg =~ s/\s\(\#(\d+)\)\s*\Z//o ) {
+		if ( $message =~ s/\s\(\#(\d+)\)\s*\Z//o ) {
 			$cur->{diag} = $1 - 1;
 		}
 
-		if ( $msg =~ m/\)\s*\Z/o ) {
-			my $pos = rindex( $msg, '(' );
-			$tmp = substr( $msg, $pos, length($msg) - $pos, '' );
+		if ( $message =~ m/\)\s*\Z/o ) {
+			my $pos = rindex( $message, '(' );
+			$tmp = substr( $message, $pos, length($message) - $pos, '' );
 		}
 
-		if ( $msg =~ s/\s\(\#(\d+)\)(.+)//o ) {
+		if ( $message =~ s/\s\(\#(\d+)\)(.+)//o ) {
 			$cur->{diag} = $1 - 1;
 			my $diagtext = $2;
 			$diagtext =~ s/\x1F//go;
 			push @diag, join( ' ', split( ' ', $diagtext ) );
 		}
 
-		if ( $msg =~ s/\sat(?:\s|\x1F)+.+?(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
+		if ( $message =~ s/\sat(?:\s|\x1F)+.+?(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
 			$cur->{line} = $1;
-			$cur->{msg}  = $msg;
+			$cur->{msg}  = $message;
 		}
 
 		if ($tmp) {
@@ -340,7 +345,7 @@ sub check_syntax {
 		}
 
 		if (defined $cur->{msg}) {
-			$cur->{msg} =~ s/\x1F/$nlchar/go;
+			$cur->{msg} =~ s/\x1F/\n/go;
 		}
 
 		if ( defined $cur->{diag} ) {
@@ -371,12 +376,12 @@ sub find_unmatched_brace {
 	# create a new object of the task class and schedule it
 	Padre::Task::PPI::FindUnmatchedBrace->new(
 		# for parsing
-		text => $self->text_get,
+		text     => $self->text_get,
 		# will be available in "finish" but not in "run"/"process_ppi"
 		document => $self,
 	)->schedule;
 
-	return();
+	return ();
 }
 
 # finds the start of the current symbol.
@@ -391,45 +396,44 @@ sub _get_current_symbol {
 	my $cursor_col   = $pos-$line_start; # TODO: let's hope this is the physical column
 	my $line_end     = $editor->GetLineEndPosition($line);
 	my $line_content = $editor->GetTextRange($line_start, $line_end);
-
-	my $col = $cursor_col;
+	my $col          = $cursor_col;
         
 	# find start of symbol TODO: This could be more robust, no?
 	while (1) {
-		if ($col == 0 or substr($line_content, $col, 1) =~ /^[^\w:']$/) {
+		if ($col == 0 or substr($line_content, $col, 1) =~ /^[^\w:\']$/) {
 			last;
 		}
 		$col--;
 	}
 
-	return() if $col == 0
-	         or substr($line_content, $col+1, 1) !~ /^[\w:']$/;
+	if ( $col == 0 or substr($line_content, $col+1, 1) !~ /^[\w:\']$/ ) {
+		return ();
+	}
 	return [$line+1, $col+1];
 }
-
 
 sub find_variable_declaration {
 	my ($self) = @_;
 
 	my $location = _get_current_symbol($self->editor);
-	if (not defined $location) {
+	unless ( defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
 			Padre->ide->wx->main_window
 		);
-		return();
+		return ();
 	}
+
 	# create a new object of the task class and schedule it
 	Padre::Task::PPI::FindVariableDeclaration->new(
 		document => $self,
 		location => $location,
 	)->schedule;
 
-	return();
+	return ();
 }
-
 
 sub lexical_variable_replacement {
 	my ($self, $replacement) = @_;
@@ -442,7 +446,7 @@ sub lexical_variable_replacement {
 			Wx::wxOK,
 			Padre->ide->wx->main_window
 		);
-		return();
+		return ();
 	}
 	# create a new object of the task class and schedule it
 	Padre::Task::PPI::LexicalReplaceVariable->new(
@@ -451,11 +455,8 @@ sub lexical_variable_replacement {
                 replacement => $replacement,
 	)->schedule;
 
-	return();
+	return ();
 }
-
-
-
 
 1;
 

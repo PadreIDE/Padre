@@ -115,15 +115,13 @@ $editor_2->configure_editor($doc_2);
 SCOPE: {
 	my $msgs = $doc_2->check_syntax;
 	#diag Dumper $msgs;
-	is_deeply($msgs, [
-	    {
-             'severity' => 'W'
-        },
-        {
-             'msg' => 'Useless use of a constant in void context',
-             'severity' => 'W',
-             'line' => '1'
-        }
-      ]);
+	is_deeply(
+		$msgs->[-1],
+		{
+			'msg'      => 'Useless use of a constant in void context',
+			'severity' => 'W',
+			'line'     => '1',
+		}
+	);
 	BEGIN { $tests += 1; }
 }

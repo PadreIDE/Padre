@@ -35,6 +35,7 @@ requires       'HTML::Parser'            => '3.58';
 requires       'HTML::Entities'          => '3.57';
 requires       'List::Util'              => '1.18';
 requires       'IO::Socket'              => '1.30';
+requires       'IPC::Run3'               => '0.035';
 requires       'Term::ReadLine'          => 0;
 requires       'Module::Refresh'         => '0.13';
 requires       'App::Ack'                => '1.86';
