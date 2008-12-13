@@ -473,11 +473,19 @@ If you don't specify that parameter, the default
 syntax-check-pane updating code will be run after finishing
 the check.
 
-=head2 check_syntax ( [ FORCE ] )
+By default, this method will only check the syntax if
+the document has changed since the last check. Specify
+the C<force =E<gt> 1> parameter to override this.
+
+=head2 check_syntax
 
 NOT IMPLEMENTED IN THE BASE CLASS
 
 See also: C<check_syntax_in_background>!
+
+By default, this method will only check the syntax if
+the document has changed since the last check. Specify
+the C<force =E<gt> 1> parameter to override this.
 
 An implementation in a derived class needs to return an arrayref of
 syntax problems.

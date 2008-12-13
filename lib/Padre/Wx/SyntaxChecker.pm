@@ -155,7 +155,7 @@ sub on_syntax_check_timer {
 		return;
 	}
 
-	my $messages = $page->{Document}->check_syntax($force);
+	my $messages = $page->{Document}->check_syntax(force => $force);
 	return unless defined $messages;
 
 	if ( scalar(@{$messages}) > 0 ) {

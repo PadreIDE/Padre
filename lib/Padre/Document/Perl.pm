@@ -259,14 +259,14 @@ sub _css_class {
 # Documented in Padre::Document!
 sub check_syntax {
 	my $self  = shift;
-	my $force = shift;
+	my %args  = @_;
 
 	my $text = $self->text_get;
 	unless ( defined $text and $text ne '' ) {
 		return [];
 	}
 
-	unless ( $force ) {
+	unless ( $args{force} ) {
 		if (   defined( $self->{last_checked_text} )
 			&& $self->{last_checked_text} eq $text
 		) {
