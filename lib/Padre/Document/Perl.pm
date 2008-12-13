@@ -266,14 +266,16 @@ sub check_syntax {
 		return [];
 	}
 
+	require Digest::MD5;
+	my $md5 = Digest::MD5::md5($text);
 	unless ( $args{force} ) {
-		if (   defined( $self->{last_checked_text} )
-			&& $self->{last_checked_text} eq $text
+		if ( defined( $self->{last_checked_md5} )
+		     && $self->{last_checked_md5} eq $md5
 		) {
 			return;
 		}
 	}
-	$self->{last_checked_text} = $text;
+	$self->{last_checked_md5} = $md5;
 
 	# Execute the syntax check
 	my $stderr = '';
