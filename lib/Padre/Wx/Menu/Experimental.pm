@@ -51,7 +51,7 @@ sub new {
 		Wx::gettext('Refresh Counter: ') . $self->{refresh_count}
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1, $self->{refresh_count} ),
+		$self->{refresh_count},
 		sub {
 			return;
 		},
@@ -153,7 +153,7 @@ sub refresh {
 	# Update the refresh counter
 	$self->{refresh_counter}++;
 	$self->{refresh_count}->SetText( 
-		Wx::gettext('Refresh Counter: ') . $self->{refresh_count}
+		Wx::gettext('Refresh Counter: ') . $self->{refresh_counter}
 	);
 
 	# Simple QuickFind check update
