@@ -1,5 +1,15 @@
 Changes for Padre.
 
+Note: If you are having issues running Padre after upgrading to 0.21,
+      ("Gtk-CRITICAL **: gtk_window_set_modal: assertion `GTK_IS_WINDOW (window)' failed")
+      try moving or deleting your $HOME/.padre directory and check
+      whether that fixes the issues. YMMV and let us know about any
+      problems.
+
+    Now using Module::Install for building (ADAMK, SMUELLER, SZABGAB)
+    Fixed bookmark-related crash (#172) (SvenDowideit)
+    Fixed syntax-checker related focus glitch (#173) (SvenDowideit)
+    Removed JavaScript plugin from the main distribution (SZABGAB)
     Major menu refactoring. Each menu is now implemented in a seperate
         class, with independant ->refresh methods and much improved
         encapsulation as a result. (ADAMK)
@@ -21,6 +31,8 @@ Changes for Padre.
         go last. (SMUELLER)
     A bunch of autoindentation fixes. (SMUELLER)
     AUI updates to the syntax-checker/output-window GUI elements (HJANSEN)
+    Various portability and miscellaneous fixes to the syntax checker
+        (ADAMK, HJANSEN)
     Add new Perl-specific feature: "Jump to variable declaration"
         and the experimental "replace lexical variable". (SMUELLER)
     The Perl-specific "find unmatched brace" feature now processes
@@ -36,6 +48,7 @@ Changes for Padre.
     Open selection prompts user if nothing selected. (#143) (JQUELIN)
     Russian translation added (Andrew Shitov)
     Dutch translation added (Dirk De Nijs)
+    Lots and lots of encoding tweaks.
 
 v0.20 2008.12.02
 
