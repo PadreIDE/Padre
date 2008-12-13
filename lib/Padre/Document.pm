@@ -471,7 +471,10 @@ you pass in as the C<on_finish> parameter.
 
 If you don't specify that parameter, the default
 syntax-check-pane updating code will be run after finishing
-the check.
+the check. If you do specify a callback, the first parameter
+will be the task object. You can
+run the default updating code by executing the
+C<update_gui()> method of the task object.
 
 By default, this method will only check the syntax if
 the document has changed since the last check. Specify
