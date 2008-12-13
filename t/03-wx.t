@@ -65,20 +65,24 @@ my @events = (
 
 			$editor->ReplaceSelection('/java');
 			$editor->SetSelection(0, 0);
-			$T->is_eq($main->selected_text,     '', 'selected_text');
+			$T->is_eq($main->selected_text,     '', 'no selected_text');
 
 			Padre::Wx::Dialog::Find->search( search_term => qr/java/ );
 			my ($start, $end) = $editor->GetSelection;
 			$T->is_num($start, 11, 'start is 11');
 			$T->is_num($end,   15, 'end is 15');
 			
-			$T->is_eq($main->selected_text,     'java', 'selected_text');
+			$T->is_eq($main->selected_text,     'java', 'java selected_text');
 
 			$main->on_save;
+			my $line = '';
+			# TODO: better report if file could not be opended
 			if ( open my $fh, '<', catfile($home, 'hello_world.pl') ) {
-				my $line = <$fh>;
-				$T->is_eq($line, "#!/usr/bin/java\n", 'file really changed');
+				$line = <$fh>;
+			} else {
+				$T->diag("Could not open hello_world.pl '$!'");
 			}
+			$T->is_eq($line, "#!/usr/bin/java\n", 'file really changed');
 
 			BEGIN { $main::tests += 7; }
 		}
@@ -100,7 +104,7 @@ my @events = (
 
 			{
 				Padre::Wx::Dialog::Find->search( search_term => qr/test/ );
-				$T->is_eq($main->selected_text,    'test', 'selected_text');
+				$T->is_eq($main->selected_text,    'test', 'test selected_text');
 				my ($start, $end) = $editor->GetSelection;
 				$T->is_num($start, 56, 'start is 56');
 				$T->is_num($end,   60, 'end is 60');
@@ -118,7 +122,7 @@ my @events = (
 				my @editors = $main->pages;
 				$T->is_num(scalar(@editors), 1, '1 editor');
 				my $doc = $main->selected_document;
-				$T->is_eq(basename($doc->filename), 'cyrillic_test.pl', 'filename');
+				$T->is_eq(basename($doc->filename), 'cyrillic_test.pl', 'filename is cyrillic_test.pl');
 			}
 			Padre::Wx::Dialog::Bookmarks->set_bookmark($main);
 
@@ -173,7 +177,7 @@ my @events = (
 			my $T = Test::Builder->new;
 			$T->diag("setting syntax check");
 			my $main = $ide->wx->main_window;
-			$T->diag($main->{gui}->{syntaxcheck_panel});
+			$T->diag("syntaxcheck_panel: $main->{gui}->{syntaxcheck_panel}");
 			#$T->ok(not (defined $main->{gui}->{syntaxcheck_panel}), 'syntaxcheck_panel is not yet defined');
 			$main->menu->view->{show_syntaxcheck}->Check(1);
 			$main->on_toggle_syntax_check(event(checked => 1));
@@ -185,9 +189,13 @@ my @events = (
 		# for now, just check if there are no warnings generated
 		delay => 100,
 		code  => sub {
+			my $T = Test::Builder->new;
 			my $main = $ide->wx->main_window;
+			$T->diag("setup editor for one_char.pl");
 			$main->setup_editors( catfile($home, 'one_char.pl') );
-			BEGIN { $main::tests += 0; }
+			my @editors = $main->pages;
+			$T->is_num(scalar(@editors), 1, '1 editor');
+			BEGIN { $main::tests += 1; }
 		},
 	},
 	{
@@ -217,3 +225,4 @@ sub event {
 
 package Wx::Event;
 sub IsChecked { return $_[0]->{checked}; }
+
