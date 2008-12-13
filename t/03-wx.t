@@ -187,7 +187,7 @@ my @events = (
 	},
 	{
 		# for now, just check if there are no warnings generated
-		delay => 100,
+		delay => 300,
 		code  => sub {
 			my $T = Test::Builder->new;
 			my $main = $ide->wx->main_window;
