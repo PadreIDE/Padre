@@ -16,7 +16,7 @@ use Padre::Wx::Menu::Window  ();
 use Padre::Wx::Menu::Help    ();
 use Padre::Documents         ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 
 

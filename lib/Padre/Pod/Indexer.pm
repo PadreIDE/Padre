@@ -3,7 +3,7 @@ package Padre::Pod::Indexer;
 use strict;
 use warnings;
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 use File::Find::Rule;
 use Padre::DB;

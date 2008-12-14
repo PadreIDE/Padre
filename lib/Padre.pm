@@ -14,7 +14,7 @@ use YAML::Tiny     ();
 use DBI            ();
 use Class::Autouse ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials

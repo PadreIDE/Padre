@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Wx::DND;
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 our @ISA     = 'Wx::FileDropTarget';
 
 sub new {

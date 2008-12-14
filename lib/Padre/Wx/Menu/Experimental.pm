@@ -7,7 +7,7 @@ use Padre::Wx          ();
 use Padre::Wx::Submenu ();
 use Padre::Documents   ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 our @ISA     = 'Padre::Wx::Submenu';
 
 

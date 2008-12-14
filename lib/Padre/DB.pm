@@ -11,7 +11,7 @@ use ORLite 0.15 {
 	tables => 0,
 };
 
-our $VERSION    = '0.20';
+our $VERSION    = '0.21';
 our $COMPATIBLE = '0.17';
 
 # At load time, autocreate if needed

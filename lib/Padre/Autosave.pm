@@ -3,7 +3,7 @@ package Padre::Autosave;
 use strict;
 use warnings;
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 =head1 NAME
 

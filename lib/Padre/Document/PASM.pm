@@ -6,7 +6,7 @@ use warnings;
 use Padre::Document ();
 use Padre::Util     ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 our @ISA     = 'Padre::Document';
 
 # Slightly less naive way to parse and colorize pasm files

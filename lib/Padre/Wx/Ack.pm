@@ -11,7 +11,7 @@ my $iter;
 my %opts;
 my %stats;
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 my $DONE_EVENT : shared = Wx::NewEventType;
 
 my $ack_loaded = 0;

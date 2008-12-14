@@ -9,7 +9,7 @@ use Params::Util       ();
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 our @ISA     = 'Padre::Wx::Submenu';
 
 

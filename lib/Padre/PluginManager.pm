@@ -25,7 +25,7 @@ use Padre::Util              ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::Plugins ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
 
 
 
