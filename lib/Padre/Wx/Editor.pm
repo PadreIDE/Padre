@@ -93,18 +93,14 @@ sub padre_setup {
 sub padre_setup_plain {
 	my $self = shift;
 
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-
-	$self->SetFont( $font );
-
-	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+	$self->set_font;
 
 	$self->StyleClearAll();
 
 	foreach my $k (keys %{ $data->{plain}{foregrounds} }) {
 		$self->StyleSetForeground( $k, _color( $data->{plain}{foregrounds}{$k} ) );
 	}
-	
+
 	#$self->StyleSetBold(12,  1);
 
 	# Apply tag style for selected lexer (blue)
@@ -266,6 +262,23 @@ sub show_folding {
 	return;
 }
 
+
+sub set_font {
+	my ($self) = @_;
+
+	my $config = Padre->ide->config;
+
+	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	if ( defined $config->{editor_font} ) {
+		$font->SetNativeFontInfoUserDesc( $config->{editor_font} );
+	}
+	$self->SetFont($font);
+	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
+
+	return;
+}
+
+
 sub set_preferences {
 	my ($self) = @_;
 
@@ -278,6 +291,8 @@ sub set_preferences {
 	$self->SetViewWhiteSpace(    $config->{editor_whitespaces}       );
 	$self->show_currentlinebackground( $config->{editor_currentlinebackground} );
 
+	$self->padre_setup;
+
 	$self->{Document}->set_indentation_style;
 
 	return;
@@ -287,7 +302,17 @@ sub set_preferences {
 sub show_currentlinebackground {
 	my ($self, $on) = (@_);
 
-	$self->SetCaretLineBackground( Wx::Colour->new(255, 255, 64, 255) );
+	my $config = Padre->ide->config;
+
+	my $color = Wx::Colour->new(255, 255, 64, 255);
+	if ( defined $config->{editor_caret_line_background_color} ) {
+		eval {
+			$color = Wx::Colour->new( $config->{editor_caret_line_background_color} );
+		};
+		$color = Wx::Colour->new(255, 255, 64, 255) if $@;
+	}
+
+	$self->SetCaretLineBackground( $color );
 	$self->SetCaretLineVisible( ( defined($on) && $on ) ? 1 : 0 );
 
 	return;

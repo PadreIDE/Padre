@@ -9,7 +9,7 @@ use Padre::Wx::Dialog ();
 
 our $VERSION = '0.21';
 
-sub get_layout {
+sub get_layout_for_behaviour {
 	my ($config, $main_startup, $editor_autoindent, $editor_methods) = @_;
 
 	return [
@@ -54,9 +54,22 @@ sub get_layout {
 			['Wx::CheckBox',    'editor_use_wordwrap', '',
 				($config->{editor_use_wordwrap} ? 1 : 0) ],
 		],
+	];
+}
+
+sub get_layout_for_appearance {
+	my $config = shift;
+
+	return [
 		[
-			[ 'Wx::Button',     '_ok_',           Wx::wxID_OK     ],
-			[ 'Wx::Button',     '_cancel_',       Wx::wxID_CANCEL ],
+			[ 'Wx::StaticText', undef, Wx::gettext('Editor Font:') ],
+			[ 'Wx::FontPickerCtrl', 'editor_font',
+				(defined $config->{editor_font} ? $config->{editor_font} : '') ] 
+		],
+		[
+			[ 'Wx::StaticText', undef, Wx::gettext('Editor Caret Line Background Colour:') ],
+			[ 'Wx::ColourPickerCtrl', 'editor_caret_line_background_color',
+				(defined $config->{editor_caret_line_background_color} ? $config->{editor_caret_line_background_color} : '#efefef') ]
 		],
 	];
 }
@@ -65,12 +78,19 @@ sub dialog {
 	my ($class, $win, $main_startup, $editor_autoindent, $editor_methods) = @_;
 
 	my $config = Padre->ide->config;
-	my $layout = get_layout($config, $main_startup, $editor_autoindent, $editor_methods);
+	my $behaviour  = get_layout_for_behaviour($config, $main_startup, $editor_autoindent, $editor_methods);
+	my $appearance = get_layout_for_appearance($config);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $win,
 		title  => Wx::gettext("Preferences"),
-		layout => $layout,
+		layout => [ $behaviour, $appearance, ],
 		width  => [280, 200],
+		multipage => {
+			auto_ok_cancel  => 1,
+			ok_widgetid     => '_ok_',
+			cancel_widgetid => '_cancel_',
+			pagenames       => [ 'Behaviour', 'Appearance' ]
+		},
 	);
 
 	$dialog->{_widgets_}{editor_tabwidth}->SetFocus;
@@ -89,7 +109,7 @@ sub dialog {
 	);
 
 	$dialog->{_widgets_}{_ok_}->SetDefault;
-	
+
 	return $dialog;
 }
 
@@ -129,11 +149,19 @@ sub run {
 
 	my $data = $dialog->get_data;
 
-	foreach my $f (qw(pod_maxlist pod_minlist editor_tabwidth editor_indentwidth)) {
+	foreach my $f (
+		qw( pod_maxlist
+			pod_minlist
+			editor_tabwidth
+			editor_indentwidth
+			editor_font
+			editor_caret_line_background_color
+		)
+	) {
 		$config->{$f} = $data->{$f};
 	}
 	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style)) {
-		$config->{$f} = $data->{$f} ? 1 :0;
+		$config->{$f} = $data->{$f} ? 1 : 0;
 	}
 
 	$config->{main_startup}        = $main_startup[ $data->{main_startup} ];
