@@ -31,7 +31,7 @@ sub new {
 		$self->Append( -1, Wx::gettext("Find Unmatched Brace") ),
 		sub {
 			my $doc = Padre::Documents->current;
-			return unless _INSTANCE($doc, 'Padre::Document::Perl');
+			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
 			$doc->find_unmatched_brace;
 		},
 	);
@@ -40,7 +40,7 @@ sub new {
 		$self->Append( -1, Wx::gettext("Find variable declaration") ),
 		sub {
 			my $doc = Padre::Documents->current;
-			return unless _INSTANCE($doc, 'Padre::Document::Perl');
+			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
 			$doc->find_variable_declaration;
 		},
 	);
@@ -50,7 +50,7 @@ sub new {
 			$self->Append( -1, Wx::gettext("Lexically replace variable") ),
 			sub {
 				my $doc = Padre::Documents->current;
-				return unless _INSTANCE($doc, 'Padre::Document::Perl');
+				return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
 				my $dialog = Padre::Wx::History::TextDialog->new(
 					$_[0],
 					Wx::gettext("Replacement"),
