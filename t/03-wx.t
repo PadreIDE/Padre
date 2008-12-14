@@ -4,9 +4,6 @@ use strict;
 use warnings;
 
 use Test::More;
-BEGIN {
-	plan skip_all => 'This test needs an overhaul as its success depends on the speed of the host';
-}
 
 BEGIN {
 	if ( $^O eq 'MSWin32' ) {
@@ -113,15 +110,12 @@ my @events = (
 				$T->is_num($start, 56, 'start is 56');
 				$T->is_num($end,   60, 'end is 60');
 			}
-			if (0) { # TODO: These tests fail due to encoding bug. Commented out for release only
+			{
 				Padre::Wx::Dialog::Find->search( search_term => qr/test/ );
 				$T->is_eq($main->selected_text,    'test', 'selected_text');
 				my ($start, $end) = $editor->GetSelection;
 				$T->is_num($start, 211, 'start is 211');
 				$T->is_num($end,   215, 'end is 215');
-			}
-			else {
-				$T->ok(1, "Skipping tests that fail due to known encoding bug") for 1..3;
 			}
 
 			$main->on_close_all_but_current;
