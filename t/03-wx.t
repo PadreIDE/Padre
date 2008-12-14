@@ -5,6 +5,10 @@ use warnings;
 
 use Test::More;
 BEGIN {
+	plan skip_all => 'This test needs an overhaul as its success depends on the speed of the host';
+}
+
+BEGIN {
 	if ( $^O eq 'MSWin32' ) {
 		plan skip_all => 'Windows currently has problems with Unicode files';
 		exit(0);
