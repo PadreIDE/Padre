@@ -35,7 +35,7 @@ my $frame = $ide->wx->main_window;
 
 my @events = (
 	{
-		delay => 100,
+		delay => 200,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			my $T = Test::Builder->new;
@@ -53,7 +53,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 100,
+		delay => 200,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			my $doc  = $main->selected_document;
@@ -88,7 +88,7 @@ my @events = (
 		}
 	},
 	{
-		delay => 100,
+		delay => 200,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
@@ -133,7 +133,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 700,
+		delay => 1000,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			my $T = Test::Builder->new;
@@ -147,7 +147,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 100,
+		delay => 200,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			my $T = Test::Builder->new;
@@ -163,7 +163,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 200,
+		delay => 400,
 		code  => sub {
 			my $T = Test::Builder->new;
 			$T->diag("changing locale");
@@ -175,7 +175,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 100,
+		delay => 200,
 		code  => sub {
 			my $T = Test::Builder->new;
 			$T->diag("setting syntax check");
@@ -190,7 +190,7 @@ my @events = (
 	},
 	{
 		# for now, just check if there are no warnings generated
-		delay => 500,
+		delay => 800,
 		code  => sub {
 			my $T = Test::Builder->new;
 			my $main = $ide->wx->main_window;
@@ -203,7 +203,7 @@ my @events = (
 	},
 	{
 		# for now, just check if there are no warnings generated
-		delay => 1000,
+		delay => 1500,
 		code  => sub {
 			my $T = Test::Builder->new;
 			my $main = $ide->wx->main_window;
@@ -215,7 +215,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 3000,
+		delay => 4000,
 		code  => sub {
 			my $T = Test::Builder->new;
 			$T->diag("exiting");
