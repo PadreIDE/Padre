@@ -96,12 +96,20 @@ sub keywords {
 sub get_functions {
 	my $self = shift;
 	my $text = $self->text_get;
-	return $text =~ m{^sub\s+(\w+(?:::\w+)*)}gm;
+
+	my %nlCharTable = ( UNIX => "\n", WIN => "\r\n", MAC => "\r" );
+	my $nlchar = $nlCharTable{ $self->get_newline_type };
+
+	return $text =~ m/${nlchar}sub\s+(\w+(?:::\w+)*)/g;
 }
 
 sub get_function_regex {
 	my ( $self, $sub ) = @_;
-	return qr{(^|\n)sub\s+$sub\b};
+
+	my %nlCharTable = ( UNIX => "\n", WIN => "\r\n", MAC => "\r" );
+	my $nlchar = $nlCharTable{ $self->get_newline_type };
+
+	return qr!(?:^|${nlchar})sub\s+$sub\b!;
 }
 
 sub get_command {
