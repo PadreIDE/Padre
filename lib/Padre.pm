@@ -1035,8 +1035,9 @@ that's your problem.
 To Mattia Barbon for providing WxPerl.
 Part of the code was copied from his Wx::Demo application.
 
-The developers of Padre:
+The developers of Padre in alphabetical order:
 
+Aaron Trevena (TEEJAY),
 Adam Kennedy (ADAMK),
 Brian Cassidy (BRICAS),
 Chris Dolan (CHRISDOLAN),
@@ -1045,11 +1046,10 @@ Heiko Jansen (HJANSEN),
 Jerome Quelin (JQUELIN),
 Kaare Rasmussen (KAARE),
 Keedi Kim (KEEDI),
-Max Maischein (CORION)
+Max Maischein (CORION),
 Patrick Donelan (PATSPAM),
-Steffen Mueller (TSEE),
-Aaron Trevena (TEEJAY),
-Paweł Murias (PMURIAS)
+Paweł Murias (PMURIAS),
+Steffen Mueller (TSEE)
 
 
 To Herbert Breunung for letting me work on Kephra.
@@ -1057,6 +1057,8 @@ To Herbert Breunung for letting me work on Kephra.
 To Octavian Rasnita for early testing and bug reports.
 
 =head2 Translations
+
+Dutch - Dirk De Nijs (ddn123456)
 
 English - everyone on the team
 
@@ -1074,6 +1076,5 @@ Korean - Keedi Kim (KEEDI)
 
 Russian - Andrew Shitov
 
-Dutch - Dirk De Nijs (ddn123456)
-
 =cut
+
