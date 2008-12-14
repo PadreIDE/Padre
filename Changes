@@ -1,11 +1,12 @@
 Changes for Padre.
 
+v0.21 2008.12.14
+
 Note: If you are having issues running Padre after upgrading to 0.21,
       ("Gtk-CRITICAL **: gtk_window_set_modal: assertion `GTK_IS_WINDOW (window)' failed")
       try moving or deleting your $HOME/.padre directory and check
       whether that fixes the issues. YMMV and let us know about any
       problems.
-
     
     Now using Module::Install for building (ADAMK, SMUELLER, SZABGAB)
     Fixed bookmark-related crash (#172) (SvenDowideit)
