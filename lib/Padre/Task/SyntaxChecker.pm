@@ -124,7 +124,7 @@ sub update_gui {
 	my $messages = $self->{syntax_check};
 	
 	my $syntax_checker = Padre->ide->wx->main_window->syntax_checker;
-	my $syntax_bar     = $syntax_checker->syntax_bar;
+	my $syntax_bar     = $syntax_checker->syntaxbar;
 	my $notebook_page  = $self->{main_thread_only}{notebook_page};
 	my $document       = $notebook_page->{Document};
 	
@@ -203,6 +203,7 @@ sub update_gui {
 
 	return 1;
 }
+
 
 1;
 
