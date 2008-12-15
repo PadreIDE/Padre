@@ -24,6 +24,12 @@ if ($^O eq 'linux') {
 }
 
 my $perl = Probe::Perl->find_perl_interpreter;
+if ($^O eq 'darwin') {
+	#I presume there's a proper way to do this?
+	$perl = `which wxPerl`;
+	chomp($perl);
+	die "padre needs to run using wxPerl on OSX" unless (-e $perl);
+}
 my @cmd  = (
         qq[$perl],
         qq[-I$FindBin::Bin/lib],
