@@ -166,7 +166,12 @@ sub schedule {
 
 	# cleanup old threads and refill the pool
 	$self->reap();
-	$process->prepare();
+	
+	# prepare and stop if vetoes
+	my $return = $process->prepare();
+	if ($return and $return =~ /^break$/) {
+		return;
+	}
 
 	my $string;
 	$process->serialize(\$string);

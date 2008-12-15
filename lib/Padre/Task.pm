@@ -38,9 +38,13 @@ task:
   # This is run in the main thread before being handed
   # off to a worker (background) thread. The Wx GUI can be
   # polled for information here.
-  # If you don't need it, just inherit this default no-op.
+  # If you don't need it, just inherit the default no-op.
   sub prepare {
           my $self = shift;
+          if ( condition_for_not_running_the_task ) {
+                  return "BREAK";
+          }
+          
           return 1;
   }
 
@@ -91,6 +95,9 @@ thread for your task, the following steps happen:
 =over 2
 
 =item The scheduler calls C<prepare> on your object.
+
+=item If your prepare method returns the string 'break', all further processing
+is stopped immediately.
 
 =item The scheduler serializes your object with C<Storable>.
 
@@ -166,6 +173,11 @@ In case you need to set up things in the main thread,
 you can implement a C<prepare> method which will be called
 right before serialization for transfer to the assigned
 worker thread.
+
+If C<prepare> returns the string C<break> (case insensitive),
+all further processing of the task will be stopped and neither
+C<run> nor C<finish> will be called. Any other return values
+are generally ignored.
 
 You do not have to implement this method in the subclass.
 
