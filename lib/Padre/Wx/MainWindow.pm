@@ -2067,18 +2067,7 @@ sub on_close_pane {
 	my ( $self, $event ) = @_;
 	my $pane = $event->GetPane();
 
-	# it's ugly, but it works
-	# TODO: This needs to be fixed. Data::Dumper is damn slow and this is just... wrong.
-	if ( Data::Dumper::Dumper(\$pane) eq 
-	     Data::Dumper::Dumper(\$self->{gui}->{output_panel}) )
-	{
-		$self->menu->view->{output}->Check(0);
-	}
-	elsif ( Data::Dumper::Dumper(\$pane) eq
-	        Data::Dumper::Dumper(\$self->{gui}->{subs_panel}) )
-	{
-		$self->menu->view->{functions}->Check(0);
-	}
+
 }
 
 sub on_doc_stats {
