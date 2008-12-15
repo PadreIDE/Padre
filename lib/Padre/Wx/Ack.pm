@@ -10,6 +10,7 @@ use Wx::Locale qw(:default);
 my $iter;
 my %opts;
 my %stats;
+my $panel_string_index = 9999999;
 
 our $VERSION = '0.21';
 my $DONE_EVENT : shared = Wx::NewEventType;
@@ -288,7 +289,7 @@ sub ack_done {
 	my $data = $event->GetData;
 
 	$mainwindow = Padre->ide->wx->main_window;
-	$mainwindow->{gui}->{ack_panel}->InsertStringItem( 999999 - $stats{printed_lines}, $data);
+	$mainwindow->{gui}->{ack_panel}->InsertStringItem( $panel_string_index--, $data);
 	$mainwindow->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 
 	return;
