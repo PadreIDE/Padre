@@ -66,38 +66,8 @@ sub on_ack {
 	return;
 }
 
-sub find_clicked {
-	my ($dialog, $event) = @_;
-
-	my $search = _get_data_from( $dialog );
-
-	$search->{dir} ||= '.';
-	return if not $search->{term};
-	
-	my $mainwindow = Padre->ide->wx->main_window;
-
-	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
-
-	# TODO kill the thread before closing the application
-
-	$opts{regex} = $search->{term};
-	if (-f $search->{dir}) {
-		$opts{all} = 1;
-	}
-	my $what = App::Ack::get_starting_points( [$search->{dir}], \%opts );
-	fill_type_wanted();
-	$iter = App::Ack::get_iterator( $what, \%opts );
-	App::Ack::filetype_setup();
-
-	$mainwindow->show_output(1);
-	$mainwindow->{gui}->{output_panel}->clear;
-
-	Wx::Event::EVT_COMMAND( $mainwindow, -1, $DONE_EVENT, \&ack_done );
-
-	my $worker = threads->create( \&on_ack_thread );
-
-	return;
-}
+################################
+# Dialog related
 
 sub _get_data_from {
 	my ( $dialog ) = @_;
@@ -195,11 +165,121 @@ sub cancel_clicked {
 	return;
 }
 
+sub find_clicked {
+	my ($dialog, $event) = @_;
+
+	my $search = _get_data_from( $dialog );
+
+	$search->{dir} ||= '.';
+	return if not $search->{term};
+	
+	my $mainwindow = Padre->ide->wx->main_window;
+
+	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
+
+	# TODO kill the thread before closing the application
+
+	$opts{regex} = $search->{term};
+	if (-f $search->{dir}) {
+		$opts{all} = 1;
+	}
+	my $what = App::Ack::get_starting_points( [$search->{dir}], \%opts );
+	fill_type_wanted();
+	$iter = App::Ack::get_iterator( $what, \%opts );
+	App::Ack::filetype_setup();
+
+	unless ( $mainwindow->{gui}->{ack_panel} ) {
+		create_ack_pane( $mainwindow );
+	}
+	show_ack_output($mainwindow, 1);
+	$mainwindow->{gui}->{ack_panel}->DeleteAllItems;
+
+	Wx::Event::EVT_COMMAND( $mainwindow, -1, $DONE_EVENT, \&ack_done );
+
+	my $worker = threads->create( \&on_ack_thread );
+
+	return;
+}
+
+################################
+# Ack pane related
+
+sub create_ack_pane {
+	my ( $main ) = @_;
+	
+	$main->{gui}->{ack_panel} = Wx::ListCtrl->new(
+		$main->{gui}->{bottompane},
+		Wx::wxID_ANY,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT
+	);
+	
+	$main->{gui}->{ack_panel}->InsertColumn(0, Wx::gettext('Ack'));
+	$main->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
+	
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$main,
+		$main->{gui}->{ack_panel},
+		\&on_ack_result_selected,
+	);
+}
+
+sub show_ack_output {
+	my $main = shift;
+	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
+	
+	my $bp = \$main->{gui}->{bottompane};
+	my $op = \$main->{gui}->{ack_panel};
+
+	if ( $on ) {
+		my $idx = ${$bp}->GetPageIndex(${$op});
+		if ( $idx >= 0 ) {
+			${$bp}->SetSelection($idx);
+		}
+		else {
+			${$bp}->InsertPage(
+				0,
+				${$op},
+				Wx::gettext("Ack"),
+				1,
+			);
+			${$op}->Show;
+			$main->check_pane_needed('bottompane');
+		}
+	} else {
+		my $idx = ${$bp}->GetPageIndex(${$op});
+		${$op}->Hide;
+		if ( $idx >= 0 ) {
+			${$bp}->RemovePage($idx);
+			$main->check_pane_needed('bottompane');
+		}
+	}
+	$main->manager->Update;
+
+	return;
+}
+
+sub on_ack_result_selected {
+	my ($self, $event) = @_;
+	
+	my $text = $event->GetItem->GetText;
+	return if not defined $text;
+	
+	print STDERR "$text\n";
+}
+
+######################################
+# Ack related
+
 sub ack_done {
 	my( $mainwindow, $event ) = @_;
 
 	my $data = $event->GetData;
-	$mainwindow->{gui}->{output_panel}->AppendText($data);
+
+	$mainwindow = Padre->ide->wx->main_window;
+	$mainwindow->{gui}->{ack_panel}->InsertStringItem( int(rand(1000)), $data);
+	$mainwindow->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 
 	return;
 }
@@ -231,6 +311,15 @@ sub print_results {
 
 	#my $end = $result->get_end_iter;
 	#$result->insert($end, $text);
+	
+	# just print it when we have \n
+	if ( $text =~ /[\r\n]/ ) {
+		$text = $stats{last_matched_filename} . $stats{last_text} . $text if $stats{last_text};
+		delete $stats{last_text};
+	} else {
+		$stats{last_text} .= $text;
+		return;
+	}
 
 	my $frame = Padre->ide->wx->main_window;
 	my $threvent = Wx::PlThreadEvent->new( -1, $DONE_EVENT, $text );
