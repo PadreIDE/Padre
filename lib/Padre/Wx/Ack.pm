@@ -272,8 +272,8 @@ sub on_ack_result_selected {
 	my $mainwindow = Padre->ide->wx->main_window;
 	
 	my $id = $mainwindow->setup_editor($file);
-	return unless $id;
-	$mainwindow->on_nth_pane($id);
+	$mainwindow->on_nth_pane($id) if ($id);
+	
 	my $page = $mainwindow->selected_editor;
 	$line--;
 	$page->GotoLine($line);
@@ -288,7 +288,7 @@ sub ack_done {
 	my $data = $event->GetData;
 
 	$mainwindow = Padre->ide->wx->main_window;
-	$mainwindow->{gui}->{ack_panel}->InsertStringItem( int(rand(1000)), $data);
+	$mainwindow->{gui}->{ack_panel}->InsertStringItem( 999999 - $stats{printed_lines}, $data);
 	$mainwindow->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 
 	return;
@@ -314,7 +314,9 @@ sub print_results {
 	# 1, add \n before $filename expect the first filename
 	if ( $stats{printed_lines} % 3 == 1 ) {
 		$text .= "\n";
-		$text = "\n$text" if ($stats{printed_lines} != 1);
+		if ($stats{printed_lines} != 1) {
+			_send_text("\n");
+		}
 	}
 	# an extra space for line number
 	$text .= ' ' if ( $stats{printed_lines} % 3 == 2 );
@@ -331,15 +333,17 @@ sub print_results {
 		return;
 	}
 
-	my $frame = Padre->ide->wx->main_window;
-	my $threvent = Wx::PlThreadEvent->new( -1, $DONE_EVENT, $text );
-	Wx::PostEvent( $frame, $threvent );
-
+	_send_text($text);
 
 	return;
 }
 
-
+sub _send_text {
+	my $text = shift;
+	my $frame = Padre->ide->wx->main_window;
+	my $threvent = Wx::PlThreadEvent->new( -1, $DONE_EVENT, $text );
+	Wx::PostEvent( $frame, $threvent );
+}
 
 # see t/module.t in ack distro
 sub fill_type_wanted {
