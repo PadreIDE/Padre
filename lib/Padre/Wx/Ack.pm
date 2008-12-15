@@ -266,7 +266,17 @@ sub on_ack_result_selected {
 	my $text = $event->GetItem->GetText;
 	return if not defined $text;
 	
-	print STDERR "$text\n";
+	my ($file, $line) = ($text =~ /^(.*?)\:(\d+)\:/);
+	return unless $line;
+
+	my $mainwindow = Padre->ide->wx->main_window;
+	
+	my $id = $mainwindow->setup_editor($file);
+	return unless $id;
+	$mainwindow->on_nth_pane($id);
+	my $page = $mainwindow->selected_editor;
+	$line--;
+	$page->GotoLine($line);
 }
 
 ######################################
