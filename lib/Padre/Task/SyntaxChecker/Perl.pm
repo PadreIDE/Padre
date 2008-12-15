@@ -1,0 +1,188 @@
+
+package Padre::Task::SyntaxChecker::Perl;
+use strict;
+use warnings;
+
+our $VERSION = '0.21';
+
+use base 'Padre::Task::SyntaxChecker';
+
+use version;
+
+=pod
+
+=head1 NAME
+
+Padre::Task::SyntaxChecker::Perl - Perl document syntax-checking in the background
+
+=head1 SYNOPSIS
+
+  # by default, the text of the current document
+  # will be fetched as will the document's notebook page.
+  my $task = Padre::Task::SyntaxChecker::Perl->new(
+    newlines => "\r\n", # specify the newline type!
+  );
+  $task->schedule;
+  
+  my $task2 = Padre::Task::SyntaxChecker::Perl->new(
+    text => Padre::Documents->current->text_get,
+    notebook_page => Padre::Documents->current->editor,
+    on_finish => sub { my $task = shift; ... },
+    newlines => "\r\n", # specify the newline type!
+  );
+  $task2->schedule;
+
+=head1 DESCRIPTION
+
+This class implements syntax checking of Perl documents in
+the background. It inherits from L<Padre::Task::SyntaxChecker>.
+Please read its documentation!
+
+=cut
+
+sub run {
+	my $self = shift;
+	$self->_check_syntax();
+	return 1;
+}
+
+sub _check_syntax {
+	my $self = shift;
+	
+	my $nlchar = $self->{newlines};
+	$self->{text} =~ s/$nlchar/\n/g if defined $nlchar;
+
+	# Execute the syntax check
+	my $stderr = '';
+	SCOPE: {
+		require File::Temp;
+		my $file = File::Temp->new;
+		$file->print( $self->{text} );
+		$file->close;
+		my @cmd = (
+			Padre->perl_interpreter,
+			'-Mdiagnostics',
+			'-c',
+			$file->filename,
+		);
+		require IPC::Cmd;
+		require IPC::Open3;
+		# damn global variables. This is likely unnecessary, but safe
+		local $IPC::Cmd::USE_IPC_OPEN3 = 1;
+		$IPC::Cmd::USE_IPC_OPEN3 = 1; # silence warning
+		
+		my( undef, undef, undef, undef, $stderr_buf )
+		  = IPC::Cmd::run( command => \@cmd, verbose => 0 );
+		$stderr = join '', @$stderr_buf if ref($stderr_buf) eq 'ARRAY';
+	}
+
+	# Don't really know where that comes from...
+	my $i = index( $stderr, 'Uncaught exception from user code' );
+	if ( $i > 0 ) {
+		$stderr = substr( $stderr, 0, $i );
+	}
+
+	# Handle the "no errors or warnings" case
+	if ( $stderr =~ /^\s+syntax OK\s+$/s ) {
+		return [];
+	}
+
+	# Split into message paragraphs
+	$stderr =~ s/\n\n/\n/go;
+	$stderr =~ s/\n\s/\x1F /go;
+	my @messages = split(/\n/, $stderr);
+
+	my $issues = [];
+	my @diag   = ();
+	foreach my $message ( @messages ) {
+		if (   index( $message, 'has too many errors' )    > 0
+			or index( $message, 'had compilation errors' ) > 0
+			or index( $message, 'syntax OK' ) > 0
+		) {
+			last;
+		}
+
+		my $cur = {};
+		my $tmp = '';
+
+		if ( $message =~ s/\s\(\#(\d+)\)\s*\Z//o ) {
+			$cur->{diag} = $1 - 1;
+		}
+
+		if ( $message =~ m/\)\s*\Z/o ) {
+			my $pos = rindex( $message, '(' );
+			$tmp = substr( $message, $pos, length($message) - $pos, '' );
+		}
+
+		if ( $message =~ s/\s\(\#(\d+)\)(.+)//o ) {
+			$cur->{diag} = $1 - 1;
+			my $diagtext = $2;
+			$diagtext =~ s/\x1F//go;
+			push @diag, join( ' ', split( ' ', $diagtext ) );
+		}
+
+		if ( $message =~ s/\sat(?:\s|\x1F)+.+?(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
+			$cur->{line} = $1;
+			$cur->{msg}  = $message;
+		}
+
+		if ($tmp) {
+			$cur->{msg} .= "\n" . $tmp;
+		}
+
+		if (defined $cur->{msg}) {
+			$cur->{msg} =~ s/\x1F/\n/go;
+		}
+
+		if ( defined $cur->{diag} ) {
+			$cur->{desc} = $diag[ $cur->{diag} ];
+			delete $cur->{diag};
+		}
+		if (   defined( $cur->{desc} )
+			&& $cur->{desc} =~ /^\s*\([WD]/o
+		) {
+			$cur->{severity} = 'W';
+		}
+		else {
+			$cur->{severity} = 'E';
+		}
+		delete $cur->{desc};
+
+		push @{$issues}, $cur;
+	}
+
+	$self->{syntax_check} = $issues;
+}
+
+
+
+1;
+
+__END__
+
+=head1 SEE ALSO
+
+This class inherits from L<Padre::Task::SyntaxChecker> which
+in turn is a L<Padre::Task> and its instances can be scheduled
+using L<Padre::TaskManager>.
+
+The transfer of the objects to and from the worker threads is implemented
+with L<Storable>.
+
+=head1 AUTHOR
+
+Steffen Mueller C<smueller@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2008 Gabor Szabo.
+
+This program is free software; you can redistribute it and/or
+modify it under the same terms as Perl 5 itself.
+
+=cut
+
+# Copyright 2008 Gabor Szabo.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
