@@ -266,7 +266,6 @@ sub _css_class {
 # Checks the syntax of a Perl document.
 # Documented in Padre::Document!
 # Implemented as a task. See Padre::Task::SyntaxChecker::Perl
-
 sub check_syntax {
 	my $self  = shift;
 	my %args  = @_;
@@ -314,6 +313,7 @@ sub _check_syntax_internals {
 	
 	require Padre::Task::SyntaxChecker::Perl;
 	my $task = Padre::Task::SyntaxChecker::Perl->new(
+		notebook_page => $self->editor,
 		text => $text,
 		newlines => $nlchar,
 		( exists $args->{on_finish} ? (on_finish => $args->{on_finish}) : () ),
