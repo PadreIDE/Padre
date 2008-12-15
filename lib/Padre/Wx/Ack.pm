@@ -56,7 +56,10 @@ sub on_ack {
 	}
 
 	# clear %stats; for every request
-	%stats = ();
+	%stats = (
+		cnt_files   => 0,
+		cnt_matches => 0,
+	);
 	
 	my $text   = $mainwindow->selected_text;
 	$text = '' if not defined $text;
@@ -69,34 +72,6 @@ sub on_ack {
 
 ################################
 # Dialog related
-
-sub _get_data_from {
-	my ( $dialog ) = @_;
-
-	my $data = $dialog->get_data;
-	
-	my $term = $data->{_ack_term_};
-	my $dir  = $data->{_ack_dir_};
-	
-	$dialog->Destroy;
-	
-	my $config = Padre->ide->config;
-	if ( $term ) {
-		unshift @{$config->{ack_terms}}, $term;
-		my %seen;
-		@{$config->{ack_terms}} = grep {!$seen{$_}++} @{$config->{ack_terms}};
-	}
-	if ( $dir ) {
-		unshift @{$config->{ack_dirs}}, $dir;
-		my %seen;
-		@{$config->{ack_dirs}} = grep {!$seen{$_}++} @{$config->{ack_dirs}};
-	}
-	
-	return {
-		term => $term,
-		dir  => $dir,
-	}
-}
 
 sub get_layout {
 	my ( $term ) = shift;
@@ -202,6 +177,34 @@ sub find_clicked {
 	return;
 }
 
+sub _get_data_from {
+	my ( $dialog ) = @_;
+
+	my $data = $dialog->get_data;
+	
+	my $term = $data->{_ack_term_};
+	my $dir  = $data->{_ack_dir_};
+	
+	$dialog->Destroy;
+	
+	my $config = Padre->ide->config;
+	if ( $term ) {
+		unshift @{$config->{ack_terms}}, $term;
+		my %seen;
+		@{$config->{ack_terms}} = grep {!$seen{$_}++} @{$config->{ack_terms}};
+	}
+	if ( $dir ) {
+		unshift @{$config->{ack_dirs}}, $dir;
+		my %seen;
+		@{$config->{ack_dirs}} = grep {!$seen{$_}++} @{$config->{ack_dirs}};
+	}
+	
+	return {
+		term => $term,
+		dir  => $dir,
+	}
+}
+
 ################################
 # Ack pane related
 
@@ -296,7 +299,12 @@ sub ack_done {
 }
 
 sub on_ack_thread {
+
 	App::Ack::print_matches( $iter, \%opts );
+
+	# summary
+	_send_text("\n") if ( $stats{cnt_files} );
+	_send_text("Found $stats{cnt_files} files and $stats{cnt_matches} matches\n");
 }
 
 sub print_results {
@@ -310,17 +318,21 @@ sub print_results {
 	return if ( $stats{printed_lines} % 3 == 1 and
 				$stats{last_matched_filename} and
 				$stats{last_matched_filename} eq $text );
-	$stats{last_matched_filename} = $text if ( $stats{printed_lines} % 3 == 1 );
-	# new \n rules
-	# 1, add \n before $filename expect the first filename
 	if ( $stats{printed_lines} % 3 == 1 ) {
+		$stats{last_matched_filename} = $text;
+		$stats{cnt_files}++;
+		
+		# add \n after $filename
 		$text .= "\n";
+		# new line between different files
 		if ($stats{printed_lines} != 1) {
 			_send_text("\n");
 		}
+	} elsif ( $stats{printed_lines} % 3 == 2 ) {
+		$stats{cnt_matches}++;
+		# an extra space for line number
+		$text .= ' ';
 	}
-	# an extra space for line number
-	$text .= ' ' if ( $stats{printed_lines} % 3 == 2 );
 
 	#my $end = $result->get_end_iter;
 	#$result->insert($end, $text);
