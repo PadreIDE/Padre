@@ -13,6 +13,9 @@ use Getopt::Long   ();
 use YAML::Tiny     ();
 use DBI            ();
 use Class::Autouse ();
+# load this before things are messed up to produce versions like '0,76'! 
+# TODO: Bug report dispatched. Likely to be fixed in 0.77.
+use version        ();
 
 our $VERSION = '0.21';
 
