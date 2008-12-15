@@ -265,19 +265,36 @@ sub _css_class {
 
 # Checks the syntax of a Perl document.
 # Documented in Padre::Document!
+# Implemented as a task. See Padre::Task::SyntaxChecker::Perl
+
 sub check_syntax {
 	my $self  = shift;
 	my %args  = @_;
+	$args{background} = 0;
+	return $self->_check_syntax_internals(\%args);
+}
 
+sub check_syntax_in_background {
+	my $self  = shift;
+	my %args  = @_;
+	$args{background} = 1;
+	return $self->_check_syntax_internals(\%args);
+}
+
+sub _check_syntax_internals {
+	my $self = shift;
+	my $args = shift;
+	
 	my $text = $self->text_get;
 	unless ( defined $text and $text ne '' ) {
 		return [];
 	}
 
+	# Do we really need an update?
 	require Digest::MD5;
 	use Encode qw(encode_utf8);
 	my $md5 = Digest::MD5::md5(encode_utf8($text));
-	unless ( $args{force} ) {
+	unless ( $args->{force} ) {
 		if ( defined( $self->{last_checked_md5} )
 		     && $self->{last_checked_md5} eq $md5
 		) {
@@ -286,6 +303,7 @@ sub check_syntax {
 	}
 	$self->{last_checked_md5} = $md5;
 
+	
 	my $nlchar = "\n";
 	if ( $self->get_newline_type eq 'WIN' ) {
 		$nlchar = "\r\n";
@@ -293,101 +311,24 @@ sub check_syntax {
 	elsif ( $self->get_newline_type eq 'MAC' ) {
 		$nlchar = "\r";
 	}
-	$text =~ s/$nlchar/\n/g;
-
-	# Execute the syntax check
-	my $stderr = '';
-	SCOPE: {
-		require File::Temp;
-		my $file = File::Temp->new;
-		$file->print( $text );
-		$file->close;
-		require IPC::Run3;
-		my @cmd = (
-			Padre->perl_interpreter,
-			'-Mdiagnostics',
-			'-c',
-			$file->filename,
-		);
-		IPC::Run3::run3( \@cmd, \undef, \undef, \$stderr );
+	
+	require Padre::Task::SyntaxChecker::Perl;
+	my $task = Padre::Task::SyntaxChecker::Perl->new(
+		text => $text,
+		newlines => $nlchar,
+		( exists $args->{on_finish} ? (on_finish => $args->{on_finish}) : () ),
+	);
+	if ($args->{background}) {
+		# asynchroneous execution (see on_finish hook)
+		$task->schedule();
+		return();
 	}
-
-	# Don't really know where that comes from...
-	my $i = index( $stderr, 'Uncaught exception from user code' );
-	if ( $i > 0 ) {
-		$stderr = substr( $stderr, 0, $i );
+	else {
+		# serial execution, returning the result
+		return() if $task->prepare() =~ /^break$/;
+		$task->run();
+		return $task->{syntax_check};
 	}
-
-	# Handle the "no errors or warnings" case
-	if ( $stderr =~ /^\s+syntax OK\s+$/s ) {
-		return [];
-	}
-
-	# Split into message paragraphs
-	$stderr =~ s/\n\n/\n/go;
-	$stderr =~ s/\n\s/\x1F /go;
-	my @messages = split(/\n/, $stderr);
-
-	my $issues = [];
-	my @diag   = ();
-	foreach my $message ( @messages ) {
-		if (   index( $message, 'has too many errors' )    > 0
-			or index( $message, 'had compilation errors' ) > 0
-			or index( $message, 'syntax OK' ) > 0
-		) {
-			last;
-		}
-
-		my $cur = {};
-		my $tmp = '';
-
-		if ( $message =~ s/\s\(\#(\d+)\)\s*\Z//o ) {
-			$cur->{diag} = $1 - 1;
-		}
-
-		if ( $message =~ m/\)\s*\Z/o ) {
-			my $pos = rindex( $message, '(' );
-			$tmp = substr( $message, $pos, length($message) - $pos, '' );
-		}
-
-		if ( $message =~ s/\s\(\#(\d+)\)(.+)//o ) {
-			$cur->{diag} = $1 - 1;
-			my $diagtext = $2;
-			$diagtext =~ s/\x1F//go;
-			push @diag, join( ' ', split( ' ', $diagtext ) );
-		}
-
-		if ( $message =~ s/\sat(?:\s|\x1F)+.+?(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
-			$cur->{line} = $1;
-			$cur->{msg}  = $message;
-		}
-
-		if ($tmp) {
-			$cur->{msg} .= "\n" . $tmp;
-		}
-
-		if (defined $cur->{msg}) {
-			$cur->{msg} =~ s/\x1F/\n/go;
-		}
-
-		if ( defined $cur->{diag} ) {
-			$cur->{desc} = $diag[ $cur->{diag} ];
-			delete $cur->{diag};
-		}
-		if (   defined( $cur->{desc} )
-			&& $cur->{desc} =~ /^\s*\([WD]/o
-		) {
-			$cur->{severity} = 'W';
-		}
-		else {
-			$cur->{severity} = 'E';
-		}
-		delete $cur->{desc};
-
-		push @{$issues}, $cur;
-	}
-
-	return $issues;
 }
 
 sub comment_lines_str { return '#' }
