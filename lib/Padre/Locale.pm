@@ -26,20 +26,6 @@ our $VERSION = '0.21';
 
 use constant DEFAULT_LOCALE => 'en';
 
-# TODO move it to some better place,
-# used in Menu.pm
-my %LANGUAGE = (
-	ar => Wx::gettext('Arabic'),
-	de => Wx::gettext('German'),
-	en => Wx::gettext('English'),
-	fr => Wx::gettext('French'),
-	he => Wx::gettext('Hebrew'),
-	hu => Wx::gettext('Hungarian'),
-	ko => Wx::gettext('Korean'),
-	it => Wx::gettext('Italian'),
-	ru => Wx::gettext('Russian'),
-	nl => Wx::gettext('Dutch'),
-);
 
 my %SHORTNAME = (
 	Wx::wxLANGUAGE_ARABIC()     => 'ar',
@@ -56,8 +42,21 @@ my %SHORTNAME = (
 
 my %NUMBER = reverse %SHORTNAME;
 
+# LANGUAGES hash needs to be here in order
+# the get the run-time language change for these words too.
 sub languages {
-	return ( %LANGUAGE );
+	return (
+		ar => Wx::gettext('Arabic'),
+		de => Wx::gettext('German'),
+		en => Wx::gettext('English'),
+		fr => Wx::gettext('French'),
+		he => Wx::gettext('Hebrew'),
+		hu => Wx::gettext('Hungarian'),
+		ko => Wx::gettext('Korean'),
+		it => Wx::gettext('Italian'),
+		ru => Wx::gettext('Russian'),
+		nl => Wx::gettext('Dutch'),
+	);
 }
 
 sub shortname {
