@@ -29,6 +29,7 @@ use constant DEFAULT_LOCALE => 'en';
 # TODO move it to some better place,
 # used in Menu.pm
 my %LANGUAGE = (
+	ar => Wx::gettext('Arabic'),
 	de => Wx::gettext('German'),
 	en => Wx::gettext('English'),
 	fr => Wx::gettext('French'),
@@ -41,6 +42,7 @@ my %LANGUAGE = (
 );
 
 my %SHORTNAME = (
+	Wx::wxLANGUAGE_ARABIC()     => 'ar',
 	Wx::wxLANGUAGE_GERMAN()     => 'de',
 	Wx::wxLANGUAGE_ENGLISH_US() => 'en',
 	Wx::wxLANGUAGE_FRENCH()     => 'fr',

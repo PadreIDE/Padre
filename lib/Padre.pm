@@ -1061,6 +1061,8 @@ To Octavian Rasnita for early testing and bug reports.
 
 =head2 Translations
 
+Arabic - Ahmad M. Zawawi (AZAWAWI)
+
 Dutch - Dirk De Nijs (ddn123456)
 
 English - everyone on the team
