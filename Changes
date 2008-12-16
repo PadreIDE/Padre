@@ -1,8 +1,9 @@
 Changes for Padre.
 	Italian translation updated (SBLANDIN)
 	
-v0.21 2008.12.15
+v0.21 2008.12.X
 
+    improved Ack (FAYLAND)
     Allow selection of editor font and current line background 
         color (HJANSEN)
 
