@@ -204,6 +204,7 @@ sub find_clicked {
 	unless ( $mainwindow->{gui}->{ack_panel} ) {
 		create_ack_pane( $mainwindow );
 	}
+	$mainwindow->show_output(1);
 	show_ack_output($mainwindow, 1);
 	$mainwindow->{gui}->{ack_panel}->DeleteAllItems;
 

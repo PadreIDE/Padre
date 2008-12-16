@@ -1741,6 +1741,11 @@ sub show_output {
 		${$op}->Hide;
 		if ( $idx >= 0 ) {
 			${$bp}->RemovePage($idx);
+			
+			# delete 'Ack' pane
+			$idx = ${$bp}->GetPageIndex( $self->{gui}->{ack_panel} );
+			${$bp}->DeletePage($idx) if ( $idx >= 0 );
+			
 			$self->check_pane_needed('bottompane');
 		}
 	}
