@@ -56,12 +56,6 @@ sub on_ack {
 		$ack_loaded = 1;
 	}
 
-	# clear %stats; for every request
-	%stats = (
-		cnt_files   => 0,
-		cnt_matches => 0,
-	);
-	
 	my $text   = $mainwindow->selected_text;
 	$text = '' if not defined $text;
 	
@@ -78,7 +72,10 @@ sub get_layout {
 	my ( $term ) = shift;
 	
 	my $config = Padre->ide->config;
-	
+	$config->{ack_terms}      ||= [];
+	$config->{ack_dirs}       ||= [];
+	$config->{ack_file_types} ||= [];
+
 	my @layout = (
 		[
 			[ 'Wx::StaticText', undef,              gettext('Term:')],
@@ -91,13 +88,17 @@ sub get_layout {
 			[ 'Wx::Button',     '_pick_dir_',        gettext('Pick &directory')],
 		],
 		[
-			['Wx::CheckBox',    'case_insensitive', gettext('Case &Insensitive'),    ($config->{search}->{case_insensitive} ? 1 : 0) ],
+			[ 'Wx::StaticText', undef,              gettext('In Files/Types:')],
+			[ 'Wx::ComboBox',   '_file_types_',     '', $config->{ack_file_types} ],
+			[ 'Wx::Button',     '_cancel_',         Wx::wxID_CANCEL],
 		],
 		[
-			[],
-			[],
-			[ 'Wx::Button',     '_cancel_',    Wx::wxID_CANCEL],
+			['Wx::CheckBox',    'case_insensitive', gettext('Case &Insensitive'),    ($config->{ack}->{case_insensitive} ? 1 : 0) ],
 		],
+		[
+			['Wx::CheckBox',    'ignore_hidden_subdirs', gettext('I&gnore hidden Subdirectories'),    ($config->{ack}->{ignore_hidden_subdirs} ? 1 : 0) ],
+		],
+		
 	);
 	return \@layout;
 }
@@ -168,15 +169,36 @@ sub find_clicked {
 
 	# TODO kill the thread before closing the application
 
+	# prepare \%opts
+	%opts = ();
 	$opts{regex} = $search->{term};
-	if (-f $search->{dir}) {
+	# ignore_hidden_subdirs
+	if ( $search->{ignore_hidden_subdirs} ) {
 		$opts{all} = 1;
+	} else {
+		$opts{u} = 1; # unrestricted
 	}
-	# case insensitive
-	$opts{i} = $search->{case_insensitive};
+	# file_type
+	fill_type_wanted();
+	if ( my $file_types = $search->{file_types} ) {
+		my $is_regex = 1;
+		my $wanted = ($file_types =~ s/^no//) ? 0 : 1;
+		for my $i ( App::Ack::filetypes_supported() ) {
+			if ( $i eq $file_types ) {
+				$App::Ack::type_wanted{ $i } = $wanted;
+				$is_regex = 0;
+				last;
+			}
+		}
+		$opts{G} = quotemeta $file_types if ( $is_regex );
+	}
+	# case_insensitive
+	$opts{i} = $search->{case_insensitive} if $search->{case_insensitive};
+	
+	use Data::Dumper;
+	print STDERR Dumper(\%opts);
 	
 	my $what = App::Ack::get_starting_points( [$search->{dir}], \%opts );
-	fill_type_wanted();
 	$iter = App::Ack::get_iterator( $what, \%opts );
 	App::Ack::filetype_setup();
 
@@ -200,6 +222,9 @@ sub _get_data_from {
 	
 	my $term = $data->{_ack_term_};
 	my $dir  = $data->{_ack_dir_};
+	my $file_types = $data->{_file_types_};
+	my $case_insensitive      = $data->{case_insensitive};
+	my $ignore_hidden_subdirs = $data->{ignore_hidden_subdirs};
 	
 	$dialog->Destroy;
 	
@@ -208,17 +233,29 @@ sub _get_data_from {
 		unshift @{$config->{ack_terms}}, $term;
 		my %seen;
 		@{$config->{ack_terms}} = grep {!$seen{$_}++} @{$config->{ack_terms}};
+		@{$config->{ack_terms}} = splice(@{$config->{ack_terms}},  0, 20);
 	}
 	if ( $dir ) {
 		unshift @{$config->{ack_dirs}}, $dir;
 		my %seen;
 		@{$config->{ack_dirs}} = grep {!$seen{$_}++} @{$config->{ack_dirs}};
+		@{$config->{ack_dirs}} = splice(@{$config->{ack_dirs}},  0, 20);
 	}
+	if ( $file_types ) {
+		unshift @{$config->{ack_file_types}}, $dir;
+		my %seen;
+		@{$config->{ack_file_types}} = grep {!$seen{$_}++} @{$config->{ack_file_types}};
+		@{$config->{ack_file_types}} = splice(@{$config->{ack_file_types}},  0, 20);
+	}
+	$config->{ack}->{case_insensitive}      = $case_insensitive;
+	$config->{ack}->{ignore_hidden_subdirs} = $ignore_hidden_subdirs;
 	
 	return {
 		term => $term,
 		dir  => $dir,
-		case_insensitive => $data->{case_insensitive},
+		file_types => $file_types,
+		case_insensitive      => $case_insensitive,
+		ignore_hidden_subdirs => $ignore_hidden_subdirs,
 	}
 }
 
@@ -317,6 +354,12 @@ sub ack_done {
 
 sub on_ack_thread {
 
+	# clear %stats; for every request
+	%stats = (
+		cnt_files   => 0,
+		cnt_matches => 0,
+	);
+
 	App::Ack::print_matches( $iter, \%opts );
 
 	# summary
@@ -327,15 +370,20 @@ sub on_ack_thread {
 sub print_results {
 	my ($text) = @_;
 	
-	#print "$text\n";
+	print "$text\n";
 	
 	# the first is filename, the second is line number, the third is matched line text
+	# while 'Binary file', there is ONLY filename
 	$stats{printed_lines}++;
 	# don't print filename again if it's just printed
 	return if ( $stats{printed_lines} % 3 == 1 and
 				$stats{last_matched_filename} and
 				$stats{last_matched_filename} eq $text );
 	if ( $stats{printed_lines} % 3 == 1 ) {
+		if ( $text =~ /^Binary file/ ) {
+			$stats{printed_lines} = $stats{printed_lines} + 2;
+		}
+		
 		$stats{last_matched_filename} = $text;
 		$stats{cnt_files}++;
 		
