@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-13 00:20+0100\n"
-"PO-Revision-Date: 2008-12-16 20:43+0200\n"
+"PO-Revision-Date: 2008-12-16 21:09+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +106,7 @@ msgstr "تم الغاء الفحص"
 
 #: lib/Padre/Wx/Ack.pm:137
 msgid "Term:"
-msgstr ""
+msgstr "مصطلح:"
 
 #: lib/Padre/Wx/Ack.pm:142
 msgid "Dir:"
@@ -220,12 +220,12 @@ msgstr "اختيار الكل\tCtrl-A"
 #: lib/Padre/Wx/Editor.pm:560
 #: lib/Padre/Wx/Menu/Edit.pm:232
 msgid "&Comment Selected Lines\tCtrl-M"
-msgstr ""
+msgstr "ا&ضافه تعليق للاسطر المختاره\tCtrl-M"
 
 #: lib/Padre/Wx/Editor.pm:564
 #: lib/Padre/Wx/Menu/Edit.pm:240
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
-msgstr ""
+msgstr "ا&زاله التعليق من الاسطر المختاره\tCtrl-Shift-M"
 
 #: lib/Padre/Wx/Editor.pm:573
 #: lib/Padre/Wx/Menu/Window.pm:37
@@ -280,7 +280,7 @@ msgstr "تشغيل الإعداد"
 
 #: lib/Padre/Wx/MainWindow.pm:792
 msgid "No open document"
-msgstr ""
+msgstr "لا يوجد أي وثيقه مفتوحه"
 
 #: lib/Padre/Wx/MainWindow.pm:807
 msgid "No execution mode was defined for this document"
@@ -595,7 +595,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:29
 msgid "Guess from current document"
-msgstr ""
+msgstr "تخمين من الوثيقه الحاليه"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:30
 msgid "Guess"
@@ -631,16 +631,16 @@ msgstr "الكل"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:23
 msgid "Class:"
-msgstr ""
+msgstr "ال Class:"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:24
 #: lib/Padre/Wx/Dialog/Snippets.pm:125
 msgid "Snippet:"
-msgstr ""
+msgstr "قصاصه:"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:25
 msgid "&Insert"
-msgstr ""
+msgstr "ا&ضافه"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:27
 msgid "&Add"
@@ -648,7 +648,7 @@ msgstr "ا&ضافه"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:39
 msgid "Snippets"
-msgstr ""
+msgstr "قصاصات"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:123
 msgid "Category:"
@@ -664,7 +664,7 @@ msgstr "&حفظ"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:137
 msgid "Edit/Add Snippets"
-msgstr ""
+msgstr "تعديل/اضافه قصاصات"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:28
 msgid "Existing bookmarks:"
@@ -697,19 +697,19 @@ msgstr "جديد..."
 
 #: lib/Padre/Wx/Menu/File.pm:50
 msgid "Perl Distribution (Module::Starter)"
-msgstr ""
+msgstr "وحده توزيع Perl (Module::Starter)"
 
 #: lib/Padre/Wx/Menu/File.pm:66
 msgid "&Open...\tCtrl-O"
-msgstr ""
+msgstr "&فتح...\tCtrl-O"
 
 #: lib/Padre/Wx/Menu/File.pm:74
 msgid "Open Selection\tCtrl-Shift-O"
-msgstr ""
+msgstr "فتح الاختيار\tCtrl-Shift-O"
 
 #: lib/Padre/Wx/Menu/File.pm:85
 msgid "&Close\tCtrl-W"
-msgstr ""
+msgstr "ا&غلاق\tCtrl-W"
 
 #: lib/Padre/Wx/Menu/File.pm:95
 msgid "Close All"
@@ -725,7 +725,7 @@ msgstr "اعادة تحميل الملف"
 
 #: lib/Padre/Wx/Menu/File.pm:131
 msgid "&Save\tCtrl-S"
-msgstr ""
+msgstr "&حفظ\tCtrl-S"
 
 #: lib/Padre/Wx/Menu/File.pm:141
 msgid "Save &As..."
@@ -745,15 +745,15 @@ msgstr "تحويل..."
 
 #: lib/Padre/Wx/Menu/File.pm:199
 msgid "EOL to Windows"
-msgstr ""
+msgstr "تحويل نهايه السطر الى ويندوز "
 
 #: lib/Padre/Wx/Menu/File.pm:209
 msgid "EOL to Unix"
-msgstr ""
+msgstr "تحويل نهايه السطر الى يونكس"
 
 #: lib/Padre/Wx/Menu/File.pm:219
 msgid "EOL to Mac Classic"
-msgstr ""
+msgstr "تحويل نهايه السطر الى ماكنتوش كلاسيك "
 
 #: lib/Padre/Wx/Menu/File.pm:237
 msgid "&Recent Files"
@@ -769,7 +769,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/File.pm:289
 msgid "Doc Stats"
-msgstr ""
+msgstr "احصائيات الوثيقه"
 
 #: lib/Padre/Wx/Menu/File.pm:308
 msgid "&Quit\tCtrl-Q"
@@ -777,7 +777,7 @@ msgstr "&خروج\tCtrl-Q"
 
 #: lib/Padre/Wx/Menu/Run.pm:29
 msgid "Run Script\tF5"
-msgstr ""
+msgstr "تشغيل ملف نصي\tF5"
 
 #: lib/Padre/Wx/Menu/Run.pm:37
 msgid "Run Command\tCtrl-F5"
@@ -789,11 +789,11 @@ msgstr "&ايقاف"
 
 #: lib/Padre/Wx/Menu/Perl.pm:31
 msgid "Find Unmatched Brace"
-msgstr ""
+msgstr "ايجاد قوص بلا مثيل"
 
 #: lib/Padre/Wx/Menu/Perl.pm:40
 msgid "Find variable declaration"
-msgstr ""
+msgstr "ايجاد اعلان متغير"
 
 #: lib/Padre/Wx/Menu/Perl.pm:50
 msgid "Lexically replace variable"
@@ -888,11 +888,11 @@ msgstr "ادوات البرنامج المساعد"
 
 #: lib/Padre/Wx/Menu/Edit.pm:31
 msgid "&Undo"
-msgstr ""
+msgstr "ا&لغاء التغييرات"
 
 #: lib/Padre/Wx/Menu/Edit.pm:42
 msgid "&Redo"
-msgstr ""
+msgstr "ا&عاده التغييرات"
 
 #: lib/Padre/Wx/Menu/Edit.pm:60
 msgid "Select"
