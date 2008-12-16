@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-13 00:20+0100\n"
-"PO-Revision-Date: 2008-12-16 19:33+0200\n"
+"PO-Revision-Date: 2008-12-16 19:58+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: lib/Padre/PluginManager.pm:564
 #: lib/Padre/Wx/Menu.pm:78
 msgid "Pl&ugins"
-msgstr ""
+msgstr "ال&برامج المساعده"
 
 #: lib/Padre/PluginManager.pm:601
 #: lib/Padre/Wx/MainWindow.pm:1264
@@ -255,7 +255,7 @@ msgstr "عرض النتائج"
 #: lib/Padre/Wx/MainWindow.pm:515
 #: lib/Padre/Wx/MainWindow.pm:1775
 msgid "Subs"
-msgstr ""
+msgstr "الوظائف الفرعيه"
 
 #: lib/Padre/Wx/MainWindow.pm:516
 #: lib/Padre/Wx/MainWindow.pm:1733
@@ -474,19 +474,19 @@ msgstr "غير حساس لحالة الأحرف"
 
 #: lib/Padre/Wx/Dialog/Search.pm:161
 msgid "Use regex"
-msgstr ""
+msgstr "استعمال regex"
 
 #: lib/Padre/Wx/Dialog/Find.pm:27
 msgid "Replace With:"
-msgstr ""
+msgstr "استبدال ب:"
 
 #: lib/Padre/Wx/Dialog/Find.pm:29
 msgid "&Replace"
-msgstr ""
+msgstr "ا&ستبدال"
 
 #: lib/Padre/Wx/Dialog/Find.pm:34
 msgid "Replace &All"
-msgstr ""
+msgstr "استبدال ال&كل"
 
 #: lib/Padre/Wx/Dialog/Find.pm:37
 msgid "Case &Insensitive"
@@ -562,12 +562,12 @@ msgstr "تم"
 #: lib/Padre/Wx/Dialog/Preferences.pm:71
 #: lib/Padre/Wx/Menu/Edit.pm:351
 msgid "Preferences"
-msgstr ""
+msgstr "تفضيلات"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:45
 #: lib/Padre/Wx/Menu/Plugins.pm:31
 msgid "Plugin Manager"
-msgstr ""
+msgstr "مدير البرنامج المساعد"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:101
 msgid "Disable"
@@ -599,15 +599,15 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:30
 msgid "Guess"
-msgstr ""
+msgstr "تخمين"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:33
 msgid "Max number of modules"
-msgstr ""
+msgstr "اقصى عدد من الوحدات"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:37
 msgid "Min number of modules"
-msgstr ""
+msgstr "اقل عدد من الوحدات"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:41
 msgid "Open files:"
@@ -619,7 +619,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:49
 msgid "Methods order:"
-msgstr ""
+msgstr "ترتيب ال Methods:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:53
 msgid "Default word wrap on for each file"
@@ -668,7 +668,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:28
 msgid "Existing bookmarks:"
-msgstr ""
+msgstr "العلامات المتوفره:"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:42
 msgid "Delete &All"
@@ -676,11 +676,11 @@ msgstr "حذف ال&كل"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:51
 msgid "Set Bookmark"
-msgstr ""
+msgstr "تحديد علامه"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:51
 msgid "GoTo Bookmark"
-msgstr ""
+msgstr "ذهاب الى علامه"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:108
 #, perl-format
@@ -773,7 +773,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/File.pm:308
 msgid "&Quit\tCtrl-Q"
-msgstr ""
+msgstr "&خروج\tCtrl-Q"
 
 #: lib/Padre/Wx/Menu/Run.pm:29
 msgid "Run Script\tF5"
@@ -781,11 +781,11 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Run.pm:37
 msgid "Run Command\tCtrl-F5"
-msgstr ""
+msgstr "تشغيل الامر\tCtrl-F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:45
 msgid "&Stop"
-msgstr ""
+msgstr "&ايقاف"
 
 #: lib/Padre/Wx/Menu/Perl.pm:31
 msgid "Find Unmatched Brace"
@@ -802,11 +802,11 @@ msgstr ""
 #: lib/Padre/Wx/Menu/Perl.pm:56
 #: lib/Padre/Wx/Menu/Perl.pm:57
 msgid "Replacement"
-msgstr ""
+msgstr "بديل"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:29
 msgid "Disable Experimental Mode"
-msgstr ""
+msgstr "تعطيل النمط التجريبي"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:40
 msgid "Reflow Menu/Toolbar"
@@ -834,11 +834,11 @@ msgstr "بحث سريع"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:116
 msgid "Find Next\tF4"
-msgstr ""
+msgstr "ايجاد التالي\tF4"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:122
 msgid "Find Previous\tShift-F4"
-msgstr ""
+msgstr "ايجاد السابق\tShift-F4"
 
 #: lib/Padre/Wx/Menu/Help.pm:41
 msgid "Context Help\tCtrl-Shift-H"
@@ -846,7 +846,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Help.pm:57
 msgid "Visit the PerlMonks"
-msgstr ""
+msgstr "زياره موقع PerlMonks"
 
 #: lib/Padre/Wx/Menu/Help.pm:66
 msgid "&About"
@@ -858,33 +858,33 @@ msgstr "حقوق الطبع 2008 Gabor Szabo"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:40
 msgid "Edit My Plugin"
-msgstr ""
+msgstr "تحرير برنامجي المساعد"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:47
 msgid "Could not find the Padre::Plugin::My plugin"
-msgstr ""
+msgstr "فشل العثور على Padre::Plugin::My plugin"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:54
 msgid "Reload My Plugin"
-msgstr ""
+msgstr "اعاده تحميل البرنامج المساعد"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:60
 #: lib/Padre/Wx/Menu/Plugins.pm:63
 #: lib/Padre/Wx/Menu/Plugins.pm:64
 msgid "Reset My Plugin"
-msgstr ""
+msgstr "اعادة تشغيل برنامجي المساعد"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:82
 msgid "Reload All Plugins"
-msgstr ""
+msgstr "اعاده تحميل كل البرامج المساعده"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:88
 msgid "Test A Plugin From Local Dir"
-msgstr ""
+msgstr "فحص برنامج مساعد من الدليل المحلي"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:95
 msgid "Plugin Tools"
-msgstr ""
+msgstr "ادوات البرنامج المساعد"
 
 #: lib/Padre/Wx/Menu/Edit.pm:31
 msgid "&Undo"
@@ -916,7 +916,7 @@ msgstr "&نسخ\tCtrl-C"
 
 #: lib/Padre/Wx/Menu/Edit.pm:119
 msgid "Cu&t\tCtrl-X"
-msgstr ""
+msgstr "&قص\tCtrl-X"
 
 #: lib/Padre/Wx/Menu/Edit.pm:130
 msgid "&Paste\tCtrl-V"
@@ -924,15 +924,15 @@ msgstr "&لصق\tCtrl-V"
 
 #: lib/Padre/Wx/Menu/Edit.pm:150
 msgid "&Find\tCtrl-F"
-msgstr ""
+msgstr "&بحث\tCtrl-F"
 
 #: lib/Padre/Wx/Menu/Edit.pm:159
 msgid "Find Next\tF3"
-msgstr ""
+msgstr "ايجاد التالي\tF3"
 
 #: lib/Padre/Wx/Menu/Edit.pm:168
 msgid "Find Previous\tShift-F3"
-msgstr ""
+msgstr "ايجاد السابق\tShift-F3"
 
 #: lib/Padre/Wx/Menu/Edit.pm:177
 msgid "Ac&k"
