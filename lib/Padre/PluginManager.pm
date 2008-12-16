@@ -321,9 +321,15 @@ sub _load_plugin_norefresh_menu {
 		return;
 	}
 
-	# Does the plugin advertise its compatibility
-	unless ( $module->can('new') and $module->can('padre_interfaces') ) {
-		warn $self->{errstr} = "Plugin:$name - Not compatible with Padre::Plugin API";
+	# Does the plugin have new method? TODO
+	unless ( $module->can('new') ) {
+		warn $self->{errstr} = "Plugin:$name - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin";
+		$state->{status} = 'failed';
+		return;
+	}
+	# TODO this will not check anything as padre_interfaces is defined in Padre::Plugin
+	unless ( $module->can('padre_interfaces') ) {
+		warn $self->{errstr} = "Plugin:$name - Not compatible with Padre::Plugin API. Need to have sub padre_interfaces";
 		$state->{status} = 'failed';
 		return;
 	}
