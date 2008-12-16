@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-13 00:20+0100\n"
-"PO-Revision-Date: 2008-12-16 19:58+0200\n"
+"PO-Revision-Date: 2008-12-16 20:43+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -242,11 +242,11 @@ msgstr "ملفات"
 
 #: lib/Padre/Wx/MainWindow.pm:322
 msgid "Workspace View"
-msgstr ""
+msgstr "عرض مكان العمل"
 
 #: lib/Padre/Wx/MainWindow.pm:326
 msgid "Methods"
-msgstr ""
+msgstr "ال Methods"
 
 #: lib/Padre/Wx/MainWindow.pm:363
 msgid "Output View"
@@ -360,7 +360,7 @@ msgstr "ملف غير محفوظ"
 
 #: lib/Padre/Wx/MainWindow.pm:1533
 msgid "Cannot diff if file was never saved"
-msgstr ""
+msgstr "فشل العثور على التغييرات في حاله عدم حفظ الملف من قبل"
 
 #: lib/Padre/Wx/MainWindow.pm:1539
 msgid "There are no differences\n"
@@ -403,12 +403,12 @@ msgstr "أحرف مع مسافات: %d"
 #: lib/Padre/Wx/MainWindow.pm:2104
 #, perl-format
 msgid "Newline type: %s"
-msgstr ""
+msgstr "نوع بدايه السطر: %s"
 
 #: lib/Padre/Wx/MainWindow.pm:2105
 #, perl-format
 msgid "Encoding: %s"
-msgstr ""
+msgstr "ترميز: %s"
 
 #: lib/Padre/Wx/MainWindow.pm:2107
 #, perl-format
@@ -441,11 +441,11 @@ msgstr "اغلاق ملف"
 
 #: lib/Padre/Wx/ToolBar.pm:63
 msgid "Undo"
-msgstr ""
+msgstr "الغاء التغييرات"
 
 #: lib/Padre/Wx/ToolBar.pm:68
 msgid "Redo"
-msgstr ""
+msgstr "اعاده التغييرات"
 
 #: lib/Padre/Wx/ToolBar.pm:80
 msgid "Cut"
@@ -494,15 +494,15 @@ msgstr "غير حساس لحالة الأحرف&"
 
 #: lib/Padre/Wx/Dialog/Find.pm:40
 msgid "&Use Regex"
-msgstr ""
+msgstr "ا&ستخدام ال Regex"
 
 #: lib/Padre/Wx/Dialog/Find.pm:43
 msgid "Search &Backwards"
-msgstr ""
+msgstr "بحث لل&وراء"
 
 #: lib/Padre/Wx/Dialog/Find.pm:46
 msgid "Close Window on &hit"
-msgstr ""
+msgstr "اغلاق النافذه عند ال&ضغط"
 
 #: lib/Padre/Wx/Dialog/Find.pm:66
 msgid "Search"
@@ -522,7 +522,7 @@ msgstr "البريد الإلكتروني:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:42
 msgid "Builder:"
-msgstr ""
+msgstr "البناء:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:47
 msgid "License:"
@@ -530,11 +530,11 @@ msgstr "الترخيص:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:52
 msgid "Parent Directory:"
-msgstr ""
+msgstr "ابو الدليل:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:53
 msgid "Pick parent directory"
-msgstr ""
+msgstr "اختيار ابو الدليل"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:82
 msgid "Module Start"
@@ -543,11 +543,11 @@ msgstr "بدايه الوحده"
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:125
 #, perl-format
 msgid "Field %s was missing. Module not created."
-msgstr ""
+msgstr "الحقل %s مفقود. لم يتم كتابه أي وحده."
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:125
 msgid "missing field"
-msgstr ""
+msgstr "حقل مفقود"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:144
 #, perl-format
@@ -583,11 +583,11 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:18
 msgid "Use Tabs"
-msgstr ""
+msgstr "استخدام ال Tabs"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:21
 msgid "TAB display size (in spaces)"
-msgstr ""
+msgstr "حجم عرض TAB (بعدد الفراغات)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:25
 msgid "Indentation width (in columns)"
@@ -940,7 +940,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:183
 msgid "&Goto\tCtrl-G"
-msgstr ""
+msgstr "&ذهاب الى\tCtrl-G"
 
 #: lib/Padre/Wx/Menu/Edit.pm:191
 msgid "&AutoComp\tCtrl-P"
@@ -952,7 +952,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:207
 msgid "&Join lines\tCtrl-J"
-msgstr ""
+msgstr "&دمج الاسطر\tCtrl-J"
 
 #: lib/Padre/Wx/Menu/Edit.pm:215
 msgid "Snippets\tCtrl-Shift-A"
@@ -960,39 +960,39 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:255
 msgid "Tabs and Spaces"
-msgstr ""
+msgstr "ال Tabs و المسافات"
 
 #: lib/Padre/Wx/Menu/Edit.pm:260
 msgid "Tabs to Spaces..."
-msgstr ""
+msgstr "تحويل Tabs الى مسافات..."
 
 #: lib/Padre/Wx/Menu/Edit.pm:268
 msgid "Spaces to Tabs..."
-msgstr ""
+msgstr "تحويل المسافات الى Tabs..."
 
 #: lib/Padre/Wx/Menu/Edit.pm:276
 msgid "Delete Trailing Spaces"
-msgstr ""
+msgstr "حذف المسافات عند النهايه"
 
 #: lib/Padre/Wx/Menu/Edit.pm:284
 msgid "Delete Leading Spaces"
-msgstr ""
+msgstr "حذف المسافات عند البدايه"
 
 #: lib/Padre/Wx/Menu/Edit.pm:298
 msgid "Upper/Lower Case"
-msgstr ""
+msgstr "تكبير/تصغير حاله الاحرف"
 
 #: lib/Padre/Wx/Menu/Edit.pm:303
 msgid "Upper All\tCtrl-Shift-U"
-msgstr ""
+msgstr "تكبير حاله كل الاحرف\tCtrl-Shift-U"
 
 #: lib/Padre/Wx/Menu/Edit.pm:312
 msgid "Lower All\tCtrl-U"
-msgstr ""
+msgstr "تصغير حاله كل الاحرف\tCtrl-U"
 
 #: lib/Padre/Wx/Menu/Edit.pm:327
 msgid "Diff"
-msgstr ""
+msgstr "التغييرات"
 
 #: lib/Padre/Wx/Menu/Edit.pm:335
 msgid "Insert From File..."
@@ -1012,15 +1012,15 @@ msgstr "آخر ملف تم زيارته\tCtrl-6"
 
 #: lib/Padre/Wx/Menu/Window.pm:72
 msgid "Right Click\tAlt-/"
-msgstr ""
+msgstr "نقر على اليمين\tAlt-/"
 
 #: lib/Padre/Wx/Menu/Window.pm:91
 msgid "GoTo Subs Window\tAlt-S"
-msgstr ""
+msgstr "ذهاب الى نافذه الوظائف الفرعيه\tAlt-S"
 
 #: lib/Padre/Wx/Menu/Window.pm:103
 msgid "GoTo Output Window\tAlt-O"
-msgstr ""
+msgstr "ذهاب الى نافذه النتائج\tAlt-O"
 
 #: lib/Padre/Wx/Menu/Window.pm:112
 msgid "GoTo Syntax Check Window\tAlt-C"
@@ -1028,7 +1028,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Window.pm:124
 msgid "GoTo Main Window\tAlt-M"
-msgstr ""
+msgstr "ذهاب الى النافذه الرئيسيه\tAlt-M"
 
 #: lib/Padre/Wx/Menu/View.pm:35
 msgid "Show Output"
@@ -1068,7 +1068,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/View.pm:148
 msgid "Show Whitespaces"
-msgstr ""
+msgstr "اظهار الفراغات"
 
 #: lib/Padre/Wx/Menu/View.pm:158
 msgid "Show Indentation Guide"
@@ -1092,11 +1092,11 @@ msgstr "إعادة ضبط حجم الخط\tCtrl-/"
 
 #: lib/Padre/Wx/Menu/View.pm:219
 msgid "Set Bookmark\tCtrl-B"
-msgstr ""
+msgstr "تحديد علامه\tCtrl-B"
 
 #: lib/Padre/Wx/Menu/View.pm:228
 msgid "Goto Bookmark\tCtrl-Shift-B"
-msgstr ""
+msgstr "ذهاب الى علامه\tCtrl-Shift-B"
 
 #: lib/Padre/Wx/Menu/View.pm:244
 msgid "Language"
