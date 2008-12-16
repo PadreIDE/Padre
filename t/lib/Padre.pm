@@ -37,20 +37,22 @@ sub refis {
 }
 
 # delay is counted from the previous event
-sub setup_events {
-	my ($frame, $events) = @_;
-	my $delay = 0;
-	foreach my $event (@$events) {
-		my $id    = Wx::NewId();
-		my $timer = Wx::Timer->new( $frame, $id );
-		Wx::Event::EVT_TIMER(
-			$frame,
-			$id,
-			$event->{code}
-		);
-		$delay += $event->{delay};
-		$timer->Start( $delay, 1 );
+sub setup_event {
+	my ($frame, $events, $cnt) = @_;
+	return if $cnt >= @$events;
+	my $event = $events->[$cnt];
+
+	if ($event->{subevents}) {
+		setup_event($frame, $event->{subevents}, 0);
 	}
+	my $id    = Wx::NewId();
+	my $timer = Wx::Timer->new( $frame, $id );
+	Wx::Event::EVT_TIMER(
+		$frame,
+		$id,
+		sub { $event->{code}->(@_); setup_event($frame, $events, $cnt+1) },
+	);
+	$timer->Start( $event->{delay}, 1 );
 }
 
 1;

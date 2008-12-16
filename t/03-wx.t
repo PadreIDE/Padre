@@ -36,7 +36,7 @@ my $frame = $ide->wx->main_window;
 
 my @events = (
 	{
-		delay => 200,
+		delay => 100,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			my $T = Test::Builder->new;
@@ -54,7 +54,7 @@ my @events = (
 		},
 	},
 	{
-		delay => 200,
+		delay => 100,
 		code  => sub {
 			my $main = $ide->wx->main_window;
 			my $doc  = $main->selected_document;
@@ -129,20 +129,22 @@ my @events = (
 
 			BEGIN { $main::tests += 9; }
 		},
-	},
-	{
-		delay => 1000,
-		code  => sub {
-			my $main = $ide->wx->main_window;
-			my $T = Test::Builder->new;
-			my $dialog = Padre::Wx::Dialog::Bookmarks::get_dialog();
-			my $event = Wx::CommandEvent->new( &Wx::wxEVT_COMMAND_BUTTON_CLICKED, $dialog->{_widgets_}{cancel}->GetId );
-			#$dialog->{_widgets_}{cancel}->GetEventHandler->ProcessEvent( $event );
-			#$dialog->GetEventHandler->ProcessEvent( $event );
-			$dialog->GetEventHandler->AddPendingEvent( $event );
-			#$dialog->EndModal(Wx::wxID_CANCEL);
-			BEGIN { $main::tests += 0; }
+		subevents => [
+			{
+			delay => 1000,
+			code  => sub {
+				my $main = $ide->wx->main_window;
+				my $T = Test::Builder->new;
+				my $dialog = Padre::Wx::Dialog::Bookmarks::get_dialog();
+				my $event = Wx::CommandEvent->new( &Wx::wxEVT_COMMAND_BUTTON_CLICKED, $dialog->{_widgets_}{cancel}->GetId );
+				#$dialog->{_widgets_}{cancel}->GetEventHandler->ProcessEvent( $event );
+				$dialog->GetEventHandler->ProcessEvent( $event );
+				#$dialog->GetEventHandler->AddPendingEvent( $event );
+				#$dialog->EndModal(Wx::wxID_CANCEL);
+				BEGIN { $main::tests += 0; }
+			},
 		},
+		],
 	},
 	{
 		delay => 200,
@@ -223,7 +225,7 @@ my @events = (
 	},
 );
 
-t::lib::Padre::setup_events($frame, \@events);
+t::lib::Padre::setup_event($frame, \@events, 0);
 
 
 $ide->wx->MainLoop;
