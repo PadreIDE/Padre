@@ -67,6 +67,16 @@ sub new {
 		},
 	);
 
+	$self->{show_errorlist} = $self->AppendCheckItem( -1,
+		Wx::gettext("Show Error List")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{show_errorlist},
+		sub {
+			$_[0]->on_toggle_errorlist($_[1]);
+		},
+	);
+
 	# On Windows disabling the status bar is broken, so don't allow it
 	unless ( Padre::Util::WIN32 ) {
 		$self->{statusbar} = $self->AppendCheckItem( -1,
@@ -310,6 +320,7 @@ sub refresh {
 	$self->{indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{show_calltips}->Check( $config->{editor_calltips} ? 1 : 0 );
 	$self->{show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
+	$self->{show_errorlist}->Check( $config->{editor_errorlist} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
 	my $document = Padre::Documents->current;

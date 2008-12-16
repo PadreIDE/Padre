@@ -34,6 +34,7 @@ use Padre::Wx                 ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Output         ();
+use Padre::Wx::ErrorList      ();
 use Padre::Document           ();
 use Padre::Documents          ();
 use Padre::Wx::FileDropTarget ();
@@ -58,6 +59,7 @@ use Class::XSAccessor
 		manager        => 'manager',
 		no_refresh     => '_no_refresh',
 		syntax_checker => 'syntax_checker',
+		errorlist	   => 'errorlist',
 	};
 
 sub new {
@@ -134,6 +136,11 @@ sub new {
 	# create it AFTER the bottom pane!
 	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
 	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
+
+	# Create the error list
+	# create it AFTER the bottom pane!
+	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
+
 
 	# on close pane
 	Wx::Event::EVT_AUI_PANE_CLOSE(
@@ -422,6 +429,10 @@ sub timer_post_init {
 	Padre->ide->plugin_manager->enable_editors_for_all;
 	if ( $self->menu->view->{show_syntaxcheck}->IsChecked ) {
 		$self->syntax_checker->enable(1);
+	}
+
+	if ( $self->menu->view->{show_errorlist}->IsChecked ) {
+		$self->errorlist->enable;
 	}
 	
 	$self->refresh;
@@ -749,7 +760,7 @@ sub run_command {
 				$_[1]->Skip(1);
 				my $outpanel = $_[0]->{gui}->{output_panel};
 				$outpanel->style_neutral;
-				$outpanel->AppendText( $_[1]->GetLine . "\n" );
+				$outpanel->AppendText( $_[1]->GetLine . "\n" );			
 				return;
 			},
 		);
@@ -760,6 +771,9 @@ sub run_command {
 				my $outpanel = $_[0]->{gui}->{output_panel};
 				$outpanel->style_bad;
 				$outpanel->AppendText( $_[1]->GetLine . "\n" );
+				
+				$_[0]->errorlist->collect_data($_[1]->GetLine);
+				
 				return;
 			},
 		);
@@ -769,6 +783,7 @@ sub run_command {
 				$_[1]->Skip(1);
 				$_[1]->GetProcess->Destroy;
 				$self->menu->run->enable;
+				$_[0]->errorlist->populate;
 			},
 		);
 	}
@@ -1643,6 +1658,17 @@ sub on_toggle_syntax_check {
 	$config->{editor_syntaxcheck} = $event->IsChecked ? 1 : 0;
 
 	$self->syntax_checker->enable( $config->{editor_syntaxcheck} ? 1 : 0 );
+
+	return;
+}
+
+sub on_toggle_errorlist {
+	my ($self, $event) = @_;
+
+	my $config = Padre->ide->config;
+	$config->{editor_errorlist} = $event->IsChecked ? 1 : 0;
+
+	$config->{editor_errorlist} ? $self->errorlist->enable : $self->errorlist->disable;
 
 	return;
 }
