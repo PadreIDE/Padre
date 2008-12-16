@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-13 00:20+0100\n"
-"PO-Revision-Date: 2008-12-16 21:54+0200\n"
+"PO-Revision-Date: 2008-12-16 22:22+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr "تم الفحص"
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:90
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:140
 msgid "No declaration could be found for the specified (lexical?) variable"
-msgstr "لا يوجد اعلان للمتغير (lexical?)  المطلوب"
+msgstr "لا يوجد اعلان للمتغير (مفردي?) المطلوب"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:143
@@ -579,7 +579,7 @@ msgstr "تمكين"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:17
 msgid "Automatic indentation style"
-msgstr ""
+msgstr "نمط الازاحه التلقائي"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:18
 msgid "Use Tabs"
@@ -591,7 +591,7 @@ msgstr "حجم عرض TAB (بعدد الفراغات)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:25
 msgid "Indentation width (in columns)"
-msgstr ""
+msgstr "عرض الازاحه (بعدد الاعمده)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:29
 msgid "Guess from current document"
@@ -615,7 +615,7 @@ msgstr "ملفات مقتوحه:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:45
 msgid "Autoindent:"
-msgstr ""
+msgstr "الازاحه التلقائيه:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:49
 msgid "Methods order:"
@@ -623,7 +623,7 @@ msgstr "ترتيب ال Methods:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:53
 msgid "Default word wrap on for each file"
-msgstr ""
+msgstr "تشغيل العوده الى البدايه عند نهايه السطر لكل ملف"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:19
 msgid "All"
@@ -797,7 +797,7 @@ msgstr "ايجاد اعلان متغير"
 
 #: lib/Padre/Wx/Menu/Perl.pm:50
 msgid "Lexically replace variable"
-msgstr ""
+msgstr "استبدال مفرداتي للمتغير"
 
 #: lib/Padre/Wx/Menu/Perl.pm:56
 #: lib/Padre/Wx/Menu/Perl.pm:57
@@ -810,7 +810,7 @@ msgstr "تعطيل النمط التجريبي"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:40
 msgid "Reflow Menu/Toolbar"
-msgstr ""
+msgstr "اعاده القائمة/شريط الادوات"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:52
 msgid "Recent Projects"
@@ -1072,11 +1072,11 @@ msgstr "اظهار الفراغات"
 
 #: lib/Padre/Wx/Menu/View.pm:158
 msgid "Show Indentation Guide"
-msgstr ""
+msgstr "اظهار دليل الازاحه"
 
 #: lib/Padre/Wx/Menu/View.pm:168
 msgid "Word-Wrap"
-msgstr ""
+msgstr "العوده الى البدايه عند نهايه السطر"
 
 #: lib/Padre/Wx/Menu/View.pm:185
 msgid "Increase Font Size\tCtrl-+"
