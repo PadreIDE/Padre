@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-13 00:20+0100\n"
-"PO-Revision-Date: 2008-12-16 17:33+0200\n"
+"PO-Revision-Date: 2008-12-16 19:33+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -264,11 +264,11 @@ msgstr "نتائج"
 
 #: lib/Padre/Wx/MainWindow.pm:574
 msgid "L:"
-msgstr ""
+msgstr "سطر:"
 
 #: lib/Padre/Wx/MainWindow.pm:574
 msgid "Ch:"
-msgstr ""
+msgstr "حرف:"
 
 #: lib/Padre/Wx/MainWindow.pm:716
 msgid "Command line"
@@ -331,7 +331,7 @@ msgstr "حفظ الملف ك..."
 
 #: lib/Padre/Wx/MainWindow.pm:1324
 msgid "File already exists. Overwrite it?"
-msgstr ""
+msgstr "الملف موجود بالفعل. هل تريد الكتابة فوقه؟"
 
 #: lib/Padre/Wx/MainWindow.pm:1325
 msgid "Exist"
@@ -344,7 +344,7 @@ msgstr "الملف على القرص تغير منذ آخر حفظ. هل تري�
 #: lib/Padre/Wx/MainWindow.pm:1388
 #: lib/Padre/Wx/MainWindow.pm:2248
 msgid "File not in sync"
-msgstr ""
+msgstr "الملف غير متزامن"
 
 #: lib/Padre/Wx/MainWindow.pm:1396
 msgid "Could not save file: "
@@ -364,11 +364,11 @@ msgstr ""
 
 #: lib/Padre/Wx/MainWindow.pm:1539
 msgid "There are no differences\n"
-msgstr ""
+msgstr "لا توجد فروقات\n"
 
 #: lib/Padre/Wx/MainWindow.pm:1815
 msgid "Syntax Check"
-msgstr ""
+msgstr "فحص التركيب"
 
 #: lib/Padre/Wx/MainWindow.pm:1964
 #, perl-format
@@ -393,12 +393,12 @@ msgstr "اسطر: %d"
 #: lib/Padre/Wx/MainWindow.pm:2102
 #, perl-format
 msgid "Chars without spaces: %d"
-msgstr ""
+msgstr "أحرف بدون مسافات: %d"
 
 #: lib/Padre/Wx/MainWindow.pm:2103
 #, perl-format
 msgid "Chars with spaces: %d"
-msgstr ""
+msgstr "أحرف مع مسافات: %d"
 
 #: lib/Padre/Wx/MainWindow.pm:2104
 #, perl-format
@@ -470,7 +470,7 @@ msgstr "بحث:"
 
 #: lib/Padre/Wx/Dialog/Search.pm:157
 msgid "Case insensitive"
-msgstr ""
+msgstr "غير حساس لحالة الأحرف"
 
 #: lib/Padre/Wx/Dialog/Search.pm:161
 msgid "Use regex"
@@ -490,7 +490,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Find.pm:37
 msgid "Case &Insensitive"
-msgstr ""
+msgstr "غير حساس لحالة الأحرف&"
 
 #: lib/Padre/Wx/Dialog/Find.pm:40
 msgid "&Use Regex"
@@ -510,7 +510,7 @@ msgstr "بحث"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:30
 msgid "Module Name:"
-msgstr ""
+msgstr "اسم الوحده:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:34
 msgid "Author:"
@@ -538,7 +538,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:82
 msgid "Module Start"
-msgstr ""
+msgstr "بدايه الوحده"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:125
 #, perl-format
@@ -1008,7 +1008,7 @@ msgstr "الملف السابق\tCtrl-Shift-TAB"
 
 #: lib/Padre/Wx/Menu/Window.pm:65
 msgid "Last Visited File\tCtrl-6"
-msgstr ""
+msgstr "آخر ملف تم زيارته\tCtrl-6"
 
 #: lib/Padre/Wx/Menu/Window.pm:72
 msgid "Right Click\tAlt-/"
@@ -1036,11 +1036,11 @@ msgstr "اظهار النتائج"
 
 #: lib/Padre/Wx/Menu/View.pm:45
 msgid "Show Functions"
-msgstr ""
+msgstr "اظهار الوظائف"
 
 #: lib/Padre/Wx/Menu/View.pm:61
 msgid "Show Syntax Check"
-msgstr ""
+msgstr "اظهار فحص التركيب"
 
 #: lib/Padre/Wx/Menu/View.pm:73
 msgid "Show StatusBar"
