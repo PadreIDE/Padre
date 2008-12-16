@@ -75,6 +75,8 @@ sub get_layout {
 	$config->{ack_terms}      ||= [];
 	$config->{ack_dirs}       ||= [];
 	$config->{ack_file_types} ||= [];
+	# default value is 1 for ignore_hidden_subdirs
+	$config->{ack}->{ignore_hidden_subdirs} = 1 unless ( exists $config->{ack}->{ignore_hidden_subdirs} );
 
 	my @layout = (
 		[
