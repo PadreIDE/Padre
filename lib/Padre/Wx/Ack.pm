@@ -123,8 +123,10 @@ sub dialog {
 sub on_pick_dir {
 	my ($dialog, $event) = @_;
 
+	my $dir_value = $dialog->{_widgets_}{_ack_dir_}->GetValue();
+
 	my $win = Padre->ide->wx->main_window;
-	my $dir_dialog = Wx::DirDialog->new( $win, Wx::gettext("Select directory"), '');
+	my $dir_dialog = Wx::DirDialog->new( $win, Wx::gettext("Select directory"), $dir_value);
 	if ($dir_dialog->ShowModal == Wx::wxID_CANCEL) {
 		return;
 	}
@@ -303,7 +305,7 @@ sub on_ack_thread {
 	App::Ack::print_matches( $iter, \%opts );
 
 	# summary
-	_send_text("\n") if ( $stats{cnt_files} );
+	_send_text('-' x 39 . "\n") if ( $stats{cnt_files} );
 	_send_text("Found $stats{cnt_files} files and $stats{cnt_matches} matches\n");
 }
 
