@@ -6,6 +6,7 @@ use warnings;
 use Padre::Wx ();
 use Padre::Wx::Dialog;
 use Wx::Locale qw(:default);
+use File::Basename ();
 
 my $iter;
 my %opts;
@@ -123,10 +124,17 @@ sub dialog {
 sub on_pick_dir {
 	my ($dialog, $event) = @_;
 
-	my $dir_value = $dialog->{_widgets_}{_ack_dir_}->GetValue();
-
 	my $win = Padre->ide->wx->main_window;
-	my $dir_dialog = Wx::DirDialog->new( $win, Wx::gettext("Select directory"), $dir_value);
+
+	my $default_dir = $dialog->{_widgets_}{_ack_dir_}->GetValue();
+	unless ( $default_dir ) { # we use currect editor
+		my $filename = $win->selected_filename();
+		if ( $filename ) {
+			$default_dir = File::Basename::dirname($filename);
+		}
+	}
+
+	my $dir_dialog = Wx::DirDialog->new( $win, Wx::gettext("Select directory"), $default_dir);
 	if ($dir_dialog->ShowModal == Wx::wxID_CANCEL) {
 		return;
 	}
