@@ -270,7 +270,7 @@ sub on_ack_result_selected {
 	my $text = $event->GetItem->GetText;
 	return if not defined $text;
 	
-	my ($file, $line) = ($text =~ /^(.*?)\:(\d+)\:/);
+	my ($file, $line) = ($text =~ /^(.*?)\((\d+)\)\:/);
 	return unless $line;
 
 	my $mainwindow = Padre->ide->wx->main_window;
@@ -322,15 +322,15 @@ sub print_results {
 		$stats{last_matched_filename} = $text;
 		$stats{cnt_files}++;
 		
-		# add \n after $filename
-		$text .= "\n";
+		# chop last ':', add \n after $filename
+		chop($text);
+		$text = "Found '$opts{regex}' in '$text':\n";
 		# new line between different files
-		if ($stats{printed_lines} != 1) {
-			_send_text("\n");
-		}
+		_send_text('-' x 39 . "\n");
 	} elsif ( $stats{printed_lines} % 3 == 2 ) {
 		$stats{cnt_matches}++;
-		# an extra space for line number
+		# use () to wrap the number, an extra space for line number
+		$text =~ s/(\d+)/\($1\)/;
 		$text .= ' ';
 	}
 
@@ -339,7 +339,9 @@ sub print_results {
 	
 	# just print it when we have \n
 	if ( $text =~ /[\r\n]/ ) {
-		$text = $stats{last_matched_filename} . $stats{last_text} . $text if $stats{last_text};
+		my $filename = $stats{last_matched_filename};
+		chop($filename);
+		$text = $filename . $stats{last_text} . $text if $stats{last_text};
 		delete $stats{last_text};
 	} else {
 		$stats{last_text} .= $text;
