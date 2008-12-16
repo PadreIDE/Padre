@@ -111,16 +111,16 @@ sub dialog {
 	my $layout = get_layout($term);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $win,
-		title  => gettext("Ack"),
+		title  => gettext("Ack (Find in Files)"),
 		layout => $layout,
-		width  => [150, 200],
+		width  => [190, 210],
 		size   => Wx::wxDefaultSize,
 		pos    => Wx::wxDefaultPosition,
 	);
 	
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_find_},        \&find_clicked);
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_pick_dir_},    \&on_pick_dir);
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_},      \&cancel_clicked      );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_find_},     \&find_clicked);
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_pick_dir_}, \&on_pick_dir);
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_},   \&cancel_clicked);
 	
 	$dialog->{_widgets_}{_ack_term_}->SetFocus;
 
