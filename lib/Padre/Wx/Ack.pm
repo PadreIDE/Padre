@@ -91,6 +91,9 @@ sub get_layout {
 			[ 'Wx::Button',     '_pick_dir_',        gettext('Pick &directory')],
 		],
 		[
+			['Wx::CheckBox',    'case_insensitive', gettext('Case &Insensitive'),    ($config->{search}->{case_insensitive} ? 1 : 0) ],
+		],
+		[
 			[],
 			[],
 			[ 'Wx::Button',     '_cancel_',    Wx::wxID_CANCEL],
@@ -169,6 +172,9 @@ sub find_clicked {
 	if (-f $search->{dir}) {
 		$opts{all} = 1;
 	}
+	# case insensitive
+	$opts{i} = $search->{case_insensitive};
+	
 	my $what = App::Ack::get_starting_points( [$search->{dir}], \%opts );
 	fill_type_wanted();
 	$iter = App::Ack::get_iterator( $what, \%opts );
@@ -212,6 +218,7 @@ sub _get_data_from {
 	return {
 		term => $term,
 		dir  => $dir,
+		case_insensitive => $data->{case_insensitive},
 	}
 }
 
