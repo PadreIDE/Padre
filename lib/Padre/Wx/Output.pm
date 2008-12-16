@@ -28,6 +28,9 @@ sub new {
 
 	# Do custom startup stuff here
 	$self->clear;
+	my $stdFontSize = Wx::wxNORMAL_FONT->GetPointSize;
+	my $font = Wx::Font->new( $stdFontSize, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	$self->SetFont($font);
 	$self->AppendText(Wx::gettext('No output'));
 
 	return $self;
