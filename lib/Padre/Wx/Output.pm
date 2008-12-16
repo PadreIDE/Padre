@@ -36,6 +36,15 @@ sub new {
 	return $self;
 }
 
+sub select {
+	my $self = shift;
+
+	my $idx = $self->GetParent->GetPageIndex($self);
+	$self->GetParent->SetSelection($idx);
+
+	return;
+}
+
 # A convenience not provided by the original version
 sub SetBackgroundColour {
 	my $self = shift;
