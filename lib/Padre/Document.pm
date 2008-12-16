@@ -92,7 +92,6 @@ our %EXT_MIME = (
 
 our %MIME_CLASS = (
 	'application/x-perl'     => 'Padre::Document::Perl',
-	'application/x-perl6'    => 'Padre::Document::Perl6',
 	'application/x-pasm'     => 'Padre::Document::PASM',
 	'application/x-pir'      => 'Padre::Document::PIR',
 );
