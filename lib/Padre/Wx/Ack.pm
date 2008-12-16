@@ -290,29 +290,20 @@ sub show_ack_output {
 	my $bp = \$main->{gui}->{bottompane};
 	my $op = \$main->{gui}->{ack_panel};
 
-	if ( $on ) {
-		my $idx = ${$bp}->GetPageIndex(${$op});
-		if ( $idx >= 0 ) {
-			${$bp}->SetSelection($idx);
-		}
-		else {
-			${$bp}->InsertPage(
-				0,
-				${$op},
-				Wx::gettext("Ack"),
-				1,
-			);
-			${$op}->Show;
-			$main->check_pane_needed('bottompane');
-		}
-	} else {
-		my $idx = ${$bp}->GetPageIndex(${$op});
-		${$op}->Hide;
-		if ( $idx >= 0 ) {
-			${$bp}->RemovePage($idx);
-			$main->check_pane_needed('bottompane');
-		}
+	my $idx = ${$bp}->GetPageIndex(${$op});
+	if ( $idx >= 0 ) {
+		${$bp}->SetSelection($idx);
 	}
+	else {
+		${$bp}->InsertPage(
+			0,
+			${$op},
+			Wx::gettext("Ack"),
+			1,
+		);
+		${$op}->Show;
+	}
+	$main->manager->GetPane('bottompane')->Show;
 	$main->manager->Update;
 
 	return;

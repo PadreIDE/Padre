@@ -1741,11 +1741,6 @@ sub show_output {
 		${$op}->Hide;
 		if ( $idx >= 0 ) {
 			${$bp}->RemovePage($idx);
-			
-			# delete 'Ack' pane
-			$idx = ${$bp}->GetPageIndex( $self->{gui}->{ack_panel} );
-			${$bp}->DeletePage($idx) if ( $idx >= 0 );
-			
 			$self->check_pane_needed('bottompane');
 		}
 	}
@@ -1844,10 +1839,17 @@ sub check_pane_needed {
 	my $cnt = $self->{gui}->{$pane}->GetPageCount;
 
 	foreach my $num ( 0 .. $cnt ) {
+		# ignore 'Ack' pane
+		if ( $pane eq 'bottompane' ) {
+    		my $ack_page_idx = $self->{gui}->{$pane}->GetPageIndex( $self->{gui}->{ack_panel} );
+    		next if ( defined $ack_page_idx and $ack_page_idx == $num );
+		}
+		
 		my $p = undef;
 		eval {
 			$p = $self->{gui}->{$pane}->GetPage($num)
 		};
+
 		if ( defined($p) && $p->IsShown ) {
 			$visible++;
 		}
