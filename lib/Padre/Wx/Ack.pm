@@ -196,10 +196,7 @@ sub find_clicked {
 	}
 	# case_insensitive
 	$opts{i} = $search->{case_insensitive} if $search->{case_insensitive};
-	
-	use Data::Dumper;
-	print STDERR Dumper(\%opts);
-	
+
 	my $what = App::Ack::get_starting_points( [$search->{dir}], \%opts );
 	$iter = App::Ack::get_iterator( $what, \%opts );
 	App::Ack::filetype_setup();
@@ -372,7 +369,7 @@ sub on_ack_thread {
 sub print_results {
 	my ($text) = @_;
 	
-	print "$text\n";
+	#print "$text\n";
 	
 	# the first is filename, the second is line number, the third is matched line text
 	# while 'Binary file', there is ONLY filename
