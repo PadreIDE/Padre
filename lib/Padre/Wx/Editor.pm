@@ -135,6 +135,7 @@ sub padre_setup_style {
 	}
 
 	$self->StyleSetBackground(34, _color($data->{$name}{brace_highlight}));
+	$self->StyleSetBackground($_, _color($data->{$name}{background})) for (0..32);
 
 	return;
 }

@@ -8,6 +8,7 @@ plain:
   0: 00007f
 perl:
  brace_highlight: 00FF00
+ background: ffffff
  colors:
   wxSTC_PL_DEFAULT:        000000
   wxSTC_PL_ERROR:          ff0000
