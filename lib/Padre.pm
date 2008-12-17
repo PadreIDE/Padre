@@ -1052,7 +1052,9 @@ Keedi Kim (KEEDI),
 Max Maischein (CORION),
 Patrick Donelan (PATSPAM),
 Paweł Murias (PMURIAS),
+Petar Shangov (PSHANGOV),
 Steffen Mueller (TSEE)
+
 
 
 To Herbert Breunung for letting me work on Kephra.

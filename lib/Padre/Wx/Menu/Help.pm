@@ -118,8 +118,9 @@ sub about {
 	$about->AddDeveloper("Keedi Kim");
 	$about->AddDeveloper("Max Maischein");
 	$about->AddDeveloper("Patrick Donelan");
-	$about->AddDeveloper("Steffen Mueller");
 	$about->AddDeveloper("Paweł Murias");
+	$about->AddDeveloper("Petar Shangov");
+	$about->AddDeveloper("Steffen Mueller");
 
  	$about->AddTranslator("Arabic - Ahmad Zawawi");
 	$about->AddTranslator("German - Heiko Jansen");

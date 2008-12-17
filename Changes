@@ -1,7 +1,8 @@
 Changes for Padre.
 
+    Error list window for runntime errors and diagnostics (PSHANGOV)
     Arabic translation added (AZAWAWI)
-	Italian translation updated (SBLANDIN)
+    Italian translation updated (SBLANDIN)
     improved Ack (FAYLAND)
     Allow selection of editor font and current line background 
         color (HJANSEN)
