@@ -72,8 +72,8 @@ sub get_layout_for_appearance {
 		],
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Caret Line Background Colour:') ],
-			[ 'Wx::ColourPickerCtrl', 'editor_caret_line_background_color',
-				(defined $config->{editor_caret_line_background_color} ? $config->{editor_caret_line_background_color} : '#efefef') ]
+			[ 'Wx::ColourPickerCtrl', 'editor_current_line_background_color',
+				(defined $config->{editor_current_line_background_color} ? $config->{editor_current_line_background_color} : '#efefef') ]
 		],
 	];
 }
@@ -159,11 +159,13 @@ sub run {
 			editor_tabwidth
 			editor_indentwidth
 			editor_font
-			editor_caret_line_background_color
+			editor_current_line_background_color
 		)
 	) {
 		$config->{$f} = $data->{$f};
 	}
+	$config->{editor_current_line_background_color} =~ s/#//;
+
 	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style)) {
 		$config->{$f} = $data->{$f} ? 1 : 0;
 	}

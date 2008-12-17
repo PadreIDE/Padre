@@ -51,12 +51,19 @@ sub new {
 sub data {
 	my $name = shift;
 
-	unless ( defined $data and $name eq $data_name ) {
-		$data = YAML::Tiny::LoadFile(
-			Padre::Util::sharefile( 'styles', "$name.yml" )
-		);
-		$data_name = $name;
+	return $data if not defined $name;
+	return $data if defined $data and $name eq $data_name;
+
+	$data = YAML::Tiny::LoadFile(
+		Padre::Util::sharefile( 'styles', "$name.yml" )
+	);
+	$data_name = $name;
+
+	my $config = Padre->ide->config;
+	if (defined $config->{editor_current_line_background_color}) {
+		$data->{plain}{current_line_background} = $config->{editor_current_line_background_color};
 	}
+
 	return $data;
 }
 
@@ -295,7 +302,7 @@ sub set_preferences {
 	$self->SetIndentationGuides( $config->{editor_indentationguides} );
 	$self->SetViewEOL(           $config->{editor_eol}               );
 	$self->SetViewWhiteSpace(    $config->{editor_whitespaces}       );
-	$self->show_currentlinebackground( $config->{editor_currentlinebackground} );
+	$self->SetCaretLineVisible(  $config->{editor_current_line_background} ? 1 : 0 );
 
 	$self->padre_setup;
 
@@ -304,14 +311,6 @@ sub set_preferences {
 	return;
 }
 
-
-sub show_currentlinebackground {
-	my ($self, $on) = (@_);
-
-	$self->SetCaretLineVisible( ( defined($on) && $on ) ? 1 : 0 );
-
-	return;
-}
 
 sub show_calltip {
 	my ($self) = @_;

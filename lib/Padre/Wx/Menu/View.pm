@@ -127,11 +127,11 @@ sub new {
 		},
 	);
 
-	$self->{currentlinebackground} = $self->AppendCheckItem( -1,
+	$self->{current_line_background} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Current Line")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{currentlinebackground},
+		$self->{current_line_background},
 		sub {
 			$_[0]->on_toggle_current_line_background($_[1]);
 		},
@@ -328,7 +328,7 @@ sub refresh {
 	# Simple check state cases from configuration
 	$self->{lines}->Check( $config->{editor_linenumbers} ? 1 : 0 );
 	$self->{folding}->Check( $config->{editor_codefolding} ? 1 : 0 );
-	$self->{currentlinebackground}->Check( $config->{editor_currentlinebackground} ? 1 : 0 );
+	$self->{current_line_background}->Check( $config->{editor_current_line_background} ? 1 : 0 );
 	$self->{eol}->Check( $config->{editor_eol} ? 1 : 0 );
 	$self->{whitespaces}->Check( $config->{editor_whitespaces} ? 1 : 0 );
 	unless ( Padre::Util::WIN32 ) {

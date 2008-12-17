@@ -1655,10 +1655,10 @@ sub on_toggle_current_line_background {
 	my ($self, $event) = @_;
 
 	my $config = Padre->ide->config;
-	$config->{editor_currentlinebackground} = $event->IsChecked ? 1 : 0;
+	$config->{editor_current_line_background} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
-		$editor->show_currentlinebackground( $config->{editor_currentlinebackground} ? 1 : 0 );
+		$editor->SetCaretLineVisible( $config->{editor_current_line_background} ? 1 : 0 );
 	}
 
 	return;
