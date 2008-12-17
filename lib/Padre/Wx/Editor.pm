@@ -491,8 +491,6 @@ sub on_right_down {
 	
 	my $win = Padre->ide->wx->main_window;
 	
-# Popup Was: Undo, Redo | Cut, Copy, Paste, Delete | Select All
-
 	my $pos       = $self->GetCurrentPos;
 	#my $line      = $self->LineFromPosition($pos);
 	#print "right down: $pos\n"; # this is the position of the cursor and not that of the mouse!
@@ -593,7 +591,26 @@ sub on_right_down {
 
 	$menu->AppendSeparator;
 
-#	$menu->Append( Wx::wxID_NEW, '' );
+	if ( Padre->ide->config->{editor_codefolding} eq 1 ) {
+		my $mousePos = $event->GetPosition;
+		my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
+		my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
+
+		if (   $mousePos->x <   $firstPointInLine->x
+			&& $mousePos->x > ( $firstPointInLine->x - 18 )
+		) {
+			my $fold = $menu->Append( -1, Wx::gettext("Fold all") );
+			Wx::Event::EVT_MENU( $win, $fold,
+				sub { &on_fold_all(@_) },
+			);
+			my $unfold = $menu->Append( -1, Wx::gettext("Unfold all") );
+			Wx::Event::EVT_MENU( $win, $unfold,
+				sub { &on_unfold_all(@_) },
+			);
+			$menu->AppendSeparator;
+		}
+	}
+
 	Wx::Event::EVT_MENU( $win,
 		$menu->Append( -1, Wx::gettext("&Split window") ),
 		\&Padre::Wx::MainWindow::on_split_window,
@@ -603,6 +620,48 @@ sub on_right_down {
 	} else { #Wx::CommandEvent
 		$self->PopupMenu( $menu, 50, 50); # TODO better location
 	}
+}
+
+sub on_fold_all {
+	my ($win, $event) = @_;
+	my $self = $win->selected_editor;
+
+	my $lineCount = $self->GetLineCount;
+	my $currentLine = $lineCount;
+
+	while ( $currentLine >= 0 ) {
+		if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
+			if ( $self->GetFoldExpanded($parentLine) ) {
+				$self->ToggleFold($parentLine);
+				$currentLine = $parentLine;
+			}
+			else {
+				$currentLine--;
+			}
+		}
+		else {
+			$currentLine--;
+		}
+	}
+
+	return;
+}
+
+sub on_unfold_all {
+	my ($win, $event) = @_;
+	my $self = $win->selected_editor;
+
+	my $lineCount = $self->GetLineCount;
+    my $currentLine = 0;
+
+	while ( $currentLine <= $lineCount ) {
+		if ( ! $self->GetFoldExpanded($currentLine) ) {
+			$self->ToggleFold($currentLine);
+		}
+		$currentLine++;
+	}
+
+	return;
 }
 
 sub on_left_up {

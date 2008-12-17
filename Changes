@@ -1,5 +1,7 @@
 Changes for Padre.
 
+    Right-click menu in margin column for code folding now
+        allows to fold/unfold all foldable areas (HJANSEN)
     Error list window for runntime errors and diagnostics (PSHANGOV)
     Arabic translation added (AZAWAWI)
     Italian translation updated (SBLANDIN)
