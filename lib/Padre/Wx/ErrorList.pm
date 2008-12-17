@@ -5,33 +5,32 @@ use warnings;
 
 our $VERSION = '0.20';
 
-use Wx qw(:treectrl :window wxDefaultPosition wxDefaultSize wxOK WXK_F1);
-use base qw(Wx::TreeCtrl);
-
 require Padre;
 use Padre::Wx;
 use Parse::ErrorString::Perl;
 
+use base qw(Wx::TreeCtrl);
+
 use Class::XSAccessor
 	getters => {
-		mw => 'mw',
-		root => 'root',
-		data => 'data',
-		enabled => 'enabled',
-		index => 'index',
-		parser => 'parser',
+		mw       => 'mw',
+		root     => 'root',
+		data     => 'data',
+		enabled  => 'enabled',
+		index    => 'index',
+		parser   => 'parser',
 	};
 
 sub new {
 	my $class = shift;
-	my $mw = shift;
+	my $mw    = shift;
 
 	my $self = $class->SUPER::new(
 	    $mw, 
 	    -1, 
-	    wxDefaultPosition, 
-	    wxDefaultSize, 
-	    wxTR_HAS_BUTTONS|wxTR_HIDE_ROOT|wxTR_LINES_AT_ROOT
+	    Wx::wxDefaultPosition, 
+	    Wx::wxDefaultSize, 
+	    Wx::wxTR_HAS_BUTTONS|Wx::wxTR_HIDE_ROOT|Wx::wxTR_LINES_AT_ROOT
 	);
 
 	$self->Hide;
@@ -92,7 +91,7 @@ sub on_f1 {
 	my ($self, $event) = @_;
 	$event->Skip(0);
 	my $key_code = $event->GetKeyCode;
-	if ($key_code == WXK_F1) {
+	if ($key_code == Wx::WXK_F1) {
 		#my $item = $event->GetItem;
 	    my $item = $self->GetSelection;
     	my $err = $self->GetPlData($item);
@@ -101,7 +100,7 @@ sub on_f1 {
 			$diagnostics = $err->diagnostics;
 			$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 		}
-		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, "Diagnostics", wxOK);
+		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, "Diagnostics", Wx::wxOK);
 		$dialog->ShowModal;
 	}
 }
