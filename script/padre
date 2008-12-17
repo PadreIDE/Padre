@@ -2,7 +2,6 @@
 
 use strict;
 use warnings;
-use English qw( -no_match_vars ) ;  # Avoids regex performance penalty
 
 $| = 1;
 
@@ -23,11 +22,15 @@ require threads::shared;
 
 $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP}||'';
 
-if( $PERL_VERSION ge v5.1 ) {
+if( $^V ge v5.1 ) { # PERL_VERSION
   # This is needed for Padre::Plugin::Perl6 and Syntax::Highlight::Perl6
   # This will be removed once this STD.pm bug is fixed.
-  print "XXX- Enabled support for STD.pm\n";
-  use STD;
+	eval {
+	  use STD;
+	};
+	if (not $@) {
+		print "XXX- Enabled support for STD.pm\n";
+	}
 }
 
 require Padre;
