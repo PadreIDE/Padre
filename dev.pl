@@ -31,19 +31,19 @@ if ($^O eq 'darwin') {
 	die "padre needs to run using wxPerl on OSX" unless (-e $perl);
 }
 my @cmd  = (
-        qq[$perl],
-	qq[-I$FindBin::Bin/blib/lib],
-        qq[-I$FindBin::Bin/lib],
+	qq[$perl],
+	qq[-I$FindBin::Bin/lib],
+#	qq[-I$FindBin::Bin/blib/lib], # why would we need this?
 
-        qq[-I$FindBin::Bin/../projects/Wx-Perl-Dialog/lib],
+	qq[-I$FindBin::Bin/../projects/Wx-Perl-Dialog/lib],
 );
 if ( grep { $_ eq '-d' } @ARGV ) {
-        @ARGV = grep { $_ ne '-d' } @ARGV;
-        push @cmd, '-d';
+	@ARGV = grep { $_ ne '-d' } @ARGV;
+	push @cmd, '-d';
 }
 if ( grep { $_ eq '-p' } @ARGV ) {
-        @ARGV = grep { $_ ne '-p' } @ARGV;
-        push @cmd, '-d:NYTProf';
+	@ARGV = grep { $_ ne '-p' } @ARGV;
+	push @cmd, '-d:NYTProf';
 }
 push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 #print join( ' ', @cmd ) . "\n";
