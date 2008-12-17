@@ -102,7 +102,7 @@ sub padre_setup_plain {
 	$self->StyleClearAll();
 
 	
-	$self->SetCaretLineBackground( _color( $data->{plain}{caret_background} ) );
+	$self->SetCaretLineBackground( _color( $data->{plain}{current_line_background} ) );
 
 	foreach my $k (keys %{ $data->{plain}{foregrounds} }) {
 		$self->StyleSetForeground( $k, _color( $data->{plain}{foregrounds}{$k} ) );
