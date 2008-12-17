@@ -595,11 +595,17 @@ sub on_right_down {
 		) {
 			my $fold = $menu->Append( -1, Wx::gettext("Fold all") );
 			Wx::Event::EVT_MENU( $win, $fold,
-				sub { &on_fold_all(@_) },
+				sub {
+					my $main = shift;
+					$main->selected_editor->fold_all;
+				},
 			);
 			my $unfold = $menu->Append( -1, Wx::gettext("Unfold all") );
 			Wx::Event::EVT_MENU( $win, $unfold,
-				sub { &on_unfold_all(@_) },
+				sub {
+					my $main = shift;
+					$main->selected_editor->unfold_all;
+				},
 			);
 			$menu->AppendSeparator;
 		}
@@ -616,9 +622,8 @@ sub on_right_down {
 	}
 }
 
-sub on_fold_all {
-	my ($win, $event) = @_;
-	my $self = $win->selected_editor;
+sub fold_all {
+	my ($self) = @_;
 
 	my $lineCount = $self->GetLineCount;
 	my $currentLine = $lineCount;
@@ -641,9 +646,8 @@ sub on_fold_all {
 	return;
 }
 
-sub on_unfold_all {
-	my ($win, $event) = @_;
-	my $self = $win->selected_editor;
+sub unfold_all {
+	my ($self) = @_;
 
 	my $lineCount = $self->GetLineCount;
     my $currentLine = 0;

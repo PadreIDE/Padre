@@ -1646,6 +1646,9 @@ sub on_toggle_code_folding {
 
 	foreach my $editor ( $self->pages ) {
 		$editor->show_folding( $config->{editor_codefolding} );
+		if ( $config->{editor_codefolding} == 0 ) {
+			$editor->unfold_all;
+		}
 	}
 
 	return;
