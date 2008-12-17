@@ -151,18 +151,6 @@ sub sharefile {
 	File::Spec->catfile( share(), @_ );
 }
 
-
-package Px;
-
-use constant {
-	PASM_KEYWORD  => 1,
-	PASM_REGISTER => 2,
-	PASM_LABEL    => 3,
-	PASM_STRING   => 4,
-	PASM_COMMENT  => 5,
-	PASM_POD      => 6,
-};
-
 1;
 
 =head1 SUPPORT

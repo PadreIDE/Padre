@@ -92,8 +92,6 @@ our %EXT_MIME = (
 
 our %MIME_CLASS = (
 	'application/x-perl'     => 'Padre::Document::Perl',
-	'application/x-pasm'     => 'Padre::Document::PASM',
-	'application/x-pir'      => 'Padre::Document::PIR',
 );
 
 # Document types marked here with CONFIRMED have be checked to confirm that
