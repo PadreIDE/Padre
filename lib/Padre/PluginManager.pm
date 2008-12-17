@@ -654,6 +654,9 @@ sub get_menu {
 		$self->{errstr} = "Error when calling menu for plugin '$name' $@";
 		return ();
 	}
+	unless ( defined $label and defined $menu ) {
+		return ();
+	}
 	return ($label, $menu);
 }
 
