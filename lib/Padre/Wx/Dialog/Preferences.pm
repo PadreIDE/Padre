@@ -64,7 +64,11 @@ sub get_layout_for_appearance {
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font',
-				(defined $config->{editor_font} ? $config->{editor_font} : '') ] 
+				( defined $config->{editor_font}
+				    ? $config->{editor_font}
+				    : Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc
+				)
+			] 
 		],
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Caret Line Background Colour:') ],
