@@ -32,6 +32,7 @@ if ($^O eq 'darwin') {
 }
 my @cmd  = (
         qq[$perl],
+	qq[-I$FindBin::Bin/blib/lib],
         qq[-I$FindBin::Bin/lib],
 
         qq[-I$FindBin::Bin/../projects/Wx-Perl-Dialog/lib],
