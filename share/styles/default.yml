@@ -45,12 +45,3 @@ perl:
 #define SCE_PL_SUB_PROTOTYPE 40
 #define SCE_PL_FORMAT_IDENT 41
 #define SCE_PL_FORMAT 42
-pasm:
- brace_highlight: 00ffff
- colors:
-  PASM_KEYWORD:     7f0000
-  PASM_REGISTER:    7f0044
-  PASM_LABEL:       aa007f
-  PASM_STRING:      00aa7f
-  PASM_COMMENT:     0000aa
-  PASM_POD:         0000ff

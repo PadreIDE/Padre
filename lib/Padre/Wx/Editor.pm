@@ -75,8 +75,8 @@ sub padre_setup {
 	my $mimetype = $self->{Document}->get_mimetype;
 	if ($mimetype eq 'application/x-perl') {
 		$self->padre_setup_style('perl');
-	} elsif ( $mimetype eq 'application/x-pasm' ) {
-		$self->padre_setup_style('pasm');
+	#} elsif ( $mimetype eq 'application/x-pasm' ) {
+	#	$self->padre_setup_style('pasm');
 	} elsif ($mimetype) {
 		# setup some default coloring
 		# for the time being it is the same as for Perl
