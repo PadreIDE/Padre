@@ -54,6 +54,10 @@ sub get_layout_for_behaviour {
 			['Wx::CheckBox',    'editor_use_wordwrap', '',
 				($config->{editor_use_wordwrap} ? 1 : 0) ],
 		],
+		[
+			[ 'Wx::StaticText', undef,              Wx::gettext('Preferred language for error diagnostics:')],
+			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->{diagnostics_lang}],
+		],
 	];
 }
 
@@ -160,6 +164,7 @@ sub run {
 			editor_indentwidth
 			editor_font
 			editor_current_line_background_color
+			diagnostics_lang
 		)
 	) {
 		$config->{$f} = $data->{$f};

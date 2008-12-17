@@ -19,11 +19,13 @@ use Class::XSAccessor
 		enabled  => 'enabled',
 		index    => 'index',
 		parser   => 'parser',
+		config   => 'config',
 	};
 
 sub new {
 	my $class = shift;
 	my $mw    = shift;
+	my $config = Padre->ide->config;
 
 	my $self = $class->SUPER::new(
 	    $mw, 
@@ -39,7 +41,7 @@ sub new {
 	$self->{root} = $root;	
 	
 	$self->{mw} = $mw;
-	
+	$self->{config} = $config;
 	
 	return $self;
 }
@@ -51,12 +53,18 @@ sub DESTROY {
 
 sub enable {
     my $self = shift;
-	# my $index = $self->{mw}->{gui}->{bottompane}->GetPageCount;
     my $index = $self->{mw}->{gui}->{bottompane}->GetPageCount;
     $self->{mw}->{gui}->{bottompane}->InsertPage( $index, $self, Wx::gettext("Error List"), 0 );
     $self->Show;
 	$self->{mw}->{gui}->{bottompane}->SetSelection($index);
-	$self->{parser} = Parse::ErrorString::Perl->new;
+	my $lang = $self->config->{diagnostics_lang};
+	if ($lang) {
+		$lang =~ s/^\s*//;
+		$lang =~ s/\s*$//;
+		$self->{parser} = Parse::ErrorString::Perl->new(lang => $lang);
+	} else {
+		$self->{parser} = Parse::ErrorString::Perl->new;
+	}
     $self->{enabled} = 1;
 }
 
