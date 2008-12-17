@@ -5,8 +5,8 @@ use warnings;
 
 our $VERSION = '0.20';
 
-use base qw(Wx::TreeCtrl);
 use Wx qw(:treectrl :window wxDefaultPosition wxDefaultSize wxOK WXK_F1);
+use base qw(Wx::TreeCtrl);
 
 require Padre;
 use Padre::Wx;
