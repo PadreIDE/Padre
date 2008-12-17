@@ -25,9 +25,7 @@ $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP}||'';
 if( $^V ge v5.1 ) { # PERL_VERSION
   # This is needed for Padre::Plugin::Perl6 and Syntax::Highlight::Perl6
   # This will be removed once this STD.pm bug is fixed.
-	eval {
-	  use STD;
-	};
+	eval "use STD;";
 	if (not $@) {
 		print "XXX- Enabled support for STD.pm\n";
 	}
