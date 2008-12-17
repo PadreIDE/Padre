@@ -182,7 +182,7 @@ sub load_plugins {
 	$self->_refresh_plugin_menu;
 	if ( my @failed = $self->failed ) {
 		$self->parent->wx->main_window->error(
-			"Failed to load the following plugin(s):\n"
+			Wx::gettext("Failed to load the following plugin(s):\n")
 			. join "\n", @failed
 		);
 		return;
@@ -316,20 +316,20 @@ sub _load_plugin_norefresh_menu {
 	# Does the plugin load without error
 	eval "use $module"; ## no critic
 	if ( $@ ) {
-		warn $self->{errstr} = "Plugin:$name - Failed to load module: $@";
+		warn $self->{errstr} = sprintf(Wx::gettext("Plugin:%s - Failed to load module: %s"), $name, $@);
 		$state->{status} = 'failed';
 		return;
 	}
 
 	# Does the plugin have new method? TODO
 	unless ( $module->can('new') ) {
-		warn $self->{errstr} = "Plugin:$name - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin";
+		warn $self->{errstr} = sprintf(Wx::gettext("Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin", $name));
 		$state->{status} = 'failed';
 		return;
 	}
 	# TODO this will not check anything as padre_interfaces is defined in Padre::Plugin
 	unless ( $module->can('padre_interfaces') ) {
-		warn $self->{errstr} = "Plugin:$name - Not compatible with Padre::Plugin API. Need to have sub padre_interfaces";
+		warn $self->{errstr} = sprintf(Wx::gettext("Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub padre_interfaces", $name));
 		$state->{status} = 'failed';
 		return;
 	}
@@ -337,7 +337,7 @@ sub _load_plugin_norefresh_menu {
 	eval {
 		$state->{object} = $module->new;
 		unless ( ref($state->{object}) ) {
-			die "Could not create plugin object for $module";
+			die sprintf(Wx::gettext("Could not create plugin object for %s", $module));
 		}
 		$self->_plugin_enable($name);
 	};
@@ -473,17 +473,17 @@ sub alert_new {
 		}
 	}
 	if ( $new_plugins ) {
-		my $msg = <<"END_MSG";
+		my $msg = Wx::gettext(<<"END_MSG");
 We found several new plugins.
 In order to configure and enable them go to
 Plugins -> Plugin Manager
 
 List of new plugins:
 
-$new_plugins
 END_MSG
+		$msg .= $new_plugins;
 
-		$self->parent->wx->main_window->message($msg, 'New plugins detected');
+		$self->parent->wx->main_window->message($msg, Wx::gettext('New plugins detected'));
 	}
 
 	return 1;
@@ -631,7 +631,7 @@ sub test_a_plugin {
 	$config->{plugins}->{$filename}->{enabled} = 1;
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'failed' ) {
-		$main->error("Faild to load the plugin '$filename'");
+		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'"), $filename));
 		return;
 	}
 
