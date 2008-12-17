@@ -2123,6 +2123,7 @@ sub on_doc_stats {
 		sprintf(Wx::gettext("Chars with spaces: %d"),    $chars_with_space   ),
 		sprintf(Wx::gettext("Newline type: %s"),         $newline_type       ),
 		sprintf(Wx::gettext("Encoding: %s"),             $encoding           ),
+		sprintf(Wx::gettext("Document type: %s"),        (defined ref($doc) ? ref($doc) : Wx::gettext("none"))),
 		defined $filename
 			? sprintf(Wx::gettext("Filename: %s"),       $filename)
 			: Wx::gettext("No filename"),
