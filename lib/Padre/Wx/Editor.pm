@@ -685,8 +685,14 @@ sub on_mouse_motion {
 	my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
 	my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
 
-	if (   $mousePos->x < ( $firstPointInLine->x - 18 )
-		&& $mousePos->x > ( $firstPointInLine->x - 36 )
+	my ( $offset1, $offset2 ) = ( 0, 18 );
+	if ( Padre->ide->config->{editor_codefolding} eq 1 ) {
+		$offset1 += 18;
+		$offset2 += 18;
+	}
+
+	if (   $mousePos->x < ( $firstPointInLine->x - $offset1 )
+		&& $mousePos->x > ( $firstPointInLine->x - $offset2 )
 	) {
 		$self->CallTipCancel, return unless $self->MarkerGet($line);
 		$self->CallTipShow( $self->PositionFromLine($line), $self->{synchk_calltips}->{$line} );
