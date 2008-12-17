@@ -244,8 +244,28 @@ sub new {
 
 	$self->AppendSeparator;
 
+	my $config    = Padre->ide->config;
 
-
+	# Styles (temporary location?)
+	$self->{style} = Wx::Menu->new;
+	$self->Append( -1,
+		Wx::gettext("Style"),
+		$self->{style}
+	);
+	my %styles    = (default => 'Default', night => 'Night');
+	foreach my $name ( sort { $styles{$a} cmp $styles{$b} }  keys %styles) {
+		my $label = $styles{$name};
+		my $radio = $self->{style}->AppendRadioItem( -1, $label );
+		if ( $config->{host}->{style} and $config->{host}->{style} eq $name ) {
+			$radio->Check(1);
+		}
+		Wx::Event::EVT_MENU( $main,
+			$radio,
+			sub {
+				$_[0]->change_style($name);
+			},
+		);
+	}
 
 
 	# Language Support
@@ -263,7 +283,6 @@ sub new {
 
 	$self->{language}->AppendSeparator;
 
-	my $config    = Padre->ide->config;
 	my %languages = Padre::Locale::languages();
 	foreach my $name ( sort { $languages{$a} cmp $languages{$b} }  keys %languages) {
 		my $label = $languages{$name};

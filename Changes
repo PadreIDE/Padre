@@ -1,5 +1,6 @@
 Changes for Padre.
 
+    Allow several coloring styles, add style called 'night' (SZABGAB)
     Right-click menu in margin column for code folding now
         allows to fold/unfold all foldable areas (HJANSEN)
     Error list window for runntime errors and diagnostics (PSHANGOV)

@@ -19,6 +19,7 @@ our %mode = (
 );
 
 my $data;
+my $data_name;
 my $width;
 
 sub new {
@@ -26,7 +27,7 @@ sub new {
 
 	my $self = $class->SUPER::new( $parent );
 #	$self->UsePopUp(0);
-	$data = data();
+	$data = data('default');
 #	$self->SetMouseDwellTime(1000); # off: Wx::SC_TIME_FOREVER
 
 	$self->SetMarginWidth(0, 0);
@@ -48,10 +49,13 @@ sub new {
 }
 
 sub data {
-	unless ( defined $data ) {
+	my $name = shift;
+
+	unless ( defined $data and $name eq $data_name ) {
 		$data = YAML::Tiny::LoadFile(
-			Padre::Util::sharefile( 'styles', 'default.yml' )
+			Padre::Util::sharefile( 'styles', "$name.yml" )
 		);
+		$data_name = $name;
 	}
 	return $data;
 }

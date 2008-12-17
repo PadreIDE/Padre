@@ -506,6 +506,19 @@ sub refresh {
 	return;
 }
 
+sub change_style {
+	my $self = shift;
+	my $name = shift;
+
+	warn "Style: $name\n";
+	Padre::Wx::Editor::data($name);
+	foreach my $editor ( $self->pages ) {
+		$editor->padre_setup;
+	}
+	
+	return;
+}
+
 sub change_locale {
 	my $self = shift;
 	my $name = shift;
