@@ -101,10 +101,8 @@ sub padre_setup_plain {
 		$self->StyleSetForeground( $k, _color( $data->{plain}{foregrounds}{$k} ) );
 	}
 
-	#$self->StyleSetBold(12,  1);
-
 	# Apply tag style for selected lexer (blue)
-	$self->StyleSetSpec( Wx::wxSTC_H_TAG, "fore:#0000ff" );
+	#$self->StyleSetSpec( Wx::wxSTC_H_TAG, "fore:#0000ff" );
 
 	if ( $self->can('SetLayoutDirection') ) {
 		$self->SetLayoutDirection( Wx::wxLayout_LeftToRight );
