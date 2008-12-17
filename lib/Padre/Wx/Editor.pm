@@ -101,6 +101,9 @@ sub padre_setup_plain {
 
 	$self->StyleClearAll();
 
+	
+	$self->SetCaretLineBackground( _color( $data->{plain}{caret_background} ) );
+
 	foreach my $k (keys %{ $data->{plain}{foregrounds} }) {
 		$self->StyleSetForeground( $k, _color( $data->{plain}{foregrounds}{$k} ) );
 	}
@@ -305,17 +308,6 @@ sub set_preferences {
 sub show_currentlinebackground {
 	my ($self, $on) = (@_);
 
-	my $config = Padre->ide->config;
-
-	my $color = Wx::Colour->new(255, 255, 64, 255);
-	if ( defined $config->{editor_caret_line_background_color} ) {
-		eval {
-			$color = Wx::Colour->new( $config->{editor_caret_line_background_color} );
-		};
-		$color = Wx::Colour->new(255, 255, 64, 255) if $@;
-	}
-
-	$self->SetCaretLineBackground( $color );
 	$self->SetCaretLineVisible( ( defined($on) && $on ) ? 1 : 0 );
 
 	return;
