@@ -55,6 +55,7 @@ requires       'IO::String'              => '1.08';
 requires       'Module::Inspector'       => '0.04';
 requires       'Module::Starter'         => '1.50';
 requires       'ORLite'                  => '0.15';
+requires       'ORLite::Migrate'         => '0.01';
 requires       'Params::Util'            => '0.33';
 requires       'PAR'                     => '0.970';
 requires       'Pod::POM'                => '0.17';
@@ -72,20 +73,21 @@ requires       'YAML::Tiny'              => '1.32';
 requires       'Wx'                      => '0.89';
 requires       'Wx::Perl::Dialog'        => '0.04';
 requires       'Wx::Perl::ProcessStream' => '0.11';
-requires	   'Parse::ErrorString::Perl'=> '0.06';
+requires       'Parse::ErrorString::Perl'=> '0.06';
 test_requires  'Test::Compile'           => '0.08' unless win32;
 test_requires  'Test::More'              => '0.47';
+test_requires  'Test::Script'            => '1.03';
 test_requires  'Test::Exception'         => '0.27';
 test_requires  'Test::NoWarnings'        => '0.084';
 test_requires  'Test::NeedsDisplay'      => '1.05';
-no_index       'directory' => [ qw{ t xt eg share inc privinc} ];
+no_index       'directory'               => qw{ t xt eg share inc privinc};
+homepage       'http://padre.perlide.org/';
+bugtracker     'http://padre.perlide.org/';
 install_script 'script/padre';
 install_share;
 
 #	meta_merge => {
 #		resources => {
-#			homepage    => 'http://padre.perlide.org/',
-#			bugtracker  => 'http://padre.perlide.org/',
 #			Repository  => 'http://svn.perlide.org/padre',
 #			MailingList => 'http://mail.perlide.org/mailman/listinfo/padre-dev',
 #		},
