@@ -439,7 +439,7 @@ sub timer_post_init {
 	$self->Thaw;
 
 	# Check for new plugins and alert the user to them
-	my $plugins = Padre->ide->plugin_manager->alert_new;
+	Padre->ide->plugin_manager->alert_new;
 
 	# Start the change detection timer
 	my $timer = Wx::Timer->new( $self, Padre::Wx::id_FILECHK_TIMER );

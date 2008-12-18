@@ -38,6 +38,7 @@ SCOPE: {
 		editor_autoindent  => 'deep',
 		editor_methods     => 'alphabetical',
 		editor_whitespaces => 0,
+		editor_codefolding => 0,
 
 		editor_auto_indentation_style => 0,
 		editor_tabwidth               => 8,

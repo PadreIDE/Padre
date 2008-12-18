@@ -10,7 +10,7 @@ BEGIN {
 }
 
 use Test::NeedsDisplay;
-use Test::More tests => 21;
+use Test::More tests => 24;
 use Test::Script;
 use Test::NoWarnings;
 use Class::Autouse ':devel';

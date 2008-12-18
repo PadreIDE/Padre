@@ -187,7 +187,7 @@ sub load_plugins {
 		$self->parent->wx->main_window->error(
 			Wx::gettext("Failed to load the following plugin(s):\n")
 			. join "\n", @failed
-		);
+		) unless $ENV{HARNESS_ACTIVE};
 		return;
 	}
 	return;
@@ -301,12 +301,84 @@ sub _load_plugin_norefresh_menu {
 	}
 
 	$plugins->{$name} ||= {};
-	my $state = $plugins->{$name};
+	my $state  = $plugins->{$name};
+	my $module = $state->{module} = "Padre::Plugin::$name";
 
-	my $module = "Padre::Plugin::$name";
-	$state->{module} = $module;
+	# Does the plugin load without error
+	eval "use $module"; ## no critic
+	if ( $@ ) {
+		$self->{errstr} = sprintf(
+			Wx::gettext(
+				"Plugin:%s - Failed to load module: %s"
+			),
+			$name,
+			$@,
+		);
+		$state->{status} = 'failed';
+		return;
+	}
 
+	# Plugin must be a Padre::Plugin subclass
+	unless ( $module->isa('Padre::Plugin') ) {
+		$self->{errstr} = sprintf(
+			Wx::gettext(
+				"Plugin:%s - Not compatible with Padre::Plugin API. "
+				. "Need to be subclass of Padre::Plugin"
+			), $name,
+		);
+		$state->{status} = 'failed';
+		return;
+	}
+
+	# Does the plugin have new method?
+	unless ( $module->can('new') ) {
+		$self->{errstr} = sprintf(
+			Wx::gettext(
+				"Plugin:%s - Not compatible with Padre::Plugin API. "
+				. "Plugin is not instantiable"
+			), $name,
+		);
+		$state->{status} = 'failed';
+		return;
+	}
+
+	# This will not check anything as padre_interfaces is defined in Padre::Plugin
+	unless ( $module->can('padre_interfaces') ) {
+		$self->{errstr} = sprintf(
+			Wx::gettext(
+				"Plugin:%s - Not compatible with Padre::Plugin API. "
+				. "Need to have sub padre_interfaces"
+			),
+			$name,
+		);
+		$state->{status} = 'failed';
+		return;
+	}
+
+	# Attempt to instantiate the plugin
+	my $object = eval { $module->new };
+	if ( $@ ) {
+		# TODO report error in a nicer way
+		$self->{errstr} = $@;
+		$state->{status} = 'failed';
+		return;
+	}
+	unless ( _INSTANCE($object, 'Padre::Plugin') ) {
+		$self->{errstr} = sprintf(
+			Wx::gettext(
+				"Plugin:%s - Not compatible with Padre::Plugin API. "
+				. "Need to have sub padre_interfaces"
+			),
+			$name,
+		);
+		$state->{status} = 'failed';
+		return;
+	}
+	$state->{object} = $object;
+
+	# Should we try to enable the plugin
 	unless ( $config->{plugins}->{$name} ) {
+		# Do not enable by default
 		$config->{plugins}->{$name}->{enabled} = 0;
 		$state->{status} = 'new';
 		return;
@@ -316,45 +388,9 @@ sub _load_plugin_norefresh_menu {
 		return;
 	}
 
-	# Does the plugin load without error
-	eval "use $module"; ## no critic
-	if ( $@ ) {
-		warn $self->{errstr} = sprintf(Wx::gettext("Plugin:%s - Failed to load module: %s"), $name, $@);
-		$state->{status} = 'failed';
-		return;
-	}
+	# FINALLY we are clear to enable the plugin
+	$self->_plugin_enable($name);
 
-	# Does the plugin have new method? TODO
-	unless ( $module->can('new') ) {
-		warn $self->{errstr} = sprintf(Wx::gettext("Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin", $name));
-		$state->{status} = 'failed';
-		return;
-	}
-	# TODO this will not check anything as padre_interfaces is defined in Padre::Plugin
-	unless ( $module->can('padre_interfaces') ) {
-		warn $self->{errstr} = sprintf(Wx::gettext("Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub padre_interfaces", $name));
-		$state->{status} = 'failed';
-		return;
-	}
-
-	eval {
-		$state->{object} = $module->new;
-		unless ( ref($state->{object}) ) {
-			die sprintf(Wx::gettext("Could not create plugin object for %s", $module));
-		}
-		$self->_plugin_enable($name);
-	};
-	if ( $@ ) {
-		# TODO report error in a nicer way
-		warn $self->{errstr} = $@;
-		$state->{status} = 'failed';
-
-		# Automatically disable the plugin
-		$config->{plugins}->{$name}->{enabled} = 0; # persistent!
-	} else {
-		$state->{status} = 'enabled';
-	}
-	
 	return 1;
 }
 
@@ -378,6 +414,9 @@ sub _plugin_enable {
 		$Padre::Document::MIME_CLASS{$type} = $class;
 	}
 
+	# Update the status
+	$self->plugins->{$name}->{status} = 'enabled';
+
 	return 1;
 }
 
@@ -397,6 +436,9 @@ sub _plugin_disable {
 
 	# Call the plugin's own disable method
 	$plugin->plugin_disable;
+
+	# Update the status
+	$self->plugins->{$name}->{status} = 'disabled';
 
 	return 1;
 }
@@ -495,7 +537,7 @@ sub alert_new {
 			$new_plugins .= "$name\n";
 		}
 	}
-	if ( $new_plugins ) {
+	if ( $new_plugins and not $ENV{HARNESS_ACTIVE} ) {
 		my $msg = Wx::gettext(<<"END_MSG");
 We found several new plugins.
 In order to configure and enable them go to

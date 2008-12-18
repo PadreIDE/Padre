@@ -108,6 +108,7 @@ sub plugin_preferences {
 }
 
 sub toggle_enabled {
+	$DB::single = 1;
 	my $self    = shift;
 	my $name    = shift;
 	my $manager = $self->{manager};

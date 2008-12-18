@@ -114,9 +114,9 @@ $editor_2->configure_editor($doc_2);
 
 SCOPE: {
 	my $msgs = $doc_2->check_syntax;
-	#diag Dumper $msgs;
+	my $end  = $msgs->[-1];
 	is_deeply(
-		$msgs->[-1],
+		$end,
 		{
 			'msg'      => 'Useless use of a constant in void context',
 			'severity' => 'W',
