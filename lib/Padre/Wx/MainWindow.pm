@@ -376,18 +376,17 @@ sub create_bottom_pane {
 	return;
 }
 
-
 # Load any default files
 sub load_files {
 	my $self   = shift;
 	my $config = Padre->ide->config;
 	my $files  = Padre->inst->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
-		$self->setup_editors( @$files );
+		$self->setup_editors(@$files);
 	} elsif ( $config->{main_startup} eq 'new' ) {
-		$self->setup_editors();
+		$self->setup_editors;
 	} elsif ( $config->{main_startup} eq 'nothing' ) {
-		# nothing
+		# Nothing
 	} elsif ( $config->{main_startup} eq 'last' ) {
 		if ( $config->{host}->{main_files} ) {
 			$self->Freeze;
@@ -1618,7 +1617,8 @@ sub zoom {
 sub on_preferences {
 	my $self = shift;
 
-	if (Padre::Wx::Dialog::Preferences->run( $self )) {
+	require Padre::Wx::Dialog::Preferences;
+	if ( Padre::Wx::Dialog::Preferences->run( $self )) {
 		foreach my $editor ( $self->pages ) {
 			$editor->set_preferences;
 		}
