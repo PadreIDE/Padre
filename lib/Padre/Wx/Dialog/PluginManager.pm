@@ -1,125 +1,145 @@
 package Padre::Wx::Dialog::PluginManager;
+
 use strict;
 use warnings;
-
+use Carp              ();
+use Params::Util      qw{_INSTANCE};
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
-use Wx::Locale        qw(:default);
-use Data::Dumper qw(Dumper);
 
 our $VERSION = '0.21';
 
-sub get_layout {
-	my ($plugins) = @_;
-	$plugins ||= {};
-
-	my @layout;
-	foreach my $module (sort keys %$plugins) {
-		push @layout,
-			[
-				['Wx::StaticText', undef, $module ],
-				['Wx::Button',    "able_$module", 'na' ],
-				['Wx::Button',    "pref_$module", gettext('Preferences') ],
-			];
-	}
-	
-	push @layout,
-		[
-			['Wx::Button',     'ok',     Wx::wxID_OK],
-			[],
-			[],
-		];
-
-	return \@layout;
-}
-
-sub dialog {
-	my ($class, $main) = @_;
-
-	my $config = Padre->ide->config;
-	my @plugins = sort keys %{ $config->{plugins} };
-
-	my $layout = get_layout( $config->{plugins} );
-	my $dialog = Padre::Wx::Dialog->new(
-		parent   => $main,
-		title    => gettext('Plugin Manager'),
-		layout   => $layout,
-		width    => [300, 100, 100],
-	);
-	foreach my $module (@plugins) {
-		Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{"pref_$module"}, sub { _pref($_[0], $module)} );
-		Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{"able_$module"}, sub { _able($_[0], $module)} );
-		$dialog->{_widgets_}{"pref_$module"}->Disable;
-		_set_labels($dialog, $module, $config->{plugins}{$module}{enabled});
+sub new {
+	my $class   = shift;
+	my $parent  = shift;
+	my $manager = shift;
+	unless ( _INSTANCE($manager, 'Padre::PluginManager') ) {
+		Carp::croak("Missing or invalid Padre::PluginManager object");
 	}
 
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{ok},      sub { $dialog->EndModal(Wx::wxID_OK) } );
-	$dialog->{_widgets_}{ok}->SetDefault;
+	# Create the object
+	my $self = bless {
+		parent  => $parent,
+		manager => $manager,
+		dialog  => undef,
+	}, $class;
 
-	$dialog->{_widgets_}{ok}->SetFocus;
-
-	return $dialog;
-}
-
-sub _pref {
-	my ($self, $module) = @_;
-
-	my $obj = Padre->ide->plugin_manager->plugins->{$module}{object};
-	if ($obj and $obj->can('preferences_dialog')) {
-		$obj->preferences_dialog;
-	}
-	
-	#print "$self\n";
-	return;
-}
-
-sub _able {
-	my ($self, $module) = @_;
-	
-	my $config = Padre->ide->config;
-	my $manager = Padre->ide->plugin_manager;
-	
-	if ($config->{plugins}{$module}{enabled}) {
-		$config->{plugins}{$module}{enabled} = 0;
-		$manager->unload_plugin($module);
-
-	} else {
-		$config->{plugins}{$module}{enabled} = 1;
-		if (not $manager->reload_plugin($module)) {
-			Padre->ide->wx->main_window->error($manager->{errstr});
-		}
-	}
-	_set_labels($self, $module, $config->{plugins}{$module}{enabled});
-	#print "$self\n";
-	return;
-}
-
-sub _set_labels {
-	my ($dialog, $module, $enabled) = @_;
-
-	if ($enabled) {
-		$dialog->{_widgets_}{"able_$module"}->SetLabel(gettext('Disable'));
-		my $obj = Padre->ide->plugin_manager->plugins->{$module}{object};
-		if ($obj and $obj->can('preferences_dialog')) {
-			$dialog->{_widgets_}{"pref_$module"}->Enable;
-		}
-	} else {
-		$dialog->{_widgets_}{"able_$module"}->SetLabel(gettext('Enable'));
-		$dialog->{_widgets_}{"pref_$module"}->Disable;
-	}
+	return $self;
 }
 
 sub show {
-	my ($class, $main) = @_;
+	my $self = shift;
 
-	my $dialog   = $class->dialog($main);
-	return if not $dialog->show_modal;
-	
-	my $data = $dialog->get_data;
+	# Create the layout
+	my $plugins = $self->{manager}->plugins;
+	my @names   = sort keys %$plugins;
+	my @layout  = ();
+	foreach my $name ( @names ) {
+		my $object = $plugins->{$name}->{object};
+		my $text   = ($object and $object->can('plugin_name'))
+			? $object->plugin_name
+			: $name;
+		push @layout, [
+			[ 'Wx::StaticText', undef,       $text   ],
+			[ 'Wx::Button',    "able_$name", 'na'    ],
+			[ 'Wx::Button',    "pref_$name", Wx::gettext('Preferences') ],
+		];
+	}
+	push @layout, [
+		[ 'Wx::Button', 'ok', Wx::wxID_OK ],
+		[ ],
+		[ ],
+	];
+
+	# Create the dialog frame
+	my $dialog = $self->{dialog} = Padre::Wx::Dialog->new(
+		parent => $self->{parent},
+		title  => Wx::gettext('Plugin Manager'),
+		layout => \@layout,
+		width  => [ 200, 100, 100 ],
+	);
+	foreach my $name ( @names ) {
+		my $object = $plugins->{$name}->{object};
+		Wx::Event::EVT_BUTTON(
+			$dialog,
+			$dialog->{_widgets_}->{"pref_$name"},
+			sub {
+				$self->plugin_preferences($name);
+			},
+		);
+		Wx::Event::EVT_BUTTON(
+			$dialog,
+			$dialog->{_widgets_}->{"able_$name"},
+			sub {
+				$self->toggle_enabled($name);
+			},
+		);
+		unless ( $object and $object->can('plugin_preferences') ) {
+			$dialog->{_widgets_}->{"pref_$name"}->Disable;
+		}
+		$self->update_labels($name);
+	}
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{_widgets_}->{ok},
+		sub {
+			$dialog->EndModal(Wx::wxID_OK);
+		},
+	);
+	$dialog->{_widgets_}->{ok}->SetDefault;
+	$dialog->{_widgets_}->{ok}->SetFocus;
+
+	# Show the dialog frame
+	$dialog->show_modal;
 	$dialog->Destroy;
+	delete $self->{dialog};
 
 	return;
 }
 
+sub plugin_preferences {
+	my $self   = shift;
+	my $name   = shift;
+	my $object = $self->{manager}->plugins->{$name}->{object};
+	if ( $object and $object->can('plugin_preferences') ) {
+		$object->plugin_preferences;
+	}
+	return;
+}
+
+sub toggle_enabled {
+	my $self    = shift;
+	my $name    = shift;
+	my $manager = $self->{manager};
+	my $plugin  = $manager->plugins->{$name};
+	my $status  = $plugin->{status};
+	if ( $status eq 'enabled' ) {
+		$manager->_plugin_disable($name);
+	} elsif ( $status eq 'new' or $status eq 'disabled' ) {
+		$manager->_plugin_enable($name);
+	}
+	$self->update_labels($name);
+	return;
+}
+
+sub update_labels {
+	my $self   = shift;
+	my $name   = shift;
+	my $dialog = $self->{dialog};
+	my $plugin = $self->{manager}->plugins->{$name};
+	my $status = $plugin->{status};
+	if ( $status ) {
+		if ( $status eq 'enabled' ) {
+			$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Disable'));
+			if ( $plugin->{object}->can('plugin_preferences') ) {
+				$dialog->{_widgets_}->{"pref_$name"}->Enable;
+			}
+		} elsif ( $status eq 'new' or $status eq 'disabled' ) {
+			$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Enable'));
+			$dialog->{_widgets_}->{"pref_$name"}->Disable;
+		}
+	}
+	return;
+}
 
 1;

@@ -296,7 +296,7 @@ sub _load_plugin_norefresh_menu {
 
 	# Skip if that plugin was already loaded
 	$name =~ s/^Padre::Plugin:://;
-	if ( $plugins->{$name} and $plugins->{$name}->{status} eq 'loaded' ) {
+	if ( $plugins->{$name} and $plugins->{$name}->{status} eq 'enabled' ) {
 		return;
 	}
 
@@ -352,7 +352,7 @@ sub _load_plugin_norefresh_menu {
 		# Automatically disable the plugin
 		$config->{plugins}->{$name}->{enabled} = 0; # persistent!
 	} else {
-		$state->{status} = 'loaded';
+		$state->{status} = 'enabled';
 	}
 	
 	return 1;
@@ -666,7 +666,7 @@ sub get_menu {
 	my $main    = shift;
 	my $name    = shift;
 	my $plugin  = $self->plugins->{$name};
-	unless ( $plugin and $plugin->{status} eq 'loaded' ) {
+	unless ( $plugin and $plugin->{status} eq 'enabled' ) {
 		return ();
 	}
 	unless ( $plugin->{object}->can('menu_plugins') ) {

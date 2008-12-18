@@ -20,8 +20,8 @@ our @ISA     = 'Padre::Wx::Submenu';
 # Padre::Wx::Submenu Methods
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
+	my $class   = shift;
+	my $main    = shift;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
@@ -30,7 +30,10 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1, Wx::gettext("Plugin Manager") ),
 		sub {
-			Padre::Wx::Dialog::PluginManager->show(@_);
+			require Padre::Wx::Dialog::PluginManager;
+			Padre::Wx::Dialog::PluginManager->new( $_[0],
+				Padre->ide->plugin_manager,
+			)->show;
 		},
 	);
 
@@ -104,7 +107,7 @@ sub new {
 	foreach my $name ( 'My', @plugins ) {
 		next unless $plugins->{$name};
 		next unless $plugins->{$name}->{status};
-		next unless $plugins->{$name}->{status} eq 'loaded';
+		next unless $plugins->{$name}->{status} eq 'enabled';
 
 		my @menu = $manager->get_menu( $main, $name );
 		next unless @menu;
