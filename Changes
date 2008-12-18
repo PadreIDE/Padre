@@ -1,5 +1,9 @@
 Changes for Padre.
 
+    Rewrote Padre::Wx::Dialog::PluginManager to interact directly with
+        Padre::PluginManager (and not talk to Padre::Config) (ADAMK)
+    Migrated Padre::DB to use ORLite::Migrate instead of the
+       (increasingly slow) ->setup method (ADAMK)
     Allow several coloring styles, add style called 'night' (SZABGAB)
     Right-click menu in margin column for code folding now
         allows to fold/unfold all foldable areas (HJANSEN)
