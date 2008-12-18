@@ -20,9 +20,11 @@ our $VERSION = '0.21';
 #####################################################################
 # Class-Level Functionality
 
-my $DEFAULT_DIR = File::Spec->catfile(
-	($ENV{PADRE_HOME} ? $ENV{PADRE_HOME} : File::HomeDir->my_data),
-	'.padre'
+my $DEFAULT_DIR = File::Spec->catfile( (
+	$ENV{PADRE_HOME}
+		? $ENV{PADRE_HOME}
+		: File::HomeDir->my_data
+	), '.padre',
 );
 
 sub default_dir {
@@ -31,7 +33,6 @@ sub default_dir {
 		mkdir $dir or
 		die "Cannot create config dir '$dir' $!";
 	}
-
 	return $dir;
 }
 
@@ -62,29 +63,31 @@ sub default_plugin_dir {
 		die "Cannot create plugins dir '$plugins_full_path' $!";
 	}
 
-	# copy the My Plugin if necessary
+	# Copy the My Plugin if necessary
 	my $file = File::Spec->catfile( $plugins_full_path, 'My.pm' );
-	if (not -e $file) {
+	unless ( -e $file ) {
 		Padre::Config->copy_original_My_plugin( $file );
 	}
 	return $pluginsdir;
 }
 
-
 sub copy_original_My_plugin {
 	my $class = shift;
 	my $target = shift;
 	my $src = File::Spec->catfile( File::Basename::dirname($INC{'Padre/Config.pm'}), 'Plugin', 'My.pm' );
-	if (not $src) {
+	unless ( $src ) {
 		die "Could not find the original My plugin";
 	}
-	if (not File::Copy::copy($src, $target) ) {
+	unless ( File::Copy::copy($src, $target) ) {
 		return die "Could not copy the My plugin ($src) to $target: $!";
 	}
 	chmod 0644, $target;
 
 	return 1;
 }
+
+
+
 
 
 #####################################################################
