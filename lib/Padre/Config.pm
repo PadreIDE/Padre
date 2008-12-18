@@ -99,10 +99,6 @@ sub new {
 	$self->{host}->{main_width}     ||= 600;
 	$self->{host}->{main_left}      ||= 40;
 	$self->{host}->{main_top}       ||= 20;
-#	$self->{host}->{main_height}    ||= Wx::wxDefaultSize()->height;
-#	$self->{host}->{main_width}     ||= Wx::wxDefaultSize()->width;
-#	$self->{host}->{main_left}      ||= Wx::wxDefaultPosition()->x;
-#	$self->{host}->{main_top}       ||= Wx::wxDefaultPosition()->y;
 	$self->{host}->{main_maximized} ||= 0;
 
 	# Files that were previously open (and can be still)
