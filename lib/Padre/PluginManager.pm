@@ -126,6 +126,9 @@ use Class::XSAccessor
 	};
 
 
+
+
+
 #####################################################################
 # Configuration and Startup
 
@@ -355,7 +358,7 @@ sub _load_plugin_norefresh_menu {
 	return 1;
 }
 
-# Assume the named plugin exists, load it
+# Assume the named plugin exists, enable it
 sub _plugin_enable {
 	my $self   = shift;
 	my $name   = shift;
@@ -364,7 +367,7 @@ sub _plugin_enable {
 	# Call the plugin's own enable method
 	$plugin->plugin_enable;
 
-	# If the plugin defines document types, enable them
+	# If the plugin defines document types, register them
 	my @documents = $plugin->registered_documents;
 	if ( @documents ) {
 		Class::Autouse->load('Padre::Document');
@@ -374,6 +377,26 @@ sub _plugin_enable {
 		my $class = shift @documents;
 		$Padre::Document::MIME_CLASS{$type} = $class;
 	}
+
+	return 1;
+}
+
+# Assume the named plugin exists, disable it
+sub _plugin_disable {
+	my $self = shift;
+	my $name = shift;
+	my $plugin = $self->plugins->{$name}->{object};
+
+	# If the plugin defines document types, deregister them
+	my @documents = $plugin->registered_documents;
+	while ( @documents ) {
+		my $type  = shift @documents;
+		my $class = shift @documents;
+		delete $Padre::Document::MIME_CLASS{$type};
+	}
+
+	# Call the plugin's own disable method
+	$plugin->plugin_disable;
 
 	return 1;
 }
