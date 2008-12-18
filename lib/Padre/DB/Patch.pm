@@ -6,10 +6,24 @@ use strict;
 use DBI      ();
 use Exporter ();
 
-use vars qw{$VERSION @EXPORT $FILE};
+use vars qw{$VERSION @ISA @EXPORT $FILE};
 BEGIN {
 	$VERSION = '0.21';
-	@EXPORT  = ();
+	@ISA     = 'Exporter';
+	@EXPORT  = qw{
+		file
+		dbh
+		do
+		selectall_arrayref
+		selectall_hashref
+		selectcol_arrayref
+		selectrow_array
+		selectrow_arrayref
+		selectrow_hashref
+		pragma
+		table_exists
+		column_exists
+	};
 	$FILE    = undef;
 }
 
@@ -25,9 +39,11 @@ sub file {
 	return $FILE;
 }
 
-sub connect {
+sub dbh {
 	my $file = file();
-	my $dbh  = DBI->connect("dbi:SQLite(RaiseError=>1):$file");
+	my $dbh  = DBI->connect("dbi:SQLite:$file", undef, undef, {
+		RaiseError => 1,
+	} );
 	unless ( $dbh ) {
 		die "Failed to connect to $file";
 	}
@@ -35,31 +51,31 @@ sub connect {
 }
 
 sub do {
-	connect()->do(@_);
+	dbh()->do(@_);
 }
 
 sub selectall_arrayref {
-	connect()->selectall_arrayref(@_);
+	dbh()->selectall_arrayref(@_);
 }
 
 sub selectall_hashref {
-	connect()->selectall_hashref(@_);
+	dbh()->selectall_hashref(@_);
 }
 
 sub selectcol_arrayref {
-	connect()->selectcol_arrayref(@_);
+	dbh()->selectcol_arrayref(@_);
 }
 
 sub selectrow_array {
-	connect()->selectrow_array(@_);
+	dbh()->selectrow_array(@_);
 }
 
 sub selectrow_arrayref {
-	connect()->selectrow_arrayref(@_);
+	dbh()->selectrow_arrayref(@_);
 }
 
 sub selectrow_hashref {
-	connect()->selectrow_hashref(@_);
+	dbh()->selectrow_hashref(@_);
 }
 
 sub pragma {
