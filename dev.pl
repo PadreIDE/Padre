@@ -13,6 +13,11 @@ use Probe::Perl;
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
 
+# Due to share functionality, we must have run make
+unless ( -d 'blib' ) {
+	die "You must now have run make in order to run dev.pl";
+}
+
 if ($^O eq 'linux') {
 	if( my $msgfmt = `which msgfmt`) {
 		chomp $msgfmt;
@@ -24,7 +29,7 @@ if ($^O eq 'linux') {
 }
 
 my $perl = Probe::Perl->find_perl_interpreter;
-if ($^O eq 'darwin') {
+if ( $^O eq 'darwin' ) {
 	#I presume there's a proper way to do this?
 	$perl = `which wxPerl`;
 	chomp($perl);
@@ -45,10 +50,4 @@ if ( grep { $_ eq '-p' } @ARGV ) {
 	push @cmd, '-d:NYTProf';
 }
 push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
-#print join( ' ', @cmd ) . "\n";
 system( @cmd );
-
-#my $cmd  = qq["$perl" -I$FindBin::Bin/lib -I$FindBin::Bin/../plugins/par/lib $FindBin::Bin/script/padre @ARGV];
-#print $cmd . "\n";
-#system $cmd;
-
