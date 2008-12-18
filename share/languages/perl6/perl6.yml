@@ -6,21 +6,9 @@
 abs:
  cmd: (NUMBER)
  exp: The absolute value of NUMBER.
-accept:
- cmd: (NEWSOCKET, GENERICSOCKET)
- exp: Accept an incoming socket.
-alarm:
- cmd: (NUMBER)
- exp: Asks the operating system to send an alarm sign after NUMBER seconds.
 atan2:
  cmd: (Y, X)
  exp: Returns the arctangent of Y/X in the range -PI to PI.
-bind:
- cmd: (SOCKET, NAME)
- exp: Binds a network address to a socket.
-binmode:
- cmd: (FILEHANDLE)  or  (FILEHANDLE, LAYER)
- exp: Arranges for FILEHANDLE to be read or written in "binary" format.
 bless:
  cmd: (REFERENCE, CLASSNAME)
  exp: Connects a REFERENCE (usually of a hash) to a CLASS to arrange for OOP dispatching.
@@ -54,9 +42,6 @@ close:
 closedir:
  cmd: (DIRECTORY_HANDLE)
  exp: Close a DIRECTORY_HANDLE opened by opendir().
-connect:
- cmd: (SOCKET, NAME)
- exp: Attempts to connect to a remote socket.
 continue:
  cmd: BLOCK
  exp: Flow control statement.
@@ -66,12 +51,6 @@ cos:
 crypt:
  cmd: (PLAINTEXT, SALT)
  exp: Returns the encrypted PLAINTEXT string using the SALT.
-dbmclose:
- cmd: (HASH)
- exp: See untie() instead.
-dbmopen:
- cmd: (HASH, DBNAME, MASK)
- exp: See tie() instead.
 defined:
  cmd: SCALAR
  exp: Returns false if SCALAR is undef. Otherwise returns true.
@@ -84,9 +63,6 @@ die:
 do:
  cmd: BLOCK   or  (PATH)
  exp: do PATH executes the file in the PATH.
-dump:
- cmd: ()
- exp: Immediate core dump (crashing perl) not really useful for humans.
 each:
  cmd: (HASH)
  exp: Loop through a hash by returning the (key, value) pair on every call.
@@ -441,21 +417,9 @@ symlink:
 syscall:
  cmd: NUMBER, LIST
  exp: Calls the system call specified as the first element of the list, passing the remaining elements as arguments to the system call. 
-sysopen:
- cmd: FILEHANDLE,FILENAME,MODE,PERMS
- exp: Opens the file whose filename is given by FILENAME, and associates it with FILEHANDLE.
-sysread:
- cmd: FILEHANDLE,SCALAR,LENGTH
- exp: Attempts to read LENGTH bytes of data into variable SCALAR from the specified FILEHANDLE, using the system call read(2).
-sysseek:
- cmd: FILEHANDLE,POSITION,WHENCE
- exp: Sets FILEHANDLEs system position in bytes using the system call lseek(2).
-system:
+run:
  cmd: PROGRAM LIST
- exp: Does exactly the same thing as "exec LIST", except that a fork is done first,
-syswrite:
- cmd: FILEHANDLE,SCALAR,LENGTH,OFFSET
- exp: Attempts to write LENGTH bytes of data from variable SCALAR to the specified FILEHANDLE, using the system call write(2).
+ exp: Executes an external program, and returns control to the caller once the program has exited.
 tell:
  cmd: FILEHANDLE
  exp: Returns the current position in bytes for FILEHANDLE, or -1 on error.
@@ -519,9 +483,6 @@ wait:
 waitpid:
  cmd: PID,FLAGS
  exp: Waits for a particular child process to terminate.
-wantarray:
- cmd: () no parameters
- exp: Returns true if the current call of the function expects more than one results.
 warn:
  cmd: (STRING)
  exp: Produces a message on STDERR just like die, but does not exit or throw an exception.
