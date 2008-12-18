@@ -91,7 +91,7 @@ sub padre_setup {
 	} elsif ($mimetype) {
 		# setup some default coloring
 		# for the time being it is the same as for Perl
-		$self->padre_setup_style('perl');
+		$self->padre_setup_style('padre');
 	} else {
 		# if mimetype is not known, then no coloring for now
 		# but mimimal conifuration should apply here too

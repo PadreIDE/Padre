@@ -151,6 +151,14 @@ sub sharefile {
 	File::Spec->catfile( share(), @_ );
 }
 
+package Px;
+
+use constant {
+	PADRE_BLUE  => 0,
+	PADRE_RED   => 1,
+};
+
+
 1;
 
 =head1 SUPPORT
