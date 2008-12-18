@@ -37,6 +37,7 @@ requires       'HTML::Entities'          => '3.57';
 requires       'List::Util'              => '1.18';
 requires       'IO::Socket'              => '1.30';
 requires       'IPC::Cmd'                => '0.42';
+requires       'IPC::Run'                => '0.80' if win32;
 requires       'IPC::Open3'              => '0'; # not dual-lived!
 requires       'Term::ReadLine'          => 0;
 requires       'Module::Refresh'         => '0.13';
