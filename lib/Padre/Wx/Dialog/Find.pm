@@ -99,10 +99,10 @@ sub find {
 
 sub find_next {
 	my ($class, $main) = @_;
-	
+
 	my $config = Padre->ide->config;
 	my $term = $config->{search_terms}->[0];
-	
+
 	# for Quick Find
 	if ( $config->{experimental} ) {
 		# check if is checked
@@ -115,10 +115,11 @@ sub find_next {
 	}
 
 	if ( $term ) {
-		$class->search();
+		$class->search;
 	} else {
 		$class->find( $main );
 	}
+
 	return;
 }
 
