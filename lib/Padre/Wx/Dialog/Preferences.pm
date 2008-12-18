@@ -75,9 +75,9 @@ sub get_layout_for_appearance {
 			] 
 		],
 		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Editor Caret Line Background Colour:') ],
+			[ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_current_line_background_color',
-				(defined $config->{editor_current_line_background_color} ? $config->{editor_current_line_background_color} : '#efefef') ]
+				(defined $config->{editor_current_line_background_color} ? '#' . $config->{editor_current_line_background_color} : '#ffff04') ]
 		],
 	];
 }

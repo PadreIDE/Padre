@@ -108,8 +108,20 @@ sub padre_setup_plain {
 
 	$self->StyleClearAll();
 
+	my $config = Padre->ide->config;
+
 	if ( defined $data->{plain}{current_line_background} ) {
+		if ( defined $config->{editor_current_line_background_color} ) {
+			if (   $data->{plain}{current_line_background}
+				ne $config->{editor_current_line_background_color}
+			) {
+				$data->{plain}{current_line_background} = $config->{editor_current_line_background_color};
+			}
+		}
 		$self->SetCaretLineBackground( _color( $data->{plain}{current_line_background} ) );
+	}
+	elsif ( defined $config->{editor_current_line_background_color} ) {
+		$self->SetCaretLineBackground( _color( $config->{editor_current_line_background_color} ) );
 	}
 
 	foreach my $k (keys %{ $data->{plain}{foregrounds} }) {
