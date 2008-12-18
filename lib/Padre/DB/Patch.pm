@@ -6,10 +6,11 @@ use strict;
 use DBI      ();
 use Exporter ();
 
-use vars qw{@EXPORT $FILE};
+use vars qw{$VERSION @EXPORT $FILE};
 BEGIN {
-	@EXPORT = ();
-	$FILE   = undef;
+	$VERSION = '0.21';
+	@EXPORT  = ();
+	$FILE    = undef;
 }
 
 sub file {
