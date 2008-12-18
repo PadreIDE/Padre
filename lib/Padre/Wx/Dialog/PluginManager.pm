@@ -117,18 +117,15 @@ sub toggle_enabled {
 	my $manager = $self->{manager};
 	my $plugin  = $manager->plugins->{$name};
 	my $status  = $plugin->{status};
+	$self->{parent}->Freeze;
 	if ( $status eq 'enabled' ) {
-		$self->{parent}->Freeze;
 		$manager->_plugin_disable($name);
-		$self->{parent}->menu->refresh;
-		$self->{parent}->Thaw;
 	} elsif ( $status eq 'new' or $status eq 'disabled' ) {
-		$self->{parent}->Freeze;
 		$manager->_plugin_enable($name);
-		$self->{parent}->menu->refresh;
-		$self->{parent}->Thaw;
 	}
 	$self->update_labels($name);
+	$self->{parent}->menu->refresh;
+	$self->{parent}->Thaw;
 	return;
 }
 
