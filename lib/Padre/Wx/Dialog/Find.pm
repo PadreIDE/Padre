@@ -134,7 +134,6 @@ sub find_previous {
 	return;
 }
 
-
 sub cancel_clicked {
 	my ($dialog, $event) = @_;
 
