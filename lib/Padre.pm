@@ -36,7 +36,6 @@ use Class::Autouse qw{
 	Padre::Project
 	Padre::PluginManager
 	Padre::Pod::Frame
-	Padre::Pod::Indexer
 	Padre::Pod::Viewer
 	Padre::Task
 	Padre::Task::PPI
@@ -51,8 +50,6 @@ use Class::Autouse qw{
 	Padre::Wx::App
 	Padre::Wx::Dialog::Bookmarks
 	Padre::Wx::Dialog::Find
-	Padre::Wx::Dialog::PluginManager
-	Padre::Wx::Dialog::Preferences
 	Padre::Wx::Dialog::Search
 	Padre::Wx::Dialog::Snippets
 	Padre::Wx::History::TextDialog
