@@ -699,7 +699,7 @@ sub on_mouse_motion {
 	my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
 
 	my ( $offset1, $offset2 ) = ( 0, 18 );
-	if ( Padre->ide->config->{editor_codefolding} eq 1 ) {
+	if ( Padre->ide->config->{editor_codefolding} ) {
 		$offset1 += 18;
 		$offset2 += 18;
 	}
