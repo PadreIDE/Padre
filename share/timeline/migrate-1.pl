@@ -123,9 +123,9 @@ my @prepsnips = (
 );
 
 SCOPE: {
-	my $dbh = connect();
+	my $dbh = dbh();
 	$dbh->begin_work;
-	my $sth = $class->prepare(
+	my $sth = $dbh->prepare(
 		'INSERT INTO snippets ( mimetype, category, name, snippet ) VALUES (?, ?, ?, ?)'
 	);
 	$sth->execute($_->[0], $_->[1], $_->[2], $_->[3]) for @prepsnips;
