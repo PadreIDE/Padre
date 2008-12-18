@@ -130,15 +130,19 @@ sub collect_data {
 	my $self = shift;
 	return unless $self->enabled;
 	my $line = shift;
-	if (!$self->{data}) {
-	    my $root = $self->root;
-	    $self->DeleteChildren($root);
-	}
+	#if (!$self->{data}) {
+	#    my $root = $self->root;
+	#    $self->DeleteChildren($root);
+	#}
 	$self->{data} .= $line;
 	$self->{data} .= "\n";
 }
 
-
+sub clear {
+	my $self = shift;
+	my $root = $self->root;
+    $self->DeleteChildren($root);
+}
 
 1;
 

@@ -758,6 +758,9 @@ sub run_command {
 
 	# Disable access to the run menus
 	$self->menu->run->disable;
+	
+	# Clear the error list
+	$self->errorlist->clear;
 
 	# Prepare the output window for the output
 	$self->show_output(1);
