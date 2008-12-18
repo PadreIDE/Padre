@@ -40,9 +40,9 @@ sub show {
 			? $object->plugin_name
 			: $name;
 		push @layout, [
-			[ 'Wx::StaticText', undef,       $text   ],
-			[ 'Wx::Button',    "able_$name", 'na'    ],
-			[ 'Wx::Button',    "pref_$name", Wx::gettext('Preferences') ],
+			[ 'Wx::StaticText', undef,       $text                       ],
+			[ 'Wx::Button',    "able_$name", Wx::gettext('Incompatible') ],
+			[ 'Wx::Button',    "pref_$name", Wx::gettext('Preferences')  ],
 		];
 	}
 	push @layout, [
@@ -76,6 +76,9 @@ sub show {
 		);
 		unless ( $object and $object->can('plugin_preferences') ) {
 			$dialog->{_widgets_}->{"pref_$name"}->Disable;
+		}
+		if ( $plugins->{$name}->{status} eq 'failed' ) {
+			$dialog->{_widgets_}->{"able_$name"}->Disable;
 		}
 		$self->update_labels($name);
 	}

@@ -564,14 +564,16 @@ END_MSG
 # enable all the plugins for a single editor
 sub editor_enable {
 	my ($self, $editor) = @_;
-	foreach my $plugin ( keys %{ $self->{plugins} } ) {
+	foreach my $name ( keys %{ $self->{plugins} } ) {
+		my $plugin = $self->{plugins}->{$name} or return;
+		my $object = $plugin->{object}         or return;
+		next unless $plugin->{status};
+		next unless $plugin->{status} eq 'enabled';
 		eval {
-			if ( my $object = $self->{plugins}->{$plugin}->{object} ) {
-				return if not $object->can('editor_enable');
-				$object->editor_enable( $editor, $editor->{Document} );
-			}
+			return if not $object->can('editor_enable');
+			$object->editor_enable( $editor, $editor->{Document} );
 		};
-		if ($@) {
+		if ( $@ ) {
 			warn $@;
 			# TODO: report the plugin error!
 		}
@@ -589,14 +591,14 @@ sub enable_editors_for_all {
 }
 
 sub enable_editors {
-	my $self = shift;
-	my $name = shift;
-	
-	my $plugins = $self->plugins;
-	return if not $plugins->{$name} or not $plugins->{$name}->{object};
+	my $self   = shift;
+	my $name   = shift;
+	my $plugin = $self->plugins->{$name} or return;
+	my $object = $plugin->{object}       or return;
+	return unless $plugin->{state} eq 'enabled';
 	foreach my $editor ( $self->parent->wx->main_window->pages ) {
-		if ( $plugins->{$name}->{object}->can('editor_enable') ) {
-			$plugins->{$name}->{object}->editor_enable( $editor, $editor->{Document} );
+		if ( $object->can('editor_enable') ) {
+			$object->editor_enable( $editor, $editor->{Document} );
 		}
 	}
 	return 1;
