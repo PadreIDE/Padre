@@ -10,7 +10,7 @@ use File::ShareDir::PAR ();
 
 use ORLite::Migrate 0.01 {
 	create   => 1,
-	tables   => 0,
+	tables   => [ 'Modules' ],
 	file     => Padre::Config->default_db,
 	timeline => File::Spec->catdir(
 		File::ShareDir::PAR::dist_dir('Padre'),
