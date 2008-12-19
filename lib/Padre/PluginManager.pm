@@ -595,7 +595,7 @@ sub enable_editors {
 	my $name   = shift;
 	my $plugin = $self->plugins->{$name} or return;
 	my $object = $plugin->{object}       or return;
-	return unless ( $plugin->{state} and $plugin->{state} eq 'enabled' );
+	return unless ( $plugin->{status} and $plugin->{status} eq 'enabled' );
 	foreach my $editor ( $self->parent->wx->main_window->pages ) {
 		if ( $object->can('editor_enable') ) {
 			$object->editor_enable( $editor, $editor->{Document} );
