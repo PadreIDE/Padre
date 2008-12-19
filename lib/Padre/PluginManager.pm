@@ -122,7 +122,7 @@ use Class::XSAccessor
 	getters => {
 		parent     => 'parent',
 		plugin_dir => 'plugin_dir',
-                plugins    => 'plugins',
+		plugins    => 'plugins',
 	};
 
 
@@ -660,7 +660,7 @@ sub failed {
 # TODO: document this.
 sub test_a_plugin {
 	my $self    = shift;
-        my $main    = $self->parent->wx->main_window;
+	my $main    = $self->parent->wx->main_window;
 	my $config  = $self->parent->config;
 	my $plugins = $self->plugins;
 

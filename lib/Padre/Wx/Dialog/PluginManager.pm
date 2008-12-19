@@ -115,12 +115,15 @@ sub toggle_enabled {
 	my $self    = shift;
 	my $name    = shift;
 	my $manager = $self->{manager};
+	my $config  = $manager->parent->config;
 	my $plugin  = $manager->plugins->{$name};
 	my $status  = $plugin->{status};
 	$self->{parent}->Freeze;
 	if ( $status eq 'enabled' ) {
+		$config->{plugins}->{$name}->{enabled} = 0;
 		$manager->_plugin_disable($name);
 	} elsif ( $status eq 'new' or $status eq 'disabled' ) {
+		$config->{plugins}->{$name}->{enabled} = 1;
 		$manager->_plugin_enable($name);
 	}
 	$self->update_labels($name);
