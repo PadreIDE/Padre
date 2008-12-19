@@ -826,7 +826,7 @@ sub uncomment_lines {
 		}
 		$last  = $self->GetLineEndPosition($end);
 		$first = $last - length( $str->[1] );
-		my $text  = $self->GetTextRange($first, $last);
+		$text  = $self->GetTextRange($first, $last);
 		if ($text eq $str->[1]) {
 			$self->SetSelection($first, $last);
 			$self->ReplaceSelection('');
