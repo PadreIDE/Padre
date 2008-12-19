@@ -786,14 +786,22 @@ sub get_text_from_clipboard {
 
 # $editor->comment_lines($begin, $end, $str);
 # $str is either # for perl or // for Javascript, etc.
+# $str might be ['<--', '-->] for html
 sub comment_lines {
 	my ($self, $begin, $end, $str) = @_;
 
 	$self->BeginUndoAction;
-	for my $line ($begin .. $end) {
-		# insert $str (# or //)
-		my $pos = $self->PositionFromLine($line);
-		$self->InsertText($pos, $str);
+	if ( ref $str eq 'ARRAY' ) {
+		my $pos = $self->PositionFromLine($begin);
+		$self->InsertText($pos, $str->[0]);
+		$pos = $self->GetLineEndPosition($end);
+		$self->InsertText($pos, $str->[1]);
+	} else {
+		for my $line ($begin .. $end) {
+			# insert $str (# or //)
+			my $pos = $self->PositionFromLine($line);
+			$self->InsertText($pos, $str);
+		}
 	}
 	$self->EndUndoAction;
 	return;
@@ -807,15 +815,32 @@ sub comment_lines {
 sub uncomment_lines {
 	my ($self, $begin, $end, $str) = @_;
 
-	my $length = length $str;
 	$self->BeginUndoAction;
-	for my $line ($begin .. $end) {
-		my $first = $self->PositionFromLine($line);
-		my $last  = $first + $length;
+	if ( ref $str eq 'ARRAY' ) {
+		my $first = $self->PositionFromLine($begin);
+		my $last  = $first + length( $str->[0] );
 		my $text  = $self->GetTextRange($first, $last);
-		if ($text eq $str) {
+		if ($text eq $str->[0]) {
 			$self->SetSelection($first, $last);
 			$self->ReplaceSelection('');
+		}
+		$last  = $self->GetLineEndPosition($end);
+		$first = $last - length( $str->[1] );
+		my $text  = $self->GetTextRange($first, $last);
+		if ($text eq $str->[1]) {
+			$self->SetSelection($first, $last);
+			$self->ReplaceSelection('');
+		}
+	} else {
+		my $length = length $str;
+		for my $line ($begin .. $end) {
+			my $first = $self->PositionFromLine($line);
+			my $last  = $first + $length;
+			my $text  = $self->GetTextRange($first, $last);
+			if ($text eq $str) {
+				$self->SetSelection($first, $last);
+				$self->ReplaceSelection('');
+			}
 		}
 	}
 	$self->EndUndoAction;
