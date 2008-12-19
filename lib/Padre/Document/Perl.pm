@@ -421,6 +421,41 @@ sub lexical_variable_replacement {
 	return ();
 }
 
+sub autocomplete {
+	my $self   = shift;
+
+	my $editor = $self->editor;
+	my $pos    = $editor->GetCurrentPos;
+	my $line   = $editor->LineFromPosition($pos);
+	my $first  = $editor->PositionFromLine($line);
+
+	# line from beginning to current position
+	my $prefix = $editor->GetTextRange($first, $pos);
+	   $prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
+	my $last   = $editor->GetLength();
+	my $text   = $editor->GetTextRange(0, $last);
+	my $pre_text  = $editor->GetTextRange(0, $first+length($prefix)); 
+	my $post_text = $editor->GetTextRange($first, $last); 
+
+	my $regex;
+	eval { $regex = qr{\b($prefix\w+(?:::\w+)*)\b} };
+	if ($@) {
+		return ("Cannot build regex for '$prefix'");
+	}
+
+	my %seen;
+	my @words;
+	push @words ,grep { ! $seen{$_}++ } reverse ($pre_text =~ /$regex/g);
+	push @words , grep { ! $seen{$_}++ } ($post_text =~ /$regex/g);
+
+	if (@words > 20) {
+		@words = @words[0..19];
+	}
+
+	return (length($prefix), @words);
+}
+
+
 1;
 
 # Copyright 2008 Gabor Szabo.
