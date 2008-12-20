@@ -51,5 +51,11 @@ padre:
  brace_highlight: 00FF00
  background: ffffff
  colors:
-  PADRE_BLUE: 003300
-  PADRE_RED:  ff0000
+  PADRE_BLACK:          000000
+  PADRE_BLUE:           003300
+  PADRE_DARK_RED:      8b0000
+  PADRE_DARK_GREEN:    006400
+  PADRE_DARK_MAGENTA:  8b008b
+  PADRE_DARK_ORANGE:   ff8c00
+  PADRE_CRIMSON:        dc143c
+  PADRE_BROWN:          a52a2a

@@ -154,8 +154,15 @@ sub sharefile {
 package Px;
 
 use constant {
-	PADRE_BLUE  => 0,
-	PADRE_RED   => 1,
+    PADRE_BLACK         => 0,
+    PADRE_BLUE          => 1,
+    PADRE_DARK_RED      => 2,
+    PADRE_DARK_GREEN    => 3,
+    PADRE_DARK_MAGENTA  => 4,
+    PADRE_DARK_ORANGE   => 5,
+    PADRE_DIM_GRAY      => 6,
+    PADRE_CRIMSON       => 7,
+    PADRE_BROWN         => 8,
 };
 
 
