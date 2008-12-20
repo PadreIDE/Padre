@@ -5,14 +5,6 @@ use warnings;
 
 $| = 1;
 
-if ($ENV{PARROT_PATH}) {
-	unshift @INC, (
-		"$ENV{PARROT_PATH}/ext/Parrot-Embed/blib/lib",
-		"$ENV{PARROT_PATH}/ext/Parrot-Embed/blib/arch",
-		"$ENV{PARROT_PATH}/ext/Parrot-Embed/_build/lib",
-		);
-}
-
 unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} or grep /^(-h|--help)$/, @ARGV) {
 	exit 0 if fork();
 }
