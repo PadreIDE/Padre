@@ -47,9 +47,15 @@ perl:
 #define SCE_PL_SUB_PROTOTYPE 40
 #define SCE_PL_FORMAT_IDENT 41
 #define SCE_PL_FORMAT 42
-perl:
+padre:
  brace_highlight: 00FF00
  background: 000000
  colors:
-  PADRE_BLUE: 003300
-  PADRE_RED:  ff0000
+  PADRE_BLACK:          ffffff
+  PADRE_BLUE:           00ff00
+  PADRE_RED:            ff0000
+  PADRE_GREEN:          00ff00
+  PADRE_MAGENTA:        ff00ff
+  PADRE_ORANGE:         ffa500
+  PADRE_CRIMSON:        dc143c
+  PADRE_BROWN:          f4a460
