@@ -110,7 +110,8 @@ sub on_f1 {
 			$diagnostics = $err->diagnostics;
 			$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 		}
-		my $dialog = Wx::MessageDialog->new($self->mw, encode('utf8', $diagnostics), "Diagnostics", Wx::wxOK);
+		$diagnostics = $^O eq 'MSWin32' ? $diagnostics : encode('utf8', $diagnostics);
+		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, "Diagnostics", Wx::wxOK);
 		$dialog->ShowModal;
 	}
 }
