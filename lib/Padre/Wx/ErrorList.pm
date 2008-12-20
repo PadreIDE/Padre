@@ -8,6 +8,8 @@ our $VERSION = '0.20';
 require Padre;
 use Padre::Wx;
 use Parse::ErrorString::Perl;
+use Wx::Locale qw(:default);
+use Encode qw(encode);
 
 use base qw(Wx::TreeCtrl);
 
@@ -103,12 +105,12 @@ sub on_f1 {
 		#my $item = $event->GetItem;
 	    my $item = $self->GetSelection;
     	my $err = $self->GetPlData($item);
-		my $diagnostics = "No diagnostics available for this error!";
+		my $diagnostics = gettext("No diagnostics available for this error!");
 		if ($err->diagnostics) {
 			$diagnostics = $err->diagnostics;
 			$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 		}
-		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, "Diagnostics", Wx::wxOK);
+		my $dialog = Wx::MessageDialog->new($self->mw, encode('utf8', $diagnostics), "Diagnostics", Wx::wxOK);
 		$dialog->ShowModal;
 	}
 }
