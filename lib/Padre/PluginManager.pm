@@ -702,7 +702,7 @@ sub test_a_plugin {
 		return;
 	}
 
-	$self->reload_plugins;
+	#$self->reload_plugins;
 }
 
 sub get_menu {
