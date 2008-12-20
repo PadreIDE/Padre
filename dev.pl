@@ -14,7 +14,7 @@ $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
 
 # Due to share functionality, we must have run make
-unless ( -d 'blib' ) {
+unless ( -d "$FindBin::Bin/blib" ) {
 	die "You must now have run make in order to run dev.pl";
 }
 
