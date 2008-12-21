@@ -2161,10 +2161,7 @@ sub on_tab_and_space {
 	my ( $self, $type ) = @_;
 	
 	my $doc = $self->selected_document;
-	if (not $doc) {
-		$self->message( 'No file is open' );
-		return;
-	}
+	return if not $doc;
 
 	my $title = $type eq 'Space_to_Tab' ? Wx::gettext('Space to Tab') : Wx::gettext('Tab to Space');
 	
@@ -2204,10 +2201,7 @@ sub on_delete_ending_space {
 	my ( $self ) = @_;
 	
 	my $doc = $self->selected_document;
-	if (not $doc) {
-		$self->message( 'No file is open' );
-		return;
-	}
+	return if not $doc;
 	
 	my $src = $self->selected_text;
 	my $code = ( $src ) ? $src : $doc->text_get;
