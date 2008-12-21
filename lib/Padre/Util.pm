@@ -121,9 +121,9 @@ sub get_matches {
 			$pair = $matches[-1];
 		}
 	} else {
-		$pair = first {$from < $_->[0]}         @matches;
+		$pair = first {$from < $_->[0]} @matches;
 		if (not $pair and @matches) {
-		    $pair = $matches[0];
+			$pair = $matches[0];
 		}
 	}
 
@@ -154,15 +154,15 @@ sub sharefile {
 package Px;
 
 use constant {
-    PADRE_BLACK         => 0,
-    PADRE_BLUE          => 1,
-    PADRE_RED           => 2,
-    PADRE_GREEN         => 3,
-    PADRE_MAGENTA       => 4,
-    PADRE_ORANGE        => 5,
-    PADRE_DIM_GRAY      => 6,
-    PADRE_CRIMSON       => 7,
-    PADRE_BROWN         => 8,
+	PADRE_BLACK         => 0,
+	PADRE_BLUE          => 1,
+	PADRE_RED           => 2,
+	PADRE_GREEN         => 3,
+	PADRE_MAGENTA       => 4,
+	PADRE_ORANGE        => 5,
+	PADRE_DIM_GRAY      => 6,
+	PADRE_CRIMSON       => 7,
+	PADRE_BROWN         => 8,
 };
 
 
