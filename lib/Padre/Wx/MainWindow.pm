@@ -2166,10 +2166,10 @@ sub on_tab_and_space {
 		return;
 	}
 
-	my $title = $type eq 'Space_to_Tab' ? 'Space to Tab' : 'Tab to Space';
+	my $title = $type eq 'Space_to_Tab' ? Wx::gettext('Space to Tab') : Wx::gettext('Tab to Space');
 	
 	my $dialog = Padre::Wx::History::TextDialog->new(
-		$self, 'How many spaces for each tab:', $title, $type,
+		$self, Wx::gettext('How many spaces for each tab:'), $title, $type,
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
