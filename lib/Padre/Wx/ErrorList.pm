@@ -85,7 +85,7 @@ sub populate {
 	
 	my $data = $self->data;
 	my $parser = $self->parser;
-	my @errors = $parser->parse_string($data);
+	my @errors = defined $data && $data ne '' ? $parser->parse_string($data) : ();
 	$self->{data} = "";
 	Wx::Event::EVT_TREE_KEY_DOWN($self, $self, \&on_f1);
 	
