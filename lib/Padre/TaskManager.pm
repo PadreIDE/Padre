@@ -105,6 +105,9 @@ our $REAP_TIMER;
 # You can instantiate this class only once.
 our $SINGLETON;
 
+# This is set in the worker threads only!
+our $_main_window;
+
 sub new {
 	my $class = shift;
 
@@ -423,6 +426,9 @@ sub worker_loop {
 	my $queue = $taskmanager->task_queue;
 	require Storable;
 
+	# Set the thread-specific main-window pointer
+	$_main_window = $main;
+
 	#warn threads->tid() . " -- Hi, I'm a thread.";
 
 	while (my $task = $queue->dequeue ) {
@@ -445,7 +451,11 @@ sub worker_loop {
 
 		#warn threads->tid() . " -- done with task.";
 	}
+	
+	# clean up
+	undef $_main_window;
 }
+
 
 1;
 
