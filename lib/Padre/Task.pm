@@ -378,6 +378,56 @@ sub _deserialize {
 	undef;
 }
 
+=pod
+
+=head2 post_event
+
+This method allows you to easily post a Wx event to the main
+thread. First argument must be the event ID, second argument
+the data you want to pass to the event handler.
+
+For a complete example, please check the code of
+C<Padre::Task::Example::WxEvent>.
+
+You can set up a new event ID in your Padre::Task subclass
+like this:
+
+  our $FUN_EVENT_TYPE =  : shared = Wx::NewEventType();
+
+Then you have to setup the event handler (for example in the
+C<prepare()> method. This should happen in the main thread!
+
+(TODO: Check the effect of declaring the same
+handler multiple times)
+
+  Wx::Event::EVT_COMMAND(
+      Padre->ide->wx->main_window,
+      -1,
+      $FUN_EVENT,
+      \&update_gui_with_fun
+  );
+  
+  sub update_gui_with_fun {
+      my ($main, $event) = @_; @_=(); # hack to avoid "Scalars leaked"
+      my $data = $event->GetData();
+  }
+  
+After that, you can dispatch events of type C<$FUN_EVENT_TYPE>
+by simply running:
+
+  $self->post_event($FUN_EVENT_TYPE, $data);
+
+=cut
+
+sub post_event {
+	my $self = shift;
+	my $event_id = shift;
+	my $data = shift;
+	my $thread_event = Wx::PlThreadEvent->new( -1, $event_id, $data );
+	Wx::PostEvent($Padre::TaskManager::_main_window, $thread_event);
+	return 1;
+}
+
 
 1;
 
