@@ -2184,9 +2184,9 @@ sub on_tab_and_space {
 	
 	my $to_space = ' ' x $space_num;
 	if ( $type eq 'Space_to_Tab' ) {
-		$code =~ s/$to_space/\t/isg;
+		$code =~ s/^(\s+)/my $s = $1; $s =~ s{$to_space}{\t}g; $s/mge;
 	} else {
-		$code =~ s/\t/$to_space/isg;
+		$code =~ s/^(\s+)/my $s = $1; $s =~ s{\t}{$to_space}g; $s/mge;
 	}
 	
 	if ( $src ) {
