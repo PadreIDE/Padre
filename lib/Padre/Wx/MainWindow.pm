@@ -2323,7 +2323,7 @@ sub on_notebook_page_changed {
 			Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor)
 		} @{ $_[0]->{page_history} };
 		push @{ $_[0]->{page_history} }, $editor;
-		$editor->{Document}->set_indentation_style(); #  update indentation in case auto-update is on; TODO: encasulation?
+		$editor->{Document}->set_indentation_style(); #  update indentation in case auto-update is on; TODO: encapsulation?
 	}
 	$_[0]->refresh;
 }
