@@ -84,14 +84,11 @@ test_requires  'Test::NeedsDisplay'      => '1.05';
 no_index       'directory'               => qw{ t xt eg share inc privinc};
 homepage       'http://padre.perlide.org/';
 bugtracker     'http://padre.perlide.org/';
+repository     'http://svn.perlide.org/padre/trunk/Padre/';
 install_script 'script/padre';
 install_share;
 
-#	meta_merge => {
-#		resources => {
-#			Repository  => 'http://svn.perlide.org/padre',
-#			MailingList => 'http://mail.perlide.org/mailman/listinfo/padre-dev',
-#		},
+#MailingList => 'http://mail.perlide.org/mailman/listinfo/padre-dev',
 
 setup_padre;
 
