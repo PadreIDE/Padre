@@ -30,11 +30,11 @@ sub new {
 	my $config = Padre->ide->config;
 
 	my $self = $class->SUPER::new(
-	    $mw, 
-	    -1, 
-	    Wx::wxDefaultPosition, 
-	    Wx::wxDefaultSize, 
-	    Wx::wxTR_HAS_BUTTONS|Wx::wxTR_HIDE_ROOT|Wx::wxTR_LINES_AT_ROOT
+		$mw, 
+		-1, 
+		Wx::wxDefaultPosition, 
+		Wx::wxDefaultSize, 
+		Wx::wxTR_HAS_BUTTONS|Wx::wxTR_HIDE_ROOT|Wx::wxTR_LINES_AT_ROOT
 	);
 
 	$self->Hide;
@@ -54,10 +54,10 @@ sub DESTROY {
 }
 
 sub enable {
-    my $self = shift;
-    my $index = $self->{mw}->{gui}->{bottompane}->GetPageCount;
-    $self->{mw}->{gui}->{bottompane}->InsertPage( $index, $self, Wx::gettext("Error List"), 0 );
-    $self->Show;
+	my $self = shift;
+	my $index = $self->{mw}->{gui}->{bottompane}->GetPageCount;
+	$self->{mw}->{gui}->{bottompane}->InsertPage( $index, $self, Wx::gettext("Error List"), 0 );
+	$self->Show;
 	$self->{mw}->{gui}->{bottompane}->SetSelection($index);
 	my $lang = $self->config->{diagnostics_lang};
 	if ($lang) {
@@ -67,15 +67,15 @@ sub enable {
 	} else {
 		$self->{parser} = Parse::ErrorString::Perl->new;
 	}
-    $self->{enabled} = 1;
+	$self->{enabled} = 1;
 }
 
 sub disable {
-    my $self = shift;
+	my $self = shift;
 	my $index = $self->{mw}->{gui}->{bottompane}->GetPageIndex($self);
 	$self->Hide;
-    $self->{mw}->{gui}->{bottompane}->RemovePage($index);
-    $self->{enabled} = 0;
+	$self->{mw}->{gui}->{bottompane}->RemovePage($index);
+	$self->{enabled} = 0;
 }
 
 sub populate {
@@ -91,9 +91,9 @@ sub populate {
 	
 	foreach my $err (@errors) {
 		my $message = $err->message . " at " . $err->file_msgpath . " line " . $err->line;
-	    my $err_tree_item = $self->AppendItem( $root, $message, -1, -1, Wx::TreeItemData->new( $err ) );
-	    
-	    Wx::Event::EVT_TREE_ITEM_ACTIVATED($self, $self, \&on_activate);
+		my $err_tree_item = $self->AppendItem( $root, $message, -1, -1, Wx::TreeItemData->new( $err ) );
+		
+		Wx::Event::EVT_TREE_ITEM_ACTIVATED($self, $self, \&on_activate);
 	}
 }
 
@@ -103,8 +103,8 @@ sub on_f1 {
 	my $key_code = $event->GetKeyCode;
 	if ($key_code == Wx::WXK_F1) {
 		#my $item = $event->GetItem;
-	    my $item = $self->GetSelection;
-    	my $err = $self->GetPlData($item);
+		my $item = $self->GetSelection;
+		my $err = $self->GetPlData($item);
 		my $diagnostics = gettext("No diagnostics available for this error!");
 		if ($err->diagnostics) {
 			$diagnostics = $err->diagnostics;
@@ -117,16 +117,16 @@ sub on_f1 {
 }
 
 sub on_activate {
-    my $self = shift;
-    my $event = shift;
-    my $item = $event->GetItem;
-    my $err = $self->GetPlData($item);
-    my $mw = $self->mw;
-    $mw->setup_editor($err->file_abspath);
-    my $editor = $mw->selected_editor;
-    my $line_number = $err->line;
-    $line_number--;
-    $editor->GotoLine($line_number);
+	my $self = shift;
+	my $event = shift;
+	my $item = $event->GetItem;
+	my $err = $self->GetPlData($item);
+	my $mw = $self->mw;
+	$mw->setup_editor($err->file_abspath);
+	my $editor = $mw->selected_editor;
+	my $line_number = $err->line;
+	$line_number--;
+	$editor->GotoLine($line_number);
 }
 
 sub collect_data {
@@ -144,7 +144,7 @@ sub collect_data {
 sub clear {
 	my $self = shift;
 	my $root = $self->root;
-    $self->DeleteChildren($root);
+	$self->DeleteChildren($root);
 }
 
 1;
