@@ -182,7 +182,7 @@ sub colorize {
 		'ArrayIndex'    => 0,
 		'Cast'          => 0,
 		'Magic'         => 0,
-    );
+	);
 
 	my @tokens = $ppi_doc->tokens;
 	$ppi_doc->index_locations;
@@ -360,7 +360,7 @@ sub _get_current_symbol {
 	my $line_end     = $editor->GetLineEndPosition($line);
 	my $line_content = $editor->GetTextRange($line_start, $line_end);
 	my $col          = $cursor_col;
-        
+
 	# find start of symbol TODO: This could be more robust, no?
 	while (1) {
 		if ($col == 0 or substr($line_content, $col, 1) =~ /^[^\w:\']$/) {
@@ -415,7 +415,7 @@ sub lexical_variable_replacement {
 	Padre::Task::PPI::LexicalReplaceVariable->new(
 		document => $self,
 		location => $location,
-                replacement => $replacement,
+		replacement => $replacement,
 	)->schedule;
 
 	return ();

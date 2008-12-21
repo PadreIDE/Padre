@@ -107,7 +107,7 @@ our $SINGLETON;
 
 sub new {
 	my $class = shift;
-        
+
 	return $SINGLETON if defined $SINGLETON;
 
 	my $self = $SINGLETON = bless {
@@ -438,8 +438,8 @@ sub worker_loop {
 		$process->run();
 
 		# FREEZE THE PROCESS AND PASS IT BACK
-                undef $task;
-                $process->serialize( \$task );
+		undef $task;
+		$process->serialize( \$task );
 		my $thread_event = Wx::PlThreadEvent->new( -1, $TASK_DONE_EVENT, $task );
 		Wx::PostEvent($main, $thread_event);
 

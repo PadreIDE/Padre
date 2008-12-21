@@ -82,7 +82,7 @@ sub dialog {
 		title           => gettext("Module Start"),
 		layout          => $layout,
 		width           => [100, 200],
-                bottom => 20,
+		bottom          => 20,
 	);
 
 	$dialog->{_widgets_}{_ok_}->SetDefault;
@@ -130,12 +130,13 @@ sub ok_clicked {
 	my $pwd = Cwd::cwd();
 	chdir $data->{_directory_};
 	require Module::Starter::App;
-	@ARGV = ('--module',   $data->{_module_name_},
-	         '--author',   $data->{_author_name_},
-	         '--email',    $data->{_email_},
-	         '--builder',  $data->{_builder_choice_},
-	         '--license',  $data->{_license_choice_},
-	        );
+	@ARGV = (
+		'--module',   $data->{_module_name_},
+		'--author',   $data->{_author_name_},
+		'--email',    $data->{_email_},
+		'--builder',  $data->{_builder_choice_},
+		'--license',  $data->{_license_choice_},
+	);
 	Module::Starter::App->run;
 	@ARGV = ();
 	chdir $pwd;

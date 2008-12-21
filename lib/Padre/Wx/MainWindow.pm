@@ -59,7 +59,7 @@ use Class::XSAccessor
 		manager        => 'manager',
 		no_refresh     => '_no_refresh',
 		syntax_checker => 'syntax_checker',
-		errorlist	   => 'errorlist',
+		errorlist      => 'errorlist',
 	};
 
 sub new {
@@ -91,12 +91,12 @@ sub new {
 		-1,
 		$title,
 		[
-		    $config->{host}->{main_left},
-		    $config->{host}->{main_top},
+			$config->{host}->{main_left},
+			$config->{host}->{main_top},
 		],
 		[
-		    $config->{host}->{main_width},
-		    $config->{host}->{main_height},
+			$config->{host}->{main_width},
+			$config->{host}->{main_height},
 		],
 		$wx_frame_style,
 	);

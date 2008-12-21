@@ -135,7 +135,7 @@ sub _create_menu_bar {
 	Wx::Event::EVT_MENU(  $self, $file->Append( Wx::wxID_OPEN, ''),  \&on_open);
 	Wx::Event::EVT_MENU(  $self, $file->Append( Wx::wxID_EXIT, ''),  sub { $self->Close } );
 	Wx::Event::EVT_MENU(  $self, $edit->Append( Wx::wxID_FIND, ''),  \&on_find);
-   
+
 	Wx::Event::EVT_CLOSE( $self,             \&on_close);
 
 	return;
@@ -148,7 +148,7 @@ sub on_find {
 	my $dialog = Wx::TextEntryDialog->new( $self, "", "Type in search term", $search_term );
 	if ($dialog->ShowModal == Wx::wxID_CANCEL) {
 		return;
-	}   
+	}
 	$search_term = $dialog->GetValue;
 	$dialog->Destroy;
 	return if not defined $search_term or $search_term eq '';

@@ -69,7 +69,7 @@ sub new {
 	if (not defined $self->{text}) {
 		$self->{text} = Padre::Documents->current->text_get();
 	}
-        return $self;
+	return $self;
 }
 
 sub run {

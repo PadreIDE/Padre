@@ -681,7 +681,7 @@ sub stats {
 		$chars_with_space = $editor->GetTextLength();
 		$is_readonly = $editor->GetReadOnly();
 	}
-    
+
 	$words++ while ( $code =~ /\b\w+\b/g );
 	$chars_without_space++ while ( $code =~ /\S/g );
 
