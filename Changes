@@ -1,6 +1,19 @@
 Changes for Padre.
 
-    improved comment/uncomment_lines for HTML/XML (FAYLAND)
+    Various Perl6 and Parrot related snippets of code and
+        functionality have been moved to the respective
+        plugins (SZABGAB and others)
+    Extended preference dialog with tabs (HJANSEN)
+    Syntax checker now running in the background (SMUELLER)
+    Background Tasks can now prevent execution in the prepare
+        hook (SMUELLER)
+    Added interface for passing events from worker threads to the
+        main thread (SMUELLER)
+    Added simple example of a Task that sends events to the
+        main thread (SMUELLER)
+    Tab/Space conversion only converts at the start of each
+        line now (SMUELLER)
+    Improved comment/uncomment_lines for HTML/XML (FAYLAND)
     Rewrote Padre::Wx::Dialog::PluginManager to interact directly with
         Padre::PluginManager (and not talk to Padre::Config) (ADAMK)
     Migrated Padre::DB to use ORLite::Migrate instead of the
@@ -8,10 +21,10 @@ Changes for Padre.
     Allow several coloring styles, add style called 'night' (SZABGAB)
     Right-click menu in margin column for code folding now
         allows to fold/unfold all foldable areas (HJANSEN)
-    Error list window for runntime errors and diagnostics (PSHANGOV)
+    Error list window for run-time errors and diagnostics (PSHANGOV)
     Arabic translation added (AZAWAWI)
     Italian translation updated (SBLANDIN)
-    improved Ack (FAYLAND)
+    Improved Ack (FAYLAND)
     Allow selection of editor font and current line background 
         color (HJANSEN)
 
