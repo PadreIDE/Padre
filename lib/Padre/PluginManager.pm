@@ -184,10 +184,17 @@ sub load_plugins {
 	$self->_load_plugins_from_par;
 	$self->_refresh_plugin_menu;
 	if ( my @failed = $self->failed ) {
-		$self->parent->wx->main_window->error(
-			Wx::gettext("Failed to load the following plugin(s):\n")
-			. join "\n", @failed
-		) unless $ENV{HARNESS_ACTIVE};
+		# Until such time as we can show an error message
+		# in a smarter way, this gets annoying.
+		# Every time you start the editor, we tell you what
+		# we DIDN'T do...
+		# Turn this back on once we can track these over time
+		# and only report on plugins that USED to work but now
+		# have started to fail.
+		#$self->parent->wx->main_window->error(
+		#	Wx::gettext("Failed to load the following plugin(s):\n")
+		#	. join "\n", @failed
+		#) unless $ENV{HARNESS_ACTIVE};
 		return;
 	}
 	return;
