@@ -245,7 +245,7 @@ sub _make_worker_thread {
 
 	@_=(); # avoid "Scalars leaked"
 	my $worker = threads->create(
-	  {'exit' => 'thread_only'}, \&worker_loop, $main, $self
+	  {'exit' => 'thread_only'}, \&worker_loop, $main, $self->task_queue
 	);
 	push @{$self->{workers}}, $worker;
 }
@@ -422,8 +422,7 @@ sub on_task_done_event {
 ##########################
 # Worker thread main loop
 sub worker_loop {
-	my ($main, $taskmanager) = @_;  @_ = (); # hack to avoid "Scalars leaked"
-	my $queue = $taskmanager->task_queue;
+	my ($main, $queue) = @_;  @_ = (); # hack to avoid "Scalars leaked"
 	require Storable;
 
 	# Set the thread-specific main-window pointer
