@@ -197,7 +197,7 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue( $string );
 		$self->task_queue->enqueue( "STOP" );
-		worker_loop( Padre->ide->wx->main_window, $self );
+		worker_loop( Padre->ide->wx->main_window, $self->task_queue );
 	}
 
 	return 1;
