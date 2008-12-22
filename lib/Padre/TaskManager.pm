@@ -467,9 +467,6 @@ some consideration and probably, the schedule() call needs to block once
 the queue is "full". However, it's not clear how this can work if the
 Wx MainLoop isn't reached for processing finish events.
 
-There needs to be a way to flag data in the task that doesn't have to be
-passed to the worker but is necessary in the finish routine.
-
 =head1 SEE ALSO
 
 The base class of all "work units" is L<Padre::Task>.
