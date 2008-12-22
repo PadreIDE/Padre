@@ -56,7 +56,7 @@ sub get_layout_for_behaviour {
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Preferred language for error diagnostics:')],
-			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->{diagnostics_lang}],
+			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->{diagnostics_lang}||''],
 		],
 	];
 }
