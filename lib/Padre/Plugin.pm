@@ -266,6 +266,7 @@ The method is passed a wx object that should be used as the wx parent.
 
   sub menu_plugins_simple {
       'My Plugin' => [
+          '---' => undef,    # menu separator
           About => sub { $self->show_about },
           Deep  => [
               'Do Something' => sub { $self->do_something },
@@ -347,8 +348,12 @@ sub _menu_plugins_submenu {
 			my $submenu = $self->_menu_plugins_submenu( $win, $value );
 			$menu->Append( -1, $label, $submenu );
 		} else {
-			Wx::Event::EVT_MENU( $win, $menu->Append( -1, $label), $value );
-		}
+            if($label =~ /^---/) {
+                $menu->AppendSeparator;
+            } else {
+                Wx::Event::EVT_MENU( $win, $menu->Append( -1, $label), $value );
+            }
+        }
 	}
 	return $menu;
 }
