@@ -1070,7 +1070,7 @@ French - Jerome Quelin (JQUELIN)
 
 German - Heiko Jansen (HJANSEN)
 
-Hebrew - Omer Zak
+Hebrew - Omer Zak and Shlomi Fish (SHLOMIF)
 
 Hungarian - Gyorgy Pasztor (GYU)
 

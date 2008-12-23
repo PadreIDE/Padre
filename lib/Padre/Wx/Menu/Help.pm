@@ -126,6 +126,7 @@ sub about {
 	$about->AddTranslator("German - Heiko Jansen");
 	$about->AddTranslator("French - Jerome Quelin");
 	$about->AddTranslator("Hebrew - Omer Zak");
+	$about->AddTranslator("Hebrew - Shlomi Fish");
 	$about->AddTranslator("Hungarian - Gyorgy Pasztor");
 	$about->AddTranslator("Italian - Simone Blandino");
 	$about->AddTranslator("Korean - Keedi Kim");
