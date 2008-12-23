@@ -2,13 +2,20 @@
 
 use strict;
 use warnings;
-use Test::NeedsDisplay;
+#use Test::NeedsDisplay;
 
 my $CR   = "\015";
 my $LF   = "\012";
 my $CRLF = "\015\012";
 
 use Test::More;
+BEGIN {
+	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre::Util 'newline_type';

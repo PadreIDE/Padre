@@ -4,6 +4,13 @@ use warnings;
 
 use Data::Dumper;
 use Test::More;
+BEGIN {
+	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
 use Test::NoWarnings;
 my $tests;
 

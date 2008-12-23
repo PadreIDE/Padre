@@ -1,9 +1,9 @@
 use strict;
 use warnings;
-use Test::NeedsDisplay;
+#use Test::NeedsDisplay;
 
 use Test::More;
-plan skip_all => 'Needs DISPLAY' if
+plan skip_all => 'Needs DISPLAY' if not $ENV{DISPLAY} and not $^O eq 'MSWin32';
 plan skip_all => 'Needs Test::Compile 0.08 but that does not work on Windows' if $^O eq 'MSWin32'; # the same as File::Spec uses
 plan skip_all => 'Needs Test::Compile 0.08' if not eval "use Test::Compile 0.08; 1"; ## no critic
 diag "Test::Compile $Test::Compile::VERSION";

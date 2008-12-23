@@ -6,6 +6,14 @@ use warnings;
 use Test::More;
 
 BEGIN {
+	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
+
+BEGIN {
 	if ( $^O eq 'MSWin32' ) {
 		plan skip_all => 'Windows currently has problems with Unicode files';
 		exit(0);
@@ -15,7 +23,7 @@ BEGIN {
 use File::Basename        qw(basename);
 use File::Copy            qw(copy);
 use File::Spec::Functions qw(catfile);
-use Test::NeedsDisplay;
+#use Test::NeedsDisplay;
 use Test::NoWarnings;
 use Test::Builder;
 use t::lib::Padre;

@@ -7,7 +7,16 @@ use FindBin      qw($Bin);
 use File::Spec   ();
 use Data::Dumper qw(Dumper);
 
-use Test::More tests => 25;
+use Test::More;
+BEGIN {
+	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
+plan tests => 25;
+
 use Test::NoWarnings;
 
 use t::lib::Padre;
