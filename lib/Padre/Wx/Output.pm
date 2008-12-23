@@ -36,6 +36,14 @@ sub new {
 	return $self;
 }
 
+# from Sean Healy on wxPerl mailing list
+use Encode;
+sub AppendText {
+	my ($self, $text) = @_;
+	my $string = decode("utf8", $text);
+	$self->SUPER::AppendText($string);
+}
+
 sub select {
 	my $self = shift;
 
