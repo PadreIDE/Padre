@@ -57,8 +57,8 @@ sub _check_syntax {
 	SCOPE: {
 		require File::Temp;
 		my $file = File::Temp->new;
-		use Encode;
-		$file->print( encode("utf8", $self->{text}) );
+		binmode( $file, ":utf8" );
+		$file->print( $self->{text} );
 		$file->close;
 		my @cmd = (
 			Padre->perl_interpreter,
