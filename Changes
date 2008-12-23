@@ -1,5 +1,7 @@
 Changes for Padre.
 
+v0.22 2008.12.23
+
     Various Perl6 and Parrot related snippets of code and
         functionality have been moved to the respective
         plugins (SZABGAB and others)
@@ -104,8 +106,7 @@ v0.20 2008.12.02
     Hungarian updates. (GYU)
     Fix the "cannot save new file bug". (TEEJAY)
     Save files under Mac. #160 (ChrisDolan)
-    Restor inner window layout through restart. (HJANSEN)
-
+    Restore inner window layout through restart. (HJANSEN)
 
 v0.19 2008.11.28
 
