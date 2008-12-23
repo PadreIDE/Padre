@@ -28,6 +28,7 @@ Changes for Padre.
     Allow selection of editor font and current line background 
         color (HJANSEN)
     Hebrew translation updated (SHLOMIF)
+    Upped Encode requirement to 2.26, fixes some fatal errors with unicode
 
 v0.21 2008.12.14
 
