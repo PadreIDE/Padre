@@ -3,7 +3,7 @@ package Padre::Wx::ErrorList;
 use strict;
 use warnings;
 
-our $VERSION = '0.20';
+our $VERSION = '0.22';
 
 require Padre;
 use Padre::Wx;

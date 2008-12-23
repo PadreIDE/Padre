@@ -28,7 +28,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 our @ISA     = 'Wx::App';
 
 use Class::XSAccessor

@@ -44,7 +44,7 @@ use warnings;
 use Scalar::Util ();
 use Padre::Wx    ();
 
-our $VERSION    = '0.21';
+our $VERSION    = '0.22';
 our $COMPATIBLE = '0.18';
 
 
