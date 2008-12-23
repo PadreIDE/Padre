@@ -2,6 +2,15 @@ use strict;
 use lib 'privinc';
 use inc::Module::Install;
 
+# workaround for the fact that Module::Install loads the modules
+# into memory and when Test::NoWarnings is loaded it will hide
+# the warnings generated from that point.
+eval  {
+	require Test::NoWarnings;
+	$SIG{__WARN__} = 'DEFAULT';
+};
+
+
 use Config;
 unless ( $Config{usethreads} ) {
 	warn "Padre requires a perl built using threads\n";
