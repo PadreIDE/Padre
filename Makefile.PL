@@ -80,9 +80,14 @@ requires       'threads'                 => '1.71';
 requires       'threads::shared'         => '1.26';
 requires       'Thread::Queue'           => '2.11';
 requires       'YAML::Tiny'              => '1.32';
-requires       'Wx'                      => '0.89';
-requires       'Wx::Perl::Dialog'        => '0.04';
-requires       'Wx::Perl::ProcessStream' => '0.11';
+
+# See #170
+if (win32 or $ENV{DISPLAY}) {
+	requires       'Wx'                      => '0.89';
+	requires       'Wx::Perl::Dialog'        => '0.04';
+	requires       'Wx::Perl::ProcessStream' => '0.11';
+}
+
 requires       'Parse::ErrorString::Perl'=> '0.06';
 test_requires  'Test::Compile'           => '0.08' unless win32;
 test_requires  'Test::More'              => '0.47';
