@@ -629,20 +629,11 @@ sub reload_plugin {
 	return 1;
 }
 
-# recreate the Plugins menu
-### TODO - Reimplement this in Padre::Wx::Menu::Plugins
+# refresh the Plugins menu
 sub _refresh_plugin_menu {
 	my $self = shift;
-	my $main = $self->parent->wx->main_window;
-
-	# Regenerate the menu
-	my $menu    = $main->menu;
-	my $submenu = Padre::Wx::Menu::Plugins->new($main);
-	my $place   = $menu->{wx}->FindMenu( Wx::gettext("Pl&ugins") );
-
-	# Update the menu
-	$menu->{wx}->Replace( $place, $submenu->wx, Wx::gettext("Pl&ugins") );
-	$menu->refresh;
+	
+        $self->parent->wx->main_window->menu->plugins->refresh;
 }
 
 =pod
