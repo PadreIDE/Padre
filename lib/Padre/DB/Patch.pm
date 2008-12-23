@@ -3,12 +3,14 @@ package Padre::DB::Patch;
 # A convenience module for writing migration patches
 
 use strict;
+
+our $VERSION = '0.21';
+
 use DBI      ();
 use Exporter ();
 
 use vars qw{$VERSION @ISA @EXPORT $FILE};
 BEGIN {
-	$VERSION = '0.21';
 	@ISA     = 'Exporter';
 	@EXPORT  = qw{
 		file
