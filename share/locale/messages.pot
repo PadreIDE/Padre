@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-16 21:01+0200\n"
+"POT-Creation-Date: 2008-12-16 21:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,30 +71,6 @@ msgstr ""
 msgid "Dutch"
 msgstr ""
 
-#: lib/Padre/Wx/Project.pm:25 lib/Padre/Wx/Project.pm:145
-msgid "Not implemented yet"
-msgstr ""
-
-#: lib/Padre/Wx/Project.pm:26 lib/Padre/Wx/Project.pm:145
-msgid "Not yet available"
-msgstr ""
-
-#: lib/Padre/Wx/Project.pm:46
-msgid "Select Project"
-msgstr ""
-
-#: lib/Padre/Wx/Project.pm:59
-msgid "Select Project Name or type in new one"
-msgstr ""
-
-#: lib/Padre/Wx/Project.pm:65
-msgid "Select Directory"
-msgstr ""
-
-#: lib/Padre/Wx/Project.pm:129
-msgid "Select Project Directory"
-msgstr ""
-
 #: lib/Padre/Wx/Menu.pm:74 lib/Padre/Wx/Menu/File.pm:258
 #: lib/Padre/Wx/Menu/File.pm:262
 msgid "&File"
@@ -122,6 +98,30 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu.pm:89
 msgid "E&xperimental"
+msgstr ""
+
+#: lib/Padre/Wx/Project.pm:25 lib/Padre/Wx/Project.pm:145
+msgid "Not implemented yet"
+msgstr ""
+
+#: lib/Padre/Wx/Project.pm:26 lib/Padre/Wx/Project.pm:145
+msgid "Not yet available"
+msgstr ""
+
+#: lib/Padre/Wx/Project.pm:46
+msgid "Select Project"
+msgstr ""
+
+#: lib/Padre/Wx/Project.pm:59
+msgid "Select Project Name or type in new one"
+msgstr ""
+
+#: lib/Padre/Wx/Project.pm:65
+msgid "Select Directory"
+msgstr ""
+
+#: lib/Padre/Wx/Project.pm:129
+msgid "Select Project Directory"
 msgstr ""
 
 #: lib/Padre/Wx/SyntaxChecker.pm:45 lib/Padre/Task/SyntaxChecker.pm:183
@@ -424,23 +424,6 @@ msgstr ""
 msgid "Select all"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:22
-#: lib/Padre/Wx/Dialog/Preferences.pm:85 lib/Padre/Wx/Menu/Edit.pm:351
-msgid "Preferences"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:45 lib/Padre/Wx/Menu/Plugins.pm:31
-msgid "Plugin Manager"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:101
-msgid "Disable"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/PluginManager.pm:107
-msgid "Enable"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/Search.pm:128 lib/Padre/Wx/Dialog/Find.pm:22
 msgid "Find:"
 msgstr ""
@@ -512,6 +495,23 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:108
 #, perl-format
 msgid "%s line %s"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:22
+#: lib/Padre/Wx/Dialog/Preferences.pm:85 lib/Padre/Wx/Menu/Edit.pm:351
+msgid "Preferences"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:45 lib/Padre/Wx/Menu/Plugins.pm:31
+msgid "Plugin Manager"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:101
+msgid "Disable"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:107
+msgid "Enable"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Find.pm:27
@@ -648,51 +648,6 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Plugins.pm:40
-msgid "Edit My Plugin"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Plugins.pm:47
-msgid "Could not find the Padre::Plugin::My plugin"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Plugins.pm:54
-msgid "Reload My Plugin"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Plugins.pm:60 lib/Padre/Wx/Menu/Plugins.pm:63
-#: lib/Padre/Wx/Menu/Plugins.pm:64
-msgid "Reset My Plugin"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Plugins.pm:82
-msgid "Reload All Plugins"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Plugins.pm:88
-msgid "Test A Plugin From Local Dir"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Plugins.pm:95
-msgid "Plugin Tools"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Help.pm:41
-msgid "Context Help\tCtrl-Shift-H"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Help.pm:57
-msgid "Visit the PerlMonks"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Help.pm:66
-msgid "&About"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Help.pm:104
-msgid "Copyright 2008 Gabor Szabo"
-msgstr ""
-
 #: lib/Padre/Wx/Menu/Run.pm:29
 msgid "Run Script\tF5"
 msgstr ""
@@ -703,6 +658,118 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Run.pm:45
 msgid "&Stop"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:31
+msgid "&Undo"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:42
+msgid "&Redo"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:60
+msgid "Select"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:76
+msgid "Mark selection start\tCtrl-["
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:86
+msgid "Mark selection end\tCtrl-]"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:96
+msgid "Clear selection marks"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:108
+msgid "&Copy\tCtrl-C"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:119
+msgid "Cu&t\tCtrl-X"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:130
+msgid "&Paste\tCtrl-V"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:150
+msgid "&Find\tCtrl-F"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:159
+msgid "Find Next\tF3"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:168
+msgid "Find Previous\tShift-F3"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:177
+msgid "Ac&k"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:183
+msgid "&Goto\tCtrl-G"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:191
+msgid "&AutoComp\tCtrl-P"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:199
+msgid "&Brace matching\tCtrl-1"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:207
+msgid "&Join lines\tCtrl-J"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:215
+msgid "Snippets\tCtrl-Shift-A"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:255
+msgid "Tabs and Spaces"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:260
+msgid "Tabs to Spaces..."
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:268
+msgid "Spaces to Tabs..."
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:276
+msgid "Delete Trailing Spaces"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:284
+msgid "Delete Leading Spaces"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:298
+msgid "Upper/Lower Case"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:303
+msgid "Upper All\tCtrl-Shift-U"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:312
+msgid "Lower All\tCtrl-U"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:327
+msgid "Diff"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:335
+msgid "Insert From File..."
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Window.pm:51
@@ -857,22 +924,6 @@ msgstr ""
 msgid "Find Previous\tShift-F4"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:31
-msgid "Find Unmatched Brace"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Perl.pm:40
-msgid "Find variable declaration"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Perl.pm:50
-msgid "Lexically replace variable"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Perl.pm:56 lib/Padre/Wx/Menu/Perl.pm:57
-msgid "Replacement"
-msgstr ""
-
 #: lib/Padre/Wx/Menu/File.pm:36
 msgid "&New\tCtrl-N"
 msgstr ""
@@ -961,121 +1012,78 @@ msgstr ""
 msgid "&Quit\tCtrl-Q"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:31
-msgid "&Undo"
+#: lib/Padre/Wx/Menu/Plugins.pm:40
+msgid "Edit My Plugin"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:42
-msgid "&Redo"
+#: lib/Padre/Wx/Menu/Plugins.pm:47
+msgid "Could not find the Padre::Plugin::My plugin"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:60
-msgid "Select"
+#: lib/Padre/Wx/Menu/Plugins.pm:54
+msgid "Reload My Plugin"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:76
-msgid "Mark selection start\tCtrl-["
+#: lib/Padre/Wx/Menu/Plugins.pm:60 lib/Padre/Wx/Menu/Plugins.pm:63
+#: lib/Padre/Wx/Menu/Plugins.pm:64
+msgid "Reset My Plugin"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:86
-msgid "Mark selection end\tCtrl-]"
+#: lib/Padre/Wx/Menu/Plugins.pm:82
+msgid "Reload All Plugins"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:96
-msgid "Clear selection marks"
+#: lib/Padre/Wx/Menu/Plugins.pm:88
+msgid "Test A Plugin From Local Dir"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:108
-msgid "&Copy\tCtrl-C"
+#: lib/Padre/Wx/Menu/Plugins.pm:95
+msgid "Plugin Tools"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:119
-msgid "Cu&t\tCtrl-X"
+#: lib/Padre/Wx/Menu/Perl.pm:31
+msgid "Find Unmatched Brace"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:130
-msgid "&Paste\tCtrl-V"
+#: lib/Padre/Wx/Menu/Perl.pm:40
+msgid "Find variable declaration"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:150
-msgid "&Find\tCtrl-F"
+#: lib/Padre/Wx/Menu/Perl.pm:50
+msgid "Lexically replace variable"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:159
-msgid "Find Next\tF3"
+#: lib/Padre/Wx/Menu/Perl.pm:56 lib/Padre/Wx/Menu/Perl.pm:57
+msgid "Replacement"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:168
-msgid "Find Previous\tShift-F3"
+#: lib/Padre/Wx/Menu/Help.pm:41
+msgid "Context Help\tCtrl-Shift-H"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:177
-msgid "Ac&k"
+#: lib/Padre/Wx/Menu/Help.pm:57
+msgid "Visit the PerlMonks"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:183
-msgid "&Goto\tCtrl-G"
+#: lib/Padre/Wx/Menu/Help.pm:66
+msgid "&About"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:191
-msgid "&AutoComp\tCtrl-P"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:199
-msgid "&Brace matching\tCtrl-1"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:207
-msgid "&Join lines\tCtrl-J"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:215
-msgid "Snippets\tCtrl-Shift-A"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:255
-msgid "Tabs and Spaces"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:260
-msgid "Tabs to Spaces..."
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:268
-msgid "Spaces to Tabs..."
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:276
-msgid "Delete Trailing Spaces"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:284
-msgid "Delete Leading Spaces"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:298
-msgid "Upper/Lower Case"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:303
-msgid "Upper All\tCtrl-Shift-U"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:312
-msgid "Lower All\tCtrl-U"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:327
-msgid "Diff"
-msgstr ""
-
-#: lib/Padre/Wx/Menu/Edit.pm:335
-msgid "Insert From File..."
+#: lib/Padre/Wx/Menu/Help.pm:104
+msgid "Copyright 2008 Gabor Szabo"
 msgstr ""
 
 #: lib/Padre/Task/SyntaxChecker.pm:171 lib/Padre/Task/SyntaxChecker.pm:186
 #: lib/Padre/Task/SyntaxChecker.pm:187
 msgid "Warning"
+msgstr ""
+
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:77
+msgid "All braces appear to be matched"
+msgstr ""
+
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:78
+msgid "Check Complete"
 msgstr ""
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:87
@@ -1097,14 +1105,6 @@ msgstr ""
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:97
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:147
 msgid "Check Canceled"
-msgstr ""
-
-#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:77
-msgid "All braces appear to be matched"
-msgstr ""
-
-#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:78
-msgid "Check Complete"
 msgstr ""
 
 #: lib/Padre/Document/Perl.pm:385 lib/Padre/Document/Perl.pm:408
