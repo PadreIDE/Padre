@@ -1038,6 +1038,7 @@ Part of the code was copied from his Wx::Demo application.
 The developers of Padre in alphabetical order:
 
 Aaron Trevena (TEEJAY),
+Ahmad Zawawi (AZAWAWI),
 Adam Kennedy (ADAMK),
 Brian Cassidy (BRICAS),
 Chris Dolan (CHRISDOLAN),
