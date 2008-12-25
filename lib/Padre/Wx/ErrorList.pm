@@ -20,8 +20,9 @@ use Class::XSAccessor
 		data     => 'data',
 		enabled  => 'enabled',
 		index    => 'index',
-		parser   => 'parser',
 		config   => 'config',
+		lang     => 'lang',
+		parser   => 'parser',
 	};
 
 sub new {
@@ -41,6 +42,9 @@ sub new {
 
 	my $root = $self->AddRoot( 'Root', -1, -1, Wx::TreeItemData->new( 'Data' ) );
 	$self->{root} = $root;	
+
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED($self, $self, \&on_activate);
+	Wx::Event::EVT_TREE_KEY_DOWN($self, $self, \&on_f1);
 	
 	$self->{mw} = $mw;
 	$self->{config} = $config;
@@ -59,14 +63,6 @@ sub enable {
 	$self->{mw}->{gui}->{bottompane}->InsertPage( $index, $self, Wx::gettext("Error List"), 0 );
 	$self->Show;
 	$self->{mw}->{gui}->{bottompane}->SetSelection($index);
-	my $lang = $self->config->{diagnostics_lang};
-	if ($lang) {
-		$lang =~ s/^\s*//;
-		$lang =~ s/\s*$//;
-		$self->{parser} = Parse::ErrorString::Perl->new(lang => $lang);
-	} else {
-		$self->{parser} = Parse::ErrorString::Perl->new;
-	}
 	$self->{enabled} = 1;
 }
 
@@ -81,20 +77,26 @@ sub disable {
 sub populate {
 	my $self = shift;
 	return unless $self->enabled;
-	my $root = $self->root;
 	
+	my $cur_lang = $self->config->{diagnostics_lang};
+	$cur_lang =~ s/^\s*//;
+	$cur_lang =~ s/\s*$//;
+	my $old_lang = $self->lang;
+	$self->{lang} = $cur_lang;
+
 	my $data = $self->data;
-	my $parser = $self->parser;
-	my @errors = defined $data && $data ne '' ? $parser->parse_string($data) : ();
 	$self->{data} = "";
-	Wx::Event::EVT_TREE_KEY_DOWN($self, $self, \&on_f1);
+	return unless $data;
 	
-	foreach my $err (@errors) {
-		my $message = $err->message . " at " . $err->file_msgpath . " line " . $err->line;
-		my $err_tree_item = $self->AppendItem( $root, $message, -1, -1, Wx::TreeItemData->new( $err ) );
-		
-		Wx::Event::EVT_TREE_ITEM_ACTIVATED($self, $self, \&on_activate);
-	}
+
+	my $parser_task = Padre::Task::ErrorParser->new(
+		parser    => $self->parser,
+		cur_lang  => $cur_lang,
+		old_lang  => $old_lang,
+		data      => $data,
+	);
+	
+	$parser_task->schedule;
 }
 
 sub on_f1 {
@@ -104,14 +106,20 @@ sub on_f1 {
 	if ($key_code == Wx::WXK_F1) {
 		#my $item = $event->GetItem;
 		my $item = $self->GetSelection;
+		return unless $item;
 		my $err = $self->GetPlData($item);
+		return if $err->isa('Parse::ErrorString::Perl::StackItem');
 		my $diagnostics = gettext("No diagnostics available for this error!");
 		if ($err->diagnostics) {
 			$diagnostics = $err->diagnostics;
 			$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 		}
 		$diagnostics = $^O eq 'MSWin32' ? $diagnostics : encode('utf8', $diagnostics);
-		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, "Diagnostics", Wx::wxOK);
+		my $dialog_title = gettext("Diagnostics");
+		if ($err->type_description) {
+			$dialog_title .= (": " . gettext($err->type_description));
+		}
+		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, $dialog_title, Wx::wxOK);
 		$dialog->ShowModal;
 	}
 }
@@ -120,8 +128,10 @@ sub on_activate {
 	my $self = shift;
 	my $event = shift;
 	my $item = $event->GetItem;
+	return unless $item;
 	my $err = $self->GetPlData($item);
 	my $mw = $self->mw;
+	return if $err->file eq 'eval';
 	$mw->setup_editor($err->file_abspath);
 	my $editor = $mw->selected_editor;
 	my $line_number = $err->line;
@@ -145,6 +155,71 @@ sub clear {
 	my $self = shift;
 	my $root = $self->root;
 	$self->DeleteChildren($root);
+}
+
+package Padre::Task::ErrorParser;
+
+use base 'Padre::Task';
+
+use Class::XSAccessor
+	getters => {
+		parser       => 'parser',
+		old_lang     => 'old_lang',
+		cur_lang     => 'cur_lang',
+		data         => 'data',
+	};
+
+sub run {
+	my $self = shift;
+	unless ($self->parser and ( (!$self->cur_lang and !$self->old_lang) or ($self->cur_lang eq $self->old_lang) )) {
+		if ($self->cur_lang) {
+			$self->{parser} = Parse::ErrorString::Perl->new(lang => $self->cur_lang);
+		} else {
+			$self->{parser} = Parse::ErrorString::Perl->new;
+		}
+	}
+    return 1;
+}
+
+sub finish {
+	my $self = shift;
+    my $mw = shift;
+
+	my $errorlist = $mw->errorlist;
+	
+	my $data = $self->data;
+	my $parser = $self->parser;
+	$errorlist->{parser} = $parser;
+
+	my @errors = defined $data && $data ne '' ? $parser->parse_string($data) : ();
+	
+	foreach my $err (@errors) {
+		my $message = $err->message . " at " . $err->file . " line " . $err->line;
+		#$message = encode('utf8', $message);
+		if ($err->near) {
+			my $near = $err->near;
+			# some day when we have unicode in wx ...
+			#$near =~ s/\n/\x{c2b6}/g;
+			$near =~ s/\n/\\n/g;
+			$near =~ s/\r//g;
+			$message .= ", near \"$near\"";
+		} elsif ($err->at) {
+			my $at = $err->at;
+			$message .= ", at $at";
+		}
+		my $err_tree_item = $errorlist->AppendItem( $errorlist->root, $message, -1, -1, Wx::TreeItemData->new( $err ) );
+		
+		if ($err->stack) {
+			foreach my $stack_item ($err->stack) {
+				my $stack_message = $stack_item->sub . 
+					" called at " . $stack_item->file . 
+					" line " . $stack_item->line;
+				$errorlist->AppendItem( $err_tree_item, $stack_message, -1, -1, Wx::TreeItemData->new( $stack_item ) );
+			}
+		}
+	}
+	
+	return 1;
 }
 
 1;

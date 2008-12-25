@@ -88,7 +88,7 @@ if (win32 or $ENV{DISPLAY}) {
 	requires       'Wx::Perl::ProcessStream' => '0.11';
 }
 
-requires       'Parse::ErrorString::Perl'=> '0.06';
+requires       'Parse::ErrorString::Perl'=> '0.08';
 test_requires  'Test::Compile'           => '0.08' unless win32;
 test_requires  'Test::More'              => '0.47';
 test_requires  'Test::Script'            => '1.03';
