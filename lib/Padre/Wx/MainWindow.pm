@@ -1163,7 +1163,7 @@ sub setup_editor {
 		filename => $file,
 	);
 	if ($doc->errstr) {
-		warn $doc->errstr;
+		warn $doc->errstr . " when trying to open '$file'";
 		return;
 	}
 
