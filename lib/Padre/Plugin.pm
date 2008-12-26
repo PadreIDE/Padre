@@ -344,15 +344,21 @@ sub _menu_plugins_submenu {
 	while ( @$items ) {
 		my $label = shift @$items;
 		my $value = shift @$items;
-		if ( ref $value eq 'ARRAY' ) {
+		if (not defined $value) {
+			if ($label =~ /^---/) {
+				$menu->AppendSeparator;
+            } else {
+				Carp::cluck("Undefined value for label '$label'");
+            }
+		} elsif (not ref $value) {
+			Carp::cluck("Not reference '$value'");
+		} elsif ( ref $value eq 'ARRAY' ) {
 			my $submenu = $self->_menu_plugins_submenu( $win, $value );
 			$menu->Append( -1, $label, $submenu );
-		} else {
-            if($label =~ /^---/) {
-                $menu->AppendSeparator;
-            } else {
-                Wx::Event::EVT_MENU( $win, $menu->Append( -1, $label), $value );
-            }
+		} elsif (ref $value eq 'CODE') {
+			Wx::Event::EVT_MENU( $win, $menu->Append( -1, $label), sub { eval { $value->(@_) }; Carp::cluck($@) if $@; } );
+        } else {
+			Carp::cluck("Cannot deal with '$value' for label '$label'");
         }
 	}
 	return $menu;
