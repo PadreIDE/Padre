@@ -347,7 +347,7 @@ sub show_calltip {
 	my $regex = join '|', sort {length $a <=> length $b} keys %$keywords;
 
 	my $tip;
-	if ( $prefix =~ /($regex)[ (]?$/ ) {
+	if ( $prefix =~ /(?:^|[^\w\$\@\%\&])($regex)[ (]?$/ ) {
 		my $z = $keywords->{$1};
 		return if not $z or not ref($z) or ref($z) ne 'HASH';
 		$tip = "$z->{cmd}\n$z->{exp}";
