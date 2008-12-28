@@ -1,19 +1,20 @@
 package Module::Install::PRIVATE::Padre;
+
+use 5.008;
 use strict;
 use warnings;
 use Module::Install::Base;
 
-use FindBin ();
-use File::Spec;
+use FindBin    ();
 use File::Find ();
 
-our @ISA = qw(Module::Install::Base);
 our $VERSION = '0.20';
+our @ISA     = qw{Module::Install::Base};
 
 sub setup_padre {
-	my $self = shift;
-	my $inc_class = join('::', @{$self->_top}{qw(prefix name)});
-	my $class = __PACKAGE__;
+	my $self      = shift;
+	my $inc_class = join( '::', @{ $self->_top }{ qw(prefix name) } );
+	my $class     = __PACKAGE__;
 
 	$self->postamble(<<"END_MAKEFILE");
 # --- Padre section:
@@ -26,21 +27,40 @@ END_MAKEFILE
 }
 
 sub check_wx_version {
-	# Missing Wx should be dealt by the standard prereq system
-	eval { require Wx };
-	return if $@;
+	# Can we find Wx.pm
+	my $wxfile = _module_file('Wx');
+	my $wxpath = _file_path($wxfile);
+	unless ( $wxpath ) {
+		# Wx.pm is not installed.
+		# Allow EU:MM to do it's thing as normal
+		return;
+	}
+	my $wx_pm = _path_version($wxpath);
+	print "Found Wx.pm     $wx_pm\n";
 
-	my $version = Wx::wxVERSION_STRING();
-	nono("Could not find Wx::wxVERSION_STRING") if not defined $version;
+	# Do we have the alien package
+	eval {
+		require Alien::wxWidgets;
+		Alien::wxWidgets->import;
+	};
+	if ( $@ ) {
+		# If we don't have the alien package,
+		# we should just pass through to EU:MM
+		return;
+	}
 
-	print "Found $version\n";
-	print "Found Wx.pm     $Wx::VERSION\n";
-	$version =~ s/wxWidgets\s+//;
-	nono("Sorry we don't known this wxWidgets version format: '$version'")
-	  if $version !~ /^\d+\.\d+(\.\d+)?$/;
-	my ($major, $minor, $way_too_minor) = split /\./, $version;
-	nono("Padre needs at least version 2.8.8 of wxWidgets. this is version $version")
-	  if $major < 2 or $minor < 8;
+	# Find the wxWidgets version from the alien
+	my $widgets = Alien::wxWidgets->version;
+	unless ( $widgets ) {
+		nono("Alien::wxWidgets was unable to determine the wxWidgets version");
+	}
+	my $widgets_human = $widgets;
+	$widgets_human =~ s/^(\d\.\d\d\d)(\d\d\d)$/$1.$2/;
+	$widgets_human =~ s/0//g;
+	print "Found wxWidgets $widgets_human\n";
+	unless ( $widgets >= 2.008008 ) {
+		nono("Padre needs at least version 2.8.8 of wxWidgets. You have wxWidgets $widgets_human");
+	}
 
 	return;
 }
@@ -48,9 +68,8 @@ sub check_wx_version {
 sub nono {
 	my $msg = shift;
 	print STDERR "$msg\n";
-	exit 0;
+	exit(0);
 }
-
 
 sub make_exe {
 	my $self = shift;
@@ -58,92 +77,129 @@ sub make_exe {
 	# temporary tool to create executable using PAR
 	eval "use Module::ScanDeps 0.88; 1;" or die $@;
 
-	my @libs	= get_libs();
+	my @libs    = get_libs();
 	my @modules = get_modules();
 	my $exe	 = $^O =~ /win32/i ? 'padre.exe' : 'padre';
-	if (-e $exe) {
+	if ( -e $exe ) {
 		unlink $exe or die "Cannot remove '$exe' $!";
 	}
-	my @cmd	 = ('pp', '-o', $exe, qw(-I lib script/padre));
-	push @cmd, @modules, @libs;
-	if ($^O =~ /win32/i) {
+	my @cmd	= ( 'pp', '-o', $exe, qw{ -I lib script/padre } );
+	push @cmd, @modules;
+	push @cmd, @libs;
+	if ( $^O =~ /win32/i ) {
 		push @cmd, '-M', 'Tie::Hash::NamedCapture';
 	}
 
-	print "@cmd\n";
+	print join( ' ', @cmd ) . "\n";
 	system(@cmd);
 
 	return;
 }
 
-
 sub get_libs {
+	# Run-time "use" the Alien module
 	require Alien::wxWidgets;
-	Alien::wxWidgets->import(); # needed to make it work
-	require File::Find;
-	my @libs = Alien::wxWidgets->shared_libraries(
-	  qw(stc xrc html adv core base) 
-	);
+	Alien::wxWidgets->import;
 
-# formerly, we needed to put the libs verbatim:
-#	qw(
-#				libwx_gtk2_adv-2.8.so.0
-#				libwx_gtk2_core-2.8.so.0
-#				libwx_base-2.8.so.0
-#				libwx_base_net-2.8.so.0
-#				libwx_gtk2_stc-2.8.so.0
-#				libwx_gtk2_html-2.8.so.0
-#	);
-
-	my %libs = map {($_,0)} @libs;
+	# Extract the settings we need from the Alient
 	my $prefix = Alien::wxWidgets->prefix;
-	
-	File::Find::find(
-	  sub {
-		  if (exists $libs{$_}) {
-			$libs{$_} = $File::Find::name;
-		  }
-	  },
-	  $prefix
+	my %libs   = map { ($_, 0) } Alien::wxWidgets->shared_libraries(
+		qw(stc xrc html adv core base) 
 	);
 
-	my @missing = grep {!$libs{$_}} keys %libs;
-	warn "Could not find shared library on disk for $_"
-	  for @missing;
+	require File::Find;
+	File::Find::find(
+		sub {
+			if ( exists $libs{$_} ) {
+				$libs{$_} = $File::Find::name;
+			}
+		},
+		$prefix
+	);
 
-	my @libs_args;
-	push @libs_args, "-l", $_ for values %libs;
+	my @missing = grep { ! $libs{$_} } keys %libs;
+	foreach ( @missing ) {
+		warn("Could not find shared library on disk for $_");
+	}
 
-	return @libs_args;
+	return map { ('-l', $_) } values %libs;
 }
 
-
 sub get_modules {
-
 	my @modules;
 	my @files;
-
-	open my $fh, '<', 'MANIFEST' or die "Do you need to run 'make manifest'? Could not open MANIFEST for reading: $!";
-	while (my $line = <$fh>) {
+	local *FILE;
+	unless ( open(FILE, '<', 'MANIFEST') ) {
+		die("Do you need to run 'make manifest'? Could not open MANIFEST for reading: $!");
+	}
+	while ( my $line = <FILE> ) {
 		chomp $line;
-		if ($line =~ m{^lib/}) {
+		if ( $line =~ m{^lib/} ) {
 			$line = substr($line, 4, -3);
 			$line =~ s{/}{::}g;
 			push @modules, $line;
 		}
-		if ($line =~ m{^share/}) {
+		if ( $line =~ m{^share/} ) {
 			push @files, $line;
 		}
 	}
+
 	my @args;
 	push @args, "-M", $_ for @modules;
 	push @args, "-a", $_ for @files;
-
 	return @args;
 }
 
+# To prevent EU:MM loading modules, we hijack %INC and then set $VERSION
+# into all of the packages so that EU:MM still gets the versions it wants.
+sub trick_eumm {
+	my $self     = shift;
+	my @requires = map { $_ ? @$_ : () } (
+		$self->configure_requires,
+		$self->build_requires,
+		$self->test_requires,
+		$self->requires,
+	);
+	foreach my $module ( map { $_->[0] } @requires ) {
+		# If the module is already loaded leave it alone
+		my $file = _module_file($module);
+		next if $INC{$file};
 
+		# What version of the module is installed
+		my $found = _file_path($file);
+		unless ( defined $found ) {
+			# Leave it to EU:MM to not find as well
+			next;
+		}
 
+		# Parse out the version for the currently installed version
+		my $version = _path_version($found);
 
+		# Make the module look like it is loaded,
+		# and set the version to match the one on disk.
+		$INC{$file} = __PACKAGE__;
+		no strict 'refs';
+		*{"${module}::VERSION"} = sub { $version };
+	}
+	return 1;
+}
+
+sub _module_file {
+	my $module = shift;
+	$module =~ s/::/\//g;
+	$module .= '.pm';
+	return $module;
+}
+
+sub _file_path {
+	my $file  = shift;
+	my @found = grep { -f $_ } map { "$_/$file" } @INC;
+	return $found[0];
+}
+
+sub _path_version {
+	require ExtUtils::MM_Unix;
+	ExtUtils::MM_Unix->parse_version($_[0]);
+}
 
 1;
