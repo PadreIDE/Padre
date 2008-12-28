@@ -1,0 +1,50 @@
+=head1 NAME
+
+Padre::Manual::Hacking - Guide to hacking on Padre
+
+=head1 DESCRIPTION
+
+This is the Padre Developers Guide.
+
+It is intended for people are interested
+in hacking on Padre, and specifically hacking the core distribution.
+
+=head2 Getting Started
+
+This document assumes that you are working from a copy of Padre checked
+out from the official repository.
+
+Rather than just checking out the Padre distribution alone, we recommend
+that you checkout the entire repository trunk, which will provide you
+with Padre itself, miscellaneous tool scripts, and most of the plugin
+distributions as well.
+
+The specific path you want to check out is...
+
+  http://svn.perlide.org/padre/trunk
+
+=head2 Extra Files
+
+The trunk contains primarily a set of directories for various CPAN
+distributions that make up Padre.
+
+In addition, there are some additional scripts that are for development
+purposes and are not part of the releases themselves.
+
+
+
+
+
+=head1 SUPPORT
+
+For support with Padre itself, see the support section in the top
+level L<Padre> class.
+
+For support on hacking Padre, the best place to go is the #padre
+channel on L<irc://irc.perl.org/>.
+
+=head1 COPYRIGHT
+
+Copyright 2008 Adam Kennedy.
+
+
