@@ -30,8 +30,10 @@ BEGIN {
 	'unintented_glob.pl'           => 'TODO',
 	'return_stronger_than_or.pl'   => 'TODO',
 	'grep_always_true.pl'          => 'TODO',
-	'my_argv.pl'                   => 'TODO',
+	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
+	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA, 
 	# other special variables ? $a, $b, $ARGV, $AUTOLOAD, etc ? $_ in perls older than 5.10? 
+	# @_ ?
 	);
 }
 
