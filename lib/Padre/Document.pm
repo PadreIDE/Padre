@@ -27,7 +27,6 @@ use warnings;
 use Carp           ();
 use File::Spec     ();
 use Class::Autouse ();
-use POSIX          qw(LC_CTYPE);
 use Padre::Util    ();
 use Padre::Wx      ();
 use Padre;
@@ -69,6 +68,7 @@ our %EXT_MIME = (
 	mak   => 'text/x-makefile',
 	mat   => 'text/x-matlab',
 	pas   => 'text/x-pascal',
+	pod   => 'text/x-pod',
 	php   => 'application/x-php',
 	py    => 'text/x-python',
 	rb    => 'application/x-ruby',
@@ -81,6 +81,7 @@ our %EXT_MIME = (
 	pm    => 'application/x-perl',
 	pod   => 'application/x-perl',
 	t     => 'application/x-perl',
+	txt   => 'text/plain',
 	xml   => 'text/xml',
 	yml   => 'text/x-yaml',
 	yaml  => 'text/x-yaml',
@@ -91,6 +92,7 @@ our %EXT_MIME = (
 );
 
 our %MIME_CLASS = (
+	'text/x-pod'             => 'Padre::Document::POD',
 	'application/x-perl'     => 'Padre::Document::Perl',
 );
 
@@ -128,6 +130,7 @@ our %MIME_LEXER = (
 	'application/x-pir'      => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
 	'application/x-pasm'     => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
 	'application/x-perl6'    => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
+	'text/plain'             => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 );
 
 
