@@ -5,6 +5,7 @@ package Padre;
 use 5.008001;
 use strict;
 use warnings;
+use utf8;
 use Carp           ();
 use Cwd            ();
 use File::Spec     ();

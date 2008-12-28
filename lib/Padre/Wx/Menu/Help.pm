@@ -10,6 +10,7 @@ package Padre::Wx::Menu::Help;
 use 5.008;
 use strict;
 use warnings;
+use utf8;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
 
@@ -111,7 +112,7 @@ sub about {
 	$about->AddDeveloper("Brian Cassidy");
 	$about->AddDeveloper("Chris Dolan");
 	$about->AddDeveloper("Fayland Lam");
-	$about->AddDeveloper("Gabor Szabo");
+	$about->AddDeveloper("Gábor Szabó - גאבור סבו ");
 	$about->AddDeveloper("Heiko Jansen");
 	$about->AddDeveloper("Jerome Quelin");
 	$about->AddDeveloper("Kaare Rasmussen");
@@ -120,14 +121,14 @@ sub about {
 	$about->AddDeveloper("Patrick Donelan");
 	$about->AddDeveloper("Paweł Murias");
 	$about->AddDeveloper("Petar Shangov");
-	$about->AddDeveloper("Steffen Mueller");
+	$about->AddDeveloper("Steffen Müller");
 
  	$about->AddTranslator("Arabic - Ahmad Zawawi");
 	$about->AddTranslator("German - Heiko Jansen");
 	$about->AddTranslator("French - Jerome Quelin");
-	$about->AddTranslator("Hebrew - Omer Zak");
-	$about->AddTranslator("Hebrew - Shlomi Fish");
-	$about->AddTranslator("Hungarian - Gyorgy Pasztor");
+	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
+	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
+	$about->AddTranslator("Hungarian - György Pásztor");
 	$about->AddTranslator("Italian - Simone Blandino");
 	$about->AddTranslator("Korean - Keedi Kim");
 	$about->AddTranslator("Russian - Andrew Shitov");
