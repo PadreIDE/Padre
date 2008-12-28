@@ -27,8 +27,36 @@ BEGIN {
 	'match_default_scalar.pl'      => 'TODO',
 	'chomp.pl'                     => 'TODO',
 	'substitute_in_map.pl'         => 'TODO',
+	'unintented_glob.pl'           => 'TODO',
+	'return_stronger_than_or.pl'   => 'TODO',
+	'grep_always_true.pl'          => 'TODO',
+	'mu_argv.pl'                   => 'TODO',
 	);
 }
+
+# probably already in some Perl Critic rules
+# lack of use strict; and lack of use warnings; should be also reported.
+
+# this might be also in some Perl Critic rules 
+#my $filename = 'input.txt';
+#open my $fh, '<', $filename || die $!;
+# problem: precedence of || is higher than that of , so the above code is actually
+# the same as:
+# open my $fh, '<', ($filename || die $!);
+# which will only die if the $filename is false, nothing to do with
+# success of failure of open()
+
+
+# without "use warning" this 'works' noiselessly
+# I am not sure we need to look for such as we should always
+# tell users to 'use warnings'
+#my $x = 23;
+#my $z = 3;
+#if ($x = 7) {
+#	print "xx\n";
+#}
+#
+
 
 foreach my $file (keys %tests) {
 	if ($tests{$file} eq 'TODO') {
