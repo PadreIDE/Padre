@@ -134,11 +134,7 @@ sub pre_process {
 	my ( $self ) = @_;
 	my $config = Padre->ide->config;
 
-print "pre\n";
-use Data::Dumper;
-#print Dumper $config;
 	if ($config->{editor_perl5_beginner}) {
-	print "process\n";
 		require Padre::Document::Perl::Beginner;
 		my $b = Padre::Document::Perl::Beginner->new;
 		if ($b->check( $self->text_get )) {
