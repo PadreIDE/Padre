@@ -16,11 +16,16 @@ my $b = Padre::Document::Perl::Beginner->new;
 isa_ok $b, 'Padre::Document::Perl::Beginner';
 BEGIN { $tests += 1; }
 
-SCOPE: {
-	my $data = slurp (File::Spec->catfile('t', 'files', 'beginner', 'split1.pl'));
-	ok(! defined($b->check($data)), 'split1.pl');
-	is($b->error, "The second parameter of split is a string, not an array", "split1.pl error");
-	BEGIN { $tests += 2; }
+my %tests = (
+	'split1.pl' => "The second parameter of split is a string, not an array",
+	'split2.pl' => "The second parameter of split is a string, not an array",
+);
+
+foreach my $file (keys %tests) {
+	my $data = slurp (File::Spec->catfile('t', 'files', 'beginner', $file));
+	ok(! defined($b->check($data)), $file);
+	is($b->error, $tests{$file}, "$file error");
+	BEGIN { $tests += 2 * 2; }
 }
 
 sub slurp {
