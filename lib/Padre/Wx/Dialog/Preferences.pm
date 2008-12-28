@@ -55,6 +55,11 @@ sub get_layout_for_behaviour {
 				($config->{editor_use_wordwrap} ? 1 : 0) ],
 		],
 		[
+			[ 'Wx::StaticText', undef,              Wx::gettext('Perl beginner mode')],
+			['Wx::CheckBox',    'editor_perl5_beginner', '',
+				($config->{editor_perl5_beginner} ? 1 : 0) ],
+		],
+		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Preferred language for error diagnostics:')],
 			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->{diagnostics_lang}||''],
 		],
@@ -171,7 +176,7 @@ sub run {
 	}
 	$config->{editor_current_line_background_color} =~ s/#//;
 
-	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style)) {
+	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style editor_perl5_beginner)) {
 		$config->{$f} = $data->{$f} ? 1 : 0;
 	}
 

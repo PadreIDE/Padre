@@ -52,6 +52,7 @@ SCOPE: {
 		editor_tabwidth               => 8,
 		editor_indentwidth            => 4,
 		editor_use_tabs               => 1,
+		editor_perl5_beginner         => 1,
 
 		search_terms       => [],
 		replace_terms      => [],

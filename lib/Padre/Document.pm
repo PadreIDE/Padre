@@ -589,8 +589,9 @@ sub find_project {
 
 # abstract method, each subclass should implement it
 sub keywords           { return {} }
-sub get_functions      { return () };
-sub get_function_regex { return '' };
+sub get_functions      { return () }
+sub get_function_regex { return '' }
+sub pre_process        { return 1  }
 
 # should return ($length, @words)
 # where $length is the length of the prefix to be replaced by one of the words

@@ -36,6 +36,7 @@ my %defaults = (
 	editor_whitespaces        => 0,
 	editor_methods            => 'alphabetical',
 	editor_codefolding        => 0,
+	editor_perl5_beginner     => 1,
 
 	# Indentation settings
 	editor_auto_indentation_style => 0,

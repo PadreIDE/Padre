@@ -843,7 +843,11 @@ sub run_script {
 		return;
 	}
 	if ($cmd) {
-		$self->run_command( $cmd );
+		if ($document->pre_process) {
+			$self->run_command( $cmd );
+		} else {
+			$self->error( $document->errstr );
+		}
 	}
 	return;
 }

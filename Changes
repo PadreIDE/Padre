@@ -2,6 +2,8 @@ Changes for Padre.
 
 v0.23 ??????????
 
+    Add naive way to locate some of the annoying errors beginners
+        might make that perl does not catch. (SZABGAB)
     Makefile.PL tricks EU:MM into not loading every single dependency,
         making our dependency-heavy Makefile.PL far saner (ADAMK)
 
