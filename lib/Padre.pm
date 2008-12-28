@@ -2,10 +2,13 @@ package Padre;
 
 # See POD at end for documentation
 
-use 5.008001;
+use 5.008005;
 use strict;
 use warnings;
 use utf8;
+
+# Non-Padre modules we need just to show the initial
+# window should be loaded early and normally.
 use Carp           ();
 use Cwd            ();
 use File::Spec     ();
