@@ -1,5 +1,10 @@
 Changes for Padre.
 
+v0.23 ??????????
+
+    Makefile.PL tricks EU:MM into not loading every single dependency,
+        making our dependency-heavy Makefile.PL far saner (ADAMK)
+
 v0.22 2008.12.23
 
     Various Perl6 and Parrot related snippets of code and
