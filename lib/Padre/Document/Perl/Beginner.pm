@@ -76,6 +76,11 @@ sub check {
 			return;
 		}
 	}
+	if ($text =~ /use\s+warning\s*;/) {
+		$self->{error} = "You need to write use warnings (with an s at the end) and not use warning.";
+		return;
+	}
+
 	return 1;
 }
 
