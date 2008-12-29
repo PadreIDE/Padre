@@ -116,7 +116,7 @@ sub about {
 	$about->AddDeveloper("Heiko Jansen");
 	$about->AddDeveloper("Jerome Quelin");
 	$about->AddDeveloper("Kaare Rasmussen");
-	$about->AddDeveloper("Keedi Kim");
+	$about->AddDeveloper("Keedi Kim - 김도형");
 	$about->AddDeveloper("Max Maischein");
 	$about->AddDeveloper("Patrick Donelan");
 	$about->AddDeveloper("Paweł Murias");
@@ -130,7 +130,7 @@ sub about {
 	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
 	$about->AddTranslator("Hungarian - György Pásztor");
 	$about->AddTranslator("Italian - Simone Blandino");
-	$about->AddTranslator("Korean - Keedi Kim");
+	$about->AddTranslator("Korean - Keedi Kim - 김도형");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
 
