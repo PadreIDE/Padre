@@ -1042,7 +1042,7 @@ Part of the code was copied from his Wx::Demo application.
 The developers of Padre in alphabetical order:
 
 Aaron Trevena (TEEJAY),
-Ahmad Zawawi (AZAWAWI),
+Ahmad Zawawi أحمد محمد زواوي (AZAWAWI),
 Adam Kennedy (ADAMK),
 Brian Cassidy (BRICAS),
 Chris Dolan (CHRISDOLAN),
@@ -1066,7 +1066,7 @@ To Octavian Rasnita for early testing and bug reports.
 
 =head2 Translations
 
-Arabic - Ahmad M. Zawawi (AZAWAWI)
+Arabic - Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
 
 Dutch - Dirk De Nijs (ddn123456)
 

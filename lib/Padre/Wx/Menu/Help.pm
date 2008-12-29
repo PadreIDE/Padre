@@ -108,7 +108,7 @@ sub about {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 	$about->AddDeveloper("Adam Kennedy");
-	$about->AddDeveloper("Ahmad Zawawi");
+	$about->AddDeveloper("Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddDeveloper("Brian Cassidy");
 	$about->AddDeveloper("Chris Dolan");
 	$about->AddDeveloper("Fayland Lam");
@@ -123,7 +123,7 @@ sub about {
 	$about->AddDeveloper("Petar Shangov");
 	$about->AddDeveloper("Steffen Müller");
 
- 	$about->AddTranslator("Arabic - Ahmad Zawawi");
+ 	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddTranslator("German - Heiko Jansen");
 	$about->AddTranslator("French - Jerome Quelin");
 	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
