@@ -444,7 +444,7 @@ sub _load_plugin {
 		$plugin->status('error');
 		return;
 	}
-	$self->{object} = $object;
+	$plugin->{object} = $object;
 
 	# Should we try to enable the plugin
 	my $config = $self->plugin_config($plugin);
