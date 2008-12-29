@@ -125,7 +125,7 @@ sub about {
 
  	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddTranslator("German - Heiko Jansen");
-	$about->AddTranslator("French - Jerome Quelin");
+	$about->AddTranslator("French - Jérôme Quelin");
 	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
 	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
 	$about->AddTranslator("Hungarian - György Pásztor");
