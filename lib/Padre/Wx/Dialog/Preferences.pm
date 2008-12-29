@@ -102,7 +102,7 @@ sub dialog {
 			auto_ok_cancel  => 1,
 			ok_widgetid     => '_ok_',
 			cancel_widgetid => '_cancel_',
-			pagenames       => [ 'Behaviour', 'Appearance' ]
+			pagenames       => [ Wx::gettext('Behaviour'), Wx::gettext('Appearance') ]
 		},
 	);
 
