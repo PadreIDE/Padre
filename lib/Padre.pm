@@ -1047,15 +1047,16 @@ Adam Kennedy (ADAMK),
 Brian Cassidy (BRICAS),
 Chris Dolan (CHRISDOLAN),
 Fayland Lam (FAYLAND),
+Gábor Szabó - גאבור סבו (SZABGAB),
 Heiko Jansen (HJANSEN),
 Jerome Quelin (JQUELIN),
 Kaare Rasmussen (KAARE),
-Keedi Kim (KEEDI),
+Keedi Kim  - 김도형  (KEEDI),
 Max Maischein (CORION),
 Patrick Donelan (PATSPAM),
 Paweł Murias (PMURIAS),
 Petar Shangov (PSHANGOV),
-Steffen Mueller (TSEE)
+Steffen Müller (TSEE)
 
 
 
@@ -1075,13 +1076,13 @@ French - Jerome Quelin (JQUELIN)
 
 German - Heiko Jansen (HJANSEN)
 
-Hebrew - Omer Zak and Shlomi Fish (SHLOMIF)
+Hebrew - Omer Zak  - עומר זק and Shlomi Fish  - שלומי פיש (SHLOMIF)
 
-Hungarian - Gyorgy Pasztor (GYU)
+Hungarian - György Pásztor (GYU)
 
 Italian - Simone Blandino (SBLANDIN)
 
-Korean - Keedi Kim (KEEDI)
+Korean - Keedi Kim - 김도형 (KEEDI)
 
 Russian - Andrew Shitov
 
