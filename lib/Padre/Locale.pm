@@ -38,7 +38,7 @@ my %SHORTNAME = (
 	Wx::wxLANGUAGE_KOREAN()        => 'ko',
 	Wx::wxLANGUAGE_RUSSIAN()       => 'ru',
 	Wx::wxLANGUAGE_DUTCH()         => 'nl',
-	Wx::wxLANGUAGE_PORTUGUESE_BR() => 'pt', # probably should be 'pt_br'
+	Wx::wxLANGUAGE_PORTUGUESE() => 'pt', # probably should be 'pt_br'
 );
 
 my %NUMBER = reverse %SHORTNAME;
