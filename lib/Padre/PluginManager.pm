@@ -696,7 +696,7 @@ sub test_a_plugin {
 	$config->{plugins}->{$filename}->{enabled} = 1;
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
-		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'"), $filename));
+		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'\n%s"), $filename, $self->{errstr}));
 		return;
 	}
 
