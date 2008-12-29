@@ -1086,5 +1086,7 @@ Korean - Keedi Kim - 김도형 (KEEDI)
 
 Russian - Andrew Shitov
 
+Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
+
 =cut
 

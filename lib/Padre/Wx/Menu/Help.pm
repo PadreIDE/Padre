@@ -133,6 +133,7 @@ sub about {
 	$about->AddTranslator("Korean - Keedi Kim - 김도형");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
+	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
 
 	Wx::AboutBox( $about );
 	return;

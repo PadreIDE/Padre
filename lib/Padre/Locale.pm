@@ -28,16 +28,17 @@ use constant DEFAULT_LOCALE => 'en';
 
 
 my %SHORTNAME = (
-	Wx::wxLANGUAGE_ARABIC()     => 'ar',
-	Wx::wxLANGUAGE_GERMAN()     => 'de',
-	Wx::wxLANGUAGE_ENGLISH_US() => 'en',
-	Wx::wxLANGUAGE_FRENCH()     => 'fr',
-	Wx::wxLANGUAGE_HEBREW()     => 'he',
-	Wx::wxLANGUAGE_HUNGARIAN()  => 'hu',
-	Wx::wxLANGUAGE_ITALIAN()    => 'it',
-	Wx::wxLANGUAGE_KOREAN()     => 'ko',
-	Wx::wxLANGUAGE_RUSSIAN()    => 'ru',
-	Wx::wxLANGUAGE_DUTCH()      => 'nl',
+	Wx::wxLANGUAGE_ARABIC()        => 'ar',
+	Wx::wxLANGUAGE_GERMAN()        => 'de',
+	Wx::wxLANGUAGE_ENGLISH_US()    => 'en',
+	Wx::wxLANGUAGE_FRENCH()        => 'fr',
+	Wx::wxLANGUAGE_HEBREW()        => 'he',
+	Wx::wxLANGUAGE_HUNGARIAN()     => 'hu',
+	Wx::wxLANGUAGE_ITALIAN()       => 'it',
+	Wx::wxLANGUAGE_KOREAN()        => 'ko',
+	Wx::wxLANGUAGE_RUSSIAN()       => 'ru',
+	Wx::wxLANGUAGE_DUTCH()         => 'nl',
+	Wx::wxLANGUAGE_PORTUGUESE_BR() => 'pt', # probably should be 'pt_br'
 );
 
 my %NUMBER = reverse %SHORTNAME;
@@ -56,6 +57,7 @@ sub languages {
 		it => Wx::gettext('Italian'),
 		ru => Wx::gettext('Russian'),
 		nl => Wx::gettext('Dutch'),
+		pt => Wx::gettext('Portuguese'), # brazilian
 	);
 }
 

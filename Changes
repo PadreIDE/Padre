@@ -8,6 +8,7 @@ v0.23 ??????????
         might make that perl does not catch. (SZABGAB)
     Makefile.PL tricks EU:MM into not loading every single dependency,
         making our dependency-heavy Makefile.PL far saner (ADAMK)
+    Portuguese (Brazilian) translation added (GARU)
 
 v0.22 2008.12.23
 
