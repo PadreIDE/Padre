@@ -2,6 +2,8 @@ Changes for Padre.
 
 v0.23 ??????????
 
+    Refactored the plugin state hash out into a standalone
+        Padre::PluginHandle class (ADAMK)
     Add naive way to locate some of the annoying errors beginners
         might make that perl does not catch. (SZABGAB)
     Makefile.PL tricks EU:MM into not loading every single dependency,
