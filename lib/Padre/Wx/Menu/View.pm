@@ -287,7 +287,7 @@ sub new {
 	foreach my $name ( sort { $languages{$a} cmp $languages{$b} }  keys %languages) {
 		my $label = $languages{$name};
 		if ( $label eq 'English' ) {
-			$label = "English (The Queen's)";
+			$label = "English (New Britstralian)";
 		}
 
 		my $radio = $self->{language}->AppendRadioItem( -1, $label );
