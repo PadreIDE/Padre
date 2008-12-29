@@ -3,87 +3,79 @@
 use strict;
 use warnings;
 
-use FindBin      qw($Bin);
-use File::Spec   ();
-use Data::Dumper qw(Dumper);
-
 use Test::More;
 BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
 }
 
-plan tests => 25;
+plan tests => 23;
 
+use FindBin      qw($Bin);
+use File::Spec   ();
+use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
-
 use t::lib::Padre;
 use Padre;
+use Padre::PluginManager;
 
-use_ok('Padre::PluginManager');
+my $padre = Padre->new;
 
-my $padre = Padre->new();
-my $plugin_m1 = Padre::PluginManager->new($padre);
-isa_ok $plugin_m1, 'Padre::PluginManager';
+# Test the default loading behaviour
+SCOPE: {
+	my $manager = Padre::PluginManager->new($padre);
+	isa_ok( $manager, 'Padre::PluginManager' );
+	is(
+		$manager->plugin_dir,
+		Padre::Config->default_plugin_dir,
+		'->default_plugin_dir ok',
+	);
+	is( keys %{$manager->plugins}, 0, 'Found no plugins' );
+	ok(
+		! defined($manager->load_plugins()),
+		'load_plugins always returns undef'
+	);
 
-is $plugin_m1->plugin_dir, Padre::Config->default_plugin_dir;
-is keys %{$plugin_m1->plugins}, 0;
-
-ok !defined($plugin_m1->load_plugins()), 'load_plugins always returns undef';
-
-
-# check if we have the plugins that come with Padre
-cmp_ok (keys %{$plugin_m1->plugins}, '>=', 1);
-#is $plugin_m1->plugins->{'Development::Tools'},  'Padre::Plugin::Development::Tools';
-ok !$plugin_m1->plugins->{'Development::Tools'},  'no second level plugin';
-
-# try load again
-#{
-#my $st = $plugin_m1->load_plugin('Development::Tools');
-#is $st, undef;
-#}
-
-## Test loading single plugins
-$plugin_m1 = Padre::PluginManager->new($padre);
-is keys %{$plugin_m1->plugins}, 0;
-ok(!$plugin_m1->load_plugin('My'));
-is keys %{$plugin_m1->plugins}, 1;
-is( $plugin_m1->plugins->{My}{status}, 'disabled' );
-$padre->config->{plugins}{My}{enabled} = 1;
-ok($plugin_m1->load_plugin('My'));
-is( $plugin_m1->plugins->{My}{status}, 'enabled' );
-ok($plugin_m1->reload_plugin('My'));
-is( $plugin_m1->plugins->{My}{status}, 'enabled' );
-ok($plugin_m1->unload_plugin('My'));
-ok( !defined($plugin_m1->plugins->{My}) );
-
-
-## Test With custom plugins
-my $custom_dir = File::Spec->catfile( $Bin, 'lib' );
-my $plugin_m2  = Padre::PluginManager->new($padre, plugin_dir => $custom_dir);
-
-is $plugin_m2->plugin_dir, $custom_dir;
-is keys %{$plugin_m2->plugins}, 0;
-
-$plugin_m2->_load_plugins_from_inc();
-# cannot compare with the exact numbers as there might be plugins already installed
-cmp_ok (keys %{$plugin_m2->plugins}, '>=', 3, 'at least 3 plugins')
-	or diag(Dumper(\$plugin_m2->plugins));
-
-#is $plugin_m2->plugins->{'Development::Tools'},  'Padre::Plugin::Development::Tools';
-ok !exists $plugin_m2->plugins->{'Development::Tools'},  'no second level plugin';
-is $plugin_m2->plugins->{TestPlugin}{module},     'Padre::Plugin::TestPlugin';
-#is $plugin_m2->plugins->{'Test::Plugin'},        'Padre::Plugin::Test::Plugin';
-ok !defined $plugin_m2->plugins->{'Test::Plugin'},        'no second level plugin';
-
-# try load again
-{
-	my $st = $plugin_m2->load_plugin('TestPlugin');
-	is $st, undef;
+	# check if we have the plugins that come with Padre
+	cmp_ok( keys %{$manager->plugins}, '>=', 1, 'Loaded at least one plugin' );
+	ok( ! $manager->plugins->{'Development::Tools'}, 'No second level plugin' );
 }
 
-### XXX? TODO, test par
+## Test loading single plugins
+SCOPE: {
+	my $manager = Padre::PluginManager->new($padre);
+	is( keys %{$manager->plugins}, 0, 'No plugins loaded' );
+	ok( ! $manager->load_plugin('My'), 'Loaded My Plugin' );
+	is( keys %{$manager->plugins}, 1, 'Loaded something' );
+	my $handle = $manager->_plugin('My');
+	isa_ok( $handle, 'Padre::PluginHandle' );
+	is( $handle->name, 'My', 'Loaded My Plugin' );
+	ok( $handle->disabled, 'My Plugin is disabled' );
+	ok( $manager->unload_plugin('My'), '->unload_plugin ok' );
+	ok( ! defined($manager->plugins->{My}), 'Plugin no longer loaded' );
+	is( eval("\$Padre::Plugin::My::VERSION"), undef, 'My Plugin was cleaned up' );
+}
 
-1;
+## Test With custom plugins
+SCOPE: {
+	my $custom_dir = File::Spec->catfile( $Bin, 'lib' );
+	my $manager  = Padre::PluginManager->new($padre, plugin_dir => $custom_dir);
+	is( $manager->plugin_dir, $custom_dir );
+	is( keys %{$manager->plugins}, 0 );
+
+	$manager->_load_plugins_from_inc;
+	# cannot compare with the exact numbers as there might be plugins already installed
+	cmp_ok(keys %{$manager->plugins}, '>=', 3, 'at least 3 plugins')
+	or
+	diag(Dumper(\$manager->plugins));
+
+	ok( ! exists $manager->plugins->{'Development::Tools'},  'no second level plugin' );
+	is( $manager->_plugin('TestPlugin')->class, 'Padre::Plugin::TestPlugin' );
+	ok( !defined $manager->plugins->{'Test::Plugin'},        'no second level plugin' );
+
+	# try load again
+	my $st = $manager->load_plugin('TestPlugin');
+	is( $st, undef );
+}

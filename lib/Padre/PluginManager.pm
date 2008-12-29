@@ -273,7 +273,7 @@ sub failed {
 	my $self    = shift;
 	my $plugins = $self->plugins;
 	return grep {
-		$plugins->{$_}->{status} eq 'failed'
+		$plugins->{$_}->{status} eq 'error'
 	} keys %$plugins;
 }
 
@@ -384,7 +384,7 @@ sub _load_plugin {
 			$name,
 			$@,
 		);
-		$plugin->status('failed');
+		$plugin->status('error');
 		return;
 	}
 
@@ -396,7 +396,7 @@ sub _load_plugin {
 				. "Need to be subclass of Padre::Plugin"
 			), $name,
 		);
-		$plugin->status('failed');
+		$plugin->status('error');
 		return;
 	}
 
@@ -408,7 +408,7 @@ sub _load_plugin {
 				. "Plugin is not instantiable"
 			), $name,
 		);
-		$plugin->status('failed');
+		$plugin->status('error');
 		return;
 	}
 
@@ -421,7 +421,7 @@ sub _load_plugin {
 			),
 			$name,
 		);
-		$plugin->status('failed');
+		$plugin->status('error');
 		return;
 	}
 
@@ -430,7 +430,7 @@ sub _load_plugin {
 	if ( $@ ) {
 		# TODO report error in a nicer way
 		$self->{errstr} = $@;
-		$plugin->status('failed');
+		$plugin->status('error');
 		return;
 	}
 	unless ( _INSTANCE($object, 'Padre::Plugin') ) {
@@ -441,7 +441,7 @@ sub _load_plugin {
 			),
 			$name,
 		);
-		$plugin->status('failed');
+		$plugin->status('error');
 		return;
 	}
 	$self->{object} = $object;
@@ -502,7 +502,7 @@ sub _unload_plugin {
 
 	# Unload the plugin class itself
 	require Class::Unload;
-	Class::Unload->unload($handle->module);
+	Class::Unload->unload($handle->class);
 
 	# Finally, remove the handle (and flush the sort order)
 	delete $self->{plugins}->{$handle->name};
@@ -695,7 +695,7 @@ sub test_a_plugin {
 	delete $plugins->{$filename};
 	$config->{plugins}->{$filename}->{enabled} = 1;
 	$self->load_plugin($filename);
-	if ( $self->plugins->{$filename}->{status} eq 'failed' ) {
+	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
 		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'"), $filename));
 		return;
 	}
