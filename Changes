@@ -9,6 +9,7 @@ v0.23 ??????????
     Makefile.PL tricks EU:MM into not loading every single dependency,
         making our dependency-heavy Makefile.PL far saner (ADAMK)
     Portuguese (Brazilian) translation added (GARU)
+    Spanish translation added (PacoLinux)
 
 v0.22 2008.12.23
 
