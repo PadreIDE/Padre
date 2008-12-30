@@ -114,7 +114,7 @@ sub about {
 	$about->AddDeveloper("Fayland Lam");
 	$about->AddDeveloper("Gábor Szabó - גאבור סבו ");
 	$about->AddDeveloper("Heiko Jansen");
-	$about->AddDeveloper("Jerome Quelin");
+	$about->AddDeveloper("Jérôme Quelin");
 	$about->AddDeveloper("Kaare Rasmussen");
 	$about->AddDeveloper("Keedi Kim - 김도형");
 	$about->AddDeveloper("Max Maischein");
