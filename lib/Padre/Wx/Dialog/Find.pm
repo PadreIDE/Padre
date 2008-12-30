@@ -104,13 +104,11 @@ sub find_next {
 	my $term = $config->{search_terms}->[0];
 
 	# for Quick Find
-	if ( $config->{experimental} ) {
-		# check if is checked
-		if ( $main->menu->experimental->{quick_find}->IsChecked ) {
-			my $text = $main->selected_text;
-			if ( $text and $text ne $term ) {
-				unshift @{$config->{search_terms}}, $text;
-			}
+	# check if is checked
+	if ( $main->menu->edit->{quick_find}->IsChecked ) {
+		my $text = $main->selected_text;
+		if ( $text and $text ne $term ) {
+			unshift @{$config->{search_terms}}, $text;
 		}
 	}
 
