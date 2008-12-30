@@ -148,6 +148,7 @@ sub colorize {
 		'ArrayIndex'    => 0,
 		'Cast'          => 0,
 		'Magic'         => 0,
+		'Octal'         => 0,
 	);
 
 	my @tokens = $ppi_doc->tokens;
@@ -167,7 +168,7 @@ sub colorize {
 #		last if $row > 10;
 		my $color = $colors{$css};
 		if (not defined $color) {
-			Wx::LogMessage("Missing definition fir '$css'\n");
+			Wx::LogMessage("Missing definition for '$css'\n");
 			next;
 		}
 		next if not $color;
