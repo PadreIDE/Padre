@@ -45,29 +45,27 @@ sub new {
 		},
 	);
 
-	if ( Padre->ide->config->{experimental} ) {
-		Wx::Event::EVT_MENU( $main,
-			$self->Append( -1, Wx::gettext("Lexically replace variable") ),
-			sub {
-				my $doc = Padre::Documents->current;
-				return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
-				my $dialog = Padre::Wx::History::TextDialog->new(
-					$_[0],
-					Wx::gettext("Replacement"),
-					Wx::gettext("Replacement"),
-					'$foo',
-				);
-				if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-					return;
-				}
-				my $replacement = $dialog->GetValue;
-				$dialog->Destroy;
-				return unless defined $replacement;
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, Wx::gettext("Lexically replace variable") ),
+		sub {
+			my $doc = Padre::Documents->current;
+			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
+			my $dialog = Padre::Wx::History::TextDialog->new(
+				$_[0],
+				Wx::gettext("Replacement"),
+				Wx::gettext("Replacement"),
+				'$foo',
+			);
+			if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+				return;
+			}
+			my $replacement = $dialog->GetValue;
+			$dialog->Destroy;
+			return unless defined $replacement;
 
-				$doc->lexical_variable_replacement($replacement);
-			},
-		);
-	}
+			$doc->lexical_variable_replacement($replacement);
+		},
+	);
 
 	return $self;
 }
