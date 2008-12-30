@@ -172,6 +172,36 @@ sub new {
 		},
 	);
 
+	$self->AppendSeparator;
+
+	# Quick Find: Press F3 to start search with selected text
+	$self->{quick_find} = $self->AppendCheckItem( -1,
+		Wx::gettext("Quick Find")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{quick_find},
+		sub {
+			Padre->ide->config->{is_quick_find} = $_[1]->IsChecked ? 1 : 0;
+			return;
+		},
+	);
+
+	# Incremental find (#60)
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, Wx::gettext("Find Next\tF4") ),
+		sub {
+			$_[0]->find->search('next');
+		},
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, Wx::gettext("Find Previous\tShift-F4") ),
+		sub {
+			$_[0]->find->search('previous');
+		}
+	);
+
+	$self->AppendSeparator;
+
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1,
 			Wx::gettext("Ac&k")
