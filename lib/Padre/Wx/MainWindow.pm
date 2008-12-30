@@ -1971,7 +1971,7 @@ sub run_in_padre {
 	if ( $@ ) {
 		Wx::MessageBox(
 			sprintf(Wx::gettext("Error: %s"), $@),
-			Wx::gettext("Self error"),
+			Wx::gettext("Internal error"),
 			Wx::wxOK,
 			$self,
 		);
