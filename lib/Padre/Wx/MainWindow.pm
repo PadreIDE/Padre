@@ -485,6 +485,18 @@ sub window_top {
 sub refresh {
 	my $self = shift;
 	return if $self->no_refresh;
+
+    # Fixed ticket #185: Padre crash when closing files
+    # http://padre.perlide.org/ticket/185
+    # allow one refresh per second.. This prevents possible 
+    # future refresh bugs...
+    my $timestamp = time;
+    my $last_refresh = (defined $self->{last_refresh}) ? $self->{last_refresh} : 0;
+    $self->{last_refresh} = $timestamp;
+    if( $last_refresh <= $timestamp) {
+       return;
+    }
+    
 	$self->Freeze;
 
 	# Freeze during the subtle parts of the refresh
