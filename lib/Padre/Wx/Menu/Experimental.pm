@@ -84,36 +84,6 @@ sub new {
 		},
 	);
 
-	# Experimental PPI-based highlighting
-	$self->{ppi_highlight} = $self->AppendCheckItem( -1,
-		Wx::gettext("Use PPI for Perl5 syntax highlighting")
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{ppi_highlight},
-		sub {
-			# Update the saved config setting
-			my $config = Padre->ide->config;
-			$config->{ppi_highlight} = $_[1]->IsChecked ? 1 : 0;
-
-			# Refresh the menu (and MIME_LEXER hook)
-			$self->refresh;
-
-			# Update the colourise for each Perl editor
-			foreach my $editor ( $_[0]->pages ) {
-				my $doc = $editor->{Document};
-				next unless $doc->isa('Padre::Document::Perl');
-				if ( $config->{ppi_highlight} ) {
-					$doc->colorize;
-				} else {
-					$doc->remove_color;
-					$editor->Colourise( 0, $editor->GetLength );
-				}
-			}
-
-			return;
-		}
-	);
-
 	return $self;
 }
 
