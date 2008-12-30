@@ -86,8 +86,10 @@ sub new {
 				my $doc = $editor->{Document};
 				next unless $doc->isa('Padre::Document::Perl');
 				if ( $config->{ppi_highlight} ) {
+					$editor->SetLexer(Wx::wxSTC_LEX_CONTAINER);
 					$doc->colorize;
 				} else {
+					$editor->SetLexer(Wx::wxSTC_LEX_PERL);
 					$doc->remove_color;
 					$editor->Colourise( 0, $editor->GetLength );
 				}
