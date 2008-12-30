@@ -134,6 +134,7 @@ sub about {
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
 	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
+        $about->AddTranslator("Spanish - Paco Alguacil");
 
 	Wx::AboutBox( $about );
 	return;

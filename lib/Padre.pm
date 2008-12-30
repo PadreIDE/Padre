@@ -1088,5 +1088,7 @@ Russian - Andrew Shitov
 
 Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
 
+Spanish - Paco Alguacil (PacoLinux)
+
 =cut
 
