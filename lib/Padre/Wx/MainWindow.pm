@@ -35,9 +35,10 @@ use Padre::Wx::Editor         ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Output         ();
 use Padre::Wx::ErrorList      ();
+use Padre::wx::AuiManager     ();
+use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
 use Padre::Documents          ();
-use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.22';
 our @ISA     = 'Wx::Frame';
@@ -108,15 +109,12 @@ sub new {
 		Padre::Wx::FileDropTarget->new($self)
 	);
 
-	$self->{manager} = Wx::AuiManager->new;
-	$self->{manager}->SetManagedWindow($self);
+	# Temporary store for the function list.
+	# TODO: Storing this here violates encapsulation.
 	$self->{_methods} = [];
 
-	# do NOT use hints other than Rectangle or the app will crash on Linux/GTK
-	my $flags = $self->{manager}->GetFlags;
-	$flags &= ~Wx::wxAUI_MGR_TRANSPARENT_HINT;
-	$flags &= ~Wx::wxAUI_MGR_VENETIAN_BLINDS_HINT;
-	$self->{manager}->SetFlags( $flags ^ Wx::wxAUI_MGR_RECTANGLE_HINT );
+	# Set the window manager
+	$self->{manager} = Padre::Wx::AuiManager->new($self);
 
 	# Add some additional attribute slots
 	$self->{marker} = {};
@@ -133,14 +131,13 @@ sub new {
 	$self->create_bottom_pane;
 
 	# Create the syntax checker and sidebar for syntax check messages
-	# create it AFTER the bottom pane!
+	# Must be created after the bottom pane!
 	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
 	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
 
 	# Create the error list
-	# create it AFTER the bottom pane!
+	# Must be created after the bottom pane!
 	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
-
 
 	# on close pane
 	Wx::Event::EVT_AUI_PANE_CLOSE(
@@ -177,7 +174,8 @@ sub new {
 	Wx::Event::EVT_STC_CHARADDED(   $self, -1, \&on_stc_char_added   );
 	Wx::Event::EVT_STC_DWELLSTART(  $self, -1, \&on_stc_dwell_start  );
 
-	# As ugly as the WxPerl icon is, the new file toolbar image is uglier
+	# As ugly as the WxPerl icon is, the new file toolbar image we
+	# used to use was far uglier
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
 	if ( defined $config->{host}->{aui_manager_layout} ) {
