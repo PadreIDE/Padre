@@ -56,18 +56,21 @@ sub refresh {
 	my $newline_type = $doc->get_newline_type || Padre::Util::NEWLINE;
 	my $modified     = $editor->GetModify ? '*' : ' ';
 
-	if ( $filename ) {
-		$main->nb->SetPageText(
-			$pageid,
-			$modified . File::Basename::basename($filename)
-		);
-	} else {
-		my $text = substr($main->nb->GetPageText($pageid), 1);
-		$main->nb->SetPageText(
-			$pageid,
-			$modified . $text
-		);
-	}
+    #Fixed ticket #190: Massive GDI object leakages 
+    #http://padre.perlide.org/ticket/190
+    #Please remember to call SetPageText once per the same text
+    #This still leaks but far less slowly (just on undo)
+    my $old_text = $main->nb->GetPageText($pageid);
+    my $text = ($filename) ? 
+        File::Basename::basename($filename) : 
+        substr($old_text, 1);
+    my $page_text = $modified . $text;
+    if($old_text ne $page_text) {
+        $main->nb->SetPageText(
+            $pageid,
+            $page_text
+        );
+    }
 
 	my $current = $editor->GetCurrentPos;
 	my $start   = $editor->PositionFromLine($line);
