@@ -82,6 +82,8 @@ sub new {
 			$self->refresh;
 
 			# Update the colourise for each Perl editor
+			# TODO try to delay the actual color updating for the
+			# pages that are not in focus till they get in focus
 			foreach my $editor ( $_[0]->pages ) {
 				my $doc = $editor->{Document};
 				next unless $doc->isa('Padre::Document::Perl');
@@ -101,6 +103,13 @@ sub new {
 
 
 	return $self;
+}
+
+sub refresh {
+	my $self     = shift;
+	my $config   = Padre->ide->config;
+
+	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
 }
 
 1;
