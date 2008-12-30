@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PADRE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-28 22:16-0200\n"
-"PO-Revision-Date: 2008-12-29 15:11-0300\n"
+"POT-Creation-Date: 2008-12-30 12:37-0200\n"
+"PO-Revision-Date: 2008-12-30 13:27-0300\n"
 "Last-Translator: Breno G. de Oliveira <garu@cpan.org>\n"
 "Language-Team: Brazilian Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -16,50 +16,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: lib/Padre/Document.pm:252
-#, fuzzy, perl-format
+#: lib/Padre/Document.pm:515
+#, perl-format
 msgid "Unsaved %d"
 msgstr "Não salvo %d"
 
-#: lib/Padre/Locale.pm:49
+#: lib/Padre/Locale.pm:50
 msgid "Arabic"
 msgstr "Árabe"
 
-#: lib/Padre/Locale.pm:50
+#: lib/Padre/Locale.pm:51
 msgid "German"
 msgstr "Alemão"
 
-#: lib/Padre/Locale.pm:51
+#: lib/Padre/Locale.pm:52
 msgid "English"
 msgstr "Inglês"
 
-#: lib/Padre/Locale.pm:52
+#: lib/Padre/Locale.pm:53
 msgid "French"
 msgstr "Francês"
 
-#: lib/Padre/Locale.pm:53
+#: lib/Padre/Locale.pm:54
 msgid "Hebrew"
 msgstr "Hebraico"
 
-#: lib/Padre/Locale.pm:54
+#: lib/Padre/Locale.pm:55
 msgid "Hungarian"
 msgstr "Húngaro"
 
-#: lib/Padre/Locale.pm:55
+#: lib/Padre/Locale.pm:56
 msgid "Korean"
 msgstr "Coreano"
 
-#: lib/Padre/Locale.pm:56
+#: lib/Padre/Locale.pm:57
 msgid "Italian"
 msgstr "Italiano"
 
-#: lib/Padre/Locale.pm:57
+#: lib/Padre/Locale.pm:58
 msgid "Russian"
 msgstr "Russo"
 
-#: lib/Padre/Locale.pm:58
+#: lib/Padre/Locale.pm:59
 msgid "Dutch"
 msgstr "Holandês"
+
+#: lib/Padre/Locale.pm:60
+msgid "Portuguese"
+msgstr "Português"
 
 #: lib/Padre/PluginManager.pm:245
 msgid ""
@@ -93,8 +97,8 @@ msgstr "Plugin:%s - Não compatível com a API Padre::Plugin. Precisa ser uma subc
 
 #: lib/Padre/PluginManager.pm:407
 #, perl-format
-msgid "Plugin:%s - Not compatible with Padre::Plugin API. Plugin is not instantiable"
-msgstr "Plugin:%s - Não compatível com a API Padre::Plugin. Plugin não é instaciável"
+msgid "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be instantiated"
+msgstr "Plugin:%s - Não compatível com a API Padre::Plugin. Plugin não pôde ser instaciado"
 
 #: lib/Padre/PluginManager.pm:419
 #: lib/Padre/PluginManager.pm:439
@@ -103,25 +107,29 @@ msgid "Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub padre
 msgstr "Plugin:%s - Não compatível com a API Padre::Plugin. Precisa ter a sub padre_interfaces"
 
 #: lib/Padre/PluginManager.pm:672
-#: lib/Padre/Wx/MainWindow.pm:1297
-#: lib/Padre/Wx/MainWindow.pm:1950
+#: lib/Padre/Wx/MainWindow.pm:1253
+#: lib/Padre/Wx/MainWindow.pm:1906
 msgid "Open file"
 msgstr "Abrir arquivo"
 
 #: lib/Padre/PluginManager.pm:699
 #, perl-format
-msgid "Failed to load the plugin '%s'"
-msgstr "Falha ao carregar plugin '%s'"
+msgid ""
+"Failed to load the plugin '%s'\n"
+"%s"
+msgstr ""
+"Falha ao carregar plugin '%s'\n"
+"%s"
 
-#: lib/Padre/Document/Perl.pm:402
-#: lib/Padre/Document/Perl.pm:425
+#: lib/Padre/Document/Perl.pm:415
+#: lib/Padre/Document/Perl.pm:445
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:87
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:137
 msgid "Current cursor does not seem to point at a variable"
-msgstr "Cursor atual não parece apontar para uma variável"
+msgstr "Cursor não parece apontar para uma variável"
 
-#: lib/Padre/Document/Perl.pm:403
-#: lib/Padre/Document/Perl.pm:426
+#: lib/Padre/Document/Perl.pm:416
+#: lib/Padre/Document/Perl.pm:446
 msgid "Check cancelled"
 msgstr "Verificação cancelada"
 
@@ -134,8 +142,8 @@ msgstr "Aviso"
 #: lib/Padre/Task/SyntaxChecker.pm:171
 #: lib/Padre/Task/SyntaxChecker.pm:186
 #: lib/Padre/Task/SyntaxChecker.pm:190
-#: lib/Padre/Wx/MainWindow.pm:908
-#: lib/Padre/Wx/MainWindow.pm:1429
+#: lib/Padre/Wx/MainWindow.pm:864
+#: lib/Padre/Wx/MainWindow.pm:1385
 msgid "Error"
 msgstr "Erro"
 
@@ -145,7 +153,6 @@ msgid "Line"
 msgstr "Linha"
 
 #: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:77
-#, fuzzy
 msgid "All braces appear to be matched"
 msgstr "Todos os blocos de chaves parecem estar fechados"
 
@@ -212,12 +219,12 @@ msgid "Select all\tCtrl-A"
 msgstr "Selecionar tudo\tCtrl-A"
 
 #: lib/Padre/Wx/Editor.pm:590
-#: lib/Padre/Wx/Menu/Edit.pm:232
+#: lib/Padre/Wx/Menu/Edit.pm:262
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "&Comentar Linhas Selecionadas\tCtrl-M"
 
 #: lib/Padre/Wx/Editor.pm:594
-#: lib/Padre/Wx/Menu/Edit.pm:240
+#: lib/Padre/Wx/Menu/Edit.pm:270
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "&Descomentar Linhas Selecionadas\tCtrl-Shift-M"
 
@@ -242,219 +249,207 @@ msgstr "Lista de Erros"
 msgid "No diagnostics available for this error!"
 msgstr "Nenhum diagnóstico disponível para este erro!"
 
-#: lib/Padre/Wx/MainWindow.pm:84
+#: lib/Padre/Wx/MainWindow.pm:86
 msgid "(running from SVN checkout)"
 msgstr "(executando a partir de checkout SVN)"
 
-#: lib/Padre/Wx/MainWindow.pm:246
+#: lib/Padre/Wx/MainWindow.pm:244
 msgid "Files"
 msgstr "Arquivos"
 
-#: lib/Padre/Wx/MainWindow.pm:329
-#, fuzzy
+#: lib/Padre/Wx/MainWindow.pm:327
 msgid "Workspace View"
 msgstr "Exibição da Área de Trabalho"
 
-#: lib/Padre/Wx/MainWindow.pm:333
+#: lib/Padre/Wx/MainWindow.pm:331
 msgid "Methods"
 msgstr "Métodos"
 
-#: lib/Padre/Wx/MainWindow.pm:370
-#, fuzzy
+#: lib/Padre/Wx/MainWindow.pm:368
 msgid "Output View"
 msgstr "Exibição da Saída"
 
-#: lib/Padre/Wx/MainWindow.pm:537
-#: lib/Padre/Wx/MainWindow.pm:1823
+#: lib/Padre/Wx/MainWindow.pm:535
+#: lib/Padre/Wx/MainWindow.pm:1779
 msgid "Subs"
 msgstr "Subs"
 
-#: lib/Padre/Wx/MainWindow.pm:538
-#: lib/Padre/Wx/MainWindow.pm:1781
+#: lib/Padre/Wx/MainWindow.pm:536
+#: lib/Padre/Wx/MainWindow.pm:1737
 msgid "Output"
 msgstr "Saída"
 
-#: lib/Padre/Wx/MainWindow.pm:596
-msgid "L:"
-msgstr "L:"
-
-#: lib/Padre/Wx/MainWindow.pm:596
-msgid "Ch:"
-msgstr "Caract:"
-
-#: lib/Padre/Wx/MainWindow.pm:738
+#: lib/Padre/Wx/MainWindow.pm:694
 msgid "Command line"
 msgstr "Linha de comando"
 
-#: lib/Padre/Wx/MainWindow.pm:739
+#: lib/Padre/Wx/MainWindow.pm:695
 msgid "Run setup"
 msgstr "Executar setup"
 
-#: lib/Padre/Wx/MainWindow.pm:821
+#: lib/Padre/Wx/MainWindow.pm:777
 msgid "No open document"
 msgstr "Nenhum documento aberto"
 
-#: lib/Padre/Wx/MainWindow.pm:836
+#: lib/Padre/Wx/MainWindow.pm:792
 msgid "No execution mode was defined for this document"
 msgstr "Nenhum modo de execução foi definido para este documento"
 
-#: lib/Padre/Wx/MainWindow.pm:859
+#: lib/Padre/Wx/MainWindow.pm:815
 msgid "Not a Perl document"
 msgstr "Não é um documento Perl"
 
-#: lib/Padre/Wx/MainWindow.pm:901
+#: lib/Padre/Wx/MainWindow.pm:857
 msgid "Message"
 msgstr "Mensagem"
 
-#: lib/Padre/Wx/MainWindow.pm:988
+#: lib/Padre/Wx/MainWindow.pm:944
 msgid "Autocompletions error"
 msgstr "Erro de auto-completar"
 
-#: lib/Padre/Wx/MainWindow.pm:999
+#: lib/Padre/Wx/MainWindow.pm:955
 msgid "Line number:"
 msgstr "Número da linha:"
 
-#: lib/Padre/Wx/MainWindow.pm:1227
+#: lib/Padre/Wx/MainWindow.pm:1183
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Nada selecionado. Digite o que deve ser aberto:"
 
-#: lib/Padre/Wx/MainWindow.pm:1228
+#: lib/Padre/Wx/MainWindow.pm:1184
 msgid "Open selection"
 msgstr "Abrir seleção"
 
-#: lib/Padre/Wx/MainWindow.pm:1272
+#: lib/Padre/Wx/MainWindow.pm:1228
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Não foi possível encontrar arquivo '%s'"
 
-#: lib/Padre/Wx/MainWindow.pm:1272
+#: lib/Padre/Wx/MainWindow.pm:1228
 msgid "Open Selection"
 msgstr "Abrir Seleção"
 
-#: lib/Padre/Wx/MainWindow.pm:1323
-#: lib/Padre/Wx/MainWindow.pm:2293
+#: lib/Padre/Wx/MainWindow.pm:1279
+#: lib/Padre/Wx/MainWindow.pm:2248
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Não foi possível recarregar arquivo: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:1343
+#: lib/Padre/Wx/MainWindow.pm:1299
 msgid "Save file as..."
 msgstr "Salvar arquivo como..."
 
-#: lib/Padre/Wx/MainWindow.pm:1357
+#: lib/Padre/Wx/MainWindow.pm:1313
 msgid "File already exists. Overwrite it?"
 msgstr "Arquivo já existe. Sobrescrever?"
 
-#: lib/Padre/Wx/MainWindow.pm:1358
+#: lib/Padre/Wx/MainWindow.pm:1314
 msgid "Exist"
 msgstr "Existe"
 
-#: lib/Padre/Wx/MainWindow.pm:1420
+#: lib/Padre/Wx/MainWindow.pm:1376
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Arquivo modificado em disco desde o último salvamento. Gostaria de sobrescrevê-lo?"
 
-#: lib/Padre/Wx/MainWindow.pm:1421
-#: lib/Padre/Wx/MainWindow.pm:2286
+#: lib/Padre/Wx/MainWindow.pm:1377
+#: lib/Padre/Wx/MainWindow.pm:2241
 msgid "File not in sync"
 msgstr "Arquivo não sincronizado"
 
-#: lib/Padre/Wx/MainWindow.pm:1429
+#: lib/Padre/Wx/MainWindow.pm:1385
 msgid "Could not save file: "
 msgstr "Não foi possível salvar arquivo:"
 
-#: lib/Padre/Wx/MainWindow.pm:1470
+#: lib/Padre/Wx/MainWindow.pm:1426
 msgid "File changed. Do you want to save it?"
 msgstr "Arquivo modificado. Gostaria de salvá-lo?"
 
-#: lib/Padre/Wx/MainWindow.pm:1471
+#: lib/Padre/Wx/MainWindow.pm:1427
 msgid "Unsaved File"
 msgstr "Arquivo não salvo"
 
-#: lib/Padre/Wx/MainWindow.pm:1566
+#: lib/Padre/Wx/MainWindow.pm:1522
 msgid "Cannot diff if file was never saved"
 msgstr "Não é possível executar diff se arquivo nunca foi salvo"
 
-#: lib/Padre/Wx/MainWindow.pm:1572
+#: lib/Padre/Wx/MainWindow.pm:1528
 msgid "There are no differences\n"
 msgstr "Nenhuma diferença encontrada\n"
 
-#: lib/Padre/Wx/MainWindow.pm:1863
+#: lib/Padre/Wx/MainWindow.pm:1819
 msgid "Syntax Check"
 msgstr "Verificação de Sintaxe"
 
-#: lib/Padre/Wx/MainWindow.pm:2018
+#: lib/Padre/Wx/MainWindow.pm:1973
 #, perl-format
 msgid "Error: %s"
 msgstr "Erro: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2019
+#: lib/Padre/Wx/MainWindow.pm:1974
 #: lib/Padre/Wx/Menu/Experimental.pm:79
-#, fuzzy
 msgid "Self error"
-msgstr "Self error"
+msgstr "Erro interno"
 
-#: lib/Padre/Wx/MainWindow.pm:2143
+#: lib/Padre/Wx/MainWindow.pm:2098
 #, perl-format
 msgid "Words: %d"
 msgstr "Palavras: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2144
+#: lib/Padre/Wx/MainWindow.pm:2099
 #, perl-format
 msgid "Lines: %d"
 msgstr "Linhas: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2145
+#: lib/Padre/Wx/MainWindow.pm:2100
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr "Caracteres sem espaços: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2146
+#: lib/Padre/Wx/MainWindow.pm:2101
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Caracteres com espaços: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2147
+#: lib/Padre/Wx/MainWindow.pm:2102
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Tipo da quebra de linha: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2148
+#: lib/Padre/Wx/MainWindow.pm:2103
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Codificação: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2149
+#: lib/Padre/Wx/MainWindow.pm:2104
 #, perl-format
 msgid "Document type: %s"
 msgstr "Tipo do documento: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2149
-#, fuzzy
+#: lib/Padre/Wx/MainWindow.pm:2104
 msgid "none"
 msgstr "nenhum"
 
-#: lib/Padre/Wx/MainWindow.pm:2151
+#: lib/Padre/Wx/MainWindow.pm:2106
 #, perl-format
 msgid "Filename: %s"
 msgstr "Nome do arquivo: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2152
+#: lib/Padre/Wx/MainWindow.pm:2107
 msgid "No filename"
 msgstr "Nenhum nome de arquivo"
 
-#: lib/Padre/Wx/MainWindow.pm:2170
+#: lib/Padre/Wx/MainWindow.pm:2125
 msgid "Space to Tab"
 msgstr "Espaços para Tabs"
 
-#: lib/Padre/Wx/MainWindow.pm:2170
+#: lib/Padre/Wx/MainWindow.pm:2125
 msgid "Tab to Space"
 msgstr "Tabs para Espaços"
 
-#: lib/Padre/Wx/MainWindow.pm:2173
+#: lib/Padre/Wx/MainWindow.pm:2128
 msgid "How many spaces for each tab:"
 msgstr "Quantos espaços para cada tab:"
 
-#: lib/Padre/Wx/MainWindow.pm:2285
+#: lib/Padre/Wx/MainWindow.pm:2240
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "Arquivo modificado em disco desde o último salvamento. Gostaria de recarregá-lo?"
 
@@ -523,6 +518,14 @@ msgstr "Escolher Diretório"
 msgid "Select Project Directory"
 msgstr "Escolha o Diretório do Projeto"
 
+#: lib/Padre/Wx/StatusBar.pm:80
+msgid "L:"
+msgstr "L:"
+
+#: lib/Padre/Wx/StatusBar.pm:82
+msgid "Ch:"
+msgstr "Caract:"
+
 #: lib/Padre/Wx/SyntaxChecker.pm:46
 msgid "Type"
 msgstr "Tipo"
@@ -588,7 +591,7 @@ msgid "GoTo Bookmark"
 msgstr "Ir para Marcação"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:108
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s line %s"
 msgstr "%s linha %s"
 
@@ -638,7 +641,6 @@ msgid "Email:"
 msgstr "Email:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:42
-#, fuzzy
 msgid "Builder:"
 msgstr "Builder:"
 
@@ -655,7 +657,6 @@ msgid "Pick parent directory"
 msgstr "Escolher diretório pai"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:82
-#, fuzzy
 msgid "Module Start"
 msgstr "Iniciar Módulo"
 
@@ -683,7 +684,7 @@ msgstr "Incompatível"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:45
 #: lib/Padre/Wx/Dialog/Preferences.pm:98
-#: lib/Padre/Wx/Menu/Edit.pm:351
+#: lib/Padre/Wx/Menu/Edit.pm:381
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -754,7 +755,7 @@ msgstr "Modo iniciante Perl"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:63
 msgid "Preferred language for error diagnostics:"
-msgstr "Idioma preferido para diagnósticos de erros:"
+msgstr "Idioma preferido para diagnóstico de erros:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:74
 msgid "Editor Font:"
@@ -763,6 +764,50 @@ msgstr "Fonte do Editor:"
 #: lib/Padre/Wx/Dialog/Preferences.pm:83
 msgid "Editor Current Line Background Colour:"
 msgstr "Cor de Fundo da Linha Atual no Editor"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:105
+msgid "Behaviour"
+msgstr "Comportamento"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:105
+msgid "Appearance"
+msgstr "Aparência"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:147
+msgid "new"
+msgstr "novo"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:147
+msgid "nothing"
+msgstr "nenhum"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:147
+msgid "last"
+msgstr "último"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:152
+msgid "no"
+msgstr "não"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:152
+msgid "same_level"
+msgstr "mesmo_nivel"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:152
+msgid "deep"
+msgstr "profunda"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:157
+msgid "alphabetical"
+msgstr "alfabética"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:157
+msgid "original"
+msgstr "original"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:158
+msgid "alphabetical_private_last"
+msgstr "alfabética_privados_por_último"
 
 #: lib/Padre/Wx/Dialog/Search.pm:157
 msgid "Case insensitive"
@@ -773,7 +818,6 @@ msgid "Use regex"
 msgstr "Usar expressão regular"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:19
-#, fuzzy
 msgid "All"
 msgstr "Todos"
 
@@ -862,67 +906,79 @@ msgstr "Procurar Próximo\tF3"
 msgid "Find Previous\tShift-F3"
 msgstr "Procurar Anterior\tShift-F3"
 
-#: lib/Padre/Wx/Menu/Edit.pm:177
+#: lib/Padre/Wx/Menu/Edit.pm:179
+msgid "Quick Find"
+msgstr "Busca Rápida"
+
+#: lib/Padre/Wx/Menu/Edit.pm:191
+msgid "Find Next\tF4"
+msgstr "Buscar Próximo\tF4"
+
+#: lib/Padre/Wx/Menu/Edit.pm:197
+msgid "Find Previous\tShift-F4"
+msgstr "Buscar Anterior\tShift-F4"
+
+#: lib/Padre/Wx/Menu/Edit.pm:207
 msgid "Ac&k"
 msgstr "Ac&k"
 
-#: lib/Padre/Wx/Menu/Edit.pm:183
+#: lib/Padre/Wx/Menu/Edit.pm:213
 msgid "&Goto\tCtrl-G"
 msgstr "&Ir para\tCtrl-G"
 
-#: lib/Padre/Wx/Menu/Edit.pm:191
+#: lib/Padre/Wx/Menu/Edit.pm:221
 msgid "&AutoComp\tCtrl-P"
 msgstr "&Auto-completar\tCtrl-P"
 
-#: lib/Padre/Wx/Menu/Edit.pm:199
+#: lib/Padre/Wx/Menu/Edit.pm:229
 msgid "&Brace matching\tCtrl-1"
 msgstr "Início/Fim de &bloco correspondente\tCtrl-1"
 
-#: lib/Padre/Wx/Menu/Edit.pm:207
+#: lib/Padre/Wx/Menu/Edit.pm:237
 msgid "&Join lines\tCtrl-J"
 msgstr "&Juntar linhas\tCtrl-J"
 
-#: lib/Padre/Wx/Menu/Edit.pm:215
+#: lib/Padre/Wx/Menu/Edit.pm:245
 msgid "Snippets\tCtrl-Shift-A"
 msgstr "Trechos\tCtrl-Shift-A"
 
-#: lib/Padre/Wx/Menu/Edit.pm:255
+#: lib/Padre/Wx/Menu/Edit.pm:285
 msgid "Tabs and Spaces"
 msgstr "Tabs e Espaços"
 
-#: lib/Padre/Wx/Menu/Edit.pm:260
+#: lib/Padre/Wx/Menu/Edit.pm:290
 msgid "Tabs to Spaces..."
 msgstr "Tabs para Espaços..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:268
+#: lib/Padre/Wx/Menu/Edit.pm:298
 msgid "Spaces to Tabs..."
 msgstr "Espaços para Tabs..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:276
+#: lib/Padre/Wx/Menu/Edit.pm:306
 msgid "Delete Trailing Spaces"
 msgstr "Retirar espaços do final da linha"
 
-#: lib/Padre/Wx/Menu/Edit.pm:284
+#: lib/Padre/Wx/Menu/Edit.pm:314
 msgid "Delete Leading Spaces"
 msgstr "Retirar espaços do início da linha"
 
-#: lib/Padre/Wx/Menu/Edit.pm:298
+#: lib/Padre/Wx/Menu/Edit.pm:328
 msgid "Upper/Lower Case"
 msgstr "Caixa Alta/Baixa"
 
-#: lib/Padre/Wx/Menu/Edit.pm:303
+#: lib/Padre/Wx/Menu/Edit.pm:333
 msgid "Upper All\tCtrl-Shift-U"
 msgstr "Tudo em Maiúsculas\tCtrl-Shift-U"
 
-#: lib/Padre/Wx/Menu/Edit.pm:312
+#: lib/Padre/Wx/Menu/Edit.pm:342
 msgid "Lower All\tCtrl-U"
 msgstr "Tudo em Minúsculas\tCtrl-U"
 
-#: lib/Padre/Wx/Menu/Edit.pm:327
+#: lib/Padre/Wx/Menu/Edit.pm:357
 msgid "Diff"
 msgstr "Diff"
 
-#: lib/Padre/Wx/Menu/Edit.pm:335
+#: lib/Padre/Wx/Menu/Edit.pm:365
 msgid "Insert From File..."
 msgstr "Inserir a partir de Arquivo..."
 
@@ -935,7 +991,7 @@ msgid "Refresh Menu"
 msgstr "Atualizar Menu"
 
 #: lib/Padre/Wx/Menu/Experimental.pm:51
-#: lib/Padre/Wx/Menu/Experimental.pm:156
+#: lib/Padre/Wx/Menu/Experimental.pm:98
 msgid "Refresh Counter: "
 msgstr "Atualizar Contador:"
 
@@ -950,22 +1006,6 @@ msgstr "Executar no &Padre"
 #: lib/Padre/Wx/Menu/Experimental.pm:78
 msgid "Error: "
 msgstr "Erro:"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:89
-msgid "Use PPI for Perl5 syntax highlighting"
-msgstr "Usar PPI para coloração de sintaxe Perl5"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:121
-msgid "Quick Find"
-msgstr "Busca Rápida"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:133
-msgid "Find Next\tF4"
-msgstr "Buscar Próximo\tF4"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:139
-msgid "Find Previous\tShift-F4"
-msgstr "Buscar Anterior\tShift-F4"
 
 #: lib/Padre/Wx/Menu/File.pm:36
 msgid "&New\tCtrl-N"
@@ -1079,15 +1119,18 @@ msgstr "Encontrar Bloco Aberto"
 msgid "Find variable declaration"
 msgstr "Encontrar declaração de variável"
 
-#: lib/Padre/Wx/Menu/Perl.pm:50
+#: lib/Padre/Wx/Menu/Perl.pm:49
 msgid "Lexically replace variable"
 msgstr "Substituir variável lexicalmente"
 
+#: lib/Padre/Wx/Menu/Perl.pm:55
 #: lib/Padre/Wx/Menu/Perl.pm:56
-#: lib/Padre/Wx/Menu/Perl.pm:57
-#, fuzzy
 msgid "Replacement"
 msgstr "Substituição"
+
+#: lib/Padre/Wx/Menu/Perl.pm:72
+msgid "Use PPI for Perl5 syntax highlighting"
+msgstr "Usar PPI para coloração de sintaxe Perl5"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:43
 msgid "Edit My Plugin"
