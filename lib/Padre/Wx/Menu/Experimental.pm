@@ -70,18 +70,7 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext('Run in &Padre') ),
-		sub {
-			my $self = shift;
-			my $code = Padre::Documents->current->text_get;
-			eval $code; ## no critic
-			Wx::MessageBox(
-				Wx::gettext("Error: ") . "$@",
-				Wx::gettext("Self error"),
-				Wx::wxOK,
-				$main,
-			) if $@;
-			return;
-		},
+		\&Padre::Wx::MainWindow::run_in_padre,
 	);
 
 	return $self;
