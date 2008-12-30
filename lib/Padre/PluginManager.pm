@@ -405,7 +405,7 @@ sub _load_plugin {
 		$self->{errstr} = sprintf(
 			Wx::gettext(
 				"Plugin:%s - Not compatible with Padre::Plugin API. "
-				. "Plugin is not instantiable"
+				. "Plugin cannot be instantiated"
 			), $name,
 		);
 		$plugin->status('error');
