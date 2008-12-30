@@ -1072,7 +1072,7 @@ Dutch - Dirk De Nijs (ddn123456)
 
 English - everyone on the team
 
-French - Jerome Quelin (JQUELIN)
+French - Jérôme Quelin (JQUELIN)
 
 German - Heiko Jansen (HJANSEN)
 
