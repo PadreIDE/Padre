@@ -82,8 +82,15 @@ sub ppi_select {
 }
 
 
-
-
+sub lexer {
+	my $self = shift;
+	my $config = Padre->ide->config;
+	if ( $config->{ppi_highlight} ) {
+		return Wx::wxSTC_LEX_CONTAINER;
+	} else {
+		return $self->SUPER::lexer();
+	}
+}
 
 #####################################################################
 # Padre::Document GUI Integration

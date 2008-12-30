@@ -73,16 +73,7 @@ sub data {
 sub padre_setup {
 	my ($self) = @_;
 
-	my $lexer = $self->{Document}->lexer;
-	
-	if ($lexer eq Wx::wxSTC_LEX_PERL) {
-		my $config = Padre->ide->config;
-		if ( $config->{ppi_highlight} ) {
-			$lexer = Wx::wxSTC_LEX_CONTAINER;
-		}
-	}
-	
-	$self->SetLexer( $lexer );
+	$self->SetLexer( $self->{Document}->lexer );
 #	 $self->Colourise(0, $self->GetTextLength);
 
 	# the next line will change the ESC key to cut the current selection
