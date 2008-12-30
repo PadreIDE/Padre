@@ -43,6 +43,9 @@ my %defaults = (
 	editor_use_tabs               => 1,
 	editor_tabwidth               => 8,
 	editor_indentwidth            => 4,
+	
+	ppi_highlight                 => 0,
+	ppi_highlight_limit           => 10_000,
 
 	# When running a script from the application some of the files might have not been saved yet.
 	# There are several option what to do before running the script

@@ -85,7 +85,8 @@ sub ppi_select {
 sub lexer {
 	my $self = shift;
 	my $config = Padre->ide->config;
-	if ( $config->{ppi_highlight} ) {
+
+	if ( $config->{ppi_highlight} and $self->editor->GetTextLength < $config->{ppi_highlight_limit} ) {
 		return Wx::wxSTC_LEX_CONTAINER;
 	} else {
 		return $self->SUPER::lexer();

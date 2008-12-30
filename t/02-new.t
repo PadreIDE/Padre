@@ -54,6 +54,9 @@ SCOPE: {
 		editor_use_tabs               => 1,
 		editor_perl5_beginner         => 1,
 
+		ppi_highlight                 => 0,
+		ppi_highlight_limit           => 10_000,
+
 		search_terms       => [],
 		replace_terms      => [],
 		main_startup       => 'new',
