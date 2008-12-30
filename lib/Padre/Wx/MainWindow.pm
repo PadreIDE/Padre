@@ -36,7 +36,7 @@ use Padre::Wx::Output         ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::StatusBar      ();
 use Padre::Wx::ErrorList      ();
-use Padre::wx::AuiManager     ();
+use Padre::Wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
 use Padre::Documents          ();
