@@ -32,8 +32,9 @@ use Padre::Util               ();
 use Padre::Locale             ();
 use Padre::Wx                 ();
 use Padre::Wx::Editor         ();
-use Padre::Wx::ToolBar        ();
 use Padre::Wx::Output         ();
+use Padre::Wx::ToolBar        ();
+use Padre::Wx::StatusBar      ();
 use Padre::Wx::ErrorList      ();
 use Padre::wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
@@ -105,6 +106,7 @@ sub new {
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
 
+	# Drag and drop support
 	$self->SetDropTarget(
 		Padre::Wx::FileDropTarget->new($self)
 	);
@@ -113,13 +115,19 @@ sub new {
 	# TODO: Storing this here violates encapsulation.
 	$self->{_methods} = [];
 
+	# Temporary store for the notebook tab history
+	# TODO: Storing this here (might) violate encapsulation.
+	#       It should probably be in the notebook object.
+	$self->{page_history} = [];
+
 	# Set the window manager
 	$self->{manager} = Padre::Wx::AuiManager->new($self);
 
 	# Add some additional attribute slots
 	$self->{marker} = {};
 
-	$self->{page_history} = [];
+	# Create the status bar
+	$self->{gui}->{statusbar} = Padre::Wx::StatusBar->new($self);
 
 	# create basic window components
 	$self->create_main_components;
@@ -152,7 +160,7 @@ sub new {
 		my ($self, $event) = @_;
 		my $mod  = $event->GetModifiers || 0;
 		my $code = $event->GetKeyCode;
-		
+
 		# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 		$mod = $mod & (Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT());
 		if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
@@ -214,16 +222,8 @@ sub create_main_components {
 	);
 	$self->GetToolBar->Realize;
 
-	# Create the status bar
-	unless ( defined $self->{gui}->{statusbar} ) {
-		$self->{gui}->{statusbar} = $self->CreateStatusBar( 1, Wx::wxST_SIZEGRIP|Wx::wxFULL_REPAINT_ON_RESIZE );
-		$self->{gui}->{statusbar}->SetFieldsCount(4);
-		$self->{gui}->{statusbar}->SetStatusWidths(-1, 100, 50, 100);
-	}
-
 	return;
 }
-
 
 sub create_editor_pane {
 	my $self = shift;
@@ -561,51 +561,9 @@ sub refresh_toolbar {
 }
 
 sub refresh_status {
-	my ($self) = @_;
+	my $self = shift;
 	return if $self->no_refresh;
-
-	my $pageid = $self->nb->GetSelection();
-	if (not defined $pageid or $pageid == -1) {
-		$self->SetStatusText("", $_) for (0..3);
-		return;
-	}
-	my $editor       = $self->nb->GetPage($pageid);
-	my $doc          = Padre::Documents->current or return;
-	my $line         = $editor->GetCurrentLine;
-	my $filename     = $doc->filename || '';
-	my $newline_type = $doc->get_newline_type || Padre::Util::NEWLINE;
-	my $modified     = $editor->GetModify ? '*' : ' ';
-
-	if ($filename) {
-		$self->nb->SetPageText($pageid, $modified . File::Basename::basename $filename);
-	} else {
-		my $text = substr($self->nb->GetPageText($pageid), 1);
-		$self->nb->SetPageText($pageid, $modified . $text);
-	}
-
-	my $pos   = $editor->GetCurrentPos;
-	my $start = $editor->PositionFromLine($line);
-	my $char  = $pos-$start;
-
-	$self->SetStatusText("$modified $filename",             0);
-
-	my $charWidth = $self->{gui}->{statusbar}->GetCharWidth;
-	my $mt = $doc->get_mimetype;
-	my $curPos = Wx::gettext('L:') . ($line + 1) . ' ' . Wx::gettext('Ch:') . $char;
-
-	$self->SetStatusText($mt,           1);
-	$self->SetStatusText($newline_type, 2);
-	$self->SetStatusText($curPos,       3);
-
-	# since charWidth is an average we adjust the values a little
-	$self->{gui}->{statusbar}->SetStatusWidths(
-		-1,
-		(length($mt)           - 1) * $charWidth,
-		(length($newline_type) + 2) * $charWidth,
-		(length($curPos)       + 1) * $charWidth
-	); 
-
-	return;
+	$self->GetStatusBar->refresh;
 }
 
 # TODO now on every ui chnage (move of the mouse)
@@ -1982,7 +1940,6 @@ sub convert_to {
 	my ($self, $newline_type) = @_;
 
 	my $editor = $self->selected_editor;
-	#$editor->SetEOLMode( $mode{$newline_type} );
 	$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline_type} );
 
 	# TODO: include the changing of file type in the undo/redo actions
