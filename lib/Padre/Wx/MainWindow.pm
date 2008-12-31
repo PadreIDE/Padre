@@ -504,7 +504,7 @@ sub refresh {
     my $timestamp = time;
     my $last_refresh = (defined $self->{last_refresh}) ? $self->{last_refresh} : 0;
     $self->{last_refresh} = $timestamp;
-    if( $last_refresh <= $timestamp) {
+    if($last_refresh >= $timestamp) {
        return;
     }
     
