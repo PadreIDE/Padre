@@ -29,4 +29,14 @@ sub new {
 	return $self;
 }
 
+sub relocale {
+	my $self = shift;
+
+	# Update various pane labels
+	$self->GetPane('sidepane')->Caption( Wx::gettext("Subs") );
+	$self->GetPane('bottompane')->Caption( Wx::gettext("Output") );
+
+	return $self;
+}
+
 1;
