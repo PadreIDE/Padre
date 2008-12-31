@@ -116,6 +116,9 @@ sub padre_setup_plain {
 
 	my $config = Padre->ide->config;
 
+	if ( defined $data->{plain}{current_line_foreground} ) {
+		$self->SetCaretForeground( _color( $data->{plain}{current_line_foreground} ) );
+	}
 	if ( defined $data->{plain}{current_line_background} ) {
 		if ( defined $config->{editor_current_line_background_color} ) {
 			if (   $data->{plain}{current_line_background}

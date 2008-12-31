@@ -6,7 +6,8 @@
 plain:
  foregrounds:
   0: 00007f
-  current_line_background: FFFF04
+ current_line_foreground: FFFFFF
+ current_line_background: 000000
 perl:
  brace_highlight: 00FF00
  background: 000000
