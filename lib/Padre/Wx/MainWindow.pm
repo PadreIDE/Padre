@@ -64,6 +64,12 @@ use Class::XSAccessor
 		errorlist      => 'errorlist',
 	};
 
+# NOTE: Yes this method does get a little large, but that's fine.
+#       It's better to have one bigger method that is easily
+#       understandable rather than scattering tightly-related code
+#       all over the place in unrelated places.
+#       If you feel the need to make this smaller, try to make each
+#       individual step tighter and better abstracted.
 sub new {
 	my $class  = shift;
 	my $config = Padre->ide->config;
@@ -126,11 +132,18 @@ sub new {
 	# Add some additional attribute slots
 	$self->{marker} = {};
 
+	# Create the menu bar
+	$self->{menu} = Padre::Wx::Menu->new($self);
+	$self->SetMenuBar( $self->menu->wx );
+
+	# Create the tool bar
+	$self->SetToolBar(
+		Padre::Wx::ToolBar->new($self)
+	);
+	$self->GetToolBar->Realize;
+
 	# Create the status bar
 	$self->{gui}->{statusbar} = Padre::Wx::StatusBar->new($self);
-
-	# create basic window components
-	$self->create_main_components;
 
 	$self->create_editor_pane;
 
@@ -210,11 +223,6 @@ sub new {
 
 sub create_main_components {
 	my $self = shift;
-
-	# Create the menu bar
-	delete $self->{menu} if defined $self->{menu};
-	$self->{menu} = Padre::Wx::Menu->new($self);
-	$self->SetMenuBar( $self->menu->wx );
 
 	# Create the tool bar
 	$self->SetToolBar(
@@ -482,6 +490,9 @@ sub window_top {
 #####################################################################
 # Refresh Methods
 
+# The term and method "refresh" is reserved for fast, blocking,
+# real-time updates to the GUI. Enabling and disabling menu entries,
+# updating dynamic titles and status bars, and other rapid changes.
 sub refresh {
 	my $self = shift;
 	return if $self->no_refresh;
@@ -515,48 +526,11 @@ sub refresh {
 	return;
 }
 
-sub change_style {
-	my $self = shift;
-	my $name = shift;
-
-	warn "Style: $name\n";
-	Padre::Wx::Editor::data($name);
-	foreach my $editor ( $self->pages ) {
-		$editor->padre_setup;
-	}
-	
-	return;
-}
-
-sub change_locale {
-	my $self = shift;
-	my $name = shift;
-
-	# Save the locale to the config
-	Padre->ide->config->{host}->{locale} = $name;
-
-	# Reset the locale
-	delete $self->{locale};
-	$self->{locale} = Padre::Locale::object();
-
-	# Refresh the interface with the new labels
-	$self->create_main_components;
-	$self->refresh;
-
-	# Replace the AUI component captions
-	$self->manager->GetPane('sidepane')->Caption( Wx::gettext("Subs") );
-	$self->manager->GetPane('bottompane')->Caption( Wx::gettext("Output") );
-
-	return;
-}
-
 sub refresh_syntaxcheck {
 	my $self = shift;
 	return if $self->no_refresh;
 	return if not $self->menu->view->{show_syntaxcheck}->IsChecked;
-
 	Padre::Wx::SyntaxChecker::on_syntax_check_timer( $self, undef, 1 );
-
 	return;
 }
 
@@ -580,8 +554,7 @@ sub refresh_status {
 
 # TODO now on every ui chnage (move of the mouse)
 # we refresh this even though that should not be
-# necessary 
-# can that be eliminated ?
+# necessary can that be eliminated ?
 sub refresh_methods {
 	my $self = shift;
 	return if $self->no_refresh;
@@ -629,6 +602,66 @@ sub refresh_methods {
 
 
 #####################################################################
+# Interface Rebuilding Methods
+
+sub change_style {
+	my $self = shift;
+	Padre::Wx::Editor::data($_[0]);
+	foreach my $editor ( $self->pages ) {
+		$editor->padre_setup;
+	}
+	return;
+}
+
+sub change_locale {
+	my $self = shift;
+	my $name = shift;
+
+	# Save the locale to the config
+	Padre->ide->config->{host}->{locale} = $name;
+
+	# Reset the locale
+	delete $self->{locale};
+	$self->{locale} = Padre::Locale::object();
+
+	# Run the "relocale" process to update the GUI
+	$self->relocale;
+
+	# With language stuff updated, do a full refresh
+	# sweep to clean everything up.
+	$self->refresh;
+
+	return;
+}
+
+# The term and method "relocale" is reserved for functionality
+# intended to run when the application wishes to change locale
+# (and wishes to do so without restarting).
+sub relocale {
+	my $self = shift;
+
+	# The menu doesn't support relocale, replace it
+	delete $self->{menu};
+	$self->{menu} = Padre::Wx::Menu->new($self);
+	$self->SetMenuBar( $self->menu->wx );
+
+	# The toolbar doesn't support relocale, replace it
+	$self->SetToolBar(
+		Padre::Wx::ToolBar->new($self)
+	);
+	$self->GetToolBar->Realize;
+
+	# Update window manager captions
+	$self->manager->relocale;
+
+	return;
+}
+
+
+
+
+
+#####################################################################
 # Introspection
 
 sub selected_document {
@@ -653,7 +686,6 @@ your editing a atomic in the Undo stack.
 
  $editor->BeginUndoAction;
  $editor->EndUndoAction;
-
 
 =cut
 
