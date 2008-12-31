@@ -737,7 +737,11 @@ sub stats {
 	$chars_without_space++ while ( $code =~ /\S/g );
 
 	my $filename = $self->filename;
-	
+
+	# not set when first time to save
+	require Padre::Locale;
+	$self->{encoding} ||= Padre::Locale::encoding_from_string($src);
+
 	return ( $lines, $chars_with_space, $chars_without_space, $words, $is_readonly, 
 			$filename, $self->{newline_type}, $self->{encoding} );
 }
