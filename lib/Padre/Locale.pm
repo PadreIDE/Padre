@@ -117,7 +117,11 @@ my %RFC4646 = (
 		fallback => [ 'en-nz', 'en-gb' ],
 	},
 
-	# The remaining languages are listed sorted by identifier.
+
+
+
+
+	# The official languages are listed sorted by identifier.
 	# NOTE: Please do not populate entries into this list unless
 	# you are a native speaker of a particular language and are
 	# fully aware of any 
@@ -137,7 +141,20 @@ my %RFC4646 = (
 		wxid     => Wx::wxLANGUAGE_ENGLISH_US,
 	},
 
-	
+
+
+
+
+	# RFC4646 supports the interesting idea of comedy languages.
+	# We'll put these at the end :)
+	# Mostly what these do is uncover issues that might arise when
+	# a language is not supported by various older standards.
+	'i-klingon' => {
+		gettext  => 'Klingon',
+		iso639   => undef,
+		iso3166  => undef,
+		wxid     => undef,
+	},
 );
 
 
