@@ -190,9 +190,9 @@ my %SHORTNAME = (
 
 my %NUMBER = reverse %SHORTNAME;
 
-# LANGUAGES hash needs to be here in order
-# the get the run-time language change for these words too.
-my %LANGUAGES = (
+# The list of languages that should be shown in the language menu
+# and the strings that should be used to label them.
+sub menu_view_languages {
 	ar => Wx::gettext('Arabic'),
 	de => Wx::gettext('German'),
 	en => Wx::gettext('English'),
@@ -205,15 +205,6 @@ my %LANGUAGES = (
 	nl => Wx::gettext('Dutch'),
 	pt => Wx::gettext('Portuguese'), # Actually brazilian, which is a bug
         es => Wx::gettext('Spanish'),
-);
-
-# TODO: The need for direct access to the table indicates a failure
-#       on the part of Padre::Locale to provide sufficiently useful
-#       functions. Second-generation locale support has data that is
-#       too complex to be reasonably useful to external consumers, so
-#       we need to fix that by providing more direct functions.
-sub languages {
-	return %LANGUAGES;
 }
 
 sub shortname {
