@@ -107,7 +107,7 @@ my %RFC4646 = (
 		gettext  => 'English (Australian)',
 		iso639   => 'en',
 		iso3166  => 'AU',
-		wxid     => Wx::wxLANGUAGE_ENGLISH_AUSTRALIAN,
+		wxid     => Wx::wxLANGUAGE_ENGLISH_AUSTRALIA,
 		# Even though en-gb is the default language, in this
 		# specific case there is a clearly expressed desire for
 		# this fallback path.
@@ -130,7 +130,7 @@ my %RFC4646 = (
 		gettext  => 'English (New Zealand)',
 		iso639   => 'en',
 		iso3166  => 'NZ',
-		wxid     => Wx::wxLANGUAGE_NEW_ZEALAND,
+		wxid     => Wx::wxLANGUAGE_ENGLISH_NEW_ZEALAND,
 		fallback => [ 'en-au', 'en-gb' ], # The en-au is debatable
 	},
 
