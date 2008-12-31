@@ -20,6 +20,7 @@ our %mode = (
 
 my $data;
 my $data_name;
+my $data_private;
 my $width;
 
 sub new {
@@ -49,21 +50,31 @@ sub new {
 }
 
 sub data {
-	my $name = shift;
+	my $name    = shift;
+	my $private = shift;
 
 	return $data if not defined $name;
 	return $data if defined $data and $name eq $data_name;
 
-	$data = YAML::Tiny::LoadFile(
-		Padre::Util::sharefile( 'styles', "$name.yml" )
-	);
-	$data_name = $name;
-
-	my $config = Padre->ide->config;
-	if (defined $config->{editor_current_line_background_color}) {
-		$data->{plain}{current_line_background} = $config->{editor_current_line_background_color};
+	my $file = $private 
+				? File::Spec->catfile( Padre::Config->default_dir , 'styles', "$name.yml" )
+				: Padre::Util::sharefile( 'styles', "$name.yml" );
+	my $tdata;
+	eval {
+		$tdata = YAML::Tiny::LoadFile($file);
+	};
+	if ($@) {
+		warn $@;
+	} else {
+		$data_name = $name;
+		$data_private = $private;
+		$data = $tdata;
+		
+		my $config = Padre->ide->config;
+		if (defined $config->{editor_current_line_background_color}) {
+			$data->{plain}{current_line_background} = $config->{editor_current_line_background_color};
+		}
 	}
-
 	return $data;
 }
 
@@ -167,8 +178,16 @@ sub padre_setup_style {
 
 sub _color {
 	my $rgb = shift;
-	my @c = map {hex($_)} $rgb =~ /(..)(..)(..)/;
-	return Wx::Colour->new(@c)
+	my @c = (0xFF, 0xFF, 0xFF); # some default
+	if (not defined $rgb) {
+		#Carp::cluck("undefined color");
+	} elsif ( $rgb =~ /^(..)(..)(..)$/) {
+		@c = map {hex($_)} ($1, $2, $3);
+	} else {
+		#Carp::cluck("invalid color '$rgb'");
+	}
+	#print "@c\n";
+	return Wx::Colour->new(@c);
 }
 
 sub highlight_braces {

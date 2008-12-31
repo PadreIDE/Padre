@@ -605,8 +605,10 @@ sub refresh_methods {
 # Interface Rebuilding Methods
 
 sub change_style {
-	my $self = shift;
-	Padre::Wx::Editor::data($_[0]);
+	my $self    = shift;
+	my $name    = shift;
+	my $private = shift;
+	Padre::Wx::Editor::data($name, $private);
 	foreach my $editor ( $self->pages ) {
 		$editor->padre_setup;
 	}
