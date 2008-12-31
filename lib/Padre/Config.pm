@@ -59,7 +59,7 @@ my %defaults = (
 	search_terms              => [],
 	replace_terms             => [],
 
-	# Various things that should probably be in the database
+	# Various things that should be in the database
 	bookmarks                 => {},
 	projects                  => {},
 	current_project           => '',
@@ -176,7 +176,9 @@ sub new {
 	];
 
 	# When they want to run an arbitrary command
-	$self->{host}->{run_command}    ||= '';
+	$self->{host}->{run_command} ||= '';
+
+	# Default the locale to the system locale
 
 
 	%$self = (%defaults, %$self);
