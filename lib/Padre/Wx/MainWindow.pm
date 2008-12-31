@@ -242,7 +242,8 @@ sub create_editor_pane {
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_DEFAULT_STYLE | Wx::wxAUI_NB_WINDOWLIST_BUTTON,
+		Wx::wxAUI_NB_TOP | Wx::wxAUI_NB_SCROLL_BUTTONS | 
+        Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB | Wx::wxAUI_NB_WINDOWLIST_BUTTON,
 	);
 
 	$self->manager->AddPane(
