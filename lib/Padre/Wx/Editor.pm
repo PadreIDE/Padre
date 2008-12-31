@@ -69,11 +69,6 @@ sub data {
 		$data_name = $name;
 		$data_private = $private;
 		$data = $tdata;
-		
-		my $config = Padre->ide->config;
-		if (defined $config->{editor_current_line_background_color}) {
-			$data->{plain}{current_line_background} = $config->{editor_current_line_background_color};
-		}
 	}
 	return $data;
 }
