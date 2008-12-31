@@ -14,8 +14,8 @@ our @ISA     = 'Wx::AuiManager';
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new;
-	
-	 # Wx::AuiManager seems to bless into itself but we want to subclass it
+
+	# Wx::AuiManager seems to bless into itself but we want to subclass it
 	bless $self, $class;
 
 	# Set the managed window
