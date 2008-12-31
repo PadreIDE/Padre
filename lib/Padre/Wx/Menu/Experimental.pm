@@ -87,16 +87,6 @@ sub refresh {
 		Wx::gettext('Refresh Counter: ') . $self->{refresh_counter}
 	);
 
-	# Simple QuickFind check update
-	$self->{quick_find}->Check( $config->{is_quick_find} ? 1 : 0 );
-
-	# Check update and enable/disable the PPI lexer hook
-	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
-	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
-		$config->{ppi_highlight}
-			? Wx::wxSTC_LEX_CONTAINER
-			: Wx::wxSTC_LEX_PERL;
-
 	return;
 }
 

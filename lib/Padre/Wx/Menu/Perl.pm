@@ -109,6 +109,10 @@ sub refresh {
 	my $config   = Padre->ide->config;
 
 	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
+	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
+		$config->{ppi_highlight}
+			? Wx::wxSTC_LEX_CONTAINER
+			: Wx::wxSTC_LEX_PERL;
 }
 
 1;
