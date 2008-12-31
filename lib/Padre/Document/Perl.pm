@@ -103,6 +103,7 @@ sub colorize {
 
 	my $editor = $self->editor;
 	my $text   = $self->text_get;
+	return unless $text;
 
 	require PPI::Document;
 	my $ppi_doc = PPI::Document->new( \$text );
