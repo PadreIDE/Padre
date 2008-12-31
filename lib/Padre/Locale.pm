@@ -79,6 +79,7 @@ my %RFC4646 = (
 		iso3166   => 'GB',
 
 		# REQUIRED: The wxWidgets language (integer) identifier.
+		# http://docs.wxwidgets.org/stable/wx_languagecodes.html#languagecodes
 		wxid      => Wx::wxLANGUAGE_ENGLISH_UK,
 
 		# OPTIONAL: The wxWidgets catalog file to use.
