@@ -203,7 +203,7 @@ sub show {
 
 sub on_forward {
 	my ( $self ) = @_;
-	my $module = Padre->ide->next_module;
+	my $module = $self->next_module;
 	if ( $module ) {
 		$self->{html}->display($module);
 	}
@@ -212,7 +212,7 @@ sub on_forward {
 
 sub on_back {
 	my ( $self ) = @_;
-	my $module = Padre->ide->prev_module;
+	my $module = $self->prev_module;
 	if ( $module ) {
 		$self->{html}->display($module);
 	}
