@@ -138,7 +138,7 @@ sub new {
 	);
 	$self->{save_as} = $self->Append(
 		Wx::wxID_SAVEAS,
-		Wx::gettext('Save &As...')
+		Wx::gettext("Save &As...\tF12")
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{save_as},
