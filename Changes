@@ -10,6 +10,11 @@ v0.23 ??????????
         making our dependency-heavy Makefile.PL far saner (ADAMK)
     Portuguese (Brazilian) translation added (GARU)
     Spanish translation added (PacoLinux)
+    Shutdown process now delays saving the session until after the
+        interface phase (ADAMK)
+    Shutdown process now disables all the plugins, so they have a
+        change to shut down elegantly too (ADAMK)
+    Plugins now reload correctly (ADAMK)
 
 v0.22 2008.12.23
 
