@@ -33,8 +33,3 @@ my $dialog = Padre::Wx::Dialog::HTML->new(
 	html  => $html,
 );
 isa_ok( $dialog, 'Padre::Wx::Dialog::HTML' );
-
-# Show the dialog
-$dialog->Show;
-
-1;
