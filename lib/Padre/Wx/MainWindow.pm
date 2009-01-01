@@ -176,7 +176,9 @@ sub new {
 
 		# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 		$mod = $mod & (Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT());
-		if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+		if (not $mod) {
+			$self->on_f1($event) if $code = Wx::WXK_F1;
+		} elsif ( $mod == Wx::wxMOD_CMD ) { # Ctrl
 			# Ctrl-TAB  #TODO it is already in the menu
 			$self->on_next_pane if $code == Wx::WXK_TAB;
 		} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT()) { # Ctrl-Shift
@@ -1522,6 +1524,13 @@ sub on_nth_pane {
 		return 1;
 	}
 
+	return;
+}
+
+sub on_f1 {
+	my ( $self, $event ) = @_;
+	print "F1\n";
+	$event->Skip();
 	return;
 }
 
