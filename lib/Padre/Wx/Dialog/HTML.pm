@@ -40,7 +40,13 @@ sub new {
 	$self->{sizer} = Wx::GridSizer->new( 1, 1, 10, 10 );
 
 	# Add the HTML renderer to the frame
-	$self->{renderer} = Padre::Wx::HtmlWindow->new( $self->{panel}, -1 );
+	$self->{renderer} = Padre::Wx::HtmlWindow->new(
+		$self->{panel},
+		-1,
+		[ -1, -1 ],
+		[ -1, -1 ],
+		Wx::wxHW_NO_SELECTION,
+	);
 	$self->{sizer}->Add(
 		$self->{renderer},
 		1, # Growth proportion
