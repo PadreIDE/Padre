@@ -45,11 +45,6 @@ sub show {
 			[ 'Wx::Button',    "pref_$name", Wx::gettext('Preferences')  ],
 		];
 	}
-	push @layout, [
-		[ 'Wx::Button', 'ok', Wx::wxID_OK ],
-		[ ],
-		[ ],
-	];
 
 	# Create the dialog frame
 	my $dialog = $self->{dialog} = Padre::Wx::Dialog->new(
@@ -89,8 +84,6 @@ sub show {
 			$dialog->EndModal(Wx::wxID_OK);
 		},
 	);
-	$dialog->{_widgets_}->{ok}->SetDefault;
-	$dialog->{_widgets_}->{ok}->SetFocus;
 
 	# Show the dialog frame
 	$dialog->show_modal;
