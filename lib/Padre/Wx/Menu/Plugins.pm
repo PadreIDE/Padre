@@ -49,8 +49,10 @@ sub new {
 			return $self->error(
 				Wx::gettext("Could not find the Padre::Plugin::My plugin")
 			) unless -e $file;
-			$_[0]->setup_editor($file);
-			$_[0]->refresh;
+
+			# Use the plural so we get the "close single unused document"
+			# behaviour, and so we get a free freezing and refresh calls.
+			$_[0]->setup_editors($file);
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
@@ -97,32 +99,31 @@ sub new {
 	# Add the tools submenu
 	$self->Append( -1, Wx::gettext('Plugin Tools'), $tools );
 
-	$self->add_plugin_specific_entries();
+	$self->add_plugin_specific_entries($main);
 
 	return $self;
 }
 
 sub add_plugin_specific_entries {
 	my $self = shift;
-	
-	# Get the list of plugins
-	my $manager = Padre->ide->plugin_manager;
-	my $plugins = $manager->plugins;
-	my @plugins = grep { $_ ne 'My' } sort keys %$plugins;
+	my $main = shift;
 
+	# Clear out any existing entries
+	my $manager = Padre->ide->plugin_manager;
 	my $entries = $self->{plugin_menus} || [];
-	$self->remove_plugin_specific_entries() if @$entries;
+	$self->remove_plugin_specific_entries if @$entries;
 
 	# Add the enabled plugins that want a menu
 	my $need_seperator = 1;
-	foreach my $name ( 'My', @plugins ) {
-		next unless $plugins->{$name};
-		next unless $plugins->{$name}->{status};
-		next unless $plugins->{$name}->{status} eq 'enabled';
+	foreach my $name ( $manager->plugin_names ) {
+		my $plugin = $manager->_plugin($name);
+		next unless $plugin->enabled;
 
-		my @menu = $manager->get_menu( Padre->ide->wx->main_window, $name );
+		# Generate the menu for the plugin
+		my @menu = $manager->get_menu( $main, $name );
 		next unless @menu;
 
+		# Did the previous entry needs a separator after it
 		if ( $need_seperator ) {
 			push @$entries, $self->AppendSeparator;
 			$need_seperator = 0;
@@ -140,21 +141,23 @@ sub add_plugin_specific_entries {
 }
 
 sub remove_plugin_specific_entries {
-	my $self = shift;
+	my $self    = shift;
 	my $entries = $self->{plugin_menus} || [];
-	
-	while (@$entries) {
-		$self->Destroy(pop @$entries);
+
+	while ( @$entries ) {
+		$self->Destroy( pop @$entries );
 	}
 	$self->{plugin_menus} = $entries;
+
 	return 1;
 }
 
 sub refresh {
-	my $self    = shift;
+	my $self = shift;
+	my $main = Padre->ide->wx->main_window;
 
-	$self->remove_plugin_specific_entries();
-	$self->add_plugin_specific_entries();
+	$self->remove_plugin_specific_entries;
+	$self->add_plugin_specific_entries($main);
 
 	return 1;
 }
