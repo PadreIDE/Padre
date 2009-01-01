@@ -99,6 +99,19 @@ sub new {
 			return;
 		}
 	);
+	
+	# Make it easier to access stack traces
+	$self->{run_with_stack_trace} = $self->AppendCheckItem( -1,
+		Wx::gettext("Run perl scripts with stack trace")
+	);	
+	Wx::Event::EVT_MENU( $main, $self->{run_with_stack_trace},
+		sub {
+			# Update the saved config setting
+			my $config = Padre->ide->config;
+			$config->{run_with_stack_trace} = $_[1]->IsChecked ? 1 : 0;
+			$self->refresh;
+		}
+	);
 
 
 	return $self;
@@ -109,6 +122,7 @@ sub refresh {
 	my $config   = Padre->ide->config;
 
 	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
+	$self->{run_with_stack_trace}->Check( $config->{run_with_stack_trace} ? 1 : 0 );
 	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
 		$config->{ppi_highlight}
 			? Wx::wxSTC_LEX_CONTAINER
