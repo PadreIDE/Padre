@@ -2,9 +2,6 @@
 
 use strict;
 use File::Spec ();
-BEGIN {
-	$DB::single = $DB::single = 1;
-}
 use lib File::Spec->rel2abs(
 	File::Spec->catdir(
 		File::Spec->updir,
