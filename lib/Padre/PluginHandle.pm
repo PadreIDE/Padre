@@ -112,7 +112,7 @@ sub can_editor {
 
 
 ######################################################################
-# Rendering Methods
+# Interface Methods
 
 sub plugin_name {
 	my $self   = shift;
@@ -121,6 +121,16 @@ sub plugin_name {
 		return $object->plugin_name;
 	} else {
 		return $self->name;
+	}
+}
+
+sub version {
+	my $self   = shift;
+	my $object = $self->object;
+	if ( $object ) {
+		return $object->VERSION;
+	} else {
+		return '???';
 	}
 }
 
