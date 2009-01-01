@@ -106,12 +106,16 @@ use Class::XSAccessor
 sub plugin_names {
 	my $self = shift;
 	unless ( $self->{plugin_names} ) {
+		# Schwatzian transform that sorts the plugins by their
+		# full names, but always puts "My Plugin" first.
 		$self->{plugin_names} = [
+			map { $_->[0] }
 			sort {
-				($b->name eq 'My') <=> ($a->name eq 'My')
+				($b->[0] eq 'My') <=> ($a->[0] eq 'My')
 				or
-				$a->name cmp $b->name
+				$a->[1] cmp $b->[1]
 			}
+			map { [ $_->name, $_->plugin_name ] }
 			values %{ $self->{plugins} }
 		];
 	}
@@ -128,6 +132,17 @@ sub plugin_objects {
 
 #####################################################################
 # Bulk Plugin Operations
+
+# Disable (but don't unload) all plugins when Padre exits
+sub shutdown {
+	my $self = shift;
+	foreach my $name ( $self->plugin_names ) {
+		my $plugin = $self->_plugin($name);
+		next unless $plugin->enabled;
+		$self->_plugin_disable($plugin);
+	}
+	return 1;
+}
 
 =pod
 
@@ -636,7 +651,7 @@ sub get_menu {
 	my $self    = shift;
 	my $main    = shift;
 	my $name    = shift;
-	my $plugin  = $self->plugins->{$name};
+	my $plugin  = $self->_plugin($name);
 	unless ( $plugin and $plugin->{status} eq 'enabled' ) {
 		return ();
 	}
