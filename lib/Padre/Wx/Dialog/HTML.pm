@@ -47,6 +47,8 @@ sub new {
 		[ -1, -1 ],
 		Wx::wxHW_NO_SELECTION,
 	);
+	$self->{renderer}->SetBorders(0);
+
 	$self->{sizer}->Add(
 		$self->{renderer},
 		1, # Growth proportion
@@ -54,14 +56,27 @@ sub new {
 		5, # Border size
 	);
 
-	# Load the HTML content
-	$self->{renderer}->SetPage( $self->{html} );
-
 	# Tie the sizing to the panel
 	$self->{panel}->SetSizer( $self->{sizer} );
 	$self->{panel}->SetAutoLayout(1);
 
+	# Do an initial refresh to load the HTML
+	$self->refresh;
+
 	return $self;
+}
+
+sub refresh {
+	my $self = shift;
+	my $html = $self->html;
+	$self->{renderer}->SetPage($html);
+	return;
+}
+
+# The default renderer returns a fixed HTML string passed to the constructor.
+# Dialogs that work with dynamic state will build the HTML on the fly.
+sub html {
+	$_[0]->{html};
 }
 
 1;
