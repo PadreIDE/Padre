@@ -444,15 +444,16 @@ sub _load_plugin {
 		$plugin->status('error');
 		return;
 	}
+
+	# Plugin is now loaded
 	$plugin->{object} = $object;
+	$plugin->status('loaded');
 
 	# Should we try to enable the plugin
 	my $config = $self->plugin_config($plugin);
 	unless ( defined $config->{enabled} ) {
 		# Do not enable by default
 		$config->{enabled} = 0;
-		$plugin->status('unloaded');
-		return;
 	}
 	unless ( $config->{enabled} ) {
 		$plugin->status('disabled');
