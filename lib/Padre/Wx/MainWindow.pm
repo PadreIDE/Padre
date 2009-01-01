@@ -223,18 +223,6 @@ sub new {
 	return $self;
 }
 
-sub create_main_components {
-	my $self = shift;
-
-	# Create the tool bar
-	$self->SetToolBar(
-		Padre::Wx::ToolBar->new($self)
-	);
-	$self->GetToolBar->Realize;
-
-	return;
-}
-
 sub create_editor_pane {
 	my $self = shift;
 
@@ -244,8 +232,10 @@ sub create_editor_pane {
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP | Wx::wxAUI_NB_SCROLL_BUTTONS | 
-        Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB | Wx::wxAUI_NB_WINDOWLIST_BUTTON,
+		Wx::wxAUI_NB_TOP
+		| Wx::wxAUI_NB_SCROLL_BUTTONS
+		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
+		| Wx::wxAUI_NB_WINDOWLIST_BUTTON,
 	);
 
 	$self->manager->AddPane(
@@ -266,12 +256,6 @@ sub create_editor_pane {
 		$self->nb,
 		\&on_close,
 	);
-
-#	Wx::Event::EVT_DESTROY(
-#	   $self,
-#	   $self->nb,
-#	   sub {print "destroy @_\n"; },
-#	);
 
 	return;
 }
@@ -300,7 +284,7 @@ sub create_side_pane {
 	Wx::Event::EVT_KILL_FOCUS( $self->{gui}->{subs_panel}, \&on_subs_panel_left );
 
 	# find-as-you-type in functions tab
-	# TODO: should the whole subs_panel stuff be in its own class?
+	# TODO: should the whole subs_panel stuff be in its own class? (Yes)
 	Wx::Event::EVT_CHAR( $self->{gui}->{subs_panel}, sub {
 		my ($self, $event) = @_;
 		my $mod  = $event->GetModifiers || 0;
@@ -388,15 +372,30 @@ sub create_bottom_pane {
 # Load any default files
 sub load_files {
 	my $self   = shift;
-	my $config = Padre->ide->config;
+
+	# An explicit list on the command line overrides configuration
 	my $files  = Padre->inst->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
 		$self->setup_editors(@$files);
-	} elsif ( $config->{main_startup} eq 'new' ) {
+		return;
+	}
+
+	# Config setting 'nothing' means startup with nothing open
+	my $config  = Padre->ide->config;
+	my $startup = $config->{main_startup};
+	if ( $startup eq 'nothing' ) {
+		return;
+	}
+
+	# Config setting 'new' means startup with a single new file open
+	if ( $startup eq 'new' ) {
 		$self->setup_editors;
-	} elsif ( $config->{main_startup} eq 'nothing' ) {
-		# Nothing
-	} elsif ( $config->{main_startup} eq 'last' ) {
+		return;
+	}
+
+	# Config setting 'last' means startup with all the files from the
+	# previous time we used Padre open (if they still exist)
+	if ( $startup eq 'last' ) {
 		if ( $config->{host}->{main_files} ) {
 			$self->Freeze;
 			my @main_files     = @{$config->{host}->{main_files}};
@@ -411,13 +410,16 @@ sub load_files {
 			}
 			if ( $config->{host}->{main_file} ) {
 				my $id = $self->find_editor_of_file( $config->{host}->{main_file} );
-				$self->on_nth_pane($id) if (defined $id);
+				$self->on_nth_pane($id) if defined $id;
 			}
 			$self->Thaw;
 		}
-	} else {
-		# should never happen
+		return;
 	}
+
+	# Configuration has an entry we don't know about
+	# TODO: Once we have a warning system more useful than STDERR
+	# add a warning. For now though, just do nothing and ignore.
 	return;
 }
 
@@ -427,6 +429,8 @@ sub timer_post_init {
 	# Do an initial Show/paint of the complete-looking main window
 	# without any files loaded. Then immediately Freeze so that the
 	# loading of the files is done in a single render pass.
+	# This gives us an optimum compromise between being PERCEIVED
+	# to startup quickly, and ACTUALLY starting up quickly.
 	$self->Show(1);
 	$self->Freeze;
 
@@ -507,11 +511,12 @@ sub refresh {
 	$self->refresh_toolbar;
 	$self->refresh_status;
 	$self->refresh_methods;
-    # Fix ticket #185: Padre crash when closing files
-    if(! $self->{no_syntax_check_refresh}) {
-        $self->refresh_syntaxcheck;
-    }
-    $self->{no_syntax_check_refresh} = 0;
+
+	# Fix ticket #185: Padre crash when closing files
+	if ( ! $self->{no_syntax_check_refresh} ) {
+		$self->refresh_syntaxcheck;
+	}
+	$self->{no_syntax_check_refresh} = 0;
 
 	my $id = $self->nb->GetSelection;
 	if ( defined $id and $id >= 0 ) {
@@ -519,6 +524,7 @@ sub refresh {
 	}
 
 	$self->Thaw;
+
 	return;
 }
 
@@ -1014,24 +1020,26 @@ sub on_goto {
 sub on_close_window {
 	my $self   = shift;
 	my $event  = shift;
-	my $config = Padre->ide->config;
+	my $padre  = Padre->ide;
+	my $config = $padre->config;
 
-	# Save the list of open files
-	$config->{host}->{main_files} = [
+	# Capture the current session, before we start the interactive
+	# part of the shutdown which will mess it up. Don't save it to
+	# the config yet, because we haven't committed to the shutdown
+	# until we get past the interactive phase.
+	my $main_file  = $self->selected_filename;
+	my $main_files = [
 		map  { $_->filename }
 		grep { $_ } 
 		map  { Padre::Documents->by_id($_) }
 		$self->pageids
 	];
-	# Save all Pos for open files
-	$config->{host}->{main_files_pos} = [
+	my $main_files_pos = [
 		map  { $_->editor->GetCurrentPos }
 		grep { $_ } 
 		map  { Padre::Documents->by_id($_) }
 		$self->pageids
 	];
-	# Save selected tab
-	$config->{host}->{main_file} = $self->selected_filename;
 
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
@@ -1059,8 +1067,14 @@ sub on_close_window {
 	# at which Padre appears to close.
 	$self->Show(0);
 
-	# Discover and save the state we want to memorize
-	$config->{host}->{main_maximized} = $self->IsMaximized ? 1 : 0;
+	# Now it's safe to save the session
+	$config->{host}->{main_file}      = $main_file;
+	$config->{host}->{main_files}     = $main_files;
+	$config->{host}->{main_files_pos} = $main_files_pos;
+
+	# Save the window geometry
+	$config->{host}->{aui_manager_layout} = $self->manager->SavePerspective;
+	$config->{host}->{main_maximized}     = $self->IsMaximized ? 1 : 0;
 	unless ( $self->IsMaximized ) {
 		# Don't save the maximized window size
 		(
@@ -1073,14 +1087,17 @@ sub on_close_window {
 		) = $self->GetPositionXY;
 	}
 
-	$config->{host}->{aui_manager_layout} = $self->manager->SavePerspective;
-
-	Padre->ide->save_config;
-
-	# Clean up secondary windows
+	# Clean up our secondary windows
 	if ( $self->{help} ) {
 		$self->{help}->Destroy;
 	}
+
+	# Shut down all the plugins before saving the configuration
+	# so that plugins have a change to save their configuration.
+	$padre->plugin_manager->shutdown;
+
+	# Write the configuration to disk
+	$padre->save_config;
 
 	$event->Skip;
 
@@ -1116,14 +1133,16 @@ sub setup_editors {
 	$self->Freeze;
 
 	# If and only if there is only one current file,
-	# and it is unused, close it.
+	# and it is unused, close it. This is a somewhat
+	# subtle interface DWIM trick, but it's one that
+	# clearly looks wrong when we DON'T do it.
 	if ( $self->nb->GetPageCount == 1 ) {
 		if ( Padre::Documents->current->is_unused ) {
 			$self->on_close($self);
 		}
 	}
 
-	if (@files) {
+	if ( @files ) {
 		foreach my $f ( @files ) {
 			Padre::DB->add_recent_files($f);
 			$self->setup_editor($f);
@@ -1131,6 +1150,7 @@ sub setup_editors {
 	} else {
 		$self->setup_editor;
 	}
+
 	$self->Thaw;
 	$self->refresh;
 	return;
