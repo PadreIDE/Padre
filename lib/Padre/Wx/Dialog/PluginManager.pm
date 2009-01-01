@@ -36,9 +36,7 @@ sub show {
 	my @layout  = ();
 	foreach my $name ( @names ) {
 		my $object = $plugins->{$name}->{object};
-		my $text   = ($object and $object->can('plugin_name'))
-			? $object->plugin_name
-			: $name;
+		my $text   = $plugins->{$name}->plugin_name;
 		push @layout, [
 			[ 'Wx::StaticText', undef,       $text                       ],
 			[ 'Wx::Button',    "able_$name", Wx::gettext('Incompatible') ],

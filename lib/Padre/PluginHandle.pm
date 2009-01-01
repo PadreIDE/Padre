@@ -112,6 +112,23 @@ sub can_editor {
 
 
 ######################################################################
+# Rendering Methods
+
+sub plugin_name {
+	my $self   = shift;
+	my $object = $self->object;
+	if ( $object and $object->can('plugin_name') ) {
+		return $object->plugin_name;
+	} else {
+		return $self->name;
+	}
+}
+
+
+
+
+
+######################################################################
 # Pass-Through Methods
 
 sub enable {
