@@ -185,6 +185,7 @@ sub new {
 			return;
 		},
 	);
+	$self->{quick_find}->Check( Padre->ide->config->{is_quick_find} ? 1 : 0 );
 
 	# Incremental find (#60)
 	Wx::Event::EVT_MENU( $main,
