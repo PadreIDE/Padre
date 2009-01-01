@@ -115,7 +115,7 @@ our %MIME_LEXER = (
 	'text/x-adasrc'          => Wx::wxSTC_LEX_ADA,       # CONFIRMED
 	'text/x-asm'             => Wx::wxSTC_LEX_ASM,       # CONFIRMED
 
-	# application/x-msdos-program includes .exe and .com)
+	# application/x-msdos-program includes .exe and .com, so don't use it
 	'application/x-bat'      => Wx::wxSTC_LEX_BATCH,     # CONFIRMED
 
 	'text/x-c++src'          => Wx::wxSTC_LEX_CPP,       # CONFIRMED
@@ -142,7 +142,7 @@ our %MIME_LEXER = (
 	'text/vbscript'          => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
 
 	# text/xml specifically means "human-readable XML".
-	# This is prefered to the more-generic application/xml
+	# This is prefered to the more generic application/xml
 	'text/xml'               => Wx::wxSTC_LEX_XML,       # CONFIRMED
 
 	'text/x-yaml'            => Wx::wxSTC_LEX_YAML,      # CONFIRMED
