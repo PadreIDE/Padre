@@ -39,7 +39,7 @@ sub new {
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1, Wx::gettext("Context Help\tCtrl-Shift-H") ),
+		$self->Append( -1, Wx::gettext("Context Help\tF1") ),
 		sub {
 			# TODO This feels wrong, the help menu code shouldn't
 			# populate the mainwindow hash.
