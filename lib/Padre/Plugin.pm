@@ -13,26 +13,29 @@ Padre::Plugin - Padre Plugin API
   use strict;
   use base 'Padre::Plugin';
   
-  # Declare the Padre classes we use and Padre version the code was written to
+  # The plugin name to show in the Plugin Manager and menus
+  sub plugin_name {
+      'Example Plugin';
+  }
+  
+  # Declare the Padre interfaces this plugin uses
   sub padre_interfaces {
       'Padre::Plugin'         => 0.19,
       'Padre::Document::Perl' => 0.16,
       'Padre::Wx::MainWindow' => 0.16,
       'Padre::DB'             => 0.16,
   }
-
-  # The plugin name to show in the Plugins menu
+  
   # The command structure to show in the Plugins menu
   sub menu_plugins_simple {
       my $self = shift;
       'My Plugin' => [
-          About => sub { $self->show_about },
-          Deep  => [
+          About   => sub { $self->show_about },
+          Submenu => [
               'Do Something' => sub { $self->do_something },
           ],
       ];
   }
-
   
   1;
 
@@ -42,6 +45,7 @@ use 5.008;
 use strict;
 use warnings;
 use Scalar::Util ();
+use Params::Util ();
 use Padre::Wx    ();
 
 our $VERSION    = '0.22';
@@ -56,7 +60,7 @@ our $COMPATIBLE = '0.18';
 
 =pod
 
-=head2 STATIC/CLASS METHODS
+=head1 STATIC/CLASS METHODS
 
 =head2 plugin_name
 
@@ -89,17 +93,17 @@ sub plugin_name {
   }
 
 In Padre, plugins are permitted to make relatively deep calls into
-Padre's internals.
+Padre's internals. This allows a lot of freedom, but comes at the cost
+of allowing plugins to damage or crash the editor.
 
-To compensate for any potential problems with API compatibility, the second
-generation Padre Plugin Manager will will look for each Plugin module to
-define the Padre classes that the Plugin uses, and the version of Padre that
-the code was originally written against.
+To help compensate for any potential problems, the Plugin Manager expects each
+Plugin module to define the Padre classes that the Plugin uses, and the version
+of Padre that the code was originally written against (for each class).
 
 This information will be used by the plugin manager to calculate whether or
 not the Plugin is still compatible with Padre.
 
-The list of used interfaces should be provided as a list of class/version
+The list of interfaces should be provided as a list of class/version
 pairs, as shown in the example.
 
 The padre_interfaces method will be called on the class, not on the plugin
@@ -165,10 +169,12 @@ document types for which the plugin provides a document class
 (which is used by Padre to enable functionality beyond the level of
 a plain text file with simple Scintilla highlighting).
 
-This method will be called by the Plugin Manager and used to populate
-various internal data and do various other tasks at a time of its choosing.
+This method will be called by the Plugin Manager and the information returned
+will be used to populate various internal data and do various other tasks at
+a time of its choosing. Plugin authors are expected to provide this
+information without having to know how or why Padre will use it.
 
-This (theoretically at this point) allows Padre to keep a document open
+This (theoretically at this point) should allow Padre to keep a document open
 while a plugin is being enabled or disabled, upgrading or downgrading the
 document in the process.
 
@@ -230,13 +236,15 @@ L<Class::Unload>. Suppose you have C<My::Extra::Class> and want to unload it,
 simply do this in C<plugin_disable>:
 
   require Class::Unload;
-  Class::Unload->unload( "My::Extra::Class" );
+  Class::Unload->unload('My::Extra::Class');
 
 Class::Unload takes care of all the tedious bits for you. Note that you
-shouldn't unload any extra, external CPAN dependencies at this point
-since they might be required by other plugins.
+should B<not> unload any external CPAN dependencies, as these may be needed
+by other plugins or Padre itself. Only classes that are part of your plugin
+should be unloaded.
 
-Returns true on success, or false if the unloading process failed.
+Returns true on success, or false if the unloading process failed and your
+plugin has been left in an unknown state.
 
 =cut
 
@@ -258,7 +266,7 @@ The method is passed a wx object that should be used as the wx parent.
 
 =cut
 
-# To be implemented in the child class
+# This method is only implemented in the plugin children
 
 =pod
 
@@ -266,20 +274,29 @@ The method is passed a wx object that should be used as the wx parent.
 
   sub menu_plugins_simple {
       'My Plugin' => [
-          '---' => undef,    # menu separator
-          About => sub { $self->show_about },
-          Deep  => [
+          Submenu  => [
               'Do Something' => sub { $self->do_something },
           ],
+          '---' => undef,        # Separator
+          About => 'show_about', # Shorthand for sub { $self->show_about(@_) }
       ];
   }
 
 The C<menu_plugins_simple> method defines a simple menu structure for your
 plugin.
 
-It returns two values, the label for the menu entry to be used in the top level
-Plugins menu, and a reference to an ARRAY containing an ordered set of key/value
-pairs that will be turned into menus.
+It returns two values, the label for the menu entry to be used in the top
+level Plugins menu, and a reference to an ARRAY containing an B<ordered> set of
+key/value pairs that will be turned into menus.
+
+If the key is a string containing three hyphons (i.e. '---') the pair will be
+rendered as a menu seperator.
+
+If the value is a Perl identifier, it will be treated as a method name to be
+called on the plugin object when the menu entry is triggered.
+
+If the value is a reference to an ARRAY, the pair will be rendered as a
+sub-menu containing further menu items.
 
 =cut
 
@@ -306,7 +323,7 @@ sub menu_plugins_simple {
       );
   
       # Return it and the label for our plugin
-      return ( 'My Plugin' => $menu );
+      return ( $self->plugin_name => $menu );
 
 The C<menu_plugins> method defines a fully-featured mechanism for building
 your plugin menu.
@@ -324,43 +341,66 @@ If the method return a null list, no menu entry will be created for the plugin.
 
 sub menu_plugins {
 	my $self   = shift;
-	my $win    = shift;
+	my $main   = shift;
 	my @simple = $self->menu_plugins_simple or return ();
 	my $label  = $simple[0];
-	my $menu   = $self->_menu_plugins_submenu( $win, $simple[1] ) or return ();
+	my $menu   = $self->_menu_plugins_submenu( $main, $simple[1] ) or return ();
 	return ($label, $menu);
 }
 
 sub _menu_plugins_submenu {
 	my $self  = shift;
-	my $win   = shift;
+	my $main  = shift;
 	my $items = shift;
 	unless ( $items and ref $items and ref $items eq 'ARRAY' and not @$items % 2 ) {
 		return;
 	}
 
 	# Fill the menu
-	my $menu  = Wx::Menu->new;
+	my $menu = Wx::Menu->new;
 	while ( @$items ) {
 		my $label = shift @$items;
 		my $value = shift @$items;
-		if (not defined $value) {
-			if ($label =~ /^---/) {
+
+		# Separator
+		unless ( defined $value ) {
+			if ( $label eq '---' ) {
 				$menu->AppendSeparator;
-            } else {
-				Carp::cluck("Undefined value for label '$label'");
-            }
-		} elsif (not ref $value) {
-			Carp::cluck("Not reference '$value'");
-		} elsif ( ref $value eq 'ARRAY' ) {
-			my $submenu = $self->_menu_plugins_submenu( $win, $value );
+				next;
+			}
+			Carp::cluck("Undefined value for label '$label'");
+		}			
+
+		# Method Name
+		if ( Params::Util::_IDENTIFIER($value) ) {
+			# Convert to a function reference
+			my $method = $value;
+			$value = sub { $self->$method(@_) };
+		}
+
+		# Function Reference
+		if ( Params::Util::_CODE($value) ) {
+			Wx::Event::EVT_MENU(
+				$main,
+				$menu->Append( -1, $label ),
+				sub {
+					eval { $value->(@_) };
+					Carp::cluck($@) if $@;
+				},
+			);
+			next;
+		}
+
+		# Array Reference (submenu)
+		if ( Params::Util::_ARRAY0($value) ) {
+			my $submenu = $self->_menu_plugins_submenu( $main, $value );
 			$menu->Append( -1, $label, $submenu );
-		} elsif (ref $value eq 'CODE') {
-			Wx::Event::EVT_MENU( $win, $menu->Append( -1, $label), sub { eval { $value->(@_) }; Carp::cluck($@) if $@; } );
-        } else {
-			Carp::cluck("Cannot deal with '$value' for label '$label'");
-        }
+			next;
+		}
+	
+		Carp::cluck("Unknown or invalid menu entry (label '$label' and value '$value')");
 	}
+
 	return $menu;
 }
 
