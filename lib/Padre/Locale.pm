@@ -185,7 +185,7 @@ my %SHORTNAME = (
 	# (With apologies to the Portugese)
 	Wx::wxLANGUAGE_PORTUGUESE()    => 'pt',
 
-        Wx::wxLANGUAGE_SPANISH()       => 'es',
+	Wx::wxLANGUAGE_SPANISH()       => 'es',
 );
 
 my %NUMBER = reverse %SHORTNAME;
@@ -204,7 +204,7 @@ sub menu_view_languages {
 	ru => Wx::gettext('Russian'),
 	nl => Wx::gettext('Dutch'),
 	pt => Wx::gettext('Portuguese'), # Actually brazilian, which is a bug
-        es => Wx::gettext('Spanish'),
+	es => Wx::gettext('Spanish'),
 }
 
 sub shortname {

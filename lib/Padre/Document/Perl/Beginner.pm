@@ -9,11 +9,11 @@ Padre::Document::Perl::Beginner - naive implementation of some beginner specific
 
 =head1 SYNOPSIS
 
- use Padre::Document::Perl::Beginner;
- my $b = Padre::Document::Perl::Beginner->new;
- if (not $b->check($data)) {
-	warn $b->error;
- }
+  use Padre::Document::Perl::Beginner;
+  my $b = Padre::Document::Perl::Beginner->new;
+  if (not $b->check($data)) {
+      warn $b->error;
+  }
 
 =head1 DESCRIPTION
 
@@ -26,11 +26,11 @@ This module provides a method called C<check> that can check a perl script
 
 =head1 Examples
 
- split /,/, @data;
- 
+  split /,/, @data;
+
 Here @data is in scalar context returning the number of elemenets. Spotted in this form:
 
- split /,/, @ARGV;
+  split /,/, @ARGV;
 
 
 See L<http://padre.perlide.org/ticket/52> and L<http://www.perlmonks.org/?node_id=728569>
@@ -48,10 +48,6 @@ modify it under the same terms as Perl 5 itself.
 =head1 WARRANTY
 
 There is no warranty whatsoever.
-
-=head1 CREDITS and THANKS
-
-
 
 =cut
 

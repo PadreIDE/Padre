@@ -144,18 +144,18 @@ sub run {
 
 	my $config = Padre->ide->config;
 
-    my @main_startup_items = (Wx::gettext('new'), Wx::gettext('nothing'), Wx::gettext('last'));
+	my @main_startup_items = (Wx::gettext('new'), Wx::gettext('nothing'), Wx::gettext('last'));
 	my @main_startup = (
 		$config->{main_startup},
 		grep { $_ ne $config->{main_startup} } @main_startup_items
 	);
-    my @editor_autoindent_items = (Wx::gettext('no'), Wx::gettext('same_level'), Wx::gettext('deep') );
+	my @editor_autoindent_items = (Wx::gettext('no'), Wx::gettext('same_level'), Wx::gettext('deep') );
 	my @editor_autoindent = (
 		$config->{editor_autoindent},
 		grep { $_ ne $config->{editor_autoindent} } @editor_autoindent_items 
 	);
-    my @editor_methods_items = (Wx::gettext('alphabetical'), Wx::gettext('original'), 
-                                Wx::gettext('alphabetical_private_last') );
+	my @editor_methods_items = (Wx::gettext('alphabetical'), Wx::gettext('original'), 
+	                            Wx::gettext('alphabetical_private_last') );
 	my @editor_methods = (
 		$config->{editor_methods},
 		grep { $_ ne $config->{editor_methods} } @editor_methods_items

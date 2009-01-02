@@ -1909,8 +1909,8 @@ sub check_pane_needed {
 	foreach my $num ( 0 .. $cnt ) {
 		# ignore 'Ack' pane
 		if ( $pane eq 'bottompane' ) {
-    		my $ack_page_idx = $self->{gui}->{$pane}->GetPageIndex( $self->{gui}->{ack_panel} );
-    		next if ( defined $ack_page_idx and $ack_page_idx == $num );
+			my $ack_page_idx = $self->{gui}->{$pane}->GetPageIndex( $self->{gui}->{ack_panel} );
+			next if ( defined $ack_page_idx and $ack_page_idx == $num );
 		}
 		
 		my $p = undef;

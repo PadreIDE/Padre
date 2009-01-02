@@ -56,9 +56,10 @@ sub data {
 	return $data if not defined $name;
 	return $data if defined $data and $name eq $data_name;
 
-	my $file = $private 
-				? File::Spec->catfile( Padre::Config->default_dir , 'styles', "$name.yml" )
-				: Padre::Util::sharefile( 'styles', "$name.yml" );
+	my $file =
+		$private 
+		? File::Spec->catfile( Padre::Config->default_dir , 'styles', "$name.yml" )
+		: Padre::Util::sharefile( 'styles', "$name.yml" );
 	my $tdata;
 	eval {
 		$tdata = YAML::Tiny::LoadFile($file);
@@ -680,7 +681,7 @@ sub unfold_all {
 	my ($self) = @_;
 
 	my $lineCount = $self->GetLineCount;
-    my $currentLine = 0;
+	my $currentLine = 0;
 
 	while ( $currentLine <= $lineCount ) {
 		if ( ! $self->GetFoldExpanded($currentLine) ) {

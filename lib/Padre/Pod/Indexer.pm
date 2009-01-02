@@ -19,8 +19,8 @@ use Padre::DB;
 
 =head1 SYNOPIS
 
- my $indexer = Padre::Pod::Indexer->new;
- my @files = $indexer->list_all_files(@INC);
+  my $indexer = Padre::Pod::Indexer->new;
+  my @files = $indexer->list_all_files(@INC);
 
 =cut
 

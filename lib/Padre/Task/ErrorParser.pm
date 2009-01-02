@@ -24,12 +24,12 @@ sub run {
 			$self->{parser} = Parse::ErrorString::Perl->new;
 		}
 	}
-    return 1;
+	return 1;
 }
 
 sub finish {
 	my $self = shift;
-    my $mw = shift;
+	my $mw = shift;
 
 	my $errorlist = $mw->errorlist;
 	

@@ -720,8 +720,8 @@ sub test_a_plugin {
 }
 
 # Refresh the Plugins menu
-sub _refresh_plugin_menu {	
-        $_[0]->parent->wx->main_window->menu->plugins->refresh;
+sub _refresh_plugin_menu {
+	$_[0]->parent->wx->main_window->menu->plugins->refresh;
 }
 
 

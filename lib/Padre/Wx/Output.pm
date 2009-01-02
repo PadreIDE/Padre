@@ -40,7 +40,7 @@ sub new {
 use Encode;
 sub AppendText {
 	my ($self, $text) = @_;
-    my $string = utf8::is_utf8($text) ? $text : decode('utf8', $text);
+	my $string = utf8::is_utf8($text) ? $text : decode('utf8', $text);
 	$self->SUPER::AppendText($string);
 }
 

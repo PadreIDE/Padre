@@ -103,7 +103,7 @@ sub on_select_project {
 	if ($config->{projects}->{$project}) {
 		#is changing allowed? how do we notice that it is not one of the already existing names?
 	} else {
-	   $config->{projects}->{$project}->{dir} = $dir;
+		$config->{projects}->{$project}->{dir} = $dir;
 	}
 
 	$config->{current_project} = $project;

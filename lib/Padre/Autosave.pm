@@ -11,13 +11,10 @@ Padre::Autosave - autosave and recovery mechanism for Padre
 
 =head1 SYNOPSIS
 
- my $autosave = Padre:Autosave->new(db => 'path/to/database');
- $autosave->save_file($path, $type, $data, $timestamp) = @_;
-
+  my $autosave = Padre:Autosave->new(db => 'path/to/database');
+  $autosave->save_file($path, $type, $data, $timestamp) = @_;
 
 =head1 DESCRIPTION
-
-
 
 =head1 The longer autosave plan
 

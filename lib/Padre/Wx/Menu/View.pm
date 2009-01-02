@@ -275,9 +275,9 @@ sub new {
 	}
 
 	my $dir = File::Spec->catdir( Padre::Config->default_dir , 'styles' );
-	my @private_styles = map
-							{ substr File::Basename::basename($_), 0, -4 }
-							glob File::Spec->catdir( $dir, '*.yml' );
+	my @private_styles =
+		map { substr File::Basename::basename($_), 0, -4 }
+		glob File::Spec->catdir( $dir, '*.yml' );
 	if (@private_styles) {
 		$self->AppendSeparator;
 		foreach my $name (@private_styles) {
@@ -291,7 +291,7 @@ sub new {
 				sub {
 					$_[0]->change_style($name, 1);
 				},
-			);		
+			);
 		}
 	}
 
