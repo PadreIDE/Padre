@@ -20,6 +20,9 @@ BEGIN {
 	}
 }
 
+use Class::XSAccessor
+	constructor => 'new';
+
 =pod
 
 =head1 NAME
@@ -142,13 +145,6 @@ sub schedule {
 C<Padre::Task> provides a basic constructor for you to
 inherit. It simply stores all provided data in the internal
 hash reference.
-
-=cut
-
-sub new {
-	my $class = shift;
-	bless { @_ }, $class;
-}
 
 =head2 run
 
