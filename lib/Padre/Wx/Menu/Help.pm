@@ -41,14 +41,20 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1, Wx::gettext("Context Help\tF1") ),
 		sub {
-			# TODO This feels wrong, the help menu code shouldn't
-			# populate the mainwindow hash.
-			my $selection = $_[0]->selected_text;
-			$_[0]->menu->help->help($_[0]);
-			if ( $selection ) {
-				$_[0]->{help}->show( $selection );
+			my $current = Wx::Window::FindFocus();
+			if ( $current->isa('Padre::Wx::ErrorList') ) {
+				$_[0]->errorlist->on_f1;
+			} else {
+			
+				# TODO This feels wrong, the help menu code shouldn't
+				# populate the mainwindow hash.
+				my $selection = $_[0]->selected_text;
+				$_[0]->menu->help->help($_[0]);
+				if ( $selection ) {
+					$_[0]->{help}->show( $selection );
+				}
+				return;
 			}
-			return;
 		},
 	);
 

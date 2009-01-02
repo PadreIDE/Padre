@@ -45,7 +45,7 @@ sub new {
 	$self->{root} = $root;	
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED($self, $self, \&on_activate);
-	Wx::Event::EVT_TREE_KEY_DOWN($self, $self, \&on_f1);
+	#Wx::Event::EVT_TREE_KEY_DOWN($self, $self, \&on_f1);
 	
 	$self->{mw} = $mw;
 	$self->{config} = $config;
@@ -105,28 +105,23 @@ sub populate {
 }
 
 sub on_f1 {
-	my ($self, $event) = @_;
-	$event->Skip(0);
-	my $key_code = $event->GetKeyCode;
-	if ($key_code == Wx::WXK_F1) {
-		#my $item = $event->GetItem;
-		my $item = $self->GetSelection;
-		return unless $item;
-		my $err = $self->GetPlData($item);
-		return if $err->isa('Parse::ErrorString::Perl::StackItem');
-		my $diagnostics = gettext("No diagnostics available for this error!");
-		if ($err->diagnostics) {
-			$diagnostics = $err->diagnostics;
-			$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
-		}
-		$diagnostics = $^O eq 'MSWin32' ? $diagnostics : encode('utf8', $diagnostics);
-		my $dialog_title = gettext("Diagnostics");
-		if ($err->type_description) {
-			$dialog_title .= (": " . gettext($err->type_description));
-		}
-		my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, $dialog_title, Wx::wxOK);
-		$dialog->ShowModal;
+	my $self = shift;
+	my $item = $self->GetSelection;
+	return unless $item;
+	my $err = $self->GetPlData($item);
+	return if $err->isa('Parse::ErrorString::Perl::StackItem');
+	my $diagnostics = gettext("No diagnostics available for this error!");
+	if ($err->diagnostics) {
+		$diagnostics = $err->diagnostics;
+		$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 	}
+	$diagnostics = $^O eq 'MSWin32' ? $diagnostics : encode('utf8', $diagnostics);
+	my $dialog_title = gettext("Diagnostics");
+	if ($err->type_description) {
+		$dialog_title .= (": " . gettext($err->type_description));
+	}
+	my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, $dialog_title, Wx::wxOK);
+	$dialog->ShowModal;
 }
 
 sub on_activate {
