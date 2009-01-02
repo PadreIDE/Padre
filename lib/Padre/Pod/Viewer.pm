@@ -63,10 +63,15 @@ sub display {
 	my $self   = shift;
 	my $module = shift;
 	my $path   = $self->module_to_path($module);
-	my $parser = Padre::Pod::Viewer::POD->new;
-	$parser->start_html;
-	$parser->parse_from_file($path);
-	my $html = $parser->get_html;
+	my $html;
+	if ($path) {
+		my $parser = Padre::Pod::Viewer::POD->new;
+		$parser->start_html;
+		$parser->parse_from_file($path);
+		$html = $parser->get_html;
+	} else {
+		$html = "No documentation found for <em>$module</em>.";
+	}
 	$self->SetPage($html);
 	return $self;    
 }
