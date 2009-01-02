@@ -64,6 +64,8 @@ sub enable {
 	$self->{mw}->{gui}->{bottompane}->InsertPage( $index, $self, Wx::gettext("Error List"), 0 );
 	$self->Show;
 	$self->{mw}->{gui}->{bottompane}->SetSelection($index);
+	$self->mw->check_pane_needed('bottompane');
+	$self->mw->manager->Update;
 	$self->{enabled} = 1;
 }
 
@@ -72,6 +74,8 @@ sub disable {
 	my $index = $self->{mw}->{gui}->{bottompane}->GetPageIndex($self);
 	$self->Hide;
 	$self->{mw}->{gui}->{bottompane}->RemovePage($index);
+	$self->mw->check_pane_needed('bottompane');
+	$self->mw->manager->Update;
 	$self->{enabled} = 0;
 }
 
