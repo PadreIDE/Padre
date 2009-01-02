@@ -7,904 +7,1261 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-03 21:24+0100\n"
-"PO-Revision-Date: 2008-11-30 22:16+0100\n"
+"POT-Creation-Date: 2009-01-02 02:19-0200\n"
+"PO-Revision-Date: 2009-01-02 16:36+0100\n"
 "Last-Translator: Pásztor György <pasztor@linux.gyakg.u-szeged.hu>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../lib/Padre/PluginManager.pm:563
-#: ../../lib/Padre/PluginManager.pm:566
-#: ../../lib/Padre/Wx/Menu.pm:86
-msgid "Pl&ugins"
-msgstr "Pl&uginek"
-
-#: ../../lib/Padre/PluginManager.pm:603
-#: ../../lib/Padre/Wx/MainWindow.pm:1295
-#: ../../lib/Padre/Wx/MainWindow.pm:1883
-msgid "Open file"
-msgstr "Fájl megnyitása"
-
-#: ../../lib/Padre/Plugin/Vi.pm:306
-#: ../../lib/Padre/Wx/Menu/Help.pm:42
-msgid "Copyright 2008 Gabor Szabo"
-msgstr "Copyright 2008 Szabó Gábor"
-
-#: ../../lib/Padre/Wx/Ack.pm:93
-msgid "Term: "
-msgstr "Kifejezés: "
-
-#: ../../lib/Padre/Wx/Ack.pm:96
-msgid "Dir: "
-msgstr "Könyvtár:"
-
-#: ../../lib/Padre/Wx/Ack.pm:101
-msgid "Pick &directory"
-msgstr "Válassz &könyvtárat"
-
-#: ../../lib/Padre/Wx/Ack.pm:150
-msgid "Select directory"
-msgstr "Könyvtár kiválasztása"
-
-#: ../../lib/Padre/Wx/Dialog/Search.pm:130
-#: ../../lib/Padre/Wx/Dialog/Find.pm:22
-msgid "Find:"
-msgstr "Keres:"
-
-#: ../../lib/Padre/Wx/Dialog/Search.pm:159
-msgid "Case insensitive"
-msgstr "Kis- és nagybetű egybevétele"
-
-#: ../../lib/Padre/Wx/Dialog/Search.pm:163
-msgid "Use regex"
-msgstr "Regex használata"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:27
-msgid "Replace With:"
-msgstr "Erre cserél:"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:29
-msgid "&Replace"
-msgstr "&Cserél"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:34
-msgid "Replace &All"
-msgstr "&Mindet Cseréli"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:37
-msgid "Case &Insensitive"
-msgstr "Kis- és nagybetű egybevétele"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:40
-msgid "&Use Regex"
-msgstr "&Regex használata"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:43
-msgid "Search &Backwards"
-msgstr "&Visszafelé keres"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:46
-msgid "Close Window on &hit"
-msgstr "Találatkor zárja be az ablakot"
-
-#: ../../lib/Padre/Wx/Dialog/Find.pm:66
-msgid "Search"
-msgstr "Keres"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:30
-msgid "Module Name:"
-msgstr "Modul Név:"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:34
-msgid "Author:"
-msgstr "Szerző:"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:38
-msgid "Email:"
-msgstr "Email:"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:42
-msgid "Builder:"
-msgstr "Fordító:"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:47
-msgid "License:"
-msgstr "Licenc:"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:52
-msgid "Parent Directory:"
-msgstr "Szülő Könyvtár:"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:53
-msgid "Pick parent directory"
-msgstr "Válassz szülő könyvtárat"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:82
-msgid "Module Start"
-msgstr "Modul Kezdete"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#: lib/Padre/Document.pm:515
 #, perl-format
-msgid "Field %s was missing. Module not created."
-msgstr "A %s mező hiányzik. A modul nem jött létre."
+msgid "Unsaved %d"
+msgstr "Mentetlen %d"
 
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:125
-msgid "missing field"
-msgstr "hiányzó mező"
+#: lib/Padre/Locale.pm:196
+msgid "Arabic"
+msgstr "Arab"
 
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:144
-#, perl-format
-msgid "%s apparantly created. Do you want to open it now?"
-msgstr "A %s látszólag létrehozva. Megnyissam most?"
-
-#: ../../lib/Padre/Wx/Dialog/ModuleStart.pm:145
-msgid "Done"
-msgstr "Kész"
-
-#: ../../lib/Padre/Wx/Dialog/PluginManager.pm:22
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:64
-#: ../../lib/Padre/Wx/Menu.pm:553
-msgid "Preferences"
-msgstr "Beállítások"
-
-#: ../../lib/Padre/Wx/Dialog/PluginManager.pm:45
-#: ../../lib/Padre/Wx/Menu.pm:778
-msgid "Plugin Manager"
-msgstr "Plugin Kezelő"
-
-#: ../../lib/Padre/Wx/Dialog/PluginManager.pm:101
-msgid "Disable"
-msgstr "Letilt"
-
-#: ../../lib/Padre/Wx/Dialog/PluginManager.pm:107
-msgid "Enable"
-msgstr "Engedélyez"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:19
-msgid "Use Tabs"
-msgstr "Tabok használata"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:22
-msgid "TAB display size (in spaces)"
-msgstr "TAB megjelenített mérete (szóközökben)"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:26
-msgid "Guess from current document"
-msgstr "Az aktuális dokumentum alapján kitalál"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:27
-msgid "Guess"
-msgstr "Tippel"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:30
-msgid "Max number of modules"
-msgstr "Maximális modulszám"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:34
-msgid "Min number of modules"
-msgstr "Minimális modulszám"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:38
-msgid "Open files:"
-msgstr "Fájl megnyitása:"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:42
-msgid "Autoindent:"
-msgstr "Autoindent:"
-
-#: ../../lib/Padre/Wx/Dialog/Preferences.pm:46
-msgid "Default word wrap on for each file"
-msgstr "Alapértelmezett szótörés minden fájlra"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:19
-msgid "All"
-msgstr "Mind"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:23
-msgid "Class:"
-msgstr "Osztály:"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:24
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:123
-msgid "Snippet:"
-msgstr "Töredék:"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:25
-msgid "&Insert"
-msgstr "&Beszúrás"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:27
-#: ../../lib/Padre/Wx/Menu.pm:81
-msgid "&Edit"
-msgstr "&Szerkeszt"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:27
-msgid "&Add"
-msgstr "&Hozzáad"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:39
-msgid "Snippets"
-msgstr "Töredékek"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:121
-msgid "Category:"
-msgstr "Kategória:"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:122
-msgid "Name:"
-msgstr "Név:"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:124
-msgid "&Save"
-msgstr "&Mentés"
-
-#: ../../lib/Padre/Wx/Dialog/Snippets.pm:135
-msgid "Edit/Add Snippets"
-msgstr "Töredékek Szerkesztése/Hozzáadása"
-
-#: ../../lib/Padre/Wx/Dialog/Bookmarks.pm:24
-msgid "Existing bookmarks:"
-msgstr "Létező könyvjelzők:"
-
-#: ../../lib/Padre/Wx/Dialog/Bookmarks.pm:47
-msgid "Set Bookmark"
-msgstr "Könyvjelző beállítása"
-
-#: ../../lib/Padre/Wx/Dialog/Bookmarks.pm:47
-msgid "GoTo Bookmark"
-msgstr "Könyvjelzőre ugrás"
-
-#: ../../lib/Padre/Wx/Dialog/Bookmarks.pm:103
-#, perl-format
-msgid "%s line %s"
-msgstr "%s sor %s"
-
-#: ../../lib/Padre/Wx/Menu.pm:79
-#: ../../lib/Padre/Wx/Menu.pm:344
-#: ../../lib/Padre/Wx/Menu.pm:345
-msgid "&File"
-msgstr "&Fájl"
-
-#: ../../lib/Padre/Wx/Menu.pm:80
-msgid "&Project"
-msgstr "&Projekt"
-
-#: ../../lib/Padre/Wx/Menu.pm:82
-msgid "&View"
-msgstr "&Megnéz"
-
-#: ../../lib/Padre/Wx/Menu.pm:84
-msgid "&Run"
-msgstr "&Futtatás"
-
-#: ../../lib/Padre/Wx/Menu.pm:85
-msgid "&Bookmarks"
-msgstr "&Könyvjelzők"
-
-#: ../../lib/Padre/Wx/Menu.pm:87
-msgid "&Tools"
-msgstr "Eszközök"
-
-#: ../../lib/Padre/Wx/Menu.pm:88
-msgid "&Window"
-msgstr "&Ablak"
-
-#: ../../lib/Padre/Wx/Menu.pm:89
-msgid "&Help"
-msgstr "&Súgó"
-
-#: ../../lib/Padre/Wx/Menu.pm:91
-msgid "E&xperimental"
-msgstr "K&isérleti"
-
-#: ../../lib/Padre/Wx/Menu.pm:245
-msgid "New..."
-msgstr "Új..."
-
-#: ../../lib/Padre/Wx/Menu.pm:247
-msgid "Perl Distribution (Module::Starter)"
-msgstr "Perl Terjesztés (Module::Starter)"
-
-#: ../../lib/Padre/Wx/Menu.pm:257
-msgid "Open Selection\tCtrl-Shift-O"
-msgstr "Kiválasztás megnyitása\tCtrl-Shift-O"
-
-#: ../../lib/Padre/Wx/Menu.pm:267
-msgid "Close All"
-msgstr "Mind bezárása"
-
-#: ../../lib/Padre/Wx/Menu.pm:273
-msgid "Close All but Current"
-msgstr "Az aktuális kivételével az összes bezárása"
-
-#: ../../lib/Padre/Wx/Menu.pm:278
-msgid "Reload file"
-msgstr "Fájl újratöltées"
-
-#: ../../lib/Padre/Wx/Menu.pm:296
-msgid "Save All"
-msgstr "Mindet Menti"
-
-#: ../../lib/Padre/Wx/Menu.pm:313
-msgid "Convert..."
-msgstr "Konvertál..."
-
-#: ../../lib/Padre/Wx/Menu.pm:314
-msgid "EOL to Windows"
-msgstr "Windowsos sorvégek"
-
-#: ../../lib/Padre/Wx/Menu.pm:319
-msgid "EOL to Unix"
-msgstr "Unixos sorvégek"
-
-#: ../../lib/Padre/Wx/Menu.pm:324
-msgid "EOL to Mac Classic"
-msgstr "Maces sorvégek"
-
-#: ../../lib/Padre/Wx/Menu.pm:333
-msgid "Recent Files"
-msgstr "Legutóbbi fájlok"
-
-#: ../../lib/Padre/Wx/Menu.pm:335
-msgid "Open All Recent Files"
-msgstr "Összes utóbbi fájl megnyitása"
-
-#: ../../lib/Padre/Wx/Menu.pm:339
-msgid "Clean Recent Files List"
-msgstr "Utóbbi fájlok listájának törlése"
-
-#: ../../lib/Padre/Wx/Menu.pm:367
-msgid "Doc Stats"
-msgstr "Dokumentum statisztikák"
-
-#: ../../lib/Padre/Wx/Menu.pm:403
-msgid "Select"
-msgstr "Kijelölés"
-
-#: ../../lib/Padre/Wx/Menu.pm:405
-#: ../../lib/Padre/Wx/Editor.pm:406
-msgid "Select all\tCtrl-A"
-msgstr "Összes kijelölése\tCtrl-A"
-
-#: ../../lib/Padre/Wx/Menu.pm:410
-msgid "Mark selection start\tCtrl-["
-msgstr "Megjelöli kijelölés kezdeteként\tCtrl-["
-
-#: ../../lib/Padre/Wx/Menu.pm:417
-msgid "Mark selection end\tCtrl-]"
-msgstr "Megjelölés kijelölés végeként\tCtrl-]"
-
-#: ../../lib/Padre/Wx/Menu.pm:424
-msgid "Clear selection marks"
-msgstr "Kijelölési jelzések törlése"
-
-#: ../../lib/Padre/Wx/Menu.pm:454
-msgid "Find Next\tF3"
-msgstr "Következő Keresése\tF3"
-
-#: ../../lib/Padre/Wx/Menu.pm:458
-msgid "Find Previous\tShift-F3"
-msgstr "&Előző Keresése\tShoft-F3"
-
-#: ../../lib/Padre/Wx/Menu.pm:462
-msgid "Ac&k"
-msgstr "&Rendben"
-
-#: ../../lib/Padre/Wx/Menu.pm:465
-msgid "&Goto\tCtrl-G"
-msgstr "U&gorj\tCtrl-G"
-
-#: ../../lib/Padre/Wx/Menu.pm:470
-msgid "&AutoComp\tCtrl-P"
-msgstr "&AutoBefejez\tCtrl-P"
-
-#: ../../lib/Padre/Wx/Menu.pm:475
-msgid "&Brace matching\tCtrl-1"
-msgstr "Zárójel &párja\tCtrl-1"
-
-#: ../../lib/Padre/Wx/Menu.pm:480
-msgid "&Join lines\tCtrl-J"
-msgstr "Sorok össze&kapcsolása\tCtrl-J"
-
-#: ../../lib/Padre/Wx/Menu.pm:485
-msgid "Snippets\tCtrl-Shift-A"
-msgstr "Töredékek\tCtrl-Shift-A"
-
-#: ../../lib/Padre/Wx/Menu.pm:493
-msgid "&Comment Selected Lines\tCtrl-M"
-msgstr "Kiválasztott sorok &kommentezése\tCtrl-M"
-
-#: ../../lib/Padre/Wx/Menu.pm:498
-msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
-msgstr "Kiválasztott sorok &unkommentezése\tCtrl-Shift-M"
-
-#: ../../lib/Padre/Wx/Menu.pm:507
-msgid "Tabs and Spaces"
-msgstr "Tabulátorok és Szóközök"
-
-#: ../../lib/Padre/Wx/Menu.pm:509
-msgid "Tabs to Spaces..."
-msgstr "Tabulátorok szóközökké..."
-
-#: ../../lib/Padre/Wx/Menu.pm:513
-msgid "Spaces to Tabs..."
-msgstr "Szóközök Tabulátorokká..."
-
-#: ../../lib/Padre/Wx/Menu.pm:517
-msgid "Delete Trailing Spaces"
-msgstr "Záró Szóközök Törlése"
-
-#: ../../lib/Padre/Wx/Menu.pm:521
-msgid "Delete Leading Spaces"
-msgstr "Bevezető Szóközök Törlése"
-
-#: ../../lib/Padre/Wx/Menu.pm:527
-msgid "Upper/Lower Case"
-msgstr "Nagy/Kis Betűk"
-
-#: ../../lib/Padre/Wx/Menu.pm:529
-msgid "Upper All\tCtrl-Shift-U"
-msgstr "Nagybetűs Mind\tCtrl-Shift-U"
-
-#: ../../lib/Padre/Wx/Menu.pm:533
-msgid "Lower All\tCtrl-U"
-msgstr "Kisbetű Mind\tCtrl-U"
-
-#: ../../lib/Padre/Wx/Menu.pm:539
-msgid "Diff"
-msgstr "Különbség"
-
-#: ../../lib/Padre/Wx/Menu.pm:544
-msgid "Insert From File..."
-msgstr "Beszúrás Fájlból..."
-
-#: ../../lib/Padre/Wx/Menu.pm:569
-msgid "Show Output"
-msgstr "Kimenet megjelenítése"
-
-#: ../../lib/Padre/Wx/Menu.pm:578
-msgid "Show Functions"
-msgstr "Függvények Mutatása"
-
-#: ../../lib/Padre/Wx/Menu.pm:589
-msgid "Show StatusBar"
-msgstr "Státuszsor megjelenítése"
-
-#: ../../lib/Padre/Wx/Menu.pm:598
-msgid "Show Line numbers"
-msgstr "Sorszámok megjelenítése"
-
-#: ../../lib/Padre/Wx/Menu.pm:603
-msgid "Show Code Folding"
-msgstr "Kód összecsukás megjelenítése"
-
-#: ../../lib/Padre/Wx/Menu.pm:608
-msgid "Show Newlines"
-msgstr "Újsorok megjelenítése"
-
-#: ../../lib/Padre/Wx/Menu.pm:613
-msgid "Show Whitespaces"
-msgstr "Szóközök Mutatása"
-
-#: ../../lib/Padre/Wx/Menu.pm:619
-msgid "Show Indentation Guide"
-msgstr "Indentálási segéd megjelenítése"
-
-#: ../../lib/Padre/Wx/Menu.pm:626
-msgid "Show Call Tips"
-msgstr "Tippek mutatása"
-
-#: ../../lib/Padre/Wx/Menu.pm:631
-msgid "Show Syntax Check"
-msgstr "Szintaxisellenőrző Mutatása"
-
-#: ../../lib/Padre/Wx/Menu.pm:638
-msgid "Word-Wrap"
-msgstr "Szó-Törés"
-
-#: ../../lib/Padre/Wx/Menu.pm:647
-msgid "Highlight Current Line"
-msgstr "Aktuális Sor Kiemelése"
-
-#: ../../lib/Padre/Wx/Menu.pm:655
-msgid "Increase Font Size\tCtrl-+"
-msgstr "Betűméret növelése\tCtrl-+"
-
-#: ../../lib/Padre/Wx/Menu.pm:659
-msgid "Decrease Font Size\tCtrl--"
-msgstr "Betűméret csökkentsée\tCtrl--"
-
-#: ../../lib/Padre/Wx/Menu.pm:663
-msgid "Reset Font Size\tCtrl-/"
-msgstr "Betűméret visszaállítása\tCtrl-/"
-
-#: ../../lib/Padre/Wx/Menu.pm:669
-msgid "Set Bookmark\tCtrl-B"
-msgstr "Könyvjelző beállítása\tCtrl-B"
-
-#: ../../lib/Padre/Wx/Menu.pm:673
-msgid "Goto Bookmark\tCtrl-Shift-B"
-msgstr "Könyvjelzőre ugrás\tCtrl-Shift-B"
-
-#: ../../lib/Padre/Wx/Menu.pm:679
-msgid "Language"
-msgstr "Nyelv"
-
-#: ../../lib/Padre/Wx/Menu.pm:682
-msgid "System Default"
-msgstr "Rendszer Alapértelmezése"
-
-#: ../../lib/Padre/Wx/Menu.pm:700
-msgid "&Full screen\tF11"
-msgstr "&Teljes képernyő\tF11"
-
-#: ../../lib/Padre/Wx/Menu.pm:714
-msgid "Find Unmatched Brace"
-msgstr "Pár nélküli zárójel keresése"
-
-#: ../../lib/Padre/Wx/Menu.pm:723
-msgid "All braces appear to be matched"
-msgstr "Minden zárójel jónak tűnik"
-
-#: ../../lib/Padre/Wx/Menu.pm:723
-msgid "Check Complete"
-msgstr "Az ellenőrzés teljes"
-
-#: ../../lib/Padre/Wx/Menu.pm:738
-msgid "Run Script\tF5"
-msgstr "Script futtatása\tF5"
-
-#: ../../lib/Padre/Wx/Menu.pm:743
-msgid "Run Command\tCtrl-F5"
-msgstr "Parancs Futtatása\tCtrl-F5"
-
-#: ../../lib/Padre/Wx/Menu.pm:748
-msgid "&Stop"
-msgstr "&Stop"
-
-#: ../../lib/Padre/Wx/Menu.pm:781
-msgid "Plugin Tools"
-msgstr "Plugin Eszközök"
-
-#: ../../lib/Padre/Wx/Menu.pm:807
-msgid "Edit My Plugin"
-msgstr "Pluginem Szerkesztése"
-
-#: ../../lib/Padre/Wx/Menu.pm:812
-msgid "Could not find the Padre::Plugin::My plugin"
-msgstr "Nem találom a Padre::Plugin::My plugin -t"
-
-#: ../../lib/Padre/Wx/Menu.pm:820
-msgid "Reload My Plugin"
-msgstr "My Plugin Ujratöltése"
-
-#: ../../lib/Padre/Wx/Menu.pm:824
-#: ../../lib/Padre/Wx/Menu.pm:827
-#: ../../lib/Padre/Wx/Menu.pm:828
-msgid "Reset My Plugin"
-msgstr "My Plugin alapállapotba hozása"
-
-#: ../../lib/Padre/Wx/Menu.pm:846
-msgid "Reload All Plugins"
-msgstr "Minden Plugin Ujratöltése"
-
-#: ../../lib/Padre/Wx/Menu.pm:850
-msgid "Test A Plugin From Local Dir"
-msgstr "Plugin Tesztelése Helyi Könyvtárból"
-
-#: ../../lib/Padre/Wx/Menu.pm:863
-#: ../../lib/Padre/Wx/Editor.pm:450
-msgid "&Split window"
-msgstr "&Megosztott ablak"
-
-#: ../../lib/Padre/Wx/Menu.pm:868
-msgid "Next File\tCtrl-TAB"
-msgstr "Következő Fájl\tCtrl-TAB"
-
-#: ../../lib/Padre/Wx/Menu.pm:872
-msgid "Previous File\tCtrl-Shift-TAB"
-msgstr "Előző Fájl\tCtrl-Shift-TAB"
-
-#: ../../lib/Padre/Wx/Menu.pm:876
-msgid "Last Visited File\tCtrl-6"
-msgstr "Utoljára Megtekintett Fájl\tCtrl-6"
-
-#: ../../lib/Padre/Wx/Menu.pm:880
-msgid "Right Click\tAlt-/"
-msgstr "Jobb Klikk\tAlt-/"
-
-#: ../../lib/Padre/Wx/Menu.pm:892
-msgid "GoTo Subs Window\tAlt-S"
-msgstr "Ugrás a Szubrutinok Ablakára\tAlt-S"
-
-#: ../../lib/Padre/Wx/Menu.pm:900
-msgid "GoTo Output Window\tAlt-O"
-msgstr "Ugrás a Kimeneti Ablakra\tAlt-O"
-
-#: ../../lib/Padre/Wx/Menu.pm:906
-msgid "GoTo Syntax Check Window\tAlt-C"
-msgstr "Ugrás a Szintaxisellenörző Ablakra\tAlt-C"
-
-#: ../../lib/Padre/Wx/Menu.pm:915
-msgid "GoTo Main Window\tAlt-M"
-msgstr "Ugrás a Főablakra\tAlt-M"
-
-#: ../../lib/Padre/Wx/Menu.pm:937
-msgid "Context Help\tCtrl-Shift-H"
-msgstr "Körenyezetérzékeny Segítség\tCtrl-Shift-H"
-
-#: ../../lib/Padre/Wx/Menu.pm:951
-msgid "Visit the PerlMonks"
-msgstr "PerlMonks meglátogatása"
-
-#: ../../lib/Padre/Wx/Menu.pm:971
-msgid "Reflow Menu/Toolbar"
-msgstr "Lebegő menü/Eszköztár"
-
-#: ../../lib/Padre/Wx/Menu.pm:983
-msgid "Recent Projects"
-msgstr "Legutóbbi Projektek"
-
-#: ../../lib/Padre/Wx/Menu.pm:987
-msgid "Run in &Padre"
-msgstr "Futtatás &Padréban"
-
-#: ../../lib/Padre/Wx/Menu.pm:993
-msgid "Error: "
-msgstr "Hiba: "
-
-#: ../../lib/Padre/Wx/Menu.pm:993
-#: ../../lib/Padre/Wx/MainWindow.pm:1947
-msgid "Self error"
-msgstr "Belső hiba"
-
-#: ../../lib/Padre/Wx/Menu.pm:1001
-msgid "Use PPI for Perl5 syntax highlighting"
-msgstr "PPI használata a Perl5 szintaxis kiemelőjéhez"
-
-#: ../../lib/Padre/Wx/Menu.pm:1011
-msgid "Quick Find"
-msgstr "Gyorskeresés"
-
-#: ../../lib/Padre/Wx/Menu.pm:1024
-msgid "Find Next\tF4"
-msgstr "Következő Keresése\tF4"
-
-#: ../../lib/Padre/Wx/Menu.pm:1028
-msgid "Find Previous\tShift-F4"
-msgstr "Előző Keresése\tShoft-F3"
-
-#: ../../lib/Padre/Wx/Project.pm:25
-#: ../../lib/Padre/Wx/Project.pm:145
-msgid "Not implemented yet"
-msgstr "Még nincs implementálva"
-
-#: ../../lib/Padre/Wx/Project.pm:26
-#: ../../lib/Padre/Wx/Project.pm:145
-msgid "Not Yes"
-msgstr "Nem Igen"
-
-#: ../../lib/Padre/Wx/Project.pm:46
-msgid "Select Project"
-msgstr "Projekt kiválasztása"
-
-#: ../../lib/Padre/Wx/Project.pm:59
-msgid "Select Project Name or type in new one"
-msgstr "Projektnév kiválasztása vagy új beírása"
-
-#: ../../lib/Padre/Wx/Project.pm:65
-msgid "Select Directory"
-msgstr "Könyvtár kiválasztása"
-
-#: ../../lib/Padre/Wx/Project.pm:129
-msgid "Select Project Directory"
-msgstr "Projekt könyvtár kiválasztása"
-
-#: ../../lib/Padre/Wx/Output.pm:31
-msgid "No output"
-msgstr "Nincs kimenet"
-
-#: ../../lib/Padre/Wx/MainWindow.pm:38
+#: lib/Padre/Locale.pm:197
 msgid "German"
 msgstr "Német"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:39
+#: lib/Padre/Locale.pm:198
 msgid "English"
 msgstr "Angol"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:40
-msgid "Korean"
-msgstr "Koreai"
+#: lib/Padre/Locale.pm:199
+msgid "French"
+msgstr "Francia"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:41
-msgid "Hungarian"
-msgstr "Magyar"
-
-#: ../../lib/Padre/Wx/MainWindow.pm:42
+#: lib/Padre/Locale.pm:200
 msgid "Hebrew"
 msgstr "Héber"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:84
-msgid "(running from SVN checkout)"
-msgstr "(SVN munkapéldányból futtatás)"
+#: lib/Padre/Locale.pm:201
+msgid "Hungarian"
+msgstr "Magyar"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:135
-msgid "Files"
-msgstr "Fájlok"
+#: lib/Padre/Locale.pm:202
+msgid "Korean"
+msgstr "Koreai"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:179
-#: ../../lib/Padre/Wx/MainWindow.pm:611
-msgid "Subs"
-msgstr "Függvények"
+#: lib/Padre/Locale.pm:203
+msgid "Italian"
+msgstr "Olasz"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:181
-msgid "Methods"
-msgstr "Metódusok"
+#: lib/Padre/Locale.pm:204
+msgid "Russian"
+msgstr "Orosz"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:201
-#: ../../lib/Padre/Wx/MainWindow.pm:609
-msgid "Output"
-msgstr "Kimenet"
+#: lib/Padre/Locale.pm:205
+msgid "Dutch"
+msgstr "Holland"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:299
-#: ../../lib/Padre/Wx/MainWindow.pm:515
-msgid "Line"
-msgstr "Sor"
+#: lib/Padre/Locale.pm:206
+msgid "Portuguese"
+msgstr "Portugál"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:300
-#: ../../lib/Padre/Wx/MainWindow.pm:517
-msgid "Type"
-msgstr "Típus"
+#: lib/Padre/Locale.pm:207
+msgid "Spanish"
+msgstr "Spanyol"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:301
-msgid "Description"
-msgstr "Leírás"
+#: lib/Padre/PluginManager.pm:260
+msgid ""
+"We found several new plugins.\n"
+"In order to configure and enable them go to\n"
+"Plugins -> Plugin Manager\n"
+"\n"
+"List of new plugins:\n"
+"\n"
+msgstr ""
+"Számos új plugint találtam.\n"
+"Ahhoz hogy konfigurálhasd ill. engedélyezd válaszd ki\n"
+"Pluginek -> Plugin Kezelő\n"
+"\n"
+"Új pluginek listája:\n"
+"\n"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:307
-#: ../../lib/Padre/Wx/MainWindow.pm:610
-msgid "Syntax"
-msgstr "Szintaxis"
+#: lib/Padre/PluginManager.pm:269
+msgid "New plugins detected"
+msgstr "Új plugin-okat találtam."
 
-#: ../../lib/Padre/Wx/MainWindow.pm:804
-msgid "Command line"
-msgstr "Parancssor"
+#: lib/Padre/PluginManager.pm:397
+#, perl-format
+msgid "Plugin:%s - Failed to load module: %s"
+msgstr "Plugin:%s - Modul betöltése sikertelen: %s"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:805
-msgid "Run setup"
-msgstr "Beállítás futtatása"
+#: lib/Padre/PluginManager.pm:410
+#, perl-format
+msgid "Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin"
+msgstr "Plugin:%s - Nem kompatibilis a Padre::Plugin API-val. A Padre::Plugin egy alosztálya kell legyen."
 
-#: ../../lib/Padre/Wx/MainWindow.pm:877
-msgid "No open document"
-msgstr "Nincs nyitot dokumentum"
+#: lib/Padre/PluginManager.pm:422
+#, perl-format
+msgid "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be instantiated"
+msgstr "Plugin:%s - Nem kompatibilis a Padre::Plugin API-val. A plugint nem lehet példányosítani"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:891
-msgid "No execution mode was defined for this document"
-msgstr "Nincs végrehajtási mód definiálva ehhez a dokumentumhoz"
+#: lib/Padre/PluginManager.pm:434
+#: lib/Padre/PluginManager.pm:454
+#, perl-format
+msgid "Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub padre_interfaces"
+msgstr "Plugin:%s - Nem kompatibilis a Padre::Plugin API-val. Kell legyen padre_interfaces szubrutinja."
 
-#: ../../lib/Padre/Wx/MainWindow.pm:910
-msgid "Not a Perl document"
-msgstr "Nem Perl dokumentum"
+#: lib/Padre/PluginManager.pm:688
+#: lib/Padre/Wx/MainWindow.pm:1315
+#: lib/Padre/Wx/MainWindow.pm:1969
+msgid "Open file"
+msgstr "Fájl megnyitása"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:916
-msgid "Only .pl files can be executed"
-msgstr "Csak .pl fájlok futtathatók"
+#: lib/Padre/PluginManager.pm:715
+#, perl-format
+msgid ""
+"Failed to load the plugin '%s'\n"
+"%s"
+msgstr ""
+"Nem sikerült a '%s' plugint betölteni\n"
+"%s"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:952
-msgid "Message"
-msgstr "Üzenet"
+#: lib/Padre/Document/Perl.pm:428
+#: lib/Padre/Document/Perl.pm:458
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:87
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:137
+msgid "Current cursor does not seem to point at a variable"
+msgstr "Az aktuális mutató úgy tűnik nem változóra mutat"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:959
-#: ../../lib/Padre/Wx/MainWindow.pm:1438
+#: lib/Padre/Document/Perl.pm:429
+#: lib/Padre/Document/Perl.pm:459
+msgid "Check cancelled"
+msgstr "Ellenőrzés megállítva"
+
+#: lib/Padre/Task/SyntaxChecker.pm:171
+#: lib/Padre/Task/SyntaxChecker.pm:186
+#: lib/Padre/Task/SyntaxChecker.pm:187
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#: lib/Padre/Task/SyntaxChecker.pm:171
+#: lib/Padre/Task/SyntaxChecker.pm:186
+#: lib/Padre/Task/SyntaxChecker.pm:190
+#: lib/Padre/Wx/MainWindow.pm:912
+#: lib/Padre/Wx/MainWindow.pm:1447
 msgid "Error"
 msgstr "Hiba"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1033
+#: lib/Padre/Task/SyntaxChecker.pm:183
+#: lib/Padre/Wx/SyntaxChecker.pm:45
+msgid "Line"
+msgstr "Sor"
+
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:77
+msgid "All braces appear to be matched"
+msgstr "Minden zárójel jónak tűnik"
+
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:78
+msgid "Check Complete"
+msgstr "Az ellenőrzés befejeződött"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:90
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:140
+msgid "No declaration could be found for the specified (lexical?) variable"
+msgstr "Nem található deklaráció a megadott (lexikális?) változóhoz"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:143
+msgid "Unknown error"
+msgstr "Ismeretlen hiba"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:97
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:147
+msgid "Check Canceled"
+msgstr "Ellenőrzés megszakítva"
+
+#: lib/Padre/Wx/Ack.pm:83
+msgid "Term:"
+msgstr "Kifejezés: "
+
+#: lib/Padre/Wx/Ack.pm:88
+msgid "Dir:"
+msgstr "Könyvtár:"
+
+#: lib/Padre/Wx/Ack.pm:90
+msgid "Pick &directory"
+msgstr "Válassz &könyvtárat"
+
+#: lib/Padre/Wx/Ack.pm:93
+msgid "In Files/Types:"
+msgstr "Fájltípus:"
+
+#: lib/Padre/Wx/Ack.pm:98
+#: lib/Padre/Wx/Dialog/Find.pm:37
+msgid "Case &Insensitive"
+msgstr "Kis- és nagybetű egybevétele"
+
+#: lib/Padre/Wx/Ack.pm:101
+msgid "I&gnore hidden Subdirectories"
+msgstr "Rejtett könyvtárak figyelmen kívül hagyása"
+
+#: lib/Padre/Wx/Ack.pm:114
+msgid "Ack (Find in Files)"
+msgstr "Ack (Fájlokban keresés)"
+
+#: lib/Padre/Wx/Ack.pm:143
+msgid "Select directory"
+msgstr "Könyvtár kijelölése"
+
+#: lib/Padre/Wx/Ack.pm:276
+#: lib/Padre/Wx/Ack.pm:301
+msgid "Ack"
+msgstr "Rendben"
+
+#: lib/Padre/Wx/AuiManager.pm:39
+#: lib/Padre/Wx/MainWindow.pm:1842
+msgid "Subs"
+msgstr "Függvények"
+
+#: lib/Padre/Wx/AuiManager.pm:40
+#: lib/Padre/Wx/MainWindow.pm:1800
+msgid "Output"
+msgstr "Kimenet"
+
+#: lib/Padre/Wx/Editor.pm:565
+#: lib/Padre/Wx/Menu/Edit.pm:66
+msgid "Select all\tCtrl-A"
+msgstr "Minden kijelölése\tCtrl-A"
+
+#: lib/Padre/Wx/Editor.pm:607
+msgid "&Comment Selected Lines\tCtrl-M"
+msgstr "Kiválasztott sorok &kommentezése\tCtrl-M"
+
+#: lib/Padre/Wx/Editor.pm:611
+msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
+msgstr "Kiválasztott sorok &unkommentezése\tCtrl-Shift-M"
+
+#: lib/Padre/Wx/Editor.pm:626
+msgid "Fold all"
+msgstr "Az összes összecsukása"
+
+#: lib/Padre/Wx/Editor.pm:633
+msgid "Unfold all"
+msgstr "Az összes szétnyitása"
+
+#: lib/Padre/Wx/Editor.pm:645
+#: lib/Padre/Wx/Menu/Window.pm:37
+msgid "&Split window"
+msgstr "&Megosztott ablak"
+
+#: lib/Padre/Wx/ErrorList.pm:64
+msgid "Error List"
+msgstr "Hibalista"
+
+#: lib/Padre/Wx/ErrorList.pm:113
+msgid "No diagnostics available for this error!"
+msgstr "Nem található diagnosztika ehhez a hibához!"
+
+#: lib/Padre/Wx/MainWindow.pm:92
+msgid "(running from SVN checkout)"
+msgstr "(SVN munkapéldányból futtatás)"
+
+#: lib/Padre/Wx/MainWindow.pm:245
+msgid "Files"
+msgstr "Fájlok"
+
+#: lib/Padre/Wx/MainWindow.pm:322
+msgid "Workspace View"
+msgstr "Munkaterület nézet"
+
+#: lib/Padre/Wx/MainWindow.pm:326
+msgid "Methods"
+msgstr "Metódusok"
+
+#: lib/Padre/Wx/MainWindow.pm:363
+msgid "Output View"
+msgstr "Kimeneti nézet"
+
+#: lib/Padre/Wx/MainWindow.pm:742
+msgid "Command line"
+msgstr "Parancssor"
+
+#: lib/Padre/Wx/MainWindow.pm:743
+msgid "Run setup"
+msgstr "Beállítás futtatása"
+
+#: lib/Padre/Wx/MainWindow.pm:825
+msgid "No open document"
+msgstr "Nincs nyitot dokumentum"
+
+#: lib/Padre/Wx/MainWindow.pm:840
+msgid "No execution mode was defined for this document"
+msgstr "Ehhez a dokumentumhoz nincs végrehajtási mód definiálva"
+
+#: lib/Padre/Wx/MainWindow.pm:863
+msgid "Not a Perl document"
+msgstr "Nem Perl dokumentum"
+
+#: lib/Padre/Wx/MainWindow.pm:905
+msgid "Message"
+msgstr "Üzenet"
+
+#: lib/Padre/Wx/MainWindow.pm:992
 msgid "Autocompletions error"
 msgstr "Autokiegészítési hiba"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1044
+#: lib/Padre/Wx/MainWindow.pm:1003
 msgid "Line number:"
 msgstr "Sor száma:"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1224
-msgid "Need to have something selected"
-msgstr "Valamit ki kell választani"
+#: lib/Padre/Wx/MainWindow.pm:1245
+msgid "Nothing selected. Enter what should be opened:"
+msgstr "Nincs kiválasztva semmi. Add meg, amit meg kell nyitni:"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1225
-#: ../../lib/Padre/Wx/MainWindow.pm:1265
+#: lib/Padre/Wx/MainWindow.pm:1246
+msgid "Open selection"
+msgstr "Kiválasztottak megnyitása"
+
+#: lib/Padre/Wx/MainWindow.pm:1290
+#, perl-format
+msgid "Could not find file '%s'"
+msgstr "Nem találom a(z) '%s' fájlt"
+
+#: lib/Padre/Wx/MainWindow.pm:1290
 msgid "Open Selection"
 msgstr "Kijelölés megnyitása"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1265
+#: lib/Padre/Wx/MainWindow.pm:1341
+#: lib/Padre/Wx/MainWindow.pm:2311
 #, perl-format
-msgid "Could not find file '%s'"
-msgstr "Nem találom a '%s' fájlt"
+msgid "Could not reload file: %s"
+msgstr "Nem lehet újratölteni a '%s' fájlt"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1351
+#: lib/Padre/Wx/MainWindow.pm:1361
 msgid "Save file as..."
 msgstr "Fájl mentése mint..."
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1365
+#: lib/Padre/Wx/MainWindow.pm:1375
 msgid "File already exists. Overwrite it?"
 msgstr "A fájl már létezik. Felülírjam?"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1366
+#: lib/Padre/Wx/MainWindow.pm:1376
 msgid "Exist"
 msgstr "Létezik"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1428
+#: lib/Padre/Wx/MainWindow.pm:1438
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "A fájl megváltozott a lemezen a legutóbbi mentés óta. Felülírjam?"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1429
-#: ../../lib/Padre/Wx/MainWindow.pm:2244
+#: lib/Padre/Wx/MainWindow.pm:1439
+#: lib/Padre/Wx/MainWindow.pm:2304
 msgid "File not in sync"
 msgstr "A fájl nincs szinkronban"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1479
+#: lib/Padre/Wx/MainWindow.pm:1447
+msgid "Could not save file: "
+msgstr "Nem lehet elmenteni a '%s' fájlt"
+
+#: lib/Padre/Wx/MainWindow.pm:1489
 msgid "File changed. Do you want to save it?"
 msgstr "A fájl megváltozott. Elmentsem?"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1480
+#: lib/Padre/Wx/MainWindow.pm:1490
 msgid "Unsaved File"
-msgstr "Mentetlen Fájl"
+msgstr "Nem mentett Fájl"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1582
+#: lib/Padre/Wx/MainWindow.pm:1585
 msgid "Cannot diff if file was never saved"
-msgstr "Nem tudom összehasonlítani, ha a fájl nem volt lementve"
+msgstr "Nem összehasonlítható, ha a fájl még egyszer sem volt lementve"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1588
+#: lib/Padre/Wx/MainWindow.pm:1591
 msgid "There are no differences\n"
 msgstr "Nincs különbség\n"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:1947
+#: lib/Padre/Wx/MainWindow.pm:1882
+msgid "Syntax Check"
+msgstr "Szintaxis ellenőrzése"
+
+#: lib/Padre/Wx/MainWindow.pm:2036
 #, perl-format
 msgid "Error: %s"
 msgstr "Hiba: %s"
 
-#: ../../lib/Padre/Wx/MainWindow.pm:2243
+#: lib/Padre/Wx/MainWindow.pm:2037
+msgid "Internal error"
+msgstr "Belső hiba"
+
+#: lib/Padre/Wx/MainWindow.pm:2161
+#, perl-format
+msgid "Words: %d"
+msgstr "Szavak: %d"
+
+#: lib/Padre/Wx/MainWindow.pm:2162
+#, perl-format
+msgid "Lines: %d"
+msgstr "Sorok: %d"
+
+#: lib/Padre/Wx/MainWindow.pm:2163
+#, perl-format
+msgid "Chars without spaces: %d"
+msgstr "Karakterek szóközök nélkül: %d"
+
+#: lib/Padre/Wx/MainWindow.pm:2164
+#, perl-format
+msgid "Chars with spaces: %d"
+msgstr "Karakterek szóközökkel együtt: %d"
+
+#: lib/Padre/Wx/MainWindow.pm:2165
+#, perl-format
+msgid "Newline type: %s"
+msgstr "Újsor típus: %s"
+
+#: lib/Padre/Wx/MainWindow.pm:2166
+#, perl-format
+msgid "Encoding: %s"
+msgstr "Kódolás: %s"
+
+#: lib/Padre/Wx/MainWindow.pm:2167
+#, perl-format
+msgid "Document type: %s"
+msgstr "Dokumentum típus: %s"
+
+#: lib/Padre/Wx/MainWindow.pm:2167
+msgid "none"
+msgstr "egyik sem"
+
+#: lib/Padre/Wx/MainWindow.pm:2169
+#, perl-format
+msgid "Filename: %s"
+msgstr "Fájlnév: %s"
+
+#: lib/Padre/Wx/MainWindow.pm:2170
+msgid "No filename"
+msgstr "Nincs fájlnév"
+
+#: lib/Padre/Wx/MainWindow.pm:2188
+msgid "Space to Tab"
+msgstr "Szóközök tabulátorokká"
+
+#: lib/Padre/Wx/MainWindow.pm:2188
+msgid "Tab to Space"
+msgstr "Tabulátorok szóközökké"
+
+#: lib/Padre/Wx/MainWindow.pm:2191
+msgid "How many spaces for each tab:"
+msgstr "Hány szóköz legyen egy tab helyén:"
+
+#: lib/Padre/Wx/MainWindow.pm:2303
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "A fájl megváltozott a lemezen a legutóbbi mentés óta. Újra betöltsem?"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:22
+#: lib/Padre/Wx/Menu.pm:74
+#: lib/Padre/Wx/Menu/File.pm:258
+#: lib/Padre/Wx/Menu/File.pm:262
+msgid "&File"
+msgstr "&Fájl"
+
+#: lib/Padre/Wx/Menu.pm:75
+#: lib/Padre/Wx/Dialog/Snippets.pm:27
+msgid "&Edit"
+msgstr "&Szerkesztés"
+
+#: lib/Padre/Wx/Menu.pm:76
+msgid "&View"
+msgstr "&Megnéz"
+
+#: lib/Padre/Wx/Menu.pm:77
+msgid "&Run"
+msgstr "&Futtatás"
+
+#: lib/Padre/Wx/Menu.pm:78
+msgid "Pl&ugins"
+msgstr "Pl&uginek"
+
+#: lib/Padre/Wx/Menu.pm:79
+msgid "&Window"
+msgstr "&Ablak"
+
+#: lib/Padre/Wx/Menu.pm:80
+msgid "&Help"
+msgstr "&Súgó"
+
+#: lib/Padre/Wx/Menu.pm:89
+msgid "E&xperimental"
+msgstr "K&isérleti"
+
+#: lib/Padre/Wx/Output.pm:34
+msgid "No output"
+msgstr "Nincs kimenet"
+
+#: lib/Padre/Wx/Project.pm:25
+#: lib/Padre/Wx/Project.pm:145
+msgid "Not implemented yet"
+msgstr "Még nincs implementálva"
+
+#: lib/Padre/Wx/Project.pm:26
+#: lib/Padre/Wx/Project.pm:145
+msgid "Not yet available"
+msgstr "Még nem elérhető"
+
+#: lib/Padre/Wx/Project.pm:46
+msgid "Select Project"
+msgstr "Projekt kiválasztása"
+
+#: lib/Padre/Wx/Project.pm:59
+msgid "Select Project Name or type in new one"
+msgstr "Projektnév kiválasztása vagy új beírása"
+
+#: lib/Padre/Wx/Project.pm:65
+msgid "Select Directory"
+msgstr "Könyvtár kiválasztása"
+
+#: lib/Padre/Wx/Project.pm:129
+msgid "Select Project Directory"
+msgstr "Projekt könyvtár kiválasztása"
+
+#: lib/Padre/Wx/StatusBar.pm:83
+msgid "L:"
+msgstr "L:"
+
+#: lib/Padre/Wx/StatusBar.pm:85
+msgid "Ch:"
+msgstr "Ch:"
+
+#: lib/Padre/Wx/SyntaxChecker.pm:46
+msgid "Type"
+msgstr "Típus"
+
+#: lib/Padre/Wx/SyntaxChecker.pm:47
+msgid "Description"
+msgstr "Leírás"
+
+#: lib/Padre/Wx/ToolBar.pm:27
 msgid "New File"
 msgstr "Új Fájl"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:32
+#: lib/Padre/Wx/ToolBar.pm:37
 msgid "Open File"
 msgstr "Fájl Megnyitása"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:37
+#: lib/Padre/Wx/ToolBar.pm:42
 msgid "Save File"
 msgstr "Fájl Mentése"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:47
+#: lib/Padre/Wx/ToolBar.pm:47
 msgid "Close File"
 msgstr "Fájl Bezárása"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:63
+#: lib/Padre/Wx/ToolBar.pm:63
 msgid "Undo"
-msgstr "Visszavon"
+msgstr "Visszavonás"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:68
+#: lib/Padre/Wx/ToolBar.pm:68
 msgid "Redo"
 msgstr "Megismétel"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:80
+#: lib/Padre/Wx/ToolBar.pm:80
 msgid "Cut"
 msgstr "Kivágás"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:90
+#: lib/Padre/Wx/ToolBar.pm:90
 msgid "Copy"
 msgstr "Másolás"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:100
+#: lib/Padre/Wx/ToolBar.pm:100
 msgid "Paste"
 msgstr "Beillesztés"
 
-#: ../../lib/Padre/Wx/ToolBar.pm:113
+#: lib/Padre/Wx/ToolBar.pm:113
 msgid "Select all"
-msgstr "Mindent kijelöl"
+msgstr "Minden kijelölése"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:28
+msgid "Existing bookmarks:"
+msgstr "Létező könyvjelzők:"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:42
+msgid "Delete &All"
+msgstr "Mind &törlése"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:51
+msgid "Set Bookmark"
+msgstr "Könyvjelző beállítása"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:51
+msgid "GoTo Bookmark"
+msgstr "Könyvjelzőre ugrás"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:108
+#, perl-format
+msgid "%s line %s"
+msgstr "%s sor %s"
+
+#: lib/Padre/Wx/Dialog/Find.pm:22
+#: lib/Padre/Wx/Dialog/Search.pm:128
+msgid "Find:"
+msgstr "Keresés:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:27
+msgid "Replace With:"
+msgstr "Csere erre:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:29
+msgid "&Replace"
+msgstr "&Csere"
+
+#: lib/Padre/Wx/Dialog/Find.pm:34
+msgid "Replace &All"
+msgstr "&Mindegyik cseréje"
+
+#: lib/Padre/Wx/Dialog/Find.pm:40
+msgid "&Use Regex"
+msgstr "&Regex használata"
+
+#: lib/Padre/Wx/Dialog/Find.pm:43
+msgid "Search &Backwards"
+msgstr "&Visszafelé keresés"
+
+#: lib/Padre/Wx/Dialog/Find.pm:46
+msgid "Close Window on &hit"
+msgstr "Találatkor az ablak bezárása"
+
+#: lib/Padre/Wx/Dialog/Find.pm:66
+msgid "Search"
+msgstr "Keresés"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:30
+msgid "Module Name:"
+msgstr "Modulnév:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:34
+msgid "Author:"
+msgstr "Szerző:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:38
+msgid "Email:"
+msgstr "Email:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:42
+msgid "Builder:"
+msgstr "Fordító:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:47
+msgid "License:"
+msgstr "Licenc:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:52
+msgid "Parent Directory:"
+msgstr "Szülő Könyvtár:"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:53
+msgid "Pick parent directory"
+msgstr "Szülő könyvtár választása"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:82
+msgid "Module Start"
+msgstr "Modul Kezdete"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#, perl-format
+msgid "Field %s was missing. Module not created."
+msgstr "A(z) %s mező hiányzik. A modul nem jött létre."
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:125
+msgid "missing field"
+msgstr "hiányzó mező"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:145
+#, perl-format
+msgid "%s apparantly created. Do you want to open it now?"
+msgstr "A(z) %s látszólag létrejött. Megnyissam most?"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:146
+msgid "Done"
+msgstr "Kész"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:42
+msgid "Incompatible"
+msgstr "Inkompatibilis"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:43
+#: lib/Padre/Wx/Dialog/Preferences.pm:98
+msgid "Preferences"
+msgstr "Beállítások"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:50
+#: lib/Padre/Wx/Dialog/PluginManager2.pm:20
+#: lib/Padre/Wx/Menu/Plugins.pm:31
+msgid "Plugin Manager"
+msgstr "Plugin Kezelő"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:133
+msgid "Disable"
+msgstr "Letiltás"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:138
+msgid "Enable"
+msgstr "Engedélyezés"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:17
+msgid "Automatic indentation style"
+msgstr "Automatikus indentálási stílus"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:18
+msgid "Use Tabs"
+msgstr "Tabok használata"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:21
+msgid "TAB display size (in spaces)"
+msgstr "TAB megjelenített mérete (szóközökben)"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:25
+msgid "Indentation width (in columns)"
+msgstr "Indentálás (oszlopokban)"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:29
+msgid "Guess from current document"
+msgstr "Az aktuális dokumentum alapján kitalál"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:30
+msgid "Guess"
+msgstr "Találgat"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:33
+msgid "Max number of modules"
+msgstr "Maximális modulszám"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:37
+msgid "Min number of modules"
+msgstr "Minimális modulszám"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:41
+msgid "Open files:"
+msgstr "Fájl megnyitása:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:45
+msgid "Autoindent:"
+msgstr "Autoindent:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:49
+msgid "Methods order:"
+msgstr "Metódusok sorrendje:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:53
+msgid "Default word wrap on for each file"
+msgstr "Alapértelmezett szótörés mindegyik fájlra"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:58
+msgid "Perl beginner mode"
+msgstr "Perl kezdő mód"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:63
+msgid "Preferred language for error diagnostics:"
+msgstr "Előnyben részesített nyelv a hiba diagnosztikánál:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:74
+msgid "Editor Font:"
+msgstr "Szerkesztő betűtípusa:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:83
+msgid "Editor Current Line Background Colour:"
+msgstr "Szerkesztő aktuális sorának háttérszine:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:105
+msgid "Behaviour"
+msgstr "Viselkedés"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:105
+msgid "Appearance"
+msgstr "Megjelenés"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:147
+msgid "new"
+msgstr "új"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:147
+msgid "nothing"
+msgstr "semmi"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:147
+msgid "last"
+msgstr "utolsó"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:152
+msgid "no"
+msgstr "nem"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:152
+msgid "same_level"
+msgstr "azonos_szint"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:152
+msgid "deep"
+msgstr "mély"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:157
+msgid "alphabetical"
+msgstr "alfabetikus"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:157
+msgid "original"
+msgstr "eredeti"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:158
+msgid "alphabetical_private_last"
+msgstr "alfabetikus_utolsó_privát"
+
+#: lib/Padre/Wx/Dialog/Search.pm:157
+msgid "Case insensitive"
+msgstr "Kis- és nagybetű egybevétele"
+
+#: lib/Padre/Wx/Dialog/Search.pm:161
+msgid "Use regex"
+msgstr "Regex használata"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:19
+msgid "All"
+msgstr "Mind"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:23
+msgid "Class:"
+msgstr "Osztály:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:24
+#: lib/Padre/Wx/Dialog/Snippets.pm:125
+msgid "Snippet:"
+msgstr "Töredék:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:25
+msgid "&Insert"
+msgstr "&Beszúrás"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:27
+msgid "&Add"
+msgstr "&Hozzáadás"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:39
+msgid "Snippets"
+msgstr "Töredékek"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:123
+msgid "Category:"
+msgstr "Kategória:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:124
+msgid "Name:"
+msgstr "Név:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:126
+msgid "&Save"
+msgstr "&Mentés"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:137
+msgid "Edit/Add Snippets"
+msgstr "Töredékek Szerkesztése/Hozzáadása"
+
+#: lib/Padre/Wx/Menu/Edit.pm:31
+msgid "&Undo"
+msgstr "Viss&zavonás"
+
+#: lib/Padre/Wx/Menu/Edit.pm:42
+msgid "&Redo"
+msgstr "M&egismétel"
+
+#: lib/Padre/Wx/Menu/Edit.pm:60
+msgid "Select"
+msgstr "Kijelölés"
+
+#: lib/Padre/Wx/Menu/Edit.pm:76
+msgid "Mark selection start\tCtrl-["
+msgstr "Megjelölés kijelölés kezdeteként\tCtrl-["
+
+#: lib/Padre/Wx/Menu/Edit.pm:86
+msgid "Mark selection end\tCtrl-]"
+msgstr "Megjelölés kijelölés végeként\tCtrl-]"
+
+#: lib/Padre/Wx/Menu/Edit.pm:96
+msgid "Clear selection marks"
+msgstr "Kijelölési jelzések törlése"
+
+#: lib/Padre/Wx/Menu/Edit.pm:108
+msgid "&Copy\tCtrl-C"
+msgstr "&Másol\tCtrl-C"
+
+#: lib/Padre/Wx/Menu/Edit.pm:119
+msgid "Cu&t\tCtrl-X"
+msgstr "K&ivág\tCtrl-X"
+
+#: lib/Padre/Wx/Menu/Edit.pm:130
+msgid "&Paste\tCtrl-V"
+msgstr "&Beilleszt\tCtrl-V"
+
+#: lib/Padre/Wx/Menu/Edit.pm:150
+msgid "&Find\tCtrl-F"
+msgstr "&Keresés\tCtrl-F"
+
+#: lib/Padre/Wx/Menu/Edit.pm:159
+msgid "Find Next\tF3"
+msgstr "Következő Keresése\tF3"
+
+#: lib/Padre/Wx/Menu/Edit.pm:168
+msgid "Find Previous\tShift-F3"
+msgstr "&Előző Keresése\tShoft-F3"
+
+#: lib/Padre/Wx/Menu/Edit.pm:179
+msgid "Quick Find"
+msgstr "Gyorskeresés"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:29
+msgid "Disable Experimental Mode"
+msgstr "Kísérleti mód letiltása"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:41
+msgid "Refresh Menu"
+msgstr "Menü frissítése"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:51
+#: lib/Padre/Wx/Menu/Experimental.pm:87
+msgid "Refresh Counter: "
+msgstr "Frissítés számláló:"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:65
+msgid "Recent Projects"
+msgstr "Legutóbbi Projektek"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:72
+msgid "Run in &Padre"
+msgstr "Futtatás &Padréban"
+
+#: lib/Padre/Wx/Menu/File.pm:36
+msgid "&New\tCtrl-N"
+msgstr "&Új\tCtrl-N"
+
+#: lib/Padre/Wx/Menu/File.pm:45
+msgid "New..."
+msgstr "Új..."
+
+#: lib/Padre/Wx/Menu/File.pm:50
+msgid "Perl Distribution (Module::Starter)"
+msgstr "Perl Terjesztés (Module::Starter)"
+
+#: lib/Padre/Wx/Menu/File.pm:66
+msgid "&Open...\tCtrl-O"
+msgstr "&Megnyitás\tCtrl-O"
+
+#: lib/Padre/Wx/Menu/File.pm:74
+msgid "Open Selection\tCtrl-Shift-O"
+msgstr "Kiválasztás megnyitása\tCtrl-Shift-O"
+
+#: lib/Padre/Wx/Menu/File.pm:85
+msgid "&Close\tCtrl-W"
+msgstr "&Bezárás\tCtrl-W"
+
+#: lib/Padre/Wx/Menu/File.pm:95
+msgid "Close All"
+msgstr "Mind bezárása"
+
+#: lib/Padre/Wx/Menu/File.pm:104
+msgid "Close All but Current"
+msgstr "Az aktuális kivételével az összes bezárása"
+
+#: lib/Padre/Wx/Menu/File.pm:113
+msgid "Reload file"
+msgstr "Fájl újratöltése"
+
+#: lib/Padre/Wx/Menu/File.pm:131
+msgid "&Save\tCtrl-S"
+msgstr "Menté&s\tCtrl-S"
+
+#: lib/Padre/Wx/Menu/File.pm:141
+msgid "Save &As...\tF12"
+msgstr "Mentés m&ásként...\tF12"
+
+#: lib/Padre/Wx/Menu/File.pm:150
+msgid "Save All"
+msgstr "Minden mentése"
+
+#: lib/Padre/Wx/Menu/File.pm:168
+msgid "&Print..."
+msgstr "Ny&omtatás"
+
+#: lib/Padre/Wx/Menu/File.pm:194
+msgid "Convert..."
+msgstr "Konvertálás..."
+
+#: lib/Padre/Wx/Menu/File.pm:199
+msgid "EOL to Windows"
+msgstr "Windows-os sorvégek"
+
+#: lib/Padre/Wx/Menu/File.pm:209
+msgid "EOL to Unix"
+msgstr "Unixos sorvégek"
+
+#: lib/Padre/Wx/Menu/File.pm:219
+msgid "EOL to Mac Classic"
+msgstr "Mac-es sorvégek"
+
+#: lib/Padre/Wx/Menu/File.pm:237
+msgid "&Recent Files"
+msgstr "Ko&rábbi fájlok"
+
+#: lib/Padre/Wx/Menu/File.pm:242
+msgid "Open All Recent Files"
+msgstr "Összes korábbi fájl megnyitása"
+
+#: lib/Padre/Wx/Menu/File.pm:250
+msgid "Clean Recent Files List"
+msgstr "Korábbi fájlok listájának törlése"
+
+#: lib/Padre/Wx/Menu/File.pm:289
+msgid "Doc Stats"
+msgstr "Dokumentum statisztikák"
+
+#: lib/Padre/Wx/Menu/File.pm:308
+msgid "&Quit\tCtrl-Q"
+msgstr "&Kilépés\tCtrl-Q"
+
+#: lib/Padre/Wx/Menu/Help.pm:42
+msgid "Context Help\tF1"
+msgstr "Környezeti segítség\tF1"
+
+#: lib/Padre/Wx/Menu/Help.pm:58
+msgid "Visit the PerlMonks"
+msgstr "PerlMonks meglátogatása"
+
+#: lib/Padre/Wx/Menu/Help.pm:67
+msgid "&About"
+msgstr "Né&vjegy"
+
+#: lib/Padre/Wx/Menu/Help.pm:105
+msgid "Copyright 2008 Gabor Szabo"
+msgstr "Copyright 2008 Szabó Gábor"
+
+#: lib/Padre/Wx/Menu/Perl.pm:31
+msgid "Find Unmatched Brace"
+msgstr "Pár nélküli zárójel keresése"
+
+#: lib/Padre/Wx/Menu/Perl.pm:40
+msgid "Find variable declaration"
+msgstr "Változódeklaráció keresése"
+
+#: lib/Padre/Wx/Menu/Perl.pm:49
+msgid "Lexically replace variable"
+msgstr "Lexikus változócsere"
+
+#: lib/Padre/Wx/Menu/Perl.pm:55
+#: lib/Padre/Wx/Menu/Perl.pm:56
+msgid "Replacement"
+msgstr "Csere"
+
+#: lib/Padre/Wx/Menu/Perl.pm:72
+msgid "Use PPI for Perl5 syntax highlighting"
+msgstr "PPI használata a Perl5 szintaxis kiemelőjéhez"
+
+#: lib/Padre/Wx/Menu/Perl.pm:105
+msgid "Run perl scripts with stack trace"
+msgstr "Perl script futtatása veremkövetéssel"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:43
+msgid "Edit My Plugin"
+msgstr "My Plugin Szerkesztése"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:50
+msgid "Could not find the Padre::Plugin::My plugin"
+msgstr "Nem találom a Padre::Plugin::My plugin -t"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:59
+msgid "Reload My Plugin"
+msgstr "My Plugin Ujratöltése"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:65
+#: lib/Padre/Wx/Menu/Plugins.pm:68
+#: lib/Padre/Wx/Menu/Plugins.pm:69
+msgid "Reset My Plugin"
+msgstr "My Plugin alapállapotba hozása"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:87
+msgid "Reload All Plugins"
+msgstr "Minden Plugin Ujratöltése"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:93
+msgid "Test A Plugin From Local Dir"
+msgstr "Plugin Tesztelése Helyi Könyvtárból"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:100
+msgid "Plugin Tools"
+msgstr "Plugin Eszközök"
+
+#: lib/Padre/Wx/Menu/Run.pm:29
+msgid "Run Script\tF5"
+msgstr "Script futtatása\tF5"
+
+#: lib/Padre/Wx/Menu/Run.pm:37
+msgid "Run Command\tCtrl-F5"
+msgstr "Parancs Futtatása\tCtrl-F5"
+
+#: lib/Padre/Wx/Menu/Run.pm:45
+msgid "&Stop"
+msgstr "&Stop"
+
+#: lib/Padre/Wx/Menu/View.pm:36
+msgid "Show Output"
+msgstr "Kimenet megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:46
+msgid "Show Functions"
+msgstr "Függvények megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:62
+msgid "Show Syntax Check"
+msgstr "Szintaxisellenőrző megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:72
+msgid "Show Error List"
+msgstr "Hibalista mutatása"
+
+#: lib/Padre/Wx/Menu/View.pm:84
+msgid "Show StatusBar"
+msgstr "Státuszsor megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:102
+msgid "Show Line Numbers"
+msgstr "Sorszámok megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:112
+msgid "Show Code Folding"
+msgstr "Kód összecsukás megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:122
+msgid "Show Call Tips"
+msgstr "Tippek megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:132
+msgid "Show Current Line"
+msgstr "Aktuális sor megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:149
+msgid "Show Newlines"
+msgstr "Újsorok megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:159
+msgid "Show Whitespaces"
+msgstr "Szóközök megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:169
+msgid "Show Indentation Guide"
+msgstr "Indentálási segéd megjelenítése"
+
+#: lib/Padre/Wx/Menu/View.pm:179
+msgid "Word-Wrap"
+msgstr "Szó-Törés"
+
+#: lib/Padre/Wx/Menu/View.pm:197
+msgid "Increase Font Size\tCtrl-+"
+msgstr "Betűméret növelése\tCtrl-+"
+
+#: lib/Padre/Wx/Menu/View.pm:206
+msgid "Decrease Font Size\tCtrl--"
+msgstr "Betűméret csökkentsée\tCtrl--"
+
+#: lib/Padre/Wx/Menu/View.pm:215
+msgid "Reset Font Size\tCtrl-/"
+msgstr "Betűméret visszaállítása\tCtrl-/"
+
+#: lib/Padre/Wx/Menu/View.pm:231
+msgid "Set Bookmark\tCtrl-B"
+msgstr "Könyvjelző beállítása\tCtrl-B"
+
+#: lib/Padre/Wx/Menu/View.pm:240
+msgid "Goto Bookmark\tCtrl-Shift-B"
+msgstr "Könyvjelzőre ugrás\tCtrl-Shift-B"
+
+#: lib/Padre/Wx/Menu/View.pm:256
+msgid "Style"
+msgstr "Stílus"
+
+#: lib/Padre/Wx/Menu/View.pm:305
+msgid "Language"
+msgstr "Nyelv"
+
+#: lib/Padre/Wx/Menu/View.pm:309
+msgid "System Default"
+msgstr "Rendszer Alapértelmezése"
+
+#: lib/Padre/Wx/Menu/View.pm:352
+msgid "&Full Screen\tF11"
+msgstr "&Teljes képernyő\tF11"
+
+#: lib/Padre/Wx/Menu/Window.pm:51
+msgid "Next File\tCtrl-TAB"
+msgstr "Következő Fájl\tCtrl-TAB"
+
+#: lib/Padre/Wx/Menu/Window.pm:58
+msgid "Previous File\tCtrl-Shift-TAB"
+msgstr "Előző Fájl\tCtrl-Shift-TAB"
+
+#: lib/Padre/Wx/Menu/Window.pm:65
+msgid "Last Visited File\tCtrl-6"
+msgstr "Utoljára Megtekintett Fájl\tCtrl-6"
+
+#: lib/Padre/Wx/Menu/Window.pm:72
+msgid "Right Click\tAlt-/"
+msgstr "Jobb kattintás\tAlt-/"
+
+#: lib/Padre/Wx/Menu/Window.pm:91
+msgid "GoTo Subs Window\tAlt-S"
+msgstr "Ugrás a Szubrutinok Ablakára\tAlt-S"
+
+#: lib/Padre/Wx/Menu/Window.pm:103
+msgid "GoTo Output Window\tAlt-O"
+msgstr "Ugrás a Kimeneti Ablakra\tAlt-O"
+
+#: lib/Padre/Wx/Menu/Window.pm:112
+msgid "GoTo Syntax Check Window\tAlt-C"
+msgstr "Ugrás a Szintaxisellenörző Ablakra\tAlt-C"
+
+#: lib/Padre/Wx/Menu/Window.pm:124
+msgid "GoTo Main Window\tAlt-M"
+msgstr "Ugrás a Főablakra\tAlt-M"
+
+#~ msgid "&Project"
+#~ msgstr "&Projekt"
+#~ msgid "&Bookmarks"
+#~ msgstr "&Könyvjelzők"
+#~ msgid "&Tools"
+#~ msgstr "Eszközök"
+#~ msgid "&Brace matching\tCtrl-1"
+#~ msgstr "Zárójel &párja\tCtrl-1"
+#~ msgid "Snippets\tCtrl-Shift-A"
+#~ msgstr "Töredékek\tCtrl-Shift-A"
+#~ msgid "Tabs and Spaces"
+#~ msgstr "Tabulátorok és Szóközök"
+#~ msgid "Delete Trailing Spaces"
+#~ msgstr "Záró Szóközök Törlése"
+#~ msgid "Delete Leading Spaces"
+#~ msgstr "Bevezető Szóközök Törlése"
+#~ msgid "Upper/Lower Case"
+#~ msgstr "Nagy/Kis Betűk"
+#~ msgid "Upper All\tCtrl-Shift-U"
+#~ msgstr "Nagybetűs Mind\tCtrl-Shift-U"
+#~ msgid "Lower All\tCtrl-U"
+#~ msgstr "Kisbetű Mind\tCtrl-U"
+#~ msgid "Diff"
+#~ msgstr "Különbség"
+#~ msgid "Insert From File..."
+#~ msgstr "Beszúrás Fájlból..."
+#~ msgid "Reflow Menu/Toolbar"
+#~ msgstr "Lebegő menü/Eszköztár"
+#~ msgid "Error: "
+#~ msgstr "Hiba: "
+#~ msgid "Find Next\tF4"
+#~ msgstr "Következő Keresése\tF4"
+#~ msgid "Find Previous\tShift-F4"
+#~ msgstr "Előző Keresése\tShoft-F3"
+#~ msgid "Not Yes"
+#~ msgstr "Nem Igen"
+#~ msgid "Syntax"
+#~ msgstr "Szintaxis"
+#~ msgid "Only .pl files can be executed"
+#~ msgstr "Csak .pl fájlok futtathatók"
+#~ msgid "Need to have something selected"
+#~ msgstr "Valamit ki kell választani"
 
