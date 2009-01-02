@@ -9,6 +9,11 @@ use YAML::Tiny ();
 
 our $VERSION = '0.22';
 
+use Class::XSAccessor
+	getters => {
+		root => 'root',
+		padre_yml => 'padre_yml',
+	};
 
 
 
@@ -22,8 +27,7 @@ sub project_class {
 	unless ( -d $dir ) {
 		die("Directory '$dir' does not exist");
 	}
-
-	
+	# TODO: Finish this method
 }
 
 
@@ -55,14 +59,6 @@ sub new {
 	}
 
 	return $self;
-}
-
-sub root {
-	$_[0]->{root}
-}
-
-sub padre_yml {
-	$_[0]->{padre_yml}
 }
 
 1;
