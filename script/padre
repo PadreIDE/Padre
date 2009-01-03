@@ -14,15 +14,6 @@ require threads::shared;
 
 $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP}||'';
 
-if( $^V ge v5.1 ) { # $PERL_VERSION
-    # This is needed for Padre::Plugin::Perl6 and Syntax::Highlight::Perl6
-    # This will be removed once this STD.pm bug is fixed.
-    eval "use STD;";
-    if (not $@) { # $EVAL_ERROR
-        print "Loaded STD.pm for Padre::Plugin::Perl6\n";
-    }
-}
-
 require Padre;
 my $app = Padre->new;
 $app->run;
