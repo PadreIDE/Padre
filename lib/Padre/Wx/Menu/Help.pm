@@ -114,29 +114,29 @@ sub about {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 	$about->AddDeveloper("Adam Kennedy");
-	$about->AddDeveloper("Ahmad Zawawi - Ø£Ø­ÙØ¯ ÙØ­ÙØ¯ Ø²ÙØ§ÙÙ");
+	$about->AddDeveloper("Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddDeveloper("Brian Cassidy");
 	$about->AddDeveloper("Chris Dolan");
 	$about->AddDeveloper("Fayland Lam");
-	$about->AddDeveloper("GÃ¡bor SzabÃ³ - ×××××¨ ×¡×× ");
+	$about->AddDeveloper("Gábor Szabó - גאבור סבו ");
 	$about->AddDeveloper("Heiko Jansen");
-	$about->AddDeveloper("JÃ©rÃ´me Quelin");
+	$about->AddDeveloper("Jérôme Quelin");
 	$about->AddDeveloper("Kaare Rasmussen");
-	$about->AddDeveloper("Keedi Kim - ê¹ëí");
+	$about->AddDeveloper("Keedi Kim - 김도형");
 	$about->AddDeveloper("Max Maischein");
 	$about->AddDeveloper("Patrick Donelan");
-	$about->AddDeveloper("PaweÅ Murias");
+	$about->AddDeveloper("Paweł Murias");
 	$about->AddDeveloper("Petar Shangov");
-	$about->AddDeveloper("Steffen MÃ¼ller");
+	$about->AddDeveloper("Steffen Müller");
 
- 	$about->AddTranslator("Arabic - Ahmad Zawawi - Ø£Ø­ÙØ¯ ÙØ­ÙØ¯ Ø²ÙØ§ÙÙ");
+ 	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddTranslator("German - Heiko Jansen");
-	$about->AddTranslator("French - JÃ©rÃ´me Quelin");
-	$about->AddTranslator("Hebrew - Omer Zak - ×¢×××¨ ××§");
-	$about->AddTranslator("Hebrew - Shlomi Fish - ×©×××× ×¤××©");
-	$about->AddTranslator("Hungarian - GyÃ¶rgy PÃ¡sztor");
+	$about->AddTranslator("French - Jérôme Quelin");
+	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
+	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
+	$about->AddTranslator("Hungarian - György Pásztor");
 	$about->AddTranslator("Italian - Simone Blandino");
-	$about->AddTranslator("Korean - Keedi Kim - ê¹ëí");
+	$about->AddTranslator("Korean - Keedi Kim - 김도형");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
 	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
