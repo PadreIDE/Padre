@@ -8,6 +8,7 @@ use Padre::Util              ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::File    ();
 use Padre::Wx::Menu::Edit    ();
+use Padre::Wx::Menu::Search  ();
 use Padre::Wx::Menu::View    ();
 use Padre::Wx::Menu::Perl    ();
 use Padre::Wx::Menu::Run     ();
@@ -35,6 +36,7 @@ use Class::XSAccessor
 		# upgraded to be fully encapsulated classes.
 		file         => 'file',
 		edit         => 'edit',
+		search       => 'search',
 		view         => 'view',
 		perl         => 'perl',
 		run          => 'run',
@@ -51,17 +53,18 @@ sub new {
 	# Create the basic object
 	my $self   = bless {
 		# Link back to the main window
-		main => $main,
+		main    => $main,
 
 		# The number of menus in the default set.
 		# That is, EXCLUDING the special Perl menu.
-		default => 7,
+		default => 8,
 	}, $class;
 
 	# Generate the individual menus
 	$self->{main}    = $main;
 	$self->{file}    = Padre::Wx::Menu::File->new($main);
 	$self->{edit}    = Padre::Wx::Menu::Edit->new($main);
+	$self->{search}  = Padre::Wx::Menu::Search->new($main);
 	$self->{view}    = Padre::Wx::Menu::View->new($main);
 	$self->{perl}    = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}     = Padre::Wx::Menu::Run->new($main);
@@ -73,6 +76,7 @@ sub new {
 	$self->{wx} = Wx::MenuBar->new;
 	$self->wx->Append( $self->file->wx,    Wx::gettext("&File")    );
 	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit")    );
+	$self->wx->Append( $self->search->wx,  Wx::gettext("&Search")  );
 	$self->wx->Append( $self->view->wx,    Wx::gettext("&View")    );
 	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
 	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
@@ -110,14 +114,15 @@ sub refresh {
 
 	# Add/Remove the Perl menu
 	if ( $document and not $menu ) {
-		$self->wx->Insert( 3, $self->perl->wx, '&Perl' );
+		$self->wx->Insert( 4, $self->perl->wx, '&Perl' );
 	} elsif ( $menu and not $document ) {
-		$self->wx->Remove( 3 );
+		$self->wx->Remove( 4 );
 	}
 
 	# Refresh individual menus
 	$self->file->refresh;
 	$self->edit->refresh;
+	$self->search->refresh;
 	$self->view->refresh;
 	$self->run->refresh;
 	$self->perl->refresh;
