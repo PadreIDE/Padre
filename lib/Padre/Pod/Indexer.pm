@@ -30,8 +30,12 @@ sub run {
 
 	# Save to the database
 	Padre::DB->begin;
-	Padre::DB->delete_modules;
-	Padre::DB->add_modules(@files);
+	Padre::DB::Modules->truncate;
+	foreach my $file ( @files ) {
+		Padre::DB::Modules->create(
+			name => $file,
+		);
+	}
 	Padre::DB->commit;
 
 	return 1;

@@ -250,7 +250,7 @@ sub new {
 			Wx::gettext("Clean Recent Files List")
 		),
 		sub {
-			Padre::DB->delete_recent( 'files' );
+			Padre::DB::History->delete('where type = ?', 'files');
 
 			# Replace the whole File menu
 			my $menu       = Padre::Wx::Menu::File->new($_[0]);

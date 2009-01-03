@@ -6,9 +6,8 @@ use warnings;
 
 # Insert snippets in your code
 
-use Padre::Wx;
+use Padre::Wx ();
 use Padre::Wx::Dialog;
-use Wx::Locale qw(:default);
 
 our $VERSION = '0.22';
 
@@ -16,15 +15,15 @@ sub get_layout {
 	my ($config) = @_;
 
 	my $cats = Padre::DB->find_snipclasses;
-	unshift @$cats, gettext('All');
+	unshift @$cats, Wx::gettext('All');
 	my $snippets = Padre::DB->find_snipnames;
 
 	my @layout = (
-		[ [ 'Wx::StaticText', undef, gettext('Class:') ],       [ 'Wx::Choice', '_find_cat_',     $cats ], ],
-		[ [ 'Wx::StaticText', undef, gettext('Snippet:') ],     [ 'Wx::Choice', '_find_snippet_', $snippets ], ],
-		[ [], [ 'Wx::Button', '_insert_', gettext('&Insert') ], [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Class:') ],       [ 'Wx::Choice', '_find_cat_',     $cats ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Snippet:') ],     [ 'Wx::Choice', '_find_snippet_', $snippets ], ],
+		[ [], [ 'Wx::Button', '_insert_', Wx::gettext('&Insert') ], [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
 		[ [ 'Wx::StaticLine' ],                                 [ 'Wx::StaticLine' ], ],
-		[ [], [ 'Wx::Button', '_edit_',   gettext('&Edit') ],   [ 'Wx::Button', '_add_',    gettext('&Add') ], ],
+		[ [], [ 'Wx::Button', '_edit_',   Wx::gettext('&Edit') ],   [ 'Wx::Button', '_add_',    Wx::gettext('&Add') ], ],
 	);
 	return \@layout;
 }
@@ -36,20 +35,19 @@ sub dialog {
 	my $layout = get_layout($config);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $win,
-		title  => gettext("Snippets"),
+		title  => Wx::gettext("Snippets"),
 		layout => $layout,
 		width  => [ 150, 200 ],
 	);
 
-	Wx::Event::EVT_CHOICE( $dialog, $dialog->{_widgets_}{_find_cat_}, \&find_category );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_insert_}, \&get_snippet );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_}, \&cancel_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_edit_},   \&edit_snippet );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_add_},	\&add_snippet );
+	Wx::Event::EVT_CHOICE( $dialog, $dialog->{_widgets_}{_find_cat_}, \&find_category  );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_insert_},   \&get_snippet    );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_},   \&cancel_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_edit_},     \&edit_snippet   );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_add_},	  \&add_snippet    );
 
 	$dialog->{_widgets_}{_find_cat_}->SetFocus;
 	$dialog->{_widgets_}{_insert_}->SetDefault;
-
 
 	my $doc = Padre::Documents->current or return;
 
@@ -120,10 +118,10 @@ sub snippet_layout {
 	my ($snippet) = @_;
 
 	my @layout = (
-		[ [ 'Wx::StaticText', undef, gettext('Category:') ], [ 'Wx::TextCtrl', 'category', $snippet->[1] ], ],
-		[ [ 'Wx::StaticText', undef, gettext('Name:') ],     [ 'Wx::TextCtrl', 'name',     $snippet->[2] ], ],
-		[ [ 'Wx::StaticText', undef, gettext('Snippet:') ],  [ 'Wx::TextCtrl', 'snippet',  $snippet->[3], 400 ], ],
-		[ [], [ 'Wx::Button', '_save_', gettext('&Save') ],  [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Category:') ], [ 'Wx::TextCtrl', 'category', $snippet->[1] ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Name:') ],     [ 'Wx::TextCtrl', 'name',     $snippet->[2] ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Snippet:') ],  [ 'Wx::TextCtrl', 'snippet',  $snippet->[3], 400 ], ],
+		[ [], [ 'Wx::Button', '_save_', Wx::gettext('&Save') ],  [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
 	);
 	return \@layout;
 }
@@ -134,7 +132,7 @@ sub snippet_dialog {
 	my $layout	  = snippet_layout($snippet);
 	my $snip_dialog = Padre::Wx::Dialog->new(
 		parent => $dialog,
-		title  => gettext("Edit/Add Snippets"),
+		title  => Wx::gettext("Edit/Add Snippets"),
 		layout => $layout,
 		width  => [ 300, 500 ],
 	);
@@ -180,9 +178,17 @@ sub save_snippet {
 	my $data = $dialog->get_data or return;
 
 	if ( defined $snippet_number ) {
-		Padre::DB->edit_snippet( $snippet_number, $data->{category}, $data->{name}, $data->{snippet} );
+		Padre::DB->do(
+			"update snippets set category = ?, name = ?, snippet = ? where id = ?",
+			{}, $data->{category}, $data->{name}, $data->{snippet}, $snippet_number,
+		);
 	} else {
-		Padre::DB->add_snippet( $data->{category}, $data->{name}, $data->{snippet} );
+		Padre::DB::Snippets->create(
+			mimetype => Padre::Documents->current->guess_mimetype,
+			category => $data->{category},
+			name     => $data->{name},
+			snippet  => $data->{snippet},
+		);
 	}
 
 	return;

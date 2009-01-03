@@ -54,7 +54,10 @@ sub ShowModal {
 
 	# If they entered something differen add it to the history.
 	unless ( defined $self->{suggested} and $value eq $self->{suggested} ) {
-		Padre::DB->add_history( $self->{type}, $value );
+		Padre::DB::History->create(
+			type => $self->{type},
+			name => $value,
+		);
 	}
 
 	return $rv;

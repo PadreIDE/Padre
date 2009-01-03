@@ -28,7 +28,7 @@ our $COMPATIBLE = '0.23';
 
 
 #####################################################################
-# Host Preference Methods
+# Host-Specific Configuration Methods
 
 sub hostconf_read {
 	return +{
@@ -57,41 +57,6 @@ sub hostconf_write {
 
 
 #####################################################################
-# Modules Methods
-
-sub add_modules {
-	my $class = shift;
-	foreach my $module ( @_ ) {
-		Padre::DB::Modules->create(
-			name => $module,
-		);
-	}
-	return;
-}
-
-sub delete_modules {
-	Padre::DB::Modules->truncate;
-}
-
-sub find_modules {
-	my $class = shift;
-	my $where = '';
-	my @bind  = ();
-	if ( $_[0] ) {
-		$where = 'where name like ?';
-		push @bind, '%' . $_[0] . '%';
-	}
-	my @found = Padre::DB::Modules->select(
-		"$where order by name", @bind,
-	);
-	return [ map { $_->name } @found ];
-}
-
-
-
-
-
-#####################################################################
 # History
 
 sub add_history {
@@ -101,12 +66,6 @@ sub add_history {
 		name => $_[1],
 	);
 	return;
-}
-
-sub get_history {
-	my $class = shift;
-	my $type  = shift;
-	die "CODE INCOMPLETE";
 }
 
 # ORLite can't handle "distinct", so don't convert this to the model
@@ -121,12 +80,6 @@ sub get_recent {
 	return wantarray ? @$recent : $recent;
 }
 
-sub delete_recent {
-	my $class = shift;
-	Padre::DB::History->delete('where type = ?', shift);
-	return 1;
-}
-
 sub get_last {
 	my $class  = shift;
 	my @recent = $class->get_recent(shift, 1);
@@ -134,7 +87,11 @@ sub get_last {
 }
 
 sub add_recent_files {
-	$_[0]->add_history('files', $_[1]);
+	Padre::DB::History->create(
+		type => 'files',
+		name => $_[1],
+	);
+	return;
 }
 
 sub get_recent_files {
@@ -142,7 +99,11 @@ sub get_recent_files {
 }
 
 sub add_recent_pod {
-	$_[0]->add_history('pod', $_[1]);
+	Padre::DB::History->create(
+		type => 'pod',
+		name => $_[1],
+	);
+	return;
 }
 
 sub get_recent_pod {
@@ -159,22 +120,6 @@ sub get_last_pod {
 
 #####################################################################
 # Snippets
-
-sub add_snippet {
-	Padre::DB::Snippets->create(
-		mimetype => Padre::Documents->current->guess_mimetype,
-		category => $_[1],
-		name     => $_[2],
-		snippet  => $_[3],
-	);
-}
-
-sub edit_snippet {
-	$_[0]->do(
-		"update snippets set category = ?, name = ?, snippet = ? where id = ?",
-		{}, $_[2], $_[3], $_[4], $_[1],
-	);
-}
 
 sub find_snipclasses {
 	$_[0]->selectcol_arrayref(

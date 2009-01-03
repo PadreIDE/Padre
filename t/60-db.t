@@ -43,18 +43,18 @@ SCOPE: {
 	is_deeply \@pods, ['Test::More', 'Test'], 'pods';
 	is( Padre::DB->get_last_pod, 'Test::More', 'current is Test::More' );
 	
-	ok( ! Padre::DB->add_recent_files('Test.pm'), 'add_recent_file' );
-	ok( ! Padre::DB->add_recent_files('Test2.pm'), 'add_recent_file 2' );
+	ok( ! Padre::DB->add_recent_files('Test.pm'), 'add_recent_files' );
+	ok( ! Padre::DB->add_recent_files('Test2.pm'), 'add_recent_files 2' );
 	@files = Padre::DB->get_recent_files;
 	is_deeply \@files, ['Test2.pm', 'Test.pm'], 'files';
 
 	# test delete_recent
-	ok( Padre::DB->delete_recent( 'pod' ) );
+	ok( Padre::DB::History->delete('where type = ?', 'pod') );
 	@pods = Padre::DB->get_recent_pod;
 	is_deeply \@pods, [], 'no pods after delete_recent pod';
 	@files = Padre::DB->get_recent_files;
 	is_deeply \@files, ['Test2.pm', 'Test.pm'], 'files still remain after delete_recent pod';
-	ok( Padre::DB->delete_recent( 'files' ) );
+	ok( Padre::DB::History->delete('where type = ?', 'files') );
 	@files = Padre::DB->get_recent_files;
 	is_deeply \@files, [], 'no files after delete_recent files';
 

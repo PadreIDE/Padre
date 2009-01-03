@@ -3,38 +3,33 @@ package Padre::Pod::Frame;
 use 5.008;
 use strict;
 use warnings;
-use Data::Dumper qw{Dumper};
-use Padre::DB    ();
-use Padre::Wx    ();
+use Padre::DB          ();
+use Padre::Wx          ();
 use Padre::Pod::Viewer ();
-use base 'Wx::Frame';
 
 our $VERSION = '0.22';
+our @ISA     = 'Wx::Frame';
 
+my $choice      = '';
 my $search_term = '';
-my $choice;
-my $choices;
 
 sub new {
-	my ($class) = @_;
-
-	my $self = $class->SUPER::new( undef,
-	                             -1,
-	                             'PodViewer ',
-	                             Wx::wxDefaultPosition,
-	                             [750, 700],
-	                             );
-	$self->_setup_podviewer();
+	my $class = shift;
+	my $self  = $class->SUPER::new(
+		undef,
+		-1,
+		'PodViewer ',
+		Wx::wxDefaultPosition,
+		[750, 700],
+	);
+	$self->_setup_podviewer;
 	$self->_create_menu_bar;
 	return $self;
 }
 
-
 sub _setup_podviewer {
-	my ($self) = @_;
-
-	my $panel = Wx::Panel->new( $self, -1,);
-
+	my $self    = shift;
+	my $panel   = Wx::Panel->new( $self, -1,);
 	my $html    = Padre::Pod::Viewer->new( $panel, -1 );
 	my $top_s   = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	my $but_s   = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
@@ -44,12 +39,16 @@ sub _setup_podviewer {
 	$but_s->Add( $forward );
 
 	# TODO: update list when a file is opened
-	$choice = Wx::Choice->new( $panel, Wx::wxID_ANY, [ 0, 0 ], Wx::wxDefaultSize, scalar(Padre::DB->get_recent_pod), [ Padre::DB->get_recent_pod ] );
+	$choice = Wx::Choice->new(
+		$panel,
+		Wx::wxID_ANY,
+		[ 0, 0 ],
+		Wx::wxDefaultSize,
+		scalar(Padre::DB->get_recent_pod),
+		[ Padre::DB->get_recent_pod ],
+	);
 	$but_s->Add($choice);
 	Wx::Event::EVT_CHOICE( $panel, $choice, \&on_selection );
-
-	$choices = Padre::DB->find_modules;
-	my @ch = @{$choices}[0..10];
 	my $combobox = Wx::ComboBox->new($panel, -1, '', [375, 5], [-1, 32], []); #, $self->style);
 	Wx::Event::EVT_COMBOBOX(   $panel, $combobox, \&on_combobox);
 	Wx::Event::EVT_TEXT(       $panel, $combobox, sub { on_combobox_text_changed($combobox, @_) } );
@@ -71,17 +70,21 @@ sub _setup_podviewer {
 
 
 sub on_combobox_text_changed {
-	my ( $combobox, $self ) = @_;
-	my $text              = $combobox->GetValue;
-	my $choices           = Padre::DB->find_modules($text);
+	my $combobox = shift;
+	my $self     = shift;
+	my $text     = $combobox->GetValue;
+	my @choices  = Padre::DB::Modules->select(
+		'where name like ? order by name',
+		"\%$text\%",
+	);
 	my $pod_maxlist = Padre->ide->config->{pod_maxlist};
 	my $pod_minlist = Padre->ide->config->{pod_minlist};
-	if ( $pod_minlist < @$choices and @$choices < $pod_maxlist ) {
+	if ( $pod_minlist < @choices and @choices < $pod_maxlist ) {
 		$combobox->Clear;
-		foreach my $name (@$choices) {
-			$combobox->Append($name);
+		foreach my $module ( @choices ) {
+			$combobox->Append( $module->name );
 		}
-	} elsif ($pod_maxlist < @$choices) {
+	} elsif ( $pod_maxlist < @choices ) {
 		$combobox->Clear;
 	}
 	return;
