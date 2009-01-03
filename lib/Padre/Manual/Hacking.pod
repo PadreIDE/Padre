@@ -25,15 +25,170 @@ The specific path you want to check out is...
 
 =head2 Extra Files
 
-The trunk contains primarily a set of directories for various CPAN
-distributions that make up Padre.
+The trunk contains primarily a set of directories, one for each CPAN
+distribution created for Padre by the development team.
 
 In addition, there are some additional scripts that are for development
 purposes and are not part of the releases themselves.
 
+F<Padre/dev.pl>
 
+This is a launch script used to start Padre in developer mode. This mainly
+automates a couple of conveniences, such as using a local .padre directory
+instead of your system one, and including lib in the @INC path to prevent
+needing to run make constantly.
 
+F<tools/release.pl>
 
+Used to release Padre.
+
+F<tools/update_version_number.pl>
+
+Similar to the B<ppi_version> tool from CPAN, this updates the version number.
+
+=head2 Bug Tracking
+
+Padre uses Trac for bug tracking this.
+
+The main web site of Padre is actually its Trac L<http://padre.perlide.org/>
+
+=head2 Patching
+
+Check out the trunk (L<http://svn.perlide.org/padre/trunk/>) and use svn
+diff to create your patch while your current working directory is the
+trunk directory.
+
+Please send patches either to the padre-dev mailing list or add them to
+trac to the appropriate ticket.
+
+=head2 Branching
+
+Usually we use the trunk for all the development work so we can see issues
+and fix them quickly. At least some of use already use Padre for the
+development work running it from the workspace so if someone breaks trunk
+that will immediately effect some of the developers.
+
+So please don't B<intentionally> break the trunk!
+
+If you think your change is relatively large and you feel more comfortable
+working on a branch, do it.
+
+=head2 Change Management
+
+We try to work with small changes. There are no exact rules what is small
+and what is already too big but we try not to mix unrelated issues in one
+change. If you need a styling change or white space change, do it it in a
+separate commit.
+
+Commit messages are important. If a commit relates to a ticket please try
+to remember adding the ticket number with a # sign ( #23 ). The GUI of
+Trac will turn it into a link to the relevant ticket making it easier to
+find related information.
+
+Most of the current major committers monitor the commit messages to see
+what everyone else is doing, so please write them as if they are going to
+actually be read within a few hours of you making the commit.
+
+=head2 Tickets/Issues/Bugs
+
+We are using Trac as the issue and bug tracker.
+
+When adding a note that relates to one of the commit in SVN please use the
+r780 format. That allows Trak to create links to the diff of that revision.
+
+=head2 Code review
+
+We don't have formal code-review but in response to the commit messages
+we sometimes reply with comments to the padre-dev mailing list.
+
+You are also encourgaed to do so!
+
+=head1 STYLE
+
+We're not overly strict about code style in Padre (yet), but please don't
+feel offended if somebody corrects your coding style.
+
+There are a number of relatively simple preferences that are more or less
+enforced, but none of this is automated. We prefer humans over automation
+for this because PerlTidy has something of a history of doing things overly
+strictly, which can sometimes destroy clarity for the sake of
+correctness.
+
+In general, the code style preferences for Padre are guided by ease of
+understanding code, and thus ease of maintenance.
+
+=head2 B<Tabs instead of Spaces>
+
+Use one tab character for each indentation level at the beginning of a line.
+
+There are a lot of people working on Padre, with indent preferences
+ranging from two to eight spaces. Using tabs allows all of the development
+team to work with code at the indent level that is most comfortable for
+their eyes.
+
+In particular, allowing the use of large (eight or higher) tabs enables
+developers with visual processing or eye-sight issues (astygmatisms, mild
+short-sightedness, figure-ground problems) to effectively contribute to
+Padre.
+
+If your editor doesn't support tabs properly, well that's clearly a
+temporary probably because you will eventually be switching to Padre,
+which DOES support tabs properly.
+
+Additionally, there current plan for project support does include correctly
+supporting project specific tab-versus-space settings, so you can use
+spaces for B<your> code, and Padre will just switch and Do The Right Thing
+when you work on the Padre project.
+
+After the initial indentation, do not use tabs for indentation any more.
+Instead, use the appropriate amount of spaces to make  things line up.
+
+Example: (Where you put the opening brace isn't
+          important for this example!)
+
+sub baz {
+	if (foo()
+	    and bar())
+	{
+		# ...
+	}
+}
+
+=head2 Method and Subroutine Naming
+
+Methods in Padre itself must be lowercase, and should generally consist of
+complete words separated by underscores.
+(e.g. Use ->check_message instead of ->chkMsg).
+
+Methods in all capitals are reserved for Perl-specific methods such as
+C<DESTROY>
+
+Methods in StudlyCaps are reserved for the Wx bindings.
+
+Separating This allows us to
+be clear which methods (or overrided methods) are part of the Wx layer,
+and which are part of Padre itself.
+
+=head2 Accessors
+
+If a value is set once during the constructor and then not changed
+afterward, use a accessor name which matches the original parameter.
+
+  my $object = Class->new(
+      value => 'something',
+  );
+  
+  sub value {
+      $_[0]->{value};
+  }
+
+Accessors which can change post-constructor should be named "get_foo"
+and "set_foo". Do not use mutators.
+
+For simple accessors, we encourage the use of L<Class::XSAccessor> for
+accessor generation. This not only makes them significantly faster,
+but also makes debugging easier, because the debugger won't descend into
+every single accessor sub.
 
 =head1 SUPPORT
 
@@ -45,6 +200,4 @@ channel on L<irc://irc.perl.org/>.
 
 =head1 COPYRIGHT
 
-Copyright 2008 Adam Kennedy.
-
-
+Copyright 2008 The Padre Team.

@@ -1,0 +1,23 @@
+=head1 NAME
+
+Padre::Manual - The Primary Padre Documentation
+
+=head1 DESCRIPTION
+
+This is a stub for what will eventually become the Padre manual.
+
+Currently this serves as a launch point for each of the child documents
+that make up the nascent "manual".
+
+=head2 Padre Development Guide
+
+If you would like to help improve Padre see L<Padre::Manual::Hacking> for
+information on checking out Padre, how to work with it, file bugs, etc.
+
+=head2 Padre Translation Guild
+
+If you would like to translate Padre into your local language, see
+L<Padre::Manual::Translation> for more information.
+
+This is currently VERY new and does not have much useful information in it.
+(That should hopefully change shortly).
