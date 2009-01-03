@@ -13,7 +13,7 @@ BEGIN {
 	}
 }
 
-plan tests => 14;
+plan tests => 15;
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -117,4 +117,8 @@ SCOPE: {
 	# A typical submenu
 	my $file = $menu->file;
 	isa_ok( $file, 'Padre::Wx::Submenu' );
+
+	# The notebook
+	my $notebook = $main->nb;
+	isa_ok( $notebook, 'Padre::Wx::Notebook' );
 }
