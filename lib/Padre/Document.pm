@@ -254,21 +254,34 @@ sub guess_mimetype {
 		return 'application/x-perl';
 	}
 
+	my $text = $self->{original_content};
+
 	# Try derive the mime type from the name
 	if ( $self->filename and $self->filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
-		return $EXT_MIME{$ext} if $EXT_MIME{$ext};
+		
+		if ( $EXT_MIME{$ext} ) {
+			return $EXT_MIME{$ext} if $EXT_MIME{$ext} ne 'application/x-perl';
+			if ( $EXT_MIME{$ext} eq 'application/x-perl' ) {
+				if ( $text and $text =~ /^use\sv6;/m ) {
+					return 'application/x-perl6';
+				} else {
+					return 'application/x-perl';
+				}
+			}
+		}
 	}
 
 	# Fall back on deriving the type from the content
 	# Hardcode this for now for the special cases we care about.
-	my $text = $self->{original_content};
+
 	if ( $text and $text =~ /\A#!/m ) {
 		# Found a hash bang line
 		if ( $text =~ /\A#![^\n]*\bperl\b/m ) {
 			return 'application/x-perl';
 		}
 	}
+
 
 	# Fall back to a null value
 	return '';
