@@ -592,8 +592,15 @@ sub plugin_config {
 
 	# Get the plugin, and from there he config
 	my $plugin  = $self->_plugin($param);
+	my $name    = $plugin->name;
 	my $config  = $self->parent->config;
-	return( $config->{plugins} ||= {} );
+	unless ( $config->{plugins} ) {
+		$config->{plugins} = {};
+	}
+	unless ( $config->{plugins}->{$name} ) {
+		$config->{plugins}->{$name} = {};
+	}
+	return $config->{plugins}->{$name};
 }
 
 # enable all the plugins for a single editor
