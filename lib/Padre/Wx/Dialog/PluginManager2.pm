@@ -33,7 +33,11 @@ sub html {
 	my $manager = $self->{manager};
 
 	my @rows = ();
-	my $icon = URI::file->new( Padre::Util::sharefile('plugin.gif') )->as_string;
+	my $file = Padre::Util::sharefile('plugin.gif');
+	unless ( -f $file ) {
+		die "Failed to find $file";
+	}
+	my $icon = URI::file->new( $file )->as_string;
 	foreach my $name ( $manager->plugin_names ) {
 		my $plugin   = $manager->_plugin($name);
 		my $namehtml = "<b>"  . $plugin->plugin_name . "</b>";
