@@ -15,6 +15,11 @@ v0.23 ??????????
     Shutdown process now disables all the plugins, so they have a
         change to shut down elegantly too (ADAMK)
     Plugins now reload correctly (ADAMK)
+    Created a basic stub Padre::Manual and moved the information in
+        HACKING.txt into Padre::Manual::Hacking and
+	Padre::Manual::Translation (ADAMK)
+    Moved more bits of GUI code out of MainWindow and into their own
+        classes (ADAMK)
 
 v0.22 2008.12.23
 
