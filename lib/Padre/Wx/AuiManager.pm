@@ -5,18 +5,27 @@ package Padre::Wx::AuiManager;
 
 use strict;
 use warnings;
-use Padre::Wx ();
+use Params::Util qw{_INSTANCE};
+use Padre::Wx    ();
 
 our $VERSION = '0.22';
-our @ISA     = 'Wx::AuiManager';
+
+# Due to an overly simplistic implementation at the C level,
+# Wx::AuiManager is only a SCALAR reference and cannot be
+# sub-classed.
+# Instead, we will do inheritance by composition.
+use Class::Adapter::Builder
+	ISA      => 'Wx::AuiManager',
+	AUTOLOAD => 1;
 
 # The custom AUI Manager takes the parent window as a param
 sub new {
-	my $class = shift;
-	my $self  = $class->SUPER::new;
+	my $class  = shift;
+	my $object = Wx::AuiManager->new;
+	my $self   = $class->SUPER::new( $object );
 
-	# Wx::AuiManager seems to bless into itself but we want to subclass it
-	bless $self, $class;
+	# Locale caption gettext values
+	$self->{caption} = {};
 
 	# Set the managed window
 	$self->SetManagedWindow($_[0]);
@@ -32,12 +41,21 @@ sub new {
 	return $self;
 }
 
+sub caption_gettext {
+	my $self = shift;
+	$self->{caption}->{$_[0]} = $_[1];
+	$self->GetPane($_[0])->Caption( Wx::gettext($_[1]) );
+	return 1;
+}
+
 sub relocale {
 	my $self = shift;
 
-	# Update various pane labels
-	$self->GetPane('sidepane')->Caption( Wx::gettext("Subs") );
-	$self->GetPane('bottompane')->Caption( Wx::gettext("Output") );
+	# Update the pane captions
+	foreach my $name ( sort keys %{ $self->{caption} } ) {
+		my $pane = $self->GetPane($name) or next;
+		$pane->Caption( Wx::gettext($self->{caption}->{$name}) );
+	}
 
 	return $self;
 }

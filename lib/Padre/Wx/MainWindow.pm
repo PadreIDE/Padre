@@ -33,7 +33,9 @@ use Padre::Locale             ();
 use Padre::Wx                 ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
+use Padre::Wx::Bottom         ();
 use Padre::Wx::ToolBar        ();
+use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
 use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
@@ -113,9 +115,7 @@ sub new {
 	$self->{locale} = Padre::Locale::object();
 
 	# Drag and drop support
-	$self->SetDropTarget(
-		Padre::Wx::FileDropTarget->new($self)
-	);
+	Padre::Wx::FileDropTarget->set($self);
 
 	# Temporary store for the function list.
 	# TODO: Storing this here violates encapsulation.
@@ -145,11 +145,20 @@ sub new {
 	# Create the status bar
 	$self->{gui}->{statusbar} = Padre::Wx::StatusBar->new($self);
 
-	$self->create_editor_pane;
+	# Create the main notebook for the documents
+	$self->{gui}->{notebook} = Padre::Wx::Notebook->new($self);
 
 	$self->create_side_pane;
 
-	$self->create_bottom_pane;
+	# Create the bottom pane
+	$self->{gui}->{bottompane} = Padre::Wx::Bottom->new($self);
+
+	# Create the output textarea
+	$self->{gui}->{output_panel} = Padre::Wx::Output->new(
+		$self->{gui}->{bottompane}
+	);
+
+	$self->show_output( Padre->ide->config->{main_output_panel} );
 
 	# Create the syntax checker and sidebar for syntax check messages
 	# Must be created after the bottom pane!
@@ -176,9 +185,7 @@ sub new {
 
 		# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 		$mod = $mod & (Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT());
-		if (not $mod) {
-			# key without modifyer
-		} elsif ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+		if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
 			# Ctrl-TAB  #TODO it is already in the menu
 			$self->on_next_pane if $code == Wx::WXK_TAB;
 		} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT()) { # Ctrl-Shift
@@ -190,7 +197,11 @@ sub new {
 	} );
 
 	# Deal with someone closing the window
-	Wx::Event::EVT_CLOSE(           $self,     \&on_close_window     );
+	Wx::Event::EVT_CLOSE( $self, sub {
+		shift->on_close_window(@_);
+	} );
+
+	# Scintilla Event Hooks
 	Wx::Event::EVT_STC_UPDATEUI(    $self, -1, \&on_stc_update_ui    );
 	Wx::Event::EVT_STC_CHANGE(      $self, -1, \&on_stc_change       );
 	Wx::Event::EVT_STC_STYLENEEDED( $self, -1, \&on_stc_style_needed );
@@ -201,6 +212,7 @@ sub new {
 	# used to use was far uglier
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
+	# Load the saved pane layout from last time (if any)
 	if ( defined $config->{host}->{aui_manager_layout} ) {
 		$self->manager->LoadPerspective( $config->{host}->{aui_manager_layout} );
 	}
@@ -221,43 +233,6 @@ sub new {
 	$timer->Start( 1, 1 );
 
 	return $self;
-}
-
-sub create_editor_pane {
-	my $self = shift;
-
-	# Create the main notebook for the documents
-	$self->{gui}->{notebook} = Wx::AuiNotebook->new(
-		$self,
-		Wx::wxID_ANY,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP
-		| Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
-		| Wx::wxAUI_NB_WINDOWLIST_BUTTON,
-	);
-
-	$self->manager->AddPane(
-		$self->nb,
-		Wx::AuiPaneInfo->new->Name('editorpane')
-			->CenterPane->Resizable->PaneBorder->Dockable
-			->Caption( Wx::gettext('Files') )->Position(1)
-	);
-
-	Wx::Event::EVT_AUINOTEBOOK_PAGE_CHANGED(
-		$self,
-		$self->{gui}->{notebook},
-		\&on_notebook_page_changed,
-	);
-
-	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE(
-		$self,
-		$self->nb,
-		\&on_close,
-	);
-
-	return;
 }
 
 sub create_side_pane {
@@ -333,38 +308,6 @@ sub create_side_pane {
 	);
 
 	$self->show_functions( Padre->ide->config->{main_subs_panel} );
-
-	return;
-}
-
-sub create_bottom_pane {
-	my $self = shift;
-
-	$self->{gui}->{bottompane} = Wx::AuiNotebook->new(
-		$self,
-		Wx::wxID_ANY,
-		Wx::wxDefaultPosition,
-		Wx::Size->new(350, 300), # used when pane is floated
-		Wx::wxAUI_NB_SCROLL_BUTTONS|Wx::wxAUI_NB_WINDOWLIST_BUTTON|Wx::wxAUI_NB_TOP
-		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
-	);
-
-	# Create the bottom-of-screen output textarea
-	$self->{gui}->{output_panel} = Padre::Wx::Output->new(
-		$self->{gui}->{bottompane}
-	);
-
-	$self->manager->AddPane(
-		$self->{gui}->{bottompane},
-		Wx::AuiPaneInfo->new->Name('bottompane')
-			->CenterPane->Resizable(1)->PaneBorder(0)->Movable(1)
-			->CaptionVisible(1)->CloseButton(0)->DestroyOnClose(0)
-			->MaximizeButton(1)->Floatable(1)->Dockable(1)
-			->Caption( Wx::gettext("Output View") )->Position(2)->Bottom->Layer(4)
-			->Hide
-	);
-
-	$self->show_output( Padre->ide->config->{main_output_panel} );
 
 	return;
 }
@@ -2340,12 +2283,16 @@ sub on_last_visited_pane {
 
 sub on_notebook_page_changed {
 	my $editor = $_[0]->selected_editor;
-	if ($editor) {
-		@{ $_[0]->{page_history} } = grep {
+	if ( $editor ) {
+		my $history = $_[0]->{page_history};
+		@$history = grep {
 			Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor)
-		} @{ $_[0]->{page_history} };
-		push @{ $_[0]->{page_history} }, $editor;
-		$editor->{Document}->set_indentation_style(); #  update indentation in case auto-update is on; TODO: encapsulation?
+		} @$history;
+		push @$history, $editor;
+
+		# Update indentation in case auto-update is on
+		# TODO: encapsulation?
+		$editor->{Document}->set_indentation_style;
 	}
 	$_[0]->refresh;
 }
