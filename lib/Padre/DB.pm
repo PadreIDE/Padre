@@ -10,10 +10,11 @@ use File::ShareDir::PAR ();
 use ORLite 1.17         (); # Need truncate
 
 use ORLite::Migrate 0.01 {
-	create   => 1,
-	tables   => [ 'Modules' ],
-	file     => Padre::Config->default_db,
-	timeline => File::Spec->catdir(
+	create        => 1,
+	tables        => [ 'Modules' ],
+	file          => Padre::Config->default_db,
+	user_revision => 2,
+	timeline      => File::Spec->catdir(
 		File::ShareDir::PAR::dist_dir('Padre'),
 		'timeline',
 	),
@@ -30,7 +31,7 @@ our $COMPATIBLE = '0.23';
 # Host Preference Methods
 
 sub hostconf_read {
-	return {
+	return +{
 		map { $_->name => $_->value }
 		Padre::DB::Hostconf->select
 	};
