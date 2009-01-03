@@ -3,6 +3,7 @@ package Padre::Wx::FileDropTarget;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util qw{ _INSTANCE };
 use Wx::DND;
 
 our $VERSION = '0.22';
@@ -13,6 +14,15 @@ sub new {
 	my $self      = $class->SUPER::new;
 	$self->{main} = shift;
 	return $self;
+}
+
+sub set {
+	my $self = shift;
+	unless ( _INSTANCE($self, 'Padre::Wx::FileDropTarget') ) {
+		$self = $self->new(@_);
+	}
+	$self->{main}->SetDropTarget($self);
+	return 1;
 }
 
 sub OnDropFiles {
