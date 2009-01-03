@@ -144,24 +144,39 @@ sub run {
 
 	my $config = Padre->ide->config;
 
-	my @main_startup_items = (Wx::gettext('new'), Wx::gettext('nothing'), Wx::gettext('last'));
+	#Keep this in order for tools/update_pot_messages.pl to pick these messages up.
+	my @keep_me = (
+		Wx::gettext('new'),
+		Wx::gettext('nothing'),
+		Wx::gettext('last'),
+		Wx::gettext('no'),
+		Wx::gettext('same_level'),
+		Wx::gettext('deep'),
+		Wx::gettext('alphabetical'),
+		Wx::gettext('original'),
+		Wx::gettext('alphabetical_private_last'),
+	);
+	my @main_startup_items = qw(new nothing last);
 	my @main_startup = (
 		$config->{main_startup},
 		grep { $_ ne $config->{main_startup} } @main_startup_items
 	);
-	my @editor_autoindent_items = (Wx::gettext('no'), Wx::gettext('same_level'), Wx::gettext('deep') );
+	my @main_startup_localized = map{Wx::gettext($_)} @main_startup;
+	my @editor_autoindent_items = qw(no same_level deep);
 	my @editor_autoindent = (
 		$config->{editor_autoindent},
 		grep { $_ ne $config->{editor_autoindent} } @editor_autoindent_items 
 	);
-	my @editor_methods_items = (Wx::gettext('alphabetical'), Wx::gettext('original'), 
-	                            Wx::gettext('alphabetical_private_last') );
+	my @editor_autoindent_localized = map{Wx::gettext($_)} @editor_autoindent;
+	my @editor_methods_items = qw(alphabetical original alphabetical_private_last);
 	my @editor_methods = (
 		$config->{editor_methods},
 		grep { $_ ne $config->{editor_methods} } @editor_methods_items
 	);
+	my @editor_methods_localized = map{Wx::gettext($_)} @editor_methods;
 
-	my $dialog = $class->dialog( $win, \@main_startup, \@editor_autoindent, \@editor_methods );
+	my $dialog = $class->dialog( $win, 
+		\@main_startup_localized, \@editor_autoindent_localized, \@editor_methods_localized );
 	return if not $dialog->show_modal;
 
 	my $data = $dialog->get_data;
