@@ -38,6 +38,6 @@
 # Avoid archives of this distribution
 \bPadre-[\d\.\_]+
 
+# Avoid Padre development files
 \B\.padre
 dev.pl
-
