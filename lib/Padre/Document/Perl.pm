@@ -152,6 +152,7 @@ sub colorize {
 		'Octal'         => 0,
 		'Hex'           => 0,
 		'Literal'       => 0,
+		'Version'       => 0,
 	);
 
 	my @tokens = $ppi_doc->tokens;
