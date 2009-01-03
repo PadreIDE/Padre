@@ -1,10 +1,9 @@
 Changes for Padre.
 
-v0.23 2009.01.03
-    Updated Italian transation.
 
 v0.23 ??????????
 
+    Updated Italian transation.
     Refactored the plugin state hash out into a standalone
         Padre::PluginHandle class (ADAMK)
     Add naive way to locate some of the annoying errors beginners
