@@ -13,6 +13,8 @@ use Carp           ();
 use Cwd            ();
 use File::Spec     ();
 use File::HomeDir  ();
+use List::Util     ();
+use Scalar::Util   ();
 use Getopt::Long   ();
 use YAML::Tiny     ();
 use DBI            ();
@@ -38,6 +40,8 @@ use Class::Autouse qw{
 	Padre::Document::Perl
 	Padre::PPI
 	Padre::Project
+	Padre::Project::Null
+	Padre::Project::Perl
 	Padre::PluginManager
 	Padre::Pod::Frame
 	Padre::Pod::Viewer
@@ -110,14 +114,14 @@ sub new {
 
 	}, $class;
 
-	# Load the first layer of permanent state (config files)
+	# Load (and migrate if needed) the persistant host state database
+	Class::Autouse->load('Padre::DB');
+
+	# Load (and sync if needed) the user's portable configuration
 	$self->{config_dir}  = Padre::Config->default_dir;
 	$self->{config_yaml} = Padre::Config->default_yaml;
 	$self->{config}      = Padre::Config->read(   $self->config_yaml );
 	$self->{config}    ||= Padre::Config->create( $self->config_yaml );
-
-	# Load the second layer of permanent state (database)
-	Class::Autouse->load('Padre::DB');
 
 	# Create the plugin manager
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
@@ -139,9 +143,7 @@ sub ide {
 }
 
 sub wx {
-	my $self = shift;
-	$self->{wx} or
-	$self->{wx} = Padre::Wx::App->new;
+	$_[0]->{wx};
 }
 
 sub task_manager {
@@ -207,10 +209,29 @@ sub save_config {
 }
 
 sub usage { print <<"END_USAGE"; exit(1) }
-Usage: $0 [FILENAMEs]
+Usage: $0 [FILENAMES]
            --index to index the modules found on this computer
            --help this help
 END_USAGE
+
+
+
+
+
+#####################################################################
+# Project Management
+
+sub project {
+	my $self = shift;
+	my $root = shift;
+	unless ( $self->{project}->{$root} ) {
+		my $class = Padre::Project->class($root);
+		$self->{project}->{$root} = $class->new(
+			root => $root,
+		);
+	}
+	return $self->{project}->{$root};
+}
 
 1;
 
@@ -1018,17 +1039,19 @@ modify it under the same terms as Perl 5 itself.
 
 The icons were taken from
 http://tango.freedesktop.org/Tango_Desktop_Project
+
 The Tango base icon theme is licensed under the
 Creative Commons Attribution Share-Alike license.
+
 Using tango-icon-theme-0.8.1.tar.gz
 
 =head1 WARRANTY
 
-There is no warranty whatsoever.
-If you lose data or your hair because of this program,
-that's your problem.
+There is no warranty whatsoever. If you lose data or your hair because
+of this program, that's your problem because you clearly aren't using
+version control or backing up properly.
 
-=head1 CREDITS and THANKS
+=head1 ACKNOWLEDGEMENTS
 
 To Mattia Barbon for providing WxPerl.
 Part of the code was copied from his Wx::Demo application.
@@ -1045,14 +1068,12 @@ Gábor Szabó - גאבור סבו (SZABGAB),
 Heiko Jansen (HJANSEN),
 Jérôme Quelin (JQUELIN),
 Kaare Rasmussen (KAARE),
-Keedi Kim  - 김도형  (KEEDI),
+Keedi Kim - 김도형 (KEEDI),
 Max Maischein (CORION),
 Patrick Donelan (PATSPAM),
 Paweł Murias (PMURIAS),
 Petar Shangov (PSHANGOV),
 Steffen Müller (TSEE)
-
-
 
 To Herbert Breunung for letting me work on Kephra.
 
@@ -1085,4 +1106,3 @@ Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
 Spanish - Paco Alguacil (PacoLinux)
 
 =cut
-

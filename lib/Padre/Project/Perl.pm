@@ -4,13 +4,13 @@ package Padre::Project::Perl;
 
 use strict;
 use warnings;
-use base 'Padre::Project';
+use Padre::Project ();
 
 our $VERSION = '0.23';
+our @ISA     = 'Padre::Project';
 
 sub inspector {
 	my $self = shift;
-
 	unless ( $self->{inspector} ) {
 		require Module::Inspector;
 		$self->{inspector} = Module::Inspector->new( dist_dir => $self->root );
@@ -35,12 +35,13 @@ sub from_file {
 			-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
 			or
 			-f File::Spec->catpath( $v, $_, 'Build.PL' )
+			or
+			-f File::Spec->catpath( $v, $_, 'padre.yml' )
 		}
 		map {
 			File::Spec->catdir(@d[0 .. $_])
 		} reverse ( 0 .. $#d );
 	unless ( defined $dirs ) {
-		# Carp::croak("Failed to find the portable.perl file");
 		return;
 	}
 

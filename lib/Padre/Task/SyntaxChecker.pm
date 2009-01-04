@@ -74,7 +74,7 @@ sub new {
 	unless ( defined $self->{text} ) {
 		$self->{text} = Padre::Current->document->text_get;
 	}
-	
+
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
 	my $notebook_page = $self->{notebook_page} || $self->{main_thread_only}{notebook_page};
@@ -123,7 +123,7 @@ sub finish {
 sub update_gui {
 	my $self = shift;
 	my $messages = $self->{syntax_check};
-	
+	$DB::single = 1;
 	my $syntax_checker = Padre->ide->wx->main_window->syntax_checker;
 	my $syntax_bar     = $syntax_checker->syntaxbar;
 	my $notebook_page  = $self->{main_thread_only}{notebook_page};

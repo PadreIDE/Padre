@@ -11,7 +11,7 @@ our $VERSION = '0.23';
 
 use Class::XSAccessor
 	getters => {
-		root => 'root',
+		root      => 'root',
 		padre_yml => 'padre_yml',
 	};
 
@@ -21,13 +21,23 @@ use Class::XSAccessor
 ######################################################################
 # Class Methods
 
-sub project_class {
+sub class {
 	my $class = shift;
-	my $dir   = shift;
-	unless ( -d $dir ) {
-		die("Directory '$dir' does not exist");
+	my $root  = shift;
+	unless ( -d $root ) {
+		Carp::croak("Project directory '$root' does not exist");
 	}
-	# TODO: Finish this method
+	if ( File::Spec->catfile($root, 'Makefile.PL') ) {
+		return 'Padre::Project::Perl';
+	}
+	if ( File::Spec->catfile($root, 'Build.PL') ) {
+		return 'Padre::Project::Perl';
+	}
+	if ( File::Spec->catfile($root, 'padre.yml') ) {
+		return 'Padre::Project';
+	}
+	return 'Padre::Project::Null';
+
 }
 
 

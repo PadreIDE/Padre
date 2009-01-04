@@ -62,18 +62,31 @@ sub _check_syntax {
 		$file->close;
 		my @cmd = (
 			Padre->perl_interpreter,
+		);
+		if ( $self->{perl_cmd} ) {
+			push @cmd, @{$self->{perl_cmd}};
+		}
+		push @cmd, (
 			'-Mdiagnostics',
 			'-c',
 			$file->filename,
 		);
 		require IPC::Cmd;
 		require IPC::Open3;
+
 		# damn global variables. This is likely unnecessary, but safe
 		local $IPC::Cmd::USE_IPC_OPEN3 = 1;
 		$IPC::Cmd::USE_IPC_OPEN3 = 1; # silence warning
-		
-		my( undef, undef, undef, undef, $stderr_buf )
-		  = IPC::Cmd::run( command => \@cmd, verbose => 0 );
+
+		# Make sure we execute from the correct directory
+		my $stderr_buf = [];
+		if ( $self->{cwd} ) {
+			require File::pushd;
+			my $pushd = File::pushd::pushd($self->{cwd});
+			$stderr_buf = (IPC::Cmd::run( command => \@cmd, verbose => 0 ))[4];
+		} else {
+			$stderr_buf = (IPC::Cmd::run( command => \@cmd, verbose => 0 ))[4];
+		}
 		$stderr = join '', @$stderr_buf if ref($stderr_buf) eq 'ARRAY';
 	}
 
