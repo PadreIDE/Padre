@@ -1,0 +1,112 @@
+Revision history for Perl extension Config::Tiny
+
+2.12 Thu  1 Nov 2007
+	- Converting build script from Module::Install to tinier EU:MM
+
+2.11 Missing
+
+2.10 Sat 20 Sep 2006
+	- This release contains only build-time changes
+	- Did a little housekeeping on Makefile.PL and the unit tests
+	- Upgrading to Module::Install 0.64
+
+2.09 Sat 15 Jul 2006
+	- This release contains only build-time changes
+	- Added a dependency on ExtUtils::MakeMaker 6.11
+	  Module::Install may have an issue with older EU:MM installs
+
+2.08 Sat 15 Jul 2006
+	- This release contains only build-time changes
+	- Upgraded to Module::Install 0.63
+
+2.07 Wed 10 May 2006
+	- This release contains only build-time changes
+	- AutoInstall is only needed for options, so remove auto_install
+
+2.06 Sun 23 Apr 2006
+	- No functional changes.
+	- Moved test.conf to the root dir, removing last use of File::Spec
+	- It also means we don't need FindBin, so removed that too
+	- Upgrading to Module::Install 0.62
+
+2.05 Thu 23 Feb 2006
+	- No functional changes.
+	- Moved over from the old CVS repository to the new SVN one
+	- Updated tests for the new release system
+	- Upgrading to a newer Module::Install
+
+2.04 Sat 31 Dec 2005
+	- No functional changes.
+	- Upgrading to a newer Module::Install to address Cygwin problem
+
+2.03 Fri 30 Dec 2005
+	- No functional changes.
+	- POD Change: CPAN #15143 Clear things up about $! after
+	  unsuccessful read()?  (flatworm)
+	- Upgraded Makefile.PL to use Module::Install
+
+2.02 Sun Jun 19 2005
+	- Add trimming of whitespace from the section names so that we can
+	  use section tags like [ section ] and have it Do What You Mean.
+	- Cleaned up the POD a little more.
+
+2.01 Thu Mar 24 2005
+	- Lars Thegler noted in CSS::Tiny that 3-argument open is not
+	  supported by 5.005. Added a small fix to change it to 2-argument
+	  open.
+
+2.00 Fri Jul 16 2004
+	- Final tweaks to round out complete 5.004 and Win32 compatibility
+
+1.9  Wed Jul  7 2004
+	- Applied some small optimisations from Japheth Cleaver
+
+1.8  Wed Jun 30 2004
+	- Fixed a bug whereby trying to load an empty file returned an error,
+	  when it should be valid (if an empty object)
+
+1.7  Tue Jun 22 2004
+	- Added a little more flexibility in the 'read' and 'read_string' methods
+	  to handle being called in unexpected, but recoverable, ways.
+
+1.6  Mon Mar  1 2004
+	- Bug fix: Sections without keys didn't appear at all in the parsed struct
+
+1.5  Wed Jan  7 2004
+	- Updating documentation to provide a correct location to send bug reports
+
+1.4  Web Dec 24 2003
+	- Caught a warning when trying to parse an undefined string.
+	  Returns undef in that case.
+	- Merry Christmas and a productive New Year to you all!
+
+1.3  Fri Nov 7 2003
+	- Slightly altered a regex so that trailing whitespace in properties
+	  is dropped.
+
+1.2  Wed Aug 12 15:51:12 2003
+	- Applied a variety of small changed designed to reduce the number of
+	  opcodes generated, without changing the functionality.
+	  This should save a few K in load overhead.
+
+1.1  Wed Apr 23 22:56:21 2003
+	- When reporting a bad line, put single quotes around the
+	  lines contents in the error message.
+	- Small updates to the pod documentation
+
+1.0  Sat Dec 21 11:53:51 2002
+	- Removed file locking, since we read/write virtually atomically now
+	- Removed mode support from ->write() it was erroneous
+	- Removed dependency on Fcntl
+	- Added the read_string() method
+	- Other minor tweaks to shrink the code
+
+0.3  Mon Dec 09 00:44:21 2002
+	- Upgraded tests to Test::More, to deep test the structs
+	- Added Fcntl to the required modules
+
+0.2  Tue Nov 26 21:51:34 2002
+	- Don't import Fcntl symbols
+
+0.1  Wed Nov 13 16:50:23 2002
+	- original version
