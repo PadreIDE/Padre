@@ -59,6 +59,14 @@ sub tango {
 	);
 }
 
+sub icon {
+	Wx::Bitmap->new(
+		Padre::Util::sharefile( 'miscicons', @_ ),
+		Wx::wxBITMAP_TYPE_PNG,
+	);
+}
+
+
 1;
 
 # Copyright 2008 Gabor Szabo.
