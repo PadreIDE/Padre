@@ -1,32 +1,35 @@
-
 package Padre::Task::Examples::WxEvent;
+
 use strict;
 use warnings;
+use Padre::Task ();
 
 our $VERSION = '0.22';
-
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 # set up a new event type
 our $SAY_HELLO_EVENT : shared = Wx::NewEventType();
 
 sub prepare {
-	my $self = shift;
-
 	# Set up the event handler
-	my $main = Padre->ide->wx->main_window;
-	Wx::Event::EVT_COMMAND($main, -1, $SAY_HELLO_EVENT, \&on_say_hello);
-	return();
+	Wx::Event::EVT_COMMAND(
+		Padre->ide->wx->main_window,
+		-1,
+		$SAY_HELLO_EVENT,
+		\&on_say_hello,
+	);
+
+	return;
 }
 
-# the event handler
+# The event handler
 sub on_say_hello {
 	my ($main, $event) = @_; @_=(); # hack to avoid "Scalars leaked"
 	
-	# write a message to the beginning of the document
-	my $cur = Padre::Documents->current->editor;
-	return if not defined $cur;
-	$cur->InsertText(0, $event->GetData());
+	# Write a message to the beginning of the document
+	my $editor = $main->current->editor;
+	return if not defined $editor;
+	$editor->InsertText(0, $event->GetData);
 }
 
 sub run {

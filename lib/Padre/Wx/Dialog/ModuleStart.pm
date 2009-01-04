@@ -72,17 +72,17 @@ sub start {
 }
 
 sub dialog {
-	my ( $class, $win ) = @_;
+	my ( $class, $parent ) = @_;
 
 	my $config = Padre->ide->config;
 
 	my $layout = get_layout($config);
 	my $dialog = Padre::Wx::Dialog->new(
-		parent          => $win,
-		title           => gettext("Module Start"),
-		layout          => $layout,
-		width           => [100, 200],
-		bottom          => 20,
+		parent => $parent,
+		title  => gettext("Module Start"),
+		layout => $layout,
+		width  => [100, 200],
+		bottom => 20,
 	);
 
 	$dialog->{_widgets_}{_ok_}->SetDefault;

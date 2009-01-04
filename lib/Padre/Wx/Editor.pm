@@ -360,7 +360,7 @@ sub show_calltip {
 		$self->CallTipCancel;
 	}
 
-	my $doc = Padre::Documents->current or return;
+	my $doc = Padre::Current->document or return;
 	my $keywords = $doc->keywords;
 
 	my $regex = join '|', sort {length $a <=> length $b} keys %$keywords;
@@ -531,7 +531,7 @@ sub on_right_down {
 	my $z = Wx::Event::EVT_MENU( $main, # Ctrl-Z
 		$undo,
 		sub {
-			my $editor = Padre::Documents->current->editor;
+			my $editor = Padre::Current->editor;
 			if ( $editor->CanUndo ) {
 				$editor->Undo;
 			}
@@ -546,7 +546,7 @@ sub on_right_down {
 	Wx::Event::EVT_MENU( $main, # Ctrl-Y
 		$redo,
 		sub {
-			my $editor = Padre::Documents->current->editor;
+			my $editor = Padre::Current->editor;
 			if ( $editor->CanRedo ) {
 				$editor->Redo;
 			}
@@ -634,15 +634,13 @@ sub on_right_down {
 			my $fold = $menu->Append( -1, Wx::gettext("Fold all") );
 			Wx::Event::EVT_MENU( $main, $fold,
 				sub {
-					my $main = shift;
-					$main->selected_editor->fold_all;
+					$_[0]->current->editor->fold_all;
 				},
 			);
 			my $unfold = $menu->Append( -1, Wx::gettext("Unfold all") );
 			Wx::Event::EVT_MENU( $main, $unfold,
 				sub {
-					my $main = shift;
-					$main->selected_editor->unfold_all;
+					$_[0]->current->editor->unfold_all;
 				},
 			);
 			$menu->AppendSeparator;

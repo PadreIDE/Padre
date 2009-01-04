@@ -1,11 +1,12 @@
-
 package Padre::Task::PPI;
+
 use strict;
 use warnings;
+use Padre::Task    ();
+use Padre::Current ();
 
 our $VERSION = '0.22';
-
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 =pod
 
@@ -65,9 +66,9 @@ the constructor.
 
 sub new {
 	my $class = shift;
-	my $self = $class->SUPER::new(@_);
-	if (not defined $self->{text}) {
-		$self->{text} = Padre::Documents->current->text_get();
+	my $self  = $class->SUPER::new(@_);
+	unless ( defined $self->{text} ) {
+		$self->{text} = Padre::Current->document->text_get;
 	}
 	return $self;
 }
@@ -84,13 +85,12 @@ sub run {
 
 sub prepare {
 	my $self = shift;
-	if (not defined $self->{text}) {
+	unless ( defined $self->{text} ) {
 		require Carp;
 		Carp::croak("Could not find the document's text for PPI parsing.");
 	}
 	return 1;
 }
-
 
 1;
 

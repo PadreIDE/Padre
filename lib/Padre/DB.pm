@@ -4,11 +4,12 @@ package Padre::DB;
 
 use strict;
 use File::Spec          ();
+use File::ShareDir::PAR ();
 use Params::Util        ();
 use Padre::Config       ();
-use File::ShareDir::PAR ();
-use ORLite 1.17         (); # Need truncate
+use Padre::Current      ();
 
+use ORLite 1.17 (); # Need truncate
 use ORLite::Migrate 0.01 {
 	create        => 1,
 	tables        => [ 'Modules' ],
@@ -124,14 +125,14 @@ sub get_last_pod {
 sub find_snipclasses {
 	$_[0]->selectcol_arrayref(
 		"select distinct category from snippets where mimetype = ? order by category",
-		{}, Padre::Documents->current->guess_mimetype,
+		{}, Padre::Current->document->guess_mimetype,
 	);
 }
 
 sub find_snipnames {
 	my $class = shift;
 	my $sql   = "select name from snippets where mimetype = ?";
-	my @bind  = ( Padre::Documents->current->guess_mimetype );
+	my @bind  = ( Padre::Current->document->guess_mimetype );
 	if ( $_[0] ) {
 		$sql .= " and category = ?";
 		push @bind, $_[0];
@@ -143,7 +144,7 @@ sub find_snipnames {
 sub find_snippets {
 	my $class = shift;
 	my $sql   = "select id, category, name, snippet from snippets where mimetype = ?";
-	my @bind  = ( Padre::Documents->current->guess_mimetype );
+	my @bind  = ( Padre::Current->document->guess_mimetype );
 	if ( $_[0] ) {
 		$sql .= " and category = ?";
 		push @bind, $_[0];

@@ -54,7 +54,7 @@ sub search {
 sub _find {
 	my $self  = shift;
 	my $main  = Padre->ide->wx->main_window;
-	my $page  = Padre::Documents->current->editor;
+	my $page  = $main->current->editor;
 	my $last  = $page->GetLength;
 	my $text  = $page->GetTextRange(0, $last);
 

@@ -1,11 +1,12 @@
-
 package Padre::Task::SyntaxChecker;
+
 use strict;
 use warnings;
+use Padre::Task    ();
+use Padre::Current ();
 
 our $VERSION = '0.22';
-
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 =pod
 
@@ -36,8 +37,8 @@ Padre::Task::SyntaxChecker - Generic syntax-checking background processing task
   $task->schedule;
   
   my $task2 = Padre::Task::SyntaxChecker::MyLanguage->new(
-    text => Padre::Documents->current->text_get,
-    notebook_page => Padre::Documents->current->editor,
+    text          => Padre::Current->document->text_get,
+    notebook_page => Padre::Current->editor,
   );
   $task2->schedule;
 
@@ -69,9 +70,9 @@ for this reason.
 
 sub new {
 	my $class = shift;
-	my $self = $class->SUPER::new(@_);
-	if (not defined $self->{text}) {
-		$self->{text} = Padre::Documents->current->text_get();
+	my $self  = $class->SUPER::new(@_);
+	unless ( defined $self->{text} ) {
+		$self->{text} = Padre::Current->document->text_get;
 	}
 	
 	# put notebook page and callback into main-thread-only storage
@@ -81,7 +82,7 @@ sub new {
 	delete $self->{notebook_page};
 	delete $self->{on_finish};
 	if (not defined $notebook_page) {
-		$notebook_page = Padre::Documents->current->editor;
+		$notebook_page = Padre::Current->editor;
 	}
 	return() if not defined $notebook_page;
 	$self->{main_thread_only}{on_finish} = $on_finish if $on_finish;

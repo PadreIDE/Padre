@@ -4,8 +4,9 @@ package Padre::Wx::StatusBar;
 
 use strict;
 use warnings;
-use Padre::Util ();
-use Padre::Wx   ();
+use Padre::Util    ();
+use Padre::Wx      ();
+use Padre::Current ();
 
 our $VERSION = '0.22';
 our @ISA     = 'Wx::StatusBar';
@@ -37,65 +38,68 @@ sub new {
 	return $self;
 }
 
-sub refresh {
+sub clear {
 	my $self = shift;
-	my $main = $self->main;
+	$self->SetStatusText("", 0);
+	$self->SetStatusText("", 1);
+	$self->SetStatusText("", 2);
+	$self->SetStatusText("", 3);
+	return;
+}
+
+sub current {
+	Padre::Current->new(
+		main => $_[0]->main,
+	);
+}
+
+sub refresh {
+	my $self     = shift;
+	my $current  = $self->current;
 
 	# Blank the status bar if no document is open
-	my $pageid = $main->nb->GetSelection;
-	if ( not defined $pageid or $pageid == -1) {
-		$main->SetStatusText("", $_) for (0..3);
-		return;
-	}
+	my $editor   = $current->editor or return $self->clear;
 
-	# Prepare the current state
-	my $editor       = $main->nb->GetPage($pageid);
-	my $doc          = Padre::Documents->current or return;
-	my $line         = $editor->GetCurrentLine;
-	my $filename     = $doc->filename || '';
-	my $newline_type = $doc->get_newline_type || Padre::Util::NEWLINE;
-	my $modified     = $editor->GetModify ? '*' : ' ';
-
-	#Fixed ticket #190: Massive GDI object leakages 
-	#http://padre.perlide.org/ticket/190
-	#Please remember to call SetPageText once per the same text
-	#This still leaks but far less slowly (just on undo)
-	my $old_text = $main->nb->GetPageText($pageid);
-	my $text = 
-		$filename
+	# Prepare the various strings that form the status bar
+	my $notebook = $current->_notebook;
+	my $document = $current->document;
+	my $newline  = $document->get_newline_type || Padre::Util::NEWLINE;
+	my $pageid   = $notebook->GetSelection;
+	my $filename = $document->filename || '';
+	my $old      = $notebook->GetPageText($pageid);
+	my $text     = $filename
 		? File::Basename::basename($filename)
-		: substr($old_text, 1);
-	my $page_text = $modified . $text;
-	if($old_text ne $page_text) {
-		$main->nb->SetPageText(
-			$pageid,
-			$page_text
-		);
-	}
+		: substr($old, 1);
+	my $modified = $editor->GetModify ? '*' : ' ';
+	my $title    = $modified . $text;
+	my $position = $editor->GetCurrentPos;
+	my $line     = $editor->GetCurrentLine;
+	my $start    = $editor->PositionFromLine($line);
+	my $char     = $position - $start;
+	my $width    = $self->GetCharWidth;
+	my $mimetype = $document->get_mimetype;
+	my $postring = Wx::gettext('L:')  . ($line + 1) . ' '
+	             . Wx::gettext('Ch:') . $char;
 
-	my $current = $editor->GetCurrentPos;
-	my $start   = $editor->PositionFromLine($line);
-	my $char    = $current - $start;
-
-	$main->SetStatusText( "$modified $filename", 0 );
-
-	my $width    = $main->{gui}->{statusbar}->GetCharWidth;
-	my $mimetype = $doc->get_mimetype;
-	my $position = Wx::gettext('L:') . ($line + 1)
-		. ' '
-		. Wx::gettext('Ch:') . $char;
-
-	$main->SetStatusText( $mimetype,     1 );
-	$main->SetStatusText( $newline_type, 2 );
-	$main->SetStatusText( $position,     3 );
-
-	# since charWidth is an average we adjust the values a little
-	$main->{gui}->{statusbar}->SetStatusWidths(
+	# Write the new values into the status bar and update sizes
+	$self->SetStatusText( "$modified $filename", 0 );
+	$self->SetStatusText( $mimetype,             1 );
+	$self->SetStatusText( $newline,              2 );
+	$self->SetStatusText( $postring,             3 );
+	$self->SetStatusWidths(
 		-1,
-		(length($mimetype)        ) * $width,
-		(length($newline_type) + 2) * $width,
-		(length($position)     + 2) * $width
+		(length($mimetype)    ) * $width,
+		(length($newline)  + 2) * $width,
+		(length($postring) + 2) * $width,
 	); 
+
+	# Fixed ticket #190: Massive GDI object leakages 
+	# http://padre.perlide.org/ticket/190
+	# Please remember to call SetPageText once per the same text
+	# This still leaks but far less slowly (just on undo)
+	if ( $old ne $title ) {
+		$notebook->SetPageText( $pageid, $title );
+	}
 
 	return;
 }

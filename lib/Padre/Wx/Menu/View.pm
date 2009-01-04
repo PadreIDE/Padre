@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
-use Padre::Documents   ();
+use Padre::Current     ();
 
 our $VERSION = '0.22';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -243,7 +243,7 @@ sub new {
 			Wx::gettext("Reset Font Size\tCtrl-/")
 		),
 		sub {
-			$_[0]->zoom( -1 * $_[0]->selected_editor->GetZoom );
+			$_[0]->zoom( -1 * $_[0]->current->editor->GetZoom );
 		},
 	);
 
@@ -408,7 +408,7 @@ sub refresh {
 	$self->{show_errorlist}->Check( $config->{editor_errorlist} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
-	my $document = Padre::Documents->current;
+	my $document = Padre::Current->document;
 	if ( $document ) {
 		my $editor = $document->editor;
 		my $mode   = $editor->GetWrapMode;

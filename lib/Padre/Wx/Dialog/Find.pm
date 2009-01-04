@@ -53,14 +53,14 @@ sub get_layout {
 }
 
 sub dialog {
-	my ( $class, $win, $args) = @_;
+	my ( $class, $parent, $args) = @_;
 
 	my $config = Padre->ide->config;
 	my $search_term = $args->{term} || '';
 
 	my $layout = get_layout($search_term, $config);
 	my $dialog = Padre::Wx::Dialog->new(
-		parent => $win,
+		parent => $parent,
 		title  => Wx::gettext("Search"),
 		layout => $layout,
 		width  => [ 150, 200 ],

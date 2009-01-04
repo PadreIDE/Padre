@@ -48,7 +48,7 @@ sub new {
 			
 				# TODO This feels wrong, the help menu code shouldn't
 				# populate the mainwindow hash.
-				my $selection = $_[0]->selected_text;
+				my $selection = $_[0]->current->text;
 				$_[0]->menu->help->help($_[0]);
 				if ( $selection ) {
 					$_[0]->{help}->show( $selection );

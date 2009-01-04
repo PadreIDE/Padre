@@ -1,5 +1,5 @@
-
 package Padre::Task::SyntaxChecker::Perl;
+
 use strict;
 use warnings;
 
@@ -25,10 +25,10 @@ Padre::Task::SyntaxChecker::Perl - Perl document syntax-checking in the backgrou
   $task->schedule;
   
   my $task2 = Padre::Task::SyntaxChecker::Perl->new(
-    text => Padre::Documents->current->text_get,
-    notebook_page => Padre::Documents->current->editor,
-    on_finish => sub { my $task = shift; ... },
-    newlines => "\r\n", # specify the newline type!
+    text          => Padre::Current->document->text_get,
+    notebook_page => Padre::Current->editor,
+    on_finish     => sub { my $task = shift; ... },
+    newlines      => "\r\n", # specify the newline type!
   );
   $task2->schedule;
 
@@ -42,7 +42,7 @@ Please read its documentation!
 
 sub run {
 	my $self = shift;
-	$self->_check_syntax();
+	$self->_check_syntax;
 	return 1;
 }
 
@@ -154,8 +154,6 @@ sub _check_syntax {
 
 	$self->{syntax_check} = $issues;
 }
-
-
 
 1;
 

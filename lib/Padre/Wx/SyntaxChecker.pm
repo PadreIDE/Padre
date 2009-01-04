@@ -85,7 +85,7 @@ sub enable {
 			$self->{synCheckTimer}->Stop;
 			Wx::Event::EVT_IDLE( $main, sub { return } );
 		}
-		my $page = $main->selected_editor;
+		my $page = $main->current->editor;
 		if ( defined($page) ) {
 			$page->MarkerDeleteAll(Padre::Wx::MarkError);
 			$page->MarkerDeleteAll(Padre::Wx::MarkWarn);
@@ -121,7 +121,7 @@ sub syntax_check_idle_timer {
 sub on_syntax_check_msg_selected {
 	my ($main, $event) = @_;
 
-	my $page = $main->selected_editor;
+	my $page = $main->current->editor;
 
 	my $line_number = $event->GetItem->GetText;
 	return if  not defined($line_number)
@@ -141,7 +141,7 @@ sub on_syntax_check_timer {
 	my $self = $win->syntax_checker;
 	my $syntaxbar = $self->syntaxbar;
 
-	my $page = $win->selected_editor;
+	my $page = $win->current->editor;
 	if ( ! defined $page ) {
 		return;
 	}
