@@ -5,8 +5,8 @@ use strict;
 use warnings;
 use YAML::Tiny                ();
 use Padre::Util               ();
-use Padre::Wx                 ();
 use Padre::Current            ();
+use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.23';
@@ -27,17 +27,15 @@ sub new {
 	my( $class, $parent ) = @_;
 
 	my $self = $class->SUPER::new( $parent );
-#	$self->UsePopUp(0);
 	$data = data('default');
-#	$self->SetMouseDwellTime(1000); # off: Wx::SC_TIME_FOREVER
 
 	$self->SetMarginWidth(0, 0);
 	$self->SetMarginWidth(1, 0);
 	$self->SetMarginWidth(2, 0);
 
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
-	Wx::Event::EVT_LEFT_UP(  $self, \&on_left_up );
-	
+	Wx::Event::EVT_LEFT_UP(    $self, \&on_left_up    );
+
 	if ( Padre->ide->config->{editor_use_wordwrap} ) {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	}
@@ -117,25 +115,25 @@ sub padre_setup_plain {
 
 	my $config = Padre->ide->config;
 
-	if ( defined $data->{plain}{current_line_foreground} ) {
-		$self->SetCaretForeground( _color( $data->{plain}{current_line_foreground} ) );
+	if ( defined $data->{plain}->{current_line_foreground} ) {
+		$self->SetCaretForeground( _color( $data->{plain}->{current_line_foreground} ) );
 	}
-	if ( defined $data->{plain}{current_line_background} ) {
+	if ( defined $data->{plain}->{current_line_background} ) {
 		if ( defined $config->{editor_current_line_background_color} ) {
-			if (   $data->{plain}{current_line_background}
+			if (   $data->{plain}->{current_line_background}
 				ne $config->{editor_current_line_background_color}
 			) {
-				$data->{plain}{current_line_background} = $config->{editor_current_line_background_color};
+				$data->{plain}->{current_line_background} = $config->{editor_current_line_background_color};
 			}
 		}
-		$self->SetCaretLineBackground( _color( $data->{plain}{current_line_background} ) );
+		$self->SetCaretLineBackground( _color( $data->{plain}->{current_line_background} ) );
 	}
 	elsif ( defined $config->{editor_current_line_background_color} ) {
 		$self->SetCaretLineBackground( _color( $config->{editor_current_line_background_color} ) );
 	}
 
-	foreach my $k (keys %{ $data->{plain}{foregrounds} }) {
-		$self->StyleSetForeground( $k, _color( $data->{plain}{foregrounds}{$k} ) );
+	foreach my $k (keys %{ $data->{plain}->{foregrounds} }) {
+		$self->StyleSetForeground( $k, _color( $data->{plain}->{foregrounds}->{$k} ) );
 	}
 
 	# Apply tag style for selected lexer (blue)
@@ -153,7 +151,7 @@ sub padre_setup_style {
 
 	$self->padre_setup_plain;
 
-	foreach my $k ( keys %{ $data->{$name}{colors} }) {
+	foreach my $k ( keys %{ $data->{$name}->{colors} }) {
 		my $f = 'Wx::' . $k;
 		no strict "refs"; ## no critic
 		my $v = eval {$f->()};
@@ -166,11 +164,11 @@ sub padre_setup_style {
 			}
 		}
 
-		$self->StyleSetForeground( $f->(), _color($data->{$name}{colors}{$k}) );
+		$self->StyleSetForeground( $f->(), _color($data->{$name}->{colors}->{$k}) );
 	}
 
-	$self->StyleSetBackground(34, _color($data->{$name}{brace_highlight}));
-	$self->StyleSetBackground($_, _color($data->{$name}{background})) for (0..32);
+	$self->StyleSetBackground(34, _color($data->{$name}->{brace_highlight}));
+	$self->StyleSetBackground($_, _color($data->{$name}->{background})) for (0..32);
 
 	return;
 }
@@ -225,7 +223,7 @@ sub show_line_numbers {
 
 	# premature optimization, caching the with that was on the 3rd place at load time
 	# as timed my Deve::NYTProf
-	$width ||= $self->TextWidth(Wx::wxSTC_STYLE_LINENUMBER, "9"); # width of a single character
+	$width ||= $self->TextWidth(Wx::wxSTC_STYLE_LINENUMBER, "m"); # width of a single character
 	if ($on) {
 		my $n = 1 + List::Util::max (2, length ($self->GetLineCount * 2));
 		my $width = $n * $width;
@@ -324,8 +322,7 @@ sub set_font {
 
 
 sub set_preferences {
-	my ($self) = @_;
-
+	my $self   = shift;
 	my $config = Padre->ide->config;
 
 	$self->show_line_numbers(    $config->{editor_linenumbers}       );
@@ -344,25 +341,21 @@ sub set_preferences {
 
 
 sub show_calltip {
-	my ($self) = @_;
-
+	my $self   = shift;
 	my $config = Padre->ide->config;
-	return if not $config->{editor_calltips};
-
+	return unless $config->{editor_calltips};
 
 	my $pos    = $self->GetCurrentPos;
 	my $line   = $self->LineFromPosition($pos);
 	my $first  = $self->PositionFromLine($line);
 	my $prefix = $self->GetTextRange($first, $pos); # line from beginning to current position
-	   #$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
-	if ($self->CallTipActive) {
+	if ( $self->CallTipActive ) {
 		$self->CallTipCancel;
 	}
 
-	my $doc = Padre::Current->document or return;
+	my $doc      = Padre::Current->document or return;
 	my $keywords = $doc->keywords;
-
-	my $regex = join '|', sort {length $a <=> length $b} keys %$keywords;
+	my $regex    = join '|', sort { length $a <=> length $b } keys %$keywords;
 
 	my $tip;
 	if ( $prefix =~ /(?:^|[^\w\$\@\%\&])($regex)[ (]?$/ ) {
@@ -370,7 +363,7 @@ sub show_calltip {
 		return if not $z or not ref($z) or ref($z) ne 'HASH';
 		$tip = "$z->{cmd}\n$z->{exp}";
 	}
-	if ($tip) {
+	if ( $tip ) {
 		$self->CallTipShow($self->CallTipPosAtStart() + 1, $tip);
 	}
 	return;
@@ -899,7 +892,7 @@ sub goto_line_centerize {
 # borrowed from Kephra
 sub goto_pos_centerize {
 	my ( $self, $pos ) = @_;
-	
+
 	my $max = $self->GetLength;
 	$pos = 0 unless $pos or $pos < 0;
 	$pos = $max if $pos > $max;
