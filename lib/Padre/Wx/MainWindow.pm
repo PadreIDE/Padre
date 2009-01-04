@@ -41,7 +41,6 @@ use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
-use Padre::Documents          ();
 use Padre::Current            qw{_CURRENT};
 
 our $VERSION = '0.22';
@@ -348,8 +347,7 @@ sub load_files {
 				my $file = $main_files[$i];
 				my $id   = $self->setup_editor($file);
 				if ( $id and $main_files_pos[$i] ) {
-					my $doc  = Padre::Documents->by_id($id);
-					$doc->editor->GotoPos( $main_files_pos[$i] );
+					$self->notebook->GetPage($id)->GotoPos( $main_files_pos[$i] );
 				}
 			}
 			if ( $config->{host}->{main_file} ) {
@@ -463,9 +461,9 @@ sub refresh {
 	}
 	$self->{no_syntax_check_refresh} = 0;
 
-	my $id = $self->nb->GetSelection;
+	my $id = $self->notebook->GetSelection;
 	if ( defined $id and $id >= 0 ) {
-		$self->nb->GetPage($id)->SetFocus;
+		$self->notebook->GetPage($id)->SetFocus;
 	}
 
 	$self->Thaw;
@@ -672,11 +670,11 @@ sub selected_text {
 }
 
 sub pageids {
-	return ( 0 .. $_[0]->nb->GetPageCount - 1 );
+	return ( 0 .. $_[0]->notebook->GetPageCount - 1 );
 }
 
 sub pages {
-	my $notebook = $_[0]->nb;
+	my $notebook = $_[0]->notebook;
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
 
@@ -964,27 +962,29 @@ sub on_goto {
 }
 
 sub on_close_window {
-	my $self   = shift;
-	my $event  = shift;
-	my $padre  = Padre->ide;
-	my $config = $padre->config;
+	my $self      = shift;
+	my $event     = shift;
+	my $padre     = Padre->ide;
+	my $config    = $padre->config;
+	my $notebook  = $self->notebook;
+	my @documents = grep { $_ }
+		map  { $_->{Document} }
+		grep { $_ }
+		map  { $notebook->GetPage($_) }
+		$self->pageids;
 
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up. Don't save it to
 	# the config yet, because we haven't committed to the shutdown
 	# until we get past the interactive phase.
 	my $main_file  = $self->selected_filename;
-	my $main_files = [
+	my $main_files = [ 
 		map  { $_->filename }
-		grep { $_ } 
-		map  { Padre::Documents->by_id($_) }
-		$self->pageids
+		@documents
 	];
 	my $main_files_pos = [
 		map  { $_->editor->GetCurrentPos }
-		grep { $_ } 
-		map  { Padre::Documents->by_id($_) }
-		$self->pageids
+		@documents
 	];
 
 	# Check that all files have been saved
@@ -1054,14 +1054,14 @@ sub on_split_window {
 	my ($self) = @_;
 
 	my $editor  = $self->selected_editor;
-	my $id      = $self->nb->GetSelection;
-	my $title   = $self->nb->GetPageText($id);
+	my $id      = $self->notebook->GetSelection;
+	my $title   = $self->notebook->GetPageText($id);
 	my $file    = $self->selected_filename;
 	return if not $file;
 	my $pointer = $editor->GetDocPointer();
 	$editor->AddRefDocument($pointer);
 
-	my $new_editor = Padre::Wx::Editor->new( $self->nb );
+	my $new_editor = Padre::Wx::Editor->new( $self->notebook );
 	$new_editor->{Document} = $editor->{Document};
 	$new_editor->padre_setup;
 	$new_editor->SetDocPointer($pointer);
@@ -1082,7 +1082,7 @@ sub setup_editors {
 	# and it is unused, close it. This is a somewhat
 	# subtle interface DWIM trick, but it's one that
 	# clearly looks wrong when we DON'T do it.
-	if ( $self->nb->GetPageCount == 1 ) {
+	if ( $self->notebook->GetPageCount == 1 ) {
 		if ( Padre::Current->document->is_unused ) {
 			$self->on_close($self);
 		}
@@ -1135,7 +1135,7 @@ sub setup_editor {
 		return;
 	}
 
-	my $editor = Padre::Wx::Editor->new( $self->nb );
+	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $doc;
 	$doc->set_editor( $editor );
 	$editor->configure_editor($doc);
@@ -1165,9 +1165,9 @@ sub setup_editor {
 sub create_tab {
 	my ($self, $editor, $file, $title) = @_;
 
-	$self->nb->AddPage($editor, $title, 1);
+	$self->notebook->AddPage($editor, $title, 1);
 	$editor->SetFocus;
-	my $id  = $self->nb->GetSelection;
+	my $id  = $self->notebook->GetSelection;
 
 	$self->refresh;
 
@@ -1334,7 +1334,7 @@ sub on_save_as {
 			last;
 		}
 	}
-	my $pageid = $self->nb->GetSelection;
+	my $pageid = $self->notebook->GetSelection;
 	$self->_save_buffer($pageid);
 
 	$doc->set_mimetype( $doc->guess_mimetype );
@@ -1355,7 +1355,7 @@ sub on_save {
 		return $self->on_save_as;
 	}
 	if ( $doc->is_modified ) {
-		my $pageid = $self->nb->GetSelection;
+		my $pageid = $self->notebook->GetSelection;
 		$self->_save_buffer($pageid);
 	}
 
@@ -1367,7 +1367,7 @@ sub on_save {
 sub on_save_all {
 	my $self = shift;
 	foreach my $id ( $self->pageids ) {
-		my $doc = Padre::Documents->by_id($id);
+		my $doc = $self->notebook->GetPage($id) or next;
 		$self->on_save( $doc ) or return 0;
 	}
 	return 1;
@@ -1376,8 +1376,8 @@ sub on_save_all {
 sub _save_buffer {
 	my ($self, $id) = @_;
 
-	my $page = $self->nb->GetPage($id);
-	my $doc  = Padre::Documents->by_id($id) or return;
+	my $page = $self->notebook->GetPage($id);
+	my $doc  = $page->{Document} or return;
 
 	if ( $doc->has_changed_on_disk ) {
 		my $ret = Wx::MessageBox(
@@ -1424,22 +1424,26 @@ sub on_close {
 }
 
 sub close {
-	my ($self, $id) = @_;
-
-	$id = defined $id ? $id : $self->nb->GetSelection;
-	
+	my $self     = shift;
+	my $notebook = $self->notebook;
+	my $id       = shift;
+	unless ( defined $id ) {
+		$id = $notebook->GetSelection;
+	}
 	return if $id == -1;
-	
-	my $doc = Padre::Documents->by_id($id) or return;
+
+	my $editor = $notebook->GetPage($id) or return;
+	my $doc    = $editor->{Document}     or return;
 
 	local $self->{_no_refresh} = 1;
-	
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed. Do you want to save it?"),
 			$doc->filename || Wx::gettext("Unsaved File"),
-			Wx::wxYES_NO|Wx::wxCANCEL|Wx::wxCENTRE,
+			Wx::wxYES_NO
+			| Wx::wxCANCEL
+			| Wx::wxCENTRE,
 			$self,
 		);
 		if ( $ret == Wx::wxYES ) {
@@ -1451,7 +1455,7 @@ sub close {
 			return 0;
 		}
 	}
-	$self->nb->DeletePage($id);
+	$self->notebook->DeletePage($id);
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh($self->current);
@@ -1468,7 +1472,7 @@ sub on_close_all {
 
 sub on_close_all_but_current {
 	my $self = shift;
-	return $self->_close_all( $self->nb->GetSelection );
+	return $self->_close_all( $self->notebook->GetSelection );
 }
 
 sub _close_all {
@@ -1487,9 +1491,9 @@ sub _close_all {
 
 sub on_nth_pane {
 	my ($self, $id) = @_;
-	my $page = $self->nb->GetPage($id);
+	my $page = $self->notebook->GetPage($id);
 	if ($page) {
-		$self->nb->SetSelection($id);
+		$self->notebook->SetSelection($id);
 		$self->refresh_status($self->current);
 		$page->{Document}->set_indentation_style(); # TODO: encapsulation?
 		return 1;
@@ -1501,10 +1505,10 @@ sub on_nth_pane {
 sub on_next_pane {
 	my ($self) = @_;
 
-	my $count = $self->nb->GetPageCount;
+	my $count = $self->notebook->GetPageCount;
 	return if not $count;
 
-	my $id    = $self->nb->GetSelection;
+	my $id    = $self->notebook->GetSelection;
 	if ($id + 1 < $count) {
 		$self->on_nth_pane($id + 1);
 	} else {
@@ -1515,9 +1519,9 @@ sub on_next_pane {
 
 sub on_prev_pane {
 	my ($self) = @_;
-	my $count = $self->nb->GetPageCount;
+	my $count = $self->notebook->GetPageCount;
 	return if not $count;
-	my $id    = $self->nb->GetSelection;
+	my $id    = $self->notebook->GetSelection;
 	if ($id) {
 		$self->on_nth_pane($id - 1);
 	} else {
@@ -1908,7 +1912,7 @@ sub on_toggle_status_bar {
 sub on_insert_from_file {
 	my ( $win ) = @_;
 	
-	my $id  = $win->nb->GetSelection;
+	my $id  = $win->notebook->GetSelection;
 	return if $id == -1;
 	
 	# popup the window
@@ -1943,7 +1947,7 @@ sub on_insert_from_file {
 	$data->SetText($text);
 	my $length = $data->GetTextLength;
 	
-	my $editor = $win->nb->GetPage($id);
+	my $editor = $win->notebook->GetPage($id);
 	$editor->ReplaceSelection('');
 	my $pos = $editor->GetCurrentPos;
 	$editor->InsertText( $pos, $text );
@@ -1967,11 +1971,13 @@ sub convert_to {
 }
 
 sub find_editor_of_file {
-	my ($self, $file) = @_;
-	foreach my $id (0 .. $self->nb->GetPageCount -1) {
-	my $doc = Padre::Documents->by_id($id) or return;
-		my $filename = $doc->filename;
-		next if not $filename;
+	my $self     = shift;
+	my $file     = shift;
+	my $notebook = $self->notebook;
+	foreach my $id ( $self->pageids ) {
+		my $editor   = $notebook->GetPage($id) or return;
+		my $document = $editor->{Document}     or return;
+		my $filename = $document->filename     or next;
 		return $id if $filename eq $file;
 	}
 	return;
@@ -1979,7 +1985,7 @@ sub find_editor_of_file {
 
 sub run_in_padre {
 	my $self = shift;
-	my $doc  = $self->selected_document or return;
+	my $doc  = $self->current->document or return;
 	my $code = $doc->text_get;
 	eval $code; ## no critic
 	if ( $@ ) {
@@ -2266,16 +2272,17 @@ sub on_last_visited_pane {
 
 	if (@{ $self->{page_history} } >= 2) {
 		@{ $self->{page_history} }[-1, -2] = @{ $_[0]->{page_history} }[-2, -1];
-		foreach my $i ($self->pageids) {
-			my $editor = $_[0]->nb->GetPage($i);
+		foreach my $i ( $self->pageids ) {
+			my $editor = $_[0]->notebook->GetPage($i);
 			if ( Scalar::Util::refaddr($editor) eq Scalar::Util::refaddr($_[0]->{page_history}[-1]) ) {
-				$self->nb->SetSelection($i);
+				$self->notebook->SetSelection($i);
 				last;
 			}
 		}
-		#$self->refresh;
-		$self->refresh_status;
-		$self->refresh_toolbar;
+
+		# Partial refresh
+		$self->refresh_status($self->current);
+		$self->refresh_toolbar($self->current);
 	}
 }
 

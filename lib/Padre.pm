@@ -848,10 +848,6 @@ is an abstraction class to deal with a single document.
 
 =back
 
-=item L<Padre::Documents>
-
-aggregated the list of all currently open documents.
-
 =item L<Padre::PluginBuilder>
 
 =item L<Padre::PluginManager>

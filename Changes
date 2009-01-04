@@ -4,6 +4,8 @@ v0.23 ??????????
 
     Created Padre::Current, which should simplify everything that needs
         to know about the current whatever (ADAMK)
+    Used Padre::Current to kill off the slightly out of place non-class
+        Padre::Documents (ADAMK)
     View Document As... (FAYLAND)
     Updated Italian transation.
     Refactored the plugin state hash out into a standalone

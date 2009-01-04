@@ -66,22 +66,22 @@ sub dialog {
 		width  => [ 150, 200 ],
 	);
 
-	foreach my $cb (@cbs) {
+	foreach my $cb ( @cbs ) {
 		Wx::Event::EVT_CHECKBOX(
 			$dialog,
-			$dialog->{_widgets_}{$cb},
+			$dialog->{_widgets_}->{$cb},
 			sub {
-				$_[0]->{_widgets_}{_find_choice_}->SetFocus;
+				$_[0]->{_widgets_}->{_find_choice_}->SetFocus;
 			},
 		);
 	}
-	$dialog->{_widgets_}{_find_}->SetDefault;
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_find_},        \&find_clicked);
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_replace_},     \&replace_clicked     );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_replace_all_}, \&replace_all_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_},      \&cancel_clicked      );
+	$dialog->{_widgets_}->{_find_}->SetDefault;
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_find_},        \&find_clicked);
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_replace_},     \&replace_clicked     );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_replace_all_}, \&replace_all_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},      \&cancel_clicked      );
 
-	$dialog->{_widgets_}{_find_choice_}->SetFocus;
+	$dialog->{_widgets_}->{_find_choice_}->SetFocus;
 
 	return $dialog;
 }
@@ -89,7 +89,7 @@ sub dialog {
 sub find {
 	my ($class, $main) = @_;
 
-	my $text   = $main->current->text;
+	my $text = $main->current->text;
 	$text = '' if not defined $text;
 
 	# TODO: if selection is more than one lines then consider it as the limit
@@ -152,12 +152,11 @@ sub replace_all_clicked {
 	my $regex = _get_regex();
 	return if not defined $regex;
 
-	my $config      = Padre->ide->config;
-	my $main = Padre->ide->wx->main_window;
-
-	my $page = $main->selected_editor;
-	my $last = $page->GetLength();
-	my $str  = $page->GetTextRange(0, $last);
+	my $config = Padre->ide->config;
+	my $main   = Padre->ide->wx->main_window;
+	my $page   = $main->current->editor;
+	my $last   = $page->GetLength;
+	my $str    = $page->GetTextRange(0, $last);
 
 	my $replace_term = $config->{replace_terms}->[0];
 	$replace_term =~ s/\\t/\t/g;
@@ -222,8 +221,8 @@ sub _get_data_from {
 	foreach my $field (@cbs) {
 	   $config->{search}->{$field} = $data->{$field};
 	}
-	my $search_term      = $data->{_find_choice_};
-	my $replace_term     = $data->{_replace_choice_};
+	my $search_term  = $data->{_find_choice_};
+	my $replace_term = $data->{_replace_choice_};
 
 	if ($config->{search}->{close_on_hit}) {
 		$dialog->Destroy;
@@ -244,10 +243,8 @@ sub _get_data_from {
 }
 
 sub _get_regex {
-	my %args = @_;
-
-	my $config = Padre->ide->config;
-
+	my %args        = @_;
+	my $config      = Padre->ide->config;
 	my $search_term = $args{search_term} || $config->{search_terms}->[0];
 	return $search_term if defined $search_term and 'Regexp' eq ref $search_term;
 
@@ -263,13 +260,12 @@ sub _get_regex {
 
 	my $regex;
 	eval { $regex = qr/$search_term/m };
-	if ($@) {
-		my $main = Padre->ide->wx->main_window;
+	if ( $@ ) {
 		Wx::MessageBox(
 			sprintf(Wx::gettext("Cannot build regex for '%s'"), $search_term),
 			Wx::gettext("Search error"),
 			Wx::wxOK,
-			$main,
+			Padre->ide->wx->main_window,
 		);
 		return;
 	}
@@ -277,16 +273,15 @@ sub _get_regex {
 }
 
 sub search {
-	my ( $class, %args ) = @_;
-
-	my $main = Padre->ide->wx->main_window;
-
+	my $class = shift;
+	my %args  = @_;
+	my $main  = Padre->ide->wx->main_window;
 	my $regex = _get_regex(%args);
 	return if not defined $regex;
 
-	my $page = $main->selected_editor;
+	my $page = $main->current->editor;
 	my ($from, $to) = $page->GetSelection;
-	my $last = $page->GetLength();
+	my $last = $page->GetLength;
 	my $str  = $page->GetTextRange(0, $last);
 
 	my $config    = Padre->ide->config;

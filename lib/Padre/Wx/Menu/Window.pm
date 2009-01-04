@@ -171,7 +171,7 @@ sub refresh {
 
 	# Update the labels to match the notebooks
 	foreach my $i ( 0 .. $#$alt ) {
-		my $doc   = Padre::Documents->by_id($i) or return;
+		my $doc   = $notebook->GetPage($i)->{Document} or return;
 		my $label = $doc->filename || $notebook->GetPageText($i);
 		$label =~ s/^\s+//;
 		$alt->[$i]->SetText($label);

@@ -7,7 +7,6 @@ use YAML::Tiny                ();
 use Padre::Util               ();
 use Padre::Wx                 ();
 use Padre::Current            ();
-use Padre::Documents          ();
 use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.22';
