@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 
 v0.23 ??????????
 
+    Added a friendly icon to the ToolBar that displays the status
+        (idle, running, high load) of the background tasks (SMUELLER)
     Created Padre::Current, which should simplify everything that needs
         to know about the current whatever (ADAMK)
     Used Padre::Current to kill off the slightly out of place non-class
