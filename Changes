@@ -1,7 +1,5 @@
 Changes for Perl Application Development and Refactoring Environment 
 
-v0.23 ??????????
-
     Added a friendly icon to the ToolBar that displays the status
         (idle, running, high load) of the background tasks (SMUELLER)
     Created Padre::Current, which should simplify everything that needs
@@ -9,6 +7,9 @@ v0.23 ??????????
     Used Padre::Current to kill off the slightly out of place non-class
         Padre::Documents (ADAMK)
     View Document As... (FAYLAND)
+
+v0.23 2009.01.04
+
     Updated Italian transation.
     Refactored the plugin state hash out into a standalone
         Padre::PluginHandle class (ADAMK)

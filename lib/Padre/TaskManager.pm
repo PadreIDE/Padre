@@ -79,7 +79,7 @@ BEGIN {
 	$INC{"Padre/TaskManager.pm"} ||= __FILE__;
 }
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 use threads;
 # According to Wx docs, this MUST be loaded before Wx, so this also happens in the script

@@ -43,7 +43,7 @@ use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
 use Padre::Current            qw{_CURRENT};
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 our @ISA     = 'Wx::Frame';
 
 my $default_dir = Cwd::cwd();

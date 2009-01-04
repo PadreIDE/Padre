@@ -7,7 +7,7 @@ use Padre::DB          ();
 use Padre::Wx          ();
 use Padre::Pod::Viewer ();
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 our @ISA     = 'Wx::Frame';
 
 my $choice      = '';

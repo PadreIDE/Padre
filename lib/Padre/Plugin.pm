@@ -48,7 +48,7 @@ use Scalar::Util ();
 use Params::Util ();
 use Padre::Wx    ();
 
-our $VERSION    = '0.22';
+our $VERSION    = '0.23';
 our $COMPATIBLE = '0.18';
 
 

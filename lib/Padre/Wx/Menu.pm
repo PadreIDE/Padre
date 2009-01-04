@@ -17,7 +17,7 @@ use Padre::Wx::Menu::Window  ();
 use Padre::Wx::Menu::Help    ();
 use Padre::Current           qw{_CURRENT};
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 
 

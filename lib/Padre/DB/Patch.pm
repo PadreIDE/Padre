@@ -4,7 +4,7 @@ package Padre::DB::Patch;
 
 use strict;
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 use DBI      ();
 use Exporter ();

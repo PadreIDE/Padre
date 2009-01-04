@@ -4,7 +4,7 @@ use warnings;
 use Module::Build ();
 our @ISA = ('Module::Build');
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 =pod
 

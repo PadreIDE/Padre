@@ -20,7 +20,7 @@ use Pod::POM::View::HTML ();
 use Padre::Wx            ();
 use Wx::Html             ();
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 use base 'Wx::HtmlWindow';
 

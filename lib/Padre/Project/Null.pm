@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Padre::Project ();
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 our @ISA     = 'Padre::Project';
 
 sub new {

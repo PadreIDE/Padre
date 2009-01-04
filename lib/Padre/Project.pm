@@ -7,7 +7,7 @@ use warnings;
 use File::Spec ();
 use YAML::Tiny ();
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 use Class::XSAccessor
 	getters => {

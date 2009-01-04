@@ -11,7 +11,7 @@ use File::HomeDir ();
 use Params::Util  qw{ _STRING _ARRAY };
 use YAML::Tiny    ();
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 my %defaults = (
 	# Number of modules to display when searching for documentation

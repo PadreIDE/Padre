@@ -19,7 +19,7 @@ use Wx::AUI     ();
 use Wx::Locale  ();
 use Padre::Util ();
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 
 
