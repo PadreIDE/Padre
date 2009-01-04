@@ -423,12 +423,14 @@ sub on_task_done_event {
 	my $frozen = $event->GetData;
 	my $process = Padre::Task->deserialize( \$frozen );
 
+	$process->finish($main);
+
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
-	Padre->ide->{task_manager}->{running_tasks}--;
+	Padre->ide->task_manager->{running_tasks}--;
+	$main->GetToolBar->update_task_status();
 
-	$process->finish($main);
 	return();
 }
 
@@ -447,7 +449,8 @@ sub on_task_start_event {
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
-	Padre->ide->{task_manager}->{running_tasks}++;
+	Padre->ide->task_manager->{running_tasks}++;
+	$main->GetToolBar->update_task_status();
 
 	return();
 }
