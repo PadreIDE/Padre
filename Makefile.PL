@@ -81,7 +81,7 @@ test_requires  'Test::More'               => '0.47';
 test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
-test_requires  'Test::NeedsDisplay'       => '1.05';
+test_requires  'Test::NeedsDisplay'       => '1.06';
 no_index       'directory'                => qw{ t xt eg share inc privinc };
 homepage       'http://padre.perlide.org/';
 bugtracker     'http://padre.perlide.org/';

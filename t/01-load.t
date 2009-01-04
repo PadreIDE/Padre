@@ -1,13 +1,6 @@
 #!/usr/bin/perl
-use strict;
-use Test::More;
-BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
-		plan skip_all => 'Needs DISPLAY';
-		exit 0;
-	}
-}
 
+use strict;
 BEGIN {
 	$|  = 1;
 	$^W = 1;
@@ -16,8 +9,8 @@ BEGIN {
 	$DB::single = $DB::single = 1;
 }
 
-use Test::NeedsDisplay;
-plan tests => 24;
+use Test::NeedsDisplay ':skip_all';
+use Test::More tests => 24;
 use Test::Script;
 use Test::NoWarnings;
 use Class::Autouse ':devel';
