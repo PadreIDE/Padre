@@ -169,6 +169,7 @@ sub menu_view_mimes {
 	YAML   => 'text/x-yaml',
 	VBScript => 'text/vbscript',
 	SQL    => 'text/x-sql',
+	Perl6  => 'application/x-perl6',
 	'No Highlight' => 'text/plain',
 }
 
