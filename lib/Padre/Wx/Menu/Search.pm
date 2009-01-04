@@ -103,8 +103,4 @@ sub new {
 	return $self;
 }
 
-sub refresh {
-	return 1;
-}
-
 1;

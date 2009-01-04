@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
+use Padre::Current     qw{_CURRENT};
 
 our $VERSION = '0.22';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -62,7 +63,7 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
-	my $document = Padre::Documents->current;
+	my $document = _CURRENT(@_)->document;
 
 	# Disable if not document,
 	# otherwise match run_command state

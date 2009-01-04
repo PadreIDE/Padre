@@ -8,6 +8,7 @@ use warnings;
 use Params::Util       ();
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
+use Padre::Current     qw{_CURRENT};
 
 our $VERSION = '0.22';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -154,7 +155,7 @@ sub remove_plugin_specific_entries {
 
 sub refresh {
 	my $self = shift;
-	my $main = Padre->ide->wx->main_window;
+	my $main = _CURRENT(@_)->_main;
 
 	$self->remove_plugin_specific_entries;
 	$self->add_plugin_specific_entries($main);

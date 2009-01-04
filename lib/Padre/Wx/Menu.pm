@@ -15,7 +15,7 @@ use Padre::Wx::Menu::Run     ();
 use Padre::Wx::Menu::Plugins ();
 use Padre::Wx::Menu::Window  ();
 use Padre::Wx::Menu::Help    ();
-use Padre::Documents         ();
+use Padre::Current           qw{_CURRENT};
 
 our $VERSION = '0.22';
 
@@ -106,9 +106,10 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
+	my $current  = _CURRENT(@_);
 	my $menu     = $self->wx->GetMenuCount ne $self->{default};
 	my $document = !! _INSTANCE(
-		Padre::Documents->current,
+		$current->document,
 		'Padre::Document::Perl'
 	);
 
@@ -120,18 +121,18 @@ sub refresh {
 	}
 
 	# Refresh individual menus
-	$self->file->refresh;
-	$self->edit->refresh;
-	$self->search->refresh;
-	$self->view->refresh;
-	$self->run->refresh;
-	$self->perl->refresh;
-	$self->plugins->refresh;
-	$self->window->refresh;
-	$self->help->refresh;
+	$self->file->refresh($current);
+	$self->edit->refresh($current);
+	$self->search->refresh($current);
+	$self->view->refresh($current);
+	$self->run->refresh($current);
+	$self->perl->refresh($current);
+	$self->plugins->refresh($current);
+	$self->window->refresh($current);
+	$self->help->refresh($current);
 
 	if ( $self->experimental ) {
-		$self->experimental->refresh;
+		$self->experimental->refresh($current);
 	}
 
 	return 1;

@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
+use Padre::Current     qw{_CURRENT};
 
 our $VERSION = '0.22';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -321,8 +322,8 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
-	my $document = Padre::Documents->current;
-	my $doc      = $document ? 1 : 0;
+	my $current  = _CURRENT(@_);
+	my $doc      = $current->document ? 1 : 0;
 
 	$self->{ open_selection        }->Enable($doc);
 	$self->{ close                 }->Enable($doc);

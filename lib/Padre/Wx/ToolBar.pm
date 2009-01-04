@@ -127,24 +127,19 @@ sub new {
 }
 
 sub refresh {
-	my $self     = shift;
-	my $document = _CURRENT(@_)->document;
-	my $editor   = $document ? $document->editor : undef;
-
-	my $selection_exists = 0;
-	if ( $editor ) {
-		my $text = $editor->GetSelectedText;
-		if ( defined $text and length($text) > 0 ) {
-			$selection_exists = 1;
-		}
-	}
+	my $self      = shift;
+	my $current   = _CURRENT(@_);
+	my $editor    = $current->editor;
+	my $document  = $current->document;
+	my $text      = $current->text;
+	my $selection = (defined $text and $text ne '') ? 1 : 0;
 
 	$self->EnableTool( Wx::wxID_SAVE,      ( $document and $document->is_modified ? 1 : 0 ));
 	$self->EnableTool( Wx::wxID_CLOSE,     ( $editor ? 1 : 0 ));
 	$self->EnableTool( Wx::wxID_UNDO,      ( $editor and $editor->CanUndo  ));
 	$self->EnableTool( Wx::wxID_REDO,      ( $editor and $editor->CanRedo  ));
-	$self->EnableTool( Wx::wxID_CUT,       ( $selection_exists ));
-	$self->EnableTool( Wx::wxID_COPY,      ( $selection_exists ));
+	$self->EnableTool( Wx::wxID_CUT,       ( $selection ));
+	$self->EnableTool( Wx::wxID_COPY,      ( $selection ));
 	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ));
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ));
 

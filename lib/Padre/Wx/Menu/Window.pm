@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
+use Padre::Current     qw{_CURRENT};
 
 our $VERSION = '0.22';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -72,7 +73,7 @@ sub new {
 			Wx::gettext("Right Click\tAlt-/")
 		),
 		sub {
-			my $editor = $_[0]->selected_editor;
+			my $editor = $_[0]->current->editor;
 			if ( $editor ) {
 				$editor->on_right_down($_[1]);
 			}
@@ -92,7 +93,7 @@ sub new {
 		),
 		sub {
 			$_[0]->{subs_panel_was_closed} = ! Padre->ide->config->{main_subs_panel};
-			$_[0]->refresh_methods;
+			$_[0]->refresh_methods($_[0]->current);
 			$_[0]->show_functions(1); 
 			$_[0]->{gui}->{subs_panel}->SetFocus;
 		},
@@ -124,7 +125,8 @@ sub new {
 			Wx::gettext("GoTo Main Window\tAlt-M")
 		),
 		sub {
-			$_[0]->selected_editor->SetFocus;
+			my $editor = $_[0]->current->editor or return;
+			$editor->SetFocus;
 		},
 	);
 
@@ -136,12 +138,13 @@ sub new {
 }
 
 sub refresh {
-	my $self    = shift;
-	my $alt     = $self->{alt};
-	my $default = $self->{default};
-	my $items   = $self->GetMenuItemCount;
-	my $nb      = Padre->ide->wx->main_window->nb;
-	my $pages   = $nb->GetPageCount;
+	my $self     = shift;
+	my $current  = _CURRENT(@_);
+	my $alt      = $self->{alt};
+	my $default  = $self->{default};
+	my $items    = $self->GetMenuItemCount;
+	my $notebook = $current->_notebook;
+	my $pages    = $notebook->GetPageCount;
 
 	# Add or remove menu entries as needed
 	if ( $pages ) {
@@ -169,7 +172,7 @@ sub refresh {
 	# Update the labels to match the notebooks
 	foreach my $i ( 0 .. $#$alt ) {
 		my $doc   = Padre::Documents->by_id($i) or return;
-		my $label = $doc->filename || $nb->GetPageText($i);
+		my $label = $doc->filename || $notebook->GetPageText($i);
 		$label =~ s/^\s+//;
 		$alt->[$i]->SetText($label);
 	}

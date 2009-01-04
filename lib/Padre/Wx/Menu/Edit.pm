@@ -5,6 +5,7 @@ package Padre::Wx::Menu::Edit;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Current     qw{_CURRENT};
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
 
@@ -33,7 +34,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main, # Ctrl-Z
 		$self->{undo},
 		sub {
-			Padre::Documents->current->editor->Undo;
+			Padre::Current->editor->Undo;
 		},
 	);
 
@@ -44,7 +45,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main, # Ctrl-Y
 		$self->{redo},
 		sub {
-			Padre::Documents->current->editor->Redo;
+			Padre::Current->editor->Redo;
 		},
 	);
 
@@ -76,7 +77,7 @@ sub new {
 			Wx::gettext("Mark selection start\tCtrl-[")
 		),
 		sub {
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
+			my $editor = Padre::Current->editor or return;
 			$editor->text_selection_mark_start;
 		},
 	);
@@ -86,7 +87,7 @@ sub new {
 			Wx::gettext("Mark selection end\tCtrl-]")
 		),
 		sub {
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
+			my $editor = Padre::Current->editor or return;
 			$editor->text_selection_mark_end;
 		},
 	);
@@ -110,7 +111,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{copy},
 		sub {
-			Padre->ide->wx->main_window->selected_editor->Copy;
+			Padre::Current->editor->Copy;
 		}
 	);
 
@@ -121,7 +122,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{cut},
 		sub {
-			Padre->ide->wx->main_window->selected_editor->Cut;
+			Padre::Current->editor->Cut;
 		}
 	);
 
@@ -132,7 +133,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{paste},
 		sub { 
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
+			my $editor = Padre::Current->editor or return;
 			$editor->Paste;
 		},
 	);
@@ -268,7 +269,7 @@ sub new {
 			Wx::gettext("Upper All\tCtrl-Shift-U")
 		),
 		sub {
-			Padre::Documents->current->editor->UpperCase;
+			Padre::Current->editor->UpperCase;
 		},
 	);
 
@@ -277,7 +278,7 @@ sub new {
 			Wx::gettext("Lower All\tCtrl-U")
 		),
 		sub {
-			Padre::Documents->current->editor->LowerCase;
+			Padre::Current->editor->LowerCase;
 		},
 	);
 
@@ -327,10 +328,13 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
-	my $document = Padre::Documents->current;
-	my $doc      = $document ? 1 : 0;
+	my $current  = _CURRENT(@_);
+	my $document = $current->document;
+	my $editor   = $current->editor || 0;
+	my $text     = $current->text;
 
 	# Handle the simple cases
+	my $doc = $document ? 1 : 0;
 	$self->{ goto             }->Enable($doc);
 	$self->{ autocomp         }->Enable($doc);
 	$self->{ brace_match      }->Enable($doc);
@@ -342,9 +346,7 @@ sub refresh {
 	$self->{ insert_from_file }->Enable($doc);
 
 	# Handle the complex cases
-	my $editor    = $document ? $document->editor : 0;
-	my $selected  = $editor ? $editor->GetSelectedText : '';
-	my $selection = !! ( defined $selected and $selected ne '' );
+	my $selection = !! ( defined $text and $text ne '' );
 	$self->{undo}->Enable( $editor and $editor->CanUndo );
 	$self->{redo}->Enable( $editor and $editor->CanRedo );
 	$self->{cut}->Enable( $selection );

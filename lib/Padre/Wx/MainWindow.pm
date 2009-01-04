@@ -42,7 +42,7 @@ use Padre::Wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
 use Padre::Documents          ();
-use Padre::Current            ();
+use Padre::Current            qw{_CURRENT};
 
 our $VERSION = '0.22';
 our @ISA     = 'Wx::Frame';
@@ -448,17 +448,18 @@ sub refresh {
 	my $self = shift;
 	return if $self->no_refresh;
 
+	# Freeze during the refresh
 	$self->Freeze;
 
-	# Freeze during the subtle parts of the refresh
-	$self->refresh_menu;
-	$self->refresh_toolbar;
-	$self->refresh_status;
-	$self->refresh_methods;
+	my $current = $self->current;
+	$self->refresh_menu($current);
+	$self->refresh_toolbar($current);
+	$self->refresh_status($current);
+	$self->refresh_methods($current);
 
 	# Fix ticket #185: Padre crash when closing files
 	if ( ! $self->{no_syntax_check_refresh} ) {
-		$self->refresh_syntaxcheck;
+		$self->refresh_syntaxcheck($current);
 	}
 	$self->{no_syntax_check_refresh} = 0;
 
@@ -483,19 +484,19 @@ sub refresh_syntaxcheck {
 sub refresh_menu {
 	my $self = shift;
 	return if $self->no_refresh;
-	$self->menu->refresh;
+	$self->menu->refresh($_[0] or $self->current);
 }
 
 sub refresh_toolbar {
 	my $self = shift;
 	return if $self->no_refresh;
-	$self->GetToolBar->refresh($self->selected_document);
+	$self->GetToolBar->refresh($_[0] or $self->current);
 }
 
 sub refresh_status {
 	my $self = shift;
 	return if $self->no_refresh;
-	$self->GetStatusBar->refresh;
+	$self->GetStatusBar->refresh($_[0] or $self->current);
 }
 
 # TODO now on every ui chnage (move of the mouse)
@@ -506,19 +507,20 @@ sub refresh_methods {
 	return if $self->no_refresh;
 	return unless $self->menu->view->{functions}->IsChecked;
 
-	my $subs_panel = $self->{gui}->{subs_panel};
-
-	my $doc = $self->selected_document;
-	unless ( $doc ) {
-		$subs_panel->DeleteAllItems;
+	# Flush the list if there is no active document
+	my $current    = _CURRENT(@_);
+	my $document   = $current->document;
+	my $subs = $self->{gui}->{subs_panel};
+	unless ( $document ) {
+		$subs->DeleteAllItems;
 		return;
 	}
 
-	my @methods = $doc->get_functions;
 	my $config  = Padre->ide->config;
-	if ($config->{editor_methods} eq 'original') {
-		# that should be the one we got from get_functions
-	} elsif ($config->{editor_methods} eq 'alphabetical_private_last') {
+	my @methods = $document->get_functions;
+	if ( $config->{editor_methods} eq 'original' ) {
+		# That should be the one we got from get_functions
+	} elsif ( $config->{editor_methods} eq 'alphabetical_private_last' ) {
 		# ~ comes after \w
 		@methods = map { tr/~/_/; $_ } ## no critic
 			sort
@@ -529,15 +531,17 @@ sub refresh_methods {
 		@methods = sort @methods;
 	}
 
-	my $new = join ';', @methods;
-	my $old = join ';', @{ $self->{_methods} };
-	return if $old eq $new;
-
-	$subs_panel->DeleteAllItems;
-	foreach my $method ( reverse @methods ) {
-		$subs_panel->InsertStringItem(0, $method);
+	if ( scalar(@methods) == scalar(@{$self->{_methods}}) ) {
+		my $new = join ';', @methods;
+		my $old = join ';', @{ $self->{_methods} };
+		return if $old eq $new;	
 	}
-	$subs_panel->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
+
+	$subs->DeleteAllItems;
+	foreach my $method ( reverse @methods ) {
+		$subs->InsertStringItem(0, $method);
+	}
+	$subs->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 	$self->{_methods} = \@methods;
 
 	return;
@@ -1372,10 +1376,10 @@ sub on_save_all {
 sub _save_buffer {
 	my ($self, $id) = @_;
 
-	my $page         = $self->nb->GetPage($id);
-	my $doc          = Padre::Documents->by_id($id) or return;
+	my $page = $self->nb->GetPage($id);
+	my $doc  = Padre::Documents->by_id($id) or return;
 
-	if ($doc->has_changed_on_disk) {
+	if ( $doc->has_changed_on_disk ) {
 		my $ret = Wx::MessageBox(
 			Wx::gettext("File changed on disk since last saved. Do you want to overwrite it?"),
 			$doc->filename || Wx::gettext("File not in sync"),
@@ -1385,8 +1389,13 @@ sub _save_buffer {
 		return if $ret != Wx::wxYES;
 	}
 
-	if (not $doc->save_file) {
-		Wx::MessageBox(Wx::gettext("Could not save file: ") . $doc->errstr, Wx::gettext("Error"), Wx::wxOK, $self);
+	unless ( $doc->save_file ) {
+		Wx::MessageBox(
+			Wx::gettext("Could not save file: ") . $doc->errstr,
+			Wx::gettext("Error"),
+			Wx::wxOK,
+			$self,
+		);
 		return;
 	}
 
@@ -1410,7 +1419,7 @@ sub on_close {
 		$event->Veto;
 	}
 	$self->close;
-    $self->{no_syntax_check_refresh} = 1;
+	$self->{no_syntax_check_refresh} = 1;
 	$self->refresh;
 }
 
@@ -1445,7 +1454,7 @@ sub close {
 	$self->nb->DeletePage($id);
 
 	# Remove the entry from the Window menu
-	$self->menu->window->refresh;
+	$self->menu->window->refresh($self->current);
 
 	return 1;
 }
@@ -1481,7 +1490,7 @@ sub on_nth_pane {
 	my $page = $self->nb->GetPage($id);
 	if ($page) {
 		$self->nb->SetSelection($id);
-		$self->refresh_status;
+		$self->refresh_status($self->current);
 		$page->{Document}->set_indentation_style(); # TODO: encapsulation?
 		return 1;
 	}
@@ -1587,7 +1596,7 @@ sub on_preferences {
 		foreach my $editor ( $self->pages ) {
 			$editor->set_preferences;
 		}
-		$self->refresh_methods;
+		$self->refresh_methods($self->current);
 	}
 
 	return;
@@ -2018,50 +2027,43 @@ sub on_stc_style_needed {
 
 
 sub on_stc_update_ui {
-	my ($self, $event) = @_;
+	my $self    = shift;
 
-	# avoid recursion
+	# Avoid recursion
 	return if $self->{_in_stc_update_ui};
 	local $self->{_in_stc_update_ui} = 1;
 
-	# check for brace, on current position, higlight the matching brace
-	my $editor = $self->selected_editor;
+	# Check for brace, on current position, higlight the matching brace
+	my $current = $self->current;
+	my $editor  = $current->editor;
 	$editor->highlight_braces;
 	$editor->show_calltip;
 
-	$self->refresh_menu;
-	$self->refresh_toolbar;
-	$self->refresh_status;
-	#$self->refresh_methods;
-	#$self->refresh_syntaxcheck;
 	# avoid refreshing the subs as that takes a lot of time
 	# TODO maybe we should refresh it on every 20s hit or so
-#	$self->refresh;
+	$self->refresh_menu($current);
+	$self->refresh_toolbar($current);
+	$self->refresh_status($current);
+	#$self->refresh_methods;
+	#$self->refresh_syntaxcheck;
 
 	return;
 }
 
 sub on_stc_change {
-	my ($self, $event) = @_;
-
-	return if $self->no_refresh;
-
 	return;
 }
 
 # http://www.yellowbrain.com/stc/events.html#EVT_STC_CHARADDED
 # TODO: maybe we need to check this more carefully.
 sub on_stc_char_added {
-	my ($self, $event) = @_;
-
-	my $key = $event->GetKey;
-	if ($key == 10) { # ENTER
-		my $editor = $self->selected_editor;
-		$editor->autoindent("indent");
-	}
-	elsif ($key == 125) { # Closing brace }
-		my $editor = $self->selected_editor;
-		$editor->autoindent("deindent");
+	my $self  = shift;
+	my $event = shift;
+	my $key   = $event->GetKey;
+	if ( $key == 10 ) { # ENTER
+		$self->current->editor->autoindent('indent');
+	} elsif ( $key == 125 ) { # Closing brace
+		$self->current->editor->autoindent('deindent');
 	}
 	return;
 }
@@ -2081,15 +2083,13 @@ sub on_stc_dwell_start {
 
 sub on_close_pane {
 	my ( $self, $event ) = @_;
-	my $pane = $event->GetPane();
-
-
+	my $pane = $event->GetPane;
 }
 
 sub on_doc_stats {
 	my ($self, $event) = @_;
 
-	my $doc = $self->selected_document;
+	my $doc = $self->current->document;
 	if (not $doc) {
 		$self->message( 'No file is open', 'Stats' );
 		return;
@@ -2122,13 +2122,14 @@ sub on_doc_stats {
 }
 
 sub on_tab_and_space {
-	my ( $self, $type ) = @_;
-	
-	my $doc = $self->selected_document;
-	return if not $doc;
+	my $self    = shift;
+	my $type    = shift;
+	my $current = $self->current;
+	my $doc     = $current->document or return;
+	my $title   = $type eq 'Space_to_Tab'
+		? Wx::gettext('Space to Tab')
+		: Wx::gettext('Tab to Space');
 
-	my $title = $type eq 'Space_to_Tab' ? Wx::gettext('Space to Tab') : Wx::gettext('Tab to Space');
-	
 	my $dialog = Padre::Wx::History::TextDialog->new(
 		$self, Wx::gettext('How many spaces for each tab:'), $title, $type,
 	);
@@ -2141,7 +2142,7 @@ sub on_tab_and_space {
 		return;
 	}
 	
-	my $src = $self->selected_text;
+	my $src  = $current->text;
 	my $code = ( $src ) ? $src : $doc->text_get;
 	
 	return unless ( defined $code and length($code) );
@@ -2154,7 +2155,7 @@ sub on_tab_and_space {
 	}
 	
 	if ( $src ) {
-		my $editor = $self->selected_editor;
+		my $editor = $current->editor;
 		$editor->ReplaceSelection( $code );
 	} else {
 		$doc->text_set( $code );
@@ -2162,34 +2163,32 @@ sub on_tab_and_space {
 }
 
 sub on_delete_ending_space {
-	my ( $self ) = @_;
-	
-	my $doc = $self->selected_document;
-	return if not $doc;
-	
-	my $src = $self->selected_text;
-	my $code = ( $src ) ? $src : $doc->text_get;
-	
-	# remove ending space
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document or return;	
+	my $src      = $current->text;
+	my $code     = defined($src) ? $src : $document->text_get;
+
+	# Remove ending space
 	$code =~ s/([^\n\S]+)$//mg;
 	
 	if ( $src ) {
-		my $editor = $self->selected_editor;
+		my $editor = $current->editor;
 		$editor->ReplaceSelection( $code );
 	} else {
-		$doc->text_set( $code );
+		$document->text_set( $code );
 	}
 }
 
 sub on_delete_leading_space {
-	my ( $self ) = @_;
-	
-	my $src = $self->selected_text;
+	my $self    = shift;
+	my $current = $self->current;
+	my $src     = $current->text;
 	unless ( $src ) {
 		$self->message('No selection');
 		return;
 	}
-	
+
 	my $dialog = Padre::Wx::History::TextDialog->new(
 		$self, 'How many leading spaces to delete(1 tab == 4 spaces):',
 		'Delete Leading Space', 'fay_delete_leading_space',
@@ -2211,7 +2210,7 @@ sub on_delete_leading_space {
 	$tabs .= '' x $space_num_left if ( $space_num_left );
 	$code =~ s/^($spaces|$tabs)//mg;
 	
-	my $editor = $self->selected_editor;
+	my $editor = $current->editor;
 	$editor->ReplaceSelection( $code );
 }
 
@@ -2219,7 +2218,7 @@ sub on_delete_leading_space {
 # should be in a class representing the subs panel
 sub on_subs_panel_left {
 	my ($self, $event) = @_;
-	my $main  = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main_window;
 	if ( $main->{subs_panel_was_closed} ) {
 		$main->show_functions(0);
 		$main->{subs_panel_was_closed} = 0;
@@ -2235,7 +2234,7 @@ sub on_subs_panel_left {
 #
 sub timer_check_overwrite {
 	my $self = shift;
-	my $doc  = $self->selected_document or return;
+	my $doc  = $self->current->document or return;
 
 	return unless $doc->has_changed_on_disk;
 	return if     $doc->{_already_popup_file_changed};
@@ -2281,7 +2280,7 @@ sub on_last_visited_pane {
 }
 
 sub on_notebook_page_changed {
-	my $editor = $_[0]->selected_editor;
+	my $editor = $_[0]->current->editor;
 	if ( $editor ) {
 		my $history = $_[0]->{page_history};
 		@$history = grep {
