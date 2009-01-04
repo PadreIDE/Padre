@@ -60,10 +60,22 @@ sub new {
 
 # Get the text from the editor (and don't cache)
 sub text {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self   = ref($_[0]) ? $_[0] : $_[0]->new;
 	my $editor = $self->editor;
 	if ( defined $editor ) {
 		return $editor->GetSelectedText;
+	} else {
+		return undef;
+	}
+}
+
+# Get the title of the current editor window (and don't cache)
+sub title {
+	my $self     = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $notebook = $self->_notebook;
+	my $selected = $notebook->GetSelection;
+	if ( $selected >= 0 ) {
+		return $notebook->getPageText($selected);
 	} else {
 		return undef;
 	}

@@ -97,29 +97,26 @@ sub _get_data {
 }
 
 sub set_bookmark {
-	my ($class, $main) = @_;
-
-	my $editor   = $main->selected_editor;
-	return if not $editor;
+	my $class    = shift;
+	my $main     = shift;
+	my $current  = $main->current;
+	my $editor   = $current->editor or return;
+	my $path     = $current->filename;
 	my $line     = $editor->GetCurrentLine;
-	my $path     = $main->selected_filename;
 	my $file     = File::Basename::basename($path || '');
+	my $dialog   = $class->dialog(
+		$main,
+		sprintf(gettext("%s line %s"), $file, $line)
+	);
+	$dialog->show_modal or return;
 
-	my $dialog   = $class->dialog($main, sprintf(gettext("%s line %s"), $file, $line));
-	return if not $dialog->show_modal;
-	
 	my $data     = _get_data($dialog);
-
 	my $config   = Padre->ide->config;
-	my $shortcut = delete $data->{shortcut};
-	#my $text     = delete $data->{text};
+	my $shortcut = delete $data->{shortcut} or return;
 	
-	return if not $shortcut;
-
 	$data->{file}   = $path;
 	$data->{line}   = $line;
-	#$data->{pageid} = $pageid;
-	$config->{bookmarks}{$shortcut} = $data;
+	$config->{bookmarks}->{$shortcut} = $data;
 
 	return;
 }

@@ -622,51 +622,26 @@ sub notebook {
 	return $_[0]->{gui}->{notebook};
 }
 
+=pod
+
+=head2 current
+
+  $self->current->document
+  $self->current->editor
+  $self->current->filename
+  $self->current->title
+  $self->current->text
+
+Creates a L<Padre::Current> object for the main window, giving you quick
+and cacheing access to the current various whatevers.
+
+See L<Padre::Current> for more information (once we've actually written
+the POD for it).
+
+=cut
+
 sub current {
 	Padre::Current->new( main => $_[0] );
-}
-
-=pod
-
-=head2 selected_editor
-
- my $editor = $self->selected_editor;
- my $text   = $editor->GetText;
-
- ... do your stuff with the $text
-
- $editor->SetText($text);
-
-You can also use the following two methods to make
-your editing a atomic in the Undo stack.
-
- $editor->BeginUndoAction;
- $editor->EndUndoAction;
-
-=cut
-
-sub selected_editor {
-	$_[0]->current->editor;
-}
-
-sub selected_document {
-	$_[0]->current->document;
-}
-
-=pod
-
-=head2 selected_filename
-
-Returns the name filename of the current buffer.
-
-=cut
-
-sub selected_filename {
-	$_[0]->current->filename;
-}
-
-sub selected_text {
-	$_[0]->current->text;
 }
 
 sub pageids {
@@ -772,7 +747,7 @@ sub run_command {
 # This should really be somewhere else, but can stay here for now
 sub run_script {
 	my $self     = shift;
-	my $document = Padre::Current->document;
+	my $document = $self->current->document;
 	unless ( $document ) {
 		return $self->error(Wx::gettext("No open document"));
 	}
@@ -810,7 +785,7 @@ sub run_script {
 
 sub debug_perl {
 	my $self     = shift;
-	my $document = $self->selected_document;
+	my $document = $self->current->document;
 	unless ( $document->isa('Perl::Document::Perl') ) {
 		return $self->error(Wx::gettext("Not a Perl document"));
 	}
@@ -883,7 +858,7 @@ sub find {
 
 sub on_brace_matching {
 	my $self  = shift;
-	my $page  = $self->selected_editor;
+	my $page  = $self->current->editor;
 	my $pos1  = $page->GetCurrentPos;
 	my $pos2  = $page->BraceMatch($pos1);
 	if ( $pos2 == -1 ) {   #Wx::wxSTC_INVALID_POSITION
@@ -902,33 +877,35 @@ sub on_brace_matching {
 }
 
 sub on_comment_out_block {
-	my $self  = shift;
-	my $page  = $self->selected_editor;
-	my $begin = $page->LineFromPosition($page->GetSelectionStart);
-	my $end   = $page->LineFromPosition($page->GetSelectionEnd);
-	my $doc   = $self->selected_document;
-	my $str   = $doc->comment_lines_str;
-	return if not defined $str;
-	$page->comment_lines($begin, $end, $str);
+	my $self     = shift;
+	my $current  = $self->current;
+	my $editor   = $current->editor;
+	my $document = $current->document;
+	my $begin    = $editor->LineFromPosition($editor->GetSelectionStart);
+	my $end      = $editor->LineFromPosition($editor->GetSelectionEnd);
+	my $string   = $document->comment_lines_str;
+	return unless defined $string;
+	$editor->comment_lines($begin, $end, $string);
 	return;
 }
 
 sub on_uncomment_block {
-	my $self  = shift;
-	my $page  = $self->selected_editor;
-	my $begin = $page->LineFromPosition($page->GetSelectionStart);
-	my $end   = $page->LineFromPosition($page->GetSelectionEnd);
-	my $doc   = $self->selected_document;
-	my $str   = $doc->comment_lines_str;
-	return if not defined $str;
-	$page->uncomment_lines($begin, $end, $str);
+	my $self     = shift;
+	my $current  = $self->current;
+	my $editor   = $current->editor;
+	my $document = $current->document;
+	my $begin    = $editor->LineFromPosition($editor->GetSelectionStart);
+	my $end      = $editor->LineFromPosition($editor->GetSelectionEnd);
+	my $string   = $document->comment_lines_str;
+	return unless defined $string;
+	$editor->uncomment_lines($begin, $end, $string);
 	return;
 }
 
 sub on_autocompletition {
-	my $self = shift;
-	my $doc  = $self->selected_document or return;
-	my ( $length, @words ) = $doc->autocomplete;
+	my $self     = shift;
+	my $document = $self->current->document or return;
+	my ( $length, @words ) = $document->autocomplete;
 	if ( $length =~ /\D/ ) {
 		Wx::MessageBox(
 			$length,
@@ -937,15 +914,19 @@ sub on_autocompletition {
 		);
 	}
 	if ( @words ) {
-		$doc->editor->AutoCompShow($length, join " ", @words);
+		$document->editor->AutoCompShow($length, join " ", @words);
 	}
 	return;
 }
 
 sub on_goto {
-	my $self = shift;
-
-	my $dialog = Wx::TextEntryDialog->new( $self, Wx::gettext("Line number:"), "", '' );
+	my $self   = shift;
+	my $dialog = Wx::TextEntryDialog->new(
+		$self,
+		Wx::gettext("Line number:"),
+		"",
+		'',
+	);
 	if ($dialog->ShowModal == Wx::wxID_CANCEL) {
 		return;
 	}   
@@ -954,7 +935,7 @@ sub on_goto {
 	return if not defined $line_number or $line_number !~ /^\d+$/;
 	#what if it is bigger than buffer?
 
-	my $page = $self->selected_editor;
+	my $page = $self->current->editor;
 	$line_number--;
 	$page->goto_line_centerize($line_number);
 
@@ -977,7 +958,7 @@ sub on_close_window {
 	# part of the shutdown which will mess it up. Don't save it to
 	# the config yet, because we haven't committed to the shutdown
 	# until we get past the interactive phase.
-	my $main_file  = $self->selected_filename;
+	my $main_file  = $self->current->filename;
 	my $main_files = [ 
 		map  { $_->filename }
 		@documents
@@ -1051,14 +1032,13 @@ sub on_close_window {
 }
 
 sub on_split_window {
-	my ($self) = @_;
-
-	my $editor  = $self->selected_editor;
-	my $id      = $self->notebook->GetSelection;
-	my $title   = $self->notebook->GetPageText($id);
-	my $file    = $self->selected_filename;
-	return if not $file;
-	my $pointer = $editor->GetDocPointer();
+	my $self     = shift;
+	my $current  = $self->current;
+	my $notebook = $current->_notebook;
+	my $editor   = $current->editor;
+	my $title    = $current->title;
+	my $file     = $current->filename or return;
+	my $pointer  = $editor->GetDocPointer;
 	$editor->AddRefDocument($pointer);
 
 	my $new_editor = Padre::Wx::Editor->new( $self->notebook );
@@ -1075,7 +1055,8 @@ sub on_split_window {
 }
 
 sub setup_editors {
-	my ($self, @files) = @_;
+	my $self  = shift;
+	my @files = @_;
 	$self->Freeze;
 
 	# If and only if there is only one current file,
@@ -1083,7 +1064,7 @@ sub setup_editors {
 	# subtle interface DWIM trick, but it's one that
 	# clearly looks wrong when we DON'T do it.
 	if ( $self->notebook->GetPageCount == 1 ) {
-		if ( Padre::Current->document->is_unused ) {
+		if ( $self->current->document->is_unused ) {
 			$self->on_close($self);
 		}
 	}
@@ -1164,13 +1145,10 @@ sub setup_editor {
 
 sub create_tab {
 	my ($self, $editor, $file, $title) = @_;
-
 	$self->notebook->AddPage($editor, $title, 1);
 	$editor->SetFocus;
-	my $id  = $self->notebook->GetSelection;
-
+	my $id = $self->notebook->GetSelection;
 	$self->refresh;
-
 	return $id;
 }
 
@@ -1182,10 +1160,10 @@ sub create_tab {
 #    of a module and try to open it locally or from @INC.
 sub on_open_selection {
 	my ($self, $event) = @_;
-	
+
 	# get selection, ask for it if needed
-	my $selection = $self->selected_text();
-	if (not $selection) {
+	my $text = $self->current->text;
+	unless ( $text ) {
 		my $dialog = Wx::TextEntryDialog->new(
 			$self,
 			Wx::gettext("Nothing selected. Enter what should be opened:"),
@@ -1194,36 +1172,36 @@ sub on_open_selection {
 		);
 		return if $dialog->ShowModal == Wx::wxID_CANCEL;
 
-		$selection = $dialog->GetValue;
+		$text = $dialog->GetValue;
 		$dialog->Destroy;
-		return if not defined $selection;
+		return unless defined $text;
 	}
 	
 	my $file;
-	if (-e $selection) {
-		$file = $selection;
-		if (not File::Spec->file_name_is_absolute($file)) {
+	if ( -e $text ) {
+		$file = $text;
+		unless ( File::Spec->file_name_is_absolute($file) ) {
 			$file = File::Spec->catfile(Cwd::cwd(), $file);
 			# check if this is still a file?
 		}
 	} else {
-		my $filename
-			= File::Spec->catfile(
-					File::Basename::dirname($self->selected_filename),
-					$selection);
-		if (-e $filename) {
+		my $filename = File::Spec->catfile(
+			File::Basename::dirname($self->current->filename),
+			$text,
+		);
+		if ( -e $filename ) {
 			$file = $filename;
 		}
 	}
-	if (not $file) { # and we are in a Perl environment
-		$selection =~ s{::}{/}g;
-		$selection .= ".pm";
-		my $filename = File::Spec->catfile(Cwd::cwd(), $selection);
+	unless ( $file ) { # and we are in a Perl environment
+		$text =~ s{::}{/}g;
+		$text .= ".pm";
+		my $filename = File::Spec->catfile(Cwd::cwd(), $text);
 		if (-e $filename) {
 			$file = $filename;
 		} else {
 			foreach my $path (@INC) {
-				my $filename = File::Spec->catfile( $path, $selection );
+				my $filename = File::Spec->catfile( $path, $text );
 				if (-e $filename) {
 					$file = $filename;
 					last;
@@ -1232,8 +1210,13 @@ sub on_open_selection {
 		}
 	}
 
-	if (not $file) {
-		Wx::MessageBox(sprintf(Wx::gettext("Could not find file '%s'"), $selection), Wx::gettext("Open Selection"), Wx::wxOK, $self);
+	unless ( $file ) {
+		Wx::MessageBox(
+			sprintf(Wx::gettext("Could not find file '%s'"), $text),
+			Wx::gettext("Open Selection"),
+			Wx::wxOK,
+			$self,
+		);
 		return;
 	}
 
@@ -1243,18 +1226,15 @@ sub on_open_selection {
 }
 
 sub on_open_all_recent_files {
-	my ( $self ) = @_;
-	
 	my $files = Padre::DB->get_recent_files;
-	$self->setup_editors( @$files );
+	$_[0]->setup_editors( @$files );
 }
 
 sub on_open {
-	my ($self, $event) = @_;
-
-	my $current_filename = $self->selected_filename;
-	if ($current_filename) {
-		$default_dir = File::Basename::dirname($current_filename);
+	my $self     = shift;
+	my $filename = $self->current->filename;
+	if ( $filename ) {
+		$default_dir = File::Basename::dirname($filename);
 	}
 	my $dialog = Wx::FileDialog->new(
 		$self,
@@ -1280,28 +1260,29 @@ sub on_open {
 }
 
 sub on_reload_file {
-	my ($self) = @_;
-
-	my $doc     = $self->selected_document or return;
-	if (not $doc->reload) {
-		$self->error(sprintf(Wx::gettext("Could not reload file: %s"), $doc->errstr));
+	my $self     = shift;
+	my $document = $self->current->document or return;
+	if ( $document->reload ) {
+		$document->editor->configure_editor($document);
 	} else {
-		$doc->editor->configure_editor($doc);
+		$self->error( sprintf(
+			Wx::gettext("Could not reload file: %s"),
+			$document->errstr
+		) );
 	}
-
 	return;
 }
 
 # Returns true if saved.
 # Returns false if cancelled.
 sub on_save_as {
-	my $self    = shift;
-	my $doc     = $self->selected_document or return;
-	my $current = $doc->filename;
+	my $self     = shift;
+	my $document = $self->current->document or return;
+	my $current  = $document->filename;
 	if ( defined $current ) {
 		$default_dir = File::Basename::dirname($current);
 	}
-	while (1) {
+	while ( 1 ) {
 		my $dialog = Wx::FileDialog->new(
 			$self,
 			Wx::gettext("Save file as..."),
@@ -1317,29 +1298,29 @@ sub on_save_as {
 		$default_dir = $dialog->GetDirectory;
 		my $path = File::Spec->catfile($default_dir, $filename);
 		if ( -e $path ) {
-			my $res = Wx::MessageBox(
+			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),
 				Wx::gettext("Exist"),
 				Wx::wxYES_NO,
 				$self,
 			);
-			if ( $res == Wx::wxYES ) {
-				$doc->_set_filename($path);
-				$doc->set_newline_type(Padre::Util::NEWLINE);
+			if ( $response == Wx::wxYES ) {
+				$document->_set_filename($path);
+				$document->set_newline_type(Padre::Util::NEWLINE);
 				last;
 			}
 		} else {
-			$doc->_set_filename($path);
-			$doc->set_newline_type(Padre::Util::NEWLINE);
+			$document->_set_filename($path);
+			$document->set_newline_type(Padre::Util::NEWLINE);
 			last;
 		}
 	}
 	my $pageid = $self->notebook->GetSelection;
 	$self->_save_buffer($pageid);
 
-	$doc->set_mimetype( $doc->guess_mimetype );
-	$doc->editor->padre_setup;
-	$doc->rebless;
+	$document->set_mimetype( $document->guess_mimetype );
+	$document->editor->padre_setup;
+	$document->rebless;
 
 	$self->refresh;
 
@@ -1347,14 +1328,13 @@ sub on_save_as {
 }
 
 sub on_save {
-	my $self = shift;
+	my $self     = shift;
+	my $document = $self->current->document or return;
 
-	my $doc    = $self->selected_document or return;
-
-	if ( $doc->is_new ) {
+	if ( $document->is_new ) {
 		return $self->on_save_as;
 	}
-	if ( $doc->is_modified ) {
+	if ( $document->is_modified ) {
 		my $pageid = $self->notebook->GetSelection;
 		$self->_save_buffer($pageid);
 	}
@@ -1531,23 +1511,24 @@ sub on_prev_pane {
 }
 
 sub on_diff {
-	my $self = shift;
-	my $doc  = Padre::Current->document;
-	return if not $doc;
-
-	my $current = $doc->text_get;
-	my $file    = $doc->filename;
-	return $self->error(Wx::gettext("Cannot diff if file was never saved")) if not $file;
+	my $self     = shift;
+	my $document = Padre::Current->document or return;
+	my $text     = $document->text_get;
+	my $file     = $document->filename;
+	unless ( $file ) {
+		return $self->error(Wx::gettext("Cannot diff if file was never saved"));
+	}
 
 	require Text::Diff;
-	my $diff = Text::Diff::diff($file, \$current);
-	
-	if ( not $diff ) {
+	my $diff = Text::Diff::diff( $file, \$text );
+	unless ( $diff ) {
 		$diff = Wx::gettext("There are no differences\n");
 	}
+
 	$self->show_output(1);
 	$self->{gui}->{output_panel}->clear;
 	$self->{gui}->{output_panel}->AppendText($diff);
+
 	return;
 }
 
@@ -1557,8 +1538,7 @@ sub on_diff {
 # toggle full screen status.
 #
 sub on_full_screen {
-	my ($self, $event) = @_;
-	$self->ShowFullScreen( ! $self->IsFullScreen );
+	$_[0]->ShowFullScreen( ! $_[0]->IsFullScreen );
 }
 
 #
@@ -1567,14 +1547,13 @@ sub on_full_screen {
 # join current line with next one (a-la vi with Ctrl+J)
 #
 sub on_join_lines {
-	my ($self) = @_;
-
-	my $page = $self->selected_editor;
+	my $self = shift;
+	my $page = $self->current->editor;
 
 	# find positions
 	my $pos1 = $page->GetCurrentPos;
 	my $line = $page->LineFromPosition($pos1);
-	my $pos2 = $page->PositionFromLine($line+1);
+	my $pos2 = $page->PositionFromLine($line + 1);
 
 	# mark target & join lines
 	$page->SetTargetStart($pos1);
@@ -1586,7 +1565,7 @@ sub on_join_lines {
 
 sub zoom {
 	my $self = shift;
-	my $zoom = $self->selected_editor->GetZoom + shift;
+	my $zoom = $self->current->editor->GetZoom + shift;
 	foreach my $page ( $self->pages ) {
 		$page->SetZoom($zoom);
 	}
@@ -1723,9 +1702,8 @@ sub on_word_wrap {
 		$self->menu->view->{word_wrap}->Check($on);
 	}
 	
-	my $doc = $self->selected_document;
-	return unless $doc;
-	
+	my $doc = $self->current->document or return;
+
 	if ( $on ) {
 		$doc->editor->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	} else {
@@ -1910,18 +1888,22 @@ sub on_toggle_status_bar {
 }
 
 sub on_insert_from_file {
-	my ( $win ) = @_;
-	
-	my $id  = $win->notebook->GetSelection;
+	my $self = shift;
+	my $id   = $self->notebook->GetSelection;
 	return if $id == -1;
-	
+
 	# popup the window
-	my $last_filename = $win->selected_filename;
-	if ($last_filename) {
+	my $last_filename = $self->current->filename;
+	if ( $last_filename ) {
 		$default_dir = File::Basename::dirname($last_filename);
 	}
 	my $dialog = Wx::FileDialog->new(
-		$win, Wx::gettext('Open file'), $default_dir, '', '*.*', Wx::wxFD_OPEN,
+		$self,
+		Wx::gettext('Open file'),
+		$default_dir,
+		'',
+		'*.*',
+		Wx::wxFD_OPEN,
 	);
 	unless ( Padre::Util::WIN32 ) {
 		$dialog->SetWildcard("*");
@@ -1947,7 +1929,7 @@ sub on_insert_from_file {
 	$data->SetText($text);
 	my $length = $data->GetTextLength;
 	
-	my $editor = $win->notebook->GetPage($id);
+	my $editor = $self->notebook->GetPage($id);
 	$editor->ReplaceSelection('');
 	my $pos = $editor->GetCurrentPos;
 	$editor->InsertText( $pos, $text );
@@ -1955,19 +1937,18 @@ sub on_insert_from_file {
 }
 
 sub convert_to {
-	my ($self, $newline_type) = @_;
-
-	my $editor = $self->selected_editor;
-	$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline_type} );
+	my $self    = shift;
+	my $newline = shift;
+	my $current = $self->current;
+	my $editor  = $current->editor;
+	$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline} );
 
 	# TODO: include the changing of file type in the undo/redo actions
 	# or better yet somehow fetch it from the document when it is needed.
-	my $doc = $self->selected_document or return;
-	$doc->set_newline_type($newline_type);
+	my $document = $current->document or return;
+	$document->set_newline_type($newline);
 
 	$self->refresh;
-
-	return;
 }
 
 sub find_editor_of_file {
@@ -2000,13 +1981,14 @@ sub run_in_padre {
 }
 
 sub on_function_selected {
-	my ($self, $event) = @_;
-	my $sub = $event->GetItem->GetText;
-	return if not defined $sub;
-
-	my $doc = $self->selected_document;
-	Padre::Wx::Dialog::Find->search( search_term => $doc->get_function_regex($sub) );
-	$self->selected_editor->SetFocus;
+	my $self  = shift;
+	my $event = shift;
+	my $sub   = $event->GetItem->GetText;
+	return unless defined $sub;
+	Padre::Wx::Dialog::Find->search(
+		search_term => $self->current->document->get_function_regex($sub),
+	);
+	$self->current->editor->SetFocus;
 	return;
 }
 
@@ -2077,12 +2059,12 @@ sub on_stc_char_added {
 sub on_stc_dwell_start {
 	my ($self, $event) = @_;
 
-	print Data::Dumper::Dumper $event;
-	my $editor = $self->selected_editor;
-	print "dwell: ", $event->GetPosition, "\n";
-	#$editor->show_tooltip;
-	#print Wx::GetMousePosition, "\n";
-	#print Wx::GetMousePositionXY, "\n";
+	# print Data::Dumper::Dumper $event;
+	my $editor = $self->current->editor;
+	# print "dwell: ", $event->GetPosition, "\n";
+	# $editor->show_tooltip;
+	# print Wx::GetMousePosition, "\n";
+	# print Wx::GetMousePositionXY, "\n";
 
 	return;
 }

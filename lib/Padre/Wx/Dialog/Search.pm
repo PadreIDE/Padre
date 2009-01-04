@@ -174,7 +174,7 @@ sub _create_panel {
 
 	$self->{outer}->Add( $self->{panel}, 1, Wx::wxALIGN_LEFT|Wx::wxALL|Wx::wxEXPAND, 5 );
 
-	my $width  = $main->selected_editor->GetSize->GetWidth;
+	my $width  = $main->current->editor->GetSize->GetWidth;
 	my $height = $self->{panel}->GetSize->GetHeight;
 	my $size = Wx::Size->new( $width, $height );
 	$self->{panel}->SetSize( $size );
