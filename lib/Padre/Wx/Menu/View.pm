@@ -78,7 +78,7 @@ sub new {
 		},
 	);
 
-	# On Windows disabling the status bar is broken, so don't allow it
+	# On Windows disabling the status bar doesn't work, so don't allow it
 	unless ( Padre::Util::WIN32 ) {
 		$self->{statusbar} = $self->AppendCheckItem( -1,
 			Wx::gettext("Show StatusBar")
@@ -108,12 +108,13 @@ sub new {
 		Wx::Event::EVT_MENU( $main,
 			$radio,
 			sub {
-				my $doc = $_[0]->selected_document;
+				my $doc = $_[0]->current->document;
 				if ( $doc ) {
 					$doc->set_mimetype( $mimes{$name} );
-					$doc->editor->padre_setup();
+					$doc->editor->padre_setup;
 					$doc->rebless;
 				}
+				$_[0]->refresh;
 			},
 		);
 	}
