@@ -122,8 +122,91 @@ sub new {
 		Wx::wxID_SELECTALL,
 		sub { \&Padre::Wx::Editor::text_select_all(@_) },
 	);
+	$self->AddSeparator;
+
+	# Task status
+	$self->{task_status_idle_id}    = Wx::NewId;
+	$self->{task_status_running_id} = Wx::NewId;
+	$self->{task_status_load_id}    = Wx::NewId;
+
+	$self->AddTool(
+		$self->{task_status_idle_id}, '',
+		Padre::Wx::icon( 'tasks-idle.png' ),
+		Wx::gettext('Background Tasks are idle'),
+	);
+	$self->{task_status_id} = $self->{task_status_idle_id};
+	$self->{task_status_tool_pos} = $self->GetToolPos($self->{task_status_idle_id});
 
 	return $self;
+}
+
+sub update_task_status {
+	my $self = shift;
+	
+	my $manager = Padre->ide->task_manager;
+	return $self->set_task_status_idle()
+	  if not defined $manager;
+
+	my $running = $manager->running_tasks;
+	return $self->set_task_status_idle()
+	  if not $running;
+
+	my $max_workers = $manager->max_no_workers;
+	my $jobs = $manager->task_queue->pending() + $running;
+	if ($jobs > 2*$max_workers) {
+		return $self->set_task_status_load();
+	}
+	return $self->set_task_status_running();
+}
+
+sub set_task_status_idle {
+	my $self = shift;
+	my $id = $self->{task_status_idle_id};
+	return() if $self->{task_status_id} == $id;
+
+	my $bitmap = Padre::Wx::icon( 'tasks-idle.png' );
+	my $text   = Wx::gettext('Background Tasks are idle');
+	return $self->_set_task_status($id, $bitmap, $text);
+}
+
+sub set_task_status_running {
+	my $self = shift;
+	my $id = $self->{task_status_running_id};
+	return() if $self->{task_status_id} == $id;
+
+	my $bitmap = Padre::Wx::icon( 'tasks-running.png' );
+	my $text   = Wx::gettext('Background Tasks are running');
+	return $self->_set_task_status($id, $bitmap, $text);
+}
+
+sub set_task_status_load {
+	my $self = shift;
+	my $id = $self->{task_status_load_id};
+	return() if $self->{task_status_id} == $id;
+
+	my $bitmap = Padre::Wx::icon( 'tasks-load.png' );
+	my $text   = Wx::gettext('Background Tasks are running with high load');
+	return $self->_set_task_status($id, $bitmap, $text);
+}
+
+sub _set_task_status {
+	my $self   = shift;
+	my $id     = shift;
+	my $bitmap = shift;
+	my $text   = shift;
+
+	$self->{task_status_id} = $id;
+	$self->DeleteToolByPos($self->{task_status_tool_pos});
+	$self->InsertTool(
+		$self->{task_status_tool_pos},
+		$id, '',
+		$bitmap,
+		$bitmap,
+		Wx::wxITEM_NORMAL(),
+		$text,
+	);
+
+	return(1);
 }
 
 sub refresh {
@@ -142,6 +225,8 @@ sub refresh {
 	$self->EnableTool( Wx::wxID_COPY,      ( $selection ));
 	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ));
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ));
+
+	$self->update_task_status();
 
 	return;
 }
