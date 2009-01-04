@@ -324,7 +324,7 @@ sub on_ack_result_selected {
 
 	my $page = $main->current->editor;
 	$line--;
-	$page->GotoLine($line);
+	$page->goto_line_centerize($line);
 }
 
 ######################################

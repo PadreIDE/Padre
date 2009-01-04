@@ -134,7 +134,7 @@ sub on_activate {
 	my $editor = $mw->current->editor;
 	my $line_number = $err->line;
 	$line_number--;
-	$editor->GotoLine($line_number);
+	$editor->goto_line_centerize($line_number);
 }
 
 sub collect_data {

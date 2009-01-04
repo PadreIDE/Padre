@@ -155,7 +155,7 @@ sub goto_bookmark {
 	if (defined $pageid) {
 	   $main->on_nth_pane($pageid);
 	   my $page = $main->nb->GetPage($pageid);
-	   $page->GotoLine($line);
+	   $page->goto_line_centerize($line);
 	}
 
 	return;

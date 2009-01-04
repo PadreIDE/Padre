@@ -953,9 +953,8 @@ sub on_goto {
 	#what if it is bigger than buffer?
 
 	my $page = $self->selected_editor;
-
 	$line_number--;
-	$page->GotoLine($line_number);
+	$page->goto_line_centerize($line_number);
 
 	return;
 }

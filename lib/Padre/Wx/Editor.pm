@@ -892,6 +892,29 @@ sub configure_editor {
 	return;
 }
 
+sub goto_line_centerize {
+	my ( $self, $line ) = @_;
+	
+	my $pos = $self->PositionFromLine($line);
+	$self->goto_pos_centerize($pos);
+}
+
+# borrowed from Kephra
+sub goto_pos_centerize {
+	my ( $self, $pos ) = @_;
+	
+	my $max = $self->GetLength;
+	$pos = 0 unless $pos or $pos < 0;
+	$pos = $max if $pos > $max;
+
+	$self->SetCurrentPos($pos);
+	$self->SetSelection($pos, $pos);
+	$self->SearchAnchor;
+
+	$self->ScrollToLine($self->GetCurrentLine - ( $self->LinesOnScreen / 2 ));
+	$self->EnsureCaretVisible;
+}
+
 1;
 
 # Copyright 2008 Gabor Szabo.
