@@ -42,6 +42,7 @@ use Padre::Wx::AuiManager     ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
 use Padre::Documents          ();
+use Padre::Current            ();
 
 our $VERSION = '0.22';
 our @ISA     = 'Wx::Frame';
@@ -611,13 +612,19 @@ sub relocale {
 #####################################################################
 # Introspection
 
-sub selected_document {
-	Padre::Documents->current;
-}
-
 sub nb {
 	return $_[0]->{gui}->{notebook};
 }
+
+sub notebook {
+	return $_[0]->{gui}->{notebook};
+}
+
+sub current {
+	Padre::Current->new( main => $_[0] );
+}
+
+=pod
 
 =head2 selected_editor
 
@@ -637,9 +644,14 @@ your editing a atomic in the Undo stack.
 =cut
 
 sub selected_editor {
-	my $nb = $_[0]->nb;
-	return $nb->GetPage( $nb->GetSelection );
+	$_[0]->current->editor;
 }
+
+sub selected_document {
+	$_[0]->current->document;
+}
+
+=pod
 
 =head2 selected_filename
 
@@ -648,16 +660,11 @@ Returns the name filename of the current buffer.
 =cut
 
 sub selected_filename {
-	my $self = shift;
-	my $doc = $self->selected_document or return;
-	return $doc->filename;
+	$_[0]->current->filename;
 }
 
 sub selected_text {
-	my $self = shift;
-	my $id   = $self->nb->GetSelection;
-	return if $id == -1;
-	return $self->selected_editor->GetSelectedText;
+	$_[0]->current->text;
 }
 
 sub pageids {
@@ -763,7 +770,7 @@ sub run_command {
 # This should really be somewhere else, but can stay here for now
 sub run_script {
 	my $self     = shift;
-	my $document = Padre::Documents->current;
+	my $document = Padre::Current->document;
 	unless ( $document ) {
 		return $self->error(Wx::gettext("No open document"));
 	}
@@ -851,14 +858,13 @@ sub message {
 }
 
 sub error {
-	my $self = shift;
-	$self->message( shift, Wx::gettext('Error') );
+	$_[0]->message( $_[1], Wx::gettext('Error') );
 }
 
 sub find {
 	my $self = shift;
 
-	if ( not defined $self->{fast_find_panel} ) {
+	unless ( defined $self->{fast_find_panel} ) {
 		require Padre::Wx::Dialog::Search;
 		$self->{fast_find_panel} = Padre::Wx::Dialog::Search->new;
 	}
@@ -868,71 +874,65 @@ sub find {
 
 
 
+
+
 #####################################################################
 # Event Handlers
 
 sub on_brace_matching {
-	my ($self, $event) = @_;
-
+	my $self  = shift;
 	my $page  = $self->selected_editor;
 	my $pos1  = $page->GetCurrentPos;
 	my $pos2  = $page->BraceMatch($pos1);
-	if ($pos2 == -1 ) {   #Wx::wxSTC_INVALID_POSITION
-		if ($pos1 > 0) {
+	if ( $pos2 == -1 ) {   #Wx::wxSTC_INVALID_POSITION
+		if ( $pos1 > 0 ) {
 			$pos1--;
 			$pos2 = $page->BraceMatch($pos1);
 		}
 	}
 
-	if ($pos2 != -1 ) {   #Wx::wxSTC_INVALID_POSITION
-		#print "$pos1 $pos2\n";
-		#$page->BraceHighlight($pos1, $pos2);
-		#$page->SetCurrentPos($pos2);
+	if ( $pos2 != -1 ) {   #Wx::wxSTC_INVALID_POSITION
 		$page->GotoPos($pos2);
-		#$page->MoveCaretInsideView;
 	}
 	# TODO: or any nearby position.
 
 	return;
 }
 
-
 sub on_comment_out_block {
-	my ($self, $event) = @_;
-
-	my $page   = $self->selected_editor;
-	my $begin  = $page->LineFromPosition($page->GetSelectionStart);
-	my $end    = $page->LineFromPosition($page->GetSelectionEnd);
-	my $doc    = $self->selected_document;
-
-	my $str = $doc->comment_lines_str;
+	my $self  = shift;
+	my $page  = $self->selected_editor;
+	my $begin = $page->LineFromPosition($page->GetSelectionStart);
+	my $end   = $page->LineFromPosition($page->GetSelectionEnd);
+	my $doc   = $self->selected_document;
+	my $str   = $doc->comment_lines_str;
 	return if not defined $str;
 	$page->comment_lines($begin, $end, $str);
-
 	return;
 }
 
 sub on_uncomment_block {
-	my ($self, $event) = @_;
-
-	my $page   = $self->selected_editor;
-	my $begin  = $page->LineFromPosition($page->GetSelectionStart);
-	my $end    = $page->LineFromPosition($page->GetSelectionEnd);
-	my $doc    = $self->selected_document;
-
-	my $str = $doc->comment_lines_str;
+	my $self  = shift;
+	my $page  = $self->selected_editor;
+	my $begin = $page->LineFromPosition($page->GetSelectionStart);
+	my $end   = $page->LineFromPosition($page->GetSelectionEnd);
+	my $doc   = $self->selected_document;
+	my $str   = $doc->comment_lines_str;
 	return if not defined $str;
 	$page->uncomment_lines($begin, $end, $str);
-
 	return;
 }
 
 sub on_autocompletition {
-	my $self   = shift;
-	my $doc    = $self->selected_document or return;
+	my $self = shift;
+	my $doc  = $self->selected_document or return;
 	my ( $length, @words ) = $doc->autocomplete;
 	if ( $length =~ /\D/ ) {
-		Wx::MessageBox($length, Wx::gettext("Autocompletions error"), Wx::wxOK);
+		Wx::MessageBox(
+			$length,
+			Wx::gettext("Autocompletions error"),
+			Wx::wxOK,
+		);
 	}
 	if ( @words ) {
 		$doc->editor->AutoCompShow($length, join " ", @words);
@@ -1080,7 +1080,7 @@ sub setup_editors {
 	# subtle interface DWIM trick, but it's one that
 	# clearly looks wrong when we DON'T do it.
 	if ( $self->nb->GetPageCount == 1 ) {
-		if ( Padre::Documents->current->is_unused ) {
+		if ( Padre::Current->document->is_unused ) {
 			$self->on_close($self);
 		}
 	}
@@ -1520,7 +1520,7 @@ sub on_prev_pane {
 
 sub on_diff {
 	my $self = shift;
-	my $doc  = Padre::Documents->current;
+	my $doc  = Padre::Current->document;
 	return if not $doc;
 
 	my $current = $doc->text_get;
@@ -2001,7 +2001,7 @@ sub on_function_selected {
 sub on_stc_style_needed {
 	my ( $self, $event ) = @_;
 
-	my $doc = Padre::Documents->current or return;
+	my $doc = Padre::Current->document or return;
 	if ($doc->can('colorize')) {
 
 		# workaround something that seems like a Scintilla bug
