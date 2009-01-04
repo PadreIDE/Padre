@@ -470,7 +470,7 @@ sub worker_loop {
 		#warn("THREAD TERMINATING"), return 1 if not ref($task) and $task eq 'STOP';
 		return 1 if not ref($task) and $task eq 'STOP';
 
-		my $thread_start_event = Wx::PlThreadEvent->new( -1, $TASK_START_EVENT );
+		my $thread_start_event = Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, 0 );
 		Wx::PostEvent($main, $thread_start_event);
 
 		my $process = Padre::Task->deserialize( \$task);
