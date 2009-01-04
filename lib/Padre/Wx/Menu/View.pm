@@ -103,8 +103,10 @@ sub new {
 	);
 
 	my %mimes = Padre::Document::menu_view_mimes();
-	foreach my $name ( keys %mimes ) {
-		my $radio = $self->{view_as_highlighting}->AppendRadioItem( -1, $name );
+	foreach my $name ( sort keys %mimes ) {
+		my $label = $name;
+		$label =~ s/^\d+//;
+		my $radio = $self->{view_as_highlighting}->AppendRadioItem( -1, $label );
 		Wx::Event::EVT_MENU( $main,
 			$radio,
 			sub {
@@ -418,18 +420,20 @@ sub refresh {
 		}
 		
 		# set mimetype
+		my $has_checked = 0;
 		if ( $document->get_mimetype ) {
     		my %mimes = Padre::Document::menu_view_mimes();
-    		my @mimes = keys %mimes;
+    		my @mimes = sort keys %mimes;
     		foreach my $pos ( 0 .. scalar @mimes - 1 ) {
     			my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
     			if ( $document->get_mimetype eq $mimes{$mimes[$pos]} ) {
     				$radio->Check(1);
-    			} else {
-    				$radio->Check(0);
+    				$has_checked = 1;
     			}
     		}
     	}
+    	# by default, 'Plain Text';
+    	$self->{view_as_highlighting}->FindItemByPosition(0)->Check(1) unless $has_checked;
 	}
 
 	return;

@@ -159,18 +159,18 @@ our %MIME_CLASS = (
 );
 
 sub menu_view_mimes {
-	Perl => 'application/x-perl',
-	HTML => 'text/html',
-	JavaScript => 'application/javascript',
-	CSS  => 'text/css',
-	Python => 'text/x-python',
-	Ruby   => 'application/x-ruby',
-	PHP    => 'application/x-php',
-	YAML   => 'text/x-yaml',
-	VBScript => 'text/vbscript',
-	SQL    => 'text/x-sql',
-	Perl6  => 'application/x-perl6',
-	'No Highlight' => 'text/plain',
+	'00Plain Text' => 'text/plain',
+	'01Perl'       => 'application/x-perl',
+	'03HTML'       => 'text/html',
+	'05JavaScript' => 'application/javascript',
+	'07CSS'        => 'text/css',
+	'09Python'     => 'text/x-python',
+	'11Ruby'       => 'application/x-ruby',
+	'13PHP'        => 'application/x-php',
+	'15YAML'       => 'text/x-yaml',
+	'17VBScript'   => 'text/vbscript',
+	'19SQL'        => 'text/x-sql',
+	'21Perl6'      => 'application/x-perl6',
 }
 
 
