@@ -174,7 +174,7 @@ sub new {
 			require Padre::Wx::Printout;
 			my $printer  = Wx::Printer->new;
 			my $printout = Padre::Wx::Printout->new(
-				$_[0]->selected_editor, "Print",
+				$_[0]->current->editor, "Print",
 			);
 			$printer->Print( $_[0], $printout, 1 );
 			$printout->Destroy;

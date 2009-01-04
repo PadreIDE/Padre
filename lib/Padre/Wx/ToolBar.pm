@@ -3,6 +3,7 @@ package Padre::Wx::ToolBar;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Current    qw{_CURRENT};
 use Padre::Wx         ();
 use Padre::Wx::Editor ();
 
@@ -82,7 +83,9 @@ sub new {
 	Wx::Event::EVT_TOOL(
 		$main,
 		Wx::wxID_CUT,
-		sub { Padre->ide->wx->main_window->selected_editor->Cut },
+		sub {
+			Padre::Current->editor->Cut
+		},
 	);
 	$self->AddTool(
 		Wx::wxID_COPY,  '',
@@ -92,7 +95,9 @@ sub new {
 	Wx::Event::EVT_TOOL(
 		$main,
 		Wx::wxID_COPY,
-		sub { Padre->ide->wx->main_window->selected_editor->Copy },
+		sub {
+			Padre::Current->editor->Copy
+		},
 	);
 	$self->AddTool(
 		Wx::wxID_PASTE, '',
@@ -103,7 +108,7 @@ sub new {
 		$main,
 		Wx::wxID_PASTE,
 		sub { 
-			my $editor = Padre->ide->wx->main_window->selected_editor or return;
+			my $editor = Padre::Current->editor or return;
 			$editor->Paste;
 		},
 	);
@@ -122,19 +127,19 @@ sub new {
 }
 
 sub refresh {
-	my $self    = shift;
-	my $doc     = shift;
-	my $editor  = $doc ? $doc->editor : undef;
+	my $self     = shift;
+	my $document = _CURRENT(@_)->document;
+	my $editor   = $document ? $document->editor : undef;
 
 	my $selection_exists = 0;
 	if ( $editor ) {
-		my $txt = $editor->GetSelectedText;
-		if ( defined($txt) && length($txt) > 0 ) {
+		my $text = $editor->GetSelectedText;
+		if ( defined $text and length($text) > 0 ) {
 			$selection_exists = 1;
 		}
 	}
 
-	$self->EnableTool( Wx::wxID_SAVE,      ( $doc and $doc->is_modified ? 1 : 0 ));
+	$self->EnableTool( Wx::wxID_SAVE,      ( $document and $document->is_modified ? 1 : 0 ));
 	$self->EnableTool( Wx::wxID_CLOSE,     ( $editor ? 1 : 0 ));
 	$self->EnableTool( Wx::wxID_UNDO,      ( $editor and $editor->CanUndo  ));
 	$self->EnableTool( Wx::wxID_REDO,      ( $editor and $editor->CanRedo  ));

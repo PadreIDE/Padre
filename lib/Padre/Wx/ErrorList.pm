@@ -54,8 +54,7 @@ sub new {
 }
 
 sub DESTROY {
-	my $self = shift;
-	delete $self->{mw};
+	delete $_[0]->{mw};
 }
 
 sub enable {
@@ -125,15 +124,14 @@ sub on_f1 {
 }
 
 sub on_activate {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
-	my $item = $event->GetItem;
-	return unless $item;
-	my $err = $self->GetPlData($item);
-	my $mw = $self->mw;
+	my $item  = $event->GetItem or return;
+	my $err   = $self->GetPlData($item);
+	my $mw    = $self->mw;
 	return if $err->file eq 'eval';
 	$mw->setup_editor($err->file_abspath);
-	my $editor = $mw->selected_editor;
+	my $editor = $mw->current->editor;
 	my $line_number = $err->line;
 	$line_number--;
 	$editor->GotoLine($line_number);

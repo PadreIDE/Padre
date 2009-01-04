@@ -43,23 +43,23 @@ sub load_ack {
 
 
 sub on_ack {
-	my ($mainwindow) = @_;
+	my $main = shift;
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
 	if ( ! $ack_loaded ) {
 		my $error = load_ack();
 		if ( $error ) {
-			$mainwindow->error($error);
+			$main->error($error);
 			return;
 		}
 		$ack_loaded = 1;
 	}
 
-	my $text   = $mainwindow->selected_text;
+	my $text = $main->current->text;
 	$text = '' if not defined $text;
 	
-	my $dialog = dialog($mainwindow, $text);
+	my $dialog = dialog($main, $text);
 	$dialog->Show(1);
 
 	return;
@@ -106,11 +106,11 @@ sub get_layout {
 }
 
 sub dialog {
-	my ( $win, $term ) = @_;
+	my ( $main, $term ) = @_;
 	
 	my $layout = get_layout($term);
 	my $dialog = Padre::Wx::Dialog->new(
-		parent => $win,
+		parent => $main,
 		title  => gettext("Ack (Find in Files)"),
 		layout => $layout,
 		width  => [190, 210],
@@ -130,17 +130,17 @@ sub dialog {
 sub on_pick_dir {
 	my ($dialog, $event) = @_;
 
-	my $win = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main_window;
 
-	my $default_dir = $dialog->{_widgets_}{_ack_dir_}->GetValue();
+	my $default_dir = $dialog->{_widgets_}{_ack_dir_}->GetValue;
 	unless ( $default_dir ) { # we use currect editor
-		my $filename = $win->selected_filename();
+		my $filename = $main->current->filename;
 		if ( $filename ) {
 			$default_dir = File::Basename::dirname($filename);
 		}
 	}
 
-	my $dir_dialog = Wx::DirDialog->new( $win, Wx::gettext("Select directory"), $default_dir);
+	my $dir_dialog = Wx::DirDialog->new( $main, Wx::gettext("Select directory"), $default_dir);
 	if ($dir_dialog->ShowModal == Wx::wxID_CANCEL) {
 		return;
 	}
@@ -165,7 +165,7 @@ sub find_clicked {
 	$search->{dir} ||= '.';
 	return if not $search->{term};
 	
-	my $mainwindow = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main_window;
 
 	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
 
@@ -201,14 +201,14 @@ sub find_clicked {
 	$iter = App::Ack::get_iterator( $what, \%opts );
 	App::Ack::filetype_setup();
 
-	unless ( $mainwindow->{gui}->{ack_panel} ) {
-		create_ack_pane( $mainwindow );
+	unless ( $main->{gui}->{ack_panel} ) {
+		create_ack_pane( $main );
 	}
-	$mainwindow->show_output(1);
-	show_ack_output($mainwindow, 1);
-	$mainwindow->{gui}->{ack_panel}->DeleteAllItems;
+	$main->show_output(1);
+	show_ack_output($main, 1);
+	$main->{gui}->{ack_panel}->DeleteAllItems;
 
-	Wx::Event::EVT_COMMAND( $mainwindow, -1, $DONE_EVENT, \&ack_done );
+	Wx::Event::EVT_COMMAND( $main, -1, $DONE_EVENT, \&ack_done );
 
 	my $worker = threads->create( \&on_ack_thread );
 
@@ -311,19 +311,18 @@ sub show_ack_output {
 
 sub on_ack_result_selected {
 	my ($self, $event) = @_;
-	
+
 	my $text = $event->GetItem->GetText;
 	return if not defined $text;
-	
+
 	my ($file, $line) = ($text =~ /^(.*?)\((\d+)\)\:/);
 	return unless $line;
 
-	my $mainwindow = Padre->ide->wx->main_window;
-	
-	my $id = $mainwindow->setup_editor($file);
-	$mainwindow->on_nth_pane($id) if ($id);
-	
-	my $page = $mainwindow->selected_editor;
+	my $main = Padre->ide->wx->main_window;
+	my $id   = $main->setup_editor($file);
+	$main->on_nth_pane($id) if $id;
+
+	my $page = $main->current->editor;
 	$line--;
 	$page->GotoLine($line);
 }
@@ -332,13 +331,13 @@ sub on_ack_result_selected {
 # Ack related
 
 sub ack_done {
-	my( $mainwindow, $event ) = @_;
+	my( $main, $event ) = @_;
 
 	my $data = $event->GetData;
 
-	$mainwindow = Padre->ide->wx->main_window;
-	$mainwindow->{gui}->{ack_panel}->InsertStringItem( $panel_string_index--, $data);
-	$mainwindow->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
+	$main = Padre->ide->wx->main_window;
+	$main->{gui}->{ack_panel}->InsertStringItem( $panel_string_index--, $data);
+	$main->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 
 	return;
 }

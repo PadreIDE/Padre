@@ -6,6 +6,7 @@ use warnings;
 use YAML::Tiny                ();
 use Padre::Util               ();
 use Padre::Wx                 ();
+use Padre::Current            ();
 use Padre::Documents          ();
 use Padre::Wx::FileDropTarget ();
 
@@ -514,7 +515,7 @@ sub _get_line_by_number {
 sub on_right_down {
 	my ($self, $event) = @_;
 	
-	my $win = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main_window;
 	
 	my $pos       = $self->GetCurrentPos;
 	#my $line      = $self->LineFromPosition($pos);
@@ -527,7 +528,7 @@ sub on_right_down {
 	if (not $self->CanUndo) {
 		$undo->Enable(0);
 	}
-	my $z = Wx::Event::EVT_MENU( $win, # Ctrl-Z
+	my $z = Wx::Event::EVT_MENU( $main, # Ctrl-Z
 		$undo,
 		sub {
 			my $editor = Padre::Documents->current->editor;
@@ -542,7 +543,7 @@ sub on_right_down {
 		$redo->Enable(0);
 	}
 	
-	Wx::Event::EVT_MENU( $win, # Ctrl-Y
+	Wx::Event::EVT_MENU( $main, # Ctrl-Y
 		$redo,
 		sub {
 			my $editor = Padre::Documents->current->editor;
@@ -555,19 +556,19 @@ sub on_right_down {
 	$menu->AppendSeparator;
 
 	my $selection_exists = 0;
-	my $id = $win->nb->GetSelection;
+	my $id = $main->nb->GetSelection;
 	if ( $id != -1 ) {
-		my $txt = $win->nb->GetPage($id)->GetSelectedText;
-		if ( defined($txt) && length($txt) > 0 ) {
+		my $text = $main->nb->GetPage($id)->GetSelectedText;
+		if ( defined($text) && length($text) > 0 ) {
 			$selection_exists = 1;
 		}
 	}
 
 	my $sel_all = $menu->Append( Wx::wxID_SELECTALL, Wx::gettext("Select all\tCtrl-A") );
-	if ( not $win->nb->GetPage($id)->GetTextLength > 0 ) {
+	if ( not $main->nb->GetPage($id)->GetTextLength > 0 ) {
 		$sel_all->Enable(0);
 	}
-	Wx::Event::EVT_MENU( $win, # Ctrl-A
+	Wx::Event::EVT_MENU( $main, # Ctrl-A
 		$sel_all,
 		sub { \&text_select_all(@_) },
 	);
@@ -577,27 +578,33 @@ sub on_right_down {
 	if ( not $selection_exists ) {
 		$copy->Enable(0);
 	}
-	Wx::Event::EVT_MENU( $win, # Ctrl-C
+	Wx::Event::EVT_MENU( $main, # Ctrl-C
 		$copy,
-		sub { Padre->ide->wx->main_window->selected_editor->Copy; }
+		sub {
+			Padre::Current->editor->Copy;
+		}
 	);
 
 	my $cut = $menu->Append( Wx::wxID_CUT, '' );
 	if ( not $selection_exists ) {
 		$cut->Enable(0);
 	}
-	Wx::Event::EVT_MENU( $win, # Ctrl-X
+	Wx::Event::EVT_MENU( $main, # Ctrl-X
 		$cut,
-		sub { Padre->ide->wx->main_window->selected_editor->Cut; }
+		sub {
+			Padre::Current->editor->Cut;
+		}
 	);
 
 	my $paste = $menu->Append( Wx::wxID_PASTE, '' );
 	my $text  = get_text_from_clipboard();
 
-	if ( length($text) && $win->nb->GetPage($id)->CanPaste ) {
-		Wx::Event::EVT_MENU( $win, # Ctrl-V
+	if ( length($text) && $main->nb->GetPage($id)->CanPaste ) {
+		Wx::Event::EVT_MENU( $main, # Ctrl-V
 			$paste,
-			sub { Padre->ide->wx->main_window->selected_editor->Paste },
+			sub {
+				Padre::Current->editor->Paste;
+			},
 		);
 	} else {
 		$paste->Enable(0);
@@ -606,11 +613,11 @@ sub on_right_down {
 	$menu->AppendSeparator;
 
 	my $comment = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
-	Wx::Event::EVT_MENU( $win, $comment,
+	Wx::Event::EVT_MENU( $main, $comment,
 		\&Padre::Wx::MainWindow::on_comment_out_block,
 	);
 	my $uncomment = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
-	Wx::Event::EVT_MENU( $win, $uncomment,
+	Wx::Event::EVT_MENU( $main, $uncomment,
 		\&Padre::Wx::MainWindow::on_uncomment_block,
 	);
 
@@ -625,14 +632,14 @@ sub on_right_down {
 			&& $mousePos->x > ( $firstPointInLine->x - 18 )
 		) {
 			my $fold = $menu->Append( -1, Wx::gettext("Fold all") );
-			Wx::Event::EVT_MENU( $win, $fold,
+			Wx::Event::EVT_MENU( $main, $fold,
 				sub {
 					my $main = shift;
 					$main->selected_editor->fold_all;
 				},
 			);
 			my $unfold = $menu->Append( -1, Wx::gettext("Unfold all") );
-			Wx::Event::EVT_MENU( $win, $unfold,
+			Wx::Event::EVT_MENU( $main, $unfold,
 				sub {
 					my $main = shift;
 					$main->selected_editor->unfold_all;
@@ -642,7 +649,7 @@ sub on_right_down {
 		}
 	}
 
-	Wx::Event::EVT_MENU( $win,
+	Wx::Event::EVT_MENU( $main,
 		$menu->Append( -1, Wx::gettext("&Split window") ),
 		\&Padre::Wx::MainWindow::on_split_window,
 	);
@@ -736,11 +743,11 @@ sub on_mouse_motion {
 }
 
 sub text_select_all {
-	my ( $win, $event ) = @_;
+	my ( $main, $event ) = @_;
 
-	my $id = $win->nb->GetSelection;
+	my $id = $main->nb->GetSelection;
 	return if $id == -1;
-	$win->nb->GetPage($id)->SelectAll;
+	$main->nb->GetPage($id)->SelectAll;
 	return;
 }
 
@@ -770,32 +777,29 @@ sub text_selection_mark_end {
 }
 
 sub text_selection_clear_marks {
-	my ($win) = @_;
-
-	my $page = $win->selected_editor;
-
-	undef $page->{selection_mark_start};
-	undef $page->{selection_mark_end};
+	my $editor = $_[0]->current->editor;
+	undef $editor->{selection_mark_start};
+	undef $editor->{selection_mark_end};
 }
 
 sub put_text_to_clipboard {
-	my ($txt) = @_;
-
+	my $text = shift;
 	Wx::wxTheClipboard->Open;
-	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($txt) );
+	Wx::wxTheClipboard->SetData(
+		Wx::TextDataObject->new($text)
+	);
 	Wx::wxTheClipboard->Close;
-
 	return;
 }
 
 sub get_text_from_clipboard {
 	Wx::wxTheClipboard->Open;
-	my $text   = '';
+	my $text = '';
 	if ( Wx::wxTheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
 		my $data = Wx::TextDataObject->new;
 		my $ok   = Wx::wxTheClipboard->GetData($data);
-		if ($ok) {
-			$text   = $data->GetText;
+		if ( $ok ) {
+			$text = $data->GetText;
 		}
 	}
 	Wx::wxTheClipboard->Close;
@@ -877,7 +881,7 @@ sub configure_editor {
 		$self->SetText( $doc->{original_content} );
 	}
 	$self->EmptyUndoBuffer;
-	if ($convert_to) {
+	if ( $convert_to ) {
 		my $file = $doc->filename;
 		warn "Converting $file to $convert_to";
 		$self->ConvertEOLs( $mode{$newline_type} );
@@ -887,8 +891,6 @@ sub configure_editor {
 
 	return;
 }
-
-
 
 1;
 

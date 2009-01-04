@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use Test::NeedsDisplay ':skip_all';
-use Test::More tests => 15;
+use Test::More tests => 20;
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -104,11 +104,19 @@ SCOPE: {
 	refis( $menu->win,  $main, 'Menu ->win gets the main window' );
 	refis( $menu->main, $main, 'Menu ->main gets the main window' );
 
-	# A typical submenu
+	# A submenu
 	my $file = $menu->file;
 	isa_ok( $file, 'Padre::Wx::Submenu' );
 
 	# The notebook
 	my $notebook = $main->nb;
 	isa_ok( $notebook, 'Padre::Wx::Notebook' );
+
+	# Current context
+	my $current = $main->current;
+	isa_ok( $current, 'Padre::Current' );
+	isa_ok( $current->_main,     'Padre::Wx::MainWindow' );
+	isa_ok( $current->_notebook, 'Padre::Wx::Notebook'   );
+	refis(  $current->_main,     $main,     '->current->_main ok'     );
+	refis(  $current->_notebook, $notebook, '->current->_notebook ok' );
 }

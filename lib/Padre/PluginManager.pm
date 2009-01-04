@@ -686,7 +686,7 @@ sub test_a_plugin {
 	my $plugins = $self->plugins;
 
 	my $last_filename = $config->{last_test_plugin_file};
-	$last_filename  ||= $main->selected_filename;
+	$last_filename  ||= $main->current->filename;
 	my $default_dir = '';
 	if ( $last_filename ) {
 		$default_dir = File::Basename::dirname($last_filename);
