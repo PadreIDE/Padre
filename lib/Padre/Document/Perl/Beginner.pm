@@ -3,6 +3,8 @@ package Padre::Document::Perl::Beginner;
 use strict;
 use warnings;
 
+our $VERSION = '0.22';
+
 =head1 NAME
 
 Padre::Document::Perl::Beginner - naive implementation of some beginner specific error checking
