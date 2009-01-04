@@ -4,7 +4,7 @@ v0.23 ??????????
 
     Created Padre::Current, which should simplify everything that needs
         to know about the current whatever (ADAMK)
-    View as (Highlighting File T&ype) (FAYLAND)
+    View Document As... (FAYLAND)
     Updated Italian transation.
     Refactored the plugin state hash out into a standalone
         Padre::PluginHandle class (ADAMK)

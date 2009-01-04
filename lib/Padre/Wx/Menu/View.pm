@@ -98,7 +98,7 @@ sub new {
 	# View as (Highlighting File Type)
 	$self->{view_as_highlighting} = Wx::Menu->new;
 	$self->Append( -1,
-		Wx::gettext("View as (Highlighting File T&ype)"),
+		Wx::gettext("View Document As..."),
 		$self->{view_as_highlighting}
 	);
 
