@@ -2,8 +2,12 @@ use Test::More 'no_plan';
 use File::Spec::Functions qw( catfile );
 use URI;
 
+BEGIN {
 
-require_ok( 'Padre::DocBrowser' );
+
+use_ok( 'Padre::DocBrowser' ) ;
+
+}
 
 my $db = Padre::DocBrowser->new();
 
