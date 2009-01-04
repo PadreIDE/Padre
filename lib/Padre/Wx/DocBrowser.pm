@@ -69,6 +69,7 @@ sub new {
 	                             Wx::wxDefaultPosition,
 	                             [750, 700],
 	                             );
+
 	$self->{provider} = Padre::DocBrowser->new;
 
 	my $top_s   = Wx::BoxSizer->new( Wx::wxVERTICAL );
@@ -104,8 +105,8 @@ sub new {
 		Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxALIGN_RIGHT
 	);
- 	$but_s->Add( $label, 1, Wx::wxALIGN_RIGHT   );
-	$but_s->Add( $entry );
+ 	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT |  Wx::wxALIGN_CENTER_VERTICAL   );
+	$but_s->Add( $entry, 1, Wx::wxALIGN_RIGHT |  Wx::wxALIGN_CENTER_VERTICAL );
 
 	$top_s->Add( $but_s , 0 , Wx::wxEXPAND  );
  	$top_s->Add( $nb , 1,  Wx::wxGROW  );
@@ -119,9 +120,6 @@ sub new {
 	#$self->_create_menu_bar;
 	return $self;
 }
-
-use Data::Dumper;
-
 
 sub OnLinkClicked {
 	my ($self,$event) = @_;
