@@ -95,6 +95,31 @@ sub new {
 
 
 
+	# View as (Highlighting File Type)
+	$self->{view_as_highlighting} = Wx::Menu->new;
+	$self->Append( -1,
+		Wx::gettext("View as (Highlighting File T&ype)"),
+		$self->{view_as_highlighting}
+	);
+
+	my %mimes = Padre::Document::menu_view_mimes();
+	foreach my $name ( keys %mimes ) {
+		my $radio = $self->{view_as_highlighting}->AppendRadioItem( -1, $name );
+		Wx::Event::EVT_MENU( $main,
+			$radio,
+			sub {
+				my $doc = $_[0]->selected_document;
+				if ( $doc ) {
+					$doc->set_mimetype( $mimes{$name} );
+					$doc->editor->padre_setup();
+					$doc->rebless;
+				}
+			},
+		);
+	}
+
+	$self->AppendSeparator;
+
 
 
 	# Editor Functionality
@@ -390,6 +415,20 @@ sub refresh {
 		} elsif ( $mode eq Wx::wxSTC_WRAP_NONE and $wrap->IsChecked ) {
 			$wrap->Check(0);
 		}
+		
+		# set mimetype
+		if ( $document->get_mimetype ) {
+    		my %mimes = Padre::Document::menu_view_mimes();
+    		my @mimes = keys %mimes;
+    		foreach my $pos ( 0 .. scalar @mimes - 1 ) {
+    			my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
+    			if ( $document->get_mimetype eq $mimes{$mimes[$pos]} ) {
+    				$radio->Check(1);
+    			} else {
+    				$radio->Check(0);
+    			}
+    		}
+    	}
 	}
 
 	return;

@@ -158,7 +158,19 @@ our %MIME_CLASS = (
 	'text/x-pod'             => 'Padre::Document::POD',
 );
 
-
+sub menu_view_mimes {
+	Perl => 'application/x-perl',
+	HTML => 'text/html',
+	JavaScript => 'application/javascript',
+	CSS  => 'text/css',
+	Python => 'text/x-python',
+	Ruby   => 'application/x-ruby',
+	PHP    => 'application/x-php',
+	YAML   => 'text/x-yaml',
+	VBScript => 'text/vbscript',
+	SQL    => 'text/x-sql',
+	'No Highlight' => 'text/plain',
+}
 
 
 
