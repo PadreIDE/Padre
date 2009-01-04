@@ -162,7 +162,7 @@ sub help {
     $self->display( $docs, $ref );	  	  
   }
   else {
-	  $self->debug( "no help today" );
+		$self->not_found( $query );
   }
 }
 
@@ -196,11 +196,31 @@ eval {
 	    );
 	    $panel->SetPage( $show->{original_content} );
   }
+  else {
+	$self->not_found( $query );
+  }
  
 };
 
 $self->debug( $@ ) if $@;
   
+}
+
+sub not_found { 
+	my ($self,$query) = @_;
+	my $html = qq|
+<html><body>
+<h1>Not Found</h1>
+<p>Could not find documentation for
+<pre>$query</pre>
+</p>
+</body>
+</html>
+|;
+	my $frame = Wx::HtmlWindow->new( $self );
+	$self->notebook->AddPage( $frame , 'Not Found' , 1 );
+	$frame->SetPage( $html );
+
 }
 
 sub _setup_welcome {
