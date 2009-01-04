@@ -89,7 +89,7 @@ Accepts a URI or scalar
 =head2 accept
 
 
-=head1 SUBCLASSING
+=head1 EXTENDING
 
 
 
