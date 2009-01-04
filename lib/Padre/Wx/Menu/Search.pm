@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
+use Padre::Current     qw{_CURRENT};
 
 our $VERSION = '0.23';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -30,29 +31,32 @@ sub new {
 
 
 	# Search and Replace
+	$self->{find} = $self->Append(
+		Wx::wxID_FIND,
+		Wx::gettext("&Find\tCtrl-F")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append(
-			Wx::wxID_FIND,
-			Wx::gettext("&Find\tCtrl-F")
-		),
+		$self->{find},
 		sub {
 			Padre::Wx::Dialog::Find->find(@_)
 		},
 	);
 
+	$self->{find_next} = $self->Append( -1,
+		Wx::gettext("Find Next\tF3")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Find Next\tF3")
-		),
+		$self->{find_next},
 		sub {
 			Padre::Wx::Dialog::Find->find_next(@_);
 		},
 	);
 
+	$self->{find_previous} = $self->Append( -1,
+		Wx::gettext("Find Previous\tShift-F3")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Find Previous\tShift-F3")
-		),
+		$self->{find_previous},
 		sub {
 			Padre::Wx::Dialog::Find->find_previous(@_);
 		},
@@ -74,14 +78,21 @@ sub new {
 	$self->{quick_find}->Check( Padre->ide->config->{is_quick_find} ? 1 : 0 );
 
 	# Incremental find (#60)
+	$self->{quick_find_next} = $self->Append( -1,
+		Wx::gettext("Find Next\tF4")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1, Wx::gettext("Find Next\tF4") ),
+		$self->{quick_find_next},
 		sub {
 			$_[0]->find->search('next');
 		},
 	);
+
+	$self->{quick_find_previous} = $self->Append( -1,
+		Wx::gettext("Find Previous\tShift-F4")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1, Wx::gettext("Find Previous\tShift-F4") ),
+		$self->{quick_find_previous},
 		sub {
 			$_[0]->find->search('previous');
 		}
@@ -101,6 +112,18 @@ sub new {
 
 
 	return $self;
+}
+
+sub refresh {
+	my $self = shift;
+	my $doc  = _CURRENT(@_)->document ? 1 : 0;
+	$self->{ find                }->Enable($doc);
+	$self->{ find_next           }->Enable($doc);
+	$self->{ find_previous       }->Enable($doc);
+	$self->{ quick_find          }->Enable($doc);
+	$self->{ quick_find_next     }->Enable($doc);
+	$self->{ quick_find_previous }->Enable($doc);
+	return;
 }
 
 1;
