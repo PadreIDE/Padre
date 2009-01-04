@@ -124,7 +124,14 @@ sub new {
 	);
 	$self->AddSeparator;
 
+
+
 	# Task status
+       
+	# There can be three statuses:
+	# idle, running (light load), and load (high load).
+	# They'll be switched on demand by update_task_status()
+	# Here, we just set up a default state of idle
 	$self->{task_status_idle_id}    = Wx::NewId;
 	$self->{task_status_running_id} = Wx::NewId;
 	$self->{task_status_load_id}    = Wx::NewId;
@@ -134,16 +141,21 @@ sub new {
 		Padre::Wx::icon( 'tasks-idle.png' ),
 		Wx::gettext('Background Tasks are idle'),
 	);
+	# Remember the id of the current status for update checks
 	$self->{task_status_id} = $self->{task_status_idle_id};
+	# Remember the position of the status icon for replacement
 	$self->{task_status_tool_pos} = $self->GetToolPos($self->{task_status_idle_id});
 
 	return $self;
 }
 
+# checks whether a Task status icon update is in order
+# and if so, changes the icon to one of the other states
 sub update_task_status {
 	my $self = shift;
 	
 	my $manager = Padre->ide->task_manager;
+	# Still in editor-startup phase, default to idle
 	return $self->set_task_status_idle()
 	  if not defined $manager;
 
@@ -153,6 +165,9 @@ sub update_task_status {
 
 	my $max_workers = $manager->max_no_workers;
 	my $jobs = $manager->task_queue->pending() + $running;
+	# High load is defined as the state when the number of
+	# running and pending jobs is larger that twice the
+	# MAXIMUM number of workers
 	if ($jobs > 2*$max_workers) {
 		return $self->set_task_status_load();
 	}
@@ -189,6 +204,9 @@ sub set_task_status_load {
 	return $self->_set_task_status($id, $bitmap, $text);
 }
 
+# Replaces the actual Task status Tool in the ToolBar.
+# Starting with wx 2.9, this can be removed in favour
+# of simply updating the bitmap.
 sub _set_task_status {
 	my $self   = shift;
 	my $id     = shift;
