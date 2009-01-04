@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx          ();
 use Padre::Wx::Submenu ();
-use Padre::Current     ();
+use Padre::Current     qw{_CURRENT};
 
 our $VERSION = '0.23';
 our @ISA     = 'Padre::Wx::Submenu';
@@ -220,28 +220,31 @@ sub new {
 
 
 	# Font Size
+	$self->{font_increase} = $self->Append( -1,
+		Wx::gettext("Increase Font Size\tCtrl-+")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Increase Font Size\tCtrl-+")
-		),
+		$self->{font_increase},
 		sub {
 			$_[0]->zoom(+1);
 		},
 	);
 
+	$self->{font_decrease} = $self->Append( -1,
+		Wx::gettext("Decrease Font Size\tCtrl--")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Decrease Font Size\tCtrl--")
-		),
+		$self->{font_decrease},
 		sub {
 			$_[0]->zoom(-1);
 		},
 	);
 
+	$self->{font_reset} = $self->Append( -1,
+		Wx::gettext("Reset Font Size\tCtrl-/")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Reset Font Size\tCtrl-/")
-		),
+		$self->{font_reset},
 		sub {
 			$_[0]->zoom( -1 * $_[0]->current->editor->GetZoom );
 		},
@@ -254,19 +257,21 @@ sub new {
 
 
 	# Bookmark Support
+	$self->{bookmark_set} = $self->Append( -1,
+		Wx::gettext("Set Bookmark\tCtrl-B")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Set Bookmark\tCtrl-B")
-		),
+		$self->{bookmark_set},
 		sub {
 			Padre::Wx::Dialog::Bookmarks->set_bookmark($_[0]);
 		},
 	);
 
+	$self->{bookmark_goto} = $self->Append( -1,
+		Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
-			Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
-		),
+		$self->{bookmark_goto},
 		sub {
 			Padre::Wx::Dialog::Bookmarks->goto_bookmark($_[0]);
 		},
@@ -389,26 +394,26 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
+	my $document = _CURRENT(@_)->document;
 	my $config   = Padre->ide->config;
 
 	# Simple check state cases from configuration
-	$self->{lines}->Check( $config->{editor_linenumbers} ? 1 : 0 );
-	$self->{folding}->Check( $config->{editor_codefolding} ? 1 : 0 );
-	$self->{current_line_background}->Check( $config->{editor_current_line_background} ? 1 : 0 );
-	$self->{eol}->Check( $config->{editor_eol} ? 1 : 0 );
-	$self->{whitespaces}->Check( $config->{editor_whitespaces} ? 1 : 0 );
 	unless ( Padre::Util::WIN32 ) {
 		$self->{statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
 	}
-	$self->{output}->Check( $config->{main_output_panel} ? 1 : 0 );
-	$self->{functions}->Check( $config->{main_subs_panel} ? 1 : 0 );
-	$self->{indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
-	$self->{show_calltips}->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{show_syntaxcheck}->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
-	$self->{show_errorlist}->Check( $config->{editor_errorlist} ? 1 : 0 );
+	$self->{ lines        }->Check( $config->{editor_linenumbers} ? 1 : 0 );
+	$self->{ folding      }->Check( $config->{editor_codefolding} ? 1 : 0 );
+	$self->{ current_line_background}->Check( $config->{editor_current_line_background} ? 1 : 0 );
+	$self->{ eol           }->Check( $config->{editor_eol} ? 1 : 0 );
+	$self->{ whitespaces   }->Check( $config->{editor_whitespaces} ? 1 : 0 );
+	$self->{ output        }->Check( $config->{main_output_panel} ? 1 : 0 );
+	$self->{ functions     }->Check( $config->{main_subs_panel} ? 1 : 0 );
+	$self->{ indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
+	$self->{ show_calltips    }->Check( $config->{editor_calltips} ? 1 : 0 );
+	$self->{ show_syntaxcheck }->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
+	$self->{ show_errorlist   }->Check( $config->{editor_errorlist} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
-	my $document = Padre::Current->document;
 	if ( $document ) {
 		my $editor = $document->editor;
 		my $mode   = $editor->GetWrapMode;
@@ -418,23 +423,32 @@ sub refresh {
 		} elsif ( $mode eq Wx::wxSTC_WRAP_NONE and $wrap->IsChecked ) {
 			$wrap->Check(0);
 		}
-		
-		# set mimetype
+
+		# Set mimetype
 		my $has_checked = 0;
 		if ( $document->get_mimetype ) {
-    		my %mimes = Padre::Document::menu_view_mimes();
-    		my @mimes = sort keys %mimes;
-    		foreach my $pos ( 0 .. scalar @mimes - 1 ) {
-    			my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
-    			if ( $document->get_mimetype eq $mimes{$mimes[$pos]} ) {
-    				$radio->Check(1);
-    				$has_checked = 1;
-    			}
-    		}
-    	}
-    	# by default, 'Plain Text';
-    	$self->{view_as_highlighting}->FindItemByPosition(0)->Check(1) unless $has_checked;
+			my %mimes = Padre::Document::menu_view_mimes();
+			my @mimes = sort keys %mimes;
+			foreach my $pos ( 0 .. scalar @mimes - 1 ) {
+				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
+				if ( $document->get_mimetype eq $mimes{$mimes[$pos]} ) {
+					$radio->Check(1);
+					$has_checked = 1;
+				}
+			}
+		}
+
+		# By default 'Plain Text';
+		$self->{view_as_highlighting}->FindItemByPosition(0)->Check(1) unless $has_checked;
 	}
+
+	# Disable zooming and bookmarks if there's no current document
+	my $doc = $document ? 1 : 0;
+	$self->{ font_increase        }->Enable($doc);
+	$self->{ font_decrease        }->Enable($doc);
+	$self->{ font_reset           }->Enable($doc);
+	$self->{ bookmark_set         }->Enable($doc);
+	$self->{ bookmark_goto        }->Enable($doc);
 
 	return;
 }
