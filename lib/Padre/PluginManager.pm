@@ -106,7 +106,7 @@ use Class::XSAccessor
 sub plugin_names {
 	my $self = shift;
 	unless ( $self->{plugin_names} ) {
-		# Schwatzian transform that sorts the plugins by their
+		# Schwartzian transform that sorts the plugins by their
 		# full names, but always puts "My Plugin" first.
 		$self->{plugin_names} = [
 			map { $_->[0] }
