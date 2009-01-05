@@ -257,43 +257,56 @@ sub new {
 
 
 	# Bookmark Support
-	$self->{bookmark_set} = $self->Append( -1,
-		Wx::gettext("Set Bookmark\tCtrl-B")
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{bookmark_set},
-		sub {
-			Padre::Wx::Dialog::Bookmarks->set_bookmark($_[0]);
-		},
-	);
+	unless (
+		$config->{experimental}
+		and
+		defined $config->{experimental_bookmarks}
+		and
+		not $config->{experimental_bookmarks}
+	) {
+		$self->{bookmark_set} = $self->Append( -1,
+			Wx::gettext("Set Bookmark\tCtrl-B")
+		);
+		Wx::Event::EVT_MENU( $main,
+			$self->{bookmark_set},
+			sub {
+				Padre::Wx::Dialog::Bookmarks->set_bookmark($_[0]);
+			},
+		);
+		
+		$self->{bookmark_goto} = $self->Append( -1,
+			Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
+		);
+		Wx::Event::EVT_MENU( $main,
+			$self->{bookmark_goto},
+			sub {
+				Padre::Wx::Dialog::Bookmarks->goto_bookmark($_[0]);
+			},
+		);
+		
+		$self->AppendSeparator;
+	}
 
-	$self->{bookmark_goto} = $self->Append( -1,
-		Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{bookmark_goto},
-		sub {
-			Padre::Wx::Dialog::Bookmarks->goto_bookmark($_[0]);
-		},
-	);
-
-	$self->AppendSeparator;
 
 
 
 
-
-	# Styles (temporary location?)
+	# Editor Look and Feel
 	$self->{style} = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Style"),
 		$self->{style}
 	);
-	
-	# TODO: name should be localized
-	my %styles = ( default => 'Default', night => 'Night' );
-	
-	foreach my $name ( sort { $styles{$a} cmp $styles{$b} }  keys %styles) {
+	my %styles = (
+		default => Wx::gettext('Padre'),
+		night   => Wx::gettext('Night'),
+	);
+	my @order = sort {
+		($b eq 'default') <=> ($a eq 'default')
+		or
+		$styles{$a} cmp $styles{$b}
+	} keys %styles;
+	foreach my $name ( @order ) {
 		my $label = $styles{$name};
 		my $radio = $self->{style}->AppendRadioItem( -1, $label );
 		if ( $config->{host}->{style} and $config->{host}->{style} eq $name ) {
@@ -311,7 +324,7 @@ sub new {
 	my @private_styles =
 		map { substr File::Basename::basename($_), 0, -4 }
 		glob File::Spec->catdir( $dir, '*.yml' );
-	if (@private_styles) {
+	if ( @private_styles ) {
 		$self->AppendSeparator;
 		foreach my $name (@private_styles) {
 			my $label = $name;
