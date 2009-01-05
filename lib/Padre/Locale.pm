@@ -34,6 +34,7 @@ TO BE COMPLETED
 use 5.008;
 use strict;
 use warnings;
+use List::Util  ();
 
 # NOTE: Normally, namespace convention is that modules outside of Padre::Wx
 # should not implement anything using Wx modules.
@@ -68,6 +69,9 @@ my %RFC4646 = (
 	'en-gb' => {
 		# REQUIRED: The gettext msgid for the language.
 		gettext   => 'English (British)',
+
+		# REQUIRED: The native name of the language
+		l10ntext   => 'English (British)',
 
 		# REQUIRED: Mapping to ISO 639 language tag.
 		# Used by Padre's first-generation locale support
@@ -105,6 +109,7 @@ my %RFC4646 = (
 	# but which Padre is aware of.
 	'en-au' => {
 		gettext  => 'English (Australian)',
+		l10ntext => 'English (Australian)',
 		iso639   => 'en',
 		iso3166  => 'AU',
 		wxid     => Wx::wxLANGUAGE_ENGLISH_AUSTRALIA,
@@ -128,6 +133,7 @@ my %RFC4646 = (
 
 	'en-nz' => {
 		gettext  => 'English (New Zealand)',
+		l10ntext => 'English (New Zealand)',
 		iso639   => 'en',
 		iso3166  => 'NZ',
 		wxid     => Wx::wxLANGUAGE_ENGLISH_NEW_ZEALAND,
@@ -136,6 +142,7 @@ my %RFC4646 = (
 
 	'en-us' => {
 		gettext  => 'English (US)',
+		l10ntext => 'English (US)',
 		iso639   => 'en',
 		iso3166  => 'US',
 		wxid     => Wx::wxLANGUAGE_ENGLISH_US,
@@ -149,13 +156,59 @@ my %RFC4646 = (
 	# We'll put these at the end :)
 	# Mostly what these do is uncover issues that might arise when
 	# a language is not supported by various older standards.
-	'i-klingon' => {
+	'x-klingon' => {
 		gettext  => 'Klingon',
+		l10ntext => 'Klingon', # TODO Fix this at some point
 		iso639   => undef,
 		iso3166  => undef,
 		wxid     => undef,
 	},
 );
+
+# Find the rfc4646 identifier for the current host
+sub rfc4646_system {
+	my $wx = Wx::Locale::GetSystemLanguage;
+	List::Util::first {
+		$RFC4646{$_}->{wxid} == $wx
+	} grep {
+		defined $RFC4646{$_}->{wxid}
+	} sort keys %RFC4646;
+}
+
+# Find the rfc4646 to use by default
+sub rfc4646_startup {
+	my $config = Padre->ide->config;
+	my $id     = $config->{host}->{rfc4646};
+	if ( $id and not $RFC4646{$id} ) {
+		# Bad configuration entry
+		$id = undef;
+	}
+	unless ( $id ) {
+		# Try for the system default
+		$id = rfc4646_system();
+	}
+	unless ( $id ) {
+		# Use the fallback default
+		$id = RFC4646_DEFAULT;
+	}
+	return $id;
+}
+
+# Given a rfc4646 identifier, sets the language globally
+# and returns the relevant Wx::Locale object.
+sub rfc4646_object {
+	my $id     = shift;
+	my $lang   = $RFC4646{$id}->{wxid};
+	my $locale = Wx::Locale->new($lang);
+	$locale->AddCatalogLookupPathPrefix(
+		Padre::Util::sharedir('locale')
+	);
+	unless ( $locale->IsLoaded($id) ) {
+		my $file = Padre::Util::sharefile('locale', $id) . '.mo';
+		$locale->AddCatalog($id) if -f $file;
+	}
+	return $locale;
+}
 
 
 
