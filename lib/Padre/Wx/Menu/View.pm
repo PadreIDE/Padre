@@ -368,7 +368,7 @@ sub new {
 			$_[0]->change_locale;
 		},
 	);
-	if ( $default eq $config->{host}->{locale} ) {
+	if ( defined $config->{host}->{locale} and $default eq $config->{host}->{locale} ) {
 		$self->{language_default}->Check(1);
 	}
 
