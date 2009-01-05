@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment 
 
+    Replace Padre::Pod::Frame with Padre::Wx::DocBrowser, hopefully
+        making help more helpful. (Andrew Bramble)
     Moving to the glorious RFC4646-based second-generation Padre::Locale
         implementation. "Portugese" is no longer Brazilian :) (ADAMK)
     Added a friendly icon to the ToolBar that displays the status

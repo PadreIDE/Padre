@@ -45,7 +45,12 @@ Constructor , see L<Wx::Frame>
 =head2 help
 
 Accepts a string, L<URI> or L<Padre::Document> and attempts to render 
-documentation for such in a new AuiNoteBook tab. 
+documentation for such in a new AuiNoteBook tab. Links matching a scheme 
+accepted by L<Padre::DocBrowser> will (when clicked) be resolved and 
+displayed in a new tab.
+
+=head2 show (Padre::Pod::Frame compat)
+
 
 =head1 BUGS
 
@@ -132,6 +137,9 @@ sub OnLinkClicked {
 	if ( $self->provider->accept( $scheme ) ) {
 		$self->help( $uri );
 	}
+	else {
+		Wx::LaunchDefaultBrowser( $uri );
+	}
 	
 
 }
@@ -143,6 +151,11 @@ sub on_search_text_enter {
 	my $text = $event->GetValue;
 	$self->help($text);
 
+}
+
+# Compat with old PodFrame help ?
+sub show {
+  shift->help( @_ );
 }
 
 sub help {
