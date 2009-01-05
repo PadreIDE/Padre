@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment 
 
+    Moving to the glorious RFC4646-based second-generation Padre::Locale
+        implementation. "Portugese" is no longer Brazilian :) (ADAMK)
     Added a friendly icon to the ToolBar that displays the status
         (idle, running, high load) of the background tasks (SMUELLER)
     Created Padre::Current, which should simplify everything that needs
