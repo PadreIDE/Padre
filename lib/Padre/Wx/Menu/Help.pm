@@ -67,6 +67,21 @@ sub new {
 		},
 	);
 
+	# Add Padre website tools
+	$self->AppendSeparator;
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, Wx::gettext("Report a New &Bug") ),
+		sub {
+			Wx::LaunchDefaultBrowser('http://padre.perlide.org/wiki/Tickets');
+		},
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1, Wx::gettext("View All &Open Bugs") ),
+		sub {
+			Wx::LaunchDefaultBrowser('http://padre.perlide.org/report/1');
+		},
+	);
+
 	# Add the About
 	$self->AppendSeparator;
 	Wx::Event::EVT_MENU( $main,
@@ -79,7 +94,7 @@ sub new {
 	return $self;
 }
 
-# TODO - This violates encapsulation, a menu entry should be
+# TODO - This violates encapsulation, a menu entry shouldn't be
 #        spawning windows and storing them in the window hash.
 sub help {
 	my $self = shift;
