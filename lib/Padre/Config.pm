@@ -179,7 +179,7 @@ sub new {
 	$self->{host}->{run_command} ||= '';
 
 	# Default the locale to the system locale
-
+	$self->{host}->{style} ||= 'default';
 
 	%$self = (%defaults, %$self);
 
