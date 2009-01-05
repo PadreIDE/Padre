@@ -67,6 +67,7 @@ SCOPE: {
 			run_command    => '',
 			main_files     => [],
 			main_files_pos => [],
+			style          => 'default',
 		},
 		main_subs_panel   => 0,
 		main_output_panel => 0,
