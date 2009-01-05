@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment 
 
+    Updated German translation (HJANSEN)
     Replace Padre::Pod::Frame with Padre::Wx::DocBrowser, hopefully
         making help more helpful. (Andrew Bramble)
     Moving to the glorious RFC4646-based second-generation Padre::Locale
