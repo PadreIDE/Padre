@@ -58,6 +58,17 @@ sub new {
 #####################################################################
 # Context Methods
 
+# Get the project from the document (and don't cache)
+sub project {
+	my $self     = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $document = $self->document;
+	if ( defined $document ) {
+		return $document->project;
+	} else {
+		return undef;
+	}
+}
+	
 # Get the text from the editor (and don't cache)
 sub text {
 	my $self   = ref($_[0]) ? $_[0] : $_[0]->new;
