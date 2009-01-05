@@ -351,8 +351,13 @@ sub new {
 		Wx::gettext("Language"),
 		$self->{language}
 	);
+
+	my $rfc4646_system = Padre::Locale::rfc4646_system();
 	Wx::Event::EVT_MENU( $main,
-		$self->{language}->AppendRadioItem( -1, Wx::gettext("System Default") ),
+		$self->{language}->AppendCheckItem( -1,
+			Wx::gettext("System Default")
+			. " ($rfc4646_system)"
+		),
 		sub {
 			$_[0]->change_locale;
 		},
@@ -360,9 +365,9 @@ sub new {
 
 	$self->{language}->AppendSeparator;
 
-	my %languages = Padre::Locale::menu_view_languages();
-	foreach my $name ( sort { $languages{$a} cmp $languages{$b} }  keys %languages) {
-		my $label = $languages{$name};
+	my %language = Padre::Locale::rfc4646_menu_view_languages();
+	foreach my $name ( sort { $language{$a} cmp $language{$b} }  keys %language ) {
+		my $label = $language{$name};
 		if ( $label eq 'English' ) {
 			# NOTE: A dose of fun in a mostly boring application.
 			# With more Padre developers, more countries, and more

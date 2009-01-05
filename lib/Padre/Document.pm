@@ -417,7 +417,6 @@ sub load_file {
 	require Padre::Locale;
 	$self->{encoding} = Padre::Locale::encoding_from_string($content);
 	$content = Encode::decode($self->{encoding}, $content);
-	#print "DEBUG: SystemDefault($system_default), $lang_shortname:$self->{encoding}, $file\n";
 
 	$self->{original_content} = $content;
 
