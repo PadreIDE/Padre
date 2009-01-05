@@ -615,7 +615,9 @@ sub on_right_down {
 
 	$menu->AppendSeparator;
 
-	if ( Padre->ide->config->{editor_codefolding} eq 1 ) {
+	if ( $event->isa('Wx::MouseEvent')
+	     && Padre->ide->config->{editor_codefolding} eq 1
+	) {
 		my $mousePos = $event->GetPosition;
 		my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
 		my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
