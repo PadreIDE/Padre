@@ -346,27 +346,34 @@ sub new {
 
 
 	# Language Support
+	# TODO: God this is horrible, there has to be a better way
+	my $default  = Padre::Locale::system_rfc4646();
+	my $current  = Padre::Locale::rfc4646();
+	my %language = Padre::Locale::menu_view_languages();
+
+	# Parent Menu
 	$self->{language} = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Language"),
 		$self->{language}
 	);
 
-	my $system_rfc4646 = Padre::Locale::system_rfc4646();
+	# Default menu entry
+	$self->{language_default} = $self->{language}->AppendCheckItem( -1,
+		Wx::gettext("System Default") . " ($default)"
+	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{language}->AppendCheckItem( -1,
-			Wx::gettext("System Default")
-			. " ($system_rfc4646)"
-		),
+		$self->{language_default},
 		sub {
 			$_[0]->change_locale;
 		},
 	);
+	if ( $default eq $config->{host}->{locale} ) {
+		$self->{language_default}->Check(1);
+	}
 
 	$self->{language}->AppendSeparator;
 
-	my $current  = Padre::Locale::rfc4646();
-	my %language = Padre::Locale::menu_view_languages();
 	foreach my $name ( sort { $language{$a} cmp $language{$b} }  keys %language ) {
 		my $label = $language{$name};
 		if ( $label eq 'English (United Kingdom)' ) {
@@ -379,7 +386,6 @@ sub new {
 			# speakers, non-English localisations do NOT show this.
 			$label = "English (New Britstralian)";
 		}
-
 		my $radio = $self->{language}->AppendRadioItem( -1, $label );
 		Wx::Event::EVT_MENU( $main,
 			$radio,
