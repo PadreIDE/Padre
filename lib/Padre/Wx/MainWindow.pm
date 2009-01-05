@@ -112,7 +112,7 @@ sub new {
 	);
 
 	# Set the locale
-	$self->{locale} = Padre::Locale::rfc4646_current();
+	$self->{locale} = Padre::Locale::object();
 
 	# Drag and drop support
 	Padre::Wx::FileDropTarget->set($self);
@@ -568,7 +568,7 @@ sub change_locale {
 	my $self = shift;
 	my $name = shift;
 	unless ( defined $name ) {
-		$name = Padre::Locale::rfc4646_system();
+		$name = Padre::Locale::system_rfc4646();
 	}
 
 	# Save the locale to the config
@@ -576,7 +576,7 @@ sub change_locale {
 
 	# Reset the locale
 	delete $self->{locale};
-	$self->{locale} = Padre::Locale::rfc4646_current();
+	$self->{locale} = Padre::Locale::object();
 
 	# Run the "relocale" process to update the GUI
 	$self->relocale;
