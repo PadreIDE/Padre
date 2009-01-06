@@ -127,18 +127,41 @@ sub update_labels {
 	my $name   = shift;
 	my $dialog = $self->{dialog};
 	my $plugin = $self->{manager}->plugins->{$name};
-	my $status = $plugin->{status};
-	if ( $status ) {
-		if ( $status eq 'enabled' ) {
-			$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Disable'));
-			if ( $plugin->{object}->can('plugin_preferences') ) {
-				$dialog->{_widgets_}->{"pref_$name"}->Enable;
-			}
-		} elsif ( $status eq 'new' or $status eq 'disabled' ) {
-			$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Enable'));
+
+	if ( $plugin->enabled ) {
+		$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Disable'));
+		if ( $plugin->{object}->can('plugin_preferences') ) {
+			$dialog->{_widgets_}->{"pref_$name"}->Enable;
+		} else {
 			$dialog->{_widgets_}->{"pref_$name"}->Disable;
 		}
+		return;
 	}
+
+	if ( $plugin->can_enable ) {
+		$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Enable'));
+		$dialog->{_widgets_}->{"able_$name")->Enable;
+		$dialog->{_widgets_}->{"pref_$name"}->Disable;
+		return;
+	}
+
+	if ( $plugin->error ) {
+		$dialog->{_widgets_}->{"able_$name")->SetLabel(Wx::gettext('Crashed'));
+		$dialog->{_widgets_}->{"able_$name")->Disable;
+		$dialog->{_widgets_}->{"pref_$name"}->Disable;
+		return;
+	}
+
+	if ( $plugin->incompatible ) {
+		$dialog->{_widgets_}->{"able_$name")->SetLabel(Wx::gettext('Crashed'));
+		$dialog->{_widgets_}->{"able_$name")->Disable;
+		$dialog->{_widgets_}->{"pref_$name"}->Disable;
+		return;
+	}
+
+	$dialog->{_widgets_}->{"able_$name")->SetLabel(Wx::gettext('Unknown'));
+	$dialog->{_widgets_}->{"able_$name")->Disable;
+	$dialog->{_widgets_}->{"pref_$name"}->Disable;
 	return;
 }
 
