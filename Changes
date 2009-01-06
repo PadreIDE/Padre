@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment 
 
+    Double-clicking an entry in the function list now faithfully
+        matches the behaviour of the Ultraedit implementation (ADAMK)
     Updated German translation (HJANSEN)
     Replace Padre::Pod::Frame with Padre::Wx::DocBrowser, hopefully
         making help more helpful. (Andrew Bramble)

@@ -290,11 +290,22 @@ sub create_side_pane {
 
 	$self->manager->AddPane(
 		$self->{gui}->{sidepane},
-		Wx::AuiPaneInfo->new->Name('sidepane')
-			->CenterPane->Resizable(1)->PaneBorder(0)->Movable(1)
-			->CaptionVisible(1)->CloseButton(0)->DestroyOnClose(0)
-			->MaximizeButton(0)->Floatable(1)->Dockable(1)
-			->Caption( Wx::gettext("Workspace View") )->Position(3)->Right->Layer(3)
+		Wx::AuiPaneInfo->new
+			->Name('sidepane')
+			->CenterPane
+			->Resizable(1)
+			->PaneBorder(0)
+			->Movable(1)
+			->CaptionVisible(1)
+			->CloseButton(0)
+			->DestroyOnClose(0)
+			->MaximizeButton(0)
+			->Floatable(1)
+			->Dockable(1)
+			->Caption( Wx::gettext("Workspace View") )
+			->Position(3)
+			->Right
+			->Layer(3)
 			->Hide
 	);
 
@@ -1985,14 +1996,31 @@ sub run_in_padre {
 }
 
 sub on_function_selected {
-	my $self  = shift;
-	my $event = shift;
-	my $sub   = $event->GetItem->GetText;
-	return unless defined $sub;
-	Padre::Wx::Dialog::Find->search(
-		search_term => $self->current->document->get_function_regex($sub),
+	$DB::single = 1;
+	my $self     = shift;
+	my $event    = shift;
+	my $subname  = $event->GetItem->GetText or return;
+	my $document = $self->current->document;
+	my $editor   = $document->editor;
+
+	# Locate the function
+	my ($start, $end) = Padre::Util::get_matches(
+		$editor->GetText,
+		$document->get_function_regex($subname),
+		$editor->GetSelection, # Provides two params
 	);
-	$self->current->editor->SetFocus;
+	return unless defined $start; # Couldn't find it
+
+	# Move the selection to the sub location
+	$editor->GotoPos($start);
+	$editor->ScrollToLine(
+		$editor->GetCurrentLine - ($editor->LinesOnScreen / 2)
+	);
+	$editor->SetFocus;
+
+	# $editor->SetCurrentPos($start);
+	# $editor->goto_pos_centerize($start);
+
 	return;
 }
 
