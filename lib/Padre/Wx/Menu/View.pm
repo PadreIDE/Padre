@@ -115,6 +115,12 @@ sub new {
 					$doc->set_mimetype( $mimes{$name} );
 					$doc->editor->padre_setup;
 					$doc->rebless;
+					$doc->remove_color;
+					if ($doc->can('colorize')) {
+						$doc->colorize;
+					} else {
+						$doc->editor->Colourise( 0, $doc->editor->GetLength );
+					}
 				}
 				$_[0]->refresh;
 			},
