@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
-
+    Padre::Wx::DocBrowser now uses Padre::Task::DocBrowser, let's 
+        hope properly! (Andrew Bramble) 
     Class correction Padre::Wx::Menu -> Padre::Wx::Menubar (ADAMK)
     Class correction Padre::Wx::Submenu -> Padre::Wx::Menu (ADAMK)
     Now that Padre::DocBrowser has landed, delete the Padre::Pod

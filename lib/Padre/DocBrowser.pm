@@ -37,6 +37,8 @@ Allow new packages to be loaded and interrogated for the mimetypes they can
 generate documentation for. Provide similar mechanism for registering new
 documentation viewers and uri schemes accepted for resolving. 
 
+B<NOTE> i think all the method names are wrong. blast it.
+
 =head1 SYNOPSIS
 
   # Does perlish things by default via 'Padre::DocBrowser::POD'
