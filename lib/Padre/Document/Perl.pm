@@ -254,11 +254,7 @@ sub keywords {
 sub get_functions {
 	my $self = shift;
 	my $text = $self->text_get;
-
-	my %nlCharTable = ( UNIX => "\n", WIN => "\r\n", MAC => "\r" );
-	my $nlchar = $nlCharTable{ $self->get_newline_type };
-
-	return $text =~ m/${nlchar}sub\s+(\w+(?:::\w+)*)/g;
+	return $text =~ m/[\012\015]sub\s+(\w+(?:::\w+)*)/g;
 }
 
 sub get_function_regex {
