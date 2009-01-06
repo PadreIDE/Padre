@@ -198,13 +198,11 @@ sub _css_class {
 				return 'core';
 			}
 		}
-		
 		if ( $Token->previous_sibling and $Token->previous_sibling->content eq '->' ) {
 			if ( $Token->content =~ /^(?:new)$/ ) {
 				return 'core';
 			}
 		}
-
 		if ( $Token->parent->isa('PPI::Statement::Include') ) {
 			if ( $Token->content =~ /^(?:use|no)$/ ) {
 				return 'keyword';
@@ -264,12 +262,11 @@ sub get_functions {
 }
 
 sub get_function_regex {
-	my ( $self, $sub ) = @_;
+	my $name = quotemeta($_[1]);
 
-	my %nlCharTable = ( UNIX => "\n", WIN => "\r\n", MAC => "\r" );
-	my $nlchar = $nlCharTable{ $self->get_newline_type };
-
-	return qr!(?:^|${nlchar})sub\s+$sub\b!;
+	# This emulates qr/(?<=^|[\012\0125])sub\s$name\b/ but without
+	# triggering a "Variable length lookbehind not implemented" error.
+	return qr/(?:(?<=^)sub\s+$name|(?<=[\012\0125])sub\s+$name)\b/;
 }
 
 sub get_command {
