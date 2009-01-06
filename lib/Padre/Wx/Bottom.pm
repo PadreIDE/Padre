@@ -12,15 +12,22 @@ our @ISA     = 'Wx::AuiNotebook';
 sub new {
 	my $class = shift;
 	my $main  = shift;
+
+	# Create the platform-sensitive style
+	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
+	          | Wx::wxAUI_NB_TOP;
+	unless ( Padre::Util::LINUX ) {
+		# Crashes on Linux/GTK
+		# Doesn't seem to work right on Win32...
+		# $style = $style | Wx::wxAUI_NB_TAB_EXTERNAL_MOVE;
+	}
+
 	my $self  = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::Size->new(350, 300), # used when pane is floated
-		Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_TOP
-		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
-		# TODO: Should we still use it for non-Linux?
+		$style,
 	);
 
 	# Add ourself to the window manager

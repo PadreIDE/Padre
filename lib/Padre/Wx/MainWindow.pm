@@ -236,16 +236,23 @@ sub new {
 }
 
 sub create_side_pane {
-	my $self = shift;
+	my $self  = shift;
+
+	# Create the platform-sensitive style
+	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
+	          | Wx::wxAUI_NB_TOP;
+	unless ( Padre::Util::LINUX ) {
+		# Crashes on Linux/GTK
+		# Doesn't seem to work right on Win32...
+		# $style = $style | Wx::wxAUI_NB_TAB_EXTERNAL_MOVE;
+	}
 
 	$self->{gui}->{sidepane} = Wx::AuiNotebook->new(
 		$self,
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::Size->new(300, 350), # used when pane is floated
-		Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_TOP
-		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
+		$style,
 	);
 
 	# Create the right-hand sidebar
