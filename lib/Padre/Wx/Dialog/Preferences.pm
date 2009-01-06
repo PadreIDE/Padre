@@ -30,14 +30,6 @@ sub get_layout_for_behaviour {
 			[ 'Wx::Button',     '_guess_',          Wx::gettext('Guess')     ],
 		],
 		[
-			[ 'Wx::StaticText', undef,              Wx::gettext('Max number of modules')],
-			[ 'Wx::TextCtrl',   'pod_maxlist',      $config->{pod_maxlist}],
-		],
-		[
-			[ 'Wx::StaticText', undef,              Wx::gettext('Min number of modules')],
-			[ 'Wx::TextCtrl',   'pod_minlist',      $config->{pod_minlist}],
-		],
-		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Open files:')],
 			[ 'Wx::Choice',     'main_startup',     $main_startup],
 		],

@@ -18,7 +18,6 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::Size->new(350, 300), # used when pane is floated
 		Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_WINDOWLIST_BUTTON
 		| Wx::wxAUI_NB_TOP
 		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
 		# TODO: Should we still use it for non-Linux?

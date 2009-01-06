@@ -243,7 +243,8 @@ sub create_side_pane {
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::Size->new(300, 350), # used when pane is floated
-		Wx::wxAUI_NB_SCROLL_BUTTONS|Wx::wxAUI_NB_WINDOWLIST_BUTTON|Wx::wxAUI_NB_TOP
+		Wx::wxAUI_NB_SCROLL_BUTTONS
+		| Wx::wxAUI_NB_TOP
 		# |Wx::wxAUI_NB_TAB_EXTERNAL_MOVE crashes on Linux/GTK
 	);
 
@@ -256,7 +257,10 @@ sub create_side_pane {
 		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT
 	);
 
-	Wx::Event::EVT_KILL_FOCUS( $self->{gui}->{subs_panel}, \&on_subs_panel_left );
+	Wx::Event::EVT_KILL_FOCUS(
+		$self->{gui}->{subs_panel},
+		\&on_subs_panel_left,
+	);
 
 	# find-as-you-type in functions tab
 	# TODO: should the whole subs_panel stuff be in its own class? (Yes)
@@ -390,7 +394,7 @@ sub timer_post_init {
 	# Load all files and refresh the application so that it
 	# represents the loaded state.
 	$self->load_files;
-	$self->on_toggle_status_bar;
+	$self->on_toggle_statusbar;
 	Padre->ide->plugin_manager->enable_editors_for_all;
 	if ( $self->menu->view->{show_syntaxcheck}->IsChecked ) {
 		$self->syntax_checker->enable(1);
@@ -1876,7 +1880,7 @@ sub check_pane_needed {
 	return;
 }
 
-sub on_toggle_status_bar {
+sub on_toggle_statusbar {
 	my ($self, $event) = @_;
 	if ( Padre::Util::WIN32 ) {
 		# Status bar always shown on Windows
@@ -1894,6 +1898,20 @@ sub on_toggle_status_bar {
 	} else {
 		$status_bar->Hide;
 	}
+
+	return;
+}
+
+sub on_toggle_lockpanels {
+	my $self  = shift;
+	my $event = shift;
+
+	# Update the configuration
+	my $config = Padre->ide->config;
+	$config->{main_lockpanels} = $self->menu->view->{lock_panels}->IsChecked ? 1 : 0;
+
+	# Update the lock status
+	$self->manager->lock_panels($config->{main_lockpanels});
 
 	return;
 }
@@ -1992,7 +2010,6 @@ sub run_in_padre {
 }
 
 sub on_function_selected {
-	$DB::single = 1;
 	my $self     = shift;
 	my $event    = shift;
 	my $subname  = $event->GetItem->GetText or return;

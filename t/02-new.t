@@ -26,8 +26,6 @@ SCOPE: {
 	is_deeply  $config,
 		{
 		experimental       => 0,
-		pod_minlist        => 2,
-		pod_maxlist        => 200,
 
 		editor_linenumbers => 0,
 		editor_eol         => 0,
@@ -53,6 +51,7 @@ SCOPE: {
 		main_statusbar     => 1,
 		main_output        => 0,
 		main_rightbar      => 1,
+		main_lockpanels    => 0,
 		projects           => {},
 		run_save           => 'same',
 		current_project    => '',

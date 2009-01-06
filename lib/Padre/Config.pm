@@ -14,10 +14,6 @@ use YAML::Tiny    ();
 our $VERSION = '0.24';
 
 my %defaults = (
-	# Number of modules to display when searching for documentation
-	pod_maxlist               => 200,
-	pod_minlist               => 2,
-
 	# startup mode, if no files given on the command line this can be
 	#   new        - a new empty buffer
 	#   nothing    - nothing to open
@@ -28,10 +24,11 @@ my %defaults = (
 	main_statusbar            => 1,
 	main_output               => 0,
 	main_rightbar             => 1,
+	main_lockpanels           => 0,
 	editor_linenumbers        => 0,
 	editor_eol                => 0,
 	editor_indentationguides  => 0,
-	editor_calltips           => 1,
+	editor_calltips           => 0,
 	editor_autoindent         => 'deep',
 	editor_whitespaces        => 0,
 	editor_methods            => 'alphabetical',
@@ -43,7 +40,7 @@ my %defaults = (
 	editor_use_tabs               => 1,
 	editor_tabwidth               => 8,
 	editor_indentwidth            => 4,
-	
+
 	ppi_highlight                 => 0,
 	ppi_highlight_limit           => 10_000,
 
@@ -73,6 +70,8 @@ my %defaults = (
 	# By default, don't enable experimental features
 	experimental              => 0,
 );
+
+
 
 
 

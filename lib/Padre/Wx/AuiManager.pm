@@ -60,4 +60,28 @@ sub relocale {
 	return $self;
 }
 
+# Set the lock status of the panels
+sub lock_panels {
+	my $self   = shift;
+	my $unlock = $_[0] ? 0 : 1;
+
+	$self->Update;
+
+	$self->GetPane('bottompane')
+		->CaptionVisible($unlock)
+		->Floatable($unlock)
+		->Dockable($unlock)
+		->Movable($unlock);
+
+	$self->GetPane('sidepane')
+		->CaptionVisible($unlock)
+		->Floatable($unlock)
+		->Dockable($unlock)
+		->Movable($unlock);
+
+	$self->Update;
+
+	return;
+}
+
 1;

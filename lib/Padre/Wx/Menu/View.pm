@@ -31,6 +31,23 @@ sub new {
 
 
 
+	# Can the user move stuff around
+	$self->{lock_panels} = $self->AppendCheckItem( -1,
+		Wx::gettext("Lock All Panels")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{lock_panels},
+		sub {
+			$_[0]->on_toggle_lockpanels($_[1]);
+		},
+	);
+
+	$self->AppendSeparator;
+
+
+
+
+
 	# Show or hide GUI elements
 	$self->{output} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Output")
@@ -86,12 +103,14 @@ sub new {
 		Wx::Event::EVT_MENU( $main,
 			$self->{statusbar},
 			sub {
-				$_[0]->on_toggle_status_bar($_[1]);
+				$_[0]->on_toggle_statusbar($_[1]);
 			},
 		);
 	}
 
 	$self->AppendSeparator;
+
+
 
 
 
@@ -439,6 +458,7 @@ sub refresh {
 	$self->{ whitespaces   }->Check( $config->{editor_whitespaces} ? 1 : 0 );
 	$self->{ output        }->Check( $config->{main_output_panel} ? 1 : 0 );
 	$self->{ functions     }->Check( $config->{main_subs_panel} ? 1 : 0 );
+	$self->{ lock_panels      }->Check( $config->{main_lockpanels} ? 1 : 0 );
 	$self->{ indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{ show_calltips    }->Check( $config->{editor_calltips} ? 1 : 0 );
 	$self->{ show_syntaxcheck }->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
@@ -475,11 +495,11 @@ sub refresh {
 
 	# Disable zooming and bookmarks if there's no current document
 	my $doc = $document ? 1 : 0;
-	$self->{ font_increase        }->Enable($doc);
-	$self->{ font_decrease        }->Enable($doc);
-	$self->{ font_reset           }->Enable($doc);
-	$self->{ bookmark_set         }->Enable($doc);
-	$self->{ bookmark_goto        }->Enable($doc);
+	$self->{ font_increase }->Enable($doc);
+	$self->{ font_decrease }->Enable($doc);
+	$self->{ font_reset    }->Enable($doc);
+	$self->{ bookmark_set  }->Enable($doc);
+	$self->{ bookmark_goto }->Enable($doc);
 
 	return;
 }
