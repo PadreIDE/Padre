@@ -1,28 +1,33 @@
 package Padre::Wx::DocBrowser;
+
+use 5.008;
 use strict;
 use warnings;
+use URI            ();
+use Scalar::Util   ();
+use Class::Autouse ();
+
 use Padre::Wx ();
 
 use base 'Wx::Frame';
-use Scalar::Util qw( blessed );
 use Padre::Wx::AuiManager ();
-use URI qw();
 use Padre::DocBrowser;
-use Class::Autouse;
-use Class::XSAccessor 
-    accessors => { notebook => 'notebook' , provider=>'provider' };
-    
+
 our $VERSION = '0.24';
 
+use Class::XSAccessor 
+	accessors => {
+		notebook => 'notebook',
+		provider => 'provider',
+	};
+
 our %VIEW = (
-  'text/xhtml' => 'Padre::Wx::HtmlWindow',
+	'text/xhtml' => 'Padre::Wx::HtmlWindow',
 );
 
 our %PROVIDER = (
-  'Pod' => 'Padre::Wx::DocBrowser::POD',
-  
+	'Pod' => 'Padre::Wx::DocBrowser::POD',  
 );
-
 
 =pod
 
@@ -49,8 +54,9 @@ documentation for such in a new AuiNoteBook tab. Links matching a scheme
 accepted by L<Padre::DocBrowser> will (when clicked) be resolved and 
 displayed in a new tab.
 
-=head2 show (Padre::Pod::Frame compat)
+=head2 show
 
+TO BE COMPLETED
 
 =head1 BUGS
 
@@ -60,8 +66,6 @@ ala via Help menu - crashes.
 =head1 SEE ALSO
 
 L<Padre::DocBrowser>
-
-
 
 =cut
 
@@ -77,8 +81,8 @@ sub new {
 
 	$self->{provider} = Padre::DocBrowser->new;
 
-	my $top_s   = Wx::BoxSizer->new( Wx::wxVERTICAL );
-	my $but_s   = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $top_s = Wx::BoxSizer->new( Wx::wxVERTICAL );
+	my $but_s = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
 
 	my $nb = Wx::AuiNotebook->new(
 		$self,
@@ -117,12 +121,7 @@ sub new {
  	$top_s->Add( $nb , 1,  Wx::wxGROW  );
 	$self->SetSizer( $top_s );
 	$self->SetAutoLayout( 1 );
-	#$self->_setup_providers;
-	#$self->_setup_notebook;
 	$self->_setup_welcome;
-	
-	#$self->_setup_viewers();
-	#$self->_create_menu_bar;
 	return $self;
 }
 
@@ -161,7 +160,7 @@ sub show {
 sub help {
   my ($self,$query,%hints) = @_;
   my $type;
-  if (blessed $query && $query->can( 'get_mimetype' ) ) {
+  if ( Scalar::Util::blessed($query) && $query->can( 'get_mimetype' ) ) {
     $self->debug( "Help from mimetype doc" );
     my $docs = $self->{provider}->docs( $query );
     $self->display( $docs, $query );
@@ -193,7 +192,7 @@ sub display {
   my $show = $self->{provider}->browse( $docs );
 
   my $title = 'Untitled';
-  if ( blessed $query and $query->isa("Padre::Document") ) {	
+  if ( Scalar::Util::blessed($query) and $query->isa("Padre::Document") ) {	
 	    $title = $query->get_title;
   }
 eval {

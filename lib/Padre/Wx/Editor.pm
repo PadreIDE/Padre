@@ -85,7 +85,6 @@ sub padre_setup {
 	my ($self) = @_;
 
 	$self->SetLexer( $self->{Document}->lexer );
-#	 $self->Colourise(0, $self->GetTextLength);
 
 	# the next line will change the ESC key to cut the current selection
 	# See: http://www.yellowbrain.com/stc/keymap.html

@@ -1,26 +1,26 @@
 package Padre::DocBrowser;
+
+use 5.008;
 use strict;
 use warnings;
-
-use Class::Autouse;
-use Padre::DocBrowser::POD;
-use Carp qw( confess );
-use Scalar::Util qw( blessed );
-use Class::XSAccessor
-  getters => {
-    get_providers => 'providers',
-    get_viewers   => 'viewers',
-    get_schemes    => 'schemes',
-    
-  },
-  setters => {
-    set_providers => 'providers',
-    set_viewers   => 'viewers',
-    set_schemes    => 'schemes',
-  };
-
+use Carp                   ();
+use Scalar::Util           ();
+use Class::Autouse         ();
+use Padre::DocBrowser::POD ();
 
 our $VERSION = '0.24';
+
+use Class::XSAccessor
+	getters => {
+		get_providers => 'providers',
+		get_viewers   => 'viewers',
+		get_schemes   => 'schemes',	
+	},
+	setters => {
+		set_providers => 'providers',
+		set_viewers   => 'viewers',
+		set_schemes   => 'schemes',
+	};
 
 =pod
 
@@ -57,8 +57,7 @@ documentation viewers and uri schemes accepted for resolving.
   
   my $new_output = $browser->browse( $docs );
   # $new_output now with a table of contents
-  
-  
+
 =head1 METHODS
 
 =head2 new
@@ -88,10 +87,7 @@ Accepts a URI or scalar
 
 =head2 accept
 
-
 =head1 EXTENDING
-
-
 
   package My::DocBrowser::Doxygen;
   
@@ -109,19 +105,19 @@ Accepts a URI or scalar
   }
   
   sub generate {
-	    my ($self,$doc) = @_;
-	    # $doc will be Padre::Document of any type specified 
-	    # by ->provider_for
-	    
-	    # push $doc through doxygen
-	    # ...
-	    # that was easy :)
-	    
-	    # You know your own output type, be explicit
-	    my $response = Padre::Document->new();	  
-	    $response->{original_content} = $doxygen->output;
-	    $response->set_mimetype( 'text/x-doxygen' );
-	    return $response;
+      my ($self,$doc) = @_;
+      # $doc will be Padre::Document of any type specified 
+      # by ->provider_for
+      
+      # push $doc through doxygen
+      # ...
+      # that was easy :)
+      
+      # You know your own output type, be explicit
+      my $response = Padre::Document->new();	  
+      $response->{original_content} = $doxygen->output;
+      $response->set_mimetype( 'text/x-doxygen' );
+      return $response;
   }
 
   sub render {
@@ -147,157 +143,148 @@ sub new {
 
 	my $self = bless \%args, ref ($class) || $class;
 	$self->set_providers({}) unless $args{providers};
-	$self->set_viewers({}) unless $args{viewers};
-	$self->set_schemes({}) unless $args{schemes};
-	
+	$self->set_viewers({})   unless $args{viewers};
+	$self->set_schemes({})   unless $args{schemes};
+
 	# Provides pod from perl, pod: perldoc: schemes
 	$self->load_provider( 'Padre::DocBrowser::POD' );
-	
+
 	# Produces html view of POD
 	$self->load_viewer( 'Padre::DocBrowser::POD' );
-	
-	
 
 	return $self;
 }
 
 sub load_provider {
-	    my ($self,$class) = @_;
+	my ($self,$class) = @_;
 
-	    Class::Autouse->autouse( $class );
-	    if ( $class->can( 'provider_for' ) ) {
-			$self->register_providers(
-			    $_ => $class
-			) for $class->provider_for;
-	    }
-	    else {
-			confess "$class is not a provider for anything.";
-	    }
-	    
-	    if ( $class->can( 'accept_schemes' ) ) {
-		    $self->register_schemes( 
+	Class::Autouse->autouse( $class );
+	if ( $class->can( 'provider_for' ) ) {
+		$self->register_providers(
 			$_ => $class
-			) for $class->accept_schemes;			
-	    }
-	    else {
-			    confess "$class accepts no uri schemes";
-	    }
-	    
-	$self;
+		) for $class->provider_for;
+	} else {
+		Carp::confess("$class is not a provider for anything.");
+	}
+
+	if ( $class->can( 'accept_schemes' ) ) {
+		$self->register_schemes( 
+			$_ => $class
+		) for $class->accept_schemes;			
+	} else {
+		Carp::confess("$class accepts no uri schemes");
+	}
+
+	return $self;
 }
 
 sub load_viewer {
-	    my ($self,$class) = @_;
-	    Class::Autouse->autouse( $class );
-	    if ( $class->can( 'viewer_for' ) ) {
-			$self->register_viewers(
-			    $_ => $class
-			) for $class->viewer_for;
-	    }
-	    $self;
+	my ($self,$class) = @_;
+	Class::Autouse->autouse( $class );
+	if ( $class->can( 'viewer_for' ) ) {
+		$self->register_viewers(
+			$_ => $class
+		) for $class->viewer_for;
+	}
+	$self;
 }
 
-
 sub register_providers {
-  my ($self,%provides) = @_;
-  while ( my ($type,$class) = each %provides ) {
-	  # TODO - handle collisions, ie multi providers
-    $self->get_providers->{$type} = $class;	      
-  }
-  $self;
+	my ($self,%provides) = @_;
+	while ( my ($type,$class) = each %provides ) {
+		# TODO - handle collisions, ie multi providers
+		$self->get_providers->{$type} = $class;	      
+	}
+	$self;
 }
 
 sub register_viewers {
-  my ($self,%viewers) = @_;
-  while ( my ($type,$class) = each %viewers ) {
-    $self->get_viewers->{$type} = $class;
-    Class::Autouse->autouse( $class );
-  }
-  $self;
+	my ($self,%viewers) = @_;
+	while ( my ($type,$class) = each %viewers ) {
+		$self->get_viewers->{$type} = $class;
+		Class::Autouse->autouse( $class );
+	}
+	$self;
 }
 
 sub register_schemes { 
-	    my ($self,%schemes) = @_;
-	    while ( my ($scheme,$class) = each %schemes ) {
-			    $self->get_schemes->{$scheme} = $class;			    
-	    }
-	    $self;
+	my ($self,%schemes) = @_;
+	while ( my ($scheme,$class) = each %schemes ) {
+		$self->get_schemes->{$scheme} = $class;			    
+	}
+	$self;
 }
 
 sub provider_for {
-  my ($self,$type) = @_;
-  my $p;
-eval {
-  if ( exists $self->get_providers->{$type} ) {
-	$p =  $self->get_providers->{$type}->new();
-  } 
-};
-confess $@ if $@;
-return $p;
+	my ($self,$type) = @_;
+	my $p;
+	eval {
+		if ( exists $self->get_providers->{$type} ) {
+			$p = $self->get_providers->{$type}->new;
+		} 
+	};
+	Carp::confess($@) if $@;
+	return $p;
 }
 
 sub accept {
-	    my ($self,$scheme) = @_;
-	    if ( defined $self->get_schemes->{$scheme} ) {
-			return 1;
-	    }
-	    return;
+	my ($self,$scheme) = @_;
+	if ( defined $self->get_schemes->{$scheme} ) {
+		return 1;
+	}
+	return;
 }
 
 sub viewer_for {
-  my ($self,$type) = @_;
-  my $v;
-eval {
-  if ( exists $self->get_viewers->{$type} ) {
-	   $v = $self->get_viewers->{$type}->new;
-  }	
-};
-  confess $@ if $@;
-  return $v;
+	my ($self,$type) = @_;
+	my $v;
+	eval {
+		if ( exists $self->get_viewers->{$type} ) {
+			$v = $self->get_viewers->{$type}->new;
+		}	
+	};
+	Carp::confess($@) if $@;
+	return $v;
 }
 
 sub docs {
-  my ($self,$doc) = @_;
-  if ( my $provider = $self->provider_for( $doc->get_mimetype ) ) {
-	  my $docs = $provider->generate( $doc );
-	  return $docs;	  
-  }
-  warn "No provider for " . $doc->get_mimetype;	
-  return;
+	my ($self,$doc) = @_;
+	if ( my $provider = $self->provider_for( $doc->get_mimetype ) ) {
+		my $docs = $provider->generate( $doc );
+		return $docs;	  
+	}
+	warn "No provider for " . $doc->get_mimetype;	
+	return;
 }
 
 sub resolve {
-  my ($self,$ref) = @_;
-  my @refs;
-  if ( blessed $ref and $ref->isa( 'URI' ) ) {
-	    return $self->resolve_uri( $ref );
-  }
-  # TODO this doubles up if a provider subscribes to multi
-  # mimetypes . 
-  foreach my $class ( values %{$self->get_providers} ) {
-	    my $resp = $class->resolve( $ref );
-	    push @refs ,$resp if $resp;
-  }	
-  #warn "Returning first of " . scalar @refs . " resolved\n";
-  return $refs[0];
+	my ($self,$ref) = @_;
+	my @refs;
+	if ( Scalar::Util::blessed($ref) and $ref->isa( 'URI' ) ) {
+		return $self->resolve_uri( $ref );
+	}
+	# TODO this doubles up if a provider subscribes to multi
+	# mimetypes . 
+	foreach my $class ( values %{$self->get_providers} ) {
+		my $resp = $class->resolve( $ref );
+		push @refs ,$resp if $resp;
+	}	
+	return $refs[0];
 }
 
 sub resolve_uri { 
-	    my ($self,$uri) = @_;
-	    my $resolver = $self->get_schemes->{ $uri->scheme };
-	    my $doc = $resolver->resolve( $uri->opaque );
-	    return $doc;
+	my ($self,$uri) = @_;
+	my $resolver = $self->get_schemes->{ $uri->scheme };
+	my $doc = $resolver->resolve( $uri->opaque );
+	return $doc;
 }
 
 sub browse {
-  my ($self,$docs) = @_;
-
-  if ( my $viewer = $self->viewer_for( $docs->get_mimetype ) ) {
-    return $viewer->render( $docs );
-  }
-  return;
+	my ($self,$docs) = @_;
+	if ( my $viewer = $self->viewer_for( $docs->get_mimetype ) ) {
+		return $viewer->render( $docs );
+	}
+	return;
 }
-  
 
 1;
-
