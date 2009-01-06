@@ -29,6 +29,12 @@ sub new {
 	my $self = $class->SUPER::new( $parent );
 	$data = data('default');
 
+	# Set the code margins a little larger than the default.
+	# This seems to noticably reduce eye strain.
+	$self->SetMarginLeft(2);
+	$self->SetMarginRight(2);
+
+	# Clear out all the other margins
 	$self->SetMarginWidth(0, 0);
 	$self->SetMarginWidth(1, 0);
 	$self->SetMarginWidth(2, 0);
