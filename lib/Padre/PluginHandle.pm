@@ -148,7 +148,14 @@ sub enable {
 	}
 
 	# Call the enable method for the object
-	$self->object->plugin_enable;
+	eval {
+		$self->object->plugin_enable;
+	};
+	if ( $@ ) {
+		# Crashed during plugin enable
+		$self->status('error');
+		return 0;
+	}
 
 	# If the plugin defines document types, register them
 	my @documents = $self->object->registered_documents;
@@ -182,12 +189,19 @@ sub disable {
 	}
 
 	# Call the plugin's own disable method
-	$self->object->plugin_disable;
+	eval {
+		$self->object->plugin_disable;
+	};
+	if ( $@ ) {
+		# Crashed during plugin disable
+		$self->status('error');
+		return 1;
+	}
 
 	# Update the status
 	$self->status('disabled');
 
-	return 1;
+	return 0;
 }
 
 
