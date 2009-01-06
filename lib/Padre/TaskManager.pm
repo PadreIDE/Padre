@@ -120,8 +120,8 @@ sub new {
 	return $SINGLETON if defined $SINGLETON;
 
 	my $self = $SINGLETON = bless {
-		min_no_workers => 2,
-		max_no_workers => 8,
+		min_no_workers => 1,
+		max_no_workers => 3,
 		use_threads    => 1, # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
@@ -130,7 +130,7 @@ sub new {
 		running_tasks  => 0,
 	}, $class;
 
-	#$self->{use_threads} = 0 if Wx->VERSION < 0.89;
+	$self->{use_threads} = 0 if Wx->VERSION < 0.89;
 
 	my $main = Padre->ide->wx->main_window;
 
