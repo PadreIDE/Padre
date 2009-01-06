@@ -182,7 +182,7 @@ sub help {
 
 sub ResolveRef {
 	my ($self,$ref) = @_;
-	warn "Resolve ref '$ref'";
+	#warn "Resolve ref '$ref'";
 	my $task = Padre::Task::DocBrowser->new(
 		document => $ref , type=>'resolve' ,
 		main_thread_only => sub { $self->display($_[0],$ref) }

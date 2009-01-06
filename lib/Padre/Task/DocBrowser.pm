@@ -10,8 +10,6 @@ use Data::Dumper;
 
 sub run {
     my ($self) = @_;
-warn sprintf( "THREAD (%d) RUNNING '%s' \n",
-                threads->tid() ,   $self->{document} );
 
     $self->{browser} ||=  Padre::DocBrowser->new();
     my $type = $self->{type} || 'error';
