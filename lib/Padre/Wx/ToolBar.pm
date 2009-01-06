@@ -219,10 +219,11 @@ sub _set_task_status {
 		$self->{task_status_tool_pos},
 		$id, '',
 		$bitmap,
-		$bitmap,
+		Wx::wxNullBitmap,
 		Wx::wxITEM_NORMAL(),
 		$text,
 	);
+	$self->Realize();
 
 	return(1);
 }
