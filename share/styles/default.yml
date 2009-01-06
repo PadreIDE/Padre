@@ -53,10 +53,10 @@ padre:
  background: ffffff
  colors:
   PADRE_BLACK:          000000
-  PADRE_BLUE:           003300
-  PADRE_RED:      8b0000
-  PADRE_GREEN:    006400
+  PADRE_BLUE:           000099
+  PADRE_RED:      990000
+  PADRE_GREEN:    00AA00
   PADRE_MAGENTA:  8b008b
-  PADRE_ORANGE:   ff8c00
+  PADRE_ORANGE:   ff8228
   PADRE_CRIMSON:        dc143c
   PADRE_BROWN:          a52a2a
