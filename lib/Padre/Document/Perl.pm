@@ -262,11 +262,9 @@ sub get_functions {
 }
 
 sub get_function_regex {
-	my $name = quotemeta($_[1]);
-
 	# This emulates qr/(?<=^|[\012\0125])sub\s$name\b/ but without
 	# triggering a "Variable length lookbehind not implemented" error.
-	return qr/(?:(?<=^)sub\s+$name|(?<=[\012\0125])sub\s+$name)\b/;
+	return qr/(?:(?<=^)sub\s+$_[1]|(?<=[\012\0125])sub\s+$_[1])\b/;
 }
 
 sub get_command {
