@@ -7,7 +7,7 @@ use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 use Padre::Current    ();
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 sub get_layout_for_behaviour {
 	my ($config, $main_startup, $editor_autoindent, $editor_methods) = @_;

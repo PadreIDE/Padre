@@ -2,6 +2,9 @@ package Padre::DocBrowser::POD;
 
 use strict;
 use warnings;
+
+our $VERSION = '0.24';
+
 use Padre::Pod::Viewer;
 use Pod::Simple::XHTML;
 use Data::Dumper;

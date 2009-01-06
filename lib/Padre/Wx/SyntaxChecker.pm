@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 use Class::XSAccessor
 	getters => {

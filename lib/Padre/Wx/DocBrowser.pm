@@ -12,7 +12,7 @@ use Class::Autouse;
 use Class::XSAccessor 
     accessors => { notebook => 'notebook' , provider=>'provider' };
     
-our $VERSION = '0.22';
+our $VERSION = '0.24';
 
 our %VIEW = (
   'text/xhtml' => 'Padre::Wx::HtmlWindow',

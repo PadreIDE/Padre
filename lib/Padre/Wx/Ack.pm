@@ -13,7 +13,7 @@ my %opts;
 my %stats;
 my $panel_string_index = 9999999;
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 my $DONE_EVENT : shared = Wx::NewEventType;
 
 my $ack_loaded = 0;

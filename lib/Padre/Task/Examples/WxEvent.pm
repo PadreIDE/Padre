@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Padre::Task ();
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 our @ISA     = 'Padre::Task';
 
 # set up a new event type

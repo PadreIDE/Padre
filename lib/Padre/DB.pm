@@ -21,7 +21,7 @@ use ORLite::Migrate 0.01 {
 	),
 };
 
-our $VERSION    = '0.23';
+our $VERSION    = '0.24';
 our $COMPATIBLE = '0.23';
 
 

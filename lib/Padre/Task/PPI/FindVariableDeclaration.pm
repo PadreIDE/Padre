@@ -3,7 +3,7 @@ package Padre::Task::PPI::FindVariableDeclaration;
 use strict;
 use warnings;
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 use base 'Padre::Task::PPI';
 

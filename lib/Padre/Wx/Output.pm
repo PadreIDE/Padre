@@ -12,7 +12,7 @@ use Padre::Wx    ();
 
 use base 'Wx::TextCtrl';
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 sub new {
 	my $class  = shift;

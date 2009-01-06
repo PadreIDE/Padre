@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Padre::Project ();
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 our @ISA     = 'Padre::Project';
 
 sub inspector {

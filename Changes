@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment 
 
+v0.24 2009.01.06
+
     Double-clicking an entry in the function list now faithfully
         matches the behaviour of the Ultraedit implementation (ADAMK)
     Updated German translation (HJANSEN)

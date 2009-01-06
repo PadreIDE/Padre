@@ -10,7 +10,7 @@ use Padre::Wx          ();
 use Padre::Wx::Submenu ();
 use Padre::Current     qw{_CURRENT};
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 our @ISA     = 'Padre::Wx::Submenu';
 
 

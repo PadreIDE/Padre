@@ -7,7 +7,7 @@ use Padre::Wx;
 use Padre::Wx::Dialog;
 use Wx::Locale qw(:default);
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 # use Padre::Wx::Dialog::Text;
 # in ErrorList:
