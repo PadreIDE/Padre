@@ -35,7 +35,7 @@ sub viewer_for {
 sub resolve {
 	my $self = shift;
 	my $ref  = shift;
-	my $path = $self->module_to_path( $ref );
+	my $path = $self->_module_to_path( $ref );
 	if ( $path ) {
 		my $doc = Padre::Document->new( filename => $path );
 		$doc->set_mimetype('application/x-pod');
