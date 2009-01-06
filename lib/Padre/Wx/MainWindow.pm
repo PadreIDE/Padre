@@ -629,10 +629,6 @@ sub relocale {
 #####################################################################
 # Introspection
 
-sub nb {
-	return $_[0]->{gui}->{notebook};
-}
-
 sub notebook {
 	return $_[0]->{gui}->{notebook};
 }

@@ -84,23 +84,23 @@ sub new {
 	my $top_s = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	my $but_s = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
 
-	my $nb = Wx::AuiNotebook->new(
+	my $notebook = Wx::AuiNotebook->new(
 		$self,
 	        Wx::wxID_ANY,
                 Wx::wxDefaultPosition,
                 Wx::wxDefaultSize,
 		Wx::wxAUI_NB_DEFAULT_STYLE
 	);
-        $self->notebook($nb);
+        $self->notebook($notebook);
 
 
 
 
 	my $entry = Wx::TextCtrl->new( $self , -1 , 
 		'search terms..' ,
-	   Wx::wxDefaultPosition,
-	   Wx::wxDefaultSize ,
-	 , Wx::wxTE_PROCESS_ENTER
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_PROCESS_ENTER
 	);
 
         Wx::Event::EVT_TEXT_ENTER( $self, $entry, 
@@ -117,11 +117,12 @@ sub new {
  	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT |  Wx::wxALIGN_CENTER_VERTICAL   );
 	$but_s->Add( $entry, 1, Wx::wxALIGN_RIGHT |  Wx::wxALIGN_CENTER_VERTICAL );
 
-	$top_s->Add( $but_s , 0 , Wx::wxEXPAND  );
- 	$top_s->Add( $nb , 1,  Wx::wxGROW  );
+	$top_s->Add( $but_s,    0, Wx::wxEXPAND );
+ 	$top_s->Add( $notebook, 1, Wx::wxGROW   );
 	$self->SetSizer( $top_s );
-	$self->SetAutoLayout( 1 );
+	$self->SetAutoLayout(1);
 	$self->_setup_welcome;
+
 	return $self;
 }
 

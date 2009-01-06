@@ -110,7 +110,7 @@ SCOPE: {
 	isa_ok( $file, 'Padre::Wx::Menu' );
 
 	# The notebook
-	my $notebook = $main->nb;
+	my $notebook = $main->notebook;
 	isa_ok( $notebook, 'Padre::Wx::Notebook' );
 
 	# Current context

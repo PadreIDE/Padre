@@ -150,9 +150,9 @@ sub goto_bookmark {
 
 	# go to the relevant editor and row
 	if (defined $pageid) {
-	   $main->on_nth_pane($pageid);
-	   my $page = $main->nb->GetPage($pageid);
-	   $page->goto_line_centerize($line);
+		$main->on_nth_pane($pageid);
+		my $page = $main->notebook->GetPage($pageid);
+		$page->goto_line_centerize($line);
 	}
 
 	return;

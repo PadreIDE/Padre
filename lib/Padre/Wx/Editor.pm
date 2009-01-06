@@ -553,16 +553,16 @@ sub on_right_down {
 	$menu->AppendSeparator;
 
 	my $selection_exists = 0;
-	my $id = $main->nb->GetSelection;
+	my $id = $main->notebook->GetSelection;
 	if ( $id != -1 ) {
-		my $text = $main->nb->GetPage($id)->GetSelectedText;
+		my $text = $main->notebook->GetPage($id)->GetSelectedText;
 		if ( defined($text) && length($text) > 0 ) {
 			$selection_exists = 1;
 		}
 	}
 
 	my $sel_all = $menu->Append( Wx::wxID_SELECTALL, Wx::gettext("Select all\tCtrl-A") );
-	if ( not $main->nb->GetPage($id)->GetTextLength > 0 ) {
+	if ( not $main->notebook->GetPage($id)->GetTextLength > 0 ) {
 		$sel_all->Enable(0);
 	}
 	Wx::Event::EVT_MENU( $main, # Ctrl-A
@@ -596,7 +596,7 @@ sub on_right_down {
 	my $paste = $menu->Append( Wx::wxID_PASTE, '' );
 	my $text  = get_text_from_clipboard();
 
-	if ( length($text) && $main->nb->GetPage($id)->CanPaste ) {
+	if ( length($text) && $main->notebook->GetPage($id)->CanPaste ) {
 		Wx::Event::EVT_MENU( $main, # Ctrl-V
 			$paste,
 			sub {
@@ -742,9 +742,9 @@ sub on_mouse_motion {
 sub text_select_all {
 	my ( $main, $event ) = @_;
 
-	my $id = $main->nb->GetSelection;
+	my $id = $main->notebook->GetSelection;
 	return if $id == -1;
-	$main->nb->GetPage($id)->SelectAll;
+	$main->notebook->GetPage($id)->SelectAll;
 	return;
 }
 
