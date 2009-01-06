@@ -3,11 +3,11 @@ package Padre::Plugin::My;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
-
-use base 'Padre::Plugin';
+use Padre::Wx     ();
+use Padre::Plugin ();
 
 our $VERSION = '0.24';
+our @ISA     = 'Padre::Plugin';
 
 
 
@@ -17,7 +17,7 @@ our $VERSION = '0.24';
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	'Padre::Plugin' => 0.19
+	'Padre::Plugin' => 0.24
 }
 
 sub plugin_name {
@@ -27,7 +27,7 @@ sub plugin_name {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		'About' => sub { $self->about },
+		'About' => sub { $self->show_about },
 		# 'Another Menu Entry' => sub { $self->about },
 		# 'A Sub-Menu...' => [
 		#     'Sub-Menu Entry' => sub { $self->about },
@@ -42,7 +42,7 @@ sub menu_plugins_simple {
 #####################################################################
 # Custom Methods
 
-sub about {
+sub show_about {
 	my $self = shift;
 
 	# Locate this plugin

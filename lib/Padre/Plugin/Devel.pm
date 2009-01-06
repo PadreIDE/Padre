@@ -22,8 +22,8 @@ our @ISA     = 'Padre::Plugin';
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	'Padre::Plugin'         => 0.19,
-	'Padre::Wx::MainWindow' => 0.19,
+	'Padre::Plugin'         => 0.24,
+	'Padre::Wx::MainWindow' => 0.24,
 }
 
 sub plugin_name {
@@ -35,6 +35,7 @@ sub menu_plugins_simple {
 	return $self->plugin_name => [
 		'Show %INC' => sub { $self->show_inc   },
 		'Info'      => sub { $self->show_info  },
+		'---'       => undef,
 		'About'     => sub { $self->show_about },
 	];
 }
@@ -57,18 +58,6 @@ sub show_inc {
 	);
 }
 
-sub show_about {
-	my $self  = shift;
-	my $about = Wx::AboutDialogInfo->new;
-	$about->SetName('Padre::Plugin::Devel');
-	$about->SetDescription(
-		"A set of unrelated tools used by the Padre developers\n" .
-		"Some of these might end up in core Padre or in oter plugins"
-	);
-	Wx::AboutBox( $about );
-	return;
-}
-
 sub show_info {
 	my $self     = shift;
 	my $main     = Padre->ide->wx->main_window;
@@ -80,6 +69,18 @@ sub show_info {
 	} else {
 		$main->message( 'No file is open', 'Info' );
 	}
+	return;
+}
+
+sub show_about {
+	my $self  = shift;
+	my $about = Wx::AboutDialogInfo->new;
+	$about->SetName('Padre::Plugin::Devel');
+	$about->SetDescription(
+		"A set of unrelated tools used by the Padre developers\n" .
+		"Some of these might end up in core Padre or in oter plugins"
+	);
+	Wx::AboutBox( $about );
 	return;
 }
 
