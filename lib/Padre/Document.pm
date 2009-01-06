@@ -279,7 +279,7 @@ sub guess_mimetype {
 		if ( $EXT_MIME{$ext} ) {
 			if ( $EXT_MIME{$ext} eq 'application/x-perl' ) {
 				# Sometimes Perl 6 will look like Perl 5
-				if ( $text and $text =~ /^use\sv6;/m ) {
+				if ( $text and $text =~ /^use\s+v6;/m ) {
 					return 'application/x-perl6';
 				}
 			}
