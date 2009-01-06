@@ -259,26 +259,29 @@ sub new {
 
 
 	# Upper and Lower Case
-	my $edit_case = Wx::Menu->new;
+	$self->{case} = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Upper/Lower Case"),
-		$edit_case
+		$self->{case},
+	);
+
+	$self->{case_upper} = $self->{case}->Append( -1,
+		Wx::gettext("Upper All\tCtrl-Shift-U"),
 	);
 	Wx::Event::EVT_MENU( $main,
-		$edit_case->Append( -1,
-			Wx::gettext("Upper All\tCtrl-Shift-U")
-		),
+		$self->{case_upper},
 		sub {
-			Padre::Current->editor->UpperCase;
+			$_[0]->current->editor->UpperCase;
 		},
 	);
 
+	$self->{case_lower} = $self->{case}->Append( -1,
+		Wx::gettext("Lower All\tCtrl-U"),
+	);
 	Wx::Event::EVT_MENU( $main,
-		$edit_case->Append( -1,
-			Wx::gettext("Lower All\tCtrl-U")
-		),
+		$self->{case_lower},
 		sub {
-			Padre::Current->editor->LowerCase;
+			$_[0]->current->editor->LowerCase;
 		},
 	);
 
@@ -344,6 +347,8 @@ sub refresh {
 	$self->{ uncomment        }->Enable($doc);
 	$self->{ diff             }->Enable($doc);
 	$self->{ insert_from_file }->Enable($doc);
+	$self->{ case_upper       }->Enable($doc);
+	$self->{ case_lower       }->Enable($doc);
 
 	# Handle the complex cases
 	my $selection = !! ( defined $text and $text ne '' );
