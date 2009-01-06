@@ -1249,11 +1249,11 @@ msgstr "Test beendet"
 msgid "Check cancelled"
 msgstr "Check abgebrochen"
 
-#~ msgid "ctrl"
-#~ msgstr "strg"
+msgid "ctrl"
+msgstr "strg"
 
-#~ msgid "shift"
-#~ msgstr "umschalt"
+msgid "shift"
+msgstr "umschalt"
 
-#~ msgid "alt"
-#~ msgstr "alt"
+msgid "alt"
+msgstr "alt"
