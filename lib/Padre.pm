@@ -52,7 +52,7 @@ use Class::Autouse qw{
 	Padre::TaskManager
 	Padre::Wx::Popup
 	Padre::Wx::Editor
-	Padre::Wx::Menu
+	Padre::Wx::Menubar
 	Padre::Wx::Ack
 	Padre::Wx::App
 	Padre::Wx::Dialog::Bookmarks

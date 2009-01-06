@@ -101,13 +101,13 @@ SCOPE: {
 
 	# The main menu
 	my $menu = $main->menu;
-	isa_ok( $menu, 'Padre::Wx::Menu' );
-	refis( $menu->win,  $main, 'Menu ->win gets the main window' );
-	refis( $menu->main, $main, 'Menu ->main gets the main window' );
+	isa_ok( $menu, 'Padre::Wx::Menubar' );
+	refis( $menu->win,  $main, 'Menubar ->win gets the main window' );
+	refis( $menu->main, $main, 'Menubar ->main gets the main window' );
 
 	# A submenu
 	my $file = $menu->file;
-	isa_ok( $file, 'Padre::Wx::Submenu' );
+	isa_ok( $file, 'Padre::Wx::Menu' );
 
 	# The notebook
 	my $notebook = $main->nb;

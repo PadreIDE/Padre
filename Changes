@@ -1,5 +1,7 @@
-Changes for Perl Application Development and Refactoring Environment 
+Changes for Perl Application Development and Refactoring Environment
 
+    Class correction Padre::Wx::Menu -> Padre::Wx::Menubar (ADAMK)
+    Class correction Padre::Wx::Submenu -> Padre::Wx::Menu (ADAMK)
     Now that Padre::DocBrowser has landed, delete the Padre::Pod
         family of modules (ADAMK)
 

@@ -12,17 +12,17 @@ use strict;
 use warnings;
 use utf8;
 use Padre::Wx          ();
-use Padre::Wx::Submenu ();
+use Padre::Wx::Menu ();
 use Padre::Wx::DocBrowser();
 
 our $VERSION = '0.24';
-our @ISA     = 'Padre::Wx::Submenu';
+our @ISA     = 'Padre::Wx::Menu';
 
 
 
 
 #####################################################################
-# Padre::Wx::Submenu Methods
+# Padre::Wx::Menu Methods
 
 sub new {
 	my $class = shift;

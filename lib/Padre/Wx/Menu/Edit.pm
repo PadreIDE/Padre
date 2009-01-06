@@ -7,17 +7,17 @@ use strict;
 use warnings;
 use Padre::Current     qw{_CURRENT};
 use Padre::Wx          ();
-use Padre::Wx::Submenu ();
+use Padre::Wx::Menu ();
 
 our $VERSION = '0.24';
-our @ISA     = 'Padre::Wx::Submenu';
+our @ISA     = 'Padre::Wx::Menu';
 
 
 
 
 
 #####################################################################
-# Padre::Wx::Submenu Methods
+# Padre::Wx::Menu Methods
 
 sub new {
 	my $class = shift;

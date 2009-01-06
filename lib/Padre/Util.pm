@@ -24,7 +24,6 @@ may be moved, removed or changed at any time without notice.
 use 5.008;
 use strict;
 use warnings;
-
 use Exporter     ();
 use FindBin      ();
 use File::Spec   ();

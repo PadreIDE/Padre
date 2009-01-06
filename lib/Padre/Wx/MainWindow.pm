@@ -133,7 +133,7 @@ sub new {
 	$self->{marker} = {};
 
 	# Create the menu bar
-	$self->{menu} = Padre::Wx::Menu->new($self);
+	$self->{menu} = Padre::Wx::Menubar->new($self);
 	$self->SetMenuBar( $self->menu->wx );
 
 	# Create the tool bar
@@ -607,7 +607,7 @@ sub relocale {
 
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};
-	$self->{menu} = Padre::Wx::Menu->new($self);
+	$self->{menu} = Padre::Wx::Menubar->new($self);
 	$self->SetMenuBar( $self->menu->wx );
 
 	# The toolbar doesn't support relocale, replace it
