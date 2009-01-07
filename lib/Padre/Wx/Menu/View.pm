@@ -22,12 +22,10 @@ our @ISA     = 'Padre::Wx::Menu';
 sub new {
 	my $class  = shift;
 	my $main   = shift;
+	my $config = $main->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
-
-	# Cache the config object to prevent Padre->ide calls
-	my $config = $self->{config} = $main->config;
 
 
 
@@ -446,8 +444,10 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
-	my $config   = $self->{config};
-	my $document = _CURRENT(@_)->document;
+	my $current  = _CURRENT(@_);
+	my $config   = $current->config;
+	my $document = $current->document;
+	my $doc      = $document ? 1 : 0;
 
 	# Simple check state cases from configuration
 	unless ( Padre::Util::WXWIN32 ) {
@@ -496,7 +496,6 @@ sub refresh {
 	}
 
 	# Disable zooming and bookmarks if there's no current document
-	my $doc = $document ? 1 : 0;
 	$self->{ font_increase }->Enable($doc);
 	$self->{ font_decrease }->Enable($doc);
 	$self->{ font_reset    }->Enable($doc);
