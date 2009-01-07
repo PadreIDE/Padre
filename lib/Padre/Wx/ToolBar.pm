@@ -267,7 +267,7 @@ sub refresh {
 	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ));
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ));
 
-	$self->update_task_status();
+	$self->update_task_status;
 
 	return;
 }
