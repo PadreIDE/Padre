@@ -33,7 +33,7 @@ sub new {
 
 	# Can the user move stuff around
 	$self->{lock_panels} = $self->AppendCheckItem( -1,
-		Wx::gettext("Lock All Panels")
+		Wx::gettext("Lock User Interface")
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{lock_panels},
