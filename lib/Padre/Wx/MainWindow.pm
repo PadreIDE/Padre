@@ -686,6 +686,14 @@ sub pages {
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
 
+sub bottom {
+	$_[0]->{gui}->{bottompane};
+}
+
+sub output {
+	$_[0]->{gui}->{output_panel};
+}
+
 
 
 
@@ -778,7 +786,7 @@ sub run_command {
 }
 
 # This should really be somewhere else, but can stay here for now
-sub run_script {
+sub run_document {
 	my $self     = shift;
 	my $document = $self->current->document;
 	unless ( $document ) {
@@ -801,12 +809,12 @@ sub run_script {
 	}
 
 	my $cmd = eval { $document->get_command };
-	if ($@) {
+	if ( $@ ) {
 		chomp $@;
 		$self->error($@);
 		return;
 	}
-	if ($cmd) {
+	if ( $cmd ) {
 		if ($document->pre_process) {
 			$self->run_command( $cmd );
 		} else {
@@ -1734,7 +1742,7 @@ sub on_word_wrap {
 	unless ( $on == $self->menu->view->{word_wrap}->IsChecked ) {
 		$self->menu->view->{word_wrap}->Check($on);
 	}
-	
+
 	my $doc = $self->current->document or return;
 
 	if ( $on ) {
@@ -1745,41 +1753,21 @@ sub on_word_wrap {
 }
 
 sub show_output {
+	$DB::single = 1;
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
-
-	my $bp = \$self->{gui}->{bottompane};
-	my $op = \$self->{gui}->{output_panel};
+	$self->config->{main_output_panel} = $on;
 
 	if ( $on ) {
-		my $idx = ${$bp}->GetPageIndex(${$op});
-		if ( $idx >= 0 ) {
-			${$bp}->SetSelection($idx);
-		}
-		else {
-			${$bp}->InsertPage(
-				0,
-				${$op},
-				Wx::gettext("Output"),
-				1,
-				# Padre::Wx::tango( 'mimetypes', 'text-x-generic.png' )
-			);
-			${$op}->Show;
-			$self->check_pane_needed('bottompane');
-		}
+		$self->bottom->show($self->output);
 	} else {
-		my $idx = ${$bp}->GetPageIndex(${$op});
-		${$op}->Hide;
-		if ( $idx >= 0 ) {
-			${$bp}->RemovePage($idx);
-			$self->check_pane_needed('bottompane');
-		}
+		$self->bottom->hide($self->output);
 	}
+
 	$self->aui->Update;
-	$self->config->{main_output_panel} = $on;
 
 	return;
 }

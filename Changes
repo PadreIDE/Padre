@@ -1,6 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
-    Implemented 
+    Moved Padre::Plugin::CPAN functionality into the core so that
+        we can do various sorts of tighter integration (ADAMK)
     Padre::Wx::DocBrowser now uses Padre::Task::DocBrowser (let's 
         hope properly) (Andrew Bramble) 
     Class correction Padre::Wx::Menu -> Padre::Wx::Menubar (ADAMK)

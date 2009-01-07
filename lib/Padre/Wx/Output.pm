@@ -7,12 +7,13 @@ package Padre::Wx::Output;
 use 5.008;
 use strict;
 use warnings;
+use utf8;
+use Encode       ();
 use Params::Util ();
 use Padre::Wx    ();
 
-use base 'Wx::TextCtrl';
-
 our $VERSION = '0.24';
+our @ISA     = 'Wx::TextCtrl';
 
 sub new {
 	my $class  = shift;
@@ -23,7 +24,10 @@ sub new {
 		"", 
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTE_READONLY | Wx::wxTE_MULTILINE | Wx::wxTE_DONTWRAP | Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+		Wx::wxTE_READONLY
+		| Wx::wxTE_MULTILINE
+		| Wx::wxTE_DONTWRAP
+		| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 
 	# Do custom startup stuff here
@@ -36,20 +40,33 @@ sub new {
 	return $self;
 }
 
-# from Sean Healy on wxPerl mailing list
-use Encode;
+sub tab_label {
+	Wx::gettext('Output');
+}
+
+
+
+
+
+#####################################################################
+# Main Methods
+
+# From Sean Healy on wxPerl mailing list.
+# Tweaked to avoid copying as much as possible.
 sub AppendText {
-	my ($self, $text) = @_;
-	my $string = utf8::is_utf8($text) ? $text : decode('utf8', $text);
-	$self->SUPER::AppendText($string);
+	my $self = shift;
+	if ( utf8::is_utf8($_[0]) ) {
+		return $self->SUPER::AppendText($_[0]);
+	}
+
+	my $text = Encode::decode('utf8', $_[0]);
+	$self->SUPER::AppendText($text);
 }
 
 sub select {
-	my $self = shift;
-
-	my $idx = $self->GetParent->GetPageIndex($self);
-	$self->GetParent->SetSelection($idx);
-
+	my $self   = shift;
+	my $parent = $self->GetParent;
+	$parent->SetSelection( $parent->GetPageIndex($self) );
 	return;
 }
 

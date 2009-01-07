@@ -1,10 +1,12 @@
 package Padre::Wx::Menu::Perl;
 
-# Fully encapsulated Run menu
+# Fully encapsulated Perl menu
 
 use 5.008;
 use strict;
 use warnings;
+use File::Spec      ();
+use File::HomeDir   ();
 use Params::Util    ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
@@ -25,6 +27,9 @@ sub new {
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
+
+	# Cache the configuration
+	$self->{config} = $main->config;
 
 	# Module-Related Functions
 	$self->{module} = Wx::Menu->new;
@@ -70,13 +75,13 @@ sub new {
 	$self->{module}->AppendSeparator;
 
 	# Utility Operations
-	$self->{module_edit_cpan} = $self->{module}->Append( -1,
-		Wx::gettext("Open CPAN::Config"),
+	$self->{module_open_config} = $self->{module}->Append( -1,
+		Wx::gettext("Open CPAN Config File"),
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{module_edit_cpan},
+		$self->{module_open_config},
 		sub {
-			$self->edit_config($_[0]);
+			$self->open_config($_[0]);
 		},
 	);
 
@@ -193,10 +198,11 @@ sub new {
 
 sub refresh {
 	my $self   = shift;
-	my $config = Padre->ide->config;
+	my $config = $self->{config};
 
 	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
 	$self->{run_with_stack_trace}->Check( $config->{run_with_stack_trace} ? 1 : 0 );
+
 	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
 		$config->{ppi_highlight}
 			? Wx::wxSTC_LEX_CONTAINER
@@ -225,13 +231,106 @@ sub install_url {
 sub install_cpan {
 	my $self = shift;
 	my $main = shift;
-	$main->error("TO BE COMPLETED");
+
+	# Ask for the module name	
+	require Padre::Wx::History::TextDialog;
+	my $dialog = Padre::Wx::History::TextDialog->new(
+		$main,
+		"Module Name:\neg: Perl::Critic",
+		'Install Module',
+		'CPAN_INSTALL_MODULE',
+	);
+	my $result = $dialog->ShowModal;
+	my $module = $dialog->GetValue;
+
+	# Handle aborted installs
+	$dialog->Destroy;
+	if ( $result == Wx::wxID_CANCEL ) {
+		return;
+	}
+	unless ( defined $module ) {
+		return;
+	}
+	$module =~ s/^\s+//g;
+	$module =~ s/\s+$//g;
+	unless ( $module ne '' ) {
+		return;
+	}
+
+	# Validation?
+
+	# If this is the first time a command has been run,
+	# set up the ProcessStream bindings.
+	unless ( $Wx::Perl::ProcessStream::VERSION ) {
+		require Wx::Perl::ProcessStream;
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
+				return;
+			},
+		);
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
+				return;
+			},
+		);
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[1]->GetProcess->Destroy;
+				$main->menu->run->enable;
+			},
+		);
+	}
+
+	# Prepare the output window
+	$main->show_output(1);
+	$main->output->clear;
+	$main->menu->run->disable;
+
+	# Run with the same Perl that launched Padre
+	my $perl = Padre->perl_interpreter;
+	my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
+	warn "run $cmd\n";
+	local $ENV{AUTOMATED_TESTING} = 1;
+	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
+
+	return;
 }
 
-sub edit_config {
+sub open_config {
 	my $self = shift;
 	my $main = shift;
-	$main->error("TO BE COMPLETED");
+
+	# Locate the CPAN config file(s)
+	require CPAN;
+	my $default_dir = $INC{'CPAN.pm'};
+	$default_dir =~ s/\.pm$//is; # remove .pm
+
+	# Load the main config first
+	my $core = File::Spec->catfile($default_dir, 'Config.pm');
+	if ( -e $core ) {
+		$main->setup_editors($core);
+		return;
+	}
+
+	# Fallback to a personal config
+	my $user = File::Spec->catfile(
+		File::HomeDir->my_home,
+		'.cpan', 'CPAN', 'MyConfig.pm'
+	);
+	if ( -e $user ) {
+		$main->setup_editors($user);
+		return;
+	}
+
+	$main->error("Failed to find your CPAN configuration");
 }
 
 1;
