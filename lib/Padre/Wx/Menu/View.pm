@@ -22,10 +22,12 @@ our @ISA     = 'Padre::Wx::Menu';
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $config = Padre->ide->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
+
+	# Cache the config object to prevent Padre->ide calls
+	my $config = $self->{config} = $main->config;
 
 
 
@@ -444,8 +446,8 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
+	my $config   = $self->{config};
 	my $document = _CURRENT(@_)->document;
-	my $config   = Padre->ide->config;
 
 	# Simple check state cases from configuration
 	unless ( Padre::Util::WXWIN32 ) {
