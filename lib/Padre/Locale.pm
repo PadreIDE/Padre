@@ -284,7 +284,7 @@ BEGIN {
 			gettext   => 'Korean',
 			utf8text  => '한국어',
 			iso639    => 'ko',
-			iso3166   => undef,
+			iso3166   => 'KR',
 			wxid      => Wx::wxLANGUAGE_KOREAN,
 			fallback  => [ ],
 			supported => 1,
