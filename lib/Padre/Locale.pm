@@ -58,7 +58,7 @@ our $VERSION = '0.24';
 # simplicity (for now) we list them all as lower-case.
 my %RFC4646;
 BEGIN {
-    sub gettext { shift }
+    sub gettext { shift }; # dummy function and semicolon for xgettext
 	%RFC4646 = (
 		# The default language for Padre is "United Kingdom English"
 		# The most common English dialect, used not only in the UK,
