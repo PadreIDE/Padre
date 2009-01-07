@@ -154,6 +154,7 @@ sub enable {
 	if ( $@ ) {
 		# Crashed during plugin enable
 		$self->status('error');
+		warn $@;
 		return 0;
 	}
 
