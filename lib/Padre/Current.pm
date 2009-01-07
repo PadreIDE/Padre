@@ -149,6 +149,12 @@ sub _notebook {
 	return $self->{notebook};
 }
 
+# Get the project from the main_window (and don't cache)
+sub config {
+	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	$self->_main->config;
+}
+
 # Convenience method
 sub _main {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
