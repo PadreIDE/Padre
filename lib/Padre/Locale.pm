@@ -58,6 +58,7 @@ our $VERSION = '0.24';
 # simplicity (for now) we list them all as lower-case.
 my %RFC4646;
 BEGIN {
+    sub gettext { shift }
 	%RFC4646 = (
 		# The default language for Padre is "United Kingdom English"
 		# The most common English dialect, used not only in the UK,
@@ -67,7 +68,7 @@ BEGIN {
 		# documentation purposes.
 		'en-gb' => {
 			# REQUIRED: The gettext msgid for the language.
-			gettext    => 'English (United Kingdom)',
+			gettext    => gettext('English (United Kingdom)'),
 	
 			# REQUIRED: The native name of the language
 			utf8text   => 'English (United Kingdom)',
@@ -106,7 +107,7 @@ BEGIN {
 		# Example entry for an language which is not supported directly,
 		# but which Padre is aware of.
 		'en-au' => {
-			gettext   => 'English (Australian)',
+			gettext   => gettext('English (Australian)'),
 			utf8text  => 'English (Australian)',
 			iso639    => 'en',
 			iso3166   => 'AU',
@@ -123,7 +124,7 @@ BEGIN {
 	
 		# The fallback entry when Wx can't determine a language
 		'x-unknown' => {
-			gettext   => 'Unknown',
+			gettext   => gettext('Unknown'),
 			utf8text  => 'Unknown',
 			iso639    => 'en', # For convenience
 			iso3166   => undef,
@@ -137,7 +138,7 @@ BEGIN {
 		# fully aware of any 
 	
 		'ar' => {
-			gettext   => 'Arabic',
+			gettext   => gettext('Arabic'),
 			utf8text  => 'عربي',
 			iso639    => 'ar',
 			iso3166   => undef,
@@ -147,7 +148,7 @@ BEGIN {
 		},
 	
 		'de' => {
-			gettext   => 'German',
+			gettext   => gettext('German'),
 			utf8text  => 'Deutsch',
 			iso639    => 'de',
 			iso3166   => undef,
@@ -157,7 +158,7 @@ BEGIN {
 		},
 	
 		'en' => {
-			gettext   => 'English',
+			gettext   => gettext('English'),
 			utf8text  => 'English',
 			iso639    => 'en',
 			iso3166   => undef,
@@ -166,7 +167,7 @@ BEGIN {
 		},
 	
 		'en-ca' => {
-			gettext   => 'English (Canada)',
+			gettext   => gettext('English (Canada)'),
 			utf8text  => 'English (Canada)',
 			iso639    => 'en',
 			iso3166   => undef,
@@ -175,7 +176,7 @@ BEGIN {
 		},
 	
 		'en-nz' => {
-			gettext   => 'English (New Zealand)',
+			gettext   => gettext('English (New Zealand)'),
 			utf8text  => 'English (New Zealand)',
 			iso639    => 'en',
 			iso3166   => 'NZ',
@@ -185,7 +186,7 @@ BEGIN {
 		},
 	
 		'en-us' => {
-			gettext   => 'English (United States)',
+			gettext   => gettext('English (United States)'),
 			utf8text  => 'English (United States)',
 			iso639    => 'en',
 			iso3166   => 'US',
@@ -194,7 +195,7 @@ BEGIN {
 		},
 	
 		'es-ar' => {
-			gettext   => 'Spanish (Argentina)',
+			gettext   => gettext('Spanish (Argentina)'),
 			utf8text  => 'Español (Argentina)',
 			iso639    => 'sp',
 			iso3166   => 'AR',
@@ -206,7 +207,7 @@ BEGIN {
 			# Simplify until there's another Spanish
 			# gettext   => 'Spanish (Spain)',
 			# utf8text  => 'Español (de España)',
-			gettext   => 'Spanish',
+			gettext   => gettext('Spanish'),
 			utf8text  => 'Español',
 			iso639    => 'sp',
 			iso3166   => 'SP',
@@ -216,7 +217,7 @@ BEGIN {
 		},
 	
 		'fr-ca' => {
-			gettext   => 'French (France)',
+			gettext   => gettext('French (France)'),
 			utf8text  => 'Français (Canada)',
 			iso639    => 'fr',
 			iso3166   => 'CA',
@@ -228,7 +229,7 @@ BEGIN {
 			# Simplify until there's another French
 			# gettext   => 'French (France)',
 			# utf8text  => 'Français (France)',
-			gettext   => 'French',
+			gettext   => gettext('French'),
 			utf8text  => 'Français',
 			iso639    => 'fr',
 			iso3166   => 'FR',
@@ -238,7 +239,7 @@ BEGIN {
 		},
 	
 		'he' => {
-			gettext   => 'Hebrew',
+			gettext   => gettext('Hebrew'),
 			utf8text  => 'עברית',
 			iso639    => 'he',
 			iso3166   => undef,
@@ -248,7 +249,7 @@ BEGIN {
 		},
 	
 		'hu' => {
-			gettext   => 'Hungarian',
+			gettext   => gettext('Hungarian'),
 			utf8text  => 'Magyar',
 			iso639    => 'hu',
 			iso3166   => undef,
@@ -261,7 +262,7 @@ BEGIN {
 			# Simplify until there's another Italian
 			# gettext   => 'Italian (Italy)',
 			# utf8text  => 'Italiano (Italy)',
-			gettext   => 'Italian',
+			gettext   => gettext('Italian'),
 			utf8text  => 'Italiano',
 			iso639    => 'it',
 			iso3166   => 'IT',
@@ -271,7 +272,7 @@ BEGIN {
 		},
 	
 		'ja' => {
-			gettext   => 'Japanese',
+			gettext   => gettext('Japanese'),
 			utf8text  => '日本語',
 			iso639    => 'ja',
 			iso3166   => undef,
@@ -281,7 +282,7 @@ BEGIN {
 		},
 	
 		'ko' => {
-			gettext   => 'Korean',
+			gettext   => gettext('Korean'),
 			utf8text  => '한국어',
 			iso639    => 'ko',
 			iso3166   => 'KR',
@@ -294,7 +295,7 @@ BEGIN {
 			# Simplify until there's another Italian
 			# gettext   => 'Dutch (Netherlands)',
 			# utf8text  => 'Nederlands (Nederlands)',
-			gettext   => 'Dutch',
+			gettext   => gettext('Dutch'),
 			utf8text  => 'Nederlands',
 			iso639    => 'nl',
 			iso3166   => 'NL',
@@ -304,7 +305,7 @@ BEGIN {
 		},
 	
 		'nl-be' => {
-			gettext   => 'Dutch (Belgium)',
+			gettext   => gettext('Dutch (Belgium)'),
 			utf8text  => 'Nederlands (België)',
 			iso639    => 'en',
 			iso3166   => 'BE',
@@ -313,7 +314,7 @@ BEGIN {
 		},
 	
 		'pt-br' => {
-			gettext   => 'Portuguese (Brazil)',
+			gettext   => gettext('Portuguese (Brazil)'),
 			utf8text  => 'Português (Brasil)',
 			iso639    => 'pt',
 			iso3166   => 'BR',
@@ -323,7 +324,7 @@ BEGIN {
 		},
 	
 		'pt-pt' => {
-			gettext   => 'Portuguese (Portugal)',
+			gettext   => gettext('Portuguese (Portugal)'),
 			utf8text  => 'Português (Europeu)',
 			iso639    => 'pt',
 			iso3166   => 'PT',
@@ -332,7 +333,7 @@ BEGIN {
 		},
 	
 		'ru' => {
-			gettext   => 'Russian',
+			gettext   => gettext('Russian'),
 			utf8text  => 'Русский',
 			iso639    => 'ru',
 			iso3166   => undef,
@@ -342,7 +343,7 @@ BEGIN {
 		},
 	
 		'zh' => {
-			gettext   => 'Chinese',
+			gettext   => gettext('Chinese'),
 			utf8text  => 'Chinese',
 			iso639    => 'zh',
 			iso3166   => undef,
@@ -351,7 +352,7 @@ BEGIN {
 		},
 	
 		'zh-cn' => {
-			gettext   => 'Chinese (Simplified)',
+			gettext   => gettext('Chinese (Simplified)'),
 			utf8text  => '中文 (简体)',
 			iso639    => 'zh',
 			iso3166   => 'CN',
@@ -360,7 +361,7 @@ BEGIN {
 		},
 	
 		'zh-tw' => {
-			gettext   => 'Chinese (Traditional)',
+			gettext   => gettext('Chinese (Traditional)'),
 			utf8text  => '正體中文 (繁體)',
 			iso639    => 'zh',
 			iso3166   => 'TW',
@@ -373,7 +374,7 @@ BEGIN {
 		# Mostly what these do is uncover issues that might arise when
 		# a language is not supported by various older standards.
 		'x-klingon' => {
-			gettext   => 'Klingon',
+			gettext   => gettext('Klingon'),
 			utf8text  => 'Klingon', # TODO Fix this at some point
 			iso639    => undef,
 			iso3166   => undef,
@@ -444,6 +445,7 @@ sub object {
 
 sub menu_view_languages {
 	return map {
+		print "$_ -> $RFC4646{$_}->{gettext}\n";
 		$_ => Wx::gettext($RFC4646{$_}->{gettext})
 	} grep {
 		$RFC4646{$_}->{supported}
