@@ -27,13 +27,13 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	# Script Execution
-	$self->{run_script} = $self->Append( -1,
+	$self->{run_document} = $self->Append( -1,
 		Wx::gettext("Run Script\tF5")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{run_script},
+		$self->{run_document},
 		sub {
-			$_[0]->run_script;
+			$_[0]->run_document;
 		},
 	);
 
@@ -73,7 +73,7 @@ sub refresh {
 
 	# Disable if not document,
 	# otherwise match run_command state
-	$self->{run_script}->Enable(
+	$self->{run_document}->Enable(
 		$document
 			? $self->{run_command}->IsEnabled
 			: 0
@@ -91,7 +91,7 @@ sub refresh {
 
 sub enable {
 	my $self = shift;
-	$self->{run_script}->Enable(1);
+	$self->{run_document}->Enable(1);
 	$self->{run_command}->Enable(1);
 	$self->{stop}->Enable(0);
 	return;
@@ -99,7 +99,7 @@ sub enable {
 
 sub disable {
 	my $self = shift;
-	$self->{run_script}->Enable(0);
+	$self->{run_document}->Enable(0);
 	$self->{run_command}->Enable(0);
 	$self->{stop}->Enable(1);
 	return;
