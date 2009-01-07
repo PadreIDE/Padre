@@ -16,7 +16,7 @@ sub new {
 	# Create the platform-sensitive style
 	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
 	          | Wx::wxAUI_NB_TOP;
-	unless ( Padre::Util::LINUX ) {
+	unless ( Padre::Util::WXGTK ) {
 		# Crashes on Linux/GTK
 		# Doesn't seem to work right on Win32...
 		# $style = $style | Wx::wxAUI_NB_TAB_EXTERNAL_MOVE;
@@ -31,7 +31,7 @@ sub new {
 	);
 
 	# Add ourself to the window manager
-	$main->manager->AddPane(
+	$main->aui->AddPane(
 		$self,
 		Wx::AuiPaneInfo->new
 			->Name('bottompane')
@@ -52,7 +52,7 @@ sub new {
 	);
 
 	# Set the locale-aware caption
-	$main->manager->caption_gettext('bottompane' => 'Output View');
+	$main->aui->caption_gettext('bottompane' => 'Output View');
 
 	return $self;
 }

@@ -96,7 +96,7 @@ sub new {
 	);
 
 	# On Windows disabling the status bar doesn't work, so don't allow it
-	unless ( Padre::Util::WIN32 ) {
+	unless ( Padre::Util::WXWIN32 ) {
 		$self->{statusbar} = $self->AppendCheckItem( -1,
 			Wx::gettext("Show StatusBar")
 		);
@@ -448,7 +448,7 @@ sub refresh {
 	my $config   = Padre->ide->config;
 
 	# Simple check state cases from configuration
-	unless ( Padre::Util::WIN32 ) {
+	unless ( Padre::Util::WXWIN32 ) {
 		$self->{statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
 	}
 	$self->{ lines        }->Check( $config->{editor_linenumbers} ? 1 : 0 );

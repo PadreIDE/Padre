@@ -22,7 +22,7 @@ sub new {
 	);
 
 	# Add ourself to the main window
-	$main->manager->AddPane(
+	$main->aui->AddPane(
 		$self,
 		Wx::AuiPaneInfo->new
 			->Name('editorpane')
@@ -32,7 +32,7 @@ sub new {
 			->Dockable
 			->Position(1)
 	);
-	$main->manager->caption_gettext('editorpane' => 'Files');
+	$main->aui->caption_gettext('editorpane' => 'Files');
 
 	Wx::Event::EVT_AUINOTEBOOK_PAGE_CHANGED(
 		$main,

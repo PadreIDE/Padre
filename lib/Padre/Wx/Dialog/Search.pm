@@ -41,7 +41,7 @@ sub search {
 		$self->_create_panel;
 	}
 	# pane != panel
-	my $pane = Padre->ide->wx->main_window->manager->GetPane('find');
+	my $pane = Padre->ide->wx->main_window->aui->GetPane('find');
 	if ( $pane->IsShown ) {
 		$self->_find;
 	} else {
@@ -180,7 +180,7 @@ sub _create_panel {
 	$self->{panel}->SetSize( $size );
 
 	# manage the pane in aui
-	$main->manager->AddPane( $self->{panel},
+	$main->aui->AddPane( $self->{panel},
 		Wx::AuiPaneInfo->new->Name( 'find' )
 		->Bottom
 		->CaptionVisible(0)
@@ -196,7 +196,7 @@ sub _hide_panel {
 	my $self = shift;
 
 	# pane != panel
-	my $auimngr = Padre->ide->wx->main_window->manager;
+	my $auimngr = Padre->ide->wx->main_window->aui;
 	$auimngr->GetPane('find')->Hide;
 	$auimngr->Update;
 
@@ -207,7 +207,7 @@ sub _show_panel {
 	my $self = shift;
 
 	# Show the panel; pane != panel
-	my $auimngr = Padre->ide->wx->main_window->manager;
+	my $auimngr = Padre->ide->wx->main_window->aui;
 	$auimngr->GetPane('find')->Show(1);
 	$auimngr->Update;
 

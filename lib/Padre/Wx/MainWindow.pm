@@ -59,8 +59,9 @@ use constant SECONDS => 1000;
 
 use Class::XSAccessor
 	getters => {
+		config         => 'config',
+		aui            => 'aui',
 		menu           => 'menu',
-		manager        => 'manager',
 		no_refresh     => '_no_refresh',
 		syntax_checker => 'syntax_checker',
 		errorlist      => 'errorlist',
@@ -111,6 +112,10 @@ sub new {
 		$wx_frame_style,
 	);
 
+	# Save a pointer to the configuration object.
+	# This prevents tons of Padre->ide->config calls.
+	$self->{config} = $config;
+
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
 
@@ -127,7 +132,7 @@ sub new {
 	$self->{page_history} = [];
 
 	# Set the window manager
-	$self->{manager} = Padre::Wx::AuiManager->new($self);
+	$self->{aui} = Padre::Wx::AuiManager->new($self);
 
 	# Add some additional attribute slots
 	$self->{marker} = {};
@@ -158,7 +163,7 @@ sub new {
 		$self->{gui}->{bottompane}
 	);
 
-	$self->show_output( Padre->ide->config->{main_output_panel} );
+	$self->show_output( $self->config->{main_output_panel} );
 
 	# Create the syntax checker and sidebar for syntax check messages
 	# Must be created after the bottom pane!
@@ -214,7 +219,7 @@ sub new {
 
 	# Load the saved pane layout from last time (if any)
 	if ( defined $config->{host}->{aui_manager_layout} ) {
-		$self->manager->LoadPerspective( $config->{host}->{aui_manager_layout} );
+		$self->aui->LoadPerspective( $config->{host}->{aui_manager_layout} );
 	}
 
 	# we need an event immediately after the window opened
@@ -241,7 +246,7 @@ sub create_side_pane {
 	# Create the platform-sensitive style
 	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
 	          | Wx::wxAUI_NB_TOP;
-	unless ( Padre::Util::LINUX ) {
+	unless ( Padre::Util::WXGTK ) {
 		# Crashes on Linux/GTK
 		# Doesn't seem to work right on Win32...
 		# $style = $style | Wx::wxAUI_NB_TAB_EXTERNAL_MOVE;
@@ -299,7 +304,7 @@ sub create_side_pane {
 		return;
 	} );
 
-	$self->manager->AddPane(
+	$self->aui->AddPane(
 		$self->{gui}->{sidepane},
 		Wx::AuiPaneInfo->new
 			->Name('sidepane')
@@ -329,7 +334,7 @@ sub create_side_pane {
 		\&on_function_selected,
 	);
 
-	$self->show_functions( Padre->ide->config->{main_subs_panel} );
+	$self->show_functions( $self->config->{main_subs_panel} );
 
 	return;
 }
@@ -346,7 +351,7 @@ sub load_files {
 	}
 
 	# Config setting 'nothing' means startup with nothing open
-	my $config  = Padre->ide->config;
+	my $config  = $self->config;
 	my $startup = $config->{main_startup};
 	if ( $startup eq 'nothing' ) {
 		return;
@@ -536,7 +541,7 @@ sub refresh_methods {
 		return;
 	}
 
-	my $config  = Padre->ide->config;
+	my $config  = $self->config;
 	my @methods = $document->get_functions;
 	if ( $config->{editor_methods} eq 'original' ) {
 		# That should be the one we got from get_functions
@@ -594,7 +599,7 @@ sub change_locale {
 	}
 
 	# Save the locale to the config
-	Padre->ide->config->{host}->{locale} = $name;
+	$self->config->{host}->{locale} = $name;
 
 	# Reset the locale
 	delete $self->{locale};
@@ -622,15 +627,21 @@ sub relocale {
 	$self->SetMenuBar( $self->menu->wx );
 
 	# The toolbar doesn't support relocale, replace it
+	$self->rebuild_toolbar;
+
+	# Update window manager captions
+	$self->aui->relocale;
+
+	return;
+}
+
+sub rebuild_toolbar {
+	my $self = shift;
 	$self->SetToolBar(
 		Padre::Wx::ToolBar->new($self)
 	);
 	$self->GetToolBar->Realize;
-
-	# Update window manager captions
-	$self->manager->relocale;
-
-	return;
+	return 1;
 }
 
 
@@ -776,7 +787,7 @@ sub run_script {
 
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	if ( $config->{run_save} eq 'same' ) {
 		$self->on_save;
 	} elsif ( $config->{run_save} eq 'all_files' ) {
@@ -820,7 +831,7 @@ sub debug_perl {
 
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	if ( $config->{run_save} eq 'same' ) {
 		$self->on_save;
 	} elsif ( $config->{run_save} eq 'all_files' ) {
@@ -1022,7 +1033,7 @@ sub on_close_window {
 	$config->{host}->{main_files_pos} = $main_files_pos;
 
 	# Save the window geometry
-	$config->{host}->{aui_manager_layout} = $self->manager->SavePerspective;
+	$config->{host}->{aui_manager_layout} = $self->aui->SavePerspective;
 	$config->{host}->{main_maximized}     = $self->IsMaximized ? 1 : 0;
 	unless ( $self->IsMaximized ) {
 		# Don't save the maximized window size
@@ -1128,7 +1139,7 @@ sub setup_editor {
 
 	local $self->{_no_refresh} = 1;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	
 	my $doc = Padre::Document->new(
 		filename => $file,
@@ -1610,7 +1621,7 @@ sub on_preferences {
 sub on_toggle_line_numbers {
 	my ($self, $event) = @_;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_linenumbers} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
@@ -1623,7 +1634,7 @@ sub on_toggle_line_numbers {
 sub on_toggle_code_folding {
 	my ($self, $event) = @_;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_codefolding} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
@@ -1639,7 +1650,7 @@ sub on_toggle_code_folding {
 sub on_toggle_current_line_background {
 	my ($self, $event) = @_;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_current_line_background} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
@@ -1652,7 +1663,7 @@ sub on_toggle_current_line_background {
 sub on_toggle_syntax_check {
 	my ($self, $event) = @_;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_syntaxcheck} = $event->IsChecked ? 1 : 0;
 
 	$self->syntax_checker->enable( $config->{editor_syntaxcheck} ? 1 : 0 );
@@ -1663,7 +1674,7 @@ sub on_toggle_syntax_check {
 sub on_toggle_errorlist {
 	my ($self, $event) = @_;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_errorlist} = $event->IsChecked ? 1 : 0;
 
 	$config->{editor_errorlist} ? $self->errorlist->enable : $self->errorlist->disable;
@@ -1674,7 +1685,7 @@ sub on_toggle_errorlist {
 sub on_toggle_indentation_guide {
 	my $self   = shift;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_indentationguides} = $self->menu->view->{indentation_guide}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
@@ -1687,7 +1698,7 @@ sub on_toggle_indentation_guide {
 sub on_toggle_eol {
 	my $self   = shift;
 
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_eol} = $self->menu->view->{eol}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->pages ) {
@@ -1706,7 +1717,7 @@ sub on_toggle_whitespaces {
 	my ($self) = @_;
 	
 	# check whether we need to show / hide spaces & tabs.
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{editor_whitespaces} = $self->menu->view->{whitespaces}->IsChecked
 		? Wx::wxSTC_WS_VISIBLEALWAYS
 		: Wx::wxSTC_WS_INVISIBLE;
@@ -1767,8 +1778,8 @@ sub show_output {
 			$self->check_pane_needed('bottompane');
 		}
 	}
-	$self->manager->Update;
-	Padre->ide->config->{main_output_panel} = $on;
+	$self->aui->Update;
+	$self->config->{main_output_panel} = $on;
 
 	return;
 }
@@ -1808,8 +1819,8 @@ sub show_functions {
 			$self->check_pane_needed('sidepane');
 		}
 	}
-	$self->manager->Update;
-	Padre->ide->config->{main_subs_panel} = $on;
+	$self->aui->Update;
+	$self->config->{main_subs_panel} = $on;
 
 	return;
 }
@@ -1850,7 +1861,7 @@ sub show_syntaxbar {
 			$self->check_pane_needed('bottompane');
 		}
 	}
-	$self->manager->Update;
+	$self->aui->Update;
 
 	return;
 }
@@ -1878,10 +1889,10 @@ sub check_pane_needed {
 		}
 	}
 	if ($visible) {
-		$self->manager->GetPane($pane)->Show;
+		$self->aui->GetPane($pane)->Show;
 	}
 	else {
-		$self->manager->GetPane($pane)->Hide;
+		$self->aui->GetPane($pane)->Hide;
 	}
 
 	return;
@@ -1889,13 +1900,13 @@ sub check_pane_needed {
 
 sub on_toggle_statusbar {
 	my ($self, $event) = @_;
-	if ( Padre::Util::WIN32 ) {
+	if ( Padre::Util::WXWIN32 ) {
 		# Status bar always shown on Windows
 		return;
 	}
 
 	# Update the configuration
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{main_statusbar} = $self->menu->view->{statusbar}->IsChecked ? 1 : 0;
 
 	# Update the status bar
@@ -1914,11 +1925,15 @@ sub on_toggle_lockpanels {
 	my $event = shift;
 
 	# Update the configuration
-	my $config = Padre->ide->config;
+	my $config = $self->config;
 	$config->{main_lockpanels} = $self->menu->view->{lock_panels}->IsChecked ? 1 : 0;
 
 	# Update the lock status
-	$self->manager->lock_panels($config->{main_lockpanels});
+	$self->aui->lock_panels($config->{main_lockpanels});
+
+	# The toolbar can't dynamically switch between
+	# tearable and non-tearable so rebuild it.
+	$self->rebuild_toolbar;
 
 	return;
 }

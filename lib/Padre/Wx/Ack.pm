@@ -303,8 +303,8 @@ sub show_ack_output {
 		);
 		${$op}->Show;
 	}
-	$main->manager->GetPane('bottompane')->Show;
-	$main->manager->Update;
+	$main->aui->GetPane('bottompane')->Show;
+	$main->aui->Update;
 
 	return;
 }

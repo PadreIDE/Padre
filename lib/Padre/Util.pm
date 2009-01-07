@@ -33,18 +33,39 @@ our $VERSION   = '0.24';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches);
 
-# Padre targets three major platforms.
-# 1. Native Win32
-# 2. Mac OS X
-# 3. GTK Unix/Linux
-# The following defined reusable constants for these platforms,
-# suitable for use in platform-specific adaptation code.
 
+
+
+
+#####################################################################
+# Officially Supported Constants
+
+# Convenience constants for the operating system
 use constant WIN32   => !! ( $^O eq 'MSWin32'  );
 use constant MAC     => !! ( $^O eq 'darwin'   );
-use constant LINUX   => !! ( $^O =~ m/^linux/i ); # TODO Is an insensitive regex really needed?
 use constant UNIX    => !  ( WIN32 or MAC );
+
+# Padre targets the three largest Wx backends
+# 1. Win32 Native 
+# 2. Mac OS X Native
+# 3. Unix GTK 
+# The following defined reusable constants for these platforms,
+# suitable for use in Wx platform-specific adaptation code.
+# Currently (and a bit naively) we align these to the platforms.
+use constant WXWIN32 => WIN32;
+use constant WXMAC   => MAC;
+use constant WXGTK   => UNIX;
+
+# The local newline type
 use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
+
+
+
+
+
+
+#####################################################################
+# Miscellaneous Functions
 
 =pod
 
@@ -132,6 +153,11 @@ sub get_matches {
 	return ($start, $end, @matches);
 }
 
+
+
+
+
+
 #####################################################################
 # Shared Resources
 
@@ -163,7 +189,6 @@ use constant {
 	PADRE_CRIMSON       => 7,
 	PADRE_BROWN         => 8,
 };
-
 
 1;
 

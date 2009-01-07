@@ -30,7 +30,7 @@ SCOPE: {
 		editor_linenumbers => 0,
 		editor_eol         => 0,
 		editor_indentationguides => 0,
-		editor_calltips    => 1,
+		editor_calltips    => 0,
 		editor_autoindent  => 'deep',
 		editor_methods     => 'alphabetical',
 		editor_whitespaces => 0,
