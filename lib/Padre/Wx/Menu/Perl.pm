@@ -297,7 +297,6 @@ sub install_cpan {
 	# Run with the same Perl that launched Padre
 	my $perl = Padre->perl_interpreter;
 	my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
-	warn "run $cmd\n";
 	local $ENV{AUTOMATED_TESTING} = 1;
 	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
 
