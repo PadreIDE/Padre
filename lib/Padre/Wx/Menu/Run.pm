@@ -5,9 +5,9 @@ package Padre::Wx::Menu::Run;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx          ();
+use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current     qw{_CURRENT};
+use Padre::Current  qw{_CURRENT};
 
 our $VERSION = '0.24';
 our @ISA     = 'Padre::Wx::Menu';
@@ -27,7 +27,9 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	# Script Execution
-	$self->{run_script} = $self->Append( -1, Wx::gettext("Run Script\tF5") );
+	$self->{run_script} = $self->Append( -1,
+		Wx::gettext("Run Script\tF5")
+	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{run_script},
 		sub {
@@ -35,7 +37,9 @@ sub new {
 		},
 	);
 
-	$self->{run_command} = $self->Append( -1, Wx::gettext("Run Command\tCtrl-F5") );
+	$self->{run_command} = $self->Append( -1,
+		Wx::gettext("Run Command\tCtrl-F5")
+	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{run_command},
 		sub {
@@ -43,7 +47,9 @@ sub new {
 		},
 	);
 
-	$self->{stop} = $self->Append( -1, Wx::gettext("&Stop") );
+	$self->{stop} = $self->Append( -1,
+		Wx::gettext("&Stop")
+	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{stop},
 		sub {
@@ -67,9 +73,10 @@ sub refresh {
 
 	# Disable if not document,
 	# otherwise match run_command state
-	$self->{run_script}->Enable( $document
-		? $self->{run_command}->IsEnabled
-		: 0
+	$self->{run_script}->Enable(
+		$document
+			? $self->{run_command}->IsEnabled
+			: 0
 	);
 
 	return 1;
