@@ -62,7 +62,22 @@ sub new {
 		},
 	);
 
+	# This currently mainly exists to make Ctrl-R work
+	$self->{replace} = $self->Append( -1,
+		Wx::gettext("Replace\tCtrl-R")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{replace},
+		sub {
+			Padre::Wx::Dialog::Find->find(@_);
+		},
+	);
+		
 	$self->AppendSeparator;
+
+
+
+
 
 	# Quick Find: Press F3 to start search with selected text
 	$self->{quick_find} = $self->AppendCheckItem( -1,
@@ -100,6 +115,11 @@ sub new {
 
 	$self->AppendSeparator;
 
+
+
+
+
+	# Was this going to be moved to a plugin?
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1,
 			Wx::gettext("Ac&k Search")
@@ -120,6 +140,7 @@ sub refresh {
 	$self->{ find                }->Enable($doc);
 	$self->{ find_next           }->Enable($doc);
 	$self->{ find_previous       }->Enable($doc);
+	$self->{ replace             }->Enable($doc);
 	$self->{ quick_find          }->Enable($doc);
 	$self->{ quick_find_next     }->Enable($doc);
 	$self->{ quick_find_previous }->Enable($doc);
