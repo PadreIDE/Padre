@@ -33,6 +33,7 @@ sub create_outlinebar {
 	my $self = shift;
 	my $main = $self->main;
 
+	# TODO: Violates encapsulation
 	$main->{gui}->{outline_panel} = Wx::TreeCtrl->new(
 		$main->{gui}->{sidepane},
 		Wx::wxID_ANY,
