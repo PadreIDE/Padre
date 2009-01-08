@@ -35,7 +35,7 @@ sub create_syntaxbar {
 
 	$main->{gui}->{syntaxcheck_panel} = Wx::ListView->new(
 		$main->{gui}->{bottompane},
-		Wx::wxID_ANY,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL

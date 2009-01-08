@@ -285,7 +285,7 @@ sub show_folding {
 
 		Wx::Event::EVT_STC_MARGINCLICK(
 			$self,
-			Wx::wxID_ANY,
+			-1,
 			sub {
 				my ( $editor, $event ) = @_;
 				if ( $event->GetMargin() == 2 ) {

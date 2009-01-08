@@ -35,7 +35,7 @@ sub create_outlinebar {
 
 	$main->{gui}->{outline_panel} = Wx::TreeCtrl->new(
 		$main->right,
-		Wx::wxID_ANY,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTR_DEFAULT_STYLE

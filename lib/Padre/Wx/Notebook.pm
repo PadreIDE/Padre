@@ -12,7 +12,7 @@ sub new {
 	my $main  = shift;
 	my $self  = $class->SUPER::new(
 		$main,
-		Wx::wxID_ANY,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxAUI_NB_TOP

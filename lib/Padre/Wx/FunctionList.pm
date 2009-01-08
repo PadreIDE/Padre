@@ -22,7 +22,7 @@ sub new {
 	# Create the underlying object
 	my $self = $class->SUPER::new(
 		$parent,
-		Wx::wxID_ANY,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLC_SINGLE_SEL

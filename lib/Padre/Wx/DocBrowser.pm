@@ -84,7 +84,7 @@ sub new {
 
 	my $notebook = Wx::AuiNotebook->new(
 		$self,
-		Wx::wxID_ANY,
+		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxAUI_NB_DEFAULT_STYLE
