@@ -70,13 +70,6 @@ sub color {
 #####################################################################
 # Load Shared Resources
 
-sub tango {
-	Wx::Bitmap->new(
-		Padre::Util::sharefile( 'tango', '16x16', @_ ),
-		Wx::wxBITMAP_TYPE_PNG,
-	);
-}
-
 sub icon {
 	Wx::Bitmap->new(
 		Padre::Util::sharefile( 'miscicons', @_ ),
@@ -84,6 +77,12 @@ sub icon {
 	);
 }
 
+sub tango {
+	Wx::Bitmap->new(
+		Padre::Util::sharefile( 'tango', '16x16', @_ ),
+		Wx::wxBITMAP_TYPE_PNG,
+	);
+}
 
 1;
 

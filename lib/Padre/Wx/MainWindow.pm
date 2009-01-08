@@ -33,6 +33,7 @@ use Padre::Locale             ();
 use Padre::Current            qw{_CURRENT};
 use Padre::Document           ();
 use Padre::Wx                 ();
+use Padre::Wx::Icon           ();
 use Padre::Wx::Right          ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
@@ -1782,7 +1783,7 @@ sub show_syntaxbar {
 				${$sp},
 				Wx::gettext("Syntax Check"),
 				1,
-				# Padre::Wx::tango( 'status', 'dialog-warning.png' )
+				# Padre::Wx::Icon::find('status/dialog-warning')
 			);
 			${$sp}->Show;
 			$self->check_pane_needed('bottompane');

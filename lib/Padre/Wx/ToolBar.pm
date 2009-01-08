@@ -6,6 +6,7 @@ use warnings;
 use Padre::Current    qw{_CURRENT};
 use Padre::Wx         ();
 use Padre::Wx::Editor ();
+use Padre::Wx::Icon   ();
 
 our $VERSION = '0.24';
 our @ISA     = 'Wx::ToolBar';
@@ -33,7 +34,7 @@ sub new {
 	# Automatically populate
 	$self->AddTool(
 		Wx::wxID_NEW, '',
-		Padre::Wx::tango( 'actions', 'document-new.png' ),
+		Padre::Wx::Icon::find('actions/document-new'),
 		Wx::gettext('New File'),
 	);
 	Wx::Event::EVT_TOOL(
@@ -44,19 +45,19 @@ sub new {
 
 	$self->AddTool(
 		Wx::wxID_OPEN, '',
-		Padre::Wx::tango( 'actions', 'document-open.png' ),
+		Padre::Wx::Icon::find('actions/document-open'),
 		Wx::gettext('Open File'),
 	);
 
 	$self->AddTool(
 		Wx::wxID_SAVE, '',
-		Padre::Wx::tango( 'actions', 'document-save.png' ),
+		Padre::Wx::Icon::find('actions/document-save'),
 		Wx::gettext('Save File'),
 	);
 
 	$self->AddTool(
 		Wx::wxID_CLOSE, '',
-		Padre::Wx::tango( 'emblems', 'emblem-unreadable.png' ),
+		Padre::Wx::Icon::find('emblems/emblem-unreadable'),
 		Wx::gettext('Close File'),
 	);
 	Wx::Event::EVT_TOOL(
@@ -74,13 +75,13 @@ sub new {
 	# Undo/Redo Support
 	$self->AddTool(
 		Wx::wxID_UNDO, '',
-		Padre::Wx::tango( 'actions', 'edit-undo.png' ),
+		Padre::Wx::Icon::find('actions/edit-undo'),
 		Wx::gettext('Undo'),
 	);
 
 	$self->AddTool(
 		Wx::wxID_REDO, '',
-		Padre::Wx::tango( 'actions', 'edit-redo.png' ),
+		Padre::Wx::Icon::find('actions/edit-redo'),
 		Wx::gettext('Redo'),
 	);
 
@@ -93,7 +94,7 @@ sub new {
 	# Cut/Copy/Paste
 	$self->AddTool(
 		Wx::wxID_CUT, '',
-		Padre::Wx::tango( 'actions', 'edit-cut.png' ),
+		Padre::Wx::Icon::find('actions/edit-cut'),
 		Wx::gettext('Cut'),
 	);
 	Wx::Event::EVT_TOOL(
@@ -106,7 +107,7 @@ sub new {
 
 	$self->AddTool(
 		Wx::wxID_COPY,  '',
-		Padre::Wx::tango( 'actions', 'edit-copy.png' ),
+		Padre::Wx::Icon::find('actions/edit-copy'),
 		Wx::gettext('Copy'),
 	);
 	Wx::Event::EVT_TOOL(
@@ -119,7 +120,7 @@ sub new {
 
 	$self->AddTool(
 		Wx::wxID_PASTE, '',
-		Padre::Wx::tango( 'actions', 'edit-paste.png' ),
+		Padre::Wx::Icon::find('actions/edit-paste'),
 		Wx::gettext('Paste'),
 	);
 	Wx::Event::EVT_TOOL(
@@ -133,7 +134,7 @@ sub new {
 
 	$self->AddTool(
 		Wx::wxID_SELECTALL, '',
-		Padre::Wx::tango( 'actions', 'edit-select-all.png' ),
+		Padre::Wx::Icon::find('actions/edit-select-all'),
 		Wx::gettext('Select all'),
 	);
 	Wx::Event::EVT_TOOL(
@@ -160,7 +161,7 @@ sub new {
 
 	$self->AddTool(
 		$self->{task_status_idle_id}, '',
-		Padre::Wx::icon( 'tasks-idle.png' ),
+		Padre::Wx::Icon::find('status/padre-tasks-idle'),
 		Wx::gettext('Background Tasks are idle'),
 	);
 
@@ -201,7 +202,7 @@ sub set_task_status_idle {
 	my $id   = $self->{task_status_idle_id};
 	return if $self->{task_status_id} == $id;
 
-	my $bitmap = Padre::Wx::icon( 'tasks-idle.png' );
+	my $bitmap = Padre::Wx::Icon::find('status/padre-tasks-idle');
 	my $text   = Wx::gettext('Background Tasks are idle');
 	return $self->_set_task_status($id, $bitmap, $text);
 }
@@ -211,7 +212,7 @@ sub set_task_status_running {
 	my $id   = $self->{task_status_running_id};
 	return if $self->{task_status_id} == $id;
 
-	my $bitmap = Padre::Wx::icon( 'tasks-running.png' );
+	my $bitmap = Padre::Wx::Icon::find('status/padre-tasks-running');
 	my $text   = Wx::gettext('Background Tasks are running');
 	return $self->_set_task_status($id, $bitmap, $text);
 }
@@ -221,7 +222,7 @@ sub set_task_status_load {
 	my $id   = $self->{task_status_load_id};
 	return if $self->{task_status_id} == $id;
 
-	my $bitmap = Padre::Wx::icon( 'tasks-load.png' );
+	my $bitmap = Padre::Wx::Icon::find('status/padre-tasks-load');
 	my $text   = Wx::gettext('Background Tasks are running with high load');
 	return $self->_set_task_status($id, $bitmap, $text);
 }
@@ -242,7 +243,7 @@ sub _set_task_status {
 		$id, '',
 		$bitmap,
 		Wx::wxNullBitmap,
-		Wx::wxITEM_NORMAL(),
+		Wx::wxITEM_NORMAL,
 		$text,
 	);
 	$self->Realize;

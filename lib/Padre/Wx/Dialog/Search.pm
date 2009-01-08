@@ -5,9 +5,13 @@ package Padre::Wx::Dialog::Search;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx;
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
 
 our $VERSION = '0.24';
+
+
+
 
 
 ######################################################################
@@ -23,6 +27,9 @@ sub new {
 	}, $class;
 	return $self;
 }
+
+
+
 
 
 ######################################################################
@@ -117,7 +124,7 @@ sub _create_panel {
 	# Close button
 	$self->{close} = Wx::BitmapButton->new(
 		$self->{panel}, -1,
-		Padre::Wx::tango( 'emblems', 'emblem-unreadable.png' ),
+		Padre::Wx::Icon::find('emblems/emblem-unreadable'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
 		Wx::wxNO_BORDER,
@@ -136,7 +143,7 @@ sub _create_panel {
 	# Previous button
 	$self->{previous} = Wx::BitmapButton->new(
 		$self->{panel}, -1,
-		Padre::Wx::tango( 'actions', 'go-previous.png' ),
+		Padre::Wx::Icon::find('actions/go-previous'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
 		Wx::wxNO_BORDER
@@ -146,7 +153,7 @@ sub _create_panel {
 	# Previous button
 	$self->{next} = Wx::BitmapButton->new(
 		$self->{panel}, -1,
-		Padre::Wx::tango( 'actions', 'go-next.png' ),
+		Padre::Wx::Icon::find('actions/go-next'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
 		Wx::wxNO_BORDER,
