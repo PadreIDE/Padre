@@ -40,6 +40,7 @@ use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
 use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
+use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Document           ();
 use Padre::Current            qw{_CURRENT};
@@ -155,7 +156,14 @@ sub new {
 	# Create the main notebook for the documents
 	$self->{gui}->{notebook} = Padre::Wx::Notebook->new($self);
 
-	$self->create_side_pane;
+	# Create the right pane
+	$self->{gui}->{sidepane} = Padre::Wx::Right->new($self);
+
+	# Create the function list
+	$self->{gui}->{subs_panel} = Padre::Wx::FunctionList->new(
+		$self->{gui}->{sidepane}
+	);
+	$self->show_functions( $self->config->{main_subs_panel} );
 
 	# Create the bottom pane
 	$self->{gui}->{bottompane} = Padre::Wx::Bottom->new($self);
@@ -164,7 +172,6 @@ sub new {
 	$self->{gui}->{output_panel} = Padre::Wx::Output->new(
 		$self->{gui}->{bottompane}
 	);
-
 	$self->show_output( $self->config->{main_output_panel} );
 
 	# Create the syntax checker and sidebar for syntax check messages
@@ -245,70 +252,6 @@ sub new {
 	$timer->Start( 1, 1 );
 
 	return $self;
-}
-
-sub create_side_pane {
-	my $self  = shift;
-	$DB::single = 1;
-
-	$self->{gui}->{sidepane} = Padre::Wx::Right->new($self);
-
-	# Create the right-hand sidebar
-	$self->{gui}->{subs_panel} = Wx::ListCtrl->new(
-		$self->{gui}->{sidepane},
-		Wx::wxID_ANY,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT
-	);
-
-	Wx::Event::EVT_KILL_FOCUS(
-		$self->{gui}->{subs_panel},
-		\&on_subs_panel_left,
-	);
-
-	# find-as-you-type in functions tab
-	# TODO: should the whole subs_panel stuff be in its own class? (Yes)
-	Wx::Event::EVT_CHAR( $self->{gui}->{subs_panel}, sub {
-		my ($self, $event) = @_;
-		my $mod  = $event->GetModifiers || 0;
-		my $code = $event->GetKeyCode;
-		
-		# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
-		$mod = $mod & (Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT()); # TODO: This is cargo-cult
-
-		if (!$mod) {
-			if ($code <= 255 and $code > 0 and chr($code) =~ /^[\w_:-]$/) { # TODO is there a better way? use ==?
-				$code = 95 if $code == 45; # transform - => _ for convenience
-				$self->{function_find_string} .= chr($code);
-				# this does a partial match starting at the beginning of the function name
-				my $pos = $self->FindItem(0, $self->{function_find_string}, 1);
-				if (defined $pos) {
-					$self->SetItemState($pos, Wx::wxLIST_STATE_SELECTED, Wx::wxLIST_STATE_SELECTED);
-				}
-			}
-			else {
-				# reset the find string
-				$self->{function_find_string} = undef;
-			}
-		}
-
-		$event->Skip(1);
-		return;
-	} );
-
-	$self->{gui}->{subs_panel}->InsertColumn(0, Wx::gettext('Methods'));
-	$self->{gui}->{subs_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
-
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self->{gui}->{subs_panel},
-		\&on_function_selected,
-	);
-
-	$self->show_functions( $self->config->{main_subs_panel} );
-
-	return;
 }
 
 # Load any default files

@@ -18,7 +18,9 @@ our @ISA     = 'Wx::TextCtrl';
 sub new {
 	my $class  = shift;
 	my $parent = shift;
-	my $self   = $class->SUPER::new(
+
+	# Create the underlying object
+	my $self = $class->SUPER::new(
 		$parent,
 		-1,
 		"", 

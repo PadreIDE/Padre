@@ -1,7 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    All big MainWindow gui elements are now in their own classes,
+        which should help us spread out feature logic properly (ADAMK)
     Moved Padre::Plugin::CPAN functionality into the core so that
-        we can do various sorts of tighter integration (ADAMK)
+        we can do various sorts of tighter CPAN integration (ADAMK)
     Padre::Wx::DocBrowser now uses Padre::Task::DocBrowser (let's 
         hope properly) (Andrew Bramble) 
     Class correction Padre::Wx::Menu -> Padre::Wx::Menubar (ADAMK)
