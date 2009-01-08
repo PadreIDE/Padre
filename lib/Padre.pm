@@ -1014,14 +1014,6 @@ Copyright 2008 Gabor Szabo. L<http://www.szabgab.com/>
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl 5 itself.
 
-The icons were taken from
-http://tango.freedesktop.org/Tango_Desktop_Project
-
-The Tango base icon theme is licensed under the
-Creative Commons Attribution Share-Alike license.
-
-Using tango-icon-theme-0.8.1.tar.gz
-
 =head1 DISCLAIMER OF WARRANTY
 
 There is no warranty whatsoever. If you lose data or your hair because

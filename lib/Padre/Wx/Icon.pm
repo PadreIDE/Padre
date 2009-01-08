@@ -26,16 +26,14 @@ our $VERSION = '0.24';
 # For now apply a single common configuration
 use constant SIZE    => '16x16';
 use constant EXT     => '.png';
-use constant THEMES  => ( 'gnome218', 'tango', 'padre' );
+use constant THEMES  => ( 'gnome218', 'padre' );
 use constant ICONS   => Padre::Util::sharedir('icons');
 
 # Supports the use of theme-specific "hints",
 # when we want to substitute a technically incorrect
 # icon on a theme by theme basis.
 my %HINT = (
-	'tango' => {
-		'x-document-close' => 'emblem/unreadable',
-	},
+	'gnome218' => { },
 );
 
 

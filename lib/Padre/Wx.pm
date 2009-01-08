@@ -64,28 +64,6 @@ sub color {
 }
 
 
-
-
-
-#####################################################################
-# Load Shared Resources
-
-sub icon {
-	Wx::Bitmap->new(
-		Padre::Util::sharefile( 'miscicons', @_ ),
-		Wx::wxBITMAP_TYPE_PNG,
-	);
-}
-
-sub tango {
-	Wx::Bitmap->new(
-		Padre::Util::sharefile( 'tango', '16x16', @_ ),
-		Wx::wxBITMAP_TYPE_PNG,
-	);
-}
-
-1;
-
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or
