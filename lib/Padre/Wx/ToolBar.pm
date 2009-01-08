@@ -16,10 +16,10 @@ sub new {
 	my $main  = shift;
 
 	# Prepare the style
-	my $style = Wx::wxNO_BORDER
-		| Wx::wxTB_HORIZONTAL
+	my $style = Wx::wxTB_HORIZONTAL
 		| Wx::wxTB_FLAT
-		| Wx::wxTB_NO_TOOLTIPS;
+		| Wx::wxTB_NO_TOOLTIPS
+		| Wx::wxNO_BORDER;
 	unless ( $main->config->{main_lockpanels} ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
@@ -30,6 +30,12 @@ sub new {
 		Wx::wxDefaultSize,
 		$style,
 		5050,
+	);
+
+	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
+	# icon sets we need to be SLIGHTLY bigger.
+	$self->SetToolBitmapSize(
+		Wx::Size->new( 16, 16 )
 	);
 
 	# Automatically populate
@@ -151,7 +157,7 @@ sub new {
 
 
 	# Task status
-       
+
 	# There can be three statuses:
 	# idle, running (light load), and load (high load).
 	# They'll be switched on demand by update_task_status()
