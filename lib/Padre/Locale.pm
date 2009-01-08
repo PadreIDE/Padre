@@ -358,6 +358,7 @@ BEGIN {
 			iso3166   => 'CN',
 			wxid      => Wx::wxLANGUAGE_CHINESE_SIMPLIFIED,
 			fallback  => [ 'en-us' ],
+			supported => 1,
 		},
 	
 		'zh-tw' => {
