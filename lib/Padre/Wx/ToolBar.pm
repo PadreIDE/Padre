@@ -57,7 +57,7 @@ sub new {
 
 	$self->AddTool(
 		Wx::wxID_CLOSE, '',
-		Padre::Wx::Icon::find('emblems/emblem-unreadable'),
+		Padre::Wx::Icon::find('actions/x-document-close'),
 		Wx::gettext('Close File'),
 	);
 	Wx::Event::EVT_TOOL(

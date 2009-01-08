@@ -124,7 +124,7 @@ sub _create_panel {
 	# Close button
 	$self->{close} = Wx::BitmapButton->new(
 		$self->{panel}, -1,
-		Padre::Wx::Icon::find('emblems/emblem-unreadable'),
+		Padre::Wx::Icon::find('actions/x-document-close'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
 		Wx::wxNO_BORDER,

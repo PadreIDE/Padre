@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Our unattributed redistribution of tango was probably illegal,
+        and made us incompatible with Debian. Switch to gnome for
+        now. They are as ugly as sin, but at least they're legal (ADAMK)
     All big MainWindow gui elements are now in their own classes,
         which should help us spread out feature logic properly (ADAMK)
     Moved Padre::Plugin::CPAN functionality into the core so that

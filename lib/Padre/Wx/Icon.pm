@@ -26,12 +26,17 @@ our $VERSION = '0.24';
 # For now apply a single common configuration
 use constant SIZE    => '16x16';
 use constant EXT     => '.png';
-use constant THEMES  => ( 'gnome', 'tango', 'padre' );
+use constant THEMES  => ( 'gnome218', 'tango', 'padre' );
 use constant ICONS   => Padre::Util::sharedir('icons');
 
-# Add a little meaning to the split hash keys
-use constant CONTEXT => 0;
-use constant NAME    => 1;
+# Supports the use of theme-specific "hints",
+# when we want to substitute a technically incorrect
+# icon on a theme by theme basis.
+my %HINT = (
+	'tango' => {
+		'x-document-close' => 'emblem/unreadable',
+	},
+);
 
 
 
@@ -44,17 +49,19 @@ use constant NAME    => 1;
 # bother to check params.
 # TODO: Clearly this assumption can't last...
 sub find {
-	my @param = split /\//, $_[0];
+	my $name = shift;
 
 	# Search through the theme list
 	foreach my $theme ( THEMES ) {
+		my $hint = ($HINT{$theme} and $HINT{$theme}->{$name})
+			? $HINT{$theme}->{$name}
+			: $name;
 		my $file = File::Spec->catfile(
 			ICONS,
 			$theme,
 			SIZE,
-			$param[CONTEXT],
-			($param[NAME] . EXT),
-		);
+			(split /\//, $hinted)
+		) . '.png';
 		next unless -f $file;
 		return Wx::Bitmap->new($file, Wx::wxBITMAP_TYPE_PNG );
 	}
