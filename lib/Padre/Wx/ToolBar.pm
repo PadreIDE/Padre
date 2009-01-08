@@ -31,6 +31,7 @@ sub new {
 		$style,
 		5050,
 	);
+	$DB::single = 1;
 
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
@@ -38,39 +39,28 @@ sub new {
 		Wx::Size->new( 16, 16 )
 	);
 
-	# Automatically populate
-	$self->AddTool(
-		Wx::wxID_NEW, '',
-		Padre::Wx::Icon::find('actions/document-new'),
-		Wx::gettext('New File'),
+	# Populate the toolbar
+	$self->add_tool(
+		id    => Wx::wxID_NEW,
+		icon  => 'actions/document-new',
+		short => Wx::gettext('New File'),
+		event => sub { $_[0]->on_new },
 	);
-	Wx::Event::EVT_TOOL(
-		$main,
-		Wx::wxID_NEW,
-		sub { $_[0]->on_new },
+	$self->add_tool(
+		id    => Wx::wxID_OPEN,
+		icon  => 'actions/document-open',
+		short => Wx::gettext('Open File'),
 	);
-
-	$self->AddTool(
-		Wx::wxID_OPEN, '',
-		Padre::Wx::Icon::find('actions/document-open'),
-		Wx::gettext('Open File'),
+	$self->add_tool(
+		id    => Wx::wxID_SAVE,
+		icon  => 'actions/document-save',
+		short => Wx::gettext('Save File'),
 	);
-
-	$self->AddTool(
-		Wx::wxID_SAVE, '',
-		Padre::Wx::Icon::find('actions/document-save'),
-		Wx::gettext('Save File'),
-	);
-
-	$self->AddTool(
-		Wx::wxID_CLOSE, '',
-		Padre::Wx::Icon::find('actions/x-document-close'),
-		Wx::gettext('Close File'),
-	);
-	Wx::Event::EVT_TOOL(
-		$main,
-		Wx::wxID_CLOSE,
-		sub { $_[0]->on_close($_[1]) },
+	$self->add_tool(
+		id    => Wx::wxID_CLOSE,
+		icon  => 'actions/x-document-close',
+		short => Wx::gettext('Close File'),
+		event => sub { $_[0]->on_close($_[1]) },
 	);
 
 	$self->AddSeparator;
@@ -286,6 +276,30 @@ sub refresh {
 
 #####################################################################
 # Toolbar 2.0 Experimentation
+
+sub add_tool {
+	my $self  = shift;
+	my %param = @_;
+	my $id    = $param{id} || -1;
+
+	# Create the tool
+	$self->AddTool(
+		$id, '',
+		Padre::Wx::Icon::find($param{icon}),
+		$param{short},
+	);
+
+	# Add the optional event hook
+	if ( defined $param{event} ) {
+		Wx::Event::EVT_TOOL(
+			$self->GetParent,
+			$id,
+			$param{event},
+		);
+	}
+
+	return;
+}
 
 # NOTE: This is just here so Adam doesn't lose it accidentally.
 #       Please don't play around with it (yet).
