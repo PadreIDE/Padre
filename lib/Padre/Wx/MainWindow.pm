@@ -571,6 +571,10 @@ sub output {
 	$_[0]->{gui}->{output_panel};
 }
 
+sub outline {
+    $_[0]->{gui}->{outline_panel};
+}
+
 =pod
 
 =head2 current

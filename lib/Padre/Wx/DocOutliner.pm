@@ -33,9 +33,8 @@ sub create_outlinebar {
 	my $self = shift;
 	my $main = $self->main;
 
-	# TODO: Violates encapsulation
 	$main->{gui}->{outline_panel} = Wx::TreeCtrl->new(
-		$main->{gui}->{sidepane},
+		$main->right,
 		Wx::wxID_ANY,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -44,15 +43,11 @@ sub create_outlinebar {
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$main,
-		$main->{gui}->{outline_panel},
-                \&on_outlineelem_selected,
-        );
+		$main->outline,
+		\&on_outlineelem_selected,
+	);
 
 	return;
-}
-
-sub outlinebar {
-	return $_[0]->main->{gui}->{outline_panel};
 }
 
 sub enable {
@@ -102,7 +97,7 @@ sub on_outlineelem_selected {
 sub on_outline_timer {
 	my ( $win, $event, $force ) = @_;
 	my $self = $win->doc_outliner;
-	my $outlinebar = $self->outlinebar;
+	my $outlinebar = $win->outline;
 
 	my $page = $win->current->editor;
 	if ( ! defined $page ) {
