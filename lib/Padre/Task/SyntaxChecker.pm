@@ -147,8 +147,8 @@ sub update_gui {
 
 		my $red = Wx::Colour->new("red");
 		my $orange = Wx::Colour->new("orange");
-		$notebook_page->MarkerDefine(Padre::Wx::MarkError(), Wx::wxSTC_MARK_SMALLRECT(), $red, $red);
-		$notebook_page->MarkerDefine(Padre::Wx::MarkWarn(),  Wx::wxSTC_MARK_SMALLRECT(), $orange, $orange);
+		$notebook_page->MarkerDefine(Padre::Wx::MarkError(), Wx::wxSTC_MARK_SMALLRECT, $red, $red);
+		$notebook_page->MarkerDefine(Padre::Wx::MarkWarn(),  Wx::wxSTC_MARK_SMALLRECT, $orange, $orange);
 
 		my $i = 0;
 		$syntax_bar->DeleteAllItems;
@@ -181,8 +181,8 @@ sub update_gui {
 			$last_hint = $hint;
 		}
 
-		my $width0_default = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT(), Wx::gettext("Line") . ' ' );
-		my $width0 = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT(), $last_hint->{line} x 2 );
+		my $width0_default = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT, Wx::gettext("Line") . ' ' );
+		my $width0 = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT, $last_hint->{line} x 2 );
 		my $refStr = '';
 		if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
 			$refStr = Wx::gettext('Warning');
@@ -190,7 +190,7 @@ sub update_gui {
 		else {
 			$refStr = Wx::gettext('Error');
 		}
-		my $width1 = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT(), $refStr . ' ' );
+		my $width1 = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT, $refStr . ' ' );
 		my $width2 = $syntax_bar->GetSize->GetWidth - $width0 - $width1 - $syntax_bar->GetCharWidth * 2;
 		$syntax_bar->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
 		$syntax_bar->SetColumnWidth( 1, $width1 );

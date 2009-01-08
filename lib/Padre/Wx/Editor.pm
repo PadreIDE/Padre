@@ -91,7 +91,7 @@ sub padre_setup {
 	#$self->CmdKeyAssign(Wx::wxSTC_KEY_ESCAPE, 0, Wx::wxSTC_CMD_CUT);
 
 	$self->SetCodePage(65001); # which is supposed to be Wx::wxSTC_CP_UTF8
-	# and Wx::wxUNICODE() or wxUSE_UNICODE should be on
+	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 
 	my $mimetype = $self->{Document}->get_mimetype;
 	if ($mimetype eq 'application/x-perl') {

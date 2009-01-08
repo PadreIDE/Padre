@@ -41,7 +41,7 @@ sub ShowModal {
 
 	# Get the return value as normal
 	my $rv = $self->{OBJECT}->ShowModal(@_);
-	unless ( $rv == Wx::wxID_OK() ) {
+	unless ( $rv == Wx::wxID_OK ) {
 		# They hit Cancel
 		return $rv;
 	}

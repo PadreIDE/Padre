@@ -186,11 +186,11 @@ sub new {
 		my $code = $event->GetKeyCode;
 
 		# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
-		$mod = $mod & (Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT());
+		$mod = $mod & (Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT);
 		if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
 			# Ctrl-TAB  #TODO it is already in the menu
 			$self->on_next_pane if $code == Wx::WXK_TAB;
-		} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT()) { # Ctrl-Shift
+		} elsif ( $mod == Wx::wxMOD_CMD + Wx::wxMOD_SHIFT) { # Ctrl-Shift
 			# Ctrl-Shift-TAB #TODO it is already in the menu
 			$self->on_prev_pane if $code == Wx::WXK_TAB;
 		}
