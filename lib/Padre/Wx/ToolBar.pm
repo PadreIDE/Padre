@@ -275,7 +275,7 @@ sub refresh {
 
 
 #####################################################################
-# Toolbar 2.0 Experimentation
+# Toolbar 2.0
 
 sub add_tool {
 	my $self  = shift;
@@ -300,14 +300,6 @@ sub add_tool {
 
 	return;
 }
-
-# NOTE: This is just here so Adam doesn't lose it accidentally.
-#       Please don't play around with it (yet).
-our %TOOLS = (
-	'Padre.new' => {
-		
-	},
-);
 
 1;
 
