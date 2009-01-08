@@ -127,7 +127,7 @@ sub _create_panel {
 		Padre::Wx::Icon::find('actions/x-document-close'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
-		Wx::wxNO_BORDER,
+		Wx::wxBORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON($main, $self->{close}, sub { $self->_hide_panel } );
 
@@ -146,7 +146,7 @@ sub _create_panel {
 		Padre::Wx::Icon::find('actions/go-previous'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
-		Wx::wxNO_BORDER
+		Wx::wxBORDER_NONE
 	);
 	Wx::Event::EVT_BUTTON($main, $self->{previous}, sub { $self->search('previous') } );
 
@@ -156,7 +156,7 @@ sub _create_panel {
 		Padre::Wx::Icon::find('actions/go-next'),
 		Wx::Point->new(-1,-1),
 		Wx::Size->new(-1,-1),
-		Wx::wxNO_BORDER,
+		Wx::wxBORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON($main, $self->{next}, sub { $self->search('next') } );
 
