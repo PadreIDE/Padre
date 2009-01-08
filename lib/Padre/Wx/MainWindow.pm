@@ -31,6 +31,7 @@ use Params::Util              ();
 use Padre::Util               ();
 use Padre::Locale             ();
 use Padre::Wx                 ();
+use Padre::Wx::Right          ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
 use Padre::Wx::Bottom         ();
@@ -242,23 +243,9 @@ sub new {
 
 sub create_side_pane {
 	my $self  = shift;
+	$DB::single = 1;
 
-	# Create the platform-sensitive style
-	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
-	          | Wx::wxAUI_NB_TOP;
-	unless ( Padre::Util::WXGTK ) {
-		# Crashes on Linux/GTK
-		# Doesn't seem to work right on Win32...
-		# $style = $style | Wx::wxAUI_NB_TAB_EXTERNAL_MOVE;
-	}
-
-	$self->{gui}->{sidepane} = Wx::AuiNotebook->new(
-		$self,
-		Wx::wxID_ANY,
-		Wx::wxDefaultPosition,
-		Wx::Size->new(300, 350), # used when pane is floated
-		$style,
-	);
+	$self->{gui}->{sidepane} = Padre::Wx::Right->new($self);
 
 	# Create the right-hand sidebar
 	$self->{gui}->{subs_panel} = Wx::ListCtrl->new(
@@ -303,27 +290,6 @@ sub create_side_pane {
 		$event->Skip(1);
 		return;
 	} );
-
-	$self->aui->AddPane(
-		$self->{gui}->{sidepane},
-		Wx::AuiPaneInfo->new
-			->Name('sidepane')
-			->CenterPane
-			->Resizable(1)
-			->PaneBorder(0)
-			->Movable(1)
-			->CaptionVisible(1)
-			->CloseButton(0)
-			->DestroyOnClose(0)
-			->MaximizeButton(0)
-			->Floatable(1)
-			->Dockable(1)
-			->Caption( Wx::gettext("Workspace View") )
-			->Position(3)
-			->Right
-			->Layer(3)
-			->Hide
-	);
 
 	$self->{gui}->{subs_panel}->InsertColumn(0, Wx::gettext('Methods'));
 	$self->{gui}->{subs_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
@@ -655,6 +621,18 @@ sub notebook {
 	return $_[0]->{gui}->{notebook};
 }
 
+sub bottom {
+	$_[0]->{gui}->{bottompane};
+}
+
+sub right {
+	$_[0]->{gui}->{sidepane};
+}
+
+sub output {
+	$_[0]->{gui}->{output_panel};
+}
+
 =pod
 
 =head2 current
@@ -686,13 +664,6 @@ sub pages {
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
 
-sub bottom {
-	$_[0]->{gui}->{bottompane};
-}
-
-sub output {
-	$_[0]->{gui}->{output_panel};
-}
 
 
 
@@ -1753,7 +1724,6 @@ sub on_word_wrap {
 }
 
 sub show_output {
-	$DB::single = 1;
 	my $self = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {

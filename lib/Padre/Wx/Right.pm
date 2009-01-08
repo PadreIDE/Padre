@@ -1,6 +1,6 @@
-package Padre::Wx::Bottom;
+package Padre::Wx::Right;
 
-# The bottom notebook
+# The right-hand notebook
 
 use strict;
 use warnings;
@@ -28,11 +28,11 @@ sub new {
 	}
 
 	# Create the basic object
-	my $self  = $class->SUPER::new(
+	my $self = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new(350, 300), # used when pane is floated
+		Wx::Size->new(300, 350), # used when pane is floated
 		$style,
 	);
 
@@ -43,24 +43,24 @@ sub new {
 	$self->{aui}->AddPane(
 		$self,
 		Wx::AuiPaneInfo->new
-			->Name('bottompane')
+			->Name('sidepane')
 			->Resizable(1)
 			->PaneBorder(0)
 			->Movable(1)
 			->CaptionVisible(1)
 			->CloseButton(0)
 			->DestroyOnClose(0)
-			->MaximizeButton(1)
+			->MaximizeButton(0)
 			->Floatable(1)
 			->Dockable(1)
-			->Position(2)
-			->Bottom
-			->Layer(4)
+			->Position(3)
+			->Right
+			->Layer(3)
 			->Hide
 	);
 
 	# Set the locale-aware caption
-	$self->{aui}->caption_gettext('bottompane' => 'Output View');
+	$self->{aui}->caption_gettext('sidepane' => 'Workspace View');
 
 	return $self;
 }
