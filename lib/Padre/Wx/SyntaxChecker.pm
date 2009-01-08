@@ -154,7 +154,11 @@ sub on_syntax_check_timer {
 	}
 	my $document = $page->{Document};
 
-	unless ( defined( $document ) and $document->can('check_syntax') ) {
+	if ( ! defined $document ) {
+		$syntaxbar->DeleteAllItems;
+		return;
+	}
+	elsif ( ! $document->can('check_syntax') ) {
 		if ( defined $page and $page->isa('Padre::Wx::Editor') ) {
 			$page->MarkerDeleteAll(Padre::Wx::MarkError);
 			$page->MarkerDeleteAll(Padre::Wx::MarkWarn);
@@ -163,8 +167,14 @@ sub on_syntax_check_timer {
 		return;
 	}
 
-	$document->check_syntax_in_background(force => $force);
-	
+	my $pre_exec_result = $document->check_syntax_in_background(force => $force);
+
+	# In case we have created a new and still completely empty doc we
+	# need to clean up the message list
+	if ( ref $pre_exec_result eq 'ARRAY' && ! @{$pre_exec_result} ) {
+		$syntaxbar->DeleteAllItems;
+	}
+
 	if ( defined($event) ) {
 		$event->Skip(0);
 	}

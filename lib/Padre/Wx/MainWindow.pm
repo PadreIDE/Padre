@@ -386,15 +386,10 @@ sub refresh {
 	$self->refresh_status($current);
 	$self->refresh_methods($current);
 
-	# Fix ticket #185: Padre crash when closing files
-	if ( ! $self->{no_syntax_check_refresh} ) {
-		$self->refresh_syntaxcheck($current);
-	}
-	$self->{no_syntax_check_refresh} = 0;
-
 	my $id = $self->notebook->GetSelection;
 	if ( defined $id and $id >= 0 ) {
 		$self->notebook->GetPage($id)->SetFocus;
+		$self->refresh_syntaxcheck;
 	}
 
 	$self->Thaw;
@@ -1353,7 +1348,6 @@ sub on_close {
 		$event->Veto;
 	}
 	$self->close;
-	$self->{no_syntax_check_refresh} = 1;
 	$self->refresh;
 }
 
@@ -1390,6 +1384,10 @@ sub close {
 		}
 	}
 	$self->notebook->DeletePage($id);
+
+	if ( defined $self->syntax_checker->syntaxbar ) {
+		$self->syntax_checker->syntaxbar->DeleteAllItems;
+	}
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh($self->current);
