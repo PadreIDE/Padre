@@ -30,6 +30,8 @@ use Scalar::Util              ();
 use Params::Util              ();
 use Padre::Util               ();
 use Padre::Locale             ();
+use Padre::Current            qw{_CURRENT};
+use Padre::Document           ();
 use Padre::Wx                 ();
 use Padre::Wx::Right          ();
 use Padre::Wx::Editor         ();
@@ -42,8 +44,6 @@ use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
 use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
-use Padre::Document           ();
-use Padre::Current            qw{_CURRENT};
 
 our $VERSION = '0.24';
 our @ISA     = 'Wx::Frame';
