@@ -19,7 +19,7 @@ sub new {
 	my $style = Wx::wxNO_BORDER
 		| Wx::wxTB_HORIZONTAL
 		| Wx::wxTB_FLAT
-		| wxTB_NO_TOOLTIPS;
+		| Wx::wxTB_NO_TOOLTIPS;
 	unless ( $main->config->{main_lockpanels} ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
