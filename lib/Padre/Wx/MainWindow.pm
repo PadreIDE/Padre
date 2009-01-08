@@ -150,43 +150,25 @@ sub new {
 	);
 	$self->GetToolBar->Realize;
 
-	# Create the status bar
+	# Create the tool panes 
 	$self->{gui}->{statusbar} = Padre::Wx::StatusBar->new($self);
 
-	# Create the main notebook for the documents
-	$self->{gui}->{notebook} = Padre::Wx::Notebook->new($self);
+	# Create the three notebooks (document and tools) that
+	# serve as the main AUI manager GUI elements.
+	$self->{gui}->{notebook}   = Padre::Wx::Notebook->new($self);
+	$self->{gui}->{sidepane}   = Padre::Wx::Right->new($self);
+	$self->{gui}->{bottompane} = Padre::Wx::Bottom->new($self);
 
-	# Create the right pane
-	$self->{gui}->{sidepane} = Padre::Wx::Right->new($self);
-
-	# Create the function list
+	# Creat the various tools that will live in the panes
 	$self->{gui}->{subs_panel} = Padre::Wx::FunctionList->new(
 		$self->{gui}->{sidepane}
 	);
-	$self->show_functions( $self->config->{main_subs_panel} );
-
-	# Create the bottom pane
-	$self->{gui}->{bottompane} = Padre::Wx::Bottom->new($self);
-
-	# Create the output textarea
 	$self->{gui}->{output_panel} = Padre::Wx::Output->new(
 		$self->{gui}->{bottompane}
 	);
-	$self->show_output( $self->config->{main_output_panel} );
-
-	# Create the syntax checker and sidebar for syntax check messages
-	# Must be created after the bottom pane!
+	$self->{errorlist}      = Padre::Wx::ErrorList->new($self);
 	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
-	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
-
-	# Create the doc outline analyzer and sidebar for structure display
-	# Must be created after the side pane!
-	$self->{doc_outliner} = Padre::Wx::DocOutliner->new($self);
-	$self->show_outlinebar( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
-
-	# Create the error list
-	# Must be created after the bottom pane!
-	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
+	$self->{doc_outliner}   = Padre::Wx::DocOutliner->new($self);
 
 	# on close pane
 	Wx::Event::EVT_AUI_PANE_CLOSE(
@@ -230,6 +212,12 @@ sub new {
 	# As ugly as the WxPerl icon is, the new file toolbar image we
 	# used to use was far uglier
 	$self->SetIcon( Wx::GetWxPerlIcon() );
+
+	# Show the tools that the configuration dictates
+	$self->show_functions( $self->config->{main_subs_panel} );
+	$self->show_output( $self->config->{main_output_panel} );
+	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
+	$self->show_outlinebar( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
 
 	# Load the saved pane layout from last time (if any)
 	if ( defined $config->{host}->{aui_manager_layout} ) {
