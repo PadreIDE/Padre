@@ -62,6 +62,7 @@ use Class::Autouse qw{
 	Padre::Wx::History::TextDialog
 	Padre::Wx::MainWindow
 	Padre::Wx::SyntaxChecker
+	Padre::Wx::DocOutliner
 };
 
 # Gnerate faster accessors

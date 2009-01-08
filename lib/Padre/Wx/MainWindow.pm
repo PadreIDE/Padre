@@ -66,6 +66,7 @@ use Class::XSAccessor
 		no_refresh     => '_no_refresh',
 		syntax_checker => 'syntax_checker',
 		errorlist      => 'errorlist',
+		doc_outliner   => 'doc_outliner',
 	};
 
 # NOTE: Yes this method does get a little large, but that's fine.
@@ -170,6 +171,11 @@ sub new {
 	# Must be created after the bottom pane!
 	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
 	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
+
+	# Create the doc outline analyzer and sidebar for structure display
+	# Must be created after the side pane!
+	$self->{doc_outliner} = Padre::Wx::DocOutliner->new($self);
+	$self->show_outlinebar( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
 
 	# Create the error list
 	# Must be created after the bottom pane!
@@ -1779,6 +1785,46 @@ sub show_functions {
 	}
 	$self->aui->Update;
 	$self->config->{main_subs_panel} = $on;
+
+	return;
+}
+
+sub show_outlinebar {
+	my $self = shift;
+	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
+
+	my $sp = \$self->{gui}->{sidepane};
+	my $op = \$self->{gui}->{outline_panel};
+
+	# XXX error while $self->menu->view->{show_docoutline} is not defined...
+	#unless ( $on == $self->menu->view->{show_docoutline}->IsChecked ) {
+	#	$self->menu->view->{show_docoutline}->Check($on);
+	#}
+
+	if ( $on ) {
+		my $idx = ${$sp}->GetPageIndex(${$op});
+		if ( $idx >= 0 ) {
+			${$sp}->SetSelection($idx);
+		}
+		else {
+			${$sp}->InsertPage(
+				1,
+				${$op},
+				Wx::gettext("Outline"),
+				1,
+			);
+			${$op}->Show;
+			$self->check_pane_needed('sidepane');
+		}
+	} else {
+		my $idx = ${$sp}->GetPageIndex(${$op});
+		${$op}->Hide;
+		if ( $idx >= 0 ) {
+			${$sp}->RemovePage($idx);
+			$self->check_pane_needed('sidepane');
+		}
+	}
+	$self->aui->Update;
 
 	return;
 }
