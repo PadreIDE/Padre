@@ -3,6 +3,7 @@ package Padre::Config::Project;
 use 5.008;
 use strict;
 use warnings;
+use YAML::Tiny   ();
 use Params::Util qw{_HASH0};
 
 our $VERSION = '0.24';
