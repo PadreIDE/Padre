@@ -51,7 +51,7 @@ sub find {
 
 	# Search through the theme list
 	foreach my $theme ( THEMES ) {
-		my $hint = ($HINT{$theme} and $HINT{$theme}->{$name})
+		my $hinted = ($HINT{$theme} and $HINT{$theme}->{$name})
 			? $HINT{$theme}->{$name}
 			: $name;
 		my $file = File::Spec->catfile(
