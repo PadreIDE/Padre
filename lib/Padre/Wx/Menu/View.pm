@@ -373,7 +373,7 @@ sub new {
 	# Language Support
 	# TODO: God this is horrible, there has to be a better way
 	require Padre::Locale;
-	my $default  = Padre::Locale::system_rfc4646();
+	my $default  = Padre::Locale::system_rfc4646() || 'x-unknown';
 	my $current  = Padre::Locale::rfc4646();
 	my %language = Padre::Locale::menu_view_languages();
 
