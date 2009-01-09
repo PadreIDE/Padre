@@ -31,11 +31,15 @@ sub new {
 
 
 	# Create new things
+	$self->{new} = $self->Append(
+		Wx::wxID_NEW,
+		Wx::gettext("&New\tCtrl-N"),
+	);
+	#$self->{new}->SetBitmap(
+	#	Padre::Wx::gnome('actions', 'document-new.png')
+	#);
 	Wx::Event::EVT_MENU( $main,
-		$self->Append(
-			Wx::wxID_NEW,
-			Wx::gettext("&New\tCtrl-N")
-		),
+		$self->{new},
 		sub {
 			$_[0]->on_new;
 		},
