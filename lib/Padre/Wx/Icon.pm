@@ -64,6 +64,12 @@ sub find {
 		return Wx::Bitmap->new($file, Wx::wxBITMAP_TYPE_PNG );
 	}
 
+	require Carp;
+	# NOTE: This crash is mandatory. If you pass undef or similarly
+	# wrong things to AddTool, you get a segfault and nobody likes
+	# segfaults, right?
+	Carp::confess("Could not find icon '$name'!");
+
 	return undef;
 }
 
