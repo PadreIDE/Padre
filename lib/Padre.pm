@@ -524,12 +524,6 @@ Need to define the mime-type mapping in L<Padre::Document>
 For examples see L<Padre::Document::PASM>, L<Padre::Document::PIR>,
 L<Padre::Document::Perl>.
 
-=head1 Command line options
-
-  --index   will go over the @INC and list all the available modules in the database
-
-  a list of filenames can be given to be opened
-
 =head1 Preferences
 
 There are several types of preferences we can think of.

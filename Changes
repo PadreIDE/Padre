@@ -1,5 +1,12 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.25 2009.01.09
+
+    Added Chinese (Simplified) translation (FAYLAND)
+    Various subtle tweaks to the look and feel of the toolbar and
+        the panels. The GUI now looks noticably "sharper" (ADAMK)
+    Expanded the variety and depth of functionality available in the
+        bundled "Padre Developer Tools" plugin (ADAMK)
     Our unattributed redistribution of tango was probably illegal,
         and made us incompatible with Debian. Switch to gnome for
         now. They are as ugly as sin, but at least they're legal (ADAMK)
@@ -8,7 +15,7 @@ Changes for Perl Application Development and Refactoring Environment
     Moved Padre::Plugin::CPAN functionality into the core so that
         we can do various sorts of tighter CPAN integration (ADAMK)
     Padre::Wx::DocBrowser now uses Padre::Task::DocBrowser (let's 
-        hope properly) (Andrew Bramble) 
+        hope properly) (Andrew Bramble)
     Class correction Padre::Wx::Menu -> Padre::Wx::Menubar (ADAMK)
     Class correction Padre::Wx::Submenu -> Padre::Wx::Menu (ADAMK)
     Now that Padre::DocBrowser has landed, delete the Padre::Pod

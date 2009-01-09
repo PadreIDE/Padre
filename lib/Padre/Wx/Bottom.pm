@@ -89,7 +89,7 @@ sub show {
 	$self->InsertPage(
 		0,
 		$page,
-		$page->tab_label,
+		$page->gettext_label,
 		1,
 	);
 	$page->Show;

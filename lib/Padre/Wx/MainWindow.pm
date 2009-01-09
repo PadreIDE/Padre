@@ -158,18 +158,16 @@ sub new {
 
 	# Create the three notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
-	$self->{gui}->{notebook}   = Padre::Wx::Notebook->new($self);
-	$self->{gui}->{sidepane}   = Padre::Wx::Right->new($self);
-	$self->{gui}->{bottompane} = Padre::Wx::Bottom->new($self);
+	$self->{gui}->{notebook}     = Padre::Wx::Notebook->new($self);
+	$self->{gui}->{sidepane}     = Padre::Wx::Right->new($self);
+	$self->{gui}->{bottompane}   = Padre::Wx::Bottom->new($self);
 
 	# Creat the various tools that will live in the panes
-	$self->{gui}->{subs_panel} = Padre::Wx::FunctionList->new($self);
-	$self->{gui}->{output_panel} = Padre::Wx::Output->new(
-		$self->{gui}->{bottompane}
-	);
-	$self->{errorlist}      = Padre::Wx::ErrorList->new($self);
-	$self->{syntax_checker} = Padre::Wx::SyntaxChecker->new($self);
-	$self->{doc_outliner}   = Padre::Wx::DocOutliner->new($self);
+	$self->{gui}->{subs_panel}   = Padre::Wx::FunctionList->new($self);
+	$self->{gui}->{output_panel} = Padre::Wx::Output->new($self);
+	$self->{errorlist}           = Padre::Wx::ErrorList->new($self);
+	$self->{syntax_checker}      = Padre::Wx::SyntaxChecker->new($self);
+	$self->{doc_outliner}        = Padre::Wx::DocOutliner->new($self);
 
 	# on close pane
 	Wx::Event::EVT_AUI_PANE_CLOSE(
@@ -567,7 +565,11 @@ sub output {
 }
 
 sub outline {
-    $_[0]->{gui}->{outline_panel};
+	$_[0]->{gui}->{outline_panel};
+}
+
+sub functions {
+	$_[0]->{gui}->{subs_panel};
 }
 
 =pod
@@ -1685,40 +1687,18 @@ sub show_output {
 sub show_functions {
 	my $self = shift;
 	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
-
-	my $sp = \$self->{gui}->{sidepane};
-	my $fp = \$self->{gui}->{subs_panel};
-
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
+	$self->config->{main_subs_panel} = $on;
 
 	if ( $on ) {
-		# $self->refresh_methods();
-		my $idx = ${$sp}->GetPageIndex(${$fp});
-		if ( $idx >= 0 ) {
-			${$sp}->SetSelection($idx);
-		}
-		else {
-			${$sp}->InsertPage(
-				0,
-				${$fp},
-				Wx::gettext("Subs"),
-				1,
-			);
-			${$fp}->Show;
-			$self->check_pane_needed('sidepane');
-		}
+		$self->right->show($self->functions);
 	} else {
-		my $idx = ${$sp}->GetPageIndex(${$fp});
-		${$fp}->Hide;
-		if ( $idx >= 0 ) {
-			${$sp}->RemovePage($idx);
-			$self->check_pane_needed('sidepane');
-		}
+		$self->right->hide($self->functions);
 	}
+
 	$self->aui->Update;
-	$self->config->{main_subs_panel} = $on;
 
 	return;
 }
@@ -1979,34 +1959,6 @@ sub run_in_padre {
 	return;
 }
 
-sub on_function_selected {
-	my $self     = shift;
-	my $event    = shift;
-	my $subname  = $event->GetItem->GetText or return;
-	my $document = $self->current->document;
-	my $editor   = $document->editor;
-
-	# Locate the function
-	my ($start, $end) = Padre::Util::get_matches(
-		$editor->GetText,
-		$document->get_function_regex($subname),
-		$editor->GetSelection, # Provides two params
-	);
-	return unless defined $start; # Couldn't find it
-
-	# Move the selection to the sub location
-	$editor->GotoPos($start);
-	$editor->ScrollToLine(
-		$editor->GetCurrentLine - ($editor->LinesOnScreen / 2)
-	);
-	$editor->SetFocus;
-
-	# $editor->SetCurrentPos($start);
-	# $editor->goto_pos_centerize($start);
-
-	return;
-}
-
 ## STC related functions
 
 sub on_stc_style_needed {
@@ -2215,18 +2167,6 @@ sub on_delete_leading_space {
 	
 	my $editor = $current->editor;
 	$editor->ReplaceSelection( $code );
-}
-
-# TODO next function
-# should be in a class representing the subs panel
-sub on_subs_panel_left {
-	my ($self, $event) = @_;
-	my $main = Padre->ide->wx->main_window;
-	if ( $main->{subs_panel_was_closed} ) {
-		$main->show_functions(0);
-		$main->{subs_panel_was_closed} = 0;
-	}
-	return;
 }
 
 #

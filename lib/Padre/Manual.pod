@@ -9,15 +9,18 @@ This is a stub for what will eventually become the Padre manual.
 Currently this serves as a launch point for each of the child documents
 that make up the nascent "manual".
 
-=head2 Padre Development Guide
+=head2 Padre Developer Guide
 
 If you would like to help improve Padre see L<Padre::Manual::Hacking> for
-information on checking out Padre, how to work with it, file bugs, etc.
+information on checking out the Padre source code, how to work with it,
+file bugs, and on.
 
 =head2 Padre Translation Guild
 
-If you would like to translate Padre into your local language, see
-L<Padre::Manual::Translation> for more information.
+If you would like to translate Padre into your local language, see the
+online documentation for more details.
 
-This is currently VERY new and does not have much useful information in it.
-(That should hopefully change shortly).
+L<http://padre.perlide.org/wiki/TranslationIntro>
+
+TO BE COMPLETED
+
