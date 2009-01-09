@@ -28,6 +28,8 @@ sub new {
 		Wx::wxLC_SINGLE_SEL
 		| Wx::wxLC_NO_HEADER
 		| Wx::wxLC_REPORT
+		| Wx::wxBORDER_NONE
+		| Wx::wxVSCROLL
 	);
 
 	# TODO: What does this do?
