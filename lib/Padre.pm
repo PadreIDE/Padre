@@ -27,13 +27,27 @@ our $VERSION = '0.24';
 
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials
-use Padre::Util    ();
-use Padre::Config  ();
+use Padre::Util   ();
+use Padre::Config ();
 
 # Nudges to make Class::Autouse behave
 BEGIN {
 	$Class::Autouse::LOADED{'Wx::Object'} = 1;
 }
+
+# Modules to be run-time autoloaded.
+# This is more efficient that use'ing a module, but less efficient
+# than making a direct call to require.
+# This is for fully OO classes that are refered to in a number of
+# different places in the code, making the use of "require" tricky.
+# For modules that are only used in one or two places (such as
+# task-specific dialog boxes and so on) you should use require instead.
+# This section can also be used for classes which aren't called
+# directly by name. For example, a document type class is called from
+# $class->new variable obtained from a HASH mapping.
+# This should not be used for abstract parent classes that are never
+# refered to directly. Let them get loaded normally via the top level
+# module's "use base" (or similar) call.
 use Class::Autouse qw{
 	Padre::DB
 	Padre::Document
@@ -61,8 +75,6 @@ use Class::Autouse qw{
 	Padre::Wx::Dialog::Snippets
 	Padre::Wx::History::TextDialog
 	Padre::Wx::MainWindow
-	Padre::Wx::SyntaxChecker
-	Padre::Wx::DocOutliner
 };
 
 # Gnerate faster accessors
