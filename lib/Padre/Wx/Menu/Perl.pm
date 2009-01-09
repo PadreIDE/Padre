@@ -49,28 +49,30 @@ sub new {
 		},
 	);
 
-	$self->{module}->AppendSeparator;
+	#$self->{module}->AppendSeparator;
 
 	# Install from other places
-	$self->{module_install_file} = $self->{module}->Append( -1,
-		Wx::gettext("Install Local Distribution"),
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{module_install_file},
-		sub {
-			$self->install_file($_[0]);
-		},
-	);
+	# TODO: implement
+	#$self->{module_install_file} = $self->{module}->Append( -1,
+	#	Wx::gettext("Install Local Distribution"),
+	#);
+	#Wx::Event::EVT_MENU( $main,
+	#	$self->{module_install_file},
+	#	sub {
+	#		$self->install_file($_[0]);
+	#	},
+	#);
 
-	$self->{module_install_url} = $self->{module}->Append( -1,
-		Wx::gettext("Install Remote Distribution"),
-	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{module_install_url},
-		sub {
-			$self->install_url($_[0]);
-		},
-	);
+	# TODO: implement
+	#$self->{module_install_url} = $self->{module}->Append( -1,
+	#	Wx::gettext("Install Remote Distribution"),
+	#);
+	#Wx::Event::EVT_MENU( $main,
+	#	$self->{module_install_url},
+	#	sub {
+	#		$self->install_url($_[0]);
+	#	},
+	#);
 
 	$self->{module}->AppendSeparator;
 
