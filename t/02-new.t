@@ -27,7 +27,7 @@ SCOPE: {
 		{
 		experimental       => 0,
 
-		editor_linenumbers => 0,
+		editor_linenumbers => 1,
 		editor_eol         => 0,
 		editor_indentationguides => 0,
 		editor_calltips    => 0,
