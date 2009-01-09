@@ -49,7 +49,7 @@ use constant SHAREDIR => File::Spec->rel2abs(
 	Padre::Util::sharedir('locale')
 );
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 # The RFC4646 table is the primary language data table and contains
 # mappings from a Padre-supported language to all the relevant data

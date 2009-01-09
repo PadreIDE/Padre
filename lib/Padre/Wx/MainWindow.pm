@@ -48,7 +48,7 @@ use Padre::Wx::FunctionList   ();
 use Padre::Wx::SyntaxChecker  ();
 use Padre::Wx::FileDropTarget ();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 our @ISA     = 'Wx::Frame';
 
 my $default_dir = Cwd::cwd();

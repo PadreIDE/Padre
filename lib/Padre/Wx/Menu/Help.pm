@@ -15,7 +15,7 @@ use Padre::Wx          ();
 use Padre::Wx::Menu ();
 use Padre::Wx::DocBrowser();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 our @ISA     = 'Padre::Wx::Menu';
 
 

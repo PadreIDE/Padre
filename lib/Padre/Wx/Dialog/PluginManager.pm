@@ -7,7 +7,7 @@ use Params::Util      qw{_INSTANCE};
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 sub new {
 	my $class   = shift;

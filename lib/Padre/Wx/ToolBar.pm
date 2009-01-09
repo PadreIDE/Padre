@@ -8,7 +8,7 @@ use Padre::Wx         ();
 use Padre::Wx::Editor ();
 use Padre::Wx::Icon   ();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 our @ISA     = 'Wx::ToolBar';
 
 sub new {

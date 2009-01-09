@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use PPI;
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 
 

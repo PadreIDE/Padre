@@ -30,7 +30,7 @@ use warnings;
 use Padre::Wx ();
 use base 'Wx::Frame';
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 =pod
 

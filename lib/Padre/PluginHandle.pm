@@ -6,7 +6,7 @@ use warnings;
 use Carp         'croak';
 use Params::Util qw{_IDENTIFIER _CLASS _INSTANCE};
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 use overload
 	'bool'     => sub { 1 },

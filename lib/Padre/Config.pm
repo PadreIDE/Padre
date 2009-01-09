@@ -11,7 +11,7 @@ use File::HomeDir ();
 use Params::Util  qw{ _STRING _ARRAY };
 use YAML::Tiny    ();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 my %defaults = (
 	# startup mode, if no files given on the command line this can be

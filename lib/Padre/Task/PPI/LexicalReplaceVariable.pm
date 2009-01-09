@@ -3,7 +3,7 @@ package Padre::Task::PPI::LexicalReplaceVariable;
 use strict;
 use warnings;
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 use base 'Padre::Task::PPI';
 use Padre::Wx ();

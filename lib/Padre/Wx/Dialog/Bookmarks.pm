@@ -10,7 +10,7 @@ use Padre::Wx;
 use Padre::Wx::Dialog;
 use Wx::Locale qw(:default);
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 # workaround: need to be accessible from outside in oder to write unit test ( t/03-wx.t )
 my $dialog;
