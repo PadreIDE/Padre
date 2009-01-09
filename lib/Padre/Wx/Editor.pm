@@ -31,8 +31,8 @@ sub new {
 
 	# Set the code margins a little larger than the default.
 	# This seems to noticably reduce eye strain.
-	$self->SetMarginLeft(2);
-	$self->SetMarginRight(2);
+	$self->SetMarginLeft(3);
+	$self->SetMarginRight(0);
 
 	# Clear out all the other margins
 	$self->SetMarginWidth(0, 0);
