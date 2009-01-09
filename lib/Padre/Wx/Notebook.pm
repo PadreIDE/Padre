@@ -27,11 +27,17 @@ sub new {
 		$self,
 		Wx::AuiPaneInfo->new
 			->Name('editorpane')
-			->CenterPane
-			->Resizable
+ 			->CenterPane
+			->Resizable(1)
 			->PaneBorder(0)
-			->Dockable
+			->Movable(1)
+			->CaptionVisible(0)
+			->CloseButton(0)
+			->MaximizeButton(0)
+			->Floatable(1)
+			->Dockable(1)
 			->Position(1)
+			->Layer(1)
 	);
 	$main->aui->caption_gettext('editorpane' => 'Files');
 
