@@ -51,7 +51,7 @@ SCOPE: {
 		main_statusbar     => 1,
 		main_output        => 0,
 		main_rightbar      => 1,
-		main_lockpanels    => 0,
+		main_lockpanels    => 1,
 		projects           => {},
 		run_save           => 'same',
 		current_project    => '',
