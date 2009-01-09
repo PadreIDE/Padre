@@ -92,7 +92,6 @@ sub new {
 			Wx::gettext("GoTo Subs Window\tAlt-S")
 		),
 		sub {
-			$_[0]->{subs_panel_was_closed} = ! Padre->ide->config->{main_subs_panel};
 			$_[0]->refresh_methods($_[0]->current);
 			$_[0]->show_functions(1); 
 			$_[0]->{gui}->{subs_panel}->SetFocus;
