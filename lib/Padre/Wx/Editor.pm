@@ -98,6 +98,10 @@ sub padre_setup {
 		$self->padre_setup_style('perl');
 	#} elsif ( $mimetype eq 'application/x-pasm' ) {
 	#	$self->padre_setup_style('pasm');
+	} elsif ( $mimetype eq 'text/x-patch' ) {
+		$self->padre_setup_style('diff');
+	} elsif ( $mimetype eq 'text/x-makefile' ) {
+		$self->padre_setup_style('make');
 	} elsif ($mimetype) {
 		# setup some default coloring
 		# for the time being it is the same as for Perl
@@ -148,6 +152,8 @@ sub padre_setup_plain {
 		$self->SetLayoutDirection( Wx::wxLayout_LeftToRight );
 	}
 
+	$self->setup_style_from_config('plain');
+
 	return;
 }
 
@@ -155,6 +161,15 @@ sub padre_setup_style {
 	my ($self, $name) = @_;
 
 	$self->padre_setup_plain;
+
+	$self->StyleSetBackground($_, _color($data->{$name}->{background})) for (0..Wx::wxSTC_STYLE_DEFAULT);
+	$self->setup_style_from_config($name);
+
+	return;
+}
+
+sub setup_style_from_config {
+	my ($self, $name) = @_;
 
 	foreach my $k ( keys %{ $data->{$name}->{colors} }) {
 		my $f = 'Wx::' . $k;
@@ -169,13 +184,19 @@ sub padre_setup_style {
 			}
 		}
 
-		$self->StyleSetForeground( $f->(), _color($data->{$name}->{colors}->{$k}) );
+		$self->StyleSetForeground( $f->(), _color($data->{$name}->{colors}->{$k}->{foreground}) )
+			if exists $data->{$name}->{colors}->{$k}->{foreground};
+		$self->StyleSetBackground( $f->(), _color($data->{$name}->{colors}->{$k}->{background}) )
+			if exists $data->{$name}->{colors}->{$k}->{background};
+		$self->StyleSetBold( $f->(), $data->{$name}->{colors}->{$k}->{bold} )
+			if exists $data->{$name}->{colors}->{$k}->{bold};
+		$self->StyleSetItalic( $f->(), $data->{$name}->{colors}->{$k}->{italic} )
+			if exists $data->{$name}->{colors}->{$k}->{italic};
+		$self->StyleSetEOLFilled( $f->(), $data->{$name}->{colors}->{$k}->{eolfilled} )
+			if exists $data->{$name}->{colors}->{$k}->{eolfilled};
+		$self->StyleSetUnderline( $f->(), $data->{$name}->{colors}->{$k}->{underline} )
+			if exists $data->{$name}->{colors}->{$k}->{underline};
 	}
-
-	$self->StyleSetBackground(34, _color($data->{$name}->{brace_highlight}));
-	$self->StyleSetBackground($_, _color($data->{$name}->{background})) for (0..32);
-
-	return;
 }
 
 sub _color {
