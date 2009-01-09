@@ -17,8 +17,8 @@ use Test::NoWarnings;
 
 use Data::Dumper qw(Dumper);
 
-use t::lib::Padre;
-use Padre;
+#use t::lib::Padre;
+#use Padre;
 use Padre::DB ();
 
 my $app = Padre->new;
