@@ -941,15 +941,15 @@ msgstr "跳至(&G)\tCtrl-G"
 
 #: lib/Padre/Wx/Menu/Edit.pm:157
 msgid "&AutoComp\tCtrl-P"
-msgstr ""
+msgstr "自动完成(&A)\tCtrl-P"
 
 #: lib/Padre/Wx/Menu/Edit.pm:165
 msgid "&Brace matching\tCtrl-1"
-msgstr ""
+msgstr "匹配括号(&B)\t-Ctrl-1"
 
 #: lib/Padre/Wx/Menu/Edit.pm:173
 msgid "&Join lines\tCtrl-J"
-msgstr ""
+msgstr "合并行(&J)\tCtrl-J"
 
 #: lib/Padre/Wx/Menu/Edit.pm:181
 msgid "Snippets\tCtrl-Shift-A"
