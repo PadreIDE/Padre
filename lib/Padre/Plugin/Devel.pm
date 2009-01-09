@@ -40,6 +40,10 @@ sub menu_plugins_simple {
 		'Dump Top IDE Object'       => 'dump_padre',
 		'Dump %INC HASH'            => 'dump_inc',
 		'---'                       => undef,
+		'wxWidgets 2.8.8 Reference' => sub {
+			Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
+		},
+		'---'                       => undef,
 		'About'                     => 'show_about',
 	];
 }
