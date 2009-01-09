@@ -1,16 +1,22 @@
-use Test::NoWarnings;
+#!/usr/bin/perl
 
-use Test::More 'no_plan'; 
+use strict;
+use Test::More;
+BEGIN {
+	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
+plan( 'no_plan' );
+
+use Test::NoWarnings;
 use File::Spec::Functions qw( catfile );
 use URI;
 
-BEGIN {
-
-
 use_ok( 'Padre::DocBrowser' ) ;
 use_ok( 'Padre::Task::DocBrowser' );
-
-}
 
 my $db = Padre::DocBrowser->new();
 
