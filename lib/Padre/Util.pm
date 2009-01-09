@@ -31,7 +31,7 @@ use List::Util   qw(first);
 
 our $VERSION   = '0.24';
 our @ISA       = 'Exporter';
-our @EXPORT_OK = qw(newline_type get_matches);
+our @EXPORT_OK = qw(newline_type get_matches _T);
 
 
 
@@ -156,7 +156,21 @@ sub get_matches {
 
 
 
+#####################################################################
 
+=pod
+
+=head2 _T
+
+This is the shorthand of Wx::gettext('some text to translate')
+
+Specifically to be used for strings that you want to
+delay translation until later, so that the translation
+tools can find it.
+=cut
+sub _T { 
+    shift; 
+}
 
 #####################################################################
 # Shared Resources
