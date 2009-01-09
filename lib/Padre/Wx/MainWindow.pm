@@ -43,7 +43,9 @@ use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
 use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
+use Padre::Wx::DocOutliner    ();
 use Padre::Wx::FunctionList   ();
+use Padre::Wx::SyntaxChecker  ();
 use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.24';
@@ -161,9 +163,7 @@ sub new {
 	$self->{gui}->{bottompane} = Padre::Wx::Bottom->new($self);
 
 	# Creat the various tools that will live in the panes
-	$self->{gui}->{subs_panel} = Padre::Wx::FunctionList->new(
-		$self->{gui}->{sidepane}
-	);
+	$self->{gui}->{subs_panel} = Padre::Wx::FunctionList->new($self);
 	$self->{gui}->{output_panel} = Padre::Wx::Output->new(
 		$self->{gui}->{bottompane}
 	);
@@ -1957,7 +1957,7 @@ sub run_in_padre {
 	my $self = shift;
 	my $doc  = $self->current->document or return;
 	my $code = $doc->text_get;
-	eval $code; ## no critic
+	my @rv   = eval $code; ## no critic
 	if ( $@ ) {
 		Wx::MessageBox(
 			sprintf(Wx::gettext("Error: %s"), $@),
@@ -1965,7 +1965,17 @@ sub run_in_padre {
 			Wx::wxOK,
 			$self,
 		);
+		return;
 	}
+
+	# Dump the results to the output window
+	require Devel::Dumpvar;
+	my $dumper = Devel::Dumpvar->new( to => 'return' );
+	my $string = $dumper->dump( @rv );
+	$self->show_output(1);
+	$self->output->clear;
+	$self->output->AppendText($string);
+
 	return;
 }
 
