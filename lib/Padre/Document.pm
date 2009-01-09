@@ -265,7 +265,7 @@ sub last_sync {
 sub guess_mimetype {
 	my $self     = shift;
 	my $text     = $self->{original_content};
-	my $filename = $self->filename;
+	my $filename = $self->filename || q{};
 
 	# Default mime-type of new files, should be configurable in the GUI
 	# TODO: Make it configurable in the GUI :)
@@ -285,6 +285,12 @@ sub guess_mimetype {
 			}
 			return $EXT_MIME{$ext};
 		}
+	}
+
+	# Try derive the mime type from the basename
+	my $basename = File::Basename::basename($filename);
+	if ( $basename ) {
+		return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
 	}
 
 	# Fall back on deriving the type from the content.
