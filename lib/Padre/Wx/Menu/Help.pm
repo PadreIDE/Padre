@@ -58,7 +58,7 @@ sub new {
 		},
 	);
        Wx::Event::EVT_MENU( $main,
-                $self->Append( -1, 'Current Document' ),
+                $self->Append( -1, Wx::gettext('Current Document') ),
                 sub {
                         $_[0]->menu->help->help($_[0]);
 			my $doc = $_[0]->current->document;
