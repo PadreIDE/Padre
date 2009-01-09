@@ -34,10 +34,13 @@ sub plugin_enable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		'Dump Current Document'          => sub { $self->dump_document },
-		'Eval Current Document in Padre' => sub { $self->eval_document },
-		'---'                            => undef,
-		'About'                          => sub { $self->show_about    },
+		'Run Document inside Padre' => 'eval_document',
+		'---'                       => undef,
+		'Dump Current Document'     => 'dump_document',
+		'Dump Top IDE Object'       => 'dump_padre',
+		'Dump %INC HASH'            => 'dump_inc',
+		'---'                       => undef,
+		'About'                     => 'show_about',
 	];
 }
 
@@ -48,6 +51,12 @@ sub menu_plugins_simple {
 #####################################################################
 # Plugin Methods
 
+sub eval_document {
+	my $self     = shift;
+	my $document = Padre::Current->document or return;
+	return $self->_dump_eval( $document->text_get );
+}
+
 sub dump_document {
 	my $self     = shift;
 	my $document = Padre::Current->document;
@@ -55,14 +64,17 @@ sub dump_document {
 		Padre::Current->_main->message( 'No file is open', 'Info' );
 		return;
 	}
-	return $self->_dump_eval( $document );
+	return $self->_dump( $document );
 }
 
-sub eval_document {
-	my $self     = shift;
-	my $document = Padre::Current->document or return;
-	my $code     = $document->text_get;
-	return $self->_dump_eval( $code );
+sub dump_padre {
+	my $self = shift;
+	return $self->_dump( Padre->ide );
+}
+
+sub dump_inc {
+	my $self = shift;
+	return $self->_dump( \%INC );
 }
 
 sub show_about {
@@ -80,19 +92,28 @@ sub show_about {
 sub _dump_eval {
 	my $self = shift;
 	my $code = shift;
-	my $main = Padre::Current->_main;
 
 	# Evecute the code and handle errors
-	warn $code . "\n";
 	my @rv = eval $code; ## no critic
 	if ( $@ ) {
-		$main->error( sprintf(Wx::gettext("Error: %s"), $@) );
+		Padre::Current->_main->error(
+			sprintf(Wx::gettext("Error: %s"), $@)
+		);
 		return;
 	}
 
-	# Dump the results to the output window
+	return $self->_dump( @rv );
+}
+
+sub _dump {
+	my $self = shift;
+
+	# Generate the dump string
 	my $dumper = Devel::Dumpvar->new( to => 'return' );
-	my $string = $dumper->dump( @rv );
+	my $string = $dumper->dump( @_ );
+
+	# Show it in the output window
+	my $main = Padre::Current->_main;
 	$main->show_output(1);
 	$main->output->clear;
 	$main->output->AppendText($string);
