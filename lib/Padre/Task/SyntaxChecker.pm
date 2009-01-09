@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Padre::Task    ();
 use Padre::Current ();
+use Padre::Wx      ();
 
 our $VERSION = '0.24';
 our @ISA     = 'Padre::Task';
@@ -123,7 +124,7 @@ sub finish {
 sub update_gui {
 	my $self = shift;
 	my $messages = $self->{syntax_check};
-	$DB::single = 1;
+	$DB::single = $DB::single = 1; # silence 'used only once' warning during -c
 	my $syntax_checker = Padre->ide->wx->main_window->syntax_checker;
 	my $syntax_bar     = $syntax_checker->syntaxbar;
 	my $notebook_page  = $self->{main_thread_only}{notebook_page};
