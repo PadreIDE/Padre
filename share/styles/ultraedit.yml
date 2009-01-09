@@ -4,60 +4,133 @@
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
+
+# Items of colors support following properties:
+#   - foreground: color
+#   - background: color
+#   - bold:       0 or 1
+#   - italic:     0 or 1
+#   - eolfilled:  0 or 1
+#   - underline:  0 or 1
+
+#
+# base style
+#
 plain:
  foregrounds:
   0: 00007f
  current_line_foreground: 000000
  current_line_background: FFFF04
-perl:
- brace_highlight: 00FF00
- background: ffffff
  colors:
-  wxSTC_PL_DEFAULT:        000000
-  wxSTC_PL_ERROR:          ff0000
-  wxSTC_PL_COMMENTLINE:    007f00
-  wxSTC_PL_POD:            7f7f7f
-  wxSTC_PL_NUMBER:         007f7f
-  wxSTC_PL_WORD:           00007f
-  wxSTC_PL_STRING:         ff7f00
-  wxSTC_PL_CHARACTER:      7f007f
-  wxSTC_PL_PUNCTUATION:    000000
-  wxSTC_PL_PREPROCESSOR:   7f7f7f
-  wxSTC_PL_OPERATOR:       00007f
-  wxSTC_PL_IDENTIFIER:     0000ff
-  wxSTC_PL_SCALAR:         7f007f
-  wxSTC_PL_ARRAY:          4080ff
-  wxSTC_PL_HASH:           0080ff
-  wxSTC_PL_SYMBOLTABLE:    00ff00
+  wxSTC_STYLE_DEFAULT:
+  wxSTC_STYLE_LINENUMBER:
+  wxSTC_STYLE_BRACELIGHT:
+  wxSTC_STYLE_BRACEBAD:
+  wxSTC_STYLE_CONTROLCHAR:
+  wxSTC_STYLE_INDENTGUIDE:
+  wxSTC_STYLE_CALLTIP:
+  wxSTC_STYLE_LASTPREDEFINED:
+
+#
+# default style (load after plain)
+#
+padre:
+ background:  ffffff
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 00ff00
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  PADRE_BLACK:
+   foreground: 000000
+  PADRE_BLUE:
+   foreground: 000099
+  PADRE_RED:
+   foreground: 990000
+  PADRE_GREEN:
+   foreground: 00AA00
+  PADRE_MAGENTA:
+   foreground: 8b008b
+  PADRE_ORANGE:
+   foreground: ff8228
+  PADRE_CRIMSON:
+   foreground: dc143c
+  PADRE_BROWN:
+   foreground: a52a2a
+
+#
+# application/x-perl
+#
+perl:
+ background:  ffffff
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 00ff00
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  wxSTC_PL_DEFAULT:
+   foreground: 000000
+  wxSTC_PL_ERROR:
+   foreground: ff0000
+  wxSTC_PL_COMMENTLINE:
+   foreground: 007f00
+  wxSTC_PL_POD:
+   foreground: 7f7f7f
+  wxSTC_PL_NUMBER:
+   foreground: 007f7f
+  wxSTC_PL_WORD:
+   foreground: 00007f
+  wxSTC_PL_STRING:
+   foreground: ff7f00
+  wxSTC_PL_CHARACTER:
+   foreground: 7f007f
+  wxSTC_PL_PUNCTUATION:
+   foreground: 000000
+  wxSTC_PL_PREPROCESSOR:
+   foreground: 7f7f7f
+  wxSTC_PL_OPERATOR:
+   foreground: 00007f
+  wxSTC_PL_IDENTIFIER:
+   foreground: 0000ff
+  wxSTC_PL_SCALAR:
+   foreground: 7f007f
+  wxSTC_PL_ARRAY:
+   foreground: 4080ff
+  wxSTC_PL_HASH:
+   foreground: 0080ff
+  wxSTC_PL_SYMBOLTABLE:
+   foreground: 00ff00
 # missing SCE_PL_VARIABLE_INDEXER (16)
-  wxSTC_PL_REGEX:          ff007f
-  wxSTC_PL_REGSUBST:       7f7f00
-  wxSTC_PL_LONGQUOTE:      ff7f00
-  wxSTC_PL_BACKTICKS:      ffaa00
-  wxSTC_PL_DATASECTION:    ff7f00
-  wxSTC_PL_HERE_DELIM:     ff7f00
-  wxSTC_PL_HERE_Q:         7f007f
-  wxSTC_PL_HERE_QQ:        ff7f00
-  wxSTC_PL_HERE_QX:        ffaa00
-  wxSTC_PL_STRING_Q:       7f007f
-  wxSTC_PL_STRING_QQ:      ff7f00
-  wxSTC_PL_STRING_QX:      ffaa00
-  wxSTC_PL_STRING_QR:      ff007f
-  wxSTC_PL_STRING_QW:      7f007f
+  wxSTC_PL_REGEX:
+   foreground: ff007f
+  wxSTC_PL_REGSUBST:
+   foreground: 7f7f00
+  wxSTC_PL_LONGQUOTE:
+   foreground: ff7f00
+  wxSTC_PL_BACKTICKS:
+   foreground: ffaa00
+  wxSTC_PL_DATASECTION:
+   foreground: ff7f00
+  wxSTC_PL_HERE_DELIM:
+   foreground: ff7f00
+  wxSTC_PL_HERE_Q:
+   foreground: 7f007f
+  wxSTC_PL_HERE_QQ:
+   foreground: ff7f00
+  wxSTC_PL_HERE_QX:
+   foreground: ffaa00
+  wxSTC_PL_STRING_Q:
+   foreground: 7f007f
+  wxSTC_PL_STRING_QQ:
+   foreground: ff7f00
+  wxSTC_PL_STRING_QX:
+   foreground: ffaa00
+  wxSTC_PL_STRING_QR:
+   foreground: ff007f
+  wxSTC_PL_STRING_QW:
+   foreground: 7f007f
 # missing:
 #define SCE_PL_POD_VERB 31
 #define SCE_PL_SUB_PROTOTYPE 40
 #define SCE_PL_FORMAT_IDENT 41
 #define SCE_PL_FORMAT 42
-padre:
- brace_highlight: 00FF00
- background: ffffff
- colors:
-  PADRE_BLACK:          000000
-  PADRE_BLUE:           000099
-  PADRE_RED:      990000
-  PADRE_GREEN:    00AA00
-  PADRE_MAGENTA:  8b008b
-  PADRE_ORANGE:   ff8228
-  PADRE_CRIMSON:        dc143c
-  PADRE_BROWN:          a52a2a
