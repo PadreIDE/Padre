@@ -90,7 +90,7 @@ msgstr "韩语"
 
 #: lib/Padre/Locale.pm:298
 msgid "Dutch"
-msgstr ""
+msgstr "荷兰语"
 
 #: lib/Padre/Locale.pm:308
 msgid "Dutch (Belgium)"
@@ -323,7 +323,7 @@ msgstr "命令行"
 
 #: lib/Padre/Wx/MainWindow.pm:711
 msgid "Run setup"
-msgstr ""
+msgstr "Run setup"
 
 #: lib/Padre/Wx/MainWindow.pm:793
 msgid "No open document"
@@ -415,7 +415,7 @@ msgstr "无法对未保存文件进行比较"
 
 #: lib/Padre/Wx/MainWindow.pm:1566
 msgid "There are no differences\n"
-msgstr "无差异"
+msgstr "无差异\n"
 
 #: lib/Padre/Wx/MainWindow.pm:1796
 msgid "Subs"
