@@ -1,5 +1,11 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.26 2009.0X.XX
+
+    Added styles for text/x-patch, text/x-makefile file types (KEEDI)
+    Now style config file supports foreground, background, bold,
+        italic, eolfilled, underline properties (KEEDI)
+
 v0.25 2009.01.09
 
     Added Chinese (Simplified) translation (FAYLAND)
