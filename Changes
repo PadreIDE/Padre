@@ -20,6 +20,8 @@ v0.25 2009.01.09
     Class correction Padre::Wx::Submenu -> Padre::Wx::Menu (ADAMK)
     Now that Padre::DocBrowser has landed, delete the Padre::Pod
         family of modules (ADAMK)
+    Automatic indentation style detection now the default (SMUELLER)
+    User interface now "locked" by default (SMUELLER)
 
 v0.24 2009.01.06
 
