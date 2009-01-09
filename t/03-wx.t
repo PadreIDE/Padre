@@ -2,9 +2,8 @@
 
 use strict;
 use warnings;
-use Test::NeedsDisplay ':skip_all';
+#use Test::NeedsDisplay ':skip_all';
 use Test::More;
-
 BEGIN {
 	if ( $^O eq 'MSWin32' ) {
 		plan skip_all => 'Windows currently has problems with Unicode files';
