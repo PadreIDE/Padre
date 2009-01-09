@@ -36,7 +36,6 @@ sub new {
 			->MaximizeButton(0)
 			->Floatable(1)
 			->Dockable(1)
-			->Position(1)
 			->Layer(1)
 	);
 	$main->aui->caption_gettext('editorpane' => 'Files');
