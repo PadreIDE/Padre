@@ -36,9 +36,9 @@ SCOPE: {
 		editor_whitespaces => 0,
 		editor_codefolding => 0,
 
-		editor_auto_indentation_style => 0,
+		editor_auto_indentation_style => 1,
 		editor_tabwidth               => 8,
-		editor_indentwidth            => 4,
+		editor_indentwidth            => 8,
 		editor_use_tabs               => 1,
 		editor_perl5_beginner         => 1,
 
