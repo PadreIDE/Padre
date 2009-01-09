@@ -92,6 +92,7 @@ sub enable {
 			$self->{synCheckTimer}->Stop;
 			Wx::Event::EVT_IDLE( $main, sub { return } );
 		}
+		# TODO: Need to do this on all pages
 		my $page = $main->current->editor;
 		if ( defined($page) ) {
 			$page->MarkerDeleteAll(Padre::Wx::MarkError);

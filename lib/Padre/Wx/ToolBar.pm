@@ -31,7 +31,6 @@ sub new {
 		$style,
 		5050,
 	);
-	$DB::single = 1;
 
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.

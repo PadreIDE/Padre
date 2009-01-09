@@ -16,6 +16,7 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxAUI_NB_TOP
+		| Wx::wxBORDER_NONE
 		| Wx::wxAUI_NB_SCROLL_BUTTONS
 		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
 		| Wx::wxAUI_NB_WINDOWLIST_BUTTON,
@@ -28,7 +29,7 @@ sub new {
 			->Name('editorpane')
 			->CenterPane
 			->Resizable
-			->PaneBorder
+			->PaneBorder(0)
 			->Dockable
 			->Position(1)
 	);

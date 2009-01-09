@@ -20,7 +20,8 @@ sub new {
 
 	# Create the platform-sensitive style
 	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
-	          | Wx::wxAUI_NB_TOP;
+		| Wx::wxAUI_NB_TOP
+		| Wx::wxBORDER_NONE;
 	unless ( Padre::Util::WXGTK ) {
 		# Crashes on Linux/GTK
 		# Doesn't seem to work right on Win32...
