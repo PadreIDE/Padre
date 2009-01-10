@@ -26,7 +26,6 @@ sub new {
 		-1,
 		Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE
 	);
-	$self->{main} = $main;
 
 	# Set up the fields
 	$self->SetFieldsCount(4);
@@ -47,9 +46,13 @@ sub clear {
 	return;
 }
 
+sub main {
+	$_[0]->GetParent;
+}
+
 sub current {
 	Padre::Current->new(
-		main => $_[0]->main,
+		main => $_[0]->GetParent,
 	);
 }
 
