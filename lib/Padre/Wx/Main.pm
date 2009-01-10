@@ -1677,6 +1677,9 @@ sub show_functions {
 }
 
 sub show_outline {
+	# NOT YET
+	return;
+
 	my $self = shift;
 	my $outline = $self->outline;
 
