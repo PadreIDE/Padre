@@ -155,7 +155,7 @@ sub remove_plugin_specific_entries {
 
 sub refresh {
 	my $self = shift;
-	my $main = _CURRENT(@_)->_main;
+	my $main = _CURRENT(@_)->main;
 
 	$self->remove_plugin_specific_entries;
 	$self->add_plugin_specific_entries($main);

@@ -94,7 +94,7 @@ sub new {
 		sub {
 			$_[0]->refresh_methods($_[0]->current);
 			$_[0]->show_functions(1); 
-			$_[0]->{gui}->{subs_panel}->SetFocus;
+			$_[0]->functions->SetFocus;
 		},
 	);
 
@@ -104,7 +104,7 @@ sub new {
 		),
 		sub {
 			$_[0]->show_output(1);
-			$_[0]->{gui}->{output_panel}->SetFocus;
+			$_[0]->output->SetFocus;
 		},
 	);
 
@@ -114,8 +114,8 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{goto_syntax_check},
 		sub {
-			$_[0]->show_syntaxbar(1);
-			$_[0]->{gui}->{syntaxcheck_panel}->SetFocus;
+			$_[0]->show_syntax(1);
+			$_[0]->syntax->SetFocus;
 		},
 	);
 
@@ -142,7 +142,7 @@ sub refresh {
 	my $alt      = $self->{alt};
 	my $default  = $self->{default};
 	my $items    = $self->GetMenuItemCount;
-	my $notebook = $current->_notebook;
+	my $notebook = $current->notebook;
 	my $pages    = $notebook->GetPageCount;
 
 	# Add or remove menu entries as needed

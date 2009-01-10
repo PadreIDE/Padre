@@ -2,79 +2,91 @@ package Padre::Wx::ErrorList;
 
 use strict;
 use warnings;
+use Encode                   ();
+use Padre::Wx                ();
+use Padre::Locale            ();
+use Padre::Task::ErrorParser ();
+use Parse::ErrorString::Perl ();
 
 our $VERSION = '0.25';
-
-require Padre;
-use Padre::Wx;
-use Padre::Task::ErrorParser;
-use Parse::ErrorString::Perl;
-use Wx::Locale qw(:default);
-use Encode qw(encode);
-
-use base qw(Wx::TreeCtrl);
+our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor
 	getters => {
-		mw       => 'mw',
 		root     => 'root',
 		data     => 'data',
 		enabled  => 'enabled',
 		index    => 'index',
-		config   => 'config',
 		lang     => 'lang',
 		parser   => 'parser',
 	};
 
 sub new {
-	my $class = shift;
-	my $mw    = shift;
-	my $config = Padre->ide->config;
+	my $class  = shift;
+	my $main   = shift;
 
+	# Create the Wx object
 	my $self = $class->SUPER::new(
-		$mw, 
+		$main->bottom, 
 		-1, 
 		Wx::wxDefaultPosition, 
 		Wx::wxDefaultSize, 
-		Wx::wxTR_HAS_BUTTONS|Wx::wxTR_HIDE_ROOT|Wx::wxTR_LINES_AT_ROOT
+		Wx::wxTR_HAS_BUTTONS
+		| Wx::wxTR_HIDE_ROOT
+		| Wx::wxTR_LINES_AT_ROOT
 	);
 
 	$self->Hide;
 
-	my $root = $self->AddRoot( 'Root', -1, -1, Wx::TreeItemData->new( 'Data' ) );
-	$self->{root} = $root;	
+	$self->{root} = $self->AddRoot(
+		'Root',
+		-1,
+		-1,
+		Wx::TreeItemData->new('Data'),
+	);	
 
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED($self, $self, \&on_activate);
-	#Wx::Event::EVT_TREE_KEY_DOWN($self, $self, \&on_f1);
-	
-	$self->{mw} = $mw;
-	$self->{config} = $config;
-	
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED( $self,
+		$self,
+		sub {
+			$self->on_tree_item_activated($_[1])
+		},
+	);
+
 	return $self;
 }
 
-sub DESTROY {
-	delete $_[0]->{mw};
+sub bottom {
+	$_[0]->GetParent;
+}
+
+sub main {
+	$_[0]->GetGrandparent;
+}
+
+sub config {
+	$_[0]->GetGrandparent->config;
 }
 
 sub enable {
-	my $self = shift;
-	my $index = $self->{mw}->{gui}->{bottompane}->GetPageCount;
-	$self->{mw}->{gui}->{bottompane}->InsertPage( $index, $self, Wx::gettext("Error List"), 0 );
+	my $self     = shift;
+	my $main     = $self->main;
+	my $bottom   = $self->bottom;
+	my $position = $bottom->GetPageCount;
+	$bottom->InsertPage( $position, $self, Wx::gettext("Error List"), 0 );
 	$self->Show;
-	$self->{mw}->{gui}->{bottompane}->SetSelection($index);
-	$self->mw->check_pane_needed('bottompane');
-	$self->mw->aui->Update;
+	$bottom->SetSelection($position);
+	$main->aui->Update;
 	$self->{enabled} = 1;
 }
 
 sub disable {
-	my $self = shift;
-	my $index = $self->{mw}->{gui}->{bottompane}->GetPageIndex($self);
+	my $self     = shift;
+	my $main     = $self->main;
+	my $bottom   = $self->bottom;
+	my $position = $bottom->GetPageIndex($self);
 	$self->Hide;
-	$self->{mw}->{gui}->{bottompane}->RemovePage($index);
-	$self->mw->check_pane_needed('bottompane');
-	$self->mw->aui->Update;
+	$bottom->RemovePage($position);
+	$main->aui->Update;
 	$self->{enabled} = 0;
 }
 
@@ -91,50 +103,58 @@ sub populate {
 	my $data = $self->data;
 	$self->{data} = "";
 	return unless $data;
-	
 
-	my $parser_task = Padre::Task::ErrorParser->new(
+	my $task = Padre::Task::ErrorParser->new(
 		parser    => $self->parser,
 		cur_lang  => $cur_lang,
 		old_lang  => $old_lang,
 		data      => $data,
 	);
-	
-	$parser_task->schedule;
+
+	$task->schedule;
 }
 
-sub on_f1 {
-	my $self = shift;
-	my $item = $self->GetSelection;
-	return unless $item;
-	my $err = $self->GetPlData($item);
-	return if $err->isa('Parse::ErrorString::Perl::StackItem');
-	my $diagnostics = gettext("No diagnostics available for this error!");
-	if ($err->diagnostics) {
-		$diagnostics = $err->diagnostics;
+sub on_menu_help_context_help {
+	my $self  = shift;
+	my $item  = $self->GetSelection or return;
+	my $error = $self->GetPlData($item);
+	if ( $error->isa('Parse::ErrorString::Perl::StackItem') ) {
+		return;
+	}
+	my $diagnostics = Wx::gettext("No diagnostics available for this error!");
+	if ($error->diagnostics) {
+		$diagnostics = $error->diagnostics;
 		$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 	}
-	$diagnostics = $^O eq 'MSWin32' ? $diagnostics : encode('utf8', $diagnostics);
-	my $dialog_title = gettext("Diagnostics");
-	if ($err->type_description) {
-		$dialog_title .= (": " . gettext($err->type_description));
+	$diagnostics = Padre::Util::WIN32
+		? $diagnostics
+		: Encode::encode('utf8', $diagnostics);
+	my $dialog_title = Wx::gettext("Diagnostics");
+	if ($error->type_description) {
+		$dialog_title .= (": " . Wx::gettext($error->type_description));
 	}
-	my $dialog = Wx::MessageDialog->new($self->mw, $diagnostics, $dialog_title, Wx::wxOK);
+	my $dialog = Wx::MessageDialog->new(
+		$self->main,
+		$diagnostics,
+		$dialog_title,
+		Wx::wxOK,
+	);
 	$dialog->ShowModal;
 }
 
-sub on_activate {
+sub on_tree_item_activated {
 	my $self  = shift;
 	my $event = shift;
 	my $item  = $event->GetItem or return;
-	my $err   = $self->GetPlData($item);
-	my $mw    = $self->mw;
-	return if $err->file eq 'eval';
-	$mw->setup_editor($err->file_abspath);
-	my $editor = $mw->current->editor;
-	my $line_number = $err->line;
-	$line_number--;
-	$editor->goto_line_centerize($line_number);
+	my $error = $self->GetPlData($item);
+	my $main  = $self->main;
+	if ( $error->file eq 'eval' ) {
+		return;
+	}
+	$main->setup_editor($error->file_abspath);
+	my $editor = $main->current->editor;
+	my $line   = $error->line - 1;
+	$editor->goto_line_centerize($line);
 }
 
 sub collect_data {
@@ -151,8 +171,7 @@ sub collect_data {
 
 sub clear {
 	my $self = shift;
-	my $root = $self->root;
-	$self->DeleteChildren($root);
+	$self->DeleteChildren($self->root);
 }
 
 1;

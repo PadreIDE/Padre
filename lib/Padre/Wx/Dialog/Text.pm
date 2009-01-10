@@ -9,17 +9,15 @@ use Wx::Locale qw(:default);
 
 our $VERSION = '0.25';
 
-# use Padre::Wx::Dialog::Text;
-# in ErrorList:
-# Padre::Wx::Dialog::Text->show($self->mw, gettext("Diagnostics"), encode('utf8', $diagnostics));
-
 sub get_layout {
 	my ($text) = @_;
 
 	my $width     = 300;
 	my $multiline = 1;
 	my @layout = (
-		[['Wx::TextCtrl', 'display', $text, 300, $multiline]],
+		[
+			['Wx::TextCtrl', 'display', $text, 300, $multiline]
+		],
 		[
 			['Wx::Button',     'ok',     Wx::wxID_OK],
 		],

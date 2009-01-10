@@ -9,11 +9,6 @@ use Padre::Wx ();
 our $VERSION = '0.25';
 our @ISA     = 'Wx::AuiNotebook';
 
-use Class::XSAccessor
-	getters => {
-		aui => 'aui',
-	};
-
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -29,7 +24,7 @@ sub new {
 	}
 
 	# Create the basic object
-	my $self  = $class->SUPER::new(
+	my $self = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
@@ -37,14 +32,11 @@ sub new {
 		$style,
 	);
 
-	# Maintain a reference to our manager
-	$self->{aui} = $main->aui;
-
 	# Add ourself to the window manager
-	$self->{aui}->AddPane(
+	$self->aui->AddPane(
 		$self,
 		Wx::AuiPaneInfo->new
-			->Name('bottompane')
+			->Name('bottom')
 			->Resizable(1)
 			->PaneBorder(0)
 			->Movable(1)
@@ -61,9 +53,18 @@ sub new {
 	);
 
 	# Set the locale-aware caption
-	$self->{aui}->caption_gettext('bottompane' => 'Output View');
+	$self->aui->caption_gettext('bottom' => 'Output View');
 
 	return $self;
+}
+
+
+sub main {
+	$_[0]->GetParent;
+}
+
+sub aui {
+	$_[0]->GetParent->aui;
 }
 
 
@@ -122,6 +123,7 @@ sub hide {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

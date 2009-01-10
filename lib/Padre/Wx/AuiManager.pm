@@ -67,13 +67,13 @@ sub lock_panels {
 
 	$self->Update;
 
-	$self->GetPane('bottompane')
+	$self->GetPane('bottom')
 		->CaptionVisible($unlock)
 		->Floatable($unlock)
 		->Dockable($unlock)
 		->Movable($unlock);
 
-	$self->GetPane('sidepane')
+	$self->GetPane('right')
 		->CaptionVisible($unlock)
 		->Floatable($unlock)
 		->Dockable($unlock)

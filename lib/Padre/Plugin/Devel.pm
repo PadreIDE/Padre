@@ -65,7 +65,7 @@ sub dump_document {
 	my $self     = shift;
 	my $document = Padre::Current->document;
 	unless ( $document ) {
-		Padre::Current->_main->message( 'No file is open', 'Info' );
+		Padre::Current->main->message( 'No file is open', 'Info' );
 		return;
 	}
 	return $self->_dump( $document );
@@ -100,7 +100,7 @@ sub _dump_eval {
 	# Evecute the code and handle errors
 	my @rv = eval $code; ## no critic
 	if ( $@ ) {
-		Padre::Current->_main->error(
+		Padre::Current->main->error(
 			sprintf(Wx::gettext("Error: %s"), $@)
 		);
 		return;
@@ -117,7 +117,7 @@ sub _dump {
 	my $string = $dumper->dump( @_ );
 
 	# Show it in the output window
-	my $main = Padre::Current->_main;
+	my $main = Padre::Current->main;
 	$main->show_output(1);
 	$main->output->clear;
 	$main->output->AppendText($string);

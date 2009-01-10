@@ -43,9 +43,8 @@ sub new {
 		sub {
 			my $current = Wx::Window::FindFocus();
 			if ( $current->isa('Padre::Wx::ErrorList') ) {
-				$_[0]->errorlist->on_f1;
+				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
-			
 				# TODO This feels wrong, the help menu code shouldn't
 				# populate the main window hash.
 				my $selection = $_[0]->current->text;

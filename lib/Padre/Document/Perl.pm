@@ -350,9 +350,9 @@ sub _check_syntax_internals {
 
 	require Padre::Task::SyntaxChecker::Perl;
 	my %check = (
-		notebook_page => $self->editor,
-		text          => $text,
-		newlines      => $nlchar,
+		editor   => $self->editor,
+		text     => $text,
+		newlines => $nlchar,
 	);
 	if ( exists $args->{on_finish} ) {
 		$check{on_finish} = $args->{on_finish};
@@ -374,7 +374,9 @@ sub _check_syntax_internals {
 	}
 }
 
-sub comment_lines_str { return '#' }
+sub comment_lines_str {
+	return '#';
+}
 
 sub find_unmatched_brace {
 	my ($self) = @_;

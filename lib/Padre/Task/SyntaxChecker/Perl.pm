@@ -26,7 +26,7 @@ Padre::Task::SyntaxChecker::Perl - Perl document syntax-checking in the backgrou
   
   my $task2 = Padre::Task::SyntaxChecker::Perl->new(
     text          => Padre::Current->document->text_get,
-    notebook_page => Padre::Current->editor,
+    editor => Padre::Current->editor,
     on_finish     => sub { my $task = shift; ... },
     newlines      => "\r\n", # specify the newline type!
   );

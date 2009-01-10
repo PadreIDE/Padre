@@ -35,17 +35,17 @@ use Padre::Document           ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
 use Padre::Wx::Right          ();
+use Padre::Wx::Bottom         ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
-use Padre::Wx::Bottom         ();
+use Padre::Wx::Syntax         ();
+use Padre::Wx::Outline        ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
 use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
-use Padre::Wx::DocOutliner    ();
 use Padre::Wx::FunctionList   ();
-use Padre::Wx::SyntaxChecker  ();
 use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.25';
@@ -64,13 +64,19 @@ use constant SECONDS => 1000;
 
 use Class::XSAccessor
 	getters => {
-		config         => 'config',
-		aui            => 'aui',
-		menu           => 'menu',
-		no_refresh     => '_no_refresh',
-		syntax_checker => 'syntax_checker',
-		errorlist      => 'errorlist',
-		doc_outliner   => 'doc_outliner',
+		config     => 'config',
+		aui        => 'aui',
+		menu       => 'menu',
+		no_refresh => '_no_refresh',
+		notebook   => 'notebook',
+		right      => 'right',
+		functions  => 'functions',
+		outline    => 'outline',
+		bottom     => 'bottom',
+		output     => 'output',
+		syntax     => 'syntax',
+		errorlist  => 'errorlist',
+		ack        => 'ack',
 	};
 
 # NOTE: Yes this method does get a little large, but that's fine.
@@ -87,9 +93,9 @@ sub new {
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 
 	# Determine the initial frame style
-	my $wx_frame_style = Wx::wxDEFAULT_FRAME_STYLE;
+	my $style = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->{host}->{main_maximized} ) {
-		$wx_frame_style |= Wx::wxMAXIMIZE;
+		$style |= Wx::wxMAXIMIZE;
 	}
 
 	# Determine the window title
@@ -115,7 +121,7 @@ sub new {
 			$config->{host}->{main_width},
 			$config->{host}->{main_height},
 		],
-		$wx_frame_style,
+		$style,
 	);
 
 	# Save a pointer to the configuration object.
@@ -145,7 +151,7 @@ sub new {
 
 	# Create the menu bar
 	$self->{menu} = Padre::Wx::Menubar->new($self);
-	$self->SetMenuBar( $self->menu->wx );
+	$self->SetMenuBar( $self->{menu}->wx );
 
 	# Create the tool bar
 	$self->SetToolBar(
@@ -153,27 +159,29 @@ sub new {
 	);
 	$self->GetToolBar->Realize;
 
-	# Create the tool panes 
-	$self->{gui}->{statusbar}    = Padre::Wx::StatusBar->new($self);
+	# Create the status bar
+	$self->SetStatusBar(
+		Padre::Wx::StatusBar->new($self)
+	);
 
 	# Create the three notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
-	$self->{gui}->{notebook}     = Padre::Wx::Notebook->new($self);
-	$self->{gui}->{sidepane}     = Padre::Wx::Right->new($self);
-	$self->{gui}->{bottompane}   = Padre::Wx::Bottom->new($self);
+	$self->{notebook}  = Padre::Wx::Notebook->new($self);
+	$self->{right}     = Padre::Wx::Right->new($self);
+	$self->{bottom}    = Padre::Wx::Bottom->new($self);
 
 	# Creat the various tools that will live in the panes
-	$self->{gui}->{subs_panel}   = Padre::Wx::FunctionList->new($self);
-	$self->{gui}->{output_panel} = Padre::Wx::Output->new($self);
-	$self->{errorlist}           = Padre::Wx::ErrorList->new($self);
-	$self->{syntax_checker}      = Padre::Wx::SyntaxChecker->new($self);
-	$self->{doc_outliner}        = Padre::Wx::DocOutliner->new($self);
+	$self->{functions} = Padre::Wx::FunctionList->new($self);
+	$self->{outline}   = Padre::Wx::Outline->new($self);
+	$self->{output}    = Padre::Wx::Output->new($self);
+	$self->{syntax}    = Padre::Wx::Syntax->new($self);
+	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
 
 	# on close pane
 	Wx::Event::EVT_AUI_PANE_CLOSE(
 		$self,
 		sub {
-			$_[0]->on_close_pane($_[1]);
+			$_[0]->on_aui_pane_close($_[1]);
 		},
 	);
 
@@ -215,23 +223,25 @@ sub new {
 	# Show the tools that the configuration dictates
 	$self->show_functions( $self->config->{main_subs_panel} );
 	$self->show_output( $self->config->{main_output_panel} );
-	$self->show_syntaxbar( $self->menu->view->{show_syntaxcheck}->IsChecked );
-	$self->show_outlinebar( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
+	$self->show_outline( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
 
 	# Load the saved pane layout from last time (if any)
 	if ( defined $config->{host}->{aui_manager_layout} ) {
 		$self->aui->LoadPerspective( $config->{host}->{aui_manager_layout} );
 	}
 
+	# Lock the panels if needed
+	$self->aui->lock_panels( $self->config->{main_lockpanels} );
+
 	# we need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did not show
 	# the status bar which is ok, but then when we selected the menu to show it, it showed
 	# at the top)
 	# TODO: there might be better ways to fix that issue...
-	my $timer = Wx::Timer->new( $self, Padre::Wx::id_POST_INIT_TIMER );
+	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
 	Wx::Event::EVT_TIMER(
 		$self,
-		Padre::Wx::id_POST_INIT_TIMER,
+		Padre::Wx::ID_TIMER_POSTINIT,
 		sub {
 			$_[0]->timer_post_init;
 		},
@@ -311,7 +321,7 @@ sub timer_post_init {
 	$self->on_toggle_statusbar;
 	Padre->ide->plugin_manager->enable_editors_for_all;
 	if ( $self->menu->view->{show_syntaxcheck}->IsChecked ) {
-		$self->syntax_checker->enable(1);
+		$self->show_syntax(1);
 	}
 
 	if ( $self->menu->view->{show_errorlist}->IsChecked ) {
@@ -326,9 +336,9 @@ sub timer_post_init {
 	Padre->ide->plugin_manager->alert_new;
 
 	# Start the change detection timer
-	my $timer = Wx::Timer->new( $self, Padre::Wx::id_FILECHK_TIMER );
+	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
 	Wx::Event::EVT_TIMER( $self,
-		Padre::Wx::id_FILECHK_TIMER,
+		Padre::Wx::ID_TIMER_FILECHECK,
 		sub {
 			$_[0]->timer_check_overwrite;
 		},
@@ -399,7 +409,7 @@ sub refresh_syntaxcheck {
 	my $self = shift;
 	return if $self->no_refresh;
 	return if not $self->menu->view->{show_syntaxcheck}->IsChecked;
-	Padre::Wx::SyntaxChecker::on_syntax_check_timer( $self, undef, 1 );
+	$self->syntax->on_timer( undef, 1 );
 	return;
 }
 
@@ -430,11 +440,11 @@ sub refresh_methods {
 	return unless $self->menu->view->{functions}->IsChecked;
 
 	# Flush the list if there is no active document
-	my $current    = _CURRENT(@_);
-	my $document   = $current->document;
-	my $subs = $self->{gui}->{subs_panel};
+	my $current   = _CURRENT(@_);
+	my $document  = $current->document;
+	my $functions = $self->functions;
 	unless ( $document ) {
-		$subs->DeleteAllItems;
+		$functions->DeleteAllItems;
 		return;
 	}
 
@@ -459,11 +469,11 @@ sub refresh_methods {
 		return if $old eq $new;	
 	}
 
-	$subs->DeleteAllItems;
+	$functions->DeleteAllItems;
 	foreach my $method ( reverse @methods ) {
-		$subs->InsertStringItem(0, $method);
+		$functions->InsertStringItem(0, $method);
 	}
-	$subs->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
+	$functions->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 	$self->{_methods} = \@methods;
 
 	return;
@@ -548,30 +558,6 @@ sub rebuild_toolbar {
 #####################################################################
 # Introspection
 
-sub notebook {
-	$_[0]->{gui}->{notebook};
-}
-
-sub bottom {
-	$_[0]->{gui}->{bottompane};
-}
-
-sub right {
-	$_[0]->{gui}->{sidepane};
-}
-
-sub output {
-	$_[0]->{gui}->{output_panel};
-}
-
-sub outline {
-	$_[0]->{gui}->{outline_panel};
-}
-
-sub functions {
-	$_[0]->{gui}->{subs_panel};
-}
-
 =pod
 
 =head2 current
@@ -645,7 +631,7 @@ sub run_command {
 
 	# Prepare the output window for the output
 	$self->show_output(1);
-	$self->{gui}->{output_panel}->Remove( 0, $self->{gui}->{output_panel}->GetLastPosition );
+	$self->output->Remove( 0, $self->output->GetLastPosition );
 
 	# If this is the first time a command has been run,
 	# set up the ProcessStream bindings.
@@ -655,7 +641,7 @@ sub run_command {
 			$self,
 			sub {
 				$_[1]->Skip(1);
-				my $outpanel = $_[0]->{gui}->{output_panel};
+				my $outpanel = $_[0]->output;
 				$outpanel->style_neutral;
 				$outpanel->AppendText( $_[1]->GetLine . "\n" );			
 				return;
@@ -665,7 +651,7 @@ sub run_command {
 			$self,
 			sub {
 				$_[1]->Skip(1);
-				my $outpanel = $_[0]->{gui}->{output_panel};
+				my $outpanel = $_[0]->output;
 				$outpanel->style_bad;
 				$outpanel->AppendText( $_[1]->GetLine . "\n" );
 				
@@ -985,7 +971,7 @@ sub on_close_window {
 sub on_split_window {
 	my $self     = shift;
 	my $current  = $self->current;
-	my $notebook = $current->_notebook;
+	my $notebook = $current->notebook;
 	my $editor   = $current->editor;
 	my $title    = $current->title;
 	my $file     = $current->filename or return;
@@ -1340,7 +1326,8 @@ sub _save_buffer {
 # Returns true if closed.
 # Returns false on cancel.
 sub on_close {
-	my ($self, $event) = @_;
+	my $self  = shift;
+	my $event = shift;
 
 	# When we get an Wx::AuiNotebookEvent from it will try to close
 	# the notebook no matter what. For the other events we have to
@@ -1387,9 +1374,7 @@ sub close {
 	}
 	$self->notebook->DeletePage($id);
 
-	if ( defined $self->syntax_checker->syntaxbar ) {
-		$self->syntax_checker->syntaxbar->DeleteAllItems;
-	}
+	$self->syntax->clear;
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh($self->current);
@@ -1400,31 +1385,31 @@ sub close {
 # Returns true if all closed.
 # Returns false if cancelled.
 sub on_close_all {
-	my $self = shift;
-	return $self->_close_all;
+	$_[0]->_close_all;
 }
 
 sub on_close_all_but_current {
-	my $self = shift;
-	return $self->_close_all( $self->notebook->GetSelection );
+	$_[0]->_close_all( $_[0]->notebook->GetSelection );
 }
 
 sub _close_all {
-	my ($self, $skip) = @_;
-
+	my $self = shift;
+	my $skip = shift;
 	$self->Freeze;
 	foreach my $id ( reverse $self->pageids ) {
-		next if defined $skip and $skip == $id;
-		$self->close( $id ) or return 0;
+		if ( defined $skip and $skip == $id ) {
+			next;
+		}
+		$self->close($id) or return 0;
 	}
 	$self->refresh;
 	$self->Thaw;
-
 	return 1;
 }
 
 sub on_nth_pane {
-	my ($self, $id) = @_;
+	my $self = shift;
+	my $id   = shift;
 	my $page = $self->notebook->GetPage($id);
 	if ($page) {
 		$self->notebook->SetSelection($id);
@@ -1432,18 +1417,14 @@ sub on_nth_pane {
 		$page->{Document}->set_indentation_style(); # TODO: encapsulation?
 		return 1;
 	}
-
 	return;
 }
 
 sub on_next_pane {
-	my ($self) = @_;
-
-	my $count = $self->notebook->GetPageCount;
-	return if not $count;
-
+	my $self  = shift;
+	my $count = $self->notebook->GetPageCount or return;
 	my $id    = $self->notebook->GetSelection;
-	if ($id + 1 < $count) {
+	if ( $id + 1 < $count ) {
 		$self->on_nth_pane($id + 1);
 	} else {
 		$self->on_nth_pane(0);
@@ -1452,14 +1433,13 @@ sub on_next_pane {
 }
 
 sub on_prev_pane {
-	my ($self) = @_;
-	my $count = $self->notebook->GetPageCount;
-	return if not $count;
+	my $self  = shift;
+	my $count = $self->notebook->GetPageCount or return;
 	my $id    = $self->notebook->GetSelection;
-	if ($id) {
-		$self->on_nth_pane($id - 1);
+	if ( $id ) {
+		$self->on_nth_pane( $id - 1 );
 	} else {
-		$self->on_nth_pane($count-1);
+		$self->on_nth_pane($count - 1 );
 	}
 	return;
 }
@@ -1480,8 +1460,8 @@ sub on_diff {
 	}
 
 	$self->show_output(1);
-	$self->{gui}->{output_panel}->clear;
-	$self->{gui}->{output_panel}->AppendText($diff);
+	$self->output->clear;
+	$self->output->AppendText($diff);
 
 	return;
 }
@@ -1582,24 +1562,22 @@ sub on_toggle_current_line_background {
 }
 
 sub on_toggle_syntax_check {
-	my ($self, $event) = @_;
-
-	my $config = $self->config;
-	$config->{editor_syntaxcheck} = $event->IsChecked ? 1 : 0;
-
-	$self->syntax_checker->enable( $config->{editor_syntaxcheck} ? 1 : 0 );
-
+	my $self  = shift;
+	my $event = shift;
+	$self->config->{editor_syntaxcheck} = $event->IsChecked ? 1 : 0;
+	$self->show_syntax( $self->config->{editor_syntaxcheck} );
 	return;
 }
 
 sub on_toggle_errorlist {
-	my ($self, $event) = @_;
-
-	my $config = $self->config;
-	$config->{editor_errorlist} = $event->IsChecked ? 1 : 0;
-
-	$config->{editor_errorlist} ? $self->errorlist->enable : $self->errorlist->disable;
-
+	my $self  = shift;
+	my $event = shift;
+	$self->config->{editor_errorlist} = $event->IsChecked ? 1 : 0;
+	if ( $self->config->editor_errorlist ) {
+		$self->errorlist->enable;
+	} else {
+		$self->errorlist->disable;
+	}
 	return;
 }
 
@@ -1665,24 +1643,12 @@ sub on_word_wrap {
 	}
 }
 
-sub show_output {
-	my $self = shift;
-	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->view->{output}->IsChecked ) {
-		$self->menu->view->{output}->Check($on);
-	}
-	$self->config->{main_output_panel} = $on;
 
-	if ( $on ) {
-		$self->bottom->show($self->output);
-	} else {
-		$self->bottom->hide($self->output);
-	}
 
-	$self->aui->Update;
 
-	return;
-}
+
+#####################################################################
+# Right-Hand Panel Tools
 
 sub show_functions {
 	my $self = shift;
@@ -1703,136 +1669,95 @@ sub show_functions {
 	return;
 }
 
-sub show_outlinebar {
+sub show_outline {
+	# NOT YET
+	return;
+
 	my $self = shift;
 	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
-
-	my $sp = \$self->{gui}->{sidepane};
-	my $op = \$self->{gui}->{outline_panel};
-
-	# XXX error while $self->menu->view->{show_docoutline} is not defined...
-	#unless ( $on == $self->menu->view->{show_docoutline}->IsChecked ) {
-	#	$self->menu->view->{show_docoutline}->Check($on);
-	#}
+	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
+		$self->menu->view->{outline}->Check($on);
+	}
+	$self->config->{main_outline} = $on;
 
 	if ( $on ) {
-		my $idx = ${$sp}->GetPageIndex(${$op});
-		if ( $idx >= 0 ) {
-			${$sp}->SetSelection($idx);
-		}
-		else {
-			${$sp}->InsertPage(
-				1,
-				${$op},
-				Wx::gettext("Outline"),
-				1,
-			);
-			${$op}->Show;
-			$self->check_pane_needed('sidepane');
-		}
+		$self->right->show($self->outline);
 	} else {
-		my $idx = ${$sp}->GetPageIndex(${$op});
-		${$op}->Hide;
-		if ( $idx >= 0 ) {
-			${$sp}->RemovePage($idx);
-			$self->check_pane_needed('sidepane');
-		}
+		$self->right->hide($self->outline);
 	}
+
 	$self->aui->Update;
 
 	return;
 }
 
-sub show_syntaxbar {
+
+
+
+
+#####################################################################
+# Bottom Panel Tools
+
+sub show_output {
 	my $self = shift;
-	my $on   = scalar(@_) ? $_[0] ? 1 : 0 : 1;
+	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
+	unless ( $on == $self->menu->view->{output}->IsChecked ) {
+		$self->menu->view->{output}->Check($on);
+	}
+	$self->config->{main_output_panel} = $on;
 
-	my $bp = \$self->{gui}->{bottompane};
-	my $sp = \$self->{gui}->{syntaxcheck_panel};
+	if ( $on ) {
+		$self->bottom->show($self->output);
+	} else {
+		$self->bottom->hide($self->output);
+	}
 
+	$self->aui->Update;
+
+	return;
+}
+
+sub show_syntax {
+	my $self   = shift;
+	my $syntax = $self->syntax;
+
+	my $on     = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{show_syntaxcheck}->IsChecked ) {
 		$self->menu->view->{show_syntaxcheck}->Check($on);
 	}
 
 	if ( $on ) {
-		my $idx = ${$bp}->GetPageIndex(${$sp});
-		if ( $idx >= 0 ) {
-			${$bp}->SetSelection($idx);
-		}
-		else {
-			${$bp}->InsertPage(
-				1,
-				${$sp},
-				Wx::gettext("Syntax Check"),
-				1,
-				# Padre::Wx::Icon::find('status/dialog-warning')
-			);
-			${$sp}->Show;
-			$self->check_pane_needed('bottompane');
-		}
+		$self->bottom->show($syntax);
+		$syntax->start unless $syntax->running;
+	} else {
+		$self->bottom->hide($self->syntax);
+		$syntax->stop if $syntax->running;		
 	}
-	else {
-		my $idx = ${$bp}->GetPageIndex(${$sp});
-		${$sp}->Hide;
-		if ( $idx >= 0 ) {
-			${$bp}->RemovePage($idx);
-			$self->check_pane_needed('bottompane');
-		}
-	}
+
 	$self->aui->Update;
 
 	return;
 }
 
-sub check_pane_needed {
-	my ( $self, $pane ) = @_;
 
-	my $visible = 0;
-	my $cnt = $self->{gui}->{$pane}->GetPageCount;
 
-	foreach my $num ( 0 .. $cnt ) {
-		# ignore 'Ack' pane
-		if ( $pane eq 'bottompane' ) {
-			my $ack_page_idx = $self->{gui}->{$pane}->GetPageIndex( $self->{gui}->{ack_panel} );
-			next if ( defined $ack_page_idx and $ack_page_idx == $num );
-		}
-		
-		my $p = undef;
-		eval {
-			$p = $self->{gui}->{$pane}->GetPage($num)
-		};
 
-		if ( defined($p) && $p->IsShown ) {
-			$visible++;
-		}
-	}
-	if ($visible) {
-		$self->aui->GetPane($pane)->Show;
-	}
-	else {
-		$self->aui->GetPane($pane)->Hide;
-	}
 
-	return;
-}
 
 sub on_toggle_statusbar {
-	my ($self, $event) = @_;
-	if ( Padre::Util::WXWIN32 ) {
-		# Status bar always shown on Windows
-		return;
-	}
+	my $self  = shift;
+
+	# Status bar always shown on Windows
+	return if Padre::Util::WXWIN32;
 
 	# Update the configuration
-	my $config = $self->config;
-	$config->{main_statusbar} = $self->menu->view->{statusbar}->IsChecked ? 1 : 0;
+	$self->config->{main_statusbar} = $self->menu->view->{statusbar}->IsChecked ? 1 : 0;
 
 	# Update the status bar
-	my $status_bar = $self->GetStatusBar;
-	if ( $config->{main_statusbar} ) {
-		$status_bar->Show;
+	if ( $self->config->{main_statusbar} ) {
+		$self->GetStatusBar->Show;
 	} else {
-		$status_bar->Hide;
+		$self->GetStatusBar->Hide;
 	}
 
 	return;
@@ -1840,14 +1765,12 @@ sub on_toggle_statusbar {
 
 sub on_toggle_lockpanels {
 	my $self  = shift;
-	my $event = shift;
 
 	# Update the configuration
-	my $config = $self->config;
-	$config->{main_lockpanels} = $self->menu->view->{lock_panels}->IsChecked ? 1 : 0;
+	$self->config->{main_lockpanels} = $self->menu->view->{lock_panels}->IsChecked ? 1 : 0;
 
 	# Update the lock status
-	$self->aui->lock_panels($config->{main_lockpanels});
+	$self->aui->lock_panels( $self->config->{main_lockpanels} );
 
 	# The toolbar can't dynamically switch between
 	# tearable and non-tearable so rebuild it.
@@ -2036,7 +1959,7 @@ sub on_stc_dwell_start {
 	return;
 }
 
-sub on_close_pane {
+sub on_aui_pane_close {
 	my ( $self, $event ) = @_;
 	my $pane = $event->GetPane;
 }

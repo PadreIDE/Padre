@@ -201,12 +201,12 @@ sub find_clicked {
 	$iter = App::Ack::get_iterator( $what, \%opts );
 	App::Ack::filetype_setup();
 
-	unless ( $main->{gui}->{ack_panel} ) {
+	unless ( $main->{ack} ) {
 		create_ack_pane( $main );
 	}
 	$main->show_output(1);
 	show_ack_output($main, 1);
-	$main->{gui}->{ack_panel}->DeleteAllItems;
+	$main->{ack}->DeleteAllItems;
 
 	Wx::Event::EVT_COMMAND( $main, -1, $DONE_EVENT, \&ack_done );
 
@@ -265,20 +265,20 @@ sub _get_data_from {
 sub create_ack_pane {
 	my ( $main ) = @_;
 	
-	$main->{gui}->{ack_panel} = Wx::ListCtrl->new(
-		$main->{gui}->{bottompane},
+	$main->{ack} = Wx::ListCtrl->new(
+		$main->bottom,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT
 	);
 	
-	$main->{gui}->{ack_panel}->InsertColumn(0, Wx::gettext('Ack'));
-	$main->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
+	$main->{ack}->InsertColumn(0, Wx::gettext('Ack'));
+	$main->{ack}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 	
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$main,
-		$main->{gui}->{ack_panel},
+		$main->{ack},
 		\&on_ack_result_selected,
 	);
 }
@@ -287,8 +287,8 @@ sub show_ack_output {
 	my $main = shift;
 	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
 	
-	my $bp = \$main->{gui}->{bottompane};
-	my $op = \$main->{gui}->{ack_panel};
+	my $bp = \$main->{bottom};
+	my $op = \$main->{ack};
 
 	my $idx = ${$bp}->GetPageIndex(${$op});
 	if ( $idx >= 0 ) {
@@ -303,7 +303,7 @@ sub show_ack_output {
 		);
 		${$op}->Show;
 	}
-	$main->aui->GetPane('bottompane')->Show;
+	$main->aui->GetPane('bottom')->Show;
 	$main->aui->Update;
 
 	return;
@@ -336,8 +336,8 @@ sub ack_done {
 	my $data = $event->GetData;
 
 	$main = Padre->ide->wx->main;
-	$main->{gui}->{ack_panel}->InsertStringItem( $panel_string_index--, $data);
-	$main->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
+	$main->{ack}->InsertStringItem( $panel_string_index--, $data);
+	$main->{ack}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 
 	return;
 }

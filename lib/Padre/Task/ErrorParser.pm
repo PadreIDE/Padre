@@ -9,10 +9,10 @@ use base 'Padre::Task';
 
 use Class::XSAccessor
 	getters => {
-		parser       => 'parser',
-		old_lang     => 'old_lang',
-		cur_lang     => 'cur_lang',
-		data         => 'data',
+		parser   => 'parser',
+		old_lang => 'old_lang',
+		cur_lang => 'cur_lang',
+		data     => 'data',
 	};
 
 sub run {
@@ -28,17 +28,15 @@ sub run {
 }
 
 sub finish {
-	my $self = shift;
-	my $mw = shift;
-
-	my $errorlist = $mw->errorlist;
-	
-	my $data = $self->data;
-	my $parser = $self->parser;
+	my $self      = shift;
+	my $main      = shift;
+	my $errorlist = $main->errorlist;
+	my $data      = $self->data;
+	my $parser    = $self->parser;
 	$errorlist->{parser} = $parser;
 
 	my @errors = defined $data && $data ne '' ? $parser->parse_string($data) : ();
-	
+
 	foreach my $err (@errors) {
 		my $message = $err->message . " at " . $err->file . " line " . $err->line;
 		#$message = encode('utf8', $message);
@@ -54,7 +52,7 @@ sub finish {
 			$message .= ", at $at";
 		}
 		my $err_tree_item = $errorlist->AppendItem( $errorlist->root, $message, -1, -1, Wx::TreeItemData->new( $err ) );
-		
+
 		if ($err->stack) {
 			foreach my $stack_item ($err->stack) {
 				my $stack_message = $stack_item->sub . 
@@ -64,7 +62,7 @@ sub finish {
 			}
 		}
 	}
-	
+
 	return 1;
 }
 

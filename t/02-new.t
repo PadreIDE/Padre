@@ -122,8 +122,8 @@ SCOPE: {
 	# Current context
 	my $current = $main->current;
 	isa_ok( $current, 'Padre::Current' );
-	isa_ok( $current->_main,     'Padre::Wx::Main' );
-	isa_ok( $current->_notebook, 'Padre::Wx::Notebook'   );
-	refis(  $current->_main,     $main,     '->current->_main ok'     );
-	refis(  $current->_notebook, $notebook, '->current->_notebook ok' );
+	isa_ok( $current->main,     'Padre::Wx::Main' );
+	isa_ok( $current->notebook, 'Padre::Wx::Notebook'   );
+	refis(  $current->main,     $main,     '->current->main ok'     );
+	refis(  $current->notebook, $notebook, '->current->notebook ok' );
 }

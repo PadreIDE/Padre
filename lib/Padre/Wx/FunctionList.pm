@@ -46,7 +46,9 @@ sub new {
 
 	# Grab the kill focus to prevent deselection
 	Wx::Event::EVT_KILL_FOCUS( $self,
-		sub { return },
+		sub {
+			return;
+		},
 	);
 
 	# Double-click a function name
@@ -58,6 +60,10 @@ sub new {
 	);
 
 	return $self;
+}
+
+sub right {
+	$_[0]->GetParent;
 }
 
 sub main {
@@ -142,6 +148,7 @@ sub on_list_item_activated {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

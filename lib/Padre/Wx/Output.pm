@@ -34,11 +34,14 @@ sub new {
 
 	# Do custom startup stuff here
 	$self->clear;
-	$self->set_font();
+	$self->set_font;
 	$self->AppendText( Wx::gettext('No output') );
 
-
 	return $self;
+}
+
+sub bottom {
+	$_[0]->GetParent;
 }
 
 sub main {
@@ -80,7 +83,7 @@ sub AppendText {
 	return();
 }
 
-{
+SCOPE: {
 	# TODO: This should be some sort of style file, but the main editor style support is too wacky to add this at the moment
 	my $fg_colors = [
 		Wx::Colour->new('#000000'), # black
@@ -108,12 +111,12 @@ sub AppendText {
 	];
 	
 	sub _handle_ansi_escapes {
-		my $self = shift;
+		my $self    = shift;
 		my $newtext = shift;
 
 		# read the next TEXT CONTROL-SEQUENCE pair
-		my $style = $self->GetDefaultStyle();
-		while ($newtext =~ m{ \G (.*?) \033\[ ( (?: \d+ (?:;\d+)* )? ) m }xcg) {
+		my $style = $self->GetDefaultStyle;
+		while ( $newtext =~ m{ \G (.*?) \033\[ ( (?: \d+ (?:;\d+)* )? ) m }xcg ) {
 			my $ctrl = $2;
 			# first print the text preceding the control sequence
 			$self->SUPER::AppendText($1);
@@ -122,10 +125,10 @@ sub AppendText {
 			# we don't handle any others at the moment (see regexp above)
 			my @cmds = split /;/, $ctrl;
 			
-			foreach my $cmd (@cmds) {
-				if ($cmd >= 0 and $cmd < 30) {
+			foreach my $cmd ( @cmds ) {
+				if ( $cmd >= 0 and $cmd < 30 ) {
 					# for all these, we need the font object:
-					my $font = $style->GetFont();
+					my $font = $style->GetFont;
 					if ($cmd == 0) { # reset
 						$style->SetTextColour($fg_colors->[9]); # reset text color
 						$style->SetBackgroundColour($bg_colors->[9]); # reset bg color
@@ -133,7 +136,7 @@ sub AppendText {
 						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
 						$font->SetUnderlined(0);
 						$font->SetStyle(Wx::wxFONTSTYLE_NORMAL);
-					}
+					} 
 					elsif ($cmd == 1) { # bold
 						$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 					}
@@ -153,10 +156,10 @@ sub AppendText {
 						$font->SetUnderlined(0);
 					}
 					$style->SetFont($font);
-				} # end if < 30 (aka need font)
+				}
 				
 				# the high range is supposed to be 'high intensity' as supported by aixterm
-				elsif ($cmd >= 30 && $cmd < 40 or $cmd >= 90 && $cmd < 100) {
+				elsif ( $cmd >= 30 && $cmd < 40 or $cmd >= 90 && $cmd < 100 ) {
 					# foreground
 					$cmd -= $cmd > 40 ? 90 : 30;
 					my $color = $fg_colors->[$cmd];
@@ -166,7 +169,7 @@ sub AppendText {
 					}
 				}
 				# the high range is supposed to be 'high intensity' as supported by aixterm
-				elsif ($cmd >= 40 && $cmd < 50 or $cmd >= 100 && $cmd < 110) {
+				elsif ( $cmd >= 40 && $cmd < 50 or $cmd >= 100 && $cmd < 110 ) {
 					# background
 					$cmd -= $cmd > 50 ? 100 : 40;
 					my $color = $bg_colors->[$cmd];
@@ -180,7 +183,7 @@ sub AppendText {
 		} # end while more control sequences
 		
 		# the remaining text
-		if (defined(pos($newtext))) {
+		if ( defined(pos($newtext)) ) {
 			$self->SUPER::AppendText(substr($newtext, pos($newtext)));
 		}
 	}
@@ -226,21 +229,18 @@ sub style_busy {
 }
 
 sub set_font {
-	my ($self) = @_;
-
-	my $config = Padre->ide->config;
-
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	my $self   = shift;
+	my $config = $self->main->config;
+	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
 	if ( defined $config->{editor_font} ) {
 		$font->SetNativeFontInfoUserDesc( $config->{editor_font} );
 	}
-	my $style = $self->GetDefaultStyle();
+	my $style = $self->GetDefaultStyle;
 	$style->SetFont($font);
 	$self->SetDefaultStyle($style);
 
 	return;
 }
-
 
 1;
 

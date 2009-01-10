@@ -5,9 +5,10 @@ package Padre::Wx::Menu::View;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx          ();
+use Padre::Wx       ();
+use Padre::Locale   ();
 use Padre::Wx::Menu ();
-use Padre::Current     qw{_CURRENT};
+use Padre::Current  qw{_CURRENT};
 
 our $VERSION = '0.25';
 our @ISA     = 'Padre::Wx::Menu';
@@ -372,7 +373,6 @@ sub new {
 
 	# Language Support
 	# TODO: God this is horrible, there has to be a better way
-	require Padre::Locale;
 	my $default  = Padre::Locale::system_rfc4646() || 'x-unknown';
 	my $current  = Padre::Locale::rfc4646();
 	my %language = Padre::Locale::menu_view_languages();
@@ -464,7 +464,6 @@ sub refresh {
 	$self->{ lock_panels      }->Check( $config->{main_lockpanels} ? 1 : 0 );
 	$self->{ indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{ show_calltips    }->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{ show_syntaxcheck }->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
 	$self->{ show_errorlist   }->Check( $config->{editor_errorlist} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific

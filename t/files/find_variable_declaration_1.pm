@@ -66,13 +66,13 @@ sub setup_workers {
 	return if not $self->use_threads;
 
 	@_=(); # avoid "Scalars leaked"
-	my $mw = Padre->ide->wx->main;
+	my $main = Padre->ide->wx->main;
 
 
 	# ensure minimum no. workers
 	my $workers = $self->{workers};
 	while (@$workers < $self->{min_no_workers}) {
-		$self->_make_worker_thread($mw);
+		$self->_make_worker_thread($main);
 	}
 
 	# add workers to satisfy demand
@@ -81,7 +81,7 @@ sub setup_workers {
 	if (@$workers < $self->{max_no_workers} and $jobs_pending > 2*@$workers) {
 		my $target = int($jobs_pending/2);
 		$target = $self->{max_no_workers} if $target > $self->{max_no_workers};
-		$self->_make_worker_thread($mw) for 1..($target-@$workers);
+		$self->_make_worker_thread($main) for 1..($target-@$workers);
                 $n_threads_to_kill *= 5;#fake
 	}
 

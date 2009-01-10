@@ -83,7 +83,7 @@ sub text {
 # Get the title of the current editor window (and don't cache)
 sub title {
 	my $self     = ref($_[0]) ? $_[0] : $_[0]->new;
-	my $notebook = $self->_notebook;
+	my $notebook = $self->notebook;
 	my $selected = $notebook->GetSelection;
 	if ( $selected >= 0 ) {
 		return $notebook->getPageText($selected);
@@ -124,7 +124,7 @@ sub document {
 sub editor {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
 	unless ( exists $self->{editor} ) {
-		my $notebook = $self->_notebook;
+		my $notebook = $self->notebook;
 		my $selected = $notebook->GetSelection;
 		if ( $selected == -1 ) {
 			$self->{editor} = undef;
@@ -141,10 +141,10 @@ sub editor {
 }
 
 # Convenience method
-sub _notebook {
+sub notebook {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{notebook} ) {
-		$self->{notebook} = $self->_main->notebook;
+		$self->{notebook} = $self->main->notebook;
 	}
 	return $self->{notebook};
 }
@@ -152,11 +152,11 @@ sub _notebook {
 # Get the project from the main window (and don't cache)
 sub config {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
-	$self->_main->config;
+	$self->main->config;
 }
 
 # Convenience method
-sub _main {
+sub main {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{main} ) {
 		require Padre;
@@ -166,6 +166,7 @@ sub _main {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

@@ -186,11 +186,10 @@ my @events = (
 			my $T = Test::Builder->new;
 			$T->diag("setting syntax check");
 			my $main = $ide->wx->main;
-			$T->diag("syntaxcheck_panel: $main->{gui}->{syntaxcheck_panel}");
-			#$T->ok(not (defined $main->{gui}->{syntaxcheck_panel}), 'syntaxcheck_panel is not yet defined');
+			$T->diag("syntaxcheck_panel: " . $main->syntax);
 			$main->menu->view->{show_syntaxcheck}->Check(1);
 			$main->on_toggle_syntax_check(event(checked => 1));
-			$T->ok($main->{gui}->{syntaxcheck_panel}->isa('Wx::ListView'), 'is a Wx::ListView');
+			$T->ok($main->syntax->isa('Wx::ListView'), 'is a Wx::ListView');
 			BEGIN { $main::tests += 1; }
 		},
 	},

@@ -1,4 +1,5 @@
 package Padre::Task::DocBrowser;
+
 use strict;
 use warnings;
 use Padre::DocBrowser;
@@ -11,27 +12,27 @@ our $VERSION = '0.25';
 use Data::Dumper;
 
 sub run {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    $self->{browser} ||=  Padre::DocBrowser->new();
-    my $type = $self->{type} || 'error';
-    if ( $type eq 'error' ) {
-        return "BREAK";
-    }
-    unless ( $self->{browser}->can( $type ) ) {
-        return "BREAK";
-    }
+	$self->{browser} ||=  Padre::DocBrowser->new();
+	my $type = $self->{type} || 'error';
+	if ( $type eq 'error' ) {
+		return "BREAK";
+	}
+	unless ( $self->{browser}->can( $type ) ) {
+		return "BREAK";
+	}
 
-    my $result = $self->{browser}->$type( $self->{document} );
-    $self->{result} = $result;
-    return 1;
-    
-       
+	my $result = $self->{browser}->$type( $self->{document} );
+	$self->{result} = $result;
+	return 1;
+	
+	   
 }
 
 sub finish {
-    my ($self,$mw) = @_;
-    $self->{main_thread_only}->( $self->{result}, $self->{document} );
+	my $self = shift;
+	$self->{main_thread_only}->( $self->{result}, $self->{document} );
 }
 
 1;

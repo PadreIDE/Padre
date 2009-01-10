@@ -27,9 +27,6 @@ sub new {
 	$self->SetFieldsCount(4);
 	$self->SetStatusWidths(-1, 100, 50, 100);
 
-	# Put the status bar onto the parent frame
-	$main->SetStatusBar($self);
-
 	return $self;
 }
 
@@ -60,7 +57,7 @@ sub refresh {
 	my $editor   = $current->editor or return $self->clear;
 
 	# Prepare the various strings that form the status bar
-	my $notebook = $current->_notebook;
+	my $notebook = $current->notebook;
 	my $document = $current->document;
 	my $newline  = $document->get_newline_type || Padre::Util::NEWLINE;
 	my $pageid   = $notebook->GetSelection;

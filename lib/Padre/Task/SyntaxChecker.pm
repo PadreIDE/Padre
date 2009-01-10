@@ -2,6 +2,7 @@ package Padre::Task::SyntaxChecker;
 
 use strict;
 use warnings;
+use Params::Util   qw{_CODE _INSTANCE};
 use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();
@@ -39,7 +40,7 @@ Padre::Task::SyntaxChecker - Generic syntax-checking background processing task
   
   my $task2 = Padre::Task::SyntaxChecker::MyLanguage->new(
     text          => Padre::Current->document->text_get,
-    notebook_page => Padre::Current->editor,
+    editor => Padre::Current->editor,
   );
   $task2->schedule;
 
@@ -78,16 +79,16 @@ sub new {
 
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
-	my $notebook_page = $self->{notebook_page} || $self->{main_thread_only}->{notebook_page};
+	my $editor = $self->{editor} || $self->{main_thread_only}->{editor};
 	my $on_finish     = $self->{on_finish}     || $self->{main_thread_only}->{on_finish};
-	delete $self->{notebook_page};
+	delete $self->{editor};
 	delete $self->{on_finish};
-	if (not defined $notebook_page) {
-		$notebook_page = Padre::Current->editor;
+	unless ( defined $editor ) {
+		$editor = Padre::Current->editor;
 	}
-	return() if not defined $notebook_page;
+	return() if not defined $editor;
 	$self->{main_thread_only}->{on_finish} = $on_finish if $on_finish;
-	$self->{main_thread_only}->{notebook_page} = $notebook_page;
+	$self->{main_thread_only}->{editor} = $editor;
 	return $self;
 }
 
@@ -98,11 +99,11 @@ sub run {
 
 sub prepare {
 	my $self = shift;
-	if (not defined $self->{text}) {
+	unless ( defined $self->{text} ) {
 		require Carp;
 		Carp::croak("Could not find the document's text for syntax checking.");
 	}
-	if (not defined $self->{main_thread_only}->{notebook_page}) {
+	unless ( defined $self->{main_thread_only}->{editor} ) {
 		require Carp;
 		Carp::croak("Could not find the reference to the notebook page for GUI updating.");
 	}
@@ -110,50 +111,54 @@ sub prepare {
 }
 
 sub finish {
-	my $self = shift;
-
+	my $self     = shift;
 	my $callback = $self->{main_thread_only}->{on_finish};
-	if (defined $callback and ref($callback) eq 'CODE') {
+	if ( _CODE($callback) ) {
 		$callback->($self);
-	}
-	else {
-		$self->update_gui();
+	} else {
+		$self->update_gui;
 	}
 }
 
 sub update_gui {
-	my $self = shift;
+	my $self     = shift;
 	my $messages = $self->{syntax_check};
-	$DB::single = $DB::single = 1; # silence 'used only once' warning during -c
-	my $syntax_checker = Padre->ide->wx->main->syntax_checker;
-	my $syntax_bar     = $syntax_checker->syntaxbar;
-	my $notebook_page  = $self->{main_thread_only}->{notebook_page};
-	my $document       = $notebook_page->{Document};
-	
+	my $syntax   = Padre->ide->wx->main->syntax;
+	my $editor   = $self->{main_thread_only}->{editor};
+
+	# Clear out the existing stuff
+	$syntax->clear;
+
 	require Padre::Wx;
 	# If there are no errors, clear the synax checker pane and return.
 	unless ( $messages ) {
-		if ( defined $notebook_page and $notebook_page->isa('Padre::Wx::Editor') ) {
-			$notebook_page->MarkerDeleteAll(Padre::Wx::MarkError());
-			$notebook_page->MarkerDeleteAll(Padre::Wx::MarkWarn());
-		}
-		$syntax_bar->DeleteAllItems;
 		return;
 	}
-	
-	# update the syntax checker pane
-	if ( scalar(@{$messages}) > 0 ) {
-		$notebook_page->MarkerDeleteAll(Padre::Wx::MarkError());
-		$notebook_page->MarkerDeleteAll(Padre::Wx::MarkWarn());
 
-		my $red = Wx::Colour->new("red");
+	# Again, slightly differently
+	unless ( @$messages ) {
+		return 1;
+	}
+
+	# Update the syntax checker pane
+	if ( scalar(@{$messages}) > 0 ) {
+		my $red    = Wx::Colour->new("red");
 		my $orange = Wx::Colour->new("orange");
-		$notebook_page->MarkerDefine(Padre::Wx::MarkError(), Wx::wxSTC_MARK_SMALLRECT, $red, $red);
-		$notebook_page->MarkerDefine(Padre::Wx::MarkWarn(),  Wx::wxSTC_MARK_SMALLRECT, $orange, $orange);
+		$editor->MarkerDefine(
+			Padre::Wx::MarkError(),
+			Wx::wxSTC_MARK_SMALLRECT,
+			$red,
+			$red,
+		);
+		$editor->MarkerDefine(
+			Padre::Wx::MarkWarn(),
+			Wx::wxSTC_MARK_SMALLRECT,
+			$orange,
+			$orange,
+		);
 
 		my $i = 0;
-		$syntax_bar->DeleteAllItems;
-		delete $notebook_page->{synchk_calltips};
+		delete $editor->{synchk_calltips};
 		my $last_hint = '';
 		
 		# eliminate some warnings
@@ -164,26 +169,32 @@ sub update_gui {
 		foreach my $hint ( sort { $a->{line} <=> $b->{line} } @{$messages} ) {
 			my $l = $hint->{line} - 1;
 			if ( $hint->{severity} eq 'W' ) {
-				$notebook_page->MarkerAdd( $l, 2);
+				$editor->MarkerAdd( $l, 2);
 			}
 			else {
-				$notebook_page->MarkerAdd( $l, 1);
+				$editor->MarkerAdd( $l, 1);
 			}
-			my $idx = $syntax_bar->InsertStringItem( $i++, $l + 1 );
-			$syntax_bar->SetItem( $idx, 1, ( $hint->{severity} eq 'W' ? Wx::gettext('Warning') : Wx::gettext('Error') ) );
-			$syntax_bar->SetItem( $idx, 2, $hint->{msg} );
+			my $idx = $syntax->InsertStringItem( $i++, $l + 1 );
+			$syntax->SetItem( $idx, 1, ( $hint->{severity} eq 'W' ? Wx::gettext('Warning') : Wx::gettext('Error') ) );
+			$syntax->SetItem( $idx, 2, $hint->{msg} );
 
-			if ( exists $notebook_page->{synchk_calltips}->{$l} ) {
-				$notebook_page->{synchk_calltips}->{$l} .= "\n--\n" . $hint->{msg};
+			if ( exists $editor->{synchk_calltips}->{$l} ) {
+				$editor->{synchk_calltips}->{$l} .= "\n--\n" . $hint->{msg};
 			}
 			else {
-				$notebook_page->{synchk_calltips}->{$l} = $hint->{msg};
+				$editor->{synchk_calltips}->{$l} = $hint->{msg};
 			}
 			$last_hint = $hint;
 		}
 
-		my $width0_default = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT, Wx::gettext("Line") . ' ' );
-		my $width0 = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT, $last_hint->{line} x 2 );
+		my $width0_default = $editor->TextWidth(
+			Wx::wxSTC_STYLE_DEFAULT,
+			Wx::gettext("Line") . ' '
+		);
+		my $width0 = $editor->TextWidth(
+			Wx::wxSTC_STYLE_DEFAULT,
+			$last_hint->{line} x 2
+		);
 		my $refStr = '';
 		if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
 			$refStr = Wx::gettext('Warning');
@@ -191,16 +202,11 @@ sub update_gui {
 		else {
 			$refStr = Wx::gettext('Error');
 		}
-		my $width1 = $notebook_page->TextWidth( Wx::wxSTC_STYLE_DEFAULT, $refStr . ' ' );
-		my $width2 = $syntax_bar->GetSize->GetWidth - $width0 - $width1 - $syntax_bar->GetCharWidth * 2;
-		$syntax_bar->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
-		$syntax_bar->SetColumnWidth( 1, $width1 );
-		$syntax_bar->SetColumnWidth( 2, $width2 );
-	}
-	else {
-		$notebook_page->MarkerDeleteAll(Padre::Wx::MarkError());
-		$notebook_page->MarkerDeleteAll(Padre::Wx::MarkWarn());
-		$syntax_bar->DeleteAllItems;
+		my $width1 = $editor->TextWidth( Wx::wxSTC_STYLE_DEFAULT, $refStr . ' ' );
+		my $width2 = $syntax->GetSize->GetWidth - $width0 - $width1 - $syntax->GetCharWidth * 2;
+		$syntax->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
+		$syntax->SetColumnWidth( 1, $width1 );
+		$syntax->SetColumnWidth( 2, $width2 );
 	}
 
 	return 1;

@@ -39,9 +39,9 @@ sub MarkWarn  { 2 }
 #####################################################################
 # Defines for object IDs
 
-sub id_SYNCHK_TIMER    { 30001 }
-sub id_FILECHK_TIMER   { 30002 }
-sub id_POST_INIT_TIMER { 30003 }
+sub ID_TIMER_SYNTAX    { 30001 }
+sub ID_TIMER_FILECHECK { 30002 }
+sub ID_TIMER_POSTINIT  { 30003 }
 
 
 
