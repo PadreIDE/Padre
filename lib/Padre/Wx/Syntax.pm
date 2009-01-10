@@ -56,7 +56,7 @@ sub clear {
 	my $self = shift;
 
 	# Remove the margins for the syntax markers
-	foreach my $editor ( $self->main->pages ) {
+	foreach my $editor ( $self->main->editors ) {
 		$editor->MarkerDeleteAll( Padre::Wx::MarkError );
 		$editor->MarkerDeleteAll( Padre::Wx::MarkWarn  );		
 	}
@@ -78,7 +78,7 @@ sub start {
 	my $self = shift;
 
 	# Add the margins for the syntax markers
-	foreach my $editor ( $self->main->pages ) {
+	foreach my $editor ( $self->main->editors ) {
 		# Margin number 1 for symbols
 		$editor->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL);
 
@@ -135,7 +135,7 @@ sub stop {
 	$self->clear;
 
 	# Remove the editor margin
-	foreach my $editor ( $self->main->pages ) {
+	foreach my $editor ( $self->main->editors ) {
 		$editor->SetMarginWidth(1, 0);
 	}
 

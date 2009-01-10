@@ -638,7 +638,7 @@ sub enable_editors {
 	my $plugin = $self->plugins->{$name} or return;
 	my $object = $plugin->{object}       or return;
 	return unless ( $plugin->{status} and $plugin->{status} eq 'enabled' );
-	foreach my $editor ( $self->parent->wx->main->pages ) {
+	foreach my $editor ( $self->parent->wx->main->editors ) {
 		if ( $object->can('editor_enable') ) {
 			$object->editor_enable( $editor, $editor->{Document} );
 		}

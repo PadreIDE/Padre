@@ -491,7 +491,7 @@ sub change_style {
 	my $name    = shift;
 	my $private = shift;
 	Padre::Wx::Editor::data($name, $private);
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->padre_setup;
 	}
 	return;
@@ -585,6 +585,13 @@ sub pageids {
 }
 
 sub pages {
+	my $notebook = $_[0]->notebook;
+	return map { $notebook->GetPage($_) } $_[0]->pageids;
+}
+
+# For now, this has the same meaning as pages, but once we
+# get project tabs or something, this will change.
+sub editor {
 	my $notebook = $_[0]->notebook;
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
@@ -1500,7 +1507,7 @@ sub on_join_lines {
 sub zoom {
 	my $self = shift;
 	my $zoom = $self->current->editor->GetZoom + shift;
-	foreach my $page ( $self->pages ) {
+	foreach my $page ( $self->editors ) {
 		$page->SetZoom($zoom);
 	}
 }
@@ -1510,7 +1517,7 @@ sub on_preferences {
 
 	require Padre::Wx::Dialog::Preferences;
 	if ( Padre::Wx::Dialog::Preferences->run( $self )) {
-		foreach my $editor ( $self->pages ) {
+		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
 		}
 		$self->refresh_methods($self->current);
@@ -1525,7 +1532,7 @@ sub on_toggle_line_numbers {
 	my $config = $self->config;
 	$config->{editor_linenumbers} = $event->IsChecked ? 1 : 0;
 
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->show_line_numbers( $config->{editor_linenumbers} );
 	}
 
@@ -1538,7 +1545,7 @@ sub on_toggle_code_folding {
 	my $config = $self->config;
 	$config->{editor_codefolding} = $event->IsChecked ? 1 : 0;
 
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->show_folding( $config->{editor_codefolding} );
 		if ( $config->{editor_codefolding} == 0 ) {
 			$editor->unfold_all;
@@ -1554,7 +1561,7 @@ sub on_toggle_current_line_background {
 	my $config = $self->config;
 	$config->{editor_current_line_background} = $event->IsChecked ? 1 : 0;
 
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->SetCaretLineVisible( $config->{editor_current_line_background} ? 1 : 0 );
 	}
 
@@ -1587,7 +1594,7 @@ sub on_toggle_indentation_guide {
 	my $config = $self->config;
 	$config->{editor_indentationguides} = $self->menu->view->{indentation_guide}->IsChecked ? 1 : 0;
 
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->SetIndentationGuides( $config->{editor_indentationguides} );
 	}
 
@@ -1600,7 +1607,7 @@ sub on_toggle_eol {
 	my $config = $self->config;
 	$config->{editor_eol} = $self->menu->view->{eol}->IsChecked ? 1 : 0;
 
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->SetViewEOL( $config->{editor_eol} );
 	}
 
@@ -1622,7 +1629,7 @@ sub on_toggle_whitespaces {
 		: Wx::wxSTC_WS_INVISIBLE;
 	
 	# update all open views with the new config.
-	foreach my $editor ( $self->pages ) {
+	foreach my $editor ( $self->editors ) {
 		$editor->SetViewWhiteSpace( $config->{editor_whitespaces} );
 	}
 }

@@ -47,12 +47,12 @@ my @events = (
 			my $main = $ide->wx->main;
 			my $T = Test::Builder->new;
 			{
-				my @editors = $main->pages;
+				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 1, '1 editor');
 			}
 			$main->setup_editors( catfile($home, 'hello_world.pl') );
 			{
-				my @editors = $main->pages;
+				my @editors = $main->editors;
 				#$T->todo_skip('close the empty buffer');
 				$T->is_num(scalar(@editors), 1, '1 editor');
 			}
@@ -105,7 +105,7 @@ my @events = (
 			my $editor = $doc->editor;
 
 			{
-				my @editors = $main->pages;
+				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 2, '2 editors');
 			}
 
@@ -126,7 +126,7 @@ my @events = (
 
 			$main->on_close_all_but_current;
 			{
-				my @editors = $main->pages;
+				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 1, '1 editor');
 				my $doc = $main->current->document;
 				$T->is_eq(basename($doc->filename), 'cyrillic_test.pl', 'filename is cyrillic_test.pl');
@@ -159,7 +159,7 @@ my @events = (
 			my $T = Test::Builder->new;
 			$main->on_close_all;
 			{
-				my @editors = $main->pages;
+				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 0, '0 editor');
 				my $doc = $main->current->document;
 				$T->ok(not(defined $doc), 'no document');
@@ -201,7 +201,7 @@ my @events = (
 			my $main = $ide->wx->main;
 			$T->diag("setup editor for one_char.pl");
 			$main->setup_editors( catfile($home, 'one_char.pl') );
-			my @editors = $main->pages;
+			my @editors = $main->editors;
 			$T->is_num(scalar(@editors), 1, '1 editor');
 			BEGIN { $main::tests += 1; }
 		},
@@ -214,7 +214,7 @@ my @events = (
 			my $main = $ide->wx->main;
 			$T->diag("setup editor for cyrillic_test.pl");
 			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
-			my @editors = $main->pages;
+			my @editors = $main->editors;
 			$T->is_num(scalar(@editors), 2, '2 editor');
 			BEGIN { $main::tests += 1; }
 		},

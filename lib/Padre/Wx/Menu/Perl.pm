@@ -166,7 +166,7 @@ sub new {
 			# Update the colourise for each Perl editor
 			# TODO try to delay the actual color updating for the
 			# pages that are not in focus till they get in focus
-			foreach my $editor ( $_[0]->pages ) {
+			foreach my $editor ( $_[0]->editors ) {
 				my $doc = $editor->{Document};
 				next unless $doc->isa('Padre::Document::Perl');
 				$editor->SetLexer( $doc->lexer );
