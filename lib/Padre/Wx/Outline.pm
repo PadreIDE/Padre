@@ -3,6 +3,7 @@ package Padre::Wx::Outline;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util   qw{_INSTANCE};
 use Padre::Wx      ();
 use Padre::Current ();
 
@@ -45,7 +46,10 @@ sub gettext_label {
 	Wx::gettext('Outline');
 }
 
-
+sub clear {
+	$_[0]->DeleteAllItems;
+	return;
+}
 
 
 
@@ -59,29 +63,21 @@ sub start {
 
 	# Set up or reinitialise the timer
 	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
-		Wx::Event::EVT_IDLE( $self,
-			sub {
-				$self->on_idle($_[1]);
-			},
-		);
-		$self->on_timer( undef, 1 );
+		$self->{timer}->Stop if $self->{timer}->IsRunning;
 	} else {
 		$self->{timer} = Wx::Timer->new(
 			$self,
-			Padre::Wx::ID_TIMER_SYNTAX
+			Padre::Wx::ID_TIMER_OUTLINE
 		);
 		Wx::Event::EVT_TIMER( $self,
-			Padre::Wx::ID_TIMER_SYNTAX,
+			Padre::Wx::ID_TIMER_OUTLINE,
 			sub {
 				$self->on_timer($_[1], $_[2]);
 			},
 		);
-		Wx::Event::EVT_IDLE( $self,
-			sub {
-				$self->on_idle($_[1]);
-			},
-		);
 	}
+	$self->{timer}->Start( 1000 );
+	$self->on_timer( undef, 1 );
 
 	return;
 }
@@ -91,9 +87,10 @@ sub stop {
 
 	# Stop the timer
 	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
-		$self->{timer}->Stop;
-		Wx::Event::EVT_IDLE( $self, sub { return } );
+		$self->{timer}->Stop if $self->{timer}->IsRunning;
 	}
+
+	$self->clear;
 
 	# TODO: GUI on-stop cleanup here
 
@@ -112,49 +109,37 @@ sub running {
 # Event Handlers
 
 sub on_tree_item_activated {
-	my $self  = shift;
-	my $event = shift;
-	my $page  = $self->main->current->editor;
+	my ($self, $event) = @_;
+	my $page = $self->main->current->editor;
 
-	#my $line_number = $event->GetItem->GetText;
-	#return if  not defined($line_number)
-	#		or $line_number !~ /^\d+$/o
-	#		or $page->GetLineCount < $line_number;
+	my $item = $self->GetPlData( $event->GetItem );
+	return if not defined $item;
 
-	#$line_number--;
-	#$page->EnsureVisible($line_number);
-	#$page->GotoPos( $page->GetLineIndentPosition($line_number) );
-	#$page->SetFocus;
+	my $line_number = $item->{line};
+	return if not defined($line_number)
+		  or $line_number !~ /^\d+$/o
+		  or $page->GetLineCount < $line_number;
 
-	return;
-}
+	$line_number--;
+	$page->EnsureVisible($line_number);
+	$page->GotoPos( $page->GetLineIndentPosition($line_number) );
+	$page->SetFocus;
 
-sub on_idle {
-	# TODO: This will probably violate encapsulation
-	my ( $main, $event ) = @_;
-	my $self = $main->outline;
-
-	#$self->{synCheckTimer}->Stop if $self->{synCheckTimer}->IsRunning;
-	#$self->{synCheckTimer}->Start(300, 1);
-
-	$event->Skip(0);
 	return;
 }
 
 sub on_timer {
-	# TODO: This will probably violate encapsulation
-	my ( $main, $event, $force ) = @_;
-	my $self     = $main->outline;
-	my $document = $main->current->document or return;
-	my $page     = $document->editor;
+	my ( $self, $event, $force ) = @_;
 
-	unless ( $document->can('get_outline') ) {
-		$self->DeleteAllItems;
+	my $document = $self->main->current->document or return;
+
+	unless ( $document->can('get_outline_in_background') ) {
+		$self->clear;
 		return;
 	}
 
-	#$document->get_outline_in_background(force => $force);
-	
+	$document->get_outline_in_background(force => 1);
+
 	if ( defined($event) ) {
 		$event->Skip(0);
 	}

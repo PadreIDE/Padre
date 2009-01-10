@@ -42,7 +42,7 @@ sub MarkWarn  { 2 }
 sub ID_TIMER_SYNTAX    { 30001 }
 sub ID_TIMER_FILECHECK { 30002 }
 sub ID_TIMER_POSTINIT  { 30003 }
-
+sub ID_TIMER_OUTLINE   { 30004 }
 
 
 

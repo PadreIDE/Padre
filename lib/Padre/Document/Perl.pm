@@ -374,6 +374,59 @@ sub _check_syntax_internals {
 	}
 }
 
+sub get_outline_in_background {
+	my $self  = shift;
+	my %args  = @_;
+	$args{background} = 1;
+	return $self->_get_outline_internals(\%args);
+}
+
+sub _get_outline_internals {
+	my $self = shift;
+	my $args = shift;
+	my $text = $self->text_get;
+	unless ( defined $text and $text ne '' ) {
+		return [];
+	}
+
+	# Do we really need an update?
+	require Digest::MD5;
+	my $md5 = Digest::MD5::md5(Encode::encode_utf8($text));
+	unless ( $args->{force} ) {
+		if (
+			defined($self->{last_checked_md5})
+			and
+			$self->{last_checked_md5} eq $md5
+		) {
+			return;
+		}
+	}
+	$self->{last_checked_md5} = $md5;
+	require Padre::Task::Outline::Perl;
+	my %check = (
+		editor   => $self->editor,
+		text     => $text,
+	);
+	if ( exists $args->{on_finish} ) {
+		$check{on_finish} = $args->{on_finish};
+	}
+	if ( $self->project ) {
+		$check{cwd} = $self->project->root;
+		$check{perl_cmd} = [ '-Ilib' ];
+	}
+	my $task = Padre::Task::Outline::Perl->new( %check );
+	if ( $args->{background} ) {
+		# asynchronous execution (see on_finish hook)
+		$task->schedule;
+		return;
+	} else {
+		# serial execution, returning the result
+		return if $task->prepare =~ /^break$/;
+		$task->run;
+		return $task->{outline};
+	}
+}
+
 sub comment_lines_str {
 	return '#';
 }

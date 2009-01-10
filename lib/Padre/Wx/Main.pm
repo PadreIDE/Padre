@@ -1677,10 +1677,9 @@ sub show_functions {
 }
 
 sub show_outline {
-	# NOT YET
-	return;
-
 	my $self = shift;
+	my $outline = $self->outline;
+
 	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
 		$self->menu->view->{outline}->Check($on);
@@ -1688,9 +1687,11 @@ sub show_outline {
 	$self->config->{main_outline} = $on;
 
 	if ( $on ) {
-		$self->right->show($self->outline);
+		$self->right->show($outline);
+		$outline->start unless $outline->running;
 	} else {
-		$self->right->hide($self->outline);
+		$self->right->hide($outline);
+		$outline->stop if $outline->running;
 	}
 
 	$self->aui->Update;
