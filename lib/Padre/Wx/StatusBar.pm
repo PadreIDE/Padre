@@ -11,11 +11,6 @@ use Padre::Current ();
 our $VERSION = '0.25';
 our @ISA     = 'Wx::StatusBar';
 
-use Class::XSAccessor
-	getters => {
-		main => 'main',
-	};
-
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -24,7 +19,8 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE
+		Wx::wxST_SIZEGRIP
+		| Wx::wxFULL_REPAINT_ON_RESIZE
 	);
 
 	# Set up the fields
