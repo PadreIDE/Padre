@@ -63,8 +63,9 @@ sub gettext_label {
 # Tweaked to avoid copying as much as possible.
 sub AppendText {
 	my $self = shift;
+	my $use_ansi = Padre->ide->config->{output_ansi_controls};
 	if ( utf8::is_utf8($_[0]) ) {
-		if (1) { # FIXME switch in config after Adam's config refactoring
+		if ($use_ansi) {
 			$self->_handle_ansi_escapes($_[0]);
 		}
 		else {
@@ -73,7 +74,7 @@ sub AppendText {
 	}
 	else {
 		my $text = Encode::decode('utf8', $_[0]);
-		if (1) { # FIXME switch in config after Adam's config refactoring
+		if ($use_ansi) {
 			$self->_handle_ansi_escapes($text);
 		}
 		else {

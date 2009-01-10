@@ -76,6 +76,11 @@ sub get_layout_for_appearance {
 			[ 'Wx::ColourPickerCtrl', 'editor_current_line_background_color',
 				(defined $config->{editor_current_line_background_color} ? '#' . $config->{editor_current_line_background_color} : '#ffff04') ]
 		],
+		[
+			[ 'Wx::StaticText', undef,              Wx::gettext('Colored text in output window (ANSI): ')],
+			['Wx::CheckBox',    'output_ansi_controls', '',
+				($config->{output_ansi_controls} ? 1 : 0) ],
+		],
 	];
 }
 
@@ -187,7 +192,7 @@ sub run {
 	}
 	$config->{editor_current_line_background_color} =~ s/#//;
 
-	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style editor_perl5_beginner)) {
+	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style editor_perl5_beginner output_ansi_controls)) {
 		$config->{$f} = $data->{$f} ? 1 : 0;
 	}
 

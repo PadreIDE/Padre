@@ -35,6 +35,9 @@ my %defaults = (
 	editor_codefolding        => 0,
 	editor_perl5_beginner     => 1,
 
+	# preferences specific to the output window
+	output_ansi_controls      => 1,
+
 	# Indentation settings
 	editor_auto_indentation_style => 1,
 	editor_use_tabs               => 1,

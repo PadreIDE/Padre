@@ -43,6 +43,8 @@ SCOPE: {
 		editor_whitespaces => 0,
 		editor_codefolding => 0,
 
+		output_ansi_controls => 1,
+
 		editor_auto_indentation_style => 1,
 		editor_tabwidth               => 8,
 		editor_indentwidth            => 8,
