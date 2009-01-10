@@ -154,7 +154,7 @@ sub new {
 	$self->GetToolBar->Realize;
 
 	# Create the tool panes 
-	$self->{gui}->{statusbar} = Padre::Wx::StatusBar->new($self);
+	$self->{gui}->{statusbar}    = Padre::Wx::StatusBar->new($self);
 
 	# Create the three notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
@@ -549,7 +549,7 @@ sub rebuild_toolbar {
 # Introspection
 
 sub notebook {
-	return $_[0]->{gui}->{notebook};
+	$_[0]->{gui}->{notebook};
 }
 
 sub bottom {
@@ -2211,7 +2211,7 @@ sub on_last_visited_pane {
 		@{ $self->{page_history} }[-1, -2] = @{ $_[0]->{page_history} }[-2, -1];
 		foreach my $i ( $self->pageids ) {
 			my $editor = $_[0]->notebook->GetPage($i);
-			if ( Scalar::Util::refaddr($editor) eq Scalar::Util::refaddr($_[0]->{page_history}[-1]) ) {
+			if ( Scalar::Util::refaddr($editor) eq Scalar::Util::refaddr($_[0]->{page_history}->[-1]) ) {
 				$self->notebook->SetSelection($i);
 				last;
 			}

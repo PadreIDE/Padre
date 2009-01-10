@@ -78,16 +78,16 @@ sub new {
 
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
-	my $notebook_page = $self->{notebook_page} || $self->{main_thread_only}{notebook_page};
-	my $on_finish     = $self->{on_finish}     || $self->{main_thread_only}{on_finish};
+	my $notebook_page = $self->{notebook_page} || $self->{main_thread_only}->{notebook_page};
+	my $on_finish     = $self->{on_finish}     || $self->{main_thread_only}->{on_finish};
 	delete $self->{notebook_page};
 	delete $self->{on_finish};
 	if (not defined $notebook_page) {
 		$notebook_page = Padre::Current->editor;
 	}
 	return() if not defined $notebook_page;
-	$self->{main_thread_only}{on_finish} = $on_finish if $on_finish;
-	$self->{main_thread_only}{notebook_page} = $notebook_page;
+	$self->{main_thread_only}->{on_finish} = $on_finish if $on_finish;
+	$self->{main_thread_only}->{notebook_page} = $notebook_page;
 	return $self;
 }
 
@@ -102,7 +102,7 @@ sub prepare {
 		require Carp;
 		Carp::croak("Could not find the document's text for syntax checking.");
 	}
-	if (not defined $self->{main_thread_only}{notebook_page}) {
+	if (not defined $self->{main_thread_only}->{notebook_page}) {
 		require Carp;
 		Carp::croak("Could not find the reference to the notebook page for GUI updating.");
 	}
@@ -112,7 +112,7 @@ sub prepare {
 sub finish {
 	my $self = shift;
 
-	my $callback = $self->{main_thread_only}{on_finish};
+	my $callback = $self->{main_thread_only}->{on_finish};
 	if (defined $callback and ref($callback) eq 'CODE') {
 		$callback->($self);
 	}
@@ -127,7 +127,7 @@ sub update_gui {
 	$DB::single = $DB::single = 1; # silence 'used only once' warning during -c
 	my $syntax_checker = Padre->ide->wx->main->syntax_checker;
 	my $syntax_bar     = $syntax_checker->syntaxbar;
-	my $notebook_page  = $self->{main_thread_only}{notebook_page};
+	my $notebook_page  = $self->{main_thread_only}->{notebook_page};
 	my $document       = $notebook_page->{Document};
 	
 	require Padre::Wx;

@@ -98,22 +98,22 @@ sub dialog {
 		},
 	);
 
-	$dialog->{_widgets_}{editor_tabwidth}->SetFocus;
+	$dialog->{_widgets_}->{editor_tabwidth}->SetFocus;
 
 	Wx::Event::EVT_BUTTON( $dialog,
-		$dialog->{_widgets_}{_ok_},
+		$dialog->{_widgets_}->{_ok_},
 		sub { $dialog->EndModal(Wx::wxID_OK) },
 	);
 	Wx::Event::EVT_BUTTON( $dialog,
-		$dialog->{_widgets_}{_cancel_},
+		$dialog->{_widgets_}->{_cancel_},
 		sub { $dialog->EndModal(Wx::wxID_CANCEL) },
 	);
 	Wx::Event::EVT_BUTTON( $dialog,
-		$dialog->{_widgets_}{_guess_},
+		$dialog->{_widgets_}->{_guess_},
 		sub { $class->guess_indentation_settings($dialog) },
 	);
 
-	$dialog->{_widgets_}{_ok_}->SetDefault;
+	$dialog->{_widgets_}->{_ok_}->SetDefault;
 
 	return $dialog;
 }
@@ -125,9 +125,9 @@ sub guess_indentation_settings {
 
 	my $indent_style = $doc->guess_indentation_style();
 	
-	$dialog->{_widgets_}{editor_use_tabs}->SetValue( $indent_style->{use_tabs} );
-	$dialog->{_widgets_}{editor_tabwidth}->SetValue( $indent_style->{tabwidth} );
-	$dialog->{_widgets_}{editor_indentwidth}->SetValue( $indent_style->{indentwidth} );
+	$dialog->{_widgets_}->{editor_use_tabs}->SetValue( $indent_style->{use_tabs} );
+	$dialog->{_widgets_}->{editor_tabwidth}->SetValue( $indent_style->{tabwidth} );
+	$dialog->{_widgets_}->{editor_indentwidth}->SetValue( $indent_style->{indentwidth} );
 }
 
 

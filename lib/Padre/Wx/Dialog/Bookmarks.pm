@@ -59,26 +59,26 @@ sub dialog {
 		layout   => $layout,
 		width    => [300, 50],
 	);
-	if ($dialog->{_widgets_}{entry}) {
-		$dialog->{_widgets_}{entry}->SetSize(10 * length $text, -1);
+	if ($dialog->{_widgets_}->{entry}) {
+		$dialog->{_widgets_}->{entry}->SetSize(10 * length $text, -1);
 	}
 
 #	foreach my $b (qw(ok cancel delete)) {
-#		print "$b ", join (':', $dialog->{_widgets_}{ok}->GetSizeWH), "\n";
+#		print "$b ", join (':', $dialog->{_widgets_}->{ok}->GetSizeWH), "\n";
 #	}
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{ok},      sub { $dialog->EndModal(Wx::wxID_OK) } );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{cancel},  sub { $dialog->EndModal(Wx::wxID_CANCEL) } );
-	$dialog->{_widgets_}{ok}->SetDefault;
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{ok},      sub { $dialog->EndModal(Wx::wxID_OK) } );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{cancel},  sub { $dialog->EndModal(Wx::wxID_CANCEL) } );
+	$dialog->{_widgets_}->{ok}->SetDefault;
 
-	if ($dialog->{_widgets_}{delete}) {
-		Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{delete},     \&on_delete_bookmark );
-		Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{delete_all}, \&on_delete_all_bookmark );
+	if ($dialog->{_widgets_}->{delete}) {
+		Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{delete},     \&on_delete_bookmark );
+		Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{delete_all}, \&on_delete_all_bookmark );
 	}
 
 	if ($text) {
-		$dialog->{_widgets_}{entry}->SetFocus;
+		$dialog->{_widgets_}->{entry}->SetFocus;
 	} else {
-		$dialog->{_widgets_}{tb}->SetFocus;
+		$dialog->{_widgets_}->{tb}->SetFocus;
 	}
 
 	return $dialog;
@@ -88,7 +88,7 @@ sub _get_data {
 	my ($dialog) = @_;
 
 	my %data;
-	my $shortcut = $dialog->{_widgets_}{entry}->GetValue;
+	my $shortcut = $dialog->{_widgets_}->{entry}->GetValue;
 	$shortcut =~ s/:/ /g; # YAML::Tiny limitation
 	$data{shortcut} = $shortcut;
 	$dialog->Destroy;
@@ -128,9 +128,9 @@ sub goto_bookmark {
 	return if not $dialog->show_modal;
 	
 	my $config    = Padre->ide->config;
-	my $selection = $dialog->{_widgets_}{tb}->GetSelection;
+	my $selection = $dialog->{_widgets_}->{tb}->GetSelection;
 	my @shortcuts = sort keys %{ $config->{bookmarks} };
-	my $bookmark  = $config->{bookmarks}{ $shortcuts[$selection] };
+	my $bookmark  = $config->{bookmarks}->{ $shortcuts[$selection] };
 
 	my $file      = $bookmark->{file};
 	my $line      = $bookmark->{line};
@@ -161,12 +161,12 @@ sub goto_bookmark {
 sub on_delete_bookmark {
 	my ($dialog, $event) = @_;
 
-	my $selection = $dialog->{_widgets_}{tb}->GetSelection;
+	my $selection = $dialog->{_widgets_}->{tb}->GetSelection;
 	my $config    = Padre->ide->config;
 	my @shortcuts = sort keys %{ $config->{bookmarks} };
 	
-	delete $config->{bookmarks}{ $shortcuts[$selection] };
-	$dialog->{_widgets_}{tb}->DeletePage($selection);
+	delete $config->{bookmarks}->{ $shortcuts[$selection] };
+	$dialog->{_widgets_}->{tb}->DeletePage($selection);
 
 	return;
 }
@@ -177,7 +177,7 @@ sub on_delete_all_bookmark {
 	my $config    = Padre->ide->config;
 	$config->{bookmarks} = {}; # clear
 	
-	$dialog->{_widgets_}{tb}->DeleteAllPages();
+	$dialog->{_widgets_}->{tb}->DeleteAllPages();
 
 	return;
 }

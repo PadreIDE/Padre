@@ -80,7 +80,7 @@ sub finish {
 	my $self = shift;
 	if (defined $self->{declaration_location}) {
 		# GUI update
-		$self->{main_thread_only}{document}->ppi_select( $self->{declaration_location} );
+		$self->{main_thread_only}->{document}->ppi_select( $self->{declaration_location} );
 	}
 	else {
 		my $text;

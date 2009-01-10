@@ -32,21 +32,21 @@ sub get_layout {
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('Author:')],
-			[ 'Wx::TextCtrl',   '_author_name_',    ($config->{module_start}{author_name} || '') ],
+			[ 'Wx::TextCtrl',   '_author_name_',    ($config->{module_start}->{author_name} || '') ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('Email:')],
-			[ 'Wx::TextCtrl',   '_email_',          ($config->{module_start}{email} || '') ],
+			[ 'Wx::TextCtrl',   '_email_',          ($config->{module_start}->{email} || '') ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('Builder:')],
 			[ 'Wx::ComboBox',   '_builder_choice_',
-				($config->{module_start}{builder_choice} || ''), \@builders],
+				($config->{module_start}->{builder_choice} || ''), \@builders],
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('License:')],
 			[ 'Wx::ComboBox',   '_license_choice_',
-				($config->{module_start}{license_choice} || ''), \@licenses],
+				($config->{module_start}->{license_choice} || ''), \@licenses],
 		],
 		[
 			[ 'Wx::StaticText',      undef,         gettext('Parent Directory:')],
@@ -85,11 +85,11 @@ sub dialog {
 		bottom => 20,
 	);
 
-	$dialog->{_widgets_}{_ok_}->SetDefault;
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_ok_},      \&ok_clicked      );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_},  \&cancel_clicked  );
+	$dialog->{_widgets_}->{_ok_}->SetDefault;
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_ok_},      \&ok_clicked      );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},  \&cancel_clicked  );
 
-	$dialog->{_widgets_}{_module_name_}->SetFocus;
+	$dialog->{_widgets_}->{_module_name_}->SetFocus;
 
 	return $dialog;
 }
@@ -111,10 +111,10 @@ sub ok_clicked {
 	#print Dumper $data;
 
 	my $config = Padre->ide->config;
-	$config->{module_start}{author_name} = $data->{_author_name_};
-	$config->{module_start}{email}       = $data->{_email_};
-	$config->{module_start}{builder_choice} = $data->{_builder_choice_};
-	$config->{module_start}{license_choice} = $data->{_license_choice_};
+	$config->{module_start}->{author_name} = $data->{_author_name_};
+	$config->{module_start}->{email}       = $data->{_email_};
+	$config->{module_start}->{builder_choice} = $data->{_builder_choice_};
+	$config->{module_start}->{license_choice} = $data->{_license_choice_};
 
 	my $main = Padre->ide->wx->main;
 

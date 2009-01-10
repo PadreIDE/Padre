@@ -39,15 +39,15 @@ sub dialog {
 		layout   => $layout,
 		width    => [300, 50],
 	);
-#	if ($dialog->{_widgets_}{display}) {
-#		$dialog->{_widgets_}{display}->SetSize(10 * length $text, -1);
+#	if ($dialog->{_widgets_}->{display}) {
+#		$dialog->{_widgets_}->{display}->SetSize(10 * length $text, -1);
 #	}
 #
 
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{ok},      sub { $dialog->EndModal(Wx::wxID_OK) } );
-	$dialog->{_widgets_}{ok}->SetDefault;
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{ok},      sub { $dialog->EndModal(Wx::wxID_OK) } );
+	$dialog->{_widgets_}->{ok}->SetDefault;
 
-	$dialog->{_widgets_}{ok}->SetFocus;
+	$dialog->{_widgets_}->{ok}->SetFocus;
 
 	return $dialog;
 }

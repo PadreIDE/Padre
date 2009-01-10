@@ -42,7 +42,7 @@ sub setup {
 
 sub commands {
     my ($self, @commands) = @_;
-    $self->{commands}{$_}++ for @commands;
+    $self->{commands}->{$_}++ for @commands;
     return;
 }
 
@@ -140,9 +140,9 @@ sub enter_2 {
     #process
     $out->AppendText("$cmd_line\n");
     my ($cmd, $args) = split /\s+/, $cmd_line, 2;
-    $self->{_app}{args} = $args;
+    $self->{_app}->{args} = $args;
 
-    if ($self->{_app}{commands}{$cmd}) {
+    if ($self->{_app}->{commands}->{$cmd}) {
         my $output = $self->{_app}->$cmd();
         $out->AppendText($output);
     } else {

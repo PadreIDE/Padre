@@ -129,8 +129,8 @@ sub finish {
 	if (defined $self->{updated_document_string}) {
 		# GUI update
 		# TODO: What if the document changed? Bad luck for now.
-		$self->{main_thread_only}{document}->editor->SetText( $self->{updated_document_string} );
-		$self->{main_thread_only}{document}->ppi_select( $self->{token_location} );
+		$self->{main_thread_only}->{document}->editor->SetText( $self->{updated_document_string} );
+		$self->{main_thread_only}->{document}->ppi_select( $self->{token_location} );
 	}
 	else {
 		my $text;

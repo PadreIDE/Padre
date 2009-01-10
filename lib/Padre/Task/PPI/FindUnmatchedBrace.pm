@@ -71,7 +71,7 @@ sub finish {
 	my $self = shift;
 	if (defined $self->{bad_element}) {
 		# GUI update
-		$self->{main_thread_only}{document}->ppi_select( $self->{bad_element} );
+		$self->{main_thread_only}->{document}->ppi_select( $self->{bad_element} );
 	}
 	else {
 		Wx::MessageBox(
