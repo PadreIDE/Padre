@@ -60,11 +60,11 @@ sub bottom {
 }
 
 sub main {
-	$_[0]->GetGrandparent;
+	$_[0]->GetGrandParent;
 }
 
 sub config {
-	$_[0]->GetGrandparent->config;
+	$_[0]->GetGrandParent->config;
 }
 
 sub enable {
