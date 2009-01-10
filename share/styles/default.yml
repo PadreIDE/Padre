@@ -258,3 +258,29 @@ css:
    foreground: 202020
   wxSTC_CSS_ATTRIBUTE:
    foreground: 202020
+
+#
+# conf: text/plain
+#
+conf:
+ colors:
+  wxSTC_CONF_DEFAULT:
+   foreground: 000000
+  wxSTC_CONF_COMMENT:
+   foreground: 007f00
+  wxSTC_CONF_NUMBER:
+   foreground: 007f7f
+  wxSTC_CONF_IDENTIFIER:
+   foreground: 0000ff
+  wxSTC_CONF_EXTENSION:
+   foreground: 202020
+  wxSTC_CONF_PARAMETER:
+   foreground: 208820
+  wxSTC_CONF_STRING:
+   foreground: ff7f00
+  wxSTC_CONF_OPERATOR:
+   foreground: 00007f
+  wxSTC_CONF_IP:
+   foreground: 209999
+  wxSTC_CONF_DIRECTIVE:
+   foreground: 202020

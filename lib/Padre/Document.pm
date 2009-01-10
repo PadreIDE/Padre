@@ -98,6 +98,7 @@ our %EXT_MIME = (
 	pm    => 'application/x-perl',
 	pod   => 'application/x-perl',
 	t     => 'application/x-perl',
+	conf  => 'text/plain',
 	txt   => 'text/plain',
 	xml   => 'text/xml',
 	yml   => 'text/x-yaml',
@@ -539,6 +540,19 @@ sub lexer {
 	my $self = shift;
 	return Wx::wxSTC_LEX_AUTOMATIC unless $self->get_mimetype;
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined $MIME_LEXER{$self->get_mimetype};
+
+	# If mime type is not sufficient to figure out file type
+	# than use suffix for lexer
+	my $filename = $self->filename || q{};
+	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
+		my $ext = lc $1;
+		if ( $EXT_MIME{$ext} ) {
+			if ( $EXT_MIME{$ext} eq 'text/plain' ) {
+				return Wx::wxSTC_LEX_CONF if $ext eq 'conf';
+			}
+		}
+	}
+
 	return $MIME_LEXER{$self->get_mimetype};
 }
 

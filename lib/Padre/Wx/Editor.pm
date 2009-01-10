@@ -106,6 +106,12 @@ sub padre_setup {
 		$self->padre_setup_style('yaml');
 	} elsif ( $mimetype eq 'text/css' ) {
 		$self->padre_setup_style('css');
+	} elsif ( $mimetype eq 'text/plain' ) {
+		my $filename = $self->{Document}->filename || q{};
+		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
+			my $ext = lc $1;
+			$self->padre_setup_style('conf') if $ext eq 'conf';
+		}
 	} elsif ($mimetype) {
 		# setup some default coloring
 		# for the time being it is the same as for Perl
