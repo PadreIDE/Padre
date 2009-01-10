@@ -61,15 +61,23 @@ sub gettext_label {
 sub AppendText {
 	my $self = shift;
 	if ( utf8::is_utf8($_[0]) ) {
-		return $self->SUPER::AppendText($_[0]);
-	}
-	my $text = Encode::decode('utf8', $_[0]);
-	if (1) { # FIXME switch
-		$self->_handle_ansi_escapes($text);
+		if (1) { # FIXME switch in config after Adam's config refactoring
+			$self->_handle_ansi_escapes($_[0]);
+		}
+		else {
+			$self->SUPER::AppendText($_[0]);
+		}
 	}
 	else {
-		$self->SUPER::AppendText($text);
+		my $text = Encode::decode('utf8', $_[0]);
+		if (1) { # FIXME switch in config after Adam's config refactoring
+			$self->_handle_ansi_escapes($text);
+		}
+		else {
+			$self->SUPER::AppendText($text);
+		}
 	}
+	return();
 }
 
 {
