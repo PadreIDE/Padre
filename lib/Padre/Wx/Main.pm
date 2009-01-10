@@ -591,7 +591,7 @@ sub pages {
 
 # For now, this has the same meaning as pages, but once we
 # get project tabs or something, this will change.
-sub editor {
+sub editors {
 	my $notebook = $_[0]->notebook;
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
