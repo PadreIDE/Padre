@@ -213,3 +213,48 @@ yaml:
    bold:       1
    eolfilled:  1
 
+#
+# text/css
+#
+css:
+ colors:
+  wxSTC_CSS_DEFAULT:
+   foreground: 000000
+  wxSTC_CSS_TAG:
+   foreground: 2020ff
+   bold:       1
+  wxSTC_CSS_CLASS:
+   foreground: 3350ff
+   bold:       1
+  wxSTC_CSS_PSEUDOCLASS:
+   foreground: 202020
+  wxSTC_CSS_UNKNOWN_PSEUDOCLASS:
+   foreground: 202020
+   bold:       1
+  wxSTC_CSS_OPERATOR:
+   foreground: 208820
+   bold:       1
+  wxSTC_CSS_IDENTIFIER:
+   foreground: 882020
+  wxSTC_CSS_UNKNOWN_IDENTIFIER:
+   foreground: 202020
+   bold:       1
+  wxSTC_CSS_VALUE:
+   foreground: 209999
+  wxSTC_CSS_COMMENT:
+   foreground: 888820
+  wxSTC_CSS_ID:
+   foreground: 3030aa
+   bold:       1
+  wxSTC_CSS_IMPORTANT:
+   foreground: 202020
+  wxSTC_CSS_DIRECTIVE:
+   foreground: 202020
+  wxSTC_CSS_DOUBLESTRING:
+   foreground: 202020
+  wxSTC_CSS_SINGLESTRING:
+   foreground: 202020
+  wxSTC_CSS_IDENTIFIER2:
+   foreground: 202020
+  wxSTC_CSS_ATTRIBUTE:
+   foreground: 202020
