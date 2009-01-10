@@ -37,7 +37,7 @@ sub new {
 		$self->Append( -1,
 			Wx::gettext("&Split window")
 		),
-		\&Padre::Wx::MainWindow::on_split_window,
+		\&Padre::Wx::Main::on_split_window,
 	);
 
 	$self->AppendSeparator;
@@ -51,21 +51,21 @@ sub new {
 		$self->Append( -1,
 			Wx::gettext("Next File\tCtrl-TAB")
 		),
-		\&Padre::Wx::MainWindow::on_next_pane,
+		\&Padre::Wx::Main::on_next_pane,
 	);
 
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1,
 			Wx::gettext("Previous File\tCtrl-Shift-TAB")
 		),
-		\&Padre::Wx::MainWindow::on_prev_pane,
+		\&Padre::Wx::Main::on_prev_pane,
 	);
 
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1,
 			Wx::gettext("Last Visited File\tCtrl-6")
 		),
-		\&Padre::Wx::MainWindow::on_last_visited_pane,
+		\&Padre::Wx::Main::on_last_visited_pane,
 	);
 
 	Wx::Event::EVT_MENU( $main,

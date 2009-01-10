@@ -48,7 +48,7 @@ sub search {
 		$self->_create_panel;
 	}
 	# pane != panel
-	my $pane = Padre->ide->wx->main_window->aui->GetPane('find');
+	my $pane = Padre->ide->wx->main->aui->GetPane('find');
 	if ( $pane->IsShown ) {
 		$self->_find;
 	} else {
@@ -60,7 +60,7 @@ sub search {
 
 sub _find {
 	my $self  = shift;
-	my $main  = Padre->ide->wx->main_window;
+	my $main  = Padre->ide->wx->main;
 	my $page  = $main->current->editor;
 	my $last  = $page->GetLength;
 	my $text  = $page->GetTextRange(0, $last);
@@ -114,7 +114,7 @@ sub _find {
 #
 sub _create_panel {
 	my $self = shift;
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 
 	# The panel and the boxsizer to place controls
 	$self->{outer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -203,7 +203,7 @@ sub _hide_panel {
 	my $self = shift;
 
 	# pane != panel
-	my $auimngr = Padre->ide->wx->main_window->aui;
+	my $auimngr = Padre->ide->wx->main->aui;
 	$auimngr->GetPane('find')->Hide;
 	$auimngr->Update;
 
@@ -214,7 +214,7 @@ sub _show_panel {
 	my $self = shift;
 
 	# Show the panel; pane != panel
-	my $auimngr = Padre->ide->wx->main_window->aui;
+	my $auimngr = Padre->ide->wx->main->aui;
 	$auimngr->GetPane('find')->Show(1);
 	$auimngr->Update;
 

@@ -47,7 +47,7 @@ sub new {
 	}
 	$self->SetDropTarget(
 		Padre::Wx::FileDropTarget->new(
-			Padre->ide->wx->main_window
+			Padre->ide->wx->main
 		)
 	);
 	return $self;
@@ -533,7 +533,7 @@ sub _get_line_by_number {
 sub on_right_down {
 	my ($self, $event) = @_;
 	
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 	
 	my $pos       = $self->GetCurrentPos;
 	#my $line      = $self->LineFromPosition($pos);
@@ -632,11 +632,11 @@ sub on_right_down {
 
 	my $comment = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
 	Wx::Event::EVT_MENU( $main, $comment,
-		\&Padre::Wx::MainWindow::on_comment_out_block,
+		\&Padre::Wx::Main::on_comment_out_block,
 	);
 	my $uncomment = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
 	Wx::Event::EVT_MENU( $main, $uncomment,
-		\&Padre::Wx::MainWindow::on_uncomment_block,
+		\&Padre::Wx::Main::on_uncomment_block,
 	);
 
 	$menu->AppendSeparator;
@@ -669,7 +669,7 @@ sub on_right_down {
 
 	Wx::Event::EVT_MENU( $main,
 		$menu->Append( -1, Wx::gettext("&Split window") ),
-		\&Padre::Wx::MainWindow::on_split_window,
+		\&Padre::Wx::Main::on_split_window,
 	);
 	if ($event->isa('Wx::MouseEvent')) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY);

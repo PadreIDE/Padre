@@ -169,8 +169,8 @@ msgid ""
 "padre_interfaces"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:695 lib/Padre/Wx/MainWindow.pm:1192
-#: lib/Padre/Wx/MainWindow.pm:1871
+#: lib/Padre/PluginManager.pm:695 lib/Padre/Wx/Main.pm:1192
+#: lib/Padre/Wx/Main.pm:1871
 msgid "Open file"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/Plugin/Devel.pm:104 lib/Padre/Wx/MainWindow.pm:1943
+#: lib/Padre/Plugin/Devel.pm:104 lib/Padre/Wx/Main.pm:1943
 #, perl-format
 msgid "Error: %s"
 msgstr ""
@@ -303,183 +303,183 @@ msgstr ""
 msgid "No diagnostics available for this error!"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:101
+#: lib/Padre/Wx/Main.pm:101
 msgid "(running from SVN checkout)"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:620
+#: lib/Padre/Wx/Main.pm:620
 msgid "Command line"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:621
+#: lib/Padre/Wx/Main.pm:621
 msgid "Run setup"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:703
+#: lib/Padre/Wx/Main.pm:703
 msgid "No open document"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:718
+#: lib/Padre/Wx/Main.pm:718
 msgid "No execution mode was defined for this document"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:741
+#: lib/Padre/Wx/Main.pm:741
 msgid "Not a Perl document"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:783
+#: lib/Padre/Wx/Main.pm:783
 msgid "Message"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:789 lib/Padre/Wx/MainWindow.pm:1326
+#: lib/Padre/Wx/Main.pm:789 lib/Padre/Wx/Main.pm:1326
 #: lib/Padre/Task/SyntaxChecker.pm:173 lib/Padre/Task/SyntaxChecker.pm:188
 #: lib/Padre/Task/SyntaxChecker.pm:192
 msgid "Error"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:863
+#: lib/Padre/Wx/Main.pm:863
 msgid "Autocompletions error"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:877
+#: lib/Padre/Wx/Main.pm:877
 msgid "Line number:"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1120
+#: lib/Padre/Wx/Main.pm:1120
 msgid "Nothing selected. Enter what should be opened:"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1121
+#: lib/Padre/Wx/Main.pm:1121
 msgid "Open selection"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1166
+#: lib/Padre/Wx/Main.pm:1166
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1167
+#: lib/Padre/Wx/Main.pm:1167
 msgid "Open Selection"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1220 lib/Padre/Wx/MainWindow.pm:2195
+#: lib/Padre/Wx/Main.pm:1220 lib/Padre/Wx/Main.pm:2195
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1239
+#: lib/Padre/Wx/Main.pm:1239
 msgid "Save file as..."
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1253
+#: lib/Padre/Wx/Main.pm:1253
 msgid "File already exists. Overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1254
+#: lib/Padre/Wx/Main.pm:1254
 msgid "Exist"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1315
+#: lib/Padre/Wx/Main.pm:1315
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1316 lib/Padre/Wx/MainWindow.pm:2188
+#: lib/Padre/Wx/Main.pm:1316 lib/Padre/Wx/Main.pm:2188
 msgid "File not in sync"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1325
+#: lib/Padre/Wx/Main.pm:1325
 msgid "Could not save file: "
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1372
+#: lib/Padre/Wx/Main.pm:1372
 msgid "File changed. Do you want to save it?"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1373
+#: lib/Padre/Wx/Main.pm:1373
 msgid "Unsaved File"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1473
+#: lib/Padre/Wx/Main.pm:1473
 msgid "Cannot diff if file was never saved"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1479
+#: lib/Padre/Wx/Main.pm:1479
 msgid "There are no differences\n"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1727
+#: lib/Padre/Wx/Main.pm:1727
 msgid "Outline"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1766
+#: lib/Padre/Wx/Main.pm:1766
 msgid "Syntax Check"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:1944
+#: lib/Padre/Wx/Main.pm:1944
 msgid "Internal error"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2058
+#: lib/Padre/Wx/Main.pm:2058
 #, perl-format
 msgid "Words: %d"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2059
+#: lib/Padre/Wx/Main.pm:2059
 #, perl-format
 msgid "Lines: %d"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2060
+#: lib/Padre/Wx/Main.pm:2060
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2061
+#: lib/Padre/Wx/Main.pm:2061
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2062
+#: lib/Padre/Wx/Main.pm:2062
 #, perl-format
 msgid "Newline type: %s"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2063
+#: lib/Padre/Wx/Main.pm:2063
 #, perl-format
 msgid "Encoding: %s"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2064
+#: lib/Padre/Wx/Main.pm:2064
 #, perl-format
 msgid "Document type: %s"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2064
+#: lib/Padre/Wx/Main.pm:2064
 msgid "none"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2066
+#: lib/Padre/Wx/Main.pm:2066
 #, perl-format
 msgid "Filename: %s"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2067
+#: lib/Padre/Wx/Main.pm:2067
 msgid "No filename"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2085
+#: lib/Padre/Wx/Main.pm:2085
 msgid "Space to Tab"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2086
+#: lib/Padre/Wx/Main.pm:2086
 msgid "Tab to Space"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2089
+#: lib/Padre/Wx/Main.pm:2089
 msgid "How many spaces for each tab:"
 msgstr ""
 
-#: lib/Padre/Wx/MainWindow.pm:2187
+#: lib/Padre/Wx/Main.pm:2187
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr ""
 

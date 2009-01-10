@@ -31,11 +31,11 @@ msgid "Pl&ugins"
 msgstr "Пла&гины"
 
 #: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:591
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1275
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1888
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1275
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1888
 #: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:591
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1254
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1877
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1254
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1877
 msgid "Open file"
 msgstr "Открыть файл"
 
@@ -63,279 +63,279 @@ msgstr "Описание"
 msgid "Syntax Check"
 msgstr "Проверка синтаксиса"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:50
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:50
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:50
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:50
 msgid "German"
 msgstr "Немецкий"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:51
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:51
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:51
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:51
 msgid "English"
 msgstr "Английский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:52
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:52
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:52
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:52
 msgid "French"
 msgstr "Французский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:53
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:53
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:53
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:53
 msgid "Hebrew"
 msgstr "Иврит"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:54
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:54
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:54
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:54
 msgid "Hungarian"
 msgstr "Венгерский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:55
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:55
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:55
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:55
 msgid "Korean"
 msgstr "Корейский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:56
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:56
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:56
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:56
 msgid "Italian"
 msgstr "Итальянский"
 
 msgid "Russian"
 msgstr "Русский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:108
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:108
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:108
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:108
 msgid "(running from SVN checkout)"
 msgstr "(выполняется извлеченное из SVN)"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:265
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:265
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:265
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:265
 msgid "Files"
 msgstr "Файлы"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:321
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:514
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:321
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:514
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:321
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:514
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:321
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:514
 msgid "Subs"
 msgstr "Подпрограммы"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:329
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:329
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:329
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:329
 msgid "Workspace View"
 msgstr "Вид рабочей области"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:332
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:332
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:332
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:332
 msgid "Methods"
 msgstr "Методы"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:361
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:512
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:361
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:512
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:361
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:512
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:361
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:512
 msgid "Output"
 msgstr "Вывод"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:369
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:369
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:369
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:369
 msgid "Output View"
 msgstr "Вид вывода"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:513
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:513
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:513
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:513
 msgid "Syntax"
 msgstr "Синтаксис"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:601
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:601
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:601
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:601
 msgid "L:"
 msgstr "Стр.:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:601
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:601
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:601
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:601
 msgid "Ch:"
 msgstr "Симв.:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:735
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:735
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:735
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:735
 msgid "Command line"
 msgstr "Командная строка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:736
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:736
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:736
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:736
 msgid "Run setup"
 msgstr "Выполнить установку"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:808
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:808
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:808
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:808
 msgid "No open document"
 msgstr "Нет открытых документов"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:822
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:822
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:822
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:822
 msgid "No execution mode was defined for this document"
 msgstr "Для этого документа не установлен режим исполнения"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:841
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:841
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:841
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:841
 msgid "Not a Perl document"
 msgstr "Не Perl-документ"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:847
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:847
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:847
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:847
 msgid "Only .pl files can be executed"
 msgstr "Выполняться могут только .pl-файлы"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:883
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:883
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:883
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:883
 msgid "Message"
 msgstr "Сообщение"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:890
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1408
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:890
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1397
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:890
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1408
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:890
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1397
 msgid "Error"
 msgstr "Ошибка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:970
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:970
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:970
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:970
 msgid "Autocompletions error"
 msgstr "Ошибка автоподстановки"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:981
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:981
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:981
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:981
 msgid "Line number:"
 msgstr "Номер строки:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1205
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1205
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Ничего не выбрано. Укажите, что нужно открыть:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1206
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1206
 msgid "Open selection"
 msgstr "Открыть выделенное"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1250
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1226
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1250
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1226
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Файл '%s' не найден"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1250
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1186
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1226
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1250
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1186
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1226
 msgid "Open Selection"
 msgstr "Открыть выделенное"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1301
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2252
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1290
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:2241
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1301
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2252
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1290
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:2241
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Невозможно загрузить файл %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1321
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1310
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1321
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1310
 msgid "Save file as..."
 msgstr "Сохранить файл как..."
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1335
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1324
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1335
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1324
 msgid "File already exists. Overwrite it?"
 msgstr "Файл уже существует. Перезаписать?"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1336
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1325
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1336
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1325
 msgid "Exist"
 msgstr "Существует"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1398
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1387
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1398
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1387
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Со времени последнего сохранения файл на диске изменился. Перезаписать?"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1399
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2245
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1388
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:2234
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1399
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2245
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1388
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:2234
 msgid "File not in sync"
 msgstr "Файл не синхронизирован"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1449
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1438
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1449
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1438
 msgid "File changed. Do you want to save it?"
 msgstr "Файл изменен. Сохранить?"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1450
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1439
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1450
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1439
 msgid "Unsaved File"
 msgstr "Несохраненный файл"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1552
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1541
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1552
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1541
 msgid "Cannot diff if file was never saved"
 msgstr "Невозможно найти различия в несохраненном файле"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1558
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1547
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1558
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1547
 msgid "There are no differences"
 msgstr "Различий нет"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1953
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1942
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1953
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1942
 #, perl-format
 msgid "Error: %s"
 msgstr "Ошибка: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:1953
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1953
 #: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:987
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1942
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1942
 #: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:999
 msgid "Self error"
 msgstr "Внутренняя ошибка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2097
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2097
 #, perl-format
 msgid "Words: %d"
 msgstr "Words: %d"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2098
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2098
 #, perl-format
 msgid "Lines: %d"
 msgstr "Строк: %d"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2099
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2099
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr "Символов без пробелов: %d"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2100
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2100
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Символов с пробелами: %в"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2101
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2101
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Тип перевода строк: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2102
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2102
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Кодировка: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2104
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2104
 #, perl-format
 msgid "Filename: %s"
 msgstr "Имя файла: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2105
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2105
 msgid "No filename"
 msgstr "Файл без имени"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/MainWindow.pm:2244
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:2233
+#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2244
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:2233
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "Со времени последнего сохранения файл изменился. Переоткрыть с диска?"
 
@@ -1324,6 +1324,6 @@ msgstr "Отключить"
 msgid "Enable"
 msgstr "Включить"
 
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/MainWindow.pm:1185
+#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1185
 msgid "Need to have something selected"
 msgstr "Требуется что-либо выделить"

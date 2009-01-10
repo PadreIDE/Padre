@@ -68,9 +68,9 @@ use warnings;
 
 # This is somewhat disturbing but necessary to prevent
 # Test::Compile from breaking. The compile tests run
-# perl -v lib/Padre/Wx/MainWindow.pm which first compiles
+# perl -v lib/Padre/Wx/Main.pm which first compiles
 # the module as a script (i.e. no %INC entry created)
-# and then again when Padre::Wx::MainWindow is required
+# and then again when Padre::Wx::Main is required
 # from another module down the dependency chain.
 # This used to break with subroutine redefinitions.
 # So to prevent this, we force the creating of the correct
@@ -112,7 +112,7 @@ our $REAP_TIMER;
 our $SINGLETON;
 
 # This is set in the worker threads only!
-our $_main_window;
+our $_main;
 
 sub new {
 	my $class = shift;
@@ -132,7 +132,7 @@ sub new {
 
 	$self->{use_threads} = 0 if Wx->VERSION < 0.89;
 
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 
 	Wx::Event::EVT_COMMAND($main, -1, $TASK_DONE_EVENT, \&on_task_done_event);
 	Wx::Event::EVT_COMMAND($main, -1, $TASK_START_EVENT, \&on_task_start_event);
@@ -205,7 +205,7 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue( $string );
 		$self->task_queue->enqueue( "STOP" );
-		worker_loop( Padre->ide->wx->main_window, $self->task_queue );
+		worker_loop( Padre->ide->wx->main, $self->task_queue );
 	}
 
 	return 1;
@@ -226,7 +226,7 @@ sub setup_workers {
 	return unless $self->use_threads;
 
 	@_=(); # avoid "Scalars leaked"
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 
 	# Ensure minimum no. workers
 	my $workers = $self->{workers};
@@ -462,7 +462,7 @@ sub worker_loop {
 	require Storable;
 
 	# Set the thread-specific main-window pointer
-	$_main_window = $main;
+	$_main = $main;
 
 	#warn threads->tid() . " -- Hi, I'm a thread.";
 
@@ -492,7 +492,7 @@ sub worker_loop {
 	}
 	
 	# clean up
-	undef $_main_window;
+	undef $_main;
 }
 
 

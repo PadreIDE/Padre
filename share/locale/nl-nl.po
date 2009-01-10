@@ -355,7 +355,7 @@ msgid "Error: "
 msgstr "Fout: "
 
 #: lib/Padre/Wx/Menu.pm:454
-#: lib/Padre/Wx/MainWindow.pm:1359
+#: lib/Padre/Wx/Main.pm:1359
 msgid "Self error"
 msgstr "Interne Fout"
 
@@ -461,122 +461,122 @@ msgstr "Configuratie: %s\n"
 msgid "Copyright 2008 Gabor Szabo"
 msgstr "Copyright 2008 Gabor Szabo"
 
-#: lib/Padre/Wx/MainWindow.pm:54
+#: lib/Padre/Wx/Main.pm:54
 msgid "(running from SVN checkout)"
 msgstr "(gebaseerd op uitgecheckte SVN data)"
 
-#: lib/Padre/Wx/MainWindow.pm:108
+#: lib/Padre/Wx/Main.pm:108
 msgid "Files"
 msgstr "Bestanden"
 
-#: lib/Padre/Wx/MainWindow.pm:131
+#: lib/Padre/Wx/Main.pm:131
 msgid "Subs"
 msgstr "Subroutines"
 
-#: lib/Padre/Wx/MainWindow.pm:135
+#: lib/Padre/Wx/Main.pm:135
 msgid "Methods"
 msgstr "Methodes"
 
-#: lib/Padre/Wx/MainWindow.pm:153
+#: lib/Padre/Wx/Main.pm:153
 msgid "Output"
 msgstr "Uitvoer"
 
-#: lib/Padre/Wx/MainWindow.pm:463
+#: lib/Padre/Wx/Main.pm:463
 msgid "Command line"
 msgstr "Commando-lijn"
 
-#: lib/Padre/Wx/MainWindow.pm:464
+#: lib/Padre/Wx/Main.pm:464
 msgid "Run setup"
 msgstr "Uitvoerings-instellingen"
 
-#: lib/Padre/Wx/MainWindow.pm:544
+#: lib/Padre/Wx/Main.pm:544
 msgid "No open document"
 msgstr "Geen document geopend"
 
-#: lib/Padre/Wx/MainWindow.pm:558
+#: lib/Padre/Wx/Main.pm:558
 msgid "No execution mode was defined for this document"
 msgstr "Geen uitvoeringsmodus bepaald voor dit document"
 
-#: lib/Padre/Wx/MainWindow.pm:577
+#: lib/Padre/Wx/Main.pm:577
 msgid "Not a Perl document"
 msgstr "Geen Perl Document"
 
-#: lib/Padre/Wx/MainWindow.pm:583
+#: lib/Padre/Wx/Main.pm:583
 msgid "Only .pl files can be executed"
 msgstr "Slechts .pl-bestanden kunnen uitgevoerd worden"
 
-#: lib/Padre/Wx/MainWindow.pm:619
+#: lib/Padre/Wx/Main.pm:619
 msgid "Message"
 msgstr "Bericht"
 
-#: lib/Padre/Wx/MainWindow.pm:626
-#: lib/Padre/Wx/MainWindow.pm:1074
+#: lib/Padre/Wx/Main.pm:626
+#: lib/Padre/Wx/Main.pm:1074
 msgid "Error"
 msgstr "Fout"
 
-#: lib/Padre/Wx/MainWindow.pm:712
+#: lib/Padre/Wx/Main.pm:712
 msgid "Autocompletions error"
 msgstr "Fout automatische aanvulling"
 
-#: lib/Padre/Wx/MainWindow.pm:723
+#: lib/Padre/Wx/Main.pm:723
 msgid "Line number:"
 msgstr "Lijn nummer:"
 
-#: lib/Padre/Wx/MainWindow.pm:879
+#: lib/Padre/Wx/Main.pm:879
 msgid "Need to have something selected"
 msgstr "Gelieve een selectie te maken"
 
-#: lib/Padre/Wx/MainWindow.pm:879
-#: lib/Padre/Wx/MainWindow.pm:916
+#: lib/Padre/Wx/Main.pm:879
+#: lib/Padre/Wx/Main.pm:916
 msgid "Open Selection"
 msgstr "Open Selectie"
 
-#: lib/Padre/Wx/MainWindow.pm:916
+#: lib/Padre/Wx/Main.pm:916
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Bestand '%s' niet gevonden"
 
-#: lib/Padre/Wx/MainWindow.pm:935
+#: lib/Padre/Wx/Main.pm:935
 msgid "Open file"
 msgstr "Bestand openen"
 
-#: lib/Padre/Wx/MainWindow.pm:988
+#: lib/Padre/Wx/Main.pm:988
 msgid "Save file as..."
 msgstr "Bestand opslaan als..."
 
-#: lib/Padre/Wx/MainWindow.pm:1002
+#: lib/Padre/Wx/Main.pm:1002
 msgid "File already exists. Overwrite it?"
 msgstr "Bestand bestaat reeds. Overschrijven?"
 
-#: lib/Padre/Wx/MainWindow.pm:1003
+#: lib/Padre/Wx/Main.pm:1003
 msgid "Exist"
 msgstr "Bestaand"
 
-#: lib/Padre/Wx/MainWindow.pm:1064
+#: lib/Padre/Wx/Main.pm:1064
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Bestand gewijzigd sinds het voor de laatste maal werd opgeslagen. Wijzigingen overschrijven?"
 
-#: lib/Padre/Wx/MainWindow.pm:1065
+#: lib/Padre/Wx/Main.pm:1065
 msgid "File not in sync"
 msgstr "Bestand niet gesynchroniseerd"
 
-#: lib/Padre/Wx/MainWindow.pm:1107
+#: lib/Padre/Wx/Main.pm:1107
 msgid "File changed. Do you want to save it?"
 msgstr "Bestand gewijzigd. Opslaan?"
 
-#: lib/Padre/Wx/MainWindow.pm:1108
+#: lib/Padre/Wx/Main.pm:1108
 msgid "Unsaved File"
 msgstr "Bestand niet opgeslagen"
 
-#: lib/Padre/Wx/MainWindow.pm:1208
+#: lib/Padre/Wx/Main.pm:1208
 msgid "Cannot diff if file was never saved"
 msgstr "Vergelijken kan niet indien het bestand nog niet is opgeslagen"
 
-#: lib/Padre/Wx/MainWindow.pm:1213
+#: lib/Padre/Wx/Main.pm:1213
 msgid "There are no differences\n"
 msgstr "Geen verschillen\n"
 
-#: lib/Padre/Wx/MainWindow.pm:1359
+#: lib/Padre/Wx/Main.pm:1359
 #, perl-format
 msgid "Error: %s"
 msgstr "Fout: %s"

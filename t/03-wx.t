@@ -36,7 +36,7 @@ copy catfile('eg', 'cyrillic_test.pl'),  catfile($home, 'cyrillic_test.pl');
 copy catfile('t', 'files', 'one_char.pl'),  catfile($home, 'one_char.pl');
 
 my $ide   = Padre->ide;
-my $frame = $ide->wx->main_window;
+my $frame = $ide->wx->main;
 
 my @events = (
 	{
@@ -44,7 +44,7 @@ my @events = (
 		                 # this seems to be an issue with Padre or wx beneath but for now we hide it with the larger
 		                 # delay
 		code  => sub {
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			my $T = Test::Builder->new;
 			{
 				my @editors = $main->pages;
@@ -62,7 +62,7 @@ my @events = (
 	{
 		delay => 100,
 		code  => sub {
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			my $doc  = $main->current->document;
 			my $editor = $doc->editor;
 			$editor->SetSelection(10, 15);
@@ -97,7 +97,7 @@ my @events = (
 	{
 		delay => 200,
 		code  => sub {
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
 
 			my $T = Test::Builder->new;
@@ -139,7 +139,7 @@ my @events = (
 			{
 			delay => 1000,
 			code  => sub {
-				my $main = $ide->wx->main_window;
+				my $main = $ide->wx->main;
 				my $T = Test::Builder->new;
 				my $dialog = Padre::Wx::Dialog::Bookmarks::get_dialog();
 				my $event = Wx::CommandEvent->new( &Wx::wxEVT_COMMAND_BUTTON_CLICKED, $dialog->{_widgets_}{cancel}->GetId );
@@ -155,7 +155,7 @@ my @events = (
 	{
 		delay => 200,
 		code  => sub {
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			my $T = Test::Builder->new;
 			$main->on_close_all;
 			{
@@ -173,7 +173,7 @@ my @events = (
 		code  => sub {
 			my $T = Test::Builder->new;
 			$T->diag("changing locale");
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			$main->change_locale('en');
 			$main->change_locale('');
 			$main->change_locale('en');
@@ -185,7 +185,7 @@ my @events = (
 		code  => sub {
 			my $T = Test::Builder->new;
 			$T->diag("setting syntax check");
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			$T->diag("syntaxcheck_panel: $main->{gui}->{syntaxcheck_panel}");
 			#$T->ok(not (defined $main->{gui}->{syntaxcheck_panel}), 'syntaxcheck_panel is not yet defined');
 			$main->menu->view->{show_syntaxcheck}->Check(1);
@@ -199,7 +199,7 @@ my @events = (
 		delay => 800,
 		code  => sub {
 			my $T = Test::Builder->new;
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			$T->diag("setup editor for one_char.pl");
 			$main->setup_editors( catfile($home, 'one_char.pl') );
 			my @editors = $main->pages;
@@ -212,7 +212,7 @@ my @events = (
 		delay => 1500,
 		code  => sub {
 			my $T = Test::Builder->new;
-			my $main = $ide->wx->main_window;
+			my $main = $ide->wx->main;
 			$T->diag("setup editor for cyrillic_test.pl");
 			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
 			my @editors = $main->pages;
@@ -226,7 +226,7 @@ my @events = (
 			my $T = Test::Builder->new;
 			$T->diag("exiting");
 			$ide->wx->ExitMainLoop;
-			$ide->wx->main_window->Destroy;
+			$ide->wx->main->Destroy;
 		},
 	},
 );

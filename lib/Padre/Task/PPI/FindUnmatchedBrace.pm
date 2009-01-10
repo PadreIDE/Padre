@@ -78,7 +78,7 @@ sub finish {
 			Wx::gettext("All braces appear to be matched"),
 			Wx::gettext("Check Complete"),
 			Wx::wxOK,
-			Padre->ide->wx->main_window
+			Padre->ide->wx->main
 		);
 	}
 	return();

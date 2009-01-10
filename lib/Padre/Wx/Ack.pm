@@ -130,7 +130,7 @@ sub dialog {
 sub on_pick_dir {
 	my ($dialog, $event) = @_;
 
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 
 	my $default_dir = $dialog->{_widgets_}{_ack_dir_}->GetValue;
 	unless ( $default_dir ) { # we use currect editor
@@ -165,7 +165,7 @@ sub find_clicked {
 	$search->{dir} ||= '.';
 	return if not $search->{term};
 	
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 
 	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
 
@@ -318,7 +318,7 @@ sub on_ack_result_selected {
 	my ($file, $line) = ($text =~ /^(.*?)\((\d+)\)\:/);
 	return unless $line;
 
-	my $main = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 	my $id   = $main->setup_editor($file);
 	$main->on_nth_pane($id) if $id;
 
@@ -335,7 +335,7 @@ sub ack_done {
 
 	my $data = $event->GetData;
 
-	$main = Padre->ide->wx->main_window;
+	$main = Padre->ide->wx->main;
 	$main->{gui}->{ack_panel}->InsertStringItem( $panel_string_index--, $data);
 	$main->{gui}->{ack_panel}->SetColumnWidth(0, Wx::wxLIST_AUTOSIZE);
 
@@ -410,7 +410,7 @@ sub print_results {
 
 sub _send_text {
 	my $text = shift;
-	my $frame = Padre->ide->wx->main_window;
+	my $frame = Padre->ide->wx->main;
 	my $threvent = Wx::PlThreadEvent->new( -1, $DONE_EVENT, $text );
 	Wx::PostEvent( $frame, $threvent );
 }

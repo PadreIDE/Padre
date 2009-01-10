@@ -102,8 +102,8 @@ SCOPE: {
 	isa_ok( $app, 'Padre::Wx::App' );
 
 	# The main window
-	my $main = $app->main_window;
-	isa_ok( $main, 'Padre::Wx::MainWindow' );
+	my $main = $app->main;
+	isa_ok( $main, 'Padre::Wx::Main' );
 
 	# The main menu
 	my $menu = $main->menu;
@@ -122,7 +122,7 @@ SCOPE: {
 	# Current context
 	my $current = $main->current;
 	isa_ok( $current, 'Padre::Current' );
-	isa_ok( $current->_main,     'Padre::Wx::MainWindow' );
+	isa_ok( $current->_main,     'Padre::Wx::Main' );
 	isa_ok( $current->_notebook, 'Padre::Wx::Notebook'   );
 	refis(  $current->_main,     $main,     '->current->_main ok'     );
 	refis(  $current->_notebook, $notebook, '->current->_notebook ok' );

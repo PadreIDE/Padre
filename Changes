@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
 v0.26 2009.0X.XX
-
+    The long-awaited MainWindow.pm -> Main.pm rename (ADAMK)
     Added styles for text/x-patch, text/x-makefile file types (KEEDI)
     Now style config file supports foreground, background, bold,
         italic, eolfilled, underline properties (KEEDI)
@@ -163,7 +163,7 @@ v0.20 2008.12.02
     Reworked the autoindentation: Now with auto-de-indentation on
         closing brace (SMUELLER)
     Now using Class::XSAccessor for generating accessors (SMUELLER)
-    Moved the syntax checker from MainWindow.pm into
+    Moved the syntax checker from Main.pm into
         Padre::Wx::SyntaxChecker (SMUELLER)
     Small improvement to startup time by not refreshing the plugin
         menu after loading each plugin (SMUELLER)

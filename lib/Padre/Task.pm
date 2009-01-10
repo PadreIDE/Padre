@@ -65,7 +65,7 @@ task:
   # You don't have to implement this if you don't need it.
   sub finish {
           my $self = shift;
-          my $mainwindow = shift;
+          my $main = shift;
           # cleanup!
           return 1;
   }
@@ -397,7 +397,7 @@ C<prepare()> method. This should happen in the main thread!
 handler multiple times)
 
   Wx::Event::EVT_COMMAND(
-      Padre->ide->wx->main_window,
+      Padre->ide->wx->main,
       -1,
       $FUN_EVENT,
       \&update_gui_with_fun
@@ -420,7 +420,7 @@ sub post_event {
 	my $event_id = shift;
 	my $data = shift;
 	my $thread_event = Wx::PlThreadEvent->new( -1, $event_id, $data );
-	Wx::PostEvent($Padre::TaskManager::_main_window, $thread_event);
+	Wx::PostEvent($Padre::TaskManager::_main, $thread_event);
 	return 1;
 }
 

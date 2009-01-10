@@ -193,10 +193,7 @@ sub ResolveRef {
 
 # FIXME , add our own output panel
 sub debug {
-	my ($self,$string) = @_;
-	Padre->ide->wx->
-		main_window->{gui}{output_panel}->AppendText( $string . $/ );
-
+	Padre->ide->wx->main->output->AppendText( $_[1] . $/ );
 }
 
 sub display {

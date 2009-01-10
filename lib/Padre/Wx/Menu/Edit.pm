@@ -150,7 +150,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{goto},
-		\&Padre::Wx::MainWindow::on_goto,
+		\&Padre::Wx::Main::on_goto,
 	);
 
 	$self->{autocomp} = $self->Append( -1,
@@ -158,7 +158,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{autocomp},
-		\&Padre::Wx::MainWindow::on_autocompletition,
+		\&Padre::Wx::Main::on_autocompletition,
 	);
 
 	$self->{brace_match} = $self->Append( -1,
@@ -166,7 +166,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{brace_match},
-		\&Padre::Wx::MainWindow::on_brace_matching,
+		\&Padre::Wx::Main::on_brace_matching,
 	);
 
 	$self->{join_lines} = $self->Append( -1,
@@ -174,7 +174,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{join_lines},
-		\&Padre::Wx::MainWindow::on_join_lines,
+		\&Padre::Wx::Main::on_join_lines,
 	);
 
 	$self->{snippets} = $self->Append( -1,
@@ -199,7 +199,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{comment_out},
-		\&Padre::Wx::MainWindow::on_comment_out_block,
+		\&Padre::Wx::Main::on_comment_out_block,
 	);
 
 	$self->{uncomment} = $self->Append( -1,
@@ -207,7 +207,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{uncomment},
-		\&Padre::Wx::MainWindow::on_uncomment_block,
+		\&Padre::Wx::Main::on_uncomment_block,
 	);
 	$self->AppendSeparator;
 
@@ -297,7 +297,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{diff},
-		\&Padre::Wx::MainWindow::on_diff,
+		\&Padre::Wx::Main::on_diff,
 	);
 
 	$self->{insert_from_file} = $self->Append( -1,
@@ -305,7 +305,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{insert_from_file},
-		\&Padre::Wx::MainWindow::on_insert_from_file,
+		\&Padre::Wx::Main::on_insert_from_file,
 	);
 
 	$self->AppendSeparator;
@@ -319,7 +319,7 @@ sub new {
 		$self->Append( -1,
 			Wx::gettext("Preferences")
 		),
-		\&Padre::Wx::MainWindow::on_preferences,
+		\&Padre::Wx::Main::on_preferences,
 	);
 
 

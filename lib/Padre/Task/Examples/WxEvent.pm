@@ -13,7 +13,7 @@ our $SAY_HELLO_EVENT : shared = Wx::NewEventType();
 sub prepare {
 	# Set up the event handler
 	Wx::Event::EVT_COMMAND(
-		Padre->ide->wx->main_window,
+		Padre->ide->wx->main,
 		-1,
 		$SAY_HELLO_EVENT,
 		\&on_say_hello,

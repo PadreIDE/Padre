@@ -22,7 +22,7 @@ Padre::Plugin - Padre Plugin API
   sub padre_interfaces {
       'Padre::Plugin'         => 0.19,
       'Padre::Document::Perl' => 0.16,
-      'Padre::Wx::MainWindow' => 0.16,
+      'Padre::Wx::Main'       => 0.16,
       'Padre::DB'             => 0.16,
   }
   
@@ -88,7 +88,7 @@ sub plugin_name {
   sub padre_interfaces {
       'Padre::Plugin'         => 0.19,
       'Padre::Document::Perl' => 0.16,
-      'Padre::Wx::MainWindow' => 0.18,
+      'Padre::Wx::Main'       => 0.18,
       'Padre::DB'             => 0.16,
   }
 
@@ -312,12 +312,12 @@ sub menu_plugins_simple {
 
   sub menu_plugins {
       my $self        = shift;
-      my $main_window = shift;
+      my $main = shift;
   
       # Create a simple menu with a single About entry
       my $menu = Wx::Menu->new;
       Wx::Event::EVT_MENU(
-          $main_window,
+          $main,
           $menu->Append( -1, 'About', ),
           sub { $self->show_about },
       );

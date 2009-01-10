@@ -202,191 +202,191 @@ msgstr ""
 "Errore nel caricamento del plugin '%s'\n"
 "%s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:94
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:94
 msgid "(running from SVN checkout)"
 msgstr "(In esecuzione dal checkout SVN)"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:297
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:297
 msgid "Workspace View"
 msgstr "Visualizza Workspace"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:301
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:301
 msgid "Methods"
 msgstr "Metodi"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:685
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:685
 msgid "Command line"
 msgstr "Riga di comando"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:686
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:686
 msgid "Run setup"
 msgstr "Esegui setup"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:768
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:768
 msgid "No open document"
 msgstr "Nessun documento aperto"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:783
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:783
 msgid "No execution mode was defined for this document"
 msgstr "Nessuna modalità di esecuzione definita per questo documento"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:806
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:806
 msgid "Not a Perl document"
 msgstr "Non è un documento Perl"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:848
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:848
 msgid "Message"
 msgstr "Messaggio"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:855
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1390
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:855
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1390
 msgid "Error"
 msgstr "Errore"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:935
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:935
 msgid "Autocompletions error"
 msgstr "Errore di completamento automatico"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:946
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:946
 msgid "Line number:"
 msgstr "Numero riga:"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1188
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1188
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Nessuna selezione. Specificare cosa dovrebbe essere aperto:"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1189
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1189
 msgid "Open selection"
 msgstr "Apri selezione"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1233
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1233
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Impossibile trovare il file '%s'"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1233
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1233
 msgid "Open Selection"
 msgstr "Apri selezione"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1284
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2254
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1284
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2254
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Impossibile ricaricare il file; %s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1381
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1381
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Il file è stato modificato su disco dall'ultimo salvataggio. Sovrascriverlo?"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1382
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2247
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1382
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2247
 msgid "File not in sync"
 msgstr "File non sincronizzato"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1390
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1390
 msgid "Could not save file: "
 msgstr "Impossibile salvare il file:W"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1432
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1432
 msgid "File changed. Do you want to save it?"
 msgstr "File modificato. Sovrascriverlo?"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1433
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1433
 msgid "Unsaved File"
 msgstr "File da salvare"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1528
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1528
 msgid "Cannot diff if file was never saved"
 msgstr "Impossibile eseguire diff se il file non è mai stato salvato"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1534
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1534
 msgid "There are no differences\n"
 msgstr "Non ci sono differenze\n"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1743
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1743
 msgid "Output"
 msgstr "Output"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1785
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1785
 msgid "Subs"
 msgstr "Sub"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1825
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1825
 msgid "Syntax Check"
 msgstr "Verifica sintassi"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1979
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1979
 #, perl-format
 msgid "Error: %s"
 msgstr "Errore: %s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:1980
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:1980
 msgid "Internal error"
 msgstr "Errore interno"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2104
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2104
 #, perl-format
 msgid "Words: %d"
 msgstr "Parole: %d"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2105
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2105
 #, perl-format
 msgid "Lines: %d"
 msgstr "Righe: %d"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2106
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2106
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr "Caratteri esclusi gli spazi: %d"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2107
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2107
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Caratteri comprensivi degli spazi: %d"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2108
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2108
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Tipo fine riga: %s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2109
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2109
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Codifica: %s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2110
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2110
 #, perl-format
 msgid "Document type: %s"
 msgstr "Tipo documento: %s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2110
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2110
 msgid "none"
 msgstr "nessuno"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2112
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2112
 #, perl-format
 msgid "Filename: %s"
 msgstr "Nome file: %s"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2113
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2113
 msgid "No filename"
 msgstr "Nessun nome file"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2131
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2131
 #, fuzzy
 msgid "Space to Tab"
 msgstr "Da spazi a tabulazioni..."
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2131
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2131
 #, fuzzy
 msgid "Tab to Space"
 msgstr "Da tabulazioni a spazi..."
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2134
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2134
 msgid "How many spaces for each tab:"
 msgstr "Quanti spazi per ogni tabulazione:"
 
-#: /home/simone/Padre/Padre/lib/Padre/Wx/MainWindow.pm:2246
+#: /home/simone/Padre/Padre/lib/Padre/Wx/Main.pm:2246
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "File su disco modificato dall'ultimo salvataggio. Ricaricarlo?"
 
@@ -1343,15 +1343,15 @@ msgstr "Plugin:%s Non compatibile con l'API Padre::Plugin. Il plugin non è ista
 msgid "Failed to load the plugin '%s'"
 msgstr "Errore nel caricamento del plugin '%s'"
 
-#: /home/simone/Padre/Padre/blib/lib/Padre/Wx/MainWindow.pm:246
+#: /home/simone/Padre/Padre/blib/lib/Padre/Wx/Main.pm:246
 msgid "Files"
 msgstr "File"
 
-#: /home/simone/Padre/Padre/blib/lib/Padre/Wx/MainWindow.pm:370
+#: /home/simone/Padre/Padre/blib/lib/Padre/Wx/Main.pm:370
 msgid "Output View"
 msgstr "Visualizza Output"
 
-#: /home/simone/Padre/Padre/blib/lib/Padre/Wx/MainWindow.pm:2015
+#: /home/simone/Padre/Padre/blib/lib/Padre/Wx/Main.pm:2015
 #, fuzzy
 msgid "Self error"
 msgstr "Self error"

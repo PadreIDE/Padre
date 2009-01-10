@@ -149,7 +149,7 @@ sub _notebook {
 	return $self->{notebook};
 }
 
-# Get the project from the main_window (and don't cache)
+# Get the project from the main window (and don't cache)
 sub config {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
 	$self->_main->config;
@@ -160,7 +160,7 @@ sub _main {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{main} ) {
 		require Padre;
-		$self->{main} = Padre->ide->wx->main_window;
+		$self->{main} = Padre->ide->wx->main;
 	}
 	return $self->{main};
 }

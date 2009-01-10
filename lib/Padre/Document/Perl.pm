@@ -427,7 +427,7 @@ sub find_variable_declaration {
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
-			Padre->ide->wx->main_window
+			Padre->ide->wx->main
 		);
 		return ();
 	}
@@ -457,7 +457,7 @@ sub lexical_variable_replacement {
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
-			Padre->ide->wx->main_window
+			Padre->ide->wx->main
 		);
 		return ();
 	}

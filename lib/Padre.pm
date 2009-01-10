@@ -74,7 +74,7 @@ use Class::Autouse qw{
 	Padre::Wx::Dialog::Search
 	Padre::Wx::Dialog::Snippets
 	Padre::Wx::History::TextDialog
-	Padre::Wx::MainWindow
+	Padre::Wx::Main
 };
 
 # Gnerate faster accessors
@@ -177,7 +177,7 @@ END_USAGE
 	}
 
 	# We can now confirm the GUI will be used
-	$self->wx->main_window->Show(1);
+	$self->wx->main->Show(1);
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
@@ -956,9 +956,9 @@ Scintilla.
 
 =item L<Padre::Wx::History::TextDialog>
 
-=item L<Padre::Wx::MainWindow>
+=item L<Padre::Wx::Main>
 
-is the main frame, most of the code is currently there.
+This is the main window, most of the code is currently there.
 
 =item L<Padre::Wx::Menu>
 

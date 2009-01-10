@@ -153,7 +153,7 @@ sub replace_all_clicked {
 	return if not defined $regex;
 
 	my $config = Padre->ide->config;
-	my $main   = Padre->ide->wx->main_window;
+	my $main   = Padre->ide->wx->main;
 	my $page   = $main->current->editor;
 	my $last   = $page->GetLength;
 	my $str    = $page->GetTextRange(0, $last);
@@ -265,7 +265,7 @@ sub _get_regex {
 			sprintf(Wx::gettext("Cannot build regex for '%s'"), $search_term),
 			Wx::gettext("Search error"),
 			Wx::wxOK,
-			Padre->ide->wx->main_window,
+			Padre->ide->wx->main,
 		);
 		return;
 	}
@@ -275,7 +275,7 @@ sub _get_regex {
 sub search {
 	my $class = shift;
 	my %args  = @_;
-	my $main  = Padre->ide->wx->main_window;
+	my $main  = Padre->ide->wx->main;
 	my $regex = _get_regex(%args);
 	return if not defined $regex;
 

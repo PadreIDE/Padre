@@ -43,24 +43,24 @@ sub new {
 	my $self  = $class->SUPER::new(@_);
 
 	# Immediately populate the main window
-	$self->{main_window} = Padre::Wx::MainWindow->new;
+	$self->{main} = Padre::Wx::Main->new;
 
 	return $self;
 }
 
 =pod
 
-=head2 main_window
+=head2 main
 
-The C<main_window> method creates or returns the existing
-L<Padre::Wx::MainWindow> object, representing the main editor window
+The C<main> method creates or returns the existing
+L<Padre::Wx::Main> object, representing the main editor window
 of the application.
 
 =cut
 
 use Class::XSAccessor
 	getters => {
-		main_window => 'main_window',
+		main => 'main',
 	};
 
 

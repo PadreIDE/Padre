@@ -178,8 +178,8 @@ msgid ""
 msgstr ""
 "插件 %s - 与 Padre::Plugin API 不兼容。必须拥有子程序 padre_interfaces"
 
-#: lib/Padre/PluginManager.pm:695 lib/Padre/Wx/MainWindow.pm:1282
-#: lib/Padre/Wx/MainWindow.pm:1941
+#: lib/Padre/PluginManager.pm:695 lib/Padre/Wx/Main.pm:1282
+#: lib/Padre/Wx/Main.pm:1941
 msgid "Open file"
 msgstr "打开文件"
 
@@ -305,196 +305,196 @@ msgstr "错误列表"
 msgid "No diagnostics available for this error!"
 msgstr "该错误没有诊断信息"
 
-#: lib/Padre/Wx/MainWindow.pm:95
+#: lib/Padre/Wx/Main.pm:95
 msgid "(running from SVN checkout)"
 msgstr "(自来 SVN)"
 
-#: lib/Padre/Wx/MainWindow.pm:321
+#: lib/Padre/Wx/Main.pm:321
 msgid "Workspace View"
 msgstr "工作视图"
 
-#: lib/Padre/Wx/MainWindow.pm:328
+#: lib/Padre/Wx/Main.pm:328
 msgid "Methods"
 msgstr "方法"
 
-#: lib/Padre/Wx/MainWindow.pm:710
+#: lib/Padre/Wx/Main.pm:710
 msgid "Command line"
 msgstr "命令行"
 
-#: lib/Padre/Wx/MainWindow.pm:711
+#: lib/Padre/Wx/Main.pm:711
 msgid "Run setup"
 msgstr "Run setup"
 
-#: lib/Padre/Wx/MainWindow.pm:793
+#: lib/Padre/Wx/Main.pm:793
 msgid "No open document"
 msgstr "没有打开文档"
 
-#: lib/Padre/Wx/MainWindow.pm:808
+#: lib/Padre/Wx/Main.pm:808
 msgid "No execution mode was defined for this document"
 msgstr "没有该文档对应的运行方法"
 
-#: lib/Padre/Wx/MainWindow.pm:831
+#: lib/Padre/Wx/Main.pm:831
 msgid "Not a Perl document"
 msgstr "不是一个 Perl 文档"
 
-#: lib/Padre/Wx/MainWindow.pm:873
+#: lib/Padre/Wx/Main.pm:873
 msgid "Message"
 msgstr "提示"
 
-#: lib/Padre/Wx/MainWindow.pm:879 lib/Padre/Wx/MainWindow.pm:1416
+#: lib/Padre/Wx/Main.pm:879 lib/Padre/Wx/Main.pm:1416
 #: lib/Padre/Task/SyntaxChecker.pm:172 lib/Padre/Task/SyntaxChecker.pm:187
 #: lib/Padre/Task/SyntaxChecker.pm:191
 msgid "Error"
 msgstr "错误"
 
-#: lib/Padre/Wx/MainWindow.pm:953
+#: lib/Padre/Wx/Main.pm:953
 msgid "Autocompletions error"
 msgstr "自动完成错误"
 
-#: lib/Padre/Wx/MainWindow.pm:967
+#: lib/Padre/Wx/Main.pm:967
 msgid "Line number:"
 msgstr "行号:"
 
-#: lib/Padre/Wx/MainWindow.pm:1210
+#: lib/Padre/Wx/Main.pm:1210
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "无选区。请输入需要打开的:"
 
-#: lib/Padre/Wx/MainWindow.pm:1211
+#: lib/Padre/Wx/Main.pm:1211
 msgid "Open selection"
 msgstr "打开所选"
 
-#: lib/Padre/Wx/MainWindow.pm:1256
+#: lib/Padre/Wx/Main.pm:1256
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "无法找到文件 '%s'"
 
-#: lib/Padre/Wx/MainWindow.pm:1257
+#: lib/Padre/Wx/Main.pm:1257
 msgid "Open Selection"
 msgstr "打开所选"
 
-#: lib/Padre/Wx/MainWindow.pm:1310 lib/Padre/Wx/MainWindow.pm:2295
+#: lib/Padre/Wx/Main.pm:1310 lib/Padre/Wx/Main.pm:2295
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "无法重载文件: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:1329
+#: lib/Padre/Wx/Main.pm:1329
 msgid "Save file as..."
 msgstr "另存为..."
 
-#: lib/Padre/Wx/MainWindow.pm:1343
+#: lib/Padre/Wx/Main.pm:1343
 msgid "File already exists. Overwrite it?"
 msgstr "文件已存在。是否覆盖？"
 
-#: lib/Padre/Wx/MainWindow.pm:1344
+#: lib/Padre/Wx/Main.pm:1344
 msgid "Exist"
 msgstr "存在"
 
-#: lib/Padre/Wx/MainWindow.pm:1405
+#: lib/Padre/Wx/Main.pm:1405
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "文件在上次保存后有更新。是否覆盖？"
 
-#: lib/Padre/Wx/MainWindow.pm:1406 lib/Padre/Wx/MainWindow.pm:2288
+#: lib/Padre/Wx/Main.pm:1406 lib/Padre/Wx/Main.pm:2288
 msgid "File not in sync"
 msgstr "文件未同步"
 
-#: lib/Padre/Wx/MainWindow.pm:1415
+#: lib/Padre/Wx/Main.pm:1415
 msgid "Could not save file: "
 msgstr "无法保存文件："
 
-#: lib/Padre/Wx/MainWindow.pm:1463
+#: lib/Padre/Wx/Main.pm:1463
 msgid "File changed. Do you want to save it?"
 msgstr "文件已更改。是否保存？"
 
-#: lib/Padre/Wx/MainWindow.pm:1464
+#: lib/Padre/Wx/Main.pm:1464
 msgid "Unsaved File"
 msgstr "为保存文件"
 
-#: lib/Padre/Wx/MainWindow.pm:1560
+#: lib/Padre/Wx/Main.pm:1560
 msgid "Cannot diff if file was never saved"
 msgstr "无法对未保存文件进行比较"
 
-#: lib/Padre/Wx/MainWindow.pm:1566
+#: lib/Padre/Wx/Main.pm:1566
 msgid "There are no differences\n"
 msgstr "无差异\n"
 
-#: lib/Padre/Wx/MainWindow.pm:1796
+#: lib/Padre/Wx/Main.pm:1796
 msgid "Subs"
 msgstr "子程序"
 
-#: lib/Padre/Wx/MainWindow.pm:1836
+#: lib/Padre/Wx/Main.pm:1836
 msgid "Syntax Check"
 msgstr "语法检查"
 
-#: lib/Padre/Wx/MainWindow.pm:2013
+#: lib/Padre/Wx/Main.pm:2013
 #, perl-format
 msgid "Error: %s"
 msgstr "错误: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2014
+#: lib/Padre/Wx/Main.pm:2014
 msgid "Internal error"
 msgstr "内部错误"
 
-#: lib/Padre/Wx/MainWindow.pm:2146
+#: lib/Padre/Wx/Main.pm:2146
 #, perl-format
 msgid "Words: %d"
 msgstr "单词: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2147
+#: lib/Padre/Wx/Main.pm:2147
 #, perl-format
 msgid "Lines: %d"
 msgstr "行号: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2148
+#: lib/Padre/Wx/Main.pm:2148
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr "字符（无空格）: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2149
+#: lib/Padre/Wx/Main.pm:2149
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "字符（带空格）: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2150
+#: lib/Padre/Wx/Main.pm:2150
 #, perl-format
 msgid "Newline type: %s"
 msgstr "换行类型: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2151
+#: lib/Padre/Wx/Main.pm:2151
 #, perl-format
 msgid "Encoding: %s"
 msgstr "编码: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2152
+#: lib/Padre/Wx/Main.pm:2152
 #, perl-format
 msgid "Document type: %s"
 msgstr "文档类型: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2152
+#: lib/Padre/Wx/Main.pm:2152
 msgid "none"
 msgstr "无"
 
-#: lib/Padre/Wx/MainWindow.pm:2154
+#: lib/Padre/Wx/Main.pm:2154
 #, perl-format
 msgid "Filename: %s"
 msgstr "文件名: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2155
+#: lib/Padre/Wx/Main.pm:2155
 msgid "No filename"
 msgstr "没有文件名"
 
-#: lib/Padre/Wx/MainWindow.pm:2173
+#: lib/Padre/Wx/Main.pm:2173
 msgid "Space to Tab"
 msgstr "转换空格为制表符"
 
-#: lib/Padre/Wx/MainWindow.pm:2174
+#: lib/Padre/Wx/Main.pm:2174
 msgid "Tab to Space"
 msgstr "转换制表符为空格"
 
-#: lib/Padre/Wx/MainWindow.pm:2177
+#: lib/Padre/Wx/Main.pm:2177
 msgid "How many spaces for each tab:"
 msgstr "一个制表符转为多个个空格:"
 
-#: lib/Padre/Wx/MainWindow.pm:2287
+#: lib/Padre/Wx/Main.pm:2287
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "文件在上次保存后有更新。是否重新载入？"
 

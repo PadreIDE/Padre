@@ -47,7 +47,7 @@ sub new {
 			} else {
 			
 				# TODO This feels wrong, the help menu code shouldn't
-				# populate the mainwindow hash.
+				# populate the main window hash.
 				my $selection = $_[0]->current->text;
 				$_[0]->menu->help->help($_[0]);
 				if ( $selection ) {
@@ -129,13 +129,13 @@ sub help {
 # FIXME this feels utterly backwards to me
 sub on_help_close {
         my ($self,$event) = @_;
-	my $help = Padre->ide->wx->main_window->{help};
+	my $help = Padre->ide->wx->main->{help};
 
         if ( $event->CanVeto ) {
                 $help->Hide;
         }
         else {
-                delete Padre->ide->wx->main_window->{help};
+                delete Padre->ide->wx->main->{help};
                 $help->Destroy;
         }
 }

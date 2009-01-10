@@ -27,8 +27,8 @@ msgstr "קובץ שלא נשמר %d"
 msgid "Pl&ugins"
 msgstr "תוספים"
 
-#: lib/Padre/PluginManager.pm:601 lib/Padre/Wx/MainWindow.pm:1263
-#: lib/Padre/Wx/MainWindow.pm:1901
+#: lib/Padre/PluginManager.pm:601 lib/Padre/Wx/Main.pm:1263
+#: lib/Padre/Wx/Main.pm:1901
 msgid "Open file"
 msgstr "פתח קובץ"
 
@@ -140,198 +140,198 @@ msgstr "טיפוס"
 msgid "Description"
 msgstr "תיאור"
 
-#: lib/Padre/Wx/MainWindow.pm:82
+#: lib/Padre/Wx/Main.pm:82
 msgid "(running from SVN checkout)"
 msgstr "(מורץ מ-SVN checkout)"
 
-#: lib/Padre/Wx/MainWindow.pm:239
+#: lib/Padre/Wx/Main.pm:239
 msgid "Files"
 msgstr "קבצים"
 
-#: lib/Padre/Wx/MainWindow.pm:322
+#: lib/Padre/Wx/Main.pm:322
 msgid "Workspace View"
 msgstr "מרחב העבודה"
 
-#: lib/Padre/Wx/MainWindow.pm:326
+#: lib/Padre/Wx/Main.pm:326
 msgid "Methods"
 msgstr "מתודות"
 
-#: lib/Padre/Wx/MainWindow.pm:363
+#: lib/Padre/Wx/Main.pm:363
 #, fuzzy
 msgid "Output View"
 msgstr "פלט"
 
-#: lib/Padre/Wx/MainWindow.pm:514 lib/Padre/Wx/MainWindow.pm:1774
+#: lib/Padre/Wx/Main.pm:514 lib/Padre/Wx/Main.pm:1774
 msgid "Subs"
 msgstr "שגרות"
 
-#: lib/Padre/Wx/MainWindow.pm:515 lib/Padre/Wx/MainWindow.pm:1732
+#: lib/Padre/Wx/Main.pm:515 lib/Padre/Wx/Main.pm:1732
 msgid "Output"
 msgstr "פלט"
 
-#: lib/Padre/Wx/MainWindow.pm:573
+#: lib/Padre/Wx/Main.pm:573
 msgid "L:"
 msgstr "ש':"
 
-#: lib/Padre/Wx/MainWindow.pm:573
+#: lib/Padre/Wx/Main.pm:573
 msgid "Ch:"
 msgstr "תו:"
 
-#: lib/Padre/Wx/MainWindow.pm:715
+#: lib/Padre/Wx/Main.pm:715
 msgid "Command line"
 msgstr "שורת הפקודה"
 
-#: lib/Padre/Wx/MainWindow.pm:716
+#: lib/Padre/Wx/Main.pm:716
 msgid "Run setup"
 msgstr "הגדרות ריצה"
 
-#: lib/Padre/Wx/MainWindow.pm:791
+#: lib/Padre/Wx/Main.pm:791
 msgid "No open document"
 msgstr "אין מסמך פתוח"
 
-#: lib/Padre/Wx/MainWindow.pm:806
+#: lib/Padre/Wx/Main.pm:806
 msgid "No execution mode was defined for this document"
 msgstr "מצב ביצוע לא הוגדר למסמך זה"
 
-#: lib/Padre/Wx/MainWindow.pm:825
+#: lib/Padre/Wx/Main.pm:825
 msgid "Not a Perl document"
 msgstr "לא מסמך Perl"
 
-#: lib/Padre/Wx/MainWindow.pm:867
+#: lib/Padre/Wx/Main.pm:867
 msgid "Message"
 msgstr "מסר"
 
-#: lib/Padre/Wx/MainWindow.pm:874 lib/Padre/Wx/MainWindow.pm:1395
+#: lib/Padre/Wx/Main.pm:874 lib/Padre/Wx/Main.pm:1395
 #: lib/Padre/Task/SyntaxChecker.pm:171 lib/Padre/Task/SyntaxChecker.pm:186
 #: lib/Padre/Task/SyntaxChecker.pm:190
 msgid "Error"
 msgstr "שגיאה"
 
-#: lib/Padre/Wx/MainWindow.pm:954
+#: lib/Padre/Wx/Main.pm:954
 msgid "Autocompletions error"
 msgstr "שגיאת השלמות אוטומטיות"
 
-#: lib/Padre/Wx/MainWindow.pm:965
+#: lib/Padre/Wx/Main.pm:965
 msgid "Line number:"
 msgstr "מספר שורה:"
 
-#: lib/Padre/Wx/MainWindow.pm:1193
+#: lib/Padre/Wx/Main.pm:1193
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "לא נבחר דבר. הכנס מה שצריך להיפתח"
 
-#: lib/Padre/Wx/MainWindow.pm:1194
+#: lib/Padre/Wx/Main.pm:1194
 #, fuzzy
 msgid "Open selection"
 msgstr "סימון פתוח"
 
-#: lib/Padre/Wx/MainWindow.pm:1238
+#: lib/Padre/Wx/Main.pm:1238
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "לא נמצא קובץ '%s'"
 
-#: lib/Padre/Wx/MainWindow.pm:1238
+#: lib/Padre/Wx/Main.pm:1238
 msgid "Open Selection"
 msgstr "סימון פתוח"
 
-#: lib/Padre/Wx/MainWindow.pm:1289 lib/Padre/Wx/MainWindow.pm:2249
+#: lib/Padre/Wx/Main.pm:1289 lib/Padre/Wx/Main.pm:2249
 #, fuzzy, perl-format
 msgid "Could not reload file: %s"
 msgstr "לא נמצא קובץ '%s'"
 
-#: lib/Padre/Wx/MainWindow.pm:1309
+#: lib/Padre/Wx/Main.pm:1309
 msgid "Save file as..."
 msgstr "שמור קובץ בתור..."
 
-#: lib/Padre/Wx/MainWindow.pm:1323
+#: lib/Padre/Wx/Main.pm:1323
 msgid "File already exists. Overwrite it?"
 msgstr "קובץ כבר קיים. לדרוס אותו?"
 
-#: lib/Padre/Wx/MainWindow.pm:1324
+#: lib/Padre/Wx/Main.pm:1324
 msgid "Exist"
 msgstr "קיים"
 
-#: lib/Padre/Wx/MainWindow.pm:1386
+#: lib/Padre/Wx/Main.pm:1386
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "קובץ השתנה בדיסק מאז השמירה האחרונה. האם ברצונך לדרוס אותו?"
 
-#: lib/Padre/Wx/MainWindow.pm:1387 lib/Padre/Wx/MainWindow.pm:2242
+#: lib/Padre/Wx/Main.pm:1387 lib/Padre/Wx/Main.pm:2242
 msgid "File not in sync"
 msgstr "קובץ לא מסונכרן"
 
-#: lib/Padre/Wx/MainWindow.pm:1395
+#: lib/Padre/Wx/Main.pm:1395
 #, fuzzy
 msgid "Could not save file: "
 msgstr "לא נמצא קובץ '%s'"
 
-#: lib/Padre/Wx/MainWindow.pm:1436
+#: lib/Padre/Wx/Main.pm:1436
 msgid "File changed. Do you want to save it?"
 msgstr "קובץ השתנה. האם ברצונך לשמור אותו?"
 
-#: lib/Padre/Wx/MainWindow.pm:1437
+#: lib/Padre/Wx/Main.pm:1437
 msgid "Unsaved File"
 msgstr "קובץ שלא נשמר"
 
-#: lib/Padre/Wx/MainWindow.pm:1532
+#: lib/Padre/Wx/Main.pm:1532
 msgid "Cannot diff if file was never saved"
 msgstr "אי אפשר לעשות השוואה לקובץ שמעולם לא נשמר"
 
-#: lib/Padre/Wx/MainWindow.pm:1538
+#: lib/Padre/Wx/Main.pm:1538
 msgid "There are no differences\n"
 msgstr "אין הבדלים\n"
 
-#: lib/Padre/Wx/MainWindow.pm:1814
+#: lib/Padre/Wx/Main.pm:1814
 msgid "Syntax Check"
 msgstr "בדיקת תחביר"
 
-#: lib/Padre/Wx/MainWindow.pm:1969
+#: lib/Padre/Wx/Main.pm:1969
 #, perl-format
 msgid "Error: %s"
 msgstr "שגיאה: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:1970 lib/Padre/Wx/Menu/Experimental.pm:79
+#: lib/Padre/Wx/Main.pm:1970 lib/Padre/Wx/Menu/Experimental.pm:79
 msgid "Self error"
 msgstr "תקלה פנימית"
 
-#: lib/Padre/Wx/MainWindow.pm:2094
+#: lib/Padre/Wx/Main.pm:2094
 #, perl-format
 msgid "Words: %d"
 msgstr "מילים: %ג"
 
-#: lib/Padre/Wx/MainWindow.pm:2095
+#: lib/Padre/Wx/Main.pm:2095
 #, perl-format
 msgid "Lines: %d"
 msgstr "שורות: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2096
+#: lib/Padre/Wx/Main.pm:2096
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr "תוים שאינם רווחים: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2097
+#: lib/Padre/Wx/Main.pm:2097
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "תוים כולל רווחים: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2098
+#: lib/Padre/Wx/Main.pm:2098
 #, perl-format
 msgid "Newline type: %s"
 msgstr "סוג שורה חדשה: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2099
+#: lib/Padre/Wx/Main.pm:2099
 #, perl-format
 msgid "Encoding: %s"
 msgstr "קידוד: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2101
+#: lib/Padre/Wx/Main.pm:2101
 #, perl-format
 msgid "Filename: %s"
 msgstr "שם הקובץ: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2102
+#: lib/Padre/Wx/Main.pm:2102
 msgid "No filename"
 msgstr "אין שם קובץ"
 
-#: lib/Padre/Wx/MainWindow.pm:2241
+#: lib/Padre/Wx/Main.pm:2241
 #, fuzzy
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "קובץ השתנה בדיסק מאז השמירה האחרונה. האם ברצונך לטעון אותו מחדש?"

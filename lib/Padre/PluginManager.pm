@@ -192,7 +192,7 @@ sub load_plugins {
 		# Turn this back on once we can track these over time
 		# and only report on plugins that USED to work but now
 		# have started to fail.
-		#$self->parent->wx->main_window->error(
+		#$self->parent->wx->main->error(
 		#	Wx::gettext("Failed to load the following plugin(s):\n")
 		#	. join "\n", @failed
 		#) unless $ENV{HARNESS_ACTIVE};
@@ -265,7 +265,7 @@ List of new plugins:
 
 END_MSG
 
-		$self->parent->wx->main_window->message( $msg,
+		$self->parent->wx->main->message( $msg,
 			Wx::gettext('New plugins detected')
 		);
 	}
@@ -638,7 +638,7 @@ sub enable_editors {
 	my $plugin = $self->plugins->{$name} or return;
 	my $object = $plugin->{object}       or return;
 	return unless ( $plugin->{status} and $plugin->{status} eq 'enabled' );
-	foreach my $editor ( $self->parent->wx->main_window->pages ) {
+	foreach my $editor ( $self->parent->wx->main->pages ) {
 		if ( $object->can('editor_enable') ) {
 			$object->editor_enable( $editor, $editor->{Document} );
 		}
@@ -681,7 +681,7 @@ sub get_menu {
 # TODO: document this.
 sub test_a_plugin {
 	my $self    = shift;
-	my $main    = $self->parent->wx->main_window;
+	my $main    = $self->parent->wx->main;
 	my $config  = $self->parent->config;
 	my $plugins = $self->plugins;
 
@@ -728,7 +728,7 @@ sub test_a_plugin {
 
 # Refresh the Plugins menu
 sub _refresh_plugin_menu {
-	$_[0]->parent->wx->main_window->menu->plugins->refresh;
+	$_[0]->parent->wx->main->menu->plugins->refresh;
 }
 
 

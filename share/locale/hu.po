@@ -110,8 +110,8 @@ msgid "Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub padre
 msgstr "Plugin:%s - Nem kompatibilis a Padre::Plugin API-val. Kell legyen padre_interfaces szubrutinja."
 
 #: lib/Padre/PluginManager.pm:688
-#: lib/Padre/Wx/MainWindow.pm:1315
-#: lib/Padre/Wx/MainWindow.pm:1969
+#: lib/Padre/Wx/Main.pm:1315
+#: lib/Padre/Wx/Main.pm:1969
 msgid "Open file"
 msgstr "Fájl megnyitása"
 
@@ -145,8 +145,8 @@ msgstr "Figyelmeztetés"
 #: lib/Padre/Task/SyntaxChecker.pm:171
 #: lib/Padre/Task/SyntaxChecker.pm:186
 #: lib/Padre/Task/SyntaxChecker.pm:190
-#: lib/Padre/Wx/MainWindow.pm:912
-#: lib/Padre/Wx/MainWindow.pm:1447
+#: lib/Padre/Wx/Main.pm:912
+#: lib/Padre/Wx/Main.pm:1447
 msgid "Error"
 msgstr "Hiba"
 
@@ -217,12 +217,12 @@ msgid "Ack"
 msgstr "Rendben"
 
 #: lib/Padre/Wx/AuiManager.pm:39
-#: lib/Padre/Wx/MainWindow.pm:1842
+#: lib/Padre/Wx/Main.pm:1842
 msgid "Subs"
 msgstr "Függvények"
 
 #: lib/Padre/Wx/AuiManager.pm:40
-#: lib/Padre/Wx/MainWindow.pm:1800
+#: lib/Padre/Wx/Main.pm:1800
 msgid "Output"
 msgstr "Kimenet"
 
@@ -260,196 +260,196 @@ msgstr "Hibalista"
 msgid "No diagnostics available for this error!"
 msgstr "Nem található diagnosztika ehhez a hibához!"
 
-#: lib/Padre/Wx/MainWindow.pm:92
+#: lib/Padre/Wx/Main.pm:92
 msgid "(running from SVN checkout)"
 msgstr "(SVN munkapéldányból futtatás)"
 
-#: lib/Padre/Wx/MainWindow.pm:245
+#: lib/Padre/Wx/Main.pm:245
 msgid "Files"
 msgstr "Fájlok"
 
-#: lib/Padre/Wx/MainWindow.pm:322
+#: lib/Padre/Wx/Main.pm:322
 msgid "Workspace View"
 msgstr "Munkaterület nézet"
 
-#: lib/Padre/Wx/MainWindow.pm:326
+#: lib/Padre/Wx/Main.pm:326
 msgid "Methods"
 msgstr "Metódusok"
 
-#: lib/Padre/Wx/MainWindow.pm:363
+#: lib/Padre/Wx/Main.pm:363
 msgid "Output View"
 msgstr "Kimeneti nézet"
 
-#: lib/Padre/Wx/MainWindow.pm:742
+#: lib/Padre/Wx/Main.pm:742
 msgid "Command line"
 msgstr "Parancssor"
 
-#: lib/Padre/Wx/MainWindow.pm:743
+#: lib/Padre/Wx/Main.pm:743
 msgid "Run setup"
 msgstr "Beállítás futtatása"
 
-#: lib/Padre/Wx/MainWindow.pm:825
+#: lib/Padre/Wx/Main.pm:825
 msgid "No open document"
 msgstr "Nincs nyitot dokumentum"
 
-#: lib/Padre/Wx/MainWindow.pm:840
+#: lib/Padre/Wx/Main.pm:840
 msgid "No execution mode was defined for this document"
 msgstr "Ehhez a dokumentumhoz nincs végrehajtási mód definiálva"
 
-#: lib/Padre/Wx/MainWindow.pm:863
+#: lib/Padre/Wx/Main.pm:863
 msgid "Not a Perl document"
 msgstr "Nem Perl dokumentum"
 
-#: lib/Padre/Wx/MainWindow.pm:905
+#: lib/Padre/Wx/Main.pm:905
 msgid "Message"
 msgstr "Üzenet"
 
-#: lib/Padre/Wx/MainWindow.pm:992
+#: lib/Padre/Wx/Main.pm:992
 msgid "Autocompletions error"
 msgstr "Autokiegészítési hiba"
 
-#: lib/Padre/Wx/MainWindow.pm:1003
+#: lib/Padre/Wx/Main.pm:1003
 msgid "Line number:"
 msgstr "Sor száma:"
 
-#: lib/Padre/Wx/MainWindow.pm:1245
+#: lib/Padre/Wx/Main.pm:1245
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Nincs kiválasztva semmi. Add meg, amit meg kell nyitni:"
 
-#: lib/Padre/Wx/MainWindow.pm:1246
+#: lib/Padre/Wx/Main.pm:1246
 msgid "Open selection"
 msgstr "Kiválasztottak megnyitása"
 
-#: lib/Padre/Wx/MainWindow.pm:1290
+#: lib/Padre/Wx/Main.pm:1290
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Nem találom a(z) '%s' fájlt"
 
-#: lib/Padre/Wx/MainWindow.pm:1290
+#: lib/Padre/Wx/Main.pm:1290
 msgid "Open Selection"
 msgstr "Kijelölés megnyitása"
 
-#: lib/Padre/Wx/MainWindow.pm:1341
-#: lib/Padre/Wx/MainWindow.pm:2311
+#: lib/Padre/Wx/Main.pm:1341
+#: lib/Padre/Wx/Main.pm:2311
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Nem lehet újratölteni a '%s' fájlt"
 
-#: lib/Padre/Wx/MainWindow.pm:1361
+#: lib/Padre/Wx/Main.pm:1361
 msgid "Save file as..."
 msgstr "Fájl mentése mint..."
 
-#: lib/Padre/Wx/MainWindow.pm:1375
+#: lib/Padre/Wx/Main.pm:1375
 msgid "File already exists. Overwrite it?"
 msgstr "A fájl már létezik. Felülírjam?"
 
-#: lib/Padre/Wx/MainWindow.pm:1376
+#: lib/Padre/Wx/Main.pm:1376
 msgid "Exist"
 msgstr "Létezik"
 
-#: lib/Padre/Wx/MainWindow.pm:1438
+#: lib/Padre/Wx/Main.pm:1438
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "A fájl megváltozott a lemezen a legutóbbi mentés óta. Felülírjam?"
 
-#: lib/Padre/Wx/MainWindow.pm:1439
-#: lib/Padre/Wx/MainWindow.pm:2304
+#: lib/Padre/Wx/Main.pm:1439
+#: lib/Padre/Wx/Main.pm:2304
 msgid "File not in sync"
 msgstr "A fájl nincs szinkronban"
 
-#: lib/Padre/Wx/MainWindow.pm:1447
+#: lib/Padre/Wx/Main.pm:1447
 msgid "Could not save file: "
 msgstr "Nem lehet elmenteni a '%s' fájlt"
 
-#: lib/Padre/Wx/MainWindow.pm:1489
+#: lib/Padre/Wx/Main.pm:1489
 msgid "File changed. Do you want to save it?"
 msgstr "A fájl megváltozott. Elmentsem?"
 
-#: lib/Padre/Wx/MainWindow.pm:1490
+#: lib/Padre/Wx/Main.pm:1490
 msgid "Unsaved File"
 msgstr "Nem mentett Fájl"
 
-#: lib/Padre/Wx/MainWindow.pm:1585
+#: lib/Padre/Wx/Main.pm:1585
 msgid "Cannot diff if file was never saved"
 msgstr "Nem összehasonlítható, ha a fájl még egyszer sem volt lementve"
 
-#: lib/Padre/Wx/MainWindow.pm:1591
+#: lib/Padre/Wx/Main.pm:1591
 msgid "There are no differences\n"
 msgstr "Nincs különbség\n"
 
-#: lib/Padre/Wx/MainWindow.pm:1882
+#: lib/Padre/Wx/Main.pm:1882
 msgid "Syntax Check"
 msgstr "Szintaxis ellenőrzése"
 
-#: lib/Padre/Wx/MainWindow.pm:2036
+#: lib/Padre/Wx/Main.pm:2036
 #, perl-format
 msgid "Error: %s"
 msgstr "Hiba: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2037
+#: lib/Padre/Wx/Main.pm:2037
 msgid "Internal error"
 msgstr "Belső hiba"
 
-#: lib/Padre/Wx/MainWindow.pm:2161
+#: lib/Padre/Wx/Main.pm:2161
 #, perl-format
 msgid "Words: %d"
 msgstr "Szavak: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2162
+#: lib/Padre/Wx/Main.pm:2162
 #, perl-format
 msgid "Lines: %d"
 msgstr "Sorok: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2163
+#: lib/Padre/Wx/Main.pm:2163
 #, perl-format
 msgid "Chars without spaces: %d"
 msgstr "Karakterek szóközök nélkül: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2164
+#: lib/Padre/Wx/Main.pm:2164
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Karakterek szóközökkel együtt: %d"
 
-#: lib/Padre/Wx/MainWindow.pm:2165
+#: lib/Padre/Wx/Main.pm:2165
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Újsor típus: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2166
+#: lib/Padre/Wx/Main.pm:2166
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Kódolás: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2167
+#: lib/Padre/Wx/Main.pm:2167
 #, perl-format
 msgid "Document type: %s"
 msgstr "Dokumentum típus: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2167
+#: lib/Padre/Wx/Main.pm:2167
 msgid "none"
 msgstr "egyik sem"
 
-#: lib/Padre/Wx/MainWindow.pm:2169
+#: lib/Padre/Wx/Main.pm:2169
 #, perl-format
 msgid "Filename: %s"
 msgstr "Fájlnév: %s"
 
-#: lib/Padre/Wx/MainWindow.pm:2170
+#: lib/Padre/Wx/Main.pm:2170
 msgid "No filename"
 msgstr "Nincs fájlnév"
 
-#: lib/Padre/Wx/MainWindow.pm:2188
+#: lib/Padre/Wx/Main.pm:2188
 msgid "Space to Tab"
 msgstr "Szóközök tabulátorokká"
 
-#: lib/Padre/Wx/MainWindow.pm:2188
+#: lib/Padre/Wx/Main.pm:2188
 msgid "Tab to Space"
 msgstr "Tabulátorok szóközökké"
 
-#: lib/Padre/Wx/MainWindow.pm:2191
+#: lib/Padre/Wx/Main.pm:2191
 msgid "How many spaces for each tab:"
 msgstr "Hány szóköz legyen egy tab helyén:"
 
-#: lib/Padre/Wx/MainWindow.pm:2303
+#: lib/Padre/Wx/Main.pm:2303
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "A fájl megváltozott a lemezen a legutóbbi mentés óta. Újra betöltsem?"
 

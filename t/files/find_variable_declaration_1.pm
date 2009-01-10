@@ -47,7 +47,7 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue( $string );
 		$self->task_queue->enqueue( "STOP" );
-		worker_loop( Padre->ide->wx->main_window, $self );
+		worker_loop( Padre->ide->wx->main, $self );
 	}
 
 	return 1;
@@ -66,7 +66,7 @@ sub setup_workers {
 	return if not $self->use_threads;
 
 	@_=(); # avoid "Scalars leaked"
-	my $mw = Padre->ide->wx->main_window;
+	my $mw = Padre->ide->wx->main;
 
 
 	# ensure minimum no. workers

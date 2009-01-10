@@ -125,7 +125,7 @@ sub update_gui {
 	my $self = shift;
 	my $messages = $self->{syntax_check};
 	$DB::single = $DB::single = 1; # silence 'used only once' warning during -c
-	my $syntax_checker = Padre->ide->wx->main_window->syntax_checker;
+	my $syntax_checker = Padre->ide->wx->main->syntax_checker;
 	my $syntax_bar     = $syntax_checker->syntaxbar;
 	my $notebook_page  = $self->{main_thread_only}{notebook_page};
 	my $document       = $notebook_page->{Document};

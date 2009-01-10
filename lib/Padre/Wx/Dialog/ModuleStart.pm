@@ -116,13 +116,13 @@ sub ok_clicked {
 	$config->{module_start}{builder_choice} = $data->{_builder_choice_};
 	$config->{module_start}{license_choice} = $data->{_license_choice_};
 
-	my $main_window = Padre->ide->wx->main_window;
+	my $main = Padre->ide->wx->main;
 
 	# TODO improve input validation !
 	my @fields = qw(_module_name_ _author_name_ _email_ _builder_choice_ _license_choice_);
 	foreach my $f (@fields) {
 		if (not $data->{$f}) {
-			Wx::MessageBox(sprintf(gettext("Field %s was missing. Module not created."), $f), gettext("missing field"), Wx::wxOK, $main_window);
+			Wx::MessageBox(sprintf(gettext("Field %s was missing. Module not created."), $f), gettext("missing field"), Wx::wxOK, $main);
 			return;
 		}
 	}
@@ -145,7 +145,7 @@ sub ok_clicked {
 		sprintf(gettext("%s apparantly created. Do you want to open it now?"), $data->{_module_name_}),
 		gettext("Done"),
 		Wx::wxYES_NO|Wx::wxCENTRE,
-		$main_window,
+		$main,
 	);
 	if ( $ret == Wx::wxYES ) {
 		my $module_name = $data->{_module_name_};
@@ -156,8 +156,8 @@ sub ok_clicked {
 		$parts[-1] .= '.pm';
 		my $file = File::Spec->catfile( $data->{_directory_}, $dir_name, 'lib', @parts);
 		Padre::DB->add_recent_files($file);
-		$main_window->setup_editor($file);
-		$main_window->refresh;
+		$main->setup_editor($file);
+		$main->refresh;
 	}
 
 	return;

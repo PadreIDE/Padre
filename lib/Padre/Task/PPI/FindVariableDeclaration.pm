@@ -97,7 +97,7 @@ sub finish {
 			$text,
 			Wx::gettext("Check Canceled"),
 			Wx::wxOK,
-			Padre->ide->wx->main_window
+			Padre->ide->wx->main
 		);
 	}
 	return();
