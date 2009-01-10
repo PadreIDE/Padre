@@ -34,15 +34,9 @@ sub new {
 
 	# Do custom startup stuff here
 	$self->clear;
-	$self->SetFont(
-		Wx::Font->new(
-			Wx::wxNORMAL_FONT->GetPointSize,
-			Wx::wxTELETYPE,
-			Wx::wxNORMAL,
-			Wx::wxNORMAL,
-		),
-	);
+	$self->set_font();
 	$self->AppendText( Wx::gettext('No output') );
+
 
 	return $self;
 }
@@ -112,6 +106,23 @@ sub style_neutral {
 sub style_busy {
 	$_[0]->SetBackgroundColour('#CCCCCC');
 }
+
+sub set_font {
+	my ($self) = @_;
+
+	my $config = Padre->ide->config;
+
+	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	if ( defined $config->{editor_font} ) {
+		$font->SetNativeFontInfoUserDesc( $config->{editor_font} );
+	}
+	my $style = $self->GetDefaultStyle();
+	$style->SetFont($font);
+	$self->SetDefaultStyle($style);
+
+	return;
+}
+
 
 1;
 
