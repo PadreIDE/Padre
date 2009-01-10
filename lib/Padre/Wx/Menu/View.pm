@@ -464,6 +464,7 @@ sub refresh {
 	$self->{ lock_panels      }->Check( $config->{main_lockpanels} ? 1 : 0 );
 	$self->{ indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{ show_calltips    }->Check( $config->{editor_calltips} ? 1 : 0 );
+	$self->{ show_syntaxcheck }->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
 	$self->{ show_errorlist   }->Check( $config->{editor_errorlist} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
