@@ -2,7 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 
 v0.26 2009.0X.XX
     The long-awaited MainWindow.pm -> Main.pm rename (ADAMK)
-    Added styles for text/x-patch, text/x-makefile file types (KEEDI)
+    Added styles for text/x-patch, text/x-makefile, text/x-yaml
+        file types (KEEDI)
     Now style config file supports foreground, background, bold,
         italic, eolfilled, underline properties (KEEDI)
 

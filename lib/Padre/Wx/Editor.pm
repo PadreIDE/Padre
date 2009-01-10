@@ -102,6 +102,8 @@ sub padre_setup {
 		$self->padre_setup_style('diff');
 	} elsif ( $mimetype eq 'text/x-makefile' ) {
 		$self->padre_setup_style('make');
+	} elsif ( $mimetype eq 'text/x-yaml' ) {
+		$self->padre_setup_style('yaml');
 	} elsif ($mimetype) {
 		# setup some default coloring
 		# for the time being it is the same as for Perl

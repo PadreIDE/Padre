@@ -133,6 +133,11 @@ perl:
 #define SCE_PL_FORMAT 42
 
 #
+# If you want to support another file type
+# then refer wxWidget's include/wx-2.8/wx/stc/stc.h file
+#
+
+#
 # text/x-patch
 #
 diff:
@@ -178,7 +183,33 @@ make:
    foreground: 7f0000
 
 #
-# If you want to support another file type
-# then refer wxWidget's include/wx-2.8/wx/stc/stc.h file
+# text/x-yaml
 #
+yaml:
+ colors:
+  wxSTC_YAML_DEFAULT:
+   foreground: 000000
+  wxSTC_YAML_COMMENT:
+   foreground: 008800
+  wxSTC_YAML_IDENTIFIER:
+   foreground: 000088
+   bold:       1
+  wxSTC_YAML_KEYWORD:
+   foreground: 880088
+  wxSTC_YAML_NUMBER:
+   foreground: 880000
+  wxSTC_YAML_REFERENCE:
+   foreground: 008888
+  wxSTC_YAML_DOCUMENT:
+   foreground: FFFFFF
+   background: 000088
+   bold:       1
+   eolfilled:  1
+  wxSTC_YAML_TEXT:
+   foreground: 333366
+  wxSTC_YAML_ERROR:
+   foreground: ffffff
+   background: 000088
+   bold:       1
+   eolfilled:  1
 
