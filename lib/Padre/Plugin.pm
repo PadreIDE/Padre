@@ -369,7 +369,7 @@ sub _menu_plugins_submenu {
 				next;
 			}
 			Carp::cluck("Undefined value for label '$label'");
-		}			
+		}
 
 		# Method Name
 		if ( Params::Util::_IDENTIFIER($value) ) {

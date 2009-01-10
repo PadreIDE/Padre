@@ -63,7 +63,7 @@ sub generate {
 	return $response;
 	
 }
-    
+
 sub render {
 	my $self = shift;
 	my $doc  = shift;
@@ -72,9 +72,9 @@ sub render {
 		\$doc->{original_content}
 	); # want text_get ??
 
-    	my $out = IO::Scalar->new( \$data );
+	my $out = IO::Scalar->new( \$data );
 	my $v   = Pod::Simple::XHTML->new;
-	$v->perldoc_url_prefix( 'perldoc:' );	
+	$v->perldoc_url_prefix( 'perldoc:' );
 	$v->output_fh( $out );
 	$v->parse_file( $pod );
 

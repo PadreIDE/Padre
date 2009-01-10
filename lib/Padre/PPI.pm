@@ -17,7 +17,7 @@ our $VERSION = '0.25';
 sub find_unmatched_brace {
 	$_[1]->isa('PPI::Statement::UnmatchedBrace') and return 1;
 	$_[1]->isa('PPI::Structure')                 or return '';
-	$_[1]->start and $_[1]->finish              and return '';
+	$_[1]->start and $_[1]->finish               and return '';
 	return 1;
 }
 

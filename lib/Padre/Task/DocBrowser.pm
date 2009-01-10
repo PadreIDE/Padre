@@ -25,9 +25,9 @@ sub run {
 
 	my $result = $self->{browser}->$type( $self->{document} );
 	$self->{result} = $result;
+
 	return 1;
-	
-	   
+
 }
 
 sub finish {

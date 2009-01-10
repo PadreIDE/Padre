@@ -58,7 +58,7 @@ sub clear {
 	# Remove the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
 		$editor->MarkerDeleteAll( Padre::Wx::MarkError );
-		$editor->MarkerDeleteAll( Padre::Wx::MarkWarn  );		
+		$editor->MarkerDeleteAll( Padre::Wx::MarkWarn  );
 	}
 
 	# Remove all items from the tool

@@ -45,7 +45,7 @@ sub dialog {
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_insert_},   \&get_snippet    );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},   \&cancel_clicked );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_edit_},     \&edit_snippet   );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_add_},	    \&add_snippet    );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_add_},      \&add_snippet    );
 
 	$dialog->{_widgets_}->{_find_cat_}->SetFocus;
 	$dialog->{_widgets_}->{_insert_}->SetDefault;
@@ -70,7 +70,7 @@ sub _get_catno {
 
 sub find_category {
 	my $dialog   = shift;
-	my $cat	     = _get_catno($dialog);
+	my $cat      = _get_catno($dialog);
 	my $snippets = Padre::DB->find_snipnames($cat);
 	my $field    = $dialog->{_widgets_}->{_find_snippet_};
 	$field->Clear;
@@ -89,7 +89,7 @@ sub get_snippet_text {
 sub get_snippet {
 	my $dialog = shift;
 	my $data   = $dialog->get_data or return;
-	my $cat	   = _get_catno($dialog);
+	my $cat    = _get_catno($dialog);
 	my $snipno = $data->{_find_snippet_};
 	my $text   = get_snippet_text( $cat, $snipno );
 	my $editor = Padre::Current->editor;
@@ -119,7 +119,7 @@ sub snippet_layout {
 sub snippet_dialog {
 	my ( $dialog, $snippet ) = @_;
 
-	my $layout	  = snippet_layout($snippet);
+	my $layout      = snippet_layout($snippet);
 	my $snip_dialog = Padre::Wx::Dialog->new(
 		parent => $dialog,
 		title  => Wx::gettext("Edit/Add Snippets"),

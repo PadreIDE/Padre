@@ -650,7 +650,7 @@ sub run_command {
 				$_[1]->Skip(1);
 				my $outpanel = $_[0]->output;
 				$outpanel->style_neutral;
-				$outpanel->AppendText( $_[1]->GetLine . "\n" );			
+				$outpanel->AppendText( $_[1]->GetLine . "\n" );
 				return;
 			},
 		);

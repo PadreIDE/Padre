@@ -14,7 +14,7 @@ use Class::XSAccessor
 	getters => {
 		get_providers => 'providers',
 		get_viewers   => 'viewers',
-		get_schemes   => 'schemes',	
+		get_schemes   => 'schemes',
 	},
 	setters => {
 		set_providers => 'providers',
@@ -95,11 +95,11 @@ Accepts a URI or scalar
   
   # URI of doxygen:$string or doxygen://path?query
   sub accept_schemes {
-      'doxygen',	  
+      'doxygen',
   }
   
   sub provider_for {
-      'text/x-c++src'      
+      'text/x-c++src'
   }
   
   sub viewer_for {
@@ -135,7 +135,7 @@ Accepts a URI or scalar
       $response->{original_content} = $doxy2html->output;
       $response->set_mimetype( 'text/x-html' );
       return $response;
-      	  
+      
   }
 
 =cut
@@ -172,7 +172,7 @@ sub load_provider {
 	if ( $class->can( 'accept_schemes' ) ) {
 		$self->register_schemes( 
 			$_ => $class
-		) for $class->accept_schemes;			
+		) for $class->accept_schemes;
 	} else {
 		Carp::confess("$class accepts no uri schemes");
 	}
@@ -212,7 +212,7 @@ sub register_viewers {
 sub register_schemes { 
 	my ($self,%schemes) = @_;
 	while ( my ($scheme,$class) = each %schemes ) {
-		$self->get_schemes->{$scheme} = $class;			    
+		$self->get_schemes->{$scheme} = $class;
 	}
 	$self;
 }
@@ -255,7 +255,7 @@ sub docs {
 		my $docs = $provider->generate( $doc );
 		return $docs;	  
 	}
-	warn "No provider for " . $doc->get_mimetype;	
+	warn "No provider for " . $doc->get_mimetype;
 	return;
 }
 
@@ -270,7 +270,7 @@ sub resolve {
 	foreach my $class ( values %{$self->get_providers} ) {
 		my $resp = $class->resolve( $ref );
 		push @refs ,$resp if $resp;
-	}	
+	}
 	return $refs[0];
 }
 

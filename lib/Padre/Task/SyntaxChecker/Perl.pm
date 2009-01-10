@@ -152,7 +152,7 @@ sub _check_syntax {
 			$cur->{desc} = $diag[ $cur->{diag} ];
 			delete $cur->{diag};
 		}
-		if (   defined( $cur->{desc} )
+		if ( defined( $cur->{desc} )
 			&& $cur->{desc} =~ /^\s*\([WD]/o
 		) {
 			$cur->{severity} = 'W';
