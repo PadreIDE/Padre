@@ -45,6 +45,72 @@ sub gettext_label {
 	Wx::gettext('Outline');
 }
 
+
+
+
+
+#####################################################################
+# Timer Control
+
+sub start {
+	my $self = shift;
+
+	# TODO: GUI on-start initialisation here
+
+	# Set up or reinitialise the timer
+	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
+		Wx::Event::EVT_IDLE( $self,
+			sub {
+				$self->on_idle($_[1]);
+			},
+		);
+		$self->on_timer( undef, 1 );
+	} else {
+		$self->{timer} = Wx::Timer->new(
+			$self,
+			Padre::Wx::ID_TIMER_SYNTAX
+		);
+		Wx::Event::EVT_TIMER( $self,
+			Padre::Wx::ID_TIMER_SYNTAX,
+			sub {
+				$self->on_timer($_[1], $_[2]);
+			},
+		);
+		Wx::Event::EVT_IDLE( $self,
+			sub {
+				$self->on_idle($_[1]);
+			},
+		);
+	}
+
+	return;
+}
+
+sub stop {
+	my $self = shift;
+
+	# Stop the timer
+	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
+		$self->{timer}->Stop;
+		Wx::Event::EVT_IDLE( $self, sub { return } );
+	}
+
+	# TODO: GUI on-stop cleanup here
+
+	return;
+}
+
+sub running {
+	!! ($_[0]->{timer} and $_[0]->{timer}->IsRunning);
+}
+
+
+
+
+
+#####################################################################
+# Event Handlers
+
 sub on_tree_item_activated {
 	my $self  = shift;
 	my $event = shift;
