@@ -33,13 +33,13 @@ sub new {
 
 
 	# Can the user move stuff around
-	$self->{lock_panels} = $self->AppendCheckItem( -1,
+	$self->{lockinterface} = $self->AppendCheckItem( -1,
 		Wx::gettext("Lock User Interface")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{lock_panels},
+		$self->{lockinterface},
 		sub {
-			$_[0]->on_toggle_lockpanels($_[1]);
+			$_[0]->on_toggle_lockinterface($_[1]);
 		},
 	);
 
@@ -136,7 +136,7 @@ sub new {
 					$doc->editor->padre_setup;
 					$doc->rebless;
 					$doc->remove_color;
-					if ($doc->can('colorize')) {
+					if ( $doc->can('colorize') ) {
 						$doc->colorize;
 					} else {
 						$doc->editor->Colourise( 0, $doc->editor->GetLength );
@@ -436,7 +436,15 @@ sub new {
 			Wx::gettext("&Full Screen\tF11")
 		),
 		sub {
-			$_[0]->on_full_screen($_[1]);
+			if ( $_[0]->IsFullScreen ) {
+				$_[0]->ShowFullScreen(0);
+			} else {
+				$_[0]->ShowFullScreen( 1,
+					Wx::wxFULLSCREEN_NOCAPTION
+					| Wx::wxFULLSCREEN_NOBORDER
+				);
+			}
+			return;
 		},
 	);
 
@@ -454,18 +462,19 @@ sub refresh {
 	unless ( Padre::Util::WXWIN32 ) {
 		$self->{statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
 	}
-	$self->{ lines        }->Check( $config->{editor_linenumbers} ? 1 : 0 );
-	$self->{ folding      }->Check( $config->{editor_codefolding} ? 1 : 0 );
-	$self->{ current_line_background}->Check( $config->{editor_current_line_background} ? 1 : 0 );
-	$self->{ eol           }->Check( $config->{editor_eol} ? 1 : 0 );
-	$self->{ whitespaces   }->Check( $config->{editor_whitespaces} ? 1 : 0 );
-	$self->{ output        }->Check( $config->{main_output_panel} ? 1 : 0 );
-	$self->{ functions     }->Check( $config->{main_subs_panel} ? 1 : 0 );
-	$self->{ lock_panels      }->Check( $config->{main_lockpanels} ? 1 : 0 );
-	$self->{ indentation_guide}->Check( $config->{editor_indentationguides} ? 1 : 0 );
-	$self->{ show_calltips    }->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{ show_syntaxcheck }->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
-	$self->{ show_errorlist   }->Check( $config->{editor_errorlist} ? 1 : 0 );
+	
+	$self->{ lines                   }->Check( $config->{editor_linenumbers}             ? 1 : 0 );
+	$self->{ folding                 }->Check( $config->{editor_codefolding}             ? 1 : 0 );
+	$self->{ current_line_background }->Check( $config->{editor_current_line_background} ? 1 : 0 );
+	$self->{ eol                     }->Check( $config->{editor_eol}                     ? 1 : 0 );
+	$self->{ whitespaces             }->Check( $config->{editor_whitespaces}             ? 1 : 0 );
+	$self->{ output                  }->Check( $config->{main_output_panel}              ? 1 : 0 );
+	$self->{ functions               }->Check( $config->{main_subs_panel}                ? 1 : 0 );
+	$self->{ lockinterface           }->Check( $config->{main_lockinterface}             ? 1 : 0 );
+	$self->{ indentation_guide       }->Check( $config->{editor_indentationguides}       ? 1 : 0 );
+	$self->{ show_calltips           }->Check( $config->{editor_calltips}                ? 1 : 0 );
+	$self->{ show_syntaxcheck        }->Check( $config->{editor_syntaxcheck}             ? 1 : 0 );
+	$self->{ show_errorlist          }->Check( $config->{editor_errorlist}               ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
 	if ( $document ) {
@@ -507,6 +516,7 @@ sub refresh {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or
