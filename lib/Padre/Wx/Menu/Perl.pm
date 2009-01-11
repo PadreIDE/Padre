@@ -143,6 +143,80 @@ sub new {
 		},
 	);
 
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1,
+			Wx::gettext("Vertically Align Selected")
+		),
+		sub {
+			my $editor = $_[0]->current->editor or return;
+
+			# Get the selected lines
+			my $begin = $editor->LineFromPosition( $editor->GetSelectionStart );
+			my $end   = $editor->LineFromPosition( $editor->GetSelectionEnd   );
+			if ( $begin == $end ) {
+				$_[0]->error(Wx::gettext("You must select a range of lines"));
+				return;
+			}
+			my @line  = ( $begin .. $end );
+			my @text  = ();
+			foreach ( @line ) {
+				my $x = $editor->PositionFromLine($_);
+				my $y = $editor->GetLineEndPosition($_);
+				push @text, $editor->GetTextRange($x, $y);
+			}
+
+			# Get the align character from the selection start
+			# (which must be a non-whitespace non-word character)
+			my $start = $editor->GetSelectionStart;
+			my $c     = $editor->GetTextRange($start, $start + 1);
+			unless ( defined $c and $c =~ /^[^\s\w]$/ ) {
+				$_[0]->error(Wx::gettext("First character of selection must be a non-word character to align"));
+			}
+
+			# Locate the position of the align character,
+			# and the position of the earliest whitespace before it.
+			my $qc       = quotemeta $c;
+			my @position = ();
+			foreach ( @text ) {
+				if ( /^(.+?)(\s*)$qc/ ) {
+					push @position, [ length("$1"), length("$2") ];
+				} else {
+					# This line is not a member of the align set
+					push @position, undef;
+				}
+			}
+
+			# Find the latest position of the starting whitespace.
+			my $longest = List::Util::max map { $_->[0] } grep { $_ } @position;
+
+			# Now lets line them up
+			$editor->BeginUndoAction;
+			foreach ( 0 .. $#line ) {
+				next unless $position[$_];
+				my $spaces = $longest
+					- $position[$_]->[0]
+					- $position[$_]->[1]
+					+ 1;
+				if ( $_ == 0 ) {
+					$start = $start + $spaces;
+				}
+				my $insert = $editor->PositionFromLine($line[$_]) + $position[$_]->[0];
+				if ( $spaces > 0 ) {
+					$editor->InsertText( $insert, ' ' x $spaces );
+				} elsif ( $spaces < 0 ) {
+					$editor->SetSelection($insert, $insert - $spaces);
+					$editor->ReplaceSelection('');
+				}
+			}
+			$editor->EndUndoAction;
+
+			# Move the selection to the new position
+			$editor->SetSelection( $start, $start );
+
+			return;
+		},
+	);
+
 	$self->AppendSeparator;
 
 
