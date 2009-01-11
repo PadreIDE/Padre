@@ -85,6 +85,12 @@ sub on_auinotebook_page_changed {
 		# Update indentation in case auto-update is on
 		# TODO: encapsulation?
 		$editor->{Document}->set_indentation_style;
+
+		# make sure the outline is refreshed for the new doc
+		if ( defined $main->outline ) {
+			$main->outline->clear;
+			$main->outline->force_next(1);
+		}
 	}
 	$main->refresh;
 }

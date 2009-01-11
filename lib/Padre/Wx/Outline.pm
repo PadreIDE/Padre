@@ -20,6 +20,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTR_DEFAULT_STYLE
 	);
+	$self->{force_next} = 0;
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
 		$self,
@@ -49,6 +50,18 @@ sub gettext_label {
 sub clear {
 	$_[0]->DeleteAllItems;
 	return;
+}
+
+sub force_next {
+	my $self = shift;
+
+	if ( defined $_[0] ) {
+		$self->{force_next} = $_[0];
+		return $self->{force_next};
+	}
+	else {
+		return $self->{force_next};
+	}
 }
 
 
@@ -138,7 +151,12 @@ sub on_timer {
 		return;
 	}
 
-	$document->get_outline_in_background(force => 1);
+	if ( $self->force_next ) {
+		$force = 1;
+		$self->force_next(0);
+	}
+
+	$document->get_outline_in_background(force => $force);
 
 	if ( defined($event) ) {
 		$event->Skip(0);
