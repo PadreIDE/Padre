@@ -216,44 +216,50 @@ sub new {
 
 
 	# Tabs And Spaces
-	my $edit_tab = Wx::Menu->new;
+	$self->{tabs} = Wx::Menu->new;
 	$self->Append( -1,
 		Wx::gettext("Tabs and Spaces"),
-		$edit_tab
+		$self->{tabs},
 	);
 
+	$self->{tabs_to_spaces} = $self->{tabs}->Append( -1,
+		Wx::gettext("Tabs to Spaces...")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$edit_tab->Append( -1,
-			Wx::gettext("Tabs to Spaces...")
-		),
+		$self->{tabs_to_spaces},
 		sub {
 			$_[0]->on_tab_and_space('Tab_to_Space');
 		},
 	);
+
+	$self->{spaces_to_tabs} = $self->{tabs}->Append( -1,
+		Wx::gettext("Spaces to Tabs...")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$edit_tab->Append( -1,
-			Wx::gettext("Spaces to Tabs...")
-		),
+		$self->{spaces_to_tabs},
 		sub {
 			$_[0]->on_tab_and_space('Space_to_Tab');
 		},
 	);
 
-	$edit_tab->AppendSeparator;
+	$self->{tabs}->AppendSeparator;
 
+	$self->{delete_trailing} = $self->{tabs}->Append( -1,
+		Wx::gettext("Delete Trailing Spaces")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$edit_tab->Append( -1,
-			Wx::gettext("Delete Trailing Spaces")
-		),
+		$self->{delete_trailing},
 		sub {
 			$DB::single = 1;
 			$_[0]->on_delete_ending_space;
 		},
 	);
+
+	$self->{delete_leading} = $self->{tabs}->Append( -1,
+		Wx::gettext("Delete Leading Spaces")
+	);
 	Wx::Event::EVT_MENU( $main,
-		$edit_tab->Append( -1,
-			Wx::gettext("Delete Leading Spaces")
-		),
+		$self->{delete_leading},
 		sub {
 			$_[0]->on_delete_leading_space;
 		},
@@ -354,6 +360,10 @@ sub refresh {
 	$self->{ insert_from_file }->Enable($doc);
 	$self->{ case_upper       }->Enable($doc);
 	$self->{ case_lower       }->Enable($doc);
+	$self->{ tabs_to_spaces   }->Enable($doc);
+	$self->{ spaces_to_tabs   }->Enable($doc);
+	$self->{ delete_leading   }->Enable($doc);
+	$self->{ delete_trailing  }->Enable($doc);
 
 	# Handle the complex cases
 	my $selection = !! ( defined $text and $text ne '' );
@@ -367,6 +377,7 @@ sub refresh {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or
