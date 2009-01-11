@@ -417,6 +417,9 @@ sub refresh {
 		$self->aui->GetPane('notebook')->PaneBorder(1);
 	}
 
+	# Update the GUI
+	$self->aui->Update;
+
 	return;
 }
 
