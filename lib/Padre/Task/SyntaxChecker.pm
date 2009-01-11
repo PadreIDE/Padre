@@ -187,26 +187,7 @@ sub update_gui {
 			$last_hint = $hint;
 		}
 
-		my $width0_default = $editor->TextWidth(
-			Wx::wxSTC_STYLE_DEFAULT,
-			Wx::gettext("Line") . ' '
-		);
-		my $width0 = $editor->TextWidth(
-			Wx::wxSTC_STYLE_DEFAULT,
-			$last_hint->{line} x 2
-		);
-		my $refStr = '';
-		if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
-			$refStr = Wx::gettext('Warning');
-		}
-		else {
-			$refStr = Wx::gettext('Error');
-		}
-		my $width1 = $editor->TextWidth( Wx::wxSTC_STYLE_DEFAULT, $refStr . ' ' );
-		my $width2 = $syntax->GetSize->GetWidth - $width0 - $width1 - $syntax->GetCharWidth * 2;
-		$syntax->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
-		$syntax->SetColumnWidth( 1, $width1 );
-		$syntax->SetColumnWidth( 2, $width2 );
+		$syntax->set_column_widths($last_hint);
 	}
 
 	return 1;

@@ -67,6 +67,33 @@ sub clear {
 	return;
 }
 
+sub set_column_widths {
+	my $self = shift;
+	my $ref_entry = shift;
+	if ( ! defined $ref_entry ) {
+		$ref_entry = { line => ' ', };
+	}
+
+	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 2;
+	my $width0         = $self->GetCharWidth * length( $ref_entry->{line} x 2 );
+
+	my $refStr = '';
+	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
+		$refStr = Wx::gettext('Warning');
+	}
+	else {
+		$refStr = Wx::gettext('Error');
+	}
+
+	my $width1 = $self->GetCharWidth * ( length($refStr) + 2 );
+	my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
+
+	$self->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
+	$self->SetColumnWidth( 1, $width1 );
+	$self->SetColumnWidth( 2, $width2 );
+
+	return;
+}
 
 
 
@@ -86,13 +113,8 @@ sub start {
 		$editor->SetMarginWidth(1, 16);
 	}
 
-	# Set the column widths to use
-	my $width0 = $self->GetCharWidth * ( length( Wx::gettext('Line') ) + 3 );
-	my $width1 = $self->GetCharWidth * ( length( Wx::gettext('Type') ) + 3 );
-	my $width2 = $self->GetSize->GetWidth - $width0 - $width1;
-	$self->SetColumnWidth( 0, $width0 );
-	$self->SetColumnWidth( 1, $width1 );
-	$self->SetColumnWidth( 2, $width2 );
+	# List appearance: Initialize column widths
+	$self->set_column_widths;
 
 	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
 		Wx::Event::EVT_IDLE( $self,
