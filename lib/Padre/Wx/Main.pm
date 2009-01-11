@@ -1486,15 +1486,6 @@ sub on_diff {
 }
 
 #
-# on_full_screen()
-#
-# toggle full screen status.
-#
-sub on_full_screen {
-	$_[0]->ShowFullScreen( ! $_[0]->IsFullScreen );
-}
-
-#
 # on_join_lines()
 #
 # join current line with next one (a-la vi with Ctrl+J)
@@ -1786,11 +1777,11 @@ sub on_toggle_statusbar {
 	return;
 }
 
-sub on_toggle_lockpanels {
+sub on_toggle_lockinterface {
 	my $self  = shift;
 
 	# Update the configuration
-	$self->config->{main_lockpanels} = $self->menu->view->{lock_panels}->IsChecked ? 1 : 0;
+	$self->config->{main_lockpanels} = $self->menu->view->{lockinterface}->IsChecked ? 1 : 0;
 
 	# Update the lock status
 	$self->aui->lock_panels( $self->config->{main_lockpanels} );
