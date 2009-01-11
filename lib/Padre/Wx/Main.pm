@@ -229,7 +229,7 @@ sub new {
 	# Show the tools that the configuration dictates
 	$self->show_functions( $self->config->{main_subs_panel} );
 	$self->show_output( $self->config->{main_output_panel} );
-	$self->show_outline( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
+	$self->show_outline( $self->config->{main_outline_panel} );
 
 	# Load the saved pane layout from last time (if any)
 	# NOTE: This seems to be a bigger source of bugs than
@@ -1692,9 +1692,6 @@ sub show_functions {
 }
 
 sub show_outline {
-	# NOT YET
-	return;
-
 	my $self = shift;
 	my $outline = $self->outline;
 
@@ -1702,7 +1699,7 @@ sub show_outline {
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
 		$self->menu->view->{outline}->Check($on);
 	}
-	$self->config->{main_outline} = $on;
+	$self->config->{main_outline_panel} = $on;
 
 	if ( $on ) {
 		$self->right->show($outline);

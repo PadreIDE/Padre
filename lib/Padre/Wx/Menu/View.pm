@@ -76,6 +76,17 @@ sub new {
 		},
 	);
 
+	# Show or hide GUI elements
+	$self->{outline} = $self->AppendCheckItem( -1,
+		Wx::gettext("Show Outline")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{outline},
+		sub {
+			$_[0]->show_outline( $_[1]->IsChecked );
+		},
+	);
+
 	$self->{show_syntaxcheck} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Syntax Check")
 	);
@@ -469,6 +480,7 @@ sub refresh {
 	$self->{ eol                     }->Check( $config->{editor_eol}                     ? 1 : 0 );
 	$self->{ whitespaces             }->Check( $config->{editor_whitespaces}             ? 1 : 0 );
 	$self->{ output                  }->Check( $config->{main_output_panel}              ? 1 : 0 );
+	$self->{ outline                 }->Check( $config->{main_outline_panel}             ? 1 : 0 );
 	$self->{ functions               }->Check( $config->{main_subs_panel}                ? 1 : 0 );
 	$self->{ lockinterface           }->Check( $config->{main_lockinterface}             ? 1 : 0 );
 	$self->{ indentation_guide       }->Check( $config->{editor_indentationguides}       ? 1 : 0 );

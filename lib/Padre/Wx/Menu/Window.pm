@@ -100,6 +100,16 @@ sub new {
 
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1,
+			Wx::gettext("GoTo Outline Window\tAlt-L")
+		),
+		sub {
+			$_[0]->show_outline(1);
+			$_[0]->outline->SetFocus;
+		},
+	);
+
+	Wx::Event::EVT_MENU( $main,
+		$self->Append( -1,
 			Wx::gettext("GoTo Output Window\tAlt-O")
 		),
 		sub {
