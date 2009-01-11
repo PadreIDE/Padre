@@ -142,29 +142,30 @@ sub update_gui {
 	}
 
 	# Update the outline pane
-
-	# TODO REST OF THIS SUBROUTINE IS UGLY AND NEEDS TO BE REFACTORED !!!
-
-	my $appender = sub {
-		my ( $parent, $item ) = @_;
-		$outlinebar->AppendItem(
-			$parent,
-			$item->{name},
+	if( scalar(@{ $outline }) == 1 ) {
+		my $pkg = $outline->[0];
+		my $root = $outlinebar->AddRoot(
+			$pkg->{name},
 			-1,
 			-1,
 			Wx::TreeItemData->new( {
-				line => $item->{line},
-				name => $item->{name}
+				line => $pkg->{line},
+				name => $pkg->{name}
 			} )
 		);
-	};
-
-	if ( ref $outline eq 'ARRAY' ) {
-		if ( scalar(@{ $outline }) == 0 ) {
-			return;
-		} elsif( scalar(@{ $outline }) == 1 ) {
-			my $pkg = $outline->[0];
-			my $root = $outlinebar->AddRoot(
+		foreach my $type ( qw(pragmata modules methods) ) {
+			$self->add_subtree( $outlinebar, $pkg, $type, $root );
+		}
+	} else {
+		my $root = $outlinebar->AddRoot(
+			Wx::gettext('Outline'),
+			-1,
+			-1,
+			Wx::TreeItemData->new('')
+		);
+		foreach my $pkg ( @{ $outline } ) {
+			my $branch = $outlinebar->AppendItem(
+				$root,
 				$pkg->{name},
 				-1,
 				-1,
@@ -174,53 +175,47 @@ sub update_gui {
 				} )
 			);
 			foreach my $type ( qw(pragmata modules methods) ) {
-				if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
-					my $type_elem = $outlinebar->AppendItem(
-						$root,
-						ucfirst($type),
-						-1,
-						-1,
-						Wx::TreeItemData->new()
-					);
-					foreach my $item ( sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} } ) {
-						$appender->($type_elem, $item);
-					}
-				}
+				$self->add_subtree( $outlinebar, $pkg, $type, $branch );
 			}
-			$outlinebar->ExpandAll;
-		} else {
-			my $root = $outlinebar->AddRoot( gettext('Outline'), -1, -1, Wx::TreeItemData->new('') );
-			foreach my $pkg ( @{ $outline } ) {
-				my $root = $outlinebar->AddRoot(
-					$pkg->{name},
-					-1,
-					-1,
-					Wx::TreeItemData->new( {
-						line => $pkg->{line},
-						name => $pkg->{name}
-					} )
-				);
-				foreach my $type ( qw(pragmata modules methods) ) {
-					if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
-						my $type_elem = $outlinebar->AppendItem(
-							$root,
-							ucfirst($type),
-							-1,
-							-1,
-							Wx::TreeItemData->new()
-						);
-						foreach my $item ( sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} } ) {
-							$appender->($type_elem, $item);
-						}
-					}
-				}
-			}
-			$outlinebar->ExpandAll;
 		}
 	}
+	$outlinebar->ExpandAll;
 	$outlinebar->GetBestSize;
 
 	return 1;
+}
+
+sub add_subtree {
+	my ( $self, $outlinebar, $pkg, $type, $root ) = @_;
+
+	if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
+		my $type_elem = $outlinebar->AppendItem(
+			$root,
+			ucfirst($type),
+			-1,
+			-1,
+			Wx::TreeItemData->new()
+		);
+		foreach my $item ( sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} } ) {
+			$self->append_entry($outlinebar, $type_elem, $item);
+		}
+	}
+	return;
+}
+
+sub append_entry {
+	my ( $self, $outlinebar, $parent, $item ) = @_;
+	$outlinebar->AppendItem(
+		$parent,
+		$item->{name},
+		-1,
+		-1,
+		Wx::TreeItemData->new( {
+			line => $item->{line},
+			name => $item->{name}
+		} )
+	);
+	return;
 }
 
 
