@@ -47,6 +47,8 @@ sub new {
 		},
 	);
 
+	$self->AppendSeparator;
+
 	$self->{stop} = $self->Append( -1,
 		Wx::gettext("&Stop")
 	);
