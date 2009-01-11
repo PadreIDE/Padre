@@ -26,7 +26,7 @@ sub new {
 	$main->aui->AddPane(
 		$self,
 		Wx::AuiPaneInfo->new
-			->Name('editorpane')
+			->Name('notebook')
  			->CenterPane
 			->Resizable(1)
 			->PaneBorder(0)
@@ -38,13 +38,13 @@ sub new {
 			->Dockable(1)
 			->Layer(1)
 	);
-	$main->aui->caption_gettext('editorpane' => 'Files');
+	$main->aui->caption_gettext('notebook' => 'Files');
 
 	Wx::Event::EVT_AUINOTEBOOK_PAGE_CHANGED(
-		$main,
+		$self,
 		$self,
 		sub {
-			shift->on_notebook_page_changed(@_);
+			$_[0]->on_auinotebook_page_changed($_[1]);
 		},
 	);
 
@@ -63,7 +63,33 @@ sub main {
 	$_[0]->GetParent;
 }
 
+
+
+
+
+######################################################################
+# Event Handlers
+
+sub on_auinotebook_page_changed {
+	my $self   = shift;
+	my $main   = $self->main;
+	my $editor = $main->current->editor;
+	if ( $editor ) {
+		my $history = $main->{page_history};
+		@$history = grep {
+			Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor)
+		} @$history;
+		push @$history, $editor;
+
+		# Update indentation in case auto-update is on
+		# TODO: encapsulation?
+		$editor->{Document}->set_indentation_style;
+	}
+	$main->refresh;
+}
+
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

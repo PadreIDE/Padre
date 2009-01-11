@@ -110,6 +110,7 @@ sub new {
 	}
 
 	# Create the underlying Wx frame
+	$DB::single = 1;
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
@@ -231,9 +232,11 @@ sub new {
 	$self->show_outline( 0 );# NOT YET #$self->menu->view->{show_docoutline}->IsChecked );
 
 	# Load the saved pane layout from last time (if any)
-	if ( defined $config->{host}->{aui_manager_layout} ) {
-		$self->aui->LoadPerspective( $config->{host}->{aui_manager_layout} );
-	}
+	# NOTE: This seems to be a bigger source of bugs than
+	# it is a saver of time.
+	#if ( defined $config->{host}->{aui_manager_layout} ) {
+	#	$self->aui->LoadPerspective( $config->{host}->{aui_manager_layout} );
+	#}
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $self->config->{main_lockpanels} );
@@ -284,7 +287,6 @@ sub load_files {
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
 		if ( $config->{host}->{main_files} ) {
-			my $guard          = $self->Freeze;
 			my @main_files     = @{$config->{host}->{main_files}};
 			my @main_files_pos = @{$config->{host}->{main_files_pos}};
 			foreach my $i ( 0 .. $#main_files ) {
@@ -403,10 +405,16 @@ sub refresh {
 	$self->refresh_status($current);
 	$self->refresh_methods($current);
 
-	my $id = $self->notebook->GetSelection;
-	if ( defined $id and $id >= 0 ) {
-		$self->notebook->GetPage($id)->SetFocus;
-		$self->refresh_syntaxcheck;
+	my $notebook = $self->notebook;
+	if ( $notebook->GetPageCount ) {
+		my $id = $notebook->GetSelection;
+		if ( defined $id and $id >= 0 ) {
+			$notebook->GetPage($id)->SetFocus;
+			$self->refresh_syntaxcheck;
+		}
+		$self->aui->GetPane('notebook')->PaneBorder(0);
+	} else {
+		$self->aui->GetPane('notebook')->PaneBorder(1);
 	}
 
 	return;
@@ -2158,22 +2166,6 @@ sub on_last_visited_pane {
 		$self->refresh_status($self->current);
 		$self->refresh_toolbar($self->current);
 	}
-}
-
-sub on_notebook_page_changed {
-	my $editor = $_[0]->current->editor;
-	if ( $editor ) {
-		my $history = $_[0]->{page_history};
-		@$history = grep {
-			Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor)
-		} @$history;
-		push @$history, $editor;
-
-		# Update indentation in case auto-update is on
-		# TODO: encapsulation?
-		$editor->{Document}->set_indentation_style;
-	}
-	$_[0]->refresh;
 }
 
 1;
