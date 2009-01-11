@@ -185,6 +185,12 @@ sub new {
 
 	%$self = (%defaults, %$self);
 
+	# Forcefully disable syntax checking at startup.
+	# Automatically compiling files provided on the command
+	# line at start means executing arbitrary code, which is
+	# a massive security violation.
+	$self->{editor_syntaxcheck} = 0;
+
 	return $self;
 }
 
