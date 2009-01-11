@@ -22,11 +22,15 @@ sub new {
 
 # Read config from the database (overwriting any existing data)
 sub read {
-	my $self = shift;
-	%$self = map {
+	my $class = shift;
+
+	# Read in the config data
+	my %hash = map {
 		$_->name => $_->value
 	} Padre::DB::Hostconf->select;
-	return 1;
+
+	# Create and return the object
+	return $class->new( %hash );
 }
 
 sub write {
