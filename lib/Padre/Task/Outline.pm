@@ -133,6 +133,7 @@ sub update_gui {
 	my $editor  = $self->{main_thread_only}->{editor};
 
 	# Clear out the existing stuff
+	# TODO extract data for keeping (sub)trees collapsed/expanded (see below)
 	$outlinebar->clear;
 
 	require Padre::Wx;
@@ -184,6 +185,10 @@ sub update_gui {
 			}
 		}
 	}
+
+	# TODO Expanding all is not acceptable: We need to keep the state
+	# (i.e., keep the pragmata subtree collapsed if it was collapsed
+	# by the user)
 	$outlinebar->ExpandAll;
 	$outlinebar->GetBestSize;
 
