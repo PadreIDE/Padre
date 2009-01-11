@@ -8,7 +8,7 @@ use Module::Install::Base;
 use FindBin    ();
 use File::Find ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.25';
 our @ISA     = qw{Module::Install::Base};
 
 sub setup_padre {
@@ -137,7 +137,11 @@ sub get_modules {
 		if ( $line =~ m{^lib/} ) {
 			$line = substr($line, 4, -3);
 			$line =~ s{/}{::}g;
-			push @modules, $line;
+			if ($line =~ //) {
+				push @modules, $line;
+			} else {
+				push @files, $line;
+			}
 		}
 		if ( $line =~ m{^share/} ) {
 			push @files, $line;
