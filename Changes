@@ -10,6 +10,9 @@ v0.26 2009.0X.XX
     Now style config file supports foreground, background, bold,
         italic, eolfilled, underline properties (KEEDI)
     Output window now uses mono-spaced font by default (SMUELLER)
+    The 'Crashed' button in the plugin manager dialog is now
+        clickable if an explanation for the failure is
+        available (SMUELLER)
 
 v0.25 2009.01.09
 
