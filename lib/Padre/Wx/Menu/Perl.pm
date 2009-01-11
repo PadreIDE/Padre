@@ -5,9 +5,11 @@ package Padre::Wx::Menu::Perl;
 use 5.008;
 use strict;
 use warnings;
+use List::Util      ();
 use File::Spec      ();
 use File::HomeDir   ();
 use Params::Util    ();
+use Padre::Locale   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -49,30 +51,28 @@ sub new {
 		},
 	);
 
-	#$self->{module}->AppendSeparator;
+	$self->{module}->AppendSeparator;
 
 	# Install from other places
-	# TODO: implement
-	#$self->{module_install_file} = $self->{module}->Append( -1,
-	#	Wx::gettext("Install Local Distribution"),
-	#);
-	#Wx::Event::EVT_MENU( $main,
-	#	$self->{module_install_file},
-	#	sub {
-	#		$self->install_file($_[0]);
-	#	},
-	#);
+	$self->{module_install_file} = $self->{module}->Append( -1,
+		Wx::gettext("Install Local Distribution"),
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{module_install_file},
+		sub {
+			$self->install_file($_[0]);
+		},
+	);
 
-	# TODO: implement
-	#$self->{module_install_url} = $self->{module}->Append( -1,
-	#	Wx::gettext("Install Remote Distribution"),
-	#);
-	#Wx::Event::EVT_MENU( $main,
-	#	$self->{module_install_url},
-	#	sub {
-	#		$self->install_url($_[0]);
-	#	},
-	#);
+	$self->{module_install_url} = $self->{module}->Append( -1,
+		Wx::gettext("Install Remote Distribution"),
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{module_install_url},
+		sub {
+			$self->install_url($_[0]);
+		},
+	);
 
 	$self->{module}->AppendSeparator;
 
@@ -122,7 +122,9 @@ sub new {
 
 	# Perl-Specific Refactoring
 	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1, Wx::gettext("Lexically Rename Variable") ),
+		$self->Append( -1,
+			Wx::gettext("Lexically Rename Variable")
+		),
 		sub {
 			my $doc = $_[0]->current->document;
 			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
@@ -293,15 +295,105 @@ sub refresh {
 # Menu Event Methods
 
 sub install_file {
+	$DB::single = 1;
 	my $self = shift;
 	my $main = shift;
-	$main->error("TO BE COMPLETED");
+
+	# Ask what we should install
+	my $dialog = Wx::FileDialog->new(
+		$main,
+		Wx::gettext("Select distribution to install"),
+		'', # Default directory
+		'', # Default file
+		undef,
+		Wx::wxFD_OPEN
+		| Wx::wxFD_FILE_MUST_EXIST
+	);
+	$dialog->CentreOnParent;
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	my $string = $dialog->GetValue;
+	$dialog->Destroy;
+	unless ( defined $string and $string =~ /\S/ ) {
+		$main->error("Did not provide a distribution");
+		return;
+	}
+
+	return;
 }
 
 sub install_url {
 	my $self = shift;
 	my $main = shift;
-	$main->error("TO BE COMPLETED");
+
+	# Ask what we should install
+	my $dialog = Wx::TextEntryDialog->new(
+		$main,
+		"Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz",
+		"pip",
+		'',
+	);
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	my $string = $dialog->GetValue;
+	$dialog->Destroy;
+	unless ( defined $string and $string =~ /\S/ ) {
+		$main->error("Did not provide a distribution");
+		return;
+	}
+
+	# Execute the command
+	my $perl   = Padre->perl_interpreter;
+	my $dir    = File::Basename::dirname( $perl );
+	my $pip    = File::Spec->catfile( $dir, 'pip' );
+	unless ( -f $pip ) {
+		$main->error("pip is unexpectedly not installed");
+		return;
+	}
+
+	# If this is the first time a command has been run,
+	# set up the ProcessStream bindings.
+	unless ( $Wx::Perl::ProcessStream::VERSION ) {
+		require Wx::Perl::ProcessStream;
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
+				return;
+			},
+		);
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
+				return;
+			},
+		);
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[1]->GetProcess->Destroy;
+				$main->menu->run->enable;
+			},
+		);
+	}
+
+	# Prepare the output window
+	$main->show_output(1);
+	$main->output->clear;
+	$main->menu->run->disable;
+
+	# Run with the same Perl that launched Padre
+	my $cmd = qq{"$perl" "pip" "$string"};
+	local $ENV{AUTOMATED_TESTING} = 1;
+	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
+
+	return;
 }
 
 sub install_cpan {
