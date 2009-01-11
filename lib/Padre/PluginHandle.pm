@@ -18,6 +18,8 @@ use Class::XSAccessor
 		name   => 'name',
 		class  => 'class',
 		object => 'object',
+	},
+	accessors => {
 		errstr => 'errstr',
 	};
 
@@ -30,7 +32,7 @@ use Class::XSAccessor
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_, status => 'unloaded' }, $class;
+	my $self  = bless { @_, status => 'unloaded', errstr => '' }, $class;
 
 	# Check params
 	unless ( _IDENTIFIER($self->name) ) {
@@ -154,7 +156,13 @@ sub enable {
 	if ( $@ ) {
 		# Crashed during plugin enable
 		$self->status('error');
-		warn $@;
+		$self->errstr(
+			sprintf(
+				Wx::gettext("Failed to enable plugin '%s': %s"),
+				$self->name,
+				$@,
+			)
+		);
 		return 0;
 	}
 
@@ -171,6 +179,7 @@ sub enable {
 
 	# Update the status
 	$self->status('enabled');
+	$self->errstr('');
 
 	return 1;
 }
@@ -196,11 +205,19 @@ sub disable {
 	if ( $@ ) {
 		# Crashed during plugin disable
 		$self->status('error');
+		$self->errstr(
+			sprintf(
+				Wx::gettext("Failed to disable plugin '%s': %s"),
+				$self->name,
+				$@,
+			)
+		);
 		return 1;
 	}
 
 	# Update the status
 	$self->status('disabled');
+	$self->errstr('');
 
 	return 0;
 }

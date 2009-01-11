@@ -288,7 +288,7 @@ sub failed {
 	my $self    = shift;
 	my $plugins = $self->plugins;
 	return grep {
-		$plugins->{$_}->{status} eq 'error'
+		$plugins->{$_}->status eq 'error'
 	} keys %$plugins;
 }
 
@@ -392,12 +392,14 @@ sub _load_plugin {
 	my $code = "use $module ();";
 	eval $code; ## no critic
 	if ( $@ ) {
-		$self->{errstr} = sprintf(
-			Wx::gettext(
-				"Plugin:%s - Failed to load module: %s"
-			),
-			$name,
-			$@,
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Failed to load module: %s"
+				),
+				$name,
+				$@,
+			)
 		);
 		$plugin->status('error');
 		return;
@@ -405,11 +407,13 @@ sub _load_plugin {
 
 	# Plugin must be a Padre::Plugin subclass
 	unless ( $module->isa('Padre::Plugin') ) {
-		$self->{errstr} = sprintf(
-			Wx::gettext(
-				"Plugin:%s - Not compatible with Padre::Plugin API. "
-				. "Need to be subclass of Padre::Plugin"
-			), $name,
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Not compatible with Padre::Plugin API. "
+					. "Need to be subclass of Padre::Plugin"
+				), $name,
+			)
 		);
 		$plugin->status('error');
 		return;
@@ -417,11 +421,13 @@ sub _load_plugin {
 
 	# Does the plugin have new method?
 	unless ( $module->can('new') ) {
-		$self->{errstr} = sprintf(
-			Wx::gettext(
-				"Plugin:%s - Not compatible with Padre::Plugin API. "
-				. "Plugin cannot be instantiated"
-			), $name,
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Not compatible with Padre::Plugin API. "
+					. "Plugin cannot be instantiated"
+				), $name,
+			)
 		);
 		$plugin->status('error');
 		return;
@@ -429,12 +435,14 @@ sub _load_plugin {
 
 	# This will not check anything as padre_interfaces is defined in Padre::Plugin
 	unless ( $module->can('padre_interfaces') ) {
-		$self->{errstr} = sprintf(
-			Wx::gettext(
-				"Plugin:%s - Not compatible with Padre::Plugin API. "
-				. "Need to have sub padre_interfaces"
-			),
-			$name,
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Not compatible with Padre::Plugin API. "
+					. "Need to have sub padre_interfaces"
+				),
+				$name,
+			)
 		);
 		$plugin->status('error');
 		return;
@@ -443,18 +451,25 @@ sub _load_plugin {
 	# Attempt to instantiate the plugin
 	my $object = eval { $module->new };
 	if ( $@ ) {
-		# TODO report error in a nicer way
-		$self->{errstr} = $@;
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Could not instantiate plugin object"
+				),
+				$name,
+			) . ": $@"
+		);
 		$plugin->status('error');
 		return;
 	}
 	unless ( _INSTANCE($object, 'Padre::Plugin') ) {
-		$self->{errstr} = sprintf(
-			Wx::gettext(
-				"Plugin:%s - Not compatible with Padre::Plugin API. "
-				. "Need to have sub padre_interfaces"
-			),
-			$name,
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Could not instantiate plugin object: the constructor does not return a Padre::Plugin object"
+				),
+				$name,
+			)
 		);
 		$plugin->status('error');
 		return;
@@ -669,7 +684,7 @@ sub get_menu {
 		$plugin->{object}->menu_plugins($main)
 	};
 	if ( $@ ) {
-		$self->{errstr} = "Error when calling menu for plugin '$name' $@";
+		$plugin->errstr(Wx::gettext("Error when calling menu for plugin") .  "'$name': $@");
 		return ();
 	}
 	unless ( defined $label and defined $menu ) {
@@ -719,7 +734,7 @@ sub test_a_plugin {
 	$config->{plugins}->{$filename}->{enabled} = 1;
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
-		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'\n%s"), $filename, $self->{errstr}));
+		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr));
 		return;
 	}
 
