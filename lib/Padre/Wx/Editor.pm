@@ -547,16 +547,15 @@ sub _get_line_by_number {
 }
 
 sub on_right_down {
-	my ($self, $event) = @_;
-	
-	my $main = Padre->ide->wx->main;
-	
-	my $pos       = $self->GetCurrentPos;
-	#my $line      = $self->LineFromPosition($pos);
+	my $self  = shift;
+	my $event = shift;
+	my $main  = $self->main;
+	my $pos   = $self->GetCurrentPos;
+	#my $line  = $self->LineFromPosition($pos);
 	#print "right down: $pos\n"; # this is the position of the cursor and not that of the mouse!
 	#my $p = $event->GetLogicalPosition;
 	#print "x: ", $p->x, "\n";
-	
+
 	my $menu = Wx::Menu->new;
 	my $undo = $menu->Append( Wx::wxID_UNDO, '' );
 	if (not $self->CanUndo) {
