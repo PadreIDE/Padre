@@ -18,8 +18,9 @@ sub new {
 		Wx::wxAUI_NB_TOP
 		| Wx::wxBORDER_NONE
 		| Wx::wxAUI_NB_SCROLL_BUTTONS
+		| Wx::wxAUI_NB_TAB_MOVE
 		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
-		| Wx::wxAUI_NB_WINDOWLIST_BUTTON,
+		| Wx::wxAUI_NB_WINDOWLIST_BUTTON
 	);
 
 	# Add ourself to the main window
