@@ -96,6 +96,7 @@ sub new {
 	my $style = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->{host}->{main_maximized} ) {
 		$style |= Wx::wxMAXIMIZE;
+		$style |= Wx::wxCLIP_CHILDREN;
 	}
 
 	# Determine the window title
@@ -123,6 +124,10 @@ sub new {
 		],
 		$style,
 	);
+
+	# A large complex application looks, frankly, utterly stupid
+	# if it gets very small, or even mildly small.
+	$self->SetMinSize( Wx::Size->new(500, 400) );
 
 	# Save a pointer to the configuration object.
 	# This prevents tons of Padre->ide->config calls.
@@ -279,7 +284,7 @@ sub load_files {
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
 		if ( $config->{host}->{main_files} ) {
-			$self->Freeze;
+			my $guard          = $self->Freeze;
 			my @main_files     = @{$config->{host}->{main_files}};
 			my @main_files_pos = @{$config->{host}->{main_files_pos}};
 			foreach my $i ( 0 .. $#main_files ) {
@@ -293,7 +298,6 @@ sub load_files {
 				my $id = $self->find_editor_of_file( $config->{host}->{main_file} );
 				$self->on_nth_pane($id) if defined $id;
 			}
-			$self->Thaw;
 		}
 		return;
 	}
@@ -348,6 +352,11 @@ sub timer_post_init {
 	return;
 }
 
+# Creates a automatic Freeze object that Thaw's on destruction.
+sub freezer {
+	Wx::WindowUpdateLocker->new( $_[0] );
+}
+
 
 
 
@@ -386,7 +395,7 @@ sub refresh {
 	return if $self->no_refresh;
 
 	# Freeze during the refresh
-	$self->Freeze;
+	my $guard = $self->freezer;
 
 	my $current = $self->current;
 	$self->refresh_menu($current);
@@ -399,8 +408,6 @@ sub refresh {
 		$self->notebook->GetPage($id)->SetFocus;
 		$self->refresh_syntaxcheck;
 	}
-
-	$self->Thaw;
 
 	return;
 }
@@ -1001,37 +1008,43 @@ sub on_split_window {
 sub setup_editors {
 	my $self  = shift;
 	my @files = @_;
-	$self->Freeze;
+	SCOPE: {
+		my $guard = $self->freezer;
 
-	# If and only if there is only one current file,
-	# and it is unused, close it. This is a somewhat
-	# subtle interface DWIM trick, but it's one that
-	# clearly looks wrong when we DON'T do it.
-	if ( $self->notebook->GetPageCount == 1 ) {
-		if ( $self->current->document->is_unused ) {
-			$self->on_close($self);
+		# If and only if there is only one current file,
+		# and it is unused, close it. This is a somewhat
+		# subtle interface DWIM trick, but it's one that
+		# clearly looks wrong when we DON'T do it.
+		if ( $self->notebook->GetPageCount == 1 ) {
+			if ( $self->current->document->is_unused ) {
+				$self->on_close($self);
+			}
+		}
+
+		if ( @files ) {
+			foreach my $f ( @files ) {
+				Padre::DB->add_recent_files($f);
+				$self->setup_editor($f);
+			}
+		} else {
+			$self->setup_editor;
 		}
 	}
 
-	if ( @files ) {
-		foreach my $f ( @files ) {
-			Padre::DB->add_recent_files($f);
-			$self->setup_editor($f);
-		}
-	} else {
-		$self->setup_editor;
-	}
-
-	$self->Thaw;
+	# Update the menus AFTER the initial GUI update,
+	# because it makes file loading LOOK faster.
+	# Do the menu/etc refresh in the time it takes the
+	# user to actually perceive the file has been opened.
 	$self->refresh;
+
 	return;
 }
 
 sub on_new {
 	$_[0]->Freeze;
 	$_[0]->setup_editor;
-	$_[0]->refresh;
 	$_[0]->Thaw;
+	$_[0]->refresh;
 	return;
 }
 
@@ -1400,9 +1413,9 @@ sub on_close_all_but_current {
 }
 
 sub _close_all {
-	my $self = shift;
-	my $skip = shift;
-	$self->Freeze;
+	my $self  = shift;
+	my $skip  = shift;
+	my $guard = $self->freezer;
 	foreach my $id ( reverse $self->pageids ) {
 		if ( defined $skip and $skip == $id ) {
 			next;
@@ -1410,7 +1423,6 @@ sub _close_all {
 		$self->close($id) or return 0;
 	}
 	$self->refresh;
-	$self->Thaw;
 	return 1;
 }
 
