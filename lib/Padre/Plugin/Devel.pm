@@ -111,16 +111,16 @@ sub _dump_eval {
 
 sub _dump {
 	my $self = shift;
-
-	# Generate the dump string
-	my $dumper = Devel::Dumpvar->new( to => 'return' );
-	my $string = $dumper->dump( @_ );
-
-	# Show it in the output window
 	my $main = Padre::Current->main;
+
+	# Generate the dump string and set into the output window
+	$main->output->SetValue(
+		Devel::Dumpvar->new(
+			to => 'return',
+		)->dump(@_)
+	);
+	$main->output->SetSelection(0, 0);
 	$main->show_output(1);
-	$main->output->clear;
-	$main->output->AppendText($string);
 
 	return;
 }
