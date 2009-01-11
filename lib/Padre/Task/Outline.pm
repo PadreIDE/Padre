@@ -122,6 +122,11 @@ sub finish {
 }
 
 sub update_gui {
+	# TODO This and the helper routines used here probably need to be
+	# document type specific (pragmata, modules and methods do 
+	# not apply to all languages and there may be other hierarchy
+	# levels instead)
+
 	my $self    = shift;
 	my $outline = $self->{outline};
 	my $outlinebar = Padre->ide->wx->main->outline;
