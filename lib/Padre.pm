@@ -524,6 +524,41 @@ Need to define the mime-type mapping in L<Padre::Document>
 For examples see L<Padre::Document::PASM>, L<Padre::Document::PIR>,
 L<Padre::Document::Perl>.
 
+=head2 Syntax checking
+
+Depending on a corresponding support in the respective C<Padre::Document::Language> 
+class, Padre supports real time syntax checking capabilities: 
+
+=over 4
+
+=item
+
+Syntax errors or warnings are displayed in a side bar (usually at the bottom of the
+Padre window). By double-clicking a list entry you can navigate to the position in
+the file.
+
+=item
+
+Additionally, there is a symbol column on the left side of the editor where colored
+symbols mark the code lines with problems.
+
+=back
+
+=head3 WARNING NOTE
+
+Syntax checking for Perl5 documents comes bundled with Padre. It is implemented 
+using "perl -c". This means that parts of the code actually get executed (e.g.
+BEGIN blocks). Malicious software might used this fact to damage your system
+(C<BEGIN { system('rm -rf ~') }>) or suck up your resources 
+(C<BEGIN { while(1) { } }>).
+Syntax checking is currently disabled by default and has to be enabled manually
+after every start of Padre. This somewhat increases security when doing
+C<padre some_unknown_file.pl>.
+However, it does not protect you when you open a file from within Padre while
+syntax checking is turned on.
+The most secure solution would require a really fast non-executing syntax checker
+which unfortunately is currently not available.
+
 =head1 Preferences
 
 There are several types of preferences we can think of.
