@@ -1,5 +1,10 @@
 package Padre::Config2;
 
+# To help force the break from the first-generate HASH based configuration
+# over to the second-generation method based configuration, initially we
+# will use an ARRAY-based object, so that all existing code is forcefully
+# broken.
+
 use 5.008;
 use strict;
 use warnings;
@@ -14,6 +19,15 @@ our $VERSION = '0.25';
 use constant HOST    => 0;
 use constant USER    => 1;
 use constant PROJECT => 2;
+
+
+
+
+
+#####################################################################
+# Configuration Design
+
+config( experimental => USER );
 
 
 
@@ -55,6 +69,31 @@ sub read {
 	my $host = Padre::Config::Host->read;
 
 	# Load the user configuration
+	die "TO BE COMPLETED";
+}
+
+sub host {
+	$_[0]->[HOST];
+}
+
+sub user {
+	$_[0]->[USER];
+}
+
+sub project {
+	$_[0]->[PROJECT];
+}
+
+
+
+
+
+#####################################################################
+# Support Methods
+
+sub config {
+	my $name = shift;
+	
 	die "TO BE COMPLETED";
 }
 
