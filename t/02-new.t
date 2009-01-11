@@ -32,41 +32,45 @@ SCOPE: {
 	my $config = $app->config;
 	is_deeply  $config,
 		{
-		experimental       => 0,
+		experimental                  => 0,
 
-		editor_linenumbers => 1,
-		editor_eol         => 0,
-		editor_indentationguides => 0,
-		editor_calltips    => 0,
-		editor_autoindent  => 'deep',
-		editor_methods     => 'alphabetical',
-		editor_whitespaces => 0,
-		editor_codefolding => 0,
+		main_startup                  => 'new',
+		main_statusbar                => 1,
+		main_output                   => 0,
+		main_rightbar                 => 1,
+		main_lockpanels               => 1,
+		main_subs_panel               => 0,
+		main_output_panel             => 0,
 
-		output_ansi_controls => 1,
-
+		editor_linenumbers            => 1,
+		editor_eol                    => 0,
+		editor_indentationguides      => 0,
+		editor_calltips               => 0,
+		editor_autoindent             => 'deep',
+		editor_methods                => 'alphabetical',
+		editor_whitespaces            => 0,
+		editor_codefolding            => 0,
 		editor_auto_indentation_style => 1,
 		editor_tabwidth               => 8,
 		editor_indentwidth            => 8,
 		editor_use_tabs               => 1,
 		editor_perl5_beginner         => 1,
+		editor_syntaxcheck            => 0,
+		output_ansi_controls          => 1,
 
 		ppi_highlight                 => 0,
 		ppi_highlight_limit           => 10_000,
 
-		search_terms       => [],
-		replace_terms      => [],
-		main_startup       => 'new',
-		main_statusbar     => 1,
-		main_output        => 0,
-		main_rightbar      => 1,
-		main_lockpanels    => 1,
-		projects           => {},
-		run_save           => 'same',
-		current_project    => '',
-		bookmarks          => {},
-
-		host               => {
+		search_terms                  => [],
+		replace_terms                 => [],
+		projects                      => {},
+		run_save                      => 'same',
+		current_project               => '',
+		bookmarks                     => {},
+		plugins                       => {},
+		use_worker_threads            => 1,
+		
+		host => {
 			main_maximized => 0,
 			main_top       => 20,
 			main_left      => 40,
@@ -77,11 +81,6 @@ SCOPE: {
 			main_files_pos => [],
 			style          => 'default',
 		},
-		main_subs_panel   => 0,
-		main_output_panel => 0,
-
-		plugins => {},
-		use_worker_threads        => 1,
 	},
 	'defaults';
 }
