@@ -24,14 +24,18 @@ my $data_private;
 my $width;
 
 sub new {
-	my( $class, $parent ) = @_;
+	my $class    = shift;
+	my $notebook = shift;
 
-	my $self = $class->SUPER::new( $parent );
+	# Create the underlying Wx object
+	my $self = $class->SUPER::new( $notebook );
+
+	# TODO: Make this suck less
 	$data = data('default');
 
 	# Set the code margins a little larger than the default.
 	# This seems to noticably reduce eye strain.
-	$self->SetMarginLeft(3);
+	$self->SetMarginLeft(2);
 	$self->SetMarginRight(0);
 
 	# Clear out all the other margins
@@ -46,11 +50,13 @@ sub new {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	}
 	$self->SetDropTarget(
-		Padre::Wx::FileDropTarget->new(
-			Padre->ide->wx->main
-		)
+		Padre::Wx::FileDropTarget->new($self->main)
 	);
 	return $self;
+}
+
+sub main {
+	$_[0]->GetGrandParent;
 }
 
 sub data {
