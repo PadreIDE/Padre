@@ -30,7 +30,7 @@ sub new {
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self,
 		$self,
 		sub {
-			$self->list_item_activated($_[1]);
+			$self->on_list_item_activated($_[1]);
 		},
 	);
 
