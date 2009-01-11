@@ -5,8 +5,8 @@ package Padre::Wx::Menu::Edit;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current     qw{_CURRENT};
-use Padre::Wx          ();
+use Padre::Current  qw{_CURRENT};
+use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
 our $VERSION = '0.25';
@@ -221,6 +221,7 @@ sub new {
 		Wx::gettext("Tabs and Spaces"),
 		$edit_tab
 	);
+
 	Wx::Event::EVT_MENU( $main,
 		$edit_tab->Append( -1,
 			Wx::gettext("Tabs to Spaces...")
@@ -237,11 +238,15 @@ sub new {
 			$_[0]->on_tab_and_space('Space_to_Tab');
 		},
 	);
+
+	$edit_tab->AppendSeparator;
+
 	Wx::Event::EVT_MENU( $main,
 		$edit_tab->Append( -1,
 			Wx::gettext("Delete Trailing Spaces")
 		),
 		sub {
+			$DB::single = 1;
 			$_[0]->on_delete_ending_space;
 		},
 	);
