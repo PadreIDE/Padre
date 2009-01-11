@@ -565,6 +565,7 @@ sub rebuild_toolbar {
 	$self->SetToolBar(
 		Padre::Wx::ToolBar->new($self)
 	);
+	$self->GetToolBar->refresh;
 	$self->GetToolBar->Realize;
 	return 1;
 }
