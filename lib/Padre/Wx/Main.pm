@@ -1856,7 +1856,10 @@ sub convert_to {
 	my $newline = shift;
 	my $current = $self->current;
 	my $editor  = $current->editor;
-	$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline} );
+	{
+		no warnings 'once'; # TODO eliminate?
+		$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline} );
+	}
 
 	# TODO: include the changing of file type in the undo/redo actions
 	# or better yet somehow fetch it from the document when it is needed.

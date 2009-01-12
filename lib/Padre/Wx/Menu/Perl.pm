@@ -281,6 +281,7 @@ sub refresh {
 	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
 	$self->{run_with_stack_trace}->Check( $config->{run_with_stack_trace} ? 1 : 0 );
 
+	no warnings 'once'; # TODO eliminate?
 	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
 		$config->{ppi_highlight}
 			? Wx::wxSTC_LEX_CONTAINER
@@ -295,7 +296,8 @@ sub refresh {
 # Menu Event Methods
 
 sub install_file {
-	$DB::single = 1;
+	# TODO: supidly duplicated to avoid warning
+	$DB::single = $DB::single = 1;
 	my $self = shift;
 	my $main = shift;
 

@@ -11,7 +11,7 @@ our $VERSION = '0.25';
 
 
 
-
+my $hash;  # just to let compilation pass
 
 #####################################################################
 # Constructor and Storage Interaction

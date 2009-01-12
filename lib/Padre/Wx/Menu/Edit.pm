@@ -250,7 +250,7 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{delete_trailing},
 		sub {
-			$DB::single = 1;
+			$DB::single = $DB::single = 1; # stupdily duplicated to avoid warning
 			$_[0]->on_delete_ending_space;
 		},
 	);
