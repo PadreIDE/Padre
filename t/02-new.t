@@ -37,7 +37,6 @@ SCOPE: {
 		main_startup                  => 'new',
 		main_statusbar                => 1,
 		main_output                   => 0,
-		main_rightbar                 => 1,
 		main_lockpanels               => 1,
 		main_subs_panel               => 0,
 		main_output_panel             => 0,
