@@ -1,5 +1,7 @@
 package Padre::Config::Host;
 
+# Configuration and state data related to the host that Padre is running on.
+
 use 5.008;
 use strict;
 use warnings;

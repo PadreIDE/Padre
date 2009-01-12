@@ -11,7 +11,7 @@ use warnings;
 use Carp                   ();
 use Params::Util           qw{_INSTANCE};
 use Padre::Config::Host    ();
-use Padre::Config::User    ();
+use Padre::Config::Human   ();
 use Padre::Config::Project ();
 
 our $VERSION = '0.25';
@@ -46,7 +46,7 @@ sub new {
 	unless ( _INSTANCE($host, 'Padre::Config::Host') ) {
 		Carp::croak("Did not provide a host config to Padre::Config2->new");
 	}
-	unless ( _INSTANCE($user, 'Padre::Config::User') ) {
+	unless ( _INSTANCE($user, 'Padre::Config::Human') ) {
 		Carp::croak("Did not provide a user config to Padre::Config2->new");
 	}
 

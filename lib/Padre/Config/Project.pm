@@ -1,5 +1,7 @@
 package Padre::Config::Project;
 
+# Configuration and state data that describes project policies.
+
 use 5.008;
 use strict;
 use warnings;

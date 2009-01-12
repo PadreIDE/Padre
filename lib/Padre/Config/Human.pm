@@ -1,4 +1,6 @@
-package Padre::Config::User;
+package Padre::Config::Human;
+
+# Configuration and state data relating to the human using Padre.
 
 use 5.008;
 use strict;
@@ -42,6 +44,7 @@ sub read {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or
