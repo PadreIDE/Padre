@@ -335,8 +335,10 @@ sub new {
 		$self->{style}
 	);
 	my %styles = (
-		default => Wx::gettext('Padre'),
-		night   => Wx::gettext('Night'),
+		default   => Wx::gettext('Padre'),
+		night     => Wx::gettext('Night'),
+		ultraedit => Wx::gettext('Ultraedit'),
+		notepad   => Wx::gettext('Notepad++'),
 	);
 	my @order = sort {
 		($b eq 'default') <=> ($a eq 'default')
