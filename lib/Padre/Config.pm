@@ -23,8 +23,8 @@ my %defaults = (
 	# Look and feel preferences
 	main_statusbar            => 1,
 	main_output               => 0,
-	main_rightbar             => 1,
 	main_lockpanels           => 1,
+
 	editor_linenumbers        => 1,
 	editor_eol                => 0,
 	editor_indentationguides  => 0,
