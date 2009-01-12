@@ -64,6 +64,7 @@ use constant SECONDS => 1000;
 
 use Class::XSAccessor
 	getters => {
+		title      => 'title',
 		config     => 'config',
 		aui        => 'aui',
 		menu       => 'menu',
@@ -100,13 +101,17 @@ sub new {
 	}
 
 	# Determine the window title
-	my $title = "Padre $Padre::VERSION ";
+	$self->{title} = "Padre ";
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
+		my $revision = Padre::Util::svn_directory_revision($dir);
 		if ( -d "$dir.svn" ) {
-			$title .= Wx::gettext('(running from SVN checkout)');
+			$self->{title} .= "SVN \@$revision (\$VERSION = $Padre::VERSION)";
 		}
+	}
+	if ( $self->{title} eq 'Padre' ) {
+		$self->{title} .= $Padre::VERSION;
 	}
 
 	# Create the underlying Wx frame
@@ -114,7 +119,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
-		$title,
+		$self->{title},
 		[
 			$config->{host}->{main_left},
 			$config->{host}->{main_top},
