@@ -27,6 +27,9 @@ use constant PROJECT => 2;
 #####################################################################
 # Configuration Design
 
+# This section identifies the set of all named configuration entries,
+# and where the configuration system should resolve them to.
+
 config( experimental => USER );
 
 
