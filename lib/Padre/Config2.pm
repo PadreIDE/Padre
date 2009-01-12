@@ -89,12 +89,31 @@ sub project {
 
 
 #####################################################################
-# Support Methods
+# Code Generation
 
 sub config {
 	my $name = shift;
-	
-	die "TO BE COMPLETED";
+
+	# Generate the accessor
+	my @lines = (
+		"\tmy \$self = shift;\n",
+	);
+	while ( @_ ) {
+		my $part = [qw{HOST USER PROJECT}]->[shift] or next;
+		push @lines, (
+			"\tif ( exists \$self->[$part]->{$name} ) {\n",
+			"\t\treturn \$self->[$part]->{$name};\n",
+			"\t}\n",
+		);
+	}
+	push @lines, "\treturn undef;\n";
+
+	# Compile the accessor
+	my $code = join( '', @lines );
+	eval $code; ## no critic
+	die("Failed to build config accessor for '$name'") if $@;
+
+	return 1;
 }
 
 1;
