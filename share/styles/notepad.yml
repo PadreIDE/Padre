@@ -1,0 +1,145 @@
+---
+# Compatibility style for people switching from Notepad++.
+# Copyright 2008 Adam Kennedy.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+
+# Items of colors support following properties:
+#   - foreground: color
+#   - background: color
+#   - bold:       0 or 1
+#   - italic:     0 or 1
+#   - eolfilled:  0 or 1
+#   - underline:  0 or 1
+
+#
+# base style
+#
+plain:
+ foregrounds:
+  0: 00007f
+ current_line_foreground: 000000
+ current_line_background: FFFF04
+ colors:
+  wxSTC_STYLE_DEFAULT:
+  wxSTC_STYLE_LINENUMBER:
+  wxSTC_STYLE_BRACELIGHT:
+  wxSTC_STYLE_BRACEBAD:
+  wxSTC_STYLE_CONTROLCHAR:
+  wxSTC_STYLE_INDENTGUIDE:
+  wxSTC_STYLE_CALLTIP:
+  wxSTC_STYLE_LASTPREDEFINED:
+
+#
+# default style (load after plain)
+#
+padre:
+ background:  ffffff
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 00ff00
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  PADRE_BLACK:
+   foreground: 000000
+  PADRE_BLUE:
+   foreground: 000099
+  PADRE_RED:
+   foreground: 990000
+  PADRE_GREEN:
+   foreground: 00AA00
+  PADRE_MAGENTA:
+   foreground: 8b008b
+  PADRE_ORANGE:
+   foreground: ff8228
+  PADRE_CRIMSON:
+   foreground: dc143c
+  PADRE_BROWN:
+   foreground: a52a2a
+
+#
+# application/x-perl
+#
+perl:
+ background:  FFFFFF
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: ff0000
+  wxSTC_STYLE_BRACEBAD:
+   foreground: 880000
+  wxSTC_PL_DEFAULT:
+   foreground: ff0000
+  wxSTC_PL_ERROR:
+   foreground: ff88c0
+   bold: 1
+   italic: 1
+  wxSTC_PL_COMMENTLINE:
+   foreground: 008800
+  wxSTC_PL_POD:
+   foreground: 000000
+  wxSTC_PL_NUMBER:
+   foreground: ff0000
+  wxSTC_PL_WORD:
+   foreground: 0000ff
+   bold: 1
+  wxSTC_PL_STRING:
+   foreground: 808080
+  wxSTC_PL_CHARACTER:
+   foreground: 808080
+  wxSTC_PL_PUNCTUATION:
+   foreground: 804000
+  wxSTC_PL_PREPROCESSOR:
+   foreground: 804000
+  wxSTC_PL_OPERATOR:
+   foreground: 000080
+   bold: 1
+  wxSTC_PL_IDENTIFIER:
+   foreground: 000000
+  wxSTC_PL_SCALAR:
+   foreground: ff8000
+  wxSTC_PL_ARRAY:
+   foreground: 4080ff
+  wxSTC_PL_HASH:
+   foreground: 0080ff
+  wxSTC_PL_SYMBOLTABLE:
+   foreground: ff0000
+   bold: 1
+# missing SCE_PL_VARIABLE_INDEXER (16)
+  wxSTC_PL_REGEX:
+   foreground: 8080ff
+   background: ffeeec
+  wxSTC_PL_REGSUBST:
+   foreground: 8080c0
+   background: ffeeec
+  wxSTC_PL_LONGQUOTE:
+   foreground: ff8000
+  wxSTC_PL_BACKTICKS:
+   foreground: ffff00
+   background: 808080
+   bold: 1
+  wxSTC_PL_DATASECTION:
+   foreground: 808080
+  wxSTC_PL_HERE_DELIM:
+   foreground: 000000
+  wxSTC_PL_HERE_Q:
+   foreground: 000000
+  wxSTC_PL_HERE_QQ:
+   foreground: 000000
+  wxSTC_PL_HERE_QX:
+   foreground: 000000
+  wxSTC_PL_STRING_Q:
+   foreground: 000000
+  wxSTC_PL_STRING_QQ:
+   foreground: 000000
+  wxSTC_PL_STRING_QX:
+   foreground: 000000
+  wxSTC_PL_STRING_QR:
+   foreground: 000000
+  wxSTC_PL_STRING_QW:
+   foreground: 000000
+# missing:
+#define SCE_PL_POD_VERB 31
+#define SCE_PL_SUB_PROTOTYPE 40
+#define SCE_PL_FORMAT_IDENT 41
+#define SCE_PL_FORMAT 42
