@@ -2071,7 +2071,7 @@ sub on_delete_ending_space {
 	my $current  = $self->current;
 	my $document = $current->document or return;	
 	my $src      = $current->text;
-	my $code     = defined($src) ? $src : $document->text_get;
+	my $code     = (defined($src) && length($src) > 0) ? $src : $document->text_get;
 
 	# Remove ending space
 	$code =~ s/([^\n\S]+)$//mg;
