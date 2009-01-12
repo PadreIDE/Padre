@@ -17,7 +17,7 @@ use Padre::Config::Project ();
 our $VERSION = '0.25';
 
 use constant HOST    => 0;
-use constant USER    => 1;
+use constant HUMAN    => 1;
 use constant PROJECT => 2;
 
 
@@ -30,7 +30,22 @@ use constant PROJECT => 2;
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
 
-config( experimental => USER );
+config( experimental       => HUMAN );
+
+# Window geometry
+config( main_maximized     => HOST  );
+config( main_top           => HOST  );
+config( main_left          => HOST  );
+config( main_width         => HOST  );
+config( main_height        => HOST  );
+
+# Pages and Panels
+config( main_startup       => HUMAN );
+config( main_lockinterface => HUMAN );
+config( main_statusbar     => HUMAN );
+config( main_functions     => HUMAN );
+config( main_outline    => HUMAN );
+config( main_output        => HUMAN );
 
 
 
@@ -40,18 +55,18 @@ config( experimental => USER );
 # Constructor and Accessors
 
 sub new {
-	my $class   = shift;
-	my $host    = shift;
-	my $user    = shift;
+	my $class = shift;
+	my $host  = shift;
+	my $human = shift;
 	unless ( _INSTANCE($host, 'Padre::Config::Host') ) {
 		Carp::croak("Did not provide a host config to Padre::Config2->new");
 	}
-	unless ( _INSTANCE($user, 'Padre::Config::Human') ) {
+	unless ( _INSTANCE($human, 'Padre::Config::Human') ) {
 		Carp::croak("Did not provide a user config to Padre::Config2->new");
 	}
 
 	# Create the basic object with the two required elements
-	my $self = bless [ $host, $user ], $class;
+	my $self = bless [ $host, $human ], $class;
 
 	# Add the optional third element
 	if ( @_ ) {
@@ -79,8 +94,8 @@ sub host {
 	$_[0]->[HOST];
 }
 
-sub user {
-	$_[0]->[USER];
+sub human {
+	$_[0]->[HUMAN];
 }
 
 sub project {
