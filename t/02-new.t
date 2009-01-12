@@ -41,6 +41,7 @@ SCOPE: {
 		main_lockpanels               => 1,
 		main_subs_panel               => 0,
 		main_output_panel             => 0,
+		main_outline_panel            => 0,
 
 		editor_linenumbers            => 1,
 		editor_eol                    => 0,
