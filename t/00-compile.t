@@ -9,10 +9,29 @@ BEGIN {
 }
 
 #use Test::NeedsDisplay ':skip_all';
-plan skip_all => 'Needs Test::Compile 0.08 but that does not work on Windows' if $^O eq 'MSWin32'; # the same as File::Spec uses
-plan skip_all => 'Needs Test::Compile 0.08' if not eval "use Test::Compile 0.08; 1"; ## no critic
-diag "Test::Compile $Test::Compile::VERSION";
 
+use File::Find::Rule;
 use File::Temp;
+
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
-all_pl_files_ok(all_pm_files());
+
+my $out = File::Spec->catfile($ENV{PADRE_HOME}, 'out.txt');
+my $err = File::Spec->catfile($ENV{PADRE_HOME}, 'err.txt');
+
+my @files = File::Find::Rule->file()->name('*.pm')->in('lib');
+plan tests => 2 * @files;
+foreach my $file (@files) {
+		system "$^X -c $file > $out 2>$err";
+		my $out_data = slurp($out);
+		is($out_data, '', "STDOUT of $file");
+		
+		my $err_data = slurp($err);
+		is($err_data, "$file syntax OK\n", "STDERR of $file");
+}
+
+sub slurp {
+	my $file = shift;
+	open my $fh, '<', $file or die $!;
+	local $/ = undef;
+	return <$fh>;
+}
