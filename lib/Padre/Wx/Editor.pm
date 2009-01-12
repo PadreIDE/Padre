@@ -88,7 +88,7 @@ sub data {
 # most of this should be read from some external files
 # but for now we use this if statement
 sub padre_setup {
-	my ($self) = @_;
+	my $self = shift;
 
 	$self->SetLexer( $self->{Document}->lexer );
 
@@ -133,10 +133,8 @@ sub padre_setup {
 
 sub padre_setup_plain {
 	my $self = shift;
-
 	$self->set_font;
-
-	$self->StyleClearAll();
+	$self->StyleClearAll;
 
 	my $config = Padre->ide->config;
 
