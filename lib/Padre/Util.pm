@@ -153,12 +153,6 @@ sub get_matches {
 	return ($start, $end, @matches);
 }
 
-
-
-
-
-#####################################################################
-
 =pod
 
 =head2 _T
@@ -168,9 +162,42 @@ This is the shorthand of Wx::gettext('some text to translate')
 Specifically to be used for strings that you want to
 delay translation until later, so that the translation
 tools can find it.
+
 =cut
+
 sub _T { 
 	shift; 
+}
+
+
+
+
+
+#####################################################################
+# Developer-Only Functions
+
+# This is pretty hacky
+sub svn_directory_revision {
+	my $dir = shift;
+
+	# Find the entries file
+	my $entries = File::Spec->catfile( $dir, '.svn', 'entries' );
+	return unless -f $entries;
+
+	# Find the headline revision
+	local $/ = undef;
+	open(my $fh, "<", $entries) or return;
+	my $buffer = <$fh>;
+	close( $fh );
+
+	# Find the first number after the first occuranc
+	# of "dir".
+	unless ( $buffer =~ /\bdir\b\s+(\d+)/m ) {
+		return undef;
+	}
+
+	# Quote this to prevent certain aliasing bugs
+	return "$1";
 }
 
 
