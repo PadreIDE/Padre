@@ -33,6 +33,7 @@ use Padre::Util               ();
 use Padre::Locale             ();
 use Padre::Current            qw{_CURRENT};
 use Padre::Document           ();
+use Padre::SingleInstance     ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
 use Padre::Wx::Right          ();
@@ -133,6 +134,8 @@ sub new {
 		$style,
 	);
 
+	#$self->setup_single_instance;
+	
 	# Remember the original title we used for later
 	$self->{title} = $title;
 
@@ -274,6 +277,45 @@ sub new {
 	$timer->Start( 1, 1 );
 
 	return $self;
+}
+
+# setup padre to work as a single instance
+sub setup_single_instance {
+    my $self = shift;
+    my $t = Padre::SingleInstance->new( 
+        on_file_request => sub { my $file = shift; $self->on_file_request($file) },
+        on_focus_request => sub { $self->on_focus_request },
+    );
+    if ($t->is_running) {
+        print "It is running\n";
+    } else {
+        print "Nothing is running... Going to start server\n";
+        my $thr = $t->start_server;
+        $thr->detach;
+    }
+    return;
+}
+
+#sent when another Padre process sends a file open request
+sub on_file_request {
+    my $self = shift;
+    my $file = shift; 
+    print "on_file_request: $file\n";
+    if(-f $file) {
+        print "found file: $file... Gonna open it\n";
+        $self->setup_editor($file);
+    } else {
+        print "Could not find file '$file'";
+    }
+    return;
+}
+
+#sent when another Padre process requests this window to be focused
+sub on_focus_request {
+    my $self = shift;
+    print "on_focus_request\n";
+    $self->Raise;
+    return;
 }
 
 # Load any default files
