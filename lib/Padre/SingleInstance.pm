@@ -79,22 +79,20 @@ sub _run {
                                     Listen    => 10 )
         or croak "Couldn't be a tcp server on port " . SERVER_PORT .  ": $@\n";
     LOOP: while (my $client = $server->accept()) {
-        # $client is the new connection
         while(my $line = <$client>) {
             if($line =~ /^open\s+(.+)$/) {
-                #XXX- I should open filename... 
                 my $filename = $1;
                 eval {
                     $self->{on_file_request}($filename);
                     1;
                 };
-                Carp::confess($@) if $@;
+                Carp::cluck($@) if $@;
             } elsif($line =~ /^restore_focus$/) {
                 eval {
                     $self->{on_focus_request}();
                     1;
                 };
-                Carp::confess($@) if $@;
+                Carp::cluck($@) if $@;
             }
         }
     }
