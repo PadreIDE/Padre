@@ -114,7 +114,6 @@ sub new {
 	}
 
 	# Create the underlying Wx frame
-	$DB::single = 1;
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
@@ -129,6 +128,9 @@ sub new {
 		],
 		$style,
 	);
+	$self->{title} = $title;
+
+	# Remember the original title we used for later
 	$self->{title} = $title;
 
 	# Set the "default directory" (exact meaning uncertain)
@@ -524,7 +526,6 @@ sub change_style {
 }
 
 sub change_locale {
-	$DB::single = 1;
 	my $self = shift;
 	my $name = shift;
 	unless ( defined $name ) {
