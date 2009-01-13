@@ -80,6 +80,7 @@ use Class::Autouse qw{
 # Gnerate faster accessors
 use Class::XSAccessor
 	getters => {
+		original_cwd   => 'original_cwd',
 		config         => 'config',
 		config_dir     => 'config_dir',
 		config_yaml    => 'config_yaml',
@@ -163,20 +164,7 @@ sub run {
 	}
 	@ARGV = grep { ! /^-M/ } @ARGV;
 
-	# Handle the common command line "padre --help" case.
-	my $USAGE  = '';
-	my $getopt = Getopt::Long::GetOptions(
-		help => \$USAGE,
-	);
-	if ( $USAGE or ! $getopt ) {
-		print <<"END_USAGE";
-Usage: $0 [FILENAMES]
-    --help Shows this help message
-END_USAGE
-		exit(1);
-	}
-
-	# We can now confirm the GUI will be used
+	# Now the essentials are loaded, show the GUI
 	$self->wx->main->Show(1);
 
 	# FIXME: RT #1 This call should be delayed until after the
@@ -185,7 +173,7 @@ END_USAGE
 
 	$self->{ARGV} = [ map {File::Spec->rel2abs( $_ )} @ARGV ];
 
-	$self->{original_dir} = Cwd::cwd();
+	$self->{original_cwd} = Cwd::cwd();
 
 	# Move our current dir to the user's documents directory by default
 	my $documents = File::HomeDir->my_documents;

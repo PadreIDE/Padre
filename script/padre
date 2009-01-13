@@ -2,8 +2,31 @@
 
 use strict;
 use warnings;
+use Getopt::Long ();
 
 $| = 1;
+
+# Handle special command line cases early, because options like --home
+# MUST be processed before the Padre.pm library is loaded.
+my $USAGE  = '';
+my $HOME   = undef;
+my $getopt = Getopt::Long::GetOptions(
+	'help'   => \$USAGE,
+	'home=s' => \$HOME,
+);
+if ( $USAGE or ! $getopt ) {
+	print <<"END_USAGE";
+Usage: $0 [FILENAMES]
+
+--home=dir Forces Padre's "home" directory to a specific location
+--help     Shows this help message
+
+END_USAGE
+	exit(1);
+}
+if ( defined $HOME ) {
+	$ENV{PADRE_HOME} = $HOME;
+}
 
 unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} or grep /^(-h|--help)$/, @ARGV) {  
     exit 0 if fork();
