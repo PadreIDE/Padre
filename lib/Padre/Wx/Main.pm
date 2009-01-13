@@ -100,17 +100,17 @@ sub new {
 	}
 
 	# Determine the window title
-	$self->{title} = "Padre ";
+	my $title = "Padre ";
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
 		my $revision = Padre::Util::svn_directory_revision($dir);
 		if ( -d "$dir.svn" ) {
-			$self->{title} .= "SVN \@$revision (\$VERSION = $Padre::VERSION)";
+			$title .= "SVN \@$revision (\$VERSION = $Padre::VERSION)";
 		}
 	}
-	if ( $self->{title} eq 'Padre' ) {
-		$self->{title} .= $Padre::VERSION;
+	if ( $title eq 'Padre' ) {
+		$title .= $Padre::VERSION;
 	}
 
 	# Create the underlying Wx frame
@@ -118,7 +118,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
-		$self->{title},
+		$title,
 		[
 			$config->{host}->{main_left},
 			$config->{host}->{main_top},
@@ -129,6 +129,7 @@ sub new {
 		],
 		$style,
 	);
+	$self->{title} = $title;
 
 	# Set the "default directory" (exact meaning uncertain)
 	$self->{default_dir} = Cwd::cwd();
