@@ -1,9 +1,10 @@
 Note to Packagers:
 
 This directory contains padre-specific icons, all of which have either
-been created from scratch by members of the Padre team (they fall under
-the same terms as Perl(!) itself) or have their source individually
-documented and verified with licensing information below.
+been created from scratch by members of the Padre team as described
+below (they fall under the same terms as Perl(!) itself) or have their
+source individually documented and verified with licensing information
+below.
 
 Note to Developers:
 
