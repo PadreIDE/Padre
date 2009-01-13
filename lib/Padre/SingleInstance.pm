@@ -41,7 +41,7 @@ sub is_running {
 
     if($socket) {    
         print "It is alive\n";
-        if($#ARGV > 0) {
+        if($#ARGV >= 0) {
             foreach my $argnum (0 .. $#ARGV) {
                my $arg = $ARGV[$argnum];
                print $socket "open $ARGV[$argnum]\n";
@@ -50,7 +50,6 @@ sub is_running {
                 or croak "Cant close socket\n";
         } else {
             print $socket "restore_focus";
-            die "Nothing to write...\n";
         }
         die "Sent it my work.... bye bye\n";
     }
@@ -85,39 +84,20 @@ sub _run {
             if($line =~ /^open\s+(.+)$/) {
                 #XXX- I should open filename... 
                 my $filename = $1;
-                $self->{on_file_request}($filename);
-                if($filename eq 'shutdown') {
-                    print "Going to shutdown";
-                    last LOOP;
-                }
+                eval {
+                    $self->{on_file_request}($filename);
+                    1;
+                };
+                Carp::confess($@) if $@;
             } elsif($line =~ /^restore_focus$/) {
-                #XXX- I should restore focus
-                $self->{on_focus_request}();
+                eval {
+                    $self->{on_focus_request}();
+                    1;
+                };
+                Carp::confess($@) if $@;
             }
         }
     }
 }    
 
 1;
-
-# package main;
-
-#autoflush it
-# STDOUT->autoflush(1);
-
-# my $t = SingleInstance->new( 
-    # on_file_request => sub { my $filename = shift; print "filename: " . $filename . " open requested\n";},
-    # on_focus_request => sub { print "focus requested\n" }
-# );
-# if ($t->is_running) {
-    # print "It is running\n";
-# } else {
-    # print "Nothing is running... Going to start server\n";
-    # my $thr = $t->start_server;
-    # $thr->detach;
-    # while($thr->is_running) {
-        # sleep 1;
-    # }
-# }
-
-0;
