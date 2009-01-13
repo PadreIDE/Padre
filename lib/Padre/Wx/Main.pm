@@ -51,8 +51,6 @@ use Padre::Wx::FileDropTarget ();
 our $VERSION = '0.25';
 our @ISA     = 'Wx::Frame';
 
-my $default_dir = Cwd::cwd();
-
 use constant SECONDS => 1000;
 
 
@@ -64,20 +62,21 @@ use constant SECONDS => 1000;
 
 use Class::XSAccessor
 	getters => {
-		title      => 'title',
-		config     => 'config',
-		aui        => 'aui',
-		menu       => 'menu',
-		no_refresh => '_no_refresh',
-		notebook   => 'notebook',
-		right      => 'right',
-		functions  => 'functions',
-		outline    => 'outline',
-		bottom     => 'bottom',
-		output     => 'output',
-		syntax     => 'syntax',
-		errorlist  => 'errorlist',
-		ack        => 'ack',
+		title       => 'title',
+		default_dir => 'default_dir',
+		config      => 'config',
+		aui         => 'aui',
+		menu        => 'menu',
+		no_refresh  => '_no_refresh',
+		notebook    => 'notebook',
+		right       => 'right',
+		functions   => 'functions',
+		outline     => 'outline',
+		bottom      => 'bottom',
+		output      => 'output',
+		syntax      => 'syntax',
+		errorlist   => 'errorlist',
+		ack         => 'ack',
 	};
 
 # NOTE: Yes this method does get a little large, but that's fine.
@@ -130,6 +129,9 @@ sub new {
 		],
 		$style,
 	);
+
+	# Set the "default directory" (exact meaning uncertain)
+	$self->{default_dir} = Cwd::cwd();
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
@@ -1208,12 +1210,12 @@ sub on_open {
 	my $self     = shift;
 	my $filename = $self->current->filename;
 	if ( $filename ) {
-		$default_dir = File::Basename::dirname($filename);
+		$self->{default_dir} = File::Basename::dirname($filename);
 	}
 	my $dialog = Wx::FileDialog->new(
 		$self,
 		Wx::gettext("Open file"),
-		$default_dir,
+		$self->default_dir,
 		"",
 		"*.*",
 		Wx::wxFD_MULTIPLE,
@@ -1225,9 +1227,9 @@ sub on_open {
 		return;
 	}
 	my @filenames = $dialog->GetFilenames;
-	$default_dir = $dialog->GetDirectory;
+	$self->{default_dir} = $dialog->GetDirectory;
 
-	my @files = map { File::Spec->catfile($default_dir, $_) } @filenames;
+	my @files = map { File::Spec->catfile($self->default_dir, $_) } @filenames;
 	$self->setup_editors(@files);
 
 	return;
@@ -1254,13 +1256,13 @@ sub on_save_as {
 	my $document = $self->current->document or return;
 	my $current  = $document->filename;
 	if ( defined $current ) {
-		$default_dir = File::Basename::dirname($current);
+		$self->{default_dir} = File::Basename::dirname($current);
 	}
 	while ( 1 ) {
 		my $dialog = Wx::FileDialog->new(
 			$self,
 			Wx::gettext("Save file as..."),
-			$default_dir,
+			$self->{default_dir},
 			"",
 			"*.*",
 			Wx::wxFD_SAVE,
@@ -1269,8 +1271,8 @@ sub on_save_as {
 			return 0;
 		}
 		my $filename = $dialog->GetFilename;
-		$default_dir = $dialog->GetDirectory;
-		my $path = File::Spec->catfile($default_dir, $filename);
+		$self->{default_dir} = $dialog->GetDirectory;
+		my $path = File::Spec->catfile($self->default_dir, $filename);
 		if ( -e $path ) {
 			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),
@@ -1815,12 +1817,12 @@ sub on_insert_from_file {
 	# popup the window
 	my $last_filename = $self->current->filename;
 	if ( $last_filename ) {
-		$default_dir = File::Basename::dirname($last_filename);
+		$self->{default_dir} = File::Basename::dirname($last_filename);
 	}
 	my $dialog = Wx::FileDialog->new(
 		$self,
 		Wx::gettext('Open file'),
-		$default_dir,
+		$self->default_dir,
 		'',
 		'*.*',
 		Wx::wxFD_OPEN,
@@ -1832,9 +1834,9 @@ sub on_insert_from_file {
 		return;
 	}
 	my $filename = $dialog->GetFilename;
-	$default_dir = $dialog->GetDirectory;
+	$self->{default_dir} = $dialog->GetDirectory;
 	
-	my $file = File::Spec->catfile($default_dir, $filename);
+	my $file = File::Spec->catfile($self->default_dir, $filename);
 	
 	my $text;
 	if ( open(my $fh, '<', $file) ) {
