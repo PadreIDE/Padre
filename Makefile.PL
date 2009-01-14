@@ -47,6 +47,7 @@ requires       'Module::Refresh'          => '0.13';
 requires       'App::Ack'                 => '1.86';
 requires       'Class::Autouse'           => '1.26';
 requires       'Class::Unload'            => '0.03';
+requires       'Devel::Dumpvar'           => '0.04';
 requires       'DBD::SQLite'              => '1.10';
 requires       'DBI'                      => '1.58';
 requires       'File::Copy::Recursive'    => '0.37';
