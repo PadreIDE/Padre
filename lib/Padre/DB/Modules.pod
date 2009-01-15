@@ -141,11 +141,9 @@ Returns true, or throws an exception on error.
 =head2 id
 
   if ( $object->id ) {
-      print "Object has been inserted
-";
+      print "Object has been inserted\n";
   } else {
-      print "Object has not been inserted
-";
+      print "Object has not been inserted\n";
   }
 
 Returns true, or throws an exception on error.
@@ -165,7 +163,7 @@ The Author
 
 =head1 COPYRIGHT
 
-Copyright 2009 The Author.
+Copyright 2009The Author.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

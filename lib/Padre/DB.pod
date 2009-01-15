@@ -190,7 +190,7 @@ for a datase. See the SQLite documentation for more details.
 
 Padre::DB is based on L<ORLite> 1.18.
 
-Documentation created by L<ORLite::Pod> 0.03.
+Documentation created by L<ORLite::Pod> 0.04.
 
 For general support, please see the support section of the main project
 documentation.
@@ -201,7 +201,7 @@ The Author
 
 =head1 COPYRIGHT
 
-Copyright 2009 The Author.
+Copyright 2009The Author.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
