@@ -1225,11 +1225,11 @@ msgstr "Incompatible"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:132
 msgid "Disable"
-msgstr "Interdire"
+msgstr "Désactiver"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:142
 msgid "Enable"
-msgstr "Autoriser"
+msgstr "Activer"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:149
 #: lib/Padre/Wx/Dialog/PluginManager.pm:156
