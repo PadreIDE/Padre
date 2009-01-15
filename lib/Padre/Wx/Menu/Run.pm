@@ -26,6 +26,9 @@ sub new {
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
+	# Add additional properties
+	$self->{main} = $main;
+
 	# Script Execution
 	$self->{run_document} = $self->Append( -1,
 		Wx::gettext("Run Script\tF5")

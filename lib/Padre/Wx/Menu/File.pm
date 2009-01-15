@@ -22,13 +22,11 @@ our @ISA     = 'Padre::Wx::Menu';
 sub new {
 	my $class = shift;
 	my $main  = shift;
-
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
-
-
-
+	# Add additional properties
+	$self->{main} = $main;
 
 	# Create new things
 	$self->{new} = $self->Append(

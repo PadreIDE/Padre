@@ -30,6 +30,7 @@ sub new {
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
+	$self->{main} = $main;
 
 	# Add the POD-based help launchers
 	Wx::Event::EVT_MENU( $main,

@@ -30,6 +30,9 @@ sub new {
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
+	# Add additional properties
+	$self->{main} = $main;
+
 	# Cache the configuration
 	$self->{config} = $main->config;
 
