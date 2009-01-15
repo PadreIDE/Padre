@@ -70,7 +70,15 @@ Returns a new L<Padre::DB::History> object.
 
 =head2 create
 
-  TO BE COMPLETED
+  my $object = Padre::DB::History->create(
+
+      id => 'value',
+
+      type => 'value',
+
+      name => 'value',
+
+  );
 
 The C<create> constructor is a one-step combination of C<new> and
 C<insert> that takes the column parameters, creates a new
@@ -151,6 +159,13 @@ Returns true, or throws an exception on error.
 
 REMAINING ACCESSORS TO BE COMPLETED
 
+=head1 SQL
+
+The history table was originally created with the
+following SQL command.
+
+  CREATE TABLE history (id INTEGER PRIMARY KEY, type VARCHAR(100), name VARCHAR(100))
+
 =head1 SUPPORT
 
 Padre::DB::History is part of the L<Padre::DB> API.
@@ -159,11 +174,11 @@ See the documentation for L<Padre::DB> for more information.
 
 =head1 AUTHOR
 
-The Author
+Adam Kennedy
 
 =head1 COPYRIGHT
 
-Copyright 2009The Author.
+Copyright 2009 Adam Kennedy.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
