@@ -27,6 +27,9 @@ sub new {
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
+	# Add additional properties
+	$self->{main} = $main;
+
 	# Link to the Plugin Manager
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1, Wx::gettext("Plugin Manager") ),
