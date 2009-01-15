@@ -27,6 +27,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	# Add additional properties
+	$self->{main} = $main;
 	$self->{alt} = [];
 
 
