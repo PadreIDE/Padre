@@ -6,6 +6,19 @@ use Getopt::Long ();
 
 $| = 1;
 
+#must run using wxPerl on OSX.
+if (($^O eq 'darwin') and ($^X !~ m{/wxPerl\.app/})) {
+    my $perl_path = `which wxPerl`;
+    chomp($perl_path);
+    if (-e $perl_path) {
+        warn "spawning 'wxPerl' interpreter for OSX\n";
+        system($perl_path, '-S', $0, @ARGV);
+    } else {
+        warn "padre cannot find wxPerl executable (which it requires on OSX)\n" ;
+    }
+    exit 0;
+}
+
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
 my $USAGE  = '';
