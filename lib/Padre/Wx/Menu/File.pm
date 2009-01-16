@@ -270,7 +270,7 @@ sub new {
 	$self->{recentfiles}->AppendSeparator;
 
 	my $idx = 0;
-	foreach my $file ( grep { -f } Padre::DB->get_recent_files ) {
+	foreach my $file ( grep { -f } Padre::DB->get_recent('files') ) {
 		Wx::Event::EVT_MENU( $main,
 			$self->{recentfiles}->Append( -1,
 				++$idx < 10 ? "&$idx. $file" : "$idx. $file"

@@ -1,11 +1,6 @@
 package Padre::Wx::Menu::Help;
 
-# Second attempt to build an fully encapsulated help menu.
-# (As a test bed for doing it for the bigger ones)
-# Whoever ripped my last attempt apart and made it a trivial
-# container for functions instead of a real menu, please leave
-# this one alone for now. :(
-# Adam K
+# Fully encapsulated help menu
 
 use 5.008;
 use strict;
@@ -17,6 +12,7 @@ use Padre::Wx::DocBrowser();
 
 our $VERSION = '0.25';
 our @ISA     = 'Padre::Wx::Menu';
+
 
 
 
@@ -111,22 +107,18 @@ sub help {
 
 	unless ( $main->{help} ) {
 		$main->{help} = Padre::Wx::DocBrowser->new;
-	        Wx::Event::EVT_CLOSE(
-        	        $main->{help},
-	                \&on_help_close,
-       		 );
-
-		my $module = Padre::DB->get_last_pod || 'Padre';
-		if ( $module ) {
-			$main->{help}->help($module);
-		}
+		Wx::Event::EVT_CLOSE(
+			$main->{help},
+			\&on_help_close,
+		);
+		$main->{help}->help('Padre');
 	}
 	$main->{help}->SetFocus;
 	$main->{help}->Show(1);
 	return;
 }
 
-# FIXME this feels utterly backwards to me
+# TODO - this feels utterly backwards to me
 sub on_help_close {
         my ($self,$event) = @_;
 	my $help = Padre->ide->wx->main->{help};
@@ -139,7 +131,6 @@ sub on_help_close {
                 $help->Destroy;
         }
 }
-
 
 sub about {
 	my $self = shift;
@@ -193,6 +184,7 @@ sub about {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

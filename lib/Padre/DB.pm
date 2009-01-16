@@ -60,15 +60,6 @@ sub hostconf_write {
 #####################################################################
 # History
 
-sub add_history {
-	my $class = shift;
-	Padre::DB::History->create(
-		type => $_[0],
-		name => $_[1],
-	);
-	return;
-}
-
 # ORLite can't handle "distinct", so don't convert this to the model
 sub get_recent {
 	my $class  = shift;
@@ -79,40 +70,6 @@ sub get_recent {
 		{}, $type,
 	) or die "Failed to find revent files";
 	return wantarray ? @$recent : $recent;
-}
-
-sub get_last {
-	my $class  = shift;
-	my @recent = $class->get_recent(shift, 1);
-	return $recent[0];
-}
-
-sub add_recent_files {
-	Padre::DB::History->create(
-		type => 'files',
-		name => $_[1],
-	);
-	return;
-}
-
-sub get_recent_files {
-	$_[0]->get_recent('files');
-}
-
-sub add_recent_pod {
-	Padre::DB::History->create(
-		type => 'pod',
-		name => $_[1],
-	);
-	return;
-}
-
-sub get_recent_pod {
-	$_[0]->get_recent('pod');
-}
-
-sub get_last_pod {
-	$_[0]->get_last('pod');
 }
 
 
@@ -156,6 +113,13 @@ sub find_snippets {
 1;
 
 __END__
+
+# Copyright 2008 Gabor Szabo.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+
+=pod
 
 =head1 NAME
 
@@ -367,3 +331,5 @@ it and/or modify it under the same terms as Perl itself.
 
 The full text of the license can be found in the
 LICENSE file included with this module.
+
+=cut

@@ -155,7 +155,10 @@ sub ok_clicked {
 		my $dir_name = join('-', @parts);
 		$parts[-1] .= '.pm';
 		my $file = File::Spec->catfile( $data->{_directory_}, $dir_name, 'lib', @parts);
-		Padre::DB->add_recent_files($file);
+		Padre::DB::History->create(
+			type => 'files',
+			name => $file,
+		);
 		$main->setup_editor($file);
 		$main->refresh;
 	}

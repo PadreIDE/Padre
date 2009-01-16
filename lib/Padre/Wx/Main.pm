@@ -34,6 +34,7 @@ use Padre::Locale             ();
 use Padre::Current            qw{_CURRENT};
 use Padre::Document           ();
 use Padre::SingleInstance     ();
+use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
 use Padre::Wx::Right          ();
@@ -1093,7 +1094,10 @@ sub setup_editors {
 
 		if ( @files ) {
 			foreach my $f ( @files ) {
-				Padre::DB->add_recent_files($f);
+				Padre::DB::History->create(
+					type => 'files',
+					name => $f,
+				);
 				$self->setup_editor($f);
 			}
 		} else {
@@ -1253,7 +1257,7 @@ sub on_open_selection {
 }
 
 sub on_open_all_recent_files {
-	my $files = Padre::DB->get_recent_files;
+	my $files = Padre::DB->get_recent('files');
 	$_[0]->setup_editors( @$files );
 }
 
@@ -1406,7 +1410,10 @@ sub _save_buffer {
 		return;
 	}
 
-	Padre::DB->add_recent_files($doc->filename);
+	Padre::DB::History->create(
+		type => 'files',
+		name => $doc->filename,
+	);
 	$page->SetSavePoint;
 	$self->refresh;
 

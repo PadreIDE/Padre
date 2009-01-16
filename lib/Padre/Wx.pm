@@ -63,6 +63,7 @@ sub color {
 	return Wx::Colour->new(@c);
 }
 
+1;
 
 # Copyright 2008 Gabor Szabo.
 # LICENSE
