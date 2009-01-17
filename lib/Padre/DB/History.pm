@@ -6,7 +6,6 @@ package Padre::DB::History;
 use strict;
 use warnings;
 use Params::Util ();
-use Padre::DB    ();
 
 our $VERSION = '0.25';
 
@@ -19,6 +18,12 @@ sub recent {
 		{}, $type,
 	) or die "Failed to find recent values from history";
 	return wantarray ? @$recent : $recent;
+}
+
+sub previous {
+	my $class = shift;
+	my @list  = $class->recent($_[0], 1);
+	return $list[0];
 }
 
 1;
@@ -49,13 +54,28 @@ TO BE COMPLETED
 The C<recent> method is non-ORLite method that is used to retrieve the
 most recent distinct values for a particular history category.
 
-It takes a compulory parameter of the history type to refrieve, and an
+It takes a compulory parameter of the history type to retrieve, and an
 optional positive integer for the maximum number of distinct values to
 retrieve (10 by default).
 
 Returns a list of zero or more 'name' values in array context.
 
 Returns a reference to an array of zero or more 'name' values in scalar context.
+
+Throws an exception if the history query fails.
+
+=head2 previous
+
+  # Get the single most recent file
+  my $file = Padre::DB::History->previous('files');
+
+The C<previous> method is the single-value form of the C<recent> method.
+
+It takes a compulsory parameter of the history type to retrieve.
+
+Returns the single most recent value as a string.
+
+Returns C<undef> if there are no values.
 
 Throws an exception if the history query fails.
 
@@ -234,3 +254,8 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
+
+# Copyright 2008 Gabor Szabo.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

@@ -5,50 +5,117 @@ package Padre::Wx::Dialog::Find;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util      qw{_STRING};
+use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
 our $VERSION = '0.25';
 
-my @cbs = qw(case_insensitive use_regex backwards close_on_hit);
+my @cbs = qw(
+	case_insensitive
+	use_regex
+	backwards
+	close_on_hit
+);
 
 sub get_layout {
-	my ($search_term, $config) = @_;
+	my $search_term = shift;
+	my $config      = shift;
+
+	# Get the search terms
+	my $recent_search  = Padre::DB::History->recent('search',  20);
+	my $recent_replace = Padre::DB::History->recent('replace', 20);
 
 	my @layout = (
 		[
-			[ 'Wx::StaticText', undef,              Wx::gettext('Find:')],
-			[ 'Wx::ComboBox',   '_find_choice_',    $search_term, $config->{search_terms}],
-			[ 'Wx::Button',     '_find_',           Wx::wxID_FIND ],
+			[
+				'Wx::StaticText',
+				undef,
+				Wx::gettext('Find:')
+			],
+			[
+				'Wx::ComboBox',
+				'_find_choice_',
+				$search_term,
+				$recent_search
+			],
+			[
+				'Wx::Button',
+				'_find_',
+				Wx::wxID_FIND
+			],
 		],
 		[
-			[ 'Wx::StaticText', undef,              Wx::gettext('Replace With:')],
-			[ 'Wx::ComboBox',   '_replace_choice_',    '', $config->{replace_terms}],
-			[ 'Wx::Button',     '_replace_',        Wx::gettext('&Replace')],
+			[
+				'Wx::StaticText',
+				undef,
+				Wx::gettext('Replace With:')
+			],
+			[
+				'Wx::ComboBox',
+				'_replace_choice_',
+				'',
+				$recent_replace
+			],
+			[
+				'Wx::Button',
+				'_replace_',
+				Wx::gettext('&Replace')
+			],
 		],
 		[
 			[],
 			[],
-			[ 'Wx::Button',     '_replace_all_',    Wx::gettext('Replace &All')],
+			[
+				'Wx::Button',
+				'_replace_all_',
+				Wx::gettext('Replace &All')
+			],
 		],
 		[
-			['Wx::CheckBox',    'case_insensitive', Wx::gettext('Case &Insensitive'),    ($config->{search}->{case_insensitive} ? 1 : 0) ],
+			[
+				'Wx::CheckBox',
+				'case_insensitive',
+				Wx::gettext('Case &Insensitive'),
+				($config->{search}->{case_insensitive} ? 1 : 0) 
+			],
 		],
 		[
-			['Wx::CheckBox',    'use_regex',        Wx::gettext('&Use Regex'),           ($config->{search}->{use_regex} ? 1 : 0) ],
+			[
+				'Wx::CheckBox',
+				'use_regex',
+				Wx::gettext('&Use Regex'),
+				($config->{search}->{use_regex} ? 1 : 0)
+			],
 		],
 		[
-			['Wx::CheckBox',    'backwards',        Wx::gettext('Search &Backwards'),    ($config->{search}->{backwards} ? 1 : 0) ],
+			[
+				'Wx::CheckBox',
+				'backwards',
+				Wx::gettext('Search &Backwards'),
+				($config->{search}->{backwards} ? 1 : 0)
+			],
 		],
 		[
-			['Wx::CheckBox',    'close_on_hit',     Wx::gettext('Close Window on &hit'), ($config->{search}->{close_on_hit} ? 1 : 0) ],
+			[
+				'Wx::CheckBox',
+				'close_on_hit',
+				Wx::gettext('Close Window on &hit'),
+				($config->{search}->{close_on_hit} ? 1 : 0)
+			],
 		],
 		[
 			[],
 			[],
-			[ 'Wx::Button',     '_cancel_',    Wx::wxID_CANCEL],
+			[
+				'Wx::Button',
+				'_cancel_',
+				Wx::wxID_CANCEL
+			],
 		],
 	);
+
 	return \@layout;
 }
 
@@ -75,11 +142,28 @@ sub dialog {
 			},
 		);
 	}
+
 	$dialog->{_widgets_}->{_find_}->SetDefault;
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_find_},        \&find_clicked);
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_replace_},     \&replace_clicked     );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_replace_all_}, \&replace_all_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},      \&cancel_clicked      );
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{_widgets_}->{_find_},
+		\&find_clicked
+	);
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{_widgets_}->{_replace_},
+		\&replace_clicked
+	);
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{_widgets_}->{_replace_all_},
+		\&replace_all_clicked
+	);
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{_widgets_}->{_cancel_},
+		\&cancel_clicked
+	);
 
 	$dialog->{_widgets_}->{_find_choice_}->SetFocus;
 
@@ -102,17 +186,19 @@ sub find {
 }
 
 sub find_next {
-	my ($class, $main) = @_;
-
-	my $config = Padre->ide->config;
-	my $term = $config->{search_terms}->[0];
+	my $class = shift;
+	my $main  = shift;
+	my $term  = Padre::DB::History->previous('search');
 
 	# for Quick Find
 	# check if is checked
 	if ( $main->menu->search->{quick_find}->IsChecked ) {
 		my $text = $main->current->text;
 		if ( $text and $text ne $term ) {
-			unshift @{$config->{search_terms}}, $text;
+			Padre::DB::History->create(
+				type => 'search',
+				name => $text,
+			);
 		}
 	}
 
@@ -126,9 +212,9 @@ sub find_next {
 }
 
 sub find_previous {
-	my ($class, $main) = @_;
-
-	my $term = Padre->ide->config->{search_terms}->[0];
+	my $class = shift;
+	my $main  = shift;
+	my $term  = Padre::DB::History->previous('search');
 	if ( $term ) {
 		$class->search(rev => 1);
 	} else {
@@ -138,10 +224,7 @@ sub find_previous {
 }
 
 sub cancel_clicked {
-	my ($dialog, $event) = @_;
-
-	$dialog->Destroy;
-
+	$_[0]->Destroy;
 	return;
 }
 
@@ -152,21 +235,21 @@ sub replace_all_clicked {
 	my $regex = _get_regex();
 	return if not defined $regex;
 
-	my $config = Padre->ide->config;
-	my $main   = Padre->ide->wx->main;
-	my $page   = $main->current->editor;
-	my $last   = $page->GetLength;
-	my $str    = $page->GetTextRange(0, $last);
-
-	my $replace_term = $config->{replace_terms}->[0];
-	$replace_term =~ s/\\t/\t/g;
+	my $current = Padre::Current->new;
+	my $main    = $current->main;
+	my $config  = $main->config;
+	my $page    = $current->editor;
+	my $last    = $page->GetLength;
+	my $str     = $page->GetTextRange(0, $last);
+	my $replace = Padre::DB::History->previous('replace');
+	$replace =~ s/\\t/\t/g;
 
 	my ($start, $end, @matches) = Padre::Util::get_matches($str, $regex, 0, 0);
 	$page->BeginUndoAction;
-	foreach my $m (reverse @matches) {
+	foreach my $m ( reverse @matches ) {
 		$page->SetTargetStart($m->[0]);
 		$page->SetTargetEnd($m->[1]);
-		$page->ReplaceTarget($replace_term);
+		$page->ReplaceTarget($replace);
 	}
 	$page->EndUndoAction;
 
@@ -186,14 +269,15 @@ sub replace_clicked {
 	my ($start, $end, @matches) = Padre::Util::get_matches($text, $regex, 0, 0);
 
 	# If they do, replace it
-	my $config = Padre->ide->config;
 	if ( defined $start and $start == 0 and $end == length($text) ) {
-		my $replace = $config->{replace_terms}->[0];
+		# TODO - This can return undef
+		my $replace = Padre::DB::History->previous('replace');
 		$replace =~ s/\\t/\t/g;
 		$current->editor->ReplaceSelection($replace);
 	}
 
-	# if search window is still open, run a search_again on the whole text
+	# If search window is still open, run a search_again on the whole text
+	my $config = Padre->ide->config;
 	unless ( $config->{search}->{close_on_hit} ) {
 		Padre::Wx::Dialog::Find->search;
 	}
@@ -202,7 +286,8 @@ sub replace_clicked {
 }
 
 sub find_clicked {
-	my ($dialog, $event) = @_;
+	my $dialog = shift;
+	my $event  = shift;
 
 	_get_data_from( $dialog ) or return;
 	Padre::Wx::Dialog::Find->search;
@@ -211,41 +296,40 @@ sub find_clicked {
 }
 
 sub _get_data_from {
-	my ( $dialog ) = @_;
-
-	my $data = $dialog->get_data;
-
-	#print Data::Dumper::Dumper $data;
-
+	$DB::single = 1;
+	my $dialog = shift;
+	my $data   = $dialog->get_data;
 	my $config = Padre->ide->config;
-	foreach my $field (@cbs) {
+	foreach my $field ( @cbs ) {
 	   $config->{search}->{$field} = $data->{$field};
 	}
-	my $search_term  = $data->{_find_choice_};
-	my $replace_term = $data->{_replace_choice_};
+	my $search  = $data->{_find_choice_};
+	my $replace = $data->{_replace_choice_};
 
 	if ($config->{search}->{close_on_hit}) {
 		$dialog->Destroy;
 	}
-	return if not defined $search_term or $search_term eq '';
+	return unless defined _STRING($search);
 
-	if ( $search_term ) {
-		unshift @{$config->{search_terms}}, $search_term;
-		my %seen;
-		@{$config->{search_terms}} = grep {!$seen{$_}++} @{$config->{search_terms}};
-	}
-	if ( $replace_term ) {
-		unshift @{$config->{replace_terms}}, $replace_term;
-		my %seen;
-		@{$config->{replace_terms}} = grep {!$seen{$_}++} @{$config->{replace_terms}};
-	}
+	Padre::DB->begin;
+	Padre::DB::History->create(
+		type => 'search',
+		name => $search,
+	) if $search;
+	Padre::DB::History->create(
+		type => 'replace',
+		name => $replace,
+	) if $replace;
+	Padre::DB->commit;
+
 	return 1;
 }
 
 sub _get_regex {
 	my %args        = @_;
 	my $config      = Padre->ide->config;
-	my $search_term = $args{search_term} || $config->{search_terms}->[0];
+	my $search_term = $args{search_term}
+		|| Padre::DB::History->previous('search');
 	return $search_term if defined $search_term and 'Regexp' eq ref $search_term;
 
 	if ($config->{search}->{use_regex}) {

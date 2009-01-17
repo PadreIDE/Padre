@@ -4,7 +4,6 @@ package Padre::DB::Hostconf;
 
 use strict;
 use warnings;
-use Padre::DB ();
 
 our $VERSION = '0.25';
 
@@ -224,3 +223,8 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
+
+# Copyright 2008 Gabor Szabo.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

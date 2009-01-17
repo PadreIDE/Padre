@@ -61,8 +61,6 @@ SCOPE: {
 		ppi_highlight                 => 0,
 		ppi_highlight_limit           => 10_000,
 
-		search_terms                  => [],
-		replace_terms                 => [],
 		projects                      => {},
 		run_save                      => 'same',
 		current_project               => '',

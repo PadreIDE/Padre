@@ -55,10 +55,6 @@ my %defaults = (
 	# all_buffers - all the buffers even if they don't have a name yet
 	run_save                  => 'same',
 
-	# Search and replace recent values
-	search_terms              => [],
-	replace_terms             => [],
-
 	# Various things that should be in the database
 	bookmarks                 => {},
 	projects                  => {},
@@ -254,10 +250,6 @@ sub write {
 	# Serialize some values
 	$copy->{host}->{main_files} = join( "\n", grep { defined } @{$copy->{host}->{main_files}} );
 	$copy->{host}->{main_files_pos} = join( "\n", grep { defined } @{$copy->{host}->{main_files_pos}} );
-
-	# Limit the search_terms/replace_terms
-	@{$copy->{search_terms}}  = splice(@{$copy->{search_terms}},  0, 20);
-	@{$copy->{replace_terms}} = splice(@{$copy->{replace_terms}}, 0, 20);
 
 	# Save the host configuration
 	Padre::DB::Hostconf->write( delete $copy->{host} );
