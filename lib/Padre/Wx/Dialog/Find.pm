@@ -296,7 +296,6 @@ sub find_clicked {
 }
 
 sub _get_data_from {
-	$DB::single = 1;
 	my $dialog = shift;
 	my $data   = $dialog->get_data;
 	my $config = Padre->ide->config;

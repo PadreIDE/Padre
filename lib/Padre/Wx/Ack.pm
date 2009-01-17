@@ -3,6 +3,7 @@ package Padre::Wx::Ack;
 use 5.008;
 use strict;
 use warnings;
+use Padre::DB ();
 use Padre::Wx ();
 use Padre::Wx::Dialog;
 use Wx::Locale qw(:default);
@@ -69,29 +70,31 @@ sub on_ack {
 # Dialog related
 
 sub get_layout {
-	my ( $term ) = shift;
-	
-	my $config = Padre->ide->config;
-	$config->{ack_terms}      ||= [];
-	$config->{ack_dirs}       ||= [];
-	$config->{ack_file_types} ||= [];
+	my $term   = shift;
+	my $search = Padre::DB::History->recent('search');
+	my $in_dir = Padre::DB::History->recent('find in');
+	my $types  = Padre::DB::History->recent('find types');
+
 	# default value is 1 for ignore_hidden_subdirs
-	$config->{ack}->{ignore_hidden_subdirs} = 1 unless ( exists $config->{ack}->{ignore_hidden_subdirs} );
+	my $config = Padre->ide->config;
+	unless ( exists $config->{ack}->{ignore_hidden_subdirs} ) {
+		$config->{ack}->{ignore_hidden_subdirs} = 1;
+	}
 
 	my @layout = (
 		[
 			[ 'Wx::StaticText', undef,              gettext('Term:')],
-			[ 'Wx::ComboBox',   '_ack_term_',       $term, $config->{ack_terms} ],
+			[ 'Wx::ComboBox',   '_ack_term_',       $term, $search ],
 			[ 'Wx::Button',     '_find_',           Wx::wxID_FIND ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('Dir:')],
-			[ 'Wx::ComboBox',   '_ack_dir_',        '', $config->{ack_dirs} ],
+			[ 'Wx::ComboBox',   '_ack_dir_',        '', $in_dir ],
 			[ 'Wx::Button',     '_pick_dir_',        gettext('Pick &directory')],
 		],
 		[
 			[ 'Wx::StaticText', undef,              gettext('In Files/Types:')],
-			[ 'Wx::ComboBox',   '_file_types_',     '', $config->{ack_file_types} ],
+			[ 'Wx::ComboBox',   '_file_types_',     '', $types ],
 			[ 'Wx::Button',     '_cancel_',         Wx::wxID_CANCEL],
 		],
 		[
@@ -102,6 +105,7 @@ sub get_layout {
 		],
 		
 	);
+
 	return \@layout;
 }
 
@@ -227,33 +231,31 @@ sub _get_data_from {
 	my $ignore_hidden_subdirs = $data->{ignore_hidden_subdirs};
 	
 	$dialog->Destroy;
-	
+
+	# Save our preferences
 	my $config = Padre->ide->config;
-	if ( $term ) {
-		unshift @{$config->{ack_terms}}, $term;
-		my %seen;
-		@{$config->{ack_terms}} = grep {!$seen{$_}++} @{$config->{ack_terms}};
-		@{$config->{ack_terms}} = splice(@{$config->{ack_terms}},  0, 20);
-	}
-	if ( $dir ) {
-		unshift @{$config->{ack_dirs}}, $dir;
-		my %seen;
-		@{$config->{ack_dirs}} = grep {!$seen{$_}++} @{$config->{ack_dirs}};
-		@{$config->{ack_dirs}} = splice(@{$config->{ack_dirs}},  0, 20);
-	}
-	if ( $file_types ) {
-		unshift @{$config->{ack_file_types}}, $dir;
-		my %seen;
-		@{$config->{ack_file_types}} = grep {!$seen{$_}++} @{$config->{ack_file_types}};
-		@{$config->{ack_file_types}} = splice(@{$config->{ack_file_types}},  0, 20);
-	}
+	Padre::DB->begin;
+	Padre::DB::History->create(
+		type => 'search',
+		name => $term,
+	) if $term;
+	Padre::DB::History->create(
+		type => 'find in',
+		name => $dir,
+	) if $dir;
+	Padre::DB::History->create(
+		type => 'find type',
+		name => $file_types,
+	) if $file_types;
+	Padre::DB->commit;
+
 	$config->{ack}->{case_insensitive}      = $case_insensitive;
 	$config->{ack}->{ignore_hidden_subdirs} = $ignore_hidden_subdirs;
-	
+
 	return {
-		term => $term,
-		dir  => $dir,
-		file_types => $file_types,
+		term                  => $term,
+		dir                   => $dir,
+		file_types            => $file_types,
 		case_insensitive      => $case_insensitive,
 		ignore_hidden_subdirs => $ignore_hidden_subdirs,
 	}
