@@ -1185,7 +1185,7 @@ sub create_tab {
 
 # try to open in various ways
 #    as full path
-#    as path relative to cwd
+#    as path relative to cwd (where the editor was started)
 #    as path to relative to where the current file is
 # if we are in a perl file or perl environment also try if the thing might be a name
 #    of a module and try to open it locally or from @INC.
@@ -1208,14 +1208,25 @@ sub on_open_selection {
 		return unless defined $text;
 	}
 	
+	#remove leading and trailing whitespace or newlines 
+	#atm, we assume you are opening _one_ file, so newlines in the middle are significant
+	$text =~ s/^[\s\n]*(.*?)[\s\n]*$/$1/;
+	
 	my $file;
-	if ( -e $text ) {
+	if ((File::Spec->file_name_is_absolute($text)) and ( -e $text )) {
 		$file = $text;
-		unless ( File::Spec->file_name_is_absolute($file) ) {
-			$file = File::Spec->catfile(Cwd::cwd(), $file);
-			# check if this is still a file?
-		}
 	} else {
+		#try relative to the dir we started in?
+		{
+			my $filename = File::Spec->catfile(
+				$self->{cwd},
+				$text,
+			);
+			if ( -e $filename ) {
+				$file = $filename;
+			}
+		}
+		#try relative to the current file
 		if ($self->current->filename) {
 			my $filename = File::Spec->catfile(
 				File::Basename::dirname($self->current->filename),
@@ -1227,14 +1238,15 @@ sub on_open_selection {
 		}
 	}
 	unless ( $file ) { # and we are in a Perl environment
-		$text =~ s{::}{/}g;
-		$text .= ".pm";
-		my $filename = File::Spec->catfile(Cwd::cwd(), $text);
+		my $module = $text;
+		$module =~ s{::}{/}g;
+		$module .= ".pm";
+		my $filename = File::Spec->catfile(Cwd::cwd(), $module);
 		if (-e $filename) {
 			$file = $filename;
 		} else {
 			foreach my $path (@INC) {
-				my $filename = File::Spec->catfile( $path, $text );
+				my $filename = File::Spec->catfile( $path, $module );
 				if (-e $filename) {
 					$file = $filename;
 					last;

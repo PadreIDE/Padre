@@ -247,15 +247,50 @@ my @events = (
 			{
 				#put down one filename that is relative to the dir padre was started from
 				$T->diag(Cwd::cwd());
-				my $path = catfile('./', 'cyrillic_test.pl');
+				my $path = catfile('./eg/', 'cyrillic_test.pl');
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
 				$T->diag("selected : ".$main->current->text);
-				#FAILS ATM $main->on_open_selection();
-				#FAILS ATM $T->is_num(scalar($main->pages), 2, 'new and relative cyrillic_test open');
+				$main->on_open_selection();
+				$T->is_num(scalar($main->pages), 2, 'new and relative cyrillic_test open');
 			}
-			
-			#redo above test from an editor which _does_ have a filename (ie, has been opened or saved, not newly created
+			$main->on_close();
+			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
+			{
+				#put down one filename that is relative to the dir padre was started from
+				$T->diag(Cwd::cwd());
+				my $path = catfile('./eg/', 'cyrillic_test.pl')."\n";
+				$doc->text_set($path);
+				$editor->SetSelection(0, length($path));
+				$T->diag("selected : ".$main->current->text);
+				$main->on_open_selection();
+				$T->is_num(scalar($main->pages), 2, 'relative cyrillic_test open with additional \n');
+			}
+			$main->on_close();
+			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
+			{
+				#put down one filename that is relative to the dir padre was started from
+				$T->diag(Cwd::cwd());
+				my $path = "\n".catfile('./eg/', 'cyrillic_test.pl')."\n";
+				$doc->text_set($path);
+				$editor->SetSelection(0, length($path));
+				$T->diag("selected : ".$main->current->text);
+				$main->on_open_selection();
+				$T->is_num(scalar($main->pages), 2, 'relative cyrillic_test open with additional \n');
+			}
+			$main->on_close();
+			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
+			{
+				#put down one filename that is relative to the dir padre was started from
+				$T->diag(Cwd::cwd());
+				my $path = "\t   ".catfile('./eg/', 'cyrillic_test.pl')." \n\t ";
+				$doc->text_set($path);
+				$editor->SetSelection(0, length($path));
+				$T->diag("selected : ".$main->current->text);
+				$main->on_open_selection();
+				$T->is_num(scalar($main->pages), 2, 'relative cyrillic_test open with additional \n');
+			}
+			#redo above tests from an editor which _does_ have a filename (ie, has been opened or saved, not newly created
 
 			#several files
 			#non .pm file
@@ -267,7 +302,7 @@ my @events = (
 			#no selection, fill in - not there, popup again with edit and possibly options to choose from
 			#selection isn't there, but found similar?
 			
-			BEGIN { $main::tests += 3; }
+			BEGIN { $main::tests += 10; }
 		},
 	},
 	{
