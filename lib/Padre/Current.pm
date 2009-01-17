@@ -86,7 +86,7 @@ sub title {
 	my $notebook = $self->notebook;
 	my $selected = $notebook->GetSelection;
 	if ( $selected >= 0 ) {
-		return $notebook->getPageText($selected);
+		return $notebook->GetPageText($selected);
 	} else {
 		return undef;
 	}
