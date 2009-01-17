@@ -23,6 +23,7 @@ use File::Spec::Functions qw(catfile);
 use Test::NoWarnings;
 use Test::Builder;
 use t::lib::Padre;
+use Cwd;
 use Padre;
 
 our $tests;
@@ -217,6 +218,56 @@ my @events = (
 			my @editors = $main->editors;
 			$T->is_num(scalar(@editors), 2, '2 editor');
 			BEGIN { $main::tests += 1; }
+		},
+	},
+	{
+		delay => 800,
+		code  => sub {
+			my $T = Test::Builder->new;
+			my $main = $ide->wx->main;
+			$main->on_close_all();
+			$T->diag("create a new editor");
+			$main->on_new();
+			my @editors = $main->pages;
+			$T->is_num(scalar(@editors), 1, 'one new editor');
+			my $doc  = $main->current->document;
+			my $editor = $doc->editor;
+			{
+				#one abs path file.
+				my $path = catfile($home, 'cyrillic_test.pl');
+				$doc->text_set($path);
+				$editor->SetSelection(0, length($path));
+				$T->diag("selected : ".$main->current->text);
+				$main->on_open_selection();
+				$T->is_num(scalar($main->pages), 2, 'new and abs cyrillic_test open');
+				
+			}
+			$main->on_close();
+			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
+			{
+				#put down one filename that is relative to the dir padre was started from
+				$T->diag(Cwd::cwd());
+				my $path = catfile('./', 'cyrillic_test.pl');
+				$doc->text_set($path);
+				$editor->SetSelection(0, length($path));
+				$T->diag("selected : ".$main->current->text);
+				#FAILS ATM $main->on_open_selection();
+				#FAILS ATM $T->is_num(scalar($main->pages), 2, 'new and relative cyrillic_test open');
+			}
+			
+			#redo above test from an editor which _does_ have a filename (ie, has been opened or saved, not newly created
+
+			#several files
+			#non .pm file
+			#abs path
+			#use line
+			#require line
+			#multiple use/require lines
+			#makefile
+			#no selection, fill in - not there, popup again with edit and possibly options to choose from
+			#selection isn't there, but found similar?
+			
+			BEGIN { $main::tests += 3; }
 		},
 	},
 	{

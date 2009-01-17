@@ -1216,12 +1216,14 @@ sub on_open_selection {
 			# check if this is still a file?
 		}
 	} else {
-		my $filename = File::Spec->catfile(
-			File::Basename::dirname($self->current->filename),
-			$text,
-		);
-		if ( -e $filename ) {
-			$file = $filename;
+		if ($self->current->filename) {
+			my $filename = File::Spec->catfile(
+				File::Basename::dirname($self->current->filename),
+				$text,
+			);
+			if ( -e $filename ) {
+				$file = $filename;
+			}
 		}
 	}
 	unless ( $file ) { # and we are in a Perl environment
