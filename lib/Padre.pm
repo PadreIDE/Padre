@@ -125,6 +125,9 @@ sub new {
 		project        => {},
 	}, $class;
 
+	#save the startup dir before anyone can move us.
+	$self->{original_cwd} = Cwd::cwd();
+
 	# Load (and migrate if needed) the persistant host state database
 	Class::Autouse->load('Padre::DB');
 
@@ -171,9 +174,7 @@ sub run {
 	# window was opened but my Wx skills do not exist. --Steffen
 	$self->plugin_manager->load_plugins;
 
-	$self->{ARGV} = [ map {File::Spec->rel2abs( $_ )} @ARGV ];
-
-	$self->{original_cwd} = Cwd::cwd();
+	$self->{ARGV} = [ map {File::Spec->rel2abs( $_, $self->{original_cwd} )} @ARGV ];
 
 	# Move our current dir to the user's documents directory by default
 	my $documents = File::HomeDir->my_documents;

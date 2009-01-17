@@ -1219,7 +1219,7 @@ sub on_open_selection {
 		#try relative to the dir we started in?
 		{
 			my $filename = File::Spec->catfile(
-				$self->{cwd},
+				Padre->inst->{original_cwd},
 				$text,
 			);
 			if ( -e $filename ) {
@@ -1241,7 +1241,7 @@ sub on_open_selection {
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
-		my $filename = File::Spec->catfile(Cwd::cwd(), $module);
+		my $filename = File::Spec->catfile(Padre->inst->{original_cwd}, $module);
 		if (-e $filename) {
 			$file = $filename;
 		} else {
