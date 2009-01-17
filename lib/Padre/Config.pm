@@ -220,7 +220,7 @@ sub read {
 	return unless ref($hash) eq 'HASH';
 
 	# Load the host configuration
-	my $host = Padre::DB->hostconf_read;
+	my $host = Padre::DB::Hostconf->read;
 	return unless ref($hash) eq 'HASH';
 
 	# Expand a few things
@@ -260,7 +260,7 @@ sub write {
 	@{$copy->{replace_terms}} = splice(@{$copy->{replace_terms}}, 0, 20);
 
 	# Save the host configuration
-	Padre::DB->hostconf_write( delete $copy->{host} );
+	Padre::DB::Hostconf->write( delete $copy->{host} );
 
 	# Save the user configuration
 	YAML::Tiny::DumpFile( $_[0], $copy );

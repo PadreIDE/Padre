@@ -21,56 +21,12 @@ use ORLite::Migrate 0.01 {
 	),
 };
 
-our $VERSION    = '0.25';
-our $COMPATIBLE = '0.23';
+# Overlay classes to enhance the ORLite defaults
+use Padre::DB::History  ();
+use Padre::DB::Hostconf ();
 
-
-
-
-
-#####################################################################
-# Host-Specific Configuration Methods
-
-sub hostconf_read {
-	return +{
-		map { $_->name => $_->value }
-		Padre::DB::Hostconf->select
-	};
-}
-
-sub hostconf_write {
-	my $class = shift;
-	my $hash  = shift;
-	$class->begin;
-	Padre::DB::Hostconf->truncate;
-	foreach my $name ( sort keys %$hash ) {
-		Padre::DB::Hostconf->create(
-			name  => $name,
-			value => $hash->{$name},
-		);
-	}
-	$class->commit;
-	return 1;
-}
-
-
-
-
-
-#####################################################################
-# History
-
-# ORLite can't handle "distinct", so don't convert this to the model
-sub get_recent {
-	my $class  = shift;
-	my $type   = shift;
-	my $limit  = Params::Util::_POSINT(shift) || 10;
-	my $recent = $class->selectcol_arrayref(
-		"select distinct name from history where type = ? order by id desc limit $limit",
-		{}, $type,
-	) or die "Failed to find revent files";
-	return wantarray ? @$recent : $recent;
-}
+our $VERSION    = '0.26';
+our $COMPATIBLE = '0.26';
 
 
 

@@ -1271,7 +1271,7 @@ sub on_open_selection {
 }
 
 sub on_open_all_recent_files {
-	my $files = Padre::DB->get_recent('files');
+	my $files = Padre::DB::History->recent('files');
 	$_[0]->setup_editors( @$files );
 }
 

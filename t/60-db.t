@@ -18,7 +18,7 @@ use t::lib::Padre;
 use Padre::DB ();
 
 SCOPE: {
-	my @files = Padre::DB->get_recent('files');
+	my @files = Padre::DB::History->recent('files');
 	is_deeply \@files, [], 'no files yet';
 
 	Padre::DB::History->create(
@@ -29,14 +29,14 @@ SCOPE: {
 		type => 'files',
 		name => 'Test2.pm',
 	);
-	@files = Padre::DB->get_recent('files');
+	@files = Padre::DB::History->recent('files');
 	is_deeply \@files, ['Test2.pm', 'Test.pm'], 'files';
 
 	# test delete_recent
-	@files = Padre::DB->get_recent('files');
+	@files = Padre::DB::History->recent('files');
 	is_deeply \@files, ['Test2.pm', 'Test.pm'], 'files still remain after delete_recent pod';
 	ok( Padre::DB::History->delete('where type = ?', 'files') );
-	@files = Padre::DB->get_recent('files');
+	@files = Padre::DB::History->recent('files');
 	is_deeply \@files, [], 'no files after delete_recent files';
 }
 

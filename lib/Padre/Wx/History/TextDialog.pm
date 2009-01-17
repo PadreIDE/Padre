@@ -20,7 +20,7 @@ sub new {
 	# Instead of using the default value directly search using it
 	# as a type value in the database history table.
 	my $type   = $params[3];
-	$params[3] = Padre::DB->get_recent($type, 1);
+	$params[3] = Padre::DB::History->recent($type, 1);
 	$params[3] = '' unless defined $params[3];
 
 	# Create the object
