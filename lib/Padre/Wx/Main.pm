@@ -1674,7 +1674,7 @@ sub on_toggle_errorlist {
 	my $self  = shift;
 	my $event = shift;
 	$self->config->{editor_errorlist} = $event->IsChecked ? 1 : 0;
-	if ( $self->config->editor_errorlist ) {
+	if ( $self->config->{editor_errorlist} ) {
 		$self->errorlist->enable;
 	} else {
 		$self->errorlist->disable;
