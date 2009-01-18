@@ -525,8 +525,10 @@ sub refresh {
 	$self->{ font_increase }->Enable($doc);
 	$self->{ font_decrease }->Enable($doc);
 	$self->{ font_reset    }->Enable($doc);
-	$self->{ bookmark_set  }->Enable($doc);
-	$self->{ bookmark_goto }->Enable($doc);
+
+	# You cannot set a bookmark unless the current document is on disk.
+	my $set = ( $doc and defined $document->filename ) ? 1 : 0;
+	$self->{ bookmark_set  }->Enable($set);
 
 	return;
 }
