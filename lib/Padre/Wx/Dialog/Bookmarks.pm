@@ -18,32 +18,33 @@ sub get_dialog { return $dialog };
 
 sub get_layout {
 	my ($text, $shortcuts) = @_;
-	
+
 	my @layout;
-	if ($text) {
-		push @layout, [['Wx::TextCtrl', 'entry', $text]];
+	if ( $text ) {
+		push @layout, [ [ 'Wx::TextCtrl', 'entry', $text ] ];
 	}
+
 	push @layout,
 		[
-			['Wx::StaticText', undef, gettext("Existing bookmarks:")],
+			[ 'Wx::StaticText', undef, gettext("Existing bookmarks:") ],
 		],
 		[
-			['Wx::Treebook',   'tb', $shortcuts],
+			[ 'Wx::Treebook',   'tb', $shortcuts ],
 		],
 		[
-			['Wx::Button',     'ok',     Wx::wxID_OK],
-			['Wx::Button',     'cancel', Wx::wxID_CANCEL],
+			[ 'Wx::Button',     'ok',     Wx::wxID_OK     ],
+			[ 'Wx::Button',     'cancel', Wx::wxID_CANCEL ],
 		];
 
-	if (@$shortcuts) {
-		push @{ $layout[-1] }, 
-			['Wx::Button',     'delete', Wx::wxID_DELETE];
-		push @{ $layout[-1] }, 
-			['Wx::Button',     'delete_all', gettext('Delete &All')];
+	if ( @$shortcuts ) {
+		push @{ $layout[-1] },
+			[ 'Wx::Button',     'delete', Wx::wxID_DELETE ];
+		push @{ $layout[-1] },
+			[ 'Wx::Button',     'delete_all', gettext('Delete &All') ];
 	}
+
 	return \@layout;
 }
-
 
 sub dialog {
 	my ($class, $main, $text) = @_;
@@ -63,9 +64,6 @@ sub dialog {
 		$dialog->{_widgets_}->{entry}->SetSize(10 * length $text, -1);
 	}
 
-#	foreach my $b (qw(ok cancel delete)) {
-#		print "$b ", join (':', $dialog->{_widgets_}->{ok}->GetSizeWH), "\n";
-#	}
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{ok},      sub { $dialog->EndModal(Wx::wxID_OK) } );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{cancel},  sub { $dialog->EndModal(Wx::wxID_CANCEL) } );
 	$dialog->{_widgets_}->{ok}->SetDefault;
@@ -85,15 +83,12 @@ sub dialog {
 }
 
 sub _get_data {
-	my ($dialog) = @_;
-
-	my %data;
+	my $dialog   = shift;
 	my $shortcut = $dialog->{_widgets_}->{entry}->GetValue;
 	$shortcut =~ s/:/ /g; # YAML::Tiny limitation
-	$data{shortcut} = $shortcut;
 	$dialog->Destroy;
 	$dialog = undef;
-	return ($dialog, \%data);
+	return ( $dialog, { shortcut => $shortcut } );
 }
 
 sub set_bookmark {
@@ -113,7 +108,7 @@ sub set_bookmark {
 	my $data     = _get_data($dialog);
 	my $config   = Padre->ide->config;
 	my $shortcut = delete $data->{shortcut} or return;
-	
+
 	$data->{file}   = $path;
 	$data->{line}   = $line;
 	$config->{bookmarks}->{$shortcut} = $data;
@@ -126,7 +121,7 @@ sub goto_bookmark {
 
 	my $dialog    = $class->dialog($main);
 	return if not $dialog->show_modal;
-	
+
 	my $config    = Padre->ide->config;
 	my $selection = $dialog->{_widgets_}->{tb}->GetSelection;
 	my @shortcuts = sort keys %{ $config->{bookmarks} };
@@ -136,20 +131,20 @@ sub goto_bookmark {
 	my $line      = $bookmark->{line};
 	my $pageid    = $bookmark->{pageid};
 
-	if (not defined $pageid) {
+	unless ( defined $pageid ) {
 		# find if the given file is in memory
 		$pageid = $main->find_editor_of_file($file);
 	}
-	if (not defined $pageid) {
+	unless ( defined $pageid ) {
 		# load the file
-		if (-e $file) {
+		if ( -e $file ) {
 			$main->setup_editor($file);
 			$pageid = $main->find_editor_of_file($file);
 		}
 	}
 
 	# go to the relevant editor and row
-	if (defined $pageid) {
+	if ( defined $pageid ) {
 		$main->on_nth_pane($pageid);
 		my $page = $main->notebook->GetPage($pageid);
 		$page->goto_line_centerize($line);
@@ -159,8 +154,7 @@ sub goto_bookmark {
 }
 
 sub on_delete_bookmark {
-	my ($dialog, $event) = @_;
-
+	my $dialog    = shift;
 	my $selection = $dialog->{_widgets_}->{tb}->GetSelection;
 	my $config    = Padre->ide->config;
 	my @shortcuts = sort keys %{ $config->{bookmarks} };
@@ -172,13 +166,10 @@ sub on_delete_bookmark {
 }
 
 sub on_delete_all_bookmark {
-	my ($dialog, $event) = @_;
-
-	my $config    = Padre->ide->config;
+	my $dialog = shift;
+	my $config = Padre->ide->config;
 	$config->{bookmarks} = {}; # clear
-	
-	$dialog->{_widgets_}->{tb}->DeleteAllPages();
-
+	$dialog->{_widgets_}->{tb}->DeleteAllPages;
 	return;
 }
 
