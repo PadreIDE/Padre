@@ -14,17 +14,13 @@ use YAML::Tiny    ();
 our $VERSION = '0.25';
 
 my %defaults = (
-	# startup mode, if no files given on the command line this can be
-	#   new        - a new empty buffer
-	#   nothing    - nothing to open
-	#   last       - the files that were open last time
-	main_startup             => 'new',
-
 	# Look and feel preferences
 	main_lockinterface       => 1,
 	main_functions           => 0,
+	main_functions_order     => 'alphabetical',
 	main_outline             => 0,
 	main_output              => 0,
+	main_output_ansi         => 1,
 	main_syntaxcheck         => 0,
 	main_errorlist           => 0,
 	main_statusbar           => 1,
@@ -37,7 +33,6 @@ my %defaults = (
 	editor_indentationguides => 0,
 	editor_calltips          => 0,
 	editor_autoindent        => 'deep',
-	editor_methods           => 'alphabetical',
 	editor_folding           => 0,
 	editor_wordwrap          => 0,
 	editor_currentline       => 0,
@@ -50,8 +45,11 @@ my %defaults = (
 	ppi_highlight            => 0,
 	ppi_highlight_limit      => 10_000,
 
-	# preferences specific to the output window
-	output_ansi              => 1,
+	# startup mode, if no files given on the command line this can be
+	#   new        - a new empty buffer
+	#   nothing    - nothing to open
+	#   last       - the files that were open last time
+	main_startup             => 'new',
 
 	# When running a script from the application some of the files might have not been saved yet.
 	# There are several option what to do before running the script
@@ -267,8 +265,10 @@ use Class::XSAccessor
 		main_startup             => 'main_startup',
 		main_lockinterface       => 'main_lockinterface',
 		main_functions           => 'main_functions',
+		main_functions_order     => 'main_functions_order',
 		main_outline             => 'main_outline',
 		main_output              => 'main_output',
+		main_output_ansi         => 'main_output_ansi',
 		main_syntaxcheck         => 'main_syntaxcheck',
 		main_errorlist           => 'main_errorlist',
 		main_statusbar           => 'main_statusbar',
@@ -279,10 +279,10 @@ use Class::XSAccessor
 		editor_indentationguides => 'editor_indentationguides',
 		editor_calltips          => 'editor_calltips',
 		editor_autoindent        => 'editor_autoindent',
-		editor_methods           => 'editor_methods',
 		editor_folding           => 'editor_folding',
 		editor_wordwrap          => 'editor_wordwrap',
 		editor_currentline       => 'editor_currentline',
+		editor_currentline_color => 'editor_currentline_color',
 		editor_beginner          => 'editor_beginner',
 		editor_indent_auto       => 'editor_indent_auto',
 		editor_indent_tab        => 'editor_indent_tab',
@@ -290,7 +290,6 @@ use Class::XSAccessor
 		editor_indent_width      => 'editor_indent_width',
 		ppi_highlight            => 'ppi_highlight',
 		ppi_highlight_limit      => 'ppi_highlight_limit',
-		output_ansi              => 'output_ansi',
 		run_save                 => 'run_save',
 		threads                  => 'threads',
 		diagnostics_lang         => 'diagnostics_lang',

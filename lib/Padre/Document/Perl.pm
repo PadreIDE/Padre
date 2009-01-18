@@ -87,7 +87,7 @@ sub lexer {
 	my $self = shift;
 	my $config = Padre->ide->config;
 
-	if ( $config->{ppi_highlight} and $self->editor->GetTextLength < $config->{ppi_highlight_limit} ) {
+	if ( $config->ppi_highlight and $self->editor->GetTextLength < $config->ppi_highlight_limit ) {
 		return Wx::wxSTC_LEX_CONTAINER;
 	} else {
 		return $self->SUPER::lexer();
@@ -284,10 +284,9 @@ sub get_command {
 }
 
 sub pre_process {
-	my ( $self ) = @_;
-	my $config = Padre->ide->config;
+	my $self = shift;
 
-	if ($config->{editor_beginner}) {
+	if ( Padre->ide->config->editor_beginner ) {
 		require Padre::Document::Perl::Beginner;
 		my $b = Padre::Document::Perl::Beginner->new;
 		if ($b->check( $self->text_get )) {

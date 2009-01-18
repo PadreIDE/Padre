@@ -145,7 +145,7 @@ sub new {
 
 	# Create the task manager
 	$self->{task_manager} = Padre::TaskManager->new(
-		use_threads => $self->config->{threads},
+		use_threads => $self->config->threads,
 	);
 
 	return $self;

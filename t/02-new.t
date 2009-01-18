@@ -48,7 +48,7 @@ SCOPE: {
 		editor_indentationguides => 0,
 		editor_calltips          => 0,
 		editor_autoindent        => 'deep',
-		editor_methods           => 'alphabetical',
+		main_functions_order           => 'alphabetical',
 		editor_whitespace        => 0,
 		editor_folding           => 0,
 		editor_wordwrap          => 0,
@@ -59,7 +59,7 @@ SCOPE: {
 		editor_indent_width      => 8,
 		editor_indent_tab        => 1,
 		editor_beginner          => 1,
-		output_ansi              => 1,
+		main_output_ansi              => 1,
 
 		ppi_highlight            => 0,
 		ppi_highlight_limit      => 10_000,

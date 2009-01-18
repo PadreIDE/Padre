@@ -63,7 +63,7 @@ sub gettext_label {
 # Tweaked to avoid copying as much as possible.
 sub AppendText {
 	my $self = shift;
-	my $use_ansi = Padre->ide->config->{output_ansi};
+	my $use_ansi = Padre->ide->config->main_output_ansi;
 	if ( utf8::is_utf8($_[0]) ) {
 		if ($use_ansi) {
 			$self->_handle_ansi_escapes($_[0]);
@@ -233,8 +233,8 @@ sub set_font {
 	my $self   = shift;
 	my $config = $self->main->config;
 	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->{editor_font} ) {
-		$font->SetNativeFontInfoUserDesc( $config->{editor_font} );
+	if ( defined $config->editor_font ) {
+		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	my $style = $self->GetDefaultStyle;
 	$style->SetFont($font);

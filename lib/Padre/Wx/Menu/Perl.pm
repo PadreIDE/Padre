@@ -249,7 +249,7 @@ sub new {
 				my $doc = $editor->{Document};
 				next unless $doc->isa('Padre::Document::Perl');
 				$editor->SetLexer( $doc->lexer );
-				if ( $config->{ppi_highlight} ) {
+				if ( $config->ppi_highlight ) {
 					$doc->colorize;
 				} else {
 					$doc->remove_color;
@@ -281,12 +281,12 @@ sub refresh {
 	my $self   = shift;
 	my $config = $self->{config};
 
-	$self->{ppi_highlight}->Check( $config->{ppi_highlight} ? 1 : 0 );
+	$self->{ppi_highlight}->Check( $config->ppi_highlight ? 1 : 0 );
 	$self->{run_with_stack_trace}->Check( $config->{run_with_stack_trace} ? 1 : 0 );
 
 	no warnings 'once'; # TODO eliminate?
 	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
-		$config->{ppi_highlight}
+		$config->ppi_highlight
 			? Wx::wxSTC_LEX_CONTAINER
 			: Wx::wxSTC_LEX_PERL;
 }

@@ -69,7 +69,7 @@ sub new {
 		$self->{functions},
 		sub {
 			if ( $_[1]->IsChecked ) {
-				$_[0]->refresh_methods;
+				$_[0]->refresh_functions;
 				$_[0]->show_functions(1);
 			}
 			else {
@@ -195,13 +195,13 @@ sub new {
 		},
 	);
 
-	$self->{current_line_background} = $self->AppendCheckItem( -1,
+	$self->{currentline} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Current Line")
 	);
 	Wx::Event::EVT_MENU( $main,
-		$self->{current_line_background},
+		$self->{currentline},
 		sub {
-			$_[0]->on_toggle_current_line_background($_[1]);
+			$_[0]->on_toggle_currentline($_[1]);
 		},
 	);
 
@@ -297,7 +297,7 @@ sub new {
 
 	# Bookmark Support
 	unless (
-		$config->{experimental}
+		$config->experimental
 		and
 		defined $config->{experimental_bookmarks}
 		and
@@ -475,22 +475,22 @@ sub refresh {
 
 	# Simple check state cases from configuration
 	unless ( Padre::Util::WXWIN32 ) {
-		$self->{statusbar}->Check( $config->main_statusbar ? 1 : 0 );
+		$self->{statusbar}->Check( $config->main_statusbar );
 	}
 
-	$self->{ lines }->Check( $config->{editor_linenumbers} ? 1 : 0 );
-	$self->{ folding }->Check( $config->{editor_folding} ? 1 : 0 );
-	$self->{ current_line_background }->Check( $config->{editor_currentline} ? 1 : 0 );
-	$self->{ eol }->Check( $config->{editor_eol} ? 1 : 0 );
-	$self->{ whitespaces }->Check( $config->{editor_whitespace} ? 1 : 0 );
-	$self->{ output }->Check( $config->main_output ? 1 : 0 );
-	$self->{ outline }->Check( $config->main_outline ? 1 : 0 );
-	$self->{ functions }->Check( $config->main_functions ? 1 : 0 );
-	$self->{ lockinterface }->Check( $config->main_lockinterface ? 1 : 0 );
-	$self->{ indentation_guide }->Check( $config->{editor_indentationguides} ? 1 : 0 );
-	$self->{ show_calltips }->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{ show_syntaxcheck }->Check( $config->main_syntaxcheck ? 1 : 0 );
-	$self->{ show_errorlist }->Check( $config->main_errorlist ? 1 : 0 );
+	$self->{ lines             }->Check( $config->editor_linenumbers );
+	$self->{ folding           }->Check( $config->editor_folding );
+	$self->{ currentline       }->Check( $config->editor_currentline );
+	$self->{ eol               }->Check( $config->editor_eol );
+	$self->{ whitespaces       }->Check( $config->editor_whitespace );
+	$self->{ output            }->Check( $config->main_output );
+	$self->{ outline           }->Check( $config->main_outline );
+	$self->{ functions         }->Check( $config->main_functions );
+	$self->{ lockinterface     }->Check( $config->main_lockinterface );
+	$self->{ indentation_guide }->Check( $config->editor_indentationguides );
+	$self->{ show_calltips     }->Check( $config->editor_calltips );
+	$self->{ show_syntaxcheck  }->Check( $config->main_syntaxcheck );
+	$self->{ show_errorlist    }->Check( $config->main_errorlist );
 
 	# Check state for word wrap is document-specific
 	if ( $document ) {

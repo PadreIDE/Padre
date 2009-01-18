@@ -10,20 +10,20 @@ use Padre::Current    ();
 our $VERSION = '0.25';
 
 sub get_layout_for_behaviour {
-	my ($config, $main_startup, $editor_autoindent, $editor_methods) = @_;
+	my ($config, $main_startup, $editor_autoindent, $main_functions_order) = @_;
 
 	return [
 		[
-			['Wx::CheckBox',    'editor_indent_auto', Wx::gettext('Automatic indentation style'),    ($config->{editor_indent_auto} ? 1 : 0) ],
-			['Wx::CheckBox',    'editor_indent_tab', Wx::gettext('Use Tabs'),    ($config->{editor_indent_tab} ? 1 : 0) ],
+			['Wx::CheckBox',    'editor_indent_auto', Wx::gettext('Automatic indentation style'),    ($config->editor_indent_auto ? 1 : 0) ],
+			['Wx::CheckBox',    'editor_indent_tab', Wx::gettext('Use Tabs'),    ($config->editor_indent_tab ? 1 : 0) ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('TAB display size (in spaces)')],
-			[ 'Wx::TextCtrl',   'editor_indent_tab_width',  $config->{editor_indent_tab_width}],
+			[ 'Wx::TextCtrl',   'editor_indent_tab_width',  $config->editor_indent_tab_width],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Indentation width (in columns)')],
-			[ 'Wx::TextCtrl',   'editor_indent_width', $config->{editor_indent_width}],
+			[ 'Wx::TextCtrl',   'editor_indent_width', $config->editor_indent_width],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Guess from current document')],
@@ -39,21 +39,21 @@ sub get_layout_for_behaviour {
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Methods order:')],
-			[ 'Wx::Choice',     'editor_methods', $editor_methods],
+			[ 'Wx::Choice',     'main_functions_order', $main_functions_order],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Default word wrap on for each file')],
 			['Wx::CheckBox',    'editor_wordwrap', '',
-				($config->{editor_wordwrap} ? 1 : 0) ],
+				($config->editor_wordwrap ? 1 : 0) ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Perl beginner mode')],
 			['Wx::CheckBox',    'editor_beginner', '',
-				($config->{editor_beginner} ? 1 : 0) ],
+				($config->editor_beginner ? 1 : 0) ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Preferred language for error diagnostics:')],
-			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->{diagnostics_lang}||''],
+			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->diagnostics_lang||''],
 		],
 	];
 }
@@ -65,8 +65,8 @@ sub get_layout_for_appearance {
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font',
-				( defined $config->{editor_font}
-				    ? $config->{editor_font}
+				( defined $config->editor_font
+				    ? $config->editor_font
 				    : Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc
 				)
 			] 
@@ -74,21 +74,21 @@ sub get_layout_for_appearance {
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color',
-				(defined $config->{editor_currentline_color} ? '#' . $config->{editor_currentline_color} : '#ffff04') ]
+				(defined $config->editor_currentline_color ? '#' . $config->editor_currentline_color : '#ffff04') ]
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Colored text in output window (ANSI): ')],
-			['Wx::CheckBox',    'output_ansi', '',
-				($config->{output_ansi} ? 1 : 0) ],
+			['Wx::CheckBox',    'main_output_ansi', '',
+				($config->main_output_ansi ? 1 : 0) ],
 		],
 	];
 }
 
 sub dialog {
-	my ($class, $win, $main_startup, $editor_autoindent, $editor_methods) = @_;
+	my ($class, $win, $main_startup, $editor_autoindent, $main_functions_order) = @_;
 
 	my $config = Padre->ide->config;
-	my $behaviour  = get_layout_for_behaviour($config, $main_startup, $editor_autoindent, $editor_methods);
+	my $behaviour  = get_layout_for_behaviour($config, $main_startup, $editor_autoindent, $main_functions_order);
 	my $appearance = get_layout_for_appearance($config);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $win,
@@ -151,51 +151,62 @@ sub run {
 		Wx::gettext('original'),
 		Wx::gettext('alphabetical_private_last'),
 	);
+
+	# Startup preparation
 	my $main_startup = $config->main_startup;
 	my @main_startup_items = (
 		$main_startup,
 		grep { $_ ne $main_startup } qw{new nothing last}
 	);
 	my @main_startup_localized = map{Wx::gettext($_)} @main_startup_items;
-	my @editor_autoindent_items = qw(no same_level deep);
-	my @editor_autoindent = (
-		$config->{editor_autoindent},
-		grep { $_ ne $config->{editor_autoindent} } @editor_autoindent_items 
+
+	# Autoindent preparation
+	my $editor_autoindent = $config->editor_autoindent;
+	my @editor_autoindent_items = (
+		$editor_autoindent,
+		grep { $_ ne $editor_autoindent } qw{no same_level deep}
 	);
-	my @editor_autoindent_localized = map{Wx::gettext($_)} @editor_autoindent;
-	my @editor_methods_items = qw(alphabetical original alphabetical_private_last);
-	my @editor_methods = (
-		$config->{editor_methods},
-		grep { $_ ne $config->{editor_methods} } @editor_methods_items
+	my @editor_autoindent_localized = map{Wx::gettext($_)} @editor_autoindent_items;
+
+	# Function List Ordering
+	my $main_functions_order = $config->main_functions_order;
+	my @main_functions_order_items = (
+		$main_functions_order,
+		grep { $_ ne $main_functions_order }
+		qw{alphabetical original alphabetical_private_last}
 	);
-	my @editor_methods_localized = map{Wx::gettext($_)} @editor_methods;
+	my @main_functions_order_localized = map{Wx::gettext($_)} @main_functions_order_items;
 
 	my $dialog = $class->dialog( $win, 
-		\@main_startup_localized, \@editor_autoindent_localized, \@editor_methods_localized );
+		\@main_startup_localized, \@editor_autoindent_localized, \@main_functions_order_localized );
 	return if not $dialog->show_modal;
 
 	my $data = $dialog->get_data;
 
-	foreach my $f (
-		qw( 
-			editor_indent_tab_width
-			editor_indent_width
-			editor_font
-			editor_currentline_color
-			diagnostics_lang
-		)
-	) {
+	foreach my $f ( qw( 
+		editor_indent_tab_width
+		editor_indent_width
+		editor_font
+		editor_currentline_color
+		diagnostics_lang
+	) ) {
 		$config->{$f} = $data->{$f};
 	}
 	$config->{editor_currentline_color} =~ s/#//;
 
-	foreach my $f (qw(editor_indent_tab editor_wordwrap editor_indent_auto editor_beginner output_ansi)) {
+	foreach my $f ( qw(
+		editor_indent_tab
+		editor_wordwrap
+		editor_indent_auto
+		editor_beginner
+		main_output_ansi
+	)) {
 		$config->{$f} = $data->{$f} ? 1 : 0;
 	}
 
 	$config->{main_startup}        = $main_startup_items[ $data->{main_startup} ];
-	$config->{editor_autoindent}   = $editor_autoindent[ $data->{editor_autoindent} ];
-	$config->{editor_methods}      = $editor_methods[ $data->{editor_methods} ];
+	$config->{editor_autoindent}   = $editor_autoindent_items[ $data->{editor_autoindent} ];
+	$config->{main_functions_order}      = $main_functions_order_items[ $data->{main_functions_order} ];
 
 	return 1;
 }

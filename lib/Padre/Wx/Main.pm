@@ -463,7 +463,7 @@ sub refresh {
 	$self->refresh_menu($current);
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
-	$self->refresh_methods($current);
+	$self->refresh_functions($current);
 
 	my $notebook = $self->notebook;
 	if ( $notebook->GetPageCount ) {
@@ -512,7 +512,7 @@ sub refresh_status {
 # TODO now on every ui chnage (move of the mouse)
 # we refresh this even though that should not be
 # necessary can that be eliminated ?
-sub refresh_methods {
+sub refresh_functions {
 	my $self = shift;
 	return if $self->no_refresh;
 	return unless $self->menu->view->{functions}->IsChecked;
@@ -528,9 +528,9 @@ sub refresh_methods {
 
 	my $config  = $self->config;
 	my @methods = $document->get_functions;
-	if ( $config->{editor_methods} eq 'original' ) {
+	if ( $config->main_functions_order eq 'original' ) {
 		# That should be the one we got from get_functions
-	} elsif ( $config->{editor_methods} eq 'alphabetical_private_last' ) {
+	} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
 		# ~ comes after \w
 		@methods = map { tr/~/_/; $_ } ## no critic
 			sort
@@ -777,11 +777,11 @@ sub run_document {
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
 	my $config = $self->config;
-	if ( $config->{run_save} eq 'same' ) {
+	if ( $config->run_save eq 'same' ) {
 		$self->on_save;
-	} elsif ( $config->{run_save} eq 'all_files' ) {
+	} elsif ( $config->run_save eq 'all_files' ) {
 		$self->on_save_all;
-	} elsif ( $config->{run_save} eq 'all_buffer' ) {
+	} elsif ( $config->run_save eq 'all_buffer' ) {
 		$self->on_save_all;
 	}
 
@@ -821,11 +821,11 @@ sub debug_perl {
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
 	my $config = $self->config;
-	if ( $config->{run_save} eq 'same' ) {
+	if ( $config->run_save eq 'same' ) {
 		$self->on_save;
-	} elsif ( $config->{run_save} eq 'all_files' ) {
+	} elsif ( $config->run_save eq 'all_files' ) {
 		$self->on_save_all;
-	} elsif ( $config->{run_save} eq 'all_buffer' ) {
+	} elsif ( $config->run_save eq 'all_buffer' ) {
 		$self->on_save_all;
 	}
 
@@ -1627,7 +1627,7 @@ sub on_preferences {
 		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
 		}
-		$self->refresh_methods($self->current);
+		$self->refresh_functions($self->current);
 	}
 
 	return;
@@ -1640,7 +1640,7 @@ sub on_toggle_line_numbers {
 	$config->{editor_linenumbers} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->show_line_numbers( $config->{editor_linenumbers} );
+		$editor->show_line_numbers( $config->editor_linenumbers );
 	}
 
 	return;
@@ -1653,8 +1653,8 @@ sub on_toggle_code_folding {
 	$config->{editor_folding} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->show_folding( $config->{editor_folding} );
-		if ( $config->{editor_folding} == 0 ) {
+		$editor->show_folding( $config->editor_folding );
+		unless ( $config->editor_folding ) {
 			$editor->unfold_all;
 		}
 	}
@@ -1662,14 +1662,14 @@ sub on_toggle_code_folding {
 	return;
 }
 
-sub on_toggle_current_line_background {
+sub on_toggle_currentline {
 	my ($self, $event) = @_;
 
 	my $config = $self->config;
 	$config->{editor_currentline} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetCaretLineVisible( $config->{editor_currentline} ? 1 : 0 );
+		$editor->SetCaretLineVisible( $config->editor_currentline ? 1 : 0 );
 	}
 
 	return;
@@ -1702,7 +1702,7 @@ sub on_toggle_indentation_guide {
 	$config->{editor_indentationguides} = $self->menu->view->{indentation_guide}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetIndentationGuides( $config->{editor_indentationguides} );
+		$editor->SetIndentationGuides( $config->editor_indentationguides );
 	}
 
 	return;
@@ -1715,7 +1715,7 @@ sub on_toggle_eol {
 	$config->{editor_eol} = $self->menu->view->{eol}->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetViewEOL( $config->{editor_eol} );
+		$editor->SetViewEOL( $config->editor_eol );
 	}
 
 	return;
@@ -1737,7 +1737,7 @@ sub on_toggle_whitespaces {
 	
 	# update all open views with the new config.
 	foreach my $editor ( $self->editors ) {
-		$editor->SetViewWhiteSpace( $config->{editor_whitespace} );
+		$editor->SetViewWhiteSpace( $config->editor_whitespace );
 	}
 }
 
@@ -2040,7 +2040,7 @@ sub on_stc_update_ui {
 	$self->refresh_menu($current);
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
-	#$self->refresh_methods;
+	#$self->refresh_functions;
 	#$self->refresh_syntaxcheck;
 
 	return;

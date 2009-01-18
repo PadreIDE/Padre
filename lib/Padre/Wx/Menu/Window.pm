@@ -93,7 +93,7 @@ sub new {
 			Wx::gettext("GoTo Subs Window\tAlt-S")
 		),
 		sub {
-			$_[0]->refresh_methods($_[0]->current);
+			$_[0]->refresh_functions($_[0]->current);
 			$_[0]->show_functions(1); 
 			$_[0]->functions->SetFocus;
 		},

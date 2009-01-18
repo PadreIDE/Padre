@@ -37,16 +37,10 @@ config( editor_indent_tab        => PROJECT, HUMAN );
 config( editor_indent_tab_width  => PROJECT, HUMAN );
 config( editor_indent_width      => PROJECT, HUMAN );
 
-# Behaviour Tuning
-config( main_startup             => HUMAN );
-config( run_save                 => HUMAN );
-config( threads                  => HUMAN );
-config( output_ansi              => HUMAN );
-config( experimental             => HUMAN );
-
 # Pages and Panels
 config( main_lockinterface       => HUMAN );
 config( main_functions           => HUMAN );
+config( main_functions_order     => HUMAN );
 config( main_outline             => HUMAN );
 config( main_output              => HUMAN );
 config( main_syntaxcheck         => HUMAN );
@@ -54,16 +48,27 @@ config( main_errorlist           => HUMAN );
 config( main_statusbar           => HUMAN );
 
 # Editor settings
-config( editor_autoindent        => HUMAN );
-config( editor_beginner          => HUMAN );
-config( editor_calltips          => HUMAN );
-config( editor_eol               => HUMAN );
-config( editor_folding           => HUMAN );
-config( editor_indentationguides => HUMAN );
+config( editor_font              => HUMAN );
 config( editor_linenumbers       => HUMAN );
+config( editor_eol               => HUMAN );
 config( editor_whitespace        => HUMAN );
+config( editor_indentationguides => HUMAN );
+config( editor_calltips          => HUMAN );
+config( editor_autoindent        => HUMAN );
+config( editor_folding           => HUMAN );
+config( editor_currentline       => HUMAN );
+config( editor_currentline_color => HUMAN );
+config( editor_beginner          => HUMAN );
 config( ppi_highlight            => HUMAN );
 config( ppi_highlight_limit      => HUMAN );
+
+# Behaviour Tuning
+config( main_startup             => HUMAN );
+config( run_save                 => HUMAN );
+config( threads                  => HUMAN );
+config( main_output_ansi              => HUMAN );
+config( diagnostic_lang          => HUMAN );
+config( experimental             => HUMAN );
 
 # Because the colour data is in local files,
 # it has to be a host-specific setting.

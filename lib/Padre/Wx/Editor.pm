@@ -46,7 +46,7 @@ sub new {
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 	Wx::Event::EVT_LEFT_UP(    $self, \&on_left_up    );
 
-	if ( Padre->ide->config->{editor_wordwrap} ) {
+	if ( Padre->ide->config->editor_wordwrap ) {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	}
 	$self->SetDropTarget(
@@ -141,18 +141,18 @@ sub padre_setup_plain {
 	if ( defined $data->{plain}->{current_line_foreground} ) {
 		$self->SetCaretForeground( _color( $data->{plain}->{current_line_foreground} ) );
 	}
-	if ( defined $data->{plain}->{current_line_background} ) {
-		if ( defined $config->{editor_currentline_color} ) {
-			if (   $data->{plain}->{current_line_background}
-				ne $config->{editor_currentline_color}
+	if ( defined $data->{plain}->{currentline} ) {
+		if ( defined $config->editor_currentline_color ) {
+			if (   $data->{plain}->{currentline}
+				ne $config->editor_currentline_color
 			) {
-				$data->{plain}->{current_line_background} = $config->{editor_currentline_color};
+				$data->{plain}->{currentline} = $config->editor_currentline_color;
 			}
 		}
-		$self->SetCaretLineBackground( _color( $data->{plain}->{current_line_background} ) );
+		$self->SetCaretLineBackground( _color( $data->{plain}->{currentline} ) );
 	}
-	elsif ( defined $config->{editor_currentline_color} ) {
-		$self->SetCaretLineBackground( _color( $config->{editor_currentline_color} ) );
+	elsif ( defined $config->editor_currentline_color ) {
+		$self->SetCaretLineBackground( _color( $config->editor_currentline_color ) );
 	}
 
 	foreach my $k (keys %{ $data->{plain}->{foregrounds} }) {
@@ -351,8 +351,8 @@ sub set_font {
 	my $config = Padre->ide->config;
 
 	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->{editor_font} ) {
-		$font->SetNativeFontInfoUserDesc( $config->{editor_font} );
+	if ( defined $config->editor_font ) {
+		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	$self->SetFont($font);
 	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
@@ -365,12 +365,12 @@ sub set_preferences {
 	my $self   = shift;
 	my $config = Padre->ide->config;
 
-	$self->show_line_numbers(    $config->{editor_linenumbers}       );
-	$self->show_folding(         $config->{editor_folding}       );
-	$self->SetIndentationGuides( $config->{editor_indentationguides} );
-	$self->SetViewEOL(           $config->{editor_eol}               );
-	$self->SetViewWhiteSpace(    $config->{editor_whitespace}       );
-	$self->SetCaretLineVisible(  $config->{editor_currentline} ? 1 : 0 );
+	$self->show_line_numbers(    $config->editor_linenumbers       );
+	$self->show_folding(         $config->editor_folding           );
+	$self->SetIndentationGuides( $config->editor_indentationguides );
+	$self->SetViewEOL(           $config->editor_eol               );
+	$self->SetViewWhiteSpace(    $config->editor_whitespace        );
+	$self->SetCaretLineVisible(  $config->editor_currentline       );
 
 	$self->padre_setup;
 
@@ -383,7 +383,7 @@ sub set_preferences {
 sub show_calltip {
 	my $self   = shift;
 	my $config = Padre->ide->config;
-	return unless $config->{editor_calltips};
+	return unless $config->editor_calltips;
 
 	my $pos    = $self->GetCurrentPos;
 	my $line   = $self->LineFromPosition($pos);
@@ -420,12 +420,12 @@ sub autoindent {
 	my ($self, $mode) = @_;
 
 	my $config = Padre->ide->config;
-	return if not $config->{editor_autoindent} or $config->{editor_autoindent} eq 'no';
-	
-	if ($mode eq 'deindent') {
+	return unless $config->editor_autoindent;
+	return if $config->editor_autoindent eq 'no';
+
+	if ( $mode eq 'deindent' ) {
 		$self->_auto_deindent($config);
-	}
-	else {
+	} else {
 		# default to "indent"
 		$self->_auto_indent($config);
 	}
@@ -445,7 +445,7 @@ sub _auto_indent {
 	my $content = $self->_get_line_by_number($prev_line);
 	my $indent  = ($content =~ /^(\s+)/ ? $1 : '');
 
-	if ($config->{editor_autoindent} eq 'deep' and $content =~ /\{\s*$/) {
+	if ( $config->editor_autoindent eq 'deep' and $content =~ /\{\s*$/ ) {
 		my $indent_width = $indent_style->{indentwidth};
 		my $tab_width    = $indent_style->{tabwidth};
 		if ($indent_style->{use_tabs} and $indent_width != $tab_width) {
@@ -486,7 +486,7 @@ sub _auto_deindent {
 	my $indent    = ($content =~ /^(\s+)/ ? $1 : '');
 
 	# This is for } on a new line:
-	if ($config->{editor_autoindent} eq 'deep' and $content =~ /^\s*\}\s*$/) {
+	if ( $config->editor_autoindent eq 'deep' and $content =~ /^\s*\}\s*$/ ) {
 		my $prev_line    = $line-1;
 		my $prev_content = ( $prev_line < 0 ? '' : $self->_get_line_by_number($prev_line) );
 		my $prev_indent  = ($prev_content =~ /^(\s+)/ ? $1 : '');
@@ -527,7 +527,7 @@ sub _auto_deindent {
 		$self->GotoPos( $self->GetLineEndPosition($line) );
 	}
 	# this is if the line matches "blahblahSomeText}".
-	elsif ($config->{editor_autoindent} eq 'deep' and $content =~ /\}\s*$/) {
+	elsif ( $config->editor_autoindent eq 'deep' and $content =~ /\}\s*$/) {
 		# TODO: What should happen in this case?
 	}
 
@@ -658,8 +658,10 @@ sub on_right_down {
 
 	$menu->AppendSeparator;
 
-	if ( $event->isa('Wx::MouseEvent')
-	     && Padre->ide->config->{editor_folding} eq 1
+	if (
+		$event->isa('Wx::MouseEvent')
+		and
+		Padre->ide->config->editor_folding
 	) {
 		my $mousePos = $event->GetPosition;
 		my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
@@ -759,7 +761,7 @@ sub on_mouse_motion {
 	my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
 
 	my ( $offset1, $offset2 ) = ( 0, 18 );
-	if ( Padre->ide->config->{editor_folding} ) {
+	if ( Padre->ide->config->editor_folding ) {
 		$offset1 += 18;
 		$offset2 += 18;
 	}

@@ -84,7 +84,7 @@ sub new {
 	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")    );
 
 	my $config = Padre->ide->config;
-	if ( $config->{experimental} ) {
+	if ( $config->experimental ) {
 		# Create the Experimental menu
 		# All the crap that doesn't work, have a home,
 		# or should never be seen be real users goes here.

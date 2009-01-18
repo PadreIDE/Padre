@@ -94,11 +94,11 @@ sub populate {
 	my $self = shift;
 	return unless $self->enabled;
 
-	my $cur_lang = $self->config->{diagnostics_lang};
-	$cur_lang =~ s/^\s*//;
-	$cur_lang =~ s/\s*$//;
-	my $old_lang = $self->lang;
-	$self->{lang} = $cur_lang;
+	my $lang = $self->config->diagnostics_lang;
+	$lang =~ s/^\s*//;
+	$lang =~ s/\s*$//;
+	my $old = $self->lang;
+	$self->{lang} = $lang;
 
 	my $data = $self->data;
 	$self->{data} = "";
@@ -106,8 +106,8 @@ sub populate {
 
 	my $task = Padre::Task::ErrorParser->new(
 		parser   => $self->parser,
-		cur_lang => $cur_lang,
-		old_lang => $old_lang,
+		cur_lang => $lang,
+		old_lang => $old,
 		data     => $data,
 	);
 
