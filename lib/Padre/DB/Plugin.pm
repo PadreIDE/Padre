@@ -1,3 +1,29 @@
+package Padre::DB::Plugin;
+
+use strict;
+use warnings;
+
+our $VERSION = '0.25';
+
+# Finds and returns a single element by name
+sub fetch_name {
+	return ($_[0]->select('where name = ?', $_[1]))[0];
+}
+
+# Set enabled for an object
+sub update_enabled {
+	Padre::DB->do(
+		'update plugin set enabled = ? where name = ?', {},
+		$_[2], $_[1],
+	);
+}
+
+1;
+
+__END__
+
+=pod
+
 =head1 NAME
 
 Padre::DB::Plugin - Padre::DB class for the plugin table
@@ -193,3 +219,9 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
+=cut
+
+# Copyright 2008 Gabor Szabo.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

@@ -62,7 +62,6 @@ SCOPE: {
 		ppi_highlight_limit           => 10_000,
 
 		run_save                      => 'same',
-		plugins                       => {},
 		threads            => 1,
 		
 		host => {

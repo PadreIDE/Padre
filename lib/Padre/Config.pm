@@ -25,6 +25,7 @@ my %defaults = (
 	main_output               => 0,
 	main_lockpanels           => 1,
 
+	# Editor features and indent settings
 	editor_linenumbers        => 1,
 	editor_eol                => 0,
 	editor_whitespace        => 0,
@@ -34,18 +35,15 @@ my %defaults = (
 	editor_methods            => 'alphabetical',
 	editor_folding        => 0,
 	editor_beginner     => 1,
-
-	# preferences specific to the output window
-	output_ansi      => 1,
-
-	# Indentation settings
 	editor_indent_auto => 1,
 	editor_indent_tab               => 1,
 	editor_indent_tab_width               => 8,
 	editor_indent_width            => 8,
-
 	ppi_highlight                 => 0,
 	ppi_highlight_limit           => 10_000,
+
+	# preferences specific to the output window
+	output_ansi      => 1,
 
 	# When running a script from the application some of the files might have not been saved yet.
 	# There are several option what to do before running the script
@@ -54,9 +52,6 @@ my %defaults = (
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
 	run_save                  => 'same',
-
-	# By default we have an empty plugins configuration
-	plugins                   => {},
 
 	# By default, use background threads unless profiling
 	threads        => 1,
@@ -124,7 +119,7 @@ sub default_plugin_dir {
 }
 
 sub copy_original_My_plugin {
-	my $class = shift;
+	my $class  = shift;
 	my $target = shift;
 	my $src = File::Spec->catfile( File::Basename::dirname($INC{'Padre/Config.pm'}), 'Plugin', 'My.pm' );
 	unless ( $src ) {

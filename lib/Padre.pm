@@ -744,10 +744,7 @@ TODO: What to do if a newer version of the same plugin was installed?
 TODO: What to do if a module was removed ? Shall we keep its data in
 the configuration file or remove it?
 
-The configuration file has a plugins hash. The keys are the names of the plugins
-(sans the Padre::Plugin:: part)
-
-TODO Padre should offer an easy but simple way for plugin authors
+TODO: Padre should offer an easy but simple way for plugin authors
 to declare configuration variables and automaticly generate both configuration
 file and configuration dialog. Padre should also allow for full customization
 of both for those more advanced in wx foo.

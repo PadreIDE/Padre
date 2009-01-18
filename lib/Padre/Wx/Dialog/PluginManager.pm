@@ -115,10 +115,14 @@ sub toggle_enabled {
 	my $plugin  = $manager->plugins->{$name};
 	$self->{parent}->Freeze;
 	if ( $plugin->enabled ) {
-		$config->{plugins}->{$name}->{enabled} = 0;
+		Padre::DB::Plugin->update_enabled(
+			$plugin->class => 0,
+		);
 		$manager->_plugin_disable($name);
 	} elsif ( $plugin->can_enable ) {
-		$config->{plugins}->{$name}->{enabled} = 1;
+		Padre::DB::Plugin->update_enabled(
+			$plugin->class => 1,
+		);
 		$manager->_plugin_enable($name);
 	}
 	$self->update_labels($name);

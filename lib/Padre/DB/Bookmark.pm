@@ -13,10 +13,7 @@ sub select_names {
 
 # Finds and returns a single element by name
 sub fetch_name {
-	my @rows = Padre::DB::Bookmark->select(
-		'where name = ?', $_[1],
-	);
-	return $rows[0];
+	return ($_[0]->select('where name = ?', $_[1]))[0];
 }
 
 1;

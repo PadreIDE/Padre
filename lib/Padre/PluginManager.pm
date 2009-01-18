@@ -133,14 +133,28 @@ sub plugin_objects {
 #####################################################################
 # Bulk Plugin Operations
 
-# Disable (but don't unload) all plugins when Padre exits
+# Disable (but don't unload) all plugins when Padre exits.
+# Save the plugin enable/disable states for the next startup.
 sub shutdown {
 	my $self = shift;
+
+	Padre::DB->begin;
 	foreach my $name ( $self->plugin_names ) {
 		my $plugin = $self->_plugin($name);
-		next unless $plugin->enabled;
-		$self->_plugin_disable($plugin);
+		if ( $plugin->enabled ) {
+			Padre::DB::Plugin->update_enabled(
+				$plugin->class => 1,
+			);
+			$self->_plugin_disable($plugin);
+
+		} elsif ( $plugin->disabled ) {
+			Padre::DB::Plugin->update_enabled(
+				$plugin->class => 0,
+			);
+		}
 	}
+	Padre::DB->commit;
+
 	return 1;
 }
 
@@ -519,8 +533,11 @@ sub _unload_plugin {
 	my $handle = $self->_plugin(shift);
 
 	# Remember if we are enabled or not
-	$self->plugin_config($handle)->{enabled} = $handle->enabled ? 1 : 0;
-	
+	my $enabled = $handle->enabled ? 1 : 0;
+	Padre::DB::Plugin->update_enabled(
+		$handle->class => $enabled,
+	);
+
 	# Disable if needed
 	if ( $handle->enabled ) {
 		$handle->disable;
@@ -605,17 +622,18 @@ sub plugin_config {
 		$param = $package;
 	}
 
-	# Get the plugin, and from there he config
+	# Get the plugin, and from there the config
 	my $plugin  = $self->_plugin($param);
-	my $name    = $plugin->name;
-	my $config  = $self->parent->config;
-	unless ( $config->{plugins} ) {
-		$config->{plugins} = {};
+	my $object  = Padre::DB::Plugin->fetch_name($plugin->class);
+	unless ( $object ) {
+		$object = Padre::DB::Plugin->create(
+			name    => $plugin->class,
+			version => $plugin->version,
+			enabled => undef, # undef means no preference yet
+			config  => undef,
+		);
 	}
-	unless ( $config->{plugins}->{$name} ) {
-		$config->{plugins}->{$name} = {};
-	}
-	return $config->{plugins}->{$name};
+	return $object;
 }
 
 # enable all the plugins for a single editor
