@@ -14,16 +14,16 @@ sub get_layout_for_behaviour {
 
 	return [
 		[
-			['Wx::CheckBox',    'editor_auto_indentation_style', Wx::gettext('Automatic indentation style'),    ($config->{editor_auto_indentation_style} ? 1 : 0) ],
-			['Wx::CheckBox',    'editor_use_tabs', Wx::gettext('Use Tabs'),    ($config->{editor_use_tabs} ? 1 : 0) ],
+			['Wx::CheckBox',    'editor_indent_auto', Wx::gettext('Automatic indentation style'),    ($config->{editor_indent_auto} ? 1 : 0) ],
+			['Wx::CheckBox',    'editor_indent_tab', Wx::gettext('Use Tabs'),    ($config->{editor_indent_tab} ? 1 : 0) ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('TAB display size (in spaces)')],
-			[ 'Wx::TextCtrl',   'editor_tabwidth',  $config->{editor_tabwidth}],
+			[ 'Wx::TextCtrl',   'editor_indent_tab_width',  $config->{editor_indent_tab_width}],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Indentation width (in columns)')],
-			[ 'Wx::TextCtrl',   'editor_indentwidth', $config->{editor_indentwidth}],
+			[ 'Wx::TextCtrl',   'editor_indent_width', $config->{editor_indent_width}],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Guess from current document')],
@@ -48,8 +48,8 @@ sub get_layout_for_behaviour {
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Perl beginner mode')],
-			['Wx::CheckBox',    'editor_perl5_beginner', '',
-				($config->{editor_perl5_beginner} ? 1 : 0) ],
+			['Wx::CheckBox',    'editor_beginner', '',
+				($config->{editor_beginner} ? 1 : 0) ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Preferred language for error diagnostics:')],
@@ -78,8 +78,8 @@ sub get_layout_for_appearance {
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Colored text in output window (ANSI): ')],
-			['Wx::CheckBox',    'output_ansi_controls', '',
-				($config->{output_ansi_controls} ? 1 : 0) ],
+			['Wx::CheckBox',    'output_ansi', '',
+				($config->{output_ansi} ? 1 : 0) ],
 		],
 	];
 }
@@ -103,7 +103,7 @@ sub dialog {
 		},
 	);
 
-	$dialog->{_widgets_}->{editor_tabwidth}->SetFocus;
+	$dialog->{_widgets_}->{editor_indent_tab_width}->SetFocus;
 
 	Wx::Event::EVT_BUTTON( $dialog,
 		$dialog->{_widgets_}->{_ok_},
@@ -130,9 +130,9 @@ sub guess_indentation_settings {
 
 	my $indent_style = $doc->guess_indentation_style();
 	
-	$dialog->{_widgets_}->{editor_use_tabs}->SetValue( $indent_style->{use_tabs} );
-	$dialog->{_widgets_}->{editor_tabwidth}->SetValue( $indent_style->{tabwidth} );
-	$dialog->{_widgets_}->{editor_indentwidth}->SetValue( $indent_style->{indentwidth} );
+	$dialog->{_widgets_}->{editor_indent_tab}->SetValue( $indent_style->{use_tabs} );
+	$dialog->{_widgets_}->{editor_indent_tab_width}->SetValue( $indent_style->{tabwidth} );
+	$dialog->{_widgets_}->{editor_indent_width}->SetValue( $indent_style->{indentwidth} );
 }
 
 
@@ -181,8 +181,8 @@ sub run {
 	foreach my $f (
 		qw( pod_maxlist
 			pod_minlist
-			editor_tabwidth
-			editor_indentwidth
+			editor_indent_tab_width
+			editor_indent_width
 			editor_font
 			editor_current_line_background_color
 			diagnostics_lang
@@ -192,7 +192,7 @@ sub run {
 	}
 	$config->{editor_current_line_background_color} =~ s/#//;
 
-	foreach my $f (qw(editor_use_tabs editor_use_wordwrap editor_auto_indentation_style editor_perl5_beginner output_ansi_controls)) {
+	foreach my $f (qw(editor_indent_tab editor_use_wordwrap editor_indent_auto editor_beginner output_ansi)) {
 		$config->{$f} = $data->{$f} ? 1 : 0;
 	}
 

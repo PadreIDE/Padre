@@ -27,22 +27,22 @@ my %defaults = (
 
 	editor_linenumbers        => 1,
 	editor_eol                => 0,
+	editor_whitespace        => 0,
 	editor_indentationguides  => 0,
 	editor_calltips           => 0,
 	editor_autoindent         => 'deep',
-	editor_whitespaces        => 0,
 	editor_methods            => 'alphabetical',
-	editor_codefolding        => 0,
-	editor_perl5_beginner     => 1,
+	editor_folding        => 0,
+	editor_beginner     => 1,
 
 	# preferences specific to the output window
-	output_ansi_controls      => 1,
+	output_ansi      => 1,
 
 	# Indentation settings
-	editor_auto_indentation_style => 1,
-	editor_use_tabs               => 1,
-	editor_tabwidth               => 8,
-	editor_indentwidth            => 8,
+	editor_indent_auto => 1,
+	editor_indent_tab               => 1,
+	editor_indent_tab_width               => 8,
+	editor_indent_width            => 8,
 
 	ppi_highlight                 => 0,
 	ppi_highlight_limit           => 10_000,
@@ -64,7 +64,7 @@ my %defaults = (
 	plugins                   => {},
 
 	# By default, use background threads unless profiling
-	use_worker_threads        => 1,
+	threads        => 1,
 
 	# By default, don't enable experimental features
 	experimental              => 0,

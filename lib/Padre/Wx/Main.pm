@@ -1637,11 +1637,11 @@ sub on_toggle_code_folding {
 	my ($self, $event) = @_;
 
 	my $config = $self->config;
-	$config->{editor_codefolding} = $event->IsChecked ? 1 : 0;
+	$config->{editor_folding} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->show_folding( $config->{editor_codefolding} );
-		if ( $config->{editor_codefolding} == 0 ) {
+		$editor->show_folding( $config->{editor_folding} );
+		if ( $config->{editor_folding} == 0 ) {
 			$editor->unfold_all;
 		}
 	}
@@ -1718,13 +1718,13 @@ sub on_toggle_whitespaces {
 	
 	# check whether we need to show / hide spaces & tabs.
 	my $config = $self->config;
-	$config->{editor_whitespaces} = $self->menu->view->{whitespaces}->IsChecked
+	$config->{editor_whitespace} = $self->menu->view->{whitespaces}->IsChecked
 		? Wx::wxSTC_WS_VISIBLEALWAYS
 		: Wx::wxSTC_WS_INVISIBLE;
 	
 	# update all open views with the new config.
 	foreach my $editor ( $self->editors ) {
-		$editor->SetViewWhiteSpace( $config->{editor_whitespaces} );
+		$editor->SetViewWhiteSpace( $config->{editor_whitespace} );
 	}
 }
 

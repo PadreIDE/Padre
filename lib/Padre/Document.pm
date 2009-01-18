@@ -591,15 +591,15 @@ sub get_indentation_style {
 	# TODO: (document >) project > config
 
 	my $style;
-	if ($config->{editor_auto_indentation_style}) {
+	if ($config->{editor_indent_auto}) {
 		# TODO: This should be cached? What's with newish documents then?
 		$style = $self->guess_indentation_style;
 	}
 	else {
 		$style = {
-			use_tabs    => $config->{editor_use_tabs},
-			tabwidth    => $config->{editor_tabwidth},
-			indentwidth => $config->{editor_indentwidth},
+			use_tabs    => $config->{editor_indent_tab},
+			tabwidth    => $config->{editor_indent_tab_width},
+			indentwidth => $config->{editor_indent_width},
 		};
 	}
 	
@@ -677,9 +677,9 @@ sub guess_indentation_style {
 		# fallback
 		my $config = Padre->ide->config;
 		$style = {
-			use_tabs    => $config->{editor_use_tabs},
-			tabwidth    => $config->{editor_tabwidth},
-			indentwidth => $config->{editor_indentwidth},
+			use_tabs    => $config->{editor_indent_tab},
+			tabwidth    => $config->{editor_indent_tab_width},
+			indentwidth => $config->{editor_indent_width},
 		};
 	}
 	

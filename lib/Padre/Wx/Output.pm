@@ -63,7 +63,7 @@ sub gettext_label {
 # Tweaked to avoid copying as much as possible.
 sub AppendText {
 	my $self = shift;
-	my $use_ansi = Padre->ide->config->{output_ansi_controls};
+	my $use_ansi = Padre->ide->config->{output_ansi};
 	if ( utf8::is_utf8($_[0]) ) {
 		if ($use_ansi) {
 			$self->_handle_ansi_escapes($_[0]);

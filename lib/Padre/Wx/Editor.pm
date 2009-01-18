@@ -366,10 +366,10 @@ sub set_preferences {
 	my $config = Padre->ide->config;
 
 	$self->show_line_numbers(    $config->{editor_linenumbers}       );
-	$self->show_folding(         $config->{editor_codefolding}       );
+	$self->show_folding(         $config->{editor_folding}       );
 	$self->SetIndentationGuides( $config->{editor_indentationguides} );
 	$self->SetViewEOL(           $config->{editor_eol}               );
-	$self->SetViewWhiteSpace(    $config->{editor_whitespaces}       );
+	$self->SetViewWhiteSpace(    $config->{editor_whitespace}       );
 	$self->SetCaretLineVisible(  $config->{editor_current_line_background} ? 1 : 0 );
 
 	$self->padre_setup;
@@ -655,7 +655,7 @@ sub on_right_down {
 	$menu->AppendSeparator;
 
 	if ( $event->isa('Wx::MouseEvent')
-	     && Padre->ide->config->{editor_codefolding} eq 1
+	     && Padre->ide->config->{editor_folding} eq 1
 	) {
 		my $mousePos = $event->GetPosition;
 		my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
@@ -755,7 +755,7 @@ sub on_mouse_motion {
 	my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
 
 	my ( $offset1, $offset2 ) = ( 0, 18 );
-	if ( Padre->ide->config->{editor_codefolding} ) {
+	if ( Padre->ide->config->{editor_folding} ) {
 		$offset1 += 18;
 		$offset2 += 18;
 	}

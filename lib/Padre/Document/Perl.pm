@@ -287,7 +287,7 @@ sub pre_process {
 	my ( $self ) = @_;
 	my $config = Padre->ide->config;
 
-	if ($config->{editor_perl5_beginner}) {
+	if ($config->{editor_beginner}) {
 		require Padre::Document::Perl::Beginner;
 		my $b = Padre::Document::Perl::Beginner->new;
 		if ($b->check( $self->text_get )) {
