@@ -752,7 +752,7 @@ sub on_mouse_motion {
 	my ( $self, $event ) = @_;
 
 	$event->Skip;
-	return unless Padre->ide->config->{editor_syntaxcheck};
+	return unless Padre->ide->config->{main_syntaxcheck};
 
 	my $mousePos = $event->GetPosition;
 	my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );

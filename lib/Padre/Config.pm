@@ -18,32 +18,32 @@ my %defaults = (
 	#   new        - a new empty buffer
 	#   nothing    - nothing to open
 	#   last       - the files that were open last time
-	main_startup              => 'new',
+	main_startup             => 'new',
 
 	# Look and feel preferences
-	main_statusbar            => 1,
-	main_output               => 0,
-	main_lockpanels           => 1,
+	main_lockinterface          => 1,
+	main_statusbar           => 1,
+	main_output              => 0,
 
 	# Editor features and indent settings
-	editor_linenumbers        => 1,
-	editor_eol                => 0,
+	editor_linenumbers       => 1,
+	editor_eol               => 0,
 	editor_whitespace        => 0,
-	editor_indentationguides  => 0,
-	editor_calltips           => 0,
-	editor_autoindent         => 'deep',
-	editor_methods            => 'alphabetical',
-	editor_folding        => 0,
-	editor_beginner     => 1,
-	editor_indent_auto => 1,
-	editor_indent_tab               => 1,
-	editor_indent_tab_width               => 8,
-	editor_indent_width            => 8,
-	ppi_highlight                 => 0,
-	ppi_highlight_limit           => 10_000,
+	editor_indentationguides => 0,
+	editor_calltips          => 0,
+	editor_autoindent        => 'deep',
+	editor_methods           => 'alphabetical',
+	editor_folding           => 0,
+	editor_beginner          => 1,
+	editor_indent_auto       => 1,
+	editor_indent_tab        => 1,
+	editor_indent_tab_width  => 8,
+	editor_indent_width      => 8,
+	ppi_highlight            => 0,
+	ppi_highlight_limit      => 10_000,
 
 	# preferences specific to the output window
-	output_ansi      => 1,
+	output_ansi              => 1,
 
 	# When running a script from the application some of the files might have not been saved yet.
 	# There are several option what to do before running the script
@@ -51,13 +51,13 @@ my %defaults = (
 	# same - save the file in the current buffer
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
-	run_save                  => 'same',
+	run_save                 => 'same',
 
 	# By default, use background threads unless profiling
-	threads        => 1,
+	threads                  => 1,
 
 	# By default, don't enable experimental features
-	experimental              => 0,
+	experimental             => 0,
 );
 
 
@@ -152,6 +152,9 @@ sub new {
 	$self->{host}->{main_maximized} ||= 0;
 
 	# Files that were previously open (and can be still)
+	unless ( exists $self->{host}->{main_file} ) {
+		$self->{host}->{main_file} = undef;
+	}
 	unless ( _ARRAY($self->{host}->{main_files}) ) {
 		$self->{host}->{main_files} = [];
 	}
@@ -163,11 +166,8 @@ sub new {
 		@{ $self->{host}->{main_files} }
 	];
 
-	# When they want to run an arbitrary command
-	$self->{host}->{run_command} ||= '';
-
 	# Default the locale to the system locale
-	$self->{host}->{style} ||= 'default';
+	$self->{host}->{editor_style} ||= 'default';
 
 	%$self = (%defaults, %$self);
 
@@ -175,7 +175,7 @@ sub new {
 	# Automatically compiling files provided on the command
 	# line at start means executing arbitrary code, which is
 	# a massive security violation.
-	$self->{editor_syntaxcheck} = 0;
+	$self->{main_syntaxcheck} = 0;
 
 	return $self;
 }

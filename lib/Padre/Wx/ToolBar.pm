@@ -21,7 +21,7 @@ sub new {
 		| Wx::wxTB_NO_TOOLTIPS
 		| Wx::wxTB_NODIVIDER
 		| Wx::wxBORDER_NONE;
-	unless ( $main->config->{main_lockpanels} ) {
+	unless ( $main->config->{main_lockinterface} ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
 

@@ -17,7 +17,7 @@ use Padre::Config::Project ();
 our $VERSION = '0.25';
 
 use constant HOST    => 0;
-use constant HUMAN    => 1;
+use constant HUMAN   => 1;
 use constant PROJECT => 2;
 
 
@@ -30,22 +30,55 @@ use constant PROJECT => 2;
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
 
-config( experimental       => HUMAN );
+# Indent Settings
+# Allow projects to forcefully override personal settings
+config( editor_indent_auto       => PROJECT, HUMAN );
+config( editor_indent_tab        => PROJECT, HUMAN );
+config( editor_indent_tab_width  => PROJECT, HUMAN );
+config( editor_indent_width      => PROJECT, HUMAN );
 
-# Window geometry
-config( main_maximized     => HOST  );
-config( main_top           => HOST  );
-config( main_left          => HOST  );
-config( main_width         => HOST  );
-config( main_height        => HOST  );
+# Behaviour Tuning
+config( main_startup             => HUMAN );
+config( run_save                 => HUMAN );
+config( threads                  => HUMAN );
+config( output_ansi              => HUMAN );
+config( experimental             => HUMAN );
 
 # Pages and Panels
-config( main_startup       => HUMAN );
-config( main_lockinterface => HUMAN );
-config( main_statusbar     => HUMAN );
-config( main_functions     => HUMAN );
-config( main_outline    => HUMAN );
-config( main_output        => HUMAN );
+config( main_lockinterface       => HUMAN );
+config( main_functions           => HUMAN );
+config( main_outline             => HUMAN );
+config( main_output              => HUMAN );
+config( main_syntaxcheck         => HUMAN );
+config( main_statusbar           => HUMAN );
+
+# Editor settings
+config( editor_autoindent        => HUMAN );
+config( editor_beginner          => HUMAN );
+config( editor_calltips          => HUMAN );
+config( editor_eol               => HUMAN );
+config( editor_folding           => HUMAN );
+config( editor_indentationguides => HUMAN );
+config( editor_linenumbers       => HUMAN );
+config( editor_whitespace        => HUMAN );
+config( ppi_highlight            => HUMAN );
+config( ppi_highlight_limit      => HUMAN );
+
+# Because the colour data is in local files,
+# it has to be a host-specific setting.
+config( editor_style             => HOST  );
+
+# Window geometry
+config( main_maximized           => HOST  );
+config( main_top                 => HOST  );
+config( main_left                => HOST  );
+config( main_width               => HOST  );
+config( main_height              => HOST  );
+
+# Editor Session State
+config( main_file                => HOST  );
+config( main_files               => HOST  );
+config( main_files_pos           => HOST  );
 
 
 

@@ -30,53 +30,51 @@ SCOPE: {
 
 SCOPE: {
 	my $config = $app->config;
-	is_deeply  $config,
-		{
-		experimental                  => 0,
+	is_deeply( $config, {
+		experimental             => 0,
 
-		main_startup                  => 'new',
-		main_statusbar                => 1,
-		main_output                   => 0,
-		main_lockpanels               => 1,
-		main_subs_panel               => 0,
-		main_output_panel             => 0,
-		main_outline_panel            => 0,
+		main_startup             => 'new',
+		main_statusbar           => 1,
+		main_output              => 0,
+		main_lockinterface       => 1,
+		main_functions           => 0,
+		main_output              => 0,
+		main_outline             => 0,
 
-		editor_linenumbers            => 1,
-		editor_eol                    => 0,
-		editor_indentationguides      => 0,
-		editor_calltips               => 0,
-		editor_autoindent             => 'deep',
-		editor_methods                => 'alphabetical',
-		editor_whitespace            => 0,
-		editor_folding            => 0,
-		editor_indent_auto => 1,
-		editor_indent_tab_width               => 8,
-		editor_indent_width            => 8,
-		editor_indent_tab               => 1,
-		editor_beginner         => 1,
-		editor_syntaxcheck            => 0,
-		output_ansi          => 1,
+		editor_linenumbers       => 1,
+		editor_eol               => 0,
+		editor_indentationguides => 0,
+		editor_calltips          => 0,
+		editor_autoindent        => 'deep',
+		editor_methods           => 'alphabetical',
+		editor_whitespace        => 0,
+		editor_folding           => 0,
+		editor_indent_auto       => 1,
+		editor_indent_tab_width  => 8,
+		editor_indent_width      => 8,
+		editor_indent_tab        => 1,
+		editor_beginner          => 1,
+		main_syntaxcheck         => 0,
+		output_ansi              => 1,
 
-		ppi_highlight                 => 0,
-		ppi_highlight_limit           => 10_000,
+		ppi_highlight            => 0,
+		ppi_highlight_limit      => 10_000,
 
-		run_save                      => 'same',
-		threads            => 1,
-		
+		run_save                 => 'same',
+		threads                  => 1,
+
 		host => {
+			editor_style   => 'default',
 			main_maximized => 0,
 			main_top       => 20,
 			main_left      => 40,
 			main_width     => 600,
 			main_height    => 400,
-			run_command    => '',
+			main_file      => undef,
 			main_files     => [],
 			main_files_pos => [],
-			style          => 'default',
 		},
-	},
-	'defaults';
+	}, 'defaults' );
 }
 
 

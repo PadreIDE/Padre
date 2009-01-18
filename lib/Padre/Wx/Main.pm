@@ -248,19 +248,19 @@ sub new {
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
 	# Show the tools that the configuration dictates
-	$self->show_functions( $self->config->{main_subs_panel} );
-	$self->show_output( $self->config->{main_output_panel} );
-	$self->show_outline( $self->config->{main_outline_panel} );
+	$self->show_functions( $self->config->{main_functions} );
+	$self->show_output( $self->config->{main_output} );
+	$self->show_outline( $self->config->{main_outline} );
 
 	# Load the saved pane layout from last time (if any)
 	# NOTE: This seems to be a bigger source of bugs than
 	# it is a saver of time.
-	#if ( defined $config->{host}->{aui_manager_layout} ) {
-	#	$self->aui->LoadPerspective( $config->{host}->{aui_manager_layout} );
+	#if ( defined $config->{host}->{main_auilayout} ) {
+	#	$self->aui->LoadPerspective( $config->{host}->{main_auilayout} );
 	#}
 
 	# Lock the panels if needed
-	$self->aui->lock_panels( $self->config->{main_lockpanels} );
+	$self->aui->lock_panels( $self->config->{main_lockinterface} );
 
 	# we need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did not show
@@ -1035,8 +1035,8 @@ sub on_close_window {
 	$config->{host}->{main_files_pos} = $main_files_pos;
 
 	# Save the window geometry
-	$config->{host}->{aui_manager_layout} = $self->aui->SavePerspective;
-	$config->{host}->{main_maximized}     = $self->IsMaximized ? 1 : 0;
+	$config->{host}->{main_auilayout} = $self->aui->SavePerspective;
+	$config->{host}->{main_maximized} = $self->IsMaximized ? 1 : 0;
 	unless ( $self->IsMaximized ) {
 		# Don't save the maximized window size
 		(
@@ -1171,7 +1171,7 @@ sub setup_editor {
 
 	$editor->set_preferences;
 
-	if ( $config->{editor_syntaxcheck} ) {
+	if ( $config->{main_syntaxcheck} ) {
 		if ( $editor->GetMarginWidth(1) == 0 ) {
 			$editor->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL); # margin number 1 for symbols
 			$editor->SetMarginWidth(1, 16);                     # set margin 1 16 px wide
@@ -1678,8 +1678,8 @@ sub on_toggle_current_line_background {
 sub on_toggle_syntax_check {
 	my $self  = shift;
 	my $event = shift;
-	$self->config->{editor_syntaxcheck} = $event->IsChecked ? 1 : 0;
-	$self->show_syntax( $self->config->{editor_syntaxcheck} );
+	$self->config->{main_syntaxcheck} = $event->IsChecked ? 1 : 0;
+	$self->show_syntax( $self->config->{main_syntaxcheck} );
 	return;
 }
 
@@ -1770,7 +1770,7 @@ sub show_functions {
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
-	$self->config->{main_subs_panel} = $on;
+	$self->config->{main_functions} = $on;
 
 	if ( $on ) {
 		$self->right->show($self->functions);
@@ -1791,7 +1791,7 @@ sub show_outline {
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
 		$self->menu->view->{outline}->Check($on);
 	}
-	$self->config->{main_outline_panel} = $on;
+	$self->config->{main_outline} = $on;
 
 	if ( $on ) {
 		$self->right->show($outline);
@@ -1819,7 +1819,7 @@ sub show_output {
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
-	$self->config->{main_output_panel} = $on;
+	$self->config->{main_output} = $on;
 
 	if ( $on ) {
 		$self->bottom->show($self->output);
@@ -1882,10 +1882,10 @@ sub on_toggle_lockinterface {
 	my $self  = shift;
 
 	# Update the configuration
-	$self->config->{main_lockpanels} = $self->menu->view->{lockinterface}->IsChecked ? 1 : 0;
+	$self->config->{main_lockinterface} = $self->menu->view->{lockinterface}->IsChecked ? 1 : 0;
 
 	# Update the lock status
-	$self->aui->lock_panels( $self->config->{main_lockpanels} );
+	$self->aui->lock_panels( $self->config->{main_lockinterface} );
 
 	# The toolbar can't dynamically switch between
 	# tearable and non-tearable so rebuild it.

@@ -350,7 +350,7 @@ sub new {
 	foreach my $name ( @order ) {
 		my $label = $styles{$name};
 		my $radio = $self->{style}->AppendRadioItem( -1, $label );
-		if ( $config->{host}->{style} and $config->{host}->{style} eq $name ) {
+		if ( $config->{host}->{editor_style} and $config->{host}->{editor_style} eq $name ) {
 			$radio->Check(1);
 		}
 		Wx::Event::EVT_MENU( $main,
@@ -370,7 +370,7 @@ sub new {
 		foreach my $name (@private_styles) {
 			my $label = $name;
 			my $radio = $self->{style}->AppendRadioItem( -1, $label );
-			if ( $config->{host}->{style} and $config->{host}->{style} eq $name ) {
+			if ( $config->{host}->{editor_style} and $config->{host}->{editor_style} eq $name ) {
 				$radio->Check(1);
 			}
 			Wx::Event::EVT_MENU( $main,
@@ -483,13 +483,13 @@ sub refresh {
 	$self->{ current_line_background }->Check( $config->{editor_current_line_background} ? 1 : 0 );
 	$self->{ eol }->Check( $config->{editor_eol} ? 1 : 0 );
 	$self->{ whitespaces }->Check( $config->{editor_whitespace} ? 1 : 0 );
-	$self->{ output }->Check( $config->{main_output_panel} ? 1 : 0 );
-	$self->{ outline }->Check( $config->{main_outline_panel} ? 1 : 0 );
-	$self->{ functions }->Check( $config->{main_subs_panel} ? 1 : 0 );
+	$self->{ output }->Check( $config->{main_output} ? 1 : 0 );
+	$self->{ outline }->Check( $config->{main_outline} ? 1 : 0 );
+	$self->{ functions }->Check( $config->{main_functions} ? 1 : 0 );
 	$self->{ lockinterface }->Check( $config->{main_lockinterface} ? 1 : 0 );
 	$self->{ indentation_guide }->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{ show_calltips }->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{ show_syntaxcheck }->Check( $config->{editor_syntaxcheck} ? 1 : 0 );
+	$self->{ show_syntaxcheck }->Check( $config->{main_syntaxcheck} ? 1 : 0 );
 	$self->{ show_errorlist }->Check( $config->{editor_errorlist} ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
