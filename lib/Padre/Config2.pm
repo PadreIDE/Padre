@@ -50,6 +50,7 @@ config( main_functions           => HUMAN );
 config( main_outline             => HUMAN );
 config( main_output              => HUMAN );
 config( main_syntaxcheck         => HUMAN );
+config( main_errorlist           => HUMAN );
 config( main_statusbar           => HUMAN );
 
 # Editor settings

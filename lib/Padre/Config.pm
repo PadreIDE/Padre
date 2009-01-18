@@ -21,11 +21,16 @@ my %defaults = (
 	main_startup             => 'new',
 
 	# Look and feel preferences
-	main_lockinterface          => 1,
-	main_statusbar           => 1,
+	main_lockinterface       => 1,
+	main_functions           => 0,
+	main_outline             => 0,
 	main_output              => 0,
+	main_syntaxcheck         => 0,
+	main_errorlist           => 0,
+	main_statusbar           => 1,
 
 	# Editor features and indent settings
+	editor_font              => undef,
 	editor_linenumbers       => 1,
 	editor_eol               => 0,
 	editor_whitespace        => 0,
@@ -34,6 +39,9 @@ my %defaults = (
 	editor_autoindent        => 'deep',
 	editor_methods           => 'alphabetical',
 	editor_folding           => 0,
+	editor_wordwrap          => 0,
+	editor_currentline       => 0,
+	editor_currentline_color => 'FFFF04',
 	editor_beginner          => 1,
 	editor_indent_auto       => 1,
 	editor_indent_tab        => 1,
@@ -55,6 +63,9 @@ my %defaults = (
 
 	# By default, use background threads unless profiling
 	threads                  => 1,
+
+	# What language should the diagnostics be in
+	diagnostics_lang         => '',
 
 	# By default, don't enable experimental features
 	experimental             => 0,
@@ -243,6 +254,79 @@ sub write {
 
 	return 1;
 }
+
+
+
+
+
+#####################################################################
+# Human-Layer Settings
+
+use Class::XSAccessor
+	getters => {
+		main_startup             => 'main_startup',
+		main_lockinterface       => 'main_lockinterface',
+		main_functions           => 'main_functions',
+		main_outline             => 'main_outline',
+		main_output              => 'main_output',
+		main_syntaxcheck         => 'main_syntaxcheck',
+		main_errorlist           => 'main_errorlist',
+		main_statusbar           => 'main_statusbar',
+		editor_font              => 'editor_font',
+		editor_linenumbers       => 'editor_linenumbers',
+		editor_eol               => 'editor_eol',
+		editor_whitespace        => 'editor_whitespace',
+		editor_indentationguides => 'editor_indentationguides',
+		editor_calltips          => 'editor_calltips',
+		editor_autoindent        => 'editor_autoindent',
+		editor_methods           => 'editor_methods',
+		editor_folding           => 'editor_folding',
+		editor_wordwrap          => 'editor_wordwrap',
+		editor_currentline       => 'editor_currentline',
+		editor_beginner          => 'editor_beginner',
+		editor_indent_auto       => 'editor_indent_auto',
+		editor_indent_tab        => 'editor_indent_tab',
+		editor_indent_tab_width  => 'editor_indent_tab_width',
+		editor_indent_width      => 'editor_indent_width',
+		ppi_highlight            => 'ppi_highlight',
+		ppi_highlight_limit      => 'ppi_highlight_limit',
+		output_ansi              => 'output_ansi',
+		run_save                 => 'run_save',
+		threads                  => 'threads',
+		diagnostics_lang         => 'diagnostics_lang',
+		experimental             => 'experimental',
+	};
+
+
+
+
+
+#####################################################################
+# Host-Layer Settings
+
+#sub {
+#	$_[0]->{host}->{};
+#}
+#
+#sub {
+#	$_[0]->{host}->{};
+#}
+#
+#sub {
+#	$_[0]->{host}->{};
+#}
+#
+#sub {
+#	$_[0]->{host}->{};
+#}
+#
+#sub {
+#	$_[0]->{host}->{};
+#}
+#
+#sub {
+#	$_[0]->{host}->{};
+#}
 
 1;
 

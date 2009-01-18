@@ -475,22 +475,22 @@ sub refresh {
 
 	# Simple check state cases from configuration
 	unless ( Padre::Util::WXWIN32 ) {
-		$self->{statusbar}->Check( $config->{main_statusbar} ? 1 : 0 );
+		$self->{statusbar}->Check( $config->main_statusbar ? 1 : 0 );
 	}
-	
+
 	$self->{ lines }->Check( $config->{editor_linenumbers} ? 1 : 0 );
 	$self->{ folding }->Check( $config->{editor_folding} ? 1 : 0 );
-	$self->{ current_line_background }->Check( $config->{editor_current_line_background} ? 1 : 0 );
+	$self->{ current_line_background }->Check( $config->{editor_currentline} ? 1 : 0 );
 	$self->{ eol }->Check( $config->{editor_eol} ? 1 : 0 );
 	$self->{ whitespaces }->Check( $config->{editor_whitespace} ? 1 : 0 );
-	$self->{ output }->Check( $config->{main_output} ? 1 : 0 );
-	$self->{ outline }->Check( $config->{main_outline} ? 1 : 0 );
-	$self->{ functions }->Check( $config->{main_functions} ? 1 : 0 );
-	$self->{ lockinterface }->Check( $config->{main_lockinterface} ? 1 : 0 );
+	$self->{ output }->Check( $config->main_output ? 1 : 0 );
+	$self->{ outline }->Check( $config->main_outline ? 1 : 0 );
+	$self->{ functions }->Check( $config->main_functions ? 1 : 0 );
+	$self->{ lockinterface }->Check( $config->main_lockinterface ? 1 : 0 );
 	$self->{ indentation_guide }->Check( $config->{editor_indentationguides} ? 1 : 0 );
 	$self->{ show_calltips }->Check( $config->{editor_calltips} ? 1 : 0 );
-	$self->{ show_syntaxcheck }->Check( $config->{main_syntaxcheck} ? 1 : 0 );
-	$self->{ show_errorlist }->Check( $config->{editor_errorlist} ? 1 : 0 );
+	$self->{ show_syntaxcheck }->Check( $config->main_syntaxcheck ? 1 : 0 );
+	$self->{ show_errorlist }->Check( $config->main_errorlist ? 1 : 0 );
 
 	# Check state for word wrap is document-specific
 	if ( $document ) {
@@ -528,7 +528,7 @@ sub refresh {
 
 	# You cannot set a bookmark unless the current document is on disk.
 	my $set = ( $doc and defined $document->filename ) ? 1 : 0;
-	$self->{ bookmark_set  }->Enable($set);
+	$self->{ bookmark_set }->Enable($set);
 
 	return;
 }

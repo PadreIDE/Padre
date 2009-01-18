@@ -43,8 +43,8 @@ sub get_layout_for_behaviour {
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Default word wrap on for each file')],
-			['Wx::CheckBox',    'editor_use_wordwrap', '',
-				($config->{editor_use_wordwrap} ? 1 : 0) ],
+			['Wx::CheckBox',    'editor_wordwrap', '',
+				($config->{editor_wordwrap} ? 1 : 0) ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Perl beginner mode')],
@@ -73,8 +73,8 @@ sub get_layout_for_appearance {
 		],
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
-			[ 'Wx::ColourPickerCtrl', 'editor_current_line_background_color',
-				(defined $config->{editor_current_line_background_color} ? '#' . $config->{editor_current_line_background_color} : '#ffff04') ]
+			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color',
+				(defined $config->{editor_currentline_color} ? '#' . $config->{editor_currentline_color} : '#ffff04') ]
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Colored text in output window (ANSI): ')],
@@ -94,7 +94,7 @@ sub dialog {
 		parent => $win,
 		title  => Wx::gettext("Preferences"),
 		layout => [ $behaviour, $appearance, ],
-		width  => [280, 200],
+		width  => [ 280, 200 ],
 		multipage => {
 			auto_ok_cancel  => 1,
 			ok_widgetid     => '_ok_',
@@ -127,21 +127,19 @@ sub guess_indentation_settings {
 	my $class  = shift;
 	my $dialog = shift;
 	my $doc    = Padre::Current->document;
-
-	my $indent_style = $doc->guess_indentation_style();
-	
-	$dialog->{_widgets_}->{editor_indent_tab}->SetValue( $indent_style->{use_tabs} );
-	$dialog->{_widgets_}->{editor_indent_tab_width}->SetValue( $indent_style->{tabwidth} );
-	$dialog->{_widgets_}->{editor_indent_width}->SetValue( $indent_style->{indentwidth} );
+	my $indent = $doc->guess_indentation_style;
+	$dialog->{_widgets_}->{editor_indent_tab}->SetValue( $indent->{use_tabs} );
+	$dialog->{_widgets_}->{editor_indent_tab_width}->SetValue( $indent->{tabwidth} );
+	$dialog->{_widgets_}->{editor_indent_width}->SetValue( $indent->{indentwidth} );
 }
 
-
 sub run {
-	my ( $class, $win ) = @_;
-
+	my $class  = shift;
+	my $win    = shift;
 	my $config = Padre->ide->config;
 
-	#Keep this in order for tools/update_pot_messages.pl to pick these messages up.
+	# Keep this in order for tools/update_pot_messages.pl
+	# to pick these messages up.
 	my @keep_me = (
 		Wx::gettext('new'),
 		Wx::gettext('nothing'),
@@ -153,12 +151,12 @@ sub run {
 		Wx::gettext('original'),
 		Wx::gettext('alphabetical_private_last'),
 	);
-	my @main_startup_items = qw(new nothing last);
-	my @main_startup = (
-		$config->{main_startup},
-		grep { $_ ne $config->{main_startup} } @main_startup_items
+	my $main_startup = $config->main_startup;
+	my @main_startup_items = (
+		$main_startup,
+		grep { $_ ne $main_startup } qw{new nothing last}
 	);
-	my @main_startup_localized = map{Wx::gettext($_)} @main_startup;
+	my @main_startup_localized = map{Wx::gettext($_)} @main_startup_items;
 	my @editor_autoindent_items = qw(no same_level deep);
 	my @editor_autoindent = (
 		$config->{editor_autoindent},
@@ -179,24 +177,23 @@ sub run {
 	my $data = $dialog->get_data;
 
 	foreach my $f (
-		qw( pod_maxlist
-			pod_minlist
+		qw( 
 			editor_indent_tab_width
 			editor_indent_width
 			editor_font
-			editor_current_line_background_color
+			editor_currentline_color
 			diagnostics_lang
 		)
 	) {
 		$config->{$f} = $data->{$f};
 	}
-	$config->{editor_current_line_background_color} =~ s/#//;
+	$config->{editor_currentline_color} =~ s/#//;
 
-	foreach my $f (qw(editor_indent_tab editor_use_wordwrap editor_indent_auto editor_beginner output_ansi)) {
+	foreach my $f (qw(editor_indent_tab editor_wordwrap editor_indent_auto editor_beginner output_ansi)) {
 		$config->{$f} = $data->{$f} ? 1 : 0;
 	}
 
-	$config->{main_startup}        = $main_startup[ $data->{main_startup} ];
+	$config->{main_startup}        = $main_startup_items[ $data->{main_startup} ];
 	$config->{editor_autoindent}   = $editor_autoindent[ $data->{editor_autoindent} ];
 	$config->{editor_methods}      = $editor_methods[ $data->{editor_methods} ];
 

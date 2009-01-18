@@ -248,9 +248,9 @@ sub new {
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
 	# Show the tools that the configuration dictates
-	$self->show_functions( $self->config->{main_functions} );
-	$self->show_output( $self->config->{main_output} );
-	$self->show_outline( $self->config->{main_outline} );
+	$self->show_functions( $self->config->main_functions );
+	$self->show_outline( $self->config->main_outline );
+	$self->show_output( $self->config->main_output );
 
 	# Load the saved pane layout from last time (if any)
 	# NOTE: This seems to be a bigger source of bugs than
@@ -260,7 +260,7 @@ sub new {
 	#}
 
 	# Lock the panels if needed
-	$self->aui->lock_panels( $self->config->{main_lockinterface} );
+	$self->aui->lock_panels( $self->config->main_lockinterface );
 
 	# we need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did not show
@@ -332,7 +332,7 @@ sub load_files {
 
 	# Config setting 'nothing' means startup with nothing open
 	my $config  = $self->config;
-	my $startup = $config->{main_startup};
+	my $startup = $config->main_startup;
 	if ( $startup eq 'nothing' ) {
 		return;
 	}
@@ -1005,7 +1005,7 @@ sub on_close_window {
 
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
-		if ( $config->{main_startup} eq 'same' ) {
+		if ( $config->main_startup eq 'same' ) {
 			# Save the files, but don't close
 			my $saved = $self->on_save_all;
 			unless ( $saved ) {
@@ -1171,7 +1171,7 @@ sub setup_editor {
 
 	$editor->set_preferences;
 
-	if ( $config->{main_syntaxcheck} ) {
+	if ( $config->main_syntaxcheck ) {
 		if ( $editor->GetMarginWidth(1) == 0 ) {
 			$editor->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL); # margin number 1 for symbols
 			$editor->SetMarginWidth(1, 16);                     # set margin 1 16 px wide
@@ -1666,10 +1666,10 @@ sub on_toggle_current_line_background {
 	my ($self, $event) = @_;
 
 	my $config = $self->config;
-	$config->{editor_current_line_background} = $event->IsChecked ? 1 : 0;
+	$config->{editor_currentline} = $event->IsChecked ? 1 : 0;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetCaretLineVisible( $config->{editor_current_line_background} ? 1 : 0 );
+		$editor->SetCaretLineVisible( $config->{editor_currentline} ? 1 : 0 );
 	}
 
 	return;
@@ -1679,15 +1679,15 @@ sub on_toggle_syntax_check {
 	my $self  = shift;
 	my $event = shift;
 	$self->config->{main_syntaxcheck} = $event->IsChecked ? 1 : 0;
-	$self->show_syntax( $self->config->{main_syntaxcheck} );
+	$self->show_syntax( $self->config->main_syntaxcheck );
 	return;
 }
 
 sub on_toggle_errorlist {
 	my $self  = shift;
 	my $event = shift;
-	$self->config->{editor_errorlist} = $event->IsChecked ? 1 : 0;
-	if ( $self->config->{editor_errorlist} ) {
+	$self->config->{main_errorlist} = $event->IsChecked ? 1 : 0;
+	if ( $self->config->main_errorlist ) {
 		$self->errorlist->enable;
 	} else {
 		$self->errorlist->disable;
@@ -1869,7 +1869,7 @@ sub on_toggle_statusbar {
 	$self->config->{main_statusbar} = $self->menu->view->{statusbar}->IsChecked ? 1 : 0;
 
 	# Update the status bar
-	if ( $self->config->{main_statusbar} ) {
+	if ( $self->config->main_statusbar ) {
 		$self->GetStatusBar->Show;
 	} else {
 		$self->GetStatusBar->Hide;
@@ -1885,7 +1885,7 @@ sub on_toggle_lockinterface {
 	$self->config->{main_lockinterface} = $self->menu->view->{lockinterface}->IsChecked ? 1 : 0;
 
 	# Update the lock status
-	$self->aui->lock_panels( $self->config->{main_lockinterface} );
+	$self->aui->lock_panels( $self->config->main_lockinterface );
 
 	# The toolbar can't dynamically switch between
 	# tearable and non-tearable so rebuild it.

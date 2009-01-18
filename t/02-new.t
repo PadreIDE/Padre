@@ -34,13 +34,15 @@ SCOPE: {
 		experimental             => 0,
 
 		main_startup             => 'new',
-		main_statusbar           => 1,
-		main_output              => 0,
 		main_lockinterface       => 1,
 		main_functions           => 0,
-		main_output              => 0,
 		main_outline             => 0,
+		main_output              => 0,
+		main_syntaxcheck         => 0,
+		main_errorlist           => 0,
+		main_statusbar           => 1,
 
+		editor_font              => undef,
 		editor_linenumbers       => 1,
 		editor_eol               => 0,
 		editor_indentationguides => 0,
@@ -49,12 +51,14 @@ SCOPE: {
 		editor_methods           => 'alphabetical',
 		editor_whitespace        => 0,
 		editor_folding           => 0,
+		editor_wordwrap          => 0,
+		editor_currentline       => 0,
+		editor_currentline_color => 'FFFF04',
 		editor_indent_auto       => 1,
 		editor_indent_tab_width  => 8,
 		editor_indent_width      => 8,
 		editor_indent_tab        => 1,
 		editor_beginner          => 1,
-		main_syntaxcheck         => 0,
 		output_ansi              => 1,
 
 		ppi_highlight            => 0,
@@ -62,6 +66,8 @@ SCOPE: {
 
 		run_save                 => 'same',
 		threads                  => 1,
+
+		diagnostics_lang         => '',
 
 		host => {
 			editor_style   => 'default',

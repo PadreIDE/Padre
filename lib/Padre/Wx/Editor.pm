@@ -46,7 +46,7 @@ sub new {
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 	Wx::Event::EVT_LEFT_UP(    $self, \&on_left_up    );
 
-	if ( Padre->ide->config->{editor_use_wordwrap} ) {
+	if ( Padre->ide->config->{editor_wordwrap} ) {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
 	}
 	$self->SetDropTarget(
@@ -142,17 +142,17 @@ sub padre_setup_plain {
 		$self->SetCaretForeground( _color( $data->{plain}->{current_line_foreground} ) );
 	}
 	if ( defined $data->{plain}->{current_line_background} ) {
-		if ( defined $config->{editor_current_line_background_color} ) {
+		if ( defined $config->{editor_currentline_color} ) {
 			if (   $data->{plain}->{current_line_background}
-				ne $config->{editor_current_line_background_color}
+				ne $config->{editor_currentline_color}
 			) {
-				$data->{plain}->{current_line_background} = $config->{editor_current_line_background_color};
+				$data->{plain}->{current_line_background} = $config->{editor_currentline_color};
 			}
 		}
 		$self->SetCaretLineBackground( _color( $data->{plain}->{current_line_background} ) );
 	}
-	elsif ( defined $config->{editor_current_line_background_color} ) {
-		$self->SetCaretLineBackground( _color( $config->{editor_current_line_background_color} ) );
+	elsif ( defined $config->{editor_currentline_color} ) {
+		$self->SetCaretLineBackground( _color( $config->{editor_currentline_color} ) );
 	}
 
 	foreach my $k (keys %{ $data->{plain}->{foregrounds} }) {
@@ -370,7 +370,7 @@ sub set_preferences {
 	$self->SetIndentationGuides( $config->{editor_indentationguides} );
 	$self->SetViewEOL(           $config->{editor_eol}               );
 	$self->SetViewWhiteSpace(    $config->{editor_whitespace}       );
-	$self->SetCaretLineVisible(  $config->{editor_current_line_background} ? 1 : 0 );
+	$self->SetCaretLineVisible(  $config->{editor_currentline} ? 1 : 0 );
 
 	$self->padre_setup;
 
@@ -752,7 +752,7 @@ sub on_mouse_motion {
 	my ( $self, $event ) = @_;
 
 	$event->Skip;
-	return unless Padre->ide->config->{main_syntaxcheck};
+	return unless Padre->ide->config->main_syntaxcheck;
 
 	my $mousePos = $event->GetPosition;
 	my $line = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );

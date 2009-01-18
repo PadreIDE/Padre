@@ -93,7 +93,7 @@ sub disable {
 sub populate {
 	my $self = shift;
 	return unless $self->enabled;
-	
+
 	my $cur_lang = $self->config->{diagnostics_lang};
 	$cur_lang =~ s/^\s*//;
 	$cur_lang =~ s/\s*$//;
@@ -105,10 +105,10 @@ sub populate {
 	return unless $data;
 
 	my $task = Padre::Task::ErrorParser->new(
-		parser    => $self->parser,
-		cur_lang  => $cur_lang,
-		old_lang  => $old_lang,
-		data      => $data,
+		parser   => $self->parser,
+		cur_lang => $cur_lang,
+		old_lang => $old_lang,
+		data     => $data,
 	);
 
 	$task->schedule;
