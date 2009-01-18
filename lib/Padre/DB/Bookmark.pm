@@ -1,3 +1,30 @@
+package Padre::DB::Bookmark;
+
+use strict;
+use warnings;
+
+our $VERSION = '0.25';
+
+sub select_names {
+	Padre::DB->selectcol_arrayref(
+		'select name from bookmark order by name'
+	);
+}
+
+# Finds and returns a single element by name
+sub fetch_name {
+	my @rows = Padre::DB::Bookmark->select(
+		'where name = ?', $_[1],
+	);
+	return $rows[0];
+}
+
+1;
+
+__END__
+
+=pod
+
 =head1 NAME
 
 Padre::DB::Bookmark - Padre::DB class for the bookmark table
@@ -190,3 +217,4 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
+=cut

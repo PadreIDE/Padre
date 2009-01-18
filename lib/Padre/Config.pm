@@ -56,7 +56,6 @@ my %defaults = (
 	run_save                  => 'same',
 
 	# Various things that should be in the database
-	bookmarks                 => {},
 	projects                  => {},
 	current_project           => '',
 
@@ -240,12 +239,6 @@ sub write {
 
 	# Clone and remove the bless
 	my $copy = Storable::dclone( +{ %$self } );
-
-	# Clean out some internals
-	my $bookmarks = $self->{bookmarks};
-	foreach my $key ( keys %$bookmarks ) {
-		delete $bookmarks->{$key}->{pageid};
-	}
 
 	# Serialize some values
 	$copy->{host}->{main_files} = join( "\n", grep { defined } @{$copy->{host}->{main_files}} );

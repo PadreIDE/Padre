@@ -64,7 +64,6 @@ SCOPE: {
 		projects                      => {},
 		run_save                      => 'same',
 		current_project               => '',
-		bookmarks                     => {},
 		plugins                       => {},
 		threads            => 1,
 		
