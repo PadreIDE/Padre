@@ -64,13 +64,6 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Recent projects
-	$self->{recent_projects} = Wx::Menu->new;
-	$self->Append( -1,
-		Wx::gettext("Recent Projects") . '...',
-		$self->{recent_projects},
-	);
-
 	return $self;
 }
 

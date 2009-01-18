@@ -55,10 +55,6 @@ my %defaults = (
 	# all_buffers - all the buffers even if they don't have a name yet
 	run_save                  => 'same',
 
-	# Various things that should be in the database
-	projects                  => {},
-	current_project           => '',
-
 	# By default we have an empty plugins configuration
 	plugins                   => {},
 

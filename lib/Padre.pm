@@ -371,7 +371,7 @@ Padre will have the notion of a Perl project. As we would like
 to make things as natural as possible for the perl developer
 and we think the distribution methods used for CPAN module are
 a good way to handle any project Padre will understand a project
-as a CPAN module. This does not mean that you project needs to end
+as a CPAN module. This does not mean that your project needs to end
 up on CPAN of course. But if your projects directory structure
 follows that of the modules on CPAN, Padre will be automatically
 recognize it.
@@ -1004,10 +1004,6 @@ not in use.
 =item L<Padre::Wx::Printout>
 
 Implementing the printing capability of Padre.
-
-=item L<Padre::Wx::Project>
-
-not in use.
 
 =item L<Padre::Wx::RightClick>
 
