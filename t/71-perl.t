@@ -12,29 +12,36 @@ BEGIN {
 }
 
 use Test::NoWarnings;
-use Data::Dumper qw(Dumper);
-use File::Spec   ();
-use t::lib::Padre;
-use t::lib::Padre::Editor;
+use File::Spec::Functions ':ALL';
+
+# Padre can move the cwd around, so lock in the location of the
+# test files early before that happens
+my $files = rel2abs( catdir( 't', 'files' ) );
 
 my $tests;
 plan tests => $tests+1;
+
+use t::lib::Padre;
+use t::lib::Padre::Editor;
 
 use Padre::Document;
 use Padre::PPI;
 use PPI::Document;
 
-my $editor_1 = t::lib::Padre::Editor->new;
-my $file_1   = File::Spec->catfile('t', 'files', 'missing_brace_1.pl');
-my $doc_1    = Padre::Document->new(
-	filename  => $file_1,
-);
-$doc_1->set_editor($editor_1);
-$editor_1->configure_editor($doc_1);
+
+
+
 
 SCOPE: {
-	my $msgs = $doc_1->check_syntax;
-	#diag Dumper $msgs;
+	my $editor = t::lib::Padre::Editor->new;
+	my $file   = catfile( $files, 'missing_brace_1.pl' );
+	my $doc    = Padre::Document->new(
+		filename  => $file,
+	);
+	$doc->set_editor($editor);
+	$editor->configure_editor($doc);
+
+	my $msgs = $doc->check_syntax;
 	is_deeply ($msgs, [
            {
              'msg' => 'Missing right curly or square bracket, at end of line',
@@ -47,24 +54,23 @@ SCOPE: {
              'line' => '10'
            }
 	]);
-	
-	BEGIN { $tests += 1; }
-}
 
-SCOPE: {
-	isa_ok($doc_1, 'Padre::Document');
-	isa_ok($doc_1, 'Padre::Document::Perl');
-	is($doc_1->filename, $file_1, 'filename');
+	isa_ok($doc, 'Padre::Document');
+	isa_ok($doc, 'Padre::Document::Perl');
+	is($doc->filename, $file, 'filename');
 	
 	#Padre::PPI::find_unmatched_brace();
-	BEGIN { $tests += 3; }
+	BEGIN { $tests += 4; }
 }
+
+
+
 
 
 # tests for Padre::PPI::find_variable_declaration
 # and ...find_token_at_location
 SCOPE: {
-	my $infile = File::Spec->catfile('t', 'files', 'find_variable_declaration_1.pm');
+	my $infile = catfile( $files, 'find_variable_declaration_1.pm' );
 	my $text = do { local $/=undef; open my $fh, '<', $infile or die $!; <$fh> };
   
 	my $doc = PPI::Document->new( \$text );
@@ -111,16 +117,20 @@ SCOPE: {
 }
 
 
-my $editor_2 = t::lib::Padre::Editor->new;
-my $file_2   = File::Spec->catfile('t', 'files', 'one_char.pl');
-my $doc_2    = Padre::Document->new(
-	filename  => $file_2,
-);
-$doc_2->set_editor($editor_2);
-$editor_2->configure_editor($doc_2);
 
+
+
+# Test for check_syntax
 SCOPE: {
-	my $msgs = $doc_2->check_syntax;
+	my $editor = t::lib::Padre::Editor->new;
+	my $file   = catfile( $files, 'one_char.pl' );
+	my $doc    = Padre::Document->new(
+		filename  => $file,
+	);
+	$doc->set_editor($editor);
+	$editor->configure_editor($doc);
+
+	my $msgs = $doc->check_syntax;
 	my $end  = $msgs->[-1];
 	is_deeply(
 		$end,
