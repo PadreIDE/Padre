@@ -197,6 +197,14 @@ sub new {
 
 
 	# Commenting
+	$self->{comment_toggle} = $self->Append( -1,
+                Wx::gettext("&Toggle Comment\tCtrl-Shift-C")
+        );
+        Wx::Event::EVT_MENU( $main,
+                $self->{comment_toggle},
+                \&Padre::Wx::Main::on_comment_toggle_block,
+        );
+
 	$self->{comment_out} = $self->Append( -1,
 		Wx::gettext("&Comment Selected Lines\tCtrl-M")
 	);

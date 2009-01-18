@@ -642,7 +642,11 @@ sub on_right_down {
 	}
 
 	$menu->AppendSeparator;
-
+	
+	my $commentToggle = $menu->Append( -1, Wx::gettext("&Toggle Comment\tCtrl-Shift-C") );
+        Wx::Event::EVT_MENU( $main, $commentToggle,
+                \&Padre::Wx::Main::on_comment_toggle_block,
+        );
 	my $comment = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
 	Wx::Event::EVT_MENU( $main, $comment,
 		\&Padre::Wx::Main::on_comment_out_block,
@@ -835,6 +839,18 @@ sub get_text_from_clipboard {
 	}
 	Wx::wxTheClipboard->Close;
 	return $text;
+}
+
+# Coment or comment text depending on the first selected line.
+# This is the most coherent way to handle mixed blocks(commented and
+# uncommented lines).
+sub comment_toggle_lines {
+	my ($self, $begin, $end, $str) = @_;
+	if ( _get_line_by_number($self, $begin) =~ /\s*$str/ ) {
+		uncomment_lines(@_);
+	} else {
+		comment_lines(@_);
+		}	
 }
 
 # $editor->comment_lines($begin, $end, $str);
