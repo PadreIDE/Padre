@@ -303,29 +303,49 @@ use Class::XSAccessor
 #####################################################################
 # Host-Layer Settings
 
-#sub {
-#	$_[0]->{host}->{};
-#}
-#
-#sub {
-#	$_[0]->{host}->{};
-#}
-#
-#sub {
-#	$_[0]->{host}->{};
-#}
-#
-#sub {
-#	$_[0]->{host}->{};
-#}
-#
-#sub {
-#	$_[0]->{host}->{};
-#}
-#
-#sub {
-#	$_[0]->{host}->{};
-#}
+sub main_maximized {
+	$_[0]->{host}->{main_maximized};
+}
+
+sub main_top {
+	$_[0]->{host}->{main_top};
+}
+
+sub main_left {
+	$_[0]->{host}->{main_left};
+}
+
+sub main_width {
+	$_[0]->{host}->{main_width};
+}
+
+sub main_height {
+	$_[0]->{host}->{main_height};
+}
+
+sub main_auilayout {
+	$_[0]->{host}->{main_auilayout};
+}
+
+sub main_file {
+	$_[0]->{host}->{main_file};
+}
+
+sub main_files {
+	$_[0]->{host}->{main_files};
+}
+
+sub main_files_pos {
+	$_[0]->{host}->{main_files_pos};
+}
+
+sub editor_style {
+	$_[0]->{host}->{editor_style};
+}
+
+sub locale {
+	$_[0]->{host}->{locale};
+}
 
 1;
 

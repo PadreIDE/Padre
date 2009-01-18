@@ -411,7 +411,7 @@ use constant system_rfc4646 =>
 
 # Find the rfc4646 to use by default
 sub rfc4646 {
-	my $config = Padre->ide->config->{host}->{locale};
+	my $config = Padre->ide->config->locale;
 	if ( $config and not $RFC4646{$config} ) {
 		# Bad or unsupported configuration
 		$config = undef;
@@ -461,7 +461,7 @@ sub menu_view_languages {
 sub encoding_system_default {
 	my $encoding;
 	if ( Padre::Util::MAC ) {
-		# In mac system Wx::locale::GetSystemEncodingName() couldn't
+		# In mac system Wx::Locale::GetSystemEncodingName() couldn't
 		# return the name of encoding directly.
 		# Use LC_CTYPE to guess system default encoding.
 		require POSIX;
@@ -474,7 +474,7 @@ sub encoding_system_default {
 		}
 
 	} elsif ( Padre::Util::WIN32 ) {
-		# In windows system Wx::locale::GetSystemEncodingName() returns
+		# In windows system Wx::Locale::GetSystemEncodingName() returns
 		# like ``windows-1257'' and it matches as ``cp1257''
 		# refer to src/common/intl.cpp
 		$encoding = Wx::Locale::GetSystemEncodingName();

@@ -350,7 +350,7 @@ sub new {
 	foreach my $name ( @order ) {
 		my $label = $styles{$name};
 		my $radio = $self->{style}->AppendRadioItem( -1, $label );
-		if ( $config->{host}->{editor_style} and $config->{host}->{editor_style} eq $name ) {
+		if ( $config->editor_style and $config->editor_style eq $name ) {
 			$radio->Check(1);
 		}
 		Wx::Event::EVT_MENU( $main,
@@ -370,7 +370,7 @@ sub new {
 		foreach my $name (@private_styles) {
 			my $label = $name;
 			my $radio = $self->{style}->AppendRadioItem( -1, $label );
-			if ( $config->{host}->{editor_style} and $config->{host}->{editor_style} eq $name ) {
+			if ( $config->editor_style and $config->editor_style eq $name ) {
 				$radio->Check(1);
 			}
 			Wx::Event::EVT_MENU( $main,
@@ -409,7 +409,7 @@ sub new {
 			$_[0]->change_locale;
 		},
 	);
-	if ( defined $config->{host}->{locale} and $default eq $config->{host}->{locale} ) {
+	if ( defined $config->locale and $config->locale eq $default ) {
 		$self->{language_default}->Check(1);
 	}
 

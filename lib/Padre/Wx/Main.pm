@@ -100,7 +100,7 @@ sub new {
 
 	# Determine the initial frame style
 	my $style = Wx::wxDEFAULT_FRAME_STYLE;
-	if ( $config->{host}->{main_maximized} ) {
+	if ( $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
 		$style |= Wx::wxCLIP_CHILDREN;
 	}
@@ -125,12 +125,12 @@ sub new {
 		-1,
 		$title,
 		[
-			$config->{host}->{main_left},
-			$config->{host}->{main_top},
+			$config->main_left,
+			$config->main_top,
 		],
 		[
-			$config->{host}->{main_width},
-			$config->{host}->{main_height},
+			$config->main_width,
+			$config->main_height,
 		],
 		$style,
 	);
@@ -255,8 +255,8 @@ sub new {
 	# Load the saved pane layout from last time (if any)
 	# NOTE: This seems to be a bigger source of bugs than
 	# it is a saver of time.
-	#if ( defined $config->{host}->{main_auilayout} ) {
-	#	$self->aui->LoadPerspective( $config->{host}->{main_auilayout} );
+	#if ( defined $config->main_auilayout ) {
+	#	$self->aui->LoadPerspective( $config->main_auilayout );
 	#}
 
 	# Lock the panels if needed
@@ -346,9 +346,9 @@ sub load_files {
 	# Config setting 'last' means startup with all the files from the
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
-		if ( $config->{host}->{main_files} ) {
-			my @main_files     = @{$config->{host}->{main_files}};
-			my @main_files_pos = @{$config->{host}->{main_files_pos}};
+		if ( $config->main_files ) {
+			my @main_files     = @{ $config->main_files     };
+			my @main_files_pos = @{ $config->main_files_pos };
 			foreach my $i ( 0 .. $#main_files ) {
 				my $file = $main_files[$i];
 				my $id   = $self->setup_editor($file);
@@ -356,8 +356,8 @@ sub load_files {
 					$self->notebook->GetPage($id)->GotoPos( $main_files_pos[$i] );
 				}
 			}
-			if ( $config->{host}->{main_file} ) {
-				my $id = $self->find_editor_of_file( $config->{host}->{main_file} );
+			if ( $config->main_file ) {
+				my $id = $self->find_editor_of_file( $config->main_file );
 				$self->on_nth_pane($id) if defined $id;
 			}
 		}
