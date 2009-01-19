@@ -2,9 +2,20 @@ Changes for Perl Application Development and Refactoring Environment
 
 v0.26 2009.0X.XX
 
+    Complete rewrite of the configuration layer. All access to configuration
+        data is now via methods so that we can add support for project-level
+        customisation of the interface. (ADAMK)
+    Completely refactored all of the config setting names (ADAMK)
+    Moved config data on bookmarks, plugins and historical search/replace
+        strings out of the config file and into the database. (ADAMK)
     The output window now understands the color and font-face
         related ANSI control sequences (SMUELLER)
     The long-awaited MainWindow.pm -> Main.pm (ADAMK)
+    Heavily modified many variables and method names to bring a greater
+       simplicity and consistency to various APIs. Only possible because
+       we were already breaking the config system and Main.pm (ADAMK)
+    Removed some classes and other code that had (astonishingly for such a
+        your application) become useless and bit-rotten (ADAMK)
     Added styles for text/x-patch, text/x-makefile, text/x-yaml,
         text/css, text/plain(apache conf) file types (KEEDI)
     Now style config file supports foreground, background, bold,
