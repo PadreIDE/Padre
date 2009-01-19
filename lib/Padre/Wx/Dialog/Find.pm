@@ -13,10 +13,10 @@ use Padre::Wx::Dialog ();
 our $VERSION = '0.25';
 
 my @cbs = qw(
-	case_insensitive
-	use_regex
-	backwards
-	close_on_hit
+	find_case
+	find_regex
+	find_reverse
+	find_first
 );
 
 sub get_layout {
@@ -76,33 +76,33 @@ sub get_layout {
 		[
 			[
 				'Wx::CheckBox',
-				'case_insensitive',
+				'find_case',
 				Wx::gettext('Case &Insensitive'),
-				($config->{search}->{case_insensitive} ? 1 : 0) 
+				($config->find_case ? 0 : 1) 
 			],
 		],
 		[
 			[
 				'Wx::CheckBox',
-				'use_regex',
+				'find_regex',
 				Wx::gettext('&Use Regex'),
-				($config->{search}->{use_regex} ? 1 : 0)
+				($config->find_regex ? 1 : 0)
 			],
 		],
 		[
 			[
 				'Wx::CheckBox',
-				'backwards',
+				'find_reverse',
 				Wx::gettext('Search &Backwards'),
-				($config->{search}->{backwards} ? 1 : 0)
+				($config->find_reverse ? 1 : 0)
 			],
 		],
 		[
 			[
 				'Wx::CheckBox',
-				'close_on_hit',
+				'find_first',
 				Wx::gettext('Close Window on &hit'),
-				($config->{search}->{close_on_hit} ? 1 : 0)
+				($config->find_first ? 1 : 0)
 			],
 		],
 		[
@@ -278,7 +278,7 @@ sub replace_clicked {
 
 	# If search window is still open, run a search_again on the whole text
 	my $config = Padre->ide->config;
-	unless ( $config->{search}->{close_on_hit} ) {
+	unless ( $config->find_first ) {
 		Padre::Wx::Dialog::Find->search;
 	}
 
@@ -299,13 +299,14 @@ sub _get_data_from {
 	my $dialog = shift;
 	my $data   = $dialog->get_data;
 	my $config = Padre->ide->config;
-	foreach my $field ( @cbs ) {
-	   $config->{search}->{$field} = $data->{$field};
-	}
+	$config->{find_case}    = $data->{find_case} ? 0 : 1;
+	$config->{find_regex}   = $data->{find_regex};
+	$config->{find_reverse} = $data->{find_reverse};
+	$config->{find_first}   = $data->{find_first};
 	my $search  = $data->{_find_choice_};
 	my $replace = $data->{_replace_choice_};
 
-	if ($config->{search}->{close_on_hit}) {
+	if ( $config->find_first ) {
 		$dialog->Destroy;
 	}
 	return unless defined _STRING($search);
@@ -331,13 +332,13 @@ sub _get_regex {
 		|| Padre::DB::History->previous('search');
 	return $search_term if defined $search_term and 'Regexp' eq ref $search_term;
 
-	if ($config->{search}->{use_regex}) {
+	if ( $config->find_regex ) {
 		$search_term =~ s/\$/\\\$/; # escape $ signs by default so they won't interpolate
 	} else {
 		$search_term = quotemeta $search_term;
 	}
 
-	if ($config->{search}->{case_insensitive})  {
+	unless ( $config->find_case )  {
 		$search_term =~ s/^(\^?)/$1(?i)/;
 	}
 
@@ -368,11 +369,11 @@ sub search {
 	my $str  = $page->GetTextRange(0, $last);
 
 	my $config    = Padre->ide->config;
-	my $backwards = $config->{search}->{backwards};
-	if ($args{rev}) {
-	   $backwards = not $backwards;
+	my $find_reverse = $config->find_reverse;
+	if ( $args{rev} ) {
+	   $find_reverse = not $find_reverse;
 	}
-	my ($start, $end, @matches) = Padre::Util::get_matches($str, $regex, $from, $to, $backwards);
+	my ($start, $end, @matches) = Padre::Util::get_matches($str, $regex, $from, $to, $find_reverse);
 	return if not defined $start;
 
 	$page->SetSelection( $start, $end );

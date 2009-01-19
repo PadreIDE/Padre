@@ -10,7 +10,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 20 );
+plan( tests => 19 );
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -36,8 +36,10 @@ SCOPE: {
 		main_startup             => 'new',
 		main_lockinterface       => 1,
 		main_functions           => 0,
+		main_functions_order     => 'alphabetical',
 		main_outline             => 0,
 		main_output              => 0,
+		main_output_ansi         => 1,
 		main_syntaxcheck         => 0,
 		main_errorlist           => 0,
 		main_statusbar           => 1,
@@ -48,7 +50,6 @@ SCOPE: {
 		editor_indentationguides => 0,
 		editor_calltips          => 0,
 		editor_autoindent        => 'deep',
-		main_functions_order           => 'alphabetical',
 		editor_whitespace        => 0,
 		editor_folding           => 0,
 		editor_wordwrap          => 0,
@@ -59,7 +60,11 @@ SCOPE: {
 		editor_indent_width      => 8,
 		editor_indent_tab        => 1,
 		editor_beginner          => 1,
-		main_output_ansi              => 1,
+
+		find_case                => 0,
+		find_regex               => 0,
+		find_reverse             => 0,
+		find_first               => 0,
 
 		ppi_highlight            => 0,
 		ppi_highlight_limit      => 10_000,
@@ -107,7 +112,6 @@ SCOPE: {
 	# The main menu
 	my $menu = $main->menu;
 	isa_ok( $menu, 'Padre::Wx::Menubar' );
-	refis( $menu->win,  $main, 'Menubar ->win gets the main window' );
 	refis( $menu->main, $main, 'Menubar ->main gets the main window' );
 
 	# A submenu

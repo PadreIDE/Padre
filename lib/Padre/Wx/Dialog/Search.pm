@@ -221,8 +221,8 @@ sub _show_panel {
 	# Update checkboxes with config values
 	# since they might have been updated by find dialog
 	my $config = Padre->ide->config;
-	$self->{case}->SetValue( $config->{search}->{case_insensitive} );
-	$self->{regex}->SetValue( $config->{search}->{use_regex} );
+	$self->{case}->SetValue( $config->find_case ? 0 : 1 );
+	$self->{regex}->SetValue( $config->find_regex );
 
 	# You probably want to use the Find
 	$self->{entry}->SetFocus;
@@ -240,7 +240,7 @@ sub _show_panel {
 #
 sub _on_case_checked {
 	my $self = shift;
-	Padre->ide->config->{search}->{case_insensitive} = $self->{case}->GetValue;
+	Padre->ide->config->{find_case} = $self->{case}->GetValue ? 0 : 1;
 	$self->{restart} = 1;
 	$self->_find;
 	return;
@@ -290,7 +290,7 @@ sub _on_key_pressed {
 #
 sub _on_regex_checked {
 	my $self = shift;
-	Padre->ide->config->{search}->{use_regex} = $self->{regex}->GetValue;
+	Padre->ide->config->{find_regex} = $self->{regex}->GetValue;
 	$self->{restart} = 1;
 	$self->_find;
 	return;

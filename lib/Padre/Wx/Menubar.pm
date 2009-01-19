@@ -29,7 +29,6 @@ our $VERSION = '0.25';
 use Class::XSAccessor
 	getters => {
 		wx           => 'wx',
-		win          => 'main',
 		main         => 'main',
 
 		# Don't add accessors to here until they have been

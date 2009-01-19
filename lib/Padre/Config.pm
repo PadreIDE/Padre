@@ -45,6 +45,12 @@ my %defaults = (
 	ppi_highlight            => 0,
 	ppi_highlight_limit      => 10_000,
 
+	# Search settings
+	find_case                => 0,
+	find_regex               => 0,
+	find_reverse             => 0,
+	find_first               => 0,
+
 	# startup mode, if no files given on the command line this can be
 	#   new        - a new empty buffer
 	#   nothing    - nothing to open
@@ -288,6 +294,10 @@ use Class::XSAccessor
 		editor_indent_tab        => 'editor_indent_tab',
 		editor_indent_tab_width  => 'editor_indent_tab_width',
 		editor_indent_width      => 'editor_indent_width',
+		find_case                => 'find_case',
+		find_regex               => 'find_regex',
+		find_reverse             => 'find_reverse',
+		find_first               => 'find_first',
 		ppi_highlight            => 'ppi_highlight',
 		ppi_highlight_limit      => 'ppi_highlight_limit',
 		run_save                 => 'run_save',

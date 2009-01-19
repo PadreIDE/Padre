@@ -59,6 +59,10 @@ config( editor_folding           => HUMAN );
 config( editor_currentline       => HUMAN );
 config( editor_currentline_color => HUMAN );
 config( editor_beginner          => HUMAN );
+config( find_case                => HUMAN );
+config( find_regex               => HUMAN );
+config( find_reverse             => HUMAN );
+config( find_first               => HUMAN );
 config( ppi_highlight            => HUMAN );
 config( ppi_highlight_limit      => HUMAN );
 
@@ -66,7 +70,7 @@ config( ppi_highlight_limit      => HUMAN );
 config( main_startup             => HUMAN );
 config( run_save                 => HUMAN );
 config( threads                  => HUMAN );
-config( main_output_ansi              => HUMAN );
+config( main_output_ansi         => HUMAN );
 config( diagnostic_lang          => HUMAN );
 config( experimental             => HUMAN );
 
