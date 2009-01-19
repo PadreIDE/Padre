@@ -42,7 +42,7 @@ sub Append {
 	if ($accel) {
 	    my ($mod, $mod2, $key) = ( $accel =~ m/(Ctrl|Alt)(-Shift)?\-(.)/);#
 	    $mod .= $mod2 if ($mod2);
-	    $self->{main}{accel_keys}{hotkeys}{$mod}{$key} = $item;
+	    $self->{main}{accel_keys}{hotkeys}{uc($mod)}{ord(uc($key))} = $item;
 	}
     }
     return $item;
