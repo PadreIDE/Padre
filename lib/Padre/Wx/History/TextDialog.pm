@@ -3,9 +3,9 @@ package Padre::Wx::History::TextDialog;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::DB ();
-use Padre::Wx ();
+use Params::Util qw{_INSTANCE};
+use Padre::DB    ();
+use Padre::Wx    ();
 
 use Class::Adapter::Builder
 	ISA      => 'Wx::TextEntryDialog',
@@ -20,8 +20,13 @@ sub new {
 	# Instead of using the default value directly search using it
 	# as a type value in the database history table.
 	my $type   = $params[3];
-	$params[3] = Padre::DB::History->recent($type, 1);
-	$params[3] = '' unless defined $params[3];
+	$params[3] = Padre::DB::History->previous($type);
+	if ( _INSTANCE($params[3], 'Padre::DB::History') ) {
+		$params[3] = $params[3]->name;
+	}
+	unless ( defined $params[3] ) {
+		$params[3] = '';
+	}
 
 	# Create the object
 	my $object = Wx::TextEntryDialog->new( @params );
