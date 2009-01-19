@@ -240,7 +240,10 @@ sub _show_panel {
 #
 sub _on_case_checked {
 	my $self = shift;
-	Padre->ide->config->{find_case} = $self->{case}->GetValue ? 0 : 1;
+	Padre->ide->config->set(
+		'find_case',
+		$self->{case}->GetValue ? 0 : 1
+	);
 	$self->{restart} = 1;
 	$self->_find;
 	return;
@@ -290,7 +293,10 @@ sub _on_key_pressed {
 #
 sub _on_regex_checked {
 	my $self = shift;
-	Padre->ide->config->{find_regex} = $self->{regex}->GetValue;
+	Padre->ide->config->set(
+		'find_regex',
+		$self->{regex}->GetValue,
+	);
 	$self->{restart} = 1;
 	$self->_find;
 	return;

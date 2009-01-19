@@ -63,7 +63,8 @@ config( find_case                => HUMAN );
 config( find_regex               => HUMAN );
 config( find_reverse             => HUMAN );
 config( find_first               => HUMAN );
-config( find_nohuman             => HUMAN );
+config( find_nohidden            => HUMAN );
+config( find_quick               => HUMAN );
 config( ppi_highlight            => HUMAN );
 config( ppi_highlight_limit      => HUMAN );
 

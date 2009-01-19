@@ -256,8 +256,8 @@ sub _get_data_from {
 	) if $file_types;
 	Padre::DB->commit;
 
-	$config->{find_case}     = $case_insensitive ? 0 : 1;
-	$config->{find_nohidden} = $ignore_hidden_subdirs;
+	$config->set( find_case     => $case_insensitive ? 0 : 1 );
+	$config->set( find_nohidden => $ignore_hidden_subdirs    );
 
 	return {
 		term                  => $term,

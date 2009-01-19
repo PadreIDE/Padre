@@ -191,7 +191,10 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{show_calltips},
 		sub {
-			Padre->ide->config->{editor_calltips} = $_[1]->IsChecked;
+			Padre->ide->config->set(
+				'editor_calltips',
+				$_[1]->IsChecked,
+			);
 		},
 	);
 

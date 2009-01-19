@@ -88,11 +88,14 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->{quick_find},
 		sub {
-			Padre->ide->config->{is_quick_find} = $_[1]->IsChecked ? 1 : 0;
+			Padre->ide->config->set(
+				'find_quick',
+				$_[1]->IsChecked ? 1 : 0,
+			);
 			return;
 		},
 	);
-	$self->{quick_find}->Check( Padre->ide->config->{is_quick_find} ? 1 : 0 );
+	$self->{quick_find}->Check( Padre->ide->config->find_quick );
 
 	# Incremental find (#60)
 	$self->{quick_find_next} = $self->Append( -1,

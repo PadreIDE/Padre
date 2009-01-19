@@ -583,7 +583,7 @@ sub change_locale {
 	}
 
 	# Save the locale to the config
-	$self->config->{host}->{locale} = $name;
+	$self->config->set( locale => $name );
 
 	# Reset the locale
 	delete $self->{locale};
@@ -1030,23 +1030,22 @@ sub on_close_window {
 	$self->Show(0);
 
 	# Now it's safe to save the session
-	$config->{host}->{main_file}      = $main_file;
-	$config->{host}->{main_files}     = $main_files;
-	$config->{host}->{main_files_pos} = $main_files_pos;
+	$config->set( main_file      => $main_file      );
+	$config->set( main_files     => $main_files     );
+	$config->set( main_files_pos => $main_files_pos );
 
 	# Save the window geometry
-	$config->{host}->{main_auilayout} = $self->aui->SavePerspective;
-	$config->{host}->{main_maximized} = $self->IsMaximized ? 1 : 0;
+	$config->set( main_auilayout => $self->aui->SavePerspective );
+	$config->set( main_maximized => $self->IsMaximized ? 1 : 0  );
+
+	# Don't save the maximized window size
 	unless ( $self->IsMaximized ) {
-		# Don't save the maximized window size
-		(
-			$config->{host}->{main_width},
-			$config->{host}->{main_height},
-		) = $self->GetSizeWH;
-		(
-			$config->{host}->{main_left},
-			$config->{host}->{main_top},
-		) = $self->GetPositionXY;
+		my ( $main_width, $main_height ) = $self->GetSizeWH;
+		my ( $main_left,  $main_top    ) = $self->GetPositionXY;
+		$config->set( main_width  => $main_width  );
+		$config->set( main_height => $main_height );
+		$config->set( main_left   => $main_left   );
+		$config->set( main_top    => $main_top    );
 	}
 
 	# Clean up our secondary windows
@@ -1637,7 +1636,7 @@ sub on_toggle_line_numbers {
 	my ($self, $event) = @_;
 
 	my $config = $self->config;
-	$config->{editor_linenumbers} = $event->IsChecked ? 1 : 0;
+	$config->set( editor_linenumbers => $event->IsChecked ? 1 : 0 );
 
 	foreach my $editor ( $self->editors ) {
 		$editor->show_line_numbers( $config->editor_linenumbers );
@@ -1650,7 +1649,7 @@ sub on_toggle_code_folding {
 	my ($self, $event) = @_;
 
 	my $config = $self->config;
-	$config->{editor_folding} = $event->IsChecked ? 1 : 0;
+	$config->set( editor_folding => $event->IsChecked ? 1 : 0 );
 
 	foreach my $editor ( $self->editors ) {
 		$editor->show_folding( $config->editor_folding );
@@ -1666,7 +1665,7 @@ sub on_toggle_currentline {
 	my ($self, $event) = @_;
 
 	my $config = $self->config;
-	$config->{editor_currentline} = $event->IsChecked ? 1 : 0;
+	$config->set( editor_currentline => $event->IsChecked ? 1 : 0 );
 
 	foreach my $editor ( $self->editors ) {
 		$editor->SetCaretLineVisible( $config->editor_currentline ? 1 : 0 );
@@ -1678,7 +1677,10 @@ sub on_toggle_currentline {
 sub on_toggle_syntax_check {
 	my $self  = shift;
 	my $event = shift;
-	$self->config->{main_syntaxcheck} = $event->IsChecked ? 1 : 0;
+	$self->config->set(
+		'main_syntaxcheck',
+		$event->IsChecked ? 1 : 0,
+	);
 	$self->show_syntax( $self->config->main_syntaxcheck );
 	return;
 }
@@ -1686,7 +1688,10 @@ sub on_toggle_syntax_check {
 sub on_toggle_errorlist {
 	my $self  = shift;
 	my $event = shift;
-	$self->config->{main_errorlist} = $event->IsChecked ? 1 : 0;
+	$self->config->set(
+		'main_errorlist',
+		$event->IsChecked ? 1 : 0,
+	);
 	if ( $self->config->main_errorlist ) {
 		$self->errorlist->enable;
 	} else {
@@ -1697,9 +1702,12 @@ sub on_toggle_errorlist {
 
 sub on_toggle_indentation_guide {
 	my $self   = shift;
+	my $config = shift;
 
-	my $config = $self->config;
-	$config->{editor_indentationguides} = $self->menu->view->{indentation_guide}->IsChecked ? 1 : 0;
+	$config->set(
+		'editor_indentationguides',
+		$self->menu->view->{indentation_guide}->IsChecked ? 1 : 0,
+	);
 
 	foreach my $editor ( $self->editors ) {
 		$editor->SetIndentationGuides( $config->editor_indentationguides );
@@ -1710,9 +1718,12 @@ sub on_toggle_indentation_guide {
 
 sub on_toggle_eol {
 	my $self   = shift;
-
 	my $config = $self->config;
-	$config->{editor_eol} = $self->menu->view->{eol}->IsChecked ? 1 : 0;
+
+	$config->set(
+		'editor_eol',
+		$self->menu->view->{eol}->IsChecked ? 1 : 0,
+	);
 
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewEOL( $config->editor_eol );
@@ -1731,9 +1742,12 @@ sub on_toggle_whitespaces {
 	
 	# check whether we need to show / hide spaces & tabs.
 	my $config = $self->config;
-	$config->{editor_whitespace} = $self->menu->view->{whitespaces}->IsChecked
-		? Wx::wxSTC_WS_VISIBLEALWAYS
-		: Wx::wxSTC_WS_INVISIBLE;
+	$config->set(
+		'editor_whitespace',
+		$self->menu->view->{whitespaces}->IsChecked
+			? Wx::wxSTC_WS_VISIBLEALWAYS
+			: Wx::wxSTC_WS_INVISIBLE
+	);
 	
 	# update all open views with the new config.
 	foreach my $editor ( $self->editors ) {
@@ -1770,7 +1784,7 @@ sub show_functions {
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
-	$self->config->{main_functions} = $on;
+	$self->config->set( main_functions => $on );
 
 	if ( $on ) {
 		$self->right->show($self->functions);
@@ -1791,7 +1805,7 @@ sub show_outline {
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
 		$self->menu->view->{outline}->Check($on);
 	}
-	$self->config->{main_outline} = $on;
+	$self->config->set( main_outline => $on );
 
 	if ( $on ) {
 		$self->right->show($outline);
@@ -1819,7 +1833,7 @@ sub show_output {
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
-	$self->config->{main_output} = $on;
+	$self->config->set( main_output => $on );
 
 	if ( $on ) {
 		$self->bottom->show($self->output);
@@ -1866,7 +1880,10 @@ sub on_toggle_statusbar {
 	return if Padre::Util::WXWIN32;
 
 	# Update the configuration
-	$self->config->{main_statusbar} = $self->menu->view->{statusbar}->IsChecked ? 1 : 0;
+	$self->config->set(
+		'main_statusbar',
+		$self->menu->view->{statusbar}->IsChecked ? 1 : 0,
+	);
 
 	# Update the status bar
 	if ( $self->config->main_statusbar ) {
@@ -1882,7 +1899,10 @@ sub on_toggle_lockinterface {
 	my $self  = shift;
 
 	# Update the configuration
-	$self->config->{main_lockinterface} = $self->menu->view->{lockinterface}->IsChecked ? 1 : 0;
+	$self->config->set(
+		'main_lockinterface',
+		$self->menu->view->{lockinterface}->IsChecked ? 1 : 0,
+	);
 
 	# Update the lock status
 	$self->aui->lock_panels( $self->config->main_lockinterface );

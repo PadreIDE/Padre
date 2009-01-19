@@ -185,20 +185,62 @@ sub run {
 	$dialog->show_modal or return;
 
 	my $data = $dialog->get_data;
-	$config->{diagnostics_lang}         = $data->{diagnostics_lang};
-	$config->{editor_indent_auto}       = $data->{editor_indent_auto} ? 1 : 0;
-	$config->{editor_indent_tab}        = $data->{editor_indent_tab} ? 1 : 0;
-	$config->{editor_indent_tab_width}  = $data->{editor_indent_tab_width};
-	$config->{editor_indent_width}      = $data->{editor_indent_width};
-	$config->{editor_font}              = $data->{editor_font};
-	$config->{editor_currentline_color} = $data->{editor_currentline_color};
-	$config->{editor_currentline_color} =~ s/#//;
-	$config->{editor_wordwrap}          = $data->{editor_wordwrap} ? 1 : 0;
-	$config->{editor_beginner}          = $data->{editor_beginner} ? 1 : 0;
-	$config->{editor_autoindent}        = $editor_autoindent_items[ $data->{editor_autoindent} ];
-	$config->{main_startup}             = $main_startup_items[ $data->{main_startup} ];
-	$config->{main_functions_order}     = $main_functions_order_items[ $data->{main_functions_order} ];
-	$config->{main_output_ansi}         = $data->{main_output_ansi} ? 1 : 0;
+	$config->set(
+		'diagnostics_lang',
+		$data->{diagnostics_lang}
+	);
+	$config->set(
+		'editor_indent_auto',
+		$data->{editor_indent_auto} ? 1 : 0
+	);
+	$config->set(
+		'editor_indent_tab',
+		$data->{editor_indent_tab} ? 1 : 0
+	);
+	$config->set(
+		'editor_indent_tab_width',
+		$data->{editor_indent_tab_width}
+	);
+	$config->set(
+		'editor_indent_width',
+		$data->{editor_indent_width}
+	);
+	$config->set(
+		'editor_font',
+		$data->{editor_font}
+	);
+	$config->set(
+		'editor_wordwrap',
+		$data->{editor_wordwrap} ? 1 : 0
+	);
+	$config->set(
+		'editor_beginner',
+		$data->{editor_beginner} ? 1 : 0
+	);
+	$config->set(
+		'editor_autoindent',
+		$editor_autoindent_items[ $data->{editor_autoindent} ]
+	);
+	$config->set(
+		'main_startup',
+		$main_startup_items[ $data->{main_startup} ]
+	);
+	$config->set(
+		'main_functions_order',
+		$main_functions_order_items[ $data->{main_functions_order} ]
+	);
+	$config->set(
+		'main_output_ansi',
+		$data->{main_output_ansi} ? 1 : 0
+	);
+
+	# The slightly different one
+	my $editor_currentline_color = $data->{editor_currentline_color};
+	$editor_currentline_color =~ s/#//;
+	$config->set(
+		'editor_currentline_color',
+		$data->{editor_currentline_color}
+	);
 
 	return 1;
 }

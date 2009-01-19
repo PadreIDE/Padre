@@ -32,7 +32,7 @@ sub new {
 			Wx::gettext('Disable Experimental Mode')
 		),
 		sub {
-			Padre->ide->config->{experimental} = 0;
+			Padre->ide->config->set( experimental => 0 );
 			$_[0]->menu->refresh($_[0]->current);
 			return;
 		},

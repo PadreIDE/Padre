@@ -66,6 +66,7 @@ SCOPE: {
 		find_reverse             => 0,
 		find_first               => 0,
 		find_nohidden            => 1,
+		find_quick               => 0,
 
 		ppi_highlight            => 0,
 		ppi_highlight_limit      => 10_000,

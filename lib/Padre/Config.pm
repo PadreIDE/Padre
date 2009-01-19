@@ -51,6 +51,7 @@ my %defaults = (
 	find_reverse             => 0,
 	find_first               => 0,
 	find_nohidden            => 1,
+	find_quick               => 0,
 
 	# startup mode, if no files given on the command line this can be
 	#   new        - a new empty buffer
@@ -301,6 +302,7 @@ use Class::XSAccessor
 		find_reverse             => 'find_reverse',
 		find_first               => 'find_first',
 		find_nohidden            => 'find_nohidden',
+		find_quick               => 'find_quick',
 		ppi_highlight            => 'ppi_highlight',
 		ppi_highlight_limit      => 'ppi_highlight_limit',
 		run_save                 => 'run_save',
@@ -359,6 +361,34 @@ sub editor_style {
 
 sub locale {
 	$_[0]->{host}->{locale};
+}
+
+
+
+
+
+#####################################################################
+# Setting a Setting
+
+sub set {
+	my $self  = shift;
+	my $name  = shift;
+	my $value = shift;
+
+	# Check the human layer
+	if ( exists $self->{$name} ) {
+		$self->{$name} = $value;
+		return 1;
+	}
+
+	# Check the host layer
+	if ( exists $self->{host}->{$name} ) {
+		$self->{host}->{$name} = $value;
+		return 1;
+	}
+
+	# FAIL
+	die("Unknown or unsupported configuration setting '$name'");
 }
 
 1;

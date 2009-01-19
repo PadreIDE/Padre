@@ -299,10 +299,11 @@ sub _get_data_from {
 	my $dialog = shift;
 	my $data   = $dialog->get_data;
 	my $config = Padre->ide->config;
-	$config->{find_case}    = $data->{find_case} ? 0 : 1;
-	$config->{find_regex}   = $data->{find_regex};
-	$config->{find_reverse} = $data->{find_reverse};
-	$config->{find_first}   = $data->{find_first};
+	$config->set( find_case    => $data->{find_case} ? 0 : 1 );
+	$config->set( find_regex   => $data->{find_regex}        );
+	$config->set( find_reverse => $data->{find_reverse}      );
+	$config->set( find_first   => $data->{find_first}        );
+
 	my $search  = $data->{_find_choice_};
 	my $replace = $data->{_replace_choice_};
 

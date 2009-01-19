@@ -237,7 +237,7 @@ sub new {
 		sub {
 			# Update the saved config setting
 			my $config = Padre->ide->config;
-			$config->{ppi_highlight} = $_[1]->IsChecked ? 1 : 0;
+			$config->set( ppi_highlight => $_[1]->IsChecked ? 1 : 0 );
 
 			# Refresh the menu (and MIME_LEXER hook)
 			$self->refresh;
@@ -269,7 +269,7 @@ sub new {
 		sub {
 			# Update the saved config setting
 			my $config = Padre->ide->config;
-			$config->{run_stacktrace} = $_[1]->IsChecked ? 1 : 0;
+			$config->set( run_stacktrace => $_[1]->IsChecked ? 1 : 0 );
 			$self->refresh;
 		}
 	);
