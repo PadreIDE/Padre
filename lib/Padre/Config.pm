@@ -195,7 +195,9 @@ sub new {
 	# a massive security violation.
 	$self->{main_syntaxcheck} = 0;
 
-	return $self;
+	# Return a clear wrapper
+	require Padre::Config::Clear;
+	return Padre::Config::Clear->new( $self );
 }
 
 # Write a null config, then read it back in
