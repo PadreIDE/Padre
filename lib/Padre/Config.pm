@@ -11,6 +11,8 @@ use File::HomeDir ();
 use Params::Util  qw{ _STRING _ARRAY };
 use YAML::Tiny    ();
 
+use Padre::Config::Clear ();
+
 our $VERSION = '0.25';
 
 my %defaults = (
@@ -196,7 +198,6 @@ sub new {
 	$self->{main_syntaxcheck} = 0;
 
 	# Return a clear wrapper
-	require Padre::Config::Clear;
 	return Padre::Config::Clear->new( $self );
 }
 
