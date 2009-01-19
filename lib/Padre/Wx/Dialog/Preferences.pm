@@ -53,7 +53,7 @@ sub get_layout_for_behaviour {
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Preferred language for error diagnostics:')],
-			[ 'Wx::TextCtrl',     'diagnostics_lang', $config->diagnostics_lang||''],
+			[ 'Wx::TextCtrl',     'locale_perldiag', $config->locale_perldiag||''],
 		],
 	];
 }
@@ -186,8 +186,8 @@ sub run {
 
 	my $data = $dialog->get_data;
 	$config->set(
-		'diagnostics_lang',
-		$data->{diagnostics_lang}
+		'locale_perldiag',
+		$data->{locale_perldiag}
 	);
 	$config->set(
 		'editor_indent_auto',

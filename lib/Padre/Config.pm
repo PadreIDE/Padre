@@ -73,8 +73,9 @@ my %defaults = (
 	# By default, use background threads unless profiling
 	threads                  => 1,
 
-	# What language should the diagnostics be in
-	diagnostics_lang         => '',
+	# What language should we work in
+	locale                   => '',       
+	locale_perldiag          => '',
 
 	# By default, don't enable experimental features
 	experimental             => 0,
@@ -310,8 +311,9 @@ use Class::XSAccessor
 		ppi_highlight_limit      => 'ppi_highlight_limit',
 		run_save                 => 'run_save',
 		run_stacktrace           => 'run_stacktrace',
+		locale                   => 'locale',
+		locale_perldiag          => 'locale_perldiag',
 		threads                  => 'threads',
-		diagnostics_lang         => 'diagnostics_lang',
 		experimental             => 'experimental',
 	};
 
@@ -360,10 +362,6 @@ sub main_files_pos {
 
 sub editor_style {
 	$_[0]->{host}->{editor_style};
-}
-
-sub locale {
-	$_[0]->{host}->{locale};
 }
 
 

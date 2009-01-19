@@ -10,7 +10,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 67 );
+plan( tests => 68 );
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -70,7 +70,8 @@ SCOPE: {
 	is( $config->run_save                 => 'same'         );
 	is( $config->run_stacktrace           => 0              );
 	is( $config->threads                  => 1              );
-	is( $config->diagnostics_lang         => ''             );
+	is( $config->locale                   => ''             );
+	is( $config->locale_perldiag          => ''             );
 	is( $config->editor_style             => 'default'      );
 	is( $config->main_maximized           => 0              );
 	is( $config->main_top                 => 20             );

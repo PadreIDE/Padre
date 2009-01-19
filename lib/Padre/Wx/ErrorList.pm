@@ -94,7 +94,7 @@ sub populate {
 	my $self = shift;
 	return unless $self->enabled;
 
-	my $lang = $self->config->diagnostics_lang;
+	my $lang = $self->config->locale_perldiag;
 	$lang =~ s/^\s*//;
 	$lang =~ s/\s*$//;
 	my $old = $self->lang;

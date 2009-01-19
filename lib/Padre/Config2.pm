@@ -38,11 +38,13 @@ config( editor_indent_tab_width  => PROJECT, HUMAN );
 config( editor_indent_width      => PROJECT, HUMAN );
 
 # Pages and Panels
+config( main_startup             => HUMAN );
 config( main_lockinterface       => HUMAN );
 config( main_functions           => HUMAN );
 config( main_functions_order     => HUMAN );
 config( main_outline             => HUMAN );
 config( main_output              => HUMAN );
+config( main_output_ansi         => HUMAN );
 config( main_syntaxcheck         => HUMAN );
 config( main_errorlist           => HUMAN );
 config( main_statusbar           => HUMAN );
@@ -69,12 +71,11 @@ config( ppi_highlight            => HUMAN );
 config( ppi_highlight_limit      => HUMAN );
 
 # Behaviour Tuning
-config( main_startup             => HUMAN );
 config( run_save                 => HUMAN );
 config( run_stacktrace           => HUMAN );
 config( threads                  => HUMAN );
-config( main_output_ansi         => HUMAN );
-config( diagnostic_lang          => HUMAN );
+config( locale                   => HUMAN );
+config( locale_perldiag          => HUMAN );
 config( experimental             => HUMAN );
 
 # Because the colour data is in local files,
