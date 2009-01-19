@@ -278,9 +278,9 @@ sub get_command {
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
-	my $config = Padre->ide->config;
-	return $config->{run_with_stack_trace} ? 
-		qq{"$perl" -Mdiagnostics(-traceonly) "$filename"} : qq{"$perl" "$filename"};
+	return Padre->ide->config->run_stacktrace
+		? qq{"$perl" -Mdiagnostics(-traceonly) "$filename"}
+		: qq{"$perl" "$filename"};
 }
 
 sub pre_process {

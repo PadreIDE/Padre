@@ -63,12 +63,14 @@ config( find_case                => HUMAN );
 config( find_regex               => HUMAN );
 config( find_reverse             => HUMAN );
 config( find_first               => HUMAN );
+config( find_nohuman             => HUMAN );
 config( ppi_highlight            => HUMAN );
 config( ppi_highlight_limit      => HUMAN );
 
 # Behaviour Tuning
 config( main_startup             => HUMAN );
 config( run_save                 => HUMAN );
+config( run_stacktrace           => HUMAN );
 config( threads                  => HUMAN );
 config( main_output_ansi         => HUMAN );
 config( diagnostic_lang          => HUMAN );

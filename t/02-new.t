@@ -65,11 +65,14 @@ SCOPE: {
 		find_regex               => 0,
 		find_reverse             => 0,
 		find_first               => 0,
+		find_nohidden            => 1,
 
 		ppi_highlight            => 0,
 		ppi_highlight_limit      => 10_000,
 
 		run_save                 => 'same',
+		run_stacktrace           => 0,
+
 		threads                  => 1,
 
 		diagnostics_lang         => '',

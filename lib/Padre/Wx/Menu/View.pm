@@ -296,35 +296,27 @@ sub new {
 
 
 	# Bookmark Support
-	unless (
-		$config->experimental
-		and
-		defined $config->{experimental_bookmarks}
-		and
-		not $config->{experimental_bookmarks}
-	) {
-		$self->{bookmark_set} = $self->Append( -1,
-			Wx::gettext("Set Bookmark\tCtrl-B")
-		);
-		Wx::Event::EVT_MENU( $main,
-			$self->{bookmark_set},
-			sub {
-				Padre::Wx::Dialog::Bookmarks->set_bookmark($_[0]);
-			},
-		);
-		
-		$self->{bookmark_goto} = $self->Append( -1,
-			Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
-		);
-		Wx::Event::EVT_MENU( $main,
-			$self->{bookmark_goto},
-			sub {
-				Padre::Wx::Dialog::Bookmarks->goto_bookmark($_[0]);
-			},
-		);
-		
-		$self->AppendSeparator;
-	}
+	$self->{bookmark_set} = $self->Append( -1,
+		Wx::gettext("Set Bookmark\tCtrl-B")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{bookmark_set},
+		sub {
+			Padre::Wx::Dialog::Bookmarks->set_bookmark($_[0]);
+		},
+	);
+	
+	$self->{bookmark_goto} = $self->Append( -1,
+		Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{bookmark_goto},
+		sub {
+			Padre::Wx::Dialog::Bookmarks->goto_bookmark($_[0]);
+		},
+	);
+	
+	$self->AppendSeparator;
 
 
 

@@ -718,8 +718,7 @@ sub test_a_plugin {
 	my $config  = $self->parent->config;
 	my $plugins = $self->plugins;
 
-	my $last_filename = $config->{last_test_plugin_file};
-	$last_filename  ||= $main->current->filename;
+	my $last_filename = $main->current->filename;
 	my $default_dir = '';
 	if ( $last_filename ) {
 		$default_dir = File::Basename::dirname($last_filename);
@@ -738,7 +737,6 @@ sub test_a_plugin {
 	
 	# Save into plugin for next time
 	my $file = File::Spec->catfile($default_dir, $filename);
-	$config->{last_test_plugin_file} = $file;
 	
 	( $default_dir, $filename ) = split(/Padre[\\\/]Plugin[\\\/]/, $file, 2);
 	$filename =~ s/\.pm$//; # remove last .pm
@@ -749,7 +747,6 @@ sub test_a_plugin {
 
 	# Load plugin
 	delete $plugins->{$filename};
-	$config->{plugins}->{$filename}->{enabled} = 1;
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
 		$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr));

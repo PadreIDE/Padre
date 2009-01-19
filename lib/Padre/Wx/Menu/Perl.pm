@@ -262,14 +262,14 @@ sub new {
 	);
 
 	# Make it easier to access stack traces
-	$self->{run_with_stack_trace} = $self->AppendCheckItem( -1,
+	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
 		Wx::gettext("Run Scripts with Stack Trace")
 	);	
-	Wx::Event::EVT_MENU( $main, $self->{run_with_stack_trace},
+	Wx::Event::EVT_MENU( $main, $self->{run_stacktrace},
 		sub {
 			# Update the saved config setting
 			my $config = Padre->ide->config;
-			$config->{run_with_stack_trace} = $_[1]->IsChecked ? 1 : 0;
+			$config->{run_stacktrace} = $_[1]->IsChecked ? 1 : 0;
 			$self->refresh;
 		}
 	);
@@ -281,8 +281,8 @@ sub refresh {
 	my $self   = shift;
 	my $config = $self->{config};
 
-	$self->{ppi_highlight}->Check( $config->ppi_highlight ? 1 : 0 );
-	$self->{run_with_stack_trace}->Check( $config->{run_with_stack_trace} ? 1 : 0 );
+	$self->{ppi_highlight}->Check( $config->ppi_highlight );
+	$self->{run_stacktrace}->Check( $config->run_stacktrace );
 
 	no warnings 'once'; # TODO eliminate?
 	$Padre::Document::MIME_LEXER{'application/x-perl'} = 

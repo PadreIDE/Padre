@@ -178,35 +178,27 @@ sub run {
 	my @main_functions_order_localized = map{Wx::gettext($_)} @main_functions_order_items;
 
 	my $dialog = $class->dialog( $win, 
-		\@main_startup_localized, \@editor_autoindent_localized, \@main_functions_order_localized );
-	return if not $dialog->show_modal;
+		\@main_startup_localized,
+		\@editor_autoindent_localized,
+		\@main_functions_order_localized
+	);
+	$dialog->show_modal or return;
 
 	my $data = $dialog->get_data;
-
-	foreach my $f ( qw( 
-		editor_indent_tab_width
-		editor_indent_width
-		editor_font
-		editor_currentline_color
-		diagnostics_lang
-	) ) {
-		$config->{$f} = $data->{$f};
-	}
+	$config->{diagnostics_lang}         = $data->{diagnostics_lang};
+	$config->{editor_indent_auto}       = $data->{editor_indent_auto} ? 1 : 0;
+	$config->{editor_indent_tab}        = $data->{editor_indent_tab} ? 1 : 0;
+	$config->{editor_indent_tab_width}  = $data->{editor_indent_tab_width};
+	$config->{editor_indent_width}      = $data->{editor_indent_width};
+	$config->{editor_font}              = $data->{editor_font};
+	$config->{editor_currentline_color} = $data->{editor_currentline_color};
 	$config->{editor_currentline_color} =~ s/#//;
-
-	foreach my $f ( qw(
-		editor_indent_tab
-		editor_wordwrap
-		editor_indent_auto
-		editor_beginner
-		main_output_ansi
-	)) {
-		$config->{$f} = $data->{$f} ? 1 : 0;
-	}
-
-	$config->{main_startup}        = $main_startup_items[ $data->{main_startup} ];
-	$config->{editor_autoindent}   = $editor_autoindent_items[ $data->{editor_autoindent} ];
-	$config->{main_functions_order}      = $main_functions_order_items[ $data->{main_functions_order} ];
+	$config->{editor_wordwrap}          = $data->{editor_wordwrap} ? 1 : 0;
+	$config->{editor_beginner}          = $data->{editor_beginner} ? 1 : 0;
+	$config->{editor_autoindent}        = $editor_autoindent_items[ $data->{editor_autoindent} ];
+	$config->{main_startup}             = $main_startup_items[ $data->{main_startup} ];
+	$config->{main_functions_order}     = $main_functions_order_items[ $data->{main_functions_order} ];
+	$config->{main_output_ansi}         = $data->{main_output_ansi} ? 1 : 0;
 
 	return 1;
 }

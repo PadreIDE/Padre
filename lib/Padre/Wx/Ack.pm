@@ -77,9 +77,6 @@ sub get_layout {
 
 	# default value is 1 for ignore_hidden_subdirs
 	my $config = Padre->ide->config;
-	unless ( exists $config->{ack}->{ignore_hidden_subdirs} ) {
-		$config->{ack}->{ignore_hidden_subdirs} = 1;
-	}
 
 	my @layout = (
 		[
@@ -98,10 +95,20 @@ sub get_layout {
 			[ 'Wx::Button',     '_cancel_',         Wx::wxID_CANCEL],
 		],
 		[
-			['Wx::CheckBox',    'case_insensitive', gettext('Case &Insensitive'),    ($config->{ack}->{case_insensitive} ? 1 : 0) ],
+			[
+				'Wx::CheckBox',
+				'case_insensitive',
+				gettext('Case &Insensitive'),
+				($config->find_case ? 0 : 1)
+			],
 		],
 		[
-			['Wx::CheckBox',    'ignore_hidden_subdirs', gettext('I&gnore hidden Subdirectories'),    ($config->{ack}->{ignore_hidden_subdirs} ? 1 : 0) ],
+			[
+				'Wx::CheckBox',
+				'ignore_hidden_subdirs',
+				gettext('I&gnore hidden Subdirectories'),
+				$config->find_nohidden,
+			],
 		],
 		
 	);
@@ -249,8 +256,8 @@ sub _get_data_from {
 	) if $file_types;
 	Padre::DB->commit;
 
-	$config->{ack}->{case_insensitive}      = $case_insensitive;
-	$config->{ack}->{ignore_hidden_subdirs} = $ignore_hidden_subdirs;
+	$config->{find_case}     = $case_insensitive ? 0 : 1;
+	$config->{find_nohidden} = $ignore_hidden_subdirs;
 
 	return {
 		term                  => $term,

@@ -50,6 +50,7 @@ my %defaults = (
 	find_regex               => 0,
 	find_reverse             => 0,
 	find_first               => 0,
+	find_nohidden            => 1,
 
 	# startup mode, if no files given on the command line this can be
 	#   new        - a new empty buffer
@@ -64,6 +65,7 @@ my %defaults = (
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
 	run_save                 => 'same',
+	run_stacktrace           => 0,
 
 	# By default, use background threads unless profiling
 	threads                  => 1,
@@ -298,9 +300,11 @@ use Class::XSAccessor
 		find_regex               => 'find_regex',
 		find_reverse             => 'find_reverse',
 		find_first               => 'find_first',
+		find_nohidden            => 'find_nohidden',
 		ppi_highlight            => 'ppi_highlight',
 		ppi_highlight_limit      => 'ppi_highlight_limit',
 		run_save                 => 'run_save',
+		run_stacktrace           => 'run_stacktrace',
 		threads                  => 'threads',
 		diagnostics_lang         => 'diagnostics_lang',
 		experimental             => 'experimental',
