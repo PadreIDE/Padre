@@ -1039,7 +1039,7 @@ sub on_close_window {
 	$config->set( main_files_pos => $main_files_pos );
 
 	# Save the window geometry
-	$config->set( main_auilayout => $self->aui->SavePerspective );
+	#$config->set( main_auilayout => $self->aui->SavePerspective );
 	$config->set( main_maximized => $self->IsMaximized ? 1 : 0  );
 
 	# Don't save the maximized window size
