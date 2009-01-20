@@ -28,7 +28,7 @@ use File::HomeDir             ();
 use File::Basename            ();
 use List::Util                ();
 use Scalar::Util              ();
-use Params::Util              ();
+use Params::Util              qw{_INSTANCE};
 use Padre::Util               ();
 use Padre::Locale             ();
 use Padre::Current            qw{_CURRENT};
@@ -93,8 +93,12 @@ use Class::XSAccessor
 #       individual step tighter and better abstracted.
 sub new {
 	my $class  = shift;
-	my $config = Padre->ide->config;
+	my $config = shift;
+	unless ( _INSTANCE($config, 'Padre::Config') ) {
+		Carp::croak("Did not provide a config object to Padre::Wx::Main->new");
+	}
 
+	# Bootstrap some Wx internals
 	Wx::InitAllImageHandlers();
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 

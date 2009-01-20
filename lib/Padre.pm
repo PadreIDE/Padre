@@ -141,7 +141,7 @@ sub new {
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
 
 	# Create the main window
-	$self->{wx} = Padre::Wx::App->new;
+	$self->{wx} = Padre::Wx::App->new( $self->{config} );
 
 	# Create the task manager
 	$self->{task_manager} = Padre::TaskManager->new(
