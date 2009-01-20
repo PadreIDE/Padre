@@ -48,7 +48,7 @@ my %defaults = (
 	ppi_highlight_limit      => 10_000,
 
 	# Search settings
-	find_case                => 0,
+	find_case                => 1,
 	find_regex               => 0,
 	find_reverse             => 0,
 	find_first               => 0,

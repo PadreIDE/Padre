@@ -59,7 +59,7 @@ SCOPE: {
 	is( $config->editor_indent_width      => 8              );
 	is( $config->editor_indent_tab        => 1              );
 	is( $config->editor_beginner          => 1              );
-	is( $config->find_case                => 0              );
+	is( $config->find_case                => 1              );
 	is( $config->find_regex               => 0              );
 	is( $config->find_reverse             => 0              );
 	is( $config->find_first               => 0              );

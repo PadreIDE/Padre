@@ -31,7 +31,7 @@ use 5.008;
 use strict;
 use warnings;
 use Carp         ();
-use Params::Util '_INSTANCE';
+use Params::Util qw{ _INSTANCE };
 use Padre::Wx    ();
 
 our $VERSION = '0.25';
@@ -58,7 +58,7 @@ sub new {
 	$self->{config} = $config;
 
 	# Immediately populate the main window
-	$self->{main} = Padre::Wx::Main->new( $config );
+	$self->{main} = Padre::Wx::Main->new($config);
 
 	return $self;
 }
@@ -105,6 +105,7 @@ This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl 5 itself.
 
 =cut
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

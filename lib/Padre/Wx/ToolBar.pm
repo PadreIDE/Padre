@@ -44,7 +44,9 @@ sub new {
 		id    => Wx::wxID_NEW,
 		icon  => 'actions/document-new',
 		short => Wx::gettext('New File'),
-		event => sub { $_[0]->on_new },
+		event => sub {
+			$_[0]->on_new;
+		},
 	);
 	$self->add_tool(
 		id    => Wx::wxID_OPEN,
@@ -60,7 +62,9 @@ sub new {
 		id    => Wx::wxID_CLOSE,
 		icon  => 'actions/x-document-close',
 		short => Wx::gettext('Close File'),
-		event => sub { $_[0]->on_close($_[1]) },
+		event => sub {
+			$_[0]->on_close($_[1]);
+		},
 	);
 
 	$self->AddSeparator;
@@ -98,7 +102,7 @@ sub new {
 		$main,
 		Wx::wxID_CUT,
 		sub {
-			Padre::Current->editor->Cut
+			Padre::Current->editor->Cut;
 		},
 	);
 
@@ -111,7 +115,7 @@ sub new {
 		$main,
 		Wx::wxID_COPY,
 		sub {
-			Padre::Current->editor->Copy
+			Padre::Current->editor->Copy;
 		},
 	);
 
@@ -137,7 +141,9 @@ sub new {
 	Wx::Event::EVT_TOOL(
 		$main,
 		Wx::wxID_SELECTALL,
-		sub { \&Padre::Wx::Editor::text_select_all(@_) },
+		sub {
+			\&Padre::Wx::Editor::text_select_all(@_);
+		},
 	);
 
 	$self->AddSeparator;
@@ -249,6 +255,7 @@ sub _set_task_status {
 }
 
 sub refresh {
+	$DB::single = 1;
 	my $self      = shift;
 	my $current   = _CURRENT(@_);
 	my $editor    = $current->editor;

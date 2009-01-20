@@ -24,6 +24,7 @@ requires       'perl'                     => '5.008001';
 requires       'Carp'                     => 0;
 requires       'Class::Adapter'           => '1.05';
 requires       'Class::XSAccessor'        => '0.14';
+requires       'Class::XSAccessor::Array' => '0.14';
 requires       'Cwd'                      => '3.2701';
 requires       'Data::Dumper'             => 0;
 requires       'Devel::Dumpvar'           => '0.04';

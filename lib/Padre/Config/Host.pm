@@ -5,13 +5,15 @@ package Padre::Config::Host;
 use 5.008;
 use strict;
 use warnings;
-use Padre::DB ();
+
+# Avoid the introspective compilation until runtime
+# use Padre::DB ();
 
 our $VERSION = '0.25';
 
 
 
-my $hash;  # just to let compilation pass
+
 
 #####################################################################
 # Constructor and Storage Interaction
@@ -24,7 +26,7 @@ sub new {
 
 # Read config from the database (overwriting any existing data)
 sub read {
-	my $class = shift;
+	require Padre::DB;
 
 	# Read in the config data
 	my %hash = map {
@@ -32,20 +34,22 @@ sub read {
 	} Padre::DB::Hostconf->select;
 
 	# Create and return the object
-	return $class->new( %hash );
+	return $_[0]->new( %hash );
 }
 
 sub write {
-	my $self = shift;
+	require Padre::DB;
+
 	Padre::DB->begin;
 	Padre::DB::Hostconf->truncate;
-	foreach my $name ( sort keys %$self ) {
+	foreach my $name ( sort keys %{$_[0]} ) {
 		Padre::DB::Hostconf->create(
 			name  => $name,
-			value => $hash->{$name},
+			value => undef,
 		);
 	}
 	Padre::DB->commit;
+
 	return 1;
 }
 
