@@ -140,7 +140,8 @@ sub about {
 	$about->SetDescription(
 		"Perl Application Development and Refactoring Environment\n\n" .
 		"Based on Wx.pm $Wx::VERSION and " . Wx::wxVERSION_STRING . "\n" .
-		"Config at " . Padre->ide->config_dir . "\n"
+		"Config at " . Padre->ide->config_dir . "\n" .
+		"SQLite user_version at " . Padre::DB->pragma('user_version') . "\n"
 	);
 	$about->SetVersion($Padre::VERSION);
 	$about->SetCopyright( Wx::gettext("Copyright 2008 Gabor Szabo"));
