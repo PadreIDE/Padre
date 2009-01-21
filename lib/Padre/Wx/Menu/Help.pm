@@ -39,7 +39,7 @@ sub new {
 		$self->Append( -1, Wx::gettext("Context Help\tF1") ),
 		sub {
 			my $current = Wx::Window::FindFocus();
-			if ( $current->isa('Padre::Wx::ErrorList') ) {
+			if ( (defined $current) and $current->isa('Padre::Wx::ErrorList') ) {
 				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
 				# TODO This feels wrong, the help menu code shouldn't
