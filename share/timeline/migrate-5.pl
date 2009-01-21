@@ -23,6 +23,7 @@ use Padre::DB::Patch;
 # Create the bookmark table
 do(<<'END_SQL');
 CREATE TABLE session (
+	id INTEGER NOT NULL PRIMARY KEY,
 	file VARCHAR(255) UNIQUE NOT NULL,
 	line INTEGER NOT NULL,
 	character INTEGER NOT NULL,

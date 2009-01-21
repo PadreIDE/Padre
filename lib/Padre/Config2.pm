@@ -373,26 +373,6 @@ setting(
 	default => 400,
 );
 
-# Editor Session State
-setting(
-	name    => 'main_file',
-	type    => STRING,
-	store   => HOST,
-	default => undef,
-);
-setting(
-	name    => 'main_files',
-	type    => STRING,
-	store   => HOST,
-	default => [],
-);
-setting(
-	name    => 'main_files_pos',
-	type    => STRING,
-	store   => HOST,
-	default => [],
-);
-
 
 
 

@@ -8,7 +8,7 @@ use File::Path    ();
 use File::Spec    ();
 use File::Copy    ();
 use File::HomeDir ();
-use Params::Util  qw{ _STRING _ARRAY };
+use Params::Util  qw{ _HASH0 };
 use YAML::Tiny    ();
 
 use Padre::Config::Clear ();
@@ -98,7 +98,7 @@ my $DEFAULT_DIR = File::Spec->catfile( (
 sub default_dir {
 	my $dir = $DEFAULT_DIR;
 	unless ( -e $dir ) {
-		mkdir $dir or
+		mkdir($dir) or
 		die "Cannot create config dir '$dir' $!";
 	}
 	return $dir;
@@ -166,30 +166,16 @@ sub new {
 	my $self  = bless { @_ }, $class;
 
 	# Main window geometry
+	$self->{host}->{main_maximized} ||= 0;
 	$self->{host}->{main_height}    ||= 400;
 	$self->{host}->{main_width}     ||= 600;
 	$self->{host}->{main_left}      ||= 40;
 	$self->{host}->{main_top}       ||= 20;
-	$self->{host}->{main_maximized} ||= 0;
-
-	# Files that were previously open (and can be still)
-	unless ( exists $self->{host}->{main_file} ) {
-		$self->{host}->{main_file} = undef;
-	}
-	unless ( _ARRAY($self->{host}->{main_files}) ) {
-		$self->{host}->{main_files} = [];
-	}
-	unless ( _ARRAY($self->{host}->{main_files_pos}) ) {
-		$self->{host}->{main_files_pos} = [];
-	}
-	$self->{host}->{main_files} = [
-		grep { -f $_ and -r _ }
-		@{ $self->{host}->{main_files} }
-	];
 
 	# Default the locale to the system locale
 	$self->{host}->{editor_style} ||= 'default';
 
+	# Merge the stored values over the defaults
 	%$self = (%defaults, %$self);
 
 	# Forcefully disable syntax checking at startup.
@@ -199,7 +185,7 @@ sub new {
 	$self->{main_syntaxcheck} = 0;
 
 	# Return a clear wrapper
-	return Padre::Config::Clear->new( $self );
+	return Padre::Config::Clear->new($self);
 }
 
 # Write a null config, then read it back in
@@ -211,7 +197,7 @@ sub create {
 	YAML::Tiny::DumpFile( $file, {} );
 
 	# Now read it (and the host config) back in
-	return $class->read( $file );
+	return $class->read($file);
 }
 
 sub read {
@@ -231,18 +217,6 @@ sub read {
 	my $host = Padre::DB::Hostconf->read;
 	return unless ref($hash) eq 'HASH';
 
-	# Expand a few things
-	if ( defined _STRING($host->{main_files}) ) {
-		$host->{main_files} = [
-			 split /\n/, $host->{main_files}
-		];
-	}
-	if ( defined _STRING($host->{main_files_pos}) ) {
-		$host->{main_files_pos} = [
-			 split /\n/, $host->{main_files_pos}
-		];
-	}
-
 	# Merge and create the configuration
 	return $class->new( %$hash, host => $host );
 }
@@ -252,10 +226,6 @@ sub write {
 
 	# Clone and remove the bless
 	my $copy = Storable::dclone( +{ %$self } );
-
-	# Serialize some values
-	$copy->{host}->{main_files} = join( "\n", grep { defined } @{$copy->{host}->{main_files}} );
-	$copy->{host}->{main_files_pos} = join( "\n", grep { defined } @{$copy->{host}->{main_files_pos}} );
 
 	# Save the host configuration
 	Padre::DB::Hostconf->write( delete $copy->{host} );
@@ -346,18 +316,6 @@ sub main_height {
 
 sub main_auilayout {
 	$_[0]->{host}->{main_auilayout};
-}
-
-sub main_file {
-	$_[0]->{host}->{main_file};
-}
-
-sub main_files {
-	$_[0]->{host}->{main_files};
-}
-
-sub main_files_pos {
-	$_[0]->{host}->{main_files_pos};
 }
 
 sub editor_style {

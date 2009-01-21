@@ -255,7 +255,6 @@ sub _set_task_status {
 }
 
 sub refresh {
-	$DB::single = 1;
 	my $self      = shift;
 	my $current   = _CURRENT(@_);
 	my $editor    = $current->editor;

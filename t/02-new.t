@@ -78,10 +78,6 @@ SCOPE: {
 	is( $config->main_left                => 40             );
 	is( $config->main_width               => 600            );
 	is( $config->main_height              => 400            );
-	is( $config->main_file                => undef          );
-
-	is_deeply( $config->main_files     => [] );
-	is_deeply( $config->main_files_pos => [] );
 }
 
 

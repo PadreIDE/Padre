@@ -325,7 +325,9 @@ sub on_focus_request {
 
 # Load any default files
 sub load_files {
-	my $self   = shift;
+	my $self    = shift;
+	my $config  = $self->config;
+	my $startup = $config->main_startup;
 
 	# An explicit list on the command line overrides configuration
 	my $files  = Padre->inst->{ARGV};
@@ -334,9 +336,32 @@ sub load_files {
 		return;
 	}
 
+	# Config setting 'last' means startup with all the files from the
+	# previous time we used Padre open (if they still exist)
+	Padre::DB->begin;
+	if ( $startup eq 'last' ) {
+		my @session = Padre::DB::Session->select;
+		if ( @session ) {
+			my $focus = undef;
+			foreach my $document ( @session ) {
+				my $filename = $document->file;
+				next unless -f $filename;
+				my $id = $self->setup_editor($filename);
+				if ( $document->focus ) {
+					$focus = $id;
+				}
+
+				# TODO - Go to the line/character
+			}
+			if ( defined $focus ) {
+				$self->on_nth_pane($focus);
+			}
+		}
+	}
+	Padre::DB::Session->truncate;
+	Padre::DB->commit;
+
 	# Config setting 'nothing' means startup with nothing open
-	my $config  = $self->config;
-	my $startup = $config->main_startup;
 	if ( $startup eq 'nothing' ) {
 		return;
 	}
@@ -344,27 +369,6 @@ sub load_files {
 	# Config setting 'new' means startup with a single new file open
 	if ( $startup eq 'new' ) {
 		$self->setup_editors;
-		return;
-	}
-
-	# Config setting 'last' means startup with all the files from the
-	# previous time we used Padre open (if they still exist)
-	if ( $startup eq 'last' ) {
-		if ( $config->main_files ) {
-			my @main_files     = @{ $config->main_files     };
-			my @main_files_pos = @{ $config->main_files_pos };
-			foreach my $i ( 0 .. $#main_files ) {
-				my $file = $main_files[$i];
-				my $id   = $self->setup_editor($file);
-				if ( $id and $main_files_pos[$i] ) {
-					$self->notebook->GetPage($id)->GotoPos( $main_files_pos[$i] );
-				}
-			}
-			if ( $config->main_file ) {
-				my $id = $self->find_editor_of_file( $config->main_file );
-				$self->on_nth_pane($id) if defined $id;
-			}
-		}
 		return;
 	}
 
@@ -982,30 +986,36 @@ sub on_goto {
 }
 
 sub on_close_window {
-	my $self      = shift;
-	my $event     = shift;
-	my $padre     = Padre->ide;
-	my $config    = $padre->config;
-	my $notebook  = $self->notebook;
-	my @documents = grep { $_ }
-		map  { $_->{Document} }
-		grep { $_ }
-		map  { $notebook->GetPage($_) }
-		$self->pageids;
+	my $self   = shift;
+	my $event  = shift;
+	my $padre  = Padre->ide;
+	my $config = $padre->config;
 
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up. Don't save it to
 	# the config yet, because we haven't committed to the shutdown
 	# until we get past the interactive phase.
-	my $main_file  = $self->current->filename;
-	my $main_files = [ 
-		map  { $_->filename }
-		@documents
-	];
-	my $main_files_pos = [
-		map  { $_->editor->GetCurrentPos }
-		@documents
-	];
+	my @session  = ();
+	my $notebook = $self->notebook;
+	my $current  = $self->current->filename;
+	foreach my $pageid ( $self->pageids ) {
+		next unless defined $pageid;
+		my $editor    = $notebook->GetPage($pageid);
+		my $document  = $editor->{Document} or next;
+		my $file      = $editor->{Document}->filename;
+		my $position  = $editor->GetCurrentPos;
+		my $line      = $editor->GetCurrentLine;
+		my $start     = $editor->PositionFromLine($line);
+		my $character = $position - $start;
+		my $focus     = ($current eq $file) ? 1 : 0;
+		push @session, Padre::DB::Session->new(
+			file      => $file,
+			line      => $line,
+			character => $character,
+			clue      => undef,
+			focus     => $focus,
+		);
+	}
 
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
@@ -1033,11 +1043,6 @@ sub on_close_window {
 	# at which Padre appears to close.
 	$self->Show(0);
 
-	# Now it's safe to save the session
-	$config->set( main_file      => $main_file      );
-	$config->set( main_files     => $main_files     );
-	$config->set( main_files_pos => $main_files_pos );
-
 	# Save the window geometry
 	#$config->set( main_auilayout => $self->aui->SavePerspective );
 	$config->set( main_maximized => $self->IsMaximized ? 1 : 0  );
@@ -1060,6 +1065,14 @@ sub on_close_window {
 	# Shut down all the plugins before saving the configuration
 	# so that plugins have a change to save their configuration.
 	$padre->plugin_manager->shutdown;
+
+	# Write the session to the database
+	Padre::DB->begin;
+	Padre::DB::Session->truncate;
+	foreach my $file ( @session ) {
+		$file->insert;
+	}
+	Padre::DB->commit;
 
 	# Write the configuration to disk
 	$padre->save_config;
