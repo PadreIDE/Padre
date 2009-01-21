@@ -237,7 +237,6 @@ my @events = (
 				my $path = catfile($home, 'cyrillic_test.pl');
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
-				$T->diag("selected : ".$main->current->text);
 				$main->on_open_selection();
 				$T->is_num(scalar($main->pages), 2, 'new and abs cyrillic_test open');
 				
@@ -246,11 +245,9 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			{
 				#put down one filename that is relative to the dir padre was started from
-				$T->diag(Cwd::cwd());
 				my $path = catfile('./eg/', 'cyrillic_test.pl');
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
-				$T->diag("selected : ".$main->current->text);
 				$main->on_open_selection();
 				$T->is_num(scalar($main->pages), 2, 'new and relative cyrillic_test open');
 			}
@@ -258,11 +255,9 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			{
 				#put down one filename that is relative to the dir padre was started from
-				$T->diag(Cwd::cwd());
 				my $path = catfile('./eg/', 'cyrillic_test.pl')."\n";
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
-				$T->diag("selected : ".$main->current->text);
 				$main->on_open_selection();
 				$T->is_num(scalar($main->pages), 2, 'relative cyrillic_test open with additional \n');
 			}
@@ -270,11 +265,9 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			{
 				#put down one filename that is relative to the dir padre was started from
-				$T->diag(Cwd::cwd());
 				my $path = "\n".catfile('./eg/', 'cyrillic_test.pl')."\n";
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
-				$T->diag("selected : ".$main->current->text);
 				$main->on_open_selection();
 				$T->is_num(scalar($main->pages), 2, 'relative cyrillic_test open with additional \n');
 			}
@@ -282,11 +275,11 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			{
 				#put down one filename that is relative to the dir padre was started from
-				$T->diag(Cwd::cwd());
+				#$T->diag(Cwd::cwd());
 				my $path = "\t   ".catfile('./eg/', 'cyrillic_test.pl')." \n\t ";
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
-				$T->diag("selected : ".$main->current->text);
+				#$T->diag("selected : ".$main->current->text);
 				$main->on_open_selection();
 				$T->is_num(scalar($main->pages), 2, 'relative cyrillic_test open with additional \n');
 			}
