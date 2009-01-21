@@ -19,6 +19,12 @@ my @cbs = qw(
 	find_first
 );
 
+sub new {
+	my $class = shift;
+	my $self  = bless {}, $class;
+	return $self;
+}
+
 sub get_layout {
 	my $search_term = shift;
 	my $config      = shift;
@@ -171,16 +177,21 @@ sub dialog {
 }
 
 sub find {
-	my ($class, $main) = @_;
+	my ($self, $main) = @_;
 
 	my $text = $main->current->text;
 	$text = '' if not defined $text;
 
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and replace and not as the string to be used
+	
+	unless ( $self->{dialog} ) {
+		$self->{dialog}  = $self->dialog($main, { term => $text } );
+	} else {
+		#TODO: give focus.
+	}
 
-	my $dialog = $class->dialog( $main, { term => $text } );
-	$dialog->Show(1);
+	$self->{dialog}->Show(1);
 
 	return;
 }
@@ -224,7 +235,7 @@ sub find_previous {
 }
 
 sub cancel_clicked {
-	$_[0]->Destroy;
+	$_[0]->Hide;
 	return;
 }
 
@@ -308,7 +319,7 @@ sub _get_data_from {
 	my $replace = $data->{_replace_choice_};
 
 	if ( $config->find_first ) {
-		$dialog->Destroy;
+		$dialog->Hide;
 	}
 	return unless defined _STRING($search);
 

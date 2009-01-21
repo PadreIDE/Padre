@@ -871,6 +871,16 @@ sub error {
 sub find {
 	my $self = shift;
 
+	unless ( defined $self->{find_dialog} ) {
+		require Padre::Wx::Dialog::Find;
+		$self->{find_dialog} = Padre::Wx::Dialog::Find->new;
+	}
+
+	return $self->{find_dialog};
+}
+sub fast_find {
+	my $self = shift;
+
 	unless ( defined $self->{fast_find_panel} ) {
 		require Padre::Wx::Dialog::Search;
 		$self->{fast_find_panel} = Padre::Wx::Dialog::Search->new;
