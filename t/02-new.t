@@ -10,7 +10,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 68 );
+plan( tests => 65 );
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;

@@ -485,7 +485,7 @@ sub read {
 	my $host = Padre::Config::Host->read;
 
 	# Load the user configuration
-	my $user = Padre::Config::Human->read(@_);
+	my $human = Padre::Config::Human->read(@_);
 
 	# Hand off to the constructor
 	return $class->new( $host, $human );	
