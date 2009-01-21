@@ -166,7 +166,9 @@ sub goto_bookmark {
 	my $bookmark  = Padre::DB::Bookmark->fetch_name($name);
 	unless ( $bookmark ) {
 		# Deleted since the dialog was shown
-		$main->error(Wx::gettext("The bookmark '$name' no longer exists"));
+		$main->error(
+            sprintf(Wx::gettext("The bookmark '%s' no longer exists"), $name)
+        );
 		return;
 	}
 
