@@ -505,7 +505,10 @@ sub read {
 	my $host = Padre::Config::Host->read;
 
 	# Load the user configuration
-	die "TO BE COMPLETED";
+	my $user = Padre::Config::Human->read(@_);
+
+	# Hand off to the constructor
+	return $class->new( $host, $human );	
 }
 
 
