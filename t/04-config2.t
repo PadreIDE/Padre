@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 57;
+use Test::More tests => 58;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -61,3 +61,9 @@ ok( $config->write, '->write ok' );
 # Check that we have a version for the parts now
 is( $config->host->version,  1, '->host->version is set'  );
 is( $config->human->version, 1, '->human->version is set' );
+
+# Set a value
+ok(
+	$config->set( main_lockinterface => 0 ),
+	'->set ok',
+);

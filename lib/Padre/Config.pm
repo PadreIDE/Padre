@@ -185,7 +185,7 @@ sub new {
 	$self->{main_syntaxcheck} = 0;
 
 	# Return a clear wrapper
-	return Padre::Config::Clear->new($self);
+	Padre::Config::Clear->new($self);
 }
 
 # Write a null config, then read it back in
@@ -217,7 +217,7 @@ sub read {
 	return unless ref($hash) eq 'HASH';
 
 	# Merge and create the configuration
-	return $class->new( %$hash, host => $host );
+	$class->new( %$hash, host => $host );
 }
 
 sub write {

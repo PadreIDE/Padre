@@ -11,7 +11,7 @@ use warnings;
 use Carp                   ();
 use File::Spec             ();
 use File::HomeDir          ();
-use Params::Util           qw{_INSTANCE};
+use Params::Util           qw{ _POSINT _INSTANCE };
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
@@ -31,7 +31,7 @@ our $REVISION = 1;
 
 # Settings Types (based on Firefox)
 use constant BOOLEAN => 0;
-use constant INTEGER => 1;
+use constant POSINT  => 1;
 use constant STRING  => 2;
 use constant PATH    => 3;
 
@@ -96,13 +96,13 @@ setting(
 );
 setting(
 	name    => 'editor_indent_tab_width',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HUMAN,
 	default => 8,
 );
 setting(
 	name    => 'editor_indent_width',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HUMAN,
 	default => 8,
 );
@@ -284,7 +284,7 @@ setting(
 );
 setting(
 	name    => 'ppi_highlight_limit',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HUMAN,
 	default => 2000,
 );
@@ -353,25 +353,25 @@ setting(
 );
 setting(
 	name    => 'main_top',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HOST,
 	default => 40,
 );
 setting(
 	name    => 'main_left',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HOST,
 	default => 20,
 );
 setting(
 	name    => 'main_width',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HOST,
 	default => 600,
 );
 setting(
 	name    => 'main_height',
-	type    => INTEGER,
+	type    => POSINT,
 	store   => HOST,
 	default => 400,
 );
@@ -479,6 +479,39 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub set {
+	my $self  = shift;
+	my $name  = shift;
+	my $value = shift;
+
+	# Does the setting exist?
+	my $setting = $SETTING{$name} or
+	Carp::croak("The configuration setting '$name' does not exist");
+
+	# All types are STRING-like
+	unless ( defined $value and not ref $value ) {
+		Carp::croak("Missing or non-scalar value for setting '$name'");
+	}
+
+	# We don't need to do additional checks on STRING types at this point
+	my $type = $setting->type;
+	if ( $type == BOOLEAN and $value ne '1' and $value ne '0' ) {
+		Carp::croak("Tried to change setting '$name' to a non-boolean");
+	}
+	if ( $type == POSINT and not _POSINT($value) ) {
+		Carp::croak("Tried to change setting '$name' to a non-boolean");
+	}
+	if ( $type == PATH and not -e $value ) {
+		Carp::croak("Tried to change setting '$name' to a non-existant path");
+	}
+
+	# Set the value into the appropriate backend
+	my $store = $SETTING{$name}->store;
+	$self->[$store]->{$name} = $value;
+
+	return 1;
 }
 
 sub read {
