@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 58;
+use Test::More tests => 105;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -14,17 +14,17 @@ use File::Temp ();
 BEGIN {
 	$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 }
-use Padre::Config2 ();
+use Padre::Config ();
 
 # Create the empty config file
-my $empty = Padre::Config2->default_yaml;
+my $empty = Padre::Config->default_yaml;
 open( FILE, '>', $empty ) or die "Failed to open $empty";
 print FILE "--- {}\n";
 close( FILE );
 
 # Load the config
-my $config = Padre::Config2->read;
-isa_ok( $config, 'Padre::Config2' );
+my $config = Padre::Config->read;
+isa_ok( $config, 'Padre::Config' );
 isa_ok( $config->host,  'Padre::Config::Host'  );
 isa_ok( $config->human, 'Padre::Config::Human' );
 is( $config->project, undef, '->project is undef' );
@@ -36,11 +36,12 @@ my @names = sort {
 	length($a) <=> length($b)
 	or
 	$a cmp $b
-} keys %Padre::Config2::SETTING;
+} keys %Padre::Config::SETTING;
 foreach my $name ( @names ) {
+	ok( defined($config->$name()), "->$name is defined" );	
 	is(
 		$config->$name(),
-		$Padre::Config2::DEFAULT{$name},
+		$Padre::Config::DEFAULT{$name},
 		"->$name defaults ok",
 	);
 }

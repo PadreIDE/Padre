@@ -126,8 +126,7 @@ sub new {
 	Class::Autouse->load('Padre::DB');
 
 	# Load (and sync if needed) the user's portable configuration
-	$self->{config}   = Padre::Config->read;
-	$self->{config} ||= Padre::Config->create;
+	$self->{config} = Padre::Config->read;
 
 	# Create the plugin manager
 	$self->{plugin_manager} = Padre::PluginManager->new($self);

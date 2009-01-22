@@ -43,7 +43,7 @@ SCOPE: {
 	is( $config->main_syntaxcheck         => 0              );
 	is( $config->main_errorlist           => 0              );
 	is( $config->main_statusbar           => 1              );
-	is( $config->editor_font              => undef          );
+	is( $config->editor_font              => ''             );
 	is( $config->editor_linenumbers       => 1              );
 	is( $config->editor_eol               => 0              );
 	is( $config->editor_indentationguides => 0              );
@@ -52,7 +52,7 @@ SCOPE: {
 	is( $config->editor_whitespace        => 0              );
 	is( $config->editor_folding           => 0              );
 	is( $config->editor_wordwrap          => 0              );
-	is( $config->editor_currentline       => 0              );
+	is( $config->editor_currentline       => 1              );
 	is( $config->editor_currentline_color => 'FFFF04'       );
 	is( $config->editor_indent_auto       => 1              );
 	is( $config->editor_indent_tab_width  => 8              );
@@ -66,7 +66,7 @@ SCOPE: {
 	is( $config->find_nohidden            => 1              );
 	is( $config->find_quick               => 0              );
 	is( $config->ppi_highlight            => 0              );
-	is( $config->ppi_highlight_limit      => 10_000         );
+	is( $config->ppi_highlight_limit      => 2000           );
 	is( $config->run_save                 => 'same'         );
 	is( $config->run_stacktrace           => 0              );
 	is( $config->threads                  => 1              );
@@ -74,8 +74,8 @@ SCOPE: {
 	is( $config->locale_perldiag          => ''             );
 	is( $config->editor_style             => 'default'      );
 	is( $config->main_maximized           => 0              );
-	is( $config->main_top                 => 20             );
-	is( $config->main_left                => 40             );
+	is( $config->main_top                 => 40             );
+	is( $config->main_left                => 20             );
 	is( $config->main_width               => 600            );
 	is( $config->main_height              => 400            );
 }

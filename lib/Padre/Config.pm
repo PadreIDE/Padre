@@ -1,84 +1,386 @@
 package Padre::Config;
 
+# To help force the break from the first-generate HASH based configuration
+# over to the second-generation method based configuration, initially we
+# will use an ARRAY-based object, so that all existing code is forcefully
+# broken.
+
 use 5.008;
 use strict;
 use warnings;
-use Storable      ();
-use File::Path    ();
-use File::Spec    ();
-use File::Copy    ();
-use File::HomeDir ();
-use Params::Util  qw{ _HASH0 };
-use YAML::Tiny    ();
-
-use Padre::Config::Clear ();
+use Carp                   ();
+use File::Spec             ();
+use File::Copy             ();
+use File::HomeDir          ();
+use Params::Util           qw{ _POSINT _INSTANCE };
+use Padre::Config::Setting ();
+use Padre::Config::Human   ();
+use Padre::Config::Project ();
+use Padre::Config::Host    ();
 
 our $VERSION = '0.25';
 
-my %defaults = (
-	# Look and feel preferences
-	main_lockinterface       => 1,
-	main_functions           => 0,
-	main_functions_order     => 'alphabetical',
-	main_outline             => 0,
-	main_output              => 0,
-	main_output_ansi         => 1,
-	main_syntaxcheck         => 0,
-	main_errorlist           => 0,
-	main_statusbar           => 1,
+# Master storage of the settings
+our %SETTING = ();
 
-	# Editor features and indent settings
-	editor_font              => undef,
-	editor_linenumbers       => 1,
-	editor_eol               => 0,
-	editor_whitespace        => 0,
-	editor_indentationguides => 0,
-	editor_calltips          => 0,
-	editor_autoindent        => 'deep',
-	editor_folding           => 0,
-	editor_wordwrap          => 0,
-	editor_currentline       => 0,
-	editor_currentline_color => 'FFFF04',
-	editor_beginner          => 1,
-	editor_indent_auto       => 1,
-	editor_indent_tab        => 1,
-	editor_indent_tab_width  => 8,
-	editor_indent_width      => 8,
-	ppi_highlight            => 0,
-	ppi_highlight_limit      => 10_000,
+# A cache for the defaults
+our %DEFAULT = ();
 
-	# Search settings
-	find_case                => 1,
-	find_regex               => 0,
-	find_reverse             => 0,
-	find_first               => 0,
-	find_nohidden            => 1,
-	find_quick               => 0,
+# The configuration revision.
+# (Functionally similar to the database revision)
+our $REVISION = 1;
 
+# Settings Types (based on Firefox)
+use constant BOOLEAN => 0;
+use constant POSINT  => 1;
+use constant STRING  => 2;
+use constant PATH    => 3;
+
+# Setting Stores
+use constant HOST    => 0;
+use constant HUMAN   => 1;
+use constant PROJECT => 2;
+
+use Class::XSAccessor::Array
+	getters => {
+		host    => HOST,
+		human   => HUMAN,
+		project => PROJECT,
+	};
+
+sub product_path {
+	if ( defined $ENV{PADRE_HOME} ) {
+		# When explicitly set, always use the Unix style
+		return qw{ .padre };
+	} elsif ( File::Spec->isa('File::Spec::Win32') ) {
+		# On Windows use the traditional Vendor/Product format
+		return qw{ Perl Padre };
+	} else {
+		# Use the the Unix style elsewhere.
+		# TODO - We may want to do something special on Mac
+		return qw{ .padre };
+	}
+}
+
+# Establish Padre's home directory
+my $DEFAULT_DIR = File::Spec->catdir(
+	(defined $ENV{PADRE_HOME} ? $ENV{PADRE_HOME} : File::HomeDir->my_data),
+	Padre::Config->product_path,
+);
+unless ( File::Spec->file_name_is_absolute($DEFAULT_DIR) ) {
+	$DEFAULT_DIR = File::Spec->rel2abs($DEFAULT_DIR);
+}
+
+
+
+
+
+#####################################################################
+# Settings Specification
+
+# This section identifies the set of all named configuration entries,
+# and where the configuration system should resolve them to.
+
+# Indent Settings
+# Allow projects to forcefully override personal settings
+setting(
+	name    => 'editor_indent_auto',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_indent_tab',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_indent_tab_width',
+	type    => POSINT,
+	store   => HUMAN,
+	default => 8,
+);
+setting(
+	name    => 'editor_indent_width',
+	type    => POSINT,
+	store   => HUMAN,
+	default => 8,
+);
+
+# Pages and Panels
+setting(
 	# startup mode, if no files given on the command line this can be
 	#   new        - a new empty buffer
 	#   nothing    - nothing to open
 	#   last       - the files that were open last time
-	main_startup             => 'new',
+	name    => 'main_startup',
+	type    => STRING,
+	store   => HUMAN,
+	default => 'new',
+);
+setting(
+	name    => 'main_lockinterface',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'main_functions',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_functions_order',
+	type    => STRING,
+	store   => HUMAN,
+	default => 'alphabetical',
+);
+setting(
+	name    => 'main_outline',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_output',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_output_ansi',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'main_syntaxcheck',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_errorlist',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_statusbar',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
 
+# Editor settings
+setting(
+	name    => 'editor_font',
+	type    => STRING,
+	store   => HUMAN,
+	default => '',
+);
+setting(
+	name    => 'editor_linenumbers',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_eol',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_whitespace',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_indentationguides',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_calltips',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_autoindent',
+	type    => STRING,
+	store   => HUMAN,
+	default => 'deep',
+);
+setting(
+	name    => 'editor_folding',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_currentline',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_currentline_color',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 'FFFF04',
+);
+setting(
+	name    => 'editor_beginner',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_wordwrap',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_case',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'find_regex',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_reverse',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_first',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_nohidden',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'find_quick',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'ppi_highlight',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'ppi_highlight_limit',
+	type    => POSINT,
+	store   => HUMAN,
+	default => 2000,
+);
+
+# Behaviour Tuning
+setting(
 	# When running a script from the application some of the files might have not been saved yet.
 	# There are several option what to do before running the script
 	# none - don's save anything
 	# same - save the file in the current buffer
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
-	run_save                 => 'same',
-	run_stacktrace           => 0,
+	name    => 'run_save',
+	type    => STRING,
+	store   => HUMAN,
+	default => 'same',
+);
+setting(
+	name    => 'run_stacktrace',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
+	# By default use background threads unless profiling
+	# TODO - Make the default actually change
+	name    => 'threads',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'locale',
+	type    => STRING,
+	store   => HUMAN,
+	default => '',
+);
+setting(
+	name    => 'locale_perldiag',
+	type    => STRING,
+	store   => HUMAN,
+	default => '',
+);
+setting(
+	name    => 'experimental',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
 
-	# By default, use background threads unless profiling
-	threads                  => 1,
+# Because the colour data is in local files,
+# it has to be a host-specific setting.
+setting(
+	name    => 'editor_style',
+	type    => STRING,
+	store   => HOST,
+	default => 'default',
+);
 
-	# What language should we work in
-	locale                   => '',       
-	locale_perldiag          => '',
-
-	# By default, don't enable experimental features
-	experimental             => 0,
+# Window geometry
+setting(
+	name    => 'main_maximized',
+	type    => BOOLEAN,
+	store   => HOST,
+	default => 0,
+);
+setting(
+	name    => 'main_top',
+	type    => POSINT,
+	store   => HOST,
+	default => 40,
+);
+setting(
+	name    => 'main_left',
+	type    => POSINT,
+	store   => HOST,
+	default => 20,
+);
+setting(
+	name    => 'main_width',
+	type    => POSINT,
+	store   => HOST,
+	default => 600,
+);
+setting(
+	name    => 'main_height',
+	type    => POSINT,
+	store   => HOST,
+	default => 400,
 );
 
 
@@ -88,20 +390,12 @@ my %defaults = (
 #####################################################################
 # Class-Level Functionality
 
-my $DEFAULT_DIR = File::Spec->catfile( (
-	$ENV{PADRE_HOME}
-		? $ENV{PADRE_HOME}
-		: File::HomeDir->my_data
-	), '.padre',
-);
-
 sub default_dir {
-	my $dir = $DEFAULT_DIR;
-	unless ( -e $dir ) {
-		mkdir($dir) or
-		die "Cannot create config dir '$dir' $!";
+	unless ( -e $DEFAULT_DIR ) {
+		mkdir($DEFAULT_DIR) or
+		die "Cannot create config dir '$DEFAULT_DIR' $!";
 	}
-	return $dir;
+	return $DEFAULT_DIR;
 }
 
 sub default_yaml {
@@ -136,9 +430,11 @@ sub default_plugin_dir {
 	unless ( -e $file ) {
 		Padre::Config->copy_original_My_plugin( $file );
 	}
+
 	return $pluginsdir;
 }
 
+# TODO - This should probably live in Padre::PluginManager somewhere
 sub copy_original_My_plugin {
 	my $class  = shift;
 	my $target = shift;
@@ -149,7 +445,7 @@ sub copy_original_My_plugin {
 	unless ( File::Copy::copy($src, $target) ) {
 		return die "Could not copy the My plugin ($src) to $target: $!";
 	}
-	chmod 0644, $target;
+	chmod( 0644, $target );
 
 	return 1;
 }
@@ -158,195 +454,143 @@ sub copy_original_My_plugin {
 
 
 
+
+
+
+
+
 #####################################################################
-# Constructor and Serialization
+# Constructor and Accessors
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
-
-	# Main window geometry
-	$self->{host}->{main_maximized} ||= 0;
-	$self->{host}->{main_height}    ||= 400;
-	$self->{host}->{main_width}     ||= 600;
-	$self->{host}->{main_left}      ||= 40;
-	$self->{host}->{main_top}       ||= 20;
-
-	# Default the locale to the system locale
-	$self->{host}->{editor_style} ||= 'default';
-
-	# Merge the stored values over the defaults
-	%$self = (%defaults, %$self);
-
-	# Forcefully disable syntax checking at startup.
-	# Automatically compiling files provided on the command
-	# line at start means executing arbitrary code, which is
-	# a massive security violation.
-	$self->{main_syntaxcheck} = 0;
-
-	# Return a clear wrapper
-	Padre::Config::Clear->new($self);
-}
-
-# Write a null config, then read it back in
-sub create {
-	my $class = shift;
-
-	# Save a null configuration
-	YAML::Tiny::DumpFile( $class->default_yaml, {} );
-
-	# Now read it (and the host config) back in
-	return $class->read;
-}
-
-sub read {
-	my $class = shift;
-
-	# Check the config file
-	my $file = $class->default_yaml;
-	unless ( defined $file and -f $file and -r _ ) {
-		return;
+	my $host  = shift;
+	my $human = shift;
+	unless ( _INSTANCE($host, 'Padre::Config::Host') ) {
+		Carp::croak("Did not provide a host config to Padre::Config->new");
+	}
+	unless ( _INSTANCE($human, 'Padre::Config::Human') ) {
+		Carp::croak("Did not provide a user config to Padre::Config->new");
 	}
 
-	# Load the user configuration
-	my $hash = YAML::Tiny::LoadFile($file);
-	return unless ref($hash) eq 'HASH';
+	# Create the basic object with the two required elements
+	my $self = bless [ $host, $human ], $class;
 
-	# Load the host configuration
-	my $host = Padre::DB::Hostconf->read;
-	return unless ref($hash) eq 'HASH';
+	# Add the optional third element
+	if ( @_ ) {
+		my $project = shift;
+		unless ( _INSTANCE($project, 'Padre::Config::Project') ) {
+			Carp::croak("Did not provide a project config to Padre::Config->new");
+		}
+		$self->[PROJECT] = $project;
+	}
 
-	# Merge and create the configuration
-	$class->new( %$hash, host => $host );
+	return $self;
 }
-
-sub write {
-	my $self = shift;
-
-	# Clone and remove the bless
-	my $copy = Storable::dclone( +{ %$self } );
-
-	# Save the host configuration
-	Padre::DB::Hostconf->write( delete $copy->{host} );
-
-	# Save the user configuration
-	YAML::Tiny::DumpFile( $self->default_yaml, $copy );
-
-	return 1;
-}
-
-
-
-
-
-#####################################################################
-# Human-Layer Settings
-
-use Class::XSAccessor
-	getters => {
-		main_startup             => 'main_startup',
-		main_lockinterface       => 'main_lockinterface',
-		main_functions           => 'main_functions',
-		main_functions_order     => 'main_functions_order',
-		main_outline             => 'main_outline',
-		main_output              => 'main_output',
-		main_output_ansi         => 'main_output_ansi',
-		main_syntaxcheck         => 'main_syntaxcheck',
-		main_errorlist           => 'main_errorlist',
-		main_statusbar           => 'main_statusbar',
-		editor_font              => 'editor_font',
-		editor_linenumbers       => 'editor_linenumbers',
-		editor_eol               => 'editor_eol',
-		editor_whitespace        => 'editor_whitespace',
-		editor_indentationguides => 'editor_indentationguides',
-		editor_calltips          => 'editor_calltips',
-		editor_autoindent        => 'editor_autoindent',
-		editor_folding           => 'editor_folding',
-		editor_wordwrap          => 'editor_wordwrap',
-		editor_currentline       => 'editor_currentline',
-		editor_currentline_color => 'editor_currentline_color',
-		editor_beginner          => 'editor_beginner',
-		editor_indent_auto       => 'editor_indent_auto',
-		editor_indent_tab        => 'editor_indent_tab',
-		editor_indent_tab_width  => 'editor_indent_tab_width',
-		editor_indent_width      => 'editor_indent_width',
-		find_case                => 'find_case',
-		find_regex               => 'find_regex',
-		find_reverse             => 'find_reverse',
-		find_first               => 'find_first',
-		find_nohidden            => 'find_nohidden',
-		find_quick               => 'find_quick',
-		ppi_highlight            => 'ppi_highlight',
-		ppi_highlight_limit      => 'ppi_highlight_limit',
-		run_save                 => 'run_save',
-		run_stacktrace           => 'run_stacktrace',
-		locale                   => 'locale',
-		locale_perldiag          => 'locale_perldiag',
-		threads                  => 'threads',
-		experimental             => 'experimental',
-	};
-
-
-
-
-
-#####################################################################
-# Host-Layer Settings
-
-sub main_maximized {
-	$_[0]->{host}->{main_maximized};
-}
-
-sub main_top {
-	$_[0]->{host}->{main_top};
-}
-
-sub main_left {
-	$_[0]->{host}->{main_left};
-}
-
-sub main_width {
-	$_[0]->{host}->{main_width};
-}
-
-sub main_height {
-	$_[0]->{host}->{main_height};
-}
-
-sub main_auilayout {
-	$_[0]->{host}->{main_auilayout};
-}
-
-sub editor_style {
-	$_[0]->{host}->{editor_style};
-}
-
-
-
-
-
-#####################################################################
-# Setting a Setting
 
 sub set {
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;
 
-	# Check the human layer
-	if ( exists $self->{$name} ) {
-		$self->{$name} = $value;
-		return 1;
+	# Does the setting exist?
+	my $setting = $SETTING{$name} or
+	Carp::croak("The configuration setting '$name' does not exist");
+
+	# All types are STRING-like
+	unless ( defined $value and not ref $value ) {
+		Carp::croak("Missing or non-scalar value for setting '$name'");
 	}
 
-	# Check the host layer
-	if ( exists $self->{host}->{$name} ) {
-		$self->{host}->{$name} = $value;
-		return 1;
+	# We don't need to do additional checks on STRING types at this point
+	my $type = $setting->type;
+	if ( $type == BOOLEAN and $value ne '1' and $value ne '0' ) {
+		Carp::croak("Tried to change setting '$name' to a non-boolean");
+	}
+	if ( $type == POSINT and not _POSINT($value) ) {
+		Carp::croak("Tried to change setting '$name' to a non-boolean");
+	}
+	if ( $type == PATH and not -e $value ) {
+		Carp::croak("Tried to change setting '$name' to a non-existant path");
 	}
 
-	# FAIL
-	die("Unknown or unsupported configuration setting '$name'");
+	# Set the value into the appropriate backend
+	my $store = $SETTING{$name}->store;
+	$self->[$store]->{$name} = $value;
+
+	return 1;
+}
+
+sub read {
+	my $class = shift;
+
+	# Load the host configuration
+	my $host = Padre::Config::Host->read;
+
+	# Load the user configuration
+	my $human = Padre::Config::Human->read
+	         || Padre::Config::Human->create;
+
+	# Hand off to the constructor
+	my $self = $class->new( $host, $human );
+
+	# TODO - Check the version
+
+	return $self;
+}
+
+sub write {
+	my $self = shift;
+
+	# Save the user configuration
+	$self->[HUMAN]->{version} = $REVISION;
+	$self->[HUMAN]->write( $self->default_yaml );
+
+	# Save the host configuration
+	$self->[HOST]->{version} = $REVISION;
+	$self->[HOST]->write;
+
+	return 1;
+}
+
+
+
+
+
+#####################################################################
+# Code Generation
+
+sub setting {
+	# Validate the setting
+	my $object = Padre::Config::Setting->new(@_);
+	if ( $SETTING{$object->{name}} ) {
+		Carp::croak("The $object->{name} setting is already defined");
+	}
+
+	# Generate the accessor
+	my $code = <<"END_PERL";
+package Padre::Config;
+
+sub $object->{name} {
+	my \$self = shift;
+	if ( exists \$self->[$object->{store}]->{'$object->{name}'} ) {
+		return \$self->[$object->{store}]->{'$object->{name}'};
+	}
+	return \$DEFAULT{'$object->{name}'};
+}
+END_PERL
+
+	# Compile the accessor
+	eval $code; ## no critic
+	if ( $@ ) {
+		Carp::croak("Failed to compile setting $object->{name}");
+	}
+
+	# Save the setting
+	$SETTING{$object->{name}} = $object;
+	$DEFAULT{$object->{name}} = $object->{default};
+
+	return 1;
 }
 
 1;

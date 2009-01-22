@@ -5,9 +5,10 @@ package Padre::Config::Human;
 use 5.008;
 use strict;
 use warnings;
-use YAML::Tiny     ();
-use Params::Util   qw{_HASH0};
-use Padre::Config2 ();
+use Storable      ();
+use YAML::Tiny    ();
+use Params::Util  qw{_HASH0};
+use Padre::Config ();
 
 our $VERSION = '0.25';
 
@@ -21,27 +22,33 @@ our $VERSION = '0.25';
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
-
-	# Check the config
-
 	return $self;
 }
 
 sub read {
 	my $class = shift;
 
-	# Check the file
-	my $file = shift;
-	unless ( defined $file and -f $file and -r $file ) {
-		return;
-	}
-
 	# Load the user configuration
-	my $hash = YAML::Tiny::LoadFile($file);
+	my $hash = eval {
+		YAML::Tiny::LoadFile(
+			Padre::Config->default_yaml
+		)
+	};
 	return unless _HASH0($hash);
 
 	# Create the object
 	return $class->new( %$hash );
+}
+
+sub create {
+	my $class = shift;
+	my $file  = Padre::Config->default_yaml;
+
+	YAML::Tiny::DumpFile( $file, {
+		version => 1,
+	} ) or Carp::croak("Failed to create '$file'");
+
+	return $class->read( $file );
 }
 
 sub write {
@@ -51,7 +58,10 @@ sub write {
 	my $copy = Storable::dclone( +{ %$self } );
 
 	# Save the user configuration
-	YAML::Tiny::DumpFile( Padre::Config->default_yaml, $copy );
+	YAML::Tiny::DumpFile(
+		Padre::Config->default_yaml,
+		$copy,
+	);
 
 	return 1;
 }
