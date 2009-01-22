@@ -5,8 +5,9 @@ package Padre::Config::Human;
 use 5.008;
 use strict;
 use warnings;
-use YAML::Tiny   ();
-use Params::Util qw{_HASH0};
+use YAML::Tiny     ();
+use Params::Util   qw{_HASH0};
+use Padre::Config2 ();
 
 our $VERSION = '0.25';
 
@@ -41,6 +42,18 @@ sub read {
 
 	# Create the object
 	return $class->new( %$hash );
+}
+
+sub write {
+	my $self = shift;
+
+	# Clone and remove the bless
+	my $copy = Storable::dclone( +{ %$self } );
+
+	# Save the user configuration
+	YAML::Tiny::DumpFile( Padre::Config->default_yaml, $copy );
+
+	return 1;
 }
 
 1;

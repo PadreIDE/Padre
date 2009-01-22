@@ -3,6 +3,7 @@ package Padre::Plugin::My;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Config ();
 use Padre::Wx     ();
 use Padre::Plugin ();
 
@@ -47,7 +48,7 @@ sub show_about {
 
 	# Locate this plugin
 	my $path = File::Spec->catfile(
-		Padre->ide->config_dir,
+		Padre::Config->default_dir,
 		qw{ plugins Padre Plugin My.pm }
 	);
 

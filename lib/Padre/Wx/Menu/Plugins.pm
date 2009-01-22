@@ -5,10 +5,11 @@ package Padre::Wx::Menu::Plugins;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util       ();
-use Padre::Wx          ();
+use Padre::Config   ();
+use Params::Util    ();
+use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current     qw{_CURRENT};
+use Padre::Current  qw{_CURRENT};
 
 our $VERSION = '0.25';
 our @ISA     = 'Padre::Wx::Menu';
@@ -47,7 +48,7 @@ sub new {
 		$tools->Append( -1, Wx::gettext("Edit My Plugin") ),
 		sub {
 			my $file = File::Spec->catfile(
-				Padre->ide->config_dir,
+				Padre::Config->default_dir,
 				qw{ plugins Padre Plugin My.pm }
 			);
 			return $self->error(

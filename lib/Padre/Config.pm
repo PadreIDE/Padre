@@ -203,9 +203,9 @@ sub create {
 sub read {
 	my $class = shift;
 
-	# Check the file
-	my $file = shift;
-	unless ( defined $file and -f $file and -r $file ) {
+	# Check the config file
+	my $file = $class->default_yaml;
+	unless ( defined $file and -f $file and -r _ ) {
 		return;
 	}
 
@@ -231,7 +231,7 @@ sub write {
 	Padre::DB::Hostconf->write( delete $copy->{host} );
 
 	# Save the user configuration
-	YAML::Tiny::DumpFile( $_[0], $copy );
+	YAML::Tiny::DumpFile( $self->default_yaml, $copy );
 
 	return 1;
 }

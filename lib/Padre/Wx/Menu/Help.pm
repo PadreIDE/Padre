@@ -6,9 +6,10 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Padre::Wx          ();
-use Padre::Wx::Menu ();
-use Padre::Wx::DocBrowser();
+use Padre::Config         ();
+use Padre::Wx             ();
+use Padre::Wx::Menu       ();
+use Padre::Wx::DocBrowser ();
 
 our $VERSION = '0.25';
 our @ISA     = 'Padre::Wx::Menu';
@@ -140,7 +141,7 @@ sub about {
 	$about->SetDescription(
 		"Perl Application Development and Refactoring Environment\n\n" .
 		"Based on Wx.pm $Wx::VERSION and " . Wx::wxVERSION_STRING . "\n" .
-		"Config at " . Padre->ide->config_dir . "\n" .
+		"Config at " . Padre::Config->default_dir . "\n" .
 		"SQLite user_version at " . Padre::DB->pragma('user_version') . "\n"
 	);
 	$about->SetVersion($Padre::VERSION);

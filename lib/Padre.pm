@@ -82,8 +82,6 @@ use Class::XSAccessor
 	getters => {
 		original_cwd   => 'original_cwd',
 		config         => 'config',
-		config_dir     => 'config_dir',
-		config_yaml    => 'config_yaml',
 		wx             => 'wx',
 		task_manager   => 'task_manager',
 		plugin_manager => 'plugin_manager',
@@ -114,10 +112,6 @@ sub new {
 		# Wx Attributes
 		wx             => undef,
 
-		# Internal Attributes
-		config_dir     => undef,
-		config_yaml    => undef,
-
 		# Plugin Attributes
 		plugin_manager => undef,
 
@@ -132,10 +126,8 @@ sub new {
 	Class::Autouse->load('Padre::DB');
 
 	# Load (and sync if needed) the user's portable configuration
-	$self->{config_dir}  = Padre::Config->default_dir;
-	$self->{config_yaml} = Padre::Config->default_yaml;
-	$self->{config}      = Padre::Config->read(   $self->config_yaml );
-	$self->{config}    ||= Padre::Config->create( $self->config_yaml );
+	$self->{config}   = Padre::Config->read;
+	$self->{config} ||= Padre::Config->create;
 
 	# Create the plugin manager
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
@@ -194,7 +186,7 @@ sub run {
 
 # Save the YAML configuration file
 sub save_config {
-	$_[0]->config->write( $_[0]->config_yaml );
+	$_[0]->config->write;
 }
 
 

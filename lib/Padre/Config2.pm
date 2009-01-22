@@ -485,10 +485,24 @@ sub read {
 	my $host = Padre::Config::Host->read;
 
 	# Load the user configuration
-	my $human = Padre::Config::Human->read(@_);
+	my $human = Padre::Config::Human->read(
+		$class->default_yaml,
+	);
 
 	# Hand off to the constructor
-	return $class->new( $host, $human );	
+	return $class->new( $host, $human );
+}
+
+sub write {
+	my $self = shift;
+
+	# Save the user settings
+	$self->[HUMAN]->write( $self->default_yaml );
+
+	# Save the host settings
+	$self->[HOST]->write;
+
+	return 1;
 }
 
 
