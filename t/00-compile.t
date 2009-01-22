@@ -18,15 +18,18 @@ $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 my $out = File::Spec->catfile($ENV{PADRE_HOME}, 'out.txt');
 my $err = File::Spec->catfile($ENV{PADRE_HOME}, 'err.txt');
 
-my @files = File::Find::Rule->file->name('*.pm')->in('lib');
+my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
 plan tests => 2 * @files;
-foreach my $file (@files) {
-		system "$^X -c $file > $out 2>$err";
+foreach my $file ( @files ) {
+		my $module = $file;
+		$module =~ s/[\/\\]/::/g;
+		$module =~ s/\.pm$//;
+		system "$^X -e \"require $module; print 'ok';\" > $out 2>$err";
 		my $out_data = slurp($out);
-		is($out_data, '', "STDOUT of $file");
+		is($out_data, 'ok', "STDOUT of $file");
 
 		my $err_data = slurp($err);
-		is($err_data, "$file syntax OK\n", "STDERR of $file");
+		is($err_data, '', "STDERR of $file");
 }
 
 sub slurp {
