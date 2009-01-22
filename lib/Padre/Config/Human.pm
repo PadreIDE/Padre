@@ -56,6 +56,10 @@ sub write {
 	return 1;
 }
 
+sub version {
+	$_[0]->{version};
+}
+
 1;
 
 # Copyright 2008 Gabor Szabo.

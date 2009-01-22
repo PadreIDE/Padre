@@ -19,6 +19,16 @@ use Padre::Config::Host    ();
 
 our $VERSION = '0.25';
 
+# Master storage of the settings
+our %SETTING = ();
+
+# A cache for the defaults
+our %DEFAULT = ();
+
+# The configuration revision.
+# (Functionally similar to the database revision)
+our $REVISION = 1;
+
 # Settings Types (based on Firefox)
 use constant BOOLEAN => 0;
 use constant INTEGER => 1;
@@ -37,29 +47,25 @@ use Class::XSAccessor::Array
 		project => PROJECT,
 	};
 
-# Establish Padre's home directory
-my $DEFAULT_DIR = undef;
-if ( defined $ENV{PADRE_HOME} ) {
-	# When explicitly set, always use the Unix style
-	$DEFAULT_DIR = File::Spec->catdir(
-		$ENV{PADRE_HOME},
-		'.padre',
-	);
-} elsif ( File::Spec->isa('File::Spec::Win32') ) {
-	# On Windows use the traditional Vendor/Product format
-	$DEFAULT_DIR = File::Spec->catdir(
-		File::HomeDir->my_data,
-		'Perl',
-		'Padre',
-	);
-} else {
-	# Use the the Unix style elsewhere
-	# TODO - We may want to do something special on Mac
-	$DEFAULT_DIR = File::Spec->catdir(
-		File::HomeDir->my_data,
-		'.padre',
-	);
+sub product_path {
+	if ( defined $ENV{PADRE_HOME} ) {
+		# When explicitly set, always use the Unix style
+		return qw{ .padre };
+	} elsif ( File::Spec->isa('File::Spec::Win32') ) {
+		# On Windows use the traditional Vendor/Product format
+		return qw{ Perl Padre };
+	} else {
+		# Use the the Unix style elsewhere.
+		# TODO - We may want to do something special on Mac
+		return qw{ .padre };
+	}
 }
+
+# Establish Padre's home directory
+my $DEFAULT_DIR = File::Spec->catdir(
+	(defined $ENV{PADRE_HOME} ? $ENV{PADRE_HOME} : File::HomeDir->my_data),
+	Padre::Config2->product_path,
+);
 unless ( File::Spec->file_name_is_absolute($DEFAULT_DIR) ) {
 	$DEFAULT_DIR = File::Spec->rel2abs($DEFAULT_DIR);
 }
@@ -73,9 +79,6 @@ unless ( File::Spec->file_name_is_absolute($DEFAULT_DIR) ) {
 
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
-
-# Setting Storage
-our %SETTING = ();
 
 # Indent Settings
 # Allow projects to forcefully override personal settings
@@ -490,16 +493,21 @@ sub read {
 	);
 
 	# Hand off to the constructor
-	return $class->new( $host, $human );
+	my $self = $class->new( $host, $human );
+
+	# Check the version
+
 }
 
 sub write {
 	my $self = shift;
 
-	# Save the user settings
+	# Save the user configuration
+	$self->[HUMAN]->{version} = $REVISION;
 	$self->[HUMAN]->write( $self->default_yaml );
 
-	# Save the host settings
+	# Save the host configuration
+	$self->[HOST]->{version} = $REVISION;
 	$self->[HOST]->write;
 
 	return 1;
@@ -511,9 +519,6 @@ sub write {
 
 #####################################################################
 # Code Generation
-
-# Cache the defaults
-our %DEFAULT = ();
 
 sub setting {
 	# Validate the setting
@@ -538,6 +543,9 @@ END_PERL
 	if ( $@ ) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}
+
+	# Save the setting
+	$SETTING{$object->{name}} = $object;
 
 	return 1;
 }
