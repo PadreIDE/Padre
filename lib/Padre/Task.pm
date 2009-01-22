@@ -77,7 +77,7 @@ follows. (C<new> and C<schedule> are inherited.)
 
   require Padre::Task::Foo;
   my $task = Padre::Task::Foo->new(some => 'data');
-  $task->schedule(); # hand off to the task manager
+  $task->schedule; # hand off to the task manager
 
 As a special case, any (arbitrarily nested and complex) data
 structure you put into your object under
@@ -123,8 +123,6 @@ CAVEATS section below!)
 
 =head1 INSTANCE METHODS
 
-=cut
-
 =head2 schedule
 
 C<Padre::Task> implements the scheduling logic for your
@@ -139,6 +137,8 @@ sub schedule {
 	my $self = shift;
 	Padre->ide->task_manager->schedule($self);
 }
+
+=pod
 
 =head2 new
 
@@ -163,6 +163,8 @@ sub run {
 	return 1;
 }
 
+=pod
+
 =head2 prepare
 
 In case you need to set up things in the main thread,
@@ -184,6 +186,8 @@ sub prepare {
 	return 1;
 }
 
+=pod
+
 =head2 finish
 
 Quite likely, you need to actually use the results of your
@@ -204,8 +208,8 @@ sub finish {
 	return 1;
 }
 
-
-{ # scope for main thread data storage
+# Scope for main thread data storage
+SCOPE: {
 	my %MainThreadData;
 
 	# this will serialize the object and do some magic as it happens
@@ -225,15 +229,21 @@ sub finish {
  
 		# save the real object class for deserialization 
 		my $class = ref($self);
-		if (exists $self->{_process_class}) {
+		if ( exists $self->{_process_class} ) {
 			require Carp;
-			Carp::croak("The '_process_class' slot in a Padre::Task"
-			            . " object is reserved for usage by Padre::Task");
+			Carp::croak(
+				"The '_process_class' slot in a Padre::Task"
+				. " object is reserved for usage by Padre::Task"
+			);
 		}
 
 		$self->{_process_class} = $class;
 
-		my $save_main_thread_data = (threads->tid() == 0 and exists $self->{main_thread_only});
+		my $save_main_thread_data = (
+			threads->tid() == 0
+			and
+			exists $self->{main_thread_only}
+		);
 		if ($save_main_thread_data) {
 			my $id = "$self";
 			$id .= '_' while exists $MainThreadData{$id};
@@ -282,7 +292,7 @@ sub finish {
 		}
 
 		# restore the main-thread-only data in the task
-		if ( threads->tid() == 0 and exists $padretask->{_main_thread_data_id} ) {
+		if ( threads->tid == 0 and exists $padretask->{_main_thread_data_id} ) {
 			my $id = $padretask->{_main_thread_data_id};
 			$padretask->{main_thread_only} = $MainThreadData{$id};
 			delete $padretask->{_main_thread_data_id};
@@ -292,9 +302,7 @@ sub finish {
 		my $obj = bless $padretask => $userclass;
 		return $obj;
 	}
-
-} # end scope of main thread data storage
-
+}
 
 # old Process::Storable internals
 sub _serialize {
@@ -416,18 +424,15 @@ by simply running:
 =cut
 
 sub post_event {
-	my $self = shift;
-	my $event_id = shift;
-	my $data = shift;
-	my $thread_event = Wx::PlThreadEvent->new( -1, $event_id, $data );
-	Wx::PostEvent($Padre::TaskManager::_main, $thread_event);
-	return 1;
+	Wx::PostEvent(
+		$Padre::TaskManager::_main,
+		Wx::PlThreadEvent->new( -1, $_[1], $_[2] ),
+	);
 }
-
 
 1;
 
-__END__
+=pod
 
 =head1 NOTES AND CAVEATS
 

@@ -3,6 +3,7 @@ package Padre::Task::Examples::WxEvent;
 use strict;
 use warnings;
 use Padre::Task ();
+use Padre::Wx   ();
 
 our $VERSION = '0.25';
 our @ISA     = 'Padre::Task';
@@ -24,7 +25,8 @@ sub prepare {
 
 # The event handler
 sub on_say_hello {
-	my ($main, $event) = @_; @_=(); # hack to avoid "Scalars leaked"
+	my ($main, $event) = @_;
+	@_=(); # hack to avoid "Scalars leaked"
 	
 	# Write a message to the beginning of the document
 	my $editor = $main->current->editor;
@@ -39,6 +41,7 @@ sub run {
 	$self->post_event($SAY_HELLO_EVENT, "Hello from thread!\n");
 	sleep 1;
 	$self->post_event($SAY_HELLO_EVENT, "Hello again!\n");
+
 	return 1;
 }
 
