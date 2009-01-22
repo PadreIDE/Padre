@@ -191,13 +191,12 @@ sub new {
 # Write a null config, then read it back in
 sub create {
 	my $class = shift;
-	my $file  = shift;
 
 	# Save a null configuration
-	YAML::Tiny::DumpFile( $file, {} );
+	YAML::Tiny::DumpFile( $class->default_yaml, {} );
 
 	# Now read it (and the host config) back in
-	return $class->read($file);
+	return $class->read;
 }
 
 sub read {
