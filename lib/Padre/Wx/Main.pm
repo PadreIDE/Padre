@@ -998,6 +998,7 @@ sub on_close_window {
 		my $editor    = $notebook->GetPage($pageid);
 		my $document  = $editor->{Document} or next;
 		my $file      = $editor->{Document}->filename;
+		next unless defined $file;
 		my $position  = $editor->GetCurrentPos;
 		my $line      = $editor->GetCurrentLine;
 		my $start     = $editor->PositionFromLine($line);
