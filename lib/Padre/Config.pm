@@ -231,7 +231,7 @@ setting(
 );
 setting(
 	name    => 'editor_currentline_color',
-	type    => BOOLEAN,
+	type    => STRING,
 	store   => HUMAN,
 	default => 'FFFF04',
 );
