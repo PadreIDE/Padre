@@ -287,24 +287,24 @@ sub setup_single_instance {
 
 #sent when another Padre process sends a file open request
 sub on_file_request {
-    my $self = shift;
-    my $file = shift; 
-    print "on_file_request: $file\n";
-    if(-f $file) {
-        print "found file: $file... Gonna open it\n";
-        $self->setup_editor($file);
-    } else {
-        print "Could not find file '$file'";
-    }
-    return;
+	my $self = shift;
+	my $file = shift; 
+	print "on_file_request: $file\n";
+	if( -f $file ) {
+		print "found file: $file... Gonna open it\n";
+		$self->setup_editor($file);
+	} else {
+		print "Could not find file '$file'";
+	}
+	return;
 }
 
 #sent when another Padre process requests this window to be focused
 sub on_focus_request {
-    my $self = shift;
-    print "on_focus_request\n";
-    $self->Raise;
-    return;
+	my $self = shift;
+	print "on_focus_request\n";
+	$self->Raise;
+	return;
 }
 
 # Load any default files
