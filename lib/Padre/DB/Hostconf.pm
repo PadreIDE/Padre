@@ -1,4 +1,4 @@
-package Padre::DB::Hostconf;
+package Padre::DB::HostConfig;
 
 # Overlay class for Padre::DB auto-generated default version
 
@@ -16,9 +16,9 @@ sub write {
 	my $class = shift;
 	my $hash  = shift;
 	Padre::DB->begin;
-	Padre::DB::Hostconf->truncate;
+	Padre::DB::HostConfig->truncate;
 	foreach my $name ( sort keys %$hash ) {
-		Padre::DB::Hostconf->create(
+		Padre::DB::HostConfig->create(
 			name  => $name,
 			value => $hash->{$name},
 		);
@@ -35,7 +35,7 @@ __END__
 
 =head1 NAME
 
-Padre::DB::Hostconf - Padre::DB class for the hostconf table
+Padre::DB::HostConfig - Padre::DB class for the hostconf table
 
 =head1 SYNOPSIS
 
@@ -50,10 +50,10 @@ TO BE COMPLETED
 =head2 select
 
   # Get all objects in list context
-  my @list = Padre::DB::Hostconf->select;
+  my @list = Padre::DB::HostConfig->select;
   
   # Get a subset of objects in scalar context
-  my $array_ref = Padre::DB::Hostconf->select(
+  my $array_ref = Padre::DB::HostConfig->select(
       'where name > ? order by name',
       1000,
   );
@@ -66,18 +66,18 @@ C<FROM hostconf> section of the query, followed by variables
 to be bound to the placeholders in the SQL phrase. Any SQL that is
 compatible with SQLite can be used in the parameter.
 
-Returns a list of B<Padre::DB::Hostconf> objects when called in list context, or a
-reference to an ARRAY of B<Padre::DB::Hostconf> objects when called in scalar context.
+Returns a list of B<Padre::DB::HostConfig> objects when called in list context, or a
+reference to an ARRAY of B<Padre::DB::HostConfig> objects when called in scalar context.
 
 Throws an exception on error, typically directly from the L<DBI> layer.
 
 =head2 count
 
   # How many objects are in the table
-  my $rows = Padre::DB::Hostconf->count;
+  my $rows = Padre::DB::HostConfig->count;
   
   # How many objects 
-  my $small = Padre::DB::Hostconf->count(
+  my $small = Padre::DB::HostConfig->count(
       'where name > ?',
       1000,
   );
@@ -101,11 +101,11 @@ Throws an exception on error, typically directly from the L<DBI> layer.
 The C<new> constructor is used to create a new abstract object that
 is not (yet) written to the database.
 
-Returns a new L<Padre::DB::Hostconf> object.
+Returns a new L<Padre::DB::HostConfig> object.
 
 =head2 create
 
-  my $object = Padre::DB::Hostconf->create(
+  my $object = Padre::DB::HostConfig->create(
 
       name => 'value',
 
@@ -115,7 +115,7 @@ Returns a new L<Padre::DB::Hostconf> object.
 
 The C<create> constructor is a one-step combination of C<new> and
 C<insert> that takes the column parameters, creates a new
-L<Padre::DB::Hostconf> object, inserts the appropriate row into the L<hostconf>
+L<Padre::DB::HostConfig> object, inserts the appropriate row into the L<hostconf>
 table, and then returns the object.
 
 If the primary key column C<name> is not provided to the
@@ -145,11 +145,11 @@ on error, typically from the L<DBI> layer.
   $object->delete;
   
   # Delete multiple rows from the hostconf table
-  Padre::DB::Hostconf->delete('where name > ?', 1000);
+  Padre::DB::HostConfig->delete('where name > ?', 1000);
 
 The C<delete> method can be used in a class form and an instance form.
 
-When used on an existing B<Padre::DB::Hostconf> instance, the C<delete> method
+When used on an existing B<Padre::DB::HostConfig> instance, the C<delete> method
 removes that specific instance from the C<hostconf>, leaving
 the object ntact for you to deal with post-delete actions as you wish.
 
@@ -165,7 +165,7 @@ attempt to call delete without a SQL condition phrase.
 =head2 truncate
 
   # Delete all records in the hostconf table
-  Padre::DB::Hostconf->truncate;
+  Padre::DB::HostConfig->truncate;
 
 To prevent the common and extremely dangerous error case where
 deletion is called accidentally without providing a condition,
@@ -204,7 +204,7 @@ following SQL command.
 
 =head1 SUPPORT
 
-Padre::DB::Hostconf is part of the L<Padre::DB> API.
+Padre::DB::HostConfig is part of the L<Padre::DB> API.
 
 See the documentation for L<Padre::DB> for more information.
 

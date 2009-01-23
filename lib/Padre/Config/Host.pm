@@ -31,7 +31,7 @@ sub read {
 	# Read in the config data
 	my %hash = map {
 		$_->name => $_->value
-	} Padre::DB::Hostconf->select;
+	} Padre::DB::HostConfig->select;
 
 	# Create and return the object
 	return $_[0]->new( %hash );
@@ -42,9 +42,9 @@ sub write {
 
 	my $self = shift;
 	Padre::DB->begin;
-	Padre::DB::Hostconf->truncate;
+	Padre::DB::HostConfig->truncate;
 	foreach my $name ( sort keys %$self ) {
-		Padre::DB::Hostconf->create(
+		Padre::DB::HostConfig->create(
 			name  => $name,
 			value => $self->{$name},
 		);

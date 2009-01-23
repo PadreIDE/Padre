@@ -22,10 +22,10 @@ use ORLite::Migrate 0.01 {
 };
 
 # Overlay classes to enhance the ORLite defaults
-use Padre::DB::Plugin   ();
-use Padre::DB::Bookmark ();
-use Padre::DB::History  ();
-use Padre::DB::Hostconf ();
+use Padre::DB::Plugin     ();
+use Padre::DB::Bookmark   ();
+use Padre::DB::History    ();
+use Padre::DB::HostConfig ();
 
 our $VERSION    = '0.26';
 our $COMPATIBLE = '0.26';
