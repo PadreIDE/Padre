@@ -1003,7 +1003,7 @@ sub on_close_window {
 		my $line      = $editor->GetCurrentLine;
 		my $start     = $editor->PositionFromLine($line);
 		my $character = $position - $start;
-		my $focus     = ($current eq $file) ? 1 : 0;
+		my $focus     = (defined $current and $current eq $file) ? 1 : 0;
 		push @session, Padre::DB::Session->new(
 			file      => $file,
 			line      => $line,
