@@ -33,8 +33,9 @@ our $REVISION = 1;
 # Settings Types (based on Firefox)
 use constant BOOLEAN => 0;
 use constant POSINT  => 1;
-use constant STRING  => 2;
-use constant PATH    => 3;
+use constant INTEGER => 2;
+use constant STRING  => 3;
+use constant PATH    => 4;
 
 # Setting Stores
 use constant HOST    => 0;
@@ -360,13 +361,13 @@ setting(
 );
 setting(
 	name    => 'main_top',
-	type    => POSINT,
+	type    => INTEGER,
 	store   => HOST,
 	default => 40,
 );
 setting(
 	name    => 'main_left',
-	type    => POSINT,
+	type    => INTEGER,
 	store   => HOST,
 	default => 20,
 );
@@ -503,13 +504,16 @@ sub set {
 	# We don't need to do additional checks on STRING types at this point
 	my $type = $setting->type;
 	if ( $type == BOOLEAN and $value ne '1' and $value ne '0' ) {
-		Carp::croak("Tried to change setting '$name' to a non-boolean");
+		Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
 	}
 	if ( $type == POSINT and not _POSINT($value) ) {
-		Carp::croak("Tried to change setting '$name' to a non-boolean");
+		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
+	}
+	if ( $type == INTEGER and not _INTEGER($value) ) {
+		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
 	}
 	if ( $type == PATH and not -e $value ) {
-		Carp::croak("Tried to change setting '$name' to a non-existant path");
+		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
 	}
 
 	# Set the value into the appropriate backend
@@ -556,7 +560,7 @@ sub write {
 
 
 #####################################################################
-# Code Generation
+# Support Functions
 
 sub setting {
 	# Validate the setting
@@ -589,6 +593,10 @@ END_PERL
 	$DEFAULT{$object->{name}} = $object->{default};
 
 	return 1;
+}
+
+sub _INTEGER ($) {
+	(defined $_[0] and ! ref $_[0] and $_[0] =~ m/^(?:0|-?[1-9]\d*)$/) ? $_[0] : undef;
 }
 
 1;
