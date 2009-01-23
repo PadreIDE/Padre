@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 use base 'Padre::Task::PPI';
 

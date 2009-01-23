@@ -8,7 +8,7 @@ use warnings;
 use Carp         ();
 use Params::Util ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 # TODO: Really shouldn't clone these constants,
 # but for now it's a nice convenience.

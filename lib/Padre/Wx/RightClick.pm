@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 sub on_right_click {
 	my ($self, $event) = @_;

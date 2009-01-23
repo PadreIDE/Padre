@@ -5,7 +5,7 @@ package Padre::DB::Patch;
 use strict;
 use warnings;
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 use DBI      ();
 use Exporter ();
@@ -27,7 +27,9 @@ BEGIN {
 		table_exists
 		column_exists
 	};
-	$FILE    = undef;
+
+	# The location of the SQLite database file
+	$FILE = undef;
 }
 
 sub file {

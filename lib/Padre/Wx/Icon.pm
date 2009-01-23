@@ -21,7 +21,7 @@ use File::Spec  ();
 use Padre::Util ();
 use Padre::Wx   ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 # For now apply a single common configuration
 use constant SIZE         => '16x16';

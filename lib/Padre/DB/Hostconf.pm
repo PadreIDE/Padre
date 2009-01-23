@@ -5,7 +5,7 @@ package Padre::DB::Hostconf;
 use strict;
 use warnings;
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 sub read {
 	my %config = map { $_->name => $_->value } $_[0]->select;

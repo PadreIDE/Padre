@@ -10,7 +10,7 @@ use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 my @cbs = qw(
 	find_case

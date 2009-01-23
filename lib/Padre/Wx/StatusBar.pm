@@ -8,7 +8,7 @@ use Padre::Util    ();
 use Padre::Wx      ();
 use Padre::Current ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 our @ISA     = 'Wx::StatusBar';
 
 sub new {
