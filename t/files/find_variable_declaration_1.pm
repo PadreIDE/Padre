@@ -1,14 +1,15 @@
-
 package Padre::TaskManager;
-BEGIN {$INC{"Padre/TaskManager.pm"} ||= __FILE__}
 
 use strict;
 use warnings;
 
 our $VERSION = '0.20';
 
+# According to Wx docs,
+# this MUST be loaded before Wx,
+# so this also happens in the script.
 use threads;
-use threads::shared; # according to Wx docs, this MUST be loaded before Wx, so this also happens in the script
+use threads::shared;
 use Thread::Queue;
 
 require Padre;
@@ -53,6 +54,8 @@ sub schedule {
 	return 1;
 }
 
+=pod
+
 =head2 setup_workers
 
 Create more workers if necessary. Called by C<reap> which
@@ -87,6 +90,8 @@ sub setup_workers {
 
 	return 1;
 }
+
+=pod
 
 =head2 reap
 
@@ -149,4 +154,3 @@ sub reap {
 
 	return 1;
 }
-

@@ -438,7 +438,10 @@ sub default_plugin_dir {
 sub copy_original_My_plugin {
 	my $class  = shift;
 	my $target = shift;
-	my $src = File::Spec->catfile( File::Basename::dirname($INC{'Padre/Config.pm'}), 'Plugin', 'My.pm' );
+	my $src = File::Spec->catfile(
+		File::Basename::dirname($INC{'Padre/Config.pm'}),
+		'Plugin', 'My.pm'
+	);
 	unless ( $src ) {
 		die "Could not find the original My plugin";
 	}

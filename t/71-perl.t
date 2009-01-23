@@ -82,22 +82,22 @@ SCOPE: {
 		sub {
 			return 0 if not $_[1]->isa('PPI::Token::Symbol')
 			         or not $_[1]->content eq '$n_threads_to_kill'
-			         or not $_[1]->location->[0] == 138;
+			         or not $_[1]->location->[0] == 137;
 			$elem = $_[1];
 			return 1;
 		}
 	);
 	isa_ok( $elem, 'PPI::Token::Symbol' );
-  
+ 
 	$doc->flush_locations(); # TODO: This shouldn't have to be here. But remove it and things break -- Adam?
 	#my $doc2 = PPI::Document->new( \$text );
-	my $cmp_elem = Padre::PPI::find_token_at_location($doc, [138, 33, 33]);
+	my $cmp_elem = Padre::PPI::find_token_at_location($doc, [137, 26, 26]);
 	ok( $elem == $cmp_elem, 'find_token_at_location returns the same token as a manual search' );
 	my $declaration;
 	$doc->find_first(
 		sub {
 			return 0 if not $_[1]->isa('PPI::Statement::Variable')
-			         or not $_[1]->location->[0] == 126;
+			         or not $_[1]->location->[0] == 131;
 			$declaration = $_[1];
 			return 1;
 		}
@@ -105,7 +105,7 @@ SCOPE: {
 	isa_ok( $declaration, 'PPI::Statement::Variable' );
   
 	$doc->flush_locations(); # TODO: This shouldn't have to be here. But remove it and things break -- Adam?
-	my $cmp_declaration = Padre::PPI::find_token_at_location($doc, [126, 2, 9]);
+	my $cmp_declaration = Padre::PPI::find_token_at_location($doc, [131, 2, 9]);
 	# They're not really the same. The manual search finds the entire Statement node. Hence the first_element.
 	ok( $declaration->first_element() == $cmp_declaration, 'find_token_at_location returns the same token as a manual search' );
 
