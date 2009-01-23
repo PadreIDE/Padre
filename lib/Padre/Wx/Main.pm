@@ -3,22 +3,6 @@ package Padre::Wx::Main;
 use 5.008;
 use strict;
 use warnings;
-
-# This is somewhat disturbing but necessary to prevent
-# Test::Compile from breaking. The compile tests run
-# perl -v lib/Padre/Wx/Main.pm which first compiles
-# the module as a script (i.e. no %INC entry created)
-# and then again when Padre::Wx::Main is required
-# from another module down the dependency chain.
-# This used to break with subroutine redefinitions.
-# So to prevent this, we force the creating of the correct
-# %INC entry when the file is first compiled. -- Steffen
-# TODO - Test::Compile is clearly a piece of shit, someone
-#        write a better and properly-crossplatform one. -- Adam K
-BEGIN {
-	$INC{"Padre/Wx/Main.pm"} ||= __FILE__;
-}
-
 use FindBin;
 use Cwd                       ();
 use Carp                      ();

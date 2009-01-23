@@ -66,23 +66,12 @@ use 5.008;
 use strict;
 use warnings;
 
-# This is somewhat disturbing but necessary to prevent
-# Test::Compile from breaking. The compile tests run
-# perl -v lib/Padre/Wx/Main.pm which first compiles
-# the module as a script (i.e. no %INC entry created)
-# and then again when Padre::Wx::Main is required
-# from another module down the dependency chain.
-# This used to break with subroutine redefinitions.
-# So to prevent this, we force the creating of the correct
-# %INC entry when the file is first compiled. -- Steffen
-BEGIN {
-	$INC{"Padre/TaskManager.pm"} ||= __FILE__;
-}
-
 our $VERSION = '0.26';
 
+# According to Wx docs,
+# this MUST be loaded before Wx,
+# so this also happens in the script.
 use threads;
-# According to Wx docs, this MUST be loaded before Wx, so this also happens in the script
 use threads::shared;
 use Thread::Queue;
 
