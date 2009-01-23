@@ -108,6 +108,7 @@ sub new {
 	}
 
 	# Create the underlying Wx frame
+	$DB::single = 1;
 	my $self = $class->SUPER::new(
 		undef,
 		-1,

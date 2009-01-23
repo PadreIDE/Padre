@@ -457,11 +457,6 @@ sub copy_original_My_plugin {
 
 
 
-
-
-
-
-
 #####################################################################
 # Constructor and Accessors
 
@@ -477,7 +472,7 @@ sub new {
 	}
 
 	# Create the basic object with the two required elements
-	my $self = bless [ $host, $human ], $class;
+	my $self = bless [ $host, $human, undef ], $class;
 
 	# Add the optional third element
 	if ( @_ ) {

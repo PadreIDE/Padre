@@ -40,12 +40,13 @@ sub read {
 sub write {
 	require Padre::DB;
 
+	my $self = shift;
 	Padre::DB->begin;
 	Padre::DB::Hostconf->truncate;
-	foreach my $name ( sort keys %{$_[0]} ) {
+	foreach my $name ( sort keys %$self ) {
 		Padre::DB::Hostconf->create(
 			name  => $name,
-			value => undef,
+			value => $self->{$name},
 		);
 	}
 	Padre::DB->commit;

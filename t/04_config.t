@@ -6,7 +6,7 @@ BEGIN {
 	$^W = 1;
 }
 
-use Test::More tests => 105;
+use Test::More tests => 108;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -63,8 +63,21 @@ ok( $config->write, '->write ok' );
 is( $config->host->version,  1, '->host->version is set'  );
 is( $config->human->version, 1, '->human->version is set' );
 
-# Set a value
+# Set values on both the human and host sides
 ok(
 	$config->set( main_lockinterface => 0 ),
-	'->set ok',
+	'->set(human) ok',
 );
+ok(
+	$config->set( main_maximized => 1 ),
+	'->set(host) ok',
+);
+
+# Save the config again
+ok( $config->write, '->write ok' );
+
+# Read in a fresh version of the config
+my $config2 = Padre::Config->read;
+
+# Confirm the config is round-trip safe
+is_deeply( $config2, $config, 'Config round-trips ok' );
