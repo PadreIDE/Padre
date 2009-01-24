@@ -1715,15 +1715,15 @@ sub on_toggle_errorlist {
 
 sub on_toggle_indentation_guide {
 	my $self   = shift;
-	my $config = shift;
+	my $event  = shift;
 
-	$config->set(
+	$self->config->set(
 		'editor_indentationguides',
 		$self->menu->view->{indentation_guide}->IsChecked ? 1 : 0,
 	);
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetIndentationGuides( $config->editor_indentationguides );
+		$editor->SetIndentationGuides( $self->config->editor_indentationguides );
 	}
 
 	return;
