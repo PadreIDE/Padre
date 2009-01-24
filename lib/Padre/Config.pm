@@ -596,7 +596,7 @@ END_PERL
 }
 
 sub _INTEGER ($) {
-	(defined $_[0] and ! ref $_[0] and $_[0] =~ m/^(?:0|-?[1-9]\d*)$/) ? $_[0] : undef;
+	(defined $_[0] and ! ref $_[0] and $_[0] =~ m/^(?:0|-?[1-9]\d*)$/) ? 1 : undef;
 }
 
 1;
