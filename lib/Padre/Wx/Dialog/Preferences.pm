@@ -239,7 +239,7 @@ sub run {
 	$editor_currentline_color =~ s/#//;
 	$config->set(
 		'editor_currentline_color',
-		$data->{editor_currentline_color}
+		$editor_currentline_color
 	);
 
 	return 1;
