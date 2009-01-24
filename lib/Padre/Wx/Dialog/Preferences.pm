@@ -65,7 +65,7 @@ sub get_layout_for_appearance {
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font',
-				( defined $config->editor_font
+				( ( defined $config->editor_font && length $config->editor_font > 0 )
 				    ? $config->editor_font
 				    : Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc
 				)
