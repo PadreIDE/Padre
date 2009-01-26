@@ -117,7 +117,9 @@ SCOPE: {
 
 		# read the next TEXT CONTROL-SEQUENCE pair
 		my $style = $self->GetDefaultStyle;
+		my $ansi_found = 0;
 		while ( $newtext =~ m{ \G (.*?) \033\[ ( (?: \d+ (?:;\d+)* )? ) m }xcg ) {
+			$ansi_found = 1;
 			my $ctrl = $2;
 			# first print the text preceding the control sequence
 			$self->SUPER::AppendText($1);
@@ -186,6 +188,9 @@ SCOPE: {
 		# the remaining text
 		if ( defined(pos($newtext)) ) {
 			$self->SUPER::AppendText(substr($newtext, pos($newtext)));
+		}
+		unless ( $ansi_found )  {
+			$self->SUPER::AppendText($newtext);
 		}
 	}
 }
