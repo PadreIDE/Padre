@@ -380,12 +380,11 @@ sub timer_post_init {
 	# size, reposition to the defaults).
 	my $config = $self->config;
 	unless ( $self->IsShownOnScreen ) {
-		$self->SetSize(
-			$config->default( 'main_left'   ),
-			$config->default( 'main_top'    ),
-			$config->default( 'main_width'  ),
-			$config->default( 'main_height' ),
-		);
+		$self->SetSize( Wx::Size->new(
+			$config->default('main_width'),
+			$config->default('main_height'),
+		) );
+		$self->CentreOnScreen;
 	}
 
 	# Load all files and refresh the application so that it
