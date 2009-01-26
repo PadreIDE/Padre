@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-25 18:35+0100\n"
-"PO-Revision-Date: 2009-01-25 19:57+0200\n"
+"PO-Revision-Date: 2009-01-26 06:56+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -18,18 +18,14 @@ msgstr ""
 "X-Poedit-Bookmarks: -1,116,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #: lib/Padre/PluginHandle.pm:161
-#, fuzzy, perl-format
+#, perl-format
 msgid "Failed to enable plugin '%s': %s"
-msgstr ""
-"فشل تحميل البرنامج المساعد '%s'\n"
-"%s"
+msgstr "فشل تمكين البرنامج المساعد '%s': %s"
 
 #: lib/Padre/PluginHandle.pm:210
-#, fuzzy, perl-format
+#, perl-format
 msgid "Failed to disable plugin '%s': %s"
-msgstr ""
-"فشل تحميل البرنامج المساعد '%s'\n"
-"%s"
+msgstr "فشل تعطيل البرنامج المساعد '%s': %s"
 
 #: lib/Padre/PluginManager.pm:274
 msgid ""
@@ -695,7 +691,7 @@ msgstr "تمكين"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:158
 #: lib/Padre/Wx/Dialog/PluginManager.pm:169
 msgid "Crashed"
-msgstr ""
+msgstr "تحطم"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:27
 msgid "Module Name:"
@@ -1053,30 +1049,27 @@ msgstr "تثبيت وحدة CPAN"
 
 #: lib/Padre/Wx/Menu/Perl.pm:61
 msgid "Install Local Distribution"
-msgstr ""
+msgstr "تثبيت التوزيع المحلي"
 
 #: lib/Padre/Wx/Menu/Perl.pm:71
 msgid "Install Remote Distribution"
-msgstr ""
+msgstr "تثبيت التوزيع البعيد"
 
 #: lib/Padre/Wx/Menu/Perl.pm:84
-#, fuzzy
 msgid "Open CPAN Config File"
-msgstr "فتح جميع الملفات الاخيرة"
+msgstr "فتح ملف تعريفات CPAN"
 
 #: lib/Padre/Wx/Menu/Perl.pm:102
 msgid "Find Unmatched Brace"
 msgstr "ايجاد قوص بلا مثيل"
 
 #: lib/Padre/Wx/Menu/Perl.pm:112
-#, fuzzy
 msgid "Find Variable Declaration"
 msgstr "ايجاد اعلان متغير"
 
 #: lib/Padre/Wx/Menu/Perl.pm:129
-#, fuzzy
 msgid "Lexically Rename Variable"
-msgstr "استبدال مفرداتي للمتغير"
+msgstr "اعاده تسميه المتغير ضمن النطاق"
 
 #: lib/Padre/Wx/Menu/Perl.pm:136
 #: lib/Padre/Wx/Menu/Perl.pm:137
@@ -1085,29 +1078,27 @@ msgstr "بديل"
 
 #: lib/Padre/Wx/Menu/Perl.pm:153
 msgid "Vertically Align Selected"
-msgstr ""
+msgstr "محاذاة الاسطر المختاره عموديا"
 
 #: lib/Padre/Wx/Menu/Perl.pm:162
 msgid "You must select a range of lines"
-msgstr ""
+msgstr "يجب ان تختار مجموعه من الاسطر"
 
 #: lib/Padre/Wx/Menu/Perl.pm:178
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Perl.pm:233
-#, fuzzy
 msgid "Use PPI Syntax Highlighting"
-msgstr "استخدام PPI لتلوين بناء جمل Perl5"
+msgstr "استخدام PPI لتلوين بناء الجمل"
 
 #: lib/Padre/Wx/Menu/Perl.pm:266
-#, fuzzy
 msgid "Run Scripts with Stack Trace"
-msgstr "تشغيل برامج بيرل النصيه مع stack trace"
+msgstr "تشغيل البرامج النصيه مع stack trace"
 
 #: lib/Padre/Wx/Menu/Perl.pm:310
 msgid "Select distribution to install"
-msgstr ""
+msgstr "اختر وحده توزيع لتثبيتها"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:48
 msgid "Edit My Plugin"
@@ -1280,9 +1271,8 @@ msgid "GoTo Subs Window\tAlt-S"
 msgstr "ذهاب الى نافذه الوظائف الفرعيه\tAlt-S"
 
 #: lib/Padre/Wx/Menu/Window.pm:104
-#, fuzzy
 msgid "GoTo Outline Window\tAlt-L"
-msgstr "ذهاب الى نافذه النتائج\tAlt-O"
+msgstr "ذهاب الى نافذه المخطط\tAlt-L"
 
 #: lib/Padre/Wx/Menu/Window.pm:114
 msgid "GoTo Output Window\tAlt-O"
@@ -1310,7 +1300,7 @@ msgstr "زياره موقع PerlMonks"
 
 #: lib/Padre/Wx/Menu/Help.pm:79
 msgid "Report a New &Bug"
-msgstr ""
+msgstr "تبليغ عن &بقه جديده"
 
 #: lib/Padre/Wx/Menu/Help.pm:85
 msgid "View All &Open Bugs"
@@ -1326,7 +1316,7 @@ msgstr "حقوق الطبع 2008 Gabor Szabo"
 
 #: lib/Padre/Wx/Menu/View.pm:39
 msgid "Lock User Interface"
-msgstr ""
+msgstr "قفل واجهة المستخدم"
 
 #: lib/Padre/Wx/Menu/View.pm:56
 msgid "Show Output"
@@ -1337,9 +1327,8 @@ msgid "Show Functions"
 msgstr "اظهار الوظائف"
 
 #: lib/Padre/Wx/Menu/View.pm:83
-#, fuzzy
 msgid "Show Outline"
-msgstr "اظهار احرف السطر الجديد  "
+msgstr "اظهار المخطط"
 
 #: lib/Padre/Wx/Menu/View.pm:93
 msgid "Show Syntax Check"
@@ -1419,15 +1408,15 @@ msgstr "برنامج Padre"
 
 #: lib/Padre/Wx/Menu/View.pm:336
 msgid "Night"
-msgstr ""
+msgstr "ليلي"
 
 #: lib/Padre/Wx/Menu/View.pm:337
 msgid "Ultraedit"
-msgstr ""
+msgstr "برنامج Ultraedit"
 
 #: lib/Padre/Wx/Menu/View.pm:338
 msgid "Notepad++"
-msgstr ""
+msgstr "برنامج Notepad++"
 
 #: lib/Padre/Wx/Menu/View.pm:393
 msgid "Language"
