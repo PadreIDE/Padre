@@ -36,6 +36,7 @@ copy catfile('eg', 'cyrillic_test.pl'),  catfile($home, 'cyrillic_test.pl');
 
 copy catfile('t', 'files', 'one_char.pl'),  catfile($home, 'one_char.pl');
 
+my $padreInstance = Padre->new;
 my $ide   = Padre->ide;
 my $frame = $ide->wx->main;
 
