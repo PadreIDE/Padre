@@ -44,13 +44,17 @@ ok( $config->write, '->write ok' );
 my $app = Padre->new;
 isa_ok($app, 'Padre');
 
-my $tm = Padre::TaskManager->new(
+my $task_manager = Padre::TaskManager->new(
 	use_threads => 0,
 );
-isa_ok($tm, 'Padre::TaskManager');
+isa_ok($task_manager, 'Padre::TaskManager');
 
-my $padre = Padre->inst;
-is_deeply($tm, $padre->task_manager, 'TaskManager is a singleton');
+my $padre = Padre->ide;
+is_deeply(
+	$task_manager,
+	$padre->task_manager,
+	'TaskManager is a singleton',
+);
 
 my $task = Padre::Task::Test->new(
 	main_thread_only => 'not in sub thread',
@@ -60,4 +64,4 @@ isa_ok( $task, 'Padre::Task::Test' );
 $task->prepare;
 $task->schedule;
 # TODO: check the issues with finish, etc.
-$tm->cleanup;
+$task_manager->cleanup;

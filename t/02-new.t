@@ -10,7 +10,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 65 );
+plan( tests => 63 );
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -19,10 +19,6 @@ my $app = Padre->new;
 isa_ok($app, 'Padre');
 
 SCOPE: {
-	my $inst = Padre->inst;
-	isa_ok($inst, 'Padre');
-	refis( $inst, $app, '->inst matches ->new' );
-
 	my $ide = Padre->ide;
 	isa_ok($ide, 'Padre');
 	refis( $ide, $app, '->ide matches ->new' );

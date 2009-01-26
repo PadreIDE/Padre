@@ -97,14 +97,15 @@ sub perl_interpreter {
 }
 
 my $SINGLETON = undef;
-sub inst {
-	Carp::croak("Padre->new has not been called yet") if not $SINGLETON;
-	return $SINGLETON;
+
+# Access to the Singleton post-construction
+sub ide {
+	$SINGLETON or Carp::croak('Padre->new has not been called yet');
 }
 
 # The order of initialisation here is VERY important
 sub new {
-	Carp::croak("Padre->new already called. Use Padre->inst") if $SINGLETON;
+	Carp::croak('Padre->new already called. Use Padre->ide') if $SINGLETON;
 	my $class = shift;
 
 	# Create the empty object
@@ -119,7 +120,7 @@ sub new {
 		project        => {},
 	}, $class;
 
-	#save the startup dir before anyone can move us.
+	# Save the startup dir before anyone can move us.
 	$self->{original_cwd} = Cwd::cwd();
 
 	# Load (and sync if needed) the user's portable configuration
@@ -137,15 +138,6 @@ sub new {
 	);
 
 	return $self;
-}
-
-sub ide {
-	unless ( $SINGLETON ) {
-		$DB::single = 1;
-		warn("Warning: Called Padre->ide without an existing instance");
-		$SINGLETON = Padre->new;
-	}
-	return $SINGLETON;
 }
 
 sub run {

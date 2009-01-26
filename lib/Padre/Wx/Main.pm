@@ -316,7 +316,7 @@ sub load_files {
 	my $startup = $config->main_startup;
 
 	# An explicit list on the command line overrides configuration
-	my $files  = Padre->inst->{ARGV};
+	my $files  = Padre->ide->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
 		$self->setup_editors(@$files);
 		return;
@@ -1258,7 +1258,7 @@ sub on_open_selection {
 		#try relative to the dir we started in?
 		{
 			my $filename = File::Spec->catfile(
-				Padre->inst->{original_cwd},
+				Padre->ide->{original_cwd},
 				$text,
 			);
 			if ( -e $filename ) {
@@ -1280,7 +1280,10 @@ sub on_open_selection {
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
-		my $filename = File::Spec->catfile(Padre->inst->{original_cwd}, $module);
+		my $filename = File::Spec->catfile(
+			Padre->ide->{original_cwd},
+			$module,
+		);
 		if (-e $filename) {
 			$file = $filename;
 		} else {
