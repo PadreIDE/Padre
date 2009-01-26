@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-25 18:35+0100\n"
-"PO-Revision-Date: 2009-01-26 06:56+0200\n"
+"PO-Revision-Date: 2009-01-26 07:24+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -70,12 +70,12 @@ msgstr "البرنامج المساعد:%s - غير متوافق مع Padre::Plu
 #: lib/Padre/PluginManager.pm:471
 #, perl-format
 msgid "Plugin:%s - Could not instantiate plugin object"
-msgstr ""
+msgstr "البرنامج المساعد:%s - لا يمكن انشاء كينونه البرنامج المساعد"
 
 #: lib/Padre/PluginManager.pm:483
 #, perl-format
 msgid "Plugin:%s - Could not instantiate plugin object: the constructor does not return a Padre::Plugin object"
-msgstr ""
+msgstr "البرنامج المساعد:%s - لا يمكن انشاء كينونه البرنامج المساعد: ال constructor لا يرجع كينونه Padre::Plugin"
 
 #: lib/Padre/PluginManager.pm:705
 msgid "Error when calling menu for plugin"
@@ -814,7 +814,7 @@ msgstr "لون خلفيه محرر السطر الحالي:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:80
 msgid "Colored text in output window (ANSI): "
-msgstr ""
+msgstr "النص الملون في نافذه النتائج (ANSI):"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:102
 msgid "Behaviour"
@@ -878,7 +878,7 @@ msgstr "ذهاب الى علامه"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:123
 msgid "Cannot set bookmark in unsaved document"
-msgstr ""
+msgstr "فشل تحديد العلامه في الوثيقه الغير محفوظه"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:132
 #, perl-format
@@ -888,7 +888,7 @@ msgstr "%s سطر %s"
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:170
 #, perl-format
 msgid "The bookmark '%s' no longer exists"
-msgstr ""
+msgstr "لم تعد العلامه '%s' غير موجوده"
 
 #: lib/Padre/Wx/Dialog/Find.pm:59
 msgid "Replace With:"
@@ -1086,7 +1086,7 @@ msgstr "يجب ان تختار مجموعه من الاسطر"
 
 #: lib/Padre/Wx/Menu/Perl.pm:178
 msgid "First character of selection must be a non-word character to align"
-msgstr ""
+msgstr "لمحاذاه اول حرف من الاختيار وجب ان يكون من غير احرف الكلمات"
 
 #: lib/Padre/Wx/Menu/Perl.pm:233
 msgid "Use PPI Syntax Highlighting"
