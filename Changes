@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 
 v0.26 2009.0X.XX
 
+    On X11 based platforms, selecting text using the mouse and pasting it
+        via middle mouse button now works (HJANSEN)
     Unifying Padre->inst and Padre->ide (ADAMK)
     Complete rewrite of the configuration layer. All access to configuration
         data is now via methods so that we can add support for project-level

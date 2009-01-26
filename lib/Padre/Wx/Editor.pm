@@ -740,13 +740,15 @@ sub unfold_all {
 sub on_left_up {
 	my ($self, $event) = @_;
 
-	my $pos       = $self->GetCurrentPos;
-	#my $line      = $self->LineFromPosition($pos);
-	#print "$pos\n"; # this is the position of the cursor and not that of the mouse!
+	my $text = $self->GetSelectedText;
+	if ( defined($text) && length($text) > 0 ) {
+		# only on X11 based platforms
+		Wx::wxTheClipboard->UsePrimarySelection(1);
+		$self->put_text_to_clipboard($text);
+		Wx::wxTheClipboard->UsePrimarySelection(0);
+	}
 
-	#print "left $pos\n";
-
-	$event->Skip();
+	$event->Skip;
 	return;
 }
 
@@ -820,12 +822,14 @@ sub text_selection_clear_marks {
 }
 
 sub put_text_to_clipboard {
-	my $text = shift;
+	my ( $self, $text ) = @_;
+
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->SetData(
 		Wx::TextDataObject->new($text)
 	);
 	Wx::wxTheClipboard->Close;
+
 	return;
 }
 
