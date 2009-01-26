@@ -29,6 +29,7 @@ our $VERSION = '0.26';
 # autouse everything other than the bare essentials
 use Padre::Util   ();
 use Padre::Config ();
+use Padre::DB     ();
 
 # Nudges to make Class::Autouse behave
 BEGIN {
@@ -49,7 +50,6 @@ BEGIN {
 # refered to directly. Let them get loaded normally via the top level
 # module's "use base" (or similar) call.
 use Class::Autouse qw{
-	Padre::DB
 	Padre::Document
 	Padre::Document::Perl
 	Padre::Document::POD
@@ -122,9 +122,6 @@ sub new {
 	#save the startup dir before anyone can move us.
 	$self->{original_cwd} = Cwd::cwd();
 
-	# Load (and migrate if needed) the persistant host state database
-	Class::Autouse->load('Padre::DB');
-
 	# Load (and sync if needed) the user's portable configuration
 	$self->{config} = Padre::Config->read;
 
@@ -132,7 +129,7 @@ sub new {
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
 
 	# Create the main window
-	$self->{wx} = Padre::Wx::App->new( $self->{config} );
+	$self->{wx} = Padre::Wx::App->new($self);
 
 	# Create the task manager
 	$self->{task_manager} = Padre::TaskManager->new(
@@ -143,8 +140,12 @@ sub new {
 }
 
 sub ide {
-	$SINGLETON or
-	$SINGLETON = Padre->new;
+	unless ( $SINGLETON ) {
+		$DB::single = 1;
+		warn("Warning: Called Padre->ide without an existing instance");
+		$SINGLETON = Padre->new;
+	}
+	return $SINGLETON;
 }
 
 sub run {
@@ -157,9 +158,6 @@ sub run {
 		die $@ if $@;
 	}
 	@ARGV = grep { ! /^-M/ } @ARGV;
-
-	# Now the essentials are loaded, show the GUI
-	$self->wx->main->Show(1);
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
@@ -853,7 +851,7 @@ List of functions
 
 =item L<Padre::DB>
 
-is the database abstraction for SQLite.
+The SQLite database abstraction for storing Padre's internal data.
 
 =item L<Padre::Document>
 

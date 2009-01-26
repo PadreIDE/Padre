@@ -46,28 +46,28 @@ our @ISA     = 'Wx::App';
 
 sub new {
 	my $class  = shift;
-	my $config = shift;
-	unless ( _INSTANCE($config, 'Padre::Config') ) {
-		Carp::croak("Did not provide a configuration to Padre::App->new");
+	my $ide    = shift;
+	unless ( _INSTANCE($ide, 'Padre') ) {
+		Carp::croak("Did not provide the ide object to Padre::App->new");
 	}
 
 	# Create the Wx object
 	my $self = $class->SUPER::new;
 
-	# Save a copy of the config (everyone else does it)
-	$self->{config} = $config;
+	# Save a link back to the parent ide
+	$self->{ide} = $ide;
 
 	# Immediately populate the main window
-	$self->{main} = Padre::Wx::Main->new($config);
+	$self->{main} = Padre::Wx::Main->new($ide);
 
 	return $self;
 }
 
 =pod
 
-=head2 config
+=head2 ide
 
-The C<config> accessor returns the L<Padre::Config> for the application.
+The C<ide> accessor provides a link back to the parent L<Padre> ide object.
 
 =head2 main
 
@@ -78,9 +78,21 @@ application.
 
 use Class::XSAccessor
 	getters => {
-		config => 'config',
-		main   => 'main',
+		ide  => 'ide',
+		main => 'main',
 	};
+
+=pod
+
+=head2 config
+
+The C<config> accessor returns the L<Padre::Config> for the application.
+
+=cut
+
+sub config {
+	$_[0]->ide->config;
+}
 
 
 

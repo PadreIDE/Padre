@@ -77,21 +77,14 @@ use Class::XSAccessor
 #       individual step tighter and better abstracted.
 sub new {
 	my $class  = shift;
-	my $config = shift;
-	unless ( _INSTANCE($config, 'Padre::Config') ) {
-		Carp::croak("Did not provide a config object to Padre::Wx::Main->new");
+	my $ide    = shift;
+	unless ( _INSTANCE($ide, 'Padre') ) {
+		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 
 	# Bootstrap some Wx internals
 	Wx::InitAllImageHandlers();
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
-
-	# Determine the initial frame style
-	my $style = Wx::wxDEFAULT_FRAME_STYLE;
-	if ( $config->main_maximized ) {
-		$style |= Wx::wxMAXIMIZE;
-		$style |= Wx::wxCLIP_CHILDREN;
-	}
 
 	# Determine the window title
 	my $title = 'Padre';
@@ -105,6 +98,14 @@ sub new {
 	}
 	if ( $title eq 'Padre' ) {
 		$title .= " $Padre::VERSION";
+	}
+
+	# Determine the initial frame style
+	my $config = $ide->config;
+	my $style  = Wx::wxDEFAULT_FRAME_STYLE;
+	if ( $config->main_maximized ) {
+		$style |= Wx::wxMAXIMIZE;
+		$style |= Wx::wxCLIP_CHILDREN;
 	}
 
 	# Create the underlying Wx frame
@@ -123,10 +124,15 @@ sub new {
 		$style,
 	);
 
-	#$self->setup_single_instance;
-	
 	# Remember the original title we used for later
 	$self->{title} = $title;
+
+	# Save a reference to the configuration object.
+	# This prevents tons of ->ide->config
+	$self->{config} = $ide->config;
+
+	# Save a reference back to the parent IDE
+	$self->{ide} = $ide;
 
 	# Having recorded the "current working directory" move
 	# the OS directory cursor away from this directory, so
@@ -138,10 +144,6 @@ sub new {
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
 	$self->SetMinSize( Wx::Size->new(500, 400) );
-
-	# Save a pointer to the configuration object.
-	# This prevents tons of Padre->ide->config calls.
-	$self->{config} = $config;
 
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
@@ -372,6 +374,19 @@ sub timer_post_init {
 	# to startup quickly, and ACTUALLY starting up quickly.
 	$self->Show(1);
 	$self->Freeze;
+
+	# If the position mandated by the configuration is now
+	# off the screen (typically because we've changed the screen
+	# size, reposition to the defaults).
+	my $config = $self->config;
+	unless ( $self->IsShownOnScreen ) {
+		$self->SetSize(
+			$config->default( 'main_left'   ),
+			$config->default( 'main_top'    ),
+			$config->default( 'main_width'  ),
+			$config->default( 'main_height' ),
+		);
+	}
 
 	# Load all files and refresh the application so that it
 	# represents the loaded state.

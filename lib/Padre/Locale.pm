@@ -41,8 +41,9 @@ use File::Spec ();
 # Padre::Wx should not implement anything using Wx modules.
 # We make an exception in this case, because we're only using the locale
 # logic in Wx, which isn't related to widgets anyway.
-use Padre::Util '_T';
-use Padre::Wx   ();
+use Padre::Util   ('_T');
+use Padre::Config ();
+use Padre::Wx     ();
 
 use constant DEFAULT  => 'en-gb';
 use constant SHAREDIR => File::Spec->rel2abs(
@@ -411,7 +412,7 @@ use constant system_rfc4646 =>
 
 # Find the rfc4646 to use by default
 sub rfc4646 {
-	my $config = Padre->ide->config->locale;
+	my $config = Padre::Config->read;
 	if ( $config and not $RFC4646{$config} ) {
 		# Bad or unsupported configuration
 		$config = undef;
@@ -570,6 +571,7 @@ sub encoding_from_string {
 }
 
 1;
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or

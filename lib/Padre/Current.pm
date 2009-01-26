@@ -159,10 +159,30 @@ sub config {
 sub main {
 	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{main} ) {
-		require Padre;
-		$self->{main} = Padre->ide->wx->main;
+		if ( defined $self->{ide} ) {
+			$self->{main} = $self->{ide}->wx->main;
+		} else {
+			require Padre;
+			$self->{ide}  = Padre->ide;
+			$self->{main} = $self->{ide}->wx->main;
+		}
+		return $self->{main};
 	}
 	return $self->{main};
+}
+
+# Convenience method
+sub ide {
+	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	unless ( defined $self->{ide} ) {
+		if ( defined $self->{main} ) {
+			$self->{ide} = $self->{main}->ide;
+		} else {
+			require Padre;
+			$self->{ide} = Padre->ide;
+		}
+	}
+	return $self->{ide};
 }
 
 1;

@@ -18,17 +18,20 @@ use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 
-our $VERSION = '0.26';
+our $VERSION   = '0.26';
 
 # Master storage of the settings
-our %SETTING = ();
+our %SETTING   = ();
 
 # A cache for the defaults
-our %DEFAULT = ();
+our %DEFAULT   = ();
 
 # The configuration revision.
 # (Functionally similar to the database revision)
-our $REVISION = 1;
+our $REVISION  = 1;
+
+# Storage for the default config object
+our $SINGLETON = undef;
 
 # Settings Types (based on Firefox)
 use constant BOOLEAN => 0;
@@ -42,6 +45,7 @@ use constant HOST    => 0;
 use constant HUMAN   => 1;
 use constant PROJECT => 2;
 
+# Accessor generation
 use Class::XSAccessor::Array
 	getters => {
 		host    => HOST,
@@ -523,22 +527,36 @@ sub set {
 	return 1;
 }
 
+# Fetches an explicitly named default
+sub default {
+	my $self  = shift;
+	my $name  = shift;
+
+	# Does the setting exist?
+	my $setting = $SETTING{$name} or
+	Carp::croak("The configuration setting '$name' does not exist");
+
+	return $DEFAULT{$name};
+}
+
 sub read {
 	my $class = shift;
 
-	# Load the host configuration
-	my $host = Padre::Config::Host->read;
+	unless ( $SINGLETON ) {
+		# Load the host configuration
+		my $host = Padre::Config::Host->read;
 
-	# Load the user configuration
-	my $human = Padre::Config::Human->read
-	         || Padre::Config::Human->create;
+		# Load the user configuration
+		my $human = Padre::Config::Human->read
+			|| Padre::Config::Human->create;
 
-	# Hand off to the constructor
-	my $self = $class->new( $host, $human );
+		# Hand off to the constructor
+		$SINGLETON = $class->new( $host, $human );
 
-	# TODO - Check the version
+		# TODO - Check the version
+	}
 
-	return $self;
+	return $SINGLETON;
 }
 
 sub write {

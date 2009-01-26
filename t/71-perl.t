@@ -19,7 +19,7 @@ use File::Spec::Functions ':ALL';
 my $files = rel2abs( catdir( 't', 'files' ) );
 
 my $tests;
-plan tests => $tests+1;
+plan tests => $tests + 1;
 
 use t::lib::Padre;
 use t::lib::Padre::Editor;
@@ -28,9 +28,10 @@ use Padre::Document;
 use Padre::PPI;
 use PPI::Document;
 
-
-
-
+# Create the object so that Padre->ide works
+my $app = Padre->new;
+isa_ok($app, 'Padre');
+BEGIN { $tests += 1; }
 
 SCOPE: {
 	my $editor = t::lib::Padre::Editor->new;
@@ -58,7 +59,7 @@ SCOPE: {
 	isa_ok($doc, 'Padre::Document');
 	isa_ok($doc, 'Padre::Document::Perl');
 	is($doc->filename, $file, 'filename');
-	
+
 	#Padre::PPI::find_unmatched_brace();
 	BEGIN { $tests += 4; }
 }

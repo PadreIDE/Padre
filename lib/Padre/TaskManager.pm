@@ -97,6 +97,7 @@ our $TASK_START_EVENT : shared = Wx::NewEventType;
 
 # Timer to reap dead workers every N milliseconds
 our $REAP_TIMER;
+
 # You can instantiate this class only once.
 our $SINGLETON;
 
@@ -131,7 +132,7 @@ sub new {
 
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
-	if (not defined $REAP_TIMER and $self->use_threads) {
+	if ( not defined $REAP_TIMER and $self->use_threads ) {
 		# explicit id necessary to distinguish from startup-timer of the main window
 		my $timerid = Wx::NewId();
 		$REAP_TIMER = Wx::Timer->new( $main, $timerid );
