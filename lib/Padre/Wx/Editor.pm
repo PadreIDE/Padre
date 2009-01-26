@@ -741,8 +741,8 @@ sub on_left_up {
 	my ($self, $event) = @_;
 
 	my $text = $self->GetSelectedText;
-	if ( defined($text) && length($text) > 0 ) {
-		# only on X11 based platforms
+	if ( Padre::Util::WXGTK and defined $text and $text ne '' ) {
+		# Only on X11 based platforms
 		Wx::wxTheClipboard->UsePrimarySelection(1);
 		$self->put_text_to_clipboard($text);
 		Wx::wxTheClipboard->UsePrimarySelection(0);
