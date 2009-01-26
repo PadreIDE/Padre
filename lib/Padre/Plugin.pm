@@ -320,7 +320,7 @@ sub config_read {
 
 =head2 config_write
 
-  $self->config_read( { foo => 'bar' } );
+  $self->config_write( { foo => 'bar' } );
 
 The C<config_write> method is used to write the host-specific configuration
 information for the plugin into the underlying database storage.
