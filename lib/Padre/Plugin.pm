@@ -4,7 +4,7 @@ package Padre::Plugin;
 
 =head1 NAME
 
-Padre::Plugin - Padre Plugin API 
+Padre::Plugin - Padre Plugin API 2.1
 
 =head1 SYNOPSIS
 
@@ -44,12 +44,18 @@ Padre::Plugin - Padre Plugin API
 use 5.008;
 use strict;
 use warnings;
+use Carp         ();
 use Scalar::Util ();
-use Params::Util ();
+use Params::Util ('_HASH0', '_INSTANCE');
+use YAML::Tiny   ();
+use Padre::DB    ();
 use Padre::Wx    ();
 
 our $VERSION    = '0.26';
 our $COMPATIBLE = '0.18';
+
+# Link plugins back to their IDE
+my %IDE = ();
 
 
 
@@ -142,8 +148,22 @@ object.
 
 sub new {
 	my $class = shift;
-	my $self  = bless {}, $class;
+	my $ide   = shift;
+	unless ( _INSTANCE($ide, 'Padre') ) {
+		Carp::croak("Did not provide a Padre ide object");
+	}
+
+	# Create the basic object
+	my $self = bless {}, $class;
+
+	# Store the link back to the IDE
+	$IDE{Scalar::Util::refaddr($self)} = $ide;
+
 	return $self;
+}
+
+sub DESTROY {
+	delete $IDE{Scalar::Util::refaddr($_[0])};
 }
 
 
@@ -249,6 +269,85 @@ plugin has been left in an unknown state.
 =cut
 
 sub plugin_disable {
+	return 1;
+}
+
+=pod
+
+=head2 config_read
+
+  my $hash = $self->config_read;
+  if ( $hash ) {
+      print "Loaded existing configuration\n";
+  } else {
+      print "No existing configuration";
+  }
+
+The C<config_read> method provides access to host-specific configuration
+stored in a persistant location by Padre.
+
+At this time, the configuration must be a nested, non-cyclic structure of
+C<HASH> references, C<ARRAY> references and simple scalars (the use of
+C<undef> values is permitted) with a C<HASH> reference at the root.
+
+Returns a nested C<HASH>-root structure if there is an existing saved
+configuration for the plugin, or C<undef> if there is no existing saved
+configuration for the plugin.
+
+=cut
+
+sub config_read {
+	my $self  = shift;
+
+	# Retrieve the config string from the database
+	my $class = Scalar::Util::blessed($self);
+	my @row   = Padre::DB->selectrow_array(
+		'select config from plugin where name = ?', {},
+		$class,
+	);
+	return undef unless defined $row[0];
+
+	# Parse the config from the string
+	my @config = YAML::Tiny::Load($row[0]);
+	unless ( _HASH0($config[0]) ) {
+		Carp::croak('Config for plugin was not a HASH refence');
+	}
+
+	return $config[0];
+}
+
+=pod
+
+=head2 config_write
+
+  $self->config_read( { foo => 'bar' } );
+
+The C<config_write> method is used to write the host-specific configuration
+information for the plugin into the underlying database storage.
+
+At this time, the configuration must be a nested, non-cyclic structure of
+C<HASH> references, C<ARRAY> references and simple scalars (the use of
+C<undef> values is permitted) with a C<HASH> reference at the root.
+
+=cut
+
+sub config_write {
+	my $self   = shift;
+	my $config = shift;
+	unless ( _HASH0($config) ) {
+		Carp::croak('Did not provide a HASH ref to config_write');
+	}
+
+	# Convert the config to a string
+	my $string = YAML::Tiny::Dump( $config );
+
+	# Write the config string to the database
+	my $class = Scalar::Util::blessed($self);
+	Padre::DB->selectrow_array(
+		'update plugin set config = ? where name = ?', {},
+		$string, $class,
+	);
+
 	return 1;
 }
 
@@ -397,7 +496,7 @@ sub _menu_plugins_submenu {
 			$menu->Append( -1, $label, $submenu );
 			next;
 		}
-	
+
 		Carp::cluck("Unknown or invalid menu entry (label '$label' and value '$value')");
 	}
 
@@ -476,6 +575,40 @@ deep integration with the editor widget.
 
 sub editor_disable {
 	return 1;
+}
+
+
+
+
+
+#####################################################################
+# Padre Integration Methods
+
+=pod
+
+=head2 ide
+
+The C<ide> convenience method provides access to the root-level L<Padre>
+IDE object, preventing the need to go via the global Padre-E<gt>ide
+method.
+
+=cut
+
+sub ide {
+	$IDE{Scalar::Util::refaddr($_[0])};
+}
+
+=pod
+
+=head2 main
+
+The C<main> convenience method provides direct access to the
+L<Padre::Wx::Main> (main window) object.
+
+=cut
+
+sub main {
+	$IDE{Scalar::Util::refaddr($_[0])}->wx->main;
 }
 
 1;

@@ -26,9 +26,32 @@ sub plugin_name {
 	'Padre Developer Tools';
 }
 
-# Load our non-core dependencies when we are enabled
 sub plugin_enable {
+	my $self = shift;
+
+	# Load our non-core dependencies=
 	require Devel::Dumpvar;
+
+	# Load our configuration
+	# (Used for testing purposes)
+	$self->{config} = $self->config_read;
+
+	return 1;
+}
+
+sub plugin_disable {
+	my $self   = shift;
+
+	# Save our configuration
+	# (Used for testing purposes)
+	if ( $self->{config} ) {
+		$self->{config}->{foo}++;
+		$self->config_write( delete($self->{config}) );
+	} else {
+		$self->config_write( { foo => 1 } );
+	}
+
+	return 1;
 }
 
 sub menu_plugins_simple {

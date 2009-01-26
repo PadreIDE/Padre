@@ -94,21 +94,20 @@ sub new {
 	}
 
 	# Determine the window title
-	my $title = "Padre ";
+	my $title = 'Padre';
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
 		my $revision = Padre::Util::svn_directory_revision($dir);
 		if ( -d "$dir.svn" ) {
-			$title .= "SVN \@$revision (\$VERSION = $Padre::VERSION)";
+			$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
 		}
 	}
 	if ( $title eq 'Padre' ) {
-		$title .= $Padre::VERSION;
+		$title .= " $Padre::VERSION";
 	}
 
 	# Create the underlying Wx frame
-	$DB::single = 1;
 	my $self = $class->SUPER::new(
 		undef,
 		-1,

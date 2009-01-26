@@ -463,7 +463,7 @@ sub _load_plugin {
 	}
 
 	# Attempt to instantiate the plugin
-	my $object = eval { $module->new };
+	my $object = eval { $module->new($self->{parent}) };
 	if ( $@ ) {
 		$plugin->errstr(
 			sprintf(
@@ -472,8 +472,7 @@ sub _load_plugin {
 				),
 				$name,
 			) . ": $@"
-		);
-		$plugin->status('error');
+		);		$plugin->status('error');
 		return;
 	}
 	unless ( _INSTANCE($object, 'Padre::Plugin') ) {
@@ -494,7 +493,7 @@ sub _load_plugin {
 	$plugin->status('loaded');
 
 	# Should we try to enable the plugin
-	my $conf = $self->plugin_config($plugin);
+	my $conf = $self->plugin_db($plugin);
 	unless ( defined $conf->{enabled} ) {
 		# Do not enable by default
 		$conf->{enabled} = 0;
@@ -596,7 +595,7 @@ sub _plugin_disable {
 
 =pod
 
-=head2 plugin_config
+=head2 plugin_db
 
 Given a plugin name or namespace, returns a hash reference
 which corresponds to the configuration section in the Padre
@@ -609,7 +608,7 @@ a plugin namespace, the plugin name is determine automatically.
 
 =cut
 
-sub plugin_config {
+sub plugin_db {
 	my $self = shift;
 
 	# Infer the plugin name from caller if not provided
