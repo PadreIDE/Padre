@@ -6,6 +6,7 @@ v0.26 2009.0X.XX
         data is now via methods so that we can add support for project-level
         customisation of the interface. (ADAMK)
     Completely refactored all of the config setting names (ADAMK)
+    Added first-class configuration support for Plugins (ADAMK)
     Moved config data on bookmarks, plugins and historical search/replace
         strings out of the config file and into the database. (ADAMK)
     The output window now understands the color and font-face
