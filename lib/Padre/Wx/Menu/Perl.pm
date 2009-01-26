@@ -321,7 +321,9 @@ sub install_file {
 	my $string = $dialog->GetValue;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error("Did not provide a distribution");
+		$main->error(
+				Wx::gettext("Did not provide a distribution")
+            );
 		return;
 	}
 
@@ -335,7 +337,7 @@ sub install_url {
 	# Ask what we should install
 	my $dialog = Wx::TextEntryDialog->new(
 		$main,
-		"Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz",
+		Wx::gettext("Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"),
 		"pip",
 		'',
 	);
@@ -345,7 +347,7 @@ sub install_url {
 	my $string = $dialog->GetValue;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error("Did not provide a distribution");
+		$main->error(Wx::gettext("Did not provide a distribution"));
 		return;
 	}
 
@@ -354,7 +356,7 @@ sub install_url {
 	my $dir    = File::Basename::dirname( $perl );
 	my $pip    = File::Spec->catfile( $dir, 'pip' );
 	unless ( -f $pip ) {
-		$main->error("pip is unexpectedly not installed");
+		$main->error(Wx::gettext("pip is unexpectedly not installed"));
 		return;
 	}
 
@@ -409,7 +411,7 @@ sub install_cpan {
 	require Padre::Wx::History::TextDialog;
 	my $dialog = Padre::Wx::History::TextDialog->new(
 		$main,
-		"Module Name:\neg: Perl::Critic",
+		Wx::gettext("Module Name:\ne.g.: Perl::Critic"),
 		'Install Module',
 		'CPAN_INSTALL_MODULE',
 	);
@@ -502,7 +504,7 @@ sub open_config {
 		return;
 	}
 
-	$main->error("Failed to find your CPAN configuration");
+	$main->error(Wx::gettext("Failed to find your CPAN configuration"));
 }
 
 1;
