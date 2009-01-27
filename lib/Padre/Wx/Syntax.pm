@@ -23,6 +23,24 @@ sub new {
 		| Wx::wxLC_SINGLE_SEL
 	);
 
+	my $imagelist = Wx::ImageList->new( 14, 7 );
+
+	my $errorImg = Wx::Icon->new;
+	$errorImg->LoadFile(
+		Padre::Util::sharefile( split( '/', 'icons/padre/16x16/status/padre-syntax-error.png' ) ),
+		Wx::wxBITMAP_TYPE_PNG
+	);
+	$imagelist->Add($errorImg);
+
+	my $warningImg = Wx::Icon->new;
+	$warningImg->LoadFile(
+		Padre::Util::sharefile( split( '/', 'icons/padre/16x16/status/padre-syntax-warning.png' ) ),
+		Wx::wxBITMAP_TYPE_PNG
+	);
+	$imagelist->Add($warningImg);
+
+	$self->AssignImageList($imagelist, Wx::wxIMAGE_LIST_SMALL);
+
 	$self->InsertColumn( 0, Wx::gettext('Line')        );
 	$self->InsertColumn( 1, Wx::gettext('Type')        );
 	$self->InsertColumn( 2, Wx::gettext('Description') );
@@ -74,8 +92,8 @@ sub set_column_widths {
 		$ref_entry = { line => ' ', };
 	}
 
-	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 2;
-	my $width0         = $self->GetCharWidth * length( $ref_entry->{line} x 2 );
+	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 16;
+	my $width0         = $self->GetCharWidth * length( $ref_entry->{line} x 2 ) + 14;
 
 	my $refStr = '';
 	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {

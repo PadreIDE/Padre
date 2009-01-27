@@ -174,7 +174,8 @@ sub update_gui {
 			else {
 				$editor->MarkerAdd( $l, 1);
 			}
-			my $idx = $syntax->InsertStringItem( $i++, $l + 1 );
+			my $idx = $syntax->InsertStringImageItem( $i++, $l + 1, ( $hint->{severity} eq 'W' ? 1 : 0 ) );
+			$syntax->SetItemData( $idx, 0 );
 			$syntax->SetItem( $idx, 1, ( $hint->{severity} eq 'W' ? Wx::gettext('Warning') : Wx::gettext('Error') ) );
 			$syntax->SetItem( $idx, 2, $hint->{msg} );
 
