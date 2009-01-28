@@ -632,9 +632,31 @@ sub relocale {
 # configuration file is synced from a remote network location.
 # NOTE: This method is highly experimental and subject to change.
 sub reconfig {
-	my $self = shift;
+	my $self   = shift;
+	my $config = shift;
 
-	
+	# Do everything inside a freeze
+	my $guard = $self->freezer;
+
+	# The biggest potential change is that the user may have a
+	# different forced locale.
+	# TODO - This could get subtle (we have to not only know
+	# what the current locale is, but also if it was derived from
+	# the system default or not)
+
+	# Rebuild the toolbar if the lockinterface status has changed
+	# TODO - Implement this
+
+	# Show or hide all the main gui elements
+	$self->show_functions( $config->main_functions   );
+	$self->show_outline(   $config->main_outline     );
+	$self->show_output(    $config->main_output      );
+	$self->show_syntax(    $config->main_syntaxcheck );
+
+	# Finally refresh the menu to clean it up
+	$self->menu->refresh;
+
+	return 1;
 }
 
 sub rebuild_toolbar {
