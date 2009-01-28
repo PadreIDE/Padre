@@ -625,6 +625,18 @@ sub relocale {
 	return;
 }
 
+# The term and method "reconfig" is reserved for functionality
+# intended to run when Padre's underlying configuration is updated
+# by an external actor at run-time.
+# The primary use cases for this method are when the user
+# configuration file is synced from a remote network location.
+# NOTE: This method is highly experimental and subject to change.
+sub reconfig {
+	my $self = shift;
+
+	
+}
+
 sub rebuild_toolbar {
 	my $self = shift;
 	$self->SetToolBar(
