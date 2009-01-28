@@ -4,15 +4,11 @@ package Padre::Config::Patch;
 
 use strict;
 use warnings;
+use YAML::Tiny    ();
+use Exporter      ();
+use Padre::Config ();
 
 our $VERSION = '0.26';
-
-use YAML::Tiny ();
-use Exporter   ();
-
-# Load the Padre::Config module so we can get the
-# config file location.
-use Padre::Config ();
 
 1;
 

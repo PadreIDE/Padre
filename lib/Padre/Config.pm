@@ -37,7 +37,7 @@ our $SINGLETON = undef;
 use constant BOOLEAN => 0;
 use constant POSINT  => 1;
 use constant INTEGER => 2;
-use constant STRING  => 3;
+use constant ASCII  => 3;
 use constant PATH    => 4;
 
 # Setting Stores
@@ -90,13 +90,13 @@ unless ( File::Spec->file_name_is_absolute($DEFAULT_DIR) ) {
 setting(
 	# Initially, this must be ascii only
 	name    => 'identity_name',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => '',
 );
 setting(
 	name    => 'identity_email',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => '',
 );
@@ -135,7 +135,7 @@ setting(
 	#   nothing    - nothing to open
 	#   last       - the files that were open last time
 	name    => 'main_startup',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => 'new',
 );
@@ -153,7 +153,7 @@ setting(
 );
 setting(
 	name    => 'main_functions_order',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => 'alphabetical',
 );
@@ -197,7 +197,7 @@ setting(
 # Editor settings
 setting(
 	name    => 'editor_font',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => '',
 );
@@ -233,7 +233,7 @@ setting(
 );
 setting(
 	name    => 'editor_autoindent',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => 'deep',
 );
@@ -251,7 +251,7 @@ setting(
 );
 setting(
 	name    => 'editor_currentline_color',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => 'FFFF04',
 );
@@ -325,7 +325,7 @@ setting(
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
 	name    => 'run_save',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => 'same',
 );
@@ -345,13 +345,13 @@ setting(
 );
 setting(
 	name    => 'locale',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => '',
 );
 setting(
 	name    => 'locale_perldiag',
-	type    => STRING,
+	type    => ASCII,
 	store   => HUMAN,
 	default => '',
 );
@@ -366,7 +366,7 @@ setting(
 # it has to be a host-specific setting.
 setting(
 	name    => 'editor_style',
-	type    => STRING,
+	type    => ASCII,
 	store   => HOST,
 	default => 'default',
 );
@@ -515,12 +515,12 @@ sub set {
 	my $setting = $SETTING{$name} or
 	Carp::croak("The configuration setting '$name' does not exist");
 
-	# All types are STRING-like
+	# All types are ASCII-like
 	unless ( defined $value and not ref $value ) {
 		Carp::croak("Missing or non-scalar value for setting '$name'");
 	}
 
-	# We don't need to do additional checks on STRING types at this point
+	# We don't need to do additional checks on ASCII types at this point
 	my $type = $setting->type;
 	if ( $type == BOOLEAN and $value ne '1' and $value ne '0' ) {
 		Carp::croak("Tried to change setting '$name' to non-boolean '$value'");

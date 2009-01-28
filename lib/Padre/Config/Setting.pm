@@ -15,9 +15,10 @@ our $VERSION = '0.26';
 
 # Settings Types
 use constant BOOLEAN => 0;
-use constant INTEGER => 1;
-use constant STRING  => 2;
-use constant PATH    => 3;
+use constant POSINT  => 1;
+use constant INTEGER => 2;
+use constant ASCII   => 3;
+use constant PATH    => 4;
 
 # Setting Stores
 use constant HOST    => 0;
