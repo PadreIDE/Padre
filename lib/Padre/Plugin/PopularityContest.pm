@@ -80,7 +80,7 @@ our @ISA     = 'Padre::Plugin';
 # Constructor
 
 sub plugin_name {
-	'Popularity Contest'
+	'Padre Popularity Contest'
 }
 
 sub plugin_enable {
