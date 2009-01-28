@@ -57,17 +57,19 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		'Run Document inside Padre' => 'eval_document',
-		'---'                       => undef,
-		'Dump Current Document'     => 'dump_document',
-		'Dump Top IDE Object'       => 'dump_padre',
-		'Dump %INC HASH'            => 'dump_inc',
-		'---'                       => undef,
-		'wxWidgets 2.8.8 Reference' => sub {
+		'Run Document inside Padre'  => 'eval_document',
+		'---'                        => undef,
+		'Dump Current Document'      => 'dump_document',
+		'Dump Top IDE Object'        => 'dump_padre',
+		'Dump %INC HASH'             => 'dump_inc',
+		'---'                        => undef,
+		'Simulate Crash - exit(255)' => 'simulate_crash',
+		'---'                        => undef,
+		'wxWidgets 2.8.8 Reference'  => sub {
 			Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
 		},
-		'---'                       => undef,
-		'About'                     => 'show_about',
+		'---'                        => undef,
+		'About'                      => 'show_about',
 	];
 }
 
@@ -80,7 +82,7 @@ sub menu_plugins_simple {
 
 sub eval_document {
 	my $self     = shift;
-	my $document = Padre::Current->document or return;
+	my $document = $self->current->document or return;
 	return $self->_dump_eval( $document->text_get );
 }
 
@@ -102,6 +104,10 @@ sub dump_padre {
 sub dump_inc {
 	my $self = shift;
 	return $self->_dump( \%INC );
+}
+
+sub simulate_crash {
+	exit(1);
 }
 
 sub show_about {
@@ -150,8 +156,6 @@ sub _dump {
 
 1;
 
-__END__
-
 =pod
 
 =head1 NAME
@@ -184,6 +188,7 @@ This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
 =cut
+
 # Copyright 2008 Gabor Szabo.
 # LICENSE
 # This program is free software; you can redistribute it and/or
