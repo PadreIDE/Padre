@@ -86,6 +86,21 @@ unless ( File::Spec->file_name_is_absolute($DEFAULT_DIR) ) {
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
 
+# The identity of the user (simplistic initial version)
+setting(
+	# Initially, this must be ascii only
+	name    => 'identity_name',
+	type    => STRING,
+	store   => HUMAN,
+	default => '',
+);
+setting(
+	name    => 'identity_email',
+	type    => STRING,
+	store   => HUMAN,
+	default => '',
+);
+
 # Indent Settings
 # Allow projects to forcefully override personal settings
 setting(
