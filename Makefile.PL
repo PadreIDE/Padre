@@ -67,6 +67,7 @@ requires       'PAR'                      => '0.970';
 requires       'Pod::POM'                 => '0.17';
 requires       'Pod::Simple'              => '3.07';
 requires       'Pod::Simple::XHTML'       => '3.04';
+requires       'POSIX'                    => 0;
 requires       'Probe::Perl'              => '0.01';
 requires       'PPI'                      => '1.203';
 requires       'Storable'                 => '2.15';

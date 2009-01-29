@@ -107,7 +107,8 @@ sub dump_inc {
 }
 
 sub simulate_crash {
-	exit(1);
+	require POSIX;
+	POSIX::_exit();
 }
 
 sub show_about {
