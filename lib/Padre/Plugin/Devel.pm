@@ -57,19 +57,19 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		'Run Document inside Padre'  => 'eval_document',
-		'---'                        => undef,
-		'Dump Current Document'      => 'dump_document',
-		'Dump Top IDE Object'        => 'dump_padre',
-		'Dump %INC HASH'             => 'dump_inc',
-		'---'                        => undef,
-		'Simulate Crash - exit(255)' => 'simulate_crash',
-		'---'                        => undef,
-		'wxWidgets 2.8.8 Reference'  => sub {
+		'Run Document inside Padre' => 'eval_document',
+		'---'                       => undef,
+		'Dump Current Document'     => 'dump_document',
+		'Dump Top IDE Object'       => 'dump_padre',
+		'Dump %INC HASH'            => 'dump_inc',
+		'---'                       => undef,
+		'Simulate Crash'            => 'simulate_crash',
+		'---'                       => undef,
+		'wxWidgets 2.8.8 Reference' => sub {
 			Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
 		},
-		'---'                        => undef,
-		'About'                      => 'show_about',
+		'---'                       => undef,
+		'About'                     => 'show_about',
 	];
 }
 
