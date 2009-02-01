@@ -415,7 +415,7 @@ sub timer_post_init {
 			$_[0]->timer_check_overwrite;
 		},
 	);
-	$timer->Start( 5 * SECONDS, 0 );
+	$timer->Start( 2 * SECONDS, 0 );
 
 	return;
 }
