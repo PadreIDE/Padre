@@ -8,7 +8,7 @@ use Padre::Project ();
 our $VERSION = '0.26';
 our @ISA     = 'Padre::Project';
 
-use overload 'bool' => sub () { '' }
+use overload 'bool' => sub () { '' };
 
 1;
 
