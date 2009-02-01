@@ -1,6 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
-v0.26 2009.0X.XX
+v0.26 2009.02.01
 
     On X11 based platforms, selecting text using the mouse and pasting it
         via middle mouse button now works (HJANSEN)
@@ -19,7 +19,7 @@ v0.26 2009.0X.XX
        simplicity and consistency to various APIs. Only possible because
        we were already breaking the config system and Main.pm (ADAMK)
     Removed some classes and other code that had (astonishingly for such a
-        your application) become useless and bit-rotten (ADAMK)
+        young application) become useless and bit-rotten (ADAMK)
     Added styles for text/x-patch, text/x-makefile, text/x-yaml,
         text/css, text/plain(apache conf) file types (KEEDI)
     Now style config file supports foreground, background, bold,
