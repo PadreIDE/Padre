@@ -65,6 +65,47 @@ my $unsaved_number = 0;
 #####################################################################
 # Document Registration
 
+# This is the list of binary files
+# (which we don't support loading in fallback text mode)
+our %EXT_BINARY = (
+	aiff  => 1,
+	au    => 1,
+	avi   => 1,
+	bmp   => 1,
+	cache => 1,
+	dat   => 1,
+	doc   => 1,
+	gif   => 1,
+	gz    => 1,
+	icns  => 1,
+	jar   => 1,
+	jpeg  => 1,
+	jpg   => 1,
+	m4a   => 1,
+	mov   => 1,
+	mp3   => 1,
+	mpg   => 1,
+	ogg   => 1,
+	pdf   => 1,
+	png   => 1,
+	pnt   => 1,
+	ppt   => 1,
+	qt    => 1,
+	ra    => 1,
+	svg   => 1,
+	svgz  => 1,
+	svn   => 1,
+	swf   => 1,
+	tar   => 1,
+	tgz   => 1,
+	tif   => 1,
+	tiff  => 1,
+	wav   => 1,
+	xls   => 1,
+	xlw   => 1,
+	zip   => 1,
+);
+
 # This is the primary file extension to mime-type mapping
 our %EXT_MIME = (
 	ada   => 'text/x-adasrc',
