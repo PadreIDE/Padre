@@ -10,11 +10,6 @@ BEGIN {
 		exit 0;
 	}
 }
-BEGIN {
-	plan( skip_all => 'Fails for unknown reasons, skipping for release' );
-	exit 0;
-}
-
 
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
