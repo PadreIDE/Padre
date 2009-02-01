@@ -2,10 +2,13 @@ package Padre::Project;
 
 # Base project functionality for Padre
 
+use 5.008;
 use strict;
 use warnings;
-use File::Spec ();
-use YAML::Tiny ();
+use File::Spec    ();
+use YAML::Tiny    ();
+use Padre::Config ();
+use Padre::Config::Project ();
 
 our $VERSION = '0.26';
 
@@ -65,10 +68,35 @@ sub new {
 		'padre.yml',
 	);
 	if ( -f $padre_yml ) {
-		$self->{padre_yml} = YAML::Tiny->read( $padre_yml );
+		$self->{padre_yml} = $padre_yml;
 	}
 
 	return $self;
+}
+
+sub config {
+	my $self = shift;
+	unless ( $self->{config} ) {
+		# Get the default config object
+		my $config = Padre->ide->config;
+
+		# If we have a padre.yml file create a custom config object
+		if ( $self->{padre_yml} ) {
+			$self->{config} = Padre::Config->new(
+				$config->host,
+				$config->human,
+				Padre::Config::Project->read(
+					$self->{padre_yml},
+				),
+			);
+		} else {
+			$self->{config} = Padre::Config->new(
+				$config->host,
+				$config->human,
+			);
+		}
+	}
+	return $self->{config};
 }
 
 1;
