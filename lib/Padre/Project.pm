@@ -30,13 +30,13 @@ sub class {
 	unless ( -d $root ) {
 		Carp::croak("Project directory '$root' does not exist");
 	}
-	if ( File::Spec->catfile($root, 'Makefile.PL') ) {
+	if ( -f File::Spec->catfile($root, 'Makefile.PL') ) {
 		return 'Padre::Project::Perl';
 	}
-	if ( File::Spec->catfile($root, 'Build.PL') ) {
+	if ( -f File::Spec->catfile($root, 'Build.PL') ) {
 		return 'Padre::Project::Perl';
 	}
-	if ( File::Spec->catfile($root, 'padre.yml') ) {
+	if ( -f File::Spec->catfile($root, 'padre.yml') ) {
 		return 'Padre::Project';
 	}
 	return 'Padre::Project::Null';
