@@ -413,19 +413,21 @@ use constant system_rfc4646 =>
 # Find the rfc4646 to use by default
 sub rfc4646 {
 	my $config = Padre::Config->read;
-	if ( $config and not $RFC4646{$config} ) {
+	my $locale = $config->locale;
+	
+	if ( $locale and not $RFC4646{$locale} ) {
 		# Bad or unsupported configuration
-		$config = undef;
+		$locale = undef;
 	}
 
 	# Try for the system default
-	$config ||= system_rfc4646;
+	$locale ||= system_rfc4646;
 
 	# Use the fallback default
-	$config ||= DEFAULT;
+	$locale ||= DEFAULT;
 
 	# Return supported language for this language
-	return $RFC4646{$config}->{actual};
+	return $RFC4646{$locale}->{actual};
 }
 
 # Given a rfc4646 identifier, sets the language globally
