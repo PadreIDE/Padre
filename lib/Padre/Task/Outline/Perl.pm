@@ -240,7 +240,7 @@ sub _update_treectrl {
 sub _add_subtree {
 	my ( $outlinebar, $pkg, $type, $root ) = @_;
 
-	my $type_elem = '';
+	my $type_elem = undef;
 	if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
 		$type_elem = $outlinebar->AppendItem(
 			$root,
@@ -263,11 +263,13 @@ sub _add_subtree {
 			);
 		}
 	}
-	if ( $type eq 'methods' ) {
-		$outlinebar->Expand($type_elem);
-	}
-	else {
-		$outlinebar->Collapse($type_elem);
+	if ( defined $type_elem ) {
+		if ( $type eq 'methods' ) {
+			$outlinebar->Expand($type_elem);
+		}
+		else {
+			$outlinebar->Collapse($type_elem);
+		}
 	}
 
 	return;
