@@ -18,8 +18,9 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_DEFAULT_STYLE
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS  
 	);
+	$self->SetIndent(10);
 	$self->{force_next} = 0;
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
@@ -146,7 +147,7 @@ sub on_timer {
 
 	my $document = $self->main->current->document or return;
 
-	unless ( $document->can('get_outline_in_background') ) {
+	unless ( $document->can('get_outline') ) {
 		$self->clear;
 		return;
 	}
@@ -156,7 +157,7 @@ sub on_timer {
 		$self->force_next(0);
 	}
 
-	$document->get_outline_in_background(force => $force);
+	$document->get_outline(force => $force);
 
 	if ( defined($event) ) {
 		$event->Skip(0);

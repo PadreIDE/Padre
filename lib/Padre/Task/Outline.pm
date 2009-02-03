@@ -64,10 +64,9 @@ attribute of the object. The result should be a data structure of the
 form defined in the documentation of the C<Padre::Document::get_outline>
 method. See L<Padre::Document>.
 
-This base class implements all logic necessary to update the GUI
-with the structure info in a C<finish()> hook. If you want
-to implement your own C<finish()>, make sure to call C<$self-E<gt>SUPER::finish>
-for this reason.
+This base class requires all logic necessary to update the GUI
+with the structure info in a method C<update_gui> of the derived
+class. That method is called in the C<finish()> hook.
 
 =cut
 
@@ -80,16 +79,16 @@ sub new {
 
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
+
 	my $editor = $self->{editor} || $self->{main_thread_only}->{editor};
-	my $on_finish     = $self->{on_finish}     || $self->{main_thread_only}->{on_finish};
 	delete $self->{editor};
-	delete $self->{on_finish};
 	unless ( defined $editor ) {
 		$editor = Padre::Current->editor;
 	}
-	return() if not defined $editor;
-	$self->{main_thread_only}->{on_finish} = $on_finish if $on_finish;
+	return if not defined $editor;
+
 	$self->{main_thread_only}->{editor} = $editor;
+
 	return $self;
 }
 
@@ -112,122 +111,12 @@ sub prepare {
 }
 
 sub finish {
-	my $self     = shift;
-	my $callback = $self->{main_thread_only}->{on_finish};
-	if ( _CODE($callback) ) {
-		$callback->($self);
-	} else {
-		$self->update_gui;
-	}
-}
+	my $self = shift;
 
-sub update_gui {
-	# TODO This and the helper routines used here probably need to be
-	# document type specific (pragmata, modules and methods do 
-	# not apply to all languages and there may be other hierarchy
-	# levels instead)
+	$self->update_gui;
 
-	my $self    = shift;
-	my $outline = $self->{outline};
-	my $outlinebar = Padre->ide->wx->main->outline;
-	my $editor  = $self->{main_thread_only}->{editor};
-
-	# Clear out the existing stuff
-	# TODO extract data for keeping (sub)trees collapsed/expanded (see below)
-	$outlinebar->clear;
-
-	require Padre::Wx;
-	# If there are no errors, clear the outline pane and return.
-	unless ( $outline ) {
-		return;
-	}
-
-	# Again, slightly differently
-	unless ( @$outline ) {
-		return 1;
-	}
-
-	# Update the outline pane
-	if( scalar(@{ $outline }) == 1 ) {
-		my $pkg = $outline->[0];
-		my $root = $outlinebar->AddRoot(
-			$pkg->{name},
-			-1,
-			-1,
-			Wx::TreeItemData->new( {
-				line => $pkg->{line},
-				name => $pkg->{name}
-			} )
-		);
-		foreach my $type ( qw(pragmata modules methods) ) {
-			$self->add_subtree( $outlinebar, $pkg, $type, $root );
-		}
-	} else {
-		my $root = $outlinebar->AddRoot(
-			Wx::gettext('Outline'),
-			-1,
-			-1,
-			Wx::TreeItemData->new('')
-		);
-		foreach my $pkg ( @{ $outline } ) {
-			my $branch = $outlinebar->AppendItem(
-				$root,
-				$pkg->{name},
-				-1,
-				-1,
-				Wx::TreeItemData->new( {
-					line => $pkg->{line},
-					name => $pkg->{name}
-				} )
-			);
-			foreach my $type ( qw(pragmata modules methods) ) {
-				$self->add_subtree( $outlinebar, $pkg, $type, $branch );
-			}
-		}
-	}
-
-	# TODO Expanding all is not acceptable: We need to keep the state
-	# (i.e., keep the pragmata subtree collapsed if it was collapsed
-	# by the user)
-	$outlinebar->ExpandAll;
-	$outlinebar->GetBestSize;
-
-	return 1;
-}
-
-sub add_subtree {
-	my ( $self, $outlinebar, $pkg, $type, $root ) = @_;
-
-	if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
-		my $type_elem = $outlinebar->AppendItem(
-			$root,
-			ucfirst($type),
-			-1,
-			-1,
-			Wx::TreeItemData->new()
-		);
-		foreach my $item ( sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} } ) {
-			$self->append_entry($outlinebar, $type_elem, $item);
-		}
-	}
 	return;
 }
-
-sub append_entry {
-	my ( $self, $outlinebar, $parent, $item ) = @_;
-	$outlinebar->AppendItem(
-		$parent,
-		$item->{name},
-		-1,
-		-1,
-		Wx::TreeItemData->new( {
-			line => $item->{line},
-			name => $item->{name}
-		} )
-	);
-	return;
-}
-
 
 1;
 
