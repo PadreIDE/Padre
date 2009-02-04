@@ -12,6 +12,7 @@ use Carp                   ();
 use File::Spec             ();
 use File::Copy             ();
 use File::HomeDir          ();
+use File::Path             ();
 use Params::Util           qw{ _POSINT _INSTANCE };
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
@@ -412,7 +413,7 @@ setting(
 
 sub default_dir {
 	unless ( -e $DEFAULT_DIR ) {
-		mkdir($DEFAULT_DIR) or
+		File::Path::mkpath($DEFAULT_DIR) or
 		die "Cannot create config dir '$DEFAULT_DIR' $!";
 	}
 	return $DEFAULT_DIR;
