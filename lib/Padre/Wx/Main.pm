@@ -177,9 +177,14 @@ sub new {
 	$self->GetToolBar->Realize;
 
 	# Create the status bar
-	$self->SetStatusBar(
-		Padre::Wx::StatusBar->new($self)
-	);
+	my $statusbar = Padre::Wx::StatusBar->new($self);
+	$self->SetStatusBar($statusbar);
+	# show the statusbar if needed.
+	if ( $self->config->main_statusbar ) {
+		$statusbar->Show;
+	} else {
+		$statusbar->Hide;
+	}
 
 	# Create the three notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
