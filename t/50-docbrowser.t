@@ -13,7 +13,12 @@ plan( 'no_plan' );
 
 use Test::NoWarnings;
 use File::Spec::Functions qw( catfile );
+use File::Temp ();
 use URI;
+
+BEGIN {
+	$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
+}
 
 use_ok( 'Padre::DocBrowser' ) ;
 use_ok( 'Padre::Task::DocBrowser' );
