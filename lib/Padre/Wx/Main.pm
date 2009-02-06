@@ -2104,7 +2104,7 @@ sub on_stc_style_needed {
 		return if defined $doc->{_text} and $doc->{_text} eq $text;
 		$doc->{_text} = $text;
 
-		$doc->colorize;
+		$doc->colorize(Padre::Current->editor->GetEndStyled, $event->GetPosition);
 	}
 
 }

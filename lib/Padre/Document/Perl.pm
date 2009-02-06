@@ -98,8 +98,13 @@ sub lexer {
 # Padre::Document GUI Integration
 
 sub colorize {
-	my ($self) = @_;
+	my $self = shift;
 	
+	# comment the next three lines to disable pshangov's experimental ppi lexer
+	require Padre::Document::Perl::Lexer;
+	Padre::Document::Perl::Lexer->colorize(@_);
+	return;
+
 	$self->remove_color;
 
 	my $editor = $self->editor;
