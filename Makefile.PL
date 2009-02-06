@@ -72,6 +72,7 @@ requires       'PPI'                      => '1.203';
 requires       'Probe::Perl'              => '0.01';
 requires       'Storable'                 => '2.15';
 requires       'Term::ReadLine'           => 0;
+requires       'Text::Balanced'           => 0;
 requires       'Text::Diff'               => '0.35';
 requires       'Text::FindIndent'         => '0.03';
 requires       'Thread::Queue'            => '2.11';

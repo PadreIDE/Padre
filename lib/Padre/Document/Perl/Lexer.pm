@@ -1,6 +1,5 @@
 use strict;
 use warnings;
-use feature 'say';
 use PPI::Document;
 use PPI::Dumper;
 use Text::Balanced;
