@@ -10,7 +10,7 @@ plan tests => scalar @files;
 # too simple way to check if we have copyright information on all files
 # TODO: need to be improved
 
-my $copyright = qr{# Copyright 2008 (Gabor Szabo|Kaare Rasmussen).\s*};
+my $copyright = qr{# Copyright 200[89] (Gabor Szabo|Kaare Rasmussen|Peter Shangov).\s*};
 $copyright    = qr{$copyright# LICENSE\s*};
 $copyright    = qr{$copyright# This program is free software; you can redistribute it and/or\s*};
 $copyright    = qr{$copyright# modify it under the same terms as Perl 5 itself.};

@@ -413,3 +413,8 @@ sub class_to_css {
 }
 
 1;
+
+# Copyright 2009 Peter Shangov.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
