@@ -274,6 +274,18 @@ sub new {
 		}
 	);
 
+	$self->{autocomplete_brackets} = $self->AppendCheckItem(
+		-1,
+		Wx::gettext("Automatic bracket completion")
+	);
+	Wx::Event::EVT_MENU( $main, $self->{autocomplete_brackets},
+		sub {
+			# Update the saved config setting
+			my $config = Padre->ide->config;
+			$config->set( autocomplete_brackets => $_[1]->IsChecked ? 1 : 0 );
+		}
+	);
+
 	return $self;
 }
 
@@ -283,6 +295,7 @@ sub refresh {
 
 	$self->{ppi_highlight}->Check( $config->ppi_highlight );
 	$self->{run_stacktrace}->Check( $config->run_stacktrace );
+	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
 
 	no warnings 'once'; # TODO eliminate?
 	$Padre::Document::MIME_LEXER{'application/x-perl'} = 

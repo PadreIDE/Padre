@@ -45,6 +45,7 @@ sub new {
 
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 	Wx::Event::EVT_LEFT_UP(    $self, \&on_left_up    );
+	Wx::Event::EVT_CHAR(       $self, \&on_char       );
 
 	if ( Padre->ide->config->editor_wordwrap ) {
 		$self->SetWrapMode( Wx::wxSTC_WRAP_WORD );
@@ -734,6 +735,18 @@ sub unfold_all {
 		$currentLine++;
 	}
 
+	return;
+}
+
+sub on_char {
+	my ( $self, $event ) = @_;
+
+	my $doc = $self->{Document};
+	if ( $doc->can('event_on_char') ) {
+		$doc->event_on_char( $self, $event );
+	}
+
+	$event->Skip;
 	return;
 }
 

@@ -337,6 +337,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'autocomplete_brackets',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
 	# By default use background threads unless profiling
 	# TODO - Make the default actually change
 	name    => 'threads',

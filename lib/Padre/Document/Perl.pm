@@ -551,6 +551,35 @@ sub autocomplete {
 	return (length($prefix), @words);
 }
 
+sub event_on_char {
+	my ( $self, $editor, $event ) = @_;
+
+	my $key = $event->GetUnicodeKey;
+
+	if ( Padre->ide->config->autocomplete_brackets ) {
+		my %table = ( 40 => 41, 60 => 62, 91 => 93, ); # <> would be: 123 => 125, );
+		my $pos = $editor->GetCurrentPos;
+		foreach my $code ( keys %table ) {
+			if ( $key == $code ) {
+				my $nextChar;
+				if ( $editor->GetTextLength > $pos ) {
+					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
+				}
+				unless (
+					defined($nextChar)
+					&& ord($nextChar) == $table{$code}
+				) {
+					$editor->AddText( chr( $table{$code} ) );
+					$editor->CharLeft;
+					last;
+				}
+			}
+		}
+	}
+
+	return;
+}
+
 1;
 
 # Copyright 2008 Gabor Szabo.
