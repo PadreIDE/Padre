@@ -322,8 +322,8 @@ sub install_file {
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
 		$main->error(
-				Wx::gettext("Did not provide a distribution")
-            );
+			Wx::gettext("Did not provide a distribution")
+		);
 		return;
 	}
 
