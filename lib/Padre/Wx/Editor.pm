@@ -860,8 +860,8 @@ sub get_text_from_clipboard {
 	return $text;
 }
 
-# Coment or comment text depending on the first selected line.
-# This is the most coherent way to handle mixed blocks(commented and
+# Comment or uncomment text depending on the first selected line.
+# This is the most coherent way to handle mixed blocks (commented and
 # uncommented lines).
 sub comment_toggle_lines {
 	my ($self, $begin, $end, $str) = @_;
