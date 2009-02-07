@@ -557,7 +557,7 @@ sub event_on_char {
 	my $key = $event->GetUnicodeKey;
 
 	if ( Padre->ide->config->autocomplete_brackets ) {
-		my %table = ( 40 => 41, 60 => 62, 91 => 93, ); # <> would be: 123 => 125, );
+		my %table = ( 40 => 41, 60 => 62, 91 => 93, 123 => 125, ); # <> would be: 123 => 125, );
 		my $pos = $editor->GetCurrentPos;
 		foreach my $code ( keys %table ) {
 			if ( $key == $code ) {
