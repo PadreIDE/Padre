@@ -691,6 +691,12 @@ sub on_right_down {
 		$menu->Append( -1, Wx::gettext("&Split window") ),
 		\&Padre::Wx::Main::on_split_window,
 	);
+
+	my $doc = $self->{Document};
+	if ( $doc->can('event_on_right_down') ) {
+		$doc->event_on_right_down( $self, $menu, $event );
+	}
+
 	if ($event->isa('Wx::MouseEvent')) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY);
 	} else { #Wx::CommandEvent

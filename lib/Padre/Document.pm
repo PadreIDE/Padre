@@ -727,6 +727,38 @@ sub guess_indentation_style {
 	return $style;
 }
 
+=head2 event_on_char
+
+NOT IMPLEMENTED IN THE BASE CLASS
+
+This method - if implemented - is called after any addition of a character
+to the current document. This enables document classes to aid the user
+in the editing process in various ways, e.g. by auto-pairing of brackets
+or by suggesting usable method names when method-call syntax is detected.
+
+Parameters retrieved are the objects for the document, the editor, and the 
+wxWidgets event.
+
+Returns nothing.
+
+Cf. C<Padre::Document::Perl> for an example.
+
+=head2 event_on_right_down
+
+NOT IMPLEMENTED IN THE BASE CLASS
+
+This method - if implemented - is called when a user right-clicks in an 
+editor to open a context menu and after the standard context menu was 
+created and populated in the C<Padre::Wx::Editor> class.
+By manipulating the menu document classes may provide the user with 
+additional options.
+
+Parameters retrieved are the objects for the document, the editor, the 
+context menu (C<Wx::Menu>) and the event.
+
+Returns nothing.
+
+=cut
 
 
 
