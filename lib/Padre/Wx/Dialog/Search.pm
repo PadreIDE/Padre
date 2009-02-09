@@ -222,7 +222,7 @@ sub _show_panel {
 	# since they might have been updated by find dialog
 	my $config = Padre->ide->config;
 	$self->{case}->SetValue( $config->find_case ? 0 : 1 );
-	$self->{regex}->SetValue( $config->find_regex );
+	$self->{regex}->SetValue( $config->find_regex ? 0 : 1 );
 
 	# You probably want to use the Find
 	$self->{entry}->SetFocus;
@@ -295,7 +295,7 @@ sub _on_regex_checked {
 	my $self = shift;
 	Padre->ide->config->set(
 		'find_regex',
-		$self->{regex}->GetValue,
+		$self->{regex}->GetValue ? 0 : 1,
 	);
 	$self->{restart} = 1;
 	$self->_find;
