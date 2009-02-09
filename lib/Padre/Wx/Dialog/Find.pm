@@ -187,9 +187,11 @@ sub find {
 	
 	unless ( $self->{dialog} ) {
 		$self->{dialog}  = $self->dialog($main, { term => $text } );
-	} else {
-		#TODO: give focus.
-	}
+	} 
+	# Focus is given by the Cancel Button
+	#else {
+	#	#TODO: give focus.
+	#}
 
 	$self->{dialog}->Show(1);
 
