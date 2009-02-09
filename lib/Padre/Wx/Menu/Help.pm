@@ -156,6 +156,7 @@ sub about {
 	$about->AddDeveloper("Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddDeveloper("Brian Cassidy");
 	$about->AddDeveloper("Chris Dolan");
+	$about->AddDeveloper("Claudio Ramirez");
 	$about->AddDeveloper("Fayland Lam");
 	$about->AddDeveloper("Gábor Szabó - גאבור סבו ");
 	$about->AddDeveloper("Heiko Jansen");
