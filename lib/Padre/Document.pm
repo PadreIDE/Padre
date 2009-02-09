@@ -315,13 +315,17 @@ sub guess_mimetype {
 		return 'application/x-perl';
 	}
 
+	# Perl 6:   use v6; class ..., module ...
+	# maybe also grammar ...
+	# but make sure that is real code and not just a comment or doc in some perl 5 code...
+
 	# Try derive the mime type from the name
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( $EXT_MIME{$ext} eq 'application/x-perl' ) {
 				# Sometimes Perl 6 will look like Perl 5
-				if ( $text and $text =~ /^\s*use\s+v6;/m ) {
+				if ( is_perl6($text) ) {
 					return 'application/x-perl6';
 				}
 			}
@@ -341,8 +345,8 @@ sub guess_mimetype {
 	# TODO: Add support for plugins being able to do something here.
 	if ( $text and $text =~ /\A#!/m ) {
 		# Found a hash bang line
-		if ( $text =~ /\A#![^\n]*\bperl\b/m ) {
-			return 'application/x-perl';
+		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
+			return is_perl6($text) ? 'application/x-perl6' : 'application/x-perl';
 		}
 		if ( $text =~ /\A---/ ) {
 			return 'text/x-yaml';
@@ -357,6 +361,11 @@ sub guess_mimetype {
 # TODO: get it from config
 sub _get_default_newline_type {
 	Padre::Util::NEWLINE;
+}
+
+sub is_perl6 {
+	return if not $_[0];
+	return $_[0] =~ /^\s*use\s+v6;/m;
 }
 
 # Where to convert (UNIX, WIN, MAC)
