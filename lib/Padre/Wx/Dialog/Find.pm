@@ -236,6 +236,8 @@ sub find_previous {
 
 sub cancel_clicked {
 	$_[0]->Hide;
+	# If no focus is set, the focus is lost when reopening the dialog
+	$_[0]->{_widgets_}->{_find_choice_}->SetFocus;
 	return;
 }
 
