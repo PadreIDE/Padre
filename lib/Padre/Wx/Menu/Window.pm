@@ -163,9 +163,13 @@ sub refresh {
 			$items++;
 		}
 		my $need = $pages - $items + $default + 1;
+		my $main = $self->{main};
 		if ( $need > 0 ) {
-			foreach ( 1 .. $need ) {
-				push @$alt, $self->Append( -1, '' );
+			foreach my $i ( 1 .. $need ) {
+				my $menu_entry = $self->Append( -1, '' );
+				push @$alt, $menu_entry;
+				Wx::Event::EVT_MENU( $main, $menu_entry, 
+					sub { $main->on_nth_pane($pages - $need + $i -1) } );
 			}
 		} elsif ( $need < 0 ) {
 			foreach ( 1 .. -$need ) {
