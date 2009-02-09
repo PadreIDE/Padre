@@ -2,8 +2,10 @@ Changes for Perl Application Development and Refactoring Environment
 
 v0.27
 
-    Fix the Windows menu to be able to jump to files (SZABGAB)
-    Statusbar show status kept accross startup (#200) (JQUELIN)
+    Some fixes in the search menu.
+    Improve file type (Perl 5 / Perl 6 ) recognition. (SZABGAB)
+    Fix the Windows menu to be able to jump to files. (SZABGAB)
+    Statusbar show status kept accross startup (#200). (JQUELIN)
 
 v0.26 2009.02.01
 
