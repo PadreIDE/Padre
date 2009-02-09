@@ -1069,7 +1069,7 @@ Max Maischein (CORION),
 Patrick Donelan (PATSPAM),
 Paweł Murias (PMURIAS),
 Petar Shangov (PSHANGOV),
-Steffen Müller (TSEE)
+Steffen Müller (TSEE) L<mailto:smueller@cpan.org>
 
 To Herbert Breunung for letting me work on Kephra.
 
