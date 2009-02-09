@@ -1,0 +1,8 @@
+=begin pod
+
+=head1 NAME
+
+Some Perl6 related text here
+
+=end pod
+

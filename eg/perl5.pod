@@ -1,0 +1,31 @@
+
+=head1 NAME
+
+Some text
+
+
+=head1 VERSION
+
+The initial template usually just has:
+
+This documentation refers to <Module::Name> version 0.0.1
+
+
+=head1 SYNOPSIS
+
+	use <Module::Name>;
+	# Brief but working code example(s) here showing the most common usage(s)
+
+	# This section will be as far as many users bother reading
+	# so make it as educational and exemplary as possible.
+
+
+=head1 DESCRIPTION
+
+A full description of the module and its features.
+May include numerous subsections (i.e. =head2, =head3, etc.)
+
+=cut
+
+
+

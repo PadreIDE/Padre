@@ -363,9 +363,16 @@ sub _get_default_newline_type {
 	Padre::Util::NEWLINE;
 }
 
+# naive sub to decide if a piece of code is Perl 6 or Perl 5.
 sub is_perl6 {
-	return if not $_[0];
-	return $_[0] =~ /^\s*use\s+v6;/m;
+	my ($text) = @_;
+	return if not $text;
+	return 1 if $text =~ /^=begin\s+pod/msx;
+	return   if $text =~ /^=head[12]/msx;
+
+	return 1 if $text =~ /^\s*use\s+v6;/msx;
+	return 1 if $text =~ /^\s*class\s+\w/msx;
+	return;
 }
 
 # Where to convert (UNIX, WIN, MAC)
