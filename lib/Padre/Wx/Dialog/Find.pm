@@ -26,7 +26,6 @@ sub new {
 }
 
 sub get_layout {
-	my $search_term = shift;
 	my $config      = shift;
 
 	# Get the search terms
@@ -43,7 +42,7 @@ sub get_layout {
 			[
 				'Wx::ComboBox',
 				'_find_choice_',
-				$search_term,
+				'',
 				$recent_search
 			],
 			[
@@ -126,12 +125,10 @@ sub get_layout {
 }
 
 sub dialog {
-	my ( $class, $parent, $args ) = @_;
+	my ( $class, $parent ) = @_;
 
 	my $config = Padre->ide->config;
-	my $search_term = $args->{term} || '';
-
-	my $layout = get_layout($search_term, $config);
+	my $layout = get_layout($config);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $parent,
 		title  => Wx::gettext("Search"),
@@ -187,7 +184,7 @@ sub find {
 	$text = '' if $text =~ /\n/;
 
 	unless ( $self->{dialog} ) {
-		$self->{dialog}  = $self->dialog( $main, { term => $text } );
+		$self->{dialog}  = $self->dialog( $main );
 	}
 	$self->{dialog}->{_widgets_}->{_find_choice_}->SetValue($text);
 	# Focus is given by the Cancel Button
