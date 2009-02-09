@@ -126,7 +126,7 @@ sub get_layout {
 }
 
 sub dialog {
-	my ( $class, $parent, $args) = @_;
+	my ( $class, $parent, $args ) = @_;
 
 	my $config = Padre->ide->config;
 	my $search_term = $args->{term} || '';
@@ -184,10 +184,12 @@ sub find {
 
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and replace and not as the string to be used
-	
+	$text = '' if $text =~ /\n/;
+
 	unless ( $self->{dialog} ) {
-		$self->{dialog}  = $self->dialog($main, { term => $text } );
-	} 
+		$self->{dialog}  = $self->dialog( $main, { term => $text } );
+	}
+	$self->{dialog}->{_widgets_}->{_find_choice_}->SetValue($text);
 	# Focus is given by the Cancel Button
 	#else {
 	#	#TODO: give focus.
