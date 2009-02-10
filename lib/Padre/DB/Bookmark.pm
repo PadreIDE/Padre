@@ -3,7 +3,7 @@ package Padre::DB::Bookmark;
 use strict;
 use warnings;
 
-our $VERSION = '0.26';
+our $VERSION = '0.27';
 
 sub select_names {
 	Padre::DB->selectcol_arrayref(

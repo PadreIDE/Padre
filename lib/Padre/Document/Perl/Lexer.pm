@@ -1,11 +1,12 @@
+package Padre::Document::Perl::Lexer;
+
 use strict;
 use warnings;
 use PPI::Document;
 use PPI::Dumper;
 use Text::Balanced;
 
-package Padre::Document::Perl::Lexer;
-
+our $VERSION = '0.27';
 
 sub class_to_color {
 	my $class = shift;

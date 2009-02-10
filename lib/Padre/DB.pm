@@ -27,7 +27,7 @@ use Padre::DB::Bookmark   ();
 use Padre::DB::History    ();
 use Padre::DB::HostConfig ();
 
-our $VERSION    = '0.26';
+our $VERSION    = '0.27';
 our $COMPATIBLE = '0.26';
 
 
