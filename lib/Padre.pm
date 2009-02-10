@@ -77,7 +77,7 @@ use Class::Autouse qw{
 	Padre::Wx::Main
 };
 
-# Gnerate faster accessors
+# Generate faster accessors
 use Class::XSAccessor
 	getters => {
 		original_cwd   => 'original_cwd',
