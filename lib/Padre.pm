@@ -1065,7 +1065,7 @@ Chris Dolan (CHRISDOLAN)
 
 Claudio Ramirez (CLAUDIO) L<padre.claudio@apt-get.be>
 
-Fayland Lam (FAYLAND)
+Fayland Lam (FAYLAND) L<mailto:fayland@gmail.com>
 
 Gábor Szabó - גאבור סבו (SZABGAB) L<mailto:szabgab@gmail.com>
 
@@ -1094,6 +1094,8 @@ To Octavian Rasnita for early testing and bug reports.
 =head2 Translations
 
 Arabic - Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
+
+Chinese (Simplified) - Fayland Lam (FAYLAND)
 
 Dutch - Dirk De Nijs (ddn123456)
 
