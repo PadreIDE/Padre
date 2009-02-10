@@ -40,7 +40,7 @@ See L<http://padre.perlide.org/ticket/52> and L<http://www.perlmonks.org/?node_i
 
 =head1 COPYRIGHT
 
-Copyright 2008 Gabor Szabo. L<http://www.szabgab.com/>
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 
 =head1 LICENSE
 
@@ -84,7 +84,7 @@ sub check {
 
 
 1;
-# Copyright 2008 Gabor Szabo.
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.

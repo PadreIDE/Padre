@@ -1176,8 +1176,8 @@ msgid "&About"
 msgstr "关于(&A)"
 
 #: lib/Padre/Wx/Menu/Help.pm:154
-msgid "Copyright 2008 Gabor Szabo"
-msgstr "Copyright 2008 Gabor Szabo"
+msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
+msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 
 #: lib/Padre/Wx/Menu/Perl.pm:39
 msgid "Install Module..."

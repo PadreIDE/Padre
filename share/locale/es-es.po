@@ -1119,6 +1119,6 @@ msgid "&About"
 msgstr "&Acerca de"
 
 #: lib/Padre/Wx/Menu/Help.pm:104
-msgid "Copyright 2008 Gabor Szabo"
-msgstr "Copyright 2008 Gabor Szabo"
+msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
+msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 

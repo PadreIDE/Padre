@@ -1,5 +1,5 @@
 # Padre Russian translation.
-# Copyright (C) Padre editor
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 # This file is distributed under the same license as the Padre package.
 # Andrew Shitov <andy@shitov.ru>, 4 December 2008
 #
@@ -1059,8 +1059,8 @@ msgstr "Выбрать каталог"
 #: /home/jquelin/prog/padre/trunk/lib/Padre/Plugin/Vi.pm:306
 #: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu/Help.pm:42
 #: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Plugin/Vi.pm:306
-msgid "Copyright 2008 Gabor Szabo"
-msgstr "Copyright 2008 Gabor Szabo"
+msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
+msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 
 #: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:128
 #: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:22

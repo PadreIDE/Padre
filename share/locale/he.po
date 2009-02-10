@@ -1119,7 +1119,7 @@ msgid "&About"
 msgstr "אודות"
 
 #: lib/Padre/Wx/Menu/Help.pm:104
-msgid "Copyright 2008 Gabor Szabo"
+msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 msgstr "כל הזכויות שמורות לגבור סאבו - 2008"
 
 #: lib/Padre/Task/SyntaxChecker.pm:171 lib/Padre/Task/SyntaxChecker.pm:186
