@@ -1048,8 +1048,7 @@ SUCH DAMAGES.
 
 =head1 ACKNOWLEDGEMENTS
 
-To Mattia Barbon for providing WxPerl.
-Part of the code was copied from his Wx::Demo application.
+=head2 The Padre development team
 
 The developers of Padre in alphabetical order:
 
@@ -1087,11 +1086,7 @@ Petar Shangov (PSHANGOV)
 
 Steffen Müller (TSEE) L<mailto:smueller@cpan.org>
 
-To Herbert Breunung for letting me work on Kephra.
-
-To Octavian Rasnita for early testing and bug reports.
-
-=head2 Translations
+=head2 Translators
 
 Arabic - Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
 
@@ -1118,6 +1113,15 @@ Russian - Andrew Shitov
 Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
 
 Spanish - Paco Alguacil (PacoLinux)
+
+=head2 Thanks
+
+To Mattia Barbon for providing WxPerl.
+Part of the code was copied from his Wx::Demo application.
+
+To Herbert Breunung for letting me work on Kephra.
+
+To Octavian Rasnita for early testing and bug reports.
 
 =cut
 
