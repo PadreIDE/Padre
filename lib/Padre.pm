@@ -997,7 +997,6 @@ handles everything the toolbar should know and do.
 
 =back
 
-
 =head1 BUGS
 
 Please submit your bugs at L<http://padre.perlide.org/>
@@ -1054,22 +1053,38 @@ Part of the code was copied from his Wx::Demo application.
 
 The developers of Padre in alphabetical order:
 
-Aaron Trevena (TEEJAY),
-Ahmad Zawawi أحمد محمد زواوي (AZAWAWI),
-Adam Kennedy (ADAMK),
-Brian Cassidy (BRICAS),
-Chris Dolan (CHRISDOLAN),
-Claudio Ramirez (CLAUDIO) L<padre.claudio@apt-get.be>,
-Fayland Lam (FAYLAND),
-Gábor Szabó - גאבור סבו (SZABGAB) L<mailto:szabgab@gmail.com>,
-Heiko Jansen (HJANSEN),
-Jérôme Quelin (JQUELIN) L<mailto:jquelin@cpan.org>,
-Kaare Rasmussen (KAARE) L<mailto:kaare@cpan.org>,
-Keedi Kim - 김도형 (KEEDI),
-Max Maischein (CORION),
-Patrick Donelan (PATSPAM),
-Paweł Murias (PMURIAS),
-Petar Shangov (PSHANGOV),
+Aaron Trevena (TEEJAY)
+
+Ahmad Zawawi أحمد محمد زواوي (AZAWAWI)
+
+Adam Kennedy (ADAMK) E<lt>adamk@cpan.orgE<gt>
+
+Brian Cassidy (BRICAS)
+
+Chris Dolan (CHRISDOLAN)
+
+Claudio Ramirez (CLAUDIO) L<padre.claudio@apt-get.be>
+
+Fayland Lam (FAYLAND)
+
+Gábor Szabó - גאבור סבו (SZABGAB) L<mailto:szabgab@gmail.com>
+
+Heiko Jansen (HJANSEN)
+
+Jérôme Quelin (JQUELIN) L<mailto:jquelin@cpan.org>
+
+Kaare Rasmussen (KAARE) L<mailto:kaare@cpan.org>
+
+Keedi Kim - 김도형 (KEEDI)
+
+Max Maischein (CORION)
+
+Patrick Donelan (PATSPAM)
+
+Paweł Murias (PMURIAS)
+
+Petar Shangov (PSHANGOV)
+
 Steffen Müller (TSEE) L<mailto:smueller@cpan.org>
 
 To Herbert Breunung for letting me work on Kephra.
