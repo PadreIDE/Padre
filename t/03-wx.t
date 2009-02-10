@@ -40,6 +40,10 @@ my $padreInstance = Padre->new;
 my $ide   = Padre->ide;
 my $frame = $ide->wx->main;
 
+diag "This test script is known to fail sometimes on some operating systems";
+diag "If this happens to you, please report it to the Padre developers";
+diag "and use the force to install Padre anyway.";
+
 my @events = (
 	{
 		delay => 1000,   # TODO: if we reduce this to 100 or even 500 the test crashes (segfault?) after 2 oks
