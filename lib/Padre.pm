@@ -37,7 +37,7 @@ BEGIN {
 }
 
 # Modules to be run-time autoloaded.
-# This is more efficient that use'ing a module, but less efficient
+# This is more efficient than use'ing a module, but less efficient
 # than making a direct call to require.
 # This is for fully OO classes that are refered to in a number of
 # different places in the code, making the use of "require" tricky.
