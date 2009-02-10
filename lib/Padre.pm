@@ -1097,7 +1097,7 @@ Arabic - Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
 
 Dutch - Dirk De Nijs (ddn123456)
 
-English - everyone on the team
+English - Everyone on the team
 
 French - Jérôme Quelin (JQUELIN)
 
