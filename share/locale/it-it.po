@@ -112,8 +112,8 @@ msgid "Save file as..."
 msgstr "Salva con nome..."
 
 #: /home/sblandin/Padre/Padre-Plugin-Vi/lib/Padre/Plugin/Vi.pm:306
-msgid "Copyright 2008 Gabor Szabo"
-msgstr "Copyright 2008 Gabor Szabo"
+msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
+msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 
 #: /home/sblandin/Padre/Padre-Plugin-XML/lib/Padre/Plugin/XML.pm:33
 msgid "This is not a XML document!"
