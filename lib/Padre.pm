@@ -1059,6 +1059,8 @@ Ahmad Zawawi أحمد محمد زواوي (AZAWAWI)
 
 Adam Kennedy (ADAMK) E<lt>adamk@cpan.orgE<gt>
 
+Breno G. de Oliveira (GARU)
+
 Brian Cassidy (BRICAS)
 
 Chris Dolan (CHRISDOLAN)
