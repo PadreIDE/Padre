@@ -154,6 +154,7 @@ sub about {
 
 	$about->AddDeveloper("Adam Kennedy");
 	$about->AddDeveloper("Ahmad Zawawi - أحمد محمد زواوي");
+    $about->AddDeveloper("Breno G. de Oliveira");
 	$about->AddDeveloper("Brian Cassidy");
 	$about->AddDeveloper("Chris Dolan");
 	$about->AddDeveloper("Claudio Ramirez");
