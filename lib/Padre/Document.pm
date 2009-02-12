@@ -202,7 +202,6 @@ our %MIME_LEXER = (
 our %MIME_CLASS = (
 	'application/x-perl' => 'Padre::Document::Perl',
 	'text/x-pod'         => 'Padre::Document::POD',
-	'application/x-shellscript' => 'Padre::Document::Shell',
 );
 
 sub menu_view_mimes {
