@@ -184,14 +184,43 @@ sub refresh {
 	}
 
 	# Update the labels to match the notebooks
+	my $config_shorten_path = 1; # TODO should be configurable ?
+	my $prefix_length       = 0;
+	if ($config_shorten_path) {
+		$prefix_length = length get_common_prefix($#$alt, $notebook);
+	}
 	foreach my $i ( 0 .. $#$alt ) {
 		my $doc   = $notebook->GetPage($i)->{Document} or return;
 		my $label = $doc->filename || $notebook->GetPageText($i);
 		$label =~ s/^\s+//;
+		if ($prefix_length < length $label) {
+			$label = substr($label, $prefix_length);
+		}
 		$alt->[$i]->SetText($label);
 	}
 
 	return 1;
+}
+
+sub get_common_prefix {
+	my ($count, $notebook) = @_;
+	my $prefix = '';
+	foreach my $i ( 0 .. $count ) {
+		my $doc   = $notebook->GetPage($i)->{Document} or return;
+		my $label = $doc->filename || $notebook->GetPageText($i);
+		if (not $prefix) {
+			$prefix = $label;
+			next;
+		}
+		if (length $prefix > length $label) {
+			$prefix = substr($prefix, 0, length $label);
+		}
+		while ($prefix and substr($label, 0, length $prefix) ne $prefix) {
+			chop $prefix;
+		}
+		last if not $prefix;
+	}
+	return $prefix;
 }
 
 1;

@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Allow the shortening of the the file list in the Window menu. (SZABGAB)
+
 v0.27 2009.02.10
 
     Copyright changed to "The Padre development team as listed in Padre.pm." (SZABGAB)
