@@ -1,5 +1,9 @@
 package Padre::Document::Shell;
 
+######################################################
+### This Class will be moved to a plugin (CLAUDIO) ###
+######################################################
+
 use 5.008;
 use strict;
 use warnings;
