@@ -1,6 +1,20 @@
+The icons in the gnome218 directory are taken from the gnome-icon-theme
+project, version 2.18.
 
-Copyright for the icons in the gnome218 directory:
+ftp://ftp.gnome.org/pub/gnome/sources/gnome-icon-theme/2.18/gnome-icon-theme-2.18.0.tar.bz2
 
+The date of the above file is in 2007, so the copyright should be from about
+that time.
+
+Authors:
+    Lapo Calamandrei <calamandrei@gmail.com>
+    Rodney Dawes <dobey@novell.com>
+    Luca Ferretti <elle.uca@libero.it>
+    Tuomas Kuosmanen <tigert@gimp.org>
+    Andreas Nilsson <nisses.mail@home.se>
+    Jakub Steiner <jimmac@novell.com>
+
+License:
    This package is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation; version 2 dated June, 1991.
@@ -14,7 +28,3 @@ Copyright for the icons in the gnome218 directory:
    along with this package; if not, write to the Free Software
    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
    USA.
-
-On Debian GNU/Linux systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL'.
-
