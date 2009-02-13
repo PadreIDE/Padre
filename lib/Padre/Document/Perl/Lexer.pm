@@ -33,6 +33,7 @@ sub class_to_color {
 		'Quote'         => 9,
 		'Single'        => 9,
 		'Double'        => 9,
+		'Backtick'      => 9,	
 		'Interpolate'   => 9,
 		'QuoteLike'     => 7,
 		'Regexp'        => 7,
@@ -52,6 +53,9 @@ sub class_to_color {
 		'Literal'       => 0,
 	);
 	
+	if (not defined $colors{$css}) {
+		warn "No color defined for '$css' or '$class'\n";
+	}
 	return $colors{$css};
 }
 
@@ -409,7 +413,7 @@ sub class_to_css {
 	# Normal coloring
 	my $css = ref $Token;
 	$css =~ s/^.+:://;
-	$css;
+	return $css;
 }
 
 1;
