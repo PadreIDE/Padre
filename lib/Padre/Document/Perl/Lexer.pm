@@ -99,7 +99,7 @@ sub colorize {
 	
 	# this check is not necessary if we are on the first line of text	
 	if ($start_line > 0) {
-		
+
 		# get first char on the preceding line, but skip newline symbols
 		my $previous_char = $styling_start_pos-1; 
 		while ($editor->GetCharAt($previous_char) == 10 or $editor->GetCharAt($previous_char) == 13) {
@@ -322,6 +322,11 @@ sub prepare_tokens {
 			length => ($t->length + $new_lines),
 			color  => class_to_color($t),
 		);
+		# a bug in PPI ?
+		if ($t->isa('PPI::Token::Comment')) {
+			$token{length}--;
+		}
+		#print "$offset $token{start} $token{length} $token{color} '$t' " . ref($t) . "\n" if $token{start} < 180;
 		
 		push @prepared_tokens, \%token;
 	}
