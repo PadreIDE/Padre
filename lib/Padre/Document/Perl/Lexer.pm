@@ -80,13 +80,13 @@ sub colorize {
 	# rather than starting to parse and style from the position sent by Wx::STC,
 	# we will shift the start and end position to the start of the first line and
 	# end of the last line respectively
-	$start_line = $editor->LineFromPosition($start_pos);
-	$end_line = $editor->LineFromPosition($end_pos);
+	$start_line        = $editor->LineFromPosition($start_pos);
+	$end_line          = $editor->LineFromPosition($end_pos);
 	$styling_start_pos = $editor->PositionFromLine($start_line);
-	$styling_end_pos = $editor->GetLineEndPosition($end_line);
-	$line_count = $editor->GetLineCount();
-	$last_char = $editor->GetLineEndPosition($line_count-1);
-	my $inital_text = $editor->GetTextRange($start_pos, $end_pos);
+	$styling_end_pos   = $editor->GetLineEndPosition($end_line);
+	$line_count        = $editor->GetLineCount();
+	$last_char         = $editor->GetLineEndPosition($line_count-1);
+	my $inital_text    = $editor->GetTextRange($start_pos, $end_pos);
 	
 	# basically we let PPI start parsing the text within the start and end
 	# positions we just determined, unless there is a chance that our start
