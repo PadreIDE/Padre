@@ -99,11 +99,13 @@ sub lexer {
 
 sub colorize {
 	my $self = shift;
-	
-	# comment the next three lines to disable pshangov's experimental ppi lexer
-	require Padre::Document::Perl::Lexer;
-	Padre::Document::Perl::Lexer->colorize(@_);
-	return;
+
+	# use pshangov's experimental ppi lexer only when running in development mode
+	if ($ENV{PADRE_DEV}) {
+		require Padre::Document::Perl::Lexer;
+		Padre::Document::Perl::Lexer->colorize(@_);
+		return;
+	}
 
 	$self->remove_color;
 
