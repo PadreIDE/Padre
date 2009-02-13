@@ -143,6 +143,7 @@ sub colorize {
 		'Quote'         => 9,
 		'Single'        => 9,
 		'Double'        => 9,
+		'Backtick'      => 9,
 		'Interpolate'   => 9,
 		'QuoteLike'     => 7,
 		'Regexp'        => 7,
