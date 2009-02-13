@@ -1,5 +1,11 @@
 package Padre::Wx::Main;
 
+=head1 NAME
+
+Padre::Wx::Main - Main window of Padre
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;

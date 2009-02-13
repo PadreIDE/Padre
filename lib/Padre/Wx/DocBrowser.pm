@@ -32,9 +32,11 @@ our %VIEW = (
 
 =pod
 
-=head1 Welcome to Padre DocBrowser
-
 =head1 NAME
+
+Padre::Wx::DowBrowser - Wx front-end for Padre::DocBrowser
+
+=head1 Welcome to Padre DocBrowser
 
 Padre::Wx::DocBrowser ( Wx::Frame )
 

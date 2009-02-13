@@ -10,7 +10,7 @@ use base 'Wx::Perl::Dialog';
 
 =head1 NAME
 
-Padre::Wx::Dialog
+Padre::Wx::Dialog - dummy Padre wrapper around Wx::Perl::Dialog
 
 =cut
 

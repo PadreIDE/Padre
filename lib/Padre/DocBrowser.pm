@@ -26,7 +26,7 @@ use Class::XSAccessor
 
 =head1 NAME
 
-Padre::DocBrowser
+Padre::DocBrowser -- documentation browser for Padre
 
 =head1 DESCRIPTION
 
