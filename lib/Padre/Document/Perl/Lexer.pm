@@ -322,11 +322,17 @@ sub prepare_tokens {
 			length => ($t->length + $new_lines),
 			color  => class_to_color($t),
 		);
-		# a bug in PPI ?
-		if ($t->isa('PPI::Token::Comment')) {
+		# workarounds for a bug in PPI ?
+		if ($t->isa('PPI::Token::Comment') and 
+			($start == 1 or $editor->GetCharAt($start-1) == 10 or $editor->GetCharAt($start-1) == 13)) {
 			$token{length}--;
 		}
-		#print "$offset $token{start} $token{length} $token{color} '$t' " . ref($t) . "\n" if $token{start} < 180;
+		# to color the first # character in the whole document (the sh-bang):
+		if ($start == 1) {
+			$token{start} = 0;
+		}
+
+		print "$offset $start $token{length} $token{color} '$t' " . ref($t) . "\n" if $token{start} < 180;
 		
 		push @prepared_tokens, \%token;
 	}
