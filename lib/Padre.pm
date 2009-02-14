@@ -1071,7 +1071,7 @@ Fayland Lam (FAYLAND) L<mailto:fayland@gmail.com>
 
 Gábor Szabó - גאבור סבו (SZABGAB) L<mailto:szabgab@gmail.com>
 
-Heiko Jansen (HJANSEN)
+Heiko Jansen (HJANSEN) L<mailto:heiko_jansen@web.de>
 
 Jérôme Quelin (JQUELIN) L<mailto:jquelin@cpan.org>
 
