@@ -18,12 +18,12 @@ sub get_layout_for_behaviour {
 			['Wx::CheckBox',    'editor_indent_tab', Wx::gettext('Use Tabs'),    ($config->editor_indent_tab ? 1 : 0) ],
 		],
 		[
-			[ 'Wx::StaticText', undef,              Wx::gettext('TAB display size (in spaces)')],
-			[ 'Wx::TextCtrl',   'editor_indent_tab_width',  $config->editor_indent_tab_width],
+			[ 'Wx::StaticText', undef,                     Wx::gettext('TAB display size (in spaces)')],
+			[ 'Wx::SpinCtrl',   'editor_indent_tab_width', $config->editor_indent_tab_width, 0, 32 ],
 		],
 		[
-			[ 'Wx::StaticText', undef,              Wx::gettext('Indentation width (in columns)')],
-			[ 'Wx::TextCtrl',   'editor_indent_width', $config->editor_indent_width],
+			[ 'Wx::StaticText', undef,                 Wx::gettext('Indentation width (in columns)')],
+			[ 'Wx::SpinCtrl',   'editor_indent_width', $config->editor_indent_width, 0, 32 ],
 		],
 		[
 			[ 'Wx::StaticText', undef,              Wx::gettext('Guess from current document')],
