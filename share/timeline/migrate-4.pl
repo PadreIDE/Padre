@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 use strict;
 use File::Spec ();
 use lib File::Spec->rel2abs(

@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # This patch creates the plugin table.
 # In the initial implementation this stores the enabled/disabled
 # state of the plugin, the version, and the config structure for

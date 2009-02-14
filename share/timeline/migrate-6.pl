@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # Rebuild the config table as not null.
 
 use strict;

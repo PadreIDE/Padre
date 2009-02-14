@@ -1,5 +1,3 @@
-#!/usr/bin/perl
-
 # This patch removes the old modules table.
 
 use strict;
