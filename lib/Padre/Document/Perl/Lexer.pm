@@ -332,7 +332,7 @@ sub prepare_tokens {
 			$token{start} = 0;
 		}
 
-		print "$offset $start $token{length} $token{color} '$t' " . ref($t) . "\n" if $token{start} < 180;
+		#print "$offset $start $token{length} $token{color} '$t' " . ref($t) . "\n" if $token{start} < 180;
 		
 		push @prepared_tokens, \%token;
 	}
