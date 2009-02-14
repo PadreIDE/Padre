@@ -1059,17 +1059,17 @@ Brian Cassidy (BRICAS)
 
 Chris Dolan (CHRISDOLAN)
 
-Claudio Ramirez (CLAUDIO) L<padre.claudio@apt-get.be>
+Claudio Ramirez (CLAUDIO) E<lt>claudio@apt-get.beE<gt>
 
-Fayland Lam (FAYLAND) L<mailto:fayland@gmail.com>
+Fayland Lam (FAYLAND) E<lt>fayland@gmail.comE<gt>
 
-Gábor Szabó - גאבור סבו (SZABGAB) L<mailto:szabgab@gmail.com>
+Gábor Szabó - גאבור סבו (SZABGAB) E<lt>szabgab@gmail.comE<gt>
 
-Heiko Jansen (HJANSEN) L<mailto:heiko_jansen@web.de>
+Heiko Jansen (HJANSEN) E<lt>heiko_jansen@web.deE<gt>
 
-Jérôme Quelin (JQUELIN) L<mailto:jquelin@cpan.org>
+Jérôme Quelin (JQUELIN) E<lt>jquelin@cpan.orgE<gt>
 
-Kaare Rasmussen (KAARE) L<mailto:kaare@cpan.org>
+Kaare Rasmussen (KAARE) E<lt>kaare@cpan.orgE<gt>
 
 Keedi Kim - 김도형 (KEEDI)
 
@@ -1081,7 +1081,7 @@ Paweł Murias (PMURIAS)
 
 Petar Shangov (PSHANGOV)
 
-Steffen Müller (TSEE) L<mailto:smueller@cpan.org>
+Steffen Müller (TSEE) E<lt>smueller@cpan.orgE<gt>
 
 =head2 Translators
 
