@@ -1020,12 +1020,6 @@ modify it under the same terms as Perl 5 itself.
 
 =head1 DISCLAIMER OF WARRANTY
 
-There is no warranty whatsoever. If you lose data or your hair because
-of this program, that's your problem because you clearly aren't using
-version control or backing up properly.
-
-=head1 DISCLAIMER OF WARRANTY
-
 BECAUSE THIS SOFTWARE IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY
 FOR THE SOFTWARE, TO THE EXTENT PERMITTED BY APPLICABLE LAW. EXCEPT WHEN
 OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES
