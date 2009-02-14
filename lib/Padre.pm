@@ -1043,6 +1043,8 @@ SUCH DAMAGES.
 
 =head1 ACKNOWLEDGEMENTS
 
+=encoding utf8
+
 =head2 The Padre development team
 
 The developers of Padre in alphabetical order:
