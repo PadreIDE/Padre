@@ -51,6 +51,7 @@ sub class_to_color {
 		'Octal'         => 0,
 		'Hex'           => 0,
 		'Literal'       => 0,
+		'Version'       => 0,
 	);
 	
 	if (not defined $colors{$css}) {
