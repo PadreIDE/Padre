@@ -22,7 +22,11 @@ sub setup_padre {
 exe :: all
 \t\$(NOECHO) \$(PERL) -Iprivinc "-M$inc_class" -e "make_exe()"
 
+ppm :: ppd all
+\t\$(NOECHO) tar czf Padre.tar.gz blib/
+
 END_MAKEFILE
+
 
 }
 
