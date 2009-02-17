@@ -1111,7 +1111,7 @@ Russian - Andrew Shitov
 
 Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
 
-Spanish - Paco Alguacil (PacoLinux)
+Spanish - Paco Alguacil (PacoLinux), Enrique Nell (ENELL)
 
 =head2 Thanks
 
