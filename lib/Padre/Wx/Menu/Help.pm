@@ -182,6 +182,7 @@ sub about {
 	$about->AddTranslator("Dutch - Dirk De Nijs");
 	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
 	$about->AddTranslator("Spanish - Paco Alguacil");
+	$about->AddTranslator("Spanish - Enrique Nell");	
 
 	Wx::AboutBox( $about );
 	return;
