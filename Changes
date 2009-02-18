@@ -3,7 +3,7 @@ Changes for Perl Application Development and Refactoring Environment
     Move Wx::Perl::Dialog back to the Padre tree. (SZABGAB)
     Allow the shortening of the the file list in the Window menu. (SZABGAB)
     Fix Ctrl-TAB and Ctrl-Shift-TAB. (SZABGAB)
-	Updated Spanish translation (ENELL)
+    Updated Spanish translation (ENELL)
 
 v0.27 2009.02.10
 
