@@ -556,6 +556,13 @@ sub autocomplete {
 
 sub event_on_char {
 	my ( $self, $editor, $event ) = @_;
+	$editor->Freeze;
+
+	my $selection_exists = 0;
+	my $text = $editor->GetSelectedText;
+	if ( defined($text) && length($text) > 0 ) {
+		$selection_exists = 1;
+	}
 
 	my $key = $event->GetUnicodeKey;
 
@@ -571,22 +578,32 @@ sub event_on_char {
 		my $pos = $editor->GetCurrentPos;
 		foreach my $code ( keys %table ) {
 			if ( $key == $code ) {
-				my $nextChar;
-				if ( $editor->GetTextLength > $pos ) {
-					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
-				}
-				unless (
-					defined($nextChar)
-					&& ord($nextChar) == $table{$code}
-				) {
+				if ( $selection_exists ) {
+					my $start = $editor->GetSelectionStart;
+					my $end   = $editor->GetSelectionEnd;
+					$editor->GotoPos($end);
 					$editor->AddText( chr( $table{$code} ) );
-					$editor->CharLeft;
-					last;
+					$editor->GotoPos($start);
+				}
+				else {
+					my $nextChar;
+					if ( $editor->GetTextLength > $pos ) {
+						$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
+					}
+					unless (
+						defined($nextChar)
+						&& ord($nextChar) == $table{$code}
+					) {
+						$editor->AddText( chr( $table{$code} ) );
+						$editor->CharLeft;
+						last;
+					}
 				}
 			}
 		}
 	}
 
+	$editor->Thaw;
 	return;
 }
 
