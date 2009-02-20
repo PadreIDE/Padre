@@ -66,6 +66,23 @@ sub check_wx_version {
 		nono("Padre needs at least version 2.8.8 of wxWidgets. You have wxWidgets $widgets_human");
 	}
 
+	# this part still needs the DISPLAY 
+	# so check only if there is one
+	if ( $ENV{DISPLAY} ) {
+		eval {
+			require Wx;
+			Wx->import;
+		};
+		if ($@) {
+			# If we don't have the Wx installed,
+			# we should just pass through to EU:MM
+			return;
+		}
+		unless ( Wx::wxUNICODE() ) {
+			nono("Padre needs wxWidgest to be compile with Unicode support (--enable-unicode)");
+		}
+	}
+
 	return;
 }
 
