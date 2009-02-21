@@ -187,12 +187,12 @@ sub find {
 		$self->{dialog}  = $self->dialog( $main );
 	}
 	$self->{dialog}->{_widgets_}->{_find_choice_}->SetValue($text);
-	# Focus is given by the Cancel Button
-	#else {
-	#	#TODO: give focus.
-	#}
 
-	$self->{dialog}->Show(1);
+	if ( $self->{dialog}->IsShown ) {
+		Padre::Wx::Dialog::Find->find_next($main);
+	} else {
+		$self->{dialog}->Show(1);
+	}
 
 	return;
 }
