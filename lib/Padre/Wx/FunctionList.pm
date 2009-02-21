@@ -59,6 +59,8 @@ sub new {
 		}
 	);
 
+	$self->Hide;
+
 	return $self;
 }
 
