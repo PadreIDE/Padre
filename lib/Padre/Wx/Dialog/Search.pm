@@ -265,7 +265,9 @@ sub _on_entry_changed {
 #
 # _on_key_pressed()
 #
-# called when a key is pressed in the entry. used to trap escape so we abort
+# called when a key is pressed in the entry. used to trap 
+#		escape so we abort
+#		return = find again
 # search, otherwise dispatch event up-stack.
 #
 sub _on_key_pressed {
@@ -281,7 +283,11 @@ sub _on_key_pressed {
 		$self->_hide_panel;
 		return;
 	}
-
+	if ( $code == Wx::WXK_RETURN ) {
+		$self->_find;
+		return;
+	}
+	
 	$event->Skip(1);
 }
 
