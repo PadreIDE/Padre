@@ -273,6 +273,7 @@ sub get_function_regex {
 
 sub get_command {
 	my $self     = shift;
+	my $debug    = shift;
 
 	# Check the file name
 	my $filename = $self->filename;
@@ -286,7 +287,7 @@ sub get_command {
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
-	return Padre->ide->config->run_stacktrace
+	return $debug
 		? qq{"$perl" -Mdiagnostics(-traceonly) "$filename"}
 		: qq{"$perl" "$filename"};
 }

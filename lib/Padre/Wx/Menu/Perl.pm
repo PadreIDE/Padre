@@ -260,19 +260,19 @@ sub new {
 			return;
 		}
 	);
-
-	# Make it easier to access stack traces
-	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
-		Wx::gettext("Run Scripts with Stack Trace")
-	);	
-	Wx::Event::EVT_MENU( $main, $self->{run_stacktrace},
-		sub {
-			# Update the saved config setting
-			my $config = Padre->ide->config;
-			$config->set( run_stacktrace => $_[1]->IsChecked ? 1 : 0 );
-			$self->refresh;
-		}
-	);
+# Move of stacktrace to Run
+#	# Make it easier to access stack traces
+#	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
+#		Wx::gettext("Run Scripts with Stack Trace")
+#	);	
+#	Wx::Event::EVT_MENU( $main, $self->{run_stacktrace},
+#		sub {
+#			# Update the saved config setting
+#			my $config = Padre->ide->config;
+#			$config->set( run_stacktrace => $_[1]->IsChecked ? 1 : 0 );
+#			$self->refresh;
+#		}
+#	);
 
 	$self->{autocomplete_brackets} = $self->AppendCheckItem(
 		-1,
@@ -294,7 +294,7 @@ sub refresh {
 	my $config = $self->{config};
 
 	$self->{ppi_highlight}->Check( $config->ppi_highlight );
-	$self->{run_stacktrace}->Check( $config->run_stacktrace );
+	#$self->{run_stacktrace}->Check( $config->run_stacktrace );
 	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
 
 	no warnings 'once'; # TODO eliminate?

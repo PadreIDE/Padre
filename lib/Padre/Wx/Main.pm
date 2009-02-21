@@ -822,6 +822,7 @@ sub run_command {
 # This should really be somewhere else, but can stay here for now
 sub run_document {
 	my $self     = shift;
+	my $debug    = shift;	
 	my $document = $self->current->document;
 	unless ( $document ) {
 		return $self->error(Wx::gettext("No open document"));
@@ -842,7 +843,7 @@ sub run_document {
 		return $self->error(Wx::gettext("No execution mode was defined for this document"));
 	}
 
-	my $cmd = eval { $document->get_command };
+	my $cmd = eval { $document->get_command($debug) };
 	if ( $@ ) {
 		chomp $@;
 		$self->error($@);

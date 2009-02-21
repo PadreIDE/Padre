@@ -330,6 +330,7 @@ setting(
 	store   => HUMAN,
 	default => 'same',
 );
+# Move of stacktrace to run menu: will be removed (run_stacktrace)
 setting(
 	name    => 'run_stacktrace',
 	type    => BOOLEAN,

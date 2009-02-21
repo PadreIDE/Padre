@@ -10,7 +10,9 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 63 );
+# Move to Run menux
+#plan( tests => 63 );
+plan( tests => 62 );
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
@@ -64,7 +66,8 @@ SCOPE: {
 	is( $config->ppi_highlight            => 0              );
 	is( $config->ppi_highlight_limit      => 2000           );
 	is( $config->run_save                 => 'same'         );
-	is( $config->run_stacktrace           => 0              );
+# Move to Run menu
+#	is( $config->run_stacktrace           => 0              );
 	is( $config->threads                  => 1              );
 	is( $config->locale                   => ''             );
 	is( $config->locale_perldiag          => ''             );

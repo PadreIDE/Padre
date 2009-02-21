@@ -39,6 +39,16 @@ sub new {
 			$_[0]->run_document;
 		},
 	);
+	
+	$self->{run_document_debug} = $self->Append( -1,
+		Wx::gettext("Run Script (debug info)\tShift-F5")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{run_document_debug},
+		sub {
+			$_[0]->run_document(1); # Enable debug info
+		},
+	);
 
 	$self->{run_command} = $self->Append( -1,
 		Wx::gettext("Run Command\tCtrl-F5")
@@ -83,6 +93,11 @@ sub refresh {
 			? $self->{run_command}->IsEnabled
 			: 0
 	);
+	$self->{run_document_debug}->Enable(
+		$document
+			? $self->{run_command}->IsEnabled
+			: 0
+	);
 
 	return 1;
 }
@@ -97,6 +112,7 @@ sub refresh {
 sub enable {
 	my $self = shift;
 	$self->{run_document}->Enable(1);
+	$self->{run_document_debug}->Enable(1);
 	$self->{run_command}->Enable(1);
 	$self->{stop}->Enable(0);
 	return;
@@ -105,6 +121,7 @@ sub enable {
 sub disable {
 	my $self = shift;
 	$self->{run_document}->Enable(0);
+	$self->{run_document_debug}->Enable(0);
 	$self->{run_command}->Enable(0);
 	$self->{stop}->Enable(1);
 	return;
