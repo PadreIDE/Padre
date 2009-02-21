@@ -249,7 +249,30 @@ sub _add_subtree {
 			-1,
 			Wx::TreeItemData->new()
 		);
-		foreach my $item ( sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} } ) {
+
+		my @sorted_entries = ();
+		if ( $type eq 'methods' ) {
+			my $config = Padre->ide->config;
+			if ( $config->main_functions_order eq 'original' ) {
+				# That should be the one we got
+				@sorted_entries = @{ $pkg->{$type} };
+			}
+			elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
+				# ~ comes after \w
+				my @pre = map { $_->{name} =~ s/^_/~/; $_ } @{ $pkg->{$type} };
+				@pre = sort { $a->{name} cmp $b->{name} } @pre;
+				@sorted_entries = map { $_->{name} =~ s/^~/_/; $_ } @pre;
+			}
+			else {
+				# Alphabetical (aka 'abc')
+				@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
+			}
+		}
+		else {
+			@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
+		}
+
+		foreach my $item ( @sorted_entries ) {
 			$outlinebar->AppendItem(
 				$type_elem,
 				$item->{name},
