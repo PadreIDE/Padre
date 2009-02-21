@@ -1575,6 +1575,7 @@ sub close {
 	$self->notebook->DeletePage($id);
 
 	$self->syntax->clear;
+	$self->outline->clear;
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh($self->current);
