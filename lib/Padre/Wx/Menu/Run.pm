@@ -53,7 +53,7 @@ sub new {
 	$self->AppendSeparator;
 
 	$self->{stop} = $self->Append( -1,
-		Wx::gettext("&Stop")
+		Wx::gettext("Stop\tF6")
 	);
 	Wx::Event::EVT_MENU( $main,
 		$self->{stop},
