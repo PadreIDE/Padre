@@ -163,8 +163,8 @@ sub get_widget_value {
 	     && $self->{_widgets_}->{$name}->isa('Wx::Control')
 	) {
 		my $w = $self->{_widgets_}->{$name};
-		next if $w->isa('Wx::Button');
-		next if $w->isa('Wx::StaticText');
+		return undef if $w->isa('Wx::Button');
+		return undef if $w->isa('Wx::StaticText');
 
 		if ( $w->isa('Wx::DirPickerCtrl') ) {
 			return $w->GetPath;
