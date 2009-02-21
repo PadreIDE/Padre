@@ -1699,7 +1699,8 @@ sub on_preferences {
 	my $self = shift;
 
 	require Padre::Wx::Dialog::Preferences;
-	if ( Padre::Wx::Dialog::Preferences->run( $self )) {
+	my $prefDlg = Padre::Wx::Dialog::Preferences->new;
+	if ( $prefDlg->run($self) ) {
 		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
 		}
