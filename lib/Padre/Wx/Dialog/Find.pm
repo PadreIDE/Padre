@@ -8,7 +8,8 @@ use warnings;
 use Params::Util      qw{_STRING};
 use Padre::DB         ();
 use Padre::Wx         ();
-use Padre::Wx::Dialog ();
+
+use base qw(Padre::Wx::Dialog);
 
 our $VERSION = '0.27';
 
@@ -22,155 +23,230 @@ my @cbs = qw(
 sub new {
 	my $class = shift;
 	my $self  = bless {}, $class;
+
+	$self->create_dialog;
+
 	return $self;
 }
 
-sub get_layout {
-	my $config      = shift;
+sub relocale {
+	my $self = shift;
 
-	# Get the search terms
-	my $recent_search  = Padre::DB::History->recent('search',  20);
-	my $recent_replace = Padre::DB::History->recent('replace', 20);
+	$self->delete_dialog;
+	$self->create_dialog;
 
-	my @layout = (
-		[
-			[
-				'Wx::StaticText',
-				undef,
-				Wx::gettext('Find:')
-			],
-			[
-				'Wx::ComboBox',
-				'_find_choice_',
-				'',
-				$recent_search
-			],
-			[
-				'Wx::Button',
-				'_find_',
-				Wx::wxID_FIND
-			],
-		],
-		[
-			[
-				'Wx::StaticText',
-				undef,
-				Wx::gettext('Replace With:')
-			],
-			[
-				'Wx::ComboBox',
-				'_replace_choice_',
-				'',
-				$recent_replace
-			],
-			[
-				'Wx::Button',
-				'_replace_',
-				Wx::gettext('&Replace')
-			],
-		],
-		[
-			[],
-			[],
-			[
-				'Wx::Button',
-				'_replace_all_',
-				Wx::gettext('Replace &All')
-			],
-		],
-		[
-			[
-				'Wx::CheckBox',
-				'find_case',
-				Wx::gettext('Case &Insensitive'),
-				($config->find_case ? 0 : 1) 
-			],
-		],
-		[
-			[
-				'Wx::CheckBox',
-				'find_regex',
-				Wx::gettext('&Use Regex'),
-				($config->find_regex ? 1 : 0)
-			],
-		],
-		[
-			[
-				'Wx::CheckBox',
-				'find_reverse',
-				Wx::gettext('Search &Backwards'),
-				($config->find_reverse ? 1 : 0)
-			],
-		],
-		[
-			[
-				'Wx::CheckBox',
-				'find_first',
-				Wx::gettext('Close Window on &hit'),
-				($config->find_first ? 1 : 0)
-			],
-		],
-		[
-			[],
-			[],
-			[
-				'Wx::Button',
-				'_cancel_',
-				Wx::wxID_CANCEL
-			],
-		],
-	);
-
-	return \@layout;
+	return;
 }
 
-sub dialog {
-	my ( $class, $parent ) = @_;
+sub delete_dialog {
+	my $self = shift;
+
+	delete $self->{dialog};
+
+	return;
+}
+
+sub create_dialog {
+	my $self = shift;
 
 	my $config = Padre->ide->config;
-	my $layout = get_layout($config);
-	my $dialog = Padre::Wx::Dialog->new(
-		parent => $parent,
-		title  => Wx::gettext("Search"),
-		layout => $layout,
-		width  => [ 150, 200 ],
+
+	$self->{dialog} = Wx::Dialog->new(
+		Padre->ide->wx->main,
+		-1,
+		Wx::gettext('Find'),
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxCAPTION
+		| Wx::wxRESIZE_BORDER
+		| Wx::wxCLOSE_BOX
+		| Wx::wxSYSTEM_MENU,
 	);
+
+	my $main_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
+    $main_sizer->AddGrowableCol(0);
+    $self->{dialog}->SetSizer($main_sizer);
+
+    my $left_top_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
+    $left_top_sizer->AddGrowableCol(1);
+    $main_sizer->Add( $left_top_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxGROW|Wx::wxALL, 5 );
+
+    $left_top_sizer->Add(
+		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Find:") ),
+		0,
+		Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		5
+	);
+
+    $self->add_widget( '_find_choice_',	Wx::ComboBox->new( $self->{dialog} ) );
+	$left_top_sizer->Add(
+		$self->get_widget('_find_choice_'),
+		3,
+		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		5
+	);
+
+	$left_top_sizer->Add(
+		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Replace with:") ),
+		0,
+		Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		5
+	);
+
+	$self->add_widget( '_replace_choice_',	Wx::ComboBox->new( $self->{dialog} ) );
+	$left_top_sizer->Add(
+		$self->get_widget('_replace_choice_'),
+		3,
+		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		5
+	);
+
+	my $right_top_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$main_sizer->Add(
+		$right_top_sizer,
+		0,
+		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxLEFT|Wx::wxRIGHT,
+		5
+	);
+
+	$self->add_widget( '_find_', Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") ) );
+	$right_top_sizer->Add(
+		$self->get_widget('_find_'),
+		1,
+		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		5
+	);
+
+	$self->add_widget( '_replace_', Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE, Wx::gettext("&Replace") ) );
+	$right_top_sizer->Add(
+		$self->get_widget('_replace_'),
+		1,
+		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		5
+	);
+
+	my $left_bottom_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$main_sizer->Add(
+		$left_bottom_sizer,
+		2,
+		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		5
+	);
+
+	$self->add_widget( 'find_case', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Case &Insensitive') ) );
+	$self->get_widget('find_case')->SetValue( $config->find_case ? 0 : 1 );
+	$left_bottom_sizer->Add(
+		$self->get_widget('find_case'),
+		0,
+		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		5
+	);
+
+	$self->add_widget( 'find_regex', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('&Use Regex') ) );
+	$self->get_widget('find_regex')->SetValue( $config->find_regex ? 1 : 0 );
+	$left_bottom_sizer->Add(
+		$self->get_widget('find_regex'),
+		0,
+		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		5
+	);
+
+	$self->add_widget( 'find_reverse', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Search &Backwards') ) );
+	$self->get_widget('find_reverse')->SetValue( $config->find_reverse ? 1 : 0 );
+	$left_bottom_sizer->Add(
+		$self->get_widget('find_reverse'),
+		0,
+		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		5
+	);
+
+	$self->add_widget( 'find_first', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Close Window on &hit') ) );
+	$self->get_widget('find_first')->SetValue( $config->find_first ? 1 : 0 );
+	$left_bottom_sizer->Add(
+		$self->get_widget('find_first'),
+		0,
+		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		5
+	);
+
+	my $right_bottom_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$main_sizer->Add( $right_bottom_sizer, 0, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxGROW|Wx::wxALL, 5);
+
+	$self->add_widget( '_replace_all_', Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") ) );
+	$right_bottom_sizer->Add(
+		$self->get_widget('_replace_all_'),
+		0,
+		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxBOTTOM,
+		5
+	);
+
+	$right_bottom_sizer->Add(5, 5, 5, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxALL, 5);
+
+	$self->add_widget( '_cancel_', Wx::Button->new( $self->{dialog}, Wx::wxID_CANCEL, Wx::gettext("&Cancel") ) );
+	$right_bottom_sizer->Add(
+		$self->get_widget('_cancel_'),
+		0,
+		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxBOTTOM,
+		5
+	);
+
+	$main_sizer->SetSizeHints( $self->{dialog} );
+	return;
+}
+
+sub update_dialog {
+	my $self = shift;
+
+	my $config = Padre->ide->config;
+	my $dialog = $self->{dialog};
 
 	foreach my $cb ( @cbs ) {
 		Wx::Event::EVT_CHECKBOX(
 			$dialog,
-			$dialog->{_widgets_}->{$cb},
+			$self->get_widget($cb),
 			sub {
-				$_[0]->{_widgets_}->{_find_choice_}->SetFocus;
+				$self->get_widget('_find_choice_')->SetFocus;
 			},
 		);
 	}
 
-	$dialog->{_widgets_}->{_find_}->SetDefault;
+	$self->get_widget('_find_')->SetDefault;
 	Wx::Event::EVT_BUTTON(
 		$dialog,
-		$dialog->{_widgets_}->{_find_},
-		\&find_clicked
+		$self->get_widget('_find_'),
+		sub { $self->find_clicked }
 	);
 	Wx::Event::EVT_BUTTON(
 		$dialog,
-		$dialog->{_widgets_}->{_replace_},
-		\&replace_clicked
+		$self->get_widget('_replace_'),
+		sub { $self->replace_clicked }
 	);
 	Wx::Event::EVT_BUTTON(
 		$dialog,
-		$dialog->{_widgets_}->{_replace_all_},
-		\&replace_all_clicked
+		$self->get_widget('_replace_all_'),
+		sub { $self->replace_all_clicked }
 	);
 	Wx::Event::EVT_BUTTON(
 		$dialog,
-		$dialog->{_widgets_}->{_cancel_},
-		\&cancel_clicked
+		$self->get_widget('_cancel_'),
+		sub { $self->cancel_clicked }
 	);
 
-	$dialog->{_widgets_}->{_find_choice_}->SetFocus;
+	my $find_combobox = $self->get_widget('_find_choice_');
+	$find_combobox->Clear;
+	foreach my $s ( Padre::DB::History->recent('search') ) {
+		$find_combobox->Append($s);
+	}
 
-	return $dialog;
+	my $replace_combobox = $self->get_widget('_replace_choice_');
+	$replace_combobox->Clear;
+	foreach my $r ( Padre::DB::History->recent('replace') ) {
+		$replace_combobox->Append($r);
+	}
+
+	$find_combobox->SetFocus;
+
+	return;
 }
 
 sub find {
@@ -183,10 +259,8 @@ sub find {
 	# of the search and replace and not as the string to be used
 	$text = '' if $text =~ /\n/;
 
-	unless ( $self->{dialog} ) {
-		$self->{dialog}  = $self->dialog( $main );
-	}
-	$self->{dialog}->{_widgets_}->{_find_choice_}->SetValue($text);
+	$self->update_dialog;
+	$self->get_widget('_find_choice_')->SetValue($text);
 
 	if ( $self->{dialog}->IsShown ) {
 		Padre::Wx::Dialog::Find->find_next($main);
@@ -198,7 +272,7 @@ sub find {
 }
 
 sub find_next {
-	my $class = shift;
+	my $self  = shift;
 	my $main  = shift;
 	my $term  = Padre::DB::History->previous('search');
 
@@ -215,37 +289,37 @@ sub find_next {
 	}
 
 	if ( $term ) {
-		$class->search;
+		$self->search;
 	} else {
-		$class->find( $main );
+		$self->find( $main );
 	}
 
 	return;
 }
 
 sub find_previous {
-	my $class = shift;
+	my $self = shift;
 	my $main  = shift;
 	my $term  = Padre::DB::History->previous('search');
 	if ( $term ) {
-		$class->search(rev => 1);
+		$self->search(rev => 1);
 	} else {
-		$class->find( $main );
+		$self->find( $main );
 	}
 	return;
 }
 
 sub cancel_clicked {
-	$_[0]->Hide;
+	$_[0]->{dialog}->Hide;
 	# If no focus is set, the focus is lost when reopening the dialog
-	$_[0]->{_widgets_}->{_find_choice_}->SetFocus;
+	$_[0]->get_widget('_find_choice_')->SetFocus;
 	return;
 }
 
 sub replace_all_clicked {
-	my ($dialog, $event) = @_;
+	my ($self, $dialog, $event) = @_;
 
-	_get_data_from( $dialog ) or return;
+	$self->get_data_from_dialog or return;
 	my $regex = _get_regex();
 	return if not defined $regex;
 
@@ -267,13 +341,17 @@ sub replace_all_clicked {
 	}
 	$page->EndUndoAction;
 
+	Padre->ide->wx->main->message(
+		sprintf( Wx::gettext('%s occurences were replaced'), scalar @matches )
+	);
+
 	return;
 }
 
 sub replace_clicked {
-	my ($dialog, $event) = @_;
+	my ($self, $dialog, $event) = @_;
 
-	_get_data_from( $dialog ) or return;
+	$self->get_data_from_dialog or return;
 	my $regex = _get_regex();
 	return if not defined $regex;
 
@@ -293,25 +371,27 @@ sub replace_clicked {
 	# If search window is still open, run a search_again on the whole text
 	my $config = Padre->ide->config;
 	unless ( $config->find_first ) {
-		Padre::Wx::Dialog::Find->search;
+		$self->search;
 	}
 
 	return;
 }
 
 sub find_clicked {
+	my $self   = shift;
 	my $dialog = shift;
 	my $event  = shift;
 
-	_get_data_from( $dialog ) or return;
-	Padre::Wx::Dialog::Find->search;
+	$self->get_data_from_dialog or return;
+	$self->search;
 
 	return;
 }
 
-sub _get_data_from {
-	my $dialog = shift;
-	my $data   = $dialog->get_data;
+sub get_data_from_dialog {
+	my $self   = shift;
+	my $dialog = $self->{dialog};
+	my $data   = $self->get_widgets_values;
 	my $config = Padre->ide->config;
 	$config->set( find_case    => $data->{find_case} ? 0 : 1    );
 	$config->set( find_regex   => $data->{find_regex} ? 1 : 0   );
@@ -372,7 +452,7 @@ sub _get_regex {
 }
 
 sub search {
-	my $class = shift;
+	my $self = shift;
 	my %args  = @_;
 	my $main  = Padre->ide->wx->main;
 	my $regex = _get_regex(%args);

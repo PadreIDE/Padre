@@ -632,6 +632,10 @@ sub relocale {
 	# The toolbar doesn't support relocale, replace it
 	$self->rebuild_toolbar;
 
+	if ( defined $self->find ) {
+		$self->find->relocale;
+	}
+
 	# Update window manager captions
 	$self->aui->relocale;
 
