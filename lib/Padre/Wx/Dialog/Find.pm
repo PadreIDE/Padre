@@ -329,8 +329,8 @@ sub replace_all_clicked {
 	my $page    = $current->editor;
 	my $last    = $page->GetLength;
 	my $str     = $page->GetTextRange(0, $last);
-	my $replace = Padre::DB::History->previous('replace');
-	$replace =~ s/\\t/\t/g;
+	my $replace = Padre::DB::History->previous('replace') || '';
+	$replace =~ s/\\t/\t/g if $replace;
 
 	my ($start, $end, @matches) = Padre::Util::get_matches($str, $regex, 0, 0);
 	$page->BeginUndoAction;
