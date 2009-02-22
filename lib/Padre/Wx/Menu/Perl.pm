@@ -496,15 +496,20 @@ sub open_config {
 	my $main = shift;
 
 	# Locate the CPAN config file(s)
-	require CPAN;
-	my $default_dir = $INC{'CPAN.pm'};
-	$default_dir =~ s/\.pm$//is; # remove .pm
+	my $default_dir = '';
+	eval {
+		require CPAN;
+		$default_dir = $INC{'CPAN.pm'};
+		$default_dir =~ s/\.pm$//is; # remove .pm
+	};
 
 	# Load the main config first
-	my $core = File::Spec->catfile($default_dir, 'Config.pm');
-	if ( -e $core ) {
-		$main->setup_editors($core);
-		return;
+	if ( $default_dir ne '' ) {
+		my $core = File::Spec->catfile($default_dir, 'Config.pm');
+		if ( -e $core ) {
+			$main->setup_editors($core);
+			return;
+		}
 	}
 
 	# Fallback to a personal config
