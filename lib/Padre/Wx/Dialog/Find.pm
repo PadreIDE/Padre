@@ -41,6 +41,7 @@ sub relocale {
 sub delete_dialog {
 	my $self = shift;
 
+	$self->{dialog}->Destroy;
 	delete $self->{dialog};
 
 	return;
@@ -191,18 +192,10 @@ sub create_dialog {
 	);
 
 	$main_sizer->SetSizeHints( $self->{dialog} );
-	return;
-}
-
-sub update_dialog {
-	my $self = shift;
-
-	my $config = Padre->ide->config;
-	my $dialog = $self->{dialog};
 
 	foreach my $cb ( @cbs ) {
 		Wx::Event::EVT_CHECKBOX(
-			$dialog,
+			$self->{dialog},
 			$self->get_widget($cb),
 			sub {
 				$self->get_widget('_find_choice_')->SetFocus;
@@ -212,25 +205,31 @@ sub update_dialog {
 
 	$self->get_widget('_find_')->SetDefault;
 	Wx::Event::EVT_BUTTON(
-		$dialog,
+		$self->{dialog},
 		$self->get_widget('_find_'),
 		sub { $self->find_clicked }
 	);
 	Wx::Event::EVT_BUTTON(
-		$dialog,
+		$self->{dialog},
 		$self->get_widget('_replace_'),
 		sub { $self->replace_clicked }
 	);
 	Wx::Event::EVT_BUTTON(
-		$dialog,
+		$self->{dialog},
 		$self->get_widget('_replace_all_'),
 		sub { $self->replace_all_clicked }
 	);
 	Wx::Event::EVT_BUTTON(
-		$dialog,
+		$self->{dialog},
 		$self->get_widget('_cancel_'),
 		sub { $self->cancel_clicked }
 	);
+
+	return;
+}
+
+sub update_dialog {
+	my $self = shift;
 
 	my $find_combobox = $self->get_widget('_find_choice_');
 	$find_combobox->Clear;
