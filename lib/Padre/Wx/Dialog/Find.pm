@@ -64,21 +64,21 @@ sub create_dialog {
 	);
 
 	my $main_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
-    $main_sizer->AddGrowableCol(0);
-    $self->{dialog}->SetSizer($main_sizer);
+	$main_sizer->AddGrowableCol(0);
+	$self->{dialog}->SetSizer($main_sizer);
 
-    my $left_top_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
-    $left_top_sizer->AddGrowableCol(1);
-    $main_sizer->Add( $left_top_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxGROW|Wx::wxALL, 5 );
+	my $left_top_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
+	$left_top_sizer->AddGrowableCol(1);
+	$main_sizer->Add( $left_top_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxGROW|Wx::wxALL, 5 );
 
-    $left_top_sizer->Add(
+	$left_top_sizer->Add(
 		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Find:") ),
 		0,
 		Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
 		5
 	);
 
-    $self->add_widget( '_find_choice_',	Wx::ComboBox->new( $self->{dialog} ) );
+	$self->add_widget( '_find_choice_',	Wx::ComboBox->new( $self->{dialog} ) );
 	$left_top_sizer->Add(
 		$self->get_widget('_find_choice_'),
 		3,
