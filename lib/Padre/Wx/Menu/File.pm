@@ -254,32 +254,13 @@ sub new {
 		),
 		sub {
 			Padre::DB::History->delete('where type = ?', 'files');
-
-			# Replace the whole File menu
-			my $menu       = Padre::Wx::Menu::File->new($_[0]);
-			my $menu_place = $_[0]->menu->wx->FindMenu(
-				Wx::gettext("&File")
-			);
-			$_[0]->menu->wx->Replace(
-				$menu_place => $menu->wx,
-				Wx::gettext("&File")
-			);
+			$self->update_recentfiles;
 		},
 	);
 
 	$self->{recentfiles}->AppendSeparator;
 
-	my $idx = 0;
-	foreach my $file ( grep { -f } Padre::DB::History->recent('files') ) {
-		Wx::Event::EVT_MENU( $main,
-			$self->{recentfiles}->Append( -1,
-				++$idx < 10 ? "&$idx. $file" : "$idx. $file"
-			),
-			sub {
-				$_[0]->setup_editors($file);
-			},
-		);
-	}
+	$self->update_recentfiles;
 
 	$self->AppendSeparator;
 
@@ -342,6 +323,32 @@ sub refresh {
 	$self->{ docstat               }->Enable($doc);
 
 	return 1;
+}
+
+sub update_recentfiles {
+	my $self = shift;
+
+	# menu entry count starts at 0
+	# first 3 entries are "open all", "clean list" and a separator
+	foreach ( my $i = 12; $i >= 3; $i-- ) {
+		if ( my $item = $self->{recentfiles}->FindItemByPosition($i) ) {
+			$self->{recentfiles}->Delete($item);
+		}
+	}
+
+	my $idx = 0;
+	foreach my $file ( grep { -f } Padre::DB::History->recent('files') ) {
+		Wx::Event::EVT_MENU( $self->{main},
+			$self->{recentfiles}->Append( -1,
+				++$idx < 10 ? "&$idx. $file" : "$idx. $file"
+			),
+			sub {
+				$_[0]->setup_editors($file);
+			},
+		);
+	}
+
+	return;
 }
 
 1;

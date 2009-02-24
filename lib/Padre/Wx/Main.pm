@@ -1255,6 +1255,14 @@ sub setup_editor {
 		}
 	}
 
+	if ( ! $doc->is_new ) {
+		Padre::DB::History->create(
+			type => 'files',
+			name => $doc->filename,
+		);
+		$self->menu->file->update_recentfiles;
+	}
+
 	my $id = $self->create_tab($editor, $file, $title);
 
 	$editor->padre_setup;
@@ -1365,7 +1373,9 @@ sub on_open_selection {
 
 sub on_open_all_recent_files {
 	my $files = Padre::DB::History->recent('files');
-	$_[0]->setup_editors( @$files );
+	# debatable: "reverse" keeps order in "recent files" submenu
+	# but editor tab ordering may "feel" wrong
+	$_[0]->setup_editors( reverse @$files );
 }
 
 sub on_open {
@@ -1460,6 +1470,12 @@ sub on_save_as {
 	$document->editor->padre_setup;
 	$document->rebless;
 
+	Padre::DB::History->create(
+		type => 'files',
+		name => $document->filename,
+	);
+	$self->menu->file->update_recentfiles;
+
 	$self->refresh;
 
 	return 1;
@@ -1517,10 +1533,6 @@ sub _save_buffer {
 		return;
 	}
 
-	Padre::DB::History->create(
-		type => 'files',
-		name => $doc->filename,
-	);
 	$page->SetSavePoint;
 	$self->refresh;
 
