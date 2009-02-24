@@ -68,7 +68,7 @@ sub check_wx_version {
 
 	# this part still needs the DISPLAY 
 	# so check only if there is one
-	if ( $ENV{DISPLAY} ) {
+	if ( $ENV{DISPLAY} or $^O =~ /win32/i ) {
 		eval {
 			require Wx;
 			Wx->import;
