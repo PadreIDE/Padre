@@ -187,6 +187,7 @@ sub _init_preview_editor {
 	my $doc = Padre::Document::Perl->new();
 	my $editor = $self->get_widget('preview_editor');
 	$editor->{Document} = $doc;
+	$doc->set_editor($editor);
 
 	my $dummy_text = <<'END_TEXT';
 #!/usr/bin/perl
