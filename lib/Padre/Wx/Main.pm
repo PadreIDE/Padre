@@ -939,8 +939,23 @@ sub fast_find {
 	return $self->{fast_find_panel};
 }
 
+sub prompt {
+	my $self     = shift;
+	my $title    = shift || "Prompt";
+	my $subtitle = shift || "Subtitle";
+	my $key      = shift || "GENERIC";
 
-
+	require Padre::Wx::History::TextDialog;
+	my $dialog = Padre::Wx::History::TextDialog->new(
+        $self, $title, $subtitle, $key,
+    );
+    if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+        return;
+    }
+    my $value = $dialog->GetValue;
+    $dialog->Destroy;
+	return $value;
+}
 
 
 #####################################################################
