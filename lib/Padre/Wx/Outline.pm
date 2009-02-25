@@ -136,7 +136,7 @@ sub on_tree_item_activated {
 
 	$line_number--;
 	$page->EnsureVisible($line_number);
-	$page->GotoPos( $page->GetLineIndentPosition($line_number) );
+	$page->goto_pos_centerize( $page->GetLineIndentPosition($line_number) );
 	$page->SetFocus;
 
 	return;

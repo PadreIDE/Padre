@@ -209,9 +209,7 @@ sub on_list_item_activated {
 
 	$line--;
 	$editor->EnsureVisible($line);
-	$editor->GotoPos(
-		$editor->GetLineIndentPosition($line)
-	);
+	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 	$editor->SetFocus;
 
 	return;
