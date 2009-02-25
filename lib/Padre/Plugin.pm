@@ -83,7 +83,7 @@ sub plugin_name {
 	my @words = $class =~ /(\w+)/gi;
 	my $name  = pop @words;
 	$name =~ s/([a-z])([A-Z])/$1 $2/g;
-	$name =~ s/([A-Z]+)([A-Z])/$1 $2/g;
+	$name =~ s/([A-Z]+)([A-Z][a-z]+)/$1 $2/g;
 	return $name;
 }
 
