@@ -102,6 +102,28 @@ setting(
 	default => '',
 );
 
+
+# for Module::Starter
+setting(
+	name    => 'license',
+	type    => ASCII,
+	store   => HUMAN,
+	default => '',
+);
+setting(
+	name    => 'builder',
+	type    => ASCII,
+	store   => HUMAN,
+	default => '',
+);
+setting(
+	name    => 'module_start_directory',
+	type    => ASCII,
+	store   => HUMAN,
+	default => '',
+);
+
+
 # Indent Settings
 # Allow projects to forcefully override personal settings
 setting(

@@ -13,7 +13,6 @@ use Padre::Wx::Dialog ();
 our $VERSION = '0.27';
 
 sub get_layout {
-	my ($config) = @_;
 
 	my @builders = ('Module::Build', 'ExtUtils::MakeMaker', 'Module::Install');
 	my @licenses = qw(apache artistic artistic_2 bsd gpl lgpl mit mozilla open_source perl restrictive unrestricted);
@@ -71,7 +70,7 @@ sub dialog {
 
 	my $config = Padre->ide->config;
 
-	my $layout = get_layout($config);
+	my $layout = get_layout();
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $parent,
 		title  => Wx::gettext("Module Start"),
@@ -80,6 +79,12 @@ sub dialog {
 		bottom => 20,
 	);
 
+	$dialog->{_widgets_}->{_author_name_}->SetValue($config->identity_name);
+	$dialog->{_widgets_}->{_email_}->SetValue($config->identity_email);
+	$dialog->{_widgets_}->{_builder_choice_}->SetValue($config->builder);
+	$dialog->{_widgets_}->{_license_choice_}->SetValue($config->license);
+	$dialog->{_widgets_}->{_directory_}->SetPath($config->module_start_directory);
+	
 	$dialog->{_widgets_}->{_ok_}->SetDefault;
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_ok_},      \&ok_clicked      );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},  \&cancel_clicked  );
@@ -115,6 +120,13 @@ sub ok_clicked {
 		}
 	}
 
+	my $config = Padre->ide->config;
+	$config->set('identity_name',  $data->{_author_name_} );
+	$config->set('identity_email', $data->{_email_} );
+	$config->set('builder',        $data->{_builder_choice_} );
+	$config->set('license',        $data->{_license_choice_} );
+	$config->set('module_start_directory', $data->{_directory_} );
+	
 	my $pwd = Cwd::cwd();
 	chdir $data->{_directory_};
 	require Module::Starter::App;
