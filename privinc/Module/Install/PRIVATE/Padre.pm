@@ -149,23 +149,21 @@ sub get_libs {
 sub get_modules {
 	my @modules;
 	my @files;
-	local *FILE;
-	unless ( open(FILE, '<', 'MANIFEST') ) {
+	open(my $fh, '<', 'MANIFEST') or
 		die("Do you need to run 'make manifest'? Could not open MANIFEST for reading: $!");
-	}
-	while ( my $line = <FILE> ) {
+	while ( my $line = <$fh> ) {
 		chomp $line;
-		if ( $line =~ m{^lib/} ) {
+		if ( $line =~ m{^lib/.*\.pm$} ) {
 			$line = substr($line, 4, -3);
 			$line =~ s{/}{::}g;
-			if ($line =~ //) {
-				push @modules, $line;
-			} else {
-				push @files, $line;
-			}
+			push @modules, $line;
+		}
+		if ( $line =~ m{^lib/.*\.pod$} ) {
+			push @files, $line;
 		}
 		if ( $line =~ m{^share/} ) {
-			push @files, $line;
+			(my $newpath = $line) =~ s{^share}{lib/auto/share/dist/Padre};
+			push @files, "$line;$newpath";
 		}
 	}
 
