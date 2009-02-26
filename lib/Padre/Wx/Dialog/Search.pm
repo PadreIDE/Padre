@@ -148,7 +148,16 @@ sub _create_panel {
 		Wx::Size->new(-1,-1),
 		Wx::wxBORDER_NONE
 	);
+	#$self->{previous}->SetLabel("Next"); # TODO: should be better but does not work
 	Wx::Event::EVT_BUTTON($main, $self->{previous}, sub { $self->search('previous') } );
+	$self->{previous_text} = Wx::Button->new(
+		$self->{panel}, -1,
+		Wx::gettext('Previ&ous'),
+		Wx::Point->new(-1,-1),
+		Wx::Size->new(-1,-1),
+		Wx::wxBORDER_NONE,
+	);
+	Wx::Event::EVT_BUTTON($main, $self->{previous_text}, sub { $self->search('previous') } );
 
 	# Previous button
 	$self->{next} = Wx::BitmapButton->new(
@@ -159,17 +168,25 @@ sub _create_panel {
 		Wx::wxBORDER_NONE,
 	);
 	Wx::Event::EVT_BUTTON($main, $self->{next}, sub { $self->search('next') } );
+	$self->{next_text} = Wx::Button->new(
+		$self->{panel}, -1,
+		Wx::gettext('&Next'),
+		Wx::Point->new(-1,-1),
+		Wx::Size->new(-1,-1),
+		Wx::wxBORDER_NONE,
+	);
+	Wx::Event::EVT_BUTTON($main, $self->{next_text}, sub { $self->search('next') } );
 
 	# Case sensitivity
-	$self->{case} = Wx::CheckBox->new($self->{panel}, -1, Wx::gettext('Case insensitive'));
+	$self->{case} = Wx::CheckBox->new($self->{panel}, -1, Wx::gettext('Case &insensitive'));
 	Wx::Event::EVT_CHECKBOX($main, $self->{case}, sub { $self->_on_case_checked } );
 
 	# Regex search
-	$self->{regex} = Wx::CheckBox->new($self->{panel}, -1, Wx::gettext('Use regex'));
+	$self->{regex} = Wx::CheckBox->new($self->{panel}, -1, Wx::gettext('Use rege&x'));
 	Wx::Event::EVT_CHECKBOX($main, $self->{regex}, sub { $self->_on_regex_checked } );
 
 	# Place all controls
-	foreach my $element ( qw{ close label entry previous next case regex } ) {
+	foreach my $element ( qw{ close label entry previous previous_text next next_text case regex } ) {
 		$self->{hbox}->Add(10,0);
 		$self->{hbox}->Add($self->{$element}, 0, Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALIGN_LEFT, 0);
 	}
@@ -246,6 +263,7 @@ sub _on_case_checked {
 	);
 	$self->{restart} = 1;
 	$self->_find;
+	$self->{entry}->SetFocus;
 	return;
 }
 
@@ -305,6 +323,7 @@ sub _on_regex_checked {
 	);
 	$self->{restart} = 1;
 	$self->_find;
+	$self->{entry}->SetFocus;
 	return;
 }
 
