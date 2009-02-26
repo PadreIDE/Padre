@@ -336,17 +336,17 @@ sub _check_syntax_internals {
 
 	# Do we really need an update?
 	require Digest::MD5;
-	my $md5 = Digest::MD5::md5(Encode::encode_utf8($text));
+	my $md5 = Digest::MD5::md5_hex(Encode::encode_utf8($text));
 	unless ( $args->{force} ) {
 		if (
-			defined($self->{last_checked_md5})
+			defined($self->{last_syncheck_md5})
 			and
-			$self->{last_checked_md5} eq $md5
+			$self->{last_syncheck_md5} eq $md5
 		) {
 			return;
 		}
 	}
-	$self->{last_checked_md5} = $md5;
+	$self->{last_syncheck_md5} = $md5;
 	
 	my $nlchar = "\n";
 	if ( $self->get_newline_type eq 'WIN' ) {
@@ -393,17 +393,17 @@ sub get_outline {
 
 	# Do we really need an update?
 	require Digest::MD5;
-	my $md5 = Digest::MD5::md5(Encode::encode_utf8($text));
+	my $md5 = Digest::MD5::md5_hex(Encode::encode_utf8($text));
 	unless ( $args{force} ) {
 		if (
-			defined($self->{last_checked_md5})
+			defined($self->{last_outline_md5})
 			and
-			$self->{last_checked_md5} eq $md5
+			$self->{last_outline_md5} eq $md5
 		) {
 			return;
 		}
 	}
-	$self->{last_checked_md5} = $md5;
+	$self->{last_outline_md5} = $md5;
 
 	my %check = (
 		editor   => $self->editor,
