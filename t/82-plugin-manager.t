@@ -11,7 +11,7 @@ BEGIN {
 	}
 }
 
-plan tests => 27;
+plan tests => 29;
 
 use FindBin      qw($Bin);
 use File::Spec   ();
@@ -84,6 +84,7 @@ SCOPE: {
 my $path = File::Spec->catfile( $Bin, 'files', 'plugins' );
 #diag $path;
 unshift @INC, $path;
+#diag $ENV{PADRE_HOME};
 SCOPE: {
 	my $manager  = Padre::PluginManager->new($padre);
 	$manager->load_plugin('A');
@@ -96,6 +97,12 @@ SCOPE: {
 	is $manager->plugins->{'B'}->{status}, 'error', 'error in loading B';
 	is $manager->plugins->{'B'}->errstr,
 		'Plugin:B - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin',
-		;
+		'text of error message';
+
+	$manager->load_plugin('C');
+	is $manager->plugins->{'C'}->{status}, 'disabled', 'disabled in loading C';
+	is $manager->plugins->{'C'}->errstr,
+		'Plugin:C - Does not have menus',
+		'text of error message';
 
 }

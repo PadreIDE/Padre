@@ -434,6 +434,7 @@ sub _load_plugin {
 	}
 
 	# Does the plugin have new method?
+	# TODO: do we need to check this? After all Padre::Plugin has a new method..
 	unless ( $module->can('new') ) {
 		$plugin->errstr(
 			sprintf(
@@ -448,6 +449,7 @@ sub _load_plugin {
 	}
 
 	# This will not check anything as padre_interfaces is defined in Padre::Plugin
+	# TODO: do we need to check this? After all Padre::Plugin has a padre_interfaces method..
 	unless ( $module->can('padre_interfaces') ) {
 		$plugin->errstr(
 			sprintf(
@@ -472,7 +474,8 @@ sub _load_plugin {
 				),
 				$name,
 			) . ": $@"
-		);		$plugin->status('error');
+		);
+		$plugin->status('error');
 		return;
 	}
 	unless ( _INSTANCE($object, 'Padre::Plugin') ) {
@@ -491,6 +494,24 @@ sub _load_plugin {
 	# Plugin is now loaded
 	$plugin->{object} = $object;
 	$plugin->status('loaded');
+	
+	# TODO: shall we check this? Padre::Plugin provides this method so every plugin will already have it
+	#unless ( $plugin->{object}->can('menu_plugins') ) {
+	#}
+	my @menus = $plugin->{object}->menu_plugins_simple;
+	unless ( @menus ) {
+		$plugin->errstr(
+			sprintf(
+				Wx::gettext(
+					"Plugin:%s - Does not have menus"
+				),
+				$name,
+			)
+		);
+		# TODO: for now we allow a plugin without a menu but maybe we should not.
+		#$plugin->status('error');
+		#return;
+	}
 
 	# Should we try to enable the plugin
 	my $conf = $self->plugin_db($plugin);
