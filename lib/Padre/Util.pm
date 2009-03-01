@@ -222,6 +222,24 @@ sub sharefile {
 	File::Spec->catfile( share(), @_ );
 }
 
+sub find_perldiag_translations {
+	my %languages;
+	foreach my $path (@INC) {
+		my $dir = File::Spec->catdir( $path, 'POD2' );
+		next if not -e $dir;
+		if (opendir my $dh, $dir) {
+			while (my $lang = readdir $dh) {
+				next if $lang eq '.' or $lang eq '..';
+				if (-e File::Spec->catfile( $dir, $lang, 'perldiag.pod' )) {
+					$languages{$lang} = 1;
+				}
+			}
+		}
+	}
+	return sort keys %languages;
+}
+
+
 package Px;
 
 use constant {

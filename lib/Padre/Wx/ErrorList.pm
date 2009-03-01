@@ -97,6 +97,7 @@ sub populate {
 	my $lang = $self->config->locale_perldiag;
 	$lang =~ s/^\s*//;
 	$lang =~ s/\s*$//;
+	$lang = '' if $lang eq 'EN';
 	my $old = $self->lang;
 	$self->{lang} = $lang;
 

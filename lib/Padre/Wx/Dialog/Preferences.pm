@@ -28,7 +28,7 @@ sub _new_panel {
 }
 
 sub _behaviour_panel {
-	my ( $self, $treebook, $main_startup, $editor_autoindent, $main_functions_order ) = @_;
+	my ( $self, $treebook, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales ) = @_;
 
 	my $config = Padre->ide->config;
 
@@ -75,7 +75,7 @@ sub _behaviour_panel {
 		],
 		[
 			[ 'Wx::StaticText', undef, Wx::gettext('Preferred language for error diagnostics:') ],
-			[ 'Wx::TextCtrl', 'locale_perldiag', $config->locale_perldiag || '' ]
+			[ 'Wx::Choice', 'locale_perldiag', $perldiag_locales ]
 		],
 	];
 
@@ -296,7 +296,7 @@ sub _add_plugins {
 }
 
 sub dialog {
-	my ($self, $win, $main_startup, $editor_autoindent, $main_functions_order) = @_;
+	my ($self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales) = @_;
 
 	my $dialog = Wx::Dialog->new(
 		$win,
@@ -323,7 +323,8 @@ sub dialog {
 		$tb,
 		$main_startup,
 		$editor_autoindent,
-		$main_functions_order
+		$main_functions_order,
+		$perldiag_locales,
 	);
 	$tb->AddPage( $behaviour, Wx::gettext('Behaviour') );
 
@@ -438,11 +439,19 @@ sub run {
 	);
 	my @main_functions_order_localized = map{Wx::gettext($_)} @main_functions_order_items;
 
+	my $perldiag_locale = $config->locale_perldiag;
+	my @perldiag_locales = (
+		$perldiag_locale,
+		grep { $_ ne $perldiag_locale }
+			('EN', Padre::Util::find_perldiag_translations())
+	);
+
 	$self->{dialog} = $self->dialog(
 		$win,
 		\@main_startup_localized,
 		\@editor_autoindent_localized,
 		\@main_functions_order_localized,
+		\@perldiag_locales,
 	);
 	my $ret = $self->{dialog}->ShowModal;
 	if ( $ret eq Wx::wxID_CANCEL ) {
@@ -452,7 +461,7 @@ sub run {
 	my $data = $self->get_widgets_values;
 	$config->set(
 		'locale_perldiag',
-		$data->{locale_perldiag}
+		$perldiag_locales[ $data->{locale_perldiag} ]
 	);
 	$config->set(
 		'editor_indent_auto',
@@ -507,6 +516,7 @@ sub run {
 		$editor_currentline_color
 	);
 
+	$config->write;
 	return 1;
 }
 

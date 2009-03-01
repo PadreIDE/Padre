@@ -4,6 +4,7 @@ Changes for Perl Application Development and Refactoring Environment
     Allow the shortening of the the file list in the Window menu. (SZABGAB)
     Fix Ctrl-TAB and Ctrl-Shift-TAB. (SZABGAB)
     Updated Spanish translation (ENELL)
+    List the available perldiag translations and allow the user to change. (SZABGAB)
 
 v0.27 2009.02.10
 
