@@ -82,6 +82,7 @@ sub _behaviour_panel {
 	my $panel = $self->_new_panel($treebook);
 	$self->fill_panel_by_table( $panel, $table );
 
+	
 	Wx::Event::EVT_BUTTON( $panel,
 		$self->get_widget('_guess_'),
 		sub { warn Dumper([@_]); $self->guess_indentation_settings },
@@ -361,6 +362,7 @@ sub dialog {
 		0
 	);
 	$button_row_sizer->Add( $save, 0, Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL, 5);
+	$save->SetDefault;
 
 	my $cancel = Wx::Button->new(
 		$dialog,
@@ -371,6 +373,7 @@ sub dialog {
 		0
 	);
 	$button_row_sizer->Add( $cancel, 0, Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL, 5);
+	$cancel->SetFocus;
 
 	$dialog->SetSizerAndFit($dialog_sizer);
 	return $dialog;
