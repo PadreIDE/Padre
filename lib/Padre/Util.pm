@@ -211,10 +211,10 @@ sub share {
 	return File::Spec->catdir( $FindBin::Bin, File::Spec->updir, 'share' ) if $ENV{PADRE_DEV};
 	if (defined $ENV{PADRE_PAR_PATH}) {
 		# File::ShareDir new style path
-		$path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'auto','share', 'dist', 'Padre' );
+		my $path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'auto','share', 'dist', 'Padre' );
 		return $path if -d $path;
 		# File::ShareDir old style path
-		my $path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'share' );
+		$path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'share' );
 		return $path if -d $path;
 	}
 
