@@ -209,7 +209,16 @@ sub svn_directory_revision {
 
 sub share {
 	return File::Spec->catdir( $FindBin::Bin, File::Spec->updir, 'share' ) if $ENV{PADRE_DEV};
-	return File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'share' )      if $ENV{PADRE_PAR_PATH};
+	if (defined $ENV{PADRE_PAR_PATH}) {
+		# File::ShareDir new style path
+		$path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'auto','share', 'dist', 'Padre' );
+		return $path if -d $path;
+		# File::ShareDir old style path
+		my $path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'share' );
+		return $path if -d $path;
+	}
+
+	# rely on automatic handling of everything
 	require File::ShareDir::PAR;
 	return File::ShareDir::PAR::dist_dir('Padre');
 }
