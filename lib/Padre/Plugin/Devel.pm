@@ -82,7 +82,7 @@ sub menu_plugins_simple {
 
 sub eval_document {
 	my $self     = shift;
-	my $document = $self->current->document or return;
+	my $document = Padre::Current->document or return;
 	return $self->_dump_eval( $document->text_get );
 }
 
