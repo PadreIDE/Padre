@@ -12,7 +12,7 @@ use Encode       ();
 use Params::Util ();
 use Padre::Wx    ();
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 our @ISA     = 'Wx::TextCtrl';
 
 sub new {

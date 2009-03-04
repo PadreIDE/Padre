@@ -29,7 +29,7 @@ use FindBin    ();
 use File::Spec ();
 use List::Util qw(first);
 
-our $VERSION   = '0.27';
+our $VERSION   = '0.28';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches _T);
 

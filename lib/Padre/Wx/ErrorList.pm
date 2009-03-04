@@ -8,7 +8,7 @@ use Padre::Locale            ();
 use Padre::Task::ErrorParser ();
 use Parse::ErrorString::Perl ();
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor

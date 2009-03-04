@@ -9,7 +9,7 @@ use warnings;
 # Avoid the introspective compilation until runtime
 # use Padre::DB ();
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 
 
 

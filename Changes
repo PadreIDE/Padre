@@ -1,10 +1,15 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.28 2009.03.04
+
     Move Wx::Perl::Dialog back to the Padre tree. (SZABGAB)
     Allow the shortening of the the file list in the Window menu. (SZABGAB)
     Fix Ctrl-TAB and Ctrl-Shift-TAB. (SZABGAB)
-    Updated Spanish translation (ENELL)
     List the available perldiag translations and allow the user to change. (SZABGAB)
+    Fix a few missed cases of the API change. (SZABGAB)
+    Some sharedir improvement. (TSEE)
+    List of available perldiag translations. (SZABGAB)
+    Add prompt method to be used by plugins as well. (SZABGAB)
 
 v0.27 2009.02.10
 

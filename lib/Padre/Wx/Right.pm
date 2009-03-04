@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 our @ISA     = 'Wx::AuiNotebook';
 
 sub new {
