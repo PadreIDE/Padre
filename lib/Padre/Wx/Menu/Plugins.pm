@@ -95,6 +95,12 @@ sub new {
 		},
 	);
 	Wx::Event::EVT_MENU( $main,
+		$tools->Append( -1, Wx::gettext("(Re)load Current Plugin") ),
+		sub {
+			Padre->ide->plugin_manager->reload_current_plugin;
+		},
+	);	
+	Wx::Event::EVT_MENU( $main,
 		$tools->Append( -1, Wx::gettext("Test A Plugin From Local Dir") ),
 		sub {
 			Padre->ide->plugin_manager->test_a_plugin;

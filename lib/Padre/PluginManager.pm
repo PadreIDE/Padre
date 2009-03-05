@@ -731,7 +731,58 @@ sub get_menu {
 	return ($label, $menu);
 }
 
+=pod
+
+=head2 reload_current_plugin
+
+When developing a plugin one usually edits the
+files belonging to the plugin (The Padre::Plugin::Wonder itself
+or Padre::Documents::Wonder located in the same project as the plugin
+itself.
+
+This call and the appropriate menu option should be able to load
+(or reload) that plugin.
+
+=cut
+
+sub reload_current_plugin {
+	my $self    = shift;
+	my $main    = $self->parent->wx->main;
+	my $config  = $self->parent->config;
+	my $plugins = $self->plugins;
+
+	return $main->error(Wx::gettext('No document open')) if not $main->current;
+	my $filename = $main->current->filename;
+	return $main->error(Wx::gettext('No filename')) if not $filename;
+
+	# TODO: locate project
+	my $dir = Padre::Util::get_project_dir($filename);
+	return $main->error(Wx::gettext('Could not locate project dir')) if not $dir;
+	$dir = File::Spec->catdir($dir, 'lib'); # TODO shall we relax the assumption of a lib subdir?
+
+	@INC = ($dir, grep {$_ ne $dir} @INC);
+	my ($plugin_filename) = glob File::Spec->catdir($dir, 'Padre', 'Plugin', '*.pm');
+
+	# Load plugin
+	my $plugin = File::Basename::basename($plugin_filename);
+	$plugin =~ s/\.pm$//;
+
+	if ($plugins->{$plugin}) {
+		$self->reload_plugin($plugin);
+	} else {
+		$self->load_plugin($plugin);
+		if ( $self->plugins->{$plugin}->{status} eq 'error' ) {
+			$main->error(sprintf(Wx::gettext("Failed to load the plugin '%s'\n%s"), 
+				$plugin, $self->plugins->{$plugin}->errstr));
+			return;
+		}
+	}
+
+	return;
+}
+
 # TODO: document this.
+# TODO: make it also reload the file?
 sub test_a_plugin {
 	my $self    = shift;
 	my $main    = $self->parent->wx->main;
