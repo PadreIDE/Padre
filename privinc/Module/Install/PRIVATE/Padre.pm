@@ -89,7 +89,7 @@ sub check_wx_version {
 sub nono {
 	my $msg = shift;
 	print STDERR "$msg\n";
-	exit(0);
+	exit(1);
 }
 
 sub make_exe {
