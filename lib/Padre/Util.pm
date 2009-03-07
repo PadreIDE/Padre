@@ -265,18 +265,17 @@ sub get_project_dir {
 	my $filename = shift;
 
 	my $olddir = File::Basename::dirname($filename);
-	my $dir    = File::Basename::dirname($olddir);
-	#print "DIR: $olddir\n     $dir\n";
+	my $dir    = $olddir;
 	while (1) {
-		last if $olddir eq $dir;
-		last if -e File::Spec->catfile($dir, 'Makefile.PL');
-		last if -e File::Spec->catfile($dir, 'Build.PL');
-		#print "trying $dir\n";
+#		print "DIR: $olddir\n     $dir\n";
+		return $dir if -e File::Spec->catfile($dir, 'Makefile.PL');
+		return $dir if -e File::Spec->catfile($dir, 'Build.PL');
 		$olddir = $dir;
 		$dir = File::Basename::dirname($dir);
+
+		last if $olddir eq $dir;
 	}
-	return if $dir eq $olddir;
-	return $dir;
+	return;
 }
 
 
