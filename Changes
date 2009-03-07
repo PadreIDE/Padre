@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Initial support for directory browser based on the Outline code (SZABGAB)
+
 v0.28 2009.03.04
 
     Move Wx::Perl::Dialog back to the Padre tree. (SZABGAB)

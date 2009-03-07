@@ -36,6 +36,7 @@ SCOPE: {
 	is( $config->main_functions           => 0              );
 	is( $config->main_functions_order     => 'alphabetical' );
 	is( $config->main_outline             => 0              );
+	is( $config->main_directory           => 0              );
 	is( $config->main_output              => 0              );
 	is( $config->main_output_ansi         => 1              );
 	is( $config->main_syntaxcheck         => 0              );

@@ -187,6 +187,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'main_directory',
+	type    => BOOLEAN,
+	store   => HUMAN,
+	default => 0,
+);
+setting(
 	name    => 'main_output',
 	type    => BOOLEAN,
 	store   => HUMAN,

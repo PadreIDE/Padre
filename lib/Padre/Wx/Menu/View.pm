@@ -89,6 +89,16 @@ sub new {
 		},
 	);
 
+	$self->{directory} = $self->AppendCheckItem( -1,
+		Wx::gettext("Show Directory tree")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{directory},
+		sub {
+			$_[0]->show_directory( $_[1]->IsChecked );
+		},
+	);
+
 	$self->{show_syntaxcheck} = $self->AppendCheckItem( -1,
 		Wx::gettext("Show Syntax Check")
 	);
@@ -480,6 +490,7 @@ sub refresh {
 	$self->{ whitespaces       }->Check( $config->editor_whitespace );
 	$self->{ output            }->Check( $config->main_output );
 	$self->{ outline           }->Check( $config->main_outline );
+	$self->{ directory         }->Check( $config->main_directory );
 	$self->{ functions         }->Check( $config->main_functions );
 	$self->{ lockinterface     }->Check( $config->main_lockinterface );
 	$self->{ indentation_guide }->Check( $config->editor_indentationguides );

@@ -33,6 +33,7 @@ use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
 use Padre::Wx::Syntax         ();
 use Padre::Wx::Outline        ();
+use Padre::Wx::Directory      ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
@@ -64,6 +65,7 @@ use Class::XSAccessor
 		right       => 'right',
 		functions   => 'functions',
 		outline     => 'outline',
+		directory   => 'directory',
 		bottom      => 'bottom',
 		output      => 'output',
 		syntax      => 'syntax',
@@ -201,6 +203,7 @@ sub new {
 	# Creat the various tools that will live in the panes
 	$self->{functions} = Padre::Wx::FunctionList->new($self);
 	$self->{outline}   = Padre::Wx::Outline->new($self);
+	$self->{directory} = Padre::Wx::Directory->new($self);
 	$self->{output}    = Padre::Wx::Output->new($self);
 	$self->{syntax}    = Padre::Wx::Syntax->new($self);
 	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
@@ -253,6 +256,7 @@ sub new {
 	# Show the tools that the configuration dictates
 	$self->show_functions( $self->config->main_functions );
 	$self->show_outline( $self->config->main_outline );
+	$self->show_directory( $self->config->main_directory );
 	$self->show_output( $self->config->main_output );
 
 	# Load the saved pane layout from last time (if any)
@@ -667,6 +671,7 @@ sub reconfig {
 	# Show or hide all the main gui elements
 	$self->show_functions( $config->main_functions   );
 	$self->show_outline(   $config->main_outline     );
+	$self->show_directory(   $config->main_directory );
 	$self->show_output(    $config->main_output      );
 	$self->show_syntax(    $config->main_syntaxcheck );
 
@@ -1607,6 +1612,7 @@ sub close {
 
 	$self->syntax->clear;
 	$self->outline->clear;
+	$self->directory->clear;
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh($self->current);
@@ -1923,6 +1929,30 @@ sub show_outline {
 	} else {
 		$self->right->hide($outline);
 		$outline->stop if $outline->running;
+	}
+
+	$self->aui->Update;
+
+	return;
+}
+
+sub show_directory {
+	my $self = shift;
+	my $directory = $self->directory;
+
+	my $on   = ( @_ ? ($_[0] ? 1 : 0) : 1 );
+	unless ( $on == $self->menu->view->{directory}->IsChecked ) {
+		$self->menu->view->{directory}->Check($on);
+	}
+	$self->config->set( main_directory => $on );
+
+	if ( $on ) {
+		$self->right->show($directory);
+		$directory->update_gui;
+		#$directory->start unless $directory->running;
+	} else {
+		$self->right->hide($directory);
+		#$directory->stop if $directory->running;
 	}
 
 	$self->aui->Update;
