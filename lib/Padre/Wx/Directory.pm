@@ -96,10 +96,15 @@ sub list_dir {
 		my @items = sort readdir $dh;
 		foreach my $thing (@items)  {
 			next if $thing eq '.' or $thing eq '..';
-			push @data, {
+			my $path = File::Spec->catfile($dir, $thing);
+			my %item = (
 				name => $thing,
 				dir  => $dir,
-			};
+			);
+			if (-d $path) {
+				$item{subdir} = list_dir($path);
+			}
+			push @data, \%item;
 		}
 	}
 	return \@data;
@@ -183,87 +188,35 @@ sub _update_treectrl {
 	my ( $dir, $data, $root ) = @_;
 
 	foreach my $pkg ( @{ $data } ) {
-		my $branch = $dir->AppendItem(
-			$root,
-			$pkg->{name},
-			-1,
-			-1,
-			Wx::TreeItemData->new( {
-				dir  => $pkg->{dir},
-				name => $pkg->{name},
-				type => 'package',
-			} )
-		);
-#		foreach my $type ( qw(pragmata modules methods) ) {
-#			_add_subtree( $dir, $pkg, $type, $branch );
-#		}
-		$dir->Expand($branch);
-	}
-
-	return;
-}
-
-sub _add_subtree {
-	my ( $dir, $pkg, $type, $root ) = @_;
-
-	my $type_elem = undef;
-	if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
-		$type_elem = $dir->AppendItem(
-			$root,
-			ucfirst($type),
-			-1,
-			-1,
-			Wx::TreeItemData->new()
-		);
-
-		my @sorted_entries = ();
-		if ( $type eq 'methods' ) {
-			my $config = Padre->ide->config;
-			if ( $config->main_functions_order eq 'original' ) {
-				# That should be the one we got
-				@sorted_entries = @{ $pkg->{$type} };
-			}
-			elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
-				# ~ comes after \w
-				my @pre = map { $_->{name} =~ s/^_/~/; $_ } @{ $pkg->{$type} };
-				@pre = sort { $a->{name} cmp $b->{name} } @pre;
-				@sorted_entries = map { $_->{name} =~ s/^~/_/; $_ } @pre;
-			}
-			else {
-				# Alphabetical (aka 'abc')
-				@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
-			}
-		}
-		else {
-			@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
-		}
-
-		foreach my $item ( @sorted_entries ) {
-			$dir->AppendItem(
-				$type_elem,
-				$item->{name},
+		if ($pkg->{subdir}) {
+			my $type_elem = $dir->AppendItem(
+				$root,
+				$pkg->{name},
+				-1,
+				-1,
+				Wx::TreeItemData->new()
+			);
+			_update_treectrl( $dir, $pkg->{subdir}, $type_elem );
+		} else {
+			my $branch = $dir->AppendItem(
+				$root,
+				$pkg->{name},
 				-1,
 				-1,
 				Wx::TreeItemData->new( {
-					dir  => $item->{dir},
-					name => $item->{name},
-					type => $type,
+					dir  => $pkg->{dir},
+					name => $pkg->{name},
+					type => 'package',
 				} )
 			);
+			$dir->Expand($branch);
 		}
 	}
-	if ( defined $type_elem ) {
-		if ( $type eq 'methods' ) {
-			$dir->Expand($type_elem);
-		}
-		else {
-			$dir->Collapse($type_elem);
-		}
-	}
+#	$dir->Expand($type_elem);
+#	$dir->Collapse($type_elem);
 
 	return;
 }
-
 
 1;
 
