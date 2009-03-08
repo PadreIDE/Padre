@@ -12,6 +12,8 @@ use Padre::Util    ();
 our $VERSION = '0.28';
 our @ISA     = 'Wx::TreeCtrl';
 
+my %CACHED;
+
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -114,16 +116,25 @@ sub list_dir {
 }
 
 sub update_gui {
+	my ($self) = @_;
+
 	return if not Padre->ide->wx;
-	my $directory   = Padre->ide->wx->main->directory;
-	$directory->clear;
 
 	my $filename = Padre::Current->filename;
 	return if not $filename;
 	my $dir = Padre::Util::get_project_dir($filename) 
 		|| File::Basename::dirname($filename);
+	# TODO empty CACHE if forced ?
+	# TODO how to recognize real change in ?
+	return if $CACHED{$dir};
+	
 	my $data = list_dir($dir);
+
 	return if not @$data;
+	$CACHED{$dir} = 1;
+
+	my $directory   = Padre->ide->wx->main->directory;
+	$directory->clear;
 
 	my $root = $directory->AddRoot(
 		Wx::gettext('Directory'),
