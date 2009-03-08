@@ -7,6 +7,7 @@ use Params::Util   qw{_INSTANCE};
 use Padre::Wx      ();
 use Padre::Current ();
 use File::Basename ();
+use Padre::Util    ();
 
 our $VERSION = '0.28';
 our @ISA     = 'Wx::TreeCtrl';
@@ -90,7 +91,7 @@ sub on_tree_item_activated {
 }
 
 my %SKIP = map { $_ => 1 }
-	('.', '..');
+	('.', '..', '.svn', 'CVS', '.git');
 
 sub list_dir {
 	my ($dir) = @_;
@@ -119,7 +120,8 @@ sub update_gui {
 
 	my $filename = Padre::Current->filename;
 	return if not $filename;
-	my $dir = File::Basename::dirname($filename);
+	my $dir = Padre::Util::get_project_dir($filename) 
+		|| File::Basename::dirname($filename);
 	my $data = list_dir($dir);
 	return if not @$data;
 
