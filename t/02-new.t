@@ -11,8 +11,8 @@ BEGIN {
 	}
 }
 # Move to Run menux
-#plan( tests => 63 );
-plan( tests => 62 );
+plan( tests => 63 );
+#plan( tests => 62 );
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
