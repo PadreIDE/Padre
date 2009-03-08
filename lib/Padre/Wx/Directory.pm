@@ -89,13 +89,15 @@ sub on_tree_item_activated {
 	return;
 }
 
+my %SKIP = map { $_ => 1 }
+	('.', '..');
+
 sub list_dir {
 	my ($dir) = @_;
 	my @data;
 	if (opendir my $dh, $dir) {
-		my @items = sort readdir $dh;
+		my @items = sort grep { not $SKIP{$_} } readdir $dh;
 		foreach my $thing (@items)  {
-			next if $thing eq '.' or $thing eq '..';
 			my $path = File::Spec->catfile($dir, $thing);
 			my %item = (
 				name => $thing,
