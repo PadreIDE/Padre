@@ -85,7 +85,7 @@ sub _behaviour_panel {
 	
 	Wx::Event::EVT_BUTTON( $panel,
 		$self->get_widget('_guess_'),
-		sub { warn Dumper([@_]); $self->guess_indentation_settings },
+		sub { $self->guess_indentation_settings },
 	);
 
 	return $panel;
