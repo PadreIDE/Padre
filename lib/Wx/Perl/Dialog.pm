@@ -60,6 +60,12 @@ This is still an alpha version of the code. It is used mainly by L<Padre> and it
 plugins. The API can change without any warning.
 
 
+Actually as of version 0.28 we have move this code back to the Padre distribution
+in order to make it easier for the Padre developers to improve it.
+
+
+
+
 =head1 DESCRIPTION
 
 =head2 Layout
