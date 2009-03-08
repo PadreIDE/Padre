@@ -181,7 +181,7 @@ sub _on_tree_item_right_click {
 			sub {
 				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				my $help = Padre::Wx::DocBrowser->new;
-                		$help->help( $itemData->{name} );
+				$help->help( $itemData->{name} );
 				$help->SetFocus;
 				$help->Show(1);
 				return;

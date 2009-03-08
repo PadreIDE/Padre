@@ -195,7 +195,7 @@ sub _on_tree_item_right_click {
 			sub {
 				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				my $help = Padre::Wx::DocBrowser->new;
-                		$help->help( $itemData->{name} );
+				$help->help( $itemData->{name} );
 				$help->SetFocus;
 				$help->Show(1);
 				return;
@@ -217,22 +217,22 @@ sub _update_treectrl {
 	my ( $outlinebar, $outline, $root ) = @_;
 
 	foreach my $pkg ( @{ $outline } ) {
-                my $branch = $outlinebar->AppendItem(
-                        $root,
-                        $pkg->{name},
-                        -1,
-                        -1,
-                        Wx::TreeItemData->new( {
-                                line => $pkg->{line},
-                                name => $pkg->{name},
+		my $branch = $outlinebar->AppendItem(
+ 			$root,
+			$pkg->{name},
+			-1,
+			-1,
+			Wx::TreeItemData->new( {
+				line => $pkg->{line},
+				name => $pkg->{name},
 				type => 'package',
-                        } )
-                );
-                foreach my $type ( qw(pragmata modules methods) ) {
-                        _add_subtree( $outlinebar, $pkg, $type, $branch );
-                }
-                $outlinebar->Expand($branch);
-        }
+			} )
+		);
+		foreach my $type ( qw(pragmata modules methods) ) {
+			_add_subtree( $outlinebar, $pkg, $type, $branch );
+		}
+		$outlinebar->Expand($branch);
+	}
 
 	return;
 }
