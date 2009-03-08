@@ -89,14 +89,8 @@ sub on_tree_item_activated {
 	return;
 }
 
-sub update_gui {
-	return if not Padre->ide->wx;
-	my $directory   = Padre->ide->wx->main->directory;
-	$directory->clear;
-
-	my $filename = Padre::Current->filename;
-	return if not $filename;
-	my $dir = File::Basename::dirname($filename);
+sub list_dir {
+	my ($dir) = @_;
 	my @data;
 	if (opendir my $dh, $dir) {
 		my @items = sort readdir $dh;
@@ -108,7 +102,19 @@ sub update_gui {
 			};
 		}
 	}
-	return if not @data;
+	return \@data;
+}
+
+sub update_gui {
+	return if not Padre->ide->wx;
+	my $directory   = Padre->ide->wx->main->directory;
+	$directory->clear;
+
+	my $filename = Padre::Current->filename;
+	return if not $filename;
+	my $dir = File::Basename::dirname($filename);
+	my $data = list_dir($dir);
+	return if not @$data;
 
 	my $root = $directory->AddRoot(
 		Wx::gettext('Directory'),
@@ -117,7 +123,7 @@ sub update_gui {
 		Wx::TreeItemData->new('')
 	);
 
-	_update_treectrl( $directory, \@data, $root );
+	_update_treectrl( $directory, $data, $root );
 
 	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
 		$directory,
