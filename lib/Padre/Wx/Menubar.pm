@@ -126,7 +126,10 @@ sub refresh {
 	$self->view->refresh($current);
 	$self->run->refresh($current);
 	$self->perl->refresh($current);
-	$self->plugins->refresh($current);
+	
+# plugin menu refresh disabled as it was leaking memory
+# TODO eliminate the memory leak
+#	$self->plugins->refresh($current);
 	$self->window->refresh($current);
 	$self->help->refresh($current);
 
