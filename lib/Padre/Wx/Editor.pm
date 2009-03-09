@@ -18,6 +18,17 @@ our %mode = (
 	UNIX => Wx::wxSTC_EOL_LF,
 );
 
+# mapping for mime-type to the style name in the share/styles/default.yml file
+our %MIME_STYLE = (
+	'application/x-perl' => 'perl',
+	'text/x-patch'       => 'diff',
+	'text/x-makefile'    => 'make',
+	'text/x-yaml'        => 'yaml',
+	'text/css'           => 'css',
+#	'application/x-pasm' => 'pasm',
+	'application/x-php'  => 'perl', # temporary solution
+);
+
 my $data;
 my $data_name;
 my $data_private;
@@ -101,20 +112,8 @@ sub padre_setup {
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 
 	my $mimetype = $self->{Document}->get_mimetype;
-	if ($mimetype eq 'application/x-perl') {
-		$self->padre_setup_style('perl');
-	#} elsif ( $mimetype eq 'application/x-pasm' ) {
-	#	$self->padre_setup_style('pasm');
-	} elsif ( $mimetype eq 'text/x-patch' ) {
-		$self->padre_setup_style('diff');
-	} elsif ( $mimetype eq 'text/x-makefile' ) {
-		$self->padre_setup_style('make');
-	} elsif ( $mimetype eq 'text/x-yaml' ) {
-		$self->padre_setup_style('yaml');
-	} elsif ( $mimetype eq 'text/css' ) {
-		$self->padre_setup_style('css');
-	} elsif ( $mimetype eq 'application/x-php' ) {
-		$self->padre_setup_style('perl');
+	if ($MIME_STYLE{$mimetype}) {
+		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 	} elsif ( $mimetype eq 'text/plain' ) {
 		my $filename = $self->{Document}->filename || q{};
 		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
