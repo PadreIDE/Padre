@@ -113,6 +113,8 @@ sub padre_setup {
 		$self->padre_setup_style('yaml');
 	} elsif ( $mimetype eq 'text/css' ) {
 		$self->padre_setup_style('css');
+	} elsif ( $mimetype eq 'application/x-php' ) {
+		$self->padre_setup_style('perl');
 	} elsif ( $mimetype eq 'text/plain' ) {
 		my $filename = $self->{Document}->filename || q{};
 		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
