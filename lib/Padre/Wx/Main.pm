@@ -1460,7 +1460,7 @@ sub on_save_as {
 			Wx::wxFD_SAVE,
 		);
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-			return 0;
+			return;
 		}
 		my $filename = $dialog->GetFilename;
 		$self->{cwd} = $dialog->GetDirectory;
@@ -1501,19 +1501,21 @@ sub on_save_as {
 	return 1;
 }
 
+# returns true if document saved
+# returns fals if document was not could not save it.
 sub on_save {
 	my $self     = shift;
 	my $document = shift || $self->current->document;
 	return unless $document;
-	print $document->filename;
+	#print $document->filename, "\n";
 
 	my $pageid = $self->find_id_of_editor( $document->editor );
 	if ( $document->is_new ) {
 		# move focus to document to be saved
 		$self->on_nth_pane( $pageid );
-		$self->on_save_as;
+		return $self->on_save_as;
 	} elsif ( $document->is_modified ) {
-		$self->_save_buffer($pageid);
+		return $self->_save_buffer($pageid);
 	}
 
 	return;
@@ -1524,12 +1526,16 @@ sub on_save {
 sub on_save_all {
 	my $self = shift;
 	foreach my $id ( $self->pageids ) {
-		my $doc = $self->notebook->GetPage($id) or next;
-		$self->on_save( $doc ) or return 0;
+		my $editor = $self->notebook->GetPage($id) or next;
+		my $doc = $editor->{Document}; # TODO no accessor for document?
+		if ($doc->is_modified) {
+			$self->on_save( $doc ) or return 0;
+		}
 	}
 	return 1;
 }
 
+# returns true if buffer saved, fals if not
 sub _save_buffer {
 	my ($self, $id) = @_;
 
@@ -1559,7 +1565,7 @@ sub _save_buffer {
 	$page->SetSavePoint;
 	$self->refresh;
 
-	return;
+	return 1;
 }
 
 # Returns true if closed.
