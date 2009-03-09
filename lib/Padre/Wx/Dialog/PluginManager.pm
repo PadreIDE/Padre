@@ -126,7 +126,7 @@ sub toggle_enabled {
 		$manager->_plugin_enable($name);
 	}
 	$self->update_labels($name);
-	$self->{parent}->menu->refresh;
+	$self->{parent}->menu->refresh(1);
 	$self->{parent}->Thaw;
 	return;
 }

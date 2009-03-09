@@ -105,6 +105,8 @@ sub new {
 
 sub refresh {
 	my $self     = shift;
+	my $plugins  = shift;
+
 	my $current  = _CURRENT(@_);
 	my $menu     = $self->wx->GetMenuCount ne $self->{default};
 	my $document = !! _INSTANCE(
@@ -127,9 +129,11 @@ sub refresh {
 	$self->run->refresh($current);
 	$self->perl->refresh($current);
 	
-# plugin menu refresh disabled as it was leaking memory
+# plugin menu requires special flag as it was leaking memory
 # TODO eliminate the memory leak
-#	$self->plugins->refresh($current);
+	if ( $plugins ) {
+		$self->plugins->refresh($current);
+	}
 	$self->window->refresh($current);
 	$self->help->refresh($current);
 

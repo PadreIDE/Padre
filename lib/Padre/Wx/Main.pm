@@ -483,7 +483,7 @@ sub refresh {
 	my $guard = $self->freezer;
 
 	my $current = $self->current;
-	$self->refresh_menu($current);
+	$self->refresh_menu;
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 	$self->refresh_functions($current);
@@ -517,7 +517,7 @@ sub refresh_syntaxcheck {
 sub refresh_menu {
 	my $self = shift;
 	return if $self->no_refresh;
-	$self->menu->refresh($_[0] or $self->current);
+	$self->menu->refresh;
 }
 
 sub refresh_toolbar {
@@ -2220,7 +2220,7 @@ sub on_stc_update_ui {
 
 	# avoid refreshing the subs as that takes a lot of time
 	# TODO maybe we should refresh it on every 20s hit or so
-	$self->refresh_menu($current);
+	$self->refresh_menu;
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 	#$self->refresh_functions;
