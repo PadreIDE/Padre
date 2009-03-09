@@ -1503,13 +1503,16 @@ sub on_save_as {
 
 sub on_save {
 	my $self     = shift;
-	my $document = $self->current->document or return;
+	my $document = shift || $self->current->document;
+	return unless $document;
+	print $document->filename;
 
+	my $pageid = $self->find_id_of_editor( $document->editor );
 	if ( $document->is_new ) {
-		return $self->on_save_as;
-	}
-	if ( $document->is_modified ) {
-		my $pageid = $self->notebook->GetSelection;
+		# move focus to document to be saved
+		$self->on_nth_pane( $pageid );
+		$self->on_save_as;
+	} elsif ( $document->is_modified ) {
 		$self->_save_buffer($pageid);
 	}
 
@@ -2134,6 +2137,20 @@ sub find_editor_of_file {
 	return;
 }
 
+# TODO can this really work? What happens when we split a window?
+sub find_id_of_editor {
+	my $self     = shift;
+	my $editor   = shift;
+	my $notebook = $self->notebook;
+	foreach my $id ( $self->pageids ) {
+		if ($editor eq $notebook->GetPage($id)) {
+			return $id;
+		}
+	}
+	return;
+}
+
+
 sub run_in_padre {
 	my $self = shift;
 	my $doc  = $self->current->document or return;
@@ -2181,7 +2198,7 @@ sub on_stc_style_needed {
 
 }
 
-
+# called on every movement of the cursor
 sub on_stc_update_ui {
 	my $self    = shift;
 
