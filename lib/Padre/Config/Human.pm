@@ -61,7 +61,8 @@ sub read {
 # my $revision = $config->version;
 #
 sub version {
-	$_[0]->{version};
+	my $self = shift;
+	$self->{version};	# stored as other preferences!
 }
 
 
