@@ -29,10 +29,9 @@ my $REVISION = 1;		# config schema revision
 sub create {
 	my $class = shift;
 	my $file  = Padre::Config->default_yaml;
+	my $empty = { version => $REVISION };
 
-	DumpFile( $file, {
-		version => $REVISION,
-	} ) or Carp::croak("Failed to create '$file'");
+	DumpFile( $file, $empty ) or Carp::croak("Failed to create '$file'");
 
 	return $class->read;
 }
