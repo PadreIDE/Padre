@@ -11,7 +11,6 @@ use warnings;
 use Storable      ();
 use YAML::Tiny    ();
 use Params::Util  qw{_HASH0};
-use Padre::Config ();
 
 our $VERSION = '0.28';
 
