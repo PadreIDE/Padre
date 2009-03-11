@@ -145,7 +145,7 @@ No params.
 =back
 
 
-=head1 LICENSE & COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 
