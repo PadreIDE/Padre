@@ -1,16 +1,17 @@
-package Padre::Config::Human;
-
 #
 # Configuration and state data relating to the human using Padre.
 #
+
+package Padre::Config::Human;
 
 use 5.008;
 use strict;
 use warnings;
 
-use Storable      ();
-use YAML::Tiny    ();
-use Params::Util  qw{_HASH0};
+use Storable      qw{ dclone };
+use YAML::Tiny    qw{ DumpFile LoadFile };
+use Params::Util  qw{ _HASH0 };
+use Padre::Config;
 
 our $VERSION = '0.28';
 
@@ -30,7 +31,7 @@ sub read {
 
 	# Load the user configuration
 	my $hash = eval {
-		YAML::Tiny::LoadFile(
+		LoadFile(
 			Padre::Config->default_yaml
 		)
 	};
@@ -52,7 +53,7 @@ sub create {
 	my $class = shift;
 	my $file  = Padre::Config->default_yaml;
 
-	YAML::Tiny::DumpFile( $file, {
+	DumpFile( $file, {
 		version => $SCHEMA_VERSION,
 	} ) or Carp::croak("Failed to create '$file'");
 
@@ -70,10 +71,10 @@ sub write {
 	my $self = shift;
 
 	# Clone and remove the bless
-	my $copy = Storable::dclone( +{ %$self } );
+	my $copy = dclone( +{ %$self } );
 
 	# Save the user configuration
-	YAML::Tiny::DumpFile(
+	DumpFile(
 		Padre::Config->default_yaml,
 		$copy,
 	);
