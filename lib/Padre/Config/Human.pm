@@ -18,6 +18,24 @@ our $VERSION = '0.28';
 my $REVISION = 1;		# config schema revision
 
 
+#--
+# constructors
+
+#
+# my $config = Padre::Config::Human->create;
+#
+sub create {
+	my $class = shift;
+	my $file  = Padre::Config->default_yaml;
+
+	DumpFile( $file, {
+		version => $REVISION,
+	} ) or Carp::croak("Failed to create '$file'");
+
+	return $class->read;
+}
+
+
 #
 # my $config = Padre::Config::Human->read;
 #
@@ -36,19 +54,16 @@ sub read {
 	return bless $hash, $class;
 }
 
-#
-# my $config = Padre::Config::Human->create;
-#
-sub create {
-	my $class = shift;
-	my $file  = Padre::Config->default_yaml;
+#--
+# public methods
 
-	DumpFile( $file, {
-		version => $REVISION,
-	} ) or Carp::croak("Failed to create '$file'");
-
-	return $class->read;
+#
+# my $revision = $config->version;
+#
+sub version {
+	$_[0]->{version};
 }
+
 
 #
 # $config->write;
@@ -68,12 +83,6 @@ sub write {
 	return 1;
 }
 
-#
-# my $revision = $config->version;
-#
-sub version {
-	$_[0]->{version};
-}
 
 1;
 
