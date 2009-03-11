@@ -7,11 +7,23 @@ package Padre::Config::Constants;
 use File::Spec;
 use File::Spec::Functions qw{ catdir rel2abs };
 
+# export stuff
+use base qw{ Exporter };
+our @EXPORT_OK = qw{
+	dirs
+	$PADRE_HOME
+};
+our %EXPORT_TAGS = (
+	dirs => [ qw{ $PADRE_HOME } ],
+);
 
+
+# list of constants
 our $PADRE_HOME = _find_padre_home();
 
 
 
+# -- private subs
 
 sub _find_padre_home {
 	my $home;
@@ -49,18 +61,48 @@ information). Those systems needs to somehow agree on some basic stuff, which
 is defined in this module.
 
 
+
 =head1 PUBLIC API
 
 =head2 Available constants
 
-This module exports nothing by default. However, the following constants can
-be imported:
+This module exports nothing by default. However, some constants can
+be imported with:
+
+	use Padre::Config::Constants qw{ $FOO $BAR };
+
+
+The list of available constants are:
 
 =over 4
 
-=item *
+=item * $PADRE_HOME
+
+Private Padre configuration directory Padre, used to store stuff.
 
 =back
+
+
+
+=head2 Available group of constants
+
+Since lots of constants are somehow related, this module defines some tags
+to import them all at once, with eg:
+
+	use Padre::Config::Constants qw{ :dirs };
+
+The tags available are:
+
+=over 4
+
+=item * dirs
+
+Exports C<$PADRE_HOME>.
+
+
+=back
+
+
 
 
 =head1 COPYRIGHT & LICENSE
