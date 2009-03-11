@@ -8,6 +8,7 @@ use 5.008;
 use strict;
 use warnings;
 
+use Carp          qw{ croak              };
 use File::Spec    qw{ catfile            };
 use Params::Util  qw{ _HASH0             };
 use Storable      qw{ dclone             };
@@ -31,8 +32,7 @@ sub create {
 	my $file  = Padre::Config->default_yaml;
 	my $empty = { version => $REVISION };
 
-	DumpFile( $file, $empty ) or Carp::croak("Failed to create '$file'");
-
+	DumpFile($file, $empty) or croak("Failed to create '$file'");
 	return $class->read;
 }
 
