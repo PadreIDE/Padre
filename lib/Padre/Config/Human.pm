@@ -33,7 +33,7 @@ sub read {
 	return unless _HASH0($hash);
 
 	# Create and return the object
-	return bless $hash, __PACKAGE__;
+	return bless $hash, $class;
 }
 
 #
