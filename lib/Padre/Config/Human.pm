@@ -15,6 +15,8 @@ use Padre::Config ();
 
 our $VERSION = '0.28';
 
+my $SCHEMA_VERSION = 1;		# version of config schema
+
 
 #
 # my $config = Padre::Config::Human->read;
@@ -52,7 +54,7 @@ sub create {
 	my $file  = Padre::Config->default_yaml;
 
 	YAML::Tiny::DumpFile( $file, {
-		version => 1,
+		version => $SCHEMA_VERSION,
 	} ) or Carp::croak("Failed to create '$file'");
 
 	return $class->read( $file );
