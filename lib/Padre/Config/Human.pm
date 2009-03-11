@@ -15,16 +15,11 @@ use Padre::Config;
 
 our $VERSION = '0.28';
 
-my $SCHEMA_VERSION = 1;		# version of config schema
+my $REVISION = 1;		# config schema revision
 
 
 #
 # my $config = Padre::Config::Human->read;
-#
-# load & return the user configuration from the yaml file. return undef in
-# case of failure.
-#
-# no params.
 #
 sub read {
 	my $class = shift;
@@ -42,19 +37,14 @@ sub read {
 }
 
 #
-# $config->create;
-#
-# create & return an empty user configuration. (almost empty, since it will
-# still store the version of the config schema - see version() below).
-#
-# no params.
+# my $config = Padre::Config::Human->create;
 #
 sub create {
 	my $class = shift;
 	my $file  = Padre::Config->default_yaml;
 
 	DumpFile( $file, {
-		version => $SCHEMA_VERSION,
+		version => $REVISION,
 	} ) or Carp::croak("Failed to create '$file'");
 
 	return $class->read;
@@ -62,10 +52,6 @@ sub create {
 
 #
 # $config->write;
-#
-# (over-)write user configuration to the yaml file.
-#
-# no params.
 #
 sub write {
 	my $self = shift;
@@ -83,13 +69,7 @@ sub write {
 }
 
 #
-# my $version = $config->version;
-#
-# return the version of the config schema. indeed, we might want to have
-# more structured config instead of a plain hash later on. note that this
-# version is stored with the other user preferences at the same level.
-#
-# no params.
+# my $revision = $config->version;
 #
 sub version {
 	$_[0]->{version};
@@ -112,6 +92,53 @@ for more information on the various types of preferences supported by Padre.
 All human settings are stored in a hash as top-level keys (no hierarchy). The hash is
 then dumped in C<config.yml>, a YAML file in Padre's preferences directory (see
 C<Padre::Config>). 
+
+
+=head1 PUBLIC API
+
+=head2 Constructors
+
+=over 4
+
+=item my $config = Padre::Config::Human->create;
+
+Create & return an empty user configuration. (almost empty, since it will
+still store the config schema revision - see version() below).
+
+No params.
+
+
+=item my $config = Padre::Config::Human->read;
+
+Load & return the user configuration from the yaml file. Return undef in
+case of failure.
+
+No params.
+
+
+=back
+
+
+=head2 Methods
+
+=over 4
+
+=item my $revision = $config->version;
+
+Return the config schema revision. Indeed, we might want to have
+more structured config instead of a plain hash later on. Note that this
+version is stored with the other user preferences at the same level.
+
+No params.
+
+
+=item $config->write;
+
+(Over-)write user configuration to the yaml file.
+
+No params.
+
+=back
 
 
 =head1 LICENSE & COPYRIGHT
