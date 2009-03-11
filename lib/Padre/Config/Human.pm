@@ -8,18 +8,20 @@ use 5.008;
 use strict;
 use warnings;
 
-use Storable      qw{ dclone };
-use YAML::Tiny    qw{ DumpFile LoadFile };
-use Params::Util  qw{ _HASH0 };
+use File::Spec    qw{ catfile            };
+use Params::Util  qw{ _HASH0             };
+use Storable      qw{ dclone             };
+use YAML::Tiny    qw{ DumpFile LoadFile  };
+
 use Padre::Config;
 
 our $VERSION = '0.28';
 
+
 my $REVISION = 1;		# config schema revision
 
 
-#--
-# constructors
+# -- constructors
 
 #
 # my $config = Padre::Config::Human->create;
@@ -54,8 +56,8 @@ sub read {
 	return bless $hash, $class;
 }
 
-#--
-# public methods
+
+# -- public methods
 
 #
 # my $revision = $config->version;
