@@ -19,12 +19,6 @@ our $VERSION = '0.28';
 ######################################################################
 # Constructor
 
-sub new {
-	my $class = shift;
-	my $self  = bless { @_ }, $class;
-	return $self;
-}
-
 sub read {
 	my $class = shift;
 
@@ -37,7 +31,7 @@ sub read {
 	return unless _HASH0($hash);
 
 	# Create the object
-	return $class->new( %$hash );
+	return bless $hash, __PACKAGE__;
 }
 
 sub create {
