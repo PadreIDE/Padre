@@ -4,6 +4,34 @@
 
 package Padre::Config::Constants;
 
+use File::Spec;
+use File::Spec::Functions qw{ catdir rel2abs };
+
+
+our $PADRE_HOME = _find_padre_home();
+
+
+
+
+sub _find_padre_home {
+	my $home;
+	
+	# PADRE_HOME env var set, always use unix style.
+	if ( defined $ENV{PADRE_HOME} ) {
+		$home = catdir( $ENV{PADRE_HOME}, '.padre' );
+		return rel2abs($home);
+	}
+
+	# using data dir as defined by the os.
+	my $datadir = File::HomeDir->my_data;
+	my @subdirs = File::Spec->isa('File::Spec::Win32')
+		? qw{ Perl Padre }	# on windows use the traditional vendor/product format
+		: qw{ .padre };		# TODO - is mac correctly covered?
+
+	$home = catdir( $datadir, @subdirs );
+	return rel2abs($home);
+}
+
 
 1;
 
