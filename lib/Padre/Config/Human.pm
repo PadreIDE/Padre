@@ -44,11 +44,7 @@ sub read {
 	my $class = shift;
 
 	# Load the user configuration
-	my $hash = eval {
-		LoadFile(
-			Padre::Config->default_yaml
-		)
-	};
+	my $hash = eval { LoadFile( Padre::Config->default_yaml ) };
 	return unless _HASH0($hash);
 
 	# Create and return the object
@@ -77,10 +73,7 @@ sub write {
 	my $copy = dclone( +{ %$self } );
 
 	# Save the user configuration
-	DumpFile(
-		Padre::Config->default_yaml,
-		$copy,
-	);
+	DumpFile( Padre::Config->default_yaml, $copy );
 
 	return 1;
 }
