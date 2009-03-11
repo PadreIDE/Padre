@@ -57,7 +57,7 @@ sub create {
 		version => $SCHEMA_VERSION,
 	} ) or Carp::croak("Failed to create '$file'");
 
-	return $class->read( $file );
+	return $class->read;
 }
 
 #
