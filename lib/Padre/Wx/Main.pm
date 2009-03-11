@@ -851,7 +851,8 @@ sub run_document {
 	unless ( $document->can('get_command') ) {
 		return $self->error(Wx::gettext("No execution mode was defined for this document"));
 	}
-
+	my $argv = $self->prompt("Command line parameters", "", "RUN_COMMAND_LINE_PARAMS") || '';
+	
 	my $cmd = eval { $document->get_command($debug) };
 	if ( $@ ) {
 		chomp $@;
@@ -860,6 +861,7 @@ sub run_document {
 	}
 	if ( $cmd ) {
 		if ($document->pre_process) {
+			$cmd .= " $argv";
 			$self->run_command( $cmd );
 		} else {
 			$self->error( $document->errstr );
