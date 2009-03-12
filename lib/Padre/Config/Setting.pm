@@ -5,25 +5,12 @@ package Padre::Config::Setting;
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
-use Params::Util ();
+
+use Carp                     ();
+use Padre::Config::Constants qw{ :stores :types };
+use Params::Util             ();
 
 our $VERSION = '0.28';
-
-# TODO: Really shouldn't clone these constants,
-# but for now it's a nice convenience.
-
-# Settings Types
-use constant BOOLEAN => 0;
-use constant POSINT  => 1;
-use constant INTEGER => 2;
-use constant ASCII   => 3;
-use constant PATH    => 4;
-
-# Setting Stores
-use constant HOST    => 0;
-use constant HUMAN   => 1;
-use constant PROJECT => 2;
 
 use Class::XSAccessor
 	getters => {
