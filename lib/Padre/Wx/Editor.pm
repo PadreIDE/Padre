@@ -11,7 +11,7 @@ use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::StyledTextCtrl';
+use base 'Wx::StyledTextCtrl';
 
 our %mode = (
 	WIN  => Wx::wxSTC_EOL_CRLF,

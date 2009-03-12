@@ -5,7 +5,7 @@ use warnings;
 use Padre::Wx ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::AuiNotebook';
+use base 'Wx::AuiNotebook';
 
 sub new {
 	my $class = shift;

@@ -8,7 +8,7 @@ use Padre::Wx      ();
 use Padre::Current ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::ListCtrl';
+use base 'Wx::ListCtrl';
 
 
 

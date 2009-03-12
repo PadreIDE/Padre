@@ -3,7 +3,7 @@ use strict;
 use warnings FATAL => 'all';
 
 our $VERSION = '0.01';
-our @ISA     = 'Padre::Plugin';
+use base 'Padre::Plugin';
 
 
 1;

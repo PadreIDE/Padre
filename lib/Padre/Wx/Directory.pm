@@ -10,7 +10,7 @@ use File::Basename ();
 use Padre::Util    ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::TreeCtrl';
+use base 'Wx::TreeCtrl';
 
 my %CACHED;
 

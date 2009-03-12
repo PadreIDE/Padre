@@ -9,7 +9,7 @@ use Padre::Wx      ();
 use Padre::Current ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::StatusBar';
+use base 'Wx::StatusBar';
 
 sub new {
 	my $class = shift;

@@ -6,7 +6,7 @@ use warnings;
 use Module::Build            ();
 use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
 
-our @ISA = ('Module::Build');
+use base 'Module::Build';
 
 our $VERSION = '0.28';
 

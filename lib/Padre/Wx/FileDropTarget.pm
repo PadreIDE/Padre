@@ -7,7 +7,7 @@ use Params::Util qw{ _INSTANCE };
 use Wx::DND;
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::FileDropTarget';
+use base 'Wx::FileDropTarget';
 
 sub new {
 	my $class     = shift;

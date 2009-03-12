@@ -27,7 +27,7 @@ use Padre::Wx ();
 use Wx::Html  ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::HtmlWindow';
+use base 'Wx::HtmlWindow';
 
 
 

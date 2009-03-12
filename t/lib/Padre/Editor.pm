@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use Padre::Wx::Editor;
-our @ISA = 'Padre::Wx::Editor';
+use base 'Padre::Wx::Editor';
 
 sub new {
 	my $self = bless {}, shift;

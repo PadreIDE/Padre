@@ -33,11 +33,9 @@ use strict;
 use warnings;
 use Pod::Simple::XHTML ();
 
-use vars qw{@ISA};
 our $VERSION = '0.28';
-BEGIN {
-	@ISA     = 'Pod::Simple::XHTML';
-}
+use base 'Pod::Simple::XHTML';
+
 
 use Class::XSAccessor
 	getters => {

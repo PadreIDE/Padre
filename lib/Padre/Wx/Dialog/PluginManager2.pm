@@ -12,7 +12,7 @@ use Padre::Wx               ();
 use Padre::Wx::Dialog::HTML ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Padre::Wx::Dialog::HTML';
+use base 'Padre::Wx::Dialog::HTML';
 
 sub new {
 	my $class = shift;

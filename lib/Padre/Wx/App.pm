@@ -35,7 +35,7 @@ use Params::Util qw{ _INSTANCE };
 use Padre::Wx    ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Wx::App';
+use base 'Wx::App';
 
 
 

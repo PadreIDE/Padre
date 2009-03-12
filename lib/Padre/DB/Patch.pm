@@ -10,9 +10,9 @@ our $VERSION = '0.28';
 use DBI      ();
 use Exporter ();
 
-use vars qw{$VERSION @ISA @EXPORT $FILE};
+use base 'Exporter';
+use vars qw{$VERSION @EXPORT $FILE};
 BEGIN {
-	@ISA     = 'Exporter';
 	@EXPORT  = qw{
 		file
 		dbh

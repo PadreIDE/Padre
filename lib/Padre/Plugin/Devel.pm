@@ -8,7 +8,7 @@ use Padre::Plugin  ();
 use Padre::Current ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Padre::Plugin';
+use base 'Padre::Plugin';
 
 
 

@@ -10,7 +10,7 @@ use Exporter     ();
 use Test::More   ();
 
 our $VERSION = '0.20';
-our @ISA     = 'Exporter';
+use base 'Exporter';
 our @EXPORT  = 'refis';
 
 # By default, load Padre in a controlled environment

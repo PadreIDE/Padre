@@ -9,7 +9,7 @@ use FindBin    ();
 use File::Find ();
 
 our $VERSION = '0.26';
-our @ISA     = qw{Module::Install::Base};
+use base qw{ Module::Install::Base };
 
 sub setup_padre {
 	my $self      = shift;

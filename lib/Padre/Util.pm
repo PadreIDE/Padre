@@ -31,7 +31,7 @@ use List::Util qw(first);
 use File::Basename ();
 
 our $VERSION   = '0.28';
-our @ISA       = 'Exporter';
+use base 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches _T);
 
 

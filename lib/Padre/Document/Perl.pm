@@ -11,7 +11,7 @@ use Padre::Document ();
 use Padre::Util     ();
 
 our $VERSION = '0.28';
-our @ISA     = 'Padre::Document';
+use base 'Padre::Document';
 
 
 
