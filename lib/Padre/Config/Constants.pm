@@ -10,7 +10,6 @@ use File::Spec::Functions qw{ catdir rel2abs };
 # export stuff
 use base qw{ Exporter };
 our @EXPORT_OK = qw{
-	dirs
 	$PADRE_HOME
 };
 our %EXPORT_TAGS = (
