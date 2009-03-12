@@ -49,7 +49,7 @@ our $PROJECT = 2;
 # -- private subs
 
 #
-# my $dir = _fond_padre_config_dir();
+# my $dir = _find_padre_config_dir();
 #
 # find and return the config directory where padre should store its
 # preferences & settings. no params.
@@ -70,8 +70,10 @@ sub _find_padre_config_dir {
 	my $confdir = rel2abs( catdir( @subdirs ) );
 
 	# check if directory exists, create it otherwise
-	mkpath($confdir) or die "Cannot create config dir '$confdir' $!"
-		unless -e $confdir;
+	unless ( -e $confdir ) {
+		mkpath($confdir) or
+		die "Cannot create config dir '$confdir': $!";
+	}
 
 	return $confdir;
 }
