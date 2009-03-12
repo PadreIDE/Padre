@@ -57,10 +57,6 @@ use Class::XSAccessor::Array
 	};
 
 
-# Establish Padre's home directory
-my $DEFAULT_DIR = $PADRE_CONFIG_DIR;
-
-
 
 
 
@@ -430,11 +426,11 @@ setting(
 # Class-Level Functionality
 
 sub default_dir {
-	unless ( -e $DEFAULT_DIR ) {
-		File::Path::mkpath($DEFAULT_DIR) or
-		die "Cannot create config dir '$DEFAULT_DIR' $!";
+	unless ( -e $PADRE_CONFIG_DIR ) {
+		File::Path::mkpath($PADRE_CONFIG_DIR) or
+		die "Cannot create config dir '$PADRE_CONFIG_DIR' $!";
 	}
-	return $DEFAULT_DIR;
+	return $PADRE_CONFIG_DIR;
 }
 
 
