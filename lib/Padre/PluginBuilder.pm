@@ -1,7 +1,11 @@
 package Padre::PluginBuilder;
+
 use strict;
 use warnings;
-use Module::Build ();
+
+use Module::Build            ();
+use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
+
 our @ISA = ('Module::Build');
 
 our $VERSION = '0.28';
@@ -71,9 +75,7 @@ sub ACTION_installplugin {
 	my $plugin = "$module.par";
 
 	require Padre;
-	my $plugin_dir = Padre::Config->default_plugin_dir;
-
-	return $self->copy_if_modified(from => $plugin, to_dir => $plugin_dir);
+	return $self->copy_if_modified(from => $plugin, to_dir => $PADRE_PLUGIN_DIR);
 }
 
 
