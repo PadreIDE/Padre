@@ -4,6 +4,7 @@
 
 package Padre::Config::Constants;
 
+use File::Path            qw{ mkpath };
 use File::Spec;
 use File::Spec::Functions qw{ catdir catfile rel2abs };
 
@@ -27,22 +28,25 @@ our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
 # -- private subs
 
 sub _find_padre_config_dir {
-	my $home;
-	
-	# PADRE_HOME env var set, always use unix style.
+	# define config dir
+	my @subdirs;
 	if ( defined $ENV{PADRE_HOME} ) {
-		$home = catdir( $ENV{PADRE_HOME}, '.padre' );
-		return rel2abs($home);
+		# PADRE_HOME env var set, always use unix style.
+		@subdirs = ( $ENV{PADRE_HOME}, '.padre' );
+	} else {
+		# using data dir as defined by the os.
+		@subdirs = ( File::HomeDir->my_data );
+		push @subdirs, File::Spec->isa('File::Spec::Win32')
+			? qw{ Perl Padre }	# on windows use the traditional vendor/product format
+			: qw{ .padre };		# TODO - is mac correctly covered?
 	}
+	my $confdir = rel2abs( catdir( @subdirs ) );
 
-	# using data dir as defined by the os.
-	my $datadir = File::HomeDir->my_data;
-	my @subdirs = File::Spec->isa('File::Spec::Win32')
-		? qw{ Perl Padre }	# on windows use the traditional vendor/product format
-		: qw{ .padre };		# TODO - is mac correctly covered?
+	# check if directory exists, create it otherwise
+	mkpath($confdir) or die "Cannot create config dir '$confdir' $!"
+		unless -e $confdir;
 
-	$home = catdir( $datadir, @subdirs );
-	return rel2abs($home);
+	return $confdir;
 }
 
 
