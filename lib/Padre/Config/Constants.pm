@@ -4,11 +4,14 @@
 
 package Padre::Config::Constants;
 
+use File::Basename        qw{ dirname };
+use File::Copy            qw{ copy };
 use File::Path            qw{ mkpath };
 use File::Spec;
 use File::Spec::Functions qw{ catdir catfile rel2abs };
 
 # -- export stuff
+
 use base qw{ Exporter };
 
 my @dirs   = qw{ $PADRE_CONFIG_DIR $PADRE_PLUGIN_DIR    };
@@ -83,7 +86,10 @@ sub _find_padre_config_dir {
 # my $dir = _find_padre_plugin_dir();
 #
 # find and return the directory where padre should check the locally
-# installed plugins. create it if needed. no params.
+# installed plugins. create it if needed. copy the My Plugin in it if
+# needed.
+#
+# no params.
 #
 sub _find_padre_plugin_dir {
 	my $pluginsdir = catdir( $PADRE_CONFIG_DIR, 'plugins' );
@@ -96,9 +102,12 @@ sub _find_padre_plugin_dir {
 	}
 
 	# copy the My Plugin if necessary
-	my $file = catfile( $fullpath, 'My.pm' );
-	unless ( -e $file ) {
-		Padre::Config->copy_original_My_plugin( $file );
+	my $dst = catfile( $fullpath, 'My.pm' );
+	unless ( -e $dst ) {
+		my $src = catfile( dirname($INC{'Padre/Config.pm'}), 'Plugin', 'My.pm' );
+		die "Could not find the original My plugin" unless -e $src;
+		copy($src, $dst) or die "Could not copy the My plugin ($src) to $dst: $!";
+		chmod( 0644, $dst);
 	}
 
 	return $pluginsdir;
