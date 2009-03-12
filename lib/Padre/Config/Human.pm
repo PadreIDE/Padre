@@ -135,7 +135,7 @@ No params.
 =back
 
 
-=head2 Methods
+=head2 Object methods
 
 =over 4
 
