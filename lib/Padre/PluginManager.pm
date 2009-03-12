@@ -27,7 +27,7 @@ use File::Spec               ();
 use File::Spec::Functions    qw{ catfile };
 use Scalar::Util             ();
 use Params::Util             qw{_IDENTIFIER _CLASS _INSTANCE};
-use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
+use Padre::Config::Constants qw{ $PADRE_PLUGIN_LIBDIR };
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
@@ -148,7 +148,7 @@ sub reset_my_plugin {
 	my ($self, $overwrite) = @_;
 
 	# do not overwrite it unless stated so.
-	my $dst = catfile( $PADRE_PLUGIN_DIR, 'My.pm' );
+	my $dst = catfile( $PADRE_PLUGIN_LIBDIR, 'My.pm' );
 	return if -e $dst && !$overwrite;
 	
 	# find the My Plugin

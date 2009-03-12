@@ -17,7 +17,7 @@ use File::Spec::Functions qw{ catdir catfile rel2abs };
 
 use base qw{ Exporter };
 
-my @dirs   = qw{ $PADRE_CONFIG_DIR $PADRE_PLUGIN_DIR    };
+my @dirs   = qw{ $PADRE_CONFIG_DIR $PADRE_PLUGIN_DIR $PADRE_PLUGIN_LIBDIR };
 my @files  = qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER    };
 my @stores = qw{ $HOST $HUMAN $PROJECT                  };
 my @types  = qw{ $BOOLEAN $POSINT $INTEGER $ASCII $PATH };
@@ -34,10 +34,21 @@ our %EXPORT_TAGS = (
 # -- list of constants
 
 # files & dirs
-our $PADRE_CONFIG_DIR = _find_padre_config_dir();
-our $PADRE_PLUGIN_DIR = _find_padre_plugin_dir();
-our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
-our $CONFIG_FILE_HOST = catfile( $PADRE_CONFIG_DIR, 'config.db'  );
+our $PADRE_CONFIG_DIR    = _find_padre_config_dir();
+our $PADRE_PLUGIN_DIR    = catdir( $PADRE_CONFIG_DIR, 'plugins' );
+our $PADRE_PLUGIN_LIBDIR = catdir( $PADRE_PLUGIN_DIR, 'Padre', 'Plugin' );
+our $CONFIG_FILE_USER    = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
+our $CONFIG_FILE_HOST    = catfile( $PADRE_CONFIG_DIR, 'config.db'  );
+
+{
+	# check if plugin directory exists, create it otherwise
+	unless ( -e $PADRE_PLUGIN_LIBDIR ) {
+		mkpath($PADRE_PLUGIN_LIBDIR) or
+		die "Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!";
+	}
+}
+
+
 
 # settings types (based on firefox)
 our $BOOLEAN = 0;
@@ -165,6 +176,10 @@ Private Padre configuration directory Padre, used to store stuff.
 
 Private directory where Padre can look for plugins.
 
+=item * $PADRE_PLUGIN_LIBDIR
+
+Subdir of $PADRE_PLUGIN_DIR with the path C<Padre/Plugin> added (or whatever
+depending on your platform) so that perl can load a C<Padre::Plugin::> plugin.
 
 =back
 
@@ -187,7 +202,7 @@ Imports everything.
 
 =item * dirs
 
-Imports C<$PADRE_CONFIG_DIR> and C<$PADRE_PLUGIN_DIR>.
+Imports C<$PADRE_CONFIG_DIR>, C<$PADRE_PLUGIN_DIR> and C<$PADRE_PLUGIN_LIBDIR>.
 
 =item * files
 
