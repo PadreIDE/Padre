@@ -273,7 +273,9 @@ sub new {
 	# (we had an issue that if the default of main_statusbar was false it did not show
 	# the status bar which is ok, but then when we selected the menu to show it, it showed
 	# at the top)
+	# so now we always turn the status bar on at the beginning and hide it in the timer, if it was not needed
 	# TODO: there might be better ways to fix that issue...
+	$self->GetStatusBar->Show;
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
 	Wx::Event::EVT_TIMER(
 		$self,
@@ -407,8 +409,12 @@ sub timer_post_init {
 	# Load all files and refresh the application so that it
 	# represents the loaded state.
 	$self->load_files;
+	# canot use the toggle sub here as that one reads from the Menu and 
+	# on some machines the Menu is not configured yet at this point.
 	if ( $self->config->main_statusbar ) {
 		$self->GetStatusBar->Show;
+	} else {
+		$self->GetStatusBar->Hide;
 	}
 	Padre->ide->plugin_manager->enable_editors_for_all;
 
