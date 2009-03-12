@@ -166,33 +166,6 @@ foreach my $type ( keys %settings ) {
 
 
 #####################################################################
-# Class-Level Functionality
-
-
-# TODO - This should probably live in Padre::PluginManager somewhere
-sub copy_original_My_plugin {
-	my $class  = shift;
-	my $target = shift;
-	my $src = File::Spec->catfile(
-		File::Basename::dirname($INC{'Padre/Config.pm'}),
-		'Plugin', 'My.pm'
-	);
-	unless ( $src ) {
-		die "Could not find the original My plugin";
-	}
-	unless ( File::Copy::copy($src, $target) ) {
-		return die "Could not copy the My plugin ($src) to $target: $!";
-	}
-	chmod( 0644, $target );
-
-	return 1;
-}
-
-
-
-
-
-#####################################################################
 # Constructor and Accessors
 
 sub new {
