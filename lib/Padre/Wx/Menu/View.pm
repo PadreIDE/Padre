@@ -5,10 +5,11 @@ package Padre::Wx::Menu::View;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx       ();
-use Padre::Locale   ();
-use Padre::Wx::Menu ();
-use Padre::Current  qw{_CURRENT};
+use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
+use Padre::Wx                ();
+use Padre::Locale            ();
+use Padre::Wx::Menu          ();
+use Padre::Current           qw{_CURRENT};
 
 our $VERSION = '0.28';
 our @ISA     = 'Padre::Wx::Menu';
@@ -366,7 +367,7 @@ sub new {
 		);
 	}
 
-	my $dir = File::Spec->catdir( Padre::Config->default_dir , 'styles' );
+	my $dir = File::Spec->catdir( $PADRE_CONFIG_DIR, 'styles' );
 	my @private_styles =
 		map { substr File::Basename::basename($_), 0, -4 }
 		glob File::Spec->catdir( $dir, '*.yml' );
