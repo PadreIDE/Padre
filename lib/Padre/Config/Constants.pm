@@ -20,13 +20,13 @@ our %EXPORT_TAGS = (
 
 
 # list of constants
-our $PADRE_CONFIG_DIR = _find_padre_home();
+our $PADRE_CONFIG_DIR = _find_padre_config_dir();
 our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
 
 
 # -- private subs
 
-sub _find_padre_home {
+sub _find_padre_config_dir {
 	my $home;
 	
 	# PADRE_HOME env var set, always use unix style.
