@@ -82,6 +82,11 @@ The list of available constants are:
 
 =over 4
 
+=item * $CONFIG_FILE_HOST
+
+DB configuration file storing host settings.
+
+
 =item * $CONFIG_FILE_USER
 
 YAML configuration file storing user settings.
@@ -113,7 +118,7 @@ Exports C<$PADRE_CONFIG_DIR>.
 
 =item * files
 
-Exports C<$CONFIG_FILE_USER>.
+Exports C<$CONFIG_FILE_HOST> and C<$CONFIG_FILE_USER>.
 
 =back
 
