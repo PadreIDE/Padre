@@ -44,369 +44,124 @@ use Class::XSAccessor::Array
 		project => $PROJECT,
 	};
 
-
-
-
-
 #####################################################################
 # Settings Specification
 
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
 
-# The identity of the user (simplistic initial version)
-setting(
-	# Initially, this must be ascii only
-	name    => 'identity_name',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-setting(
-	name    => 'identity_email',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
+my %settings = (
+human => [
+	# for each setting, add an array ref:
+	# [ $setting_name, $setting_type, $setting_default ]
 
-
-# for Module::Starter
-setting(
-	name    => 'license',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-setting(
-	name    => 'builder',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-setting(
-	name    => 'module_start_directory',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-
-
-# Indent Settings
-# Allow projects to forcefully override personal settings
-setting(
-	name    => 'editor_indent_auto',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'editor_indent_tab',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'editor_indent_tab_width',
-	type    => $POSINT,
-	store   => $HUMAN,
-	default => 8,
-);
-setting(
-	name    => 'editor_indent_width',
-	type    => $POSINT,
-	store   => $HUMAN,
-	default => 8,
-);
-
-# Pages and Panels
-setting(
+	# -- user identity (simplistic initial version)
+	[ 'identity_name',  $ASCII, '' ],  # Initially, this must be ascii only
+	[ 'identity_email', $ASCII, '' ],
+	
+	# -- for module::starter
+	[ 'license',                $ASCII, '' ],
+	[ 'builder',                $ASCII, '' ],
+	[ 'module_start_directory', $ASCII, '' ],
+	
+	# -- indent settings
+	# allow projects to forcefully override personal settings
+	[ 'editor_indent_auto',      $BOOLEAN, 1 ],
+	[ 'editor_indent_tab',       $BOOLEAN, 1 ],
+	[ 'editor_indent_tab_width', $POSINT,  8 ],
+	[ 'editor_indent_width',     $POSINT,  8 ],
+	
+	# -- pages and panels
 	# startup mode, if no files given on the command line this can be
 	#   new        - a new empty buffer
 	#   nothing    - nothing to open
 	#   last       - the files that were open last time
-	name    => 'main_startup',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => 'new',
-);
-setting(
-	name    => 'main_lockinterface',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'main_functions',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'main_functions_order',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => 'alphabetical',
-);
-setting(
-	name    => 'main_outline',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'main_directory',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'main_output',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'main_output_ansi',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'main_syntaxcheck',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'main_errorlist',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'main_statusbar',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-
-# Editor settings
-setting(
-	name    => 'editor_font',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-setting(
-	name    => 'editor_linenumbers',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'editor_eol',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'editor_whitespace',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'editor_indentationguides',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'editor_calltips',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'editor_autoindent',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => 'deep',
-);
-setting(
-	name    => 'editor_folding',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'editor_currentline',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'editor_currentline_color',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => 'FFFF04',
-);
-setting(
-	name    => 'editor_beginner',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'editor_wordwrap',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'find_case',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'find_regex',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'find_reverse',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'find_first',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'find_nohidden',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'find_quick',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'ppi_highlight',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'ppi_highlight_limit',
-	type    => $POSINT,
-	store   => $HUMAN,
-	default => 2000,
-);
-
-# Behaviour Tuning
-setting(
-	# When running a script from the application some of the files might have not been saved yet.
-	# There are several option what to do before running the script
-	# none - don's save anything
+	[ 'main_startup',         $ASCII,   'new'          ],
+	[ 'main_lockinterface',   $BOOLEAN, 1              ],
+	[ 'main_functions',       $BOOLEAN, 0              ],
+	[ 'main_functions_order', $ASCII,   'alphabetical' ],
+	[ 'main_outline',         $BOOLEAN, 0              ],
+	[ 'main_directory',       $BOOLEAN, 0              ],
+	[ 'main_output',          $BOOLEAN, 0              ],
+	[ 'main_output_ansi',     $BOOLEAN, 1              ],
+	[ 'main_syntaxcheck',     $BOOLEAN, 0              ],
+	[ 'main_errorlist',       $BOOLEAN, 0              ],
+	[ 'main_statusbar',       $BOOLEAN, 1              ],
+	
+	# -- editor settings
+	[ 'editor_font',              $ASCII,   ''       ],
+	[ 'editor_linenumbers',       $BOOLEAN, 1        ],
+	[ 'editor_eol',               $BOOLEAN, 0        ],
+	[ 'editor_whitespace',        $BOOLEAN, 0        ],
+	[ 'editor_indentationguides', $BOOLEAN, 0        ],
+	[ 'editor_calltips',          $BOOLEAN, 0        ],
+	[ 'editor_autoindent',        $ASCII,   'deep'   ],
+	[ 'editor_folding',           $BOOLEAN, 0        ],
+	[ 'editor_currentline',       $BOOLEAN, 1        ],
+	[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
+	[ 'editor_beginner',          $BOOLEAN, 1        ],
+	[ 'editor_wordwrap',          $BOOLEAN, 0        ],
+	[ 'find_case',                $BOOLEAN, 1        ],
+	[ 'find_regex',               $BOOLEAN, 0        ],
+	[ 'find_reverse',             $BOOLEAN, 0        ],
+	[ 'find_first',               $BOOLEAN, 0        ],
+	[ 'find_nohidden',            $BOOLEAN, 1        ],
+	[ 'find_quick',               $BOOLEAN, 0        ],
+	[ 'ppi_highlight',            $BOOLEAN, 1        ],
+	[ 'ppi_highlight_limit',      $POSINT,  2000     ],
+	
+	# -- behaviour tuning
+	# When running a script from the application some of the files might have
+	# not been saved yet. There are several option what to do before running the
+	# script:
+	# none - don't save anything
 	# same - save the file in the current buffer
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
-	name    => 'run_save',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => 'same',
-);
-# Move of stacktrace to run menu: will be removed (run_stacktrace)
-setting(
-	name    => 'run_stacktrace',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'autocomplete_brackets',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
-setting(
-	# By default use background threads unless profiling
+	[ 'run_save',              $ASCII,   'same' ],
+	# move of stacktrace to run menu: will be removed (run_stacktrace)
+	[ 'run_stacktrace',        $BOOLEAN, 0      ],
+	[ 'autocomplete_brackets', $BOOLEAN, 0      ],
+	# by default use background threads unless profiling
 	# TODO - Make the default actually change
-	name    => 'threads',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 1,
-);
-setting(
-	name    => 'locale',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-setting(
-	name    => 'locale_perldiag',
-	type    => $ASCII,
-	store   => $HUMAN,
-	default => '',
-);
-setting(
-	name    => 'experimental',
-	type    => $BOOLEAN,
-	store   => $HUMAN,
-	default => 0,
-);
+	[ 'threads',               $BOOLEAN, 1      ],
+	[ 'locale',                $ASCII,   ''     ],
+	[ 'locale_perldiag',       $ASCII,   ''     ],
+	[ 'experimental',          $BOOLEAN, 0      ],
+],
+host => [
+	# for each setting, add an array ref:
+	# [ $setting_name, $setting_type, $setting_default ]
 
-# Because the colour data is in local files,
-# it has to be a host-specific setting.
-setting(
-	name    => 'editor_style',
-	type    => $ASCII,
-	store   => $HOST,
-	default => 'default',
+	# -- color data
+	# since it's in local files, it has to be a host-specific setting
+	[ 'editor_style', $ASCII, 'default' ],
+	
+	# -- window geometry
+	[ 'main_maximized', $BOOLEAN, 0   ],
+	[ 'main_top',       $INTEGER, 40  ],
+	[ 'main_left',      $INTEGER, 20  ],
+	[ 'main_width',     $POSINT,  600 ],
+	[ 'main_height',    $POSINT,  400 ],
+],
 );
-
-# Window geometry
-setting(
-	name    => 'main_maximized',
-	type    => $BOOLEAN,
-	store   => $HOST,
-	default => 0,
+my %store = (
+	human => $HUMAN,
+	host  => $HOST,
 );
-setting(
-	name    => 'main_top',
-	type    => $INTEGER,
-	store   => $HOST,
-	default => 40,
-);
-setting(
-	name    => 'main_left',
-	type    => $INTEGER,
-	store   => $HOST,
-	default => 20,
-);
-setting(
-	name    => 'main_width',
-	type    => $POSINT,
-	store   => $HOST,
-	default => 600,
-);
-setting(
-	name    => 'main_height',
-	type    => $POSINT,
-	store   => $HOST,
-	default => 400,
-);
-
-
+foreach my $type ( keys %settings ) {
+	my $settings = $settings{$type};
+	my $store    = $store{$type};
+	foreach my $setting ( @$settings ) {
+		my ($name, $type, $default) = @$setting;
+		setting(
+			name    => $name,
+			type    => $type,
+			store   => $store,
+			default => $default,
+		);
+	}
+}
 
 
 
