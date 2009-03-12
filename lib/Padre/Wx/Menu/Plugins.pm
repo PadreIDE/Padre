@@ -78,12 +78,8 @@ sub new {
 			);
 			if ( $ret == Wx::wxOK) {
 				my $manager = Padre->ide->plugin_manager;
-				my $target = File::Spec->catfile(
-					$manager->plugin_dir,
-					qw{ Padre Plugin My.pm }
-				);
 				$manager->unload_plugin("My");
-				Padre::Config->copy_original_My_plugin($target);
+				$manager->reset_my_plugin(1);
 				$manager->load_plugin("My");
 			}
 		},
