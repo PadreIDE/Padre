@@ -89,28 +89,17 @@ sub _find_padre_config_dir {
 # my $dir = _find_padre_plugin_dir();
 #
 # find and return the directory where padre should check the locally
-# installed plugins. create it if needed. copy the My Plugin in it if
-# needed.
+# installed plugins. create it if needed.
 #
 # no params.
 #
 sub _find_padre_plugin_dir {
-	my $pluginsdir = catdir( $PADRE_CONFIG_DIR, 'plugins' );
+	my $pluginsdir = catdir( $PADRE_CONFIG_DIR, 'plugins', 'Padre', 'Plugin' );
 
 	# check if plugin directory exists, create it otherwise
-	my $fullpath = catdir( $pluginsdir, 'Padre', 'Plugin'	);
-	unless ( -e $fullpath ) {
-		mkpath($fullpath) or
-		die "Cannot create plugins dir '$fullpath': $!";
-	}
-
-	# copy the My Plugin if necessary
-	my $dst = catfile( $fullpath, 'My.pm' );
-	unless ( -e $dst ) {
-		my $src = catfile( dirname($INC{'Padre/Config.pm'}), 'Plugin', 'My.pm' );
-		die "Could not find the original My plugin" unless -e $src;
-		copy($src, $dst) or die "Could not copy the My plugin ($src) to $dst: $!";
-		chmod( 0644, $dst);
+	unless ( -e $pluginsdir ) {
+		mkpath($pluginsdir) or
+		die "Cannot create plugins dir '$pluginsdir': $!";
 	}
 
 	return $pluginsdir;
