@@ -169,28 +169,6 @@ foreach my $type ( keys %settings ) {
 # Class-Level Functionality
 
 
-sub default_plugin_dir {
-	my $pluginsdir = File::Spec->catdir(
-		$PADRE_CONFIG_DIR,
-		'plugins',
-	);
-	my $plugins_full_path = File::Spec->catdir(
-		$pluginsdir, 'Padre', 'Plugin'
-	);
-	unless ( -e $plugins_full_path) {
-		File::Path::mkpath($plugins_full_path) or
-		die "Cannot create plugins dir '$plugins_full_path' $!";
-	}
-
-	# Copy the My Plugin if necessary
-	my $file = File::Spec->catfile( $plugins_full_path, 'My.pm' );
-	unless ( -e $file ) {
-		Padre::Config->copy_original_My_plugin( $file );
-	}
-
-	return $pluginsdir;
-}
-
 # TODO - This should probably live in Padre::PluginManager somewhere
 sub copy_original_My_plugin {
 	my $class  = shift;
