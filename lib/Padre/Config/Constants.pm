@@ -9,6 +9,7 @@ use warnings;
 
 use File::Basename        qw{ dirname };
 use File::Copy            qw{ copy };
+use File::HomeDir         ();
 use File::Path            qw{ mkpath };
 use File::Spec;
 use File::Spec::Functions qw{ catdir catfile rel2abs };
