@@ -24,15 +24,28 @@ my $REVISION = 1;		# config schema revision
 # -- constructors
 
 #
+# my $config = Padre::Config::Human->_new( $href );
+#
+# create & return a new config object. if $href is not supplied, the config
+# object will be empty. this constructor is private and should not be used
+# outside this class.
+#
+sub _new {
+	my ($class, $self) = @_;
+	$self ||= {};
+	bless $self, $class;
+	return $self;
+}
+
+
+#
 # my $config = Padre::Config::Human->create;
 #
 sub create {
 	my $class = shift;
-	my $file  = $CONFIG_FILE_USER;
-	my $empty = { version => $REVISION };
-
-	DumpFile($file, $empty) or croak("Failed to create '$file'");
-	return $class->read;
+	my $self  = $class->_new( { version => $REVISION } );
+	$self->write;
+	return $self;
 }
 
 
@@ -47,7 +60,7 @@ sub read {
 	return unless _HASH0($hash);
 
 	# Create and return the object
-	return bless $hash, $class;
+	return $class->_new($hash);
 }
 
 
