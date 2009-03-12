@@ -407,13 +407,13 @@ sub timer_post_init {
 	# Load all files and refresh the application so that it
 	# represents the loaded state.
 	$self->load_files;
-	$self->on_toggle_statusbar;
-	Padre->ide->plugin_manager->enable_editors_for_all;
-	if ( $self->menu->view->{show_syntaxcheck}->IsChecked ) {
-		$self->show_syntax(1);
+	if ( $self->config->main_statusbar ) {
+		$self->GetStatusBar->Show;
 	}
+	Padre->ide->plugin_manager->enable_editors_for_all;
 
-	if ( $self->menu->view->{show_errorlist}->IsChecked ) {
+	$self->show_syntax( $self->config->main_syntaxcheck );
+	if ($self->config->main_errorlist) {
 		$self->errorlist->enable;
 	}
 	
