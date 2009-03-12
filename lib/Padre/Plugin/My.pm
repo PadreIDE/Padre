@@ -3,9 +3,9 @@ package Padre::Plugin::My;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Config ();
-use Padre::Wx     ();
-use Padre::Plugin ();
+use Padre::Config::Constants qw( $PADRE_CONFIG_DIR );
+use Padre::Wx                  ();
+use Padre::Plugin              ();
 
 our $VERSION = '0.28';
 our @ISA     = 'Padre::Plugin';
@@ -48,7 +48,7 @@ sub show_about {
 
 	# Locate this plugin
 	my $path = File::Spec->catfile(
-		Padre::Config->default_dir,
+		$PADRE_CONFIG_DIR,
 		qw{ plugins Padre Plugin My.pm }
 	);
 
