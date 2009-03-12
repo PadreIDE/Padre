@@ -3,17 +3,17 @@ package Padre::DB;
 # Provide an ORLite-based API for the Padre database
 
 use strict;
-use File::Spec          ();
-use File::ShareDir::PAR ();
-use Params::Util        ();
-use Padre::Config       ();
-use Padre::Current      ();
+use File::Spec               ();
+use File::ShareDir::PAR      ();
+use Params::Util             ();
+use Padre::Config::Constants qw{ $CONFIG_FILE_HOST };
+use Padre::Current           ();
 
 use ORLite 1.17 (); # Need truncate
 use ORLite::Migrate 0.01 {
 	create        => 1,
 	tables        => [ 'Modules' ],
-	file          => Padre::Config->default_db,
+	file          => $CONFIG_FILE_HOST,
 	user_revision => 6,
 	timeline      => File::Spec->catdir(
 		File::ShareDir::PAR::dist_dir('Padre'),
