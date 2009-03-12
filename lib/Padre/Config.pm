@@ -425,15 +425,6 @@ setting(
 #####################################################################
 # Class-Level Functionality
 
-sub default_dir {
-	unless ( -e $PADRE_CONFIG_DIR ) {
-		File::Path::mkpath($PADRE_CONFIG_DIR) or
-		die "Cannot create config dir '$PADRE_CONFIG_DIR' $!";
-	}
-	return $PADRE_CONFIG_DIR;
-}
-
-
 sub default_db {
 	File::Spec->catfile(
 		$PADRE_CONFIG_DIR,
