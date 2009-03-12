@@ -13,17 +13,14 @@ use 5.008;
 use strict;
 use warnings;
 
-use Carp                   ();
-use File::Spec             ();
-use File::Copy             ();
-use File::Path             ();
-use Params::Util           qw{ _POSINT _INSTANCE };
-use Padre::Config::Setting ();
-use Padre::Config::Human   ();
-use Padre::Config::Project ();
-use Padre::Config::Host    ();
-
+use Carp                     qw{ croak };
+use Params::Util             qw{ _POSINT _INSTANCE };
 use Padre::Config::Constants qw{ :stores :types $PADRE_CONFIG_DIR };
+use Padre::Config::Setting   ();
+use Padre::Config::Human     ();
+use Padre::Config::Project   ();
+use Padre::Config::Host      ();
+
 
 our $VERSION   = '0.28';
 
@@ -178,10 +175,10 @@ sub new {
 	my $host  = shift;
 	my $human = shift;
 	unless ( _INSTANCE($host, 'Padre::Config::Host') ) {
-		Carp::croak("Did not provide a host config to Padre::Config->new");
+		croak("Did not provide a host config to Padre::Config->new");
 	}
 	unless ( _INSTANCE($human, 'Padre::Config::Human') ) {
-		Carp::croak("Did not provide a user config to Padre::Config->new");
+		croak("Did not provide a user config to Padre::Config->new");
 	}
 
 	# Create the basic object with the two required elements
@@ -191,7 +188,7 @@ sub new {
 	if ( @_ ) {
 		my $project = shift;
 		unless ( _INSTANCE($project, 'Padre::Config::Project') ) {
-			Carp::croak("Did not provide a project config to Padre::Config->new");
+			croak("Did not provide a project config to Padre::Config->new");
 		}
 		$self->[$PROJECT] = $project;
 	}
@@ -206,26 +203,26 @@ sub set {
 
 	# Does the setting exist?
 	my $setting = $SETTING{$name} or
-	Carp::croak("The configuration setting '$name' does not exist");
+	croak("The configuration setting '$name' does not exist");
 
 	# All types are $ASCII-like
 	unless ( defined $value and not ref $value ) {
-		Carp::croak("Missing or non-scalar value for setting '$name'");
+		croak("Missing or non-scalar value for setting '$name'");
 	}
 
 	# We don't need to do additional checks on $ASCII types at this point
 	my $type = $setting->type;
 	if ( $type == $BOOLEAN and $value ne '1' and $value ne '0' ) {
-		Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
+		croak("Tried to change setting '$name' to non-boolean '$value'");
 	}
 	if ( $type == $POSINT and not _POSINT($value) ) {
-		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
+		croak("Tried to change setting '$name' to non-posint '$value'");
 	}
 	if ( $type == $INTEGER and not _INTEGER($value) ) {
-		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
+		croak("Tried to change setting '$name' to non-integer '$value'");
 	}
 	if ( $type == $PATH and not -e $value ) {
-		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
+		croak("Tried to change setting '$name' to non-existant path '$value'");
 	}
 
 	# Set the value into the appropriate backend
@@ -242,7 +239,7 @@ sub default {
 
 	# Does the setting exist?
 	my $setting = $SETTING{$name} or
-	Carp::croak("The configuration setting '$name' does not exist");
+	croak("The configuration setting '$name' does not exist");
 
 	return $DEFAULT{$name};
 }
@@ -292,7 +289,7 @@ sub setting {
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
 	if ( $SETTING{$object->{name}} ) {
-		Carp::croak("The $object->{name} setting is already defined");
+		croak("The $object->{name} setting is already defined");
 	}
 
 	# Generate the accessor
@@ -311,7 +308,7 @@ END_PERL
 	# Compile the accessor
 	eval $code; ## no critic
 	if ( $@ ) {
-		Carp::croak("Failed to compile setting $object->{name}");
+		croak("Failed to compile setting $object->{name}");
 	}
 
 	# Save the setting
