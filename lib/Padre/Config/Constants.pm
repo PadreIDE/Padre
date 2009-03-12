@@ -5,21 +5,23 @@
 package Padre::Config::Constants;
 
 use File::Spec;
-use File::Spec::Functions qw{ catdir rel2abs };
+use File::Spec::Functions qw{ catdir catfile rel2abs };
 
 # export stuff
 use base qw{ Exporter };
 our @EXPORT_OK = qw{
+	$CONFIG_FILE_USER
 	$PADRE_CONFIG_DIR
 };
 our %EXPORT_TAGS = (
-	dirs => [ qw{ $PADRE_CONFIG_DIR } ],
+	dirs  => [ qw{ $PADRE_CONFIG_DIR }  ],
+	files => [ qw{ $CONFIG_FILE_USER } ],
 );
 
 
 # list of constants
 our $PADRE_CONFIG_DIR = _find_padre_home();
-
+our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
 
 
 # -- private subs
@@ -75,9 +77,15 @@ The list of available constants are:
 
 =over 4
 
+=item * $CONFIG_FILE_USER
+
+YAML configuration file storing user settings.
+
+
 =item * $PADRE_CONFIG_DIR
 
 Private Padre configuration directory Padre, used to store stuff.
+
 
 =back
 
@@ -98,6 +106,9 @@ The tags available are:
 
 Exports C<$PADRE_CONFIG_DIR>.
 
+=item * files
+
+Exports C<$CONFIG_FILE_USER>.
 
 =back
 
