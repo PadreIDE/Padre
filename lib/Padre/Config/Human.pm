@@ -14,10 +14,9 @@ use Params::Util  qw{ _HASH0             };
 use Storable      qw{ dclone             };
 use YAML::Tiny    qw{ DumpFile LoadFile  };
 
-use Padre::Config;
+use Padre::Config::Constants qw{ $CONFIG_FILE_USER };
 
 our $VERSION = '0.28';
-
 
 my $REVISION = 1;		# config schema revision
 
@@ -29,7 +28,7 @@ my $REVISION = 1;		# config schema revision
 #
 sub create {
 	my $class = shift;
-	my $file  = Padre::Config->default_yaml;
+	my $file  = $CONFIG_FILE_USER;
 	my $empty = { version => $REVISION };
 
 	DumpFile($file, $empty) or croak("Failed to create '$file'");
@@ -44,7 +43,7 @@ sub read {
 	my $class = shift;
 
 	# Load the user configuration
-	my $hash = eval { LoadFile( Padre::Config->default_yaml ) };
+	my $hash = eval { LoadFile( $CONFIG_FILE_USER ) };
 	return unless _HASH0($hash);
 
 	# Create and return the object
@@ -73,7 +72,7 @@ sub write {
 	my $copy = dclone( +{ %$self } );
 
 	# Save the user configuration
-	DumpFile( Padre::Config->default_yaml, $copy );
+	DumpFile( $CONFIG_FILE_USER, $copy );
 
 	return 1;
 }
