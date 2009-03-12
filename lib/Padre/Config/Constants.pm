@@ -8,22 +8,41 @@ use File::Path            qw{ mkpath };
 use File::Spec;
 use File::Spec::Functions qw{ catdir catfile rel2abs };
 
-# export stuff
+# -- export stuff
 use base qw{ Exporter };
-our @EXPORT_OK = qw{
-	$CONFIG_FILE_HOST $CONFIG_FILE_USER
-	$PADRE_CONFIG_DIR
-};
+
+my @dirs   = qw{ $PADRE_CONFIG_DIR                      };
+my @files  = qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER    };
+my @stores = qw{ $HOST $HUMAN $PROJECT                  };
+my @types  = qw{ $BOOLEAN $POSINT $INTEGER $ASCII $PATH };
+
+our @EXPORT_OK   = ( @dirs, @files, @stores, @types );
 our %EXPORT_TAGS = (
-	dirs  => [ qw{ $PADRE_CONFIG_DIR }  ],
-	files => [ qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER } ],
+	dirs   => \@dirs,
+	files  => \@files,
+	stores => \@stores,
+	types  => \@types,
 );
 
 
-# list of constants
+# -- list of constants
+
+# files & dirs
 our $PADRE_CONFIG_DIR = _find_padre_config_dir();
 our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
 our $CONFIG_FILE_HOST = catfile( $PADRE_CONFIG_DIR, 'config.db'  );
+
+# settings types (based on firefox)
+our $BOOLEAN = 0;
+our $POSINT  = 1;
+our $INTEGER = 2;
+our $ASCII   = 3;
+our $PATH    = 4;
+
+# settings stores
+our $HOST    = 0;
+our $HUMAN   = 1;
+our $PROJECT = 2;
 
 
 # -- private subs
@@ -82,6 +101,15 @@ The list of available constants are:
 
 =over 4
 
+=item * $BOOLEAN, $POSINT, $INTEGER, $ASCII, $PATH
+
+Settings types.
+
+=item * $HOST, $HUMAN, $PROJECT
+
+Settings stores.
+
+
 =item * $CONFIG_FILE_HOST
 
 DB configuration file storing host settings.
@@ -112,13 +140,25 @@ The tags available are:
 
 =over 4
 
+=item * all
+
+Imports everything.
+
 =item * dirs
 
-Exports C<$PADRE_CONFIG_DIR>.
+Imports C<$PADRE_CONFIG_DIR>.
 
 =item * files
 
-Exports C<$CONFIG_FILE_HOST> and C<$CONFIG_FILE_USER>.
+Imports C<$CONFIG_FILE_HOST> and C<$CONFIG_FILE_USER>.
+
+=item * stores
+
+Imports C<$BOOLEAN>, C<$POSINT>, C<$INTEGER>, C<$ASCII> and C<$PATH>.
+
+=item * types
+
+Imports C<$HOST>, C<$HUMAN> and C<$PROJECT>.
 
 =back
 

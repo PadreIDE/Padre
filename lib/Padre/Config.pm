@@ -11,7 +11,6 @@ use warnings;
 use Carp                   ();
 use File::Spec             ();
 use File::Copy             ();
-use File::HomeDir          ();
 use File::Path             ();
 use Params::Util           qw{ _POSINT _INSTANCE };
 use Padre::Config::Setting ();
