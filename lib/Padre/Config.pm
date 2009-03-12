@@ -56,19 +56,6 @@ use Class::XSAccessor::Array
 		project => PROJECT,
 	};
 
-sub product_path {
-	if ( defined $ENV{PADRE_HOME} ) {
-		# When explicitly set, always use the Unix style
-		return qw{ .padre };
-	} elsif ( File::Spec->isa('File::Spec::Win32') ) {
-		# On Windows use the traditional Vendor/Product format
-		return qw{ Perl Padre };
-	} else {
-		# Use the the Unix style elsewhere.
-		# TODO - We may want to do something special on Mac
-		return qw{ .padre };
-	}
-}
 
 # Establish Padre's home directory
 my $DEFAULT_DIR = $PADRE_CONFIG_DIR;
