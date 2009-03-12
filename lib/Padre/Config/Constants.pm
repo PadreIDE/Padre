@@ -11,18 +11,19 @@ use File::Spec::Functions qw{ catdir catfile rel2abs };
 # export stuff
 use base qw{ Exporter };
 our @EXPORT_OK = qw{
-	$CONFIG_FILE_USER
+	$CONFIG_FILE_HOST $CONFIG_FILE_USER
 	$PADRE_CONFIG_DIR
 };
 our %EXPORT_TAGS = (
 	dirs  => [ qw{ $PADRE_CONFIG_DIR }  ],
-	files => [ qw{ $CONFIG_FILE_USER } ],
+	files => [ qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER } ],
 );
 
 
 # list of constants
 our $PADRE_CONFIG_DIR = _find_padre_config_dir();
 our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
+our $CONFIG_FILE_HOST = catfile( $PADRE_CONFIG_DIR, 'config.db'  );
 
 
 # -- private subs
