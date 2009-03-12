@@ -11,7 +11,7 @@ use File::Spec::Functions qw{ catdir catfile rel2abs };
 # -- export stuff
 use base qw{ Exporter };
 
-my @dirs   = qw{ $PADRE_CONFIG_DIR                      };
+my @dirs   = qw{ $PADRE_CONFIG_DIR $PADRE_PLUGIN_DIR    };
 my @files  = qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER    };
 my @stores = qw{ $HOST $HUMAN $PROJECT                  };
 my @types  = qw{ $BOOLEAN $POSINT $INTEGER $ASCII $PATH };
@@ -29,6 +29,7 @@ our %EXPORT_TAGS = (
 
 # files & dirs
 our $PADRE_CONFIG_DIR = _find_padre_config_dir();
+our $PADRE_PLUGIN_DIR = _find_padre_plugin_dir();
 our $CONFIG_FILE_USER = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
 our $CONFIG_FILE_HOST = catfile( $PADRE_CONFIG_DIR, 'config.db'  );
 
@@ -73,6 +74,32 @@ sub _find_padre_config_dir {
 		unless -e $confdir;
 
 	return $confdir;
+}
+
+
+#
+# my $dir = _find_padre_plugin_dir();
+#
+# find and return the directory where padre should check the locally
+# installed plugins. no params.
+#
+sub _find_padre_plugin_dir {
+	my $pluginsdir = catdir( $PADRE_CONFIG_DIR, 'plugins' );
+
+	# check if plugin directory exists, create it otherwise
+	my $fullpath = catdir( $pluginsdir, 'Padre', 'Plugin'	);
+	unless ( -e $fullpath ) {
+		mkpath($fullpath) or
+		die "Cannot create plugins dir '$fullpath': $!";
+	}
+
+	# copy the My Plugin if necessary
+	my $file = catfile( $fullpath, 'My.pm' );
+	unless ( -e $file ) {
+		Padre::Config->copy_original_My_plugin( $file );
+	}
+
+	return $pluginsdir;
 }
 
 
@@ -131,6 +158,11 @@ YAML configuration file storing user settings.
 Private Padre configuration directory Padre, used to store stuff.
 
 
+=item * $PADRE_PLUGIN_DIR
+
+Private directory where Padre can look for plugins.
+
+
 =back
 
 
@@ -152,7 +184,7 @@ Imports everything.
 
 =item * dirs
 
-Imports C<$PADRE_CONFIG_DIR>.
+Imports C<$PADRE_CONFIG_DIR> and C<$PADRE_PLUGIN_DIR>.
 
 =item * files
 
