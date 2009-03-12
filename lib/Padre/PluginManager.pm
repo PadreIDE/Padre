@@ -22,12 +22,14 @@ use strict;
 use warnings;
 
 use Carp                     qw{croak};
+use File::Basename           qw{ dirname };
+use File::Copy               qw{ copy };
 use File::Path               ();
 use File::Spec               ();
 use File::Spec::Functions    qw{ catfile };
 use Scalar::Util             ();
 use Params::Util             qw{_IDENTIFIER _CLASS _INSTANCE};
-use Padre::Config::Constants qw{ $PADRE_PLUGIN_LIBDIR };
+use Padre::Config::Constants qw{ :dirs };
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
@@ -67,7 +69,7 @@ sub new {
 		parent       => $parent,
 		plugins      => {},
 		plugin_names => [],
-		plugin_dir   => Padre::Config->default_plugin_dir,
+		plugin_dir   => $PADRE_PLUGIN_DIR,
 		par_loaded   => 0,
 		@_,
 	}, $class;

@@ -19,6 +19,7 @@ use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
+use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
 use Padre::PluginManager;
 
 my $padre = Padre->new;
@@ -29,8 +30,8 @@ SCOPE: {
 	isa_ok( $manager, 'Padre::PluginManager' );
 	is(
 		$manager->plugin_dir,
-		Padre::Config->default_plugin_dir,
-		'->default_plugin_dir ok',
+		$PADRE_PLUGIN_DIR,
+		'->plugin_dir ok',
 	);
 	is( keys %{$manager->plugins}, 0, 'Found no plugins' );
 	ok(
