@@ -47,6 +47,12 @@ our $PROJECT = 2;
 
 # -- private subs
 
+#
+# my $dir = _fond_padre_config_dir();
+#
+# find and return the config directory where padre should store its
+# preferences & settings. no params.
+#
 sub _find_padre_config_dir {
 	# define config dir
 	my @subdirs;
