@@ -3,6 +3,7 @@ Changes for Perl Application Development and Refactoring Environment
     Initial support for directory browser based on the Outline code (SZABGAB)
     Improving Padre::Util::get_project_dir (SZABGAB)
     Eliminate a test failure on non-English locale. (SZABGAB)
+    Internal cleanups & documentation for configuration subsystem (JQUELIN)
 
 v0.28 2009.03.04
 
