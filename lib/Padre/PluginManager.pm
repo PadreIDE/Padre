@@ -20,11 +20,14 @@ plugins, as well as providing part of the interface to plugin writers.
 
 use strict;
 use warnings;
+
 use Carp                     qw{croak};
 use File::Path               ();
 use File::Spec               ();
+use File::Spec::Functions    qw{ catfile };
 use Scalar::Util             ();
 use Params::Util             qw{_IDENTIFIER _CLASS _INSTANCE};
+use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
@@ -132,6 +135,29 @@ sub plugin_objects {
 
 #####################################################################
 # Bulk Plugin Operations
+
+#
+# $pluginmgr->reset_my_plugin( $overwrite );
+#
+# reset the my plugin if needed. if $overwrite is set, remove it first.
+#
+sub reset_my_plugin {
+	my ($self, $overwrite) = @_;
+
+	# do not overwrite it unless stated so.
+	my $dst = catfile( $PADRE_PLUGIN_DIR, 'My.pm' );
+	return if -e $dst && !$overwrite;
+	
+	# find the My Plugin
+	my $src = catfile( dirname($INC{'Padre/Config.pm'}), 'Plugin', 'My.pm' );
+	die "Could not find the original My plugin" unless -e $src;
+
+	# copy the My Plugin
+	unlink $dst;
+	copy($src, $dst) or die "Could not copy the My plugin ($src) to $dst: $!";
+	chmod( 0644, $dst);
+}
+
 
 # Disable (but don't unload) all plugins when Padre exits.
 # Save the plugin enable/disable states for the next startup.
