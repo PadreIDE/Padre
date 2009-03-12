@@ -156,7 +156,7 @@ foreach my $type ( keys %settings ) {
 	my $store    = $store{$type};
 	foreach my $setting ( @$settings ) {
 		my ($name, $type, $default) = @$setting;
-		setting(
+		_setting(
 			name    => $name,
 			type    => $type,
 			store   => $store,
@@ -279,13 +279,14 @@ sub write {
 }
 
 
+# -- private subs
 
-
-
-#####################################################################
-# Support Functions
-
-sub setting {
+#
+# _setting( %params );
+#
+# create a new setting, with %params used to feed the new object.
+#
+sub _setting {
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
 	if ( $SETTING{$object->{name}} ) {
