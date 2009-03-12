@@ -19,6 +19,8 @@ use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 
+use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
+
 our $VERSION   = '0.28';
 
 # Master storage of the settings
@@ -69,13 +71,7 @@ sub product_path {
 }
 
 # Establish Padre's home directory
-my $DEFAULT_DIR = File::Spec->catdir(
-	(defined $ENV{PADRE_HOME} ? $ENV{PADRE_HOME} : File::HomeDir->my_data),
-	Padre::Config->product_path,
-);
-unless ( File::Spec->file_name_is_absolute($DEFAULT_DIR) ) {
-	$DEFAULT_DIR = File::Spec->rel2abs($DEFAULT_DIR);
-}
+my $DEFAULT_DIR = $PADRE_CONFIG_DIR;
 
 
 
