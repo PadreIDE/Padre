@@ -107,7 +107,7 @@ human => [
 	[ 'find_first',               $BOOLEAN, 0        ],
 	[ 'find_nohidden',            $BOOLEAN, 1        ],
 	[ 'find_quick',               $BOOLEAN, 0        ],
-	[ 'ppi_highlight',            $BOOLEAN, 1        ],
+	[ 'ppi_highlight',            $BOOLEAN, 0        ],
 	[ 'ppi_highlight_limit',      $POSINT,  2000     ],
 	
 	# -- behaviour tuning
