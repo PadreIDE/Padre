@@ -18,7 +18,7 @@ use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 
-use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
+use Padre::Config::Constants qw{ :stores :types $PADRE_CONFIG_DIR };
 
 our $VERSION   = '0.28';
 
@@ -50,9 +50,9 @@ use constant PROJECT => 2;
 # Accessor generation
 use Class::XSAccessor::Array
 	getters => {
-		host    => HOST,
-		human   => HUMAN,
-		project => PROJECT,
+		host    => $HOST,
+		human   => $HUMAN,
+		project => $PROJECT,
 	};
 
 
@@ -69,14 +69,14 @@ use Class::XSAccessor::Array
 setting(
 	# Initially, this must be ascii only
 	name    => 'identity_name',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 setting(
 	name    => 'identity_email',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 
@@ -84,20 +84,20 @@ setting(
 # for Module::Starter
 setting(
 	name    => 'license',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 setting(
 	name    => 'builder',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 setting(
 	name    => 'module_start_directory',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 
@@ -106,26 +106,26 @@ setting(
 # Allow projects to forcefully override personal settings
 setting(
 	name    => 'editor_indent_auto',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'editor_indent_tab',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'editor_indent_tab_width',
-	type    => POSINT,
-	store   => HUMAN,
+	type    => $POSINT,
+	store   => $HUMAN,
 	default => 8,
 );
 setting(
 	name    => 'editor_indent_width',
-	type    => POSINT,
-	store   => HUMAN,
+	type    => $POSINT,
+	store   => $HUMAN,
 	default => 8,
 );
 
@@ -136,190 +136,190 @@ setting(
 	#   nothing    - nothing to open
 	#   last       - the files that were open last time
 	name    => 'main_startup',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => 'new',
 );
 setting(
 	name    => 'main_lockinterface',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'main_functions',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'main_functions_order',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => 'alphabetical',
 );
 setting(
 	name    => 'main_outline',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'main_directory',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'main_output',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'main_output_ansi',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'main_syntaxcheck',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'main_errorlist',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'main_statusbar',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 
 # Editor settings
 setting(
 	name    => 'editor_font',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 setting(
 	name    => 'editor_linenumbers',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'editor_eol',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'editor_whitespace',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'editor_indentationguides',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'editor_calltips',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'editor_autoindent',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => 'deep',
 );
 setting(
 	name    => 'editor_folding',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'editor_currentline',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'editor_currentline_color',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => 'FFFF04',
 );
 setting(
 	name    => 'editor_beginner',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'editor_wordwrap',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'find_case',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'find_regex',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'find_reverse',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'find_first',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'find_nohidden',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'find_quick',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'ppi_highlight',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'ppi_highlight_limit',
-	type    => POSINT,
-	store   => HUMAN,
+	type    => $POSINT,
+	store   => $HUMAN,
 	default => 2000,
 );
 
@@ -332,47 +332,47 @@ setting(
 	# all_files - all the files (but not buffers that have no filenames)
 	# all_buffers - all the buffers even if they don't have a name yet
 	name    => 'run_save',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => 'same',
 );
 # Move of stacktrace to run menu: will be removed (run_stacktrace)
 setting(
 	name    => 'run_stacktrace',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	name    => 'autocomplete_brackets',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 setting(
 	# By default use background threads unless profiling
 	# TODO - Make the default actually change
 	name    => 'threads',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 1,
 );
 setting(
 	name    => 'locale',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 setting(
 	name    => 'locale_perldiag',
-	type    => ASCII,
-	store   => HUMAN,
+	type    => $ASCII,
+	store   => $HUMAN,
 	default => '',
 );
 setting(
 	name    => 'experimental',
-	type    => BOOLEAN,
-	store   => HUMAN,
+	type    => $BOOLEAN,
+	store   => $HUMAN,
 	default => 0,
 );
 
@@ -380,40 +380,40 @@ setting(
 # it has to be a host-specific setting.
 setting(
 	name    => 'editor_style',
-	type    => ASCII,
-	store   => HOST,
+	type    => $ASCII,
+	store   => $HOST,
 	default => 'default',
 );
 
 # Window geometry
 setting(
 	name    => 'main_maximized',
-	type    => BOOLEAN,
-	store   => HOST,
+	type    => $BOOLEAN,
+	store   => $HOST,
 	default => 0,
 );
 setting(
 	name    => 'main_top',
-	type    => INTEGER,
-	store   => HOST,
+	type    => $INTEGER,
+	store   => $HOST,
 	default => 40,
 );
 setting(
 	name    => 'main_left',
-	type    => INTEGER,
-	store   => HOST,
+	type    => $INTEGER,
+	store   => $HOST,
 	default => 20,
 );
 setting(
 	name    => 'main_width',
-	type    => POSINT,
-	store   => HOST,
+	type    => $POSINT,
+	store   => $HOST,
 	default => 600,
 );
 setting(
 	name    => 'main_height',
-	type    => POSINT,
-	store   => HOST,
+	type    => $POSINT,
+	store   => $HOST,
 	default => 400,
 );
 
@@ -508,20 +508,20 @@ sub set {
 	my $setting = $SETTING{$name} or
 	Carp::croak("The configuration setting '$name' does not exist");
 
-	# All types are ASCII-like
+	# All types are $ASCII-like
 	unless ( defined $value and not ref $value ) {
 		Carp::croak("Missing or non-scalar value for setting '$name'");
 	}
 
-	# We don't need to do additional checks on ASCII types at this point
+	# We don't need to do additional checks on $ASCII types at this point
 	my $type = $setting->type;
-	if ( $type == BOOLEAN and $value ne '1' and $value ne '0' ) {
+	if ( $type == $BOOLEAN and $value ne '1' and $value ne '0' ) {
 		Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
 	}
-	if ( $type == POSINT and not _POSINT($value) ) {
+	if ( $type == $POSINT and not _POSINT($value) ) {
 		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
 	}
-	if ( $type == INTEGER and not _INTEGER($value) ) {
+	if ( $type == $INTEGER and not _INTEGER($value) ) {
 		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
 	}
 	if ( $type == PATH and not -e $value ) {
@@ -571,12 +571,12 @@ sub write {
 	my $self = shift;
 
 	# Save the user configuration
-	$self->[HUMAN]->{version} = $REVISION;
-	$self->[HUMAN]->write();
+	$self->[$HUMAN]->{version} = $REVISION;
+	$self->[$HUMAN]->write();
 
 	# Save the host configuration
-	$self->[HOST]->{version} = $REVISION;
-	$self->[HOST]->write;
+	$self->[$HOST]->{version} = $REVISION;
+	$self->[$HOST]->write;
 
 	return 1;
 }
