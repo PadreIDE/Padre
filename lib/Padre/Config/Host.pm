@@ -16,10 +16,18 @@ our $VERSION = '0.28';
 
 # -- constructors
 
-sub new {
-	my $class = shift;
-	my $self  = bless { @_ }, $class;
-	return $self;
+#
+# my $config = Padre::Config::Host->_new( $href );
+#
+# create & return a new config object. if $href is not supplied, the config
+# object will be empty. this constructor is private and should not be used
+# outside this class.
+#
+sub _new {
+	my ($class, $href) = @_;
+	$href ||= {};
+	bless $href, $class;
+	return $href;
 }
 
 
@@ -27,15 +35,16 @@ sub new {
 # my $config = Padre::Config::Host->read;
 #
 sub read {
-	require Padre::DB;
+	my $class = shift;
 
 	# Read in the config data
+	require Padre::DB;
 	my %hash = map {
 		$_->name => $_->value
 	} Padre::DB::HostConfig->select;
 
 	# Create and return the object
-	return $_[0]->new( %hash );
+	return $class->_new( \%hash );
 }
 
 
