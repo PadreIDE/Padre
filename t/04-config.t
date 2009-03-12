@@ -16,9 +16,10 @@ BEGIN {
 	$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 }
 use Padre::Config ();
+use Padre::Config::Constants qw{ $CONFIG_FILE_USER };
 
 # Create the empty config file
-my $empty = Padre::Config->default_yaml;
+my $empty = $CONFIG_FILE_USER;
 open( FILE, '>', $empty ) or die "Failed to open $empty";
 print FILE "--- {}\n";
 close( FILE );
