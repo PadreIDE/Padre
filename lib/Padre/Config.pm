@@ -436,14 +436,14 @@ sub default_dir {
 
 sub default_db {
 	File::Spec->catfile(
-		$_[0]->default_dir,
+		$PADRE_CONFIG_DIR,
 		'config.db',
 	);
 }
 
 sub default_plugin_dir {
 	my $pluginsdir = File::Spec->catdir(
-		$_[0]->default_dir,
+		$PADRE_CONFIG_DIR,
 		'plugins',
 	);
 	my $plugins_full_path = File::Spec->catdir(
