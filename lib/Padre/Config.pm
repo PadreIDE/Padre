@@ -425,12 +425,6 @@ setting(
 #####################################################################
 # Class-Level Functionality
 
-sub default_db {
-	File::Spec->catfile(
-		$PADRE_CONFIG_DIR,
-		'config.db',
-	);
-}
 
 sub default_plugin_dir {
 	my $pluginsdir = File::Spec->catdir(
