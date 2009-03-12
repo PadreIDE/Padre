@@ -319,9 +319,16 @@ END_PERL
 	return 1;
 }
 
+
+#
+# my $is_integer = _INTEGER( $scalar );
+#
+# return true if $scalar is an integer.
+#
 sub _INTEGER ($) {
-	(defined $_[0] and ! ref $_[0] and $_[0] =~ m/^(?:0|-?[1-9]\d*)$/) ? 1 : undef;
+	return defined $_[0] && ! ref $_[0] && $_[0] =~ m/^(?:0|-?[1-9]\d*)$/;
 }
+
 
 1;
 
