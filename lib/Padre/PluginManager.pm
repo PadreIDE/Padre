@@ -71,6 +71,9 @@ sub new {
 		par_loaded   => 0,
 		@_,
 	}, $class;
+	
+	# initialize empty My Plugin if needed
+	$self->reset_my_plugin(0);
 
 	return $self;
 }
