@@ -127,6 +127,15 @@ __END__
 Padre::Config::Constants - constants used by config subsystems
 
 
+
+=head1 SYNOPSIS
+
+	use Padre::Config::Constants qw{ :all };
+	[...]
+	# do stuff with exported constants
+
+
+
 =head1 DESCRIPTION
 
 Padre uses various configuration subsystems (see C<Padre::Config> for more
@@ -218,7 +227,6 @@ Imports C<$BOOLEAN>, C<$POSINT>, C<$INTEGER>, C<$ASCII> and C<$PATH>.
 Imports C<$HOST>, C<$HUMAN> and C<$PROJECT>.
 
 =back
-
 
 
 
