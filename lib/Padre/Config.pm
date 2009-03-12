@@ -454,12 +454,6 @@ sub default_dir {
 	return $DEFAULT_DIR;
 }
 
-sub default_yaml {
-	File::Spec->catfile(
-		$_[0]->default_dir,
-		'config.yml',
-	);
-}
 
 sub default_db {
 	File::Spec->catfile(
