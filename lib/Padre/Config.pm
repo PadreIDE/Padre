@@ -1,3 +1,7 @@
+#
+# Configuration subsystem for Padre
+#
+
 package Padre::Config;
 
 # To help force the break from the first-generate HASH based configuration
@@ -8,6 +12,7 @@ package Padre::Config;
 use 5.008;
 use strict;
 use warnings;
+
 use Carp                   ();
 use File::Spec             ();
 use File::Copy             ();
@@ -321,6 +326,7 @@ sub _INTEGER ($) {
 }
 
 1;
+
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
