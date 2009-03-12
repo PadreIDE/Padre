@@ -609,7 +609,7 @@ sub write {
 
 	# Save the user configuration
 	$self->[HUMAN]->{version} = $REVISION;
-	$self->[HUMAN]->write( $self->default_yaml );
+	$self->[HUMAN]->write();
 
 	# Save the host configuration
 	$self->[HOST]->{version} = $REVISION;
