@@ -8,9 +8,6 @@ use 5.008;
 use strict;
 use warnings;
 
-# Avoid the introspective compilation until runtime
-# use Padre::DB ();
-
 our $VERSION = '0.28';
 
 
@@ -63,9 +60,9 @@ sub version {
 # $config->write;
 #
 sub write {
+	my $self = shift;
 	require Padre::DB;
 
-	my $self = shift;
 	Padre::DB->begin;
 	Padre::DB::HostConfig->truncate;
 	foreach my $name ( sort keys %$self ) {
