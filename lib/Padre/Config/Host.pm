@@ -14,9 +14,7 @@ use warnings;
 our $VERSION = '0.28';
 
 
-
-#####################################################################
-# Constructor and Storage Interaction
+# -- constructors
 
 sub new {
 	my $class = shift;
@@ -24,7 +22,10 @@ sub new {
 	return $self;
 }
 
-# Read config from the database (overwriting any existing data)
+
+#
+# my $config = Padre::Config::Host->read;
+#
 sub read {
 	require Padre::DB;
 
@@ -37,6 +38,20 @@ sub read {
 	return $_[0]->new( %hash );
 }
 
+
+# -- public methods
+
+#
+# my $revision = $config->version;
+#
+sub version {
+	$_[0]->{version};
+}
+
+
+#
+# $config->write;
+#
 sub write {
 	require Padre::DB;
 
@@ -54,9 +69,6 @@ sub write {
 	return 1;
 }
 
-sub version {
-	$_[0]->{version};
-}
 
 1;
 
