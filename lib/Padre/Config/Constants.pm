@@ -4,6 +4,9 @@
 
 package Padre::Config::Constants;
 
+use strict;
+use warnings;
+
 use File::Basename        qw{ dirname };
 use File::Copy            qw{ copy };
 use File::Path            qw{ mkpath };
