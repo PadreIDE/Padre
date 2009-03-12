@@ -35,17 +35,6 @@ our $REVISION  = 1;
 # Storage for the default config object
 our $SINGLETON = undef;
 
-# Settings Types (based on Firefox)
-use constant BOOLEAN => 0;
-use constant POSINT  => 1;
-use constant INTEGER => 2;
-use constant ASCII  => 3;
-use constant PATH    => 4;
-
-# Setting Stores
-use constant HOST    => 0;
-use constant HUMAN   => 1;
-use constant PROJECT => 2;
 
 # Accessor generation
 use Class::XSAccessor::Array
@@ -493,7 +482,7 @@ sub new {
 		unless ( _INSTANCE($project, 'Padre::Config::Project') ) {
 			Carp::croak("Did not provide a project config to Padre::Config->new");
 		}
-		$self->[PROJECT] = $project;
+		$self->[$PROJECT] = $project;
 	}
 
 	return $self;
@@ -524,7 +513,7 @@ sub set {
 	if ( $type == $INTEGER and not _INTEGER($value) ) {
 		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
 	}
-	if ( $type == PATH and not -e $value ) {
+	if ( $type == $PATH and not -e $value ) {
 		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
 	}
 
