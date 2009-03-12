@@ -10,15 +10,15 @@ use File::Spec::Functions qw{ catdir rel2abs };
 # export stuff
 use base qw{ Exporter };
 our @EXPORT_OK = qw{
-	$PADRE_HOME
+	$PADRE_CONFIG_DIR
 };
 our %EXPORT_TAGS = (
-	dirs => [ qw{ $PADRE_HOME } ],
+	dirs => [ qw{ $PADRE_CONFIG_DIR } ],
 );
 
 
 # list of constants
-our $PADRE_HOME = _find_padre_home();
+our $PADRE_CONFIG_DIR = _find_padre_home();
 
 
 
@@ -75,7 +75,7 @@ The list of available constants are:
 
 =over 4
 
-=item * $PADRE_HOME
+=item * $PADRE_CONFIG_DIR
 
 Private Padre configuration directory Padre, used to store stuff.
 
@@ -96,7 +96,7 @@ The tags available are:
 
 =item * dirs
 
-Exports C<$PADRE_HOME>.
+Exports C<$PADRE_CONFIG_DIR>.
 
 
 =back
