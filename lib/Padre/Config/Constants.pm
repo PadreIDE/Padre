@@ -52,7 +52,7 @@ our $PROJECT = 2;
 # my $dir = _find_padre_config_dir();
 #
 # find and return the config directory where padre should store its
-# preferences & settings. no params.
+# preferences & settings. create it if needed. no params.
 #
 sub _find_padre_config_dir {
 	# define config dir
@@ -83,7 +83,7 @@ sub _find_padre_config_dir {
 # my $dir = _find_padre_plugin_dir();
 #
 # find and return the directory where padre should check the locally
-# installed plugins. no params.
+# installed plugins. create it if needed. no params.
 #
 sub _find_padre_plugin_dir {
 	my $pluginsdir = catdir( $PADRE_CONFIG_DIR, 'plugins' );
