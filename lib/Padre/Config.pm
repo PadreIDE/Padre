@@ -325,6 +325,81 @@ sub _INTEGER ($) {
 
 1;
 
+__END__
+
+=head1 NAME
+
+Padre::Config - configuration subsystem for Padre
+
+
+=head1 SYNOPSIS
+
+	use Padre::Config;
+	[...]
+	if ( Padre::Config->main_statusbar ) { [...] }
+
+
+
+=head1 DESCRIPTION
+
+=head2 Generic usage
+
+Every setting is accessed by a method named after it, which is a mutator.
+ie, it can be used both as a getter and a setter, depending on the number
+of arguments passed to it.
+
+
+
+=head2 Different types of settings
+
+Padre needs to store different settings. Those preferences are stored in
+different places depending on their impact. But C<Padre::Config> allows to
+access them with a unified api (a mutator). Only their declaration differ
+in the module.
+
+Here are the various types of settings that C<Padre::Config> can manage:
+
+=over 4
+
+=item * User settings
+
+Those settings are general settings that relates to user preferences. They range
+from general user interface look&feel (whether to show the line numbers, etc.)
+to editor preferences (tab width, etc.) and other personal settings.
+
+Those settings are stored in a YAML file, and accessed with C<Padre::Config::Human>.
+
+
+=item * Host settings
+
+Those preferences are related to the host on which Padre is run. The principal
+example of those settings are window appearance.
+
+Those settings are stored in a DB file, and accessed with C<Padre::Config::Host>.
+
+
+=item * Project settings
+
+Those preferences are related to the project of the file you are currently
+editing. Examples of those settings are whether to use tabs or spaces, etc.
+
+Those settings are accessed with C<Padre::Config::Project>.
+
+
+=back
+
+
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute it and/or modify it under the
+same terms as Perl 5 itself.
+
+=cut
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
