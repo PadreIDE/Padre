@@ -13,7 +13,7 @@ use Padre::Task;
 use lib '.';
 use t::lib::Padre::Task::Test;
 
-use vars '$TestClass'; # secret class name
+our $TestClass; # secret class name
 
 sub fake_run_task {
 	my $string = shift;

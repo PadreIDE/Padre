@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Test::More;
 use Data::Dumper;
-use vars qw/@windows/;
+our @windows;
 
 BEGIN {
     eval 'use Win32::GuiTest qw(:ALL);'; ## no critic (ProhibitStringyEval)

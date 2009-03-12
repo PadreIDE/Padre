@@ -11,7 +11,7 @@ use DBI      ();
 use Exporter ();
 
 use base 'Exporter';
-use vars qw{$VERSION @EXPORT $FILE};
+our (@EXPORT, $FILE};
 BEGIN {
 	@EXPORT  = qw{
 		file

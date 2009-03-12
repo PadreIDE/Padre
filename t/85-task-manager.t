@@ -17,7 +17,7 @@ BEGIN {
 	exit 0;
 }
 
-use vars '$TestClass';
+our $TestClass;
 BEGIN {
 	$TestClass = 'Padre::Task::Test';
 }
