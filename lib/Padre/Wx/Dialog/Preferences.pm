@@ -301,7 +301,7 @@ sub dialog {
 	my $dialog = Wx::Dialog->new(
 		$win,
 		-1,
-		'Settings',
+		Wx::gettext('Settings'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION | Wx::wxRESIZE_BORDER | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU,
