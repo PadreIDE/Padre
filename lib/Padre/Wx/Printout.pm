@@ -6,7 +6,7 @@ use warnings;
 use Wx::Print;
 use base qw(Wx::Printout);
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 sub new {
 	my $class  = shift;

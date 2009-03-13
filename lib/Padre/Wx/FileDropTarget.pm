@@ -6,7 +6,7 @@ use warnings;
 use Params::Util qw{ _INSTANCE };
 use Wx::DND;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 use base 'Wx::FileDropTarget';
 
 sub new {

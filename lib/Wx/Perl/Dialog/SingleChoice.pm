@@ -6,7 +6,7 @@ use warnings;
 use Wx        qw(:everything);
 use Wx::Event qw(:everything);
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 $| = 1;
 

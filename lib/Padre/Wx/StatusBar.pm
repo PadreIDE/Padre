@@ -8,7 +8,7 @@ use Padre::Util    ();
 use Padre::Wx      ();
 use Padre::Current ();
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 use base 'Wx::StatusBar';
 
 sub new {

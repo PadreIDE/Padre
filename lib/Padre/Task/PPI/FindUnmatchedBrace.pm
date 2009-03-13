@@ -3,7 +3,7 @@ package Padre::Task::PPI::FindUnmatchedBrace;
 use strict;
 use warnings;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 use base 'Padre::Task::PPI';
 use Padre::Wx();
