@@ -6,6 +6,7 @@ v0.29 2009.03.13
     Improving Padre::Util::get_project_dir (SZABGAB)
     Eliminate a test failure on non-English locale. (SZABGAB)
     Internal cleanups & documentation for configuration subsystem (JQUELIN)
+    Require Test::Most for the testing and bail_on compilation errors. (SZABGAB)
 
 v0.28 2009.03.04
 

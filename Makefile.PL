@@ -84,6 +84,7 @@ requires       'Wx::Perl::ProcessStream'  => '0.11';
 requires       'YAML::Tiny'               => '1.32';
 test_requires  'Test::Compile'            => '0.08' unless win32;
 test_requires  'Test::More'               => '0.47';
+test_requires  'Test::Most'               => '0.21';
 test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';

@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::Most;
 BEGIN {
 	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
 		plan skip_all => 'Needs DISPLAY';
@@ -9,6 +9,7 @@ BEGIN {
 }
 
 #use Test::NeedsDisplay ':skip_all';
+bail_on_fail;
 
 use File::Find::Rule;
 use File::Temp;
@@ -25,11 +26,11 @@ foreach my $file ( @files ) {
 		$module =~ s/[\/\\]/::/g;
 		$module =~ s/\.pm$//;
 		system "$^X -e \"require $module; print 'ok';\" > $out 2>$err";
-		my $out_data = slurp($out);
-		is($out_data, 'ok', "STDOUT of $file");
-
 		my $err_data = slurp($err);
 		is($err_data, '', "STDERR of $file");
+
+		my $out_data = slurp($out);
+		is($out_data, 'ok', "STDOUT of $file");
 }
 
 sub slurp {
