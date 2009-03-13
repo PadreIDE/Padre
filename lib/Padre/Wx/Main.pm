@@ -187,12 +187,6 @@ sub new {
 	# Create the status bar
 	my $statusbar = Padre::Wx::StatusBar->new($self);
 	$self->SetStatusBar($statusbar);
-	# show the statusbar if needed.
-	if ( $self->config->main_statusbar ) {
-		$statusbar->Show;
-	} else {
-		$statusbar->Hide;
-	}
 
 	# Create the three notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
@@ -275,7 +269,7 @@ sub new {
 	# at the top)
 	# so now we always turn the status bar on at the beginning and hide it in the timer, if it was not needed
 	# TODO: there might be better ways to fix that issue...
-	$self->GetStatusBar->Show;
+	$statusbar->Show;
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
 	Wx::Event::EVT_TIMER(
 		$self,
