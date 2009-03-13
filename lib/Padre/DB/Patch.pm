@@ -11,7 +11,7 @@ use DBI      ();
 use Exporter ();
 
 use base 'Exporter';
-our (@EXPORT, $FILE};
+our (@EXPORT, $FILE);
 BEGIN {
 	@EXPORT  = qw{
 		file
