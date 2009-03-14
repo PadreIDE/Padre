@@ -4,40 +4,83 @@ use strict;
 use warnings;
 use Test::More;
 use Data::Dumper;
-our @windows;
 
-BEGIN {
-    eval 'use Win32::GuiTest qw(:ALL);'; ## no critic (ProhibitStringyEval)
-    $@ and plan skip_all => 'Win32::GuiTest is required for this test';
-    
-    @windows = FindWindowLike(0, "^Padre");
-    scalar @windows or plan skip_all => 'You need open Padre then start this test';
+eval {
+	require Win32::GuiTest;
+	import Win32::GuiTest qw(:ALL);
 };
+if ($@) {
+	plan skip_all => 'Win32::GuiTest is required for this test';
+}
+    
+my %existing_windows = map {$_ => 1} FindWindowLike(0, "^Padre");
+
+
+my $cmd = "start $^X script\\padre";
+diag $cmd;
+system $cmd;
+our $padre;
+
+# allow some time to launch Padre
+foreach (1..10) {
+	sleep(1);
+	my @current_windows = FindWindowLike(0, "^Padre");
+	my @wins = grep { ! $existing_windows{$_} } @current_windows;
+	die "Too many Padres found '@wins'" if @wins > 1;
+	$padre = shift @wins;
+	last if $padre;
+}
+die "Could not find Padre" if not $padre;
+
+SetForegroundWindow($padre);
+sleep 1; # crap, we have to wait for Padre to come to the foreground
+my $fg = GetForegroundWindow();
+die "Padre is NOT in the foreground" if $fg ne $padre;
+
+########
 
 plan tests => 5;
 
-my $padre = $windows[0];
+diag "Window id $padre";
+
+
+
 
 my $menu = GetMenu($padre);
+diag "Menu id: $menu";
 
-# test File
+# test File Menu
 my $submenu = GetSubMenu($menu, 0);
-my %h = GetMenuItemInfo($menu, 0);
-is $h{text}, '&File';
-%h = GetMenuItemInfo($submenu, 0);   # New in the File menu
-is $h{text}, "&New\tCtrl-N";
+{
+	my %h = GetMenuItemInfo($menu, 0);
+	# The next test is locale specific so we might skip
+	# the whole thing if not in English?
+	is $h{text}, '&File', "File Menu is ok";
+}
+
+{
+	my %h = GetMenuItemInfo($submenu, 0);   # New in the File menu
+	is $h{text}, "&New\tCtrl-N", "New is the first menu item";
+}
 my $subsubmenu = GetSubMenu($submenu, 1);
-%h = GetMenuItemInfo($subsubmenu, 0);
-is $h{text}, "Perl Distribution (Module::Starter)";
+{
+	my %h = GetMenuItemInfo($subsubmenu, 0);
+	is $h{text}, "Perl Distribution (Module::Starter)", "Module::Starter menu";
+}
 
 # test Edit
-$submenu = GetSubMenu($menu, 1);
-%h = GetMenuItemInfo($menu, 1);
-is $h{text}, '&Edit';
+{
+	$submenu = GetSubMenu($menu, 1);
+	my %h = GetMenuItemInfo($menu, 1);
+	is $h{text}, '&Edit', 'Edit menu';
+}
 
 # test View
-$submenu = GetSubMenu($menu, 2);
-%h = GetMenuItemInfo($menu, 2);
-is $h{text}, '&View';
+{
+	$submenu = GetSubMenu($menu, 3);
+	my %h = GetMenuItemInfo($menu, 3);
+	is $h{text}, '&View', 'View Menu';
+}
 
-1;
+SendKeys("%{F4}");  # Alt-F4 to exit
+
