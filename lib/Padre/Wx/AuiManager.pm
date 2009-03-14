@@ -41,10 +41,10 @@ sub new {
 	return $self;
 }
 
-sub caption_gettext {
+sub caption {
 	my $self = shift;
 	$self->{caption}->{$_[0]} = $_[1];
-	$self->GetPane($_[0])->Caption( Wx::gettext($_[1]) );
+	$self->GetPane($_[0])->Caption( $_[1] );
 	return 1;
 }
 
