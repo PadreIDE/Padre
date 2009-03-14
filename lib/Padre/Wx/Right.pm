@@ -53,7 +53,7 @@ sub new {
 	);
 
 	# Set the locale-aware caption
-	$self->aui->caption_gettext('right' => 'Workspace View');
+	$self->aui->caption('right' => Wx::gettext('Workspace View'));
 
 	return $self;
 }

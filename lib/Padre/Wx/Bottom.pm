@@ -53,7 +53,7 @@ sub new {
 	);
 
 	# Set the locale-aware caption
-	$self->aui->caption_gettext('bottom' => 'Output View');
+	$self->aui->caption('bottom' => Wx::gettext('Output View'));
 
 	return $self;
 }
