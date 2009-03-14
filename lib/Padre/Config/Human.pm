@@ -9,7 +9,6 @@ use strict;
 use warnings;
 
 use Carp          qw{ croak              };
-use File::Spec    qw{ catfile            };
 use Params::Util  qw{ _HASH0             };
 use Storable      qw{ dclone             };
 use YAML::Tiny    qw{ DumpFile LoadFile  };
