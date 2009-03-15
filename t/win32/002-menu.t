@@ -5,6 +5,7 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 
+
 eval {
 	require Win32::GuiTest;
 	import Win32::GuiTest qw(:ALL);
@@ -12,39 +13,12 @@ eval {
 if ($@) {
 	plan skip_all => 'Win32::GuiTest is required for this test';
 }
-    
-my %existing_windows = map {$_ => 1} FindWindowLike(0, "^Padre");
 
-
-my $cmd = "start $^X script\\padre";
-diag $cmd;
-system $cmd;
-our $padre;
-
-# allow some time to launch Padre
-foreach (1..10) {
-	sleep(1);
-	my @current_windows = FindWindowLike(0, "^Padre");
-	my @wins = grep { ! $existing_windows{$_} } @current_windows;
-	die "Too many Padres found '@wins'" if @wins > 1;
-	$padre = shift @wins;
-	last if $padre;
-}
-die "Could not find Padre" if not $padre;
-
-SetForegroundWindow($padre);
-sleep 1; # crap, we have to wait for Padre to come to the foreground
-my $fg = GetForegroundWindow();
-die "Padre is NOT in the foreground" if $fg ne $padre;
-
-########
+require t::lib::Padre::Win32;
+my $padre = t::lib::Padre::Win32::setup();
 
 plan tests => 5;
-
 diag "Window id $padre";
-
-
-
 
 my $menu = GetMenu($padre);
 diag "Menu id: $menu";
