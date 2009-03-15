@@ -398,41 +398,7 @@ sub install_cpan {
 	}
 
 	# Validation?
-
-	# If this is the first time a command has been run,
-	# set up the ProcessStream bindings.
-	unless ( $Wx::Perl::ProcessStream::VERSION ) {
-		require Wx::Perl::ProcessStream;
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[1]->GetProcess->Destroy;
-				$main->menu->run->enable;
-			},
-		);
-	}
-
-	# Prepare the output window
-	$main->show_output(1);
-	$main->output->clear;
-	$main->menu->run->disable;
+	$self->setup_bindings($main);
 
 	# Run with the same Perl that launched Padre
 	my $perl = Padre->perl_interpreter;
@@ -540,7 +506,7 @@ sub install_with_pip {
     $self->setup_bindings($main);
 
 	# Run with the same Perl that launched Padre
-	my $perl   = Padre->perl_interpreter;
+	my $perl = Padre->perl_interpreter;
 	my $cmd = qq{"$perl" "$pip" "$module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
 	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
