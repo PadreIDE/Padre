@@ -1,6 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
-    Storing cursor position in file (#206) (JQUELIN)
+    (Re-)Storing cursor position in file (#206) (JQUELIN)
+    Reload file keeps cursor position (#220) (JQUELIN)
 
 v0.29 2009.03.13
 
