@@ -364,56 +364,7 @@ sub install_url {
 		return;
 	}
 
-	# Find 'pip', used to install modules
-	require File::Which;
-	my $pip = scalar File::Which::which('pip');
-	unless ( -f $pip ) {
-		$main->error(Wx::gettext("pip is unexpectedly not installed"));
-		return;
-	}
-
-	# If this is the first time a command has been run,
-	# set up the ProcessStream bindings.
-	unless ( $Wx::Perl::ProcessStream::VERSION ) {
-		require Wx::Perl::ProcessStream;
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[1]->GetProcess->Destroy;
-				$main->menu->run->enable;
-			},
-		);
-	}
-
-	# Prepare the output window
-	$main->show_output(1);
-	$main->output->clear;
-	$main->menu->run->disable;
-
-
-	# Run with the same Perl that launched Padre
-	my $perl   = Padre->perl_interpreter;
-	my $cmd = qq{"$perl" "$pip" "$string"};
-	local $ENV{AUTOMATED_TESTING} = 1;
-	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
-
+    $self->install_with_pip($main, $string);
 	return;
 }
 
@@ -525,6 +476,78 @@ sub open_config {
 
 	$main->error(Wx::gettext("Failed to find your CPAN configuration"));
 }
+
+
+
+
+
+#####################################################################
+# Auxiliary Methods
+
+sub setup_bindings {
+    my $self = shift;
+    my $main = shift;
+
+	# If this is the first time a command has been run,
+	# set up the ProcessStream bindings.
+	unless ( $Wx::Perl::ProcessStream::VERSION ) {
+		require Wx::Perl::ProcessStream;
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
+				return;
+			},
+		);
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
+				return;
+			},
+		);
+		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
+			$main,
+			sub {
+				$_[1]->Skip(1);
+				$_[1]->GetProcess->Destroy;
+				$main->menu->run->enable;
+			},
+		);
+	}
+
+	# Prepare the output window
+	$main->show_output(1);
+	$main->output->clear;
+	$main->menu->run->disable;
+}
+
+sub install_with_pip {
+	my $self = shift;
+	my $main = shift;
+	my $module = shift;
+
+	# Find 'pip', used to install modules
+	require File::Which;
+	my $pip = scalar File::Which::which('pip');
+	unless ( -f $pip ) {
+		$main->error(Wx::gettext("pip is unexpectedly not installed"));
+		return;
+	}
+
+    $self->setup_bindings($main);
+
+	# Run with the same Perl that launched Padre
+	my $perl   = Padre->perl_interpreter;
+	my $cmd = qq{"$perl" "$pip" "$module"};
+	local $ENV{AUTOMATED_TESTING} = 1;
+	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
+	
+	return;
+}
+
 
 1;
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
