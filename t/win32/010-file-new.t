@@ -3,22 +3,24 @@
 use strict;
 use warnings;
 use Test::More;
+use Data::Dumper;
 use FindBin qw/$RealBin/;
-our @windows;
 
-BEGIN {
-    eval 'use Win32::GuiTest qw(:ALL);'; ## no critic (ProhibitStringyEval)
-    $@ and plan skip_all => 'Win32::GuiTest is required for this test';
-    
-    @windows = FindWindowLike(0, "^Padre");
-    scalar @windows or plan skip_all => 'You need open Padre then start this test';
+eval {
+	require Win32::GuiTest;
+	import Win32::GuiTest qw(:ALL);
 };
+if ($@) {
+	plan skip_all => 'Win32::GuiTest is required for this test';
+}
+
+require t::lib::Padre::Win32;
+my $padre = t::lib::Padre::Win32::setup();
+############################
 
 plan tests => 2;
+diag "Window id $padre";
 
-my $padre = $windows[0];
-SetForegroundWindow($padre);
-sleep 1;
 
 MenuSelect("&File|&New");
 sleep 1;
@@ -45,14 +47,19 @@ sleep 1;
 # check the file
 ok(-e "$dir/$save_to", 'file saved');
 
-open(my $fh, '<', "$dir/$save_to");
-local $/;
-my $text = <$fh>;
-close($fh);
+my $text;
+if (open(my $fh, '<', "$dir/$save_to")) {
+	local $/;
+	$text = <$fh>;
+	close($fh);
+} else {
+	diag("Could not open file $dir/$save_to  $!");
+}
 like($text, qr/inside Padre/);
 
 # restore
 MenuSelect("&File|&Close");
 unlink("$dir/$save_to");
 
-1;
+SendKeys("%{F4}");  # Alt-F4 to exit
+

@@ -16,6 +16,7 @@ if ($@) {
 
 require t::lib::Padre::Win32;
 my $padre = t::lib::Padre::Win32::setup();
+################################
 
 plan tests => 5;
 diag "Window id $padre";
