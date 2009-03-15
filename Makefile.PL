@@ -89,6 +89,9 @@ test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
 # test_requires  'Test::NeedsDisplay'       => '1.07';
+
+tests     't/*.t t/win32/*.t'  if win32;
+
 no_index       'directory'                => qw{ t xt eg share inc privinc };
 homepage       'http://padre.perlide.org/';
 bugtracker     'http://padre.perlide.org/';
