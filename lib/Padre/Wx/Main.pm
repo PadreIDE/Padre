@@ -1291,6 +1291,15 @@ sub setup_editor {
 
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
+	my $filename = $doc->filename;
+	if ( defined $filename ) {
+		my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
+		if ( defined $pos ) {
+			$editor->SetCurrentPos($pos);
+			$editor->SetSelection($pos,$pos);
+		}
+	}
+
 	return $id;
 }
 
@@ -1619,6 +1628,12 @@ sub close {
 			return 0;
 		}
 	}
+	
+	#
+	Padre::DB::LastPositionInFile->set_last_pos(
+		$doc->filename, $editor->GetCurrentPos
+	);
+	
 	$self->notebook->DeletePage($id);
 
 	$self->syntax->clear;
