@@ -1291,14 +1291,7 @@ sub setup_editor {
 
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
-	my $filename = $doc->filename;
-	if ( defined $filename ) {
-		my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
-		if ( defined $pos ) {
-			$editor->SetCurrentPos($pos);
-			$editor->SetSelection($pos,$pos);
-		}
-	}
+	$doc->restore_cursor_position;
 
 	return $id;
 }
@@ -1443,19 +1436,10 @@ sub on_reload_file {
 	my $document = $self->current->document or return;
 	my $editor   = $document->editor;
 
-	my $filename = $document->filename;
-	if ( defined $filename ) {
-		my $pos = $editor->GetCurrentPos;
-		Padre::DB::LastPositionInFile->set_last_pos($filename, $pos);
-	}
+	$document->store_cursor_position;
 	if ( $document->reload ) {
 		$document->editor->configure_editor($document);
-		my $filename = $document->filename;
-		my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
-		if ( defined $pos ) {
-			$editor->SetCurrentPos($pos);
-			$editor->SetSelection($pos,$pos);
-		}
+		$document->restore_cursor_position;
 	} else {
 		$self->error( sprintf(
 			Wx::gettext("Could not reload file: %s"),
@@ -1643,9 +1627,7 @@ sub close {
 	}
 	
 	#
-	Padre::DB::LastPositionInFile->set_last_pos(
-		$doc->filename, $editor->GetCurrentPos
-	);
+	$doc->store_cursor_position;
 	
 	$self->notebook->DeletePage($id);
 
