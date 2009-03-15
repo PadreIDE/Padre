@@ -1441,8 +1441,21 @@ sub on_open {
 sub on_reload_file {
 	my $self     = shift;
 	my $document = $self->current->document or return;
+	my $editor   = $document->editor;
+
+	my $filename = $document->filename;
+	if ( defined $filename ) {
+		my $pos = $editor->GetCurrentPos;
+		Padre::DB::LastPositionInFile->set_last_pos($filename, $pos);
+	}
 	if ( $document->reload ) {
 		$document->editor->configure_editor($document);
+		my $filename = $document->filename;
+		my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
+		if ( defined $pos ) {
+			$editor->SetCurrentPos($pos);
+			$editor->SetSelection($pos,$pos);
+		}
 	} else {
 		$self->error( sprintf(
 			Wx::gettext("Could not reload file: %s"),
