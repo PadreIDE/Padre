@@ -364,10 +364,9 @@ sub install_url {
 		return;
 	}
 
-	# Execute the command
-	my $perl   = Padre->perl_interpreter;
-	my $dir    = File::Basename::dirname( $perl );
-	my $pip    = File::Spec->catfile( $dir, 'pip' );
+	# Find 'pip', used to install modules
+	require File::Which;
+	my $pip = scalar File::Which::which('pip');
 	unless ( -f $pip ) {
 		$main->error(Wx::gettext("pip is unexpectedly not installed"));
 		return;
@@ -408,8 +407,10 @@ sub install_url {
 	$main->output->clear;
 	$main->menu->run->disable;
 
+
 	# Run with the same Perl that launched Padre
-	my $cmd = qq{"$perl" "pip" "$string"};
+	my $perl   = Padre->perl_interpreter;
+	my $cmd = qq{"$perl" "$pip" "$string"};
 	local $ENV{AUTOMATED_TESTING} = 1;
 	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
 
