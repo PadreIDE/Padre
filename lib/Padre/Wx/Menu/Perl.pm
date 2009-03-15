@@ -312,8 +312,6 @@ sub refresh {
 # Menu Event Methods
 
 sub install_file {
-	# TODO: supidly duplicated to avoid warning
-	$DB::single = $DB::single = 1;
 	my $self = shift;
 	my $main = shift;
 
@@ -321,9 +319,9 @@ sub install_file {
 	my $dialog = Wx::FileDialog->new(
 		$main,
 		Wx::gettext("Select distribution to install"),
-		'', # Default directory
-		'', # Default file
-		undef,
+		'',                       # Default directory
+		'',                       # Default file
+		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
 		Wx::wxFD_OPEN
 		| Wx::wxFD_FILE_MUST_EXIST
 	);
@@ -331,7 +329,7 @@ sub install_file {
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
-	my $string = $dialog->GetValue;
+	my $string = $dialog->GetPath;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
 		$main->error(
@@ -340,6 +338,7 @@ sub install_file {
 		return;
 	}
 
+	$self->install_with_pip($main, $string);
 	return;
 }
 
