@@ -378,6 +378,8 @@ The method is passed a wx object that should be used as the wx parent.
           ],
           '---' => undef,        # Separator
           About => 'show_about', # Shorthand for sub { $self->show_about(@_) }
+          "Action\tCtrl+Shift+Z" => 'action', # Also use keyboard shortcuts 
+					      # to call sub { $self->show_about(@_) }
       ];
   }
 
@@ -390,6 +392,9 @@ key/value pairs that will be turned into menus.
 
 If the key is a string containing three hyphons (i.e. '---') the pair will be
 rendered as a menu seperator.
+
+If the key is a string containing a tab ("\t") and a keyboard shorcut combination
+the menu action will also be available through a keyboard shortcut.
 
 If the value is a Perl identifier, it will be treated as a method name to be
 called on the plugin object when the menu entry is triggered.
