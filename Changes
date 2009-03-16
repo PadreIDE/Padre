@@ -2,6 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 
     (Re-)Storing cursor position in file (#206) (JQUELIN)
     Reload file keeps cursor position (#220) (JQUELIN)
+    Preferences windows title should match its menu invocation (#270) (JQUELIN)
 
 v0.29 2009.03.13
 
