@@ -469,6 +469,19 @@ sub load_file {
 	my ($self) = @_;
 
 	my $file = $self->{filename};
+
+	# check if file exists
+	if ( ! -e $file ) {
+		# file doesn't exist, try to create an empty one
+		if ( not open my $fh, '>', $file ) {
+			# oops, error creating file. abort operation
+			print ">>$file $!\n";
+			$self->set_errstr($!);
+			return;
+		}
+	}
+
+	# load file
 	$self->set_errstr('');
 	my $content;
 	if (open my $fh, '<', $file) {
