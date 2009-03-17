@@ -4,7 +4,8 @@ use strict;
 use warnings;
 use Test::More;
 use Data::Dumper;
-use FindBin qw/$RealBin/;
+use Win32;
+#use FindBin qw/$RealBin/;
 
 eval {
 	require Win32::GuiTest;
@@ -30,15 +31,12 @@ my $text = "If you're reading this inside Padre, ";
 $text   .= "we might consider this test succesful. ";
 $text   .= "Please wait.......";
 
-
-# TODO replace this with $ENV{PADRE_HOME} (now it breaks)
-my $dir      = $RealBin;
+my $dir      = Win32::GetLongPathName($ENV{PADRE_HOME});
 my $save_to  = "$dir/$$.txt";
 my $save_tox = "$dir/x$$.txt";
 # Stupid Save box don't accpect '/' in the input
 $save_to =~ s/\//\\/g;
 $save_tox =~ s/\//\\/g;
-unlink($save_to, $save_tox);
 diag "Save to '$save_to'";
 
 {
@@ -81,7 +79,6 @@ diag "Save to '$save_to'";
 
 # restore
 MenuSelect("&File|&Close");
-unlink($save_to);
 
 SendKeys("%{F4}");  # Alt-F4 to exit
 sleep 1;
