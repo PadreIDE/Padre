@@ -30,37 +30,41 @@ Win32::GuiTest::SendKeys("If you're reading this inside Padre, ");
 Win32::GuiTest::SendKeys("we might consider this test succesful. ");
 Win32::GuiTest::SendKeys("Please wait.......");
 
+# TODO replace this with $ENV{PADRE_HOME} (now it breaks)
 my $dir = $RealBin;
 # Stupid Save box don't accpect '/' in the input
-$dir =~ s/\//\\/g;
+
 
 MenuSelect("&File|&Save");
 sleep 1;
 
-my $save_to = "$$.txt";
-unlink("$dir/$save_to");
+my $save_to = "$dir/$$.txt";
+$save_to =~ s/\//\\/g;
+unlink($save_to);
+diag "Save to '$save_to'";
 
 # Stupid Save box don't accpect '/' in the input
-SendKeys("$dir\\$save_to");
+
+
+SendKeys($save_to);
 SendKeys("%{S}");
 sleep 1;
-
 # check the file
-ok(-e "$dir/$save_to", 'file saved');
+ok(-e $save_to, 'file saved');
 
 my $text;
-if (open(my $fh, '<', "$dir/$save_to")) {
+if (open(my $fh, '<', $save_to)) {
 	local $/;
 	$text = <$fh>;
 	close($fh);
 } else {
-	diag("Could not open file $dir/$save_to  $!");
+	diag("Could not open file $save_to  $!");
 }
 like($text, qr/inside Padre/);
 
 # restore
 MenuSelect("&File|&Close");
-unlink("$dir/$save_to");
+unlink($save_to);
 
 SendKeys("%{F4}");  # Alt-F4 to exit
 sleep 1;
