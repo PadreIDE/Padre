@@ -14,6 +14,7 @@ if ($@) {
 	plan skip_all => 'Win32::GuiTest is required for this test';
 }
 
+use t::lib::Padre;
 require t::lib::Padre::Win32;
 my $padre = t::lib::Padre::Win32::setup();
 ############################
@@ -62,4 +63,4 @@ MenuSelect("&File|&Close");
 unlink("$dir/$save_to");
 
 SendKeys("%{F4}");  # Alt-F4 to exit
-
+sleep 1;

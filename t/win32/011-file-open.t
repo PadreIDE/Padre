@@ -15,6 +15,7 @@ if ($@) {
 	plan skip_all => 'Win32::GuiTest is required for this test';
 }
 
+use t::lib::Padre;
 require t::lib::Padre::Win32;
 my $padre = t::lib::Padre::Win32::setup();
 ##############################
@@ -42,4 +43,4 @@ like( $text, qr/missing_brace_1\.pl$/, 'get missing_brace_1.pl on statusbar' );
 MenuSelect("&File|&Close");
 
 SendKeys("%{F4}");  # Alt-F4 to exit
-
+sleep 1;
