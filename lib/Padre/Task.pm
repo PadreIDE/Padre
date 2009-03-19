@@ -6,6 +6,7 @@ use warnings;
 our $VERSION = '0.29';
 
 require Padre;
+require Padre::Wx;
 
 use Storable     ();
 use IO::Handle   ();
@@ -22,6 +23,10 @@ BEGIN {
 
 use Class::XSAccessor
 	constructor => 'new';
+
+# set up the stdout/stderr printing events
+our $STDOUT_EVENT : shared = Wx::NewEventType();
+our $STDERR_EVENT : shared = Wx::NewEventType();
 
 =pod
 
@@ -57,6 +62,8 @@ task:
   sub run {
           my $self = shift;
           # Do something that takes a long time!
+          # optionally print to the output window
+          $self->print("Background thread says hi!\n");
           return 1;
   }
 
@@ -133,9 +140,28 @@ Calling this multiple times will submit multiple jobs.
 
 =cut
 
-sub schedule {
-	my $self = shift;
-	Padre->ide->task_manager->schedule($self);
+{
+	my $events_initialized = 0;
+	sub schedule {
+		my $self = shift;
+		if (!$events_initialized) {
+			my $main = Padre->ide->wx->main;
+			Wx::Event::EVT_COMMAND(
+				$main,
+				-1,
+				$STDOUT_EVENT,
+				\&_on_stdout,
+			);
+			Wx::Event::EVT_COMMAND(
+				$main,
+				-1,
+				$STDERR_EVENT,
+				\&_on_stderr,
+			);
+			$events_initialized = 1;
+		}
+		Padre->ide->task_manager->schedule($self);
+	}
 }
 
 =pod
@@ -382,6 +408,65 @@ sub _deserialize {
 	undef;
 }
 
+# The main-thread stdout hook
+sub _on_stdout {
+	my ($main, $event) = @_;
+	@_=(); # hack to avoid "Scalars leaked"
+	my $out = $main->output();
+	$main->show_output(1);
+	$out->style_neutral();
+	$out->AppendText($event->GetData);
+	return();
+}
+
+# The main-thread stderr hook
+sub _on_stderr {
+	my ($main, $event) = @_;
+	@_=(); # hack to avoid "Scalars leaked"
+	my $out = $main->output();
+	$main->show_output(1);
+	$out->style_bad();
+	$out->AppendText($event->GetData);
+	$out->style_neutral();
+	return();
+}
+
+=pod
+
+=head2 print
+
+  $task->print("Hi this is immediately sent to the Padre output window\n");
+
+Sends an event to the main Padre thread and dispays a
+message in the Padre output window.
+
+=cut
+
+sub task_print {
+	my $self = shift;
+	$self->post_event($STDOUT_EVENT, join("", @_));
+	return();
+}
+
+
+=pod
+
+=head2 warn
+
+  $task->warn("Hi this is immediately sent to the Padre output window\n");
+
+Sends an event to the main Padre thread and dispays a
+message in the Padre output window with style C<bad>.
+
+=cut
+
+sub task_warn {
+	my $self = shift;
+	$self->post_event($STDERR_EVENT, join("", @_));
+	return();
+}
+
+
 =pod
 
 =head2 post_event
@@ -401,8 +486,8 @@ like this:
 Then you have to setup the event handler (for example in the
 C<prepare()> method. This should happen in the main thread!
 
-(TODO: Check the effect of declaring the same
-handler multiple times)
+But watch out: You should not declare the same
+handler multiple times.
 
   Wx::Event::EVT_COMMAND(
       Padre->ide->wx->main,
@@ -424,9 +509,10 @@ by simply running:
 =cut
 
 sub post_event {
+	my @stuff = @_; @_ = ();
 	Wx::PostEvent(
 		$Padre::TaskManager::_main,
-		Wx::PlThreadEvent->new( -1, $_[1], $_[2] ),
+		Wx::PlThreadEvent->new( -1, $stuff[1], $stuff[2] ),
 	);
 }
 
