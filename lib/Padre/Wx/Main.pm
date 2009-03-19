@@ -831,7 +831,7 @@ sub run_command {
 # This should really be somewhere else, but can stay here for now
 sub run_document {
 	my $self     = shift;
-	my $debug    = shift;	
+	my $debug    = shift;
 	my $document = $self->current->document;
 	unless ( $document ) {
 		return $self->error(Wx::gettext("No open document"));
@@ -954,13 +954,13 @@ sub prompt {
 
 	require Padre::Wx::History::TextDialog;
 	my $dialog = Padre::Wx::History::TextDialog->new(
-        $self, $title, $subtitle, $key,
-    );
-    if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-        return;
-    }
-    my $value = $dialog->GetValue;
-    $dialog->Destroy;
+		$self, $title, $subtitle, $key,
+	);
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	my $value = $dialog->GetValue;
+	$dialog->Destroy;
 	return $value;
 }
 
