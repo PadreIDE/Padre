@@ -87,13 +87,19 @@ use Class::XSAccessor
 		plugin_manager => 'plugin_manager',
 	};
 
-# Globally shared detection of the "curent" Perl
-sub perl_interpreter {
-	require Probe::Perl;
-	my $perl = Probe::Perl->find_perl_interpreter;
-	return $perl if $perl;
-	require File::Which;
-	return scalar File::Which::which('perl');
+# Globally shared detection of the "current" Perl
+{
+	my $perl_interpreter;
+	sub perl_interpreter {
+		return $perl_interpreter if defined $perl_interpreter;
+		require Probe::Perl;
+		my $perl = Probe::Perl->find_perl_interpreter;
+		$perl_interpreter = $perl, return $perl if defined $perl;
+		require File::Which;
+		$perl = scalar File::Which::which('perl');
+		$perl_interpreter = $perl;
+		return $perl;
+	}
 }
 
 my $SINGLETON = undef;
