@@ -472,6 +472,45 @@ sub on_task_start_event {
 	return();
 }
 
+=pod
+
+=head2 on_dump_running_tasks
+
+Called by the toolbar task-status button.
+Dumps the list of running tasks to the output panel.
+
+=cut
+
+sub on_dump_running_tasks {
+	my $ide = Padre->ide;
+	my $manager = $ide->task_manager;
+	my $nrunning = $manager->running_tasks();
+
+	my $main = $ide->wx->main;
+	my $output = $main->output;
+	$main->show_output(1);
+	$output->style_neutral;
+
+	$output->AppendText("\n-----------------------------------------\n[" . localtime() . "] ");
+	if ($nrunning == 0) {
+		$output->AppendText("Currently, no background tasks are being executed.\n");
+		return();
+	}
+
+	my $running = $manager->{running_tasks};
+	$output->AppendText("The following tasks are currently executing in the background:\n");
+	foreach my $type (keys %$running) {
+		$output->AppendText(sprintf('%3u of type \'%s\'', $running->{$type}, $type) . "\n");
+	}
+
+	my $queue = $manager->task_queue;
+	my $pending = $queue->pending;
+
+	if ($pending) {
+		$output->AppendText("\nAdditionally, there are $pending tasks pending execution.\n");
+	}
+}
+
 ##########################
 # Worker thread main loop
 sub worker_loop {
