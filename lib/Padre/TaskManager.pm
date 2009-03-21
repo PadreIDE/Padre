@@ -165,9 +165,9 @@ proxy to this method for convenience.
 =cut
 
 sub schedule {
-	my $self    = shift;
-	my $process = shift;
-	if ( not ref($process) or not $process->isa("Padre::Task") ) {
+	my $self = shift;
+	my $task = shift;
+	if ( not ref($task) or not $task->isa("Padre::Task") ) {
 		die "Invalid task scheduled!"; # TODO: grace
 	}
 
@@ -175,13 +175,13 @@ sub schedule {
 	$self->reap();
 	
 	# prepare and stop if vetoes
-	my $return = $process->prepare();
-	if ($return and $return =~ /^break$/) {
+	my $return = $task->prepare();
+	if ($return and $return =~ /^break$/i) {
 		return;
 	}
 
 	my $string;
-	$process->serialize(\$string);
+	$task->serialize(\$string);
 	if ( $self->use_threads ) {
 		require Time::HiRes;
 		# This is to make sure we don't indefinitely fill the
@@ -398,7 +398,6 @@ sub on_close {
 	# instead of going through the Padre globals!
 	Padre->ide->{task_manager}->cleanup();
 
-	# TODO: understand cargo cult
 	$event->Skip(1);
 }
 
