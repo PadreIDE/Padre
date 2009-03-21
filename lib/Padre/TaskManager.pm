@@ -95,6 +95,9 @@ our $TASK_DONE_EVENT : shared = Wx::NewEventType;
 # running a task.
 our $TASK_START_EVENT : shared = Wx::NewEventType;
 
+# remember whether the event handlers were initialized...
+our $EVENTS_INITIALIZED = 0;
+
 # Timer to reap dead workers every N milliseconds
 our $REAP_TIMER;
 
@@ -124,9 +127,12 @@ sub new {
 
 	my $main = Padre->ide->wx->main;
 
-	Wx::Event::EVT_COMMAND($main, -1, $TASK_DONE_EVENT, \&on_task_done_event);
-	Wx::Event::EVT_COMMAND($main, -1, $TASK_START_EVENT, \&on_task_start_event);
-	Wx::Event::EVT_CLOSE($main, \&on_close);
+	if (not $EVENTS_INITIALIZED) {
+		Wx::Event::EVT_COMMAND($main, -1, $TASK_DONE_EVENT, \&on_task_done_event);
+		Wx::Event::EVT_COMMAND($main, -1, $TASK_START_EVENT, \&on_task_start_event);
+		Wx::Event::EVT_CLOSE($main, \&on_close);
+		$EVENTS_INITIALIZED = 1;
+	}
  
 	$self->{task_queue} = Thread::Queue->new;
 
