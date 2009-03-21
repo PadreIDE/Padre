@@ -62,13 +62,20 @@ Perl code for parsing from the current document
 or specify it as the "C<text>" parameter to
 the constructor.
 
+Note: If you don't supply the document text and
+there is no currently open document to fetch it from,
+C<new()> will simply return the empty list instead
+of a Padre::Task::PPI object.
+
 =cut
 
 sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 	unless ( defined $self->{text} ) {
-		$self->{text} = Padre::Current->document->text_get;
+		my $doc = Padre::Current->document;
+		return() if not defined $doc;
+		$self->{text} = $doc->text_get;
 	}
 	return $self;
 }
