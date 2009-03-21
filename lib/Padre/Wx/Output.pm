@@ -238,7 +238,7 @@ sub set_font {
 	my $self   = shift;
 	my $config = $self->main->config;
 	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font ) {
+	if ( defined $config->editor_font && length $config->editor_font > 0 ) { # empty default...
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	my $style = $self->GetDefaultStyle;
