@@ -167,7 +167,15 @@ sub new {
 		Padre::Wx::Icon::find('status/padre-tasks-idle'),
 		Wx::gettext('Background Tasks are idle'),
 	);
-
+	
+	# connect the dumping of the running task map to the output
+	# window to each one of the tool states
+	foreach my $id (map {$self->{"task_status_${_}_id"}} qw(idle running load)) {
+		Wx::Event::EVT_TOOL(
+			$main, $id, \&Padre::TaskManager::on_dump_running_tasks,
+		);
+	}
+	
 	# Remember the id of the current status for update checks
 	$self->{task_status_id} = $self->{task_status_idle_id};
 
