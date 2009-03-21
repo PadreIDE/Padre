@@ -441,7 +441,6 @@ sub on_task_done_event {
 	# instead of going through the Padre globals!
 	my $running = Padre->ide->task_manager->{running_tasks};
 	my $task_type = ref($task);
-	warn "DONE: $task_type";
 	$running->{$task_type}--;
 	delete $running->{$task_type} if not $running->{$task_type};
 	
@@ -468,7 +467,6 @@ sub on_task_start_event {
 	my $manager = Padre->ide->task_manager;
 	my $task_type = $event->GetData();
 	$manager->{running_tasks}{$task_type}++;
-	warn "STARTED: $task_type";
 	$main->GetToolBar->update_task_status();
 
 	return();
