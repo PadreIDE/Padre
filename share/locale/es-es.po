@@ -31,7 +31,6 @@ msgid "English (Australian)"
 msgstr "Inglés (Australia)"
 
 #: lib/Padre/Locale.pm:127 lib/Padre/Wx/Dialog/PluginManager.pm:179
-#, fuzzy
 msgid "Unknown"
 msgstr "Desconocido"
 
@@ -132,12 +131,12 @@ msgid "Klingon"
 msgstr "Klingon"
 
 #: lib/Padre/PluginHandle.pm:161
-#, fuzzy, perl-format
+#, perl-format
 msgid "Failed to enable plugin '%s': %s"
 msgstr "No se pudo habilitar el complemento '%s': %s"
 
 #: lib/Padre/PluginHandle.pm:210
-#, fuzzy, perl-format
+#, perl-format
 msgid "Failed to disable plugin '%s': %s"
 msgstr "No se pudo deshabilitar el complemento '%s': %s"
 
@@ -176,7 +175,7 @@ msgstr ""
 "subclase de Padre::Plugin."
 
 #: lib/Padre/PluginManager.pm:473
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be "
 "instantiated"
@@ -209,7 +208,7 @@ msgstr ""
 "el constructor no devuelve un objeto Padre::Plugin."
 
 #: lib/Padre/PluginManager.pm:537
-#, fuzzy, perl-format
+#, perl-format
 msgid "Plugin:%s - Does not have menus"
 msgstr "Complemento:%s - No se pudo cargar el modulo %s."
 
@@ -218,7 +217,6 @@ msgid "Error when calling menu for plugin"
 msgstr "Error al llamar el menú del complemento"
 
 #: lib/Padre/PluginManager.pm:785
-#, fuzzy
 msgid "No document open"
 msgstr "Ningún documento abierto"
 
@@ -227,12 +225,11 @@ msgid "No filename"
 msgstr "Sin nombre de archivo"
 
 #: lib/Padre/PluginManager.pm:791
-#, fuzzy
 msgid "Could not locate project dir"
 msgstr "No se pudo guardar el archivo: "
 
 #: lib/Padre/PluginManager.pm:806 lib/Padre/PluginManager.pm:854
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Failed to load the plugin '%s'\n"
 "%s"
@@ -280,7 +277,6 @@ msgid "&GoTo Element"
 msgstr "I&r a elemento"
 
 #: lib/Padre/Task/Outline/Perl.pm:193 lib/Padre/Wx/Directory.pm:179
-#, fuzzy
 msgid "Open &Documentation"
 msgstr "Abrir &documentación"
 
@@ -349,7 +345,6 @@ msgid "Output View"
 msgstr "Vista de resultados"
 
 #: lib/Padre/Wx/Directory.pm:52 lib/Padre/Wx/Directory.pm:140
-#, fuzzy
 msgid "Directory"
 msgstr "Seleccionar directorio"
 
@@ -362,7 +357,6 @@ msgid "Select all\tCtrl-A"
 msgstr "Seleccionar todo\tCtrl-A"
 
 #: lib/Padre/Wx/Editor.pm:649 lib/Padre/Wx/Menu/Edit.pm:201
-#, fuzzy
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "Ayuda contextual\tCtrl-Mayús-H"
 
@@ -371,7 +365,6 @@ msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "&Marcar seleccionadas como comentario\tCtrl-M"
 
 #: lib/Padre/Wx/Editor.pm:657 lib/Padre/Wx/Menu/Edit.pm:217
-#, fuzzy
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "&Quitar marca de comentario de seleccionadas\tCtrl-M"
 
@@ -400,7 +393,6 @@ msgid "Diagnostics"
 msgstr "Diagnósticos"
 
 #: lib/Padre/Wx/FunctionList.pm:76
-#, fuzzy
 msgid "Sub List"
 msgstr "Lista de funciones"
 
@@ -433,7 +425,6 @@ msgid "Autocompletions error"
 msgstr "Error de Autocompletar"
 
 #: lib/Padre/Wx/Main.pm:1051
-#, fuzzy
 msgid "Line number:"
 msgstr "Número de línea:"
 
@@ -442,7 +433,6 @@ msgid "Nothing selected. Enter what should be opened:"
 msgstr "No hay nada seleccionado. Indique qué es lo que desea abrir:"
 
 #: lib/Padre/Wx/Main.pm:1323
-#, fuzzy
 msgid "Open selection"
 msgstr "Abrir selección"
 
@@ -452,7 +442,6 @@ msgid "Could not find file '%s'"
 msgstr "No se encontró el archivo: '%s'"
 
 #: lib/Padre/Wx/Main.pm:1386
-#, fuzzy
 msgid "Open Selection"
 msgstr "Abrir selección"
 
@@ -488,7 +477,6 @@ msgid "Could not save file: "
 msgstr "No se pudo guardar el archivo: "
 
 #: lib/Padre/Wx/Main.pm:1612
-#, fuzzy
 msgid "File changed. Do you want to save it?"
 msgstr "El archivo ha cambiado. ¿Desea guardarlo?"
 
@@ -507,7 +495,6 @@ msgid "There are no differences\n"
 msgstr "No existen diferencias\n"
 
 #: lib/Padre/Wx/Main.pm:2180
-#, fuzzy
 msgid "Internal error"
 msgstr "Error interno"
 
@@ -582,7 +569,6 @@ msgid "&Edit"
 msgstr "E&dición"
 
 #: lib/Padre/Wx/Menubar.pm:78
-#, fuzzy
 msgid "&Search"
 msgstr "&Buscar"
 
@@ -600,7 +586,7 @@ msgstr "&Complementos"
 
 #: lib/Padre/Wx/Menubar.pm:82
 msgid "&Window"
-msgstr "&Ventana"
+msgstr "Ve&ntana"
 
 #: lib/Padre/Wx/Menubar.pm:83
 msgid "&Help"
@@ -729,7 +715,6 @@ msgid "The bookmark '%s' no longer exists"
 msgstr "El marcador '%s' ya no existe"
 
 #: lib/Padre/Wx/Dialog/Find.pm:58
-#, fuzzy
 msgid "Find"
 msgstr "Buscar:"
 
@@ -738,12 +723,10 @@ msgid "Find:"
 msgstr "Buscar:"
 
 #: lib/Padre/Wx/Dialog/Find.pm:91
-#, fuzzy
 msgid "Replace with:"
 msgstr "Reemplazar por:"
 
 #: lib/Padre/Wx/Dialog/Find.pm:113
-#, fuzzy
 msgid "&Find"
 msgstr "Buscar:"
 
@@ -764,7 +747,6 @@ msgid "Close Window on &hit"
 msgstr "Cerrar &ventana al encontrar coincidencia"
 
 #: lib/Padre/Wx/Dialog/Find.pm:176
-#, fuzzy
 msgid "Replace &all"
 msgstr "Reemplazar &todo"
 
@@ -778,7 +760,6 @@ msgid "%s occurences were replaced"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
-#, fuzzy
 msgid "Module Name:"
 msgstr "Nombre del módulo:"
 
@@ -873,17 +854,14 @@ msgid "Use Tabs"
 msgstr "Usar tabulaciones"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:53
-#, fuzzy
 msgid "TAB display size (in spaces):"
 msgstr "Mostrar tamaño de tabulación (en espacios)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:57
-#, fuzzy
 msgid "Indentation width (in columns):"
 msgstr "Ancho de sangría (en columnas)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:61
-#, fuzzy
 msgid "Guess from current document:"
 msgstr "Detectar en el documento actual"
 
@@ -908,7 +886,6 @@ msgid "Preferred language for error diagnostics:"
 msgstr "Idioma preferido para los diagnósticos:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:120
-#, fuzzy
 msgid "Colored text in output window (ANSI)"
 msgstr "Texto coloreado en la ventana de resultados (ANSI): "
 
@@ -925,7 +902,6 @@ msgid "Settings Demo"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:255
-#, fuzzy
 msgid "Enable?"
 msgstr "Habilitar"
 
@@ -950,12 +926,10 @@ msgid "nothing"
 msgstr "nada"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:408
-#, fuzzy
 msgid "last"
 msgstr "último"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:409
-#, fuzzy
 msgid "no"
 msgstr "no"
 
@@ -988,12 +962,10 @@ msgid "&Next"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Search.pm:181
-#, fuzzy
 msgid "Case &insensitive"
 msgstr "No distinguir mayúsculas de minúsculas"
 
 #: lib/Padre/Wx/Dialog/Search.pm:185
-#, fuzzy
 msgid "Use rege&x"
 msgstr "Usar expresión regular"
 
@@ -1039,7 +1011,7 @@ msgstr "&Deshacer"
 
 #: lib/Padre/Wx/Menu/Edit.pm:46
 msgid "&Redo"
-msgstr "&Rehacer"
+msgstr "Re&hacer"
 
 #: lib/Padre/Wx/Menu/Edit.pm:64
 msgid "Select"
@@ -1182,7 +1154,6 @@ msgid "&Save\tCtrl-S"
 msgstr "&Guardar\tCtrl-S"
 
 #: lib/Padre/Wx/Menu/File.pm:144
-#, fuzzy
 msgid "Save &As...\tF12"
 msgstr "Guardar c&omo...\tF12"
 
@@ -1223,7 +1194,6 @@ msgid "Clean Recent Files List"
 msgstr "Borrar lista de archivos recientes"
 
 #: lib/Padre/Wx/Menu/File.pm:273
-#, fuzzy
 msgid "Doc Stats"
 msgstr "Estadísticas del documento"
 
@@ -1232,12 +1202,10 @@ msgid "&Quit\tCtrl-Q"
 msgstr "&Salir\tCtrl-Q"
 
 #: lib/Padre/Wx/Menu/Help.pm:40
-#, fuzzy
 msgid "Context Help\tF1"
 msgstr "Ayuda contextual\tF1"
 
 #: lib/Padre/Wx/Menu/Help.pm:58
-#, fuzzy
 msgid "Current Document"
 msgstr "Documento actual"
 
@@ -1247,7 +1215,7 @@ msgstr "Visitar PerlMonks"
 
 #: lib/Padre/Wx/Menu/Help.pm:79
 msgid "Report a New &Bug"
-msgstr "&Notificar error nuevo"
+msgstr "&Notificar error"
 
 #: lib/Padre/Wx/Menu/Help.pm:85
 msgid "View All &Open Bugs"
@@ -1258,13 +1226,11 @@ msgid "&About"
 msgstr "&Acerca de"
 
 #: lib/Padre/Wx/Menu/Help.pm:148
-#, fuzzy
 msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
 msgstr ""
 "Copyright 2008-2009. El equipo de desarrollo de Padre que figura en Padre.pm."
 
 #: lib/Padre/Wx/Menu/Perl.pm:42
-#, fuzzy
 msgid "Install Module..."
 msgstr "Instalar módulo..."
 
@@ -1281,7 +1247,6 @@ msgid "Install Remote Distribution"
 msgstr "Instalar distribución remota"
 
 #: lib/Padre/Wx/Menu/Perl.pm:84
-#, fuzzy
 msgid "Open CPAN Config File"
 msgstr "Abrir archivo de configuración de CPAN"
 
@@ -1290,12 +1255,10 @@ msgid "Find Unmatched Brace"
 msgstr "Buscar llave desemparejada"
 
 #: lib/Padre/Wx/Menu/Perl.pm:112
-#, fuzzy
 msgid "Find Variable Declaration"
 msgstr "Buscar declaración de variable"
 
 #: lib/Padre/Wx/Menu/Perl.pm:129
-#, fuzzy
 msgid "Lexically Rename Variable"
 msgstr "Cambiar nombre de variable en ámbito léxico"
 
@@ -1318,7 +1281,6 @@ msgstr ""
 "alinear"
 
 #: lib/Padre/Wx/Menu/Perl.pm:233
-#, fuzzy
 msgid "Use PPI Syntax Highlighting"
 msgstr "Usar PPI para el resaltado de sintaxis de PPI"
 
@@ -1382,7 +1344,6 @@ msgid "Reload All Plugins"
 msgstr "Volver a cargar todos los complementos"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:95
-#, fuzzy
 msgid "(Re)load Current Plugin"
 msgstr "Volver a cargar mi complemento"
 
@@ -1400,14 +1361,13 @@ msgstr "Ejecutar script\tF5"
 
 #: lib/Padre/Wx/Menu/Run.pm:44
 msgid "Run Script (debug info)\tShift-F5"
-msgstr ""
+msgstr "Ejecutar script (info. de depuración)\Mayús-F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:54
 msgid "Run Command\tCtrl-F5"
 msgstr "Ejecutar comando\tCtrl-F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:66
-#, fuzzy
 msgid "Stop\tF6"
 msgstr "&Detener"
 
@@ -1424,7 +1384,6 @@ msgid "Find Previous\tShift-F3"
 msgstr "Buscar anterior\tMayús-F3"
 
 #: lib/Padre/Wx/Menu/Search.pm:69
-#, fuzzy
 msgid "Replace\tCtrl-R"
 msgstr "Reemplazar\tCtrl-R"
 
@@ -1441,7 +1400,6 @@ msgid "Find Previous\tShift-F4"
 msgstr "Buscar anterior\tMayús-F4"
 
 #: lib/Padre/Wx/Menu/Search.pm:127
-#, fuzzy
 msgid "Ac&k Search"
 msgstr "Buscar con Ac&k"
 
@@ -1458,12 +1416,10 @@ msgid "Show Functions"
 msgstr "Mostrar funciones"
 
 #: lib/Padre/Wx/Menu/View.pm:84
-#, fuzzy
 msgid "Show Outline"
 msgstr "Mostrar esquema"
 
 #: lib/Padre/Wx/Menu/View.pm:94
-#, fuzzy
 msgid "Show Directory tree"
 msgstr "Seleccionar directorio"
 
@@ -1484,7 +1440,6 @@ msgid "View Document As..."
 msgstr "Ver documento como..."
 
 #: lib/Padre/Wx/Menu/View.pm:180
-#, fuzzy
 msgid "Show Line Numbers"
 msgstr "Mostrar números de línea"
 
@@ -1497,7 +1452,6 @@ msgid "Show Call Tips"
 msgstr "Mostrar información sobre sintaxis"
 
 #: lib/Padre/Wx/Menu/View.pm:213
-#, fuzzy
 msgid "Show Current Line"
 msgstr "Mostrar línea actual"
 
@@ -1542,7 +1496,6 @@ msgid "Style"
 msgstr "Estilo"
 
 #: lib/Padre/Wx/Menu/View.pm:346
-#, fuzzy
 msgid "Padre"
 msgstr "Padre"
 
@@ -1567,7 +1520,6 @@ msgid "System Default"
 msgstr "Predeterminado del sistema"
 
 #: lib/Padre/Wx/Menu/View.pm:457
-#, fuzzy
 msgid "&Full Screen\tF11"
 msgstr "&Pantalla completa\tF11"
 
@@ -1592,7 +1544,6 @@ msgid "GoTo Subs Window\tAlt-S"
 msgstr "Ir a ventana de funciones\tAlt-S"
 
 #: lib/Padre/Wx/Menu/Window.pm:104
-#, fuzzy
 msgid "GoTo Outline Window\tAlt-L"
 msgstr "Ir a ventana de esquema\tAlt-L"
 
