@@ -64,6 +64,7 @@ sub menu_plugins_simple {
 		'Dump %INC HASH'            => 'dump_inc',
 		'---'                       => undef,
 		'Simulate Crash'            => 'simulate_crash',
+		'Simulate Crashing Bg Task' => 'simulate_task_crash',
 		'---'                       => undef,
 		'wxWidgets 2.8.8 Reference' => sub {
 			Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
@@ -110,6 +111,12 @@ sub simulate_crash {
 	require POSIX;
 	POSIX::_exit();
 }
+
+sub simulate_task_crash {
+	require Padre::Task::Debug::Crashing;
+	Padre::Task::Debug::Crashing->new()->schedule();
+}
+
 
 sub show_about {
 	my $self  = shift;
