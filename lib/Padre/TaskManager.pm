@@ -275,7 +275,6 @@ sub reap {
 	@_=(); # avoid "Scalars leaked"
 	my $workers = $self->{workers};
 
-use Data::Dumper; warn Dumper $self->{running_tasks};
 	my @active_or_waiting;
 	#warn "No. worker threads before reaping: ".scalar (@$workers);
 
@@ -283,7 +282,6 @@ use Data::Dumper; warn Dumper $self->{running_tasks};
 		if ($thread->is_joinable()) {
 			my $tid = $thread->tid();
 			# clean up the running task if necessary (case of crashed thread)
-			warn "THREAD $tid JOINABLE";
 			$self->_stop_task($tid);
 			my $tmp = $thread->join();
 		}
