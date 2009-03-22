@@ -1065,6 +1065,8 @@ Breno G. de Oliveira (GARU)
 
 Brian Cassidy (BRICAS)
 
+Cezary Morga (THEREK) E<lt>cm@therek.netE<gt>
+
 Chris Dolan (CHRISDOLAN)
 
 Claudio Ramirez (CLAUDIO) E<lt>claudio@apt-get.beE<gt>
