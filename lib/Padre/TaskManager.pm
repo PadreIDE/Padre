@@ -275,11 +275,16 @@ sub reap {
 	@_=(); # avoid "Scalars leaked"
 	my $workers = $self->{workers};
 
+use Data::Dumper; warn Dumper $self->{running_tasks};
 	my @active_or_waiting;
 	#warn "No. worker threads before reaping: ".scalar (@$workers);
 
 	foreach my $thread (@$workers) {
 		if ($thread->is_joinable()) {
+			my $tid = $thread->tid();
+			# clean up the running task if necessary (case of crashed thread)
+			warn "THREAD $tid JOINABLE";
+			$self->_stop_task($tid);
 			my $tmp = $thread->join();
 		}
 		else {
@@ -315,6 +320,29 @@ sub reap {
 	$self->setup_workers();
 
 	return 1;
+}
+
+
+sub _stop_task {
+	my $self = shift;
+	my $tid = shift;
+	my $task_type = shift;
+
+	my $running = $self->{running_tasks};
+
+	if (not defined $task_type) { # attempt cleanup after crash
+		foreach my $task_type (keys %$running) {
+			delete $running->{$task_type}{$tid};
+			delete $running->{$task_type} if not keys %{$running->{$task_type}};
+		}
+	}
+	else {
+		delete $running->{$task_type}{$tid};
+		delete $running->{$task_type} if not keys %{$running->{$task_type}};
+	}
+	
+	Padre->ide->wx->main->GetToolBar->update_task_status();
+	return(1);
 }
 
 =pod
@@ -376,8 +404,8 @@ Returns the number of tasks that are currently being executed.
 sub running_tasks {
 	my $self = shift;
 	my $n = 0;
-	foreach my $tasks_of_this_type (values %{$self->{running_tasks}}) {
-		$n += $tasks_of_this_type;
+	foreach my $task_type_hash (values %{$self->{running_tasks}}) {
+		$n += keys %$task_type_hash;
 	}
 	return $n;
 }
@@ -412,7 +440,7 @@ sub on_close {
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
-	Padre->ide->{task_manager}->cleanup();
+	Padre->ide->task_manager->cleanup();
 
 	$event->Skip(1);
 }
@@ -435,16 +463,15 @@ sub on_task_done_event {
 	my $task = Padre::Task->deserialize( \$frozen );
 
 	$task->finish($main);
+	my $tid = $task->{__thread_id};
 
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
-	my $running = Padre->ide->task_manager->{running_tasks};
+	my $manager = Padre->ide->task_manager;
+	my $running = $manager->{running_tasks};
 	my $task_type = ref($task);
-	$running->{$task_type}--;
-	delete $running->{$task_type} if not $running->{$task_type};
-	
-	$main->GetToolBar->update_task_status();
+	$manager->_stop_task($tid, $task_type);
 
 	return();
 }
@@ -465,8 +492,9 @@ sub on_task_start_event {
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
 	my $manager = Padre->ide->task_manager;
-	my $task_type = $event->GetData();
-	$manager->{running_tasks}{$task_type}++;
+	my $tid_and_task_type = $event->GetData();
+	my ($tid, $task_type) = split /;/, $tid_and_task_type, 2;
+	$manager->{running_tasks}{$task_type}{$tid} = 1;
 	$main->GetToolBar->update_task_status();
 
 	return();
@@ -498,10 +526,17 @@ sub on_dump_running_tasks {
 	}
 
 	my $running = $manager->{running_tasks};
-	$output->AppendText("The following tasks are currently executing in the background:\n");
+	my $text;
+	$text .= "The following tasks are currently executing in the background:\n";
+
 	foreach my $type (keys %$running) {
-		$output->AppendText(sprintf('%3u of type \'%s\'', $running->{$type}, $type) . "\n");
+		my $threads = $running->{$type};
+		my $n = keys %$threads;
+		$text .= "- $n of type '$type':\n";
+		$text .= "  (in thread(s) " . join(", ", sort {$a <=> $b} values %$threads) . ")\n";
 	}
+
+	$output->AppendText($text);
 
 	my $queue = $manager->task_queue;
 	my $pending = $queue->pending;
@@ -530,8 +565,9 @@ sub worker_loop {
 		return 1 if not ref($frozen_task) and $frozen_task eq 'STOP';
 
 		my $task = Padre::Task->deserialize( \$frozen_task );
+		$task->{__thread_id} = threads->tid();
 
-		my $thread_start_event = Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, ref($task) );
+		my $thread_start_event = Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, $task->{__thread_id} . ";" . ref($task) );
 		Wx::PostEvent($main, $thread_start_event);
 		
 		# RUN
