@@ -60,7 +60,7 @@ sub check_wx_version {
 	}
 	my $widgets_human = $widgets;
 	$widgets_human =~ s/^(\d\.\d\d\d)(\d\d\d)$/$1.$2/;
-	$widgets_human =~ s/0//g;
+	$widgets_human =~ s/\.0*/./g;
 	print "Found wxWidgets $widgets_human\n";
 	unless ( $widgets >= 2.008008 ) {
 		nono("Padre needs at least version 2.8.8 of wxWidgets. You have wxWidgets $widgets_human");
