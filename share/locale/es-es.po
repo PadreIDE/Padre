@@ -1361,7 +1361,7 @@ msgstr "Ejecutar script\tF5"
 
 #: lib/Padre/Wx/Menu/Run.pm:44
 msgid "Run Script (debug info)\tShift-F5"
-msgstr "Ejecutar script (info. de depuración)\Mayús-F5"
+msgstr "Ejecutar script (info. de depuración)\tMayús-F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:54
 msgid "Run Command\tCtrl-F5"
