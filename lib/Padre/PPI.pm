@@ -152,8 +152,7 @@ sub find_variable_declaration {
 	my $document = $cursor->top();
 	my $declaration;
 	while ( $cursor = $cursor->parent ) {
-		last if $cursor == $document;
-		if ($cursor->isa("PPI::Structure::Block")) {
+		if ($cursor->isa("PPI::Structure::Block") or $cursor == $document) {
 			my @elems = $cursor->elements;
 			foreach my $elem (@elems) {
 				if ($elem->isa("PPI::Statement::Variable")
@@ -162,7 +161,7 @@ sub find_variable_declaration {
 					last;
 				}
 			}
-			last if $declaration;
+			last if $declaration or $cursor == $document;
 		}
 	} # end while not top level
 

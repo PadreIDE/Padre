@@ -78,8 +78,9 @@ sub process_ppi {
 		$self->{error} = "no declaration";
 		return;
 	}
-	my $scope = $declaration->parent;
-	while ( not $scope->isa('Padre::Document') and not $scope->isa('PPI::Structure::Block') ) {
+
+	my $scope = $declaration;
+	while ( not $scope->isa('PPI::Document') and not $scope->isa('PPI::Structure::Block') ) {
 		$scope = $scope->parent;
 	}
 
