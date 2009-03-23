@@ -95,7 +95,7 @@ sub process_ppi {
 			'|',
 			map { quotemeta($_) }
 			grep { tr/$@%*// == 1 and !$unique{$_}++ }
-			map { my $name = $_; s/^\$//; ($name, "\${$_}") }
+			map { my $name = $_; $name =~ s/^\$//; ($_, "\${$name}") }
 			($varname, $token_str)
 		)
 	. ')';
