@@ -6,6 +6,8 @@ Changes for Perl Application Development and Refactoring Environment
     Fix error if passed a non-existent filename on command-line (#155) (JQUELIN)
     New task_warn/task_print methods in background tasks to easily
         print to the output pane (SMUELLER)
+    Fix bug in lexical variable declaration search that would prevent
+        it from finding variables declared in the main doc scope (SMUELLER)
 
 v0.29 2009.03.13
 
