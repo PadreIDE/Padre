@@ -12,95 +12,88 @@ our $VERSION = '0.29';
 use base 'Wx::StatusBar';
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
+    my $class = shift;
+    my $main  = shift;
 
-	# Create the basic object
-	my $self = $class->SUPER::new(
-		$main,
-		-1,
-		Wx::wxST_SIZEGRIP
-		| Wx::wxFULL_REPAINT_ON_RESIZE
-	);
+    # Create the basic object
+    my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
-	# Set up the fields
-	$self->SetFieldsCount(4);
-	$self->SetStatusWidths(-1, 100, 50, 100);
+    # Set up the fields
+    $self->SetFieldsCount(4);
+    $self->SetStatusWidths( -1, 100, 50, 100 );
 
-	return $self;
+    return $self;
 }
 
 sub clear {
-	my $self = shift;
-	$self->SetStatusText("", 0);
-	$self->SetStatusText("", 1);
-	$self->SetStatusText("", 2);
-	$self->SetStatusText("", 3);
-	return;
+    my $self = shift;
+    $self->SetStatusText( "", 0 );
+    $self->SetStatusText( "", 1 );
+    $self->SetStatusText( "", 2 );
+    $self->SetStatusText( "", 3 );
+    return;
 }
 
 sub main {
-	$_[0]->GetParent;
+    $_[0]->GetParent;
 }
 
 sub current {
-	Padre::Current->new(
-		main => $_[0]->GetParent,
-	);
+    Padre::Current->new( main => $_[0]->GetParent, );
 }
 
 sub refresh {
-	my $self     = shift;
-	my $current  = $self->current;
+    my $self    = shift;
+    my $current = $self->current;
 
-	# Blank the status bar if no document is open
-	my $editor   = $current->editor or return $self->clear;
+    # Blank the status bar if no document is open
+    my $editor = $current->editor or return $self->clear;
 
-	# Prepare the various strings that form the status bar
-	my $notebook = $current->notebook;
-	my $document = $current->document;
-	my $newline  = $document->get_newline_type || Padre::Util::NEWLINE;
-	my $pageid   = $notebook->GetSelection;
-	my $filename = $document->filename || '';
-	my $old      = $notebook->GetPageText($pageid);
-	my $text     = $filename
-		? File::Basename::basename($filename)
-		: substr($old, 1);
-	my $modified = $editor->GetModify ? '*' : ' ';
-	my $title    = $modified . $text;
-	my $position = $editor->GetCurrentPos;
-	my $line     = $editor->GetCurrentLine;
-	my $start    = $editor->PositionFromLine($line);
-	my $char     = $position - $start;
-	my $width    = $self->GetCharWidth;
-	my $mimetype = $document->get_mimetype;
-	my $postring = Wx::gettext('L:')  . ($line + 1) . ' '
-	             . Wx::gettext('Ch:') . $char;
+    # Prepare the various strings that form the status bar
+    my $notebook = $current->notebook;
+    my $document = $current->document;
+    my $newline  = $document->get_newline_type || Padre::Util::NEWLINE;
+    my $pageid   = $notebook->GetSelection;
+    my $filename = $document->filename || '';
+    my $old      = $notebook->GetPageText($pageid);
+    my $text
+        = $filename
+        ? File::Basename::basename($filename)
+        : substr( $old, 1 );
+    my $modified = $editor->GetModify ? '*' : ' ';
+    my $title    = $modified . $text;
+    my $position = $editor->GetCurrentPos;
+    my $line     = $editor->GetCurrentLine;
+    my $start    = $editor->PositionFromLine($line);
+    my $char     = $position - $start;
+    my $width    = $self->GetCharWidth;
+    my $mimetype = $document->get_mimetype;
+    my $postring = Wx::gettext('L:') . ( $line + 1 ) . ' ' . Wx::gettext('Ch:') . $char;
 
-	# Write the new values into the status bar and update sizes
-	$self->SetStatusText( "$modified $filename", 0 );
-	$self->SetStatusText( $mimetype,             1 );
-	$self->SetStatusText( $newline,              2 );
-	$self->SetStatusText( $postring,             3 );
-	$self->SetStatusWidths(
-		-1,
-		(length($mimetype)    ) * $width,
-		(length($newline)  + 2) * $width,
-		(length($postring) + 2) * $width,
-	); 
+    # Write the new values into the status bar and update sizes
+    $self->SetStatusText( "$modified $filename", 0 );
+    $self->SetStatusText( $mimetype,             1 );
+    $self->SetStatusText( $newline,              2 );
+    $self->SetStatusText( $postring,             3 );
+    $self->SetStatusWidths( -1,
+                            ( length($mimetype) ) * $width,
+                            ( length($newline) + 2 ) * $width,
+                            ( length($postring) + 2 ) * $width,
+    );
 
-	# Fixed ticket #190: Massive GDI object leakages 
-	# http://padre.perlide.org/ticket/190
-	# Please remember to call SetPageText once per the same text
-	# This still leaks but far less slowly (just on undo)
-	if ( $old ne $title ) {
-		$notebook->SetPageText( $pageid, $title );
-	}
+    # Fixed ticket #190: Massive GDI object leakages
+    # http://padre.perlide.org/ticket/190
+    # Please remember to call SetPageText once per the same text
+    # This still leaks but far less slowly (just on undo)
+    if ( $old ne $title ) {
+        $notebook->SetPageText( $pageid, $title );
+    }
 
-	return;
-}
+    return;
+} ## end sub refresh
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
