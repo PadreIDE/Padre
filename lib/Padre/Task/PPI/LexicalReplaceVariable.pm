@@ -91,11 +91,20 @@ sub process_ppi {
 	# for finding symbols in quotelikes and regexes
 	my %unique;
 	my $finder_regexp = '(?:'
-	                    . join('|', map {quotemeta($_)} grep {!$unique{$_}++} ($varname, $token_str))
-	                    . ')';
+		. join(
+			'|',
+			map { quotemeta($_) }
+			grep { tr/$@%*// == 1 and !$unique{$_}++ }
+			map { my $name = $_; s/^\$//; ($name, "\${$_}") }
+			($varname, $token_str)
+		)
+	. ')';
+
 	$finder_regexp = qr/$finder_regexp/;
 
 	my $replacement = $self->{replacement};
+	my $replacement_curlies = $replacement . "}";
+	$replacement_curlies =~ s/([\$@%\*])/$1\{/;
 
 	$scope->find(
 		sub {
@@ -108,7 +117,7 @@ sub process_ppi {
 			}
 			elsif ($node->isa("PPI::Token")) { # the case of potential quotelikes and regexes
 				my $str = $node->content;
-				if ($str =~ s/($finder_regexp)/$replacement/g) {
+				if ($str =~ s{($finder_regexp)}<$1 =~ tr/{// ? $replacement_curlies : $replacement>ge) {
 					# TODO do this without breaking encapsulation!
 					$node->{content} = $str;
 				}
