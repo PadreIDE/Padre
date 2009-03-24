@@ -820,8 +820,17 @@ sub run_command {
 
 	# Start the command
 	$self->{command} = Wx::Perl::ProcessStream->OpenProcess( $cmd, 'MyName1', $self );
+	
+	# TODO: It appears that Wx::Perl::ProcessStream's OpenProcess()
+	# does not honour the docs, as we don't get to this cleanup code
+	# even if we try to run a program that doesn't exist.
 	unless ( $self->{command} ) {
 		# Failed to start the command. Clean up.
+		Wx::MessageBox(
+            sprintf(Wx::gettext("Failed to start '%s' command"), $cmd), 
+            Wx::gettext("Error"), 
+            Wx::wxOK, $self
+        );
 		$self->menu->run->enable;
 	}
 
