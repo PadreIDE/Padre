@@ -311,7 +311,7 @@ sub guess_mimetype {
 
     # Fall back to a null value
     return '';
-} ## end sub guess_mimetype
+}
 
 sub mime_type_by_extension {
 	my ($self, $ext) = @_;
@@ -459,7 +459,7 @@ sub load_file {
     $self->{original_content} = $content;
 
     return 1;
-} ## end sub load_file
+}
 
 sub newline_type {
     my ($self) = @_;
@@ -500,7 +500,7 @@ sub newline_type {
         }
     }
     return ( $newline_type, $convert_to );
-} ## end sub newline_type
+}
 
 sub save_file {
     my ($self) = @_;
@@ -530,7 +530,7 @@ sub save_file {
     }
     $self->{_timestamp} = $self->time_on_file;
     return 1;
-} ## end sub save_file
+}
 
 =pod
 
@@ -743,7 +743,7 @@ sub guess_indentation_style {
     }
 
     return $style;
-} ## end sub guess_indentation_style
+}
 
 =head2 event_on_char
 
@@ -824,7 +824,7 @@ sub project_find {
     }
 
     return File::Spec->catpath( $v, $dirs, '' );
-} ## end sub project_find
+}
 
 #####################################################################
 # Document Analysis Methods
@@ -885,7 +885,7 @@ sub stats {
 
     return ( $lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
              $self->{encoding} );
-} ## end sub stats
+}
 
 =pod
 
@@ -1013,7 +1013,7 @@ sub autocomplete {
     }
 
     return ( length($prefix), @words );
-} ## end sub autocomplete
+}
 
 1;
 

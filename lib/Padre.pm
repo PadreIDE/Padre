@@ -143,7 +143,7 @@ sub new {
     $self->{task_manager} = Padre::TaskManager->new( use_threads => $self->config->threads, );
 
     return $self;
-} ## end sub new
+}
 
 sub run {
     my $self = shift;
@@ -176,7 +176,7 @@ sub run {
     $self->{wx} = undef;
 
     return;
-} ## end sub run
+}
 
 # Save the YAML configuration file
 sub save_config {

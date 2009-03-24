@@ -90,7 +90,7 @@ sub refresh {
     }
 
     return;
-} ## end sub refresh
+}
 
 1;
 
