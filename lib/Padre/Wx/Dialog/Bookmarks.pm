@@ -126,9 +126,11 @@ sub set_bookmark {
 	# Ask the user for the bookmark name
 	my $line     = $editor->GetCurrentLine;
 	my $file     = File::Basename::basename($path || '');
+	my ($text)   = $editor->GetLine($line);
+	$text =~ s/\r?\n?$//;
 	my $dialog   = $class->dialog(
 		$main,
-		sprintf(Wx::gettext("%s line %s"), $file, $line)
+		sprintf(Wx::gettext("%s line %s: %s"), $file, $line, $text)
 	);
 	$dialog->show_modal or return;
 
