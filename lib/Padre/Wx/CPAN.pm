@@ -21,6 +21,7 @@ use Class::XSAccessor
 	accessors => {
 		listview => 'listview',
 		entry    => 'entry',
+		modules  => 'modules',
 	};
 
 
@@ -78,7 +79,7 @@ sub new {
 #	);
 #
 
-	my $label = Wx::StaticText->new( $self, -1 , 'Search'  ,
+	my $label = Wx::StaticText->new( $self, -1 , 'Filter'  ,
 		Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxALIGN_RIGHT
 	);
@@ -98,7 +99,8 @@ sub new {
 	CPAN::HandleConfig->load(
 		be_silent => 1,
 	);
-
+	my @modules = map {$_->id} CPAN::Shell->expand('Module', "/^/");
+	$self->{modules} = \@modules;
 	$self->show_rows;
 	
 	return $self;
@@ -122,9 +124,12 @@ sub show_rows {
 	$listview->clear;
 
 	$regex ||= '^';
-	my $MAX_DISPLAY = 10;
-	my @modules = CPAN::Shell->expand('Module', "/$regex/");
-	foreach my $i (0..$MAX_DISPLAY) {
+	my $MAX_DISPLAY = 100;
+	my $i = 0;
+	foreach my $module (@{ $self->{modules} }) {
+		next if $module !~ /$regex/;
+		$i++;
+		last if $i > $MAX_DISPLAY;
 		#my $name = $module->id;
 		#print "$name\n";
 		#last if $main::c++ > 10;
@@ -133,7 +138,7 @@ sub show_rows {
 		my $idx = $listview->InsertStringImageItem( 1, 1,  1 );
 		$listview->SetItemData( $idx, 0 );
 		$listview->SetItem( $idx, 1,  Wx::gettext('Warning')  );
-		$listview->SetItem( $idx, 2, $modules[$i]->id );
+		$listview->SetItem( $idx, 2, $module );
 	}
 }
 
