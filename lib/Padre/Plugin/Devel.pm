@@ -69,6 +69,9 @@ sub menu_plugins_simple {
 		'wxWidgets 2.8.8 Reference' => sub {
 			Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
 		},
+		'STC Reference' => sub {
+			Wx::LaunchDefaultBrowser('http://www.yellowbrain.com/stc/index.html');
+		},
 		'---'                       => undef,
 		'About'                     => 'show_about',
 	];
