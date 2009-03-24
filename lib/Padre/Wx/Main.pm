@@ -2122,15 +2122,10 @@ sub on_insert_from_file {
 		return;
 	}
 	
-	my $data = Wx::TextDataObject->new;
-	$data->SetText($text);
-	my $length = $data->GetTextLength;
-	
 	my $editor = $self->notebook->GetPage($id);
-	$editor->ReplaceSelection('');
-	my $pos = $editor->GetCurrentPos;
-	$editor->InsertText( $pos, $text );
-	$editor->GotoPos( $pos + $length - 1 );
+	$editor->insert_text($text);
+
+	return;
 }
 
 sub convert_to {

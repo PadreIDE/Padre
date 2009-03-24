@@ -1029,6 +1029,21 @@ sub goto_pos_centerize {
 	$self->EnsureCaretVisible;
 }
 
+sub insert_text {
+	my ($self, $text) = @_;
+
+	my $data = Wx::TextDataObject->new;
+	$data->SetText($text);
+	my $length = $data->GetTextLength;
+	
+	$self->ReplaceSelection('');
+	my $pos = $self->GetCurrentPos;
+	$self->InsertText( $pos, $text );
+	$self->GotoPos( $pos + $length - 1 );
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
