@@ -313,6 +313,11 @@ sub guess_mimetype {
     return '';
 } ## end sub guess_mimetype
 
+sub mime_type_by_extension {
+	my ($self, $ext) = @_;
+	return $EXT_MIME{$ext};
+}
+
 # For ts without a newline type
 # TODO: get it from config
 sub _get_default_newline_type {

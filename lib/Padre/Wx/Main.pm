@@ -2456,6 +2456,25 @@ sub on_last_visited_pane {
 	}
 }
 
+sub on_new_from_template {
+	my ($self, $extension) = @_;
+
+	$self->on_new();
+
+	my $editor = Padre::Current->editor;
+	return if not $editor;
+
+	my $file = File::Spec->catfile(Padre::Util::sharedir('templates'), "template.$extension");
+	$editor->insert_from_file($file);
+
+	my $document = $editor->{Document};
+	$document->set_mimetype( $document->mime_type_by_extension($extension) );
+	$document->editor->padre_setup;
+	$document->rebless;
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
