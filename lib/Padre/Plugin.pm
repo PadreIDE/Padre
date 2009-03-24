@@ -20,20 +20,20 @@ Padre::Plugin - Padre Plugin API 2.1
   
   # Declare the Padre interfaces this plugin uses
   sub padre_interfaces {
-      'Padre::Plugin'         => 0.19,
-      'Padre::Document::Perl' => 0.16,
-      'Padre::Wx::Main'       => 0.16,
-      'Padre::DB'             => 0.16,
+      'Padre::Plugin'         => 0.29,
+      'Padre::Document::Perl' => 0.29,
+      'Padre::Wx::Main'       => 0.29,
+      'Padre::DB'             => 0.29,
   }
   
   # The command structure to show in the Plugins menu
   sub menu_plugins_simple {
       my $self = shift;
-      'My Plugin' => [
-          About   => sub { $self->show_about },
-          Submenu => [
-              'Do Something' => sub { $self->do_something },
-          ],
+      return $self->plugin_name => [
+                'About'   => sub { $self->show_about },
+                'Submenu' => [
+                    'Do Something' => sub { $self->do_something },
+                ],
       ];
   }
   
