@@ -370,6 +370,14 @@ sub install_url {
 sub install_cpan {
 	my $self = shift;
 	my $main = shift;
+	require Padre::Wx::CPAN;
+	my $cpan = Padre::Wx::CPAN->new;
+	$cpan->show;
+}
+
+sub install_cpan_old {
+	my $self = shift;
+	my $main = shift;
 
 	# Ask for the module name	
 	require Padre::Wx::History::TextDialog;
