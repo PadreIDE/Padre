@@ -13,7 +13,6 @@ use base 'Wx::Frame';
 use Scalar::Util qw( blessed );
 use Params::Util qw( _INSTANCE );
 
-use CPAN;
 
 our $VERSION = '0.29';
 
@@ -21,7 +20,8 @@ use Class::XSAccessor
 	accessors => {
 		listview => 'listview',
 		entry    => 'entry',
-		modules  => 'modules',
+		cpan     => 'cpan',
+		main     => 'main',
 	};
 
 
@@ -44,12 +44,12 @@ Constructor , see L<Wx::Frame>
 
 =head1 SEE ALSO
 
-L<CPAN>
+L<Padre::CPAN>
 
 =cut
 
 sub new {
-	my ($class) = @_;
+	my ($class, $cpan, $main) = @_;
 
 	my $self = $class->SUPER::new(
 		undef,
@@ -58,6 +58,8 @@ sub new {
 		Wx::wxDefaultPosition,
 		[750, 700],
 	);
+	$self->{cpan} = $cpan;
+	$self->{main} = $main;
 
 	my $top_s = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	my $but_s = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
@@ -96,11 +98,6 @@ sub new {
 	$self->SetAutoLayout(1);
 	#$self->_setup_welcome;
 	
-	CPAN::HandleConfig->load(
-		be_silent => 1,
-	);
-	my @modules = map {$_->id} CPAN::Shell->expand('Module', "/^/");
-	$self->{modules} = \@modules;
 	$self->show_rows;
 	
 	return $self;
@@ -123,18 +120,8 @@ sub show_rows {
 	my $listview = $self->listview;
 	$listview->clear;
 
-	$regex ||= '^';
-	my $MAX_DISPLAY = 100;
-	my $i = 0;
-	foreach my $module (@{ $self->{modules} }) {
-		next if $module !~ /$regex/;
-		$i++;
-		last if $i > $MAX_DISPLAY;
-		#my $name = $module->id;
-		#print "$name\n";
-		#last if $main::c++ > 10;
-		#$name =~ s/::.*//;
-		#$prefix{$name}++
+	my $modules = $self->{cpan}->get_modules($regex);
+	foreach my $module (@$modules) {
 		my $idx = $listview->InsertStringImageItem( 1, 1,  1 );
 		$listview->SetItemData( $idx, 0 );
 		$listview->SetItem( $idx, 1,  Wx::gettext('Warning')  );

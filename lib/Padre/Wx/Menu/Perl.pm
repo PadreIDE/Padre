@@ -370,51 +370,14 @@ sub install_url {
 sub install_cpan {
 	my $self = shift;
 	my $main = shift;
+	require Padre::CPAN;
+	my $cpan = Padre::CPAN->new;
+
 	require Padre::Wx::CPAN;
-	my $cpan = Padre::Wx::CPAN->new;
-	$cpan->show;
+	my $cpan_gui = Padre::Wx::CPAN->new($cpan, $main);
+	$cpan_gui->show;
 }
 
-sub install_cpan_old {
-	my $self = shift;
-	my $main = shift;
-
-	# Ask for the module name	
-	require Padre::Wx::History::TextDialog;
-	my $dialog = Padre::Wx::History::TextDialog->new(
-		$main,
-		Wx::gettext("Module Name:\ne.g.: Perl::Critic"),
-		'Install Module',
-		'CPAN_INSTALL_MODULE',
-	);
-	my $result = $dialog->ShowModal;
-	my $module = $dialog->GetValue;
-
-	# Handle aborted installs
-	$dialog->Destroy;
-	if ( $result == Wx::wxID_CANCEL ) {
-		return;
-	}
-	unless ( defined $module ) {
-		return;
-	}
-	$module =~ s/^\s+//g;
-	$module =~ s/\s+$//g;
-	unless ( $module ne '' ) {
-		return;
-	}
-
-	# Validation?
-	$self->setup_bindings($main);
-
-	# Run with the same Perl that launched Padre
-	my $perl = Padre->perl_interpreter;
-	my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
-	local $ENV{AUTOMATED_TESTING} = 1;
-	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
-
-	return;
-}
 
 sub open_config {
 	my $self = shift;
@@ -453,49 +416,8 @@ sub open_config {
 
 
 
-
 #####################################################################
 # Auxiliary Methods
-
-sub setup_bindings {
-    my $self = shift;
-    my $main = shift;
-
-	# If this is the first time a command has been run,
-	# set up the ProcessStream bindings.
-	unless ( $Wx::Perl::ProcessStream::VERSION ) {
-		require Wx::Perl::ProcessStream;
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[1]->GetProcess->Destroy;
-				$main->menu->run->enable;
-			},
-		);
-	}
-
-	# Prepare the output window
-	$main->show_output(1);
-	$main->output->clear;
-	$main->menu->run->disable;
-}
 
 sub install_with_pip {
 	my $self = shift;
@@ -510,7 +432,7 @@ sub install_with_pip {
 		return;
 	}
 
-    $self->setup_bindings($main);
+    $main->setup_bindings;
 
 	# Run with the same Perl that launched Padre
 	my $perl = Padre->perl_interpreter;
