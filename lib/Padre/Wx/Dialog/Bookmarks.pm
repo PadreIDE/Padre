@@ -60,8 +60,7 @@ sub dialog {
 		parent   => $main,
 		title    => $title,
 		layout   => $layout,
-		width    => [ -1, -1 ],
-		# width    => [ 300, 50 ],
+		width    => [ 300, 50 ],
 	);
 	if ( $dialog->{_widgets_}->{entry} ) {
 		$dialog->{_widgets_}->{entry}->SetSize(10 * length $text, -1);
