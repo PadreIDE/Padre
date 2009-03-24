@@ -2086,8 +2086,8 @@ sub on_toggle_lockinterface {
 
 sub on_insert_from_file {
 	my $self = shift;
-	my $id   = $self->notebook->GetSelection;
-	return if $id == -1;
+	my $editor   = Padre::Current->editor;
+	return if not $editor;
 
 	# popup the window
 	my $last_filename = $self->current->filename;
@@ -2122,7 +2122,6 @@ sub on_insert_from_file {
 		return;
 	}
 	
-	my $editor = $self->notebook->GetPage($id);
 	$editor->insert_text($text);
 
 	return;
