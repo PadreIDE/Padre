@@ -61,7 +61,7 @@ sub menu_plugins_simple {
 		'---'                       => undef,
 		'Dump Current Document'     => 'dump_document',
 		'Dump Top IDE Object'       => 'dump_padre',
-		'Dump %INC HASH'            => 'dump_inc',
+		'Dump %INC and @INC'        => 'dump_inc',
 		'---'                       => undef,
 		'Simulate Crash'            => 'simulate_crash',
 		'Simulate Crashing Bg Task' => 'simulate_task_crash',
@@ -104,7 +104,7 @@ sub dump_padre {
 
 sub dump_inc {
 	my $self = shift;
-	return $self->_dump( \%INC );
+	return $self->_dump( \%INC, \@INC );
 }
 
 sub simulate_crash {
