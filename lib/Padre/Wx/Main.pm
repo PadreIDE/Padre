@@ -2112,17 +2112,7 @@ sub on_insert_from_file {
 	$self->{cwd} = $dialog->GetDirectory;
 	
 	my $file = File::Spec->catfile($self->cwd, $filename);
-	
-	my $text;
-	if ( open(my $fh, '<', $file) ) {
-		binmode($fh);
-		local $/ = undef;
-		$text = <$fh>;
-	} else {
-		return;
-	}
-	
-	$editor->insert_text($text);
+	$editor->insert_from_file($file);
 
 	return;
 }

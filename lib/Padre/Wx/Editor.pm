@@ -1044,6 +1044,23 @@ sub insert_text {
 	return;
 }
 
+sub insert_from_file {
+	my ($self, $file) = @_;	
+
+	my $text;
+	if ( open(my $fh, '<', $file) ) {
+		binmode($fh);
+		local $/ = undef;
+		$text = <$fh>;
+	} else {
+		return;
+	}
+	
+	$self->insert_text($text);
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
