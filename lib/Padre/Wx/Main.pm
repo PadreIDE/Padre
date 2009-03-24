@@ -850,11 +850,11 @@ sub run_document {
 	# TODO: Make this code suck less
 	my $config = $self->config;
 	if ( $config->run_save eq 'same' ) {
-		$self->on_save;
+		$self->on_save or return;
 	} elsif ( $config->run_save eq 'all_files' ) {
-		$self->on_save_all;
+		$self->on_save_all or return;
 	} elsif ( $config->run_save eq 'all_buffer' ) {
-		$self->on_save_all;
+		$self->on_save_all or return;
 	}
 
 	unless ( $document->can('get_command') ) {
