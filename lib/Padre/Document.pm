@@ -454,6 +454,7 @@ sub load_file {
     # if guess encoding fails then use 'utf-8'
     require Padre::Locale;
     $self->{encoding} = Padre::Locale::encoding_from_string($content);
+    warn $self->{encoding};
     $content = Encode::decode( $self->{encoding}, $content );
 
     $self->{original_content} = $content;

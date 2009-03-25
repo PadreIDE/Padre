@@ -15,11 +15,12 @@ our $VERSION = '0.29';
 use base 'Padre::Wx::Dialog::HTML';
 
 sub new {
-	my $class = shift;
-	my $self  = $class->SUPER::new( @_,
+	my ($class, $parent, $manager) = @_;
+	my $self  = $class->SUPER::new(
 		title => Wx::gettext('Plugin Manager'),
 	);
 
+	$self->{manager} = $manager;
 	unless ( _INSTANCE($self->{manager}, 'Padre::PluginManager') ) {
 		Carp::croak("Missing or invalid Padre::PluginManager object");
 	}
@@ -31,6 +32,7 @@ sub new {
 sub html {
 	my $self    = shift;
 	my $manager = $self->{manager};
+	return '' unless defined $manager;
 
 	my @rows = ();
 	my $file = Padre::Util::sharefile('plugin.gif');
