@@ -2483,12 +2483,14 @@ sub install_cpan {
 	my $module = shift;
 
 	# Validation?
-	$main->setup_bindings;
+	#$main->setup_bindings;
 	# Run with the same Perl that launched Padre
-	my $perl = Padre->perl_interpreter;
-	my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
+	#my $perl = Padre->perl_interpreter;
+	#my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
-	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
+	my $cpan = Padre::CPAN->new;
+	$cpan->install($module);
+	#Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
 
 	return;
 }

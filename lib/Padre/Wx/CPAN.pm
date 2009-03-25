@@ -120,10 +120,11 @@ sub show_rows {
 	my $listview = $self->listview;
 	$listview->clear;
 
+	my $c = 10;
 	my $modules = $self->{cpan}->get_modules($regex);
 	foreach my $module (@$modules) {
-		my $idx = $listview->InsertStringImageItem( 1, 1,  1 );
-		$listview->SetItemData( $idx, 0 );
+		my $idx = $listview->InsertStringImageItem( 0, $module,  0 );
+		#$listview->SetItemData( $idx, $c++ );
 		$listview->SetItem( $idx, 1,  Wx::gettext('Warning')  );
 		$listview->SetItem( $idx, 2, $module );
 	}

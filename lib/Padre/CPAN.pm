@@ -6,7 +6,7 @@ use Carp         ();
 
 our $VERSION   = '0.29';
 
-use CPAN;
+use CPAN ();
 
 my $SINGLETON;
 
@@ -40,6 +40,12 @@ sub get_modules {
 		push @modules, $module;
 	}
 	return \@modules;
+}
+
+sub install {
+	my ($self, $module) = @_;
+	CPAN::Shell->install($module);
+
 }
 
 1;

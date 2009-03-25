@@ -47,12 +47,8 @@ sub new {
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self,
 		$self,
-		sub {
-			$self->on_list_item_activated($_[1]);
-		},
+		\&on_list_item_activated,
 	);
-
-#	$self->Hide;
 
 	return $self;
 }
@@ -188,22 +184,10 @@ sub running {
 sub on_list_item_activated {
 	my $self   = shift;
 	my $event  = shift;
-	my $editor = $self->main->current->editor;
 	my $line   = $event->GetItem->GetText;
-
-	if (
-		not defined($line)
-		or $line !~ /^\d+$/o
-		or $editor->GetLineCount < $line
-	) {
-		return;
-	}
-
-	$line--;
-	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-	$editor->SetFocus;
-
+	#my $line   = $event->GetItem->GetText(2);
+	print STDERR $line;
+	
 	return;
 }
 
