@@ -76,10 +76,10 @@ sub refresh {
     $self->SetStatusText( $newline,              2 );
     $self->SetStatusText( $postring,             3 );
     $self->SetStatusWidths(
-                            -1,
-                            ( length($mimetype) ) * $width,
-                            ( length($newline) + 2 ) * $width,
-                            ( length($postring) + 2 ) * $width,
+        -1,
+        ( length($mimetype) ) * $width,
+        ( length($newline) + 2 ) * $width,
+        ( length($postring) + 2 ) * $width,
     );
 
     # Fixed ticket #190: Massive GDI object leakages

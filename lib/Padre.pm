@@ -80,11 +80,11 @@ use Class::Autouse qw{
 
 # Generate faster accessors
 use Class::XSAccessor getters => {
-                                   original_cwd   => 'original_cwd',
-                                   config         => 'config',
-                                   wx             => 'wx',
-                                   task_manager   => 'task_manager',
-                                   plugin_manager => 'plugin_manager',
+    original_cwd   => 'original_cwd',
+    config         => 'config',
+    wx             => 'wx',
+    task_manager   => 'task_manager',
+    plugin_manager => 'plugin_manager',
 };
 
 # Globally shared detection of the "current" Perl

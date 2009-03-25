@@ -64,56 +64,56 @@ my $unsaved_number = 0;
 # This is the list of binary files
 # (which we don't support loading in fallback text mode)
 our %EXT_BINARY = (
-                   aiff => 1, au => 1, avi => 1, bmp => 1, cache => 1, dat => 1, doc => 1, gif => 1, gz => 1, icns => 1,
-                   jar => 1, jpeg => 1, jpg => 1, m4a => 1, mov => 1, mp3  => 1, mpg => 1, ogg => 1, pdf => 1, png => 1,
-                   pnt => 1, ppt  => 1, qt  => 1, ra  => 1, svg => 1, svgz => 1, svn => 1, swf => 1, tar => 1, tgz => 1,
-                   tif => 1, tiff => 1, wav => 1, xls => 1, xlw => 1, zip  => 1,
+    aiff => 1, au   => 1, avi => 1, bmp => 1, cache => 1, dat  => 1, doc => 1, gif => 1, gz  => 1, icns => 1,
+    jar  => 1, jpeg => 1, jpg => 1, m4a => 1, mov   => 1, mp3  => 1, mpg => 1, ogg => 1, pdf => 1, png  => 1,
+    pnt  => 1, ppt  => 1, qt  => 1, ra  => 1, svg   => 1, svgz => 1, svn => 1, swf => 1, tar => 1, tgz  => 1,
+    tif  => 1, tiff => 1, wav => 1, xls => 1, xlw   => 1, zip  => 1,
 );
 
 # This is the primary file extension to mime-type mapping
 our %EXT_MIME = (
-                  ada   => 'text/x-adasrc',
-                  asm   => 'text/x-asm',
-                  bat   => 'text/x-bat',
-                  cpp   => 'text/x-c++src',
-                  css   => 'text/css',
-                  diff  => 'text/x-patch',
-                  e     => 'text/x-eiffel',
-                  f     => 'text/x-fortran',
-                  htm   => 'text/html',
-                  html  => 'text/html',
-                  js    => 'application/javascript',
-                  json  => 'application/json',
-                  latex => 'application/x-latex',
-                  lsp   => 'application/x-lisp',
-                  lua   => 'text/x-lua',
-                  mak   => 'text/x-makefile',
-                  mat   => 'text/x-matlab',
-                  pas   => 'text/x-pascal',
-                  pod   => 'text/x-pod',
-                  php   => 'application/x-php',
-                  py    => 'text/x-python',
-                  rb    => 'application/x-ruby',
-                  sql   => 'text/x-sql',
-                  tcl   => 'application/x-tcl',
-                  vbs   => 'text/vbscript',
-                  patch => 'text/x-patch',
-                  pl    => 'application/x-perl',
-                  plx   => 'application/x-perl',
-                  pm    => 'application/x-perl',
-                  pod   => 'application/x-perl',
-                  t     => 'application/x-perl',
-                  conf  => 'text/plain',
-                  sh    => 'application/x-shellscript',
-                  ksh   => 'application/x-shellscript',
-                  txt   => 'text/plain',
-                  xml   => 'text/xml',
-                  yml   => 'text/x-yaml',
-                  yaml  => 'text/x-yaml',
-                  '4th' => 'text/x-forth',
-                  pasm  => 'application/x-pasm',
-                  pir   => 'application/x-pir',
-                  p6    => 'application/x-perl6',
+    ada   => 'text/x-adasrc',
+    asm   => 'text/x-asm',
+    bat   => 'text/x-bat',
+    cpp   => 'text/x-c++src',
+    css   => 'text/css',
+    diff  => 'text/x-patch',
+    e     => 'text/x-eiffel',
+    f     => 'text/x-fortran',
+    htm   => 'text/html',
+    html  => 'text/html',
+    js    => 'application/javascript',
+    json  => 'application/json',
+    latex => 'application/x-latex',
+    lsp   => 'application/x-lisp',
+    lua   => 'text/x-lua',
+    mak   => 'text/x-makefile',
+    mat   => 'text/x-matlab',
+    pas   => 'text/x-pascal',
+    pod   => 'text/x-pod',
+    php   => 'application/x-php',
+    py    => 'text/x-python',
+    rb    => 'application/x-ruby',
+    sql   => 'text/x-sql',
+    tcl   => 'application/x-tcl',
+    vbs   => 'text/vbscript',
+    patch => 'text/x-patch',
+    pl    => 'application/x-perl',
+    plx   => 'application/x-perl',
+    pm    => 'application/x-perl',
+    pod   => 'application/x-perl',
+    t     => 'application/x-perl',
+    conf  => 'text/plain',
+    sh    => 'application/x-shellscript',
+    ksh   => 'application/x-shellscript',
+    txt   => 'text/plain',
+    xml   => 'text/xml',
+    yml   => 'text/x-yaml',
+    yaml  => 'text/x-yaml',
+    '4th' => 'text/x-forth',
+    pasm  => 'application/x-pasm',
+    pir   => 'application/x-pir',
+    p6    => 'application/x-perl6',
 );
 
 # This is the mime-type to Scintilla lexer mapping.
@@ -186,18 +186,18 @@ sub menu_view_mimes {
 # Constructor and Accessors
 
 use Class::XSAccessor getters => {
-                                   editor           => 'editor',
-                                   filename         => 'filename',       # TODO is this read_only or what?
-                                   get_mimetype     => 'mimetype',
-                                   get_newline_type => 'newline_type',
-                                   errstr           => 'errstr',
+    editor           => 'editor',
+    filename         => 'filename',       # TODO is this read_only or what?
+    get_mimetype     => 'mimetype',
+    get_newline_type => 'newline_type',
+    errstr           => 'errstr',
     },
     setters => {
-                 _set_filename    => 'filename',       # TODO temporary hack
-                 set_newline_type => 'newline_type',
-                 set_mimetype     => 'mimetype',
-                 set_errstr       => 'errstr',
-                 set_editor       => 'editor',
+    _set_filename    => 'filename',       # TODO temporary hack
+    set_newline_type => 'newline_type',
+    set_mimetype     => 'mimetype',
+    set_errstr       => 'errstr',
+    set_editor       => 'editor',
     };
 
 =pod
@@ -663,9 +663,9 @@ sub get_indentation_style {
         $style = $self->guess_indentation_style;
     } else {
         $style = {
-                   use_tabs    => $config->editor_indent_tab,
-                   tabwidth    => $config->editor_indent_tab_width,
-                   indentwidth => $config->editor_indent_width,
+            use_tabs    => $config->editor_indent_tab,
+            tabwidth    => $config->editor_indent_tab_width,
+            indentwidth => $config->editor_indent_width,
         };
     }
 
@@ -720,30 +720,30 @@ sub guess_indentation_style {
     my $style;
     if ( $indentation =~ /^t\d+/ ) {    # we only do ONE tab
         $style = {
-                   use_tabs    => 1,
-                   tabwidth    => 8,
-                   indentwidth => 8,
+            use_tabs    => 1,
+            tabwidth    => 8,
+            indentwidth => 8,
         };
     } elsif ( $indentation =~ /^s(\d+)/ ) {
         $style = {
-                   use_tabs    => 0,
-                   tabwidth    => 8,
-                   indentwidth => $1,
+            use_tabs    => 0,
+            tabwidth    => 8,
+            indentwidth => $1,
         };
     } elsif ( $indentation =~ /^m(\d+)/ ) {
         $style = {
-                   use_tabs    => 1,
-                   tabwidth    => 8,
-                   indentwidth => $1,
+            use_tabs    => 1,
+            tabwidth    => 8,
+            indentwidth => $1,
         };
     } else {
 
         # fallback
         my $config = Padre->ide->config;
         $style = {
-                   use_tabs    => $config->editor_indent_tab,
-                   tabwidth    => $config->editor_indent_tab_width,
-                   indentwidth => $config->editor_indent_width,
+            use_tabs    => $config->editor_indent_tab,
+            tabwidth    => $config->editor_indent_tab_width,
+            indentwidth => $config->editor_indent_width,
         };
     }
 
@@ -887,8 +887,8 @@ sub stats {
     $self->{encoding} ||= Padre::Locale::encoding_from_string($src);
 
     return (
-             $lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
-             $self->{encoding}
+        $lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
+        $self->{encoding}
     );
 }
 
