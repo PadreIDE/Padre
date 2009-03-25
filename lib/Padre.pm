@@ -79,7 +79,8 @@ use Class::Autouse qw{
 };
 
 # Generate faster accessors
-use Class::XSAccessor getters => { original_cwd   => 'original_cwd',
+use Class::XSAccessor getters => {
+                                   original_cwd   => 'original_cwd',
                                    config         => 'config',
                                    wx             => 'wx',
                                    task_manager   => 'task_manager',

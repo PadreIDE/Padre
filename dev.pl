@@ -49,12 +49,13 @@ if ( grep { $_ eq '-p' } @ARGV ) {
 if ( grep { $_ eq '-h' } @ARGV ) {
     @ARGV = grep { $_ ne '-h' } @ARGV;
     my $dir = File::Basename::dirname $ENV{PADRE_HOME};
-    if (opendir my $dh, $dir) {
-		foreach my $plugin (grep {$_ =~ /^Padre-Plugin-/} readdir $dh) {
-			push @cmd, "-I$dir/$plugin/lib";
-		}
-	}
+    if ( opendir my $dh, $dir ) {
+        foreach my $plugin ( grep { $_ =~ /^Padre-Plugin-/ } readdir $dh ) {
+            push @cmd, "-I$dir/$plugin/lib";
+        }
+    }
 }
 push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
+
 #print "@cmd\n";
 system(@cmd);

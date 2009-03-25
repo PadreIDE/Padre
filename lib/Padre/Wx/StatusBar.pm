@@ -75,7 +75,8 @@ sub refresh {
     $self->SetStatusText( $mimetype,             1 );
     $self->SetStatusText( $newline,              2 );
     $self->SetStatusText( $postring,             3 );
-    $self->SetStatusWidths( -1,
+    $self->SetStatusWidths(
+                            -1,
                             ( length($mimetype) ) * $width,
                             ( length($newline) + 2 ) * $width,
                             ( length($postring) + 2 ) * $width,

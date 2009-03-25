@@ -63,14 +63,16 @@ my $unsaved_number = 0;
 
 # This is the list of binary files
 # (which we don't support loading in fallback text mode)
-our %EXT_BINARY = (aiff => 1, au => 1, avi => 1, bmp => 1, cache => 1, dat => 1, doc => 1, gif => 1, gz => 1, icns => 1,
+our %EXT_BINARY = (
+                   aiff => 1, au => 1, avi => 1, bmp => 1, cache => 1, dat => 1, doc => 1, gif => 1, gz => 1, icns => 1,
                    jar => 1, jpeg => 1, jpg => 1, m4a => 1, mov => 1, mp3  => 1, mpg => 1, ogg => 1, pdf => 1, png => 1,
                    pnt => 1, ppt  => 1, qt  => 1, ra  => 1, svg => 1, svgz => 1, svn => 1, swf => 1, tar => 1, tgz => 1,
                    tif => 1, tiff => 1, wav => 1, xls => 1, xlw => 1, zip  => 1,
 );
 
 # This is the primary file extension to mime-type mapping
-our %EXT_MIME = ( ada   => 'text/x-adasrc',
+our %EXT_MIME = (
+                  ada   => 'text/x-adasrc',
                   asm   => 'text/x-asm',
                   bat   => 'text/x-bat',
                   cpp   => 'text/x-c++src',
@@ -183,13 +185,15 @@ sub menu_view_mimes {
 #####################################################################
 # Constructor and Accessors
 
-use Class::XSAccessor getters => { editor           => 'editor',
+use Class::XSAccessor getters => {
+                                   editor           => 'editor',
                                    filename         => 'filename',       # TODO is this read_only or what?
                                    get_mimetype     => 'mimetype',
                                    get_newline_type => 'newline_type',
                                    errstr           => 'errstr',
     },
-    setters => { _set_filename    => 'filename',       # TODO temporary hack
+    setters => {
+                 _set_filename    => 'filename',       # TODO temporary hack
                  set_newline_type => 'newline_type',
                  set_mimetype     => 'mimetype',
                  set_errstr       => 'errstr',
@@ -216,8 +220,7 @@ sub new {
 
     if ( $self->{filename} ) {
         $self->load_file;
-    }
-    else {
+    } else {
         $unsaved_number++;
         $self->{newline_type} = $self->_get_default_newline_type;
     }
@@ -314,8 +317,8 @@ sub guess_mimetype {
 }
 
 sub mime_type_by_extension {
-	my ($self, $ext) = @_;
-	return $EXT_MIME{$ext};
+    my ( $self, $ext ) = @_;
+    return $EXT_MIME{$ext};
 }
 
 # For ts without a newline type
@@ -444,8 +447,7 @@ sub load_file {
         binmode($fh);
         local $/ = undef;
         $content = <$fh>;
-    }
-    else {
+    } else {
         $self->set_errstr($!);
         return;
     }
@@ -472,31 +474,26 @@ sub newline_type {
     if ( $current_type eq 'None' ) {
 
         # keep default
-    }
-    elsif ( $current_type eq 'Mixed' ) {
+    } elsif ( $current_type eq 'Mixed' ) {
         my $mixed = $self->_mixed_newlines();
         if ( $mixed eq 'Ask' ) {
             warn "TODO ask the user what to do with $file";
 
             # $convert_to = $newline_type = ;
-        }
-        elsif ( $mixed eq 'Keep' ) {
+        } elsif ( $mixed eq 'Keep' ) {
             warn "TODO probably we should not allow keeping garbage ($file) \n";
-        }
-        else {
+        } else {
 
             #warn "TODO converting $file";
             $convert_to = $newline_type = $mixed;
         }
-    }
-    else {
+    } else {
         $convert_to = $self->_auto_convert;
         if ($convert_to) {
 
             #warn "TODO call converting on $file";
             $newline_type = $convert_to;
-        }
-        else {
+        } else {
             $newline_type = $current_type;
         }
     }
@@ -517,15 +514,13 @@ sub save_file {
     my $encode = '';
     if ( defined $self->{encoding} ) {
         $encode = ":raw:encoding($self->{encoding})";
-    }
-    else {
+    } else {
         warn "encoding is not set, (couldn't get from contents) when saving file $filename\n";
     }
 
     if ( open my $fh, ">$encode", $filename ) {
         print {$fh} $content;
-    }
-    else {
+    } else {
         $self->set_errstr($!);
         return;
     }
@@ -631,8 +626,7 @@ sub get_title {
     my $self = shift;
     if ( $self->{filename} ) {
         return File::Basename::basename( $self->{filename} );
-    }
-    else {
+    } else {
         my $str = sprintf( Wx::gettext("Unsaved %d"), $unsaved_number );
 
         # A bug in Wx requires a space at the front of the title
@@ -667,9 +661,9 @@ sub get_indentation_style {
 
         # TODO: This should be cached? What's with newish documents then?
         $style = $self->guess_indentation_style;
-    }
-    else {
-        $style = { use_tabs    => $config->editor_indent_tab,
+    } else {
+        $style = {
+                   use_tabs    => $config->editor_indent_tab,
                    tabwidth    => $config->editor_indent_tab_width,
                    indentwidth => $config->editor_indent_width,
         };
@@ -725,19 +719,29 @@ sub guess_indentation_style {
 
     my $style;
     if ( $indentation =~ /^t\d+/ ) {    # we only do ONE tab
-        $style = { use_tabs => 1, tabwidth => 8, indentwidth => 8, };
-    }
-    elsif ( $indentation =~ /^s(\d+)/ ) {
-        $style = { use_tabs => 0, tabwidth => 8, indentwidth => $1, };
-    }
-    elsif ( $indentation =~ /^m(\d+)/ ) {
-        $style = { use_tabs => 1, tabwidth => 8, indentwidth => $1, };
-    }
-    else {
+        $style = {
+                   use_tabs    => 1,
+                   tabwidth    => 8,
+                   indentwidth => 8,
+        };
+    } elsif ( $indentation =~ /^s(\d+)/ ) {
+        $style = {
+                   use_tabs    => 0,
+                   tabwidth    => 8,
+                   indentwidth => $1,
+        };
+    } elsif ( $indentation =~ /^m(\d+)/ ) {
+        $style = {
+                   use_tabs    => 1,
+                   tabwidth    => 8,
+                   indentwidth => $1,
+        };
+    } else {
 
         # fallback
         my $config = Padre->ide->config;
-        $style = { use_tabs    => $config->editor_indent_tab,
+        $style = {
+                   use_tabs    => $config->editor_indent_tab,
                    tabwidth    => $config->editor_indent_tab_width,
                    indentwidth => $config->editor_indent_width,
         };
@@ -787,8 +791,7 @@ sub project {
     my $root = $self->project_dir;
     if ( defined $root ) {
         return Padre->ide->project($root);
-    }
-    else {
+    } else {
         return undef;
     }
 }
@@ -865,8 +868,7 @@ sub stats {
         $lines = 1;           # by default
         $lines++ while ( $code2 =~ /[\r\n]/g );
         $chars_with_space = length($code);
-    }
-    else {
+    } else {
         $code = $self->text_get;
 
         # I trust editor more
@@ -884,8 +886,10 @@ sub stats {
     require Padre::Locale;
     $self->{encoding} ||= Padre::Locale::encoding_from_string($src);
 
-    return ( $lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
-             $self->{encoding} );
+    return (
+             $lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
+             $self->{encoding}
+    );
 }
 
 =pod
