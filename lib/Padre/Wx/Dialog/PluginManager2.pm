@@ -28,6 +28,14 @@ sub new {
 	return $self;
 }
 
+
+# update html and show dialog
+sub show {
+	my $self = shift;
+	$self->refresh;
+	$self->Show;
+}
+
 # Render the content of the dialog based on the plugins
 sub html {
 	my $self    = shift;
