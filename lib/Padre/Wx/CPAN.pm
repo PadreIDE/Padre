@@ -4,15 +4,13 @@ use 5.008;
 use strict;
 use warnings;
 use URI            ();
-use Scalar::Util   ();
 use Class::Autouse ();
+use Scalar::Util   qw( blessed );
+use Params::Util   qw( _INSTANCE );
 
 use Padre::Wx ();
-
 use base 'Wx::Frame';
-use Scalar::Util qw( blessed );
-use Params::Util qw( _INSTANCE );
-
+use Padre::Wx::CPAN::Listview;
 
 our $VERSION = '0.29';
 
@@ -88,7 +86,6 @@ sub new {
  	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT |  Wx::wxALIGN_CENTER_VERTICAL   );
 	$but_s->Add( $entry, 1, Wx::wxALIGN_RIGHT |  Wx::wxALIGN_CENTER_VERTICAL );
 
-	use Padre::Wx::CPAN::Listview;
 	my $listview = Padre::Wx::CPAN::Listview->new($self);
 	$self->{listview} = $listview;
 	$top_s->Add( $but_s,    0, Wx::wxEXPAND );
@@ -98,7 +95,7 @@ sub new {
 	$self->SetAutoLayout(1);
 	#$self->_setup_welcome;
 	
-	$self->listview->show_rows($self->cpan);
+	$self->listview->show_rows;
 	
 	return $self;
 }
@@ -119,7 +116,7 @@ sub show {
 sub on_key_pressed {
 	my ($self, $text_ctrl, $event) = @_;
 
-	$self->listview->show_rows( $self->cpan, $self->{entry}->GetValue );	
+	$self->listview->show_rows( $self->{entry}->GetValue );	
 
 	return;
 }

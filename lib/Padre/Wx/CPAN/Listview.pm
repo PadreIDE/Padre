@@ -22,7 +22,7 @@ sub new {
 		Wx::wxLC_REPORT
 		| Wx::wxLC_SINGLE_SEL
 	);
-
+	$self->{cpan} = $frame->cpan;
 	my $imagelist = Wx::ImageList->new( 14, 7 );
 
 	my $errorImg = Wx::Icon->new;
@@ -41,14 +41,13 @@ sub new {
 
 	$self->AssignImageList($imagelist, Wx::wxIMAGE_LIST_SMALL);
 
-	$self->InsertColumn( 0, Wx::gettext('Line')        );
-	$self->InsertColumn( 1, Wx::gettext('Type')        );
-	$self->InsertColumn( 2, Wx::gettext('Description') );
+	$self->InsertColumn( 0, Wx::gettext('Status')        );
+	#$self->InsertColumn( 1, Wx::gettext('Type')        );
+	#$self->InsertColumn( 1, Wx::gettext('Description') );
 
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self,
-		$self,
-		\&on_list_item_activated,
-	);
+	$self->SetColumnWidth( 0, $self->GetSize->GetWidth );
+
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $self, \&on_list_item_activated	);
 
 	return $self;
 }
@@ -75,121 +74,21 @@ sub clear {
 
 sub set_column_widths {
 	my $self = shift;
-	my $ref_entry = shift;
-	if ( ! defined $ref_entry ) {
-		$ref_entry = { line => ' ', };
-	}
 
-	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 16;
-	my $width0         = $self->GetCharWidth * length( $ref_entry->{line} x 2 ) + 14;
+	my $width0 = $self->GetCharWidth * length( Wx::gettext("Status") ) + 16;
+	my $width1 = $self->GetSize->GetWidth - $width0;
+	#my $width1 = $self->GetCharWidth * ( length("blabla") + 2 );
+	#my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
 
-	my $refStr = '';
-	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
-		$refStr = Wx::gettext('Warning');
-	}
-	else {
-		$refStr = Wx::gettext('Error');
-	}
-
-	my $width1 = $self->GetCharWidth * ( length($refStr) + 2 );
-	my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
-
-	$self->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
+	$self->SetColumnWidth( 0, $width0 );
 	$self->SetColumnWidth( 1, $width1 );
-	$self->SetColumnWidth( 2, $width2 );
+	#$self->SetColumnWidth( 2, $width2 );
 
 	return;
 }
-
-
-
-
-#####################################################################
-# Timer Control
-
-sub start {
-	my $self = shift;
-
-	# Add the margins for the syntax markers
-	foreach my $editor ( $self->main->editors ) {
-		# Margin number 1 for symbols
-		$editor->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL);
-
-		# Set margin 1 16 px wide
-		$editor->SetMarginWidth(1, 16);
-	}
-
-	# List appearance: Initialize column widths
-	$self->set_column_widths;
-
-	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
-		Wx::Event::EVT_IDLE( $self,
-			sub {
-				$self->on_idle($_[1]);
-			},
-		);
-		$self->on_timer( undef, 1 );
-	} else {
-		$self->{timer} = Wx::Timer->new(
-			$self,
-			Padre::Wx::ID_TIMER_SYNTAX
-		);
-		Wx::Event::EVT_TIMER( $self,
-			Padre::Wx::ID_TIMER_SYNTAX,
-			sub {
-				$self->on_timer($_[1], $_[2]);
-			},
-		);
-		Wx::Event::EVT_IDLE( $self,
-			sub {
-				$self->on_idle($_[1]);
-			},
-		);
-	}
-
-	return;
-}
-
-sub stop {
-	my $self = shift;
-
-	# Stop the timer
-	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
-		$self->{timer}->Stop;
-		Wx::Event::EVT_IDLE( $self, sub { return } );
-	}
-
-	# Clear out the existing data
-	$self->clear;
-
-	# Remove the editor margin
-	foreach my $editor ( $self->main->editors ) {
-		$editor->SetMarginWidth(1, 0);
-	}
-
-	return;
-}
-
-sub running {
-	!! ($_[0]->{timer} and $_[0]->{timer}->IsRunning);
-}
-
-
-
-
 
 #####################################################################
 # Event Handlers
-
-sub on_list_item_activated {
-	my $self   = shift;
-	my $event  = shift;
-	my $line   = $event->GetItem->GetText;
-	#my $line   = $event->GetItem->GetText(2);
-	print STDERR $line;
-	
-	return;
-}
 
 sub on_timer {
 	my $self   = shift;
@@ -230,18 +129,29 @@ sub on_idle {
 }
 
 sub show_rows {
-	my ($self, $cpan, $regex) = @_;
+	my ($self, $regex) = @_;
 	
 	$self->clear;
-
+	my $cpan = $self->{cpan};
 	my $c = 10;
 	my $modules = $cpan->get_modules($regex);
 	foreach my $module (@$modules) {
 		my $idx = $self->InsertStringImageItem( 0, $module,  0 );
-		#$self->SetItemData( $idx, $c++ );
-		$self->SetItem( $idx, 1,  Wx::gettext('Warning')  );
-		$self->SetItem( $idx, 2, $module );
+		#$self->SetItem( $idx, 1,  Wx::gettext('Warning')  );
+		#$self->SetItem( $idx, 1, $module );
+		$self->SetItemData( $idx, 1 );
 	}
+}
+
+sub on_list_item_activated {
+	my $self   = shift;
+	my $event  = shift;
+	my $line   = $event->GetItem->GetText;
+	print STDERR "L: $line\n";
+#	my $item = $self->GetFocusedItem;
+#	print STDERR "I ", $item, "\n";
+#	print STDERR "T ", $self->GetItemText($item), "\n";
+	return;
 }
 
 
