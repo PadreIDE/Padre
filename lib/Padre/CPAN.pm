@@ -30,6 +30,8 @@ sub get_modules {
 	my ($self, $regex) = @_;
 
 	$regex ||= '^';
+	$regex =~ s/ //g;
+
 	my $MAX_DISPLAY = 100;
 	my $i = 0;
 	my @modules;

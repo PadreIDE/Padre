@@ -98,7 +98,7 @@ sub new {
 	$self->SetAutoLayout(1);
 	#$self->_setup_welcome;
 	
-	$self->show_rows;
+	$self->listview->show_rows($self->cpan);
 	
 	return $self;
 }
@@ -115,30 +115,11 @@ sub show {
 }
 
 
-sub show_rows {
-	my ($self, $regex) = @_;
-	my $listview = $self->listview;
-	$listview->clear;
-
-	my $c = 10;
-	my $modules = $self->{cpan}->get_modules($regex);
-	foreach my $module (@$modules) {
-		my $idx = $listview->InsertStringImageItem( 0, $module,  0 );
-		#$listview->SetItemData( $idx, $c++ );
-		$listview->SetItem( $idx, 1,  Wx::gettext('Warning')  );
-		$listview->SetItem( $idx, 2, $module );
-	}
-}
 
 sub on_key_pressed {
 	my ($self, $text_ctrl, $event) = @_;
 
-	my $txt = $self->{entry}->GetValue;
-	$txt = '' if not defined $txt; # just in case...
-
-	#print STDERR "$txt\n";
-	$txt =~ s/ //g;
-	$self->show_rows($txt);	
+	$self->listview->show_rows( $self->cpan, $self->{entry}->GetValue );	
 
 	return;
 }

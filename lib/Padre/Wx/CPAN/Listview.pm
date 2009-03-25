@@ -229,6 +229,23 @@ sub on_idle {
 	return;
 }
 
+sub show_rows {
+	my ($self, $cpan, $regex) = @_;
+	
+	$self->clear;
+
+	my $c = 10;
+	my $modules = $cpan->get_modules($regex);
+	foreach my $module (@$modules) {
+		my $idx = $self->InsertStringImageItem( 0, $module,  0 );
+		#$self->SetItemData( $idx, $c++ );
+		$self->SetItem( $idx, 1,  Wx::gettext('Warning')  );
+		$self->SetItem( $idx, 2, $module );
+	}
+}
+
+
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
