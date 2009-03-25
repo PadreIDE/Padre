@@ -43,7 +43,7 @@ sub html {
 	return '' unless defined $manager;
 
 	my @rows = ();
-	my $file = Padre::Util::sharefile('plugin.gif');
+	my $file = Padre::Util::sharefile('plugin.png');
 	unless ( -f $file ) {
 		die "Failed to find $file";
 	}
