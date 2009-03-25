@@ -51,10 +51,11 @@ sub html {
 	foreach my $name ( $manager->plugin_names ) {
 		my $plugin   = $manager->_plugin($name);
 		my $namehtml = "<b>"  . $plugin->plugin_name . "</b>";
+		my $version  = $plugin->version || '???';
 		my $cellhtml = "<td bgcolor='#FFFFFF'>"
 			. $namehtml
 			. "&nbsp;&nbsp;&nbsp;"
-			. $plugin->version
+			. $version
 			. "</td>";
 		my $rowhtml  = "<tr>"
 			. "<td width='52'><img src='$icon' height='32' width='32'></td>"
