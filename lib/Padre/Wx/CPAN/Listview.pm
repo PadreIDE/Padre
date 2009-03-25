@@ -45,7 +45,7 @@ sub new {
 	#$self->InsertColumn( 1, Wx::gettext('Type')        );
 	#$self->InsertColumn( 1, Wx::gettext('Description') );
 
-	$self->SetColumnWidth( 0, $self->GetSize->GetWidth );
+	$self->SetColumnWidth( 0, 750 );
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $self, \&on_list_item_activated	);
 
@@ -148,6 +148,7 @@ sub on_list_item_activated {
 	my $event  = shift;
 	my $line   = $event->GetItem->GetText;
 	print STDERR "L: $line\n";
+	$self->{cpan}->install($line);
 #	my $item = $self->GetFocusedItem;
 #	print STDERR "I ", $item, "\n";
 #	print STDERR "T ", $self->GetItemText($item), "\n";

@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    New GUI for selecting and installing CPAN modules. (SZABGAB)
+    CPAN related menu items moved to new Perl5 plugin (SZABGAB)
     (Re-)Storing cursor position in file (#206) (JQUELIN)
     Reload file keeps cursor position (#220) (JQUELIN)
     Preferences windows title should match its menu invocation (#270) (JQUELIN)
