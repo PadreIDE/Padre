@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use Carp                    qw{ croak };
+use Padre::Wx::Icon;
 
 use URI::file               ();
 use Params::Util            qw{_INSTANCE};
@@ -40,12 +41,17 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT| Wx::wxLC_SINGLE_SEL
 	);
-	$list->InsertColumn( 0, Wx::gettext('Icon') );
-	$list->InsertColumn( 1, Wx::gettext('Name') );
-	$list->InsertColumn( 2, Wx::gettext('Version') );
-	$list->InsertColumn( 3, Wx::gettext('Status') );
+	$list->InsertColumn( 0, Wx::gettext('Name') );
+	$list->InsertColumn( 1, Wx::gettext('Version') );
+	$list->InsertColumn( 2, Wx::gettext('Status') );
 	$self->{list} = $list;
 
+	# create imagelist
+	my $imglist = Wx::ImageList->new( 16, 16 );
+	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
+	$self->{imagelist} = $imglist;
+
+	# store plugin manager
 	$self->{manager} = $manager;
 
 	return $self;
@@ -64,7 +70,13 @@ sub refresh {
 	my $list    = $self->{list};
 	my $manager = $self->{manager};
 	my $plugins = $manager->plugins;
+	my $imglist = $self->{imagelist};
+
+	# clear image list & fill it again
+	$imglist->RemoveAll;
+	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 	
+	# clear plugin list & fill it again
 	$list->DeleteAllItems;
 	foreach my $name ( reverse $manager->plugin_names ) {
 		my $plugin  = $plugins->{$name};
@@ -75,15 +87,14 @@ sub refresh {
 		$status    = Wx::gettext('incompatible') if $plugin->incompatible;
 		$status    = Wx::gettext('crashed')      if $plugin->error;
 
-		my $idx = $list->InsertStringImageItem( 0, '', 0 );
-		$list->SetItem($idx, 1, $name);
-		$list->SetItem($idx, 2, $version);
-		$list->SetItem($idx, 3, $status);
+		my $idx = $list->InsertStringImageItem(0, $name, 0);
+		$list->SetItem($idx, 1, $version);
+		$list->SetItem($idx, 2, $status);
 		$list->SetItemData( $idx, 1 );
 	}
 
 	# auto-resize columns
-	$list->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE) for 0..3;
+	$list->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE) for 0..2;
 }
 
 
