@@ -25,8 +25,8 @@ sub new {
     my $self = $class->SUPER::new(
         $parent,
         -1,
-		Wx::gettext('Plugin Manager'),
-        [-1,-1],
+	Wx::gettext('Plugin Manager'),
+        Wx::wxDefaultPosition,
         [-1,-1],
         Wx::wxDEFAULT_FRAME_STYLE,
     );
