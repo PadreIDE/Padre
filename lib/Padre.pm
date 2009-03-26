@@ -34,7 +34,7 @@ use Padre::DB     ();
 
 # Nudges to make Class::Autouse behave
 BEGIN {
-    $Class::Autouse::LOADED{'Wx::Object'} = 1;
+	$Class::Autouse::LOADED{'Wx::Object'} = 1;
 }
 
 # Modules to be run-time autoloaded.
@@ -51,150 +51,150 @@ BEGIN {
 # refered to directly. Let them get loaded normally via the top level
 # module's "use base" (or similar) call.
 use Class::Autouse qw{
-    Padre::Document
-    Padre::Document::Perl
-    Padre::Document::POD
-    Padre::PPI
-    Padre::Project
-    Padre::Project::Null
-    Padre::Project::Perl
-    Padre::PluginManager
-    Padre::Task
-    Padre::Task::PPI
-    Padre::Task::PPI::FindUnmatchedBrace
-    Padre::Task::PPI::FindVariableDeclaration
-    Padre::Task::PPI::LexicalReplaceVariable
-    Padre::TaskManager
-    Padre::Wx::Popup
-    Padre::Wx::Editor
-    Padre::Wx::Menubar
-    Padre::Wx::Ack
-    Padre::Wx::App
-    Padre::Wx::Dialog::Bookmarks
-    Padre::Wx::Dialog::Find
-    Padre::Wx::Dialog::Search
-    Padre::Wx::Dialog::Snippets
-    Padre::Wx::History::TextDialog
-    Padre::Wx::Main
+	Padre::Document
+	Padre::Document::Perl
+	Padre::Document::POD
+	Padre::PPI
+	Padre::Project
+	Padre::Project::Null
+	Padre::Project::Perl
+	Padre::PluginManager
+	Padre::Task
+	Padre::Task::PPI
+	Padre::Task::PPI::FindUnmatchedBrace
+	Padre::Task::PPI::FindVariableDeclaration
+	Padre::Task::PPI::LexicalReplaceVariable
+	Padre::TaskManager
+	Padre::Wx::Popup
+	Padre::Wx::Editor
+	Padre::Wx::Menubar
+	Padre::Wx::Ack
+	Padre::Wx::App
+	Padre::Wx::Dialog::Bookmarks
+	Padre::Wx::Dialog::Find
+	Padre::Wx::Dialog::Search
+	Padre::Wx::Dialog::Snippets
+	Padre::Wx::History::TextDialog
+	Padre::Wx::Main
 };
 
 # Generate faster accessors
 use Class::XSAccessor getters => {
-    original_cwd   => 'original_cwd',
-    config         => 'config',
-    wx             => 'wx',
-    task_manager   => 'task_manager',
-    plugin_manager => 'plugin_manager',
+	original_cwd   => 'original_cwd',
+	config         => 'config',
+	wx             => 'wx',
+	task_manager   => 'task_manager',
+	plugin_manager => 'plugin_manager',
 };
 
 # Globally shared detection of the "current" Perl
 {
-    my $perl_interpreter;
+	my $perl_interpreter;
 
-    sub perl_interpreter {
-        return $perl_interpreter if defined $perl_interpreter;
-        require Probe::Perl;
-        my $perl = Probe::Perl->find_perl_interpreter;
-        $perl_interpreter = $perl, return $perl if defined $perl;
-        require File::Which;
-        $perl             = scalar File::Which::which('perl');
-        $perl_interpreter = $perl;
-        return $perl;
-    }
+	sub perl_interpreter {
+		return $perl_interpreter if defined $perl_interpreter;
+		require Probe::Perl;
+		my $perl = Probe::Perl->find_perl_interpreter;
+		$perl_interpreter = $perl, return $perl if defined $perl;
+		require File::Which;
+		$perl             = scalar File::Which::which('perl');
+		$perl_interpreter = $perl;
+		return $perl;
+	}
 }
 
 my $SINGLETON = undef;
 
 # Access to the Singleton post-construction
 sub ide {
-    $SINGLETON or Carp::croak('Padre->new has not been called yet');
+	$SINGLETON or Carp::croak('Padre->new has not been called yet');
 }
 
 # The order of initialisation here is VERY important
 sub new {
-    Carp::croak('Padre->new already called. Use Padre->ide') if $SINGLETON;
-    my $class = shift;
+	Carp::croak('Padre->new already called. Use Padre->ide') if $SINGLETON;
+	my $class = shift;
 
-    # Create the empty object
-    my $self = $SINGLETON = bless {
+	# Create the empty object
+	my $self = $SINGLETON = bless {
 
-        # Wx Attributes
-        wx => undef,
+		# Wx Attributes
+		wx => undef,
 
-        # Plugin Attributes
-        plugin_manager => undef,
+		# Plugin Attributes
+		plugin_manager => undef,
 
-        # Project Attributes
-        project => {},
-    }, $class;
+		# Project Attributes
+		project => {},
+	}, $class;
 
-    # Save the startup dir before anyone can move us.
-    $self->{original_cwd} = Cwd::cwd();
+	# Save the startup dir before anyone can move us.
+	$self->{original_cwd} = Cwd::cwd();
 
-    # Load (and sync if needed) the user's portable configuration
-    $self->{config} = Padre::Config->read;
+	# Load (and sync if needed) the user's portable configuration
+	$self->{config} = Padre::Config->read;
 
-    # Create the plugin manager
-    $self->{plugin_manager} = Padre::PluginManager->new($self);
+	# Create the plugin manager
+	$self->{plugin_manager} = Padre::PluginManager->new($self);
 
-    # Create the main window
-    $self->{wx} = Padre::Wx::App->new($self);
+	# Create the main window
+	$self->{wx} = Padre::Wx::App->new($self);
 
-    # Create the task manager
-    $self->{task_manager} = Padre::TaskManager->new( use_threads => $self->config->threads, );
+	# Create the task manager
+	$self->{task_manager} = Padre::TaskManager->new( use_threads => $self->config->threads, );
 
-    return $self;
+	return $self;
 }
 
 sub run {
-    my $self = shift;
+	my $self = shift;
 
-    # Handle architectural command line options
-    foreach my $M ( grep {/^-M/} @ARGV ) {
-        my $module = substr( $M, 2 );
-        eval "use $module";    ## no critic
-        die $@ if $@;
-    }
-    @ARGV = grep { !/^-M/ } @ARGV;
+	# Handle architectural command line options
+	foreach my $M ( grep {/^-M/} @ARGV ) {
+		my $module = substr( $M, 2 );
+		eval "use $module";    ## no critic
+		die $@ if $@;
+	}
+	@ARGV = grep { !/^-M/ } @ARGV;
 
-    # FIXME: RT #1 This call should be delayed until after the
-    # window was opened but my Wx skills do not exist. --Steffen
-    $self->plugin_manager->load_plugins;
+	# FIXME: RT #1 This call should be delayed until after the
+	# window was opened but my Wx skills do not exist. --Steffen
+	$self->plugin_manager->load_plugins;
 
-    $self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
+	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
 
-    # Move our current dir to the user's documents directory by default
-    my $documents = File::HomeDir->my_documents;
-    if ( defined $documents ) {
-        chdir $documents;
-    }
+	# Move our current dir to the user's documents directory by default
+	my $documents = File::HomeDir->my_documents;
+	if ( defined $documents ) {
+		chdir $documents;
+	}
 
-    # Switch into runtime mode
-    $self->wx->MainLoop;
+	# Switch into runtime mode
+	$self->wx->MainLoop;
 
-    # All shutdown procedures complete.
-    # Do some final cleaning up.
-    $self->{wx} = undef;
+	# All shutdown procedures complete.
+	# Do some final cleaning up.
+	$self->{wx} = undef;
 
-    return;
+	return;
 }
 
 # Save the YAML configuration file
 sub save_config {
-    $_[0]->config->write;
+	$_[0]->config->write;
 }
 
 #####################################################################
 # Project Management
 
 sub project {
-    my $self = shift;
-    my $root = shift;
-    unless ( $self->{project}->{$root} ) {
-        my $class = Padre::Project->class($root);
-        $self->{project}->{$root} = $class->new( root => $root, );
-    }
-    return $self->{project}->{$root};
+	my $self = shift;
+	my $root = shift;
+	unless ( $self->{project}->{$root} ) {
+		my $class = Padre::Project->class($root);
+		$self->{project}->{$root} = $class->new( root => $root, );
+	}
+	return $self->{project}->{$root};
 }
 
 1;
