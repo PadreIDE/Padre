@@ -4,7 +4,8 @@ package Padre::Wx::Dialog::PluginManager3;
 
 use strict;
 use warnings;
-use Carp                    ();
+
+use Carp                    qw{ croak };
 use URI::file               ();
 use Params::Util            qw{_INSTANCE};
 use Padre::Util             ();
@@ -12,18 +13,25 @@ use Padre::Wx               ();
 use Padre::Wx::Dialog::HTML ();
 
 our $VERSION = '0.29';
-use base 'Padre::Wx::Dialog::HTML';
+use base 'Wx::Dialog';
 
 sub new {
 	my ($class, $parent, $manager) = @_;
-	my $self  = $class->SUPER::new(
-		title => Wx::gettext('Plugin Manager'),
-	);
+
+    croak "Missing or invalid Padre::PluginManager object"
+        unless $manager->isa('Padre::PluginManager');
+
+    # create object
+	my $self = $class->SUPER::new(
+        $parent,
+        -1,
+		Wx::gettext('Plugin Manager'),
+        [-1,-1],
+        [-1,-1],
+        Wx::wxDEFAULT_FRAME_STYLE,
+    );
 
     $self->{manager} = $manager;
-	unless ( _INSTANCE($self->{manager}, 'Padre::PluginManager') ) {
-		Carp::croak("Missing or invalid Padre::PluginManager object");
-	}
 
 	return $self;
 }
@@ -31,7 +39,6 @@ sub new {
 
 sub show {
     my $self = shift;
-    $self->refresh;
     $self->Show;
 }
 
