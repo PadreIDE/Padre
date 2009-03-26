@@ -78,49 +78,6 @@ sub refresh {
 }
 
 
-# Render the content of the dialog based on the plugins
-sub html {
-	my $self    = shift;
-	my $manager = $self->{manager};
-	return '' unless defined $manager;
-
-	my @rows = ();
-	my $file = Padre::Util::sharefile('plugin.png');
-	unless ( -f $file ) {
-		die "Failed to find $file";
-	}
-	my $icon = URI::file->new( $file )->as_string;
-	foreach my $name ( $manager->plugin_names ) {
-		my $plugin   = $manager->_plugin($name);
-		my $namehtml = "<b>"  . $plugin->plugin_name . "</b>";
-		my $version  = $plugin->version || '???';
-		my $cellhtml = "<td bgcolor='#FFFFFF'>"
-			. $namehtml
-			. "&nbsp;&nbsp;&nbsp;"
-			. $version
-			. "</td>";
-		my $rowhtml  = "<tr>"
-			. "<td width='32'><img src='$icon' height='16' width='16'></td>"
-			. $cellhtml
-			. "</tr>";
-		push @rows, $rowhtml;
-	}
-
-	# Wrap in the overall page
-	my $rowshtml = join( "\n", @rows );
-	return <<"END_HTML";
-<html>
-<head>
-</head>
-<body bgcolor="#CCCCCC">
-<table border="1" cellpadding="10" cellspacing="0" width="100%">
-$rowshtml
-</table>
-</body>
-</html>
-END_HTML
-}
-
 1;
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
