@@ -36,8 +36,8 @@ sub new {
 	Wx::Event::EVT_MENU( $main,
 		$self->Append( -1, Wx::gettext("Plugin Manager") ),
 		sub {
-			require Padre::Wx::Dialog::PluginManager3;
-			Padre::Wx::Dialog::PluginManager3->new( $_[0],
+			require Padre::Wx::Dialog::PluginManager;
+			Padre::Wx::Dialog::PluginManager->new( $_[0],
 				Padre->ide->plugin_manager,
 			)->show;
 		},
