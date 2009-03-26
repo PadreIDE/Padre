@@ -28,7 +28,7 @@ sub new {
 		-1,
 	Wx::gettext('Plugin Manager'),
 		Wx::wxDefaultPosition,
-		[-1,-1],
+		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
