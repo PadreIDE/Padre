@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Remove Test::Compile from the prereqs as well as it is not in use. (SZABGAB)
     New GUI for selecting and installing CPAN modules. (SZABGAB)
     CPAN related menu items moved to new Perl5 plugin (SZABGAB)
     (Re-)Storing cursor position in file (#206) (JQUELIN)

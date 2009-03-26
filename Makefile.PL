@@ -82,7 +82,6 @@ requires       'Wx'                       => '0.89';
 #requires       'Wx::Perl::Dialog'         => '0.04'; # in Padre now
 requires       'Wx::Perl::ProcessStream'  => '0.11';
 requires       'YAML::Tiny'               => '1.32';
-test_requires  'Test::Compile'            => '0.08' unless win32;
 test_requires  'Test::More'               => '0.47';
 test_requires  'Test::Most'               => '0.21';
 test_requires  'Test::Script'             => '1.03';
