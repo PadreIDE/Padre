@@ -6,6 +6,7 @@ use strict;
 use warnings;
 
 use Carp                    qw{ croak };
+
 use URI::file               ();
 use Params::Util            qw{_INSTANCE};
 use Padre::Util             ();
@@ -30,6 +31,19 @@ sub new {
 		[-1,-1],
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
+
+	# create list
+	my $list = Wx::ListView->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_REPORT| Wx::wxLC_SINGLE_SEL
+	);
+	$list->InsertColumn( 0, Wx::gettext('Icon') );
+	$list->InsertColumn( 1, Wx::gettext('Name') );
+	$list->InsertColumn( 2, Wx::gettext('Description') );
+	$list->InsertColumn( 3, Wx::gettext('Status') );
 
 	$self->{manager} = $manager;
 
