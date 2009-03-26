@@ -42,8 +42,9 @@ sub new {
 	);
 	$list->InsertColumn( 0, Wx::gettext('Icon') );
 	$list->InsertColumn( 1, Wx::gettext('Name') );
-	$list->InsertColumn( 2, Wx::gettext('Description') );
+	$list->InsertColumn( 2, Wx::gettext('Version') );
 	$list->InsertColumn( 3, Wx::gettext('Status') );
+	$self->{list} = $list;
 
 	$self->{manager} = $manager;
 
