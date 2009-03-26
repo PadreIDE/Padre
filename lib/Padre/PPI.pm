@@ -154,7 +154,7 @@ sub find_variable_declaration {
 	my $prev_cursor;
 	while ( 1 ) {
 		$prev_cursor = $cursor;
-	$cursor = $cursor->parent;
+		$cursor = $cursor->parent;
 		if ($cursor->isa("PPI::Structure::Block") or $cursor == $document) {
 			my @elems = $cursor->elements;
 			foreach my $elem (@elems) {
