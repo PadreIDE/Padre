@@ -54,8 +54,29 @@ sub new {
 
 sub show {
 	my $self = shift;
+	$self->refresh;
 	$self->Show;
 }
+
+sub refresh {
+	my $self = shift;
+
+	my $list    = $self->{list};
+	my $manager = $self->{manager};
+	my $plugins = $manager->plugins;
+	
+	$list->DeleteAllItems;
+	foreach my $name ( reverse $manager->plugin_names ) {
+		my $plugin  = $plugins->{$name};
+		my $version = $plugin->version || '???';
+		my $idx = $list->InsertStringImageItem( 0, '', 0 );
+		$list->SetItem($idx, 1, $name);
+		$list->SetItem($idx, 2, $version);
+		$list->SetItem($idx, 3, 'unknown');
+		$list->SetItemData( $idx, 1 );
+	}
+}
+
 
 # Render the content of the dialog based on the plugins
 sub html {
