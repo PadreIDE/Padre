@@ -18,35 +18,35 @@ use base 'Wx::Frame';
 sub new {
 	my ($class, $parent, $manager) = @_;
 
-    croak "Missing or invalid Padre::PluginManager object"
-        unless $manager->isa('Padre::PluginManager');
+	croak "Missing or invalid Padre::PluginManager object"
+		unless $manager->isa('Padre::PluginManager');
 
-    # create object
-    my $self = $class->SUPER::new(
-        $parent,
-        -1,
+	# create object
+	my $self = $class->SUPER::new(
+		$parent,
+		-1,
 	Wx::gettext('Plugin Manager'),
-        Wx::wxDefaultPosition,
-        [-1,-1],
-        Wx::wxDEFAULT_FRAME_STYLE,
-    );
+		Wx::wxDefaultPosition,
+		[-1,-1],
+		Wx::wxDEFAULT_FRAME_STYLE,
+	);
 
-    $self->{manager} = $manager;
+	$self->{manager} = $manager;
 
-    return $self;
+	return $self;
 }
 
 
 sub show {
-    my $self = shift;
-    $self->Show;
+	my $self = shift;
+	$self->Show;
 }
 
 # Render the content of the dialog based on the plugins
 sub html {
 	my $self    = shift;
 	my $manager = $self->{manager};
-    return '' unless defined $manager;
+	return '' unless defined $manager;
 
 	my @rows = ();
 	my $file = Padre::Util::sharefile('plugin.png');
@@ -57,7 +57,7 @@ sub html {
 	foreach my $name ( $manager->plugin_names ) {
 		my $plugin   = $manager->_plugin($name);
 		my $namehtml = "<b>"  . $plugin->plugin_name . "</b>";
-        my $version  = $plugin->version || '???';
+		my $version  = $plugin->version || '???';
 		my $cellhtml = "<td bgcolor='#FFFFFF'>"
 			. $namehtml
 			. "&nbsp;&nbsp;&nbsp;"
