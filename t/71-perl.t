@@ -118,6 +118,7 @@ SCOPE: {
 	isa_ok($doc, "PPI::Document");
 	$doc->index_locations;
   
+	# Test foreach my $i
 	my $elem = find_var_simple($doc, '$i', 8); # search $i in line 8
 	isa_ok( $elem, 'PPI::Token::Symbol' );
  
@@ -139,11 +140,33 @@ SCOPE: {
 	my $result_declaration = Padre::PPI::find_variable_declaration($elem);
 	ok( $declaration == $result_declaration, 'Correct declaration found');
 
-	BEGIN { $tests += 6; }
+	# Now the same for "for our $k"
+	$elem = find_var_simple($doc, '$k', 11); # search $k in line 11 
+	isa_ok( $elem, 'PPI::Token::Symbol' );
+ 
+	$doc->flush_locations(); # TODO: This shouldn't have to be here. But remove it and things break -- Adam?
+	$cmp_elem = Padre::PPI::find_token_at_location($doc, [11, 5, 5]);
+	ok( $elem == $cmp_elem, 'find_token_at_location returns the same token as a manual search' );
+
+	$doc->flush_locations(); # TODO: This shouldn't have to be here. But remove it and things break -- Adam?
+	$declaration = Padre::PPI::find_token_at_location($doc, [10, 11, 11]);
+	isa_ok( $declaration, 'PPI::Token::Symbol' );
+	$prev_sibling = $declaration->sprevious_sibling();
+	ok(
+		(defined($prev_sibling) and $prev_sibling->isa('PPI::Token::Word')
+		and $prev_sibling->content() =~ /^(?:my|our)$/),
+		"Find variable declaration in foreach"
+	);
+  
+	$doc->flush_locations(); # TODO: This shouldn't have to be here. But remove it and things break -- Adam?
+	TODO: {
+		local $TODO = "PPI parses 'for our \$foo (...){}' wrongly";
+		$result_declaration = Padre::PPI::find_variable_declaration($elem);
+		ok( $declaration == $result_declaration, 'Correct declaration found');
+	}
+
+	BEGIN { $tests += 11; }
 }
-
-
-
 
 
 

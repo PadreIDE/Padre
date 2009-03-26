@@ -186,10 +186,8 @@ sub find_variable_declaration {
 						last;
 					}
 				}
-                                
 			}
 			last if $declaration or $cursor == $document;
-
 		}
 	} # end while not top level
 
