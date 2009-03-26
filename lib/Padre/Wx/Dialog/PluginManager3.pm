@@ -69,10 +69,16 @@ sub refresh {
 	foreach my $name ( reverse $manager->plugin_names ) {
 		my $plugin  = $plugins->{$name};
 		my $version = $plugin->version || '???';
+
+		my $status = Wx::gettext('disabled');
+		$status    = Wx::gettext('enabled')      if $plugin->enabled;
+		$status    = Wx::gettext('incompatible') if $plugin->incompatible;
+		$status    = Wx::gettext('crashed')      if $plugin->error;
+
 		my $idx = $list->InsertStringImageItem( 0, '', 0 );
 		$list->SetItem($idx, 1, $name);
 		$list->SetItem($idx, 2, $version);
-		$list->SetItem($idx, 3, 'unknown');
+		$list->SetItem($idx, 3, $status);
 		$list->SetItemData( $idx, 1 );
 	}
 
