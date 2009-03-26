@@ -171,6 +171,26 @@ sub find_variable_declaration {
 			}
 			last if $declaration or $cursor == $document;
 		}
+                # this is for "foreach my $i ..."
+		elsif ($cursor->isa("PPI::Statement::Compound") and $cursor->type() =~ /^for/) {
+			my @elems = $cursor->elements;
+			foreach my $elem (@elems) {
+				# Stop scanning this scope if we're at the branch we're coming
+				# from. This is to ignore declarations later in the block.
+				last if $elem == $prev_cursor;
+
+				if ($elem->isa("PPI::Token::Word") and $elem->content() =~ /^(?:my|our)$/) {
+					my $nelem = $elem->snext_sibling();
+					if (defined $nelem and $nelem->isa("PPI::Token::Symbol")) {
+						$declaration = $nelem;
+						last;
+					}
+				}
+                                
+			}
+			last if $declaration or $cursor == $document;
+
+		}
 	} # end while not top level
 
 	return $declaration;
