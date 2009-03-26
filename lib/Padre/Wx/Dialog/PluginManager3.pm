@@ -75,6 +75,9 @@ sub refresh {
 		$list->SetItem($idx, 3, 'unknown');
 		$list->SetItemData( $idx, 1 );
 	}
+
+	# auto-resize columns
+	$list->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE) for 0..3;
 }
 
 
