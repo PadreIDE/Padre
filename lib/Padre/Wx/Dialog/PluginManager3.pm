@@ -13,7 +13,7 @@ use Padre::Wx               ();
 use Padre::Wx::Dialog::HTML ();
 
 our $VERSION = '0.29';
-use base 'Wx::Dialog';
+use base 'Wx::Frame';
 
 sub new {
 	my ($class, $parent, $manager) = @_;
@@ -22,7 +22,7 @@ sub new {
         unless $manager->isa('Padre::PluginManager');
 
     # create object
-	my $self = $class->SUPER::new(
+    my $self = $class->SUPER::new(
         $parent,
         -1,
 		Wx::gettext('Plugin Manager'),
@@ -33,7 +33,7 @@ sub new {
 
     $self->{manager} = $manager;
 
-	return $self;
+    return $self;
 }
 
 
