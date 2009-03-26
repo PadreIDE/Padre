@@ -433,9 +433,9 @@ sub _on_stderr {
 
 =pod
 
-=head2 print
+=head2 task_print
 
-  $task->print("Hi this is immediately sent to the Padre output window\n");
+  $task->task_print("Hi this is immediately sent to the Padre output window\n");
 
 Sends an event to the main Padre thread and dispays a
 message in the Padre output window.
@@ -451,9 +451,9 @@ sub task_print {
 
 =pod
 
-=head2 warn
+=head2 task_warn
 
-  $task->warn("Hi this is immediately sent to the Padre output window\n");
+  $task->task_warn("Hi this is immediately sent to the Padre output window\n");
 
 Sends an event to the main Padre thread and dispays a
 message in the Padre output window with style C<bad>.
