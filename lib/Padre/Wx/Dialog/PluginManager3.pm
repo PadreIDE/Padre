@@ -17,6 +17,9 @@ use Padre::Wx::Dialog::HTML ();
 our $VERSION = '0.30';
 use base 'Wx::Frame';
 
+
+# -- constructor
+
 sub new {
 	my ($class, $parent, $manager) = @_;
 
@@ -58,13 +61,18 @@ sub new {
 }
 
 
+# -- public methods
+
 sub show {
 	my $self = shift;
-	$self->refresh;
+	$self->_refresh;
 	$self->Show;
 }
 
-sub refresh {
+
+# -- private methods
+
+sub _refresh {
 	my $self = shift;
 
 	my $list    = $self->{list};
@@ -74,8 +82,10 @@ sub refresh {
 
 	# clear image list & fill it again
 	$imglist->RemoveAll;
+	# default plugin icon
 	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 	my %icon = ( plugin => 0 );
+	# plugin status
 	my $i = 0;
 	foreach my $name ( qw{ enabled disabled crashed incompatible } ) {
 		my $icon = Padre::Wx::Icon::find("status/padre-plugin-$name");
