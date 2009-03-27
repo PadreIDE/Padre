@@ -8,10 +8,10 @@ use warnings;
 use Carp                    qw{ croak };
 use Class::XSAccessor
 	accessors => {
+		_hbox      => '_hbox',
 		_imagelist => '_imagelist',
 		_list      => '_list',
 		_manager   => '_manager',
-		_vbox      => '_vbox',
 	};
 
 use Padre::Wx::Icon;
@@ -63,9 +63,12 @@ sub _create {
 	my $self = shift;
 	
 	# create vertical box that will host all controls
-	$self->_vbox( Wx::BoxSizer->new( Wx::wxHORIZONTAL ) );
+	my $hbox = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$self->_hbox( $hbox );
 
 	$self->_create_list;
+	
+	$self->SetSizerAndFit($hbox);
 }
 
 sub _create_list {
