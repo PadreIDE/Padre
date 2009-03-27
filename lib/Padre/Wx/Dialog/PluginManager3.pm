@@ -72,6 +72,11 @@ sub show {
 
 # -- private methods
 
+#
+# $dialog->_refresh;
+#
+# refresh list of plugins and their associated state.
+#
 sub _refresh {
 	my $self = shift;
 
