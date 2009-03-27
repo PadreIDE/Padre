@@ -36,23 +36,8 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
-	# create list
-	my $list = Wx::ListView->new(
-		$self,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT| Wx::wxLC_SINGLE_SEL
-	);
-	$list->InsertColumn( 0, Wx::gettext('Name') );
-	$list->InsertColumn( 1, Wx::gettext('Version') );
-	$list->InsertColumn( 2, Wx::gettext('Status') );
-	$self->{list} = $list;
-
-	# create imagelist
-	my $imglist = Wx::ImageList->new( 16, 16 );
-	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
-	$self->{imagelist} = $imglist;
+	# create dialog
+	$self->_create;
 
 	# store plugin manager
 	$self->{manager} = $manager;
@@ -72,6 +57,29 @@ sub show {
 
 # -- private methods
 
+sub _create {
+	my $self = shift;
+	
+	# create list
+	my $list = Wx::ListView->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_REPORT| Wx::wxLC_SINGLE_SEL
+	);
+	$list->InsertColumn( 0, Wx::gettext('Name') );
+	$list->InsertColumn( 1, Wx::gettext('Version') );
+	$list->InsertColumn( 2, Wx::gettext('Status') );
+	$self->{list} = $list;
+
+	# create imagelist
+	my $imglist = Wx::ImageList->new( 16, 16 );
+	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
+	$self->{imagelist} = $imglist;
+}
+
+	
 #
 # $dialog->_refresh;
 #
