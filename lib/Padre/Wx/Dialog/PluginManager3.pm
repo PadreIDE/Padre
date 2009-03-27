@@ -8,12 +8,6 @@ use warnings;
 use Carp                    qw{ croak };
 use Padre::Wx::Icon;
 
-use URI::file               ();
-use Params::Util            qw{_INSTANCE};
-use Padre::Util             ();
-use Padre::Wx               ();
-use Padre::Wx::Dialog::HTML ();
-
 our $VERSION = '0.30';
 use base 'Wx::Frame';
 
