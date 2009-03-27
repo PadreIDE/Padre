@@ -42,7 +42,7 @@ sub new {
 		Wx::wxLC_REPORT| Wx::wxLC_SINGLE_SEL
 	);
 	$list->InsertColumn( 0, Wx::gettext('Name') );
-	$list->InsertColumn( 1, Wx::gettext('Vers') );
+	$list->InsertColumn( 1, Wx::gettext('Version') );
 	$list->InsertColumn( 2, Wx::gettext('Status') );
 	$self->{list} = $list;
 
