@@ -11,6 +11,7 @@ use Class::XSAccessor
 		_imagelist => '_imagelist',
 		_list      => '_list',
 		_manager   => '_manager',
+		_vbox      => '_vbox',
 	};
 
 use Padre::Wx::Icon;
@@ -60,6 +61,10 @@ sub show {
 
 sub _create {
 	my $self = shift;
+	
+	# create vertical box that will host all controls
+	$self->_vbox( Wx::BoxSizer->new( Wx::wxHORIZONTAL ) );
+
 	$self->_create_list;
 }
 
@@ -83,6 +88,8 @@ sub _create_list {
 	my $imglist = Wx::ImageList->new( 16, 16 );
 	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
 	$self->_imagelist( $imglist );
+	
+	$self->_vbox->Add( $list, 1 , Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
