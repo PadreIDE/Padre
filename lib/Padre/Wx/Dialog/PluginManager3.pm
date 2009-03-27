@@ -75,6 +75,13 @@ sub refresh {
 	# clear image list & fill it again
 	$imglist->RemoveAll;
 	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
+	my %icon = ( plugin => 0 );
+	my $i = 0;
+	foreach my $name ( qw{ enabled disabled crashed incompatible } ) {
+		my $icon = Padre::Wx::Icon::find("status/padre-plugin-$name");
+		$imglist->Add($icon);
+		$icon{$name} = ++$i;
+	}
 	
 	# clear plugin list & fill it again
 	$list->DeleteAllItems;
@@ -89,7 +96,7 @@ sub refresh {
 
 		my $idx = $list->InsertStringImageItem(0, $name, 0);
 		$list->SetItem($idx, 1, $version);
-		$list->SetItem($idx, 2, $status);
+		$list->SetItem($idx, 2, $status, $icon{$status});
 		$list->SetItemData( $idx, 1 );
 	}
 
