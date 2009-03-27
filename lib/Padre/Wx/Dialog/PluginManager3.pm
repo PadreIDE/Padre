@@ -6,19 +6,24 @@ use strict;
 use warnings;
 
 use Carp                    qw{ croak };
+use Class::XSAccessor
+	accessors => {
+		_imagelist => '_imagelist',
+		_list      => '_list',
+		_manager   => '_manager',
+	};
+
 use Padre::Wx::Icon;
 
-our $VERSION = '0.30';
 use base 'Wx::Frame';
+
+our $VERSION = '0.30';
 
 
 # -- constructor
 
 sub new {
 	my ($class, $parent, $manager) = @_;
-
-	croak "Missing or invalid Padre::PluginManager object"
-		unless $manager->isa('Padre::PluginManager');
 
 	# create object
 	my $self = $class->SUPER::new(
@@ -34,7 +39,9 @@ sub new {
 	$self->_create;
 
 	# store plugin manager
-	$self->{manager} = $manager;
+	croak "Missing or invalid Padre::PluginManager object"
+		unless $manager->isa('Padre::PluginManager');
+	$self->_manager( $manager );
 
 	return $self;
 }
@@ -65,15 +72,15 @@ sub _create {
 	$list->InsertColumn( 0, Wx::gettext('Name') );
 	$list->InsertColumn( 1, Wx::gettext('Version') );
 	$list->InsertColumn( 2, Wx::gettext('Status') );
-	$self->{list} = $list;
+	$self->_list( $list );
 
 	# create imagelist
 	my $imglist = Wx::ImageList->new( 16, 16 );
 	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
-	$self->{imagelist} = $imglist;
+	$self->_imagelist( $imglist );
 }
 
-	
+
 #
 # $dialog->_refresh;
 #
@@ -82,10 +89,10 @@ sub _create {
 sub _refresh {
 	my $self = shift;
 
-	my $list    = $self->{list};
-	my $manager = $self->{manager};
+	my $list    = $self->_list;
+	my $manager = $self->_manager;
 	my $plugins = $manager->plugins;
-	my $imglist = $self->{imagelist};
+	my $imglist = $self->_imagelist;
 
 	# clear image list & fill it again
 	$imglist->RemoveAll;
