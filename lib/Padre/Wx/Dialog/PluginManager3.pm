@@ -60,6 +60,11 @@ sub show {
 
 sub _create {
 	my $self = shift;
+	$self->_create_list;
+}
+
+sub _create_list {
+	my $self = shift;
 	
 	# create list
 	my $list = Wx::ListView->new(
@@ -79,7 +84,6 @@ sub _create {
 	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
 	$self->_imagelist( $imglist );
 }
-
 
 #
 # $dialog->_refresh;
