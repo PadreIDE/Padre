@@ -30,7 +30,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-	Wx::gettext('Plugin Manager'),
+		Wx::gettext('Plugin Manager'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
