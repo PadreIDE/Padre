@@ -116,6 +116,69 @@ sub _refresh {
 
 
 1;
+
+__END__
+
+
+=head1 NAME
+
+Padre::Wx::Dialog::PluginManager3 - Plugin manager dialog for Padre
+
+
+
+=head1 DESCRIPTION
+
+Padre will have a lot of plugins. First plugin manager was not taking this
+into account, and the first plugin manager window was too small & too
+crowded to show them all properly.
+
+This revamped plugin manager is now using a list control, and thus can show
+lots of plugins in an effective manner.
+
+
+
+=head1 PUBLIC API
+
+=head2 Constructor
+
+=over 4
+
+=item * my $dialog = P::W::D::PM->new( $parent, $manager )
+
+Create and return a new Wx dialog listing all the plugins. It needs a
+C<$parent> window and a C<Padre::PluginManager> object that really handles
+Padre plugins under the hood.
+
+
+=back
+
+
+
+=head2 Public methods
+
+=over 4
+
+=item * $dialog->show;
+
+Request the plugin manager dialog to be shown. It will be refreshed first
+with a current list of plugins with their state.
+
+
+=back
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute it and/or modify it under the
+same terms as Perl 5 itself.
+
+
+=cut
+
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
