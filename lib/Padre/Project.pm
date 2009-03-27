@@ -10,7 +10,7 @@ use YAML::Tiny    ();
 use Padre::Config ();
 use Padre::Config::Project ();
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 
 use Class::XSAccessor
 	getters => {

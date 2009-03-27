@@ -11,7 +11,7 @@ use Padre::Wx         ();
 
 use base qw(Padre::Wx::Dialog);
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 
 my @cbs = qw(
 	find_case

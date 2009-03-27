@@ -66,7 +66,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 
 # According to Wx docs,
 # this MUST be loaded before Wx,

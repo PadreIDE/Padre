@@ -33,7 +33,7 @@ use strict;
 use warnings;
 use Pod::Simple::XHTML ();
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 use base 'Pod::Simple::XHTML';
 
 

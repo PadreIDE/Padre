@@ -11,7 +11,7 @@ use Class::Adapter::Builder
 	NEW      => 'Wx::Menu',
 	AUTOLOAD => 'PUBLIC';
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 
 use Class::XSAccessor
 	getters => {

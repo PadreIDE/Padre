@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.30 2009.03.27
+
     Remove Test::Compile from the prereqs as well as it is not in use. (SZABGAB)
     New GUI for selecting and installing CPAN modules. (SZABGAB)
     CPAN related menu items moved to new Perl5 plugin (SZABGAB)
@@ -11,6 +13,7 @@ Changes for Perl Application Development and Refactoring Environment
         print to the output pane (SMUELLER)
     Fix bug in lexical variable declaration search that would prevent
         it from finding variables declared in the main doc scope (SMUELLER)
+    Lexical variable replace works for foreach my $foo too. (SMUELLER)
 
 v0.29 2009.03.13
 
