@@ -6,7 +6,15 @@ BEGIN {
 	$| = 1; # flush for the threads
 }
 
-use Test::More tests => 50;
+use Test::More;
+BEGIN {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+		plan skip_all => 'Needs DISPLAY';
+		exit 0;
+	}
+}
+
+plan tests => 50;
 use threads;
 use threads::shared;
 use Padre::Task;
