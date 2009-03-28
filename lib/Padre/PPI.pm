@@ -134,6 +134,7 @@ sub find_variable_declaration {
 	my $cursor   = shift;
 	return()
 	  if not $cursor or not $cursor->isa("PPI::Token");
+
 	my ($varname, $token_str);
 	if ($cursor->isa("PPI::Token::Symbol")) {
 		$varname = $cursor->symbol;
@@ -141,13 +142,15 @@ sub find_variable_declaration {
 	}
 	else {
 		my $content = $cursor->content;
-		if ($content =~ /([\$@%*][\w:']+)/) {
+		if ($content =~ /((?:\$#?|[@%*])[\w:']+)/) {
 			$varname = $1;
 			$token_str = $1;
 		}
 	}
 	return()
 	  if not defined $varname;
+	
+	$varname =~ s/^\$\#/@/;
 
 	my $document = $cursor->top();
 	my $declaration;
