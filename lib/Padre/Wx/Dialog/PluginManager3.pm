@@ -73,14 +73,17 @@ sub show {
 sub _on_list_item_selected {
 	my ($self, $event) = @_;
 	
-	my $name    = $event->GetLabel;
+	my $name   = $event->GetLabel;
 	my $plugin = $self->_manager->plugins->{$name};
 
-	# update plugin name in right pane
+	# updating plugin name in right pane
 	$self->_label->SetLabel( $name );
+
+	# updating first button
 	
-	#
-	if ( $plugin->can('plugin_preferences') ) {
+
+	# updating preferences button
+	if ( $plugin->object->can('plugin_preferences') ) {
 		$self->_butprefs->Enable;
 	} else {
 		$self->_butprefs->Disable;
