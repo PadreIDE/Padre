@@ -84,8 +84,50 @@ sub lock_panels {
 	return;
 }
 
+# This is so wrong that I am even reluctant to describe it.
+# We're seeing occasional double-frees from the Wx::AuiManager
+# DESTROY XSUB. That will give a segmentation fault during
+# global destruction.
+# Now, I failed to track down WHY perl tries to call DESTROY
+# multiple times. Maybe it's related to Class::Adapter::Builder,
+# but I don't want to go around pointing fingers.
+# What we'll do below is trade the SEGV for a small leak.
+# We check whether the specific object at hand had been
+# DESTROYed earlier and if so, we do nothing. If it hasn't been
+# DESTROYed yet, we mark it as an ex-AUIManager and proceed to
+# call the DESTROY XSUB.
+# You may be appropriately appalled now. --Steffen
+
+# PS: Uncomment those lines for getting a "manual" stack
+#     trace. Calling cluck() or similar during global destruction
+#     won't work.
+# PPS: Anybody who manages to fix this for real AND explain to me
+#      what the HELL is happening will get a beer on the next
+#      occasion!
+{
+	no warnings 'redefine';
+	no strict;
+	my $destroy = \&Wx::AuiManager::DESTROY;
+	my %destroyed_managers;
+	*Wx::AuiManager::DESTROY = sub {
+#		print "$_[0]\n";
+#		my $i = 0;
+#		while (1) {
+#			my @c = caller($i++);
+#			last if @c < 3;
+#			print "$i: $c[0] - $c[1] - $c[2] - $c[3]\n";
+#		}
+
+		if (not exists $destroyed_managers{"$_[0]"}) {
+			$destroyed_managers{"$_[0]"}++;
+			goto &$destroy;
+		}
+	};
+}
+
+
 1;
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
-# modify it under the same terms as Perl 5 itself.
+# modify it under the same terms as Perl 5 itself
