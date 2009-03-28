@@ -771,10 +771,12 @@ sub on_run_tests {
 	my $self   = shift;
 	
 	my $doc = Padre::Current->document;
+	return $self->error(Wx::gettext("No document open")) if not $doc;
 	my $filename = $doc->filename;
+	return $self->error(Wx::gettext("Current document has no filename")) if not $filename;
 
 	my $project_dir = Padre::Util::get_project_dir($filename);
-	return $self->error("Could not find project root") if not $project_dir;
+	return $self->error(Wx::gettext("Could not find project root")) if not $project_dir;
 
 	my $dir = Cwd::cwd;
 	chdir $project_dir;
