@@ -106,6 +106,12 @@ sub _create_list {
 	$list->InsertColumn( 2, Wx::gettext('Status') );
 	$self->_list( $list );
 
+	# install event handler
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self, $list->GetId,
+		\&_on_list_item_selected,
+	);
+
 	# create imagelist
 	my $imglist = Wx::ImageList->new( 16, 16 );
 	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
@@ -161,6 +167,10 @@ sub _create_right_pane {
 	$hbox->AddStretchSpacer;
 }
 
+sub _on_list_item_selected {
+	my ($self, $event) = @_;
+	print "selected\n";
+}
 
 # -- private methods
 
