@@ -70,7 +70,11 @@ sub show {
 #
 sub _on_list_item_selected {
 	my ($self, $event) = @_;
-	print "selected\n";
+	
+	my $name = $event->GetLabel;
+
+	# update plugin name in right pane
+	$self->_label->SetLabel( $name );
 }
 
 
