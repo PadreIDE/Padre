@@ -68,7 +68,7 @@ sub _create {
 
 	$self->_create_list;
 	
-	$self->SetSizerAndFit($hbox);
+	$self->SetSizer($hbox);
 }
 
 sub _create_list {
