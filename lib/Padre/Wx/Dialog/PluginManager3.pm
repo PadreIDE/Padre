@@ -95,6 +95,17 @@ sub _create_details {
 	my $whtml = Wx::HtmlWindow->new( $self );
 	$vbox->Add($whtml, 1, Wx::wxALL | Wx::wxALIGN_TOP |
 		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1);
+
+	# the buttons
+	my $hbox = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
+	my $b2 = Wx::Button->new( $self, -1, 'Button 2' );
+	$hbox->AddStretchSpacer;
+	$hbox->Add($b1, 0, Wx::wxALL, 1);
+	$hbox->AddStretchSpacer;
+	$hbox->Add($b2, 0, Wx::wxALL, 1);
+	$hbox->AddStretchSpacer;
 }
 
 
