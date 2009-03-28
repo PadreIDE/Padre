@@ -64,11 +64,10 @@ sub _create {
 	
 	# create vertical box that will host all controls
 	my $hbox = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$self->SetSizer($hbox);
 	$self->_hbox( $hbox );
 
 	$self->_create_list;
-	
-	$self->SetSizer($hbox);
 }
 
 sub _create_list {
