@@ -75,6 +75,10 @@ sub _on_list_item_selected {
 
 	# update plugin name in right pane
 	$self->_label->SetLabel( $name );
+	
+	# force window to recompute layout. indeed, changes are that plugin
+	# name has a different length, and thus should be recentered.
+	$self->Layout;
 }
 
 
@@ -159,18 +163,17 @@ sub _create_right_pane {
 	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# the plugin name
-	my $label = Wx::StaticText->new( $self, -1,
-		'plugin name',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxALIGN_CENTRE | Wx::wxST_NO_AUTORESIZE,
-	);
-	$vbox->Add($label, 0, Wx::wxALIGN_CENTER, 1);
-	my $font = $label->GetFont;
+	my $hbox1 = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$vbox->Add( $hbox1, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $label = Wx::StaticText->new( $self, -1, 'plugin name' );
+	my $font  = $label->GetFont;
 	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 2 );
-	$label->SetFont($font);
-	$self->_label($label);
+	$label->SetFont( $font );
+	$hbox1->AddStretchSpacer;
+	$hbox1->Add( $label, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
+	$hbox1->AddStretchSpacer;
+	$self->_label( $label );
 	
 	# the plugin documentation
 	my $whtml = Wx::HtmlWindow->new( $self );
@@ -178,15 +181,15 @@ sub _create_right_pane {
 		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1);
 
 	# the buttons
-	my $hbox = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
-	$vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $hbox2 = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
 	my $b2 = Wx::Button->new( $self, -1, 'Button 2' );
-	$hbox->AddStretchSpacer;
-	$hbox->Add($b1, 0, Wx::wxALL, 1);
-	$hbox->AddStretchSpacer;
-	$hbox->Add($b2, 0, Wx::wxALL, 1);
-	$hbox->AddStretchSpacer;
+	$hbox2->AddStretchSpacer;
+	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
+	$hbox2->AddStretchSpacer;
+	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
+	$hbox2->AddStretchSpacer;
 }
 
 
