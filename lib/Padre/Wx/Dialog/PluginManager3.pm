@@ -73,21 +73,46 @@ sub show {
 sub _on_list_item_selected {
 	my ($self, $event) = @_;
 	
-	my $name   = $event->GetLabel;
-	my $plugin = $self->_manager->plugins->{$name};
+	my $name    = $event->GetLabel;
+	my $plugin  = $self->_manager->plugins->{$name};
+	my $manager = $self->_manager;
 
 	# updating plugin name in right pane
 	$self->_label->SetLabel( $name );
 
 	# updating first button
-	
+	my $button   = $self->_button;
+	my $butprefs = $self->_butprefs;
 
-	# updating preferences button
-	if ( $plugin->object->can('plugin_preferences') ) {
-		$self->_butprefs->Enable;
+	if ( $plugin->error || $plugin->incompatible ) {
+		# plugin is in error state
+		$button->SetLabel( Wx::gettext( 'Show error message' ) );
+		$butprefs->Disable;
+		
 	} else {
-		$self->_butprefs->Disable;
+		# plugin is working...
+		
+		if ( $plugin->enabled ) {
+			# ... and enabled
+			$button->SetLabel( Wx::gettext('Disable') );
+			$button->Enable;
+		} elsif ( $plugin->can_enable ) {
+			# ... and disabled
+			$button->SetLabel( Wx::gettext('Enable') );
+			$button->Enable;
+		} else {
+			# ... disabled but cannot be enabled
+			$button->Disable;
+		}
+		
+		# updating preferences button
+		if ( $plugin->object->can('plugin_preferences') ) {
+			$self->_butprefs->Enable;
+		} else {
+			$self->_butprefs->Disable;
+		}
 	}
+
 
 	
 	# force window to recompute layout. indeed, changes are that plugin
