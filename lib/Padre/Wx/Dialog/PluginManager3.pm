@@ -79,7 +79,7 @@ sub _create_list {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT| Wx::wxLC_SINGLE_SEL
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Name') );
 	$list->InsertColumn( 1, Wx::gettext('Version') );
@@ -90,7 +90,8 @@ sub _create_list {
 	my $imglist = Wx::ImageList->new( 16, 16 );
 	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
 	$self->_imagelist( $imglist );
-	
+
+	# pack the list
 	$self->_hbox->Add( $list, 1 , Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
