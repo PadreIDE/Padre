@@ -91,6 +91,10 @@ sub _create_details {
 	$font->SetPointSize( $font->GetPointSize + 2 );
 	$label->SetFont($font);
 	
+	# the plugin documentation
+	my $whtml = Wx::HtmlWindow->new( $self );
+	$vbox->Add($whtml, 1, Wx::wxALL | Wx::wxALIGN_TOP |
+		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1);
 }
 
 
