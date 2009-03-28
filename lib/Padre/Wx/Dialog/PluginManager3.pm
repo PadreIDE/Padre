@@ -85,7 +85,7 @@ sub _create_details {
 		Wx::wxDefaultSize,
 		Wx::wxALIGN_CENTRE | Wx::wxST_NO_AUTORESIZE,
 	);
-	$vbox->Add($label, 1, Wx::wxALIGN_CENTER, 1);
+	$vbox->Add($label, 0, Wx::wxALIGN_CENTER, 1);
 	my $font = $label->GetFont;
 	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 2 );
