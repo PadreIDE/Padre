@@ -13,6 +13,7 @@ our $VERSION = '0.30';
 use base 'Wx::TreeCtrl';
 
 my %CACHED;
+my $current_dir;
 
 sub new {
 	my $class = shift;
@@ -126,12 +127,12 @@ sub update_gui {
 		|| File::Basename::dirname($filename);
 	# TODO empty CACHE if forced ?
 	# TODO how to recognize real change in ?
-	return if $CACHED{$dir};
+	return if $current_dir and $current_dir eq $dir;
+	if (not $CACHED{$dir}) {
+		$CACHED{$dir} = list_dir($dir);
+	}
 	
-	my $data = list_dir($dir);
-
-	return if not @$data;
-	$CACHED{$dir} = 1;
+	return if not @{ $CACHED{$dir} };
 
 	my $directory   = Padre->ide->wx->main->directory;
 	$directory->clear;
@@ -143,7 +144,7 @@ sub update_gui {
 		Wx::TreeItemData->new('')
 	);
 
-	_update_treectrl( $directory, $data, $root );
+	_update_treectrl( $directory, $CACHED{$dir}, $root );
 
 	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
 		$directory,
