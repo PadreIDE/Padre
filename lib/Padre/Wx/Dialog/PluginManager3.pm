@@ -52,7 +52,7 @@ sub new {
 
 sub show {
 	my $self = shift;
-	$self->_refresh;
+	$self->_refresh_list;
 	$self->Show;
 }
 
@@ -165,11 +165,11 @@ sub _create_right_pane {
 # -- private methods
 
 #
-# $dialog->_refresh;
+# $dialog->_refresh_list;
 #
 # refresh list of plugins and their associated state.
 #
-sub _refresh {
+sub _refresh_list {
 	my $self = shift;
 
 	my $list    = $self->_list;
