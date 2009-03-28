@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Fix the Directory browser to switch between projects. (SZABGAB)
+    Add "Run Tests" menu options to, err run tests. (SZABGAB)
+
 v0.30 2009.03.27
 
     Remove Test::Compile from the prereqs as well as it is not in use. (SZABGAB)
