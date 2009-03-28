@@ -15,6 +15,7 @@ use Class::XSAccessor
 		_label     => '_label',
 		_list      => '_list',
 		_manager   => '_manager',
+		_whtml     => '_whtml',
 	};
 
 use Padre::Wx::Icon;
@@ -112,8 +113,6 @@ sub _on_list_item_selected {
 			$self->_butprefs->Disable;
 		}
 	}
-
-
 	
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
@@ -218,6 +217,7 @@ sub _create_right_pane {
 	my $whtml = Wx::HtmlWindow->new( $self );
 	$vbox->Add($whtml, 1, Wx::wxALL | Wx::wxALIGN_TOP |
 		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1);
+	$self->_whtml( $whtml );
 
 	# the buttons
 	my $hbox2 = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
