@@ -68,10 +68,45 @@ sub _create {
 	$self->_hbox( $hbox );
 
 	$self->_create_list;
-	$self->_create_details;
+	$self->_create_right_pane;
 }
 
-sub _create_details {
+
+sub _create_list {
+	my $self = shift;
+	
+	# create list
+	my $list = Wx::ListView->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
+	);
+	$list->InsertColumn( 0, Wx::gettext('Name') );
+	$list->InsertColumn( 1, Wx::gettext('Version') );
+	$list->InsertColumn( 2, Wx::gettext('Status') );
+	$self->_list( $list );
+
+	# create imagelist
+	my $imglist = Wx::ImageList->new( 16, 16 );
+	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
+	$self->_imagelist( $imglist );
+
+	# pack the list
+	$self->_hbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+}
+
+
+#
+# $dialog->_create_right_pane;
+#
+# create the right pane of the frame. it will hold the name of the plugin,
+# the associated documentation, and the action buttons to manage the plugin.
+#
+# no params. no return values.
+#
+sub _create_right_pane {
 	my $self = shift;
 
 	# all controls will be lined up
@@ -109,30 +144,6 @@ sub _create_details {
 }
 
 
-sub _create_list {
-	my $self = shift;
-	
-	# create list
-	my $list = Wx::ListView->new(
-		$self,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
-	);
-	$list->InsertColumn( 0, Wx::gettext('Name') );
-	$list->InsertColumn( 1, Wx::gettext('Version') );
-	$list->InsertColumn( 2, Wx::gettext('Status') );
-	$self->_list( $list );
-
-	# create imagelist
-	my $imglist = Wx::ImageList->new( 16, 16 );
-	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
-	$self->_imagelist( $imglist );
-
-	# pack the list
-	$self->_hbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-}
 
 #
 # $dialog->_refresh;
