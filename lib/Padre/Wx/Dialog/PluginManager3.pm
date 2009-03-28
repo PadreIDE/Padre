@@ -57,7 +57,23 @@ sub show {
 }
 
 
-# -- gui methods
+# -- gui handlers
+
+#
+# $self->_on_list_item_selected( $event );
+#
+# handler called when a list item has been selected. it will in turn update
+# the right part of the frame.
+#
+# $event is a Wx::ListEvent.
+#
+sub _on_list_item_selected {
+	my ($self, $event) = @_;
+	print "selected\n";
+}
+
+
+# -- private methods
 
 #
 # $self->_create;
@@ -167,12 +183,6 @@ sub _create_right_pane {
 	$hbox->AddStretchSpacer;
 }
 
-sub _on_list_item_selected {
-	my ($self, $event) = @_;
-	print "selected\n";
-}
-
-# -- private methods
 
 #
 # $dialog->_refresh_list;
