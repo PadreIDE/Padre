@@ -89,7 +89,7 @@ sub process_ppi {
 	#warn "VARNAME: $varname";
 
 	# TODO: This could be part of PPI somehow?
-	# for finding symbols in quotelikes and regexes
+	# The following string of hacks is simply for finding symbols in quotelikes and regexes
 	my $type = substr($varname, 0, 1);
 	my $brace = $type eq '@' ? '[' : ($type eq '%' ? '{' : '');
 
@@ -106,18 +106,19 @@ sub process_ppi {
 			$slicev =~ s/^\%/\@/;
 			push @patterns, quotemeta($slicev).'(?='.quotemeta($brace).')';
 		}
+		elsif ($type eq '@') {
+			my $indexv = $varname;
+			$indexv =~ s/^\@/\$\#/;
+			push @patterns, quotemeta($indexv);
+		}
 	}
 	else  {
-		@patterns = (
-			quotemeta(_curlify($varname)), quotemeta($varname)."(?![\[\{])",
-		);
+		@patterns = ( quotemeta(_curlify($varname)), quotemeta($varname)."(?![\[\{])" );
 	}
 	my %unique;
-	my $finder_regexp = '(?:'
-		. join( '|', grep { !$unique{$_}++ } @patterns )
-		. ')';
+	my $finder_regexp = '(?:' . join( '|', grep { !$unique{$_}++ } @patterns ) . ')';
 
-	$finder_regexp = qr/$finder_regexp/;
+	$finder_regexp = qr/$finder_regexp/; # used to find symbols in quotelikes and regexes
 	#warn $finder_regexp;
 
 	my $replacement = substr($self->{replacement}, 1);
@@ -130,11 +131,16 @@ sub process_ppi {
 				# TODO do this without breaking encapsulation!
 				$node->{content} = substr($node->content(), 0, 1) . $replacement;
 			}
+			if ($node->isa("PPI::Token::ArrayIndex")) { # $#foo
+				return 0 unless substr($node->content, 2) eq substr($varname, 1);
+				# TODO do this without breaking encapsulation!
+				$node->{content} = '$#' . $replacement;
+			}
 			elsif ($node->isa("PPI::Token")) { # the case of potential quotelikes and regexes
 				my $str = $node->content;
 				if ($str =~ s{($finder_regexp)([\[\{]?)}<
-				        if ($1 =~ tr/{//) { substr($1, 0, 1) . "{$replacement}$2" }
-				        else              { substr($1, 0, 1) . "$replacement$2" }
+				        if ($1 =~ tr/{//) { substr($1, 0, ($1=~tr/#//)+1) . "{$replacement}$2" }
+				        else              { substr($1, 0, ($1=~tr/#//)+1) . "$replacement$2" }
 				    >ge) {
 					# TODO do this without breaking encapsulation!
 					$node->{content} = $str;
