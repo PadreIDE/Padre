@@ -8,8 +8,8 @@ use warnings;
 use Carp                    qw{ croak };
 use Class::XSAccessor
 	accessors => {
-		_button1   => '_button1',
-		_button2   => '_button2',
+		_button    => '_button',
+		_butprefs  => '_butprefs',
 		_hbox      => '_hbox',
 		_imagelist => '_imagelist',
 		_label     => '_label',
@@ -81,9 +81,9 @@ sub _on_list_item_selected {
 	
 	#
 	if ( $plugin->can('plugin_preferences') ) {
-		$self->_button2->Enable;
+		$self->_butprefs->Enable;
 	} else {
-		$self->_button2->Disable;
+		$self->_butprefs->Disable;
 	}
 
 	
@@ -195,14 +195,14 @@ sub _create_right_pane {
 	my $hbox2 = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
 	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
-	my $b2 = Wx::Button->new( $self, -1, 'Button 2' );
+	my $b2 = Wx::Button->new( $self, -1, Wx::gettext('Preferences') );
 	$hbox2->AddStretchSpacer;
 	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
 	$hbox2->AddStretchSpacer;
 	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
 	$hbox2->AddStretchSpacer;
-	$self->_button1( $b1 );
-	$self->_button2( $b2 );
+	$self->_button  ( $b1 );
+	$self->_butprefs( $b2 );
 }
 
 
