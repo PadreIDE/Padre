@@ -773,6 +773,8 @@ sub on_run_tests {
 	my $doc = Padre::Current->document;
 	return $self->error(Wx::gettext("No document open")) if not $doc;
 	my $filename = $doc->filename;
+	
+	# TODO probably should fetch the current project name
 	return $self->error(Wx::gettext("Current document has no filename")) if not $filename;
 
 	my $project_dir = Padre::Util::get_project_dir($filename);

@@ -122,6 +122,11 @@ sub refresh {
 			? $self->{run_command}->IsEnabled
 			: 0
 	);
+	$self->{run_tests}->Enable(
+		$document
+			? $self->{run_command}->IsEnabled
+			: 0
+	);
 
 	return 1;
 }
