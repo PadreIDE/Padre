@@ -839,8 +839,20 @@ sub test_a_plugin {
 	
 	# Save into plugin for next time
 	my $file = File::Spec->catfile($default_dir, $filename);
-	
-	( $default_dir, $filename ) = split(/Padre[\\\/]Plugin[\\\/]/, $file, 2);
+
+	# last catfile's parameter is to ensure trailing slash
+	my $plugin_folder_name = File::Spec->catfile('Padre', 'Plugin', '');
+	( $default_dir, $filename ) = split(/$plugin_folder_name/, $file, 2);
+	unless ($filename) {
+		Wx::MessageBox(
+			sprintf(Wx::gettext("Plugin must have '%s' as base directory"), 
+					$plugin_folder_name
+			),
+            'Error loading plugin', Wx::wxOK, $main
+        );
+		return;
+    }
+    
 	$filename =~ s/\.pm$//; # remove last .pm
 	$filename =~ s/[\\\/]/\:\:/;
 	unless ( $INC[0] eq $default_dir ) {
