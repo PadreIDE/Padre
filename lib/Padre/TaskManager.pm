@@ -122,8 +122,6 @@ sub new {
 		running_tasks  => {},
 	}, $class;
 
-	$self->{use_threads} = 0 if Wx->VERSION < 0.89;
-
 	my $main = Padre->ide->wx->main;
 
 	if (not $EVENTS_INITIALIZED) {
