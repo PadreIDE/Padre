@@ -36,13 +36,13 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
-	# create dialog
-	$self->_create;
-
 	# store plugin manager
 	croak "Missing or invalid Padre::PluginManager object"
 		unless $manager->isa('Padre::PluginManager');
 	$self->_manager( $manager );
+
+	# create dialog
+	$self->_create;
 
 	return $self;
 }
