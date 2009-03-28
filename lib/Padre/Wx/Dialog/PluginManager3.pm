@@ -115,10 +115,14 @@ sub _on_list_item_selected {
 	}
 	
 	# update plugin documentation
+	my $class = $plugin->class;
 	my $browser = Padre::DocBrowser->new;
-	my $doc     = $browser->resolve( $plugin->class );
-	my $output  = $browser->browse( $doc );
-	$self->_whtml->SetPage( $output->{original_content} );
+	my $doc     = $browser->resolve( $class );
+	my $output  = eval { $browser->browse( $doc ) };
+	my $html = $@
+		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
+		: $output->{original_content};
+	$self->_whtml->SetPage( $html );
 	
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
