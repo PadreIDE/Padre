@@ -848,13 +848,15 @@ sub run_document {
 
 	# Apply the user's save-on-run policy
 	# TODO: Make this code suck less
-	my $config = $self->config;
-	if ( $config->run_save eq 'same' ) {
-		$self->on_save or return;
-	} elsif ( $config->run_save eq 'all_files' ) {
-		$self->on_save_all or return;
-	} elsif ( $config->run_save eq 'all_buffer' ) {
-		$self->on_save_all or return;
+	unless ( $document->is_saved ) {
+		my $config = $self->config;
+		if ( $config->run_save eq 'same' ) {
+			$self->on_save or return;
+		} elsif ( $config->run_save eq 'all_files' ) {
+			$self->on_save_all or return;
+		} elsif ( $config->run_save eq 'all_buffer' ) {
+			$self->on_save_all or return;
+		}
 	}
 
 	unless ( $document->can('get_command') ) {
