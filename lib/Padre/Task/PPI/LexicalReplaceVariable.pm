@@ -85,7 +85,7 @@ sub process_ppi {
 	}
 
 	my $token_str = $token->content;
-	my $varname = $token->canonical;
+	my $varname = $token->symbol;
 
 	# TODO: This could be part of PPI somehow?
 	# for finding symbols in quotelikes and regexes

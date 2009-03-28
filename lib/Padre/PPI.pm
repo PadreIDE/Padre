@@ -136,7 +136,7 @@ sub find_variable_declaration {
 	  if not $cursor or not $cursor->isa("PPI::Token");
 	my ($varname, $token_str);
 	if ($cursor->isa("PPI::Token::Symbol")) {
-		$varname = $cursor->canonical;
+		$varname = $cursor->symbol;
 		$token_str = $cursor->content;
 	}
 	else {
@@ -181,7 +181,8 @@ sub find_variable_declaration {
 
 				if ($elem->isa("PPI::Token::Word") and $elem->content() =~ /^(?:my|our)$/) {
 					my $nelem = $elem->snext_sibling();
-					if (defined $nelem and $nelem->isa("PPI::Token::Symbol")) {
+					if (defined $nelem and $nelem->isa("PPI::Token::Symbol")
+					    and $nelem->symbol() eq $varname || $nelem->content() eq $token_str) {
 						$declaration = $nelem;
 						last;
 					}
