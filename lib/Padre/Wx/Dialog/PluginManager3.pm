@@ -92,7 +92,7 @@ sub _create_list {
 	$list->AssignImageList($imglist, Wx::wxIMAGE_LIST_SMALL);
 	$self->_imagelist( $imglist );
 	
-	$self->_vbox->Add( $list, 1 , Wx::wxALL | Wx::wxEXPAND, 1 );
+	$self->_hbox->Add( $list, 1 , Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
