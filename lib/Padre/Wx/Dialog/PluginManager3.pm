@@ -213,7 +213,7 @@ sub _refresh_list {
 	my %icon = ( plugin => 0 );
 	# plugin status
 	my $i = 0;
-	foreach my $name ( qw{ enabled disabled crashed incompatible } ) {
+	foreach my $name ( qw{ enabled disabled error crashed incompatible } ) {
 		my $icon = Padre::Wx::Icon::find("status/padre-plugin-$name");
 		$imglist->Add($icon);
 		$icon{$name} = ++$i;
@@ -224,11 +224,7 @@ sub _refresh_list {
 	foreach my $name ( reverse $manager->plugin_names ) {
 		my $plugin  = $plugins->{$name};
 		my $version = $plugin->version || '???';
-
-		my $status = Wx::gettext('disabled');
-		$status    = Wx::gettext('enabled')      if $plugin->enabled;
-		$status    = Wx::gettext('incompatible') if $plugin->incompatible;
-		$status    = Wx::gettext('crashed')      if $plugin->error;
+		my $status  = $plugin->status;
 
 		my $idx = $list->InsertStringImageItem(0, $name, 0);
 		$list->SetItem($idx, 1, $version);
