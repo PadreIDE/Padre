@@ -66,6 +66,8 @@ sub show {
 # plugins, and a pane on the right holding the details for the selected
 # plugin, as well as control buttons.
 #
+# no params, no return values.
+#
 sub _create {
 	my $self = shift;
 	
@@ -80,6 +82,14 @@ sub _create {
 }
 
 
+#
+# $dialog->_create_right_list;
+#
+# create the list on the left of the frame. it will hold a list of available
+# plugins, along with their version & current status.
+#
+# no params. no return values.
+#
 sub _create_list {
 	my $self = shift;
 	
