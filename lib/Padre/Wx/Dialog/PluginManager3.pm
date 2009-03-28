@@ -68,7 +68,23 @@ sub _create {
 	$self->_hbox( $hbox );
 
 	$self->_create_list;
+	$self->_create_details;
 }
+
+sub _create_details {
+	my $self = shift;
+
+	my $vbox = Wx::BoxSizer->new( Wx::wxVERTICAL );
+	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	
+	my $label = Wx::StaticText->new( $self, -1, 'plugin name',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxALIGN_CENTRE | Wx::wxST_NO_AUTORESIZE,
+	);
+	$vbox->Add($label, 1, Wx::wxALIGN_CENTER, 1);
+}
+
 
 sub _create_list {
 	my $self = shift;
@@ -92,7 +108,7 @@ sub _create_list {
 	$self->_imagelist( $imglist );
 
 	# pack the list
-	$self->_hbox->Add( $list, 1 , Wx::wxALL | Wx::wxEXPAND, 1 );
+	$self->_hbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
