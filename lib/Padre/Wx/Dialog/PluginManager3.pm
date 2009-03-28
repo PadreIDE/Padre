@@ -114,6 +114,12 @@ sub _on_list_item_selected {
 		}
 	}
 	
+	# update plugin documentation
+	my $browser = Padre::DocBrowser->new;
+	my $doc     = $browser->resolve( $plugin->class );
+	my $output  = $browser->browse( $doc );
+	$self->_whtml->SetPage( $output->{original_content} );
+	
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
 	$self->Layout;
