@@ -70,6 +70,15 @@ sub new {
 		},
 	);
 
+	$self->{run_tests} = $self->Append( -1,
+		Wx::gettext("Run Tests")
+	);
+	Wx::Event::EVT_MENU( $main,
+		$self->{run_tests},
+		sub {
+			$_[0]->on_run_tests;
+		},
+	);
 	$self->AppendSeparator;
 
 	$self->{stop} = $self->Append( -1,

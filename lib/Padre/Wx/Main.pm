@@ -767,6 +767,21 @@ sub on_run_command {
 	return;
 }
 
+sub on_run_tests {
+	my $self   = shift;
+	
+	my $doc = Padre::Current->document;
+	my $filename = $doc->filename;
+
+	my $project_dir = Padre::Util::get_project_dir($filename);
+	return $self->error("Could not find project root") if not $project_dir;
+
+	my $dir = Cwd::cwd;
+	chdir $project_dir;
+	$self->run_command("prove -b $project_dir/t");
+	chdir $dir;
+}
+
 sub run_command {
 	my $self   = shift;
 	my $cmd    = shift;
