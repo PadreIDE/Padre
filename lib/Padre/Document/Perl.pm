@@ -449,7 +449,7 @@ sub _get_current_symbol {
 	my $pos          = $editor->GetCurrentPos;
 	my $line         = $editor->LineFromPosition($pos);
 	my $line_start   = $editor->PositionFromLine($line);
-	my $cursor_col   = $pos-$line_start; # TODO: let's hope this is the physical column
+	my $cursor_col   = $pos-$line_start;
 	my $line_end     = $editor->GetLineEndPosition($line);
 	my $line_content = $editor->GetTextRange($line_start, $line_end);
 	my $col          = $cursor_col;
