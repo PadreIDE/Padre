@@ -156,6 +156,11 @@ sub _refresh {
 
 	# auto-resize columns
 	$list->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE) for 0..2;
+
+	# making sure the list can show all columns
+	my $width = 15; # taking vertical scrollbar into account
+	$width += $list->GetColumnWidth($_) for 0..2;
+	$list->SetMinSize([$width, -1]);
 }
 
 
