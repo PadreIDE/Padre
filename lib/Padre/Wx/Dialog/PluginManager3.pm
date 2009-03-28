@@ -10,6 +10,7 @@ use Class::XSAccessor
 	accessors => {
 		_hbox      => '_hbox',
 		_imagelist => '_imagelist',
+		_label     => '_label',
 		_list      => '_list',
 		_manager   => '_manager',
 	};
@@ -165,6 +166,7 @@ sub _create_right_pane {
 	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 2 );
 	$label->SetFont($font);
+	$self->_label($label);
 	
 	# the plugin documentation
 	my $whtml = Wx::HtmlWindow->new( $self );
