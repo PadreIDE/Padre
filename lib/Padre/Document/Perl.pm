@@ -456,13 +456,13 @@ sub _get_current_symbol {
 
 	# find start of symbol TODO: This could be more robust, no?
 	while (1) {
-		if ($col == 0 or substr($line_content, $col, 1) =~ /^[^\w:\']$/) {
+		if ($col == 0 or substr($line_content, $col, 1) =~ /^[^#\w:\']$/) {
 			last;
 		}
 		$col--;
 	}
 
-	if ( $col == 0 or substr($line_content, $col+1, 1) !~ /^[\w:\']$/ ) {
+	if ( $col == 0 or substr($line_content, $col+1, 1) !~ /^[#\w:\']$/ ) {
 		return ();
 	}
 	return [$line+1, $col+1];
