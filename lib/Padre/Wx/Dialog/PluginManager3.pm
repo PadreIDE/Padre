@@ -57,8 +57,15 @@ sub show {
 }
 
 
-# -- private methods
+# -- gui methods
 
+#
+# $self->_create;
+#
+# create the dialog itself. it will have a list on the left with all found
+# plugins, and a pane on the right holding the details for the selected
+# plugin, as well as control buttons.
+#
 sub _create {
 	my $self = shift;
 	
@@ -145,6 +152,7 @@ sub _create_right_pane {
 }
 
 
+# -- private methods
 
 #
 # $dialog->_refresh;
