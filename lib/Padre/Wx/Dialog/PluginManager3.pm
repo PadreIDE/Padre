@@ -65,6 +65,7 @@ sub _create {
 	# create vertical box that will host all controls
 	my $hbox = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
 	$self->SetSizer($hbox);
+	$self->SetMinSize([640,480]);
 	$self->_hbox( $hbox );
 
 	$self->_create_list;
@@ -109,7 +110,7 @@ sub _create_list {
 sub _create_right_pane {
 	my $self = shift;
 
-	# all controls will be lined up
+	# all controls will be lined up in a vbox
 	my $vbox = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
