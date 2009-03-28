@@ -77,11 +77,17 @@ sub _create_details {
 	my $vbox = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	
-	my $label = Wx::StaticText->new( $self, -1, 'plugin name',
+	my $label = Wx::StaticText->new( $self, -1,
+		'plugin name',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxALIGN_CENTRE | Wx::wxST_NO_AUTORESIZE,
 	);
+	my $font = $label->GetFont;
+	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
+	$font->SetPointSize( $font->GetPointSize + 2 );
+	$label->SetFont($font);
+	
 	$vbox->Add($label, 1, Wx::wxALIGN_CENTER, 1);
 }
 
