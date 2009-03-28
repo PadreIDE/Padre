@@ -12,17 +12,16 @@ BEGIN {
 	}
 }
 
-BEGIN {
-	plan( skip_all => 'Fails for unknown reasons, skipping till tsee fixes it' );
-	exit 0;
-}
-
 our $TestClass;
 BEGIN {
 	$TestClass = 'Padre::Task::Test';
 }
 
-plan( tests => 13 );
+plan( tests => 17 );
+
+# need to load these before padre!
+use threads;
+use threads::shared;
 
 use t::lib::Padre;
 use Padre;

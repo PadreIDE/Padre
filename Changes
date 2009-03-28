@@ -6,6 +6,7 @@ Changes for Perl Application Development and Refactoring Environment
         AuiManagers (SMUELLER)
     Lexical variable replace works for arrays and hashes in all their
         ugly incantations now (SMUELLER)
+    Re-enable the taskmanager tests after fixing them. (SMUELLER)
 
 v0.30 2009.03.27
 
