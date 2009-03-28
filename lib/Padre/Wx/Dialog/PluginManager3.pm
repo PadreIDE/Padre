@@ -8,6 +8,8 @@ use warnings;
 use Carp                    qw{ croak };
 use Class::XSAccessor
 	accessors => {
+		_button1   => '_button1',
+		_button2   => '_button2',
 		_hbox      => '_hbox',
 		_imagelist => '_imagelist',
 		_label     => '_label',
@@ -190,6 +192,8 @@ sub _create_right_pane {
 	$hbox2->AddStretchSpacer;
 	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
 	$hbox2->AddStretchSpacer;
+	$self->_button1( $b1 );
+	$self->_button2( $b2 );
 }
 
 
