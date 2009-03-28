@@ -56,7 +56,15 @@ sub new {
 
 sub show {
 	my $self = shift;
+
 	$self->_refresh_list;
+	
+	# select first item in the list
+	my $list = $self->_list;
+	my $item = $list->GetItem(0);
+	$item->SetState( Wx::wxLIST_STATE_SELECTED );
+	$list->SetItem($item);
+
 	$self->Show;
 }
 
