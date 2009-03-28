@@ -73,10 +73,19 @@ sub show {
 sub _on_list_item_selected {
 	my ($self, $event) = @_;
 	
-	my $name = $event->GetLabel;
+	my $name    = $event->GetLabel;
+	my $plugin = $self->_manager->plugins->{$name};
 
 	# update plugin name in right pane
 	$self->_label->SetLabel( $name );
+	
+	#
+	if ( $plugin->can('plugin_preferences') ) {
+		$self->_button2->Enable;
+	} else {
+		$self->_button2->Disable;
+	}
+
 	
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
