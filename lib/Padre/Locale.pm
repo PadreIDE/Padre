@@ -313,7 +313,7 @@ BEGIN {
 			fallback  => [ 'nl-nl' ],
 		},
 
-		''pl' => {
+		'pl' => {
 			gettext   => _T('Polish'),
 			utf8text  => 'Polski',
 			iso639    => 'pl',
