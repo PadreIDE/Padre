@@ -371,6 +371,12 @@ sub _refresh_list {
 }
 
 
+#
+# $dialog->_update_plugin_state;
+#
+# update button caption & state, as well as status icon in the list,
+# depending on the new plugin state.
+#
 sub _update_plugin_state {
 	my $self   = shift;
 	my $plugin = $self->_curplugin;
