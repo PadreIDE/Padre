@@ -94,7 +94,7 @@ sub process_ppi {
 	my $brace = $type eq '@' ? '[' : ($type eq '%' ? '{' : '');
 
 	my @patterns;
-	if ($type eq '@') {
+	if ($type eq '@' or $type eq '%') {
 		my $accessv = $varname;
 		$accessv =~ s/^\Q$type\E/\$/;
 		@patterns = (
