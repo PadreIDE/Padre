@@ -73,6 +73,17 @@ sub show {
 # -- gui handlers
 
 #
+# $self->_on_butprefs_clicked;
+#
+# handler called when the preferences button has been clicked.
+#
+sub _on_butprefs_clicked {
+	my $self   = shift;
+	$self->_curplugin->object->plugin_preferences;
+}
+
+
+#
 # $self->_on_list_item_selected( $event );
 #
 # handler called when a list item has been selected. it will in turn update
@@ -244,6 +255,7 @@ sub _create_right_pane {
 	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
 	my $b2 = Wx::Button->new( $self, -1, Wx::gettext('Preferences') );
+	Wx::Event::EVT_BUTTON($self, $b2, \&_on_butprefs_clicked);
 	$hbox2->AddStretchSpacer;
 	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
 	$hbox2->AddStretchSpacer;
