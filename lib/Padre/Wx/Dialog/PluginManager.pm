@@ -43,6 +43,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
+	$self->SetIcon( Wx::GetWxPerlIcon() );
 	$self->_parent($parent);
 
 	# store plugin manager
