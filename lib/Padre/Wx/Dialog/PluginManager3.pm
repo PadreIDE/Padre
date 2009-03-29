@@ -292,6 +292,25 @@ sub _create_right_pane {
 
 
 #
+# $self->_plugin_disable;
+#
+# disable plugin, and update gui.
+#
+sub _plugin_disable {
+	my $self = shift;
+	
+	my $plugin = $self->_curplugin;
+	my $parent = $self->_parent;
+
+	$parent->Freeze;
+	Padre::DB::Plugin->update_enabled( $plugin->class => 0 );
+	$self->_manager->_plugin_disable($plugin->name);
+	$parent->menu->refresh(1);
+	$parent->Thaw;
+}
+
+
+#
 # $self->_plugin_enable;
 #
 # enable plugin, and update gui.
