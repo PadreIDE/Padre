@@ -16,6 +16,7 @@ use Class::XSAccessor
 		_label     => '_label',
 		_list      => '_list',
 		_manager   => '_manager',
+		_parent    => '_parent',
 		_whtml     => '_whtml',
 	};
 
@@ -40,6 +41,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
+	$self->_parent($parent);
 
 	# store plugin manager
 	croak "Missing or invalid Padre::PluginManager object"
