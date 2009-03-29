@@ -290,6 +290,23 @@ sub _create_right_pane {
 
 
 #
+# $self->_plugin_enable;
+#
+# enable plugin, and update gui.
+#
+sub _plugin_enable {
+	my $self = shift;
+	
+	my $plugin = $self->_curplugin;
+	#$self->{parent}->Freeze;
+	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
+	$self->_manager->_plugin_enable($plugin->name);
+#	$self->{parent}->menu->refresh(1);
+#	$self->{parent}->Thaw;
+}
+
+
+#
 # $self->_plugin_show_error_msg;
 #
 # show plugin error message, in an error dialog box.
