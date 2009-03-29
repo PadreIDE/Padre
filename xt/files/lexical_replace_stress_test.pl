@@ -9,7 +9,7 @@
 my $foo;
 while (!$foo) {
   my $bar;
-  for(my $i=0; $i < 100; $i++) {
+  foreach my $i (0..100) {
     if ($i== 5) {
       $foo = 1;
       $bar += 1;
@@ -17,13 +17,17 @@ while (!$foo) {
       my $bAz;
       my $baz = 4;
       my @baz = (5);
+      my %baz = qw(a b);
       for (my $j = 0; $j < @baz; $j++) {
         $#baz--;
         $#bAz--;
         $bAz[2] = "blah $baz";
         $baz = "blub ${bAz} @bAz @{bAz}
-                $bAz[0] $#bAz";
+                $bAz[0] $#bAz
+                $baz{foo} @baz{foo}";
         $bAz++;
+        $baz{foo} = "bar";
+        @baz{bar} = ("hi");
       }
     }
   }
