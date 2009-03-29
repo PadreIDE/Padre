@@ -9,8 +9,6 @@ use base 'Padre::Task';
 
 our $VERSION = '0.32';
 
-use Data::Dumper;
-
 sub run {
 	my ($self) = @_;
 
