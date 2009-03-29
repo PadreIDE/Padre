@@ -25,6 +25,10 @@ foreach my $file ( @files ) {
 		my $module = $file;
 		$module =~ s/[\/\\]/::/g;
 		$module =~ s/\.pm$//;
+		if ($ENV{CPAN_SHELL_LEVEL} and $module eq 'Padre::CPAN') {
+			Test::Most->builder->skip ("Cannot load CPAN shell under the CPAN shell") for 1..2;
+			next;
+		}
 		system "$^X -e \"require $module; print 'ok';\" > $out 2>$err";
 		my $err_data = slurp($err);
 		is($err_data, '', "STDERR of $file");
