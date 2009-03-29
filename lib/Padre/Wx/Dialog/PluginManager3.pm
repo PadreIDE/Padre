@@ -90,7 +90,18 @@ sub _on_butprefs_clicked {
 #
 sub _on_button_clicked {
 	my $self = shift;
-	print $self;
+	
+	# find method to call
+	my $label = $self->_button->GetLabel;
+	my %method = (
+		Wx::gettext('Disable')            => '_plugin_disable',
+		Wx::gettext('Enable')             => '_plugin_enable',
+		Wx::gettext('Show error message') => '_plugin_show_error_msg',
+	);
+	my $method = $method{$label};
+	
+	# call method
+	$self->$method;
 }
 
 
