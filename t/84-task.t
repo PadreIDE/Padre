@@ -13,12 +13,12 @@ BEGIN {
 		exit 0;
 	}
 }
+use t::lib::Padre;
 
 plan tests => 50;
 use threads;
 use threads::shared;
 use Padre::Task;
-use lib '.';
 use t::lib::Padre::Task::Test;
 
 our $TestClass; # secret class name

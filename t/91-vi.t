@@ -16,6 +16,7 @@ my $tests;
 
 plan tests => $tests+1;
 
+use t::lib::Padre;
 use t::lib::Padre::Editor;
 
 ok(1);
