@@ -10,6 +10,7 @@ use Class::XSAccessor
 	accessors => {
 		_button    => '_button',
 		_butprefs  => '_butprefs',
+		_curplugin => '_curplugin',
 		_hbox      => '_hbox',
 		_imagelist => '_imagelist',
 		_label     => '_label',
@@ -85,6 +86,7 @@ sub _on_list_item_selected {
 	my $name    = $event->GetLabel;
 	my $plugin  = $self->_manager->plugins->{$name};
 	my $manager = $self->_manager;
+	$self->_curplugin( $plugin ); # storing selected plugin
 
 	# updating plugin name in right pane
 	$self->_label->SetLabel( $name );
