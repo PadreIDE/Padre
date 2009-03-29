@@ -398,11 +398,20 @@ sub _update_plugin_state {
 	my $button   = $self->_button;
 	my $butprefs = $self->_butprefs;
 
-	if ( $plugin->error || $plugin->incompatible ) {
+	if ( $plugin->error ) {
 		# plugin is in error state
 		$button->SetLabel( Wx::gettext( 'Show error message' ) );
 		$butprefs->Disable;
+		$item->SetText(Wx::gettext('error'));
 		$item->SetImage(3);
+		$list->SetItem($item);
+
+	} elsif ( $plugin->incompatible ) {
+		# plugin is incompatible
+		$button->SetLabel( Wx::gettext( 'Show error message' ) );
+		$butprefs->Disable;
+		$item->SetText(Wx::gettext('incompatible'));
+		$item->SetImage(5);
 		$list->SetItem($item);
 		
 	} else {
@@ -412,6 +421,7 @@ sub _update_plugin_state {
 			# ... and enabled
 			$button->SetLabel( Wx::gettext('Disable') );
 			$button->Enable;
+			$item->SetText(Wx::gettext('enabled'));
 			$item->SetImage(1);
 			$list->SetItem($item);
 
@@ -419,6 +429,7 @@ sub _update_plugin_state {
 			# ... and disabled
 			$button->SetLabel( Wx::gettext('Enable') );
 			$button->Enable;
+			$item->SetText(Wx::gettext('disabled'));
 			$item->SetImage(2);
 			$list->SetItem($item);
 
