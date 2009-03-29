@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Padre::Project ();
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 use base 'Padre::Project';
 
 sub inspector {

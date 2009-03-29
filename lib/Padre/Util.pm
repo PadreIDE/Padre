@@ -30,7 +30,7 @@ use File::Spec ();
 use List::Util qw(first);
 use File::Basename ();
 
-our $VERSION   = '0.31';
+our $VERSION   = '0.32';
 use base 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches _T);
 

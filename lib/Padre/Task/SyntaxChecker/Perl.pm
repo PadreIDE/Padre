@@ -3,7 +3,7 @@ package Padre::Task::SyntaxChecker::Perl;
 use strict;
 use warnings;
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 use base 'Padre::Task::SyntaxChecker';
 

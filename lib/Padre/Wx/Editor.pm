@@ -10,7 +10,7 @@ use Padre::Current            ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 use base 'Wx::StyledTextCtrl';
 
 our %mode = (

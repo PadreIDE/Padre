@@ -8,7 +8,7 @@ use Carp         ();
 use Exporter     ();
 use Params::Util qw{_INSTANCE};
 
-our $VERSION   = '0.31';
+our $VERSION   = '0.32';
 use base 'Exporter';
 our @EXPORT_OK = '_CURRENT';
 

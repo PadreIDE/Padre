@@ -9,7 +9,7 @@ use File::Spec         ();
 use Pod::Simple::XHTML ();
 use Padre::Document    ();
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 use Class::XSAccessor
 	constructor => 'new', 

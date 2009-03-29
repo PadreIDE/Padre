@@ -7,7 +7,7 @@ use threads;
 
 use base 'Padre::Task';
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 use Data::Dumper;
 

@@ -3,7 +3,7 @@ package Padre::Task;
 use strict;
 use warnings;
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 require Padre;
 require Padre::Wx;
