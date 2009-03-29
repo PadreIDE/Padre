@@ -290,6 +290,20 @@ sub _create_right_pane {
 
 
 #
+# $self->_plugin_show_error_msg;
+#
+# show plugin error message, in an error dialog box.
+#
+sub _plugin_show_error_msg {
+	my $self = shift;
+
+	my $message = $self->_curplugin->errstr;
+	my $title   = Wx::gettext('Error');
+	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
+}
+
+
+#
 # $dialog->_refresh_list;
 #
 # refresh list of plugins and their associated state.
