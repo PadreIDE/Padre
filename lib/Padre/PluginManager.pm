@@ -651,9 +651,9 @@ sub _plugin_disable {
 
 Given a plugin name or namespace, returns a hash reference
 which corresponds to the configuration section in the Padre
-YAML configuration of that plugin. Any modifications of that
-hash reference will, on normal exit, be written to the
-configuration file.
+database of that plugin. Any modifications of that
+hash reference will, on normal exit, be serialized and
+written back to the databasefile.
 
 If the plugin name is omitted and this method is called from
 a plugin namespace, the plugin name is determine automatically.
