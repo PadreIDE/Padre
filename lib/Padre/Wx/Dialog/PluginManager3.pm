@@ -300,11 +300,13 @@ sub _plugin_enable {
 	my $self = shift;
 	
 	my $plugin = $self->_curplugin;
-	#$self->{parent}->Freeze;
+	my $parent = $self->_parent;
+
+	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
 	$self->_manager->_plugin_enable($plugin->name);
-#	$self->{parent}->menu->refresh(1);
-#	$self->{parent}->Thaw;
+	$parent->menu->refresh(1);
+	$parent->Thaw;
 }
 
 
