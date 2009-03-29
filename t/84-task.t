@@ -15,14 +15,15 @@ BEGIN {
 }
 use t::lib::Padre;
 
-plan tests => 50;
+plan tests => 108;
 use threads;         # need to be loaded before Padre
 use threads::shared; # need to be loaded before Padre
 
 use Padre::Task;
 use t::lib::Padre::Task::Test;
+use t::lib::Padre::Task::PPITest;
 
-our $TestClass; # secret class name
+our $TestClass; # secret Task class name accessible in the test threads. See also way below
 
 # reminiscent of the in-thread worker loop in Padre::TaskManager:
 sub fake_run_task {
@@ -60,12 +61,16 @@ sub fake_run_task {
 # helper sub that runs a test task. Reminiscent of what the user would do
 # plus what the scheduler does
 sub fake_execute_task {
-	my $class = shift;
-	my $use_threads = shift;
+	my $class           = shift;
+	my $test_spec       = shift;
+	my $use_threads     = $test_spec->{threading};
+	my $extra_data      = $test_spec->{extra_data}||{};
+	my $tests_in_thread = $test_spec->{thread_tests}||0;
 
 	# normally user code:
+	$class->new(text => 'foo'); # FIXME necessary for the following to pass for Padre::Task::PPITest???
 	ok($class->can('new'), "task can be constructed");
-	my $task = $class->new( main_thread_only => "not in sub thread" );
+	my $task = $class->new( main_thread_only => "not in sub thread", %$extra_data );
 	isa_ok($task, 'Padre::Task');
 	isa_ok($task, $class);
 	ok($task->can('prepare'), "can prepare");
@@ -84,7 +89,7 @@ sub fake_execute_task {
 		# modify main thread copy of test counter since
 		# it was copied for the worker thread.
 		my $tb = Test::Builder->new();
-		$tb->current_test( $tb->current_test() + 9 ); # XXX - watch out! Magic number of tests in thread
+		$tb->current_test( $tb->current_test() + $tests_in_thread ); # XXX - watch out! Magic number of tests in thread
 		isa_ok($thread, 'threads');
 	}
 	else {
@@ -97,15 +102,32 @@ sub fake_execute_task {
 	ok(defined $final);
 	ok(not exists $task->{answer});
 	$task->{answer} = 'succeed';
-	is_deeply($final, $task);
+	if ($task->isa("Padre::Task::Test")) {
+		is_deeply($final, $task);
+	} else {
+		pass("Skipping deep comparison for non-basic tasks");
+	}
 	$final->finish();
 }
 
 package main;
-$TestClass = "Padre::Task::Test";
-fake_execute_task($TestClass, 0); # no threading
-fake_execute_task($TestClass, 1); # threading
 
+# simple task test
+$TestClass = "Padre::Task::Test";
+my $testspec = { threading => 0, thread_tests => 9, };
+fake_execute_task($TestClass, $testspec);
+$testspec->{threading} = 1;
+fake_execute_task($TestClass, $testspec);
+
+# PPI subtask test
+$TestClass = "Padre::Task::PPITest";
+$testspec->{thread_tests} = 11;
+$testspec->{extra_data} = {text => q(my $self = shift;)};
+$testspec->{threading} = 0;
+fake_execute_task($TestClass, $testspec);
+
+$testspec->{threading} = 1;
+fake_execute_task($TestClass, $testspec);
 
 
 
