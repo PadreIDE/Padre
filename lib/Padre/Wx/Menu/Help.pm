@@ -11,7 +11,7 @@ use Padre::Wx                ();
 use Padre::Wx::Menu          ();
 use Padre::Wx::DocBrowser    ();
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 use base 'Padre::Wx::Menu';
 
 

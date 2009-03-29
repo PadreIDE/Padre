@@ -5,7 +5,7 @@ use warnings;
 
 use base 'Padre::Task';
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 
 sub run {
 	my ($self) = @_;

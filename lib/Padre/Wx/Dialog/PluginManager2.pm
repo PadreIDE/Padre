@@ -11,7 +11,7 @@ use Padre::Util             ();
 use Padre::Wx               ();
 use Padre::Wx::Dialog::HTML ();
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 use base 'Padre::Wx::Dialog::HTML';
 
 sub new {

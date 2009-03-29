@@ -12,7 +12,7 @@ use Padre::Wx ();
 use base 'Wx::Frame';
 use Padre::Wx::CPAN::Listview;
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 
 use Class::XSAccessor 
 	accessors => {

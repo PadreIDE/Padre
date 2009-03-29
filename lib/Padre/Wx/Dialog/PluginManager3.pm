@@ -22,7 +22,7 @@ use Padre::Wx::Icon;
 
 use base 'Wx::Frame';
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 
 
 # -- constructor

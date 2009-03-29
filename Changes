@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.31 2009.03.29
+
     Avoid creating the ~/.padre during testing by two more tests. (SZABGAB, thanks to AYILMAZ)
     Skip testing Padre::CPAN as it cannot be loaded under CPAN. (SZABGAB, thanks to AYILMAZ)
     Fix the Directory browser to switch between projects. (SZABGAB)

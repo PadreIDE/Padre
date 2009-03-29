@@ -16,7 +16,7 @@ use Params::Util qw( _INSTANCE );
 use Padre::Wx::AuiManager ();
 use Padre::Task::DocBrowser;
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 
 use Class::XSAccessor 
 	accessors => {

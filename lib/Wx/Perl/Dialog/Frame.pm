@@ -10,7 +10,7 @@ use Wx::Event          qw(:everything);
 use Wx::Perl::Dialog::Frame ();
 use base 'Wx::Frame';
 
-our $VERSION = '0.30';
+our $VERSION = '0.31';
 
 sub new {
     my ($class) = @_;
