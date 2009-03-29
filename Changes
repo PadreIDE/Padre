@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Revamped plugin manager. (JQUELIN)
+
 v0.32 2009.03.29
     Trying to fix again the skipping of Padre::CPAN under the CPAN shell.
 
