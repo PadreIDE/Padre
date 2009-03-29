@@ -16,50 +16,61 @@ BEGIN {
 use t::lib::Padre;
 
 plan tests => 50;
-use threads;
-use threads::shared;
+use threads;         # need to be loaded before Padre
+use threads::shared; # need to be loaded before Padre
+
 use Padre::Task;
 use t::lib::Padre::Task::Test;
 
 our $TestClass; # secret class name
 
+# reminiscent of the in-thread worker loop in Padre::TaskManager:
 sub fake_run_task {
 	my $string = shift;
+	# try to recover the serialized task from its Storable-dumped form to an object
 	my $recovered = Padre::Task->deserialize( \$string );
 	ok(defined $recovered, "recovered form defined");
 	isa_ok($recovered, 'Padre::Task');
-	isa_ok($recovered, $TestClass);
+	isa_ok($recovered, $TestClass); # a subcalss of Padre::Task
 	#is_deeply($recovered, $task);
 	
+	# Test the execution in the main thread in case worker threads are disabled
 	if (threads->tid() == 0) { # main thread
 		ok( exists($recovered->{main_thread_only})
 		    && not exists($recovered->{_main_thread_data_id}),
 		    && $recovered->{main_thread_only} eq 'not in sub thread',
 		    "main-thread data stays available in main thread" );
 	}
+	# Test the execution in a worker thread
 	else {
 		ok( not exists($recovered->{main_thread_only}),
 		    && exists($recovered->{_main_thread_data_id}),
 		    "main-thread data not available in worker thread" );
 	}
 	
+	# call the test task's run method
 	$recovered->run();
 	$string = undef;
+	# ship the thing back at the end
 	$recovered->serialize(\$string);
 	ok(defined $string);
 	return $string;
 }
 
+# helper sub that runs a test task. Reminiscent of what the user would do
+# plus what the scheduler does
 sub fake_execute_task {
 	my $class = shift;
 	my $use_threads = shift;
 
+	# normally user code:
 	ok($class->can('new'), "task can be constructed");
 	my $task = $class->new( main_thread_only => "not in sub thread" );
 	isa_ok($task, 'Padre::Task');
 	isa_ok($task, $class);
 	ok($task->can('prepare'), "can prepare");
 	
+	# done by the scheduler:
 	$task->prepare();
 	my $string;
 	$task->serialize(\$string);
@@ -81,6 +92,7 @@ sub fake_execute_task {
 		ok(1);
 	}
 
+	# done by the scheduler:
 	my $final = Padre::Task->deserialize( \$string );
 	ok(defined $final);
 	ok(not exists $task->{answer});
