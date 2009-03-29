@@ -131,7 +131,7 @@ sub process_ppi {
 				# TODO do this without breaking encapsulation!
 				$node->{content} = substr($node->content(), 0, 1) . $replacement;
 			}
-			if ($node->isa("PPI::Token::ArrayIndex")) { # $#foo
+			if ($type eq '@' and $node->isa("PPI::Token::ArrayIndex")) { # $#foo
 				return 0 unless substr($node->content, 2) eq substr($varname, 1);
 				# TODO do this without breaking encapsulation!
 				$node->{content} = '$#' . $replacement;
