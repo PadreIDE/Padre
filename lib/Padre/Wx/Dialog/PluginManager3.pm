@@ -10,6 +10,7 @@ use Class::XSAccessor
 	accessors => {
 		_button    => '_button',
 		_butprefs  => '_butprefs',
+		_curitem   => '_curitem',
 		_curplugin => '_curplugin',
 		_hbox      => '_hbox',
 		_imagelist => '_imagelist',
@@ -120,7 +121,8 @@ sub _on_list_item_selected {
 	
 	my $name    = $event->GetLabel;
 	my $plugin  = $self->_manager->plugins->{$name};
-	$self->_curplugin( $plugin ); # storing selected plugin
+	$self->_curplugin( $plugin );         # storing selected plugin
+	$self->_curitem( $event->GetItem );   # storing selected list item
 
 	# updating plugin name in right pane
 	$self->_label->SetLabel( $name );
@@ -406,6 +408,8 @@ sub _update_plugin_state {
 		}
 	}
 
+	# update the list item
+	
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
 	$self->Layout;
