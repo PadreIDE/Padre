@@ -1,26 +1,27 @@
-package Padre::Wx::Dialog::PluginManager3;
+#
+# This file is part of Padre, the Perl ide.
+#
 
-# Third-generation plugin manager
+package Padre::Wx::Dialog::PluginManager3;
 
 use strict;
 use warnings;
 
-use Carp                    qw{ croak };
+use Carp qw{ croak };
 use Class::XSAccessor
 	accessors => {
-		_button    => '_button',
-		_butprefs  => '_butprefs',
-		_currow    => '_currow',
-		_curplugin => '_curplugin',
-		_hbox      => '_hbox',
-		_imagelist => '_imagelist',
-		_label     => '_label',
-		_list      => '_list',
-		_manager   => '_manager',
-		_parent    => '_parent',
-		_whtml     => '_whtml',
+		_button    => '_button',	# general-purpose button
+		_butprefs  => '_butprefs',	# preferences button
+		_currow    => '_currow',	# current list row number
+		_curplugin => '_curplugin',	# current plugin selected
+		_hbox      => '_hbox',		# the window hbox sizer
+		_imagelist => '_imagelist',	# image list for the listctrl
+		_label     => '_label',		# label at top of right pane
+		_list      => '_list',		# list on the left of the pane
+		_manager   => '_manager',	# ref to plugin manager
+		_parent    => '_parent',	# parent window
+		_whtml     => '_whtml',		# html space for plugin doc
 	};
-
 use Padre::Wx::Icon;
 
 use base 'Wx::Frame';
@@ -170,7 +171,7 @@ sub _on_list_item_selected {
 # no params, no return values.
 #
 sub _create {
-	my $self = shift;
+        my $self = shift;
 	
 	# create vertical box that will host all controls
 	my $hbox = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
@@ -192,7 +193,7 @@ sub _create {
 # no params. no return values.
 #
 sub _create_list {
-	my $self = shift;
+        my $self = shift;
 	
 	# create list
 	my $list = Wx::ListView->new(
@@ -230,7 +231,7 @@ sub _create_list {
 # no params. no return values.
 #
 sub _create_right_pane {
-	my $self = shift;
+        my $self = shift;
 
 	# all controls will be lined up in a vbox
 	my $vbox = Wx::BoxSizer->new( Wx::wxVERTICAL );
@@ -388,10 +389,10 @@ sub _refresh_list {
 # depending on the new plugin state.
 #
 sub _update_plugin_state {
-	my $self   = shift;
-	my $plugin = $self->_curplugin;
-	my $list   = $self->_list;
-	my $item   = $list->GetItem( $self->_currow, 2 );
+        my $self   = shift;
+        my $plugin = $self->_curplugin;
+        my $list   = $self->_list;
+        my $item   = $list->GetItem( $self->_currow, 2 );
 
 	# updating buttons
 	my $button   = $self->_button;
@@ -455,12 +456,19 @@ Padre::Wx::Dialog::PluginManager3 - Plugin manager dialog for Padre
 
 =head1 DESCRIPTION
 
-Padre will have a lot of plugins. First plugin manager was not taking this
-into account, and the first plugin manager window was too small & too
-crowded to show them all properly.
+Padre will have a lot of plugins. First plugin manager was not taking
+this into account, and the first plugin manager window was too small &
+too crowded to show them all properly.
 
-This revamped plugin manager is now using a list control, and thus can show
-lots of plugins in an effective manner.
+This revamped plugin manager is now using a list control, and thus can
+show lots of plugins in an effective manner.
+
+Upon selection, the right pane will be updated with the plugin name &
+plugin documentation. Two buttons will allow to de/activate the plugin
+(or see plugin error message) and set plugin preferences.
+
+
+Double-clicking on a plugin in the list will de/activate it.
 
 
 
@@ -473,8 +481,8 @@ lots of plugins in an effective manner.
 =item * my $dialog = P::W::D::PM->new( $parent, $manager )
 
 Create and return a new Wx dialog listing all the plugins. It needs a
-C<$parent> window and a C<Padre::PluginManager> object that really handles
-Padre plugins under the hood.
+C<$parent> window and a C<Padre::PluginManager> object that really
+handles Padre plugins under the hood.
 
 
 =back
@@ -487,8 +495,8 @@ Padre plugins under the hood.
 
 =item * $dialog->show;
 
-Request the plugin manager dialog to be shown. It will be refreshed first
-with a current list of plugins with their state.
+Request the plugin manager dialog to be shown. It will be refreshed
+first with a current list of plugins with their state.
 
 
 =back
@@ -499,8 +507,8 @@ with a current list of plugins with their state.
 
 Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 
-This program is free software; you can redistribute it and/or modify it under the
-same terms as Perl 5 itself.
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl 5 itself.
 
 
 =cut
