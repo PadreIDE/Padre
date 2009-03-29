@@ -208,14 +208,8 @@ sub _create_list {
 	$self->_list( $list );
 
 	# install event handler
-	Wx::Event::EVT_LIST_ITEM_SELECTED(
-		$self, $list->GetId,
-		\&_on_list_item_selected,
-	);
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self, $list->GetId,
-		\&_on_list_item_activated,
-	);
+	Wx::Event::EVT_LIST_ITEM_SELECTED ($self, $list, \&_on_list_item_selected );
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED($self, $list, \&_on_list_item_activated);
 
 	# create imagelist
 	my $imglist = Wx::ImageList->new( 16, 16 );
