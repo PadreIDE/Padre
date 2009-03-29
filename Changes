@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.32 2009.03.29
+    Trying to fix again the skipping of Padre::CPAN under the CPAN shell.
+
 v0.31 2009.03.29
 
     Avoid creating the ~/.padre during testing by two more tests. (SZABGAB, thanks to AYILMAZ)
