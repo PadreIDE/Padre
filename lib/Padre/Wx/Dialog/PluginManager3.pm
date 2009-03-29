@@ -374,6 +374,8 @@ sub _refresh_list {
 sub _update_plugin_state {
 	my $self   = shift;
 	my $plugin = $self->_curplugin;
+	my $list   = $self->_list;
+	my $item   = $list->GetItem( $self->_currow, 2 );
 
 	# updating buttons
 	my $button   = $self->_button;
@@ -383,6 +385,8 @@ sub _update_plugin_state {
 		# plugin is in error state
 		$button->SetLabel( Wx::gettext( 'Show error message' ) );
 		$butprefs->Disable;
+		$item->SetImage(3);
+		$list->SetItem($item);
 		
 	} else {
 		# plugin is working...
@@ -391,11 +395,15 @@ sub _update_plugin_state {
 			# ... and enabled
 			$button->SetLabel( Wx::gettext('Disable') );
 			$button->Enable;
+			$item->SetImage(1);
+			$list->SetItem($item);
 
 		} elsif ( $plugin->can_enable ) {
 			# ... and disabled
 			$button->SetLabel( Wx::gettext('Enable') );
 			$button->Enable;
+			$item->SetImage(2);
+			$list->SetItem($item);
 
 		} else {
 			# ... disabled but cannot be enabled
