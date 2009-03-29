@@ -74,6 +74,28 @@ END_MESSAGE
 
 1;
 
+__END__
+
+=head1 NAME
+
+Padre::Plugin::My - my personal plugin
+
+
+=head1 DESCRIPTION
+
+This is your personal plugin. Update it to fit your needs. And if it
+does interesting stuff, please consider sharing it on CPAN!
+
+
+=head1 COPYRIGHT & LICENSE
+
+Currently it's copyright (c) 2008-2009 The Padre develoment team as
+listed in Padre.pm... But update it and it will become Copyright (c) you
+C<< you@your-domain.com> >>! How exciting! :-)
+
+
+=cut
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
