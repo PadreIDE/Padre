@@ -271,11 +271,15 @@ sub _plugin_disable {
 	my $plugin = $self->_curplugin;
 	my $parent = $self->_parent;
 
+	# disable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 0 );
 	$self->_manager->_plugin_disable($plugin->name);
 	$parent->menu->refresh(1);
 	$parent->Thaw;
+	
+	# update plugin manager dialog to reflect new state
+	$self->_update_plugin_state;
 }
 
 
@@ -290,11 +294,15 @@ sub _plugin_enable {
 	my $plugin = $self->_curplugin;
 	my $parent = $self->_parent;
 
+	# enable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
 	$self->_manager->_plugin_enable($plugin->name);
 	$parent->menu->refresh(1);
 	$parent->Thaw;
+
+	# update plugin manager dialog to reflect new state
+	$self->_update_plugin_state;
 }
 
 
