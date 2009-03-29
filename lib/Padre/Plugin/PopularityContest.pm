@@ -103,7 +103,39 @@ sub plugin_disable {
 	return 1;
 }
 
+
+sub menu_plugins_simple {
+	my $self = shift;
+	return $self->plugin_name => [
+		Wx::gettext("About")       => 'show_about',
+#		Wx::gettext("Submit")      => 'submit',
+	];
+}
+
+sub show_about {
+	my $self  = shift;
+	my $about = Wx::AboutDialogInfo->new;
+	$about->SetName(__PACKAGE__);
+	$about->SetDescription(
+		"Trying to figure out what do people use?\n"
+	);
+	Wx::AboutBox( $about );
+	return;
+}
+
+sub submit {
+	my $self = shift;
+	require Padre::Task::HTTPClient;
+	my $task = Padre::Task::HTTPClient->new;
+	$task->schedule;
+	my $main = Padre->ide->wx->main;
+	$main->message("Data will be submitted in the background. Thank you.");
+	return;
+}
+
 1;
+
+
 
 =pod
 
