@@ -1111,6 +1111,8 @@ Korean - Keedi Kim - 김도형 (KEEDI)
 
 Russian - Andrew Shitov
 
+Polish - Cezary Morga (THEREK)
+
 Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
 
 Spanish - Paco Alguacil (PacoLinux), Enrique Nell (ENELL)

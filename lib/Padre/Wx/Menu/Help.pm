@@ -181,6 +181,7 @@ sub about {
 	$about->AddTranslator("Korean - Keedi Kim - 김도형");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
+	$about->AddTranslator("Polish - Cezary Morga");
 	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
 	$about->AddTranslator("Spanish - Paco Alguacil");
 	$about->AddTranslator("Spanish - Enrique Nell");	

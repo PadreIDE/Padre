@@ -312,6 +312,16 @@ BEGIN {
 			wxid      => Wx::wxLANGUAGE_DUTCH_BELGIAN,
 			fallback  => [ 'nl-nl' ],
 		},
+
+		''pl' => {
+			gettext   => _T('Polish'),
+			utf8text  => 'Polski',
+			iso639    => 'pl',
+			iso3166   => 'PL',
+			wxid      => Wx::wxLANGUAGE_POLISH,
+			fallback  => [ ],
+			supported => 1,
+		},
 	
 		'pt-br' => {
 			gettext   => _T('Portuguese (Brazil)'),

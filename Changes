@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Added Polish translation. (THEREK)
     Revamped plugin manager. (JQUELIN)
 
 v0.32 2009.03.29
