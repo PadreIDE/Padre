@@ -120,44 +120,10 @@ sub _on_list_item_selected {
 	
 	my $name    = $event->GetLabel;
 	my $plugin  = $self->_manager->plugins->{$name};
-	my $manager = $self->_manager;
 	$self->_curplugin( $plugin ); # storing selected plugin
 
 	# updating plugin name in right pane
 	$self->_label->SetLabel( $name );
-
-	# updating first button
-	my $button   = $self->_button;
-	my $butprefs = $self->_butprefs;
-
-	if ( $plugin->error || $plugin->incompatible ) {
-		# plugin is in error state
-		$button->SetLabel( Wx::gettext( 'Show error message' ) );
-		$butprefs->Disable;
-		
-	} else {
-		# plugin is working...
-		
-		if ( $plugin->enabled ) {
-			# ... and enabled
-			$button->SetLabel( Wx::gettext('Disable') );
-			$button->Enable;
-		} elsif ( $plugin->can_enable ) {
-			# ... and disabled
-			$button->SetLabel( Wx::gettext('Enable') );
-			$button->Enable;
-		} else {
-			# ... disabled but cannot be enabled
-			$button->Disable;
-		}
-		
-		# updating preferences button
-		if ( $plugin->object->can('plugin_preferences') ) {
-			$self->_butprefs->Enable;
-		} else {
-			$self->_butprefs->Disable;
-		}
-	}
 	
 	# update plugin documentation
 	my $class = $plugin->class;
@@ -169,6 +135,9 @@ sub _on_list_item_selected {
 		: $output->{original_content};
 	$self->_whtml->SetPage( $html );
 	
+	# update buttons
+	$self->_update_plugin_state;
+
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
 	$self->Layout;
@@ -389,6 +358,49 @@ sub _refresh_list {
 	my $width = 15; # taking vertical scrollbar into account
 	$width += $list->GetColumnWidth($_) for 0..2;
 	$list->SetMinSize([$width, -1]);
+}
+
+
+sub _update_plugin_state {
+	my $self   = shift;
+	my $plugin = $self->_curplugin;
+
+	# updating buttons
+	my $button   = $self->_button;
+	my $butprefs = $self->_butprefs;
+
+	if ( $plugin->error || $plugin->incompatible ) {
+		# plugin is in error state
+		$button->SetLabel( Wx::gettext( 'Show error message' ) );
+		$butprefs->Disable;
+		
+	} else {
+		# plugin is working...
+		
+		if ( $plugin->enabled ) {
+			# ... and enabled
+			$button->SetLabel( Wx::gettext('Disable') );
+			$button->Enable;
+		} elsif ( $plugin->can_enable ) {
+			# ... and disabled
+			$button->SetLabel( Wx::gettext('Enable') );
+			$button->Enable;
+		} else {
+			# ... disabled but cannot be enabled
+			$button->Disable;
+		}
+		
+		# updating preferences button
+		if ( $plugin->object->can('plugin_preferences') ) {
+			$self->_butprefs->Enable;
+		} else {
+			$self->_butprefs->Disable;
+		}
+	}
+
+	# force window to recompute layout. indeed, changes are that plugin
+	# name has a different length, and thus should be recentered.
+	$self->Layout;
 }
 
 
