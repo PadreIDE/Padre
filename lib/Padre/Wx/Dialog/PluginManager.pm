@@ -10,19 +10,19 @@ use warnings;
 use Carp qw{ croak };
 use Class::XSAccessor
 	accessors => {
-		_button    => '_button',	# general-purpose button
-		_butprefs  => '_butprefs',	# preferences button
-		_currow    => '_currow',	# current list row number
-		_curplugin => '_curplugin',	# current plugin selected
-		_hbox      => '_hbox',		# the window hbox sizer
-		_imagelist => '_imagelist',	# image list for the listctrl
-		_label     => '_label',		# label at top of right pane
-		_list      => '_list',		# list on the left of the pane
-		_manager   => '_manager',	# ref to plugin manager
-		_parent    => '_parent',	# parent window
+		_button      => '_button',  	# general-purpose button
+		_butprefs    => '_butprefs',	# preferences button
+		_currow      => '_currow',  	# current list row number
+		_curplugin   => '_curplugin',	# current plugin selected
+		_hbox        => '_hbox',		# the window hbox sizer
+		_imagelist   => '_imagelist',	# image list for the listctrl
+		_label       => '_label',		# label at top of right pane
+		_list        => '_list',		# list on the left of the pane
+		_manager     => '_manager',  	# ref to plugin manager
+		_parent      => '_parent',   	# parent window
         _sortcolumn  => '_sortcolumn',  # column used for list sorting
         _sortreverse => '_sortreverse', # list sorting is reversed
-		_whtml     => '_whtml',		# html space for plugin doc
+		_whtml       => '_whtml',		# html space for plugin doc
 	};
 use Padre::Wx::Icon;
 
