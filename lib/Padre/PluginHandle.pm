@@ -120,7 +120,7 @@ sub can_editor {
 sub plugin_icon {
 	my $self  = shift;
     my $class = $self->class;
-    return $class->icon if $class->can('icon');
+    return $class->plugin_icon if $class->can('plugin_icon');
 }
 
 sub plugin_name {
