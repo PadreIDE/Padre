@@ -895,7 +895,7 @@ sub run_document_parameters {
 	}
 
 	my $filename = File::Basename::fileparse( $self->current->filename );
-	$run_argv{$filename} = $self->prompt( "Command line parameters", "", "RUN_COMMAND_LINE_PARAMS_$filename" );
+	$run_argv{$filename} = $self->prompt( Wx::gettext("Command line parameters"), Wx::gettext("Run parameters"), "RUN_COMMAND_LINE_PARAMS_$filename" );
 
 	return;
 }
