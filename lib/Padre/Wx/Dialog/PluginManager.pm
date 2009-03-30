@@ -78,6 +78,17 @@ sub show {
 # -- gui handlers
 
 #
+# $self->_on_butclose_clicked;
+#
+# handler called when the close button has been clicked.
+#
+sub _on_butclose_clicked {
+	my $self = shift;
+	$self->Hide;
+}
+
+
+#
 # $self->_on_butprefs_clicked;
 #
 # handler called when the preferences button has been clicked.
