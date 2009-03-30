@@ -262,12 +262,15 @@ sub _create_right_pane {
 	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
 	my $b2 = Wx::Button->new( $self, -1, Wx::gettext('Preferences') );
+	my $b3 = Wx::Button->new( $self, -1, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON($self, $b1, \&_on_button_clicked);
 	Wx::Event::EVT_BUTTON($self, $b2, \&_on_butprefs_clicked);
+	Wx::Event::EVT_BUTTON($self, $b3, \&_on_butclose_clicked);
 	$hbox2->AddStretchSpacer;
 	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
-	$hbox2->AddStretchSpacer;
 	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
+	$hbox2->AddStretchSpacer;
+	$hbox2->Add( $b3, 0, Wx::wxALL, 1 );
 	$hbox2->AddStretchSpacer;
 	$self->_button  ( $b1 );
 	$self->_butprefs( $b2 );
