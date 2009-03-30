@@ -116,6 +116,13 @@ sub can_editor {
 ######################################################################
 # Interface Methods
 
+
+sub plugin_icon {
+	my $self  = shift;
+    my $class = $self->class;
+    return $class->icon if $class->can('icon');
+}
+
 sub plugin_name {
 	my $self   = shift;
 	my $object = $self->object;
