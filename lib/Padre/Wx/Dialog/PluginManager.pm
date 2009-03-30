@@ -122,6 +122,18 @@ sub _on_button_clicked {
 
 
 #
+# $self->_on_list_col_click;
+#
+# handler called when a column has been clicked, to reorder the list.
+#
+sub _on_list_col_click {
+    my ($self, $event) = @_;
+    my $col = $event->GetColumn;
+    $self->_refresh_list($col);
+}
+
+
+#
 # $self->_on_list_item_activated;
 #
 # handler called when a list item has been activated (enter pressed, or
@@ -223,6 +235,7 @@ sub _create_list {
 	# install event handler
 	Wx::Event::EVT_LIST_ITEM_SELECTED ($self, $list, \&_on_list_item_selected );
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED($self, $list, \&_on_list_item_activated);
+	Wx::Event::EVT_LIST_COL_CLICK     ($self, $list, \&_on_list_col_click);
 
 	# create imagelist
 	my $imglist = Wx::ImageList->new( 16, 16 );
