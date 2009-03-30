@@ -424,7 +424,16 @@ sub _refresh_list {
 		my $version = $plugin->version || '???';
 		my $status  = $plugin->status;
 
-		my $idx = $list->InsertStringImageItem(0, $name, 0);
+        # check if plugin is supplying its own icon
+        my $iconidx = 0;
+        my $icon = $plugin->plugin_icon;
+        if ( defined($icon) ) {
+		    $imglist->Add($icon);
+            $iconidx = $imglist->GetImageCount - 1;
+        }
+
+        # inserting the plugin in the list
+		my $idx = $list->InsertStringImageItem(0, $name, $iconidx);
 		$list->SetItem($idx, 1, $version);
 		$list->SetItem($idx, 2, $status, $icon{$status});
 		$list->SetItemData( $idx, 1 );
