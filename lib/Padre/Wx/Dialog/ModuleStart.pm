@@ -106,8 +106,10 @@ sub ok_clicked {
 	my @fields = qw(_module_name_ _author_name_ _email_ _builder_choice_ _license_choice_);
 	foreach my $f (@fields) {
 		if ( not $data->{$f} ) {
-			Wx::MessageBox( sprintf( Wx::gettext("Field %s was missing. Module not created."), $f ),
-				Wx::gettext("missing field"), Wx::wxOK, $main );
+			Wx::MessageBox(
+				sprintf( Wx::gettext("Field %s was missing. Module not created."), $f ),
+				Wx::gettext("missing field"), Wx::wxOK, $main
+			);
 			return;
 		}
 	}

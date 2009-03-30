@@ -443,9 +443,10 @@ sub _build_layout {
 				$default = Wx::Colour->new('#000000') if $@;
 				$widget = $class->new( $dialog, -1, $default, Wx::wxDefaultPosition, $width, Wx::wxCLRP_DEFAULT_STYLE );
 			} elsif ( $class eq 'Wx::SpinCtrl' ) {
-				$widget
-					= $class->new( $dialog, -1, $arg, Wx::wxDefaultPosition, $width, Wx::wxSP_ARROW_KEYS, $params[0],
-					$params[1], $arg );
+				$widget = $class->new(
+					$dialog,    -1, $arg, Wx::wxDefaultPosition, $width, Wx::wxSP_ARROW_KEYS, $params[0],
+					$params[1], $arg
+				);
 			} else {
 				warn "Unsupported widget $class\n";
 				next;

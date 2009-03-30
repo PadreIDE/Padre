@@ -180,7 +180,7 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName(__PACKAGE__);
-	$about->SetDescription( "Perl 5 related tools\n" );
+	$about->SetDescription("Perl 5 related tools\n");
 	Wx::AboutBox($about);
 	return;
 }

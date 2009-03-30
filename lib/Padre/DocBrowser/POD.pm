@@ -11,10 +11,9 @@ use Padre::Document    ();
 
 our $VERSION = '0.32';
 
-use Class::XSAccessor
-	constructor => 'new', getters => {
+use Class::XSAccessor constructor => 'new', getters => {
 	get_provider => 'provider',
-	};
+};
 
 sub provider_for {
 	'application/x-perl', 'application/x-pod',;

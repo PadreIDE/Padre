@@ -398,9 +398,8 @@ sub _refresh_list {
 	my @plugins = map { $plugins->{$_} } $manager->plugin_names;
 	if ( $column == 1 ) {
 		no warnings;
-		@plugins
-			= map { $_->[0] }
-			sort  { $a->[1] <=> $b->[1] }
+		@plugins = map { $_->[0] }
+			sort { $a->[1] <=> $b->[1] }
 			map { [ $_, version->new( $_->version || 0 ) ] } @plugins;
 	}
 	@plugins = sort { $a->status cmp $b->status } @plugins if $column == 2;

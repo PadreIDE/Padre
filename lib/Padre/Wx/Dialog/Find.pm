@@ -173,8 +173,10 @@ sub create_dialog {
 	my $right_bottom_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$main_sizer->Add( $right_bottom_sizer, 0, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
 
-	$self->add_widget( '_replace_all_',
-		Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") ) );
+	$self->add_widget(
+		'_replace_all_',
+		Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") )
+	);
 	$right_bottom_sizer->Add(
 		$self->get_widget('_replace_all_'),
 		0,

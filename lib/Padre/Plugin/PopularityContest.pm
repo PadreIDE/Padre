@@ -112,7 +112,7 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName(__PACKAGE__);
-	$about->SetDescription( "Trying to figure out what do people use?\n" );
+	$about->SetDescription("Trying to figure out what do people use?\n");
 	Wx::AboutBox($about);
 	return;
 }

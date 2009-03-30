@@ -264,8 +264,7 @@ SCOPE: {
 
 		$self->{_process_class} = $class;
 
-		my $save_main_thread_data
-			= ( threads->tid() == 0 and exists $self->{main_thread_only} );
+		my $save_main_thread_data = ( threads->tid() == 0 and exists $self->{main_thread_only} );
 		if ($save_main_thread_data) {
 			my $id = "$self";
 			$id .= '_' while exists $MainThreadData{$id};

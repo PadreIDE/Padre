@@ -420,7 +420,7 @@ sub _load_plugin {
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext( "Plugin:%s - Failed to load module: %s" ),
+				Wx::gettext("Plugin:%s - Failed to load module: %s"),
 				$name,
 				$@,
 			)
@@ -476,7 +476,7 @@ sub _load_plugin {
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext( "Plugin:%s - Could not instantiate plugin object" ),
+				Wx::gettext("Plugin:%s - Could not instantiate plugin object"),
 				$name,
 				)
 				. ": $@"
@@ -508,7 +508,7 @@ sub _load_plugin {
 	unless (@menus) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext( "Plugin:%s - Does not have menus" ),
+				Wx::gettext("Plugin:%s - Does not have menus"),
 				$name,
 			)
 		);

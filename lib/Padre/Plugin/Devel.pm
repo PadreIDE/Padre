@@ -115,7 +115,7 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName('Padre::Plugin::Devel');
-	$about->SetDescription( "A set of unrelated tools used by the Padre developers\n" );
+	$about->SetDescription("A set of unrelated tools used by the Padre developers\n");
 	Wx::AboutBox($about);
 	return;
 }
