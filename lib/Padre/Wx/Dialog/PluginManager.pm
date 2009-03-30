@@ -393,8 +393,10 @@ sub _refresh_list {
 		$icon{$name} = ++$i;
 	}
 	
-	# clear plugin list & fill it again
-	$list->DeleteAllItems;
+    # get list of plugins, and sort it. note that $manager->plugins names
+    # is sorted (with my plugin first), and that perl sort is now stable:
+    # sorting on another criterion will keep the alphabetical order if new
+    # criterion is not enough.
     my @plugins = map { $plugins->{$_} } $manager->plugin_names;
     if ( $column == 1 ) {
         no warnings;
@@ -404,6 +406,10 @@ sub _refresh_list {
             map  { [$_, version->new($_->version || 0)] }
             @plugins;
     }
+    @plugins = sort { $a->status cmp $b->status } @plugins if $column == 2;
+
+	# clear plugin list & fill it again
+	$list->DeleteAllItems;
 	foreach my $plugin ( reverse @plugins ) {
 		my $name    = $plugin->name;
 		my $version = $plugin->version || '???';
