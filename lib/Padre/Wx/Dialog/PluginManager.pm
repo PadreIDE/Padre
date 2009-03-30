@@ -395,8 +395,9 @@ sub _refresh_list {
 	
 	# clear plugin list & fill it again
 	$list->DeleteAllItems;
-	foreach my $name ( reverse $manager->plugin_names ) {
-		my $plugin  = $plugins->{$name};
+    my @plugins = map { $plugins->{$_} } $manager->plugin_names;
+	foreach my $plugin ( reverse @plugins ) {
+		my $name    = $plugin->name;
 		my $version = $plugin->version || '???';
 		my $status  = $plugin->status;
 
