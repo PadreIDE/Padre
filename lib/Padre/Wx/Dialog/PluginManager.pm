@@ -362,17 +362,23 @@ sub _plugin_show_error_msg {
 
 
 #
-# $dialog->_refresh_list;
+# $dialog->_refresh_list($column, $reverse);
 #
-# refresh list of plugins and their associated state.
+# refresh list of plugins and their associated state. list is sorted
+# according to $column (default to first column), and may be reversed
+# (default to no).
 #
 sub _refresh_list {
-	my $self = shift;
+	my ($self, $column, $reverse) = @_;
 
 	my $list    = $self->_list;
 	my $manager = $self->_manager;
 	my $plugins = $manager->plugins;
 	my $imglist = $self->_imagelist;
+
+    # default sorting
+    $column  ||= 0;
+    $reverse ||= 0;
 
 	# clear image list & fill it again
 	$imglist->RemoveAll;
