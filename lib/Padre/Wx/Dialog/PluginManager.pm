@@ -396,6 +396,13 @@ sub _refresh_list {
 	# clear plugin list & fill it again
 	$list->DeleteAllItems;
     my @plugins = map { $plugins->{$_} } $manager->plugin_names;
+    if ( $column == 1 ) {
+        @plugins =
+            map  { $_->[0] }
+            sort { $a->[1] <=> $b->[1] }
+            map  { [$_, version->new($_->version)] }
+            @plugins;
+    }
 	foreach my $plugin ( reverse @plugins ) {
 		my $name    = $plugin->name;
 		my $version = $plugin->version || '???';
