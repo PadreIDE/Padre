@@ -5,26 +5,22 @@ package Padre::Wx::Menu::Plugins;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Config              ();
-use Padre::Config::Constants   qw{ $PADRE_CONFIG_DIR };
-use Params::Util               ();
-use Padre::Wx                  ();
-use Padre::Wx::Menu            ();
-use Padre::Current             qw{_CURRENT};
+use Padre::Config ();
+use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
+use Params::Util    ();
+use Padre::Wx       ();
+use Padre::Wx::Menu ();
+use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.32';
 use base 'Padre::Wx::Menu';
-
-
-
-
 
 #####################################################################
 # Padre::Wx::Menu Methods
 
 sub new {
-	my $class   = shift;
-	my $main    = shift;
+	my $class = shift;
+	my $main  = shift;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
@@ -33,11 +29,13 @@ sub new {
 	$self->{main} = $main;
 
 	# Link to the Plugin Manager
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( -1, Wx::gettext("Plugin Manager") ),
 		sub {
 			require Padre::Wx::Dialog::PluginManager;
-			Padre::Wx::Dialog::PluginManager->new( $_[0],
+			Padre::Wx::Dialog::PluginManager->new(
+				$_[0],
 				Padre->ide->plugin_manager,
 			)->show;
 		},
@@ -45,38 +43,39 @@ sub new {
 
 	# Create the plugin tools submenu
 	my $tools = Wx::Menu->new;
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$tools->Append( -1, Wx::gettext("Edit My Plugin") ),
 		sub {
 			my $file = File::Spec->catfile(
 				$PADRE_CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error(
-				Wx::gettext("Could not find the Padre::Plugin::My plugin")
-			) unless -e $file;
+			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plugin") ) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
 			$_[0]->setup_editors($file);
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$tools->Append( -1, Wx::gettext("Reload My Plugin") ),
 		sub {
 			Padre->ide->plugin_manager->reload_plugin('My');
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$tools->Append( -1, Wx::gettext("Reset My Plugin") ),
-		sub  {
+		sub {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("Reset My Plugin"),
 				Wx::gettext("Reset My Plugin"),
 				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
 				$main,
 			);
-			if ( $ret == Wx::wxOK) {
+			if ( $ret == Wx::wxOK ) {
 				my $manager = Padre->ide->plugin_manager;
 				$manager->unload_plugin("My");
 				$manager->reset_my_plugin(1);
@@ -85,19 +84,22 @@ sub new {
 		},
 	);
 	$tools->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$tools->Append( -1, Wx::gettext("Reload All Plugins") ),
 		sub {
 			Padre->ide->plugin_manager->reload_plugins;
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$tools->Append( -1, Wx::gettext("(Re)load Current Plugin") ),
 		sub {
 			Padre->ide->plugin_manager->reload_current_plugin;
 		},
-	);	
-	Wx::Event::EVT_MENU( $main,
+	);
+	Wx::Event::EVT_MENU(
+		$main,
 		$tools->Append( -1, Wx::gettext("Test A Plugin From Local Dir") ),
 		sub {
 			Padre->ide->plugin_manager->test_a_plugin;
@@ -132,7 +134,7 @@ sub add_plugin_specific_entries {
 		next unless @menu;
 
 		# Did the previous entry needs a separator after it
-		if ( $need_seperator ) {
+		if ($need_seperator) {
 			push @$entries, $self->AppendSeparator;
 			$need_seperator = 0;
 		}
@@ -142,17 +144,17 @@ sub add_plugin_specific_entries {
 			$need_seperator = 1;
 		}
 	}
-	
+
 	$self->{plugin_menus} = $entries;
-	
+
 	return 1;
 }
 
 sub remove_plugin_specific_entries {
-	my $self    = shift;
+	my $self = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while ( @$entries ) {
+	while (@$entries) {
 		$self->Destroy( pop @$entries );
 	}
 	$self->{plugin_menus} = $entries;
@@ -171,6 +173,7 @@ sub refresh {
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

@@ -3,19 +3,15 @@ package Padre::Document::Perl;
 use 5.008;
 use strict;
 use warnings;
-use Carp            ();
-use Encode          ();
-use Params::Util    '_INSTANCE';
+use Carp   ();
+use Encode ();
+use Params::Util '_INSTANCE';
 use YAML::Tiny      ();
 use Padre::Document ();
 use Padre::Util     ();
 
 our $VERSION = '0.32';
 use base 'Padre::Document';
-
-
-
-
 
 #####################################################################
 # Padre::Document::Perl Methods
@@ -31,9 +27,9 @@ sub ppi_get {
 }
 
 sub ppi_set {
-	my $self     = shift;
-	my $document = _INSTANCE(shift, 'PPI::Document');
-	unless ( $document ) {
+	my $self = shift;
+	my $document = _INSTANCE( shift, 'PPI::Document' );
+	unless ($document) {
 		Carp::croak("Did not provide a PPI::Document");
 	}
 
@@ -44,19 +40,19 @@ sub ppi_set {
 sub ppi_find {
 	my $self     = shift;
 	my $document = $self->ppi_get;
-	return $document->find( @_ );
+	return $document->find(@_);
 }
 
 sub ppi_find_first {
 	my $self     = shift;
 	my $document = $self->ppi_get;
-	return $document->find_first( @_ );
+	return $document->find_first(@_);
 }
 
 sub ppi_transform {
-	my $self      = shift;
-	my $transform = _INSTANCE(shift, 'PPI::Transform');
-	unless ( $transform ) {
+	my $self = shift;
+	my $transform = _INSTANCE( shift, 'PPI::Transform' );
+	unless ($transform) {
 		Carp::croak("Did not provide a PPI::Transform");
 	}
 
@@ -73,18 +69,17 @@ sub ppi_transform {
 sub ppi_select {
 	my $self     = shift;
 	my $location = shift;
-	if ( _INSTANCE($location, 'PPI::Element') ) {
+	if ( _INSTANCE( $location, 'PPI::Element' ) ) {
 		$location = $location->location;
 	}
-	my $editor   = $self->editor or return;
-	my $line     = $editor->PositionFromLine( $location->[0] - 1 );
-	my $start    = $line + $location->[1] - 1;
+	my $editor = $self->editor or return;
+	my $line   = $editor->PositionFromLine( $location->[0] - 1 );
+	my $start  = $line + $location->[1] - 1;
 	$editor->SetSelection( $start, $start + 1 );
 }
 
-
 sub lexer {
-	my $self = shift;
+	my $self   = shift;
 	my $config = Padre->ide->config;
 
 	if ( $config->ppi_highlight and $self->editor->GetTextLength < $config->ppi_highlight_limit ) {
@@ -101,7 +96,7 @@ sub colorize {
 	my $self = shift;
 
 	# use pshangov's experimental ppi lexer only when running in development mode
-	if ($ENV{PADRE_DEV}) {
+	if ( $ENV{PADRE_DEV} ) {
 		require Padre::Document::Perl::Lexer;
 		Padre::Document::Perl::Lexer->colorize(@_);
 		return;
@@ -115,31 +110,31 @@ sub colorize {
 
 	require PPI::Document;
 	my $ppi_doc = PPI::Document->new( \$text );
-	if (not defined $ppi_doc) {
+	if ( not defined $ppi_doc ) {
 		Wx::LogMessage( 'PPI::Document Error %s', PPI::Document->errstr );
-		Wx::LogMessage( 'Original text: %s', $text );
+		Wx::LogMessage( 'Original text: %s',      $text );
 		return;
 	}
 
 	my %colors = (
-		keyword         => 4, # dark green
-		structure       => 6,
-		core            => 1, # red
-		pragma          => 7, # purple
-		'Whitespace'    => 0,
-		'Structure'     => 0,
+		keyword      => 4,    # dark green
+		structure    => 6,
+		core         => 1,    # red
+		pragma       => 7,    # purple
+		'Whitespace' => 0,
+		'Structure'  => 0,
 
-		'Number'        => 1,
-		'Float'         => 1,
+		'Number' => 1,
+		'Float'  => 1,
 
 		'HereDoc'       => 4,
 		'Data'          => 4,
 		'Operator'      => 6,
-		'Comment'       => 2, # it's good, it's green
+		'Comment'       => 2,    # it's good, it's green
 		'Pod'           => 2,
 		'End'           => 2,
 		'Label'         => 0,
-		'Word'          => 0, # stay the black
+		'Word'          => 0,    # stay the black
 		'Quote'         => 9,
 		'Single'        => 9,
 		'Double'        => 9,
@@ -168,35 +163,40 @@ sub colorize {
 	$ppi_doc->index_locations;
 	my $first = $editor->GetFirstVisibleLine();
 	my $lines = $editor->LinesOnScreen();
+
 	#print "First $first lines $lines\n";
 	foreach my $t (@tokens) {
+
 		#print $t->content;
-		my ($row, $rowchar, $col) = @{ $t->location };
-#		next if $row < $first;
-#		next if $row > $first + $lines;
+		my ( $row, $rowchar, $col ) = @{ $t->location };
+
+		#		next if $row < $first;
+		#		next if $row > $first + $lines;
 		my $css = $self->_css_class($t);
-#		if ($row > $first and $row < $first + 5) {
-#			print "$row, $rowchar, ", $t->length, "  ", $t->class, "  ", $css, "  ", $t->content, "\n";
-#		}
-#		last if $row > 10;
+
+		#		if ($row > $first and $row < $first + 5) {
+		#			print "$row, $rowchar, ", $t->length, "  ", $t->class, "  ", $css, "  ", $t->content, "\n";
+		#		}
+		#		last if $row > 10;
 		my $color = $colors{$css};
-		if (not defined $color) {
+		if ( not defined $color ) {
 			Wx::LogMessage("Missing definition for '$css'\n");
 			next;
 		}
 		next if not $color;
 
-		my $start  = $editor->PositionFromLine($row-1) + $rowchar-1;
-		my $len = $t->length;
+		my $start = $editor->PositionFromLine( $row - 1 ) + $rowchar - 1;
+		my $len   = $t->length;
 
-		$editor->StartStyling($start, $color);
-		$editor->SetStyling($len, $color);
+		$editor->StartStyling( $start, $color );
+		$editor->SetStyling( $len, $color );
 	}
 }
 
 sub _css_class {
-	my ($self, $Token) = @_;
+	my ( $self, $Token ) = @_;
 	if ( $Token->isa('PPI::Token::Word') ) {
+
 		# There are some words we can be very confident are
 		# being used as keywords
 		unless ( $Token->snext_sibling and $Token->snext_sibling->content eq '=>' ) {
@@ -241,10 +241,6 @@ sub _css_class {
 	$css;
 }
 
-
-
-
-
 #####################################################################
 # Padre::Document Document Analysis
 
@@ -252,9 +248,7 @@ my $keywords;
 
 sub keywords {
 	unless ( defined $keywords ) {
-		$keywords = YAML::Tiny::LoadFile(
-			Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' )
-		);
+		$keywords = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perl5.yml' ) );
 	}
 	return $keywords;
 }
@@ -266,20 +260,22 @@ sub get_functions {
 }
 
 sub get_function_regex {
+
 	# This emulates qr/(?<=^|[\012\0125])sub\s$name\b/ but without
 	# triggering a "Variable length lookbehind not implemented" error.
 	return qr/(?:(?<=^)sub\s+$_[1]|(?<=[\012\0125])sub\s+$_[1])\b/;
 }
 
 sub get_command {
-	my $self     = shift;
-	my $debug    = shift;
+	my $self  = shift;
+	my $debug = shift;
 
 	# Check the file name
 	my $filename = $self->filename;
-#	unless ( $filename and $filename =~ /\.pl$/i ) {
-#		die "Only .pl files can be executed\n";
-#	}
+
+	#	unless ( $filename and $filename =~ /\.pl$/i ) {
+	#		die "Only .pl files can be executed\n";
+	#	}
 
 	# Run with the same Perl that launched Padre
 	# TODO: get preferred Perl from configuration
@@ -298,7 +294,7 @@ sub pre_process {
 	if ( Padre->ide->config->editor_beginner ) {
 		require Padre::Document::Perl::Beginner;
 		my $b = Padre::Document::Perl::Beginner->new;
-		if ($b->check( $self->text_get )) {
+		if ( $b->check( $self->text_get ) ) {
 			return 1;
 		} else {
 			$self->set_errstr( $b->error );
@@ -313,17 +309,17 @@ sub pre_process {
 # Documented in Padre::Document!
 # Implemented as a task. See Padre::Task::SyntaxChecker::Perl
 sub check_syntax {
-	my $self  = shift;
-	my %args  = @_;
+	my $self = shift;
+	my %args = @_;
 	$args{background} = 0;
-	return $self->_check_syntax_internals(\%args);
+	return $self->_check_syntax_internals( \%args );
 }
 
 sub check_syntax_in_background {
-	my $self  = shift;
-	my %args  = @_;
+	my $self = shift;
+	my %args = @_;
 	$args{background} = 1;
-	return $self->_check_syntax_internals(\%args);
+	return $self->_check_syntax_internals( \%args );
 }
 
 sub _check_syntax_internals {
@@ -336,23 +332,20 @@ sub _check_syntax_internals {
 
 	# Do we really need an update?
 	require Digest::MD5;
-	my $md5 = Digest::MD5::md5_hex(Encode::encode_utf8($text));
+	my $md5 = Digest::MD5::md5_hex( Encode::encode_utf8($text) );
 	unless ( $args->{force} ) {
-		if (
-			defined($self->{last_syncheck_md5})
-			and
-			$self->{last_syncheck_md5} eq $md5
-		) {
+		if ( defined( $self->{last_syncheck_md5} )
+			and $self->{last_syncheck_md5} eq $md5 )
+		{
 			return;
 		}
 	}
 	$self->{last_syncheck_md5} = $md5;
-	
+
 	my $nlchar = "\n";
 	if ( $self->get_newline_type eq 'WIN' ) {
 		$nlchar = "\r\n";
-	}
-	elsif ( $self->get_newline_type eq 'MAC' ) {
+	} elsif ( $self->get_newline_type eq 'MAC' ) {
 		$nlchar = "\r";
 	}
 
@@ -366,17 +359,19 @@ sub _check_syntax_internals {
 		$check{on_finish} = $args->{on_finish};
 	}
 	if ( $self->project ) {
-		$check{cwd} = $self->project->root;
-		$check{perl_cmd} = [ '-Ilib' ];
+		$check{cwd}      = $self->project->root;
+		$check{perl_cmd} = ['-Ilib'];
 	}
-	my $task = Padre::Task::SyntaxChecker::Perl->new( %check );
+	my $task = Padre::Task::SyntaxChecker::Perl->new(%check);
 	if ( $args->{background} ) {
+
 		# asynchroneous execution (see on_finish hook)
 		$task->schedule;
-		return();
+		return ();
 	} else {
+
 		# serial execution, returning the result
-		return() if $task->prepare() =~ /^break$/;
+		return () if $task->prepare() =~ /^break$/;
 		$task->run();
 		return $task->{syntax_check};
 	}
@@ -393,29 +388,27 @@ sub get_outline {
 
 	# Do we really need an update?
 	require Digest::MD5;
-	my $md5 = Digest::MD5::md5_hex(Encode::encode_utf8($text));
+	my $md5 = Digest::MD5::md5_hex( Encode::encode_utf8($text) );
 	unless ( $args{force} ) {
-		if (
-			defined($self->{last_outline_md5})
-			and
-			$self->{last_outline_md5} eq $md5
-		) {
+		if ( defined( $self->{last_outline_md5} )
+			and $self->{last_outline_md5} eq $md5 )
+		{
 			return;
 		}
 	}
 	$self->{last_outline_md5} = $md5;
 
 	my %check = (
-		editor   => $self->editor,
-		text     => $text,
+		editor => $self->editor,
+		text   => $text,
 	);
 	if ( $self->project ) {
-		$check{cwd} = $self->project->root;
-		$check{perl_cmd} = [ '-Ilib' ];
+		$check{cwd}      = $self->project->root;
+		$check{perl_cmd} = ['-Ilib'];
 	}
 
 	require Padre::Task::Outline::Perl;
-	my $task = Padre::Task::Outline::Perl->new( %check );
+	my $task = Padre::Task::Outline::Perl->new(%check);
 
 	# asynchronous execution (see on_finish hook)
 	$task->schedule;
@@ -431,8 +424,10 @@ sub find_unmatched_brace {
 
 	# create a new object of the task class and schedule it
 	Padre::Task::PPI::FindUnmatchedBrace->new(
+
 		# for parsing
-		text     => $self->text_get,
+		text => $self->text_get,
+
 		# will be available in "finish" but not in "run"/"process_ppi"
 		document => $self,
 	)->schedule;
@@ -445,33 +440,33 @@ sub find_unmatched_brace {
 # to what PPI considers a PPI::Token::Symbol, but since we're doing
 # it the manual, stupid way, this may also work within quotelikes and regexes.
 sub _get_current_symbol {
-	my $editor = shift;
+	my $editor       = shift;
 	my $pos          = $editor->GetCurrentPos;
 	my $line         = $editor->LineFromPosition($pos);
 	my $line_start   = $editor->PositionFromLine($line);
-	my $cursor_col   = $pos-$line_start;
+	my $cursor_col   = $pos - $line_start;
 	my $line_end     = $editor->GetLineEndPosition($line);
-	my $line_content = $editor->GetTextRange($line_start, $line_end);
+	my $line_content = $editor->GetTextRange( $line_start, $line_end );
 	my $col          = $cursor_col;
 
 	# find start of symbol TODO: This could be more robust, no?
 	while (1) {
-		if ($col == 0 or substr($line_content, $col, 1) =~ /^[^#\w:\']$/) {
+		if ( $col == 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/ ) {
 			last;
 		}
 		$col--;
 	}
 
-	if ( $col == 0 or substr($line_content, $col+1, 1) !~ /^[#\w:\']$/ ) {
+	if ( $col == 0 or substr( $line_content, $col + 1, 1 ) !~ /^[#\w:\']$/ ) {
 		return ();
 	}
-	return [$line+1, $col+1];
+	return [ $line + 1, $col + 1 ];
 }
 
 sub find_variable_declaration {
 	my ($self) = @_;
 
-	my $location = _get_current_symbol($self->editor);
+	my $location = _get_current_symbol( $self->editor );
 	unless ( defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
@@ -491,18 +486,14 @@ sub find_variable_declaration {
 	return ();
 }
 
-
-
-
-
 #####################################################################
 # Padre::Document Document Manipulation
 
 sub lexical_variable_replacement {
-	my ($self, $replacement) = @_;
+	my ( $self, $replacement ) = @_;
 
-	my $location = _get_current_symbol($self->editor);
-	if (not defined $location) {
+	my $location = _get_current_symbol( $self->editor );
+	if ( not defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
@@ -511,10 +502,11 @@ sub lexical_variable_replacement {
 		);
 		return ();
 	}
+
 	# create a new object of the task class and schedule it
 	Padre::Task::PPI::LexicalReplaceVariable->new(
-		document => $self,
-		location => $location,
+		document    => $self,
+		location    => $location,
 		replacement => $replacement,
 	)->schedule;
 
@@ -522,7 +514,7 @@ sub lexical_variable_replacement {
 }
 
 sub autocomplete {
-	my $self   = shift;
+	my $self = shift;
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
@@ -530,12 +522,12 @@ sub autocomplete {
 	my $first  = $editor->PositionFromLine($line);
 
 	# line from beginning to current position
-	my $prefix = $editor->GetTextRange($first, $pos);
-	   $prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
-	my $last   = $editor->GetLength();
-	my $text   = $editor->GetTextRange(0, $last);
-	my $pre_text  = $editor->GetTextRange(0, $first+length($prefix)); 
-	my $post_text = $editor->GetTextRange($first, $last); 
+	my $prefix = $editor->GetTextRange( $first, $pos );
+	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
+	my $last      = $editor->GetLength();
+	my $text      = $editor->GetTextRange( 0, $last );
+	my $pre_text  = $editor->GetTextRange( 0, $first + length($prefix) );
+	my $post_text = $editor->GetTextRange( $first, $last );
 
 	my $regex;
 	eval { $regex = qr{\b($prefix\w+(?:::\w+)*)\b} };
@@ -545,14 +537,14 @@ sub autocomplete {
 
 	my %seen;
 	my @words;
-	push @words ,grep { ! $seen{$_}++ } reverse ($pre_text =~ /$regex/g);
-	push @words ,grep { ! $seen{$_}++ } ($post_text =~ /$regex/g);
+	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
+	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
 
-	if (@words > 20) {
-		@words = @words[0..19];
+	if ( @words > 20 ) {
+		@words = @words[ 0 .. 19 ];
 	}
 
-	return (length($prefix), @words);
+	return ( length($prefix), @words );
 }
 
 sub event_on_char {
@@ -560,7 +552,7 @@ sub event_on_char {
 	$editor->Freeze;
 
 	my $selection_exists = 0;
-	my $text = $editor->GetSelectedText;
+	my $text             = $editor->GetSelectedText;
 	if ( defined($text) && length($text) > 0 ) {
 		$selection_exists = 1;
 	}
@@ -569,32 +561,30 @@ sub event_on_char {
 
 	if ( Padre->ide->config->autocomplete_brackets ) {
 		my %table = (
-			34 => 34,   # " "
-			39 => 39,   # ' '
-			40 => 41,   # ( )
-			60 => 62,   # < >
-			91 => 93,   # [ ]
-			123 => 125, # { }
+			34  => 34,     # " "
+			39  => 39,     # ' '
+			40  => 41,     # ( )
+			60  => 62,     # < >
+			91  => 93,     # [ ]
+			123 => 125,    # { }
 		);
 		my $pos = $editor->GetCurrentPos;
 		foreach my $code ( keys %table ) {
 			if ( $key == $code ) {
-				if ( $selection_exists ) {
+				if ($selection_exists) {
 					my $start = $editor->GetSelectionStart;
 					my $end   = $editor->GetSelectionEnd;
 					$editor->GotoPos($end);
 					$editor->AddText( chr( $table{$code} ) );
 					$editor->GotoPos($start);
-				}
-				else {
+				} else {
 					my $nextChar;
 					if ( $editor->GetTextLength > $pos ) {
 						$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
 					}
-					unless (
-						defined($nextChar)
-						&& ord($nextChar) == $table{$code}
-					) {
+					unless ( defined($nextChar)
+						&& ord($nextChar) == $table{$code} )
+					{
 						$editor->AddText( chr( $table{$code} ) );
 						$editor->CharLeft;
 						last;

@@ -12,6 +12,7 @@ use base 'Padre::Task';
 our $SAY_HELLO_EVENT : shared = Wx::NewEventType();
 
 sub prepare {
+
 	# Set up the event handler
 	Wx::Event::EVT_COMMAND(
 		Padre->ide->wx->main,
@@ -25,22 +26,22 @@ sub prepare {
 
 # The event handler
 sub on_say_hello {
-	my ($main, $event) = @_;
-	@_=(); # hack to avoid "Scalars leaked"
-	
+	my ( $main, $event ) = @_;
+	@_ = ();    # hack to avoid "Scalars leaked"
+
 	# Write a message to the beginning of the document
 	my $editor = $main->current->editor;
 	return if not defined $editor;
-	$editor->InsertText(0, $event->GetData);
+	$editor->InsertText( 0, $event->GetData );
 }
 
 sub run {
 	my $self = shift;
-	
+
 	# post two events for fun
-	$self->post_event($SAY_HELLO_EVENT, "Hello from thread!\n");
+	$self->post_event( $SAY_HELLO_EVENT, "Hello from thread!\n" );
 	sleep 1;
-	$self->post_event($SAY_HELLO_EVENT, "Hello again!\n");
+	$self->post_event( $SAY_HELLO_EVENT, "Hello again!\n" );
 
 	return 1;
 }

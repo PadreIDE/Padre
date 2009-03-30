@@ -19,11 +19,11 @@ sub get_layout {
 	my $snippets = Padre::DB->find_snipnames;
 
 	my @layout = (
-		[ [ 'Wx::StaticText', undef, Wx::gettext('Class:') ],       [ 'Wx::Choice', '_find_cat_',     $cats ], ],
-		[ [ 'Wx::StaticText', undef, Wx::gettext('Snippet:') ],     [ 'Wx::Choice', '_find_snippet_', $snippets ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Class:') ],   [ 'Wx::Choice', '_find_cat_',     $cats ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Snippet:') ], [ 'Wx::Choice', '_find_snippet_', $snippets ], ],
 		[ [], [ 'Wx::Button', '_insert_', Wx::gettext('&Insert') ], [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
-		[ [ 'Wx::StaticLine' ],                                 [ 'Wx::StaticLine' ], ],
-		[ [], [ 'Wx::Button', '_edit_',   Wx::gettext('&Edit') ],   [ 'Wx::Button', '_add_',    Wx::gettext('&Add') ], ],
+		[ ['Wx::StaticLine'], ['Wx::StaticLine'], ],
+		[ [], [ 'Wx::Button', '_edit_', Wx::gettext('&Edit') ], [ 'Wx::Button', '_add_', Wx::gettext('&Add') ], ],
 	);
 	return \@layout;
 }
@@ -41,11 +41,11 @@ sub dialog {
 		width  => [ 150, 200 ],
 	);
 
-	Wx::Event::EVT_CHOICE( $dialog, $dialog->{_widgets_}->{_find_cat_}, \&find_category  );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_insert_},   \&get_snippet    );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},   \&cancel_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_edit_},     \&edit_snippet   );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_add_},      \&add_snippet    );
+	Wx::Event::EVT_CHOICE( $dialog, $dialog->{_widgets_}->{_find_cat_}, \&find_category );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_insert_}, \&get_snippet );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_}, \&cancel_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_edit_},   \&edit_snippet );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_add_},    \&add_snippet );
 
 	$dialog->{_widgets_}->{_find_cat_}->SetFocus;
 	$dialog->{_widgets_}->{_insert_}->SetDefault;
@@ -111,7 +111,7 @@ sub snippet_layout {
 		[ [ 'Wx::StaticText', undef, Wx::gettext('Category:') ], [ 'Wx::TextCtrl', 'category', $snippet->[1] ], ],
 		[ [ 'Wx::StaticText', undef, Wx::gettext('Name:') ],     [ 'Wx::TextCtrl', 'name',     $snippet->[2] ], ],
 		[ [ 'Wx::StaticText', undef, Wx::gettext('Snippet:') ],  [ 'Wx::TextCtrl', 'snippet',  $snippet->[3], 400 ], ],
-		[ [], [ 'Wx::Button', '_save_', Wx::gettext('&Save') ],  [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
+		[ [], [ 'Wx::Button', '_save_', Wx::gettext('&Save') ], [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
 	);
 	return \@layout;
 }
@@ -128,7 +128,7 @@ sub snippet_dialog {
 	);
 
 	Wx::Event::EVT_BUTTON( $snip_dialog, $snip_dialog->{_widgets_}->{_save_}, \&save_snippet );
-	Wx::Event::EVT_BUTTON( $dialog,	  $dialog->{_widgets_}->{_cancel_},	\&cancel_clicked );
+	Wx::Event::EVT_BUTTON( $dialog,      $dialog->{_widgets_}->{_cancel_},    \&cancel_clicked );
 
 	$snip_dialog->{_widgets_}->{category}->SetFocus;
 
@@ -140,10 +140,10 @@ my $snippet_number;
 sub edit_snippet {
 	my ( $dialog, $event ) = @_;
 
-	my $data        = $dialog->get_data or return;
-	my $cat	        = _get_catno($dialog);
-	my $snipno      = $data->{_find_snippet_};
-	my $choices     = Padre::DB->find_snippets($cat);
+	my $data    = $dialog->get_data or return;
+	my $cat     = _get_catno($dialog);
+	my $snipno  = $data->{_find_snippet_};
+	my $choices = Padre::DB->find_snippets($cat);
 	$snippet_number = $choices->[$snipno]->[0];
 	my $snip_dialog = snippet_dialog( $dialog, $choices->[$snipno] );
 	$snip_dialog->show_modal;

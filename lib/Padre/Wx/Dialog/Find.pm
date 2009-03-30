@@ -5,9 +5,9 @@ package Padre::Wx::Dialog::Find;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util      qw{_STRING};
-use Padre::DB         ();
-use Padre::Wx         ();
+use Params::Util qw{_STRING};
+use Padre::DB ();
+use Padre::Wx ();
 
 use base qw(Padre::Wx::Dialog);
 
@@ -22,7 +22,7 @@ my @cbs = qw(
 
 sub new {
 	my $class = shift;
-	my $self  = bless {}, $class;
+	my $self = bless {}, $class;
 
 	$self->create_dialog;
 
@@ -59,46 +59,46 @@ sub create_dialog {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION
-		| Wx::wxRESIZE_BORDER
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU,
+			| Wx::wxRESIZE_BORDER
+			| Wx::wxCLOSE_BOX
+			| Wx::wxSYSTEM_MENU,
 	);
 
-	my $main_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
+	my $main_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$main_sizer->AddGrowableCol(0);
 	$self->{dialog}->SetSizer($main_sizer);
 
-	my $left_top_sizer = Wx::FlexGridSizer->new(2, 2, 0, 0);
+	my $left_top_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$left_top_sizer->AddGrowableCol(1);
-	$main_sizer->Add( $left_top_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxGROW|Wx::wxALL, 5 );
+	$main_sizer->Add( $left_top_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
 
 	$left_top_sizer->Add(
 		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Find:") ),
 		0,
-		Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
 
-	$self->add_widget( '_find_choice_',	Wx::ComboBox->new( $self->{dialog} ) );
+	$self->add_widget( '_find_choice_', Wx::ComboBox->new( $self->{dialog} ) );
 	$left_top_sizer->Add(
 		$self->get_widget('_find_choice_'),
 		3,
-		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
 
 	$left_top_sizer->Add(
 		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Replace with:") ),
 		0,
-		Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
 
-	$self->add_widget( '_replace_choice_',	Wx::ComboBox->new( $self->{dialog} ) );
+	$self->add_widget( '_replace_choice_', Wx::ComboBox->new( $self->{dialog} ) );
 	$left_top_sizer->Add(
 		$self->get_widget('_replace_choice_'),
 		3,
-		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
 
@@ -106,7 +106,7 @@ sub create_dialog {
 	$main_sizer->Add(
 		$right_top_sizer,
 		0,
-		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxLEFT|Wx::wxRIGHT,
+		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT,
 		5
 	);
 
@@ -114,7 +114,7 @@ sub create_dialog {
 	$right_top_sizer->Add(
 		$self->get_widget('_find_'),
 		1,
-		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
@@ -122,7 +122,7 @@ sub create_dialog {
 	$right_top_sizer->Add(
 		$self->get_widget('_replace_'),
 		1,
-		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
@@ -130,7 +130,7 @@ sub create_dialog {
 	$main_sizer->Add(
 		$left_bottom_sizer,
 		2,
-		Wx::wxGROW|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL,
+		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
 
@@ -139,7 +139,7 @@ sub create_dialog {
 	$left_bottom_sizer->Add(
 		$self->get_widget('find_case'),
 		0,
-		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
@@ -148,7 +148,7 @@ sub create_dialog {
 	$left_bottom_sizer->Add(
 		$self->get_widget('find_regex'),
 		0,
-		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
@@ -157,7 +157,7 @@ sub create_dialog {
 	$left_bottom_sizer->Add(
 		$self->get_widget('find_reverse'),
 		0,
-		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
@@ -166,34 +166,35 @@ sub create_dialog {
 	$left_bottom_sizer->Add(
 		$self->get_widget('find_first'),
 		0,
-		Wx::wxALIGN_LEFT|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxTOP,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
 	my $right_bottom_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$main_sizer->Add( $right_bottom_sizer, 0, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxGROW|Wx::wxALL, 5);
+	$main_sizer->Add( $right_bottom_sizer, 0, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
 
-	$self->add_widget( '_replace_all_', Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") ) );
+	$self->add_widget( '_replace_all_',
+		Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") ) );
 	$right_bottom_sizer->Add(
 		$self->get_widget('_replace_all_'),
 		0,
-		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxBOTTOM,
+		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxBOTTOM,
 		5
 	);
 
-	$right_bottom_sizer->Add(5, 5, 5, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxALL, 5);
+	$right_bottom_sizer->Add( 5, 5, 5, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxALL, 5 );
 
 	$self->add_widget( '_cancel_', Wx::Button->new( $self->{dialog}, Wx::wxID_CANCEL, Wx::gettext("&Cancel") ) );
 	$right_bottom_sizer->Add(
 		$self->get_widget('_cancel_'),
 		0,
-		Wx::wxGROW|Wx::wxLEFT|Wx::wxRIGHT|Wx::wxBOTTOM,
+		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxBOTTOM,
 		5
 	);
 
 	$main_sizer->SetSizeHints( $self->{dialog} );
 
-	foreach my $cb ( @cbs ) {
+	foreach my $cb (@cbs) {
 		Wx::Event::EVT_CHECKBOX(
 			$self->{dialog},
 			$self->get_widget($cb),
@@ -249,7 +250,7 @@ sub update_dialog {
 }
 
 sub find {
-	my ($self, $main) = @_;
+	my ( $self, $main ) = @_;
 
 	my $text = $main->current->text;
 	$text = '' if not defined $text;
@@ -271,9 +272,9 @@ sub find {
 }
 
 sub find_next {
-	my $self  = shift;
-	my $main  = shift;
-	my $term  = Padre::DB::History->previous('search');
+	my $self = shift;
+	my $main = shift;
+	my $term = Padre::DB::History->previous('search');
 
 	# for Quick Find
 	# check if is checked
@@ -287,10 +288,10 @@ sub find_next {
 		}
 	}
 
-	if ( $term ) {
+	if ($term) {
 		$self->search;
 	} else {
-		$self->find( $main );
+		$self->find($main);
 	}
 
 	return;
@@ -298,25 +299,26 @@ sub find_next {
 
 sub find_previous {
 	my $self = shift;
-	my $main  = shift;
-	my $term  = Padre::DB::History->previous('search');
-	if ( $term ) {
-		$self->search(rev => 1);
+	my $main = shift;
+	my $term = Padre::DB::History->previous('search');
+	if ($term) {
+		$self->search( rev => 1 );
 	} else {
-		$self->find( $main );
+		$self->find($main);
 	}
 	return;
 }
 
 sub cancel_clicked {
 	$_[0]->{dialog}->Hide;
+
 	# If no focus is set, the focus is lost when reopening the dialog
 	$_[0]->get_widget('_find_choice_')->SetFocus;
 	return;
 }
 
 sub replace_all_clicked {
-	my ($self, $dialog, $event) = @_;
+	my ( $self, $dialog, $event ) = @_;
 
 	$self->get_data_from_dialog or return;
 	my $regex = _get_regex();
@@ -327,28 +329,26 @@ sub replace_all_clicked {
 	my $config  = $main->config;
 	my $page    = $current->editor;
 	my $last    = $page->GetLength;
-	my $str     = $page->GetTextRange(0, $last);
+	my $str     = $page->GetTextRange( 0, $last );
 	my $replace = Padre::DB::History->previous('replace') || '';
 	$replace =~ s/\\t/\t/g if $replace;
 
-	my ($start, $end, @matches) = Padre::Util::get_matches($str, $regex, 0, 0);
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $str, $regex, 0, 0 );
 	$page->BeginUndoAction;
 	foreach my $m ( reverse @matches ) {
-		$page->SetTargetStart($m->[0]);
-		$page->SetTargetEnd($m->[1]);
+		$page->SetTargetStart( $m->[0] );
+		$page->SetTargetEnd( $m->[1] );
 		$page->ReplaceTarget($replace);
 	}
 	$page->EndUndoAction;
 
-	Padre->ide->wx->main->message(
-		sprintf( Wx::gettext('%s occurences were replaced'), scalar @matches )
-	);
+	Padre->ide->wx->main->message( sprintf( Wx::gettext('%s occurences were replaced'), scalar @matches ) );
 
 	return;
 }
 
 sub replace_clicked {
-	my ($self, $dialog, $event) = @_;
+	my ( $self, $dialog, $event ) = @_;
 
 	$self->get_data_from_dialog or return;
 	my $regex = _get_regex();
@@ -357,10 +357,11 @@ sub replace_clicked {
 	# Get current search condition and check if they match
 	my $current = Padre::Current->new;
 	my $text    = $current->text;
-	my ($start, $end, @matches) = Padre::Util::get_matches($text, $regex, 0, 0);
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
 
 	# If they do, replace it
 	if ( defined $start and $start == 0 and $end == length($text) ) {
+
 		# TODO - This can return undef
 		my $replace = Padre::DB::History->previous('replace');
 		$replace =~ s/\\t/\t/g;
@@ -392,10 +393,10 @@ sub get_data_from_dialog {
 	my $dialog = $self->{dialog};
 	my $data   = $self->get_widgets_values;
 	my $config = Padre->ide->config;
-	$config->set( find_case    => $data->{find_case} ? 0 : 1    );
-	$config->set( find_regex   => $data->{find_regex} ? 1 : 0   );
+	$config->set( find_case    => $data->{find_case}    ? 0 : 1 );
+	$config->set( find_regex   => $data->{find_regex}   ? 1 : 0 );
 	$config->set( find_reverse => $data->{find_reverse} ? 1 : 0 );
-	$config->set( find_first   => $data->{find_first} ? 1 : 0   );
+	$config->set( find_first   => $data->{find_first}   ? 1 : 0 );
 
 	my $search  = $data->{_find_choice_};
 	my $replace = $data->{_replace_choice_};
@@ -427,20 +428,20 @@ sub _get_regex {
 	return $search_term if defined $search_term and 'Regexp' eq ref $search_term;
 
 	if ( $config->find_regex ) {
-		$search_term =~ s/\$/\\\$/; # escape $ signs by default so they won't interpolate
+		$search_term =~ s/\$/\\\$/;    # escape $ signs by default so they won't interpolate
 	} else {
 		$search_term = quotemeta $search_term;
 	}
 
-	unless ( $config->find_case )  {
+	unless ( $config->find_case ) {
 		$search_term =~ s/^(\^?)/$1(?i)/;
 	}
 
 	my $regex;
 	eval { $regex = qr/$search_term/m };
-	if ( $@ ) {
+	if ($@) {
 		Wx::MessageBox(
-			sprintf(Wx::gettext("Cannot build regex for '%s'"), $search_term),
+			sprintf( Wx::gettext("Cannot build regex for '%s'"), $search_term ),
 			Wx::gettext("Search error"),
 			Wx::wxOK,
 			Padre->ide->wx->main,
@@ -451,23 +452,23 @@ sub _get_regex {
 }
 
 sub search {
-	my $self = shift;
+	my $self  = shift;
 	my %args  = @_;
 	my $main  = Padre->ide->wx->main;
 	my $regex = _get_regex(%args);
 	return if not defined $regex;
 
 	my $page = $main->current->editor;
-	my ($from, $to) = $page->GetSelection;
+	my ( $from, $to ) = $page->GetSelection;
 	my $last = $page->GetLength;
-	my $str  = $page->GetTextRange(0, $last);
+	my $str = $page->GetTextRange( 0, $last );
 
-	my $config    = Padre->ide->config;
+	my $config       = Padre->ide->config;
 	my $find_reverse = $config->find_reverse;
 	if ( $args{rev} ) {
-	   $find_reverse = not $find_reverse;
+		$find_reverse = not $find_reverse;
 	}
-	my ($start, $end, @matches) = Padre::Util::get_matches($str, $regex, $from, $to, $find_reverse);
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $str, $regex, $from, $to, $find_reverse );
 	return if not defined $start;
 
 	$page->SetSelection( $start, $end );

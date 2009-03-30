@@ -2,7 +2,7 @@ package Padre::Task::SyntaxChecker;
 
 use strict;
 use warnings;
-use Params::Util   qw{_CODE _INSTANCE};
+use Params::Util qw{_CODE _INSTANCE};
 use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();
@@ -79,14 +79,14 @@ sub new {
 
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
-	my $editor = $self->{editor} || $self->{main_thread_only}->{editor};
-	my $on_finish     = $self->{on_finish}     || $self->{main_thread_only}->{on_finish};
+	my $editor    = $self->{editor}    || $self->{main_thread_only}->{editor};
+	my $on_finish = $self->{on_finish} || $self->{main_thread_only}->{on_finish};
 	delete $self->{editor};
 	delete $self->{on_finish};
 	unless ( defined $editor ) {
 		$editor = Padre::Current->editor;
 	}
-	return() if not defined $editor;
+	return () if not defined $editor;
 	$self->{main_thread_only}->{on_finish} = $on_finish if $on_finish;
 	$self->{main_thread_only}->{editor} = $editor;
 	return $self;
@@ -130,18 +130,19 @@ sub update_gui {
 	$syntax->clear;
 
 	require Padre::Wx;
+
 	# If there are no errors, clear the synax checker pane and return.
-	unless ( $messages ) {
+	unless ($messages) {
 		return;
 	}
 
 	# Again, slightly differently
-	unless ( @$messages ) {
+	unless (@$messages) {
 		return 1;
 	}
 
 	# Update the syntax checker pane
-	if ( scalar(@{$messages}) > 0 ) {
+	if ( scalar( @{$messages} ) > 0 ) {
 		my $red    = Wx::Colour->new("red");
 		my $orange = Wx::Colour->new("orange");
 		$editor->MarkerDefine(
@@ -160,19 +161,18 @@ sub update_gui {
 		my $i = 0;
 		delete $editor->{synchk_calltips};
 		my $last_hint = '';
-		
+
 		# eliminate some warnings
-		foreach my $m (@{$messages}) {
+		foreach my $m ( @{$messages} ) {
 			$m->{line} = 0  unless defined $m->{line};
 			$m->{msg}  = '' unless defined $m->{msg};
 		}
 		foreach my $hint ( sort { $a->{line} <=> $b->{line} } @{$messages} ) {
 			my $l = $hint->{line} - 1;
 			if ( $hint->{severity} eq 'W' ) {
-				$editor->MarkerAdd( $l, 2);
-			}
-			else {
-				$editor->MarkerAdd( $l, 1);
+				$editor->MarkerAdd( $l, 2 );
+			} else {
+				$editor->MarkerAdd( $l, 1 );
 			}
 			my $idx = $syntax->InsertStringImageItem( $i++, $l + 1, ( $hint->{severity} eq 'W' ? 1 : 0 ) );
 			$syntax->SetItemData( $idx, 0 );
@@ -181,8 +181,7 @@ sub update_gui {
 
 			if ( exists $editor->{synchk_calltips}->{$l} ) {
 				$editor->{synchk_calltips}->{$l} .= "\n--\n" . $hint->{msg};
-			}
-			else {
+			} else {
 				$editor->{synchk_calltips}->{$l} = $hint->{msg};
 			}
 			$last_hint = $hint;
@@ -193,7 +192,6 @@ sub update_gui {
 
 	return 1;
 }
-
 
 1;
 

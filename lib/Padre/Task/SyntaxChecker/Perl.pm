@@ -48,7 +48,7 @@ sub run {
 
 sub _check_syntax {
 	my $self = shift;
-	
+
 	my $nlchar = $self->{newlines};
 	$self->{text} =~ s/$nlchar/\n/g if defined $nlchar;
 
@@ -64,28 +64,29 @@ sub _check_syntax {
 			Padre->perl_interpreter,
 		);
 		if ( $self->{perl_cmd} ) {
-			push @cmd, @{$self->{perl_cmd}};
+			push @cmd, @{ $self->{perl_cmd} };
 		}
-		push @cmd, (
+		push @cmd,
+			(
 			'-Mdiagnostics',
 			'-c',
 			$file->filename,
-		);
+			);
 		require IPC::Cmd;
 		require IPC::Open3;
 
 		# damn global variables. This is likely unnecessary, but safe
 		local $IPC::Cmd::USE_IPC_OPEN3 = 1;
-		$IPC::Cmd::USE_IPC_OPEN3 = 1; # silence warning
+		$IPC::Cmd::USE_IPC_OPEN3 = 1;    # silence warning
 
 		# Make sure we execute from the correct directory
 		my $stderr_buf = [];
 		if ( $self->{cwd} ) {
 			require File::pushd;
-			my $pushd = File::pushd::pushd($self->{cwd});
-			$stderr_buf = (IPC::Cmd::run( command => \@cmd, verbose => 0 ))[4];
+			my $pushd = File::pushd::pushd( $self->{cwd} );
+			$stderr_buf = ( IPC::Cmd::run( command => \@cmd, verbose => 0 ) )[4];
 		} else {
-			$stderr_buf = (IPC::Cmd::run( command => \@cmd, verbose => 0 ))[4];
+			$stderr_buf = ( IPC::Cmd::run( command => \@cmd, verbose => 0 ) )[4];
 		}
 		$stderr = join '', @$stderr_buf if ref($stderr_buf) eq 'ARRAY';
 	}
@@ -104,15 +105,15 @@ sub _check_syntax {
 	# Split into message paragraphs
 	$stderr =~ s/\n\n/\n/go;
 	$stderr =~ s/\n\s/\x1F /go;
-	my @messages = split(/\n/, $stderr);
+	my @messages = split( /\n/, $stderr );
 
 	my $issues = [];
 	my @diag   = ();
-	foreach my $message ( @messages ) {
-		if (   index( $message, 'has too many errors' )    > 0
+	foreach my $message (@messages) {
+		if (   index( $message, 'has too many errors' ) > 0
 			or index( $message, 'had compilation errors' ) > 0
-			or index( $message, 'syntax OK' ) > 0
-		) {
+			or index( $message, 'syntax OK' ) > 0 )
+		{
 			last;
 		}
 
@@ -144,7 +145,7 @@ sub _check_syntax {
 			$cur->{msg} .= "\n" . $tmp;
 		}
 
-		if (defined $cur->{msg}) {
+		if ( defined $cur->{msg} ) {
 			$cur->{msg} =~ s/\x1F/\n/go;
 		}
 
@@ -153,11 +154,10 @@ sub _check_syntax {
 			delete $cur->{diag};
 		}
 		if ( defined( $cur->{desc} )
-			&& $cur->{desc} =~ /^\s*\([WD]/o
-		) {
+			&& $cur->{desc} =~ /^\s*\([WD]/o )
+		{
 			$cur->{severity} = 'W';
-		}
-		else {
+		} else {
 			$cur->{severity} = 'E';
 		}
 		delete $cur->{desc};

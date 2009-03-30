@@ -10,7 +10,6 @@ use warnings;
 
 our $VERSION = '0.32';
 
-
 # -- constructors
 
 #
@@ -21,12 +20,11 @@ our $VERSION = '0.32';
 # outside this class.
 #
 sub _new {
-	my ($class, $href) = @_;
+	my ( $class, $href ) = @_;
 	$href ||= {};
 	bless $href, $class;
 	return $href;
 }
-
 
 #
 # my $config = Padre::Config::Host->read;
@@ -36,14 +34,11 @@ sub read {
 
 	# Read in the config data
 	require Padre::DB;
-	my %hash = map {
-		$_->name => $_->value
-	} Padre::DB::HostConfig->select;
+	my %hash = map { $_->name => $_->value } Padre::DB::HostConfig->select;
 
 	# Create and return the object
 	return $class->_new( \%hash );
 }
-
 
 # -- public methods
 
@@ -52,9 +47,8 @@ sub read {
 #
 sub version {
 	my $self = shift;
-	$self->{version};	# stored as other preferences!
+	$self->{version};    # stored as other preferences!
 }
-
 
 #
 # $config->write;
@@ -75,7 +69,6 @@ sub write {
 
 	return 1;
 }
-
 
 1;
 

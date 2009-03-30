@@ -7,14 +7,10 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current  qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.32';
 use base 'Padre::Wx::Menu';
-
-
-
-
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -30,50 +26,60 @@ sub new {
 	$self->{main} = $main;
 
 	# Script Execution
-	$self->{run_document} = $self->Append( -1,
+	$self->{run_document} = $self->Append(
+		-1,
 		Wx::gettext("Run Script\tF5")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{run_document},
 		sub {
 			$_[0]->run_document;
 		},
 	);
 
-	$self->{run_document_parameters} = $self->Append( -1,
+	$self->{run_document_parameters} = $self->Append(
+		-1,
 		Wx::gettext("Run Parameters\tShift-Ctrl-F5")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{run_document_parameters},
 		sub {
 			$_[0]->run_document_parameters;
 		},
 	);
 
-	$self->{run_document_debug} = $self->Append( -1,
+	$self->{run_document_debug} = $self->Append(
+		-1,
 		Wx::gettext("Run Script (debug info)\tShift-F5")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{run_document_debug},
 		sub {
-			$_[0]->run_document(1); # Enable debug info
+			$_[0]->run_document(1);    # Enable debug info
 		},
 	);
 
-	$self->{run_command} = $self->Append( -1,
+	$self->{run_command} = $self->Append(
+		-1,
 		Wx::gettext("Run Command\tCtrl-F5")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{run_command},
 		sub {
 			$_[0]->on_run_command;
 		},
 	);
 
-	$self->{run_tests} = $self->Append( -1,
+	$self->{run_tests} = $self->Append(
+		-1,
 		Wx::gettext("Run Tests")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{run_tests},
 		sub {
 			$_[0]->on_run_tests;
@@ -81,10 +87,12 @@ sub new {
 	);
 	$self->AppendSeparator;
 
-	$self->{stop} = $self->Append( -1,
+	$self->{stop} = $self->Append(
+		-1,
 		Wx::gettext("Stop\tF6")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{stop},
 		sub {
 			if ( $_[0]->{command} ) {
@@ -108,32 +116,28 @@ sub refresh {
 	# Disable if not document,
 	# otherwise match run_command state
 	$self->{run_document}->Enable(
-		$document
-			? $self->{run_command}->IsEnabled
-			: 0
+		  $document
+		? $self->{run_command}->IsEnabled
+		: 0
 	);
 	$self->{run_document_parameters}->Enable(
-		$document
-			? $self->{run_command}->IsEnabled
-			: 0
+		  $document
+		? $self->{run_command}->IsEnabled
+		: 0
 	);
 	$self->{run_document_debug}->Enable(
-		$document
-			? $self->{run_command}->IsEnabled
-			: 0
+		  $document
+		? $self->{run_command}->IsEnabled
+		: 0
 	);
 	$self->{run_tests}->Enable(
-		$document
-			? $self->{run_command}->IsEnabled
-			: 0
+		  $document
+		? $self->{run_command}->IsEnabled
+		: 0
 	);
 
 	return 1;
 }
-
-
-
-
 
 #####################################################################
 # Custom Methods
@@ -159,6 +163,7 @@ sub disable {
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

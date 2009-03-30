@@ -13,38 +13,35 @@ use 5.008;
 use strict;
 use warnings;
 
-use Carp                     qw{ croak };
-use Params::Util             qw{ _POSINT _INSTANCE };
+use Carp qw{ croak };
+use Params::Util qw{ _POSINT _INSTANCE };
 use Padre::Config::Constants qw{ :stores :types $PADRE_CONFIG_DIR };
-use Padre::Config::Setting   ();
-use Padre::Config::Human     ();
-use Padre::Config::Project   ();
-use Padre::Config::Host      ();
+use Padre::Config::Setting ();
+use Padre::Config::Human   ();
+use Padre::Config::Project ();
+use Padre::Config::Host    ();
 
-
-our $VERSION   = '0.32';
+our $VERSION = '0.32';
 
 # Master storage of the settings
-our %SETTING   = ();
+our %SETTING = ();
 
 # A cache for the defaults
-our %DEFAULT   = ();
+our %DEFAULT = ();
 
 # The configuration revision.
 # (Functionally similar to the database revision)
-our $REVISION  = 1;
+our $REVISION = 1;
 
 # Storage for the default config object
 our $SINGLETON = undef;
 
-
 # Accessor generation
-use Class::XSAccessor::Array
-	getters => {
-		host    => $HOST,
-		human   => $HUMAN,
-		project => $PROJECT,
-	};
+use Class::XSAccessor::Array getters => {
+	host    => $HOST,
+	human   => $HUMAN,
+	project => $PROJECT,
+};
 
 #####################################################################
 # Settings Specification
@@ -53,99 +50,103 @@ use Class::XSAccessor::Array
 # and where the configuration system should resolve them to.
 
 my %settings = (
-human => [
-	# for each setting, add an array ref:
-	# [ $setting_name, $setting_type, $setting_default ]
+	human => [
 
-	# -- user identity (simplistic initial version)
-	[ 'identity_name',  $ASCII, '' ],  # Initially, this must be ascii only
-	[ 'identity_email', $ASCII, '' ],
-	
-	# -- for module::starter
-	[ 'license',                $ASCII, '' ],
-	[ 'builder',                $ASCII, '' ],
-	[ 'module_start_directory', $ASCII, '' ],
-	
-	# -- indent settings
-	# allow projects to forcefully override personal settings
-	[ 'editor_indent_auto',      $BOOLEAN, 1 ],
-	[ 'editor_indent_tab',       $BOOLEAN, 1 ],
-	[ 'editor_indent_tab_width', $POSINT,  8 ],
-	[ 'editor_indent_width',     $POSINT,  8 ],
-	
-	# -- pages and panels
-	# startup mode, if no files given on the command line this can be
-	#   new        - a new empty buffer
-	#   nothing    - nothing to open
-	#   last       - the files that were open last time
-	[ 'main_startup',         $ASCII,   'new'          ],
-	[ 'main_lockinterface',   $BOOLEAN, 1              ],
-	[ 'main_functions',       $BOOLEAN, 0              ],
-	[ 'main_functions_order', $ASCII,   'alphabetical' ],
-	[ 'main_outline',         $BOOLEAN, 0              ],
-	[ 'main_directory',       $BOOLEAN, 0              ],
-	[ 'main_output',          $BOOLEAN, 0              ],
-	[ 'main_output_ansi',     $BOOLEAN, 1              ],
-	[ 'main_syntaxcheck',     $BOOLEAN, 0              ],
-	[ 'main_errorlist',       $BOOLEAN, 0              ],
-	[ 'main_statusbar',       $BOOLEAN, 1              ],
-	
-	# -- editor settings
-	[ 'editor_font',              $ASCII,   ''       ],
-	[ 'editor_linenumbers',       $BOOLEAN, 1        ],
-	[ 'editor_eol',               $BOOLEAN, 0        ],
-	[ 'editor_whitespace',        $BOOLEAN, 0        ],
-	[ 'editor_indentationguides', $BOOLEAN, 0        ],
-	[ 'editor_calltips',          $BOOLEAN, 0        ],
-	[ 'editor_autoindent',        $ASCII,   'deep'   ],
-	[ 'editor_folding',           $BOOLEAN, 0        ],
-	[ 'editor_currentline',       $BOOLEAN, 1        ],
-	[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
-	[ 'editor_beginner',          $BOOLEAN, 1        ],
-	[ 'editor_wordwrap',          $BOOLEAN, 0        ],
-	[ 'find_case',                $BOOLEAN, 1        ],
-	[ 'find_regex',               $BOOLEAN, 0        ],
-	[ 'find_reverse',             $BOOLEAN, 0        ],
-	[ 'find_first',               $BOOLEAN, 0        ],
-	[ 'find_nohidden',            $BOOLEAN, 1        ],
-	[ 'find_quick',               $BOOLEAN, 0        ],
-	[ 'ppi_highlight',            $BOOLEAN, 0        ],
-	[ 'ppi_highlight_limit',      $POSINT,  2000     ],
-	
-	# -- behaviour tuning
-	# When running a script from the application some of the files might have
-	# not been saved yet. There are several option what to do before running the
-	# script:
-	# none - don't save anything
-	# same - save the file in the current buffer
-	# all_files - all the files (but not buffers that have no filenames)
-	# all_buffers - all the buffers even if they don't have a name yet
-	[ 'run_save',              $ASCII,   'same' ],
-	# move of stacktrace to run menu: will be removed (run_stacktrace)
-	[ 'run_stacktrace',        $BOOLEAN, 0      ],
-	[ 'autocomplete_brackets', $BOOLEAN, 0      ],
-	# by default use background threads unless profiling
-	# TODO - Make the default actually change
-	[ 'threads',               $BOOLEAN, 1      ],
-	[ 'locale',                $ASCII,   ''     ],
-	[ 'locale_perldiag',       $ASCII,   ''     ],
-	[ 'experimental',          $BOOLEAN, 0      ],
-],
-host => [
-	# for each setting, add an array ref:
-	# [ $setting_name, $setting_type, $setting_default ]
+		# for each setting, add an array ref:
+		# [ $setting_name, $setting_type, $setting_default ]
 
-	# -- color data
-	# since it's in local files, it has to be a host-specific setting
-	[ 'editor_style', $ASCII, 'default' ],
-	
-	# -- window geometry
-	[ 'main_maximized', $BOOLEAN, 0   ],
-	[ 'main_top',       $INTEGER, 40  ],
-	[ 'main_left',      $INTEGER, 20  ],
-	[ 'main_width',     $POSINT,  600 ],
-	[ 'main_height',    $POSINT,  400 ],
-],
+		# -- user identity (simplistic initial version)
+		[ 'identity_name',  $ASCII, '' ],    # Initially, this must be ascii only
+		[ 'identity_email', $ASCII, '' ],
+
+		# -- for module::starter
+		[ 'license',                $ASCII, '' ],
+		[ 'builder',                $ASCII, '' ],
+		[ 'module_start_directory', $ASCII, '' ],
+
+		# -- indent settings
+		# allow projects to forcefully override personal settings
+		[ 'editor_indent_auto',      $BOOLEAN, 1 ],
+		[ 'editor_indent_tab',       $BOOLEAN, 1 ],
+		[ 'editor_indent_tab_width', $POSINT,  8 ],
+		[ 'editor_indent_width',     $POSINT,  8 ],
+
+		# -- pages and panels
+		# startup mode, if no files given on the command line this can be
+		#   new        - a new empty buffer
+		#   nothing    - nothing to open
+		#   last       - the files that were open last time
+		[ 'main_startup',         $ASCII,   'new' ],
+		[ 'main_lockinterface',   $BOOLEAN, 1 ],
+		[ 'main_functions',       $BOOLEAN, 0 ],
+		[ 'main_functions_order', $ASCII,   'alphabetical' ],
+		[ 'main_outline',         $BOOLEAN, 0 ],
+		[ 'main_directory',       $BOOLEAN, 0 ],
+		[ 'main_output',          $BOOLEAN, 0 ],
+		[ 'main_output_ansi',     $BOOLEAN, 1 ],
+		[ 'main_syntaxcheck',     $BOOLEAN, 0 ],
+		[ 'main_errorlist',       $BOOLEAN, 0 ],
+		[ 'main_statusbar',       $BOOLEAN, 1 ],
+
+		# -- editor settings
+		[ 'editor_font',              $ASCII,   '' ],
+		[ 'editor_linenumbers',       $BOOLEAN, 1 ],
+		[ 'editor_eol',               $BOOLEAN, 0 ],
+		[ 'editor_whitespace',        $BOOLEAN, 0 ],
+		[ 'editor_indentationguides', $BOOLEAN, 0 ],
+		[ 'editor_calltips',          $BOOLEAN, 0 ],
+		[ 'editor_autoindent',        $ASCII,   'deep' ],
+		[ 'editor_folding',           $BOOLEAN, 0 ],
+		[ 'editor_currentline',       $BOOLEAN, 1 ],
+		[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
+		[ 'editor_beginner',          $BOOLEAN, 1 ],
+		[ 'editor_wordwrap',          $BOOLEAN, 0 ],
+		[ 'find_case',                $BOOLEAN, 1 ],
+		[ 'find_regex',               $BOOLEAN, 0 ],
+		[ 'find_reverse',             $BOOLEAN, 0 ],
+		[ 'find_first',               $BOOLEAN, 0 ],
+		[ 'find_nohidden',            $BOOLEAN, 1 ],
+		[ 'find_quick',               $BOOLEAN, 0 ],
+		[ 'ppi_highlight',            $BOOLEAN, 0 ],
+		[ 'ppi_highlight_limit',      $POSINT,  2000 ],
+
+		# -- behaviour tuning
+		# When running a script from the application some of the files might have
+		# not been saved yet. There are several option what to do before running the
+		# script:
+		# none - don't save anything
+		# same - save the file in the current buffer
+		# all_files - all the files (but not buffers that have no filenames)
+		# all_buffers - all the buffers even if they don't have a name yet
+		[ 'run_save', $ASCII, 'same' ],
+
+		# move of stacktrace to run menu: will be removed (run_stacktrace)
+		[ 'run_stacktrace',        $BOOLEAN, 0 ],
+		[ 'autocomplete_brackets', $BOOLEAN, 0 ],
+
+		# by default use background threads unless profiling
+		# TODO - Make the default actually change
+		[ 'threads',         $BOOLEAN, 1 ],
+		[ 'locale',          $ASCII,   '' ],
+		[ 'locale_perldiag', $ASCII,   '' ],
+		[ 'experimental',    $BOOLEAN, 0 ],
+	],
+	host => [
+
+		# for each setting, add an array ref:
+		# [ $setting_name, $setting_type, $setting_default ]
+
+		# -- color data
+		# since it's in local files, it has to be a host-specific setting
+		[ 'editor_style', $ASCII, 'default' ],
+
+		# -- window geometry
+		[ 'main_maximized', $BOOLEAN, 0 ],
+		[ 'main_top',       $INTEGER, 40 ],
+		[ 'main_left',      $INTEGER, 20 ],
+		[ 'main_width',     $POSINT,  600 ],
+		[ 'main_height',    $POSINT,  400 ],
+	],
 );
 my %store = (
 	human => $HUMAN,
@@ -154,8 +155,8 @@ my %store = (
 foreach my $type ( keys %settings ) {
 	my $settings = $settings{$type};
 	my $store    = $store{$type};
-	foreach my $setting ( @$settings ) {
-		my ($name, $type, $default) = @$setting;
+	foreach my $setting (@$settings) {
+		my ( $name, $type, $default ) = @$setting;
 		_setting(
 			name    => $name,
 			type    => $type,
@@ -165,8 +166,6 @@ foreach my $type ( keys %settings ) {
 	}
 }
 
-
-
 #####################################################################
 # Constructor and Accessors
 
@@ -174,10 +173,10 @@ sub new {
 	my $class = shift;
 	my $host  = shift;
 	my $human = shift;
-	unless ( _INSTANCE($host, 'Padre::Config::Host') ) {
+	unless ( _INSTANCE( $host, 'Padre::Config::Host' ) ) {
 		croak("Did not provide a host config to Padre::Config->new");
 	}
-	unless ( _INSTANCE($human, 'Padre::Config::Human') ) {
+	unless ( _INSTANCE( $human, 'Padre::Config::Human' ) ) {
 		croak("Did not provide a user config to Padre::Config->new");
 	}
 
@@ -185,9 +184,9 @@ sub new {
 	my $self = bless [ $host, $human, undef ], $class;
 
 	# Add the optional third element
-	if ( @_ ) {
+	if (@_) {
 		my $project = shift;
-		unless ( _INSTANCE($project, 'Padre::Config::Project') ) {
+		unless ( _INSTANCE( $project, 'Padre::Config::Project' ) ) {
 			croak("Did not provide a project config to Padre::Config->new");
 		}
 		$self->[$PROJECT] = $project;
@@ -202,8 +201,8 @@ sub set {
 	my $value = shift;
 
 	# Does the setting exist?
-	my $setting = $SETTING{$name} or
-	croak("The configuration setting '$name' does not exist");
+	my $setting = $SETTING{$name}
+		or croak("The configuration setting '$name' does not exist");
 
 	# All types are $ASCII-like
 	unless ( defined $value and not ref $value ) {
@@ -234,12 +233,12 @@ sub set {
 
 # Fetches an explicitly named default
 sub default {
-	my $self  = shift;
-	my $name  = shift;
+	my $self = shift;
+	my $name = shift;
 
 	# Does the setting exist?
-	my $setting = $SETTING{$name} or
-	croak("The configuration setting '$name' does not exist");
+	my $setting = $SETTING{$name}
+		or croak("The configuration setting '$name' does not exist");
 
 	return $DEFAULT{$name};
 }
@@ -247,7 +246,8 @@ sub default {
 sub read {
 	my $class = shift;
 
-	unless ( $SINGLETON ) {
+	unless ($SINGLETON) {
+
 		# Load the host configuration
 		my $host = Padre::Config::Host->read;
 
@@ -278,7 +278,6 @@ sub write {
 	return 1;
 }
 
-
 # -- private subs
 
 #
@@ -287,9 +286,10 @@ sub write {
 # create a new setting, with %params used to feed the new object.
 #
 sub _setting {
+
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
-	if ( $SETTING{$object->{name}} ) {
+	if ( $SETTING{ $object->{name} } ) {
 		croak("The $object->{name} setting is already defined");
 	}
 
@@ -307,18 +307,17 @@ sub $object->{name} {
 END_PERL
 
 	# Compile the accessor
-	eval $code; ## no critic
-	if ( $@ ) {
+	eval $code;    ## no critic
+	if ($@) {
 		croak("Failed to compile setting $object->{name}");
 	}
 
 	# Save the setting
-	$SETTING{$object->{name}} = $object;
-	$DEFAULT{$object->{name}} = $object->{default};
+	$SETTING{ $object->{name} } = $object;
+	$DEFAULT{ $object->{name} } = $object->{default};
 
 	return 1;
 }
-
 
 #
 # my $is_integer = _INTEGER( $scalar );
@@ -326,9 +325,8 @@ END_PERL
 # return true if $scalar is an integer.
 #
 sub _INTEGER ($) {
-	return defined $_[0] && ! ref $_[0] && $_[0] =~ m/^(?:0|-?[1-9]\d*)$/;
+	return defined $_[0] && !ref $_[0] && $_[0] =~ m/^(?:0|-?[1-9]\d*)$/;
 }
-
 
 1;
 

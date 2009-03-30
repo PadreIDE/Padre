@@ -74,7 +74,7 @@ sub new {
 	my $self  = $class->SUPER::new(@_);
 	unless ( defined $self->{text} ) {
 		my $doc = Padre::Current->document;
-		return() if not defined $doc;
+		return () if not defined $doc;
 		$self->{text} = $doc->text_get;
 	}
 	return $self;
@@ -84,7 +84,7 @@ sub run {
 	my $self = shift;
 	require PPI;
 	require PPI::Document;
-	my $ppi = PPI::Document->new( \($self->{text}) );
+	my $ppi = PPI::Document->new( \( $self->{text} ) );
 	delete $self->{text};
 	$self->process_ppi($ppi) if $self->can('process_ppi');
 	return 1;

@@ -2,7 +2,7 @@ package Padre::Task::HTTPClient;
 
 use strict;
 use warnings;
-use Params::Util   qw{_CODE _INSTANCE};
+use Params::Util qw{_CODE _INSTANCE};
 use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();
@@ -24,7 +24,7 @@ Sending and receiving data via HTTP.
 
 =cut
 
-# TODO this should probably run later, 
+# TODO this should probably run later,
 # not when the plugin is enabled
 sub run {
 	my $self = shift;
@@ -33,26 +33,26 @@ sub run {
 	my $ua = LWP::UserAgent->new;
 	$ua->agent("Padre/$VERSION");
 	my $url = $ENV{PADRE_URL} || 'http://peride.org/popularity';
-	my $req = HTTP::Request->new(POST => $url);
+	my $req = HTTP::Request->new( POST => $url );
 	$req->content_type('application/x-www-form-urlencoded');
 
 	# TODO the data here has to be controlled by the user
 	my %data;
 	$data{fname} = 'Foo';
 	$data{lname} = 'Bar';
-#	$data{padre} = $VERSION;
-#	$data{perl}  = $];
-#	$data{os}    = $^O;
-	
+
+	#	$data{padre} = $VERSION;
+	#	$data{perl}  = $];
+	#	$data{os}    = $^O;
+
 	require YAML::Tiny;
-	my $content = YAML::Tiny::Dump(\%data);
+	my $content = YAML::Tiny::Dump( \%data );
 	$req->content($content);
 
 	my $res = $ua->request($req);
 
 	return 1;
 }
-
 
 1;
 

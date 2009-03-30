@@ -24,21 +24,20 @@ use Padre::Wx   ();
 our $VERSION = '0.32';
 
 # For now apply a single common configuration
-use constant SIZE         => '16x16';
-use constant EXT          => '.png';
-use constant THEMES       => ( 'gnome218', 'padre' );
-use constant ICONS        => Padre::Util::sharedir('icons');
+use constant SIZE   => '16x16';
+use constant EXT    => '.png';
+use constant THEMES => ( 'gnome218', 'padre' );
+use constant ICONS  => Padre::Util::sharedir('icons');
 
 # Supports the use of theme-specific "hints",
 # when we want to substitute a technically incorrect
 # icon on a theme by theme basis.
 my %HINT = (
-	'gnome218' => { },
+	'gnome218' => {},
 );
 
 our $DEFAULT_ICON_NAME = 'status/padre-fallback-icon';
 our $DEFAULT_ICON;
-
 
 #####################################################################
 # Icon Resolver
@@ -50,32 +49,36 @@ sub find {
 	my $name = shift;
 
 	# Search through the theme list
-	foreach my $theme ( THEMES ) {
-		my $hinted = ($HINT{$theme} and $HINT{$theme}->{$name})
+	foreach my $theme (THEMES) {
+		my $hinted
+			= ( $HINT{$theme} and $HINT{$theme}->{$name} )
 			? $HINT{$theme}->{$name}
 			: $name;
 		my $file = File::Spec->catfile(
 			ICONS,
 			$theme,
 			SIZE,
-			(split /\//, $hinted)
+			( split /\//, $hinted )
 		) . '.png';
 		next unless -f $file;
-		return Wx::Bitmap->new($file, Wx::wxBITMAP_TYPE_PNG );
+		return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
 	}
 
-	if (defined $DEFAULT_ICON) {
+	if ( defined $DEFAULT_ICON ) {
+
 		# fallback with a pretty ?
 		return $DEFAULT_ICON;
 	}
+
 	# setup and return the default icon
-	elsif ($name ne $DEFAULT_ICON_NAME) {
+	elsif ( $name ne $DEFAULT_ICON_NAME ) {
 		$DEFAULT_ICON = find($DEFAULT_ICON_NAME);
 		return $DEFAULT_ICON if defined $DEFAULT_ICON;
 	}
 
 	# THIS IS BAD!
 	require Carp;
+
 	# NOTE: This crash is mandatory. If you pass undef or similarly
 	# wrong things to AddTool, you get a segfault and nobody likes
 	# segfaults, right?
@@ -83,6 +86,7 @@ sub find {
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

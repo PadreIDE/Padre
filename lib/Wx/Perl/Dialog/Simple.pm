@@ -53,42 +53,44 @@ our $VERSION = '0.32';
 $| = 1;
 
 our @EXPORT = qw(
-				entry
-				password
-				file_selector
-				dir_selector
-				dir_picker
-				file_picker
-				date_picker
-				colour_picker
-				choice
-				single_choice
-				message
-				calendar
-			);
+	entry
+	password
+	file_selector
+	dir_selector
+	dir_picker
+	file_picker
+	date_picker
+	colour_picker
+	choice
+	single_choice
+	message
+	calendar
+);
+
 #                 print_out close_app open_frame display_text
 
-use Wx        qw(:everything);
-use Wx::STC   ();
+use Wx qw(:everything);
+use Wx::STC ();
 use Wx::Event qw(:everything);
 
 sub entry {
-    my ( %args ) = @_;
+	my (%args) = @_;
 
-    %args = (
-              title   => '',
-              prompt  => '',
-              default => '',
-              %args);
+	%args = (
+		title   => '',
+		prompt  => '',
+		default => '',
+		%args
+	);
 
-    my $class = $args{password} ? 'Wx::PasswordEntryDialog' : 'Wx::TextEntryDialog';
-    my $dialog = $class->new( undef, $args{prompt}, $args{title}, $args{default} );
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }
-    my $resp = $dialog->GetValue;
-    $dialog->Destroy;
-    return $resp;
+	my $class = $args{password} ? 'Wx::PasswordEntryDialog' : 'Wx::TextEntryDialog';
+	my $dialog = $class->new( undef, $args{prompt}, $args{title}, $args{default} );
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
+	my $resp = $dialog->GetValue;
+	$dialog->Destroy;
+	return $resp;
 }
 
 =head2 password
@@ -96,11 +98,11 @@ sub entry {
 =cut
 
 sub password {
-    my ( %args ) = @_;
+	my (%args) = @_;
 
-    $args{password} = 1;
-    
-    return entry( %args );
+	$args{password} = 1;
+
+	return entry(%args);
 }
 
 =head2 file_selector
@@ -108,22 +110,23 @@ sub password {
 =cut
 
 sub file_selector {
-    my ( %args ) = @_;
-    %args = (
-                title => '',
-                %args);
+	my (%args) = @_;
+	%args = (
+		title => '',
+		%args
+	);
 
-    my $dialog = Wx::FileDialog->new( undef, $args{title}, '', "", "*.*", wxFD_OPEN);
-    if ($^O !~ /win32/i) {
-       $dialog->SetWildcard("*");
-    }
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }
-    my $filename = $dialog->GetFilename;
-    my $default_dir = $dialog->GetDirectory;
+	my $dialog = Wx::FileDialog->new( undef, $args{title}, '', "", "*.*", wxFD_OPEN );
+	if ( $^O !~ /win32/i ) {
+		$dialog->SetWildcard("*");
+	}
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
+	my $filename    = $dialog->GetFilename;
+	my $default_dir = $dialog->GetDirectory;
 
-    return File::Spec->catfile($default_dir, $filename);
+	return File::Spec->catfile( $default_dir, $filename );
 }
 
 =head2 dir_selector
@@ -131,19 +134,20 @@ sub file_selector {
 =cut
 
 sub dir_selector {
-    my ( %args ) = @_;
-    %args = (
-                title => '',
-                path  => '',
-                %args);
+	my (%args) = @_;
+	%args = (
+		title => '',
+		path  => '',
+		%args
+	);
 
-    my $dialog = Wx::DirDialog->new( undef, $args{title}, $args{path});
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }
-    my $dir = $dialog->GetPath;
+	my $dialog = Wx::DirDialog->new( undef, $args{title}, $args{path} );
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
+	my $dir = $dialog->GetPath;
 
-    return $dir;
+	return $dir;
 }
 
 =head2 date_picker
@@ -153,17 +157,16 @@ sub dir_selector {
 sub date_picker {
 
 	require Wx::DateTime;
-    require Wx::Calendar;
+	require Wx::Calendar;
 	my $date = Wx::DateTime->newFromDMY( 8, 0, 1979, 1, 1, 1, 1 );
 	my $calendar = Wx::DatePickerCtrl->new( undef, -1, $date );
 
 	return dialog(
-				sub { Wx::DatePickerCtrl->new( $_[0], -1 ) },
-				sub { $_[0]; },
-				sub { $_[0]->GetValue->Format; },
-				{
-					title => 'Select date',
-				},
+		sub { Wx::DatePickerCtrl->new( $_[0], -1 ) },
+		sub { $_[0]; },
+		sub { $_[0]->GetValue->Format; },
+		{   title => 'Select date',
+		},
 	);
 }
 
@@ -174,12 +177,11 @@ sub date_picker {
 sub colour_picker {
 
 	return dialog(
-				sub { Wx::ColourPickerCtrl->new( $_[0], -1 ) },
-				sub { $_[0]; },
-				sub { my $c = $_[0]->GetColour; return [$c->Red, $c->Green, $c->Blue] },
-				{
-					title => 'Select colour',
-				},
+		sub { Wx::ColourPickerCtrl->new( $_[0], -1 ) },
+		sub { $_[0]; },
+		sub { my $c = $_[0]->GetColour; return [ $c->Red, $c->Green, $c->Blue ] },
+		{   title => 'Select colour',
+		},
 	);
 }
 
@@ -191,12 +193,11 @@ sub file_picker {
 
 	require Cwd;
 	return dialog(
-				sub { Wx::FilePickerCtrl->new( $_[0] ) }, 
-				sub { $_[0]->SetPath(Cwd::cwd()) }, # setup
-				sub { $_[0]->GetPath; },            # get data
-				{
-					title => 'Select file',
-				},
+		sub { Wx::FilePickerCtrl->new( $_[0] ) },
+		sub { $_[0]->SetPath( Cwd::cwd() ) },       # setup
+		sub { $_[0]->GetPath; },                    # get data
+		{   title => 'Select file',
+		},
 	);
 }
 
@@ -208,10 +209,9 @@ sub dir_picker {
 	require Cwd;
 	return dialog(
 		sub { Wx::DirPickerCtrl->new( $_[0] ) },
-		sub { $_[0]->SetPath(Cwd::cwd()) }, # setup
-		sub { $_[0]->GetPath; },            # get data
-		{
-			title => 'Select directory',
+		sub { $_[0]->SetPath( Cwd::cwd() ) },      # setup
+		sub { $_[0]->GetPath; },                   # get data
+		{   title => 'Select directory',
 		},
 	);
 }
@@ -233,19 +233,19 @@ It needs 4 parameters: 3 subroutines and a hash-ref
 =cut
 
 sub dialog {
-	my ($control, $setup, $getdata, $args) = @_;
+	my ( $control, $setup, $getdata, $args ) = @_;
 
-	$args          ||= {};
+	$args ||= {};
 	$args->{title} ||= '';
 
 	my $dialog = Wx::Dialog->new( undef, -1, $args->{title} );
 	my $ctrl   = $control->($dialog);
-	my $ok     = Wx::Button->new( $dialog, wxID_OK, '');
-	my $cancel = Wx::Button->new( $dialog, wxID_CANCEL, '', [-1, -1], $ok->GetSize);
+	my $ok     = Wx::Button->new( $dialog, wxID_OK, '' );
+	my $cancel = Wx::Button->new( $dialog, wxID_CANCEL, '', [ -1, -1 ], $ok->GetSize );
 
-	my $box      = Wx::BoxSizer->new(  wxVERTICAL   );
-	my $top      = Wx::BoxSizer->new(  wxHORIZONTAL );
-    my $buttons  = Wx::BoxSizer->new(  wxHORIZONTAL );
+	my $box     = Wx::BoxSizer->new(wxVERTICAL);
+	my $top     = Wx::BoxSizer->new(wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(wxHORIZONTAL);
 	$box->Add($top);
 	$box->Add($buttons);
 	$top->Add($ctrl);
@@ -254,64 +254,60 @@ sub dialog {
 	$ok->SetDefault;
 	$dialog->SetSizer($box);
 
-
-	my ($bw, $bh) = $ok->GetSizeWH;
-	my ($w, $h)   = $ctrl->GetSizeWH;
-	$dialog->SetSize($bw*2, $h+$bh+20);
+	my ( $bw, $bh ) = $ok->GetSizeWH;
+	my ( $w,  $h )  = $ctrl->GetSizeWH;
+	$dialog->SetSize( $bw * 2, $h + $bh + 20 );
 
 	$setup->($ctrl);
 
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
 
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }
-	
 	my $data = $getdata->($ctrl);
 
 	$dialog->Destroy;
 
-    return $data;
+	return $data;
 }
-
 
 =head2 choice
 
 =cut
 
 sub choice {
-    my ( %args ) = @_;
-    %args = (
-                title   => '',
-                message => '',
-                choices => [],
+	my (%args) = @_;
+	%args = (
+		title   => '',
+		message => '',
+		choices => [],
 
-                %args);
+		%args
+	);
 
-    my $dialog = Wx::MultiChoiceDialog->new( undef, $args{message}, $args{title}, $args{choices});
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }
-    return map {$args{choices}[$_]} $dialog->GetSelections;
+	my $dialog = Wx::MultiChoiceDialog->new( undef, $args{message}, $args{title}, $args{choices} );
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
+	return map { $args{choices}[$_] } $dialog->GetSelections;
 }
 
 sub single_choice {
-    my ( %args ) = @_;
-    %args = (
-                title   => '',
-                message => '',
-                choices => [],
+	my (%args) = @_;
+	%args = (
+		title   => '',
+		message => '',
+		choices => [],
 
-                %args);
+		%args
+	);
 
-    my $dialog = Wx::SingleChoiceDialog->new( undef, $args{message}, $args{title}, $args{choices});
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }
-    return $args{choices}[ $dialog->GetSelection ];
+	my $dialog = Wx::SingleChoiceDialog->new( undef, $args{message}, $args{title}, $args{choices} );
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
+	return $args{choices}[ $dialog->GetSelection ];
 }
-
-
-
 
 #=head2 print_out
 #
@@ -330,17 +326,18 @@ sub single_choice {
 =cut
 
 sub message {
-    my ( %args ) = @_;
+	my (%args) = @_;
 
-    %args = (
-                title   => '',
-                text    => '',
+	%args = (
+		title => '',
+		text  => '',
 
-                %args);
+		%args
+	);
 
-    Wx::MessageBox( $args{text}, $args{title}, wxOK|wxCENTRE);
+	Wx::MessageBox( $args{text}, $args{title}, wxOK | wxCENTRE );
 
-    return;
+	return;
 }
 
 1;

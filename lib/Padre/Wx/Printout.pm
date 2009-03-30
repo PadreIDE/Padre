@@ -53,23 +53,23 @@ sub GetPageInfo {
 	my $ppiScr = Wx::Size->new( $x, $y );
 
 	my $pageSize = Wx::Size->new( $self->GetPageSizeMM );
-	$pageSize->SetWidth(  int( $pageSize->GetWidth  * $ppiScr->GetWidth  / 25.4 ) );
+	$pageSize->SetWidth( int( $pageSize->GetWidth * $ppiScr->GetWidth / 25.4 ) );
 	$pageSize->SetHeight( int( $pageSize->GetHeight * $ppiScr->GetHeight / 25.4 ) );
 
 	$self->{pageRect} = Wx::Rect->new( 0, 0, $pageSize->GetWidth, $pageSize->GetHeight );
 
 	# my $topLeft  = $psdd->GetMarginTopLeft;
-	my $left   = 25.4; # $topLeft->x;
-	my $top    = 25.4; # $topLeft->y;
+	my $left = 25.4;    # $topLeft->x;
+	my $top  = 25.4;    # $topLeft->y;
 
 	# my $btmRight = $psdd->GetMarginBottomRight;
 	my $right  = Wx::Size->new( $self->GetPageSizeMM )->GetWidth - 50.8;    # $btmRight->x;
 	my $bottom = 25.4;                                                      # $btmRight->y;
 
-	$top    = int( $top    * $ppiScr->GetHeight / 25.4 );
+	$top    = int( $top * $ppiScr->GetHeight / 25.4 );
 	$bottom = int( $bottom * $ppiScr->GetHeight / 25.4 );
-	$left   = int( $left   * $ppiScr->GetWidth  / 25.4 );
-	$right  = int( $right  * $ppiScr->GetWidth  / 25.4 );
+	$left   = int( $left * $ppiScr->GetWidth / 25.4 );
+	$right  = int( $right * $ppiScr->GetWidth / 25.4 );
 
 	$self->{printRect} = Wx::Rect->new(
 		int( $left * $dc->GetUserScale ),
@@ -99,7 +99,7 @@ sub GetPageInfo {
 	$selPageFrom = $minPage;
 	$selPageTo   = $maxPage;
 	return ( $minPage, $maxPage, $selPageFrom, $selPageTo );
-} ## end sub GetPageInfo
+}
 
 sub HasPage {
 	my $self = shift;
@@ -117,7 +117,7 @@ sub PrintScaling {
 	my ( $sx, $sy ) = $self->GetPPIScreen;
 
 	my $ppiScr = Wx::Size->new( $sx, $sy );
-	if ( $ppiScr->GetWidth == 0 ) { # guessing 96 dpi
+	if ( $ppiScr->GetWidth == 0 ) {    # guessing 96 dpi
 		$ppiScr->SetWidth(96);
 		$ppiScr->SetHeight(96);
 	}
@@ -125,7 +125,7 @@ sub PrintScaling {
 	my ( $px, $py ) = $self->GetPPIPrinter;
 	my $ppiPrt = Wx::Size->new( $px, $py );
 
-	if ( $ppiPrt->GetWidth == 0 ) { # scaling factor 1
+	if ( $ppiPrt->GetWidth == 0 ) {    # scaling factor 1
 		$ppiPrt->SetWidth( $ppiScr->GetWidth );
 		$ppiPrt->SetHeight( $ppiScr->GetHeight );
 	}
@@ -135,17 +135,16 @@ sub PrintScaling {
 	my $pageSize = Wx::Size->new( $pax, $pay );
 
 	# set user scale
-	my $scale_x = ( $ppiPrt->GetWidth  * $dcSize->GetWidth    ) / 
-	              ( $ppiScr->GetWidth  * $pageSize->GetWidth  );
-	my $scale_y = ( $ppiPrt->GetHeight * $dcSize->GetHeight   ) /
-	              ( $ppiScr->GetHeight * $pageSize->GetHeight );
+	my $scale_x = ( $ppiPrt->GetWidth * $dcSize->GetWidth ) /   ( $ppiScr->GetWidth * $pageSize->GetWidth );
+	my $scale_y = ( $ppiPrt->GetHeight * $dcSize->GetHeight ) / ( $ppiScr->GetHeight * $pageSize->GetHeight );
 
 	$dc->SetUserScale( $scale_x, $scale_y );
 
 	return 1;
-} ## end sub PrintScaling
+}
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

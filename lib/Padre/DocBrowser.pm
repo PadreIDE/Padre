@@ -10,16 +10,15 @@ use Padre::DocBrowser::POD ();
 
 our $VERSION = '0.32';
 
-use Class::XSAccessor
-	getters => {
-		get_providers => 'providers',
-		get_viewers   => 'viewers',
-		get_schemes   => 'schemes',
+use Class::XSAccessor getters => {
+	get_providers => 'providers',
+	get_viewers   => 'viewers',
+	get_schemes   => 'schemes',
 	},
 	setters => {
-		set_providers => 'providers',
-		set_viewers   => 'viewers',
-		set_schemes   => 'schemes',
+	set_providers => 'providers',
+	set_viewers   => 'viewers',
+	set_schemes   => 'schemes',
 	};
 
 =pod
@@ -141,38 +140,34 @@ Accepts a URI or scalar
 =cut
 
 sub new {
-	my ($class,%args) = @_;
+	my ( $class, %args ) = @_;
 
-	my $self = bless \%args, ref ($class) || $class;
-	$self->set_providers({}) unless $args{providers};
-	$self->set_viewers({})   unless $args{viewers};
-	$self->set_schemes({})   unless $args{schemes};
+	my $self = bless \%args, ref($class) || $class;
+	$self->set_providers( {} ) unless $args{providers};
+	$self->set_viewers(   {} ) unless $args{viewers};
+	$self->set_schemes(   {} ) unless $args{schemes};
 
 	# Provides pod from perl, pod: perldoc: schemes
-	$self->load_provider( 'Padre::DocBrowser::POD' );
+	$self->load_provider('Padre::DocBrowser::POD');
 
 	# Produces html view of POD
-	$self->load_viewer( 'Padre::DocBrowser::POD' );
+	$self->load_viewer('Padre::DocBrowser::POD');
 
 	return $self;
 }
 
 sub load_provider {
-	my ($self,$class) = @_;
+	my ( $self, $class ) = @_;
 
-	Class::Autouse->autouse( $class );
-	if ( $class->can( 'provider_for' ) ) {
-		$self->register_providers(
-			$_ => $class
-		) for $class->provider_for;
+	Class::Autouse->autouse($class);
+	if ( $class->can('provider_for') ) {
+		$self->register_providers( $_ => $class ) for $class->provider_for;
 	} else {
 		Carp::confess("$class is not a provider for anything.");
 	}
 
-	if ( $class->can( 'accept_schemes' ) ) {
-		$self->register_schemes( 
-			$_ => $class
-		) for $class->accept_schemes;
+	if ( $class->can('accept_schemes') ) {
+		$self->register_schemes( $_ => $class ) for $class->accept_schemes;
 	} else {
 		Carp::confess("$class accepts no uri schemes");
 	}
@@ -181,56 +176,56 @@ sub load_provider {
 }
 
 sub load_viewer {
-	my ($self,$class) = @_;
-	Class::Autouse->autouse( $class );
-	if ( $class->can( 'viewer_for' ) ) {
-		$self->register_viewers(
-			$_ => $class
-		) for $class->viewer_for;
+	my ( $self, $class ) = @_;
+	Class::Autouse->autouse($class);
+	if ( $class->can('viewer_for') ) {
+		$self->register_viewers( $_ => $class ) for $class->viewer_for;
 	}
 	$self;
 }
 
 sub register_providers {
-	my ($self,%provides) = @_;
-	while ( my ($type,$class) = each %provides ) {
+	my ( $self, %provides ) = @_;
+	while ( my ( $type, $class ) = each %provides ) {
+
 		# TODO - handle collisions, ie multi providers
-		$self->get_providers->{$type} = $class;	      
+		$self->get_providers->{$type} = $class;
 	}
 	$self;
 }
 
 sub register_viewers {
-	my ($self,%viewers) = @_;
-	while ( my ($type,$class) = each %viewers ) {
+	my ( $self, %viewers ) = @_;
+	while ( my ( $type, $class ) = each %viewers ) {
 		$self->get_viewers->{$type} = $class;
-		Class::Autouse->autouse( $class );
+		Class::Autouse->autouse($class);
 	}
 	$self;
 }
 
-sub register_schemes { 
-	my ($self,%schemes) = @_;
-	while ( my ($scheme,$class) = each %schemes ) {
+sub register_schemes {
+	my ( $self, %schemes ) = @_;
+	while ( my ( $scheme, $class ) = each %schemes ) {
 		$self->get_schemes->{$scheme} = $class;
 	}
 	$self;
 }
 
 sub provider_for {
-	my ($self,$type) = @_;
+	my ( $self, $type ) = @_;
 	my $p;
 	eval {
-		if ( exists $self->get_providers->{$type} ) {
+		if ( exists $self->get_providers->{$type} )
+		{
 			$p = $self->get_providers->{$type}->new;
-		} 
+		}
 	};
 	Carp::confess($@) if $@;
 	return $p;
 }
 
 sub accept {
-	my ($self,$scheme) = @_;
+	my ( $self, $scheme ) = @_;
 	if ( defined $self->get_schemes->{$scheme} ) {
 		return 1;
 	}
@@ -238,58 +233,61 @@ sub accept {
 }
 
 sub viewer_for {
-	my ($self,$type) = @_;
+	my ( $self, $type ) = @_;
 	my $v;
 	eval {
-		if ( exists $self->get_viewers->{$type} ) {
+		if ( exists $self->get_viewers->{$type} )
+		{
 			$v = $self->get_viewers->{$type}->new;
-		}	
+		}
 	};
 	Carp::confess($@) if $@;
 	return $v;
 }
 
 sub docs {
-	my ($self,$doc) = @_;
+	my ( $self, $doc ) = @_;
 	if ( my $provider = $self->provider_for( $doc->get_mimetype ) ) {
-		my $docs = $provider->generate( $doc );
-		return $docs;	  
+		my $docs = $provider->generate($doc);
+		return $docs;
 	}
 	warn "No provider for " . $doc->get_mimetype;
 	return;
 }
 
 sub resolve {
-	my ($self,$ref) = @_;
+	my ( $self, $ref ) = @_;
 	my @refs;
-	if ( Scalar::Util::blessed($ref) and $ref->isa( 'URI' ) ) {
-		return $self->resolve_uri( $ref );
+	if ( Scalar::Util::blessed($ref) and $ref->isa('URI') ) {
+		return $self->resolve_uri($ref);
 	}
+
 	# TODO this doubles up if a provider subscribes to multi
-	# mimetypes . 
-	foreach my $class ( values %{$self->get_providers} ) {
-		my $resp = $class->resolve( $ref );
-		push @refs ,$resp if $resp;
+	# mimetypes .
+	foreach my $class ( values %{ $self->get_providers } ) {
+		my $resp = $class->resolve($ref);
+		push @refs, $resp if $resp;
 	}
 	return $refs[0];
 }
 
-sub resolve_uri { 
-	my ($self,$uri) = @_;
+sub resolve_uri {
+	my ( $self, $uri ) = @_;
 	my $resolver = $self->get_schemes->{ $uri->scheme };
-	my $doc = $resolver->resolve( $uri->opaque );
+	my $doc      = $resolver->resolve( $uri->opaque );
 	return $doc;
 }
 
 sub browse {
-	my ($self,$docs) = @_;
+	my ( $self, $docs ) = @_;
 	if ( my $viewer = $self->viewer_for( $docs->get_mimetype ) ) {
-		return $viewer->render( $docs );
+		return $viewer->render($docs);
 	}
 	return;
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

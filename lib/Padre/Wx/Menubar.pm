@@ -3,8 +3,8 @@ package Padre::Wx::Menubar;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util             qw{_INSTANCE};
-use Padre::Current           qw{_CURRENT};
+use Params::Util qw{_INSTANCE};
+use Padre::Current qw{_CURRENT};
 use Padre::Util              ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::File    ();
@@ -19,40 +19,36 @@ use Padre::Wx::Menu::Help    ();
 
 our $VERSION = '0.32';
 
-
-
-
-
 #####################################################################
 # Construction, Setup, and Accessors
 
-use Class::XSAccessor
-	getters => {
-		wx           => 'wx',
-		main         => 'main',
+use Class::XSAccessor getters => {
+	wx   => 'wx',
+	main => 'main',
 
-		# Don't add accessors to here until they have been
-		# upgraded to be fully encapsulated classes.
-		file         => 'file',
-		edit         => 'edit',
-		search       => 'search',
-		view         => 'view',
-		perl         => 'perl',
-		run          => 'run',
-		plugins      => 'plugins',
-		window       => 'window',
-		help         => 'help',
-		experimental => 'experimental',
-	};
+	# Don't add accessors to here until they have been
+	# upgraded to be fully encapsulated classes.
+	file         => 'file',
+	edit         => 'edit',
+	search       => 'search',
+	view         => 'view',
+	perl         => 'perl',
+	run          => 'run',
+	plugins      => 'plugins',
+	window       => 'window',
+	help         => 'help',
+	experimental => 'experimental',
+};
 
 sub new {
-	my $class  = shift;
-	my $main   = shift;
+	my $class = shift;
+	my $main  = shift;
 
 	# Create the basic object
-	my $self   = bless {
+	my $self = bless {
+
 		# Link back to the main window
-		main    => $main,
+		main => $main,
 
 		# The number of menus in the default set.
 		# That is, EXCLUDING the special Perl menu.
@@ -73,17 +69,18 @@ sub new {
 
 	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
-	$self->wx->Append( $self->file->wx,    Wx::gettext("&File")    );
-	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit")    );
-	$self->wx->Append( $self->search->wx,  Wx::gettext("&Search")  );
-	$self->wx->Append( $self->view->wx,    Wx::gettext("&View")    );
-	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
+	$self->wx->Append( $self->file->wx,    Wx::gettext("&File") );
+	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit") );
+	$self->wx->Append( $self->search->wx,  Wx::gettext("&Search") );
+	$self->wx->Append( $self->view->wx,    Wx::gettext("&View") );
+	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run") );
 	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
-	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window")  );
-	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")    );
+	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window") );
+	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
 
 	my $config = Padre->ide->config;
 	if ( $config->experimental ) {
+
 		# Create the Experimental menu
 		# All the crap that doesn't work, have a home,
 		# or should never be seen be real users goes here.
@@ -96,20 +93,16 @@ sub new {
 	return $self;
 }
 
-
-
-
-
 #####################################################################
 # Reflowing the Menu
 
 sub refresh {
-	my $self     = shift;
-	my $plugins  = shift;
+	my $self    = shift;
+	my $plugins = shift;
 
 	my $current  = _CURRENT(@_);
 	my $menu     = $self->wx->GetMenuCount ne $self->{default};
-	my $document = !! _INSTANCE(
+	my $document = !!_INSTANCE(
 		$current->document,
 		'Padre::Document::Perl'
 	);
@@ -118,7 +111,7 @@ sub refresh {
 	if ( $document and not $menu ) {
 		$self->wx->Insert( 4, $self->perl->wx, '&Perl' );
 	} elsif ( $menu and not $document ) {
-		$self->wx->Remove( 4 );
+		$self->wx->Remove(4);
 	}
 
 	# Refresh individual menus
@@ -128,10 +121,10 @@ sub refresh {
 	$self->view->refresh($current);
 	$self->run->refresh($current);
 	$self->perl->refresh($current);
-	
-# plugin menu requires special flag as it was leaking memory
-# TODO eliminate the memory leak
-	if ( $plugins ) {
+
+	# plugin menu requires special flag as it was leaking memory
+	# TODO eliminate the memory leak
+	if ($plugins) {
 		$self->plugins->refresh($current);
 	}
 	$self->window->refresh($current);

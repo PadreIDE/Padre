@@ -19,8 +19,8 @@ sub new {
 		id     => -1,
 		style  => Wx::wxDEFAULT_FRAME_STYLE,
 		title  => '',
-		pos    => [-1, -1],
-		size   => [-1, -1],
+		pos    => [ -1, -1 ],
+		size   => [ -1, -1 ],
 		@_,
 	);
 
@@ -51,9 +51,9 @@ sub new {
 
 	$self->{sizer}->Add(
 		$self->{renderer},
-		1, # Growth proportion
+		1,    # Growth proportion
 		Wx::wxEXPAND,
-		5, # Border size
+		5,    # Border size
 	);
 
 	# Tie the sizing to the panel
@@ -80,6 +80,7 @@ sub html {
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

@@ -5,21 +5,17 @@ package Padre::Project;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec    ();
-use YAML::Tiny    ();
-use Padre::Config ();
+use File::Spec             ();
+use YAML::Tiny             ();
+use Padre::Config          ();
 use Padre::Config::Project ();
 
 our $VERSION = '0.32';
 
-use Class::XSAccessor
-	getters => {
-		root      => 'root',
-		padre_yml => 'padre_yml',
-	};
-
-
-
+use Class::XSAccessor getters => {
+	root      => 'root',
+	padre_yml => 'padre_yml',
+};
 
 ######################################################################
 # Class Methods
@@ -30,36 +26,32 @@ sub class {
 	unless ( -d $root ) {
 		Carp::croak("Project directory '$root' does not exist");
 	}
-	if ( -f File::Spec->catfile($root, 'Makefile.PL') ) {
+	if ( -f File::Spec->catfile( $root, 'Makefile.PL' ) ) {
 		return 'Padre::Project::Perl';
 	}
-	if ( -f File::Spec->catfile($root, 'Build.PL') ) {
+	if ( -f File::Spec->catfile( $root, 'Build.PL' ) ) {
 		return 'Padre::Project::Perl';
 	}
-	if ( -f File::Spec->catfile($root, 'padre.yml') ) {
+	if ( -f File::Spec->catfile( $root, 'padre.yml' ) ) {
 		return 'Padre::Project';
 	}
 	return 'Padre::Project::Null';
 
 }
 
-
-
-
-
 ######################################################################
 # Constructor and Accessors
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check the root directory
 	unless ( defined $self->root ) {
 		croak("Did not provide a root directory");
 	}
 	unless ( -d $self->root ) {
-		croak("Root directory " . $self->root . " does not exist");
+		croak( "Root directory " . $self->root . " does not exist" );
 	}
 
 	# Check for a padre.yml file
@@ -77,6 +69,7 @@ sub new {
 sub config {
 	my $self = shift;
 	unless ( $self->{config} ) {
+
 		# Get the default config object
 		my $config = Padre->ide->config;
 

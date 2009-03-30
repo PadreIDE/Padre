@@ -47,6 +47,7 @@ sub run {
 }
 
 sub _get_outline {
+
 	# TODO switch to using File::PackageIndexer
 	# (which needs to be modified / extended first)
 	my $self = shift;
@@ -64,39 +65,36 @@ sub _get_outline {
 
 	my $find = PPI::Find->new(
 		sub {
-			return 1 if
-				   ref $_[0] eq 'PPI::Statement::Package'
-				or ref $_[0] eq 'PPI::Statement::Include'
-				or ref $_[0] eq 'PPI::Statement::Sub'
+			return 1
+				if ref $_[0] eq 'PPI::Statement::Package'
+					or ref $_[0] eq 'PPI::Statement::Include'
+					or ref $_[0] eq 'PPI::Statement::Sub';
 		}
 	);
 
-	my @things = $find->in($ppi_doc);
-	my $cur_pkg = {};
+	my @things        = $find->in($ppi_doc);
+	my $cur_pkg       = {};
 	my $not_first_one = 0;
 	foreach my $thing (@things) {
 		if ( ref $thing eq 'PPI::Statement::Package' ) {
-			if ( $not_first_one ) {
+			if ($not_first_one) {
 				if ( not $cur_pkg->{name} ) {
 					$cur_pkg->{name} = 'main';
 				}
 				push @{$outline}, $cur_pkg;
 				$cur_pkg = {};
 			}
-			$not_first_one = 1;
+			$not_first_one   = 1;
 			$cur_pkg->{name} = $thing->namespace;
 			$cur_pkg->{line} = $thing->location->[0];
-		}
-		elsif ( ref $thing eq 'PPI::Statement::Include' ) {
+		} elsif ( ref $thing eq 'PPI::Statement::Include' ) {
 			next if $thing->type eq 'no';
 			if ( $thing->pragma ) {
 				push @{ $cur_pkg->{pragmata} }, { name => $thing->pragma, line => $thing->location->[0] };
-			}
-			elsif ( $thing->module ) {
+			} elsif ( $thing->module ) {
 				push @{ $cur_pkg->{modules} }, { name => $thing->module, line => $thing->location->[0] };
 			}
-		}
-		elsif ( ref $thing eq 'PPI::Statement::Sub' ) {
+		} elsif ( ref $thing eq 'PPI::Statement::Sub' ) {
 			push @{ $cur_pkg->{methods} }, { name => $thing->name, line => $thing->location->[0] };
 		}
 	}
@@ -132,13 +130,14 @@ sub update_gui {
 	$outlinebar->clear;
 
 	require Padre::Wx;
+
 	# If there is no structure, clear the outline pane and return.
-	unless ( $outline ) {
+	unless ($outline) {
 		return;
 	}
 
 	# Again, slightly differently
-	unless ( @$outline ) {
+	unless (@$outline) {
 		return 1;
 	}
 
@@ -174,25 +173,28 @@ sub _on_tree_item_right_click {
 	my ( $outlinebar, $event ) = @_;
 	my $showMenu = 0;
 
-	my $menu = Wx::Menu->new;
+	my $menu     = Wx::Menu->new;
 	my $itemData = $outlinebar->GetPlData( $event->GetItem );
 
 	if ( defined($itemData) && defined( $itemData->{line} ) && $itemData->{line} > 0 ) {
 		my $goTo = $menu->Append( -1, Wx::gettext("&GoTo Element") );
-		Wx::Event::EVT_MENU( $outlinebar, $goTo,
+		Wx::Event::EVT_MENU(
+			$outlinebar, $goTo,
 			sub { $outlinebar->on_tree_item_activated($event); },
 		);
 		$showMenu++;
 	}
 
-	if ( 
-		defined($itemData)
-		&& defined( $itemData->{type} ) 
-		&& ( $itemData->{type} eq 'modules' || $itemData->{type} eq 'pragmata' )
-	) {
+	if (   defined($itemData)
+		&& defined( $itemData->{type} )
+		&& ( $itemData->{type} eq 'modules' || $itemData->{type} eq 'pragmata' ) )
+	{
 		my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
-		Wx::Event::EVT_MENU( $outlinebar, $pod,
+		Wx::Event::EVT_MENU(
+			$outlinebar,
+			$pod,
 			sub {
+
 				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				my $help = Padre::Wx::DocBrowser->new;
 				$help->help( $itemData->{name} );
@@ -203,7 +205,6 @@ sub _on_tree_item_right_click {
 		);
 		$showMenu++;
 	}
-		
 
 	if ( $showMenu > 0 ) {
 		my $x = $event->GetPoint->x;
@@ -216,19 +217,19 @@ sub _on_tree_item_right_click {
 sub _update_treectrl {
 	my ( $outlinebar, $outline, $root ) = @_;
 
-	foreach my $pkg ( @{ $outline } ) {
+	foreach my $pkg ( @{$outline} ) {
 		my $branch = $outlinebar->AppendItem(
- 			$root,
+			$root,
 			$pkg->{name},
-			-1,
-			-1,
-			Wx::TreeItemData->new( {
-				line => $pkg->{line},
-				name => $pkg->{name},
-				type => 'package',
-			} )
+			-1, -1,
+			Wx::TreeItemData->new(
+				{   line => $pkg->{line},
+					name => $pkg->{name},
+					type => 'package',
+				}
+			)
 		);
-		foreach my $type ( qw(pragmata modules methods) ) {
+		foreach my $type (qw(pragmata modules methods)) {
 			_add_subtree( $outlinebar, $pkg, $type, $branch );
 		}
 		$outlinebar->Expand($branch);
@@ -241,7 +242,7 @@ sub _add_subtree {
 	my ( $outlinebar, $pkg, $type, $root ) = @_;
 
 	my $type_elem = undef;
-	if ( defined($pkg->{$type}) && scalar(@{ $pkg->{$type} }) > 0 ) {
+	if ( defined( $pkg->{$type} ) && scalar( @{ $pkg->{$type} } ) > 0 ) {
 		$type_elem = $outlinebar->AppendItem(
 			$root,
 			ucfirst($type),
@@ -254,43 +255,42 @@ sub _add_subtree {
 		if ( $type eq 'methods' ) {
 			my $config = Padre->ide->config;
 			if ( $config->main_functions_order eq 'original' ) {
+
 				# That should be the one we got
 				@sorted_entries = @{ $pkg->{$type} };
-			}
-			elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
+			} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
+
 				# ~ comes after \w
 				my @pre = map { $_->{name} =~ s/^_/~/; $_ } @{ $pkg->{$type} };
 				@pre = sort { $a->{name} cmp $b->{name} } @pre;
 				@sorted_entries = map { $_->{name} =~ s/^~/_/; $_ } @pre;
-			}
-			else {
+			} else {
+
 				# Alphabetical (aka 'abc')
 				@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
 			}
-		}
-		else {
+		} else {
 			@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
 		}
 
-		foreach my $item ( @sorted_entries ) {
+		foreach my $item (@sorted_entries) {
 			$outlinebar->AppendItem(
 				$type_elem,
 				$item->{name},
-				-1,
-				-1,
-				Wx::TreeItemData->new( {
-					line => $item->{line},
-					name => $item->{name},
-					type => $type,
-				} )
+				-1, -1,
+				Wx::TreeItemData->new(
+					{   line => $item->{line},
+						name => $item->{name},
+						type => $type,
+					}
+				)
 			);
 		}
 	}
 	if ( defined $type_elem ) {
 		if ( $type eq 'methods' ) {
 			$outlinebar->Expand($type_elem);
-		}
-		else {
+		} else {
 			$outlinebar->Collapse($type_elem);
 		}
 	}

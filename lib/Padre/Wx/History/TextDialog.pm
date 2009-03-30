@@ -4,8 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
-use Padre::DB    ();
-use Padre::Wx    ();
+use Padre::DB ();
+use Padre::Wx ();
 
 use Class::Adapter::Builder
 	ISA      => 'Wx::TextEntryDialog',
@@ -19,9 +19,9 @@ sub new {
 
 	# Instead of using the default value directly search using it
 	# as a type value in the database history table.
-	my $type   = $params[3];
+	my $type = $params[3];
 	$params[3] = Padre::DB::History->previous($type);
-	if ( _INSTANCE($params[3], 'Padre::DB::History') ) {
+	if ( _INSTANCE( $params[3], 'Padre::DB::History' ) ) {
 		$params[3] = $params[3]->name;
 	}
 	unless ( defined $params[3] ) {
@@ -29,10 +29,10 @@ sub new {
 	}
 
 	# Create the object
-	my $object = Wx::TextEntryDialog->new( @params );
+	my $object = Wx::TextEntryDialog->new(@params);
 
 	# Create the adapter
-	my $self = $class->SUPER::new( $object );
+	my $self = $class->SUPER::new($object);
 
 	# Remember what we suggested to them
 	$self->{type}      = $type;
@@ -47,6 +47,7 @@ sub ShowModal {
 	# Get the return value as normal
 	my $rv = $self->{OBJECT}->ShowModal(@_);
 	unless ( $rv == Wx::wxID_OK ) {
+
 		# They hit Cancel
 		return $rv;
 	}

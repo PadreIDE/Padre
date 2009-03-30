@@ -2,8 +2,8 @@ package Padre::Wx::Dialog::PluginManager;
 
 use strict;
 use warnings;
-use Carp              ();
-use Params::Util      qw{_INSTANCE};
+use Carp ();
+use Params::Util qw{_INSTANCE};
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
@@ -13,7 +13,7 @@ sub new {
 	my $class   = shift;
 	my $parent  = shift;
 	my $manager = shift;
-	unless ( _INSTANCE($manager, 'Padre::PluginManager') ) {
+	unless ( _INSTANCE( $manager, 'Padre::PluginManager' ) ) {
 		Carp::croak("Missing or invalid Padre::PluginManager object");
 	}
 
@@ -34,14 +34,15 @@ sub show {
 	my $plugins = $self->{manager}->plugins;
 	my @names   = sort keys %$plugins;
 	my @layout  = ();
-	foreach my $name ( @names ) {
+	foreach my $name (@names) {
 		my $object = $plugins->{$name}->{object};
 		my $text   = $plugins->{$name}->plugin_name;
-		push @layout, [
-			[ 'Wx::StaticText', undef,       $text                       ],
-			[ 'Wx::Button',    "able_$name", Wx::gettext('Incompatible') ],
-			[ 'Wx::Button',    "pref_$name", Wx::gettext('Preferences')  ],
-		];
+		push @layout,
+			[
+			[ 'Wx::StaticText', undef,        $text ],
+			[ 'Wx::Button',     "able_$name", Wx::gettext('Incompatible') ],
+			[ 'Wx::Button',     "pref_$name", Wx::gettext('Preferences') ],
+			];
 	}
 
 	# Create the dialog frame
@@ -51,7 +52,7 @@ sub show {
 		layout => \@layout,
 		width  => [ 200, 100, 100 ],
 	);
-	foreach my $name ( @names ) {
+	foreach my $name (@names) {
 		my $plugin = $plugins->{$name};
 		my $object = $plugin->object;
 		Wx::Event::EVT_BUTTON(
@@ -65,10 +66,9 @@ sub show {
 			$dialog,
 			$dialog->{_widgets_}->{"able_$name"},
 			sub {
-				if ($plugin->error or $plugin->incompatible) {
+				if ( $plugin->error or $plugin->incompatible ) {
 					$self->{parent}->error( $plugin->errstr() );
-				}
-				else {
+				} else {
 					$self->toggle_enabled($name);
 				}
 			},
@@ -138,7 +138,7 @@ sub update_labels {
 	my $plugin = $self->{manager}->plugins->{$name};
 
 	if ( $plugin->enabled ) {
-		$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Disable'));
+		$dialog->{_widgets_}->{"able_$name"}->SetLabel( Wx::gettext('Disable') );
 		if ( $plugin->{object}->can('plugin_preferences') ) {
 			$dialog->{_widgets_}->{"pref_$name"}->Enable;
 		} else {
@@ -148,14 +148,14 @@ sub update_labels {
 	}
 
 	if ( $plugin->can_enable ) {
-		$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Enable'));
+		$dialog->{_widgets_}->{"able_$name"}->SetLabel( Wx::gettext('Enable') );
 		$dialog->{_widgets_}->{"able_$name"}->Enable;
 		$dialog->{_widgets_}->{"pref_$name"}->Disable;
 		return;
 	}
 
 	if ( $plugin->error ) {
-		$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Crashed'));
+		$dialog->{_widgets_}->{"able_$name"}->SetLabel( Wx::gettext('Crashed') );
 		if ( $plugin->errstr ) {
 			$dialog->{_widgets_}->{"able_$name"}->Enable;
 		} else {
@@ -166,7 +166,7 @@ sub update_labels {
 	}
 
 	if ( $plugin->incompatible ) {
-		$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Crashed'));
+		$dialog->{_widgets_}->{"able_$name"}->SetLabel( Wx::gettext('Crashed') );
 		if ( $plugin->errstr ) {
 			$dialog->{_widgets_}->{"able_$name"}->Enable;
 		} else {
@@ -176,7 +176,7 @@ sub update_labels {
 		return;
 	}
 
-	$dialog->{_widgets_}->{"able_$name"}->SetLabel(Wx::gettext('Unknown'));
+	$dialog->{_widgets_}->{"able_$name"}->SetLabel( Wx::gettext('Unknown') );
 	$dialog->{_widgets_}->{"able_$name"}->Disable;
 	$dialog->{_widgets_}->{"pref_$name"}->Disable;
 
@@ -184,6 +184,7 @@ sub update_labels {
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

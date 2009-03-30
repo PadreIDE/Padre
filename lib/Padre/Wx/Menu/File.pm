@@ -5,16 +5,12 @@ package Padre::Wx::Menu::File;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx          ();
+use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current     qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.32';
 use base 'Padre::Wx::Menu';
-
-
-
-
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -22,6 +18,7 @@ use base 'Padre::Wx::Menu';
 sub new {
 	my $class = shift;
 	my $main  = shift;
+
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
@@ -33,10 +30,12 @@ sub new {
 		Wx::wxID_NEW,
 		Wx::gettext("&New\tCtrl-N"),
 	);
+
 	#$self->{new}->SetBitmap(
 	#	Padre::Wx::gnome('actions', 'document-new.png')
 	#);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{new},
 		sub {
 			$_[0]->on_new;
@@ -44,58 +43,66 @@ sub new {
 	);
 
 	my $file_new = Wx::Menu->new;
-	$self->Append( -1,
+	$self->Append(
+		-1,
 		Wx::gettext("New..."),
 		$file_new,
 	);
-	Wx::Event::EVT_MENU( $main,
-		$file_new->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$file_new->Append(
+			-1,
 			Wx::gettext('Perl 5 script')
 		),
 		sub {
 			$_[0]->on_new_from_template('pl');
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
-		$file_new->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$file_new->Append(
+			-1,
 			Wx::gettext('Perl 5 module')
 		),
 		sub {
 			$_[0]->on_new_from_template('pm');
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
-		$file_new->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$file_new->Append(
+			-1,
 			Wx::gettext('Perl 5 test')
 		),
 		sub {
 			$_[0]->on_new_from_template('t');
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
-		$file_new->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$file_new->Append(
+			-1,
 			Wx::gettext('Perl 6 script')
 		),
 		sub {
 			$_[0]->on_new_from_template('p6');
 		},
-	);	
-	Wx::Event::EVT_MENU( $main,
-		$file_new->Append( -1,
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$file_new->Append(
+			-1,
 			Wx::gettext('Perl Distribution (Module::Starter)')
 		),
 		sub {
 			require Padre::Wx::Dialog::ModuleStart;
-			Padre::Wx::Dialog::ModuleStart->start($_[0]);
+			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
 		},
 	);
 
-
-
-
-
 	# Open and close files
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append(
 			Wx::wxID_OPEN,
 			Wx::gettext("&Open...\tCtrl-O")
@@ -105,10 +112,12 @@ sub new {
 		},
 	);
 
-	$self->{open_selection} = $self->Append( -1,
+	$self->{open_selection} = $self->Append(
+		-1,
 		Wx::gettext("Open Selection\tCtrl-Shift-O")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{open_selection},
 		sub {
 			$_[0]->on_open_selection;
@@ -119,35 +128,42 @@ sub new {
 		Wx::wxID_CLOSE,
 		Wx::gettext("&Close\tCtrl-W"),
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{close},
 		sub {
 			$_[0]->on_close;
 		},
 	);
 
-	$self->{close_all} = $self->Append( -1,
+	$self->{close_all} = $self->Append(
+		-1,
 		Wx::gettext('Close All')
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{close_all},
 		sub {
 			$_[0]->on_close_all;
 		},
 	);
-	$self->{close_all_but_current} = $self->Append( -1,
+	$self->{close_all_but_current} = $self->Append(
+		-1,
 		Wx::gettext('Close All but Current')
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{close_all_but_current},
 		sub {
 			$_[0]->on_close_all_but_current;
 		},
 	);
-	$self->{reload_file} = $self->Append( -1,
+	$self->{reload_file} = $self->Append(
+		-1,
 		Wx::gettext('Reload file')
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{reload_file},
 		sub {
 			$_[0]->on_reload_file;
@@ -156,16 +172,13 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Save files
 	$self->{save} = $self->Append(
 		Wx::wxID_SAVE,
 		Wx::gettext("&Save\tCtrl-S")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{save},
 		sub {
 			$_[0]->on_save;
@@ -175,16 +188,19 @@ sub new {
 		Wx::wxID_SAVEAS,
 		Wx::gettext("Save &As...\tF12")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{save_as},
 		sub {
 			$_[0]->on_save_as;
 		},
 	);
-	$self->{save_all} = $self->Append( -1,
+	$self->{save_all} = $self->Append(
+		-1,
 		Wx::gettext('Save All')
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{save_all},
 		sub {
 			$_[0]->on_save_all;
@@ -193,16 +209,13 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Print files
 	$self->{print} = $self->Append(
 		Wx::wxID_PRINT,
 		Wx::gettext('&Print...'),
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{print},
 		sub {
 			require Wx::Print;
@@ -219,41 +232,44 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Conversions and Transforms
 	$self->{convert_nl} = Wx::Menu->new;
-	$self->Append( -1,
+	$self->Append(
+		-1,
 		Wx::gettext("Convert..."),
 		$self->{convert_nl}
 	);
 
-	$self->{convert_nl_windows} = $self->{convert_nl}->Append( -1,
+	$self->{convert_nl_windows} = $self->{convert_nl}->Append(
+		-1,
 		Wx::gettext("EOL to Windows")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{convert_nl_windows},
 		sub {
 			$_[0]->convert_to("WIN");
 		},
 	);
 
-	$self->{convert_nl_unix} = $self->{convert_nl}->Append(-1,
+	$self->{convert_nl_unix} = $self->{convert_nl}->Append(
+		-1,
 		Wx::gettext("EOL to Unix")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{convert_nl_unix},
 		sub {
 			$_[0]->convert_to("UNIX");
 		},
 	);
 
-	$self->{convert_nl_mac} = $self->{convert_nl}->Append(-1,
+	$self->{convert_nl_mac} = $self->{convert_nl}->Append(
+		-1,
 		Wx::gettext("EOL to Mac Classic")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{convert_nl_mac},
 		sub {
 			$_[0]->convert_to("MAC");
@@ -262,30 +278,31 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Recent things
 	$self->{recentfiles} = Wx::Menu->new;
-	$self->Append( -1,
+	$self->Append(
+		-1,
 		Wx::gettext("&Recent Files"),
 		$self->{recentfiles}
 	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{recentfiles}->Append(-1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{recentfiles}->Append(
+			-1,
 			Wx::gettext("Open All Recent Files")
 		),
 		sub {
 			$_[0]->on_open_all_recent_files;
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
-		$self->{recentfiles}->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{recentfiles}->Append(
+			-1,
 			Wx::gettext("Clean Recent Files List")
 		),
 		sub {
-			Padre::DB::History->delete('where type = ?', 'files');
+			Padre::DB::History->delete( 'where type = ?', 'files' );
 			$self->update_recentfiles;
 		},
 	);
@@ -296,15 +313,13 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Word Stats
-	$self->{docstat} = $self->Append( -1,
+	$self->{docstat} = $self->Append(
+		-1,
 		Wx::gettext('Doc Stats')
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{docstat},
 		sub {
 			$_[0]->on_doc_stats;
@@ -313,12 +328,9 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Exiting
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append(
 			Wx::wxID_EXIT,
 			Wx::gettext("&Quit\tCtrl-Q")
@@ -328,31 +340,27 @@ sub new {
 		},
 	);
 
-
-
-
-
 	return $self;
 }
 
 sub refresh {
-	my $self     = shift;
-	my $current  = _CURRENT(@_);
-	my $doc      = $current->document ? 1 : 0;
+	my $self    = shift;
+	my $current = _CURRENT(@_);
+	my $doc     = $current->document ? 1 : 0;
 
-	$self->{ open_selection        }->Enable($doc);
-	$self->{ close                 }->Enable($doc);
-	$self->{ close_all             }->Enable($doc);
-	$self->{ close_all_but_current }->Enable($doc);
-	$self->{ reload_file           }->Enable($doc);
-	$self->{ save                  }->Enable($doc);
-	$self->{ save_as               }->Enable($doc);
-	$self->{ save_all              }->Enable($doc);
-	$self->{ print                 }->Enable($doc);
-	$self->{ convert_nl_windows    }->Enable($doc);
-	$self->{ convert_nl_unix       }->Enable($doc);
-	$self->{ convert_nl_mac        }->Enable($doc);
-	$self->{ docstat               }->Enable($doc);
+	$self->{open_selection}->Enable($doc);
+	$self->{close}->Enable($doc);
+	$self->{close_all}->Enable($doc);
+	$self->{close_all_but_current}->Enable($doc);
+	$self->{reload_file}->Enable($doc);
+	$self->{save}->Enable($doc);
+	$self->{save_as}->Enable($doc);
+	$self->{save_all}->Enable($doc);
+	$self->{print}->Enable($doc);
+	$self->{convert_nl_windows}->Enable($doc);
+	$self->{convert_nl_unix}->Enable($doc);
+	$self->{convert_nl_mac}->Enable($doc);
+	$self->{docstat}->Enable($doc);
 
 	return 1;
 }
@@ -369,9 +377,11 @@ sub update_recentfiles {
 	}
 
 	my $idx = 0;
-	foreach my $file ( grep { -f } Padre::DB::History->recent('files') ) {
-		Wx::Event::EVT_MENU( $self->{main},
-			$self->{recentfiles}->Append( -1,
+	foreach my $file ( grep {-f} Padre::DB::History->recent('files') ) {
+		Wx::Event::EVT_MENU(
+			$self->{main},
+			$self->{recentfiles}->Append(
+				-1,
 				++$idx < 10 ? "&$idx. $file" : "$idx. $file"
 			),
 			sub {
@@ -384,6 +394,7 @@ sub update_recentfiles {
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

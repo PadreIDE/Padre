@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
-use Padre::Wx    ();
+use Padre::Wx ();
 
 our $VERSION = '0.32';
 use base 'Wx::ListView';
@@ -19,8 +19,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT
-		| Wx::wxLC_SINGLE_SEL
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
 	my $imagelist = Wx::ImageList->new( 14, 7 );
@@ -39,16 +38,16 @@ sub new {
 	);
 	$imagelist->Add($warningImg);
 
-	$self->AssignImageList($imagelist, Wx::wxIMAGE_LIST_SMALL);
+	$self->AssignImageList( $imagelist, Wx::wxIMAGE_LIST_SMALL );
 
-	$self->InsertColumn( 0, Wx::gettext('Line')        );
-	$self->InsertColumn( 1, Wx::gettext('Type')        );
+	$self->InsertColumn( 0, Wx::gettext('Line') );
+	$self->InsertColumn( 1, Wx::gettext('Type') );
 	$self->InsertColumn( 2, Wx::gettext('Description') );
 
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self,
-		$self,
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self, $self,
 		sub {
-			$self->on_list_item_activated($_[1]);
+			$self->on_list_item_activated( $_[1] );
 		},
 	);
 
@@ -75,8 +74,8 @@ sub clear {
 
 	# Remove the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
-		$editor->MarkerDeleteAll( Padre::Wx::MarkError );
-		$editor->MarkerDeleteAll( Padre::Wx::MarkWarn  );
+		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
+		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 	}
 
 	# Remove all items from the tool
@@ -86,9 +85,9 @@ sub clear {
 }
 
 sub set_column_widths {
-	my $self = shift;
+	my $self      = shift;
 	my $ref_entry = shift;
-	if ( ! defined $ref_entry ) {
+	if ( !defined $ref_entry ) {
 		$ref_entry = { line => ' ', };
 	}
 
@@ -98,8 +97,7 @@ sub set_column_widths {
 	my $refStr = '';
 	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
 		$refStr = Wx::gettext('Warning');
-	}
-	else {
+	} else {
 		$refStr = Wx::gettext('Error');
 	}
 
@@ -113,9 +111,6 @@ sub set_column_widths {
 	return;
 }
 
-
-
-
 #####################################################################
 # Timer Control
 
@@ -124,20 +119,22 @@ sub start {
 
 	# Add the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
+
 		# Margin number 1 for symbols
-		$editor->SetMarginType(1, Wx::wxSTC_MARGIN_SYMBOL);
+		$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
 
 		# Set margin 1 16 px wide
-		$editor->SetMarginWidth(1, 16);
+		$editor->SetMarginWidth( 1, 16 );
 	}
 
 	# List appearance: Initialize column widths
 	$self->set_column_widths;
 
-	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
-		Wx::Event::EVT_IDLE( $self,
+	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
+		Wx::Event::EVT_IDLE(
+			$self,
 			sub {
-				$self->on_idle($_[1]);
+				$self->on_idle( $_[1] );
 			},
 		);
 		$self->on_timer( undef, 1 );
@@ -146,15 +143,17 @@ sub start {
 			$self,
 			Padre::Wx::ID_TIMER_SYNTAX
 		);
-		Wx::Event::EVT_TIMER( $self,
+		Wx::Event::EVT_TIMER(
+			$self,
 			Padre::Wx::ID_TIMER_SYNTAX,
 			sub {
-				$self->on_timer($_[1], $_[2]);
+				$self->on_timer( $_[1], $_[2] );
 			},
 		);
-		Wx::Event::EVT_IDLE( $self,
+		Wx::Event::EVT_IDLE(
+			$self,
 			sub {
-				$self->on_idle($_[1]);
+				$self->on_idle( $_[1] );
 			},
 		);
 	}
@@ -166,9 +165,9 @@ sub stop {
 	my $self = shift;
 
 	# Stop the timer
-	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
+	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop;
-		Wx::Event::EVT_IDLE( $self, sub { return } );
+		Wx::Event::EVT_IDLE( $self, sub {return} );
 	}
 
 	# Clear out the existing data
@@ -176,19 +175,15 @@ sub stop {
 
 	# Remove the editor margin
 	foreach my $editor ( $self->main->editors ) {
-		$editor->SetMarginWidth(1, 0);
+		$editor->SetMarginWidth( 1, 0 );
 	}
 
 	return;
 }
 
 sub running {
-	!! ($_[0]->{timer} and $_[0]->{timer}->IsRunning);
+	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
 }
-
-
-
-
 
 #####################################################################
 # Event Handlers
@@ -199,11 +194,10 @@ sub on_list_item_activated {
 	my $editor = $self->main->current->editor;
 	my $line   = $event->GetItem->GetText;
 
-	if (
-		not defined($line)
+	if (   not defined($line)
 		or $line !~ /^\d+$/o
-		or $editor->GetLineCount < $line
-	) {
+		or $editor->GetLineCount < $line )
+	{
 		return;
 	}
 
@@ -227,11 +221,11 @@ sub on_timer {
 		return;
 	}
 
-	my $pre_exec_result = $document->check_syntax_in_background(force => $force);
+	my $pre_exec_result = $document->check_syntax_in_background( force => $force );
 
 	# In case we have created a new and still completely empty doc we
 	# need to clean up the message list
-	if ( ref $pre_exec_result eq 'ARRAY' && ! @{$pre_exec_result} ) {
+	if ( ref $pre_exec_result eq 'ARRAY' && !@{$pre_exec_result} ) {
 		$self->clear;
 	}
 
@@ -248,7 +242,7 @@ sub on_idle {
 	if ( $self->{timer}->IsRunning ) {
 		$self->{timer}->Stop;
 	}
-	$self->{timer}->Start(300, 1);
+	$self->{timer}->Start( 300, 1 );
 	$event->Skip(0);
 	return;
 }

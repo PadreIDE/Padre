@@ -30,26 +30,22 @@ use File::Spec ();
 use List::Util qw(first);
 use File::Basename ();
 
-our $VERSION   = '0.32';
+our $VERSION = '0.32';
 use base 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches _T);
-
-
-
-
 
 #####################################################################
 # Officially Supported Constants
 
 # Convenience constants for the operating system
-use constant WIN32   => !! ( $^O eq 'MSWin32'  );
-use constant MAC     => !! ( $^O eq 'darwin'   );
-use constant UNIX    => !  ( WIN32 or MAC );
+use constant WIN32 => !!( $^O eq 'MSWin32' );
+use constant MAC   => !!( $^O eq 'darwin' );
+use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends
-# 1. Win32 Native 
+# 1. Win32 Native
 # 2. Mac OS X Native
-# 3. Unix GTK 
+# 3. Unix GTK
 # The following defined reusable constants for these platforms,
 # suitable for use in Wx platform-specific adaptation code.
 # Currently (and a bit naively) we align these to the platforms.
@@ -59,11 +55,6 @@ use constant WXGTK   => UNIX;
 
 # The local newline type
 use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
-
-
-
-
-
 
 #####################################################################
 # Miscellaneous Functions
@@ -97,7 +88,7 @@ sub newline_type {
 	$text =~ s/$CRLF//g;
 	return "WIN" if $text !~ /$LF/ and $text !~ /$CR/;
 
-	return "Mixed"
+	return "Mixed";
 }
 
 =pod
@@ -121,37 +112,37 @@ Paramters:
 =cut
 
 sub get_matches {
-	my ($text, $regex, $from, $to, $backward) = @_;
+	my ( $text, $regex, $from, $to, $backward ) = @_;
 	die "missing parameters" if @_ < 4;
 
 	use Encode;
-	$text = Encode::encode('utf-8', $text);
+	$text = Encode::encode( 'utf-8', $text );
 
 	my @matches;
 
-	while ($text =~ /$regex/g) {
+	while ( $text =~ /$regex/g ) {
 		my $e = pos($text);
 		my $s = $e - length($&);
-		push @matches, [$s, $e];
+		push @matches, [ $s, $e ];
 	}
 
 	my $pair;
 	if ($backward) {
-		$pair = first {$to > $_->[1]} reverse @matches;
-		if (not $pair and @matches) {
+		$pair = first { $to > $_->[1] } reverse @matches;
+		if ( not $pair and @matches ) {
 			$pair = $matches[-1];
 		}
 	} else {
-		$pair = first {$from < $_->[0]} @matches;
-		if (not $pair and @matches) {
+		$pair = first { $from < $_->[0] } @matches;
+		if ( not $pair and @matches ) {
 			$pair = $matches[0];
 		}
 	}
 
-	my ($start, $end);
-	($start, $end) = @$pair if $pair;
+	my ( $start, $end );
+	( $start, $end ) = @$pair if $pair;
 
-	return ($start, $end, @matches);
+	return ( $start, $end, @matches );
 }
 
 =pod
@@ -166,13 +157,9 @@ tools can find it.
 
 =cut
 
-sub _T { 
-	shift; 
+sub _T {
+	shift;
 }
-
-
-
-
 
 #####################################################################
 # Developer-Only Functions
@@ -187,9 +174,9 @@ sub svn_directory_revision {
 
 	# Find the headline revision
 	local $/ = undef;
-	open(my $fh, "<", $entries) or return;
+	open( my $fh, "<", $entries ) or return;
 	my $buffer = <$fh>;
-	close( $fh );
+	close($fh);
 
 	# Find the first number after the first occuranc
 	# of "dir".
@@ -201,19 +188,17 @@ sub svn_directory_revision {
 	return "$1";
 }
 
-
-
-
-
 #####################################################################
 # Shared Resources
 
 sub share {
 	return File::Spec->catdir( $FindBin::Bin, File::Spec->updir, 'share' ) if $ENV{PADRE_DEV};
-	if (defined $ENV{PADRE_PAR_PATH}) {
+	if ( defined $ENV{PADRE_PAR_PATH} ) {
+
 		# File::ShareDir new style path
-		my $path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'auto','share', 'dist', 'Padre' );
+		my $path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'auto', 'share', 'dist', 'Padre' );
 		return $path if -d $path;
+
 		# File::ShareDir old style path
 		$path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'share' );
 		return $path if -d $path;
@@ -237,10 +222,10 @@ sub find_perldiag_translations {
 	foreach my $path (@INC) {
 		my $dir = File::Spec->catdir( $path, 'POD2' );
 		next if not -e $dir;
-		if (opendir my $dh, $dir) {
-			while (my $lang = readdir $dh) {
+		if ( opendir my $dh, $dir ) {
+			while ( my $lang = readdir $dh ) {
 				next if $lang eq '.' or $lang eq '..';
-				if (-e File::Spec->catfile( $dir, $lang, 'perldiag.pod' )) {
+				if ( -e File::Spec->catfile( $dir, $lang, 'perldiag.pod' ) ) {
 					$languages{$lang} = 1;
 				}
 			}
@@ -267,30 +252,30 @@ sub get_project_dir {
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
 	while (1) {
-#		print "DIR: $olddir\n     $dir\n";
-		return $dir if -e File::Spec->catfile($dir, 'Makefile.PL');
-		return $dir if -e File::Spec->catfile($dir, 'Build.PL');
+
+		#		print "DIR: $olddir\n     $dir\n";
+		return $dir if -e File::Spec->catfile( $dir, 'Makefile.PL' );
+		return $dir if -e File::Spec->catfile( $dir, 'Build.PL' );
 		$olddir = $dir;
-		$dir = File::Basename::dirname($dir);
+		$dir    = File::Basename::dirname($dir);
 
 		last if $olddir eq $dir;
 	}
 	return;
 }
 
-
 package Px;
 
 use constant {
-	PADRE_BLACK         => 0,
-	PADRE_BLUE          => 1,
-	PADRE_RED           => 2,
-	PADRE_GREEN         => 3,
-	PADRE_MAGENTA       => 4,
-	PADRE_ORANGE        => 5,
-	PADRE_DIM_GRAY      => 6,
-	PADRE_CRIMSON       => 7,
-	PADRE_BROWN         => 8,
+	PADRE_BLACK    => 0,
+	PADRE_BLUE     => 1,
+	PADRE_RED      => 2,
+	PADRE_GREEN    => 3,
+	PADRE_MAGENTA  => 4,
+	PADRE_ORANGE   => 5,
+	PADRE_DIM_GRAY => 6,
+	PADRE_CRIMSON  => 7,
+	PADRE_BROWN    => 8,
 };
 
 1;

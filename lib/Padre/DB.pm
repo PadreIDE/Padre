@@ -3,23 +3,23 @@ package Padre::DB;
 # Provide an ORLite-based API for the Padre database
 
 use strict;
-use File::Spec               ();
-use File::ShareDir::PAR      ();
-use Params::Util             ();
+use File::Spec          ();
+use File::ShareDir::PAR ();
+use Params::Util        ();
 use Padre::Config::Constants qw{ $CONFIG_FILE_HOST };
-use Padre::Current           ();
+use Padre::Current ();
 
-use ORLite 1.17 (); # Need truncate
+use ORLite 1.17 ();    # Need truncate
 use ORLite::Migrate 0.01 {
 	create        => 1,
-	tables        => [ 'Modules' ],
+	tables        => ['Modules'],
 	file          => $CONFIG_FILE_HOST,
 	user_revision => 7,
 	timeline      => File::Spec->catdir(
 		File::ShareDir::PAR::dist_dir('Padre'),
 		'timeline',
 	),
-}; # add parameter '-DEBUG' after the hash ref to get info on orlite magic
+};                     # add parameter '-DEBUG' after the hash ref to get info on orlite magic
 
 # Overlay classes to enhance the ORLite defaults
 use Padre::DB::Plugin             ();
@@ -30,10 +30,6 @@ use Padre::DB::LastPositionInFile ();
 
 our $VERSION    = '0.32';
 our $COMPATIBLE = '0.26';
-
-
-
-
 
 #####################################################################
 # Snippets
@@ -54,7 +50,7 @@ sub find_snipnames {
 		push @bind, $_[0];
 	}
 	$sql .= " order by name";
-	return $class->selectcol_arrayref($sql, {}, @bind);
+	return $class->selectcol_arrayref( $sql, {}, @bind );
 }
 
 sub find_snippets {
@@ -66,7 +62,7 @@ sub find_snippets {
 		push @bind, $_[0];
 	}
 	$sql .= " order by name";
-	return $class->selectall_arrayref($sql, {}, @bind);
+	return $class->selectall_arrayref( $sql, {}, @bind );
 }
 
 1;

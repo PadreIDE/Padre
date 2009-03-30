@@ -23,13 +23,13 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main->bottom,
 		-1,
-		"", 
+		"",
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTE_READONLY
-		| Wx::wxTE_MULTILINE
-		| Wx::wxTE_DONTWRAP
-		| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+			| Wx::wxTE_MULTILINE
+			| Wx::wxTE_DONTWRAP
+			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 
 	# Do custom startup stuff here
@@ -52,144 +52,137 @@ sub gettext_label {
 	Wx::gettext('Output');
 }
 
-
-
-
-
 #####################################################################
 # Main Methods
 
 # From Sean Healy on wxPerl mailing list.
 # Tweaked to avoid copying as much as possible.
 sub AppendText {
-	my $self = shift;
+	my $self     = shift;
 	my $use_ansi = Padre->ide->config->main_output_ansi;
-	if ( utf8::is_utf8($_[0]) ) {
+	if ( utf8::is_utf8( $_[0] ) ) {
 		if ($use_ansi) {
-			$self->_handle_ansi_escapes($_[0]);
+			$self->_handle_ansi_escapes( $_[0] );
+		} else {
+			$self->SUPER::AppendText( $_[0] );
 		}
-		else {
-			$self->SUPER::AppendText($_[0]);
-		}
-	}
-	else {
-		my $text = Encode::decode('utf8', $_[0]);
+	} else {
+		my $text = Encode::decode( 'utf8', $_[0] );
 		if ($use_ansi) {
 			$self->_handle_ansi_escapes($text);
-		}
-		else {
+		} else {
 			$self->SUPER::AppendText($text);
 		}
 	}
-	return();
+	return ();
 }
 
 SCOPE: {
+
 	# TODO: This should be some sort of style file, but the main editor style support is too wacky to add this at the moment
 	my $fg_colors = [
-		Wx::Colour->new('#000000'), # black
-		Wx::Colour->new('#FF0000'), # red
-		Wx::Colour->new('#00FF00'), # green
-		Wx::Colour->new('#FFFF00'), # yellow
-		Wx::Colour->new('#0000FF'), # blue
-		Wx::Colour->new('#FF00FF'), # magenta
-		Wx::Colour->new('#00FFFF'), # cyan
-		Wx::Colour->new('#FFFFFF'), # white
+		Wx::Colour->new('#000000'),    # black
+		Wx::Colour->new('#FF0000'),    # red
+		Wx::Colour->new('#00FF00'),    # green
+		Wx::Colour->new('#FFFF00'),    # yellow
+		Wx::Colour->new('#0000FF'),    # blue
+		Wx::Colour->new('#FF00FF'),    # magenta
+		Wx::Colour->new('#00FFFF'),    # cyan
+		Wx::Colour->new('#FFFFFF'),    # white
 		undef,
-		Wx::Colour->new('#000000'), # reset to default (black)
+		Wx::Colour->new('#000000'),    # reset to default (black)
 	];
 	my $bg_colors = [
-		Wx::Colour->new('#000000'), # black
-		Wx::Colour->new('#FF0000'), # red
-		Wx::Colour->new('#00FF00'), # green
-		Wx::Colour->new('#FFFF00'), # yellow
-		Wx::Colour->new('#0000FF'), # blue
-		Wx::Colour->new('#FF00FF'), # magenta
-		Wx::Colour->new('#00FFFF'), # cyan
-		Wx::Colour->new('#FFFFFF'), # white
+		Wx::Colour->new('#000000'),    # black
+		Wx::Colour->new('#FF0000'),    # red
+		Wx::Colour->new('#00FF00'),    # green
+		Wx::Colour->new('#FFFF00'),    # yellow
+		Wx::Colour->new('#0000FF'),    # blue
+		Wx::Colour->new('#FF00FF'),    # magenta
+		Wx::Colour->new('#00FFFF'),    # cyan
+		Wx::Colour->new('#FFFFFF'),    # white
 		undef,
-		Wx::Colour->new('#FFFFFF'), # reset to default (white)
+		Wx::Colour->new('#FFFFFF'),    # reset to default (white)
 	];
-	
+
 	sub _handle_ansi_escapes {
 		my $self    = shift;
 		my $newtext = shift;
 
 		# read the next TEXT CONTROL-SEQUENCE pair
-		my $style = $self->GetDefaultStyle;
+		my $style      = $self->GetDefaultStyle;
 		my $ansi_found = 0;
 		while ( $newtext =~ m{ \G (.*?) \033\[ ( (?: \d+ (?:;\d+)* )? ) m }xcg ) {
 			$ansi_found = 1;
 			my $ctrl = $2;
+
 			# first print the text preceding the control sequence
 			$self->SUPER::AppendText($1);
-			
+
 			# split the sequence on ; -- this may be specific to the graphics 'm' sequences, but
 			# we don't handle any others at the moment (see regexp above)
 			my @cmds = split /;/, $ctrl;
-			
-			foreach my $cmd ( @cmds ) {
+
+			foreach my $cmd (@cmds) {
 				if ( $cmd >= 0 and $cmd < 30 ) {
+
 					# for all these, we need the font object:
 					my $font = $style->GetFont;
-					if ($cmd == 0) { # reset
-						$style->SetTextColour($fg_colors->[9]); # reset text color
-						$style->SetBackgroundColour($bg_colors->[9]); # reset bg color
-						# reset bold/italic/underlined state
+					if ( $cmd == 0 ) {    # reset
+						$style->SetTextColour( $fg_colors->[9] );          # reset text color
+						$style->SetBackgroundColour( $bg_colors->[9] );    # reset bg color
+						                                                   # reset bold/italic/underlined state
 						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
 						$font->SetUnderlined(0);
 						$font->SetStyle(Wx::wxFONTSTYLE_NORMAL);
-					} 
-					elsif ($cmd == 1) { # bold
+					} elsif ( $cmd == 1 ) {                                # bold
 						$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
-					}
-					elsif ($cmd == 2) { # faint
+					} elsif ( $cmd == 2 ) {                                # faint
 						$font->SetWeight(Wx::wxFONTWEIGHT_LIGHT);
-					}
-					elsif ($cmd == 3) { # italic
+					} elsif ( $cmd == 3 ) {                                # italic
 						$font->SetStyle(Wx::wxFONTSTYLE_ITALIC);
-					}
-					elsif ($cmd == 4 || $cmd == 21) { # underline (21==double, but we can't do that)
+					} elsif ( $cmd == 4 || $cmd == 21 ) {    # underline (21==double, but we can't do that)
 						$font->SetUnderlined(1);
-					}
-					elsif ($cmd == 22) { # reset bold and faint
+					} elsif ( $cmd == 22 ) {                 # reset bold and faint
 						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
-					}
-					elsif ($cmd == 24) { # reset underline
+					} elsif ( $cmd == 24 ) {                 # reset underline
 						$font->SetUnderlined(0);
 					}
 					$style->SetFont($font);
 				}
-				
+
 				# the high range is supposed to be 'high intensity' as supported by aixterm
 				elsif ( $cmd >= 30 && $cmd < 40 or $cmd >= 90 && $cmd < 100 ) {
+
 					# foreground
 					$cmd -= $cmd > 40 ? 90 : 30;
 					my $color = $fg_colors->[$cmd];
-					if (defined $color) {
+					if ( defined $color ) {
 						$style->SetTextColour($color);
 						$self->SetDefaultStyle($style);
 					}
 				}
+
 				# the high range is supposed to be 'high intensity' as supported by aixterm
 				elsif ( $cmd >= 40 && $cmd < 50 or $cmd >= 100 && $cmd < 110 ) {
+
 					# background
 					$cmd -= $cmd > 50 ? 100 : 40;
 					my $color = $bg_colors->[$cmd];
-					if (defined $color) {
+					if ( defined $color ) {
 						$style->SetBackgroundColour($color);
 					}
 				}
-				
+
 				$self->SetDefaultStyle($style);
-			} # end foreach command in the sequence
-		} # end while more control sequences
-		
+			}    # end foreach command in the sequence
+		}    # end while more control sequences
+
 		# the remaining text
-		if ( defined(pos($newtext)) ) {
-			$self->SUPER::AppendText(substr($newtext, pos($newtext)));
+		if ( defined( pos($newtext) ) ) {
+			$self->SUPER::AppendText( substr( $newtext, pos($newtext) ) );
 		}
-		unless ( $ansi_found )  {
+		unless ($ansi_found) {
 			$self->SUPER::AppendText($newtext);
 		}
 	}
@@ -238,7 +231,7 @@ sub set_font {
 	my $self   = shift;
 	my $config = $self->main->config;
 	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font && length $config->editor_font > 0 ) { # empty default...
+	if ( defined $config->editor_font && length $config->editor_font > 0 ) {    # empty default...
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	my $style = $self->GetDefaultStyle;

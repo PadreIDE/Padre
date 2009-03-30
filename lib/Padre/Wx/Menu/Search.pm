@@ -5,16 +5,12 @@ package Padre::Wx::Menu::Search;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx          ();
+use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current     qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.32';
 use base 'Padre::Wx::Menu';
-
-
-
-
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -29,35 +25,37 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-
-
-
 	# Search and Replace
 	$self->{find} = $self->Append(
 		Wx::wxID_FIND,
 		Wx::gettext("&Find\tCtrl-F")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{find},
 		sub {
 			$_[0]->find->find(@_);
 		},
 	);
 
-	$self->{find_next} = $self->Append( -1,
+	$self->{find_next} = $self->Append(
+		-1,
 		Wx::gettext("Find Next\tF3")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{find_next},
 		sub {
 			$_[0]->find->find_next(@_);
 		},
 	);
 
-	$self->{find_previous} = $self->Append( -1,
+	$self->{find_previous} = $self->Append(
+		-1,
 		Wx::gettext("Find Previous\tShift-F3")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{find_previous},
 		sub {
 			$_[0]->find->find_previous(@_);
@@ -65,21 +63,25 @@ sub new {
 	);
 
 	# This currently mainly exists to make Ctrl-R work
-	$self->{replace} = $self->Append( -1,
+	$self->{replace} = $self->Append(
+		-1,
 		Wx::gettext("Replace\tCtrl-R")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{replace},
 		sub {
 			$_[0]->find->find(@_);
 		},
 	);
-		
+
 	# Quick Find: Press F3 to start search with selected text
-	$self->{quick_find} = $self->AppendCheckItem( -1,
+	$self->{quick_find} = $self->AppendCheckItem(
+		-1,
 		Wx::gettext("Quick Find")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{quick_find},
 		sub {
 			Padre->ide->config->set(
@@ -93,22 +95,26 @@ sub new {
 
 	$self->AppendSeparator;
 
-#We should be able to remove F4 and shift-F4 and hook this functionality to F3 and shift-F3
+	#We should be able to remove F4 and shift-F4 and hook this functionality to F3 and shift-F3
 	# Incremental find (#60)
-	$self->{quick_find_next} = $self->Append( -1,
+	$self->{quick_find_next} = $self->Append(
+		-1,
 		Wx::gettext("Find Next\tF4")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{quick_find_next},
 		sub {
 			$_[0]->fast_find->search('next');
 		},
 	);
 
-	$self->{quick_find_previous} = $self->Append( -1,
+	$self->{quick_find_previous} = $self->Append(
+		-1,
 		Wx::gettext("Find Previous\tShift-F4")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{quick_find_previous},
 		sub {
 			$_[0]->fast_find->search('previous');
@@ -117,39 +123,34 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Was this going to be moved to a plugin?
-	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append(
+			-1,
 			Wx::gettext("Ac&k Search")
 		),
 		\&Padre::Wx::Ack::on_ack,
 	);
-
-
-
-
 
 	return $self;
 }
 
 sub refresh {
 	my $self = shift;
-	my $doc  = _CURRENT(@_)->document ? 1 : 0;
-	$self->{ find                }->Enable($doc);
-	$self->{ find_next           }->Enable($doc);
-	$self->{ find_previous       }->Enable($doc);
-	$self->{ replace             }->Enable($doc);
-	$self->{ quick_find          }->Enable($doc);
-	$self->{ quick_find_next     }->Enable($doc);
-	$self->{ quick_find_previous }->Enable($doc);
+	my $doc = _CURRENT(@_)->document ? 1 : 0;
+	$self->{find}->Enable($doc);
+	$self->{find_next}->Enable($doc);
+	$self->{find_previous}->Enable($doc);
+	$self->{replace}->Enable($doc);
+	$self->{quick_find}->Enable($doc);
+	$self->{quick_find_next}->Enable($doc);
+	$self->{quick_find_previous}->Enable($doc);
 	return;
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

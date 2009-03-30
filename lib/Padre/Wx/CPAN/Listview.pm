@@ -4,14 +4,14 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
-use Padre::Wx    ();
+use Padre::Wx ();
 
 our $VERSION = '0.32';
 use base 'Wx::ListView';
 
 sub new {
 	my $class = shift;
-	my $frame  = shift;
+	my $frame = shift;
 
 	# Create the underlying object
 	my $self = $class->SUPER::new(
@@ -19,8 +19,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT
-		| Wx::wxLC_SINGLE_SEL
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 	$self->{cpan} = $frame->cpan;
 	my $imagelist = Wx::ImageList->new( 14, 7 );
@@ -39,15 +38,16 @@ sub new {
 	);
 	$imagelist->Add($warningImg);
 
-	$self->AssignImageList($imagelist, Wx::wxIMAGE_LIST_SMALL);
+	$self->AssignImageList( $imagelist, Wx::wxIMAGE_LIST_SMALL );
 
-	$self->InsertColumn( 0, Wx::gettext('Status')        );
+	$self->InsertColumn( 0, Wx::gettext('Status') );
+
 	#$self->InsertColumn( 1, Wx::gettext('Type')        );
 	#$self->InsertColumn( 1, Wx::gettext('Description') );
 
 	$self->SetColumnWidth( 0, 750 );
 
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $self, \&on_list_item_activated	);
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $self, \&on_list_item_activated );
 
 	return $self;
 }
@@ -77,11 +77,13 @@ sub set_column_widths {
 
 	my $width0 = $self->GetCharWidth * length( Wx::gettext("Status") ) + 16;
 	my $width1 = $self->GetSize->GetWidth - $width0;
+
 	#my $width1 = $self->GetCharWidth * ( length("blabla") + 2 );
 	#my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
 
 	$self->SetColumnWidth( 0, $width0 );
 	$self->SetColumnWidth( 1, $width1 );
+
 	#$self->SetColumnWidth( 2, $width2 );
 
 	return;
@@ -102,11 +104,11 @@ sub on_timer {
 		return;
 	}
 
-	my $pre_exec_result = $document->check_syntax_in_background(force => $force);
+	my $pre_exec_result = $document->check_syntax_in_background( force => $force );
 
 	# In case we have created a new and still completely empty doc we
 	# need to clean up the message list
-	if ( ref $pre_exec_result eq 'ARRAY' && ! @{$pre_exec_result} ) {
+	if ( ref $pre_exec_result eq 'ARRAY' && !@{$pre_exec_result} ) {
 		$self->clear;
 	}
 
@@ -123,20 +125,21 @@ sub on_idle {
 	if ( $self->{timer}->IsRunning ) {
 		$self->{timer}->Stop;
 	}
-	$self->{timer}->Start(300, 1);
+	$self->{timer}->Start( 300, 1 );
 	$event->Skip(0);
 	return;
 }
 
 sub show_rows {
-	my ($self, $regex) = @_;
-	
+	my ( $self, $regex ) = @_;
+
 	$self->clear;
-	my $cpan = $self->{cpan};
-	my $c = 10;
+	my $cpan    = $self->{cpan};
+	my $c       = 10;
 	my $modules = $cpan->get_modules($regex);
 	foreach my $module (@$modules) {
-		my $idx = $self->InsertStringImageItem( 0, $module,  0 );
+		my $idx = $self->InsertStringImageItem( 0, $module, 0 );
+
 		#$self->SetItem( $idx, 1,  Wx::gettext('Warning')  );
 		#$self->SetItem( $idx, 1, $module );
 		$self->SetItemData( $idx, 1 );
@@ -144,18 +147,17 @@ sub show_rows {
 }
 
 sub on_list_item_activated {
-	my $self   = shift;
-	my $event  = shift;
-	my $line   = $event->GetItem->GetText;
+	my $self  = shift;
+	my $event = shift;
+	my $line  = $event->GetItem->GetText;
 	print STDERR "L: $line\n";
 	$self->{cpan}->install($line);
-#	my $item = $self->GetFocusedItem;
-#	print STDERR "I ", $item, "\n";
-#	print STDERR "T ", $self->GetItemText($item), "\n";
+
+	#	my $item = $self->GetFocusedItem;
+	#	print STDERR "I ", $item, "\n";
+	#	print STDERR "T ", $self->GetItemText($item), "\n";
 	return;
 }
-
-
 
 1;
 

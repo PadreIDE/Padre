@@ -7,16 +7,12 @@ use strict;
 use warnings;
 use utf8;
 use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
-use Padre::Wx                ();
-use Padre::Wx::Menu          ();
-use Padre::Wx::DocBrowser    ();
+use Padre::Wx             ();
+use Padre::Wx::Menu       ();
+use Padre::Wx::DocBrowser ();
 
 our $VERSION = '0.32';
 use base 'Padre::Wx::Menu';
-
-
-
-
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -30,43 +26,47 @@ sub new {
 	$self->{main} = $main;
 
 	# Add the POD-based help launchers
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( Wx::wxID_HELP, '' ),
 		sub {
-			$_[0]->menu->help->help($_[0]);
+			$_[0]->menu->help->help( $_[0] );
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( -1, Wx::gettext("Context Help\tF1") ),
 		sub {
 			my $current = Wx::Window::FindFocus();
-			if ( (defined $current) and $current->isa('Padre::Wx::ErrorList') ) {
+			if ( ( defined $current ) and $current->isa('Padre::Wx::ErrorList') ) {
 				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
+
 				# TODO This feels wrong, the help menu code shouldn't
 				# populate the main window hash.
 				my $selection = $_[0]->current->text;
-				$_[0]->menu->help->help($_[0]);
-				if ( $selection ) {
-					$_[0]->{help}->help( $selection );
+				$_[0]->menu->help->help( $_[0] );
+				if ($selection) {
+					$_[0]->{help}->help($selection);
 				}
 				return;
 			}
 		},
 	);
-       Wx::Event::EVT_MENU( $main,
-                $self->Append( -1, Wx::gettext('Current Document') ),
-                sub {
-                        $_[0]->menu->help->help($_[0]);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append( -1, Wx::gettext('Current Document') ),
+		sub {
+			$_[0]->menu->help->help( $_[0] );
 			my $doc = $_[0]->current->document;
-			$_[0]->{help}->help( $doc );
-                },
-        );
-
+			$_[0]->{help}->help($doc);
+		},
+	);
 
 	# Add interesting and helpful websites
 	$self->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( -1, Wx::gettext('Visit the PerlMonks') ),
 		sub {
 			Wx::LaunchDefaultBrowser('http://perlmonks.org/');
@@ -75,13 +75,15 @@ sub new {
 
 	# Add Padre website tools
 	$self->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( -1, Wx::gettext("Report a New &Bug") ),
 		sub {
 			Wx::LaunchDefaultBrowser('http://padre.perlide.org/wiki/Tickets');
 		},
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( -1, Wx::gettext("View All &Open Bugs") ),
 		sub {
 			Wx::LaunchDefaultBrowser('http://padre.perlide.org/report/1');
@@ -90,7 +92,8 @@ sub new {
 
 	# Add the About
 	$self->AppendSeparator;
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( Wx::wxID_ABOUT, Wx::gettext("&About") ),
 		sub {
 			$_[0]->menu->help->about;
@@ -121,16 +124,15 @@ sub help {
 
 # TODO - this feels utterly backwards to me
 sub on_help_close {
-        my ($self,$event) = @_;
+	my ( $self, $event ) = @_;
 	my $help = Padre->ide->wx->main->{help};
 
-        if ( $event->CanVeto ) {
-                $help->Hide;
-        }
-        else {
-                delete Padre->ide->wx->main->{help};
-                $help->Destroy;
-        }
+	if ( $event->CanVeto ) {
+		$help->Hide;
+	} else {
+		delete Padre->ide->wx->main->{help};
+		$help->Destroy;
+	}
 }
 
 sub about {
@@ -138,23 +140,24 @@ sub about {
 
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName("Padre");
-	$about->SetDescription(
-		"Perl Application Development and Refactoring Environment\n\n" .
-		"Based on Wx.pm $Wx::VERSION and " . Wx::wxVERSION_STRING . "\n" .
-		"Config at $PADRE_CONFIG_DIR\n" .
-		"SQLite user_version at " . Padre::DB->pragma('user_version') . "\n"
-	);
+	$about->SetDescription( "Perl Application Development and Refactoring Environment\n\n"
+			. "Based on Wx.pm $Wx::VERSION and "
+			. Wx::wxVERSION_STRING . "\n"
+			. "Config at $PADRE_CONFIG_DIR\n"
+			. "SQLite user_version at "
+			. Padre::DB->pragma('user_version')
+			. "\n" );
 	$about->SetVersion($Padre::VERSION);
-	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm"));
+	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm") );
 
 	# Only Unix/GTK native about box supports websites
-	if ( Padre::Util::WXGTK ) {
+	if (Padre::Util::WXGTK) {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 
 	$about->AddDeveloper("Adam Kennedy");
 	$about->AddDeveloper("Ahmad Zawawi - أحمد محمد زواوي");
-    $about->AddDeveloper("Breno G. de Oliveira");
+	$about->AddDeveloper("Breno G. de Oliveira");
 	$about->AddDeveloper("Brian Cassidy");
 	$about->AddDeveloper("Cezary Morga");
 	$about->AddDeveloper("Chris Dolan");
@@ -171,7 +174,7 @@ sub about {
 	$about->AddDeveloper("Petar Shangov");
 	$about->AddDeveloper("Steffen Müller");
 
- 	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
+	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
 	$about->AddTranslator("German - Heiko Jansen");
 	$about->AddTranslator("French - Jérôme Quelin");
 	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
@@ -184,9 +187,9 @@ sub about {
 	$about->AddTranslator("Polish - Cezary Morga");
 	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
 	$about->AddTranslator("Spanish - Paco Alguacil");
-	$about->AddTranslator("Spanish - Enrique Nell");	
+	$about->AddTranslator("Spanish - Enrique Nell");
 
-	Wx::AboutBox( $about );
+	Wx::AboutBox($about);
 	return;
 }
 

@@ -3,7 +3,7 @@ package Padre::Wx::Outline;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util   qw{_INSTANCE};
+use Params::Util qw{_INSTANCE};
 use Padre::Wx      ();
 use Padre::Current ();
 
@@ -18,16 +18,15 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS  
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS
 	);
 	$self->SetIndent(10);
 	$self->{force_next} = 0;
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self,
+		$self, $self,
 		sub {
-			$self->on_tree_item_activated($_[1]);
+			$self->on_tree_item_activated( $_[1] );
 		},
 	);
 
@@ -59,13 +58,10 @@ sub force_next {
 	if ( defined $_[0] ) {
 		$self->{force_next} = $_[0];
 		return $self->{force_next};
-	}
-	else {
+	} else {
 		return $self->{force_next};
 	}
 }
-
-
 
 #####################################################################
 # Timer Control
@@ -76,21 +72,22 @@ sub start {
 	# TODO: GUI on-start initialisation here
 
 	# Set up or reinitialise the timer
-	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
+	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop if $self->{timer}->IsRunning;
 	} else {
 		$self->{timer} = Wx::Timer->new(
 			$self,
 			Padre::Wx::ID_TIMER_OUTLINE
 		);
-		Wx::Event::EVT_TIMER( $self,
+		Wx::Event::EVT_TIMER(
+			$self,
 			Padre::Wx::ID_TIMER_OUTLINE,
 			sub {
-				$self->on_timer($_[1], $_[2]);
+				$self->on_timer( $_[1], $_[2] );
 			},
 		);
 	}
-	$self->{timer}->Start( 1000 );
+	$self->{timer}->Start(1000);
 	$self->on_timer( undef, 1 );
 
 	return;
@@ -100,7 +97,7 @@ sub stop {
 	my $self = shift;
 
 	# Stop the timer
-	if ( _INSTANCE($self->{timer}, 'Wx::Timer') ) {
+	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop if $self->{timer}->IsRunning;
 	}
 
@@ -112,27 +109,24 @@ sub stop {
 }
 
 sub running {
-	!! ($_[0]->{timer} and $_[0]->{timer}->IsRunning);
+	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
 }
-
-
-
-
 
 #####################################################################
 # Event Handlers
 
 sub on_tree_item_activated {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 	my $page = $self->main->current->editor;
 
 	my $item = $self->GetPlData( $event->GetItem );
 	return if not defined $item;
 
 	my $line_number = $item->{line};
-	return if not defined($line_number)
-		  or $line_number !~ /^\d+$/o
-		  or $page->GetLineCount < $line_number;
+	return
+		if not defined($line_number)
+			or $line_number !~ /^\d+$/o
+			or $page->GetLineCount < $line_number;
 
 	$line_number--;
 	$page->EnsureVisible($line_number);
@@ -157,7 +151,7 @@ sub on_timer {
 		$self->force_next(0);
 	}
 
-	$document->get_outline(force => $force);
+	$document->get_outline( force => $force );
 
 	if ( defined($event) ) {
 		$event->Skip(0);

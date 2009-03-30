@@ -8,17 +8,16 @@ use 5.008;
 use strict;
 use warnings;
 
-use Carp          qw{ croak              };
-use Params::Util  qw{ _HASH0             };
-use Storable      qw{ dclone             };
-use YAML::Tiny    qw{ DumpFile LoadFile  };
+use Carp qw{ croak              };
+use Params::Util qw{ _HASH0             };
+use Storable qw{ dclone             };
+use YAML::Tiny qw{ DumpFile LoadFile  };
 
 use Padre::Config::Constants qw{ $CONFIG_FILE_USER };
 
 our $VERSION = '0.32';
 
-my $REVISION = 1;		# config schema revision
-
+my $REVISION = 1;    # config schema revision
 
 # -- constructors
 
@@ -30,23 +29,21 @@ my $REVISION = 1;		# config schema revision
 # outside this class.
 #
 sub _new {
-	my ($class, $self) = @_;
+	my ( $class, $self ) = @_;
 	$self ||= {};
 	bless $self, $class;
 	return $self;
 }
-
 
 #
 # my $config = Padre::Config::Human->create;
 #
 sub create {
 	my $class = shift;
-	my $self  = $class->_new( { version => $REVISION } );
+	my $self = $class->_new( { version => $REVISION } );
 	$self->write;
 	return $self;
 }
-
 
 #
 # my $config = Padre::Config::Human->read;
@@ -55,13 +52,12 @@ sub read {
 	my $class = shift;
 
 	# Load the user configuration
-	my $hash = eval { LoadFile( $CONFIG_FILE_USER ) };
+	my $hash = eval { LoadFile($CONFIG_FILE_USER) };
 	return unless _HASH0($hash);
 
 	# Create and return the object
 	return $class->_new($hash);
 }
-
 
 # -- public methods
 
@@ -70,9 +66,8 @@ sub read {
 #
 sub version {
 	my $self = shift;
-	$self->{version};	# stored as other preferences!
+	$self->{version};    # stored as other preferences!
 }
-
 
 #
 # $config->write;
@@ -81,14 +76,13 @@ sub write {
 	my $self = shift;
 
 	# Clone and remove the bless
-	my $copy = dclone( +{ %$self } );
+	my $copy = dclone( +{%$self} );
 
 	# Save the user configuration
 	DumpFile( $CONFIG_FILE_USER, $copy );
 
 	return 1;
 }
-
 
 1;
 

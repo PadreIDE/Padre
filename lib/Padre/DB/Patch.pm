@@ -11,9 +11,10 @@ use DBI      ();
 use Exporter ();
 
 use base 'Exporter';
-our (@EXPORT, $FILE);
+our ( @EXPORT, $FILE );
+
 BEGIN {
-	@EXPORT  = qw{
+	@EXPORT = qw{
 		file
 		dbh
 		do
@@ -33,7 +34,8 @@ BEGIN {
 }
 
 sub file {
-	unless ( $FILE ) {
+	unless ($FILE) {
+
 		# The filename is passed on STDIN
 		$FILE = <STDIN>;
 		chomp($FILE);
@@ -46,10 +48,13 @@ sub file {
 
 sub dbh {
 	my $file = file();
-	my $dbh  = DBI->connect("dbi:SQLite:$file", undef, undef, {
-		RaiseError => 1,
-	} );
-	unless ( $dbh ) {
+	my $dbh  = DBI->connect(
+		"dbi:SQLite:$file",
+		undef, undef,
+		{   RaiseError => 1,
+		}
+	);
+	unless ($dbh) {
 		die "Failed to connect to $file";
 	}
 	return $dbh;
@@ -96,8 +101,8 @@ sub table_exists {
 }
 
 sub column_exists {
-	table_exists($_[0]) or
-	selectrow_array("select count($_[1]) from $_[0]", {});
+	table_exists( $_[0] )
+		or selectrow_array( "select count($_[1]) from $_[0]", {} );
 }
 
 1;

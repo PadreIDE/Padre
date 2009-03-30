@@ -28,19 +28,15 @@ sub from_file {
 	}
 
 	# Search upwards from the file to find the project root
-	my ($v, $d, $f) = File::Spec->splitpath($focus_file);
+	my ( $v, $d, $f ) = File::Spec->splitpath($focus_file);
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
 	my $dirs = List::Util::first {
-			-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
-			or
-			-f File::Spec->catpath( $v, $_, 'Build.PL' )
-			or
-			-f File::Spec->catpath( $v, $_, 'padre.yml' )
-		}
-		map {
-			File::Spec->catdir(@d[0 .. $_])
-		} reverse ( 0 .. $#d );
+		-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
+			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
+			or -f File::Spec->catpath( $v, $_, 'padre.yml' );
+	}
+	map { File::Spec->catdir( @d[ 0 .. $_ ] ) } reverse( 0 .. $#d );
 	unless ( defined $dirs ) {
 		return;
 	}

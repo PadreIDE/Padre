@@ -7,19 +7,19 @@ our $VERSION = '0.32';
 
 use base 'Padre::Task';
 
-use Class::XSAccessor
-	getters => {
-		parser   => 'parser',
-		old_lang => 'old_lang',
-		cur_lang => 'cur_lang',
-		data     => 'data',
-	};
+use Class::XSAccessor getters => {
+	parser   => 'parser',
+	old_lang => 'old_lang',
+	cur_lang => 'cur_lang',
+	data     => 'data',
+};
 
 sub run {
 	my $self = shift;
-	unless ($self->parser and ( (!$self->cur_lang and !$self->old_lang) or ($self->cur_lang eq $self->old_lang) )) {
-		if ($self->cur_lang) {
-			$self->{parser} = Parse::ErrorString::Perl->new(lang => $self->cur_lang);
+	unless ( $self->parser and ( ( !$self->cur_lang and !$self->old_lang ) or ( $self->cur_lang eq $self->old_lang ) ) )
+	{
+		if ( $self->cur_lang ) {
+			$self->{parser} = Parse::ErrorString::Perl->new( lang => $self->cur_lang );
 		} else {
 			$self->{parser} = Parse::ErrorString::Perl->new;
 		}
@@ -39,26 +39,26 @@ sub finish {
 
 	foreach my $err (@errors) {
 		my $message = $err->message . " at " . $err->file . " line " . $err->line;
+
 		#$message = encode('utf8', $message);
-		if ($err->near) {
+		if ( $err->near ) {
 			my $near = $err->near;
+
 			# some day when we have unicode in wx ...
 			#$near =~ s/\n/\x{c2b6}/g;
 			$near =~ s/\n/\\n/g;
 			$near =~ s/\r//g;
 			$message .= ", near \"$near\"";
-		} elsif ($err->at) {
+		} elsif ( $err->at ) {
 			my $at = $err->at;
 			$message .= ", at $at";
 		}
-		my $err_tree_item = $errorlist->AppendItem( $errorlist->root, $message, -1, -1, Wx::TreeItemData->new( $err ) );
+		my $err_tree_item = $errorlist->AppendItem( $errorlist->root, $message, -1, -1, Wx::TreeItemData->new($err) );
 
-		if ($err->stack) {
-			foreach my $stack_item ($err->stack) {
-				my $stack_message = $stack_item->sub . 
-					" called at " . $stack_item->file . 
-					" line " . $stack_item->line;
-				$errorlist->AppendItem( $err_tree_item, $stack_message, -1, -1, Wx::TreeItemData->new( $stack_item ) );
+		if ( $err->stack ) {
+			foreach my $stack_item ( $err->stack ) {
+				my $stack_message = $stack_item->sub . " called at " . $stack_item->file . " line " . $stack_item->line;
+				$errorlist->AppendItem( $err_tree_item, $stack_message, -1, -1, Wx::TreeItemData->new($stack_item) );
 			}
 		}
 	}

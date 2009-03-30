@@ -79,17 +79,17 @@ require Padre;
 use Padre::Task;
 use Padre::Wx ();
 
-use Class::XSAccessor
-	getters => {
-		task_queue     => 'task_queue',
-		reap_interval  => 'reap_interval',
-		use_threads    => 'use_threads',
-		max_no_workers => 'max_no_workers',
-	};
+use Class::XSAccessor getters => {
+	task_queue     => 'task_queue',
+	reap_interval  => 'reap_interval',
+	use_threads    => 'use_threads',
+	max_no_workers => 'max_no_workers',
+};
 
 # This event is triggered by the worker thread main loop after
 # finishing a task.
 our $TASK_DONE_EVENT : shared = Wx::NewEventType;
+
 # This event is triggered by the worker thread main loop before
 # running a task.
 our $TASK_START_EVENT : shared = Wx::NewEventType;
@@ -114,35 +114,36 @@ sub new {
 	my $self = $SINGLETON = bless {
 		min_no_workers => 1,
 		max_no_workers => 3,
-		use_threads    => 1, # can be explicitly disabled
+		use_threads    => 1,       # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
-		workers        => [],
-		task_queue     => undef,
-		running_tasks  => {},
+		workers       => [],
+		task_queue    => undef,
+		running_tasks => {},
 	}, $class;
 
 	my $main = Padre->ide->wx->main;
 
-	if (not $EVENTS_INITIALIZED) {
-		Wx::Event::EVT_COMMAND($main, -1, $TASK_DONE_EVENT, \&on_task_done_event);
-		Wx::Event::EVT_COMMAND($main, -1, $TASK_START_EVENT, \&on_task_start_event);
-		Wx::Event::EVT_CLOSE($main, \&on_close);
+	if ( not $EVENTS_INITIALIZED ) {
+		Wx::Event::EVT_COMMAND( $main, -1, $TASK_DONE_EVENT,  \&on_task_done_event );
+		Wx::Event::EVT_COMMAND( $main, -1, $TASK_START_EVENT, \&on_task_start_event );
+		Wx::Event::EVT_CLOSE( $main, \&on_close );
 		$EVENTS_INITIALIZED = 1;
 	}
- 
+
 	$self->{task_queue} = Thread::Queue->new;
 
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
 	if ( not defined $REAP_TIMER and $self->use_threads ) {
+
 		# explicit id necessary to distinguish from startup-timer of the main window
 		my $timerid = Wx::NewId();
 		$REAP_TIMER = Wx::Timer->new( $main, $timerid );
 		Wx::Event::EVT_TIMER(
 			$main, $timerid, sub { $SINGLETON->reap(); },
 		);
-		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS  );
+		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS );
 	}
 
 	return $self;
@@ -165,39 +166,42 @@ sub schedule {
 	my $self = shift;
 	my $task = shift;
 	if ( not ref($task) or not $task->isa("Padre::Task") ) {
-		die "Invalid task scheduled!"; # TODO: grace
+		die "Invalid task scheduled!";    # TODO: grace
 	}
 
 	# cleanup old threads and refill the pool
 	$self->reap();
-	
+
 	# prepare and stop if vetoes
 	my $return = $task->prepare();
-	if ($return and $return =~ /^break$/i) {
+	if ( $return and $return =~ /^break$/i ) {
 		return;
 	}
 
 	my $string;
-	$task->serialize(\$string);
+	$task->serialize( \$string );
 	if ( $self->use_threads ) {
 		require Time::HiRes;
+
 		# This is to make sure we don't indefinitely fill the
 		# queue if the CPU can't keep up. If it REALLY can't
 		# keep up, we *want* to block eventually.
 		# For now, the limit has been set to 5*NWORKERTHREADS
 		# which should be a lot.
 		while ( $self->task_queue->pending > 5 * $self->{max_no_workers} ) {
+
 			# Sleep 10msec
 			Time::HiRes::usleep(10000);
 		}
-		$self->task_queue->enqueue( $string );
+		$self->task_queue->enqueue($string);
 
 	} else {
+
 		# TODO: Instead of this hack, consider
-		# "reimplementing" the worker loop 
+		# "reimplementing" the worker loop
 		# as a non-threading, non-queued, fake worker loop
-		$self->task_queue->enqueue( $string );
-		$self->task_queue->enqueue( "STOP" );
+		$self->task_queue->enqueue($string);
+		$self->task_queue->enqueue("STOP");
 		worker_loop( Padre->ide->wx->main, $self->task_queue );
 	}
 
@@ -218,21 +222,21 @@ sub setup_workers {
 	my $self = shift;
 	return unless $self->use_threads;
 
-	@_=(); # avoid "Scalars leaked"
+	@_ = ();    # avoid "Scalars leaked"
 	my $main = Padre->ide->wx->main;
 
 	# Ensure minimum no. workers
 	my $workers = $self->{workers};
-	while (@$workers < $self->{min_no_workers}) {
+	while ( @$workers < $self->{min_no_workers} ) {
 		$self->_make_worker_thread($main);
 	}
 
 	# Add workers to satisfy demand
 	my $jobs_pending = $self->task_queue->pending();
-	if (@$workers < $self->{max_no_workers} and $jobs_pending > 2*@$workers) {
-		my $target = int($jobs_pending/2);
+	if ( @$workers < $self->{max_no_workers} and $jobs_pending > 2 * @$workers ) {
+		my $target = int( $jobs_pending / 2 );
 		$target = $self->{max_no_workers} if $target > $self->{max_no_workers};
-		$self->_make_worker_thread($main) for 1..($target-@$workers);
+		$self->_make_worker_thread($main) for 1 .. ( $target - @$workers );
 	}
 
 	return 1;
@@ -244,11 +248,9 @@ sub _make_worker_thread {
 	my $main = shift;
 	return if not $self->use_threads;
 
-	@_=(); # avoid "Scalars leaked"
-	my $worker = threads->create(
-	  {'exit' => 'thread_only'}, \&worker_loop, $main, $self->task_queue
-	);
-	push @{$self->{workers}}, $worker;
+	@_ = ();    # avoid "Scalars leaked"
+	my $worker = threads->create( { 'exit' => 'thread_only' }, \&worker_loop, $main, $self->task_queue );
+	push @{ $self->{workers} }, $worker;
 }
 
 =pod
@@ -270,41 +272,45 @@ sub reap {
 	my $self = shift;
 	return if not $self->use_threads;
 
-	@_=(); # avoid "Scalars leaked"
+	@_ = ();    # avoid "Scalars leaked"
 	my $workers = $self->{workers};
 
 	my @active_or_waiting;
+
 	#warn "No. worker threads before reaping: ".scalar (@$workers);
 
 	foreach my $thread (@$workers) {
-		if ($thread->is_joinable()) {
+		if ( $thread->is_joinable() ) {
 			my $tid = $thread->tid();
+
 			# clean up the running task if necessary (case of crashed thread)
 			$self->_stop_task($tid);
 			my $tmp = $thread->join();
-		}
-		else {
+		} else {
 			push @active_or_waiting, $thread;
 		}
 	}
 	$self->{workers} = \@active_or_waiting;
+
 	#warn "No. worker threads after reaping:  ".scalar (@$workers);
 
 	# kill the no. of workers that aren't needed
-	my $n_threads_to_kill =  @active_or_waiting - $self->{max_no_workers};
+	my $n_threads_to_kill = @active_or_waiting - $self->{max_no_workers};
 	$n_threads_to_kill = 0 if $n_threads_to_kill < 0;
 	my $jobs_pending = $self->task_queue->pending();
 
 	# slowly reduce the no. workers to the minimum
 	$n_threads_to_kill++
-	  if @active_or_waiting-$n_threads_to_kill > $self->{min_no_workers}
-	  and $jobs_pending == 0;
-	
+		if @active_or_waiting - $n_threads_to_kill > $self->{min_no_workers}
+			and $jobs_pending == 0;
+
 	if ($n_threads_to_kill) {
+
 		# my $target_n_threads = @active_or_waiting - $n_threads_to_kill;
 		my $queue = $self->task_queue;
 		$queue->insert( 0, ("STOP") x $n_threads_to_kill )
-		  unless $queue->pending() and not ref($queue->peek(0));
+			unless $queue->pending()
+				and not ref( $queue->peek(0) );
 
 		# We don't actually need to wait for the soon-to-be-joinable threads
 		# since reap should be called regularly.
@@ -318,27 +324,25 @@ sub reap {
 	return 1;
 }
 
-
 sub _stop_task {
-	my $self = shift;
-	my $tid = shift;
+	my $self      = shift;
+	my $tid       = shift;
 	my $task_type = shift;
 
 	my $running = $self->{running_tasks};
 
-	if (not defined $task_type) { # attempt cleanup after crash
-		foreach my $task_type (keys %$running) {
+	if ( not defined $task_type ) {    # attempt cleanup after crash
+		foreach my $task_type ( keys %$running ) {
 			delete $running->{$task_type}{$tid};
-			delete $running->{$task_type} if not keys %{$running->{$task_type}};
+			delete $running->{$task_type} if not keys %{ $running->{$task_type} };
 		}
-	}
-	else {
+	} else {
 		delete $running->{$task_type}{$tid};
-		delete $running->{$task_type} if not keys %{$running->{$task_type}};
+		delete $running->{$task_type} if not keys %{ $running->{$task_type} };
 	}
-	
+
 	Padre->ide->wx->main->GetToolBar->update_task_status();
-	return(1);
+	return (1);
 }
 
 =pod
@@ -356,13 +360,13 @@ sub cleanup {
 	# the nice way:
 	my @workers = $self->workers;
 	$self->task_queue->insert( 0, ("STOP") x scalar(@workers) );
-	while (threads->list(threads::running) >= 1) {
+	while ( threads->list(threads::running) >= 1 ) {
 		$_->join for threads->list(threads::joinable);
 	}
 	$_->join for threads->list(threads::joinable);
 
 	# didn't work the nice way?
-	while (threads->list(threads::running) >= 1) {
+	while ( threads->list(threads::running) >= 1 ) {
 		$_->detach(), $_->kill() for threads->list(threads::running);
 	}
 
@@ -399,8 +403,8 @@ Returns the number of tasks that are currently being executed.
 
 sub running_tasks {
 	my $self = shift;
-	my $n = 0;
-	foreach my $task_type_hash (values %{$self->{running_tasks}}) {
+	my $n    = 0;
+	foreach my $task_type_hash ( values %{ $self->{running_tasks} } ) {
 		$n += keys %$task_type_hash;
 	}
 	return $n;
@@ -416,7 +420,7 @@ Returns B<a list> of the worker threads.
 
 sub workers {
 	my $self = shift;
-	return @{$self->{workers}};
+	return @{ $self->{workers} };
 }
 
 =pod
@@ -431,7 +435,7 @@ Executes the cleanup method.
 =cut
 
 sub on_close {
-	my ($main, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
 
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
@@ -454,9 +458,9 @@ because C<finish> most likely updates the GUI.)
 =cut
 
 sub on_task_done_event {
-	my ($main, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
 	my $frozen = $event->GetData;
-	my $task = Padre::Task->deserialize( \$frozen );
+	my $task   = Padre::Task->deserialize( \$frozen );
 
 	$task->finish($main);
 	my $tid = $task->{__thread_id};
@@ -464,12 +468,12 @@ sub on_task_done_event {
 	# TODO/FIXME:
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
-	my $manager = Padre->ide->task_manager;
-	my $running = $manager->{running_tasks};
+	my $manager   = Padre->ide->task_manager;
+	my $running   = $manager->{running_tasks};
 	my $task_type = ref($task);
-	$manager->_stop_task($tid, $task_type);
+	$manager->_stop_task( $tid, $task_type );
 
-	return();
+	return ();
 }
 
 =pod
@@ -483,17 +487,17 @@ It simply increments the running task counter.
 =cut
 
 sub on_task_start_event {
-	my ($main, $event) = @_; @_ = (); # hack to avoid "Scalars leaked"
-	# TODO/FIXME:
-	# This should somehow get at the specific TaskManager object
-	# instead of going through the Padre globals!
-	my $manager = Padre->ide->task_manager;
+	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
+	                                       # TODO/FIXME:
+	                                       # This should somehow get at the specific TaskManager object
+	                                       # instead of going through the Padre globals!
+	my $manager           = Padre->ide->task_manager;
 	my $tid_and_task_type = $event->GetData();
-	my ($tid, $task_type) = split /;/, $tid_and_task_type, 2;
+	my ( $tid, $task_type ) = split /;/, $tid_and_task_type, 2;
 	$manager->{running_tasks}{$task_type}{$tid} = 1;
 	$main->GetToolBar->update_task_status();
 
-	return();
+	return ();
 }
 
 =pod
@@ -506,35 +510,35 @@ Dumps the list of running tasks to the output panel.
 =cut
 
 sub on_dump_running_tasks {
-	my $ide = Padre->ide;
-	my $manager = $ide->task_manager;
+	my $ide      = Padre->ide;
+	my $manager  = $ide->task_manager;
 	my $nrunning = $manager->running_tasks();
 
-	my $main = $ide->wx->main;
+	my $main   = $ide->wx->main;
 	my $output = $main->output;
 	$main->show_output(1);
 	$output->style_neutral;
 
-	$output->AppendText("\n-----------------------------------------\n[" . localtime() . "] ");
-	if ($nrunning == 0) {
+	$output->AppendText( "\n-----------------------------------------\n[" . localtime() . "] " );
+	if ( $nrunning == 0 ) {
 		$output->AppendText("Currently, no background tasks are being executed.\n");
-		return();
+		return ();
 	}
 
 	my $running = $manager->{running_tasks};
 	my $text;
 	$text .= "The following tasks are currently executing in the background:\n";
 
-	foreach my $type (keys %$running) {
+	foreach my $type ( keys %$running ) {
 		my $threads = $running->{$type};
-		my $n = keys %$threads;
+		my $n       = keys %$threads;
 		$text .= "- $n of type '$type':\n";
-		$text .= "  (in thread(s) " . join(", ", sort {$a <=> $b} values %$threads) . ")\n";
+		$text .= "  (in thread(s) " . join( ", ", sort { $a <=> $b } values %$threads ) . ")\n";
 	}
 
 	$output->AppendText($text);
 
-	my $queue = $manager->task_queue;
+	my $queue   = $manager->task_queue;
 	my $pending = $queue->pending;
 
 	if ($pending) {
@@ -545,7 +549,7 @@ sub on_dump_running_tasks {
 ##########################
 # Worker thread main loop
 sub worker_loop {
-	my ($main, $queue) = @_;  @_ = (); # hack to avoid "Scalars leaked"
+	my ( $main, $queue ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
 	require Storable;
 
 	# Set the thread-specific main-window pointer
@@ -553,7 +557,7 @@ sub worker_loop {
 
 	#warn threads->tid() . " -- Hi, I'm a thread.";
 
-	while (my $frozen_task = $queue->dequeue ) {
+	while ( my $frozen_task = $queue->dequeue ) {
 
 		#warn threads->tid() . " -- got task.";
 
@@ -563,9 +567,10 @@ sub worker_loop {
 		my $task = Padre::Task->deserialize( \$frozen_task );
 		$task->{__thread_id} = threads->tid();
 
-		my $thread_start_event = Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, $task->{__thread_id} . ";" . ref($task) );
-		Wx::PostEvent($main, $thread_start_event);
-		
+		my $thread_start_event
+			= Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, $task->{__thread_id} . ";" . ref($task) );
+		Wx::PostEvent( $main, $thread_start_event );
+
 		# RUN
 		$task->run();
 
@@ -574,15 +579,14 @@ sub worker_loop {
 		$task->serialize( \$frozen_task );
 
 		my $thread_done_event = Wx::PlThreadEvent->new( -1, $TASK_DONE_EVENT, $frozen_task );
-		Wx::PostEvent($main, $thread_done_event);
+		Wx::PostEvent( $main, $thread_done_event );
 
 		#warn threads->tid() . " -- done with task.";
 	}
-	
+
 	# clean up
 	undef $_main;
 }
-
 
 1;
 

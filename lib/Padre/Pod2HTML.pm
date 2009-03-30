@@ -36,11 +36,9 @@ use Pod::Simple::XHTML ();
 our $VERSION = '0.32';
 use base 'Pod::Simple::XHTML';
 
-
-use Class::XSAccessor
-	getters => {
-		html => 'scratch', # Method to fetch out the scratch
-	};
+use Class::XSAccessor getters => {
+	html => 'scratch',    # Method to fetch out the scratch
+};
 
 #####################################################################
 # One-Shot Method
@@ -48,14 +46,10 @@ use Class::XSAccessor
 sub pod2html {
 	my $class = shift;
 	my $input = shift;
-	my $self  = $class->new( @_ );
-	$self->parse_string_document( $input );
+	my $self  = $class->new(@_);
+	$self->parse_string_document($input);
 	return $self->html;
 }
-
-
-
-
 
 #####################################################################
 # Capture instead of print
@@ -63,7 +57,7 @@ sub pod2html {
 # Prevent binding to STDOUT
 sub new {
 	my $class = shift;
-	my $self  = $class->SUPER::new( output_fh => 1, @_ );
+	my $self = $class->SUPER::new( output_fh => 1, @_ );
 
 	# Ignore POD irregularities
 	$self->no_whining(1);
@@ -76,9 +70,6 @@ sub new {
 sub emit {
 	return;
 }
-
-
-
 
 #####################################################################
 # Customize HTML generation

@@ -8,7 +8,7 @@ use Padre::Project ();
 our $VERSION = '0.32';
 use base 'Padre::Project';
 
-use overload 'bool' => sub () { 0 };
+use overload 'bool' => sub () {0};
 
 1;
 

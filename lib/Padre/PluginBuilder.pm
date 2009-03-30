@@ -3,7 +3,7 @@ package Padre::PluginBuilder;
 use strict;
 use warnings;
 
-use Module::Build            ();
+use Module::Build ();
 use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
 
 use base 'Module::Build';
@@ -41,21 +41,20 @@ sub ACTION_plugin {
 
 	# Need PAR::Dist
 	if ( not eval { require PAR::Dist; PAR::Dist->VERSION(0.17) } ) {
-		$self->log_warn( "In order to create .par files, you need to install PAR::Dist first." );
-		return();
+		$self->log_warn("In order to create .par files, you need to install PAR::Dist first.");
+		return ();
 	}
-	$self->depends_on( 'build' );
+	$self->depends_on('build');
 	my $module = $self->module_name();
 	$module =~ s/^Padre::Plugin:://;
 	$module =~ s/::/-/g;
 
 	return PAR::Dist::blib_to_par(
-		name => $self->dist_name,
+		name    => $self->dist_name,
 		version => $self->dist_version,
-		dist => "$module.par",
+		dist    => "$module.par",
 	);
 }
-
 
 =head2 installplugin
 
@@ -67,7 +66,7 @@ into the user's Padre plugins directory.
 sub ACTION_installplugin {
 	my ($self) = @_;
 
-	$self->depends_on( 'plugin' );
+	$self->depends_on('plugin');
 
 	my $module = $self->module_name();
 	$module =~ s/^Padre::Plugin:://;
@@ -75,10 +74,8 @@ sub ACTION_installplugin {
 	my $plugin = "$module.par";
 
 	require Padre;
-	return $self->copy_if_modified(from => $plugin, to_dir => $PADRE_PLUGIN_DIR);
+	return $self->copy_if_modified( from => $plugin, to_dir => $PADRE_PLUGIN_DIR );
 }
-
-
 
 1;
 

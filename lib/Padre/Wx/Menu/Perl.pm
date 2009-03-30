@@ -16,8 +16,6 @@ use Padre::Wx::Menu ();
 our $VERSION = '0.32';
 use base 'Padre::Wx::Menu';
 
-
-
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -35,40 +33,41 @@ sub new {
 	$self->{config} = $main->config;
 
 	# Perl-Specific Searches
-	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append(
+			-1,
 			Wx::gettext("Find Unmatched Brace")
 		),
 		sub {
 			my $doc = $_[0]->current->document;
-			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
+			return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_unmatched_brace;
 		},
 	);
 
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->Append( -1, Wx::gettext("Find Variable Declaration") ),
 		sub {
 			my $doc = $_[0]->current->document;
-			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
+			return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_variable_declaration;
 		},
 	);
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Perl-Specific Refactoring
-	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append(
+			-1,
 			Wx::gettext("Lexically Rename Variable")
 		),
 		sub {
 			my $doc = $_[0]->current->document;
-			return unless Params::Util::_INSTANCE($doc, 'Padre::Document::Perl');
+			return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 			my $dialog = Padre::Wx::History::TextDialog->new(
 				$_[0],
 				Wx::gettext("Replacement"),
@@ -86,8 +85,10 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_MENU( $main,
-		$self->Append( -1,
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append(
+			-1,
 			Wx::gettext("Vertically Align Selected")
 		),
 		sub {
@@ -95,59 +96,57 @@ sub new {
 
 			# Get the selected lines
 			my $begin = $editor->LineFromPosition( $editor->GetSelectionStart );
-			my $end   = $editor->LineFromPosition( $editor->GetSelectionEnd   );
+			my $end   = $editor->LineFromPosition( $editor->GetSelectionEnd );
 			if ( $begin == $end ) {
-				$_[0]->error(Wx::gettext("You must select a range of lines"));
+				$_[0]->error( Wx::gettext("You must select a range of lines") );
 				return;
 			}
-			my @line  = ( $begin .. $end );
-			my @text  = ();
-			foreach ( @line ) {
+			my @line = ( $begin .. $end );
+			my @text = ();
+			foreach (@line) {
 				my $x = $editor->PositionFromLine($_);
 				my $y = $editor->GetLineEndPosition($_);
-				push @text, $editor->GetTextRange($x, $y);
+				push @text, $editor->GetTextRange( $x, $y );
 			}
 
 			# Get the align character from the selection start
 			# (which must be a non-whitespace non-word character)
 			my $start = $editor->GetSelectionStart;
-			my $c     = $editor->GetTextRange($start, $start + 1);
+			my $c = $editor->GetTextRange( $start, $start + 1 );
 			unless ( defined $c and $c =~ /^[^\s\w]$/ ) {
-				$_[0]->error(Wx::gettext("First character of selection must be a non-word character to align"));
+				$_[0]->error( Wx::gettext("First character of selection must be a non-word character to align") );
 			}
 
 			# Locate the position of the align character,
 			# and the position of the earliest whitespace before it.
 			my $qc       = quotemeta $c;
 			my @position = ();
-			foreach ( @text ) {
-				if ( /^(.+?)(\s*)$qc/ ) {
+			foreach (@text) {
+				if (/^(.+?)(\s*)$qc/) {
 					push @position, [ length("$1"), length("$2") ];
 				} else {
+
 					# This line is not a member of the align set
 					push @position, undef;
 				}
 			}
 
 			# Find the latest position of the starting whitespace.
-			my $longest = List::Util::max map { $_->[0] } grep { $_ } @position;
+			my $longest = List::Util::max map { $_->[0] } grep {$_} @position;
 
 			# Now lets line them up
 			$editor->BeginUndoAction;
 			foreach ( 0 .. $#line ) {
 				next unless $position[$_];
-				my $spaces = $longest
-					- $position[$_]->[0]
-					- $position[$_]->[1]
-					+ 1;
+				my $spaces = $longest - $position[$_]->[0] - $position[$_]->[1] + 1;
 				if ( $_ == 0 ) {
 					$start = $start + $spaces;
 				}
-				my $insert = $editor->PositionFromLine($line[$_]) + $position[$_]->[0];
+				my $insert = $editor->PositionFromLine( $line[$_] ) + $position[$_]->[0];
 				if ( $spaces > 0 ) {
 					$editor->InsertText( $insert, ' ' x $spaces );
 				} elsif ( $spaces < 0 ) {
-					$editor->SetSelection($insert, $insert - $spaces);
+					$editor->SetSelection( $insert, $insert - $spaces );
 					$editor->ReplaceSelection('');
 				}
 			}
@@ -162,17 +161,16 @@ sub new {
 
 	$self->AppendSeparator;
 
-
-
-
-
 	# Perl-Specific Options
-	$self->{ppi_highlight} = $self->AppendCheckItem( -1,
+	$self->{ppi_highlight} = $self->AppendCheckItem(
+		-1,
 		Wx::gettext("Use PPI Syntax Highlighting")
 	);
-	Wx::Event::EVT_MENU( $main,
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{ppi_highlight},
 		sub {
+
 			# Update the saved config setting
 			my $config = Padre->ide->config;
 			$config->set( ppi_highlight => $_[1]->IsChecked ? 1 : 0 );
@@ -198,26 +196,30 @@ sub new {
 			return;
 		}
 	);
-# Move of stacktrace to Run
-#	# Make it easier to access stack traces
-#	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
-#		Wx::gettext("Run Scripts with Stack Trace")
-#	);	
-#	Wx::Event::EVT_MENU( $main, $self->{run_stacktrace},
-#		sub {
-#			# Update the saved config setting
-#			my $config = Padre->ide->config;
-#			$config->set( run_stacktrace => $_[1]->IsChecked ? 1 : 0 );
-#			$self->refresh;
-#		}
-#	);
+
+	# Move of stacktrace to Run
+	#	# Make it easier to access stack traces
+	#	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
+	#		Wx::gettext("Run Scripts with Stack Trace")
+	#	);
+	#	Wx::Event::EVT_MENU( $main, $self->{run_stacktrace},
+	#		sub {
+	#			# Update the saved config setting
+	#			my $config = Padre->ide->config;
+	#			$config->set( run_stacktrace => $_[1]->IsChecked ? 1 : 0 );
+	#			$self->refresh;
+	#		}
+	#	);
 
 	$self->{autocomplete_brackets} = $self->AppendCheckItem(
 		-1,
 		Wx::gettext("Automatic bracket completion")
 	);
-	Wx::Event::EVT_MENU( $main, $self->{autocomplete_brackets},
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{autocomplete_brackets},
 		sub {
+
 			# Update the saved config setting
 			my $config = Padre->ide->config;
 			$config->set( autocomplete_brackets => $_[1]->IsChecked ? 1 : 0 );
@@ -232,18 +234,19 @@ sub refresh {
 	my $config = $self->{config};
 
 	$self->{ppi_highlight}->Check( $config->ppi_highlight );
+
 	#$self->{run_stacktrace}->Check( $config->run_stacktrace );
 	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
 
-	no warnings 'once'; # TODO eliminate?
-	$Padre::Document::MIME_LEXER{'application/x-perl'} = 
-		$config->ppi_highlight
-			? Wx::wxSTC_LEX_CONTAINER
-			: Wx::wxSTC_LEX_PERL;
+	no warnings 'once';    # TODO eliminate?
+	$Padre::Document::MIME_LEXER{'application/x-perl'}
+		= $config->ppi_highlight
+		? Wx::wxSTC_LEX_CONTAINER
+		: Wx::wxSTC_LEX_PERL;
 }
 
-
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

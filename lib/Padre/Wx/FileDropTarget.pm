@@ -10,15 +10,15 @@ our $VERSION = '0.32';
 use base 'Wx::FileDropTarget';
 
 sub new {
-	my $class     = shift;
-	my $self      = $class->SUPER::new;
+	my $class = shift;
+	my $self  = $class->SUPER::new;
 	$self->{main} = shift;
 	return $self;
 }
 
 sub set {
 	my $self = shift;
-	unless ( _INSTANCE($self, 'Padre::Wx::FileDropTarget') ) {
+	unless ( _INSTANCE( $self, 'Padre::Wx::FileDropTarget' ) ) {
 		$self = $self->new(@_);
 	}
 	$self->{main}->SetDropTarget($self);
@@ -26,7 +26,7 @@ sub set {
 }
 
 sub OnDropFiles {
-	foreach my $i ( @{$_[3]} ) {
+	foreach my $i ( @{ $_[3] } ) {
 		$_[0]->{main}->setup_editor($i);
 		$_[0]->{main}->refresh;
 	}

@@ -7,20 +7,15 @@ use PPI;
 
 our $VERSION = '0.32';
 
-
-
-
-
 #####################################################################
 # Assorted Search Functions
 
 sub find_unmatched_brace {
 	$_[1]->isa('PPI::Statement::UnmatchedBrace') and return 1;
-	$_[1]->isa('PPI::Structure')                 or return '';
-	$_[1]->start and $_[1]->finish               and return '';
+	$_[1]->isa('PPI::Structure') or return '';
+	$_[1]->start and $_[1]->finish and return '';
 	return 1;
 }
-
 
 # scans a document for variable declarations and
 # sorts them into three categories:
@@ -50,37 +45,33 @@ sub get_all_variable_declarations {
 			return 1;
 		},
 	);
-	
+
 	my %our;
 	my %lexical;
 	my %dynamic;
 	foreach my $decl (@$declarations) {
-		my $type = $decl->type();
-		my @vars = $decl->variables;
+		my $type     = $decl->type();
+		my @vars     = $decl->variables;
 		my $location = $decl->location;
 
 		my $target_type;
 
-		if ($type eq 'my') {
+		if ( $type eq 'my' ) {
 			$target_type = \%lexical;
-		}
-		elsif ($type eq 'our') {
+		} elsif ( $type eq 'our' ) {
 			$target_type = \%our;
-		}
-		elsif ($type eq 'local') {
+		} elsif ( $type eq 'local' ) {
 			$target_type = \%dynamic;
 		}
 
 		foreach my $var (@vars) {
 			$target_type->{$var} ||= [];
-			push @{$target_type->{$var}}, $location;
+			push @{ $target_type->{$var} }, $location;
 		}
 	}
-	
-	return({ our => \%our, lexical => \%lexical, dynamic => \%dynamic });
+
+	return ( { our => \%our, lexical => \%lexical, dynamic => \%dynamic } );
 }
-
-
 
 #####################################################################
 # Stuff that should be in PPI itself
@@ -101,11 +92,12 @@ sub element_depth {
 sub find_token_at_location {
 	my $document = shift;
 	my $location = shift;
-	
-	if (not defined $document
-	    or not $document->isa('PPI::Document')
-	    or not defined $location
-	    or not ref($location) eq 'ARRAY') {
+
+	if (   not defined $document
+		or not $document->isa('PPI::Document')
+		or not defined $location
+		or not ref($location) eq 'ARRAY' )
+	{
 		require Carp;
 		Carp::croak("find_token_at_location() requires a PPI::Document and a PPI-style location is arguments");
 	}
@@ -131,61 +123,67 @@ sub find_token_at_location {
 # find where that variable has been declared lexically.
 # Doesn't find stuff like "use vars...".
 sub find_variable_declaration {
-	my $cursor   = shift;
-	return()
-	  if not $cursor or not $cursor->isa("PPI::Token");
+	my $cursor = shift;
+	return ()
+		if not $cursor
+			or not $cursor->isa("PPI::Token");
 
-	my ($varname, $token_str);
-	if ($cursor->isa("PPI::Token::Symbol")) {
-		$varname = $cursor->symbol;
+	my ( $varname, $token_str );
+	if ( $cursor->isa("PPI::Token::Symbol") ) {
+		$varname   = $cursor->symbol;
 		$token_str = $cursor->content;
-	}
-	else {
+	} else {
 		my $content = $cursor->content;
-		if ($content =~ /((?:\$#?|[@%*])[\w:']+)/) {
-			$varname = $1;
+		if ( $content =~ /((?:\$#?|[@%*])[\w:']+)/ ) {
+			$varname   = $1;
 			$token_str = $1;
 		}
 	}
-	return()
-	  if not defined $varname;
-	
+	return ()
+		if not defined $varname;
+
 	$varname =~ s/^\$\#/@/;
 
 	my $document = $cursor->top();
 	my $declaration;
 	my $prev_cursor;
-	while ( 1 ) {
+	while (1) {
 		$prev_cursor = $cursor;
-		$cursor = $cursor->parent;
-		if ($cursor->isa("PPI::Structure::Block") or $cursor == $document) {
+		$cursor      = $cursor->parent;
+		if ( $cursor->isa("PPI::Structure::Block") or $cursor == $document ) {
 			my @elems = $cursor->elements;
 			foreach my $elem (@elems) {
+
 				# Stop scanning this scope if we're at the branch we're coming
 				# from. This is to ignore declarations later in the block.
 				last if $elem == $prev_cursor;
 
-				if ($elem->isa("PPI::Statement::Variable")
-				    and grep {$_ eq $varname} $elem->variables) {
+				if ( $elem->isa("PPI::Statement::Variable")
+					and grep { $_ eq $varname } $elem->variables )
+				{
 					$declaration = $elem;
 					last;
 				}
-                                
+
 			}
 			last if $declaration or $cursor == $document;
 		}
-                # this is for "foreach my $i ..."
-		elsif ($cursor->isa("PPI::Statement::Compound") and $cursor->type() =~ /^for/) {
+
+		# this is for "foreach my $i ..."
+		elsif ( $cursor->isa("PPI::Statement::Compound") and $cursor->type() =~ /^for/ ) {
 			my @elems = $cursor->elements;
 			foreach my $elem (@elems) {
+
 				# Stop scanning this scope if we're at the branch we're coming
 				# from. This is to ignore declarations later in the block.
 				last if $elem == $prev_cursor;
 
-				if ($elem->isa("PPI::Token::Word") and $elem->content() =~ /^(?:my|our)$/) {
+				if ( $elem->isa("PPI::Token::Word") and $elem->content() =~ /^(?:my|our)$/ ) {
 					my $nelem = $elem->snext_sibling();
-					if (defined $nelem and $nelem->isa("PPI::Token::Symbol")
-					    and $nelem->symbol() eq $varname || $nelem->content() eq $token_str) {
+					if (    defined $nelem
+						and $nelem->isa("PPI::Token::Symbol")
+						and $nelem->symbol() eq $varname || $nelem->content() eq $token_str )
+					{
 						$declaration = $nelem;
 						last;
 					}
@@ -193,11 +191,10 @@ sub find_variable_declaration {
 			}
 			last if $declaration or $cursor == $document;
 		}
-	} # end while not top level
+	}    # end while not top level
 
 	return $declaration;
 }
-
 
 1;
 

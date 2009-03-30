@@ -11,36 +11,35 @@ our $VERSION = '0.32';
 # workaround: need to be accessible from outside in oder to write unit test ( t/03-wx.t )
 # TODO - Don't store run-time data in package lexicals
 my $dialog;
+
 sub get_dialog {
 	return $dialog;
-};
+}
 
 sub get_layout {
 	my $text      = shift;
 	my $shortcuts = shift;
 
 	my @layout;
-	if ( $text ) {
+	if ($text) {
 		push @layout, [ [ 'Wx::TextCtrl', 'entry', $text ] ];
 	}
 
 	push @layout,
 		[
-			[ 'Wx::StaticText', undef, Wx::gettext("Existing bookmarks:") ],
+		[ 'Wx::StaticText', undef, Wx::gettext("Existing bookmarks:") ],
 		],
 		[
-			[ 'Wx::Treebook',   'tb', $shortcuts ],
+		[ 'Wx::Treebook', 'tb', $shortcuts ],
 		],
 		[
-			[ 'Wx::Button',     'ok',     Wx::wxID_OK     ],
-			[ 'Wx::Button',     'cancel', Wx::wxID_CANCEL ],
+		[ 'Wx::Button', 'ok',     Wx::wxID_OK ],
+		[ 'Wx::Button', 'cancel', Wx::wxID_CANCEL ],
 		];
 
-	if ( @$shortcuts ) {
-		push @{ $layout[-1] },
-			[ 'Wx::Button',     'delete', Wx::wxID_DELETE ];
-		push @{ $layout[-1] },
-			[ 'Wx::Button',     'delete_all', Wx::gettext('Delete &All') ];
+	if (@$shortcuts) {
+		push @{ $layout[-1] }, [ 'Wx::Button', 'delete',     Wx::wxID_DELETE ];
+		push @{ $layout[-1] }, [ 'Wx::Button', 'delete_all', Wx::gettext('Delete &All') ];
 	}
 
 	return \@layout;
@@ -51,38 +50,39 @@ sub dialog {
 	my $main  = shift;
 	my $text  = shift;
 	my $names = Padre::DB::Bookmark->select_names;
-	my $title = $text
+	my $title
+		= $text
 		? Wx::gettext("Set Bookmark")
 		: Wx::gettext("GoTo Bookmark");
 
 	my $layout = get_layout( $text, $names );
 	$dialog = Padre::Wx::Dialog->new(
-		parent   => $main,
-		title    => $title,
-		layout   => $layout,
-		width    => [ 300, 50 ],
+		parent => $main,
+		title  => $title,
+		layout => $layout,
+		width  => [ 300, 50 ],
 	);
 	if ( $dialog->{_widgets_}->{entry} ) {
-		$dialog->{_widgets_}->{entry}->SetSize(10 * length $text, -1);
+		$dialog->{_widgets_}->{entry}->SetSize( 10 * length $text, -1 );
 	}
 
 	Wx::Event::EVT_BUTTON(
 		$dialog,
 		$dialog->{_widgets_}->{ok},
 		sub {
-			$dialog->EndModal(Wx::wxID_OK)
+			$dialog->EndModal(Wx::wxID_OK);
 		}
 	);
 	Wx::Event::EVT_BUTTON(
 		$dialog,
 		$dialog->{_widgets_}->{cancel},
 		sub {
-			$dialog->EndModal(Wx::wxID_CANCEL)
+			$dialog->EndModal(Wx::wxID_CANCEL);
 		}
 	);
 	$dialog->{_widgets_}->{ok}->SetDefault;
 
-	if ($dialog->{_widgets_}->{delete}) {
+	if ( $dialog->{_widgets_}->{delete} ) {
 		Wx::Event::EVT_BUTTON(
 			$dialog,
 			$dialog->{_widgets_}->{delete},
@@ -119,18 +119,18 @@ sub set_bookmark {
 	my $editor  = $current->editor or return;
 	my $path    = $current->filename;
 	unless ( defined $path ) {
-		$main->error(Wx::gettext("Cannot set bookmark in unsaved document"));
+		$main->error( Wx::gettext("Cannot set bookmark in unsaved document") );
 		return;
 	}
 
 	# Ask the user for the bookmark name
-	my $line     = $editor->GetCurrentLine;
-	my $file     = File::Basename::basename($path || '');
-	my ($text)   = $editor->GetLine($line);
+	my $line   = $editor->GetCurrentLine;
+	my $file   = File::Basename::basename( $path || '' );
+	my ($text) = $editor->GetLine($line);
 	$text =~ s/\r?\n?$//;
-	my $dialog   = $class->dialog(
+	my $dialog = $class->dialog(
 		$main,
-		sprintf(Wx::gettext("%s line %s: %s"), $file, $line, $text)
+		sprintf( Wx::gettext("%s line %s: %s"), $file, $line, $text )
 	);
 	$dialog->show_modal or return;
 
@@ -152,8 +152,8 @@ sub set_bookmark {
 }
 
 sub goto_bookmark {
-	my $class  = shift;
-	my $main   = shift;
+	my $class = shift;
+	my $main  = shift;
 
 	# Show the bookmarks dialog
 	my $dialog = $class->dialog($main);
@@ -165,11 +165,10 @@ sub goto_bookmark {
 	my $selection = $treebook->GetSelection;
 	my $name      = $treebook->GetPageText($selection);
 	my $bookmark  = Padre::DB::Bookmark->fetch_name($name);
-	unless ( $bookmark ) {
+	unless ($bookmark) {
+
 		# Deleted since the dialog was shown
-		$main->error(
-            sprintf(Wx::gettext("The bookmark '%s' no longer exists"), $name)
-        );
+		$main->error( sprintf( Wx::gettext("The bookmark '%s' no longer exists"), $name ) );
 		return;
 	}
 
@@ -179,6 +178,7 @@ sub goto_bookmark {
 	my $pageid = $main->find_editor_of_file($file);
 
 	unless ( defined $pageid ) {
+
 		# Load the file
 		if ( -e $file ) {
 			$main->setup_editor($file);
@@ -198,7 +198,7 @@ sub goto_bookmark {
 
 sub on_delete_bookmark {
 	$DB::single = 1;
-	my $dialog    = shift;
+	my $dialog = shift;
 
 	# Locate the selected bookmark
 	my $treebook  = $dialog->{_widgets_}->{tb};
@@ -207,7 +207,7 @@ sub on_delete_bookmark {
 	my $bookmark  = Padre::DB::Bookmark->fetch_name($name);
 
 	# Delete it from the database
-	if ( $bookmark ) {
+	if ($bookmark) {
 		$bookmark->delete;
 	}
 

@@ -90,7 +90,7 @@ sub save_data {
 =cut
 
 sub new {
-	my ($class, %args) = @_;
+	my ( $class, %args ) = @_;
 	my $self = bless \%args, $class;
 
 	Carp::croak("No filename is given") if not $self->{dbfile};
@@ -128,25 +128,26 @@ sub types { return qw(initial autosave usersave external); }
 sub list_files {
 	my ($self) = @_;
 
-	my $rows  = $self->selectall_arrayref('SELECT DISTINCT path FROM autosave');
-	return map { @$_ } @$rows ;
+	my $rows = $self->selectall_arrayref('SELECT DISTINCT path FROM autosave');
+	return map {@$_} @$rows;
 }
 
 sub save_file {
-	my ($self, $path, $type, $content, $timestamp) = @_;
+	my ( $self, $path, $type, $content, $timestamp ) = @_;
 
 	Carp::croak("Missing type") if not defined $type;
-	Carp::croak("Invalid type '$type'") if not grep {$type eq $_} $self->types;
+	Carp::croak("Invalid type '$type'") if not grep { $type eq $_ } $self->types;
 	$timestamp ||= time;
 	$self->do(
-			'INSERT INTO autosave ( path, timestamp, type, content ) values ( ?, ?, ?, ?)',
-			{}, $path, $timestamp, $type, $content,	);
+		'INSERT INTO autosave ( path, timestamp, type, content ) values ( ?, ?, ?, ?)',
+		{}, $path, $timestamp, $type, $content,
+	);
 
 	return;
 }
 
-
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

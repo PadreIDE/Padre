@@ -53,28 +53,26 @@ There is no warranty whatsoever.
 
 =cut
 
-
 sub new {
 	return bless {}, shift;
 }
+
 sub error {
 	return $_[0]->{error};
 }
 
-
 sub check {
-	my ($self, $text) = @_;
+	my ( $self, $text ) = @_;
 	$self->{error} = '';
-	
-	
-	if ($text =~ m{split([^;]+);}) {
+
+	if ( $text =~ m{split([^;]+);} ) {
 		my $cont = $1;
-		if ($cont =~ m{\@}) {
+		if ( $cont =~ m{\@} ) {
 			$self->{error} = "The second parameter of split is a string, not an array";
 			return;
 		}
 	}
-	if ($text =~ /use\s+warning\s*;/) {
+	if ( $text =~ /use\s+warning\s*;/ ) {
 		$self->{error} = "You need to write use warnings (with an s at the end) and not use warning.";
 		return;
 	}
@@ -82,8 +80,8 @@ sub check {
 	return 1;
 }
 
-
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

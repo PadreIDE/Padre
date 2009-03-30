@@ -39,58 +39,57 @@ sub prepare {
 	# move the document to the main-thread-only storage
 	my $mto = $self->{main_thread_only} ||= {};
 	$mto->{document} = $self->{document}
-	  if defined $self->{document};
+		if defined $self->{document};
 	delete $self->{document};
-	if (not defined $mto->{document}) {
+	if ( not defined $mto->{document} ) {
 		require Carp;
 		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the brace-finder task");
 	}
 
-	if (not defined $self->{location}) {
+	if ( not defined $self->{location} ) {
 		require Carp;
 		Carp::croak("Need a {location}!");
 	}
 
-	return();
+	return ();
 }
 
 sub process_ppi {
+
 	# find bad braces
-	my $self = shift;
-	my $ppi = shift or return;
+	my $self     = shift;
+	my $ppi      = shift or return;
 	my $location = $self->{location};
 
-	$ppi->flush_locations(); # TODO: PPI bug? This shouldn't be necessary!
-	my $token = Padre::PPI::find_token_at_location($ppi, $location);
-	if (not $token) {
+	$ppi->flush_locations();    # TODO: PPI bug? This shouldn't be necessary!
+	my $token = Padre::PPI::find_token_at_location( $ppi, $location );
+	if ( not $token ) {
 		$self->{error} = "no token";
 		return;
 	}
 
 	my $declaration = Padre::PPI::find_variable_declaration($token);
-	if (not defined $declaration) {
+	if ( not defined $declaration ) {
 		$self->{error} = "no declaration";
 		return;
 	}
 	$self->{declaration_location} = $declaration->location;
-	return();
+	return ();
 }
 
 sub finish {
 	my $self = shift;
-	if (defined $self->{declaration_location}) {
+	if ( defined $self->{declaration_location} ) {
+
 		# GUI update
 		$self->{main_thread_only}->{document}->ppi_select( $self->{declaration_location} );
-	}
-	else {
+	} else {
 		my $text;
-		if ($self->{error} eq 'no token') {
+		if ( $self->{error} eq 'no token' ) {
 			$text = Wx::gettext("Current cursor does not seem to point at a variable");
-		}
-		elsif ($self->{error} eq 'no declaration') {
+		} elsif ( $self->{error} eq 'no declaration' ) {
 			$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
-		}
-		else {
+		} else {
 			$text = Wx::gettext("Unknown error");
 		}
 		Wx::MessageBox(
@@ -100,9 +99,8 @@ sub finish {
 			Padre->ide->wx->main
 		);
 	}
-	return();
+	return ();
 }
-
 
 1;
 

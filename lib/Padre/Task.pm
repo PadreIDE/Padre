@@ -15,14 +15,14 @@ use Scalar::Util ();
 use Params::Util '_INSTANCE';
 
 BEGIN {
+
 	# Hack IO::String to be a real IO::Handle
 	unless ( IO::String->isa('IO::Handle') ) {
 		@IO::String::ISA = qw{IO::Handle IO::Seekable};
 	}
 }
 
-use Class::XSAccessor
-	constructor => 'new';
+use Class::XSAccessor constructor => 'new';
 
 # set up the stdout/stderr printing events
 our $STDOUT_EVENT : shared = Wx::NewEventType();
@@ -142,9 +142,10 @@ Calling this multiple times will submit multiple jobs.
 
 {
 	my $events_initialized = 0;
+
 	sub schedule {
 		my $self = shift;
-		if (!$events_initialized) {
+		if ( !$events_initialized ) {
 			my $main = Padre->ide->wx->main;
 			Wx::Event::EVT_COMMAND(
 				$main,
@@ -252,24 +253,19 @@ SCOPE: {
 		#   for the user.
 		# - The subclasses must not use the "_process_class" slot
 		#   of the object. (Ohh...)
- 
-		# save the real object class for deserialization 
+
+		# save the real object class for deserialization
 		my $class = ref($self);
 		if ( exists $self->{_process_class} ) {
 			require Carp;
 			Carp::croak(
-				"The '_process_class' slot in a Padre::Task"
-				. " object is reserved for usage by Padre::Task"
-			);
+				"The '_process_class' slot in a Padre::Task" . " object is reserved for usage by Padre::Task" );
 		}
 
 		$self->{_process_class} = $class;
 
-		my $save_main_thread_data = (
-			threads->tid() == 0
-			and
-			exists $self->{main_thread_only}
-		);
+		my $save_main_thread_data
+			= ( threads->tid() == 0 and exists $self->{main_thread_only} );
 		if ($save_main_thread_data) {
 			my $id = "$self";
 			$id .= '_' while exists $MainThreadData{$id};
@@ -287,7 +283,7 @@ SCOPE: {
 		# cleanup
 		delete $self->{_process_class};
 		if ($save_main_thread_data) {
-			$self->{main_thread_only} = $MainThreadData{$self->{_main_thread_data_id}};
+			$self->{main_thread_only} = $MainThreadData{ $self->{_main_thread_data_id} };
 			delete $self->{_main_thread_data_id};
 		}
 		bless $self => $class;
@@ -304,11 +300,11 @@ SCOPE: {
 		my $userclass = $padretask->{_process_class};
 		delete $padretask->{_process_class};
 
-		no strict 'refs'; ## no critic
+		no strict 'refs';    ## no critic
 		my $ref = \%{"${userclass}::"};
 		use strict 'refs';
 		my $loaded = exists $ref->{"ISA"};
-		unless ( $loaded or eval("require $userclass;") ) { ## no critic
+		unless ( $loaded or eval("require $userclass;") ) {    ## no critic
 			require Carp;
 			if ($@) {
 				Carp::croak("Failed to load Padre::Task subclass '$userclass': $@");
@@ -335,29 +331,29 @@ sub _serialize {
 	my $self = shift;
 
 	# Serialize to a named file (locking it)
-	if ( defined $_[0] and ! ref $_[0] and length $_[0] ) {
-		return Storable::lock_nstore($self, shift);
+	if ( defined $_[0] and !ref $_[0] and length $_[0] ) {
+		return Storable::lock_nstore( $self, shift );
 	}
 
 	# Serialize to a string (via a handle)
-	if ( Params::Util::_SCALAR0($_[0]) ) {
+	if ( Params::Util::_SCALAR0( $_[0] ) ) {
 		my $string = shift;
-		$$string   = 'pst0' . Storable::nfreeze($self);
+		$$string = 'pst0' . Storable::nfreeze($self);
 		return 1;
 	}
 
 	# Serialize to a generic handle
-	if ( defined fileno($_[0]) ) {
+	if ( defined fileno( $_[0] ) ) {
 		local $/ = undef;
-		return Storable::nstore_fd($self, shift);
+		return Storable::nstore_fd( $self, shift );
 	}
 
 	# Serialize to an IO::Handle object
-	if ( Params::Util::_INSTANCE($_[0], 'IO::Handle') ) {
+	if ( Params::Util::_INSTANCE( $_[0], 'IO::Handle' ) ) {
 		my $string   = Storable::nfreeze($self);
 		my $iohandle = shift;
-		$iohandle->print( 'pst0' )  or return;
-		$iohandle->print( $string ) or return;
+		$iohandle->print('pst0')  or return;
+		$iohandle->print($string) or return;
 		return 1;
 	}
 
@@ -370,35 +366,35 @@ sub _deserialize {
 	my $class = shift;
 
 	# Serialize from a named file (locking it)
-	if ( defined $_[0] and ! ref $_[0] and length $_[0] ) {
+	if ( defined $_[0] and !ref $_[0] and length $_[0] ) {
 		return Storable::lock_retrieve(shift);
 	}
 
 	# Serialize from a string (via a handle)
-	if ( Params::Util::_SCALAR0($_[0]) ) {
+	if ( Params::Util::_SCALAR0( $_[0] ) ) {
 		my $string = shift;
 
 		# Remove the magic header if it exists
-		if ( substr($$string, 0, 4) eq 'pst0' ) {
-			substr($$string, 0, 4, '');
+		if ( substr( $$string, 0, 4 ) eq 'pst0' ) {
+			substr( $$string, 0, 4, '' );
 		}
 
 		return Storable::thaw($$string);
 	}
 
 	# Serialize from a generic handle
-	if ( defined fileno($_[0]) ) {
+	if ( defined fileno( $_[0] ) ) {
 		return Storable::retrieve_fd(shift);
 	}
 
 	# Serialize from an IO::Handle object
-	if ( Params::Util::_INSTANCE($_[0], 'IO::Handle') ) {
-		local $/   = undef;
+	if ( Params::Util::_INSTANCE( $_[0], 'IO::Handle' ) ) {
+		local $/ = undef;
 		my $string = $_[0]->getline;
 
 		# Remove the magic header if it exists
-		if ( substr($string, 0, 4) eq 'pst0' ) {
-			substr($string, 0, 4, '');
+		if ( substr( $string, 0, 4 ) eq 'pst0' ) {
+			substr( $string, 0, 4, '' );
 		}
 
 		return Storable::thaw($string);
@@ -410,25 +406,25 @@ sub _deserialize {
 
 # The main-thread stdout hook
 sub _on_stdout {
-	my ($main, $event) = @_;
-	@_=(); # hack to avoid "Scalars leaked"
+	my ( $main, $event ) = @_;
+	@_ = ();    # hack to avoid "Scalars leaked"
 	my $out = $main->output();
 	$main->show_output(1);
 	$out->style_neutral();
-	$out->AppendText($event->GetData);
-	return();
+	$out->AppendText( $event->GetData );
+	return ();
 }
 
 # The main-thread stderr hook
 sub _on_stderr {
-	my ($main, $event) = @_;
-	@_=(); # hack to avoid "Scalars leaked"
+	my ( $main, $event ) = @_;
+	@_ = ();    # hack to avoid "Scalars leaked"
 	my $out = $main->output();
 	$main->show_output(1);
 	$out->style_bad();
-	$out->AppendText($event->GetData);
+	$out->AppendText( $event->GetData );
 	$out->style_neutral();
-	return();
+	return ();
 }
 
 =pod
@@ -444,10 +440,9 @@ message in the Padre output window.
 
 sub task_print {
 	my $self = shift;
-	$self->post_event($STDOUT_EVENT, join("", @_));
-	return();
+	$self->post_event( $STDOUT_EVENT, join( "", @_ ) );
+	return ();
 }
-
 
 =pod
 
@@ -462,10 +457,9 @@ message in the Padre output window with style C<bad>.
 
 sub task_warn {
 	my $self = shift;
-	$self->post_event($STDERR_EVENT, join("", @_));
-	return();
+	$self->post_event( $STDERR_EVENT, join( "", @_ ) );
+	return ();
 }
-
 
 =pod
 

@@ -5,21 +5,17 @@ package Padre::Config::Project;
 use 5.008;
 use strict;
 use warnings;
-use YAML::Tiny   ();
+use YAML::Tiny ();
 use Params::Util qw{_HASH0};
 
 our $VERSION = '0.32';
-
-
-
-
 
 ######################################################################
 # Constructor
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check the config
 
@@ -40,7 +36,7 @@ sub read {
 	return unless _HASH0($hash);
 
 	# Create the object
-	return $class->new( %$hash );
+	return $class->new(%$hash);
 }
 
 1;

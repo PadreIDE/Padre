@@ -4,9 +4,9 @@ package Padre::Wx::Dialog::PluginManager2;
 
 use strict;
 use warnings;
-use Carp                    ();
-use URI::file               ();
-use Params::Util            qw{_INSTANCE};
+use Carp      ();
+use URI::file ();
+use Params::Util qw{_INSTANCE};
 use Padre::Util             ();
 use Padre::Wx               ();
 use Padre::Wx::Dialog::HTML ();
@@ -15,19 +15,18 @@ our $VERSION = '0.32';
 use base 'Padre::Wx::Dialog::HTML';
 
 sub new {
-	my ($class, $parent, $manager) = @_;
-	my $self  = $class->SUPER::new(
+	my ( $class, $parent, $manager ) = @_;
+	my $self = $class->SUPER::new(
 		title => Wx::gettext('Plugin Manager'),
 	);
 
 	$self->{manager} = $manager;
-	unless ( _INSTANCE($self->{manager}, 'Padre::PluginManager') ) {
+	unless ( _INSTANCE( $self->{manager}, 'Padre::PluginManager' ) ) {
 		Carp::croak("Missing or invalid Padre::PluginManager object");
 	}
 
 	return $self;
 }
-
 
 # update html and show dialog
 sub show {
@@ -47,20 +46,13 @@ sub html {
 	unless ( -f $file ) {
 		die "Failed to find $file";
 	}
-	my $icon = URI::file->new( $file )->as_string;
+	my $icon = URI::file->new($file)->as_string;
 	foreach my $name ( $manager->plugin_names ) {
 		my $plugin   = $manager->_plugin($name);
-		my $namehtml = "<b>"  . $plugin->plugin_name . "</b>";
+		my $namehtml = "<b>" . $plugin->plugin_name . "</b>";
 		my $version  = $plugin->version || '???';
-		my $cellhtml = "<td bgcolor='#FFFFFF'>"
-			. $namehtml
-			. "&nbsp;&nbsp;&nbsp;"
-			. $version
-			. "</td>";
-		my $rowhtml  = "<tr>"
-			. "<td width='52'><img src='$icon' height='32' width='32'></td>"
-			. $cellhtml
-			. "</tr>";
+		my $cellhtml = "<td bgcolor='#FFFFFF'>" . $namehtml . "&nbsp;&nbsp;&nbsp;" . $version . "</td>";
+		my $rowhtml  = "<tr>" . "<td width='52'><img src='$icon' height='32' width='32'></td>" . $cellhtml . "</tr>";
 		push @rows, $rowhtml;
 	}
 
@@ -80,6 +72,7 @@ END_HTML
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

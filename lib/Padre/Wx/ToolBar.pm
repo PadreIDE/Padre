@@ -3,7 +3,7 @@ package Padre::Wx::ToolBar;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current    qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 use Padre::Wx         ();
 use Padre::Wx::Editor ();
 use Padre::Wx::Icon   ();
@@ -16,17 +16,14 @@ sub new {
 	my $main  = shift;
 
 	# Prepare the style
-	my $style = Wx::wxTB_HORIZONTAL
-		| Wx::wxTB_FLAT
-		| Wx::wxTB_NO_TOOLTIPS
-		| Wx::wxTB_NODIVIDER
-		| Wx::wxBORDER_NONE;
+	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NO_TOOLTIPS | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
 	unless ( $main->config->main_lockinterface ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
 
 	# Create the parent Wx object
-	my $self = $class->SUPER::new( $main, -1,
+	my $self = $class->SUPER::new(
+		$main, -1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		$style,
@@ -35,9 +32,7 @@ sub new {
 
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
-	$self->SetToolBitmapSize(
-		Wx::Size->new( 16, 16 )
-	);
+	$self->SetToolBitmapSize( Wx::Size->new( 16, 16 ) );
 
 	# Populate the toolbar
 	$self->add_tool(
@@ -63,15 +58,11 @@ sub new {
 		icon  => 'actions/x-document-close',
 		short => Wx::gettext('Close File'),
 		event => sub {
-			$_[0]->on_close($_[1]);
+			$_[0]->on_close( $_[1] );
 		},
 	);
 
 	$self->AddSeparator;
-
-
-
-
 
 	# Undo/Redo Support
 	$self->AddTool(
@@ -88,10 +79,6 @@ sub new {
 
 	$self->AddSeparator;
 
-
-
-
-
 	# Cut/Copy/Paste
 	$self->AddTool(
 		Wx::wxID_CUT, '',
@@ -107,7 +94,7 @@ sub new {
 	);
 
 	$self->AddTool(
-		Wx::wxID_COPY,  '',
+		Wx::wxID_COPY, '',
 		Padre::Wx::Icon::find('actions/edit-copy'),
 		Wx::gettext('Copy'),
 	);
@@ -127,7 +114,7 @@ sub new {
 	Wx::Event::EVT_TOOL(
 		$main,
 		Wx::wxID_PASTE,
-		sub { 
+		sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Paste;
 		},
@@ -148,10 +135,6 @@ sub new {
 
 	$self->AddSeparator;
 
-
-
-
-
 	# Task status
 
 	# There can be three statuses:
@@ -167,20 +150,20 @@ sub new {
 		Padre::Wx::Icon::find('status/padre-tasks-idle'),
 		Wx::gettext('Background Tasks are idle'),
 	);
-	
+
 	# connect the dumping of the running task map to the output
 	# window to each one of the tool states
-	foreach my $id (map {$self->{"task_status_${_}_id"}} qw(idle running load)) {
+	foreach my $id ( map { $self->{"task_status_${_}_id"} } qw(idle running load) ) {
 		Wx::Event::EVT_TOOL(
 			$main, $id, \&Padre::TaskManager::on_dump_running_tasks,
 		);
 	}
-	
+
 	# Remember the id of the current status for update checks
 	$self->{task_status_id} = $self->{task_status_idle_id};
 
 	# Remember the position of the status icon for replacement
-	$self->{task_status_tool_pos} = $self->GetToolPos($self->{task_status_idle_id});
+	$self->{task_status_tool_pos} = $self->GetToolPos( $self->{task_status_idle_id} );
 
 	return $self;
 }
@@ -198,11 +181,12 @@ sub update_task_status {
 	return $self->set_task_status_idle unless $running;
 
 	my $max_workers = $manager->max_no_workers;
-	my $jobs = $manager->task_queue->pending + $running;
+	my $jobs        = $manager->task_queue->pending + $running;
+
 	# High load is defined as the state when the number of
 	# running and pending jobs is larger that twice the
 	# MAXIMUM number of workers
-	if ($jobs > 2 * $max_workers) {
+	if ( $jobs > 2 * $max_workers ) {
 		return $self->set_task_status_load;
 	}
 	return $self->set_task_status_running;
@@ -215,7 +199,7 @@ sub set_task_status_idle {
 
 	my $bitmap = Padre::Wx::Icon::find('status/padre-tasks-idle');
 	my $text   = Wx::gettext('Background Tasks are idle');
-	return $self->_set_task_status($id, $bitmap, $text);
+	return $self->_set_task_status( $id, $bitmap, $text );
 }
 
 sub set_task_status_running {
@@ -225,7 +209,7 @@ sub set_task_status_running {
 
 	my $bitmap = Padre::Wx::Icon::find('status/padre-tasks-running');
 	my $text   = Wx::gettext('Background Tasks are running');
-	return $self->_set_task_status($id, $bitmap, $text);
+	return $self->_set_task_status( $id, $bitmap, $text );
 }
 
 sub set_task_status_load {
@@ -235,7 +219,7 @@ sub set_task_status_load {
 
 	my $bitmap = Padre::Wx::Icon::find('status/padre-tasks-load');
 	my $text   = Wx::gettext('Background Tasks are running with high load');
-	return $self->_set_task_status($id, $bitmap, $text);
+	return $self->_set_task_status( $id, $bitmap, $text );
 }
 
 # Replaces the actual Task status Tool in the ToolBar.
@@ -248,7 +232,7 @@ sub _set_task_status {
 	my $text   = shift;
 
 	$self->{task_status_id} = $id;
-	$self->DeleteToolByPos($self->{task_status_tool_pos});
+	$self->DeleteToolByPos( $self->{task_status_tool_pos} );
 	$self->InsertTool(
 		$self->{task_status_tool_pos},
 		$id, '',
@@ -268,25 +252,21 @@ sub refresh {
 	my $editor    = $current->editor;
 	my $document  = $current->document;
 	my $text      = $current->text;
-	my $selection = (defined $text and $text ne '') ? 1 : 0;
+	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
-	$self->EnableTool( Wx::wxID_SAVE,      ( $document and $document->is_modified ? 1 : 0 ));
-	$self->EnableTool( Wx::wxID_CLOSE,     ( $editor ? 1 : 0 ));
-	$self->EnableTool( Wx::wxID_UNDO,      ( $editor and $editor->CanUndo  ));
-	$self->EnableTool( Wx::wxID_REDO,      ( $editor and $editor->CanRedo  ));
-	$self->EnableTool( Wx::wxID_CUT,       ( $selection ));
-	$self->EnableTool( Wx::wxID_COPY,      ( $selection ));
-	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ));
-	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ));
+	$self->EnableTool( Wx::wxID_SAVE, ( $document and $document->is_modified ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_CLOSE, ( $editor ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_UNDO,  ( $editor and $editor->CanUndo ) );
+	$self->EnableTool( Wx::wxID_REDO,  ( $editor and $editor->CanRedo ) );
+	$self->EnableTool( Wx::wxID_CUT,   ($selection) );
+	$self->EnableTool( Wx::wxID_COPY,  ($selection) );
+	$self->EnableTool( Wx::wxID_PASTE, ( $editor and $editor->CanPaste ) );
+	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ) );
 
 	$self->update_task_status;
 
 	return;
 }
-
-
-
-
 
 #####################################################################
 # Toolbar 2.0
@@ -299,7 +279,7 @@ sub add_tool {
 	# Create the tool
 	$self->AddTool(
 		$id, '',
-		Padre::Wx::Icon::find($param{icon}),
+		Padre::Wx::Icon::find( $param{icon} ),
 		$param{short},
 	);
 

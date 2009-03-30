@@ -10,16 +10,11 @@ use Padre::Current ();
 our $VERSION = '0.32';
 use base 'Padre::Plugin';
 
-
-
-
-
 #####################################################################
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	'Padre::Plugin'   => 0.26,
-	'Padre::Wx::Main' => 0.26,
+	'Padre::Plugin' => 0.26, 'Padre::Wx::Main' => 0.26,;
 }
 
 sub plugin_name {
@@ -33,7 +28,7 @@ sub plugin_enable {
 }
 
 sub plugin_disable {
-	my $self   = shift;
+	my $self = shift;
 
 	return 1;
 }
@@ -42,17 +37,16 @@ sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
 		Wx::gettext("Install Module...") => [
-			Wx::gettext("Install CPAN Module")          => 'install_cpan',
-			'---'                                       => undef,
-			Wx::gettext("Install Local Distribution")   => 'install_file',
-			Wx::gettext("Install Remote Distribution")  => 'install__url',
-			'---'                                       => undef,
-			Wx::gettext("Open CPAN Config File")        => 'open_config',
-			'About'                                     => 'show_about',
+			Wx::gettext("Install CPAN Module")         => 'install_cpan',
+			'---'                                      => undef,
+			Wx::gettext("Install Local Distribution")  => 'install_file',
+			Wx::gettext("Install Remote Distribution") => 'install__url',
+			'---'                                      => undef,
+			Wx::gettext("Open CPAN Config File")       => 'open_config',
+			'About'                                    => 'show_about',
 		],
 	];
 }
-
 
 #####################################################################
 # Plugin Methods
@@ -64,10 +58,9 @@ sub install_cpan {
 	my $cpan = Padre::CPAN->new;
 
 	require Padre::Wx::CPAN;
-	my $cpan_gui = Padre::Wx::CPAN->new($cpan, $main);
+	my $cpan_gui = Padre::Wx::CPAN->new( $cpan, $main );
 	$cpan_gui->show;
 }
-
 
 sub open_config {
 	my $self = shift;
@@ -78,12 +71,12 @@ sub open_config {
 	eval {
 		require CPAN;
 		$default_dir = $INC{'CPAN.pm'};
-		$default_dir =~ s/\.pm$//is; # remove .pm
+		$default_dir =~ s/\.pm$//is;    # remove .pm
 	};
 
 	# Load the main config first
 	if ( $default_dir ne '' ) {
-		my $core = File::Spec->catfile($default_dir, 'Config.pm');
+		my $core = File::Spec->catfile( $default_dir, 'Config.pm' );
 		if ( -e $core ) {
 			$main->setup_editors($core);
 			return;
@@ -100,7 +93,7 @@ sub open_config {
 		return;
 	}
 
-	$main->error(Wx::gettext("Failed to find your CPAN configuration"));
+	$main->error( Wx::gettext("Failed to find your CPAN configuration") );
 }
 
 sub install_file {
@@ -111,11 +104,10 @@ sub install_file {
 	my $dialog = Wx::FileDialog->new(
 		$main,
 		Wx::gettext("Select distribution to install"),
-		'',                       # Default directory
-		'',                       # Default file
-		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
-		Wx::wxFD_OPEN
-		| Wx::wxFD_FILE_MUST_EXIST
+		'',                                     # Default directory
+		'',                                     # Default file
+		'CPAN Packages (*.tar.gz)|*.tar.gz',    # wildcard
+		Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST
 	);
 	$dialog->CentreOnParent;
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -124,13 +116,11 @@ sub install_file {
 	my $string = $dialog->GetPath;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error(
-			Wx::gettext("Did not provide a distribution")
-		);
+		$main->error( Wx::gettext("Did not provide a distribution") );
 		return;
 	}
 
-	$self->install_with_pip($main, $string);
+	$self->install_with_pip( $main, $string );
 	return;
 }
 
@@ -151,39 +141,38 @@ sub install_url {
 	my $string = $dialog->GetValue;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error(Wx::gettext("Did not provide a distribution"));
+		$main->error( Wx::gettext("Did not provide a distribution") );
 		return;
 	}
 
-    $self->install_with_pip($main, $string);
+	$self->install_with_pip( $main, $string );
 	return;
 }
-
 
 #####################################################################
 # Auxiliary Methods
 
 sub install_with_pip {
-	my $self = shift;
-	my $main = shift;
+	my $self   = shift;
+	my $main   = shift;
 	my $module = shift;
 
 	# Find 'pip', used to install modules
 	require File::Which;
 	my $pip = scalar File::Which::which('pip');
 	unless ( -f $pip ) {
-		$main->error(Wx::gettext("pip is unexpectedly not installed"));
+		$main->error( Wx::gettext("pip is unexpectedly not installed") );
 		return;
 	}
 
-    $main->setup_bindings;
+	$main->setup_bindings;
 
 	# Run with the same Perl that launched Padre
 	my $perl = Padre->perl_interpreter;
-	my $cmd = qq{"$perl" "$pip" "$module"};
+	my $cmd  = qq{"$perl" "$pip" "$module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
 	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
-	
+
 	return;
 }
 
@@ -191,14 +180,10 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName(__PACKAGE__);
-	$about->SetDescription(
-		"Perl 5 related tools\n"
-	);
-	Wx::AboutBox( $about );
+	$about->SetDescription( "Perl 5 related tools\n" );
+	Wx::AboutBox($about);
 	return;
 }
-
-
 
 1;
 

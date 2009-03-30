@@ -2,7 +2,7 @@ package Padre::Task::Outline;
 
 use strict;
 use warnings;
-use Params::Util   qw{_CODE _INSTANCE};
+use Params::Util qw{_CODE _INSTANCE};
 use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();

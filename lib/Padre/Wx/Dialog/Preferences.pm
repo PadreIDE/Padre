@@ -11,7 +11,7 @@ use base qw(Padre::Wx::Dialog);
 our $VERSION = '0.32';
 
 sub _new_panel {
-	my ($self, $parent) = splice( @_, 0, 2 );
+	my ( $self, $parent ) = splice( @_, 0, 2 );
 	my $cols = shift || 2;
 
 	my $panel = Wx::Panel->new(
@@ -19,7 +19,7 @@ sub _new_panel {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL|Wx::wxVSCROLL|Wx::wxHSCROLL,
+		Wx::wxTAB_TRAVERSAL | Wx::wxVSCROLL | Wx::wxHSCROLL,
 	);
 	my $fgs = Wx::FlexGridSizer->new( 0, $cols, 0, 0 );
 	$panel->SetSizer($fgs);
@@ -33,57 +33,52 @@ sub _behaviour_panel {
 	my $config = Padre->ide->config;
 
 	my $table = [
-		[
-			[ 'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ), Wx::gettext('Default word wrap on for each file') ],
-			[ ]
-		],
-		[
-			[ 'Wx::CheckBox', 'editor_beginner', ( $config->editor_beginner ? 1 : 0 ), Wx::gettext('Perl beginner mode') ],
+		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
+				Wx::gettext('Default word wrap on for each file')
+			],
 			[]
 		],
-		[
-			[ 'Wx::CheckBox', 'editor_indent_auto', ( $config->editor_indent_auto ? 1 : 0 ), Wx::gettext('Automatic indentation style') ],
-			[ ]
+		[   [   'Wx::CheckBox', 'editor_beginner', ( $config->editor_beginner ? 1 : 0 ),
+				Wx::gettext('Perl beginner mode')
+			],
+			[]
 		],
-		[
-			[ 'Wx::CheckBox', 'editor_indent_tab', ( $config->editor_indent_tab ? 1 : 0 ), Wx::gettext('Use Tabs') ],
-			[ ]
+		[   [   'Wx::CheckBox', 'editor_indent_auto', ( $config->editor_indent_auto ? 1 : 0 ),
+				Wx::gettext('Automatic indentation style')
+			],
+			[]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('TAB display size (in spaces):') ],
+		[   [ 'Wx::CheckBox', 'editor_indent_tab', ( $config->editor_indent_tab ? 1 : 0 ), Wx::gettext('Use Tabs') ],
+			[]
+		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('TAB display size (in spaces):') ],
 			[ 'Wx::SpinCtrl', 'editor_indent_tab_width', $config->editor_indent_tab_width, 0, 32 ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Indentation width (in columns):') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Indentation width (in columns):') ],
 			[ 'Wx::SpinCtrl', 'editor_indent_width', $config->editor_indent_width, 0, 32 ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Guess from current document:') ],
-			[ 'Wx::Button', '_guess_', Wx::gettext('Guess') ]
+		[   [ 'Wx::StaticText', undef,     Wx::gettext('Guess from current document:') ],
+			[ 'Wx::Button',     '_guess_', Wx::gettext('Guess') ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Autoindent:') ],
-			[ 'Wx::Choice', 'editor_autoindent', $editor_autoindent ]
+		[   [ 'Wx::StaticText', undef,               Wx::gettext('Autoindent:') ],
+			[ 'Wx::Choice',     'editor_autoindent', $editor_autoindent ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Open files:') ],
-			[ 'Wx::Choice', 'main_startup', $main_startup ]
+		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
+			[ 'Wx::Choice',     'main_startup', $main_startup ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Methods order:') ],
-			[ 'Wx::Choice', 'main_functions_order', $main_functions_order ]
+		[   [ 'Wx::StaticText', undef,                  Wx::gettext('Methods order:') ],
+			[ 'Wx::Choice',     'main_functions_order', $main_functions_order ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Preferred language for error diagnostics:') ],
-			[ 'Wx::Choice', 'locale_perldiag', $perldiag_locales ]
+		[   [ 'Wx::StaticText', undef,             Wx::gettext('Preferred language for error diagnostics:') ],
+			[ 'Wx::Choice',     'locale_perldiag', $perldiag_locales ]
 		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
 	$self->fill_panel_by_table( $panel, $table );
 
-	
-	Wx::Event::EVT_BUTTON( $panel,
+	Wx::Event::EVT_BUTTON(
+		$panel,
 		$self->get_widget('_guess_'),
 		sub { $self->guess_indentation_settings },
 	);
@@ -101,31 +96,30 @@ sub _appearance_panel {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL|Wx::wxVSCROLL|Wx::wxHSCROLL,
+		Wx::wxTAB_TRAVERSAL | Wx::wxVSCROLL | Wx::wxHSCROLL,
 	);
 	my $main_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	my $font =
-		( defined $config->editor_font && length $config->editor_font > 0 )
-			? $config->editor_font
-			: Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc;
+	my $font
+		= ( defined $config->editor_font && length $config->editor_font > 0 )
+		? $config->editor_font
+		: Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc;
 
-	my $bgcolor =
-		( defined $config->editor_currentline_color )
-			? '#' . $config->editor_currentline_color
-			: '#ffff04';
+	my $bgcolor
+		= ( defined $config->editor_currentline_color )
+		? '#' . $config->editor_currentline_color
+		: '#ffff04';
 
 	my $table = [
-		[
-			[ 'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ), Wx::gettext('Colored text in output window (ANSI)') ],
-			[ ]
+		[   [   'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ),
+				Wx::gettext('Colored text in output window (ANSI)')
+			],
+			[]
 		],
-		[
-			[ 'Wx::StaticText', 'undef', Wx::gettext('Editor Font:') ],
+		[   [ 'Wx::StaticText',     'undef',       Wx::gettext('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font', $font ]
 		],
-		[
-			[ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color', $bgcolor ]
 		],
 	];
@@ -135,7 +129,8 @@ sub _appearance_panel {
 
 	$main_sizer->Add($settings_subpanel);
 
-	Wx::Event::EVT_FONTPICKER_CHANGED( $settings_subpanel,
+	Wx::Event::EVT_FONTPICKER_CHANGED(
+		$settings_subpanel,
 		$self->get_widget('editor_font'),
 		sub {
 			my $font = Wx::Font->new( $self->get_widget_value('editor_font') );
@@ -145,16 +140,18 @@ sub _appearance_panel {
 			}
 		},
 	);
-	Wx::Event::EVT_COLOURPICKER_CHANGED( $settings_subpanel,
+	Wx::Event::EVT_COLOURPICKER_CHANGED(
+		$settings_subpanel,
 		$self->get_widget('editor_currentline_color'),
 		sub {
 			my $color = $self->get_widget_value('editor_currentline_color');
-			$self->get_widget('preview_editor')->SetCaretLineBackground( Padre::Wx::Editor::_color( substr($color,1) ) );
+			$self->get_widget('preview_editor')
+				->SetCaretLineBackground( Padre::Wx::Editor::_color( substr( $color, 1 ) ) );
 		},
 	);
 
 	my $preview_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$main_sizer->Add( $preview_sizer, 3, Wx::wxGROW|Wx::wxALL, 3 );
+	$main_sizer->Add( $preview_sizer, 3, Wx::wxGROW | Wx::wxALL, 3 );
 
 	my $notebook = Wx::Notebook->new($panel);
 
@@ -163,13 +160,13 @@ sub _appearance_panel {
 	$editor_panel->SetSizer($editor_panel_sizer);
 
 	my $editor = Padre::Wx::Editor->new($editor_panel);
-	$self->add_widget('preview_editor', $editor);
+	$self->add_widget( 'preview_editor', $editor );
 	$self->_init_preview_editor( $bgcolor, $font );
 
 	$editor_panel_sizer->Add(
 		$self->get_widget('preview_editor'),
 		5,
-		Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL|Wx::wxGROW,
+		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxGROW,
 		3
 	);
 	$notebook->AddPage( $editor_panel, Wx::gettext('Settings Demo') );
@@ -185,7 +182,7 @@ sub _init_preview_editor {
 	my $self = shift;
 	my ( $bgcolor, $font ) = @_;
 
-	my $doc = Padre::Document::Perl->new();
+	my $doc    = Padre::Document::Perl->new();
 	my $editor = $self->get_widget('preview_editor');
 	$editor->{Document} = $doc;
 	$doc->set_editor($editor);
@@ -212,17 +209,17 @@ __END__
 END_TEXT
 
 	$editor->SetText($dummy_text);
-	$editor->SetWrapMode( Wx::wxSTC_WRAP_WORD );
+	$editor->SetWrapMode(Wx::wxSTC_WRAP_WORD);
 	$editor->padre_setup;
-	$editor->SetCaretLineBackground( Padre::Wx::Editor::_color( substr($bgcolor,1) ) );
+	$editor->SetCaretLineBackground( Padre::Wx::Editor::_color( substr( $bgcolor, 1 ) ) );
 	$editor->SetCaretLineVisible(1);
-	$editor->SetFont(Wx::Font->new($font));
+	$editor->SetFont( Wx::Font->new($font) );
 	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, Wx::Font->new($font) );
 	$editor->SetReadOnly(1);
-	$editor->SetExtraStyle( Wx::wxWS_EX_BLOCK_EVENTS );
+	$editor->SetExtraStyle(Wx::wxWS_EX_BLOCK_EVENTS);
 	Wx::Event::EVT_RIGHT_DOWN( $editor, undef );
-	Wx::Event::EVT_LEFT_UP(    $editor, undef );
-	Wx::Event::EVT_CHAR(       $editor, undef );
+	Wx::Event::EVT_LEFT_UP( $editor, undef );
+	Wx::Event::EVT_CHAR( $editor, undef );
 
 	return;
 }
@@ -230,10 +227,10 @@ END_TEXT
 sub _pluginmanager_panel {
 	my ( $self, $treebook ) = @_;
 
-	my $panel = $self->_new_panel($treebook, 3);
-	my $fgs   = $panel->GetSizer;
+	my $panel = $self->_new_panel( $treebook, 3 );
+	my $fgs = $panel->GetSizer;
 
-	my $stdStyle = Wx::wxALIGN_LEFT|Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL;
+	my $stdStyle = Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL;
 
 	my $manager = Padre->ide->plugin_manager;
 
@@ -245,26 +242,28 @@ sub _pluginmanager_panel {
 				Wx::wxID_STATIC,
 				$name
 			),
-			0, $stdStyle, 3
+			0,
+			$stdStyle,
+			3
 		);
 
-		$self->add_widget( 'plugin_enable_' . $plugins->{$name}->{class},
+		$self->add_widget(
+			'plugin_enable_' . $plugins->{$name}->{class},
 			Wx::CheckBox->new(
 				$panel,
 				-1,
 				Wx::gettext('Enable?')
 			)
 		);
-		$self->get_widget( 'plugin_enable_' . $plugins->{$name}->{class} )->SetValue(
-			( $plugins->{$name}->{status} eq 'enabled' ? 1 : 0 )
-		);
-		$fgs->Add( $self->get_widget(
-			'plugin_enable_' . $plugins->{$name}->{class} ), 0, $stdStyle, 3 );
+		$self->get_widget( 'plugin_enable_' . $plugins->{$name}->{class} )
+			->SetValue( ( $plugins->{$name}->{status} eq 'enabled' ? 1 : 0 ) );
+		$fgs->Add( $self->get_widget( 'plugin_enable_' . $plugins->{$name}->{class} ), 0, $stdStyle, 3 );
 
-		if ( $plugins->{$name}->{status} ne 'enabled'
-		     and $plugins->{$name}->{status} ne 'disabled'
-		) {
-			$self->add_widget( 'plugin_info_' . $plugins->{$name}->{class},
+		if (    $plugins->{$name}->{status} ne 'enabled'
+			and $plugins->{$name}->{status} ne 'disabled' )
+		{
+			$self->add_widget(
+				'plugin_info_' . $plugins->{$name}->{class},
 				Wx::Button->new(
 					$panel,
 					-1,
@@ -272,8 +271,7 @@ sub _pluginmanager_panel {
 				)
 			);
 			$fgs->Add( $self->get_widget( 'plugin_info_' . $plugins->{$name}->{class} ), 0, $stdStyle, 3 );
-		}
-		else {
+		} else {
 			$fgs->Add( 0, 0 );
 		}
 	}
@@ -289,14 +287,14 @@ sub _add_plugins {
 	my $plugins = $manager->plugins;
 	foreach my $name ( sort keys %$plugins ) {
 		my $panel = $self->_new_panel($tb);
-		$tb->AddSubPage($panel, $name, 0);
+		$tb->AddSubPage( $panel, $name, 0 );
 	}
 
 	return;
 }
 
 sub dialog {
-	my ($self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales) = @_;
+	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales ) = @_;
 
 	my $dialog = Wx::Dialog->new(
 		$win,
@@ -308,6 +306,7 @@ sub dialog {
 	);
 
 	my $dialog_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+
 	#$dialog->SetSizer($bs1);
 
 	my $tb = Wx::Treebook->new(
@@ -335,7 +334,7 @@ sub dialog {
 	#$tb->AddPage( $plugin_manager, Wx::gettext('Plugin Manager') );
 	#$self->_add_plugins($tb);
 
-	$dialog_sizer->Add( $tb, 10, Wx::wxGROW|Wx::wxALL, 5 );
+	$dialog_sizer->Add( $tb, 10, Wx::wxGROW | Wx::wxALL, 5 );
 
 	$dialog_sizer->Add(
 		Wx::StaticLine->new(
@@ -343,16 +342,15 @@ sub dialog {
 			Wx::wxID_STATIC,
 			Wx::wxDefaultPosition,
 			Wx::wxDefaultSize,
-			Wx::wxLI_HORIZONTAL|Wx::wxNO_BORDER
+			Wx::wxLI_HORIZONTAL | Wx::wxNO_BORDER
 		),
 		0,
-		Wx::wxGROW|Wx::wxALL,
+		Wx::wxGROW | Wx::wxALL,
 		5
 	);
 
 	my $button_row_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$dialog_sizer->Add(
-		$button_row_sizer, 0, Wx::wxALIGN_RIGHT|Wx::wxBOTTOM, 5 );
+	$dialog_sizer->Add( $button_row_sizer, 0, Wx::wxALIGN_RIGHT | Wx::wxBOTTOM, 5 );
 
 	my $save = Wx::Button->new(
 		$dialog,
@@ -362,7 +360,7 @@ sub dialog {
 		Wx::wxDefaultSize,
 		0
 	);
-	$button_row_sizer->Add( $save, 0, Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL, 5);
+	$button_row_sizer->Add( $save, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$save->SetDefault;
 
 	my $cancel = Wx::Button->new(
@@ -373,7 +371,7 @@ sub dialog {
 		Wx::wxDefaultSize,
 		0
 	);
-	$button_row_sizer->Add( $cancel, 0, Wx::wxALIGN_CENTER_VERTICAL|Wx::wxALL, 5);
+	$button_row_sizer->Add( $cancel, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$cancel->SetFocus;
 
 	$dialog->SetSizerAndFit($dialog_sizer);
@@ -415,35 +413,33 @@ sub run {
 	);
 
 	# Startup preparation
-	my $main_startup = $config->main_startup;
+	my $main_startup       = $config->main_startup;
 	my @main_startup_items = (
 		$main_startup,
 		grep { $_ ne $main_startup } qw{new nothing last}
 	);
-	my @main_startup_localized = map{Wx::gettext($_)} @main_startup_items;
+	my @main_startup_localized = map { Wx::gettext($_) } @main_startup_items;
 
 	# Autoindent preparation
-	my $editor_autoindent = $config->editor_autoindent;
+	my $editor_autoindent       = $config->editor_autoindent;
 	my @editor_autoindent_items = (
 		$editor_autoindent,
 		grep { $_ ne $editor_autoindent } qw{no same_level deep}
 	);
-	my @editor_autoindent_localized = map{Wx::gettext($_)} @editor_autoindent_items;
+	my @editor_autoindent_localized = map { Wx::gettext($_) } @editor_autoindent_items;
 
 	# Function List Ordering
-	my $main_functions_order = $config->main_functions_order;
+	my $main_functions_order       = $config->main_functions_order;
 	my @main_functions_order_items = (
 		$main_functions_order,
-		grep { $_ ne $main_functions_order }
-		qw{alphabetical original alphabetical_private_last}
+		grep { $_ ne $main_functions_order } qw{alphabetical original alphabetical_private_last}
 	);
-	my @main_functions_order_localized = map{Wx::gettext($_)} @main_functions_order_items;
+	my @main_functions_order_localized = map { Wx::gettext($_) } @main_functions_order_items;
 
-	my $perldiag_locale = $config->locale_perldiag;
+	my $perldiag_locale  = $config->locale_perldiag;
 	my @perldiag_locales = (
 		$perldiag_locale,
-		grep { $_ ne $perldiag_locale }
-			('EN', Padre::Util::find_perldiag_translations())
+		grep { $_ ne $perldiag_locale } ( 'EN', Padre::Util::find_perldiag_translations() )
 	);
 
 	$self->{dialog} = $self->dialog(

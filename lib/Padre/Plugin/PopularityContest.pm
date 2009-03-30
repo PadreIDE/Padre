@@ -72,15 +72,11 @@ use Padre::Plugin ();
 our $VERSION = '0.32';
 use base 'Padre::Plugin';
 
-
-
-
-
 #####################################################################
 # Constructor
 
 sub plugin_name {
-	'Padre Popularity Contest'
+	'Padre Popularity Contest';
 }
 
 sub plugin_enable {
@@ -97,18 +93,18 @@ sub plugin_disable {
 
 	# Save the config (if set)
 	if ( $self->{config} ) {
-		$self->config_write(delete $self->{config});
+		$self->config_write( delete $self->{config} );
 	}
 
 	return 1;
 }
 
-
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		Wx::gettext("About")       => 'show_about',
-#		Wx::gettext("Submit")      => 'submit',
+		Wx::gettext("About") => 'show_about',
+
+		#		Wx::gettext("Submit")      => 'submit',
 	];
 }
 
@@ -116,10 +112,8 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName(__PACKAGE__);
-	$about->SetDescription(
-		"Trying to figure out what do people use?\n"
-	);
-	Wx::AboutBox( $about );
+	$about->SetDescription( "Trying to figure out what do people use?\n" );
+	Wx::AboutBox($about);
 	return;
 }
 
@@ -134,8 +128,6 @@ sub submit {
 }
 
 1;
-
-
 
 =pod
 

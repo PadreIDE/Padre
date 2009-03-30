@@ -2,9 +2,9 @@ package Padre::CPAN;
 
 use strict;
 use warnings;
-use Carp         ();
+use Carp ();
 
-our $VERSION   = '0.32';
+our $VERSION = '0.32';
 
 use CPAN ();
 
@@ -18,7 +18,7 @@ sub new {
 	CPAN::HandleConfig->load(
 		be_silent => 1,
 	);
-	my @modules = map {$_->id} CPAN::Shell->expand('Module', '/^/');
+	my @modules = map { $_->id } CPAN::Shell->expand( 'Module', '/^/' );
 	$self->{modules} = \@modules;
 
 	$SINGLETON = $self;
@@ -27,15 +27,15 @@ sub new {
 }
 
 sub get_modules {
-	my ($self, $regex) = @_;
+	my ( $self, $regex ) = @_;
 
 	$regex ||= '^';
 	$regex =~ s/ //g;
 
 	my $MAX_DISPLAY = 100;
-	my $i = 0;
+	my $i           = 0;
 	my @modules;
-	foreach my $module (@{ $self->{modules} }) {
+	foreach my $module ( @{ $self->{modules} } ) {
 		next if $module !~ /$regex/;
 		$i++;
 		last if $i > $MAX_DISPLAY;
@@ -45,12 +45,13 @@ sub get_modules {
 }
 
 sub install {
-	my ($self, $module) = @_;
+	my ( $self, $module ) = @_;
 	CPAN::Shell->install($module);
 
 }
 
 1;
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or

@@ -30,24 +30,20 @@ From the main L<Padre> object, it can be accessed via the C<wx> method.
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
+use Carp ();
 use Params::Util qw{ _INSTANCE };
-use Padre::Wx    ();
+use Padre::Wx ();
 
 our $VERSION = '0.32';
 use base 'Wx::App';
-
-
-
-
 
 #####################################################################
 # Constructor and Accessors
 
 sub new {
-	my $class  = shift;
-	my $ide    = shift;
-	unless ( _INSTANCE($ide, 'Padre') ) {
+	my $class = shift;
+	my $ide   = shift;
+	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide the ide object to Padre::App->new");
 	}
 
@@ -76,11 +72,10 @@ application.
 
 =cut
 
-use Class::XSAccessor
-	getters => {
-		ide  => 'ide',
-		main => 'main',
-	};
+use Class::XSAccessor getters => {
+	ide  => 'ide',
+	main => 'main',
+};
 
 =pod
 
@@ -94,14 +89,10 @@ sub config {
 	$_[0]->ide->config;
 }
 
-
-
-
-
 #####################################################################
 # Wx Methods
 
-sub OnInit { 1 }
+sub OnInit {1}
 
 1;
 

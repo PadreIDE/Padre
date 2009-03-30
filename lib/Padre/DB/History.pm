@@ -22,7 +22,7 @@ sub recent {
 
 sub previous {
 	my $class = shift;
-	my @list  = $class->recent($_[0], 1);
+	my @list = $class->recent( $_[0], 1 );
 	return $list[0];
 }
 

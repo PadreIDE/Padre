@@ -13,14 +13,13 @@ use Class::Adapter::Builder
 
 our $VERSION = '0.32';
 
-use Class::XSAccessor
-	getters => {
-		wx => 'OBJECT',
-	};
+use Class::XSAccessor getters => {
+	wx => 'OBJECT',
+};
 
 # Default implementation of refresh
 
-sub refresh { 1 }
+sub refresh {1}
 
 # Overrides and then calls XS wx Menu::Append.
 # Adds any hotkeys to global registry of bound keys
@@ -30,17 +29,17 @@ sub Append {
 	my $string = $_[1];
 	my $item   = $self->wx->Append(@_);
 	my ($underlined) = ( $string =~ m/(\&\w)/ );
-	my ($accel) = ( $string =~ m/(Ctrl-.+|Alt-.+)/ );
+	my ($accel)      = ( $string =~ m/(Ctrl-.+|Alt-.+)/ );
 	if ( $underlined or $accel ) {
 		$self->{main}->{accel_keys} ||= {};
-		if ( $underlined ) {
+		if ($underlined) {
 			$underlined =~ s/&(\w)/$1/;
 			$self->{main}->{accel_keys}->{underlined}->{$underlined} = $item;
 		}
-		if ( $accel ) {
-			my ($mod, $mod2, $key) = ( $accel =~ m/(Ctrl|Alt)(-Shift)?\-(.)/ );
+		if ($accel) {
+			my ( $mod, $mod2, $key ) = ( $accel =~ m/(Ctrl|Alt)(-Shift)?\-(.)/ );
 			$mod .= $mod2 if ($mod2);
-			$self->{main}->{accel_keys}->{hotkeys}->{uc($mod)}->{ord(uc($key))} = $item;
+			$self->{main}->{accel_keys}->{hotkeys}->{ uc($mod) }->{ ord( uc($key) ) } = $item;
 		}
 	}
 	return $item;

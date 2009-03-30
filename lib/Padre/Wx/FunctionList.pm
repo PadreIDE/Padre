@@ -3,16 +3,12 @@ package Padre::Wx::FunctionList;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util   qw{ _STRING };
+use Params::Util qw{ _STRING };
 use Padre::Wx      ();
 use Padre::Current ();
 
 our $VERSION = '0.32';
 use base 'Wx::ListCtrl';
-
-
-
-
 
 #####################################################################
 # Constructor
@@ -27,35 +23,34 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_SINGLE_SEL
-		| Wx::wxLC_NO_HEADER
-		| Wx::wxLC_REPORT
-		| Wx::wxBORDER_NONE
+		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT | Wx::wxBORDER_NONE
 	);
 
 	# Set up the (only) column
-	$self->InsertColumn(   0, $self->gettext_label );
-	$self->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE  );
+	$self->InsertColumn( 0, $self->gettext_label );
+	$self->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
 
 	# Snap to selected character
-	Wx::Event::EVT_CHAR( $self,
-		sub { 
-			$self->on_char($_[1]);
+	Wx::Event::EVT_CHAR(
+		$self,
+		sub {
+			$self->on_char( $_[1] );
 		},
 	);
 
 	# Grab the kill focus to prevent deselection
-	Wx::Event::EVT_KILL_FOCUS( $self,
+	Wx::Event::EVT_KILL_FOCUS(
+		$self,
 		sub {
 			return;
 		},
 	);
 
 	# Double-click a function name
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self,
-		$self,
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self, $self,
 		sub {
-			$self->on_list_item_activated($_[1]);
+			$self->on_list_item_activated( $_[1] );
 		}
 	);
 
@@ -76,10 +71,6 @@ sub gettext_label {
 	Wx::gettext('Sub List');
 }
 
-
-
-
-
 #####################################################################
 # Event Handlers
 
@@ -94,9 +85,10 @@ sub on_char {
 
 	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 	# TODO: This is cargo-cult
-	$mod = $mod & (Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT);
-	unless ( $mod ) {
+	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
+	unless ($mod) {
 		if ( $code <= 255 and $code > 0 and chr($code) =~ /^[\w_:-]$/ ) {
+
 			# transform - => _ for convenience
 			$code = 95 if $code == 45;
 
@@ -121,7 +113,7 @@ sub on_list_item_activated {
 	my $event = shift;
 
 	# Which sub did they click
-	my $subname  = $event->GetItem->GetText;
+	my $subname = $event->GetItem->GetText;
 	unless ( defined _STRING($subname) ) {
 		return;
 	}
@@ -129,21 +121,20 @@ sub on_list_item_activated {
 	# Locate the function
 	my $document = $self->main->current->document;
 	my $editor   = $document->editor;
-	my ($start, $end) = Padre::Util::get_matches(
+	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
 		$document->get_function_regex($subname),
-		$editor->GetSelection, # Provides two params
+		$editor->GetSelection,    # Provides two params
 	);
 	unless ( defined $start ) {
+
 		# Couldn't find it
 		return;
 	}
 
 	# Move the selection to the sub location
 	$editor->GotoPos($start);
-	$editor->ScrollToLine(
-		$editor->GetCurrentLine - ($editor->LinesOnScreen / 2)
-	);
+	$editor->ScrollToLine( $editor->GetCurrentLine - ( $editor->LinesOnScreen / 2 ) );
 	$editor->SetFocus;
 
 	return;

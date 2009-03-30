@@ -9,11 +9,11 @@ use warnings;
 
 our $VERSION = '0.32';
 
-use File::Basename        qw{ dirname };
-use File::Copy            qw{ copy };
-use File::HomeDir         ();
-use File::Path            qw{ mkpath };
-use File::Spec            ();
+use File::Basename qw{ dirname };
+use File::Copy qw{ copy };
+use File::HomeDir ();
+use File::Path qw{ mkpath };
+use File::Spec ();
 use File::Spec::Functions qw{ catdir catfile rel2abs };
 
 # -- export stuff
@@ -25,14 +25,13 @@ my @files  = qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER    };
 my @stores = qw{ $HOST $HUMAN $PROJECT                  };
 my @types  = qw{ $BOOLEAN $POSINT $INTEGER $ASCII $PATH };
 
-our @EXPORT_OK   = ( @dirs, @files, @stores, @types );
+our @EXPORT_OK = ( @dirs, @files, @stores, @types );
 our %EXPORT_TAGS = (
 	dirs   => \@dirs,
 	files  => \@files,
 	stores => \@stores,
 	types  => \@types,
 );
-
 
 # -- list of constants
 
@@ -41,17 +40,16 @@ our $PADRE_CONFIG_DIR    = _find_padre_config_dir();
 our $PADRE_PLUGIN_DIR    = catdir( $PADRE_CONFIG_DIR, 'plugins' );
 our $PADRE_PLUGIN_LIBDIR = catdir( $PADRE_PLUGIN_DIR, 'Padre', 'Plugin' );
 our $CONFIG_FILE_USER    = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
-our $CONFIG_FILE_HOST    = catfile( $PADRE_CONFIG_DIR, 'config.db'  );
+our $CONFIG_FILE_HOST    = catfile( $PADRE_CONFIG_DIR, 'config.db' );
 
 {
+
 	# check if plugin directory exists, create it otherwise
 	unless ( -e $PADRE_PLUGIN_LIBDIR ) {
-		mkpath($PADRE_PLUGIN_LIBDIR) or
-		die "Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!";
+		mkpath($PADRE_PLUGIN_LIBDIR)
+			or die "Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!";
 	}
 }
-
-
 
 # settings types (based on firefox)
 our $BOOLEAN = 0;
@@ -65,7 +63,6 @@ our $HOST    = 0;
 our $HUMAN   = 1;
 our $PROJECT = 2;
 
-
 # -- private subs
 
 #
@@ -75,29 +72,31 @@ our $PROJECT = 2;
 # preferences & settings. create it if needed. no params.
 #
 sub _find_padre_config_dir {
+
 	# define config dir
 	my @subdirs;
 	if ( defined $ENV{PADRE_HOME} ) {
+
 		# PADRE_HOME env var set, always use unix style.
 		@subdirs = ( $ENV{PADRE_HOME}, '.padre' );
 	} else {
+
 		# using data dir as defined by the os.
 		@subdirs = ( File::HomeDir->my_data );
 		push @subdirs, File::Spec->isa('File::Spec::Win32')
-			? qw{ Perl Padre }	# on windows use the traditional vendor/product format
-			: qw{ .padre };		# TODO - is mac correctly covered?
+			? qw{ Perl Padre }    # on windows use the traditional vendor/product format
+			: qw{ .padre };       # TODO - is mac correctly covered?
 	}
-	my $confdir = rel2abs( catdir( @subdirs ) );
+	my $confdir = rel2abs( catdir(@subdirs) );
 
 	# check if directory exists, create it otherwise
 	unless ( -e $confdir ) {
-		mkpath($confdir) or
-		die "Cannot create config dir '$confdir': $!";
+		mkpath($confdir)
+			or die "Cannot create config dir '$confdir': $!";
 	}
 
 	return $confdir;
 }
-
 
 #
 # my $dir = _find_padre_plugin_dir();
@@ -112,13 +111,12 @@ sub _find_padre_plugin_dir {
 
 	# check if plugin directory exists, create it otherwise
 	unless ( -e $pluginsdir ) {
-		mkpath($pluginsdir) or
-		die "Cannot create plugins dir '$pluginsdir': $!";
+		mkpath($pluginsdir)
+			or die "Cannot create plugins dir '$pluginsdir': $!";
 	}
 
 	return $pluginsdir;
 }
-
 
 1;
 

@@ -11,29 +11,26 @@ use Parse::ErrorString::Perl ();
 our $VERSION = '0.32';
 use base 'Wx::TreeCtrl';
 
-use Class::XSAccessor
-	getters => {
-		root     => 'root',
-		data     => 'data',
-		enabled  => 'enabled',
-		index    => 'index',
-		lang     => 'lang',
-		parser   => 'parser',
-	};
+use Class::XSAccessor getters => {
+	root    => 'root',
+	data    => 'data',
+	enabled => 'enabled',
+	index   => 'index',
+	lang    => 'lang',
+	parser  => 'parser',
+};
 
 sub new {
-	my $class  = shift;
-	my $main   = shift;
+	my $class = shift;
+	my $main  = shift;
 
 	# Create the Wx object
 	my $self = $class->SUPER::new(
-		$main->bottom, 
-		-1, 
-		Wx::wxDefaultPosition, 
-		Wx::wxDefaultSize, 
-		Wx::wxTR_HAS_BUTTONS
-		| Wx::wxTR_HIDE_ROOT
-		| Wx::wxTR_LINES_AT_ROOT
+		$main->bottom,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTR_HAS_BUTTONS | Wx::wxTR_HIDE_ROOT | Wx::wxTR_LINES_AT_ROOT
 	);
 
 	$self->Hide;
@@ -43,12 +40,12 @@ sub new {
 		-1,
 		-1,
 		Wx::TreeItemData->new('Data'),
-	);	
+	);
 
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED( $self,
-		$self,
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self, $self,
 		sub {
-			$self->on_tree_item_activated($_[1])
+			$self->on_tree_item_activated( $_[1] );
 		},
 	);
 
@@ -123,16 +120,17 @@ sub on_menu_help_context_help {
 		return;
 	}
 	my $diagnostics = Wx::gettext("No diagnostics available for this error!");
-	if ($error->diagnostics) {
+	if ( $error->diagnostics ) {
 		$diagnostics = $error->diagnostics;
 		$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 	}
-	$diagnostics = Padre::Util::WIN32
+	$diagnostics
+		= Padre::Util::WIN32
 		? $diagnostics
-		: Encode::encode('utf8', $diagnostics);
+		: Encode::encode( 'utf8', $diagnostics );
 	my $dialog_title = Wx::gettext("Diagnostics");
-	if ($error->type_description) {
-		$dialog_title .= (": " . Wx::gettext($error->type_description));
+	if ( $error->type_description ) {
+		$dialog_title .= ( ": " . Wx::gettext( $error->type_description ) );
 	}
 	my $dialog = Wx::MessageDialog->new(
 		$self->main,
@@ -152,7 +150,7 @@ sub on_tree_item_activated {
 	if ( $error->file eq 'eval' ) {
 		return;
 	}
-	$main->setup_editor($error->file_abspath);
+	$main->setup_editor( $error->file_abspath );
 	my $editor = $main->current->editor;
 	my $line   = $error->line - 1;
 	$editor->goto_line_centerize($line);
@@ -162,6 +160,7 @@ sub collect_data {
 	my $self = shift;
 	return unless $self->enabled;
 	my $line = shift;
+
 	#if (!$self->{data}) {
 	#    my $root = $self->root;
 	#    $self->DeleteChildren($root);
@@ -172,7 +171,7 @@ sub collect_data {
 
 sub clear {
 	my $self = shift;
-	$self->DeleteChildren($self->root);
+	$self->DeleteChildren( $self->root );
 }
 
 1;

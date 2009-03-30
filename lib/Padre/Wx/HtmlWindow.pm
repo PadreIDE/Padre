@@ -29,10 +29,6 @@ use Wx::Html  ();
 our $VERSION = '0.32';
 use base 'Wx::HtmlWindow';
 
-
-
-
-
 #####################################################################
 # Loader Methods
 
@@ -59,9 +55,9 @@ sub load_file {
 		local *FILE;
 		open( FILE, '<', $file ) or die "Failed to open file";
 		$pod = <FILE>;
-		close( FILE )            or die "Failed to close file";
+		close(FILE) or die "Failed to close file";
 	}
-	return $self->load_pod( $pod );
+	return $self->load_pod($pod);
 }
 
 =pod
@@ -81,9 +77,7 @@ Returns true on success, or throws an exception on error.
 sub load_pod {
 	my $self = shift;
 	require Padre::Pod2HTML;
-	$self->SetPage(
-		Padre::Pod2HTML->pod2html($_[0])
-	);
+	$self->SetPage( Padre::Pod2HTML->pod2html( $_[0] ) );
 	return 1;
 }
 
