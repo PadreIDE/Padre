@@ -20,6 +20,8 @@ use Class::XSAccessor
 		_list      => '_list',		# list on the left of the pane
 		_manager   => '_manager',	# ref to plugin manager
 		_parent    => '_parent',	# parent window
+        _sortcolumn  => '_sortcolumn',  # column used for list sorting
+        _sortreverse => '_sortreverse', # list sorting is reversed
 		_whtml     => '_whtml',		# html space for plugin doc
 	};
 use Padre::Wx::Icon;
@@ -129,7 +131,13 @@ sub _on_button_clicked {
 sub _on_list_col_click {
     my ($self, $event) = @_;
     my $col = $event->GetColumn;
-    $self->_refresh_list($col);
+
+    my $prevcol  = $self->_sortcolumn  || 0;
+    my $reversed = $self->_sortreverse || 0;
+    $reversed = $col == $prevcol ? !$reversed : 0;
+    $self->_sortcolumn ($col);
+    $self->_sortreverse($reversed);
+    $self->_refresh_list($col, $reversed);
 }
 
 
@@ -407,6 +415,7 @@ sub _refresh_list {
             @plugins;
     }
     @plugins = sort { $a->status cmp $b->status } @plugins if $column == 2;
+    @plugins = reverse @plugins if $reverse;
 
 	# clear plugin list & fill it again
 	$list->DeleteAllItems;
