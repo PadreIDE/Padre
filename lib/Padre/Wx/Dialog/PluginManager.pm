@@ -186,7 +186,7 @@ sub _create {
 
 
 #
-# $dialog->_create_right_list;
+# $dialog->_create_list;
 #
 # create the list on the left of the frame. it will hold a list of available
 # plugins, along with their version & current status.
