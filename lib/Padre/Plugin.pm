@@ -89,6 +89,17 @@ sub plugin_name {
 
 =pod
 
+=head2 plugin_icon
+
+The C<plugin_icon> method will be called by Padre when it needs an
+icon to display in the user interface. It should return a 16x16
+C<Wx::Bitmap> object.
+
+There is no default default implementation, meaning that a default
+plugin icon will be displayed for the plugin.
+
+
+
 =head2 padre_interfaces
 
   sub padre_interfaces {
