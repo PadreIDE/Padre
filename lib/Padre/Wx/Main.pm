@@ -91,6 +91,7 @@ sub new {
 	# Bootstrap some Wx internals
 	Wx::InitAllImageHandlers();
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
+	Wx::LogMessage( 'Logging started' );
 
 	# Determine the window title
 	my $title = 'Padre';
@@ -598,6 +599,7 @@ sub change_locale {
 	unless ( defined $name ) {
 		$name = Padre::Locale::system_rfc4646();
 	}
+	Wx::LogMessage( "Changing locale to '$name'" );
 
 	# Save the locale to the config
 	$self->config->set( locale => $name );
