@@ -127,6 +127,8 @@ sub start {
 		$editor->SetMarginWidth( 1, 16 );
 	}
 
+	Padre::Util::debug('still starting the syntax checker');
+
 	# List appearance: Initialize column widths
 	$self->set_column_widths;
 
@@ -139,6 +141,7 @@ sub start {
 		);
 		$self->on_timer( undef, 1 );
 	} else {
+		Padre::Util::debug('Creating new timer');
 		$self->{timer} = Wx::Timer->new(
 			$self,
 			Padre::Wx::ID_TIMER_SYNTAX

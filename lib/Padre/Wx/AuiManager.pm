@@ -53,6 +53,7 @@ sub relocale {
 
 	# Update the pane captions
 	foreach my $name ( sort keys %{ $self->{caption} } ) {
+		Padre::Util::debug( "relocale $name" );
 		my $pane = $self->GetPane($name) or next;
 		$pane->Caption( Wx::gettext( $self->{caption}->{$name} ) );
 	}
