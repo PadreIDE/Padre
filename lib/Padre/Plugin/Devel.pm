@@ -58,6 +58,12 @@ sub menu_plugins_simple {
 		'Dump Top IDE Object'       => 'dump_padre',
 		'Dump %INC and @INC'        => 'dump_inc',
 		'---'                       => undef,
+		# TODO
+		# Should be checkbox but I am too lazy to turn the whole 
+		# menu_plugins_simple into a menu_plugins
+		'Enable logging'            => sub { set_logging(1); },
+		'Disable logging'           => sub { set_logging(0); },
+		'---'                       => undef,
 		'Simulate Crash'            => 'simulate_crash',
 		'Simulate Crashing Bg Task' => 'simulate_task_crash',
 		'---'                       => undef,
@@ -74,6 +80,16 @@ sub menu_plugins_simple {
 
 #####################################################################
 # Plugin Methods
+
+sub set_logging {
+	my ($on) = @_;
+
+	Padre->ide->wx->config->set( logging => $on );
+	Padre::Util::set_logging($on);
+	Padre->ide->wx->main->refresh;
+
+	return;
+}
 
 sub eval_document {
 	my $self = shift;

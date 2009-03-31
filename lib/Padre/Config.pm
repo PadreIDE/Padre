@@ -146,6 +146,8 @@ my %settings = (
 		[ 'main_left',      $INTEGER, 20 ],
 		[ 'main_width',     $POSINT,  600 ],
 		[ 'main_height',    $POSINT,  400 ],
+
+		[ 'logging',        $BOOLEAN, 0 ],
 	],
 );
 my %store = (

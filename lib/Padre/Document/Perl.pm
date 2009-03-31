@@ -111,8 +111,8 @@ sub colorize {
 	require PPI::Document;
 	my $ppi_doc = PPI::Document->new( \$text );
 	if ( not defined $ppi_doc ) {
-		Wx::LogMessage( 'PPI::Document Error %s', PPI::Document->errstr );
-		Wx::LogMessage( 'Original text: %s',      $text );
+		Padre::Util::debug( 'PPI::Document Error %s', PPI::Document->errstr );
+		Padre::Util::debug( 'Original text: %s',      $text );
 		return;
 	}
 
@@ -180,7 +180,7 @@ sub colorize {
 		#		last if $row > 10;
 		my $color = $colors{$css};
 		if ( not defined $color ) {
-			Wx::LogMessage("Missing definition for '$css'\n");
+			Padre::Util::debug("Missing definition for '$css'\n");
 			next;
 		}
 		next if not $color;

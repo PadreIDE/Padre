@@ -87,11 +87,13 @@ sub new {
 	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
+	my $config = $ide->config;
 
 	# Bootstrap some Wx internals
 	Wx::InitAllImageHandlers();
-	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
-	Wx::LogMessage( 'Logging started' );
+	#Wx::Log::SetActiveTarget( Wx::LogStderr->new );
+	Padre::Util::set_logging( $config->logging );
+	Padre::Util::debug( 'Logging started' );
 
 	# Determine the window title
 	my $title = 'Padre';
@@ -108,7 +110,6 @@ sub new {
 	}
 
 	# Determine the initial frame style
-	my $config = $ide->config;
 	my $style  = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
@@ -599,7 +600,7 @@ sub change_locale {
 	unless ( defined $name ) {
 		$name = Padre::Locale::system_rfc4646();
 	}
-	Wx::LogMessage( "Changing locale to '$name'" );
+	Padre::Util::debug( "Changing locale to '$name'" );
 
 	# Save the locale to the config
 	$self->config->set( locale => $name );

@@ -264,6 +264,20 @@ sub get_project_dir {
 	return;
 }
 
+{
+	my $logging;
+
+sub set_logging {
+	$logging = shift;
+}
+sub debug {
+	return if not $logging;
+
+	print STDERR "@_\n";
+}
+}
+
+
 package Px;
 
 use constant {
