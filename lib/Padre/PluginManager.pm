@@ -811,8 +811,8 @@ sub test_a_plugin {
 	my $file = File::Spec->catfile( $default_dir, $filename );
 
 	# last catfile's parameter is to ensure trailing slash
-	my $plugin_folder_name = File::Spec->catfile( 'Padre', 'Plugin', '' );
-	( $default_dir, $filename ) = split( /$plugin_folder_name/, $file, 2 );
+	my $plugin_folder_name = qr/Padre[\\\/]Plugin[\\\/]/;
+	( $default_dir, $filename ) = split( $plugin_folder_name, $file, 2 );
 	unless ($filename) {
 		Wx::MessageBox(
 			sprintf(
