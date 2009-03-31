@@ -8,7 +8,8 @@ use strict;
 use warnings;
 
 use Carp qw{ croak };
-use Class::XSAccessor accessors => {
+use Class::XSAccessor
+	accessors => {
 	_button      => '_button',         # general-purpose button
 	_butprefs    => '_butprefs',       # preferences button
 	_currow      => '_currow',         # current list row number
