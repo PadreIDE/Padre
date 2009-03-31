@@ -641,6 +641,7 @@ sub relocale {
 	$self->aui->relocale;
 
 	$self->bottom->relocale;
+	$self->right->relocale;
 
 	return;
 }
