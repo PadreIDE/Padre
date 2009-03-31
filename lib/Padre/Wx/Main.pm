@@ -91,7 +91,7 @@ sub new {
 
 	# Bootstrap some Wx internals
 	Wx::InitAllImageHandlers();
-	#Wx::Log::SetActiveTarget( Wx::LogStderr->new );
+	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 	Padre::Util::set_logging( $config->logging );
 	Padre::Util::debug( 'Logging started' );
 
