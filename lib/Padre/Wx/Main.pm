@@ -640,6 +640,8 @@ sub relocale {
 	# Update window manager captions
 	$self->aui->relocale;
 
+	$self->bottom->relocale;
+
 	return;
 }
 

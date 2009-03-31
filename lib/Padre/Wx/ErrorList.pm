@@ -69,7 +69,7 @@ sub enable {
 	my $main     = $self->main;
 	my $bottom   = $self->bottom;
 	my $position = $bottom->GetPageCount;
-	$bottom->InsertPage( $position, $self, Wx::gettext("Error List"), 0 );
+	$bottom->InsertPage( $position, $self, gettext_label(), 0 );
 	$self->Show;
 	$bottom->SetSelection($position);
 	$main->aui->Update;
@@ -85,6 +85,10 @@ sub disable {
 	$bottom->RemovePage($position);
 	$main->aui->Update;
 	$self->{enabled} = 0;
+}
+
+sub gettext_label {
+	return Wx::gettext("Error List");
 }
 
 sub populate {
