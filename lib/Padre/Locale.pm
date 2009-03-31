@@ -284,7 +284,7 @@ BEGIN {
 			iso3166   => undef,
 			wxid      => Wx::wxLANGUAGE_JAPANESE,
 			fallback  => ['en-us'],
-			supported => 1,
+			supported => 0,
 		},
 
 		'ko' => {
@@ -366,6 +366,7 @@ BEGIN {
 			iso3166  => undef,
 			wxid     => Wx::wxLANGUAGE_CHINESE,
 			fallback => [ 'zh-cn', 'zh-tw', 'en-us' ],
+			supported => 0,
 		},
 
 		'zh-cn' => {
@@ -374,7 +375,7 @@ BEGIN {
 			iso639    => 'zh',
 			iso3166   => 'CN',
 			wxid      => Wx::wxLANGUAGE_CHINESE_SIMPLIFIED,
-			fallback  => ['en-us'],
+			fallback  => [],
 			supported => 1,
 		},
 
