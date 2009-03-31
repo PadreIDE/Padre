@@ -737,7 +737,7 @@ msgstr "载入 '%s' pod 错误: %s"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:229
 #, fuzzy
 msgid "Name"
-msgstr "Name:"
+msgstr "名字:"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:230
 msgid "Version"
@@ -778,7 +778,7 @@ msgstr "作者:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:32
 msgid "Email:"
-msgstr "Email:"
+msgstr "电子邮件:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:35
 msgid "Builder:"
@@ -786,15 +786,15 @@ msgstr "Builder:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:38
 msgid "License:"
-msgstr "License:"
+msgstr "许可证:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:41
 msgid "Parent Directory:"
-msgstr "Parent Directory:"
+msgstr "父目录:"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:42
 msgid "Pick parent directory"
-msgstr "Pick parent directory"
+msgstr "选择父目录"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:68
 msgid "Module Start"
@@ -812,7 +812,7 @@ msgstr "missing field"
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:139
 #, perl-format
 msgid "%s apparantly created. Do you want to open it now?"
-msgstr "%s apparantly created. Do you want to open it now?"
+msgstr "%s 已创建。现在就打开文件吗？"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:140
 msgid "Done"
@@ -870,11 +870,11 @@ msgstr "&Add"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:39
 msgid "Snippets"
-msgstr "Snippets"
+msgstr "代码片段"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:111
 msgid "Category:"
-msgstr "Category:"
+msgstr "种类:"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:112
 msgid "Name:"
@@ -1440,7 +1440,7 @@ msgstr "上下文帮助\tF1"
 #: lib/Padre/Wx/Menu/Help.pm:58
 #, fuzzy
 msgid "Current Document"
-msgstr "Guess from current document"
+msgstr "当前文档"
 
 #: lib/Padre/Wx/Menu/Help.pm:70
 msgid "Visit the PerlMonks"
