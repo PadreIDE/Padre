@@ -23,10 +23,6 @@ my $padre = t::lib::Padre::Win32::setup();
 plan tests => 5;
 diag "Window id $padre";
 
-
-MenuSelect("&File|&New");
-sleep 1;
-
 my $text = "If you're reading this inside Padre, ";
 $text   .= "we might consider this test succesful. ";
 $text   .= "Please wait.......";
@@ -40,6 +36,20 @@ $save_tox =~ s/\//\\/g;
 diag "Save to '$save_to'";
 
 {
+	MenuSelect("&File|&New");
+	sleep 1;
+	#my @tabs = GetTabItems($padre);
+	#my @children = FindWindowLike($padre, 'Unsaved');
+	#my @children = GetChildWindows($padre);
+	#my @stc = FindWindowLike('', '', 'stcwindow');
+	#diag explain \@stc;
+	#foreach my $child (@children) {
+	#	diag sprintf "Child:  %8s  %s\n", $child, GetWindowText($child);
+	#}
+	#diag tree($padre);
+	#SendKeys("%{F4}");  # Alt-F4 to exit
+	#exit;
+
 	SendKeys($text);
 	MenuSelect("&File|&Save");
 	sleep 1;
@@ -77,7 +87,14 @@ diag "Save to '$save_to'";
 	is($text_in_file, $text, 'correct text in file');	
 }
 
-# restore
+#{
+#	SendKeys("^{n}");  # Ctrl-n
+#	sleep 4;
+#	SendKeys("text");
+#	SendKeys("^{w}");  # Ctrl-w  closing the current window
+#}
+#
+
 MenuSelect("&File|&Close");
 
 SendKeys("%{F4}");  # Alt-F4 to exit
@@ -93,4 +110,21 @@ sub slurp {
 		warn("Could not open file $save_to  $!");
 		return;
 	}
+}
+
+sub tree {
+	my ($id, $depth) = @_;
+	$depth ||= 0;
+
+	my $LIMIT = 5;
+	my @children = GetChildWindows($id);
+	my $str = '';
+	if ($depth >= $LIMIT) {
+		return( ("+" x $LIMIT) . "Depth limit of $LIMIT reached\n");
+	}
+	foreach my $child (@children) {
+		$str .=  ("+" x $depth) . sprintf "Child:  %8s  %s\n",  $child, GetWindowText($child) ;
+		$str .= tree($child, $depth + 1);
+	}
+	return $str;
 }
