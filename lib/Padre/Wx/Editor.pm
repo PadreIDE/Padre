@@ -99,6 +99,7 @@ sub data {
 sub padre_setup {
 	my $self = shift;
 
+	Padre::Util::debug("before setting the lexer");
 	$self->SetLexer( $self->{Document}->lexer );
 
 	# the next line will change the ESC key to cut the current selection

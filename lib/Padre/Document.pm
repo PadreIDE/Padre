@@ -427,6 +427,8 @@ sub load_file {
 
 	my $file = $self->{filename};
 
+	Padre::Util::debug("Loading file '$file'");
+
 	# check if file exists
 	if ( !-e $file ) {
 
@@ -607,6 +609,7 @@ sub lexer {
 	return Wx::wxSTC_LEX_AUTOMATIC unless $self->get_mimetype;
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined $MIME_LEXER{ $self->get_mimetype };
 
+	Padre::Util::debug("Trying to determine the lexer");
 	# If mime type is not sufficient to figure out file type
 	# than use suffix for lexer
 	my $filename = $self->filename || q{};

@@ -96,6 +96,7 @@ sub start {
 sub stop {
 	my $self = shift;
 
+	Padre::Util::debug("stopping Outline");
 	# Stop the timer
 	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop if $self->{timer}->IsRunning;

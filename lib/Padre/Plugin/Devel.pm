@@ -86,6 +86,7 @@ sub set_logging {
 
 	Padre->ide->wx->config->set( logging => $on );
 	Padre::Util::set_logging($on);
+	Padre::Util::debug("After setting debugging to '$on'");
 	Padre->ide->wx->main->refresh;
 
 	return;
