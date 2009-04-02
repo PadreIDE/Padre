@@ -41,7 +41,7 @@ if ( defined $HOME ) {
 	$ENV{PADRE_HOME} = $HOME;
 }
 
-unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} or grep /^(-h|--help)$/, @ARGV) {  
+unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} ) {  
     exit 0 if fork();
 }
 
