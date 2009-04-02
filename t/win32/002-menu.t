@@ -40,7 +40,7 @@ my $submenu = GetSubMenu($menu, 0);
 }
 my $subsubmenu = GetSubMenu($submenu, 1);
 {
-	my %h = GetMenuItemInfo($subsubmenu, 0);
+	my %h = GetMenuItemInfo($subsubmenu, 4);
 	is $h{text}, "Perl Distribution (Module::Starter)", "Module::Starter menu";
 }
 
