@@ -7,7 +7,7 @@ BEGIN {
 }
 
 # Move of Debug to Run Menu
-use Test::More tests => 6 + 53*2 + 9 + 1;
+use Test::More tests => 6 + 54*2 + 9 + 1;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
