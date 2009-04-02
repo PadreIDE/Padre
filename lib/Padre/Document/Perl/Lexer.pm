@@ -70,6 +70,8 @@ sub colorize {
 	# the algorithm used by Wx::STC to determine what needs styling
 	# is not precise enough for our need, but is a good starting point
 	my ( $start_pos, $end_pos ) = @_;
+	$start_pos ||= 0;
+	$end_pos   ||= $editor->GetLength;
 
 	my ($text,                 # the text that we will send to PPI for parsing
 		$start_line,           # number of first line of text to parse and style
