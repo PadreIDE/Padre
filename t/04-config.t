@@ -7,7 +7,7 @@ BEGIN {
 }
 
 # Move of Debug to Run Menu
-use Test::More tests => 122;
+use Test::More tests => 6 + 53*2 + 9 + 1;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -39,6 +39,8 @@ my @names = sort {
 	or
 	$a cmp $b
 } keys %Padre::Config::SETTING;
+diag $INC{'Padre/Config.pm'};
+diag "Number of defaults: " . @names;
 foreach my $name ( @names ) {
 	ok( defined($config->$name()), "->$name is defined" );	
 	is(
