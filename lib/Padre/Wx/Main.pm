@@ -1108,6 +1108,8 @@ sub on_close_window {
 	my $event  = shift;
 	my $padre  = Padre->ide;
 	my $config = $padre->config;
+	
+	Padre::Util::debug("on_close_window");
 
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up. Don't save it to
@@ -1137,6 +1139,8 @@ sub on_close_window {
 			);
 	}
 
+	Padre::Util::debug("went over list of files");
+	
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
 		if ( $config->main_startup eq 'same' ) {
@@ -1159,6 +1163,8 @@ sub on_close_window {
 			}
 		}
 	}
+
+	Padre::Util::debug("Files saved (or not), hiding window");
 
 	# Immediately hide the window so that the user
 	# perceives the application as closing faster.
@@ -1188,6 +1194,7 @@ sub on_close_window {
 	# Shut down all the plugins before saving the configuration
 	# so that plugins have a change to save their configuration.
 	$padre->plugin_manager->shutdown;
+	Padre::Util::debug("After plugin manager shutdown");
 
 	# Write the session to the database
 	Padre::DB->begin;
@@ -1814,6 +1821,7 @@ sub on_preferences {
 		}
 		$self->refresh_functions( $self->current );
 	}
+	Padre->ide->save_config;
 
 	return;
 }
@@ -1868,6 +1876,7 @@ sub on_toggle_syntax_check {
 		$event->IsChecked ? 1 : 0,
 	);
 	$self->show_syntax( $self->config->main_syntaxcheck );
+	Padre->ide->save_config;
 	return;
 }
 
@@ -1883,6 +1892,7 @@ sub on_toggle_errorlist {
 	} else {
 		$self->errorlist->disable;
 	}
+	Padre->ide->save_config;
 	return;
 }
 
@@ -1976,6 +1986,8 @@ sub show_functions {
 
 	$self->aui->Update;
 
+	Padre->ide->save_config;
+
 	return;
 }
 
@@ -1998,6 +2010,8 @@ sub show_outline {
 	}
 
 	$self->aui->Update;
+
+	Padre->ide->save_config;
 
 	return;
 }
@@ -2025,6 +2039,8 @@ sub show_directory {
 
 	$self->aui->Update;
 
+	Padre->ide->save_config;
+
 	return;
 }
 
@@ -2047,6 +2063,8 @@ sub show_output {
 
 	$self->aui->Update;
 
+	Padre->ide->save_config;
+
 	return;
 }
 
@@ -2068,6 +2086,8 @@ sub show_syntax {
 	}
 
 	$self->aui->Update;
+
+	Padre->ide->save_config;
 
 	return;
 }
