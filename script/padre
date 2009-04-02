@@ -42,9 +42,11 @@ if ( defined $HOME ) {
 }
 
 # put padre in the background on Unix/Linux.
-unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} ) {  
-    exit 0 if fork();
-}
+# Commented out for now so we won't be able to blame
+# this fork on any of our problems.
+#unless ( $^O eq 'MSWin32' or $ENV{PADRE_DEV} ) {  
+#    exit 0 if fork();
+#}
 
 require threads;
 require threads::shared;
