@@ -13,6 +13,7 @@ bail_on_fail;
 
 use File::Find::Rule;
 use File::Temp;
+use POSIX qw(locale_h);
 
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 
@@ -21,6 +22,8 @@ my $err = File::Spec->catfile($ENV{PADRE_HOME}, 'err.txt');
 
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
 plan tests => 2 * @files;
+diag "Detected locale: " . setlocale(LC_CTYPE);
+
 foreach my $file ( @files ) {
 		my $module = $file;
 		$module =~ s/[\/\\]/::/g;

@@ -6,7 +6,7 @@ use 5.008005;
 use strict;
 use lib 'privinc';
 use inc::Module::Install 0.77;
-
+use POSIX qw(locale_h);
 
 
 
@@ -89,7 +89,11 @@ test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
 # test_requires  'Test::NeedsDisplay'       => '1.07';
 
-tests     't/*.t t/win32/*.t'  if win32;
+my $locale = setlocale(LC_CTYPE);
+print "Locale detected: $locale\n";
+if (win32 and $locale =~ /^English/) {
+	tests     't/*.t t/win32/*.t';
+}
 
 no_index       'directory'                => qw{ t xt eg share inc privinc };
 homepage       'http://padre.perlide.org/';
