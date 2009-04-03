@@ -2597,6 +2597,42 @@ sub setup_bindings {
 	return;
 }
 
+# this is Perl specific but for now we could not
+# find a better place for this
+sub set_ppi_highlight {
+	my ($self, $on) = @_;
+	# Update the saved config setting
+	my $config = Padre->ide->config;
+	$config->set( ppi_highlight => $on );
+
+	# Refresh the menu (and MIME_LEXER hook)
+	# probably no need for this
+	# $self->refresh;
+
+	# Update the colourise for each Perl editor
+	# TODO try to delay the actual color updating for the
+	# pages that are not in focus till they get in focus
+	my $current_editor = Padre::Current->editor;
+	foreach my $editor ( $self->editors ) {
+		my $doc = $editor->{Document};
+		next unless $doc->isa('Padre::Document::Perl');
+		Padre::Util::debug("Set ppi to $on for $doc in file " . ($doc->filename || ''));
+		my $lexer = $doc->lexer;
+		$editor->SetLexer( $lexer );
+		# TODO maybe the document should have a method that tells us if it was setup
+		# to be colored by ppi or not instead of fetching the lexer again.
+		Padre::Util::debug("lexer: $lexer");
+		if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER and $editor eq $current_editor) {
+			$doc->colorize;
+		} else {
+			$doc->remove_color;
+			$editor->Colourise( 0, $editor->GetLength );
+		}
+	}
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

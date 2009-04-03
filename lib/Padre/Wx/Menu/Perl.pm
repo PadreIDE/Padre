@@ -108,30 +108,7 @@ sub new {
 		$main,
 		$self->{ppi_highlight},
 		sub {
-
-			# Update the saved config setting
-			my $config = Padre->ide->config;
-			$config->set( ppi_highlight => $_[1]->IsChecked ? 1 : 0 );
-
-			# Refresh the menu (and MIME_LEXER hook)
-			$self->refresh;
-
-			# Update the colourise for each Perl editor
-			# TODO try to delay the actual color updating for the
-			# pages that are not in focus till they get in focus
-			foreach my $editor ( $_[0]->editors ) {
-				my $doc = $editor->{Document};
-				next unless $doc->isa('Padre::Document::Perl');
-				$editor->SetLexer( $doc->lexer );
-				if ( $config->ppi_highlight ) {
-					$doc->colorize;
-				} else {
-					$doc->remove_color;
-					$editor->Colourise( 0, $editor->GetLength );
-				}
-			}
-
-			return;
+			$_[0]->set_ppi_highlight($_[1]->IsChecked ? 1 : 0);
 		}
 	);
 
@@ -176,11 +153,7 @@ sub refresh {
 	#$self->{run_stacktrace}->Check( $config->run_stacktrace );
 	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
 
-	no warnings 'once';    # TODO eliminate?
-	$Padre::Document::MIME_LEXER{'application/x-perl'}
-		= $config->ppi_highlight
-		? Wx::wxSTC_LEX_CONTAINER
-		: Wx::wxSTC_LEX_PERL;
+	return;
 }
 
 1;
