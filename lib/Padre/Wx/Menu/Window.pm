@@ -87,7 +87,7 @@ sub new {
 		$main,
 		$self->Append(
 			-1,
-			Wx::gettext("GoTo Subs Window\tAlt-S")
+			Wx::gettext("GoTo Subs Window")
 		),
 		sub {
 			$_[0]->refresh_functions( $_[0]->current );
