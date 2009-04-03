@@ -93,6 +93,7 @@ sub new {
 	Wx::InitAllImageHandlers();
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 	Padre::Util::set_logging( $config->logging );
+	Padre::Util::set_trace( $config->logging_trace );	
 	Padre::Util::debug( 'Logging started' );
 
 	# Determine the window title
@@ -343,9 +344,11 @@ sub load_files {
 		if (@session) {
 			my $focus = undef;
 			foreach my $document (@session) {
+				Padre::Util::debug("Opening '" . $document->file . "' for $document");
 				my $filename = $document->file;
 				next unless -f $filename;
 				my $id = $self->setup_editor($filename);
+				Padre::Util::debug("Setting focus on $filename");
 				if ( $document->focus ) {
 					$focus = $id;
 				}
@@ -1238,6 +1241,7 @@ sub on_split_window {
 sub setup_editors {
 	my $self  = shift;
 	my @files = @_;
+	Padre::Util::debug("setup_editors @files");
 	SCOPE: {
 		my $guard = $self->freezer;
 
@@ -1286,6 +1290,7 @@ sub on_new {
 sub setup_editor {
 	my ( $self, $file ) = @_;
 
+	Padre::Util::debug("setup_editor called for '" . ($file || '') .  "'");
 	if ($file) {
 		$file = Cwd::realpath($file); # get absolute path
 		my $id = $self->find_editor_of_file($file);
@@ -1306,6 +1311,8 @@ sub setup_editor {
 		warn $doc->errstr . " when trying to open '$file'";
 		return;
 	}
+
+	Padre::Util::debug("Document created for '$file'");
 
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $doc;
@@ -1335,7 +1342,8 @@ sub setup_editor {
 
 	my $id = $self->create_tab( $editor, $file, $title );
 
-	$editor->padre_setup;
+	# no need to call this here as set_preferences already calls padre_setup.
+	#$editor->padre_setup;
 
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
