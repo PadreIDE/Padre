@@ -211,23 +211,25 @@ sub refresh {
 
 sub get_common_prefix {
 	my ( $count, $notebook ) = @_;
-	my $prefix = '';
+	my @prefix = ();
 	foreach my $i ( 0 .. $count ) {
 		my $doc = $notebook->GetPage($i)->{Document} or return;
 		my $label = $doc->filename || $notebook->GetPageText($i);
-		if ( not $prefix ) {
-			$prefix = $label;
+		my @label = File::Spec->splitdir($label);
+
+		if ( not @prefix ) {
+			@prefix = @label;
 			next;
 		}
-		if ( length $prefix > length $label ) {
-			$prefix = substr( $prefix, 0, length $label );
+
+		my $i = 0;
+		while ($i < @prefix) {
+			last if $prefix[$i] ne $label[$i];
+			$i++;
 		}
-		while ( $prefix and substr( $label, 0, length $prefix ) ne $prefix ) {
-			chop $prefix;
-		}
-		last if not $prefix;
+		splice @prefix, $i;
 	}
-	return $prefix;
+	return File::Spec->catdir(@prefix);
 }
 
 1;
