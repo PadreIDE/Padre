@@ -20,7 +20,7 @@ unless ( -d "$FindBin::Bin/blib" ) {
 
 
 my $msgfmt;
-if ( $^O eq 'linux' ) {
+if ( $^O =~ /(linux|bsd)/ ) {
 	if ($msgfmt = `which msgfmt`) {
 		chomp $msgfmt;
 	}
