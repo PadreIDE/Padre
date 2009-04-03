@@ -18,14 +18,23 @@ unless ( -d "$FindBin::Bin/blib" ) {
 	die "You must now have run make in order to run dev.pl";
 }
 
-if ( $^O eq 'linux' ) {
-	if ( my $msgfmt = `which msgfmt` ) {
-		chomp $msgfmt;
-		foreach my $locale ( map { substr( File::Basename::basename($_), 0, -3 ) } glob "share/locale/*.po" ) {
 
-			#print "$locale\n";
-			system("$msgfmt -o share/locale/$locale.mo share/locale/$locale.po");
-		}
+my $msgfmt;
+if ( $^O eq 'linux' ) {
+	if ($msgfmt = `which msgfmt`) {
+		chomp $msgfmt;
+	}
+} elsif ($^O =~ /win32/i) {
+	my $p = "c:/Program Files/GnuWin32/bin/msgfmt.exe";
+	if (-e $p) {
+		$msgfmt = $p;
+	}
+}
+
+if ($msgfmt) {
+	foreach my $locale ( map { substr( File::Basename::basename($_), 0, -3 ) } glob "share/locale/*.po" ) {
+		#print "$locale\n";
+		system(qq("$msgfmt" -o share/locale/$locale.mo share/locale/$locale.po));
 	}
 }
 
