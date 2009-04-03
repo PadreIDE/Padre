@@ -63,6 +63,8 @@ sub menu_plugins_simple {
 		# menu_plugins_simple into a menu_plugins
 		'Enable logging'            => sub { set_logging(1); },
 		'Disable logging'           => sub { set_logging(0); },
+		'Enable trace when logging' => sub { set_trace(1); },
+		'Disable trace'             => sub { set_trace(0); },
 		'---'                       => undef,
 		'Simulate Crash'            => 'simulate_crash',
 		'Simulate Crashing Bg Task' => 'simulate_task_crash',
@@ -87,6 +89,17 @@ sub set_logging {
 	Padre->ide->wx->config->set( logging => $on );
 	Padre::Util::set_logging($on);
 	Padre::Util::debug("After setting debugging to '$on'");
+	Padre->ide->wx->main->refresh;
+
+	return;
+}
+
+sub set_trace {
+	my ($on) = @_;
+
+	Padre->ide->wx->config->set( logging_trace => $on );
+	Padre::Util::set_trace($on);
+	Padre::Util::debug("After setting trace to '$on'");
 	Padre->ide->wx->main->refresh;
 
 	return;

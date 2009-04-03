@@ -29,6 +29,7 @@ use FindBin    ();
 use File::Spec ();
 use List::Util qw(first);
 use File::Basename ();
+use Carp ();
 
 our $VERSION = '0.32';
 use base 'Exporter';
@@ -272,14 +273,22 @@ sub get_project_dir {
 
 {
 	my $logging;
+	my $trace;
 
 sub set_logging {
 	$logging = shift;
 }
+sub set_trace {
+	$trace = shift;
+}
 sub debug {
 	return if not $logging;
 
+	my $ts = "";
 	print STDERR "@_\n";
+	if ($trace) {
+		print STDERR Carp::longmess();
+	}
 }
 }
 
