@@ -29,7 +29,8 @@ use FindBin    ();
 use File::Spec ();
 use List::Util qw(first);
 use File::Basename ();
-use Carp ();
+use Carp       ();
+use POSIX      ();
 
 our $VERSION = '0.32';
 use base 'Exporter';
@@ -284,8 +285,8 @@ sub set_trace {
 sub debug {
 	return if not $logging;
 
-	my $ts = "";
-	print STDERR "@_\n";
+	my $ts = POSIX::strftime("%H:%M:%S", localtime());
+	print STDERR "$ts - @_\n";
 	if ($trace) {
 		print STDERR Carp::longmess();
 	}
