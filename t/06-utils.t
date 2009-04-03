@@ -27,6 +27,9 @@ $current_dir = File::Spec->catdir(
 							$path[-1]
 				);
 
+if ($^O =~ /Win32/i) {
+	$project_dir =~ s{/}{\\}g;
+}
 is( Padre::Util::get_project_dir($current_dir), 
 	$project_dir, 
 	"Finding Padre's project dir from relative path" 
