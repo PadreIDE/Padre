@@ -4,10 +4,15 @@ use strict;
 BEGIN {
 	$|  = 1;
 	$^W = 1;
+
+}
+my $config_options;
+BEGIN {
+	$config_options = 54;
 }
 
 # Move of Debug to Run Menu
-use Test::More tests => 6 + 54*2 + 9 + 1;
+use Test::More tests => 6 + $config_options*2 + 10 + 1;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -41,6 +46,7 @@ my @names = sort {
 } keys %Padre::Config::SETTING;
 diag $INC{'Padre/Config.pm'};
 diag "Number of defaults: " . @names;
+is (scalar(@names), $config_options, 'Expected number of config options');
 foreach my $name ( @names ) {
 	ok( defined($config->$name()), "->$name is defined" );	
 	is(
