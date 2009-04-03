@@ -1287,6 +1287,7 @@ sub setup_editor {
 	my ( $self, $file ) = @_;
 
 	if ($file) {
+		$file = Cwd::realpath($file); # get absolute path
 		my $id = $self->find_editor_of_file($file);
 		if ( defined $id ) {
 			$self->on_nth_pane($id);
