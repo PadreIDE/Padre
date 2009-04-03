@@ -34,7 +34,7 @@ if ( $^O eq 'linux' ) {
 if ($msgfmt) {
 	foreach my $locale ( map { substr( File::Basename::basename($_), 0, -3 ) } glob "share/locale/*.po" ) {
 		#print "$locale\n";
-		system(qq("$msgfmt" -o share/locale/$locale.mo share/locale/$locale.po));
+		system($msgfmt, "-o", "share/locale/$locale.mo",  "share/locale/$locale.po");
 	}
 }
 
