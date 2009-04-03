@@ -289,6 +289,10 @@ sub debug {
 	print STDERR "$ts - @_\n";
 	if ($trace) {
 		print STDERR Carp::longmess();
+	} else {
+		my ($package, $filename, $line) = caller;
+		#$filename =~ s{.*/Padre/}{Padre/};
+		print STDERR "           in line $line of $filename\n";
 	}
 }
 }

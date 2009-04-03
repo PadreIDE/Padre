@@ -242,6 +242,7 @@ sub rebless {
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
 	my $subclass = $MIME_CLASS{ $self->get_mimetype } || __PACKAGE__;
+	Padre::Util::debug("Reblessing to mimetype: '$subclass'");
 	if ($subclass) {
 		Class::Autouse->autouse($subclass);
 		bless $self, $subclass;
@@ -622,6 +623,7 @@ sub lexer {
 		}
 	}
 
+	Padre::Util::debug("Lexer will be based on mymetype " . $self->get_mimetype);
 	return $MIME_LEXER{ $self->get_mimetype };
 }
 
