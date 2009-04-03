@@ -248,7 +248,13 @@ plugins.
 
 sub get_project_dir {
 	my $filename = shift;
-
+	return unless $filename;
+	
+	# check for potential relative path on filename
+	if ($filename =~ m{\.\.}) {
+		require Cwd;
+		$filename = Cwd::realpath($filename);
+	}
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
 	while (1) {
