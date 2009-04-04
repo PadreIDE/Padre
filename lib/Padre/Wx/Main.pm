@@ -1209,6 +1209,8 @@ sub on_close_window {
 
 	$event->Skip;
 
+	Padre::Util::debug("Closing Padre");
+
 	return;
 }
 
@@ -1254,10 +1256,6 @@ sub setup_editors {
 
 		if (@files) {
 			foreach my $f (@files) {
-				Padre::DB::History->create(
-					type => 'files',
-					name => $f,
-				);
 				$self->setup_editor($f);
 			}
 		} else {
@@ -1332,6 +1330,7 @@ sub setup_editor {
 	}
 
 	if ( !$doc->is_new ) {
+		Padre::Util::debug("Adding new file to history: " . $doc->filename);
 		Padre::DB::History->create(
 			type => 'files',
 			name => $doc->filename,
