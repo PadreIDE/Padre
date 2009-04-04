@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.33 2009.04.04
+
     Fix bug in relative path showing in the Windows menu. (GARU)
     Fix the swicthing between ppi mode and none-ppi mode (SZABGAB)
     Stop forking at startup. (SZABGAB) 

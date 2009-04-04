@@ -32,7 +32,7 @@ use File::Basename ();
 use Carp       ();
 use POSIX      ();
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches _T);
 

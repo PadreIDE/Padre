@@ -69,7 +69,7 @@ use strict;
 use warnings;
 use Padre::Plugin ();
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Padre::Plugin';
 
 #####################################################################

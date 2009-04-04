@@ -5,7 +5,7 @@ use warnings;
 use Padre::Task ();
 use Padre::Wx   ();
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Padre::Task';
 
 # set up a new event type

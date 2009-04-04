@@ -7,7 +7,7 @@ use threads;
 
 use base 'Padre::Task';
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 
 sub run {
 	my ($self) = @_;

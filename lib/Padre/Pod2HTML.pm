@@ -33,7 +33,7 @@ use strict;
 use warnings;
 use Pod::Simple::XHTML ();
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Pod::Simple::XHTML';
 
 use Class::XSAccessor getters => {

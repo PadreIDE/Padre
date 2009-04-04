@@ -11,7 +11,7 @@ use Padre::Locale   ();
 use Padre::Wx::Menu ();
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Padre::Wx::Menu';
 
 #####################################################################

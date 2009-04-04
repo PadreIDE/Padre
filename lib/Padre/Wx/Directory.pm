@@ -9,7 +9,7 @@ use Padre::Current ();
 use File::Basename ();
 use Padre::Util    ();
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Wx::TreeCtrl';
 
 my %CACHED;

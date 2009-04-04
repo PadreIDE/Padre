@@ -7,7 +7,7 @@ use Params::Util qw{ _STRING };
 use Padre::Wx      ();
 use Padre::Current ();
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base 'Wx::ListCtrl';
 
 #####################################################################

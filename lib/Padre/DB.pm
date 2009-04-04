@@ -28,7 +28,7 @@ use Padre::DB::History            ();
 use Padre::DB::HostConfig         ();
 use Padre::DB::LastPositionInFile ();
 
-our $VERSION    = '0.32';
+our $VERSION    = '0.33';
 our $COMPATIBLE = '0.26';
 
 #####################################################################
