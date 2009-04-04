@@ -83,6 +83,7 @@ sub lexer {
 	my $config = Padre->ide->config;
 
 	Padre::Util::debug("Setting highlighter for Perl 5 code. length: " . $self->editor->GetTextLength);
+	Padre::Util::debug("Limit " . $config->ppi_highlight_limit);
 	if ( $config->ppi_highlight and $self->editor->GetTextLength < $config->ppi_highlight_limit ) {
 		Padre::Util::debug("Setting ppi highlighting");
 		return Wx::wxSTC_LEX_CONTAINER;

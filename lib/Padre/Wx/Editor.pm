@@ -59,6 +59,7 @@ sub new {
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
+	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 
 	if ( Padre->ide->config->editor_wordwrap ) {
 		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
@@ -755,6 +756,28 @@ sub unfold_all {
 	return;
 }
 
+sub on_focus {
+	my ( $self, $event ) = @_;
+	my $doc = Padre::Current->document;
+
+	Padre::Util::debug("Focus received file: " . ($doc->filename || ''));
+
+	if ($self->needs_manual_colorize) {
+		#Padre::Util::debug("needs manual");
+		$doc->colorize;
+		$self->needs_manual_colorize(0);
+	} elsif ($self->needs_stc_colorize) {
+		#Padre::Util::debug("needs stc");
+		$doc->remove_color;
+		$self->Colourise( 0, $self->GetLength );
+		$self->needs_stc_colorize(0);
+	}
+
+	
+	$event->Skip(1); # so the cursor will show up
+	return;
+}	
+
 sub on_char {
 	my ( $self, $event ) = @_;
 
@@ -1132,6 +1155,19 @@ sub vertically_align {
 	$editor->SetSelection( $start, $start );
 
 	return;
+}
+
+sub needs_manual_colorize {
+	if (defined $_[1]) {
+		$_[0]->{needs_manual_colorize} = $_[1];
+	}
+	return $_[0]->{needs_manual_colorize};
+}
+sub needs_stc_colorize {
+	if (defined $_[1]) {
+		$_[0]->{needs_stc_colorize} = $_[1];
+	}
+	return $_[0]->{needs_stc_colorize};
 }
 
 1;
