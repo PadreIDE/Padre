@@ -1307,6 +1307,8 @@ sub setup_editor {
 	my $doc = Padre::Document->new(
 		filename => $file,
 	);
+
+	$file ||= ''; #to avoid warnings
 	if ( $doc->errstr ) {
 		warn $doc->errstr . " when trying to open '$file'";
 		return;
