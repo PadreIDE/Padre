@@ -360,12 +360,12 @@ BEGIN {
 		},
 
 		'zh' => {
-			gettext  => _T('Chinese'),
-			utf8text => 'Chinese',
-			iso639   => 'zh',
-			iso3166  => undef,
-			wxid     => Wx::wxLANGUAGE_CHINESE,
-			fallback => [ 'zh-cn', 'zh-tw', 'en-us' ],
+			gettext   => _T('Chinese'),
+			utf8text  => 'Chinese',
+			iso639    => 'zh',
+			iso3166   => undef,
+			wxid      => Wx::wxLANGUAGE_CHINESE,
+			fallback  => [ 'zh-cn', 'zh-tw', 'en-us' ],
 			supported => 0,
 		},
 

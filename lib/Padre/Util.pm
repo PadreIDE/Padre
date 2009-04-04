@@ -29,8 +29,8 @@ use FindBin    ();
 use File::Spec ();
 use List::Util qw(first);
 use File::Basename ();
-use Carp       ();
-use POSIX      ();
+use Carp           ();
+use POSIX          ();
 
 our $VERSION = '0.33';
 use base 'Exporter';
@@ -251,9 +251,9 @@ plugins.
 sub get_project_dir {
 	my $filename = shift;
 	return unless $filename;
-	
+
 	# check for potential relative path on filename
-	if ($filename =~ m{\.\.}) {
+	if ( $filename =~ m{\.\.} ) {
 		require Cwd;
 		$filename = Cwd::realpath($filename);
 	}
@@ -276,27 +276,29 @@ sub get_project_dir {
 	my $logging;
 	my $trace;
 
-sub set_logging {
-	$logging = shift;
-}
-sub set_trace {
-	$trace = shift;
-}
-sub debug {
-	return if not $logging;
+	sub set_logging {
+		$logging = shift;
+	}
 
-	my $ts = POSIX::strftime("%H:%M:%S", localtime());
-	print STDERR "$ts - @_\n";
-	if ($trace) {
-		print STDERR Carp::longmess();
-	} else {
-		my ($package, $filename, $line) = caller;
-		#$filename =~ s{.*/Padre/}{Padre/};
-		print STDERR "           in line $line of $filename\n";
+	sub set_trace {
+		$trace = shift;
+	}
+
+	sub debug {
+		return if not $logging;
+
+		my $ts = POSIX::strftime( "%H:%M:%S", localtime() );
+		print STDERR "$ts - @_\n";
+		if ($trace) {
+			print STDERR Carp::longmess();
+		} else {
+			my ( $package, $filename, $line ) = caller;
+
+			#$filename =~ s{.*/Padre/}{Padre/};
+			print STDERR "           in line $line of $filename\n";
+		}
 	}
 }
-}
-
 
 package Px;
 

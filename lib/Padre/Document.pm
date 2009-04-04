@@ -611,6 +611,7 @@ sub lexer {
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined $MIME_LEXER{ $self->get_mimetype };
 
 	Padre::Util::debug("Trying to determine the lexer");
+
 	# If mime type is not sufficient to figure out file type
 	# than use suffix for lexer
 	my $filename = $self->filename || q{};
@@ -623,7 +624,7 @@ sub lexer {
 		}
 	}
 
-	Padre::Util::debug("Lexer will be based on mymetype " . $self->get_mimetype);
+	Padre::Util::debug( "Lexer will be based on mymetype " . $self->get_mimetype );
 	return $MIME_LEXER{ $self->get_mimetype };
 }
 

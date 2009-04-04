@@ -760,23 +760,24 @@ sub on_focus {
 	my ( $self, $event ) = @_;
 	my $doc = Padre::Current->document;
 
-	Padre::Util::debug("Focus received file: " . ($doc->filename || ''));
+	Padre::Util::debug( "Focus received file: " . ( $doc->filename || '' ) );
 
-	if ($self->needs_manual_colorize) {
+	if ( $self->needs_manual_colorize ) {
+
 		#Padre::Util::debug("needs manual");
 		$doc->colorize;
 		$self->needs_manual_colorize(0);
-	} elsif ($self->needs_stc_colorize) {
+	} elsif ( $self->needs_stc_colorize ) {
+
 		#Padre::Util::debug("needs stc");
 		$doc->remove_color;
 		$self->Colourise( 0, $self->GetLength );
 		$self->needs_stc_colorize(0);
 	}
 
-	
-	$event->Skip(1); # so the cursor will show up
+	$event->Skip(1);    # so the cursor will show up
 	return;
-}	
+}
 
 sub on_char {
 	my ( $self, $event ) = @_;
@@ -1093,6 +1094,7 @@ sub insert_from_file {
 
 sub vertically_align {
 	my ($editor) = @_;
+
 	# Get the selected lines
 	my $begin = $editor->LineFromPosition( $editor->GetSelectionStart );
 	my $end   = $editor->LineFromPosition( $editor->GetSelectionEnd );
@@ -1158,13 +1160,14 @@ sub vertically_align {
 }
 
 sub needs_manual_colorize {
-	if (defined $_[1]) {
+	if ( defined $_[1] ) {
 		$_[0]->{needs_manual_colorize} = $_[1];
 	}
 	return $_[0]->{needs_manual_colorize};
 }
+
 sub needs_stc_colorize {
-	if (defined $_[1]) {
+	if ( defined $_[1] ) {
 		$_[0]->{needs_stc_colorize} = $_[1];
 	}
 	return $_[0]->{needs_stc_colorize};

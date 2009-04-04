@@ -93,8 +93,8 @@ sub new {
 	Wx::InitAllImageHandlers();
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 	Padre::Util::set_logging( $config->logging );
-	Padre::Util::set_trace( $config->logging_trace );	
-	Padre::Util::debug( 'Logging started' );
+	Padre::Util::set_trace( $config->logging_trace );
+	Padre::Util::debug('Logging started');
 
 	# Determine the window title
 	my $title = 'Padre';
@@ -111,7 +111,7 @@ sub new {
 	}
 
 	# Determine the initial frame style
-	my $style  = Wx::wxDEFAULT_FRAME_STYLE;
+	my $style = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
 		$style |= Wx::wxCLIP_CHILDREN;
@@ -343,7 +343,7 @@ sub load_files {
 		if (@session) {
 			my $focus = undef;
 			foreach my $document (@session) {
-				Padre::Util::debug("Opening '" . $document->file . "' for $document");
+				Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 				my $filename = $document->file;
 				next unless -f $filename;
 				my $id = $self->setup_editor($filename);
@@ -600,7 +600,7 @@ sub change_locale {
 	unless ( defined $name ) {
 		$name = Padre::Locale::system_rfc4646();
 	}
-	Padre::Util::debug( "Changing locale to '$name'" );
+	Padre::Util::debug("Changing locale to '$name'");
 
 	# Save the locale to the config
 	$self->config->set( locale => $name );
@@ -901,7 +901,8 @@ sub run_document_parameters {
 	}
 
 	my $filename = File::Basename::fileparse( $self->current->filename );
-	$run_argv{$filename} = $self->prompt( Wx::gettext("Command line parameters"), Wx::gettext("Run parameters"), "RUN_COMMAND_LINE_PARAMS_$filename" );
+	$run_argv{$filename} = $self->prompt( Wx::gettext("Command line parameters"), Wx::gettext("Run parameters"),
+		"RUN_COMMAND_LINE_PARAMS_$filename" );
 
 	return;
 }
@@ -1108,7 +1109,7 @@ sub on_close_window {
 	my $event  = shift;
 	my $padre  = Padre->ide;
 	my $config = $padre->config;
-	
+
 	Padre::Util::debug("on_close_window");
 
 	# Capture the current session, before we start the interactive
@@ -1140,7 +1141,7 @@ sub on_close_window {
 	}
 
 	Padre::Util::debug("went over list of files");
-	
+
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
 		if ( $config->main_startup eq 'same' ) {
@@ -1285,9 +1286,9 @@ sub on_new {
 sub setup_editor {
 	my ( $self, $file ) = @_;
 
-	Padre::Util::debug("setup_editor called for '" . ($file || '') .  "'");
+	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 	if ($file) {
-		$file = Cwd::realpath($file); # get absolute path
+		$file = Cwd::realpath($file);    # get absolute path
 		my $id = $self->find_editor_of_file($file);
 		if ( defined $id ) {
 			$self->on_nth_pane($id);
@@ -1303,7 +1304,7 @@ sub setup_editor {
 		filename => $file,
 	);
 
-	$file ||= ''; #to avoid warnings
+	$file ||= '';    #to avoid warnings
 	if ( $doc->errstr ) {
 		warn $doc->errstr . " when trying to open '$file'";
 		return;
@@ -1330,7 +1331,7 @@ sub setup_editor {
 	}
 
 	if ( !$doc->is_new ) {
-		Padre::Util::debug("Adding new file to history: " . $doc->filename);
+		Padre::Util::debug( "Adding new file to history: " . $doc->filename );
 		Padre::DB::History->create(
 			type => 'files',
 			name => $doc->filename,
@@ -2598,7 +2599,8 @@ sub setup_bindings {
 # this is Perl specific but for now we could not
 # find a better place for this
 sub set_ppi_highlight {
-	my ($self, $on) = @_;
+	my ( $self, $on ) = @_;
+
 	# Update the saved config setting
 	my $config = Padre->ide->config;
 	$config->set( ppi_highlight => $on );
@@ -2614,24 +2616,25 @@ sub set_ppi_highlight {
 	foreach my $editor ( $self->editors ) {
 		my $doc = $editor->{Document};
 		next unless $doc->isa('Padre::Document::Perl');
-		Padre::Util::debug("Set ppi to $on for $doc in file " . ($doc->filename || ''));
+		Padre::Util::debug( "Set ppi to $on for $doc in file " . ( $doc->filename || '' ) );
 		my $lexer = $doc->lexer;
-		$editor->SetLexer( $lexer );
+		$editor->SetLexer($lexer);
+
 		# TODO maybe the document should have a method that tells us if it was setup
 		# to be colored by ppi or not instead of fetching the lexer again.
 		Padre::Util::debug("lexer: $lexer");
 
-		if ($editor eq $current_editor) {
+		if ( $editor eq $current_editor ) {
 			$editor->needs_manual_colorize(0);
 			$editor->needs_stc_colorize(0);
-			if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER) {
+			if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 				$doc->colorize;
 			} else {
 				$doc->remove_color;
 				$editor->Colourise( 0, $editor->GetLength );
 			}
 		} else {
-			if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER) {
+			if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 				$editor->needs_manual_colorize(1);
 				$editor->needs_stc_colorize(0);
 			} else {

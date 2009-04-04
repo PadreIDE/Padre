@@ -108,7 +108,7 @@ sub new {
 		$main,
 		$self->{ppi_highlight},
 		sub {
-			$_[0]->set_ppi_highlight($_[1]->IsChecked ? 1 : 0);
+			$_[0]->set_ppi_highlight( $_[1]->IsChecked ? 1 : 0 );
 		}
 	);
 

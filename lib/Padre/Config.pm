@@ -147,8 +147,8 @@ my %settings = (
 		[ 'main_width',     $POSINT,  600 ],
 		[ 'main_height',    $POSINT,  400 ],
 
-		[ 'logging',        $BOOLEAN, 0 ],
-		[ 'logging_trace',  $BOOLEAN, 0 ],
+		[ 'logging',       $BOOLEAN, 0 ],
+		[ 'logging_trace', $BOOLEAN, 0 ],
 	],
 );
 my %store = (

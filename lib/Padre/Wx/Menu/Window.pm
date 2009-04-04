@@ -223,7 +223,7 @@ sub get_common_prefix {
 		}
 
 		my $i = 0;
-		while ($i < @prefix) {
+		while ( $i < @prefix ) {
 			last if $prefix[$i] ne $label[$i];
 			$i++;
 		}

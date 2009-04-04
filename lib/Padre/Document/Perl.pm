@@ -82,8 +82,8 @@ sub lexer {
 	my $self   = shift;
 	my $config = Padre->ide->config;
 
-	Padre::Util::debug("Setting highlighter for Perl 5 code. length: " . $self->editor->GetTextLength);
-	Padre::Util::debug("Limit " . $config->ppi_highlight_limit);
+	Padre::Util::debug( "Setting highlighter for Perl 5 code. length: " . $self->editor->GetTextLength );
+	Padre::Util::debug( "Limit " . $config->ppi_highlight_limit );
 	if ( $config->ppi_highlight and $self->editor->GetTextLength < $config->ppi_highlight_limit ) {
 		Padre::Util::debug("Setting ppi highlighting");
 		return Wx::wxSTC_LEX_CONTAINER;
@@ -99,6 +99,7 @@ sub colorize {
 	my $self = shift;
 
 	Padre::Util::debug("colorize called");
+
 	# use pshangov's experimental ppi lexer only when running in development mode
 	if ( $ENV{PADRE_DEV} ) {
 		require Padre::Document::Perl::Lexer;

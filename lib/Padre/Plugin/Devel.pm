@@ -58,8 +58,9 @@ sub menu_plugins_simple {
 		'Dump Top IDE Object'       => 'dump_padre',
 		'Dump %INC and @INC'        => 'dump_inc',
 		'---'                       => undef,
+
 		# TODO
-		# Should be checkbox but I am too lazy to turn the whole 
+		# Should be checkbox but I am too lazy to turn the whole
 		# menu_plugins_simple into a menu_plugins
 		'Enable logging'            => sub { set_logging(1); },
 		'Disable logging'           => sub { set_logging(0); },
