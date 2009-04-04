@@ -1,5 +1,10 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Fix bug in relative path showing in the Windows menu. (GARU)
+    Fix the swicthing between ppi mode and none-ppi mode (SZABGAB)
+    Stop forking at startup. (SZABGAB) 
+    Skip the win32 subtests if the locale is not English. (SZABGAB)
+    Added debug logging that can be turned on/off via the Developer plugin. (SZABGAB)
     Simplified Chinese translation turned on. (FAYLAND, SZABGAB)
     Added Polish translation. (THEREK)
     Revamped plugin manager. (JQUELIN)
