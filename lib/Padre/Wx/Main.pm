@@ -1233,7 +1233,7 @@ sub on_split_window {
 
 	Padre->ide->plugin_manager->editor_enable($new_editor);
 
-	$self->create_tab( $new_editor, $file, " $title" );
+	$self->create_tab( $new_editor, " $title" );
 
 	return;
 }
@@ -1340,7 +1340,7 @@ sub setup_editor {
 		$self->menu->file->update_recentfiles;
 	}
 
-	my $id = $self->create_tab( $editor, $file, $title );
+	my $id = $self->create_tab( $editor, $title );
 
 	# no need to call this here as set_preferences already calls padre_setup.
 	#$editor->padre_setup;
@@ -1353,7 +1353,7 @@ sub setup_editor {
 }
 
 sub create_tab {
-	my ( $self, $editor, $file, $title ) = @_;
+	my ( $self, $editor, $title ) = @_;
 	$self->notebook->AddPage( $editor, $title, 1 );
 	$editor->SetFocus;
 	my $id = $self->notebook->GetSelection;
