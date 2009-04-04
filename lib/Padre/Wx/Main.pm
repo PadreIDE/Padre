@@ -338,7 +338,6 @@ sub load_files {
 
 	# Config setting 'last' means startup with all the files from the
 	# previous time we used Padre open (if they still exist)
-	Padre::DB->begin;
 	if ( $startup eq 'last' ) {
 		my @session = Padre::DB::Session->select;
 		if (@session) {
@@ -360,8 +359,6 @@ sub load_files {
 			}
 		}
 	}
-	Padre::DB::Session->truncate;
-	Padre::DB->commit;
 
 	# Config setting 'nothing' means startup with nothing open
 	if ( $startup eq 'nothing' ) {
