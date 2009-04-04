@@ -18,7 +18,7 @@ use Padre::DB::Patch;
 #####################################################################
 # Patch Content
 
-# Create the bookmark table
+# create the session table
 do(<<'END_SQL');
 CREATE TABLE session (
 	id INTEGER NOT NULL PRIMARY KEY,
