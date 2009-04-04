@@ -388,6 +388,7 @@ sub update_recentfiles {
 				$_[0]->setup_editors($file);
 			},
 		);
+		Padre::Util::debug("Recent entry created for '$file'");
 	}
 
 	return;
