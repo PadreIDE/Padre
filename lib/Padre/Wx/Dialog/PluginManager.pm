@@ -424,7 +424,6 @@ sub _refresh_list {
 		my $idx = $list->InsertStringImageItem( 0, $name, $iconidx );
 		$list->SetItem( $idx, 1, $version );
 		$list->SetItem( $idx, 2, $status, $icon{$status} );
-		$list->SetItemData( $idx, 1 );
 	}
 
 	# auto-resize columns
