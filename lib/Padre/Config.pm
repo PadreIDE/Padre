@@ -101,6 +101,7 @@ my %settings = (
 		[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
 		[ 'editor_beginner',          $BOOLEAN, 1 ],
 		[ 'editor_wordwrap',          $BOOLEAN, 0 ],
+		[ 'editor_file_size_limit',   $POSINT,  500_000 ],
 		[ 'find_case',                $BOOLEAN, 1 ],
 		[ 'find_regex',               $BOOLEAN, 0 ],
 		[ 'find_reverse',             $BOOLEAN, 0 ],
