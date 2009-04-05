@@ -2640,6 +2640,13 @@ sub key_up {
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
 		# Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
+	} elsif ( $mod == Wx::wxMOD_ALT() ) {
+		# TODO this should be fine tuned later
+		if ($code == Wx::WXK_UP) {
+			if (my $editor = Padre::Current->editor) {
+				$editor->SetFocus;
+			}
+		}
 	}
 	$event->Skip();
 	return;
