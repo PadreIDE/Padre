@@ -157,7 +157,8 @@ sub _on_list_col_click {
 sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
-	my $name   = $event->GetLabel;
+	my $fullname = $event->GetLabel;
+	my $name   = $self->_plugin_names->{$fullname};
 	my $plugin = $self->_manager->plugins->{$name};
 	$self->_curplugin($plugin);            # storing selected plugin
 	$self->_currow( $event->GetIndex );    # storing selected row
@@ -425,7 +426,7 @@ sub _refresh_list {
 		}
 
 		# inserting the plugin in the list
-		my $idx = $list->InsertStringImageItem( 0, $name, $iconidx );
+		my $idx = $list->InsertStringImageItem( 0, $fullname, $iconidx );
 		$list->SetItem( $idx, 1, $version );
 		$list->SetItem( $idx, 2, $status, $icon{$status} );
 	}
