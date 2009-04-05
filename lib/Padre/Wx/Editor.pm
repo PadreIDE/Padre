@@ -1060,6 +1060,7 @@ sub goto_pos_centerize {
 	$self->ScrollToLine( $line - ( $self->LinesOnScreen / 2 ) );
 	$self->EnsureVisible( $line );
 	$self->EnsureCaretVisible;
+	$self->SetFocus;
 }
 
 sub insert_text {
