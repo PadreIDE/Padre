@@ -60,6 +60,22 @@ sub status {
 	return $self->{status};
 }
 
+sub status_localized {
+	my ($self) = @_;
+
+	# we're forced to have a hash of translation so that gettext
+	# tools can extract those to be localized.
+	my %translation = (
+		error        => Wx::gettext('error'),
+		unloaded     => Wx::gettext('unloaded'),
+		loaded       => Wx::gettext('loaded'),
+		incompatible => Wx::gettext('incompatible'),
+		disabled     => Wx::gettext('disabled'),
+		enabled      => Wx::gettext('enabled'),
+	);
+	return $translation{ $self->{status} };
+}
+
 sub error {
 	$_[0]->{status} eq 'error';
 }
