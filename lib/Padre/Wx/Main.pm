@@ -1855,9 +1855,6 @@ sub on_toggle_code_folding {
 
 	foreach my $editor ( $self->editors ) {
 		$editor->show_folding( $config->editor_folding );
-		unless ( $config->editor_folding ) {
-			$editor->unfold_all;
-		}
 	}
 
 	return;
