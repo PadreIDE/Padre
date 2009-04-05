@@ -18,7 +18,6 @@ use Class::XSAccessor accessors => {
 	_label        => '_label',          # label at top of right pane
 	_list         => '_list',           # list on the left of the pane
 	_manager      => '_manager',        # ref to plugin manager
-	_parent       => '_parent',         # parent window
 	_plugin_names => '_plugin_names',   # mapping of short/full plugin names
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
@@ -45,7 +44,6 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
-	$self->_parent($parent);
 
 	# store plugin manager
 	croak "Missing or invalid Padre::PluginManager object"
@@ -311,7 +309,7 @@ sub _plugin_disable {
 	my $self = shift;
 
 	my $plugin = $self->_curplugin;
-	my $parent = $self->_parent;
+	my $parent = $self->GetParent;
 
 	# disable plugin
 	$parent->Freeze;
@@ -333,7 +331,7 @@ sub _plugin_enable {
 	my $self = shift;
 
 	my $plugin = $self->_curplugin;
-	my $parent = $self->_parent;
+	my $parent = $self->GetParent;
 
 	# enable plugin
 	$parent->Freeze;
