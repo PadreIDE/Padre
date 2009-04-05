@@ -2646,12 +2646,23 @@ sub key_up {
 		# Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
-		# TODO this should be fine tuned later
-		if ($code == Wx::WXK_UP) {
-			if (my $editor = Padre::Current->editor) {
-				$editor->SetFocus;
-			}
-		}
+#		my $current_focus = Wx::Window::FindFocus();
+#		Padre::Util::debug("Current focus: $current_focus");
+#		# TODO this should be fine tuned later
+#		if ($code == Wx::WXK_UP) {
+#			# TODO get the list of panels at the bottom from some other place
+#			if (my $editor = Padre::Current->editor) {
+#				if ($current_focus->isa('Padre::Wx::Output') or
+#					$current_focus->isa('Padre::Wx::ErrorList') or
+#					$current_focus->isa('Padre::Wx::Syntax') 
+#				) {
+#					$editor->SetFocus;
+#				}
+#			}
+#		} elsif ($code == Wx::WXK_DOWN) {
+#			#Padre::Util::debug("Selection: " . $self->bottom->GetSelection);
+#			#$self->bottom->GetSelection;
+#		}
 	}
 	$event->Skip();
 	return;
