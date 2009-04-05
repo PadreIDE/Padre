@@ -884,8 +884,15 @@ sub stats {
 		$is_readonly      = $editor->GetReadOnly();
 	}
 
-	$words++               while ( $code =~ /\b\w+\b/g );
-	$chars_without_space++ while ( $code =~ /\S/g );
+	# avoid slow calculation on large files
+	# TODO or improve them ?
+	if (length($code) < 100_000) {
+		$words++               while ( $code =~ /\b\w+\b/g );
+		$chars_without_space++ while ( $code =~ /\S/g );
+	} else {
+		$words = Wx::gettext("Skipped for large files");
+		$chars_without_space = Wx::gettext("Skipped for large files");
+	}
 
 	my $filename = $self->filename;
 

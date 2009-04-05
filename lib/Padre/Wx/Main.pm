@@ -2330,9 +2330,9 @@ sub on_doc_stats {
 	) = $doc->stats;
 
 	my @messages = (
-		sprintf( Wx::gettext("Words: %d"),                $words ),
+		sprintf( Wx::gettext("Words: %s"),                $words ),
 		sprintf( Wx::gettext("Lines: %d"),                $lines ),
-		sprintf( Wx::gettext("Chars without spaces: %d"), $chars_without_space ),
+		sprintf( Wx::gettext("Chars without spaces: %s"), $chars_without_space ),
 		sprintf( Wx::gettext("Chars with spaces: %d"),    $chars_with_space ),
 		sprintf( Wx::gettext("Newline type: %s"),         $newline_type ),
 		sprintf( Wx::gettext("Encoding: %s"),             $encoding ),
