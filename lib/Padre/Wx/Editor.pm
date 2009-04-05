@@ -1056,7 +1056,9 @@ sub goto_pos_centerize {
 	$self->SetSelection( $pos, $pos );
 	$self->SearchAnchor;
 
-	$self->ScrollToLine( $self->GetCurrentLine - ( $self->LinesOnScreen / 2 ) );
+	my $line = $self->GetCurrentLine;
+	$self->ScrollToLine( $line - ( $self->LinesOnScreen / 2 ) );
+	$self->EnsureVisible( $line );
 	$self->EnsureCaretVisible;
 }
 
