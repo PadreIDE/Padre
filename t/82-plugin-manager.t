@@ -21,6 +21,7 @@ use t::lib::Padre;
 use Padre;
 use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
 use Padre::PluginManager;
+use POSIX qw(locale_h);
 
 my $padre = Padre->new;
 
@@ -86,26 +87,28 @@ my $path = File::Spec->catfile( $Bin, 'files', 'plugins' );
 #diag $path;
 unshift @INC, $path;
 #diag $ENV{PADRE_HOME};
+my $english = setlocale(LC_CTYPE) eq 'en_US.UTF-8' ? 1 : 0;
 SCOPE: {
 	my $manager  = Padre::PluginManager->new($padre);
 	$manager->load_plugin('A');
 	is $manager->plugins->{'A'}->{status}, 'error', 'error in loading A';
-	my $msg1 = qr/.*/;  # set to qr/Failed to load module/ if locale is English
+	my $msg1 = $english ? qr/Failed to load module/ : qr/.*/;
 	like $manager->plugins->{'A'}->errstr, 
 		qr/^Plugin:A - $msg1: Global symbol "\$syntax_error" requires explicit package name at/,
 		'text of error message';
 
 	$manager->load_plugin('B');
 	is $manager->plugins->{'B'}->{status}, 'error', 'error in loading B';
-	my $msg2 = qr/.*/; # set to qr/Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/
+	my $msg2 = $english ? qr/Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/ : qr/.*/;
 	like $manager->plugins->{'B'}->errstr,
 		qr/^Plugin:B - $msg2/,
 		'text of error message';
 
 	$manager->load_plugin('C');
 	is $manager->plugins->{'C'}->{status}, 'disabled', 'disabled in loading C';
-	is $manager->plugins->{'C'}->errstr,
-		'Plugin:C - Does not have menus',
+	my $msg3 = $english ? qr/Does not have menus/ : qr/.*/;
+	like $manager->plugins->{'C'}->errstr,
+		qr/Plugin:C - $msg3/,                        
 		'text of error message';
-
 }
+
