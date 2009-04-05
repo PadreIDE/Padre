@@ -109,7 +109,7 @@ sub refresh {
 
 	# Add/Remove the Perl menu
 	if ( $document and not $menu ) {
-		$self->wx->Insert( 4, $self->perl->wx, '&Perl' );
+		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
 	} elsif ( $menu and not $document ) {
 		$self->wx->Remove(4);
 	}
