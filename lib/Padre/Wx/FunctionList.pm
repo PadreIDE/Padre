@@ -134,7 +134,9 @@ sub on_list_item_activated {
 
 	# Move the selection to the sub location
 	$editor->GotoPos($start);
-	$editor->ScrollToLine( $editor->GetCurrentLine - ( $editor->LinesOnScreen / 2 ) );
+	my $line = $editor->GetCurrentLine;
+	$editor->ScrollToLine( $line - ( $editor->LinesOnScreen / 2 ) );
+	$editor->EnsureVisible( $line );
 	$editor->SetFocus;
 
 	return;
