@@ -409,10 +409,11 @@ sub _refresh_list {
 	$list->DeleteAllItems;
 	my %plugin_names = ();
 	foreach my $plugin ( reverse @plugins ) {
-		my $name     = $plugin->name;
-		my $fullname = $plugin->plugin_name;
-		my $version  = $plugin->version || '???';
-		my $status   = $plugin->status;
+		my $name       = $plugin->name;
+		my $fullname   = $plugin->plugin_name;
+		my $version    = $plugin->version || '???';
+		my $status     = $plugin->status;
+		my $l10nstatus = $plugin->status_localized;
 		$plugin_names{ $fullname } = $name;
 
 		# check if plugin is supplying its own icon
@@ -426,7 +427,7 @@ sub _refresh_list {
 		# inserting the plugin in the list
 		my $idx = $list->InsertStringImageItem( 0, $fullname, $iconidx );
 		$list->SetItem( $idx, 1, $version );
-		$list->SetItem( $idx, 2, $status, $icon{$status} );
+		$list->SetItem( $idx, 2, $l10nstatus, $icon{$status} );
 	}
 
 	# store mapping of full plugin names / short plugin names
