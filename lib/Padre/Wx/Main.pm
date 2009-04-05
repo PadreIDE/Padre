@@ -208,25 +208,7 @@ sub new {
 	# Special Key Handling
 	Wx::Event::EVT_KEY_UP(
 		$self,
-		sub {
-			my ( $self, $event ) = @_;
-			my $mod = $event->GetModifiers || 0;
-			my $code = $event->GetKeyCode;
-
-			# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
-			# () needed after the constants as they are functions in Perl and
-			# without constants perl will call only the first one.
-			$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
-			if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
-				                              # Ctrl-TAB  #TODO it is already in the menu
-				$self->on_next_pane if $code == Wx::WXK_TAB;
-			} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
-				    # Ctrl-Shift-TAB #TODO it is already in the menu
-				$self->on_prev_pane if $code == Wx::WXK_TAB;
-			}
-			$event->Skip();
-			return;
-		}
+		\&key_up
 	);
 
 	# Deal with someone closing the window
@@ -2640,6 +2622,26 @@ sub set_ppi_highlight {
 			}
 		}
 	}
+	return;
+}
+
+sub key_up {
+	my ( $self, $event ) = @_;
+	my $mod = $event->GetModifiers || 0;
+	my $code = $event->GetKeyCode;
+
+	# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
+	# () needed after the constants as they are functions in Perl and
+	# without constants perl will call only the first one.
+	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
+	if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
+									  # Ctrl-TAB  #TODO it is already in the menu
+		$self->on_next_pane if $code == Wx::WXK_TAB;
+	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
+		# Ctrl-Shift-TAB #TODO it is already in the menu
+		$self->on_prev_pane if $code == Wx::WXK_TAB;
+	}
+	$event->Skip();
 	return;
 }
 
