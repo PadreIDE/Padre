@@ -408,10 +408,13 @@ sub _refresh_list {
 
 	# clear plugin list & fill it again
 	$list->DeleteAllItems;
+	my %plugin_names = ();
 	foreach my $plugin ( reverse @plugins ) {
-		my $name    = $plugin->name;
-		my $version = $plugin->version || '???';
-		my $status  = $plugin->status;
+		my $name     = $plugin->name;
+		my $fullname = $plugin->plugin_name;
+		my $version  = $plugin->version || '???';
+		my $status   = $plugin->status;
+		$plugin_names{ $fullname } = $name;
 
 		# check if plugin is supplying its own icon
 		my $iconidx = 0;
@@ -426,6 +429,9 @@ sub _refresh_list {
 		$list->SetItem( $idx, 1, $version );
 		$list->SetItem( $idx, 2, $status, $icon{$status} );
 	}
+
+	# store mapping of full plugin names / short plugin names
+	$self->_plugin_names( \%plugin_names );
 
 	# auto-resize columns
 	$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE ) for 0 .. 2;
