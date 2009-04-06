@@ -1268,6 +1268,7 @@ sub on_new {
 # current file otherwise open a new buffer and open the file there.
 sub setup_editor {
 	my ( $self, $file ) = @_;
+	my $config = $self->config;
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 	if ($file) {
@@ -1277,16 +1278,14 @@ sub setup_editor {
 			$self->on_nth_pane($id);
 			return;
 		}
+		if (-s $file > $config->editor_file_size_limit) {
+			return $self->error(sprintf( 
+				Wx::gettext("Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"), 
+				$file, $config->editor_file_size_limit));
+		}
 	}
 
 	local $self->{_no_refresh} = 1;
-
-	my $config = $self->config;
-	if ( defined($file) && -s $file > $config->editor_file_size_limit) {
-		return $self->error(sprintf( 
-			Wx::gettext("Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"), 
-			$file, $config->editor_file_size_limit));
-	}
 
 	my $doc = Padre::Document->new(
 		filename => $file,
