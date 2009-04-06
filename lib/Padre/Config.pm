@@ -97,6 +97,7 @@ my %settings = (
 		[ 'editor_calltips',          $BOOLEAN, 0 ],
 		[ 'editor_autoindent',        $ASCII,   'deep' ],
 		[ 'editor_folding',           $BOOLEAN, 0 ],
+		[ 'editor_fold_pod',          $BOOLEAN, 0 ],
 		[ 'editor_currentline',       $BOOLEAN, 1 ],
 		[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
 		[ 'editor_beginner',          $BOOLEAN, 1 ],

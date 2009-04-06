@@ -38,6 +38,11 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox', 'editor_fold_pod', ( $config->editor_fold_pod ? 1 : 0 ),
+				Wx::gettext('Auto-fold POD markup when code folding enabled')
+			],
+			[]
+		],
 		[   [   'Wx::CheckBox', 'editor_beginner', ( $config->editor_beginner ? 1 : 0 ),
 				Wx::gettext('Perl beginner mode')
 			],
@@ -482,6 +487,10 @@ sub run {
 	$config->set(
 		'editor_wordwrap',
 		$data->{editor_wordwrap} ? 1 : 0
+	);
+	$config->set(
+		'editor_fold_pod',
+		$data->{editor_fold_pod} ? 1 : 0
 	);
 	$config->set(
 		'editor_beginner',

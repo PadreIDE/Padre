@@ -292,7 +292,7 @@ sub show_symbols {
 }
 
 sub show_folding {
-	my ( $self, $on ) = @_;
+	my ( $self, $on, $fold_pod ) = @_;
 
 	if ($on) {
 
@@ -320,6 +320,7 @@ sub show_folding {
 
 		# activate
 		$self->SetProperty( 'fold' => 1 );
+		$self->fold_pod if $fold_pod;
 
 		Wx::Event::EVT_STC_MARGINCLICK(
 			$self, -1,
@@ -343,6 +344,7 @@ sub show_folding {
 
 		# deactivate
 		$self->SetProperty( 'fold' => 1 );
+		$self->unfold_all;
 	}
 
 	return;
@@ -368,7 +370,7 @@ sub set_preferences {
 	my $config = Padre->ide->config;
 
 	$self->show_line_numbers( $config->editor_linenumbers );
-	$self->show_folding( $config->editor_folding );
+	$self->show_folding( $config->editor_folding, $config->editor_fold_pod );
 	$self->SetIndentationGuides( $config->editor_indentationguides );
 	$self->SetViewEOL( $config->editor_eol );
 	$self->SetViewWhiteSpace( $config->editor_whitespace );
@@ -1011,6 +1013,30 @@ sub uncomment_lines {
 		}
 	}
 	$self->EndUndoAction;
+
+	return;
+}
+
+sub fold_pod {
+	my ($self) = @_;
+
+	my $lineCount   = $self->GetLineCount;
+	my $currentLine = $lineCount;
+
+	while ( $currentLine >= 0 ) {
+		if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
+			if ( _get_line_by_number( $self, $parentLine ) =~ /^=(pod|head)/ ) {
+				if ( $self->GetFoldExpanded($parentLine) ) {
+					$self->ToggleFold($parentLine);
+				}
+				$currentLine = $parentLine;
+			} else {
+				$currentLine--;
+			}
+		} else {
+			$currentLine--;
+		}
+	}
 
 	return;
 }
