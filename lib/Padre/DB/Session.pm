@@ -20,6 +20,15 @@ sub last_padre_session {
 	return $padre;
 }
 
+sub new_last_padre_session {
+	my $padre = Padre::DB::Session->new(
+		name        => $PADRE_SESSION,
+		description => 'Last session within Padre',
+		last_update => time,
+	);
+	$padre->insert;
+	return last_padre_session();
+}
 
 1;
 
