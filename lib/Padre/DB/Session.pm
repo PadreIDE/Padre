@@ -10,6 +10,16 @@ use warnings;
 
 our $VERSION = '0.33';
 
+my $PADRE_SESSION = 'padre-last';
+
+sub last_padre_session {
+        my ($padre) = Padre::DB->select(
+                'where name = ?',
+                $PADRE_SESSION
+	);
+	return $padre;
+}
+
 
 1;
 
