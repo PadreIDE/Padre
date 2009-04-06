@@ -1282,7 +1282,7 @@ sub setup_editor {
 	local $self->{_no_refresh} = 1;
 
 	my $config = $self->config;
-	if (-s $file > $config->editor_file_size_limit) {
+	if ( defined($file) && -s $file > $config->editor_file_size_limit) {
 		return $self->error(sprintf( 
 			Wx::gettext("Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"), 
 			$file, $config->editor_file_size_limit));
