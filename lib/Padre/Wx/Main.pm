@@ -321,7 +321,7 @@ sub load_files {
 	# Config setting 'last' means startup with all the files from the
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
-		my @files = Padre::DB::SessionFiles->last_padre_session_files;
+		my @files = Padre::DB::SessionFile->last_padre_session_files;
 		if ( @files ) {
 			my $focus = undef;
 			foreach my $document (@files) {
@@ -1114,7 +1114,7 @@ sub on_close_window {
 		my $character = $position - $start;
 		my $focus     = ( defined $current and $current eq $file ) ? 1 : 0;
 		push @session,
-			Padre::DB::SessionFiles->new(
+			Padre::DB::SessionFile->new(
 			file      => $file,
 			position  => $position,
 			focus     => $focus,
