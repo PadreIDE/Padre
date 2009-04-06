@@ -111,6 +111,8 @@ install_share;
 # Padre-Specific Oddities
 
 # Padre requires threads
+# First we should check if the perl is threaded so the users 
+# won't waste time installing modules on a perl without thread support.
 use Config;
 unless ( $Config{usethreads} ) {
 	warn("Padre requires a perl built using threads\n");

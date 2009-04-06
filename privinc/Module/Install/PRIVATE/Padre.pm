@@ -31,16 +31,18 @@ END_MAKEFILE
 }
 
 sub check_wx_version {
-	# Can we find Wx.pm
-	my $wxfile = _module_file('Wx');
-	my $wxpath = _file_path($wxfile);
-	unless ( $wxpath ) {
-		# Wx.pm is not installed.
+	# Check if Alien is installed
+	my $alien_file = _module_file('Alien::wxWidgets');
+	my $alien_path = _file_path($alien_file);
+	unless ( $alien_path ) {
+		# Alien::wxWidgets.pm is not installed.
 		# Allow EU:MM to do it's thing as normal
+		# but give some extra hints to the user
+		warn "** Could not locate Alien::wxWidgets\n";
+		warn "** When installing it please make sure wxWidgetes is compiled with Unicode enabled\n";
+		warn "** Please use the latest version from CPAN\n";
 		return;
 	}
-	my $wx_pm = _path_version($wxpath);
-	print "Found Wx.pm     $wx_pm\n";
 
 	# Do we have the alien package
 	eval {
@@ -50,6 +52,9 @@ sub check_wx_version {
 	if ( $@ ) {
 		# If we don't have the alien package,
 		# we should just pass through to EU:MM
+		warn "** Could not locate Alien::wxWidgets\n";
+		warn "** When installing it please make sure wxWidgetes is compiled with Unicode enabled\n";
+		warn "** Please use the latest version from CPAN\n";
 		return;
 	}
 
@@ -66,6 +71,23 @@ sub check_wx_version {
 		nono("Padre needs at least version 2.8.8 of wxWidgets. You have wxWidgets $widgets_human");
 	}
 
+
+	
+	# Can we find Wx.pm
+	my $wx_file = _module_file('Wx');
+	my $wx_path = _file_path($wx_file);
+	unless ( $wx_path ) {
+		# Wx.pm is not installed.
+		# Allow EU:MM to do it's thing as normal
+		# but give extra hints to the user
+		warn "** Could not locate Wx.pm\n";
+		warn "** Please install the latest version from CPAN\n";
+		return;
+	}
+	my $wx_pm = _path_version($wx_path);
+	print "Found Wx.pm     $wx_pm\n";
+
+
 	# this part still needs the DISPLAY 
 	# so check only if there is one
 	if ( $ENV{DISPLAY} or $^O =~ /win32/i ) {
@@ -76,6 +98,8 @@ sub check_wx_version {
 		if ($@) {
 			# If we don't have the Wx installed,
 			# we should just pass through to EU:MM
+			warn "** Could not locate Wx.pm\n";
+			warn "** Please install the latest version from CPAN\n";
 			return;
 		}
 		unless ( Wx::wxUNICODE() ) {
