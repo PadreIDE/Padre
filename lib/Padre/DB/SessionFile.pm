@@ -62,6 +62,8 @@ The following accessors are automatically created by C<ORLite>:
 
 =item focus()
 
+=item session()
+
 =back
 
 
