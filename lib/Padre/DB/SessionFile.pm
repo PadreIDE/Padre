@@ -14,6 +14,7 @@ our $VERSION = '0.33';
 
 sub last_padre_session_files {
 	my $padre = Padre::DB::Session->last_padre_session;
+	return unless $padre;
         my @files = Padre::DB->select(
                 'where session = ?',
                 $padre->id
