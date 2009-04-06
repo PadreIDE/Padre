@@ -14,7 +14,7 @@ use ORLite::Migrate 0.01 {
 	create        => 1,
 	tables        => ['Modules'],
 	file          => $CONFIG_FILE_HOST,
-	user_revision => 7,
+	user_revision => 8,
 	timeline      => File::Spec->catdir(
 		File::ShareDir::PAR::dist_dir('Padre'),
 		'timeline',
