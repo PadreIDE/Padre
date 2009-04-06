@@ -624,6 +624,7 @@ sub relocale {
 
 	$self->bottom->relocale;
 	$self->right->relocale;
+	$self->syntax->relocale;
 
 	return;
 }
