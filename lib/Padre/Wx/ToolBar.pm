@@ -16,7 +16,7 @@ sub new {
 	my $main  = shift;
 
 	# Prepare the style
-	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NO_TOOLTIPS | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
+	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
 	unless ( $main->config->main_lockinterface ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
