@@ -8,8 +8,6 @@ package Padre::DB::SessionFile;
 use strict;
 use warnings;
 
-use Padre::DB::Session;
-
 our $VERSION = '0.33';
 
 sub last_padre_session_files {
