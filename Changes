@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Enable tooltips on the toolbar on Windows as well (SZABGAB)
     Fix localization chane in the Syntax window (#198) (SZABGAB)
     Plugin manager correctly localized at startup (JQUELIN)
     Plugin manager displaying full plugin names (JQUELIN)
