@@ -79,13 +79,22 @@ sub _on_butclose_clicked {
 }
 
 #
-# $self->_on_butprefs_clicked;
+# $self->_on_butdelete_clicked;
 #
-# handler called when the preferences button has been clicked.
+# handler called when the delete button has been clicked.
 #
-sub _on_butprefs_clicked {
+sub _on_butdelete_clicked {
 	my $self = shift;
-	$self->_curplugin->object->plugin_preferences;
+    my $name = $self->_cursession;
+    my ($current) = Padre::DB::Session->select('where name = ?', $name);
+
+    # remove session files
+    Padre::DB::SessionFile->delete('where session = ?', $current->id);
+
+    # remove session itself
+    $current->delete;
+
+    $self->_refresh_list;
 }
 
 #
