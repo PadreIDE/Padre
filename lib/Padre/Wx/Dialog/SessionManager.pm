@@ -12,7 +12,7 @@ use Class::XSAccessor accessors => {
 	_butdelete    => '_butdelete',      # delete button
 	_butopen      => '_butopen',        # open button
 	_currow       => '_currow',         # current list row number
-	_cursession   => '_cursession',     # current session selected
+	_curname      => '_curname',        # name of current session selected
 	_vbox         => '_vbox',           # the window vbox sizer
 	_list         => '_list',           # list on the left of the pane
 	_manager      => '_manager',        # ref to plugin manager
@@ -85,7 +85,7 @@ sub _on_butclose_clicked {
 #
 sub _on_butdelete_clicked {
 	my $self = shift;
-    my $name = $self->_cursession;
+    my $name = $self->_curname;
     my ($current) = Padre::DB::Session->select('where name = ?', $name);
 
     # remove session files
@@ -148,7 +148,7 @@ sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
 	my $name = $event->GetLabel;
-	$self->_cursession($name);             # storing selected session
+	$self->_curname($name);                # storing selected session
 	$self->_currow( $event->GetIndex );    # storing selected row
 
 	# update buttons
@@ -255,7 +255,7 @@ sub _current {
 	my $self = shift;
     my ($current) = Padre::DB::Session->select(
         'where name = ?',
-        $self->_cursession );
+        $self->_curname );
     return $current;
 }
 
