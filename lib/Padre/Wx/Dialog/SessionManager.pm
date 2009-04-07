@@ -13,10 +13,10 @@ use Class::XSAccessor accessors => {
 	_butopen      => '_butopen',        # open button
 	_currow       => '_currow',         # current list row number
 	_curname      => '_curname',        # name of current session selected
-	_vbox         => '_vbox',           # the window vbox sizer
 	_list         => '_list',           # list on the left of the pane
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
+	_vbox         => '_vbox',           # the window vbox sizer
 };
 
 use base 'Wx::Frame';
