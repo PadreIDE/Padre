@@ -141,6 +141,7 @@ sub _on_list_col_click {
 sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
+    return;
 	my $fullname = $event->GetLabel;
 	my $name   = $self->_plugin_names->{$fullname};
 	my $plugin = $self->_manager->plugins->{$name};
