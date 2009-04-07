@@ -220,7 +220,10 @@ sub new {
 		$main,
 		$self->Append(
 			-1, Wx::gettext("Save current session...\tCtrl-Alt-S") ),
-		sub { $_[0]->on_save_current_session; },
+		sub {
+			require Padre::Wx::Dialog::SessionSave;
+			Padre::Wx::Dialog::SessionSave->new($_[0])->show;
+		},
 	);
 
 	$self->AppendSeparator;
