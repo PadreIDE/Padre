@@ -144,8 +144,7 @@ sub _on_list_item_selected {
 #
 # $self->_create;
 #
-# create the dialog itself. it will have a list with all found sessions, and
-# some buttons to manage them.
+# create the dialog itself.
 #
 # no params, no return values.
 #
@@ -155,10 +154,9 @@ sub _create {
 	# create vertical box that will host all controls
 	my $vbox = Wx::BoxSizer->new(wxVERTICAL);
 	$self->SetSizer($vbox);
-    #$self->SetMinSize( [ 640, 480 ] );
 	$self->_vbox($vbox);
 
-	$self->_create_list;
+	$self->_create_fields;
 	$self->_create_buttons;
 }
 
