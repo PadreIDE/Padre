@@ -101,9 +101,9 @@ sub _on_butdelete_clicked {
 sub _on_combo_item_selected {
 	my ( $self, $event ) = @_;
 
-	my $name      = $self->_combo->GetValue;
-	my ($session) = Padre::DB::Session->select(
-		'where name = ?', $name );
+	my $name    = $self->_combo->GetValue;
+	my $session = $self->_current_session;
+	return unless $session;
 	$self->_text->SetValue( $session->description );
 }
 
@@ -118,9 +118,8 @@ sub _on_combo_item_selected {
 sub _on_combo_text_changed {
 	my ( $self, $event ) = @_;
 
-	my $name      = $self->_combo->GetValue;
-	my ($session) = Padre::DB::Session->select(
-		'where name = ?', $name );
+	my $name    = $self->_combo->GetValue;
+	my $session = $self->_current_session;
 	return unless $session;
 	$self->_text->SetValue( $session->description );
 }
