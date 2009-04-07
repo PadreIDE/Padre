@@ -253,29 +253,6 @@ sub _current_session {
     return $current;
 }
 
-
-#
-# $self->_plugin_enable;
-#
-# enable plugin, and update gui.
-#
-sub _plugin_enable {
-	my $self = shift;
-
-	my $plugin = $self->_curplugin;
-	my $parent = $self->GetParent;
-
-	# enable plugin
-	$parent->Freeze;
-	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
-	$self->_manager->_plugin_enable( $plugin->name );
-	$parent->menu->refresh(1);
-	$parent->Thaw;
-
-	# update plugin manager dialog to reflect new state
-	$self->_update_plugin_state;
-}
-
 #
 # $self->_plugin_show_error_msg;
 #
