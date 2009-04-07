@@ -14,6 +14,7 @@ use Class::XSAccessor accessors => {
 	_currow       => '_currow',         # current list row number
 	_curname      => '_curname',        # name of current session selected
 	_list         => '_list',           # list on the left of the pane
+	_names        => '_names',          # list of all session names
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
 	_sizer        => '_sizer',          # the window sizer
@@ -206,6 +207,7 @@ sub _refresh_combo {
 	my @names =
 		map { $_->name }
 		Padre::DB::Session->select( 'ORDER BY name' );
+	$self->_names( \@names );
 
 	# clear list & fill it again
 	my $combo = $self->_combo;
