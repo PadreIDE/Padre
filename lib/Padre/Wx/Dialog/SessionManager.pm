@@ -15,7 +15,6 @@ use Class::XSAccessor accessors => {
 	_curname      => '_curname',        # name of current session selected
 	_vbox         => '_vbox',           # the window vbox sizer
 	_list         => '_list',           # list on the left of the pane
-	_plugin_names => '_plugin_names',   # mapping of short/full plugin names
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
 };
