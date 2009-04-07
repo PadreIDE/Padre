@@ -246,12 +246,12 @@ sub _create_buttons {
 }
 
 #
-# my $session = $self->_current;
+# my $session = $self->_current_session;
 #
 # return the padre::db::session object corresponding to currently selected line
 # in the list. return undef if no object selected.
 #
-sub _current {
+sub _current_session {
 	my $self = shift;
     my ($current) = Padre::DB::Session->select(
         'where name = ?',
