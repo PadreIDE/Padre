@@ -15,7 +15,7 @@ use Class::XSAccessor accessors => {
 	_list         => '_list',           # list on the left of the pane
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
-	_vbox         => '_vbox',           # the window vbox sizer
+	_sizer        => '_sizer',          # the window sizer
 };
 use Wx qw{ :everything };
 
@@ -151,10 +151,11 @@ sub _on_list_item_selected {
 sub _create {
 	my $self = shift;
 
-	# create vertical box that will host all controls
-	my $vbox = Wx::BoxSizer->new(wxVERTICAL);
-	$self->SetSizer($vbox);
-	$self->_vbox($vbox);
+	# create sizer that will host all controls
+	my $sizer = Wx::FlexGridSizer->new( 3, 2, 0, 0 );
+	$sizer->AddGrowableCol(1);
+	$self->SetSizer($sizer);
+	$self->_sizer($sizer);
 
 	$self->_create_fields;
 	$self->_create_buttons;
