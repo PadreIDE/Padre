@@ -90,22 +90,20 @@ sub _on_butdelete_clicked {
 }
 
 #
-# $self->_on_list_item_selected( $event );
+# $self->_on_combo_item_selected( $event );
 #
-# handler called when a list item has been selected. it will in turn update
-# the buttons state.
+# handler called when a combo item has been selected. it will in turn update
+# the description text.
 #
-# $event is a Wx::ListEvent.
+# $event is a Wx::CommandEvent.
 #
-sub _on_list_item_selected {
+sub _on_combo_item_selected {
 	my ( $self, $event ) = @_;
 
-	my $name = $event->GetLabel;
-	$self->_curname($name);                # storing selected session
-	$self->_currow( $event->GetIndex );    # storing selected row
-
-	# update buttons
-	$self->_update_buttons_state;
+	my $name      = $self->_combo->GetValue;
+	my ($session) = Padre::DB::Session->select(
+		'where name = ?', $name );
+	$self->_text->SetValue( $session->description );
 }
 
 # -- private methods
@@ -150,6 +148,7 @@ sub _create_fields {
 	$sizer->Add( $lab1,  Wx::GBPosition->new(0,0) );
 	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new(1,3), wxEXPAND );
 	$self->_combo( $combo );
+	Wx::Event::EVT_COMBOBOX( $self, $combo, \&_on_combo_item_selected );
 
 	# session descritpion
 	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
