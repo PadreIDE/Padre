@@ -283,7 +283,10 @@ sub _refresh_list {
 	}
 
 	# auto-resize columns
-	$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE ) for 0 .. 2;
+    my $flag = $list->GetItemCount
+        ? Wx::wxLIST_AUTOSIZE
+        : Wx::wxLIST_AUTOSIZE_USEHEADER;
+    $list->SetColumnWidth( $_, $flag ) for 0 .. 2;
 
 	# making sure the list can show all columns
 	my $width = 15;    # taking vertical scrollbar into account
