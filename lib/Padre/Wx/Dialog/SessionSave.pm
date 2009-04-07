@@ -207,6 +207,7 @@ sub _create_list {
 #
 sub _create_buttons {
 	my $self = shift;
+	return;
 
     # the hbox
 	my $hbox = Wx::BoxSizer->new(wxHORIZONTAL);
@@ -249,7 +250,7 @@ sub _current_session {
 #
 sub _refresh_list {
 	my ( $self, $column, $reverse ) = @_;
-
+return; # FIXME
 	# default sorting
 	$column  ||= 0;
 	$reverse ||= 0;
@@ -299,6 +300,7 @@ sub _refresh_list {
 sub _select_first_item {
     my ($self) = @_;
 
+return; # FIXME
 	# select first item in the list
 	my $list = $self->_list;
 
