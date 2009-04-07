@@ -263,7 +263,7 @@ sub _refresh_list {
     $sort   .= ' DESC' if $reverse;
     my @sessions = Padre::DB::Session->select( $sort );
 
-	# clear plugin list & fill it again
+	# clear list & fill it again
 	my $list = $self->_list;
 	$list->DeleteAllItems;
 	foreach my $session ( reverse @sessions ) {
