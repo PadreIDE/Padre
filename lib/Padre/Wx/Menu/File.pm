@@ -291,7 +291,10 @@ sub new {
 		$main,
 		$self->{sessions}->Append(
 			-1, Wx::gettext("Manage sessions") ),
-		sub { $_[0]->on_manage_sessions; },
+		sub {
+			require Padre::Wx::Dialog::SessionManager;
+			Padre::Wx::Dialog::SessionManager->new($_[0])->show;
+		},
 	);
 
 	# Recent things
