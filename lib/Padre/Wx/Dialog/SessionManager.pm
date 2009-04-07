@@ -319,13 +319,15 @@ sub _select_first_item {
 
 	# select first item in the list
 	my $list = $self->_list;
-	my $item = $list->GetItem(0);
-    if ( defined $item ) {
+
+    if ( $list->GetItemCount ) {
+	    my $item = $list->GetItem(0);
 	    $item->SetState(Wx::wxLIST_STATE_SELECTED);
 	    $list->SetItem($item);
     } else {
-        $self->_currow(undef);
-        $self->_curname(undef);
+        # remove current selection
+        $self->_currow ( undef );
+        $self->_curname( undef );
     }
 }
 
