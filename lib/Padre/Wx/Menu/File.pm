@@ -278,6 +278,22 @@ sub new {
 
 	$self->AppendSeparator;
 
+    # padre sessions
+	$self->{sessions} = Wx::Menu->new;
+	$self->Append( -1, Wx::gettext("S&essions"), $self->{sessions} );
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{sessions}->Append(
+			-1, Wx::gettext("Save current session") ),
+		sub { $_[0]->on_save_current_session; },
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{sessions}->Append(
+			-1, Wx::gettext("Manage sessions") ),
+		sub { $_[0]->on_manage_sessions; },
+	);
+
 	# Recent things
 	$self->{recentfiles} = Wx::Menu->new;
 	$self->Append(
