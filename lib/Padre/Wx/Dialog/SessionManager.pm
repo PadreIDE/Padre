@@ -318,79 +318,39 @@ sub _plugin_show_error_msg {
 #
 # $dialog->_refresh_list($column, $reverse);
 #
-# refresh list of plugins and their associated state. list is sorted
-# according to $column (default to first column), and may be reversed
-# (default to no).
+# refresh list of sessions. list is sorted according to $column (default to
+# first column), and may be reversed (default to no).
 #
 sub _refresh_list {
 	my ( $self, $column, $reverse ) = @_;
 
-    return;
-	my $list    = $self->_list;
-	my $manager = $self->_manager;
-	my $plugins = $manager->plugins;
-	my $imglist = $self->_imagelist;
-
 	# default sorting
 	$column  ||= 0;
 	$reverse ||= 0;
+    my @fields = qw{ name description last_update }; # db fields of table session
 
-	# clear image list & fill it again
-	$imglist->RemoveAll;
-
-	# default plugin icon
-	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
-	my %icon = ( plugin => 0 );
-
-	# plugin status
-	my $i = 0;
-	foreach my $name (qw{ enabled disabled error crashed incompatible }) {
-		my $icon = Padre::Wx::Icon::find("status/padre-plugin-$name");
-		$imglist->Add($icon);
-		$icon{$name} = ++$i;
-	}
-
-	# get list of plugins, and sort it. note that $manager->plugins names
-	# is sorted (with my plugin first), and that perl sort is now stable:
-	# sorting on another criterion will keep the alphabetical order if new
-	# criterion is not enough.
-	my @plugins = map { $plugins->{$_} } $manager->plugin_names;
-	if ( $column == 1 ) {
-		no warnings;
-		@plugins = map { $_->[0] }
-			sort { $a->[1] <=> $b->[1] }
-			map { [ $_, version->new( $_->version || 0 ) ] } @plugins;
-	}
-	@plugins = sort { $a->status cmp $b->status } @plugins if $column == 2;
-	@plugins = reverse @plugins if $reverse;
+	# get list of sessions, sorted.
+    my $sort = "ORDER BY $fields[$column]";
+    $sort   .= ' DESC' if $reverse;
+    my @sessions = Padre::DB::Session->select( $sort );
 
 	# clear plugin list & fill it again
+	my $list = $self->_list;
 	$list->DeleteAllItems;
-	my %plugin_names = ();
-	foreach my $plugin ( reverse @plugins ) {
-		my $name       = $plugin->name;
-		my $fullname   = $plugin->plugin_name;
-		my $version    = $plugin->version || '???';
-		my $status     = $plugin->status;
-		my $l10nstatus = $plugin->status_localized;
-		$plugin_names{ $fullname } = $name;
+	foreach my $session ( reverse @sessions ) {
+        my $name   = $session->name;
+		my $descr  = $session->description;
+		my $update = $session->last_update;
 
-		# check if plugin is supplying its own icon
-		my $iconidx = 0;
-		my $icon    = $plugin->plugin_icon;
-		if ( defined($icon) ) {
-			$imglist->Add($icon);
-			$iconidx = $imglist->GetImageCount - 1;
-		}
-
-		# inserting the plugin in the list
-		my $idx = $list->InsertStringImageItem( 0, $fullname, $iconidx );
-		$list->SetItem( $idx, 1, $version );
-		$list->SetItem( $idx, 2, $l10nstatus, $icon{$status} );
+		# inserting the session in the list
+        my $item = Wx::ListItem->new;
+        $item->SetId(0);
+        $item->SetColumn(0);
+        $item->SetText($name);
+		my $idx = $list->InsertItem( $item );
+		$list->SetItem( $idx, 1, $descr );
+		$list->SetItem( $idx, 2, $update );
 	}
-
-	# store mapping of full plugin names / short plugin names
-	$self->_plugin_names( \%plugin_names );
 
 	# auto-resize columns
 	$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE ) for 0 .. 2;
