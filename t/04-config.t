@@ -8,7 +8,7 @@ BEGIN {
 }
 my $config_options;
 BEGIN {
-	$config_options = 56;
+	$config_options = 57;
 }
 
 # Move of Debug to Run Menu
