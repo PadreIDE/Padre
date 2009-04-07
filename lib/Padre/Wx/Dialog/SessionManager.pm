@@ -246,6 +246,20 @@ sub _create_buttons {
 }
 
 #
+# my $session = $self->_current;
+#
+# return the padre::db::session object corresponding to currently selected line
+# in the list. return undef if no object selected.
+#
+sub _current {
+	my $self = shift;
+    my ($current) = Padre::DB::Session->select(
+        'where name = ?',
+        $self->_cursession );
+    return $current;
+}
+
+#
 # $self->_plugin_disable;
 #
 # disable plugin, and update gui.
