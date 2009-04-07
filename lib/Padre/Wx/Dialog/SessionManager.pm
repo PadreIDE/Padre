@@ -254,19 +254,6 @@ sub _current_session {
 }
 
 #
-# $self->_plugin_show_error_msg;
-#
-# show plugin error message, in an error dialog box.
-#
-sub _plugin_show_error_msg {
-	my $self = shift;
-
-	my $message = $self->_curplugin->errstr;
-	my $title   = Wx::gettext('Error');
-	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
-}
-
-#
 # $self->_select_first_item;
 #
 # select first item in the list, or none if there are none. in that case,
