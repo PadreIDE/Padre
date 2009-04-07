@@ -30,6 +30,16 @@ sub new_last_padre_session {
 	return last_padre_session();
 }
 
+sub files {
+	my ($self) = @_;
+	my @files = Padre::DB::SessionFile->select(
+		'where session = ?',
+		$self->id
+	);
+	return @files;
+}
+
+
 1;
 
 __END__
@@ -73,6 +83,20 @@ The following accessors are automatically created by C<ORLite>:
 =item description()
 
 =item last_update()
+
+=back
+
+
+=head2 Instance methods
+
+
+=over 4
+
+=item my @files = $session->files()
+
+Return a list of files (C<Padre::DB::SessionFile> objects) referenced by
+current C<$session>.
+
 
 =back
 
