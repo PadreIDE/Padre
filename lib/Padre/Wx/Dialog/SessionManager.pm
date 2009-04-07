@@ -200,6 +200,12 @@ sub _create {
 #
 sub _create_list {
 	my $self = shift;
+    my $vbox = $self->_vbox;
+
+    # title label
+    my $label = Wx::StaticText->new( $self, -1,
+        Wx::gettext('List of sessions') );
+	$vbox->Add( $label, 0, Wx::wxALL, 1 );
 
 	# create list
 	my $list = Wx::ListView->new(
@@ -219,7 +225,7 @@ sub _create_list {
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
-	$self->_vbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$vbox->Add( $list,  0, Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
