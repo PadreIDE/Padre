@@ -350,6 +350,7 @@ sub _plugin_show_error_msg {
 sub _refresh_list {
 	my ( $self, $column, $reverse ) = @_;
 
+    return;
 	my $list    = $self->_list;
 	my $manager = $self->_manager;
 	my $plugins = $manager->plugins;
