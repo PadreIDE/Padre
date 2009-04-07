@@ -50,9 +50,7 @@ sub new {
 
 sub show {
 	my $self = shift;
-
 	$self->_refresh_list;
-    $self->_select_first_item;
 	$self->Show;
 }
 
