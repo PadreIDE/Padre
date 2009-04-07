@@ -1082,27 +1082,8 @@ sub on_close_window {
 	# part of the shutdown which will mess it up. Don't save it to
 	# the config yet, because we haven't committed to the shutdown
 	# until we get past the interactive phase.
-	my @session  = ();
-	my $notebook = $self->notebook;
-	my $current  = $self->current->filename;
-	foreach my $pageid ( $self->pageids ) {
-		next unless defined $pageid;
-		my $editor   = $notebook->GetPage($pageid);
-		my $document = $editor->{Document} or next;
-		my $file     = $editor->{Document}->filename;
-		next unless defined $file;
-		my $position  = $editor->GetCurrentPos;
-		my $line      = $editor->GetCurrentLine;
-		my $start     = $editor->PositionFromLine($line);
-		my $character = $position - $start;
-		my $focus     = ( defined $current and $current eq $file ) ? 1 : 0;
-		push @session,
-			Padre::DB::SessionFile->new(
-			file      => $file,
-			position  => $position,
-			focus     => $focus,
-			);
-	}
+	my @session  = $self->capture_session;
+
 
 	Padre::Util::debug("went over list of files");
 
