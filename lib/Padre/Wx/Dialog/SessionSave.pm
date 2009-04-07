@@ -70,24 +70,16 @@ sub _on_butclose_clicked {
 }
 
 #
-# $self->_on_butdelete_clicked;
+# $self->_on_butsave_clicked;
 #
-# handler called when the delete button has been clicked.
+# handler called when the save button has been clicked.
 #
-sub _on_butdelete_clicked {
-	my $self    = shift;
-    my $current = $self->_current_session;
+sub _on_butsave_clicked {
+	my $self = shift;
 
-    # remove session: files, then session itself
-    Padre::DB->begin;
-    Padre::DB::SessionFile->delete('where session = ?', $current->id);
-    $current->delete;
-    Padre::DB->commit;
-
-    # update gui
-    $self->_refresh_list;
-    $self->_select_first_item;
-	$self->_update_buttons_state;
+	$self->GetParent->save_session(
+		$self->_combo->GetValue, $self->_text->GetValue );
+	$self->Destroy;  # close dialog
 }
 
 #
