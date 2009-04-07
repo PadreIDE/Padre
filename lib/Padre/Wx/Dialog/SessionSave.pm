@@ -90,19 +90,6 @@ sub _on_butdelete_clicked {
 }
 
 #
-# $self->_on_butopen_clicked;
-#
-# handler called when the open button has been clicked.
-#
-sub _on_butopen_clicked {
-	my $self = shift;
-
-    # close all open documents
-    my $main = $self->GetParent;
-	$main->open_session( $self->_current_session );
-}
-
-#
 # $self->_on_list_item_selected( $event );
 #
 # handler called when a list item has been selected. it will in turn update
