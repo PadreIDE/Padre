@@ -238,49 +238,21 @@ sub _create_list {
 sub _create_buttons {
 	my $self = shift;
 
-    return;
-	# all controls will be lined up in a vbox
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-
-	# the plugin name
-	my $hbox1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$vbox->Add( $hbox1, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	my $label = Wx::StaticText->new( $self, -1, 'plugin name' );
-	my $font = $label->GetFont;
-	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
-	$font->SetPointSize( $font->GetPointSize + 2 );
-	$label->SetFont($font);
-	$hbox1->AddStretchSpacer;
-	$hbox1->Add( $label, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
-	$hbox1->AddStretchSpacer;
-	$self->_label($label);
-
-	# the plugin documentation
-	my $whtml = Wx::HtmlWindow->new($self);
-	$vbox->Add(
-		$whtml,                                           1, Wx::wxALL | Wx::wxALIGN_TOP |
-			Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
-	);
-	$self->_whtml($whtml);
+    # the hbox
+	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# the buttons
-	my $hbox2 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
-	my $b2 = Wx::Button->new( $self, -1, Wx::gettext('Preferences') );
-	my $b3 = Wx::Button->new( $self, -1, Wx::gettext('Close') );
-	Wx::Event::EVT_BUTTON( $self, $b1, \&_on_button_clicked );
-	Wx::Event::EVT_BUTTON( $self, $b2, \&_on_butprefs_clicked );
-	Wx::Event::EVT_BUTTON( $self, $b3, \&_on_butclose_clicked );
-	$hbox2->AddStretchSpacer;
-	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
-	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
-	$hbox2->AddStretchSpacer;
-	$hbox2->Add( $b3, 0, Wx::wxALL, 1 );
-	$hbox2->AddStretchSpacer;
-	$self->_button($b1);
-	$self->_butprefs($b2);
+	my $bo  = Wx::Button->new( $self, -1, Wx::gettext('Open') );
+	my $bd  = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
+	my $bc  = Wx::Button->new( $self, -1, Wx::gettext('Close') );
+	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_button_open_clicked );
+	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_button_delete_clicked );
+	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_button_close_clicked );
+	$hbox->Add( $bo,  0, Wx::wxALL, 1 );
+	$hbox->Add( $bd,  0, Wx::wxALL, 1 );
+	$hbox->AddStretchSpacer;
+	$hbox->Add( $bc,  0, Wx::wxALL, 1 );
 }
 
 #
