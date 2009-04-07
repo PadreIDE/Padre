@@ -9,8 +9,8 @@ use warnings;
 
 use Carp qw{ croak };
 use Class::XSAccessor accessors => {
-	_button       => '_button',         # general-purpose button
-	_butprefs     => '_butprefs',       # preferences button
+	_butdelete    => '_butdelete',      # delete button
+	_butopen      => '_butopen',        # open button
 	_currow       => '_currow',         # current list row number
 	_curplugin    => '_curplugin',      # current plugin selected
 	_vbox         => '_vbox',           # the window vbox sizer
@@ -248,6 +248,8 @@ sub _create_buttons {
 	my $bo  = Wx::Button->new( $self, -1, Wx::gettext('Open') );
 	my $bd  = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
 	my $bc  = Wx::Button->new( $self, -1, Wx::gettext('Close') );
+    $self->_butopen  ( $bo );
+    $self->_butdelete( $bd );
 	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_butopen_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_butdelete_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
