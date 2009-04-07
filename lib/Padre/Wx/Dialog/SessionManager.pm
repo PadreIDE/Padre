@@ -18,6 +18,7 @@ use Class::XSAccessor accessors => {
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
 	_vbox         => '_vbox',           # the window vbox sizer
 };
+use Wx qw{ :everything };
 
 use base 'Wx::Frame';
 
