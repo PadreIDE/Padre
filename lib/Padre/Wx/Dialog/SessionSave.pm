@@ -107,6 +107,24 @@ sub _on_combo_item_selected {
 	$self->_text->SetValue( $session->description );
 }
 
+#
+# $self->_on_combo_text_changed( $event );
+#
+# handler called when user types in the combo box. it will update the
+# description text, but only if the new session matches an existing one.
+#
+# $event is a Wx::CommandEvent.
+#
+sub _on_combo_text_changed {
+	my ( $self, $event ) = @_;
+
+	my $name      = $self->_combo->GetValue;
+	my ($session) = Padre::DB::Session->select(
+		'where name = ?', $name );
+	return unless $session;
+	$self->_text->SetValue( $session->description );
+}
+
 # -- private methods
 
 #
@@ -150,6 +168,7 @@ sub _create_fields {
 	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new(1,3), wxEXPAND );
 	$self->_combo( $combo );
 	Wx::Event::EVT_COMBOBOX( $self, $combo, \&_on_combo_item_selected );
+	Wx::Event::EVT_TEXT    ( $self, $combo, \&_on_combo_text_changed  );
 
 	# session descritpion
 	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
