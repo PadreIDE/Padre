@@ -159,6 +159,7 @@ sub _create {
 
 	$self->_create_fields;
 	$self->_create_buttons;
+	$sizer->SetSizeHints($self);
 }
 
 #
