@@ -174,19 +174,17 @@ sub _create_fields {
 	my $self  = shift;
 	my $sizer = $self->_sizer;
 
-	my $padding = 3;
-
 	# session name
 	my $lab1  = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
 	my $combo = Wx::ComboBox->new  ( $self, -1, '' );
-	$sizer->Add( $lab1,  0, wxALL|wxEXPAND|wxALIGN_CENTER|wxALIGN_RIGHT, $padding );
-	$sizer->Add( $combo, 1, wxALL|wxEXPAND|wxALIGN_CENTER, $padding );
+	$sizer->Add( $lab1,  Wx::GBPosition->new(0,0) );
+	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new, wxEXPAND );
 
 	# session descritpion
 	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
 	my $text  = Wx::TextCtrl->new  ( $self, -1, '' );
-	$sizer->Add( $lab2, 0, wxALL|wxEXPAND|wxALIGN_CENTER|wxALIGN_RIGHT, $padding );
-	$sizer->Add( $text, 1, wxALL|wxEXPAND|wxALIGN_CENTER, $padding );
+	$sizer->Add( $lab2, Wx::GBPosition->new(1,0) );
+	$sizer->Add( $text, Wx::GBPosition->new(1,1), Wx::GBSpan->new, wxEXPAND );
 }
 
 #
