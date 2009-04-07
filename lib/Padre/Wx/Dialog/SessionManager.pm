@@ -80,8 +80,10 @@ sub _on_butdelete_clicked {
     my $current = $self->_current_session;
 
     # remove session: files, then session itself
+    Padre::DB->begin;
     Padre::DB::SessionFile->delete('where session = ?', $current->id);
     $current->delete;
+    Padre::DB->commit;
 
     $self->_refresh_list;
     $self->_select_first_item;
