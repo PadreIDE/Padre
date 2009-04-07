@@ -99,7 +99,6 @@ sub _on_butopen_clicked {
 
     # close all open documents
     my $main = $self->GetParent;
-	$main->on_close_all;
 	$main->open_session( $self->_current_session );
 }
 

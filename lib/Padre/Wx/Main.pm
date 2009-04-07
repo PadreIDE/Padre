@@ -1337,11 +1337,14 @@ sub create_tab {
 #
 # $self->open_session( $session );
 #
-# try to open all files referenced in the given $session (a padre::db::session
-# object). no return value.
+# try to close all files, then open all files referenced in the given
+# $session (a padre::db::session object). no return value.
 # 
 sub open_session {
     my ($self, $session) = @_;
+
+	# close all files
+	$self->on_close_all;
 
     # get list of files in the session
     my @files = Padre::DB::SessionFile->select(
