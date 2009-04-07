@@ -1335,6 +1335,37 @@ sub create_tab {
 }
 
 #
+# my @session = $self->capture_session;
+#
+# capture list of opened files, with information. return a list of
+# Padre::DB::SessionFile objects.
+#
+sub capture_session {
+        my ($self)   = @_;
+
+        my @session  = ();
+        my $notebook = $self->notebook;
+        my $current  = $self->current->filename;
+        foreach my $pageid ( $self->pageids ) {
+                next unless defined $pageid;
+                my $editor   = $notebook->GetPage($pageid);
+                my $document = $editor->{Document} or next;
+                my $file     = $editor->{Document}->filename;
+                next unless defined $file;
+                my $position  = $editor->GetCurrentPos;
+                my $focus     = ( defined $current and $current eq $file ) ? 1 : 0;
+                my $obj = Padre::DB::SessionFile->new(
+                        file      => $file,
+                        position  => $position,
+                        focus     => $focus,
+                );
+                push @session, $obj;
+        }
+
+	return @session;
+}
+
+#
 # $self->open_session( $session );
 #
 # try to close all files, then open all files referenced in the given
