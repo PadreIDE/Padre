@@ -249,9 +249,9 @@ sub _create_buttons {
 	my $bo  = Wx::Button->new( $self, -1, Wx::gettext('Open') );
 	my $bd  = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
 	my $bc  = Wx::Button->new( $self, -1, Wx::gettext('Close') );
-	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_button_open_clicked );
-	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_button_delete_clicked );
-	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_button_close_clicked );
+	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_butopen_clicked );
+	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_butdelete_clicked );
+	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 	$hbox->Add( $bo,  0, Wx::wxALL, 1 );
 	$hbox->Add( $bd,  0, Wx::wxALL, 1 );
 	$hbox->AddStretchSpacer;
