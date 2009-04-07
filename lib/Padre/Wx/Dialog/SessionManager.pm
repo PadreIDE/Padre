@@ -7,7 +7,6 @@ package Padre::Wx::Dialog::SessionManager;
 use strict;
 use warnings;
 
-use Carp qw{ croak };
 use Class::XSAccessor accessors => {
 	_butdelete    => '_butdelete',      # delete button
 	_butopen      => '_butopen',        # open button
