@@ -478,8 +478,8 @@ C<$parent> window (usually padre's main window).
 
 =item * $dialog->show;
 
-Request the plugin manager dialog to be shown. It will be refreshed
-first with a current list of plugins with their state.
+Request the session manager dialog to be shown. It will be refreshed first with
+a current list of sessions.
 
 
 =back
