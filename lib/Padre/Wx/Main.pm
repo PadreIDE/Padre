@@ -1377,6 +1377,23 @@ sub open_session {
 	$self->on_nth_pane($focus) if defined $focus;
 }
 
+#
+# $self->save_session( $session, @session );
+#
+# try to save @session files (Padre::DB::SessionFile objects) to DB,
+# associated to $session. note that $session should already exist.
+#
+sub save_session {
+        my ($self, $session, @session) = @_;
+
+	Padre::DB->begin;
+	foreach my $file ( @session ) {
+		$file->{session} = $session->id ;
+		$file->insert;
+	}
+	Padre::DB->commit;
+}
+
 # try to open in various ways
 #    as full path
 #    as path relative to cwd (where the editor was started)
