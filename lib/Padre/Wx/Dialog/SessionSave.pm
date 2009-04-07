@@ -162,41 +162,31 @@ sub _create {
 }
 
 #
-# $dialog->_create_list;
+# $dialog->_create_fields;
 #
-# create the sessions list. it will hold a list of available sessions, along
-# with their description & last update.
+# create the combo box with the sessions. it will hold a list of
+# available sessions (but still allowing user to add another value), and
+# a description field.
 #
 # no params. no return values.
 #
-sub _create_list {
-	my $self = shift;
-    my $vbox = $self->_vbox;
+sub _create_fields {
+	my $self  = shift;
+	my $sizer = $self->_sizer;
 
-    # title label
-    my $label = Wx::StaticText->new( $self, -1,
-        Wx::gettext('List of sessions') );
-	$vbox->Add( $label, 0, wxALL, 1 );
+	my $padding = 3;
 
-	# create list
-	my $list = Wx::ListView->new(
-		$self,
-		-1,
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxLC_REPORT | wxLC_SINGLE_SEL,
-	);
-	$list->InsertColumn( 0, Wx::gettext('Name') );
-	$list->InsertColumn( 1, Wx::gettext('Description') );
-	$list->InsertColumn( 2, Wx::gettext('Last update') );
-	$self->_list($list);
+	# session name
+	my $lab1  = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
+	my $combo = Wx::ComboBox->new  ( $self, -1, '' );
+	$sizer->Add( $lab1,  0, wxALL|wxEXPAND|wxALIGN_CENTER|wxALIGN_RIGHT, $padding );
+	$sizer->Add( $combo, 1, wxALL|wxEXPAND|wxALIGN_CENTER, $padding );
 
-	# install event handler
-	Wx::Event::EVT_LIST_ITEM_SELECTED( $self, $list, \&_on_list_item_selected );
-	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
-
-	# pack the list
-	$vbox->Add( $list, 1, wxALL | wxEXPAND, 1 );
+	# session descritpion
+	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
+	my $text  = Wx::TextCtrl->new  ( $self, -1, '' );
+	$sizer->Add( $lab2, 0, wxALL|wxEXPAND|wxALIGN_CENTER|wxALIGN_RIGHT, $padding );
+	$sizer->Add( $text, 1, wxALL|wxEXPAND|wxALIGN_CENTER, $padding );
 }
 
 #
