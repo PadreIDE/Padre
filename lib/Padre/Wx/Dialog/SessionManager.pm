@@ -61,8 +61,10 @@ sub show {
 	# select first item in the list
 	my $list = $self->_list;
 	my $item = $list->GetItem(0);
-	$item->SetState(Wx::wxLIST_STATE_SELECTED);
-	$list->SetItem($item);
+    if ( defined $item ) {
+	    $item->SetState(Wx::wxLIST_STATE_SELECTED);
+	    $list->SetItem($item);
+    }
 
 	$self->Show;
 }
