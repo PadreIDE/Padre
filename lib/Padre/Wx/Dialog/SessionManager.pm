@@ -205,8 +205,8 @@ sub _create {
 #
 # $dialog->_create_list;
 #
-# create the list on the left of the frame. it will hold a list of available
-# plugins, along with their version & current status.
+# create the sessions list. it will hold a list of available sessions, along
+# with their description & last update.
 #
 # no params. no return values.
 #
@@ -222,8 +222,8 @@ sub _create_list {
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Name') );
-	$list->InsertColumn( 1, Wx::gettext('Version') );
-	$list->InsertColumn( 2, Wx::gettext('Status') );
+	$list->InsertColumn( 1, Wx::gettext('Description') );
+	$list->InsertColumn( 2, Wx::gettext('Last update') );
 	$self->_list($list);
 
 	# install event handler
@@ -237,7 +237,7 @@ sub _create_list {
 	$self->_imagelist($imglist);
 
 	# pack the list
-	$self->_hbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$self->_vbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
