@@ -229,16 +229,16 @@ sub _create_list {
 }
 
 #
-# $dialog->_create_right_pane;
+# $dialog->_create_buttons;
 #
-# create the right pane of the frame. it will hold the name of the plugin,
-# the associated documentation, and the action buttons to manage the plugin.
+# create the buttons pane.
 #
 # no params. no return values.
 #
-sub _create_right_pane {
+sub _create_buttons {
 	my $self = shift;
 
+    return;
 	# all controls will be lined up in a vbox
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
