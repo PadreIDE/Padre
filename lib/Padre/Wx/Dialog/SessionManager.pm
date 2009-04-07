@@ -14,7 +14,6 @@ use Class::XSAccessor accessors => {
 	_currow       => '_currow',         # current list row number
 	_curplugin    => '_curplugin',      # current plugin selected
 	_vbox         => '_vbox',           # the window vbox sizer
-	_imagelist    => '_imagelist',      # image list for the listctrl
 	_label        => '_label',          # label at top of right pane
 	_list         => '_list',           # list on the left of the pane
 	_manager      => '_manager',        # ref to plugin manager
@@ -230,11 +229,6 @@ sub _create_list {
 	Wx::Event::EVT_LIST_ITEM_SELECTED( $self, $list, \&_on_list_item_selected );
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $list, \&_on_list_item_activated );
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
-
-	# create imagelist
-	my $imglist = Wx::ImageList->new( 16, 16 );
-	$list->AssignImageList( $imglist, Wx::wxIMAGE_LIST_SMALL );
-	$self->_imagelist($imglist);
 
 	# pack the list
 	$self->_vbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
