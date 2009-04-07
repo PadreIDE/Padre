@@ -254,43 +254,6 @@ sub _current_session {
 }
 
 #
-# $self->_select_first_item;
-#
-# select first item in the list, or none if there are none. in that case,
-# update the current row and name selection to undef.
-#
-sub _select_first_item {
-    my ($self) = @_;
-
-	# select first item in the list
-	my $list = $self->_list;
-
-    if ( $list->GetItemCount ) {
-	    my $item = $list->GetItem(0);
-	    $item->SetState(Wx::wxLIST_STATE_SELECTED);
-	    $list->SetItem($item);
-    } else {
-        # remove current selection
-        $self->_currow ( undef );
-        $self->_curname( undef );
-    }
-}
-
-#
-# $self->_update_buttons_state;
-#
-# update state of delete and open buttons: they should not be clickable if no
-# session is selected.
-#
-sub _update_buttons_state {
-    my ($self) = @_;
-
-    my $method = defined($self->_currow) ? 'Enable' : 'Disable';
-    $self->_butdelete->$method;
-    $self->_butopen->$method;
-}
-
-#
 # $dialog->_refresh_list($column, $reverse);
 #
 # refresh list of sessions. list is sorted according to $column (default to
@@ -334,6 +297,43 @@ sub _refresh_list {
 	my $width = 15;    # taking vertical scrollbar into account
 	$width += $list->GetColumnWidth($_) for 0 .. 2;
 	$list->SetMinSize( [ $width, -1 ] );
+}
+
+#
+# $self->_select_first_item;
+#
+# select first item in the list, or none if there are none. in that case,
+# update the current row and name selection to undef.
+#
+sub _select_first_item {
+    my ($self) = @_;
+
+	# select first item in the list
+	my $list = $self->_list;
+
+    if ( $list->GetItemCount ) {
+	    my $item = $list->GetItem(0);
+	    $item->SetState(Wx::wxLIST_STATE_SELECTED);
+	    $list->SetItem($item);
+    } else {
+        # remove current selection
+        $self->_currow ( undef );
+        $self->_curname( undef );
+    }
+}
+
+#
+# $self->_update_buttons_state;
+#
+# update state of delete and open buttons: they should not be clickable if no
+# session is selected.
+#
+sub _update_buttons_state {
+    my ($self) = @_;
+
+    my $method = defined($self->_currow) ? 'Enable' : 'Disable';
+    $self->_butdelete->$method;
+    $self->_butopen->$method;
 }
 
 #
