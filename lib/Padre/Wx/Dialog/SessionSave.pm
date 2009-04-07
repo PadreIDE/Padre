@@ -215,30 +215,6 @@ sub _refresh_combo {
 }
 
 #
-# $self->_select_first_item;
-#
-# select first item in the list, or none if there are none. in that case,
-# update the current row and name selection to undef.
-#
-sub _select_first_item {
-    my ($self) = @_;
-
-return; # FIXME
-	# select first item in the list
-	my $list = $self->_list;
-
-    if ( $list->GetItemCount ) {
-	    my $item = $list->GetItem(0);
-	    $item->SetState(wxLIST_STATE_SELECTED);
-	    $list->SetItem($item);
-    } else {
-        # remove current selection
-        $self->_currow ( undef );
-        $self->_curname( undef );
-    }
-}
-
-#
 # $self->_update_buttons_state;
 #
 # update state of delete and open buttons: they should not be clickable if no
