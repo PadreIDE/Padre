@@ -2264,6 +2264,7 @@ sub on_stc_update_ui {
 	# Check for brace, on current position, higlight the matching brace
 	my $current = $self->current;
 	my $editor  = $current->editor;
+	return if not defined $editor;
 	$editor->highlight_braces;
 	$editor->show_calltip;
 
