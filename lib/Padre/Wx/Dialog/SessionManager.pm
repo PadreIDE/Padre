@@ -29,26 +29,22 @@ use base 'Wx::Frame';
 
 our $VERSION = '0.33';
 
+
 # -- constructor
 
 sub new {
-	my ( $class, $parent, $manager ) = @_;
+	my ( $class, $parent ) = @_;
 
 	# create object
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::gettext('Plugin Manager'),
+		Wx::gettext('Session Manager'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
-
-	# store plugin manager
-	croak "Missing or invalid Padre::PluginManager object"
-		unless $manager->isa('Padre::PluginManager');
-	$self->_manager($manager);
 
 	# create dialog
 	$self->_create;
@@ -544,11 +540,10 @@ module implements this task as a dialog for Padre.
 
 =over 4
 
-=item * my $dialog = P::W::D::PM->new( $parent, $manager )
+=item * my $dialog = PWD::SM->new( $parent )
 
-Create and return a new Wx dialog listing all the plugins. It needs a
-C<$parent> window and a C<Padre::PluginManager> object that really
-handles Padre plugins under the hood.
+Create and return a new Wx dialog listing all the sessions. It needs a
+C<$parent> window (usually padre's main window).
 
 
 =back
