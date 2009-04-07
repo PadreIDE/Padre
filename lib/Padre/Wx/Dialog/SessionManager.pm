@@ -12,7 +12,7 @@ use Class::XSAccessor accessors => {
 	_butdelete    => '_butdelete',      # delete button
 	_butopen      => '_butopen',        # open button
 	_currow       => '_currow',         # current list row number
-	_curplugin    => '_curplugin',      # current plugin selected
+	_cursession   => '_cursession',     # current session selected
 	_vbox         => '_vbox',           # the window vbox sizer
 	_label        => '_label',          # label at top of right pane
 	_list         => '_list',           # list on the left of the pane
@@ -133,40 +133,19 @@ sub _on_list_col_click {
 # $self->_on_list_item_selected( $event );
 #
 # handler called when a list item has been selected. it will in turn update
-# the right part of the frame.
+# the buttons state.
 #
 # $event is a Wx::ListEvent.
 #
 sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
-    return;
-	my $fullname = $event->GetLabel;
-	my $name   = $self->_plugin_names->{$fullname};
-	my $plugin = $self->_manager->plugins->{$name};
-	$self->_curplugin($plugin);            # storing selected plugin
+	my $name = $event->GetLabel;
+	$self->_cursession($name);             # storing selected session
 	$self->_currow( $event->GetIndex );    # storing selected row
 
-	# updating plugin name in right pane
-	$self->_label->SetLabel($name);
-
-	# update plugin documentation
-	my $class   = $plugin->class;
-	my $browser = Padre::DocBrowser->new;
-	my $doc     = $browser->resolve($class);
-	my $output  = eval { $browser->browse($doc) };
-	my $html
-		= $@
-		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
-		: $output->{original_content};
-	$self->_whtml->SetPage($html);
-
 	# update buttons
-	$self->_update_plugin_state;
-
-	# force window to recompute layout. indeed, changes are that plugin
-	# name has a different length, and thus should be recentered.
-	$self->Layout;
+	$self->_update_buttons_state;
 }
 
 # -- private methods
