@@ -78,7 +78,7 @@ sub show {
 #
 sub _on_butclose_clicked {
 	my $self = shift;
-	$self->Hide;
+	$self->Destroy;
 }
 
 #
