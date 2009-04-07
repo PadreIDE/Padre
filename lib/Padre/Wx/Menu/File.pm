@@ -118,6 +118,16 @@ sub new {
 	);
 	Wx::Event::EVT_MENU(
 		$main,
+		$self->Append(
+			-1, Wx::gettext("Open a session...\tCtrl-Alt-O") ),
+		sub {
+			require Padre::Wx::Dialog::SessionManager;
+			Padre::Wx::Dialog::SessionManager->new($_[0])->show;
+		},
+	);
+
+	Wx::Event::EVT_MENU(
+		$main,
 		$self->{open_selection},
 		sub {
 			$_[0]->on_open_selection;
@@ -206,6 +216,12 @@ sub new {
 			$_[0]->on_save_all;
 		},
 	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append(
+			-1, Wx::gettext("Save current session...\tCtrl-Alt-S") ),
+		sub { $_[0]->on_save_current_session; },
+	);
 
 	$self->AppendSeparator;
 
@@ -277,25 +293,6 @@ sub new {
 	);
 
 	$self->AppendSeparator;
-
-    # padre sessions
-	$self->{sessions} = Wx::Menu->new;
-	$self->Append( -1, Wx::gettext("S&essions"), $self->{sessions} );
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{sessions}->Append(
-			-1, Wx::gettext("Save current session") ),
-		sub { $_[0]->on_save_current_session; },
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{sessions}->Append(
-			-1, Wx::gettext("Manage sessions") ),
-		sub {
-			require Padre::Wx::Dialog::SessionManager;
-			Padre::Wx::Dialog::SessionManager->new($_[0])->show;
-		},
-	);
 
 	# Recent things
 	$self->{recentfiles} = Wx::Menu->new;
