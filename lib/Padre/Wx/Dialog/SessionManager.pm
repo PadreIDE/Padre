@@ -329,6 +329,19 @@ sub _select_first_item {
     }
 }
 
+#
+# $self->_update_buttons_state;
+#
+# update state of delete and open buttons: they should not be clickable if no
+# session is selected.
+#
+sub _update_buttons_state {
+    my ($self) = @_;
+
+    my $method = defined($self->_currow) ? 'Enable' : 'Disable';
+    $self->_butdelete->$method;
+    $self->_butopen->$method;
+}
 
 #
 # $dialog->_refresh_list($column, $reverse);
