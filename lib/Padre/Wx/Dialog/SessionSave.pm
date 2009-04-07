@@ -8,15 +8,8 @@ use strict;
 use warnings;
 
 use Class::XSAccessor accessors => {
-	_butdelete    => '_butdelete',      # delete button
-	_butopen      => '_butopen',        # open button
 	_combo        => '_combo',          # combo box holding the session names
-	_currow       => '_currow',         # current list row number
-	_curname      => '_curname',        # name of current session selected
-	_list         => '_list',           # list on the left of the pane
 	_names        => '_names',          # list of all session names
-	_sortcolumn   => '_sortcolumn',     # column used for list sorting
-	_sortreverse  => '_sortreverse',    # list sorting is reversed
 	_sizer        => '_sizer',          # the window sizer
 	_text         => '_text',           # text control holding the description
 };
