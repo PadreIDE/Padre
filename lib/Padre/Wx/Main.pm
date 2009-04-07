@@ -1347,10 +1347,7 @@ sub open_session {
 	$self->on_close_all;
 
     # get list of files in the session
-    my @files = Padre::DB::SessionFile->select(
-        'where session = ?',
-        $session->id
-    );
+    my @files = $session->files;
     return unless @files;
 
     # opening documents
