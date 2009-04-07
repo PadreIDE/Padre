@@ -1351,6 +1351,37 @@ sub create_tab {
 	return $id;
 }
 
+#
+# $self->open_session( $session );
+#
+# try to open all files referenced in the given $session (a padre::db::session
+# object). no return value.
+# 
+sub open_session {
+    my ($self, $session) = @_;
+
+    # get list of files in the session
+    my @files = Padre::DB::SessionFile->select(
+        'where session = ?',
+        $session->id
+    );
+    return unless @files;
+
+    # opening documents
+	my $focus = undef;
+	foreach my $document ( @files ) {
+		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
+		my $filename = $document->file;
+		next unless -f $filename;
+		my $id = $self->setup_editor($filename);
+		Padre::Util::debug("Setting focus on $filename");
+		$focus = $id if $document->focus;
+
+		# TODO - Go to the line/character
+	}
+	$self->on_nth_pane($focus) if defined $focus;
+}
+
 # try to open in various ways
 #    as full path
 #    as path relative to cwd (where the editor was started)
