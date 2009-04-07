@@ -52,7 +52,7 @@ sub new {
 
 sub show {
 	my $self = shift;
-	$self->_refresh_list;
+	$self->_refresh_combo;
 	$self->Show;
 }
 
@@ -227,52 +227,22 @@ sub _current_session {
 }
 
 #
-# $dialog->_refresh_list($column, $reverse);
+# $dialog->_refresh_combo;
 #
-# refresh list of sessions. list is sorted according to $column (default to
-# first column), and may be reversed (default to no).
+# refresh combo box with list of sessions.
 #
-sub _refresh_list {
+sub _refresh_combo {
 	my ( $self, $column, $reverse ) = @_;
-return; # FIXME
-	# default sorting
-	$column  ||= 0;
-	$reverse ||= 0;
-    my @fields = qw{ name description last_update }; # db fields of table session
 
 	# get list of sessions, sorted.
-    my $sort = "ORDER BY $fields[$column]";
-    $sort   .= ' DESC' if $reverse;
-    my @sessions = Padre::DB::Session->select( $sort );
+	my @names =
+		map { $_->name }
+		Padre::DB::Session->select( 'ORDER BY name' );
 
 	# clear list & fill it again
-	my $list = $self->_list;
-	$list->DeleteAllItems;
-	foreach my $session ( reverse @sessions ) {
-        my $name   = $session->name;
-		my $descr  = $session->description;
-		my $update = localtime( $session->last_update );
-
-		# inserting the session in the list
-        my $item = Wx::ListItem->new;
-        $item->SetId(0);
-        $item->SetColumn(0);
-        $item->SetText($name);
-		my $idx = $list->InsertItem( $item );
-		$list->SetItem( $idx, 1, $descr );
-		$list->SetItem( $idx, 2, $update );
-	}
-
-	# auto-resize columns
-    my $flag = $list->GetItemCount
-        ? wxLIST_AUTOSIZE
-        : wxLIST_AUTOSIZE_USEHEADER;
-    $list->SetColumnWidth( $_, $flag ) for 0 .. 2;
-
-	# making sure the list can show all columns
-	my $width = 15;    # taking vertical scrollbar into account
-	$width += $list->GetColumnWidth($_) for 0 .. 2;
-	$list->SetMinSize( [ $width, -1 ] );
+	my $combo = $self->_combo;
+	$combo->Clear;
+	$combo->Append( $_ ) foreach @names;
 }
 
 #
