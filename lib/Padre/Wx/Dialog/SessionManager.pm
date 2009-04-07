@@ -92,24 +92,16 @@ sub _on_butdelete_clicked {
 }
 
 #
-# $self->_on_button_clicked;
+# $self->_on_butopen_clicked;
 #
-# handler called when the first button has been clicked.
+# handler called when the open button has been clicked.
 #
-sub _on_button_clicked {
+sub _on_butopen_clicked {
 	my $self = shift;
 
-	# find method to call
-	my $label  = $self->_button->GetLabel;
-	my %method = (
-		Wx::gettext('Disable')            => '_plugin_disable',
-		Wx::gettext('Enable')             => '_plugin_enable',
-		Wx::gettext('Show error message') => '_plugin_show_error_msg',
-	);
-	my $method = $method{$label};
-
-	# call method
-	$self->$method;
+    # close all open documents
+    my $main = $self->GetParent;
+	$main->on_close_all;
 }
 
 #
