@@ -70,9 +70,21 @@ sub _on_butclose_clicked {
 sub _on_butsave_clicked {
 	my $self = shift;
 
-	$self->GetParent->save_session(
-		$self->_combo->GetValue, $self->_text->GetValue );
-	$self->Destroy;  # close dialog
+	my $main    = $self->GetParent;
+	my $session = $self->_current_session;
+	if ( not defined $session ) {
+		$session = Padre::DB::Session->new(
+			name        => $self->_combo->GetValue,
+			description => $self->_text->GetValue,
+			last_update => time,
+		);
+		$session->insert;
+	}
+	my @session = $main->capture_session;
+	$main->save_session( $session, @session );
+
+	# close dialog
+	$self->Destroy;
 }
 
 #
