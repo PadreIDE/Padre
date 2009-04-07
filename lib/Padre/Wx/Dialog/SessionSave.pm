@@ -33,7 +33,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::gettext('Session Manager'),
+		Wx::gettext('Save session as...'),
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxDEFAULT_FRAME_STYLE,
