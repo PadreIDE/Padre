@@ -1885,7 +1885,8 @@ sub on_toggle_code_folding {
 	$config->set( editor_folding => $event->IsChecked ? 1 : 0 );
 
 	foreach my $editor ( $self->editors ) {
-		$editor->show_folding( $config->editor_folding, $config->editor_fold_pod );
+		$editor->show_folding( $config->editor_folding );
+		$editor->fold_pod if ( $config->editor_folding && $config->editor_fold_pod );
 	}
 
 	return;

@@ -179,6 +179,11 @@ sub padre_setup_style {
 	$self->StyleSetBackground( $_, _color( $data->{$name}->{background} ) ) for ( 0 .. Wx::wxSTC_STYLE_DEFAULT );
 	$self->setup_style_from_config($name);
 
+	# if mimetype is known, then it might
+	# be Perl with in-line POD
+	my $config = Padre->ide->config;
+	$self->fold_pod if ( $config->editor_folding && $config->editor_fold_pod );
+
 	return;
 }
 
@@ -292,7 +297,7 @@ sub show_symbols {
 }
 
 sub show_folding {
-	my ( $self, $on, $fold_pod ) = @_;
+	my ( $self, $on ) = @_;
 
 	if ($on) {
 
@@ -320,7 +325,6 @@ sub show_folding {
 
 		# activate
 		$self->SetProperty( 'fold' => 1 );
-		$self->fold_pod if $fold_pod;
 
 		Wx::Event::EVT_STC_MARGINCLICK(
 			$self, -1,
@@ -370,7 +374,7 @@ sub set_preferences {
 	my $config = Padre->ide->config;
 
 	$self->show_line_numbers( $config->editor_linenumbers );
-	$self->show_folding( $config->editor_folding, $config->editor_fold_pod );
+	$self->show_folding( $config->editor_folding );
 	$self->SetIndentationGuides( $config->editor_indentationguides );
 	$self->SetViewEOL( $config->editor_eol );
 	$self->SetViewWhiteSpace( $config->editor_whitespace );
@@ -1020,21 +1024,19 @@ sub uncomment_lines {
 sub fold_pod {
 	my ($self) = @_;
 
-	my $lineCount   = $self->GetLineCount;
-	my $currentLine = $lineCount;
+	my $currentLine = 0;
+	my $lastLine    = $self->GetLineCount;
 
-	while ( $currentLine >= 0 ) {
-		if ( ( my $parentLine = $self->GetFoldParent($currentLine) ) > 0 ) {
-			if ( _get_line_by_number( $self, $parentLine ) =~ /^=(pod|head)/ ) {
-				if ( $self->GetFoldExpanded($parentLine) ) {
-					$self->ToggleFold($parentLine);
-				}
-				$currentLine = $parentLine;
-			} else {
-				$currentLine--;
+	while ( $currentLine <= $lastLine ) {
+		if ( $self->_get_line_by_number($currentLine) =~ /^=(pod|head)/ ) {
+			if ( $self->GetFoldExpanded($currentLine) ) {
+				$self->ToggleFold($currentLine);
+				my $foldLevel = $self->GetFoldLevel($currentLine);
+				$currentLine = $self->GetLastChild($currentLine, $foldLevel);
 			}
+			$currentLine++;
 		} else {
-			$currentLine--;
+			$currentLine++;
 		}
 	}
 
