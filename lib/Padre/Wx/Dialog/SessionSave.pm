@@ -10,12 +10,14 @@ use warnings;
 use Class::XSAccessor accessors => {
 	_butdelete    => '_butdelete',      # delete button
 	_butopen      => '_butopen',        # open button
+	_combo        => '_combo',          # combo box holding the session names
 	_currow       => '_currow',         # current list row number
 	_curname      => '_curname',        # name of current session selected
 	_list         => '_list',           # list on the left of the pane
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
 	_sizer        => '_sizer',          # the window sizer
+	_text         => '_text',           # text control holding the description
 };
 use Wx qw{ :everything };
 
@@ -177,12 +179,14 @@ sub _create_fields {
 	my $combo = Wx::ComboBox->new  ( $self, -1, '' );
 	$sizer->Add( $lab1,  Wx::GBPosition->new(0,0) );
 	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new(1,3), wxEXPAND );
+	$self->_combo( $combo );
 
 	# session descritpion
 	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
 	my $text  = Wx::TextCtrl->new  ( $self, -1, '' );
 	$sizer->Add( $lab2, Wx::GBPosition->new(1,0) );
 	$sizer->Add( $text, Wx::GBPosition->new(1,1), Wx::GBSpan->new(1,3), wxEXPAND );
+	$self->_text( $text );
 }
 
 #
