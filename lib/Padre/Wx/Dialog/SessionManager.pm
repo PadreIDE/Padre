@@ -19,7 +19,6 @@ use Class::XSAccessor accessors => {
 	_plugin_names => '_plugin_names',   # mapping of short/full plugin names
 	_sortcolumn   => '_sortcolumn',     # column used for list sorting
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
-	_whtml        => '_whtml',          # html space for plugin doc
 };
 
 use base 'Wx::Frame';
