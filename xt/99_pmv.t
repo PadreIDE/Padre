@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+# Copied from http://svn.ali.as/cpan/tools/shared/99_pmv.t
 # Test that our declared minimum Perl version matches our syntax
 
 use strict;
