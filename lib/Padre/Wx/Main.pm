@@ -1147,14 +1147,11 @@ sub on_close_window {
 	my $session = Padre::DB::Session->last_padre_session;
 	if ( $session ) {
 		Padre::DB::SessionFile->delete('where session = ?', $session->id);
-		Padre::DB::Session->delete('where id = ?', $session->id);
-	}
-	$session = Padre::DB::Session->new_last_padre_session;
-	foreach my $file (@session) {
-		$file->{session} = $session->id ;
-		$file->insert;
+	} else {
+		$session = Padre::DB::Session->new_last_padre_session;
 	}
 	Padre::DB->commit;
+	$self->save_session( $session, @session );
 
 	# Write the configuration to disk
 	$padre->save_config;
