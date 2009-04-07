@@ -103,24 +103,6 @@ sub _on_butopen_clicked {
 }
 
 #
-# $self->_on_list_col_click;
-#
-# handler called when a column has been clicked, to reorder the list.
-#
-sub _on_list_col_click {
-	my ( $self, $event ) = @_;
-	my $col = $event->GetColumn;
-
-	my $prevcol  = $self->_sortcolumn  || 0;
-	my $reversed = $self->_sortreverse || 0;
-	$reversed = $col == $prevcol ? !$reversed : 0;
-	$self->_sortcolumn($col);
-	$self->_sortreverse($reversed);
-	$self->_refresh_list( $col, $reversed );
-}
-
-
-#
 # $self->_on_list_item_selected( $event );
 #
 # handler called when a list item has been selected. it will in turn update
