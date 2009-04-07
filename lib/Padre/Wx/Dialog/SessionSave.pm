@@ -178,13 +178,13 @@ sub _create_fields {
 	my $lab1  = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
 	my $combo = Wx::ComboBox->new  ( $self, -1, '' );
 	$sizer->Add( $lab1,  Wx::GBPosition->new(0,0) );
-	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new, wxEXPAND );
+	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new(1,3), wxEXPAND );
 
 	# session descritpion
 	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
 	my $text  = Wx::TextCtrl->new  ( $self, -1, '' );
 	$sizer->Add( $lab2, Wx::GBPosition->new(1,0) );
-	$sizer->Add( $text, Wx::GBPosition->new(1,1), Wx::GBSpan->new, wxEXPAND );
+	$sizer->Add( $text, Wx::GBPosition->new(1,1), Wx::GBSpan->new(1,3), wxEXPAND );
 }
 
 #
@@ -196,25 +196,17 @@ sub _create_fields {
 #
 sub _create_buttons {
 	my $self = shift;
-	return;
 
-    # the hbox
-	my $hbox = Wx::BoxSizer->new(wxHORIZONTAL);
-	$self->_vbox->Add( $hbox, 0, wxALL | wxEXPAND, 1 );
+	my $sizer = $self->_sizer;
 
 	# the buttons
-	my $bo  = Wx::Button->new( $self, -1, Wx::gettext('Open') );
-	my $bd  = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
+	my $bs  = Wx::Button->new( $self, -1, Wx::gettext('Save') );
 	my $bc  = Wx::Button->new( $self, -1, Wx::gettext('Close') );
-    $self->_butopen  ( $bo );
-    $self->_butdelete( $bd );
-	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_butopen_clicked );
-	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_butdelete_clicked );
+	Wx::Event::EVT_BUTTON( $self, $bs, \&_on_butsave_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
-	$hbox->Add( $bo,  0, wxALL, 1 );
-	$hbox->Add( $bd,  0, wxALL, 1 );
-	$hbox->AddStretchSpacer;
-	$hbox->Add( $bc,  0, wxALL, 1 );
+	$sizer->Add( $bs, Wx::GBPosition->new(2,2) );
+	$sizer->Add( $bc, Wx::GBPosition->new(2,3) );
+
 }
 
 #
