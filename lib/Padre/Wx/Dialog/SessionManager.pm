@@ -127,17 +127,6 @@ sub _on_list_col_click {
 	$self->_refresh_list( $col, $reversed );
 }
 
-#
-# $self->_on_list_item_activated;
-#
-# handler called when a list item has been activated (enter pressed, or
-# double-click). it will enable / disable plugin - or display error message
-# if plugin is currently in error.
-#
-# note that it definitely the same as clicking on the button, but we're
-# keeping a different handler in case we want to do sthg different.
-#
-*_on_list_item_activated = \&_on_button_clicked;
 
 #
 # $self->_on_list_item_selected( $event );
@@ -227,7 +216,6 @@ sub _create_list {
 
 	# install event handler
 	Wx::Event::EVT_LIST_ITEM_SELECTED( $self, $list, \&_on_list_item_selected );
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $list, \&_on_list_item_activated );
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
