@@ -225,7 +225,7 @@ sub _create_list {
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
-	$vbox->Add( $list,  0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$vbox->Add( $list, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
