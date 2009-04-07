@@ -13,7 +13,7 @@ use Class::XSAccessor accessors => {
 	_butprefs     => '_butprefs',       # preferences button
 	_currow       => '_currow',         # current list row number
 	_curplugin    => '_curplugin',      # current plugin selected
-	_hbox         => '_hbox',           # the window hbox sizer
+	_vbox         => '_vbox',           # the window vbox sizer
 	_imagelist    => '_imagelist',      # image list for the listctrl
 	_label        => '_label',          # label at top of right pane
 	_list         => '_list',           # list on the left of the pane
@@ -184,9 +184,8 @@ sub _on_list_item_selected {
 #
 # $self->_create;
 #
-# create the dialog itself. it will have a list on the left with all found
-# plugins, and a pane on the right holding the details for the selected
-# plugin, as well as control buttons.
+# create the dialog itself. it will have a list with all found sessions, and
+# some buttons to manage them.
 #
 # no params, no return values.
 #
@@ -194,13 +193,13 @@ sub _create {
 	my $self = shift;
 
 	# create vertical box that will host all controls
-	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->SetSizer($hbox);
-	$self->SetMinSize( [ 640, 480 ] );
-	$self->_hbox($hbox);
+	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$self->SetSizer($vbox);
+    #$self->SetMinSize( [ 640, 480 ] );
+	$self->_vbox($vbox);
 
 	$self->_create_list;
-	$self->_create_right_pane;
+	$self->_create_buttons;
 }
 
 #
