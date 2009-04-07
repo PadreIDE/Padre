@@ -14,7 +14,6 @@ use Class::XSAccessor accessors => {
 	_currow       => '_currow',         # current list row number
 	_cursession   => '_cursession',     # current session selected
 	_vbox         => '_vbox',           # the window vbox sizer
-	_label        => '_label',          # label at top of right pane
 	_list         => '_list',           # list on the left of the pane
 	_manager      => '_manager',        # ref to plugin manager
 	_plugin_names => '_plugin_names',   # mapping of short/full plugin names
