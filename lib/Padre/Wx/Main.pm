@@ -321,25 +321,8 @@ sub load_files {
 	# Config setting 'last' means startup with all the files from the
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
-		my @files = Padre::DB::SessionFile->last_padre_session_files;
-		if ( @files ) {
-			my $focus = undef;
-			foreach my $document (@files) {
-				Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
-				my $filename = $document->file;
-				next unless -f $filename;
-				my $id = $self->setup_editor($filename);
-				Padre::Util::debug("Setting focus on $filename");
-				if ( $document->focus ) {
-					$focus = $id;
-				}
-
-				# TODO - Go to the line/character
-			}
-			if ( defined $focus ) {
-				$self->on_nth_pane($focus);
-			}
-		}
+        my $session = Padre::DB::Session->last_padre_session;
+        $self->open_session($session) if defined($session);
 	}
 
 	# Config setting 'nothing' means startup with nothing open
