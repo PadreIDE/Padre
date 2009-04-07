@@ -22,7 +22,6 @@ use Class::XSAccessor accessors => {
 	_sortreverse  => '_sortreverse',    # list sorting is reversed
 	_whtml        => '_whtml',          # html space for plugin doc
 };
-use Padre::Wx::Icon;
 
 use base 'Wx::Frame';
 
