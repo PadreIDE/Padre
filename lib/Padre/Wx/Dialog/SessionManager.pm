@@ -84,9 +84,8 @@ sub _on_butclose_clicked {
 # handler called when the delete button has been clicked.
 #
 sub _on_butdelete_clicked {
-	my $self = shift;
-    my $name = $self->_curname;
-    my ($current) = Padre::DB::Session->select('where name = ?', $name);
+	my $self    = shift;
+    my $current = $self->_current_session;
 
     # remove session files
     Padre::DB::SessionFile->delete('where session = ?', $current->id);
