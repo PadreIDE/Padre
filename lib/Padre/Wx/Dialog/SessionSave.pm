@@ -152,7 +152,7 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	my $sizer = Wx::FlexGridSizer->new( 3, 2, 0, 0 );
+	my $sizer = Wx::GridBagSizer->new(2,2);
 	$sizer->AddGrowableCol(1);
 	$self->SetSizer($sizer);
 	$self->_sizer($sizer);
