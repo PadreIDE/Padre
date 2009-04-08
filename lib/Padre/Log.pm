@@ -1,74 +1,69 @@
 package Padre::Log;
 use Carp  ();
 use POSIX ();
-use Class::XSAccessor::Array
-	predicates => {
-		is_debug => 0,
-		is_info  => 1,
-		is_warn  => 2,
-		is_error => 3,
-		is_fatal => 4,
-		is_trace => 5,
-		has_filename => 10,
+use Class::XSAccessor::Array predicates => {
+	is_debug     => 0,
+	is_info      => 1,
+	is_warn      => 2,
+	is_error     => 3,
+	is_fatal     => 4,
+	is_trace     => 5,
+	has_filename => 10,
 	},
 	getters => {
-		get_filename => 10,
+	get_filename => 10,
 	},
 	setters => {
-		set_filename => 10,
-		_set_trace   => 5,
+	set_filename => 10,
+	_set_trace   => 5,
 	},
-;
-
+	;
 
 sub new {
-	my ($class, %params) =(@_);
+	my ( $class, %params ) = (@_);
 	return unless $class;
 	my $self = bless [], $class;
 
 	$self->set_log_level( $params{'level'} );
-	
+
 	if ( $params{'filename'} ) {
 		$self->set_filename( $params{'filename'} );
 	}
 
 	if ( $params{'trace'} ) {
 		$self->enable_trace;
-	}
-	else {
+	} else {
 		$self->disable_trace;
 	}
 	return $self;
 }
 
-sub enable_trace  { shift->_set_trace(1)     }
+sub enable_trace  { shift->_set_trace(1) }
 sub disable_trace { shift->_set_trace(undef) }
 
 sub set_log_level {
-	my $self = shift;
-	my $level = lc (shift);
-	my %level_id_for = ( 
-		'debug' => 0, 
-		'info'  => 1, 
-		'warn'  => 2, 
-		'error' => 3, 
+	my $self         = shift;
+	my $level        = lc(shift);
+	my %level_id_for = (
+		'debug' => 0,
+		'info'  => 1,
+		'warn'  => 2,
+		'error' => 3,
 		'fatal' => 4,
 		'off'   => 5,
 	);
-	
+
 	if ( $level && defined $level_id_for{$level} ) {
 		$level = $level_id_for{$level};
-	}
-	else {
+	} else {
 		$level = $level_id_for{'warn'};
 	}
 
-	foreach my $i (keys %level_id_for) {
+	foreach my $i ( keys %level_id_for ) {
 		if ( $level <= $level_id_for{$i} ) {
-			${$self}[$level_id_for{$i}] = 1;
-		}
-		else {
-			${$self}[$level_id_for{$i}] = undef;
+			${$self}[ $level_id_for{$i} ] = 1;
+		} else {
+			${$self}[ $level_id_for{$i} ] = undef;
 		}
 	}
 }
@@ -79,58 +74,57 @@ sub set_log_level {
 sub debug {
 	my $self = shift;
 	if ( $self->is_debug ) {
-		$self->_log('debug', @_);
+		$self->_log( 'debug', @_ );
 	}
 }
 
 sub info {
 	my $self = shift;
 	if ( $self->is_info ) {
-		$self->_log('info', @_);
+		$self->_log( 'info', @_ );
 	}
 }
 
 sub warn {
 	my $self = shift;
 	if ( $self->is_warn ) {
-		$self->_log('warn', @_);
+		$self->_log( 'warn', @_ );
 	}
 }
 
 sub error {
 	my $self = shift;
 	if ( $self->is_error ) {
-		$self->_log('error', @_);
+		$self->_log( 'error', @_ );
 	}
 }
 
 sub fatal {
 	my $self = shift;
 	if ( $self->is_fatal ) {
-		$self->_log('fatal', @_);
+		$self->_log( 'fatal', @_ );
 	}
 }
 
 sub _log {
-	my $self  = shift;
-	my $level = uc(shift);
+	my $self    = shift;
+	my $level   = uc(shift);
 	my $message = join ' ', @_;
 	my ( $package, $filename, $line ) = caller;
 
 	# get file handle
 	my $handle = \*STDERR;
-	if ($self->has_filename) {
+	if ( $self->has_filename ) {
 		open $handle, '>>', $self->get_filename
 			or do {
-				syswrite STDERR, "could not open file '$handle': $!\n";
-				return;
+			syswrite STDERR, "could not open file '$handle': $!\n";
+			return;
 			};
 	}
-	
-	#log received message	
-	syswrite $handle, POSIX::strftime("%H:%M:%S", localtime())
-	               . " $level [$package] line $line - @_\n"
-	    or syswrite STDERR, "could not write to handle: $!\n";
+
+	#log received message
+	syswrite $handle, POSIX::strftime( "%H:%M:%S", localtime() ) . " $level [$package] line $line - @_\n"
+		or syswrite STDERR, "could not write to handle: $!\n";
 
 	if ( $self->is_trace ) {
 		syswrite STDERR, Carp::longmess() . "\n";
@@ -139,6 +133,7 @@ sub _log {
 
 42;
 __END__
+
 =head1 NAME
 
 Padre::Log - Simple logger for Padre

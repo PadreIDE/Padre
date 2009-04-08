@@ -1032,7 +1032,7 @@ sub fold_pod {
 			if ( $self->GetFoldExpanded($currentLine) ) {
 				$self->ToggleFold($currentLine);
 				my $foldLevel = $self->GetFoldLevel($currentLine);
-				$currentLine = $self->GetLastChild($currentLine, $foldLevel);
+				$currentLine = $self->GetLastChild( $currentLine, $foldLevel );
 			}
 			$currentLine++;
 		} else {
@@ -1086,7 +1086,7 @@ sub goto_pos_centerize {
 
 	my $line = $self->GetCurrentLine;
 	$self->ScrollToLine( $line - ( $self->LinesOnScreen / 2 ) );
-	$self->EnsureVisible( $line );
+	$self->EnsureVisible($line);
 	$self->EnsureCaretVisible;
 	$self->SetFocus;
 }

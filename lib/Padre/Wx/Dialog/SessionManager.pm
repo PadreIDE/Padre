@@ -8,21 +8,20 @@ use strict;
 use warnings;
 
 use Class::XSAccessor accessors => {
-	_butdelete    => '_butdelete',      # delete button
-	_butopen      => '_butopen',        # open button
-	_currow       => '_currow',         # current list row number
-	_curname      => '_curname',        # name of current session selected
-	_list         => '_list',           # list on the left of the pane
-	_sortcolumn   => '_sortcolumn',     # column used for list sorting
-	_sortreverse  => '_sortreverse',    # list sorting is reversed
-	_vbox         => '_vbox',           # the window vbox sizer
+	_butdelete   => '_butdelete',      # delete button
+	_butopen     => '_butopen',        # open button
+	_currow      => '_currow',         # current list row number
+	_curname     => '_curname',        # name of current session selected
+	_list        => '_list',           # list on the left of the pane
+	_sortcolumn  => '_sortcolumn',     # column used for list sorting
+	_sortreverse => '_sortreverse',    # list sorting is reversed
+	_vbox        => '_vbox',           # the window vbox sizer
 };
 use Wx qw{ :everything };
 
 use base 'Wx::Frame';
 
 our $VERSION = '0.33';
-
 
 # -- constructor
 
@@ -52,7 +51,7 @@ sub show {
 	my $self = shift;
 
 	$self->_refresh_list;
-    $self->_select_first_item;
+	$self->_select_first_item;
 	$self->Show;
 }
 
@@ -75,17 +74,17 @@ sub _on_butclose_clicked {
 #
 sub _on_butdelete_clicked {
 	my $self    = shift;
-    my $current = $self->_current_session;
+	my $current = $self->_current_session;
 
-    # remove session: files, then session itself
-    Padre::DB->begin;
-    Padre::DB::SessionFile->delete('where session = ?', $current->id);
-    $current->delete;
-    Padre::DB->commit;
+	# remove session: files, then session itself
+	Padre::DB->begin;
+	Padre::DB::SessionFile->delete( 'where session = ?', $current->id );
+	$current->delete;
+	Padre::DB->commit;
 
-    # update gui
-    $self->_refresh_list;
-    $self->_select_first_item;
+	# update gui
+	$self->_refresh_list;
+	$self->_select_first_item;
 	$self->_update_buttons_state;
 }
 
@@ -97,8 +96,8 @@ sub _on_butdelete_clicked {
 sub _on_butopen_clicked {
 	my $self = shift;
 
-    # close all open documents
-    my $main = $self->GetParent;
+	# close all open documents
+	my $main = $self->GetParent;
 	$main->open_session( $self->_current_session );
 }
 
@@ -118,7 +117,6 @@ sub _on_list_col_click {
 	$self->_sortreverse($reversed);
 	$self->_refresh_list( $col, $reversed );
 }
-
 
 #
 # $self->_on_list_item_selected( $event );
@@ -155,7 +153,8 @@ sub _create {
 	# create vertical box that will host all controls
 	my $vbox = Wx::BoxSizer->new(wxVERTICAL);
 	$self->SetSizer($vbox);
-    #$self->SetMinSize( [ 640, 480 ] );
+
+	#$self->SetMinSize( [ 640, 480 ] );
 	$self->_vbox($vbox);
 
 	$self->_create_list;
@@ -172,11 +171,13 @@ sub _create {
 #
 sub _create_list {
 	my $self = shift;
-    my $vbox = $self->_vbox;
+	my $vbox = $self->_vbox;
 
-    # title label
-    my $label = Wx::StaticText->new( $self, -1,
-        Wx::gettext('List of sessions') );
+	# title label
+	my $label = Wx::StaticText->new(
+		$self, -1,
+		Wx::gettext('List of sessions')
+	);
 	$vbox->Add( $label, 0, wxALL, 1 );
 
 	# create list
@@ -210,23 +211,23 @@ sub _create_list {
 sub _create_buttons {
 	my $self = shift;
 
-    # the hbox
+	# the hbox
 	my $hbox = Wx::BoxSizer->new(wxHORIZONTAL);
 	$self->_vbox->Add( $hbox, 0, wxALL | wxEXPAND, 1 );
 
 	# the buttons
-	my $bo  = Wx::Button->new( $self, -1, Wx::gettext('Open') );
-	my $bd  = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
-	my $bc  = Wx::Button->new( $self, -1, Wx::gettext('Close') );
-    $self->_butopen  ( $bo );
-    $self->_butdelete( $bd );
+	my $bo = Wx::Button->new( $self, -1, Wx::gettext('Open') );
+	my $bd = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
+	my $bc = Wx::Button->new( $self, -1, Wx::gettext('Close') );
+	$self->_butopen($bo);
+	$self->_butdelete($bd);
 	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_butopen_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_butdelete_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
-	$hbox->Add( $bo,  0, wxALL, 1 );
-	$hbox->Add( $bd,  0, wxALL, 1 );
+	$hbox->Add( $bo, 0, wxALL, 1 );
+	$hbox->Add( $bd, 0, wxALL, 1 );
 	$hbox->AddStretchSpacer;
-	$hbox->Add( $bc,  0, wxALL, 1 );
+	$hbox->Add( $bc, 0, wxALL, 1 );
 }
 
 #
@@ -237,10 +238,11 @@ sub _create_buttons {
 #
 sub _current_session {
 	my $self = shift;
-    my ($current) = Padre::DB::Session->select(
-        'where name = ?',
-        $self->_curname );
-    return $current;
+	my ($current) = Padre::DB::Session->select(
+		'where name = ?',
+		$self->_curname
+	);
+	return $current;
 }
 
 #
@@ -255,36 +257,37 @@ sub _refresh_list {
 	# default sorting
 	$column  ||= 0;
 	$reverse ||= 0;
-    my @fields = qw{ name description last_update }; # db fields of table session
+	my @fields = qw{ name description last_update };    # db fields of table session
 
 	# get list of sessions, sorted.
-    my $sort = "ORDER BY $fields[$column]";
-    $sort   .= ' DESC' if $reverse;
-    my @sessions = Padre::DB::Session->select( $sort );
+	my $sort = "ORDER BY $fields[$column]";
+	$sort .= ' DESC' if $reverse;
+	my @sessions = Padre::DB::Session->select($sort);
 
 	# clear list & fill it again
 	my $list = $self->_list;
 	$list->DeleteAllItems;
 	foreach my $session ( reverse @sessions ) {
-        my $name   = $session->name;
+		my $name   = $session->name;
 		my $descr  = $session->description;
 		my $update = localtime( $session->last_update );
 
 		# inserting the session in the list
-        my $item = Wx::ListItem->new;
-        $item->SetId(0);
-        $item->SetColumn(0);
-        $item->SetText($name);
-		my $idx = $list->InsertItem( $item );
+		my $item = Wx::ListItem->new;
+		$item->SetId(0);
+		$item->SetColumn(0);
+		$item->SetText($name);
+		my $idx = $list->InsertItem($item);
 		$list->SetItem( $idx, 1, $descr );
 		$list->SetItem( $idx, 2, $update );
 	}
 
 	# auto-resize columns
-    my $flag = $list->GetItemCount
-        ? wxLIST_AUTOSIZE
-        : wxLIST_AUTOSIZE_USEHEADER;
-    $list->SetColumnWidth( $_, $flag ) for 0 .. 2;
+	my $flag
+		= $list->GetItemCount
+		? wxLIST_AUTOSIZE
+		: wxLIST_AUTOSIZE_USEHEADER;
+	$list->SetColumnWidth( $_, $flag ) for 0 .. 2;
 
 	# making sure the list can show all columns
 	my $width = 15;    # taking vertical scrollbar into account
@@ -299,20 +302,21 @@ sub _refresh_list {
 # update the current row and name selection to undef.
 #
 sub _select_first_item {
-    my ($self) = @_;
+	my ($self) = @_;
 
 	# select first item in the list
 	my $list = $self->_list;
 
-    if ( $list->GetItemCount ) {
-	    my $item = $list->GetItem(0);
-	    $item->SetState(wxLIST_STATE_SELECTED);
-	    $list->SetItem($item);
-    } else {
-        # remove current selection
-        $self->_currow ( undef );
-        $self->_curname( undef );
-    }
+	if ( $list->GetItemCount ) {
+		my $item = $list->GetItem(0);
+		$item->SetState(wxLIST_STATE_SELECTED);
+		$list->SetItem($item);
+	} else {
+
+		# remove current selection
+		$self->_currow(undef);
+		$self->_curname(undef);
+	}
 }
 
 #
@@ -322,13 +326,12 @@ sub _select_first_item {
 # session is selected.
 #
 sub _update_buttons_state {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    my $method = defined($self->_currow) ? 'Enable' : 'Disable';
-    $self->_butdelete->$method;
-    $self->_butopen->$method;
+	my $method = defined( $self->_currow ) ? 'Enable' : 'Disable';
+	$self->_butdelete->$method;
+	$self->_butopen->$method;
 }
-
 
 1;
 

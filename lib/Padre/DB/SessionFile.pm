@@ -10,7 +10,6 @@ use warnings;
 
 our $VERSION = '0.33';
 
-
 1;
 
 __END__

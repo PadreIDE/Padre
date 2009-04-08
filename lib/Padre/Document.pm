@@ -122,7 +122,7 @@ our %EXT_MIME = (
 # to confirm that the MIME type is either the official type, or the primary
 # one in use by the relevant language community.
 our %MIME_LEXER = (
-	'text/x-abc'  => Wx::wxSTC_LEX_CONTAINER,
+	'text/x-abc' => Wx::wxSTC_LEX_CONTAINER,
 
 	'text/x-adasrc' => Wx::wxSTC_LEX_ADA,    # CONFIRMED
 	'text/x-asm'    => Wx::wxSTC_LEX_ASM,    # CONFIRMED
@@ -889,11 +889,11 @@ sub stats {
 
 	# avoid slow calculation on large files
 	# TODO or improve them ?
-	if (length($code) < 100_000) {
+	if ( length($code) < 100_000 ) {
 		$words++               while ( $code =~ /\b\w+\b/g );
 		$chars_without_space++ while ( $code =~ /\S/g );
 	} else {
-		$words = Wx::gettext("Skipped for large files");
+		$words               = Wx::gettext("Skipped for large files");
 		$chars_without_space = Wx::gettext("Skipped for large files");
 	}
 

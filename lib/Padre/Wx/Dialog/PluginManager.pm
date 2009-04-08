@@ -9,19 +9,19 @@ use warnings;
 
 use Carp qw{ croak };
 use Class::XSAccessor accessors => {
-	_button       => '_button',         # general-purpose button
-	_butprefs     => '_butprefs',       # preferences button
-	_currow       => '_currow',         # current list row number
-	_curplugin    => '_curplugin',      # current plugin selected
-	_hbox         => '_hbox',           # the window hbox sizer
-	_imagelist    => '_imagelist',      # image list for the listctrl
-	_label        => '_label',          # label at top of right pane
-	_list         => '_list',           # list on the left of the pane
-	_manager      => '_manager',        # ref to plugin manager
-	_plugin_names => '_plugin_names',   # mapping of short/full plugin names
-	_sortcolumn   => '_sortcolumn',     # column used for list sorting
-	_sortreverse  => '_sortreverse',    # list sorting is reversed
-	_whtml        => '_whtml',          # html space for plugin doc
+	_button       => '_button',          # general-purpose button
+	_butprefs     => '_butprefs',        # preferences button
+	_currow       => '_currow',          # current list row number
+	_curplugin    => '_curplugin',       # current plugin selected
+	_hbox         => '_hbox',            # the window hbox sizer
+	_imagelist    => '_imagelist',       # image list for the listctrl
+	_label        => '_label',           # label at top of right pane
+	_list         => '_list',            # list on the left of the pane
+	_manager      => '_manager',         # ref to plugin manager
+	_plugin_names => '_plugin_names',    # mapping of short/full plugin names
+	_sortcolumn   => '_sortcolumn',      # column used for list sorting
+	_sortreverse  => '_sortreverse',     # list sorting is reversed
+	_whtml        => '_whtml',           # html space for plugin doc
 };
 use Padre::Wx::Icon;
 use Wx qw{ :everything };
@@ -68,7 +68,7 @@ sub show {
 
 	# select first item in the list. we don't need to test if
 	# there's at least a plugin, since there will always be
-	# 'my plugin'	
+	# 'my plugin'
 	my $list = $self->_list;
 	my $item = $list->GetItem(0);
 	$item->SetState(wxLIST_STATE_SELECTED);
@@ -161,8 +161,8 @@ sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
 	my $fullname = $event->GetLabel;
-	my $name   = $self->_plugin_names->{$fullname};
-	my $plugin = $self->_manager->plugins->{$name};
+	my $name     = $self->_plugin_names->{$fullname};
+	my $plugin   = $self->_manager->plugins->{$name};
 	$self->_curplugin($plugin);            # storing selected plugin
 	$self->_currow( $event->GetIndex );    # storing selected row
 
@@ -283,7 +283,7 @@ sub _create_right_pane {
 	$vbox->Add(
 		$whtml,
 		1,
-		wxALL|wxALIGN_TOP|wxALIGN_CENTER_HORIZONTAL|wxEXPAND,
+		wxALL | wxALIGN_TOP | wxALIGN_CENTER_HORIZONTAL | wxEXPAND,
 		1
 	);
 	$self->_whtml($whtml);
@@ -420,7 +420,7 @@ sub _refresh_list {
 		my $version    = $plugin->version || '???';
 		my $status     = $plugin->status;
 		my $l10nstatus = $plugin->status_localized;
-		$plugin_names{ $fullname } = $name;
+		$plugin_names{$fullname} = $name;
 
 		# check if plugin is supplying its own icon
 		my $iconidx = 0;

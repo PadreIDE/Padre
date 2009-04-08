@@ -321,8 +321,8 @@ sub load_files {
 	# Config setting 'last' means startup with all the files from the
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
-        my $session = Padre::DB::Session->last_padre_session;
-        $self->open_session($session) if defined($session);
+		my $session = Padre::DB::Session->last_padre_session;
+		$self->open_session($session) if defined($session);
 	}
 
 	# Config setting 'nothing' means startup with nothing open
@@ -867,8 +867,10 @@ sub run_document_parameters {
 	}
 
 	my $filename = File::Basename::fileparse( $self->current->filename );
-	$run_argv{$filename} = $self->prompt( Wx::gettext("Command line parameters"), Wx::gettext("Run parameters"),
-		"RUN_COMMAND_LINE_PARAMS_$filename" );
+	$run_argv{$filename} = $self->prompt(
+		Wx::gettext("Command line parameters"), Wx::gettext("Run parameters"),
+		"RUN_COMMAND_LINE_PARAMS_$filename"
+	);
 
 	return;
 }
@@ -1082,8 +1084,7 @@ sub on_close_window {
 	# part of the shutdown which will mess it up. Don't save it to
 	# the config yet, because we haven't committed to the shutdown
 	# until we get past the interactive phase.
-	my @session  = $self->capture_session;
-
+	my @session = $self->capture_session;
 
 	Padre::Util::debug("went over list of files");
 
@@ -1145,8 +1146,8 @@ sub on_close_window {
 	# Write the session to the database
 	Padre::DB->begin;
 	my $session = Padre::DB::Session->last_padre_session;
-	if ( $session ) {
-		Padre::DB::SessionFile->delete('where session = ?', $session->id);
+	if ($session) {
+		Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
 	} else {
 		$session = Padre::DB::Session->new_last_padre_session;
 	}
@@ -1243,10 +1244,15 @@ sub setup_editor {
 			$self->on_nth_pane($id);
 			return;
 		}
-		if (-s $file > $config->editor_file_size_limit) {
-			return $self->error(sprintf( 
-				Wx::gettext("Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"), 
-				$file, $config->editor_file_size_limit));
+		if ( -s $file > $config->editor_file_size_limit ) {
+			return $self->error(
+				sprintf(
+					Wx::gettext(
+						"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"),
+					$file,
+					$config->editor_file_size_limit
+				)
+			);
 		}
 	}
 
@@ -1319,26 +1325,26 @@ sub create_tab {
 # Padre::DB::SessionFile objects.
 #
 sub capture_session {
-        my ($self)   = @_;
+	my ($self) = @_;
 
-        my @session  = ();
-        my $notebook = $self->notebook;
-        my $current  = $self->current->filename;
-        foreach my $pageid ( $self->pageids ) {
-                next unless defined $pageid;
-                my $editor   = $notebook->GetPage($pageid);
-                my $document = $editor->{Document} or next;
-                my $file     = $editor->{Document}->filename;
-                next unless defined $file;
-                my $position  = $editor->GetCurrentPos;
-                my $focus     = ( defined $current and $current eq $file ) ? 1 : 0;
-                my $obj = Padre::DB::SessionFile->new(
-                        file      => $file,
-                        position  => $position,
-                        focus     => $focus,
-                );
-                push @session, $obj;
-        }
+	my @session  = ();
+	my $notebook = $self->notebook;
+	my $current  = $self->current->filename;
+	foreach my $pageid ( $self->pageids ) {
+		next unless defined $pageid;
+		my $editor   = $notebook->GetPage($pageid);
+		my $document = $editor->{Document} or next;
+		my $file     = $editor->{Document}->filename;
+		next unless defined $file;
+		my $position = $editor->GetCurrentPos;
+		my $focus    = ( defined $current and $current eq $file ) ? 1 : 0;
+		my $obj      = Padre::DB::SessionFile->new(
+			file     => $file,
+			position => $position,
+			focus    => $focus,
+		);
+		push @session, $obj;
+	}
 
 	return @session;
 }
@@ -1348,28 +1354,28 @@ sub capture_session {
 #
 # try to close all files, then open all files referenced in the given
 # $session (a padre::db::session object). no return value.
-# 
+#
 sub open_session {
-    my ($self, $session) = @_;
+	my ( $self, $session ) = @_;
 
 	# close all files
 	$self->on_close_all;
 
-    # get list of files in the session
-    my @files = $session->files;
-    return unless @files;
+	# get list of files in the session
+	my @files = $session->files;
+	return unless @files;
 
-    # opening documents
+	# opening documents
 	my $focus    = undef;
 	my $notebook = $self->notebook;
-	foreach my $document ( @files ) {
+	foreach my $document (@files) {
 		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 		my $filename = $document->file;
 		next unless -f $filename;
 		my $id = $self->setup_editor($filename);
 		Padre::Util::debug("Setting focus on $filename");
 		$focus = $id if $document->focus;
-		$notebook->GetPage($id)->goto_pos_centerize($document->position);
+		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
 	$self->on_nth_pane($focus) if defined $focus;
 }
@@ -1381,11 +1387,11 @@ sub open_session {
 # associated to $session. note that $session should already exist.
 #
 sub save_session {
-        my ($self, $session, @session) = @_;
+	my ( $self, $session, @session ) = @_;
 
 	Padre::DB->begin;
-	foreach my $file ( @session ) {
-		$file->{session} = $session->id ;
+	foreach my $file (@session) {
+		$file->{session} = $session->id;
 		$file->insert;
 	}
 	Padre::DB->commit;
@@ -2686,29 +2692,30 @@ sub key_up {
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
 	if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
-									  # Ctrl-TAB  #TODO it is already in the menu
+		                              # Ctrl-TAB  #TODO it is already in the menu
 		$self->on_next_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
-		# Ctrl-Shift-TAB #TODO it is already in the menu
+		                                                         # Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
-#		my $current_focus = Wx::Window::FindFocus();
-#		Padre::Util::debug("Current focus: $current_focus");
-#		# TODO this should be fine tuned later
-#		if ($code == Wx::WXK_UP) {
-#			# TODO get the list of panels at the bottom from some other place
-#			if (my $editor = Padre::Current->editor) {
-#				if ($current_focus->isa('Padre::Wx::Output') or
-#					$current_focus->isa('Padre::Wx::ErrorList') or
-#					$current_focus->isa('Padre::Wx::Syntax') 
-#				) {
-#					$editor->SetFocus;
-#				}
-#			}
-#		} elsif ($code == Wx::WXK_DOWN) {
-#			#Padre::Util::debug("Selection: " . $self->bottom->GetSelection);
-#			#$self->bottom->GetSelection;
-#		}
+
+		#		my $current_focus = Wx::Window::FindFocus();
+		#		Padre::Util::debug("Current focus: $current_focus");
+		#		# TODO this should be fine tuned later
+		#		if ($code == Wx::WXK_UP) {
+		#			# TODO get the list of panels at the bottom from some other place
+		#			if (my $editor = Padre::Current->editor) {
+		#				if ($current_focus->isa('Padre::Wx::Output') or
+		#					$current_focus->isa('Padre::Wx::ErrorList') or
+		#					$current_focus->isa('Padre::Wx::Syntax')
+		#				) {
+		#					$editor->SetFocus;
+		#				}
+		#			}
+		#		} elsif ($code == Wx::WXK_DOWN) {
+		#			#Padre::Util::debug("Selection: " . $self->bottom->GetSelection);
+		#			#$self->bottom->GetSelection;
+		#		}
 	}
 	$event->Skip();
 	return;

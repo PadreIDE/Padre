@@ -118,11 +118,10 @@ sub new {
 	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1, Wx::gettext("Open a session...\tCtrl-Alt-O") ),
+		$self->Append( -1, Wx::gettext("Open a session...\tCtrl-Alt-O") ),
 		sub {
 			require Padre::Wx::Dialog::SessionManager;
-			Padre::Wx::Dialog::SessionManager->new($_[0])->show;
+			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
 		},
 	);
 
@@ -218,11 +217,10 @@ sub new {
 	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1, Wx::gettext("Save current session...\tCtrl-Alt-S") ),
+		$self->Append( -1, Wx::gettext("Save current session...\tCtrl-Alt-S") ),
 		sub {
 			require Padre::Wx::Dialog::SessionSave;
-			Padre::Wx::Dialog::SessionSave->new($_[0])->show;
+			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
 		},
 	);
 

@@ -40,7 +40,7 @@ sub new {
 
 	$self->AssignImageList( $imagelist, Wx::wxIMAGE_LIST_SMALL );
 
-	$self->InsertColumn( $_, _get_title($_)) for 0..2;
+	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 2;
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$self, $self,
@@ -251,8 +251,8 @@ sub on_idle {
 sub _get_title {
 	my $c = shift;
 
-	return Wx::gettext('Line') if $c == 0;
-	return Wx::gettext('Type') if $c == 1;
+	return Wx::gettext('Line')        if $c == 0;
+	return Wx::gettext('Type')        if $c == 1;
 	return Wx::gettext('Description') if $c == 2;
 
 	die "invalid value '$c'";
@@ -261,10 +261,10 @@ sub _get_title {
 sub relocale {
 	my $self = shift;
 
-	for my $i (0..2) {
-		my $col = $self->GetColumn( $i );
-		$col->SetText(_get_title($i));
-		$self->SetColumn( $i, $col);
+	for my $i ( 0 .. 2 ) {
+		my $col = $self->GetColumn($i);
+		$col->SetText( _get_title($i) );
+		$self->SetColumn( $i, $col );
 	}
 
 	return;

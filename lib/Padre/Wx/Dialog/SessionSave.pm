@@ -8,17 +8,16 @@ use strict;
 use warnings;
 
 use Class::XSAccessor accessors => {
-	_combo        => '_combo',          # combo box holding the session names
-	_names        => '_names',          # list of all session names
-	_sizer        => '_sizer',          # the window sizer
-	_text         => '_text',           # text control holding the description
+	_combo => '_combo',    # combo box holding the session names
+	_names => '_names',    # list of all session names
+	_sizer => '_sizer',    # the window sizer
+	_text  => '_text',     # text control holding the description
 };
 use Wx qw{ :everything };
 
 use base 'Wx::Frame';
 
 our $VERSION = '0.33';
-
 
 # -- constructor
 
@@ -134,7 +133,7 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	my $sizer = Wx::GridBagSizer->new(5,5);
+	my $sizer = Wx::GridBagSizer->new( 5, 5 );
 	$sizer->AddGrowableCol(1);
 	$self->SetSizer($sizer);
 	$self->_sizer($sizer);
@@ -158,20 +157,20 @@ sub _create_fields {
 	my $sizer = $self->_sizer;
 
 	# session name
-	my $lab1  = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
-	my $combo = Wx::ComboBox->new  ( $self, -1, '' );
-	$sizer->Add( $lab1,  Wx::GBPosition->new(0,0) );
-	$sizer->Add( $combo, Wx::GBPosition->new(0,1), Wx::GBSpan->new(1,3), wxEXPAND );
-	$self->_combo( $combo );
+	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
+	my $combo = Wx::ComboBox->new( $self, -1, '' );
+	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
+	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), wxEXPAND );
+	$self->_combo($combo);
 	Wx::Event::EVT_COMBOBOX( $self, $combo, \&_on_combo_item_selected );
-	Wx::Event::EVT_TEXT    ( $self, $combo, \&_on_combo_text_changed  );
+	Wx::Event::EVT_TEXT( $self, $combo, \&_on_combo_text_changed );
 
 	# session descritpion
-	my $lab2  = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
-	my $text  = Wx::TextCtrl->new  ( $self, -1, '' );
-	$sizer->Add( $lab2, Wx::GBPosition->new(1,0) );
-	$sizer->Add( $text, Wx::GBPosition->new(1,1), Wx::GBSpan->new(1,3), wxEXPAND );
-	$self->_text( $text );
+	my $lab2 = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
+	my $text = Wx::TextCtrl->new( $self, -1, '' );
+	$sizer->Add( $lab2, Wx::GBPosition->new( 1, 0 ) );
+	$sizer->Add( $text, Wx::GBPosition->new( 1, 1 ), Wx::GBSpan->new( 1, 3 ), wxEXPAND );
+	$self->_text($text);
 }
 
 #
@@ -187,12 +186,12 @@ sub _create_buttons {
 	my $sizer = $self->_sizer;
 
 	# the buttons
-	my $bs  = Wx::Button->new( $self, -1, Wx::gettext('Save') );
-	my $bc  = Wx::Button->new( $self, -1, Wx::gettext('Close') );
+	my $bs = Wx::Button->new( $self, -1, Wx::gettext('Save') );
+	my $bc = Wx::Button->new( $self, -1, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON( $self, $bs, \&_on_butsave_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
-	$sizer->Add( $bs, Wx::GBPosition->new(2,2) );
-	$sizer->Add( $bc, Wx::GBPosition->new(2,3) );
+	$sizer->Add( $bs, Wx::GBPosition->new( 2, 2 ) );
+	$sizer->Add( $bc, Wx::GBPosition->new( 2, 3 ) );
 
 }
 
@@ -206,7 +205,8 @@ sub _current_session {
 	my $self = shift;
 	my ($current) = Padre::DB::Session->select(
 		'where name = ?',
-		$self->_combo->GetValue );
+		$self->_combo->GetValue
+	);
 	return $current;
 }
 
@@ -219,17 +219,14 @@ sub _refresh_combo {
 	my ( $self, $column, $reverse ) = @_;
 
 	# get list of sessions, sorted.
-	my @names =
-		map { $_->name }
-		Padre::DB::Session->select( 'ORDER BY name' );
+	my @names = map { $_->name } Padre::DB::Session->select('ORDER BY name');
 	$self->_names( \@names );
 
 	# clear list & fill it again
 	my $combo = $self->_combo;
 	$combo->Clear;
-	$combo->Append( $_ ) foreach @names;
+	$combo->Append($_) foreach @names;
 }
-
 
 1;
 

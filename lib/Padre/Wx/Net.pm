@@ -19,10 +19,6 @@ use Padre::Wx ();
 
 our $VERSION = '0.33';
 
-
-
-
-
 #####################################################################
 # Server Functionality
 
@@ -44,7 +40,7 @@ sub localhost_server_connect {
 	my $event  = shift;
 	my $addr   = Wx::IPV4address->new;
 	my $buffer = '';
-	$sock->RecvFrom($addr, $buffer, 1000);
+	$sock->RecvFrom( $addr, $buffer, 1000 );
 
 }
 
