@@ -24,6 +24,7 @@ use Class::XSAccessor accessors => {
 	_whtml        => '_whtml',          # html space for plugin doc
 };
 use Padre::Wx::Icon;
+use Wx qw{ :everything };
 
 use base 'Wx::Frame';
 
@@ -39,9 +40,9 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Plugin Manager'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxDEFAULT_FRAME_STYLE,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
@@ -66,7 +67,7 @@ sub show {
 	# select first item in the list
 	my $list = $self->_list;
 	my $item = $list->GetItem(0);
-	$item->SetState(Wx::wxLIST_STATE_SELECTED);
+	$item->SetState(wxLIST_STATE_SELECTED);
 	$list->SetItem($item);
 
 	$self->Show;
@@ -198,7 +199,7 @@ sub _create {
 	my $self = shift;
 
 	# create vertical box that will host all controls
-	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $hbox = Wx::BoxSizer->new(wxHORIZONTAL);
 	$self->SetSizer($hbox);
 	$self->SetMinSize( [ 640, 480 ] );
 	$self->_hbox($hbox);
@@ -222,9 +223,9 @@ sub _create_list {
 	my $list = Wx::ListView->new(
 		$self,
 		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
+		wxDefaultPosition,
+		wxDefaultSize,
+		wxLC_REPORT | wxLC_SINGLE_SEL,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Name') );
 	$list->InsertColumn( 1, Wx::gettext('Version') );
@@ -238,11 +239,11 @@ sub _create_list {
 
 	# create imagelist
 	my $imglist = Wx::ImageList->new( 16, 16 );
-	$list->AssignImageList( $imglist, Wx::wxIMAGE_LIST_SMALL );
+	$list->AssignImageList( $imglist, wxIMAGE_LIST_SMALL );
 	$self->_imagelist($imglist);
 
 	# pack the list
-	$self->_hbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$self->_hbox->Add( $list, 0, wxALL | wxEXPAND, 1 );
 }
 
 #
@@ -257,33 +258,35 @@ sub _create_right_pane {
 	my $self = shift;
 
 	# all controls will be lined up in a vbox
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $vbox = Wx::BoxSizer->new(wxVERTICAL);
+	$self->_hbox->Add( $vbox, 1, wxALL | wxEXPAND, 1 );
 
 	# the plugin name
-	my $hbox1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$vbox->Add( $hbox1, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $hbox1 = Wx::BoxSizer->new(wxHORIZONTAL);
+	$vbox->Add( $hbox1, 0, wxALL | wxEXPAND, 1 );
 	my $label = Wx::StaticText->new( $self, -1, 'plugin name' );
 	my $font = $label->GetFont;
-	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
+	$font->SetWeight(wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 2 );
 	$label->SetFont($font);
 	$hbox1->AddStretchSpacer;
-	$hbox1->Add( $label, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
+	$hbox1->Add( $label, 0, wxEXPAND | wxALIGN_CENTER, 1 );
 	$hbox1->AddStretchSpacer;
 	$self->_label($label);
 
 	# the plugin documentation
 	my $whtml = Wx::HtmlWindow->new($self);
 	$vbox->Add(
-		$whtml,                                           1, Wx::wxALL | Wx::wxALIGN_TOP |
-			Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
+		$whtml,
+		1,
+		wxALL|wxALIGN_TOP|wxALIGN_CENTER_HORIZONTAL|wxEXPAND,
+		1
 	);
 	$self->_whtml($whtml);
 
 	# the buttons
-	my $hbox2 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	my $hbox2 = Wx::BoxSizer->new(wxHORIZONTAL);
+	$vbox->Add( $hbox2, 0, wxALL | wxEXPAND, 1 );
 	my $b1 = Wx::Button->new( $self, -1, 'Button 1' );
 	my $b2 = Wx::Button->new( $self, -1, Wx::gettext('Preferences') );
 	my $b3 = Wx::Button->new( $self, -1, Wx::gettext('Close') );
@@ -291,10 +294,10 @@ sub _create_right_pane {
 	Wx::Event::EVT_BUTTON( $self, $b2, \&_on_butprefs_clicked );
 	Wx::Event::EVT_BUTTON( $self, $b3, \&_on_butclose_clicked );
 	$hbox2->AddStretchSpacer;
-	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
-	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
+	$hbox2->Add( $b1, 0, wxALL, 1 );
+	$hbox2->Add( $b2, 0, wxALL, 1 );
 	$hbox2->AddStretchSpacer;
-	$hbox2->Add( $b3, 0, Wx::wxALL, 1 );
+	$hbox2->Add( $b3, 0, wxALL, 1 );
 	$hbox2->AddStretchSpacer;
 	$self->_button($b1);
 	$self->_butprefs($b2);
@@ -354,7 +357,7 @@ sub _plugin_show_error_msg {
 
 	my $message = $self->_curplugin->errstr;
 	my $title   = Wx::gettext('Error');
-	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
+	Wx::MessageBox( $message, $title, wxOK | wxCENTER, $self );
 }
 
 #
@@ -434,7 +437,7 @@ sub _refresh_list {
 	$self->_plugin_names( \%plugin_names );
 
 	# auto-resize columns
-	$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE ) for 0 .. 2;
+	$list->SetColumnWidth( $_, wxLIST_AUTOSIZE ) for 0 .. 2;
 
 	# making sure the list can show all columns
 	my $width = 15;    # taking vertical scrollbar into account
