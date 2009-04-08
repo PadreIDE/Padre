@@ -2,7 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 
     Sessions support (#123) (JQUELIN)
     Enable tooltips on the toolbar on Windows as well (SZABGAB)
-    Fix localization chane in the Syntax window (#198) (SZABGAB)
+    Fix localization change in the Syntax window (#198) (SZABGAB)
     Plugin manager correctly localized at startup (JQUELIN)
     Plugin manager displaying full plugin names (JQUELIN)
     Set file size limit to 500_000 to avoid loading too big files. (#186) (SZABGAB)
