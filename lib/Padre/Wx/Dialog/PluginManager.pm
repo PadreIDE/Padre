@@ -64,7 +64,9 @@ sub show {
 
 	$self->_refresh_list;
 
-	# select first item in the list
+	# select first item in the list. we don't need to test if
+	# there's at least a plugin, since there will always be
+	# 'my plugin'	
 	my $list = $self->_list;
 	my $item = $list->GetItem(0);
 	$item->SetState(wxLIST_STATE_SELECTED);
