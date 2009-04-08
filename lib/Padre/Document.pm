@@ -72,6 +72,7 @@ our %EXT_BINARY = (
 
 # This is the primary file extension to mime-type mapping
 our %EXT_MIME = (
+	abc   => 'text/x-abc',
 	ada   => 'text/x-adasrc',
 	asm   => 'text/x-asm',
 	bat   => 'text/x-bat',
@@ -121,6 +122,8 @@ our %EXT_MIME = (
 # to confirm that the MIME type is either the official type, or the primary
 # one in use by the relevant language community.
 our %MIME_LEXER = (
+	'text/x-abc'  => Wx::wxSTC_LEX_CONTAINER,
+
 	'text/x-adasrc' => Wx::wxSTC_LEX_ADA,    # CONFIRMED
 	'text/x-asm'    => Wx::wxSTC_LEX_ASM,    # CONFIRMED
 
