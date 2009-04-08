@@ -35,7 +35,7 @@ sub new {
 		Wx::gettext('Session Manager'),
 		wxDefaultPosition,
 		wxDefaultSize,
-		wxDEFAULT_FRAME_STYLE,
+		wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
