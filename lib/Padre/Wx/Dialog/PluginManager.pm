@@ -134,7 +134,7 @@ sub _on_list_col_click {
 	$reversed = $col == $prevcol ? !$reversed : 0;
 	$self->_sortcolumn($col);
 	$self->_sortreverse($reversed);
-	$self->_refresh_list( $col, $reversed );
+	$self->_refresh_list;
 }
 
 #
@@ -365,14 +365,13 @@ sub _plugin_show_error_msg {
 }
 
 #
-# $dialog->_refresh_list($column, $reverse);
+# $dialog->_refresh_list;
 #
 # refresh list of plugins and their associated state. list is sorted
-# according to $column (default to first column), and may be reversed
-# (default to no).
+# according to current sort criterion.
 #
 sub _refresh_list {
-	my ( $self, $column, $reverse ) = @_;
+	my ($self) = @_;
 
 	my $list    = $self->_list;
 	my $manager = $self->_manager;
@@ -380,8 +379,8 @@ sub _refresh_list {
 	my $imglist = $self->_imagelist;
 
 	# default sorting
-	$column  ||= 0;
-	$reverse ||= 0;
+	my $column  = $self->_sortcolumn;
+	my $reverse = $self->_sortreverse;
 
 	# clear image list & fill it again
 	$imglist->RemoveAll;
