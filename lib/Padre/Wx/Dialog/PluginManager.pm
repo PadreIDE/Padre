@@ -45,6 +45,8 @@ sub new {
 		wxDEFAULT_FRAME_STYLE,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
+	$self->_sortcolumn(0);
+	$self->_sortreverse(0);
 
 	# store plugin manager
 	croak "Missing or invalid Padre::PluginManager object"
@@ -127,8 +129,8 @@ sub _on_list_col_click {
 	my ( $self, $event ) = @_;
 	my $col = $event->GetColumn;
 
-	my $prevcol  = $self->_sortcolumn  || 0;
-	my $reversed = $self->_sortreverse || 0;
+	my $prevcol  = $self->_sortcolumn;
+	my $reversed = $self->_sortreverse;
 	$reversed = $col == $prevcol ? !$reversed : 0;
 	$self->_sortcolumn($col);
 	$self->_sortreverse($reversed);
