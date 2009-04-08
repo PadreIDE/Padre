@@ -1146,11 +1146,7 @@ sub on_close_window {
 	# Write the session to the database
 	Padre::DB->begin;
 	my $session = Padre::DB::Session->last_padre_session;
-	if ($session) {
-		Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
-	} else {
-		$session = Padre::DB::Session->new_last_padre_session;
-	}
+	Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
 	Padre::DB->commit;
 	$self->save_session( $session, @session );
 
