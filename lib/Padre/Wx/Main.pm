@@ -1360,7 +1360,8 @@ sub open_session {
     return unless @files;
 
     # opening documents
-	my $focus = undef;
+	my $focus    = undef;
+	my $notebook = $self->notebook;
 	foreach my $document ( @files ) {
 		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 		my $filename = $document->file;
@@ -1368,8 +1369,7 @@ sub open_session {
 		my $id = $self->setup_editor($filename);
 		Padre::Util::debug("Setting focus on $filename");
 		$focus = $id if $document->focus;
-
-		# TODO - Go to the line/character
+		$notebook->GetPage($id)->goto_pos_centerize($document->position);
 	}
 	$self->on_nth_pane($focus) if defined $focus;
 }
