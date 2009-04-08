@@ -17,7 +17,8 @@ use Class::XSAccessor accessors => {
 	_sortreverse => '_sortreverse',    # list sorting is reversed
 	_vbox        => '_vbox',           # the window vbox sizer
 };
-use Wx qw{ :everything };
+use POSIX qw{ strftime };
+use Wx    qw{ :everything };
 
 use base 'Wx::Frame';
 
@@ -270,7 +271,7 @@ sub _refresh_list {
 	foreach my $session ( reverse @sessions ) {
 		my $name   = $session->name;
 		my $descr  = $session->description;
-		my $update = localtime( $session->last_update );
+		my $update = strftime( '%F %T', localtime( $session->last_update ) );
 
 		# inserting the session in the list
 		my $item = Wx::ListItem->new;
