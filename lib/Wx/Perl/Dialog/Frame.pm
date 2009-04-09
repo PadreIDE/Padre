@@ -4,10 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use File::Spec ();
-use Wx qw(:everything);
+use Wx::Perl::Dialog;
 use Wx::STC ();
 use Wx::Event qw(:everything);
-use Wx::Perl::Dialog::Frame ();
+
 use base 'Wx::Frame';
 
 our $VERSION = '0.33';
@@ -19,8 +19,8 @@ sub new {
 		undef,
 		-1,
 		'Wx::Perl::Dialog',
-		wxDefaultPosition,
-		wxDefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	#    EVT_ACTIVATE($self, \&on_activate);

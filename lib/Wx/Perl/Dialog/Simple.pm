@@ -69,7 +69,7 @@ our @EXPORT = qw(
 
 #                 print_out close_app open_frame display_text
 
-use Wx qw(:everything);
+use Wx::Perl::Dialog;
 use Wx::STC ();
 use Wx::Event qw(:everything);
 
@@ -85,7 +85,7 @@ sub entry {
 
 	my $class = $args{password} ? 'Wx::PasswordEntryDialog' : 'Wx::TextEntryDialog';
 	my $dialog = $class->new( undef, $args{prompt}, $args{title}, $args{default} );
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $resp = $dialog->GetValue;
@@ -116,11 +116,11 @@ sub file_selector {
 		%args
 	);
 
-	my $dialog = Wx::FileDialog->new( undef, $args{title}, '', "", "*.*", wxFD_OPEN );
+	my $dialog = Wx::FileDialog->new( undef, $args{title}, '', "", "*.*", Wx::wxFD_OPEN );
 	if ( $^O !~ /win32/i ) {
 		$dialog->SetWildcard("*");
 	}
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $filename    = $dialog->GetFilename;
@@ -142,7 +142,7 @@ sub dir_selector {
 	);
 
 	my $dialog = Wx::DirDialog->new( undef, $args{title}, $args{path} );
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	my $dir = $dialog->GetPath;
@@ -240,12 +240,12 @@ sub dialog {
 
 	my $dialog = Wx::Dialog->new( undef, -1, $args->{title} );
 	my $ctrl   = $control->($dialog);
-	my $ok     = Wx::Button->new( $dialog, wxID_OK, '' );
-	my $cancel = Wx::Button->new( $dialog, wxID_CANCEL, '', [ -1, -1 ], $ok->GetSize );
+	my $ok     = Wx::Button->new( $dialog, Wx::wxID_OK, '' );
+	my $cancel = Wx::Button->new( $dialog, Wx::wxID_CANCEL, '', [ -1, -1 ], $ok->GetSize );
 
-	my $box     = Wx::BoxSizer->new(wxVERTICAL);
-	my $top     = Wx::BoxSizer->new(wxHORIZONTAL);
-	my $buttons = Wx::BoxSizer->new(wxHORIZONTAL);
+	my $box     = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $top     = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$box->Add($top);
 	$box->Add($buttons);
 	$top->Add($ctrl);
@@ -260,7 +260,7 @@ sub dialog {
 
 	$setup->($ctrl);
 
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 
@@ -286,7 +286,7 @@ sub choice {
 	);
 
 	my $dialog = Wx::MultiChoiceDialog->new( undef, $args{message}, $args{title}, $args{choices} );
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	return map { $args{choices}[$_] } $dialog->GetSelections;
@@ -303,7 +303,7 @@ sub single_choice {
 	);
 
 	my $dialog = Wx::SingleChoiceDialog->new( undef, $args{message}, $args{title}, $args{choices} );
-	if ( $dialog->ShowModal == wxID_CANCEL ) {
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
 	return $args{choices}[ $dialog->GetSelection ];
@@ -335,7 +335,7 @@ sub message {
 		%args
 	);
 
-	Wx::MessageBox( $args{text}, $args{title}, wxOK | wxCENTRE );
+	Wx::MessageBox( $args{text}, $args{title}, Wx::wxOK | Wx::wxCENTRE );
 
 	return;
 }

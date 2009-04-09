@@ -13,7 +13,7 @@ use Class::XSAccessor accessors => {
 	_sizer => '_sizer',    # the window sizer
 	_text  => '_text',     # text control holding the description
 };
-use Wx qw{ :everything };
+use Padre::Wx ();
 
 use base 'Wx::Frame';
 
@@ -29,9 +29,9 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Save session as...'),
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_FRAME_STYLE|Wx::wxTAB_TRAVERSAL,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
@@ -160,7 +160,7 @@ sub _create_fields {
 	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
 	my $combo = Wx::ComboBox->new( $self, -1, '' );
 	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
-	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), wxEXPAND );
+	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
 	$self->_combo($combo);
 	Wx::Event::EVT_COMBOBOX( $self, $combo, \&_on_combo_item_selected );
 	Wx::Event::EVT_TEXT( $self, $combo, \&_on_combo_text_changed );
@@ -169,7 +169,7 @@ sub _create_fields {
 	my $lab2 = Wx::StaticText->new( $self, -1, Wx::gettext('Description:') );
 	my $text = Wx::TextCtrl->new( $self, -1, '' );
 	$sizer->Add( $lab2, Wx::GBPosition->new( 1, 0 ) );
-	$sizer->Add( $text, Wx::GBPosition->new( 1, 1 ), Wx::GBSpan->new( 1, 3 ), wxEXPAND );
+	$sizer->Add( $text, Wx::GBPosition->new( 1, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
 	$self->_text($text);
 }
 
