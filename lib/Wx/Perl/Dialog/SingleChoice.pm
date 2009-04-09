@@ -4,7 +4,6 @@ use strict;
 use warnings;
 
 use Wx::Perl::Dialog;
-use Wx::Event qw(:everything);
 
 our $VERSION = '0.33';
 
@@ -48,11 +47,11 @@ sub dialog {
 	$tb->SetFocus;
 
 	my $ok = Wx::Button->new( $dialog, Wx::wxID_OK, '' );
-	EVT_BUTTON( $dialog, $ok, sub { $dialog->EndModal(Wx::wxID_OK) } );
+	Wx::Event::EVT_BUTTON( $dialog, $ok, sub { $dialog->EndModal(Wx::wxID_OK) } );
 	$ok->SetDefault;
 
 	my $cancel = Wx::Button->new( $dialog, Wx::wxID_CANCEL, '', [ -1, -1 ], $ok->GetSize );
-	EVT_BUTTON( $dialog, $cancel, sub { $dialog->EndModal(Wx::wxID_CANCEL) } );
+	Wx::Event::EVT_BUTTON( $dialog, $cancel, sub { $dialog->EndModal(Wx::wxID_CANCEL) } );
 
 	$row1->Add($tb);
 	$row2->Add($ok);

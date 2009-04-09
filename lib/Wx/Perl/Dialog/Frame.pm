@@ -6,7 +6,6 @@ use warnings;
 use File::Spec ();
 use Wx::Perl::Dialog;
 use Wx::STC ();
-use Wx::Event qw(:everything);
 
 use base 'Wx::Frame';
 
@@ -23,7 +22,7 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	#    EVT_ACTIVATE($self, \&on_activate);
+	#    Wx::Event:EVT_ACTIVATE($self, \&on_activate);
 	Wx::Event::EVT_CLOSE(
 		$self,
 		sub {

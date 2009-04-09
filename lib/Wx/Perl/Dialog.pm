@@ -7,6 +7,7 @@ use warnings;
 our $VERSION = '0.33';
 
 use Wx ':everything';
+use Wx::Event ':everything';
 
 use base 'Wx::Dialog';
 

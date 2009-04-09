@@ -71,7 +71,6 @@ our @EXPORT = qw(
 
 use Wx::Perl::Dialog;
 use Wx::STC ();
-use Wx::Event qw(:everything);
 
 sub entry {
 	my (%args) = @_;
