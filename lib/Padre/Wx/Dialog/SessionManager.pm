@@ -18,7 +18,7 @@ use Class::XSAccessor accessors => {
 	_vbox        => '_vbox',           # the window vbox sizer
 };
 use POSIX qw{ strftime };
-use Wx    qw{ :everything };
+use Padre::Wx ();
 
 use base 'Wx::Frame';
 
@@ -34,9 +34,9 @@ sub new {
 		$parent,
 		-1,
 		Wx::gettext('Session Manager'),
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_FRAME_STYLE|Wx::wxTAB_TRAVERSAL,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
@@ -152,7 +152,7 @@ sub _create {
 	my $self = shift;
 
 	# create vertical box that will host all controls
-	my $vbox = Wx::BoxSizer->new(wxVERTICAL);
+	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$self->SetSizer($vbox);
 
 	#$self->SetMinSize( [ 640, 480 ] );
@@ -179,15 +179,15 @@ sub _create_list {
 		$self, -1,
 		Wx::gettext('List of sessions')
 	);
-	$vbox->Add( $label, 0, wxALL, 1 );
+	$vbox->Add( $label, 0, Wx::wxALL, 1 );
 
 	# create list
 	my $list = Wx::ListView->new(
 		$self,
 		-1,
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxLC_REPORT | wxLC_SINGLE_SEL,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
 	$list->InsertColumn( 0, Wx::gettext('Name') );
 	$list->InsertColumn( 1, Wx::gettext('Description') );
@@ -199,7 +199,7 @@ sub _create_list {
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
-	$vbox->Add( $list, 1, wxALL | wxEXPAND, 1 );
+	$vbox->Add( $list, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 }
 
 #
@@ -213,8 +213,8 @@ sub _create_buttons {
 	my $self = shift;
 
 	# the hbox
-	my $hbox = Wx::BoxSizer->new(wxHORIZONTAL);
-	$self->_vbox->Add( $hbox, 0, wxALL | wxEXPAND, 1 );
+	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# the buttons
 	my $bo = Wx::Button->new( $self, -1, Wx::gettext('Open') );
@@ -225,10 +225,10 @@ sub _create_buttons {
 	Wx::Event::EVT_BUTTON( $self, $bo, \&_on_butopen_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bd, \&_on_butdelete_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
-	$hbox->Add( $bo, 0, wxALL, 1 );
-	$hbox->Add( $bd, 0, wxALL, 1 );
+	$hbox->Add( $bo, 0, Wx::wxALL, 1 );
+	$hbox->Add( $bd, 0, Wx::wxALL, 1 );
 	$hbox->AddStretchSpacer;
-	$hbox->Add( $bc, 0, wxALL, 1 );
+	$hbox->Add( $bc, 0, Wx::wxALL, 1 );
 }
 
 #
@@ -286,8 +286,8 @@ sub _refresh_list {
 	# auto-resize columns
 	my $flag
 		= $list->GetItemCount
-		? wxLIST_AUTOSIZE
-		: wxLIST_AUTOSIZE_USEHEADER;
+		? Wx::wxLIST_AUTOSIZE
+		: Wx::wxLIST_AUTOSIZE_USEHEADER;
 	$list->SetColumnWidth( $_, $flag ) for 0 .. 2;
 
 	# making sure the list can show all columns
@@ -310,7 +310,7 @@ sub _select_first_item {
 
 	if ( $list->GetItemCount ) {
 		my $item = $list->GetItem(0);
-		$item->SetState(wxLIST_STATE_SELECTED);
+		$item->SetState(Wx::wxLIST_STATE_SELECTED);
 		$list->SetItem($item);
 	} else {
 
