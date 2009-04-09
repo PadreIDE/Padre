@@ -100,6 +100,7 @@ sub _on_butopen_clicked {
 	# close all open documents
 	my $main = $self->GetParent;
 	$main->open_session( $self->_current_session );
+	$self->Destroy();
 }
 
 #
@@ -136,6 +137,21 @@ sub _on_list_item_selected {
 
 	# update buttons
 	$self->_update_buttons_state;
+}
+
+#
+# $self->_on_list_item_activated( $event );
+#
+# handler called when a list item has been double clicked. it will automatically open
+# the selected session
+#
+# $event is a Wx::ListEvent.
+#
+sub _on_list_item_activated {
+	my ( $self, $event ) = @_;
+
+	$self->_on_list_item_selected($event);
+	$self->_on_butopen_clicked();
 }
 
 # -- private methods
@@ -196,6 +212,7 @@ sub _create_list {
 
 	# install event handler
 	Wx::Event::EVT_LIST_ITEM_SELECTED( $self, $list, \&_on_list_item_selected );
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $list, \&_on_list_item_activated );
 	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
 
 	# pack the list
