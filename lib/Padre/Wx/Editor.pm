@@ -762,11 +762,15 @@ sub unfold_all {
 	return;
 }
 
+# when the focus is received by the editor
 sub on_focus {
 	my ( $self, $event ) = @_;
 	my $doc = Padre::Current->document;
 
 	Padre::Util::debug( "Focus received file: " . ( $doc->filename || '' ) );
+	
+	# to show/hide the document specific Perl menu
+	$self->main->refresh_menu;
 
 	if ( $self->needs_manual_colorize ) {
 

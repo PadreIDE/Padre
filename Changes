@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    Stop refreshing the menues on every keystroke. Instead when the menu is being accessed. (SZABGAB)
     Sessions support (#123) (JQUELIN)
     Enable tooltips on the toolbar on Windows as well (SZABGAB)
     Fix localization change in the Syntax window (#198) (SZABGAB)

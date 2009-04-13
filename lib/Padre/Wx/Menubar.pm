@@ -79,7 +79,7 @@ sub new {
 	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
 
 	Wx::Event::EVT_MENU_OPEN( $main, sub {
-		Padre->ide->wx->main->menu->file->refresh();
+		Padre->ide->wx->main->menu->refresh();
 	});
 
 	my $config = Padre->ide->config;
@@ -119,7 +119,7 @@ sub refresh {
 	}
 
 	# Refresh individual menus
-#	$self->file->refresh($current);
+	$self->file->refresh($current);
 	$self->edit->refresh($current);
 	$self->search->refresh($current);
 	$self->view->refresh($current);
