@@ -79,7 +79,7 @@ sub refresh {
 		-1,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
-		( length($postring) + 2 ) * $width,
+		( length($postring) + 4 ) * $width,
 	);
 
 	# Fixed ticket #190: Massive GDI object leakages
