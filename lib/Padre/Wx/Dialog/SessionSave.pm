@@ -115,7 +115,9 @@ sub _on_combo_item_selected {
 sub _on_combo_text_changed {
 	my ( $self, $event ) = @_;
 
-	my $name    = $self->_combo->GetValue;
+	my $name   = $self->_combo->GetValue;
+	my $method = $name ? 'Enable' : 'Disable';
+	$self->_butsave->$method;
 	my $session = $self->_current_session;
 	return unless $session;
 	$self->_text->SetValue( $session->description );
@@ -193,6 +195,9 @@ sub _create_buttons {
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 	$sizer->Add( $bs, Wx::GBPosition->new( 2, 2 ) );
 	$sizer->Add( $bc, Wx::GBPosition->new( 2, 3 ) );
+
+	# save button is disabled at first
+	$bs->Disable;
 	$self->_butsave($bs);
 }
 
