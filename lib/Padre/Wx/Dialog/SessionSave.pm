@@ -73,7 +73,13 @@ sub _on_butsave_clicked {
 	my $main    = $self->GetParent;
 	my $session = $self->_current_session;
 	
-	if ( not defined $session ) {
+	if ( defined $session ) {
+		# session exist, remove all files associated to it
+		Padre::DB::SessionFile->delete(
+			'where session = ?',
+			$session->id
+		);
+	} else {
 		# session did not exist, create a new one
 		$session = Padre::DB::Session->new(
 			name        => $self->_combo->GetValue,
