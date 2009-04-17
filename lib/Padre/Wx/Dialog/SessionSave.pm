@@ -72,7 +72,9 @@ sub _on_butsave_clicked {
 
 	my $main    = $self->GetParent;
 	my $session = $self->_current_session;
+	
 	if ( not defined $session ) {
+		# session did not exist, create a new one
 		$session = Padre::DB::Session->new(
 			name        => $self->_combo->GetValue,
 			description => $self->_text->GetValue,
@@ -80,6 +82,8 @@ sub _on_butsave_clicked {
 		);
 		$session->insert;
 	}
+	
+	# capture session and save it
 	my @session = $main->capture_session;
 	$main->save_session( $session, @session );
 
