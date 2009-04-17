@@ -342,6 +342,7 @@ sub load_files {
 	if ( $startup eq 'last' ) {
 		my $session = Padre::DB::Session->last_padre_session;
 		$self->open_session($session) if defined($session);
+		return;
 	}
 
 	# Config setting 'nothing' means startup with nothing open
