@@ -170,6 +170,7 @@ sub _create {
 	# create vertical box that will host all controls
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$self->SetSizer($vbox);
+	$self->CenterOnParent;
 
 	#$self->SetMinSize( [ 640, 480 ] );
 	$self->_vbox($vbox);
