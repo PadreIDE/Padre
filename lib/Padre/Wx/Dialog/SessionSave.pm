@@ -8,10 +8,11 @@ use strict;
 use warnings;
 
 use Class::XSAccessor accessors => {
-	_combo => '_combo',    # combo box holding the session names
-	_names => '_names',    # list of all session names
-	_sizer => '_sizer',    # the window sizer
-	_text  => '_text',     # text control holding the description
+	_butsave => '_butsave',  # save button
+	_combo   => '_combo',    # combo box holding the session names
+	_names   => '_names',    # list of all session names
+	_sizer   => '_sizer',    # the window sizer
+	_text    => '_text',     # text control holding the description
 };
 use Padre::Wx ();
 
@@ -192,7 +193,7 @@ sub _create_buttons {
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 	$sizer->Add( $bs, Wx::GBPosition->new( 2, 2 ) );
 	$sizer->Add( $bc, Wx::GBPosition->new( 2, 3 ) );
-
+	$self->_butsave($bs);
 }
 
 #
