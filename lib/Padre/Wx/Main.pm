@@ -1388,6 +1388,7 @@ sub open_session {
 		my $filename = $document->file;
 		next unless -f $filename;
 		my $id = $self->setup_editor($filename);
+		next unless $id; # documents already opened have undef $id
 		Padre::Util::debug("Setting focus on $filename");
 		$focus = $id if $document->focus;
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
