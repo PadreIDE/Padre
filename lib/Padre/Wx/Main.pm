@@ -310,8 +310,27 @@ sub load_files {
 	my $self    = shift;
 	my $config  = $self->config;
 	my $startup = $config->main_startup;
+	my $ide     = Padre->ide;
 
-	# An explicit list on the command line overrides configuration
+	# explicit session on command line takes precedence
+	if ( defined $ide->opts->{session} ) {
+		# try to find the wanted session...
+		my ($session) = Padre::DB::Session->select(
+			'where name = ?', $ide->opts->{session}
+		);
+		# ... and open it.
+		if ( defined $session ) {
+			$self->open_session($session);
+		} else {
+			my $error =
+				sprintf Wx::gettext('No such session %s'),
+				$ide->opts->{session};
+			$self->error($error);
+		}
+		return;
+	}
+	
+	# otherwise, an explicit list on the command line overrides configuration
 	my $files = Padre->ide->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
 		$self->setup_editors(@$files);

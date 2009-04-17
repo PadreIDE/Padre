@@ -81,6 +81,7 @@ use Class::Autouse qw{
 # Generate faster accessors
 use Class::XSAccessor getters => {
 	original_cwd   => 'original_cwd',
+	opts           => 'opts',
 	config         => 'config',
 	wx             => 'wx',
 	task_manager   => 'task_manager',
@@ -114,9 +115,12 @@ sub ide {
 sub new {
 	Carp::croak('Padre->new already called. Use Padre->ide') if $SINGLETON;
 	my $class = shift;
+	my %opts  = @_;
 
 	# Create the empty object
 	my $self = $SINGLETON = bless {
+		# parsed command-line options
+		opts => \%opts,
 
 		# Wx Attributes
 		wx => undef,
@@ -126,6 +130,7 @@ sub new {
 
 		# Project Attributes
 		project => {},
+		
 	}, $class;
 
 	# Save the startup dir before anyone can move us.
