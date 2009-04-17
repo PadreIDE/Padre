@@ -1374,6 +1374,9 @@ sub capture_session {
 sub open_session {
 	my ( $self, $session ) = @_;
 
+	# prevent redrawing until we're done
+	$self->Freeze;
+
 	# close all files
 	$self->on_close_all;
 
@@ -1395,6 +1398,9 @@ sub open_session {
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
 	$self->on_nth_pane($focus) if defined $focus;
+	
+	# now we can redraw
+	$self->Thaw;
 }
 
 #
