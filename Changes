@@ -8,6 +8,7 @@ Changes for Perl Application Development and Refactoring Environment
     Plugin manager displaying full plugin names (JQUELIN)
     Set file size limit to 500_000 to avoid loading too big files. (#186) (SZABGAB)
     Double-clicking on an error now selects the line (#214) (JQUELIN)
+    Updated Spanish translation (ENELL)
 
 v0.33 2009.04.04
 
