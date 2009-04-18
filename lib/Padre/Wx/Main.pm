@@ -1260,6 +1260,12 @@ sub setup_editor {
 			$self->on_nth_pane($id);
 			return;
 		}
+		# if file does not exist, create it so that future access
+		# (such as size checking) won't warn / blow up padre
+		if ( not -f $file ) {
+			open my $fh, '>', $file;
+			close $fh;
+		}
 		if ( -s $file > $config->editor_file_size_limit ) {
 			return $self->error(
 				sprintf(
