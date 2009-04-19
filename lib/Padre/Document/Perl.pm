@@ -275,7 +275,9 @@ sub get_command {
 	my $self  = shift;
 	my $debug = shift;
 
-	# Check the file name
+	my $config = Padre->ide->config;
+
+	# Check the file name	
 	my $filename = $self->filename;
 
 	#	unless ( $filename and $filename =~ /\.pl$/i ) {
@@ -286,11 +288,23 @@ sub get_command {
 	# TODO: get preferred Perl from configuration
 	my $perl = Padre->perl_interpreter;
 
+	# Set default arguments
+	my %run_args = (
+		interpreter => $config->run_interpreter_args_default,
+		script => $config->run_script_args_default,
+	);
+
+	# Overwrite default arguments with the ones preferred for given document
+	foreach my $arg ( keys %run_args ) {
+		my $type = "run_${arg}_args_" . File::Basename::fileparse($filename);
+		$run_args{$arg} = Padre::DB::History->previous($type) if Padre::DB::History->previous($type);
+	}
+
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
 	return $debug
-		? qq{"$perl" -Mdiagnostics(-traceonly) "$filename"}
-		: qq{"$perl" "$filename"};
+		? qq{"$perl" -Mdiagnostics(-traceonly) $run_args{interpreter} "$filename" $run_args{script}}
+		: qq{"$perl" $run_args{interpreter} "$filename" $run_args{script}};
 }
 
 sub pre_process {

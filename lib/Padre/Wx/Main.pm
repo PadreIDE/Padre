@@ -47,8 +47,6 @@ use base 'Wx::Frame';
 
 use constant SECONDS => 1000;
 
-my %run_argv;
-
 #####################################################################
 # Constructor and Accessors
 
@@ -858,9 +856,6 @@ sub run_document {
 		return $self->error( Wx::gettext("No execution mode was defined for this document") );
 	}
 
-	my $filename = File::Basename::fileparse( $self->current->filename );
-	$run_argv{$filename} = '' unless ( $run_argv{$filename} );
-
 	my $cmd = eval { $document->get_command($debug) };
 	if ($@) {
 		chomp $@;
@@ -869,29 +864,11 @@ sub run_document {
 	}
 	if ($cmd) {
 		if ( $document->pre_process ) {
-			$cmd .= " $run_argv{$filename}";
 			$self->run_command($cmd);
 		} else {
 			$self->error( $document->errstr );
 		}
 	}
-	return;
-}
-
-sub run_document_parameters {
-	my $self     = shift;
-	my $document = $self->current->document;
-
-	if ( $document->is_new ) {
-		return $self->error( Wx::gettext("Save the file first") );
-	}
-
-	my $filename = File::Basename::fileparse( $self->current->filename );
-	$run_argv{$filename} = $self->prompt(
-		Wx::gettext("Command line parameters"), Wx::gettext("Run parameters"),
-		"RUN_COMMAND_LINE_PARAMS_$filename"
-	);
-
 	return;
 }
 

@@ -298,6 +298,99 @@ sub _add_plugins {
 	return;
 }
 
+sub _run_params_panel {
+	my ( $self, $treebook ) = @_;
+
+	my $config   = Padre->ide->config;
+	my $document = Padre::Current->document;
+	
+	my $intrp_args_text = Wx::gettext(<<'END_TEXT');
+i.e.
+	include directory:  -I<dir>
+	enable tainting checks:  -T
+	enable many useful warnings:  -w
+	enable all warnings:  -W
+	disable all warnings:  -X
+END_TEXT
+
+	# Default values stored in host configuration
+	my $defaults_table = [
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Interpreter arguments:') ],
+			[ 'Wx::TextCtrl', 'run_interpreter_args_default', $config->run_interpreter_args_default ]
+		],
+		[   [ 'Wx::StaticText', undef, '' ],
+			['Wx::StaticText', undef, $intrp_args_text ]
+		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Script arguments:') ],
+			[ 'Wx::TextCtrl', 'run_script_args_default', $config->run_script_args_default ]
+		],
+	];
+
+	# Per document values (overwrite defaults) stored in history
+	my ( $filename, $path, );
+	my %run_args = (
+		interpreter => '',
+		script => '',
+	);
+
+	if ( $document->is_new ) {
+		$filename = Wx::gettext('unsaved');
+		$path = Wx::gettext('N/A');
+	} else {
+		($filename, $path) = File::Basename::fileparse( Padre::Current->filename );
+		foreach my $arg ( keys %run_args ) {
+			my $type = "run_${arg}_args_${filename}";
+			$run_args{$arg} = Padre::DB::History->previous($type)
+				if Padre::DB::History->previous($type);
+		}
+	}
+	
+	my $currentdoc_table = [
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Document name:') ],
+			[ 'Wx::TextCtrl', undef, $filename, Wx::wxTE_READONLY ]
+		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Document location:') ],
+			[ 'Wx::TextCtrl', undef, $path, Wx::wxTE_READONLY ]
+		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Interpreter arguments:') ],
+			[ 'Wx::TextCtrl', "run_interpreter_args_$filename", $run_args{interpreter} ]
+		],
+		[   [ 'Wx::StaticText', undef, '' ],
+			['Wx::StaticText', undef, $intrp_args_text ]
+		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Script arguments:') ],
+			[ 'Wx::TextCtrl', "run_script_args_$filename", $run_args{script} ]
+		],
+	];
+
+	my $panel = Wx::Panel->new(
+		$treebook,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTAB_TRAVERSAL | Wx::wxVSCROLL | Wx::wxHSCROLL,
+	);
+	my $main_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+
+	my $notebook = Wx::Notebook->new($panel);
+
+	my $defaults_subpanel = $self->_new_panel($notebook);
+	$self->fill_panel_by_table( $defaults_subpanel, $defaults_table );
+	$notebook->AddPage( $defaults_subpanel, Wx::gettext('Default') );
+
+	my $currentdoc_subpanel = $self->_new_panel($notebook);
+	$self->fill_panel_by_table( $currentdoc_subpanel, $currentdoc_table );
+	$notebook->AddPage(
+		$currentdoc_subpanel,
+		sprintf( Wx::gettext('Current Document: %s'), $filename )
+	);
+
+	$main_sizer->Add($notebook, 1, Wx::wxGROW);
+	$panel->SetSizerAndFit($main_sizer);
+
+	return $panel;
+}
+
 sub dialog {
 	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales ) = @_;
 
@@ -334,6 +427,8 @@ sub dialog {
 
 	my $appearance = $self->_appearance_panel($tb);
 	$tb->AddPage( $appearance, Wx::gettext('Appearance') );
+	$tb->AddPage( $self->_run_params_panel($tb),
+		Wx::gettext('Run Parameters') );
 
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
 	#$tb->AddPage( $plugin_manager, Wx::gettext('Plugin Manager') );
@@ -512,6 +607,23 @@ sub run {
 		'main_output_ansi',
 		$data->{main_output_ansi} ? 1 : 0
 	);
+	$config->set(
+		'run_interpreter_args_default',
+		$data->{run_interpreter_args_default}
+	);
+	$config->set(
+		'run_script_args_default',
+		$data->{run_script_args_default}
+	);
+	
+	# These are a bit different as run_* variable name depends
+	# on current document's filename
+	unless ( Padre::Current->document->is_new ) {
+		Padre::DB::History->create(
+			type => $_,
+			name => $data->{$_},
+		) foreach ( grep {/^run/ && !/_default$/} (keys %$data) );
+	}
 
 	# The slightly different one
 	my $editor_currentline_color = $data->{editor_currentline_color};

@@ -32,7 +32,18 @@ sub create_widget {
 		$widget = $widgetClass->new( $parent, -1, $param->[1], $param->[2] );
 		$widget->SetPath( Cwd::cwd() );
 	} elsif ( $widgetClass eq 'Wx::TextCtrl' ) {
-		$widget = $widgetClass->new( $parent, -1, $param->[1] );
+		if ( $param->[2] ) {
+			$widget = $widgetClass->new(
+				$parent,
+				-1,
+				$param->[1],
+				Wx::wxDefaultPosition,
+				Wx::wxDefaultSize,
+				$param->[2]
+			);
+		} else {
+			$widget = $widgetClass->new( $parent, -1, $param->[1] );
+		}
 	} elsif ( $widgetClass eq 'Wx::CheckBox' ) {
 		$widget = $widgetClass->new( $parent, -1, $param->[2] );
 		$widget->SetValue( $param->[1] );
