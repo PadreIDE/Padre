@@ -16,7 +16,7 @@ use Class::XSAccessor accessors => {
 };
 use Padre::Wx ();
 
-use base 'Wx::Frame';
+use base 'Wx::Dialog';
 
 our $VERSION = '0.33';
 
@@ -202,7 +202,7 @@ sub _create_buttons {
 
 	# the buttons
 	my $bs = Wx::Button->new( $self, -1, Wx::gettext('Save') );
-	my $bc = Wx::Button->new( $self, -1, Wx::gettext('Close') );
+	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON( $self, $bs, \&_on_butsave_clicked );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 	$sizer->Add( $bs, Wx::GBPosition->new( 2, 2 ) );
