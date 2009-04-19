@@ -1,24 +1,7 @@
-# Rebuild the config table as not null.
-
 use strict;
-use File::Spec ();
-use lib File::Spec->rel2abs(
-	File::Spec->catdir(
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-	)
-);
-use Padre::DB::Patch;
+use ORLite::Migrate::Patch;
 
-
-
-
-
-#####################################################################
-# Patch Content
+# Rebuild the config table as not null.
 
 # This should get rid of the old config settings :)
 do(<<'END_SQL');
@@ -32,5 +15,3 @@ create table host_config (
 	value varchar(255) not null
 )
 END_SQL
-
-exit(0);

@@ -1,22 +1,5 @@
 use strict;
-use File::Spec ();
-use lib File::Spec->rel2abs(
-	File::Spec->catdir(
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-	)
-);
-use Padre::DB::Patch;
-
-
-
-
-
-#####################################################################
-# Patch Content
+use ORLite::Migrate::Patch;
 
 # Create the bookmark table
 do(<<'END_SQL');
@@ -27,5 +10,3 @@ CREATE TABLE bookmark (
 	line INTEGER NOT NULL
 )
 END_SQL
-
-exit(0);

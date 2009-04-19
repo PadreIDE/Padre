@@ -1,22 +1,5 @@
 use strict;
-use File::Spec ();
-use lib File::Spec->rel2abs(
-	File::Spec->catdir(
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-	)
-);
-use Padre::DB::Patch;
-
-
-
-
-
-#####################################################################
-# patch content
+use ORLite::Migrate::Patch;
 
 # remove the session table created in migrate-5
 do(<<'END_SQL');
@@ -44,5 +27,3 @@ CREATE TABLE session_file (
 	FOREIGN KEY (session) REFERENCES session(id)
 )
 END_SQL
-
-exit(0);

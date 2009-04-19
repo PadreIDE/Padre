@@ -1,22 +1,5 @@
 use strict;
-use File::Spec ();
-use lib File::Spec->rel2abs(
-	File::Spec->catdir(
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-		File::Spec->updir,
-	)
-);
-use Padre::DB::Patch;
-
-
-
-
-
-#####################################################################
-# Patch Content
+use ORLite::Migrate::Patch;
 
 # create the session table
 do(<<'END_SQL');
@@ -29,5 +12,3 @@ CREATE TABLE session (
 	focus BOOLEAN NOT NULL
 )
 END_SQL
-
-exit(0);
