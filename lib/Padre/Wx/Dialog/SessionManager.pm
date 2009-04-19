@@ -177,6 +177,7 @@ sub _create {
 
 	$self->_create_list;
 	$self->_create_buttons;
+	$self->_list->SetFocus;
 }
 
 #
