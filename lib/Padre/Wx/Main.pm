@@ -2355,7 +2355,9 @@ sub on_stc_update_ui {
 
 	# TODO move this to a more appropriate place (when switching between buffers?)
 	if ( my $directory = $self->directory ) {
-		$directory->update_gui;
+		if ($self->menu->view->{directory}->IsChecked) {
+			$directory->update_gui;
+		}
 	}
 	return;
 }
