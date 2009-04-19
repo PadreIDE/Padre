@@ -155,6 +155,7 @@ sub _create {
 	$self->_create_buttons;
 	$sizer->SetSizeHints($self);
 	$self->CenterOnParent;
+	$self->_combo->SetFocus;
 }
 
 #
