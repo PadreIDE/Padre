@@ -47,12 +47,12 @@ SCOPE: {
            {
              'msg' => 'Missing right curly or square bracket, at end of line',
              'severity' => 'E',
-             'line' => '10'
+             'line' => '17'
            },
            {
              'msg' => 'syntax error, at EOF',
              'severity' => 'E',
-             'line' => '10'
+             'line' => '17'
            }
 	]);
 
