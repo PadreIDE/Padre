@@ -92,23 +92,23 @@ SCOPE: {
 	my $manager  = Padre::PluginManager->new($padre);
 	$manager->load_plugin('A');
 	is $manager->plugins->{'A'}->{status}, 'error', 'error in loading A';
-	my $msg1 = $english ? qr/Failed to load module/ : qr/.*/;
+	my $msg1 = $english ? qr/Plugin:A - Failed to load module/ : qr/.*/;
 	like $manager->plugins->{'A'}->errstr, 
-		qr/^Plugin:A - $msg1: Global symbol "\$syntax_error" requires explicit package name at/,
+		qr/^$msg1: Global symbol "\$syntax_error" requires explicit package name at/,
 		'text of error message';
 
 	$manager->load_plugin('B');
 	is $manager->plugins->{'B'}->{status}, 'error', 'error in loading B';
-	my $msg2 = $english ? qr/Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/ : qr/.*/;
+	my $msg2 = $english ? qr/Plugin:B - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/ : qr/.*/;
 	like $manager->plugins->{'B'}->errstr,
-		qr/^Plugin:B - $msg2/,
+		qr/^$msg2/,
 		'text of error message';
 
 	$manager->load_plugin('C');
 	is $manager->plugins->{'C'}->{status}, 'disabled', 'disabled in loading C';
-	my $msg3 = $english ? qr/Does not have menus/ : qr/.*/;
+	my $msg3 = $english ? qr/Plugin:C - Does not have menus/ : qr/.*/;
 	like $manager->plugins->{'C'}->errstr,
-		qr/Plugin:C - $msg3/,                        
+		qr/$msg3/,
 		'text of error message';
 }
 
