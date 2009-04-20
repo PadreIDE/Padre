@@ -327,23 +327,25 @@ END_TEXT
 	];
 
 	# Per document values (overwrite defaults) stored in history
-	my ( $filename, $path, );
+	my $filename = Wx::gettext('Unsaved');
+	my $path     = Wx::gettext('N/A');
 	my %run_args = (
 		interpreter => '',
 		script => '',
 	);
 
-	if ( $document->is_new ) {
-		$filename = Wx::gettext('unsaved');
-		$path = Wx::gettext('N/A');
-	} else {
-		($filename, $path) = File::Basename::fileparse( Padre::Current->filename );
-		foreach my $arg ( keys %run_args ) {
-			my $type = "run_${arg}_args_${filename}";
-			$run_args{$arg} = Padre::DB::History->previous($type)
-				if Padre::DB::History->previous($type);
+	# Trap exception if there is no document currently open
+	eval {
+		unless ( $document->is_new ) {
+			($filename, $path) = File::Basename::fileparse( Padre::Current->filename );
+			foreach my $arg ( keys %run_args ) {
+				my $type = "run_${arg}_args_${filename}";
+				$run_args{$arg} = Padre::DB::History->previous($type)
+					if Padre::DB::History->previous($type);
+			}
 		}
-	}
+	};
+	$filename = Wx::gettext('No Document') if $@;
 	
 	my $currentdoc_table = [
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Document name:') ],
@@ -616,18 +618,22 @@ sub run {
 		$data->{run_script_args_default}
 	);
 	
-	# These are a bit different as run_* variable name depends
-	# on current document's filename
-	unless ( Padre::Current->document->is_new ) {
-		foreach ( grep {/^run_/ && !/_default$/} (keys %$data) ) {
-			next if Padre::DB::History->previous($_)
-				eq $data->{$_};
-			Padre::DB::History->create(
-				type => $_,
-				name => $data->{$_},
-			)
+	# Quite like in _run_params_panel, trap exception if there
+	# is no document currently open
+	eval {
+		unless ( Padre::Current->document->is_new ) {
+			# These are a bit different as run_* variable name depends
+			# on current document's filename
+			foreach ( grep {/^run_/ && !/_default$/} (keys %$data) ) {
+				next if Padre::DB::History->previous($_)
+					eq $data->{$_};
+				Padre::DB::History->create(
+					type => $_,
+					name => $data->{$_},
+				)
+			}
 		}
-	}
+	};
 
 	# The slightly different one
 	my $editor_currentline_color = $data->{editor_currentline_color};
