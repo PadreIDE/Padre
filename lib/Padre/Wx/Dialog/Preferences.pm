@@ -619,10 +619,14 @@ sub run {
 	# These are a bit different as run_* variable name depends
 	# on current document's filename
 	unless ( Padre::Current->document->is_new ) {
-		Padre::DB::History->create(
-			type => $_,
-			name => $data->{$_},
-		) foreach ( grep {/^run/ && !/_default$/} (keys %$data) );
+		foreach ( grep {/^run_/ && !/_default$/} (keys %$data) ) {
+			next if Padre::DB::History->previous($_)
+				eq $data->{$_};
+			Padre::DB::History->create(
+				type => $_,
+				name => $data->{$_},
+			)
+		}
 	}
 
 	# The slightly different one
