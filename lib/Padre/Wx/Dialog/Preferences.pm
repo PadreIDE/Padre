@@ -327,6 +327,7 @@ END_TEXT
 	];
 
 	# Per document values (overwrite defaults) stored in history
+	my $doc_flag = 0;  # value of 1 means that there is no document currently open
 	my $filename = Wx::gettext('Unsaved');
 	my $path     = Wx::gettext('N/A');
 	my %run_args = (
@@ -345,7 +346,10 @@ END_TEXT
 			}
 		}
 	};
-	$filename = Wx::gettext('No Document') if $@;
+	if ($@) {
+		$filename = Wx::gettext('No Document');
+		$doc_flag = 1;
+	}
 	
 	my $currentdoc_table = [
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Document name:') ],
@@ -381,7 +385,7 @@ END_TEXT
 	$notebook->AddPage( $defaults_subpanel, Wx::gettext('Default') );
 
 	my $currentdoc_subpanel = $self->_new_panel($notebook);
-	$self->fill_panel_by_table( $currentdoc_subpanel, $currentdoc_table );
+	$self->fill_panel_by_table( $currentdoc_subpanel, $currentdoc_table ) unless $doc_flag;
 	$notebook->AddPage(
 		$currentdoc_subpanel,
 		sprintf( Wx::gettext('Current Document: %s'), $filename )
