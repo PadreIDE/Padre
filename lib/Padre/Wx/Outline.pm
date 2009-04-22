@@ -146,9 +146,9 @@ sub on_tree_item_selection_changed {
 sub select_line_in_editor {
 	my ($self, $line_number) = @_;
 	my $page = $self->main->current->editor;
-	if(defined $line_number or
-		$line_number !~ /^\d+$/o or
-			$page->GetLineCount < $line_number)
+	if(defined $line_number &&
+		($line_number =~ /^\d+$/o) &&
+			$line_number <= $page->GetLineCount)
 	{
 		$line_number--;
 		$page->EnsureVisible($line_number);
