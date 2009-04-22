@@ -23,10 +23,17 @@ sub new {
 	$self->SetIndent(10);
 	$self->{force_next} = 0;
 
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+	Wx::Event::EVT_COMMAND_SET_FOCUS(
 		$self, $self,
 		sub {
-			$self->on_tree_item_activated( $_[1] );
+			$self->on_tree_item_set_focus( $_[1] );
+		},
+	);
+
+	Wx::Event::EVT_TREE_SEL_CHANGED(
+		$self, $self,
+		sub {
+			$self->on_tree_item_selection_changed( $_[1] );
 		},
 	);
 
@@ -117,24 +124,37 @@ sub running {
 #####################################################################
 # Event Handlers
 
-sub on_tree_item_activated {
+sub on_tree_item_set_focus {
 	my ( $self, $event ) = @_;
 	my $page = $self->main->current->editor;
+	my $item = $self->GetPlData( $self->GetSelection() );
+	if(defined $item) {
+		$self->select_line_in_editor($item->{line});
+	}
+	return;
+}
 
+sub on_tree_item_selection_changed {
+	my ( $self, $event ) = @_;
 	my $item = $self->GetPlData( $event->GetItem );
-	return if not defined $item;
+	if(defined $item) {
+		$self->select_line_in_editor($item->{line});
+	}
+	return;
+}
 
-	my $line_number = $item->{line};
-	return
-		if not defined($line_number)
-			or $line_number !~ /^\d+$/o
-			or $page->GetLineCount < $line_number;
-
-	$line_number--;
-	$page->EnsureVisible($line_number);
-	$page->goto_pos_centerize( $page->GetLineIndentPosition($line_number) );
-	$page->SetFocus;
-
+sub select_line_in_editor {
+	my ($self, $line_number) = @_;
+	my $page = $self->main->current->editor;
+	if(defined $line_number or
+		$line_number !~ /^\d+$/o or
+			$page->GetLineCount < $line_number)
+	{
+		$line_number--;
+		$page->EnsureVisible($line_number);
+		$page->goto_pos_centerize( $page->GetLineIndentPosition($line_number) );
+		$page->SetFocus;
+	}
 	return;
 }
 
