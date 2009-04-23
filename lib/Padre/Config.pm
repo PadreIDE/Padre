@@ -116,7 +116,8 @@ my %settings = (
 		# When running a script from the application some of the files might have
 		# not been saved yet. There are several option what to do before running the
 		# script:
-		# none - don't save anything
+		# none - don't save anything (the script will be run without current modifications)
+		# unsaved - as above but including modifications present in the buffer
 		# same - save the file in the current buffer
 		# all_files - all the files (but not buffers that have no filenames)
 		# all_buffers - all the buffers even if they don't have a name yet

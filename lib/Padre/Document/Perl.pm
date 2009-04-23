@@ -277,12 +277,10 @@ sub get_command {
 
 	my $config = Padre->ide->config;
 
-	# Check the file name	
-	my $filename = $self->filename;
-
-	#	unless ( $filename and $filename =~ /\.pl$/i ) {
-	#		die "Only .pl files can be executed\n";
-	#	}
+	# Use a temporary file if run_save is set to 'unsaved'
+	my $filename = $config->run_save eq 'unsaved'
+		? $self->prepare_tempfile
+		: $self->filename;
 
 	# Run with the same Perl that launched Padre
 	# TODO: get preferred Perl from configuration
@@ -615,6 +613,17 @@ sub event_on_char {
 
 	$editor->Thaw;
 	return;
+}
+
+sub prepare_tempfile {
+	my $self = shift;
+
+	use File::Temp;
+
+	my $tempfile = File::Temp->new( UNLINK => 0 );
+	print $tempfile $self->text_get;
+
+	return $tempfile->filename;
 }
 
 1;
