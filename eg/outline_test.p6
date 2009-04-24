@@ -54,8 +54,15 @@ class FooClass {
 } 
 
 #An grammar example
-#grammar foo_grammar {
-#} 
+grammar Person {
+         rule name { Name '=' (\N+) }
+         rule age  { Age  '=' (\d+) }
+         rule desc {
+             <name> \n
+             <age>  \n
+         }
+         # etc.
+}
 
 #An role example
 #role FooRole {
