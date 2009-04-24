@@ -831,8 +831,13 @@ sub test_a_plugin {
 		unshift @INC, $default_dir;
 	}
 
-	# Load plugin
-	delete $plugins->{$filename};
+	# Unload any previously existant plugin with the same name
+    if ($plugins->{$filename}) {
+    	$self->unload_plugin($filename);
+	    delete $plugins->{$filename};
+    }
+
+	# Load the selected plugin
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
 		$main->error(
