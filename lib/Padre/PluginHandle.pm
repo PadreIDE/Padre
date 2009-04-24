@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use Carp 'croak';
 use Params::Util qw{_IDENTIFIER _CLASS _INSTANCE};
+use Padre::Current ();
+use Padre::Locale  ();
 
 our $VERSION = '0.33';
 
@@ -151,6 +153,12 @@ sub enable {
 	unless ( $self->can_enable ) {
 		croak("Cannot enable plugin '$self'");
 	}
+
+	# add the plugin catalog to the locale
+	my $locale = Padre::Current->main->{locale};
+	my $code = Padre::Locale::rfc4646();
+	my $name = $self->name;
+	$locale->AddCatalog( "$name-$code" );
 
 	# Call the enable method for the object
 	eval { $self->object->plugin_enable; };
