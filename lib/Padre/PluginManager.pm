@@ -25,11 +25,13 @@ use Carp qw{croak};
 use File::Basename qw{ dirname };
 use File::Copy qw{ copy };
 use File::Path ();
+use File::ShareDir ();
 use File::Spec ();
 use File::Spec::Functions qw{ catfile };
 use Scalar::Util ();
 use Params::Util qw{_IDENTIFIER _CLASS _INSTANCE};
 use Padre::Config::Constants qw{ :dirs };
+use Padre::Current	     ();
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
@@ -528,6 +530,22 @@ sub _load_plugin {
 	unless ( $conf->{enabled} ) {
 		$plugin->status('disabled');
 		return;
+	}
+
+	# add a new directory for locale to search translation catalogs.
+	my $localedir;
+	if ( $object->can( 'plugin_locale_directory' ) ) {
+		$localedir = $object->plugin_locale_directory;
+
+	} else {
+		my $distdir;
+		eval { $distdir = File::ShareDir::dist_dir("Padre-Plugin-$name"); };
+		$localedir = File::Spec->catdir( $distdir, 'share', 'locale' )
+			unless $@;
+	}
+	if ( defined $localedir && -d $localedir ) {
+		my $locale = Padre::Current->main->{locale};
+		$locale->AddCatalogLookupPathPrefix( $localedir );
 	}
 
 	# FINALLY we are clear to enable the plugin
