@@ -123,7 +123,7 @@ sub plugin_names {
 }
 
 sub plugin_objects {
-	grep { $_[0]->{plugins}->{$_} } $_[0]->plugin_names;
+	map { $_[0]->{plugins}->{$_} } $_[0]->plugin_names;
 }
 
 #####################################################################
