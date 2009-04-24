@@ -336,9 +336,9 @@ sub is_perl6 {
 	my ($text) = @_;
 	return if not $text;
 	return 1 if $text =~ /^=begin\s+pod/msx;
-	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
+	return   if $text =~ /^=head[12]/msx;		# needed for eg/perl5_with_perl6_example.pod
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
-	return 1 if $text =~ /^\s*class\s+\w/msx;
+	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
 	return;
 }
 
