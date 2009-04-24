@@ -130,6 +130,33 @@ sub plugin_objects {
 # Bulk Plugin Operations
 
 #
+# $pluginmgr->relocale;
+#
+# update padre's locale object to handle new plugin l10n.
+#
+sub relocale {
+	my ($self) = @_;
+	my $locale = Padre::Current->main->{locale};
+
+	foreach my $plugin ( $self->plugin_objects ) {
+		# only process enabled plugins
+		next unless $plugin->status eq 'enabled';
+
+		# add the plugin locale dir to search path
+		my $object    = $plugin->{object};
+		my $localedir = $object->plugin_locale_directory
+			if $object->can( 'plugin_locale_directory' );
+		$locale->AddCatalogLookupPathPrefix( $localedir )
+			if defined $localedir && -d $localedir;
+
+		# add the plugin catalog to the locale
+		my $name = $plugin->name;
+		my $code = Padre::Locale::rfc4646();
+		$locale->AddCatalog( "$name-$code" );
+	}
+}
+
+#
 # $pluginmgr->reset_my_plugin( $overwrite );
 #
 # reset the my plugin if needed. if $overwrite is set, remove it first.

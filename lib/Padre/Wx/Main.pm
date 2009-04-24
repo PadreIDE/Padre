@@ -608,6 +608,9 @@ sub change_locale {
 sub relocale {
 	my $self = shift;
 
+	# relocale the plugins
+	Padre::Current->ide->plugin_manager->relocale;
+
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};
 	$self->{menu} = Padre::Wx::Menubar->new($self);
