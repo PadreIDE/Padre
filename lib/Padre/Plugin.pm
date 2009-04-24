@@ -104,8 +104,8 @@ The C<plugin_directory_locale()> method will be called by Padre to
 know where to look for your plugin l10n catalog.
 
 It defaults to C<$sharedir/locale> (with C<$sharedir> as defined by
-C<File::ShareDir>), and thus should basically work as is for your plugin
-if you're using the C<install_share> command of C<Module::Install>.
+C<File::ShareDir>), and thus should work as is for your plugin if you're
+using the C<install_share> command of C<Module::Install>.
 
 Your plugin catalogs should be named C<$plugin-$locale.po> (or C<.mo>
 for the compiled form). That is, C<Vi-de.po> for the german locale of
