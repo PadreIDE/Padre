@@ -1,50 +1,32 @@
+# put stuff in GLOBAL package
 use Foo;
 require Bar;
 
-sub foo_sub {
-}
-
-method foo_method {
-}
-
-submethod foo_submethod {
-}
-
-macro foo_macro {
-}
-
-regex foo_regex {
+sub foo_sub { }
+method foo_method { }
+submethod foo_submethod { }
+macro foo_macro { }
+regex foo_regex { 
 	<sym> 
 }
-
-token foo_token {
-	<sym>  
+token foo_token { 
+	<sym> 
 }
-rule foo_rule {
-	<foo_rule> <foo_token>
+rule foo_rule { 
+	<foo_rule> <foo_token> 
 }
  
 #A class example 
 class FooClass {
-	
 	use Bar;
 	
-	sub foo_sub {
-	}
-	
-	method foo_method {
-	}
-	
-	submethod foo_submethod {
-	}
-	
-	macro foo_macro {
-	}
-	
+	sub foo_sub { }
+	method foo_method { }
+	submethod foo_submethod { }
+	macro foo_macro { }
 	regex foo_regex {
 		<sym> 
 	}
-	
 	token foo_token {
 	 	<sym>  
 	}
@@ -53,10 +35,14 @@ class FooClass {
 	}
 } 
 
-#An grammar example
+#A grammar example
 grammar Person {
-         rule name { Name '=' (\N+) }
-         rule age  { Age  '=' (\d+) }
+         rule name { 
+         	Name '=' (\N+) 
+         }
+         rule age  { 
+         	Age  '=' (\d+) 
+         }
          rule desc {
              <name> \n
              <age>  \n
@@ -64,32 +50,45 @@ grammar Person {
          # etc.
 }
 
-#An role example
-#role FooRole {
-#};
- 
-# a package example
-package FooPackage;
-
-sub foo_sub {
+#A module example
+module Foo {
+	sub foo_sub { }
+	method foo_method { }
+	submethod foo_submethod { }
+	macro foo_macro { }
+	regex foo_regex {
+		<sym> 
+	}
+	token foo_token {
+	 	<sym>  
+	}
+	rule foo_rule {
+		<foo_rule> <foo_token>
+	}
 }
 
-method foo_method {
+#A package example
+package FooPackage {
+	sub foo_sub { }
+	method foo_method { }
+	submethod foo_submethod { }
+	macro foo_macro { }
+	regex foo_regex {
+		<sym> 
+	}
+	token foo_token {
+		<sym>  
+	}
+	rule foo_rule {
+		<foo_rule> <foo_token>
+	}
 }
 
-submethod foo_submethod {
-}
-
-macro foo_macro {
-}
-
-regex foo_regex {
-	<sym> 
-}
-
-token foo_token {
-	<sym>  
-}
-rule foo_rule {
-	<foo_rule> <foo_token>
+#A role example
+role Pet {
+        method feed ($food) {
+            $food.open_can;
+            $food.put_in_bowl;
+            self.eat($food);
+        }
 }
