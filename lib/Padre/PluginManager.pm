@@ -25,7 +25,6 @@ use Carp qw{croak};
 use File::Basename qw{ dirname };
 use File::Copy qw{ copy };
 use File::Path ();
-use File::ShareDir ();
 use File::Spec ();
 use File::Spec::Functions qw{ catfile };
 use Scalar::Util ();
@@ -533,16 +532,8 @@ sub _load_plugin {
 	}
 
 	# add a new directory for locale to search translation catalogs.
-	my $localedir;
-	if ( $object->can( 'plugin_locale_directory' ) ) {
-		$localedir = $object->plugin_locale_directory;
-
-	} else {
-		my $distdir;
-		eval { $distdir = File::ShareDir::dist_dir("Padre-Plugin-$name"); };
-		$localedir = File::Spec->catdir( $distdir, 'share', 'locale' )
-			unless $@;
-	}
+	my $localedir = $object->plugin_locale_directory
+		if $object->can( 'plugin_locale_directory' );
 	if ( defined $localedir && -d $localedir ) {
 		my $locale = Padre::Current->main->{locale};
 		$locale->AddCatalogLookupPathPrefix( $localedir );
