@@ -18,6 +18,8 @@ rule foo_rule {
  
 #A class example 
 class FooClass {
+	constant $PI = 22/7;
+	
 	my $.foo;
 	our $!foo;
 
