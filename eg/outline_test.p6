@@ -28,6 +28,8 @@ class FooClass {
 	use Bar;
 	
 	sub foo_sub { }
+	method !private_method {}
+	method ^how_method { }
 	method foo_method { }
 	submethod foo_submethod { }
 	macro foo_macro { }
