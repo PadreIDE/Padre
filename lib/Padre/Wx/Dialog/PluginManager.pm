@@ -9,6 +9,7 @@ use warnings;
 
 use Carp qw{ croak };
 use Class::XSAccessor accessors => {
+	_action       => '_action',          # action of default button
 	_button       => '_button',          # general-purpose button
 	_butprefs     => '_butprefs',        # preferences button
 	_currow       => '_currow',          # current list row number
@@ -108,13 +109,7 @@ sub _on_button_clicked {
 	my $self = shift;
 
 	# find method to call
-	my $label  = $self->_button->GetLabel;
-	my %method = (
-		Wx::gettext('Disable')            => '_plugin_disable',
-		Wx::gettext('Enable')             => '_plugin_enable',
-		Wx::gettext('Show error message') => '_plugin_show_error_msg',
-	);
-	my $method = $method{$label};
+	my $method = $self->_action;
 
 	# call method
 	$self->$method;
@@ -468,6 +463,7 @@ sub _update_plugin_state {
 
 		# plugin is in error state
 		$button->SetLabel( Wx::gettext('Show error message') );
+		$self->_action('_plugin_show_error_msg');
 		$butprefs->Disable;
 		$item->SetText( Wx::gettext('error') );
 		$item->SetImage(3);
@@ -477,6 +473,7 @@ sub _update_plugin_state {
 
 		# plugin is incompatible
 		$button->SetLabel( Wx::gettext('Show error message') );
+		$self->_action('_plugin_show_error_msg');
 		$butprefs->Disable;
 		$item->SetText( Wx::gettext('incompatible') );
 		$item->SetImage(5);
@@ -490,6 +487,7 @@ sub _update_plugin_state {
 
 			# ... and enabled
 			$button->SetLabel( Wx::gettext('Disable') );
+			$self->_action( '_plugin_disable' );
 			$button->Enable;
 			$item->SetText( Wx::gettext('enabled') );
 			$item->SetImage(1);
@@ -499,6 +497,7 @@ sub _update_plugin_state {
 
 			# ... and disabled
 			$button->SetLabel( Wx::gettext('Enable') );
+			$self->_action( '_plugin_enable' );
 			$button->Enable;
 			$item->SetText( Wx::gettext('disabled') );
 			$item->SetImage(2);
