@@ -18,6 +18,13 @@ rule foo_rule {
  
 #A class example 
 class FooClass {
+	my $.foo;
+	our $!foo;
+
+	has $field1 is rw;
+	has $.public is rw;
+	has $!private is rw;
+
 	use Bar;
 	
 	sub foo_sub { }
