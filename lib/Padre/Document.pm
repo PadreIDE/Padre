@@ -194,6 +194,7 @@ use Class::XSAccessor getters => {
 	get_mimetype     => 'mimetype',
 	get_newline_type => 'newline_type',
 	errstr           => 'errstr',
+	tempfile         => 'tempfile',
 	},
 	setters => {
 	_set_filename    => 'filename',       # TODO temporary hack
@@ -201,6 +202,7 @@ use Class::XSAccessor getters => {
 	set_mimetype     => 'mimetype',
 	set_errstr       => 'errstr',
 	set_editor       => 'editor',
+	set_tempfile     => 'tempfile',
 	};
 
 =pod
@@ -551,6 +553,27 @@ sub reload {
 
 	my $filename = $self->filename or return;
 	return $self->load_file;
+}
+
+# Copies document content to a temporary file.
+# Returns temporary file name.
+sub store_in_tempfile {
+	my $self = shift;
+	
+	$self->remove_tempfile if $self->tempfile;
+	
+	use File::Temp;
+	
+	my $tempfile = File::Temp->new( UNLINK => 0 );
+	$self->set_tempfile( $tempfile->filename );
+	print $tempfile $self->text_get;
+
+	return $tempfile->filename;
+}
+
+sub remove_tempfile {
+	unlink $_[0]->tempfile;
+	return;
 }
 
 #####################################################################

@@ -1738,6 +1738,7 @@ sub close {
 
 	#
 	$doc->store_cursor_position;
+	$doc->remove_tempfile if $doc->tempfile;
 
 	$self->notebook->DeletePage($id);
 

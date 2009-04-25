@@ -279,7 +279,7 @@ sub get_command {
 
 	# Use a temporary file if run_save is set to 'unsaved'
 	my $filename = $config->run_save eq 'unsaved'
-		? $self->prepare_tempfile
+		? $self->store_in_tempfile
 		: $self->filename;
 
 	# Run with the same Perl that launched Padre
@@ -613,17 +613,6 @@ sub event_on_char {
 
 	$editor->Thaw;
 	return;
-}
-
-sub prepare_tempfile {
-	my $self = shift;
-
-	use File::Temp;
-
-	my $tempfile = File::Temp->new( UNLINK => 0 );
-	print $tempfile $self->text_get;
-
-	return $tempfile->filename;
 }
 
 1;
