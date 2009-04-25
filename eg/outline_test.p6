@@ -2,8 +2,8 @@
 use Foo;
 require Bar;
 
-sub foo_sub { }
-method foo_method { }
+sub foo-sub { }
+method foo-method { }
 submethod foo_submethod { }
 macro foo_macro { }
 regex foo_regex { 
