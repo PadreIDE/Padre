@@ -559,16 +559,24 @@ sub reload {
 # Returns temporary file name.
 sub store_in_tempfile {
 	my $self = shift;
+
+	$self->create_tempfile unless $self->tempfile;
 	
-	$self->remove_tempfile if $self->tempfile;
-	
+	open FH, ">", $self->tempfile;
+	print FH $self->text_get;
+	close FH;
+
+	return $self->tempfile;
+}
+
+sub create_tempfile {
 	use File::Temp;
 	
 	my $tempfile = File::Temp->new( UNLINK => 0 );
-	$self->set_tempfile( $tempfile->filename );
-	print $tempfile $self->text_get;
-
-	return $tempfile->filename;
+	$_[0]->set_tempfile( $tempfile->filename );
+	close $tempfile;
+	
+	return;
 }
 
 sub remove_tempfile {
