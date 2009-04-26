@@ -278,7 +278,7 @@ sub get_command {
 	my $config = Padre->ide->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename = $config->run_save eq 'unsaved'
+	my $filename = $config->run_save eq 'unsaved' && !$self->is_saved
 		? $self->store_in_tempfile
 		: $self->filename;
 
