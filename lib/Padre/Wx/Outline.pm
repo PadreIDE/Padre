@@ -148,7 +148,8 @@ sub select_line_in_editor {
 	my $page = $self->main->current->editor;
 	if(defined $line_number &&
 		($line_number =~ /^\d+$/o) &&
-			$line_number <= $page->GetLineCount)
+			(defined $page) && 
+			($line_number <= $page->GetLineCount))
 	{
 		$line_number--;
 		$page->EnsureVisible($line_number);
