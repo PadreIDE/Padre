@@ -200,7 +200,7 @@ sub _create {
 	# create vertical box that will host all controls
 	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$self->SetSizer($hbox);
-	$self->SetMinSize( [ 640, 480 ] );
+	$self->SetMinSize( [ 800, 600 ] );
 	$self->_hbox($hbox);
 
 	$self->_create_list;
