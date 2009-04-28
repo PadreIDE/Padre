@@ -387,7 +387,7 @@ sub update_recentfiles {
 
 	# menu entry count starts at 0
 	# first 3 entries are "open all", "clean list" and a separator
-	foreach ( my $i = 12; $i >= 3; $i-- ) {
+	foreach ( my $i = $self->{recentfiles}->GetMenuItemCount()-1; $i >= 3; $i-- ) {
 		if ( my $item = $self->{recentfiles}->FindItemByPosition($i) ) {
 			$self->{recentfiles}->Delete($item);
 		}
