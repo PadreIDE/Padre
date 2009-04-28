@@ -27,7 +27,7 @@ use Class::XSAccessor accessors => {
 use Padre::Wx::Icon;
 use Padre::Wx ();
 
-use base 'Wx::Frame';
+use base 'Wx::Dialog';
 
 our $VERSION = '0.34';
 
