@@ -128,8 +128,8 @@ sub on_tree_item_set_focus {
 	my ( $self, $event ) = @_;
 	my $page = $self->main->current->editor;
 	my $item = $self->GetPlData( $self->GetSelection() );
-	if(defined $item) {
-		$self->select_line_in_editor($item->{line});
+	if ( defined $item ) {
+		$self->select_line_in_editor( $item->{line} );
 	}
 	return;
 }
@@ -137,19 +137,19 @@ sub on_tree_item_set_focus {
 sub on_tree_item_selection_changed {
 	my ( $self, $event ) = @_;
 	my $item = $self->GetPlData( $event->GetItem );
-	if(defined $item) {
-		$self->select_line_in_editor($item->{line});
+	if ( defined $item ) {
+		$self->select_line_in_editor( $item->{line} );
 	}
 	return;
 }
 
 sub select_line_in_editor {
-	my ($self, $line_number) = @_;
+	my ( $self, $line_number ) = @_;
 	my $page = $self->main->current->editor;
-	if(defined $line_number &&
-		($line_number =~ /^\d+$/o) &&
-			(defined $page) && 
-			($line_number <= $page->GetLineCount))
+	if (   defined $line_number
+		&& ( $line_number =~ /^\d+$/o )
+		&& ( defined $page )
+		&& ( $line_number <= $page->GetLineCount ) )
 	{
 		$line_number--;
 		$page->EnsureVisible($line_number);

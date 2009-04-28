@@ -92,13 +92,13 @@ sub on_tree_item_activated {
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
 sub list_dir {
-	my ($dir, $depth) = @_;
+	my ( $dir, $depth ) = @_;
 	my @data;
 	$depth ||= 1;
 
 	# avoid deep recursion
 	# TODO: make this more clever then simply stopping after 10 levels
-	return if $depth > 10; 
+	return if $depth > 10;
 	if ( opendir my $dh, $dir ) {
 		my @items = sort grep { not $SKIP{$_} } readdir $dh;
 		foreach my $thing (@items) {
@@ -108,7 +108,7 @@ sub list_dir {
 				dir  => $dir,
 			);
 			if ( -d $path ) {
-				$item{subdir} = list_dir($path, $depth+1);
+				$item{subdir} = list_dir( $path, $depth + 1 );
 			}
 			push @data, \%item;
 		}
@@ -204,7 +204,8 @@ sub _on_tree_item_right_click {
 
 sub _update_treectrl {
 	my ( $dir, $data, $root ) = @_;
-#warn "_update_treectrl @_";
+
+	#warn "_update_treectrl @_";
 
 	foreach my $pkg ( @{$data} ) {
 		if ( $pkg->{subdir} ) {

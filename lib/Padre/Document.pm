@@ -338,7 +338,7 @@ sub is_perl6 {
 	my ($text) = @_;
 	return if not $text;
 	return 1 if $text =~ /^=begin\s+pod/msx;
-	return   if $text =~ /^=head[12]/msx;		# needed for eg/perl5_with_perl6_example.pod
+	return   if $text =~ /^=head[12]/msx;                               # needed for eg/perl5_with_perl6_example.pod
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
 	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
 	return;
@@ -561,7 +561,7 @@ sub store_in_tempfile {
 	my $self = shift;
 
 	$self->create_tempfile unless $self->tempfile;
-	
+
 	open FH, ">", $self->tempfile;
 	print FH $self->text_get;
 	close FH;
@@ -571,11 +571,11 @@ sub store_in_tempfile {
 
 sub create_tempfile {
 	use File::Temp;
-	
+
 	my $tempfile = File::Temp->new( UNLINK => 0 );
 	$_[0]->set_tempfile( $tempfile->filename );
 	close $tempfile;
-	
+
 	return;
 }
 

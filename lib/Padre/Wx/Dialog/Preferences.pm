@@ -303,7 +303,7 @@ sub _run_params_panel {
 
 	my $config   = Padre->ide->config;
 	my $document = Padre::Current->document;
-	
+
 	my $intrp_args_text = Wx::gettext(<<'END_TEXT');
 i.e.
 	include directory:  -I<dir>
@@ -315,30 +315,31 @@ END_TEXT
 
 	# Default values stored in host configuration
 	my $defaults_table = [
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Interpreter arguments:') ],
-			[ 'Wx::TextCtrl', 'run_interpreter_args_default', $config->run_interpreter_args_default ]
+		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Interpreter arguments:') ],
+			[ 'Wx::TextCtrl',   'run_interpreter_args_default', $config->run_interpreter_args_default ]
 		],
 		[   [ 'Wx::StaticText', undef, '' ],
-			['Wx::StaticText', undef, $intrp_args_text ]
+			[ 'Wx::StaticText', undef, $intrp_args_text ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Script arguments:') ],
-			[ 'Wx::TextCtrl', 'run_script_args_default', $config->run_script_args_default ]
+		[   [ 'Wx::StaticText', undef,                     Wx::gettext('Script arguments:') ],
+			[ 'Wx::TextCtrl',   'run_script_args_default', $config->run_script_args_default ]
 		],
 	];
 
 	# Per document values (overwrite defaults) stored in history
-	my $doc_flag = 0;  # value of 1 means that there is no document currently open
+	my $doc_flag = 0;                        # value of 1 means that there is no document currently open
 	my $filename = Wx::gettext('Unsaved');
 	my $path     = Wx::gettext('N/A');
 	my %run_args = (
 		interpreter => '',
-		script => '',
+		script      => '',
 	);
 
 	# Trap exception if there is no document currently open
 	eval {
-		unless ( $document->is_new ) {
-			($filename, $path) = File::Basename::fileparse( Padre::Current->filename );
+		unless ( $document->is_new )
+		{
+			( $filename, $path ) = File::Basename::fileparse( Padre::Current->filename );
 			foreach my $arg ( keys %run_args ) {
 				my $type = "run_${arg}_args_${filename}";
 				$run_args{$arg} = Padre::DB::History->previous($type)
@@ -350,7 +351,7 @@ END_TEXT
 		$filename = Wx::gettext('No Document');
 		$doc_flag = 1;
 	}
-	
+
 	my $currentdoc_table = [
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Document name:') ],
 			[ 'Wx::TextCtrl', undef, $filename, Wx::wxTE_READONLY ]
@@ -358,14 +359,14 @@ END_TEXT
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Document location:') ],
 			[ 'Wx::TextCtrl', undef, $path, Wx::wxTE_READONLY ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Interpreter arguments:') ],
-			[ 'Wx::TextCtrl', "run_interpreter_args_$filename", $run_args{interpreter} ]
+		[   [ 'Wx::StaticText', undef,                            Wx::gettext('Interpreter arguments:') ],
+			[ 'Wx::TextCtrl',   "run_interpreter_args_$filename", $run_args{interpreter} ]
 		],
 		[   [ 'Wx::StaticText', undef, '' ],
-			['Wx::StaticText', undef, $intrp_args_text ]
+			[ 'Wx::StaticText', undef, $intrp_args_text ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Script arguments:') ],
-			[ 'Wx::TextCtrl', "run_script_args_$filename", $run_args{script} ]
+		[   [ 'Wx::StaticText', undef,                       Wx::gettext('Script arguments:') ],
+			[ 'Wx::TextCtrl',   "run_script_args_$filename", $run_args{script} ]
 		],
 	];
 
@@ -391,7 +392,7 @@ END_TEXT
 		sprintf( Wx::gettext('Current Document: %s'), $filename )
 	);
 
-	$main_sizer->Add($notebook, 1, Wx::wxGROW);
+	$main_sizer->Add( $notebook, 1, Wx::wxGROW );
 	$panel->SetSizerAndFit($main_sizer);
 
 	return $panel;
@@ -433,8 +434,10 @@ sub dialog {
 
 	my $appearance = $self->_appearance_panel($tb);
 	$tb->AddPage( $appearance, Wx::gettext('Appearance') );
-	$tb->AddPage( $self->_run_params_panel($tb),
-		Wx::gettext('Run Parameters') );
+	$tb->AddPage(
+		$self->_run_params_panel($tb),
+		Wx::gettext('Run Parameters')
+	);
 
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
 	#$tb->AddPage( $plugin_manager, Wx::gettext('Plugin Manager') );
@@ -621,20 +624,21 @@ sub run {
 		'run_script_args_default',
 		$data->{run_script_args_default}
 	);
-	
+
 	# Quite like in _run_params_panel, trap exception if there
 	# is no document currently open
 	eval {
-		unless ( Padre::Current->document->is_new ) {
+		unless ( Padre::Current->document->is_new )
+		{
+
 			# These are a bit different as run_* variable name depends
 			# on current document's filename
-			foreach ( grep {/^run_/ && !/_default$/} (keys %$data) ) {
-				next if Padre::DB::History->previous($_)
-					eq $data->{$_};
+			foreach ( grep { /^run_/ && !/_default$/ } ( keys %$data ) ) {
+				next if Padre::DB::History->previous($_) eq $data->{$_};
 				Padre::DB::History->create(
 					type => $_,
 					name => $data->{$_},
-				)
+				);
 			}
 		}
 	};

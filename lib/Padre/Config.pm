@@ -152,10 +152,11 @@ my %settings = (
 
 		[ 'logging',       $BOOLEAN, 0 ],
 		[ 'logging_trace', $BOOLEAN, 0 ],
-		
+
 		# -- default run parameters
 		[ 'run_interpreter_args_default', $ASCII, '' ],
 		[ 'run_script_args_default',      $ASCII, '' ],
+
 		#[ 'run_default_workdir',          $ASCII, '' ],
 	],
 );

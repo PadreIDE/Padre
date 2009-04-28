@@ -119,6 +119,7 @@ sub new {
 
 	# Create the empty object
 	my $self = $SINGLETON = bless {
+
 		# parsed command-line options
 		opts => \%opts,
 
@@ -130,7 +131,7 @@ sub new {
 
 		# Project Attributes
 		project => {},
-		
+
 	}, $class;
 
 	# Save the startup dir before anyone can move us.

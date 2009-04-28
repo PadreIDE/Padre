@@ -312,22 +312,22 @@ sub load_files {
 
 	# explicit session on command line takes precedence
 	if ( defined $ide->opts->{session} ) {
+
 		# try to find the wanted session...
-		my ($session) = Padre::DB::Session->select(
-			'where name = ?', $ide->opts->{session}
-		);
+		my ($session) = Padre::DB::Session->select( 'where name = ?', $ide->opts->{session} );
+
 		# ... and open it.
 		if ( defined $session ) {
 			$self->open_session($session);
 		} else {
-			my $error =
-				sprintf Wx::gettext('No such session %s'),
+			my $error
+				= sprintf Wx::gettext('No such session %s'),
 				$ide->opts->{session};
 			$self->error($error);
 		}
 		return;
 	}
-	
+
 	# otherwise, an explicit list on the command line overrides configuration
 	my $files = Padre->ide->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
@@ -463,6 +463,7 @@ sub refresh {
 	my $guard = $self->freezer;
 
 	my $current = $self->current;
+
 	#$self->refresh_menu;
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
@@ -1240,6 +1241,7 @@ sub setup_editor {
 			$self->on_nth_pane($id);
 			return;
 		}
+
 		# if file does not exist, create it so that future access
 		# (such as size checking) won't warn / blow up padre
 		if ( not -f $file ) {
@@ -1378,13 +1380,13 @@ sub open_session {
 		my $filename = $document->file;
 		next unless -f $filename;
 		my $id = $self->setup_editor($filename);
-		next unless $id; # documents already opened have undef $id
+		next unless $id;    # documents already opened have undef $id
 		Padre::Util::debug("Setting focus on $filename");
 		$focus = $id if $document->focus;
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
 	$self->on_nth_pane($focus) if defined $focus;
-	
+
 	# now we can redraw
 	$self->Thaw;
 }
@@ -2336,7 +2338,7 @@ sub on_stc_update_ui {
 
 	# TODO move this to a more appropriate place (when switching between buffers?)
 	if ( my $directory = $self->directory ) {
-		if ($self->menu->view->{directory}->IsChecked) {
+		if ( $self->menu->view->{directory}->IsChecked ) {
 			$directory->update_gui;
 		}
 	}

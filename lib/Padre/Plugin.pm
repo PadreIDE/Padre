@@ -44,14 +44,14 @@ Padre::Plugin - Padre Plugin API 2.1
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
+use Carp ();
 use File::Spec::Functions qw{ catdir };
-use File::ShareDir        ();
-use Scalar::Util ();
-use Params::Util ( '_HASH0', '_INSTANCE' );
-use YAML::Tiny   ();
-use Padre::DB    ();
-use Padre::Wx    ();
+use File::ShareDir ();
+use Scalar::Util   ();
+use Params::Util   ( '_HASH0', '_INSTANCE' );
+use YAML::Tiny     ();
+use Padre::DB      ();
+use Padre::Wx      ();
 
 our $VERSION    = '0.34';
 our $COMPATIBLE = '0.18';
@@ -120,9 +120,8 @@ sub plugin_locale_directory {
 
 	my $distdir;
 	eval { $distdir = File::ShareDir::dist_dir($pkg); };
-	return $@ ? undef : catdir( $distdir, 'share', 'locale' )
+	return $@ ? undef : catdir( $distdir, 'share', 'locale' );
 }
-
 
 =head2 padre_interfaces
 

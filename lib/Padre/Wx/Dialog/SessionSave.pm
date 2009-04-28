@@ -8,11 +8,11 @@ use strict;
 use warnings;
 
 use Class::XSAccessor accessors => {
-	_butsave => '_butsave',  # save button
-	_combo   => '_combo',    # combo box holding the session names
-	_names   => '_names',    # list of all session names
-	_sizer   => '_sizer',    # the window sizer
-	_text    => '_text',     # text control holding the description
+	_butsave => '_butsave',    # save button
+	_combo   => '_combo',      # combo box holding the session names
+	_names   => '_names',      # list of all session names
+	_sizer   => '_sizer',      # the window sizer
+	_text    => '_text',       # text control holding the description
 };
 use Padre::Wx ();
 
@@ -32,7 +32,7 @@ sub new {
 		Wx::gettext('Save session as...'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE|Wx::wxTAB_TRAVERSAL,
+		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
@@ -72,14 +72,16 @@ sub _on_butsave_clicked {
 
 	my $main    = $self->GetParent;
 	my $session = $self->_current_session;
-	
+
 	if ( defined $session ) {
+
 		# session exist, remove all files associated to it
 		Padre::DB::SessionFile->delete(
 			'where session = ?',
 			$session->id
 		);
 	} else {
+
 		# session did not exist, create a new one
 		$session = Padre::DB::Session->new(
 			name        => $self->_combo->GetValue,
@@ -88,7 +90,7 @@ sub _on_butsave_clicked {
 		);
 		$session->insert;
 	}
-	
+
 	# capture session and save it
 	my @session = $main->capture_session;
 	$main->save_session( $session, @session );
@@ -125,7 +127,7 @@ sub _on_combo_item_selected {
 sub _on_combo_text_changed {
 	my ( $self, $event ) = @_;
 
-	my $name   = $self->_combo->GetValue;
+	my $name = $self->_combo->GetValue;
 	my $method = $name ? 'Enable' : 'Disable';
 	$self->_butsave->$method;
 	my $session = $self->_current_session;

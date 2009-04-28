@@ -78,9 +78,12 @@ sub new {
 	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window") );
 	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
 
-	Wx::Event::EVT_MENU_OPEN( $main, sub {
-		Padre->ide->wx->main->menu->refresh();
-	});
+	Wx::Event::EVT_MENU_OPEN(
+		$main,
+		sub {
+			Padre->ide->wx->main->menu->refresh();
+		}
+	);
 
 	my $config = Padre->ide->config;
 	if ( $config->experimental ) {

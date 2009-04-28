@@ -768,7 +768,7 @@ sub on_focus {
 	my $doc = Padre::Current->document;
 
 	Padre::Util::debug( "Focus received file: " . ( $doc->filename || '' ) );
-	
+
 	# to show/hide the document specific Perl menu
 	$self->main->refresh_menu;
 

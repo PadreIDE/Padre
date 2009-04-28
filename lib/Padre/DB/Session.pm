@@ -13,6 +13,7 @@ our $VERSION = '0.34';
 my $PADRE_SESSION = 'padre-last';
 
 sub last_padre_session {
+
 	# find last padre session
 	my ($padre) = Padre::DB::Session->select(
 		'where name = ?',
@@ -30,7 +31,6 @@ sub last_padre_session {
 	}
 	return $padre;
 }
-
 
 sub files {
 	my ($self) = @_;

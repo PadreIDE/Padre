@@ -36,7 +36,7 @@ sub new {
 		Wx::gettext('Session Manager'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxDEFAULT_FRAME_STYLE|Wx::wxTAB_TRAVERSAL,
+		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
@@ -236,8 +236,8 @@ sub _create_buttons {
 	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# the buttons
-	my $bo = Wx::Button->new( $self, -1, Wx::gettext('Open') );
-	my $bd = Wx::Button->new( $self, -1, Wx::gettext('Delete') );
+	my $bo = Wx::Button->new( $self, -1,              Wx::gettext('Open') );
+	my $bd = Wx::Button->new( $self, -1,              Wx::gettext('Delete') );
 	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
 	$self->_butopen($bo);
 	$self->_butdelete($bd);

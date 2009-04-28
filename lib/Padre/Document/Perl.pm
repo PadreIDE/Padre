@@ -278,7 +278,8 @@ sub get_command {
 	my $config = Padre->ide->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename = $config->run_save eq 'unsaved' && !$self->is_saved
+	my $filename
+		= $config->run_save eq 'unsaved' && !$self->is_saved
 		? $self->store_in_tempfile
 		: $self->filename;
 
@@ -289,7 +290,7 @@ sub get_command {
 	# Set default arguments
 	my %run_args = (
 		interpreter => $config->run_interpreter_args_default,
-		script => $config->run_script_args_default,
+		script      => $config->run_script_args_default,
 	);
 
 	# Overwrite default arguments with the ones preferred for given document

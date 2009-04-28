@@ -156,9 +156,9 @@ sub enable {
 
 	# add the plugin catalog to the locale
 	my $locale = Padre::Current->main->{locale};
-	my $code = Padre::Locale::rfc4646();
-	my $name = $self->name;
-	$locale->AddCatalog( "$name-$code" );
+	my $code   = Padre::Locale::rfc4646();
+	my $name   = $self->name;
+	$locale->AddCatalog("$name-$code");
 
 	# Call the enable method for the object
 	eval { $self->object->plugin_enable; };

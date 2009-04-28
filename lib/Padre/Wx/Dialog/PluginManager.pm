@@ -487,7 +487,7 @@ sub _update_plugin_state {
 
 			# ... and enabled
 			$button->SetLabel( Wx::gettext('Disable') );
-			$self->_action( '_plugin_disable' );
+			$self->_action('_plugin_disable');
 			$button->Enable;
 			$item->SetText( Wx::gettext('enabled') );
 			$item->SetImage(1);
@@ -497,7 +497,7 @@ sub _update_plugin_state {
 
 			# ... and disabled
 			$button->SetLabel( Wx::gettext('Enable') );
-			$self->_action( '_plugin_enable' );
+			$self->_action('_plugin_enable');
 			$button->Enable;
 			$item->SetText( Wx::gettext('disabled') );
 			$item->SetImage(2);

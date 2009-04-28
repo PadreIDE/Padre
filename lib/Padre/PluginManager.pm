@@ -30,7 +30,7 @@ use File::Spec::Functions qw{ catfile };
 use Scalar::Util ();
 use Params::Util qw{_IDENTIFIER _CLASS _INSTANCE};
 use Padre::Config::Constants qw{ :dirs };
-use Padre::Current	     ();
+use Padre::Current           ();
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
@@ -139,20 +139,21 @@ sub relocale {
 	my $locale = Padre::Current->main->{locale};
 
 	foreach my $plugin ( $self->plugin_objects ) {
+
 		# only process enabled plugins
 		next unless $plugin->status eq 'enabled';
 
 		# add the plugin locale dir to search path
 		my $object    = $plugin->{object};
 		my $localedir = $object->plugin_locale_directory
-			if $object->can( 'plugin_locale_directory' );
-		$locale->AddCatalogLookupPathPrefix( $localedir )
+			if $object->can('plugin_locale_directory');
+		$locale->AddCatalogLookupPathPrefix($localedir)
 			if defined $localedir && -d $localedir;
 
 		# add the plugin catalog to the locale
 		my $name = $plugin->name;
 		my $code = Padre::Locale::rfc4646();
-		$locale->AddCatalog( "$name-$code" );
+		$locale->AddCatalog("$name-$code");
 	}
 }
 
@@ -560,10 +561,10 @@ sub _load_plugin {
 
 	# add a new directory for locale to search translation catalogs.
 	my $localedir = $object->plugin_locale_directory
-		if $object->can( 'plugin_locale_directory' );
+		if $object->can('plugin_locale_directory');
 	if ( defined $localedir && -d $localedir ) {
 		my $locale = Padre::Current->main->{locale};
-		$locale->AddCatalogLookupPathPrefix( $localedir );
+		$locale->AddCatalogLookupPathPrefix($localedir);
 	}
 
 	# FINALLY we are clear to enable the plugin
@@ -868,10 +869,10 @@ sub test_a_plugin {
 	}
 
 	# Unload any previously existant plugin with the same name
-    if ($plugins->{$filename}) {
-    	$self->unload_plugin($filename);
-	    delete $plugins->{$filename};
-    }
+	if ( $plugins->{$filename} ) {
+		$self->unload_plugin($filename);
+		delete $plugins->{$filename};
+	}
 
 	# Load the selected plugin
 	$self->load_plugin($filename);

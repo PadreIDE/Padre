@@ -10,7 +10,7 @@ use Padre::Wx       ();
 use Padre::Locale   ();
 use Padre::Wx::Menu ();
 use Padre::Current qw{_CURRENT};
-use File::Glob ':glob'; # Fix win32 globbing problem with spaces in paths
+use File::Glob ':glob';    # Fix win32 globbing problem with spaces in paths
 
 our $VERSION = '0.34';
 use base 'Padre::Wx::Menu';
