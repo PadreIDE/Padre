@@ -18,7 +18,7 @@ sub padre_interfaces {
 }
 
 sub plugin_name {
-	'Padre Developer Tools';
+	Wx::gettext('Padre Developer Tools');
 }
 
 sub plugin_enable {
@@ -52,32 +52,32 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		'Run Document inside Padre' => 'eval_document',
-		'---'                       => undef,
-		'Dump Current Document'     => 'dump_document',
-		'Dump Top IDE Object'       => 'dump_padre',
-		'Dump %INC and @INC'        => 'dump_inc',
-		'---'                       => undef,
+		Wx::gettext('Run Document inside Padre') => 'eval_document',
+		'---'                                    => undef,
+		Wx::gettext('Dump Current Document')     => 'dump_document',
+		Wx::gettext('Dump Top IDE Object')       => 'dump_padre',
+		Wx::gettext('Dump %INC and @INC')        => 'dump_inc',
+		'---'                                    => undef,
 
 		# TODO
 		# Should be checkbox but I am too lazy to turn the whole
 		# menu_plugins_simple into a menu_plugins
-		'Enable logging'            => sub { set_logging(1); },
-		'Disable logging'           => sub { set_logging(0); },
-		'Enable trace when logging' => sub { set_trace(1); },
-		'Disable trace'             => sub { set_trace(0); },
-		'---'                       => undef,
-		'Simulate Crash'            => 'simulate_crash',
-		'Simulate Crashing Bg Task' => 'simulate_task_crash',
-		'---'                       => undef,
-		'wxWidgets 2.8.8 Reference' => sub {
+		Wx::gettext('Enable logging')            => sub { set_logging(1); },
+		Wx::gettext('Disable logging')           => sub { set_logging(0); },
+		Wx::gettext('Enable trace when logging') => sub { set_trace(1); },
+		Wx::gettext('Disable trace')             => sub { set_trace(0); },
+		'---'                                    => undef,
+		Wx::gettext('Simulate Crash')            => 'simulate_crash',
+		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_crash',
+		'---'                                    => undef,
+		Wx::gettext('wxWidgets 2.8.8 Reference') => sub {
 			Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
 		},
-		'STC Reference' => sub {
+		Wx::gettext('STC Reference')             => sub {
 			Wx::LaunchDefaultBrowser('http://www.yellowbrain.com/stc/index.html');
 		},
-		'---'   => undef,
-		'About' => 'show_about',
+		'---'                                    => undef,
+		Wx::gettext('About')                     => 'show_about',
 	];
 }
 
@@ -116,7 +116,7 @@ sub dump_document {
 	my $self     = shift;
 	my $document = Padre::Current->document;
 	unless ($document) {
-		Padre::Current->main->message( 'No file is open', 'Info' );
+		Padre::Current->main->message( Wx::gettext('No file is open'), 'Info' );
 		return;
 	}
 	return $self->_dump($document);
@@ -146,7 +146,7 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName('Padre::Plugin::Devel');
-	$about->SetDescription("A set of unrelated tools used by the Padre developers\n");
+	$about->SetDescription( Wx::gettext("A set of unrelated tools used by the Padre developers\n") );
 	Wx::AboutBox($about);
 	return;
 }
