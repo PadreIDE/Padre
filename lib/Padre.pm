@@ -24,7 +24,7 @@ use Class::Autouse ();
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
 use version ();
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials

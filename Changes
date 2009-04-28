@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.34 009.04.28
 
     Fix crash in plugin manager when changing locale while window opened (#298) (JQUELIN)
     Support for plugin l10n in place (JQUELIN)

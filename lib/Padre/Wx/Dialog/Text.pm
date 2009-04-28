@@ -7,7 +7,7 @@ use Padre::Wx;
 use Padre::Wx::Dialog;
 use Wx::Locale qw(:default);
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 sub get_layout {
 	my ($text) = @_;

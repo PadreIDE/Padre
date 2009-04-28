@@ -12,7 +12,7 @@ use threads;
 use constant REMOTE_HOST => '127.0.0.1';
 use constant SERVER_PORT => 9999;
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 #
 # constructor

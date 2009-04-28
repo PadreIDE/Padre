@@ -21,7 +21,7 @@ use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 # Master storage of the settings
 our %SETTING = ();

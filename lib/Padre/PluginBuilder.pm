@@ -8,7 +8,7 @@ use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
 
 use base 'Module::Build';
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 =pod
 

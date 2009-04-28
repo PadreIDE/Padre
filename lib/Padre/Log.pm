@@ -1,4 +1,9 @@
 package Padre::Log;
+use strict;
+use warnings;
+
+our $VERSION = '0.34';
+
 use Carp  ();
 use POSIX ();
 use Class::XSAccessor::Array predicates => {

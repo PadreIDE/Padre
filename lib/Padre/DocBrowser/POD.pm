@@ -9,7 +9,7 @@ use File::Spec         ();
 use Pod::Simple::XHTML ();
 use Padre::Document    ();
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 use Class::XSAccessor constructor => 'new', getters => {
 	get_provider => 'provider',

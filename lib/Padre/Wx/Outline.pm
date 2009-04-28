@@ -7,7 +7,7 @@ use Params::Util qw{_INSTANCE};
 use Padre::Wx      ();
 use Padre::Current ();
 
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 use base 'Wx::TreeCtrl';
 
 sub new {
