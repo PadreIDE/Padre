@@ -5,7 +5,7 @@ grammar Property {
 	rule key { 
 		(\w+)
 	}
-		rule value { 
+	rule value { 
 		(\w+)
 	}
 	rule entry {
