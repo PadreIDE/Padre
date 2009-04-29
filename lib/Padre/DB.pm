@@ -82,15 +82,138 @@ __END__
 
 Padre::DB - An ORLite-based ORM Database API
 
+
+
 =head1 SYNOPSIS
 
   TO BE COMPLETED
 
+
+
 =head1 DESCRIPTION
 
-TO BE COMPLETED
+This module implements access to the database that Padre is using to
+store bits & pieces. It is using C<ORLite> underneath, for an easy table
+scheme discovery at runtime. See below to learn about how to update the
+database scheme.
+
+
+=head2 Updating database scheme
+
+The database is created at runtime if it does not exist, but we are
+relying on C<ORLite::Migrate>. To summarize C<ORLite::Migrate>:
+
+=over 4
+
+=item * We provide scripts to update the database from one revision to
+another.
+
+=item * C<Padre::DB> calls C<ORLite::Migrate> to apply them in order,
+starting from the current database revision.
+
+=back
+
+Therefore, in order to update the database, you need to do the
+following:
+
+=over 4
+
+=item *
+
+Create a script C<share/timeline/migrate-$i.pl> with $i the next
+available integer. This script will look like this:
+
+        use strict;
+        use ORLite::Migrate::Patch;
+
+        # do some stuff on the base
+        do(<<'END_SQL');
+        <insert your sql statement here>
+        END_SQL
+
+Of course, in case of dropping an existing table, you should make sure
+that you don't loose data - that is, your script should migrate existing
+data to the new scheme (unless the whole feature is deprecated, of
+course).
+
+=item *
+
+Update the user_revision in C<Padre::DB>'s call to C<ORLite::Migrate> to
+read the new script number (ie, the $i that you have used to name your
+script in the timeline directory).
+
+        use ORLite::Migrate 0.01 {
+            [...]
+	        user_revision => <your-revision-number>,
+            [...]
+        };
+
+
+=item *
+
+Once this is done, you can try to load Padre's development and check
+whether the table is updated correctly. Once again, check whether data
+is correctly migrated from old scheme to new scheme (if applicable).
+
+Note that C<ORLite::Migrate> is quiet by default. And if your SQL
+statements are buggy, you will not see anything but the database not
+being updated. Therefore, to debug what's going on, add the C<-DEBUG>
+flag to C<ORLite::Migrate> call (add it as the B<last> parameter):
+
+        use ORLite::Migrate 0.01 {
+            [...]
+        }, '-DEBUG'
+
+=back
+
+Congratulations! The database has been updated, and will be updated
+automatically when users will run the new Padre version...
+
+
+=head2 Accessing and using the database
+
+Now that the database has been updated, you can start using it. Each new
+table will have a C<Padre::DB::YourTable> module created automatically
+at runtime by C<ORLite>, providing you with the standard methods
+described below (see METHODS).
+
+Note: we prefer using underscore for table names instead of camel case.
+C<ORLite> is smart enough to convert underscore names to camel case
+module names.
+
+But what if you want to provide some particular methods? For example,
+one can imagine that if you create a table C<accessed_files> retaining
+the path and the opening timestamp, you want to create a method
+C<most_recent()> that will return the last opened file.
+
+In that case, that's quite easy, too:
+
+=over 4
+
+=item *
+
+Create a standard C<Padre::DB::YourTable> module where you will put your
+method. Note that all standard methods described above will B<still> be
+available.
+
+=item *
+
+Don't forget to C<use Padre::DB::YourTable> in C<Padre::DB>, so that
+other Padre modules will get access to all db tables by just using
+C<Padre::DB>.
+
+=back
+
+
+
 
 =head1 METHODS
+
+Those methods are automatically created for each of the tables (see
+above). Note that the modules automatically created provide both class
+methods and instance methods, where the object instances each represent
+a table record.
+
 
 =head2 dsn
 
@@ -266,6 +389,8 @@ no means prohibited.
 The C<pragma> method provides a convenient method for fetching a pragma
 for a datase. See the SQLite documentation for more details.
 
+
+
 =head1 SUPPORT
 
 Padre::DB is based on L<ORLite> 1.18.
@@ -275,9 +400,7 @@ Documentation created by L<ORLite::Pod> 0.06.
 For general support please see the support section of the main
 project documentation.
 
-=head1 AUTHOR
 
-Adam Kennedy
 
 =head1 COPYRIGHT
 
