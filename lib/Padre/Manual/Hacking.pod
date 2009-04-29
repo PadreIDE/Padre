@@ -146,13 +146,13 @@ Instead, use the appropriate amount of spaces to make  things line up.
 Example: (Where you put the opening brace isn't
           important for this example!)
 
-sub baz {
-	if (foo()
-	    and bar())
-	{
-		# ...
-	}
-}
+  sub baz {
+          if (foo()
+              and bar())
+          {
+                  # ...
+          }
+  }
 
 =head2 Method and Subroutine Naming
 
@@ -200,4 +200,4 @@ channel on L<irc://irc.perl.org/>.
 
 =head1 COPYRIGHT
 
-Copyright 2008 The Padre Team.
+Copyright 2008-2009 The Padre Team.
