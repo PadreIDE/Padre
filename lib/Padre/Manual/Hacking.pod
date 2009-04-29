@@ -190,6 +190,203 @@ accessor generation. This not only makes them significantly faster,
 but also makes debugging easier, because the debugger won't descend into
 every single accessor sub.
 
+=head1 HEAVY-DUTY DEBUGGING
+
+I<Don't bother reading this sectionif you don't know any C or if you
+just want to get started hacking Padre!>
+
+If you're planning to do a serious debugging session, you may want to set
+up Padre with a debugging perl and debugging version of Wx.
+Particularly the core developers are encouraged to have a go at this
+because the debugging version of wxWidgets will show various warnings
+of failed assertions which may otherwise go undetected. This is a bit of
+work to set up and not very useful for a casual hacker as this will
+involve compiling your own perl, wxWidgets, and Wx.
+
+Here's a rough how-to for Linux and similar OSs:
+
+=head2 Building your own debugging perl
+
+=over 2
+
+=item *
+
+Get the perl sources from http://cpan.org/src/README.html or via git.
+As of this writing, perl 5.10.0 is the latest stable release.
+
+=item *
+
+Extract the sources and run
+
+  ./Configure -Dprefix='/path/for/your/perl' -DDEBUGGING -Dusethreads -Duse64bitall -Dusedevel -DDEBUG_LEAKING_SCALARS -DPERL_USE_SAFE_PUTENV
+
+Remove the C<-Duse64bitall> if you have a 32bit OS (or machine). Keep
+answering the questions with default (hit Enter) except for the question
+about B<additional cc flags>. Here, put the default settings that are suggested
+in the I<[...]> brackets and add two options:
+
+  -DDEBUG_LEAKING_SCALARS -DPERL_USE_SAFE_PUTENV
+
+Afterwards, keep hitting return until the configuration is done.
+
+=item *
+
+Compile C<perl> by typing C<make> or for multiple CPUs, type C<make -jX>
+where X is the number of CPUs+1.
+
+=item *
+
+If all went well, type C<make install> to install your own private debugging perl.
+
+=item *
+
+Check whether the executables in F</path/to/your/perl/bin> all contain
+the version numbers of perl. You may want to create symlinks of the basename.
+If so, cd to the directory and run:
+
+  perl -e 'for(@ARGV){$n=$_;s/5\.\d+\.\d+//; system("ln -s $n $_")}' *5.*
+
+Check that there's now also a F<perl> symlink to F<perl5.10.0> (or whatever
+version of perl you built).
+
+=item *
+
+Setup the environment of your shell to use the new perl. For bash-like
+shells, do this:
+
+  export PATH=/path/to/your/perl/bin:$PATH
+
+csh like shells probably use something like C<setenv> or so.
+
+=item *
+
+Try running C<perl -V> to see whether your new perl is being run.
+(See also: C<which perl>)
+
+Make sure C<perl -V> shows these particular "compile-time options":
+
+  DEBUGGING DEBUG_LEAKING_SCALARS PERL_USE_SAFE_PUTENV
+  PERL_USE_DEVEL
+
+There'll certainly be others, too.
+
+=back
+
+=head2 Building your own debugging wxWidgets
+
+=over 2
+
+=item *
+
+Make sure your F<~/.cpan> is owned by you and not being used by another
+perl. Maybe clean up F<~/.cpan/build/*> so there's no collisions.
+
+=item *
+
+Run F<cpan>. (B<NOT> as root!)
+
+=item *
+
+If you like, install C<Bundle::CPAN> for convenience. Potentially
+restart F<cpan> afterwards. Check whether the modules were installed
+into your fresh perl at F</path/to/your/perl/lib....>.
+
+=item *
+
+From F<cpan>, type C<look Alien::wxWidgets>. You should get a new shell
+in an extracted C<Alien::wxWidgets> distribution.
+
+=item *
+
+Build wxWidgets by running:
+
+  perl Build.PL --debug --unicode
+
+Hopefully, it won't say you're missing any dependencies. If you're
+missing any, quit the shell and install them from the cpan shell
+before continuing.
+
+C<Build.PL> will ask you whether you want to build from sources. Yes, you do.
+Have it fetch the sources as F<.tar.gz>.
+
+  ./Build
+  ./Build test
+  ./Build install
+
+=back
+
+=head2 Installing a debugging Wx.pm
+
+=over 2
+
+=item *
+
+Now, you want to set up your own F<Wx.pm> with debugging enabled.
+First, install the prerequisites for Wx. I did it like this:
+
+  cpan> look Wx
+  ...
+  $ perl Makefile.PL
+  ... blah blah missing this or that ...
+
+Take note of the missing dependencies, exit to the CPAN shell, install
+the missing modules, then C<look Wx> again.
+
+=item *
+
+If you have all F<Wx.pm> dependencies in place, build C<Wx> like this:
+
+  perl Makefile.PL --wx-debug --wx-unicode
+  make
+  make test
+  make install
+
+=back
+
+=head2 Installing Padre from SVN
+
+=over 2
+
+=item *
+
+Once F<Wx.pm> is installed, check out Padre from the Subversion
+repository and cd to its directory under F<trunk/Padre>.
+
+=item *
+
+Run C<cpan .> to automatically install all dependencies of Padre!
+
+=item *
+
+Run the following to set up Padre:
+
+  perl Makefile.PL
+  make
+
+=item *
+
+Run F<dev.pl> to start Padre from your checkout.
+
+  perl dev.pl
+
+or with all plugins loaded:
+
+  perl dev.pl -h
+
+or with the Perl debugger:
+
+  perl dev.pl -d
+
+=item *
+
+Don't be annoyed by the Wx popups complaining about
+assertion-failures. They indicate potential bugs that probably need
+attention. If you get these, that means it was worth the effort to
+build a debugging perl and Wx! Note that the stack backtraces given are
+at the C level, not Perl backtraces.
+
+=back
+
 =head1 SUPPORT
 
 For support with Padre itself, see the support section in the top
