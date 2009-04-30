@@ -62,7 +62,7 @@ grammar Person {
 }
 
 #A module example
-module Foo {
+module Foo1 {
 	sub foo_sub { }
 	method foo_method { }
 	submethod foo_submethod { }
