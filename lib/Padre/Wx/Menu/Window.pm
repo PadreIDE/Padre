@@ -171,7 +171,9 @@ sub refresh {
 		my $main = $self->{main};
 		if ( $need > 0 ) {
 			foreach my $i ( 1 .. $need ) {
-				my $menu_entry = $self->Append( -1, '' );
+				# The temporary label 'tmp' is necessary (i.e. must be ne '')
+				# in order not to get a wx assertion failure in debug mode
+				my $menu_entry = $self->Append( -1, 'tmp' );
 				push @$alt, $menu_entry;
 				Wx::Event::EVT_MENU(
 					$main, $menu_entry,
