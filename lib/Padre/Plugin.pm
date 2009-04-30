@@ -46,7 +46,6 @@ use strict;
 use warnings;
 use Carp ();
 use File::Spec::Functions qw{ catdir };
-use File::ShareDir ();
 use Scalar::Util   ();
 use Params::Util   ( '_HASH0', '_INSTANCE' );
 use YAML::Tiny     ();
@@ -104,7 +103,8 @@ The C<plugin_directory_locale()> method will be called by Padre to
 know where to look for your plugin l10n catalog.
 
 It defaults to C<$sharedir/locale> (with C<$sharedir> as defined by
-C<File::ShareDir>), and thus should work as is for your plugin if you're
+C<File::ShareDir> or more specifically by C<File::ShareDir::PAR>),
+and thus should work as is for your plugin if you're
 using the C<install_share> command of C<Module::Install>.
 
 Your plugin catalogs should be named C<$plugin-$locale.po> (or C<.mo>
@@ -118,8 +118,9 @@ sub plugin_locale_directory {
 	my $pkg = ref($self) || $self;
 	$pkg =~ s/::/-/g;
 
+	require File::ShareDir::PAR;
 	my $distdir;
-	eval { $distdir = File::ShareDir::dist_dir($pkg); };
+	eval { $distdir = File::ShareDir::PAR::dist_dir($pkg); };
 	return $@ ? undef : catdir( $distdir, 'share', 'locale' );
 }
 
