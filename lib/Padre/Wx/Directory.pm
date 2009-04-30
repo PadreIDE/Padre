@@ -136,6 +136,7 @@ sub update_gui {
 	return if not @{ $CACHED{$dir} };
 
 	my $directory = Padre->ide->wx->main->directory;
+	$directory->Freeze();
 	$directory->clear;
 
 	my $root = $directory->AddRoot(
