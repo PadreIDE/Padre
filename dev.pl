@@ -3,6 +3,7 @@
 use 5.008;
 use strict;
 use warnings;
+use Config;
 
 # This script is only used to run the application from
 # its development location
@@ -15,7 +16,8 @@ $ENV{PADRE_HOME} = $FindBin::Bin;
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
-	die "You must now have run make in order to run dev.pl";
+	my $make = $Config::Config{make} || 'make';
+	die "You must now have run $make in order to run dev.pl";
 }
 
 
