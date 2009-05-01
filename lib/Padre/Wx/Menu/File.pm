@@ -394,7 +394,7 @@ sub update_recentfiles {
 	}
 
 	my $idx = 0;
-	foreach my $file ( grep {-f} Padre::DB::History->recent('files') ) {
+	foreach my $file ( grep {-f if $_} Padre::DB::History->recent('files') ) {
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$self->{recentfiles}->Append(
