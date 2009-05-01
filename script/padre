@@ -54,7 +54,6 @@ my %opts = (
     session => $session,
 );
 
-use Class::Autouse ':devel';
 require Padre;
 my $app = Padre->new(%opts);
 $app->run;
