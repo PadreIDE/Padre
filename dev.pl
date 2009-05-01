@@ -17,7 +17,7 @@ $ENV{PADRE_HOME} = $FindBin::Bin;
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
 	my $make = $Config::Config{make} || 'make';
-	die "You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl";
+	error("You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl");
 }
 
 
@@ -46,7 +46,9 @@ if ( $^O eq 'darwin' ) {
 	#I presume there's a proper way to do this?
 	$perl = `which wxPerl`;
 	chomp($perl);
-	die "padre needs to run using wxPerl on OSX" unless ( -e $perl );
+	unless ( -e $perl ) {
+		error("padre needs to run using wxPerl on OSX");
+	}
 }
 my @cmd = ( qq[$perl], qq[-I$FindBin::Bin/lib], qq[-I$FindBin::Bin/blib/lib], );
 if ( grep { $_ eq '-d' } @ARGV ) {
@@ -70,3 +72,10 @@ push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 
 #print "@cmd\n";
 system(@cmd);
+
+sub error {
+	my $msg = shift;
+	$msg =~ s/\n$//s;
+	print "\nError:\n$msg\n\n";
+	exit(255);
+}
