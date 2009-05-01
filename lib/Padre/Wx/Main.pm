@@ -460,11 +460,10 @@ sub refresh {
 	return if $self->no_refresh;
 
 	# Freeze during the refresh
-	my $guard = $self->freezer;
-
+	my $guard   = $self->freezer;
 	my $current = $self->current;
 
-	#$self->refresh_menu;
+	$self->refresh_menubar($current);
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 	$self->refresh_functions($current);
@@ -499,6 +498,12 @@ sub refresh_menu {
 	my $self = shift;
 	return if $self->no_refresh;
 	$self->menu->refresh;
+}
+
+sub refresh_menubar {
+	my $self = shift;
+	return if $self->no_refresh;
+	$self->menu->refresh_top;
 }
 
 sub refresh_toolbar {
