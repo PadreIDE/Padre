@@ -17,7 +17,7 @@ $ENV{PADRE_HOME} = $FindBin::Bin;
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
 	my $make = $Config::Config{make} || 'make';
-	die "You must now have run $make in order to run dev.pl";
+	die "You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl";
 }
 
 
