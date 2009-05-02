@@ -97,7 +97,7 @@ sub start {
 	$self->{timer}->Start(1000);
 	$self->on_timer( undef, 1 );
 
-	return;
+	return();
 }
 
 sub stop {
@@ -114,7 +114,7 @@ sub stop {
 
 	# TODO: GUI on-stop cleanup here
 
-	return;
+	return();
 }
 
 sub running {

@@ -533,7 +533,7 @@ sub on_dump_running_tasks {
 		my $threads = $running->{$type};
 		my $n       = keys %$threads;
 		$text .= "- $n of type '$type':\n";
-		$text .= "  (in thread(s) " . join( ", ", sort { $a <=> $b } values %$threads ) . ")\n";
+		$text .= "  (in thread(s) " . join( ", ", sort { $a <=> $b } keys %$threads ) . ")\n";
 	}
 
 	$output->AppendText($text);
