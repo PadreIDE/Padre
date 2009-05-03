@@ -225,6 +225,7 @@ END_TEXT
 	Wx::Event::EVT_RIGHT_DOWN( $editor, undef );
 	Wx::Event::EVT_LEFT_UP( $editor, undef );
 	Wx::Event::EVT_CHAR( $editor, undef );
+	Wx::Event::EVT_SET_FOCUS( $editor, undef );
 
 	return;
 }
