@@ -284,7 +284,7 @@ BEGIN {
 			iso3166   => undef,
 			wxid      => Wx::wxLANGUAGE_JAPANESE,
 			fallback  => ['en-us'],
-			supported => 0,
+			supported => 1,
 		},
 
 		'ko' => {
