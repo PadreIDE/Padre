@@ -114,12 +114,12 @@ sub padre_setup {
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 	} elsif ( $mimetype eq 'text/plain' ) {
+		$self->padre_setup_plain;
 		my $filename = $self->{Document}->filename || q{};
 		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 			my $ext = lc $1;
-			$ext eq 'conf'
-				? $self->padre_setup_style('conf')
-				: $self->padre_setup_plain;
+			# re-setup if file extension is .conf
+			$self->padre_setup_style('conf') if $ext eq 'conf';
 		}
 	} elsif ($mimetype) {
 
