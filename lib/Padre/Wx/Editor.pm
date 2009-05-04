@@ -117,7 +117,9 @@ sub padre_setup {
 		my $filename = $self->{Document}->filename || q{};
 		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 			my $ext = lc $1;
-			$self->padre_setup_style('conf') if $ext eq 'conf';
+			$ext eq 'conf'
+				? $self->padre_setup_style('conf')
+				: $self->padre_setup_plain;
 		}
 	} elsif ($mimetype) {
 
