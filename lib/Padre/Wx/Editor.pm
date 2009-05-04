@@ -129,7 +129,7 @@ sub padre_setup {
 	} else {
 
 		# if mimetype is not known, then no coloring for now
-		# but mimimal conifuration should apply here too
+		# but mimimal configuration should apply here too
 		$self->padre_setup_plain;
 	}
 
