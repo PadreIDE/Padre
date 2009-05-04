@@ -1,5 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.35 to be released
+
+    Add Japanese translation (ISHIGAKI)
+
 v0.34 009.04.28
 
     Fix crash in plugin manager when changing locale while window opened (#298) (JQUELIN)
