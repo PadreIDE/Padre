@@ -1105,6 +1105,8 @@ Hungarian - György Pásztor (GYU)
 
 Italian - Simone Blandino (SBLANDIN)
 
+Japanese - Kenichi Ishigaki (ISHIGAKI)
+
 Korean - Keedi Kim - 김도형 (KEEDI)
 
 Russian - Andrew Shitov

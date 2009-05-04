@@ -181,6 +181,7 @@ sub about {
 	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
 	$about->AddTranslator("Hungarian - György Pásztor");
 	$about->AddTranslator("Italian - Simone Blandino");
+	$about->AddTranslator("Japanese - Kenichi Ishigaki");
 	$about->AddTranslator("Korean - Keedi Kim - 김도형");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
