@@ -621,7 +621,7 @@ sub on_right_down {
 	);
 	$menu->AppendSeparator;
 
-	my $copy = $menu->Append( Wx::wxID_COPY, '' );
+	my $copy = $menu->Append( Wx::wxID_COPY, Wx::gettext("&Copy\tCtrl-C") );
 	if ( not $selection_exists ) {
 		$copy->Enable(0);
 	}
@@ -633,7 +633,7 @@ sub on_right_down {
 		}
 	);
 
-	my $cut = $menu->Append( Wx::wxID_CUT, '' );
+	my $cut = $menu->Append( Wx::wxID_CUT, Wx::gettext("Cu&t\tCtrl-X") );
 	if ( not $selection_exists ) {
 		$cut->Enable(0);
 	}
@@ -645,7 +645,7 @@ sub on_right_down {
 		}
 	);
 
-	my $paste = $menu->Append( Wx::wxID_PASTE, '' );
+	my $paste = $menu->Append( Wx::wxID_PASTE, Wx::gettext("&Paste\tCtrl-V") );
 	my $text = get_text_from_clipboard();
 
 	if ( length($text) && $main->notebook->GetPage($id)->CanPaste ) {
