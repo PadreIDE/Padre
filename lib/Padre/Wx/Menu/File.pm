@@ -52,7 +52,7 @@ sub new {
 		$main,
 		$file_new->Append(
 			-1,
-			Wx::gettext('Perl 5 script')
+			Wx::gettext('Perl 5 Script')
 		),
 		sub {
 			$_[0]->on_new_from_template('pl');
@@ -62,7 +62,7 @@ sub new {
 		$main,
 		$file_new->Append(
 			-1,
-			Wx::gettext('Perl 5 module')
+			Wx::gettext('Perl 5 Module')
 		),
 		sub {
 			$_[0]->on_new_from_template('pm');
@@ -72,7 +72,7 @@ sub new {
 		$main,
 		$file_new->Append(
 			-1,
-			Wx::gettext('Perl 5 test')
+			Wx::gettext('Perl 5 Test')
 		),
 		sub {
 			$_[0]->on_new_from_template('t');
@@ -82,7 +82,7 @@ sub new {
 		$main,
 		$file_new->Append(
 			-1,
-			Wx::gettext('Perl 6 script')
+			Wx::gettext('Perl 6 Script')
 		),
 		sub {
 			$_[0]->on_new_from_template('p6');
@@ -118,7 +118,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append( -1, Wx::gettext("Open a session...\tCtrl-Alt-O") ),
+		$self->Append( -1, Wx::gettext("Open Session...\tCtrl-Alt-O") ),
 		sub {
 			require Padre::Wx::Dialog::SessionManager;
 			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
@@ -217,7 +217,7 @@ sub new {
 	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append( -1, Wx::gettext("Save current session...\tCtrl-Alt-S") ),
+		$self->Append( -1, Wx::gettext("Save Session...\tCtrl-Alt-S") ),
 		sub {
 			require Padre::Wx::Dialog::SessionSave;
 			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
@@ -333,7 +333,7 @@ sub new {
 	# Word Stats
 	$self->{docstat} = $self->Append(
 		-1,
-		Wx::gettext('Doc Stats')
+		Wx::gettext('Document Statistics')
 	);
 	Wx::Event::EVT_MENU(
 		$main,
