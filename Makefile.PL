@@ -5,7 +5,7 @@
 use 5.008005;
 use strict;
 use lib 'privinc';
-use inc::Module::Install 0.77;
+use inc::Module::Install 0.86;
 use POSIX qw(locale_h);
 
 
@@ -49,7 +49,8 @@ requires       'FindBin'                  => 0;
 requires       'Getopt::Long'             => 0;
 requires       'HTML::Entities'           => '3.57';
 requires       'HTML::Parser'             => '3.58';
-requires       'IO::Scalar'               => '2.110';   # in the Padre.ppd file we need to list IO-stringy instead
+# In the Padre.ppd file we need to list IO-stringy instead
+requires       'IO::Scalar'               => '2.110';
 requires       'IO::Socket'               => '1.30';
 requires       'IO::String'               => '1.08';
 requires       'IPC::Cmd'                 => '0.42';
@@ -81,7 +82,6 @@ requires       'threads'                  => '1.71';
 requires       'threads::shared'          => '1.26';
 requires       'URI'                      => '0';
 requires       'Wx'                       => '0.89';
-#requires       'Wx::Perl::Dialog'         => '0.04'; # in Padre now
 requires       'Wx::Perl::ProcessStream'  => '0.11';
 requires       'YAML::Tiny'               => '1.32';
 test_requires  'Test::More'               => '0.47';
@@ -89,11 +89,11 @@ test_requires  'Test::Most'               => '0.21';
 test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
-#test_requires  'Test::NeedsDisplay'       => '1.07';
+# test_requires  'Test::NeedsDisplay'       => '1.07';
 
 my $locale = setlocale(LC_CTYPE);
-print "Locale detected: $locale\n";
-if (win32 and $locale =~ /^English/) {
+print "Found locale    $locale\n";
+if ( win32 and $locale =~ /^English/ ) {
 	tests     't/*.t t/win32/*.t';
 }
 
