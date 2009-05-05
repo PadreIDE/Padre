@@ -168,6 +168,7 @@ sub about {
 	$about->AddDeveloper("Jérôme Quelin");
 	$about->AddDeveloper("Kaare Rasmussen");
 	$about->AddDeveloper("Keedi Kim - 김도형");
+	$about->AddDeveloper("Kenichi Ishigaki");
 	$about->AddDeveloper("Max Maischein");
 	$about->AddDeveloper("Patrick Donelan");
 	$about->AddDeveloper("Paweł Murias");

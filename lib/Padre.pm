@@ -1075,6 +1075,8 @@ Kaare Rasmussen (KAARE) E<lt>kaare@cpan.orgE<gt>
 
 Keedi Kim - 김도형 (KEEDI)
 
+Kenichi Ishigaki (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
+
 Max Maischein (CORION)
 
 Patrick Donelan (PATSPAM)
