@@ -89,7 +89,7 @@ perl:
   wxSTC_PL_PREPROCESSOR:
    foreground: 7f7f7f
   wxSTC_PL_OPERATOR:
-   foreground: 7f3f00
+   foreground: bf3f00
   wxSTC_PL_IDENTIFIER:
    foreground: 000000
   wxSTC_PL_SCALAR:
