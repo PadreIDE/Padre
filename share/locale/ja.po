@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre-JA-20090504\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-03 03:06+0900\n"
+"POT-Creation-Date: 2009-05-05 15:10+0900\n"
 "PO-Revision-Date: 2009-05-03 03:07+0900\n"
 "Last-Translator: Kenichi Ishigaki <ishigaki@cpan.org>\n"
 "Language-Team: Japanese\n"
@@ -169,7 +169,8 @@ msgid ""
 "\n"
 "List of new plugins:\n"
 "\n"
-msgstr "新しいプラグインが見つかりました。\n"
+msgstr ""
+"新しいプラグインが見つかりました。\n"
 "設定や利用はプラグインメニューの\n"
 "プラグインマネージャーから行ってください\n"
 "\n"
@@ -191,8 +192,8 @@ msgid ""
 "Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of "
 "Padre::Plugin"
 msgstr ""
-"プラグイン「%s」 - Padre::PluginのAPIと互換性がありません。"
-"Padre::Pluginのサブクラスではありません"
+"プラグイン「%s」 - Padre::PluginのAPIと互換性がありません。Padre::Pluginのサ"
+"ブクラスではありません"
 
 #: lib/Padre/PluginManager.pm:480
 #, perl-format
@@ -200,8 +201,8 @@ msgid ""
 "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be "
 "instantiated"
 msgstr ""
-"プラグイン「%s」 - Padre::PluginのAPIと互換性がありません。"
-"プラグインをインスタンス化できません"
+"プラグイン「%s」 - Padre::PluginのAPIと互換性がありません。プラグインをインス"
+"タンス化できません"
 
 #: lib/Padre/PluginManager.pm:494
 #, perl-format
@@ -209,8 +210,8 @@ msgid ""
 "Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub "
 "padre_interfaces"
 msgstr ""
-"プラグイン「%s」 - Padre::PluginのAPIと互換性がありません。"
-"padre_interfacesサブルーチンがありません"
+"プラグイン「%s」 - Padre::PluginのAPIと互換性がありません。padre_interfacesサ"
+"ブルーチンがありません"
 
 #: lib/Padre/PluginManager.pm:508
 #, perl-format
@@ -222,8 +223,9 @@ msgstr "プラグイン「%s」 - オブジェクトをインスタンス化で�
 msgid ""
 "Plugin:%s - Could not instantiate plugin object: the constructor does not "
 "return a Padre::Plugin object"
-msgstr "プラグイン「%s」 - オブジェクトをインスタンス化できません。"
-"コンストラクタがPadre::Pluginオブジェクトを返しません"
+msgstr ""
+"プラグイン「%s」 - オブジェクトをインスタンス化できません。コンストラクタが"
+"Padre::Pluginオブジェクトを返しません"
 
 #: lib/Padre/PluginManager.pm:540
 #, perl-format
@@ -251,7 +253,8 @@ msgstr "プロジェクトディレクトリが見つかりません"
 msgid ""
 "Failed to load the plugin '%s'\n"
 "%s"
-msgstr "プラグイン「%s」をロードできません\n"
+msgstr ""
+"プラグイン「%s」をロードできません\n"
 "%s"
 
 #: lib/Padre/PluginManager.pm:836 lib/Padre/Wx/Main.pm:1524
@@ -313,7 +316,8 @@ msgstr "ディストリビューションが指定されていません"
 msgid ""
 "Enter URL to install\n"
 "e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-msgstr "インストールするURLを入力してください\n"
+msgstr ""
+"インストールするURLを入力してください\n"
 "例: http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
 
 #: lib/Padre/Plugin/Perl5.pm:164
@@ -449,39 +453,39 @@ msgstr "出力がありません"
 msgid "Output"
 msgstr "出力"
 
-#: lib/Padre/Wx/Editor.pm:611 lib/Padre/Wx/Menu/Edit.pm:66
+#: lib/Padre/Wx/Editor.pm:613 lib/Padre/Wx/Menu/Edit.pm:66
 msgid "Select all\tCtrl-A"
 msgstr "すべてを選択\tCtrl-A"
 
-#: lib/Padre/Wx/Editor.pm:663 lib/Padre/Wx/Menu/Edit.pm:205
+#: lib/Padre/Wx/Editor.pm:665 lib/Padre/Wx/Menu/Edit.pm:205
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "コメントをトグルする(&T)\tCtrl-Shift-C"
 
-#: lib/Padre/Wx/Editor.pm:668 lib/Padre/Wx/Menu/Edit.pm:215
+#: lib/Padre/Wx/Editor.pm:670 lib/Padre/Wx/Menu/Edit.pm:215
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "選択した行をコメントにする(&C)\tCtrl-M"
 
-#: lib/Padre/Wx/Editor.pm:673 lib/Padre/Wx/Menu/Edit.pm:225
+#: lib/Padre/Wx/Editor.pm:675 lib/Padre/Wx/Menu/Edit.pm:225
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "選択した行をコメントにしない(&U)\tCtrl-Shift-M"
 
-#: lib/Padre/Wx/Editor.pm:691
+#: lib/Padre/Wx/Editor.pm:693
 msgid "Fold all"
 msgstr "すべて折りたたむ"
 
-#: lib/Padre/Wx/Editor.pm:698
+#: lib/Padre/Wx/Editor.pm:700
 msgid "Unfold all"
 msgstr "すべて展開する"
 
-#: lib/Padre/Wx/Editor.pm:711 lib/Padre/Wx/Menu/Window.pm:34
+#: lib/Padre/Wx/Editor.pm:713 lib/Padre/Wx/Menu/Window.pm:34
 msgid "&Split window"
 msgstr "ウィンドウを分割する(&S)"
 
-#: lib/Padre/Wx/Editor.pm:1137
+#: lib/Padre/Wx/Editor.pm:1139
 msgid "You must select a range of lines"
 msgstr "行を選択してください"
 
-#: lib/Padre/Wx/Editor.pm:1153
+#: lib/Padre/Wx/Editor.pm:1155
 msgid "First character of selection must be a non-word character to align"
 msgstr "選択範囲の最初の文字は英数字以外にしてください"
 
@@ -647,7 +651,7 @@ msgstr "行番号:"
 msgid ""
 "Cannot open %s as it is over the arbitrary file size limit of Padre which is "
 "currently %s"
-msgstr 
+msgstr ""
 "「%s」を開けません。Padreのファイルサイズの上限を越えています(現在の上限%s)"
 
 #: lib/Padre/Wx/Main.pm:1430
@@ -871,19 +875,19 @@ msgid "New..."
 msgstr "新しい..."
 
 #: lib/Padre/Wx/Menu/File.pm:55
-msgid "Perl 5 script"
+msgid "Perl 5 Script"
 msgstr "Perl 5スクリプト"
 
 #: lib/Padre/Wx/Menu/File.pm:65
-msgid "Perl 5 module"
+msgid "Perl 5 Module"
 msgstr "Perl 5モジュール"
 
 #: lib/Padre/Wx/Menu/File.pm:75
-msgid "Perl 5 test"
+msgid "Perl 5 Test"
 msgstr "Perl 5テスト"
 
 #: lib/Padre/Wx/Menu/File.pm:85
-msgid "Perl 6 script"
+msgid "Perl 6 Script"
 msgstr "Perl 6スクリプト"
 
 #: lib/Padre/Wx/Menu/File.pm:95
@@ -899,7 +903,7 @@ msgid "Open Selection\tCtrl-Shift-O"
 msgstr "選択範囲を開く\tCtrl-Shift-O"
 
 #: lib/Padre/Wx/Menu/File.pm:121
-msgid "Open a session...\tCtrl-Alt-O"
+msgid "Open Session...\tCtrl-Alt-O"
 msgstr "セッションを開く...\tCtrl-Alt-O"
 
 #: lib/Padre/Wx/Menu/File.pm:138
@@ -931,7 +935,7 @@ msgid "Save All"
 msgstr "すべて保存する"
 
 #: lib/Padre/Wx/Menu/File.pm:220
-msgid "Save current session...\tCtrl-Alt-S"
+msgid "Save Session...\tCtrl-Alt-S"
 msgstr "現在のセッションを保存する...\tCtrl-Alt-S"
 
 #: lib/Padre/Wx/Menu/File.pm:232
@@ -967,8 +971,8 @@ msgid "Clean Recent Files List"
 msgstr "最近使ったファイルの一覧を消去する"
 
 #: lib/Padre/Wx/Menu/File.pm:336
-msgid "Doc Stats"
-msgstr "文書の統計情報"
+msgid "Document Statistics"
+msgstr "ドキュメントの統計情報"
 
 #: lib/Padre/Wx/Menu/File.pm:353
 msgid "&Quit\tCtrl-Q"
@@ -982,36 +986,36 @@ msgstr "プラグインマネージャー"
 msgid "All available plugins on CPAN"
 msgstr "CPANから入手できるプラグイン一覧"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:59
+#: lib/Padre/Wx/Menu/Plugins.pm:61
 msgid "Edit My Plugin"
 msgstr "Myプラグインを編集"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:65
+#: lib/Padre/Wx/Menu/Plugins.pm:67
 msgid "Could not find the Padre::Plugin::My plugin"
 msgstr "Padre::Plugin::Myプラグインが見つかりません"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:74
+#: lib/Padre/Wx/Menu/Plugins.pm:76
 msgid "Reload My Plugin"
 msgstr "Myプラグインをリロードする"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:81 lib/Padre/Wx/Menu/Plugins.pm:84
-#: lib/Padre/Wx/Menu/Plugins.pm:85
+#: lib/Padre/Wx/Menu/Plugins.pm:83 lib/Padre/Wx/Menu/Plugins.pm:86
+#: lib/Padre/Wx/Menu/Plugins.pm:87
 msgid "Reset My Plugin"
 msgstr "Myプラグインをリセットする"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:100
+#: lib/Padre/Wx/Menu/Plugins.pm:102
 msgid "Reload All Plugins"
 msgstr "すべてのプラグインをリロードする"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:107
+#: lib/Padre/Wx/Menu/Plugins.pm:109
 msgid "(Re)load Current Plugin"
 msgstr "現在のプラグインを(リ)ロードする"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:114
+#: lib/Padre/Wx/Menu/Plugins.pm:116
 msgid "Test A Plugin From Local Dir"
 msgstr "ローカルディレクトリのプラグインをテストする"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:121
+#: lib/Padre/Wx/Menu/Plugins.pm:123
 msgid "Plugin Tools"
 msgstr "プラグインツール"
 
@@ -1079,123 +1083,123 @@ msgstr "構文チェックウィンドウに移動する\tAlt-C"
 msgid "GoTo Main Window\tAlt-M"
 msgstr "メインウィンドウに移動する\tAlt-M"
 
-#: lib/Padre/Wx/Menu/View.pm:35
+#: lib/Padre/Wx/Menu/View.pm:37
 msgid "Lock User Interface"
 msgstr "ユーザインタフェースをロックする"
 
-#: lib/Padre/Wx/Menu/View.pm:50
+#: lib/Padre/Wx/Menu/View.pm:52
 msgid "Show Output"
 msgstr "出力を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:62
+#: lib/Padre/Wx/Menu/View.pm:64
 msgid "Show Functions"
 msgstr "関数を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:80
+#: lib/Padre/Wx/Menu/View.pm:82
 msgid "Show Outline"
 msgstr "アウトラインを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:92
-msgid "Show Directory tree"
+#: lib/Padre/Wx/Menu/View.pm:94
+msgid "Show Directory Tree"
 msgstr "ディレクトリツリーを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:104
+#: lib/Padre/Wx/Menu/View.pm:106
 msgid "Show Syntax Check"
 msgstr "構文チェックを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:116
+#: lib/Padre/Wx/Menu/View.pm:118
 msgid "Show Error List"
 msgstr "エラー一覧を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:130
+#: lib/Padre/Wx/Menu/View.pm:132
 msgid "Show StatusBar"
 msgstr "ステータスバーを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:147
+#: lib/Padre/Wx/Menu/View.pm:149
 msgid "View Document As..."
 msgstr "ドキュメントの表示を変える..."
 
-#: lib/Padre/Wx/Menu/View.pm:181
+#: lib/Padre/Wx/Menu/View.pm:183
 msgid "Show Line Numbers"
 msgstr "行番号を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:193
+#: lib/Padre/Wx/Menu/View.pm:195
 msgid "Show Code Folding"
 msgstr "コードの折りたたみを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:205
+#: lib/Padre/Wx/Menu/View.pm:207
 msgid "Show Call Tips"
 msgstr "コールチップを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:220
+#: lib/Padre/Wx/Menu/View.pm:222
 msgid "Show Current Line"
 msgstr "現在の行を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:235
+#: lib/Padre/Wx/Menu/View.pm:237
 msgid "Show Newlines"
 msgstr "改行を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:247
+#: lib/Padre/Wx/Menu/View.pm:249
 msgid "Show Whitespaces"
 msgstr "空白を表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:259
+#: lib/Padre/Wx/Menu/View.pm:261
 msgid "Show Indentation Guide"
 msgstr "インデントガイドを表示する"
 
-#: lib/Padre/Wx/Menu/View.pm:271
+#: lib/Padre/Wx/Menu/View.pm:273
 msgid "Word-Wrap"
 msgstr "ワードラップ"
 
-#: lib/Padre/Wx/Menu/View.pm:286
+#: lib/Padre/Wx/Menu/View.pm:288
 msgid "Increase Font Size\tCtrl-+"
 msgstr "フォントを大きくする\tCtrl-+"
 
-#: lib/Padre/Wx/Menu/View.pm:298
+#: lib/Padre/Wx/Menu/View.pm:300
 msgid "Decrease Font Size\tCtrl--"
 msgstr "フォントを小さくする\tCtrl--"
 
-#: lib/Padre/Wx/Menu/View.pm:310
+#: lib/Padre/Wx/Menu/View.pm:312
 msgid "Reset Font Size\tCtrl-/"
 msgstr "フォントの大きさをリセットする\tCtrl-/"
 
-#: lib/Padre/Wx/Menu/View.pm:325
+#: lib/Padre/Wx/Menu/View.pm:327
 msgid "Set Bookmark\tCtrl-B"
 msgstr "しおりをはさむ\tCtrl-B"
 
-#: lib/Padre/Wx/Menu/View.pm:337
+#: lib/Padre/Wx/Menu/View.pm:339
 msgid "Goto Bookmark\tCtrl-Shift-B"
 msgstr "しおりに移動する\tCtrl-Shift-B"
 
-#: lib/Padre/Wx/Menu/View.pm:353
+#: lib/Padre/Wx/Menu/View.pm:355
 msgid "Style"
 msgstr "スタイル"
 
-#: lib/Padre/Wx/Menu/View.pm:357
+#: lib/Padre/Wx/Menu/View.pm:359
 msgid "Padre"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:358
+#: lib/Padre/Wx/Menu/View.pm:360
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:359
+#: lib/Padre/Wx/Menu/View.pm:361
 msgid "Ultraedit"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:360
+#: lib/Padre/Wx/Menu/View.pm:362
 msgid "Notepad++"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:406
+#: lib/Padre/Wx/Menu/View.pm:416
 msgid "Language"
 msgstr "言語"
 
-#: lib/Padre/Wx/Menu/View.pm:413
+#: lib/Padre/Wx/Menu/View.pm:423
 msgid "System Default"
 msgstr "システムデフォルト"
 
-#: lib/Padre/Wx/Menu/View.pm:460
+#: lib/Padre/Wx/Menu/View.pm:470
 msgid "&Full Screen\tF11"
 msgstr "フルスクリーン表示\tF11"
 
@@ -1295,7 +1299,7 @@ msgstr "差分をとる"
 msgid "Insert From File..."
 msgstr "ファイルから挿入する..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:355 lib/Padre/Wx/Dialog/Preferences.pm:407
+#: lib/Padre/Wx/Menu/Edit.pm:355 lib/Padre/Wx/Dialog/Preferences.pm:408
 #: lib/Padre/Wx/Dialog/PluginManager.pm:290
 msgid "Preferences"
 msgstr "設定"
@@ -1388,7 +1392,7 @@ msgstr "見つかったらウィンドウを閉じる(&h)"
 msgid "Replace &all"
 msgstr "全置換(&a)"
 
-#: lib/Padre/Wx/Dialog/Find.pm:189 lib/Padre/Wx/Dialog/Preferences.pm:478
+#: lib/Padre/Wx/Dialog/Find.pm:189 lib/Padre/Wx/Dialog/Preferences.pm:479
 msgid "&Cancel"
 msgstr "キャンセル(&C)"
 
@@ -1526,15 +1530,15 @@ msgstr "エディタの現在の行の背景色:"
 msgid "Settings Demo"
 msgstr "設定デモ"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:260
+#: lib/Padre/Wx/Dialog/Preferences.pm:261
 msgid "Enable?"
 msgstr "有効にする?"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:275
+#: lib/Padre/Wx/Dialog/Preferences.pm:276
 msgid "Crashed"
 msgstr "クラッシュ"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:308
+#: lib/Padre/Wx/Dialog/Preferences.pm:309
 msgid ""
 "i.e.\n"
 "\tinclude directory:  -I<dir>\n"
@@ -1550,94 +1554,94 @@ msgstr ""
 "\tすべての警告を有効にする: -W\n"
 "\tすべての警告を無効にする: -X\n"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:318
-#: lib/Padre/Wx/Dialog/Preferences.pm:362
+#: lib/Padre/Wx/Dialog/Preferences.pm:319
+#: lib/Padre/Wx/Dialog/Preferences.pm:363
 msgid "Interpreter arguments:"
 msgstr "インタプリタの引数:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:324
-#: lib/Padre/Wx/Dialog/Preferences.pm:368
+#: lib/Padre/Wx/Dialog/Preferences.pm:325
+#: lib/Padre/Wx/Dialog/Preferences.pm:369
 msgid "Script arguments:"
 msgstr "スクリプトの引数:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:331
+#: lib/Padre/Wx/Dialog/Preferences.pm:332
 msgid "Unsaved"
 msgstr "未保存"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:332
+#: lib/Padre/Wx/Dialog/Preferences.pm:333
 msgid "N/A"
 msgstr "なし"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:351
+#: lib/Padre/Wx/Dialog/Preferences.pm:352
 msgid "No Document"
 msgstr "ドキュメントがありません"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:356
+#: lib/Padre/Wx/Dialog/Preferences.pm:357
 msgid "Document name:"
 msgstr "ドキュメント名:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:359
+#: lib/Padre/Wx/Dialog/Preferences.pm:360
 msgid "Document location:"
 msgstr "ドキュメントの位置:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:386
+#: lib/Padre/Wx/Dialog/Preferences.pm:387
 msgid "Default"
 msgstr "デフォルト"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:392
+#: lib/Padre/Wx/Dialog/Preferences.pm:393
 #, perl-format
 msgid "Current Document: %s"
 msgstr "現在のドキュメント: %s"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:433
+#: lib/Padre/Wx/Dialog/Preferences.pm:434
 msgid "Behaviour"
 msgstr "動作"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:436
+#: lib/Padre/Wx/Dialog/Preferences.pm:437
 msgid "Appearance"
 msgstr "表示"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:439
+#: lib/Padre/Wx/Dialog/Preferences.pm:440
 msgid "Run Parameters"
 msgstr "実行パラメータ"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:467 lib/Padre/Wx/Dialog/Snippets.pm:114
+#: lib/Padre/Wx/Dialog/Preferences.pm:468 lib/Padre/Wx/Dialog/Snippets.pm:114
 msgid "&Save"
 msgstr "保存する(&S)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:513
+#: lib/Padre/Wx/Dialog/Preferences.pm:514
 msgid "new"
 msgstr "新しい順"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:514
+#: lib/Padre/Wx/Dialog/Preferences.pm:515
 msgid "nothing"
 msgstr "なし"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:515
+#: lib/Padre/Wx/Dialog/Preferences.pm:516
 msgid "last"
 msgstr "古い順"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:516
+#: lib/Padre/Wx/Dialog/Preferences.pm:517
 msgid "no"
 msgstr "なし"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:517
+#: lib/Padre/Wx/Dialog/Preferences.pm:518
 msgid "same_level"
 msgstr "同じ深さ"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:518
+#: lib/Padre/Wx/Dialog/Preferences.pm:519
 msgid "deep"
 msgstr "深くする"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:519
+#: lib/Padre/Wx/Dialog/Preferences.pm:520
 msgid "alphabetical"
 msgstr "アルファベット順"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:520
+#: lib/Padre/Wx/Dialog/Preferences.pm:521
 msgid "original"
 msgstr "出現順"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:521
+#: lib/Padre/Wx/Dialog/Preferences.pm:522
 msgid "alphabetical_private_last"
 msgstr "プライベート変数は最後"
 
