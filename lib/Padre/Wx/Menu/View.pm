@@ -10,7 +10,9 @@ use Padre::Wx       ();
 use Padre::Locale   ();
 use Padre::Wx::Menu ();
 use Padre::Current  qw{_CURRENT};
-use File::Glob      ':glob';    # Fix win32 globbing problem with spaces in paths
+
+# Fix win32 globbing problem with spaces in paths
+use File::Glob      ();
 
 our $VERSION = '0.34';
 our @ISA     = 'Padre::Wx::Menu';
@@ -381,7 +383,9 @@ sub new {
 	my $dir = File::Spec->catdir( $PADRE_CONFIG_DIR, 'styles' );
 	my @private_styles = map {
 		substr(File::Basename::basename($_), 0, -4)
-	} glob File::Spec->catdir( $dir, '*.yml' );
+	} File::Glob::glob(
+		File::Spec->catdir( $dir, '*.yml' )
+	);
 	if ( @private_styles ) {
 		$self->AppendSeparator;
 		foreach my $name ( @private_styles ) {
