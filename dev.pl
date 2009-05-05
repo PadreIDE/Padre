@@ -34,9 +34,9 @@ if ( $^O =~ /(linux|bsd)/ ) {
 }
 
 if ($msgfmt) {
-	foreach my $locale ( map { substr( File::Basename::basename($_), 0, -3 ) } glob "share/locale/*.po" ) {
+	foreach my $locale ( map { substr( File::Basename::basename($_), 0, -3 ) } glob "$FindBin::Bin/share/locale/*.po" ) {
 		#print "$locale\n";
-		system($msgfmt, "-o", "share/locale/$locale.mo",  "share/locale/$locale.po");
+		system($msgfmt, "-o", "$FindBin::Bin/share/locale/$locale.mo",  "$FindBin::Bin/share/locale/$locale.po");
 	}
 }
 
