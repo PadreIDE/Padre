@@ -9,11 +9,11 @@ use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
 use Padre::Wx       ();
 use Padre::Locale   ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
-use File::Glob ':glob';    # Fix win32 globbing problem with spaces in paths
+use Padre::Current  qw{_CURRENT};
+use File::Glob      ':glob';    # Fix win32 globbing problem with spaces in paths
 
 our $VERSION = '0.34';
-use base 'Padre::Wx::Menu';
+our our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -89,7 +89,7 @@ sub new {
 
 	$self->{directory} = $self->AppendCheckItem(
 		-1,
-		Wx::gettext("Show Directory tree")
+		Wx::gettext("Show Directory Tree")
 	);
 	Wx::Event::EVT_MENU(
 		$main,
@@ -359,8 +359,12 @@ sub new {
 		ultraedit => Wx::gettext('Ultraedit'),
 		notepad   => Wx::gettext('Notepad++'),
 	);
-	my @order = sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
-	foreach my $name (@order) {
+	my @order = sort {
+		( $b eq 'default' ) <=> ( $a eq 'default' )
+		or
+		$styles{$a} cmp $styles{$b}
+	} keys %styles;
+	foreach my $name ( @order ) {
 		my $label = $styles{$name};
 		my $radio = $self->{style}->AppendRadioItem( -1, $label );
 		if ( $config->editor_style and $config->editor_style eq $name ) {
@@ -375,10 +379,12 @@ sub new {
 	}
 
 	my $dir = File::Spec->catdir( $PADRE_CONFIG_DIR, 'styles' );
-	my @private_styles = map { substr File::Basename::basename($_), 0, -4 } glob File::Spec->catdir( $dir, '*.yml' );
-	if (@private_styles) {
+	my @private_styles = map {
+		substr(File::Basename::basename($_), 0, -4)
+	} glob File::Spec->catdir( $dir, '*.yml' );
+	if ( @private_styles ) {
 		$self->AppendSeparator;
-		foreach my $name (@private_styles) {
+		foreach my $name ( @private_styles ) {
 			my $label = $name;
 			my $radio = $self->{style}->AppendRadioItem( -1, $label );
 			if ( $config->editor_style and $config->editor_style eq $name ) {

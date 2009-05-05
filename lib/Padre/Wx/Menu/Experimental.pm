@@ -7,7 +7,7 @@ use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
 our $VERSION = '0.34';
-use base 'Padre::Wx::Menu';
+our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################
 # Padre::Wx::Menu Methods
