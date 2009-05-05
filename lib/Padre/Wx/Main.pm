@@ -10,18 +10,18 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd            ();
-use Carp           ();
-use Data::Dumper   ();
-use File::Spec     ();
-use File::HomeDir  ();
-use File::Basename ();
-use List::Util     ();
-use Scalar::Util   ();
-use Params::Util qw{_INSTANCE};
-use Padre::Util   ();
-use Padre::Locale ();
-use Padre::Current qw{_CURRENT};
+use Cwd                       ();
+use Carp                      ();
+use Data::Dumper              ();
+use File::Spec                ();
+use File::HomeDir             ();
+use File::Basename            ();
+use List::Util                ();
+use Scalar::Util              ();
+use Params::Util              qw{_INSTANCE};
+use Padre::Util               ();
+use Padre::Locale             ();
+use Padre::Current            qw{_CURRENT};
 use Padre::Document           ();
 use Padre::SingleInstance     ();
 use Padre::DB                 ();
@@ -43,7 +43,7 @@ use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
 
 our $VERSION = '0.34';
-use base 'Wx::Frame';
+our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;
 
@@ -53,20 +53,20 @@ use constant SECONDS => 1000;
 use Class::XSAccessor getters => {
 
 	# GUI Elements
-	title     => 'title',
-	config    => 'config',
-	aui       => 'aui',
-	menu      => 'menu',
-	notebook  => 'notebook',
-	right     => 'right',
-	functions => 'functions',
-	outline   => 'outline',
-	directory => 'directory',
-	bottom    => 'bottom',
-	output    => 'output',
-	syntax    => 'syntax',
-	errorlist => 'errorlist',
-	ack       => 'ack',
+	title      => 'title',
+	config     => 'config',
+	aui        => 'aui',
+	menu       => 'menu',
+	notebook   => 'notebook',
+	right      => 'right',
+	functions  => 'functions',
+	outline    => 'outline',
+	directory  => 'directory',
+	bottom     => 'bottom',
+	output     => 'output',
+	syntax     => 'syntax',
+	errorlist  => 'errorlist',
+	ack        => 'ack',
 
 	# Operating Data
 	cwd        => 'cwd',
@@ -76,7 +76,7 @@ use Class::XSAccessor getters => {
 # NOTE: Yes this method does get a little large, but that's fine.
 #       It's better to have one bigger method that is easily
 #       understandable rather than scattering tightly-related code
-#       all over the place in unrelated places.
+#       all over the file in unrelated places.
 #       If you feel the need to make this smaller, try to make each
 #       individual step tighter and better abstracted.
 sub new {
