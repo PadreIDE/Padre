@@ -3,20 +3,18 @@ package Padre::Wx::DocBrowser;
 use 5.008;
 use strict;
 use warnings;
-use URI            ();
-use Scalar::Util   ();
-use Class::Autouse ();
+use URI                     ();
+use Scalar::Util            ();
+use Class::Autouse          ();
+use Padre::Wx               ();
+use Padre::Wx::HtmlWindow   ();
+use Scalar::Util            ();
+use Params::Util            '_INSTANCE';
+use Padre::Wx::AuiManager   ();
+use Padre::Task::DocBrowser ();
 
-use Padre::Wx ();
-
-use base 'Wx::Frame';
-use Padre::Wx::HtmlWindow;
-use Scalar::Util qw( blessed );
-use Params::Util qw( _INSTANCE );
-use Padre::Wx::AuiManager ();
-use Padre::Task::DocBrowser;
-
-our $VERSION = '0.34';
+our $VERSION = '0.26';
+our @ISA     = 'Wx::Frame';
 
 use Class::XSAccessor accessors => {
 	notebook => 'notebook',
@@ -136,7 +134,7 @@ sub OnLinkClicked {
 	if ( $self->provider->accept($scheme) ) {
 		$self->help($uri);
 	} else {
-		Wx::LaunchDefaultBrowser($uri);
+		Padre::Wx::LaunchDefaultBrowser($uri);
 	}
 
 }

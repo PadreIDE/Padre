@@ -69,7 +69,7 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext('Visit the PerlMonks') ),
 		sub {
-			Wx::LaunchDefaultBrowser('http://perlmonks.org/');
+			Padre::Wx::LaunchDefaultBrowser('http://perlmonks.org/');
 		},
 	);
 
@@ -79,14 +79,14 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("Report a New &Bug") ),
 		sub {
-			Wx::LaunchDefaultBrowser('http://padre.perlide.org/wiki/Tickets');
+			Padre::Wx::LaunchDefaultBrowser('http://padre.perlide.org/wiki/Tickets');
 		},
 	);
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext("View All &Open Bugs") ),
 		sub {
-			Wx::LaunchDefaultBrowser('http://padre.perlide.org/report/1');
+			Padre::Wx::LaunchDefaultBrowser('http://padre.perlide.org/report/1');
 		},
 	);
 
@@ -151,7 +151,7 @@ sub about {
 	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm") );
 
 	# Only Unix/GTK native about box supports websites
-	if (Padre::Util::WXGTK) {
+	if ( Padre::Util::WXGTK ) {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 

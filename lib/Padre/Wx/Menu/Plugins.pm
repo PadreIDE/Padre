@@ -48,7 +48,9 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("All available plugins on CPAN") ),
 		sub {
-			Wx::LaunchDefaultBrowser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
+			Padre::Wx::LaunchDefaultBrowser(
+				'http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist'
+			);
 		},
 	);
 
