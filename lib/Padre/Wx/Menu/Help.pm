@@ -168,7 +168,7 @@ sub about {
 	$about->AddDeveloper("Jérôme Quelin");
 	$about->AddDeveloper("Kaare Rasmussen");
 	$about->AddDeveloper("Keedi Kim - 김도형");
-	$about->AddDeveloper("Kenichi Ishigaki");
+	$about->AddDeveloper("Kenichi Ishigaki - 石垣憲一");
 	$about->AddDeveloper("Max Maischein");
 	$about->AddDeveloper("Patrick Donelan");
 	$about->AddDeveloper("Paweł Murias");
@@ -182,7 +182,7 @@ sub about {
 	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
 	$about->AddTranslator("Hungarian - György Pásztor");
 	$about->AddTranslator("Italian - Simone Blandino");
-	$about->AddTranslator("Japanese - Kenichi Ishigaki");
+	$about->AddTranslator("Japanese - Kenichi Ishigaki - 石垣憲一");
 	$about->AddTranslator("Korean - Keedi Kim - 김도형");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");

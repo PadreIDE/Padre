@@ -1075,7 +1075,7 @@ Kaare Rasmussen (KAARE) E<lt>kaare@cpan.orgE<gt>
 
 Keedi Kim - 김도형 (KEEDI)
 
-Kenichi Ishigaki (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
+Kenichi Ishigaki - 石垣憲一 (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
 
 Max Maischein (CORION)
 
@@ -1107,7 +1107,7 @@ Hungarian - György Pásztor (GYU)
 
 Italian - Simone Blandino (SBLANDIN)
 
-Japanese - Kenichi Ishigaki (ISHIGAKI)
+Japanese - Kenichi Ishigaki - 石垣憲一 (ISHIGAKI)
 
 Korean - Keedi Kim - 김도형 (KEEDI)
 
