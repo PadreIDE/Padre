@@ -33,7 +33,6 @@ use warnings;
 use Carp           ();
 use Params::Util   qw{ _INSTANCE };
 use Padre::Wx      ();
-use Padre::Wx::Net ();
 
 our $VERSION = '0.34';
 our @ISA     = 'Wx::App';
