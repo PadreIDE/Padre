@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use 5.008;
+use 5.008005;
 use strict;
 use warnings;
 use Config;
@@ -9,6 +9,7 @@ use Config;
 # its development location
 # No need to distribute it
 use FindBin;
+use File::Which    ();
 use File::Basename ();
 use Probe::Perl;
 $ENV{PADRE_DEV}  = 1;
@@ -23,34 +24,41 @@ unless ( -d "$FindBin::Bin/blib" ) {
 
 my $msgfmt;
 if ( $^O =~ /(linux|bsd)/ ) {
-	if ($msgfmt = `which msgfmt`) {
-		chomp $msgfmt;
-	}
-} elsif ($^O =~ /win32/i) {
-	my $p = "c:/Program Files/GnuWin32/bin/msgfmt.exe";
-	if (-e $p) {
+	$msgfmt = scalar File::Which::which('msgfmt');
+} elsif ( $^O =~ /win32/i ) {
+	my $p = "C:/Program Files/GnuWin32/bin/msgfmt.exe";
+	if ( -e $p ) {
 		$msgfmt = $p;
 	}
 }
 
-if ($msgfmt) {
-	foreach my $locale ( map { substr( File::Basename::basename($_), 0, -3 ) } glob "$FindBin::Bin/share/locale/*.po" ) {
-		#print "$locale\n";
-		system($msgfmt, "-o", "$FindBin::Bin/share/locale/$locale.mo",  "$FindBin::Bin/share/locale/$locale.po");
+if ( $msgfmt ) {
+	my @mo = map {
+		substr( File::Basename::basename($_), 0, -3 )
+	} glob "$FindBin::Bin/share/locale/*.po"
+	foreach my $locale ( @mo ) {
+		system(
+			$msgfmt, "-o",
+			"$FindBin::Bin/share/locale/$locale.mo",
+			"$FindBin::Bin/share/locale/$locale.po",
+		);
 	}
 }
 
 my $perl = Probe::Perl->find_perl_interpreter;
 if ( $^O eq 'darwin' ) {
-
-	#I presume there's a proper way to do this?
-	$perl = `which wxPerl`;
+	# I presume there's a proper way to do this?
+	$perl = scalar File::Which::which('wxPerl');
 	chomp($perl);
 	unless ( -e $perl ) {
 		error("padre needs to run using wxPerl on OSX");
 	}
 }
-my @cmd = ( qq[$perl], qq[-I$FindBin::Bin/lib], qq[-I$FindBin::Bin/blib/lib], );
+my @cmd = (
+	qq[$perl],
+	qq[-I$FindBin::Bin/lib],
+	qq[-I$FindBin::Bin/blib/lib],
+);
 if ( grep { $_ eq '-d' } @ARGV ) {
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-d';
@@ -63,15 +71,14 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 	@ARGV = grep { $_ ne '-h' } @ARGV;
 	my $dir = File::Basename::dirname $ENV{PADRE_HOME};
 	if ( opendir my $dh, $dir ) {
-		foreach my $plugin ( grep { $_ =~ /^Padre-Plugin-/ } readdir $dh ) {
+		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
+		foreach my $plugin ( @plugins ) {
 			push @cmd, "-I$dir/$plugin/lib";
 		}
 	}
 }
-push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 
-#print "@cmd\n";
-system(@cmd);
+system( @cmd, qq[$FindBin::Bin/script/padre], @ARGV );
 
 sub error {
 	my $msg = shift;
