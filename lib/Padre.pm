@@ -162,7 +162,10 @@ sub new {
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
 		if ( $socket ) {
-			$socket->print("open $_\n") foreach @ARGV;
+			foreach my $file ( @ARGV ) {
+				my $path = File::Spec->rel2abs($file);
+				$socket->print("open $file\n");
+			}
 			$socket->print("focus\n");
 			$socket->close;
 			return 0;
