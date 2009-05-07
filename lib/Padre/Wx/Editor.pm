@@ -44,7 +44,7 @@ sub new {
 	my $self = $class->SUPER::new($notebook);
 
 	# TODO: Make this suck less
-	$data = data('default');
+	$data = data(Padre->ide->config->editor_style);
 
 	# Set the code margins a little larger than the default.
 	# This seems to noticably reduce eye strain.
@@ -357,17 +357,14 @@ sub show_folding {
 }
 
 sub set_font {
-	my ($self) = @_;
-
+	my $self   = shift;
 	my $config = Padre->ide->config;
-
-	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
 	if ( defined $config->editor_font && length $config->editor_font > 0 ) {    # empty default...
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	$self->SetFont($font);
 	$self->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $font );
-
 	return;
 }
 
