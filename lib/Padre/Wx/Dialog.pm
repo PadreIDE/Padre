@@ -177,6 +177,8 @@ sub get_widget_value {
 			return $w->GetPath;
 		} elsif ( $w->isa('Wx::FilePickerCtrl') ) {
 			return $w->GetPath;
+		} elsif ( $w->isa('Wx::ComboBox') ) {
+			return $w->GetValue;
 		} elsif ( $w->isa('Wx::Choice') ) {
 			return $w->GetSelection;
 		} elsif ( $w->isa('Wx::FontPickerCtrl') ) {
