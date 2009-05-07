@@ -1,8 +1,8 @@
+package Padre::Config;
+
 #
 # Configuration subsystem for Padre
 #
-
-package Padre::Config;
 
 # To help force the break from the first-generate HASH based configuration
 # over to the second-generation method based configuration, initially we
@@ -12,14 +12,13 @@ package Padre::Config;
 use 5.008;
 use strict;
 use warnings;
-
-use Carp qw{ croak };
-use Params::Util qw{ _POSINT _INSTANCE };
+use Carp                     qw{ croak };
+use Params::Util             qw{ _POSINT _INSTANCE };
 use Padre::Config::Constants qw{ :stores :types $PADRE_CONFIG_DIR };
-use Padre::Config::Setting ();
-use Padre::Config::Human   ();
-use Padre::Config::Project ();
-use Padre::Config::Host    ();
+use Padre::Config::Setting   ();
+use Padre::Config::Human     ();
+use Padre::Config::Project   ();
+use Padre::Config::Host      ();
 
 our $VERSION = '0.34';
 
@@ -77,6 +76,7 @@ my %settings = (
 		#   nothing    - nothing to open
 		#   last       - the files that were open last time
 		[ 'main_startup',         $ASCII,   'new' ],
+		[ 'main_singleinstance',  $BOOLEAN, 0 ],
 		[ 'main_lockinterface',   $BOOLEAN, 1 ],
 		[ 'main_functions',       $BOOLEAN, 0 ],
 		[ 'main_functions_order', $ASCII,   'alphabetical' ],
@@ -89,28 +89,28 @@ my %settings = (
 		[ 'main_statusbar',       $BOOLEAN, 1 ],
 
 		# -- editor settings
-		[ 'editor_font',              $ASCII,   '' ],
-		[ 'editor_linenumbers',       $BOOLEAN, 1 ],
-		[ 'editor_eol',               $BOOLEAN, 0 ],
-		[ 'editor_whitespace',        $BOOLEAN, 0 ],
-		[ 'editor_indentationguides', $BOOLEAN, 0 ],
-		[ 'editor_calltips',          $BOOLEAN, 0 ],
-		[ 'editor_autoindent',        $ASCII,   'deep' ],
-		[ 'editor_folding',           $BOOLEAN, 0 ],
-		[ 'editor_fold_pod',          $BOOLEAN, 0 ],
-		[ 'editor_currentline',       $BOOLEAN, 1 ],
+		[ 'editor_font',              $ASCII,   ''       ],
+		[ 'editor_linenumbers',       $BOOLEAN, 1        ],
+		[ 'editor_eol',               $BOOLEAN, 0        ],
+		[ 'editor_whitespace',        $BOOLEAN, 0        ],
+		[ 'editor_indentationguides', $BOOLEAN, 0        ],
+		[ 'editor_calltips',          $BOOLEAN, 0        ],
+		[ 'editor_autoindent',        $ASCII,   'deep'   ],
+		[ 'editor_folding',           $BOOLEAN, 0        ],
+		[ 'editor_fold_pod',          $BOOLEAN, 0        ],
+		[ 'editor_currentline',       $BOOLEAN, 1        ],
 		[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
-		[ 'editor_beginner',          $BOOLEAN, 1 ],
-		[ 'editor_wordwrap',          $BOOLEAN, 0 ],
-		[ 'editor_file_size_limit',   $POSINT,  500_000 ],
-		[ 'find_case',                $BOOLEAN, 1 ],
-		[ 'find_regex',               $BOOLEAN, 0 ],
-		[ 'find_reverse',             $BOOLEAN, 0 ],
-		[ 'find_first',               $BOOLEAN, 0 ],
-		[ 'find_nohidden',            $BOOLEAN, 1 ],
-		[ 'find_quick',               $BOOLEAN, 0 ],
-		[ 'ppi_highlight',            $BOOLEAN, 0 ],
-		[ 'ppi_highlight_limit',      $POSINT,  2000 ],
+		[ 'editor_beginner',          $BOOLEAN, 1        ],
+		[ 'editor_wordwrap',          $BOOLEAN, 0        ],
+		[ 'editor_file_size_limit',   $POSINT,  500_000  ],
+		[ 'find_case',                $BOOLEAN, 1        ],
+		[ 'find_regex',               $BOOLEAN, 0        ],
+		[ 'find_reverse',             $BOOLEAN, 0        ],
+		[ 'find_first',               $BOOLEAN, 0        ],
+		[ 'find_nohidden',            $BOOLEAN, 1        ],
+		[ 'find_quick',               $BOOLEAN, 0        ],
+		[ 'ppi_highlight',            $BOOLEAN, 0        ],
+		[ 'ppi_highlight_limit',      $POSINT,  2000     ],
 
 		# -- behaviour tuning
 		# When running a script from the application some of the files might have
@@ -129,10 +129,10 @@ my %settings = (
 
 		# by default use background threads unless profiling
 		# TODO - Make the default actually change
-		[ 'threads',         $BOOLEAN, 1 ],
+		[ 'threads',         $BOOLEAN, 1  ],
 		[ 'locale',          $ASCII,   '' ],
 		[ 'locale_perldiag', $ASCII,   '' ],
-		[ 'experimental',    $BOOLEAN, 0 ],
+		[ 'experimental',    $BOOLEAN, 0  ],
 	],
 	host => [
 
@@ -265,7 +265,7 @@ sub read {
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
+		         || Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
@@ -281,7 +281,7 @@ sub write {
 
 	# Save the user configuration
 	$self->[$HUMAN]->{version} = $REVISION;
-	$self->[$HUMAN]->write();
+	$self->[$HUMAN]->write;
 
 	# Save the host configuration
 	$self->[$HOST]->{version} = $REVISION;

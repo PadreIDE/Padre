@@ -89,9 +89,8 @@ use Class::XSAccessor getters => {
 };
 
 # Globally shared detection of the "current" Perl
-{
+SCOPE: {
 	my $perl_interpreter;
-
 	sub perl_interpreter {
 		return $perl_interpreter if defined $perl_interpreter;
 		require Probe::Perl;
@@ -159,13 +158,19 @@ sub run {
 	# window was opened but my Wx skills do not exist. --Steffen
 	$self->plugin_manager->load_plugins;
 
-	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
+	$self->{ARGV} = [ map {
+		File::Spec->rel2abs( $_, $self->{original_cwd} )
+	} @ARGV ];
 
 	# Move our current dir to the user's documents directory by default
 	my $documents = File::HomeDir->my_documents;
 	if ( defined $documents ) {
 		chdir $documents;
 	}
+
+	# HACK: Uncomment this to locate difficult-to-find crashes
+	#       that are throw silent exceptions.
+	# $SIG{__DIE__} = sub { print @_; die $_[0] };
 
 	# Switch into runtime mode
 	$self->wx->MainLoop;

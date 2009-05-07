@@ -350,7 +350,7 @@ sub timer_post_init {
 	# represents the loaded state.
 	$self->load_files;
 
-	# canot use the toggle sub here as that one reads from the Menu and
+	# Cannot use the toggle sub here as that one reads from the Menu and
 	# on some machines the Menu is not configured yet at this point.
 	if ( $self->config->main_statusbar ) {
 		$self->GetStatusBar->Show;
@@ -368,6 +368,11 @@ sub timer_post_init {
 
 	# Now we are fully loaded and can paint continuously
 	$self->Thaw;
+
+	# Start the single instance server
+	if ( $self->config->main_singleinstance ) {
+		$self->single_instance_start;
+	}
 
 	# Check for new plugins and alert the user to them
 	Padre->ide->plugin_manager->alert_new;
@@ -389,6 +394,95 @@ sub timer_post_init {
 # Creates a automatic Freeze object that Thaw's on destruction.
 sub freezer {
 	Wx::WindowUpdateLocker->new( $_[0] );
+}
+
+#####################################################################
+# Single Instance Server
+
+my $single_instance_port = 4444;
+
+sub single_instance_start {
+	my $self = shift;
+	if ( $self->single_instance_running ) {
+		return 1;
+	}
+
+	# Create the server
+	require Wx::Socket;
+	$self->{single_instance} = Wx::SocketServer->new(
+		'127.0.0.1' => $single_instance_port,
+		Wx::wxSOCKET_NOWAIT,
+	);
+	Wx::Event::EVT_SOCKET_CONNECTION( $self,
+		$self->{single_instance},
+		sub {
+			$self->single_instance_connect($_[0]);
+		}
+	);
+	unless ( $self->{single_instance}->Ok ) {
+		die("Failed to create server");
+	}
+
+	return 1;
+}
+
+sub single_instance_stop {
+	my $self = shift;
+	unless ( $self->single_instance_running ) {
+		return 1;
+	}
+
+	# Terminate the server
+	$self->{single_instance}->Close;
+	delete($self->{single_instance})->Destroy;
+
+	return 1;
+}
+
+sub single_instance_running {
+	defined($_[0]->{single_instance});
+}
+
+sub single_instance_connect {
+	my $self   = shift;
+	my $server = shift;
+	my $client = $server->Accept(0);
+	Wx::Event::EVT_SOCKET_INPUT( $self, $client, sub {
+		# Accept the data and stream commands
+		my $command = '';
+		my $buffer  = '';
+		while ( $_[0]->Read( $buffer, 128 ) ) {
+			$command .= $buffer;
+			while ( $command =~ s/^(.*?)[\012\015]+//s ) {
+				$_[1]->single_instance_command("$1");
+			}
+		}
+		return 1;
+	} );
+	Wx::Event::EVT_SOCKET_LOST( $self, $client, sub {
+		$_[0]->Destroy;
+	} );
+	return 1;
+}
+
+sub single_instance_command {
+	my $self = shift;
+	my $line = shift;
+	unless ( defined $line and length $line ) {
+		return 1;
+	}
+	unless ( $line =~ s/^(\S+)\s*//s ) {
+		# Ignore the line
+		return 1;
+	}
+	if ( $1 eq 'focus' ) {
+		$self->Raise;
+	} elsif ( $1 eq 'open' ) {
+		$self->setup_editors($line) if -f $line;
+	} else {
+		warn("Unsupported command '$1'");
+	}
+	return 1;
 }
 
 #####################################################################
@@ -1089,73 +1183,6 @@ sub save_session {
 		$file->insert;
 	}
 	Padre::DB->commit;
-}
-
-#####################################################################
-# Single Instance Server
-
-my $single_instance_port = 4444;
-
-sub single_instance_start {
-	require Wx::Socket;
-	my $self = shift;
-
-	# Create the server
-	$self->{single_instance} = Wx::SocketServer->new(
-		'127.0.0.1' => $single_instance_port,
-		Wx::wxSOCKET_NOWAIT,
-	);
-	Wx::Event::EVT_SOCKET_CONNECTION( $self,
-		$self->{single_instance},
-		\&single_instance_server_connect,
-	);
-	unless ( $self->{single_instance}->Ok ) {
-		die("Failed to create server");
-	}
-
-	return 1;
-}
-
-sub single_instance_connect {
-	my $server = shift;
-	my $self   = shift;
-	my $client = $server->Accept(0);
-	Wx::Event::EVT_SOCKET_INPUT( $self, $client, sub {
-		# Accept the data and stream commands
-		my $command = '';
-		my $buffer  = '';
-		while ( $_[0]->Read( $buffer, 128 ) ) {
-			$command .= $buffer;
-			while ( $command =~ s/^(.*)[\012\015]+//s ) {
-				$_[1]->single_instance_command("$1");
-			}
-		}
-		return 1;
-	} );
-	Wx::Event::EVT_SOCKET_LOST( $self, $client, sub {
-		$_[0]->Destroy;
-	} );
-	return 1;
-}
-
-sub single_instance_command {
-	my $self = shift;
-	my $line = shift;
-	unless ( defined $line and length $line ) {
-		return 1;
-	}
-	unless ( $line =~ s/^(\S+)\s*//s ) {
-		# Ignore the line
-		return 1;
-	}
-	if ( $1 eq 'focus' ) {
-		$self->Raise;
-	} elsif ( $1 eq 'open' ) {
-		$self->setup_editor($line) if -f $line;
-	} else {
-		warn("Unsupported command '$1'");
-	}
-	return 1;
 }
 
 #####################################################################
