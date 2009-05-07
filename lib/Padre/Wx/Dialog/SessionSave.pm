@@ -148,14 +148,16 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
+	my $box   = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizer = Wx::GridBagSizer->new( 5, 5 );
 	$sizer->AddGrowableCol(1);
-	$self->SetSizer($sizer);
+	$box->Add( $sizer, 1, Wx::wxEXPAND|Wx::wxALL, 5 );
 	$self->_sizer($sizer);
 
 	$self->_create_fields;
 	$self->_create_buttons;
-	$sizer->SetSizeHints($self);
+	$self->SetSizer($box);
+	$box->SetSizeHints($self);
 	$self->CenterOnParent;
 	$self->_combo->SetFocus;
 }
