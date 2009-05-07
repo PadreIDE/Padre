@@ -686,7 +686,6 @@ sub relocale {
 
 	# Update window manager captions
 	$self->aui->relocale;
-
 	$self->bottom->relocale;
 	$self->right->relocale;
 	$self->syntax->relocale;
@@ -1248,14 +1247,14 @@ sub on_brace_matching {
 	my $page = $self->current->editor;
 	my $pos1 = $page->GetCurrentPos;
 	my $pos2 = $page->BraceMatch($pos1);
-	if ( $pos2 == -1 ) {    #Wx::wxSTC_INVALID_POSITION
+	if ( $pos2 == -1 ) { #Wx::wxSTC_INVALID_POSITION
 		if ( $pos1 > 0 ) {
 			$pos1--;
 			$pos2 = $page->BraceMatch($pos1);
 		}
 	}
 
-	if ( $pos2 != -1 ) {    #Wx::wxSTC_INVALID_POSITION
+	if ( $pos2 != -1 ) { #Wx::wxSTC_INVALID_POSITION
 		$page->GotoPos($pos2);
 	}
 
@@ -1314,7 +1313,7 @@ sub on_autocompletition {
 			Wx::wxOK,
 		);
 	}
-	if (@words) {
+	if ( @words ) {
 		$document->editor->AutoCompShow( $length, join " ", @words );
 	}
 	return;
@@ -1335,8 +1334,7 @@ sub on_goto {
 	$dialog->Destroy;
 	return if not defined $line_number or $line_number !~ /^\d+$/;
 
-	#what if it is bigger than buffer?
-
+	# TODO: What if it is bigger than buffer?
 	my $page = $self->current->editor;
 	$line_number--;
 	$page->goto_line_centerize($line_number);
