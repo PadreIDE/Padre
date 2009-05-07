@@ -153,8 +153,8 @@ sub new {
 	# Connect to the server if we are running in single instance mode
 	if ( $self->config->main_singleinstance ) {
 		require IO::Socket;
-		require Time::HiRes;
-		print STDERR Time::HiRes::time() . " start\n";
+
+		# This blocks for about 1 second
 		my $socket = IO::Socket::INET->new(
 			PeerAddr => '127.0.0.1',
 			PeerPort => 4444,
@@ -162,14 +162,11 @@ sub new {
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
 		if ( $socket ) {
-			foreach my $file ( @ARGV ) {
-				$socket->print("open $file\n");
-			}
+			$socket->print("open $_\n") foreach @ARGV;
 			$socket->print("focus\n");
 			$socket->close;
 			return 0;
 		}
-		print STDERR Time::HiRes::time() . " stop\n";
 	}
 
 	# Create the plugin manager
