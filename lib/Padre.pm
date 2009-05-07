@@ -7,8 +7,8 @@ use strict;
 use warnings;
 use utf8;
 
-# Non-Padre modules we need just to show the initial
-# window should be loaded early and normally.
+# Non-Padre modules we need in order to show the initial
+# window should be loaded early to simplify the load order.
 use Carp           ();
 use Cwd            ();
 use File::Spec     ();
@@ -17,8 +17,9 @@ use List::Util     ();
 use Scalar::Util   ();
 use Getopt::Long   ();
 use YAML::Tiny     ();
-use DBI            ();
 use Class::Autouse ();
+use DBI            ();
+use DBD::SQLite    ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
@@ -91,11 +92,21 @@ use Class::XSAccessor getters => {
 # Globally shared detection of the "current" Perl
 SCOPE: {
 	my $perl_interpreter;
+
 	sub perl_interpreter {
-		return $perl_interpreter if defined $perl_interpreter;
+		if ( defined $perl_interpreter ) {
+			return $perl_interpreter;
+		}
+
+		# Use the most correct method first
 		require Probe::Perl;
 		my $perl = Probe::Perl->find_perl_interpreter;
-		$perl_interpreter = $perl, return $perl if defined $perl;
+		if ( defined $perl ) {
+			$perl_interpreter = $perl;
+			return $perl;
+		}
+
+		# Fallback to a simpler way
 		require File::Which;
 		$perl             = scalar File::Which::which('perl');
 		$perl_interpreter = $perl;
@@ -136,8 +147,30 @@ sub new {
 	# Save the startup dir before anyone can move us.
 	$self->{original_cwd} = Cwd::cwd();
 
-	# Load (and sync if needed) the user's portable configuration
+	# Load (and sync if needed) the configuration
 	$self->{config} = Padre::Config->read;
+
+	# Connect to the server if we are running in single instance mode
+	if ( $self->config->main_singleinstance ) {
+		require IO::Socket;
+		require Time::HiRes;
+		print STDERR Time::HiRes::time() . " start\n";
+		my $socket = IO::Socket::INET->new(
+			PeerAddr => '127.0.0.1',
+			PeerPort => 4444,
+			Proto    => 'tcp',
+			Type     => IO::Socket::SOCK_STREAM(),
+		);
+		if ( $socket ) {
+			foreach my $file ( @ARGV ) {
+				$socket->print("open $file\n");
+			}
+			$socket->print("focus\n");
+			$socket->close;
+			return 0;
+		}
+		print STDERR Time::HiRes::time() . " stop\n";
+	}
 
 	# Create the plugin manager
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
@@ -146,7 +179,9 @@ sub new {
 	$self->{wx} = Padre::Wx::App->new($self);
 
 	# Create the task manager
-	$self->{task_manager} = Padre::TaskManager->new( use_threads => $self->config->threads, );
+	$self->{task_manager} = Padre::TaskManager->new(
+		use_threads => $self->config->threads,
+	);
 
 	return $self;
 }
