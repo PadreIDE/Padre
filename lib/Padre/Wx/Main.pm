@@ -86,16 +86,13 @@ sub new {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 	
-	# Save a reference to the configuration object.
-	# This prevents tons of ->ide->config
-	my $config = $self->{config} = $ide->config;
-
 	# Bootstrap some Wx internals
-	Wx::InitAllImageHandlers();
+	my $config = $ide->config;
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 	Padre::Util::set_logging( $config->logging );
 	Padre::Util::set_trace( $config->logging_trace );
 	Padre::Util::debug('Logging started');
+	Wx::InitAllImageHandlers();
 
 	# Determine the window title
 	my $title = 'Padre';
@@ -134,6 +131,10 @@ sub new {
 
 	# Save a reference back to the parent IDE
 	$self->{ide} = $ide;
+
+	# Save a reference to the configuration object.
+	# This prevents tons of ide->config
+	$self->{config} = $config;
 
 	# Remember the original title we used for later
 	$self->{title} = $title;
@@ -478,7 +479,7 @@ sub single_instance_command {
 		}
 		if ( $self->IsIconized ) {
 			$self->Iconize(0);
-		}			
+		}	
 	} elsif ( $1 eq 'open' ) {
 		$self->setup_editors($line) if -f $line;
 	} else {
