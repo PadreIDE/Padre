@@ -82,10 +82,13 @@ use Class::XSAccessor getters => {
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE( $ide, 'Padre' ) ) {
+	unless ( _INSTANCE($ide, 'Padre') ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
-	my $config = $ide->config;
+	
+	# Save a reference to the configuration object.
+	# This prevents tons of ->ide->config
+	my $config = $self->{config} = $ide->config;
 
 	# Bootstrap some Wx internals
 	Wx::InitAllImageHandlers();
@@ -118,24 +121,22 @@ sub new {
 	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
 		undef, -1, $title,
-		[   $config->main_left,
+		[
+			$config->main_left,
 			$config->main_top,
 		],
-		[   $config->main_width,
+		[
+			$config->main_width,
 			$config->main_height,
 		],
 		$style,
 	);
 
-	# Remember the original title we used for later
-	$self->{title} = $title;
-
-	# Save a reference to the configuration object.
-	# This prevents tons of ->ide->config
-	$self->{config} = $ide->config;
-
 	# Save a reference back to the parent IDE
 	$self->{ide} = $ide;
+
+	# Remember the original title we used for later
+	$self->{title} = $title;
 
 	# Having recorded the "current working directory" move
 	# the OS directory cursor away from this directory, so
@@ -146,7 +147,9 @@ sub new {
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
-	$self->SetMinSize( Wx::Size->new( 500, 400 ) );
+	$self->SetMinSize(
+		Wx::Size->new(500, 400)
+	);
 
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
@@ -195,7 +198,7 @@ sub new {
 	$self->{syntax}    = Padre::Wx::Syntax->new($self);
 	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
 
-	# on close pane
+	# Set up the pane close event
 	Wx::Event::EVT_AUI_PANE_CLOSE(
 		$self,
 		sub {
@@ -234,21 +237,14 @@ sub new {
 	$self->show_directory( $self->config->main_directory );
 	$self->show_output( $self->config->main_output );
 
-	# Load the saved pane layout from last time (if any)
-	# NOTE: This seems to be a bigger source of bugs than
-	# it is a saver of time.
-	#if ( defined $config->main_auilayout ) {
-	#	$self->aui->LoadPerspective( $config->main_auilayout );
-	#}
-
 	# Lock the panels if needed
 	$self->aui->lock_panels( $self->config->main_lockinterface );
 
 	# we need an event immediately after the window opened
-	# (we had an issue that if the default of main_statusbar was false it did not show
-	# the status bar which is ok, but then when we selected the menu to show it, it showed
-	# at the top)
-	# so now we always turn the status bar on at the beginning and hide it in the timer, if it was not needed
+	# (we had an issue that if the default of main_statusbar was false it did
+	# not show the status bar which is ok, but then when we selected the menu
+	# to show it, it showed at the top) so now we always turn the status bar on
+	# at the beginning and hide it in the timer, if it was not needed
 	# TODO: there might be better ways to fix that issue...
 	$statusbar->Show;
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
@@ -476,7 +472,13 @@ sub single_instance_command {
 		return 1;
 	}
 	if ( $1 eq 'focus' ) {
-		$self->Raise;
+		unless ( $self->IsActive ) {
+			$self->Show;
+			$self->Raise;
+		}
+		if ( $self->IsIconized ) {
+			$self->Iconize(0);
+		}			
 	} elsif ( $1 eq 'open' ) {
 		$self->setup_editors($line) if -f $line;
 	} else {
@@ -2755,22 +2757,24 @@ sub set_ppi_highlight {
 }
 
 sub key_up {
-	my ( $self, $event ) = @_;
-	my $mod = $event->GetModifiers || 0;
-	my $code = $event->GetKeyCode;
+	my $self  = shift;
+	my $event = shift;
+	my $mod   = $event->GetModifiers || 0;
+	my $code  = $event->GetKeyCode;
 
-	# remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
+	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
-	if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
-		                              # Ctrl-TAB  #TODO it is already in the menu
-		$self->on_next_pane if $code == Wx::WXK_TAB;
-	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
-		                                                         # Ctrl-Shift-TAB #TODO it is already in the menu
+	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+		# Ctrl-TAB  #TODO it is already in the menu
+		if ( $code == Wx::WXK_TAB ) {
+			$self->on_next_pane;
+		}
+	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
+		# Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
-
 		#		my $current_focus = Wx::Window::FindFocus();
 		#		Padre::Util::debug("Current focus: $current_focus");
 		#		# TODO this should be fine tuned later
@@ -2789,7 +2793,7 @@ sub key_up {
 		#			#$self->bottom->GetSelection;
 		#		}
 	}
-	$event->Skip();
+	$event->Skip;
 	return;
 }
 
