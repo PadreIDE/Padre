@@ -169,7 +169,7 @@ sub new {
 	);
 	$self->{reload_file} = $self->Append(
 		-1,
-		Wx::gettext('Reload file')
+		Wx::gettext('Reload File')
 	);
 	Wx::Event::EVT_MENU(
 		$main,
