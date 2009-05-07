@@ -1,34 +1,19 @@
 package Padre::SingleInstance;
 
-# core modules
+# Single Instance Client
+
+use 5.008;
 use strict;
 use warnings;
 use Carp;
 use IO::File;
 use IO::Socket;
-use threads;
 
 # constants
 use constant REMOTE_HOST => '127.0.0.1';
 use constant SERVER_PORT => 9999;
 
 our $VERSION = '0.34';
-
-#
-# constructor
-#
-sub new {
-	my ( $class, %options ) = @_;
-
-	if ( !defined $options{on_file_request} ) {
-		croak "on_file_request is not defined";
-	}
-	if ( !defined $options{on_focus_request} ) {
-		croak "on_focus_request is not defined";
-	}
-	my $self = bless \%options, $class;
-	return $self;
-}
 
 #
 # checks whether another instance is running or not
@@ -59,48 +44,6 @@ sub is_running {
 	}
 
 	return $socket ? 1 : 0;
-}
-
-#
-# start TCP server socket thread
-#
-sub start_server {
-	my $self = shift;
-	$self->{server_thread} = threads->create( sub { $self->_run; } );
-	return $self->{server_thread};
-}
-
-#
-# Main thread that services TCP clients
-#
-sub _run {
-	my $self = shift;
-
-	print "Try to run server on " . SERVER_PORT . "\n";
-	my $server = IO::Socket::INET->new(
-		LocalPort => SERVER_PORT,
-		Type      => SOCK_STREAM,
-		Reuse     => 1,
-		Listen    => 10
-	) or croak "Couldn't be a tcp server on port " . SERVER_PORT . ": $@\n";
-	LOOP: while ( my $client = $server->accept() ) {
-		while ( my $line = <$client> ) {
-			if ( $line =~ /^open\s+(.+)$/ ) {
-				my $filename = $1;
-				eval {
-					$self->{on_file_request}($filename);
-					1;
-				};
-				Carp::cluck($@) if $@;
-			} elsif ( $line =~ /^restore_focus$/ ) {
-				eval {
-					$self->{on_focus_request}();
-					1;
-				};
-				Carp::cluck($@) if $@;
-			}
-		}
-	}
 }
 
 1;

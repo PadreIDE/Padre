@@ -264,45 +264,6 @@ sub new {
 	return $self;
 }
 
-# setup padre to work as a single instance
-sub setup_single_instance {
-	my $self = shift;
-	my $t    = Padre::SingleInstance->new(
-		on_file_request => sub { my $file = shift; $self->on_file_request($file) },
-		on_focus_request => sub { $self->on_focus_request },
-	);
-	if ( $t->is_running ) {
-		print "It is running\n";
-	} else {
-		print "Nothing is running... Going to start server\n";
-		my $thr = $t->start_server;
-		$thr->detach;
-	}
-	return;
-}
-
-#sent when another Padre process sends a file open request
-sub on_file_request {
-	my $self = shift;
-	my $file = shift;
-	print "on_file_request: $file\n";
-	if ( -f $file ) {
-		print "found file: $file... Gonna open it\n";
-		$self->setup_editor($file);
-	} else {
-		print "Could not find file '$file'";
-	}
-	return;
-}
-
-#sent when another Padre process requests this window to be focused
-sub on_focus_request {
-	my $self = shift;
-	print "on_focus_request\n";
-	$self->Raise;
-	return;
-}
-
 # Load any default files
 sub load_files {
 	my $self    = shift;
@@ -683,6 +644,128 @@ sub rebuild_toolbar {
 }
 
 #####################################################################
+# Panel Tools
+
+sub show_functions {
+	my $self = shift;
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
+		$self->menu->view->{functions}->Check($on);
+	}
+	$self->config->set( main_functions => $on );
+
+	if ($on) {
+		$self->right->show( $self->functions );
+	} else {
+		$self->right->hide( $self->functions );
+	}
+
+	$self->aui->Update;
+
+	Padre->ide->save_config;
+
+	return;
+}
+
+sub show_outline {
+	my $self    = shift;
+	my $outline = $self->outline;
+
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
+		$self->menu->view->{outline}->Check($on);
+	}
+	$self->config->set( main_outline => $on );
+
+	if ($on) {
+		$self->right->show($outline);
+		$outline->start unless $outline->running;
+	} else {
+		$self->right->hide($outline);
+		$outline->stop if $outline->running;
+	}
+
+	$self->aui->Update;
+
+	Padre->ide->save_config;
+
+	return;
+}
+
+sub show_directory {
+	my $self      = shift;
+	my $directory = $self->directory;
+
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $on == $self->menu->view->{directory}->IsChecked ) {
+		$self->menu->view->{directory}->Check($on);
+	}
+	$self->config->set( main_directory => $on );
+
+	if ($on) {
+		$self->right->show($directory);
+		$directory->update_gui;
+
+		#$directory->start unless $directory->running;
+	} else {
+		$self->right->hide($directory);
+
+		#$directory->stop if $directory->running;
+	}
+
+	$self->aui->Update;
+
+	Padre->ide->save_config;
+
+	return;
+}
+
+sub show_output {
+	my $self = shift;
+	my $on = @_ ? $_[0] ? 1 : 0 : 1;
+	unless ( $on == $self->menu->view->{output}->IsChecked ) {
+		$self->menu->view->{output}->Check($on);
+	}
+	$self->config->set( main_output => $on );
+
+	if ($on) {
+		$self->bottom->show( $self->output );
+	} else {
+		$self->bottom->hide( $self->output );
+	}
+
+	$self->aui->Update;
+
+	Padre->ide->save_config;
+
+	return;
+}
+
+sub show_syntax {
+	my $self   = shift;
+	my $syntax = $self->syntax;
+
+	my $on = @_ ? $_[0] ? 1 : 0 : 1;
+	unless ( $on == $self->menu->view->{show_syntaxcheck}->IsChecked ) {
+		$self->menu->view->{show_syntaxcheck}->Check($on);
+	}
+
+	if ($on) {
+		$self->bottom->show($syntax);
+		$syntax->start unless $syntax->running;
+	} else {
+		$self->bottom->hide( $self->syntax );
+		$syntax->stop if $syntax->running;
+	}
+
+	$self->aui->Update;
+
+	Padre->ide->save_config;
+
+	return;
+}
+
+#####################################################################
 # Introspection
 
 =pod
@@ -919,6 +1002,162 @@ sub debug_perl {
 
 }
 
+######################################################################
+# Session Support
+
+#
+# my @session = $self->capture_session;
+#
+# capture list of opened files, with information. return a list of
+# Padre::DB::SessionFile objects.
+#
+sub capture_session {
+	my ($self) = @_;
+
+	my @session  = ();
+	my $notebook = $self->notebook;
+	my $current  = $self->current->filename;
+	foreach my $pageid ( $self->pageids ) {
+		next unless defined $pageid;
+		my $editor   = $notebook->GetPage($pageid);
+		my $document = $editor->{Document} or next;
+		my $file     = $editor->{Document}->filename;
+		next unless defined $file;
+		my $position = $editor->GetCurrentPos;
+		my $focus    = ( defined $current and $current eq $file ) ? 1 : 0;
+		my $obj      = Padre::DB::SessionFile->new(
+			file     => $file,
+			position => $position,
+			focus    => $focus,
+		);
+		push @session, $obj;
+	}
+
+	return @session;
+}
+
+#
+# $self->open_session( $session );
+#
+# try to close all files, then open all files referenced in the given
+# $session (a padre::db::session object). no return value.
+#
+sub open_session {
+	my ( $self, $session ) = @_;
+
+	# prevent redrawing until we're done
+	$self->Freeze;
+
+	# close all files
+	$self->on_close_all;
+
+	# get list of files in the session
+	my @files = $session->files;
+	return unless @files;
+
+	# opening documents
+	my $focus    = undef;
+	my $notebook = $self->notebook;
+	foreach my $document (@files) {
+		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
+		my $filename = $document->file;
+		next unless -f $filename;
+		my $id = $self->setup_editor($filename);
+		next unless $id;    # documents already opened have undef $id
+		Padre::Util::debug("Setting focus on $filename");
+		$focus = $id if $document->focus;
+		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
+	}
+	$self->on_nth_pane($focus) if defined $focus;
+
+	# now we can redraw
+	$self->Thaw;
+}
+
+#
+# $self->save_session( $session, @session );
+#
+# try to save @session files (Padre::DB::SessionFile objects) to DB,
+# associated to $session. note that $session should already exist.
+#
+sub save_session {
+	my ( $self, $session, @session ) = @_;
+
+	Padre::DB->begin;
+	foreach my $file (@session) {
+		$file->{session} = $session->id;
+		$file->insert;
+	}
+	Padre::DB->commit;
+}
+
+#####################################################################
+# Single Instance Server
+
+my $single_instance_port = 4444;
+
+sub single_instance_start {
+	require Wx::Socket;
+	my $self = shift;
+
+	# Create the server
+	$self->{single_instance} = Wx::SocketServer->new(
+		'127.0.0.1' => $single_instance_port,
+		Wx::wxSOCKET_NOWAIT,
+	);
+	Wx::Event::EVT_SOCKET_CONNECTION( $self,
+		$self->{single_instance},
+		\&single_instance_server_connect,
+	);
+	unless ( $self->{single_instance}->Ok ) {
+		die("Failed to create server");
+	}
+
+	return 1;
+}
+
+sub single_instance_connect {
+	my $server = shift;
+	my $self   = shift;
+	my $client = $server->Accept(0);
+	Wx::Event::EVT_SOCKET_INPUT( $self, $client, sub {
+		# Accept the data and stream commands
+		my $command = '';
+		my $buffer  = '';
+		while ( $_[0]->Read( $buffer, 128 ) ) {
+			$command .= $buffer;
+			while ( $command =~ s/^(.*)[\012\015]+//s ) {
+				$_[1]->single_instance_command("$1");
+			}
+		}
+		return 1;
+	} );
+	Wx::Event::EVT_SOCKET_LOST( $self, $client, sub {
+		$_[0]->Destroy;
+	} );
+	return 1;
+}
+
+sub single_instance_command {
+	my $self = shift;
+	my $line = shift;
+	unless ( defined $line and length $line ) {
+		return 1;
+	}
+	unless ( $line =~ s/^(\S+)\s*//s ) {
+		# Ignore the line
+		return 1;
+	}
+	if ( $1 eq 'focus' ) {
+		$self->Raise;
+	} elsif ( $1 eq 'open' ) {
+		$self->setup_editor($line) if -f $line;
+	} else {
+		warn("Unsupported command '$1'");
+	}
+	return 1;
+}
+
 #####################################################################
 # User Interaction
 
@@ -975,7 +1214,7 @@ sub prompt {
 }
 
 #####################################################################
-# Event Handlers
+# General Events
 
 sub on_brace_matching {
 	my $self = shift;
@@ -1325,92 +1564,6 @@ sub create_tab {
 	my $id = $self->notebook->GetSelection;
 	$self->refresh;
 	return $id;
-}
-
-#
-# my @session = $self->capture_session;
-#
-# capture list of opened files, with information. return a list of
-# Padre::DB::SessionFile objects.
-#
-sub capture_session {
-	my ($self) = @_;
-
-	my @session  = ();
-	my $notebook = $self->notebook;
-	my $current  = $self->current->filename;
-	foreach my $pageid ( $self->pageids ) {
-		next unless defined $pageid;
-		my $editor   = $notebook->GetPage($pageid);
-		my $document = $editor->{Document} or next;
-		my $file     = $editor->{Document}->filename;
-		next unless defined $file;
-		my $position = $editor->GetCurrentPos;
-		my $focus    = ( defined $current and $current eq $file ) ? 1 : 0;
-		my $obj      = Padre::DB::SessionFile->new(
-			file     => $file,
-			position => $position,
-			focus    => $focus,
-		);
-		push @session, $obj;
-	}
-
-	return @session;
-}
-
-#
-# $self->open_session( $session );
-#
-# try to close all files, then open all files referenced in the given
-# $session (a padre::db::session object). no return value.
-#
-sub open_session {
-	my ( $self, $session ) = @_;
-
-	# prevent redrawing until we're done
-	$self->Freeze;
-
-	# close all files
-	$self->on_close_all;
-
-	# get list of files in the session
-	my @files = $session->files;
-	return unless @files;
-
-	# opening documents
-	my $focus    = undef;
-	my $notebook = $self->notebook;
-	foreach my $document (@files) {
-		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
-		my $filename = $document->file;
-		next unless -f $filename;
-		my $id = $self->setup_editor($filename);
-		next unless $id;    # documents already opened have undef $id
-		Padre::Util::debug("Setting focus on $filename");
-		$focus = $id if $document->focus;
-		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
-	}
-	$self->on_nth_pane($focus) if defined $focus;
-
-	# now we can redraw
-	$self->Thaw;
-}
-
-#
-# $self->save_session( $session, @session );
-#
-# try to save @session files (Padre::DB::SessionFile objects) to DB,
-# associated to $session. note that $session should already exist.
-#
-sub save_session {
-	my ( $self, $session, @session ) = @_;
-
-	Padre::DB->begin;
-	foreach my $file (@session) {
-		$file->{session} = $session->id;
-		$file->insert;
-	}
-	Padre::DB->commit;
 }
 
 # try to open in various ways
@@ -2025,131 +2178,6 @@ sub on_word_wrap {
 	} else {
 		$doc->editor->SetWrapMode(Wx::wxSTC_WRAP_NONE);
 	}
-}
-
-#####################################################################
-# Right-Hand Panel Tools
-
-sub show_functions {
-	my $self = shift;
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
-		$self->menu->view->{functions}->Check($on);
-	}
-	$self->config->set( main_functions => $on );
-
-	if ($on) {
-		$self->right->show( $self->functions );
-	} else {
-		$self->right->hide( $self->functions );
-	}
-
-	$self->aui->Update;
-
-	Padre->ide->save_config;
-
-	return;
-}
-
-sub show_outline {
-	my $self    = shift;
-	my $outline = $self->outline;
-
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
-		$self->menu->view->{outline}->Check($on);
-	}
-	$self->config->set( main_outline => $on );
-
-	if ($on) {
-		$self->right->show($outline);
-		$outline->start unless $outline->running;
-	} else {
-		$self->right->hide($outline);
-		$outline->stop if $outline->running;
-	}
-
-	$self->aui->Update;
-
-	Padre->ide->save_config;
-
-	return;
-}
-
-sub show_directory {
-	my $self      = shift;
-	my $directory = $self->directory;
-
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	unless ( $on == $self->menu->view->{directory}->IsChecked ) {
-		$self->menu->view->{directory}->Check($on);
-	}
-	$self->config->set( main_directory => $on );
-
-	if ($on) {
-		$self->right->show($directory);
-		$directory->update_gui;
-
-		#$directory->start unless $directory->running;
-	} else {
-		$self->right->hide($directory);
-
-		#$directory->stop if $directory->running;
-	}
-
-	$self->aui->Update;
-
-	Padre->ide->save_config;
-
-	return;
-}
-
-#####################################################################
-# Bottom Panel Tools
-
-sub show_output {
-	my $self = shift;
-	my $on = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->view->{output}->IsChecked ) {
-		$self->menu->view->{output}->Check($on);
-	}
-	$self->config->set( main_output => $on );
-
-	if ($on) {
-		$self->bottom->show( $self->output );
-	} else {
-		$self->bottom->hide( $self->output );
-	}
-
-	$self->aui->Update;
-
-	Padre->ide->save_config;
-
-	return;
-}
-
-sub show_syntax {
-	my $self   = shift;
-	my $syntax = $self->syntax;
-
-	my $on = @_ ? $_[0] ? 1 : 0 : 1;
-	unless ( $on == $self->menu->view->{show_syntaxcheck}->IsChecked ) {
-		$self->menu->view->{show_syntaxcheck}->Check($on);
-	}
-
-	if ($on) {
-		$self->bottom->show($syntax);
-		$syntax->start unless $syntax->running;
-	} else {
-		$self->bottom->hide( $self->syntax );
-		$syntax->stop if $syntax->running;
-	}
-
-	$self->aui->Update;
-
-	Padre->ide->save_config;
-
-	return;
 }
 
 sub on_toggle_statusbar {
