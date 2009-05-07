@@ -19,7 +19,7 @@ sub _new_panel {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL | Wx::wxVSCROLL | Wx::wxHSCROLL,
+		Wx::wxTAB_TRAVERSAL,
 	);
 	my $fgs = Wx::FlexGridSizer->new( 0, $cols, 0, 0 );
 	$panel->SetSizer($fgs);
@@ -101,7 +101,7 @@ sub _appearance_panel {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL | Wx::wxVSCROLL | Wx::wxHSCROLL,
+		Wx::wxTAB_TRAVERSAL,
 	);
 	my $main_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
@@ -376,7 +376,7 @@ END_TEXT
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTAB_TRAVERSAL | Wx::wxVSCROLL | Wx::wxHSCROLL,
+		Wx::wxTAB_TRAVERSAL,
 	);
 	my $main_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
