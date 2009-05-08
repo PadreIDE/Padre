@@ -666,7 +666,7 @@ sub event_on_right_down {
 				my $doc = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 				my $dialog = Padre::Wx::History::TextDialog->new(
-					$_[0],
+					$editor->main,
 					Wx::gettext("Replacement"),
 					Wx::gettext("Replacement"),
 					'$foo',
