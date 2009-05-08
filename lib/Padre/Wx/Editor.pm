@@ -928,7 +928,7 @@ sub goto_pos_centerize {
 	$self->ScrollToLine( $line - ( $self->LinesOnScreen / 2 ) );
 	$self->EnsureVisible($line);
 	$self->EnsureCaretVisible;
-	$self->SetSelection( $pos, $pos+1 );
+	$self->SetSelection( $pos, $pos );
 	$self->SetFocus;
 }
 
