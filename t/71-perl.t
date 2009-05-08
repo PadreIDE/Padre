@@ -10,7 +10,7 @@ BEGIN {
 		exit 0;
 	}
 }
-BEGIN { plan skip_all => 'skipped for release'; }
+
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 
