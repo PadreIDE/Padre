@@ -679,9 +679,27 @@ sub event_on_right_down {
 				$doc->lexical_variable_replacement($replacement);
 			},
 		);
-	}
+	} # end if it's a variable
+}
 
-
+sub event_on_left_up {
+	my $self = shift;
+	my $editor = shift;
+	my $event = shift;
+	
+	if ($event->ControlDown) {
+		
+		my $point = $event->GetPosition();
+		my $pos = $editor->PositionFromPoint($point);
+		
+		my ($location, $token) = _get_current_symbol( $self->editor, $pos );
+		
+		# Does it look like a variable?
+		if ( defined $location and $token =~ /^[\$\*\@\%\&]/) {
+			# FIXME editor document accessor?
+			$editor->{Document}->find_variable_declaration();
+		}
+	} # end if control-click
 }
 
 1;
