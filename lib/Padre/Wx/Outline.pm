@@ -10,6 +10,11 @@ use Padre::Current ();
 our $VERSION = '0.34';
 use base 'Wx::TreeCtrl';
 
+use Class::XSAccessor
+	accessors => {
+		force_next => 'force_next',
+	};
+
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -59,15 +64,6 @@ sub clear {
 	return;
 }
 
-sub force_next {
-	my $self = shift;
-
-	if ( defined $_[0] ) {
-		$self->{force_next} = $_[0];
-	}
-	
-	return $self->{force_next};
-}
 
 #####################################################################
 # Timer Control
