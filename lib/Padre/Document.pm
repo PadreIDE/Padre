@@ -826,8 +826,20 @@ context menu (C<Wx::Menu>) and the event.
 
 Returns nothing.
 
-=cut
+=head2 event_on_left_up
 
+NOT IMPLEMENTED IN THE BASE CLASS
+
+This method - if implemented - is called when a user left-clicks in an 
+editor. This can be used to implement context-sensitive actions if
+the user presses modifier keys while clicking.
+
+Parameters retrieved are the objects for the document, the editor,
+and the event.
+
+Returns nothing.
+
+=cut
 #####################################################################
 # Project Integration Methods
 

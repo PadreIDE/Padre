@@ -626,7 +626,7 @@ sub on_char {
 	if ( $doc->can('event_on_char') ) {
 		$doc->event_on_char( $self, $event );
 	}
-
+	
 	$event->Skip;
 	return;
 }
@@ -643,6 +643,11 @@ sub on_left_up {
 		Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
+	my $doc = $self->{Document};
+	if ( $doc->can('event_on_left_up') ) {
+		$doc->event_on_left_up( $self, $event );
+	}
+	
 	$event->Skip;
 	return;
 }
