@@ -7,7 +7,7 @@ use Padre::Config::Constants qw( $PADRE_CONFIG_DIR );
 use Padre::Wx     ();
 use Padre::Plugin ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 use base 'Padre::Plugin';
 
 #####################################################################

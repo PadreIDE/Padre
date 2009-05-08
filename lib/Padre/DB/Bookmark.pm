@@ -3,7 +3,7 @@ package Padre::DB::Bookmark;
 use strict;
 use warnings;
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 sub select_names {
 	Padre::DB->selectcol_arrayref('select name from bookmark order by name');

@@ -10,7 +10,7 @@ use YAML::Tiny      ();
 use Padre::Document ();
 use Padre::Util     ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 use base 'Padre::Document';
 
 #####################################################################

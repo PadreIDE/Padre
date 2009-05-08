@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 use constant HEIGHT => 30;
 
 # This is the traditional, STATIC context menu that was moved here

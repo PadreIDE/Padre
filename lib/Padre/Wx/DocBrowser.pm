@@ -13,7 +13,7 @@ use Params::Util '_INSTANCE';
 use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
 
-our $VERSION = '0.26';
+our $VERSION = '0.35';
 our @ISA     = 'Wx::Frame';
 
 use Class::XSAccessor accessors => {

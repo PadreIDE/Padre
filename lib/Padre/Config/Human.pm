@@ -15,7 +15,7 @@ use YAML::Tiny qw{ DumpFile LoadFile  };
 
 use Padre::Config::Constants qw{ $CONFIG_FILE_USER };
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 my $REVISION = 1;    # config schema revision
 

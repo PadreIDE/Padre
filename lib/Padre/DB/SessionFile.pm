@@ -8,7 +8,7 @@ package Padre::DB::SessionFile;
 use strict;
 use warnings;
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 1;
 

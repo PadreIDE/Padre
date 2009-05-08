@@ -7,7 +7,7 @@ use Padre::Wx      ();
 use Padre::Plugin  ();
 use Padre::Current ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 use base 'Padre::Plugin';
 
 #####################################################################

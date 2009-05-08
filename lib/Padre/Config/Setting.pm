@@ -10,7 +10,7 @@ use Carp ();
 use Padre::Config::Constants qw{ :stores :types };
 use Params::Util ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 use Class::XSAccessor getters => {
 	name    => 'name',

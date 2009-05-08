@@ -14,7 +14,7 @@ use Padre::Current qw{_CURRENT};
 # Fix win32 globbing problem with spaces in paths
 use File::Glob ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################

@@ -8,7 +8,7 @@ use Padre::Current ();
 
 use base qw(Padre::Wx::Dialog);
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 sub _new_panel {
 	my ( $self, $parent ) = splice( @_, 0, 2 );

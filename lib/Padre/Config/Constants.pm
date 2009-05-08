@@ -7,7 +7,7 @@ package Padre::Config::Constants;
 use strict;
 use warnings;
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 use File::Basename qw{ dirname };
 use File::Copy qw{ copy };

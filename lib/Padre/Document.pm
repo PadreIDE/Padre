@@ -53,7 +53,7 @@ use Padre::Util    ();
 use Padre::Wx      ();
 use Padre          ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 # NOTE: This is probably a bad place to store this
 my $unsaved_number = 0;

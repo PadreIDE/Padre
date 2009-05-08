@@ -8,7 +8,7 @@ use Params::Util qw{_IDENTIFIER _CLASS _INSTANCE};
 use Padre::Current ();
 use Padre::Locale  ();
 
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 use overload
 	'bool' => sub {1},
