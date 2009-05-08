@@ -55,8 +55,6 @@ sub prepare {
 }
 
 sub process_ppi {
-
-	# find bad braces
 	my $self     = shift;
 	my $ppi      = shift or return;
 	my $location = $self->{location};
