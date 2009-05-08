@@ -5,6 +5,7 @@ v0.35 to be released
     Fix assertion failure (#301) (JQUELIN)
     Add Japanese translation (ISHIGAKI)
     Implemented experimental Single Instance support (ADAMK)
+    Implemented context-sensitive right-click menu for Perl documents (SMUELLER)
 
 v0.34 2009.04.28
 
