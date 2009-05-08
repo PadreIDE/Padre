@@ -164,7 +164,7 @@ sub new {
 		if ( $socket ) {
 			foreach my $file ( @ARGV ) {
 				my $path = File::Spec->rel2abs($file);
-				$socket->print("open $file\n");
+				$socket->print("open $path\n");
 			}
 			$socket->print("focus\n");
 			$socket->close;
