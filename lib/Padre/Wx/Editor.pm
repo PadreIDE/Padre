@@ -922,13 +922,13 @@ sub goto_pos_centerize {
 	$pos = $max if $pos > $max;
 
 	$self->SetCurrentPos($pos);
-	$self->SetSelection( $pos, $pos );
 	$self->SearchAnchor;
 
 	my $line = $self->GetCurrentLine;
 	$self->ScrollToLine( $line - ( $self->LinesOnScreen / 2 ) );
 	$self->EnsureVisible($line);
 	$self->EnsureCaretVisible;
+	$self->SetSelection( $pos, $pos+1 );
 	$self->SetFocus;
 }
 
