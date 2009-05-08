@@ -3,7 +3,7 @@ Changes for Perl Application Development and Refactoring Environment
 v0.35 to be released
 
     Add Japanese translation (ISHIGAKI)
-    Implemented experimental Single Instance support (ADAMK)
+    Implemented experimental Single Instance support (#117) (ADAMK)
     Implemented context-sensitive right-click menu for Perl documents (SMUELLER)
     Ctrl-left-click on a Perl variable will jump to its definition (SMUELLER)
     Ctrl-left-click on a Perl function callwill jump to its definition (SMUELLER)
