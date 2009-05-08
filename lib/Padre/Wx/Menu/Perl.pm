@@ -74,13 +74,10 @@ sub new {
 				Wx::gettext("Replacement"),
 				'$foo',
 			);
-			if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-				return;
-			}
+			return if $dialog->ShowModal == Wx::wxID_CANCEL;
 			my $replacement = $dialog->GetValue;
 			$dialog->Destroy;
 			return unless defined $replacement;
-
 			$doc->lexical_variable_replacement($replacement);
 		},
 	);
