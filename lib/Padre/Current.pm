@@ -176,6 +176,128 @@ sub ide {
 
 1;
 
+__END__
+
+=head1 NAME
+
+Padre::Current - convenient access to current objects within Padre
+
+
+
+=head1 SYNOPSIS
+
+	my $main = Padre::Current->main;
+	...
+
+
+
+=head1 DESCRIPTION
+
+Padre uses lots of objects from different classes. And one needs to
+have access to the current object of this sort or this other to do
+whatever is need at the time.
+
+Instead of poking directly with the various classes to find the object
+you need, C<Padre::Current> provides a bunch of handy methods to
+retrieve whatever current object you need.
+
+
+
+=head1 PUBLIC METHODS
+
+=head2 Constructor
+
+=over 4
+
+=item new()
+
+Create and return a C<Padre::Current> object. No params.
+
+
+=back
+
+
+
+=head2 Current stuff
+
+Note that you don't need to use an object directly to call those
+methods, calling them as class methods is ok. For example:
+
+	my $doc = Padre::Current->document;
+
+
+Here's the list of methods provided to get access to current something:
+
+
+=over 4
+
+=item config()
+
+Return the current C<Padre::Config> object from the main window.
+
+
+=item document()
+
+Return the current C<Padre::Document> object in use.
+
+
+=item editor()
+
+Return the current C<Padre::Editor> object in use.
+
+
+=item filename()
+
+Return the filename of the current opened document.
+
+
+=item ide()
+
+Return the current C<Padre> object in use.
+
+
+=item main()
+
+Return the current C<Padre::Wx::Main> object in use.
+
+
+=item notebook()
+
+Return the current C<Padre::Wx::Notebook> object in use.
+
+
+=item project()
+
+Return the current C<Padre::Project> object in use.
+
+
+=item text()
+
+Return the current selected text.
+
+
+=item title()
+
+Return the title of current editor window.
+
+
+=back
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
+
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
