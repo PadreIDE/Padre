@@ -23,7 +23,7 @@ use Padre::Util   ();
 use Padre::Locale ();
 use Padre::Current qw{_CURRENT};
 use Padre::Document           ();
-use Padre::SingleInstance     ();
+#use Padre::SingleInstance     ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
