@@ -481,7 +481,12 @@ sub single_instance_command {
 		$self->Show;
 		$self->Raise;
 	} elsif ( $1 eq 'open' ) {
-		$self->setup_editors($line) if -f $line;
+		if ( -f $line ) {
+			# If a file is already loaded switch to it instead
+			$self->notebook->show_file($line)
+			or
+			$self->setup_editors($line);
+		}
 	} else {
 		warn("Unsupported command '$1'");
 	}
@@ -2287,7 +2292,7 @@ sub convert_to {
 	my $newline = shift;
 	my $current = $self->current;
 	my $editor  = $current->editor;
-	{
+	SCOPE: {
 		no warnings 'once';    # TODO eliminate?
 		$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline} );
 	}

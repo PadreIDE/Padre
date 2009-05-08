@@ -5,7 +5,10 @@ use warnings;
 use Padre::Wx ();
 
 our $VERSION = '0.34';
-use base 'Wx::AuiNotebook';
+our @ISA     = 'Wx::AuiNotebook';
+
+######################################################################
+# Constructor and Accessors
 
 sub new {
 	my $class = shift;
@@ -15,8 +18,12 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE | Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TAB_MOVE
-			| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB | Wx::wxAUI_NB_WINDOWLIST_BUTTON
+		Wx::wxAUI_NB_TOP
+		| Wx::wxBORDER_NONE
+		| Wx::wxAUI_NB_SCROLL_BUTTONS
+		| Wx::wxAUI_NB_TAB_MOVE
+		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
+		| Wx::wxAUI_NB_WINDOWLIST_BUTTON
 	);
 
 	# Add ourself to the main window
@@ -49,15 +56,37 @@ sub main {
 }
 
 ######################################################################
+# Main Methods
+
+# Search for and display the page for a specified file name.
+# Returns true if found and displayed, false otherwise.
+sub show_file {
+	my $self = shift;
+	my $file = shift or return;
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		my $editor   = $self->GetPage($i)  or next;
+		my $document = $editor->{Document} or next;
+		my $filename = $document->filename;
+		if ( defined $file and $file eq $filename ) {
+			$self->SetSelection($i);
+			return 1;
+		}
+	}
+	return;
+}
+
+######################################################################
 # Event Handlers
 
 sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $editor = $main->current->editor;
-	if ($editor) {
+	if ( $editor ) {
 		my $history = $main->{page_history};
-		@$history = grep { Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor) } @$history;
+		@$history = grep {
+			Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor)
+		} @$history;
 		push @$history, $editor;
 
 		# Update indentation in case auto-update is on
