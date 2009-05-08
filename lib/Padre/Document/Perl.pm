@@ -459,7 +459,8 @@ sub find_unmatched_brace {
 # it the manual, stupid way, this may also work within quotelikes and regexes.
 sub _get_current_symbol {
 	my $editor       = shift;
-	my $pos          = $editor->GetCurrentPos;
+	my $pos          = shift;
+	$pos = $editor->GetCurrentPos if not defined $pos;
 	my $line         = $editor->LineFromPosition($pos);
 	my $line_start   = $editor->PositionFromLine($line);
 	my $cursor_col   = $pos - $line_start;
@@ -478,13 +479,23 @@ sub _get_current_symbol {
 	if ( $col == 0 or substr( $line_content, $col + 1, 1 ) !~ /^[#\w:\']$/ ) {
 		return ();
 	}
-	return [ $line + 1, $col + 1 ];
+	
+	# Extract the token, too.
+	my $token;
+	if ( substr( $line_content, $col ) =~ /^\s?(\S+)/ ) {
+		$token = $1;
+	}
+	else {
+		die "This shouldn't happen. The algorithm is wrong";
+	}
+	
+	return([ $line + 1, $col + 1 ], $token);
 }
 
 sub find_variable_declaration {
 	my ($self) = @_;
 
-	my $location = _get_current_symbol( $self->editor );
+	my ($location, $token) = _get_current_symbol( $self->editor );
 	unless ( defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
@@ -510,7 +521,7 @@ sub find_variable_declaration {
 sub lexical_variable_replacement {
 	my ( $self, $replacement ) = @_;
 
-	my $location = _get_current_symbol( $self->editor );
+	my ($location, $token) = _get_current_symbol( $self->editor );
 	if ( not defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
@@ -614,6 +625,62 @@ sub event_on_char {
 
 	$editor->Thaw;
 	return;
+}
+
+
+# Our opportunity to implement a context-sensitive right-click menu
+# This would be a lot more powerful if we used PPI, but since that would
+# slow things down beyond recognition, we use heuristics for now.
+sub event_on_right_down {
+	my $self = shift;
+	my $editor = shift;
+	my $menu = shift;
+	my $event = shift;
+	
+	my $point = $event->GetPosition();
+	my $pos = $editor->PositionFromPoint($point);
+	
+	my ($location, $token) = _get_current_symbol( $self->editor, $pos );
+	
+	if ( defined $location and $token =~ /^[\$\*\@\%\&]/) {
+		
+		$menu->AppendSeparator;
+
+		my $findDecl = $menu->Append( -1, Wx::gettext("Find Variable Declaration") );
+		Wx::Event::EVT_MENU(
+			$editor, $findDecl,
+			sub {
+				my $editor = shift;
+				my $doc = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
+				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				$doc->find_variable_declaration;
+			},
+		);
+		
+		my $lexRepl = $menu->Append( -1, Wx::gettext("Lexically Rename Variable") );
+		Wx::Event::EVT_MENU(
+			$editor, $lexRepl,
+			sub {
+				# FIXME near duplication of the code in Padre::Wx::Menu::Perl
+				my $editor = shift;
+				my $doc = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
+				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				my $dialog = Padre::Wx::History::TextDialog->new(
+					$_[0],
+					Wx::gettext("Replacement"),
+					Wx::gettext("Replacement"),
+					'$foo',
+				);
+				return if $dialog->ShowModal == Wx::wxID_CANCEL;
+				my $replacement = $dialog->GetValue;
+				$dialog->Destroy;
+				return unless defined $replacement;
+				$doc->lexical_variable_replacement($replacement);
+			},
+		);
+	}
+
+
 }
 
 1;
