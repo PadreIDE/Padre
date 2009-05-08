@@ -64,10 +64,9 @@ sub force_next {
 
 	if ( defined $_[0] ) {
 		$self->{force_next} = $_[0];
-		return $self->{force_next};
-	} else {
-		return $self->{force_next};
 	}
+	
+	return $self->{force_next};
 }
 
 #####################################################################
