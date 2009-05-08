@@ -91,6 +91,11 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
 			[ 'Wx::Choice',     'main_startup', $main_startup ]
 		],
+		[   [   'Wx::CheckBox', 'main_singleinstance', ( $config->main_singleinstance ? 1 : 0 ),
+				Wx::gettext('Open files in existing Padre')
+			],
+			[]
+		],
 		[   [ 'Wx::StaticText', undef,                  Wx::gettext('Methods order:') ],
 			[ 'Wx::Choice',     'main_functions_order', $main_functions_order ]
 		],
@@ -616,6 +621,10 @@ sub run {
 	$config->set(
 		'editor_beginner',
 		$data->{editor_beginner} ? 1 : 0
+	);
+	$config->set(
+		'main_singleinstance',
+		$data->{main_singleinstance} ? 1 : 0
 	);
 	$config->set(
 		'editor_autoindent',
