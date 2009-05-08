@@ -173,7 +173,7 @@ sub on_right_down {
 
 	my $doc = $self->{Document};
 	if ( $doc->can('event_on_right_down') ) {
-		$doc->event_on_right_down( $self, $menu, $event );
+		$doc->event_on_right_down( $self->{Document}, $self, $menu, $event );
 	}
 
 	if ( $event->isa('Wx::MouseEvent') ) {
