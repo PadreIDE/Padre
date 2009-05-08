@@ -119,7 +119,8 @@ sub process_ppi {
 	$finder_regexp = qr/$finder_regexp/;    # used to find symbols in quotelikes and regexes
 	                                        #warn $finder_regexp;
 
-	my $replacement = substr( $self->{replacement}, 1 );
+	my $replacement = $self->{replacement};
+	$replacement =~ s/^\W+//;
 
 	$scope->find(
 		sub {
