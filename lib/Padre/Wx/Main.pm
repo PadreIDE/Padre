@@ -66,11 +66,13 @@ use Class::XSAccessor getters => {
 	output     => 'output',
 	syntax     => 'syntax',
 	errorlist  => 'errorlist',
-	ack        => 'ack',
 
 	# Operating Data
 	cwd        => 'cwd',
 	no_refresh => '_no_refresh',
+
+	# Things that are probably in the wrong place
+	ack        => 'ack',
 };
 
 # NOTE: Yes this method does get a little large, but that's fine.
@@ -473,13 +475,11 @@ sub single_instance_command {
 		return 1;
 	}
 	if ( $1 eq 'focus' ) {
-		unless ( $self->IsActive ) {
-			$self->Show;
-			$self->Raise;
-		}
 		if ( $self->IsIconized ) {
 			$self->Iconize(0);
-		}	
+		}
+		$self->Show;
+		$self->Raise;
 	} elsif ( $1 eq 'open' ) {
 		$self->setup_editors($line) if -f $line;
 	} else {
