@@ -151,7 +151,7 @@ sub about {
 	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm") );
 
 	# Only Unix/GTK native about box supports websites
-	if ( Padre::Util::WXGTK ) {
+	if (Padre::Util::WXGTK) {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 

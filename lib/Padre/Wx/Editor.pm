@@ -44,7 +44,7 @@ sub new {
 	my $self = $class->SUPER::new($notebook);
 
 	# TODO: Make this suck less
-	$data = data(Padre->ide->config->editor_style);
+	$data = data( Padre->ide->config->editor_style );
 
 	# Set the code margins a little larger than the default.
 	# This seems to noticably reduce eye strain.
@@ -119,6 +119,7 @@ sub padre_setup {
 		my $filename = $self->{Document}->filename || q{};
 		if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 			my $ext = lc $1;
+
 			# re-setup if file extension is .conf
 			$self->padre_setup_style('conf') if $ext eq 'conf';
 		}
@@ -626,7 +627,7 @@ sub on_char {
 	if ( $doc->can('event_on_char') ) {
 		$doc->event_on_char( $self, $event );
 	}
-	
+
 	$event->Skip;
 	return;
 }
@@ -647,7 +648,7 @@ sub on_left_up {
 	if ( $doc->can('event_on_left_up') ) {
 		$doc->event_on_left_up( $self, $event );
 	}
-	
+
 	$event->Skip;
 	return;
 }
@@ -770,6 +771,7 @@ sub put_text_to_clipboard {
 }
 
 sub get_text_from_clipboard {
+
 	# This is to be used as a method even if we don't use $self!
 	#my $self = shift;
 	Wx::wxTheClipboard->Open;

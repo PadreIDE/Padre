@@ -122,13 +122,13 @@ our %EXT_MIME = (
 # to confirm that the MIME type is either the official type, or the primary
 # one in use by the relevant language community.
 our %MIME_LEXER = (
-	'text/x-abc'                => Wx::wxSTC_LEX_CONTAINER,
+	'text/x-abc' => Wx::wxSTC_LEX_CONTAINER,
 
-	'text/x-adasrc'             => Wx::wxSTC_LEX_ADA,    # CONFIRMED
-	'text/x-asm'                => Wx::wxSTC_LEX_ASM,    # CONFIRMED
+	'text/x-adasrc' => Wx::wxSTC_LEX_ADA,    # CONFIRMED
+	'text/x-asm'    => Wx::wxSTC_LEX_ASM,    # CONFIRMED
 
 	# application/x-msdos-program includes .exe and .com, so don't use it
-	'application/x-bat'         => Wx::wxSTC_LEX_BATCH,    # CONFIRMED
+	'application/x-bat' => Wx::wxSTC_LEX_BATCH,    # CONFIRMED
 
 	'text/x-c++src'             => Wx::wxSTC_LEX_CPP,          # CONFIRMED
 	'text/css'                  => Wx::wxSTC_LEX_CSS,          # CONFIRMED
@@ -156,56 +156,56 @@ our %MIME_LEXER = (
 
 	# text/xml specifically means "human-readable XML".
 	# This is prefered to the more generic application/xml
-	'text/xml'                  => Wx::wxSTC_LEX_XML,                           # CONFIRMED
+	'text/xml' => Wx::wxSTC_LEX_XML,                           # CONFIRMED
 
-	'text/x-yaml'               => Wx::wxSTC_LEX_YAML,               # CONFIRMED
-	'application/x-pir'         => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
-	'application/x-pasm'        => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
-	'application/x-perl6'       => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
-	'text/plain'                => Wx::wxSTC_LEX_NULL,               # CONFIRMED
+	'text/x-yaml'         => Wx::wxSTC_LEX_YAML,               # CONFIRMED
+	'application/x-pir'   => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
+	'application/x-pasm'  => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
+	'application/x-perl6' => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
+	'text/plain'          => Wx::wxSTC_LEX_NULL,               # CONFIRMED
 );
 
 # This is the mime-type to document class mapping
 our %MIME_CLASS = (
 	'application/x-perl' => 'Padre::Document::Perl',
-	'text/x-pod' => 'Padre::Document::POD',
+	'text/x-pod'         => 'Padre::Document::POD',
 );
 
 sub menu_view_mimes {
-	'00Plain Text' => 'text/plain',
-	'01Perl'       => 'application/x-perl',
-	'02Shell'      => 'application/x-shellscript',
-	'03HTML'       => 'text/html',
-	'05JavaScript' => 'application/javascript',
-	'07CSS'        => 'text/css',
-	'09Python'     => 'text/x-python',
-	'11Ruby'       => 'application/x-ruby',
-	'13PHP'        => 'application/x-php',
-	'15YAML'       => 'text/x-yaml',
-	'17VBScript'   => 'text/vbscript',
-	'19SQL'        => 'text/x-sql',
-	'21Perl6'      => 'application/x-perl6',
+	'00Plain Text'     => 'text/plain',
+		'01Perl'       => 'application/x-perl',
+		'02Shell'      => 'application/x-shellscript',
+		'03HTML'       => 'text/html',
+		'05JavaScript' => 'application/javascript',
+		'07CSS'        => 'text/css',
+		'09Python'     => 'text/x-python',
+		'11Ruby'       => 'application/x-ruby',
+		'13PHP'        => 'application/x-php',
+		'15YAML'       => 'text/x-yaml',
+		'17VBScript'   => 'text/vbscript',
+		'19SQL'        => 'text/x-sql',
+		'21Perl6'      => 'application/x-perl6',
+		;
 }
 
 #####################################################################
 # Constructor and Accessors
 
-use Class::XSAccessor
-	getters => {
-		editor           => 'editor',
-		filename         => 'filename', # TODO is this read_only or what?
-		get_mimetype     => 'mimetype',
-		get_newline_type => 'newline_type',
-		errstr           => 'errstr',
-		tempfile         => 'tempfile',
+use Class::XSAccessor getters => {
+	editor           => 'editor',
+	filename         => 'filename',       # TODO is this read_only or what?
+	get_mimetype     => 'mimetype',
+	get_newline_type => 'newline_type',
+	errstr           => 'errstr',
+	tempfile         => 'tempfile',
 	},
 	setters => {
-		_set_filename    => 'filename', # TODO temporary hack
-		set_newline_type => 'newline_type',
-		set_mimetype     => 'mimetype',
-		set_errstr       => 'errstr',
-		set_editor       => 'editor',
-		set_tempfile     => 'tempfile',
+	_set_filename    => 'filename',       # TODO temporary hack
+	set_newline_type => 'newline_type',
+	set_mimetype     => 'mimetype',
+	set_errstr       => 'errstr',
+	set_editor       => 'editor',
+	set_tempfile     => 'tempfile',
 	};
 
 =pod
@@ -326,7 +326,7 @@ sub guess_mimetype {
 }
 
 sub mime_type_by_extension {
-	$EXT_MIME{$_[1]};
+	$EXT_MIME{ $_[1] };
 }
 
 # For ts without a newline type
@@ -340,9 +340,9 @@ sub is_perl6 {
 	my ($text) = @_;
 	return if not $text;
 	return 1 if $text =~ /^=begin\s+pod/msx;
-	
+
 	# Needed for eg/perl5_with_perl6_example.pod
-	return   if $text =~ /^=head[12]/msx;
+	return if $text =~ /^=head[12]/msx;
 
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
 	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
@@ -440,7 +440,7 @@ sub load_file {
 	Padre::Util::debug("Loading file '$file'");
 
 	# check if file exists
-	if ( ! -e $file ) {
+	if ( !-e $file ) {
 
 		# file doesn't exist, try to create an empty one
 		if ( not open my $fh, '>', $file ) {
@@ -840,6 +840,7 @@ and the event.
 Returns nothing.
 
 =cut
+
 #####################################################################
 # Project Integration Methods
 

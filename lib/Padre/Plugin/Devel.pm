@@ -73,11 +73,11 @@ sub menu_plugins_simple {
 		Wx::gettext('wxWidgets 2.8.8 Reference') => sub {
 			Padre::Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
 		},
-		Wx::gettext('STC Reference')             => sub {
+		Wx::gettext('STC Reference') => sub {
 			Padre::Wx::LaunchDefaultBrowser('http://www.yellowbrain.com/stc/index.html');
 		},
-		'---'                                    => undef,
-		Wx::gettext('About')                     => 'show_about',
+		'---'                => undef,
+		Wx::gettext('About') => 'show_about',
 	];
 }
 

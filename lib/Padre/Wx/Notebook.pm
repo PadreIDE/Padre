@@ -18,12 +18,8 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP
-		| Wx::wxBORDER_NONE
-		| Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_TAB_MOVE
-		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
-		| Wx::wxAUI_NB_WINDOWLIST_BUTTON
+		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE | Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TAB_MOVE
+			| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB | Wx::wxAUI_NB_WINDOWLIST_BUTTON
 	);
 
 	# Add ourself to the main window
@@ -82,11 +78,9 @@ sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $editor = $main->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		my $history = $main->{page_history};
-		@$history = grep {
-			Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor)
-		} @$history;
+		@$history = grep { Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor) } @$history;
 		push @$history, $editor;
 
 		# Update indentation in case auto-update is on

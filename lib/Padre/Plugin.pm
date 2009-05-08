@@ -46,11 +46,11 @@ use strict;
 use warnings;
 use Carp ();
 use File::Spec::Functions qw{ catdir };
-use Scalar::Util   ();
-use Params::Util   ( '_HASH0', '_INSTANCE' );
-use YAML::Tiny     ();
-use Padre::DB      ();
-use Padre::Wx      ();
+use Scalar::Util ();
+use Params::Util ( '_HASH0', '_INSTANCE' );
+use YAML::Tiny   ();
+use Padre::DB    ();
+use Padre::Wx    ();
 
 our $VERSION    = '0.34';
 our $COMPATIBLE = '0.18';

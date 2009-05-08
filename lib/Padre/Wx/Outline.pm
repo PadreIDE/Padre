@@ -10,10 +10,9 @@ use Padre::Current ();
 our $VERSION = '0.34';
 use base 'Wx::TreeCtrl';
 
-use Class::XSAccessor
-	accessors => {
-		force_next => 'force_next',
-	};
+use Class::XSAccessor accessors => {
+	force_next => 'force_next',
+};
 
 sub new {
 	my $class = shift;
@@ -64,7 +63,6 @@ sub clear {
 	return;
 }
 
-
 #####################################################################
 # Timer Control
 
@@ -92,7 +90,7 @@ sub start {
 	$self->{timer}->Start(1000);
 	$self->on_timer( undef, 1 );
 
-	return();
+	return ();
 }
 
 sub stop {
@@ -109,7 +107,7 @@ sub stop {
 
 	# TODO: GUI on-stop cleanup here
 
-	return();
+	return ();
 }
 
 sub running {

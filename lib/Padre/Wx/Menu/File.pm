@@ -387,14 +387,14 @@ sub update_recentfiles {
 
 	# menu entry count starts at 0
 	# first 3 entries are "open all", "clean list" and a separator
-	foreach ( my $i = $self->{recentfiles}->GetMenuItemCount()-1; $i >= 3; $i-- ) {
+	foreach ( my $i = $self->{recentfiles}->GetMenuItemCount() - 1; $i >= 3; $i-- ) {
 		if ( my $item = $self->{recentfiles}->FindItemByPosition($i) ) {
 			$self->{recentfiles}->Delete($item);
 		}
 	}
 
 	my $idx = 0;
-	foreach my $file ( grep {-f if $_} Padre::DB::History->recent('files') ) {
+	foreach my $file ( grep { -f if $_ } Padre::DB::History->recent('files') ) {
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$self->{recentfiles}->Append(

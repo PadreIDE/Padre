@@ -10,18 +10,18 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd                       ();
-use Carp                      ();
-use Data::Dumper              ();
-use File::Spec                ();
-use File::HomeDir             ();
-use File::Basename            ();
-use List::Util                ();
-use Scalar::Util              ();
-use Params::Util              qw{_INSTANCE};
-use Padre::Util               ();
-use Padre::Locale             ();
-use Padre::Current            qw{_CURRENT};
+use Cwd            ();
+use Carp           ();
+use Data::Dumper   ();
+use File::Spec     ();
+use File::HomeDir  ();
+use File::Basename ();
+use List::Util     ();
+use Scalar::Util   ();
+use Params::Util qw{_INSTANCE};
+use Padre::Util   ();
+use Padre::Locale ();
+use Padre::Current qw{_CURRENT};
 use Padre::Document           ();
 use Padre::SingleInstance     ();
 use Padre::DB                 ();
@@ -53,26 +53,26 @@ use constant SECONDS => 1000;
 use Class::XSAccessor getters => {
 
 	# GUI Elements
-	title      => 'title',
-	config     => 'config',
-	aui        => 'aui',
-	menu       => 'menu',
-	notebook   => 'notebook',
-	right      => 'right',
-	functions  => 'functions',
-	outline    => 'outline',
-	directory  => 'directory',
-	bottom     => 'bottom',
-	output     => 'output',
-	syntax     => 'syntax',
-	errorlist  => 'errorlist',
+	title     => 'title',
+	config    => 'config',
+	aui       => 'aui',
+	menu      => 'menu',
+	notebook  => 'notebook',
+	right     => 'right',
+	functions => 'functions',
+	outline   => 'outline',
+	directory => 'directory',
+	bottom    => 'bottom',
+	output    => 'output',
+	syntax    => 'syntax',
+	errorlist => 'errorlist',
 
 	# Operating Data
 	cwd        => 'cwd',
 	no_refresh => '_no_refresh',
 
 	# Things that are probably in the wrong place
-	ack        => 'ack',
+	ack => 'ack',
 };
 
 # NOTE: Yes this method does get a little large, but that's fine.
@@ -84,10 +84,10 @@ use Class::XSAccessor getters => {
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE($ide, 'Padre') ) {
+	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
-	
+
 	# Bootstrap some Wx internals
 	my $config = $ide->config;
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
@@ -120,12 +120,10 @@ sub new {
 	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
 		undef, -1, $title,
-		[
-			$config->main_left,
+		[   $config->main_left,
 			$config->main_top,
 		],
-		[
-			$config->main_width,
+		[   $config->main_width,
 			$config->main_height,
 		],
 		$style,
@@ -150,9 +148,7 @@ sub new {
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
-	$self->SetMinSize(
-		Wx::Size->new(500, 400)
-	);
+	$self->SetMinSize( Wx::Size->new( 500, 400 ) );
 
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
@@ -412,10 +408,11 @@ sub single_instance_start {
 		'127.0.0.1' => $single_instance_port,
 		Wx::wxSOCKET_NOWAIT,
 	);
-	Wx::Event::EVT_SOCKET_CONNECTION( $self,
+	Wx::Event::EVT_SOCKET_CONNECTION(
+		$self,
 		$self->{single_instance},
 		sub {
-			$self->single_instance_connect($_[0]);
+			$self->single_instance_connect( $_[0] );
 		}
 	);
 	unless ( $self->{single_instance}->Ok ) {
@@ -433,34 +430,41 @@ sub single_instance_stop {
 
 	# Terminate the server
 	$self->{single_instance}->Close;
-	delete($self->{single_instance})->Destroy;
+	delete( $self->{single_instance} )->Destroy;
 
 	return 1;
 }
 
 sub single_instance_running {
-	defined($_[0]->{single_instance});
+	defined( $_[0]->{single_instance} );
 }
 
 sub single_instance_connect {
 	my $self   = shift;
 	my $server = shift;
 	my $client = $server->Accept(0);
-	Wx::Event::EVT_SOCKET_INPUT( $self, $client, sub {
-		# Accept the data and stream commands
-		my $command = '';
-		my $buffer  = '';
-		while ( $_[0]->Read( $buffer, 128 ) ) {
-			$command .= $buffer;
-			while ( $command =~ s/^(.*?)[\012\015]+//s ) {
-				$_[1]->single_instance_command("$1");
+	Wx::Event::EVT_SOCKET_INPUT(
+		$self, $client,
+		sub {
+
+			# Accept the data and stream commands
+			my $command = '';
+			my $buffer  = '';
+			while ( $_[0]->Read( $buffer, 128 ) ) {
+				$command .= $buffer;
+				while ( $command =~ s/^(.*?)[\012\015]+//s ) {
+					$_[1]->single_instance_command("$1");
+				}
 			}
+			return 1;
 		}
-		return 1;
-	} );
-	Wx::Event::EVT_SOCKET_LOST( $self, $client, sub {
-		$_[0]->Destroy;
-	} );
+	);
+	Wx::Event::EVT_SOCKET_LOST(
+		$self, $client,
+		sub {
+			$_[0]->Destroy;
+		}
+	);
 	return 1;
 }
 
@@ -471,6 +475,7 @@ sub single_instance_command {
 		return 1;
 	}
 	unless ( $line =~ s/^(\S+)\s*//s ) {
+
 		# Ignore the line
 		return 1;
 	}
@@ -482,10 +487,10 @@ sub single_instance_command {
 		$self->Raise;
 	} elsif ( $1 eq 'open' ) {
 		if ( -f $line ) {
+
 			# If a file is already loaded switch to it instead
 			$self->notebook->show_file($line)
-			or
-			$self->setup_editors($line);
+				or $self->setup_editors($line);
 		}
 	} else {
 		warn("Unsupported command '$1'");
@@ -1255,14 +1260,14 @@ sub on_brace_matching {
 	my $page = $self->current->editor;
 	my $pos1 = $page->GetCurrentPos;
 	my $pos2 = $page->BraceMatch($pos1);
-	if ( $pos2 == -1 ) { #Wx::wxSTC_INVALID_POSITION
+	if ( $pos2 == -1 ) {    #Wx::wxSTC_INVALID_POSITION
 		if ( $pos1 > 0 ) {
 			$pos1--;
 			$pos2 = $page->BraceMatch($pos1);
 		}
 	}
 
-	if ( $pos2 != -1 ) { #Wx::wxSTC_INVALID_POSITION
+	if ( $pos2 != -1 ) {    #Wx::wxSTC_INVALID_POSITION
 		$page->GotoPos($pos2);
 	}
 
@@ -1321,7 +1326,7 @@ sub on_autocompletition {
 			Wx::wxOK,
 		);
 	}
-	if ( @words ) {
+	if (@words) {
 		$document->editor->AutoCompShow( $length, join " ", @words );
 	}
 	return;
@@ -2772,15 +2777,16 @@ sub key_up {
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
-	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
-		# Ctrl-TAB  #TODO it is already in the menu
+	if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
+		                              # Ctrl-TAB  #TODO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 			$self->on_next_pane;
 		}
-	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
-		# Ctrl-Shift-TAB #TODO it is already in the menu
+	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
+		                                                         # Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
+
 		#		my $current_focus = Wx::Window::FindFocus();
 		#		Padre::Util::debug("Current focus: $current_focus");
 		#		# TODO this should be fine tuned later

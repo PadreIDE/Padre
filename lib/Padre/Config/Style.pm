@@ -4,26 +4,22 @@ package Padre::Config::Style;
 
 use strict;
 use warnings;
-use Carp         ();
+use Carp ();
 use Params::Util qw{ _IDENTIFIER _HASH };
-use YAML::Tiny   ();
+use YAML::Tiny ();
 
 our $VERSION = '0.34';
-
-
-
-
 
 ######################################################################
 # Constructor
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
-	unless ( _IDENTIFIER($self->name) ) {
+	my $self = bless {@_}, $class;
+	unless ( _IDENTIFIER( $self->name ) ) {
 		Carp::croak("Missing or invalid style name");
 	}
-	unless ( _HASH($self->data) ) {
+	unless ( _HASH( $self->data ) ) {
 		Carp::croak("Missing or invalid style data");
 	}
 	return $self;
@@ -38,10 +34,8 @@ sub load {
 	}
 
 	# Load the YAML file
-	my $data = eval {
-		YAML::Tiny::LoadFile($file);
-	};
-	if ( $@ ) {
+	my $data = eval { YAML::Tiny::LoadFile($file); };
+	if ($@) {
 		warn $@;
 		return undef;
 	}

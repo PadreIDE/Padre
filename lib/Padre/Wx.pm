@@ -11,9 +11,9 @@ use File::Spec ();
 # Load every exportable constant into here, so that they come into
 # existance in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
-use Wx          ':everything';
-use Wx          'wxTheClipboard';
-use Wx::Event   ':everything';
+use Wx ':everything';
+use Wx 'wxTheClipboard';
+use Wx::Event ':everything';
 use Wx::STC     ();
 use Wx::AUI     ();
 use Wx::Locale  ();
@@ -25,16 +25,16 @@ our $VERSION = '0.34';
 # Defines for sidebar marker; others may be needed for breakpoint
 # icons etc.
 
-sub MarkError { 1 }
-sub MarkWarn  { 2 }
+sub MarkError {1}
+sub MarkWarn  {2}
 
 #####################################################################
 # Defines for object IDs
 
-sub ID_TIMER_SYNTAX    { 30001 }
-sub ID_TIMER_FILECHECK { 30002 }
-sub ID_TIMER_POSTINIT  { 30003 }
-sub ID_TIMER_OUTLINE   { 30004 }
+sub ID_TIMER_SYNTAX    {30001}
+sub ID_TIMER_FILECHECK {30002}
+sub ID_TIMER_POSTINIT  {30003}
+sub ID_TIMER_OUTLINE   {30004}
 
 #####################################################################
 # Convenience Functions

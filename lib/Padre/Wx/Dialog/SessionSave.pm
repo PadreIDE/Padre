@@ -148,10 +148,10 @@ sub _create {
 	my $self = shift;
 
 	# create sizer that will host all controls
-	my $box   = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $box = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizer = Wx::GridBagSizer->new( 5, 5 );
 	$sizer->AddGrowableCol(1);
-	$box->Add( $sizer, 1, Wx::wxEXPAND|Wx::wxALL, 5 );
+	$box->Add( $sizer, 1, Wx::wxEXPAND | Wx::wxALL, 5 );
 	$self->_sizer($sizer);
 
 	$self->_create_fields;

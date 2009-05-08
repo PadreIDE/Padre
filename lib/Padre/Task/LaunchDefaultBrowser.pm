@@ -14,7 +14,7 @@ our $VERSION = '0.34';
 our @ISA     = 'Padre::Task';
 
 sub run {
-	Wx::LaunchDefaultBrowser($_[0]->{url});
+	Wx::LaunchDefaultBrowser( $_[0]->{url} );
 	return 1;
 }
 

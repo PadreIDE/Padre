@@ -161,8 +161,8 @@ sub new {
 			Proto    => 'tcp',
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
-		if ( $socket ) {
-			foreach my $file ( @ARGV ) {
+		if ($socket) {
+			foreach my $file (@ARGV) {
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}
@@ -193,9 +193,7 @@ sub run {
 	# window was opened but my Wx skills do not exist. --Steffen
 	$self->plugin_manager->load_plugins;
 
-	$self->{ARGV} = [ map {
-		File::Spec->rel2abs( $_, $self->{original_cwd} )
-	} @ARGV ];
+	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
 
 	# Move our current dir to the user's documents directory by default
 	my $documents = File::HomeDir->my_documents;
