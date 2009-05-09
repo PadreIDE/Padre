@@ -528,21 +528,26 @@ sub on_dump_running_tasks {
 	$main->show_output(1);
 	$output->style_neutral;
 
-	$output->AppendText( "\n-----------------------------------------\n[" . localtime() . "] " );
+	$output->AppendText(
+		"\n-----------------------------------------\n[" . localtime() . "] "
+		. sprintf( Wx::gettext("%s worker threads are running.\n"), scalar($manager->workers) )
+	);
 	if ( $nrunning == 0 ) {
-		$output->AppendText("Currently, no background tasks are being executed.\n");
+		$output->AppendText(Wx::gettext("Currently, no background tasks are being executed.\n"));
 		return ();
 	}
 
 	my $running = $manager->{running_tasks};
 	my $text;
-	$text .= "The following tasks are currently executing in the background:\n";
+	$text .= Wx::gettext("The following tasks are currently executing in the background:\n");
 
 	foreach my $type ( keys %$running ) {
 		my $threads = $running->{$type};
 		my $n       = keys %$threads;
-		$text .= "- $n of type '$type':\n";
-		$text .= "  (in thread(s) " . join( ", ", sort { $a <=> $b } keys %$threads ) . ")\n";
+		$text .= sprintf(
+			Wx::gettext("- %s of type '%s':\n  (in thread(s) %s)\n"),
+			$n, $type, join( ", ", sort { $a <=> $b } keys %$threads )
+		);
 	}
 
 	$output->AppendText($text);
@@ -551,7 +556,9 @@ sub on_dump_running_tasks {
 	my $pending = $queue->pending;
 
 	if ($pending) {
-		$output->AppendText("\nAdditionally, there are $pending tasks pending execution.\n");
+		$output->AppendText( sprintf(
+			Wx::gettext("\nAdditionally, there are %s tasks pending execution.\n"), $pending
+		) );
 	}
 }
 
