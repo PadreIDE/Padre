@@ -67,7 +67,7 @@ sub clear {
 # Timer Control
 
 sub start {
-	my $self = shift;
+	my $self = shift; @_ = ();
 
 	# TODO: GUI on-start initialisation here
 
