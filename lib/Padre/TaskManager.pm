@@ -123,13 +123,7 @@ sub new {
 	}, $class;
 
 	my $main = Padre->ide->wx->main;
-
-	if ( not $EVENTS_INITIALIZED ) {
-		Wx::Event::EVT_COMMAND( $main, -1, $TASK_DONE_EVENT,  \&on_task_done_event );
-		Wx::Event::EVT_COMMAND( $main, -1, $TASK_START_EVENT, \&on_task_start_event );
-		Wx::Event::EVT_CLOSE( $main, \&on_close );
-		$EVENTS_INITIALIZED = 1;
-	}
+	_init_events($main);
 
 	$self->{task_queue} = Thread::Queue->new;
 
@@ -147,6 +141,21 @@ sub new {
 	}
 
 	return $self;
+}
+
+# This is separated out to its own routine in order to
+# squash the "Scalars Leaked" warning (or at least one of them).
+# Previously, the warning pointed to the "my $main = ..." line.
+# This move of the event setup was a wild guess that changing the
+# scope might help. --Steffen
+sub _init_events {
+	my $main = shift; @_ = ();
+  	if ( not $EVENTS_INITIALIZED ) {
+		Wx::Event::EVT_COMMAND( $main, -1, $TASK_DONE_EVENT,  \&on_task_done_event );
+		Wx::Event::EVT_COMMAND( $main, -1, $TASK_START_EVENT, \&on_task_start_event );
+		Wx::Event::EVT_CLOSE( $main, \&on_close );
+		$EVENTS_INITIALIZED = 1;
+	}
 }
 
 =pod
