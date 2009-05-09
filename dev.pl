@@ -33,16 +33,7 @@ if ( $^O =~ /(linux|bsd)/ ) {
 }
 
 if ( $msgfmt ) {
-	my @mo = map {
-		substr( File::Basename::basename($_), 0, -3 )
-	} glob "$FindBin::Bin/share/locale/*.po";
-	foreach my $locale ( @mo ) {
-		system(
-			$msgfmt, "-o",
-			"$FindBin::Bin/share/locale/$locale.mo",
-			"$FindBin::Bin/share/locale/$locale.po",
-		);
-	}
+	convert_po_to_mo($FindBin::Bin);
 }
 
 my $perl = Probe::Perl->find_perl_interpreter;
@@ -73,6 +64,7 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
 		foreach my $plugin ( @plugins ) {
+			convert_po_to_mo("$dir/$plugin");
 			push @cmd, "-I$dir/$plugin/lib";
 		}
 	}
@@ -86,3 +78,18 @@ sub error {
 	print "\nError:\n$msg\n\n";
 	exit(255);
 }
+
+sub convert_po_to_mo {
+	my $path = shift;
+	my @mo = map {
+		substr( File::Basename::basename($_), 0, -3 )
+	} glob "$path/share/locale/*.po";
+	foreach my $locale ( @mo ) {
+		system(
+			$msgfmt, "-o",
+			"$path/share/locale/$locale.mo",
+			"$path/share/locale/$locale.po",
+		);
+	}
+}
+
