@@ -103,3 +103,17 @@ role Pet {
             self.eat($food);
         }
 }
+
+#a slang example
+slang FooSlang {
+	token foo_token { 
+		<sym> 
+	}
+}
+
+#a knowhow example
+knowhow FooKnowHow {
+	token foo_token { 
+		<sym> 
+	}
+}
