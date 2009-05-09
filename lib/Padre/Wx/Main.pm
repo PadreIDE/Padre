@@ -1334,17 +1334,7 @@ sub on_autocompletition {
 
 sub on_goto {
 	my $self   = shift;
-	my $dialog = Wx::TextEntryDialog->new(
-		$self,
-		Wx::gettext("Line number:"),
-		"",
-		'',
-	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-		return;
-	}
-	my $line_number = $dialog->GetValue;
-	$dialog->Destroy;
+	my $line_number = $self->prompt(Wx::gettext("Line number:"), "", "GOTO_LINE_NUMBER");
 	return if not defined $line_number or $line_number !~ /^\d+$/;
 
 	# TODO: What if it is bigger than buffer?
