@@ -463,19 +463,21 @@ sub _get_current_symbol {
 	$pos = $editor->GetCurrentPos if not defined $pos;
 	my $line         = $editor->LineFromPosition($pos);
 	my $line_start   = $editor->PositionFromLine($line);
-	my $cursor_col   = $pos - $line_start;
 	my $line_end     = $editor->GetLineEndPosition($line);
+	my $cursor_col   = $pos - $line_start;
 	my $line_content = $editor->GetTextRange( $line_start, $line_end );
+	$cursor_col = length($line_content)-1 if $cursor_col >= length($line_content);
 	my $col          = $cursor_col;
 
 	# find start of symbol TODO: This could be more robust, no?
 	while (1) {
-		if ( $col == 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/ ) {
+		if ( $col <= 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/ ) {
 			last;
 		}
 		$col--;
 	}
 
+	return() if $col >= length($line_content);
 	if ( substr( $line_content, $col + 1, 1 ) !~ /^[#\w:\']$/ ) {
 		return ();
 	}
@@ -644,11 +646,20 @@ sub event_on_right_down {
 	my $menu   = shift;
 	my $event  = shift;
 
-	my $point = $event->GetPosition();
-	my $pos   = $editor->PositionFromPoint($point);
+	$event->Skip();
+
+	my $pos;
+	if ($event->isa("Wx::MouseEvent")) {
+		my $point = $event->GetPosition();
+		$pos = $editor->PositionFromPoint($point);
+	}
+	else {
+		# Fall back to the cursor position
+		$editor->GetCurrentPos();
+	}
 
 	my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
-
+	
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
 
@@ -698,9 +709,16 @@ sub event_on_left_up {
 
 	if ( $event->ControlDown ) {
 
-		my $point = $event->GetPosition();
-		my $pos   = $editor->PositionFromPoint($point);
-
+		my $pos;
+		if ($event->isa("Wx::MouseEvent")) {
+			my $point = $event->GetPosition();
+			$pos = $editor->PositionFromPoint($point);
+		}
+		else {
+			# Fall back to the cursor position
+			$editor->GetCurrentPos();
+		}
+		
 		my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
 
 		# Does it look like a variable?
@@ -711,7 +729,7 @@ sub event_on_left_up {
 		}
 
 		# Does it look like a function?
-		else {
+		elsif (defined $location) {
 			my ( $start, $end ) = Padre::Util::get_matches(
 				$editor->GetText,
 				$self->get_function_regex($token),
