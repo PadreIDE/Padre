@@ -931,7 +931,7 @@ sub current_paragraph {
 }
 
 sub put_text_to_clipboard {
-	my ( $self, $text ) = @_;
+	my ( $self, $text ) = @_; @_ = (); # feeble attempt to kill Scalars Leaked
 
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
