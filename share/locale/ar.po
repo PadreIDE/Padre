@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-09 20:37+0300\n"
-"PO-Revision-Date: 2009-05-10 11:45+0200\n"
+"PO-Revision-Date: 2009-05-10 14:24+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -119,20 +119,20 @@ msgstr "فتح الملف"
 #: lib/Padre/PluginManager.pm:856
 #, perl-format
 msgid "Plugin must have '%s' as base directory"
-msgstr ""
+msgstr "يجب ان يكون '%s' دليل أساس للبرنامج المساعد"
 
 #: lib/Padre/TaskManager.pm:533
 #, perl-format
 msgid "%s worker threads are running.\n"
-msgstr ""
+msgstr "%s خطوط مهمات عاملة.\n"
 
 #: lib/Padre/TaskManager.pm:536
 msgid "Currently, no background tasks are being executed.\n"
-msgstr ""
+msgstr "حاليا، لا يوجد أي مهمات خلفيات عاملة.\n"
 
 #: lib/Padre/TaskManager.pm:542
 msgid "The following tasks are currently executing in the background:\n"
-msgstr ""
+msgstr "تعمل المهمات التالية حاليا في الخلفية:\n"
 
 #: lib/Padre/TaskManager.pm:548
 #, perl-format
@@ -140,6 +140,8 @@ msgid ""
 "- %s of type '%s':\n"
 "  (in thread(s) %s)\n"
 msgstr ""
+"- %s من نوع '%s':\n"
+"  (في المهمة أو المهمات %s)\n"
 
 #: lib/Padre/TaskManager.pm:560
 #, perl-format
@@ -147,6 +149,8 @@ msgid ""
 "\n"
 "Additionally, there are %s tasks pending execution.\n"
 msgstr ""
+"\n"
+"بالاضافة على ذلك، توجد %s مهمات تنتظر التنفيذ.\n"
 
 #: lib/Padre/Locale.pm:72
 msgid "English (United Kingdom)"
@@ -622,7 +626,7 @@ msgstr "رقم السطر:"
 #: lib/Padre/Wx/Main.pm:1527
 #, perl-format
 msgid "Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
-msgstr ""
+msgstr "لا يمكن فتح %s لان حجم الملف أكبر من الحدود المسموحه في Padre والتي هي %s"
 
 #: lib/Padre/Wx/Main.pm:1611
 msgid "Nothing selected. Enter what should be opened:"
@@ -888,7 +892,7 @@ msgstr "مدير البرنامج المساعد"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:174
 #, perl-format
 msgid "Error loading pod for class '%s': %s"
-msgstr ""
+msgstr "فشل تحميل pod ل class '%s': %s"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:229
 #: lib/Padre/Wx/Dialog/SessionManager.pm:210
@@ -1063,7 +1067,7 @@ msgstr "الغاء"
 #: lib/Padre/Wx/Dialog/Find.pm:347
 #, perl-format
 msgid "%s occurences were replaced"
-msgstr ""
+msgstr "%s اماكن تم استبدالها"
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:36
 msgid "Session Manager"
@@ -1119,7 +1123,7 @@ msgstr "تشغيل العوده الى البدايه عند نهايه السط
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:82
 msgid "Auto-fold POD markup when code folding enabled"
-msgstr ""
+msgstr "الطي التلقائي لترميز POD عند تمكين طي شيفرة المصدر"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:87
 msgid "Perl beginner mode"
@@ -1174,6 +1178,12 @@ msgid ""
 "\tenable all warnings:  -W\n"
 "\tdisable all warnings:  -X\n"
 msgstr ""
+"مثلا\n"
+"\tاضافه دليل:  -I<الدليل>\n"
+"\tتمكين كل فحوصات taint:  -T\n"
+"\tتمكين تحذيرات مفيده كثيرة:  -w\n"
+"\tتمكين كل التحذيرات:  -W\n"
+"\tتعطيل كل التحذيرات:  -X\n"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:338
 #: lib/Padre/Wx/Dialog/Preferences.pm:382
