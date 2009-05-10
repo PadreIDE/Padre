@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-09 20:37+0300\n"
-"PO-Revision-Date: 2009-05-10 11:31+0200\n"
+"PO-Revision-Date: 2009-05-10 11:45+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "غير محفوظ %d"
 #: lib/Padre/Document.pm:944
 #: lib/Padre/Document.pm:945
 msgid "Skipped for large files"
-msgstr ""
+msgstr "تم التخطي للملفات الكبيرة"
 
 #: lib/Padre/PluginManager.pm:322
 msgid ""
@@ -312,7 +312,7 @@ msgstr "اطبع الوثيقه الحاليه"
 
 #: lib/Padre/Plugin/Devel.pm:58
 msgid "Dump Top IDE Object"
-msgstr ""
+msgstr "طباعة أول كينونة IDE"
 
 #: lib/Padre/Plugin/Devel.pm:59
 msgid "Dump %INC and @INC"
@@ -340,7 +340,7 @@ msgstr "محاكاة حادث"
 
 #: lib/Padre/Plugin/Devel.pm:71
 msgid "Simulate Crashing Bg Task"
-msgstr ""
+msgstr "محاكاة فشل مهمة خلفية"
 
 #: lib/Padre/Plugin/Devel.pm:73
 msgid "wxWidgets 2.8.8 Reference"
@@ -361,7 +361,7 @@ msgstr "لا يوجد أي ملف مفتوح"
 
 #: lib/Padre/Plugin/Devel.pm:149
 msgid "A set of unrelated tools used by the Padre developers\n"
-msgstr ""
+msgstr "مجموعة ادوات غير مترابطة ومستخدمة من مطوري Padre\n"
 
 #: lib/Padre/Plugin/Devel.pm:162
 #: lib/Padre/Wx/Main.pm:2336
@@ -1178,12 +1178,12 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Preferences.pm:338
 #: lib/Padre/Wx/Dialog/Preferences.pm:382
 msgid "Interpreter arguments:"
-msgstr ""
+msgstr "مدخلات المترجم:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:344
 #: lib/Padre/Wx/Dialog/Preferences.pm:388
 msgid "Script arguments:"
-msgstr ""
+msgstr "مدخلات الملف النصي:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:351
 msgid "Unsaved"
@@ -1404,7 +1404,7 @@ msgstr "تشغيل ملف نصي\tF5"
 
 #: lib/Padre/Wx/Menu/Run.pm:43
 msgid "Run Script (debug info)\tShift-F5"
-msgstr ""
+msgstr "تشغيل الملف النصي (مع معلومات تصحيح الأخطاء)\tShift-F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:55
 msgid "Run Command\tCtrl-F5"
