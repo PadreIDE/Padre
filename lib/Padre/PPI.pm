@@ -164,6 +164,19 @@ sub find_variable_declaration {
 					$declaration = $elem;
 					last;
 				}
+				# find use vars ...
+				elsif ( $elem->isa("PPI::Statement::Include")
+					and $elem->module eq 'vars'
+					and $elem->type eq 'use' )
+				{
+					# do it the low-tech way
+					my $string = $elem->content();
+					my @vars = $string =~ /([\%\@\$][\w_:]+)/g;
+					if (grep {$varname eq $_} @vars) {
+						$declaration = $elem;
+						last;
+					}
+				}
 
 			}
 			last if $declaration or $cursor == $document;
