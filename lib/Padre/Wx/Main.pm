@@ -526,9 +526,9 @@ success, die otherwise.
 
 sub single_instance_start {
 	my $self = shift;
-	if ( $self->single_instance_running ) {
-		return 1;
-	}
+
+	# check if server is already started
+	return 1 if $self->single_instance_running;
 
 	# Create the server
 	require Wx::Socket;
@@ -543,11 +543,12 @@ sub single_instance_start {
 			$self->single_instance_connect( $_[0] );
 		}
 	);
-	unless ( $self->{single_instance}->Ok ) {
-		die("Failed to create server");
-	}
 
-	return 1;
+	return 1 if $self->{single_instance}->Ok;
+
+	# there was an error during server creation, let's die... :-(
+	die( Wx::gettext("Failed to create server") );
+	
 }
 
 sub single_instance_stop {
