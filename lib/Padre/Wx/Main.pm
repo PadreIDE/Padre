@@ -317,6 +317,8 @@ Accessors to operating data:
 
 =item * cwd()
 
+=item * no_refresh()
+
 =back
 
 
@@ -928,6 +930,8 @@ sub refresh_functions {
 
 =over 4
 
+=item * TO BE COMPLETED
+
 =cut
 
 sub change_style {
@@ -1039,8 +1043,21 @@ sub rebuild_toolbar {
 	return 1;
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# Panel Tools
+
+=head2 Panel Tools
+
+
+=over 4
+
+=item * TO BE COMPLETED
+
+=cut
 
 sub show_functions {
 	my $self = shift;
@@ -1161,10 +1178,17 @@ sub show_syntax {
 	return;
 }
 
-#####################################################################
-# Introspection
+=back
 
-=pod
+=cut
+
+
+#####################################################################
+
+=head2 Introspection
+
+
+=over 4
 
 =item * my $current = $main->current;
 
@@ -1195,8 +1219,20 @@ sub editors {
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# Process Execution
+
+=head2 Process Execution
+
+=over 4
+
+=item * TO BE COMPLETED
+
+=cut
 
 # probably need to be combined with run_command
 sub on_run_command {
@@ -1391,8 +1427,22 @@ sub debug_perl {
 
 }
 
+=back
+
+=cut
+
+
 ######################################################################
-# Session Support
+
+=head2 Session Support
+
+
+=over 4
+
+=item * TO BE COMPLETED
+
+=cut
+
 
 #
 # my @session = $self->capture_session;
@@ -1480,8 +1530,20 @@ sub save_session {
 	Padre::DB->commit;
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# User Interaction
+
+=head2 User Interaction
+
+=over 4
+
+=item * TO BE COMPLETED
+
+=cut
 
 sub message {
 	my $self    = shift;
@@ -1535,8 +1597,20 @@ sub prompt {
 	return $value;
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# General Events
+
+=head2 General Events
+
+=over 4
+
+=item * TO BE COMPLETED
+
+=cut
 
 sub on_brace_matching {
 	my $self = shift;
@@ -2928,8 +3002,20 @@ sub on_new_from_template {
 	return;
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# Auxiliary Methods
+
+=head2 Auxiliary Methods
+
+=over 4
+
+=item * TO BE COMPLETED
+
+=cut
 
 sub install_cpan {
 	my $main   = shift;
