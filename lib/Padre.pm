@@ -1157,6 +1157,8 @@ Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
 
 Spanish - Paco Alguacil (PacoLinux), Enrique Nell (ENELL)
 
+Czech - Marcela Mašláňová (mmaslano)
+
 =head2 Thanks
 
 To Mattia Barbon for providing WxPerl.

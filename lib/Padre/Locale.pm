@@ -149,6 +149,16 @@ BEGIN {
 			supported => 1,
 		},
 
+		'cz' => {
+			gettext   => _T('Czech'),
+            utf8text  => 'Česky',
+            iso639    => 'cz',
+            iso3166   => undef,
+            wxid      => Wx::wxLANGUAGE_CZECH,
+            fallback  => [],
+            supported => 1,
+		},
+
 		'de' => {
 			gettext   => _T('German'),
 			utf8text  => 'Deutsch',

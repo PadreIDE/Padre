@@ -190,6 +190,7 @@ sub about {
 	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
 	$about->AddTranslator("Spanish - Paco Alguacil");
 	$about->AddTranslator("Spanish - Enrique Nell");
+	$about->AddTranslator("Czech - Marcela Mašláňová");
 
 	Wx::AboutBox($about);
 	return;
