@@ -62,6 +62,7 @@ our @ISA     = 'Wx::Frame';
 use constant SECONDS => 1000;
 
 
+#####################################################################
 
 =head1 PUBLIC API
 
@@ -76,99 +77,7 @@ There's only one constructor for this class.
 Create and return a new Padre main window. One should pass a C<Padre>
 object as argument, to get a reference to the Padre application.
 
-=back
-
 =cut
-
-
-#####################################################################
-
-=head2 Accessors
-
-The following methods access the object attributes. They are both
-getters and setters, depending on whether you provide them with an
-argument. Use them wisely.
-
-
-Accessors to GUI elements:
-
-=over 4
-
-=item * title()
-
-=item * config()
-
-=item * aui()
-
-=item * menu()
-
-=item * notebook()
-
-=item * right()
-
-=item * functions()
-
-=item * outline()
-
-=item * directory()
-
-=item * bottom()
-
-=item * output()
-
-=item * syntax()
-
-=item * errorlist()
-
-=back
-
-
-Accessors to operating data:
-
-=over 4
-
-=item * cwd()
-
-=back
-
-
-Accessors that may not belong to this class:
-
-=over 4
-
-=item * ack()
-
-
-=back
-
-=cut
-
-
-
-use Class::XSAccessor getters => {
-
-	# GUI Elements
-	title     => 'title',
-	config    => 'config',
-	aui       => 'aui',
-	menu      => 'menu',
-	notebook  => 'notebook',
-	right     => 'right',
-	functions => 'functions',
-	outline   => 'outline',
-	directory => 'directory',
-	bottom    => 'bottom',
-	output    => 'output',
-	syntax    => 'syntax',
-	errorlist => 'errorlist',
-
-	# Operating Data
-	cwd        => 'cwd',
-	no_refresh => '_no_refresh',
-
-	# Things that are probably in the wrong place
-	ack => 'ack',
-};
 
 # NOTE: Yes this method does get a little large, but that's fine.
 #       It's better to have one bigger method that is easily
@@ -355,6 +264,101 @@ sub new {
 }
 
 
+=back
+
+=cut
+
+
+#####################################################################
+
+=head2 Accessors
+
+The following methods access the object attributes. They are both
+getters and setters, depending on whether you provide them with an
+argument. Use them wisely.
+
+
+Accessors to GUI elements:
+
+=over 4
+
+=item * title()
+
+=item * config()
+
+=item * aui()
+
+=item * menu()
+
+=item * notebook()
+
+=item * right()
+
+=item * functions()
+
+=item * outline()
+
+=item * directory()
+
+=item * bottom()
+
+=item * output()
+
+=item * syntax()
+
+=item * errorlist()
+
+=back
+
+
+Accessors to operating data:
+
+=over 4
+
+=item * cwd()
+
+=back
+
+
+Accessors that may not belong to this class:
+
+=over 4
+
+=item * ack()
+
+
+=back
+
+=cut
+
+
+use Class::XSAccessor getters => {
+
+	# GUI Elements
+	title     => 'title',
+	config    => 'config',
+	aui       => 'aui',
+	menu      => 'menu',
+	notebook  => 'notebook',
+	right     => 'right',
+	functions => 'functions',
+	outline   => 'outline',
+	directory => 'directory',
+	bottom    => 'bottom',
+	output    => 'output',
+	syntax    => 'syntax',
+	errorlist => 'errorlist',
+
+	# Operating Data
+	cwd        => 'cwd',
+	no_refresh => '_no_refresh',
+
+	# Things that are probably in the wrong place
+	ack => 'ack',
+};
+
+
+#####################################################################
 
 =head2 Public Methods
 
