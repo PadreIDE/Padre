@@ -19,6 +19,7 @@ the available methods that can be applied to it besides the added ones
 
 =cut
 
+
 use 5.008;
 use strict;
 use warnings;
@@ -77,6 +78,10 @@ object as argument, to get a reference to the Padre application.
 
 =back
 
+=cut
+
+
+#####################################################################
 
 =head2 Accessors
 
@@ -133,14 +138,12 @@ Accessors that may not belong to this class:
 
 =item * ack()
 
-=back
 
+=back
 
 =cut
 
 
-#####################################################################
-# Constructor and Accessors
 
 use Class::XSAccessor getters => {
 
@@ -355,6 +358,7 @@ sub new {
 
 =head2 Public Methods
 
+
 =over 4
 
 =cut
@@ -510,6 +514,7 @@ sub freezer {
 Padre embeds a small network server to handle single instance. Here are
 the methods that allow to control this embedded server.
 
+
 =over 4
 
 =cut
@@ -551,11 +556,19 @@ sub single_instance_start {
 	
 }
 
+
+=item * $main->single_instance_stop;
+
+Stop & destroy the embedded server if it was running. Return true
+on success.
+
+=cut
+
 sub single_instance_stop {
 	my $self = shift;
-	unless ( $self->single_instance_running ) {
-		return 1;
-	}
+
+	# server already terminated, nothing to do
+	return 1 unless $self->single_instance_running;
 
 	# Terminate the server
 	$self->{single_instance}->Close;
@@ -564,9 +577,25 @@ sub single_instance_stop {
 	return 1;
 }
 
+
+=item * my $is_running = $main->single_instance_running;
+
+Return true if the embedded server is currently running.
+
+=cut
+
 sub single_instance_running {
-	defined( $_[0]->{single_instance} );
+	return defined $_[0]->{single_instance};
 }
+
+
+=item * $main->single_instance_connect;
+
+Callback called when a client is connecting to embedded server. This is
+the case when user starts a new Padre, and preference "open all
+documents in single Padre instance" is checked.
+
+=cut
 
 sub single_instance_connect {
 	my $self   = shift;
@@ -597,23 +626,37 @@ sub single_instance_connect {
 	return 1;
 }
 
+
+=item * $main->single_instance_command( $line );
+
+Callback called when a client has issued a command C<$line> while
+connected on embedded server. Current supported commands are C<open
+$file> and C<focus>.
+
+=cut
+
 sub single_instance_command {
 	my $self = shift;
 	my $line = shift;
-	unless ( defined $line and length $line ) {
-		return 1;
-	}
-	unless ( $line =~ s/^(\S+)\s*//s ) {
 
-		# Ignore the line
-		return 1;
-	}
+	# $line should be defined
+	return 1 unless defined $line && length $line ;
+	
+	# ignore the line if command isn't plain ascii
+	return 1 unless $line =~ s/^(\S+)\s*//s;
+
 	if ( $1 eq 'focus' ) {
-		if ( $self->IsIconized ) {
-			$self->Iconize(0);
-		}
+                # try to give focus to padre ide. it might not work,
+                # since some window manager implement some kind of focus-
+                # stealing prevention.
+                
+                # first, let's deiconize padre if needed
+		$self->Iconize(0) if $self->IsIconized;
+
+		# now, let's raise padre
 		$self->Show;
 		$self->Raise;
+
 	} elsif ( $1 eq 'open' ) {
 		if ( -f $line ) {
 
@@ -621,9 +664,12 @@ sub single_instance_command {
 			$self->notebook->show_file($line)
 				or $self->setup_editors($line);
 		}
+
 	} else {
+		# d'oh! embedded server can't do anything
 		warn("Unsupported command '$1'");
 	}
+	
 	return 1;
 }
 
@@ -636,9 +682,14 @@ sub single_instance_command {
 
 =head2 Window Methods
 
-Those methods allow to query properties about the window.
+Those methods allow to query properties about the main window.
+
 
 =over 4
+
+=item * my $width = $main->window_width;
+
+Return the main window width.
 
 =cut
 
@@ -646,24 +697,62 @@ sub window_width {
 	( $_[0]->GetSizeWH )[0];
 }
 
+
+=item * my $width = $main->window_height;
+
+Return the main window height.
+
+=cut
+
 sub window_height {
 	( $_[0]->GetSizeWH )[1];
 }
+
+
+=item * my $left = $main->window_left;
+
+Return the main window position from the left of the screen.
+
+=cut
 
 sub window_left {
 	( $_[0]->GetPositionXY )[0];
 }
 
+
+=item * my $top = $main->window_top;
+
+Return the main window position from the top of the screen.
+
+=cut
+
 sub window_top {
 	( $_[0]->GetPositionXY )[1];
 }
 
-#####################################################################
-# Refresh Methods
+=back
 
-# The term and method "refresh" is reserved for fast, blocking,
-# real-time updates to the GUI. Enabling and disabling menu entries,
-# updating dynamic titles and status bars, and other rapid changes.
+=cut
+
+
+#####################################################################
+
+=head2 Refresh Methods
+
+Those methods refresh parts of Padre main window. The term C<refresh>
+and the following methods are reserved for fast, blocking, real-time
+updates to the GUI, implying rapid changes.
+
+
+=over 4
+
+=item * $main->refresh;
+
+Force refresh of all elements of Padre main window. (see below for
+individual refresh methods)
+
+=cut
+
 sub refresh {
 	my $self = shift;
 	return if $self->no_refresh;
@@ -695,6 +784,14 @@ sub refresh {
 	return;
 }
 
+
+=item * $main->refresh_syntaxcheck;
+
+Do a refresh of document syntax checking. This is a "rapid" change,
+since actual syntax check is happening in the background.
+
+=cut
+
 sub refresh_syntaxcheck {
 	my $self = shift;
 	return if $self->no_refresh;
@@ -703,11 +800,26 @@ sub refresh_syntaxcheck {
 	return;
 }
 
+
+=item * $main->refresh_menu;
+
+Force a refresh of all menus. It can enable / disable menu entries
+depending on current document or Padre internal state.
+
+=cut
+
 sub refresh_menu {
 	my $self = shift;
 	return if $self->no_refresh;
 	$self->menu->refresh;
 }
+
+
+=item * $main->refresh_menubar;
+
+Force a refresh of Padre's menubar.
+
+=cut
 
 sub refresh_menubar {
 	my $self = shift;
@@ -715,11 +827,25 @@ sub refresh_menubar {
 	$self->menu->refresh_top;
 }
 
+
+=item * $main->refresh_toolbar;
+
+Force a refresh of Padre's toolbar.
+
+=cut
+
 sub refresh_toolbar {
 	my $self = shift;
 	return if $self->no_refresh;
 	$self->GetToolBar->refresh( $_[0] or $self->current );
 }
+
+
+=item * $main->refresh_status;
+
+Force a refresh of Padre's status bar.
+
+=cut
 
 sub refresh_status {
 	my $self = shift;
@@ -727,10 +853,17 @@ sub refresh_status {
 	$self->GetStatusBar->refresh( $_[0] or $self->current );
 }
 
-# TODO now on every ui chnage (move of the mouse)
-# we refresh this even though that should not be
-# necessary can that be eliminated ?
+=item * $main->refresh_functions;
+
+Force a refresh of the function list on the right.
+
+=cut
+
 sub refresh_functions {
+        # TODO now on every ui chnage (move of the mouse) we refresh
+        # this even though that should not be necessary can that be
+        # eliminated ?
+
 	my $self = shift;
 	return if $self->no_refresh;
 	return unless $self->menu->view->{functions}->IsChecked;
@@ -778,8 +911,20 @@ sub refresh_functions {
 	return;
 }
 
+
+=back
+
+=cut
+
+
 #####################################################################
-# Interface Rebuilding Methods
+
+=head2 Interface Rebuilding Methods
+
+
+=over 4
+
+=cut
 
 sub change_style {
 	my $self    = shift;
