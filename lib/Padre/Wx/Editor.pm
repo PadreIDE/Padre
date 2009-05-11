@@ -814,6 +814,9 @@ sub on_right_down {
 	if ( $doc->can('event_on_right_down') ) {
 		$doc->event_on_right_down( $self, $menu, $event );
 	}
+	
+	# Let the plugins have a go
+	Padre->ide->plugin_manager->on_context_menu($doc, $self, $menu, $event);
 
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );

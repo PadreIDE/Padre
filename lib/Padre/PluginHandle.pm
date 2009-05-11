@@ -186,6 +186,12 @@ sub enable {
 		my $class = shift @documents;
 		$Padre::Document::MIME_CLASS{$type} = $class;
 	}
+	
+	# If the plugin has a hook for the context menu, cache it
+	if ($self->object->can('event_on_context_menu')) {
+		my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
+		$cxt_menu_hook_cache->{$name} = 1;
+	}
 
 	# Update the status
 	$self->status('enabled');
@@ -223,6 +229,11 @@ sub disable {
 		);
 		return 1;
 	}
+	
+	# If the plugin has a hook for the context menu, cache it
+	my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
+	delete $cxt_menu_hook_cache->{$self->name()};
+
 
 	# Update the status
 	$self->status('disabled');

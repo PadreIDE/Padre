@@ -63,11 +63,12 @@ sub new {
 	}
 
 	my $self = bless {
-		parent       => $parent,
-		plugins      => {},
-		plugin_names => [],
-		plugin_dir   => $PADRE_PLUGIN_DIR,
-		par_loaded   => 0,
+		parent                    => $parent,
+		plugins                   => {},
+		plugin_names              => [],
+		plugin_dir                => $PADRE_PLUGIN_DIR,
+		par_loaded                => 0,
+		plugins_with_context_menu => {},
 		@_,
 	}, $class;
 
@@ -96,12 +97,20 @@ L<Padre::PluginHandle>.
 
 This hash is only populated after C<load_plugins()> was called.
 
+=head2 plugins_with_context_menu
+
+Returns a hash (reference) with the names of all plugins as
+keys which define a hook for the context menu.
+
+See L<Padre::Plugin>.
+
 =cut
 
 use Class::XSAccessor getters => {
-	parent     => 'parent',
-	plugin_dir => 'plugin_dir',
-	plugins    => 'plugins',
+	parent                    => 'parent',
+	plugin_dir                => 'plugin_dir',
+	plugins                   => 'plugins',
+	plugins_with_context_menu => 'plugins_with_context_menu',
 };
 
 # Get the prefered plugin order.
@@ -818,6 +827,32 @@ sub reload_current_plugin {
 
 	return;
 }
+
+=pod
+
+=head2 on_context_menu
+
+Called by C<Padre::Wx::Editor> when a context menu is about to
+be displayed. The method calls the context menu hooks in all plugins
+that have one for plugin-specific manipulation of the context menu.
+
+=cut
+
+sub on_context_menu {
+	my $self = shift;
+	my $plugins = $self->plugins_with_context_menu;
+	return if not keys %$plugins;
+
+	my ($doc, $editor, $menu, $event) = @_;
+	
+	my $plugin_handles = $self->plugins;
+	foreach my $plugin_name (keys %$plugins) {
+		my $plugin = $plugin_handles->{$plugin_name}->object;
+		$plugin->event_on_context_menu($doc, $editor, $menu, $event);
+	}
+	return();
+}
+
 
 # TODO: document this.
 # TODO: make it also reload the file?
