@@ -4,6 +4,19 @@ package Padre::Wx::Main;
 
 Padre::Wx::Main - Main window of Padre
 
+
+
+=head1 DESCRIPTION
+
+C<Padre::Wx:Main> implements Padre's main window. It is the window
+containing the menus, the notebook with all opened tabs, the various sub-
+windows (outline, subs, output, errors, etc).
+
+It inherits from C<Wx::Frame>, so check wx documentation to see all
+the available methods that can be applied to it besides the added ones
+(see below).
+
+
 =cut
 
 use 5.008;
@@ -46,6 +59,85 @@ our $VERSION = '0.35';
 our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;
+
+
+
+=head1 PUBLIC API
+
+=head2 Constructor
+
+There's only one constructor for this class.
+
+=over 4
+
+=item * my $main = Padre::Wx::Main->new( $ide );
+
+Create and return a new Padre main window. One should pass a C<Padre>
+object as argument, to get a reference to the Padre application.
+
+=back
+
+
+=head2 Accessors
+
+The following methods access the object attributes. They are both
+getters and setters, depending on whether you provide them with an
+argument. Use them wisely.
+
+
+Accessors to GUI elements:
+
+=over 4
+
+=item * title()
+
+=item * config()
+
+=item * aui()
+
+=item * menu()
+
+=item * notebook()
+
+=item * right()
+
+=item * functions()
+
+=item * outline()
+
+=item * directory()
+
+=item * bottom()
+
+=item * output()
+
+=item * syntax()
+
+=item * errorlist()
+
+=back
+
+
+Accessors to operating data:
+
+=over 4
+
+=item * cwd()
+
+=back
+
+
+Accessors that may not belong to this class:
+
+=over 4
+
+=item * ack()
+
+=back
+
+
+=cut
+
 
 #####################################################################
 # Constructor and Accessors
@@ -258,6 +350,15 @@ sub new {
 
 	return $self;
 }
+
+
+
+=head2 Public Methods
+
+=over 4
+
+=cut
+
 
 # Load any default files
 sub load_files {
@@ -876,19 +977,12 @@ sub show_syntax {
 
 =pod
 
-=head2 current
-
-  $self->current->document
-  $self->current->editor
-  $self->current->filename
-  $self->current->title
-  $self->current->text
+=item * my $current = $main->current;
 
 Creates a L<Padre::Current> object for the main window, giving you quick
 and cacheing access to the current various whatevers.
 
-See L<Padre::Current> for more information (once we've actually written
-the POD for it).
+See L<Padre::Current> for more information.
 
 =cut
 
@@ -2798,6 +2892,23 @@ sub key_up {
 	$event->Skip;
 	return;
 }
+
+=back
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
+
 
 1;
 
