@@ -487,15 +487,42 @@ sub timer_post_init {
 	return;
 }
 
-# Creates a automatic Freeze object that Thaw's on destruction.
+
+=item * my $locker = $main->freezer;
+
+Create and return an automatic Freeze object that Thaw's on destruction.
+
+=cut
+
 sub freezer {
 	Wx::WindowUpdateLocker->new( $_[0] );
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# Single Instance Server
+
+=head2 Single Instance Server
+
+Padre embeds a small network server to handle single instance. Here are
+the methods that allow to control this embedded server.
+
+=over 4
+
+=cut
 
 my $single_instance_port = 4444;
+
+
+=item * $main->single_instance_start;
+
+Start the embedded server. Create it if it doesn't exist. Return true on
+success, die otherwise.
+
+=cut
 
 sub single_instance_start {
 	my $self = shift;
@@ -599,8 +626,20 @@ sub single_instance_command {
 	return 1;
 }
 
+=back
+
+=cut
+
+
 #####################################################################
-# Window Methods
+
+=head2 Window Methods
+
+Those methods allow to query properties about the window.
+
+=over 4
+
+=cut
 
 sub window_width {
 	( $_[0]->GetSizeWH )[0];
