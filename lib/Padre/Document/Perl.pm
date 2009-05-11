@@ -646,8 +646,6 @@ sub event_on_right_down {
 	my $menu   = shift;
 	my $event  = shift;
 
-	$event->Skip();
-
 	my $pos;
 	if ($event->isa("Wx::MouseEvent")) {
 		my $point = $event->GetPosition();
