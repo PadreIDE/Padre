@@ -367,10 +367,13 @@ use Class::XSAccessor getters => {
 
 =over 4
 
+=item * $main->load_files;
+
+Load any default files: session from command-line, explicit list on command-
+line, or last session if user has this setup, a new file, or nothing.
+
 =cut
 
-
-# Load any default files
 sub load_files {
 	my $self    = shift;
 	my $config  = $self->config;
@@ -426,6 +429,14 @@ sub load_files {
 	# add a warning. For now though, just do nothing and ignore.
 	return;
 }
+
+
+=item * $main->timer_post_init;
+
+Handler for timer event fired just after window creation, to finish the
+various initializations that need a real window to work.
+
+=cut
 
 sub timer_post_init {
 	my $self = shift;
@@ -935,8 +946,8 @@ Those methods reconfigure Padre's main window in case of drastic changes
 
 =item * $main->change_style( $style, $private );
 
-Apply C<$style> to Padre main window. C<$private> is a boolean true if the
-style is located in user's private Padre directory.
+Apply C<$style> to Padre main window. C<$private> is a boolean true if
+the style is located in user's private Padre directory.
 
 =cut
 
@@ -954,8 +965,8 @@ sub change_style {
 
 =item * $main->change_locale( $locale );
 
-Change Padre's locale to C<$locale>. This will update the GUI to reflect the
-new locale.
+Change Padre's locale to C<$locale>. This will update the GUI to reflect
+the new locale.
 
 =cut
 
@@ -987,12 +998,12 @@ sub change_locale {
 
 =item * $main->relocale;
 
-The term and method C<relocale> is reserved for functionality intended to run
-when the application wishes to change locale (and wishes to do so without
-restarting).
+The term and method C<relocale> is reserved for functionality intended
+to run when the application wishes to change locale (and wishes to do so
+without restarting).
 
-Note at this point, that the new locale has already been fixed, and this method
-is usually called by C<change_locale()>.
+Note at this point, that the new locale has already been fixed, and this
+method is usually called by C<change_locale()>.
 
 =cut
 
@@ -1026,10 +1037,10 @@ sub relocale {
 
 =item * $main->reconfig( $config );
 
-The term and method "reconfig" is reserved for functionality intended to run
-when Padre's underlying configuration is updated by an external actor at
-run-time. The primary use cases for this method are when the user configuration
-file is synced from a remote network location.
+The term and method "reconfig" is reserved for functionality intended to
+run when Padre's underlying configuration is updated by an external
+actor at run-time. The primary use cases for this method are when the
+user configuration file is synced from a remote network location.
 
 Note: This method is highly experimental and subject to change.
 
@@ -1067,9 +1078,9 @@ sub reconfig {
 
 =item * $main->rebuild_toolbar;
 
-Destroy and rebuild the toolbar. This method is useful because the toolbar is
-not really flexible, and most of the time it's better to recreate it from
-scratch.
+Destroy and rebuild the toolbar. This method is useful because the
+toolbar is not really flexible, and most of the time it's better to
+recreate it from scratch.
 
 =cut
 
@@ -1090,8 +1101,8 @@ sub rebuild_toolbar {
 
 =head2 Panel Tools
 
-Those methods deal with the various panels that Padre provides, and allow to
-show or hide them.
+Those methods deal with the various panels that Padre provides, and
+allow to show or hide them.
 
 
 =over 4
@@ -1099,8 +1110,8 @@ show or hide them.
 =item * $main->show_functions( $visible );
 
 Show the functions panel on the right if C<$visible> is true. Hide it
-otherwise. If C<$visible> is not provided, the method defaults to show the
-panel.
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
 
 =cut
 
@@ -1128,8 +1139,9 @@ sub show_functions {
 
 =item * $main->show_outline( $visible );
 
-Show the outline panel on the right if C<$visible> is true. Hide it otherwise.
-If C<$visible> is not provided, the method defaults to show the panel.
+Show the outline panel on the right if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
 
 =cut
 
@@ -1162,8 +1174,8 @@ sub show_outline {
 =item * $main->show_directory( $visible );
 
 Show the directory panel on the right if C<$visible> is true. Hide it
-otherwise.  If C<$visible> is not provided, the method defaults to show the
-panel.
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
 
 =cut
 
@@ -1199,8 +1211,9 @@ sub show_directory {
 
 =item * $main->show_output( $visible );
 
-Show the output panel at the bottom if C<$visible> is true. Hide it otherwise.
-If C<$visible> is not provided, the method defaults to show the panel.
+Show the output panel at the bottom if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
 
 =cut
 
@@ -1228,8 +1241,9 @@ sub show_output {
 
 =item * $main->show_syntax( $visible );
 
-Show the syntax panel at the bottom if C<$visible> is true. Hide it otherwise.
-If C<$visible> is not provided, the method defaults to show the panel.
+Show the syntax panel at the bottom if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
 
 =cut
 
@@ -1297,8 +1311,8 @@ sub pageids {
 
 =item * my @pages = $main->pages;
 
-Return a list of all notebook tabs. Those are the real objects, not the ids
-(see C<pageids()> above).
+Return a list of all notebook tabs. Those are the real objects, not the
+ids (see C<pageids()> above).
 
 =cut
 
@@ -1310,11 +1324,11 @@ sub pages {
 
 =item * my @editors = $main->editors;
 
-Return a list of all current editors. Those are the real objects, not the ids
-(see C<pageids()> above).
+Return a list of all current editors. Those are the real objects, not
+the ids (see C<pageids()> above).
 
-Note: for now, this has the same meaning as C<pages()> (see above), but this
-will change once we get project tabs or something else.
+Note: for now, this has the same meaning as C<pages()> (see above), but
+this will change once we get project tabs or something else.
 
 =cut
 
@@ -1332,16 +1346,16 @@ sub editors {
 
 =head2 Process Execution
 
-The following methods run an external command, for example to evaluate current
-document.
+The following methods run an external command, for example to evaluate
+current document.
 
 
 =over 4
 
 =item * $main->on_run_command;
 
-Prompt the user for a command to run, then run it with C<run_command()> (see
-below).
+Prompt the user for a command to run, then run it with C<run_command()>
+(see below).
 
 Note: it probably needs to be combined with C<run_command()> itself.
 
@@ -1527,8 +1541,8 @@ sub run_document {
 
 =item * $main->debug_perl;
 
-Run current document under perl debugger. An error is reported if current is
-not a Perl document.
+Run current document under perl debugger. An error is reported if
+current is not a Perl document.
 
 =cut
 
@@ -1579,9 +1593,9 @@ sub debug_perl {
 
 =head2 Session Support
 
-Those methods deal with Padre sessions. A session is a set of files / tabs
-opened, with the position within the files saved, as well as the document that
-has the focus.
+Those methods deal with Padre sessions. A session is a set of files /
+tabs opened, with the position within the files saved, as well as the
+document that has the focus.
 
 
 =over 4
@@ -1661,9 +1675,9 @@ sub open_session {
 
 =item * $main->save_session( $session, @session );
 
-Try to save C<@session> files (C<Padre::DB::SessionFile> objects, such as what
-is returned by C<capture_session()> - see above) to database, associated to
-C<$session>. Note that C<$session> should already exist.
+Try to save C<@session> files (C<Padre::DB::SessionFile> objects, such
+as what is returned by C<capture_session()> - see above) to database,
+associated to C<$session>. Note that C<$session> should already exist.
 
 =cut
 
@@ -1694,8 +1708,8 @@ Various methods to help send information to user.
 
 =item * $main->message( $msg, $title );
 
-Open a dialog box with C<$msg> as main text and C<$title> (title defaults to
-C<Message>). There's only one OK button. No return value.
+Open a dialog box with C<$msg> as main text and C<$title> (title
+defaults to C<Message>). There's only one OK button. No return value.
 
 =cut
 
@@ -1710,8 +1724,8 @@ sub message {
 
 =item * $main->error( $msg );
 
-Open an error dialog box with C<$msg> as main text. There's only one OK button.
-No return value.
+Open an error dialog box with C<$msg> as main text. There's only one OK
+button. No return value.
 
 =cut
 
@@ -1758,8 +1772,8 @@ sub fast_find {
 
 =item * my $value = $main->prompt( $title, $subtitle, $key );
 
-Prompt user with a dialog box about the value that C<$key> should have. Return
-this value, or undef if user clicked C<cancel>.
+Prompt user with a dialog box about the value that C<$key> should have.
+Return this value, or undef if user clicked C<cancel>.
 
 =cut
 
@@ -1790,8 +1804,8 @@ sub prompt {
 
 =head2 General Events
 
-Those methods are the various callbacks registered in the menus or whatever
-widgets Padre has.
+Those methods are the various callbacks registered in the menus or
+whatever widgets Padre has.
 
 
 =over 4
@@ -1883,6 +1897,14 @@ sub on_uncomment_block {
 	return;
 }
 
+
+=item * $main->on_autocompletition;
+
+Try to autocomplete current word being typed, depending on
+document type.
+
+=cut
+
 sub on_autocompletition {
 	my $self = shift;
 	my $document = $self->current->document or return;
@@ -1901,7 +1923,7 @@ sub on_autocompletition {
 }
 
 
-=item $main->on_goto;
+=item * $main->on_goto;
 
 Prompt user for a line, and jump to this line in current document.
 
@@ -1919,6 +1941,18 @@ sub on_goto {
 
 	return;
 }
+
+
+=item * $main->on_close_window( $event );
+
+Callback when window is about to be closed. This is our last chance to
+veto the C<$event> close, eg when some files are not yet saved.
+
+If close is confirmed, save config to disk. Also, capture current
+session to be able to restore it next time if user set Padre to open
+last session on startup.
+
+=cut
 
 sub on_close_window {
 	my $self   = shift;
@@ -2008,6 +2042,13 @@ sub on_close_window {
 	return;
 }
 
+
+=item * $main->on_split_window;
+
+Open a new editor with the same current document. No return value.
+
+=cut
+
 sub on_split_window {
 	my $self     = shift;
 	my $current  = $self->current;
@@ -2073,6 +2114,13 @@ sub setup_editors {
 
 	return;
 }
+
+
+=item * $main->on_new;
+
+Create a new empty tab. No return value.
+
+=cut
 
 sub on_new {
 	$_[0]->Freeze;
@@ -2192,14 +2240,21 @@ sub create_tab {
 	return $id;
 }
 
-# try to open in various ways
-#    as full path
-#    as path relative to cwd (where the editor was started)
-#    as path to relative to where the current file is
-# if we are in a perl file or perl environment also try if the thing might be a name
-#    of a module and try to open it locally or from @INC.
+
+=item * $main->on_open_selection;
+
+Try to open current selection in a new tab. Different combinations are
+tried in order: as full path, as path relative to cwd (where the editor
+was started), as path to relative to where the current file is, if we
+are in a perl file or perl environment also try if the thing might be a
+name of a module and try to open it locally or from @INC.
+
+No return value.
+
+=cut
+
 sub on_open_selection {
-	my ( $self, $event ) = @_;
+	my ($self) = @_;
 
 	# get selection, ask for it if needed
 	my $text = $self->current->text;
@@ -2299,6 +2354,14 @@ sub on_open_all_recent_files {
 	$_[0]->setup_editors( reverse @$files );
 }
 
+
+=item * $main->on_open;
+
+Prompt user for file(s) to open, and open them as new tabs. No
+return value.
+
+=cut
+
 sub on_open {
 	my $self     = shift;
 	my $filename = $self->current->filename;
@@ -2356,8 +2419,14 @@ sub on_reload_file {
 	return;
 }
 
-# Returns true if saved.
-# Returns false if cancelled.
+
+=item * my $was_saved = $main->on_save_as;
+
+Prompt user for a new filename to save current document, and save it.
+Returns true if saved, false if cancelled.
+
+=cut
+
 sub on_save_as {
 	my $self     = shift;
 	my $document = $self->current->document or return;
@@ -2416,8 +2485,15 @@ sub on_save_as {
 	return 1;
 }
 
-# returns true if document saved
-# returns fals if document was not could not save it.
+
+=item * my $success = $main->on_save;
+
+Try to save current document. Prompt user for a filename if document was
+new (see C<on_save_as()> above). Return true if document has been saved,
+false otherwise.
+
+=cut
+
 sub on_save {
 	my $self = shift;
 	my $document = shift || $self->current->document;
@@ -2438,8 +2514,14 @@ sub on_save {
 	return;
 }
 
-# Returns true if all saved.
-# Returns false if cancelled.
+
+=item * my $success = $main->on_save_all;
+
+Try to save all opened documents. Return true if all documents were
+saved, false otherwise.
+
+=cut
+
 sub on_save_all {
 	my $self = shift;
 	foreach my $id ( $self->pageids ) {
@@ -2452,7 +2534,16 @@ sub on_save_all {
 	return 1;
 }
 
-# returns true if buffer saved, fals if not
+
+=item * my $success = $main->_save_buffer( $id );
+
+Try to save buffer in tab C<$id>. This is the method used underneath by
+all C<on_save_*()> methods. It will check if document has been updated
+out of Padre before saving, and report an error if something went wrong.
+Return true if buffer was saved, false otherwise.
+
+=cut
+
 sub _save_buffer {
 	my ( $self, $id ) = @_;
 
@@ -2485,8 +2576,15 @@ sub _save_buffer {
 	return 1;
 }
 
-# Returns true if closed.
-# Returns false on cancel.
+
+=item * $main->on_close( $event );
+
+Handler when there is a close C<$event>. Veto it if it's from the aui
+notebook, since wx will try to close the tab no matter what. Otherwise,
+close current tab. No return value.
+
+=cut
+
 sub on_close {
 	my $self  = shift;
 	my $event = shift;
@@ -2501,6 +2599,14 @@ sub on_close {
 	$self->close;
 	$self->refresh;
 }
+
+
+=item * my $success = $main->close( $id );
+
+Request to close document in tab C<$id>, or current one if no C<$id>
+provided. Return true if closed, false otherwise.
+
+=cut
 
 sub close {
 	my $self     = shift;
@@ -2553,15 +2659,37 @@ sub close {
 	return 1;
 }
 
-# Returns true if all closed.
-# Returns false if cancelled.
+
+=item * my $success = $main->on_close_all;
+
+Event called when menu item close all has been hit. Return true if all
+documents were closed, false otherwise.
+
+=cut
+
 sub on_close_all {
 	$_[0]->_close_all;
 }
 
+
+=item * my $success = $main->on_close_all_but_current;
+
+Event called when menu item close all but current has been hit. Return
+true upon success, false otherwise.
+
+=cut
+
 sub on_close_all_but_current {
 	$_[0]->_close_all( $_[0]->notebook->GetSelection );
 }
+
+
+=item * my $success = $main->_on_close_all( $skip );
+
+Try to close all documents. If C<$skip> is specified (an integer), don't
+close the tab with this id. Return true upon success, false otherwise.
+
+=cut
 
 sub _close_all {
 	my $self  = shift;
@@ -2577,6 +2705,14 @@ sub _close_all {
 	return 1;
 }
 
+
+=item * $main->on_nth_pane( $id );
+
+Put focus on tab C<$id> in the notebook. Return true upon success, false
+otherwise.
+
+=cut
+
 sub on_nth_pane {
 	my $self = shift;
 	my $id   = shift;
@@ -2590,6 +2726,17 @@ sub on_nth_pane {
 	return;
 }
 
+
+=item * $main->on_next_pane;
+
+Put focus on tab next to current document. Currently, only left to right
+order is supported, but later on it can be extended to follow a last
+seen order.
+
+No return value.
+
+=cut
+
 sub on_next_pane {
 	my $self  = shift;
 	my $count = $self->notebook->GetPageCount or return;
@@ -2602,6 +2749,17 @@ sub on_next_pane {
 	return;
 }
 
+
+=item * $main->on_prev_pane;
+
+Put focus on tab previous to current document. Currently, only right to
+left order is supported, but later on it can be extended to follow a
+reverse last seen order.
+
+No return value.
+
+=cut
+
 sub on_prev_pane {
 	my $self  = shift;
 	my $count = $self->notebook->GetPageCount or return;
@@ -2613,6 +2771,15 @@ sub on_prev_pane {
 	}
 	return;
 }
+
+
+=item * $main->on_diff;
+
+Run C<Text::Diff> between current document and its last saved content on
+disk. This allow to see what has changed before saving. Display the
+differences in the output pane.
+
+=cut
 
 sub on_diff {
 	my $self     = shift;
@@ -2636,11 +2803,13 @@ sub on_diff {
 	return;
 }
 
-#
-# on_join_lines()
-#
-# join current line with next one (a-la vi with Ctrl+J)
-#
+
+=item * $main->on_join_lines;
+
+Join current line with next one (a-la vi with Ctrl+J). No return value.
+
+=cut
+
 sub on_join_lines {
 	my $self = shift;
 	my $page = $self->current->editor;
@@ -2656,7 +2825,26 @@ sub on_join_lines {
 	$page->LinesJoin;
 }
 
-###### preferences and toggle functions
+=back
+
+=cut
+
+
+######################################################################
+
+=head2 Preferences and toggle methods
+
+Those methods allow to change Padre's preferences.
+
+
+=over 4
+
+=item * $main->zoom( $factor );
+
+Apply zoom C<$factor> to Padre's documents. Factor can be either
+positive or negative.
+
+=cut
 
 sub zoom {
 	my $self = shift;
@@ -2665,6 +2853,13 @@ sub zoom {
 		$page->SetZoom($zoom);
 	}
 }
+
+
+=item * $main->on_preferences;
+
+Open Padre's preferences dialog. No return value.
+
+=cut
 
 sub on_preferences {
 	my $self = shift;
@@ -2682,6 +2877,14 @@ sub on_preferences {
 	return;
 }
 
+
+=item * $main->on_toggle_line_numbers;
+
+Toggle visibility of line numbers on the left of the document. No
+return value.
+
+=cut
+
 sub on_toggle_line_numbers {
 	my ( $self, $event ) = @_;
 
@@ -2694,6 +2897,13 @@ sub on_toggle_line_numbers {
 
 	return;
 }
+
+
+=item * $main->on_toggle_code_folding;
+
+De/activate code folding. No return value.
+
+=cut
 
 sub on_toggle_code_folding {
 	my ( $self, $event ) = @_;
@@ -2709,6 +2919,13 @@ sub on_toggle_code_folding {
 	return;
 }
 
+
+=item * $main->on_toggle_currentline;
+
+Toggle overlining of current line. No return value.
+
+=cut
+
 sub on_toggle_currentline {
 	my ( $self, $event ) = @_;
 
@@ -2722,6 +2939,13 @@ sub on_toggle_currentline {
 	return;
 }
 
+
+=item * $main->on_toggle_syntax_check;
+
+Toggle visibility of syntax panel. No return value.
+
+=cut
+
 sub on_toggle_syntax_check {
 	my $self  = shift;
 	my $event = shift;
@@ -2733,6 +2957,13 @@ sub on_toggle_syntax_check {
 	Padre->ide->save_config;
 	return;
 }
+
+
+=item * $main->on_toggle_errorlist;
+
+Toggle visibility of error-list panel. No return value.
+
+=cut
 
 sub on_toggle_errorlist {
 	my $self  = shift;
@@ -2750,6 +2981,13 @@ sub on_toggle_errorlist {
 	return;
 }
 
+
+=item * $main->on_toggle_indentation_guide;
+
+Toggle visibility of indentation guide. No return value.
+
+=cut
+
 sub on_toggle_indentation_guide {
 	my $self  = shift;
 	my $event = shift;
@@ -2765,6 +3003,13 @@ sub on_toggle_indentation_guide {
 
 	return;
 }
+
+
+=item * $main->on_toggle_eol;
+
+Toggle visibility of end of line cariage returns. No return value.
+
+=cut
 
 sub on_toggle_eol {
 	my $self   = shift;
@@ -2782,11 +3027,14 @@ sub on_toggle_eol {
 	return;
 }
 
-#
-# on_toggle_whitespaces()
-#
-# show/hide spaces and tabs (with dots and arrows respectively).
-#
+
+=item * $main->on_toggle_whitespaces;
+
+Show/hide spaces and tabs (with dots and arrows respectively). No
+return value.
+
+=cut
+
 sub on_toggle_whitespaces {
 	my ($self) = @_;
 
@@ -2805,6 +3053,13 @@ sub on_toggle_whitespaces {
 	}
 }
 
+
+=item * $main->on_word_wrap;
+
+Toggle word wrapping for current document. No return value.
+
+=cut
+
 sub on_word_wrap {
 	my $self = shift;
 	my $on = @_ ? $_[0] ? 1 : 0 : 1;
@@ -2820,6 +3075,13 @@ sub on_word_wrap {
 		$doc->editor->SetWrapMode(Wx::wxSTC_WRAP_NONE);
 	}
 }
+
+
+=item * $main->on_toggle_statusbar;
+
+Toggle statusbar visibility. No return value.
+
+=cut
 
 sub on_toggle_statusbar {
 	my $self = shift;
@@ -2843,6 +3105,14 @@ sub on_toggle_statusbar {
 	return;
 }
 
+
+=item * $main->on_toggle_lockinterface;
+
+Toggle possibility for user to change Padre's external aspect. No
+return value.
+
+=cut
+
 sub on_toggle_lockinterface {
 	my $self = shift;
 
@@ -2861,6 +3131,14 @@ sub on_toggle_lockinterface {
 
 	return;
 }
+
+
+=item * $main->on_insert_from_file;
+
+Prompt user for a file to be inserted at current position in current
+document. No return value.
+
+=cut
 
 sub on_insert_from_file {
 	my $self   = shift;
@@ -2895,6 +3173,14 @@ sub on_insert_from_file {
 	return;
 }
 
+
+=item * $main->convert_to( $eol_style );
+
+Convert document to C<$eol_style> line endings (can be one of C<WIN>,
+C<UNIX>, or C<MAC>). No return value.
+
+=cut
+
 sub convert_to {
 	my $self    = shift;
 	my $newline = shift;
@@ -2913,6 +3199,14 @@ sub convert_to {
 	$self->refresh;
 }
 
+
+=item * my $editor = $main->find_editor_of_file( $file );
+
+Return the editor (a C<Padre::Wx::Editor> object) containing the wanted
+C<$file>, or undef if file is not opened currently.
+
+=cut
+
 sub find_editor_of_file {
 	my $self     = shift;
 	my $file     = shift;
@@ -2926,7 +3220,16 @@ sub find_editor_of_file {
 	return;
 }
 
-# TODO can this really work? What happens when we split a window?
+
+=item * my $id = $main->find_id_of_editor( $editor );
+
+Given C<$editor>, return the tab id holding it, or undef if it was
+not found.
+
+Note: can this really work? What happens when we split a window?
+
+=cut
+
 sub find_id_of_editor {
 	my $self     = shift;
 	my $editor   = shift;
@@ -2938,6 +3241,17 @@ sub find_id_of_editor {
 	}
 	return;
 }
+
+
+=item * $main->run_in_padre;
+
+Eval current document within Padre. It means it can access all of
+Padre's internals, and wreck havoc. Display an error message if the eval
+went wrong, dump the result in the output panel otherwise.
+
+No return value.
+
+=cut
 
 sub run_in_padre {
 	my $self = shift;
@@ -2965,7 +3279,26 @@ sub run_in_padre {
 	return;
 }
 
-## STC related functions
+=back
+
+=cut
+
+
+######################################################################
+
+=head2 STC related methods
+
+Those methods are needed to have a smooth STC experience.
+
+
+=over 4
+
+=item * $main->on_stc_style_needed( $event );
+
+Handler of EVT_STC_STYLENEEDED C<$event>. Used to work around some edge
+cases in scintilla. No return value.
+
+=cut
 
 sub on_stc_style_needed {
 	my ( $self, $event ) = @_;
@@ -2986,7 +3319,13 @@ sub on_stc_style_needed {
 
 }
 
-# called on every movement of the cursor
+
+=item * $main->on_stc_update_ui;
+
+Handler called on every movement of the cursor. No return value.
+
+=cut
+
 sub on_stc_update_ui {
 	my $self = shift;
 
@@ -3019,12 +3358,28 @@ sub on_stc_update_ui {
 	return;
 }
 
+
+=item * $main->on_stc_change;
+
+Handler of the EVT_STC_CHANGE event. Doesn't do anythin. No
+return value.
+
+=cut
+
 sub on_stc_change {
 	return;
 }
 
-# http://www.yellowbrain.com/stc/events.html#EVT_STC_CHARADDED
-# TODO: maybe we need to check this more carefully.
+
+=item * $main->on_stc_char_added;
+
+This handler is called when a character is added. No return value. See
+L<http://www.yellowbrain.com/stc/events.html#EVT_STC_CHARADDED>
+
+TODO: maybe we need to check this more carefully.
+
+=cut
+
 sub on_stc_char_added {
 	my $self  = shift;
 	my $event = shift;
@@ -3036,6 +3391,15 @@ sub on_stc_char_added {
 	}
 	return;
 }
+
+
+=item * $main->on_stc_dwell_start( $event );
+
+Handler of the DWELLSTART C<$event>. This event is sent when the mouse
+has not moved in a given amount of time. Doesn't do anything by now. No
+return value.
+
+=cut
 
 sub on_stc_dwell_start {
 	my ( $self, $event ) = @_;
@@ -3051,13 +3415,28 @@ sub on_stc_dwell_start {
 	return;
 }
 
+
+=item * $main->on_aui_pane_close( $event );
+
+Handler called upon EVT_AUI_PANE_CLOSE C<$event>. Doesn't do anything by now.
+
+=cut
+
 sub on_aui_pane_close {
 	my ( $self, $event ) = @_;
 	my $pane = $event->GetPane;
 }
 
+
+=item * $main->on_doc_stats;
+
+Compute various stats about current document, and display them in a
+message. No return value.
+
+=cut
+
 sub on_doc_stats {
-	my ( $self, $event ) = @_;
+	my ($self) = @_;
 
 	my $doc = $self->current->document;
 	if ( not $doc ) {
@@ -3090,6 +3469,16 @@ sub on_doc_stats {
 	$self->message( $message, 'Stats' );
 	return;
 }
+
+
+=item * $main->on_tab_and_space( $style );
+
+Convert current document from spaces to tabs (or vice-versa) depending
+on C<$style> (can be either of C<Space_to_Tab> or C<Tab_to_Space>).
+Prompts the user for how many spaces are to be used to replace tabs
+(whatever the replacement direction). No return value.
+
+=cut
 
 sub on_tab_and_space {
 	my $self    = shift;
@@ -3133,6 +3522,14 @@ sub on_tab_and_space {
 	}
 }
 
+
+=item * $main->on_delete_ending_space;
+
+Trim all ending spaces in current selection, or document if no text is
+selected. No return value.
+
+=cut
+
 sub on_delete_ending_space {
 	my $self     = shift;
 	my $current  = $self->current;
@@ -3150,6 +3547,13 @@ sub on_delete_ending_space {
 		$document->text_set($code);
 	}
 }
+
+
+=item * $main->on_delete_leading_space;
+
+Trim all leading spaces in current selection. No return value.
+
+=cut
 
 sub on_delete_leading_space {
 	my $self    = shift;
@@ -3185,12 +3589,15 @@ sub on_delete_leading_space {
 	$editor->ReplaceSelection($code);
 }
 
-#
-# timer_check_overwrite()
-#
-# called every 5 seconds to check if file has been overwritten outside of
-# padre.
-#
+
+=item * $main->timer_check_overwrite;
+
+Called every n seconds to check if file has been overwritten outside of
+Padre. If that's the case, prompts the user whether s/he wants to reload
+the document. No return value.
+
+=cut
+
 sub timer_check_overwrite {
 	my $self = shift;
 	my $doc = $self->current->document or return;
@@ -3220,6 +3627,13 @@ sub timer_check_overwrite {
 	return;
 }
 
+
+=item * $main->on_last_visited_pane;
+
+Put focus on tab visited before the current one. No return value.
+
+=cut
+
 sub on_last_visited_pane {
 	my ( $self, $event ) = @_;
 
@@ -3238,6 +3652,14 @@ sub on_last_visited_pane {
 		$self->refresh_toolbar( $self->current );
 	}
 }
+
+
+=item * $main->on_new_from_template( $extension );
+
+Create a new document according to template for C<$extension> type of
+file. No return value.
+
+=cut
 
 sub on_new_from_template {
 	my ( $self, $extension ) = @_;
