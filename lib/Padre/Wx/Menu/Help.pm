@@ -184,6 +184,7 @@ sub about {
 	$about->AddTranslator("Italian - Simone Blandino");
 	$about->AddTranslator("Japanese - Kenichi Ishigaki - 石垣憲一");
 	$about->AddTranslator("Korean - Keedi Kim - 김도형");
+	$about->AddTranslator("Norwegian - Kjetil Skotheim");
 	$about->AddTranslator("Russian - Andrew Shitov");
 	$about->AddTranslator("Dutch - Dirk De Nijs");
 	$about->AddTranslator("Polish - Cezary Morga");

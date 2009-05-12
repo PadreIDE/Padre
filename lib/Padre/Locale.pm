@@ -151,12 +151,12 @@ BEGIN {
 
 		'cz' => {
 			gettext   => _T('Czech'),
-            utf8text  => 'Česky',
-            iso639    => 'cz',
-            iso3166   => undef,
-            wxid      => Wx::wxLANGUAGE_CZECH,
-            fallback  => [],
-            supported => 1,
+			utf8text  => 'Česky',
+			iso639    => 'cz',
+			iso3166   => undef,
+			wxid      => Wx::wxLANGUAGE_CZECH,
+			fallback  => [],
+			supported => 1,
 		},
 
 		'de' => {
@@ -328,6 +328,15 @@ BEGIN {
 			iso3166  => 'BE',
 			wxid     => Wx::wxLANGUAGE_DUTCH_BELGIAN,
 			fallback => ['nl-nl'],
+		},
+
+		'no' => {
+			gettext  => _T('Norwegian (Norway)'),
+			utf8text => 'Norsk (Norge)',
+			iso639   => 'no',
+			iso3166  => 'NO',
+			wxid     => Wx::wxLANGUAGE_NORWEGIAN_BOKMAL,
+			fallback => ['en-gb','en-us'],
 		},
 
 		'pl' => {

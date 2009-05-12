@@ -1159,6 +1159,8 @@ Spanish - Paco Alguacil (PacoLinux), Enrique Nell (ENELL)
 
 Czech - Marcela Mašláňová (mmaslano)
 
+Norwegian - Kjetil Skotheim (KJETIL)
+
 =head2 Thanks
 
 To Mattia Barbon for providing WxPerl.
