@@ -1476,11 +1476,13 @@ sub run_command {
 
 =item * $main->run_document( $debug )
 
-TO BE COMPLETED 
+Run current document. If C<$debug> is true, document will be run with
+diagnostics and various debug options.
+
+Note: this should really be somewhere else, but can stay here for now.
 
 =cut
 
-# This should really be somewhere else, but can stay here for now
 sub run_document {
 	my $self     = shift;
 	my $debug    = shift;
@@ -1521,6 +1523,14 @@ sub run_document {
 	}
 	return;
 }
+
+
+=item * $main->debug_perl;
+
+Run current document under perl debugger. An error is reported if current is
+not a Perl document.
+
+=cut
 
 sub debug_perl {
 	my $self     = shift;
@@ -1569,20 +1579,20 @@ sub debug_perl {
 
 =head2 Session Support
 
+Those methods deal with Padre sessions. A session is a set of files / tabs
+opened, with the position within the files saved, as well as the document that
+has the focus.
+
 
 =over 4
 
-=item * TO BE COMPLETED
+=item * my @session = $main->capture_session;
+
+Capture list of opened files, with information. Return a list of
+C<Padre::DB::SessionFile> objects.
 
 =cut
 
-
-#
-# my @session = $self->capture_session;
-#
-# capture list of opened files, with information. return a list of
-# Padre::DB::SessionFile objects.
-#
 sub capture_session {
 	my ($self) = @_;
 
@@ -1608,12 +1618,14 @@ sub capture_session {
 	return @session;
 }
 
-#
-# $self->open_session( $session );
-#
-# try to close all files, then open all files referenced in the given
-# $session (a padre::db::session object). no return value.
-#
+
+=item * $main->open_session( $session );
+
+Try to close all files, then open all files referenced in the given
+C<$session> (a C<Padre::DB::Session> object). No return value.
+
+=cut
+
 sub open_session {
 	my ( $self, $session ) = @_;
 
@@ -1646,12 +1658,15 @@ sub open_session {
 	$self->Thaw;
 }
 
-#
-# $self->save_session( $session, @session );
-#
-# try to save @session files (Padre::DB::SessionFile objects) to DB,
-# associated to $session. note that $session should already exist.
-#
+
+=item * $main->save_session( $session, @session );
+
+Try to save C<@session> files (C<Padre::DB::SessionFile> objects, such as what
+is returned by C<capture_session()> - see above) to database, associated to
+C<$session>. Note that C<$session> should already exist.
+
+=cut
+
 sub save_session {
 	my ( $self, $session, @session ) = @_;
 
@@ -1672,9 +1687,15 @@ sub save_session {
 
 =head2 User Interaction
 
+Various methods to help send information to user.
+
+
 =over 4
 
-=item * TO BE COMPLETED
+=item * $main->message( $msg, $title );
+
+Open a dialog box with C<$msg> as main text and C<$title> (title defaults to
+C<Message>). There's only one OK button. No return value.
 
 =cut
 
@@ -1686,9 +1707,24 @@ sub message {
 	return;
 }
 
+
+=item * $main->error( $msg );
+
+Open an error dialog box with C<$msg> as main text. There's only one OK button.
+No return value.
+
+=cut
+
 sub error {
 	$_[0]->message( $_[1], Wx::gettext('Error') );
 }
+
+
+=item * my $find = $main->find;
+
+Return current find dialog. Create a new one if needed.
+
+=cut
 
 sub find {
 	my $self = shift;
@@ -1701,6 +1737,13 @@ sub find {
 	return $self->{find_dialog};
 }
 
+
+=item * my $find = $main->fast_find;
+
+Return current quick find dialog. Create a new one if needed.
+
+=cut
+
 sub fast_find {
 	my $self = shift;
 
@@ -1711,6 +1754,14 @@ sub fast_find {
 
 	return $self->{fast_find_panel};
 }
+
+
+=item * my $value = $main->prompt( $title, $subtitle, $key );
+
+Prompt user with a dialog box about the value that C<$key> should have. Return
+this value, or undef if user clicked C<cancel>.
+
+=cut
 
 sub prompt {
 	my $self     = shift;
@@ -1739,9 +1790,15 @@ sub prompt {
 
 =head2 General Events
 
+Those methods are the various callbacks registered in the menus or whatever
+widgets Padre has.
+
+
 =over 4
 
-=item * TO BE COMPLETED
+=item * $main->on_brace_matching;
+
+Jump to brace matching current the one at current position.
 
 =cut
 
@@ -1766,6 +1823,13 @@ sub on_brace_matching {
 	return;
 }
 
+
+=item * $main->on_comment_toggle_block;
+
+Un/comment selected lines, depending on their current state.
+
+=cut
+
 sub on_comment_toggle_block {
 	my $self     = shift;
 	my $current  = $self->current;
@@ -1779,6 +1843,13 @@ sub on_comment_toggle_block {
 	return;
 }
 
+
+=item * $main->on_comment_out_block;
+
+Comment out selected lines unilateraly.
+
+=cut
+
 sub on_comment_out_block {
 	my $self     = shift;
 	my $current  = $self->current;
@@ -1791,6 +1862,13 @@ sub on_comment_out_block {
 	$editor->comment_lines( $begin, $end, $string );
 	return;
 }
+
+
+=item * $main->on_uncomment_block;
+
+Uncomment selected lines unilateraly.
+
+=cut
 
 sub on_uncomment_block {
 	my $self     = shift;
@@ -1821,6 +1899,13 @@ sub on_autocompletition {
 	}
 	return;
 }
+
+
+=item $main->on_goto;
+
+Prompt user for a line, and jump to this line in current document.
+
+=cut
 
 sub on_goto {
 	my $self   = shift;
@@ -1946,6 +2031,14 @@ sub on_split_window {
 	return;
 }
 
+
+=item * $main->setup_editors( @files );
+
+Setup (new) tabs for C<@files>, and update the GUI. If C<@files> is undef, open
+an empty document.
+
+=cut
+
 sub setup_editors {
 	my $self  = shift;
 	my @files = @_;
@@ -1989,8 +2082,16 @@ sub on_new {
 	return;
 }
 
-# if the current buffer is empty then fill that with the content of the
-# current file otherwise open a new buffer and open the file there.
+
+=item * $main->setup_editor( $file );
+
+Setup a new tab / buffer and open C<$file>, then update the GUI. Recycle
+current buffer if there's only one empty tab currently opened. If C<$file> is
+already opened, focus on the tab displaying it. Finally, if C<$file> does not
+exist, create an empty file before opening it.
+
+=cut
+
 sub setup_editor {
 	my ( $self, $file ) = @_;
 	my $config = $self->config;
@@ -2074,6 +2175,13 @@ sub setup_editor {
 
 	return $id;
 }
+
+
+=item * my $tab = $main->create_tab;
+
+Create a new tab in the notebook, and return its id (an integer).
+
+=cut
 
 sub create_tab {
 	my ( $self, $editor, $title ) = @_;
@@ -2176,6 +2284,13 @@ sub on_open_selection {
 	return;
 }
 
+
+=item * $main->on_open_all_recent_files;
+
+Try to open all recent files within Padre. No return value.
+
+=cut
+
 sub on_open_all_recent_files {
 	my $files = Padre::DB::History->recent('files');
 
@@ -2212,6 +2327,14 @@ sub on_open {
 
 	return;
 }
+
+
+=item * $main->on_reload_file;
+
+Try to reload current file from disk. Display an error if something went wrong.
+No return value.
+
+=cut
 
 sub on_reload_file {
 	my $self     = shift;
@@ -3144,9 +3267,16 @@ sub on_new_from_template {
 
 =head2 Auxiliary Methods
 
+Various methods that did not fit exactly in above categories...
+
+
 =over 4
 
-=item * TO BE COMPLETED
+=item * $main->install_cpan( $module );
+
+Install C<$module> from CPAN.
+
+Note: this method may not belong here...
 
 =cut
 
@@ -3167,6 +3297,15 @@ sub install_cpan {
 
 	return;
 }
+
+
+=item * $main->setup_bindings;
+
+Setup the various bindings needed to handle output pane correctly.
+
+Note: I'm not sure those are really needed...
+
+=cut
 
 sub setup_bindings {
 	my $main = shift;
@@ -3209,8 +3348,17 @@ sub setup_bindings {
 	return;
 }
 
-# this is Perl specific but for now we could not
-# find a better place for this
+
+=item * $main->set_ppi_highlight( $on );
+
+Toggle C<$on> the fact that we're using PPI to highlight current Perl document.
+If not using PPI, we're using syntax highlighting provided by wxSTC.
+
+Note: this is Perl specific but for now we could not find a better place for
+this.
+
+=cut
+
 sub set_ppi_highlight {
 	my ( $self, $on ) = @_;
 
@@ -3258,6 +3406,14 @@ sub set_ppi_highlight {
 	}
 	return;
 }
+
+
+=item * $main->key_up( $event );
+
+Callback for when a key up C<$event> happens in Padre. This handles the various
+ctrl+key combinations used within Padre.
+
+=cut
 
 sub key_up {
 	my $self  = shift;
