@@ -35,7 +35,9 @@ sub new {
 	# Do custom startup stuff here
 	$self->clear;
 	$self->set_font;
-	$self->AppendText( Wx::gettext('No output') );
+
+	# see #351: output should be blank by default at startup.
+	#$self->AppendText( Wx::gettext('No output') );
 
 	return $self;
 }
