@@ -110,9 +110,6 @@ sub new {
 			$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
 		}
 	}
-	if ( $title eq 'Padre' ) {
-		$title .= " $Padre::VERSION";
-	}
 
 	# Determine the initial frame style
 	my $style = Wx::wxDEFAULT_FRAME_STYLE;
