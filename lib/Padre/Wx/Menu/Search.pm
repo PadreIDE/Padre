@@ -128,7 +128,7 @@ sub new {
 		$main,
 		$self->Append(
 			-1,
-			Wx::gettext("Ac&k Search")
+			Wx::gettext("Find in fi&les...")
 		),
 		\&Padre::Wx::Ack::on_ack,
 	);

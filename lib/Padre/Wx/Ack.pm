@@ -115,7 +115,7 @@ sub dialog {
 	my $layout = get_layout($term);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $main,
-		title  => gettext("Ack (Find in Files)"),
+		title  => gettext("Find in Files"),
 		layout => $layout,
 		width  => [ 190, 210 ],
 		size   => Wx::wxDefaultSize,
