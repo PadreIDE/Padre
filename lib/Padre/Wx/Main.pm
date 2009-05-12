@@ -927,10 +927,16 @@ sub refresh_functions {
 
 =head2 Interface Rebuilding Methods
 
+Those methods reconfigure Padre's main window in case of drastic changes
+(locale, etc.)
+
 
 =over 4
 
-=item * TO BE COMPLETED
+=item * $main->change_style( $style, $private );
+
+Apply C<$style> to Padre main window. C<$private> is a boolean true if the
+style is located in user's private Padre directory.
 
 =cut
 
@@ -944,6 +950,14 @@ sub change_style {
 	}
 	return;
 }
+
+
+=item * $main->change_locale( $locale );
+
+Change Padre's locale to C<$locale>. This will update the GUI to reflect the
+new locale.
+
+=cut
 
 sub change_locale {
 	my $self = shift;
@@ -970,9 +984,18 @@ sub change_locale {
 	return;
 }
 
-# The term and method "relocale" is reserved for functionality
-# intended to run when the application wishes to change locale
-# (and wishes to do so without restarting).
+
+=item * $main->relocale;
+
+The term and method C<relocale> is reserved for functionality intended to run
+when the application wishes to change locale (and wishes to do so without
+restarting).
+
+Note at this point, that the new locale has already been fixed, and this method
+is usually called by C<change_locale()>.
+
+=cut
+
 sub relocale {
 	my $self = shift;
 
@@ -1000,12 +1023,18 @@ sub relocale {
 	return;
 }
 
-# The term and method "reconfig" is reserved for functionality
-# intended to run when Padre's underlying configuration is updated
-# by an external actor at run-time.
-# The primary use cases for this method are when the user
-# configuration file is synced from a remote network location.
-# NOTE: This method is highly experimental and subject to change.
+
+=item * $main->reconfig( $config );
+
+The term and method "reconfig" is reserved for functionality intended to run
+when Padre's underlying configuration is updated by an external actor at
+run-time. The primary use cases for this method are when the user configuration
+file is synced from a remote network location.
+
+Note: This method is highly experimental and subject to change.
+
+=cut
+
 sub reconfig {
 	my $self   = shift;
 	my $config = shift;
@@ -1035,6 +1064,15 @@ sub reconfig {
 	return 1;
 }
 
+
+=item * $main->rebuild_toolbar;
+
+Destroy and rebuild the toolbar. This method is useful because the toolbar is
+not really flexible, and most of the time it's better to recreate it from
+scratch.
+
+=cut
+
 sub rebuild_toolbar {
 	my $self = shift;
 	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
@@ -1052,10 +1090,17 @@ sub rebuild_toolbar {
 
 =head2 Panel Tools
 
+Those methods deal with the various panels that Padre provides, and allow to
+show or hide them.
+
 
 =over 4
 
-=item * TO BE COMPLETED
+=item * $main->show_functions( $visible );
+
+Show the functions panel on the right if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show the
+panel.
 
 =cut
 
@@ -1079,6 +1124,14 @@ sub show_functions {
 
 	return;
 }
+
+
+=item * $main->show_outline( $visible );
+
+Show the outline panel on the right if C<$visible> is true. Hide it otherwise.
+If C<$visible> is not provided, the method defaults to show the panel.
+
+=cut
 
 sub show_outline {
 	my $self    = shift;
@@ -1104,6 +1157,16 @@ sub show_outline {
 
 	return;
 }
+
+
+=item * $main->show_directory( $visible );
+
+Show the directory panel on the right if C<$visible> is true. Hide it
+otherwise.  If C<$visible> is not provided, the method defaults to show the
+panel.
+
+=cut
+
 
 sub show_directory {
 	my $self      = shift;
@@ -1133,6 +1196,14 @@ sub show_directory {
 	return;
 }
 
+
+=item * $main->show_output( $visible );
+
+Show the output panel at the bottom if C<$visible> is true. Hide it otherwise.
+If C<$visible> is not provided, the method defaults to show the panel.
+
+=cut
+
 sub show_output {
 	my $self = shift;
 	my $on = @_ ? $_[0] ? 1 : 0 : 1;
@@ -1153,6 +1224,14 @@ sub show_output {
 
 	return;
 }
+
+
+=item * $main->show_syntax( $visible );
+
+Show the syntax panel at the bottom if C<$visible> is true. Hide it otherwise.
+If C<$visible> is not provided, the method defaults to show the panel.
+
+=cut
 
 sub show_syntax {
 	my $self   = shift;
@@ -1187,6 +1266,7 @@ sub show_syntax {
 
 =head2 Introspection
 
+The following methods allow to poke into Padre's internals.
 
 =over 4
 
@@ -1203,17 +1283,41 @@ sub current {
 	Padre::Current->new( main => $_[0] );
 }
 
+
+=item * my @ids = $main->pageids;
+
+Return a list of all current tab ids (integers) within the notebook.
+
+=cut
+
 sub pageids {
 	return ( 0 .. $_[0]->notebook->GetPageCount - 1 );
 }
+
+
+=item * my @pages = $main->pages;
+
+Return a list of all notebook tabs. Those are the real objects, not the ids
+(see C<pageids()> above).
+
+=cut
 
 sub pages {
 	my $notebook = $_[0]->notebook;
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
 
-# For now, this has the same meaning as pages, but once we
-# get project tabs or something, this will change.
+
+=item * my @editors = $main->editors;
+
+Return a list of all current editors. Those are the real objects, not the ids
+(see C<pageids()> above).
+
+Note: for now, this has the same meaning as C<pages()> (see above), but this
+will change once we get project tabs or something else.
+
+=cut
+
 sub editors {
 	my $notebook = $_[0]->notebook;
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
@@ -1228,13 +1332,21 @@ sub editors {
 
 =head2 Process Execution
 
+The following methods run an external command, for example to evaluate current
+document.
+
+
 =over 4
 
-=item * TO BE COMPLETED
+=item * $main->on_run_command;
+
+Prompt the user for a command to run, then run it with C<run_command()> (see
+below).
+
+Note: it probably needs to be combined with C<run_command()> itself.
 
 =cut
 
-# probably need to be combined with run_command
 sub on_run_command {
 	my $main = shift;
 
@@ -1256,6 +1368,13 @@ sub on_run_command {
 	return;
 }
 
+
+=item * $main->on_run_tests;
+
+Callback method, to run the project tests and harness them.
+
+=cut
+
 sub on_run_tests {
 	my $self = shift;
 
@@ -1274,6 +1393,13 @@ sub on_run_tests {
 	$self->run_command("prove -b $project_dir/t");
 	chdir $dir;
 }
+
+
+=item * $main->run_command( $command );
+
+Run C<$command> and display the result in the output panel.
+
+=cut
 
 sub run_command {
 	my $self = shift;
@@ -1346,6 +1472,13 @@ sub run_command {
 
 	return;
 }
+
+
+=item * $main->run_document( $debug )
+
+TO BE COMPLETED 
+
+=cut
 
 # This should really be somewhere else, but can stay here for now
 sub run_document {
