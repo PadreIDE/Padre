@@ -2,1328 +2,1872 @@
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm."
 # This file is distributed under the same license as the Padre package.
 # Andrew Shitov <andy@shitov.ru>, 4 December 2008
+# Anatoly Sharifulin <sharifulin@gmail.com>, 12 May 2009
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Padre Russian Translation 1\n"
+"Project-Id-Version: Padre Russian Translation 2 for Padre 0.35\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-04 00:44+0300\n"
-"Last-Translator: Andrew Shitov <andy@shitov.ru>\n"
+"POT-Creation-Date: 2009-05-12 11:59+0400\n"
+"Last-Translator: Anatoly Sharifulin <sharifulin@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Document.pm:254
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Document.pm:254
+#: lib/Padre/Document.pm:675
 #, perl-format
-msgid " Unsaved %d"
+msgid "Unsaved %d"
 msgstr "Без имени %d"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:551
-#: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:554
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:91
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:551
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:554
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:91
-msgid "Pl&ugins"
-msgstr "Пла&гины"
+#: lib/Padre/Document.pm:944 lib/Padre/Document.pm:945
+msgid "Skipped for large files"
+msgstr "Пропущено для больших файлов"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/PluginManager.pm:591
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1275
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1888
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/PluginManager.pm:591
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1254
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1877
-msgid "Open file"
-msgstr "Открыть файл"
+#: lib/Padre/Locale.pm:72
+msgid "English (United Kingdom)"
+msgstr "Английский (Великобритания)"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:46
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:215
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:46
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:215
-msgid "Line"
-msgstr "Строка"
+#: lib/Padre/Locale.pm:111
+msgid "English (Australian)"
+msgstr "Английский (Австралия)"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:47
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:217
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:47
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:217
-msgid "Type"
-msgstr "Тип"
+#: lib/Padre/Locale.pm:129
+msgid "Unknown"
+msgstr "Неизвестный"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:48
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:48
-msgid "Description"
-msgstr "Описание"
+#: lib/Padre/Locale.pm:143
+msgid "Arabic"
+msgstr "Арабский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/SyntaxChecker.pm:50
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/SyntaxChecker.pm:50
-msgid "Syntax Check"
-msgstr "Проверка синтаксиса"
+#: lib/Padre/Locale.pm:153
+msgid "Czech"
+msgstr "Чешский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:50
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:50
+#: lib/Padre/Locale.pm:163
 msgid "German"
 msgstr "Немецкий"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:51
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:51
+#: lib/Padre/Locale.pm:173
 msgid "English"
 msgstr "Английский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:52
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:52
+#: lib/Padre/Locale.pm:182
+msgid "English (Canada)"
+msgstr "Английский (Канада)"
+
+#: lib/Padre/Locale.pm:191
+msgid "English (New Zealand)"
+msgstr "Английский (Новая Зеландия)"
+
+#: lib/Padre/Locale.pm:202
+msgid "English (United States)"
+msgstr "Английский (США)"
+
+#: lib/Padre/Locale.pm:211
+msgid "Spanish (Argentina)"
+msgstr "Испанский (Аргентина)"
+
+#: lib/Padre/Locale.pm:224
+msgid "Spanish"
+msgstr "Испанский"
+
+#: lib/Padre/Locale.pm:234
+msgid "French (France)"
+msgstr "Французский (Франция)"
+
+#: lib/Padre/Locale.pm:247
 msgid "French"
 msgstr "Французский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:53
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:53
+#: lib/Padre/Locale.pm:257
 msgid "Hebrew"
 msgstr "Иврит"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:54
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:54
+#: lib/Padre/Locale.pm:267
 msgid "Hungarian"
 msgstr "Венгерский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:55
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:55
-msgid "Korean"
-msgstr "Корейский"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:56
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:56
+#: lib/Padre/Locale.pm:281
 msgid "Italian"
 msgstr "Итальянский"
 
+#: lib/Padre/Locale.pm:291
+msgid "Japanese"
+msgstr "Японский"
+
+#: lib/Padre/Locale.pm:301
+msgid "Korean"
+msgstr "Корейский"
+
+#: lib/Padre/Locale.pm:315
+msgid "Dutch"
+msgstr "Нидерландский"
+
+#: lib/Padre/Locale.pm:325
+msgid "Dutch (Belgium)"
+msgstr "Нидерландский (Бельгия)"
+
+#: lib/Padre/Locale.pm:334
+msgid "Polish"
+msgstr "Польский"
+
+#: lib/Padre/Locale.pm:344
+msgid "Portuguese (Brazil)"
+msgstr "Португальский (Бразилия)"
+
+#: lib/Padre/Locale.pm:354
+msgid "Portuguese (Portugal)"
+msgstr "Португальский (Португалия)"
+
+#: lib/Padre/Locale.pm:363
 msgid "Russian"
 msgstr "Русский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:108
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:108
-msgid "(running from SVN checkout)"
-msgstr "(выполняется извлеченное из SVN)"
+#: lib/Padre/Locale.pm:373
+msgid "Chinese"
+msgstr "Китайский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:265
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:265
-msgid "Files"
-msgstr "Файлы"
+#: lib/Padre/Locale.pm:383
+msgid "Chinese (Simplified)"
+msgstr "Китайский (Упрощенный)"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:321
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:514
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:321
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:514
-msgid "Subs"
-msgstr "Подпрограммы"
+#: lib/Padre/Locale.pm:393
+msgid "Chinese (Traditional)"
+msgstr "Китайский (Традиционный)"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:329
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:329
-msgid "Workspace View"
-msgstr "Вид рабочей области"
+#: lib/Padre/Locale.pm:406
+msgid "Klingon"
+msgstr "Клингонский"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:332
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:332
-msgid "Methods"
-msgstr "Методы"
+#: lib/Padre/PluginHandle.pm:71 lib/Padre/Wx/Dialog/PluginManager.pm:468
+msgid "error"
+msgstr "ошибка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:361
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:512
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:361
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:512
-msgid "Output"
-msgstr "Вывод"
+#: lib/Padre/PluginHandle.pm:72
+msgid "unloaded"
+msgstr "незагружен"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:369
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:369
-msgid "Output View"
-msgstr "Вид вывода"
+#: lib/Padre/PluginHandle.pm:73
+msgid "loaded"
+msgstr "загружен"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:513
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:513
-msgid "Syntax"
-msgstr "Синтаксис"
+#: lib/Padre/PluginHandle.pm:74 lib/Padre/Wx/Dialog/PluginManager.pm:478
+msgid "incompatible"
+msgstr "несовместим"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:601
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:601
-msgid "L:"
-msgstr "Стр.:"
+#: lib/Padre/PluginHandle.pm:75 lib/Padre/Wx/Dialog/PluginManager.pm:502
+msgid "disabled"
+msgstr "отключен"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:601
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:601
-msgid "Ch:"
-msgstr "Симв.:"
+#: lib/Padre/PluginHandle.pm:76 lib/Padre/Wx/Dialog/PluginManager.pm:492
+msgid "enabled"
+msgstr "подключен"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:735
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:735
-msgid "Command line"
-msgstr "Командная строка"
+#: lib/Padre/PluginHandle.pm:171
+#, perl-format
+msgid "Failed to enable plugin '%s': %s"
+msgstr "Ошибка подключения плагина '%s': %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:736
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:736
-msgid "Run setup"
-msgstr "Выполнить установку"
+#: lib/Padre/PluginHandle.pm:225
+#, perl-format
+msgid "Failed to disable plugin '%s': %s"
+msgstr "Ошибка отключения плагина '%s': %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:808
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:808
-msgid "No open document"
+#: lib/Padre/PluginManager.pm:331
+msgid ""
+"We found several new plugins.\n"
+"In order to configure and enable them go to\n"
+"Plugins -> Plugin Manager\n"
+"\n"
+"List of new plugins:\n"
+"\n"
+msgstr ""
+"Найдено несколько новых плагинов.\n"
+"Для того, чтобы настроить, подключите их\n"
+"Плагины -> Менеджер плагинов\n"
+"\n"
+"Список новых плагинов:\n"
+"\n"
+
+#: lib/Padre/PluginManager.pm:341
+msgid "New plugins detected"
+msgstr "Обнаружены новые плагины"
+
+#: lib/Padre/PluginManager.pm:461
+#, perl-format
+msgid "Plugin:%s - Failed to load module: %s"
+msgstr "Плагин:%s - Ошибка загрузки модуля: %s"
+
+#: lib/Padre/PluginManager.pm:475
+#, perl-format
+msgid ""
+"Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of "
+"Padre::Plugin"
+msgstr ""
+"Плагин:%s - Несовместим с Padre::Plugin API. Плагин должен быть подклассом "
+"Padre::Plugin"
+
+#: lib/Padre/PluginManager.pm:489
+#, perl-format
+msgid ""
+"Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be "
+"instantiated"
+msgstr ""
+"Плагин:%s - Несовместим с Padre::Plugin API. Плагин не может быть обработан"
+
+#: lib/Padre/PluginManager.pm:503
+#, perl-format
+msgid ""
+"Plugin:%s - Not compatible with Padre::Plugin API. Need to have sub "
+"padre_interfaces"
+msgstr ""
+"Плагин:%s - Несовместим с Padre::Plugin API. Плагин должен содержать функцию "
+"padre_interfaces"
+
+#: lib/Padre/PluginManager.pm:517
+#, perl-format
+msgid "Plugin:%s - Could not instantiate plugin object"
+msgstr "Плагин:%s - Не может быть обработан объект плагина"
+
+#: lib/Padre/PluginManager.pm:529
+#, perl-format
+msgid ""
+"Plugin:%s - Could not instantiate plugin object: the constructor does not "
+"return a Padre::Plugin object"
+msgstr ""
+"Плагин:%s - Не может быть обработан объект плагина: конструктор не вернул "
+"Padre::Plugin объект"
+
+#: lib/Padre/PluginManager.pm:549
+#, perl-format
+msgid "Plugin:%s - Does not have menus"
+msgstr "Плагин:%s - Не содержит меню"
+
+#: lib/Padre/PluginManager.pm:768
+msgid "Error when calling menu for plugin"
+msgstr "Произошла ошибка при вызове меню плагина"
+
+#: lib/Padre/PluginManager.pm:797 lib/Padre/Wx/Main.pm:1263
+msgid "No document open"
 msgstr "Нет открытых документов"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:822
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:822
-msgid "No execution mode was defined for this document"
-msgstr "Для этого документа не установлен режим исполнения"
+#: lib/Padre/PluginManager.pm:799 lib/Padre/Wx/Main.pm:2826
+msgid "No filename"
+msgstr "Файл без имени"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:841
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:841
-msgid "Not a Perl document"
-msgstr "Не Perl-документ"
+#: lib/Padre/PluginManager.pm:803
+msgid "Could not locate project dir"
+msgstr "Невозможно найти каталог проекта"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:847
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:847
-msgid "Only .pl files can be executed"
-msgstr "Выполняться могут только .pl-файлы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:883
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:883
-msgid "Message"
-msgstr "Сообщение"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:890
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1408
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:890
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1397
-msgid "Error"
-msgstr "Ошибка"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:970
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:970
-msgid "Autocompletions error"
-msgstr "Ошибка автоподстановки"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:981
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:981
-msgid "Line number:"
-msgstr "Номер строки:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1205
-msgid "Nothing selected. Enter what should be opened:"
-msgstr "Ничего не выбрано. Укажите, что нужно открыть:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1206
-msgid "Open selection"
-msgstr "Открыть выделенное"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1250
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1226
+#: lib/Padre/PluginManager.pm:820 lib/Padre/PluginManager.pm:917
 #, perl-format
-msgid "Could not find file '%s'"
-msgstr "Файл '%s' не найден"
+msgid ""
+"Failed to load the plugin '%s'\n"
+"%s"
+msgstr ""
+"Ошибка загрузки плагина '%s'\n"
+"%s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1250
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1186
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1226
-msgid "Open Selection"
-msgstr "Открыть выделенное"
+#: lib/Padre/PluginManager.pm:871 lib/Padre/Wx/Main.pm:2062
+#: lib/Padre/Wx/Main.pm:2621
+msgid "Open file"
+msgstr "Открыть файл"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1301
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2252
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1290
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:2241
+#: lib/Padre/PluginManager.pm:891
 #, perl-format
-msgid "Could not reload file: %s"
-msgstr "Невозможно загрузить файл %s"
+msgid "Plugin must have '%s' as base directory"
+msgstr "Плагин должен содержать '%s' в качестве основного каталога"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1321
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1310
-msgid "Save file as..."
-msgstr "Сохранить файл как..."
+#: lib/Padre/TaskManager.pm:533
+#, perl-format
+msgid "%s worker threads are running.\n"
+msgstr "запущено %s рабочих потоков.\n"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1335
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1324
-msgid "File already exists. Overwrite it?"
-msgstr "Файл уже существует. Перезаписать?"
+#: lib/Padre/TaskManager.pm:536
+msgid "Currently, no background tasks are being executed.\n"
+msgstr "На данный момент нет выполняющихся фоновых задач.\n"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1336
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1325
-msgid "Exist"
-msgstr "Существует"
+#: lib/Padre/TaskManager.pm:542
+msgid "The following tasks are currently executing in the background:\n"
+msgstr "На данный момент следующие задачи выполняются фоновом режиме:\n"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1398
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1387
-msgid "File changed on disk since last saved. Do you want to overwrite it?"
-msgstr "Со времени последнего сохранения файл на диске изменился. Перезаписать?"
+#: lib/Padre/TaskManager.pm:548
+#, perl-format
+msgid ""
+"- %s of type '%s':\n"
+"  (in thread(s) %s)\n"
+msgstr ""
+"- %s, тип '%s':\n"
+"  (в потоке(ах) %s)\n"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1399
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2245
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1388
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:2234
-msgid "File not in sync"
-msgstr "Файл не синхронизирован"
+#: lib/Padre/TaskManager.pm:560
+#, perl-format
+msgid ""
+"\n"
+"Additionally, there are %s tasks pending execution.\n"
+msgstr ""
+"\n"
+"Кроме того, %s задач выполняются.\n"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1449
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1438
-msgid "File changed. Do you want to save it?"
-msgstr "Файл изменен. Сохранить?"
+#: lib/Padre/Document/Perl.pm:511 lib/Padre/Document/Perl.pm:537
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:87
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:182
+msgid "Current cursor does not seem to point at a variable"
+msgstr "В настоящий момент курсор установлен не на переменной"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1450
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1439
-msgid "Unsaved File"
-msgstr "Несохраненный файл"
+#: lib/Padre/Document/Perl.pm:512 lib/Padre/Document/Perl.pm:538
+msgid "Check cancelled"
+msgstr "Проверка отмены"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1552
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1541
-msgid "Cannot diff if file was never saved"
-msgstr "Невозможно найти различия в несохраненном файле"
+#: lib/Padre/Document/Perl.pm:666 lib/Padre/Wx/Menu/Perl.pm:51
+msgid "Find Variable Declaration"
+msgstr "Найти объявление переменной"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1558
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1547
-msgid "There are no differences"
-msgstr "Различий нет"
+#: lib/Padre/Document/Perl.pm:678 lib/Padre/Wx/Menu/Perl.pm:66
+msgid "Lexically Rename Variable"
+msgstr "Лексическое переименование переменной"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1953
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1942
+#: lib/Padre/Document/Perl.pm:689 lib/Padre/Document/Perl.pm:690
+#: lib/Padre/Wx/Menu/Perl.pm:73 lib/Padre/Wx/Menu/Perl.pm:74
+msgid "Replacement"
+msgstr "Замена"
+
+#: lib/Padre/Plugin/Devel.pm:21
+msgid "Padre Developer Tools"
+msgstr "Инструменты разработки Padre"
+
+#: lib/Padre/Plugin/Devel.pm:55
+msgid "Run Document inside Padre"
+msgstr "Выполнить в Padre"
+
+#: lib/Padre/Plugin/Devel.pm:57
+msgid "Dump Current Document"
+msgstr "Дамп текущего документа"
+
+#: lib/Padre/Plugin/Devel.pm:58
+msgid "Dump Top IDE Object"
+msgstr "Дамп Top IDE Object"
+
+#: lib/Padre/Plugin/Devel.pm:59
+msgid "Dump %INC and @INC"
+msgstr "Дамп %INC и @INC"
+
+#: lib/Padre/Plugin/Devel.pm:65
+msgid "Enable logging"
+msgstr "Включить логирование"
+
+#: lib/Padre/Plugin/Devel.pm:66
+msgid "Disable logging"
+msgstr "Отключить логирование"
+
+#: lib/Padre/Plugin/Devel.pm:67
+msgid "Enable trace when logging"
+msgstr "Включить трасирование во время логирования"
+
+#: lib/Padre/Plugin/Devel.pm:68
+msgid "Disable trace"
+msgstr "Отключить трасивание"
+
+#: lib/Padre/Plugin/Devel.pm:70
+msgid "Simulate Crash"
+msgstr "Имитация падения"
+
+#: lib/Padre/Plugin/Devel.pm:71
+msgid "Simulate Crashing Bg Task"
+msgstr "Имитация падения фоновой задачи"
+
+#: lib/Padre/Plugin/Devel.pm:73
+msgid "wxWidgets 2.8.8 Reference"
+msgstr "wxWidgets 2.8.8 справка"
+
+#: lib/Padre/Plugin/Devel.pm:76
+msgid "STC Reference"
+msgstr "STC справка"
+
+#: lib/Padre/Plugin/Devel.pm:80 lib/Padre/Plugin/PopularityContest.pm:105
+msgid "About"
+msgstr "О программе"
+
+#: lib/Padre/Plugin/Devel.pm:119
+msgid "No file is open"
+msgstr "Ни один файл не открыт"
+
+#: lib/Padre/Plugin/Devel.pm:149
+msgid "A set of unrelated tools used by the Padre developers\n"
+msgstr "Множество несвязанных инструментов используется Padre-разработчиками\n"
+
+#: lib/Padre/Plugin/Devel.pm:162 lib/Padre/Wx/Main.pm:2693
 #, perl-format
 msgid "Error: %s"
 msgstr "Ошибка: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:1953
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:987
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1942
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:999
-msgid "Self error"
+#: lib/Padre/Plugin/Perl5.pm:39
+msgid "Install Module..."
+msgstr "Установить модуль..."
+
+#: lib/Padre/Plugin/Perl5.pm:40
+msgid "Install CPAN Module"
+msgstr "Установить CPAN-модуль"
+
+#: lib/Padre/Plugin/Perl5.pm:42
+msgid "Install Local Distribution"
+msgstr "Установить локальный дистрибутив"
+
+#: lib/Padre/Plugin/Perl5.pm:43
+msgid "Install Remote Distribution"
+msgstr "Установить удаленный дистрибутив"
+
+#: lib/Padre/Plugin/Perl5.pm:45
+msgid "Open CPAN Config File"
+msgstr "Открыть файл настроек CPAN"
+
+#: lib/Padre/Plugin/Perl5.pm:96
+msgid "Failed to find your CPAN configuration"
+msgstr "Произошла ошибка при попытке открыть файл настроек CPAN"
+
+#: lib/Padre/Plugin/Perl5.pm:106
+msgid "Select distribution to install"
+msgstr "Выберите дистрибутив для установки"
+
+#: lib/Padre/Plugin/Perl5.pm:119 lib/Padre/Plugin/Perl5.pm:144
+msgid "Did not provide a distribution"
+msgstr "Дистрибутив не предоставляется"
+
+#: lib/Padre/Plugin/Perl5.pm:134
+msgid ""
+"Enter URL to install\n"
+"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+msgstr ""
+"Введите адрес для установки\n"
+"например, http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+
+#: lib/Padre/Plugin/Perl5.pm:164
+msgid "pip is unexpectedly not installed"
+msgstr "pip неожиданно не установлен"
+
+#: lib/Padre/Task/SyntaxChecker.pm:179 lib/Padre/Wx/Syntax.pm:96
+#: lib/Padre/Wx/Syntax.pm:97
+msgid "Warning"
+msgstr "Предупреждение"
+
+#: lib/Padre/Task/SyntaxChecker.pm:179 lib/Padre/Wx/Main.pm:1341
+#: lib/Padre/Wx/Main.pm:1557 lib/Padre/Wx/Main.pm:2219
+#: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Syntax.pm:99
+#: lib/Padre/Wx/Dialog/PluginManager.pm:358
+msgid "Error"
+msgstr "Ошибка"
+
+#: lib/Padre/Task/Outline/Perl.pm:146 lib/Padre/Wx/Outline.pm:58
+msgid "Outline"
+msgstr "Схема"
+
+#: lib/Padre/Task/Outline/Perl.pm:180
+msgid "&GoTo Element"
+msgstr "Перейти к элементу"
+
+#: lib/Padre/Task/Outline/Perl.pm:192 lib/Padre/Wx/Directory.pm:182
+msgid "Open &Documentation"
+msgstr "Открыть &документацию"
+
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:77
+msgid "All braces appear to be matched"
+msgstr "Все скобки выглядят парными"
+
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:78
+msgid "Check Complete"
+msgstr "Проверка завершена"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:184
+msgid "No declaration could be found for the specified (lexical?) variable"
+msgstr "Не найдено объявление указаной переменной (лексической?)"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:91
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:186
+msgid "Unknown error"
+msgstr "Неизвестная ошибка"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:95
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:190
+msgid "Check Canceled"
+msgstr "Проверка завершена"
+
+#: lib/Padre/Wx/Ack.pm:82
+msgid "Term:"
+msgstr "Термин:"
+
+#: lib/Padre/Wx/Ack.pm:86
+msgid "Dir:"
+msgstr "Каталог:"
+
+#: lib/Padre/Wx/Ack.pm:88
+msgid "Pick &directory"
+msgstr "Выбрать &каталог"
+
+#: lib/Padre/Wx/Ack.pm:90
+msgid "In Files/Types:"
+msgstr "В файлах/типах:"
+
+#: lib/Padre/Wx/Ack.pm:96 lib/Padre/Wx/Dialog/Find.pm:137
+msgid "Case &Insensitive"
+msgstr "Регистро&независимо"
+
+#: lib/Padre/Wx/Ack.pm:102
+msgid "I&gnore hidden Subdirectories"
+msgstr "Пропускать скрытые подкаталоги"
+
+#: lib/Padre/Wx/Ack.pm:118
+msgid "Ack (Find in Files)"
+msgstr "Искать (Поиск в файлах)"
+
+#: lib/Padre/Wx/Ack.pm:147
+msgid "Select directory"
+msgstr "Выбрать каталог"
+
+#: lib/Padre/Wx/Ack.pm:281 lib/Padre/Wx/Ack.pm:305
+msgid "Ack"
+msgstr "Искать"
+
+#: lib/Padre/Wx/Bottom.pm:42
+msgid "Output View"
+msgstr "Вид вывода"
+
+#: lib/Padre/Wx/Directory.pm:52 lib/Padre/Wx/Directory.pm:143
+msgid "Directory"
+msgstr "Каталог"
+
+#: lib/Padre/Wx/Directory.pm:170 lib/Padre/Wx/ToolBar.pm:49
+msgid "Open File"
+msgstr "Открыть файл"
+
+#: lib/Padre/Wx/Editor.pm:709 lib/Padre/Wx/Menu/Edit.pm:66
+msgid "Select all\tCtrl-A"
+msgstr "Веделить все\tCtrl+A"
+
+#: lib/Padre/Wx/Editor.pm:720 lib/Padre/Wx/Menu/Edit.pm:110
+msgid "&Copy\tCtrl-C"
+msgstr "&Копировать\tCtrl+C"
+
+#: lib/Padre/Wx/Editor.pm:732 lib/Padre/Wx/Menu/Edit.pm:122
+msgid "Cu&t\tCtrl-X"
+msgstr "&Вырезать\tCtrl+X"
+
+#: lib/Padre/Wx/Editor.pm:744 lib/Padre/Wx/Menu/Edit.pm:134
+msgid "&Paste\tCtrl-V"
+msgstr "Вст&авить\tCtrl+V"
+
+#: lib/Padre/Wx/Editor.pm:761 lib/Padre/Wx/Menu/Edit.pm:205
+msgid "&Toggle Comment\tCtrl-Shift-C"
+msgstr "&Переключить комментарии\tCtrl+Shift+C"
+
+#: lib/Padre/Wx/Editor.pm:766 lib/Padre/Wx/Menu/Edit.pm:215
+msgid "&Comment Selected Lines\tCtrl-M"
+msgstr "За&комментировать выделенные строки\tCtrl+M"
+
+#: lib/Padre/Wx/Editor.pm:771 lib/Padre/Wx/Menu/Edit.pm:225
+msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
+msgstr "&Разкомментировать выделенные строки\tCtrl+Shift+M"
+
+#: lib/Padre/Wx/Editor.pm:789
+msgid "Fold all"
+msgstr "Свернуть все"
+
+#: lib/Padre/Wx/Editor.pm:796
+msgid "Unfold all"
+msgstr "Развернуть все"
+
+#: lib/Padre/Wx/Editor.pm:809 lib/Padre/Wx/Menu/Window.pm:34
+msgid "&Split window"
+msgstr "Разделить &окно"
+
+#: lib/Padre/Wx/Editor.pm:1149
+msgid "You must select a range of lines"
+msgstr "Вы должны выбрать диапазон строк"
+
+#: lib/Padre/Wx/Editor.pm:1165
+msgid "First character of selection must be a non-word character to align"
+msgstr "Первый символ выделения должен быть не буквой"
+
+#: lib/Padre/Wx/ErrorList.pm:91
+msgid "Error List"
+msgstr "Ошибки"
+
+#: lib/Padre/Wx/ErrorList.pm:126
+msgid "No diagnostics available for this error!"
+msgstr "Нет диагности для этой ошибки!"
+
+#: lib/Padre/Wx/ErrorList.pm:135
+msgid "Diagnostics"
+msgstr "Диагностика"
+
+#: lib/Padre/Wx/FunctionList.pm:71
+msgid "Sub List"
+msgstr "Функции"
+
+#: lib/Padre/Wx/Main.pm:391
+#, perl-format
+msgid "No such session %s"
+msgstr "Нет такой сессии %s"
+
+#: lib/Padre/Wx/Main.pm:561
+msgid "Failed to create server"
+msgstr "Ошибка при создании сервера"
+
+#: lib/Padre/Wx/Main.pm:1243
+msgid "Command line"
+msgstr "Командная строка"
+
+#: lib/Padre/Wx/Main.pm:1244
+msgid "Run setup"
+msgstr "Выполнить установку"
+
+#: lib/Padre/Wx/Main.pm:1267
+msgid "Current document has no filename"
+msgstr "Для текущего документа не указан файл"
+
+#: lib/Padre/Wx/Main.pm:1270
+msgid "Could not find project root"
+msgstr "Путь к проекту не найден"
+
+#: lib/Padre/Wx/Main.pm:1340
+#, perl-format
+msgid "Failed to start '%s' command"
+msgstr "Ошибка запуска команды '%s'"
+
+#: lib/Padre/Wx/Main.pm:1356
+msgid "No open document"
+msgstr "Нет открытых документов"
+
+#: lib/Padre/Wx/Main.pm:1373
+msgid "No execution mode was defined for this document"
+msgstr "Для этого документа не установлен режим исполнения"
+
+#: lib/Padre/Wx/Main.pm:1396
+msgid "Not a Perl document"
+msgstr "Не Perl-документ"
+
+#: lib/Padre/Wx/Main.pm:1551
+msgid "Message"
+msgstr "Сообщение"
+
+#: lib/Padre/Wx/Main.pm:1682
+msgid "Autocompletions error"
+msgstr "Ошибка автоподстановки"
+
+#: lib/Padre/Wx/Main.pm:1694
+msgid "Line number:"
+msgstr "Номер строки:"
+
+#: lib/Padre/Wx/Main.pm:1884
+#, perl-format
+msgid ""
+"Cannot open %s as it is over the arbitrary file size limit of Padre which is "
+"currently %s"
+msgstr "Невозможно открыть %s из-за ограничения Padre на длину файла: "
+"%s"
+
+#: lib/Padre/Wx/Main.pm:1968
+msgid "Nothing selected. Enter what should be opened:"
+msgstr "Ничего не выбрано. Укажите, что нужно открыть:"
+
+#: lib/Padre/Wx/Main.pm:1969
+msgid "Open selection"
+msgstr "Открыть выделенное"
+
+#: lib/Padre/Wx/Main.pm:2033
+#, perl-format
+msgid "Could not find file '%s'"
+msgstr "Файл '%s' не найден"
+
+#: lib/Padre/Wx/Main.pm:2034
+msgid "Open Selection"
+msgstr "Открыть выделенное"
+
+#: lib/Padre/Wx/Main.pm:2095 lib/Padre/Wx/Main.pm:2955
+#, perl-format
+msgid "Could not reload file: %s"
+msgstr "Невозможно загрузить файл %s"
+
+#: lib/Padre/Wx/Main.pm:2115
+msgid "Save file as..."
+msgstr "Сохранить файл как..."
+
+#: lib/Padre/Wx/Main.pm:2129
+msgid "File already exists. Overwrite it?"
+msgstr "Файл уже существует. Перезаписать?"
+
+#: lib/Padre/Wx/Main.pm:2130
+msgid "Exist"
+msgstr "Существует"
+
+#: lib/Padre/Wx/Main.pm:2208
+msgid "File changed on disk since last saved. Do you want to overwrite it?"
+msgstr "Со времени последнего сохранения файл на диске изменился. Перезаписать?"
+
+#: lib/Padre/Wx/Main.pm:2209 lib/Padre/Wx/Main.pm:2948
+msgid "File not in sync"
+msgstr "Файл не синхронизирован"
+
+#: lib/Padre/Wx/Main.pm:2218
+msgid "Could not save file: "
+msgstr "Невозможно загрузить файл:"
+
+#: lib/Padre/Wx/Main.pm:2265
+msgid "File changed. Do you want to save it?"
+msgstr "Файл изменен. Сохранить?"
+
+#: lib/Padre/Wx/Main.pm:2266
+msgid "Unsaved File"
+msgstr "Несохраненный файл"
+
+#: lib/Padre/Wx/Main.pm:2367
+msgid "Cannot diff if file was never saved"
+msgstr "Невозможно найти различия в несохраненном файле"
+
+#: lib/Padre/Wx/Main.pm:2373
+msgid "There are no differences\n"
+msgstr "Различий нет\n"
+
+#: lib/Padre/Wx/Main.pm:2694
+msgid "Internal error"
 msgstr "Внутренняя ошибка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2097
+#: lib/Padre/Wx/Main.pm:2817
 #, perl-format
-msgid "Words: %d"
-msgstr "Words: %d"
+msgid "Words: %s"
+msgstr "Слова: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2098
+#: lib/Padre/Wx/Main.pm:2818
 #, perl-format
 msgid "Lines: %d"
 msgstr "Строк: %d"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2099
+#: lib/Padre/Wx/Main.pm:2819
 #, perl-format
-msgid "Chars without spaces: %d"
-msgstr "Символов без пробелов: %d"
+msgid "Chars without spaces: %s"
+msgstr "Символов без пробелов: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2100
+#: lib/Padre/Wx/Main.pm:2820
 #, perl-format
 msgid "Chars with spaces: %d"
-msgstr "Символов с пробелами: %в"
+msgstr "Символов с пробелами: %d"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2101
+#: lib/Padre/Wx/Main.pm:2821
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Тип перевода строк: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2102
+#: lib/Padre/Wx/Main.pm:2822
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Кодировка: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2104
+#: lib/Padre/Wx/Main.pm:2823
+#, perl-format
+msgid "Document type: %s"
+msgstr "Тип документа: %s"
+
+#: lib/Padre/Wx/Main.pm:2823
+msgid "none"
+msgstr "нет"
+
+#: lib/Padre/Wx/Main.pm:2825
 #, perl-format
 msgid "Filename: %s"
 msgstr "Имя файла: %s"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2105
-msgid "No filename"
-msgstr "Файл без имени"
+#: lib/Padre/Wx/Main.pm:2845
+msgid "Space to Tab"
+msgstr "Пробелы в табы..."
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Main.pm:2244
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:2233
+#: lib/Padre/Wx/Main.pm:2846
+msgid "Tab to Space"
+msgstr "Табы в пробелы..."
+
+#: lib/Padre/Wx/Main.pm:2849
+msgid "How many spaces for each tab:"
+msgstr "Сколько пробелов в каждом табе:"
+
+#: lib/Padre/Wx/Main.pm:2947
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "Со времени последнего сохранения файл изменился. Переоткрыть с диска?"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:25
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:145
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:25
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:145
-msgid "Not implemented yet"
-msgstr "Еще не реализовано"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:26
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:145
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:26
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:145
-msgid "Not yet available"
-msgstr "Еще недоступно"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:46
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:46
-msgid "Select Project"
-msgstr "Выбор проекта"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:59
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:59
-msgid "Select Project Name or type in new one"
-msgstr "Выберите имя проекта или впишите новое"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:65
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:65
-msgid "Select Directory"
-msgstr "Выбор каталога"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Project.pm:129
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Project.pm:129
-msgid "Select Project Directory"
-msgstr "Выбор каталога проекта"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:515
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:395
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:515
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:407
-msgid "Select all\tCtrl-A"
-msgstr "Веделить все\tCtrl+A"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:557
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:483
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:557
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:495
-msgid "&Comment Selected Lines\tCtrl-M"
-msgstr "За&комментировать выделенную строку\tCtrl+M"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:561
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:488
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:561
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:500
-msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
-msgstr "&Разкомментировать выделенную строку\tCtrl+Shift+M"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Editor.pm:570
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:857
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Editor.pm:570
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:869
-msgid "&Split window"
-msgstr "Разделить &окно"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:22
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:22
-msgid "New File"
-msgstr "Новый файл"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:32
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:32
-msgid "Open File"
-msgstr "Открыть файл"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:37
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:37
-msgid "Save File"
-msgstr "Сохранить файл"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:47
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:47
-msgid "Close File"
-msgstr "Закрыть файл"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:63
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:63
-msgid "Undo"
-msgstr "Отменить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:68
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:68
-msgid "Redo"
-msgstr "Повторить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:80
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:80
-msgid "Cut"
-msgstr "Вырезать"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:90
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:90
-msgid "Copy"
-msgstr "Копировать"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:100
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:100
-msgid "Paste"
-msgstr "Вставить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/ToolBar.pm:113
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/ToolBar.pm:113
-msgid "Select all"
-msgstr "Выделить все"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Output.pm:31
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Output.pm:31
-msgid "No output"
-msgstr "Вывода нет"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:84
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:340
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:341
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:84
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:344
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:345
+#: lib/Padre/Wx/Menubar.pm:72
 msgid "&File"
 msgstr "&Файл"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:85
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:85
-msgid "&Project"
-msgstr "&Проект"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:86
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:27
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:86
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:27
+#: lib/Padre/Wx/Menubar.pm:73 lib/Padre/Wx/Dialog/Snippets.pm:26
 msgid "&Edit"
 msgstr "&Редактирование"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:87
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:87
+#: lib/Padre/Wx/Menubar.pm:74
+msgid "&Search"
+msgstr "Искать"
+
+#: lib/Padre/Wx/Menubar.pm:75
 msgid "&View"
 msgstr "&Вид"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:89
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:89
+#: lib/Padre/Wx/Menubar.pm:76
 msgid "&Run"
 msgstr "За&пуск"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:90
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:90
-msgid "&Bookmarks"
-msgstr "&Закладки"
+#: lib/Padre/Wx/Menubar.pm:77
+msgid "Pl&ugins"
+msgstr "Пла&гины"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:92
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:92
-msgid "&Tools"
-msgstr "&Инструменты"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:93
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:93
+#: lib/Padre/Wx/Menubar.pm:78
 msgid "&Window"
 msgstr "&Окно"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:94
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:94
+#: lib/Padre/Wx/Menubar.pm:79
 msgid "&Help"
 msgstr "&Справка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:96
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:96
+#: lib/Padre/Wx/Menubar.pm:96
 msgid "E&xperimental"
 msgstr "&Экспериментальное"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:237
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:237
-msgid "&New\tCtrl-N"
-msgstr "&Новый\tCtrl+N"
+#: lib/Padre/Wx/Menubar.pm:119 lib/Padre/Wx/Menubar.pm:159
+msgid "&Perl"
+msgstr "&Perl"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:241
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:245
-msgid "New..."
-msgstr "Новый..."
+#: lib/Padre/Wx/Notebook.pm:31
+msgid "Files"
+msgstr "Файлы"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:243
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:247
-msgid "Perl Distribution (Module::Starter)"
-msgstr "Дистрибутив Perl (Module::Starter)"
+#: lib/Padre/Wx/Output.pm:38
+msgid "No output"
+msgstr "Вывода нет"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:249
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:253
-msgid "&Open...\tCtrl-O"
-msgstr "&Открыть...\tCtrl+O"
+#: lib/Padre/Wx/Output.pm:52
+msgid "Output"
+msgstr "Вывод"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:253
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:257
-msgid "Open Selection\tCtrl-Shift-O"
-msgstr "Открыть выделенное\tCtrl+Shift+O"
+#: lib/Padre/Wx/Right.pm:42
+msgid "Workspace View"
+msgstr "Вид рабочей области"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:257
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:261
-msgid "&Close\tCtrl-W"
-msgstr "&Закрыть\tCtrl+W"
+#: lib/Padre/Wx/StatusBar.pm:71
+msgid "L:"
+msgstr "Стр.:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:263
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:267
-msgid "Close All"
-msgstr "Закрыть все"
+#: lib/Padre/Wx/StatusBar.pm:71
+msgid "Ch:"
+msgstr "Симв.:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:269
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:273
-msgid "Close All but Current"
-msgstr "Закрыть все, кроме текущего"
+#: lib/Padre/Wx/Syntax.pm:66
+msgid "Syntax Check"
+msgstr "Проверка синтаксиса"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:274
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:278
-msgid "Reload file"
-msgstr "Переоткрыть файл"
+#: lib/Padre/Wx/Syntax.pm:92 lib/Padre/Wx/Syntax.pm:254
+msgid "Line"
+msgstr "Строка"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:282
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:286
-msgid "&Save\tCtrl-S"
-msgstr "&Сохранить\tCtrl+S"
+#: lib/Padre/Wx/Syntax.pm:255
+msgid "Type"
+msgstr "Тип"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:287
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:291
-msgid "Save &As..."
-msgstr "Сохранить &как..."
+#: lib/Padre/Wx/Syntax.pm:256 lib/Padre/Wx/Dialog/SessionManager.pm:211
+msgid "Description"
+msgstr "Описание"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:292
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:296
-msgid "Save All"
-msgstr "Сохранить все"
+#: lib/Padre/Wx/ToolBar.pm:41
+msgid "New File"
+msgstr "Новый файл"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:300
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:304
-msgid "&Print..."
-msgstr "&Печать..."
+#: lib/Padre/Wx/ToolBar.pm:54
+msgid "Save File"
+msgstr "Сохранить файл"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:309
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:313
-msgid "Convert..."
-msgstr "Преобразовать..."
+#: lib/Padre/Wx/ToolBar.pm:59
+msgid "Close File"
+msgstr "Закрыть файл"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:310
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:314
-msgid "EOL to Windows"
-msgstr "Переводы строк Windows"
+#: lib/Padre/Wx/ToolBar.pm:71
+msgid "Undo"
+msgstr "Отменить"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:315
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:319
-msgid "EOL to Unix"
-msgstr "Переводы строк Unix"
+#: lib/Padre/Wx/ToolBar.pm:77
+msgid "Redo"
+msgstr "Повторить"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:320
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:324
-msgid "EOL to Mac Classic"
-msgstr "Переводы строк Mac"
+#: lib/Padre/Wx/ToolBar.pm:86
+msgid "Cut"
+msgstr "Вырезать"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:329
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:333
-msgid "&Recent Files"
-msgstr "&Недавние файлы"
+#: lib/Padre/Wx/ToolBar.pm:99
+msgid "Copy"
+msgstr "Копировать"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:331
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:335
-msgid "Open All Recent Files"
-msgstr "Открыть все недавние файлы"
+#: lib/Padre/Wx/ToolBar.pm:112
+msgid "Paste"
+msgstr "Вставить"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:335
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:339
-msgid "Clean Recent Files List"
-msgstr "Очистить список недавних файлов"
+#: lib/Padre/Wx/ToolBar.pm:126
+msgid "Select all"
+msgstr "Выделить все"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:357
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:369
-msgid "Doc Stats"
+#: lib/Padre/Wx/ToolBar.pm:151 lib/Padre/Wx/ToolBar.pm:201
+msgid "Background Tasks are idle"
+msgstr "Фоновый задачи выполнены"
+
+#: lib/Padre/Wx/ToolBar.pm:211
+msgid "Background Tasks are running"
+msgstr "Фоновые задачи запущены"
+
+#: lib/Padre/Wx/ToolBar.pm:221
+msgid "Background Tasks are running with high load"
+msgstr "Фоновые задачи запущены с нагрузкой"
+
+#: lib/Padre/Wx/CPAN/Listview.pm:43 lib/Padre/Wx/CPAN/Listview.pm:78
+#: lib/Padre/Wx/Dialog/PluginManager.pm:231
+msgid "Status"
 msgstr "Статистика документа"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:366
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:378
-msgid "&Quit\tCtrl-Q"
-msgstr "&Выход\tCtrl+Q"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:380
-msgid "&Undo"
-msgstr "&Отменить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:385
-msgid "&Redo"
-msgstr "&Повторить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:393
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:405
-msgid "Select"
-msgstr "Выбрать"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:400
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:412
-msgid "Mark selection start\tCtrl-["
-msgstr "Отменить начало выделения\tCtrl+["
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:407
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:419
-msgid "Mark selection end\tCtrl-]"
-msgstr "Отметить конец выделения\tCtrl+]"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:414
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:426
-msgid "Clear selection marks"
-msgstr "Снять выделение"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:419
-msgid "&Copy\tCtrl-C"
-msgstr "&Копировать\tCtrl+C"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:424
-msgid "Cu&t\tCtrl-X"
-msgstr "&Вырезать\tCtrl+X"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:429
-msgid "&Paste\tCtrl-V"
-msgstr "Вст&авить\tCtrl+V"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:440
-msgid "&Find\tCtrl-F"
-msgstr "&Найти\tCtrl+F"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:444
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:456
-msgid "Find Next\tF3"
-msgstr "Найти следующее\tF3"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:448
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:460
-msgid "Find Previous\tShift-F3"
-msgstr "Найти предыдущее\tShift+F3"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:452
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:464
-msgid "Ac&k"
-msgstr "Ac&k"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:455
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:467
-msgid "&Goto\tCtrl-G"
-msgstr "&Перейти к\tCtrl+G"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:460
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:472
-msgid "&AutoComp\tCtrl-P"
-msgstr "Авто&заполненbt\tCtrl+P"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:465
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:477
-msgid "&Brace matching\tCtrl-1"
-msgstr "Перейти к парной &скобке\tCtrl+1"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:470
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:482
-msgid "&Join lines\tCtrl-J"
-msgstr "&Объединить строки\tCtrl+J"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:475
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:487
-msgid "Snippets\tCtrl-Shift-A"
-msgstr "Сниппеты\tCtrl+Shift+A"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:497
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:509
-msgid "Tabs and Spaces"
-msgstr "Табуляции и пробелы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:499
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:511
-msgid "Tabs to Spaces..."
-msgstr "Табуляции в пробелы..."
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:503
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:515
-msgid "Spaces to Tabs..."
-msgstr "Пробелы в табуляции..."
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:507
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:519
-msgid "Delete Trailing Spaces"
-msgstr "Удалить завершающие пробелы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:511
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:523
-msgid "Delete Leading Spaces"
-msgstr "Удалить начальные пробелы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:517
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:529
-msgid "Upper/Lower Case"
-msgstr "Верхний/нижний регистр"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:519
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:531
-msgid "Upper All\tCtrl-Shift-U"
-msgstr "Все в верхний регистр\tCtrl+Shift+U"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:523
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:535
-msgid "Lower All\tCtrl-U"
-msgstr "Все в нижний регистр\tCtrl+U"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:529
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:541
-msgid "Diff"
-msgstr "Различия"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:534
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:546
-msgid "Insert From File..."
-msgstr "Вставить из файла..."
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:543
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:71
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:22
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:555
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:71
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:22
-msgid "Preferences"
-msgstr "Настройки"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:559
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:571
-msgid "Show Output"
-msgstr "Показывать вывод"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:568
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:580
-msgid "Show Functions"
-msgstr "Показывать функции"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:579
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:591
-msgid "Show StatusBar"
-msgstr "Показывать статусную строку"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:588
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:600
-msgid "Show Line numbers"
-msgstr "Показывать номера строк"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:593
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:605
-msgid "Show Code Folding"
-msgstr "Показывать сворачивание кода"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:598
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:610
-msgid "Show Newlines"
-msgstr "Показывать переводы строк"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:603
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:615
-msgid "Show Whitespaces"
-msgstr "Показывать пробелы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:609
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:621
-msgid "Show Indentation Guide"
-msgstr "Показывать отступы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:616
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:628
-msgid "Show Call Tips"
-msgstr "Показывать подсказки по вызову функций"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:621
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:633
-msgid "Show Syntax Check"
-msgstr "Показывать проверку синтаксиса"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:628
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:640
-msgid "Word-Wrap"
-msgstr "Переводы длинных строк"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:637
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:649
-msgid "Highlight Current Line"
-msgstr "Подсветка текущей строки"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:645
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:657
-msgid "Increase Font Size\tCtrl-+"
-msgstr "Увеличить размер шрифта\tCtrl++"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:649
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:661
-msgid "Decrease Font Size\tCtrl--"
-msgstr "Уменьшить размер шрифта\tCtrl--"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:653
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:665
-msgid "Reset Font Size\tCtrl-/"
-msgstr "Установить размер шрифта по умолчанию\tCtrl+/"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:659
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:671
-msgid "Set Bookmark\tCtrl-B"
-msgstr "Поместить в закладки\tCtrl+B"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:663
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:675
-msgid "Goto Bookmark\tCtrl-Shift-B"
-msgstr "Перейти к закладке\tCtrl+Shift+B"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:669
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:681
-msgid "Language"
-msgstr "Язык"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:672
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:684
-msgid "System Default"
-msgstr "Системные установки"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:694
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:706
-msgid "&Full screen\tF11"
-msgstr "Полный &экран\tF11"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:708
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:720
-msgid "Find Unmatched Brace"
-msgstr "Найти непарные скобки"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:717
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:729
-msgid "All braces appear to be matched"
-msgstr "Все скобки выглядят парными"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:717
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:729
-msgid "Check Complete"
-msgstr "Проверка завершена"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:732
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:744
-msgid "Run Script\tF5"
-msgstr "Выполнить скрипт\tF5"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:737
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:749
-msgid "Run Command\tCtrl-F5"
-msgstr "Выполнить команду\tCtrl+F5"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:742
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:754
-msgid "&Stop"
-msgstr "Ос&тановить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:772
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:45
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:784
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:45
-msgid "Plugin Manager"
-msgstr "Менеджер плагинов"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:775
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:787
-msgid "Plugin Tools"
-msgstr "Инструменты плагинов"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:801
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:813
-msgid "Edit My Plugin"
-msgstr "Редактировать мои плагины"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:806
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:818
-msgid "Could not find the Padre::Plugin::My plugin"
-msgstr "Невозможно найти Padre::Plugin::My plugin"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:814
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:826
-msgid "Reload My Plugin"
-msgstr "Перезагрузить плагин"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:818
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:821
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:822
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:830
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:833
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:834
-msgid "Reset My Plugin"
-msgstr "Сбросить плагин"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:840
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:852
-msgid "Reload All Plugins"
-msgstr "Перезагрузить все плагины"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:844
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:856
-msgid "Test A Plugin From Local Dir"
-msgstr "Проверить плагин в локальном каталоге"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:862
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:874
-msgid "Next File\tCtrl-TAB"
-msgstr "Следующий файл\tCtrl+Tab"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:866
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:878
-msgid "Previous File\tCtrl-Shift-TAB"
-msgstr "Предыдущий файл\tCtrl+Shift+Tab"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:870
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:882
-msgid "Last Visited File\tCtrl-6"
-msgstr "Последний открытый файл\tCtrl+6"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:874
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:886
-msgid "Right Click\tAlt-/"
-msgstr "Правый клик\tAlt-/"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:886
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:898
-msgid "GoTo Subs Window\tAlt-S"
-msgstr "Перейти к окну подпрограмм\tAlt+S"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:894
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:906
-msgid "GoTo Output Window\tAlt-O"
-msgstr "Перейти к окну вывода\tAlt+O"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:900
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:912
-msgid "GoTo Syntax Check Window\tAlt-C"
-msgstr "Перейти к окну проверки синтаксиса\tAlt+C"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:909
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:921
-msgid "GoTo Main Window\tAlt-M"
-msgstr "Перейти в главное окно\tAlt+M"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:931
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:943
-msgid "Context Help\tCtrl-Shift-H"
-msgstr "Контекстная подсказка\tCtrl+Shift+H"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:945
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:957
-msgid "Visit the PerlMonks"
-msgstr "Посетить сайт PerlMonks"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:951
-msgid "&About"
-msgstr "&О программе"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:965
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:977
-msgid "Reflow Menu/Toolbar"
-msgstr "Переформатировать меню или тулбар"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:977
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:989
-msgid "Recent Projects"
-msgstr "Недавние проекты"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:981
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:993
-msgid "Run in &Padre"
-msgstr "Выполнить в &Padre"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:987
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:999
-msgid "Error: "
-msgstr "Ошибка: "
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:995
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1007
-msgid "Use PPI for Perl5 syntax highlighting"
-msgstr "Использовать PPI для подсветки синтаксиса Perl 5"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:1005
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1017
-msgid "Quick Find"
-msgstr "Быстрый поиск"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:1018
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1030
-msgid "Find Next\tF4"
-msgstr "Найти следующее\tF4"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu.pm:1022
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu.pm:1034
-msgid "Find Previous\tShift-F4"
-msgstr "Найти предыдущее\tShift+F4"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:93
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:93
-msgid "Term: "
-msgstr "Искать: "
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:96
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:96
-msgid "Dir: "
-msgstr "Каталог: "
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:101
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:101
-msgid "Pick &directory"
-msgstr "Выбрать &каталог"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Ack.pm:150
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Ack.pm:150
-msgid "Select directory"
-msgstr "Выбрать каталог"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Menu/Help.pm:42
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Plugin/Vi.pm:306
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Menu/Help.pm:42
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Plugin/Vi.pm:306
-msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
-msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm."
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:128
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:22
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Search.pm:128
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:22
-msgid "Find:"
-msgstr "Найти:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:157
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Search.pm:157
-msgid "Case insensitive"
-msgstr "Регистронезависимо"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Search.pm:161
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Search.pm:161
-msgid "Use regex"
-msgstr "Регулярные выражения"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:27
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:27
-msgid "Replace With:"
-msgstr "Заменить:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:29
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:29
-msgid "&Replace"
-msgstr "&Заменить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:34
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:34
-msgid "Replace &All"
-msgstr "Заменить &все"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:37
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:37
-msgid "Case &Insensitive"
-msgstr "Регистро&независимо"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:40
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:40
-msgid "&Use Regex"
-msgstr "&Регулярное выражение"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:43
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:43
-msgid "Search &Backwards"
-msgstr "Искать &назад"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:46
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:46
-msgid "Close Window on &hit"
-msgstr "&Закрыть окно при совпадении"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Find.pm:66
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Find.pm:66
-msgid "Search"
-msgstr "Искать"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:19
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:19
-msgid "All"
-msgstr "Все"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:23
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:23
-msgid "Class:"
-msgstr "Класс:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:24
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:125
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:24
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:125
-msgid "Snippet:"
-msgstr "Сниппет:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:25
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:25
-msgid "&Insert"
-msgstr "Вст&авить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:27
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:27
-msgid "&Add"
-msgstr "&Добавить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:39
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:39
-msgid "Snippets"
-msgstr "Сниппеты"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:123
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:123
-msgid "Category:"
-msgstr "Категория:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:124
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:124
-msgid "Name:"
-msgstr "Имя:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:126
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:126
-msgid "&Save"
-msgstr "&Сохранить"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Snippets.pm:137
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Snippets.pm:137
-msgid "Edit/Add Snippets"
-msgstr "Редактировать или добавить сниппеты"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:18
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:18
-msgid "Use Tabs"
-msgstr "Использовать табы"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:21
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:21
-msgid "TAB display size (in spaces)"
-msgstr "Размер табуляции (в пробелах)"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:25
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:25
-msgid "Indentation width (in columns)"
-msgstr "Размер отступов (в символах)"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:29
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:29
-msgid "Guess from current document"
-msgstr "На основе текущего документа"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:30
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:30
-msgid "Guess"
-msgstr "Угадать"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:33
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:33
-msgid "Max number of modules"
-msgstr "Максимальное число модулей"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:37
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:37
-msgid "Min number of modules"
-msgstr "Минимальное число модулей"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:41
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:41
-msgid "Open files:"
-msgstr "Открыть файлы:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:45
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:45
-msgid "Autoindent:"
-msgstr "Автоотступ:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:49
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:49
-msgid "Methods order:"
-msgstr "Порядок методов:"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Preferences.pm:53
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Preferences.pm:53
-msgid "Default word wrap on for each file"
-msgstr "Перевод строк по умолчанию для всех файлов"
-
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:24
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:24
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:30
 msgid "Existing bookmarks:"
 msgstr "Существующие закладки:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:38
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:38
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:42
 msgid "Delete &All"
 msgstr "&Удалить все"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:47
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:47
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:55
 msgid "Set Bookmark"
 msgstr "Установить закладку"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:47
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:47
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:56
 msgid "GoTo Bookmark"
 msgstr "Перейти к закладке"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/Bookmarks.pm:102
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/Bookmarks.pm:102
-#, perl-format
-msgid "%s line %s"
-msgstr "%s строка %s"
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:122
+msgid "Cannot set bookmark in unsaved document"
+msgstr "Невозможно установить закладку в несохраненном документе"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:30
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:30
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:133
+#, perl-format
+msgid "%s line %s: %s"
+msgstr "%s строка %s: :ы"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:171
+#, perl-format
+msgid "The bookmark '%s' no longer exists"
+msgstr "Закладка '%s' больше не существует"
+
+#: lib/Padre/Wx/Dialog/Find.pm:58
+msgid "Find"
+msgstr "Найти"
+
+#: lib/Padre/Wx/Dialog/Find.pm:76 lib/Padre/Wx/Dialog/Search.pm:132
+msgid "Find:"
+msgstr "Найти:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:91
+msgid "Replace with:"
+msgstr "Заменить:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:113
+msgid "&Find"
+msgstr "&Найти:"
+
+#: lib/Padre/Wx/Dialog/Find.pm:121
+msgid "&Replace"
+msgstr "&Заменить"
+
+#: lib/Padre/Wx/Dialog/Find.pm:146
+msgid "&Use Regex"
+msgstr "&Регулярное выражение"
+
+#: lib/Padre/Wx/Dialog/Find.pm:155
+msgid "Search &Backwards"
+msgstr "Искать &назад"
+
+#: lib/Padre/Wx/Dialog/Find.pm:164
+msgid "Close Window on &hit"
+msgstr "&Закрыть окно при совпадении"
+
+#: lib/Padre/Wx/Dialog/Find.pm:178
+msgid "Replace &all"
+msgstr "Заменить &все"
+
+#: lib/Padre/Wx/Dialog/Find.pm:189 lib/Padre/Wx/Dialog/Preferences.pm:500
+msgid "&Cancel"
+msgstr "&Отмена"
+
+#: lib/Padre/Wx/Dialog/Find.pm:347
+#, perl-format
+msgid "%s occurences were replaced"
+msgstr "заменено %s"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:26
 msgid "Module Name:"
 msgstr "Название модуля:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:34
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:34
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:29
 msgid "Author:"
 msgstr "Автор:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:38
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:38
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:32
 msgid "Email:"
-msgstr "Электронная почта:"
+msgstr "E-mail:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:42
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:42
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:35
 msgid "Builder:"
 msgstr "Сборщик:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:47
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:47
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:38
 msgid "License:"
 msgstr "Лицензия:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:52
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:52
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:41
 msgid "Parent Directory:"
 msgstr "Родительский каталог:"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:53
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:53
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:42
 msgid "Pick parent directory"
 msgstr "Выбрать родительский каталог"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:82
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:82
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:68
 msgid "Module Start"
 msgstr "Начало модуля"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:125
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:110
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr "Поле %s пропущено. Модуль не создан."
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:125
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:125
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:111
 msgid "missing field"
 msgstr "пропущено поле"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:144
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:144
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:139
 #, perl-format
 msgid "%s apparantly created. Do you want to open it now?"
-msgstr "% создан. Открыть?"
+msgstr "%s создан. Открыть?"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/ModuleStart.pm:145
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:145
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:140
 msgid "Done"
 msgstr "Готово"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:101
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:101
+#: lib/Padre/Wx/Dialog/PluginManager.pm:43 lib/Padre/Wx/Menu/Plugins.pm:34
+msgid "Plugin Manager"
+msgstr "Менеджер плагинов"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:174
+#, perl-format
+msgid "Error loading pod for class '%s': %s"
+msgstr "Ошибка загрузки pod для класса '%s': %s"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:229
+#: lib/Padre/Wx/Dialog/SessionManager.pm:210
+msgid "Name"
+msgstr "Имя"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:230
+msgid "Version"
+msgstr "Версия"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:290
+#: lib/Padre/Wx/Dialog/Preferences.pm:427 lib/Padre/Wx/Menu/Edit.pm:355
+msgid "Preferences"
+msgstr "Настройки"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:291
+#: lib/Padre/Wx/Dialog/SessionManager.pm:241
+#: lib/Padre/Wx/Dialog/SessionSave.pm:209
+msgid "Close"
+msgstr "Закрыть"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:465
+#: lib/Padre/Wx/Dialog/PluginManager.pm:475
+msgid "Show error message"
+msgstr "Показать сообщение об ошибке"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:489
 msgid "Disable"
 msgstr "Отключить"
 
-#: /home/jquelin/prog/padre/trunk/lib/Padre/Wx/Dialog/PluginManager.pm:107
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Dialog/PluginManager.pm:107
+#: lib/Padre/Wx/Dialog/PluginManager.pm:499
 msgid "Enable"
 msgstr "Включить"
 
-#: /home/jquelin/prog/padre/trunk/blib/lib/Padre/Wx/Main.pm:1185
-msgid "Need to have something selected"
-msgstr "Требуется что-либо выделить"
+#: lib/Padre/Wx/Dialog/Preferences.pm:37
+msgid "Automatic indentation style detection"
+msgstr "Автоматическое определение стиля для отступов"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:41
+msgid "Use Tabs"
+msgstr "Использовать табы"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:44
+msgid "TAB display size (in spaces):"
+msgstr "Размер табуляции (в пробелах):"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:47
+msgid "Indentation width (in columns):"
+msgstr "Размер отступов (в символах):"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:50
+msgid "Guess from current document:"
+msgstr "На основе текущего документа:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:51
+msgid "Guess"
+msgstr "Угадать"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:53
+msgid "Autoindent:"
+msgstr "Автоотступ:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:77
+msgid "Default word wrap on for each file"
+msgstr "Перевод строк по умолчанию для всех файлов"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:82
+msgid "Auto-fold POD markup when code folding enabled"
+msgstr "Автоматическое сворачивание POD при включенном сворачивание кода"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:87
+msgid "Perl beginner mode"
+msgstr "Режим новичка Perl"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:91
+msgid "Open files:"
+msgstr "Открыть файлы:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:95
+msgid "Open files in existing Padre"
+msgstr "Открыть файлы в существующем Padre"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:99
+msgid "Methods order:"
+msgstr "Порядок методов:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:102
+msgid "Preferred language for error diagnostics:"
+msgstr "Предпочитаемый язык для диагностики ошибок:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:139
+msgid "Colored text in output window (ANSI)"
+msgstr "Цветной текст в окне вывода (ANSI)"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:143
+msgid "Editor Font:"
+msgstr "Редактор шрифта:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:146
+msgid "Editor Current Line Background Colour:"
+msgstr "Редактор цвета фона текущей строки:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:196
+msgid "Settings Demo"
+msgstr "Настройки демо"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:280
+msgid "Enable?"
+msgstr "Включить?"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:295
+msgid "Crashed"
+msgstr "Возникли ошибки"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:328
+msgid ""
+"i.e.\n"
+"\tinclude directory:  -I<dir>\n"
+"\tenable tainting checks:  -T\n"
+"\tenable many useful warnings:  -w\n"
+"\tenable all warnings:  -W\n"
+"\tdisable all warnings:  -X\n"
+msgstr ""
+"например\n"
+"\tвключить каталог:  -I<dir>\n"
+"\tвключить taint-режима:  -T\n"
+"\tвключить предупреждения:  -w\n"
+"\tвключить все предупреждения:  -W\n"
+"\tотключить все предупреждения:  -X\n"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:338
+#: lib/Padre/Wx/Dialog/Preferences.pm:382
+msgid "Interpreter arguments:"
+msgstr "Параметры интерпретатора:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:344
+#: lib/Padre/Wx/Dialog/Preferences.pm:388
+msgid "Script arguments:"
+msgstr "Параметры скрипта"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:351
+msgid "Unsaved"
+msgstr "Без имени"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:352
+msgid "N/A"
+msgstr "N/A"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:371
+msgid "No Document"
+msgstr "Не документ"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:376
+msgid "Document name:"
+msgstr "Название документа:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:379
+msgid "Document location:"
+msgstr "Расположение документа:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:406
+msgid "Default"
+msgstr "По умолчанию"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:412
+#, perl-format
+msgid "Current Document: %s"
+msgstr "Текущий документ: %s"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:452
+msgid "Behaviour"
+msgstr "Поведение"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:455
+msgid "Appearance"
+msgstr "Внешний вид"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:458
+msgid "Run Parameters"
+msgstr "Параметры запуска"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:462
+msgid "Indentation"
+msgstr "Показывать отступы"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:489 lib/Padre/Wx/Dialog/Snippets.pm:114
+msgid "&Save"
+msgstr "&Сохранить"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:535
+msgid "new"
+msgstr "новый"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:536
+msgid "nothing"
+msgstr "ничего"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:537
+msgid "last"
+msgstr "последний"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:538
+msgid "no"
+msgstr "нет"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:539
+msgid "same_level"
+msgstr "похожий_уровень"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:540
+msgid "deep"
+msgstr "глубокий"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:541
+msgid "alphabetical"
+msgstr "алфавитный"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:542
+msgid "original"
+msgstr "оригинальный"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:543
+msgid "alphabetical_private_last"
+msgstr "алфавитный_последний_личный"
+
+#: lib/Padre/Wx/Dialog/Search.pm:151
+msgid "Previ&ous"
+msgstr "Преды&дущий"
+
+#: lib/Padre/Wx/Dialog/Search.pm:169
+msgid "&Next"
+msgstr "&Следующий"
+
+#: lib/Padre/Wx/Dialog/Search.pm:177
+msgid "Case &insensitive"
+msgstr "Регистро&независимо"
+
+#: lib/Padre/Wx/Dialog/Search.pm:181
+msgid "Use rege&x"
+msgstr "&Регулярное выражение"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:36
+msgid "Session Manager"
+msgstr "Менеджер сесиий"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:198
+msgid "List of sessions"
+msgstr "Список сессий"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:212
+msgid "Last update"
+msgstr "Дата обновления"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:239
+msgid "Open"
+msgstr "Открыть"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:240
+msgid "Delete"
+msgstr "Удалить"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:32
+msgid "Save session as..."
+msgstr "Сохранить сессию как..."
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:179
+msgid "Session name:"
+msgstr "Название сессии:"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:188
+msgid "Description:"
+msgstr "Описание:"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:208
+msgid "Save"
+msgstr "&Сохранить"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:18
+msgid "All"
+msgstr "Все"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:22
+msgid "Class:"
+msgstr "Класс:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
+msgid "Snippet:"
+msgstr "Сниппет:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:24
+msgid "&Insert"
+msgstr "Вст&авить"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:26
+msgid "&Add"
+msgstr "&Добавить"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:39
+msgid "Snippets"
+msgstr "Сниппеты"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:111
+msgid "Category:"
+msgstr "Категория:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:112
+msgid "Name:"
+msgstr "Имя:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:125
+msgid "Edit/Add Snippets"
+msgstr "Редактировать/добавить сниппеты"
+
+#: lib/Padre/Wx/Menu/Edit.pm:31
+msgid "&Undo"
+msgstr "&Отменить"
+
+#: lib/Padre/Wx/Menu/Edit.pm:43
+msgid "&Redo"
+msgstr "&Повторить"
+
+#: lib/Padre/Wx/Menu/Edit.pm:59
+msgid "Select"
+msgstr "Выбрать"
+
+#: lib/Padre/Wx/Menu/Edit.pm:78
+msgid "Mark selection start\tCtrl-["
+msgstr "Пометить начало выделения\tCtrl+["
+
+#: lib/Padre/Wx/Menu/Edit.pm:90
+msgid "Mark selection end\tCtrl-]"
+msgstr "Пометить конец выделения\tCtrl+]"
+
+#: lib/Padre/Wx/Menu/Edit.pm:102
+msgid "Clear selection marks"
+msgstr "Снять выделение"
+
+#: lib/Padre/Wx/Menu/Edit.pm:150
+msgid "&Goto\tCtrl-G"
+msgstr "&Перейти к\tCtrl+G"
+
+#: lib/Padre/Wx/Menu/Edit.pm:160
+msgid "&AutoComp\tCtrl-P"
+msgstr "Авто&заполнение\tCtrl+P"
+
+#: lib/Padre/Wx/Menu/Edit.pm:170
+msgid "&Brace matching\tCtrl-1"
+msgstr "Перейти к парной &скобке\tCtrl+1"
+
+#: lib/Padre/Wx/Menu/Edit.pm:180
+msgid "&Join lines\tCtrl-J"
+msgstr "&Объединить строки\tCtrl+J"
+
+#: lib/Padre/Wx/Menu/Edit.pm:190
+msgid "Snippets\tCtrl-Shift-A"
+msgstr "Сниппеты\tCtrl+Shift+A"
+
+#: lib/Padre/Wx/Menu/Edit.pm:238
+msgid "Tabs and Spaces"
+msgstr "Табы и пробелы"
+
+#: lib/Padre/Wx/Menu/Edit.pm:244
+msgid "Tabs to Spaces..."
+msgstr "Табы в пробелы..."
+
+#: lib/Padre/Wx/Menu/Edit.pm:256
+msgid "Spaces to Tabs..."
+msgstr "Пробелы в табы..."
+
+#: lib/Padre/Wx/Menu/Edit.pm:270
+msgid "Delete Trailing Spaces"
+msgstr "Удалить завершающие пробелы"
+
+#: lib/Padre/Wx/Menu/Edit.pm:283
+msgid "Delete Leading Spaces"
+msgstr "Удалить начальные пробелы"
+
+#: lib/Padre/Wx/Menu/Edit.pm:297
+msgid "Upper/Lower Case"
+msgstr "Верхний/нижний регистр"
+
+#: lib/Padre/Wx/Menu/Edit.pm:303
+msgid "Upper All\tCtrl-Shift-U"
+msgstr "Все в верхний регистр\tCtrl+Shift+U"
+
+#: lib/Padre/Wx/Menu/Edit.pm:315
+msgid "Lower All\tCtrl-U"
+msgstr "Все в нижний регистр\tCtrl+U"
+
+#: lib/Padre/Wx/Menu/Edit.pm:330
+msgid "Diff"
+msgstr "Различия"
+
+#: lib/Padre/Wx/Menu/Edit.pm:340
+msgid "Insert From File..."
+msgstr "Вставить из файла..."
+
+#: lib/Padre/Wx/Menu/Experimental.pm:30
+msgid "Disable Experimental Mode"
+msgstr "Отключить экспериментальный режим"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:44
+msgid "Refresh Menu"
+msgstr "Обновить меню"
+
+#: lib/Padre/Wx/Menu/Experimental.pm:55 lib/Padre/Wx/Menu/Experimental.pm:76
+msgid "Refresh Counter: "
+msgstr "Обновить счетчик: "
+
+#: lib/Padre/Wx/Menu/File.pm:31
+msgid "&New\tCtrl-N"
+msgstr "&Новый\tCtrl+N"
+
+#: lib/Padre/Wx/Menu/File.pm:48
+msgid "New..."
+msgstr "Новый..."
+
+#: lib/Padre/Wx/Menu/File.pm:55
+msgid "Perl 5 Script"
+msgstr "Perl 5 Скрипт"
+
+#: lib/Padre/Wx/Menu/File.pm:65
+msgid "Perl 5 Module"
+msgstr "Perl 5 Модуль"
+
+#: lib/Padre/Wx/Menu/File.pm:75
+msgid "Perl 5 Test"
+msgstr "Perl 5 Тест"
+
+#: lib/Padre/Wx/Menu/File.pm:85
+msgid "Perl 6 Script"
+msgstr "Perl 6 Скрипт"
+
+#: lib/Padre/Wx/Menu/File.pm:95
+msgid "Perl Distribution (Module::Starter)"
+msgstr "Подготовить дистрибутив (Module::Starter)"
+
+#: lib/Padre/Wx/Menu/File.pm:108
+msgid "&Open...\tCtrl-O"
+msgstr "&Открыть...\tCtrl+O"
+
+#: lib/Padre/Wx/Menu/File.pm:117
+msgid "Open Selection\tCtrl-Shift-O"
+msgstr "Открыть выделенное\tCtrl+Shift+O"
+
+#: lib/Padre/Wx/Menu/File.pm:121
+msgid "Open Session...\tCtrl-Alt-O"
+msgstr "Открыть сессию\tCtrl+Alt+O"
+
+#: lib/Padre/Wx/Menu/File.pm:138
+msgid "&Close\tCtrl-W"
+msgstr "&Закрыть\tCtrl+W"
+
+#: lib/Padre/Wx/Menu/File.pm:150
+msgid "Close All"
+msgstr "Закрыть все"
+
+#: lib/Padre/Wx/Menu/File.pm:161
+msgid "Close All but Current"
+msgstr "Закрыть все, кроме текущего"
+
+#: lib/Padre/Wx/Menu/File.pm:172
+msgid "Reload File"
+msgstr "Переоткрыть файл"
+
+#: lib/Padre/Wx/Menu/File.pm:187
+msgid "&Save\tCtrl-S"
+msgstr "&Сохранить\tCtrl+S"
+
+#: lib/Padre/Wx/Menu/File.pm:198
+msgid "Save &As...\tF12"
+msgstr "Сохранить &как...\tF12"
+
+#: lib/Padre/Wx/Menu/File.pm:209
+msgid "Save All"
+msgstr "Сохранить все"
+
+#: lib/Padre/Wx/Menu/File.pm:220
+msgid "Save Session...\tCtrl-Alt-S"
+msgstr "Сохранить сессию\tCtrl+Alt+S"
+
+#: lib/Padre/Wx/Menu/File.pm:232
+msgid "&Print..."
+msgstr "&Печать..."
+
+#: lib/Padre/Wx/Menu/File.pm:256
+msgid "Convert..."
+msgstr "Преобразовать..."
+
+#: lib/Padre/Wx/Menu/File.pm:262
+msgid "EOL to Windows"
+msgstr "Переводы строк Windows"
+
+#: lib/Padre/Wx/Menu/File.pm:274
+msgid "EOL to Unix"
+msgstr "Переводы строк Unix"
+
+#: lib/Padre/Wx/Menu/File.pm:286
+msgid "EOL to Mac Classic"
+msgstr "Переводы строк Mac"
+
+#: lib/Padre/Wx/Menu/File.pm:302
+msgid "&Recent Files"
+msgstr "&Недавние файлы"
+
+#: lib/Padre/Wx/Menu/File.pm:309
+msgid "Open All Recent Files"
+msgstr "Открыть все недавние файлы"
+
+#: lib/Padre/Wx/Menu/File.pm:319
+msgid "Clean Recent Files List"
+msgstr "Очистить список недавних файлов"
+
+#: lib/Padre/Wx/Menu/File.pm:336
+msgid "Document Statistics"
+msgstr "Статистика документа"
+
+#: lib/Padre/Wx/Menu/File.pm:353
+msgid "&Quit\tCtrl-Q"
+msgstr "&Выход\tCtrl+Q"
+
+#: lib/Padre/Wx/Menu/Help.pm:38
+msgid "Context Help\tF1"
+msgstr "Контекстная подсказка\tCtrl+Shift+H"
+
+#: lib/Padre/Wx/Menu/Help.pm:58
+msgid "Current Document"
+msgstr "Теущий документ"
+
+#: lib/Padre/Wx/Menu/Help.pm:70
+msgid "Visit the PerlMonks"
+msgstr "Посетить сайт PerlMonks"
+
+#: lib/Padre/Wx/Menu/Help.pm:80
+msgid "Report a New &Bug"
+msgstr "Сообщить о новом &баге"
+
+#: lib/Padre/Wx/Menu/Help.pm:87
+msgid "View All &Open Bugs"
+msgstr "Показать все &открытые баги"
+
+#: lib/Padre/Wx/Menu/Help.pm:97
+msgid "&About"
+msgstr "&О программе"
+
+#: lib/Padre/Wx/Menu/Help.pm:151
+msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
+msgstr ""
+"Все права сохранены. 2008-2009 Команда разработчиков Padre, перечисленных в "
+"Padre.pm."
+
+#: lib/Padre/Wx/Menu/Perl.pm:40
+msgid "Find Unmatched Brace"
+msgstr "Найти непарные скобки"
+
+#: lib/Padre/Wx/Menu/Perl.pm:89
+msgid "Vertically Align Selected"
+msgstr "Вертикальное выравнивание выделения"
+
+#: lib/Padre/Wx/Menu/Perl.pm:102
+msgid "Use PPI Syntax Highlighting"
+msgstr "Использовать PPI для подсветки синтаксиса"
+
+#: lib/Padre/Wx/Menu/Perl.pm:128
+msgid "Automatic bracket completion"
+msgstr "Автоматическое расставление скобок"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:49
+msgid "All available plugins on CPAN"
+msgstr "Все доступные плагины на CPAN"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:60
+msgid "Edit My Plugin"
+msgstr "Редактировать мои плагины"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:66
+msgid "Could not find the Padre::Plugin::My plugin"
+msgstr "Невозможно найти плагин Padre::Plugin::My"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:75
+msgid "Reload My Plugin"
+msgstr "Перезагрузить мой плагин"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:82 lib/Padre/Wx/Menu/Plugins.pm:85
+#: lib/Padre/Wx/Menu/Plugins.pm:86
+msgid "Reset My Plugin"
+msgstr "Сбросить мой плагин"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:101
+msgid "Reload All Plugins"
+msgstr "Перезагрузить все плагины"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:108
+msgid "(Re)load Current Plugin"
+msgstr "(Пере)загрузить текущий плагин"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:115
+msgid "Test A Plugin From Local Dir"
+msgstr "Проверить плагин в локальном каталоге"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:122
+msgid "Plugin Tools"
+msgstr "Инструменты плагинов"
+
+#: lib/Padre/Wx/Menu/Run.pm:31
+msgid "Run Script\tF5"
+msgstr "Выполнить скрипт\tF5"
+
+#: lib/Padre/Wx/Menu/Run.pm:43
+msgid "Run Script (debug info)\tShift-F5"
+msgstr "Выполнить скрипт (отладочная информация)\tShift+F5"
+
+#: lib/Padre/Wx/Menu/Run.pm:55
+msgid "Run Command\tCtrl-F5"
+msgstr "Выполнить команду\tCtrl+F5"
+
+#: lib/Padre/Wx/Menu/Run.pm:67
+msgid "Run Tests"
+msgstr "Выполнить тесты"
+
+#: lib/Padre/Wx/Menu/Run.pm:80
+msgid "Stop\tF6"
+msgstr "Ос&тановить"
+
+#: lib/Padre/Wx/Menu/Search.pm:31
+msgid "&Find\tCtrl-F"
+msgstr "&Найти\tCtrl+F"
+
+#: lib/Padre/Wx/Menu/Search.pm:43
+msgid "Find Next\tF3"
+msgstr "Найти следующее\tF3"
+
+#: lib/Padre/Wx/Menu/Search.pm:55
+msgid "Find Previous\tShift-F3"
+msgstr "Найти предыдущее\tShift+F3"
+
+#: lib/Padre/Wx/Menu/Search.pm:68
+msgid "Replace\tCtrl-R"
+msgstr "&Заменить"
+
+#: lib/Padre/Wx/Menu/Search.pm:81
+msgid "Quick Find"
+msgstr "Быстрый поиск"
+
+#: lib/Padre/Wx/Menu/Search.pm:102
+msgid "Find Next\tF4"
+msgstr "Найти следующее\tF4"
+
+#: lib/Padre/Wx/Menu/Search.pm:114
+msgid "Find Previous\tShift-F4"
+msgstr "Найти предыдущее\tShift+F4"
+
+#: lib/Padre/Wx/Menu/Search.pm:131
+msgid "Ac&k Search"
+msgstr "Искать"
+
+#: lib/Padre/Wx/Menu/View.pm:37
+msgid "Lock User Interface"
+msgstr "Заблокировать пользовательский интерфейс"
+
+#: lib/Padre/Wx/Menu/View.pm:52
+msgid "Show Output"
+msgstr "Показывать вывод"
+
+#: lib/Padre/Wx/Menu/View.pm:64
+msgid "Show Functions"
+msgstr "Показывать функции"
+
+#: lib/Padre/Wx/Menu/View.pm:82
+msgid "Show Outline"
+msgstr "Показывать схему"
+
+#: lib/Padre/Wx/Menu/View.pm:94
+msgid "Show Directory Tree"
+msgstr "Показать дерево каталога"
+
+#: lib/Padre/Wx/Menu/View.pm:106
+msgid "Show Syntax Check"
+msgstr "Показывать проверку синтаксиса"
+
+#: lib/Padre/Wx/Menu/View.pm:118
+msgid "Show Error List"
+msgstr "Показать список ошибок"
+
+#: lib/Padre/Wx/Menu/View.pm:132
+msgid "Show StatusBar"
+msgstr "Показывать статусную строку"
+
+#: lib/Padre/Wx/Menu/View.pm:149
+msgid "View Document As..."
+msgstr "Просмотреть документ как..."
+
+#: lib/Padre/Wx/Menu/View.pm:183
+msgid "Show Line Numbers"
+msgstr "Показывать номера строк"
+
+#: lib/Padre/Wx/Menu/View.pm:195
+msgid "Show Code Folding"
+msgstr "Показывать сворачивание кода"
+
+#: lib/Padre/Wx/Menu/View.pm:207
+msgid "Show Call Tips"
+msgstr "Показывать подсказки по вызову функций"
+
+#: lib/Padre/Wx/Menu/View.pm:222
+msgid "Show Current Line"
+msgstr "Подсветка текущей строки"
+
+#: lib/Padre/Wx/Menu/View.pm:237
+msgid "Show Newlines"
+msgstr "Показывать переводы строк"
+
+#: lib/Padre/Wx/Menu/View.pm:249
+msgid "Show Whitespaces"
+msgstr "Показывать пробелы"
+
+#: lib/Padre/Wx/Menu/View.pm:261
+msgid "Show Indentation Guide"
+msgstr "Показывать отступы"
+
+#: lib/Padre/Wx/Menu/View.pm:273
+msgid "Word-Wrap"
+msgstr "Переводы длинных строк"
+
+#: lib/Padre/Wx/Menu/View.pm:288
+msgid "Increase Font Size\tCtrl-+"
+msgstr "Увеличить размер шрифта\tCtrl++"
+
+#: lib/Padre/Wx/Menu/View.pm:300
+msgid "Decrease Font Size\tCtrl--"
+msgstr "Уменьшить размер шрифта\tCtrl+-"
+
+#: lib/Padre/Wx/Menu/View.pm:312
+msgid "Reset Font Size\tCtrl-/"
+msgstr "Установить размер шрифта по умолчанию\tCtrl+/"
+
+#: lib/Padre/Wx/Menu/View.pm:327
+msgid "Set Bookmark\tCtrl-B"
+msgstr "Поместить в закладки\tCtrl+B"
+
+#: lib/Padre/Wx/Menu/View.pm:339
+msgid "Goto Bookmark\tCtrl-Shift-B"
+msgstr "Перейти к закладке\tCtrl+Shift+B"
+
+#: lib/Padre/Wx/Menu/View.pm:355
+msgid "Style"
+msgstr "Стиль"
+
+#: lib/Padre/Wx/Menu/View.pm:359
+msgid "Padre"
+msgstr "Padre"
+
+#: lib/Padre/Wx/Menu/View.pm:360
+msgid "Night"
+msgstr "Night"
+
+#: lib/Padre/Wx/Menu/View.pm:361
+msgid "Ultraedit"
+msgstr "Ultraedit"
+
+#: lib/Padre/Wx/Menu/View.pm:362
+msgid "Notepad++"
+msgstr "Notepad++"
+
+#: lib/Padre/Wx/Menu/View.pm:410
+msgid "Language"
+msgstr "Язык"
+
+#: lib/Padre/Wx/Menu/View.pm:417
+msgid "System Default"
+msgstr "Системные установки"
+
+#: lib/Padre/Wx/Menu/View.pm:464
+msgid "&Full Screen\tF11"
+msgstr "Полный &экран\tF11"
+
+#: lib/Padre/Wx/Menu/Window.pm:46
+msgid "Next File\tCtrl-TAB"
+msgstr "Следующий файл\tCtrl+Tab"
+
+#: lib/Padre/Wx/Menu/Window.pm:55
+msgid "Previous File\tCtrl-Shift-TAB"
+msgstr "Предыдущий файл\tCtrl+Shift+Tab"
+
+#: lib/Padre/Wx/Menu/Window.pm:64
+msgid "Last Visited File\tCtrl-6"
+msgstr "Последний открытый файл\tCtrl+6"
+
+#: lib/Padre/Wx/Menu/Window.pm:73
+msgid "Right Click\tAlt-/"
+msgstr "Правый клик\tAlt-/"
+
+#: lib/Padre/Wx/Menu/Window.pm:90
+msgid "GoTo Subs Window"
+msgstr "Перейти к окну подпрограмм\tAlt+S"
+
+#: lib/Padre/Wx/Menu/Window.pm:103
+msgid "GoTo Outline Window\tAlt-L"
+msgstr "Перейти к окну схемы\tAlt+O"
+
+#: lib/Padre/Wx/Menu/Window.pm:115
+msgid "GoTo Output Window\tAlt-O"
+msgstr "Перейти к окну вывода\tAlt+O"
+
+#: lib/Padre/Wx/Menu/Window.pm:125
+msgid "GoTo Syntax Check Window\tAlt-C"
+msgstr "Перейти к окну проверки синтаксиса\tAlt+C"
+
+#: lib/Padre/Wx/Menu/Window.pm:140
+msgid "GoTo Main Window\tAlt-M"
+msgstr "Перейти в главное окно\tAlt+M"
