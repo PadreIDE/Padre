@@ -11,8 +11,6 @@ use Padre::Task::LWP ();
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Task::LWP';
 
-# TODO this should probably run later,
-# not when the plugin is enabled
 sub new {
 	my $class = shift;
 
