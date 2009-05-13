@@ -1859,7 +1859,7 @@ msgstr "Desactiveer loggen"
 
 #: lib/Padre/Plugin/Devel.pm:67
 msgid "Enable trace when logging"
-msgstr "Activeer opsporen tijdens het loggen\"\v\"a"
+msgstr "Activeer opsporen tijdens het loggen"
 
 #: lib/Padre/Plugin/Devel.pm:68
 msgid "Disable trace"
