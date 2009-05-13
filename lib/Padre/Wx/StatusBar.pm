@@ -11,6 +11,13 @@ use Padre::Current ();
 our $VERSION = '0.35';
 use base 'Wx::StatusBar';
 
+use constant {
+	FILENAME => 0,
+	MIMETYPE => 1,
+	NEWLINE  => 2,
+	POSTRING => 3,
+};
+
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -27,10 +34,10 @@ sub new {
 
 sub clear {
 	my $self = shift;
-	$self->SetStatusText( "", 0 );
-	$self->SetStatusText( "", 1 );
-	$self->SetStatusText( "", 2 );
-	$self->SetStatusText( "", 3 );
+	$self->SetStatusText( "", FILENAME );
+	$self->SetStatusText( "", MIMETYPE );
+	$self->SetStatusText( "", NEWLINE  );
+	$self->SetStatusText( "", POSTRING );
 	return;
 }
 
@@ -71,10 +78,10 @@ sub refresh {
 	my $postring = Wx::gettext('L:') . ( $line + 1 ) . ' ' . Wx::gettext('Ch:') . $char;
 
 	# Write the new values into the status bar and update sizes
-	$self->SetStatusText( "$modified $filename", 0 );
-	$self->SetStatusText( $mimetype,             1 );
-	$self->SetStatusText( $newline,              2 );
-	$self->SetStatusText( $postring,             3 );
+	$self->SetStatusText( "$modified $filename", FILENAME );
+	$self->SetStatusText( $mimetype,             MIMETYPE );
+	$self->SetStatusText( $newline,              NEWLINE  );
+	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
 		( length($mimetype) ) * $width,
