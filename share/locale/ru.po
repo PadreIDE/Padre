@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre Russian Translation 2 for Padre 0.35\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-13 11:39+0400\n"
+"POT-Creation-Date: 2009-05-13 13:12+0400\n"
 "Last-Translator: Anatoly Sharifulin <sharifulin@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -147,27 +147,27 @@ msgstr "Клингонский"
 
 #: lib/Padre/PluginHandle.pm:71 lib/Padre/Wx/Dialog/PluginManager.pm:468
 msgid "error"
-msgstr "ошибка"
+msgstr "Ошибка"
 
 #: lib/Padre/PluginHandle.pm:72
 msgid "unloaded"
-msgstr "незагружен"
+msgstr "Не загружен"
 
 #: lib/Padre/PluginHandle.pm:73
 msgid "loaded"
-msgstr "загружен"
+msgstr "Загружен"
 
 #: lib/Padre/PluginHandle.pm:74 lib/Padre/Wx/Dialog/PluginManager.pm:478
 msgid "incompatible"
-msgstr "несовместим"
+msgstr "Несовместим"
 
 #: lib/Padre/PluginHandle.pm:75 lib/Padre/Wx/Dialog/PluginManager.pm:502
 msgid "disabled"
-msgstr "отключен"
+msgstr "Отключен"
 
 #: lib/Padre/PluginHandle.pm:76 lib/Padre/Wx/Dialog/PluginManager.pm:492
 msgid "enabled"
-msgstr "подключен"
+msgstr "Подключен"
 
 #: lib/Padre/PluginHandle.pm:171
 #, perl-format
@@ -219,8 +219,7 @@ msgid ""
 "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be "
 "instantiated"
 msgstr ""
-"Плагин:%s - Несовместим с Padre::Plugin API. Плагин не может быть "
-"обработан"
+"Плагин:%s - Несовместим с Padre::Plugin API. Плагин не может быть обработан"
 
 #: lib/Padre/PluginManager.pm:503
 #, perl-format
@@ -670,9 +669,7 @@ msgstr "Номер строки:"
 msgid ""
 "Cannot open %s as it is over the arbitrary file size limit of Padre which is "
 "currently %s"
-msgstr ""
-"Невозможно открыть %s из-за ограничения Padre на длину файла: "
-"%s"
+msgstr "Невозможно открыть %s из-за ограничения Padre на длину файла: %s"
 
 #: lib/Padre/Wx/Main.pm:2261
 msgid "Nothing selected. Enter what should be opened:"
@@ -710,7 +707,8 @@ msgstr "Существует"
 
 #: lib/Padre/Wx/Main.pm:2552
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
-msgstr "Со времени последнего сохранения файл на диске изменился. Перезаписать?"
+msgstr ""
+"Со времени последнего сохранения файл на диске изменился. Перезаписать?"
 
 #: lib/Padre/Wx/Main.pm:2553 lib/Padre/Wx/Main.pm:3608
 msgid "File not in sync"
@@ -1086,7 +1084,7 @@ msgstr "Закрыть"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:465
 #: lib/Padre/Wx/Dialog/PluginManager.pm:475
 msgid "Show error message"
-msgstr "Показать сообщение об ошибке"
+msgstr "Показывать сообщение об ошибке"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:489
 msgid "Disable"
@@ -1609,7 +1607,9 @@ msgstr "&О программе"
 
 #: lib/Padre/Wx/Menu/Help.pm:151
 msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
-msgstr "Все права сохранены. 2008-2009 Команда разработчиков Padre, перечисленных в Padre.pm."
+msgstr ""
+"Все права сохранены. 2008-2009 Команда разработчиков Padre, перечисленных в "
+"Padre.pm."
 
 #: lib/Padre/Wx/Menu/Perl.pm:40
 msgid "Find Unmatched Brace"
@@ -1734,7 +1734,7 @@ msgstr "Показывать схему"
 
 #: lib/Padre/Wx/Menu/View.pm:94
 msgid "Show Directory Tree"
-msgstr "Показать дерево каталога"
+msgstr "Показывать дерево каталога"
 
 #: lib/Padre/Wx/Menu/View.pm:106
 msgid "Show Syntax Check"
@@ -1742,7 +1742,7 @@ msgstr "Показывать проверку синтаксиса"
 
 #: lib/Padre/Wx/Menu/View.pm:118
 msgid "Show Error List"
-msgstr "Показать список ошибок"
+msgstr "Показывать список ошибок"
 
 #: lib/Padre/Wx/Menu/View.pm:132
 msgid "Show StatusBar"
