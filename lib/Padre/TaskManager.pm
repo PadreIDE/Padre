@@ -68,6 +68,8 @@ use warnings;
 
 our $VERSION = '0.35';
 
+use Params::Util qw{_INSTANCE};
+
 # According to Wx docs,
 # this MUST be loaded before Wx,
 # so this also happens in the script.
@@ -149,10 +151,17 @@ sub new {
 # This move of the event setup was a wild guess that changing the
 # scope might help. --Steffen
 sub _init_events {
-	my $main = shift; @_ = ();
-  	if ( not $EVENTS_INITIALIZED ) {
-		Wx::Event::EVT_COMMAND( $main, -1, $TASK_DONE_EVENT,  \&on_task_done_event );
-		Wx::Event::EVT_COMMAND( $main, -1, $TASK_START_EVENT, \&on_task_start_event );
+	my $main = shift;
+	@_ = ();
+  	unless ( $EVENTS_INITIALIZED ) {
+		Wx::Event::EVT_COMMAND( $main, -1,
+			$TASK_DONE_EVENT,
+			\&on_task_done_event,
+		);
+		Wx::Event::EVT_COMMAND( $main, -1,
+			$TASK_START_EVENT,
+			\&on_task_start_event,
+		);
 		Wx::Event::EVT_CLOSE( $main, \&on_close );
 		$EVENTS_INITIALIZED = 1;
 	}
@@ -173,15 +182,13 @@ proxy to this method for convenience.
 
 sub schedule {
 	my $self = shift;
-	my $task = shift;
-	if ( not ref($task) or not $task->isa("Padre::Task") ) {
-		die "Invalid task scheduled!";    # TODO: grace
-	}
+	my $task = _INSTANCE(shift, 'Padre::Task')
+		or die "Invalid task scheduled!"; # TODO: grace
 
-	# cleanup old threads and refill the pool
+	# Cleanup old threads and refill the pool
 	$self->reap();
 
-	# prepare and stop if vetoes
+	# Prepare and stop if vetoes
 	my $return = $task->prepare();
 	if ( $return and $return =~ /^break$/i ) {
 		return;
@@ -229,9 +236,10 @@ typically need to call this.
 
 sub setup_workers {
 	my $self = shift;
+	@_ = (); # Avoid "Scalars leaked"
+
 	return unless $self->use_threads;
 
-	@_ = ();    # avoid "Scalars leaked"
 	my $main = Padre->ide->wx->main;
 
 	# Ensure minimum no. workers
@@ -255,9 +263,9 @@ sub setup_workers {
 sub _make_worker_thread {
 	my $self = shift;
 	my $main = shift;
-	return if not $self->use_threads;
+	return unless $self->use_threads;
 
-	@_ = ();    # avoid "Scalars leaked"
+	@_ = (); # avoid "Scalars leaked"
 	my $worker = threads->create( { 'exit' => 'thread_only' }, \&worker_loop, $main, $self->task_queue );
 	push @{ $self->{workers} }, $worker;
 }

@@ -3,8 +3,8 @@ package Padre::PluginHandle;
 use 5.008;
 use strict;
 use warnings;
-use Carp 'croak';
-use Params::Util qw{_IDENTIFIER _CLASS _INSTANCE};
+use Carp           'croak';
+use Params::Util   qw{_STRING _IDENTIFIER _CLASS _INSTANCE};
 use Padre::Current ();
 use Padre::Locale  ();
 
@@ -53,7 +53,7 @@ sub new {
 
 sub status {
 	my $self = shift;
-	if (@_) {
+	if ( @_ ) {
 		unless ( _STATUS( $_[0] ) ) {
 			croak("Invalid PluginHandle status '$_[0]'");
 		}
@@ -113,16 +113,16 @@ sub can_disable {
 
 sub can_editor {
 	$_[0]->{status} eq 'enabled'
-		and $_[0]->{object}->can('editor_enable');
+	and
+	$_[0]->{object}->can('editor_enable');
 }
 
 ######################################################################
 # Interface Methods
 
 sub plugin_icon {
-	my $self  = shift;
-	my $class = $self->class;
-	return $class->plugin_icon if $class->can('plugin_icon');
+	my $class = shift->class;
+	$class->can('plugin_icon') and $class->plugin_icon;
 }
 
 sub plugin_name {
@@ -138,7 +138,7 @@ sub plugin_name {
 sub version {
 	my $self   = shift;
 	my $object = $self->object;
-	if ($object) {
+	if ( $object ) {
 		return $object->VERSION;
 	} else {
 		return '???';
@@ -178,17 +178,17 @@ sub enable {
 
 	# If the plugin defines document types, register them
 	my @documents = $self->object->registered_documents;
-	if (@documents) {
+	if ( @documents ) {
 		Class::Autouse->load('Padre::Document');
 	}
-	while (@documents) {
+	while ( @documents ) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
 		$Padre::Document::MIME_CLASS{$type} = $class;
 	}
-	
+
 	# If the plugin has a hook for the context menu, cache it
-	if ($self->object->can('event_on_context_menu')) {
+	if ( $self->object->can('event_on_context_menu') ) {
 		my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
 		$cxt_menu_hook_cache->{$name} = 1;
 	}
@@ -246,15 +246,15 @@ sub disable {
 # Support Methods
 
 sub _STATUS {
-	(   defined $_[0] and !ref $_[0] and +{
-			error        => 1,
-			unloaded     => 1,
-			loaded       => 1,
-			incompatible => 1,
-			disabled     => 1,
-			enabled      => 1,
-			}->{ $_[0] }
-	) ? $_[0] : undef;
+	_STRING($_[0]) or return undef;
+	return {
+		error        => 1,
+		unloaded     => 1,
+		loaded       => 1,
+		incompatible => 1,
+		disabled     => 1,
+		enabled      => 1,
+	}->{$_[0]};
 }
 
 1;

@@ -60,8 +60,6 @@ use Class::Autouse qw{
 	Padre::Project::Null
 	Padre::Project::Perl
 	Padre::PluginManager
-	Padre::Task
-	Padre::Task::PPI
 	Padre::Task::PPI::FindUnmatchedBrace
 	Padre::Task::PPI::FindVariableDeclaration
 	Padre::Task::PPI::LexicalReplaceVariable

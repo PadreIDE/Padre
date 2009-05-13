@@ -44,10 +44,10 @@ Padre::Plugin - Padre Plugin API 2.1
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
-use File::Spec::Functions qw{ catdir };
+use Carp         ();
+use File::Spec   ();
 use Scalar::Util ();
-use Params::Util ( '_HASH0', '_INSTANCE' );
+use Params::Util qw{_HASH0 _INSTANCE};
 use YAML::Tiny   ();
 use Padre::DB    ();
 use Padre::Wx    ();
@@ -76,9 +76,9 @@ of the plugin.
 =cut
 
 sub plugin_name {
-	my $class = ref( $_[0] ) || $_[0];
+	my $class = ref $_[0] || $_[0];
 	my @words = $class =~ /(\w+)/gi;
-	my $name = pop @words;
+	my $name  = pop @words;
 	$name =~ s/([a-z])([A-Z])/$1 $2/g;
 	$name =~ s/([A-Z]+)([A-Z][a-z]+)/$1 $2/g;
 	return $name;
@@ -94,8 +94,6 @@ C<Wx::Bitmap> object.
 
 There is no default default implementation, meaning that a default
 plugin icon will be displayed for the plugin.
-
-
 
 =head2 plugin_locale_directory
 
@@ -114,15 +112,22 @@ C<Padre::Plugin::Vi>.
 =cut
 
 sub plugin_locale_directory {
-	my ($self) = @_;
-	my $pkg = ref($self) || $self;
+	my $pkg = ref $_[0] || $_[0];
 	$pkg =~ s/::/-/g;
 
+	# Find the distribution directory
 	require File::ShareDir::PAR;
-	my $distdir;
-	eval { $distdir = File::ShareDir::PAR::dist_dir($pkg); };
-	return $@ ? undef : catdir( $distdir, 'share', 'locale' );
+	my $distdir = eval {
+		File::ShareDir::PAR::dist_dir($pkg);
+	};
+	return undef if $@;
+
+	return File::Spec->catdir(
+		$distdir, 'share', 'locale',
+	);
 }
+
+=pod
 
 =head2 padre_interfaces
 
@@ -180,12 +185,12 @@ object.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE( $ide, 'Padre' ) ) {
+	unless ( _INSTANCE($ide, 'Padre') ) {
 		Carp::croak("Did not provide a Padre ide object");
 	}
 
 	# Create the basic object
-	my $self = bless {}, $class;
+	my $self = bless { }, $class;
 
 	# Store the link back to the IDE
 	$IDE{ Scalar::Util::refaddr($self) } = $ide;
@@ -194,7 +199,7 @@ sub new {
 }
 
 sub DESTROY {
-	delete $IDE{ Scalar::Util::refaddr( $_[0] ) };
+	delete $IDE{ Scalar::Util::refaddr($_[0]) };
 }
 
 #####################################################################

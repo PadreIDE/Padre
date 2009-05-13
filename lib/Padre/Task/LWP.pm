@@ -77,6 +77,25 @@ sub new {
 	return $self;
 }
 
+=head2 request
+
+The C<request> method returns the L<HTTP::Request> object that was provided
+to the constructor.
+
+=head2 response
+
+Before the C<run> method has been fired the C<response> method returns
+C<undef>.
+
+After the C<run> method has been fired the C<response> method returns the
+L<HTTP::Response> object for the L<LWP::UserAgent> request.
+
+Typically, you would use this in the C<finish> method for the task,
+if you wish to take any further actions in L<Padre> based on the result
+of the HTTP call.
+
+=cut
+
 
 
 
@@ -92,6 +111,11 @@ sub run {
 	$self->{response} = LWP::UserAgent->new(
 		agent => "Padre/$VERSION",
 	)->request($self->request);
+
+	# Remove the CODE references from the response.
+	# They aren't needed any more, and they won't survive
+	# the serialization back to the main thread.
+	delete $self->{response}->{handlers};
 
 	return 1;
 }

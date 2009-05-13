@@ -85,9 +85,15 @@ sub plugin_name {
 
 sub plugin_enable {
 	my $self = shift;
+	$self->SUPER::plugin_enable;
 
 	# Load the config
 	$self->{config} = $self->config_read;
+
+	# Trigger the ping at enable time.
+	# Not sure how load'y this will be, but lets try it
+	# for now and see how things end up.
+	$self->_ping;
 
 	return 1;
 }
@@ -100,13 +106,17 @@ sub plugin_disable {
 		$self->config_write( delete $self->{config} );
 	}
 
-	return 1;
+	# Make sure our task class is unloaded
+	require Class::Unload;
+	Class::Unload->unload('Padre::Plugin::PopularityContext::Ping');
+
+	$self->SUPER::plugin_disable;
 }
 
 sub menu_plugins_simple {
-	my $self = shift;
-	return $self->plugin_name => [
+	return shift->plugin_name => [
 		Wx::gettext("About") => '_about',
+		Wx::gettext("Ping")  => '_ping',
 	];
 }
 
@@ -126,14 +136,14 @@ sub _about {
 	return;
 }
 
-sub _submit {
+sub _ping {
 	my $self = shift;
 
 	# Send the request
 	require Padre::Plugin::PopularityContest::Ping;
-	Padre::Padre::Plugin::PopularityContest::Ping->new->schedule;
+	Padre::Plugin::PopularityContest::Ping->new->schedule;
 
-	return 1;
+	return;
 }
 
 1;
