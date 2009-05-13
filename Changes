@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 
     Output should be blank by default at startup (#351) (JQUELIN)
     No padre version in window title (#349) (JQUELIN)
+    Added generic web task Padre::Task::LWP (ADAMK)
+    Implemented first-generation Popularity Contest task (ADAMK)
 
 v0.35 2009.05.08
 

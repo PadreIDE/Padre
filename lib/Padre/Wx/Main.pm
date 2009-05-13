@@ -668,15 +668,18 @@ sub single_instance_command {
 		$self->Iconize(0) if $self->IsIconized;
 
 		# now, let's raise padre
-		$self->Show;
+
+		# We have to do both or (on Win32 at least)
+		# the Raise call only works the first time.
+		$self->Lower;
 		$self->Raise;
 
 	} elsif ( $1 eq 'open' ) {
 		if ( -f $line ) {
-
 			# If a file is already loaded switch to it instead
 			$self->notebook->show_file($line)
-				or $self->setup_editors($line);
+			or
+			$self->setup_editors($line);
 		}
 
 	} else {

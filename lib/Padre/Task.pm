@@ -1,33 +1,5 @@
 package Padre::Task;
 
-use strict;
-use warnings;
-
-our $VERSION = '0.35';
-
-require Padre;
-require Padre::Wx;
-
-use Storable     ();
-use IO::Handle   ();
-use IO::String   ();
-use Scalar::Util ();
-use Params::Util '_INSTANCE';
-
-BEGIN {
-
-	# Hack IO::String to be a real IO::Handle
-	unless ( IO::String->isa('IO::Handle') ) {
-		@IO::String::ISA = qw{IO::Handle IO::Seekable};
-	}
-}
-
-use Class::XSAccessor constructor => 'new';
-
-# set up the stdout/stderr printing events
-our $STDOUT_EVENT : shared = Wx::NewEventType();
-our $STDERR_EVENT : shared = Wx::NewEventType();
-
 =pod
 
 =head1 NAME
@@ -128,7 +100,44 @@ So anything you store in the task object while in the worker thread
 is still there when C<finish> runs in the main thread. (Confer the
 CAVEATS section below!)
 
-=head1 INSTANCE METHODS
+=head1 METHODS
+
+=cut
+
+use strict;
+use warnings;
+use Storable     ();
+use IO::Handle   ();
+use IO::String   ();
+use Scalar::Util ();
+use Params::Util '_INSTANCE';
+
+our $VERSION = '0.35';
+
+# TODO: Why are there require?
+require Padre;
+require Padre::Wx;
+
+BEGIN {
+	# Hack IO::String to be a real IO::Handle
+	unless ( IO::String->isa('IO::Handle') ) {
+		@IO::String::ISA = qw{IO::Handle IO::Seekable};
+	}
+}
+
+use Class::XSAccessor constructor => 'new';
+
+# set up the stdout/stderr printing events
+our $STDOUT_EVENT : shared = Wx::NewEventType();
+our $STDERR_EVENT : shared = Wx::NewEventType();
+
+=pod
+
+=head2 new
+
+C<Padre::Task> provides a basic constructor for you to
+inherit. It simply stores all provided data in the internal
+hash reference.
 
 =head2 schedule
 
@@ -140,7 +149,7 @@ Calling this multiple times will submit multiple jobs.
 
 =cut
 
-{
+SCOPE: {
 	my $events_initialized = 0;
 
 	sub schedule {
@@ -166,12 +175,6 @@ Calling this multiple times will submit multiple jobs.
 }
 
 =pod
-
-=head2 new
-
-C<Padre::Task> provides a basic constructor for you to
-inherit. It simply stores all provided data in the internal
-hash reference.
 
 =head2 run
 
@@ -259,7 +262,9 @@ SCOPE: {
 		if ( exists $self->{_process_class} ) {
 			require Carp;
 			Carp::croak(
-				"The '_process_class' slot in a Padre::Task" . " object is reserved for usage by Padre::Task" );
+				"The '_process_class' slot in a Padre::Task" .
+				" object is reserved for usage by Padre::Task"
+			);
 		}
 
 		$self->{_process_class} = $class;
@@ -502,7 +507,8 @@ by simply running:
 =cut
 
 sub post_event {
-	my @stuff = @_; @_ = ();
+	my @stuff = @_;
+	@_ = ();
 	Wx::PostEvent(
 		$Padre::TaskManager::_main,
 		Wx::PlThreadEvent->new( -1, $stuff[1], $stuff[2] ),

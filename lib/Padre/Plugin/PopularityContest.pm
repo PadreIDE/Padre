@@ -37,9 +37,9 @@ There are some things we can be B<very> clear about.
 you first explicitly telling us we are allowed to collect that type
 of information.
 
-2. We will B<NEVER> do any information that would result in
-a copyright violation. That means we won't collect, record, or
-transmit the contents of any file.
+2. We will B<NEVER> copy any information that would result in
+a violation of your legal rights, including copyright.
+That means we won't collect, record, or transmit the contents of any file.
 
 3. We will B<NEVER> transmit the name of any file, or the cryptographic
 hash of any file, or any other unique identifier of any file, although we
@@ -70,10 +70,14 @@ use warnings;
 use Padre::Plugin ();
 
 our $VERSION = '0.35';
-use base 'Padre::Plugin';
+our @ISA     = 'Padre::Plugin';
 
-#####################################################################
-# Constructor
+
+
+
+
+######################################################################
+# Padre::Plugin Methods
 
 sub plugin_name {
 	'Padre Popularity Contest';
@@ -102,13 +106,18 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		Wx::gettext("About") => 'show_about',
-
-		#		Wx::gettext("Submit")      => 'submit',
+		Wx::gettext("About") => '_about',
 	];
 }
 
-sub show_about {
+
+
+
+
+######################################################################
+# Private Methods
+
+sub _about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName(__PACKAGE__);
@@ -117,14 +126,14 @@ sub show_about {
 	return;
 }
 
-sub submit {
+sub _submit {
 	my $self = shift;
-	require Padre::Task::HTTPClient;
-	my $task = Padre::Task::HTTPClient->new;
-	$task->schedule;
-	my $main = Padre->ide->wx->main;
-	$main->message("Data will be submitted in the background. Thank you.");
-	return;
+
+	# Send the request
+	require Padre::Plugin::PopularityContest::Ping;
+	Padre::Padre::Plugin::PopularityContest::Ping->new->schedule;
+
+	return 1;
 }
 
 1;

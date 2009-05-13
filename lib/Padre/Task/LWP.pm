@@ -33,7 +33,7 @@ use Padre::Task    ();
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Task';
 
-use Class::XSAccessors
+use Class::XSAccessor
 	getters => {
 		request  => 'request',
 		response => 'response',
