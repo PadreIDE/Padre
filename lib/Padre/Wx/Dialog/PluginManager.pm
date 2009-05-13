@@ -172,7 +172,7 @@ sub _on_list_item_selected {
 	my $html
 		= $@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
-		: $output->{original_content};
+		: $output->body;
 	$self->_whtml->SetPage($html);
 
 	# update buttons

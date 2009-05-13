@@ -7,7 +7,9 @@ use Config             ();
 use IO::Scalar         ();
 use File::Spec         ();
 use Pod::Simple::XHTML ();
-use Padre::Document    ();
+use Pod::Abstract;     ();
+
+use Padre::DocBrowser::document    ();
 
 our $VERSION = '0.35';
 
@@ -33,8 +35,20 @@ sub resolve {
 	my $ref  = shift;
 	my $path = $self->_module_to_path($ref);
 	if ($path) {
-		my $doc = Padre::Document->new( filename => $path );
-		$doc->set_mimetype('application/x-pod');
+		my $doc = Padre::DocBrowser::document->load( $path );
+		$doc->mimetype('application/x-pod');
+		my $pa = Pod::Abstract->load_string( $doc->body );
+		;
+		my ($name) = $pa->select('/head1[@heading =~ {NAME}]' );
+		if ($name) {
+			my $text= $name->text;
+			my ($module) = $text =~ /([^\s]+)/g;
+			$doc->title( $module );
+		}
+		unless ( $pa->select('/pod') ) {
+			#warn "$path has no pod";
+		}
+		
 		return $doc;
 	}
 	return;
@@ -43,38 +57,26 @@ sub resolve {
 sub generate {
 	my $self = shift;
 	my $doc  = shift;
-	my $r    = Padre::Document->new;
-	$r->{original_content} = $doc->{original_content};
-	$r->set_mimetype('application/x-pod');
-	return $r;
-
+	#Carp::croak "DEPRECATED";
+	## No-op ?
+	$doc->mimetype( 'application/x-pod' );
+	return $doc;
 	#### TODO , pod extract / pod tidy ?
-	my $response = Padre::Document->new;
-	$response->set_mimetype('application/x-pod');
-	my $parser = Pod::Simple->new;
-	my $pod    = '';
-	$parser->output_fh( IO::Scalar->new( \$pod ) );
-	$parser->parse_string_document( $doc->{original_content} );
-	$response->{original_content} = $pod;
-	return $response;
-
 }
 
 sub render {
 	my $self = shift;
 	my $doc  = shift;
 	my $data = '';
-	my $pod  = IO::Scalar->new( \$doc->{original_content} );    # want text_get ??
-
+	my $pod  = IO::Scalar->new( \$doc->body );
 	my $out = IO::Scalar->new( \$data );
 	my $v   = Pod::Simple::XHTML->new;
 	$v->perldoc_url_prefix('perldoc:');
 	$v->output_fh($out);
 	$v->parse_file($pod);
-
-	my $response = Padre::Document->new;
-	$response->{original_content} = ${ $out->sref };
-	$response->set_mimetype('text/xhtml');
+	my $response = Padre::DocBrowser::document->new;
+	$response->body( ${ $out->sref } );
+	$response->mimetype('text/xhtml');
 	return $response;
 }
 
@@ -95,6 +97,9 @@ sub _module_to_path {
 			$path = "$fpath.pod";
 		}
 	}
+	
+	# TODO, scan PATH for scripts
+	##foreach my $dir ( 
 
 	return $path;
 }

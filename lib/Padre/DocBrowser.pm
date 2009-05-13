@@ -46,7 +46,7 @@ B<NOTE> i think all the method names are wrong. blast it.
   
   my $docs = $browser->docs( $source );
   # $docs provided by DocBrowser::POD->generate
-  #  should be Padre::Document , application/x-pod
+  #  should be Padre::DocBrowser::document , application/x-pod
   
   my $output = $browser->browse( $docs );
   # $output provided by DocBrowser::POD->render
@@ -247,11 +247,11 @@ sub viewer_for {
 
 sub docs {
 	my ( $self, $doc ) = @_;
-	if ( my $provider = $self->provider_for( $doc->get_mimetype ) ) {
+	if ( my $provider = $self->provider_for( $doc->guess_mimetype ) ) {
 		my $docs = $provider->generate($doc);
 		return $docs;
 	}
-	warn "No provider for " . $doc->get_mimetype;
+	#warn "No provider for " . $doc->mimetype;
 	return;
 }
 
@@ -280,11 +280,12 @@ sub resolve_uri {
 
 sub browse {
 	my ( $self, $docs ) = @_;
-	if ( my $viewer = $self->viewer_for( $docs->get_mimetype ) ) {
+	if ( my $viewer = $self->viewer_for( $docs->mimetype ) ) {
 		return $viewer->render($docs);
 	}
 	return;
 }
+
 
 1;
 

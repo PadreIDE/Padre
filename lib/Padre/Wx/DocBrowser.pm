@@ -4,12 +4,13 @@ use 5.008;
 use strict;
 use warnings;
 use URI                   ();
+use Encode                ();
 use Scalar::Util          ();
 use Class::Autouse        ();
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 use Scalar::Util          ();
-use Params::Util '_INSTANCE';
+use Params::Util qw( _INSTANCE _INVOCANT _CLASSISA );
 use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
 
@@ -31,7 +32,7 @@ our %VIEW = (
 
 =head1 NAME
 
-Padre::Wx::DowBrowser - Wx front-end for Padre::DocBrowser
+Padre::Wx::DocBrowser - Wx front-end for Padre::DocBrowser
 
 =head1 Welcome to Padre DocBrowser
 
@@ -117,7 +118,7 @@ sub new {
 	$top_s->Add( $notebook, 1, Wx::wxGROW );
 	$self->SetSizer($top_s);
 	$self->SetAutoLayout(1);
-	$self->_setup_welcome;
+	#$self->_setup_welcome;
 
 	return $self;
 }
@@ -130,7 +131,6 @@ sub OnLinkClicked {
 
 	my $uri    = URI->new($href);
 	my $scheme = $uri->scheme;
-	$self->debug("Link clicked is $uri");
 	if ( $self->provider->accept($scheme) ) {
 		$self->help($uri);
 	} else {
@@ -141,7 +141,6 @@ sub OnLinkClicked {
 
 sub on_search_text_enter {
 	my ( $self, $event ) = @_;
-	$self->debug("SEARCH $self - $event ");
 	my $text = $event->GetValue;
 	$self->help($text);
 
@@ -154,9 +153,10 @@ sub show {
 
 sub help {
 	my ( $self, $query, %hints ) = @_;
-	my $type;
-	if ( Scalar::Util::blessed($query) && $query->can('get_mimetype') ) {
-		$self->debug( "Help from mimetype, " . $query->get_mimetype );
+	$query = $self->padre2docbrowser( $query )
+		if ( _CLASSISA( ref $query ,'Padre::Document') );
+	if ( _INVOCANT($query) && $query->can('mimetype') ) {
+		#$self->debug( "Help from mimetype, " . $query->mimetype );
 		my $task = Padre::Task::DocBrowser->new(
 			document => $query, type => 'docs',
 			main_thread_only => sub { $self->display( $_[0], $query ) },
@@ -164,7 +164,7 @@ sub help {
 		$task->schedule;
 		return 1;
 	} elsif ( defined $query ) {
-		$self->debug("resolve '$query'");
+		#$self->debug("resolve '$query'");
 		my $task = Padre::Task::DocBrowser->new(
 			document => $query, type => 'resolve',
 			main_thread_only => sub { $self->help( $_[0], referrer => $query ) }
@@ -178,8 +178,6 @@ sub help {
 
 sub ResolveRef {
 	my ( $self, $ref ) = @_;
-
-	#warn "Resolve ref '$ref'";
 	my $task = Padre::Task::DocBrowser->new(
 		document => $ref, type => 'resolve',
 		main_thread_only => sub { $self->display( $_[0], $ref ) }
@@ -195,20 +193,20 @@ sub debug {
 
 sub display {
 	my ( $self, $docs, $query ) = @_;
-	if ( _INSTANCE( $docs, 'Padre::Document' ) ) {
-		$self->debug(
-			sprintf(
-				"Display %s results of query %s",
-				$docs->get_mimetype, $query
-			)
-		);
+	if ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
+		#$self->debug(
+		#	sprintf(
+		#		"Display %s results of query %s",
+		#		$docs->mimetype, $query
+		#	)
+		#);
 		my $task = Padre::Task::DocBrowser->new(
 			document => $docs, type => 'browse',
 			main_thread_only => sub { $self->ShowPage( shift, $query ) }
 		);
 		$task->schedule;
-	} elsif ( _INSTANCE( $query, 'Padre::Document' ) ) {
-
+	} elsif ( _INSTANCE( $query, 'Padre::DocBrowser::document' ) ) {
+		die;
 		#warn "TRY 2 render the query instead";
 		my $task = Padre::Task::DocBrowser->new(
 			document => $query, type => 'browse',
@@ -222,24 +220,38 @@ sub display {
 sub ShowPage {
 	my ( $self, $docs, $query ) = @_;
 
-	unless ( _INSTANCE( $docs, 'Padre::Document' ) ) {
+	unless ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
 		return $self->not_found($query);
 	}
 
 	my $title = 'Untitled';
 	my $mime  = 'text/xhtml';
 
-	if ( Scalar::Util::blessed($query) and $query->isa("Padre::Document") ) {
-		$title = $query->get_title;
+	if ( _INSTANCE( $query, 'Padre::DocBrowser::document' ) ) {
+		$title = $query->title;
 	} else {
-		$title = $docs->get_title;
+		$title = $docs->title;
 	}
 
-	my $page = $self->NewPage( $docs->get_mimetype, $title );
-	$self->debug( sprintf( "Showpage '%s' from query %s", $title, $query ) );
-
-	$page->SetPage( $docs->{original_content} );
-
+	my $total_pages = $self->notebook->GetPageCount;
+	my @opened;
+	my $i=0;
+	while ( $i < $total_pages) {
+		my $page = $self->notebook->GetPage($i);
+		push @opened , {page=>$page,index=>$i} 
+		    if $self->notebook->GetPageText($i) eq $title;
+		$i++;
+	}
+	if (my $last = pop @opened) {
+		$last->{page}->SetPage( $docs->body );
+		$self->notebook->SetSelection(
+			$last->{index}
+		);
+	}
+	else {
+		my $page = $self->NewPage( $docs->mimetype, $title );
+		$page->SetPage( $docs->body );
+	}
 }
 
 sub NewPage {
@@ -253,13 +265,27 @@ sub NewPage {
 			$self->notebook->AddPage( $panel, $title, 1 );
 			$panel;
 		} else {
-			$self->debug("NO VIEWER FOR $mime");
+			$self->debug("DocBrowser: no viewer for $mime");
 		}
 	};
 
 	$self->debug($@) if $@;
 	return $page;
 
+}
+
+sub padre2docbrowser {
+	my ($class,$padredoc) = @_;
+	my $doc = Padre::DocBrowser::document->new(
+		mimetype => $padredoc->get_mimetype,
+		title    => $padredoc->get_title,
+		filename => $padredoc->filename,
+	);
+	$doc->body( Encode::encode( 'utf8',
+		$padredoc->{original_content} 
+		)
+	);
+	return $doc;
 }
 
 sub not_found {
@@ -279,24 +305,6 @@ sub not_found {
 
 }
 
-sub _setup_welcome {
-	my $self = shift;
-	$self->help( URI->new('perldoc:Padre::Wx::DocBrowser') );
-	return;
-	my $window = Padre::Wx::HtmlWindow->new($self);
-	$window->SetPage(
-		qq|
-<html><body>
-<h1>Welcome to Padre DocBrowser</h1>
-</body></html>
-|
-	);
-	$self->{notebook}->AddPage(
-		$window,
-		'Padre DocBrowser',
-		1
-	);
-}
 
 1;
 
