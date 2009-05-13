@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre Russian Translation 2 for Padre 0.35\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-12 11:59+0400\n"
+"POT-Creation-Date: 2009-05-13 11:39+0400\n"
 "Last-Translator: Anatoly Sharifulin <sharifulin@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -110,34 +110,38 @@ msgid "Dutch (Belgium)"
 msgstr "Нидерландский (Бельгия)"
 
 #: lib/Padre/Locale.pm:334
+msgid "Norwegian (Norway)"
+msgstr "Норвежский (Норвегия)"
+
+#: lib/Padre/Locale.pm:343
 msgid "Polish"
 msgstr "Польский"
 
-#: lib/Padre/Locale.pm:344
+#: lib/Padre/Locale.pm:353
 msgid "Portuguese (Brazil)"
 msgstr "Португальский (Бразилия)"
 
-#: lib/Padre/Locale.pm:354
+#: lib/Padre/Locale.pm:363
 msgid "Portuguese (Portugal)"
 msgstr "Португальский (Португалия)"
 
-#: lib/Padre/Locale.pm:363
+#: lib/Padre/Locale.pm:372
 msgid "Russian"
 msgstr "Русский"
 
-#: lib/Padre/Locale.pm:373
+#: lib/Padre/Locale.pm:382
 msgid "Chinese"
 msgstr "Китайский"
 
-#: lib/Padre/Locale.pm:383
+#: lib/Padre/Locale.pm:392
 msgid "Chinese (Simplified)"
 msgstr "Китайский (Упрощенный)"
 
-#: lib/Padre/Locale.pm:393
+#: lib/Padre/Locale.pm:402
 msgid "Chinese (Traditional)"
 msgstr "Китайский (Традиционный)"
 
-#: lib/Padre/Locale.pm:406
+#: lib/Padre/Locale.pm:415
 msgid "Klingon"
 msgstr "Клингонский"
 
@@ -215,7 +219,8 @@ msgid ""
 "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be "
 "instantiated"
 msgstr ""
-"Плагин:%s - Несовместим с Padre::Plugin API. Плагин не может быть обработан"
+"Плагин:%s - Несовместим с Padre::Plugin API. Плагин не может быть "
+"обработан"
 
 #: lib/Padre/PluginManager.pm:503
 #, perl-format
@@ -249,11 +254,11 @@ msgstr "Плагин:%s - Не содержит меню"
 msgid "Error when calling menu for plugin"
 msgstr "Произошла ошибка при вызове меню плагина"
 
-#: lib/Padre/PluginManager.pm:797 lib/Padre/Wx/Main.pm:1263
+#: lib/Padre/PluginManager.pm:797 lib/Padre/Wx/Main.pm:1393
 msgid "No document open"
 msgstr "Нет открытых документов"
 
-#: lib/Padre/PluginManager.pm:799 lib/Padre/Wx/Main.pm:2826
+#: lib/Padre/PluginManager.pm:799 lib/Padre/Wx/Main.pm:3458
 msgid "No filename"
 msgstr "Файл без имени"
 
@@ -270,8 +275,8 @@ msgstr ""
 "Ошибка загрузки плагина '%s'\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:871 lib/Padre/Wx/Main.pm:2062
-#: lib/Padre/Wx/Main.pm:2621
+#: lib/Padre/PluginManager.pm:871 lib/Padre/Wx/Main.pm:2370
+#: lib/Padre/Wx/Main.pm:3152
 msgid "Open file"
 msgstr "Открыть файл"
 
@@ -398,7 +403,7 @@ msgstr "Ни один файл не открыт"
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr "Множество несвязанных инструментов используется Padre-разработчиками\n"
 
-#: lib/Padre/Plugin/Devel.pm:162 lib/Padre/Wx/Main.pm:2693
+#: lib/Padre/Plugin/Devel.pm:162 lib/Padre/Wx/Main.pm:3260
 #, perl-format
 msgid "Error: %s"
 msgstr "Ошибка: %s"
@@ -452,8 +457,8 @@ msgstr "pip неожиданно не установлен"
 msgid "Warning"
 msgstr "Предупреждение"
 
-#: lib/Padre/Task/SyntaxChecker.pm:179 lib/Padre/Wx/Main.pm:1341
-#: lib/Padre/Wx/Main.pm:1557 lib/Padre/Wx/Main.pm:2219
+#: lib/Padre/Task/SyntaxChecker.pm:179 lib/Padre/Wx/Main.pm:1478
+#: lib/Padre/Wx/Main.pm:1730 lib/Padre/Wx/Main.pm:2563
 #: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Syntax.pm:99
 #: lib/Padre/Wx/Dialog/PluginManager.pm:358
 msgid "Error"
@@ -519,8 +524,8 @@ msgid "I&gnore hidden Subdirectories"
 msgstr "Пропускать скрытые подкаталоги"
 
 #: lib/Padre/Wx/Ack.pm:118
-msgid "Ack (Find in Files)"
-msgstr "Искать (Поиск в файлах)"
+msgid "Find in Files"
+msgstr "Поиск в файлах"
 
 #: lib/Padre/Wx/Ack.pm:147
 msgid "Select directory"
@@ -536,7 +541,7 @@ msgstr "Вид вывода"
 
 #: lib/Padre/Wx/Directory.pm:52 lib/Padre/Wx/Directory.pm:143
 msgid "Directory"
-msgstr "Каталог"
+msgstr "Дерево каталога"
 
 #: lib/Padre/Wx/Directory.pm:170 lib/Padre/Wx/ToolBar.pm:49
 msgid "Open File"
@@ -592,7 +597,7 @@ msgstr "Первый символ выделения должен быть не 
 
 #: lib/Padre/Wx/ErrorList.pm:91
 msgid "Error List"
-msgstr "Ошибки"
+msgstr "Список ошибок"
 
 #: lib/Padre/Wx/ErrorList.pm:126
 msgid "No diagnostics available for this error!"
@@ -604,193 +609,194 @@ msgstr "Диагностика"
 
 #: lib/Padre/Wx/FunctionList.pm:71
 msgid "Sub List"
-msgstr "Функции"
+msgstr "Список функций"
 
 #: lib/Padre/Wx/Main.pm:391
 #, perl-format
 msgid "No such session %s"
 msgstr "Нет такой сессии %s"
 
-#: lib/Padre/Wx/Main.pm:561
+#: lib/Padre/Wx/Main.pm:569
 msgid "Failed to create server"
 msgstr "Ошибка при создании сервера"
 
-#: lib/Padre/Wx/Main.pm:1243
+#: lib/Padre/Wx/Main.pm:1366
 msgid "Command line"
 msgstr "Командная строка"
 
-#: lib/Padre/Wx/Main.pm:1244
+#: lib/Padre/Wx/Main.pm:1367
 msgid "Run setup"
 msgstr "Выполнить установку"
 
-#: lib/Padre/Wx/Main.pm:1267
+#: lib/Padre/Wx/Main.pm:1397
 msgid "Current document has no filename"
 msgstr "Для текущего документа не указан файл"
 
-#: lib/Padre/Wx/Main.pm:1270
+#: lib/Padre/Wx/Main.pm:1400
 msgid "Could not find project root"
 msgstr "Путь к проекту не найден"
 
-#: lib/Padre/Wx/Main.pm:1340
+#: lib/Padre/Wx/Main.pm:1477
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr "Ошибка запуска команды '%s'"
 
-#: lib/Padre/Wx/Main.pm:1356
+#: lib/Padre/Wx/Main.pm:1502
 msgid "No open document"
 msgstr "Нет открытых документов"
 
-#: lib/Padre/Wx/Main.pm:1373
+#: lib/Padre/Wx/Main.pm:1519
 msgid "No execution mode was defined for this document"
 msgstr "Для этого документа не установлен режим исполнения"
 
-#: lib/Padre/Wx/Main.pm:1396
+#: lib/Padre/Wx/Main.pm:1550
 msgid "Not a Perl document"
 msgstr "Не Perl-документ"
 
-#: lib/Padre/Wx/Main.pm:1551
+#: lib/Padre/Wx/Main.pm:1716
 msgid "Message"
 msgstr "Сообщение"
 
-#: lib/Padre/Wx/Main.pm:1682
+#: lib/Padre/Wx/Main.pm:1912
 msgid "Autocompletions error"
 msgstr "Ошибка автоподстановки"
 
-#: lib/Padre/Wx/Main.pm:1694
+#: lib/Padre/Wx/Main.pm:1931
 msgid "Line number:"
 msgstr "Номер строки:"
 
-#: lib/Padre/Wx/Main.pm:1884
+#: lib/Padre/Wx/Main.pm:2163
 #, perl-format
 msgid ""
 "Cannot open %s as it is over the arbitrary file size limit of Padre which is "
 "currently %s"
-msgstr "Невозможно открыть %s из-за ограничения Padre на длину файла: "
+msgstr ""
+"Невозможно открыть %s из-за ограничения Padre на длину файла: "
 "%s"
 
-#: lib/Padre/Wx/Main.pm:1968
+#: lib/Padre/Wx/Main.pm:2261
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Ничего не выбрано. Укажите, что нужно открыть:"
 
-#: lib/Padre/Wx/Main.pm:1969
+#: lib/Padre/Wx/Main.pm:2262
 msgid "Open selection"
 msgstr "Открыть выделенное"
 
-#: lib/Padre/Wx/Main.pm:2033
+#: lib/Padre/Wx/Main.pm:2326
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Файл '%s' не найден"
 
-#: lib/Padre/Wx/Main.pm:2034
+#: lib/Padre/Wx/Main.pm:2327
 msgid "Open Selection"
 msgstr "Открыть выделенное"
 
-#: lib/Padre/Wx/Main.pm:2095 lib/Padre/Wx/Main.pm:2955
+#: lib/Padre/Wx/Main.pm:2411 lib/Padre/Wx/Main.pm:3615
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Невозможно загрузить файл %s"
 
-#: lib/Padre/Wx/Main.pm:2115
+#: lib/Padre/Wx/Main.pm:2437
 msgid "Save file as..."
 msgstr "Сохранить файл как..."
 
-#: lib/Padre/Wx/Main.pm:2129
+#: lib/Padre/Wx/Main.pm:2451
 msgid "File already exists. Overwrite it?"
 msgstr "Файл уже существует. Перезаписать?"
 
-#: lib/Padre/Wx/Main.pm:2130
+#: lib/Padre/Wx/Main.pm:2452
 msgid "Exist"
 msgstr "Существует"
 
-#: lib/Padre/Wx/Main.pm:2208
+#: lib/Padre/Wx/Main.pm:2552
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Со времени последнего сохранения файл на диске изменился. Перезаписать?"
 
-#: lib/Padre/Wx/Main.pm:2209 lib/Padre/Wx/Main.pm:2948
+#: lib/Padre/Wx/Main.pm:2553 lib/Padre/Wx/Main.pm:3608
 msgid "File not in sync"
 msgstr "Файл не синхронизирован"
 
-#: lib/Padre/Wx/Main.pm:2218
+#: lib/Padre/Wx/Main.pm:2562
 msgid "Could not save file: "
 msgstr "Невозможно загрузить файл:"
 
-#: lib/Padre/Wx/Main.pm:2265
+#: lib/Padre/Wx/Main.pm:2624
 msgid "File changed. Do you want to save it?"
 msgstr "Файл изменен. Сохранить?"
 
-#: lib/Padre/Wx/Main.pm:2266
+#: lib/Padre/Wx/Main.pm:2625
 msgid "Unsaved File"
 msgstr "Несохраненный файл"
 
-#: lib/Padre/Wx/Main.pm:2367
+#: lib/Padre/Wx/Main.pm:2787
 msgid "Cannot diff if file was never saved"
 msgstr "Невозможно найти различия в несохраненном файле"
 
-#: lib/Padre/Wx/Main.pm:2373
+#: lib/Padre/Wx/Main.pm:2793
 msgid "There are no differences\n"
 msgstr "Различий нет\n"
 
-#: lib/Padre/Wx/Main.pm:2694
+#: lib/Padre/Wx/Main.pm:3261
 msgid "Internal error"
 msgstr "Внутренняя ошибка"
 
-#: lib/Padre/Wx/Main.pm:2817
+#: lib/Padre/Wx/Main.pm:3449
 #, perl-format
 msgid "Words: %s"
 msgstr "Слова: %s"
 
-#: lib/Padre/Wx/Main.pm:2818
+#: lib/Padre/Wx/Main.pm:3450
 #, perl-format
 msgid "Lines: %d"
 msgstr "Строк: %d"
 
-#: lib/Padre/Wx/Main.pm:2819
+#: lib/Padre/Wx/Main.pm:3451
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr "Символов без пробелов: %s"
 
-#: lib/Padre/Wx/Main.pm:2820
+#: lib/Padre/Wx/Main.pm:3452
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Символов с пробелами: %d"
 
-#: lib/Padre/Wx/Main.pm:2821
+#: lib/Padre/Wx/Main.pm:3453
 #, perl-format
 msgid "Newline type: %s"
-msgstr "Тип перевода строк: %s"
+msgstr "Перевод строк: %s"
 
-#: lib/Padre/Wx/Main.pm:2822
+#: lib/Padre/Wx/Main.pm:3454
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Кодировка: %s"
 
-#: lib/Padre/Wx/Main.pm:2823
+#: lib/Padre/Wx/Main.pm:3455
 #, perl-format
 msgid "Document type: %s"
 msgstr "Тип документа: %s"
 
-#: lib/Padre/Wx/Main.pm:2823
+#: lib/Padre/Wx/Main.pm:3455
 msgid "none"
 msgstr "нет"
 
-#: lib/Padre/Wx/Main.pm:2825
+#: lib/Padre/Wx/Main.pm:3457
 #, perl-format
 msgid "Filename: %s"
 msgstr "Имя файла: %s"
 
-#: lib/Padre/Wx/Main.pm:2845
+#: lib/Padre/Wx/Main.pm:3487
 msgid "Space to Tab"
 msgstr "Пробелы в табы..."
 
-#: lib/Padre/Wx/Main.pm:2846
+#: lib/Padre/Wx/Main.pm:3488
 msgid "Tab to Space"
 msgstr "Табы в пробелы..."
 
-#: lib/Padre/Wx/Main.pm:2849
+#: lib/Padre/Wx/Main.pm:3491
 msgid "How many spaces for each tab:"
 msgstr "Сколько пробелов в каждом табе:"
 
-#: lib/Padre/Wx/Main.pm:2947
+#: lib/Padre/Wx/Main.pm:3607
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "Со времени последнего сохранения файл изменился. Переоткрыть с диска?"
 
@@ -838,11 +844,7 @@ msgstr "&Perl"
 msgid "Files"
 msgstr "Файлы"
 
-#: lib/Padre/Wx/Output.pm:38
-msgid "No output"
-msgstr "Вывода нет"
-
-#: lib/Padre/Wx/Output.pm:52
+#: lib/Padre/Wx/Output.pm:54
 msgid "Output"
 msgstr "Вывод"
 
@@ -925,7 +927,7 @@ msgstr "Фоновые задачи запущены с нагрузкой"
 #: lib/Padre/Wx/CPAN/Listview.pm:43 lib/Padre/Wx/CPAN/Listview.pm:78
 #: lib/Padre/Wx/Dialog/PluginManager.pm:231
 msgid "Status"
-msgstr "Статистика документа"
+msgstr "Статистика"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:30
 msgid "Existing bookmarks:"
@@ -1128,7 +1130,7 @@ msgstr "Перевод строк по умолчанию для всех фай
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:82
 msgid "Auto-fold POD markup when code folding enabled"
-msgstr "Автоматическое сворачивание POD при включенном сворачивание кода"
+msgstr "Сворачивать POD при включенном сворачивание кода"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:87
 msgid "Perl beginner mode"
@@ -1231,7 +1233,7 @@ msgstr "Текущий документ: %s"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:452
 msgid "Behaviour"
-msgstr "Поведение"
+msgstr "Режим работы"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:455
 msgid "Appearance"
@@ -1251,39 +1253,39 @@ msgstr "&Сохранить"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:535
 msgid "new"
-msgstr "новый"
+msgstr "Новый"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:536
 msgid "nothing"
-msgstr "ничего"
+msgstr "Ничего"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:537
 msgid "last"
-msgstr "последний"
+msgstr "Последний"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:538
 msgid "no"
-msgstr "нет"
+msgstr "Нет"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:539
 msgid "same_level"
-msgstr "похожий_уровень"
+msgstr "Похожий уровень"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:540
 msgid "deep"
-msgstr "глубокий"
+msgstr "Глубокий"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:541
 msgid "alphabetical"
-msgstr "алфавитный"
+msgstr "Алфавитный"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:542
 msgid "original"
-msgstr "оригинальный"
+msgstr "Оригинальный"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:543
 msgid "alphabetical_private_last"
-msgstr "алфавитный_последний_личный"
+msgstr "Алфавитный (последний личный)"
 
 #: lib/Padre/Wx/Dialog/Search.pm:151
 msgid "Previ&ous"
@@ -1607,9 +1609,7 @@ msgstr "&О программе"
 
 #: lib/Padre/Wx/Menu/Help.pm:151
 msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
-msgstr ""
-"Все права сохранены. 2008-2009 Команда разработчиков Padre, перечисленных в "
-"Padre.pm."
+msgstr "Все права сохранены. 2008-2009 Команда разработчиков Padre, перечисленных в Padre.pm."
 
 #: lib/Padre/Wx/Menu/Perl.pm:40
 msgid "Find Unmatched Brace"
@@ -1670,7 +1670,7 @@ msgstr "Выполнить скрипт\tF5"
 
 #: lib/Padre/Wx/Menu/Run.pm:43
 msgid "Run Script (debug info)\tShift-F5"
-msgstr "Выполнить скрипт (отладочная информация)\tShift+F5"
+msgstr "Выполнить скрипт (режим отладки)\tShift+F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:55
 msgid "Run Command\tCtrl-F5"
@@ -1713,12 +1713,12 @@ msgid "Find Previous\tShift-F4"
 msgstr "Найти предыдущее\tShift+F4"
 
 #: lib/Padre/Wx/Menu/Search.pm:131
-msgid "Ac&k Search"
-msgstr "Искать"
+msgid "Find in fi&les..."
+msgstr "Поиск в файлах..."
 
 #: lib/Padre/Wx/Menu/View.pm:37
 msgid "Lock User Interface"
-msgstr "Заблокировать пользовательский интерфейс"
+msgstr "Зафиксировать пользовательский интерфейс"
 
 #: lib/Padre/Wx/Menu/View.pm:52
 msgid "Show Output"
@@ -1750,7 +1750,7 @@ msgstr "Показывать статусную строку"
 
 #: lib/Padre/Wx/Menu/View.pm:149
 msgid "View Document As..."
-msgstr "Просмотреть документ как..."
+msgstr "Показать документ как..."
 
 #: lib/Padre/Wx/Menu/View.pm:183
 msgid "Show Line Numbers"
@@ -1854,7 +1854,7 @@ msgstr "Правый клик\tAlt-/"
 
 #: lib/Padre/Wx/Menu/Window.pm:90
 msgid "GoTo Subs Window"
-msgstr "Перейти к окну подпрограмм\tAlt+S"
+msgstr "Перейти к окну функций\tAlt+S"
 
 #: lib/Padre/Wx/Menu/Window.pm:103
 msgid "GoTo Outline Window\tAlt-L"
@@ -1871,3 +1871,9 @@ msgstr "Перейти к окну проверки синтаксиса\tAlt+C"
 #: lib/Padre/Wx/Menu/Window.pm:140
 msgid "GoTo Main Window\tAlt-M"
 msgstr "Перейти в главное окно\tAlt+M"
+
+#~ msgid "No output"
+#~ msgstr "Вывода нет"
+
+#~ msgid "Ac&k Search"
+#~ msgstr "Искать"
