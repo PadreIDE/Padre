@@ -7,13 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-05-13 00:27+0100\n"
+"POT-Creation-Date: 2009-05-12 18:44+0200\n"
+"PO-Revision-Date: 2009-05-13 09:24+0100\n"
 "Last-Translator: ddn <ddn123456 at gmail.com>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: lib/Padre/Document.pm:675
+#, perl-format
+msgid "Unsaved %d"
+msgstr "Niet opgeslagen %d"
 
 #: lib/Padre/Document.pm:944
 #: lib/Padre/Document.pm:945
@@ -225,7 +230,6 @@ msgstr ""
 msgid "New plugins detected"
 msgstr "Nieuwe plugins gedetecteerd"
 
-#: lib/Padre/PluginManager.pm:443
 #: lib/Padre/PluginManager.pm:461
 #, perl-format
 msgid "Plugin:%s - Failed to load module: %s"
@@ -236,7 +240,6 @@ msgstr "Plugin:%s - Gefaald in het laden van module: %s"
 msgid "Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin"
 msgstr "Plugin:%s - Niet compatibel met Padre::Plugin API. Dient een subklasse te zijn van Padre::Plugin"
 
-#: lib/Padre/PluginManager.pm:473
 #: lib/Padre/PluginManager.pm:489
 #, perl-format
 msgid "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be instantiated"
@@ -257,7 +260,6 @@ msgstr "Plugin:%s - Kon plugin object niet ïnstantiëren"
 msgid "Plugin:%s - Could not instantiate plugin object: the constructor does not return a Padre::Plugin object"
 msgstr "Plugin:%s - Kon plugin object niet ïnstantiëren: de constructor geeft geen Padre::Plugin object terug"
 
-#: lib/Padre/PluginManager.pm:537
 #: lib/Padre/PluginManager.pm:549
 #, perl-format
 msgid "Plugin:%s - Does not have menus"
@@ -497,9 +499,8 @@ msgid "Current document has no filename"
 msgstr "Huidig document heeft geen bestandsnaam"
 
 #: lib/Padre/Wx/Main.pm:1400
-#, fuzzy
 msgid "Could not find project root"
-msgstr "Project root niet gevonden"
+msgstr "Project startpunt niet gevonden"
 
 #: lib/Padre/Wx/Main.pm:1477
 #, perl-format
@@ -1132,7 +1133,6 @@ msgid "Use PPI Syntax Highlighting"
 msgstr "Gebruik PPI Syntax Inkleuring"
 
 #: lib/Padre/Wx/Menu/Perl.pm:128
-#, fuzzy
 msgid "Automatic bracket completion"
 msgstr "Automatische haakjes afmaken"
 
@@ -1362,7 +1362,7 @@ msgid "&Cancel"
 msgstr "&Annuleren"
 
 #: lib/Padre/Wx/Dialog/Find.pm:347
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s occurences were replaced"
 msgstr "%s keer vervangen"
 
@@ -1475,7 +1475,6 @@ msgid "Open files:"
 msgstr "Geopende bestanden:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:95
-#, fuzzy
 msgid "Open files in existing Padre"
 msgstr "Open bestanden in bestaande Padre"
 
@@ -1631,7 +1630,6 @@ msgid "Name"
 msgstr "Naam"
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:212
-#, fuzzy
 msgid "Last update"
 msgstr "Laatste update"
 
@@ -1861,7 +1859,7 @@ msgstr "Desactiveer loggen"
 
 #: lib/Padre/Plugin/Devel.pm:67
 msgid "Enable trace when logging"
-msgstr "Activeer opsporen tijdens het loggen\"\"a"
+msgstr "Activeer opsporen tijdens het loggen\"\v\"a"
 
 #: lib/Padre/Plugin/Devel.pm:68
 msgid "Disable trace"
