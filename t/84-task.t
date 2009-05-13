@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+
 use strict;
 use warnings;
 
@@ -128,8 +129,3 @@ fake_execute_task($TestClass, $testspec);
 
 $testspec->{threading} = 1;
 fake_execute_task($TestClass, $testspec);
-
-
-
-__END__
-
