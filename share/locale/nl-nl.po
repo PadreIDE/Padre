@@ -1829,7 +1829,6 @@ msgid "pip is unexpectedly not installed"
 msgstr "pip is onverwacht niet geïnstalleerd"
 
 #: lib/Padre/Plugin/Devel.pm:21
-#, fuzzy
 msgid "Padre Developer Tools"
 msgstr "Padre Ontwikkelaar Tools"
 
