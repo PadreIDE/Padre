@@ -418,7 +418,7 @@ msgstr "Ingen filer er åpne"
 
 #: lib/Padre/Plugin/Devel.pm:149
 msgid "A set of unrelated tools used by the Padre developers\n"
-msgstr "Et sett av ikke-beslektede verktøy brukt av Padre-utviklere"
+msgstr "Et sett av ikke-beslektede verktøy brukt av Padre-utviklere\n"
 
 #: lib/Padre/Plugin/Devel.pm:162 lib/Padre/Wx/Main.pm:3260
 #, perl-format
