@@ -57,6 +57,10 @@ sub new {
 	# create dialog
 	$self->_create;
 
+	# Tune the size and position it appears
+	$self->Fit;
+	$self->CentreOnParent;
+
 	return $self;
 }
 
