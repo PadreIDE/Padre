@@ -1024,6 +1024,9 @@ sub relocale {
 	if ( defined $self->find ) {
 		$self->find->relocale;
 	}
+	if ( defined $self->replace ) {
+		$self->replace->relocale;
+	}
 
 	# Update window manager captions
 	$self->aui->relocale;
@@ -1745,7 +1748,7 @@ sub find {
 
 	unless ( defined $self->{find_dialog} ) {
 		require Padre::Wx::Dialog::Find;
-		$self->{find_dialog} = Padre::Wx::Dialog::Find->new;
+		$self->{find_dialog} = Padre::Wx::Dialog::Find->new('find');
 	}
 
 	return $self->{find_dialog};
@@ -1769,6 +1772,22 @@ sub fast_find {
 	return $self->{fast_find_panel};
 }
 
+=item * my $find = $main->replace;
+
+Return current replace dialog. Create a new one if needed.
+
+=cut
+
+sub replace {
+	my $self = shift;
+
+	unless ( defined $self->{replace_dialog} ) {
+		require Padre::Wx::Dialog::Find;
+		$self->{replace_dialog} = Padre::Wx::Dialog::Find->new('replace');
+	}
+
+	return $self->{replace_dialog};
+}
 
 =item * my $value = $main->prompt( $title, $subtitle, $key );
 

@@ -25,7 +25,7 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	# Search and Replace
+	# Search
 	$self->{find} = $self->Append(
 		Wx::wxID_FIND,
 		Wx::gettext("&Find\tCtrl-F")
@@ -62,7 +62,7 @@ sub new {
 		},
 	);
 
-	# This currently mainly exists to make Ctrl-R work
+	# Search and Replace
 	$self->{replace} = $self->Append(
 		-1,
 		Wx::gettext("Replace\tCtrl-R")
@@ -71,7 +71,7 @@ sub new {
 		$main,
 		$self->{replace},
 		sub {
-			$_[0]->find->find(@_);
+			$_[0]->replace->find(@_);
 		},
 	);
 

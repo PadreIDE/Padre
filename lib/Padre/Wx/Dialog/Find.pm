@@ -22,8 +22,11 @@ my @cbs = qw(
 
 sub new {
 	my $class = shift;
+	my $type = shift;
+
 	my $self = bless {}, $class;
 
+	$self->{dialog_type} = $type;
 	$self->create_dialog;
 
 	return $self;
@@ -50,12 +53,16 @@ sub delete_dialog {
 sub create_dialog {
 	my $self = shift;
 
+	my $title = $self->{dialog_type} eq 'replace'
+		? Wx::gettext('Replace')
+		: Wx::gettext('Find');
+
 	my $config = Padre->ide->config;
 
 	$self->{dialog} = Wx::Dialog->new(
 		Padre->ide->wx->main,
 		-1,
-		Wx::gettext('Find'),
+		$title,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION
@@ -64,133 +71,174 @@ sub create_dialog {
 			| Wx::wxSYSTEM_MENU,
 	);
 
-	my $main_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	my $main_sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
 	$main_sizer->AddGrowableCol(0);
 	$self->{dialog}->SetSizer($main_sizer);
 
-	my $left_top_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
-	$left_top_sizer->AddGrowableCol(1);
-	$main_sizer->Add( $left_top_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
+	# Find sizer begins here
+	my $find_sizer = Wx::StaticBoxSizer->new( Wx::StaticBox->new
+		( $self->{dialog}, -1, Wx::gettext('Find') ),
+		Wx::wxVERTICAL
+	);
+	$main_sizer->Add( $find_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
 
-	$left_top_sizer->Add(
-		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Find:") ),
+	$find_sizer->Add(
+		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Text to find:") ),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
 
 	$self->add_widget( '_find_choice_', Wx::ComboBox->new( $self->{dialog} ) );
-	$left_top_sizer->Add(
+	$find_sizer->Add(
 		$self->get_widget('_find_choice_'),
 		3,
 		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5
 	);
-
-	$left_top_sizer->Add(
-		Wx::StaticText->new( $self->{dialog}, Wx::wxID_STATIC, Wx::gettext("Replace with:") ),
-		0,
-		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
-		5
+	$self->add_widget(
+		'find_regex',
+		Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('&Use Regex') )
 	);
-
-	$self->add_widget( '_replace_choice_', Wx::ComboBox->new( $self->{dialog} ) );
-	$left_top_sizer->Add(
-		$self->get_widget('_replace_choice_'),
-		3,
-		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
-		5
-	);
-
-	my $right_top_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$main_sizer->Add(
-		$right_top_sizer,
-		0,
-		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxLEFT | Wx::wxRIGHT,
-		5
-	);
-
-	$self->add_widget( '_find_', Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") ) );
-	$right_top_sizer->Add(
-		$self->get_widget('_find_'),
-		1,
-		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5
-	);
-
-	$self->add_widget( '_replace_', Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE, Wx::gettext("&Replace") ) );
-	$right_top_sizer->Add(
-		$self->get_widget('_replace_'),
-		1,
-		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5
-	);
-
-	my $left_bottom_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$main_sizer->Add(
-		$left_bottom_sizer,
-		2,
-		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
-		5
-	);
-
-	$self->add_widget( 'find_case', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Case &Insensitive') ) );
-	$self->get_widget('find_case')->SetValue( $config->find_case ? 0 : 1 );
-	$left_bottom_sizer->Add(
-		$self->get_widget('find_case'),
-		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5
-	);
-
-	$self->add_widget( 'find_regex', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('&Use Regex') ) );
 	$self->get_widget('find_regex')->SetValue( $config->find_regex ? 1 : 0 );
-	$left_bottom_sizer->Add(
+	$find_sizer->Add(
 		$self->get_widget('find_regex'),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
-	$self->add_widget( 'find_reverse', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Search &Backwards') ) );
+	# Replace sizer begins here
+	if ( $self->{dialog_type} eq 'replace' ) {
+		my $replace_sizer = Wx::StaticBoxSizer->new( Wx::StaticBox->new
+			( $self->{dialog}, -1, Wx::gettext('Replace With') ),
+			Wx::wxVERTICAL
+		);
+		$main_sizer->Add(
+			$replace_sizer,
+			2,
+			Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+			5
+		);
+
+		$replace_sizer->Add(
+			Wx::StaticText->new(
+				$self->{dialog},
+				Wx::wxID_STATIC,
+				Wx::gettext("Replacement text:")
+			),
+			0,
+			Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+			5
+		);
+
+		$self->add_widget( '_replace_choice_', Wx::ComboBox->new( $self->{dialog} ) );
+		$replace_sizer->Add(
+			$self->get_widget('_replace_choice_'),
+			3,
+			Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+			5
+		);
+	}
+
+	# Options sizer begins here
+	my $options_sizer = Wx::StaticBoxSizer->new(
+		Wx::StaticBox->new(
+			$self->{dialog},
+			-1,
+			Wx::gettext('Options')
+		),
+		Wx::wxVERTICAL
+	);
+	$main_sizer->Add( $options_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
+
+	my $options_grid_sizer = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	$options_grid_sizer->AddGrowableCol(1);
+	$options_sizer->Add(
+		$options_grid_sizer,
+		2,
+		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+		0
+	);
+
+	$self->add_widget(
+		'find_case',
+		Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Case &Insensitive') )
+	);
+	$self->get_widget('find_case')->SetValue( $config->find_case ? 0 : 1 );
+	$options_grid_sizer->Add(
+		$self->get_widget('find_case'),
+		0,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		5
+	);
+	$self->add_widget(
+		'find_reverse',
+		Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Search &Backwards') )
+	);
 	$self->get_widget('find_reverse')->SetValue( $config->find_reverse ? 1 : 0 );
-	$left_bottom_sizer->Add(
+	$options_grid_sizer->Add(
 		$self->get_widget('find_reverse'),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
-	$self->add_widget( 'find_first', Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Close Window on &hit') ) );
+	$self->add_widget(
+		'find_first',
+		Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Close Window on &hit') )
+	);
 	$self->get_widget('find_first')->SetValue( $config->find_first ? 1 : 0 );
-	$left_bottom_sizer->Add(
+	$options_grid_sizer->Add(
 		$self->get_widget('find_first'),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
 
-	my $right_bottom_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$main_sizer->Add( $right_bottom_sizer, 0, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
+	# Bottom sizer begins here
+	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$main_sizer->Add( $bottom_sizer, 0, Wx::wxALIGN_RIGHT | Wx::wxALL, 5 );
 
-	$self->add_widget(
-		'_replace_all_',
-		Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") )
-	);
-	$right_bottom_sizer->Add(
-		$self->get_widget('_replace_all_'),
-		0,
-		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxBOTTOM,
-		5
-	);
-
-	$right_bottom_sizer->Add( 5, 5, 5, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxALL, 5 );
+	if ( $self->{dialog_type} eq 'replace' ) {
+		$self->add_widget(
+			'_replace_',
+			Wx::Button->new( $self->{dialog},Wx::wxID_REPLACE, Wx::gettext("&Replace") )
+		);
+		$bottom_sizer->Add(
+			$self->get_widget('_replace_'),
+			0,
+			Wx::wxGROW | Wx::wxRIGHT,
+			5
+		);
+		$self->add_widget(
+			'_replace_all_',
+			Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") )
+		);
+		$bottom_sizer->Add(
+			$self->get_widget('_replace_all_'),
+			0,
+			Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT,
+			5
+		);
+	} else {
+		$self->add_widget(
+			'_find_',
+			Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") )
+		);
+		$bottom_sizer->Add(
+			$self->get_widget('_find_'),
+			0,
+			Wx::wxGROW | Wx::wxRIGHT,
+			5
+		);
+	}
 
 	$self->add_widget( '_cancel_', Wx::Button->new( $self->{dialog}, Wx::wxID_CANCEL, Wx::gettext("&Cancel") ) );
-	$right_bottom_sizer->Add(
+	$bottom_sizer->Add(
 		$self->get_widget('_cancel_'),
 		0,
-		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxBOTTOM,
+		Wx::wxGROW | Wx::wxLEFT,
 		5
 	);
 
@@ -206,7 +254,11 @@ sub create_dialog {
 		);
 	}
 
-	$self->get_widget('_find_')->SetDefault;
+	if ( $self->{dialog_type} eq 'replace' ) {
+		$self->get_widget('_replace_')->SetDefault;
+	} else {
+		$self->get_widget('_find_')->SetDefault;
+	}
 	Wx::Event::EVT_BUTTON(
 		$self->{dialog},
 		$self->get_widget('_find_'),
@@ -240,10 +292,12 @@ sub update_dialog {
 		$find_combobox->Append($s);
 	}
 
-	my $replace_combobox = $self->get_widget('_replace_choice_');
-	$replace_combobox->Clear;
-	foreach my $r ( Padre::DB::History->recent('replace') ) {
-		$replace_combobox->Append($r);
+	if ( $self->{dialog_type} eq 'replace' ) {
+		my $replace_combobox = $self->get_widget('_replace_choice_');
+		$replace_combobox->Clear;
+		foreach my $r ( Padre::DB::History->recent('replace') ) {
+			$replace_combobox->Append($r);
+		}
 	}
 
 	$find_combobox->SetFocus;
