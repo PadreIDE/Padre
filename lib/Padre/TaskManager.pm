@@ -124,6 +124,11 @@ sub new {
 		running_tasks => {},
 	}, $class;
 
+	# Special case for profiling mode
+	if (defined($INC{"Devel/NYTProf.pm"})) {
+		$self->{use_threads} = 0;
+	}
+
 	my $main = Padre->ide->wx->main;
 	_init_events($main);
 
