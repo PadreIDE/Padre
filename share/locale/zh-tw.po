@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Padre 0.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-17 14:42+0200\n"
-"PO-Revision-Date: 2009-05-18 06:03+0800\n"
+"PO-Revision-Date: 2009-05-18 06:26+0800\n"
 "Last-Translator: BlueT - Matthew Lien - 練喆明 <BlueT@BlueT.org>\n"
 "Language-Team: Chinese/Traditional <BlueT@ubuntu-tw.org>\n"
 "MIME-Version: 1.0\n"
@@ -282,7 +282,8 @@ msgstr "以下的作業階段目前正在背景執行:\n"
 msgid ""
 "- %s of type '%s':\n"
 "  (in thread(s) %s)\n"
-msgstr ""
+msgstr "- %s of type '%s':\n"
+"  (in thread(s) %s)\n"
 
 #: lib/Padre/TaskManager.pm:552
 #, perl-format
@@ -307,7 +308,7 @@ msgstr "錯誤"
 
 #: lib/Padre/Task/Outline/Perl.pm:146 lib/Padre/Wx/Outline.pm:58
 msgid "Outline"
-msgstr ""
+msgstr "大綱"
 
 #: lib/Padre/Task/Outline/Perl.pm:180
 msgid "&GoTo Element"
@@ -329,7 +330,7 @@ msgstr "檢查完成"
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:182
 #: lib/Padre/Document/Perl.pm:511 lib/Padre/Document/Perl.pm:537
 msgid "Current cursor does not seem to point at a variable"
-msgstr ""
+msgstr "目前游標看起來不像是指向一個變數"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:184
@@ -348,11 +349,11 @@ msgstr "檢查已取消"
 
 #: lib/Padre/Wx/StatusBar.pm:78
 msgid "L:"
-msgstr ""
+msgstr "L:"
 
 #: lib/Padre/Wx/StatusBar.pm:78
 msgid "Ch:"
-msgstr ""
+msgstr "Ch:"
 
 #: lib/Padre/Wx/Syntax.pm:66
 msgid "Syntax Check"
@@ -456,11 +457,11 @@ msgstr "選取目錄"
 
 #: lib/Padre/Wx/Ack.pm:281 lib/Padre/Wx/Ack.pm:305
 msgid "Ack"
-msgstr ""
+msgstr "Ack"
 
 #: lib/Padre/Wx/Right.pm:42
 msgid "Workspace View"
-msgstr ""
+msgstr "工作區檢視"
 
 #: lib/Padre/Wx/Output.pm:54
 msgid "Output"
@@ -637,7 +638,7 @@ msgstr "前往第幾列"
 msgid ""
 "Cannot open %s as it is over the arbitrary file size limit of Padre which is "
 "currently %s"
-msgstr ""
+msgstr "無法開啟 %s 因為它超過了 Padre 目前的檔案大小限制 %s"
 
 #: lib/Padre/Wx/Main.pm:2292
 msgid "Nothing selected. Enter what should be opened:"
@@ -723,22 +724,22 @@ msgstr "列: %d"
 #: lib/Padre/Wx/Main.pm:3482
 #, perl-format
 msgid "Chars without spaces: %s"
-msgstr ""
+msgstr "無空白字元: %s"
 
 #: lib/Padre/Wx/Main.pm:3483
 #, perl-format
 msgid "Chars with spaces: %d"
-msgstr ""
+msgstr "帶空白字元: %s"
 
 #: lib/Padre/Wx/Main.pm:3484
 #, perl-format
 msgid "Newline type: %s"
-msgstr ""
+msgstr "換行字元型態: %s"
 
 #: lib/Padre/Wx/Main.pm:3485
 #, perl-format
 msgid "Encoding: %s"
-msgstr ""
+msgstr "檔案編碼: %s"
 
 #: lib/Padre/Wx/Main.pm:3486
 #, perl-format
@@ -833,7 +834,7 @@ msgstr "取消(&C)"
 #: lib/Padre/Wx/Dialog/Find.pm:499
 #, perl-format
 msgid "%s occurences were replaced"
-msgstr ""
+msgstr "%s 事件已被取代"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:18
 msgid "All"
@@ -877,7 +878,7 @@ msgstr "編輯/新增小片段"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:37
 msgid "Automatic indentation style detection"
-msgstr ""
+msgstr "自動縮排風格偵測"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:41
 msgid "Use Tabs"
@@ -889,7 +890,7 @@ msgstr "跳格(TAB)顯示大小 (以空白表示):"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:47
 msgid "Indentation width (in columns):"
-msgstr ""
+msgstr "縮排寬度 (以欄位計算):"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:50
 msgid "Guess from current document:"
@@ -963,7 +964,12 @@ msgid ""
 "\tenable many useful warnings:  -w\n"
 "\tenable all warnings:  -W\n"
 "\tdisable all warnings:  -X\n"
-msgstr ""
+msgstr "換言之\n"
+"\tinclude·directory:··-I<dir>\n"
+"\tenable·tainting·checks:··-T\n"
+"\tenable·many·useful·warnings:··-w\n"
+"\tenable·all·warnings:··-W\n"
+"\tdisable·all·warnings:··-X\n"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:338
 #: lib/Padre/Wx/Dialog/Preferences.pm:382
@@ -1027,11 +1033,11 @@ msgstr "縮排"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:535
 msgid "new"
-msgstr ""
+msgstr "新的"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:536
 msgid "nothing"
-msgstr ""
+msgstr "沒有"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:537
 msgid "last"
@@ -1043,7 +1049,7 @@ msgstr "不要啦"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:539
 msgid "same_level"
-msgstr ""
+msgstr "同一階層"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:540
 msgid "deep"
@@ -1098,7 +1104,7 @@ msgstr "外掛管理員"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:178
 #, perl-format
 msgid "Error loading pod for class '%s': %s"
-msgstr ""
+msgstr "載入 pod 錯誤於類別 '%s': %s"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:233
 #: lib/Padre/Wx/Dialog/SessionManager.pm:210
@@ -1185,11 +1191,11 @@ msgstr "完成"
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:32
 msgid "Save session as..."
-msgstr ""
+msgstr "另存 session 為..."
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:179
 msgid "Session name:"
-msgstr ""
+msgstr "Session 名稱:"
 
 #: lib/Padre/Wx/Dialog/SessionSave.pm:188
 msgid "Description:"
@@ -1630,7 +1636,7 @@ msgstr "全部存檔"
 
 #: lib/Padre/Wx/Menu/File.pm:220
 msgid "Save Session...\tCtrl-Alt-S"
-msgstr ""
+msgstr "儲存 Session...\tCtrl-Alt-S"
 
 #: lib/Padre/Wx/Menu/File.pm:232
 msgid "&Print..."
@@ -1699,7 +1705,7 @@ msgstr "使用 PPI 文法醒目功能"
 
 #: lib/Padre/Wx/Menu/Perl.pm:128
 msgid "Automatic bracket completion"
-msgstr ""
+msgstr "自動補上括弧"
 
 #: lib/Padre/Wx/Menu/Window.pm:46
 msgid "Next File\tCtrl-TAB"
@@ -1790,7 +1796,7 @@ msgstr "輸入 URL 以安裝\n"
 
 #: lib/Padre/Plugin/Perl5.pm:164
 msgid "pip is unexpectedly not installed"
-msgstr ""
+msgstr "pip 無預期地沒有被安裝"
 
 #: lib/Padre/Plugin/Devel.pm:21
 msgid "Padre Developer Tools"
@@ -1802,15 +1808,15 @@ msgstr "在 Padre 裡執行文件"
 
 #: lib/Padre/Plugin/Devel.pm:57
 msgid "Dump Current Document"
-msgstr ""
+msgstr "Dump 目前文件"
 
 #: lib/Padre/Plugin/Devel.pm:58
 msgid "Dump Top IDE Object"
-msgstr ""
+msgstr "Dump 頂層 IDE 物件"
 
 #: lib/Padre/Plugin/Devel.pm:59
 msgid "Dump %INC and @INC"
-msgstr ""
+msgstr "Dump %INC 與 @INC"
 
 #: lib/Padre/Plugin/Devel.pm:65
 msgid "Enable logging"
@@ -1822,7 +1828,7 @@ msgstr "關閉記錄功能"
 
 #: lib/Padre/Plugin/Devel.pm:67
 msgid "Enable trace when logging"
-msgstr ""
+msgstr "在記錄功能作用時啟用追蹤功能"
 
 #: lib/Padre/Plugin/Devel.pm:68
 msgid "Disable trace"
@@ -1830,11 +1836,11 @@ msgstr "關閉追蹤功能"
 
 #: lib/Padre/Plugin/Devel.pm:70
 msgid "Simulate Crash"
-msgstr ""
+msgstr "模擬程式當掉掛點"
 
 #: lib/Padre/Plugin/Devel.pm:71
 msgid "Simulate Crashing Bg Task"
-msgstr ""
+msgstr "模擬背景作業當掉掛點"
 
 #: lib/Padre/Plugin/Devel.pm:73
 msgid "wxWidgets 2.8.8 Reference"
@@ -1854,15 +1860,15 @@ msgstr "沒有開啟檔案"
 
 #: lib/Padre/Plugin/Devel.pm:149
 msgid "A set of unrelated tools used by the Padre developers\n"
-msgstr ""
+msgstr "給 Padre 開發者用的一組不相關的工具"
 
 #: lib/Padre/Plugin/PopularityContest.pm:119
 msgid "Ping"
-msgstr ""
+msgstr "Ping"
 
 #: lib/Padre/Document/Perl.pm:512 lib/Padre/Document/Perl.pm:538
 msgid "Check cancelled"
-msgstr ""
+msgstr "取消檢查"
 
 #~ msgid "perl"
 #~ msgstr "perl"
