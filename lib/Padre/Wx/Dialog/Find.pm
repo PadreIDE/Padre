@@ -1,6 +1,15 @@
 package Padre::Wx::Dialog::Find;
 
-# Find and Replace widget
+=head1 NAME
+
+Padre::Wx::Dialog::Find - Find and Replace widget
+
+=head1 DESCRIPTION
+
+C<Padre::Wx:Main> implements Padre's Find and Replace dialogs.
+Inherits from C<Padre::Wx::Dialog>.
+
+=cut
 
 use 5.008;
 use strict;
@@ -20,17 +29,45 @@ my @cbs = qw(
 	find_first
 );
 
+=head1 PUBLIC API
+
+=head2 Constructor
+
+=over 4
+
+=item new( $type )
+
+Create and return a C<Padre::Wx::Dialog::Find> object.  Takes dialog
+type (C<find> or C<replace>) as a parameter.  If none given assumes
+the type is C<find>.  Stores dialog type in C<dialog_type>.
+
+	my $find_dialog = Padre::Wx::Dialog::Find->new('find');
+
+=back
+
+=cut
+
 sub new {
 	my $class = shift;
 	my $type = shift;
 
 	my $self = bless {}, $class;
 
-	$self->{dialog_type} = $type;
+	$self->{dialog_type} = $type ? $type : 'find';
 	$self->create_dialog;
 
 	return $self;
 }
+
+=head2 Public Methods
+
+=over 4
+
+=item * $self->relocale;
+
+Delete and re-create dialog on locale (language) change.
+
+=cut
 
 sub relocale {
 	my $self = shift;
@@ -41,6 +78,12 @@ sub relocale {
 	return;
 }
 
+=item * $self->delete_dialog;
+
+Delete dialog.
+
+=cut
+
 sub delete_dialog {
 	my $self = shift;
 
@@ -49,6 +92,15 @@ sub delete_dialog {
 
 	return;
 }
+
+=item * $self->create_dialog;
+
+Create Find or Replace dialog depending on C<dialog_type> value.
+
+TODO: Maybe create methods for Find and Replace dialogs should
+be separated?
+
+=cut
 
 sub create_dialog {
 	my $self = shift;
@@ -283,6 +335,13 @@ sub create_dialog {
 	return;
 }
 
+=item * $self->update_dialog;
+
+Fetch recent search and replace strings from history and place them
+in find and replace combo boxes respectively for re-use. 
+
+=cut
+
 sub update_dialog {
 	my $self = shift;
 
@@ -305,12 +364,23 @@ sub update_dialog {
 	return;
 }
 
+=item * $self->find;
+
+Grab currently selected text, if any, and place it in find combo box.
+Bring up the dialog or perform search for strings' next occurence
+if dialog is already displayed.
+
+TODO: if selection is more than one line then consider it as the limit
+of the search and replace and not as the string to be used.
+
+=cut
+
 sub find {
 	my ( $self, $main ) = @_;
 
 	my $text = $main->current->text;
 	$text = '' if not defined $text;
-
+	
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and replace and not as the string to be used
 	$text = '' if $text =~ /\n/;
@@ -326,6 +396,14 @@ sub find {
 
 	return;
 }
+
+=item * $self->find_next;
+
+Search for given string's next occurence.  If no string is available
+(either as a selected text in editor, if Quick Find is on, or from
+search history) run C<find> method.
+
+=cut
 
 sub find_next {
 	my $self = shift;
@@ -353,6 +431,13 @@ sub find_next {
 	return;
 }
 
+=item * $self->find_previous;
+
+Perform backward search for string fetched from search history
+or run C<find> method if search history is empty.
+
+=cut
+
 sub find_previous {
 	my $self = shift;
 	my $main = shift;
@@ -365,6 +450,12 @@ sub find_previous {
 	return;
 }
 
+=item * $self->cancel_clicked;
+
+Hide dialog when pressed cancel button.
+
+=cut
+
 sub cancel_clicked {
 	$_[0]->{dialog}->Hide;
 
@@ -372,6 +463,13 @@ sub cancel_clicked {
 	$_[0]->get_widget('_find_choice_')->SetFocus;
 	return;
 }
+
+=item * $self->replace_all_clicked;
+
+Executed when Replace all button is clicked.
+Replace all appearances of given string.
+
+=cut
 
 sub replace_all_clicked {
 	my ( $self, $dialog, $event ) = @_;
@@ -403,6 +501,14 @@ sub replace_all_clicked {
 	return;
 }
 
+=item * $self->replace_clicked;
+
+Executed when Replace button is clicked.
+Replace one appearance of given strings.  If search window is still
+open, run C<search> on the whole text, again.
+
+=cut
+
 sub replace_clicked {
 	my ( $self, $dialog, $event ) = @_;
 
@@ -424,7 +530,7 @@ sub replace_clicked {
 		$current->editor->ReplaceSelection($replace);
 	}
 
-	# If search window is still open, run a search_again on the whole text
+	# If search window is still open, run a search on the whole text again
 	my $config = Padre->ide->config;
 	unless ( $config->find_first ) {
 		$self->search;
@@ -432,6 +538,13 @@ sub replace_clicked {
 
 	return;
 }
+
+=item * $self->find_clicked;
+
+Executed when Find button is clicked.
+Perform search on the term specified in the dialog.
+
+=cut
 
 sub find_clicked {
 	my $self   = shift;
@@ -443,6 +556,14 @@ sub find_clicked {
 
 	return;
 }
+
+=item * $self->get_data_from_dialog;
+
+Gather search and optionaly replace strings from the dialog and store
+them in search history.  Set search options based on the check boxes
+values.
+
+=cut
 
 sub get_data_from_dialog {
 	my $self   = shift;
@@ -476,6 +597,8 @@ sub get_data_from_dialog {
 	return 1;
 }
 
+# Internal method. $self->_get_regex( $regex )
+# Prepare and return search term defined as a regular expression.
 sub _get_regex {
 	my %args        = @_;
 	my $config      = Padre->ide->config;
@@ -507,6 +630,12 @@ sub _get_regex {
 	return $regex;
 }
 
+=item * $self->search;
+
+Perform actual search.  Highlight (set as selected) found string.
+
+=cut
+
 sub search {
 	my $self  = shift;
 	my %args  = @_;
@@ -531,6 +660,20 @@ sub search {
 
 	return;
 }
+
+=back
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
 
 1;
 
