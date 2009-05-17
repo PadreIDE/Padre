@@ -1131,6 +1131,8 @@ Arabic - Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
 
 Chinese (Simplified) - Fayland Lam (FAYLAND)
 
+Chinese (Traditional) - BlueT - Matthew Lien - 練喆明 (BLUET) E<lt>bluet@cpan.orgE<gt>
+
 Dutch - Dirk De Nijs (ddn123456)
 
 English - Everyone on the team

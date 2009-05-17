@@ -192,6 +192,7 @@ sub about {
 	$about->AddTranslator("Spanish - Paco Alguacil");
 	$about->AddTranslator("Spanish - Enrique Nell");
 	$about->AddTranslator("Czech - Marcela Mašláňová");
+	$about->AddTranslator("Chinese (Trad./TW) - BlueT - Matthew Lien - 練喆明");
 
 	Wx::AboutBox($about);
 	return;

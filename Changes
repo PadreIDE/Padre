@@ -8,6 +8,10 @@ Changes for Perl Application Development and Refactoring Environment
     Implemented first-generation Popularity Contest task (ADAMK)
     Reorganized and differentiated Find and Replace dialogs (#348) (THEREK)
 
+v0.36 2009.05.18
+
+	Add Chinese (Traditional) translation (BLUET)
+
 v0.35 2009.05.08
 
     Add Japanese translation (ISHIGAKI)
