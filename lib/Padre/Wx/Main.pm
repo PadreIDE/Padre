@@ -1772,7 +1772,7 @@ sub fast_find {
 	return $self->{fast_find_panel};
 }
 
-=item * my $find = $main->replace;
+=item * my $replace = $main->replace;
 
 Return current replace dialog. Create a new one if needed.
 
@@ -1973,7 +1973,7 @@ veto the C<$event> close, eg when some files are not yet saved.
 
 If close is confirmed, save config to disk. Also, capture current
 session to be able to restore it next time if user set Padre to open
-last session on startup.
+last session on startup. Clean up all Task Manager's tasks.
 
 =cut
 
@@ -2023,6 +2023,11 @@ sub on_close_window {
 	# This knocks about quarter of a second off the speed
 	# at which Padre appears to close.
 	$self->Show(0);
+	
+	# Stop all Task Manager's worker threads
+	Padre->ide->task_manager->cleanup();
+	
+	Padre::Util::debug("Finished TaskManager's cleanup");
 
 	# Save the window geometry
 	#$config->set( main_auilayout => $self->aui->SavePerspective );
