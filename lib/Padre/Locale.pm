@@ -384,7 +384,7 @@ BEGIN {
 			iso639    => 'zh',
 			iso3166   => undef,
 			wxid      => Wx::wxLANGUAGE_CHINESE,
-			fallback  => [ 'zh-cn', 'zh-tw', 'en-us' ],
+			fallback  => [ 'zh-tw', 'zh-cn', 'en-us' ],
 			supported => 0,
 		},
 
@@ -394,7 +394,7 @@ BEGIN {
 			iso639    => 'zh',
 			iso3166   => 'CN',
 			wxid      => Wx::wxLANGUAGE_CHINESE_SIMPLIFIED,
-			fallback  => [],
+			fallback  => [ 'zh-tw', 'en-us' ],
 			supported => 1,
 		},
 
@@ -405,6 +405,7 @@ BEGIN {
 			iso3166  => 'TW',
 			wxid     => Wx::wxLANGUAGE_CHINESE_TRADITIONAL,
 			fallback => [ 'zh-cn', 'en-us' ],
+			supported => 1,
 		},
 
 		# RFC4646 supports the interesting idea of comedy languages.
