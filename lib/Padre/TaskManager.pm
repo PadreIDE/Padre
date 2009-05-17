@@ -167,7 +167,6 @@ sub _init_events {
 			$TASK_START_EVENT,
 			\&on_task_start_event,
 		);
-		Wx::Event::EVT_CLOSE( $main, \&on_close );
 		$EVENTS_INITIALIZED = 1;
 	}
 }
@@ -448,26 +447,6 @@ sub workers {
 =pod
 
 =head1 EVENT HANDLERS
-
-=head2 on_close
-
-Registered to be executed on editor shutdown.
-Executes the cleanup method.
-
-=cut
-
-sub on_close {
-	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
-
-	# TODO/FIXME:
-	# This should somehow get at the specific TaskManager object
-	# instead of going through the Padre globals!
-	Padre->ide->task_manager->cleanup();
-
-	$event->Skip(1);
-}
-
-=pod
 
 =head2 on_task_done_event
 
