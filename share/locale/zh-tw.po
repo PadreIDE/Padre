@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre 0.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-18 06:32+0800\n"
-"PO-Revision-Date: 2009-05-19 03:21+0800\n"
+"POT-Creation-Date: 2009-05-19 03:10+0800\n"
+"PO-Revision-Date: 2009-05-19 03:26+0800\n"
 "Last-Translator: BlueT - Matthew Lien - 練喆明 <BlueT@BlueT.org>\n"
 "Language-Team: Chinese/Traditional <BlueT@ubuntu-tw.org>\n"
 "MIME-Version: 1.0\n"
@@ -92,79 +92,79 @@ msgstr "英文 (美國)"
 msgid "Spanish (Argentina)"
 msgstr "西班牙文 (阿根廷)"
 
-#: lib/Padre/Locale.pm:224
+#: lib/Padre/Locale.pm:225
 msgid "Spanish"
 msgstr "西班牙文"
 
-#: lib/Padre/Locale.pm:234
+#: lib/Padre/Locale.pm:235
 msgid "French (France)"
 msgstr "法文 (法國)"
 
-#: lib/Padre/Locale.pm:247
+#: lib/Padre/Locale.pm:249
 msgid "French"
 msgstr "法文"
 
-#: lib/Padre/Locale.pm:257
+#: lib/Padre/Locale.pm:259
 msgid "Hebrew"
 msgstr "希伯來語/猶太/以色列"
 
-#: lib/Padre/Locale.pm:267
+#: lib/Padre/Locale.pm:269
 msgid "Hungarian"
 msgstr "匈牙利語"
 
-#: lib/Padre/Locale.pm:281
+#: lib/Padre/Locale.pm:283
 msgid "Italian"
 msgstr "義大利文"
 
-#: lib/Padre/Locale.pm:291
+#: lib/Padre/Locale.pm:293
 msgid "Japanese"
 msgstr "日文"
 
-#: lib/Padre/Locale.pm:301
+#: lib/Padre/Locale.pm:303
 msgid "Korean"
 msgstr "韓文"
 
-#: lib/Padre/Locale.pm:315
+#: lib/Padre/Locale.pm:317
 msgid "Dutch"
 msgstr "荷蘭語"
 
-#: lib/Padre/Locale.pm:325
+#: lib/Padre/Locale.pm:327
 msgid "Dutch (Belgium)"
 msgstr "荷蘭語 (比利時)"
 
-#: lib/Padre/Locale.pm:334
+#: lib/Padre/Locale.pm:337
 msgid "Norwegian (Norway)"
 msgstr "挪威語 (挪威)"
 
-#: lib/Padre/Locale.pm:343
+#: lib/Padre/Locale.pm:347
 msgid "Polish"
 msgstr "波蘭文"
 
-#: lib/Padre/Locale.pm:353
+#: lib/Padre/Locale.pm:357
 msgid "Portuguese (Brazil)"
 msgstr "葡萄牙文 (巴西)"
 
-#: lib/Padre/Locale.pm:363
+#: lib/Padre/Locale.pm:367
 msgid "Portuguese (Portugal)"
 msgstr "葡萄牙文 (葡萄牙)"
 
-#: lib/Padre/Locale.pm:372
+#: lib/Padre/Locale.pm:377
 msgid "Russian"
 msgstr "俄文"
 
-#: lib/Padre/Locale.pm:382
+#: lib/Padre/Locale.pm:387
 msgid "Chinese"
 msgstr "中文"
 
-#: lib/Padre/Locale.pm:392
+#: lib/Padre/Locale.pm:397
 msgid "Chinese (Simplified)"
 msgstr "中文 (簡體)"
 
-#: lib/Padre/Locale.pm:402
+#: lib/Padre/Locale.pm:407
 msgid "Chinese (Traditional)"
 msgstr "中文 (正體/繁體)"
 
-#: lib/Padre/Locale.pm:415
+#: lib/Padre/Locale.pm:421
 msgid "Klingon"
 msgstr "克林貢語"
 
@@ -210,8 +210,7 @@ msgstr "外掛:%s - 無法例舉外掛物件"
 msgid ""
 "Plugin:%s - Could not instantiate plugin object: the constructor does not "
 "return a Padre::Plugin object"
-msgstr ""
-"外掛:%s - 無法例舉外掛物件: 建構子沒有 return 一個 Padre::Plugin 物件"
+msgstr "外掛:%s - 無法例舉外掛物件: 建構子沒有 return 一個 Padre::Plugin 物件"
 
 #: lib/Padre/PluginManager.pm:537
 #, perl-format
@@ -226,7 +225,7 @@ msgstr "呼叫外掛選單時發生錯誤"
 msgid "No document open"
 msgstr "沒有開啟文件"
 
-#: lib/Padre/PluginManager.pm:787 lib/Padre/Wx/Main.pm:3489
+#: lib/Padre/PluginManager.pm:787 lib/Padre/Wx/Main.pm:3504
 msgid "No filename"
 msgstr "沒有檔案名稱"
 
@@ -243,8 +242,8 @@ msgstr ""
 "載入外掛失敗 '%s'\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:861 lib/Padre/Wx/Main.pm:2401
-#: lib/Padre/Wx/Main.pm:3183
+#: lib/Padre/PluginManager.pm:861 lib/Padre/Wx/Main.pm:2419
+#: lib/Padre/Wx/Main.pm:3198
 msgid "Open file"
 msgstr "開啟檔案"
 
@@ -367,7 +366,7 @@ msgstr "警告"
 
 #: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Syntax.pm:99
 #: lib/Padre/Wx/Main.pm:1484 lib/Padre/Wx/Main.pm:1736
-#: lib/Padre/Wx/Main.pm:2594 lib/Padre/Wx/Dialog/PluginManager.pm:362
+#: lib/Padre/Wx/Main.pm:2609 lib/Padre/Wx/Dialog/PluginManager.pm:362
 #: lib/Padre/Task/SyntaxChecker.pm:179
 msgid "Error"
 msgstr "錯誤"
@@ -526,117 +525,153 @@ msgstr "無法找到檔案 '%s'"
 msgid "Open Selection"
 msgstr "開啟所選擇的"
 
-#: lib/Padre/Wx/Main.pm:2442 lib/Padre/Wx/Main.pm:3646
+#: lib/Padre/Wx/Main.pm:2405
+msgid "JavaScript files"
+msgstr "JavaScript 檔案"
+
+#: lib/Padre/Wx/Main.pm:2406
+msgid "Perl files"
+msgstr "Perl 檔案"
+
+#: lib/Padre/Wx/Main.pm:2407
+msgid "PHP files"
+msgstr "PHP 檔案"
+
+#: lib/Padre/Wx/Main.pm:2408
+msgid "Python files"
+msgstr "Python 檔案"
+
+#: lib/Padre/Wx/Main.pm:2409
+msgid "Ruby files"
+msgstr "Ruby 檔案"
+
+#: lib/Padre/Wx/Main.pm:2410
+msgid "SQL files"
+msgstr "SQL 檔案"
+
+#: lib/Padre/Wx/Main.pm:2411
+msgid "Text files"
+msgstr "文字檔案"
+
+#: lib/Padre/Wx/Main.pm:2412
+msgid "Web files"
+msgstr "網頁檔案"
+
+#: lib/Padre/Wx/Main.pm:2415 lib/Padre/Wx/Main.pm:2416
+msgid "All files"
+msgstr "所有檔案"
+
+#: lib/Padre/Wx/Main.pm:2457 lib/Padre/Wx/Main.pm:3661
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "無法重讀檔案: '%s"
 
-#: lib/Padre/Wx/Main.pm:2468
+#: lib/Padre/Wx/Main.pm:2483
 msgid "Save file as..."
 msgstr "將檔案儲存成..."
 
-#: lib/Padre/Wx/Main.pm:2482
+#: lib/Padre/Wx/Main.pm:2497
 msgid "File already exists. Overwrite it?"
 msgstr "檔案已存在。 是否覆蓋？"
 
-#: lib/Padre/Wx/Main.pm:2483
+#: lib/Padre/Wx/Main.pm:2498
 msgid "Exist"
 msgstr "存在"
 
-#: lib/Padre/Wx/Main.pm:2583
+#: lib/Padre/Wx/Main.pm:2598
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "磁碟上的檔案在上次儲存後已被更動。 你想要覆寫它嗎？"
 
-#: lib/Padre/Wx/Main.pm:2584 lib/Padre/Wx/Main.pm:3639
+#: lib/Padre/Wx/Main.pm:2599 lib/Padre/Wx/Main.pm:3654
 msgid "File not in sync"
 msgstr "檔案未同步"
 
-#: lib/Padre/Wx/Main.pm:2593
+#: lib/Padre/Wx/Main.pm:2608
 msgid "Could not save file: "
 msgstr "無法儲存檔案: "
 
-#: lib/Padre/Wx/Main.pm:2655
+#: lib/Padre/Wx/Main.pm:2670
 msgid "File changed. Do you want to save it?"
 msgstr "檔案已更改。 是否儲存？"
 
-#: lib/Padre/Wx/Main.pm:2656
+#: lib/Padre/Wx/Main.pm:2671
 msgid "Unsaved File"
 msgstr "未儲存檔案"
 
-#: lib/Padre/Wx/Main.pm:2818
+#: lib/Padre/Wx/Main.pm:2833
 msgid "Cannot diff if file was never saved"
 msgstr "若未存檔則無法 diff (檢視差異)"
 
-#: lib/Padre/Wx/Main.pm:2824
+#: lib/Padre/Wx/Main.pm:2839
 msgid "There are no differences\n"
 msgstr "沒有差異\n"
 
-#: lib/Padre/Wx/Main.pm:3291 lib/Padre/Plugin/Devel.pm:162
+#: lib/Padre/Wx/Main.pm:3306 lib/Padre/Plugin/Devel.pm:162
 #, perl-format
 msgid "Error: %s"
 msgstr "錯誤： %s"
 
-#: lib/Padre/Wx/Main.pm:3292
+#: lib/Padre/Wx/Main.pm:3307
 msgid "Internal error"
 msgstr "內部錯誤"
 
-#: lib/Padre/Wx/Main.pm:3480
+#: lib/Padre/Wx/Main.pm:3495
 #, perl-format
 msgid "Words: %s"
 msgstr "單字： %s"
 
-#: lib/Padre/Wx/Main.pm:3481
+#: lib/Padre/Wx/Main.pm:3496
 #, perl-format
 msgid "Lines: %d"
 msgstr "列: %d"
 
-#: lib/Padre/Wx/Main.pm:3482
+#: lib/Padre/Wx/Main.pm:3497
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr "無空白字元: %s"
 
-#: lib/Padre/Wx/Main.pm:3483
+#: lib/Padre/Wx/Main.pm:3498
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "帶空白字元: %s"
 
-#: lib/Padre/Wx/Main.pm:3484
+#: lib/Padre/Wx/Main.pm:3499
 #, perl-format
 msgid "Newline type: %s"
 msgstr "換行字元型態: %s"
 
-#: lib/Padre/Wx/Main.pm:3485
+#: lib/Padre/Wx/Main.pm:3500
 #, perl-format
 msgid "Encoding: %s"
 msgstr "檔案編碼: %s"
 
-#: lib/Padre/Wx/Main.pm:3486
+#: lib/Padre/Wx/Main.pm:3501
 #, perl-format
 msgid "Document type: %s"
 msgstr "文件類型: %s"
 
-#: lib/Padre/Wx/Main.pm:3486
+#: lib/Padre/Wx/Main.pm:3501
 msgid "none"
 msgstr "無"
 
-#: lib/Padre/Wx/Main.pm:3488
+#: lib/Padre/Wx/Main.pm:3503
 #, perl-format
 msgid "Filename: %s"
 msgstr "檔名: %s"
 
-#: lib/Padre/Wx/Main.pm:3518
+#: lib/Padre/Wx/Main.pm:3533
 msgid "Space to Tab"
 msgstr "空白轉為跳格(Tabs)"
 
-#: lib/Padre/Wx/Main.pm:3519
+#: lib/Padre/Wx/Main.pm:3534
 msgid "Tab to Space"
 msgstr "跳格(Tabs)轉為空格"
 
-#: lib/Padre/Wx/Main.pm:3522
+#: lib/Padre/Wx/Main.pm:3537
 msgid "How many spaces for each tab:"
 msgstr "每個 tab 要多少個空格:"
 
-#: lib/Padre/Wx/Main.pm:3638
+#: lib/Padre/Wx/Main.pm:3653
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "磁碟上的檔案在上次儲存後已被更動。 你想要重新載入它嗎？"
 
