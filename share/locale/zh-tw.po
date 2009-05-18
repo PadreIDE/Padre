@@ -1819,7 +1819,7 @@ msgstr "沒有開啟檔案"
 
 #: lib/Padre/Plugin/Devel.pm:149
 msgid "A set of unrelated tools used by the Padre developers\n"
-msgstr "給 Padre 開發者用的一組不相關的工具"
+msgstr "給 Padre 開發者用的一組不相關的工具\n"
 
 #: lib/Padre/Plugin/PopularityContest.pm:119
 msgid "Ping"
