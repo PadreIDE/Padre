@@ -7,6 +7,7 @@ Changes for Perl Application Development and Refactoring Environment
     Added generic HTTP task support with Padre::Task::LWP (ADAMK)
     Implemented first-generation Popularity Contest task (ADAMK)
     Reorganized and differentiated Find and Replace dialogs (#348) (THEREK)
+    Add a set of filename wildcards to filter directory listing in Open File dialog (#343) (THEREK)
 
 v0.36 2009.05.18
 
