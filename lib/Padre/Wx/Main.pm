@@ -2396,17 +2396,32 @@ sub on_open {
 	if ($filename) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
+	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
+	# "It must be noted that wildcard support in the native Motif file dialog is quite
+	# limited: only one alternative is supported, and it is displayed without
+	# the descriptive text."
+	# But I don't think Wx + Motif is in use nowadays
+	my $wildcards = join( '|',
+		Wx::gettext("JavaScript files"), "*.js;*.JS",
+		Wx::gettext("Perl files"), "*.pm;*.PM;*.pl;*.PL",
+		Wx::gettext("PHP files"), "*.php;*.php5;*.PHP",
+		Wx::gettext("Python files"), "*.py;*.PY",
+		Wx::gettext("Ruby files"), "*.rb;*.RB",
+		Wx::gettext("SQL files"), "*.slq;*.SQL",
+		Wx::gettext("Text files"), "*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
+		Wx::gettext("Web files"), "*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
+	);
+	$wildcards = Padre::Util::WIN32
+		? Wx::gettext("All files") . "|*.*|" . $wildcards
+		: Wx::gettext("All files") . "|*|" . $wildcards;
 	my $dialog = Wx::FileDialog->new(
 		$self,
 		Wx::gettext("Open file"),
 		$self->cwd,
 		"",
-		"*.*",
+		$wildcards,
 		Wx::wxFD_MULTIPLE,
 	);
-	unless (Padre::Util::WIN32) {
-		$dialog->SetWildcard("*");
-	}
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
