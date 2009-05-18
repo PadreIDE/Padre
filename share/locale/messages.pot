@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-18 06:32+0800\n"
+"POT-Creation-Date: 2009-05-19 03:10+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,79 +87,79 @@ msgstr ""
 msgid "Spanish (Argentina)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:224
+#: lib/Padre/Locale.pm:225
 msgid "Spanish"
 msgstr ""
 
-#: lib/Padre/Locale.pm:234
+#: lib/Padre/Locale.pm:235
 msgid "French (France)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:247
+#: lib/Padre/Locale.pm:249
 msgid "French"
 msgstr ""
 
-#: lib/Padre/Locale.pm:257
+#: lib/Padre/Locale.pm:259
 msgid "Hebrew"
 msgstr ""
 
-#: lib/Padre/Locale.pm:267
+#: lib/Padre/Locale.pm:269
 msgid "Hungarian"
 msgstr ""
 
-#: lib/Padre/Locale.pm:281
+#: lib/Padre/Locale.pm:283
 msgid "Italian"
 msgstr ""
 
-#: lib/Padre/Locale.pm:291
+#: lib/Padre/Locale.pm:293
 msgid "Japanese"
 msgstr ""
 
-#: lib/Padre/Locale.pm:301
+#: lib/Padre/Locale.pm:303
 msgid "Korean"
 msgstr ""
 
-#: lib/Padre/Locale.pm:315
+#: lib/Padre/Locale.pm:317
 msgid "Dutch"
 msgstr ""
 
-#: lib/Padre/Locale.pm:325
+#: lib/Padre/Locale.pm:327
 msgid "Dutch (Belgium)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:334
+#: lib/Padre/Locale.pm:337
 msgid "Norwegian (Norway)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:343
+#: lib/Padre/Locale.pm:347
 msgid "Polish"
 msgstr ""
 
-#: lib/Padre/Locale.pm:353
+#: lib/Padre/Locale.pm:357
 msgid "Portuguese (Brazil)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:363
+#: lib/Padre/Locale.pm:367
 msgid "Portuguese (Portugal)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:372
+#: lib/Padre/Locale.pm:377
 msgid "Russian"
 msgstr ""
 
-#: lib/Padre/Locale.pm:382
+#: lib/Padre/Locale.pm:387
 msgid "Chinese"
 msgstr ""
 
-#: lib/Padre/Locale.pm:392
+#: lib/Padre/Locale.pm:397
 msgid "Chinese (Simplified)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:402
+#: lib/Padre/Locale.pm:407
 msgid "Chinese (Traditional)"
 msgstr ""
 
-#: lib/Padre/Locale.pm:415
+#: lib/Padre/Locale.pm:421
 msgid "Klingon"
 msgstr ""
 
@@ -214,7 +214,7 @@ msgstr ""
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:787 lib/Padre/Wx/Main.pm:3489
+#: lib/Padre/PluginManager.pm:787 lib/Padre/Wx/Main.pm:3504
 msgid "No filename"
 msgstr ""
 
@@ -229,8 +229,8 @@ msgid ""
 "%s"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:861 lib/Padre/Wx/Main.pm:2401
-#: lib/Padre/Wx/Main.pm:3183
+#: lib/Padre/PluginManager.pm:861 lib/Padre/Wx/Main.pm:2419
+#: lib/Padre/Wx/Main.pm:3198
 msgid "Open file"
 msgstr ""
 
@@ -353,7 +353,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Syntax.pm:99
 #: lib/Padre/Wx/Main.pm:1484 lib/Padre/Wx/Main.pm:1736
-#: lib/Padre/Wx/Main.pm:2594 lib/Padre/Wx/Dialog/PluginManager.pm:362
+#: lib/Padre/Wx/Main.pm:2609 lib/Padre/Wx/Dialog/PluginManager.pm:362
 #: lib/Padre/Task/SyntaxChecker.pm:179
 msgid "Error"
 msgstr ""
@@ -512,117 +512,153 @@ msgstr ""
 msgid "Open Selection"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2442 lib/Padre/Wx/Main.pm:3646
+#: lib/Padre/Wx/Main.pm:2405
+msgid "JavaScript files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2406
+msgid "Perl files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2407
+msgid "PHP files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2408
+msgid "Python files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2409
+msgid "Ruby files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2410
+msgid "SQL files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2411
+msgid "Text files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2412
+msgid "Web files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2415 lib/Padre/Wx/Main.pm:2416
+msgid "All files"
+msgstr ""
+
+#: lib/Padre/Wx/Main.pm:2457 lib/Padre/Wx/Main.pm:3661
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2468
+#: lib/Padre/Wx/Main.pm:2483
 msgid "Save file as..."
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2482
+#: lib/Padre/Wx/Main.pm:2497
 msgid "File already exists. Overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2483
+#: lib/Padre/Wx/Main.pm:2498
 msgid "Exist"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2583
+#: lib/Padre/Wx/Main.pm:2598
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2584 lib/Padre/Wx/Main.pm:3639
+#: lib/Padre/Wx/Main.pm:2599 lib/Padre/Wx/Main.pm:3654
 msgid "File not in sync"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2593
+#: lib/Padre/Wx/Main.pm:2608
 msgid "Could not save file: "
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2655
+#: lib/Padre/Wx/Main.pm:2670
 msgid "File changed. Do you want to save it?"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2656
+#: lib/Padre/Wx/Main.pm:2671
 msgid "Unsaved File"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2818
+#: lib/Padre/Wx/Main.pm:2833
 msgid "Cannot diff if file was never saved"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:2824
+#: lib/Padre/Wx/Main.pm:2839
 msgid "There are no differences\n"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3291 lib/Padre/Plugin/Devel.pm:162
+#: lib/Padre/Wx/Main.pm:3306 lib/Padre/Plugin/Devel.pm:162
 #, perl-format
 msgid "Error: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3292
+#: lib/Padre/Wx/Main.pm:3307
 msgid "Internal error"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3480
+#: lib/Padre/Wx/Main.pm:3495
 #, perl-format
 msgid "Words: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3481
+#: lib/Padre/Wx/Main.pm:3496
 #, perl-format
 msgid "Lines: %d"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3482
+#: lib/Padre/Wx/Main.pm:3497
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3483
+#: lib/Padre/Wx/Main.pm:3498
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3484
+#: lib/Padre/Wx/Main.pm:3499
 #, perl-format
 msgid "Newline type: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3485
+#: lib/Padre/Wx/Main.pm:3500
 #, perl-format
 msgid "Encoding: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3486
+#: lib/Padre/Wx/Main.pm:3501
 #, perl-format
 msgid "Document type: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3486
+#: lib/Padre/Wx/Main.pm:3501
 msgid "none"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3488
+#: lib/Padre/Wx/Main.pm:3503
 #, perl-format
 msgid "Filename: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3518
+#: lib/Padre/Wx/Main.pm:3533
 msgid "Space to Tab"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3519
+#: lib/Padre/Wx/Main.pm:3534
 msgid "Tab to Space"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3522
+#: lib/Padre/Wx/Main.pm:3537
 msgid "How many spaces for each tab:"
 msgstr ""
 
-#: lib/Padre/Wx/Main.pm:3638
+#: lib/Padre/Wx/Main.pm:3653
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr ""
 

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Padre 0.18\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-18 06:32+0800\n"
-"PO-Revision-Date: 2009-05-18 06:35+0800\n"
+"PO-Revision-Date: 2009-05-19 03:21+0800\n"
 "Last-Translator: BlueT - Matthew Lien - 練喆明 <BlueT@BlueT.org>\n"
 "Language-Team: Chinese/Traditional <BlueT@ubuntu-tw.org>\n"
 "MIME-Version: 1.0\n"
@@ -203,7 +203,7 @@ msgstr "外掛:%s - 與 Padre::Plugin API 版本不合. 必須是 Padre::Plugin 
 #: lib/Padre/PluginManager.pm:505
 #, perl-format
 msgid "Plugin:%s - Could not instantiate plugin object"
-msgstr ""
+msgstr "外掛:%s - 無法例舉外掛物件"
 
 #: lib/Padre/PluginManager.pm:517
 #, perl-format
@@ -211,6 +211,7 @@ msgid ""
 "Plugin:%s - Could not instantiate plugin object: the constructor does not "
 "return a Padre::Plugin object"
 msgstr ""
+"外掛:%s - 無法例舉外掛物件: 建構子沒有 return 一個 Padre::Plugin 物件"
 
 #: lib/Padre/PluginManager.pm:537
 #, perl-format
@@ -471,7 +472,7 @@ msgstr "無法找到專案根目錄"
 #: lib/Padre/Wx/Main.pm:1483
 #, perl-format
 msgid "Failed to start '%s' command"
-msgstr ""
+msgstr "啟始 '%s' 指令失敗"
 
 #: lib/Padre/Wx/Main.pm:1508
 msgid "No open document"
@@ -705,7 +706,7 @@ msgstr "你得先選個幾行或是區段才行"
 
 #: lib/Padre/Wx/Editor.pm:1165
 msgid "First character of selection must be a non-word character to align"
-msgstr ""
+msgstr "所選的開頭字元必須不是單字字母才能校準(align)"
 
 #: lib/Padre/Wx/FunctionList.pm:71
 msgid "Sub List"
@@ -882,7 +883,7 @@ msgstr "尋找變數宣告"
 
 #: lib/Padre/Wx/Menu/Perl.pm:66 lib/Padre/Document/Perl.pm:678
 msgid "Lexically Rename Variable"
-msgstr ""
+msgstr "以語意詞彙為變數重新命名"
 
 #: lib/Padre/Wx/Menu/Perl.pm:73 lib/Padre/Wx/Menu/Perl.pm:74
 #: lib/Padre/Document/Perl.pm:689 lib/Padre/Document/Perl.pm:690
@@ -891,7 +892,7 @@ msgstr "取代"
 
 #: lib/Padre/Wx/Menu/Perl.pm:89
 msgid "Vertically Align Selected"
-msgstr ""
+msgstr "垂直校準功能被選取"
 
 #: lib/Padre/Wx/Menu/Perl.pm:102
 msgid "Use PPI Syntax Highlighting"
@@ -1686,7 +1687,7 @@ msgstr "原始的"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:543
 msgid "alphabetical_private_last"
-msgstr ""
+msgstr "alphabetical_private_last"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:18
 msgid "All"
@@ -1733,7 +1734,7 @@ msgstr "目前游標看起來不像是指向一個變數"
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:184
 msgid "No declaration could be found for the specified (lexical?) variable"
-msgstr ""
+msgstr "找不到特定的 (詞彙語意?) 變數宣告"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:91
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:186
