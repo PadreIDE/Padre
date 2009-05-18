@@ -214,6 +214,7 @@ BEGIN {
 			iso3166  => 'AR',
 			wxid     => Wx::wxLANGUAGE_SPANISH_ARGENTINA,
 			fallback => [ 'es-es', 'en-us' ],
+			supported => 0,
 		},
 
 		'es-es' => {
@@ -237,6 +238,7 @@ BEGIN {
 			iso3166  => 'CA',
 			wxid     => Wx::wxLANGUAGE_FRENCH_CANADIAN,
 			fallback => ['fr-fr'],
+			supported => 0,
 		},
 
 		'fr-fr' => {
@@ -328,6 +330,7 @@ BEGIN {
 			iso3166  => 'BE',
 			wxid     => Wx::wxLANGUAGE_DUTCH_BELGIAN,
 			fallback => ['nl-nl'],
+			supported => 1,
 		},
 
 		'no' => {
@@ -337,6 +340,7 @@ BEGIN {
 			iso3166  => 'NO',
 			wxid     => Wx::wxLANGUAGE_NORWEGIAN_BOKMAL,
 			fallback => ['en-gb','en-us'],
+			supported => 1,
 		},
 
 		'pl' => {
@@ -366,6 +370,7 @@ BEGIN {
 			iso3166  => 'PT',
 			wxid     => Wx::wxLANGUAGE_PORTUGUESE,
 			fallback => ['pt-br'],
+			supported => 0,
 		},
 
 		'ru' => {
@@ -419,6 +424,7 @@ BEGIN {
 			iso3166  => undef,
 			wxid     => undef,
 			fallback => ['en-gb'],       # Debatable... :)
+			supported => 0,
 		},
 	);
 
