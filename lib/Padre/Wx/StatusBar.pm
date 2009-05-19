@@ -26,8 +26,9 @@ use Padre::Current ();
 
 use Class::XSAccessor
     accessors => {
-        _task_load_sbmp  => '_task_load_sbmp',
-        _task_load_width => '_task_load_width',
+        _task_load_sbmp   => '_task_load_sbmp',
+        _task_load_status => '_task_load_status',
+        _task_load_width  => '_task_load_width',
     };
 our $VERSION = '0.35';
 use base 'Wx::StatusBar';
