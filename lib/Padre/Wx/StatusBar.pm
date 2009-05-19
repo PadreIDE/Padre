@@ -66,16 +66,16 @@ sub new {
 	# Create the basic object
 	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
-	# Set up the fields
-    my $taskload_width = 20;
-    $self->_task_load_width($taskload_width);
-	$self->SetFieldsCount(5);
-	$self->SetStatusWidths( -1, $taskload_width, 100, 50, 100 );
-
     # create the static bitmap that will hold the task load status
     my $sbmp = Wx::StaticBitmap->new($self, -1,
         Padre::Wx::Icon::find('status/padre-tasks-running2') );
     $self->_task_load_sbmp($sbmp);
+	$self->_task_load_status('foobar'); # init status to sthg defined
+
+	# Set up the fields
+	$self->SetFieldsCount(5);
+	$self->SetStatusWidths( -1, 0, 100, 50, 100 );
+
 
     Wx::Event::EVT_SIZE( $self, \&on_resize );
 	return $self;
