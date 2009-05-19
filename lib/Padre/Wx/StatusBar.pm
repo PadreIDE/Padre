@@ -26,6 +26,7 @@ use Padre::Current ();
 
 use Class::XSAccessor
     accessors => {
+        _task_load_sbmp  => '_task_load_sbmp',
         _task_load_width => '_task_load_width',
     };
 our $VERSION = '0.35';
@@ -65,10 +66,15 @@ sub new {
 	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
 	# Set up the fields
-    my $taskload_width = 16;
+    my $taskload_width = 20;
     $self->_task_load_width($taskload_width);
 	$self->SetFieldsCount(5);
 	$self->SetStatusWidths( -1, $taskload_width, 100, 50, 100 );
+
+    # create the static bitmap that will hold the task load status
+    my $sbmp = Wx::StaticBitmap->new($self, -1,
+        Padre::Wx::Icon::find('status/padre-tasks-running2') );
+    $self->_task_load_sbmp($sbmp);
 
 	return $self;
 }
@@ -172,6 +178,14 @@ sub refresh {
 		( length($newline) + 2 ) * $width,
 		( length($postring) + 4 ) * $width,
 	);
+
+    # move the static bitmap holding the task load status
+    my $sbmp = $self->_task_load_sbmp;
+    my $rect = $self->GetFieldRect( TASKLOAD );
+    my $size = $sbmp->GetSize;
+    $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
+                 $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
+
 
 	# Fixed ticket #190: Massive GDI object leakages
 	# http://padre.perlide.org/ticket/190
