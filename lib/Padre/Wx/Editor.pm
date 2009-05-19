@@ -223,18 +223,14 @@ sub setup_style_from_config {
 
 sub _color {
 	my $rgb = shift;
-	my @c = ( 0xFF, 0xFF, 0xFF );    # some default
+	my @c   = ( 0xFF, 0xFF, 0xFF );
 	if ( not defined $rgb ) {
-
 		#Carp::cluck("undefined color");
 	} elsif ( $rgb =~ /^(..)(..)(..)$/ ) {
 		@c = map { hex($_) } ( $1, $2, $3 );
 	} else {
-
 		#Carp::cluck("invalid color '$rgb'");
 	}
-
-	#print "@c\n";
 	return Wx::Colour->new(@c);
 }
 
@@ -934,25 +930,26 @@ sub current_paragraph {
 }
 
 sub put_text_to_clipboard {
-	my ( $self, $text ) = @_; @_ = (); # feeble attempt to kill Scalars Leaked
+	my ( $self, $text ) = @_;
+	@_ = (); # Feeble attempt to kill Scalars Leaked
 
 	Wx::wxTheClipboard->Open;
-	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
+	Wx::wxTheClipboard->SetData(
+		Wx::TextDataObject->new($text)
+	);
 	Wx::wxTheClipboard->Close;
 
 	return;
 }
 
 sub get_text_from_clipboard {
-
 	# This is to be used as a method even if we don't use $self!
-	#my $self = shift;
-	Wx::wxTheClipboard->Open;
+	# my $self = shift;
 	my $text = '';
+	Wx::wxTheClipboard->Open;
 	if ( Wx::wxTheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
 		my $data = Wx::TextDataObject->new;
-		my $ok   = Wx::wxTheClipboard->GetData($data);
-		if ($ok) {
+		if ( Wx::wxTheClipboard->GetData($data) ) {
 			$text = $data->GetText;
 		}
 	}
@@ -1140,7 +1137,7 @@ sub insert_from_file {
 }
 
 sub vertically_align {
-	my ($editor) = @_;
+	my $editor = shift;
 
 	# Get the selected lines
 	my $begin = $editor->LineFromPosition( $editor->GetSelectionStart );
