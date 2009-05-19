@@ -219,14 +219,19 @@ sub update_task_status {
 
 	# if we're idling, just hide the icon in the statusbar
 	if ( $status eq 'idle' ) {
-		$sbmp->SetBitmap(Wx::wxNullBitmap);
 		$sbmp->Hide;
+		$sbmp->SetBitmap(Wx::wxNullBitmap);
+		$sbmp->SetToolTip('');
 		$self->_task_load_width(0);
 		return;
 	}
 
 	# not idling, show the correct icon in the statusbar
 	my $icon = Padre::Wx::Icon::find("status/padre-tasks-${status}2");
+	$sbmp->SetToolTip( $status eq 'running'
+		? Wx::gettext('Background Tasks are running')
+		: Wx::gettext('Background Tasks are running with high load')
+	);
 	$sbmp->SetBitmap($icon);
 	$sbmp->Show;
 	$self->_task_load_width(20);
