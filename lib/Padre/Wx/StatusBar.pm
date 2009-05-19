@@ -217,7 +217,7 @@ sub update_task_status {
 	}
 
 	# not idling, show the correct icon in the statusbar
-	my $icon = Padre::Wx::Icon::find("status/padre-tasks-${status}2");
+	my $icon = Padre::Wx::Icon::find("status/padre-tasks-$status");
 	$sbmp->SetToolTip(
 		$status eq 'running'
 		? Wx::gettext('Background Tasks are running')
