@@ -1079,10 +1079,9 @@ sub configure_editor {
 }
 
 sub goto_line_centerize {
-	my ( $self, $line ) = @_;
-
-	my $pos = $self->PositionFromLine($line);
-	$self->goto_pos_centerize($pos);
+	$_[0]->goto_pos_centerize(
+		$_[0]->PositionFromLine($_[1])
+	);
 }
 
 # borrowed from Kephra
