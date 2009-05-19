@@ -26,9 +26,9 @@ use Padre::Current ();
 
 use Class::XSAccessor
     accessors => {
-        _task_load_sbmp   => '_task_load_sbmp',
-        _task_load_status => '_task_load_status',
-        _task_load_width  => '_task_load_width',
+        _task_sbmp   => '_task_sbmp',
+        _task_status => '_task_status',
+        _task_width  => '_task_width',
     };
 our $VERSION = '0.35';
 use base 'Wx::StatusBar';
@@ -68,8 +68,8 @@ sub new {
 
 	# create the static bitmap that will hold the task load status
 	my $sbmp = Wx::StaticBitmap->new($self, -1, Wx::wxNullBitmap );
-	$self->_task_load_sbmp($sbmp);
-	$self->_task_load_status('foobar'); # init status to sthg defined
+	$self->_task_sbmp($sbmp);
+	$self->_task_status('foobar'); # init status to sthg defined
 	Wx::Event::EVT_LEFT_DOWN( $sbmp, \&Padre::TaskManager::on_dump_running_tasks );
 
 	# Set up the fields
@@ -179,7 +179,7 @@ sub refresh {
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
-		$self->_task_load_width,
+		$self->_task_width,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
 		( length($postring) + 4 ) * $width,
@@ -209,20 +209,20 @@ and if so, changes the icon to one of the other states
 
 sub update_task_status {
 	my ($self) = @_;
-	my $status = _get_task_load_status();
-	return if $status eq $self->_task_load_status; # nothing to do
+	my $status = _get_task_status();
+	return if $status eq $self->_task_status; # nothing to do
 
 	# store new status
-	$self->_task_load_status($status);
+	$self->_task_status($status);
 
-	my $sbmp = $self->_task_load_sbmp;
+	my $sbmp = $self->_task_sbmp;
 
 	# if we're idling, just hide the icon in the statusbar
 	if ( $status eq 'idle' ) {
 		$sbmp->Hide;
 		$sbmp->SetBitmap(Wx::wxNullBitmap);
 		$sbmp->SetToolTip('');
-		$self->_task_load_width(0);
+		$self->_task_width(0);
 		return;
 	}
 
@@ -234,7 +234,7 @@ sub update_task_status {
 	);
 	$sbmp->SetBitmap($icon);
 	$sbmp->Show;
-	$self->_task_load_width(20);
+	$self->_task_width(20);
 }
 
 =back
@@ -276,12 +276,12 @@ sub on_resize {
 # Private methods
 
 #
-# my $status = _get_task_load_status();
+# my $status = _get_task_status();
 #
 # return 'idle', 'running' or 'load' depending on the number of threads
 # currently working.
 #
-sub _get_task_load_status {
+sub _get_task_status {
         my $manager = Padre->ide->task_manager;
 
 	# still in editor-startup phase, default to idle
@@ -307,7 +307,7 @@ sub _get_task_load_status {
 sub _move_bitmap {
     my ($self) = @_;
 
-    my $sbmp = $self->_task_load_sbmp;
+    my $sbmp = $self->_task_sbmp;
     my $rect = $self->GetFieldRect( TASKLOAD );
     my $size = $sbmp->GetSize;
     $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
