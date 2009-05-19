@@ -57,6 +57,7 @@ requires       'IPC::Cmd'                 => '0.42';
 requires       'IPC::Open3'               => 0;
 requires       'IPC::Run'                 => '0.82' if win32;
 requires       'List::Util'               => '1.18';
+requires       'List::MoreUtils'          => '0.22';
 requires       'Module::Inspector'        => '0.04';
 requires       'Module::Refresh'          => '0.13';
 requires       'Module::Starter'          => '1.50';
