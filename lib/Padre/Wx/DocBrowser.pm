@@ -24,8 +24,8 @@ use Class::XSAccessor accessors => {
 };
 
 our %VIEW = (
-	'text/xhtml'  => 'Padre::Wx::HtmlWindow',
 	'text/html'   => 'Padre::Wx::HtmlWindow',
+	'text/xhtml'  => 'Padre::Wx::HtmlWindow',
 	'text/x-html' => 'Padre::Wx::HtmlWindow',
 );
 
@@ -94,7 +94,7 @@ sub new {
 
 	my $entry = Wx::TextCtrl->new(
 		$self, -1,
-		'search terms..',
+		'search terms...',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
@@ -126,31 +126,24 @@ sub new {
 
 # Bad - this looks like a virtual, really a eventhandler
 sub OnLinkClicked {
-	my ( $self, $event ) = @_;
-	my $htmlinfo = $event->GetLinkInfo;
-	my $href     = $htmlinfo->GetHref;
-
-	my $uri    = URI->new($href);
-	my $scheme = $uri->scheme;
-	if ( $self->provider->accept($scheme) ) {
+	my $self = shift;
+	my $uri  = URI->new( $_[0]->GetLinkInfo->GetHref );
+	if ( $self->provider->accept($uri->scheme) ) {
 		$self->help($uri);
 	} else {
 		Padre::Wx::LaunchDefaultBrowser($uri);
 	}
-
 }
 
 sub on_search_text_enter {
-	my ( $self, $event ) = @_;
-	my $text = $event->GetValue;
+	my $self = shift;
+	my $text = $_[0]->GetValue;
 	$self->ResolveRef($text);
-
 }
 
 sub _hints {
-	my ($class) = @_;
 	return (
-		lang => Padre::Locale::iso639(),
+		lang               => Padre::Locale::iso639(),
 		title_from_section => Wx::gettext('NAME'),
 	);
 }
@@ -158,25 +151,32 @@ sub _hints {
 sub help {
 	my ( $self, $query, $hint ) = @_;
 
-	$query = $self->padre2docbrowser( $query )
-		if ( _CLASSISA( ref $query ,'Padre::Document') );
+	if ( _INSTANCE($query, 'Padre::Document') ) {
+		$query = $self->padre2docbrowser( $query );
+	}
 
-	my %hints = ( $self->_hints ,
+	my %hints = ( $self->_hints,
 		_HASH($hint) ? %$hint : (),
 	);
-	if ( _INVOCANT($query) && $query->can('mimetype') ) {
+	if ( _INVOCANT($query) and $query->can('mimetype') ) {
 		my $task = Padre::Task::DocBrowser->new(
-			document => $query, type => 'docs',
-			args => \%hints,
-			main_thread_only => sub { $self->display( $_[0], $query ) },
+			document         => $query,
+			type             => 'docs',
+			args             => \%hints,
+			main_thread_only => sub {
+				$self->display( $_[0], $query )
+			},
 		);
 		$task->schedule;
 		return 1;
 	} elsif ( defined $query ) {
 		my $task = Padre::Task::DocBrowser->new(
-			document => $query, type => 'resolve',
-			args => \%hints,
-			main_thread_only => sub { $self->help( $_[0], referrer => $query ) }
+			document         => $query,
+			type             => 'resolve',
+			args             => \%hints,
+			main_thread_only => sub {
+				$self->help( $_[0], referrer => $query )
+			}
 		);
 		$task->schedule;
 		return 1;
