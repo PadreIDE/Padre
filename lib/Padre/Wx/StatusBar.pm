@@ -8,11 +8,30 @@ Padre::Wx::StatusBar - Encapsulates status bar customizations
 
 =head1 DESCRIPTION
 
-C<Padre::Wx::StatusBar> implements Padre's statusbar. It is the bottom pane
-holding various, err, status information on Padre.
+C<Padre::Wx::StatusBar> implements Padre's statusbar. It is the bottom
+pane holding various, err, status information on Padre.
 
-It inherits from C<Wx::StatusBar>, so check wx documentation to see all the
-available methods that can be applied to it besides the added ones (see below).
+The information shown are (in order):
+
+=over 4
+
+=item * Filename of current document, with a leading star if file has
+been updated and not saved
+
+=item * (Optional) Icon showing status of background tasks
+
+=item * (Optional) Mimetype of current document
+
+=item * Type of end of lines of current document
+
+=item * Position in current document
+
+=back
+
+
+It inherits from C<Wx::StatusBar>, so check wx documentation to see all
+the available methods that can be applied to it besides the added ones
+(see below).
 
 
 =cut
@@ -51,8 +70,8 @@ There's only one constructor for this class.
 
 =item * my $statusbar = Padre::Wx::StatusBar->new( $main );
 
-Create and return a new Padre statusbar. One should pass the C<$main> Padre
-window as argument, to get a reference to the statusbar parent.
+Create and return a new Padre statusbar. One should pass the C<$main>
+Padre window as argument, to get a reference to the statusbar parent.
 
 =cut
 
@@ -92,8 +111,8 @@ sub new {
 
 =item * $sb->clear;
 
-Clear all the status bar fields, ie, they will display an empty string in all
-fields.
+Clear all the status bar fields, ie, they will display an empty string
+in all fields.
 
 =cut
 
@@ -192,8 +211,8 @@ sub refresh {
 
 =item * $sb->update_task_status;
 
-Checks whether a task status icon update is in order
-and if so, changes the icon to one of the other states
+Checks whether a task status icon update is in order and if so, changes
+the icon to one of the other states
 
 =cut
 
@@ -243,8 +262,8 @@ Those methods handle various events happening to the statusbar.
 
 =item * $sb->on_resize( $event );
 
-Handler for the EVT_SIZE C<$event>. Used to move the task load bitmap to its
-position.
+Handler for the EVT_SIZE C<$event>. Used to move the task load bitmap to
+its position.
 
 =cut
 
@@ -306,6 +325,14 @@ sub _move_bitmap {
 	);
 	$sbmp->Refresh;
 }
+
+
+=head1 SEE ALSO
+
+Icons for background status courtesy of Mark James, at
+L<http://www.famfamfam.com/lab/icons/silk/>.
+
+
 
 =head1 COPYRIGHT & LICENSE
 
