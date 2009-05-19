@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre 0.18\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-19 03:10+0800\n"
-"PO-Revision-Date: 2009-05-19 03:26+0800\n"
+"POT-Creation-Date: 2009-05-20 05:23+0800\n"
+"PO-Revision-Date: 2009-05-20 05:25+0800\n"
 "Last-Translator: BlueT - Matthew Lien - 練喆明 <BlueT@BlueT.org>\n"
 "Language-Team: Chinese/Traditional <BlueT@ubuntu-tw.org>\n"
 "MIME-Version: 1.0\n"
@@ -295,6 +295,14 @@ msgstr "啟用外掛失敗 '%s': %s"
 msgid "Failed to disable plugin '%s': %s"
 msgstr "關閉外掛失敗 '%s': %s"
 
+#: lib/Padre/Wx/DocBrowser.pm:147
+msgid "NAME"
+msgstr "名稱"
+
+#: lib/Padre/Wx/DocBrowser.pm:223
+msgid "Untitled"
+msgstr "未命名"
+
 #: lib/Padre/Wx/Menubar.pm:72
 msgid "&File"
 msgstr "檔案(&F)"
@@ -391,7 +399,7 @@ msgstr "大綱"
 msgid "Output"
 msgstr "輸出"
 
-#: lib/Padre/Wx/Notebook.pm:31
+#: lib/Padre/Wx/Notebook.pm:35
 msgid "Files"
 msgstr "檔案"
 
@@ -430,18 +438,6 @@ msgstr "貼上"
 #: lib/Padre/Wx/ToolBar.pm:126
 msgid "Select all"
 msgstr "全選"
-
-#: lib/Padre/Wx/ToolBar.pm:151 lib/Padre/Wx/ToolBar.pm:201
-msgid "Background Tasks are idle"
-msgstr "背景作業閒置中"
-
-#: lib/Padre/Wx/ToolBar.pm:211
-msgid "Background Tasks are running"
-msgstr "背景作業運作中"
-
-#: lib/Padre/Wx/ToolBar.pm:221
-msgid "Background Tasks are running with high load"
-msgstr "背景作業運行中且負載滿高的"
 
 #: lib/Padre/Wx/Main.pm:391
 #, perl-format
@@ -687,59 +683,67 @@ msgstr "無法診斷這個錯誤!"
 msgid "Diagnostics"
 msgstr "診斷"
 
-#: lib/Padre/Wx/StatusBar.pm:78
+#: lib/Padre/Wx/StatusBar.pm:180
 msgid "L:"
 msgstr "L:"
 
-#: lib/Padre/Wx/StatusBar.pm:78
+#: lib/Padre/Wx/StatusBar.pm:180
 msgid "Ch:"
 msgstr "Ch:"
 
-#: lib/Padre/Wx/Editor.pm:709 lib/Padre/Wx/Menu/Edit.pm:66
+#: lib/Padre/Wx/StatusBar.pm:242
+msgid "Background Tasks are running"
+msgstr "背景作業運作中"
+
+#: lib/Padre/Wx/StatusBar.pm:243
+msgid "Background Tasks are running with high load"
+msgstr "背景作業運行中且負載滿高的"
+
+#: lib/Padre/Wx/Editor.pm:705 lib/Padre/Wx/Menu/Edit.pm:66
 msgid "Select all\tCtrl-A"
 msgstr "全選\tCtrl-A"
 
-#: lib/Padre/Wx/Editor.pm:720 lib/Padre/Wx/Menu/Edit.pm:110
+#: lib/Padre/Wx/Editor.pm:716 lib/Padre/Wx/Menu/Edit.pm:110
 msgid "&Copy\tCtrl-C"
 msgstr "複製(&C)\tCtrl-C"
 
-#: lib/Padre/Wx/Editor.pm:732 lib/Padre/Wx/Menu/Edit.pm:122
+#: lib/Padre/Wx/Editor.pm:728 lib/Padre/Wx/Menu/Edit.pm:122
 msgid "Cu&t\tCtrl-X"
 msgstr "剪下(&t)\tCtrl-X"
 
-#: lib/Padre/Wx/Editor.pm:744 lib/Padre/Wx/Menu/Edit.pm:134
+#: lib/Padre/Wx/Editor.pm:740 lib/Padre/Wx/Menu/Edit.pm:134
 msgid "&Paste\tCtrl-V"
 msgstr "貼上(&P)\tCtrl-V"
 
-#: lib/Padre/Wx/Editor.pm:761 lib/Padre/Wx/Menu/Edit.pm:205
+#: lib/Padre/Wx/Editor.pm:757 lib/Padre/Wx/Menu/Edit.pm:205
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "打開註解(&T)\tCtrl-Shift-C"
 
-#: lib/Padre/Wx/Editor.pm:766 lib/Padre/Wx/Menu/Edit.pm:215
+#: lib/Padre/Wx/Editor.pm:762 lib/Padre/Wx/Menu/Edit.pm:215
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "註解(&C)所選擇的列(可多列)\tCtrl-M"
 
-#: lib/Padre/Wx/Editor.pm:771 lib/Padre/Wx/Menu/Edit.pm:225
+#: lib/Padre/Wx/Editor.pm:767 lib/Padre/Wx/Menu/Edit.pm:225
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "取消所選擇的列(可多列)的註解(&U)\tCtrl-M"
 
-#: lib/Padre/Wx/Editor.pm:789
+#: lib/Padre/Wx/Editor.pm:785
 msgid "Fold all"
 msgstr "全部摺疊"
 
-#: lib/Padre/Wx/Editor.pm:796
+#: lib/Padre/Wx/Editor.pm:792
 msgid "Unfold all"
 msgstr "全部取消摺疊"
 
-#: lib/Padre/Wx/Editor.pm:809 lib/Padre/Wx/Menu/Window.pm:34
+#: lib/Padre/Wx/Editor.pm:805 lib/Padre/Wx/Menu/Window.pm:34
 msgid "&Split window"
 msgstr "切割視窗(&S)"
 
-#: lib/Padre/Wx/Editor.pm:1149
+#: lib/Padre/Wx/Editor.pm:1145
 msgid "You must select a range of lines"
 msgstr "你得先選個幾行或是區段才行"
 
-#: lib/Padre/Wx/Editor.pm:1165
+#: lib/Padre/Wx/Editor.pm:1161
 msgid "First character of selection must be a non-word character to align"
 msgstr "所選的開頭字元必須不是單字字母才能校準(align)"
 
@@ -1908,6 +1912,9 @@ msgstr "pip 無預期地沒有被安裝"
 #: lib/Padre/Document/Perl.pm:512 lib/Padre/Document/Perl.pm:538
 msgid "Check cancelled"
 msgstr "取消檢查"
+
+#~ msgid "Background Tasks are idle"
+#~ msgstr "背景作業閒置中"
 
 #~ msgid "perl"
 #~ msgstr "perl"
