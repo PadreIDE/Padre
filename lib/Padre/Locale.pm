@@ -442,9 +442,10 @@ BEGIN {
 use constant WX => Wx::Locale::GetSystemLanguage();
 
 use constant system_rfc4646 => List::Util::first {
-	$RFC4646{$_}->{wxid} == WX;
-}
-grep { defined $RFC4646{$_}->{wxid} } sort keys %RFC4646;
+	$RFC4646{$_}->{wxid} == WX
+} grep {
+	defined $RFC4646{$_}->{wxid}
+} sort keys %RFC4646;
 
 #####################################################################
 # Locale 2.0 Implementation
@@ -491,7 +492,11 @@ sub object {
 }
 
 sub menu_view_languages {
-	return map { $_ => Wx::gettext( $RFC4646{$_}->{gettext} ) } grep { $RFC4646{$_}->{supported} } sort keys %RFC4646;
+	return map {
+		$_ => Wx::gettext( $RFC4646{$_}->{gettext} )
+	} grep {
+		$RFC4646{$_}->{supported}
+	} sort keys %RFC4646;
 }
 
 #####################################################################
