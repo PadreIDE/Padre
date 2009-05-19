@@ -26,9 +26,17 @@ my $msgfmt;
 if ( $^O =~ /(linux|bsd)/ ) {
 	$msgfmt = scalar File::Which::which('msgfmt');
 } elsif ( $^O =~ /win32/i ) {
+	eval { require File::Glob::Windows; };
+	if( $@ ) {
+		die("Default glob() will misinterpret spaces in folder names as seperators, install File::Glob::Windows to fix this behavior!");
+	} else {
+		use File::Glob::Windows;
+	}
 	my $p = "C:/Program Files/GnuWin32/bin/msgfmt.exe";
 	if ( -e $p ) {
 		$msgfmt = $p;
+	} else {
+		$msgfmt = scalar File::Which::which('msgfmt');
 	}
 }
 
@@ -64,7 +72,9 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
 		foreach my $plugin ( @plugins ) {
-			convert_po_to_mo("$dir/$plugin");
+			if( $msgfmt ) {
+				convert_po_to_mo("$dir/$plugin");
+			}
 			push @cmd, "-I$dir/$plugin/lib";
 		}
 	}
