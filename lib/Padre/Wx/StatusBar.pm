@@ -235,10 +235,11 @@ sub on_resize {
 #
 # $sb->_move_bitmap;
 #
+# move the static bitmap holding the task load status to its proper location.
+#
 sub _move_bitmap {
     my ($self) = @_;
 
-    # move the static bitmap holding the task load status
     my $sbmp = $self->_task_load_sbmp;
     my $rect = $self->GetFieldRect( TASKLOAD );
     my $size = $sbmp->GetSize;
