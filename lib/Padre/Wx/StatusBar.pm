@@ -264,6 +264,7 @@ sub on_resize {
     # note: parent resize method will be called automatically
 
     $self->_move_bitmap;
+    $self->Refresh;
 }
 
 =back
@@ -312,6 +313,7 @@ sub _move_bitmap {
     my $size = $sbmp->GetSize;
     $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
                  $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
+	 $sbmp->Refresh;
 }
 
 
