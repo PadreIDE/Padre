@@ -66,18 +66,18 @@ sub new {
 	# Create the basic object
 	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
-    # create the static bitmap that will hold the task load status
-    my $sbmp = Wx::StaticBitmap->new($self, -1,
-        Padre::Wx::Icon::find('status/padre-tasks-running2') );
-    $self->_task_load_sbmp($sbmp);
+	# create the static bitmap that will hold the task load status
+	my $sbmp = Wx::StaticBitmap->new($self, -1, Wx::wxNullBitmap );
+	$self->_task_load_sbmp($sbmp);
 	$self->_task_load_status('foobar'); # init status to sthg defined
 
 	# Set up the fields
 	$self->SetFieldsCount(5);
 	$self->SetStatusWidths( -1, 0, 100, 50, 100 );
 
+	# react to resize events, to adapt size of icon field
+	Wx::Event::EVT_SIZE( $self, \&on_resize );
 
-    Wx::Event::EVT_SIZE( $self, \&on_resize );
 	return $self;
 }
 
@@ -178,14 +178,14 @@ sub refresh {
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
-        $self->_task_load_width,
+		$self->_task_load_width,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
 		( length($postring) + 4 ) * $width,
 	);
 
-    # move the static bitmap holding the task load status
-    $self->_move_bitmap;
+	# move the static bitmap holding the task load status
+	$self->_move_bitmap;
 
 	# Fixed ticket #190: Massive GDI object leakages
 	# http://padre.perlide.org/ticket/190
@@ -224,6 +224,7 @@ sub update_task_status {
 		return;
 	}
 
+	# not idling, show the correct icon in the statusbar
 	my $icon = Padre::Wx::Icon::find("status/padre-tasks-${status}2");
 	$sbmp->SetBitmap($icon);
 	$sbmp->Show;
