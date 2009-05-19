@@ -76,6 +76,7 @@ sub new {
         Padre::Wx::Icon::find('status/padre-tasks-running2') );
     $self->_task_load_sbmp($sbmp);
 
+    Wx::Event::EVT_SIZE( $self, \&on_resize );
 	return $self;
 }
 
@@ -200,6 +201,22 @@ sub refresh {
 
 =back
 
+=cut
+
+
+sub on_resize {
+    my ($self) = @_;
+
+    # note: parent resize method will be called automatically
+
+    # move the static bitmap holding the task load status
+    my $sbmp = $self->_task_load_sbmp;
+    my $rect = $self->GetFieldRect( TASKLOAD );
+    my $size = $sbmp->GetSize;
+    $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
+                 $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
+
+}
 
 
 =head1 COPYRIGHT & LICENSE
