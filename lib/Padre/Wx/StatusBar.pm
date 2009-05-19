@@ -204,6 +204,22 @@ sub refresh {
 =cut
 
 
+#####################################################################
+
+=head2 Event handlers
+
+Those methods handle various events happening to the statusbar.
+
+
+=over 4
+
+=item * $sb->on_resize( $event );
+
+Handler for the EVT_SIZE C<$event>. Used to move the task load bitmap to its
+position.
+
+=cut
+
 sub on_resize {
     my ($self) = @_;
 
@@ -218,6 +234,12 @@ sub on_resize {
 
 }
 
+=back
+
+=cut
+
+
+#####################################################################
 
 =head1 COPYRIGHT & LICENSE
 
