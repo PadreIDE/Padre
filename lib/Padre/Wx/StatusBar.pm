@@ -29,9 +29,10 @@ use base 'Wx::StatusBar';
 
 use constant {
 	FILENAME => 0,
-	MIMETYPE => 1,
-	NEWLINE  => 2,
-	POSTRING => 3,
+	TASKLOAD => 1,
+	MIMETYPE => 2,
+	NEWLINE  => 3,
+	POSTRING => 4,
 };
 
 
@@ -60,8 +61,8 @@ sub new {
 	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
 	# Set up the fields
-	$self->SetFieldsCount(4);
-	$self->SetStatusWidths( -1, 100, 50, 100 );
+	$self->SetFieldsCount(5);
+	$self->SetStatusWidths( -1, 0, 100, 50, 100 );
 
 	return $self;
 }
@@ -160,6 +161,7 @@ sub refresh {
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
+        0,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
 		( length($postring) + 4 ) * $width,
