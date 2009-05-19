@@ -168,6 +168,9 @@ sub refresh {
 	my $mimetype = $document->get_mimetype;
 	my $postring = Wx::gettext('L:') . ( $line + 1 ) . ' ' . Wx::gettext('Ch:') . $char;
 
+	# update task load status
+	$self->update_task_status;
+
 	# Write the new values into the status bar and update sizes
 	$self->SetStatusText( "$modified $filename", FILENAME );
 	$self->SetStatusText( $mimetype,             MIMETYPE );
@@ -193,6 +196,38 @@ sub refresh {
 	}
 
 	return;
+}
+
+
+=item * $sb->update_task_status;
+
+Checks whether a task status icon update is in order
+and if so, changes the icon to one of the other states
+
+=cut
+
+sub update_task_status {
+	my ($self) = @_;
+	my $status = _get_task_load_status();
+	return if $status eq $self->_task_load_status; # nothing to do
+
+	# store new status
+	$self->_task_load_status($status);
+
+	my $sbmp = $self->_task_load_sbmp;
+
+	# if we're idling, just hide the icon in the statusbar
+	if ( $status eq 'idle' ) {
+		$sbmp->SetBitmap(Wx::wxNullBitmap);
+		$sbmp->Hide;
+		$self->_task_load_width(0);
+		return;
+	}
+
+	my $icon = Padre::Wx::Icon::find("status/padre-tasks-${status}2");
+	$sbmp->SetBitmap($icon);
+	$sbmp->Show;
+	$self->_task_load_width(20);
 }
 
 =back
