@@ -70,6 +70,7 @@ sub new {
 	my $sbmp = Wx::StaticBitmap->new($self, -1, Wx::wxNullBitmap );
 	$self->_task_load_sbmp($sbmp);
 	$self->_task_load_status('foobar'); # init status to sthg defined
+	Wx::Event::EVT_LEFT_DOWN( $sbmp, \&Padre::TaskManager::on_dump_running_tasks );
 
 	# Set up the fields
 	$self->SetFieldsCount(5);
