@@ -1,6 +1,22 @@
 package Padre::Wx::StatusBar;
 
-# Encapsulates status bar customisations
+=head1 NAME
+
+Padre::Wx::StatusBar - Encapsulates status bar customizations
+
+
+
+=head1 DESCRIPTION
+
+C<Padre::Wx::StatusBar> implements Padre's statusbar. It is the bottom pane
+holding various, err, status information on Padre.
+
+It inherits from C<Wx::StatusBar>, so check wx documentation to see all the
+available methods that can be applied to it besides the added ones (see below).
+
+
+=cut
+
 
 use strict;
 use warnings;
@@ -18,6 +34,24 @@ use constant {
 	POSTRING => 3,
 };
 
+
+#####################################################################
+
+=head1 PUBLIC API
+
+=head2 Constructor
+
+There's only one constructor for this class.
+
+=over 4
+
+=item * my $statusbar = Padre::Wx::StatusBar->new( $main );
+
+Create and return a new Padre statusbar. One should pass the C<$main> Padre
+window as argument, to get a reference to the statusbar parent.
+
+=cut
+
 sub new {
 	my $class = shift;
 	my $main  = shift;
@@ -32,6 +66,27 @@ sub new {
 	return $self;
 }
 
+
+=back
+
+=cut
+
+
+#####################################################################
+
+=head2 Public Methods
+
+
+=over 4
+
+=item * $sb->clear;
+
+Clear all the status bar fields, ie, they will display an empty string in all
+fields.
+
+=cut
+
+
 sub clear {
 	my $self = shift;
 	$self->SetStatusText( "", FILENAME );
@@ -41,13 +96,34 @@ sub clear {
 	return;
 }
 
+
+=item * my $main = $sb->main;
+
+Handy method to get a reference on Padre's main window.
+
+=cut
+
 sub main {
 	$_[0]->GetParent;
 }
 
+
+=item * my $current = $sb->current;
+
+Get a new C<Padre::Current> object.
+
+=cut
+
 sub current {
 	Padre::Current->new( main => $_[0]->GetParent, );
 }
+
+
+=item * $sb->refresh;
+
+Force an update of the document fields in the statusbar.
+
+=cut
 
 sub refresh {
 	my $self    = shift;
@@ -99,6 +175,24 @@ sub refresh {
 
 	return;
 }
+
+=back
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
+
+
 
 1;
 
