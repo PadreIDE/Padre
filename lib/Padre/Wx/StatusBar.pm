@@ -234,6 +234,30 @@ sub on_resize {
 # Private methods
 
 #
+# my $status = _get_task_load_status();
+#
+# return 'idle', 'running' or 'load' depending on the number of threads
+# currently working.
+#
+sub _get_task_load_status {
+        my $manager = Padre->ide->task_manager;
+
+	# still in editor-startup phase, default to idle
+	return 'idle' unless defined $manager;
+
+	my $running = $manager->running_tasks;
+	return 'idle' unless $running;
+
+	my $max_workers = $manager->max_no_workers;
+	my $jobs        = $manager->task_queue->pending + $running;
+
+	# high load is defined as the state when the number of
+	# running and pending jobs is larger that twice the
+	# MAXIMUM number of workers
+	return ( $jobs > 2 * $max_workers ) ? 'load' : 'running';
+}
+
+#
 # $sb->_move_bitmap;
 #
 # move the static bitmap holding the task load status to its proper location.
