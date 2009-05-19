@@ -26,9 +26,9 @@ use Padre::Current ();
 
 use Class::XSAccessor
     accessors => {
-        _task_sbmp   => '_task_sbmp',
-        _task_status => '_task_status',
-        _task_width  => '_task_width',
+        _task_sbmp   => '_task_sbmp',	 # static bitmap holding the task status
+        _task_status => '_task_status',	 # current task status
+        _task_width  => '_task_width',	 # current width of task field
     };
 our $VERSION = '0.35';
 use base 'Wx::StatusBar';
