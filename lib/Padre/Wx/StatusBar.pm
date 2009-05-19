@@ -24,6 +24,10 @@ use Padre::Util    ();
 use Padre::Wx      ();
 use Padre::Current ();
 
+use Class::XSAccessor
+    accessors => {
+        _task_load_width => '_task_load_width',
+    };
 our $VERSION = '0.35';
 use base 'Wx::StatusBar';
 
@@ -61,8 +65,10 @@ sub new {
 	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
 	# Set up the fields
+    my $taskload_width = 16;
+    $self->_task_load_width($taskload_width);
 	$self->SetFieldsCount(5);
-	$self->SetStatusWidths( -1, 0, 100, 50, 100 );
+	$self->SetStatusWidths( -1, $taskload_width, 100, 50, 100 );
 
 	return $self;
 }
@@ -161,7 +167,7 @@ sub refresh {
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
-        0,
+        $self->_task_load_width,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
 		( length($postring) + 4 ) * $width,
