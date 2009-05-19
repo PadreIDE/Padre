@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-19 03:10+0800\n"
-"PO-Revision-Date: 2009-05-19 08:29+0100\n"
+"POT-Creation-Date: 2009-05-20 05:23+0800\n"
+"PO-Revision-Date: 2009-05-20 00:05+0100\n"
 "Last-Translator: ddn <ddn123456 at gmail.com>\n"
 "Language-Team: ddn <ddn123456 at gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -298,6 +298,14 @@ msgstr "Gefaald bij het activeren van de plugin '%s': %s"
 msgid "Failed to disable plugin '%s': %s"
 msgstr "Gefaald bij het desactiveren van de plugin '%s': %s"
 
+#: lib/Padre/Wx/DocBrowser.pm:147
+msgid "NAME"
+msgstr "NAAM"
+
+#: lib/Padre/Wx/DocBrowser.pm:223
+msgid "Untitled"
+msgstr "Naamloos"
+
 #: lib/Padre/Wx/Menubar.pm:72
 msgid "&File"
 msgstr "&Bestand"
@@ -406,7 +414,7 @@ msgstr "Uitlijning"
 msgid "Output"
 msgstr "Uitvoer"
 
-#: lib/Padre/Wx/Notebook.pm:31
+#: lib/Padre/Wx/Notebook.pm:35
 msgid "Files"
 msgstr "Bestanden"
 
@@ -445,19 +453,6 @@ msgstr "Plakken"
 #: lib/Padre/Wx/ToolBar.pm:126
 msgid "Select all"
 msgstr "Selecteer Alles"
-
-#: lib/Padre/Wx/ToolBar.pm:151
-#: lib/Padre/Wx/ToolBar.pm:201
-msgid "Background Tasks are idle"
-msgstr "Achtergrondtaken wachten."
-
-#: lib/Padre/Wx/ToolBar.pm:211
-msgid "Background Tasks are running"
-msgstr "Achtergrondtaken draaien"
-
-#: lib/Padre/Wx/ToolBar.pm:221
-msgid "Background Tasks are running with high load"
-msgstr "Achtergrondtaken draaien hoogbezet"
 
 #: lib/Padre/Wx/Main.pm:391
 #, perl-format
@@ -705,67 +700,75 @@ msgstr "Geen diagnostieken beschikbaar voor deze fout!"
 msgid "Diagnostics"
 msgstr "Diagnostieken"
 
-#: lib/Padre/Wx/StatusBar.pm:78
+#: lib/Padre/Wx/StatusBar.pm:180
 msgid "L:"
 msgstr "L:"
 
-#: lib/Padre/Wx/StatusBar.pm:78
+#: lib/Padre/Wx/StatusBar.pm:180
 msgid "Ch:"
 msgstr "Ch:"
 
-#: lib/Padre/Wx/Editor.pm:709
+#: lib/Padre/Wx/StatusBar.pm:242
+msgid "Background Tasks are running"
+msgstr "Achtergrondtaken draaien"
+
+#: lib/Padre/Wx/StatusBar.pm:243
+msgid "Background Tasks are running with high load"
+msgstr "Achtergrondtaken draaien hoogbezet"
+
+#: lib/Padre/Wx/Editor.pm:705
 #: lib/Padre/Wx/Menu/Edit.pm:66
 msgid "Select all\tCtrl-A"
 msgstr "Selecteer alles\tCtrl-A"
 
-#: lib/Padre/Wx/Editor.pm:720
+#: lib/Padre/Wx/Editor.pm:716
 #: lib/Padre/Wx/Menu/Edit.pm:110
 msgid "&Copy\tCtrl-C"
 msgstr "&Kopiëren\tCtrl-C"
 
-#: lib/Padre/Wx/Editor.pm:732
+#: lib/Padre/Wx/Editor.pm:728
 #: lib/Padre/Wx/Menu/Edit.pm:122
 msgid "Cu&t\tCtrl-X"
 msgstr "K&nippen\tCtrl-X"
 
-#: lib/Padre/Wx/Editor.pm:744
+#: lib/Padre/Wx/Editor.pm:740
 #: lib/Padre/Wx/Menu/Edit.pm:134
 msgid "&Paste\tCtrl-V"
 msgstr "&Plakken\tCtrl-V"
 
-#: lib/Padre/Wx/Editor.pm:761
+#: lib/Padre/Wx/Editor.pm:757
 #: lib/Padre/Wx/Menu/Edit.pm:205
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "&Schakel Commentaar om\tCtrl-Shift-C"
 
-#: lib/Padre/Wx/Editor.pm:766
+#: lib/Padre/Wx/Editor.pm:762
 #: lib/Padre/Wx/Menu/Edit.pm:215
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "Lijnen in commentaar zetten\tCtrl-M"
 
-#: lib/Padre/Wx/Editor.pm:771
+#: lib/Padre/Wx/Editor.pm:767
 #: lib/Padre/Wx/Menu/Edit.pm:225
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "Lijnen uit commentaar zetten\tCtrl-Shift-M"
 
-#: lib/Padre/Wx/Editor.pm:789
+#: lib/Padre/Wx/Editor.pm:785
 msgid "Fold all"
 msgstr "Vouw alles samen"
 
-#: lib/Padre/Wx/Editor.pm:796
+#: lib/Padre/Wx/Editor.pm:792
 msgid "Unfold all"
 msgstr "Vouw alles uit"
 
-#: lib/Padre/Wx/Editor.pm:809
+#: lib/Padre/Wx/Editor.pm:805
 #: lib/Padre/Wx/Menu/Window.pm:34
 msgid "&Split window"
 msgstr "&Splits venster"
 
-#: lib/Padre/Wx/Editor.pm:1149
+#: lib/Padre/Wx/Editor.pm:1145
 msgid "You must select a range of lines"
 msgstr "U dient een reeks lijnen te selecteren"
 
-#: lib/Padre/Wx/Editor.pm:1165
+#: lib/Padre/Wx/Editor.pm:1161
 msgid "First character of selection must be a non-word character to align"
 msgstr "Het eerste karakter van de selectie moet een niet-woord karakter zijn om te aligneren"
 
@@ -1953,6 +1956,8 @@ msgstr "pip is onverwacht niet geïnstalleerd"
 msgid "Check cancelled"
 msgstr "Controle geannuleerd"
 
+#~ msgid "Background Tasks are idle"
+#~ msgstr "Achtergrondtaken wachten."
 #~ msgid ""
 #~ "Plugin:%s - Not compatible with Padre::Plugin API. Plugin cannot be "
 #~ "instantiated"
