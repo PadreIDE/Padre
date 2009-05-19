@@ -362,7 +362,7 @@ sub _stop_task {
 		delete $running->{$task_type} if not keys %{ $running->{$task_type} };
 	}
 
-	Padre->ide->wx->main->GetToolBar->update_task_status();
+	Padre->ide->wx->main->GetStatusBar->refresh;
 	return (1);
 }
 
@@ -496,7 +496,7 @@ sub on_task_start_event {
 	my $tid_and_task_type = $event->GetData();
 	my ( $tid, $task_type ) = split /;/, $tid_and_task_type, 2;
 	$manager->{running_tasks}{$task_type}{$tid} = 1;
-	$main->GetToolBar->update_task_status();
+	$main->GetStatusBar->refresh;
 
 	return ();
 }
