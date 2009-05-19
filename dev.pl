@@ -29,8 +29,6 @@ if ( $^O =~ /(linux|bsd)/ ) {
 	eval { require File::Glob::Windows; };
 	if( $@ ) {
 		die("Default glob() will misinterpret spaces in folder names as seperators, install File::Glob::Windows to fix this behavior!");
-	} else {
-		use File::Glob::Windows;
 	}
 	my $p = "C:/Program Files/GnuWin32/bin/msgfmt.exe";
 	if ( -e $p ) {
@@ -91,9 +89,16 @@ sub error {
 
 sub convert_po_to_mo {
 	my $path = shift;
-	my @mo = map {
-		substr( File::Basename::basename($_), 0, -3 )
-	} glob "$path/share/locale/*.po";
+	my @mo;
+	if ( $^O =~ /win32/i ) {
+		@mo = map {
+			substr( File::Basename::basename($_), 0, -3 )
+		} &File::Glob::Windows::glob("$path/share/locale/*.po");
+	} else {
+		@mo = map {
+			substr( File::Basename::basename($_), 0, -3 )
+		} glob "$path/share/locale/*.po";
+	}
 	foreach my $locale ( @mo ) {
 		system(
 			$msgfmt, "-o",
