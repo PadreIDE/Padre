@@ -21,7 +21,9 @@ sub run {
 		return "BREAK";
 	}
 
-	my $result = $self->{browser}->$type( $self->{document} );
+	my $result = $self->{browser}->$type( $self->{document} ,
+		$self->{args}
+	);
 	$self->{result} = $result;
 
 	return 1;

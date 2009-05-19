@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    DocBrowser::POD resolver is now Pod::PerlDoc with benefits
+    DocBrowser attempts to use current padre locale as language hint
     DocBrowser reuses tabs for same/similar documents (#323) (Andrew Bramble)
     Make DocBrowser suck less. Quieter and faster (#322) (Andrew Bramble)
     Output should be blank by default at startup (#351) (JQUELIN)

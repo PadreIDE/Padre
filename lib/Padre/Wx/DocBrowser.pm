@@ -10,9 +10,10 @@ use Class::Autouse        ();
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 use Scalar::Util          ();
-use Params::Util qw( _INSTANCE _INVOCANT _CLASSISA );
+use Params::Util qw( _INSTANCE _INVOCANT _CLASSISA _HASH _STRING );
 use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
+use Padre::Util qw( _T );
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::Frame';
@@ -142,31 +143,39 @@ sub OnLinkClicked {
 sub on_search_text_enter {
 	my ( $self, $event ) = @_;
 	my $text = $event->GetValue;
-	$self->help($text);
+	$self->ResolveRef($text);
 
 }
 
-# Compat with old PodFrame help ?
-sub show {
-	shift->help(@_);
+sub _hints {
+	my ($class) = @_;
+	return (
+		lang => Padre::Locale::iso639(),
+		title_from_section => Wx::gettext('NAME'),
+	);
 }
 
 sub help {
-	my ( $self, $query, %hints ) = @_;
+	my ( $self, $query, $hint ) = @_;
+
 	$query = $self->padre2docbrowser( $query )
 		if ( _CLASSISA( ref $query ,'Padre::Document') );
+
+	my %hints = ( $self->_hints ,
+		_HASH($hint) ? %$hint : (),
+	);
 	if ( _INVOCANT($query) && $query->can('mimetype') ) {
-		#$self->debug( "Help from mimetype, " . $query->mimetype );
 		my $task = Padre::Task::DocBrowser->new(
 			document => $query, type => 'docs',
+			args => \%hints,
 			main_thread_only => sub { $self->display( $_[0], $query ) },
 		);
 		$task->schedule;
 		return 1;
 	} elsif ( defined $query ) {
-		#$self->debug("resolve '$query'");
 		my $task = Padre::Task::DocBrowser->new(
 			document => $query, type => 'resolve',
+			args => \%hints,
 			main_thread_only => sub { $self->help( $_[0], referrer => $query ) }
 		);
 		$task->schedule;
@@ -180,6 +189,7 @@ sub ResolveRef {
 	my ( $self, $ref ) = @_;
 	my $task = Padre::Task::DocBrowser->new(
 		document => $ref, type => 'resolve',
+		args     => { $self->_hints } ,
 		main_thread_only => sub { $self->display( $_[0], $ref ) }
 	);
 	$task->schedule;
@@ -194,43 +204,33 @@ sub debug {
 sub display {
 	my ( $self, $docs, $query ) = @_;
 	if ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
-		#$self->debug(
-		#	sprintf(
-		#		"Display %s results of query %s",
-		#		$docs->mimetype, $query
-		#	)
-		#);
 		my $task = Padre::Task::DocBrowser->new(
 			document => $docs, type => 'browse',
-			main_thread_only => sub { $self->ShowPage( shift, $query ) }
-		);
-		$task->schedule;
-	} elsif ( _INSTANCE( $query, 'Padre::DocBrowser::document' ) ) {
-		die;
-		#warn "TRY 2 render the query instead";
-		my $task = Padre::Task::DocBrowser->new(
-			document => $query, type => 'browse',
-			main_thread_only => sub { $self->ShowPage( shift || $query, $query ) }
+			main_thread_only => sub { $self->ShowPage( $_[0], $query ) }
 		);
 		$task->schedule;
 	}
-
+	#warn "Launched a 'browse' for $docs from query '$query'";
 }
 
 sub ShowPage {
 	my ( $self, $docs, $query ) = @_;
-
+	#warn "Handed $docs from '$query' for display";
 	unless ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
 		return $self->not_found($query);
 	}
 
-	my $title = 'Untitled';
+	my $title = Wx::gettext('Untitled');
 	my $mime  = 'text/xhtml';
 
 	if ( _INSTANCE( $query, 'Padre::DocBrowser::document' ) ) {
 		$title = $query->title;
-	} else {
+	} elsif ( $docs->title ) {
+		#warn "title from documentation";
 		$title = $docs->title;
+	} elsif ( _STRING($query) ) {
+		#warn "title from scalar query";
+		$title = $query;
 	}
 
 	my $total_pages = $self->notebook->GetPageCount;

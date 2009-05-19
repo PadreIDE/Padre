@@ -256,17 +256,17 @@ sub docs {
 }
 
 sub resolve {
-	my ( $self, $ref ) = @_;
+	my ( $self, $ref , $hints) = @_;
 	my @refs;
 	if ( Scalar::Util::blessed($ref) and $ref->isa('URI') ) {
 		return $self->resolve_uri($ref);
 	}
-
 	# TODO this doubles up if a provider subscribes to multi
 	# mimetypes .
 	foreach my $class ( values %{ $self->get_providers } ) {
-		my $resp = $class->resolve($ref);
+		my $resp = $class->resolve($ref,$hints);
 		push @refs, $resp if $resp;
+		last if $resp;
 	}
 	return $refs[0];
 }

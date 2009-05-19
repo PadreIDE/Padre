@@ -6,10 +6,12 @@ use warnings;
 use Config             ();
 use IO::Scalar         ();
 use File::Spec         ();
+use File::Spec::Functions;
 use Pod::Simple::XHTML ();
 use Pod::Abstract;     ();
-
 use Padre::DocBrowser::document    ();
+use File::Temp ();
+use Data::Dumper;
 
 our $VERSION = '0.35';
 
@@ -33,32 +35,45 @@ sub viewer_for {
 sub resolve {
 	my $self = shift;
 	my $ref  = shift;
-	my $path = $self->_module_to_path($ref);
-	if ($path) {
-		my $doc = Padre::DocBrowser::document->load( $path );
-		$doc->mimetype('application/x-pod');
-		my $pa = Pod::Abstract->load_string( $doc->body );
-		;
-		my ($name) = $pa->select('/head1[@heading =~ {NAME}]' );
-		if ($name) {
-			my $text= $name->text;
-			my ($module) = $text =~ /([^\s]+)/g;
-			$doc->title( $module );
-		}
-		unless ( $pa->select('/pod') ) {
-			#warn "$path has no pod";
-		}
-		
-		return $doc;
-	}
+	my $hints= shift;
+	my ($fh,$tempfile) = File::Temp::tempfile();
+
+	my @args = ('-u' ,'-r', 
+	    "-d$tempfile",
+	    (exists $hints->{lang} )
+	        ? ('-L' , ($hints->{lang}) )
+	        : (),
+	    $ref
+	);
+	my $pd = Padre::DocBrowser::pseudoPerldoc->new(args=>\@args);
+	$pd->process();
+	my $pa = Pod::Abstract->load_file( $tempfile );
+	close $fh;
+	unlink( $tempfile );
+	
+	my $doc = Padre::DocBrowser::document->new( body => $pa->pod );
+	$doc->mimetype('application/x-pod');
+	my $title_from = $hints->{title_from_section} || 'NAME';
+	my ($name) = $pa->select("/head1[\@heading =~ {$title_from}]" );
+	    if ($name) {
+	        my $text= $name->text;
+	        my ($module) = $text =~ /([^\s]+)/g;
+	        $doc->title( $module );
+	    }
+	    unless ( $pa->select('/pod') || $pa->select('/head1') ) {
+	        warn "$ref has no pod";
+	        # Unresolvable ?
+	        return;
+	    }
+	    return $doc;
+	
+	# Perldoc failed - Unresolvable
 	return;
 }
 
 sub generate {
 	my $self = shift;
 	my $doc  = shift;
-	#Carp::croak "DEPRECATED";
-	## No-op ?
 	$doc->mimetype( 'application/x-pod' );
 	return $doc;
 	#### TODO , pod extract / pod tidy ?
@@ -80,29 +95,29 @@ sub render {
 	return $response;
 }
 
-sub _module_to_path {
-	my $self   = shift;
-	my $module = shift;
-	my $root   = $module;
-	my $file   = $module;
-	$file =~ s{::}{/}g;
-	my $path;
 
-	my $poddir = File::Spec->catdir( $Config::Config{privlib}, 'pod' );
-	foreach my $dir ( $poddir, @INC ) {
-		my $fpath = File::Spec->catfile( $dir, $file );
-		if ( -e "$fpath.pm" ) {
-			$path = "$fpath.pm";
-		} elsif ( -e "$fpath.pod" ) {
-			$path = "$fpath.pod";
-		}
-	}
-	
-	# TODO, scan PATH for scripts
-	##foreach my $dir ( 
+1;
 
-	return $path;
+package Padre::DocBrowser::pseudoPerldoc;
+use strict;
+use warnings;
+use base qw( Pod::Perldoc );
+use Pod::Perldoc::ToPod;
+
+sub VERSION { 1 };
+
+sub new {
+    my $class = shift;
+    my $self = $class->SUPER::new( @_ );
+    return $self;
 }
+
+## Lie to Pod::PerlDoc - and avoid it's autoloading implementation
+sub find_good_formatter_class {
+    $_[0]->{'formatter_class'} = 'Pod::Perldoc::ToPod';
+    return;
+};
+
 
 1;
 
