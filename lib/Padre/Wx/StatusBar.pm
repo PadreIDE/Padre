@@ -181,12 +181,7 @@ sub refresh {
 	);
 
     # move the static bitmap holding the task load status
-    my $sbmp = $self->_task_load_sbmp;
-    my $rect = $self->GetFieldRect( TASKLOAD );
-    my $size = $sbmp->GetSize;
-    $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
-                 $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
-
+    $self->_move_bitmap;
 
 	# Fixed ticket #190: Massive GDI object leakages
 	# http://padre.perlide.org/ticket/190
@@ -225,13 +220,7 @@ sub on_resize {
 
     # note: parent resize method will be called automatically
 
-    # move the static bitmap holding the task load status
-    my $sbmp = $self->_task_load_sbmp;
-    my $rect = $self->GetFieldRect( TASKLOAD );
-    my $size = $sbmp->GetSize;
-    $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
-                 $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
-
+    $self->_move_bitmap;
 }
 
 =back
@@ -240,6 +229,23 @@ sub on_resize {
 
 
 #####################################################################
+
+# Private methods
+
+#
+# $sb->_move_bitmap;
+#
+sub _move_bitmap {
+    my ($self) = @_;
+
+    # move the static bitmap holding the task load status
+    my $sbmp = $self->_task_load_sbmp;
+    my $rect = $self->GetFieldRect( TASKLOAD );
+    my $size = $sbmp->GetSize;
+    $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
+                 $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
+}
+
 
 =head1 COPYRIGHT & LICENSE
 
