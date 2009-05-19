@@ -17,19 +17,17 @@ available methods that can be applied to it besides the added ones (see below).
 
 =cut
 
-
 use strict;
 use warnings;
 use Padre::Util    ();
 use Padre::Wx      ();
 use Padre::Current ();
 
-use Class::XSAccessor
-    accessors => {
-        _task_sbmp   => '_task_sbmp',	 # static bitmap holding the task status
-        _task_status => '_task_status',	 # current task status
-        _task_width  => '_task_width',	 # current width of task field
-    };
+use Class::XSAccessor accessors => {
+	_task_sbmp   => '_task_sbmp',      # static bitmap holding the task status
+	_task_status => '_task_status',    # current task status
+	_task_width  => '_task_width',     # current width of task field
+};
 our $VERSION = '0.35';
 use base 'Wx::StatusBar';
 
@@ -40,7 +38,6 @@ use constant {
 	NEWLINE  => 3,
 	POSTRING => 4,
 };
-
 
 #####################################################################
 
@@ -67,9 +64,9 @@ sub new {
 	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
 
 	# create the static bitmap that will hold the task load status
-	my $sbmp = Wx::StaticBitmap->new($self, -1, Wx::wxNullBitmap );
+	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
-	$self->_task_status('foobar'); # init status to sthg defined
+	$self->_task_status('foobar');    # init status to sthg defined
 	Wx::Event::EVT_LEFT_DOWN( $sbmp, \&Padre::TaskManager::on_dump_running_tasks );
 
 	# Set up the fields
@@ -82,11 +79,9 @@ sub new {
 	return $self;
 }
 
-
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -102,16 +97,14 @@ fields.
 
 =cut
 
-
 sub clear {
 	my $self = shift;
 	$self->SetStatusText( "", FILENAME );
 	$self->SetStatusText( "", MIMETYPE );
-	$self->SetStatusText( "", NEWLINE  );
+	$self->SetStatusText( "", NEWLINE );
 	$self->SetStatusText( "", POSTRING );
 	return;
 }
-
 
 =item * my $main = $sb->main;
 
@@ -123,7 +116,6 @@ sub main {
 	$_[0]->GetParent;
 }
 
-
 =item * my $current = $sb->current;
 
 Get a new C<Padre::Current> object.
@@ -133,7 +125,6 @@ Get a new C<Padre::Current> object.
 sub current {
 	Padre::Current->new( main => $_[0]->GetParent, );
 }
-
 
 =item * $sb->refresh;
 
@@ -175,7 +166,7 @@ sub refresh {
 	# Write the new values into the status bar and update sizes
 	$self->SetStatusText( "$modified $filename", FILENAME );
 	$self->SetStatusText( $mimetype,             MIMETYPE );
-	$self->SetStatusText( $newline,              NEWLINE  );
+	$self->SetStatusText( $newline,              NEWLINE );
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
@@ -199,7 +190,6 @@ sub refresh {
 	return;
 }
 
-
 =item * $sb->update_task_status;
 
 Checks whether a task status icon update is in order
@@ -210,7 +200,7 @@ and if so, changes the icon to one of the other states
 sub update_task_status {
 	my ($self) = @_;
 	my $status = _get_task_status();
-	return if $status eq $self->_task_status; # nothing to do
+	return if $status eq $self->_task_status;    # nothing to do
 
 	# store new status
 	$self->_task_status($status);
@@ -228,7 +218,8 @@ sub update_task_status {
 
 	# not idling, show the correct icon in the statusbar
 	my $icon = Padre::Wx::Icon::find("status/padre-tasks-${status}2");
-	$sbmp->SetToolTip( $status eq 'running'
+	$sbmp->SetToolTip(
+		$status eq 'running'
 		? Wx::gettext('Background Tasks are running')
 		: Wx::gettext('Background Tasks are running with high load')
 	);
@@ -240,7 +231,6 @@ sub update_task_status {
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -259,18 +249,17 @@ position.
 =cut
 
 sub on_resize {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    # note: parent resize method will be called automatically
+	# note: parent resize method will be called automatically
 
-    $self->_move_bitmap;
-    $self->Refresh;
+	$self->_move_bitmap;
+	$self->Refresh;
 }
 
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -283,7 +272,7 @@ sub on_resize {
 # currently working.
 #
 sub _get_task_status {
-        my $manager = Padre->ide->task_manager;
+	my $manager = Padre->ide->task_manager;
 
 	# still in editor-startup phase, default to idle
 	return 'idle' unless defined $manager;
@@ -306,16 +295,17 @@ sub _get_task_status {
 # move the static bitmap holding the task load status to its proper location.
 #
 sub _move_bitmap {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    my $sbmp = $self->_task_sbmp;
-    my $rect = $self->GetFieldRect( TASKLOAD );
-    my $size = $sbmp->GetSize;
-    $sbmp->Move( $rect->GetLeft + ($rect->GetWidth  - $size->GetWidth ) / 2,
-                 $rect->GetTop  + ($rect->GetHeight - $size->GetHeight) / 2  );
-	 $sbmp->Refresh;
+	my $sbmp = $self->_task_sbmp;
+	my $rect = $self->GetFieldRect(TASKLOAD);
+	my $size = $sbmp->GetSize;
+	$sbmp->Move(
+		$rect->GetLeft + ( $rect->GetWidth - $size->GetWidth ) / 2,
+		$rect->GetTop +  ( $rect->GetHeight - $size->GetHeight ) / 2
+	);
+	$sbmp->Refresh;
 }
-
 
 =head1 COPYRIGHT & LICENSE
 
@@ -328,8 +318,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
-
 
 1;
 
