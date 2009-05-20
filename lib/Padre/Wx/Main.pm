@@ -8,7 +8,7 @@ Padre::Wx::Main - Main window of Padre
 
 =head1 DESCRIPTION
 
-C<Padre::Wx:Main> implements Padre's main window. It is the window
+C<Padre::Wx::Main> implements Padre's main window. It is the window
 containing the menus, the notebook with all opened tabs, the various sub-
 windows (outline, subs, output, errors, etc).
 
