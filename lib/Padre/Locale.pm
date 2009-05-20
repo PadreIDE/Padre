@@ -231,6 +231,16 @@ BEGIN {
 			supported => 1,
 		},
 
+		'fa' => {
+			gettext    => _T('Persian (Iran)'),
+			utf8text   => 'پارسی (ایران)',
+			iso639     => 'prs',
+			iso3166    => undef,
+			wxid       => Wx::wxLANGUAGE_FARSI,
+			fallback   => [],
+			supported  => 1
+		},
+
 		'fr-ca' => {
 			gettext  => _T('French (France)'),
 			utf8text => 'Français (Canada)',
