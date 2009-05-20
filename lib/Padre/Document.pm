@@ -662,7 +662,7 @@ sub lexer {
 		}
 	}
 
-	Padre::Util::debug( "Lexer will be based on mymetype " . $self->get_mimetype );
+	Padre::Util::debug( 'Lexer will be based on mime type "' . $self->get_mimetype . '"');
 	return $MIME_LEXER{ $self->get_mimetype };
 }
 
