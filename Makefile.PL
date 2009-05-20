@@ -45,6 +45,7 @@ requires       'File::ShareDir::PAR'      => '0.04';
 requires       'File::Spec'               => '3.2701';
 requires       'File::Spec::Functions'    => '3.2701';
 requires       'File::Which'              => '0.05';
+requires	   'File::Glob::Windows'	  => '0.1.2' if win32;
 requires       'FindBin'                  => 0;
 requires       'Getopt::Long'             => 0;
 requires       'HTML::Entities'           => '3.57';
