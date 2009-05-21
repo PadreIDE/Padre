@@ -21,7 +21,7 @@ msgstr ""
 #: lib/Padre/TaskManager.pm:525
 #, perl-format
 msgid "%s worker threads are running.\n"
-msgstr "%s תהליכוני פועל רצים"
+msgstr "%s תהליכוני פועל רצים.\n"
 
 #: lib/Padre/TaskManager.pm:528
 msgid "Currently, no background tasks are being executed.\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid ""
 "\n"
 "Additionally, there are %s tasks pending execution.\n"
-msgstr "בנוסף, יש %s משימות שצריכות להתבצע"
+msgstr "בנוסף, יש %s משימות שצריכות להתבצע.\n"
 
 #: lib/Padre/Locale.pm:72
 msgid "English (United Kingdom)"
