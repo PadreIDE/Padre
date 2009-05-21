@@ -43,7 +43,6 @@ msgstr ""
 #: lib/Padre/TaskManager.pm:552
 #, perl-format
 msgid ""
-"\n"
 "Additionally, there are %s tasks pending execution.\n"
 msgstr "בנוסף, יש %s משימות שצריכות להתבצע.\n"
 
