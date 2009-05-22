@@ -75,7 +75,7 @@ use Params::Util qw{_INSTANCE};
 # so this also happens in the script.
 use threads;
 use threads::shared;
-use Thread::Queue;
+use Thread::Queue 2.11;
 
 require Padre;
 use Padre::Task;
