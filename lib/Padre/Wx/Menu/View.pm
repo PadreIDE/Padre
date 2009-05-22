@@ -214,6 +214,7 @@ sub new {
 				'editor_calltips',
 				$_[1]->IsChecked ? 1 : 0,
 			);
+			$_[0]->config->write;
 		},
 	);
 

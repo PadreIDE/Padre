@@ -959,6 +959,9 @@ sub change_style {
 	foreach my $editor ( $self->editors ) {
 		$editor->padre_setup;
 	}
+	# Save editor style configuration
+	$self->config->set( editor_style => $name );
+	$self->config->write;
 	return;
 }
 
@@ -980,6 +983,7 @@ sub change_locale {
 
 	# Save the locale to the config
 	$self->config->set( locale => $name );
+	$self->config->write;
 
 	# Reset the locale
 	delete $self->{locale};
@@ -1125,6 +1129,7 @@ sub show_functions {
 		$self->menu->view->{functions}->Check($on);
 	}
 	$self->config->set( main_functions => $on );
+	$self->config->write;
 
 	if ($on) {
 		$self->right->show( $self->functions );
@@ -1157,6 +1162,7 @@ sub show_outline {
 		$self->menu->view->{outline}->Check($on);
 	}
 	$self->config->set( main_outline => $on );
+	$self->config->write;
 
 	if ($on) {
 		$self->right->show($outline);
@@ -1192,6 +1198,7 @@ sub show_directory {
 		$self->menu->view->{directory}->Check($on);
 	}
 	$self->config->set( main_directory => $on );
+	$self->config->write;
 
 	if ($on) {
 		$self->right->show($directory);
@@ -1227,6 +1234,7 @@ sub show_output {
 		$self->menu->view->{output}->Check($on);
 	}
 	$self->config->set( main_output => $on );
+	$self->config->write;
 
 	if ($on) {
 		$self->bottom->show( $self->output );
@@ -2938,6 +2946,8 @@ sub on_toggle_line_numbers {
 		$editor->show_line_numbers( $config->editor_linenumbers );
 	}
 
+	$config->write;
+
 	return;
 }
 
@@ -2959,6 +2969,8 @@ sub on_toggle_code_folding {
 		$editor->fold_pod if ( $config->editor_folding && $config->editor_fold_pod );
 	}
 
+	$config->write;
+
 	return;
 }
 
@@ -2978,6 +2990,8 @@ sub on_toggle_currentline {
 	foreach my $editor ( $self->editors ) {
 		$editor->SetCaretLineVisible( $config->editor_currentline ? 1 : 0 );
 	}
+
+	$config->write;
 
 	return;
 }
@@ -3044,6 +3058,8 @@ sub on_toggle_indentation_guide {
 		$editor->SetIndentationGuides( $self->config->editor_indentationguides );
 	}
 
+	$self->config->write;
+
 	return;
 }
 
@@ -3066,6 +3082,8 @@ sub on_toggle_eol {
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewEOL( $config->editor_eol );
 	}
+
+	$config->write;
 
 	return;
 }
@@ -3094,6 +3112,9 @@ sub on_toggle_whitespaces {
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewWhiteSpace( $config->editor_whitespace );
 	}
+	
+	# Save configuration
+	$config->write;
 }
 
 
@@ -3144,6 +3165,9 @@ sub on_toggle_statusbar {
 	} else {
 		$self->GetStatusBar->Hide;
 	}
+	
+	# Save configuration
+	$self->config->write;
 
 	return;
 }
@@ -3159,11 +3183,12 @@ return value.
 sub on_toggle_lockinterface {
 	my $self = shift;
 
-	# Update the configuration
+	# Update and save configuration
 	$self->config->set(
 		'main_lockinterface',
 		$self->menu->view->{lockinterface}->IsChecked ? 1 : 0,
 	);
+	$self->config->write;
 
 	# Update the lock status
 	$self->aui->lock_panels( $self->config->main_lockinterface );
