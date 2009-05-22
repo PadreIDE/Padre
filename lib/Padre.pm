@@ -1141,7 +1141,7 @@ French - Jérôme Quelin (JQUELIN)
 
 German - Heiko Jansen (HJANSEN)
 
-Hebrew - Omer Zak  - עומר זק and Shlomi Fish  - שלומי פיש (SHLOMIF)
+Hebrew - Omer Zak  - עומר זק, Shlomi Fish  - שלומי פיש (SHLOMIF) and Amir E. Aharoni - אמיר א. אהרוני
 
 Hungarian - György Pásztor (GYU)
 

@@ -180,6 +180,7 @@ sub about {
 	$about->AddTranslator("French - Jérôme Quelin");
 	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
 	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
+	$about->AddTranslator("Hebrew - Amir E. Aharoni - אמיר א. אהרוני");
 	$about->AddTranslator("Hungarian - György Pásztor");
 	$about->AddTranslator("Italian - Simone Blandino");
 	$about->AddTranslator("Japanese - Kenichi Ishigaki - 石垣憲一");
