@@ -39,6 +39,53 @@ will be automatically loaded by Padre as needed.
 
 Padre does B<not> currently support opening non-text files.
 
+=head2 File to MIME-type mapping
+
+Padre has a built-in hash mapping the file exetensions to mime-types.
+In certain cases (.t, .pl, .pm) Padre also looks in the content of the
+file to determine if the file is Perl 5 or Perl 6.
+
+mime-types are mapped to lexers that provide the syntax highlighting.
+
+mime-types are also mapped to modules that implement 
+special features needed by that kind of a file type.
+
+Plug-ins can add further mappings.
+
+=head3 Plan
+
+Padre has a built-in mapping of file extension to either 
+a single mime-type or function name. In order to determine
+the actual mime-type Padre checks this hash. If the key
+is a subroutine it is called and it should return the 
+mime-type of the file.
+
+The user has a way in the GUI to add more file extensions 
+and map them to existing mime-types or funtions. It is probably
+better to have a commonly used name along with the mime-type
+in that GUI instead of the mime-type only.
+
+A plugin is able to add new supported mime-types. Padre should
+either check for collisions if a plugin already wants to provide
+an already suported mime-type or should allow multiple support
+modules with a way to select the current one.
+
+
+Each mime-type is mapped to one or more lexers that provide 
+the syntax highlighting. Every mime-type has to be mapped to at least 
+one lexer but it can be mapped to several lexers as well. 
+The user is able to select the lexer for each mime-type.
+(For this each lexer should have a reasonable name too.)
+
+mime-types are also mapped to modules that implement 
+special features needed by that kind of a file type.
+
+The user can change the mime-type mapping of individual 
+files and Padre should remember this choice and allow the
+user to change it to another specific mime-type
+or to set it to "Default by extension".
+
+
 =head1 METHODS
 
 =cut
