@@ -1,5 +1,19 @@
 package Padre::Wx::Ack;
 
+=head1 NAME
+
+Padre::Wx::Ack - Find in files, using Ack
+
+
+
+=head1 DESCRIPTION
+
+C<Padre::Wx::Ack> implements a search dialog used to find recursively in
+files. It is using C<Ack> underneath, for lots of nifty features.
+
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;
@@ -431,6 +445,21 @@ sub fill_type_wanted {
 }
 
 1;
+
+
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
+
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
