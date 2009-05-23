@@ -22,7 +22,7 @@ sub find_unmatched_brace {
 # lexical (my)
 # our (our, doh)
 # dynamic (local)
-# TODO: add "use vars..." as "package" scope
+# package (use vars)
 # Returns a hash reference containing the three category names
 # each pointing at a hash which contains '$variablename' => locations.
 # locations is an array reference containing one or more PPI-style
@@ -41,36 +41,56 @@ sub get_all_variable_declarations {
 
 	my $declarations = $document->find(
 		sub {
-			return 0 unless $_[1]->isa('PPI::Statement::Variable');
+			return 0 unless $_[1]->isa('PPI::Statement::Variable')
+			         or $_[1]->isa('PPI::Statement::Include');
 			return 1;
 		},
 	);
-
+	
 	my %our;
 	my %lexical;
 	my %dynamic;
+	my %package;
 	foreach my $decl (@$declarations) {
-		my $type     = $decl->type();
-		my @vars     = $decl->variables;
-		my $location = $decl->location;
+		if ($decl->isa('PPI::Statement::Variable')) {
+			my $type     = $decl->type();
+			my @vars     = $decl->variables;
+			my $location = $decl->location;
 
-		my $target_type;
+			my $target_type;
 
-		if ( $type eq 'my' ) {
-			$target_type = \%lexical;
-		} elsif ( $type eq 'our' ) {
-			$target_type = \%our;
-		} elsif ( $type eq 'local' ) {
-			$target_type = \%dynamic;
+			if ( $type eq 'my' ) {
+				$target_type = \%lexical;
+			} elsif ( $type eq 'our' ) {
+				$target_type = \%our;
+			} elsif ( $type eq 'local' ) {
+				$target_type = \%dynamic;
+			}
+
+			foreach my $var (@vars) {
+				$target_type->{$var} ||= [];
+				push @{ $target_type->{$var} }, $location;
+			}
 		}
+		# find use vars...
+		elsif ( $decl->isa('PPI::Statement::Include')
+			and $decl->module eq 'vars'
+			and $decl->type eq 'use' )
+		{
+			# do it the low-tech way
+			my $string = $decl->content();
+			my $location = $decl->location;
 
-		foreach my $var (@vars) {
-			$target_type->{$var} ||= [];
-			push @{ $target_type->{$var} }, $location;
+			my @vars = $string =~ /([\%\@\$][\w_:]+)/g;
+			foreach my $var (@vars) {
+				$package{$var} ||= [];
+				push @{ $package{$var} }, $location;
+			}
+			
 		}
-	}
+	} # end foreach declaration
 
-	return ( { our => \%our, lexical => \%lexical, dynamic => \%dynamic } );
+	return ( { our => \%our, lexical => \%lexical, dynamic => \%dynamic, package => \%package } );
 }
 
 #####################################################################
