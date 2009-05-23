@@ -164,7 +164,7 @@ until later, so that the translation tools can find it.
 =cut
 
 sub _T {
-	shift;
+	Wx::gettext(shift);
 }
 
 #####################################################################
