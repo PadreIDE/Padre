@@ -1,4 +1,3 @@
-
 package Padre::Task::PPI::LexicalReplaceVariable;
 use strict;
 use warnings;

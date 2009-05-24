@@ -157,6 +157,8 @@ my %settings = (
 		[ 'run_interpreter_args_default', $ASCII, '' ],
 		[ 'run_script_args_default',      $ASCII, '' ],
 
+		[ 'external_diff_tool',           $ASCII, '' ],
+
 		#[ 'run_default_workdir',          $ASCII, '' ],
 	],
 );

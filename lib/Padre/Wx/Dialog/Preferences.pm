@@ -10,6 +10,20 @@ use base qw(Padre::Wx::Dialog);
 
 our $VERSION = '0.35';
 
+=head1 NAME
+
+Padre::Wx::Dialog::Preferences - window to set the preferences
+
+=head1 details
+
+In order to add a new panel implement the _name_of_the_panel method.
+Add to the dialog() sub a call to build the new panel.
+
+In the run() sub add code to take the values from the new panel
+and save them to the configuration file.
+
+=cut
+
 sub _new_panel {
 	my ( $self, $parent ) = splice( @_, 0, 2 );
 	my $cols = shift || 2;
@@ -23,6 +37,22 @@ sub _new_panel {
 	);
 	my $fgs = Wx::FlexGridSizer->new( 0, $cols, 0, 0 );
 	$panel->SetSizer($fgs);
+
+	return $panel;
+}
+
+sub _external_tools_panel {
+	my ( $self, $treebook ) = @_;
+	
+	my $config = Padre->ide->config;
+	my $table = [
+		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Diff tool:') ],
+			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
+		],
+	];
+
+	my $panel = $self->_new_panel($treebook);
+	$self->fill_panel_by_table( $panel, $table );
 
 	return $panel;
 }
@@ -461,6 +491,9 @@ sub dialog {
 	my $indentation = $self->_indentation_panel( $tb, $editor_autoindent );
 	$tb->AddPage( $indentation, Wx::gettext('Indentation') );
 
+	my $external_tools = $self->_external_tools_panel( $tb );
+	$tb->AddPage( $external_tools, Wx::gettext('External Tools') );
+
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
 	#$tb->AddPage( $plugin_manager, Wx::gettext('Plugin Manager') );
 	#$self->_add_plugins($tb);
@@ -650,6 +683,12 @@ sub run {
 		'run_script_args_default',
 		$data->{run_script_args_default}
 	);
+
+	$config->set(
+		'external_diff_tool',
+		$data->{external_diff_tool}
+	);
+
 
 	# Quite like in _run_params_panel, trap exception if there
 	# is no document currently open
