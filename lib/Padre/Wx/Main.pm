@@ -30,6 +30,7 @@ use Data::Dumper   ();
 use File::Spec     ();
 use File::HomeDir  ();
 use File::Basename ();
+use File::Temp     ();
 use List::Util     ();
 use Scalar::Util   ();
 use Params::Util qw{_INSTANCE};
@@ -2840,16 +2841,31 @@ sub on_diff {
 	unless ($file) {
 		return $self->error( Wx::gettext("Cannot diff if file was never saved") );
 	}
+	
+	my $external_diff = $self->config->external_diff_tool;
+	if ($external_diff) {
+		my $dir = File::Temp::tempdir( CLEANUP => 1 );
+		my $filename = File::Spec->catdir($dir, 'IN_EDITOR' . File::Basename::basename($file));
+		if (open my $fh, '>', $filename) {
+			print $fh $text;
+			CORE::close($fh);
+			system($external_diff, $filename, $file);
+		} else {
+			$self->error($!);
+		}
+		# save current version in a temp directory
+		# run the external diff on the original and the launch the 
+	} else {
+		require Text::Diff;
+		my $diff = Text::Diff::diff( $file, \$text );
+		unless ($diff) {
+			$diff = Wx::gettext("There are no differences\n");
+		}
 
-	require Text::Diff;
-	my $diff = Text::Diff::diff( $file, \$text );
-	unless ($diff) {
-		$diff = Wx::gettext("There are no differences\n");
+		$self->show_output(1);
+		$self->output->clear;
+		$self->output->AppendText($diff);
 	}
-
-	$self->show_output(1);
-	$self->output->clear;
-	$self->output->AppendText($diff);
 
 	return;
 }
