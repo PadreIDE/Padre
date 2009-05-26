@@ -70,8 +70,8 @@ sub menu_plugins_simple {
 		Wx::gettext('Simulate Crash')            => 'simulate_crash',
 		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_crash',
 		'---'                                    => undef,
-		Wx::gettext('wxWidgets 2.8.8 Reference') => sub {
-			Padre::Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.8/');
+		Wx::gettext('wxWidgets 2.8.10 Reference') => sub {
+			Padre::Wx::LaunchDefaultBrowser('http://docs.wxwidgets.org/2.8.10/');
 		},
 		Wx::gettext('STC Reference') => sub {
 			Padre::Wx::LaunchDefaultBrowser('http://www.yellowbrain.com/stc/index.html');
