@@ -2,9 +2,7 @@ package Padre::Wx::Main;
 
 =head1 NAME
 
-Padre::Wx::Main - Main window of Padre
-
-
+Padre::Wx::Main - The main window for the Padre IDE
 
 =head1 DESCRIPTION
 
@@ -16,9 +14,7 @@ It inherits from C<Wx::Frame>, so check wx documentation to see all
 the available methods that can be applied to it besides the added ones
 (see below).
 
-
 =cut
-
 
 use 5.008;
 use strict;
@@ -38,7 +34,6 @@ use Padre::Util   ();
 use Padre::Locale ();
 use Padre::Current qw{_CURRENT};
 use Padre::Document           ();
-#use Padre::SingleInstance     ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
 use Padre::Wx::Icon           ();
@@ -61,7 +56,6 @@ our $VERSION = '0.35';
 our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;
-
 
 #####################################################################
 
@@ -761,10 +755,7 @@ Those methods refresh parts of Padre main window. The term C<refresh>
 and the following methods are reserved for fast, blocking, real-time
 updates to the GUI, implying rapid changes.
 
-
-=over 4
-
-=item * $main->refresh;
+=head3 $main->refresh;
 
 Force refresh of all elements of Padre main window. (see below for
 individual refresh methods)
@@ -803,7 +794,7 @@ sub refresh {
 }
 
 
-=item * $main->refresh_syntaxcheck;
+=head3 $main->refresh_syntaxcheck;
 
 Do a refresh of document syntax checking. This is a "rapid" change,
 since actual syntax check is happening in the background.
@@ -819,7 +810,7 @@ sub refresh_syntaxcheck {
 }
 
 
-=item * $main->refresh_menu;
+=head3 $main->refresh_menu;
 
 Force a refresh of all menus. It can enable / disable menu entries
 depending on current document or Padre internal state.
@@ -833,7 +824,7 @@ sub refresh_menu {
 }
 
 
-=item * $main->refresh_menubar;
+=head3 $main->refresh_menubar;
 
 Force a refresh of Padre's menubar.
 
@@ -846,7 +837,7 @@ sub refresh_menubar {
 }
 
 
-=item * $main->refresh_toolbar;
+=head3 $main->refresh_toolbar;
 
 Force a refresh of Padre's toolbar.
 
@@ -859,7 +850,7 @@ sub refresh_toolbar {
 }
 
 
-=item * $main->refresh_status;
+=head3 $main->refresh_status;
 
 Force a refresh of Padre's status bar.
 
@@ -871,7 +862,7 @@ sub refresh_status {
 	$self->GetStatusBar->refresh( $_[0] or $self->current );
 }
 
-=item * $main->refresh_functions;
+=head3 $main->refresh_functions;
 
 Force a refresh of the function list on the right.
 
@@ -930,9 +921,7 @@ sub refresh_functions {
 }
 
 
-=back
 
-=cut
 
 
 #####################################################################
@@ -2402,7 +2391,7 @@ return value.
 sub on_open {
 	my $self     = shift;
 	my $filename = $self->current->filename;
-	if ($filename) {
+	if ( $filename ) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
 	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
@@ -2411,21 +2400,21 @@ sub on_open {
 	# the descriptive text."
 	# But I don't think Wx + Motif is in use nowadays
 	my $wildcards = join( '|',
-		Wx::gettext("JavaScript files"), "*.js;*.JS",
-		Wx::gettext("Perl files"), "*.pm;*.PM;*.pl;*.PL",
-		Wx::gettext("PHP files"), "*.php;*.php5;*.PHP",
-		Wx::gettext("Python files"), "*.py;*.PY",
-		Wx::gettext("Ruby files"), "*.rb;*.RB",
-		Wx::gettext("SQL files"), "*.slq;*.SQL",
-		Wx::gettext("Text files"), "*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
-		Wx::gettext("Web files"), "*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
+		Wx::gettext("JavaScript Files"), "*.js;*.JS",
+		Wx::gettext("Perl Files"),       "*.pm;*.PM;*.pl;*.PL",
+		Wx::gettext("PHP Files"),        "*.php;*.php5;*.PHP",
+		Wx::gettext("Python Files"),     "*.py;*.PY",
+		Wx::gettext("Ruby Files"),       "*.rb;*.RB",
+		Wx::gettext("SQL Files"),        "*.slq;*.SQL",
+		Wx::gettext("Text Files"),       "*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
+		Wx::gettext("Web Files"),        "*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
 	);
 	$wildcards = Padre::Util::WIN32
-		? Wx::gettext("All files") . "|*.*|" . $wildcards
-		: Wx::gettext("All files") . "|*|" . $wildcards;
+		? Wx::gettext("All Files") . "|*.*|" . $wildcards
+		: Wx::gettext("All Files") . "|*|" . $wildcards;
 	my $dialog = Wx::FileDialog->new(
 		$self,
-		Wx::gettext("Open file"),
+		Wx::gettext("Open File"),
 		$self->cwd,
 		"",
 		$wildcards,
