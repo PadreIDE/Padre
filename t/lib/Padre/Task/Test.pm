@@ -1,7 +1,8 @@
 package Padre::Task::Test;
+
 use strict;
 use warnings;
-require Test::More;
+use Test::More ();
 use base 'Padre::Task';
 
 sub prepare {
