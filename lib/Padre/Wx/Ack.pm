@@ -45,7 +45,7 @@ sub load_ack {
 		if $App::Ack::VERSION < $minver;
 
 	# redefine some app::ack subs to display results in padre's output
-	{
+	SCOPE: {
 		no warnings 'redefine', 'once';
 		*{App::Ack::print_first_filename} = sub { print_results("$_[0]\n"); };
 		*{App::Ack::print_separator}      = sub { print_results("--\n"); };
