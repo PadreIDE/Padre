@@ -2,14 +2,15 @@ package Padre::Current;
 
 # A context object, for centralising the concept of what is "current"
 
+use 5.008;
 use strict;
 use warnings;
-use Carp     ();
-use Exporter ();
+use Carp        ();
+use Exporter    ();
 use Params::Util qw{_INSTANCE};
 
-our $VERSION = '0.35';
-use base 'Exporter';
+our $VERSION   = '0.35';
+our @ISA       = 'Exporter';
 our @EXPORT_OK = '_CURRENT';
 
 #####################################################################
@@ -20,7 +21,6 @@ our @EXPORT_OK = '_CURRENT';
 # of the context-sensitive code has been migrated over, we should be
 # able to simplify it quite a bit.
 sub _CURRENT {
-
 	# Most likely options
 	unless ( defined $_[0] ) {
 		return Padre::Current->new;
@@ -33,6 +33,7 @@ sub _CURRENT {
 	if ( _INSTANCE( $_[0], 'Padre::Document' ) ) {
 		return Padre::Current->new( document => shift );
 	}
+
 	return Padre::Current->new;
 }
 
@@ -182,14 +183,10 @@ __END__
 
 Padre::Current - convenient access to current objects within Padre
 
-
-
 =head1 SYNOPSIS
 
 	my $main = Padre::Current->main;
 	...
-
-
 
 =head1 DESCRIPTION
 
@@ -201,8 +198,6 @@ Instead of poking directly with the various classes to find the object
 you need, C<Padre::Current> provides a bunch of handy methods to
 retrieve whatever current object you need.
 
-
-
 =head1 PUBLIC METHODS
 
 =head2 Constructor
@@ -213,10 +208,7 @@ retrieve whatever current object you need.
 
 Create and return a C<Padre::Current> object. No params.
 
-
 =back
-
-
 
 =head2 Current stuff
 
@@ -225,9 +217,7 @@ methods, calling them as class methods is ok. For example:
 
 	my $doc = Padre::Current->document;
 
-
 Here's the list of methods provided to get access to current something:
-
 
 =over 4
 
@@ -296,7 +286,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
