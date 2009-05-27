@@ -29,11 +29,12 @@ if it does not already do so.
 
 use 5.008;
 use strict;
-use Params::Util     qw{_STRING};
-use Padre::Transform ();
+use Params::Util           qw{ _STRING };
+use Padre::Current         ();
+use Padre::Transform::Perl ();
 
 our $VERSION = '0.35';
-our @ISA     = 'Padre::Transform';
+our @ISA     = 'Padre::Transform::Perl';
 
 
 
@@ -93,23 +94,6 @@ sub name {
 
 #####################################################################
 # Transform Methods
-
-sub apply {
-	my $self = shift;
-	my $document = _INSTANCE(shift, 'Padre::Document::Perl');
-	unless ( $document ) {
-		die('Did not provide a Padre::Document::Perl object to apply');
-	}
-
-	# Parse out the PPI document
-	my $ppi = $document->ppi_get;
-	my $rv  = $self->document($ppi);
-	if ( $rv ) {
-		$document->ppi_set;
-	}
-
-	return 1;
-}
 
 sub document {
 	my $self     = shift;
