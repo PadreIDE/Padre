@@ -3,17 +3,20 @@ package Padre::Wx::DocBrowser;
 use 5.008;
 use strict;
 use warnings;
-use URI                   ();
-use Encode                ();
-use Scalar::Util          ();
-use Class::Autouse        ();
-use Padre::Wx             ();
-use Padre::Wx::HtmlWindow ();
-use Scalar::Util          ();
-use Params::Util qw( _INSTANCE _INVOCANT _CLASSISA _HASH _STRING );
+use URI                     ();
+use Encode                  ();
+use Scalar::Util            ();
+use List::MoreUtils         ();
+use Class::Autouse          ();
+use Padre::Wx               ();
+use Padre::Wx::HtmlWindow   ();
+use Scalar::Util            ();
+use Params::Util            qw(
+	_INSTANCE _INVOCANT _CLASSISA _HASH _STRING
+);
 use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
-use Padre::Util qw( _T );
+use Padre::Util             qw( _T );
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::Frame';
@@ -59,7 +62,6 @@ displayed in a new tab.
 =head2 show
 
 TO BE COMPLETED
-
 
 =head1 SEE ALSO
 
@@ -188,12 +190,14 @@ sub help {
 sub ResolveRef {
 	my ( $self, $ref ) = @_;
 	my $task = Padre::Task::DocBrowser->new(
-		document => $ref, type => 'resolve',
-		args     => { $self->_hints } ,
-		main_thread_only => sub { $self->display( $_[0], $ref ) }
+		document         => $ref,
+		type             => 'resolve',
+		args             => { $self->_hints } ,
+		main_thread_only => sub {
+			$self->display( $_[0], $ref )
+		}
 	);
 	$task->schedule;
-
 }
 
 # FIXME , add our own output panel
@@ -205,8 +209,11 @@ sub display {
 	my ( $self, $docs, $query ) = @_;
 	if ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
 		my $task = Padre::Task::DocBrowser->new(
-			document => $docs, type => 'browse',
-			main_thread_only => sub { $self->ShowPage( $_[0], $query ) }
+			document         => $docs,
+			type             => 'browse',
+			main_thread_only => sub {
+				$self->ShowPage( $_[0], $query )
+			}
 		);
 		$task->schedule;
 	}
@@ -233,16 +240,20 @@ sub ShowPage {
 		$title = $query;
 	}
 
-	my $total_pages = $self->notebook->GetPageCount;
+	my $found = $self->notebook->GetPageCount;
 	my @opened;
-	my $i=0;
-	while ( $i < $total_pages) {
+	my $i = 0;
+	while ( $i < $found ) {
 		my $page = $self->notebook->GetPage($i);
-		push @opened , {page=>$page,index=>$i} 
-		    if $self->notebook->GetPageText($i) eq $title;
+		if ( $self->notebook->GetPageText($i) eq $title ) {
+			push @opened, {
+				page  => $page,
+				index => $i,
+			};
+		}
 		$i++;
 	}
-	if (my $last = pop @opened) {
+	if ( my $last = pop @opened ) {
 		$last->{page}->SetPage( $docs->body );
 		$self->notebook->SetSelection(
 			$last->{index}
@@ -257,9 +268,8 @@ sub ShowPage {
 sub NewPage {
 	my ( $self, $mime, $title ) = @_;
 	my $page = eval {
-		if ( exists $VIEW{$mime} )
-		{
-			Class::Autouse->autouse( $VIEW{$mime} );
+		if ( exists $VIEW{$mime} ) {
+			Class::Autouse->load( $VIEW{$mime} );
 			my $panel = $VIEW{$mime}->new($self);
 			Wx::Event::EVT_HTML_LINK_CLICKED( $self, $panel, \&OnLinkClicked );
 			$self->notebook->AddPage( $panel, $title, 1 );
@@ -281,9 +291,8 @@ sub padre2docbrowser {
 		title    => $padredoc->get_title,
 		filename => $padredoc->filename,
 	);
-	$doc->body( Encode::encode( 'utf8',
-		$padredoc->{original_content} 
-		)
+	$doc->body(
+		Encode::encode( 'utf8', $padredoc->{original_content} )
 	);
 	return $doc;
 }
@@ -304,7 +313,6 @@ sub not_found {
 	$frame->SetPage($html);
 
 }
-
 
 1;
 

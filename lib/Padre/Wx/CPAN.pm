@@ -3,16 +3,15 @@ package Padre::Wx::CPAN;
 use 5.008;
 use strict;
 use warnings;
-use URI            ();
-use Class::Autouse ();
-use Scalar::Util qw( blessed );
-use Params::Util qw( _INSTANCE );
-
-use Padre::Wx ();
-use base 'Wx::Frame';
-use Padre::Wx::CPAN::Listview;
+use URI                       ();
+use Class::Autouse            ();
+use Scalar::Util              qw( blessed );
+use Params::Util              qw( _INSTANCE );
+use Padre::Wx                 ();
+use Padre::Wx::CPAN::Listview ();
 
 our $VERSION = '0.35';
+our @ISA     = 'Wx::Frame';
 
 use Class::XSAccessor accessors => {
 	listview => 'listview',

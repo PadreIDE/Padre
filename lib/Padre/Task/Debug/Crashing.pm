@@ -2,10 +2,10 @@ package Padre::Task::Debug::Crashing;
 
 use strict;
 use warnings;
-
-use base 'Padre::Task';
+use Padre::Task ();
 
 our $VERSION = '0.35';
+our @ISA     = 'Padre::Task';
 
 sub run {
 	my ($self) = @_;

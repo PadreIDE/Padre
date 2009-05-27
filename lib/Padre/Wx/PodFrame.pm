@@ -28,9 +28,9 @@ HTML.
 use strict;
 use warnings;
 use Padre::Wx ();
-use base 'Wx::Frame';
 
 our $VERSION = '0.35';
+our @ISA     = 'Wx::Frame';
 
 =pod
 

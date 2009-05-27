@@ -2,7 +2,6 @@ package Padre::Wx::Printout;
 
 use strict;
 use warnings;
-
 use Wx::Print;
 use base qw(Wx::Printout);
 

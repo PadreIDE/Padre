@@ -838,11 +838,19 @@ sub on_mouse_motion {
 		$offset2 += 18;
 	}
 
-	if (   $mousePos->x < ( $firstPointInLine->x - $offset1 )
-		&& $mousePos->x > ( $firstPointInLine->x - $offset2 ) )
-	{
-		$self->CallTipCancel, return unless $self->MarkerGet($line);
-		$self->CallTipShow( $self->PositionFromLine($line), $self->{synchk_calltips}->{$line} );
+	if (
+		$mousePos->x < ($firstPointInLine->x - $offset1)
+		and
+		$mousePos->x > ($firstPointInLine->x - $offset2)
+	) {
+		unless ( $self->MarketGet($line) ) {
+			$self->CallTipCancel;
+			return;
+		}
+		$self->CallTipShow(
+			$self->PositionFromLine($line),
+			$self->{synchk_calltips}->{$line}
+		);
 	} else {
 		$self->CallTipCancel;
 	}

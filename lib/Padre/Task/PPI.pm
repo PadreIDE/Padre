@@ -6,7 +6,7 @@ use Padre::Task    ();
 use Padre::Current ();
 
 our $VERSION = '0.35';
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 =pod
 

@@ -7,7 +7,7 @@ use Params::Util qw{_INSTANCE};
 use Padre::Wx ();
 
 our $VERSION = '0.35';
-use base 'Wx::ListView';
+our @ISA     = 'Wx::ListView';
 
 sub new {
 	my $class = shift;

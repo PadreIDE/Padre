@@ -4,10 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{ _INSTANCE };
-use Wx::DND;
+use Padre::Wx   ();
 
 our $VERSION = '0.35';
-use base 'Wx::FileDropTarget';
+our @ISA     = 'Wx::FileDropTarget';
 
 sub new {
 	my $class = shift;

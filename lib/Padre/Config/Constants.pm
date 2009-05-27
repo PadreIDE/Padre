@@ -1,31 +1,25 @@
-#
-# Constants used by various configuration systems.
-#
-
 package Padre::Config::Constants;
+
+# Constants used by various configuration systems.
 
 use strict;
 use warnings;
-
-our $VERSION = '0.35';
-
-use File::Basename qw{ dirname };
-use File::Copy qw{ copy };
+use Exporter      ();
+use File::Path    ();
+use File::Spec    ();
 use File::HomeDir ();
-use File::Path qw{ mkpath };
-use File::Spec ();
-use File::Spec::Functions qw{ catdir catfile rel2abs };
 
-# -- export stuff
+# Regular Globals
+our $VERSION     = '0.35';
+our @ISA         = 'Exporter';
 
-use base qw{ Exporter };
-
+# Export Globals
 my @dirs   = qw{ $PADRE_CONFIG_DIR $PADRE_PLUGIN_DIR $PADRE_PLUGIN_LIBDIR };
 my @files  = qw{ $CONFIG_FILE_HOST $CONFIG_FILE_USER    };
 my @stores = qw{ $HOST $HUMAN $PROJECT                  };
 my @types  = qw{ $BOOLEAN $POSINT $INTEGER $ASCII $PATH };
 
-our @EXPORT_OK = ( @dirs, @files, @stores, @types );
+our @EXPORT_OK   = ( @dirs, @files, @stores, @types );
 our %EXPORT_TAGS = (
 	dirs   => \@dirs,
 	files  => \@files,
@@ -33,32 +27,26 @@ our %EXPORT_TAGS = (
 	types  => \@types,
 );
 
-# -- list of constants
-
-# files & dirs
+# Files and Directories
 our $PADRE_CONFIG_DIR    = _find_padre_config_dir();
-our $PADRE_PLUGIN_DIR    = catdir( $PADRE_CONFIG_DIR, 'plugins' );
-our $PADRE_PLUGIN_LIBDIR = catdir( $PADRE_PLUGIN_DIR, 'Padre', 'Plugin' );
-our $CONFIG_FILE_USER    = catfile( $PADRE_CONFIG_DIR, 'config.yml' );
-our $CONFIG_FILE_HOST    = catfile( $PADRE_CONFIG_DIR, 'config.db' );
+our $PADRE_PLUGIN_DIR    = File::Spec->catdir( $PADRE_CONFIG_DIR, 'plugins' );
+our $PADRE_PLUGIN_LIBDIR = File::Spec->catdir( $PADRE_PLUGIN_DIR, 'Padre', 'Plugin' );
+our $CONFIG_FILE_USER    = File::Spec->catfile( $PADRE_CONFIG_DIR, 'config.yml' );
+our $CONFIG_FILE_HOST    = File::Spec->catfile( $PADRE_CONFIG_DIR, 'config.db' );
 
-{
-
-	# check if plugin directory exists, create it otherwise
-	unless ( -e $PADRE_PLUGIN_LIBDIR ) {
-		mkpath($PADRE_PLUGIN_LIBDIR)
-			or die "Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!";
-	}
+unless ( -e $PADRE_PLUGIN_LIBDIR ) {
+	File::Path::mkpath( $PADRE_PLUGIN_LIBDIR )
+		or die "Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!";
 }
 
-# settings types (based on firefox)
+# Setting Types (based on firefox)
 our $BOOLEAN = 0;
 our $POSINT  = 1;
 our $INTEGER = 2;
 our $ASCII   = 3;
 our $PATH    = 4;
 
-# settings stores
+# Settings Stores
 our $HOST    = 0;
 our $HUMAN   = 1;
 our $PROJECT = 2;
@@ -87,11 +75,11 @@ sub _find_padre_config_dir {
 			? qw{ Perl Padre }    # on windows use the traditional vendor/product format
 			: qw{ .padre };       # TODO - is mac correctly covered?
 	}
-	my $confdir = rel2abs( catdir(@subdirs) );
+	my $confdir = File::Spec->rel2abs( File::Spec->catdir(@subdirs) );
 
 	# check if directory exists, create it otherwise
 	unless ( -e $confdir ) {
-		mkpath($confdir)
+		File::Path::mkpath($confdir)
 			or die "Cannot create config dir '$confdir': $!";
 	}
 
@@ -107,11 +95,13 @@ sub _find_padre_config_dir {
 # no params.
 #
 sub _find_padre_plugin_dir {
-	my $pluginsdir = catdir( $PADRE_CONFIG_DIR, 'plugins', 'Padre', 'Plugin' );
+	my $pluginsdir = File::Spec->catdir(
+		$PADRE_CONFIG_DIR, 'plugins', 'Padre', 'Plugin'
+	);
 
 	# check if plugin directory exists, create it otherwise
 	unless ( -e $pluginsdir ) {
-		mkpath($pluginsdir)
+		File::Path::mkpath($pluginsdir)
 			or die "Cannot create plugins dir '$pluginsdir': $!";
 	}
 

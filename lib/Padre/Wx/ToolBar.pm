@@ -9,7 +9,7 @@ use Padre::Wx::Editor ();
 use Padre::Wx::Icon   ();
 
 our $VERSION = '0.35';
-use base 'Wx::ToolBar';
+our @ISA     = 'Wx::ToolBar';
 
 sub new {
 	my $class = shift;

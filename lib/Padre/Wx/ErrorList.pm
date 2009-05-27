@@ -9,7 +9,7 @@ use Padre::Task::ErrorParser ();
 use Parse::ErrorString::Perl ();
 
 our $VERSION = '0.35';
-use base 'Wx::TreeCtrl';
+our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor getters => {
 	root    => 'root',

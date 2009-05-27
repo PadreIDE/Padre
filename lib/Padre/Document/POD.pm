@@ -3,9 +3,10 @@ package Padre::Document::POD;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Document ();
 
 our $VERSION = '0.35';
-use base 'Padre::Document';
+our @ISA     = 'Padre::Document';
 
 1;
 

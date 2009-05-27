@@ -6,7 +6,7 @@ use Padre::Task ();
 use Padre::Wx   ();
 
 our $VERSION = '0.35';
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 # set up a new event type
 our $SAY_HELLO_EVENT : shared = Wx::NewEventType();

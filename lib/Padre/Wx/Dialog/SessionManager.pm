@@ -1,11 +1,14 @@
-#
-# This file is part of Padre, the Perl ide.
-#
-
 package Padre::Wx::Dialog::SessionManager;
+
+# This file is part of Padre, the Perl ide.
 
 use strict;
 use warnings;
+use POSIX qw{ strftime };
+use Padre::Wx ();
+
+our $VERSION = '0.35';
+our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
 	_butdelete   => '_butdelete',      # delete button
@@ -17,12 +20,6 @@ use Class::XSAccessor accessors => {
 	_sortreverse => '_sortreverse',    # list sorting is reversed
 	_vbox        => '_vbox',           # the window vbox sizer
 };
-use POSIX qw{ strftime };
-use Padre::Wx ();
-
-use base 'Wx::Dialog';
-
-our $VERSION = '0.35';
 
 # -- constructor
 

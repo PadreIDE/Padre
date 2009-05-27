@@ -8,7 +8,7 @@ use Padre::Current ();
 use Padre::Wx      ();
 
 our $VERSION = '0.35';
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 =pod
 
@@ -20,6 +20,7 @@ gather structure info on the current document
 =head1 SYNOPSIS
 
   package Padre::Task::Outline::MyLanguage;
+  
   use base 'Padre::Task::Outline';
   
   sub run {

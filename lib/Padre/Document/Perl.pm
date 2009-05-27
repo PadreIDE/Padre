@@ -11,7 +11,7 @@ use Padre::Document ();
 use Padre::Util     ();
 
 our $VERSION = '0.35';
-use base 'Padre::Document';
+our @ISA     = 'Padre::Document';
 
 #####################################################################
 # Padre::Document::Perl Methods
@@ -27,7 +27,7 @@ sub ppi_get {
 }
 
 sub ppi_set {
-	my $self = shift;
+	my $self     = shift;
 	my $document = _INSTANCE( shift, 'PPI::Document' );
 	unless ($document) {
 		Carp::croak("Did not provide a PPI::Document");
@@ -38,19 +38,15 @@ sub ppi_set {
 }
 
 sub ppi_find {
-	my $self     = shift;
-	my $document = $self->ppi_get;
-	return $document->find(@_);
+	shift->ppi_get->find(@_);
 }
 
 sub ppi_find_first {
-	my $self     = shift;
-	my $document = $self->ppi_get;
-	return $document->find_first(@_);
+	shift->ppi_get->find_first(@_);
 }
 
 sub ppi_transform {
-	my $self = shift;
+	my $self      = shift;
 	my $transform = _INSTANCE( shift, 'PPI::Transform' );
 	unless ($transform) {
 		Carp::croak("Did not provide a PPI::Transform");
@@ -122,15 +118,15 @@ sub colorize {
 	}
 
 	my %colors = (
-		keyword      => 4,    # dark green
-		structure    => 6,
-		core         => 1,    # red
-		pragma       => 7,    # purple
-		'Whitespace' => 0,
-		'Structure'  => 0,
+		keyword         => 4,    # dark green
+		structure       => 6,
+		core            => 1,    # red
+		pragma          => 7,    # purple
+		'Whitespace'    => 0,
+		'Structure'     => 0,
 
-		'Number' => 1,
-		'Float'  => 1,
+		'Number'        => 1,
+		'Float'         => 1,
 
 		'HereDoc'       => 4,
 		'Data'          => 4,
@@ -166,12 +162,11 @@ sub colorize {
 
 	my @tokens = $ppi_doc->tokens;
 	$ppi_doc->index_locations;
-	my $first = $editor->GetFirstVisibleLine();
-	my $lines = $editor->LinesOnScreen();
+	my $first = $editor->GetFirstVisibleLine;
+	my $lines = $editor->LinesOnScreen;
 
 	#print "First $first lines $lines\n";
 	foreach my $t (@tokens) {
-
 		#print $t->content;
 		my ( $row, $rowchar, $col ) = @{ $t->location };
 

@@ -48,7 +48,7 @@ use Class::XSAccessor accessors => {
 	_task_width  => '_task_width',     # current width of task field
 };
 our $VERSION = '0.35';
-use base 'Wx::StatusBar';
+our @ISA     = 'Wx::StatusBar';
 
 use constant {
 	FILENAME => 0,

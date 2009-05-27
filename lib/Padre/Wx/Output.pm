@@ -13,7 +13,7 @@ use Params::Util ();
 use Padre::Wx    ();
 
 our $VERSION = '0.35';
-use base 'Wx::TextCtrl';
+our @ISA     = 'Wx::TextCtrl';
 
 sub new {
 	my $class = shift;
