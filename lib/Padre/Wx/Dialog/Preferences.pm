@@ -5,10 +5,12 @@ use strict;
 use warnings;
 use Padre::Wx      ();
 use Padre::Current ();
-
-use base qw(Padre::Wx::Dialog);
+use Padre::Wx::Dialog ();
 
 our $VERSION = '0.35';
+our @ISA     = 'Padre::Wx::Dialog';
+
+=pod
 
 =head1 NAME
 
@@ -693,13 +695,13 @@ sub run {
 	# Quite like in _run_params_panel, trap exception if there
 	# is no document currently open
 	eval {
-		unless ( Padre::Current->document->is_new )
-		{
-
+		unless ( Padre::Current->document->is_new ) {
 			# These are a bit different as run_* variable name depends
 			# on current document's filename
-			foreach ( grep { /^run_/ && !/_default$/ } ( keys %$data ) ) {
-				next if Padre::DB::History->previous($_) eq $data->{$_};
+			foreach ( grep { /^run_/ and not /_default$/ } keys %$data ) {
+				if ( Padre::DB::History->previous($_) eq $data->{$_} ) {
+					next;
+				}
 				Padre::DB::History->create(
 					type => $_,
 					name => $data->{$_},
