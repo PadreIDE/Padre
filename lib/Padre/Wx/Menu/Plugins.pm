@@ -5,12 +5,12 @@ package Padre::Wx::Menu::Plugins;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Config ();
+use Padre::Config   ();
 use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
 use Params::Util    ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  qw{_CURRENT};
 
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Menu';
@@ -46,10 +46,11 @@ sub new {
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append( -1, Wx::gettext("All available plugins on CPAN") ),
+		$self->Append( -1, Wx::gettext("Plugin List (CPAN)") ),
 		sub {
 			Padre::Wx::LaunchDefaultBrowser(
-				'http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist' );
+				'http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist'
+			);
 		},
 	);
 
@@ -63,7 +64,9 @@ sub new {
 				$PADRE_CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plugin") ) unless -e $file;
+			return $self->error(
+				Wx::gettext("Could not find the Padre::Plugin::My plugin")
+			) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
