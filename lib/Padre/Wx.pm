@@ -11,9 +11,10 @@ use File::Spec ();
 # Load every exportable constant into here, so that they come into
 # existance in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
-use Wx ':everything';
-use Wx 'wxTheClipboard';
-use Wx::Event ':everything';
+use Wx          ':everything';
+use Wx          'wxTheClipboard';
+use Wx::Event   ':everything';
+use Wx::DND     ();
 use Wx::STC     ();
 use Wx::AUI     ();
 use Wx::Locale  ();
