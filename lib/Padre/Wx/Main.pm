@@ -24,7 +24,6 @@ use warnings;
 use FindBin;
 use Cwd                       ();
 use Carp                      ();
-use Data::Dumper              ();
 use File::Spec                ();
 use File::HomeDir             ();
 use File::Basename            ();
@@ -3519,7 +3518,6 @@ return value.
 sub on_stc_dwell_start {
 	my ( $self, $event ) = @_;
 
-	# print Data::Dumper::Dumper $event;
 	my $editor = $self->current->editor;
 
 	# print "dwell: ", $event->GetPosition, "\n";

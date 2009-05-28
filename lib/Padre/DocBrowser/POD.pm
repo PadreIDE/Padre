@@ -11,7 +11,6 @@ use Pod::Simple::XHTML ();
 use Pod::Abstract;     ();
 use Padre::DocBrowser::document    ();
 use File::Temp ();
-use Data::Dumper;
 
 our $VERSION = '0.35';
 

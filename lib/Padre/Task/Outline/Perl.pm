@@ -194,8 +194,8 @@ sub _on_tree_item_right_click {
 			$outlinebar,
 			$pod,
 			sub {
-
 				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+				require Padre::Wx::DocBrowser;
 				my $help = Padre::Wx::DocBrowser->new;
 				$help->help( $itemData->{name} );
 				$help->SetFocus;

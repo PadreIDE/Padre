@@ -1,12 +1,9 @@
-#
-# This file is part of Padre, the Perl ide.
-#
-
 package Padre::Wx::Dialog::PluginManager;
+
+# This file is part of Padre, the Perl ide.
 
 use strict;
 use warnings;
-
 use Carp qw{ croak };
 use Class::XSAccessor accessors => {
 	_action       => '_action',          # action of default button
@@ -24,19 +21,18 @@ use Class::XSAccessor accessors => {
 	_sortreverse  => '_sortreverse',     # list sorting is reversed
 	_whtml        => '_whtml',           # html space for plugin doc
 };
-use Padre::Wx::Icon;
-use Padre::Wx ();
-
-use base 'Wx::Dialog';
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
 
 our $VERSION = '0.35';
+our @ISA     = 'Wx::Dialog';
 
 # -- constructor
 
 sub new {
 	my ( $class, $parent, $manager ) = @_;
 
-	# create object
+	# Create object
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
@@ -49,12 +45,13 @@ sub new {
 	$self->_sortcolumn(0);
 	$self->_sortreverse(0);
 
-	# store plugin manager
-	croak "Missing or invalid Padre::PluginManager object"
-		unless $manager->isa('Padre::PluginManager');
+	# Store plugin manager
+	unless ( $manager->isa('Padre::PluginManager') ) {
+		croak("Missing or invalid Padre::PluginManager object");
+	}
 	$self->_manager($manager);
 
-	# create dialog
+	# Create dialog
 	$self->_create;
 
 	# Tune the size and position it appears
@@ -169,8 +166,9 @@ sub _on_list_item_selected {
 	$self->_label->SetLabel($name);
 
 	# update plugin documentation
-	my $class   = $plugin->class;
+	require Padre::DocBrowser;
 	my $browser = Padre::DocBrowser->new;
+	my $class   = $plugin->class;
 	my $doc     = $browser->resolve($class);
 	my $output  = eval { $browser->browse($doc) };
 	my $html
@@ -278,6 +276,7 @@ sub _create_right_pane {
 	$self->_label($label);
 
 	# the plugin documentation
+	require Padre::Wx::HtmlWindow;
 	my $whtml = Wx::HtmlWindow->new($self);
 	$vbox->Add(
 		$whtml,
