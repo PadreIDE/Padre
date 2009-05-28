@@ -169,47 +169,47 @@ our %EXT_MIME = (
 # to confirm that the MIME type is either the official type, or the primary
 # one in use by the relevant language community.
 our %MIME_LEXER = (
-	'text/x-abc' => Wx::wxSTC_LEX_CONTAINER,
+	'text/x-abc'                => Wx::wxSTC_LEX_CONTAINER,
 
-	'text/x-adasrc' => Wx::wxSTC_LEX_ADA,    # CONFIRMED
-	'text/x-asm'    => Wx::wxSTC_LEX_ASM,    # CONFIRMED
+	'text/x-adasrc'             => Wx::wxSTC_LEX_ADA,       # CONFIRMED
+	'text/x-asm'                => Wx::wxSTC_LEX_ASM,       # CONFIRMED
 
 	# application/x-msdos-program includes .exe and .com, so don't use it
-	'application/x-bat' => Wx::wxSTC_LEX_BATCH,    # CONFIRMED
+	'application/x-bat'         => Wx::wxSTC_LEX_BATCH,     # CONFIRMED
 
-	'text/x-c++src'             => Wx::wxSTC_LEX_CPP,          # CONFIRMED
-	'text/css'                  => Wx::wxSTC_LEX_CSS,          # CONFIRMED
-	'text/x-patch'              => Wx::wxSTC_LEX_DIFF,         # CONFIRMED
-	'text/x-eiffel'             => Wx::wxSTC_LEX_EIFFEL,       # CONFIRMED
-	'text/x-forth'              => Wx::wxSTC_LEX_FORTH,        # CONFIRMED
-	'text/x-fortran'            => Wx::wxSTC_LEX_FORTRAN,      # CONFIRMED
-	'text/html'                 => Wx::wxSTC_LEX_HTML,         # CONFIRMED
-	'application/javascript'    => Wx::wxSTC_LEX_ESCRIPT,      # CONFIRMED
-	'application/json'          => Wx::wxSTC_LEX_ESCRIPT,      # CONFIRMED
-	'application/x-latex'       => Wx::wxSTC_LEX_LATEX,        # CONFIRMED
-	'application/x-lisp'        => Wx::wxSTC_LEX_LISP,         # CONFIRMED
+	'text/x-c++src'             => Wx::wxSTC_LEX_CPP,       # CONFIRMED
+	'text/css'                  => Wx::wxSTC_LEX_CSS,       # CONFIRMED
+	'text/x-patch'              => Wx::wxSTC_LEX_DIFF,      # CONFIRMED
+	'text/x-eiffel'             => Wx::wxSTC_LEX_EIFFEL,    # CONFIRMED
+	'text/x-forth'              => Wx::wxSTC_LEX_FORTH,     # CONFIRMED
+	'text/x-fortran'            => Wx::wxSTC_LEX_FORTRAN,   # CONFIRMED
+	'text/html'                 => Wx::wxSTC_LEX_HTML,      # CONFIRMED
+	'application/javascript'    => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
+	'application/json'          => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
+	'application/x-latex'       => Wx::wxSTC_LEX_LATEX,     # CONFIRMED
+	'application/x-lisp'        => Wx::wxSTC_LEX_LISP,      # CONFIRMED
 	'application/x-shellscript' => Wx::wxSTC_LEX_BASH,
-	'text/x-lua'                => Wx::wxSTC_LEX_LUA,          # CONFIRMED
-	'text/x-makefile'           => Wx::wxSTC_LEX_MAKEFILE,     # CONFIRMED
-	'text/x-matlab'             => Wx::wxSTC_LEX_MATLAB,       # CONFIRMED
-	'text/x-pascal'             => Wx::wxSTC_LEX_PASCAL,       # CONFIRMED
-	'application/x-perl'        => Wx::wxSTC_LEX_PERL,         # CONFIRMED
-	'text/x-python'             => Wx::wxSTC_LEX_PYTHON,       # CONFIRMED
-	'application/x-php'         => Wx::wxSTC_LEX_PHPSCRIPT,    # CONFIRMED
-	'application/x-ruby'        => Wx::wxSTC_LEX_RUBY,         # CONFIRMED
-	'text/x-sql'                => Wx::wxSTC_LEX_SQL,          # CONFIRMED
-	'application/x-tcl'         => Wx::wxSTC_LEX_TCL,          # CONFIRMED
-	'text/vbscript'             => Wx::wxSTC_LEX_VBSCRIPT,     # CONFIRMED
+	'text/x-lua'                => Wx::wxSTC_LEX_LUA,       # CONFIRMED
+	'text/x-makefile'           => Wx::wxSTC_LEX_MAKEFILE,  # CONFIRMED
+	'text/x-matlab'             => Wx::wxSTC_LEX_MATLAB,    # CONFIRMED
+	'text/x-pascal'             => Wx::wxSTC_LEX_PASCAL,    # CONFIRMED
+	'application/x-perl'        => Wx::wxSTC_LEX_PERL,      # CONFIRMED
+	'text/x-python'             => Wx::wxSTC_LEX_PYTHON,    # CONFIRMED
+	'application/x-php'         => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
+	'application/x-ruby'        => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
+	'text/x-sql'                => Wx::wxSTC_LEX_SQL,       # CONFIRMED
+	'application/x-tcl'         => Wx::wxSTC_LEX_TCL,       # CONFIRMED
+	'text/vbscript'             => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
 
 	# text/xml specifically means "human-readable XML".
 	# This is prefered to the more generic application/xml
-	'text/xml' => Wx::wxSTC_LEX_XML,                           # CONFIRMED
+	'text/xml'                  => Wx::wxSTC_LEX_XML,       # CONFIRMED
 
-	'text/x-yaml'         => Wx::wxSTC_LEX_YAML,               # CONFIRMED
-	'application/x-pir'   => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
-	'application/x-pasm'  => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
-	'application/x-perl6' => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
-	'text/plain'          => Wx::wxSTC_LEX_NULL,               # CONFIRMED
+	'text/x-yaml'               => Wx::wxSTC_LEX_YAML,      # CONFIRMED
+	'application/x-pir'         => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
+	'application/x-pasm'        => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
+	'application/x-perl6'       => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
+	'text/plain'                => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 );
 
 # This is the mime-type to document class mapping
@@ -219,7 +219,7 @@ our %MIME_CLASS = (
 );
 
 sub menu_view_mimes {
-	'00Plain Text'     => 'text/plain',
+	'00Plain Text' => 'text/plain',
 	'01Perl'       => 'application/x-perl',
 	'02Shell'      => 'application/x-shellscript',
 	'03HTML'       => 'text/html',
@@ -241,14 +241,14 @@ sub menu_view_mimes {
 use Class::XSAccessor
 	getters => {
 		editor           => 'editor',
-		filename         => 'filename',       # TODO is this read_only or what?
+		filename         => 'filename', # TODO is this read_only or what?
 		get_mimetype     => 'mimetype',
 		get_newline_type => 'newline_type',
 		errstr           => 'errstr',
 		tempfile         => 'tempfile',
 	},
 	setters => {
-		_set_filename    => 'filename',       # TODO temporary hack
+		_set_filename    => 'filename', # TODO temporary hack
 		set_newline_type => 'newline_type',
 		set_mimetype     => 'mimetype',
 		set_errstr       => 'errstr',
@@ -272,7 +272,7 @@ mime-type is defined by the guess_mimetype function
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless {@_}, $class;
 
 	if ( $self->{filename} ) {
 		$self->load_file;
@@ -311,6 +311,16 @@ sub last_sync {
 	return $_[0]->{_timestamp};
 }
 
+sub basename {
+	my $filename = $_[0]->filename;
+	defined($filename) ? File::Basename::basename($filename) : undef;
+}
+
+sub dirname {
+	my $filename = $_[0]->filename;
+	defined($filename) ? File::Basename::dirname($filename) : undef;
+}
+
 #####################################################################
 # Bad/Ugly/Broken Methods
 # These don't really completely belong in this class, but there's
@@ -325,7 +335,7 @@ sub guess_mimetype {
 
 	# Default mime-type of new files, should be configurable in the GUI
 	# TODO: Make it configurable in the GUI :)
-	unless ($filename) {
+	unless ( $filename ) {
 		return 'application/x-perl';
 	}
 
@@ -338,9 +348,9 @@ sub guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( $EXT_MIME{$ext} eq 'application/x-perl' ) {
-
 				# Sometimes Perl 6 will look like Perl 5
-				if ( is_perl6($text) ) {
+				# But only do this test if the Perl 6 plugin is enabled.
+				if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
 					return 'application/x-perl6';
 				}
 			}
@@ -350,7 +360,7 @@ sub guess_mimetype {
 
 	# Try derive the mime type from the basename
 	my $basename = File::Basename::basename($filename);
-	if ($basename) {
+	if ( $basename ) {
 		return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
 	}
 
@@ -393,10 +403,7 @@ sub is_perl6 {
 	return if $text =~ /^=head[12]/msx;
 
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
-
-	# TODO - This was generating huge numbers of false positives.
-	#        Make this not suck before re-enabling.
-	# return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
+	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
 
 	return;
 }
@@ -443,7 +450,7 @@ sub is_unused {
 	my $self = shift;
 	return '' unless $self->is_new;
 	return 1  unless $self->is_modified;
-	return 1  unless $self->text_get =~ /[^ \t]/s;
+	return 1  unless $self->text_get =~ /\S/s;
 	return '';
 }
 
@@ -455,15 +462,16 @@ sub is_unused {
 # 3) every time we type something ????
 sub has_changed_on_disk {
 	my ($self) = @_;
-	return 0 if not defined $self->filename;
-	return 0 if not defined $self->last_sync;
+	return 0 unless defined $self->filename;
+	return 0 unless defined $self->last_sync;
 	return $self->last_sync < $self->time_on_file ? 1 : 0;
 }
 
 sub time_on_file {
-	return 0 if not defined $_[0]->filename;
-	return 0 if not -e $_[0]->filename;
-	return ( stat( $_[0]->filename ) )[9];
+	my $filename = $_[0]->filename;
+	return 0 unless defined $filename;
+	return 0 unless -e $filename;
+	return (stat($filename))[9];
 }
 
 =pod
@@ -721,8 +729,8 @@ sub lexer {
 # What should be shown in the notebook tab
 sub get_title {
 	my $self = shift;
-	if ( $self->{filename} ) {
-		return File::Basename::basename( $self->{filename} );
+	if ( $self->filename ) {
+		return $self->basename;
 	} else {
 		my $str = sprintf( Wx::gettext("Unsaved %d"), $unsaved_number );
 
