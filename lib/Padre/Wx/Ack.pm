@@ -1,34 +1,33 @@
 package Padre::Wx::Ack;
 
+=pod
+
 =head1 NAME
 
 Padre::Wx::Ack - Find in files, using Ack
-
-
 
 =head1 DESCRIPTION
 
 C<Padre::Wx::Ack> implements a search dialog used to find recursively in
 files. It is using C<Ack> underneath, for lots of nifty features.
 
-
 =cut
 
 use 5.008;
 use strict;
 use warnings;
-use Padre::DB ();
-use Padre::Wx ();
-use Padre::Wx::Dialog;
-use Wx::Locale qw(:default);
-use File::Basename ();
+use Padre::DB         ();
+use Padre::Wx         ();
+use Padre::Wx::Dialog ();
+use File::Basename    ();
+
+our $VERSION = '0.35';
 
 my $iter;
 my %opts;
 my %stats;
 my $panel_string_index = 9999999;
 
-our $VERSION = '0.35';
 my $DONE_EVENT : shared = Wx::NewEventType;
 
 my $ack_loaded = 0;
@@ -39,10 +38,13 @@ sub load_ack {
 
 	# try to load app::ack - we don't require $minver in the eval to
 	# provide a meaningful error message if needed.
-	eval "use App::Ack";    ## no critic
-	return "$error (module not installed)" if $@;
-	return "$error (you have $App::Ack::VERSION installed)"
-		if $App::Ack::VERSION < $minver;
+	eval "use App::Ack"; ## no critic
+	if ( $@ ) {
+		return "$error (module not installed)";
+	}
+	if ( $App::Ack::VERSION < $minver ) {
+		return "$error (you have $App::Ack::VERSION installed)";
+	}
 
 	# redefine some app::ack subs to display results in padre's output
 	SCOPE: {
@@ -62,9 +64,9 @@ sub on_ack {
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
-	if ( !$ack_loaded ) {
+	unless ( $ack_loaded ) {
 		my $error = load_ack();
-		if ($error) {
+		if ( $error ) {
 			$main->error($error);
 			return;
 		}
@@ -93,27 +95,27 @@ sub get_layout {
 	my $config = Padre->ide->config;
 
 	my @layout = (
-		[   [ 'Wx::StaticText', undef, gettext('Term:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Term:') ],
 			[ 'Wx::ComboBox', '_ack_term_', $term, $search ],
 			[ 'Wx::Button',   '_find_',     Wx::wxID_FIND ],
 		],
-		[   [ 'Wx::StaticText', undef, gettext('Dir:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Dir:') ],
 			[ 'Wx::ComboBox', '_ack_dir_',  '', $in_dir ],
-			[ 'Wx::Button',   '_pick_dir_', gettext('Pick &directory') ],
+			[ 'Wx::Button',   '_pick_dir_', Wx::gettext('Pick &directory') ],
 		],
-		[   [ 'Wx::StaticText', undef, gettext('In Files/Types:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('In Files/Types:') ],
 			[ 'Wx::ComboBox', '_file_types_', '', $types ],
 			[ 'Wx::Button',   '_cancel_',     Wx::wxID_CANCEL ],
 		],
 		[   [   'Wx::CheckBox',
 				'case_insensitive',
-				gettext('Case &Insensitive'),
+				Wx::gettext('Case &Insensitive'),
 				( $config->find_case ? 0 : 1 )
 			],
 		],
 		[   [   'Wx::CheckBox',
 				'ignore_hidden_subdirs',
-				gettext('I&gnore hidden Subdirectories'),
+				Wx::gettext('I&gnore hidden Subdirectories'),
 				$config->find_nohidden,
 			],
 		],
@@ -129,7 +131,7 @@ sub dialog {
 	my $layout = get_layout($term);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $main,
-		title  => gettext("Find in Files"),
+		title  => Wx::gettext("Find in Files"),
 		layout => $layout,
 		width  => [ 190, 210 ],
 		size   => Wx::wxDefaultSize,
@@ -158,7 +160,11 @@ sub on_pick_dir {
 		}
 	}
 
-	my $dir_dialog = Wx::DirDialog->new( $main, Wx::gettext("Select directory"), $default_dir );
+	my $dir_dialog = Wx::DirDialog->new(
+		$main,
+		Wx::gettext("Select directory"),
+		$default_dir
+	);
 	if ( $dir_dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
@@ -168,11 +174,7 @@ sub on_pick_dir {
 }
 
 sub cancel_clicked {
-	my ( $dialog, $event ) = @_;
-
-	$dialog->Destroy;
-
-	return;
+	$_[0]->Destroy;
 }
 
 sub find_clicked {
@@ -238,9 +240,7 @@ sub find_clicked {
 
 sub _get_data_from {
 	my ($dialog) = @_;
-
-	my $data = $dialog->get_data;
-
+	my $data                  = $dialog->get_data;
 	my $term                  = $data->{_ack_term_};
 	my $dir                   = $data->{_ack_dir_};
 	my $file_types            = $data->{_file_types_};
@@ -304,12 +304,11 @@ sub create_ack_pane {
 
 sub show_ack_output {
 	my $main = shift;
-	my $on = @_ ? $_[0] ? 1 : 0 : 1;
+	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
+	my $bp   = \$main->{bottom};
+	my $op   = \$main->{ack};
+	my $idx  = ${$bp}->GetPageIndex( ${$op} );
 
-	my $bp = \$main->{bottom};
-	my $op = \$main->{ack};
-
-	my $idx = ${$bp}->GetPageIndex( ${$op} );
 	if ( $idx >= 0 ) {
 		${$bp}->SetSelection($idx);
 	} else {
@@ -446,7 +445,7 @@ sub fill_type_wanted {
 
 1;
 
-
+=pod
 
 =head1 COPYRIGHT & LICENSE
 
@@ -459,7 +458,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
