@@ -834,7 +834,7 @@ sub on_context_menu {
 	return if not keys %$plugins;
 
 	my ($doc, $editor, $menu, $event) = @_;
-	
+
 	my $plugin_handles = $self->plugins;
 	foreach my $plugin_name (keys %$plugins) {
 		my $plugin = $plugin_handles->{$plugin_name}->object;
@@ -842,7 +842,6 @@ sub on_context_menu {
 	}
 	return();
 }
-
 
 # TODO: document this.
 # TODO: make it also reload the file?
