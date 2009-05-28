@@ -220,39 +220,40 @@ our %MIME_CLASS = (
 
 sub menu_view_mimes {
 	'00Plain Text'     => 'text/plain',
-		'01Perl'       => 'application/x-perl',
-		'02Shell'      => 'application/x-shellscript',
-		'03HTML'       => 'text/html',
-		'05JavaScript' => 'application/javascript',
-		'07CSS'        => 'text/css',
-		'09Python'     => 'text/x-python',
-		'11Ruby'       => 'application/x-ruby',
-		'13PHP'        => 'application/x-php',
-		'15YAML'       => 'text/x-yaml',
-		'17VBScript'   => 'text/vbscript',
-		'19SQL'        => 'text/x-sql',
-		'21Perl6'      => 'application/x-perl6',
-		;
+	'01Perl'       => 'application/x-perl',
+	'02Shell'      => 'application/x-shellscript',
+	'03HTML'       => 'text/html',
+	'05JavaScript' => 'application/javascript',
+	'07CSS'        => 'text/css',
+	'09Python'     => 'text/x-python',
+	'11Ruby'       => 'application/x-ruby',
+	'13PHP'        => 'application/x-php',
+	'15YAML'       => 'text/x-yaml',
+	'17VBScript'   => 'text/vbscript',
+	'19SQL'        => 'text/x-sql',
+	'21Perl6'      => 'application/x-perl6',
+	;
 }
 
 #####################################################################
 # Constructor and Accessors
 
-use Class::XSAccessor getters => {
-	editor           => 'editor',
-	filename         => 'filename',       # TODO is this read_only or what?
-	get_mimetype     => 'mimetype',
-	get_newline_type => 'newline_type',
-	errstr           => 'errstr',
-	tempfile         => 'tempfile',
+use Class::XSAccessor
+	getters => {
+		editor           => 'editor',
+		filename         => 'filename',       # TODO is this read_only or what?
+		get_mimetype     => 'mimetype',
+		get_newline_type => 'newline_type',
+		errstr           => 'errstr',
+		tempfile         => 'tempfile',
 	},
 	setters => {
-	_set_filename    => 'filename',       # TODO temporary hack
-	set_newline_type => 'newline_type',
-	set_mimetype     => 'mimetype',
-	set_errstr       => 'errstr',
-	set_editor       => 'editor',
-	set_tempfile     => 'tempfile',
+		_set_filename    => 'filename',       # TODO temporary hack
+		set_newline_type => 'newline_type',
+		set_mimetype     => 'mimetype',
+		set_errstr       => 'errstr',
+		set_editor       => 'editor',
+		set_tempfile     => 'tempfile',
 	};
 
 =pod
@@ -392,7 +393,11 @@ sub is_perl6 {
 	return if $text =~ /^=head[12]/msx;
 
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
-	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
+
+	# TODO - This was generating huge numbers of false positives.
+	#        Make this not suck before re-enabling.
+	# return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
+
 	return;
 }
 
