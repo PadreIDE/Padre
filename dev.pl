@@ -21,12 +21,13 @@ unless ( -d "$FindBin::Bin/blib" ) {
 	error("You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl");
 }
 
-
 my $msgfmt;
 if ( $^O =~ /(linux|bsd)/ ) {
 	$msgfmt = scalar File::Which::which('msgfmt');
-} elsif ( $^O =~ /win32/i ) {
-	eval { require File::Glob::Windows; };
+} elsif ( $^O eq 'MSWin32' ) {
+	eval {
+		require File::Glob::Windows;
+	};
 	if( $@ ) {
 		die("Default glob() will misinterpret spaces in folder names as seperators, install File::Glob::Windows to fix this behavior!");
 	}
@@ -56,6 +57,10 @@ my @cmd = (
 	qq[-I$FindBin::Bin/lib],
 	qq[-I$FindBin::Bin/blib/lib],
 );
+if ( grep { $_ eq '-a' } @ARGV ) {
+	@ARGV = grep { $_ ne '-a' } @ARGV;
+	require Class::Autouse;
+	Class::Autouse->import( ':devel' );
 if ( grep { $_ eq '-d' } @ARGV ) {
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-d';
@@ -66,7 +71,7 @@ if ( grep { $_ eq '-p' } @ARGV ) {
 }
 if ( grep { $_ eq '-h' } @ARGV ) {
 	@ARGV = grep { $_ ne '-h' } @ARGV;
-	my $dir = File::Basename::dirname $ENV{PADRE_HOME};
+	my $dir = File::Basename::dirname($ENV{PADRE_HOME});
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
 		foreach my $plugin ( @plugins ) {
@@ -90,10 +95,10 @@ sub error {
 sub convert_po_to_mo {
 	my $path = shift;
 	my @mo;
-	if ( $^O =~ /win32/i ) {
+	if ( $^O eq 'MSWin32' ) {
 		@mo = map {
 			substr( File::Basename::basename($_), 0, -3 )
-		} &File::Glob::Windows::glob("$path/share/locale/*.po");
+		} File::Glob::Windows::glob("$path/share/locale/*.po");
 	} else {
 		@mo = map {
 			substr( File::Basename::basename($_), 0, -3 )
@@ -107,4 +112,3 @@ sub convert_po_to_mo {
 		);
 	}
 }
-
