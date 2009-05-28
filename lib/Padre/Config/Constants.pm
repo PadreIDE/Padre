@@ -10,8 +10,8 @@ use File::Spec    ();
 use File::HomeDir ();
 
 # Regular Globals
-our $VERSION     = '0.35';
-our @ISA         = 'Exporter';
+our $VERSION = '0.35';
+our @ISA     = 'Exporter';
 
 # Export Globals
 my @dirs   = qw{ $PADRE_CONFIG_DIR $PADRE_PLUGIN_DIR $PADRE_PLUGIN_LIBDIR };
@@ -84,28 +84,6 @@ sub _find_padre_config_dir {
 	}
 
 	return $confdir;
-}
-
-#
-# my $dir = _find_padre_plugin_dir();
-#
-# find and return the directory where padre should check the locally
-# installed plugins. create it if needed.
-#
-# no params.
-#
-sub _find_padre_plugin_dir {
-	my $pluginsdir = File::Spec->catdir(
-		$PADRE_CONFIG_DIR, 'plugins', 'Padre', 'Plugin'
-	);
-
-	# check if plugin directory exists, create it otherwise
-	unless ( -e $pluginsdir ) {
-		File::Path::mkpath($pluginsdir)
-			or die "Cannot create plugins dir '$pluginsdir': $!";
-	}
-
-	return $pluginsdir;
 }
 
 1;
