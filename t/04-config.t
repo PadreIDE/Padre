@@ -16,12 +16,11 @@ use Test::More tests => 6 + $config_options * 2 + 10 + 1;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
-
 BEGIN {
 	$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 }
-use Padre::Config ();
-use Padre::Config::Constants qw{ $CONFIG_FILE_USER };
+use Padre::Constant qw{ $CONFIG_FILE_USER };
+use Padre::Config  ();
 
 # Create the empty config file
 my $empty = $CONFIG_FILE_USER;

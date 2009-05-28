@@ -5,12 +5,12 @@ package Padre::Wx::Menu::Plugins;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Config   ();
-use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
 use Params::Util    ();
+use Padre::Constant qw{ $PADRE_CONFIG_DIR };
+use Padre::Current  qw{_CURRENT};
+use Padre::Config   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current  qw{_CURRENT};
 
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Menu';
@@ -73,6 +73,7 @@ sub new {
 			$_[0]->setup_editors($file);
 		},
 	);
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$tools->Append( -1, Wx::gettext("Reload My Plugin") ),
@@ -80,6 +81,7 @@ sub new {
 			Padre->ide->plugin_manager->reload_plugin('My');
 		},
 	);
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$tools->Append( -1, Wx::gettext("Reset My Plugin") ),
@@ -98,7 +100,9 @@ sub new {
 			}
 		},
 	);
+
 	$tools->AppendSeparator;
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$tools->Append( -1, Wx::gettext("Reload All Plugins") ),
@@ -106,6 +110,7 @@ sub new {
 			Padre->ide->plugin_manager->reload_plugins;
 		},
 	);
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$tools->Append( -1, Wx::gettext("(Re)load Current Plugin") ),
@@ -113,6 +118,7 @@ sub new {
 			Padre->ide->plugin_manager->reload_current_plugin;
 		},
 	);
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$tools->Append( -1, Wx::gettext("Test A Plugin From Local Dir") ),
@@ -166,10 +172,10 @@ sub add_plugin_specific_entries {
 }
 
 sub remove_plugin_specific_entries {
-	my $self = shift;
+	my $self    = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while (@$entries) {
+	while ( @$entries ) {
 		$self->Destroy( pop @$entries );
 	}
 	$self->{plugin_menus} = $entries;

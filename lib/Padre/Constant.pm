@@ -1,4 +1,4 @@
-package Padre::Config::Constants;
+package Padre::Constant;
 
 # Constants used by various configuration systems.
 
@@ -76,11 +76,11 @@ __END__
 
 =head1 NAME
 
-Padre::Config::Constants - constants used by config subsystems
+Padre::Constant - constants used by config subsystems
 
 =head1 SYNOPSIS
 
-    use Padre::Config::Constants qw{ :all };
+    use Padre::Constant qw{ :all };
     [...]
     # do stuff with exported constants
 
@@ -97,7 +97,7 @@ is defined in this module.
 This module exports nothing by default. However, some constants can
 be imported with:
 
-    use Padre::Config::Constants qw{ $FOO $BAR };
+    use Padre::Constant qw{ $FOO $BAR };
 
 The list of available constants are:
 
@@ -139,7 +139,7 @@ depending on your platform) so that perl can load a C<Padre::Plugin::> plugin.
 Since lots of constants are somehow related, this module defines some tags
 to import them all at once, with eg:
 
-    use Padre::Config::Constants qw{ :dirs };
+    use Padre::Constant qw{ :dirs };
 
 The tags available are:
 

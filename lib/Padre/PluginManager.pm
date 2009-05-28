@@ -1,8 +1,5 @@
 package Padre::PluginManager;
 
-# API NOTES:
-# This class uses english-style verb_noun method naming
-
 =pod
 
 =head1 NAME
@@ -18,17 +15,20 @@ plugins, as well as providing part of the interface to plugin writers.
 
 =cut
 
+# API NOTES:
+# This class uses english-style verb_noun method naming
+
 use strict;
 use warnings;
-use Carp                     qw{croak};
-use File::Basename           ();
+use Carp                     ();
 use File::Copy               ();
 use File::Glob               ();
 use File::Path               ();
 use File::Spec               ();
+use File::Basename           ();
 use Scalar::Util             ();
-use Params::Util             qw{_IDENTIFIER _CLASS _INSTANCE};
-use Padre::Config::Constants qw{ :dirs };
+use Params::Util             qw{ _IDENTIFIER _CLASS _INSTANCE };
+use Padre::Constant          qw{ :dirs };
 use Padre::Current           ();
 use Padre::Util              ();
 use Padre::PluginHandle      ();
@@ -57,7 +57,7 @@ sub new {
 	my $class  = shift;
 	my $parent = shift || Padre->ide;
 	unless ( _INSTANCE($parent, 'Padre') ) {
-		croak("Creation of a Padre::PluginManager without a Padre not possible");
+		Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 	}
 
 	my $self = bless {
@@ -135,9 +135,7 @@ sub plugin_names {
 }
 
 sub plugin_objects {
-	map {
-		$_[0]->{plugins}->{$_}
-	} $_[0]->plugin_names;
+	map { $_[0]->{plugins}->{$_} } $_[0]->plugin_names;
 }
 
 #####################################################################
@@ -183,21 +181,25 @@ sub relocale {
 sub reset_my_plugin {
 	my ( $self, $overwrite ) = @_;
 
-	# do not overwrite it unless stated so.
+	# Do not overwrite it unless stated so.
 	my $dst = File::Spec->catfile( $PADRE_PLUGIN_LIBDIR, 'My.pm' );
-	return if -e $dst && !$overwrite;
+	if ( -e $dst and not $overwrite ) {
+		return;
+	}
 
-	# find the My Plugin
+	# Find the My Plugin
 	my $src = File::Spec->catfile(
 		File::Basename::dirname($INC{'Padre/Config.pm'}),
 		'Plugin', 'My.pm',
 	);
-	die "Could not find the original My plugin" unless -e $src;
+	unless ( -e $src ) {
+		Carp::croak("Could not find the original My plugin");
+	}
 
 	# copy the My Plugin
 	unlink $dst;
 	unless ( File::Copy::copy($src, $dst) ) {
-		die "Could not copy the My plugin ($src) to $dst: $!";
+		Carp::croak("Could not copy the My plugin ($src) to $dst: $!");
 	}
 	chmod( 0644, $dst );
 }
@@ -240,7 +242,6 @@ sub reload_plugins {
 	my $self    = shift;
 	my $plugins = $self->plugins;
 	foreach my $name ( sort keys %$plugins ) {
-
 		# do not use the reload_plugin method since that
 		# refreshes the menu every time.
 		$self->_unload_plugin($name);
@@ -289,7 +290,7 @@ sub load_plugins {
 # attempt to load all plugins that sit as .pm files in the
 # .padre/plugins/Padre/Plugin/ folder
 sub _load_plugins_from_inc {
-	my ($self) = @_;
+	my ( $self ) = @_;
 
 	# Try the plugin directory first:
 	my $plugin_dir = $self->plugin_dir;
@@ -301,7 +302,7 @@ sub _load_plugins_from_inc {
 
 	require File::Find::Rule;
 	my @files = File::Find::Rule->name('*.pm')->file->maxdepth(1)->in(@dirs);
-	foreach my $file (@files) {
+	foreach my $file ( @files ) {
 
 		# Full path filenames
 		my $module = $file;
@@ -391,7 +392,6 @@ sub _load_plugins_from_par {
 	opendir my $dh, $plugin_dir or return;
 	while ( my $file = readdir $dh ) {
 		if ( $file =~ /^\w+\.par$/i ) {
-
 			# Only single-level plugins for now.
 			my $parfile = File::Spec->catfile( $plugin_dir, $file );
 			PAR->import($parfile);
@@ -642,12 +642,12 @@ sub reload_plugin {
 
 # Assume the named plugin exists, enable it
 sub _plugin_enable {
-	$_[0]->_plugin( $_[1] )->enable;
+	$_[0]->_plugin($_[1])->enable;
 }
 
 # Assume the named plugin exists, disable it
 sub _plugin_disable {
-	$_[0]->_plugin( $_[1] )->disable;
+	$_[0]->_plugin($_[1])->disable;
 }
 
 =pod
@@ -673,7 +673,7 @@ sub plugin_db {
 	unless ( defined $param ) {
 		my ($package) = caller();
 		unless ( $package =~ /^Padre::Plugin::/ ) {
-			croak("Cannot infer the name of the plugin for which the configuration has been requested");
+			Carp::croak("Cannot infer the name of the plugin for which the configuration has been requested");
 		}
 		$param = $package;
 	}
@@ -925,10 +925,10 @@ sub _plugin {
 	if ( _INSTANCE( $it, 'Padre::PluginHandle' ) ) {
 		my $current = $self->{plugins}->{ $it->name };
 		unless ( defined $current ) {
-			croak("Unknown plugin '$it' provided to PluginManager");
+			Carp::croak("Unknown plugin '$it' provided to PluginManager");
 		}
 		unless ( Scalar::Util::refaddr($it) == Scalar::Util::refaddr($current) ) {
-			croak("Duplicate plugin '$it' provided to PluginManager");
+			Carp::croak("Duplicate plugin '$it' provided to PluginManager");
 		}
 		return $it;
 	}
@@ -939,11 +939,11 @@ sub _plugin {
 	}
 	if ( _IDENTIFIER($it) ) {
 		unless ( defined $self->{plugins}->{$it} ) {
-			croak("Plugin '$it' does not exist in PluginManager");
+			Carp::croak("Plugin '$it' does not exist in PluginManager");
 		}
 		return $self->{plugins}->{$it};
 	}
-	croak("Missing or invalid plugin provided to Padre::PluginManager");
+	Carp::croak("Missing or invalid plugin provided to Padre::PluginManager");
 }
 
 1;

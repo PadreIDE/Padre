@@ -19,7 +19,7 @@ use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
-use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
+use Padre::Constant qw{ $PADRE_PLUGIN_DIR };
 use Padre::PluginManager;
 use POSIX qw(locale_h);
 

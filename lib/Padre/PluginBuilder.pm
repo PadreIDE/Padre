@@ -1,15 +1,5 @@
 package Padre::PluginBuilder;
 
-use strict;
-use warnings;
-
-use Module::Build ();
-use Padre::Config::Constants qw{ $PADRE_PLUGIN_DIR };
-
-use base 'Module::Build';
-
-our $VERSION = '0.35';
-
 =pod
 
 =head1 NAME
@@ -36,6 +26,14 @@ configuration directory (which defaults to C<~/.padre> on Unixy systems).
 
 =cut
 
+use strict;
+use warnings;
+use Module::Build   ();
+use Padre::Constant qw{ $PADRE_PLUGIN_DIR };
+
+our $VERSION = '0.35';
+our @ISA     = 'Module::Build';
+
 sub ACTION_plugin {
 	my ($self) = @_;
 
@@ -45,7 +43,7 @@ sub ACTION_plugin {
 		return ();
 	}
 	$self->depends_on('build');
-	my $module = $self->module_name();
+	my $module = $self->module_name;
 	$module =~ s/^Padre::Plugin:://;
 	$module =~ s/::/-/g;
 
@@ -55,6 +53,8 @@ sub ACTION_plugin {
 		dist    => "$module.par",
 	);
 }
+
+=pod
 
 =head2 installplugin
 
@@ -106,4 +106,3 @@ modify it under the same terms as Perl 5 itself.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
-

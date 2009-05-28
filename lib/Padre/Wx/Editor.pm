@@ -3,8 +3,8 @@ package Padre::Wx::Editor;
 use 5.008;
 use strict;
 use warnings;
-use YAML::Tiny ();
-use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
+use YAML::Tiny                ();
+use Padre::Constant           qw{ $PADRE_CONFIG_DIR };
 use Padre::Util               ();
 use Padre::Current            ();
 use Padre::Wx                 ();
@@ -26,9 +26,7 @@ our %MIME_STYLE = (
 	'text/x-makefile'    => 'make',
 	'text/x-yaml'        => 'yaml',
 	'text/css'           => 'css',
-
-	#	'application/x-pasm' => 'pasm',
-	'application/x-php' => 'perl',    # temporary solution
+	'application/x-php' => 'perl', # temporary solution
 );
 
 my $data;
@@ -107,8 +105,9 @@ sub padre_setup {
 	# See: http://www.yellowbrain.com/stc/keymap.html
 	#$self->CmdKeyAssign(Wx::wxSTC_KEY_ESCAPE, 0, Wx::wxSTC_CMD_CUT);
 
-	$self->SetCodePage(65001);    # which is supposed to be Wx::wxSTC_CP_UTF8
-	                              # and Wx::wxUNICODE or wxUSE_UNICODE should be on
+	# This is supposed to be Wx::wxSTC_CP_UTF8
+	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
+	$self->SetCodePage(65001);    
 
 	my $mimetype = $self->{Document}->get_mimetype;
 	if ( $MIME_STYLE{$mimetype} ) {

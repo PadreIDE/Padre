@@ -5,9 +5,9 @@ package Padre::Current;
 use 5.008;
 use strict;
 use warnings;
-use Carp        ();
-use Exporter    ();
-use Params::Util qw{_INSTANCE};
+use Carp         ();
+use Exporter     ();
+use Params::Util ();
 
 our $VERSION   = '0.35';
 our @ISA       = 'Exporter';
@@ -25,12 +25,12 @@ sub _CURRENT {
 	unless ( defined $_[0] ) {
 		return Padre::Current->new;
 	}
-	if ( _INSTANCE( $_[0], 'Padre::Current' ) ) {
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Current' ) ) {
 		return shift;
 	}
 
 	# Fallback options
-	if ( _INSTANCE( $_[0], 'Padre::Document' ) ) {
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Document' ) ) {
 		return Padre::Current->new( document => shift );
 	}
 
@@ -179,6 +179,8 @@ sub ide {
 
 __END__
 
+=pod
+
 =head1 NAME
 
 Padre::Current - convenient access to current objects within Padre
@@ -225,55 +227,43 @@ Here's the list of methods provided to get access to current something:
 
 Return the current C<Padre::Config> object from the main window.
 
-
 =item document()
 
 Return the current C<Padre::Document> object in use.
-
 
 =item editor()
 
 Return the current C<Padre::Editor> object in use.
 
-
 =item filename()
 
 Return the filename of the current opened document.
-
 
 =item ide()
 
 Return the current C<Padre> object in use.
 
-
 =item main()
 
 Return the current C<Padre::Wx::Main> object in use.
-
 
 =item notebook()
 
 Return the current C<Padre::Wx::Notebook> object in use.
 
-
 =item project()
 
 Return the current C<Padre::Project> object in use.
-
 
 =item text()
 
 Return the current selected text.
 
-
 =item title()
 
 Return the title of current editor window.
 
-
 =back
-
-
 
 =head1 COPYRIGHT & LICENSE
 

@@ -5,23 +5,23 @@ package Padre::Config::Setting;
 use 5.008;
 use strict;
 use warnings;
-
-use Carp ();
-use Padre::Config::Constants qw{ :stores :types };
-use Params::Util ();
+use Carp            ();
+use Params::Util    ();
+use Padre::Constant qw{ :stores :types };
 
 our $VERSION = '0.35';
 
-use Class::XSAccessor getters => {
-	name    => 'name',
-	type    => 'type',
-	store   => 'store',
-	default => 'default',
-};
+use Class::XSAccessor
+	getters => {
+		name    => 'name',
+		type    => 'type',
+		store   => 'store',
+		default => 'default',
+	};
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Param checking
 	unless ( $self->name ) {

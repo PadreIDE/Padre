@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Padre::Config::Constants qw{ $PADRE_CONFIG_DIR };
+use Padre::Constant       qw{ $PADRE_CONFIG_DIR };
 use Padre::Wx             ();
 use Padre::Wx::Menu       ();
 use Padre::Wx::DocBrowser ();
