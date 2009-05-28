@@ -1,5 +1,7 @@
 package Padre::Wx::Main;
 
+=pod
+
 =head1 NAME
 
 Padre::Wx::Main - The main window for the Padre IDE
@@ -42,7 +44,7 @@ use Padre::Wx::Bottom         ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
 use Padre::Wx::Syntax         ();
-use Padre::Wx::Outline        ();
+#use Padre::Wx::Outline        ();
 use Padre::Wx::Directory      ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Notebook       ();
@@ -83,7 +85,7 @@ object as argument, to get a reference to the Padre application.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE( $ide, 'Padre' ) ) {
+	unless ( _INSTANCE($ide, 'Padre') ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 
@@ -116,10 +118,12 @@ sub new {
 	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
 		undef, -1, $title,
-		[   $config->main_left,
+		[
+			$config->main_left,
 			$config->main_top,
 		],
-		[   $config->main_width,
+		[
+			$config->main_width,
 			$config->main_height,
 		],
 		$style,
@@ -187,7 +191,7 @@ sub new {
 
 	# Creat the various tools that will live in the panes
 	$self->{functions} = Padre::Wx::FunctionList->new($self);
-	$self->{outline}   = Padre::Wx::Outline->new($self);
+	# $self->{outline}   = Padre::Wx::Outline->new($self);
 	$self->{directory} = Padre::Wx::Directory->new($self);
 	$self->{output}    = Padre::Wx::Output->new($self);
 	$self->{syntax}    = Padre::Wx::Syntax->new($self);
@@ -255,7 +259,6 @@ sub new {
 	return $self;
 }
 
-
 =back
 
 =cut
@@ -268,7 +271,6 @@ sub new {
 The following methods access the object attributes. They are both
 getters and setters, depending on whether you provide them with an
 argument. Use them wisely.
-
 
 Accessors to GUI elements:
 
@@ -302,7 +304,6 @@ Accessors to GUI elements:
 
 =back
 
-
 Accessors to operating data:
 
 =over 4
@@ -313,44 +314,51 @@ Accessors to operating data:
 
 =back
 
-
 Accessors that may not belong to this class:
 
 =over 4
 
 =item * ack()
 
-
 =back
 
 =cut
 
+use Class::XSAccessor
+	predicates => {
+		has_outline => 'outline',
+	},
+	getters => {
+		# GUI Elements
+		title     => 'title',
+		config    => 'config',
+		ide       => 'ide',
+		aui       => 'aui',
+		menu      => 'menu',
+		notebook  => 'notebook',
+		right     => 'right',
+		functions => 'functions',
+		directory => 'directory',
+		bottom    => 'bottom',
+		output    => 'output',
+		syntax    => 'syntax',
+		errorlist => 'errorlist',
+	
+		# Operating Data
+		cwd        => 'cwd',
+		no_refresh => '_no_refresh',
+	
+		# Things that are probably in the wrong place
+		ack => 'ack',
+	};
 
-use Class::XSAccessor getters => {
-
-	# GUI Elements
-	title     => 'title',
-	config    => 'config',
-	aui       => 'aui',
-	menu      => 'menu',
-	notebook  => 'notebook',
-	right     => 'right',
-	functions => 'functions',
-	outline   => 'outline',
-	directory => 'directory',
-	bottom    => 'bottom',
-	output    => 'output',
-	syntax    => 'syntax',
-	errorlist => 'errorlist',
-
-	# Operating Data
-	cwd        => 'cwd',
-	no_refresh => '_no_refresh',
-
-	# Things that are probably in the wrong place
-	ack => 'ack',
-};
-
+sub outline {
+	$_[0]->{outline} or
+	$_[0]->{outline} = do {
+		require Padre::Wx::Outline;
+		Padre::Wx::Outline->new($_[0]);
+	};
+}
 
 #####################################################################
 
@@ -368,9 +376,9 @@ line, or last session if user has this setup, a new file, or nothing.
 
 sub load_files {
 	my $self    = shift;
+	my $ide     = $self->ide;
 	my $config  = $self->config;
 	my $startup = $config->main_startup;
-	my $ide     = Padre->ide;
 
 	# explicit session on command line takes precedence
 	if ( defined $ide->opts->{session} ) {
@@ -391,7 +399,7 @@ sub load_files {
 	}
 
 	# otherwise, an explicit list on the command line overrides configuration
-	my $files = Padre->ide->{ARGV};
+	my $files = $ide->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
 		$self->setup_editors(@$files);
 		return;
@@ -431,7 +439,9 @@ various initializations that need a real window to work.
 =cut
 
 sub timer_post_init {
-	my $self = shift;
+	my $self    = shift;
+	my $config  = $self->config;
+	my $manager = $self->ide->plugin_manager;
 
 	# Do an initial Show/paint of the complete-looking main window
 	# without any files loaded. Then immediately Freeze so that the
@@ -444,7 +454,6 @@ sub timer_post_init {
 	# If the position mandated by the configuration is now
 	# off the screen (typically because we've changed the screen
 	# size, reposition to the defaults).
-	my $config = $self->config;
 	unless ( $self->IsShownOnScreen ) {
 		$self->SetSize(
 			Wx::Size->new(
@@ -461,15 +470,15 @@ sub timer_post_init {
 
 	# Cannot use the toggle sub here as that one reads from the Menu and
 	# on some machines the Menu is not configured yet at this point.
-	if ( $self->config->main_statusbar ) {
+	if ( $config->main_statusbar ) {
 		$self->GetStatusBar->Show;
 	} else {
 		$self->GetStatusBar->Hide;
 	}
-	Padre->ide->plugin_manager->enable_editors_for_all;
+	$manager->enable_editors_for_all;
 
-	$self->show_syntax( $self->config->main_syntaxcheck );
-	if ( $self->config->main_errorlist ) {
+	$self->show_syntax( $config->main_syntaxcheck );
+	if ( $config->main_errorlist ) {
 		$self->errorlist->enable;
 	}
 
@@ -479,12 +488,12 @@ sub timer_post_init {
 	$self->Thaw;
 
 	# Start the single instance server
-	if ( $self->config->main_singleinstance ) {
+	if ( $config->main_singleinstance ) {
 		$self->single_instance_start;
 	}
 
 	# Check for new plugins and alert the user to them
-	Padre->ide->plugin_manager->alert_new;
+	$manager->alert_new;
 
 	# Start the change detection timer
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
@@ -500,6 +509,7 @@ sub timer_post_init {
 	return;
 }
 
+=pod
 
 =item * my $locker = $main->freezer;
 
@@ -518,11 +528,12 @@ sub freezer {
 
 #####################################################################
 
+=pod
+
 =head2 Single Instance Server
 
 Padre embeds a small network server to handle single instance. Here are
 the methods that allow to control this embedded server.
-
 
 =over 4
 
@@ -530,6 +541,7 @@ the methods that allow to control this embedded server.
 
 my $single_instance_port = 4444;
 
+=pod
 
 =item * $main->single_instance_start;
 
@@ -565,6 +577,7 @@ sub single_instance_start {
 	
 }
 
+=pod
 
 =item * $main->single_instance_stop;
 
@@ -586,6 +599,7 @@ sub single_instance_stop {
 	return 1;
 }
 
+=pod
 
 =item * my $is_running = $main->single_instance_running;
 
@@ -597,6 +611,7 @@ sub single_instance_running {
 	return defined $_[0]->{single_instance};
 }
 
+=pod
 
 =item * $main->single_instance_connect;
 
@@ -635,6 +650,7 @@ sub single_instance_connect {
 	return 1;
 }
 
+=pod
 
 =item * $main->single_instance_command( $line );
 
@@ -849,6 +865,7 @@ sub refresh_toolbar {
 	$self->GetToolBar->refresh( $_[0] or $self->current );
 }
 
+=pod
 
 =head3 $main->refresh_status;
 
@@ -955,6 +972,7 @@ sub change_style {
 	return;
 }
 
+=pod
 
 =item * $main->change_locale( $locale );
 
@@ -1004,8 +1022,8 @@ method is usually called by C<change_locale()>.
 sub relocale {
 	my $self = shift;
 
-	# relocale the plugins
-	Padre::Current->ide->plugin_manager->relocale;
+	# Relocale the plugins
+	$self->ide->plugin_manager->relocale;
 
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};
@@ -1031,6 +1049,7 @@ sub relocale {
 	return;
 }
 
+=pod
 
 =item * $main->reconfig( $config );
 
@@ -1072,6 +1091,7 @@ sub reconfig {
 	return 1;
 }
 
+=pod
 
 =item * $main->rebuild_toolbar;
 
@@ -1096,11 +1116,12 @@ sub rebuild_toolbar {
 
 #####################################################################
 
+=pod
+
 =head2 Panel Tools
 
 Those methods deal with the various panels that Padre provides, and
 allow to show or hide them.
-
 
 =over 4
 
@@ -1128,12 +1149,12 @@ sub show_functions {
 	}
 
 	$self->aui->Update;
-
-	Padre->ide->save_config;
+	$self->ide->save_config;
 
 	return;
 }
 
+=pod
 
 =item * $main->show_outline( $visible );
 
@@ -1145,7 +1166,6 @@ the panel.
 
 sub show_outline {
 	my $self    = shift;
-	my $outline = $self->outline;
 
 	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
@@ -1154,21 +1174,23 @@ sub show_outline {
 	$self->config->set( main_outline => $on );
 	$self->config->write;
 
-	if ($on) {
+	if ( $on ) {
+		my $outline = $self->outline;
 		$self->right->show($outline);
 		$outline->start unless $outline->running;
-	} else {
+	} elsif ( $self->has_outline ) {
+		my $outline = $self->outline;
 		$self->right->hide($outline);
 		$outline->stop if $outline->running;
 	}
 
 	$self->aui->Update;
-
-	Padre->ide->save_config;
+	$self->ide->save_config;
 
 	return;
 }
 
+=pod
 
 =item * $main->show_directory( $visible );
 
@@ -1202,8 +1224,7 @@ sub show_directory {
 	}
 
 	$self->aui->Update;
-
-	Padre->ide->save_config;
+	$self->ide->save_config;
 
 	return;
 }
@@ -1233,8 +1254,7 @@ sub show_output {
 	}
 
 	$self->aui->Update;
-
-	Padre->ide->save_config;
+	$self->ide->save_config;
 
 	return;
 }
@@ -1266,8 +1286,7 @@ sub show_syntax {
 	}
 
 	$self->aui->Update;
-
-	Padre->ide->save_config;
+	$self->ide->save_config;
 
 	return;
 }
@@ -1278,6 +1297,8 @@ sub show_syntax {
 
 
 #####################################################################
+
+=pod
 
 =head2 Introspection
 
@@ -1700,10 +1721,11 @@ sub save_session {
 
 #####################################################################
 
+=pod
+
 =head2 User Interaction
 
 Various methods to help send information to user.
-
 
 =over 4
 
@@ -1722,6 +1744,7 @@ sub message {
 	return;
 }
 
+=pod
 
 =item * $main->error( $msg );
 
@@ -1963,6 +1986,7 @@ sub on_goto {
 	return;
 }
 
+=pod
 
 =item * $main->on_close_window( $event );
 
@@ -1978,8 +2002,8 @@ last session on startup. Clean up all Task Manager's tasks.
 sub on_close_window {
 	my $self   = shift;
 	my $event  = shift;
-	my $padre  = Padre->ide;
-	my $config = $padre->config;
+	my $ide    = $self->ide;
+	my $config = $ide->config;
 
 	Padre::Util::debug("on_close_window");
 
@@ -2023,7 +2047,7 @@ sub on_close_window {
 	$self->Show(0);
 	
 	# Stop all Task Manager's worker threads
-	Padre->ide->task_manager->cleanup();
+	$self->ide->task_manager->cleanup;
 	
 	Padre::Util::debug("Finished TaskManager's cleanup");
 
@@ -2048,7 +2072,7 @@ sub on_close_window {
 
 	# Shut down all the plugins before saving the configuration
 	# so that plugins have a change to save their configuration.
-	$padre->plugin_manager->shutdown;
+	$ide->plugin_manager->shutdown;
 	Padre::Util::debug("After plugin manager shutdown");
 
 	# Write the session to the database
@@ -2059,8 +2083,7 @@ sub on_close_window {
 	$self->save_session( $session, @session );
 
 	# Write the configuration to disk
-	$padre->save_config;
-
+	$ide->save_config;
 	$event->Skip;
 
 	Padre::Util::debug("Closing Padre");
@@ -2068,6 +2091,7 @@ sub on_close_window {
 	return;
 }
 
+=pod
 
 =item * $main->on_split_window;
 
@@ -2091,8 +2115,7 @@ sub on_split_window {
 	$new_editor->SetDocPointer($pointer);
 	$new_editor->set_preferences;
 
-	Padre->ide->plugin_manager->editor_enable($new_editor);
-
+	$self->ide->plugin_manager->editor_enable($new_editor);
 	$self->create_tab( $new_editor, " $title" );
 
 	return;
@@ -2218,7 +2241,7 @@ sub setup_editor {
 	$doc->set_editor($editor);
 	$editor->configure_editor($doc);
 
-	Padre->ide->plugin_manager->editor_enable($editor);
+	$self->ide->plugin_manager->editor_enable($editor);
 
 	my $title = $editor->{Document}->get_title;
 
@@ -2309,10 +2332,10 @@ sub on_open_selection {
 		$file = $text;
 	} else {
 
-		#try relative to the dir we started in?
-		{
+		# Try relative to the dir we started in?
+		SCOPE: {
 			my $filename = File::Spec->catfile(
-				Padre->ide->{original_cwd},
+				$self->ide->{original_cwd},
 				$text,
 			);
 			if ( -e $filename ) {
@@ -2331,12 +2354,12 @@ sub on_open_selection {
 			}
 		}
 	}
-	unless ($file) {    # and we are in a Perl environment
+	unless ( $file ) { # and we are in a Perl environment
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
 		my $filename = File::Spec->catfile(
-			Padre->ide->{original_cwd},
+			$self->ide->{original_cwd},
 			$module,
 		);
 		if ( -e $filename ) {
@@ -2693,7 +2716,9 @@ sub close {
 	$self->notebook->DeletePage($id);
 
 	$self->syntax->clear;
-	$self->outline->clear;
+	if ( $self->has_outline ) {
+		$self->outline->clear;
+	}
 	$self->directory->clear;
 
 	# Remove the entry from the Window menu
@@ -2930,7 +2955,7 @@ sub on_preferences {
 		}
 		$self->refresh_functions( $self->current );
 	}
-	Padre->ide->save_config;
+	$self->ide->save_config;
 
 	return;
 }
@@ -3018,7 +3043,7 @@ sub on_toggle_syntax_check {
 		$event->IsChecked ? 1 : 0,
 	);
 	$self->show_syntax( $self->config->main_syntaxcheck );
-	Padre->ide->save_config;
+	$self->ide->save_config;
 	return;
 }
 
@@ -3041,7 +3066,7 @@ sub on_toggle_errorlist {
 	} else {
 		$self->errorlist->disable;
 	}
-	Padre->ide->save_config;
+	$self->ide->save_config;
 	return;
 }
 
@@ -3798,6 +3823,7 @@ sub install_cpan {
 	return;
 }
 
+=pod
 
 =item * $main->setup_bindings;
 
@@ -3848,6 +3874,7 @@ sub setup_bindings {
 	return;
 }
 
+=pod
 
 =item * $main->set_ppi_highlight( $on );
 
@@ -3863,7 +3890,7 @@ sub set_ppi_highlight {
 	my ( $self, $on ) = @_;
 
 	# Update the saved config setting
-	my $config = Padre->ide->config;
+	my $config = $self->ide->config;
 	$config->set( ppi_highlight => $on );
 
 	# Refresh the menu (and MIME_LEXER hook)

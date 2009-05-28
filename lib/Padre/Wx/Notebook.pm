@@ -94,7 +94,7 @@ sub on_auinotebook_page_changed {
 
 		# make sure the outline is refreshed for the new doc
 		# TODO: Violates encapsulation
-		if ( defined $main->outline ) {
+		if ( $main->has_outline ) {
 			$main->outline->clear;
 			$main->outline->force_next(1);
 		}

@@ -81,7 +81,7 @@ sub _get_outline {
 				if ( not $cur_pkg->{name} ) {
 					$cur_pkg->{name} = 'main';
 				}
-				push @{$outline}, $cur_pkg;
+				push @$outline, $cur_pkg;
 				$cur_pkg = {};
 			}
 			$not_first_one   = 1;
