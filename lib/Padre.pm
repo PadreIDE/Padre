@@ -55,7 +55,6 @@ use Class::Autouse qw{
 	Padre::Document
 	Padre::Document::Perl
 	Padre::Document::POD
-	Padre::PPI
 	Padre::Project
 	Padre::Project::Null
 	Padre::Project::Perl

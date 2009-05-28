@@ -64,7 +64,9 @@ sub process_ppi {
 	my $ppi      = shift or return;
 	my $location = $self->{location};
 
-	$ppi->flush_locations();    # TODO: PPI bug? This shouldn't be necessary!
+	# TODO: PPI bug? This shouldn't be necessary!
+	require Padre::PPI;
+	$ppi->flush_locations;
 	my $token = Padre::PPI::find_token_at_location( $ppi, $location );
 	if ( not $token ) {
 		$self->{error} = "no token";
