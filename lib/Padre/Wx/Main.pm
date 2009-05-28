@@ -22,19 +22,19 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd            ();
-use Carp           ();
-use Data::Dumper   ();
-use File::Spec     ();
-use File::HomeDir  ();
-use File::Basename ();
-use File::Temp     ();
-use List::Util     ();
-use Scalar::Util   ();
-use Params::Util qw{_INSTANCE};
-use Padre::Util   ();
-use Padre::Locale ();
-use Padre::Current qw{_CURRENT};
+use Cwd                       ();
+use Carp                      ();
+use Data::Dumper              ();
+use File::Spec                ();
+use File::HomeDir             ();
+use File::Basename            ();
+use File::Temp                ();
+use List::Util                ();
+use Scalar::Util              ();
+use Params::Util              qw{_INSTANCE};
+use Padre::Util               ();
+use Padre::Locale             ();
+use Padre::Current            qw{_CURRENT};
 use Padre::Document           ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
@@ -44,8 +44,8 @@ use Padre::Wx::Bottom         ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
 use Padre::Wx::Syntax         ();
-#use Padre::Wx::Outline        ();
-use Padre::Wx::Directory      ();
+# use Padre::Wx::Outline       ();
+# use Padre::Wx::Directory     ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
@@ -61,15 +61,17 @@ use constant SECONDS => 1000;
 
 #####################################################################
 
+=pod
+
 =head1 PUBLIC API
 
 =head2 Constructor
 
 There's only one constructor for this class.
 
-=over 4
+=head3 new
 
-=item * my $main = Padre::Wx::Main->new( $ide );
+    my $main = Padre::Wx::Main->new( $ide );
 
 Create and return a new Padre main window. One should pass a C<Padre>
 object as argument, to get a reference to the Padre application.
@@ -192,7 +194,7 @@ sub new {
 	# Creat the various tools that will live in the panes
 	$self->{functions} = Padre::Wx::FunctionList->new($self);
 	# $self->{outline}   = Padre::Wx::Outline->new($self);
-	$self->{directory} = Padre::Wx::Directory->new($self);
+	# $self->{directory} = Padre::Wx::Directory->new($self);
 	$self->{output}    = Padre::Wx::Output->new($self);
 	$self->{syntax}    = Padre::Wx::Syntax->new($self);
 	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
@@ -259,12 +261,9 @@ sub new {
 	return $self;
 }
 
-=back
-
-=cut
-
-
 #####################################################################
+
+=pod
 
 =head2 Accessors
 
@@ -326,7 +325,8 @@ Accessors that may not belong to this class:
 
 use Class::XSAccessor
 	predicates => {
-		has_outline => 'outline',
+		has_outline   => 'outline',
+		has_directory => 'directory',
 	},
 	getters => {
 		# GUI Elements
@@ -338,7 +338,8 @@ use Class::XSAccessor
 		notebook  => 'notebook',
 		right     => 'right',
 		functions => 'functions',
-		directory => 'directory',
+		# outline   => 'outline',
+		# directory => 'directory',
 		bottom    => 'bottom',
 		output    => 'output',
 		syntax    => 'syntax',
@@ -360,10 +361,19 @@ sub outline {
 	};
 }
 
+sub directory {
+	$_[0]->{directory} or
+	$_[0]->{directory} = do {
+		require Padre::Wx::Directory;
+		Padre::Wx::Directory->new($_[0]);
+	};
+}
+
 #####################################################################
 
-=head2 Public Methods
+=pod
 
+=head2 Public Methods
 
 =over 4
 
@@ -382,9 +392,11 @@ sub load_files {
 
 	# explicit session on command line takes precedence
 	if ( defined $ide->opts->{session} ) {
-
 		# try to find the wanted session...
-		my ($session) = Padre::DB::Session->select( 'where name = ?', $ide->opts->{session} );
+		my ($session) = Padre::DB::Session->select(
+			'where name = ?',
+			$ide->opts->{session},
+		);
 
 		# ... and open it.
 		if ( defined $session ) {
@@ -1202,8 +1214,7 @@ the panel.
 
 
 sub show_directory {
-	my $self      = shift;
-	my $directory = $self->directory;
+	my $self = shift;
 
 	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	unless ( $on == $self->menu->view->{directory}->IsChecked ) {
@@ -1212,15 +1223,12 @@ sub show_directory {
 	$self->config->set( main_directory => $on );
 	$self->config->write;
 
-	if ($on) {
+	if ( $on ) {
+		my $directory = $self->directory;
 		$self->right->show($directory);
 		$directory->update_gui;
-
-		#$directory->start unless $directory->running;
-	} else {
-		$self->right->hide($directory);
-
-		#$directory->stop if $directory->running;
+	} elsif ( $self->has_directory ) {
+		$self->right->hide($self->directory);
 	}
 
 	$self->aui->Update;
@@ -2719,7 +2727,9 @@ sub close {
 	if ( $self->has_outline ) {
 		$self->outline->clear;
 	}
-	$self->directory->clear;
+	if ( $self->has_directory ) {
+		$self->directory->clear;
+	}
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh( $self->current );
@@ -3342,6 +3352,7 @@ sub find_id_of_editor {
 	return;
 }
 
+=pod
 
 =item * $main->run_in_padre;
 
@@ -3386,10 +3397,11 @@ sub run_in_padre {
 
 ######################################################################
 
+=pod
+
 =head2 STC related methods
 
 Those methods are needed to have a smooth STC experience.
-
 
 =over 4
 
@@ -3419,6 +3431,7 @@ sub on_stc_style_needed {
 
 }
 
+=pod
 
 =item * $main->on_stc_update_ui;
 
@@ -3440,21 +3453,23 @@ sub on_stc_update_ui {
 	$editor->highlight_braces;
 	$editor->show_calltip;
 
-	# avoid refreshing the subs as that takes a lot of time
+	# Avoid refreshing the subs as that takes a lot of time
 	# TODO maybe we should refresh it on every 20s hit or so
-	#$self->refresh_menu;
+	# $self->refresh_menu;
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 
-	#$self->refresh_functions;
-	#$self->refresh_syntaxcheck;
+	# $self->refresh_functions;
+	# $self->refresh_syntaxcheck;
 
-	# TODO move this to a more appropriate place (when switching between buffers?)
-	if ( my $directory = $self->directory ) {
+	# TODO Move this to a more appropriate place
+	# (when switching between buffers?)
+	if ( $self->has_directory ) {
 		if ( $self->menu->view->{directory}->IsChecked ) {
-			$directory->update_gui;
+			$self->directory->update_gui;
 		}
 	}
+
 	return;
 }
 
