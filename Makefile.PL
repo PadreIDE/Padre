@@ -42,6 +42,7 @@ requires       'File::Glob::Windows'      => '0.1.3' if win32;
 requires       'File::Copy::Recursive'    => '0.37';
 requires       'File::Find::Rule'         => '0.30';
 requires       'File::HomeDir'            => '0.84';
+requires       'File::Path'               => '2.07';
 requires       'File::ShareDir'           => '1.00';
 requires       'File::ShareDir::PAR'      => '0.04';
 requires       'File::Spec'               => '3.2701';
