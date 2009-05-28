@@ -297,7 +297,7 @@ sub rebless {
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
 	my $class = $MIME_CLASS{ $self->get_mimetype } || __PACKAGE__;
-	Padre::Util::debug("Reblessing to mimetype: '$subclass'");
+	Padre::Util::debug("Reblessing to mimetype: '$class'");
 	if ( $class ) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
