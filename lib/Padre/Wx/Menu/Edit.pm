@@ -5,7 +5,7 @@ package Padre::Wx::Menu::Edit;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current qw{_CURRENT};
+use Padre::Current  qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -409,36 +409,35 @@ sub refresh {
 	my $current  = _CURRENT(@_);
 	my $editor   = $current->editor || 0;
 	my $text     = $current->text;
+	my $document = $current->document;
+	my $hasdoc   = $document ? 1 : 0;
+	my $newline  = $hasdoc ? $document->get_newline_type : '';
 
 	# Handle the simple cases
-	my $doc = $current->document ? 1 : 0;
-	$self->{goto}->Enable($doc);
-	$self->{autocomp}->Enable($doc);
-	$self->{brace_match}->Enable($doc);
-	$self->{join_lines}->Enable($doc);
-	$self->{snippets}->Enable($doc);
-	$self->{comment_out}->Enable($doc);
-	$self->{uncomment}->Enable($doc);
-	$self->{diff}->Enable($doc);
-	$self->{insert_from_file}->Enable($doc);
-	$self->{case_upper}->Enable($doc);
-	$self->{case_lower}->Enable($doc);
-
-	my $newline  = $doc ? $current->document->get_newline_type : '';
-
+	$self->{goto}->Enable($hasdoc);
+	$self->{autocomp}->Enable($hasdoc);
+	$self->{brace_match}->Enable($hasdoc);
+	$self->{join_lines}->Enable($hasdoc);
+	$self->{snippets}->Enable($hasdoc);
+	$self->{comment_out}->Enable($hasdoc);
+	$self->{uncomment}->Enable($hasdoc);
+	$self->{diff}->Enable($hasdoc);
+	$self->{insert_from_file}->Enable($hasdoc);
+	$self->{case_upper}->Enable($hasdoc);
+	$self->{case_lower}->Enable($hasdoc);
 	unless ( $newline eq 'WIN' ) {
-		$self->{convert_nl_windows}->Enable($doc);
+		$self->{convert_nl_windows}->Enable($hasdoc);
 	}
 	unless ( $newline eq 'UNIX' ) {
-		$self->{convert_nl_unix}->Enable($doc);
+		$self->{convert_nl_unix}->Enable($hasdoc);
 	}
 	unless ( $newline eq 'MAC' ) {
-		$self->{convert_nl_mac}->Enable($doc);
+		$self->{convert_nl_mac}->Enable($hasdoc);
 	}
-	$self->{tabs_to_spaces}->Enable($doc);
-	$self->{spaces_to_tabs}->Enable($doc);
-	$self->{delete_leading}->Enable($doc);
-	$self->{delete_trailing}->Enable($doc);
+	$self->{tabs_to_spaces}->Enable($hasdoc);
+	$self->{spaces_to_tabs}->Enable($hasdoc);
+	$self->{delete_leading}->Enable($hasdoc);
+	$self->{delete_trailing}->Enable($hasdoc);
 
 	# Handle the complex cases
 	my $selection = !!( defined $text and $text ne '' );
