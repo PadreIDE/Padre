@@ -27,18 +27,6 @@ our %EXPORT_TAGS = (
 	types  => \@types,
 );
 
-# Files and Directories
-our $PADRE_CONFIG_DIR    = _find_padre_config_dir();
-our $PADRE_PLUGIN_DIR    = File::Spec->catdir( $PADRE_CONFIG_DIR, 'plugins' );
-our $PADRE_PLUGIN_LIBDIR = File::Spec->catdir( $PADRE_PLUGIN_DIR, 'Padre', 'Plugin' );
-our $CONFIG_FILE_USER    = File::Spec->catfile( $PADRE_CONFIG_DIR, 'config.yml' );
-our $CONFIG_FILE_HOST    = File::Spec->catfile( $PADRE_CONFIG_DIR, 'config.db' );
-
-unless ( -e $PADRE_PLUGIN_LIBDIR ) {
-	File::Path::mkpath( $PADRE_PLUGIN_LIBDIR )
-		or die "Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!";
-}
-
 # Setting Types (based on firefox)
 our $BOOLEAN = 0;
 our $POSINT  = 1;
@@ -51,66 +39,56 @@ our $HOST    = 0;
 our $HUMAN   = 1;
 our $PROJECT = 2;
 
-# -- private subs
+# Files and Directories
+our $PADRE_CONFIG_DIR = File::Spec->rel2abs(
+	File::Spec->catdir(
+		defined($ENV{PADRE_HOME})
+			? ( $ENV{PADRE_HOME}, '.padre' )
+			: (
+				File::HomeDir->my_data,
+				File::Spec->isa('File::Spec::Win32')
+					? qw{ Perl Padre }
+					: qw{ .padre }
+			)
+	)
+);
 
-#
-# my $dir = _find_padre_config_dir();
-#
-# find and return the config directory where padre should store its
-# preferences & settings. create it if needed. no params.
-#
-sub _find_padre_config_dir {
+our $PADRE_PLUGIN_DIR    = File::Spec->catdir(  $PADRE_CONFIG_DIR, 'plugins' );
+our $PADRE_PLUGIN_LIBDIR = File::Spec->catdir(  $PADRE_PLUGIN_DIR, 'Padre', 'Plugin' );
+our $CONFIG_FILE_USER    = File::Spec->catfile( $PADRE_CONFIG_DIR, 'config.yml' );
+our $CONFIG_FILE_HOST    = File::Spec->catfile( $PADRE_CONFIG_DIR, 'config.db' );
 
-	# define config dir
-	my @subdirs;
-	if ( defined $ENV{PADRE_HOME} ) {
-
-		# PADRE_HOME env var set, always use unix style.
-		@subdirs = ( $ENV{PADRE_HOME}, '.padre' );
-	} else {
-
-		# using data dir as defined by the os.
-		@subdirs = ( File::HomeDir->my_data );
-		push @subdirs, File::Spec->isa('File::Spec::Win32')
-			? qw{ Perl Padre }    # on windows use the traditional vendor/product format
-			: qw{ .padre };       # TODO - is mac correctly covered?
-	}
-	my $confdir = File::Spec->rel2abs( File::Spec->catdir(@subdirs) );
-
-	# check if directory exists, create it otherwise
-	unless ( -e $confdir ) {
-		File::Path::mkpath($confdir)
-			or die "Cannot create config dir '$confdir': $!";
-	}
-
-	return $confdir;
+# Check and create the directories that need to exist
+unless ( -e $PADRE_CONFIG_DIR ) {
+	File::Path::mkpath($PADRE_CONFIG_DIR)
+	or die("Cannot create config dir '$PADRE_CONFIG_DIR': $!");
+}
+unless ( -e $PADRE_PLUGIN_LIBDIR ) {
+	File::Path::mkpath( $PADRE_PLUGIN_LIBDIR )
+	or die("Cannot create plugins dir '$PADRE_PLUGIN_LIBDIR': $!");
 }
 
 1;
 
 __END__
 
+=pod
+
 =head1 NAME
 
 Padre::Config::Constants - constants used by config subsystems
 
-
-
 =head1 SYNOPSIS
 
-	use Padre::Config::Constants qw{ :all };
-	[...]
-	# do stuff with exported constants
-
-
+    use Padre::Config::Constants qw{ :all };
+    [...]
+    # do stuff with exported constants
 
 =head1 DESCRIPTION
 
 Padre uses various configuration subsystems (see C<Padre::Config> for more
 information). Those systems needs to somehow agree on some basic stuff, which
 is defined in this module.
-
-
 
 =head1 PUBLIC API
 
@@ -119,8 +97,7 @@ is defined in this module.
 This module exports nothing by default. However, some constants can
 be imported with:
 
-	use Padre::Config::Constants qw{ $FOO $BAR };
-
+    use Padre::Config::Constants qw{ $FOO $BAR };
 
 The list of available constants are:
 
@@ -134,21 +111,17 @@ Settings types.
 
 Settings stores.
 
-
 =item * $CONFIG_FILE_HOST
 
 DB configuration file storing host settings.
-
 
 =item * $CONFIG_FILE_USER
 
 YAML configuration file storing user settings.
 
-
 =item * $PADRE_CONFIG_DIR
 
 Private Padre configuration directory Padre, used to store stuff.
-
 
 =item * $PADRE_PLUGIN_DIR
 
@@ -161,14 +134,12 @@ depending on your platform) so that perl can load a C<Padre::Plugin::> plugin.
 
 =back
 
-
-
 =head2 Available group of constants
 
 Since lots of constants are somehow related, this module defines some tags
 to import them all at once, with eg:
 
-	use Padre::Config::Constants qw{ :dirs };
+    use Padre::Config::Constants qw{ :dirs };
 
 The tags available are:
 
@@ -195,8 +166,6 @@ Imports C<$BOOLEAN>, C<$POSINT>, C<$INTEGER>, C<$ASCII> and C<$PATH>.
 Imports C<$HOST>, C<$HUMAN> and C<$PROJECT>.
 
 =back
-
-
 
 =head1 COPYRIGHT & LICENSE
 
