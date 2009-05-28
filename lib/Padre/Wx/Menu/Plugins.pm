@@ -41,14 +41,14 @@ sub new {
 		},
 	);
 
-	# TODO: should be replaced by  a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
+	# TODO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
 	# better yet, by a window that also allows the installation of all the plugins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext("Plugin List (CPAN)") ),
 		sub {
-			Padre::Wx::LaunchDefaultBrowser(
+			Padre::Wx::launch_browser(
 				'http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist'
 			);
 		},

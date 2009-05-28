@@ -20,6 +20,10 @@ my $tests;
 plan tests => $tests+1;
 
 use Padre::Document;
+use Padre::Document::Perl;
+
+# Fake that Perl 6 support is enabled
+$Padre::Document::MIME_CLASS{'application/x-perl6'} = 'Padre::Document::Perl';
 
 my $editor_1 = t::lib::Padre::Editor->new;
 my $doc_1 = Padre::Document->new;

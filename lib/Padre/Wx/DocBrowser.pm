@@ -133,7 +133,7 @@ sub OnLinkClicked {
 	if ( $self->provider->accept($uri->scheme) ) {
 		$self->help($uri);
 	} else {
-		Padre::Wx::LaunchDefaultBrowser($uri);
+		Padre::Wx::launch_browser($uri);
 	}
 }
 

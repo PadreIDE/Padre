@@ -98,7 +98,7 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext('Visit the PerlMonks') ),
 		sub {
-			Padre::Wx::LaunchDefaultBrowser('http://perlmonks.org/');
+			Padre::Wx::launch_browser('http://perlmonks.org/');
 		},
 	);
 
@@ -108,14 +108,14 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("Report a New &Bug") ),
 		sub {
-			Padre::Wx::LaunchDefaultBrowser('http://padre.perlide.org/wiki/Tickets');
+			Padre::Wx::launch_browser('http://padre.perlide.org/wiki/Tickets');
 		},
 	);
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext("View All &Open Bugs") ),
 		sub {
-			Padre::Wx::LaunchDefaultBrowser('http://padre.perlide.org/report/1');
+			Padre::Wx::launch_browser('http://padre.perlide.org/report/1');
 		},
 	);
 
