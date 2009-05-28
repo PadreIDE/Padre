@@ -64,6 +64,23 @@ sub LaunchDefaultBrowser {
 	)->schedule;
 }
 
+# Launch a Mibbit.com "Live Support" window
+sub launch_irc {
+	my $server  = shift;
+	my $channel = shift;
+
+	# Generate the (long) chat URL
+	my $url = 'http://widget.mibbit.com/?settings=1c154d53c72ad8cfdfab3caa051b30a2';
+	$url   .= '&server='     . $server;
+	$url   .= '&channel=%23' . $channel;
+	$url   .= '&noServerTab=false&noServerNotices=true&noServerMotd=true&autoConnect=true';
+
+	# Spawn a browser to show it
+	LaunchDefaultBrowser($url);
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

@@ -63,8 +63,37 @@ sub new {
 		},
 	);
 
+	# Live Support
+	$self->AppendSeparator;
+
+	$self->{live} = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Live Support"),
+		$self->{live}
+	);
+
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{live}->Append( -1, Wx::gettext('Padre Support') ),
+		sub {
+			Padre::Wx::launch_irc( 'irc.perl.org' => 'padre' );
+		},
+	);
+
+	$self->{live}->AppendSeparator;
+
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{live}->Append( -1, Wx::gettext('Perl Help (English)') ),
+		sub {
+			Padre::Wx::launch_irc( 'irc.freenode.net' => 'perl' );
+		},
+	);
+
 	# Add interesting and helpful websites
 	$self->AppendSeparator;
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext('Visit the PerlMonks') ),
