@@ -1,5 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.36 to be released
     DocBrowser::POD resolver is now Pod::PerlDoc with benefits
     DocBrowser attempts to use current padre locale as language hint
     DocBrowser reuses tabs for same/similar documents (#323) (Andrew Bramble)
@@ -11,7 +12,11 @@ Changes for Perl Application Development and Refactoring Environment
     Reorganized and differentiated Find and Replace dialogs (#348) (THEREK)
     Add a set of filename wildcards to filter directory listing in Open File dialog (#343) (THEREK)
     Add Chinese (Traditional) translation (BLUET)
-
+    Show Perl menu on a Project as well as Document basis (ADAMK)
+    Disable all Perl 6 code unless the Perl 6 plugin is enabled (ADAMK)
+    Reshuffle and relabel of some menus to improve asthetics (ADAMK)
+    Fix no_refresh during multi-file operations (ADAMK)
+    Added mibbit.com "Live Support" entries to the Help menu (ADAMK)
 
 v0.35 2009.05.08
 
