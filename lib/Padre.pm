@@ -105,17 +105,16 @@ sub new {
 
 	# Connect to the server if we are running in single instance mode
 	if ( $self->config->main_singleinstance ) {
-		require IO::Socket;
-
 		# This blocks for about 1 second
+		require IO::Socket;
 		my $socket = IO::Socket::INET->new(
 			PeerAddr => '127.0.0.1',
 			PeerPort => 4444,
 			Proto    => 'tcp',
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
-		if ($socket) {
-			foreach my $file (@ARGV) {
+		if ( $socket ) {
+			foreach my $file ( @ARGV ) {
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}
@@ -124,6 +123,9 @@ sub new {
 			return 0;
 		}
 	}
+
+	# Load a few more bits and pieces now we know that we'll need them
+	require Padre::Project;
 
 	# Create the plugin manager
 	require Padre::PluginManager;
@@ -145,11 +147,14 @@ sub new {
 sub run {
 	my $self = shift;
 
+	# Clean arguments
+	$self->{ARGV} = [ map {
+		File::Spec->rel2abs($_, $self->{original_cwd})
+	} @ARGV ];
+
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
 	$self->plugin_manager->load_plugins;
-
-	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
 
 	# Move our current dir to the user's documents directory by default
 	my $documents = File::HomeDir->my_documents;
@@ -263,7 +268,6 @@ of existing and planned features.
 The application maintains its configuration information in a
 directory called F<.padre>.
 
-
 =head2 Files operations
 
 B<File/New> creates a new empty file. By default Padre assumes this is a perl script.
@@ -314,7 +318,6 @@ B<File/Doc Stats> - just random statistics about the current document.
 
 B<File/Quit> - Exits Padre.
 
-
 =head2 Simple editing
 
 The simple editing features (should) provide the expected behavior
@@ -332,7 +335,6 @@ B<Edit/Cut> Ctrl-X
 
 B<Edit/Paste> Ctrl-V
 
-
 (TODO What is Ctrl-D ?, duplicate the current line?)
 
 =head2 Mouse right click
@@ -340,7 +342,6 @@ B<Edit/Paste> Ctrl-V
 Click on the right button of the mouse brings up a context sensitive menu.
 It provides the basic editing functions and will provide other context
 sensitive options.
-
 
 =head2 Projects (TODO)
 
@@ -352,7 +353,6 @@ as a CPAN module. This does not mean that your project needs to end
 up on CPAN of course. But if your projects directory structure
 follows that of the modules on CPAN, Padre will be automatically
 recognize it.
-
 
 =head2 Module::Starter
 
@@ -422,7 +422,6 @@ bookmarks.
   Ctr-TAB        Next Pane
   Ctr-Shift-TAB  Previous Pane
   Alt-S          Jump to list of subs window
-
 
   Ctr-M Ctr-Shift-M  comment/uncomment selected lines of code
 
