@@ -407,13 +407,11 @@ sub new {
 sub refresh {
 	my $self     = shift;
 	my $current  = _CURRENT(@_);
-	my $document = $current->document;
 	my $editor   = $current->editor || 0;
 	my $text     = $current->text;
-	my $newline  = $document->get_newline_type;
 
 	# Handle the simple cases
-	my $doc = $document ? 1 : 0;
+	my $doc = $current->document ? 1 : 0;
 	$self->{goto}->Enable($doc);
 	$self->{autocomp}->Enable($doc);
 	$self->{brace_match}->Enable($doc);
@@ -425,6 +423,9 @@ sub refresh {
 	$self->{insert_from_file}->Enable($doc);
 	$self->{case_upper}->Enable($doc);
 	$self->{case_lower}->Enable($doc);
+
+	my $newline  = $doc ? $current->document->get_newline_type : '';
+
 	unless ( $newline eq 'WIN' ) {
 		$self->{convert_nl_windows}->Enable($doc);
 	}
