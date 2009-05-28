@@ -843,7 +843,7 @@ sub on_mouse_motion {
 		and
 		$mousePos->x > ($firstPointInLine->x - $offset2)
 	) {
-		unless ( $self->MarketGet($line) ) {
+		unless ( $self->MarkerGet($line) ) {
 			$self->CallTipCancel;
 			return;
 		}
