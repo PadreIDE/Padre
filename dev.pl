@@ -11,7 +11,7 @@ use Config;
 use FindBin;
 use File::Which    ();
 use File::Basename ();
-use Probe::Perl;
+use Probe::Perl    ();
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
 
@@ -61,6 +61,7 @@ if ( grep { $_ eq '-a' } @ARGV ) {
 	@ARGV = grep { $_ ne '-a' } @ARGV;
 	require Class::Autouse;
 	Class::Autouse->import( ':devel' );
+}
 if ( grep { $_ eq '-d' } @ARGV ) {
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-d';
