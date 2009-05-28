@@ -231,6 +231,50 @@ sub new {
 	);
 	$self->AppendSeparator;
 
+	# Conversions and Transforms
+	$self->{convert_nl} = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Convert Encoding"),
+		$self->{convert_nl}
+	);
+
+	$self->{convert_nl_windows} = $self->{convert_nl}->Append(
+		-1,
+		Wx::gettext("EOL to Windows")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{convert_nl_windows},
+		sub {
+			$_[0]->convert_to("WIN");
+		},
+	);
+
+	$self->{convert_nl_unix} = $self->{convert_nl}->Append(
+		-1,
+		Wx::gettext("EOL to Unix")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{convert_nl_unix},
+		sub {
+			$_[0]->convert_to("UNIX");
+		},
+	);
+
+	$self->{convert_nl_mac} = $self->{convert_nl}->Append(
+		-1,
+		Wx::gettext("EOL to Mac Classic")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{convert_nl_mac},
+		sub {
+			$_[0]->convert_to("MAC");
+		},
+	);
+
 	# Tabs And Spaces
 	$self->{tabs} = Wx::Menu->new;
 	$self->Append(
@@ -366,6 +410,7 @@ sub refresh {
 	my $document = $current->document;
 	my $editor   = $current->editor || 0;
 	my $text     = $current->text;
+	my $newline  = $document->get_newline_type;
 
 	# Handle the simple cases
 	my $doc = $document ? 1 : 0;
@@ -380,6 +425,15 @@ sub refresh {
 	$self->{insert_from_file}->Enable($doc);
 	$self->{case_upper}->Enable($doc);
 	$self->{case_lower}->Enable($doc);
+	unless ( $newline eq 'WIN' ) {
+		$self->{convert_nl_windows}->Enable($doc);
+	}
+	unless ( $newline eq 'UNIX' ) {
+		$self->{convert_nl_unix}->Enable($doc);
+	}
+	unless ( $newline eq 'MAC' ) {
+		$self->{convert_nl_mac}->Enable($doc);
+	}
 	$self->{tabs_to_spaces}->Enable($doc);
 	$self->{spaces_to_tabs}->Enable($doc);
 	$self->{delete_leading}->Enable($doc);

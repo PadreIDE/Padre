@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  qw{_CURRENT};
 
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Menu';
@@ -112,27 +112,6 @@ sub new {
 		},
 	);
 
-	$self->{open_selection} = $self->Append(
-		-1,
-		Wx::gettext("Open Selection\tCtrl-Shift-O")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("Open Session...\tCtrl-Alt-O") ),
-		sub {
-			require Padre::Wx::Dialog::SessionManager;
-			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
-		},
-	);
-
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{open_selection},
-		sub {
-			$_[0]->on_open_selection;
-		},
-	);
-
 	$self->{close} = $self->Append(
 		Wx::wxID_CLOSE,
 		Wx::gettext("&Close\tCtrl-W"),
@@ -215,6 +194,31 @@ sub new {
 			$_[0]->on_save_all;
 		},
 	);
+
+	$self->AppendSeparator;
+
+	# Specialised open and close functions
+	$self->{open_selection} = $self->Append(
+		-1,
+		Wx::gettext("Open Selection\tCtrl-Shift-O")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{open_selection},
+		sub {
+			$_[0]->on_open_selection;
+		},
+	);
+
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append( -1, Wx::gettext("Open Session...\tCtrl-Alt-O") ),
+		sub {
+			require Padre::Wx::Dialog::SessionManager;
+			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
+		},
+	);
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext("Save Session...\tCtrl-Alt-S") ),
@@ -247,51 +251,6 @@ sub new {
 		},
 	);
 
-	$self->AppendSeparator;
-
-	# Conversions and Transforms
-	$self->{convert_nl} = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext("Convert..."),
-		$self->{convert_nl}
-	);
-
-	$self->{convert_nl_windows} = $self->{convert_nl}->Append(
-		-1,
-		Wx::gettext("EOL to Windows")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_nl_windows},
-		sub {
-			$_[0]->convert_to("WIN");
-		},
-	);
-
-	$self->{convert_nl_unix} = $self->{convert_nl}->Append(
-		-1,
-		Wx::gettext("EOL to Unix")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_nl_unix},
-		sub {
-			$_[0]->convert_to("UNIX");
-		},
-	);
-
-	$self->{convert_nl_mac} = $self->{convert_nl}->Append(
-		-1,
-		Wx::gettext("EOL to Mac Classic")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_nl_mac},
-		sub {
-			$_[0]->convert_to("MAC");
-		},
-	);
 
 	$self->AppendSeparator;
 
@@ -374,9 +333,6 @@ sub refresh {
 	$self->{save_as}->Enable($doc);
 	$self->{save_all}->Enable($doc);
 	$self->{print}->Enable($doc);
-	$self->{convert_nl_windows}->Enable($doc);
-	$self->{convert_nl_unix}->Enable($doc);
-	$self->{convert_nl_mac}->Enable($doc);
 	$self->{docstat}->Enable($doc);
 
 	return 1;
