@@ -3,8 +3,8 @@ package Padre::Wx::Menubar;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
-use Padre::Current qw{_CURRENT};
+use Params::Util             qw{_INSTANCE};
+use Padre::Current           qw{_CURRENT};
 use Padre::Util              ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::File    ();
@@ -23,8 +23,8 @@ our $VERSION = '0.35';
 # Construction, Setup, and Accessors
 
 use Class::XSAccessor getters => {
-	wx   => 'wx',
-	main => 'main',
+	wx           => 'wx',
+	main         => 'main',
 
 	# Don't add accessors to here until they have been
 	# upgraded to be fully encapsulated classes.
@@ -78,16 +78,8 @@ sub new {
 	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window") );
 	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
 
-	Wx::Event::EVT_MENU_OPEN(
-		$main,
-		sub {
-			Padre->ide->wx->main->menu->refresh();
-		}
-	);
-
 	my $config = Padre->ide->config;
 	if ( $config->experimental ) {
-
 		# Create the Experimental menu
 		# All the crap that doesn't work, have a home,
 		# or should never be seen be real users goes here.
@@ -97,6 +89,13 @@ sub new {
 		$self->{default}++;
 	}
 
+	Wx::Event::EVT_MENU_OPEN(
+		$main,
+		sub {
+			$main->refresh;
+		}
+	);
+
 	return $self;
 }
 
@@ -104,20 +103,20 @@ sub new {
 # Reflowing the Menu
 
 sub refresh {
-	my $self    = shift;
-	my $plugins = shift;
-
+	my $self     = shift;
+	my $plugins  = shift;
 	my $current  = _CURRENT(@_);
 	my $menu     = $self->wx->GetMenuCount ne $self->{default};
-	my $document = !!_INSTANCE(
-		$current->document,
-		'Padre::Document::Perl'
+	my $perl     = !! (
+		_INSTANCE($current->document, 'Padre::Document::Perl')
+		or
+		_INSTANCE($current->project, 'Padre::Project::Perl')
 	);
 
 	# Add/Remove the Perl menu
-	if ( $document and not $menu ) {
+	if ( $perl and not $menu ) {
 		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
-	} elsif ( $menu and not $document ) {
+	} elsif ( $menu and not $perl ) {
 		$self->wx->Remove(4);
 	}
 
@@ -127,11 +126,16 @@ sub refresh {
 	$self->search->refresh($current);
 	$self->view->refresh($current);
 	$self->run->refresh($current);
-	$self->perl->refresh($current);
+
+	# Don't do to the effort of refreshing the Perl menu
+	# unless we're actually showing it.
+	if ( $perl ) {
+		$self->perl->refresh($current);
+	}
 
 	# plugin menu requires special flag as it was leaking memory
 	# TODO eliminate the memory leak
-	if ($plugins) {
+	if ( $plugins ) {
 		$self->plugins->refresh($current);
 	}
 	$self->window->refresh($current);
@@ -149,15 +153,16 @@ sub refresh_top {
 
 	my $current  = _CURRENT(@_);
 	my $menu     = $self->wx->GetMenuCount ne $self->{default};
-	my $document = !!_INSTANCE(
-		$current->document,
-		'Padre::Document::Perl'
+	my $perl     = !! (
+		_INSTANCE($current->document, 'Padre::Document::Perl')
+		or
+		_INSTANCE($current->project, 'Padre::Project::Perl')
 	);
 
 	# Add/Remove the Perl menu
-	if ( $document and not $menu ) {
+	if ( $perl and not $menu ) {
 		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
-	} elsif ( $menu and not $document ) {
+	} elsif ( $menu and not $perl ) {
 		$self->wx->Remove(4);
 	}
 

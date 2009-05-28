@@ -2111,8 +2111,10 @@ sub setup_editors {
 	my @files = @_;
 	Padre::Util::debug("setup_editors @files");
 	SCOPE: {
+		# Lock both Perl and Wx-level updates
+		local $self->{_no_refresh} = 1;
 		my $guard = $self->freezer;
-
+ 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
 		# subtle interface DWIM trick, but it's one that
@@ -2123,8 +2125,8 @@ sub setup_editors {
 			}
 		}
 
-		if (@files) {
-			foreach my $f (@files) {
+		if ( @files ) {
+			foreach my $f ( @files ) {
 				$self->setup_editor($f);
 			}
 		} else {
@@ -2394,6 +2396,7 @@ sub on_open {
 	if ( $filename ) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
+
 	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
 	# "It must be noted that wildcard support in the native Motif file dialog is quite
 	# limited: only one alternative is supported, and it is displayed without
@@ -2411,7 +2414,7 @@ sub on_open {
 	);
 	$wildcards = Padre::Util::WIN32
 		? Wx::gettext("All Files") . "|*.*|" . $wildcards
-		: Wx::gettext("All Files") . "|*|" . $wildcards;
+		: Wx::gettext("All Files") . "|*|"   . $wildcards;
 	my $dialog = Wx::FileDialog->new(
 		$self,
 		Wx::gettext("Open File"),
@@ -2640,7 +2643,6 @@ sub on_close {
 	$self->close;
 	$self->refresh;
 }
-
 
 =item * my $success = $main->close( $id );
 
