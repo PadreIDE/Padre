@@ -3664,6 +3664,7 @@ sub on_delete_leading_space {
 	$editor->ReplaceSelection($code);
 }
 
+=pod
 
 =item * $main->timer_check_overwrite;
 
@@ -3702,6 +3703,7 @@ sub timer_check_overwrite {
 	return;
 }
 
+=pod
 
 =item * $main->on_last_visited_pane;
 
@@ -3711,12 +3713,12 @@ Put focus on tab visited before the current one. No return value.
 
 sub on_last_visited_pane {
 	my ( $self, $event ) = @_;
-
-	if ( @{ $self->{page_history} } >= 2 ) {
-		@{ $self->{page_history} }[ -1, -2 ] = @{ $_[0]->{page_history} }[ -2, -1 ];
+	my $history = $self->{page_history};
+	if ( @$history >= 2 ) {
+		@$history[ -1, -2 ] = @$history[ -2, -1 ];
 		foreach my $i ( $self->pageids ) {
-			my $editor = $_[0]->notebook->GetPage($i);
-			if ( Scalar::Util::refaddr($editor) eq Scalar::Util::refaddr( $_[0]->{page_history}->[-1] ) ) {
+			my $editor   = $_[0]->notebook->GetPage($i);
+			if ( Scalar::Util::refaddr($editor) eq $history->[-1] ) {
 				$self->notebook->SetSelection($i);
 				last;
 			}
@@ -3728,6 +3730,7 @@ sub on_last_visited_pane {
 	}
 }
 
+=pod
 
 =item * $main->on_new_from_template( $extension );
 

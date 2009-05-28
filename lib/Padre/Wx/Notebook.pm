@@ -82,16 +82,18 @@ sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $editor = $main->current->editor;
-	if ($editor) {
+	if ( $editor ) {
 		my $history = $main->{page_history};
-		@$history = grep { Scalar::Util::refaddr($_) ne Scalar::Util::refaddr($editor) } @$history;
-		push @$history, $editor;
+		my $current = Scalar::Util::refaddr($editor);
+		@$history = grep { $_ != $current } @$history;
+		push @$history, $current;
 
 		# Update indentation in case auto-update is on
-		# TODO: encapsulation?
+		# TODO: Violates encapsulation
 		$editor->{Document}->set_indentation_style;
 
 		# make sure the outline is refreshed for the new doc
+		# TODO: Violates encapsulation
 		if ( defined $main->outline ) {
 			$main->outline->clear;
 			$main->outline->force_next(1);
