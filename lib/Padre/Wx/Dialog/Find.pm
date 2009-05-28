@@ -583,6 +583,7 @@ sub get_data_from_dialog {
 	$config->set( find_regex   => $data->{find_regex}   ? 1 : 0 );
 	$config->set( find_reverse => $data->{find_reverse} ? 1 : 0 );
 	$config->set( find_first   => $data->{find_first}   ? 1 : 0 );
+	$config->write;
 
 	my $search  = $data->{_find_choice_};
 	my $replace = $data->{_replace_choice_};
