@@ -2,9 +2,9 @@ package Padre::Wx::Dialog::Bookmarks;
 
 use strict;
 use warnings;
-use Padre::DB ();
-use Padre::Wx ();
-use Padre::Wx::Dialog;
+use Padre::DB         ();
+use Padre::Wx         ();
+use Padre::Wx::Dialog ();
 
 our $VERSION = '0.35';
 
@@ -21,7 +21,7 @@ sub get_layout {
 	my $shortcuts = shift;
 
 	my @layout;
-	if ($text) {
+	if ( $text ) {
 		push @layout, [ [ 'Wx::TextCtrl', 'entry', $text ] ];
 	}
 
@@ -37,7 +37,7 @@ sub get_layout {
 		[ 'Wx::Button', 'cancel', Wx::wxID_CANCEL ],
 		];
 
-	if (@$shortcuts) {
+	if ( @$shortcuts ) {
 		push @{ $layout[-1] }, [ 'Wx::Button', 'delete',     Wx::wxID_DELETE ];
 		push @{ $layout[-1] }, [ 'Wx::Button', 'delete_all', Wx::gettext('Delete &All') ];
 	}
@@ -50,8 +50,7 @@ sub dialog {
 	my $main  = shift;
 	my $text  = shift;
 	my $names = Padre::DB::Bookmark->select_names;
-	my $title
-		= $text
+	my $title = $text
 		? Wx::gettext("Set Bookmark")
 		: Wx::gettext("GoTo Bookmark");
 
@@ -95,7 +94,7 @@ sub dialog {
 		);
 	}
 
-	if ($text) {
+	if ( $text ) {
 		$dialog->{_widgets_}->{entry}->SetFocus;
 	} else {
 		$dialog->{_widgets_}->{tb}->SetFocus;
@@ -160,7 +159,6 @@ sub goto_bookmark {
 	$dialog->show_modal or return;
 
 	# Find the bookmark they selected
-	$DB::single = 1;
 	my $treebook  = $dialog->{_widgets_}->{tb};
 	my $selection = $treebook->GetSelection;
 	my $name      = $treebook->GetPageText($selection);
@@ -197,7 +195,6 @@ sub goto_bookmark {
 }
 
 sub on_delete_bookmark {
-	$DB::single = 1;
 	my $dialog = shift;
 
 	# Locate the selected bookmark
@@ -218,7 +215,6 @@ sub on_delete_bookmark {
 }
 
 sub on_delete_all_bookmark {
-	$DB::single = 1;
 	my $dialog = shift;
 
 	# Delete everything from the database

@@ -45,6 +45,7 @@ use Padre::Wx::Output         ();
 use Padre::Wx::Syntax         ();
 # use Padre::Wx::Outline       ();
 # use Padre::Wx::Directory     ();
+use Padre::Wx::Menubar        ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Notebook       ();
 use Padre::Wx::StatusBar      ();
@@ -1393,6 +1394,7 @@ Note: it probably needs to be combined with C<run_command()> itself.
 sub on_run_command {
 	my $main = shift;
 
+	require Padre::Wx::History::TextDialog;
 	my $dialog = Padre::Wx::History::TextDialog->new(
 		$main,
 		Wx::gettext("Command line"),
@@ -3528,6 +3530,7 @@ sub on_stc_dwell_start {
 	return;
 }
 
+=pod
 
 =item * $main->on_aui_pane_close( $event );
 
@@ -3598,11 +3601,11 @@ sub on_tab_and_space {
 	my $type    = shift;
 	my $current = $self->current;
 	my $doc     = $current->document or return;
-	my $title
-		= $type eq 'Space_to_Tab'
+	my $title   = $type eq 'Space_to_Tab'
 		? Wx::gettext('Space to Tab')
 		: Wx::gettext('Tab to Space');
 
+	require Padre::Wx::History::TextDialog;
 	my $dialog = Padre::Wx::History::TextDialog->new(
 		$self, Wx::gettext('How many spaces for each tab:'), $title, $type,
 	);
@@ -3672,11 +3675,12 @@ sub on_delete_leading_space {
 	my $self    = shift;
 	my $current = $self->current;
 	my $src     = $current->text;
-	unless ($src) {
+	unless ( $src ) {
 		$self->message('No selection');
 		return;
 	}
 
+	require Padre::Wx::History::TextDialog;
 	my $dialog = Padre::Wx::History::TextDialog->new(
 		$self,                  'How many leading spaces to delete(1 tab == 4 spaces):',
 		'Delete Leading Space', 'fay_delete_leading_space',

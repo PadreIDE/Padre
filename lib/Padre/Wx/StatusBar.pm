@@ -1,10 +1,10 @@
 package Padre::Wx::StatusBar;
 
+=pod
+
 =head1 NAME
 
 Padre::Wx::StatusBar - Encapsulates status bar customizations
-
-
 
 =head1 DESCRIPTION
 
@@ -28,11 +28,9 @@ been updated and not saved
 
 =back
 
-
 It inherits from C<Wx::StatusBar>, so check wx documentation to see all
 the available methods that can be applied to it besides the added ones
 (see below).
-
 
 =cut
 
@@ -43,10 +41,11 @@ use Padre::Wx      ();
 use Padre::Current ();
 
 use Class::XSAccessor accessors => {
-	_task_sbmp   => '_task_sbmp',      # static bitmap holding the task status
-	_task_status => '_task_status',    # current task status
-	_task_width  => '_task_width',     # current width of task field
+	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
+	_task_status => '_task_status', # Current task status
+	_task_width  => '_task_width',  # Current width of task field
 };
+
 our $VERSION = '0.35';
 our @ISA     = 'Wx::StatusBar';
 
@@ -59,6 +58,8 @@ use constant {
 };
 
 #####################################################################
+
+=pod
 
 =head1 PUBLIC API
 
@@ -86,7 +87,13 @@ sub new {
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
 	$self->_task_status('foobar');    # init status to sthg defined
-	Wx::Event::EVT_LEFT_DOWN( $sbmp, \&Padre::TaskManager::on_dump_running_tasks );
+	Wx::Event::EVT_LEFT_DOWN(
+		$sbmp,
+		sub {
+			require Padre::TaskManager;
+			Padre::TaskManager::on_dump_running_tasks(@_);
+		},
+	);
 
 	# Set up the fields
 	$self->SetFieldsCount(5);
@@ -98,14 +105,17 @@ sub new {
 	return $self;
 }
 
+=pod
+
 =back
 
 =cut
 
 #####################################################################
 
-=head2 Public Methods
+=pod
 
+=head2 Public Methods
 
 =over 4
 
@@ -125,6 +135,8 @@ sub clear {
 	return;
 }
 
+=pod
+
 =item * my $main = $sb->main;
 
 Handy method to get a reference on Padre's main window.
@@ -135,6 +147,8 @@ sub main {
 	$_[0]->GetParent;
 }
 
+=pod
+
 =item * my $current = $sb->current;
 
 Get a new C<Padre::Current> object.
@@ -144,6 +158,8 @@ Get a new C<Padre::Current> object.
 sub current {
 	Padre::Current->new( main => $_[0]->GetParent, );
 }
+
+=pod
 
 =item * $sb->refresh;
 
@@ -209,6 +225,8 @@ sub refresh {
 	return;
 }
 
+=pod
+
 =item * $sb->update_task_status;
 
 Checks whether a task status icon update is in order and if so, changes
@@ -247,16 +265,19 @@ sub update_task_status {
 	$self->_task_width(20);
 }
 
+=pod
+
 =back
 
 =cut
 
 #####################################################################
 
+=pod
+
 =head2 Event handlers
 
 Those methods handle various events happening to the statusbar.
-
 
 =over 4
 
@@ -275,6 +296,8 @@ sub on_resize {
 	$self->_move_bitmap;
 	$self->Refresh;
 }
+
+=pod
 
 =back
 
@@ -320,19 +343,18 @@ sub _move_bitmap {
 	my $rect = $self->GetFieldRect(TASKLOAD);
 	my $size = $sbmp->GetSize;
 	$sbmp->Move(
-		$rect->GetLeft + ( $rect->GetWidth - $size->GetWidth ) / 2,
-		$rect->GetTop +  ( $rect->GetHeight - $size->GetHeight ) / 2
+		$rect->GetLeft + ( $rect->GetWidth - $size->GetWidth )   / 2,
+		$rect->GetTop  + ( $rect->GetHeight - $size->GetHeight ) / 2,
 	);
 	$sbmp->Refresh;
 }
 
+=pod
 
 =head1 SEE ALSO
 
 Icons for background status courtesy of Mark James, at
 L<http://www.famfamfam.com/lab/icons/silk/>.
-
-
 
 =head1 COPYRIGHT & LICENSE
 

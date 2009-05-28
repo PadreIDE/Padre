@@ -66,7 +66,8 @@ sub new {
 			Wx::gettext("Select all\tCtrl-A")
 		),
 		sub {
-			\&Padre::Wx::Editor::text_select_all(@_);
+			require Padre::Wx::Editor;
+			Padre::Wx::Editor::text_select_all(@_);
 		},
 	);
 
@@ -101,7 +102,10 @@ sub new {
 			-1,
 			Wx::gettext("Clear selection marks")
 		),
-		\&Padre::Wx::Editor::text_selection_clear_marks,
+		sub {
+			require Padre::Wx::Editor;
+			Padre::Wx::Editor::text_selection_clear_marks(@_);
+		},
 	);
 
 	# Cut and Paste
@@ -152,7 +156,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{goto},
-		\&Padre::Wx::Main::on_goto,
+		sub {
+			Padre::Wx::Main::on_goto(@_);
+		},
 	);
 
 	$self->{autocomp} = $self->Append(
@@ -162,7 +168,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{autocomp},
-		\&Padre::Wx::Main::on_autocompletition,
+		sub {
+			Padre::Wx::Main::on_autocompletition(@_);
+		},
 	);
 
 	$self->{brace_match} = $self->Append(
@@ -172,7 +180,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{brace_match},
-		\&Padre::Wx::Main::on_brace_matching,
+		sub {
+			Padre::Wx::Main::on_brace_matching(@_);
+		},
 	);
 
 	$self->{join_lines} = $self->Append(
@@ -182,7 +192,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{join_lines},
-		\&Padre::Wx::Main::on_join_lines,
+		sub {
+			Padre::Wx::Main::on_join_lines(@_);
+		},
 	);
 
 	$self->{snippets} = $self->Append(
@@ -193,6 +205,7 @@ sub new {
 		$main,
 		$self->{snippets},
 		sub {
+			require Padre::Wx::Dialog::Snippets;
 			Padre::Wx::Dialog::Snippets->snippets(@_);
 		},
 	);
@@ -207,7 +220,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{comment_toggle},
-		\&Padre::Wx::Main::on_comment_toggle_block,
+		sub {
+			Padre::Wx::Main::on_comment_toggle_block(@_);
+		},
 	);
 
 	$self->{comment_out} = $self->Append(
@@ -217,7 +232,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{comment_out},
-		\&Padre::Wx::Main::on_comment_out_block,
+		sub {
+			Padre::Wx::Main::on_comment_out_block(@_);
+		},
 	);
 
 	$self->{uncomment} = $self->Append(
@@ -227,7 +244,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{uncomment},
-		\&Padre::Wx::Main::on_uncomment_block,
+		sub {
+			Padre::Wx::Main::on_uncomment_block(@_);
+		},
 	);
 	$self->AppendSeparator;
 
@@ -317,7 +336,6 @@ sub new {
 		$main,
 		$self->{delete_trailing},
 		sub {
-			$DB::single = $DB::single = 1;    # stupdily duplicated to avoid warning
 			$_[0]->on_delete_ending_space;
 		},
 	);
@@ -376,7 +394,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{diff},
-		\&Padre::Wx::Main::on_diff,
+		sub {
+			Padre::Wx::Main::on_diff(@_);
+		},
 	);
 
 	$self->{insert_from_file} = $self->Append(
@@ -386,7 +406,9 @@ sub new {
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->{insert_from_file},
-		\&Padre::Wx::Main::on_insert_from_file,
+		sub {
+			Padre::Wx::Main::on_insert_from_file(@_);
+		},
 	);
 
 	$self->AppendSeparator;
@@ -398,7 +420,9 @@ sub new {
 			-1,
 			Wx::gettext("Preferences")
 		),
-		\&Padre::Wx::Main::on_preferences,
+		sub {
+			Padre::Wx::Main::on_preferences(@_);
+		},
 	);
 
 	return $self;

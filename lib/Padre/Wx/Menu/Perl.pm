@@ -75,6 +75,7 @@ sub new {
 		sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+			require Padre::Wx::History::TextDialog;
 			my $dialog = Padre::Wx::History::TextDialog->new(
 				$_[0],
 				Wx::gettext("Replacement"),

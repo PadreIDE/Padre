@@ -2,7 +2,6 @@
 
 use strict;
 use warnings;
-use Class::Autouse ':devel';
 
 use Test::More;
 BEGIN {

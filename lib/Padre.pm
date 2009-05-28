@@ -17,7 +17,6 @@ use List::Util     ();
 use Scalar::Util   ();
 use Getopt::Long   ();
 use YAML::Tiny     ();
-use Class::Autouse ();
 use DBI            ();
 use DBD::SQLite    ();
 
@@ -32,49 +31,6 @@ our $VERSION = '0.35';
 use Padre::Util   ();
 use Padre::Config ();
 use Padre::DB     ();
-
-# Nudges to make Class::Autouse behave
-BEGIN {
-	$Class::Autouse::LOADED{'Wx::Object'} = 1;
-}
-
-# Modules to be run-time autoloaded.
-# This is more efficient than use'ing a module, but less efficient
-# than making a direct call to require.
-# This is for fully OO classes that are refered to in a number of
-# different places in the code, making the use of "require" tricky.
-# For modules that are only used in one or two places (such as
-# task-specific dialog boxes and so on) you should use require instead.
-# This section can also be used for classes which aren't called
-# directly by name. For example, a document type class is called from
-# $class->new variable obtained from a HASH mapping.
-# This should not be used for abstract parent classes that are never
-# refered to directly. Let them get loaded normally via the top level
-# module's "use base" (or similar) call.
-use Class::Autouse qw{
-	Padre::Document
-	Padre::Document::Perl
-	Padre::Document::POD
-	Padre::Project
-	Padre::Project::Null
-	Padre::Project::Perl
-	Padre::PluginManager
-	Padre::Task::PPI::FindUnmatchedBrace
-	Padre::Task::PPI::FindVariableDeclaration
-	Padre::Task::PPI::LexicalReplaceVariable
-	Padre::TaskManager
-	Padre::Wx::Popup
-	Padre::Wx::Editor
-	Padre::Wx::Menubar
-	Padre::Wx::Ack
-	Padre::Wx::App
-	Padre::Wx::Dialog::Bookmarks
-	Padre::Wx::Dialog::Find
-	Padre::Wx::Dialog::Search
-	Padre::Wx::Dialog::Snippets
-	Padre::Wx::History::TextDialog
-	Padre::Wx::Main
-};
 
 # Generate faster accessors
 use Class::XSAccessor getters => {
@@ -170,12 +126,15 @@ sub new {
 	}
 
 	# Create the plugin manager
+	require Padre::PluginManager;
 	$self->{plugin_manager} = Padre::PluginManager->new($self);
 
 	# Create the main window
+	require Padre::Wx::App;
 	$self->{wx} = Padre::Wx::App->new($self);
 
 	# Create the task manager
+	require Padre::TaskManager;
 	$self->{task_manager} = Padre::TaskManager->new(
 		use_threads => $self->config->threads,
 	);
@@ -225,6 +184,10 @@ sub project {
 	my $root = shift;
 	unless ( $self->{project}->{$root} ) {
 		my $class = Padre::Project->class($root);
+		unless ( $class->VERSION ) {
+			eval "require $class;";
+			die("Failed to load $class: $@") if $@;
+		}
 		$self->{project}->{$root} = $class->new( root => $root, );
 	}
 	return $self->{project}->{$root};

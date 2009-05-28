@@ -95,7 +95,6 @@ use strict;
 use warnings;
 use Carp           ();
 use File::Spec     ();
-use Class::Autouse ();
 use Padre::Util    ();
 use Padre::Wx      ();
 use Padre          ();
@@ -297,11 +296,14 @@ sub rebless {
 	# to the the base class,
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
-	my $subclass = $MIME_CLASS{ $self->get_mimetype } || __PACKAGE__;
+	my $class = $MIME_CLASS{ $self->get_mimetype } || __PACKAGE__;
 	Padre::Util::debug("Reblessing to mimetype: '$subclass'");
-	if ($subclass) {
-		Class::Autouse->autouse($subclass);
-		bless $self, $subclass;
+	if ( $class ) {
+		unless ( $class->VERSION ) {
+			eval "require $class;";
+			die("Failed to load $class: $@") if $@;
+		};
+		bless $self, $class;
 	}
 
 	return;

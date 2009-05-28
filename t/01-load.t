@@ -17,7 +17,6 @@ BEGIN {
 plan( tests => 22 );
 use Test::Script;
 use Test::NoWarnings;
-use Class::Autouse ':devel';
 
 ok( $] >= 5.008, 'Perl version is new enough' );
 

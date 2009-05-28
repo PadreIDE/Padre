@@ -7,7 +7,6 @@ use URI                     ();
 use Encode                  ();
 use Scalar::Util            ();
 use List::MoreUtils         ();
-use Class::Autouse          ();
 use Padre::Wx               ();
 use Padre::Wx::HtmlWindow   ();
 use Scalar::Util            ();
@@ -269,8 +268,12 @@ sub NewPage {
 	my ( $self, $mime, $title ) = @_;
 	my $page = eval {
 		if ( exists $VIEW{$mime} ) {
-			Class::Autouse->load( $VIEW{$mime} );
-			my $panel = $VIEW{$mime}->new($self);
+			my $class = $VIEW{$mime};
+			unless ( $class->VERSION ) {
+				eval "require $class;";
+				die("Failed to load $class: $@") if $@;
+			}
+			my $panel = $class->new($self);
 			Wx::Event::EVT_HTML_LINK_CLICKED( $self, $panel, \&OnLinkClicked );
 			$self->notebook->AddPage( $panel, $title, 1 );
 			$panel;
@@ -278,7 +281,6 @@ sub NewPage {
 			$self->debug("DocBrowser: no viewer for $mime");
 		}
 	};
-
 	$self->debug($@) if $@;
 	return $page;
 

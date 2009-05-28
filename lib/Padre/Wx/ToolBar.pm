@@ -3,10 +3,10 @@ package Padre::Wx::ToolBar;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current qw{_CURRENT};
+use Padre::Current    qw{_CURRENT};
 use Padre::Wx         ();
-use Padre::Wx::Editor ();
 use Padre::Wx::Icon   ();
+use Padre::Wx::Editor ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::ToolBar';
@@ -129,7 +129,7 @@ sub new {
 		$main,
 		Wx::wxID_SELECTALL,
 		sub {
-			\&Padre::Wx::Editor::text_select_all(@_);
+			Padre::Wx::Editor::text_select_all(@_);
 		},
 	);
 

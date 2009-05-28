@@ -25,7 +25,6 @@ requires       'perl'                     => '5.008005';
 requires       'App::Ack'                 => '1.86';
 requires       'Carp'                     => 0;
 requires       'Class::Adapter'           => '1.05';
-requires       'Class::Autouse'           => '1.26';
 requires       'Class::Unload'            => '0.03';
 requires       'Class::XSAccessor'        => '1.02';
 requires       'Class::XSAccessor::Array' => '1.02';

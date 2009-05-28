@@ -179,7 +179,7 @@ sub enable {
 	# If the plugin defines document types, register them
 	my @documents = $self->object->registered_documents;
 	if ( @documents ) {
-		Class::Autouse->load('Padre::Document');
+		require Padre::Document;
 	}
 	while ( @documents ) {
 		my $type  = shift @documents;

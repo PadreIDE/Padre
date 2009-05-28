@@ -436,6 +436,7 @@ sub find_unmatched_brace {
 	my ($self) = @_;
 
 	# create a new object of the task class and schedule it
+	require Padre::Task::PPI::FindUnmatchedBrace;
 	Padre::Task::PPI::FindUnmatchedBrace->new(
 
 		# for parsing
@@ -512,6 +513,7 @@ sub find_variable_declaration {
 	}
 
 	# create a new object of the task class and schedule it
+	require Padre::Task::PPI::FindVariableDeclaration;
 	Padre::Task::PPI::FindVariableDeclaration->new(
 		document => $self,
 		location => $location,
@@ -538,6 +540,7 @@ sub lexical_variable_replacement {
 	}
 
 	# create a new object of the task class and schedule it
+	require Padre::Task::PPI::LexicalReplaceVariable;
 	Padre::Task::PPI::LexicalReplaceVariable->new(
 		document    => $self,
 		location    => $location,
@@ -679,6 +682,7 @@ sub event_on_right_down {
 				my $editor = shift;
 				my $doc    = $self;    # FIXME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				require Padre::Wx::History::TextDialog;
 				my $dialog = Padre::Wx::History::TextDialog->new(
 					$editor->main,
 					Wx::gettext("Replacement"),

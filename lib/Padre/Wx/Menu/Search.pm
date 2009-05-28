@@ -130,7 +130,10 @@ sub new {
 			-1,
 			Wx::gettext("Find in fi&les...")
 		),
-		\&Padre::Wx::Ack::on_ack,
+		sub {
+			require Padre::Wx::Ack;
+			Padre::Wx::Ack::on_ack(@_);
+		},
 	);
 
 	return $self;

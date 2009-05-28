@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use Carp                   ();
 use Scalar::Util           ();
-use Class::Autouse         ();
 use Padre::DocBrowser::POD ();
 
 our $VERSION = '0.35';
@@ -159,7 +158,10 @@ sub new {
 sub load_provider {
 	my ( $self, $class ) = @_;
 
-	Class::Autouse->autouse($class);
+	unless ( $class->VERSION ) {
+		eval "require $class;";
+		die("Failed to load $class: $@") if $@;
+	}
 	if ( $class->can('provider_for') ) {
 		$self->register_providers( $_ => $class ) for $class->provider_for;
 	} else {
@@ -177,7 +179,10 @@ sub load_provider {
 
 sub load_viewer {
 	my ( $self, $class ) = @_;
-	Class::Autouse->autouse($class);
+	unless ( $class->VERSION ) {
+		eval "require $class;";
+		die("Failed to load $class: $@") if $@;
+	}
 	if ( $class->can('viewer_for') ) {
 		$self->register_viewers( $_ => $class ) for $class->viewer_for;
 	}
@@ -198,7 +203,10 @@ sub register_viewers {
 	my ( $self, %viewers ) = @_;
 	while ( my ( $type, $class ) = each %viewers ) {
 		$self->get_viewers->{$type} = $class;
-		Class::Autouse->autouse($class);
+		unless ( $class->VERSION ) {
+			eval "require $class;";
+			die("Failed to load $class: $@") if $@;
+		}
 	}
 	$self;
 }

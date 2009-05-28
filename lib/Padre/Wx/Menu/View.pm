@@ -329,6 +329,7 @@ sub new {
 		$main,
 		$self->{bookmark_set},
 		sub {
+			require Padre::Wx::Dialog::Bookmarks;
 			Padre::Wx::Dialog::Bookmarks->set_bookmark( $_[0] );
 		},
 	);
@@ -341,6 +342,7 @@ sub new {
 		$main,
 		$self->{bookmark_goto},
 		sub {
+			require Padre::Wx::Dialog::Bookmarks;
 			Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
 		},
 	);

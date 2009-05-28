@@ -57,11 +57,6 @@ my @cmd = (
 	qq[-I$FindBin::Bin/lib],
 	qq[-I$FindBin::Bin/blib/lib],
 );
-if ( grep { $_ eq '-a' } @ARGV ) {
-	@ARGV = grep { $_ ne '-a' } @ARGV;
-	require Class::Autouse;
-	Class::Autouse->import( ':devel' );
-}
 if ( grep { $_ eq '-d' } @ARGV ) {
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-d';

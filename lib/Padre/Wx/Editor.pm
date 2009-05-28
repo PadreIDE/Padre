@@ -758,17 +758,23 @@ sub on_right_down {
 	my $commentToggle = $menu->Append( -1, Wx::gettext("&Toggle Comment\tCtrl-Shift-C") );
 	Wx::Event::EVT_MENU(
 		$main, $commentToggle,
-		\&Padre::Wx::Main::on_comment_toggle_block,
+		sub {
+			Padre::Wx::Main::on_comment_toggle_block(@_);
+		},
 	);
 	my $comment = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
 	Wx::Event::EVT_MENU(
 		$main, $comment,
-		\&Padre::Wx::Main::on_comment_out_block,
+		sub {
+			Padre::Wx::Main::on_comment_out_block(@_);
+		},
 	);
 	my $uncomment = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
 	Wx::Event::EVT_MENU(
 		$main, $uncomment,
-		\&Padre::Wx::Main::on_uncomment_block,
+		sub {
+			Padre::Wx::Main::on_uncomment_block(@_);
+		},
 	);
 
 	$menu->AppendSeparator;
@@ -804,7 +810,9 @@ sub on_right_down {
 	Wx::Event::EVT_MENU(
 		$main,
 		$menu->Append( -1, Wx::gettext("&Split window") ),
-		\&Padre::Wx::Main::on_split_window,
+		sub {
+			Padre::Wx::Main::on_split_window(@_);
+		},
 	);
 
 	my $doc = $self->{Document};

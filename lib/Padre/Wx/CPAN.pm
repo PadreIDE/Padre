@@ -4,7 +4,6 @@ use 5.008;
 use strict;
 use warnings;
 use URI                       ();
-use Class::Autouse            ();
 use Scalar::Util              qw( blessed );
 use Params::Util              qw( _INSTANCE );
 use Padre::Wx                 ();

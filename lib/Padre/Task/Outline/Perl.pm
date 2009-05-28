@@ -1,14 +1,5 @@
 package Padre::Task::Outline::Perl;
 
-use strict;
-use warnings;
-
-our $VERSION = '0.35';
-
-use base 'Padre::Task::Outline';
-
-use version;
-
 =pod
 
 =head1 NAME
@@ -39,6 +30,14 @@ It inherits from L<Padre::Task::Outline>.
 Please read its documentation!
 
 =cut
+
+use strict;
+use warnings;
+use version;
+use Padre::Task::Outline ();
+
+our $VERSION = '0.35';
+our @ISA     = 'Padre::Task::Outline';
 
 sub run {
 	my $self = shift;
@@ -278,12 +277,11 @@ sub _add_subtree {
 				$type_elem,
 				$item->{name},
 				-1, -1,
-				Wx::TreeItemData->new(
-					{   line => $item->{line},
-						name => $item->{name},
-						type => $type,
-					}
-				)
+				Wx::TreeItemData->new( {
+					line => $item->{line},
+					name => $item->{name},
+					type => $type,
+				} )
 			);
 		}
 	}
@@ -301,6 +299,8 @@ sub _add_subtree {
 1;
 
 __END__
+
+=pod
 
 =head1 SEE ALSO
 

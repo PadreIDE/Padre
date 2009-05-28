@@ -3,9 +3,10 @@ package Padre::Wx::Dialog::Preferences;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx      ();
-use Padre::Current ();
+use Padre::Current    ();
+use Padre::Wx         ();
 use Padre::Wx::Dialog ();
+use Padre::Wx::Editor ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -237,7 +238,7 @@ sub _appearance_panel {
 sub _init_preview_editor {
 	my $self = shift;
 	my ( $bgcolor, $font ) = @_;
-
+	require Padre::Document::Perl;
 	my $doc    = Padre::Document::Perl->new();
 	my $editor = $self->get_widget('preview_editor');
 	$editor->{Document} = $doc;
