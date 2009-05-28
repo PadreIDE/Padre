@@ -17,6 +17,8 @@ v0.36 to be released
     Reshuffle and relabel of some menus to improve asthetics (ADAMK)
     Fix no_refresh during multi-file operations (ADAMK)
     Added mibbit.com "Live Support" entries to the Help menu (ADAMK)
+    Removed the use of Class::Autouse, it was slowing down PPI (ADAMK)
+    Various performance improvements, load cost down by 12Mb (ADAMK)
 
 v0.35 2009.05.08
 
