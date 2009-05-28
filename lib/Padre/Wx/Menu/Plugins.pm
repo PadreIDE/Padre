@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util    ();
-use Padre::Constant qw{ $PADRE_CONFIG_DIR };
+use Padre::Constant ();
 use Padre::Current  qw{_CURRENT};
 use Padre::Config   ();
 use Padre::Wx       ();
@@ -61,7 +61,7 @@ sub new {
 		$tools->Append( -1, Wx::gettext("Edit My Plugin") ),
 		sub {
 			my $file = File::Spec->catfile(
-				$PADRE_CONFIG_DIR,
+				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
 			return $self->error(

@@ -19,7 +19,7 @@ use Data::Dumper qw(Dumper);
 use Test::NoWarnings;
 use t::lib::Padre;
 use Padre;
-use Padre::Constant qw{ $PADRE_PLUGIN_DIR };
+use Padre::Constant ();
 use Padre::PluginManager;
 use POSIX qw(locale_h);
 
@@ -31,7 +31,7 @@ SCOPE: {
 	isa_ok( $manager, 'Padre::PluginManager' );
 	is(
 		$manager->plugin_dir,
-		$PADRE_PLUGIN_DIR,
+		Padre::Constant::PLUGIN_DIR,
 		'->plugin_dir ok',
 	);
 	is( keys %{$manager->plugins}, 0, 'Found no plugins' );

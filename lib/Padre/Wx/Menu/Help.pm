@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Padre::Constant       qw{ $PADRE_CONFIG_DIR };
+use Padre::Constant       ();
 use Padre::Wx             ();
 use Padre::Wx::Menu       ();
 use Padre::Wx::DocBrowser ();
@@ -172,7 +172,7 @@ sub about {
 	$about->SetDescription( "Perl Application Development and Refactoring Environment\n\n"
 			. "Based on Wx.pm $Wx::VERSION and "
 			. Wx::wxVERSION_STRING . "\n"
-			. "Config at $PADRE_CONFIG_DIR\n"
+			. "Config at " . Padre::Constant::CONFIG_DIR . "\n"
 			. "SQLite user_version at "
 			. Padre::DB->pragma('user_version')
 			. "\n" );

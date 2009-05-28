@@ -12,21 +12,21 @@ package Padre::Config;
 use 5.008;
 use strict;
 use warnings;
-use Carp                   qw{ croak };
-use Params::Util           qw{ _POSINT _INSTANCE };
-use Padre::Constant        qw{ :stores :types $PADRE_CONFIG_DIR };
+use Carp                   ();
+use Params::Util           ();
+use Padre::Constant        ();
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 
-our $VERSION = '0.35';
+our $VERSION  = '0.35';
 
 # Master storage of the settings
-our %SETTING = ();
+our %SETTING  = ();
 
 # A cache for the defaults
-our %DEFAULT = ();
+our %DEFAULT  = ();
 
 # The configuration revision.
 # (Functionally similar to the database revision)
@@ -37,9 +37,9 @@ our $SINGLETON = undef;
 
 # Accessor generation
 use Class::XSAccessor::Array getters => {
-	host    => $HOST,
-	human   => $HUMAN,
-	project => $PROJECT,
+	host    => Padre::Constant::HOST,
+	human   => Padre::Constant::HUMAN,
+	project => Padre::Constant::PROJECT,
 };
 
 #####################################################################
@@ -50,67 +50,66 @@ use Class::XSAccessor::Array getters => {
 
 my %settings = (
 	human => [
-
 		# for each setting, add an array ref:
 		# [ $setting_name, $setting_type, $setting_default ]
 
 		# -- user identity (simplistic initial version)
-		[ 'identity_name',  $ASCII, '' ],    # Initially, this must be ascii only
-		[ 'identity_email', $ASCII, '' ],
+		[ 'identity_name',  Padre::Constant::ASCII, '' ],    # Initially, this must be ascii only
+		[ 'identity_email', Padre::Constant::ASCII, '' ],
 
 		# -- for module::starter
-		[ 'license',                $ASCII, '' ],
-		[ 'builder',                $ASCII, '' ],
-		[ 'module_start_directory', $ASCII, '' ],
+		[ 'license',                Padre::Constant::ASCII, '' ],
+		[ 'builder',                Padre::Constant::ASCII, '' ],
+		[ 'module_start_directory', Padre::Constant::ASCII, '' ],
 
 		# -- indent settings
 		# allow projects to forcefully override personal settings
-		[ 'editor_indent_auto',      $BOOLEAN, 1 ],
-		[ 'editor_indent_tab',       $BOOLEAN, 1 ],
-		[ 'editor_indent_tab_width', $POSINT,  8 ],
-		[ 'editor_indent_width',     $POSINT,  8 ],
+		[ 'editor_indent_auto',      Padre::Constant::BOOLEAN, 1 ],
+		[ 'editor_indent_tab',       Padre::Constant::BOOLEAN, 1 ],
+		[ 'editor_indent_tab_width', Padre::Constant::POSINT,  8 ],
+		[ 'editor_indent_width',     Padre::Constant::POSINT,  8 ],
 
 		# -- pages and panels
 		# startup mode, if no files given on the command line this can be
 		#   new        - a new empty buffer
 		#   nothing    - nothing to open
 		#   last       - the files that were open last time
-		[ 'main_startup',         $ASCII,   'new' ],
-		[ 'main_singleinstance',  $BOOLEAN, 0 ],
-		[ 'main_lockinterface',   $BOOLEAN, 1 ],
-		[ 'main_functions',       $BOOLEAN, 0 ],
-		[ 'main_functions_order', $ASCII,   'alphabetical' ],
-		[ 'main_outline',         $BOOLEAN, 0 ],
-		[ 'main_directory',       $BOOLEAN, 0 ],
-		[ 'main_output',          $BOOLEAN, 0 ],
-		[ 'main_output_ansi',     $BOOLEAN, 1 ],
-		[ 'main_syntaxcheck',     $BOOLEAN, 0 ],
-		[ 'main_errorlist',       $BOOLEAN, 0 ],
-		[ 'main_statusbar',       $BOOLEAN, 1 ],
+		[ 'main_startup',         Padre::Constant::ASCII,   'new' ],
+		[ 'main_singleinstance',  Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_lockinterface',   Padre::Constant::BOOLEAN, 1 ],
+		[ 'main_functions',       Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_functions_order', Padre::Constant::ASCII,   'alphabetical' ],
+		[ 'main_outline',         Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_directory',       Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_output',          Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_output_ansi',     Padre::Constant::BOOLEAN, 1 ],
+		[ 'main_syntaxcheck',     Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_errorlist',       Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_statusbar',       Padre::Constant::BOOLEAN, 1 ],
 
 		# -- editor settings
-		[ 'editor_font',              $ASCII,   '' ],
-		[ 'editor_linenumbers',       $BOOLEAN, 1 ],
-		[ 'editor_eol',               $BOOLEAN, 0 ],
-		[ 'editor_whitespace',        $BOOLEAN, 0 ],
-		[ 'editor_indentationguides', $BOOLEAN, 0 ],
-		[ 'editor_calltips',          $BOOLEAN, 0 ],
-		[ 'editor_autoindent',        $ASCII,   'deep' ],
-		[ 'editor_folding',           $BOOLEAN, 0 ],
-		[ 'editor_fold_pod',          $BOOLEAN, 0 ],
-		[ 'editor_currentline',       $BOOLEAN, 1 ],
-		[ 'editor_currentline_color', $ASCII,   'FFFF04' ],
-		[ 'editor_beginner',          $BOOLEAN, 1 ],
-		[ 'editor_wordwrap',          $BOOLEAN, 0 ],
-		[ 'editor_file_size_limit',   $POSINT,  500_000 ],
-		[ 'find_case',                $BOOLEAN, 1 ],
-		[ 'find_regex',               $BOOLEAN, 0 ],
-		[ 'find_reverse',             $BOOLEAN, 0 ],
-		[ 'find_first',               $BOOLEAN, 0 ],
-		[ 'find_nohidden',            $BOOLEAN, 1 ],
-		[ 'find_quick',               $BOOLEAN, 0 ],
-		[ 'ppi_highlight',            $BOOLEAN, 0 ],
-		[ 'ppi_highlight_limit',      $POSINT,  2000 ],
+		[ 'editor_font',              Padre::Constant::ASCII,   '' ],
+		[ 'editor_linenumbers',       Padre::Constant::BOOLEAN, 1 ],
+		[ 'editor_eol',               Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_whitespace',        Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_indentationguides', Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_calltips',          Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_autoindent',        Padre::Constant::ASCII,   'deep' ],
+		[ 'editor_folding',           Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_fold_pod',          Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_currentline',       Padre::Constant::BOOLEAN, 1 ],
+		[ 'editor_currentline_color', Padre::Constant::ASCII,   'FFFF04' ],
+		[ 'editor_beginner',          Padre::Constant::BOOLEAN, 1 ],
+		[ 'editor_wordwrap',          Padre::Constant::BOOLEAN, 0 ],
+		[ 'editor_file_size_limit',   Padre::Constant::POSINT,  500_000 ],
+		[ 'find_case',                Padre::Constant::BOOLEAN, 1 ],
+		[ 'find_regex',               Padre::Constant::BOOLEAN, 0 ],
+		[ 'find_reverse',             Padre::Constant::BOOLEAN, 0 ],
+		[ 'find_first',               Padre::Constant::BOOLEAN, 0 ],
+		[ 'find_nohidden',            Padre::Constant::BOOLEAN, 1 ],
+		[ 'find_quick',               Padre::Constant::BOOLEAN, 0 ],
+		[ 'ppi_highlight',            Padre::Constant::BOOLEAN, 0 ],
+		[ 'ppi_highlight_limit',      Padre::Constant::POSINT,  2000 ],
 
 		# -- behaviour tuning
 		# When running a script from the application some of the files might have
@@ -121,18 +120,18 @@ my %settings = (
 		# same - save the file in the current buffer
 		# all_files - all the files (but not buffers that have no filenames)
 		# all_buffers - all the buffers even if they don't have a name yet
-		[ 'run_save', $ASCII, 'same' ],
+		[ 'run_save', Padre::Constant::ASCII, 'same' ],
 
 		# move of stacktrace to run menu: will be removed (run_stacktrace)
-		[ 'run_stacktrace',        $BOOLEAN, 0 ],
-		[ 'autocomplete_brackets', $BOOLEAN, 0 ],
+		[ 'run_stacktrace',        Padre::Constant::BOOLEAN, 0 ],
+		[ 'autocomplete_brackets', Padre::Constant::BOOLEAN, 0 ],
 
 		# by default use background threads unless profiling
 		# TODO - Make the default actually change
-		[ 'threads',         $BOOLEAN, 1 ],
-		[ 'locale',          $ASCII,   '' ],
-		[ 'locale_perldiag', $ASCII,   '' ],
-		[ 'experimental',    $BOOLEAN, 0 ],
+		[ 'threads',         Padre::Constant::BOOLEAN, 1 ],
+		[ 'locale',          Padre::Constant::ASCII,   '' ],
+		[ 'locale_perldiag', Padre::Constant::ASCII,   '' ],
+		[ 'experimental',    Padre::Constant::BOOLEAN, 0 ],
 	],
 	host => [
 
@@ -141,30 +140,28 @@ my %settings = (
 
 		# -- color data
 		# since it's in local files, it has to be a host-specific setting
-		[ 'editor_style', $ASCII, 'default' ],
+		[ 'editor_style', Padre::Constant::ASCII, 'default' ],
 
 		# -- window geometry
-		[ 'main_maximized', $BOOLEAN, 0 ],
-		[ 'main_top',       $INTEGER, 40 ],
-		[ 'main_left',      $INTEGER, 20 ],
-		[ 'main_width',     $POSINT,  600 ],
-		[ 'main_height',    $POSINT,  400 ],
+		[ 'main_maximized', Padre::Constant::BOOLEAN, 0 ],
+		[ 'main_top',       Padre::Constant::INTEGER, 40 ],
+		[ 'main_left',      Padre::Constant::INTEGER, 20 ],
+		[ 'main_width',     Padre::Constant::POSINT,  600 ],
+		[ 'main_height',    Padre::Constant::POSINT,  400 ],
 
-		[ 'logging',       $BOOLEAN, 0 ],
-		[ 'logging_trace', $BOOLEAN, 0 ],
+		[ 'logging',       Padre::Constant::BOOLEAN, 0 ],
+		[ 'logging_trace', Padre::Constant::BOOLEAN, 0 ],
 
 		# -- default run parameters
-		[ 'run_interpreter_args_default', $ASCII, '' ],
-		[ 'run_script_args_default',      $ASCII, '' ],
-
-		[ 'external_diff_tool',           $ASCII, '' ],
-
-		#[ 'run_default_workdir',          $ASCII, '' ],
+		[ 'run_interpreter_args_default', Padre::Constant::ASCII, '' ],
+		[ 'run_script_args_default',      Padre::Constant::ASCII, '' ],
+		[ 'external_diff_tool',           Padre::Constant::ASCII, '' ],
 	],
 );
+
 my %store = (
-	human => $HUMAN,
-	host  => $HOST,
+	human => Padre::Constant::HUMAN,
+	host  => Padre::Constant::HOST,
 );
 foreach my $type ( keys %settings ) {
 	my $settings = $settings{$type};
@@ -187,23 +184,23 @@ sub new {
 	my $class = shift;
 	my $host  = shift;
 	my $human = shift;
-	unless ( _INSTANCE( $host, 'Padre::Config::Host' ) ) {
-		croak("Did not provide a host config to Padre::Config->new");
+	unless ( Params::Util::_INSTANCE($host, 'Padre::Config::Host') ) {
+		Carp::croak("Did not provide a host config to Padre::Config->new");
 	}
-	unless ( _INSTANCE( $human, 'Padre::Config::Human' ) ) {
-		croak("Did not provide a user config to Padre::Config->new");
+	unless ( Params::Util::_INSTANCE($human, 'Padre::Config::Human') ) {
+		Carp::croak("Did not provide a user config to Padre::Config->new");
 	}
 
 	# Create the basic object with the two required elements
 	my $self = bless [ $host, $human, undef ], $class;
 
 	# Add the optional third element
-	if (@_) {
+	if ( @_ ) {
 		my $project = shift;
-		unless ( _INSTANCE( $project, 'Padre::Config::Project' ) ) {
-			croak("Did not provide a project config to Padre::Config->new");
+		unless ( Params::Util::_INSTANCE($project, 'Padre::Config::Project') ) {
+			Carp::croak("Did not provide a project config to Padre::Config->new");
 		}
-		$self->[$PROJECT] = $project;
+		$self->[Padre::Constant::PROJECT] = $project;
 	}
 
 	return $self;
@@ -216,26 +213,27 @@ sub set {
 
 	# Does the setting exist?
 	my $setting = $SETTING{$name}
-		or croak("The configuration setting '$name' does not exist");
+		or Carp::croak("The configuration setting '$name' does not exist");
 
-	# All types are $ASCII-like
+	# All types are Padre::Constant::ASCII-like
 	unless ( defined $value and not ref $value ) {
-		croak("Missing or non-scalar value for setting '$name'");
+		Carp::croak("Missing or non-scalar value for setting '$name'");
 	}
 
-	# We don't need to do additional checks on $ASCII types at this point
+	# We don't need to do additional checks on Padre::Constant::ASCII
+	# types at this point.
 	my $type = $setting->type;
-	if ( $type == $BOOLEAN and $value ne '1' and $value ne '0' ) {
-		croak("Tried to change setting '$name' to non-boolean '$value'");
+	if ( $type == Padre::Constant::BOOLEAN and $value ne '1' and $value ne '0' ) {
+		Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
 	}
-	if ( $type == $POSINT and not _POSINT($value) ) {
-		croak("Tried to change setting '$name' to non-posint '$value'");
+	if ( $type == Padre::Constant::POSINT and not Params::Util::_POSINT($value) ) {
+		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
 	}
-	if ( $type == $INTEGER and not _INTEGER($value) ) {
-		croak("Tried to change setting '$name' to non-integer '$value'");
+	if ( $type == Padre::Constant::INTEGER and not _INTEGER($value) ) {
+		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
 	}
-	if ( $type == $PATH and not -e $value ) {
-		croak("Tried to change setting '$name' to non-existant path '$value'");
+	if ( $type == Padre::Constant::PATH and not -e $value ) {
+		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
 	}
 
 	# Set the value into the appropriate backend
@@ -251,8 +249,9 @@ sub default {
 	my $name = shift;
 
 	# Does the setting exist?
-	my $setting = $SETTING{$name}
-		or croak("The configuration setting '$name' does not exist");
+	unless ( $SETTING{$name} ) {
+		Carp::croak("The configuration setting '$name' does not exist");
+	}
 
 	return $DEFAULT{$name};
 }
@@ -260,14 +259,13 @@ sub default {
 sub read {
 	my $class = shift;
 
-	unless ($SINGLETON) {
-
+	unless ( $SINGLETON ) {
 		# Load the host configuration
 		my $host = Padre::Config::Host->read;
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
+		         || Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
@@ -282,12 +280,12 @@ sub write {
 	my $self = shift;
 
 	# Save the user configuration
-	$self->[$HUMAN]->{version} = $REVISION;
-	$self->[$HUMAN]->write;
+	$self->[Padre::Constant::HUMAN]->{version} = $REVISION;
+	$self->[Padre::Constant::HUMAN]->write;
 
 	# Save the host configuration
-	$self->[$HOST]->{version} = $REVISION;
-	$self->[$HOST]->write;
+	$self->[Padre::Constant::HOST]->{version} = $REVISION;
+	$self->[Padre::Constant::HOST]->write;
 
 	return 1;
 }
@@ -300,11 +298,10 @@ sub write {
 # create a new setting, with %params used to feed the new object.
 #
 sub _setting {
-
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
 	if ( $SETTING{ $object->{name} } ) {
-		croak("The $object->{name} setting is already defined");
+		Carp::croak("The $object->{name} setting is already defined");
 	}
 
 	# Generate the accessor
@@ -322,8 +319,8 @@ END_PERL
 
 	# Compile the accessor
 	eval $code;    ## no critic
-	if ($@) {
-		croak("Failed to compile setting $object->{name}");
+	if ( $@ ) {
+		Carp::croak("Failed to compile setting $object->{name}");
 	}
 
 	# Save the setting
@@ -346,18 +343,17 @@ sub _INTEGER ($) {
 
 __END__
 
+=pod
+
 =head1 NAME
 
-Padre::Config - configuration subsystem for Padre
-
+Padre::Config - Configuration subsystem for Padre
 
 =head1 SYNOPSIS
 
 	use Padre::Config;
 	[...]
 	if ( Padre::Config->main_statusbar ) { [...] }
-
-
 
 =head1 DESCRIPTION
 
@@ -366,8 +362,6 @@ Padre::Config - configuration subsystem for Padre
 Every setting is accessed by a method named after it, which is a mutator.
 ie, it can be used both as a getter and a setter, depending on the number
 of arguments passed to it.
-
-
 
 =head2 Different types of settings
 
@@ -388,14 +382,12 @@ to editor preferences (tab width, etc.) and other personal settings.
 
 Those settings are stored in a YAML file, and accessed with C<Padre::Config::Human>.
 
-
 =item * Host settings
 
 Those preferences are related to the host on which Padre is run. The principal
 example of those settings are window appearance.
 
 Those settings are stored in a DB file, and accessed with C<Padre::Config::Host>.
-
 
 =item * Project settings
 
@@ -404,12 +396,7 @@ editing. Examples of those settings are whether to use tabs or spaces, etc.
 
 Those settings are accessed with C<Padre::Config::Project>.
 
-
 =back
-
-
-
-
 
 =head1 COPYRIGHT & LICENSE
 

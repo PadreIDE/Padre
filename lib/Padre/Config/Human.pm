@@ -8,7 +8,7 @@ use warnings;
 use Storable        ();
 use YAML::Tiny      ();
 use Params::Util    ();
-use Padre::Constant qw{ $CONFIG_FILE_USER };
+use Padre::Constant ();
 
 our $VERSION = '0.35';
 
@@ -33,7 +33,9 @@ sub read {
 
 	# Load the user configuration
 	my $hash = eval {
-		YAML::Tiny::LoadFile($CONFIG_FILE_USER)
+		YAML::Tiny::LoadFile(
+			Padre::Constant::CONFIG_HUMAN
+		)
 	};
 	unless ( Params::Util::_HASH0($hash) ) {
 		return;
@@ -60,7 +62,7 @@ sub write {
 
 	# Save the unblessed clone of the user configuration hash
 	YAML::Tiny::DumpFile(
-		$CONFIG_FILE_USER,
+		Padre::Constant::CONFIG_HUMAN,
 		Storable::dclone( +{ %$self } ),
 	);
 

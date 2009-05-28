@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use File::Glob      ();
-use Padre::Constant qw{ $PADRE_CONFIG_DIR };
+use Padre::Constant ();
 use Padre::Current  qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
@@ -379,7 +379,7 @@ sub new {
 		);
 	}
 
-	my $dir     = File::Spec->catdir( $PADRE_CONFIG_DIR, 'styles' );
+	my $dir     = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
 	my @private = map {
 		substr( File::Basename::basename($_), 0, -4 )
 	} File::Glob::glob(

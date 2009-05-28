@@ -28,7 +28,7 @@ use File::Spec               ();
 use File::Basename           ();
 use Scalar::Util             ();
 use Params::Util             qw{ _IDENTIFIER _CLASS _INSTANCE };
-use Padre::Constant          qw{ :dirs };
+use Padre::Constant          ();
 use Padre::Current           ();
 use Padre::Util              ();
 use Padre::PluginHandle      ();
@@ -64,7 +64,7 @@ sub new {
 		parent                    => $parent,
 		plugins                   => {},
 		plugin_names              => [],
-		plugin_dir                => $PADRE_PLUGIN_DIR,
+		plugin_dir                => Padre::Constant::PLUGIN_DIR,
 		par_loaded                => 0,
 		plugins_with_context_menu => {},
 		@_,
@@ -182,7 +182,10 @@ sub reset_my_plugin {
 	my ( $self, $overwrite ) = @_;
 
 	# Do not overwrite it unless stated so.
-	my $dst = File::Spec->catfile( $PADRE_PLUGIN_LIBDIR, 'My.pm' );
+	my $dst = File::Spec->catfile(
+		Padre::Constant::PLUGIN_LIB,
+		'My.pm'
+	);
 	if ( -e $dst and not $overwrite ) {
 		return;
 	}
@@ -417,7 +420,7 @@ sub _setup_par {
 	my $plugin_dir = $self->plugin_dir;
 	my $cache_dir = File::Spec->catdir( $plugin_dir, 'cache' );
 	$ENV{PAR_GLOBAL_TEMP} = $cache_dir;
-	File::Path::mkpath($cache_dir) unless -e $cache_dir;
+	File::Path::make_path($cache_dir) unless -e $cache_dir;
 	$ENV{PAR_TEMP} = $cache_dir;
 
 	$self->{par_loaded} = 1;

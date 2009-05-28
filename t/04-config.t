@@ -19,11 +19,11 @@ use File::Temp ();
 BEGIN {
 	$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 }
-use Padre::Constant qw{ $CONFIG_FILE_USER };
-use Padre::Config  ();
+use Padre::Constant ();
+use Padre::Config   ();
 
 # Create the empty config file
-my $empty = $CONFIG_FILE_USER;
+my $empty = Padre::Constant::CONFIG_HUMAN;
 open( FILE, '>', $empty ) or die "Failed to open $empty";
 print FILE "--- {}\n";
 close( FILE );

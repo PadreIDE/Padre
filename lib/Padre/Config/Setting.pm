@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Carp            ();
 use Params::Util    ();
-use Padre::Constant qw{ :stores :types };
+use Padre::Constant ();
 
 our $VERSION = '0.35';
 

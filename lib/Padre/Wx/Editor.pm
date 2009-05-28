@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use YAML::Tiny                ();
-use Padre::Constant           qw{ $PADRE_CONFIG_DIR };
+use Padre::Constant           ();
 use Padre::Util               ();
 use Padre::Current            ();
 use Padre::Wx                 ();
@@ -77,9 +77,11 @@ sub data {
 	return $data if not defined $name;
 	return $data if defined $data and $name eq $data_name;
 
-	my $file
-		= $private
-		? File::Spec->catfile( $PADRE_CONFIG_DIR, 'styles', "$name.yml" )
+	my $file = $private
+		? File::Spec->catfile(
+			Padre::Constant::CONFIG_DIR,
+			'styles', "$name.yml"
+		)
 		: Padre::Util::sharefile( 'styles', "$name.yml" );
 	my $tdata;
 	eval { $tdata = YAML::Tiny::LoadFile($file); };

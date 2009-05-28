@@ -6,14 +6,14 @@ use strict;
 use File::Spec          ();
 use File::ShareDir::PAR ();
 use Params::Util        ();
-use Padre::Constant     qw{ $CONFIG_FILE_HOST };
+use Padre::Constant     ();
 use Padre::Current      ();
 
 use ORLite 1.17 ();    # Need truncate
 use ORLite::Migrate 0.01 {
 	create        => 1,
 	tables        => ['Modules'],
-	file          => $CONFIG_FILE_HOST,
+	file          => Padre::Constant::CONFIG_HOST,
 	user_revision => 8,
 	timeline      => File::Spec->catdir(
 		File::ShareDir::PAR::dist_dir('Padre'),

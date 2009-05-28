@@ -29,7 +29,7 @@ configuration directory (which defaults to C<~/.padre> on Unixy systems).
 use strict;
 use warnings;
 use Module::Build   ();
-use Padre::Constant qw{ $PADRE_PLUGIN_DIR };
+use Padre::Constant ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Module::Build';
@@ -64,17 +64,20 @@ into the user's Padre plugins directory.
 =cut
 
 sub ACTION_installplugin {
-	my ($self) = @_;
+	my ( $self ) = @_;
 
 	$self->depends_on('plugin');
 
-	my $module = $self->module_name();
+	my $module = $self->module_name;
 	$module =~ s/^Padre::Plugin:://;
 	$module =~ s/::/-/g;
 	my $plugin = "$module.par";
 
 	require Padre;
-	return $self->copy_if_modified( from => $plugin, to_dir => $PADRE_PLUGIN_DIR );
+	return $self->copy_if_modified(
+		from   => $plugin,
+		to_dir => Padre::Constant::PLUGIN_DIR,
+	);
 }
 
 1;
