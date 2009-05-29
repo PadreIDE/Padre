@@ -521,7 +521,7 @@ sub replace_all_clicked {
 	my $page    = $current->editor;
 	my $last    = $page->GetLength;
 	my $str     = $page->GetTextRange( 0, $last );
-	my $replace = Padre::DB::History->previous('replace') || '';
+	my $replace = $self->_get_replace;
 	$replace =~ s/\\t/\t/g if $replace;
 
 	my ( $start, $end, @matches ) = Padre::Util::get_matches( $str, $regex, 0, 0 );
@@ -562,9 +562,7 @@ sub replace_clicked {
 
 	# If they do, replace it
 	if ( defined $start and $start == 0 and $end == length($text) ) {
-
-		# TODO - This can return undef
-		my $replace = Padre::DB::History->previous('replace');
+		my $replace = $self->_get_replace;
 		$replace =~ s/\\t/\t/g;
 		$current->editor->ReplaceSelection($replace);
 	}
@@ -635,7 +633,7 @@ sub get_data_from_dialog {
 	Padre::DB::History->create(
 		type => 'replace',
 		name => $replace,
-	) if $self->{dialog_type} eq 'replace';
+	) if $replace;
 	Padre::DB->commit;
 
 	return 1;
@@ -672,6 +670,22 @@ sub _get_regex {
 		return;
 	}
 	return $regex;
+}
+
+# Internal method. $self->_get_replace
+# Returns previous replacement string from history
+# or empty if _replace_choice_ widget is empty.
+# Added to be able to use empty string as a replacement text
+# but without storing in (the empty string) in history.
+sub _get_replace {
+	my $self = shift;	
+	my $data = $self->get_widgets_values;
+
+	my $replace = $data->{_replace_choice_} eq ''
+		? ''
+		: Padre::DB::History->previous('replace');
+
+	return $replace;
 }
 
 =pod
