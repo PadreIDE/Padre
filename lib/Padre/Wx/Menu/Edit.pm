@@ -467,7 +467,7 @@ sub refresh {
 	my $selection = !!( defined $text and $text ne '' );
 	$self->{undo}->Enable( $editor and $editor->CanUndo );
 	$self->{redo}->Enable( $editor and $editor->CanRedo );
-	$self->{paste}->Enable( $editor and $editor->CanPaste );
+	$self->{paste}->Enable( $editor );
 
 	return 1;
 }
