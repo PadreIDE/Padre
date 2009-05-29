@@ -80,7 +80,7 @@ Padre::Constant - constants used by config subsystems
 
 =head1 SYNOPSIS
 
-    use Padre::Constant qw{ :all };
+    use Padre::Constant ();
     [...]
     # do stuff with exported constants
 
