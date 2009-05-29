@@ -1,23 +1,36 @@
 package t::lib::Padre::Win32;
+
 use strict;
 use warnings;
-
-#use Test::More;
-#my $t = Test::More->builder;
+use Probe::Perl ();
 
 sub setup {
 	require Win32::GuiTest;
-	import Win32::GuiTest qw(FindWindowLike SetForegroundWindow GetForegroundWindow);
+	import Win32::GuiTest qw{
+		FindWindowLike
+		SetForegroundWindow
+		GetForegroundWindow
+	};
 
-	my %existing_windows = map {$_ => 1} FindWindowLike(0, "^Padre");
+	my %existing_windows = map { $_ => 1 } FindWindowLike(0, "^Padre");
 
-	my $cmd = "start $^X script\\padre";
+	# Find Perl (ideally the gui one)
+	my $perl = Probe::Perl->find_perl_interpreter;
+	#if ( $perl =~ /\bperl\.exe\z/ ) {
+		#my $wperl = $perl;
+		#$wperl =~ s/perl\.exe\z/wperl.exe/;
+		#if ( -f $wperl and -e $wperl ) {
+			#$perl = $wperl;
+		#}
+	#}
+
+	my $cmd = "start $perl script\\padre";
 	#$t->diag($cmd);
 	system $cmd;
 	my $padre;
 
 	# allow some time to launch Padre
-	foreach (1..10) {
+	foreach ( 1 .. 10 ) {
 		sleep(1);
 		my @current_windows = FindWindowLike(0, "^Padre");
 		my @wins = grep { ! $existing_windows{$_} } @current_windows;
@@ -28,12 +41,13 @@ sub setup {
 	die "Could not find Padre" if not $padre;
 
 	SetForegroundWindow($padre);
-	sleep 1; # crap, we have to wait for Padre to come to the foreground
+	sleep 3; # crap, we have to wait for Padre to come to the foreground
 	my $fg = GetForegroundWindow();
-	die "Padre is NOT in the foreground" if $fg ne $padre;
+	if ( $fg ne $padre ) {
+		die "Padre is NOT in the foreground";
+	}
 
 	return $padre;
 }
-
 
 1;

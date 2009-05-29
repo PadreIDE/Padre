@@ -21,7 +21,7 @@ my $padre = t::lib::Padre::Win32::setup();
 ############################
 
 plan tests => 5;
-diag "Window id $padre";
+# diag "Window id $padre";
 
 my $text = "If you're reading this inside Padre, ";
 $text   .= "we might consider this test succesful. ";
@@ -33,9 +33,9 @@ my $save_tox = "$dir/x$$.txt";
 # Stupid Save box don't accpect '/' in the input
 $save_to =~ s/\//\\/g;
 $save_tox =~ s/\//\\/g;
-diag "Save to '$save_to'";
+# diag "Save to '$save_to'";
 
-{
+SCOPE: {
 	MenuSelect("&File|&New");
 	sleep 1;
 	#my @tabs = GetTabItems($padre);
@@ -63,7 +63,7 @@ diag "Save to '$save_to'";
 	is($text_in_file, $text, 'correct text in file');
 }
 
-{
+SCOPE: {
 	my $t = "Text in second line...";
 	SendKeys("{ENTER}");
 	SendKeys($t);
@@ -74,7 +74,7 @@ diag "Save to '$save_to'";
 	is($text_in_file, $text, 'correct text in file');
 }
 
-{
+SCOPE: {
 	SendKeys("{F12}");  # Save As
 	sleep 1;
 
@@ -99,8 +99,6 @@ MenuSelect("&File|&Close");
 
 SendKeys("%{F4}");  # Alt-F4 to exit
 sleep 1;
-
-
 
 sub slurp {
 	if (open(my $fh, '<', $save_to)) {

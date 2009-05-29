@@ -22,7 +22,6 @@ my $padre = t::lib::Padre::Win32::setup();
 
 plan tests => 1;
 
-
 MenuSelect("&File|&Open");
 sleep 1;
 

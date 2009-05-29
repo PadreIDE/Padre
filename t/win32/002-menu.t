@@ -5,25 +5,25 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 
-
 eval {
 	require Win32::GuiTest;
 	import Win32::GuiTest qw(:ALL);
 };
-if ($@) {
-	plan skip_all => 'Win32::GuiTest is required for this test';
+if ( $@ ) {
+	plan( skip_all => 'Win32::GuiTest is required for this test' );
 }
 
 use t::lib::Padre;
 require t::lib::Padre::Win32;
 my $padre = t::lib::Padre::Win32::setup();
+
 ################################
 
 plan tests => 5;
-diag "Window id $padre";
+#diag "Window id $padre";
 
 my $menu = GetMenu($padre);
-diag "Menu id: $menu";
+#diag "Menu id: $menu";
 
 # test File Menu
 my $submenu = GetSubMenu($menu, 0);
