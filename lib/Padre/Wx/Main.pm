@@ -2913,6 +2913,14 @@ sub on_join_lines {
 	my $line = $page->LineFromPosition($pos1);
 	my $pos2 = $page->PositionFromLine( $line + 1 );
 
+	# Remove leading spaces/tabs from the second line
+	my $code = $page->GetLine( $page->LineFromPosition($pos2) );
+	$code =~ s/^\s+//;
+	$code =~ s/\n$//;
+	$page->SetTargetStart($pos2);
+	$page->SetTargetEnd( $page->GetLineEndPosition( $line + 1 ) );
+	$page->ReplaceTarget($code);
+
 	# mark target & join lines
 	$page->SetTargetStart($pos1);
 	$page->SetTargetEnd($pos2);
