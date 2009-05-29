@@ -79,6 +79,7 @@ sub new {
 		[ 750, 700 ],
 	);
 
+	require Padre::DocBrowser;
 	$self->{provider} = Padre::DocBrowser->new;
 
 	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -274,7 +275,10 @@ sub NewPage {
 				die("Failed to load $class: $@") if $@;
 			}
 			my $panel = $class->new($self);
-			Wx::Event::EVT_HTML_LINK_CLICKED( $self, $panel, \&OnLinkClicked );
+			Wx::Event::EVT_HTML_LINK_CLICKED(
+				$self, $panel,
+				\&OnLinkClicked,
+			);
 			$self->notebook->AddPage( $panel, $title, 1 );
 			$panel;
 		} else {
