@@ -6,8 +6,6 @@ package Padre::Util;
 
 Padre::Util - Padre Non-Wx Utility Functions
 
-
-
 =head1 DESCRIPTION
 
 The Padre::Util package is a internal storage area for miscellaneous
@@ -18,8 +16,6 @@ All functions are exportable and documented for maintenance purposes,
 but except for in the Padre core distribution you are discouraged in the
 strongest possible terms for relying on these functions, as they may be
 moved, removed or changed at any time without notice.
-
-
 
 =head1 FUNCTIONS
 
@@ -69,7 +65,7 @@ use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
 
 =head2 newline_type
 
-	my $type = newline_type( $string );
+    my $type = newline_type( $string );
 
 Returns None if there was not CR or LF in the file.
 
@@ -123,10 +119,9 @@ sub get_matches {
 	die "missing parameters" if @_ < 4;
 
 	use Encode;
-	$text = Encode::encode( 'utf-8', $text );
+	$text = Encode::encode('utf-8', $text);
 
 	my @matches;
-
 	while ( $text =~ /$regex/g ) {
 		my $e = pos($text);
 		my $s = $e - length($&);
@@ -134,7 +129,7 @@ sub get_matches {
 	}
 
 	my $pair;
-	if ($backward) {
+	if ( $backward ) {
 		$pair = first { $to > $_->[1] } reverse @matches;
 		if ( not $pair and @matches ) {
 			$pair = $matches[-1];
@@ -274,7 +269,7 @@ sub get_project_dir {
 	return;
 }
 
-{
+SCOPE: {
 	my $logging;
 	my $trace;
 
@@ -291,30 +286,14 @@ sub get_project_dir {
 
 		my $ts = POSIX::strftime( "%H:%M:%S", localtime() );
 		print STDERR "$ts - @_\n";
-		if ($trace) {
+		if ( $trace ) {
 			print STDERR Carp::longmess();
 		} else {
 			my ( $package, $filename, $line ) = caller;
-
-			#$filename =~ s{.*/Padre/}{Padre/};
 			print STDERR "           in line $line of $filename\n";
 		}
 	}
 }
-
-package Px;
-
-use constant {
-	PADRE_BLACK    => 0,
-	PADRE_BLUE     => 1,
-	PADRE_RED      => 2,
-	PADRE_GREEN    => 3,
-	PADRE_MAGENTA  => 4,
-	PADRE_ORANGE   => 5,
-	PADRE_DIM_GRAY => 6,
-	PADRE_CRIMSON  => 7,
-	PADRE_BROWN    => 8,
-};
 
 1;
 

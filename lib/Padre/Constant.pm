@@ -13,16 +13,33 @@ use File::HomeDir ();
 our $VERSION = '0.35';
 
 # Setting Types (based on Firefox types)
-use constant BOOLEAN => 0;
-use constant POSINT  => 1;
-use constant INTEGER => 2;
-use constant ASCII   => 3;
-use constant PATH    => 4;
+use constant {
+	BOOLEAN => 0,
+	POSINT  => 1,
+	INTEGER => 2,
+	ASCII   => 3,
+	PATH    => 4,
+};
 
 # Setting Storage Backends
-use constant HOST    => 0;
-use constant HUMAN   => 1;
-use constant PROJECT => 2;
+use constant {
+	HOST    => 0,
+	HUMAN   => 1,
+	PROJECT => 2,
+};
+
+# Syntax Highlighter Colours
+use constant {
+	BLACK    => 0,
+	BLUE     => 1,
+	RED      => 2,
+	GREEN    => 3,
+	MAGENTA  => 4,
+	ORANGE   => 5,
+	DIM_GRAY => 6,
+	CRIMSON  => 7,
+	BROWN    => 8,
+};
 
 # Files and Directories
 use constant CONFIG_DIR => File::Spec->rel2abs(
