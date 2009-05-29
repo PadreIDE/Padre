@@ -90,47 +90,41 @@ Padre uses various configuration subsystems (see C<Padre::Config> for more
 information). Those systems needs to somehow agree on some basic stuff, which
 is defined in this module.
 
-=head1 PUBLIC API
+=head1 CONSTANTS
 
-=head2 Available constants
+=head2 BOOLEAN, POSINT, INTEGER, ASCII, PATH
 
-This module exports nothing.
+Settings data types.
 
-The list of available constants are:
+=head2 HOST, HUMAN, PROJECT
 
-=over 4
+Settings storage backends.
 
-=item * BOOLEAN, POSINT, INTEGER, ASCII, PATH
+=head2 BLACK, BLUE, RED, GREEN, MAGENTA, ORANGE, DIM_GRAY, CRIMSON, BROWN
 
-Settings types.
+Core supported colours.
 
-=item * HOST, HUMAN, PROJECT
-
-Settings stores.
-
-=item * CONFIG_HOST
+=head2 CONFIG_HOST
 
 DB configuration file storing host settings.
 
-=item * CONFIG_HUMAN
+=head2 CONFIG_HUMAN
 
 YAML configuration file storing user settings.
 
-=item * CONFIG_DIR
+=head2 CONFIG_DIR
 
 Private Padre configuration directory Padre, used to store stuff.
 
-=item * PLUGIN_DIR
+=head2 PLUGIN_DIR
 
 Private directory where Padre can look for plugins.
 
-=item * PLUGIN_LIB
+=head2 PLUGIN_LIB
 
 Subdir of PLUGIN_DIR with the path C<Padre/Plugin> added
 (or whatever depending on your platform) so that perl can
 load a C<Padre::Plugin::> plugin.
-
-=back
 
 =head1 COPYRIGHT & LICENSE
 
