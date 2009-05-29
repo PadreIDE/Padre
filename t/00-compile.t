@@ -43,7 +43,7 @@ foreach my $file ( @files ) {
 		is($out_data, 'ok', "STDOUT of $file");
 }
 
-script_compiles_ok('dev.pl');
+#script_compiles_ok('dev.pl');
 script_compiles_ok('script/padre');
 
 sub slurp {
