@@ -117,7 +117,6 @@ use Class::XSAccessor getters => {
 sub plugin_names {
 	my $self = shift;
 	unless ( $self->{plugin_names} ) {
-
 		# Schwartzian transform that sorts the plugins by their
 		# full names, but always puts "My Plugin" first.
 		$self->{plugin_names} = [
@@ -936,7 +935,6 @@ sub _plugin {
 		return $it;
 	}
 	if ( defined _CLASS($it) ) {
-
 		# Convert from class to name if needed
 		$it =~ s/^Padre::Plugin:://;
 	}

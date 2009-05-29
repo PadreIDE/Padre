@@ -11,8 +11,8 @@ use Padre::Locale  ();
 our $VERSION = '0.35';
 
 use overload
-	'bool' => sub {1},
-	'""' => 'name',
+	'bool'     => sub {1},
+	'""'       => 'name',
 	'fallback' => 0;
 
 use Class::XSAccessor getters => {

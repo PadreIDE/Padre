@@ -1,31 +1,32 @@
 package Padre::Wx::Dialog::PluginManager;
 
-# This file is part of Padre, the Perl ide.
+# The Plugin Manager GUI for Padre
 
 use strict;
 use warnings;
-use Carp qw{ croak };
-use Class::XSAccessor accessors => {
-	_action       => '_action',          # action of default button
-	_button       => '_button',          # general-purpose button
-	_butprefs     => '_butprefs',        # preferences button
-	_currow       => '_currow',          # current list row number
-	_curplugin    => '_curplugin',       # current plugin selected
-	_hbox         => '_hbox',            # the window hbox sizer
-	_imagelist    => '_imagelist',       # image list for the listctrl
-	_label        => '_label',           # label at top of right pane
-	_list         => '_list',            # list on the left of the pane
-	_manager      => '_manager',         # ref to plugin manager
-	_plugin_names => '_plugin_names',    # mapping of short/full plugin names
-	_sortcolumn   => '_sortcolumn',      # column used for list sorting
-	_sortreverse  => '_sortreverse',     # list sorting is reversed
-	_whtml        => '_whtml',           # html space for plugin doc
-};
+use Carp            'croak';
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::Dialog';
+
+use Class::XSAccessor accessors => {
+	_action       => '_action',       # action of default button
+	_button       => '_button',       # general-purpose button
+	_butprefs     => '_butprefs',     # preferences button
+	_currow       => '_currow',       # current list row number
+	_curplugin    => '_curplugin',    # current plugin selected
+	_hbox         => '_hbox',         # the window hbox sizer
+	_imagelist    => '_imagelist',    # image list for the listctrl
+	_label        => '_label',        # label at top of right pane
+	_list         => '_list',         # list on the left of the pane
+	_manager      => '_manager',      # ref to plugin manager
+	_plugin_names => '_plugin_names', # mapping of short/full plugin names
+	_sortcolumn   => '_sortcolumn',   # column used for list sorting
+	_sortreverse  => '_sortreverse',  # list sorting is reversed
+	_whtml        => '_whtml',        # html space for plugin doc
+};
 
 # -- constructor
 
@@ -87,8 +88,7 @@ sub show {
 # handler called when the close button has been clicked.
 #
 sub _on_butclose_clicked {
-	my $self = shift;
-	$self->Destroy;
+	$_[0]->Destroy;
 }
 
 #
@@ -97,8 +97,7 @@ sub _on_butclose_clicked {
 # handler called when the preferences button has been clicked.
 #
 sub _on_butprefs_clicked {
-	my $self = shift;
-	$self->_curplugin->object->plugin_preferences;
+	$_[0]->_curplugin->object->plugin_preferences;
 }
 
 #
@@ -123,8 +122,7 @@ sub _on_button_clicked {
 #
 sub _on_list_col_click {
 	my ( $self, $event ) = @_;
-	my $col = $event->GetColumn;
-
+	my $col      = $event->GetColumn;
 	my $prevcol  = $self->_sortcolumn;
 	my $reversed = $self->_sortreverse;
 	$reversed = $col == $prevcol ? !$reversed : 0;
@@ -159,11 +157,11 @@ sub _on_list_item_selected {
 	my $fullname = $event->GetLabel;
 	my $name     = $self->_plugin_names->{$fullname};
 	my $plugin   = $self->_manager->plugins->{$name};
-	$self->_curplugin($plugin);            # storing selected plugin
-	$self->_currow( $event->GetIndex );    # storing selected row
+	$self->_curplugin($plugin);         # storing selected plugin
+	$self->_currow( $event->GetIndex ); # storing selected row
 
 	# updating plugin name in right pane
-	$self->_label->SetLabel($name);
+	$self->_label->SetLabel($plugin->plugin_name);
 
 	# update plugin documentation
 	require Padre::DocBrowser;
@@ -171,8 +169,7 @@ sub _on_list_item_selected {
 	my $class   = $plugin->class;
 	my $doc     = $browser->resolve($class);
 	my $output  = eval { $browser->browse($doc) };
-	my $html
-		= $@
+	my $html    = $@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
 		: $output->body;
 	$self->_whtml->SetPage($html);
@@ -204,9 +201,10 @@ sub _create {
 	$self->SetSizer($hbox);
 	$self->SetMinSize( [ 800, 600 ] );
 	$self->_hbox($hbox);
-
 	$self->_create_list;
 	$self->_create_right_pane;
+
+	return 1;
 }
 
 #
@@ -264,9 +262,9 @@ sub _create_right_pane {
 
 	# the plugin name
 	my $hbox1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$vbox->Add( $hbox1, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	my $label = Wx::StaticText->new( $self, -1, 'plugin name' );
-	my $font = $label->GetFont;
+	my $font  = $label->GetFont;
+	$vbox->Add( $hbox1, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 2 );
 	$label->SetFont($font);
@@ -463,7 +461,6 @@ sub _update_plugin_state {
 	my $butprefs = $self->_butprefs;
 
 	if ( $plugin->error ) {
-
 		# plugin is in error state
 		$button->SetLabel( Wx::gettext('Show error message') );
 		$self->_action('_plugin_show_error_msg');
@@ -473,7 +470,6 @@ sub _update_plugin_state {
 		$list->SetItem($item);
 
 	} elsif ( $plugin->incompatible ) {
-
 		# plugin is incompatible
 		$button->SetLabel( Wx::gettext('Show error message') );
 		$self->_action('_plugin_show_error_msg');
@@ -483,11 +479,8 @@ sub _update_plugin_state {
 		$list->SetItem($item);
 
 	} else {
-
 		# plugin is working...
-
 		if ( $plugin->enabled ) {
-
 			# ... and enabled
 			$button->SetLabel( Wx::gettext('Disable') );
 			$self->_action('_plugin_disable');
@@ -497,7 +490,6 @@ sub _update_plugin_state {
 			$list->SetItem($item);
 
 		} elsif ( $plugin->can_enable ) {
-
 			# ... and disabled
 			$button->SetLabel( Wx::gettext('Enable') );
 			$self->_action('_plugin_enable');
@@ -507,7 +499,6 @@ sub _update_plugin_state {
 			$list->SetItem($item);
 
 		} else {
-
 			# ... disabled but cannot be enabled
 			$button->Disable;
 		}
@@ -531,12 +522,11 @@ sub _update_plugin_state {
 
 __END__
 
+=pod
 
 =head1 NAME
 
 Padre::Wx::Dialog::PluginManager - Plugin manager dialog for Padre
-
-
 
 =head1 DESCRIPTION
 
@@ -551,10 +541,7 @@ Upon selection, the right pane will be updated with the plugin name &
 plugin documentation. Two buttons will allow to de/activate the plugin
 (or see plugin error message) and set plugin preferences.
 
-
 Double-clicking on a plugin in the list will de/activate it.
-
-
 
 =head1 PUBLIC API
 
@@ -568,10 +555,7 @@ Create and return a new Wx dialog listing all the plugins. It needs a
 C<$parent> window and a C<Padre::PluginManager> object that really
 handles Padre plugins under the hood.
 
-
 =back
-
-
 
 =head2 Public methods
 
@@ -582,10 +566,7 @@ handles Padre plugins under the hood.
 Request the plugin manager dialog to be shown. It will be refreshed
 first with a current list of plugins with their state.
 
-
 =back
-
-
 
 =head1 COPYRIGHT & LICENSE
 
@@ -594,9 +575,7 @@ Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl 5 itself.
 
-
 =cut
-
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
