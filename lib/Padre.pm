@@ -953,7 +953,7 @@ Scintilla.
 
 =item L<Padre::Wx::History::ComboBox>
 
-=item L<Padre::Wx::History::TextDialog>
+=item L<Padre::Wx::History::TextEntryDialog>
 
 =item L<Padre::Wx::Main>
 

@@ -1394,8 +1394,8 @@ Note: it probably needs to be combined with C<run_command()> itself.
 sub on_run_command {
 	my $main = shift;
 
-	require Padre::Wx::History::TextDialog;
-	my $dialog = Padre::Wx::History::TextDialog->new(
+	require Padre::Wx::History::TextEntryDialog;
+	my $dialog = Padre::Wx::History::TextEntryDialog->new(
 		$main,
 		Wx::gettext("Command line"),
 		Wx::gettext("Run setup"),
@@ -1832,8 +1832,8 @@ sub prompt {
 	my $subtitle = shift || "Subtitle";
 	my $key      = shift || "GENERIC";
 
-	require Padre::Wx::History::TextDialog;
-	my $dialog = Padre::Wx::History::TextDialog->new(
+	require Padre::Wx::History::TextEntryDialog;
+	my $dialog = Padre::Wx::History::TextEntryDialog->new(
 		$self, $title, $subtitle, $key,
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -3605,8 +3605,8 @@ sub on_tab_and_space {
 		? Wx::gettext('Space to Tab')
 		: Wx::gettext('Tab to Space');
 
-	require Padre::Wx::History::TextDialog;
-	my $dialog = Padre::Wx::History::TextDialog->new(
+	require Padre::Wx::History::TextEntryDialog;
+	my $dialog = Padre::Wx::History::TextEntryDialog->new(
 		$self, Wx::gettext('How many spaces for each tab:'), $title, $type,
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -3680,10 +3680,12 @@ sub on_delete_leading_space {
 		return;
 	}
 
-	require Padre::Wx::History::TextDialog;
-	my $dialog = Padre::Wx::History::TextDialog->new(
-		$self,                  'How many leading spaces to delete(1 tab == 4 spaces):',
-		'Delete Leading Space', 'fay_delete_leading_space',
+	require Padre::Wx::History::TextEntryDialog;
+	my $dialog = Padre::Wx::History::TextEntryDialog->new(
+		$self,
+		'How many leading spaces to delete(1 tab == 4 spaces):',
+		'Delete Leading Space',
+		'fay_delete_leading_space',
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
