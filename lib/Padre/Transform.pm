@@ -25,10 +25,6 @@ use Params::Util qw{ _INSTANCE };
 
 our $VERSION = '0.35';
 
-
-
-
-
 #####################################################################
 # Constructor
 
@@ -44,12 +40,8 @@ Takes arbitrary key/value pair params and returns a new object.
 
 sub new {
 	my $class = shift;
-	bless { @_ }, $class;
+	bless {@_}, $class;
 }
-
-
-
-
 
 #####################################################################
 # Main Methods
@@ -67,9 +59,9 @@ or throws an exception on error.
 =cut
 
 sub apply {
-	my $self     = shift;
-	my $document = _INSTANCE(shift, 'Padre::Document');
-	unless ( $document ) {
+	my $self = shift;
+	my $document = _INSTANCE( shift, 'Padre::Document' );
+	unless ($document) {
 		die('Did not provide a Padre::Document object to apply');
 	}
 

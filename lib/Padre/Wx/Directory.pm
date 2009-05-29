@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use File::Basename ();
-use Params::Util   qw{_INSTANCE};
+use Params::Util qw{_INSTANCE};
 use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
@@ -23,11 +23,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT
-		| Wx::wxTR_SINGLE
-		| Wx::wxTR_HAS_BUTTONS
-		| Wx::wxBORDER_NONE
-		| Wx::wxTR_LINES_AT_ROOT
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS | Wx::wxBORDER_NONE | Wx::wxTR_LINES_AT_ROOT
 	);
 	$self->SetIndent(10);
 	$self->{force_next} = 0;
@@ -127,7 +123,7 @@ sub update_gui {
 	my $filename = Padre::Current->filename;
 	return if not $filename;
 	my $dir = Padre::Util::get_project_dir($filename)
-	       || File::Basename::dirname($filename);
+		|| File::Basename::dirname($filename);
 
 	# TODO empty CACHE if forced ?
 	# TODO how to recognize real change in ?
@@ -188,6 +184,7 @@ sub _on_tree_item_right_click {
 		Wx::Event::EVT_MENU(
 			$dir, $pod,
 			sub {
+
 				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				require Padre::Wx::DocBrowser;
 				my $help = Padre::Wx::DocBrowser->new;
@@ -227,11 +224,12 @@ sub _update_treectrl {
 				$root,
 				$pkg->{name},
 				-1, -1,
-				Wx::TreeItemData->new( {
-					dir  => $pkg->{dir},
-					name => $pkg->{name},
-					type => 'package',
-				} )
+				Wx::TreeItemData->new(
+					{   dir  => $pkg->{dir},
+						name => $pkg->{name},
+						type => 'package',
+					}
+				)
 			);
 			$dir->Expand($branch);
 		}

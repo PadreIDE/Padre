@@ -21,7 +21,7 @@ sub new {
 	# as a type value in the database history table.
 	my $type = $params[3];
 	$params[3] = Padre::DB::History->previous($type);
-	if ( Params::Util::_INSTANCE($params[3], 'Padre::DB::History') ) {
+	if ( Params::Util::_INSTANCE( $params[3], 'Padre::DB::History' ) ) {
 		$params[3] = $params[3]->name;
 	}
 	unless ( defined $params[3] ) {
@@ -47,6 +47,7 @@ sub ShowModal {
 	# Get the return value as normal
 	my $rv = $self->{OBJECT}->ShowModal(@_);
 	unless ( $rv == Wx::wxID_OK ) {
+
 		# They hit Cancel
 		return $rv;
 	}

@@ -25,7 +25,7 @@ Sending and receiving data via HTTP.
 
 use strict;
 use warnings;
-use Params::Util   qw{_INSTANCE};
+use Params::Util qw{_INSTANCE};
 use HTTP::Request  ();
 use HTTP::Response ();
 use Padre::Task    ();
@@ -33,15 +33,10 @@ use Padre::Task    ();
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Task';
 
-use Class::XSAccessor
-	getters => {
-		request  => 'request',
-		response => 'response',
-	};
-
-
-
-
+use Class::XSAccessor getters => {
+	request  => 'request',
+	response => 'response',
+};
 
 ######################################################################
 # Constructor
@@ -66,11 +61,12 @@ Returns a new L<Padre::Task::LWP> object, or throws an exception on error.
 =cut
 
 sub new {
-	my $self = shift->SUPER::new( @_,
+	my $self = shift->SUPER::new(
+		@_,
 		response => undef,
 	);
 
-	unless ( _INSTANCE($self->request, 'HTTP::Request') ) {
+	unless ( _INSTANCE( $self->request, 'HTTP::Request' ) ) {
 		Carp::croak("Missing or invalid 'request' for Padre::Task::LWP");
 	}
 
@@ -96,10 +92,6 @@ of the HTTP call.
 
 =cut
 
-
-
-
-
 ######################################################################
 # Padre::Task Methods
 
@@ -110,7 +102,7 @@ sub run {
 	require LWP::UserAgent;
 	$self->{response} = LWP::UserAgent->new(
 		agent => "Padre/$VERSION",
-	)->request($self->request);
+	)->request( $self->request );
 
 	# Remove the CODE references from the response.
 	# They aren't needed any more, and they won't survive

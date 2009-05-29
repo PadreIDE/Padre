@@ -30,9 +30,9 @@ From the main L<Padre> object, it can be accessed via the C<wx> method.
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
+use Carp ();
 use Params::Util qw{ _INSTANCE };
-use Padre::Wx    ();
+use Padre::Wx ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::App';
@@ -93,7 +93,7 @@ sub config {
 #####################################################################
 # Wx Methods
 
-sub OnInit { 1 }
+sub OnInit {1}
 
 1;
 

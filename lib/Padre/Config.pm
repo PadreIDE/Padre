@@ -20,13 +20,13 @@ use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 
-our $VERSION  = '0.35';
+our $VERSION = '0.35';
 
 # Master storage of the settings
-our %SETTING  = ();
+our %SETTING = ();
 
 # A cache for the defaults
-our %DEFAULT  = ();
+our %DEFAULT = ();
 
 # The configuration revision.
 # (Functionally similar to the database revision)
@@ -50,6 +50,7 @@ use Class::XSAccessor::Array getters => {
 
 my %settings = (
 	human => [
+
 		# for each setting, add an array ref:
 		# [ $setting_name, $setting_type, $setting_default ]
 
@@ -184,10 +185,10 @@ sub new {
 	my $class = shift;
 	my $host  = shift;
 	my $human = shift;
-	unless ( Params::Util::_INSTANCE($host, 'Padre::Config::Host') ) {
+	unless ( Params::Util::_INSTANCE( $host, 'Padre::Config::Host' ) ) {
 		Carp::croak("Did not provide a host config to Padre::Config->new");
 	}
-	unless ( Params::Util::_INSTANCE($human, 'Padre::Config::Human') ) {
+	unless ( Params::Util::_INSTANCE( $human, 'Padre::Config::Human' ) ) {
 		Carp::croak("Did not provide a user config to Padre::Config->new");
 	}
 
@@ -195,9 +196,9 @@ sub new {
 	my $self = bless [ $host, $human, undef ], $class;
 
 	# Add the optional third element
-	if ( @_ ) {
+	if (@_) {
 		my $project = shift;
-		unless ( Params::Util::_INSTANCE($project, 'Padre::Config::Project') ) {
+		unless ( Params::Util::_INSTANCE( $project, 'Padre::Config::Project' ) ) {
 			Carp::croak("Did not provide a project config to Padre::Config->new");
 		}
 		$self->[Padre::Constant::PROJECT] = $project;
@@ -259,13 +260,14 @@ sub default {
 sub read {
 	my $class = shift;
 
-	unless ( $SINGLETON ) {
+	unless ($SINGLETON) {
+
 		# Load the host configuration
 		my $host = Padre::Config::Host->read;
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-		         || Padre::Config::Human->create;
+			|| Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
@@ -298,6 +300,7 @@ sub write {
 # create a new setting, with %params used to feed the new object.
 #
 sub _setting {
+
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
 	if ( $SETTING{ $object->{name} } ) {
@@ -319,7 +322,7 @@ END_PERL
 
 	# Compile the accessor
 	eval $code;    ## no critic
-	if ( $@ ) {
+	if ($@) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}
 

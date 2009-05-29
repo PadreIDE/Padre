@@ -26,7 +26,7 @@ our %MIME_STYLE = (
 	'text/x-makefile'    => 'make',
 	'text/x-yaml'        => 'yaml',
 	'text/css'           => 'css',
-	'application/x-php' => 'perl', # temporary solution
+	'application/x-php'  => 'perl',    # temporary solution
 );
 
 my $data;
@@ -77,10 +77,11 @@ sub data {
 	return $data if not defined $name;
 	return $data if defined $data and $name eq $data_name;
 
-	my $file = $private
+	my $file
+		= $private
 		? File::Spec->catfile(
-			Padre::Constant::CONFIG_DIR,
-			'styles', "$name.yml"
+		Padre::Constant::CONFIG_DIR,
+		'styles', "$name.yml"
 		)
 		: Padre::Util::sharefile( 'styles', "$name.yml" );
 	my $tdata;
@@ -109,7 +110,7 @@ sub padre_setup {
 
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
-	$self->SetCodePage(65001);    
+	$self->SetCodePage(65001);
 
 	my $mimetype = $self->{Document}->get_mimetype;
 	if ( $MIME_STYLE{$mimetype} ) {
@@ -224,12 +225,14 @@ sub setup_style_from_config {
 
 sub _color {
 	my $rgb = shift;
-	my @c   = ( 0xFF, 0xFF, 0xFF );
+	my @c = ( 0xFF, 0xFF, 0xFF );
 	if ( not defined $rgb ) {
+
 		#Carp::cluck("undefined color");
 	} elsif ( $rgb =~ /^(..)(..)(..)$/ ) {
 		@c = map { hex($_) } ( $1, $2, $3 );
 	} else {
+
 		#Carp::cluck("invalid color '$rgb'");
 	}
 	return Wx::Colour->new(@c);
@@ -757,7 +760,8 @@ sub on_right_down {
 
 	my $commentToggle = $menu->Append( -1, Wx::gettext("&Toggle Comment\tCtrl-Shift-C") );
 	Wx::Event::EVT_MENU(
-		$main, $commentToggle,
+		$main,
+		$commentToggle,
 		sub {
 			Padre::Wx::Main::on_comment_toggle_block(@_);
 		},
@@ -771,7 +775,8 @@ sub on_right_down {
 	);
 	my $uncomment = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
 	Wx::Event::EVT_MENU(
-		$main, $uncomment,
+		$main,
+		$uncomment,
 		sub {
 			Padre::Wx::Main::on_uncomment_block(@_);
 		},
@@ -819,9 +824,9 @@ sub on_right_down {
 	if ( $doc->can('event_on_right_down') ) {
 		$doc->event_on_right_down( $self, $menu, $event );
 	}
-	
+
 	# Let the plugins have a go
-	Padre->ide->plugin_manager->on_context_menu($doc, $self, $menu, $event);
+	Padre->ide->plugin_manager->on_context_menu( $doc, $self, $menu, $event );
 
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
@@ -829,7 +834,6 @@ sub on_right_down {
 		$self->PopupMenu( $menu, 50, 50 );    # TODO better location
 	}
 }
-
 
 sub on_mouse_motion {
 	my ( $self, $event ) = @_;
@@ -847,11 +851,9 @@ sub on_mouse_motion {
 		$offset2 += 18;
 	}
 
-	if (
-		$mousePos->x < ($firstPointInLine->x - $offset1)
-		and
-		$mousePos->x > ($firstPointInLine->x - $offset2)
-	) {
+	if (    $mousePos->x < ( $firstPointInLine->x - $offset1 )
+		and $mousePos->x > ( $firstPointInLine->x - $offset2 ) )
+	{
 		unless ( $self->MarkerGet($line) ) {
 			$self->CallTipCancel;
 			return;
@@ -948,18 +950,17 @@ sub current_paragraph {
 
 sub put_text_to_clipboard {
 	my ( $self, $text ) = @_;
-	@_ = (); # Feeble attempt to kill Scalars Leaked
+	@_ = ();    # Feeble attempt to kill Scalars Leaked
 
 	Wx::wxTheClipboard->Open;
-	Wx::wxTheClipboard->SetData(
-		Wx::TextDataObject->new($text)
-	);
+	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
 	Wx::wxTheClipboard->Close;
 
 	return;
 }
 
 sub get_text_from_clipboard {
+
 	# This is to be used as a method even if we don't use $self!
 	# my $self = shift;
 	my $text = '';
@@ -1096,9 +1097,7 @@ sub configure_editor {
 }
 
 sub goto_line_centerize {
-	$_[0]->goto_pos_centerize(
-		$_[0]->PositionFromLine($_[1])
-	);
+	$_[0]->goto_pos_centerize( $_[0]->PositionFromLine( $_[1] ) );
 }
 
 # borrowed from Kephra

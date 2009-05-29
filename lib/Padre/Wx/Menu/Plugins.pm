@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Params::Util    ();
 use Padre::Constant ();
-use Padre::Current  qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 use Padre::Config   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
@@ -48,9 +48,7 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("Plugin List (CPAN)") ),
 		sub {
-			Padre::Wx::launch_browser(
-				'http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist'
-			);
+			Padre::Wx::launch_browser( 'http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist' );
 		},
 	);
 
@@ -64,9 +62,7 @@ sub new {
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error(
-				Wx::gettext("Could not find the Padre::Plugin::My plugin")
-			) unless -e $file;
+			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plugin") ) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
@@ -172,10 +168,10 @@ sub add_plugin_specific_entries {
 }
 
 sub remove_plugin_specific_entries {
-	my $self    = shift;
+	my $self = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while ( @$entries ) {
+	while (@$entries) {
 		$self->Destroy( pop @$entries );
 	}
 	$self->{plugin_menus} = $entries;

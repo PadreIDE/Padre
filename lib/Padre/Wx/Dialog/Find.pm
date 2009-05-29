@@ -16,7 +16,7 @@ Inherits from C<Padre::Wx::Dialog>.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util      qw{_STRING};
+use Params::Util qw{_STRING};
 use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
@@ -114,7 +114,8 @@ be separated?
 sub create_dialog {
 	my $self   = shift;
 	my $config = Padre->ide->config;
-	my $title  = $self->{dialog_type} eq 'replace'
+	my $title
+		= $self->{dialog_type} eq 'replace'
 		? Wx::gettext('Replace')
 		: Wx::gettext('Find');
 
@@ -125,9 +126,9 @@ sub create_dialog {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION
-		| Wx::wxRESIZE_BORDER
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU,
+			| Wx::wxRESIZE_BORDER
+			| Wx::wxCLOSE_BOX
+			| Wx::wxSYSTEM_MENU,
 	);
 
 	my $main_sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
@@ -166,7 +167,7 @@ sub create_dialog {
 	if ( $self->{dialog_type} eq 'replace' ) {
 		$self->add_widget(
 			'_replace_',
-			Wx::Button->new( $self->{dialog},Wx::wxID_REPLACE, Wx::gettext("&Replace") )
+			Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE, Wx::gettext("&Replace") )
 		);
 		$self->add_widget(
 			'_replace_all_',
@@ -184,8 +185,8 @@ sub create_dialog {
 	);
 
 	# Find sizer begins here
-	my $find_sizer = Wx::StaticBoxSizer->new( Wx::StaticBox->new
-		( $self->{dialog}, -1, Wx::gettext('Find') ),
+	my $find_sizer = Wx::StaticBoxSizer->new(
+		Wx::StaticBox->new( $self->{dialog}, -1, Wx::gettext('Find') ),
 		Wx::wxVERTICAL
 	);
 	$main_sizer->Add( $find_sizer, 2, Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL, 5 );
@@ -211,8 +212,8 @@ sub create_dialog {
 
 	# Replace sizer begins here
 	if ( $self->{dialog_type} eq 'replace' ) {
-		my $replace_sizer = Wx::StaticBoxSizer->new( Wx::StaticBox->new
-			( $self->{dialog}, -1, Wx::gettext('Replace With') ),
+		my $replace_sizer = Wx::StaticBoxSizer->new(
+			Wx::StaticBox->new( $self->{dialog}, -1, Wx::gettext('Replace With') ),
 			Wx::wxVERTICAL
 		);
 		$main_sizer->Add(
@@ -411,7 +412,7 @@ sub find {
 
 	my $text = $main->current->text;
 	$text = '' if not defined $text;
-	
+
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and replace and not as the string to be used
 	$text = '' if $text =~ /\n/;
@@ -682,7 +683,8 @@ sub _get_regex {
 sub _get_replace {
 	my $self = shift;
 
-	my $replace = $self->get_widget_value('_replace_choice_') eq ''
+	my $replace
+		= $self->get_widget_value('_replace_choice_') eq ''
 		? ''
 		: Padre::DB::History->previous('replace');
 

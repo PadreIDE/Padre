@@ -2,9 +2,9 @@ package Padre::Wx::ErrorList;
 
 use strict;
 use warnings;
-use Encode                   ();
-use Padre::Wx                ();
-use Padre::Locale            ();
+use Encode        ();
+use Padre::Wx     ();
+use Padre::Locale ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::TreeCtrl';
@@ -28,9 +28,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HAS_BUTTONS
-		| Wx::wxTR_HIDE_ROOT
-		| Wx::wxTR_LINES_AT_ROOT
+		Wx::wxTR_HAS_BUTTONS | Wx::wxTR_HIDE_ROOT | Wx::wxTR_LINES_AT_ROOT
 	);
 
 	$self->Hide;

@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{ _INSTANCE };
-use Padre::Wx   ();
+use Padre::Wx ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Wx::FileDropTarget';

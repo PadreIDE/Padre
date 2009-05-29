@@ -22,18 +22,18 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd                       ();
-use Carp                      ();
-use File::Spec                ();
-use File::HomeDir             ();
-use File::Basename            ();
-use File::Temp                ();
-use List::Util                ();
-use Scalar::Util              ();
-use Params::Util              qw{_INSTANCE};
-use Padre::Util               ();
-use Padre::Locale             ();
-use Padre::Current            qw{_CURRENT};
+use Cwd            ();
+use Carp           ();
+use File::Spec     ();
+use File::HomeDir  ();
+use File::Basename ();
+use File::Temp     ();
+use List::Util     ();
+use Scalar::Util   ();
+use Params::Util qw{_INSTANCE};
+use Padre::Util   ();
+use Padre::Locale ();
+use Padre::Current qw{_CURRENT};
 use Padre::Document           ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
@@ -85,7 +85,7 @@ object as argument, to get a reference to the Padre application.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE($ide, 'Padre') ) {
+	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 
@@ -118,12 +118,10 @@ sub new {
 	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
 		undef, -1, $title,
-		[
-			$config->main_left,
+		[   $config->main_left,
 			$config->main_top,
 		],
-		[
-			$config->main_width,
+		[   $config->main_width,
 			$config->main_height,
 		],
 		$style,
@@ -148,7 +146,7 @@ sub new {
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
-	$self->SetMinSize( Wx::Size->new(500, 400) );
+	$self->SetMinSize( Wx::Size->new( 500, 400 ) );
 
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
@@ -324,48 +322,48 @@ Accessors that may not belong to this class:
 
 =cut
 
-use Class::XSAccessor
-	predicates => {
-		has_outline   => 'outline',
-		has_directory => 'directory',
+use Class::XSAccessor predicates => {
+	has_outline   => 'outline',
+	has_directory => 'directory',
 	},
-	getters        => {
-		# GUI Elements
-		title         => 'title',
-		config        => 'config',
-		ide           => 'ide',
-		aui           => 'aui',
-		menu          => 'menu',
-		notebook      => 'notebook',
-		right         => 'right',
-		functions     => 'functions',
-		bottom        => 'bottom',
-		output        => 'output',
-		syntax        => 'syntax',
-		errorlist     => 'errorlist',
-	
-		# Operating Data
-		cwd           => 'cwd',
-		no_refresh    => '_no_refresh',
-	
-		# Things that are probably in the wrong place
-		ack           => 'ack',
+	getters => {
+
+	# GUI Elements
+	title     => 'title',
+	config    => 'config',
+	ide       => 'ide',
+	aui       => 'aui',
+	menu      => 'menu',
+	notebook  => 'notebook',
+	right     => 'right',
+	functions => 'functions',
+	bottom    => 'bottom',
+	output    => 'output',
+	syntax    => 'syntax',
+	errorlist => 'errorlist',
+
+	# Operating Data
+	cwd        => 'cwd',
+	no_refresh => '_no_refresh',
+
+	# Things that are probably in the wrong place
+	ack => 'ack',
 	};
 
 sub outline {
-	$_[0]->{outline} or
-	$_[0]->{outline} = do {
+	$_[0]->{outline}
+		or $_[0]->{outline} = do {
 		require Padre::Wx::Outline;
-		Padre::Wx::Outline->new($_[0]);
-	};
+		Padre::Wx::Outline->new( $_[0] );
+		};
 }
 
 sub directory {
-	$_[0]->{directory} or
-	$_[0]->{directory} = do {
+	$_[0]->{directory}
+		or $_[0]->{directory} = do {
 		require Padre::Wx::Directory;
-		Padre::Wx::Directory->new($_[0]);
-	};
+		Padre::Wx::Directory->new( $_[0] );
+		};
 }
 
 #####################################################################
@@ -391,6 +389,7 @@ sub load_files {
 
 	# explicit session on command line takes precedence
 	if ( defined $ide->opts->{session} ) {
+
 		# try to find the wanted session...
 		my ($session) = Padre::DB::Session->select(
 			'where name = ?',
@@ -538,7 +537,6 @@ sub freezer {
 
 =cut
 
-
 #####################################################################
 
 =pod
@@ -587,7 +585,7 @@ sub single_instance_start {
 
 	# there was an error during server creation, let's die... :-(
 	die( Wx::gettext("Failed to create server") );
-	
+
 }
 
 =pod
@@ -678,17 +676,18 @@ sub single_instance_command {
 	my $line = shift;
 
 	# $line should be defined
-	return 1 unless defined $line && length $line ;
-	
+	return 1 unless defined $line && length $line;
+
 	# ignore the line if command isn't plain ascii
 	return 1 unless $line =~ s/^(\S+)\s*//s;
 
 	if ( $1 eq 'focus' ) {
-                # try to give focus to padre ide. it might not work,
-                # since some window manager implement some kind of focus-
-                # stealing prevention.
-                
-                # first, let's deiconize padre if needed
+
+		# try to give focus to padre ide. it might not work,
+		# since some window manager implement some kind of focus-
+		# stealing prevention.
+
+		# first, let's deiconize padre if needed
 		$self->Iconize(0) if $self->IsIconized;
 
 		# now, let's raise padre
@@ -700,24 +699,24 @@ sub single_instance_command {
 
 	} elsif ( $1 eq 'open' ) {
 		if ( -f $line ) {
+
 			# If a file is already loaded switch to it instead
 			$self->notebook->show_file($line)
-			or
-			$self->setup_editors($line);
+				or $self->setup_editors($line);
 		}
 
 	} else {
+
 		# d'oh! embedded server can't do anything
 		warn("Unsupported command '$1'");
 	}
-	
+
 	return 1;
 }
 
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -738,7 +737,6 @@ sub window_width {
 	( $_[0]->GetSizeWH )[0];
 }
 
-
 =item * my $width = $main->window_height;
 
 Return the main window height.
@@ -749,7 +747,6 @@ sub window_height {
 	( $_[0]->GetSizeWH )[1];
 }
 
-
 =item * my $left = $main->window_left;
 
 Return the main window position from the left of the screen.
@@ -759,7 +756,6 @@ Return the main window position from the left of the screen.
 sub window_left {
 	( $_[0]->GetPositionXY )[0];
 }
-
 
 =item * my $top = $main->window_top;
 
@@ -774,7 +770,6 @@ sub window_top {
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -822,7 +817,6 @@ sub refresh {
 	return;
 }
 
-
 =head3 $main->refresh_syntaxcheck;
 
 Do a refresh of document syntax checking. This is a "rapid" change,
@@ -838,7 +832,6 @@ sub refresh_syntaxcheck {
 	return;
 }
 
-
 =head3 $main->refresh_menu;
 
 Force a refresh of all menus. It can enable / disable menu entries
@@ -852,7 +845,6 @@ sub refresh_menu {
 	$self->menu->refresh;
 }
 
-
 =head3 $main->refresh_menubar;
 
 Force a refresh of Padre's menubar.
@@ -864,7 +856,6 @@ sub refresh_menubar {
 	return if $self->no_refresh;
 	$self->menu->refresh_top;
 }
-
 
 =head3 $main->refresh_toolbar;
 
@@ -899,9 +890,10 @@ Force a refresh of the function list on the right.
 =cut
 
 sub refresh_functions {
-        # TODO now on every ui chnage (move of the mouse) we refresh
-        # this even though that should not be necessary can that be
-        # eliminated ?
+
+	# TODO now on every ui chnage (move of the mouse) we refresh
+	# this even though that should not be necessary can that be
+	# eliminated ?
 
 	my $self = shift;
 	return if $self->no_refresh;
@@ -950,10 +942,6 @@ sub refresh_functions {
 	return;
 }
 
-
-
-
-
 #####################################################################
 
 =head2 Interface Rebuilding Methods
@@ -979,6 +967,7 @@ sub change_style {
 	foreach my $editor ( $self->editors ) {
 		$editor->padre_setup;
 	}
+
 	# Save editor style configuration
 	$self->config->set( editor_style => $name );
 	$self->config->write;
@@ -1019,7 +1008,6 @@ sub change_locale {
 
 	return;
 }
-
 
 =item * $main->relocale;
 
@@ -1126,7 +1114,6 @@ sub rebuild_toolbar {
 
 =cut
 
-
 #####################################################################
 
 =pod
@@ -1178,7 +1165,7 @@ the panel.
 =cut
 
 sub show_outline {
-	my $self    = shift;
+	my $self = shift;
 
 	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 	unless ( $on == $self->menu->view->{outline}->IsChecked ) {
@@ -1187,7 +1174,7 @@ sub show_outline {
 	$self->config->set( main_outline => $on );
 	$self->config->write;
 
-	if ( $on ) {
+	if ($on) {
 		my $outline = $self->outline;
 		$self->right->show($outline);
 		$outline->start unless $outline->running;
@@ -1213,7 +1200,6 @@ the panel.
 
 =cut
 
-
 sub show_directory {
 	my $self = shift;
 
@@ -1224,12 +1210,12 @@ sub show_directory {
 	$self->config->set( main_directory => $on );
 	$self->config->write;
 
-	if ( $on ) {
+	if ($on) {
 		my $directory = $self->directory;
 		$self->right->show($directory);
 		$directory->update_gui;
 	} elsif ( $self->has_directory ) {
-		$self->right->hide($self->directory);
+		$self->right->hide( $self->directory );
 	}
 
 	$self->aui->Update;
@@ -1237,7 +1223,6 @@ sub show_directory {
 
 	return;
 }
-
 
 =item * $main->show_output( $visible );
 
@@ -1267,7 +1252,6 @@ sub show_output {
 
 	return;
 }
-
 
 =item * $main->show_syntax( $visible );
 
@@ -1304,7 +1288,6 @@ sub show_syntax {
 
 =cut
 
-
 #####################################################################
 
 =pod
@@ -1328,7 +1311,6 @@ sub current {
 	Padre::Current->new( main => $_[0] );
 }
 
-
 =item * my @ids = $main->pageids;
 
 Return a list of all current tab ids (integers) within the notebook.
@@ -1338,7 +1320,6 @@ Return a list of all current tab ids (integers) within the notebook.
 sub pageids {
 	return ( 0 .. $_[0]->notebook->GetPageCount - 1 );
 }
-
 
 =item * my @pages = $main->pages;
 
@@ -1351,7 +1332,6 @@ sub pages {
 	my $notebook = $_[0]->notebook;
 	return map { $notebook->GetPage($_) } $_[0]->pageids;
 }
-
 
 =item * my @editors = $main->editors;
 
@@ -1371,7 +1351,6 @@ sub editors {
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -1414,7 +1393,6 @@ sub on_run_command {
 	return;
 }
 
-
 =item * $main->on_run_tests;
 
 Callback method, to run the project tests and harness them.
@@ -1439,7 +1417,6 @@ sub on_run_tests {
 	$self->run_command("prove -b $project_dir/t");
 	chdir $dir;
 }
-
 
 =item * $main->run_command( $command );
 
@@ -1519,7 +1496,6 @@ sub run_command {
 	return;
 }
 
-
 =item * $main->run_document( $debug )
 
 Run current document. If C<$debug> is true, document will be run with
@@ -1570,7 +1546,6 @@ sub run_document {
 	return;
 }
 
-
 =item * $main->debug_perl;
 
 Run current document under perl debugger. An error is reported if
@@ -1620,7 +1595,6 @@ sub debug_perl {
 
 =cut
 
-
 ######################################################################
 
 =head2 Session Support
@@ -1664,7 +1638,6 @@ sub capture_session {
 	return @session;
 }
 
-
 =item * $main->open_session( $session );
 
 Try to close all files, then open all files referenced in the given
@@ -1704,7 +1677,6 @@ sub open_session {
 	$self->Thaw;
 }
 
-
 =item * $main->save_session( $session, @session );
 
 Try to save C<@session> files (C<Padre::DB::SessionFile> objects, such
@@ -1727,7 +1699,6 @@ sub save_session {
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -1767,7 +1738,6 @@ sub error {
 	$_[0]->message( $_[1], Wx::gettext('Error') );
 }
 
-
 =item * my $find = $main->find;
 
 Return current find dialog. Create a new one if needed.
@@ -1784,7 +1754,6 @@ sub find {
 
 	return $self->{find_dialog};
 }
-
 
 =item * my $find = $main->fast_find;
 
@@ -1849,7 +1818,6 @@ sub prompt {
 
 =cut
 
-
 #####################################################################
 
 =head2 General Events
@@ -1887,7 +1855,6 @@ sub on_brace_matching {
 	return;
 }
 
-
 =item * $main->on_comment_toggle_block;
 
 Un/comment selected lines, depending on their current state.
@@ -1906,7 +1873,6 @@ sub on_comment_toggle_block {
 	$editor->comment_toggle_lines( $begin, $end, $string );
 	return;
 }
-
 
 =item * $main->on_comment_out_block;
 
@@ -1927,7 +1893,6 @@ sub on_comment_out_block {
 	return;
 }
 
-
 =item * $main->on_uncomment_block;
 
 Uncomment selected lines unilateraly.
@@ -1946,7 +1911,6 @@ sub on_uncomment_block {
 	$editor->uncomment_lines( $begin, $end, $string );
 	return;
 }
-
 
 =item * $main->on_autocompletition;
 
@@ -1972,7 +1936,6 @@ sub on_autocompletition {
 	return;
 }
 
-
 =item * $main->on_goto;
 
 Prompt user for a line, and jump to this line in current document.
@@ -1980,7 +1943,7 @@ Prompt user for a line, and jump to this line in current document.
 =cut
 
 sub on_goto {
-	my $self   = shift;
+	my $self        = shift;
 	my $line_number = $self->prompt(
 		Wx::gettext("Line number:"),
 		Wx::gettext("Go to line number"),
@@ -2055,10 +2018,10 @@ sub on_close_window {
 	# This knocks about quarter of a second off the speed
 	# at which Padre appears to close.
 	$self->Show(0);
-	
+
 	# Stop all Task Manager's worker threads
 	$self->ide->task_manager->cleanup;
-	
+
 	Padre::Util::debug("Finished TaskManager's cleanup");
 
 	# Save the window geometry
@@ -2131,7 +2094,6 @@ sub on_split_window {
 	return;
 }
 
-
 =item * $main->setup_editors( @files );
 
 Setup (new) tabs for C<@files>, and update the GUI. If C<@files> is undef, open
@@ -2144,10 +2106,11 @@ sub setup_editors {
 	my @files = @_;
 	Padre::Util::debug("setup_editors @files");
 	SCOPE: {
+
 		# Lock both Perl and Wx-level updates
 		local $self->{_no_refresh} = 1;
 		my $guard = $self->freezer;
- 
+
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
 		# subtle interface DWIM trick, but it's one that
@@ -2158,8 +2121,8 @@ sub setup_editors {
 			}
 		}
 
-		if ( @files ) {
-			foreach my $f ( @files ) {
+		if (@files) {
+			foreach my $f (@files) {
 				$self->setup_editor($f);
 			}
 		} else {
@@ -2176,7 +2139,6 @@ sub setup_editors {
 	return;
 }
 
-
 =item * $main->on_new;
 
 Create a new empty tab. No return value.
@@ -2190,7 +2152,6 @@ sub on_new {
 	$_[0]->refresh;
 	return;
 }
-
 
 =item * $main->setup_editor( $file );
 
@@ -2285,7 +2246,6 @@ sub setup_editor {
 	return $id;
 }
 
-
 =item * my $tab = $main->create_tab;
 
 Create a new tab in the notebook, and return its id (an integer).
@@ -2300,7 +2260,6 @@ sub create_tab {
 	$self->refresh;
 	return $id;
 }
-
 
 =item * $main->on_open_selection;
 
@@ -2364,7 +2323,7 @@ sub on_open_selection {
 			}
 		}
 	}
-	unless ( $file ) { # and we are in a Perl environment
+	unless ($file) {    # and we are in a Perl environment
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
@@ -2400,7 +2359,6 @@ sub on_open_selection {
 	return;
 }
 
-
 =item * $main->on_open_all_recent_files;
 
 Try to open all recent files within Padre. No return value.
@@ -2415,7 +2373,6 @@ sub on_open_all_recent_files {
 	$_[0]->setup_editors( reverse @$files );
 }
 
-
 =item * $main->on_open;
 
 Prompt user for file(s) to open, and open them as new tabs. No
@@ -2426,7 +2383,7 @@ return value.
 sub on_open {
 	my $self     = shift;
 	my $filename = $self->current->filename;
-	if ( $filename ) {
+	if ($filename) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
 
@@ -2435,7 +2392,8 @@ sub on_open {
 	# limited: only one alternative is supported, and it is displayed without
 	# the descriptive text."
 	# But I don't think Wx + Motif is in use nowadays
-	my $wildcards = join( '|',
+	my $wildcards = join(
+		'|',
 		Wx::gettext("JavaScript Files"), "*.js;*.JS",
 		Wx::gettext("Perl Files"),       "*.pm;*.PM;*.pl;*.PL",
 		Wx::gettext("PHP Files"),        "*.php;*.php5;*.PHP",
@@ -2445,9 +2403,10 @@ sub on_open {
 		Wx::gettext("Text Files"),       "*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
 		Wx::gettext("Web Files"),        "*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
 	);
-	$wildcards = Padre::Util::WIN32
+	$wildcards
+		= Padre::Util::WIN32
 		? Wx::gettext("All Files") . "|*.*|" . $wildcards
-		: Wx::gettext("All Files") . "|*|"   . $wildcards;
+		: Wx::gettext("All Files") . "|*|" . $wildcards;
 	my $dialog = Wx::FileDialog->new(
 		$self,
 		Wx::gettext("Open File"),
@@ -2467,7 +2426,6 @@ sub on_open {
 
 	return;
 }
-
 
 =item * $main->on_reload_file;
 
@@ -2495,7 +2453,6 @@ sub on_reload_file {
 	}
 	return;
 }
-
 
 =item * my $was_saved = $main->on_save_as;
 
@@ -2562,7 +2519,6 @@ sub on_save_as {
 	return 1;
 }
 
-
 =item * my $success = $main->on_save;
 
 Try to save current document. Prompt user for a filename if document was
@@ -2591,7 +2547,6 @@ sub on_save {
 	return;
 }
 
-
 =item * my $success = $main->on_save_all;
 
 Try to save all opened documents. Return true if all documents were
@@ -2610,7 +2565,6 @@ sub on_save_all {
 	}
 	return 1;
 }
-
 
 =item * my $success = $main->_save_buffer( $id );
 
@@ -2652,7 +2606,6 @@ sub _save_buffer {
 
 	return 1;
 }
-
 
 =item * $main->on_close( $event );
 
@@ -2739,7 +2692,6 @@ sub close {
 	return 1;
 }
 
-
 =item * my $success = $main->on_close_all;
 
 Event called when menu item close all has been hit. Return true if all
@@ -2751,7 +2703,6 @@ sub on_close_all {
 	$_[0]->_close_all;
 }
 
-
 =item * my $success = $main->on_close_all_but_current;
 
 Event called when menu item close all but current has been hit. Return
@@ -2762,7 +2713,6 @@ true upon success, false otherwise.
 sub on_close_all_but_current {
 	$_[0]->_close_all( $_[0]->notebook->GetSelection );
 }
-
 
 =item * my $success = $main->_on_close_all( $skip );
 
@@ -2785,7 +2735,6 @@ sub _close_all {
 	return 1;
 }
 
-
 =item * $main->on_nth_pane( $id );
 
 Put focus on tab C<$id> in the notebook. Return true upon success, false
@@ -2805,7 +2754,6 @@ sub on_nth_pane {
 	}
 	return;
 }
-
 
 =item * $main->on_next_pane;
 
@@ -2829,7 +2777,6 @@ sub on_next_pane {
 	return;
 }
 
-
 =item * $main->on_prev_pane;
 
 Put focus on tab previous to current document. Currently, only right to
@@ -2852,7 +2799,6 @@ sub on_prev_pane {
 	return;
 }
 
-
 =item * $main->on_diff;
 
 Run C<Text::Diff> between current document and its last saved content on
@@ -2869,20 +2815,21 @@ sub on_diff {
 	unless ($file) {
 		return $self->error( Wx::gettext("Cannot diff if file was never saved") );
 	}
-	
+
 	my $external_diff = $self->config->external_diff_tool;
 	if ($external_diff) {
 		my $dir = File::Temp::tempdir( CLEANUP => 1 );
-		my $filename = File::Spec->catdir($dir, 'IN_EDITOR' . File::Basename::basename($file));
-		if (open my $fh, '>', $filename) {
+		my $filename = File::Spec->catdir( $dir, 'IN_EDITOR' . File::Basename::basename($file) );
+		if ( open my $fh, '>', $filename ) {
 			print $fh $text;
 			CORE::close($fh);
-			system($external_diff, $filename, $file);
+			system( $external_diff, $filename, $file );
 		} else {
 			$self->error($!);
 		}
+
 		# save current version in a temp directory
-		# run the external diff on the original and the launch the 
+		# run the external diff on the original and the launch the
 	} else {
 		require Text::Diff;
 		my $diff = Text::Diff::diff( $file, \$text );
@@ -2897,7 +2844,6 @@ sub on_diff {
 
 	return;
 }
-
 
 =item * $main->on_join_lines;
 
@@ -2932,7 +2878,6 @@ sub on_join_lines {
 
 =cut
 
-
 ######################################################################
 
 =head2 Preferences and toggle methods
@@ -2957,7 +2902,6 @@ sub zoom {
 	}
 }
 
-
 =item * $main->on_preferences;
 
 Open Padre's preferences dialog. No return value.
@@ -2979,7 +2923,6 @@ sub on_preferences {
 
 	return;
 }
-
 
 =item * $main->on_toggle_line_numbers;
 
@@ -3003,7 +2946,6 @@ sub on_toggle_line_numbers {
 	return;
 }
 
-
 =item * $main->on_toggle_code_folding;
 
 De/activate code folding. No return value.
@@ -3026,7 +2968,6 @@ sub on_toggle_code_folding {
 	return;
 }
 
-
 =item * $main->on_toggle_currentline;
 
 Toggle overlining of current line. No return value.
@@ -3048,7 +2989,6 @@ sub on_toggle_currentline {
 	return;
 }
 
-
 =item * $main->on_toggle_syntax_check;
 
 Toggle visibility of syntax panel. No return value.
@@ -3066,7 +3006,6 @@ sub on_toggle_syntax_check {
 	$self->ide->save_config;
 	return;
 }
-
 
 =item * $main->on_toggle_errorlist;
 
@@ -3089,7 +3028,6 @@ sub on_toggle_errorlist {
 	$self->ide->save_config;
 	return;
 }
-
 
 =item * $main->on_toggle_indentation_guide;
 
@@ -3115,7 +3053,6 @@ sub on_toggle_indentation_guide {
 	return;
 }
 
-
 =item * $main->on_toggle_eol;
 
 Toggle visibility of end of line cariage returns. No return value.
@@ -3140,7 +3077,6 @@ sub on_toggle_eol {
 	return;
 }
 
-
 =item * $main->on_toggle_whitespaces;
 
 Show/hide spaces and tabs (with dots and arrows respectively). No
@@ -3164,11 +3100,10 @@ sub on_toggle_whitespaces {
 	foreach my $editor ( $self->editors ) {
 		$editor->SetViewWhiteSpace( $config->editor_whitespace );
 	}
-	
+
 	# Save configuration
 	$config->write;
 }
-
 
 =item * $main->on_word_wrap;
 
@@ -3191,7 +3126,6 @@ sub on_word_wrap {
 		$doc->editor->SetWrapMode(Wx::wxSTC_WRAP_NONE);
 	}
 }
-
 
 =item * $main->on_toggle_statusbar;
 
@@ -3217,7 +3151,7 @@ sub on_toggle_statusbar {
 	} else {
 		$self->GetStatusBar->Hide;
 	}
-	
+
 	# Save configuration
 	$self->config->write;
 
@@ -3296,7 +3230,6 @@ sub on_insert_from_file {
 	return;
 }
 
-
 =item * $main->convert_to( $eol_style );
 
 Convert document to C<$eol_style> line endings (can be one of C<WIN>,
@@ -3322,7 +3255,6 @@ sub convert_to {
 	$self->refresh;
 }
 
-
 =item * my $editor = $main->find_editor_of_file( $file );
 
 Return the editor (a C<Padre::Wx::Editor> object) containing the wanted
@@ -3342,7 +3274,6 @@ sub find_editor_of_file {
 	}
 	return;
 }
-
 
 =item * my $id = $main->find_id_of_editor( $editor );
 
@@ -3406,7 +3337,6 @@ sub run_in_padre {
 =back
 
 =cut
-
 
 ######################################################################
 
@@ -3486,7 +3416,6 @@ sub on_stc_update_ui {
 	return;
 }
 
-
 =item * $main->on_stc_change;
 
 Handler of the EVT_STC_CHANGE event. Doesn't do anythin. No
@@ -3497,7 +3426,6 @@ return value.
 sub on_stc_change {
 	return;
 }
-
 
 =item * $main->on_stc_char_added;
 
@@ -3519,7 +3447,6 @@ sub on_stc_char_added {
 	}
 	return;
 }
-
 
 =item * $main->on_stc_dwell_start( $event );
 
@@ -3554,7 +3481,6 @@ sub on_aui_pane_close {
 	my ( $self, $event ) = @_;
 	my $pane = $event->GetPane;
 }
-
 
 =item * $main->on_doc_stats;
 
@@ -3598,7 +3524,6 @@ sub on_doc_stats {
 	return;
 }
 
-
 =item * $main->on_tab_and_space( $style );
 
 Convert current document from spaces to tabs (or vice-versa) depending
@@ -3613,7 +3538,8 @@ sub on_tab_and_space {
 	my $type    = shift;
 	my $current = $self->current;
 	my $doc     = $current->document or return;
-	my $title   = $type eq 'Space_to_Tab'
+	my $title
+		= $type eq 'Space_to_Tab'
 		? Wx::gettext('Space to Tab')
 		: Wx::gettext('Tab to Space');
 
@@ -3650,7 +3576,6 @@ sub on_tab_and_space {
 	}
 }
 
-
 =item * $main->on_delete_ending_space;
 
 Trim all ending spaces in current selection, or document if no text is
@@ -3676,7 +3601,6 @@ sub on_delete_ending_space {
 	}
 }
 
-
 =item * $main->on_delete_leading_space;
 
 Trim all leading spaces in current selection. No return value.
@@ -3687,7 +3611,7 @@ sub on_delete_leading_space {
 	my $self    = shift;
 	my $current = $self->current;
 	my $src     = $current->text;
-	unless ( $src ) {
+	unless ($src) {
 		$self->message('No selection');
 		return;
 	}
@@ -3773,7 +3697,7 @@ sub on_last_visited_pane {
 	if ( @$history >= 2 ) {
 		@$history[ -1, -2 ] = @$history[ -2, -1 ];
 		foreach my $i ( $self->pageids ) {
-			my $editor   = $_[0]->notebook->GetPage($i);
+			my $editor = $_[0]->notebook->GetPage($i);
 			if ( Scalar::Util::refaddr($editor) eq $history->[-1] ) {
 				$self->notebook->SetSelection($i);
 				last;
@@ -3817,7 +3741,6 @@ sub on_new_from_template {
 =back
 
 =cut
-
 
 #####################################################################
 
@@ -3965,7 +3888,6 @@ sub set_ppi_highlight {
 	return;
 }
 
-
 =item * $main->key_up( $event );
 
 Callback for when a key up C<$event> happens in Padre. This handles the various
@@ -4030,7 +3952,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
 
 1;
 

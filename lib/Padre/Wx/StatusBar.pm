@@ -41,9 +41,9 @@ use Padre::Wx      ();
 use Padre::Current ();
 
 use Class::XSAccessor accessors => {
-	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
-	_task_status => '_task_status', # Current task status
-	_task_width  => '_task_width',  # Current width of task field
+	_task_sbmp   => '_task_sbmp',      # Static bitmap holding the task status
+	_task_status => '_task_status',    # Current task status
+	_task_width  => '_task_width',     # Current width of task field
 };
 
 our $VERSION = '0.35';
@@ -343,8 +343,8 @@ sub _move_bitmap {
 	my $rect = $self->GetFieldRect(TASKLOAD);
 	my $size = $sbmp->GetSize;
 	$sbmp->Move(
-		$rect->GetLeft + ( $rect->GetWidth - $size->GetWidth )   / 2,
-		$rect->GetTop  + ( $rect->GetHeight - $size->GetHeight ) / 2,
+		$rect->GetLeft + ( $rect->GetWidth - $size->GetWidth ) / 2,
+		$rect->GetTop +  ( $rect->GetHeight - $size->GetHeight ) / 2,
 	);
 	$sbmp->Refresh;
 }

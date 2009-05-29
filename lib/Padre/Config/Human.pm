@@ -20,7 +20,7 @@ my $REVISION = 1;
 #
 sub create {
 	my $class = shift;
-	my $self  = bless { version => $REVISION }, $class;
+	my $self = bless { version => $REVISION }, $class;
 	$self->write;
 	return $self;
 }
@@ -32,11 +32,7 @@ sub read {
 	my $class = shift;
 
 	# Load the user configuration
-	my $hash = eval {
-		YAML::Tiny::LoadFile(
-			Padre::Constant::CONFIG_HUMAN
-		)
-	};
+	my $hash = eval { YAML::Tiny::LoadFile( Padre::Constant::CONFIG_HUMAN ) };
 	unless ( Params::Util::_HASH0($hash) ) {
 		return;
 	}
@@ -63,7 +59,7 @@ sub write {
 	# Save the unblessed clone of the user configuration hash
 	YAML::Tiny::DumpFile(
 		Padre::Constant::CONFIG_HUMAN,
-		Storable::dclone( +{ %$self } ),
+		Storable::dclone( +{%$self} ),
 	);
 
 	return 1;

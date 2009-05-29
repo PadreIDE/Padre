@@ -27,7 +27,7 @@ sub ppi_get {
 }
 
 sub ppi_set {
-	my $self     = shift;
+	my $self = shift;
 	my $document = _INSTANCE( shift, 'PPI::Document' );
 	unless ($document) {
 		Carp::croak("Did not provide a PPI::Document");
@@ -46,7 +46,7 @@ sub ppi_find_first {
 }
 
 sub ppi_transform {
-	my $self      = shift;
+	my $self = shift;
 	my $transform = _INSTANCE( shift, 'PPI::Transform' );
 	unless ($transform) {
 		Carp::croak("Did not provide a PPI::Transform");
@@ -118,15 +118,15 @@ sub colorize {
 	}
 
 	my %colors = (
-		keyword         => 4,    # dark green
-		structure       => 6,
-		core            => 1,    # red
-		pragma          => 7,    # purple
-		'Whitespace'    => 0,
-		'Structure'     => 0,
+		keyword      => 4,    # dark green
+		structure    => 6,
+		core         => 1,    # red
+		pragma       => 7,    # purple
+		'Whitespace' => 0,
+		'Structure'  => 0,
 
-		'Number'        => 1,
-		'Float'         => 1,
+		'Number' => 1,
+		'Float'  => 1,
 
 		'HereDoc'       => 4,
 		'Data'          => 4,
@@ -167,6 +167,7 @@ sub colorize {
 
 	#print "First $first lines $lines\n";
 	foreach my $t (@tokens) {
+
 		#print $t->content;
 		my ( $row, $rowchar, $col ) = @{ $t->location };
 
@@ -462,8 +463,8 @@ sub _get_current_symbol {
 	my $line_end     = $editor->GetLineEndPosition($line);
 	my $cursor_col   = $pos - $line_start;
 	my $line_content = $editor->GetTextRange( $line_start, $line_end );
-	$cursor_col = length($line_content)-1 if $cursor_col >= length($line_content);
-	my $col          = $cursor_col;
+	$cursor_col = length($line_content) - 1 if $cursor_col >= length($line_content);
+	my $col = $cursor_col;
 
 	# find start of symbol TODO: This could be more robust, no?
 	while (1) {
@@ -473,7 +474,7 @@ sub _get_current_symbol {
 		$col--;
 	}
 
-	return() if $col >= length($line_content);
+	return () if $col >= length($line_content);
 	if ( substr( $line_content, $col + 1, 1 ) !~ /^[#\w:\']$/ ) {
 		return ();
 	}
@@ -645,17 +646,17 @@ sub event_on_right_down {
 	my $event  = shift;
 
 	my $pos;
-	if ($event->isa("Wx::MouseEvent")) {
+	if ( $event->isa("Wx::MouseEvent") ) {
 		my $point = $event->GetPosition();
 		$pos = $editor->PositionFromPoint($point);
-	}
-	else {
+	} else {
+
 		# Fall back to the cursor position
 		$editor->GetCurrentPos();
 	}
 
 	my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
-	
+
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
 
@@ -707,15 +708,15 @@ sub event_on_left_up {
 	if ( $event->ControlDown ) {
 
 		my $pos;
-		if ($event->isa("Wx::MouseEvent")) {
+		if ( $event->isa("Wx::MouseEvent") ) {
 			my $point = $event->GetPosition();
 			$pos = $editor->PositionFromPoint($point);
-		}
-		else {
+		} else {
+
 			# Fall back to the cursor position
 			$editor->GetCurrentPos();
 		}
-		
+
 		my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
 
 		# Does it look like a variable?
@@ -726,7 +727,7 @@ sub event_on_left_up {
 		}
 
 		# Does it look like a function?
-		elsif (defined $location) {
+		elsif ( defined $location ) {
 			my ( $start, $end ) = Padre::Util::get_matches(
 				$editor->GetText,
 				$self->get_function_regex($token),

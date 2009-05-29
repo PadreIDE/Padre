@@ -93,11 +93,11 @@ or to set it to "Default by extension".
 use 5.008;
 use strict;
 use warnings;
-use Carp           ();
-use File::Spec     ();
-use Padre::Util    ();
-use Padre::Wx      ();
-use Padre          ();
+use Carp        ();
+use File::Spec  ();
+use Padre::Util ();
+use Padre::Wx   ();
+use Padre       ();
 
 our $VERSION = '0.35';
 
@@ -168,47 +168,47 @@ our %EXT_MIME = (
 # to confirm that the MIME type is either the official type, or the primary
 # one in use by the relevant language community.
 our %MIME_LEXER = (
-	'text/x-abc'                => Wx::wxSTC_LEX_CONTAINER,
+	'text/x-abc' => Wx::wxSTC_LEX_CONTAINER,
 
-	'text/x-adasrc'             => Wx::wxSTC_LEX_ADA,       # CONFIRMED
-	'text/x-asm'                => Wx::wxSTC_LEX_ASM,       # CONFIRMED
+	'text/x-adasrc' => Wx::wxSTC_LEX_ADA,    # CONFIRMED
+	'text/x-asm'    => Wx::wxSTC_LEX_ASM,    # CONFIRMED
 
 	# application/x-msdos-program includes .exe and .com, so don't use it
-	'application/x-bat'         => Wx::wxSTC_LEX_BATCH,     # CONFIRMED
+	'application/x-bat' => Wx::wxSTC_LEX_BATCH,    # CONFIRMED
 
-	'text/x-c++src'             => Wx::wxSTC_LEX_CPP,       # CONFIRMED
-	'text/css'                  => Wx::wxSTC_LEX_CSS,       # CONFIRMED
-	'text/x-patch'              => Wx::wxSTC_LEX_DIFF,      # CONFIRMED
-	'text/x-eiffel'             => Wx::wxSTC_LEX_EIFFEL,    # CONFIRMED
-	'text/x-forth'              => Wx::wxSTC_LEX_FORTH,     # CONFIRMED
-	'text/x-fortran'            => Wx::wxSTC_LEX_FORTRAN,   # CONFIRMED
-	'text/html'                 => Wx::wxSTC_LEX_HTML,      # CONFIRMED
-	'application/javascript'    => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
-	'application/json'          => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
-	'application/x-latex'       => Wx::wxSTC_LEX_LATEX,     # CONFIRMED
-	'application/x-lisp'        => Wx::wxSTC_LEX_LISP,      # CONFIRMED
+	'text/x-c++src'             => Wx::wxSTC_LEX_CPP,          # CONFIRMED
+	'text/css'                  => Wx::wxSTC_LEX_CSS,          # CONFIRMED
+	'text/x-patch'              => Wx::wxSTC_LEX_DIFF,         # CONFIRMED
+	'text/x-eiffel'             => Wx::wxSTC_LEX_EIFFEL,       # CONFIRMED
+	'text/x-forth'              => Wx::wxSTC_LEX_FORTH,        # CONFIRMED
+	'text/x-fortran'            => Wx::wxSTC_LEX_FORTRAN,      # CONFIRMED
+	'text/html'                 => Wx::wxSTC_LEX_HTML,         # CONFIRMED
+	'application/javascript'    => Wx::wxSTC_LEX_ESCRIPT,      # CONFIRMED
+	'application/json'          => Wx::wxSTC_LEX_ESCRIPT,      # CONFIRMED
+	'application/x-latex'       => Wx::wxSTC_LEX_LATEX,        # CONFIRMED
+	'application/x-lisp'        => Wx::wxSTC_LEX_LISP,         # CONFIRMED
 	'application/x-shellscript' => Wx::wxSTC_LEX_BASH,
-	'text/x-lua'                => Wx::wxSTC_LEX_LUA,       # CONFIRMED
-	'text/x-makefile'           => Wx::wxSTC_LEX_MAKEFILE,  # CONFIRMED
-	'text/x-matlab'             => Wx::wxSTC_LEX_MATLAB,    # CONFIRMED
-	'text/x-pascal'             => Wx::wxSTC_LEX_PASCAL,    # CONFIRMED
-	'application/x-perl'        => Wx::wxSTC_LEX_PERL,      # CONFIRMED
-	'text/x-python'             => Wx::wxSTC_LEX_PYTHON,    # CONFIRMED
-	'application/x-php'         => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
-	'application/x-ruby'        => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
-	'text/x-sql'                => Wx::wxSTC_LEX_SQL,       # CONFIRMED
-	'application/x-tcl'         => Wx::wxSTC_LEX_TCL,       # CONFIRMED
-	'text/vbscript'             => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
+	'text/x-lua'                => Wx::wxSTC_LEX_LUA,          # CONFIRMED
+	'text/x-makefile'           => Wx::wxSTC_LEX_MAKEFILE,     # CONFIRMED
+	'text/x-matlab'             => Wx::wxSTC_LEX_MATLAB,       # CONFIRMED
+	'text/x-pascal'             => Wx::wxSTC_LEX_PASCAL,       # CONFIRMED
+	'application/x-perl'        => Wx::wxSTC_LEX_PERL,         # CONFIRMED
+	'text/x-python'             => Wx::wxSTC_LEX_PYTHON,       # CONFIRMED
+	'application/x-php'         => Wx::wxSTC_LEX_PHPSCRIPT,    # CONFIRMED
+	'application/x-ruby'        => Wx::wxSTC_LEX_RUBY,         # CONFIRMED
+	'text/x-sql'                => Wx::wxSTC_LEX_SQL,          # CONFIRMED
+	'application/x-tcl'         => Wx::wxSTC_LEX_TCL,          # CONFIRMED
+	'text/vbscript'             => Wx::wxSTC_LEX_VBSCRIPT,     # CONFIRMED
 
 	# text/xml specifically means "human-readable XML".
 	# This is prefered to the more generic application/xml
-	'text/xml'                  => Wx::wxSTC_LEX_XML,       # CONFIRMED
+	'text/xml' => Wx::wxSTC_LEX_XML,                           # CONFIRMED
 
-	'text/x-yaml'               => Wx::wxSTC_LEX_YAML,      # CONFIRMED
-	'application/x-pir'         => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
-	'application/x-pasm'        => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
-	'application/x-perl6'       => Wx::wxSTC_LEX_CONTAINER, # CONFIRMED
-	'text/plain'                => Wx::wxSTC_LEX_NULL,      # CONFIRMED
+	'text/x-yaml'         => Wx::wxSTC_LEX_YAML,               # CONFIRMED
+	'application/x-pir'   => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
+	'application/x-pasm'  => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
+	'application/x-perl6' => Wx::wxSTC_LEX_CONTAINER,          # CONFIRMED
+	'text/plain'          => Wx::wxSTC_LEX_NULL,               # CONFIRMED
 );
 
 # This is the mime-type to document class mapping
@@ -218,41 +218,40 @@ our %MIME_CLASS = (
 );
 
 sub menu_view_mimes {
-	'00Plain Text' => 'text/plain',
-	'01Perl'       => 'application/x-perl',
-	'02Shell'      => 'application/x-shellscript',
-	'03HTML'       => 'text/html',
-	'05JavaScript' => 'application/javascript',
-	'07CSS'        => 'text/css',
-	'09Python'     => 'text/x-python',
-	'11Ruby'       => 'application/x-ruby',
-	'13PHP'        => 'application/x-php',
-	'15YAML'       => 'text/x-yaml',
-	'17VBScript'   => 'text/vbscript',
-	'19SQL'        => 'text/x-sql',
-	'21Perl6'      => 'application/x-perl6',
-	;
+	'00Plain Text'     => 'text/plain',
+		'01Perl'       => 'application/x-perl',
+		'02Shell'      => 'application/x-shellscript',
+		'03HTML'       => 'text/html',
+		'05JavaScript' => 'application/javascript',
+		'07CSS'        => 'text/css',
+		'09Python'     => 'text/x-python',
+		'11Ruby'       => 'application/x-ruby',
+		'13PHP'        => 'application/x-php',
+		'15YAML'       => 'text/x-yaml',
+		'17VBScript'   => 'text/vbscript',
+		'19SQL'        => 'text/x-sql',
+		'21Perl6'      => 'application/x-perl6',
+		;
 }
 
 #####################################################################
 # Constructor and Accessors
 
-use Class::XSAccessor
-	getters => {
-		editor           => 'editor',
-		filename         => 'filename', # TODO is this read_only or what?
-		get_mimetype     => 'mimetype',
-		get_newline_type => 'newline_type',
-		errstr           => 'errstr',
-		tempfile         => 'tempfile',
+use Class::XSAccessor getters => {
+	editor           => 'editor',
+	filename         => 'filename',       # TODO is this read_only or what?
+	get_mimetype     => 'mimetype',
+	get_newline_type => 'newline_type',
+	errstr           => 'errstr',
+	tempfile         => 'tempfile',
 	},
 	setters => {
-		_set_filename    => 'filename', # TODO temporary hack
-		set_newline_type => 'newline_type',
-		set_mimetype     => 'mimetype',
-		set_errstr       => 'errstr',
-		set_editor       => 'editor',
-		set_tempfile     => 'tempfile',
+	_set_filename    => 'filename',       # TODO temporary hack
+	set_newline_type => 'newline_type',
+	set_mimetype     => 'mimetype',
+	set_errstr       => 'errstr',
+	set_editor       => 'editor',
+	set_tempfile     => 'tempfile',
 	};
 
 =pod
@@ -271,7 +270,7 @@ mime-type is defined by the guess_mimetype function
 
 sub new {
 	my $class = shift;
-	my $self  = bless {@_}, $class;
+	my $self = bless {@_}, $class;
 
 	if ( $self->{filename} ) {
 		$self->load_file;
@@ -298,11 +297,11 @@ sub rebless {
 	# do for a first implementation.
 	my $class = $MIME_CLASS{ $self->get_mimetype } || __PACKAGE__;
 	Padre::Util::debug("Reblessing to mimetype: '$class'");
-	if ( $class ) {
+	if ($class) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
 			die("Failed to load $class: $@") if $@;
-		};
+		}
 		bless $self, $class;
 	}
 
@@ -337,7 +336,7 @@ sub guess_mimetype {
 
 	# Default mime-type of new files, should be configurable in the GUI
 	# TODO: Make it configurable in the GUI :)
-	unless ( $filename ) {
+	unless ($filename) {
 		return 'application/x-perl';
 	}
 
@@ -350,6 +349,7 @@ sub guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( $EXT_MIME{$ext} eq 'application/x-perl' ) {
+
 				# Sometimes Perl 6 will look like Perl 5
 				# But only do this test if the Perl 6 plugin is enabled.
 				if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
@@ -362,7 +362,7 @@ sub guess_mimetype {
 
 	# Try derive the mime type from the basename
 	my $basename = File::Basename::basename($filename);
-	if ( $basename ) {
+	if ($basename) {
 		return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
 	}
 
@@ -473,7 +473,7 @@ sub time_on_file {
 	my $filename = $_[0]->filename;
 	return 0 unless defined $filename;
 	return 0 unless -e $filename;
-	return (stat($filename))[9];
+	return ( stat($filename) )[9];
 }
 
 =pod
@@ -724,7 +724,7 @@ sub lexer {
 		}
 	}
 
-	Padre::Util::debug( 'Lexer will be based on mime type "' . $self->get_mimetype . '"');
+	Padre::Util::debug( 'Lexer will be based on mime type "' . $self->get_mimetype . '"' );
 	return $MIME_LEXER{ $self->get_mimetype };
 }
 

@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use File::Glob      ();
 use Padre::Constant ();
-use Padre::Current  qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
@@ -124,7 +124,7 @@ sub new {
 	);
 
 	# On Windows disabling the status bar doesn't work, so don't allow it
-	unless ( Padre::Util::WXWIN32 ) {
+	unless (Padre::Util::WXWIN32) {
 		$self->{statusbar} = $self->AppendCheckItem(
 			-1,
 			Wx::gettext("Show StatusBar")
@@ -157,7 +157,7 @@ sub new {
 			$main, $radio,
 			sub {
 				my $doc = $_[0]->current->document;
-				if ( $doc ) {
+				if ($doc) {
 					$doc->set_mimetype( $mimes{$name} );
 					$doc->editor->padre_setup;
 					$doc->rebless;
@@ -362,11 +362,8 @@ sub new {
 		ultraedit => Wx::gettext('Ultraedit'),
 		notepad   => Wx::gettext('Notepad++'),
 	);
-	my @order = sort {
-		($b eq 'default') <=> ($a eq 'default')
-		or
-		$styles{$a} cmp $styles{$b}
-	} keys %styles;
+	my @order
+		= sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
 	foreach my $name (@order) {
 		my $label = $styles{$name};
 		my $radio = $self->{style}->AppendRadioItem( -1, $label );
@@ -381,15 +378,12 @@ sub new {
 		);
 	}
 
-	my $dir     = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
-	my @private = map {
-		substr( File::Basename::basename($_), 0, -4 )
-	} File::Glob::glob(
-		File::Spec->catdir( $dir, '*.yml' )
-	);
-	if ( @private ) {
+	my $dir = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
+	my @private
+		= map { substr( File::Basename::basename($_), 0, -4 ) } File::Glob::glob( File::Spec->catdir( $dir, '*.yml' ) );
+	if (@private) {
 		$self->AppendSeparator;
-		foreach my $name ( @private ) {
+		foreach my $name (@private) {
 			my $label = $name;
 			my $radio = $self->{style}->AppendRadioItem( -1, $label );
 			if ( $config->editor_style and $config->editor_style eq $name ) {
@@ -439,6 +433,7 @@ sub new {
 	foreach my $name ( sort { $language{$a} cmp $language{$b} } keys %language ) {
 		my $label = $language{$name};
 		if ( $label eq 'English (United Kingdom)' ) {
+
 			# NOTE: A dose of fun in a mostly boring application.
 			# With more Padre developers, more countries, and more
 			# people in total British English instead of American
@@ -475,8 +470,7 @@ sub new {
 			} else {
 				$_[0]->ShowFullScreen(
 					1,
-					Wx::wxFULLSCREEN_NOCAPTION
-					| Wx::wxFULLSCREEN_NOBORDER
+					Wx::wxFULLSCREEN_NOCAPTION | Wx::wxFULLSCREEN_NOBORDER
 				);
 			}
 			return;
@@ -494,7 +488,7 @@ sub refresh {
 	my $doc      = $document ? 1 : 0;
 
 	# Simple check state cases from configuration
-	unless ( Padre::Util::WXWIN32 ) {
+	unless (Padre::Util::WXWIN32) {
 		$self->{statusbar}->Check( $config->main_statusbar );
 	}
 
@@ -514,7 +508,7 @@ sub refresh {
 	$self->{show_errorlist}->Check( $config->main_errorlist );
 
 	# Check state for word wrap is document-specific
-	if ( $document ) {
+	if ($document) {
 		my $editor = $document->editor;
 		my $mode   = $editor->GetWrapMode;
 		my $wrap   = $self->{word_wrap};

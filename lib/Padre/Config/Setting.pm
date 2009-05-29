@@ -11,17 +11,16 @@ use Padre::Constant ();
 
 our $VERSION = '0.35';
 
-use Class::XSAccessor
-	getters => {
-		name    => 'name',
-		type    => 'type',
-		store   => 'store',
-		default => 'default',
-	};
+use Class::XSAccessor getters => {
+	name    => 'name',
+	type    => 'type',
+	store   => 'store',
+	default => 'default',
+};
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Param checking
 	unless ( $self->name ) {

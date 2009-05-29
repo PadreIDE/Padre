@@ -11,11 +11,10 @@ use Padre::Config ();
 
 our $VERSION = '0.35';
 
-use Class::XSAccessor
-	getters => {
-		root      => 'root',
-		padre_yml => 'padre_yml',
-	};
+use Class::XSAccessor getters => {
+	root      => 'root',
+	padre_yml => 'padre_yml',
+};
 
 ######################################################################
 # Class Methods

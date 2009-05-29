@@ -4,12 +4,11 @@ use strict;
 use warnings;
 use File::Basename qw(fileparse basename);
 use Class::XSAccessor
-	constructor=> 'new',
-	accessors => {
-	   'mimetype' => 'mime_type',
-	   'body'     => 'body',
-	   'title'    => 'title',
-	   'filename' => 'filename',
+	constructor => 'new', accessors => {
+	'mimetype' => 'mime_type',
+	'body'     => 'body',
+	'title'    => 'title',
+	'filename' => 'filename',
 	};
 
 =pod
@@ -28,24 +27,23 @@ it will probably change.
 
 =cut
 
-
 sub load {
-      my ($class,$path) = @_;
-      open( my $file_in , '<' , $path ) or die "Failed to load '$path' $!";
-      my $body;
-      $body .= $_ while <$file_in>;
-      my $doc = $class->new( body => $body , filename => $path );
-      $doc->mimetype( $doc->guess_mimetype );
-      $doc->title( $doc->guess_title );
-      return $doc;
+	my ( $class, $path ) = @_;
+	open( my $file_in, '<', $path ) or die "Failed to load '$path' $!";
+	my $body;
+	$body .= $_ while <$file_in>;
+	my $doc = $class->new( body => $body, filename => $path );
+	$doc->mimetype( $doc->guess_mimetype );
+	$doc->title( $doc->guess_title );
+	return $doc;
 }
 
 sub guess_title {
-      my ($self) = @_;
-      if ( $self->filename ) {
-            return basename $self->filename;
-      }
-      'Untitled';
+	my ($self) = @_;
+	if ( $self->filename ) {
+		return basename $self->filename;
+	}
+	'Untitled';
 }
 
 # Yuk .
@@ -97,17 +95,18 @@ our %EXT_MIME = (
 );
 
 sub guess_mimetype {
-      my ($self) = @_;
-      unless ($self->filename) {
-            return 'application/x-pod';
-      }
-      my ($path,$file,$suffix) = fileparse( $self->filename, 
-            keys %EXT_MIME
-      );
-      
-      exists $EXT_MIME{$suffix}
-            ? $EXT_MIME{$suffix}
-            : '';
+	my ($self) = @_;
+	unless ( $self->filename ) {
+		return 'application/x-pod';
+	}
+	my ( $path, $file, $suffix ) = fileparse(
+		$self->filename,
+		keys %EXT_MIME
+	);
+
+	exists $EXT_MIME{$suffix}
+		? $EXT_MIME{$suffix}
+		: '';
 }
 
 1;

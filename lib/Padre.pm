@@ -9,16 +9,16 @@ use utf8;
 
 # Non-Padre modules we need in order to show the initial
 # window should be loaded early to simplify the load order.
-use Carp           ();
-use Cwd            ();
-use File::Spec     ();
-use File::HomeDir  ();
-use List::Util     ();
-use Scalar::Util   ();
-use Getopt::Long   ();
-use YAML::Tiny     ();
-use DBI            ();
-use DBD::SQLite    ();
+use Carp          ();
+use Cwd           ();
+use File::Spec    ();
+use File::HomeDir ();
+use List::Util    ();
+use Scalar::Util  ();
+use Getopt::Long  ();
+use YAML::Tiny    ();
+use DBI           ();
+use DBD::SQLite   ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
@@ -105,6 +105,7 @@ sub new {
 
 	# Connect to the server if we are running in single instance mode
 	if ( $self->config->main_singleinstance ) {
+
 		# This blocks for about 1 second
 		require IO::Socket;
 		my $socket = IO::Socket::INET->new(
@@ -113,8 +114,8 @@ sub new {
 			Proto    => 'tcp',
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
-		if ( $socket ) {
-			foreach my $file ( @ARGV ) {
+		if ($socket) {
+			foreach my $file (@ARGV) {
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}
@@ -148,9 +149,7 @@ sub run {
 	my $self = shift;
 
 	# Clean arguments
-	$self->{ARGV} = [ map {
-		File::Spec->rel2abs($_, $self->{original_cwd})
-	} @ARGV ];
+	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen

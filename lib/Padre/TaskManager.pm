@@ -125,7 +125,7 @@ sub new {
 	}, $class;
 
 	# Special case for profiling mode
-	if (defined($INC{"Devel/NYTProf.pm"})) {
+	if ( defined( $INC{"Devel/NYTProf.pm"} ) ) {
 		$self->{use_threads} = 0;
 	}
 
@@ -158,12 +158,14 @@ sub new {
 sub _init_events {
 	my $main = shift;
 	@_ = ();
-  	unless ( $EVENTS_INITIALIZED ) {
-		Wx::Event::EVT_COMMAND( $main, -1,
+	unless ($EVENTS_INITIALIZED) {
+		Wx::Event::EVT_COMMAND(
+			$main, -1,
 			$TASK_DONE_EVENT,
 			\&on_task_done_event,
 		);
-		Wx::Event::EVT_COMMAND( $main, -1,
+		Wx::Event::EVT_COMMAND(
+			$main, -1,
 			$TASK_START_EVENT,
 			\&on_task_start_event,
 		);
@@ -186,8 +188,8 @@ proxy to this method for convenience.
 
 sub schedule {
 	my $self = shift;
-	my $task = _INSTANCE(shift, 'Padre::Task')
-		or die "Invalid task scheduled!"; # TODO: grace
+	my $task = _INSTANCE( shift, 'Padre::Task' )
+		or die "Invalid task scheduled!";    # TODO: grace
 
 	# Cleanup old threads and refill the pool
 	$self->reap();
@@ -240,7 +242,7 @@ typically need to call this.
 
 sub setup_workers {
 	my $self = shift;
-	@_ = (); # Avoid "Scalars leaked"
+	@_ = ();    # Avoid "Scalars leaked"
 
 	return unless $self->use_threads;
 
@@ -269,7 +271,7 @@ sub _make_worker_thread {
 	my $main = shift;
 	return unless $self->use_threads;
 
-	@_ = (); # avoid "Scalars leaked"
+	@_ = ();    # avoid "Scalars leaked"
 	my $worker = threads->create( { 'exit' => 'thread_only' }, \&worker_loop, $main, $self->task_queue );
 	push @{ $self->{workers} }, $worker;
 }
@@ -520,12 +522,11 @@ sub on_dump_running_tasks {
 	$main->show_output(1);
 	$output->style_neutral;
 
-	$output->AppendText(
-		"\n-----------------------------------------\n[" . localtime() . "] "
-		. sprintf( Wx::gettext("%s worker threads are running.\n"), scalar($manager->workers) )
-	);
+	$output->AppendText( "\n-----------------------------------------\n["
+			. localtime() . "] "
+			. sprintf( Wx::gettext("%s worker threads are running.\n"), scalar( $manager->workers ) ) );
 	if ( $nrunning == 0 ) {
-		$output->AppendText(Wx::gettext("Currently, no background tasks are being executed.\n"));
+		$output->AppendText( Wx::gettext("Currently, no background tasks are being executed.\n") );
 		return ();
 	}
 
@@ -548,9 +549,8 @@ sub on_dump_running_tasks {
 	my $pending = $queue->pending;
 
 	if ($pending) {
-		$output->AppendText( sprintf(
-			Wx::gettext("\nAdditionally, there are %s tasks pending execution.\n"), $pending
-		) );
+		$output->AppendText(
+			sprintf( Wx::gettext("\nAdditionally, there are %s tasks pending execution.\n"), $pending ) );
 	}
 }
 

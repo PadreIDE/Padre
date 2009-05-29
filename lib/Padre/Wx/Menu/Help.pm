@@ -6,9 +6,9 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Padre::Constant       ();
-use Padre::Wx             ();
-use Padre::Wx::Menu       ();
+use Padre::Constant ();
+use Padre::Wx       ();
+use Padre::Wx::Menu ();
 
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Menu';
@@ -40,11 +40,12 @@ sub new {
 			if ( ( defined $current ) and $current->isa('Padre::Wx::ErrorList') ) {
 				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
+
 				# TODO This feels wrong, the help menu code shouldn't
 				# populate the main window hash.
 				my $selection = $_[0]->current->text;
-				$_[0]->menu->help->help($_[0]);
-				if ( $selection ) {
+				$_[0]->menu->help->help( $_[0] );
+				if ($selection) {
 					$_[0]->{help}->help($selection);
 				}
 				return;
@@ -56,9 +57,7 @@ sub new {
 		$self->Append( -1, Wx::gettext('Current Document') ),
 		sub {
 			$_[0]->menu->help->help( $_[0] );
-			$_[0]->{help}->help(
-				$_[0]->current->document
-			);
+			$_[0]->{help}->help( $_[0]->current->document );
 		},
 	);
 
@@ -172,7 +171,8 @@ sub about {
 	$about->SetDescription( "Perl Application Development and Refactoring Environment\n\n"
 			. "Based on Wx.pm $Wx::VERSION and "
 			. Wx::wxVERSION_STRING . "\n"
-			. "Config at " . Padre::Constant::CONFIG_DIR . "\n"
+			. "Config at "
+			. Padre::Constant::CONFIG_DIR . "\n"
 			. "SQLite user_version at "
 			. Padre::DB->pragma('user_version')
 			. "\n" );

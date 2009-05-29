@@ -34,9 +34,7 @@ sub new {
 	$url->query_form( \%data, ';' );
 
 	# Hand off to the parent constructor
-	return $class->SUPER::new(
-		request => HTTP::Request->new( GET => $url->as_string )
-	);
+	return $class->SUPER::new( request => HTTP::Request->new( GET => $url->as_string ) );
 }
 
 1;

@@ -5,14 +5,14 @@ package Padre::Wx::Menu::Perl;
 use 5.008;
 use strict;
 use warnings;
-use List::Util      ();
-use File::Spec      ();
-use File::HomeDir   ();
-use Params::Util    qw{_INSTANCE};
+use List::Util    ();
+use File::Spec    ();
+use File::HomeDir ();
+use Params::Util qw{_INSTANCE};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
-use Padre::Current  qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.35';
 our @ISA     = 'Padre::Wx::Menu';
@@ -153,9 +153,7 @@ sub refresh {
 	my $self    = shift;
 	my $current = _CURRENT(@_);
 	my $config  = $current->config;
-	my $perl    = !! (
-		_INSTANCE($current->document, 'Padre::Document::Perl')
-	);
+	my $perl    = !!( _INSTANCE( $current->document, 'Padre::Document::Perl' ) );
 
 	# Disable document-specific entries if we are in a Perl project
 	# but not in a Perl document.

@@ -11,9 +11,9 @@ use File::Spec ();
 # Load every exportable constant into here, so that they come into
 # existance in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
-use Wx          ':everything';
-use Wx          'wxTheClipboard';
-use Wx::Event   ':everything';
+use Wx ':everything';
+use Wx 'wxTheClipboard';
+use Wx::Event ':everything';
 use Wx::DND     ();
 use Wx::STC     ();
 use Wx::AUI     ();
@@ -26,16 +26,16 @@ our $VERSION = '0.35';
 # Defines for sidebar marker; others may be needed for breakpoint
 # icons etc.
 
-sub MarkError { 1 } 
-sub MarkWarn  { 2 }
+sub MarkError {1}
+sub MarkWarn  {2}
 
 #####################################################################
 # Defines for object IDs
 
-sub ID_TIMER_SYNTAX    { 30001 }
-sub ID_TIMER_FILECHECK { 30002 }
-sub ID_TIMER_POSTINIT  { 30003 }
-sub ID_TIMER_OUTLINE   { 30004 }
+sub ID_TIMER_SYNTAX    {30001}
+sub ID_TIMER_FILECHECK {30002}
+sub ID_TIMER_POSTINIT  {30003}
+sub ID_TIMER_OUTLINE   {30004}
 
 #####################################################################
 # Convenience Functions
@@ -79,9 +79,9 @@ sub launch_irc {
 
 	# Generate the (long) chat URL
 	my $url = 'http://widget.mibbit.com/?settings=1c154d53c72ad8cfdfab3caa051b30a2';
-	$url   .= '&server='     . $server;
-	$url   .= '&channel=%23' . $channel;
-	$url   .= '&noServerTab=false&noServerNotices=true&noServerMotd=true&autoConnect=true';
+	$url .= '&server=' . $server;
+	$url .= '&channel=%23' . $channel;
+	$url .= '&noServerTab=false&noServerNotices=true&noServerMotd=true&autoConnect=true';
 
 	# Spawn a browser to show it
 	LaunchDefaultBrowser($url);

@@ -14,18 +14,18 @@ our $VERSION = '0.35';
 
 # Setting Types (based on Firefox types)
 use constant {
-	BOOLEAN  => 0,
-	POSINT   => 1,
-	INTEGER  => 2,
-	ASCII    => 3,
-	PATH     => 4,
+	BOOLEAN => 0,
+	POSINT  => 1,
+	INTEGER => 2,
+	ASCII   => 3,
+	PATH    => 4,
 };
 
 # Setting Storage Backends
 use constant {
-	HOST     => 0,
-	HUMAN    => 1,
-	PROJECT  => 2,
+	HOST    => 0,
+	HUMAN   => 1,
+	PROJECT => 2,
 };
 
 # Syntax Highlighter Colours
@@ -44,28 +44,25 @@ use constant {
 # Files and Directories
 use constant CONFIG_DIR => File::Spec->rel2abs(
 	File::Spec->catdir(
-		defined($ENV{PADRE_HOME})
-			? ( $ENV{PADRE_HOME}, '.padre' )
-			: (
-				File::HomeDir->my_data,
-				File::Spec->isa('File::Spec::Win32')
-					? qw{ Perl Padre }
-					: qw{ .padre }
-			)
+		defined( $ENV{PADRE_HOME} ) ? ( $ENV{PADRE_HOME}, '.padre' )
+		: ( File::HomeDir->my_data,
+			File::Spec->isa('File::Spec::Win32') ? qw{ Perl Padre }
+			: qw{ .padre }
+		)
 	)
 );
 
 use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
 use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db' );
-use constant PLUGIN_DIR   => File::Spec->catdir( CONFIG_DIR, 'plugins' );
-use constant PLUGIN_LIB   => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
+use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
 
 # Check and create the directories that need to exist
 unless ( -e CONFIG_DIR or File::Path::make_path(CONFIG_DIR) ) {
-	Carp::croak("Cannot create config dir '" . CONFIG_DIR . "': $!");
+	Carp::croak( "Cannot create config dir '" . CONFIG_DIR . "': $!" );
 }
 unless ( -e PLUGIN_LIB or File::Path::make_path(PLUGIN_LIB) ) {
-	Carp::croak("Cannot create plugins dir '" . PLUGIN_LIB . "': $!");
+	Carp::croak( "Cannot create plugins dir '" . PLUGIN_LIB . "': $!" );
 }
 
 1;

@@ -3,9 +3,9 @@ package Padre::Wx::CPAN;
 use 5.008;
 use strict;
 use warnings;
-use URI                       ();
-use Scalar::Util              qw( blessed );
-use Params::Util              qw( _INSTANCE );
+use URI ();
+use Scalar::Util qw( blessed );
+use Params::Util qw( _INSTANCE );
 use Padre::Wx                 ();
 use Padre::Wx::CPAN::Listview ();
 

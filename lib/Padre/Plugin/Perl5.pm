@@ -14,8 +14,7 @@ our @ISA     = 'Padre::Plugin';
 # Padre::Plugin Methods
 
 sub padre_interfaces {
-	'Padre::Plugin'   => 0.26,
-	'Padre::Wx::Main' => 0.26,
+	'Padre::Plugin' => 0.26, 'Padre::Wx::Main' => 0.26,;
 }
 
 sub plugin_name {

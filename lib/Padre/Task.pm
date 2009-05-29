@@ -119,6 +119,7 @@ require Padre;
 require Padre::Wx;
 
 BEGIN {
+
 	# Hack IO::String to be a real IO::Handle
 	unless ( IO::String->isa('IO::Handle') ) {
 		@IO::String::ISA = qw{IO::Handle IO::Seekable};
@@ -262,9 +263,7 @@ SCOPE: {
 		if ( exists $self->{_process_class} ) {
 			require Carp;
 			Carp::croak(
-				"The '_process_class' slot in a Padre::Task" .
-				" object is reserved for usage by Padre::Task"
-			);
+				"The '_process_class' slot in a Padre::Task" . " object is reserved for usage by Padre::Task" );
 		}
 
 		$self->{_process_class} = $class;

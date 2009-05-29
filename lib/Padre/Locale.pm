@@ -208,12 +208,12 @@ BEGIN {
 		},
 
 		'es-ar' => {
-			gettext  => _T('Spanish (Argentina)'),
-			utf8text => 'Español (Argentina)',
-			iso639   => 'sp',
-			iso3166  => 'AR',
-			wxid     => Wx::wxLANGUAGE_SPANISH_ARGENTINA,
-			fallback => [ 'es-es', 'en-us' ],
+			gettext   => _T('Spanish (Argentina)'),
+			utf8text  => 'Español (Argentina)',
+			iso639    => 'sp',
+			iso3166   => 'AR',
+			wxid      => Wx::wxLANGUAGE_SPANISH_ARGENTINA,
+			fallback  => [ 'es-es', 'en-us' ],
 			supported => 0,
 		},
 
@@ -232,22 +232,22 @@ BEGIN {
 		},
 
 		'fa' => {
-			gettext    => _T('Persian (Iran)'),
-			utf8text   => 'پارسی (ایران)',
-			iso639     => 'prs',
-			iso3166    => undef,
-			wxid       => Wx::wxLANGUAGE_FARSI,
-			fallback   => [],
-			supported  => 1
+			gettext   => _T('Persian (Iran)'),
+			utf8text  => 'پارسی (ایران)',
+			iso639    => 'prs',
+			iso3166   => undef,
+			wxid      => Wx::wxLANGUAGE_FARSI,
+			fallback  => [],
+			supported => 1
 		},
 
 		'fr-ca' => {
-			gettext  => _T('French (France)'),
-			utf8text => 'Français (Canada)',
-			iso639   => 'fr',
-			iso3166  => 'CA',
-			wxid     => Wx::wxLANGUAGE_FRENCH_CANADIAN,
-			fallback => ['fr-fr'],
+			gettext   => _T('French (France)'),
+			utf8text  => 'Français (Canada)',
+			iso639    => 'fr',
+			iso3166   => 'CA',
+			wxid      => Wx::wxLANGUAGE_FRENCH_CANADIAN,
+			fallback  => ['fr-fr'],
 			supported => 0,
 		},
 
@@ -334,22 +334,22 @@ BEGIN {
 		},
 
 		'nl-be' => {
-			gettext  => _T('Dutch (Belgium)'),
-			utf8text => 'Nederlands (België)',
-			iso639   => 'en',
-			iso3166  => 'BE',
-			wxid     => Wx::wxLANGUAGE_DUTCH_BELGIAN,
-			fallback => ['nl-nl'],
+			gettext   => _T('Dutch (Belgium)'),
+			utf8text  => 'Nederlands (België)',
+			iso639    => 'en',
+			iso3166   => 'BE',
+			wxid      => Wx::wxLANGUAGE_DUTCH_BELGIAN,
+			fallback  => ['nl-nl'],
 			supported => 1,
 		},
 
 		'no' => {
-			gettext  => _T('Norwegian (Norway)'),
-			utf8text => 'Norsk (Norge)',
-			iso639   => 'no',
-			iso3166  => 'NO',
-			wxid     => Wx::wxLANGUAGE_NORWEGIAN_BOKMAL,
-			fallback => ['en-gb','en-us'],
+			gettext   => _T('Norwegian (Norway)'),
+			utf8text  => 'Norsk (Norge)',
+			iso639    => 'no',
+			iso3166   => 'NO',
+			wxid      => Wx::wxLANGUAGE_NORWEGIAN_BOKMAL,
+			fallback  => [ 'en-gb', 'en-us' ],
 			supported => 1,
 		},
 
@@ -374,12 +374,12 @@ BEGIN {
 		},
 
 		'pt-pt' => {
-			gettext  => _T('Portuguese (Portugal)'),
-			utf8text => 'Português (Europeu)',
-			iso639   => 'pt',
-			iso3166  => 'PT',
-			wxid     => Wx::wxLANGUAGE_PORTUGUESE,
-			fallback => ['pt-br'],
+			gettext   => _T('Portuguese (Portugal)'),
+			utf8text  => 'Português (Europeu)',
+			iso639    => 'pt',
+			iso3166   => 'PT',
+			wxid      => Wx::wxLANGUAGE_PORTUGUESE,
+			fallback  => ['pt-br'],
 			supported => 0,
 		},
 
@@ -414,12 +414,12 @@ BEGIN {
 		},
 
 		'zh-tw' => {
-			gettext  => _T('Chinese (Traditional)'),
-			utf8text => '正體中文 (繁體)',
-			iso639   => 'zh',
-			iso3166  => 'TW',
-			wxid     => Wx::wxLANGUAGE_CHINESE_TRADITIONAL,
-			fallback => [ 'zh-cn', 'en-us' ],
+			gettext   => _T('Chinese (Traditional)'),
+			utf8text  => '正體中文 (繁體)',
+			iso639    => 'zh',
+			iso3166   => 'TW',
+			wxid      => Wx::wxLANGUAGE_CHINESE_TRADITIONAL,
+			fallback  => [ 'zh-cn', 'en-us' ],
 			supported => 1,
 		},
 
@@ -428,12 +428,12 @@ BEGIN {
 		# Mostly what these do is uncover issues that might arise when
 		# a language is not supported by various older standards.
 		'x-klingon' => {
-			gettext  => _T('Klingon'),
-			utf8text => 'Klingon',       # TODO Fix this at some point
-			iso639   => undef,
-			iso3166  => undef,
-			wxid     => undef,
-			fallback => ['en-gb'],       # Debatable... :)
+			gettext   => _T('Klingon'),
+			utf8text  => 'Klingon',       # TODO Fix this at some point
+			iso639    => undef,
+			iso3166   => undef,
+			wxid      => undef,
+			fallback  => ['en-gb'],       # Debatable... :)
 			supported => 0,
 		},
 	);
@@ -452,10 +452,9 @@ BEGIN {
 use constant WX => Wx::Locale::GetSystemLanguage();
 
 use constant system_rfc4646 => List::Util::first {
-	$RFC4646{$_}->{wxid} == WX
-} grep {
-	defined $RFC4646{$_}->{wxid}
-} sort keys %RFC4646;
+	$RFC4646{$_}->{wxid} == WX;
+}
+grep { defined $RFC4646{$_}->{wxid} } sort keys %RFC4646;
 
 #####################################################################
 # Locale 2.0 Implementation
@@ -481,10 +480,10 @@ sub rfc4646 {
 	return $RFC4646{$locale}->{actual};
 }
 
-# 
+#
 sub iso639 {
 	my $id     = rfc4646();
-        my $iso693 = $RFC4646{$id}{iso639};
+	my $iso693 = $RFC4646{$id}{iso639};
 }
 
 # Given a rfc4646 identifier, sets the language globally
@@ -502,11 +501,7 @@ sub object {
 }
 
 sub menu_view_languages {
-	return map {
-		$_ => Wx::gettext( $RFC4646{$_}->{gettext} )
-	} grep {
-		$RFC4646{$_}->{supported}
-	} sort keys %RFC4646;
+	return map { $_ => Wx::gettext( $RFC4646{$_}->{gettext} ) } grep { $RFC4646{$_}->{supported} } sort keys %RFC4646;
 }
 
 #####################################################################

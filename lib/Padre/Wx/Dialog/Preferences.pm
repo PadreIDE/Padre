@@ -46,10 +46,10 @@ sub _new_panel {
 
 sub _external_tools_panel {
 	my ( $self, $treebook ) = @_;
-	
+
 	my $config = Padre->ide->config;
-	my $table = [
-		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Diff tool:') ],
+	my $table  = [
+		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],
 	];
@@ -494,7 +494,7 @@ sub dialog {
 	my $indentation = $self->_indentation_panel( $tb, $editor_autoindent );
 	$tb->AddPage( $indentation, Wx::gettext('Indentation') );
 
-	my $external_tools = $self->_external_tools_panel( $tb );
+	my $external_tools = $self->_external_tools_panel($tb);
 	$tb->AddPage( $external_tools, Wx::gettext('External Tools') );
 
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
@@ -692,11 +692,12 @@ sub run {
 		$data->{external_diff_tool}
 	);
 
-
 	# Quite like in _run_params_panel, trap exception if there
 	# is no document currently open
 	eval {
-		unless ( Padre::Current->document->is_new ) {
+		unless ( Padre::Current->document->is_new )
+		{
+
 			# These are a bit different as run_* variable name depends
 			# on current document's filename
 			foreach ( grep { /^run_/ and not /_default$/ } keys %$data ) {

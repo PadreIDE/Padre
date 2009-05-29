@@ -20,14 +20,14 @@ plugins, as well as providing part of the interface to plugin writers.
 
 use strict;
 use warnings;
-use Carp                     ();
-use File::Copy               ();
-use File::Glob               ();
-use File::Path               ();
-use File::Spec               ();
-use File::Basename           ();
-use Scalar::Util             ();
-use Params::Util             qw{ _IDENTIFIER _CLASS _INSTANCE };
+use Carp           ();
+use File::Copy     ();
+use File::Glob     ();
+use File::Path     ();
+use File::Spec     ();
+use File::Basename ();
+use Scalar::Util   ();
+use Params::Util qw{ _IDENTIFIER _CLASS _INSTANCE };
 use Padre::Constant          ();
 use Padre::Current           ();
 use Padre::Util              ();
@@ -54,9 +54,9 @@ First argument should be a Padre object.
 =cut
 
 sub new {
-	my $class  = shift;
+	my $class = shift;
 	my $parent = shift || Padre->ide;
-	unless ( _INSTANCE($parent, 'Padre') ) {
+	unless ( _INSTANCE( $parent, 'Padre' ) ) {
 		Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 	}
 
@@ -117,17 +117,13 @@ use Class::XSAccessor getters => {
 sub plugin_names {
 	my $self = shift;
 	unless ( $self->{plugin_names} ) {
+
 		# Schwartzian transform that sorts the plugins by their
 		# full names, but always puts "My Plugin" first.
 		$self->{plugin_names} = [
 			map { $_->[0] }
-			sort {
-				( $b->[0] eq 'My' ) <=> ( $a->[0] eq 'My' )
-				or
-				$a->[1] cmp $b->[1]
-			}
-			map { [ $_->name, $_->plugin_name ] }
-			values %{ $self->{plugins} }
+				sort { ( $b->[0] eq 'My' ) <=> ( $a->[0] eq 'My' ) or $a->[1] cmp $b->[1] }
+				map { [ $_->name, $_->plugin_name ] } values %{ $self->{plugins} }
 		];
 	}
 	return @{ $self->{plugin_names} };
@@ -155,7 +151,7 @@ sub relocale {
 		next unless $plugin->status eq 'enabled';
 
 		# add the plugin locale dir to search path
-		my $object    = $plugin->{object};
+		my $object = $plugin->{object};
 		if ( $object->can('plugin_locale_directory') ) {
 			my $dir = $object->plugin_locale_directory;
 			if ( defined $dir and -d $dir ) {
@@ -191,7 +187,7 @@ sub reset_my_plugin {
 
 	# Find the My Plugin
 	my $src = File::Spec->catfile(
-		File::Basename::dirname($INC{'Padre/Config.pm'}),
+		File::Basename::dirname( $INC{'Padre/Config.pm'} ),
 		'Plugin', 'My.pm',
 	);
 	unless ( -e $src ) {
@@ -200,7 +196,7 @@ sub reset_my_plugin {
 
 	# copy the My Plugin
 	unlink $dst;
-	unless ( File::Copy::copy($src, $dst) ) {
+	unless ( File::Copy::copy( $src, $dst ) ) {
 		Carp::croak("Could not copy the My plugin ($src) to $dst: $!");
 	}
 	chmod( 0644, $dst );
@@ -244,6 +240,7 @@ sub reload_plugins {
 	my $self    = shift;
 	my $plugins = $self->plugins;
 	foreach my $name ( sort keys %$plugins ) {
+
 		# do not use the reload_plugin method since that
 		# refreshes the menu every time.
 		$self->_unload_plugin($name);
@@ -292,7 +289,7 @@ sub load_plugins {
 # attempt to load all plugins that sit as .pm files in the
 # .padre/plugins/Padre/Plugin/ folder
 sub _load_plugins_from_inc {
-	my ( $self ) = @_;
+	my ($self) = @_;
 
 	# Try the plugin directory first:
 	my $plugin_dir = $self->plugin_dir;
@@ -304,7 +301,7 @@ sub _load_plugins_from_inc {
 
 	require File::Find::Rule;
 	my @files = File::Find::Rule->name('*.pm')->file->maxdepth(1)->in(@dirs);
-	foreach my $file ( @files ) {
+	foreach my $file (@files) {
 
 		# Full path filenames
 		my $module = $file;
@@ -376,9 +373,7 @@ again when the editor is restarted.
 sub failed {
 	my $self    = shift;
 	my $plugins = $self->plugins;
-	return grep {
-		$plugins->{$_}->status eq 'error'
-	} keys %$plugins;
+	return grep { $plugins->{$_}->status eq 'error' } keys %$plugins;
 }
 
 ######################################################################
@@ -394,6 +389,7 @@ sub _load_plugins_from_par {
 	opendir my $dh, $plugin_dir or return;
 	while ( my $file = readdir $dh ) {
 		if ( $file =~ /^\w+\.par$/i ) {
+
 			# Only single-level plugins for now.
 			my $parfile = File::Spec->catfile( $plugin_dir, $file );
 			PAR->import($parfile);
@@ -644,12 +640,12 @@ sub reload_plugin {
 
 # Assume the named plugin exists, enable it
 sub _plugin_enable {
-	$_[0]->_plugin($_[1])->enable;
+	$_[0]->_plugin( $_[1] )->enable;
 }
 
 # Assume the named plugin exists, disable it
 sub _plugin_disable {
-	$_[0]->_plugin($_[1])->disable;
+	$_[0]->_plugin( $_[1] )->disable;
 }
 
 =pod
@@ -831,18 +827,18 @@ that have one for plugin-specific manipulation of the context menu.
 =cut
 
 sub on_context_menu {
-	my $self = shift;
+	my $self    = shift;
 	my $plugins = $self->plugins_with_context_menu;
 	return if not keys %$plugins;
 
-	my ($doc, $editor, $menu, $event) = @_;
+	my ( $doc, $editor, $menu, $event ) = @_;
 
 	my $plugin_handles = $self->plugins;
-	foreach my $plugin_name (keys %$plugins) {
+	foreach my $plugin_name ( keys %$plugins ) {
 		my $plugin = $plugin_handles->{$plugin_name}->object;
-		$plugin->event_on_context_menu($doc, $editor, $menu, $event);
+		$plugin->event_on_context_menu( $doc, $editor, $menu, $event );
 	}
-	return();
+	return ();
 }
 
 # TODO: document this.
@@ -935,6 +931,7 @@ sub _plugin {
 		return $it;
 	}
 	if ( defined _CLASS($it) ) {
+
 		# Convert from class to name if needed
 		$it =~ s/^Padre::Plugin:://;
 	}

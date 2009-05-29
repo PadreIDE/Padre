@@ -41,18 +41,19 @@ sub get_all_variable_declarations {
 
 	my $declarations = $document->find(
 		sub {
-			return 0 unless $_[1]->isa('PPI::Statement::Variable')
-			         or $_[1]->isa('PPI::Statement::Include');
+			return 0
+				unless $_[1]->isa('PPI::Statement::Variable')
+					or $_[1]->isa('PPI::Statement::Include');
 			return 1;
 		},
 	);
-	
+
 	my %our;
 	my %lexical;
 	my %dynamic;
 	my %package;
 	foreach my $decl (@$declarations) {
-		if ($decl->isa('PPI::Statement::Variable')) {
+		if ( $decl->isa('PPI::Statement::Variable') ) {
 			my $type     = $decl->type();
 			my @vars     = $decl->variables;
 			my $location = $decl->location;
@@ -72,13 +73,15 @@ sub get_all_variable_declarations {
 				push @{ $target_type->{$var} }, $location;
 			}
 		}
+
 		# find use vars...
 		elsif ( $decl->isa('PPI::Statement::Include')
 			and $decl->module eq 'vars'
-			and $decl->type eq 'use' )
+			and $decl->type   eq 'use' )
 		{
+
 			# do it the low-tech way
-			my $string = $decl->content();
+			my $string   = $decl->content();
 			my $location = $decl->location;
 
 			my @vars = $string =~ /([\%\@\$][\w_:]+)/g;
@@ -86,9 +89,9 @@ sub get_all_variable_declarations {
 				$package{$var} ||= [];
 				push @{ $package{$var} }, $location;
 			}
-			
+
 		}
-	} # end foreach declaration
+	}    # end foreach declaration
 
 	return ( { our => \%our, lexical => \%lexical, dynamic => \%dynamic, package => \%package } );
 }
@@ -184,15 +187,17 @@ sub find_variable_declaration {
 					$declaration = $elem;
 					last;
 				}
+
 				# find use vars ...
 				elsif ( $elem->isa("PPI::Statement::Include")
 					and $elem->module eq 'vars'
-					and $elem->type eq 'use' )
+					and $elem->type   eq 'use' )
 				{
+
 					# do it the low-tech way
 					my $string = $elem->content();
 					my @vars = $string =~ /([\%\@\$][\w_:]+)/g;
-					if (grep {$varname eq $_} @vars) {
+					if ( grep { $varname eq $_ } @vars ) {
 						$declaration = $elem;
 						last;
 					}

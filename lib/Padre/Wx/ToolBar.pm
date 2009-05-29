@@ -3,7 +3,7 @@ package Padre::Wx::ToolBar;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current    qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 use Padre::Wx         ();
 use Padre::Wx::Icon   ();
 use Padre::Wx::Editor ();
@@ -16,10 +16,7 @@ sub new {
 	my $main  = shift;
 
 	# Prepare the style
-	my $style = Wx::wxTB_HORIZONTAL
-	          | Wx::wxTB_FLAT
-	          | Wx::wxTB_NODIVIDER
-	          | Wx::wxBORDER_NONE;
+	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
 	unless ( $main->config->main_lockinterface ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
@@ -35,9 +32,7 @@ sub new {
 
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
-	$self->SetToolBitmapSize(
-		Wx::Size->new(16, 16)
-	);
+	$self->SetToolBitmapSize( Wx::Size->new( 16, 16 ) );
 
 	# Populate the toolbar
 
@@ -137,13 +132,13 @@ sub refresh {
 	my $text      = $current->text;
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
-	$self->EnableTool( Wx::wxID_SAVE,      ( $document and $document->is_modified ? 1 : 0 ) );
-	$self->EnableTool( Wx::wxID_CLOSE,     ( $editor ? 1 : 0 ) );
-	$self->EnableTool( Wx::wxID_UNDO,      ( $editor and $editor->CanUndo ) );
-	$self->EnableTool( Wx::wxID_REDO,      ( $editor and $editor->CanRedo ) );
-	$self->EnableTool( Wx::wxID_CUT,       ( $selection ) );
-	$self->EnableTool( Wx::wxID_COPY,      ( $selection ) );
-	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ) );
+	$self->EnableTool( Wx::wxID_SAVE, ( $document and $document->is_modified ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_CLOSE, ( $editor ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_UNDO,  ( $editor and $editor->CanUndo ) );
+	$self->EnableTool( Wx::wxID_REDO,  ( $editor and $editor->CanRedo ) );
+	$self->EnableTool( Wx::wxID_CUT,   ($selection) );
+	$self->EnableTool( Wx::wxID_COPY,  ($selection) );
+	$self->EnableTool( Wx::wxID_PASTE, ( $editor and $editor->CanPaste ) );
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ) );
 
 	return;
@@ -160,7 +155,7 @@ sub add_tool {
 	# Create the tool
 	$self->AddTool(
 		$id, '',
-		Padre::Wx::Icon::find($param{icon}),
+		Padre::Wx::Icon::find( $param{icon} ),
 		$param{short},
 	);
 

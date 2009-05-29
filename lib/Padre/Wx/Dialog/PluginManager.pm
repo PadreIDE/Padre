@@ -4,7 +4,7 @@ package Padre::Wx::Dialog::PluginManager;
 
 use strict;
 use warnings;
-use Carp            'croak';
+use Carp 'croak';
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
@@ -12,20 +12,20 @@ our $VERSION = '0.35';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
-	_action       => '_action',       # action of default button
-	_button       => '_button',       # general-purpose button
-	_butprefs     => '_butprefs',     # preferences button
-	_currow       => '_currow',       # current list row number
-	_curplugin    => '_curplugin',    # current plugin selected
-	_hbox         => '_hbox',         # the window hbox sizer
-	_imagelist    => '_imagelist',    # image list for the listctrl
-	_label        => '_label',        # label at top of right pane
-	_list         => '_list',         # list on the left of the pane
-	_manager      => '_manager',      # ref to plugin manager
-	_plugin_names => '_plugin_names', # mapping of short/full plugin names
-	_sortcolumn   => '_sortcolumn',   # column used for list sorting
-	_sortreverse  => '_sortreverse',  # list sorting is reversed
-	_whtml        => '_whtml',        # html space for plugin doc
+	_action       => '_action',          # action of default button
+	_button       => '_button',          # general-purpose button
+	_butprefs     => '_butprefs',        # preferences button
+	_currow       => '_currow',          # current list row number
+	_curplugin    => '_curplugin',       # current plugin selected
+	_hbox         => '_hbox',            # the window hbox sizer
+	_imagelist    => '_imagelist',       # image list for the listctrl
+	_label        => '_label',           # label at top of right pane
+	_list         => '_list',            # list on the left of the pane
+	_manager      => '_manager',         # ref to plugin manager
+	_plugin_names => '_plugin_names',    # mapping of short/full plugin names
+	_sortcolumn   => '_sortcolumn',      # column used for list sorting
+	_sortreverse  => '_sortreverse',     # list sorting is reversed
+	_whtml        => '_whtml',           # html space for plugin doc
 };
 
 # -- constructor
@@ -157,11 +157,11 @@ sub _on_list_item_selected {
 	my $fullname = $event->GetLabel;
 	my $name     = $self->_plugin_names->{$fullname};
 	my $plugin   = $self->_manager->plugins->{$name};
-	$self->_curplugin($plugin);         # storing selected plugin
-	$self->_currow( $event->GetIndex ); # storing selected row
+	$self->_curplugin($plugin);            # storing selected plugin
+	$self->_currow( $event->GetIndex );    # storing selected row
 
 	# updating plugin name in right pane
-	$self->_label->SetLabel($plugin->plugin_name);
+	$self->_label->SetLabel( $plugin->plugin_name );
 
 	# update plugin documentation
 	require Padre::DocBrowser;
@@ -169,7 +169,8 @@ sub _on_list_item_selected {
 	my $class   = $plugin->class;
 	my $doc     = $browser->resolve($class);
 	my $output  = eval { $browser->browse($doc) };
-	my $html    = $@
+	my $html
+		= $@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
 		: $output->body;
 	$self->_whtml->SetPage($html);
@@ -461,6 +462,7 @@ sub _update_plugin_state {
 	my $butprefs = $self->_butprefs;
 
 	if ( $plugin->error ) {
+
 		# plugin is in error state
 		$button->SetLabel( Wx::gettext('Show error message') );
 		$self->_action('_plugin_show_error_msg');
@@ -470,6 +472,7 @@ sub _update_plugin_state {
 		$list->SetItem($item);
 
 	} elsif ( $plugin->incompatible ) {
+
 		# plugin is incompatible
 		$button->SetLabel( Wx::gettext('Show error message') );
 		$self->_action('_plugin_show_error_msg');
@@ -479,8 +482,10 @@ sub _update_plugin_state {
 		$list->SetItem($item);
 
 	} else {
+
 		# plugin is working...
 		if ( $plugin->enabled ) {
+
 			# ... and enabled
 			$button->SetLabel( Wx::gettext('Disable') );
 			$self->_action('_plugin_disable');
@@ -490,6 +495,7 @@ sub _update_plugin_state {
 			$list->SetItem($item);
 
 		} elsif ( $plugin->can_enable ) {
+
 			# ... and disabled
 			$button->SetLabel( Wx::gettext('Enable') );
 			$self->_action('_plugin_enable');
@@ -499,6 +505,7 @@ sub _update_plugin_state {
 			$list->SetItem($item);
 
 		} else {
+
 			# ... disabled but cannot be enabled
 			$button->Disable;
 		}

@@ -193,6 +193,7 @@ sub _on_tree_item_right_click {
 			$outlinebar,
 			$pod,
 			sub {
+
 				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				require Padre::Wx::DocBrowser;
 				my $help = Padre::Wx::DocBrowser->new;
@@ -277,11 +278,12 @@ sub _add_subtree {
 				$type_elem,
 				$item->{name},
 				-1, -1,
-				Wx::TreeItemData->new( {
-					line => $item->{line},
-					name => $item->{name},
-					type => $type,
-				} )
+				Wx::TreeItemData->new(
+					{   line => $item->{line},
+						name => $item->{name},
+						type => $type,
+					}
+				)
 			);
 		}
 	}

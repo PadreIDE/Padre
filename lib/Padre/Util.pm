@@ -24,10 +24,10 @@ moved, removed or changed at any time without notice.
 use 5.008;
 use strict;
 use warnings;
-use Exporter       ();
-use FindBin        ();
-use File::Spec     ();
-use List::Util     qw(first);
+use Exporter   ();
+use FindBin    ();
+use File::Spec ();
+use List::Util qw(first);
 use File::Basename ();
 use Carp           ();
 use POSIX          ();
@@ -119,7 +119,7 @@ sub get_matches {
 	die "missing parameters" if @_ < 4;
 
 	use Encode;
-	$text = Encode::encode('utf-8', $text);
+	$text = Encode::encode( 'utf-8', $text );
 
 	my @matches;
 	while ( $text =~ /$regex/g ) {
@@ -129,7 +129,7 @@ sub get_matches {
 	}
 
 	my $pair;
-	if ( $backward ) {
+	if ($backward) {
 		$pair = first { $to > $_->[1] } reverse @matches;
 		if ( not $pair and @matches ) {
 			$pair = $matches[-1];
@@ -286,7 +286,7 @@ SCOPE: {
 
 		my $ts = POSIX::strftime( "%H:%M:%S", localtime() );
 		print STDERR "$ts - @_\n";
-		if ( $trace ) {
+		if ($trace) {
 			print STDERR Carp::longmess();
 		} else {
 			my ( $package, $filename, $line ) = caller;

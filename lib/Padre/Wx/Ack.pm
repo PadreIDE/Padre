@@ -38,8 +38,8 @@ sub load_ack {
 
 	# try to load app::ack - we don't require $minver in the eval to
 	# provide a meaningful error message if needed.
-	eval "use App::Ack"; ## no critic
-	if ( $@ ) {
+	eval "use App::Ack";    ## no critic
+	if ($@) {
 		return "$error (module not installed)";
 	}
 	if ( $App::Ack::VERSION < $minver ) {
@@ -64,9 +64,9 @@ sub on_ack {
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
-	unless ( $ack_loaded ) {
+	unless ($ack_loaded) {
 		my $error = load_ack();
-		if ( $error ) {
+		if ($error) {
 			$main->error($error);
 			return;
 		}
@@ -239,7 +239,7 @@ sub find_clicked {
 }
 
 sub _get_data_from {
-	my ($dialog) = @_;
+	my ($dialog)              = @_;
 	my $data                  = $dialog->get_data;
 	my $term                  = $data->{_ack_term_};
 	my $dir                   = $data->{_ack_dir_};

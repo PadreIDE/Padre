@@ -64,7 +64,7 @@ into the user's Padre plugins directory.
 =cut
 
 sub ACTION_installplugin {
-	my ( $self ) = @_;
+	my ($self) = @_;
 
 	$self->depends_on('plugin');
 

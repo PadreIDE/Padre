@@ -3,16 +3,16 @@ package Padre::PluginHandle;
 use 5.008;
 use strict;
 use warnings;
-use Carp           'croak';
-use Params::Util   qw{_STRING _IDENTIFIER _CLASS _INSTANCE};
+use Carp 'croak';
+use Params::Util qw{_STRING _IDENTIFIER _CLASS _INSTANCE};
 use Padre::Current ();
 use Padre::Locale  ();
 
 our $VERSION = '0.35';
 
 use overload
-	'bool'     => sub {1},
-	'""'       => 'name',
+	'bool' => sub {1},
+	'""' => 'name',
 	'fallback' => 0;
 
 use Class::XSAccessor getters => {
@@ -53,7 +53,7 @@ sub new {
 
 sub status {
 	my $self = shift;
-	if ( @_ ) {
+	if (@_) {
 		unless ( _STATUS( $_[0] ) ) {
 			croak("Invalid PluginHandle status '$_[0]'");
 		}
@@ -113,8 +113,7 @@ sub can_disable {
 
 sub can_editor {
 	$_[0]->{status} eq 'enabled'
-	and
-	$_[0]->{object}->can('editor_enable');
+		and $_[0]->{object}->can('editor_enable');
 }
 
 ######################################################################
@@ -138,7 +137,7 @@ sub plugin_name {
 sub version {
 	my $self   = shift;
 	my $object = $self->object;
-	if ( $object ) {
+	if ($object) {
 		return $object->VERSION;
 	} else {
 		return '???';
@@ -178,10 +177,10 @@ sub enable {
 
 	# If the plugin defines document types, register them
 	my @documents = $self->object->registered_documents;
-	if ( @documents ) {
+	if (@documents) {
 		require Padre::Document;
 	}
-	while ( @documents ) {
+	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
 		$Padre::Document::MIME_CLASS{$type} = $class;
@@ -229,11 +228,10 @@ sub disable {
 		);
 		return 1;
 	}
-	
+
 	# If the plugin has a hook for the context menu, cache it
 	my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
-	delete $cxt_menu_hook_cache->{$self->name()};
-
+	delete $cxt_menu_hook_cache->{ $self->name() };
 
 	# Update the status
 	$self->status('disabled');
@@ -246,7 +244,7 @@ sub disable {
 # Support Methods
 
 sub _STATUS {
-	_STRING($_[0]) or return undef;
+	_STRING( $_[0] ) or return undef;
 	return {
 		error        => 1,
 		unloaded     => 1,
@@ -254,7 +252,7 @@ sub _STATUS {
 		incompatible => 1,
 		disabled     => 1,
 		enabled      => 1,
-	}->{$_[0]};
+	}->{ $_[0] };
 }
 
 1;

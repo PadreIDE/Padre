@@ -5,7 +5,7 @@ package Padre::Wx::Menu::Edit;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current  qw{_CURRENT};
+use Padre::Current qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -451,6 +451,7 @@ sub refresh {
 	$self->{insert_from_file}->Enable($hasdoc);
 	$self->{case_upper}->Enable($hasdoc);
 	$self->{case_lower}->Enable($hasdoc);
+
 	unless ( $newline eq 'WIN' ) {
 		$self->{convert_nl_windows}->Enable($hasdoc);
 	}
@@ -469,7 +470,7 @@ sub refresh {
 	my $selection = !!( defined $text and $text ne '' );
 	$self->{undo}->Enable( $editor and $editor->CanUndo );
 	$self->{redo}->Enable( $editor and $editor->CanRedo );
-	$self->{paste}->Enable( $editor );
+	$self->{paste}->Enable($editor);
 
 	return 1;
 }

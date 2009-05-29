@@ -21,6 +21,7 @@ our @EXPORT_OK = '_CURRENT';
 # of the context-sensitive code has been migrated over, we should be
 # able to simplify it quite a bit.
 sub _CURRENT {
+
 	# Most likely options
 	unless ( defined $_[0] ) {
 		return Padre::Current->new;

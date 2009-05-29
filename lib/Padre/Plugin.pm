@@ -48,9 +48,9 @@ use Carp         ();
 use File::Spec   ();
 use Scalar::Util ();
 use Params::Util qw{_HASH0 _INSTANCE};
-use YAML::Tiny   ();
-use Padre::DB    ();
-use Padre::Wx    ();
+use YAML::Tiny ();
+use Padre::DB  ();
+use Padre::Wx  ();
 
 our $VERSION    = '0.35';
 our $COMPATIBLE = '0.18';
@@ -78,7 +78,7 @@ of the plugin.
 sub plugin_name {
 	my $class = ref $_[0] || $_[0];
 	my @words = $class =~ /(\w+)/gi;
-	my $name  = pop @words;
+	my $name = pop @words;
 	$name =~ s/([a-z])([A-Z])/$1 $2/g;
 	$name =~ s/([A-Z]+)([A-Z][a-z]+)/$1 $2/g;
 	return $name;
@@ -117,9 +117,7 @@ sub plugin_locale_directory {
 
 	# Find the distribution directory
 	require File::ShareDir::PAR;
-	my $distdir = eval {
-		File::ShareDir::PAR::dist_dir($pkg);
-	};
+	my $distdir = eval { File::ShareDir::PAR::dist_dir($pkg); };
 	return undef if $@;
 
 	return File::Spec->catdir(
@@ -185,12 +183,12 @@ object.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE($ide, 'Padre') ) {
+	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide a Padre ide object");
 	}
 
 	# Create the basic object
-	my $self = bless { }, $class;
+	my $self = bless {}, $class;
 
 	# Store the link back to the IDE
 	$IDE{ Scalar::Util::refaddr($self) } = $ide;
@@ -199,7 +197,7 @@ sub new {
 }
 
 sub DESTROY {
-	delete $IDE{ Scalar::Util::refaddr($_[0]) };
+	delete $IDE{ Scalar::Util::refaddr( $_[0] ) };
 }
 
 #####################################################################
