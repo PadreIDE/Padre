@@ -464,9 +464,6 @@ sub timer_post_init {
 	$self->Show(1);
 	$self->Freeze;
 
-	# Do one menu refresh to get all the right boxes ticked
-	$self->menu->refresh;
-
 	# If the position mandated by the configuration is now
 	# off the screen (typically because we've changed the screen
 	# size, reposition to the defaults).

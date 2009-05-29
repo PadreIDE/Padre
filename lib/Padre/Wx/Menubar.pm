@@ -46,9 +46,8 @@ sub new {
 
 	# Create the basic object
 	my $self = bless {
-
 		# Link back to the main window
-		main => $main,
+		main    => $main,
 
 		# The number of menus in the default set.
 		# That is, EXCLUDING the special Perl menu.
@@ -92,7 +91,7 @@ sub new {
 	Wx::Event::EVT_MENU_OPEN(
 		$main,
 		sub {
-			$main->refresh;
+			$self->refresh;
 		}
 	);
 
@@ -149,11 +148,10 @@ sub refresh {
 }
 
 sub refresh_top {
-	my $self = shift;
-
-	my $current  = _CURRENT(@_);
-	my $menu     = $self->wx->GetMenuCount ne $self->{default};
-	my $perl     = !! (
+	my $self    = shift;
+	my $current = _CURRENT(@_);
+	my $menu    = $self->wx->GetMenuCount ne $self->{default};
+	my $perl    = !! (
 		_INSTANCE($current->document, 'Padre::Document::Perl')
 		or
 		_INSTANCE($current->project, 'Padre::Project::Perl')
