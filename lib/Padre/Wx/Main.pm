@@ -43,8 +43,6 @@ use Padre::Wx::Bottom         ();
 use Padre::Wx::Editor         ();
 use Padre::Wx::Output         ();
 use Padre::Wx::Syntax         ();
-# use Padre::Wx::Outline       ();
-# use Padre::Wx::Directory     ();
 use Padre::Wx::Menubar        ();
 use Padre::Wx::ToolBar        ();
 use Padre::Wx::Notebook       ();
@@ -150,7 +148,7 @@ sub new {
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
-	$self->SetMinSize( Wx::Size->new( 500, 400 ) );
+	$self->SetMinSize( Wx::Size->new(500, 400) );
 
 	# Set the locale
 	$self->{locale} = Padre::Locale::object();
@@ -193,8 +191,6 @@ sub new {
 
 	# Creat the various tools that will live in the panes
 	$self->{functions} = Padre::Wx::FunctionList->new($self);
-	# $self->{outline}   = Padre::Wx::Outline->new($self);
-	# $self->{directory} = Padre::Wx::Directory->new($self);
 	$self->{output}    = Padre::Wx::Output->new($self);
 	$self->{syntax}    = Padre::Wx::Syntax->new($self);
 	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
@@ -210,7 +206,9 @@ sub new {
 	# Special Key Handling
 	Wx::Event::EVT_KEY_UP(
 		$self,
-		\&key_up
+		sub {
+			shift->key_up(@_);
+		},
 	);
 
 	# Deal with someone closing the window
@@ -218,7 +216,7 @@ sub new {
 		$self,
 		sub {
 			shift->on_close_window(@_);
-		}
+		},
 	);
 
 	# Scintilla Event Hooks
@@ -248,7 +246,10 @@ sub new {
 	# at the beginning and hide it in the timer, if it was not needed
 	# TODO: there might be better ways to fix that issue...
 	$statusbar->Show;
-	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT );
+	my $timer = Wx::Timer->new(
+		$self,
+		Padre::Wx::ID_TIMER_POSTINIT,
+	);
 	Wx::Event::EVT_TIMER(
 		$self,
 		Padre::Wx::ID_TIMER_POSTINIT,
@@ -328,29 +329,27 @@ use Class::XSAccessor
 		has_outline   => 'outline',
 		has_directory => 'directory',
 	},
-	getters => {
+	getters        => {
 		# GUI Elements
-		title     => 'title',
-		config    => 'config',
-		ide       => 'ide',
-		aui       => 'aui',
-		menu      => 'menu',
-		notebook  => 'notebook',
-		right     => 'right',
-		functions => 'functions',
-		# outline   => 'outline',
-		# directory => 'directory',
-		bottom    => 'bottom',
-		output    => 'output',
-		syntax    => 'syntax',
-		errorlist => 'errorlist',
+		title         => 'title',
+		config        => 'config',
+		ide           => 'ide',
+		aui           => 'aui',
+		menu          => 'menu',
+		notebook      => 'notebook',
+		right         => 'right',
+		functions     => 'functions',
+		bottom        => 'bottom',
+		output        => 'output',
+		syntax        => 'syntax',
+		errorlist     => 'errorlist',
 	
 		# Operating Data
-		cwd        => 'cwd',
-		no_refresh => '_no_refresh',
+		cwd           => 'cwd',
+		no_refresh    => '_no_refresh',
 	
 		# Things that are probably in the wrong place
-		ack => 'ack',
+		ack           => 'ack',
 	};
 
 sub outline {
@@ -402,9 +401,10 @@ sub load_files {
 		if ( defined $session ) {
 			$self->open_session($session);
 		} else {
-			my $error
-				= sprintf Wx::gettext('No such session %s'),
-				$ide->opts->{session};
+			my $error = sprintf(
+				Wx::gettext('No such session %s'),
+				$ide->opts->{session},
+			);
 			$self->error($error);
 		}
 		return;
@@ -442,6 +442,7 @@ sub load_files {
 	return;
 }
 
+=pod
 
 =item * $main->timer_post_init;
 
@@ -462,6 +463,9 @@ sub timer_post_init {
 	# to startup quickly, and ACTUALLY starting up quickly.
 	$self->Show(1);
 	$self->Freeze;
+
+	# Do one menu refresh to get all the right boxes ticked
+	$self->menu->refresh;
 
 	# If the position mandated by the configuration is now
 	# off the screen (typically because we've changed the screen
@@ -3223,6 +3227,7 @@ sub on_toggle_statusbar {
 	return;
 }
 
+=pod
 
 =item * $main->on_toggle_lockinterface;
 
@@ -3232,17 +3237,18 @@ return value.
 =cut
 
 sub on_toggle_lockinterface {
-	my $self = shift;
+	my $self   = shift;
+	my $config = $self->config;
 
 	# Update and save configuration
-	$self->config->set(
+	$config->set(
 		'main_lockinterface',
 		$self->menu->view->{lockinterface}->IsChecked ? 1 : 0,
 	);
-	$self->config->write;
+	$config->write;
 
 	# Update the lock status
-	$self->aui->lock_panels( $self->config->main_lockinterface );
+	$self->aui->lock_panels( $config->main_lockinterface );
 
 	# The toolbar can't dynamically switch between
 	# tearable and non-tearable so rebuild it.
@@ -3251,6 +3257,7 @@ sub on_toggle_lockinterface {
 	return;
 }
 
+=pod
 
 =item * $main->on_insert_from_file;
 

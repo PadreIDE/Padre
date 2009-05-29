@@ -14,9 +14,10 @@ sub new {
 	my $main  = shift;
 
 	# Create the platform-sensitive style
-	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE;
-	unless (Padre::Util::WXGTK) {
-
+	my $style = Wx::wxAUI_NB_SCROLL_BUTTONS
+	          | Wx::wxAUI_NB_TOP
+	          | Wx::wxBORDER_NONE;
+	unless ( Padre::Util::WXGTK ) {
 		# Crashes on Linux/GTK
 		# Doesn't seem to work right on Win32...
 		# $style = $style | Wx::wxAUI_NB_TAB_EXTERNAL_MOVE;
@@ -27,7 +28,7 @@ sub new {
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new( 300, 350 ),    # used when pane is floated
+		Wx::Size->new(200, 500), # used when pane is floated
 		$style,
 	);
 
@@ -62,7 +63,6 @@ sub show {
 	# Are we currently showing the page
 	my $position = $self->GetPageIndex($page);
 	if ( $position >= 0 ) {
-
 		# Already showing, switch to it
 		$self->SetSelection($position);
 		return;
@@ -87,7 +87,6 @@ sub hide {
 	my $page     = shift;
 	my $position = $self->GetPageIndex($page);
 	unless ( $position >= 0 ) {
-
 		# Not showing this
 		return 1;
 	}

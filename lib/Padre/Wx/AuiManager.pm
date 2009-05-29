@@ -6,7 +6,7 @@ package Padre::Wx::AuiManager;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
-use Padre::Wx ();
+use Padre::Wx    ();
 
 our $VERSION = '0.35';
 
@@ -43,8 +43,8 @@ sub new {
 
 sub caption {
 	my $self = shift;
-	$self->{caption}->{ $_[0] } = $_[1];
-	$self->GetPane( $_[0] )->Caption( $_[1] );
+	$self->{caption}->{$_[0]} = $_[1];
+	$self->GetPane($_[0])->Caption( $_[1] );
 	return 1;
 }
 
@@ -63,15 +63,20 @@ sub relocale {
 
 # Set the lock status of the panels
 sub lock_panels {
-	my $self = shift;
+	my $self   = shift;
 	my $unlock = $_[0] ? 0 : 1;
 
 	$self->Update;
-
-	$self->GetPane('bottom')->CaptionVisible($unlock)->Floatable($unlock)->Dockable($unlock)->Movable($unlock);
-
-	$self->GetPane('right')->CaptionVisible($unlock)->Floatable($unlock)->Dockable($unlock)->Movable($unlock);
-
+	$self->GetPane('bottom')
+	     ->CaptionVisible($unlock)
+	     ->Floatable($unlock)
+	     ->Dockable($unlock)
+	     ->Movable($unlock);
+	$self->GetPane('right')
+	     ->CaptionVisible($unlock)
+	     ->Floatable($unlock)
+	     ->Dockable($unlock)
+	     ->Movable($unlock);
 	$self->Update;
 
 	return;
@@ -97,23 +102,21 @@ sub lock_panels {
 # PPS: Anybody who manages to fix this for real AND explain to me
 #      what the HELL is happening will get a beer on the next
 #      occasion!
-{
+SCOPE: {
 	no warnings 'redefine';
 	no strict;
-	my $destroy = \&Wx::AuiManager::DESTROY;
-	my %destroyed_managers;
+	my $destroy  = \&Wx::AuiManager::DESTROY;
+	my %managers = ();
 	*Wx::AuiManager::DESTROY = sub {
-
-		#		print "$_[0]\n";
-		#		my $i = 0;
-		#		while (1) {
-		#			my @c = caller($i++);
-		#			last if @c < 3;
-		#			print "$i: $c[0] - $c[1] - $c[2] - $c[3]\n";
-		#		}
-
-		if ( not exists $destroyed_managers{"$_[0]"} ) {
-			$destroyed_managers{"$_[0]"}++;
+		#print "$_[0]\n";
+		#my $i = 0;
+		#while (1) {
+		#my @c = caller($i++);
+		#last if @c < 3;
+		#print "$i: $c[0] - $c[1] - $c[2] - $c[3]\n";
+		#}
+		unless ( exists $managers{"$_[0]"} ) {
+			$managers{"$_[0]"}++;
 			goto &$destroy;
 		}
 	};
