@@ -14,18 +14,18 @@ our $VERSION = '0.35';
 
 # Setting Types (based on Firefox types)
 use constant {
-	BOOLEAN => 0,
-	POSINT  => 1,
-	INTEGER => 2,
-	ASCII   => 3,
-	PATH    => 4,
+	BOOLEAN  => 0,
+	POSINT   => 1,
+	INTEGER  => 2,
+	ASCII    => 3,
+	PATH     => 4,
 };
 
 # Setting Storage Backends
 use constant {
-	HOST    => 0,
-	HUMAN   => 1,
-	PROJECT => 2,
+	HOST     => 0,
+	HUMAN    => 1,
+	PROJECT  => 2,
 };
 
 # Syntax Highlighter Colours
