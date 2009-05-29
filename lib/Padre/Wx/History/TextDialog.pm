@@ -3,9 +3,9 @@ package Padre::Wx::History::TextDialog;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
-use Padre::DB ();
-use Padre::Wx ();
+use Params::Util ();
+use Padre::DB    ();
+use Padre::Wx    ();
 
 use Class::Adapter::Builder
 	ISA      => 'Wx::TextEntryDialog',
@@ -21,7 +21,7 @@ sub new {
 	# as a type value in the database history table.
 	my $type = $params[3];
 	$params[3] = Padre::DB::History->previous($type);
-	if ( _INSTANCE( $params[3], 'Padre::DB::History' ) ) {
+	if ( Params::Util::_INSTANCE($params[3], 'Padre::DB::History') ) {
 		$params[3] = $params[3]->name;
 	}
 	unless ( defined $params[3] ) {
@@ -47,7 +47,6 @@ sub ShowModal {
 	# Get the return value as normal
 	my $rv = $self->{OBJECT}->ShowModal(@_);
 	unless ( $rv == Wx::wxID_OK ) {
-
 		# They hit Cancel
 		return $rv;
 	}
@@ -58,8 +57,8 @@ sub ShowModal {
 		return $rv;
 	}
 
-	# If they entered something differen add it to the history.
-	unless ( defined $self->{suggested} and $value eq $self->{suggested} ) {
+	# If they entered something different add it to the history.
+	unless ( defined $self->{suggested} and $self->{suggested} eq $value ) {
 		Padre::DB::History->create(
 			type => $self->{type},
 			name => $value,

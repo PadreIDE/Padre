@@ -1,5 +1,7 @@
 package Padre::Wx::Dialog::Find;
 
+=pod
+
 =head1 NAME
 
 Padre::Wx::Dialog::Find - Find and Replace widget
@@ -14,13 +16,13 @@ Inherits from C<Padre::Wx::Dialog>.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_STRING};
-use Padre::DB ();
-use Padre::Wx ();
-
-use base qw(Padre::Wx::Dialog);
+use Params::Util      qw{_STRING};
+use Padre::DB         ();
+use Padre::Wx         ();
+use Padre::Wx::Dialog ();
 
 our $VERSION = '0.35';
+our @ISA     = 'Padre::Wx::Dialog';
 
 my @cbs = qw(
 	find_case
@@ -28,6 +30,8 @@ my @cbs = qw(
 	find_reverse
 	find_first
 );
+
+=pod
 
 =head1 PUBLIC API
 
@@ -41,7 +45,7 @@ Create and return a C<Padre::Wx::Dialog::Find> object.  Takes dialog
 type (C<find> or C<replace>) as a parameter.  If none given assumes
 the type is C<find>.  Stores dialog type in C<dialog_type>.
 
-	my $find_dialog = Padre::Wx::Dialog::Find->new('find');
+    my $find_dialog = Padre::Wx::Dialog::Find->new('find');
 
 =back
 
@@ -49,15 +53,16 @@ the type is C<find>.  Stores dialog type in C<dialog_type>.
 
 sub new {
 	my $class = shift;
-	my $type = shift;
-
-	my $self = bless {}, $class;
+	my $type  = shift;
+	my $self  = bless {}, $class;
 
 	$self->{dialog_type} = $type ? $type : 'find';
 	$self->create_dialog;
 
 	return $self;
 }
+
+=pod
 
 =head2 Public Methods
 
@@ -78,6 +83,8 @@ sub relocale {
 	return;
 }
 
+=pod
+
 =item * $self->delete_dialog;
 
 Delete dialog.
@@ -93,6 +100,8 @@ sub delete_dialog {
 	return;
 }
 
+=pod
+
 =item * $self->create_dialog;
 
 Create Find or Replace dialog depending on C<dialog_type> value.
@@ -103,13 +112,11 @@ be separated?
 =cut
 
 sub create_dialog {
-	my $self = shift;
-
-	my $title = $self->{dialog_type} eq 'replace'
+	my $self   = shift;
+	my $config = Padre->ide->config;
+	my $title  = $self->{dialog_type} eq 'replace'
 		? Wx::gettext('Replace')
 		: Wx::gettext('Find');
-
-	my $config = Padre->ide->config;
 
 	$self->{dialog} = Wx::Dialog->new(
 		Padre->ide->wx->main,
@@ -118,9 +125,9 @@ sub create_dialog {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION
-			| Wx::wxRESIZE_BORDER
-			| Wx::wxCLOSE_BOX
-			| Wx::wxSYSTEM_MENU,
+		| Wx::wxRESIZE_BORDER
+		| Wx::wxCLOSE_BOX
+		| Wx::wxSYSTEM_MENU,
 	);
 
 	my $main_sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
@@ -323,26 +330,36 @@ sub create_dialog {
 	Wx::Event::EVT_BUTTON(
 		$self->{dialog},
 		$self->get_widget('_find_'),
-		sub { $self->find_clicked }
+		sub {
+			$self->find_clicked;
+		}
 	);
 	Wx::Event::EVT_BUTTON(
 		$self->{dialog},
 		$self->get_widget('_replace_'),
-		sub { $self->replace_clicked }
+		sub {
+			$self->replace_clicked;
+		}
 	);
 	Wx::Event::EVT_BUTTON(
 		$self->{dialog},
 		$self->get_widget('_replace_all_'),
-		sub { $self->replace_all_clicked }
+		sub {
+			$self->replace_all_clicked;
+		}
 	);
 	Wx::Event::EVT_BUTTON(
 		$self->{dialog},
 		$self->get_widget('_cancel_'),
-		sub { $self->cancel_clicked }
+		sub {
+			$self->cancel_clicked;
+		}
 	);
 
 	return;
 }
+
+=pod
 
 =item * $self->update_dialog;
 
@@ -354,24 +371,27 @@ in find and replace combo boxes respectively for re-use.
 sub update_dialog {
 	my $self = shift;
 
-	my $find_combobox = $self->get_widget('_find_choice_');
-	$find_combobox->Clear;
+	my $find = $self->get_widget('_find_choice_');
+	$find->Clear;
 	foreach my $s ( Padre::DB::History->recent('search') ) {
-		$find_combobox->Append($s);
+		$find->Append($s);
 	}
 
 	if ( $self->{dialog_type} eq 'replace' ) {
-		my $replace_combobox = $self->get_widget('_replace_choice_');
-		$replace_combobox->Clear;
+		my $replace = $self->get_widget('_replace_choice_');
+		$replace->Clear;
 		foreach my $r ( Padre::DB::History->recent('replace') ) {
-			$replace_combobox->Append($r);
+			$replace->Append($r);
 		}
+		$replace->SetFocus;
+	} else {
+		$find->SetFocus;
 	}
-
-	$find_combobox->SetFocus;
 
 	return;
 }
+
+=pod
 
 =item * $self->find;
 
@@ -405,6 +425,8 @@ sub find {
 
 	return;
 }
+
+=pod
 
 =item * $self->find_next;
 
@@ -440,6 +462,8 @@ sub find_next {
 	return;
 }
 
+=pod
+
 =item * $self->find_previous;
 
 Perform backward search for string fetched from search history
@@ -459,6 +483,8 @@ sub find_previous {
 	return;
 }
 
+=pod
+
 =item * $self->cancel_clicked;
 
 Hide dialog when pressed cancel button.
@@ -472,6 +498,8 @@ sub cancel_clicked {
 	$_[0]->get_widget('_find_choice_')->SetFocus;
 	return;
 }
+
+=pod
 
 =item * $self->replace_all_clicked;
 
@@ -509,6 +537,8 @@ sub replace_all_clicked {
 
 	return;
 }
+
+=pod
 
 =item * $self->replace_clicked;
 
@@ -548,6 +578,8 @@ sub replace_clicked {
 	return;
 }
 
+=pod
+
 =item * $self->find_clicked;
 
 Executed when Find button is clicked.
@@ -565,6 +597,8 @@ sub find_clicked {
 
 	return;
 }
+
+=pod
 
 =item * $self->get_data_from_dialog;
 
@@ -640,6 +674,8 @@ sub _get_regex {
 	return $regex;
 }
 
+=pod
+
 =item * $self->search;
 
 Perform actual search.  Highlight (set as selected) found string.
@@ -671,6 +707,10 @@ sub search {
 	return;
 }
 
+1;
+
+=pod
+
 =back
 
 =head1 COPYRIGHT & LICENSE
@@ -684,8 +724,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
-1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
