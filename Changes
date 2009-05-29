@@ -1,6 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
-v0.36 to be released
+v0.36 2009.05.29
+
     DocBrowser::POD resolver is now Pod::PerlDoc with benefits
     DocBrowser attempts to use current padre locale as language hint
     DocBrowser reuses tabs for same/similar documents (#323) (Andrew Bramble)
