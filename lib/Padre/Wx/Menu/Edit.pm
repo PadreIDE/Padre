@@ -109,18 +109,6 @@ sub new {
 	);
 
 	# Cut and Paste
-	$self->{copy} = $self->Append(
-		Wx::wxID_COPY,
-		Wx::gettext("&Copy\tCtrl-C")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{copy},
-		sub {
-			Padre::Current->editor->Copy;
-		}
-	);
-
 	$self->{cut} = $self->Append(
 		Wx::wxID_CUT,
 		Wx::gettext("Cu&t\tCtrl-X")
@@ -129,7 +117,21 @@ sub new {
 		$main,
 		$self->{cut},
 		sub {
-			Padre::Current->editor->Cut;
+			my $editor = Padre::Current->editor or return;
+			$editor->Cut;
+		}
+	);
+
+	$self->{copy} = $self->Append(
+		Wx::wxID_COPY,
+		Wx::gettext("&Copy\tCtrl-C")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{copy},
+		sub {
+			my $editor = Padre::Current->editor or return;
+			$editor->Copy;
 		}
 	);
 
