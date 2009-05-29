@@ -17,7 +17,7 @@ use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
 use Padre::Util qw( _T );
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Wx::Frame';
 
 use Class::XSAccessor accessors => {

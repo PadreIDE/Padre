@@ -31,7 +31,7 @@ use warnings;
 use Module::Build   ();
 use Padre::Constant ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Module::Build';
 
 sub ACTION_plugin {

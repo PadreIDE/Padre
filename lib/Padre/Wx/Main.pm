@@ -52,7 +52,7 @@ use Padre::Wx::AuiManager     ();
 use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;

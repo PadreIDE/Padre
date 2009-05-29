@@ -21,7 +21,7 @@ use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Padre::Wx::Dialog';
 
 my @cbs = qw(

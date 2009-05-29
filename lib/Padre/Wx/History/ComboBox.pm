@@ -8,7 +8,7 @@ use warnings;
 use Padre::DB ();
 use Padre::Wx ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 
 1;
 

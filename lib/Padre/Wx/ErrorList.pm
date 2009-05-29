@@ -6,7 +6,7 @@ use Encode        ();
 use Padre::Wx     ();
 use Padre::Locale ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor getters => {

@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Transform ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Padre::Transform';
 
 sub apply {

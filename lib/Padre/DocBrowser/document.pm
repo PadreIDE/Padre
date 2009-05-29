@@ -11,6 +11,8 @@ use Class::XSAccessor
 	'filename' => 'filename',
 	};
 
+our $VERSION = '0.36';
+
 =pod
 
 =head1 NAME

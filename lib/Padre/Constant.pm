@@ -10,7 +10,7 @@ use File::Path    ();
 use File::Spec    ();
 use File::HomeDir ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 
 # Setting Types (based on Firefox types)
 use constant {

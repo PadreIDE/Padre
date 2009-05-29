@@ -5,7 +5,7 @@ use warnings;
 
 use Wx::Perl::Dialog;
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 
 $| = 1;
 

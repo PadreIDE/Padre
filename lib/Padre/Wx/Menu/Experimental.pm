@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################
