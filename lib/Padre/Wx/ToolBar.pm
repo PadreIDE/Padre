@@ -16,7 +16,10 @@ sub new {
 	my $main  = shift;
 
 	# Prepare the style
-	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
+	my $style = Wx::wxTB_HORIZONTAL
+	          | Wx::wxTB_FLAT
+	          | Wx::wxTB_NODIVIDER
+	          | Wx::wxBORDER_NONE;
 	unless ( $main->config->main_lockinterface ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
@@ -32,9 +35,12 @@ sub new {
 
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
-	$self->SetToolBitmapSize( Wx::Size->new( 16, 16 ) );
+	$self->SetToolBitmapSize(
+		Wx::Size->new(16, 16)
+	);
 
 	# Populate the toolbar
+
 	$self->add_tool(
 		id    => Wx::wxID_NEW,
 		icon  => 'actions/document-new',
@@ -43,16 +49,19 @@ sub new {
 			$_[0]->on_new;
 		},
 	);
+
 	$self->add_tool(
 		id    => Wx::wxID_OPEN,
 		icon  => 'actions/document-open',
 		short => Wx::gettext('Open File'),
 	);
+
 	$self->add_tool(
 		id    => Wx::wxID_SAVE,
 		icon  => 'actions/document-save',
 		short => Wx::gettext('Save File'),
 	);
+
 	$self->add_tool(
 		id    => Wx::wxID_CLOSE,
 		icon  => 'actions/x-document-close',
@@ -62,73 +71,57 @@ sub new {
 		},
 	);
 
-	$self->AddSeparator;
-
 	# Undo/Redo Support
-	$self->AddTool(
-		Wx::wxID_UNDO, '',
-		Padre::Wx::Icon::find('actions/edit-undo'),
-		Wx::gettext('Undo'),
-	);
-
-	$self->AddTool(
-		Wx::wxID_REDO, '',
-		Padre::Wx::Icon::find('actions/edit-redo'),
-		Wx::gettext('Redo'),
-	);
-
 	$self->AddSeparator;
+
+	$self->add_tool(
+		id    => Wx::wxID_UNDO,
+		icon  => 'actions/edit-undo',
+		short => Wx::gettext('Undo'),
+	);
+
+	$self->add_tool(
+		id    => Wx::wxID_REDO,
+		icon  => 'actions/edit-redo',
+		short => Wx::gettext('Redo'),
+	);
 
 	# Cut/Copy/Paste
-	$self->AddTool(
-		Wx::wxID_CUT, '',
-		Padre::Wx::Icon::find('actions/edit-cut'),
-		Wx::gettext('Cut'),
-	);
-	Wx::Event::EVT_TOOL(
-		$main,
-		Wx::wxID_CUT,
-		sub {
+	$self->AddSeparator;
+
+	$self->add_tool(
+		id    => Wx::wxID_CUT,
+		icon  => 'actions/edit-cut',
+		short => Wx::gettext('Cut'),
+		event => sub {
 			Padre::Current->editor->Cut;
 		},
 	);
 
-	$self->AddTool(
-		Wx::wxID_COPY, '',
-		Padre::Wx::Icon::find('actions/edit-copy'),
-		Wx::gettext('Copy'),
-	);
-	Wx::Event::EVT_TOOL(
-		$main,
-		Wx::wxID_COPY,
-		sub {
+	$self->add_tool(
+		id    => Wx::wxID_COPY,
+		icon  => 'actions/edit-copy',
+		short => Wx::gettext('Copy'),
+		event => sub {
 			Padre::Current->editor->Copy;
 		},
 	);
 
-	$self->AddTool(
-		Wx::wxID_PASTE, '',
-		Padre::Wx::Icon::find('actions/edit-paste'),
-		Wx::gettext('Paste'),
-	);
-	Wx::Event::EVT_TOOL(
-		$main,
-		Wx::wxID_PASTE,
-		sub {
+	$self->add_tool(
+		id    => Wx::wxID_PASTE,
+		icon  => 'actions/edit-paste',
+		short => Wx::gettext('Paste'),
+		event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Paste;
 		},
 	);
 
-	$self->AddTool(
-		Wx::wxID_SELECTALL, '',
-		Padre::Wx::Icon::find('actions/edit-select-all'),
-		Wx::gettext('Select all'),
-	);
-	Wx::Event::EVT_TOOL(
-		$main,
-		Wx::wxID_SELECTALL,
-		sub {
+	$self->add_tool(
+		id    => Wx::wxID_SELECTALL,
+		icon  => 'actions/edit-select-all',
+		short => Wx::gettext('Select All'),
+		event => sub {
 			Padre::Wx::Editor::text_select_all(@_);
 		},
 	);
@@ -144,13 +137,13 @@ sub refresh {
 	my $text      = $current->text;
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
-	$self->EnableTool( Wx::wxID_SAVE, ( $document and $document->is_modified ? 1 : 0 ) );
-	$self->EnableTool( Wx::wxID_CLOSE, ( $editor ? 1 : 0 ) );
-	$self->EnableTool( Wx::wxID_UNDO,  ( $editor and $editor->CanUndo ) );
-	$self->EnableTool( Wx::wxID_REDO,  ( $editor and $editor->CanRedo ) );
-	$self->EnableTool( Wx::wxID_CUT,   ($selection) );
-	$self->EnableTool( Wx::wxID_COPY,  ($selection) );
-	$self->EnableTool( Wx::wxID_PASTE, ( $editor and $editor->CanPaste ) );
+	$self->EnableTool( Wx::wxID_SAVE,      ( $document and $document->is_modified ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_CLOSE,     ( $editor ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_UNDO,      ( $editor and $editor->CanUndo ) );
+	$self->EnableTool( Wx::wxID_REDO,      ( $editor and $editor->CanRedo ) );
+	$self->EnableTool( Wx::wxID_CUT,       ( $selection ) );
+	$self->EnableTool( Wx::wxID_COPY,      ( $selection ) );
+	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ) );
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ) );
 
 	return;
@@ -167,7 +160,7 @@ sub add_tool {
 	# Create the tool
 	$self->AddTool(
 		$id, '',
-		Padre::Wx::Icon::find( $param{icon} ),
+		Padre::Wx::Icon::find($param{icon}),
 		$param{short},
 	);
 
