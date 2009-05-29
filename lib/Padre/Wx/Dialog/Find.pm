@@ -383,7 +383,9 @@ sub update_dialog {
 		foreach my $r ( Padre::DB::History->recent('replace') ) {
 			$replace->Append($r);
 		}
-		$replace->SetFocus;
+		$self->get_widget_value('_find_choice_') ne ''
+			? $replace->SetFocus
+			: $find->SetFocus;
 	} else {
 		$find->SetFocus;
 	}
@@ -414,8 +416,8 @@ sub find {
 	# of the search and replace and not as the string to be used
 	$text = '' if $text =~ /\n/;
 
-	$self->update_dialog;
 	$self->get_widget('_find_choice_')->SetValue($text);
+	$self->update_dialog;
 
 	if ( $self->{dialog}->IsShown ) {
 		Padre::Wx::Dialog::Find->find_next($main);
@@ -678,10 +680,9 @@ sub _get_regex {
 # Added to be able to use empty string as a replacement text
 # but without storing in (the empty string) in history.
 sub _get_replace {
-	my $self = shift;	
-	my $data = $self->get_widgets_values;
+	my $self = shift;
 
-	my $replace = $data->{_replace_choice_} eq ''
+	my $replace = $self->get_widget_value('_replace_choice_') eq ''
 		? ''
 		: Padre::DB::History->previous('replace');
 
