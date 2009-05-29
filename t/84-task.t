@@ -8,7 +8,6 @@ BEGIN {
 }
 
 use Test::More;
-BEGIN { plan skip_all => 'skipped for release until we got status/padre-fallback-icon sorted out'; } 
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';

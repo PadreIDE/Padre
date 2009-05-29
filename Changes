@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.37 to be released
+
 v0.36 2009.05.30
 
     DocBrowser::POD resolver is now Pod::PerlDoc with benefits
