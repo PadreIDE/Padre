@@ -635,7 +635,7 @@ sub get_data_from_dialog {
 	Padre::DB::History->create(
 		type => 'replace',
 		name => $replace,
-	) if $replace;
+	) if $self->{dialog_type} eq 'replace';
 	Padre::DB->commit;
 
 	return 1;
