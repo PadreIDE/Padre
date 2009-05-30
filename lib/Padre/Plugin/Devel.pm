@@ -216,6 +216,8 @@ Dumps the %INC hash to Output
 
 =head2 STC reference
 
+Documentation for wxStyledTextCtrl, a control that wraps the Scintilla editor component.
+
 =head2 About
 
 =head1 AUTHOR
