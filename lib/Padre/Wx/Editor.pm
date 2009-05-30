@@ -200,7 +200,9 @@ sub setup_style_from_config {
 		no strict "refs";    ## no critic
 		my $v = eval { $f->() };
 		if ($@) {
-			$f = 'Px::' . $k;
+			$f = 'Padre::Constant::' . $k;
+			$f =~ s/PADRE_//;
+			print $f . "\n";
 			$v = eval { $f->() };
 			if ($@) {
 				warn "invalid key '$k'\n";
