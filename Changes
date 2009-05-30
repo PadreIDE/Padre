@@ -8,8 +8,8 @@ v0.36 2009.05.30
     DocBrowser attempts to use current padre locale as language hint
     DocBrowser reuses tabs for same/similar documents (#323) (Andrew Bramble)
     Make DocBrowser suck less. Quieter and faster (#322) (Andrew Bramble)
-    Output should be blank by default at startup (#351) (JQUELIN)
-    No padre version in window title (#349) (JQUELIN)
+    Output should be blank by default at startup (#351) (jquelin)
+    No padre version in window title (#349) (jquelin)
     Added generic HTTP task support with Padre::Task::LWP (ADAMK)
     Implemented first-generation Popularity Contest task (ADAMK)
     Reorganized and differentiated Find and Replace dialogs (#348) (THEREK)
@@ -35,23 +35,23 @@ v0.35 2009.05.08
     Fix to the thread-status display (SMUELLER)
     Fixed ticket #300: disabled EVT_SET_FOCUS in preview (THEREK)
     Fixed ticket #289: Scrolling in preference window (PZSCHMIDT)
-    Fixed ticket #301: Fix wx assertion failures (JQUELIN, SMUELLER)
+    Fixed ticket #301: Fix wx assertion failures (jquelin, SMUELLER)
     Launching a browser now happens in the background (ADAMK)
     Add Czech translation
 
 v0.34 2009.04.28
 
-    Fix crash in plugin manager when changing locale while window opened (#298) (JQUELIN)
-    Support for plugin l10n in place (JQUELIN)
+    Fix crash in plugin manager when changing locale while window opened (#298) (jquelin)
+    Support for plugin l10n in place (jquelin)
     Added Preferences->Run Parameters panel instead of Perl->Run Parameters menu option. (THEREK)
     Stop refreshing the menues on every keystroke. Instead when the menu is being accessed. (SZABGAB)
-    Sessions support (#123) (JQUELIN)
+    Sessions support (#123) (jquelin)
     Enable tooltips on the toolbar on Windows as well (SZABGAB)
     Fix localization change in the Syntax window (#198) (SZABGAB)
-    Plugin manager correctly localized at startup (JQUELIN)
-    Plugin manager displaying full plugin names (JQUELIN)
+    Plugin manager correctly localized at startup (jquelin)
+    Plugin manager displaying full plugin names (jquelin)
     Set file size limit to 500_000 to avoid loading too big files. (#186) (SZABGAB)
-    Double-clicking on an error now selects the line (#214) (JQUELIN)
+    Double-clicking on an error now selects the line (#214) (jquelin)
 
 v0.33 2009.04.04
 
@@ -62,7 +62,7 @@ v0.33 2009.04.04
     Added debug logging that can be turned on/off via the Developer plugin. (SZABGAB)
     Simplified Chinese translation turned on. (FAYLAND, SZABGAB)
     Added Polish translation. (THEREK)
-    Revamped plugin manager. (JQUELIN)
+    Revamped plugin manager. (jquelin)
 
 v0.32 2009.03.29
     Trying to fix again the skipping of Padre::CPAN under the CPAN shell.
@@ -84,10 +84,10 @@ v0.30 2009.03.27
     Remove Test::Compile from the prereqs as well as it is not in use. (SZABGAB)
     New GUI for selecting and installing CPAN modules. (SZABGAB)
     CPAN related menu items moved to new Perl5 plugin (SZABGAB)
-    (Re-)Storing cursor position in file (#206) (JQUELIN)
-    Reload file keeps cursor position (#220) (JQUELIN)
-    Preferences windows title should match its menu invocation (#270) (JQUELIN)
-    Fix error if passed a non-existent filename on command-line (#155) (JQUELIN)
+    (Re-)Storing cursor position in file (#206) (jquelin)
+    Reload file keeps cursor position (#220) (jquelin)
+    Preferences windows title should match its menu invocation (#270) (jquelin)
+    Fix error if passed a non-existent filename on command-line (#155) (jquelin)
     New task_warn/task_print methods in background tasks to easily
         print to the output pane (SMUELLER)
     Fix bug in lexical variable declaration search that would prevent
@@ -99,7 +99,7 @@ v0.29 2009.03.13
     Initial support for directory browser based on the Outline code (SZABGAB)
     Improving Padre::Util::get_project_dir (SZABGAB)
     Eliminate a test failure on non-English locale. (SZABGAB)
-    Internal cleanups & documentation for configuration subsystem (JQUELIN)
+    Internal cleanups & documentation for configuration subsystem (jquelin)
     Require Test::Most for the testing and bail_on compilation errors. (SZABGAB)
     Eliminated a huge memory leak by not updating the plugin menu on every keystroke. (SZABGAB)
 
@@ -120,7 +120,7 @@ v0.27 2009.02.10
     Some fixes in the search menu.
     Improve file type (Perl 5 / Perl 6 ) recognition. (SZABGAB)
     Fix the Windows menu to be able to jump to files. (SZABGAB)
-    Statusbar visibility kept accross startup (#200). (JQUELIN)
+    Statusbar visibility kept accross startup (#200). (jquelin)
 
 v0.26 2009.02.01
 
@@ -295,7 +295,7 @@ Note: If you are having issues running Padre after upgrading to 0.21,
     Italian translation (SBLANDIN)
     Show methods in abc order. Allow user to set preference to 'abc' or 'original'
         ordering of methods. (#163) (SZABGAB)
-    Open selection prompts user if nothing selected. (#143) (JQUELIN)
+    Open selection prompts user if nothing selected. (#143) (jquelin)
     Russian translation added (Andrew Shitov)
     Dutch translation added (Dirk De Nijs)
     Lots and lots of encoding tweaks.
@@ -314,7 +314,7 @@ v0.20 2008.12.02
         Padre::Wx::SyntaxChecker (SMUELLER)
     Small improvement to startup time by not refreshing the plugin
         menu after loading each plugin (SMUELLER)
-    French translation added (JQUELIN)
+    French translation added (jquelin)
     Some refactoring, (SZABGAB)
     Display error when reload file failed. (SZABGAB)
     Korean updates. (KEEDI)
@@ -348,15 +348,15 @@ v0.18 2008.11.23
         has now made the dependency optional. (ADAMK)
     Aggressivly bump the HTML::Parser dependency so that we have
         better support for our Unicode-needing users (ADAMK)
-    Recognize when file is changed on disk (#55) (JQUELIN)
-    Un/Comment now filetype-dependant (#26) (JQUELIN)
+    Recognize when file is changed on disk (#55) (jquelin)
+    Un/Comment now filetype-dependant (#26) (jquelin)
     Moving the vi keybinding code to a Plugin (SZABGAB)
     Jump to the last open window using menu or Ctrl-6 (#137) (SZABGAB)
     Hide the margin of the syntax checker when it is not in use. (SZABGAB)
-    Save-as updates the window menu (#145) (JQUELIN)
-    Drag and drop file(s) open them (#42) (SZABGAB,JQUELIN)
-    padre --index no longer crashes (#79) (JQUELIN)
-    Incremental, non-intrusive search a-la Firefox (#60) (JQUELIN)
+    Save-as updates the window menu (#145) (jquelin)
+    Drag and drop file(s) open them (#42) (SZABGAB,jquelin)
+    padre --index no longer crashes (#79) (jquelin)
+    Incremental, non-intrusive search a-la Firefox (#60) (jquelin)
     New Plug-in system, incompatible with the previous one.
     Plug-in manager dialog.
     Rename Padre::Plugin::MY to Padre::Plugin::My.
@@ -370,13 +370,13 @@ v0.17 2008.11.17
     Fix the failing plugin manager test. (SZABGAB)
     Add configuration option to the autoindentation (no, same_level, deep). (SZABGAB)
     Switch to File::ShareDir::PAR 0.03. (SZABGAB)
-    Allow opening multiple files at once (#43) (JQUELIN)
+    Allow opening multiple files at once (#43) (jquelin)
     Add Padre::Plugin::MY and set it to be a prefered plugin. (SZABGAB)
-    Join lines with Ctrl+J (#128) (JQUELIN)
-    Full screen view (#131) (JQUELIN)
-    Hide/show white spaces and tabs (#132) (JQUELIN)
-    Check minimum App::Ack version (#104). (JQUELIN)
-    Selection markers to ease selection (#133) (JQUELIN)
+    Join lines with Ctrl+J (#128) (jquelin)
+    Full screen view (#131) (jquelin)
+    Hide/show white spaces and tabs (#132) (jquelin)
+    Check minimum App::Ack version (#104). (jquelin)
+    Selection markers to ease selection (#133) (jquelin)
     Drag-n-drop files from Filer Explorer (CORION)
     Add experimantal and basic vi mode. (SZABGAB)
     Fix Shift-TAB (#141) (SZABGAB)
