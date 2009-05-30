@@ -116,6 +116,14 @@ sub new {
 			Padre::Wx::launch_browser('http://padre.perlide.org/report/1');
 		},
 	);
+	
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->Append( -1, Wx::gettext("&Translate Padre...") ),
+		sub {
+			Padre::Wx::launch_browser('http://padre.perlide.org/wiki/TranslationIntro');
+		},
+	);
 
 	# Add the About
 	$self->AppendSeparator;
