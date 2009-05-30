@@ -202,7 +202,6 @@ sub setup_style_from_config {
 		if ($@) {
 			$f = 'Padre::Constant::' . $k;
 			$f =~ s/PADRE_//;
-			print $f . "\n";
 			$v = eval { $f->() };
 			if ($@) {
 				warn "invalid key '$k'\n";
