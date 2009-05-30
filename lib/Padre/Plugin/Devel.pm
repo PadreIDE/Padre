@@ -192,17 +192,29 @@ Padre::Plugin::Devel - tools used by the Padre developers
 
 =head1 DESCRIPTION
 
-=head2 Run in Padre
+=head2 Run Document inside Padre
 
 Executes and evaluates the contents of the current (saved or unsaved)
 document within the current Padre process, and then dumps the result
 of the evaluation to Output.
 
-=head2 Show %INC
+=head2 Dump Current Document
+
+=head2 Dump Top IDE Object
+
+=head2 Dump %INC and @INC
 
 Dumps the %INC hash to Output
 
-=head2 Info
+=head2 Enable/Disable logging
+
+=head2 Enable/Disable trace when logging
+
+=head2 Simulate crash
+
+=head2 wxWidgets 2.8.10 Reference
+
+=head2 STC reference
 
 =head2 About
 
