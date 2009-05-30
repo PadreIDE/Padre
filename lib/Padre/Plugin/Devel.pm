@@ -76,6 +76,9 @@ sub menu_plugins_simple {
 		Wx::gettext('STC Reference') => sub {
 			Padre::Wx::launch_browser('http://www.yellowbrain.com/stc/index.html');
 		},
+		Wx::gettext('wxPerl Live Support') => sub {
+			Padre::Wx::launch_irc('irc.perl.org' => 'wxperl');
+		},
 		'---'                => undef,
 		Wx::gettext('About') => 'show_about',
 	];
@@ -217,6 +220,10 @@ Dumps the %INC hash to Output
 =head2 STC reference
 
 Documentation for wxStyledTextCtrl, a control that wraps the Scintilla editor component.
+
+=head2 wxPerl Live Support
+
+Connects to #wxperl on irc.perl.org, where people can answer queries on wxPerl problems/usage.
 
 =head2 About
 
