@@ -388,18 +388,50 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Diff
-	$self->{diff} = $self->Append(
+	# Diff tools
+	$self->{diff} = Wx::Menu->new;
+	$self->Append(
 		-1,
-		Wx::gettext("Diff")
+		Wx::gettext("Diff Tools"),
+		$self->{diff},
+	);
+
+	$self->{diff2saved} = $self->{diff}->Append(
+		-1,
+		Wx::gettext("Diff to Saved Version")
 	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->{diff},
+		$self->{diff2saved},
 		sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
+	$self->{diff}->AppendSeparator;
+	$self->{applydiff2file} = $self->{diff}->Append(
+		-1,
+		Wx::gettext("Apply Diff to File")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{applydiff2file},
+		sub {
+			Padre::Wx::Main::on_diff(@_);
+		},
+	);
+	$self->{applydiff2project} = $self->{diff}->Append(
+		-1,
+		Wx::gettext("Apply Diff to Project")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{applydiff2project},
+		sub {
+			Padre::Wx::Main::on_diff(@_);
+		},
+	);
+	
+	
 
 	$self->{insert_from_file} = $self->Append(
 		-1,
@@ -447,7 +479,9 @@ sub refresh {
 	$self->{snippets}->Enable($hasdoc);
 	$self->{comment_out}->Enable($hasdoc);
 	$self->{uncomment}->Enable($hasdoc);
-	$self->{diff}->Enable($hasdoc);
+	$self->{diff2saved}->Enable($hasdoc);
+	$self->{applydiff2file}->Enable(0);
+	$self->{applydiff2project}->Enable(0);
 	$self->{insert_from_file}->Enable($hasdoc);
 	$self->{case_upper}->Enable($hasdoc);
 	$self->{case_lower}->Enable($hasdoc);
