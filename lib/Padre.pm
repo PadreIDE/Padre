@@ -477,7 +477,7 @@ We plan to allow the user to switch between styles.
 
 =head3 Adding new syntax highlighting
 
-Need to define constanst in L<Padre::Util> to be in the Px:: namespace.
+Need to define constants in L<Padre::Util> to be in the Padre::Constant namespace.
 
 Need to add the color mapping to share/styles/default.yml
 
