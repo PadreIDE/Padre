@@ -120,6 +120,15 @@ sub new {
 			Padre::Wx::Editor::text_select_all(@_);
 		},
 	);
+	
+	$self->add_tool(
+		id    => 999, 
+		icon  => 'actions/toggle-comments',
+		short => Wx::gettext('Toggle Comments'),
+		event => sub {
+			Padre::Wx::Main::on_comment_toggle_block(@_);
+		},
+	);
 
 	return $self;
 }
@@ -150,6 +159,10 @@ sub refresh {
 sub add_tool {
 	my $self  = shift;
 	my %param = @_;
+	
+	# TODO: the ID code must be unique. If set to -1 such as in
+	# the default call below, it will override any previous item
+	# with that id.
 	my $id    = $param{id} || -1;
 
 	# Create the tool

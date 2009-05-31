@@ -90,3 +90,11 @@ Copyright 2008 Steffen Mueller.
 You can redistribute and/or modify the icons under the same terms as Perl itself.
 
 
+===============================
+actions/toggle-comments.png
+===============================
+
+Made specifically for use in Padre.
+
+Copyright 2009 Breno G. de Oliveira.
+You can redistribute and/or modify the icons under the same terms as Perl itself.
