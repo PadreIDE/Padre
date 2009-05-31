@@ -149,6 +149,7 @@ sub refresh {
 	$self->EnableTool( Wx::wxID_COPY,  ($selection) );
 	$self->EnableTool( Wx::wxID_PASTE, ( $editor and $editor->CanPaste ) );
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ) );
+	$self->EnableTool( 999, ($document ? 1 : 0) );
 
 	return;
 }
