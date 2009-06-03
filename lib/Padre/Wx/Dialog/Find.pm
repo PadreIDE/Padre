@@ -173,12 +173,11 @@ sub create_dialog {
 			'_replace_all_',
 			Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") )
 		);
-	} else {
-		$self->add_widget(
-			'_find_',
-			Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") )
-		);
 	}
+	$self->add_widget(
+		'_find_',
+		Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") )
+	);
 	$self->add_widget(
 		'_cancel_',
 		Wx::Button->new( $self->{dialog}, Wx::wxID_CANCEL, Wx::gettext("&Cancel") )
@@ -284,6 +283,12 @@ sub create_dialog {
 	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$main_sizer->Add( $bottom_sizer, 0, Wx::wxALIGN_RIGHT | Wx::wxALL, 5 );
 
+	$bottom_sizer->Add(
+			$self->get_widget('_find_'),
+			0,
+			Wx::wxGROW | Wx::wxRIGHT,
+			5
+		);
 	if ( $self->{dialog_type} eq 'replace' ) {
 		$bottom_sizer->Add(
 			$self->get_widget('_replace_'),
@@ -295,13 +300,6 @@ sub create_dialog {
 			$self->get_widget('_replace_all_'),
 			0,
 			Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT,
-			5
-		);
-	} else {
-		$bottom_sizer->Add(
-			$self->get_widget('_find_'),
-			0,
-			Wx::wxGROW | Wx::wxRIGHT,
 			5
 		);
 	}
