@@ -29,6 +29,7 @@ my @cbs = qw(
 	find_regex
 	find_reverse
 	find_first
+	replace_all
 );
 
 =pod
@@ -163,6 +164,13 @@ sub create_dialog {
 		Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Close Window on &hit') )
 	);
 	$self->get_widget('find_first')->SetValue( $config->find_first ? 1 : 0 );
+	if ( $self->{dialog_type} eq 'replace' ) {
+		$self->add_widget(
+			'replace_all',
+			Wx::CheckBox->new( $self->{dialog}, -1, Wx::gettext('Replace &all') )
+		);
+		$self->get_widget('replace_all')->SetValue( 0 );
+	}
 	## widgets used in bottom_sizer
 	if ( $self->{dialog_type} eq 'replace' ) {
 		$self->add_widget(
@@ -170,14 +178,15 @@ sub create_dialog {
 			Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE, Wx::gettext("&Replace") )
 		);
 		$self->add_widget(
-			'_replace_all_',
-			Wx::Button->new( $self->{dialog}, Wx::wxID_REPLACE_ALL, Wx::gettext("Replace &all") )
+			'_find_',
+			Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find Next") )
+		);
+	} else {
+		$self->add_widget(
+			'_find_',
+			Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") )
 		);
 	}
-	$self->add_widget(
-		'_find_',
-		Wx::Button->new( $self->{dialog}, Wx::wxID_FIND, Wx::gettext("&Find") )
-	);
 	$self->add_widget(
 		'_cancel_',
 		Wx::Button->new( $self->{dialog}, Wx::wxID_CANCEL, Wx::gettext("&Cancel") )
@@ -278,6 +287,12 @@ sub create_dialog {
 		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5
 	);
+	$options_grid_sizer->Add(
+		$self->get_widget('replace_all'),
+		0,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		5
+	) if $self->{dialog_type} eq 'replace';
 
 	# Bottom sizer begins here
 	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -292,12 +307,6 @@ sub create_dialog {
 	if ( $self->{dialog_type} eq 'replace' ) {
 		$bottom_sizer->Add(
 			$self->get_widget('_replace_'),
-			0,
-			Wx::wxGROW | Wx::wxRIGHT,
-			5
-		);
-		$bottom_sizer->Add(
-			$self->get_widget('_replace_all_'),
 			0,
 			Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT,
 			5
@@ -338,13 +347,6 @@ sub create_dialog {
 		$self->get_widget('_replace_'),
 		sub {
 			$self->replace_clicked;
-		}
-	);
-	Wx::Event::EVT_BUTTON(
-		$self->{dialog},
-		$self->get_widget('_replace_all_'),
-		sub {
-			$self->replace_all_clicked;
 		}
 	);
 	Wx::Event::EVT_BUTTON(
@@ -509,12 +511,32 @@ Replace all appearances of given string.
 
 =cut
 
-sub replace_all_clicked {
-	my ( $self, $dialog, $event ) = @_;
+sub replace {
+	my ( $self, $regex ) = @_;
 
-	$self->get_data_from_dialog or return;
-	my $regex = _get_regex();
-	return if not defined $regex;
+	# Get current search condition and check if they match
+	my $current = Padre::Current->new;
+	my $text    = $current->text;
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
+
+	# If they do, replace it
+	if ( defined $start and $start == 0 and $end == length($text) ) {
+		my $replace = $self->_get_replace;
+		$replace =~ s/\\t/\t/g;
+		$current->editor->ReplaceSelection($replace);
+	}
+
+	# If search window is still open, run a search on the whole text again
+	my $config = Padre->ide->config;
+	unless ( $config->find_first ) {
+		$self->search;
+	}
+
+	return;
+}
+
+sub replace_all {
+	my ( $self, $regex ) = @_;
 
 	my $current = Padre::Current->new;
 	my $main    = $current->main;
@@ -556,23 +578,9 @@ sub replace_clicked {
 	my $regex = _get_regex();
 	return if not defined $regex;
 
-	# Get current search condition and check if they match
-	my $current = Padre::Current->new;
-	my $text    = $current->text;
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
-
-	# If they do, replace it
-	if ( defined $start and $start == 0 and $end == length($text) ) {
-		my $replace = $self->_get_replace;
-		$replace =~ s/\\t/\t/g;
-		$current->editor->ReplaceSelection($replace);
-	}
-
-	# If search window is still open, run a search on the whole text again
-	my $config = Padre->ide->config;
-	unless ( $config->find_first ) {
-		$self->search;
-	}
+	$self->get_widget_value('replace_all') 
+		? $self->replace_all( $regex )
+		: $self->replace( $regex );
 
 	return;
 }
