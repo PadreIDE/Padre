@@ -59,11 +59,11 @@ my @cmd = (
 );
 if ( grep { $_ eq '-d' } @ARGV ) {
 	@ARGV = grep { $_ ne '-d' } @ARGV;
-	push @cmd, '-d';
+	push @cmd, '-dt';
 }
 if ( grep { $_ eq '-p' } @ARGV ) {
 	@ARGV = grep { $_ ne '-p' } @ARGV;
-	push @cmd, '-d:NYTProf';
+	push @cmd, '-dt:NYTProf';
 }
 if ( grep { $_ eq '-h' } @ARGV ) {
 	@ARGV = grep { $_ ne '-h' } @ARGV;
