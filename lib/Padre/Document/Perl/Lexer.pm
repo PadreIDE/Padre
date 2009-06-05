@@ -52,6 +52,7 @@ sub class_to_color {
 		'Hex'           => 0,
 		'Literal'       => 0,
 		'Version'       => 0,
+		'Command'       => 0,
 	);
 
 	if ( not defined $colors{$css} ) {
@@ -381,8 +382,8 @@ sub do_styling {
 	my $editor = $doc->editor;
 
 	foreach my $t (@_) {
-		$editor->StartStyling( $t->{start}, $t->{color} );
-		$editor->SetStyling( $t->{length}, $t->{color} );
+		$editor->StartStyling( $t->{start}, $t->{color}||0 );
+		$editor->SetStyling( $t->{length}, $t->{color}||0 );
 	}
 }
 
