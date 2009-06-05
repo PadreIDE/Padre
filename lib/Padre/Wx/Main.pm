@@ -636,10 +636,15 @@ sub single_instance_connect {
 	my $self   = shift;
 	my $server = shift;
 	my $client = $server->Accept(0);
+
+	# Before we start accepting input,
+	# send the client our process ID.
+	$client->Write( sprintf('% 10s', $$), 10 );
+
+	# Set up the socket hooks
 	Wx::Event::EVT_SOCKET_INPUT(
 		$self, $client,
 		sub {
-
 			# Accept the data and stream commands
 			my $command = '';
 			my $buffer  = '';
@@ -658,6 +663,7 @@ sub single_instance_connect {
 			$_[0]->Destroy;
 		}
 	);
+
 	return 1;
 }
 
