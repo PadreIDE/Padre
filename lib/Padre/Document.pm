@@ -70,21 +70,19 @@ either check for collisions if a plugin already wants to provide
 an already suported mime-type or should allow multiple support
 modules with a way to select the current one.
 
-
 Each mime-type is mapped to one or more lexers that provide 
 the syntax highlighting. Every mime-type has to be mapped to at least 
 one lexer but it can be mapped to several lexers as well. 
 The user is able to select the lexer for each mime-type.
 (For this each lexer should have a reasonable name too.)
 
-mime-types are also mapped to modules that implement 
-special features needed by that kind of a file type.
+The mime-types are also mapped to modules that implement 
+special features needed by that kind of file.
 
 The user can change the mime-type mapping of individual 
 files and Padre should remember this choice and allow the
 user to change it to another specific mime-type
 or to set it to "Default by extension".
-
 
 =head1 METHODS
 
