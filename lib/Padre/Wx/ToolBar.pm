@@ -120,7 +120,10 @@ sub new {
 			Padre::Wx::Editor::text_select_all(@_);
 		},
 	);
-	
+
+	# Document Transforms
+	$self->AddSeparator;
+
 	$self->add_tool(
 		id    => 999, 
 		icon  => 'actions/toggle-comments',
