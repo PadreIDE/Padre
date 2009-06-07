@@ -7,8 +7,8 @@ use strict;
 use warnings;
 use utf8;
 
-# Non-Padre modules we need in order to show the initial
-# window should be loaded early to simplify the load order.
+# Non-Padre modules we need in order to the single-instance
+# check should be loaded early to simplify the load order.
 use Carp          ();
 use Cwd           ();
 use File::Spec    ();
@@ -28,9 +28,9 @@ our $VERSION = '0.36';
 
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials
-use Padre::Util   ();
-use Padre::Config ();
-use Padre::DB     ();
+use Padre::Constant ();
+use Padre::Config   ();
+use Padre::DB       ();
 
 # Generate faster accessors
 use Class::XSAccessor getters => {
@@ -119,7 +119,7 @@ sub new {
 			if ( defined $read and $read == 10 ) {
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
-				if ( Padre::Util::WIN32 ) {
+				if ( Padre::Constant::WIN32 ) {
 					require Win32::API;
 					Win32::API->new(
 						'User32.dll',
