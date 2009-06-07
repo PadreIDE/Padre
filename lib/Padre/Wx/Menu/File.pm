@@ -210,18 +210,26 @@ sub new {
 		},
 	);
 
+	$self->{open_session} = $self->Append(
+		-1,
+		Wx::gettext("Open Session...\tCtrl-Alt-O")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append( -1, Wx::gettext("Open Session...\tCtrl-Alt-O") ),
+		$self->{open_session},
 		sub {
 			require Padre::Wx::Dialog::SessionManager;
 			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
 		},
 	);
 
+	$self->{save_session} = $self->Append(
+		-1,
+		Wx::gettext("Save Session...\tCtrl-Alt-S")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append( -1, Wx::gettext("Save Session...\tCtrl-Alt-S") ),
+		$self->{save_session},
 		sub {
 			require Padre::Wx::Dialog::SessionSave;
 			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
@@ -323,7 +331,6 @@ sub refresh {
 	my $current = _CURRENT(@_);
 	my $doc     = $current->document ? 1 : 0;
 
-	$self->{open_selection}->Enable($doc);
 	$self->{close}->Enable($doc);
 	$self->{close_all}->Enable($doc);
 	$self->{close_all_but_current}->Enable($doc);
@@ -332,6 +339,8 @@ sub refresh {
 	$self->{save_as}->Enable($doc);
 	$self->{save_all}->Enable($doc);
 	$self->{print}->Enable($doc);
+	$self->{open_selection}->Enable($doc);
+	$self->{save_session}->Enable($doc);
 	$self->{docstat}->Enable($doc);
 
 	return 1;
@@ -342,7 +351,7 @@ sub update_recentfiles {
 
 	# menu entry count starts at 0
 	# first 3 entries are "open all", "clean list" and a separator
-	foreach ( my $i = $self->{recentfiles}->GetMenuItemCount() - 1; $i >= 3; $i-- ) {
+	foreach ( my $i = $self->{recentfiles}->GetMenuItemCount - 1; $i >= 3; $i-- ) {
 		if ( my $item = $self->{recentfiles}->FindItemByPosition($i) ) {
 			$self->{recentfiles}->Delete($item);
 		}
