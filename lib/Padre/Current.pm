@@ -43,7 +43,7 @@ sub _CURRENT {
 
 sub new {
 	my $class = shift;
-	bless {@_}, $class;
+	bless { @_ }, $class;
 }
 
 #####################################################################
@@ -64,11 +64,8 @@ sub project {
 sub text {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $editor = $self->editor;
-	if ( defined $editor ) {
-		return $editor->GetSelectedText;
-	} else {
-		return undef;
-	}
+	return '' unless defined $editor;
+	return $editor->GetSelectedText;
 }
 
 # Get the title of the current editor window (and don't cache)
@@ -201,70 +198,69 @@ Instead of poking directly with the various classes to find the object
 you need, C<Padre::Current> provides a bunch of handy methods to
 retrieve whatever current object you need.
 
-=head1 PUBLIC METHODS
+=head1 METHODS
 
-=head2 Constructor
+=head2 new
 
-=over 4
+  # Vanilla constructor
+  Padre::Current->new;
+  
+  # Seed the object with some context
+  Padre::Current->new( document => $document );
 
-=item new()
+The C<new> constructor creates a new context object, it optionally takes
+one or more named parameters which should be any context the caller is
+aware of before he calls the constructor.
 
-Create and return a C<Padre::Current> object. No params.
+Providing this seed context allows the context object to derive parts of
+the current context from other parts, without the need to fall back to
+the last-resort C<Padre-E<gt>ide> singleton-fetching method.
 
-=back
+Many objects in L<Padre> that are considered to be part of them context
+will have a C<current> method which automatically creates the context
+object with it as a seed.
 
-=head2 Current stuff
+Returns a new B<Padre::Current> object.
 
-Note that you don't need to use an object directly to call those
-methods, calling them as class methods is ok. For example:
+=head2 ide
 
-	my $doc = Padre::Current->document;
+Return the L<Padre> singleton for the IDE instance.
 
-Here's the list of methods provided to get access to current something:
+=head2 config
 
-=over 4
+Returns the current L<Padre::Config> configuration object for the IDE.
 
-=item config()
+=head2 main
 
-Return the current C<Padre::Config> object from the main window.
+Returns the L<Padre::Wx::Main> object for the main window.
 
-=item document()
+=head2 notebook
 
-Return the current C<Padre::Document> object in use.
+Returns the L<Padre::Wx::Notebook> object for the main window.
 
-=item editor()
+=head2 document
 
-Return the current C<Padre::Editor> object in use.
+Returns the active L<Padre::Document> document object.
 
-=item filename()
+=head2 editor
 
-Return the filename of the current opened document.
+Returns the L<Padre::Editor> editor object for the active document.
 
-=item ide()
+=head2 filename
 
-Return the current C<Padre> object in use.
+Returns the filename of the active document, if it has one.
 
-=item main()
-
-Return the current C<Padre::Wx::Main> object in use.
-
-=item notebook()
-
-Return the current C<Padre::Wx::Notebook> object in use.
-
-=item project()
-
-Return the current C<Padre::Project> object in use.
-
-=item text()
-
-Return the current selected text.
-
-=item title()
+=head2 title
 
 Return the title of current editor window.
 
-=back
+=head2 project
+
+Return the C<Padre::Project> project object for the active document.
+
+=head2 text
+
+Returns the selected text, or a null string if nothing is selected.
 
 =head1 COPYRIGHT & LICENSE
 
