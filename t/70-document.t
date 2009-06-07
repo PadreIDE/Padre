@@ -12,7 +12,7 @@ BEGIN {
 }
 
 use Test::NoWarnings;
-use File::Spec  ();
+use File::Spec ();
 use t::lib::Padre;
 use t::lib::Padre::Editor;
 
