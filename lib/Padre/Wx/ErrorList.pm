@@ -2,9 +2,10 @@ package Padre::Wx::ErrorList;
 
 use strict;
 use warnings;
-use Encode        ();
-use Padre::Wx     ();
-use Padre::Locale ();
+use Encode          ();
+use Padre::Constant ();
+use Padre::Wx       ();
+use Padre::Locale   ();
 
 our $VERSION = '0.36';
 our @ISA     = 'Wx::TreeCtrl';
@@ -128,7 +129,7 @@ sub on_menu_help_context_help {
 		$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 	}
 	$diagnostics
-		= Padre::Util::WIN32
+		= Padre::Constant::WIN32
 		? $diagnostics
 		: Encode::encode( 'utf8', $diagnostics );
 	my $dialog_title = Wx::gettext("Diagnostics");
