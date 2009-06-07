@@ -60,23 +60,26 @@ sub load_ack {
 }
 
 sub on_ack {
-	my $main = shift;
+	my $main    = shift;
+	my $current = $main->current;
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
-	unless ($ack_loaded) {
+	unless ( $ack_loaded ) {
 		my $error = load_ack();
-		if ($error) {
+		if ( $error ) {
 			$main->error($error);
 			return;
 		}
 		$ack_loaded = 1;
 	}
 
-	my $text = $main->current->text;
-	$text = '' if not defined $text;
-
-	my $dialog = dialog( $main, $text );
+	my $project = $current->project;
+	my $dialog  = dialog(
+		$main,
+		$current->text,
+		$project ? $project->root : '',
+	);
 	$dialog->Show(1);
 
 	return;
@@ -87,6 +90,7 @@ sub on_ack {
 
 sub get_layout {
 	my $term   = shift;
+	my $dir    = shift;
 	my $search = Padre::DB::History->recent('search');
 	my $in_dir = Padre::DB::History->recent('find in');
 	my $types  = Padre::DB::History->recent('find types');
@@ -100,7 +104,7 @@ sub get_layout {
 			[ 'Wx::Button',   '_find_',     Wx::wxID_FIND ],
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Dir:') ],
-			[ 'Wx::ComboBox', '_ack_dir_',  '', $in_dir ],
+			[ 'Wx::ComboBox', '_ack_dir_',  $dir, $in_dir ],
 			[ 'Wx::Button',   '_pick_dir_', Wx::gettext('Pick &directory') ],
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('In Files/Types:') ],
@@ -126,9 +130,9 @@ sub get_layout {
 }
 
 sub dialog {
-	my ( $main, $term ) = @_;
+	my ( $main, $term, $directory ) = @_;
 
-	my $layout = get_layout($term);
+	my $layout = get_layout($term, $directory);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $main,
 		title  => Wx::gettext("Find in Files"),
