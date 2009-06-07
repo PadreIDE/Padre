@@ -28,7 +28,7 @@ use POSIX qw(locale_h);
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 foreach my $module ( sort keys %modules ) {
 	require_ok( $module );
-	ok( $module->VERSION, "Got $module \$VERSION" );
+	ok( $module->VERSION, "$module: Found \$VERSION" );
 }
 
 foreach my $module ( sort keys %modules ) {
@@ -36,7 +36,7 @@ foreach my $module ( sort keys %modules ) {
 	my $document = PPI::Document->new( $modules{$module},
 		readonly => 1,
 	);
-	ok( $document, "PPI can parse $module" );
+	ok( $document, "$module: Parsable by PPI" );
 	unless ( $document ) {
 		diag( PPI::Document->errstr );
 	}
@@ -57,7 +57,7 @@ foreach my $module ( sort keys %modules ) {
 			$method->content ne 'new'           or return '';
 			return 1;
 		} );
-		ok( $good, "Do not use Padre::Current directly when ->current is possible" );
+		ok( $good, "$module: Don't use Padre::Current when ->current is possible" );
 	}
 
 	# If a method has an ide or main method, never use Padre->ide directly
@@ -76,7 +76,7 @@ foreach my $module ( sort keys %modules ) {
 			$method->content eq 'ide'           or return '';
 			return 1;
 		} );
-		ok( $good, "Do not use Padre->ide when ->ide or ->main is possible" );
+		ok( $good, "$module: Don't use Padre->ide when ->ide or ->main is possible" );
 	}
 }
 
