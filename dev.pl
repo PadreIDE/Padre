@@ -58,14 +58,17 @@ my @cmd = (
 	qq[-I$FindBin::Bin/blib/lib],
 );
 if ( grep { $_ eq '-d' } @ARGV ) {
+	# Command line debugging
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-dt';
 }
 if ( grep { $_ eq '-p' } @ARGV ) {
+	# Profiling
 	@ARGV = grep { $_ ne '-p' } @ARGV;
 	push @cmd, '-dt:NYTProf';
 }
 if ( grep { $_ eq '-h' } @ARGV ) {
+	# Rebuild translations
 	@ARGV = grep { $_ ne '-h' } @ARGV;
 	my $dir = File::Basename::dirname($ENV{PADRE_HOME});
 	if ( opendir my $dh, $dir ) {
