@@ -91,11 +91,12 @@ or to set it to "Default by extension".
 use 5.008;
 use strict;
 use warnings;
-use Carp        ();
-use File::Spec  ();
-use Padre::Util ();
-use Padre::Wx   ();
-use Padre       ();
+use Carp            ();
+use File::Spec      ();
+use Padre::Constant ();
+use Padre::Util     ();
+use Padre::Wx       ();
+use Padre           ();
 
 our $VERSION = '0.36';
 
@@ -390,7 +391,7 @@ sub mime_type_by_extension {
 # For ts without a newline type
 # TODO: get it from config
 sub _get_default_newline_type {
-	Padre::Util::NEWLINE;
+	Padre::Constant::NEWLINE;
 }
 
 # naive sub to decide if a piece of code is Perl 6 or Perl 5.
@@ -413,7 +414,7 @@ sub is_perl6 {
 # mixed files
 # TODO get from config
 sub _mixed_newlines {
-	Padre::Util::NEWLINE;
+	Padre::Constant::NEWLINE;
 }
 
 # What to do with files that have inconsistent line endings:

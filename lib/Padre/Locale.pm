@@ -41,9 +41,10 @@ use File::Spec ();
 # Padre::Wx should not implement anything using Wx modules.
 # We make an exception in this case, because we're only using the locale
 # logic in Wx, which isn't related to widgets anyway.
-use Padre::Util   ('_T');
-use Padre::Config ();
-use Padre::Wx     ();
+use Padre::Constant ();
+use Padre::Util     ('_T');
+use Padre::Config   ();
+use Padre::Wx       ();
 
 use constant DEFAULT  => 'en-gb';
 use constant SHAREDIR => File::Spec->rel2abs( Padre::Util::sharedir('locale') );
@@ -60,14 +61,13 @@ my %RFC4646;
 BEGIN {
 	%RFC4646 = (
 
-		# The default language for Padre is "United Kingdom English"
-		# The most common English dialect, used not only in the UK,
-		# but also other Commonwealth countries such as Australia,
-		# New Zealand, India, and Canada (sort of...)
+		# The default language for Padre is "United Kingdom English".
+		# This is the most common English dialect, used not only in
+		# the UK, but also other Commonwealth countries such as
+		# Australia, New Zealand, India, and Canada (sort of...)
 		# The following entry for it is heavily commented for
 		# documentation purposes.
 		'en-gb' => {
-
 			# REQUIRED: The gettext msgid for the language.
 			gettext => _T('English (United Kingdom)'),
 
@@ -137,7 +137,7 @@ BEGIN {
 		# The official languages are listed sorted by identifier.
 		# NOTE: Please do not populate entries into this list unless
 		# you are a native speaker of a particular language and are
-		# fully aware of any
+		# fully aware of any idiosyncracies for that language.
 
 		'ar' => {
 			gettext   => _T('Arabic'),
@@ -252,7 +252,6 @@ BEGIN {
 		},
 
 		'fr-fr' => {
-
 			# Simplify until there's another French
 			# gettext   => 'French (France)',
 			# utf8text  => 'Français (France)',
@@ -286,7 +285,6 @@ BEGIN {
 		},
 
 		'it-it' => {
-
 			# Simplify until there's another Italian
 			# gettext   => 'Italian (Italy)',
 			# utf8text  => 'Italiano (Italy)',
@@ -320,7 +318,6 @@ BEGIN {
 		},
 
 		'nl-nl' => {
-
 			# Simplify until there's another Italian
 			# gettext   => 'Dutch (Netherlands)',
 			# utf8text  => 'Nederlands (Nederlands)',
@@ -444,8 +441,7 @@ BEGIN {
 		my $lang = $RFC4646{$id};
 		$lang->{actual} = List::Util::first {
 			$RFC4646{$_}->{supported};
-		}
-		( $id, @{ $lang->{fallback} }, DEFAULT );
+		} ( $id, @{ $lang->{fallback} }, DEFAULT );
 	}
 }
 
@@ -453,8 +449,9 @@ use constant WX => Wx::Locale::GetSystemLanguage();
 
 use constant system_rfc4646 => List::Util::first {
 	$RFC4646{$_}->{wxid} == WX;
-}
-grep { defined $RFC4646{$_}->{wxid} } sort keys %RFC4646;
+} grep {
+	defined $RFC4646{$_}->{wxid}
+} sort keys %RFC4646;
 
 #####################################################################
 # Locale 2.0 Implementation
@@ -501,7 +498,11 @@ sub object {
 }
 
 sub menu_view_languages {
-	return map { $_ => Wx::gettext( $RFC4646{$_}->{gettext} ) } grep { $RFC4646{$_}->{supported} } sort keys %RFC4646;
+	return map {
+		$_ => Wx::gettext( $RFC4646{$_}->{gettext} )
+	} grep {
+		$RFC4646{$_}->{supported}
+	} sort keys %RFC4646;
 }
 
 #####################################################################
@@ -509,7 +510,7 @@ sub menu_view_languages {
 
 sub encoding_system_default {
 	my $encoding;
-	if (Padre::Util::MAC) {
+	if (Padre::Constant::MAC) {
 
 		# In mac system Wx::Locale::GetSystemEncodingName() couldn't
 		# return the name of encoding directly.
@@ -523,7 +524,7 @@ sub encoding_system_default {
 			$encoding = $codeset;
 		}
 
-	} elsif (Padre::Util::WIN32) {
+	} elsif (Padre::Constant::WIN32) {
 
 		# In windows system Wx::Locale::GetSystemEncodingName() returns
 		# like ``windows-1257'' and it matches as ``cp1257''
@@ -531,7 +532,7 @@ sub encoding_system_default {
 		$encoding = Wx::Locale::GetSystemEncodingName();
 		$encoding =~ s/^windows-/cp/i;
 
-	} elsif (Padre::Util::UNIX) {
+	} elsif (Padre::Constant::UNIX) {
 		$encoding = Wx::Locale::GetSystemEncodingName();
 		unless ($encoding) {
 
@@ -576,11 +577,11 @@ sub encoding_from_string {
 	my @guess    = ();
 	my $encoding = '';
 	my $language = rfc4646();
-	if ( $language eq 'ko' ) {    # Korean
+	if ( $language eq 'ko' ) {       # Korean
 		@guess = qw/utf-8 euc-kr/;
-	} elsif ( $language eq 'ja' ) {    # Japan (not yet tested)
+	} elsif ( $language eq 'ja' ) {  # Japan (not yet tested)
 		@guess = qw/utf-8 iso8859-1 euc-jp shiftjis 7bit-jis/;
-	} elsif ( $language =~ /^zh/ ) {    # Chinese (not yet tested)
+	} elsif ( $language =~ /^zh/ ) { # Chinese (not yet tested)
 		@guess = qw/utf-8 iso8859-1 euc-cn/;
 	} else {
 		$default ||= encoding_system_default();
@@ -590,7 +591,7 @@ sub encoding_from_string {
 	require Encode::Guess;
 	my $guess = Encode::Guess::guess_encoding( $content, @guess );
 	unless ( defined $guess ) {
-		$guess = '';                    # to avoid warnings
+		$guess = ''; # to avoid warnings
 	}
 
 	# Wow, nice!

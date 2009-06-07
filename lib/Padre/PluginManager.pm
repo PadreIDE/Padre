@@ -857,7 +857,7 @@ sub test_a_plugin {
 	my $dialog = Wx::FileDialog->new(
 		$main, Wx::gettext('Open file'), $default_dir, '', '*.*', Wx::wxFD_OPEN,
 	);
-	unless (Padre::Util::WIN32) {
+	unless (Padre::Constant::WIN32) {
 		$dialog->SetWildcard("*");
 	}
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
