@@ -12,6 +12,27 @@ use File::HomeDir ();
 
 our $VERSION = '0.36';
 
+# Convenience constants for the operating system
+use constant WIN32 => !! ( $^O eq 'MSWin32' );
+use constant MAC   => !! ( $^O eq 'darwin'  );
+use constant UNIX  => !  ( WIN32 or MAC     );
+
+# Padre targets the three largest Wx backends
+# 1. Win32 Native
+# 2. Mac OS X Native
+# 3. Unix GTK
+# The following defined reusable constants for these platforms,
+# suitable for use in Wx platform-specific adaptation code.
+# Currently (and a bit naively) we align these to the platforms.
+use constant {
+	WXWIN32 => WIN32,
+	WXMAC   => MAC,
+	WXGTK   => UNIX,
+};
+
+# The local newline type
+use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
+
 # Setting Types (based on Firefox types)
 use constant {
 	BOOLEAN => 0,
