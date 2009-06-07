@@ -36,14 +36,15 @@ the available methods that can be applied to it besides the added ones
 
 use strict;
 use warnings;
-use Padre::Util    ();
-use Padre::Wx      ();
-use Padre::Current ();
+use Padre::Constant ();
+use Padre::Current  ();
+use Padre::Util     ();
+use Padre::Wx       ();
 
 use Class::XSAccessor accessors => {
-	_task_sbmp   => '_task_sbmp',      # Static bitmap holding the task status
-	_task_status => '_task_status',    # Current task status
-	_task_width  => '_task_width',     # Current width of task field
+	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
+	_task_status => '_task_status', # Current task status
+	_task_width  => '_task_width',  # Current width of task field
 };
 
 our $VERSION = '0.36';
@@ -61,15 +62,11 @@ use constant {
 
 =pod
 
-=head1 PUBLIC API
+=head1 METHODS
 
-=head2 Constructor
+=head2 new
 
-There's only one constructor for this class.
-
-=over 4
-
-=item * my $statusbar = Padre::Wx::StatusBar->new( $main );
+    my $statusbar = Padre::Wx::StatusBar->new( $main );
 
 Create and return a new Padre statusbar. One should pass the C<$main>
 Padre window as argument, to get a reference to the statusbar parent.
@@ -86,7 +83,7 @@ sub new {
 	# create the static bitmap that will hold the task load status
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
-	$self->_task_status('foobar');    # init status to sthg defined
+	$self->_task_status('foobar'); # init status to sthg defined
 	Wx::Event::EVT_LEFT_DOWN(
 		$sbmp,
 		sub {
@@ -105,21 +102,17 @@ sub new {
 	return $self;
 }
 
-=pod
 
-=back
 
-=cut
+
 
 #####################################################################
 
 =pod
 
-=head2 Public Methods
+=head2 clear
 
-=over 4
-
-=item * $sb->clear;
+    $statusbar->clear;
 
 Clear all the status bar fields, ie, they will display an empty string
 in all fields.
@@ -137,7 +130,9 @@ sub clear {
 
 =pod
 
-=item * my $main = $sb->main;
+=head2 main
+
+    my $main = $statusbar->main;
 
 Handy method to get a reference on Padre's main window.
 
@@ -149,19 +144,23 @@ sub main {
 
 =pod
 
-=item * my $current = $sb->current;
+=head2 current
+
+    my $current = $statusbar->current;
 
 Get a new C<Padre::Current> object.
 
 =cut
 
 sub current {
-	Padre::Current->new( main => $_[0]->GetParent, );
+	Padre::Current->new( main => $_[0]->GetParent );
 }
 
 =pod
 
-=item * $sb->refresh;
+=head2 refresh
+
+    $statusbar->refresh;
 
 Force an update of the document fields in the statusbar.
 
@@ -177,12 +176,11 @@ sub refresh {
 	# Prepare the various strings that form the status bar
 	my $notebook = $current->notebook;
 	my $document = $current->document;
-	my $newline  = $document->get_newline_type || Padre::Util::NEWLINE;
+	my $newline  = $document->get_newline_type || Padre::Constant::NEWLINE;
 	my $pageid   = $notebook->GetSelection;
 	my $filename = $document->filename || '';
 	my $old      = $notebook->GetPageText($pageid);
-	my $text
-		= $filename
+	my $text     = $filename
 		? File::Basename::basename($filename)
 		: substr( $old, 1 );
 	my $modified = $editor->GetModify ? '*' : ' ';
@@ -201,7 +199,7 @@ sub refresh {
 	# Write the new values into the status bar and update sizes
 	$self->SetStatusText( "$modified $filename", FILENAME );
 	$self->SetStatusText( $mimetype,             MIMETYPE );
-	$self->SetStatusText( $newline,              NEWLINE );
+	$self->SetStatusText( $newline,              NEWLINE  );
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
@@ -227,7 +225,9 @@ sub refresh {
 
 =pod
 
-=item * $sb->update_task_status;
+=head2 update_task_status
+
+    $statusbar->update_task_status;
 
 Checks whether a task status icon update is in order and if so, changes
 the icon to one of the other states
@@ -265,23 +265,13 @@ sub update_task_status {
 	$self->_task_width(20);
 }
 
-=pod
-
-=back
-
-=cut
-
 #####################################################################
 
 =pod
 
-=head2 Event handlers
+=head2 on_resize
 
-Those methods handle various events happening to the statusbar.
-
-=over 4
-
-=item * $sb->on_resize( $event );
+    $statusbar->on_resize( $event );
 
 Handler for the EVT_SIZE C<$event>. Used to move the task load bitmap to
 its position.
@@ -297,14 +287,7 @@ sub on_resize {
 	$self->Refresh;
 }
 
-=pod
-
-=back
-
-=cut
-
 #####################################################################
-
 # Private methods
 
 #
@@ -332,13 +315,12 @@ sub _get_task_status {
 }
 
 #
-# $sb->_move_bitmap;
+# $statusbar->_move_bitmap;
 #
 # move the static bitmap holding the task load status to its proper location.
 #
 sub _move_bitmap {
 	my ($self) = @_;
-
 	my $sbmp = $self->_task_sbmp;
 	my $rect = $self->GetFieldRect(TASKLOAD);
 	my $size = $sbmp->GetSize;
@@ -348,6 +330,8 @@ sub _move_bitmap {
 	);
 	$sbmp->Refresh;
 }
+
+1;
 
 =pod
 
@@ -367,8 +351,6 @@ The full text of the license can be found in the
 LICENSE file included with this module.
 
 =cut
-
-1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
