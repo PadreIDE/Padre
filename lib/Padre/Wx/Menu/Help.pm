@@ -7,6 +7,8 @@ use strict;
 use warnings;
 use utf8;
 use Padre::Constant ();
+use Padre::Current  '_CURRENT';
+use Padre::Locale   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -36,8 +38,8 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("Context Help\tF1") ),
 		sub {
-			my $current = Wx::Window::FindFocus();
-			if ( ( defined $current ) and $current->isa('Padre::Wx::ErrorList') ) {
+			my $focus = Wx::Window::FindFocus();
+			if ( ( defined $focus ) and $focus->isa('Padre::Wx::ErrorList') ) {
 				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
 
@@ -45,16 +47,17 @@ sub new {
 				# populate the main window hash.
 				my $selection = $_[0]->current->text;
 				$_[0]->menu->help->help( $_[0] );
-				if ($selection) {
+				if ( $selection ) {
 					$_[0]->{help}->help($selection);
 				}
 				return;
 			}
 		},
 	);
+	$self->{current} = $self->Append( -1, Wx::gettext('Current Document') );
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append( -1, Wx::gettext('Current Document') ),
+		$self->{current},
 		sub {
 			$_[0]->menu->help->help( $_[0] );
 			$_[0]->{help}->help( $_[0]->current->document );
@@ -138,6 +141,17 @@ sub new {
 	return $self;
 }
 
+sub refresh {
+	my $self    = shift;
+	my $current = _CURRENT(@_);
+	my $hasdoc  = $current->document ? 1 : 0;
+
+	# Don't show "Current Document" unless there is one
+	$self->{current}->Enable($hasdoc);
+
+	return 1;
+}
+
 # TODO - This violates encapsulation, a menu entry shouldn't be
 #        spawning windows and storing them in the window hash.
 sub help {
@@ -188,7 +202,7 @@ sub about {
 	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm") );
 
 	# Only Unix/GTK native about box supports websites
-	if (Padre::Util::WXGTK) {
+	if ( Padre::Constant::WXGTK ) {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 
