@@ -197,7 +197,6 @@ sub colorize {
 sub _css_class {
 	my ( $self, $Token ) = @_;
 	if ( $Token->isa('PPI::Token::Word') ) {
-
 		# There are some words we can be very confident are
 		# being used as keywords
 		unless ( $Token->snext_sibling and $Token->snext_sibling->content eq '=>' ) {
@@ -257,7 +256,13 @@ sub keywords {
 sub get_functions {
 	my $self = shift;
 	my $text = $self->text_get;
-	return $text =~ m/[\012\015]\s*sub\s+(\w+(?:::\w+)*)/g;
+
+	# Filter out POD
+	$text =~ s/(?:\015{1,2}\012|\015|\012)/\n/sg;
+	$text =~ s/(\n)\n*__(?:DATA|END)__\b.*\z/$1/s;
+	$text =~ s/\n\n=\w+.+?\n\n=cut\b.+?\n+/\n\n/sg;
+
+	return $text =~ m/\n\s*sub\s+(\w+(?:::\w+)*)/g;
 }
 
 sub get_function_regex {
@@ -274,8 +279,7 @@ sub get_command {
 	my $config = Padre->ide->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename
-		= $config->run_save eq 'unsaved' && !$self->is_saved
+	my $filename = $config->run_save eq 'unsaved' && !$self->is_saved
 		? $self->store_in_tempfile
 		: $self->filename;
 
