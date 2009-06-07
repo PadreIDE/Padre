@@ -636,7 +636,7 @@ sub on_left_up {
 	my ( $self, $event ) = @_;
 
 	my $text = $self->GetSelectedText;
-	if ( Padre::Util::WXGTK and defined $text and $text ne '' ) {
+	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
 		Wx::wxTheClipboard->UsePrimarySelection(1);
