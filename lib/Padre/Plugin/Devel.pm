@@ -67,6 +67,7 @@ sub menu_plugins_simple {
 		Wx::gettext('Enable trace when logging')  => sub { set_trace(1); },
 		Wx::gettext('Disable trace')              => sub { set_trace(0); },
 		'---'                                     => undef,
+		Wx::gettext('Load All Padre Modules')      => 'load_everything',
 		Wx::gettext('Simulate Crash')             => 'simulate_crash',
 		Wx::gettext('Simulate Crashing Bg Task')  => 'simulate_task_crash',
 		'---'                                     => undef,
@@ -152,6 +153,43 @@ sub show_about {
 	$about->SetDescription( Wx::gettext("A set of unrelated tools used by the Padre developers\n") );
 	Wx::AboutBox($about);
 	return;
+}
+
+sub load_everything {
+	my $self = shift;
+
+	# Find the location of Padre.pm
+	my $padre  = $INC{'Padre.pm'};
+	my $parent = substr( $padre, 0, length($padre) - 3 );
+
+	# Find everything under Padre:: with a matching version
+	require File::Find::Rule;
+	require ExtUtils::MakeMaker;
+	my @children = grep {
+		not $INC{$_}
+	} map {
+		"Padre/$_->[0]"
+	} grep {
+		defined($_->[1]) and $_->[1] eq $VERSION
+	} map { [
+		$_,
+		ExtUtils::MM_Unix->parse_version(
+			File::Spec->catfile($parent, $_)
+		)
+	] } File::Find::Rule->name('*.pm')->file->relative->in($parent);
+	Padre::Current->main->message("Found " . scalar(@children) . " unloaded modules");
+	return unless @children;
+
+	# Load all of them (ignoring errors)
+	my $loaded = 0;
+	foreach my $child ( @children ) {
+		eval { require $child; };
+		next if $@;
+		$loaded++;
+	}
+
+	# Say how many classes we loaded
+	Padre::Current->main->message( "Loaded $loaded modules" );
 }
 
 # Takes a string, which it evals and then dumps to Output
