@@ -31,8 +31,9 @@ use File::Temp     ();
 use List::Util     ();
 use Scalar::Util   ();
 use Params::Util qw{_INSTANCE};
-use Padre::Util   ();
-use Padre::Locale ();
+use Padre::Constant ();
+use Padre::Util     ();
+use Padre::Locale   ();
 use Padre::Current qw{_CURRENT};
 use Padre::Document           ();
 use Padre::DB                 ();
@@ -252,7 +253,7 @@ sub new {
 		$self,
 		Padre::Wx::ID_TIMER_POSTINIT,
 		sub {
-			$_[0]->timer_post_init;
+			$_[0]->_timer_post_init;
 		},
 	);
 	$timer->Start( 1, 1 );
@@ -372,9 +373,9 @@ sub directory {
 
 =head2 Public Methods
 
-=over 4
+=head3 load_files
 
-=item * $main->load_files;
+    $main->load_files;
 
 Load any default files: session from command-line, explicit list on command-
 line, or last session if user has this setup, a new file, or nothing.
@@ -441,16 +442,7 @@ sub load_files {
 	return;
 }
 
-=pod
-
-=item * $main->timer_post_init;
-
-Handler for timer event fired just after window creation, to finish the
-various initializations that need a real window to work.
-
-=cut
-
-sub timer_post_init {
+sub _timer_post_init {
 	my $self    = shift;
 	my $config  = $self->config;
 	my $manager = $self->ide->plugin_manager;
@@ -523,7 +515,9 @@ sub timer_post_init {
 
 =pod
 
-=item * my $locker = $main->freezer;
+=head2 freezer
+
+   my $locker = $main->freezer;
 
 Create and return an automatic Freeze object that Thaw's on destruction.
 
@@ -533,9 +527,9 @@ sub freezer {
 	Wx::WindowUpdateLocker->new( $_[0] );
 }
 
-=back
 
-=cut
+
+
 
 #####################################################################
 
@@ -2280,11 +2274,12 @@ No return value.
 =cut
 
 sub on_open_selection {
-	my ($self) = @_;
+	my $self    = shift;
+	my $current = $self->current;
+	my $text    = $current->text;
 
 	# get selection, ask for it if needed
-	my $text = $self->current->text;
-	unless ($text) {
+	unless ( length $text ) {
 		my $dialog = Wx::TextEntryDialog->new(
 			$self,
 			Wx::gettext("Nothing selected. Enter what should be opened:"),
@@ -2295,7 +2290,7 @@ sub on_open_selection {
 
 		$text = $dialog->GetValue;
 		$dialog->Destroy;
-		return unless defined $text;
+		return unless length $text;
 	}
 
 	#remove leading and trailing whitespace or newlines
@@ -2303,7 +2298,7 @@ sub on_open_selection {
 	$text =~ s/^[\s\n]*(.*?)[\s\n]*$/$1/;
 
 	my $file;
-	if ( ( File::Spec->file_name_is_absolute($text) ) and ( -e $text ) ) {
+	if ( File::Spec->file_name_is_absolute($text) and -e $text ) {
 		$file = $text;
 	} else {
 
@@ -2318,10 +2313,10 @@ sub on_open_selection {
 			}
 		}
 
-		#try relative to the current file
-		if ( $self->current->filename ) {
+		# Try relative to the current file
+		if ( $current->filename ) {
 			my $filename = File::Spec->catfile(
-				File::Basename::dirname( $self->current->filename ),
+				File::Basename::dirname( $current->filename ),
 				$text,
 			);
 			if ( -e $filename ) {
@@ -2329,7 +2324,7 @@ sub on_open_selection {
 			}
 		}
 	}
-	unless ($file) {    # and we are in a Perl environment
+	unless ( $file ) { # and we are in a Perl environment
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
@@ -2350,7 +2345,7 @@ sub on_open_selection {
 		}
 	}
 
-	unless ($file) {
+	unless ( $file ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
 			Wx::gettext("Open Selection"),
@@ -2389,7 +2384,7 @@ return value.
 sub on_open {
 	my $self     = shift;
 	my $filename = $self->current->filename;
-	if ($filename) {
+	if ( $filename ) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
 
@@ -2409,8 +2404,7 @@ sub on_open {
 		Wx::gettext("Text Files"),       "*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
 		Wx::gettext("Web Files"),        "*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
 	);
-	$wildcards
-		= Padre::Util::WIN32
+	$wildcards = Padre::Constant::WIN32
 		? Wx::gettext("All Files") . "|*.*|" . $wildcards
 		: Wx::gettext("All Files") . "|*|" . $wildcards;
 	my $dialog = Wx::FileDialog->new(
@@ -2498,12 +2492,12 @@ sub on_save_as {
 			);
 			if ( $response == Wx::wxYES ) {
 				$document->_set_filename($path);
-				$document->set_newline_type(Padre::Util::NEWLINE);
+				$document->set_newline_type(Padre::Constant::NEWLINE);
 				last;
 			}
 		} else {
 			$document->_set_filename($path);
-			$document->set_newline_type(Padre::Util::NEWLINE);
+			$document->set_newline_type(Padre::Constant::NEWLINE);
 			last;
 		}
 	}
@@ -3143,7 +3137,7 @@ sub on_toggle_statusbar {
 	my $self = shift;
 
 	# Status bar always shown on Windows
-	return if Padre::Util::WXWIN32;
+	return if Padre::Constant::WXWIN32;
 
 	# Update the configuration
 	$self->config->set(
@@ -3221,7 +3215,7 @@ sub on_insert_from_file {
 		'*.*',
 		Wx::wxFD_OPEN,
 	);
-	unless (Padre::Util::WIN32) {
+	unless (Padre::Constant::WIN32) {
 		$dialog->SetWildcard("*");
 	}
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -3911,13 +3905,13 @@ sub key_up {
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
-	if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
-		                              # Ctrl-TAB  #TODO it is already in the menu
+	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+		# Ctrl-TAB  #TODO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 			$self->on_next_pane;
 		}
-	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
-		                                                         # Ctrl-Shift-TAB #TODO it is already in the menu
+	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
+		# Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 
@@ -3944,8 +3938,6 @@ sub key_up {
 }
 
 =back
-
-
 
 =head1 COPYRIGHT & LICENSE
 
