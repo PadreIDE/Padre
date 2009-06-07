@@ -123,12 +123,11 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Was this going to be moved to a plugin?
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append(
 			-1,
-			Wx::gettext("Find in fi&les...")
+			Wx::gettext("Find in Fi&les...")
 		),
 		sub {
 			require Padre::Wx::Ack;
