@@ -411,7 +411,6 @@ sub find {
 	my ( $self, $main ) = @_;
 
 	my $text = $main->current->text;
-	$text = '' if not defined $text;
 
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and replace and not as the string to be used
@@ -448,7 +447,7 @@ sub find_next {
 	# check if is checked
 	if ( $main->menu->search->{quick_find}->IsChecked ) {
 		my $text = $main->current->text;
-		if ( $text and $text ne $term ) {
+		if ( length($text) and $text ne $term ) {
 			Padre::DB::History->create(
 				type => 'search',
 				name => $text,
@@ -456,7 +455,7 @@ sub find_next {
 		}
 	}
 
-	if ($term) {
+	if ( $term ) {
 		$self->search;
 	} else {
 		$self->find($main);
