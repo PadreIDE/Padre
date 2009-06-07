@@ -48,13 +48,8 @@ SCOPE: {
 
 	sub perl_interpreter {
 		return $perl if defined $perl;
-use Data::Dumper;
-print Data::Dumper::Dumper \%ENV;
 		require Probe::Perl;
-print "PP: ", Probe::Perl->find_perl_interpreter, "\n";
 		require File::Which;
-print "FW: ", scalar File::Which::which('perl'), "\n";
-print "FW2: ", join ", ", File::Which::which('perl'), "\n";
 
 
 		# Use the most correct method first
