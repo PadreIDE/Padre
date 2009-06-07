@@ -124,7 +124,7 @@ sub new {
 	);
 
 	# On Windows disabling the status bar doesn't work, so don't allow it
-	unless (Padre::Util::WXWIN32) {
+	unless (Padre::Constant::WXWIN32) {
 		$self->{statusbar} = $self->AppendCheckItem(
 			-1,
 			Wx::gettext("Show StatusBar")
@@ -488,7 +488,7 @@ sub refresh {
 	my $doc      = $document ? 1 : 0;
 
 	# Simple check state cases from configuration
-	unless (Padre::Util::WXWIN32) {
+	unless ( Padre::Constant::WXWIN32 ) {
 		$self->{statusbar}->Check( $config->main_statusbar );
 	}
 
