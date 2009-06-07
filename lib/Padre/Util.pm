@@ -10,11 +10,11 @@ Padre::Util - Padre Non-Wx Utility Functions
 
 The Padre::Util package is a internal storage area for miscellaneous
 functions that aren't really Padre-specific that we want to throw
-somewhere it won't clog up task-specific packages.
+somewhere convenient so they won't clog up task-specific packages.
 
 All functions are exportable and documented for maintenance purposes,
-but except for in the Padre core distribution you are discouraged in the
-strongest possible terms for relying on these functions, as they may be
+but except for in the L<Padre> core distribution you are discouraged in the
+strongest possible terms from using these functions, as they may be
 moved, removed or changed at any time without notice.
 
 =head1 FUNCTIONS
@@ -40,9 +40,9 @@ our @EXPORT_OK = qw(newline_type get_matches _T);
 # Officially Supported Constants
 
 # Convenience constants for the operating system
-use constant WIN32 => !!( $^O eq 'MSWin32' );
-use constant MAC   => !!( $^O eq 'darwin' );
-use constant UNIX => !( WIN32 or MAC );
+use constant WIN32 => !! ( $^O eq 'MSWin32' );
+use constant MAC   => !! ( $^O eq 'darwin'  );
+use constant UNIX  => !  ( WIN32 or MAC     );
 
 # Padre targets the three largest Wx backends
 # 1. Win32 Native
@@ -151,15 +151,39 @@ sub get_matches {
 
 =head2 _T
 
-This is the shorthand of Wx::gettext('some text to translate')
+The _T function is used for strings that you do not want to translate
+immediately, but you will be translating later (multiple times).
 
-Specifically to be used for strings that you want to delay translation
-until later, so that the translation tools can find it.
+The only reason this function needs to exist at all is so that the
+translation tools can identify the string it refers to as something that
+needs to be translated.
+
+Functionally, this function is just a direct pass-through with no effect.
 
 =cut
 
 sub _T {
-	Wx::gettext(shift);
+	shift;
+}
+
+=pod
+
+=head2 pwhich
+
+  # Find the prove utility
+  my $prove = Padre::Util::pwhich('prove');
+
+The C<pwhich> function discovers the path to the installed perl script
+which is in the same installation directory as the Perl user to run
+Padre itself, ignoring the regular search PATH.
+
+Returns the locally-formatted path to the script, or false (null string)
+if the utilily does not exist in the current Perl installation.
+
+=cut
+
+sub pwhich {
+	my $bin = 1;
 }
 
 #####################################################################
@@ -242,7 +266,6 @@ Given a file it will try to locate the root directory of the given
 project. This is a temporary work around till we get full project
 support but it is used by some (SVK) plugins.
 
-
 =cut
 
 sub get_project_dir {
@@ -257,8 +280,6 @@ sub get_project_dir {
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
 	while (1) {
-
-		#		print "DIR: $olddir\n     $dir\n";
 		return $dir if -e File::Spec->catfile( $dir, 'Makefile.PL' );
 		return $dir if -e File::Spec->catfile( $dir, 'Build.PL' );
 		$olddir = $dir;
