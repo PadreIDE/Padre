@@ -106,7 +106,6 @@ no_index       'directory'                => qw{ t xt eg share inc privinc };
 homepage       'http://padre.perlide.org/';
 bugtracker     'http://padre.perlide.org/';
 repository     'http://svn.perlide.org/padre/trunk/Padre/';
-#MailingList    'http://mail.perlide.org/mailman/listinfo/padre-dev';
 install_script 'script/padre';
 install_share;
 
