@@ -8,6 +8,10 @@ use Getopt::Long ();
 
 $| = 1;
 
+if ($ENV{PADRE_DIE}) {
+	$SIG{__DIE__} = sub { print STDERR "DIE: @_" };
+}
+
 # Must run using wxPerl on OSX.
 if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
     my $perl = scalar File::Which::which('wxPerl');
