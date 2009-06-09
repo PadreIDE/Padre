@@ -116,7 +116,7 @@ our %EXT_BINARY = map { $_ => 1 } qw{
 };
 
 # This is the primary file extension to mime-type mapping
-our %EXT_MIME = (
+my %EXT_MIME = (
 	abc   => 'text/x-abc',
 	ada   => 'text/x-adasrc',
 	asm   => 'text/x-asm',
@@ -144,11 +144,11 @@ our %EXT_MIME = (
 	tcl   => 'application/x-tcl',
 	vbs   => 'text/vbscript',
 	patch => 'text/x-patch',
-	pl    => 'application/x-perl',
-	plx   => 'application/x-perl',
-	pm    => 'application/x-perl',
-	pod   => 'application/x-perl',
-	t     => 'application/x-perl',
+	pl    => \&perl_mime_type,
+	plx   => \&perl_mime_type,
+	pm    => \&perl_mime_type,
+	pod   => \&perl_mime_type,
+	t     => \&perl_mime_type,
 	conf  => 'text/plain',
 	sh    => 'application/x-shellscript',
 	ksh   => 'application/x-shellscript',
@@ -343,19 +343,15 @@ sub guess_mimetype {
 	# maybe also grammar ...
 	# but make sure that is real code and not just a comment or doc in some perl 5 code...
 
-	# Try derive the mime type from the name
+	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
-			if ( $EXT_MIME{$ext} eq 'application/x-perl' ) {
-
-				# Sometimes Perl 6 will look like Perl 5
-				# But only do this test if the Perl 6 plugin is enabled.
-				if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
-					return 'application/x-perl6';
-				}
+			if (ref $EXT_MIME{$ext}) {
+				return $EXT_MIME{$ext}->();
+			} else {
+				return $EXT_MIME{$ext}
 			}
-			return $EXT_MIME{$ext};
 		}
 	}
 
@@ -368,12 +364,10 @@ sub guess_mimetype {
 	# Fall back on deriving the type from the content.
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
-	# TODO: Add support for plugins being able to do something here.
 	if ( $text and $text =~ /\A#!/m ) {
-
 		# Found a hash bang line
 		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-			return is_perl6($text) ? 'application/x-perl6' : 'application/x-perl';
+			return $self->perl_mime_type;
 		}
 		if ( $text =~ /\A---/ ) {
 			return 'text/x-yaml';
@@ -382,6 +376,19 @@ sub guess_mimetype {
 
 	# Fall back to a null value
 	return '';
+}
+
+sub perl_mime_type {
+	my $self = shift;
+
+	my $text = $self->{original_content};
+	# Sometimes Perl 6 will look like Perl 5
+	# But only do this test if the Perl 6 plugin is enabled.
+	if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
+		return 'application/x-perl6';
+	} else {
+		return 'application/x-perl';
+	}
 }
 
 sub mime_type_by_extension {
