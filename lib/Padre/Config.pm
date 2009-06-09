@@ -87,6 +87,7 @@ my %settings = (
 		[ 'main_syntaxcheck',     Padre::Constant::BOOLEAN, 0 ],
 		[ 'main_errorlist',       Padre::Constant::BOOLEAN, 0 ],
 		[ 'main_statusbar',       Padre::Constant::BOOLEAN, 1 ],
+		[ 'main_toolbar',         Padre::Constant::BOOLEAN, 1 ],
 
 		# -- editor settings
 		[ 'editor_font',              Padre::Constant::ASCII,   '' ],

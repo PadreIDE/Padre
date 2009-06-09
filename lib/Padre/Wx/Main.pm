@@ -866,7 +866,10 @@ Force a refresh of Padre's toolbar.
 sub refresh_toolbar {
 	my $self = shift;
 	return if $self->no_refresh;
-	$self->GetToolBar->refresh( $_[0] or $self->current );
+	my $toolbar = $self->GetToolBar;
+	if ($toolbar) {
+		$toolbar->refresh( $_[0] or $self->current );
+	}
 }
 
 =pod
@@ -1104,6 +1107,10 @@ recreate it from scratch.
 
 sub rebuild_toolbar {
 	my $self = shift;
+	
+	my $toolbar = $self->GetToolBar;
+	$toolbar->Destroy if $toolbar;
+	
 	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
 	$self->GetToolBar->refresh;
 	$self->GetToolBar->Realize;
@@ -3125,6 +3132,41 @@ sub on_word_wrap {
 	} else {
 		$doc->editor->SetWrapMode(Wx::wxSTC_WRAP_NONE);
 	}
+}
+
+=item * $main->on_toggle_toolbar;
+
+Toggle toolbar visibility. No return value.
+
+=cut
+
+sub on_toggle_toolbar {
+	my $self = shift;
+
+	# Update the configuration
+	$self->config->set(
+		'main_toolbar',
+		$self->menu->view->{toolbar}->IsChecked ? 1 : 0,
+	);
+
+	if ( $self->config->main_toolbar ) {
+		$self->rebuild_toolbar;
+	} else {
+		# Update the tool bar
+		my $toolbar = $self->GetToolBar;
+		if ($toolbar) {
+			$toolbar->Destroy;
+			$self->SetToolBar(undef);
+		}
+		else {
+			Carp::carp "error finding toolbar";
+		}
+	}
+
+	# Save configuration
+	$self->config->write;
+
+	return;
 }
 
 =item * $main->on_toggle_statusbar;

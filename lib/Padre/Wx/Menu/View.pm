@@ -137,6 +137,18 @@ sub new {
 			},
 		);
 	}
+	
+	$self->{toolbar} = $self->AppendCheckItem(
+		-1,
+		Wx::gettext("Show Toolbar")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{toolbar},
+		sub {
+			$_[0]->on_toggle_toolbar($_[1]);
+		}
+	);
 
 	$self->AppendSeparator;
 
@@ -506,6 +518,7 @@ sub refresh {
 	$self->{show_calltips}->Check( $config->editor_calltips );
 	$self->{show_syntaxcheck}->Check( $config->main_syntaxcheck );
 	$self->{show_errorlist}->Check( $config->main_errorlist );
+	$self->{toolbar}->Check( $config->main_toolbar );
 
 	# Check state for word wrap is document-specific
 	if ($document) {
