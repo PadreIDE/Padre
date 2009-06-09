@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-09 02:53-0300\n"
+"POT-Creation-Date: 2009-06-09 02:58-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -429,15 +429,6 @@ msgstr ""
 
 #: lib/Padre/Plugin/PopularityContest.pm:115
 msgid "Ping"
-msgstr ""
-
-#: lib/Padre/Project/Perl_diff.pm:93
-msgid ""
-"No Makefile or Build script found on project dir. Forgot to build first?"
-msgstr ""
-
-#: lib/Padre/Project/Perl_diff.pm:94
-msgid "Unable to find builder"
 msgstr ""
 
 #: lib/Padre/Task/SyntaxChecker.pm:179 lib/Padre/Wx/Syntax.pm:96
