@@ -214,8 +214,10 @@ sub set {
 	my $value = shift;
 
 	# Does the setting exist?
-	my $setting = $SETTING{$name}
-		or Carp::croak("The configuration setting '$name' does not exist");
+	my $setting = $SETTING{$name};
+	unless ( $setting ) {
+		Carp::croak("The configuration setting '$name' does not exist");
+	}
 
 	# All types are Padre::Constant::ASCII-like
 	unless ( defined $value and not ref $value ) {
@@ -223,10 +225,12 @@ sub set {
 	}
 
 	# We don't need to do additional checks on Padre::Constant::ASCII
-	# types at this point.
 	my $type = $setting->type;
-	if ( $type == Padre::Constant::BOOLEAN and $value ne '1' and $value ne '0' ) {
-		Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
+	if ( $type == Padre::Constant::BOOLEAN ) {
+		$value = 0 if $value eq '';
+		if ( $value ne '1' and $value ne '0' ) {
+			Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
+		}
 	}
 	if ( $type == Padre::Constant::POSINT and not Params::Util::_POSINT($value) ) {
 		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
