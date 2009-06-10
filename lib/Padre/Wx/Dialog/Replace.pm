@@ -655,12 +655,14 @@ sub replace_all {
 
   $self->replace;
 
-Perform actual single replace.  Highlight (set as selected) found string.
+Perform actual single replace. Highlight (set as selected) found string.
 
 =cut
 
 sub replace {
-	my $self = shift;
+	my $self    = shift;
+	my $current = $self->current;
+	my $text    = $current->text;
 
 	# Prepare the search and replace values
 	my $regex   = $self->_get_search or return;
@@ -668,17 +670,15 @@ sub replace {
 	$replace =~ s/\\t/\t/g if length $replace;
 
 	# Get current search condition and check if they match
-	my $editor = $self->current->editor;
-	my $text   = $editor->GetTextRange( 0, $editor->GetLength );
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
+	my ($start, $end, @matches) = Padre::Util::get_matches( $text, $regex, 0, 0 );
 
 	# If they match replace it
 	if ( defined $start and $start == 0 and $end == length($text) ) {
-		$editor->ReplaceSelection($replace);
+		$current->editor->ReplaceSelection($replace);
 	}
 
 	# If search window is still open, run a search on the whole text again
-	unless ( $self->config->find_first ) {
+	unless ( $current->config->find_first ) {
 		$self->search;
 	}
 
