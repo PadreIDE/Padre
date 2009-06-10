@@ -62,12 +62,20 @@ sub menu_plugins_simple {
 		# TODO
 		# Should be checkbox but I am too lazy to turn the whole
 		# menu_plugins_simple into a menu_plugins
-		Wx::gettext('Enable logging')             => sub { set_logging(1); },
-		Wx::gettext('Disable logging')            => sub { set_logging(0); },
-		Wx::gettext('Enable trace when logging')  => sub { set_trace(1); },
-		Wx::gettext('Disable trace')              => sub { set_trace(0); },
+		Wx::gettext('Enable logging') => sub {
+			$self->set_logging(1);
+		},
+		Wx::gettext('Disable logging') => sub {
+			$self->set_logging(0);
+		},
+		Wx::gettext('Enable trace when logging') => sub {
+			$self->set_trace(1);
+		},
+		Wx::gettext('Disable trace') => sub {
+			$self->set_trace(0);
+		},
 		'---'                                     => undef,
-		Wx::gettext('Load All Padre Modules')      => 'load_everything',
+		Wx::gettext('Load All Padre Modules')     => 'load_everything',
 		Wx::gettext('Simulate Crash')             => 'simulate_crash',
 		Wx::gettext('Simulate Crashing Bg Task')  => 'simulate_task_crash',
 		'---'                                     => undef,
@@ -89,38 +97,43 @@ sub menu_plugins_simple {
 # Plugin Methods
 
 sub set_logging {
-	my ($on) = @_;
+	my $self    = shift;
+	my $on      = shift;
+	my $current = $self->current;
 
-	Padre->ide->wx->config->set( logging => $on );
+	$current->config->set( logging => $on );
 	Padre::Util::set_logging($on);
 	Padre::Util::debug("After setting debugging to '$on'");
-	Padre->ide->wx->main->refresh;
+	$current->main->refresh;
 
 	return;
 }
 
 sub set_trace {
-	my ($on) = @_;
+	my $self    = shift;
+	my $on      = shift;
+	my $current = $self->current;
 
-	Padre->ide->wx->config->set( logging_trace => $on );
+	$current->config->set( logging_trace => $on );
 	Padre::Util::set_trace($on);
 	Padre::Util::debug("After setting trace to '$on'");
-	Padre->ide->wx->main->refresh;
+	$current->main->refresh;
 
 	return;
 }
 
 sub eval_document {
-	my $self = shift;
-	my $document = Padre::Current->document or return;
+	my $self     = shift;
+	my $document = $self->current->document or return;
 	return $self->_dump_eval( $document->text_get );
 }
 
 sub dump_document {
 	my $self     = shift;
-	my $document = Padre::Current->document;
-	unless ($document) {
-		Padre::Current->main->message( Wx::gettext('No file is open'), 'Info' );
+	my $current  = $self->current;
+	my $document = $current->document;
+	unless ( $document ) {
+		$current->main->message( Wx::gettext('No file is open'), 'Info' );
 		return;
 	}
 	return $self->_dump($document);
@@ -128,12 +141,11 @@ sub dump_document {
 
 sub dump_padre {
 	my $self = shift;
-	return $self->_dump( Padre->ide );
+	return $self->_dump( $self->current->ide );
 }
 
 sub dump_inc {
-	my $self = shift;
-	return $self->_dump( \%INC, \@INC );
+	$_[0]->_dump( \%INC, \@INC );
 }
 
 sub simulate_crash {
@@ -143,20 +155,23 @@ sub simulate_crash {
 
 sub simulate_task_crash {
 	require Padre::Task::Debug::Crashing;
-	Padre::Task::Debug::Crashing->new()->schedule();
+	Padre::Task::Debug::Crashing->new->schedule;
 }
 
 sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName('Padre::Plugin::Devel');
-	$about->SetDescription( Wx::gettext("A set of unrelated tools used by the Padre developers\n") );
+	$about->SetDescription(
+		Wx::gettext("A set of unrelated tools used by the Padre developers\n")
+	);
 	Wx::AboutBox($about);
 	return;
 }
 
 sub load_everything {
 	my $self = shift;
+	my $main = $self->current->main;
 
 	# Find the location of Padre.pm
 	my $padre  = $INC{'Padre.pm'};
@@ -177,7 +192,7 @@ sub load_everything {
 			File::Spec->catfile($parent, $_)
 		)
 	] } File::Find::Rule->name('*.pm')->file->relative->in($parent);
-	Padre::Current->main->message("Found " . scalar(@children) . " unloaded modules");
+	$main->message("Found " . scalar(@children) . " unloaded modules");
 	return unless @children;
 
 	# Load all of them (ignoring errors)
@@ -189,7 +204,7 @@ sub load_everything {
 	}
 
 	# Say how many classes we loaded
-	Padre::Current->main->message( "Loaded $loaded modules" );
+	$main->message( "Loaded $loaded modules" );
 }
 
 # Takes a string, which it evals and then dumps to Output
@@ -200,7 +215,7 @@ sub _dump_eval {
 	# Evecute the code and handle errors
 	my @rv = eval $code;    ## no critic
 	if ($@) {
-		Padre::Current->main->error( sprintf( Wx::gettext("Error: %s"), $@ ) );
+		$self->current->main->error( sprintf( Wx::gettext("Error: %s"), $@ ) );
 		return;
 	}
 
@@ -209,13 +224,11 @@ sub _dump_eval {
 
 sub _dump {
 	my $self = shift;
-	my $main = Padre::Current->main;
+	my $main = $self->current->main;
 
 	# Generate the dump string and set into the output window
 	$main->output->SetValue(
-		Devel::Dumpvar->new(
-			to => 'return',
-			)->dump(@_)
+		Devel::Dumpvar->new( to => 'return' )->dump(@_)
 	);
 	$main->output->SetSelection( 0, 0 );
 	$main->show_output(1);
