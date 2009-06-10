@@ -57,12 +57,12 @@ my @events = (
 		code  => sub {
 			my $main = $ide->wx->main;
 			my $T = Test::Builder->new;
-			{
+			SCOPE: {
 				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 1, '1 editor');
 			}
 			$main->setup_editors( catfile($home, 'hello_world.pl') );
-			{
+			SCOPE: {
 				my @editors = $main->editors;
 				#$T->todo_skip('close the empty buffer');
 				$T->is_num(scalar(@editors), 1, '1 editor');
@@ -85,7 +85,13 @@ my @events = (
 			$editor->SetSelection(0, 0);
 			$T->is_eq($main->current->text,     '', 'no selected_text');
 
-			Padre::Wx::Dialog::Find->search( search_term => qr/java/ );
+			# Search for 'java'
+			Padre::DB::History->create(
+				type => 'search',
+				name => 'java',
+			);
+			$main->find->search;
+
 			my ($start, $end) = $editor->GetSelection;
 			$T->is_num($start, 11, 'start is 11');
 			$T->is_num($end,   15, 'end is 15');
@@ -115,20 +121,24 @@ my @events = (
 			my $doc  = $main->current->document;
 			my $editor = $doc->editor;
 
-			{
+			Padre::DB::History->create(
+				type => 'search',
+				name => 'test',
+			);
+
+			SCOPE: {
 				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 2, '2 editors');
 			}
-
-			{
-				Padre::Wx::Dialog::Find->search( search_term => qr/test/ );
+			SCOPE: {
+				$main->find->search;
 				$T->is_eq($main->current->text,    'test', 'test selected_text');
 				my ($start, $end) = $editor->GetSelection;
 				$T->is_num($start, 56, 'start is 56');
 				$T->is_num($end,   60, 'end is 60');
 			}
-			{
-				Padre::Wx::Dialog::Find->search( search_term => qr/test/ );
+			SCOPE: {
+				$main->find->search;
 				$T->is_eq($main->current->text,    'test', 'selected_text');
 				my ($start, $end) = $editor->GetSelection;
 				$T->is_num($start, 211, 'start is 211');
@@ -136,7 +146,7 @@ my @events = (
 			}
 
 			$main->on_close_all_but_current;
-			{
+			SCOPE: {
 				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 1, '1 editor');
 				my $doc = $main->current->document;
@@ -169,7 +179,7 @@ my @events = (
 			my $main = $ide->wx->main;
 			my $T = Test::Builder->new;
 			$main->on_close_all;
-			{
+			SCOPE: {
 				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 0, '0 editor');
 				my $doc = $main->current->document;
@@ -242,7 +252,7 @@ my @events = (
 			$T->is_num(scalar(@editors), 1, 'one new editor');
 			my $doc  = $main->current->document;
 			my $editor = $doc->editor;
-			{
+			SCOPE: {
 				#one abs path file.
 				my $path = catfile($home, 'cyrillic_test.pl');
 				$doc->text_set($path);
@@ -253,7 +263,7 @@ my @events = (
 			}
 			$main->on_close();
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
-			{
+			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
 				my $path = catfile('./eg/', 'cyrillic_test.pl');
 				$doc->text_set($path);
@@ -263,7 +273,7 @@ my @events = (
 			}
 			$main->on_close();
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
-			{
+			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
 				my $path = catfile('./eg/', 'cyrillic_test.pl')."\n";
 				$doc->text_set($path);
@@ -273,7 +283,7 @@ my @events = (
 			}
 			$main->on_close();
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
-			{
+			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
 				my $path = "\n".catfile('./eg/', 'cyrillic_test.pl')."\n";
 				$doc->text_set($path);
@@ -283,7 +293,7 @@ my @events = (
 			}
 			$main->on_close();
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
-			{
+			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
 				#$T->diag(Cwd::cwd());
 				my $path = "\t   ".catfile('./eg/', 'cyrillic_test.pl')." \n\t ";
@@ -321,12 +331,10 @@ my @events = (
 
 t::lib::Padre::setup_event($frame, \@events, 0);
 
-
 $ide->wx->MainLoop;
 
 ok(1, 'finished');
 BEGIN { $tests += 1; }
-
 
 sub event {
 	my (%args) = @_;
@@ -334,5 +342,7 @@ sub event {
 }
 
 package Wx::Event;
-sub IsChecked { return $_[0]->{checked}; }
 
+sub IsChecked {
+	$_[0]->{checked};
+}
