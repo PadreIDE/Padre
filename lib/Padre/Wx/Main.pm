@@ -3580,7 +3580,7 @@ sub on_stc_style_needed {
 	my $self     = shift;
 	my $event    = shift;
 	my $current  = $self->current;
-	my $document = $self->document or return;
+	my $document = $current->document or return;
 	if ( $document->can('colorize') ) {
 		# Workaround something that seems like a Scintilla bug
 		# when the cursor is close to the end of the document
