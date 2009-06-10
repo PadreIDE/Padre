@@ -50,6 +50,10 @@ sub main {
 	$_[0]->GetGrandParent;
 }
 
+sub current {
+	Padre::Current->new( main => $_[0]->main );
+}
+
 sub gettext_label {
 	Wx::gettext('Output');
 }
@@ -61,12 +65,12 @@ sub gettext_label {
 # Tweaked to avoid copying as much as possible.
 sub AppendText {
 	my $self     = shift;
-	my $use_ansi = Padre->ide->config->main_output_ansi;
-	if ( utf8::is_utf8( $_[0] ) ) {
-		if ($use_ansi) {
-			$self->_handle_ansi_escapes( $_[0] );
+	my $use_ansi = $self->current->ide->config->main_output_ansi;
+	if ( utf8::is_utf8($_[0]) ) {
+		if ( $use_ansi ) {
+			$self->_handle_ansi_escapes($_[0]);
 		} else {
-			$self->SUPER::AppendText( $_[0] );
+			$self->SUPER::AppendText($_[0]);
 		}
 	} else {
 		my $text = Encode::decode( 'utf8', $_[0] );
