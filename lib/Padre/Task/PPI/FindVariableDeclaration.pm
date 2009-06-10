@@ -94,7 +94,7 @@ sub finish {
 		}
 		Wx::MessageBox(
 			$text,
-			Wx::gettext("Check Canceled"),
+			Wx::gettext("Search Canceled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
 		);

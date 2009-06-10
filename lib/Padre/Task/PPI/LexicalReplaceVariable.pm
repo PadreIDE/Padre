@@ -188,7 +188,7 @@ sub finish {
 		}
 		Wx::MessageBox(
 			$text,
-			Wx::gettext("Check Canceled"),
+			Wx::gettext("Replace Operation Canceled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
 		);
