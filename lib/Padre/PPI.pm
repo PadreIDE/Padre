@@ -108,8 +108,6 @@ sub element_depth {
 	return $depth;
 }
 
-# This does not guarantee a match: the location of
-# a token is only the first character
 # TODO: PPIx::IndexOffsets or something similar might help.
 # TODO: See the 71... tests. If we don#t flush locations there, this breaks.
 sub find_token_at_location {
@@ -122,22 +120,33 @@ sub find_token_at_location {
 		or not ref($location) eq 'ARRAY' )
 	{
 		require Carp;
-		Carp::croak("find_token_at_location() requires a PPI::Document and a PPI-style location is arguments");
+		Carp::croak("find_token_at_location() requires a PPI::Document and a PPI-style location as arguments");
 	}
 
 	$document->index_locations();
 
-	my $variable_token = $document->find_first(
-		sub {
-			my $elem = $_[1];
-			return 0 if not $elem->isa('PPI::Token');
-			my $loc = $elem->location;
-			return 0 if $loc->[0] != $location->[0] or $loc->[1] != $location->[1];
-			return 1;
-		},
-	);
+	foreach my $token ($document->tokens) {
+		my $tloc = $token->location;
+		return $token->previous_token()
+		  if $tloc->[0] > $location->[0]
+		  or ( $tloc->[0] == $location->[0]
+		       and $tloc->[1] > $location->[1] );
+	}
 
-	return $variable_token;
+	return();
+
+	# old way that would only handle beginning of tokens; Should probably simply go away.; Should probably simply go away.
+	#my $variable_token = $document->find_first(
+	#	sub {
+	#		my $elem = $_[1];
+	#		return 0 if not $elem->isa('PPI::Token');
+	#		my $loc = $elem->location;
+	#		return 0 if $loc->[0] != $location->[0] or $loc->[1] != $location->[1];
+	#		return 1;
+	#	},
+	#);
+	#
+	#return $variable_token;
 }
 
 # given either a PPI::Token::Symbol (i.e. a variable)
