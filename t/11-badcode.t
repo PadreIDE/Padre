@@ -28,6 +28,7 @@ use POSIX qw(locale_h);
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 foreach my $module ( sort keys %modules ) {
 	require_ok( $module );
+	$module->import();
 	ok( $module->VERSION, "$module: Found \$VERSION" );
 }
 
@@ -43,7 +44,11 @@ foreach my $module ( sort keys %modules ) {
 
 	# If a method has a current method, never use Padre::Current directly
 	SKIP: {
-		unless ( $module->can('current') and $module ne 'Padre::Current' ) {
+		unless (
+			eval { $module->can('current') }
+			and
+			$module ne 'Padre::Current'
+		) {
 			skip("No ->current method", 1);
 		}
 		my $good = ! $document->find_any( sub {
@@ -62,7 +67,11 @@ foreach my $module ( sort keys %modules ) {
 
 	# If a method has an ide or main method, never use Padre->ide directly
 	SKIP: {
-		unless ( $module->can('ide') or $module->can('main') ) {
+		unless (
+			eval { $module->can('ide') or $module->can('main') }
+			and
+			$module ne 'Padre::Current'
+		) {
 			skip("No ->ide or ->main method", 1);
 		}
 		my $good = ! $document->find_any( sub {
