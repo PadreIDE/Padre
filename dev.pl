@@ -61,7 +61,7 @@ my @cmd = (
 if ( grep { $_ eq '-d' } @ARGV ) {
 	# Command line debugging
 	@ARGV = grep { $_ ne '-d' } @ARGV;
-	push @cmd, '-dt';
+	push @cmd, '-d';
 }
 if ( grep { $_ eq '-p' } @ARGV ) {
 	# Profiling
