@@ -3,10 +3,10 @@ package Padre::Wx::Dialog;
 use 5.008;
 use strict;
 use warnings;
+use Wx::Perl::Dialog ();
 
 our $VERSION = '0.36';
-
-use base 'Wx::Perl::Dialog';
+our @ISA     = 'Wx::Perl::Dialog';
 
 sub create_widget {
 	my $self        = shift;
@@ -260,13 +260,17 @@ sub fill_panel_by_table {
 	return;
 }
 
+1;
+
+__END__
+
+=pod
+
 =head1 NAME
 
-Padre::Wx::Dialog - dummy Padre wrapper around Wx::Perl::Dialog
+Padre::Wx::Dialog - Dummy Padre wrapper around Wx::Perl::Dialog
 
 =cut
-
-1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
