@@ -65,14 +65,41 @@ sub ppi_transform {
 sub ppi_select {
 	my $self     = shift;
 	my $location = shift;
+	my $editor = $self->editor or return;
+	my $start = $self->ppi_location_to_character_position($location);
+	$editor->SetSelection( $start, $start + 1 );
+}
+
+
+# Convert a ppi-style location [$line, $col, $apparent_col]
+# to an absolute document offset
+sub ppi_location_to_character_position {
+	my $self     = shift;
+	my $location = shift;
 	if ( _INSTANCE( $location, 'PPI::Element' ) ) {
 		$location = $location->location;
 	}
 	my $editor = $self->editor or return;
 	my $line   = $editor->PositionFromLine( $location->[0] - 1 );
 	my $start  = $line + $location->[1] - 1;
-	$editor->SetSelection( $start, $start + 1 );
+	return $start;
 }
+
+
+# Convert an absolute document offset to
+# a ppi-style location [$line, $col, $apparent_col]
+# FIXME: Doesn't handle $apparent_col right
+sub character_position_to_ppi_location {
+	my $self     = shift;
+	my $position = shift;
+
+	my $ed   = $self->editor;
+	my $line = 1 + $ed->LineFromPosition($position);
+	my $col  = 1 + $position - $ed->PositionFromLine($line-1);
+
+	return [$line, $col, $col];
+}
+
 
 sub lexer {
 	my $self   = shift;
@@ -555,6 +582,24 @@ sub lexical_variable_replacement {
 	return ();
 }
 
+sub introduce_temporary_variable {
+	my ( $self, $varname ) = @_;
+
+	my $editor = $self->editor;
+	my $start_position = $editor->GetSelectionStart;
+	my $end_position   = $editor->GetSelectionEnd-1;
+	# create a new object of the task class and schedule it
+	require Padre::Task::PPI::IntroduceTemporaryVariable;
+	Padre::Task::PPI::IntroduceTemporaryVariable->new(
+		document       => $self,
+		start_location => $start_position,
+		end_location   => $end_position,
+		varname        => $varname,
+	)->schedule;
+
+	return ();
+}
+
 sub autocomplete {
 	my $self = shift;
 
@@ -659,12 +704,14 @@ sub event_on_right_down {
 		$editor->GetCurrentPos();
 	}
 
+	my $introduced_separator = 0;
+
 	my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
 
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
 
-		$menu->AppendSeparator;
+		$menu->AppendSeparator if not $introduced_separator++;
 
 		my $findDecl = $menu->Append( -1, Wx::gettext("Find Variable Declaration") );
 		Wx::Event::EVT_MENU(
@@ -702,6 +749,36 @@ sub event_on_right_down {
 			},
 		);
 	}    # end if it's a variable
+
+	my $select_start = $editor->GetSelectionStart;
+	my $select_end   = $editor->GetSelectionEnd;
+	if ( $select_start != $select_end ) { # if something's selected
+		$menu->AppendSeparator if not $introduced_separator++;
+
+		my $intro_temp = $menu->Append( -1, Wx::gettext("Introduce Temporary Variable") );
+		Wx::Event::EVT_MENU(
+			$editor,
+			$intro_temp,
+			sub {
+				# FIXME near duplication of the code in Padre::Wx::Menu::Perl
+				my $editor = shift;
+				my $doc = $self;
+				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+				require Padre::Wx::History::TextEntryDialog;
+				my $dialog = Padre::Wx::History::TextEntryDialog->new(
+					$editor->main,
+					Wx::gettext("Variable Name"),
+					Wx::gettext("Variable Name"),
+					'$tmp',
+				);
+				return if $dialog->ShowModal == Wx::wxID_CANCEL;
+				my $replacement = $dialog->GetValue;
+				$dialog->Destroy;
+				return unless defined $replacement;
+				$doc->introduce_temporary_variable($replacement);
+			},
+		);
+	} # end if something's selected
 }
 
 sub event_on_left_up {

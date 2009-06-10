@@ -90,6 +90,31 @@ sub new {
 		},
 	);
 
+	$self->{introduce_temporary} = $self->Append(
+		-1,
+		Wx::gettext("Introduce Temporary Variable")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{introduce_temporary},
+		sub {
+			my $doc = $_[0]->current->document;
+			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+			require Padre::Wx::History::TextEntryDialog;
+			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+				$_[0],
+				Wx::gettext("Variable Name"),
+				Wx::gettext("Variable Name"),
+				'$tmp',
+			);
+			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			my $replacement = $dialog->GetValue;
+			$dialog->Destroy;
+			return unless defined $replacement;
+			$doc->introduce_temporary_variable($replacement);
+		},
+	);
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append(
