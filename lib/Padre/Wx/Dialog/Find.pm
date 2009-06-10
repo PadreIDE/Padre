@@ -326,6 +326,7 @@ sub find {
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh;
 	$self->{find_text}->SetValue($text);
+	$self->{find_text}->SetFocus;
 
 	if ( $self->IsShown ) {
 		$self->find_next;
