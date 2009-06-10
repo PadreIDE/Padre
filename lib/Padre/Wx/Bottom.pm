@@ -6,9 +6,13 @@ use strict;
 use warnings;
 use Padre::Constant ();
 use Padre::Wx       ();
+use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.36';
-our @ISA     = 'Wx::AuiNotebook';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::AuiNotebook
+};
 
 sub new {
 	my $class = shift;
@@ -38,10 +42,6 @@ sub new {
 	$aui->caption( 'bottom' => Wx::gettext('Output View') );
 
 	return $self;
-}
-
-sub main {
-	$_[0]->GetParent;
 }
 
 sub aui {

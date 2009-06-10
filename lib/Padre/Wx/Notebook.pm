@@ -3,9 +3,13 @@ package Padre::Wx::Notebook;
 use strict;
 use warnings;
 use Padre::Wx ();
+use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.36';
-our @ISA     = 'Wx::AuiNotebook';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::AuiNotebook
+};
 
 ######################################################################
 # Constructor and Accessors
@@ -47,10 +51,6 @@ sub new {
 	return $self;
 }
 
-sub main {
-	$_[0]->GetParent;
-}
-
 ######################################################################
 # Main Methods
 
@@ -77,8 +77,8 @@ sub show_file {
 sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
-	my $editor = $main->current->editor;
-	if ($editor) {
+	my $editor = $self->current->editor;
+	if ( $editor ) {
 		my $history = $main->{page_history};
 		my $current = Scalar::Util::refaddr($editor);
 		@$history = grep { $_ != $current } @$history;

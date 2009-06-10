@@ -40,6 +40,7 @@ use Padre::Constant ();
 use Padre::Current  ();
 use Padre::Util     ();
 use Padre::Wx       ();
+use Padre::Wx::Role::MainChild ();
 
 use Class::XSAccessor accessors => {
 	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
@@ -48,7 +49,10 @@ use Class::XSAccessor accessors => {
 };
 
 our $VERSION = '0.36';
-our @ISA     = 'Wx::StatusBar';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::StatusBar
+};
 
 use constant {
 	FILENAME => 0,
@@ -78,7 +82,11 @@ sub new {
 	my $main  = shift;
 
 	# Create the basic object
-	my $self = $class->SUPER::new( $main, -1, Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE );
+	my $self = $class->SUPER::new(
+		$main,
+		-1,
+		Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE
+	);
 
 	# create the static bitmap that will hold the task load status
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
@@ -130,34 +138,6 @@ sub clear {
 
 =pod
 
-=head2 main
-
-    my $main = $statusbar->main;
-
-Handy method to get a reference on Padre's main window.
-
-=cut
-
-sub main {
-	$_[0]->GetParent;
-}
-
-=pod
-
-=head2 current
-
-    my $current = $statusbar->current;
-
-Get a new C<Padre::Current> object.
-
-=cut
-
-sub current {
-	Padre::Current->new( main => $_[0]->GetParent );
-}
-
-=pod
-
 =head2 refresh
 
     $statusbar->refresh;
@@ -167,11 +147,11 @@ Force an update of the document fields in the statusbar.
 =cut
 
 sub refresh {
-	my $self    = shift;
-	my $current = $self->current;
+	my $self     = shift;
+	my $current  = $self->current;
 
 	# Blank the status bar if no document is open
-	my $editor = $current->editor or return $self->clear;
+	my $editor   = $current->editor or return $self->clear;
 
 	# Prepare the various strings that form the status bar
 	my $notebook = $current->notebook;
@@ -235,16 +215,15 @@ the icon to one of the other states
 =cut
 
 sub update_task_status {
-	my ($self) = @_;
-	my $status = _get_task_status();
-	return if $status eq $self->_task_status;    # nothing to do
+	my $self   = shift;
+	my $status = $self->_get_task_status;
+	return if $status eq $self->_task_status; # Nothing to do
 
-	# store new status
+	# Store new status
 	$self->_task_status($status);
-
 	my $sbmp = $self->_task_sbmp;
 
-	# if we're idling, just hide the icon in the statusbar
+	# If we're idling, just hide the icon in the statusbar
 	if ( $status eq 'idle' ) {
 		$sbmp->Hide;
 		$sbmp->SetBitmap(Wx::wxNullBitmap);
@@ -253,7 +232,7 @@ sub update_task_status {
 		return;
 	}
 
-	# not idling, show the correct icon in the statusbar
+	# Not idling, show the correct icon in the statusbar
 	my $icon = Padre::Wx::Icon::find("status/padre-tasks-$status");
 	$sbmp->SetToolTip(
 		$status eq 'running'
@@ -291,13 +270,14 @@ sub on_resize {
 # Private methods
 
 #
-# my $status = _get_task_status();
+# my $status = $self->_get_task_status;
 #
 # return 'idle', 'running' or 'load' depending on the number of threads
 # currently working.
 #
 sub _get_task_status {
-	my $manager = Padre->ide->task_manager;
+	my $self    = shift;
+	my $manager = $self->current->ide->task_manager;
 
 	# still in editor-startup phase, default to idle
 	return 'idle' unless defined $manager;

@@ -8,7 +8,10 @@ use Padre::Constant ();
 use Padre::Wx       ();
 
 our $VERSION = '0.36';
-our @ISA     = 'Wx::AuiNotebook';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::AuiNotebook
+};
 
 sub new {
 	my $class = shift;
@@ -36,10 +39,6 @@ sub new {
 	$self->aui->caption( 'right' => Wx::gettext('Workspace View') );
 
 	return $self;
-}
-
-sub main {
-	$_[0]->GetParent;
 }
 
 sub aui {
