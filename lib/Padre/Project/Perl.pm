@@ -34,6 +34,7 @@ sub from_file {
 	my $dirs = List::Util::first {
 		-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
 			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
+			or -f File::Spec->catpath( $v, $_, 'dist.ini' )
 			or -f File::Spec->catpath( $v, $_, 'padre.yml' );
 	}
 	map { File::Spec->catdir( @d[ 0 .. $_ ] ) } reverse( 0 .. $#d );
