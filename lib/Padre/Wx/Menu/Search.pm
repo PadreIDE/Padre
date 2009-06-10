@@ -34,7 +34,7 @@ sub new {
 		$main,
 		$self->{find},
 		sub {
-			$_[0]->find->find(@_);
+			$_[0]->find->find;
 		},
 	);
 
@@ -46,7 +46,7 @@ sub new {
 		$main,
 		$self->{find_next},
 		sub {
-			$_[0]->find->find_next(@_);
+			$_[0]->find->find_next;
 		},
 	);
 
@@ -58,7 +58,7 @@ sub new {
 		$main,
 		$self->{find_previous},
 		sub {
-			$_[0]->find->find_previous(@_);
+			$_[0]->find->find_previous;
 		},
 	);
 
@@ -71,7 +71,7 @@ sub new {
 		$main,
 		$self->{replace},
 		sub {
-			$_[0]->replace->find(@_);
+			$_[0]->replace->find;
 		},
 	);
 
