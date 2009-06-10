@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use File::Basename ();
-use Params::Util qw{_INSTANCE};
+use Params::Util   qw{_INSTANCE};
 use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
@@ -50,6 +50,10 @@ sub right {
 
 sub main {
 	$_[0]->GetGrandParent;
+}
+
+sub current {
+	Padre::Current->new( main => $_[0]->main );
 }
 
 sub gettext_label {
@@ -120,14 +124,13 @@ sub list_dir {
 }
 
 sub update_gui {
-	my ($self) = @_;
+	my $self    = shift;
+	my $current = $self->current;
+	$current->ide->wx or return;
 
-	return if not Padre->ide->wx;
-
-	my $filename = Padre::Current->filename;
-	return if not $filename;
-	my $dir = Padre::Util::get_project_dir($filename)
-		|| File::Basename::dirname($filename);
+	my $filename = $current->filename or return;
+	my $dir      = Padre::Util::get_project_dir($filename)
+	            || File::Basename::dirname($filename);
 
 	# TODO empty CACHE if forced ?
 	# TODO how to recognize real change in ?
