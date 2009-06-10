@@ -3,8 +3,8 @@ package Padre::Wx::Menubar;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
-use Padre::Current qw{_CURRENT};
+use Params::Util             qw{_INSTANCE};
+use Padre::Current           qw{_CURRENT};
 use Padre::Util              ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::File    ();
@@ -69,18 +69,17 @@ sub new {
 
 	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
-	$self->wx->Append( $self->file->wx,    Wx::gettext("&File") );
-	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit") );
-	$self->wx->Append( $self->search->wx,  Wx::gettext("&Search") );
-	$self->wx->Append( $self->view->wx,    Wx::gettext("&View") );
-	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run") );
+	$self->wx->Append( $self->file->wx,    Wx::gettext("&File")    );
+	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit")    );
+	$self->wx->Append( $self->search->wx,  Wx::gettext("&Search")  );
+	$self->wx->Append( $self->view->wx,    Wx::gettext("&View")    );
+	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run")     );
 	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
-	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window") );
-	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
+	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window")  );
+	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help")    );
 
-	my $config = Padre->ide->config;
+	my $config = $self->main->ide->config;
 	if ( $config->experimental ) {
-
 		# Create the Experimental menu
 		# All the crap that doesn't work, have a home,
 		# or should never be seen be real users goes here.
