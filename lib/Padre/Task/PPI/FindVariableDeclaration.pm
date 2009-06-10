@@ -43,7 +43,7 @@ sub prepare {
 	delete $self->{document};
 	if ( not defined $mto->{document} ) {
 		require Carp;
-		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the brace-finder task");
+		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the FindVariableDeclaration task");
 	}
 
 	if ( not defined $self->{location} ) {
