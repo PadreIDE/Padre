@@ -5,10 +5,54 @@ package Padre::Wx::History::ComboBox;
 use 5.008;
 use strict;
 use warnings;
-use Padre::DB ();
-use Padre::Wx ();
+use Padre::Wx          ();
+use Padre::DB          ();
+use Padre::DB::History ();
 
 our $VERSION = '0.36';
+our @ISA     = 'Wx::ComboBox';
+
+sub new {
+	my $class  = shift;
+	my @params = @_;
+	my $type   = $params[5];
+	$params[5] = [ Padre::DB::History->recent($type) ];
+	my $self   = $class->SUPER::new(@params);
+	$self->{type} = $type;
+	$self;
+}
+
+sub refresh {
+	my $self = shift;
+
+	# Refresh the recent values
+	my @recent = Padre::DB::History->recent($self->{type});
+
+	# Update the Wx object from the list
+	$self->Clear;
+	foreach my $option ( @recent ) {
+		$self->Append($option);
+	}
+
+	return 1;
+}
+
+sub GetValue {
+	my $self  = shift;
+	my $value = $self->SUPER::GetValue();
+
+	# If this is a value is not in our recent list, save it.
+	if ( defined $value and length $value ) {
+		unless ( $self->FindString($value) == Wx::wxNOT_FOUND ) {
+			Padre::DB::History->create(
+				type => $self->{type},
+				name => $value,
+			);
+		}
+	}
+
+	return $value;
+}
 
 1;
 
