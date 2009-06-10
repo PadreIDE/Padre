@@ -1,14 +1,14 @@
-package Padre::Wx::Dialog::Find;
+package Padre::Wx::Dialog::Replace;
 
 =pod
 
 =head1 NAME
 
-Padre::Wx::Dialog::Find - Find Widget
+Padre::Wx::Dialog::Replace - Find and Replace Widget
 
 =head1 DESCRIPTION
 
-C<Padre::Wx::Dialog::Find> implements Padre's Find dialogs.
+C<Padre::Wx:Main> implements Padre's Find and Replace dialog box.
 
 =head1 METHODS
 
@@ -34,9 +34,9 @@ our @ISA     = qw{
 
 =head2 new
 
-  my $find = Padre::Wx::Dialog::Find->new($main)
+  my $find = Padre::Wx::Dialog::Replace->new($main);
 
-Create and return a C<Padre::Wx::Dialog::Find> search widget.
+Create and return a C<Padre::Wx::Dialog::Replace> search and replace widget.
 
 =cut
 
@@ -44,14 +44,14 @@ sub new {
 	my $class   = shift;
 	my $main    = shift;
 	unless ( $main ) {
-		die("Did not pass parent to find dialog constructor");
+		die("Did not pass parent to replace dialog constructor");
 	}
 
 	# Create the Wx dialog
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Find'),
+		Wx::gettext('Find and Replace'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION
@@ -68,6 +68,16 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		'search',
+	);
+
+	# The text to replace with
+	$self->{replace_text} = Padre::Wx::History::ComboBox->new(
+		$self,
+		-1,
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		'replace',
 	);
 
 	# "Case Sensitive" option
@@ -102,7 +112,7 @@ sub new {
 	$self->{find_first} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Close Window on &Hit'),
+		Wx::gettext('Close Window on &hit'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -126,11 +136,25 @@ sub new {
 		}
 	);
 
+	# The "Replace All" option
+	$self->{replace_all} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Replace &All'),
+	);
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{replace_all},
+		sub {
+			$_[0]->{find_text}->SetFocus;
+		}
+	);
+
 	# The "Find" button
 	$self->{find} = Wx::Button->new(
 		$self,
 		Wx::wxID_FIND,
-		Wx::gettext("&Find"),
+		Wx::gettext("&Find Next"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -139,7 +163,21 @@ sub new {
 			$_[0]->find_clicked;
 		}
 	);
-	$self->{find}->SetDefault;
+
+	# The "Replace" button
+	$self->{replace} = Wx::Button->new(
+		$self,
+		Wx::wxID_REPLACE,
+		Wx::gettext("&Replace"),
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{replace},
+		sub {
+			$_[0]->replace_clicked;
+		}
+	);
+	$self->{replace}->SetDefault;
 
 	# The "Cancel" button
 	$self->{cancel} = Wx::Button->new(
@@ -187,6 +225,32 @@ sub new {
 		5,
 	);
 
+	# Replace sizer begins here
+	my $replace = Wx::StaticBoxSizer->new(
+		Wx::StaticBox->new(
+			$self,
+			-1,
+			Wx::gettext('Replace'),
+		),
+		Wx::wxVERTICAL,
+	);
+	$replace->Add(
+		Wx::StaticText->new(
+			$self,
+			Wx::wxID_STATIC,
+			Wx::gettext("Replace Text:"),
+		),
+		0,
+		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+		5,
+	);
+	$replace->Add(
+		$self->{replace_text},
+		3,
+		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
+		5,
+	);
+
 	# The layout grid for the options
 	my $grid = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
 	$grid->AddGrowableCol(1);
@@ -204,6 +268,12 @@ sub new {
 	);
 	$grid->Add(
 		$self->{find_first},
+		0,
+		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
+		5,
+	);
+	$grid->Add(
+		$self->{replace_all},
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5,
@@ -234,6 +304,12 @@ sub new {
 		5,
 	);
 	$bottom->Add(
+		$self->{replace},
+		0,
+		Wx::wxGROW | Wx::wxLEFT | Wx::wxRIGHT,
+		5,
+	);
+	$bottom->Add(
 		$self->{cancel},
 		0,
 		Wx::wxGROW | Wx::wxLEFT,
@@ -245,6 +321,12 @@ sub new {
 	$sizer->AddGrowableCol(0);
 	$sizer->Add(
 		$find,
+		2,
+		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
+		5,
+	);
+	$sizer->Add(
+		$replace,
 		2,
 		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
 		5,
@@ -325,11 +407,18 @@ sub find {
 
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh;
+	$self->{replace_text}->refresh;
 	$self->{find_text}->SetValue($text);
 
 	if ( $self->IsShown ) {
 		$self->find_next;
 	} else {
+		if ( length $text ) {
+			# Go straight to the replace field
+			$self->{replace_text}->SetFocus;
+		} else {
+			$self->{find_text}->SetFocus;
+		}
 		$self->Show(1);
 	}
 
@@ -361,11 +450,18 @@ sub find_clicked {
 	my $search = $self->{find_text}->GetValue;
 	return unless defined _STRING($search);
 
-	# Save the search term
+	# Get the replace term
+	my $replace = $self->{replace_text}->GetValue;
+
+	# Save the terms
 	Padre::DB::History->create(
 		type => 'search',
 		name => $search,
 	) if $search;
+	Padre::DB::History->create(
+		type => 'replace',
+		name => $replace,
+	) if $replace;
 
 	# Execute the first search
 	$self->search;
@@ -386,28 +482,13 @@ search history) run C<find> method.
 =cut
 
 sub find_next {
-	my $self    = shift;
-	my $current = $self->current;
-	my $term    = Padre::DB::History->previous('search');
-
-	# This is for Quick Find
-	# Check if is checked
-	if ( $current->main->menu->search->{quick_find}->IsChecked ) {
-		my $text = $current->text;
-		if ( length $text and $text ne $term ) {
-			Padre::DB::History->create(
-				type => 'search',
-				name => $text,
-			);
-		}
-	}
-
+	my $self = shift;
+	my $term = Padre::DB::History->previous('search');
 	if ( $term ) {
 		$self->search;
 	} else {
 		$self->find;
 	}
-
 	return;
 }
 
@@ -469,6 +550,141 @@ sub search {
 	return;
 }
 
+=pod
+
+=head2 replace_clicked
+
+  $self->replace_clicked;
+
+Executed when the Replace button is clicked.
+
+Replaces one appearance of the Find Text with the Replace Text.
+
+If search window is still open, run C<search> on the whole text,
+again.
+
+=cut
+
+sub replace_clicked {
+	my $self   = shift;
+	my $config = $self->_sync_config;
+
+	# If we're only searching once, we won't need the dialog any more
+	if ( $config->find_first ) {
+		$self->Hide;
+	}
+
+	# Return false if we don't have anything to search for
+	my $search = $self->{find_text}->GetValue;
+	return unless defined _STRING($search);
+
+	# Get the replace term
+	my $replace = $self->{replace_text}->GetValue;
+
+	# Save the terms
+	Padre::DB::History->create(
+		type => 'search',
+		name => $search,
+	) if $search;
+	Padre::DB::History->create(
+		type => 'replace',
+		name => $replace,
+	) if $replace;
+
+	# Execute the replace
+	if ( $self->{replace_all}->GetValue ) {
+		$self->replace_all;
+	} else {
+		$self->replace;
+	}
+
+	return;
+}
+
+=pod
+
+=head2 replace_all
+
+  $self->replace_all;
+
+Executed when Replace All button is clicked.
+
+Replace all appearances of given string in the current document.
+
+=cut
+
+sub replace_all {
+	my $self = shift;
+
+	# Prepare the search and replace values
+	my $regex   = $self->_get_search or return;
+	my $replace = $self->_get_replace;
+	$replace =~ s/\\t/\t/g if length $replace;
+
+	# Execute the search for all matches
+	my $editor = $self->current->editor;
+	my $text   = $editor->GetTextRange( 0, $editor->GetLength );
+	my (undef, undef, @matches) = Padre::Util::get_matches( $text, $regex, 0, 0 );
+
+	# Replace all matches as a single undo
+	if ( @matches ) {
+		$editor->BeginUndoAction;
+		foreach my $match ( reverse @matches ) {
+			$editor->SetTargetStart( $match->[0] );
+			$editor->SetTargetEnd( $match->[1] );
+			$editor->ReplaceTarget($replace);
+		}
+		$editor->EndUndoAction;
+
+		$self->main->message(
+			sprintf(
+				Wx::gettext('%s occurences were replaced'),
+				scalar @matches
+			)
+		);
+	} else {
+		$self->main->message(
+			Wx::gettext("Nothing to replace")
+		);
+	}
+
+	return;
+}
+
+=pod
+
+  $self->replace;
+
+Perform actual single replace.  Highlight (set as selected) found string.
+
+=cut
+
+sub replace {
+	my $self = shift;
+
+	# Prepare the search and replace values
+	my $regex   = $self->_get_search or return;
+	my $replace = $self->_get_replace;
+	$replace =~ s/\\t/\t/g if length $replace;
+
+	# Get current search condition and check if they match
+	my $editor = $self->current->editor;
+	my $text   = $editor->GetTextRange( 0, $editor->GetLength );
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
+
+	# If they match replace it
+	if ( defined $start and $start == 0 and $end == length($text) ) {
+		$editor->ReplaceSelection($replace);
+	}
+
+	# If search window is still open, run a search on the whole text again
+	unless ( $self->config->find_first ) {
+		$self->search;
+	}
+
+	return;
+}
+
 
 
 
@@ -523,6 +739,20 @@ sub _get_search {
 	}
 
 	return $regex;
+}
+
+# Internal method. $self->_get_replace
+# Returns previous replacement string from history
+# or empty if _replace_choice_ widget is empty.
+# Added to be able to use empty string as a replacement text
+# but without storing in (the empty string) in history.
+sub _get_replace {
+	my $self = shift;
+	if ( $self->{replace_text} ) {
+		return $self->{replace_text}->GetValue;
+	} else {
+		return Padre::DB::History->previous('replace');
+	}
 }
 
 1;

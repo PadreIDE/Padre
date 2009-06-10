@@ -48,7 +48,7 @@ Get the L<Padre> IDE instance that this object is a child of.
 =cut
 
 sub ide {
-	$_[0]->GetGrandParent;
+	$_[0]->GetParent->ide;
 }
 
 =pod
@@ -63,7 +63,7 @@ convenience because it is needed so often.
 =cut
 
 sub config {
-	$_[0]->GetGrandParent->config;
+	$_[0]->GetParent->config;
 }
 
 =pod
