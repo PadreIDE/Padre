@@ -30,9 +30,9 @@ my $panel_string_index = 9999999;
 
 my $DONE_EVENT : shared = Wx::NewEventType;
 
-my $ack_loaded = 0;
+my $loaded = 0;
 
-sub load_ack {
+sub load {
 	my $minver = 1.86;
 	my $error  = "App::Ack $minver required for this feature";
 
@@ -65,13 +65,13 @@ sub on_ack {
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
-	unless ( $ack_loaded ) {
-		my $error = load_ack();
+	unless ( $loaded ) {
+		my $error = load();
 		if ( $error ) {
 			$main->error($error);
 			return;
 		}
-		$ack_loaded = 1;
+		$loaded = 1;
 	}
 
 	my $project = $current->project;
