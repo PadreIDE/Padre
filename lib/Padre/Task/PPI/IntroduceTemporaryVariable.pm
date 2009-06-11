@@ -108,7 +108,7 @@ sub finish {
 
 		my $varname = $self->{varname};
 		$varname = 'tmp' if not defined $varname;
-		$varname =~ s/^[\$\@\%\*\&]?/\$/;
+                $varname = '$'.$varname if $varname !~ /^[\$\@\%]/;
                 
 		my $text = $doc->text_get;
 		my $expression = substr($text, $start_pos, $end_pos-$start_pos+1, $varname); # TODO: Pad with spaces?
