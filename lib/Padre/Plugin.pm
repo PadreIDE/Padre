@@ -48,9 +48,9 @@ use Carp         ();
 use File::Spec   ();
 use Scalar::Util ();
 use Params::Util qw{_HASH0 _INSTANCE};
-use YAML::Tiny ();
-use Padre::DB  ();
-use Padre::Wx  ();
+use YAML::Tiny   ();
+use Padre::DB    ();
+use Padre::Wx    ();
 
 our $VERSION    = '0.36';
 our $COMPATIBLE = '0.18';
@@ -656,10 +656,22 @@ sub main {
 	$IDE{ Scalar::Util::refaddr( $_[0] ) }->wx->main;
 }
 
+=pod
+
+=head2 current
+
+The C<current> convenience method provides a L<Padre::Current> context
+object for the current plugin.
+
+=cut
+
+sub current {
+	Padre::Current->new( ide => $_[0]->ide );
+}
+
 1;
 
 =pod
-
 
 =head1 SEE ALSO
 
