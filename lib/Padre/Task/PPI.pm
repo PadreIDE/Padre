@@ -77,7 +77,7 @@ sub new {
 		return () if not defined $doc;
 		$self->{text} = $doc->text_get;
 	}
-	return $self;
+	return bless $self => $class;
 }
 
 sub run {
