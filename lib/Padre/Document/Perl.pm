@@ -639,7 +639,8 @@ sub autocomplete {
 			while (defined($tag)) {
 				# TODO check file scope?
 				if ($tag->{kind} eq 'v') {
-					if (not $seen{$tag->{name}}++) { # TODO potentially don't skip depending on circumstances.
+					# TODO potentially don't skip depending on circumstances.
+					if (not $seen{$tag->{name}}++) {
 						push @words, $tag->{name};
 					}
 				}
@@ -665,6 +666,27 @@ sub autocomplete {
 					push @words, $tag->{name};
 				}
 				$tag = ($prefix eq '') ? $parser->nextTag() : $parser->findNextTag();
+			}
+			return(length($prefix), @words );
+		}
+	}
+	# check for packages
+	elsif ($prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/) {
+		my $prefix = $1;
+		my $parser = Parse::ExuberantCTags->new(File::Spec->catfile($ENV{PADRE_HOME}, 'perltags'));
+		if (defined $parser) {
+			my $tag = $parser->findTag($prefix, partial => 1);
+			my @words;
+			my %seen;
+			while (defined($tag)) {
+				# TODO check file scope?
+				if ($tag->{kind} eq 'p') {
+					# TODO potentially don't skip depending on circumstances.
+					if (not $seen{$tag->{name}}++) {
+						push @words, $tag->{name};
+					}
+				}
+				$tag = $parser->findNextTag();
 			}
 			return(length($prefix), @words );
 		}
