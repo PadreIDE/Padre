@@ -2031,7 +2031,7 @@ sub on_autocompletition {
 	if ( $length =~ /\D/ ) {
 		Wx::MessageBox(
 			$length,
-			Wx::gettext("Autocompletions error"),
+			Wx::gettext("Autocompletion error"),
 			Wx::wxOK,
 		);
 	}
