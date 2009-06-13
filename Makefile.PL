@@ -68,6 +68,7 @@ requires       'ORLite::Migrate'          => '0.03';
 requires       'PAR'                      => '0.989';
 requires       'Params::Util'             => '0.33';
 requires       'Parse::ErrorString::Perl' => '0.11';
+requires       'Parse::ExuberantCtags'    => '1.00';
 requires       'Pod::POM'                 => '0.17';
 requires       'Pod::Simple'              => '3.07';
 requires       'Pod::Simple::XHTML'       => '3.04';

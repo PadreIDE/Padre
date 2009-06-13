@@ -610,6 +610,66 @@ sub autocomplete {
 
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
+
+	# WARNING: This is totally not done, but Gabor made me commit it.
+	# TODO:
+	# a) complete this list
+	# b) make the path configurable
+	# c) make the whole thing optional and/or pluggable
+	# d) make it not suck
+	# e) make the types of auto-completion configurable
+	# f) remove the old auto-comp code or at least let the user choose to use the new
+	#    *or* the old code via configuration
+	# g) hack STC so that we can get more information in the autocomp. window,
+	# h) hack STC so we can start populating the autocompletion choices and continue to do so in the background
+	# i) hack Perl::Tags to be better (including inheritance)
+	# j) add inheritance support
+	# k) figure out how to do method auto-comp. on objects
+	require Parse::ExuberantCTags;
+
+	# check for variables
+	if ($prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/) {
+		my $prefix = $2;
+		my $type = $1;
+		my $parser = Parse::ExuberantCTags->new(File::Spec->catfile($ENV{PADRE_HOME}, 'perltags'));
+		if (defined $parser) {
+			my $tag = $parser->findTag($prefix, partial => 1);
+			my @words;
+			my %seen;
+			while (defined($tag)) {
+				# TODO check file scope?
+				if ($tag->{kind} eq 'v') {
+					if (not $seen{$tag->{name}}++) { # TODO potentially don't skip depending on circumstances.
+						push @words, $tag->{name};
+					}
+				}
+				$tag = $parser->findNextTag();
+			}
+			return(length($prefix), @words );
+		}
+	}
+	# check for methods
+	elsif ($prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)\s*->\s*(\w*)$/) {
+		my $class = $1;
+		my $prefix = $2;
+		$prefix = '' if not defined $prefix;
+		my $parser = Parse::ExuberantCTags->new(File::Spec->catfile($ENV{PADRE_HOME}, 'perltags'));
+		if (defined $parser) {
+			my $tag = ($prefix eq '') ? $parser->firstTag() : $parser->findTag($prefix, partial => 1);
+			my @words;
+			# TODO: INHERITANCE!
+			while (defined($tag)) {
+				if ($tag->{kind} eq 's'
+				    and defined $tag->{extension}{class}
+				    and $tag->{extension}{class} eq $class) {
+					push @words, $tag->{name};
+				}
+				$tag = ($prefix eq '') ? $parser->nextTag() : $parser->findNextTag();
+			}
+			return(length($prefix), @words );
+		}
+	}
+
 	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
 	my $last      = $editor->GetLength();
 	my $text      = $editor->GetTextRange( 0, $last );
