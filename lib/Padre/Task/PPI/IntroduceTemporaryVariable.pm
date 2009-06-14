@@ -91,10 +91,16 @@ sub process_ppi {
         #        For PPI, Statements can be part of others and thus don't necessarily have
         #        a semicolon.
         while (1) {
-          my $parent = $statement->parent();
+          my $parent = $statement->statement();
           last if not defined $parent;
-          $parent = $parent->statement();
-          last if not $parent
+          if ($parent eq $statement) { # exactly the same object, ie. is a statement already
+            $parent = $statement->parent(); # force the parent
+            last if not $parent # stop if we're at a block or at the document level
+                 or $parent->isa('PPI::Structure::Block')
+                 or $parent->isa('PPI::Structure::Document');
+            $parent = $parent->statement(); # force it to be a statement
+          }
+          last if not $parent # stop if the parent isn't a statement
                or not $parent->isa('PPI::Statement');
           $statement = $parent;
         }
