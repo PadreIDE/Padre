@@ -163,6 +163,12 @@ sub new {
 			$_[0]->find_clicked;
 		}
 	);
+	Wx::Event::EVT_CHAR(
+		$self->{find},
+		sub {
+			$self->_on_hotkey( $_[1]->GetKeyCode );
+		}
+	);
 
 	# The "Replace" button
 	$self->{replace} = Wx::Button->new(
@@ -175,6 +181,12 @@ sub new {
 		$self->{replace},
 		sub {
 			$_[0]->replace_clicked;
+		}
+	);
+	Wx::Event::EVT_CHAR(
+		$self->{replace},
+		sub {
+			$self->_on_hotkey( $_[1]->GetKeyCode );
 		}
 	);
 	$self->{replace}->SetDefault;
@@ -754,6 +766,17 @@ sub _get_replace {
 	} else {
 		return Padre::DB::History->previous('replace');
 	}
+}
+
+# Adds Ultraedit-like hotkeys for quick find/replace triggering
+sub _on_hotkey {
+	my $self = shift;
+	my $code = shift;
+
+	$self->find_clicked    if $code == 102; # pressed 'f' hotkey
+	$self->replace_clicked if $code == 114; # pressed 'r' hotkey
+
+	return;
 }
 
 1;
