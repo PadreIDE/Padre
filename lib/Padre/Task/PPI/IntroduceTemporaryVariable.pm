@@ -84,6 +84,21 @@ sub process_ppi {
 		$self->{error} = "no statement";
 		return;
 	}
+        # walk up the PPI tree until we reach a sort of structure that's not a statement.
+        # FIXME: This may or may not be robust. A PPI::Statement claims to be what's
+        #        defined as "statements" in perlsyn, but it's not! perlsyn says all statements
+        #        end in a semicolon unless at the end of a block.
+        #        For PPI, Statements can be part of others and thus don't necessarily have
+        #        a semicolon.
+        while (1) {
+          my $parent = $statement->parent();
+          last if not defined $parent;
+          $parent = $parent->statement();
+          last if not $parent
+               or not $parent->isa('PPI::Statement');
+          $statement = $parent;
+        }
+
 	$self->{statement_location} = $statement->location;
 	return ();
 }
