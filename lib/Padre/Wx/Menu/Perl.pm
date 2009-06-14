@@ -31,7 +31,7 @@ sub new {
 	$self->{main} = $main;
 
 	# Cache the configuration
-	$self->{config} = $main->config;
+	$self->{config} = Padre->ide->config;
 
 	# Perl-Specific Searches
 	$self->{find_brace} = $self->Append(

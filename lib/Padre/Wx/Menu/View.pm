@@ -21,7 +21,7 @@ our @ISA     = 'Padre::Wx::Menu';
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $config = $main->config;
+	my $config = Padre->ide->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);

@@ -40,7 +40,7 @@ sub new {
 
 	# Create the underlying Wx object
 	my $self   = $class->SUPER::new($notebook);
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 
 	# TODO: Make this suck less
 	$data = data( $config->editor_style );
@@ -144,7 +144,7 @@ sub padre_setup {
 
 sub padre_setup_plain {
 	my $self   = shift;
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 	$self->set_font;
 	$self->StyleClearAll;
 
@@ -181,7 +181,7 @@ sub padre_setup_plain {
 sub padre_setup_style {
 	my $self = shift;
 	my $name = shift;
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 
 	$self->padre_setup_plain;
 	for ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
@@ -366,7 +366,7 @@ sub show_folding {
 
 sub set_font {
 	my $self   = shift;
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
 	if ( defined $config->editor_font && length $config->editor_font > 0 ) {    # empty default...
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
@@ -378,7 +378,7 @@ sub set_font {
 
 sub set_preferences {
 	my $self   = shift;
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 
 	$self->show_line_numbers( $config->editor_linenumbers );
 	$self->show_folding( $config->editor_folding );
@@ -396,7 +396,7 @@ sub set_preferences {
 
 sub show_calltip {
 	my $self   = shift;
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 	return unless $config->editor_calltips;
 
 	my $pos    = $self->GetCurrentPos;
@@ -433,7 +433,7 @@ sub show_calltip {
 sub autoindent {
 	my ( $self, $mode ) = @_;
 
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 	return unless $config->editor_autoindent;
 	return if $config->editor_autoindent eq 'no';
 
@@ -792,7 +792,7 @@ sub on_right_down {
 	$menu->AppendSeparator;
 
 	if ( $event->isa('Wx::MouseEvent')
-		and $self->main->config->editor_folding )
+		and Padre->ide->config->editor_folding )
 	{
 		my $mousePos         = $event->GetPosition;
 		my $line             = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
@@ -845,7 +845,7 @@ sub on_right_down {
 sub on_mouse_motion {
 	my $self  = shift;
 	my $event = shift;
-	my $config = $self->main->config;
+	my $config = Padre->ide->config;
 
 	$event->Skip;
 	return unless $config->main_syntaxcheck;
