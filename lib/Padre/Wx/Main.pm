@@ -546,13 +546,13 @@ sub freezer {
 Padre embeds a small network server to handle single instance. Here are
 the methods that allow to control this embedded server.
 
-=over 4
-
 =cut
 
 my $single_instance_port = 4444;
 
 =pod
+
+=over 4
 
 =item * $main->single_instance_start;
 
