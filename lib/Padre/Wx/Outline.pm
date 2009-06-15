@@ -34,13 +34,6 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_TREE_SEL_CHANGED(
-		$self, $self,
-		sub {
-			$self->on_tree_item_selection_changed( $_[1] );
-		},
-	);
-
 	$self->Hide;
 
 	return $self;
@@ -121,15 +114,6 @@ sub on_tree_item_set_focus {
 	my ( $self, $event ) = @_;
 	my $page = $self->main->current->editor;
 	my $item = $self->GetPlData( $self->GetSelection() );
-	if ( defined $item ) {
-		$self->select_line_in_editor( $item->{line} );
-	}
-	return;
-}
-
-sub on_tree_item_selection_changed {
-	my ( $self, $event ) = @_;
-	my $item = $self->GetPlData( $event->GetItem );
 	if ( defined $item ) {
 		$self->select_line_in_editor( $item->{line} );
 	}
