@@ -179,7 +179,7 @@ sub _on_tree_item_right_click {
 		my $goTo = $menu->Append( -1, Wx::gettext("&GoTo Element") );
 		Wx::Event::EVT_MENU(
 			$outlinebar, $goTo,
-			sub { $outlinebar->on_tree_item_activated($event); },
+			sub { $outlinebar->on_tree_item_set_focus($event); },
 		);
 		$showMenu++;
 	}
