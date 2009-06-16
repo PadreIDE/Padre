@@ -58,7 +58,7 @@ sub new {
 	}
 
 	# Generate the regex form of the search
-	my $term
+	my $term = '';
 
 	return $self;
 }
