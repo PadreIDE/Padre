@@ -67,7 +67,7 @@ sub new {
 		$main,
 		$self->Append(
 			-1,
-			Wx::gettext("Last Visited File\tCtrl-6")
+			Wx::gettext("Last Visited File\tCtrl-Shift-P")
 		),
 		sub {
 			Padre::Wx::Main::on_last_visited_pane(@_);

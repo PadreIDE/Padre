@@ -6,6 +6,7 @@ v0.37 to be released
     Crazy Win32::API AllowSetForegroundWindow hack to allow the
     Single Instance Server to correctly foreground itself (ADAMK)
     Added Padre::Search search and replace API (ADAMK)
+    Switching to last edited file is now Ctrl-Shift-p (SZABGAB)
 
 v0.36 2009.05.30
 
