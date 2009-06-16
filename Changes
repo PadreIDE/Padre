@@ -5,6 +5,7 @@ v0.37 to be released
     Added a friendly icon on the toolbar to toggle comments (GARU)
     Crazy Win32::API AllowSetForegroundWindow hack to allow the
     Single Instance Server to correctly foreground itself (ADAMK)
+    Added Padre::Search search and replace API (ADAMK)
 
 v0.36 2009.05.30
 
