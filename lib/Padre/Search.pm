@@ -56,6 +56,10 @@ sub new {
 	unless ( defined $self->find_reverse ) {
 		$self->{find_reverse} = $self->config->find_reverse;
 	}
+
+	# Generate the regex form of the search
+	my $term
+
 	return $self;
 }
 
@@ -93,20 +97,38 @@ sub search_previous {
 }
 
 sub replace_next {
-	my $self = shift;
+	my $self   = shift;
+	my $editor = shift;
+	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
+		die("Failed to provide editor object to replace in");
+	}
+
+	# Replace the currently selected match
+	$self->replace($editor);
+
+	# Select and move to the next match
 	if ( $self->config->find_reverse ) {
-		return $self->replace_down(@_);
+		return $self->search_down($editor);
 	} else {
-		return $self->replace_up(@_);
+		return $self->search_up($editor);
 	}
 }
 
 sub replace_previous {
-	my $self = shift;
+	my $self   = shift;
+	my $editor = shift;
+	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
+		die("Failed to provide editor object to replace in");
+	}
+
+	# Replace the currently selected match
+	$self->replace($editor);
+
+	# Select and move to the next match
 	if ( $self->config->find_reverse ) {
-		return $self->replace_up(@_);
+		return $self->search_up($editor);
 	} else {
-		return $self->replace_down(@_);
+		return $self->search_down($editor);
 	}
 }
 
@@ -123,7 +145,18 @@ sub search_down {
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
 		die("Failed to provide editor object to search in");
 	}
-	die "CODE INCOMPLETE";
+
+	# Execute the search and move to the resulting location
+	my ($start, $end, @matches) = $self->matches(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+		$editor->GetSelection,
+	);
+	return unless defined $start;
+
+	# Highlight the found item
+	$editor->SetSelection( $start, $end );
+	return 1;
 }
 
 sub search_up {
@@ -132,34 +165,71 @@ sub search_up {
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
 		die("Failed to provide editor object to search in");
 	}
-	die "CODE INCOMPLETE";
+
+	# Execute the search and move to the resulting location
+	my ($start, $end, @matches) = $self->matches(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+		$editor->GetSelection,
+		'backwards'
+	);
+	return unless defined $start;
+
+	# Highlight the found item
+	$editor->SetSelection( $start, $end );
+	return 1;
 }
 
-sub replace_down {
+sub replace {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
-		die("Failed to provide editor object to search in");
+		die("Failed to provide editor object to replace in");
 	}
-	die "CODE INCOMPLETE";
-}
 
-sub replace_up {
-	my $self   = shift;
-	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
-		die("Failed to provide editor object to search in");
-	}
-	die "CODE INCOMPLETE";
+	# Execute the search and move to the resulting location
+	my ($start, $end, @matches) = $self->matches(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+		$editor->GetSelection,
+	);
+
+	# If they match replace it
+	if ( defined $start and $start == 0 and $end == $editor->GetLength ) {
+		$editor->ReplaceSelection($self->replace_text);
+		return 1;
+	} else {
+		return 0;
+	}	
 }
 
 sub replace_all {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
-		die("Failed to provide editor object to search in");
+		die("Failed to provide editor object to replace in");
 	}
-	die "CODE INCOMPLETE";
+
+	# Execute the search for all matches
+	my (undef, undef, @matches) = $self->matches(
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$self->search_regex,
+	);
+
+	# Replace all matches as a single undo
+	if ( @matches ) {
+		my $replace = $self->replace_text;
+		$editor->BeginUndoAction;
+		foreach my $match ( reverse @matches ) {
+			$editor->SetTargetStart($match->[0]);
+			$editor->SetTargetEnd($match->[1]);
+			$editor->ReplaceTarget($replace);
+		}
+		$editor->EndUndoAction;
+	}
+
+	# Return the number of matches we replaced
+	return scalar @matches;
 }
 
 
@@ -194,7 +264,7 @@ sub matches {
 	die "missing parameters" if @_ < 4;
 
 	# Searches run in unicode
-	my $text = Encode::encode( 'utf-8', shift );
+	my $text = Encode::encode('utf-8', shift);
 
 	# Find all matches for the regex
 	my $regex   = shift;
@@ -207,8 +277,8 @@ sub matches {
 	}
 
 	my $pair = ();
-	my $from = shift;
-	my $to   = shift;
+	my $from = shift || 0;
+	my $to   = shift || 0;
 	if ( $_[0] ) {
 		# Search backwards
 		my $pair = List::Util::first { $to > $_->[1] } reverse @matches;
