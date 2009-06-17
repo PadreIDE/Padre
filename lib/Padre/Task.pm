@@ -512,6 +512,7 @@ sub post_event {
 		$Padre::TaskManager::_main,
 		Wx::PlThreadEvent->new( -1, $stuff[1], $stuff[2] ),
 	);
+	return();
 }
 
 1;
