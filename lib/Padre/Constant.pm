@@ -79,10 +79,10 @@ use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
 use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
 
 # Check and create the directories that need to exist
-unless ( -e CONFIG_DIR or File::Path::make_path(CONFIG_DIR) ) {
+unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
 	Carp::croak( "Cannot create config dir '" . CONFIG_DIR . "': $!" );
 }
-unless ( -e PLUGIN_LIB or File::Path::make_path(PLUGIN_LIB) ) {
+unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
 	Carp::croak( "Cannot create plugins dir '" . PLUGIN_LIB . "': $!" );
 }
 

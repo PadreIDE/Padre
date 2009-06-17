@@ -415,7 +415,7 @@ sub _setup_par {
 	my $plugin_dir = $self->plugin_dir;
 	my $cache_dir = File::Spec->catdir( $plugin_dir, 'cache' );
 	$ENV{PAR_GLOBAL_TEMP} = $cache_dir;
-	File::Path::make_path($cache_dir) unless -e $cache_dir;
+	File::Path::mkpath($cache_dir) unless -e $cache_dir;
 	$ENV{PAR_TEMP} = $cache_dir;
 
 	$self->{par_loaded} = 1;
