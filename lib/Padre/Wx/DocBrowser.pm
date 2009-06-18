@@ -104,6 +104,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
+	$entry->SetToolTip(Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP" ) );
 
 	Wx::Event::EVT_TEXT_ENTER(
 		$self, $entry,
@@ -117,6 +118,8 @@ sub new {
 		Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxALIGN_RIGHT
 	);
+	$label->SetToolTip(Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP" ) );
+	
 	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
 	$but_s->Add( $entry, 1, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
 
