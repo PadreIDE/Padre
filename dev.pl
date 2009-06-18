@@ -16,6 +16,9 @@ $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
 $ENV{PADRE_DIE}  = 1;
 
+use lib "$FindBin::Bin/../tools";
+use lib::Tools;
+
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
 	my $make = $Config::Config{make} || 'make';
@@ -71,49 +74,3 @@ sub error {
 	exit(255);
 }
 
-sub convert_po_to_mo {
-	my $path   = shift;
-	my $msgfmt = get_msgfmt();
-	return if not $msgfmt;
-
-	my @mo;
-	if ( $^O eq 'MSWin32' ) {
-		@mo = map {
-			substr( File::Basename::basename($_), 0, -3 )
-		} File::Glob::Windows::glob("$path/share/locale/*.po");
-	} else {
-		@mo = map {
-			substr( File::Basename::basename($_), 0, -3 )
-		} glob "$path/share/locale/*.po";
-	}
-	foreach my $locale ( @mo ) {
-		system(
-			$msgfmt, "-o",
-			"$path/share/locale/$locale.mo",
-			"$path/share/locale/$locale.po",
-		);
-	}
-}
-
-sub get_msgfmt {
-
-	my $msgfmt;
-	if ( $^O =~ /(linux|bsd)/ ) {
-		$msgfmt = scalar File::Which::which('msgfmt');
-	} elsif ( $^O eq 'MSWin32' ) {
-		eval {
-			require File::Glob::Windows;
-		};
-		if( $@ ) {
-			die("Default glob() will misinterpret spaces in folder names as seperators, install File::Glob::Windows to fix this behavior!");
-		}
-		my $p = "C:/Program Files/GnuWin32/bin/msgfmt.exe";
-		if ( -e $p ) {
-			$msgfmt = $p;
-		} else {
-			$msgfmt = scalar File::Which::which('msgfmt');
-		}
-	}
-	
-	return $msgfmt;
-}
