@@ -9,9 +9,7 @@ use Config;
 # its development location
 # No need to distribute it
 use FindBin;
-use File::Which    ();
 use File::Basename ();
-use Probe::Perl    ();
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
 $ENV{PADRE_DIE}  = 1;
@@ -27,16 +25,8 @@ unless ( -d "$FindBin::Bin/blib" ) {
 
 convert_po_to_mo($FindBin::Bin);
 
+my $perl = get_perl();
 
-my $perl = Probe::Perl->find_perl_interpreter;
-if ( $^O eq 'darwin' ) {
-	# I presume there's a proper way to do this?
-	$perl = scalar File::Which::which('wxPerl');
-	chomp($perl);
-	unless ( -e $perl ) {
-		error("padre needs to run using wxPerl on OSX");
-	}
-}
 my @cmd = (
 	qq[$perl],
 	qq[-I$FindBin::Bin/lib],
