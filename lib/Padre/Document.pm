@@ -65,10 +65,17 @@ and map them to existing mime-types or funtions. It is probably
 better to have a commonly used name along with the mime-type
 in that GUI instead of the mime-type only.
 
+I wonder if we should allow the users (and or plugin authors) to
+change the functions or to add new functions that will map
+file content to mime-type or if we should just tell them to 
+patch Padre. What if they need it for some internal project?
+
 A plugin is able to add new supported mime-types. Padre should
 either check for collisions if a plugin already wants to provide
 an already suported mime-type or should allow multiple support
-modules with a way to select the current one.
+modules with a way to select the current one. (Again I think we
+probably don't need this. People can just come and add the 
+mime-types to Padre core.)
 
 Each mime-type is mapped to one or more lexers that provide 
 the syntax highlighting. Every mime-type has to be mapped to at least 
@@ -339,10 +346,6 @@ sub guess_mimetype {
 		return 'application/x-perl';
 	}
 
-	# Perl 6:   use v6; class ..., module ...
-	# maybe also grammar ...
-	# but make sure that is real code and not just a comment or doc in some perl 5 code...
-
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
@@ -402,6 +405,9 @@ sub _get_default_newline_type {
 }
 
 # naive sub to decide if a piece of code is Perl 6 or Perl 5.
+# Perl 6:   use v6; class ..., module ...
+# maybe also grammar ...
+# but make sure that is real code and not just a comment or doc in some perl 5 code...
 sub is_perl6 {
 	my ($text) = @_;
 	return if not $text;
