@@ -480,7 +480,7 @@ sub search {
 # Save the dialog settings to configuration. Returns the config object
 # as a convenience.
 sub _sync_config {
-	my $self   = shift;
+	my $self = shift;
 
 	# Save the search settings to config
 	my $config = $self->current->config;
