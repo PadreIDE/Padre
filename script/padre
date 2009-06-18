@@ -5,11 +5,12 @@ use strict;
 use warnings;
 use File::Which  ();
 use Getopt::Long ();
+use Carp         ();
 
 $| = 1;
 
 if ($ENV{PADRE_DIE}) {
-	$SIG{__DIE__} = sub { print STDERR "DIE: @_" };
+	$SIG{__DIE__} = sub { print STDERR Carp::longmess "DIE: @_" };
 }
 
 # Must run using wxPerl on OSX.
