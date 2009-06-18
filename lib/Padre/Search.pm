@@ -10,11 +10,11 @@ Padre::Search - The Padre Search API
 
   # Create the search object
   my $search = Padre::Search->new(
-      find_text => 'foo',
+      find_term => 'foo',
   );  
   
   # Execute the search on an editor object
-  $search->find_down($editor);
+  $search->find_next(Padre::Current->editor);
 
 =head2 DESCRIPTION
 
@@ -35,17 +35,19 @@ our $VERSION = '0.36';
 
 use Class::XSAccessor
 getters => {
-	find_text    => 'find_text',
+	find_term    => 'find_term',
 	find_case    => 'find_case',
 	find_regex   => 'find_regex',
 	find_reverse => 'find_reverse',
+	replace_term => 'replace_term',
+	search_regex => 'search_regex',
 };
 
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
-	unless ( defined $self->find_text ) {
-		die("Did not provide 'find_text' search term");
+	unless ( defined $self->find_term ) {
+		die("Did not provide 'find_term' search term");
 	}
 	unless ( defined $self->find_case ) {
 		$self->{find_case} = $self->config->find_case;
@@ -57,8 +59,24 @@ sub new {
 		$self->{find_reverse} = $self->config->find_reverse;
 	}
 
-	# Generate the regex form of the search
-	my $term = '';
+	# Escape the raw search term
+	my $term = $self->find_term;
+	if ( $self->find_regex ) {
+		# Escape non-trailing $ so they won't interpolate
+		$term =~ s/\$(?!\z)/\\\$/g;
+	} else {
+		# Escape everything
+		$term = quotemeta $term;
+	}
+
+	# Compile the regex
+	$self->{search_regex} = eval {
+		$self->find_case ? qr/$term/m : qr/$term/mi
+	};
+	if ( $@ ) {
+		# The regex doesn't compile
+		return;
+	}
 
 	return $self;
 }
@@ -76,7 +94,7 @@ sub config {
 
 
 #####################################################################
-# Direction Abstraction
+# Command Abstraction
 
 sub search_next {
 	my $self = shift;
@@ -97,38 +115,30 @@ sub search_previous {
 }
 
 sub replace_next {
-	my $self   = shift;
-	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
-		die("Failed to provide editor object to replace in");
-	}
+	my $self = shift;
 
 	# Replace the currently selected match
-	$self->replace($editor);
+	$self->replace(@_);
 
 	# Select and move to the next match
 	if ( $self->config->find_reverse ) {
-		return $self->search_down($editor);
+		return $self->search_down(@_);
 	} else {
-		return $self->search_up($editor);
+		return $self->search_up(@_);
 	}
 }
 
 sub replace_previous {
 	my $self   = shift;
-	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
-		die("Failed to provide editor object to replace in");
-	}
 
 	# Replace the currently selected match
-	$self->replace($editor);
+	$self->replace(@_);
 
 	# Select and move to the next match
 	if ( $self->config->find_reverse ) {
-		return $self->search_up($editor);
+		return $self->search_up(@_);
 	} else {
-		return $self->search_down($editor);
+		return $self->search_down(@_);
 	}
 }
 
@@ -137,9 +147,48 @@ sub replace_previous {
 
 
 #####################################################################
-# Search Methods
+# Content Abstraction
 
 sub search_down {
+	my $self = shift;
+	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+		return $self->editor_search_down(@_);
+	}
+	die("Missing or invalid content object to search in");
+}
+
+sub search_up {
+	my $self = shift;
+	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+		return $self->editor_search_up(@_);
+	}
+	die("Missing or invalid content object to search in");
+}
+
+sub replace {
+	my $self = shift;
+	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+		return $self->editor_replace(@_);
+	}
+	die("Missing or invalid content object to search in");
+}
+
+sub replace_all {
+	my $self = shift;
+	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+		return $self->editor_replace_all(@_);
+	}
+	die("Missing or invalid content object to search in");
+}
+
+
+
+
+
+#####################################################################
+# Editor Interaction
+
+sub editor_search_down {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
@@ -159,7 +208,7 @@ sub search_down {
 	return 1;
 }
 
-sub search_up {
+sub editor_search_up {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
@@ -180,7 +229,7 @@ sub search_up {
 	return 1;
 }
 
-sub replace {
+sub editor_replace {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
@@ -203,7 +252,7 @@ sub replace {
 	}	
 }
 
-sub replace_all {
+sub editor_replace_all {
 	my $self   = shift;
 	my $editor = shift;
 	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
@@ -235,9 +284,8 @@ sub replace_all {
 
 
 
-
 #####################################################################
-# The Actual Search
+# Core Search
 
 =pod
 
