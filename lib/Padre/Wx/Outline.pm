@@ -33,6 +33,14 @@ sub new {
 			$self->on_tree_item_set_focus( $_[1] );
 		},
 	);
+	
+	# Double-click a function name
+        Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+                $self, $self,
+                sub {
+                        $self->on_tree_item_activated( $_[1] );
+                }
+        );
 
 	$self->Hide;
 
@@ -117,6 +125,11 @@ sub on_tree_item_set_focus {
 	if ( defined $item ) {
 		$self->select_line_in_editor( $item->{line} );
 	}
+	return;
+}
+
+sub on_tree_item_activated {
+	on_tree_item_set_focus(@_);
 	return;
 }
 
