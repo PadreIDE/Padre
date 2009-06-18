@@ -41,10 +41,10 @@
 # Avoid Padre development files
 \B\.padre
 dev.pl
+\Bprivlib
 ^padre(?:\.exe)?$
 
 # Perl 6 lexer temp dir
 /lex/
 ^lex/
-
 
