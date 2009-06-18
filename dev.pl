@@ -14,8 +14,8 @@ $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
 $ENV{PADRE_DIE}  = 1;
 
-use lib "$FindBin::Bin/../tools";
-use lib::Tools;
+use lib $FindBin::Bin;
+use privlib::Tools;
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
