@@ -89,18 +89,6 @@ sub launch_irc {
 	return;
 }
 
-# needed by the syntax highlighting code in Padre::Document::Perl
-sub Wx::PADRE_BLACK    {0}
-sub Wx::PADRE_BLUE     {1}
-sub Wx::PADRE_RED      {2}
-sub Wx::PADRE_GREEN    {3}
-sub Wx::PADRE_MAGENTA  {4}
-sub Wx::PADRE_ORANGE   {5}
-sub Wx::PADRE_DIM_GRAY {6}
-sub Wx::PADRE_CRIMSON  {7}
-sub Wx::PADRE_BROWN    {8}
-
-
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
