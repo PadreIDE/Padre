@@ -27,9 +27,9 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTE_READONLY
-			| Wx::wxTE_MULTILINE
-			| Wx::wxTE_DONTWRAP
-			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+		| Wx::wxTE_MULTILINE
+		| Wx::wxTE_DONTWRAP
+		| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 
 	# Do custom startup stuff here
@@ -74,7 +74,7 @@ sub AppendText {
 		}
 	} else {
 		my $text = Encode::decode( 'utf8', $_[0] );
-		if ($use_ansi) {
+		if ( $use_ansi ) {
 			$self->_handle_ansi_escapes($text);
 		} else {
 			$self->SUPER::AppendText($text);
@@ -85,7 +85,9 @@ sub AppendText {
 
 SCOPE: {
 
-	# TODO: This should be some sort of style file, but the main editor style support is too wacky to add this at the moment
+	# TODO: This should be some sort of style file,
+	# but the main editor style support is too wacky
+	# to add this at the moment.
 	my $fg_colors = [
 		Wx::Colour->new('#000000'),    # black
 		Wx::Colour->new('#FF0000'),    # red
