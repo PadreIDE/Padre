@@ -203,15 +203,14 @@ sub setup_style_from_config {
 
 	foreach my $k ( keys %{ $data->{$name}->{colors} } ) {
 		my $f = 'Wx::' . $k;
+		if ($k =~ /^PADRE_/) {
+			$f = 'Padre::Constant::' . $k;
+		}
 		no strict "refs";    ## no critic
 		my $v = eval { $f->() };
 		if ( $@ ) {
-			$f = 'Padre::Constant::' . $k;
-			$v = eval { defined &{$f} ? $f->() : undef };
-			if ( $@ ) {
-				warn "invalid key '$k'\n";
-				next;
-			}
+			warn "invalid key '$k'\n";
+			next;
 		}
 
 		$self->StyleSetForeground( $f->(), _color( $data->{$name}->{colors}->{$k}->{foreground} ) )
