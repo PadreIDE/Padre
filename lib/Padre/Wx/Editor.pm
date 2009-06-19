@@ -204,10 +204,9 @@ sub setup_style_from_config {
 	foreach my $k ( keys %{ $data->{$name}->{colors} } ) {
 		my $f = 'Wx::' . $k;
 		no strict "refs";    ## no critic
-		my $v = eval { defined &{$f} ? $f->() : undef };
+		my $v = eval { $f->() };
 		if ( $@ ) {
 			$f = 'Padre::Constant::' . $k;
-			$f =~ s/PADRE_//;
 			$v = eval { defined &{$f} ? $f->() : undef };
 			if ( $@ ) {
 				warn "invalid key '$k'\n";
