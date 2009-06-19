@@ -213,18 +213,25 @@ sub setup_style_from_config {
 			next;
 		}
 
-		$self->StyleSetForeground( $f->(), _color( $data->{$name}->{colors}->{$k}->{foreground} ) )
-			if exists $data->{$name}->{colors}->{$k}->{foreground};
-		$self->StyleSetBackground( $f->(), _color( $data->{$name}->{colors}->{$k}->{background} ) )
-			if exists $data->{$name}->{colors}->{$k}->{background};
-		$self->StyleSetBold( $f->(), $data->{$name}->{colors}->{$k}->{bold} )
-			if exists $data->{$name}->{colors}->{$k}->{bold};
-		$self->StyleSetItalic( $f->(), $data->{$name}->{colors}->{$k}->{italic} )
-			if exists $data->{$name}->{colors}->{$k}->{italic};
-		$self->StyleSetEOLFilled( $f->(), $data->{$name}->{colors}->{$k}->{eolfilled} )
-			if exists $data->{$name}->{colors}->{$k}->{eolfilled};
-		$self->StyleSetUnderline( $f->(), $data->{$name}->{colors}->{$k}->{underline} )
-			if exists $data->{$name}->{colors}->{$k}->{underline};
+		my $colors = $data->{$name}->{colors}->{$k};
+		if ( exists $colors->{foreground} ) {
+			$self->StyleSetForeground( $f->(), _color( $colors->{foreground} ) );
+		}
+		if ( exists $colors->{background} ) {
+			$self->StyleSetBackground( $f->(), _color( $colors->{background} ) );
+		}
+		if ( exists $colors->{bold} ) {
+			$self->StyleSetBold( $f->(), $colors->{bold} );
+		}
+		if ( exists $colors->{italics} ) {
+			$self->StyleSetItalic( $f->(), $colors->{italic} );
+		}
+		if ( exists $colors->{eolfilled} ) {
+			$self->StyleSetEOLFilled( $f->(), $colors->{eolfilled} );
+		}
+		if ( exists $colors->{underlined} ) {
+			$self->StyleSetUnderline( $f->(), $colors->{underline} );
+		}
 	}
 }
 
