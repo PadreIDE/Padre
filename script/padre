@@ -10,7 +10,7 @@ use Carp         ();
 $| = 1;
 
 if ($ENV{PADRE_DIE}) {
-	$SIG{__DIE__} = sub { print STDERR Carp::longmess "\nDIE: @_\n" };
+	$SIG{__DIE__} = sub { print STDERR Carp::longmess "\nDIE: @_\n" . ("-" x80) . "\n" };
 }
 
 # Must run using wxPerl on OSX.
