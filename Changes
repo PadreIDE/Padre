@@ -7,7 +7,8 @@ v0.37 to be released
     Single Instance Server to correctly foreground itself (ADAMK)
     Added Padre::Search search and replace API (ADAMK)
     Switching to last edited file is now Ctrl-Shift-p (SZABGAB)
-    Be compatible with older version of File::Path (ryan52)
+    Be compatible with older version of File::Path (RYAN52)
+    Links to Mibbit were replaced by links to our irc.html (SZABGAB)
 
 v0.36 2009.05.30
 
