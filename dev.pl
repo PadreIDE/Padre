@@ -49,7 +49,12 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
 		foreach my $plugin ( @plugins ) {
-			convert_po_to_mo("$dir/$plugin");
+			(my $path = $plugin) =~ s{-}{/}g;
+			if (-d  "$dir/$plugin/share/locale" ) {
+				convert_po_to_mo("$dir/$plugin");
+			} elsif (-d "$dir/$plugin/lib/$path/share/locale") {
+				convert_po_to_mo("$dir/$plugin/lib/$path");
+			}
 			push @cmd, "-I$dir/$plugin/lib";
 		}
 	}
