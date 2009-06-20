@@ -78,7 +78,8 @@ sub new {
 		$main,
 		$self->{live}->Append( -1, Wx::gettext('Padre Support') ),
 		sub {
-			Padre::Wx::launch_irc( 'irc.perl.org' => 'padre' );
+			Padre::Wx::launch_browser('http://padre.perlide.org/irc.html?channel=padre');
+			#Padre::Wx::launch_irc( 'irc.perl.org' => 'padre' );
 		},
 	);
 
@@ -88,7 +89,8 @@ sub new {
 		$main,
 		$self->{live}->Append( -1, Wx::gettext('Perl Help (English)') ),
 		sub {
-			Padre::Wx::launch_irc( 'irc.freenode.net' => 'perl' );
+			Padre::Wx::launch_browser('http://padre.perlide.org/irc.html?channel=general');
+			#Padre::Wx::launch_irc( 'irc.freenode.net' => 'perl' );
 		},
 	);
 
