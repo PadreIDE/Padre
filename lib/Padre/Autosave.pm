@@ -36,7 +36,7 @@ Basically this will provide a versioned filesystem with
 metadata and autocleanup.
 
 Besides the content of the file we need to save some meta data:
-- path to the file will be the unique identifyer
+- path to the file will be the unique identifier
 - timestamp
 - type of save (initial, autosave, usersave, external)
 
