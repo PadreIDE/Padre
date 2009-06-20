@@ -9,7 +9,7 @@ BEGIN {
 	}
 }
 
-plan( 'no_plan' );
+plan tests => 12;
 
 use Test::NoWarnings;
 use File::Spec::Functions qw( catfile );
