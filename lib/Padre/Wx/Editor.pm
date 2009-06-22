@@ -70,7 +70,9 @@ sub new {
 }
 
 sub main {
-	$_[0]->GetGrandParent;
+	my $main = $_[0]->GetGrandParent;
+	return $main if $main->isa('Padre::Wx::Main');
+	return Padre->ide;
 }
 
 sub data {
