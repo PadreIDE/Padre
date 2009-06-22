@@ -31,6 +31,9 @@ our %VIEW = (
 	'text/x-html' => 'Padre::Wx::HtmlWindow',
 );
 
+# trying this
+use Wx::Event qw(EVT_MENU);
+
 =pod
 
 =head1 NAME
@@ -126,10 +129,34 @@ sub new {
 	$top_s->Add( $but_s,    0, Wx::wxEXPAND );
 	$top_s->Add( $notebook, 1, Wx::wxGROW );
 	$self->SetSizer($top_s);
-	$self->SetAutoLayout(1);
+	
 
 	#$self->_setup_welcome;
 
+
+	# to do this we really need a menu bar... trial this
+	# not really the case now.. create fictional EVT_MENU items as needed.
+	# http://www.perl.com/lpt/a/960
+	# try to add an Accelerator Table for the escape key for the window
+	# http://www.nntp.perl.org/group/perl.wxperl.users/2008/06/msg5924.html
+	#my $table = Wx::AcceleratorTable->new( [wxACCEL_NORMAL, WXK_ESCAPE, $menuid ] );
+	#$self->SetAcceleratorTable( $table );
+	my $exitMenu = Wx::Menu->new();
+	#my @menu_id;
+	$exitMenu->Append(22222, "E&xit\tCtrl+X");
+	
+	my $menuBar = Wx::MenuBar->new();
+	$menuBar->Append($exitMenu, "File" );
+	$self->SetMenuBar($menuBar);
+	
+	my $table = Wx::AcceleratorTable->new( [Wx::wxACCEL_NORMAL, Wx::WXK_ESCAPE, 22222 ] );
+	$self->SetAcceleratorTable( $table );
+	
+	# you can create fictional menu items for use by the accelerator table
+	EVT_MENU( $self, 22222, sub { $_[0]->Close(1); } );
+	
+	$self->SetAutoLayout(1);
+	
 	return $self;
 }
 
@@ -327,6 +354,12 @@ sub not_found {
 	$self->notebook->AddPage( $frame, 'Not Found', 1 );
 	$frame->SetPage($html);
 
+}
+
+sub _close {
+	my( $self ) = @_;
+	$self->Close();
+	
 }
 
 1;
