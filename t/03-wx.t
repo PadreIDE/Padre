@@ -265,7 +265,7 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
-				my $path = catfile('./eg/', 'cyrillic_test.pl');
+				my $path = catfile('./eg/perl5/', 'cyrillic_test.pl');
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
 				$main->on_open_selection();
@@ -275,7 +275,7 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
-				my $path = catfile('./eg/', 'cyrillic_test.pl')."\n";
+				my $path = catfile('./eg/perl5/', 'cyrillic_test.pl')."\n";
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
 				$main->on_open_selection();
@@ -285,7 +285,7 @@ my @events = (
 			$T->is_num(scalar($main->pages), 1, 'back to unsaved?');
 			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
-				my $path = "\n".catfile('./eg/', 'cyrillic_test.pl')."\n";
+				my $path = "\n".catfile('./eg/perl5/', 'cyrillic_test.pl')."\n";
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
 				$main->on_open_selection();
@@ -296,7 +296,7 @@ my @events = (
 			SCOPE: {
 				#put down one filename that is relative to the dir padre was started from
 				#$T->diag(Cwd::cwd());
-				my $path = "\t   ".catfile('./eg/', 'cyrillic_test.pl')." \n\t ";
+				my $path = "\t   ".catfile('./eg/perl5/', 'cyrillic_test.pl')." \n\t ";
 				$doc->text_set($path);
 				$editor->SetSelection(0, length($path));
 				#$T->diag("selected : ".$main->current->text);

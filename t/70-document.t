@@ -66,11 +66,11 @@ SCOPE: {
 my %mimes;
 BEGIN {
 	%mimes = ( 
-		'eg/hello_world.pl'                => 'application/x-perl',
-		'eg/perl5.pod'                     => 'application/x-perl',
-		'eg/perl5_with_perl6_example.pod'  => 'application/x-perl',
-		'eg/perl6/perl6.pod'               => 'application/x-perl',
-		'eg/perl6/Perl6Class.pm'           => 'application/x-perl',
+		'eg/perl5/hello_world.pl'                => 'application/x-perl',
+		'eg/perl5/perl5.pod'                     => 'application/x-perl',
+		'eg/perl5/perl5_with_perl6_example.pod'  => 'application/x-perl',
+		'eg/perl6/perl6.pod'                     => 'application/x-perl',
+		'eg/perl6/Perl6Class.pm'                 => 'application/x-perl',
 	);
 }
 
