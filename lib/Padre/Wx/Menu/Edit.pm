@@ -253,10 +253,53 @@ sub new {
 	$self->AppendSeparator;
 
 	# Conversions and Transforms
-	$self->{convert_nl} = Wx::Menu->new;
+	$self->{convert_encoding} = Wx::Menu->new;
 	$self->Append(
 		-1,
 		Wx::gettext("Convert Encoding"),
+		$self->{convert_encoding}
+	);
+
+	$self->{convert_encoding_system} = $self->{convert_encoding}->Append(
+		-1,
+		Wx::gettext('Encode document to System Default')
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{convert_encoding_system},
+		sub {
+			Padre::Wx::Main::encode_document_to_system_default(@_);
+		},
+	);
+
+	$self->{convert_encoding_utf8} = $self->{convert_encoding}->Append(
+		-1,
+		Wx::gettext('Encode document to utf-8')
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{convert_encoding_utf8},
+		sub {
+			Padre::Wx::Main::encode_document_to_utf8(@_);
+		},
+	);
+
+	$self->{convert_encoding_to} = $self->{convert_encoding}->Append(
+		-1,
+		Wx::gettext('Encode document to...')
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{convert_encoding_to},
+		sub {
+			Padre::Wx::Main::encode_document_to(@_);
+		},
+	);
+
+	$self->{convert_nl} = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Convert EOL"),
 		$self->{convert_nl}
 	);
 
@@ -509,6 +552,8 @@ sub refresh {
 
 	return 1;
 }
+
+
 
 1;
 

@@ -9,6 +9,7 @@ v0.37 to be released
     Switching to last edited file is now Ctrl-Shift-p (SZABGAB)
     Be compatible with older version of File::Path (RYAN52)
     Links to Mibbit were replaced by links to our irc.html (SZABGAB)
+    Merged the code of Padre::Plugin::Encode into Padre (SZABGAB)
 
 v0.36 2009.05.30
 
