@@ -32,7 +32,7 @@ our %VIEW = (
 );
 
 # trying this
-use Wx::Event qw(EVT_MENU);
+#use Wx::Event qw(EVT_MENU);
 
 =pod
 
@@ -143,7 +143,8 @@ sub new {
 	#$self->SetAcceleratorTable( $table );
 	my $exitMenu = Wx::Menu->new();
 	#my @menu_id;
-	$exitMenu->Append(22222, "E&xit\tCtrl+X");
+	$exitMenu->Append(Wx::wxID_CLOSE, Wx::gettext("&Close\tCtrl+W") );
+	$exitMenu->Append(22222, Wx::gettext("E&xit\tCtrl+X") );
 	
 	my $menuBar = Wx::MenuBar->new();
 	$menuBar->Append($exitMenu, "File" );
@@ -153,7 +154,9 @@ sub new {
 	$self->SetAcceleratorTable( $table );
 	
 	# you can create fictional menu items for use by the accelerator table
-	EVT_MENU( $self, 22222, sub { $_[0]->Close(1); } );
+	Wx::Event::EVT_MENU( $self, 22222, sub { $_[0]->_close(); } );
+	Wx::Event::EVT_MENU( $self, Wx::wxID_CLOSE, sub { $_[0]->_close_tab(); } );
+	
 	
 	$self->SetAutoLayout(1);
 	
@@ -361,6 +364,28 @@ sub _close {
 	$self->Close();
 	
 }
+
+sub _close_tab {
+	my($self, $event) = @_;
+	print "Closing Tab\n";
+	# When we get an Wx::AuiNotebookEvent from it will try to close
+	# the notebook no matter what. For the other events we have to
+	# close the tab manually which we do in the close() function
+	# Hence here we don't allow the automatic closing of the window.
+	if ( $event and $event->isa('Wx::AuiNotebookEvent') ) {
+		$event->Veto;
+	}	
+	
+	my $notebook = $self->notebook;
+	my $id = $notebook->GetSelection;
+	return if $id == -1;
+	
+	$self->notebook->DeletePage($id);
+	
+	return 1;
+	
+}	
+	
 
 1;
 
