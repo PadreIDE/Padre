@@ -119,6 +119,16 @@ sub plugin_share_directory {
 	my $pkg = ref $_[0] || $_[0];
 	$pkg =~ s/::/-/g;
 
+	if ($ENV{PADRE_DEV}) {
+		my $root = File::Spec->catdir( $FindBin::Bin, File::Spec->updir, File::Spec->updir, $pkg );
+		my $path = File::Spec->catdir( $root, 'share' );
+		return $path if -d $path;
+		
+		$path = File::Spec->catdir( $root, 'lib', split(/-/, $pkg), 'share' );
+		return $path if -d $path;
+		return;
+	}
+
 	# Find the distribution directory
 	require File::ShareDir::PAR;
 	my $distdir = eval { File::ShareDir::PAR::dist_dir($pkg); };
