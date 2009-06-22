@@ -112,6 +112,10 @@ C<Padre::Plugin::Vi>.
 =cut
 
 sub plugin_locale_directory {
+	return File::Spec->catdir( shift->plugin_share_directory(@_), 'locale');
+}
+
+sub plugin_share_directory {
 	my $pkg = ref $_[0] || $_[0];
 	$pkg =~ s/::/-/g;
 
@@ -121,7 +125,7 @@ sub plugin_locale_directory {
 	return undef if $@;
 
 	return File::Spec->catdir(
-		$distdir, 'share', 'locale',
+		$distdir, 'share',
 	);
 }
 
