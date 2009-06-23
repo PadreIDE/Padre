@@ -480,9 +480,13 @@ sub rfc4646 {
 #
 sub iso639 {
 	my $id     = rfc4646();
-	my $iso693 = $RFC4646{$id}{iso639};
+	my $iso639 = $RFC4646{$id}{iso639};
 }
 
+sub system_iso639 {
+	my $system = system_rfc4646();
+	my $iso639 = $RFC4646{ $system }{iso639};
+}
 # Given a rfc4646 identifier, sets the language globally
 # and returns the relevant Wx::Locale object.
 sub object {

@@ -15,6 +15,7 @@ use Params::Util qw(
 );
 use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
+use Padre::DocBrowser       ();
 use Padre::Util qw( _T );
 
 our $VERSION = '0.36';
@@ -30,9 +31,6 @@ our %VIEW = (
 	'text/xhtml'  => 'Padre::Wx::HtmlWindow',
 	'text/x-html' => 'Padre::Wx::HtmlWindow',
 );
-
-# trying this
-#use Wx::Event qw(EVT_MENU);
 
 =pod
 
@@ -61,9 +59,9 @@ documentation for such in a new AuiNoteBook tab. Links matching a scheme
 accepted by L<Padre::DocBrowser> will (when clicked) be resolved and 
 displayed in a new tab.
 
-=head2 show
+=head2 display
 
-TO BE COMPLETED
+Accepts a L<Padre::Document> or workalike
 
 =head1 SEE ALSO
 
@@ -82,7 +80,6 @@ sub new {
 		[ 750, 700 ],
 	);
 
-	require Padre::DocBrowser;
 	$self->{provider} = Padre::DocBrowser->new;
 
 	# Until we get a real icon use the same one as the others
@@ -102,7 +99,7 @@ sub new {
 
 	my $entry = Wx::TextCtrl->new(
 		$self, -1,
-		'search terms...',
+		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
@@ -112,7 +109,7 @@ sub new {
 	Wx::Event::EVT_TEXT_ENTER(
 		$self, $entry,
 		sub {
-			$self->on_search_text_enter($entry);
+			$self->OnSearchTextEnter($entry);
 		}
 	);
 
@@ -163,28 +160,22 @@ sub new {
 	return $self;
 }
 
-# Bad - this looks like a virtual, really a eventhandler
 sub OnLinkClicked {
 	my $self = shift;
 	my $uri  = URI->new( $_[0]->GetLinkInfo->GetHref );
+	my $linkinfo = $_[0]->GetLinkInfo;
+	my $scheme = $uri->scheme;
 	if ( $self->provider->accept( $uri->scheme ) ) {
-		$self->help($uri);
+		$self->ResolveRef($uri);
 	} else {
 		Padre::Wx::launch_browser($uri);
 	}
 }
 
-sub on_search_text_enter {
+sub OnSearchTextEnter {
 	my $self = shift;
 	my $text = $_[0]->GetValue;
 	$self->ResolveRef($text);
-}
-
-sub _hints {
-	return (
-		lang               => Padre::Locale::iso639(),
-		title_from_section => Wx::gettext('NAME'),
-	);
 }
 
 sub help {
@@ -232,7 +223,10 @@ sub ResolveRef {
 		type             => 'resolve',
 		args             => { $self->_hints },
 		main_thread_only => sub {
-			$self->display( $_[0], $ref );
+			if ( $_[0] ){ 
+			    $self->display( $_[0], $ref );
+			}
+			else { $self->not_found( $ref ) }
 		}
 	);
 	$task->schedule;
@@ -242,6 +236,11 @@ sub ResolveRef {
 sub debug {
 	Padre->ide->wx->main->output->AppendText( $_[1] . $/ );
 }
+
+=head2 display
+
+
+=cut
 
 sub display {
 	my ( $self, $docs, $query ) = @_;
@@ -256,13 +255,11 @@ sub display {
 		$task->schedule;
 	}
 
-	#warn "Launched a 'browse' for $docs from query '$query'";
 }
 
 sub ShowPage {
 	my ( $self, $docs, $query ) = @_;
 
-	#warn "Handed $docs from '$query' for display";
 	unless ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
 		return $self->not_found($query);
 	}
@@ -270,18 +267,18 @@ sub ShowPage {
 	my $title = Wx::gettext('Untitled');
 	my $mime  = 'text/xhtml';
 
+    # Best effort to title the tab ANYTHING more useful
+    # than 'Untitled'
 	if ( _INSTANCE( $query, 'Padre::DocBrowser::document' ) ) {
 		$title = $query->title;
 	} elsif ( $docs->title ) {
-
-		#warn "title from documentation";
 		$title = $docs->title;
 	} elsif ( _STRING($query) ) {
-
-		#warn "title from scalar query";
 		$title = $query;
 	}
 
+    # Bashing on Indicies in the attempt to replace an open
+    # tab with the same title.
 	my $found = $self->notebook->GetPageCount;
 	my @opened;
 	my $i = 0;
@@ -306,29 +303,27 @@ sub ShowPage {
 }
 
 sub NewPage {
-	my ( $self, $mime, $title ) = @_;
-	my $page = eval {
-		if ( exists $VIEW{$mime} )
-		{
-			my $class = $VIEW{$mime};
-			unless ( $class->VERSION ) {
-				eval "require $class;";
-				die("Failed to load $class: $@") if $@;
-			}
-			my $panel = $class->new($self);
-			Wx::Event::EVT_HTML_LINK_CLICKED(
-				$self, $panel,
-				\&OnLinkClicked,
-			);
-			$self->notebook->AddPage( $panel, $title, 1 );
-			$panel;
-		} else {
-			$self->debug("DocBrowser: no viewer for $mime");
-		}
-	};
-	$self->debug($@) if $@;
-	return $page;
-
+    my ( $self, $mime, $title ) = @_;
+    my $page = eval {
+        if ( exists $VIEW{$mime} )
+        {
+            my $class = $VIEW{$mime};
+            unless ( $class->VERSION ) {
+                eval "require $class;";
+                die("Failed to load $class: $@") if $@;
+            }
+            my $panel = $class->new($self);
+            Wx::Event::EVT_HTML_LINK_CLICKED(
+                $self, $panel,
+                \&OnLinkClicked,
+            );
+            $self->notebook->AddPage( $panel, $title, 1 );
+            $panel;
+        } else {
+            $self->debug("DocBrowser: no viewer for $mime");
+        }
+    };
+    return $page;
 }
 
 sub padre2docbrowser {
@@ -338,13 +333,14 @@ sub padre2docbrowser {
 		title    => $padredoc->get_title,
 		filename => $padredoc->filename,
 	);
+    # Erk - shouldn't this be ->get_text or something.
 	$doc->body( Encode::encode( 'utf8', $padredoc->{original_content} ) );
 	return $doc;
 }
 
 sub not_found {
-	my ( $self, $query ) = @_;
-	my $html = qq|
+    my ( $self, $query ) = @_;
+    my $html = qq|
 <html><body>
 <h1>Not Found</h1>
 <p>Could not find documentation for
@@ -353,21 +349,33 @@ sub not_found {
 </body>
 </html>
 |;
-	my $frame = Padre::Wx::HtmlWindow->new($self);
-	$self->notebook->AddPage( $frame, 'Not Found', 1 );
-	$frame->SetPage($html);
+    my $frame = Padre::Wx::HtmlWindow->new($self);
+    $self->notebook->AddPage( $frame, 'Not Found', 1 );
+    $frame->SetPage($html);
 
+}
+
+# Private methods
+
+# There are some things only the instance knows , like desired locale
+#  or how to derive a title from a documentation section
+sub _hints {
+	return (
+	   (Padre::Locale::iso639() eq Padre::Locale::system_iso639())
+	      ? ()
+	      :	(lang               => Padre::Locale::iso639()),
+
+		title_from_section => Wx::gettext('NAME'),
+	);
 }
 
 sub _close {
 	my( $self ) = @_;
 	$self->Close();
-	
 }
 
 sub _close_tab {
 	my($self, $event) = @_;
-	print "Closing Tab\n";
 	# When we get an Wx::AuiNotebookEvent from it will try to close
 	# the notebook no matter what. For the other events we have to
 	# close the tab manually which we do in the close() function
