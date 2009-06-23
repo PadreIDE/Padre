@@ -79,7 +79,6 @@ sub new {
 		$self->{live}->Append( -1, Wx::gettext('Padre Support') ),
 		sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/irc.html?channel=padre');
-			#Padre::Wx::launch_irc( 'irc.perl.org' => 'padre' );
 		},
 	);
 
@@ -87,10 +86,13 @@ sub new {
 
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->{live}->Append( -1, Wx::gettext('Perl Help (English)') ),
+		$self->{live}->Append( -1, Wx::gettext('Perl Help') ),
 		sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/irc.html?channel=general');
-			#Padre::Wx::launch_irc( 'irc.freenode.net' => 'perl' );
+			my $url = 'http://padre.perlide.org/irc.html?channel=general';
+			if (my $locale = Padre->ide->config->locale) {
+				$url .= "&locale=$locale";
+			}
+			Padre::Wx::launch_browser($url);
 		},
 	);
 
