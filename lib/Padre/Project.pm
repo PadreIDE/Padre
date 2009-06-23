@@ -31,6 +31,9 @@ sub class {
 	if ( -f File::Spec->catfile( $root, 'Build.PL' ) ) {
 		return 'Padre::Project::Perl';
 	}
+	if ( -f File::Spec->catfile( $root, 'dist.ini' ) ) {
+		return 'Padre::Project::Perl';
+	}
 	if ( -f File::Spec->catfile( $root, 'padre.yml' ) ) {
 		return 'Padre::Project';
 	}
