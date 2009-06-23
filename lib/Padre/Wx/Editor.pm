@@ -611,8 +611,18 @@ sub on_focus {
 
 	Padre::Util::debug( "Focus received file: " . ( $doc->filename || '' ) );
 
+	my $main = $self->main;
+
 	# to show/hide the document specific Perl menu
-	$self->main->refresh_menu;
+	$main->refresh_menu;
+
+	# update the directory listing
+	if ( $main->has_directory ) {
+		if ( $main->menu->view->{directory}->IsChecked ) {
+			$main->directory->update_gui;
+		}
+	}
+
 
 	if ( $self->needs_manual_colorize ) {
 

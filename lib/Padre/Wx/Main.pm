@@ -3629,13 +3629,6 @@ sub on_stc_update_ui {
 	# $self->refresh_functions;
 	# $self->refresh_syntaxcheck;
 
-	# TODO Move this to a more appropriate place
-	# (when switching between buffers?)
-	if ( $self->has_directory ) {
-		if ( $self->menu->view->{directory}->IsChecked ) {
-			$self->directory->update_gui;
-		}
-	}
 
 	return;
 }
