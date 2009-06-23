@@ -7,6 +7,7 @@ use Padre::Current    ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 use Padre::Wx::Editor ();
+use Padre::Wx::Dialog::Preferences::Editor ();
 
 our $VERSION = '0.36';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -216,7 +217,7 @@ sub _appearance_panel {
 	my $editor_panel_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$editor_panel->SetSizer($editor_panel_sizer);
 
-	my $editor = Padre::Wx::Editor->new($editor_panel);
+	my $editor = Padre::Wx::Dialog::Preferences::Editor->new($editor_panel);
 	$self->add_widget( 'preview_editor', $editor );
 	$self->_init_preview_editor( $bgcolor, $font );
 
