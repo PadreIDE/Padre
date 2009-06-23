@@ -276,7 +276,6 @@ msgid "loaded"
 msgstr "已载入"
 
 #: lib/Padre/PluginHandle.pm:74 lib/Padre/Wx/Dialog/PluginManager.pm:480
-#, fuzzy
 msgid "incompatible"
 msgstr "不兼容"
 
@@ -319,13 +318,12 @@ msgid "Dump %INC and @INC"
 msgstr "导出 %INC 和 @INC"
 
 #: lib/Padre/Plugin/Devel.pm:65
-#, fuzzy
 msgid "Enable logging"
-msgstr "启用记录日志"
+msgstr "启用日志记录"
 
 #: lib/Padre/Plugin/Devel.pm:68
 msgid "Disable logging"
-msgstr "禁用记录日志"
+msgstr "禁用日志记录"
 
 #: lib/Padre/Plugin/Devel.pm:71
 msgid "Enable trace when logging"
