@@ -135,6 +135,8 @@ sub make_exe {
 		push @cmd, '-M', 'Tie::Hash::NamedCapture';
 	}
 
+	push @cmd, '-M', 'ORLite::Migrate::Patch';
+
 	print join( ' ', @cmd ) . "\n";
 	system(@cmd);
 
