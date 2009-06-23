@@ -70,16 +70,15 @@ msgid ""
 msgstr "Plugin:%s - 无法初始化插件: 构造器没有返回一个 Padre::Plugin 对象"
 
 #: lib/Padre/PluginManager.pm:535
-#, fuzzy, perl-format
+#, perl-format
 msgid "Plugin:%s - Does not have menus"
-msgstr "插件 %s - 载入模块失败：%s"
+msgstr "插件 %s - 没有菜单"
 
 #: lib/Padre/PluginManager.pm:754
 msgid "Error when calling menu for plugin"
 msgstr "为插件调用目录错误"
 
 #: lib/Padre/PluginManager.pm:783 lib/Padre/Wx/Main.pm:1470
-#, fuzzy
 msgid "No document open"
 msgstr "没有打开文档"
 
@@ -88,7 +87,6 @@ msgid "No filename"
 msgstr "没有文件名"
 
 #: lib/Padre/PluginManager.pm:789
-#, fuzzy
 msgid "Could not locate project dir"
 msgstr "无法载入项目目录"
 
