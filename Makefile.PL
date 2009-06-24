@@ -76,6 +76,7 @@ requires       'Pod::Abstract'            => '0.16';
 requires       'Portable'                 => '0.12' if win32;
 requires       'POSIX'                    => 0;
 requires       'PPI'                      => '1.203';
+requires       'PPIx::EditorTools'        => 0;
 requires       'Probe::Perl'              => '0.01';
 requires       'Storable'                 => '2.15';
 requires       'Term::ReadLine'           => 0;

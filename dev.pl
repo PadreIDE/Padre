@@ -31,6 +31,7 @@ my @cmd = (
 	qq[$perl],
 	qq[-I$FindBin::Bin/lib],
 	qq[-I$FindBin::Bin/blib/lib],
+    qq[-I$FindBin::Bin/../PPIx-EditorTools/lib],
 );
 if ( grep { $_ eq '-d' } @ARGV ) {
 	# Command line debugging

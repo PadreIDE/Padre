@@ -1,4 +1,3 @@
-
 package Padre::Task::PPI::FindUnmatchedBrace;
 use strict;
 use warnings;
@@ -7,6 +6,7 @@ our $VERSION = '0.36';
 
 use base 'Padre::Task::PPI';
 use Padre::Wx();
+use PPIx::EditorTools::FindUnmatchedBrace;
 
 =pod
 
@@ -33,54 +33,55 @@ that glorious fact. If there is one, the cursor will jump to it.
 =cut
 
 sub prepare {
-	my $self = shift;
-	$self->SUPER::prepare(@_);
+    my $self = shift;
+    $self->SUPER::prepare(@_);
 
-	# move the document to the main-thread-only storage
-	my $mto = $self->{main_thread_only} ||= {};
-	$mto->{document} = $self->{document}
-		if defined $self->{document};
-	delete $self->{document};
-	if ( not defined $mto->{document} ) {
-		require Carp;
-		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the brace-finder task");
-	}
-	return ();
+    # move the document to the main-thread-only storage
+    my $mto = $self->{main_thread_only} ||= {};
+    $mto->{document} = $self->{document}
+      if defined $self->{document};
+    delete $self->{document};
+    if ( not defined $mto->{document} ) {
+        require Carp;
+        Carp::croak(
+            "Missing Padre::Document::Perl object as {document} attribute of the brace-finder task"
+        );
+    }
+    return ();
 }
 
 sub process_ppi {
 
-	# find bad braces
-	my $self = shift;
-	my $ppi = shift or return;
-	require Padre::PPI;
-	my $where = $ppi->find( \&Padre::PPI::find_unmatched_brace );
-	if ($where) {
-		@$where = sort {
-			       Padre::PPI::element_depth($b) <=> Padre::PPI::element_depth($a)
-				or $a->location->[0] <=> $b->location->[0]
-				or $a->location->[1] <=> $b->location->[1]
-		} @$where;
-		$self->{bad_element} = $where->[0]->location;    # remember for gui update
-	}
-	return ();
+    # find bad braces
+    my $self = shift;
+    my $ppi = shift or return;
+
+    my $brace =
+      eval { PPIx::EditorTools::FindUnmatchedBrace->new->find( ppi => $ppi ); };
+    if ($@) {
+        $self->{error} = $@;
+        return;
+    }
+    $self->{bad_element} = $brace->element->location;    # remember for gui update
+
+    return ();
 }
 
 sub finish {
-	my $self = shift;
-	if ( defined $self->{bad_element} ) {
+    my $self = shift;
+    if ( defined $self->{bad_element} ) {
 
-		# GUI update
-		$self->{main_thread_only}->{document}->ppi_select( $self->{bad_element} );
-	} else {
-		Wx::MessageBox(
-			Wx::gettext("All braces appear to be matched"),
-			Wx::gettext("Check Complete"),
-			Wx::wxOK,
-			Padre->ide->wx->main
-		);
-	}
-	return ();
+        # GUI update
+        $self->{main_thread_only}->{document}
+          ->ppi_select( $self->{bad_element} );
+    } else {
+        Wx::MessageBox(
+            Wx::gettext("All braces appear to be matched"),
+            Wx::gettext("Check Complete"),
+            Wx::wxOK, Padre->ide->wx->main
+        );
+    }
+    return ();
 }
 
 1;
