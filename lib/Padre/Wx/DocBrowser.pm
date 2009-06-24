@@ -141,17 +141,19 @@ sub new {
 	my $exitMenu = Wx::Menu->new();
 	#my @menu_id;
 	$exitMenu->Append(Wx::wxID_CLOSE, Wx::gettext("&Close\tCtrl+W") );
-	$exitMenu->Append(22222, Wx::gettext("E&xit\tCtrl+X") );
+	my $exitID = Wx::NewId;
+	
+	$exitMenu->Append($exitID, Wx::gettext("E&xit\tCtrl+X") );
 	
 	my $menuBar = Wx::MenuBar->new();
 	$menuBar->Append($exitMenu, "File" );
 	$self->SetMenuBar($menuBar);
 	
-	my $table = Wx::AcceleratorTable->new( [Wx::wxACCEL_NORMAL, Wx::WXK_ESCAPE, 22222 ] );
+	my $table = Wx::AcceleratorTable->new( [Wx::wxACCEL_NORMAL, Wx::WXK_ESCAPE, $exitID ] );
 	$self->SetAcceleratorTable( $table );
 	
 	# you can create fictional menu items for use by the accelerator table
-	Wx::Event::EVT_MENU( $self, 22222, sub { $_[0]->_close(); } );
+	Wx::Event::EVT_MENU( $self, $exitID, sub { $_[0]->_close(); } );
 	Wx::Event::EVT_MENU( $self, Wx::wxID_CLOSE, sub { $_[0]->_close_tab(); } );
 	
 	
@@ -339,19 +341,43 @@ sub padre2docbrowser {
 }
 
 sub not_found {
+	# trying a dialog rather than the open tab.
     my ( $self, $query ) = @_;
-    my $html = qq|
-<html><body>
-<h1>Not Found</h1>
-<p>Could not find documentation for
-<pre>$query</pre>
-</p>
-</body>
-</html>
-|;
-    my $frame = Padre::Wx::HtmlWindow->new($self);
-    $self->notebook->AddPage( $frame, 'Not Found', 1 );
-    $frame->SetPage($html);
+    
+        my $layout = [
+		[
+                        [ 'Wx::StaticText', undef,         "Nothing found for $query"],
+		],
+		[
+                        [ 'Wx::Button',     'ok',           Wx::wxID_OK   ],
+                ],
+        ];
+        
+        # Wx::Perl::Dialog
+        my $dialog = Padre::Wx::Dialog->new(
+                parent => $self,
+                title  => 'Unable to locate help...',
+                layout => $layout,
+                width  => [250, 550],
+
+        );    
+        
+        
+        $dialog->Show();
+        
+        
+#    my $html = qq|
+#<html><body>
+#<h1>Not Found</h1>
+#<p>Could not find documentation for
+#<pre>$query</pre>
+#</p>
+#</body>
+#</html>
+#|;
+#    my $frame = Padre::Wx::HtmlWindow->new($self);
+#    $self->notebook->AddPage( $frame, 'Not Found', 1 );
+#    $frame->SetPage($html);
 
 }
 
