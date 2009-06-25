@@ -17,6 +17,7 @@ use Padre::Wx::AuiManager   ();
 use Padre::Task::DocBrowser ();
 use Padre::DocBrowser       ();
 use Padre::Util qw( _T );
+use Wx::Perl::Dialog::Simple ();
 
 our $VERSION = '0.37';
 our @ISA     = 'Wx::Frame';
@@ -143,6 +144,7 @@ sub new {
 	my $exitMenu = Wx::Menu->new();
 	#my @menu_id;
 	$exitMenu->Append(Wx::wxID_CLOSE, Wx::gettext("&Close\tCtrl+W") );
+	$exitMenu->Append(Wx::wxID_OPEN , Wx::gettext("&Open\tCtrl+O") );
 	my $exitID = Wx::NewId;
 	
 	$exitMenu->Append($exitID, Wx::gettext("E&xit\tCtrl+X") );
@@ -157,7 +159,7 @@ sub new {
 	# you can create fictional menu items for use by the accelerator table
 	Wx::Event::EVT_MENU( $self, $exitID, sub { $_[0]->_close(); } );
 	Wx::Event::EVT_MENU( $self, Wx::wxID_CLOSE, sub { $_[0]->_close_tab(); } );
-	
+	Wx::Event::EVT_MENU( $self, Wx::wxID_OPEN , sub { $_[0]->_open_doc(); } );
 	
 	$self->SetAutoLayout(1);
 	
@@ -194,24 +196,48 @@ sub help {
 		$self->_hints,
 		_HASH($hint) ? %$hint : (),
 	);
-	if ( _INVOCANT($query) and $query->can('mimetype') ) {
-		my $task = Padre::Task::DocBrowser->new(
-			document         => $query,
-			type             => 'docs',
-			args             => \%hints,
-			main_thread_only => sub {
-				$self->display( $_[0], $query );
-			},
-		);
-		$task->schedule;
-		return 1;
+	
+	if ( _INVOCANT($query) and $query->isa('Padre::DocBrowser::document') ) {
+
+
+        return $self->display( $query ) if 
+            $self->viewer_for( $query->guess_mimetype );
+
+	    my $render = $self->provider->viewer_for( $query->mimetype );
+	    my $generate=$self->provider->provider_for( $query->mimetype );
+	    
+	    if ( $generate ) {
+            my $task = Padre::Task::DocBrowser->new(
+                document         => $query,
+                type             => 'docs',
+                args             => \%hints,
+                main_thread_only => sub {
+                    $self->display( $_[0], $query );
+                },
+            );
+            $task->schedule;
+            return 1;
+		}
+		if ( $render ) {
+		    my $talk = Padre::Task::DocBrowser->new(
+                document          => $query,
+                type              => 'browse',
+                args              => \%hints,
+                main_thread_only  => sub {
+                    $self->display( $_[0] , $query );
+                }
+		    );
+		    
+		}
+		$self->not_found( $query , \%hints );
+        return;
 	} elsif ( defined $query ) {
-		my $task = Padre::Task::DocBrowser->new(
+	    my $task = Padre::Task::DocBrowser->new(
 			document         => $query,
 			type             => 'resolve',
 			args             => \%hints,
 			main_thread_only => sub {
-				$self->help( $_[0], referrer => $query );
+				$self->help( $_[0], {referrer => $query} );
 			}
 		);
 		$task->schedule;
@@ -250,21 +276,30 @@ sub debug {
 sub display {
 	my ( $self, $docs, $query ) = @_;
 	if ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
+	    
+	    # if doc is html just display it 
+	    # TODO, a means to register other wx display windows such as ?!
+	    return $self->ShowPage( $docs , $query )
+            if ( $self->viewer_for( $docs->mimetype ) );
+	    
 		my $task = Padre::Task::DocBrowser->new(
 			document         => $docs,
 			type             => 'browse',
 			main_thread_only => sub {
-				$self->ShowPage( $_[0], $query );
+				$self->display( $_[0], $query );
 			}
 		);
 		$task->schedule;
+		return 1;
 	}
-
+    else {
+        $self->not_found( $docs, $query );
+        
+    }
 }
 
 sub ShowPage {
 	my ( $self, $docs, $query ) = @_;
-
 	unless ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
 		return $self->not_found($query);
 	}
@@ -340,13 +375,16 @@ sub padre2docbrowser {
 	);
     # Erk - shouldn't this be ->get_text or something.
 	$doc->body( Encode::encode( 'utf8', $padredoc->{original_content} ) );
+	
+	$doc->mimetype( $doc->guess_mimetype ) unless $doc->mimetype;
+	
 	return $doc;
 }
 
 sub not_found {
 	# trying a dialog rather than the open tab.
-    my ( $self, $query ) = @_;
-    
+    my ( $self, $query, $hints ) = @_;
+    $query ||= $hints->{referrer}; 
     use Wx qw(wxOK wxCENTRE wxICON_INFORMATION);
     my $notFound = Wx::MessageDialog->new( $self, 
 					"Searched for '$query' and failed...",
@@ -355,21 +393,6 @@ sub not_found {
 					
 	$notFound->ShowModal;
 	$notFound->Destroy;
-
-        
-        
-#    my $html = qq|
-#<html><body>
-#<h1>Not Found</h1>
-#<p>Could not find documentation for
-#<pre>$query</pre>
-#</p>
-#</body>
-#</html>
-#|;
-#    my $frame = Padre::Wx::HtmlWindow->new($self);
-#    $self->notebook->AddPage( $frame, 'Not Found', 1 );
-#    $frame->SetPage($html);
 
 }
 
@@ -411,7 +434,24 @@ sub _close_tab {
 	return 1;
 	
 }	
-	
+
+
+sub _open_doc {
+	my $self = shift;
+	my $filename = Wx::Perl::Dialog::Simple::file_selector();
+	if ( defined $filename ) {
+        my $doc = Padre::DocBrowser::document->load( $filename );
+        $self->help( $doc, $filename );
+    }
+}
+
+sub viewer_for {
+    my ($self,$mimetype) = @_;
+    return unless defined $mimetype;
+    if ( exists $VIEW{$mimetype} ) {
+        return $VIEW{$mimetype};
+    }
+}
 
 1;
 
