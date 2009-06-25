@@ -464,7 +464,12 @@ sub search {
 	my ($start, $end, @matches) = Padre::Util::get_matches(
 		$text, $regex, $from, $to, $backwards
 	);
-	return unless defined $start;
+	
+	
+	if( ! defined $start ){
+		$self->_not_found;
+		return;
+	};
 	$editor->SetSelection( $start, $end );
 
 	return;
@@ -524,6 +529,20 @@ sub _get_search {
 	}
 
 	return $regex;
+}
+
+sub _not_found {
+	my( $self ) = @_;
+	# Want to see if not found this is 
+	# where to show a MessageBox.
+	my $term   = Padre::DB::History->previous('search');
+	Wx::MessageBox(
+		sprintf( Wx::gettext("Failed to find '%s' in current document."), $term ),
+		Wx::gettext('Not Found'),
+		Wx::wxOK,
+		$self,
+	);	
+	
 }
 
 1;
