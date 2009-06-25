@@ -130,7 +130,7 @@ sub render {
 # URI::perldoc ??
 sub split_link {
         my $query = shift;
-        my($doc,$section) = $query =~ m|([^/]+)/?+(.*+)|;
+        my ($doc, $section) = split /\//, $query, 2; # was m|([^/]+)/?+(.*+)|;
 }
 
 1;
