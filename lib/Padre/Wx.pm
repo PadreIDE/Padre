@@ -90,6 +90,25 @@ sub launch_irc {
 }
 
 1;
+=pod
+
+=head1 NAME
+
+Padre::Wx
+
+=head1 DESCRIPTION
+
+Support function library for Wx-related things, and bootstrap logic for Wx integration. 
+
+Isolates any Wx.pm twiddling away from the actual Padre implementation code.
+
+Load every exportable constant, so that they come into
+existance in the Wx:: packages, allowing everywhere else in the code to
+use them without braces.
+
+
+
+=cut
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
