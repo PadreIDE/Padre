@@ -98,17 +98,19 @@ sub _get_outline {
 			push @{ $cur_pkg->{methods} }, { name => $thing->name, line => $thing->location->[0] };
 		} elsif ( ref $thing eq 'PPI::Statement' ) {
 			# last resort, let's analyse further down...
-			my $node = $thing->first_element;
+			my $node1 = $thing->first_element;
+			my $node2 = $thing->child(2);
+			next unless defined $node2;
 
 			# Moose attribute declaration
-			if ( $node->isa('PPI::Token::Word') && $node->content eq 'has' ) {
-				push @{ $cur_pkg->{attributes} }, { name => $thing->child(2)->content, line => $thing->location->[0] };
+			if ( $node1->isa('PPI::Token::Word') && $node1->content eq 'has' ) {
+				push @{ $cur_pkg->{attributes} }, { name => $node2->content, line => $thing->location->[0] };
 				next;
 			}
 
 			# MooseX::POE event declaration
-			if ( $node->isa('PPI::Token::Word') && $node->content eq 'event' ) {
-				push @{ $cur_pkg->{events} }, { name => $thing->child(2)->content, line => $thing->location->[0] };
+			if ( $node1->isa('PPI::Token::Word') && $node1->content eq 'event' ) {
+				push @{ $cur_pkg->{events} }, { name => $node2->content, line => $thing->location->[0] };
 				next;
 			}
 		}
