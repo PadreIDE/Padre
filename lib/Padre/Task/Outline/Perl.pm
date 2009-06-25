@@ -67,7 +67,8 @@ sub _get_outline {
 			return 1
 				if ref $_[0] eq 'PPI::Statement::Package'
 					or ref $_[0] eq 'PPI::Statement::Include'
-					or ref $_[0] eq 'PPI::Statement::Sub';
+					or ref $_[0] eq 'PPI::Statement::Sub'
+					or ref $_[0] eq 'PPI::Statement';
 		}
 	);
 
@@ -95,6 +96,15 @@ sub _get_outline {
 			}
 		} elsif ( ref $thing eq 'PPI::Statement::Sub' ) {
 			push @{ $cur_pkg->{methods} }, { name => $thing->name, line => $thing->location->[0] };
+		} elsif ( ref $thing eq 'PPI::Statement' ) {
+			# last resort, let's analyse further down...
+			my $node = $thing->first_element;
+
+			# Moose attribute declaration
+			if ( $node->isa('PPI::Token::Word') && $node->content eq 'has' ) {
+				push @{ $cur_pkg->{attributes} }, { name => $thing->child(2)->content, line => $thing->location->[0] };
+				next;
+			}
 		}
 	}
 
@@ -229,7 +239,7 @@ sub _update_treectrl {
 				}
 			)
 		);
-		foreach my $type (qw(pragmata modules methods)) {
+		foreach my $type (qw(pragmata modules attributes methods)) {
 			_add_subtree( $outlinebar, $pkg, $type, $branch );
 		}
 		$outlinebar->Expand($branch);
