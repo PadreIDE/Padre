@@ -106,6 +106,8 @@ sub new {
 	);
 	$entry->SetToolTip(Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP" ) );
 
+	
+	
 	Wx::Event::EVT_TEXT_ENTER(
 		$self, $entry,
 		sub {
@@ -158,6 +160,7 @@ sub new {
 	
 	
 	$self->SetAutoLayout(1);
+	
 	
 	return $self;
 }
@@ -344,26 +347,15 @@ sub not_found {
 	# trying a dialog rather than the open tab.
     my ( $self, $query ) = @_;
     
-        my $layout = [
-		[
-                        [ 'Wx::StaticText', undef,         "Nothing found for $query"],
-		],
-		[
-                        [ 'Wx::Button',     'ok',           Wx::wxID_OK   ],
-                ],
-        ];
-        
-        # Wx::Perl::Dialog
-        my $dialog = Padre::Wx::Dialog->new(
-                parent => $self,
-                title  => 'Unable to locate help...',
-                layout => $layout,
-                width  => [250, 550],
+    use Wx qw(wxOK wxCENTRE wxICON_INFORMATION);
+    my $notFound = Wx::MessageDialog->new( $self, 
+					"Searched for '$query' and failed...",
+					'Help not found.',
+					wxOK | wxCENTRE | wxICON_INFORMATION );
+					
+	$notFound->ShowModal;
+	$notFound->Destroy;
 
-        );    
-        
-        
-        $dialog->Show();
         
         
 #    my $html = qq|
