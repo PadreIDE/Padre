@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-12 21:54+0200\n"
-"PO-Revision-Date: 2009-06-16 08:48+0100\n"
+"POT-Creation-Date: 2009-06-23 23:50+0200\n"
+"PO-Revision-Date: 2009-06-25 08:41+0100\n"
 "Last-Translator: ddn <ddn123456 at gmail.com>\n"
 "Language-Team: ddn <ddn123456 at gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -194,7 +194,7 @@ msgid "No document open"
 msgstr "Geen document geopend"
 
 #: lib/Padre/PluginManager.pm:785
-#: lib/Padre/Wx/Main.pm:3746
+#: lib/Padre/Wx/Main.pm:3739
 msgid "No filename"
 msgstr "Geen bestandsnaam"
 
@@ -260,13 +260,13 @@ msgstr "Gefaald bij het activeren van de plugin '%s': %s"
 msgid "Failed to disable plugin '%s': %s"
 msgstr "Gefaald bij het desactiveren van de plugin '%s': %s"
 
-#: lib/Padre/Document.pm:743
+#: lib/Padre/Document.pm:749
 #, perl-format
 msgid "Unsaved %d"
 msgstr "Niet opgeslagen %d"
 
-#: lib/Padre/Document.pm:1012
-#: lib/Padre/Document.pm:1013
+#: lib/Padre/Document.pm:1018
+#: lib/Padre/Document.pm:1019
 msgid "Skipped for large files"
 msgstr "Overgeslagen voor grote bestanden"
 
@@ -318,7 +318,7 @@ msgid "Error"
 msgstr "Fout"
 
 #: lib/Padre/Task/Outline/Perl.pm:145
-#: lib/Padre/Wx/Outline.pm:58
+#: lib/Padre/Wx/Outline.pm:59
 msgid "Outline"
 msgstr "Uitlijning"
 
@@ -352,7 +352,7 @@ msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr "Geen declaratie gevonden voor de gespecifiëerde (lexicale?) variabele"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:128
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:149
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:187
 msgid "Unknown error"
 msgstr "Niet bekende fout"
@@ -361,15 +361,15 @@ msgstr "Niet bekende fout"
 msgid "Search Canceled"
 msgstr "Zoekactie geannuleerd"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:124
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:145
 msgid "First character of selection does not seem to point at a token."
 msgstr "Het eerste karakter van de selectie verwijst blijkbaar niet naar een token."
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:126
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:147
 msgid "Selection not part of a Perl statement?"
 msgstr "Selectie geen onderdeel van een Perl statement?"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:132
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:153
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:191
 msgid "Replace Operation Canceled"
 msgstr "Vervang Actie Geannuleerd"
@@ -454,13 +454,21 @@ msgstr "Selecteer Alles"
 msgid "Toggle Comments"
 msgstr "Schakel Commentaar om"
 
-#: lib/Padre/Wx/DocBrowser.pm:153
-msgid "NAME"
-msgstr "NAAM"
+#: lib/Padre/Wx/DocBrowser.pm:143
+msgid "&Close\tCtrl+W"
+msgstr "Slui&ten\tCtrl+W"
 
-#: lib/Padre/Wx/DocBrowser.pm:237
+#: lib/Padre/Wx/DocBrowser.pm:144
+msgid "E&xit\tCtrl+X"
+msgstr "Afsluiten\tCtrl-X"
+
+#: lib/Padre/Wx/DocBrowser.pm:267
 msgid "Untitled"
 msgstr "Naamloos"
+
+#: lib/Padre/Wx/DocBrowser.pm:368
+msgid "NAME"
+msgstr "NAAM"
 
 #: lib/Padre/Wx/Ack.pm:102
 msgid "Term:"
@@ -509,59 +517,59 @@ msgstr "Werkblad Beeld"
 msgid "Output"
 msgstr "Uitvoer"
 
-#: lib/Padre/Wx/Editor.pm:716
+#: lib/Padre/Wx/Editor.pm:731
 #: lib/Padre/Wx/Menu/Edit.pm:66
 msgid "Select all\tCtrl-A"
 msgstr "Selecteer alles\tCtrl-A"
 
-#: lib/Padre/Wx/Editor.pm:727
+#: lib/Padre/Wx/Editor.pm:742
 #: lib/Padre/Wx/Menu/Edit.pm:127
 msgid "&Copy\tCtrl-C"
 msgstr "&Kopiëren\tCtrl-C"
 
-#: lib/Padre/Wx/Editor.pm:739
+#: lib/Padre/Wx/Editor.pm:754
 #: lib/Padre/Wx/Menu/Edit.pm:114
 msgid "Cu&t\tCtrl-X"
 msgstr "K&nippen\tCtrl-X"
 
-#: lib/Padre/Wx/Editor.pm:751
+#: lib/Padre/Wx/Editor.pm:766
 #: lib/Padre/Wx/Menu/Edit.pm:140
 msgid "&Paste\tCtrl-V"
 msgstr "&Plakken\tCtrl-V"
 
-#: lib/Padre/Wx/Editor.pm:768
+#: lib/Padre/Wx/Editor.pm:783
 #: lib/Padre/Wx/Menu/Edit.pm:220
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "&Schakel Commentaar om\tCtrl-Shift-C"
 
-#: lib/Padre/Wx/Editor.pm:776
+#: lib/Padre/Wx/Editor.pm:791
 #: lib/Padre/Wx/Menu/Edit.pm:232
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "Lijnen in commentaar zetten\tCtrl-M"
 
-#: lib/Padre/Wx/Editor.pm:783
+#: lib/Padre/Wx/Editor.pm:798
 #: lib/Padre/Wx/Menu/Edit.pm:244
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "Lijnen uit commentaar zetten\tCtrl-Shift-M"
 
-#: lib/Padre/Wx/Editor.pm:804
+#: lib/Padre/Wx/Editor.pm:819
 msgid "Fold all"
 msgstr "Vouw alles samen"
 
-#: lib/Padre/Wx/Editor.pm:811
+#: lib/Padre/Wx/Editor.pm:826
 msgid "Unfold all"
 msgstr "Vouw alles uit"
 
-#: lib/Padre/Wx/Editor.pm:824
+#: lib/Padre/Wx/Editor.pm:839
 #: lib/Padre/Wx/Menu/Window.pm:34
 msgid "&Split window"
 msgstr "&Splits venster"
 
-#: lib/Padre/Wx/Editor.pm:1170
+#: lib/Padre/Wx/Editor.pm:1185
 msgid "You must select a range of lines"
 msgstr "U dient een reeks lijnen te selecteren"
 
-#: lib/Padre/Wx/Editor.pm:1186
+#: lib/Padre/Wx/Editor.pm:1201
 msgid "First character of selection must be a non-word character to align"
 msgstr "Het eerste karakter van de selectie moet een niet-woord karakter zijn om te aligneren"
 
@@ -675,7 +683,7 @@ msgid "Message"
 msgstr "Bericht"
 
 #: lib/Padre/Wx/Main.pm:2034
-msgid "Autocompletions error"
+msgid "Autocompletion error"
 msgstr "Fout automatische aanvulling"
 
 #: lib/Padre/Wx/Main.pm:2055
@@ -746,7 +754,7 @@ msgid "All Files"
 msgstr "Alle bestanden"
 
 #: lib/Padre/Wx/Main.pm:2572
-#: lib/Padre/Wx/Main.pm:3910
+#: lib/Padre/Wx/Main.pm:3903
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Bestand kon niet herladen worden: %s"
@@ -768,7 +776,7 @@ msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Bestand gewijzigd sinds het voor de laatste maal werd opgeslagen. Wijzigingen overschrijven?"
 
 #: lib/Padre/Wx/Main.pm:2718
-#: lib/Padre/Wx/Main.pm:3903
+#: lib/Padre/Wx/Main.pm:3896
 msgid "File not in sync"
 msgstr "Bestand niet gesynchroniseerd"
 
@@ -802,65 +810,74 @@ msgstr "Fout: %s"
 msgid "Internal error"
 msgstr "Interne Fout"
 
-#: lib/Padre/Wx/Main.pm:3737
+#: lib/Padre/Wx/Main.pm:3730
 #, perl-format
 msgid "Words: %s"
 msgstr "Woorden: %s"
 
-#: lib/Padre/Wx/Main.pm:3738
+#: lib/Padre/Wx/Main.pm:3731
 #, perl-format
 msgid "Lines: %d"
 msgstr "Lijnen: %d"
 
-#: lib/Padre/Wx/Main.pm:3739
+#: lib/Padre/Wx/Main.pm:3732
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr "Karakters zonders spaties: %s"
 
-#: lib/Padre/Wx/Main.pm:3740
+#: lib/Padre/Wx/Main.pm:3733
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Karakters met spaties: %d"
 
-#: lib/Padre/Wx/Main.pm:3741
+#: lib/Padre/Wx/Main.pm:3734
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Regeleinde type: %s"
 
-#: lib/Padre/Wx/Main.pm:3742
+#: lib/Padre/Wx/Main.pm:3735
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Encodering:%s"
 
-#: lib/Padre/Wx/Main.pm:3743
+#: lib/Padre/Wx/Main.pm:3736
 #, perl-format
 msgid "Document type: %s"
 msgstr "Document type: %s"
 
-#: lib/Padre/Wx/Main.pm:3743
+#: lib/Padre/Wx/Main.pm:3736
 msgid "none"
 msgstr "geen"
 
-#: lib/Padre/Wx/Main.pm:3745
+#: lib/Padre/Wx/Main.pm:3738
 #, perl-format
 msgid "Filename: %s"
 msgstr "Bestandsnaam: %s"
 
-#: lib/Padre/Wx/Main.pm:3775
+#: lib/Padre/Wx/Main.pm:3768
 msgid "Space to Tab"
 msgstr "Converteer Spaties naar Tabs"
 
-#: lib/Padre/Wx/Main.pm:3776
+#: lib/Padre/Wx/Main.pm:3769
 msgid "Tab to Space"
 msgstr "Converteer Tabs naar Spaties"
 
-#: lib/Padre/Wx/Main.pm:3780
+#: lib/Padre/Wx/Main.pm:3773
 msgid "How many spaces for each tab:"
 msgstr "Hoeveel spaties voor elke tab:"
 
-#: lib/Padre/Wx/Main.pm:3902
+#: lib/Padre/Wx/Main.pm:3895
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "Bestand gewijzigd op schijf sinds laatst opgeslagen. Het bestand heropladen?"
+
+#: lib/Padre/Wx/Main.pm:4224
+msgid "Encode to:"
+msgstr "Encodeer als:"
+
+#: lib/Padre/Wx/Main.pm:4235
+#: lib/Padre/Wx/Menu/Edit.pm:289
+msgid "Encode document to..."
+msgstr "Encodeer Document Als..."
 
 #: lib/Padre/Wx/Bottom.pm:42
 msgid "Output View"
@@ -872,7 +889,7 @@ msgstr "Functies"
 
 #: lib/Padre/Wx/Dialog/Find.pm:54
 #: lib/Padre/Wx/Dialog/Find.pm:163
-#: lib/Padre/Wx/Dialog/Replace.pm:201
+#: lib/Padre/Wx/Dialog/Replace.pm:213
 msgid "Find"
 msgstr "Vind"
 
@@ -895,29 +912,29 @@ msgid "&Find"
 msgstr "&Vind"
 
 #: lib/Padre/Wx/Dialog/Find.pm:148
-#: lib/Padre/Wx/Dialog/Preferences.pm:536
-#: lib/Padre/Wx/Dialog/Replace.pm:186
+#: lib/Padre/Wx/Dialog/Preferences.pm:537
+#: lib/Padre/Wx/Dialog/Replace.pm:198
 msgid "&Cancel"
 msgstr "&Annuleren"
 
 #: lib/Padre/Wx/Dialog/Find.pm:171
-#: lib/Padre/Wx/Dialog/Replace.pm:209
+#: lib/Padre/Wx/Dialog/Replace.pm:221
 msgid "Find Text:"
 msgstr "Vind Tekst:"
 
 #: lib/Padre/Wx/Dialog/Find.pm:217
-#: lib/Padre/Wx/Dialog/Replace.pm:287
+#: lib/Padre/Wx/Dialog/Replace.pm:299
 msgid "Options"
 msgstr "Opties"
 
 #: lib/Padre/Wx/Dialog/Find.pm:518
-#: lib/Padre/Wx/Dialog/Replace.pm:734
+#: lib/Padre/Wx/Dialog/Replace.pm:746
 #, perl-format
 msgid "Cannot build regex for '%s'"
 msgstr "Kan geen regex samenstellen voor '%s'"
 
 #: lib/Padre/Wx/Dialog/Find.pm:519
-#: lib/Padre/Wx/Dialog/Replace.pm:735
+#: lib/Padre/Wx/Dialog/Replace.pm:747
 msgid "Search error"
 msgstr "Zoekfout"
 
@@ -955,7 +972,7 @@ msgid "Name:"
 msgstr "Naam:"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
-#: lib/Padre/Wx/Dialog/Preferences.pm:525
+#: lib/Padre/Wx/Dialog/Preferences.pm:526
 msgid "&Save"
 msgstr "Op&slaan"
 
@@ -963,91 +980,91 @@ msgstr "Op&slaan"
 msgid "Edit/Add Snippets"
 msgstr "Wijzig/Voeg Uittreksels toe"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:52
+#: lib/Padre/Wx/Dialog/Preferences.pm:53
 msgid "Diff tool:"
 msgstr "Diff tool:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:70
+#: lib/Padre/Wx/Dialog/Preferences.pm:71
 msgid "Automatic indentation style detection"
 msgstr "Automatische insprong stijl detectie"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:74
+#: lib/Padre/Wx/Dialog/Preferences.pm:75
 msgid "Use Tabs"
 msgstr "Gebruik Tabs"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:77
+#: lib/Padre/Wx/Dialog/Preferences.pm:78
 msgid "TAB display size (in spaces):"
 msgstr "TAB beeldbreedte (in spaties)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:80
+#: lib/Padre/Wx/Dialog/Preferences.pm:81
 msgid "Indentation width (in columns):"
 msgstr "Insprong breedte (in kolommen)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:83
+#: lib/Padre/Wx/Dialog/Preferences.pm:84
 msgid "Guess from current document:"
 msgstr "Gok gebaseerd op huidig document"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:84
+#: lib/Padre/Wx/Dialog/Preferences.pm:85
 msgid "Guess"
 msgstr "Raad"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:86
+#: lib/Padre/Wx/Dialog/Preferences.pm:87
 msgid "Autoindent:"
 msgstr "Automatische insprong:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:110
+#: lib/Padre/Wx/Dialog/Preferences.pm:111
 msgid "Default word wrap on for each file"
 msgstr "Automatisch naar volgende lijn voor elk bestand"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:115
+#: lib/Padre/Wx/Dialog/Preferences.pm:116
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr "Automatisch dichtvouwen POD markering wanneer code vouwen geactiveerd is"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:120
+#: lib/Padre/Wx/Dialog/Preferences.pm:121
 msgid "Perl beginner mode"
 msgstr "Perl beginner modus"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:124
+#: lib/Padre/Wx/Dialog/Preferences.pm:125
 msgid "Open files:"
 msgstr "Geopende bestanden:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:128
+#: lib/Padre/Wx/Dialog/Preferences.pm:129
 msgid "Open files in existing Padre"
 msgstr "Open bestanden in bestaande Padre"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:132
+#: lib/Padre/Wx/Dialog/Preferences.pm:133
 msgid "Methods order:"
 msgstr "Methoden volgorde"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:135
+#: lib/Padre/Wx/Dialog/Preferences.pm:136
 msgid "Preferred language for error diagnostics:"
 msgstr "Voorkeurstaal voor fout diagnostieken"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:172
+#: lib/Padre/Wx/Dialog/Preferences.pm:173
 msgid "Colored text in output window (ANSI)"
 msgstr "Gekleurde tekst in het uitvoervenster (ANSI): "
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:176
+#: lib/Padre/Wx/Dialog/Preferences.pm:177
 msgid "Editor Font:"
 msgstr "Tekstverwerker Font"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:179
+#: lib/Padre/Wx/Dialog/Preferences.pm:180
 msgid "Editor Current Line Background Colour:"
 msgstr "Tekstverwerker Achtergrondkleur Huidige Lijn"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:229
+#: lib/Padre/Wx/Dialog/Preferences.pm:230
 msgid "Settings Demo"
 msgstr "Demo instellingen"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:313
+#: lib/Padre/Wx/Dialog/Preferences.pm:314
 msgid "Enable?"
 msgstr "Activeren?"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:328
+#: lib/Padre/Wx/Dialog/Preferences.pm:329
 msgid "Crashed"
 msgstr "Fout gelopen"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:361
+#: lib/Padre/Wx/Dialog/Preferences.pm:362
 msgid ""
 "i.e.\n"
 "\tinclude directory:  -I<dir>\n"
@@ -1062,104 +1079,104 @@ msgstr ""
 "\tactiveer alle waarschuwingen:  -W\n"
 "\tdesactiveer alle waarschuwingen:  -X\n"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:371
-#: lib/Padre/Wx/Dialog/Preferences.pm:415
+#: lib/Padre/Wx/Dialog/Preferences.pm:372
+#: lib/Padre/Wx/Dialog/Preferences.pm:416
 msgid "Interpreter arguments:"
 msgstr "Interpreter argumenten:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:377
-#: lib/Padre/Wx/Dialog/Preferences.pm:421
+#: lib/Padre/Wx/Dialog/Preferences.pm:378
+#: lib/Padre/Wx/Dialog/Preferences.pm:422
 msgid "Script arguments:"
 msgstr "Script argumenten:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:384
+#: lib/Padre/Wx/Dialog/Preferences.pm:385
 msgid "Unsaved"
 msgstr "Niet opgeslagen"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:385
+#: lib/Padre/Wx/Dialog/Preferences.pm:386
 msgid "N/A"
 msgstr "Niet Beschikbaar"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:404
+#: lib/Padre/Wx/Dialog/Preferences.pm:405
 msgid "No Document"
 msgstr "Geen Document"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:409
+#: lib/Padre/Wx/Dialog/Preferences.pm:410
 msgid "Document name:"
 msgstr "Document naam:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:412
+#: lib/Padre/Wx/Dialog/Preferences.pm:413
 msgid "Document location:"
 msgstr "Document locatie:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:439
+#: lib/Padre/Wx/Dialog/Preferences.pm:440
 msgid "Default"
 msgstr "Standaard"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:445
+#: lib/Padre/Wx/Dialog/Preferences.pm:446
 #, perl-format
 msgid "Current Document: %s"
 msgstr "Huidig Document: %s"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:460
+#: lib/Padre/Wx/Dialog/Preferences.pm:461
 #: lib/Padre/Wx/Dialog/PluginManager.pm:292
-#: lib/Padre/Wx/Menu/Edit.pm:455
+#: lib/Padre/Wx/Menu/Edit.pm:498
 msgid "Preferences"
 msgstr "Instellingen"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:485
+#: lib/Padre/Wx/Dialog/Preferences.pm:486
 msgid "Behaviour"
 msgstr "Gedrag"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:488
+#: lib/Padre/Wx/Dialog/Preferences.pm:489
 msgid "Appearance"
 msgstr "Weergave"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:491
+#: lib/Padre/Wx/Dialog/Preferences.pm:492
 msgid "Run Parameters"
 msgstr "Uitvoerparameters"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:495
+#: lib/Padre/Wx/Dialog/Preferences.pm:496
 msgid "Indentation"
 msgstr "Insprongen"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:498
+#: lib/Padre/Wx/Dialog/Preferences.pm:499
 msgid "External Tools"
 msgstr "Externe Tools"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:571
+#: lib/Padre/Wx/Dialog/Preferences.pm:572
 msgid "new"
 msgstr "nieuw"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:572
+#: lib/Padre/Wx/Dialog/Preferences.pm:573
 msgid "nothing"
 msgstr "niets"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:573
+#: lib/Padre/Wx/Dialog/Preferences.pm:574
 msgid "last"
 msgstr "laatste"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:574
+#: lib/Padre/Wx/Dialog/Preferences.pm:575
 msgid "no"
 msgstr "neen"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:575
+#: lib/Padre/Wx/Dialog/Preferences.pm:576
 msgid "same_level"
 msgstr "hetzelfde niveau"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:576
+#: lib/Padre/Wx/Dialog/Preferences.pm:577
 msgid "deep"
 msgstr "diep"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:577
+#: lib/Padre/Wx/Dialog/Preferences.pm:578
 msgid "alphabetical"
 msgstr "alfabetisch"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:578
+#: lib/Padre/Wx/Dialog/Preferences.pm:579
 msgid "original"
 msgstr "origineel"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:579
+#: lib/Padre/Wx/Dialog/Preferences.pm:580
 msgid "alphabetical_private_last"
 msgstr "alfabetisch, privaat laatst"
 
@@ -1253,24 +1270,24 @@ msgstr "Vervang &Alles"
 msgid "&Find Next"
 msgstr "Vind &volgende"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:171
+#: lib/Padre/Wx/Dialog/Replace.pm:177
 msgid "&Replace"
 msgstr "&Vervangen"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:233
+#: lib/Padre/Wx/Dialog/Replace.pm:245
 msgid "Replace"
 msgstr "Vervangen"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:241
+#: lib/Padre/Wx/Dialog/Replace.pm:253
 msgid "Replace Text:"
 msgstr "Vervang Tekst:"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:642
+#: lib/Padre/Wx/Dialog/Replace.pm:654
 #, perl-format
 msgid "%s occurences were replaced"
 msgstr "%s keer vervangen"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:648
+#: lib/Padre/Wx/Dialog/Replace.pm:660
 msgid "Nothing to replace"
 msgstr "Niets te vervangen"
 
@@ -1429,66 +1446,78 @@ msgid "Convert Encoding"
 msgstr "Converteer Encodering"
 
 #: lib/Padre/Wx/Menu/Edit.pm:265
+msgid "Encode document to System Default"
+msgstr "Encodeer document volgens System Default"
+
+#: lib/Padre/Wx/Menu/Edit.pm:277
+msgid "Encode document to utf-8"
+msgstr "Encodeer document als utf-8"
+
+#: lib/Padre/Wx/Menu/Edit.pm:302
+msgid "Convert EOL"
+msgstr "Converteer EOL"
+
+#: lib/Padre/Wx/Menu/Edit.pm:308
 msgid "EOL to Windows"
 msgstr "Regeleindes in Windows formaat"
 
-#: lib/Padre/Wx/Menu/Edit.pm:277
+#: lib/Padre/Wx/Menu/Edit.pm:320
 msgid "EOL to Unix"
 msgstr "Regeleindes in Unix formaat"
 
-#: lib/Padre/Wx/Menu/Edit.pm:289
+#: lib/Padre/Wx/Menu/Edit.pm:332
 msgid "EOL to Mac Classic"
 msgstr "Regeleindes in Mac Classic formaat"
 
-#: lib/Padre/Wx/Menu/Edit.pm:303
+#: lib/Padre/Wx/Menu/Edit.pm:346
 msgid "Tabs and Spaces"
 msgstr "Tabs en Spaties"
 
-#: lib/Padre/Wx/Menu/Edit.pm:309
+#: lib/Padre/Wx/Menu/Edit.pm:352
 msgid "Tabs to Spaces..."
 msgstr "Converteer Tabs naar Spaties"
 
-#: lib/Padre/Wx/Menu/Edit.pm:321
+#: lib/Padre/Wx/Menu/Edit.pm:364
 msgid "Spaces to Tabs..."
 msgstr "Converteer Spaties naar Tabs"
 
-#: lib/Padre/Wx/Menu/Edit.pm:335
+#: lib/Padre/Wx/Menu/Edit.pm:378
 msgid "Delete Trailing Spaces"
 msgstr "Verwijder achterliggende spaties op het einde van de lijn"
 
-#: lib/Padre/Wx/Menu/Edit.pm:347
+#: lib/Padre/Wx/Menu/Edit.pm:390
 msgid "Delete Leading Spaces"
 msgstr "Verwijder voorliggende spaties aan het begin van de lijn"
 
-#: lib/Padre/Wx/Menu/Edit.pm:361
+#: lib/Padre/Wx/Menu/Edit.pm:404
 msgid "Upper/Lower Case"
 msgstr "Hoofd/Kleine Letter"
 
-#: lib/Padre/Wx/Menu/Edit.pm:367
+#: lib/Padre/Wx/Menu/Edit.pm:410
 msgid "Upper All\tCtrl-Shift-U"
 msgstr "Alles Hoofdletter\tCtrl-Shift-U"
 
-#: lib/Padre/Wx/Menu/Edit.pm:379
+#: lib/Padre/Wx/Menu/Edit.pm:422
 msgid "Lower All\tCtrl-U"
 msgstr "Alles Kleine Letter\tCtrl-U"
 
-#: lib/Padre/Wx/Menu/Edit.pm:395
+#: lib/Padre/Wx/Menu/Edit.pm:438
 msgid "Diff Tools"
 msgstr "Diff tools"
 
-#: lib/Padre/Wx/Menu/Edit.pm:401
+#: lib/Padre/Wx/Menu/Edit.pm:444
 msgid "Diff to Saved Version"
 msgstr "Diff naar Opgeslagen Versie"
 
-#: lib/Padre/Wx/Menu/Edit.pm:413
+#: lib/Padre/Wx/Menu/Edit.pm:456
 msgid "Apply Diff to File"
 msgstr "Pas Diff toe op Bestand"
 
-#: lib/Padre/Wx/Menu/Edit.pm:424
+#: lib/Padre/Wx/Menu/Edit.pm:467
 msgid "Apply Diff to Project"
 msgstr "Pas Diff toe op Project"
 
-#: lib/Padre/Wx/Menu/Edit.pm:438
+#: lib/Padre/Wx/Menu/Edit.pm:481
 msgid "Insert From File..."
 msgstr "Voeg in van Bestand..."
 
@@ -1703,30 +1732,30 @@ msgid "Padre Support"
 msgstr "Padre Ondersteuning"
 
 #: lib/Padre/Wx/Menu/Help.pm:89
-msgid "Perl Help (English)"
+msgid "Perl Help"
 msgstr "Perl Help (Engels)"
 
-#: lib/Padre/Wx/Menu/Help.pm:100
+#: lib/Padre/Wx/Menu/Help.pm:104
 msgid "Visit the PerlMonks"
 msgstr "Bezoek de PerlMonniken"
 
-#: lib/Padre/Wx/Menu/Help.pm:110
+#: lib/Padre/Wx/Menu/Help.pm:114
 msgid "Report a New &Bug"
 msgstr "Rapporteer een &Nieuwe Bug"
 
-#: lib/Padre/Wx/Menu/Help.pm:117
+#: lib/Padre/Wx/Menu/Help.pm:121
 msgid "View All &Open Bugs"
 msgstr "Bekijk Alle &Openstaande Bugs"
 
-#: lib/Padre/Wx/Menu/Help.pm:125
+#: lib/Padre/Wx/Menu/Help.pm:129
 msgid "&Translate Padre..."
 msgstr "Ver&taal Padre..."
 
-#: lib/Padre/Wx/Menu/Help.pm:135
+#: lib/Padre/Wx/Menu/Help.pm:139
 msgid "&About"
 msgstr "&Betreft"
 
-#: lib/Padre/Wx/Menu/Help.pm:202
+#: lib/Padre/Wx/Menu/Help.pm:206
 msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
 msgstr "Copyright 2008-2009 Het Padre ontwikkelingsteam zoals vermeld in Padre.pm."
 
@@ -1784,7 +1813,7 @@ msgstr "&Open...\tCtrl-O"
 
 #: lib/Padre/Wx/Menu/File.pm:117
 msgid "&Close\tCtrl-W"
-msgstr "Slui&ten"
+msgstr "Slui&ten\tCtrl-W"
 
 #: lib/Padre/Wx/Menu/File.pm:129
 msgid "Close All"
@@ -1851,31 +1880,31 @@ msgid "Find Unmatched Brace"
 msgstr "Vind alleenstaande haken."
 
 #: lib/Padre/Wx/Menu/Perl.pm:53
-#: lib/Padre/Document/Perl.pm:716
+#: lib/Padre/Document/Perl.pm:798
 msgid "Find Variable Declaration"
 msgstr "Vind Variabele Declaratie"
 
 #: lib/Padre/Wx/Menu/Perl.pm:70
-#: lib/Padre/Document/Perl.pm:728
+#: lib/Padre/Document/Perl.pm:810
 msgid "Lexically Rename Variable"
 msgstr "Hernoem Lexikaal Variabele"
 
 #: lib/Padre/Wx/Menu/Perl.pm:81
 #: lib/Padre/Wx/Menu/Perl.pm:82
-#: lib/Padre/Document/Perl.pm:740
-#: lib/Padre/Document/Perl.pm:741
+#: lib/Padre/Document/Perl.pm:822
+#: lib/Padre/Document/Perl.pm:823
 msgid "Replacement"
 msgstr "Vervanging"
 
 #: lib/Padre/Wx/Menu/Perl.pm:95
-#: lib/Padre/Document/Perl.pm:758
+#: lib/Padre/Document/Perl.pm:840
 msgid "Introduce Temporary Variable"
 msgstr "Introduceer Tijdelijke Variabele"
 
 #: lib/Padre/Wx/Menu/Perl.pm:106
 #: lib/Padre/Wx/Menu/Perl.pm:107
-#: lib/Padre/Document/Perl.pm:770
-#: lib/Padre/Document/Perl.pm:771
+#: lib/Padre/Document/Perl.pm:852
+#: lib/Padre/Document/Perl.pm:853
 msgid "Variable Name"
 msgstr "Naam Variabele"
 
@@ -1900,8 +1929,8 @@ msgid "Previous File\tCtrl-Shift-TAB"
 msgstr "Vorig bestand\tCtrl-Shift-TAB"
 
 #: lib/Padre/Wx/Menu/Window.pm:70
-msgid "Last Visited File\tCtrl-6"
-msgstr "Recent Geopend Bestand\tCtrl-6"
+msgid "Last Visited File\tCtrl-Shift-P"
+msgstr "Laatst Geopend Bestand\tCtrl-Shift-P"
 
 #: lib/Padre/Wx/Menu/Window.pm:81
 msgid "Right Click\tAlt-/"
