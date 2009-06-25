@@ -105,6 +105,12 @@ sub _get_outline {
 				push @{ $cur_pkg->{attributes} }, { name => $thing->child(2)->content, line => $thing->location->[0] };
 				next;
 			}
+
+			# MooseX::POE event declaration
+			if ( $node->isa('PPI::Token::Word') && $node->content eq 'event' ) {
+				push @{ $cur_pkg->{events} }, { name => $thing->child(2)->content, line => $thing->location->[0] };
+				next;
+			}
 		}
 	}
 
@@ -239,7 +245,7 @@ sub _update_treectrl {
 				}
 			)
 		);
-		foreach my $type (qw(pragmata modules attributes methods)) {
+		foreach my $type (qw(pragmata modules attributes methods events)) {
 			_add_subtree( $outlinebar, $pkg, $type, $branch );
 		}
 		$outlinebar->Expand($branch);
