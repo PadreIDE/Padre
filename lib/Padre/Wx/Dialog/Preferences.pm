@@ -9,7 +9,7 @@ use Padre::Wx::Dialog ();
 use Padre::Wx::Editor ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 
-our $VERSION = '0.36';
+our $VERSION = '0.37';
 our @ISA     = 'Padre::Wx::Dialog';
 
 =pod

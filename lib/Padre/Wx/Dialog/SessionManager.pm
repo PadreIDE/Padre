@@ -7,7 +7,7 @@ use warnings;
 use POSIX qw{ strftime };
 use Padre::Wx ();
 
-our $VERSION = '0.36';
+our $VERSION = '0.37';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {

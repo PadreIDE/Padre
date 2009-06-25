@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Carp ();
 
-our $VERSION = '0.36';
+our $VERSION = '0.37';
 
 use CPAN ();
 
