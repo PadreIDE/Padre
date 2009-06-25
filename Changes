@@ -1,5 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
+v0.38 to be...
+
+    Some of the refactoring code was moved to PPIx-EditorTools (MGRIMES)
+
 v0.37 2009.06.25
     "Introduce Temporary Variable" refactoring tool (SMUELLER)
     Added a friendly icon on the toolbar to toggle comments (GARU)
