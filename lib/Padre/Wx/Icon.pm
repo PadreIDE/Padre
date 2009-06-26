@@ -20,6 +20,7 @@ use warnings;
 use File::Spec  ();
 use Padre::Util ();
 use Padre::Wx   ();
+use Params::Util qw( _HASH );
 
 our $VERSION = '0.37';
 
@@ -36,6 +37,14 @@ my %HINT = (
 	'gnome218' => {},
 );
 
+# Lay down some defaults from our common
+# constants
+my %PREFS = (
+	size => SIZE,
+	ext  => EXT,
+	icons=> ICONS,
+);
+
 our $DEFAULT_ICON_NAME = 'status/padre-fallback-icon';
 our $DEFAULT_ICON;
 
@@ -47,7 +56,12 @@ our $DEFAULT_ICON;
 # TODO: Clearly this assumption can't last...
 sub find {
 	my $name = shift;
-
+	my $prefs = shift;
+	# If you _really_ are competant ;), prefer size,icons,ext
+	# over the defaults
+	my %pref = _HASH( $prefs )
+		? ( %PREFS , %$prefs )
+		: %PREFS;
 	# Search through the theme list
 	foreach my $theme (THEMES) {
 		my $hinted
@@ -55,13 +69,15 @@ sub find {
 			? $HINT{$theme}->{$name}
 			: $name;
 		my $file = File::Spec->catfile(
-			ICONS,
+			$pref{icons},
 			$theme,
-			SIZE,
+			$pref{size},
 			( split /\//, $hinted )
-		) . '.png';
+		) . $pref{ext};
 		next unless -f $file;
-		return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
+		return cast_to_icon(
+			Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG )
+		);
 	}
 
 	if ( defined $DEFAULT_ICON ) {
@@ -83,6 +99,12 @@ sub find {
 	# wrong things to AddTool, you get a segfault and nobody likes
 	# segfaults, right?
 	Carp::confess("Could not find icon '$name'!");
+}
+
+sub cast_to_icon{
+	my $icon = Wx::Icon->new;
+	$icon->CopyFromBitmap( shift );
+	return $icon;
 }
 
 1;
