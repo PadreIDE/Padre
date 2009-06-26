@@ -1072,7 +1072,7 @@ Cezary Morga (THEREK) E<lt>cm@therek.netE<gt>
 
 Chris Dolan (CHRISDOLAN)
 
-Claudio Ramirez (CLAUDIO) E<lt>claudio@apt-get.beE<gt>
+Claudio Ramirez (CLAUDIO) E<lt>padre.claudio@apt-get.beE<gt>
 
 Fayland Lam (FAYLAND) E<lt>fayland@gmail.comE<gt>
 
