@@ -46,3 +46,4 @@ isa_ok( $view , 'Padre::DocBrowser::document' );
 ok( $view->mimetype eq 'text/xhtml' , 'Got html view' );
 cmp_ok( $view->title, 'eq', 'Test::More', 'Title' );
 
+
