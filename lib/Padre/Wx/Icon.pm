@@ -75,9 +75,7 @@ sub find {
 			( split /\//, $hinted )
 		) . $pref{ext};
 		next unless -f $file;
-		return cast_to_icon(
-			Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG )
-		);
+		return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
 	}
 
 	if ( defined $DEFAULT_ICON ) {
@@ -99,12 +97,6 @@ sub find {
 	# wrong things to AddTool, you get a segfault and nobody likes
 	# segfaults, right?
 	Carp::confess("Could not find icon '$name'!");
-}
-
-sub cast_to_icon{
-	my $icon = Wx::Icon->new;
-	$icon->CopyFromBitmap( shift );
-	return $icon;
 }
 
 1;
