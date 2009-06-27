@@ -14,6 +14,7 @@ use Params::Util qw(
 	_INSTANCE _INVOCANT _CLASSISA _HASH _STRING
 );
 use Padre::Wx::AuiManager   ();
+use Padre::Wx::Dialog       ();
 use Padre::Task::DocBrowser ();
 use Padre::DocBrowser       ();
 use Padre::Util qw( _T );
