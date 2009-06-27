@@ -29,7 +29,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.37';
+our $VERSION = '0.38';
 our @ISA     = 'Wx::Frame';
 
 =pod

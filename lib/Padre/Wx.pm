@@ -20,7 +20,7 @@ use Wx::AUI     ();
 use Wx::Locale  ();
 use Padre::Util ();
 
-our $VERSION = '0.37';
+our $VERSION = '0.38';
 
 #####################################################################
 # Defines for sidebar marker; others may be needed for breakpoint

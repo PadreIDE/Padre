@@ -3,7 +3,7 @@ package Padre::Document::Perl::Beginner;
 use strict;
 use warnings;
 
-our $VERSION = '0.37';
+our $VERSION = '0.38';
 
 =head1 NAME
 

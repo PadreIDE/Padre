@@ -30,7 +30,7 @@ use Padre::DB::LastPositionInFile ();
 use Padre::DB::Session            ();
 use Padre::DB::SessionFile        ();
 
-our $VERSION    = '0.37';
+our $VERSION    = '0.38';
 our $COMPATIBLE = '0.26';
 
 #####################################################################

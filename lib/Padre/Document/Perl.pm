@@ -10,7 +10,7 @@ use YAML::Tiny      ();
 use Padre::Document ();
 use Padre::Util     ();
 
-our $VERSION = '0.37';
+our $VERSION = '0.38';
 our @ISA     = 'Padre::Document';
 
 #####################################################################

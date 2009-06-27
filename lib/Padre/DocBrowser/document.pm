@@ -11,7 +11,7 @@ use Class::XSAccessor
 	'filename' => 'filename',
 	};
 
-our $VERSION = '0.37';
+our $VERSION = '0.38';
 
 =pod
 
