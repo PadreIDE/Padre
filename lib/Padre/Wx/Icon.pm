@@ -99,6 +99,13 @@ sub find {
 	Carp::confess("Could not find icon '$name'!");
 }
 
+# Some things like Wx::AboutDialogInfo want a _real_ Wx::Icon
+sub cast_to_icon{
+	my $icon = Wx::Icon->new;
+	$icon->CopyFromBitmap( shift );
+	return $icon;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
