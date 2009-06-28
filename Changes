@@ -4,6 +4,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Some of the refactoring code was moved to PPIx-EditorTools (MGRIMES)
     - Detection of Moose attributes in Outline view (JQUELIN)
     - Detection of MooseX::POE events in Outline view (JQUELIN)
+    - Added keywords to META.yml (via Makefile.PL.) (SHLOMIF)
 
 0.38 2009.06.27
 

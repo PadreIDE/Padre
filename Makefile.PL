@@ -108,6 +108,38 @@ no_index       'directory'                => qw{ t xt eg share inc privinc };
 homepage       'http://padre.perlide.org/';
 bugtracker     'http://padre.perlide.org/';
 repository     'http://svn.perlide.org/padre/trunk/Padre/';
+
+keywords(
+    "auto-completion",
+    "code",
+    "coding",
+    "completion",
+    "context",
+    "cross-platform",
+    "development",
+    "editor",
+    "environment",
+    "find",
+    "function list",
+    "gui",
+    "help",
+    "highlight",
+    "hightlighting",
+    "ide",
+    "linux",
+    "mac os",
+    "mac os x",
+    "padre",
+    "perl",
+    "portable",
+    "refactoring",
+    "replace",
+    "syntax",
+    "windows",
+    "wx",
+    "wxwidgets",
+);
+
 install_script 'script/padre';
 install_share;
 
