@@ -82,6 +82,9 @@ sub new {
 		[ 750, 700 ],
 	);
 
+
+	
+
 	$self->{provider} = Padre::DocBrowser->new;
 
 	# Until we get a real icon use the same one as the others
@@ -117,6 +120,9 @@ sub new {
 		}
 	);
 
+	# this could be lame:
+	$self->{_searchEntry} = $entry;
+	
 	my $label = Wx::StaticText->new(
 		$self,                 -1, 'Search',
 		Wx::wxDefaultPosition, Wx::wxDefaultSize,
@@ -161,6 +167,22 @@ sub new {
 	Wx::Event::EVT_MENU( $self, $exitID, sub { $_[0]->_close(); } );
 	Wx::Event::EVT_MENU( $self, Wx::wxID_CLOSE, sub { $_[0]->_close_tab(); } );
 	Wx::Event::EVT_MENU( $self, Wx::wxID_OPEN , sub { $_[0]->_open_doc(); } );
+
+
+	# not sure about this but we want to throw the close X event ot _close so it gets
+	# rid of a busy cursor if it's busy..
+	# bind the close event to our close method
+	
+	# This doesn't work... !!!   :(  It should do though!
+	# http://www.nntp.perl.org/group/perl.wxperl.users/2007/06/msg3154.html
+	# http://www.gigi.co.uk/wxperl/pdk/perltrayexample.txt
+	# use a similar syntax.... for some reason this doesn't call _close()
+	
+	# TODO: Figure out what needs to be done to check and shutdown a 
+	# long running thread
+	# To trigger this, search for perltoc in the search text entry.
+	
+	Wx::Event::EVT_CLOSE( $self, sub{ $_[0]->_close(); } );
 	
 	$self->SetAutoLayout(1);
 	
@@ -183,6 +205,12 @@ sub OnLinkClicked {
 sub OnSearchTextEnter {
 	my $self = shift;
 	my $text = $_[0]->GetValue;
+	
+	# need to see where to put the busy cursor
+	# we want to see a busy cursor
+	# cheating a bit here:
+	$self->{_busyCursor} = Wx::BusyCursor->new();
+	
 	$self->ResolveRef($text);
 }
 
@@ -341,6 +369,14 @@ sub ShowPage {
 		my $page = $self->NewPage( $docs->mimetype, $title );
 		$page->SetPage( $docs->body );
 	}
+	
+	# and turn off the busy cursor
+	$self->{_busyCursor} = undef;
+	
+	# not sure if I can do this:
+	# yep seems I can!  
+	$self->{_searchEntry}->SetFocus();
+	
 }
 
 sub NewPage {
@@ -385,6 +421,10 @@ sub padre2docbrowser {
 sub not_found {
 	# trying a dialog rather than the open tab.
     my ( $self, $query, $hints ) = @_;
+    
+    # we got this far, make the cursor not busy
+    $self->{_busyCursor} = undef;
+    
     $query ||= $hints->{referrer}; 
     use Wx qw(wxOK wxCENTRE wxICON_INFORMATION);
     my $notFound = Wx::MessageDialog->new( $self, 
@@ -395,6 +435,9 @@ sub not_found {
 	$notFound->ShowModal;
 	$notFound->Destroy;
 
+	# set focus back to the entry.
+	$self->{_searchEntry}->SetFocus();
+	
 }
 
 # Private methods
@@ -413,6 +456,12 @@ sub _hints {
 
 sub _close {
 	my( $self ) = @_;
+	
+	print "Going to close the docbrowser\n";
+	
+	# in case we have a busy cursor still:
+	$self->{_busyCursor} = undef;
+	
 	$self->Close();
 }
 
