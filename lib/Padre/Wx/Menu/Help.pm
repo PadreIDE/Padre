@@ -113,14 +113,14 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("Report a New &Bug") ),
 		sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/wiki/Tickets');
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
 		},
 	);
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext("View All &Open Bugs") ),
 		sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/report/1');
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
 		},
 	);
 	
@@ -128,7 +128,7 @@ sub new {
 		$main,
 		$self->Append( -1, Wx::gettext("&Translate Padre...") ),
 		sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/wiki/TranslationIntro');
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
 		},
 	);
 
