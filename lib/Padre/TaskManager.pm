@@ -79,10 +79,12 @@ use Thread::Queue 2.11;
 
 require Padre;
 use Padre::Task;
+use Padre::Service;
 use Padre::Wx ();
 
 use Class::XSAccessor getters => {
 	task_queue     => 'task_queue',
+	service_queue  => 'service_queue',
 	reap_interval  => 'reap_interval',
 	use_threads    => 'use_threads',
 	max_no_workers => 'max_no_workers',
@@ -95,6 +97,10 @@ our $TASK_DONE_EVENT : shared = Wx::NewEventType;
 # This event is triggered by the worker thread main loop before
 # running a task.
 our $TASK_START_EVENT : shared = Wx::NewEventType;
+
+# This event is triggered by a worker thread DURING ->run to incrementally
+# communicate to the main thread over the life of a service.
+our $SERVICE_POLL_EVENT : shared = Wx::NewEventType;
 
 # remember whether the event handlers were initialized...
 our $EVENTS_INITIALIZED = 0;
@@ -114,8 +120,8 @@ sub new {
 	return $SINGLETON if defined $SINGLETON;
 
 	my $self = $SINGLETON = bless {
-		min_no_workers => 1,
-		max_no_workers => 3,
+		min_no_workers => 2,
+		max_no_workers => 6,
 		use_threads    => 1,       # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
@@ -132,8 +138,8 @@ sub new {
 	my $main = Padre->ide->wx->main;
 	_init_events($main);
 
-	$self->{task_queue} = Thread::Queue->new;
-
+	$self->{task_queue}    = Thread::Queue->new;
+	$self->{service_queue} = Thread::Queue->new;
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
 	if ( not defined $REAP_TIMER and $self->use_threads ) {
@@ -146,6 +152,11 @@ sub new {
 		);
 		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS );
 	}
+	
+#	if ( not defined $SERVICE_TIMER and $self->use_threads ) {
+#		my $timer ;
+#	}
+	
 
 	return $self;
 }
@@ -168,6 +179,11 @@ sub _init_events {
 			$main, -1,
 			$TASK_START_EVENT,
 			\&on_task_start_event,
+		);
+		Wx::Event::EVT_COMMAND(
+			$main, -1,
+			$SERVICE_POLL_EVENT,
+			\&on_service_poll_event,
 		);
 		$EVENTS_INITIALIZED = 1;
 	}
@@ -435,6 +451,30 @@ sub running_tasks {
 
 =pod
 
+=head2 shutdown
+
+Gracefully shutdown the service queue by instructing them to hangup themselves
+and return via the usual Task mechanism.
+
+=cut
+
+sub shutdown {
+	my $self = shift;
+	while ( my  ($type,$tasks) = each %{ $self->{running_tasks} } ) {
+		next unless Params::Util::_CLASSISA( $type, 'Padre::Service' );
+		
+		foreach my $threadid ( keys %$tasks  ) {
+			$SINGLETON->service_queue->enqueue(
+				"$threadid;HANGUP",
+			);
+		}
+			
+	}
+	
+}
+
+=pod
+
 =head2 workers
 
 Returns B<a list> of the worker threads.
@@ -500,6 +540,20 @@ sub on_task_start_event {
 	$manager->{running_tasks}{$task_type}{$tid} = 1;
 	$main->GetStatusBar->refresh;
 
+	return ();
+}
+
+=pod
+
+=head2 on_service_poll_event
+
+=cut
+
+sub on_service_poll_event {
+	my ( $main , $event ) = @_; @_ = ();
+	my $tid_and_type = $event->GetData();
+	my ($tid,$type) = split /;/, $tid_and_type, 2;
+	warn "Polled by service [$tid] as [$type]";
 	return ();
 }
 
@@ -580,7 +634,12 @@ sub worker_loop {
 		Wx::PostEvent( $main, $thread_start_event );
 
 		# RUN
-		$task->run();
+		if ( $task->isa( 'Padre::Service' ) ) {
+			$task->run($SINGLETON->service_queue);
+		}
+		else {
+			$task->run;
+		}
 
 		# FREEZE THE PROCESS AND PASS IT BACK
 		undef $frozen_task;
