@@ -2126,6 +2126,10 @@ sub on_close_window {
 	# at which Padre appears to close.
 	$self->Show(0);
 
+
+	Padre::Util::debug( 'Try to shutdown services' );
+	$self->ide->task_manager->shutdown;
+	
 	# Stop all Task Manager's worker threads
 	$self->ide->task_manager->cleanup;
 

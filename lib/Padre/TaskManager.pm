@@ -460,10 +460,11 @@ and return via the usual Task mechanism.
 
 sub shutdown {
 	my $self = shift;
+	
 	while ( my  ($type,$tasks) = each %{ $self->{running_tasks} } ) {
 		next unless Params::Util::_CLASSISA( $type, 'Padre::Service' );
-		
 		foreach my $threadid ( keys %$tasks  ) {
+			Padre::Util::debug( "Hangup $type in $threadid !" );
 			$SINGLETON->service_queue->enqueue(
 				"$threadid;HANGUP",
 			);
