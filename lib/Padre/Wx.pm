@@ -72,16 +72,15 @@ sub launch_browser {
 	)->schedule;
 }
 
-# Launch a Mibbit.com "Live Support" window
+# Launch a "Live Support" window on Mibbit.com or other service
 sub launch_irc {
-	my $server  = shift;
 	my $channel = shift;
 
 	# Generate the (long) chat URL
-	my $url = 'http://widget.mibbit.com/?settings=1c154d53c72ad8cfdfab3caa051b30a2';
-	$url .= '&server=' . $server;
-	$url .= '&channel=%23' . $channel;
-	$url .= '&noServerTab=false&noServerNotices=true&noServerMotd=true&autoConnect=true';
+	my $url = "http://padre.perlide.org/irc.html?channel=$channel";
+	if (my $locale = Padre->ide->config->locale) {
+		$url .= "&locale=$locale";
+	}
 
 	# Spawn a browser to show it
 	launch_browser($url);

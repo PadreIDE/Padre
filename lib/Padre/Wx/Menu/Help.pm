@@ -78,7 +78,7 @@ sub new {
 		$main,
 		$self->{live}->Append( -1, Wx::gettext('Padre Support') ),
 		sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/irc.html?channel=padre');
+			Padre::Wx::launch_irc('padre');
 		},
 	);
 
@@ -88,11 +88,7 @@ sub new {
 		$main,
 		$self->{live}->Append( -1, Wx::gettext('Perl Help') ),
 		sub {
-			my $url = 'http://padre.perlide.org/irc.html?channel=general';
-			if (my $locale = Padre->ide->config->locale) {
-				$url .= "&locale=$locale";
-			}
-			Padre::Wx::launch_browser($url);
+			Padre::Wx::launch_irc('general');
 		},
 	);
 

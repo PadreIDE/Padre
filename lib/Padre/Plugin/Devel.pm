@@ -86,7 +86,7 @@ sub menu_plugins_simple {
 			Padre::Wx::launch_browser('http://www.yellowbrain.com/stc/index.html');
 		},
 		Wx::gettext('wxPerl Live Support') => sub {
-			Padre::Wx::launch_irc('irc.perl.org' => 'wxperl');
+			Padre::Wx::launch_irc('wxperl');
 		},
 		'---'                => undef,
 		Wx::gettext('About') => 'show_about',
