@@ -76,7 +76,7 @@ sub new {
 
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->{live}->Append( -1, Wx::gettext('Padre Support') ),
+		$self->{live}->Append( -1, Wx::gettext('Padre Support (English)') ),
 		sub {
 			Padre::Wx::launch_irc('padre');
 		},
@@ -91,6 +91,17 @@ sub new {
 			Padre::Wx::launch_irc('general');
 		},
 	);
+
+	if ( Padre::Util::WIN32 ) {
+
+		Wx::Event::EVT_MENU(
+			$main,
+			$self->{live}->Append( -1, Wx::gettext('Win32 Questions (English)') ),
+			sub {
+				Padre::Wx::launch_irc('win32');
+			},
+		);
+	}
 
 	# Add interesting and helpful websites
 	$self->AppendSeparator;
