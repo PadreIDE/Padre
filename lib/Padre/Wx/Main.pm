@@ -2418,9 +2418,9 @@ sub on_open_selection {
 	#atm, we assume you are opening _one_ file, so newlines in the middle are significant
 	$text =~ s/^[\s\n]*(.*?)[\s\n]*$/$1/;
 
-	my $file;
+	my @files;
 	if ( File::Spec->file_name_is_absolute($text) and -e $text ) {
-		$file = $text;
+		push @files, $text;
 	} else {
 
 		# Try relative to the dir we started in?
@@ -2430,7 +2430,7 @@ sub on_open_selection {
 				$text,
 			);
 			if ( -e $filename ) {
-				$file = $filename;
+				push @files, $filename;
 			}
 		}
 
@@ -2441,11 +2441,11 @@ sub on_open_selection {
 				$text,
 			);
 			if ( -e $filename ) {
-				$file = $filename;
+				push @files, $filename;
 			}
 		}
 	}
-	unless ( $file ) { # and we are in a Perl environment
+	unless ( @files ) { # TODO: and if we are in a Perl environment
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
@@ -2454,19 +2454,21 @@ sub on_open_selection {
 			$module,
 		);
 		if ( -e $filename ) {
-			$file = $filename;
+			push @files, $filename;
 		} else {
-			foreach my $path (@INC) {
+			# TODO: mayb it should not be our @INC but the @INC of the perl used for 
+			# script execution
+			foreach my $path (@INC) { 
 				my $filename = File::Spec->catfile( $path, $module );
 				if ( -e $filename ) {
-					$file = $filename;
-					last;
+					push @files, $filename;
+					#last;
 				}
 			}
 		}
 	}
 
-	unless ( $file ) {
+	unless ( @files ) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
 			Wx::gettext("Open Selection"),
@@ -2476,7 +2478,12 @@ sub on_open_selection {
 		return;
 	}
 
-	$self->setup_editors($file);
+	require Wx::Perl::Dialog::Simple;
+	my $file = Wx::Perl::Dialog::Simple::single_choice( choices => \@files );
+
+	if ($file) {
+		$self->setup_editors($file);
+	}
 
 	return;
 }
