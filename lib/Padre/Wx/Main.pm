@@ -4195,10 +4195,8 @@ sub encode_document_to_system_default {
     $doc->save_file if $doc->filename;
     $self->refresh;
 
-    my $string = 'Encode document to System Default('.$doc->{encoding}.')';
-    my $output_panel = $self->output;
-    $output_panel->clear;
-    $output_panel->AppendText( $string . $/ );
+    $self->message(Wx::gettext(sprintf('Encode document to System Default(%s)', $doc->{encoding} )));
+
     return;
 }
 
@@ -4210,10 +4208,8 @@ sub encode_document_to_utf8 {
     $doc->save_file if $doc->filename;
     $self->refresh;
 
-    my $string = 'Encode document to '.$doc->{encoding};
-    my $output_panel = $self->output;
-    $output_panel->clear;
-    $output_panel->AppendText( $string . $/ );
+    $self->message(Wx::gettext(sprintf('Encode document to %s', $doc->{encoding})));
+
     return;
 }
 
@@ -4276,10 +4272,8 @@ sub encode_ok_clicked {
     $doc->save_file if $doc->filename;
     $window->refresh;
 
-    my $string = 'Encode document to '.$doc->{encoding};
-    my $output_panel = $window->output;
-    $output_panel->clear;
-    $output_panel->AppendText( $string . $/ );
+    $window->message(Wx::gettext(sprintf('Encode document to %s', $doc->{encoding})));
+	return;
 }
 
 1;
