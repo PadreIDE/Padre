@@ -10,29 +10,27 @@ our $VERSION = '0.38';
 # Encode document to System Default
 # Encode document to utf-8
 # Encode document to ...
-sub encode_document_to_system_default {
-	my ( $window, $event ) = @_;
+sub _encode {
+	my ( $window, $encoding ) = @_;
 
 	my $doc = $window->current->document;
-	$doc->{encoding} = Padre::Locale::encoding_system_default || 'utf-8';
+	$doc->{encoding} = $encoding;
 	$doc->save_file if $doc->filename;
 	$window->refresh;
 
-	$window->message( Wx::gettext( sprintf( 'Encode document to System Default(%s)', $doc->{encoding} ) ) );
+	$window->message( Wx::gettext( sprintf( 'Document encoded to (%s)', $doc->{encoding} ) ) );
+	return;
+}
 
+sub encode_document_to_system_default {
+	my ( $window, $event ) = @_;
+	_encode($window, Padre::Locale::encoding_system_default() || 'utf-8');
 	return;
 }
 
 sub encode_document_to_utf8 {
 	my ( $window, $event ) = @_;
-
-	my $doc = $window->current->document;
-	$doc->{encoding} = 'utf-8';
-	$doc->save_file if $doc->filename;
-	$window->refresh;
-
-	$window->message( Wx::gettext( sprintf( 'Encode document to %s', $doc->{encoding} ) ) );
-
+	_encode($window, 'utf-8');
 	return;
 }
 
@@ -87,12 +85,7 @@ sub encode_ok_clicked {
 	my $data   = $dialog->get_data;
 	$dialog->Destroy;
 
-	my $doc = $window->current->document;
-	$doc->{encoding} = $data->{_encoding_};
-	$doc->save_file if $doc->filename;
-	$window->refresh;
-
-	$window->message( Wx::gettext( sprintf( 'Encode document to %s', $doc->{encoding} ) ) );
+	_encode($window, $data->{_encoding_});
 	return;
 }
 
