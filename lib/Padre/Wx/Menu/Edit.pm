@@ -268,7 +268,8 @@ sub new {
 		$main,
 		$self->{convert_encoding_system},
 		sub {
-			Padre::Wx::Main::encode_document_to_system_default(@_);
+			require Padre::Wx::Dialog::Encode;
+			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
 		},
 	);
 
@@ -280,7 +281,8 @@ sub new {
 		$main,
 		$self->{convert_encoding_utf8},
 		sub {
-			Padre::Wx::Main::encode_document_to_utf8(@_);
+			require Padre::Wx::Dialog::Encode;
+			Padre::Wx::Dialog::Encode::encode_document_to_utf8(@_);
 		},
 	);
 
@@ -292,7 +294,8 @@ sub new {
 		$main,
 		$self->{convert_encoding_to},
 		sub {
-			Padre::Wx::Main::encode_document_to(@_);
+			require Padre::Wx::Dialog::Encode;
+			Padre::Wx::Dialog::Encode::encode_document_to(@_);
 		},
 	);
 

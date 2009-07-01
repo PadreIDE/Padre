@@ -1,0 +1,104 @@
+package Padre::Wx::Dialog::Encode;
+
+use strict;
+use warnings;
+use Padre::Wx         ();
+use Padre::Wx::Dialog ();
+
+our $VERSION = '0.38';
+
+# Encode document to System Default
+# Encode document to utf-8
+# Encode document to ...
+sub encode_document_to_system_default {
+	my ( $window, $event ) = @_;
+
+	my $doc = $window->current->document;
+	$doc->{encoding} = Padre::Locale::encoding_system_default || 'utf-8';
+	$doc->save_file if $doc->filename;
+	$window->refresh;
+
+	$window->message( Wx::gettext( sprintf( 'Encode document to System Default(%s)', $doc->{encoding} ) ) );
+
+	return;
+}
+
+sub encode_document_to_utf8 {
+	my ( $window, $event ) = @_;
+
+	my $doc = $window->current->document;
+	$doc->{encoding} = 'utf-8';
+	$doc->save_file if $doc->filename;
+	$window->refresh;
+
+	$window->message( Wx::gettext( sprintf( 'Encode document to %s', $doc->{encoding} ) ) );
+
+	return;
+}
+
+sub encode_document_to {
+	my ( $window, $event ) = @_;
+
+	my @ENCODINGS = qw(
+		cp932
+		cp949
+		euc-jp
+		euc-kr
+		shift-jis
+		utf-8
+	);
+
+	my @layout = (
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Encode to:') ],
+			[ 'Wx::ComboBox', '_encoding_', 'utf-8', \@ENCODINGS, Wx::wxCB_READONLY ],
+		],
+		[   [ 'Wx::Button', '_ok_',     Wx::wxID_OK ],
+			[ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ],
+		],
+	);
+
+	my $dialog = Padre::Wx::Dialog->new(
+		parent => $window,
+		title  => Wx::gettext("Encode document to..."),
+		layout => \@layout,
+		width  => [ 100, 200 ],
+		bottom => 20,
+	);
+	$dialog->{_widgets_}{_ok_}->SetDefault;
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_ok_},     \&encode_ok_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_}, \&encode_cancel_clicked );
+
+	$dialog->{_widgets_}{_encoding_}->SetFocus;
+	$dialog->Show(1);
+
+	return 1;
+}
+
+sub encode_cancel_clicked {
+	my ( $dialog, $event ) = @_;
+
+	$dialog->Destroy;
+}
+
+sub encode_ok_clicked {
+	my ( $dialog, $event ) = @_;
+
+	my $window = $dialog->GetParent;
+	my $data   = $dialog->get_data;
+	$dialog->Destroy;
+
+	my $doc = $window->current->document;
+	$doc->{encoding} = $data->{_encoding_};
+	$doc->save_file if $doc->filename;
+	$window->refresh;
+
+	$window->message( Wx::gettext( sprintf( 'Encode document to %s', $doc->{encoding} ) ) );
+	return;
+}
+
+1;
+
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
