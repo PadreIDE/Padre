@@ -413,6 +413,8 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
+	return if not $self->current->editor; # no replace if no file is open
+
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and not as the string to be used
 	$text = '' if $text =~ /\n/;

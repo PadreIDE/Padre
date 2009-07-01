@@ -319,6 +319,8 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
+	return if not $self->current->editor; # no search if no file is open (TODO ??)
+	
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and not as the string to be used
 	$text = '' if $text =~ /\n/;
@@ -457,6 +459,7 @@ sub search {
 
 	# Find the range to search within
 	my $editor      = $self->current->editor;
+	return if not $editor; # avoid crash if no file is open
 	my $text        = $editor->GetTextRange( 0, $editor->GetLength );
 	my ($from, $to) = $editor->GetSelection;
 
