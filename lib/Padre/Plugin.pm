@@ -48,9 +48,9 @@ use Carp         ();
 use File::Spec   ();
 use Scalar::Util ();
 use Params::Util qw{_HASH0 _INSTANCE};
-use YAML::Tiny   ();
-use Padre::DB    ();
-use Padre::Wx    ();
+use YAML::Tiny ();
+use Padre::DB  ();
+use Padre::Wx  ();
 
 our $VERSION    = '0.38';
 our $COMPATIBLE = '0.18';
@@ -112,19 +112,19 @@ C<Padre::Plugin::Vi>.
 =cut
 
 sub plugin_locale_directory {
-	return File::Spec->catdir( shift->plugin_share_directory(@_), 'locale');
+	return File::Spec->catdir( shift->plugin_share_directory(@_), 'locale' );
 }
 
 sub plugin_share_directory {
 	my $pkg = ref $_[0] || $_[0];
 	$pkg =~ s/::/-/g;
 
-	if ($ENV{PADRE_DEV}) {
+	if ( $ENV{PADRE_DEV} ) {
 		my $root = File::Spec->catdir( $FindBin::Bin, File::Spec->updir, File::Spec->updir, $pkg );
 		my $path = File::Spec->catdir( $root, 'share' );
 		return $path if -d $path;
-		
-		$path = File::Spec->catdir( $root, 'lib', split(/-/, $pkg), 'share' );
+
+		$path = File::Spec->catdir( $root, 'lib', split( /-/, $pkg ), 'share' );
 		return $path if -d $path;
 		return;
 	}

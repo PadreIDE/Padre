@@ -40,9 +40,9 @@ our @EXPORT_OK = qw(newline_type get_matches _T);
 # Officially Supported Constants
 
 # Convenience constants for the operating system
-use constant WIN32 => !! ( $^O eq 'MSWin32' );
-use constant MAC   => !! ( $^O eq 'darwin'  );
-use constant UNIX  => !  ( WIN32 or MAC     );
+use constant WIN32 => !!( $^O eq 'MSWin32' );
+use constant MAC   => !!( $^O eq 'darwin' );
+use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends
 # 1. Win32 Native

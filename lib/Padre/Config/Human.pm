@@ -32,7 +32,7 @@ sub read {
 	my $class = shift;
 
 	# Load the user configuration
-	my $hash = eval { YAML::Tiny::LoadFile( Padre::Constant::CONFIG_HUMAN ) };
+	my $hash = eval { YAML::Tiny::LoadFile(Padre::Constant::CONFIG_HUMAN) };
 	unless ( Params::Util::_HASH0($hash) ) {
 		return;
 	}

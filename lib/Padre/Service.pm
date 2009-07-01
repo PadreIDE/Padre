@@ -67,43 +67,39 @@ with no arguments B<IN A TIGHT LOOP>.
 =cut
 
 sub run {
-	my ($self,$queue) = @_;
-	
-	my $tid = threads->tid;
-	my $event  = $self->{service_event};
-	$self->post_event(  $event , "$tid;ALIVE" );
+	my ( $self, $queue ) = @_;
+
+	my $tid   = threads->tid;
+	my $event = $self->{service_event};
+	$self->post_event( $event, "$tid;ALIVE" );
 	my $running = 1;
-		
-	while ( $running ) {
+
+	while ($running) {
 		$self->service_loop;
 		next unless $queue->pending;
-		
+
 		my $incoming = $queue->peek(0);
+
 		# Peek at the queue - for something addressed to us
 		# YUK - how about a dedicated queue per service
 		# peek and poke went out in the dark ages didn't they
 		if ( $incoming =~ m{$tid;} ) {
 			my $instruction = $queue->dequeue;
-			my ($command) =  $instruction =~ m{^$tid;(HANGUP|TERMINATE)};
+			my ($command) = $instruction =~ m{^$tid;(HANGUP|TERMINATE)};
 			if ( $command eq 'HANGUP' ) {
 				$self->hangup;
 				$running = 0;
-			}
-			elsif ( $command eq 'TERMINATE' ) {
+			} elsif ( $command eq 'TERMINATE' ) {
 				$self->terminate;
 				$running = 0;
+			} elsif ( $command eq 'PING' ) {
+				$self->post_event( $event, "$tid;ALIVE" );
+			} else {
+				$self->task_warn( "$self : Unrecognised command event $command" );
 			}
-			elsif ( $command eq 'PING' ) {
-				$self->post_event( $event , "$tid;ALIVE" );
-			}
-			else { 
-				$self->task_warn( "$self : Unrecognised command event $command" 
-				)
-			}
-		
+
 		}
-		
-		
+
 	}
 	return;
 }
@@ -117,7 +113,7 @@ to gracefully stop what it is doing and return from this method as soon as possi
 
 sub hangup {
 	my ($self) = @_;
-	
+
 }
 
 =head2 terminate
@@ -133,7 +129,6 @@ sub terminate {
 
 }
 
-
 =head2 service_loop
 
 Called in a loop while the service is believed to be running
@@ -143,14 +138,15 @@ second before returning control to the loop.
 =cut
 
 {
-my $i = 0;
-sub service_loop {
-	my ($self) = @_;
-	my $tid = threads->tid;
-	$self->task_print( "Service ($tid) Looped [$i]\n" );
-	$i++;	
-	sleep 1;
-}
+	my $i = 0;
+
+	sub service_loop {
+		my ($self) = @_;
+		my $tid = threads->tid;
+		$self->task_print("Service ($tid) Looped [$i]\n");
+		$i++;
+		sleep 1;
+	}
 }
 
 =head1 COPYRIGHT

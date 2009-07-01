@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use utf8;
 use Padre::Constant ();
-use Padre::Current  '_CURRENT';
+use Padre::Current '_CURRENT';
 use Padre::Locale   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
@@ -47,7 +47,7 @@ sub new {
 				# populate the main window hash.
 				my $selection = $_[0]->current->text;
 				$_[0]->menu->help->help( $_[0] );
-				if ( $selection ) {
+				if ($selection) {
 					$_[0]->{help}->help($selection);
 				}
 				return;
@@ -92,7 +92,7 @@ sub new {
 		},
 	);
 
-	if ( Padre::Util::WIN32 ) {
+	if (Padre::Util::WIN32) {
 
 		Wx::Event::EVT_MENU(
 			$main,
@@ -130,7 +130,7 @@ sub new {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
 		},
 	);
-	
+
 	Wx::Event::EVT_MENU(
 		$main,
 		$self->Append( -1, Wx::gettext("&Translate Padre...") ),
@@ -213,7 +213,7 @@ sub about {
 	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm") );
 
 	# Only Unix/GTK native about box supports websites
-	if ( Padre::Constant::WXGTK ) {
+	if (Padre::Constant::WXGTK) {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 

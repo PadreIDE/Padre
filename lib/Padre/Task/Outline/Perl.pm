@@ -97,6 +97,7 @@ sub _get_outline {
 		} elsif ( ref $thing eq 'PPI::Statement::Sub' ) {
 			push @{ $cur_pkg->{methods} }, { name => $thing->name, line => $thing->location->[0] };
 		} elsif ( ref $thing eq 'PPI::Statement' ) {
+
 			# last resort, let's analyse further down...
 			my $node1 = $thing->first_element;
 			my $node2 = $thing->child(2);

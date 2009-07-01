@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use File::Basename ();
-use Params::Util   qw{_INSTANCE};
+use Params::Util qw{_INSTANCE};
 use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
@@ -23,11 +23,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT
-		| Wx::wxTR_SINGLE
-		| Wx::wxTR_HAS_BUTTONS
-		| Wx::wxTR_LINES_AT_ROOT
-		| Wx::wxBORDER_NONE
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS | Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE
 	);
 	$self->SetIndent(10);
 	$self->{force_next} = 0;
@@ -129,8 +125,8 @@ sub update_gui {
 	$current->ide->wx or return;
 
 	my $filename = $current->filename or return;
-	my $dir      = Padre::Util::get_project_dir($filename)
-	            || File::Basename::dirname($filename);
+	my $dir = Padre::Util::get_project_dir($filename)
+		|| File::Basename::dirname($filename);
 
 	# TODO empty CACHE if forced ?
 	# TODO how to recognize real change in ?

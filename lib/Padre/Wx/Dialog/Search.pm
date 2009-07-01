@@ -36,7 +36,7 @@ sub search {
 	my $self      = shift;
 	my $direction = shift;
 
-	return if not Padre->ide->wx->main->current->editor; # avoid crash if no file open
+	return if not Padre->ide->wx->main->current->editor;    # avoid crash if no file open
 
 	$self->{backward} = $direction eq 'previous';
 	unless ( $self->{panel} ) {

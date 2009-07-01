@@ -17,7 +17,7 @@ C<Padre::Wx::Dialog::Find> implements Padre's Find dialogs.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util                 qw{_STRING};
+use Params::Util qw{_STRING};
 use Padre::Current               ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
@@ -41,9 +41,9 @@ Create and return a C<Padre::Wx::Dialog::Find> search widget.
 =cut
 
 sub new {
-	my $class   = shift;
-	my $main    = shift;
-	unless ( $main ) {
+	my $class = shift;
+	my $main  = shift;
+	unless ($main) {
 		die("Did not pass parent to find dialog constructor");
 	}
 
@@ -54,10 +54,7 @@ sub new {
 		Wx::gettext('Find'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU
-		| Wx::wxRESIZE_BORDER
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU | Wx::wxRESIZE_BORDER
 	);
 
 	# The text to search for
@@ -293,7 +290,7 @@ sub cancel {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$editor->SetFocus;
 	}
 
@@ -319,8 +316,8 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
-	return if not $self->current->editor; # no search if no file is open (TODO ??)
-	
+	return if not $self->current->editor;    # no search if no file is open (TODO ??)
+
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and not as the string to be used
 	$text = '' if $text =~ /\n/;
@@ -405,7 +402,7 @@ sub find_next {
 		}
 	}
 
-	if ( $term ) {
+	if ($term) {
 		$self->search;
 	} else {
 		$self->find;
@@ -428,7 +425,7 @@ or run C<find> method if search history is empty.
 sub find_previous {
 	my $self = shift;
 	my $term = Padre::DB::History->previous('search');
-	if ( $term ) {
+	if ($term) {
 		$self->search( rev => 1 );
 	} else {
 		$self->find;
@@ -458,29 +455,22 @@ sub search {
 	}
 
 	# Find the range to search within
-	my $editor      = $self->current->editor;
-	return if not $editor; # avoid crash if no file is open
-	my $text        = $editor->GetTextRange( 0, $editor->GetLength );
-	my ($from, $to) = $editor->GetSelection;
+	my $editor = $self->current->editor;
+	return if not $editor;    # avoid crash if no file is open
+	my $text = $editor->GetTextRange( 0, $editor->GetLength );
+	my ( $from, $to ) = $editor->GetSelection;
 
 	# Execute the search and move to the resulting location
-	my ($start, $end, @matches) = Padre::Util::get_matches(
-		$text, $regex, $from, $to, $backwards
-	);
-	
-	
-	if( ! defined $start ){
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, $from, $to, $backwards );
+
+	if ( !defined $start ) {
 		$self->_not_found;
 		return;
-	};
+	}
 	$editor->SetSelection( $start, $end );
 
 	return;
 }
-
-
-
-
 
 #####################################################################
 # Support Methods
@@ -492,10 +482,10 @@ sub _sync_config {
 
 	# Save the search settings to config
 	my $config = $self->current->config;
-	$config->set( find_case    => ! $self->{find_case}->GetValue    );
-	$config->set( find_regex   =>   $self->{find_regex}->GetValue   );
-	$config->set( find_first   =>   $self->{find_first}->GetValue   );
-	$config->set( find_reverse =>   $self->{find_reverse}->GetValue );
+	$config->set( find_case    => !$self->{find_case}->GetValue );
+	$config->set( find_regex   => $self->{find_regex}->GetValue );
+	$config->set( find_first   => $self->{find_first}->GetValue );
+	$config->set( find_reverse => $self->{find_reverse}->GetValue );
 	$config->write;
 
 	return $config;
@@ -510,18 +500,18 @@ sub _get_search {
 
 	# Escape the raw search term
 	if ( $config->find_regex ) {
+
 		# Escape non-trailing $ so they won't interpolate
 		$term =~ s/\$(?!\z)/\\\$/g;
 	} else {
+
 		# Escape everything
 		$term = quotemeta $term;
 	}
 
 	# Compile the regex
-	my $regex = eval {
-		$config->find_case ? qr/$term/m : qr/$term/mi
-	};
-	if ( $@ ) {
+	my $regex = eval { $config->find_case ? qr/$term/m : qr/$term/mi };
+	if ($@) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Cannot build regex for '%s'"), $term ),
 			Wx::gettext('Search error'),
@@ -535,17 +525,18 @@ sub _get_search {
 }
 
 sub _not_found {
-	my( $self ) = @_;
-	# Want to see if not found this is 
+	my ($self) = @_;
+
+	# Want to see if not found this is
 	# where to show a MessageBox.
-	my $term   = Padre::DB::History->previous('search');
+	my $term = Padre::DB::History->previous('search');
 	Wx::MessageBox(
 		sprintf( Wx::gettext("Failed to find '%s' in current document."), $term ),
 		Wx::gettext('Not Found'),
 		Wx::wxOK,
 		$self,
-	);	
-	
+	);
+
 }
 
 1;

@@ -65,11 +65,10 @@ sub ppi_transform {
 sub ppi_select {
 	my $self     = shift;
 	my $location = shift;
-	my $editor = $self->editor or return;
-	my $start = $self->ppi_location_to_character_position($location);
+	my $editor   = $self->editor or return;
+	my $start    = $self->ppi_location_to_character_position($location);
 	$editor->SetSelection( $start, $start + 1 );
 }
-
 
 # Convert a ppi-style location [$line, $col, $apparent_col]
 # to an absolute document offset
@@ -85,7 +84,6 @@ sub ppi_location_to_character_position {
 	return $start;
 }
 
-
 # Convert an absolute document offset to
 # a ppi-style location [$line, $col, $apparent_col]
 # FIXME: Doesn't handle $apparent_col right
@@ -95,11 +93,10 @@ sub character_position_to_ppi_location {
 
 	my $ed   = $self->editor;
 	my $line = 1 + $ed->LineFromPosition($position);
-	my $col  = 1 + $position - $ed->PositionFromLine($line-1);
+	my $col  = 1 + $position - $ed->PositionFromLine( $line - 1 );
 
-	return [$line, $col, $col];
+	return [ $line, $col, $col ];
 }
-
 
 sub lexer {
 	my $self   = shift;
@@ -224,6 +221,7 @@ sub colorize {
 sub _css_class {
 	my ( $self, $Token ) = @_;
 	if ( $Token->isa('PPI::Token::Word') ) {
+
 		# There are some words we can be very confident are
 		# being used as keywords
 		unless ( $Token->snext_sibling and $Token->snext_sibling->content eq '=>' ) {
@@ -306,7 +304,8 @@ sub get_command {
 	my $config = Padre->ide->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename = $config->run_save eq 'unsaved' && !$self->is_saved
+	my $filename
+		= $config->run_save eq 'unsaved' && !$self->is_saved
 		? $self->store_in_tempfile
 		: $self->filename;
 
@@ -585,9 +584,10 @@ sub lexical_variable_replacement {
 sub introduce_temporary_variable {
 	my ( $self, $varname ) = @_;
 
-	my $editor = $self->editor;
+	my $editor         = $self->editor;
 	my $start_position = $editor->GetSelectionStart;
-	my $end_position   = $editor->GetSelectionEnd-1;
+	my $end_position   = $editor->GetSelectionEnd - 1;
+
 	# create a new object of the task class and schedule it
 	require Padre::Task::PPI::IntroduceTemporaryVariable;
 	Padre::Task::PPI::IntroduceTemporaryVariable->new(
@@ -628,67 +628,75 @@ sub autocomplete {
 	require Parse::ExuberantCTags;
 
 	# check for variables
-	if ($prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/) {
+	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
-		my $type = $1;
-		my $parser = Parse::ExuberantCTags->new(File::Spec->catfile($ENV{PADRE_HOME}, 'perltags'));
-		if (defined $parser) {
-			my $tag = $parser->findTag($prefix, partial => 1);
+		my $type   = $1;
+		my $parser = Parse::ExuberantCTags->new( File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' ) );
+		if ( defined $parser ) {
+			my $tag = $parser->findTag( $prefix, partial => 1 );
 			my @words;
 			my %seen;
-			while (defined($tag)) {
+			while ( defined($tag) ) {
+
 				# TODO check file scope?
-				if ($tag->{kind} eq 'v') {
+				if ( $tag->{kind} eq 'v' ) {
+
 					# TODO potentially don't skip depending on circumstances.
-					if (not $seen{$tag->{name}}++) {
+					if ( not $seen{ $tag->{name} }++ ) {
 						push @words, $tag->{name};
 					}
 				}
 				$tag = $parser->findNextTag();
 			}
-			return(length($prefix), @words );
+			return ( length($prefix), @words );
 		}
 	}
+
 	# check for methods
-	elsif ($prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)\s*->\s*(\w*)$/) {
-		my $class = $1;
+	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)\s*->\s*(\w*)$/ ) {
+		my $class  = $1;
 		my $prefix = $2;
 		$prefix = '' if not defined $prefix;
-		my $parser = Parse::ExuberantCTags->new(File::Spec->catfile($ENV{PADRE_HOME}, 'perltags'));
-		if (defined $parser) {
-			my $tag = ($prefix eq '') ? $parser->firstTag() : $parser->findTag($prefix, partial => 1);
+		my $parser = Parse::ExuberantCTags->new( File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' ) );
+		if ( defined $parser ) {
+			my $tag = ( $prefix eq '' ) ? $parser->firstTag() : $parser->findTag( $prefix, partial => 1 );
 			my @words;
+
 			# TODO: INHERITANCE!
-			while (defined($tag)) {
-				if ($tag->{kind} eq 's'
-				    and defined $tag->{extension}{class}
-				    and $tag->{extension}{class} eq $class) {
+			while ( defined($tag) ) {
+				if (    $tag->{kind} eq 's'
+					and defined $tag->{extension}{class}
+					and $tag->{extension}{class} eq $class )
+				{
 					push @words, $tag->{name};
 				}
-				$tag = ($prefix eq '') ? $parser->nextTag() : $parser->findNextTag();
+				$tag = ( $prefix eq '' ) ? $parser->nextTag() : $parser->findNextTag();
 			}
-			return(length($prefix), @words );
+			return ( length($prefix), @words );
 		}
 	}
+
 	# check for packages
-	elsif ($prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/) {
+	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/ ) {
 		my $prefix = $1;
-		my $parser = Parse::ExuberantCTags->new(File::Spec->catfile($ENV{PADRE_HOME}, 'perltags'));
-		if (defined $parser) {
-			my $tag = $parser->findTag($prefix, partial => 1);
+		my $parser = Parse::ExuberantCTags->new( File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' ) );
+		if ( defined $parser ) {
+			my $tag = $parser->findTag( $prefix, partial => 1 );
 			my @words;
 			my %seen;
-			while (defined($tag)) {
+			while ( defined($tag) ) {
+
 				# TODO check file scope?
-				if ($tag->{kind} eq 'p') {
+				if ( $tag->{kind} eq 'p' ) {
+
 					# TODO potentially don't skip depending on circumstances.
-					if (not $seen{$tag->{name}}++) {
+					if ( not $seen{ $tag->{name} }++ ) {
 						push @words, $tag->{name};
 					}
 				}
 				$tag = $parser->findNextTag();
 			}
-			return(length($prefix), @words );
+			return ( length($prefix), @words );
 		}
 	}
 
@@ -834,7 +842,7 @@ sub event_on_right_down {
 
 	my $select_start = $editor->GetSelectionStart;
 	my $select_end   = $editor->GetSelectionEnd;
-	if ( $select_start != $select_end ) { # if something's selected
+	if ( $select_start != $select_end ) {    # if something's selected
 		$menu->AppendSeparator if not $introduced_separator++;
 
 		my $intro_temp = $menu->Append( -1, Wx::gettext("Introduce Temporary Variable") );
@@ -842,9 +850,10 @@ sub event_on_right_down {
 			$editor,
 			$intro_temp,
 			sub {
+
 				# FIXME near duplication of the code in Padre::Wx::Menu::Perl
 				my $editor = shift;
-				my $doc = $self;
+				my $doc    = $self;
 				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 				require Padre::Wx::History::TextEntryDialog;
 				my $dialog = Padre::Wx::History::TextEntryDialog->new(
@@ -860,7 +869,7 @@ sub event_on_right_down {
 				$doc->introduce_temporary_variable($replacement);
 			},
 		);
-	} # end if something's selected
+	}    # end if something's selected
 }
 
 sub event_on_left_up {

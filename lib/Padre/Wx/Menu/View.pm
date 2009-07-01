@@ -137,7 +137,7 @@ sub new {
 			},
 		);
 	}
-	
+
 	$self->{toolbar} = $self->AppendCheckItem(
 		-1,
 		Wx::gettext("Show Toolbar")
@@ -146,7 +146,7 @@ sub new {
 		$main,
 		$self->{toolbar},
 		sub {
-			$_[0]->on_toggle_toolbar($_[1]);
+			$_[0]->on_toggle_toolbar( $_[1] );
 		}
 	);
 
@@ -374,8 +374,7 @@ sub new {
 		ultraedit => Wx::gettext('Ultraedit'),
 		notepad   => Wx::gettext('Notepad++'),
 	);
-	my @order
-		= sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
+	my @order = sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
 	foreach my $name (@order) {
 		my $label = $styles{$name};
 		my $radio = $self->{style}->AppendRadioItem( -1, $label );
@@ -500,7 +499,7 @@ sub refresh {
 	my $doc      = $document ? 1 : 0;
 
 	# Simple check state cases from configuration
-	unless ( Padre::Constant::WXWIN32 ) {
+	unless (Padre::Constant::WXWIN32) {
 		$self->{statusbar}->Check( $config->main_statusbar );
 	}
 

@@ -65,9 +65,9 @@ sub on_ack {
 
 	# delay App::Ack loading till first use, to reduce memory
 	# usage and init time.
-	unless ( $loaded ) {
+	unless ($loaded) {
 		my $error = load();
-		if ( $error ) {
+		if ($error) {
 			$main->error($error);
 			return;
 		}
@@ -132,7 +132,7 @@ sub get_layout {
 sub dialog {
 	my ( $main, $term, $directory ) = @_;
 
-	my $layout = get_layout($term, $directory);
+	my $layout = get_layout( $term, $directory );
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $main,
 		title  => Wx::gettext("Find in Files"),

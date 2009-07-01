@@ -78,7 +78,7 @@ sub launch_irc {
 
 	# Generate the (long) chat URL
 	my $url = "http://padre.perlide.org/irc.html?channel=$channel";
-	if (my $locale = Padre->ide->config->locale) {
+	if ( my $locale = Padre->ide->config->locale ) {
 		$url .= "&locale=$locale";
 	}
 
@@ -89,6 +89,7 @@ sub launch_irc {
 }
 
 1;
+
 =pod
 
 =head1 NAME

@@ -3,10 +3,10 @@ package Padre::Wx::Dialog::Preferences;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current    ();
-use Padre::Wx         ();
-use Padre::Wx::Dialog ();
-use Padre::Wx::Editor ();
+use Padre::Current                         ();
+use Padre::Wx                              ();
+use Padre::Wx::Dialog                      ();
+use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 
 our $VERSION = '0.38';

@@ -36,16 +36,16 @@ the available methods that can be applied to it besides the added ones
 
 use strict;
 use warnings;
-use Padre::Constant ();
-use Padre::Current  ();
-use Padre::Util     ();
-use Padre::Wx       ();
+use Padre::Constant            ();
+use Padre::Current             ();
+use Padre::Util                ();
+use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
 use Class::XSAccessor accessors => {
-	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
-	_task_status => '_task_status', # Current task status
-	_task_width  => '_task_width',  # Current width of task field
+	_task_sbmp   => '_task_sbmp',      # Static bitmap holding the task status
+	_task_status => '_task_status',    # Current task status
+	_task_width  => '_task_width',     # Current width of task field
 };
 
 our $VERSION = '0.38';
@@ -91,7 +91,7 @@ sub new {
 	# create the static bitmap that will hold the task load status
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
-	$self->_task_status('foobar'); # init status to sthg defined
+	$self->_task_status('foobar');    # init status to sthg defined
 	Wx::Event::EVT_LEFT_DOWN(
 		$sbmp,
 		sub {
@@ -109,10 +109,6 @@ sub new {
 
 	return $self;
 }
-
-
-
-
 
 #####################################################################
 
@@ -147,11 +143,11 @@ Force an update of the document fields in the statusbar.
 =cut
 
 sub refresh {
-	my $self     = shift;
-	my $current  = $self->current;
+	my $self    = shift;
+	my $current = $self->current;
 
 	# Blank the status bar if no document is open
-	my $editor   = $current->editor or return $self->clear;
+	my $editor = $current->editor or return $self->clear;
 
 	# Prepare the various strings that form the status bar
 	my $notebook = $current->notebook;
@@ -160,7 +156,8 @@ sub refresh {
 	my $pageid   = $notebook->GetSelection;
 	my $filename = $document->filename || '';
 	my $old      = $notebook->GetPageText($pageid);
-	my $text     = $filename
+	my $text
+		= $filename
 		? File::Basename::basename($filename)
 		: substr( $old, 1 );
 	my $modified = $editor->GetModify ? '*' : ' ';
@@ -179,7 +176,7 @@ sub refresh {
 	# Write the new values into the status bar and update sizes
 	$self->SetStatusText( "$modified $filename", FILENAME );
 	$self->SetStatusText( $mimetype,             MIMETYPE );
-	$self->SetStatusText( $newline,              NEWLINE  );
+	$self->SetStatusText( $newline,              NEWLINE );
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
@@ -217,7 +214,7 @@ the icon to one of the other states
 sub update_task_status {
 	my $self   = shift;
 	my $status = $self->_get_task_status;
-	return if $status eq $self->_task_status; # Nothing to do
+	return if $status eq $self->_task_status;    # Nothing to do
 
 	# Store new status
 	$self->_task_status($status);
@@ -301,9 +298,9 @@ sub _get_task_status {
 #
 sub _move_bitmap {
 	my ($self) = @_;
-	my $sbmp = $self->_task_sbmp;
-	my $rect = $self->GetFieldRect(TASKLOAD);
-	my $size = $sbmp->GetSize;
+	my $sbmp   = $self->_task_sbmp;
+	my $rect   = $self->GetFieldRect(TASKLOAD);
+	my $size   = $sbmp->GetSize;
 	$sbmp->Move(
 		$rect->GetLeft + ( $rect->GetWidth - $size->GetWidth ) / 2,
 		$rect->GetTop +  ( $rect->GetHeight - $size->GetHeight ) / 2,

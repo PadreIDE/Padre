@@ -27,14 +27,13 @@ object that can independantly search and/or replace in an editor object.
 
 use strict;
 use warnings;
-use Encode       ();
-use List::Util   ();
+use Encode     ();
+use List::Util ();
 use Params::Util '_INSTANCE';
 
 our $VERSION = '0.38';
 
-use Class::XSAccessor
-getters => {
+use Class::XSAccessor getters => {
 	find_term    => 'find_term',
 	find_case    => 'find_case',
 	find_regex   => 'find_regex',
@@ -45,7 +44,7 @@ getters => {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 	unless ( defined $self->find_term ) {
 		die("Did not provide 'find_term' search term");
 	}
@@ -62,18 +61,19 @@ sub new {
 	# Escape the raw search term
 	my $term = $self->find_term;
 	if ( $self->find_regex ) {
+
 		# Escape non-trailing $ so they won't interpolate
 		$term =~ s/\$(?!\z)/\\\$/g;
 	} else {
+
 		# Escape everything
 		$term = quotemeta $term;
 	}
 
 	# Compile the regex
-	$self->{search_regex} = eval {
-		$self->find_case ? qr/$term/m : qr/$term/mi
-	};
-	if ( $@ ) {
+	$self->{search_regex} = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
+	if ($@) {
+
 		# The regex doesn't compile
 		return;
 	}
@@ -88,10 +88,6 @@ sub config {
 	}
 	return $self->{config};
 }
-
-
-
-
 
 #####################################################################
 # Command Abstraction
@@ -129,7 +125,7 @@ sub replace_next {
 }
 
 sub replace_previous {
-	my $self   = shift;
+	my $self = shift;
 
 	# Replace the currently selected match
 	$self->replace(@_);
@@ -142,16 +138,12 @@ sub replace_previous {
 	}
 }
 
-
-
-
-
 #####################################################################
 # Content Abstraction
 
 sub search_down {
 	my $self = shift;
-	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+	if ( _INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_search_down(@_);
 	}
 	die("Missing or invalid content object to search in");
@@ -159,7 +151,7 @@ sub search_down {
 
 sub search_up {
 	my $self = shift;
-	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+	if ( _INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_search_up(@_);
 	}
 	die("Missing or invalid content object to search in");
@@ -167,7 +159,7 @@ sub search_up {
 
 sub replace {
 	my $self = shift;
-	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+	if ( _INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_replace(@_);
 	}
 	die("Missing or invalid content object to search in");
@@ -175,15 +167,11 @@ sub replace {
 
 sub replace_all {
 	my $self = shift;
-	if ( _INSTANCE($_[0], 'Padre::Wx::Editor') ) {
+	if ( _INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_replace_all(@_);
 	}
 	die("Missing or invalid content object to search in");
 }
-
-
-
-
 
 #####################################################################
 # Editor Interaction
@@ -191,12 +179,12 @@ sub replace_all {
 sub editor_search_down {
 	my $self   = shift;
 	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
+	unless ( _INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
 		die("Failed to provide editor object to search in");
 	}
 
 	# Execute the search and move to the resulting location
-	my ($start, $end, @matches) = $self->matches(
+	my ( $start, $end, @matches ) = $self->matches(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
 		$editor->GetSelection,
@@ -211,12 +199,12 @@ sub editor_search_down {
 sub editor_search_up {
 	my $self   = shift;
 	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
+	unless ( _INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
 		die("Failed to provide editor object to search in");
 	}
 
 	# Execute the search and move to the resulting location
-	my ($start, $end, @matches) = $self->matches(
+	my ( $start, $end, @matches ) = $self->matches(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
 		$editor->GetSelection,
@@ -232,12 +220,12 @@ sub editor_search_up {
 sub editor_replace {
 	my $self   = shift;
 	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
+	unless ( _INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
 		die("Failed to provide editor object to replace in");
 	}
 
 	# Execute the search and move to the resulting location
-	my ($start, $end, @matches) = $self->matches(
+	my ( $start, $end, @matches ) = $self->matches(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
 		$editor->GetSelection,
@@ -245,33 +233,33 @@ sub editor_replace {
 
 	# If they match replace it
 	if ( defined $start and $start == 0 and $end == $editor->GetLength ) {
-		$editor->ReplaceSelection($self->replace_text);
+		$editor->ReplaceSelection( $self->replace_text );
 		return 1;
 	} else {
 		return 0;
-	}	
+	}
 }
 
 sub editor_replace_all {
 	my $self   = shift;
 	my $editor = shift;
-	unless ( _INSTANCE($editor, 'Padre::Wx::Editor') ) {
+	unless ( _INSTANCE( $editor, 'Padre::Wx::Editor' ) ) {
 		die("Failed to provide editor object to replace in");
 	}
 
 	# Execute the search for all matches
-	my (undef, undef, @matches) = $self->matches(
+	my ( undef, undef, @matches ) = $self->matches(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
 	);
 
 	# Replace all matches as a single undo
-	if ( @matches ) {
+	if (@matches) {
 		my $replace = $self->replace_text;
 		$editor->BeginUndoAction;
 		foreach my $match ( reverse @matches ) {
-			$editor->SetTargetStart($match->[0]);
-			$editor->SetTargetEnd($match->[1]);
+			$editor->SetTargetStart( $match->[0] );
+			$editor->SetTargetEnd( $match->[1] );
 			$editor->ReplaceTarget($replace);
 		}
 		$editor->EndUndoAction;
@@ -280,9 +268,6 @@ sub editor_replace_all {
 	# Return the number of matches we replaced
 	return scalar @matches;
 }
-
-
-
 
 #####################################################################
 # Core Search
@@ -312,7 +297,7 @@ sub matches {
 	die "missing parameters" if @_ < 4;
 
 	# Searches run in unicode
-	my $text = Encode::encode('utf-8', shift);
+	my $text = Encode::encode( 'utf-8', shift );
 
 	# Find all matches for the regex
 	my $regex   = shift;
@@ -320,7 +305,7 @@ sub matches {
 	while ( $text =~ /$regex/g ) {
 		push @matches, [ $-[0], $+[0] ];
 	}
-	unless ( @matches ) {
+	unless (@matches) {
 		return ( undef, undef );
 	}
 
@@ -328,10 +313,12 @@ sub matches {
 	my $from = shift || 0;
 	my $to   = shift || 0;
 	if ( $_[0] ) {
+
 		# Search backwards
 		my $pair = List::Util::first { $to > $_->[1] } reverse @matches;
 		$pair = $matches[-1] unless $pair;
 	} else {
+
 		# Search forwards
 		my $pair = List::Util::first { $from < $_->[0] } @matches;
 		$pair = $matches[0] unless $pair;

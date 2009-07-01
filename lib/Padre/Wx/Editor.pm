@@ -179,8 +179,8 @@ sub padre_setup_plain {
 }
 
 sub padre_setup_style {
-	my $self = shift;
-	my $name = shift;
+	my $self   = shift;
+	my $name   = shift;
 	my $config = $self->main->ide->config;
 
 	$self->padre_setup_plain;
@@ -203,12 +203,12 @@ sub setup_style_from_config {
 
 	foreach my $k ( keys %{ $data->{$name}->{colors} } ) {
 		my $f = 'Wx::' . $k;
-		if ($k =~ /^PADRE_/) {
+		if ( $k =~ /^PADRE_/ ) {
 			$f = 'Padre::Constant::' . $k;
 		}
 		no strict "refs";    ## no critic
 		my $v = eval { $f->() };
-		if ( $@ ) {
+		if ($@) {
 			warn "invalid key '$k'\n";
 			next;
 		}
@@ -623,7 +623,6 @@ sub on_focus {
 		}
 	}
 
-
 	if ( $self->needs_manual_colorize ) {
 
 		#Padre::Util::debug("needs manual");
@@ -806,7 +805,7 @@ sub on_right_down {
 
 	$menu->AppendSeparator;
 
-	if ( $event->isa('Wx::MouseEvent')
+	if (    $event->isa('Wx::MouseEvent')
 		and $self->main->ide->config->editor_folding )
 	{
 		my $mousePos         = $event->GetPosition;
@@ -858,8 +857,8 @@ sub on_right_down {
 }
 
 sub on_mouse_motion {
-	my $self  = shift;
-	my $event = shift;
+	my $self   = shift;
+	my $event  = shift;
 	my $config = $self->main->ide->config;
 
 	$event->Skip;

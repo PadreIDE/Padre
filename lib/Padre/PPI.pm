@@ -125,15 +125,15 @@ sub find_token_at_location {
 
 	$document->index_locations();
 
-	foreach my $token ($document->tokens) {
+	foreach my $token ( $document->tokens ) {
 		my $tloc = $token->location;
 		return $token->previous_token()
-		  if $tloc->[0] > $location->[0]
-		  or ( $tloc->[0] == $location->[0]
-		       and $tloc->[1] > $location->[1] );
+			if $tloc->[0] > $location->[0]
+				or (    $tloc->[0] == $location->[0]
+					and $tloc->[1] > $location->[1] );
 	}
 
-	return();
+	return ();
 
 	# old way that would only handle beginning of tokens; Should probably simply go away.; Should probably simply go away.
 	#my $variable_token = $document->find_first(

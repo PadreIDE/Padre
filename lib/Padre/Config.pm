@@ -215,7 +215,7 @@ sub set {
 
 	# Does the setting exist?
 	my $setting = $SETTING{$name};
-	unless ( $setting ) {
+	unless ($setting) {
 		Carp::croak("The configuration setting '$name' does not exist");
 	}
 

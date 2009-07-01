@@ -123,7 +123,7 @@ sub set_trace {
 }
 
 sub eval_document {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
 	return $self->_dump_eval( $document->text_get );
 }
@@ -132,7 +132,7 @@ sub dump_document {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document;
-	unless ( $document ) {
+	unless ($document) {
 		$current->main->message( Wx::gettext('No file is open'), 'Info' );
 		return;
 	}
@@ -162,9 +162,7 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName('Padre::Plugin::Devel');
-	$about->SetDescription(
-		Wx::gettext("A set of unrelated tools used by the Padre developers\n")
-	);
+	$about->SetDescription( Wx::gettext("A set of unrelated tools used by the Padre developers\n") );
 	Wx::AboutBox($about);
 	return;
 }
@@ -174,37 +172,31 @@ sub load_everything {
 	my $main = $self->current->main;
 
 	# Find the location of Padre.pm
-	my $padre  = $INC{'Padre.pm'};
+	my $padre = $INC{'Padre.pm'};
 	my $parent = substr( $padre, 0, length($padre) - 3 );
 
 	# Find everything under Padre:: with a matching version
 	require File::Find::Rule;
 	require ExtUtils::MakeMaker;
-	my @children = grep {
-		not $INC{$_}
-	} map {
-		"Padre/$_->[0]"
-	} grep {
-		defined($_->[1]) and $_->[1] eq $VERSION
-	} map { [
-		$_,
-		ExtUtils::MM_Unix->parse_version(
-			File::Spec->catfile($parent, $_)
-		)
-	] } File::Find::Rule->name('*.pm')->file->relative->in($parent);
-	$main->message("Found " . scalar(@children) . " unloaded modules");
+	my @children
+		= grep { not $INC{$_} }
+		map    { "Padre/$_->[0]" }
+		grep { defined( $_->[1] ) and $_->[1] eq $VERSION }
+		map { [ $_, ExtUtils::MM_Unix->parse_version( File::Spec->catfile( $parent, $_ ) ) ] }
+		File::Find::Rule->name('*.pm')->file->relative->in($parent);
+	$main->message( "Found " . scalar(@children) . " unloaded modules" );
 	return unless @children;
 
 	# Load all of them (ignoring errors)
 	my $loaded = 0;
-	foreach my $child ( @children ) {
+	foreach my $child (@children) {
 		eval { require $child; };
 		next if $@;
 		$loaded++;
 	}
 
 	# Say how many classes we loaded
-	$main->message( "Loaded $loaded modules" );
+	$main->message("Loaded $loaded modules");
 }
 
 # Takes a string, which it evals and then dumps to Output
@@ -227,9 +219,7 @@ sub _dump {
 	my $main = $self->current->main;
 
 	# Generate the dump string and set into the output window
-	$main->output->SetValue(
-		Devel::Dumpvar->new( to => 'return' )->dump(@_)
-	);
+	$main->output->SetValue( Devel::Dumpvar->new( to => 'return' )->dump(@_) );
 	$main->output->SetSelection( 0, 0 );
 	$main->show_output(1);
 

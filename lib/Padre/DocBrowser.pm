@@ -232,7 +232,6 @@ sub provider_for {
 	return $p;
 }
 
-
 sub accept {
 	my ( $self, $scheme ) = @_;
 	if ( defined $self->get_schemes->{$scheme} ) {
@@ -267,7 +266,7 @@ sub resolve {
 	my ( $self, $ref, $hints ) = @_;
 	my @refs;
 	if ( Scalar::Util::blessed($ref) and $ref->isa('URI') ) {
-		return $self->resolve_uri($ref,$hints);
+		return $self->resolve_uri( $ref, $hints );
 	}
 
 	# TODO this doubles up if a provider subscribes to multi
@@ -284,7 +283,7 @@ sub resolve_uri {
 	my ( $self, $uri, $hints ) = @_;
 	my $resolver = $self->accept( $uri->scheme );
 	return unless $resolver;
-	my $doc      = $resolver->resolve( $uri, $hints );
+	my $doc = $resolver->resolve( $uri, $hints );
 	return $doc;
 }
 

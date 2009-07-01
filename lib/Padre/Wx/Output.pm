@@ -27,9 +27,9 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTE_READONLY
-		| Wx::wxTE_MULTILINE
-		| Wx::wxTE_DONTWRAP
-		| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+			| Wx::wxTE_MULTILINE
+			| Wx::wxTE_DONTWRAP
+			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 
 	# Do custom startup stuff here
@@ -66,15 +66,15 @@ sub gettext_label {
 sub AppendText {
 	my $self     = shift;
 	my $use_ansi = $self->main->ide->config->main_output_ansi;
-	if ( utf8::is_utf8($_[0]) ) {
-		if ( $use_ansi ) {
-			$self->_handle_ansi_escapes($_[0]);
+	if ( utf8::is_utf8( $_[0] ) ) {
+		if ($use_ansi) {
+			$self->_handle_ansi_escapes( $_[0] );
 		} else {
-			$self->SUPER::AppendText($_[0]);
+			$self->SUPER::AppendText( $_[0] );
 		}
 	} else {
 		my $text = Encode::decode( 'utf8', $_[0] );
-		if ( $use_ansi ) {
+		if ($use_ansi) {
 			$self->_handle_ansi_escapes($text);
 		} else {
 			$self->SUPER::AppendText($text);

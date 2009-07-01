@@ -51,7 +51,6 @@ SCOPE: {
 		require Probe::Perl;
 		require File::Which;
 
-
 		# Use the most correct method first
 		require Probe::Perl;
 		my $_perl = Probe::Perl->find_perl_interpreter;
@@ -63,7 +62,7 @@ SCOPE: {
 		# Fallback to a simpler way
 		require File::Which;
 		$_perl = scalar File::Which::which('perl');
-		$perl = $_perl;
+		$perl  = $_perl;
 		return $perl;
 	}
 }
@@ -83,6 +82,7 @@ sub new {
 
 	# Create the empty object
 	my $self = $SINGLETON = bless {
+
 		# parsed command-line options
 		opts => \%opts,
 
@@ -105,6 +105,7 @@ sub new {
 
 	# Connect to the server if we are running in single instance mode
 	if ( $self->config->main_singleinstance ) {
+
 		# This blocks for about 1 second
 		require IO::Socket;
 		my $socket = IO::Socket::INET->new(
@@ -113,13 +114,14 @@ sub new {
 			Proto    => 'tcp',
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
-		if ( $socket ) {
-			my $pid  = '';
+		if ($socket) {
+			my $pid = '';
 			my $read = $socket->sysread( $pid, 10 );
 			if ( defined $read and $read == 10 ) {
+
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
-				if ( Padre::Constant::WIN32 ) {
+				if (Padre::Constant::WIN32) {
 					require Win32::API;
 					Win32::API->new(
 						'User32.dll',
@@ -128,7 +130,7 @@ sub new {
 					)->Call($pid);
 				}
 			}
-			foreach my $file ( @ARGV ) {
+			foreach my $file (@ARGV) {
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}

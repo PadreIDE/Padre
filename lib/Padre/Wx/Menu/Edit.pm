@@ -473,8 +473,6 @@ sub new {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
-	
-	
 
 	$self->{insert_from_file} = $self->Append(
 		-1,
@@ -552,8 +550,6 @@ sub refresh {
 
 	return 1;
 }
-
-
 
 1;
 

@@ -38,83 +38,79 @@ and C<end_position> to C<<$editor->GetSelectionEnd() - 1>>.
 =cut
 
 sub prepare {
-    my $self = shift;
-    $self->SUPER::prepare(@_);
+	my $self = shift;
+	$self->SUPER::prepare(@_);
 
-    # move the document to the main-thread-only storage
-    my $mto = $self->{main_thread_only} ||= {};
-    $mto->{document} = $self->{document}
-      if defined $self->{document};
-    delete $self->{document};
-    if ( not defined $mto->{document} ) {
-        require Carp;
-        Carp::croak(
-            "Missing Padre::Document::Perl object as {document} attribute of the temporary-variable task"
-        );
-    }
+	# move the document to the main-thread-only storage
+	my $mto = $self->{main_thread_only} ||= {};
+	$mto->{document} = $self->{document}
+		if defined $self->{document};
+	delete $self->{document};
+	if ( not defined $mto->{document} ) {
+		require Carp;
+		Carp::croak( "Missing Padre::Document::Perl object as {document} attribute of the temporary-variable task" );
+	}
 
-    foreach my $key (qw(start_location end_location)) {
-        if ( not defined $self->{$key} ) {
-            require Carp;
-            Carp::croak("Need a {$key}!");
-        } elsif ( not ref( $self->{$key} ) ) {
-            my $doc = $mto->{document};
-            $self->{$key} =
-              $doc->character_position_to_ppi_location( $self->{$key} );
-        }
-    }
+	foreach my $key (qw(start_location end_location)) {
+		if ( not defined $self->{$key} ) {
+			require Carp;
+			Carp::croak("Need a {$key}!");
+		} elsif ( not ref( $self->{$key} ) ) {
+			my $doc = $mto->{document};
+			$self->{$key} = $doc->character_position_to_ppi_location( $self->{$key} );
+		}
+	}
 
-    return ();
+	return ();
 }
 
 sub process_ppi {
-    my $self     = shift;
-    my $ppi      = shift or return;
-    my $location = $self->{start_location};
+	my $self     = shift;
+	my $ppi      = shift or return;
+	my $location = $self->{start_location};
 
-    my $munged = eval {
-        PPIx::EditorTools::IntroduceTemporaryVariable->new->introduce(
-            ppi            => $ppi,
-            start_location => $self->{start_location},
-            end_location   => $self->{end_location},
-            varname        => $self->{varname},
-        );
-    };
-    if ($@) {
-        $self->{error} = $@;
-        return;
-    }
+	my $munged = eval {
+		PPIx::EditorTools::IntroduceTemporaryVariable->new->introduce(
+			ppi            => $ppi,
+			start_location => $self->{start_location},
+			end_location   => $self->{end_location},
+			varname        => $self->{varname},
+		);
+	};
+	if ($@) {
+		$self->{error} = $@;
+		return;
+	}
 
-    # TODO: passing this back and forth is probably hyper-inefficient, but such is life.
-    $self->{updated_document_string} = $munged->code;
-    $self->{location}                = $munged->element->location;
-    return ();
+	# TODO: passing this back and forth is probably hyper-inefficient, but such is life.
+	$self->{updated_document_string} = $munged->code;
+	$self->{location}                = $munged->element->location;
+	return ();
 }
 
 sub finish {
-    my $self = shift;
-    if ( defined $self->{updated_document_string} ) {
+	my $self = shift;
+	if ( defined $self->{updated_document_string} ) {
 
-        # GUI update
-        # TODO: What if the document changed? Bad luck for now.
-        $self->{main_thread_only}->{document}
-          ->editor->SetText( $self->{updated_document_string} );
-        $self->{main_thread_only}->{document}->ppi_select( $self->{location} );
-    } else {
-        my $text;
-        if ( $self->{error} =~ /no token/ ) {
-            $text = Wx::gettext(
-                "First character of selection does not seem to point at a token."
-            );
-        } elsif ( $self->{error} =~ /no statement/ ) {
-            $text = Wx::gettext("Selection not part of a Perl statement?");
-        } else {
-            $text = Wx::gettext("Unknown error");
-        }
-        Wx::MessageBox( $text, Wx::gettext("Replace Operation Canceled"),
-            Wx::wxOK, Padre->ide->wx->main );
-    }
-    return ();
+		# GUI update
+		# TODO: What if the document changed? Bad luck for now.
+		$self->{main_thread_only}->{document}->editor->SetText( $self->{updated_document_string} );
+		$self->{main_thread_only}->{document}->ppi_select( $self->{location} );
+	} else {
+		my $text;
+		if ( $self->{error} =~ /no token/ ) {
+			$text = Wx::gettext( "First character of selection does not seem to point at a token." );
+		} elsif ( $self->{error} =~ /no statement/ ) {
+			$text = Wx::gettext("Selection not part of a Perl statement?");
+		} else {
+			$text = Wx::gettext("Unknown error");
+		}
+		Wx::MessageBox(
+			$text,    Wx::gettext("Replace Operation Canceled"),
+			Wx::wxOK, Padre->ide->wx->main
+		);
+	}
+	return ();
 }
 
 1;

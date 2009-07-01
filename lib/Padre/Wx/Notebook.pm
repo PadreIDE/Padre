@@ -2,7 +2,7 @@ package Padre::Wx::Notebook;
 
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.38';
@@ -78,7 +78,7 @@ sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		my $history = $main->{page_history};
 		my $current = Scalar::Util::refaddr($editor);
 		@$history = grep { $_ != $current } @$history;

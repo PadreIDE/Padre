@@ -40,9 +40,9 @@ my %HINT = (
 # Lay down some defaults from our common
 # constants
 my %PREFS = (
-	size => SIZE,
-	ext  => EXT,
-	icons=> ICONS,
+	size  => SIZE,
+	ext   => EXT,
+	icons => ICONS,
 );
 
 our $DEFAULT_ICON_NAME = 'status/padre-fallback-icon';
@@ -55,13 +55,16 @@ our $DEFAULT_ICON;
 # bother to check params.
 # TODO: Clearly this assumption can't last...
 sub find {
-	my $name = shift;
+	my $name  = shift;
 	my $prefs = shift;
+
 	# If you _really_ are competant ;), prefer size,icons,ext
 	# over the defaults
-	my %pref = _HASH( $prefs )
-		? ( %PREFS , %$prefs )
+	my %pref
+		= _HASH($prefs)
+		? ( %PREFS, %$prefs )
 		: %PREFS;
+
 	# Search through the theme list
 	foreach my $theme (THEMES) {
 		my $hinted
@@ -100,9 +103,9 @@ sub find {
 }
 
 # Some things like Wx::AboutDialogInfo want a _real_ Wx::Icon
-sub cast_to_icon{
+sub cast_to_icon {
 	my $icon = Wx::Icon->new;
-	$icon->CopyFromBitmap( shift );
+	$icon->CopyFromBitmap(shift);
 	return $icon;
 }
 

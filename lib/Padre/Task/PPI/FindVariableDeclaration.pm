@@ -34,74 +34,70 @@ that glorious fact. If a declaration is found, the cursor will jump to it.
 =cut
 
 sub prepare {
-    my $self = shift;
-    $self->SUPER::prepare(@_);
+	my $self = shift;
+	$self->SUPER::prepare(@_);
 
-    # move the document to the main-thread-only storage
-    my $mto = $self->{main_thread_only} ||= {};
-    $mto->{document} = $self->{document}
-      if defined $self->{document};
-    delete $self->{document};
-    if ( not defined $mto->{document} ) {
-        require Carp;
-        Carp::croak(
-            "Missing Padre::Document::Perl object as {document} attribute of the FindVariableDeclaration task"
-        );
-    }
+	# move the document to the main-thread-only storage
+	my $mto = $self->{main_thread_only} ||= {};
+	$mto->{document} = $self->{document}
+		if defined $self->{document};
+	delete $self->{document};
+	if ( not defined $mto->{document} ) {
+		require Carp;
+		Carp::croak(
+			"Missing Padre::Document::Perl object as {document} attribute of the FindVariableDeclaration task" );
+	}
 
-    if ( not defined $self->{location} ) {
-        require Carp;
-        Carp::croak("Need a {location}!");
-    }
+	if ( not defined $self->{location} ) {
+		require Carp;
+		Carp::croak("Need a {location}!");
+	}
 
-    return ();
+	return ();
 }
 
 sub process_ppi {
-    my $self     = shift;
-    my $ppi      = shift or return;
-    my $location = $self->{location};
+	my $self     = shift;
+	my $ppi      = shift or return;
+	my $location = $self->{location};
 
-    my $declaration = eval {
-        PPIx::EditorTools::FindVariableDeclaration->new->find(
-            ppi    => $ppi,
-            line   => $location->[0],
-            column => $location->[1] );
-    };
-    if ($@) {
-        $self->{error} = $@;
-        return;
-    }
+	my $declaration = eval {
+		PPIx::EditorTools::FindVariableDeclaration->new->find(
+			ppi    => $ppi,
+			line   => $location->[0],
+			column => $location->[1]
+		);
+	};
+	if ($@) {
+		$self->{error} = $@;
+		return;
+	}
 
-    $self->{declaration_location} = $declaration->element->location;
-    return ();
+	$self->{declaration_location} = $declaration->element->location;
+	return ();
 }
 
 sub finish {
-    my $self = shift;
-    if ( defined $self->{declaration_location} ) {
+	my $self = shift;
+	if ( defined $self->{declaration_location} ) {
 
-        # GUI update
-        $self->{main_thread_only}->{document}
-          ->ppi_select( $self->{declaration_location} );
-    } else {
-        my $text;
-        if ( $self->{error} =~ /no token/ ) {
-            $text = Wx::gettext(
-                "Current cursor does not seem to point at a variable");
-        } elsif ( $self->{error} =~ /no declaration/ ) {
-            $text = Wx::gettext(
-                "No declaration could be found for the specified (lexical?) variable"
-            );
-        } else {
-            $text = Wx::gettext("Unknown error");
-        }
-        Wx::MessageBox(
-            $text,    Wx::gettext("Search Canceled"),
-            Wx::wxOK, Padre->ide->wx->main
-        );
-    }
-    return ();
+		# GUI update
+		$self->{main_thread_only}->{document}->ppi_select( $self->{declaration_location} );
+	} else {
+		my $text;
+		if ( $self->{error} =~ /no token/ ) {
+			$text = Wx::gettext("Current cursor does not seem to point at a variable");
+		} elsif ( $self->{error} =~ /no declaration/ ) {
+			$text = Wx::gettext( "No declaration could be found for the specified (lexical?) variable" );
+		} else {
+			$text = Wx::gettext("Unknown error");
+		}
+		Wx::MessageBox(
+			$text,    Wx::gettext("Search Canceled"),
+			Wx::wxOK, Padre->ide->wx->main
+		);
+	}
+	return ();
 }
 
 1;

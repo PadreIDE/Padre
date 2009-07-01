@@ -140,6 +140,7 @@ sub new {
 
 	$self->{task_queue}    = Thread::Queue->new;
 	$self->{service_queue} = Thread::Queue->new;
+
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
 	if ( not defined $REAP_TIMER and $self->use_threads ) {
@@ -152,11 +153,10 @@ sub new {
 		);
 		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS );
 	}
-	
-#	if ( not defined $SERVICE_TIMER and $self->use_threads ) {
-#		my $timer ;
-#	}
-	
+
+	#	if ( not defined $SERVICE_TIMER and $self->use_threads ) {
+	#		my $timer ;
+	#	}
 
 	return $self;
 }
@@ -460,18 +460,18 @@ and return via the usual Task mechanism.
 
 sub shutdown {
 	my $self = shift;
-	
-	while ( my  ($type,$tasks) = each %{ $self->{running_tasks} } ) {
+
+	while ( my ( $type, $tasks ) = each %{ $self->{running_tasks} } ) {
 		next unless Params::Util::_CLASSISA( $type, 'Padre::Service' );
-		foreach my $threadid ( keys %$tasks  ) {
-			Padre::Util::debug( "Hangup $type in $threadid !" );
+		foreach my $threadid ( keys %$tasks ) {
+			Padre::Util::debug("Hangup $type in $threadid !");
 			$SINGLETON->service_queue->enqueue(
 				"$threadid;HANGUP",
 			);
 		}
-			
+
 	}
-	
+
 }
 
 =pod
@@ -551,9 +551,9 @@ sub on_task_start_event {
 =cut
 
 sub on_service_poll_event {
-	my ( $main , $event ) = @_; @_ = ();
+	my ( $main, $event ) = @_; @_ = ();
 	my $tid_and_type = $event->GetData();
-	my ($tid,$type) = split /;/, $tid_and_type, 2;
+	my ( $tid, $type ) = split /;/, $tid_and_type, 2;
 	warn "Polled by service [$tid] as [$type]";
 	return ();
 }
@@ -635,10 +635,9 @@ sub worker_loop {
 		Wx::PostEvent( $main, $thread_start_event );
 
 		# RUN
-		if ( $task->isa( 'Padre::Service' ) ) {
-			$task->run($SINGLETON->service_queue);
-		}
-		else {
+		if ( $task->isa('Padre::Service') ) {
+			$task->run( $SINGLETON->service_queue );
+		} else {
 			$task->run;
 		}
 

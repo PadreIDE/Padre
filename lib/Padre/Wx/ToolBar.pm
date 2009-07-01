@@ -125,7 +125,7 @@ sub new {
 	$self->AddSeparator;
 
 	$self->add_tool(
-		id    => 999, 
+		id    => 999,
 		icon  => 'actions/toggle-comments',
 		short => Wx::gettext('Toggle Comments'),
 		event => sub {
@@ -152,7 +152,7 @@ sub refresh {
 	$self->EnableTool( Wx::wxID_COPY,  ($selection) );
 	$self->EnableTool( Wx::wxID_PASTE, ( $editor and $editor->CanPaste ) );
 	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ) );
-	$self->EnableTool( 999, ($document ? 1 : 0) );
+	$self->EnableTool( 999, ( $document ? 1 : 0 ) );
 
 	return;
 }
@@ -163,11 +163,11 @@ sub refresh {
 sub add_tool {
 	my $self  = shift;
 	my %param = @_;
-	
+
 	# TODO: the ID code must be unique. If set to -1 such as in
 	# the default call below, it will override any previous item
 	# with that id.
-	my $id    = $param{id} || -1;
+	my $id = $param{id} || -1;
 
 	# Create the tool
 	$self->AddTool(

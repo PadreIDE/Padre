@@ -4,8 +4,8 @@ package Padre::Wx::Bottom;
 
 use strict;
 use warnings;
-use Padre::Constant ();
-use Padre::Wx       ();
+use Padre::Constant            ();
+use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.38';
@@ -24,11 +24,12 @@ sub new {
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
+
 		# Used when pane is floated
 		Wx::Size->new( 350, 300 ),
 		Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_TOP
-		| Wx::wxBORDER_NONE,
+			| Wx::wxAUI_NB_TOP
+			| Wx::wxBORDER_NONE,
 	);
 
 	# Add ourself to the window manager
@@ -58,6 +59,7 @@ sub show {
 	# Are we currently showing the page
 	my $position = $self->GetPageIndex($page);
 	if ( $position >= 0 ) {
+
 		# Already showing, switch to it
 		$self->SetSelection($position);
 		return;
