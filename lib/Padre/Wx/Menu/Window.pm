@@ -41,45 +41,49 @@ sub new {
 	$self->AppendSeparator;
 
 	# File Navigation
+	$self->{window_next_file} = $self->Append(
+		-1,
+		Wx::gettext("Next File\tCtrl-TAB")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Next File\tCtrl-TAB")
-		),
+		$self->{window_next_file},
 		sub {
 			Padre::Wx::Main::on_next_pane(@_);
 		},
 	);
 
+	$self->{window_previous_file} = $self->Append(
+		-1,
+		Wx::gettext("Previous File\tCtrl-Shift-TAB")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Previous File\tCtrl-Shift-TAB")
-		),
+		$self->{window_previous_file},
 		sub {
 			Padre::Wx::Main::on_prev_pane(@_);
 		},
 	);
 
+	$self->{window_last_visited_file} = $self->Append(
+		-1,
+		Wx::gettext("Last Visited File\tCtrl-Shift-P")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Last Visited File\tCtrl-Shift-P")
-		),
+		$self->{window_last_visited_file},
 		sub {
 			Padre::Wx::Main::on_last_visited_pane(@_);
 		},
 	);
 
+	$self->{window_right_click} = $self->Append(
+		-1,
+		Wx::gettext("Right Click\tAlt-/")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Right Click\tAlt-/")
-		),
+		$self->{window_right_click},
 		sub {
 			my $editor = $_[0]->current->editor;
 			if ($editor) {
@@ -91,12 +95,13 @@ sub new {
 	$self->AppendSeparator;
 
 	# Window Navigation
+	$self->{window_goto_subs_window} = $self->Append(
+		-1,
+		Wx::gettext("GoTo Subs Window")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("GoTo Subs Window")
-		),
+		$self->{window_goto_subs_window},
 		sub {
 			$_[0]->refresh_functions( $_[0]->current );
 			$_[0]->show_functions(1);
@@ -104,49 +109,52 @@ sub new {
 		},
 	);
 
+	$self->{window_goto_outline_window} = $self->Append(
+		-1,
+		Wx::gettext("GoTo Outline Window\tAlt-L")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("GoTo Outline Window\tAlt-L")
-		),
+		$self->{window_goto_outline_window},
 		sub {
 			$_[0]->show_outline(1);
 			$_[0]->outline->SetFocus;
 		},
 	);
 
+	$self->{window_goto_output_window} = $self->Append(
+		-1,
+		Wx::gettext("GoTo Output Window\tAlt-O")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("GoTo Output Window\tAlt-O")
-		),
+		$self->{window_goto_output_window},
 		sub {
 			$_[0]->show_output(1);
 			$_[0]->output->SetFocus;
 		},
 	);
 
-	$self->{goto_syntax_check} = $self->Append(
+	$self->{window_goto_syntax_check_window} = $self->Append(
 		-1,
 		Wx::gettext("GoTo Syntax Check Window\tAlt-C")
 	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->{goto_syntax_check},
+		$self->{window_goto_syntax_check_window},
 		sub {
 			$_[0]->show_syntax(1);
 			$_[0]->syntax->SetFocus;
 		},
 	);
 
+	$self->{window_goto_main_window} = $self->Append(
+		-1,
+		Wx::gettext("GoTo Main Window\tAlt-M")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("GoTo Main Window\tAlt-M")
-		),
+		$self->{window_goto_main_window},
 		sub {
 			my $editor = $_[0]->current->editor or return;
 			$editor->SetFocus;
