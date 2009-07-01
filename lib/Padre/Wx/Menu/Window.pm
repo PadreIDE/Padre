@@ -27,12 +27,13 @@ sub new {
 	$self->{alt}  = [];
 
 	# Split Window
+	$self->{window_split_window} = $self->Append(
+		-1,
+		Wx::gettext("&Split window")
+	);
 	Wx::Event::EVT_MENU(
 		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("&Split window")
-		),
+		$self->{window_split_window},
 		sub {
 			Padre::Wx::Main::on_split_window(@_);
 		},
@@ -208,6 +209,10 @@ sub refresh {
 			$self->Destroy( delete $self->{separator} );
 		}
 	}
+	$self->{window_split_window}->Enable($pages);
+	$self->{window_next_file}->Enable($pages);
+	$self->{window_previous_file}->Enable($pages);
+	$self->{window_right_click}->Enable($pages);
 
 	# Update the labels to match the notebooks
 	my $config_shorten_path = 1;    # TODO should be configurable ?
