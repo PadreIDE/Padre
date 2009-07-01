@@ -9,10 +9,12 @@ Changes for Perl Application Development and Refactoring Environment
       (SHLOMIF)
     - Open Selection (ctrl-Shift-O) now displays all the files it finds
       and lets the user select (SZABGAB)
+    - Eliminate crash when pressing F3/F4 while there are no open files (#421) (SZABGAB)
+    - Enable/Disable Window menu options when there are (no) open files. (#417) (SZABGAB)
 
 0.38 2009.06.27
 
-    - Replce regex that needs 5.10 by a split (SZABGAB)
+    - Replace regex that needs 5.10 by a split (SZABGAB)
 
 0.37 2009.06.25
     - "Introduce Temporary Variable" refactoring tool (SMUELLER)

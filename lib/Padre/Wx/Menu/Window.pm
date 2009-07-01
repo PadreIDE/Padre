@@ -212,6 +212,7 @@ sub refresh {
 	$self->{window_split_window}->Enable($pages);
 	$self->{window_next_file}->Enable($pages);
 	$self->{window_previous_file}->Enable($pages);
+	$self->{window_last_visited_file}->Enable($pages);
 	$self->{window_right_click}->Enable($pages);
 
 	# Update the labels to match the notebooks
