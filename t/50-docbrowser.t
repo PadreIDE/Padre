@@ -7,6 +7,10 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	if (not $<) {
+		plan skip_all => 'Cannot run as root';
+		exit 0;
+	}
 }
 
 plan tests => 14;
