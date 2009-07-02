@@ -37,18 +37,20 @@ sub encode_document_to_utf8 {
 sub encode_document_to {
 	my ( $window, $event ) = @_;
 
-	my @ENCODINGS = qw(
-		cp932
-		cp949
-		euc-jp
-		euc-kr
-		shift-jis
-		utf-8
-	);
+#	my @ENCODINGS = qw(
+#		cp932
+#		cp949
+#		euc-jp
+#		euc-kr
+#		shift-jis
+#		utf-8
+#	);
+	require Encode;
+	my @ENCODINGS = Encode->encodings(":all");
 
 	my @layout = (
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Encode to:') ],
-			[ 'Wx::ComboBox', '_encoding_', 'utf-8', \@ENCODINGS, Wx::wxCB_READONLY ],
+			[ 'Wx::ComboBox', '_encoding_', $ENCODINGS[0], \@ENCODINGS, Wx::wxCB_READONLY ],
 		],
 		[   [ 'Wx::Button', '_ok_',     Wx::wxID_OK ],
 			[ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ],
