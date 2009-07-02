@@ -142,6 +142,8 @@ sub dialog {
 		pos    => Wx::wxDefaultPosition,
 	);
 
+	$dialog->{_widgets_}->{_find_}->SetDefault;
+
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_find_},     \&find_clicked );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_pick_dir_}, \&on_pick_dir );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},   \&cancel_clicked );
