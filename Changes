@@ -11,6 +11,8 @@ Changes for Perl Application Development and Refactoring Environment
       and lets the user select (SZABGAB)
     - Eliminate crash when pressing F3/F4 while there are no open files (#421) (SZABGAB)
     - Enable/Disable Window menu options when there are (no) open files. (#417) (SZABGAB)
+    - For Cut/Copy/Paste/Select All, use the focused textctrl instead
+      of the editor textctrl (RSN)
 
 0.38 2009.06.27
 

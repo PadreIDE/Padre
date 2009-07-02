@@ -89,7 +89,7 @@ sub new {
 		icon  => 'actions/edit-cut',
 		short => Wx::gettext('Cut'),
 		event => sub {
-			Padre::Current->editor->Cut;
+			Wx::Window::FindFocus->Cut;
 		},
 	);
 
@@ -98,7 +98,7 @@ sub new {
 		icon  => 'actions/edit-copy',
 		short => Wx::gettext('Copy'),
 		event => sub {
-			Padre::Current->editor->Copy;
+			Wx::Window::FindFocus->Copy;
 		},
 	);
 
@@ -107,7 +107,7 @@ sub new {
 		icon  => 'actions/edit-paste',
 		short => Wx::gettext('Paste'),
 		event => sub {
-			my $editor = Padre::Current->editor or return;
+			my $editor = Wx::Window::FindFocus() or return;
 			$editor->Paste;
 		},
 	);
@@ -117,7 +117,7 @@ sub new {
 		icon  => 'actions/edit-select-all',
 		short => Wx::gettext('Select All'),
 		event => sub {
-			Padre::Wx::Editor::text_select_all(@_);
+			Wx::Window::FindFocus->SelectAll();
 		},
 	);
 
