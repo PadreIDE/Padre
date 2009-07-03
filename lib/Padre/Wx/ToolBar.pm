@@ -58,6 +58,12 @@ sub new {
 	);
 
 	$self->add_tool(
+		id	=> Wx::wxID_SAVEAS,
+		icon	=> 'actions/document-save-as',
+		short	=> Wx::gettext('Save as...'),
+	);
+	
+	$self->add_tool(
 		id    => Wx::wxID_CLOSE,
 		icon  => 'actions/x-document-close',
 		short => Wx::gettext('Close File'),
@@ -145,6 +151,9 @@ sub refresh {
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
 	$self->EnableTool( Wx::wxID_SAVE, ( $document and $document->is_modified ? 1 : 0 ) );
+	# got here... 
+	$self->EnableTool( Wx::wxID_SAVEAS,( $document));
+	
 	$self->EnableTool( Wx::wxID_CLOSE, ( $editor ? 1 : 0 ) );
 	$self->EnableTool( Wx::wxID_UNDO,  ( $editor and $editor->CanUndo ) );
 	$self->EnableTool( Wx::wxID_REDO,  ( $editor and $editor->CanRedo ) );
