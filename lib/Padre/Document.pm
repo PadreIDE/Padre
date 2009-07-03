@@ -597,8 +597,11 @@ sub save_file {
 	my $filename = $self->filename;
 
 	# not set when first time to save
+	# allow the upgrade from ascii to utf-8 if there were unicode characters added
 	require Padre::Locale;
-	$self->{encoding} ||= Padre::Locale::encoding_from_string($content);
+	if (not $self->{encoding} or $self->{encoding} eq 'ascii') {
+		$self->{encoding} = Padre::Locale::encoding_from_string($content);
+	}
 
 	my $encode = '';
 	if ( defined $self->{encoding} ) {
@@ -1024,9 +1027,11 @@ sub stats {
 	my $filename = $self->filename;
 
 	# not set when first time to save
+	# allow the upgread of ascii to utf-8
 	require Padre::Locale;
-	$self->{encoding} ||= Padre::Locale::encoding_from_string($src);
-
+	if (not $self->{encoding} or $self->{encoding} eq 'ascii') {
+		$self->{encoding} = Padre::Locale::encoding_from_string($src);
+	}
 	return (
 		$lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
 		$self->{encoding}
