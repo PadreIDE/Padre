@@ -32,12 +32,21 @@ my $autosave = Padre::Autosave->new(dbfile => $db_file);
 	BEGIN { $tests += 1; }
 }
 
-my $a_pl = 'Some text';
+my @a_pl = (
+	'Some text',
+	"Some text\nsecond line",
+);
 
 {
-	$autosave->save_file('a.pl', 'initial', $a_pl);
+	$autosave->save_file('a.pl', 'initial', $a_pl[0]);
 	my @files = $autosave->list_files;
 	is_deeply( \@files, ['a.pl'], 'a.pl in database');
 	BEGIN { $tests += 1; }
 }
 
+{
+	$autosave->save_file('a.pl', 'usersave', $a_pl[1]);
+	my @files = $autosave->list_files;
+	is_deeply( \@files, ['a.pl'], 'a.pl in database');
+	BEGIN { $tests += 1; }
+}

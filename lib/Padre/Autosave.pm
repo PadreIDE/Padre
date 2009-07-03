@@ -114,11 +114,13 @@ sub setup {
 	# Create the autosave table
 	$class->do(<<'END_SQL') unless $class->table_exists('autosave');
 CREATE TABLE autosave (
-	path        VARCHAR(1024) PRIMARY KEY,
+	id          INTEGER PRIMARY KEY AUTOINCREMENT,
+	path        VARCHAR(1024),
 	timestamp   VARCHAR(255),
 	type        VARCHAR(255),
 	content     BLOB
-)
+);
+CREATE INDEX file_path ON autosave (path);
 END_SQL
 
 }
@@ -133,14 +135,13 @@ sub list_files {
 }
 
 sub save_file {
-	my ( $self, $path, $type, $content, $timestamp ) = @_;
+	my ( $self, $path, $type, $content ) = @_;
 
 	Carp::croak("Missing type") if not defined $type;
 	Carp::croak("Invalid type '$type'") if not grep { $type eq $_ } $self->types;
-	$timestamp ||= time;
 	$self->do(
 		'INSERT INTO autosave ( path, timestamp, type, content ) values ( ?, ?, ?, ?)',
-		{}, $path, $timestamp, $type, $content,
+		{}, $path, time(), $type, $content,
 	);
 
 	return;
