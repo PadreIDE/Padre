@@ -157,6 +157,7 @@ my %settings = (
 		# -- default run parameters
 		[ 'run_interpreter_args_default', Padre::Constant::ASCII, '' ],
 		[ 'run_script_args_default',      Padre::Constant::ASCII, '' ],
+		[ 'run_use_external_window',      Padre::Constant::BOOLEAN, 0 ],
 		[ 'external_diff_tool',           Padre::Constant::ASCII, '' ],
 	],
 );

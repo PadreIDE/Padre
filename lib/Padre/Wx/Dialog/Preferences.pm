@@ -378,6 +378,12 @@ END_TEXT
 		[   [ 'Wx::StaticText', undef,                     Wx::gettext('Script arguments:') ],
 			[ 'Wx::TextCtrl',   'run_script_args_default', $config->run_script_args_default ]
 		],
+		[   [ 'Wx::CheckBox', 'run_use_external_window', ( $config->run_use_external_window ? 1 : 0 ),
+				Wx::gettext('Use external window for execution (xterm)')
+			],
+			[]
+		],
+
 	];
 
 	# Per document values (overwrite defaults) stored in history
@@ -686,6 +692,10 @@ sub run {
 	$config->set(
 		'run_script_args_default',
 		$data->{run_script_args_default}
+	);
+	$config->set(
+		'run_use_external_window',
+		$data->{run_use_external_window}
 	);
 
 	$config->set(

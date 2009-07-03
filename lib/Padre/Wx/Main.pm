@@ -1496,11 +1496,26 @@ sub run_command {
 	my $self = shift;
 	my $cmd  = shift;
 
+	# experimental
+	# TODO: add windows version
+	# when this mode is used the Run menu options are not turned off
+	# and the Run/Stop is not turned on as we currently cannot control
+	# the external execution.
+	my $config = $self->config;
+	if ($config->run_use_external_window) {
+		if (Padre::Util::WIN32) {
+		} else {
+			system qq(xterm -e "$cmd; sleep 1000" &);
+			return;
+		}
+	}
+
 	# Disable access to the run menus
 	$self->menu->run->disable;
 
 	# Clear the error list
 	$self->errorlist->clear;
+
 
 	# Prepare the output window for the output
 	$self->show_output(1);
