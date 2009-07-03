@@ -2615,9 +2615,20 @@ sub on_save_as {
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 			return;
 		}
-		my $filename = $dialog->GetFilename;
+		# GetPath will return the typed in string 
+		# for a file path to be saved to.
+		# now we need to work out if we use GetPath 
+		# or concatinate the two values used.
+		
+		#my $filename = $dialog->GetFilename;
+		#print "FileName: $filename\n";
+		#my $dir = $dialog->GetDirectory;
+		#print "Directory: $dir\n";
+		#print "Path: " . $dialog->GetPath  . "\n";
 		$self->{cwd} = $dialog->GetDirectory;
-		my $path = File::Spec->catfile( $self->cwd, $filename );
+		my $saveto = $dialog->GetPath;
+		#my $path = File::Spec->catfile( $self->cwd, $filename );
+		my $path = File::Spec->catfile( $saveto );
 		if ( -e $path ) {
 			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),
