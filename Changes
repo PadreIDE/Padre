@@ -13,6 +13,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Enable/Disable Window menu options when there are (no) open files. (#417) (SZABGAB)
     - For Cut/Copy/Paste/Select All, use the focused textctrl instead
       of the editor textctrl (RSN)
+    - Autoupgrade ascii files to be utf-8 on save if user types in wide characters (#304) (SZABGAB)
 
 0.38 2009.06.27
 
