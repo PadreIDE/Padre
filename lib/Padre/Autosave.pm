@@ -139,12 +139,21 @@ sub save_file {
 
 	Carp::croak("Missing type") if not defined $type;
 	Carp::croak("Invalid type '$type'") if not grep { $type eq $_ } $self->types;
+	Carp::croak("Missing file") if not defined $path;
 	$self->do(
 		'INSERT INTO autosave ( path, timestamp, type, content ) values ( ?, ?, ?, ?)',
 		{}, $path, time(), $type, $content,
 	);
 
 	return;
+}
+
+sub list_revisions {
+	my ( $self, $path ) = @_;
+
+	Carp::croak("Missing file") if not defined $path;
+	return $self->selectall_arrayref("SELECT id, timestamp, type FROM autosave WHERE path=? ORDER BY id",
+		undef, $path);
 }
 
 1;
