@@ -3733,8 +3733,8 @@ sub on_doc_stats {
 		return;
 	}
 
-	my ($lines,    $chars_with_space, $chars_without_space, $words, $is_readonly,
-		$filename, $newline_type,     $encoding
+	my ($lines, $chars_with_space, $chars_without_space, $words, $is_readonly,
+		$filename, $newline_type, $encoding
 	) = $doc->stats;
 
 	my @messages = (
