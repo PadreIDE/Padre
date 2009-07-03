@@ -563,6 +563,8 @@ sub encoding_system_default {
 			. "Please check it manually and report your environment to the Padre development team.";
 		return;
 	}
+	
+	Padre::Util::debug("Encoding system default: ($encoding)");
 
 	return $encoding;
 }
@@ -579,25 +581,27 @@ sub encoding_from_string {
 	# Or, we'll use system default encode setting
 	# If we cannot get system default, then forced it to set 'utf-8'
 	my $default  = '';
-	my @guess    = ();
+	my @guesses  = ();
 	my $encoding = '';
 	my $language = rfc4646();
 	if ( $language eq 'ko' ) {    # Korean
-		@guess = qw/utf-8 euc-kr/;
+		@guesses = qw/utf-8 euc-kr/;
 	} elsif ( $language eq 'ja' ) {    # Japan (not yet tested)
-		@guess = qw/utf-8 iso8859-1 euc-jp shiftjis 7bit-jis/;
+		@guesses = qw/utf-8 iso8859-1 euc-jp shiftjis 7bit-jis/;
 	} elsif ( $language =~ /^zh/ ) {    # Chinese (not yet tested)
-		@guess = qw/utf-8 iso8859-1 euc-cn/;
+		@guesses = qw/utf-8 iso8859-1 euc-cn/;
 	} else {
 		$default ||= encoding_system_default();
-		@guess = ($default) if $default;
+		@guesses = ($default) if $default;
 	}
 
 	require Encode::Guess;
-	my $guess = Encode::Guess::guess_encoding( $content, @guess );
+	my $guess = Encode::Guess::guess_encoding( $content, @guesses );
 	unless ( defined $guess ) {
 		$guess = '';                    # to avoid warnings
 	}
+	
+	Padre::Util::debug("Encoding guess: ($guess)");
 
 	# Wow, nice!
 	if ( ref($guess) and ref($guess) =~ m/^Encode::/ ) {
@@ -625,6 +629,8 @@ sub encoding_from_string {
 			. "Please check it manually and report to the Padre development team.";
 		$encoding = 'utf-8';
 	}
+
+	Padre::Util::debug("Encoding selected: ($encoding)");
 
 	return $encoding;
 }
