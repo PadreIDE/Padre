@@ -2131,19 +2131,16 @@ sub on_close_window {
 
 	Padre::Util::debug("Files saved (or not), hiding window");
 
+
 	# Immediately hide the window so that the user
 	# perceives the application as closing faster.
 	# This knocks about quarter of a second off the speed
 	# at which Padre appears to close.
 	$self->Show(0);
 
-	Padre::Util::debug('Try to shutdown services');
-	$self->ide->task_manager->shutdown;
 
-	# Stop all Task Manager's worker threads
-	$self->ide->task_manager->cleanup;
 
-	Padre::Util::debug("Finished TaskManager's cleanup");
+
 
 	# Save the window geometry
 	#$config->set( main_auilayout => $self->aui->SavePerspective );
@@ -2179,6 +2176,10 @@ sub on_close_window {
 	# Write the configuration to disk
 	$ide->save_config;
 	$event->Skip;
+
+	Padre::Util::debug("Tell TaskManager to cleanup");
+	# Stop all Task Manager's worker threads
+	$self->ide->task_manager->cleanup;
 
 	Padre::Util::debug("Closing Padre");
 

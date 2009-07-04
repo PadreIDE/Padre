@@ -16,7 +16,7 @@ BEGIN {
 	$TestClass = 'Padre::Task::Test';
 }
 
-plan( tests => 17 );
+plan( tests => 18 );
 
 # need to load these before padre!
 use threads;
@@ -29,6 +29,7 @@ use Padre;
 
 use_ok('Padre::TaskManager');
 use_ok('Padre::Task');
+use_ok('Padre::Service');
 require t::lib::Padre::Task::Test;
 
 # Before we create the Padre object,
