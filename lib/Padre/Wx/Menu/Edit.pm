@@ -491,6 +491,40 @@ sub new {
 
 	$self->AppendSeparator;
 
+	$self->{show_as_number} = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Show as ..."),
+		$self->{show_as_number}
+	);
+
+
+	$self->{show_as_hex} = $self->{show_as_number}->Append(
+		-1,
+		Wx::gettext("Show as hexa")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{show_as_hex},
+		sub {
+			Padre::Wx::Main::show_as_numbers(@_, 'hex');
+		},
+	);
+
+	$self->{show_as_decimal} = $self->{show_as_number}->Append(
+		-1,
+		Wx::gettext("Show as decimal")
+	);
+	Wx::Event::EVT_MENU(
+		$main,
+		$self->{show_as_decimal},
+		sub {
+			Padre::Wx::Main::show_as_numbers(@_, 'decimal');
+		},
+	);
+
+	$self->AppendSeparator;
+
 	# User Preferences
 	Wx::Event::EVT_MENU(
 		$main,

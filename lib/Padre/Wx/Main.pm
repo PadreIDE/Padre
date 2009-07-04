@@ -2408,6 +2408,7 @@ No return value.
 sub on_open_selection {
 	my $self    = shift;
 	my $current = $self->current;
+	return if not $current->editor;
 	my $text    = $current->text;
 
 	# get selection, ask for it if needed
@@ -4211,6 +4212,30 @@ sub key_up {
 	return;
 }
 
+# TODO enable/disable menu options
+sub show_as_numbers {
+	my ( $self, $event, $form ) = @_;
+
+	my $current = $self->current;
+	return if not $current->editor;
+	my $text    = $current->text;
+	if ($text) {
+		$self->show_output(1);
+		my $output = $self->output;
+		$output->Remove( 0, $output->GetLastPosition );
+		# TODO deal with wide characters ?
+		# TODO split lines, show location ?
+		foreach my $i (0..length($text)) {
+			my $decimal = ord(substr($text, $i, 1));
+			$output->AppendText( ($form eq 'decimal' ? $decimal : uc(sprintf('%0.2x', $decimal))) . ' ' );
+		}
+	} else {
+		$self->message(Wx::gettext('Need to select text in order to translate to hex'));
+	}
+
+	$event->Skip;
+	return;
+}
 
 1;
 
