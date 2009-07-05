@@ -148,7 +148,7 @@ sub on_menu_help_context_help {
 sub on_tree_item_activated {
 	my $self  = shift;
 	my $event = shift;
-	my $item  = $event->GetItem;
+	my $item  = $event->GetItem or return;
 	my $error = $self->GetPlData($item);
 	my $main  = $self->main;
 	#TODO: The <$error eq 'Data'> clause prevents
