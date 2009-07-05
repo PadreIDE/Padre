@@ -148,10 +148,15 @@ sub on_menu_help_context_help {
 sub on_tree_item_activated {
 	my $self  = shift;
 	my $event = shift;
-	my $item  = $event->GetItem or return;
+	my $item  = $event->GetItem;
 	my $error = $self->GetPlData($item);
 	my $main  = $self->main;
-	if ( $error->file eq 'eval' ) {
+	#TODO: The <$error eq 'Data'> clause prevents
+	#Padre from crashing when pressing [enter] before
+	#the main window is fully loaded. Further implications
+	# (and better understanding of why GetPlData returns 'Data'
+	# instead of an object) is a worthy investigation.
+	if ( $error eq 'Data' || $error->file eq 'eval' ) {
 		return;
 	}
 	$main->setup_editor( $error->file_abspath );
