@@ -141,7 +141,7 @@ keywords(
 );
 
 install_script 'script/padre';
-install_share;
+install_share_with_mofiles; # install Locale::Msgfmt
 
 
 

@@ -16,6 +16,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Autoupgrade ascii files to be utf-8 on save if user types in wide characters (#304) (SZABGAB)
     - Allow the user to use external (xterm) to run the scrips. (SZABGAB)
     - Add menu option to show selection as hexa or as decimal. (#36) (SZABGAB)
+    - Switch to Locale::Msgfmt and generate the .mo files at install time (RSN)
 
 0.38 2009.06.27
 
