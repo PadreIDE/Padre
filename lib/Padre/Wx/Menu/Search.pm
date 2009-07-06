@@ -64,7 +64,7 @@ sub new {
 
 	# Search and Replace
 	$self->{replace} = $self->Append(
-		-1,
+		Wx::wxID_REPLACE,
 		Wx::gettext("Replace\tCtrl-R")
 	);
 	Wx::Event::EVT_MENU(
