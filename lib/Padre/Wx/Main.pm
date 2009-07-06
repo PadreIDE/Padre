@@ -2062,17 +2062,19 @@ Prompt user for a line, and jump to this line in current document.
 
 sub on_goto {
 	my $self        = shift;
+	
+	my $editor = $self->current->editor;
+	my $max = $editor->GetLineCount;
 	my $line_number = $self->prompt(
-		Wx::gettext("Line number:"),
+		sprintf(Wx::gettext("Line number between (1-%s):"), $max),
 		Wx::gettext("Go to line number"),
 		"GOTO_LINE_NUMBER"
 	);
 	return if not defined $line_number or $line_number !~ /^\d+$/;
 
-	# TODO: What if it is bigger than buffer?
-	my $page = $self->current->editor;
+	$line_number = $max if $line_number > $max;
 	$line_number--;
-	$page->goto_line_centerize($line_number);
+	$editor->goto_line_centerize($line_number);
 
 	return;
 }
