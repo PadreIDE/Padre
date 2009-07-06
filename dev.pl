@@ -16,6 +16,7 @@ $ENV{PADRE_DIE}  = 1;
 
 use lib $FindBin::Bin;
 use privlib::Tools;
+use Locale::Msgfmt;
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
@@ -23,7 +24,7 @@ unless ( -d "$FindBin::Bin/blib" ) {
 	error("You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl");
 }
 
-convert_po_to_mo($FindBin::Bin);
+msgfmt($FindBin::Bin);
 
 my $perl = get_perl();
 
@@ -52,9 +53,9 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 		foreach my $plugin ( @plugins ) {
 			(my $path = $plugin) =~ s{-}{/}g;
 			if (-d  "$dir/$plugin/share/locale" ) {
-				convert_po_to_mo("$dir/$plugin");
+				msgfmt("$dir/$plugin");
 			} elsif (-d "$dir/$plugin/lib/$path/share/locale") {
-				convert_po_to_mo("$dir/$plugin/lib/$path");
+				msgfmt("$dir/$plugin/lib/$path");
 			}
 			push @cmd, "-I$dir/$plugin/lib";
 		}
