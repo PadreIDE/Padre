@@ -4,12 +4,10 @@ use 5.006;
 use strict;
 use warnings;
 use Test::More tests => 145;
-
 use Padre::Log;
 
 can_ok('Padre::Log', qw(debug info warn error fatal));
 can_ok('Padre::Log', qw(is_debug is_info is_warn is_error is_fatal));
-
 
 my $log = Padre::Log->new();
 isa_ok($log, 'Padre::Log');

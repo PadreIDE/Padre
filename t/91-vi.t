@@ -23,7 +23,7 @@ and there is even a third line
 END_TEXT
 
 SCOPE: {
-	diag "Testing the t::lib::Padre::Editor a bit";
+	# diag "Testing the t::lib::Padre::Editor a bit";
 	$e->SetText($text);
 	is($e->GetText($text), $text);
 

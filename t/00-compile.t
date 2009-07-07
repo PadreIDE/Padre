@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::Most;
 BEGIN {
-	if ( not $ENV{DISPLAY} and not $^O eq 'MSWin32' ) {
+	unless ( $ENV{DISPLAY} and $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
@@ -12,7 +12,6 @@ use File::Temp;
 use File::Find::Rule;
 use POSIX qw(locale_h);
 
-#use Test::NeedsDisplay ':skip_all';
 bail_on_fail;
 
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
@@ -43,7 +42,6 @@ foreach my $file ( @files ) {
 		is($out_data, 'ok', "STDOUT of $file");
 }
 
-#script_compiles_ok('dev.pl');
 script_compiles_ok('script/padre');
 
 sub slurp {

@@ -2,28 +2,21 @@
 
 use strict;
 use warnings;
-
-BEGIN {
-	$| = 1; # flush for the threads
-}
-
 use Test::More;
 BEGIN {
-	use threads;         # need to be loaded before Padre
-	use threads::shared; # need to be loaded before Padre
-
+	$| = 1; # flush for the threads
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	use_ok( 'Padre::Service' );
 }
+use threads;         # need to be loaded before Padre
+use threads::shared; # need to be loaded before Padre
 use t::lib::Padre;
+use Padre::Service;
 
-
-
-require Padre::Service;
-our $TestClass; # secret Task class name accessible in the test threads. See also way below
+# secret Task class name accessible in the test threads. See also way below
+our $TestClass;
 
 # reminiscent of the in-thread worker loop in Padre::TaskManager:
 sub fake_run_task {

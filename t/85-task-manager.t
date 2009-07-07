@@ -2,26 +2,22 @@
 
 use strict;
 use warnings;
-
 use Test::More;
 BEGIN {
-	if ( not $ENV{DISPLAY} and not $^O eq 'MSWin32' ) {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan( skip_all => 'Needs DISPLAY' );
 		exit 0;
 	}
+	plan( tests => 18 );
 }
 
-our $TestClass;
-BEGIN {
-	$TestClass = 'Padre::Task::Test';
-}
+# This must exist and must be global.
+# It is examined by the code inside the test task.
+our $TestClass = 'Padre::Task::Test';
 
-plan( tests => 18 );
-
-# need to load these before padre!
+# Need to load these before padre!
 use threads;
 use threads::shared;
-
 use t::lib::Padre;
 use Padre;
 

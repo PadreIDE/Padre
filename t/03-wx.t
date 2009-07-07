@@ -2,22 +2,16 @@
 
 use strict;
 use warnings;
-#use Test::NeedsDisplay ':skip_all';
 use Test::More;
 BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-}
-BEGIN {
 	if ( $^O eq 'MSWin32' ) {
 		plan skip_all => 'Windows currently has problems with Unicode files';
 		exit(0);
 	}
-}
-
-BEGIN {
 	plan( skip_all => 'Sometimes fails for unknown reasons, skipping for release till fixed' );
 	exit 0;
 }
@@ -31,9 +25,7 @@ use t::lib::Padre;
 use Cwd;
 use Padre;
 
-our $tests;
-
-plan tests => $tests+1;
+plan tests => 100;
 diag "PADRE_HOME: $ENV{PADRE_HOME}";
 my $home = $ENV{PADRE_HOME};
 copy catfile('eg', 'hello_world.pl'),    catfile($home, 'hello_world.pl');
@@ -67,7 +59,6 @@ my @events = (
 				#$T->todo_skip('close the empty buffer');
 				$T->is_num(scalar(@editors), 1, '1 editor');
 			}
-			BEGIN { $main::tests += 2; }
 		},
 	},
 	{
@@ -107,8 +98,6 @@ my @events = (
 				$T->diag("Could not open hello_world.pl '$!'");
 			}
 			$T->is_eq($line, "#!/usr/bin/java\n", 'file really changed');
-
-			BEGIN { $main::tests += 7; }
 		}
 	},
 	{
@@ -153,8 +142,6 @@ my @events = (
 				$T->is_eq(basename($doc->filename), 'cyrillic_test.pl', 'filename is cyrillic_test.pl');
 			}
 			Padre::Wx::Dialog::Bookmarks->set_bookmark($main);
-
-			BEGIN { $main::tests += 9; }
 		},
 		subevents => [
 			{
@@ -168,7 +155,6 @@ my @events = (
 				$dialog->GetEventHandler->ProcessEvent( $event );
 				#$dialog->GetEventHandler->AddPendingEvent( $event );
 				#$dialog->EndModal(Wx::wxID_CANCEL);
-				BEGIN { $main::tests += 0; }
 			},
 		},
 		],
@@ -186,7 +172,6 @@ my @events = (
 				$T->ok(not(defined $doc), 'no document');
 			}
 			Padre::Wx::Dialog::Bookmarks->set_bookmark($main);
-			BEGIN { $main::tests += 2; }
 		},
 	},
 	{
@@ -198,7 +183,6 @@ my @events = (
 			$main->change_locale('en');
 			$main->change_locale('');
 			$main->change_locale('en');
-			BEGIN { $main::tests += 0; }
 		},
 	},
 	{
@@ -211,7 +195,6 @@ my @events = (
 			$main->menu->view->{show_syntaxcheck}->Check(1);
 			$main->on_toggle_syntax_check(event(checked => 1));
 			$T->ok($main->syntax->isa('Wx::ListView'), 'is a Wx::ListView');
-			BEGIN { $main::tests += 1; }
 		},
 	},
 	{
@@ -224,7 +207,6 @@ my @events = (
 			$main->setup_editors( catfile($home, 'one_char.pl') );
 			my @editors = $main->editors;
 			$T->is_num(scalar(@editors), 1, '1 editor');
-			BEGIN { $main::tests += 1; }
 		},
 	},
 	{
@@ -237,7 +219,6 @@ my @events = (
 			$main->setup_editors( catfile($home, 'cyrillic_test.pl') );
 			my @editors = $main->editors;
 			$T->is_num(scalar(@editors), 2, '2 editor');
-			BEGIN { $main::tests += 1; }
 		},
 	},
 	{
@@ -315,7 +296,6 @@ my @events = (
 			#no selection, fill in - not there, popup again with edit and possibly options to choose from
 			#selection isn't there, but found similar?
 			
-			BEGIN { $main::tests += 10; }
 		},
 	},
 	{

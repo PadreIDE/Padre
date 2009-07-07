@@ -2,24 +2,18 @@
 
 use strict;
 use warnings;
-
-BEGIN {
-	$| = 1; # flush for the threads
-}
-
 use Test::More;
 BEGIN {
+	$| = 1; # Flush for the threads
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan tests => 108;
 }
 use t::lib::Padre;
-
-plan tests => 108;
 use threads;         # need to be loaded before Padre
 use threads::shared; # need to be loaded before Padre
-
 use Padre::Task;
 use t::lib::Padre::Task::Test;
 use t::lib::Padre::Task::PPITest;
@@ -34,17 +28,15 @@ sub fake_run_task {
 	ok(defined $recovered, "recovered form defined");
 	isa_ok($recovered, 'Padre::Task');
 	isa_ok($recovered, $TestClass); # a subcalss of Padre::Task
-	#is_deeply($recovered, $task);
 	
-	# Test the execution in the main thread in case worker threads are disabled
 	if (threads->tid() == 0) { # main thread
+		# Test the execution in the main thread in case worker threads are disabled
 		ok( exists($recovered->{main_thread_only})
 		    && not exists($recovered->{_main_thread_data_id}),
 		    && $recovered->{main_thread_only} eq 'not in sub thread',
 		    "main-thread data stays available in main thread" );
-	}
-	# Test the execution in a worker thread
-	else {
+	} else {
+		# Test the execution in a worker thread
 		ok( not exists($recovered->{main_thread_only}),
 		    && exists($recovered->{_main_thread_data_id}),
 		    "main-thread data not available in worker thread" );

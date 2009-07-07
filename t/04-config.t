@@ -6,13 +6,11 @@ BEGIN {
 	$^W = 1;
 
 }
-my $config_options;
-BEGIN {
-	$config_options = 63;
-}
+
+use constant CONFIG_OPTIONS => 63;
 
 # Move of Debug to Run Menu
-use Test::More tests => 6 + $config_options * 2 + 10 + 1;
+use Test::More tests => CONFIG_OPTIONS * 2 + 17;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -43,7 +41,7 @@ my @names = sort {
 	or
 	$a cmp $b
 } keys %Padre::Config::SETTING;
-is (scalar(@names), $config_options, 'Expected number of config options');
+is (scalar(@names), CONFIG_OPTIONS, 'Expected number of config options');
 foreach my $name ( @names ) {
 	ok( defined($config->$name()), "->$name is defined" );	
 	is(

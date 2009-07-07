@@ -2,16 +2,14 @@
 
 use strict;
 use warnings;
-
 use Test::More;
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan tests => 29;
 }
-
-plan tests => 29;
 
 use FindBin      qw($Bin);
 use File::Spec   ();
@@ -111,4 +109,3 @@ SCOPE: {
 		qr/$msg3/,
 		'text of error message';
 }
-

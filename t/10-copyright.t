@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use File::Find::Rule;
 
-my @files = File::Find::Rule->file()->name('*.pm')->in('lib');
+my @files = File::Find::Rule->name('*.pm')->file->in('lib');
 plan tests => scalar @files;
 
 # too simple way to check if we have copyright information on all files
@@ -21,7 +21,7 @@ $cp           = qr{${cp}This program is free software; you can redistribute\s*};
 $cp           = qr{${cp}it and/or modify it under the same terms as Perl itself.};
 
 
-foreach my $file (@files) {
+foreach my $file ( @files ) {
 	my $content = slurp($file);
 	ok($content =~ qr{$copyright|$cp}, $file);
 }

@@ -3,11 +3,11 @@
 use strict;
 use Test::More;
 BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32') {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	if (not $<) {
+	unless ( $< ) {
 		plan skip_all => 'Cannot run as root';
 		exit 0;
 	}

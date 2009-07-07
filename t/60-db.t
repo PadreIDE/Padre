@@ -2,16 +2,14 @@
 
 use strict;
 use warnings;
-
 use Test::More;
 BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32') {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan tests => 6;
 }
-
-plan tests => 6;
 
 use Test::NoWarnings;
 use t::lib::Padre;

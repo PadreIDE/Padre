@@ -7,18 +7,7 @@ use Test::NoWarnings;
 use Data::Dumper qw(Dumper);
 use File::Spec   ();
 
-my $tests;
-plan tests => $tests+1;
-
-use Padre::Document::Perl::Beginner;
-my $b = Padre::Document::Perl::Beginner->new;
-
-isa_ok $b, 'Padre::Document::Perl::Beginner';
-BEGIN { $tests += 1; }
-
-my %tests;
-BEGIN {
-	%tests = (
+my %TEST = (
 	'split1.pl'                    => "The second parameter of split is a string, not an array",
 	'split2.pl'                    => "The second parameter of split is a string, not an array",
 	'warning.pl'                   => "You need to write use warnings (with an s at the end) and not use warning.",
@@ -34,8 +23,15 @@ BEGIN {
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA, 
 	# other special variables ? $a, $b, $ARGV, $AUTOLOAD, etc ? $_ in perls older than 5.10? 
 	# @_ ?
-	);
-}
+);
+
+plan( tests => scalar(keys %TEST) * 2 + 2 );
+
+use Padre::Document::Perl::Beginner;
+my $b = Padre::Document::Perl::Beginner->new;
+
+isa_ok $b, 'Padre::Document::Perl::Beginner';
+
 
 # probably already in some Perl Critic rules
 # lack of use strict; and lack of use warnings; should be also reported.
@@ -60,9 +56,8 @@ BEGIN {
 #}
 #
 
-
-foreach my $file (keys %tests) {
-	if ($tests{$file} eq 'TODO') {
+foreach my $file ( keys %TEST ) {
+	if ( $TEST{$file} eq 'TODO' ) {
 		TODO: {
 			local $TODO = "$file not yet implemented";
 			ok(0);
@@ -73,8 +68,7 @@ foreach my $file (keys %tests) {
 
 	my $data = slurp (File::Spec->catfile('t', 'files', 'beginner', $file));
 	ok(! defined($b->check($data)), $file);
-	is($b->error, $tests{$file}, "$file error");
-	BEGIN { $tests += 2 * keys %tests; }
+	is($b->error, $TEST{$file}, "$file error");
 }
 
 sub slurp {

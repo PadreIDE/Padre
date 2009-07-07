@@ -11,9 +11,8 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan tests => 1;
 }
-
-plan tests => 1;
 
 use t::lib::Padre;
 use Padre::Wx::Dialog::HTML ();

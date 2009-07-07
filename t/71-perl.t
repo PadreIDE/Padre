@@ -2,24 +2,20 @@
 
 use strict;
 use warnings;
-#use Test::NeedsDisplay;
 use Test::More;
 BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32') {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan( tests => 24 );
 }
-
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 
-# Padre can move the cwd around, so lock in the location of the
+# Padre can move the cwd around, so save in the location of the
 # test files early before that happens
 my $files = rel2abs( catdir( 't', 'files' ) );
-
-my $tests;
-plan tests => $tests + 1;
 
 use t::lib::Padre;
 use t::lib::Padre::Editor;
@@ -31,7 +27,6 @@ use PPI::Document;
 # Create the object so that Padre->ide works
 my $app = Padre->new;
 isa_ok($app, 'Padre');
-BEGIN { $tests += 1; }
 
 SCOPE: {
 	my $editor = t::lib::Padre::Editor->new;
@@ -59,22 +54,18 @@ SCOPE: {
 	isa_ok($doc, 'Padre::Document');
 	isa_ok($doc, 'Padre::Document::Perl');
 	is($doc->filename, $file, 'filename');
-
-	#Padre::PPI::find_unmatched_brace();
-	BEGIN { $tests += 4; }
 }
-
-
-
-
 
 # first block of tests for Padre::PPI::find_variable_declaration
 # and ...find_token_at_location
 SCOPE: {
 	my $infile = catfile( $files, 'find_variable_declaration_1.pm' );
-	my $text = do { local $/=undef; open my $fh, '<', $infile or die $!; <$fh> };
-  
-	my $doc = PPI::Document->new( \$text );
+	my $text   = do {
+		local $/ = undef;
+		open my $fh, '<', $infile or die $!;
+		<$fh>
+	};
+  	my $doc = PPI::Document->new( \$text );
 	isa_ok($doc, "PPI::Document");
 	$doc->index_locations;
   
@@ -104,8 +95,6 @@ SCOPE: {
 	my $result_declaration = Padre::PPI::find_variable_declaration($elem);
 
 	ok( $declaration == $result_declaration, 'Correct declaration found');
-
-	BEGIN { $tests += 6; }
 }
 
 # second block of tests for Padre::PPI::find_variable_declaration
@@ -164,11 +153,7 @@ SCOPE: {
 		$result_declaration = Padre::PPI::find_variable_declaration($elem);
 		ok( $declaration == $result_declaration, 'Correct declaration found');
 	}
-
-	BEGIN { $tests += 11; }
 }
-
-
 
 # Test for check_syntax
 SCOPE: {
@@ -190,15 +175,12 @@ SCOPE: {
 			'line'     => '1',
 		}
 	);
-	BEGIN { $tests += 1; }
 }
 
-
-
 sub find_var_simple {
-	my $doc = shift;
+	my $doc     = shift;
 	my $varname = shift;
-	my $line = shift;
+	my $line    = shift;
 
 	my $elem;
 	$doc->find_first(
@@ -212,5 +194,3 @@ sub find_var_simple {
 	);
 	return $elem;
 }
-
-
