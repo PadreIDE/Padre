@@ -1098,6 +1098,8 @@ Paweł Murias (PMURIAS)
 
 Petar Shangov (PSHANGOV)
 
+Ryan Niebur (RSN) E<lt>rsn@cpan.orgE<gt>
+
 Steffen Müller (TSEE) E<lt>smueller@cpan.orgE<gt>
 
 Mark Grimes E<lt>mgrimes@cpan.orgE<gt>
