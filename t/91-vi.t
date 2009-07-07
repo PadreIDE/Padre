@@ -1,26 +1,18 @@
 #!/usr/bin/perl
+
 use strict;
 use warnings;
-
-use Data::Dumper;
 use Test::More;
 BEGIN {
-	if (not $ENV{DISPLAY} and not $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32') {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	plan( tests => 16 );
 }
-
 use Test::NoWarnings;
-my $tests;
-
-plan tests => $tests+1;
-
 use t::lib::Padre;
 use t::lib::Padre::Editor;
-
-ok(1);
-BEGIN { $tests += 1; }
 
 my $e = t::lib::Padre::Editor->new;
 
@@ -30,8 +22,7 @@ A second line
 and there is even a third line
 END_TEXT
 
-
-{
+SCOPE: {
 	diag "Testing the t::lib::Padre::Editor a bit";
 	$e->SetText($text);
 	is($e->GetText($text), $text);
@@ -54,7 +45,4 @@ END_TEXT
 	is($e->GetColumn(22), 22);
 	is($e->GetColumn(23), 0);
 	is($e->GetColumn(24), 1);
-	BEGIN { $tests += 1+1+5+1+2+5; }
 }
-
-
