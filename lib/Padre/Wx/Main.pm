@@ -566,8 +566,12 @@ sub single_instance_start {
 	require Wx::Socket;
 	$self->{single_instance} = Wx::SocketServer->new(
 		'127.0.0.1' => $single_instance_port,
-		Wx::wxSOCKET_NOWAIT &Wx::wxSOCKET_REUSEADDR,
+		Wx::wxSOCKET_NOWAIT Wx::wxSOCKET_REUSEADDR,
 	);
+	unless ( $self->{single_instance}->Ok ) {
+		delete $self->{single_instance_server};
+		warn( Wx::gettext("Failed to create server") );
+	}
 	Wx::Event::EVT_SOCKET_CONNECTION(
 		$self,
 		$self->{single_instance},
@@ -576,11 +580,7 @@ sub single_instance_start {
 		}
 	);
 
-	return 1 if $self->{single_instance}->Ok;
-
-	# there was an error during server creation, let's die... :-(
-	die( Wx::gettext("Failed to create server") );
-
+	return 1;
 }
 
 =pod
@@ -3427,18 +3427,11 @@ sub on_toggle_lockinterface {
 	my $config = $self->config;
 
 	# Update and save configuration
-	$config->set(
+	$config->apply(
 		'main_lockinterface',
 		$self->menu->view->{lockinterface}->IsChecked ? 1 : 0,
 	);
 	$config->write;
-
-	# Update the lock status
-	$self->aui->lock_panels( $config->main_lockinterface );
-
-	# The toolbar can't dynamically switch between
-	# tearable and non-tearable so rebuild it.
-	$self->rebuild_toolbar;
 
 	return;
 }
