@@ -9,7 +9,13 @@ use inc::Module::Install 0.86;
 use POSIX qw(locale_h);
 
 
-
+BEGIN {
+  if(author_context) {
+    if(!eval("use Locale::Msgfmt 0.12; 1;")) {
+      die("Install Locale::Msgfmt version 0.12 or higher to build from SVN");
+    }
+  }
+}
 
 
 #####################################################################
@@ -141,7 +147,7 @@ keywords(
 );
 
 install_script 'script/padre';
-install_share_with_mofiles; # developer has to install Locale::Msgfmt 0.10
+install_share_with_mofiles;
 
 
 
