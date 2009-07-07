@@ -10,11 +10,9 @@ use POSIX qw(locale_h);
 
 
 BEGIN {
-  if(author_context) {
-    if(!eval("use Locale::Msgfmt 0.12; 1;")) {
-      die("Install Locale::Msgfmt version 0.12 or higher to build from SVN");
-    }
-  }
+	if ( author_context and not eval("use Locale::Msgfmt 0.12; 1;") ) {
+		die("Install Locale::Msgfmt version 0.12 or higher to build from SVN");
+	}
 }
 
 
@@ -103,6 +101,11 @@ test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
 # test_requires  'Test::NeedsDisplay'       => '1.07';
+
+# Extra deps to squelch DIE complaints from dev.pl
+if ( author_context ) {
+	requires 'prefork' => '1.03';
+}
 
 my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
