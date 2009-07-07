@@ -26,7 +26,7 @@ unless ( -d "$FindBin::Bin/blib" ) {
 
 sub vmsgfmt {
     # I wonder if it should be verbose by default...
-    my $d = shift . "/share/locale/";
+    my $d = shift() . "/share/locale/";
     print "msgfmting $d\n";
     msgfmt({in => $d, verbose => 1});
 }
