@@ -31,7 +31,12 @@ use constant {
 };
 
 # The local newline type
-use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
+use constant {
+	NEWLINE => {
+		MSWin32 => 'WIN',
+		darwin  => 'MAC',
+	}->{$^O} || 'UNIX'
+};
 
 # Setting Types (based on Firefox types)
 use constant {
@@ -67,18 +72,20 @@ use constant {
 # Files and Directories
 use constant CONFIG_DIR => File::Spec->rel2abs(
 	File::Spec->catdir(
-		defined( $ENV{PADRE_HOME} ) ? ( $ENV{PADRE_HOME}, '.padre' )
+		defined( $ENV{PADRE_HOME} )
+		? ( $ENV{PADRE_HOME}, '.padre' )
 		: ( File::HomeDir->my_data,
-			File::Spec->isa('File::Spec::Win32') ? qw{ Perl Padre }
-			: qw{ .padre }
+			File::Spec->isa('File::Spec::Win32')
+				? qw{ Perl Padre }
+				: qw{ .padre }
 		)
 	)
 );
 
-use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
-use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db' );
-use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
-use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml'      );
+use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db'       );
+use constant PLUGIN_DIR   => File::Spec->catdir(  CONFIG_DIR, 'plugins'         );
+use constant PLUGIN_LIB   => File::Spec->catdir(  PLUGIN_DIR, 'Padre', 'Plugin' );
 
 # Check and create the directories that need to exist
 unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
@@ -120,7 +127,8 @@ Settings data types.
 
 Settings storage backends.
 
-=head2 BLACK, BLUE, RED, GREEN, MAGENTA, ORANGE, DIM_GRAY, CRIMSON, BROWN
+=head2 PADRE_BLACK, PADRE_BLUE, PADRE_RED, PADRE_GREEN, PADRE_MAGENTA, PADRE_ORANGE,
+PADRE_DIM_GRAY, PADRE_CRIMSON, PADRE_BROWN
 
 Core supported colours.
 
@@ -142,7 +150,7 @@ Private directory where Padre can look for plugins.
 
 =head2 PLUGIN_LIB
 
-Subdir of PLUGIN_DIR with the path C<Padre/Plugin> added
+Subdir of C<PLUGIN_DIR> with the path C<Padre/Plugin> added
 (or whatever depending on your platform) so that perl can
 load a C<Padre::Plugin::> plugin.
 
