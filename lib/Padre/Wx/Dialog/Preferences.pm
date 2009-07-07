@@ -50,7 +50,8 @@ sub _external_tools_panel {
 
 	my $config = Padre->ide->config;
 	my $table  = [
-		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
+		[
+			[ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],
 	];
