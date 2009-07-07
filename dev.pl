@@ -25,7 +25,7 @@ unless ( -d "$FindBin::Bin/blib" ) {
 }
 
 sub vmsgfmt {
-    msgfmt(shift() . "/share/locale/");
+    msgfmt({in => (shift() . "/share/locale/"), verbose => 0});
 }
 
 vmsgfmt($FindBin::Bin);
