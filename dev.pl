@@ -16,7 +16,7 @@ $ENV{PADRE_DIE}  = 1;
 
 use lib $FindBin::Bin;
 use privlib::Tools;
-use Locale::Msgfmt;
+use Locale::Msgfmt 0.12;
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
@@ -25,10 +25,7 @@ unless ( -d "$FindBin::Bin/blib" ) {
 }
 
 sub vmsgfmt {
-    # I wonder if it should be verbose by default...
-    my $d = shift() . "/share/locale/";
-    print "msgfmting $d\n";
-    msgfmt({in => $d, verbose => 1});
+    msgfmt(shift() . "/share/locale/");
 }
 
 vmsgfmt($FindBin::Bin);
