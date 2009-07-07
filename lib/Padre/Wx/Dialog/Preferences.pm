@@ -159,7 +159,7 @@ sub _appearance_panel {
 	);
 	my $main_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	my $font
+	my $font_desc
 		= ( defined $config->editor_font && length $config->editor_font > 0 )
 		? $config->editor_font
 		: Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc;
@@ -176,7 +176,7 @@ sub _appearance_panel {
 			[]
 		],
 		[   [ 'Wx::StaticText',     'undef',       Wx::gettext('Editor Font:') ],
-			[ 'Wx::FontPickerCtrl', 'editor_font', $font ]
+			[ 'Wx::FontPickerCtrl', 'editor_font', $font_desc ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color', $bgcolor ]
@@ -192,7 +192,7 @@ sub _appearance_panel {
 		$settings_subpanel,
 		$self->get_widget('editor_font'),
 		sub {
-			my $font = Wx::Font->new( $self->get_widget_value('editor_font') );
+			my $font = $self->_create_font( $self->get_widget_value('editor_font') );
 			$self->get_widget('preview_editor')->SetFont($font);
 			foreach my $style ( 0 .. Wx::wxSTC_STYLE_DEFAULT ) {
 				$self->get_widget('preview_editor')->StyleSetFont( $style, $font );
@@ -220,7 +220,7 @@ sub _appearance_panel {
 
 	my $editor = Padre::Wx::Dialog::Preferences::Editor->new($editor_panel);
 	$self->add_widget( 'preview_editor', $editor );
-	$self->_init_preview_editor( $bgcolor, $font );
+	$self->_init_preview_editor( $bgcolor, $font_desc );
 
 	$editor_panel_sizer->Add(
 		$self->get_widget('preview_editor'),
@@ -239,7 +239,7 @@ sub _appearance_panel {
 
 sub _init_preview_editor {
 	my $self = shift;
-	my ( $bgcolor, $font ) = @_;
+	my ( $bgcolor, $font_desc ) = @_;
 	require Padre::Document::Perl;
 	my $doc    = Padre::Document::Perl->new();
 	my $editor = $self->get_widget('preview_editor');
@@ -272,8 +272,9 @@ END_TEXT
 	$editor->padre_setup;
 	$editor->SetCaretLineBackground( Padre::Wx::Editor::_color( substr( $bgcolor, 1 ) ) );
 	$editor->SetCaretLineVisible(1);
-	$editor->SetFont( Wx::Font->new($font) );
-	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, Wx::Font->new($font) );
+	my $editor_font = $self->_create_font($font_desc);
+	$editor->SetFont( $editor_font );
+	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $editor_font );
 	$editor->SetReadOnly(1);
 	$editor->SetExtraStyle(Wx::wxWS_EX_BLOCK_EVENTS);
 	Wx::Event::EVT_RIGHT_DOWN( $editor, undef );
@@ -282,6 +283,19 @@ END_TEXT
 	Wx::Event::EVT_SET_FOCUS( $editor, undef );
 
 	return;
+}
+
+#
+# A font description is a string that you get from $font->GetNativeFontInfoUserDesc()
+# 
+# Important Note: You cannot create a font directly from it. This workaround is 
+# necessary. If you do not believe me, turn Wx debugging and you'll see what I mean :)
+#
+sub _create_font {
+	my ($self, $font_desc) = @_;
+	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	$font->SetNativeFontInfoUserDesc( $font_desc );
+	return $font;
 }
 
 sub _pluginmanager_panel {
