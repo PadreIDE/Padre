@@ -15,6 +15,8 @@ use warnings;
 use Carp                   ();
 use Params::Util           ();
 use Padre::Constant        ();
+use Padre::Util            ('_T');
+use Padre::Current         ();
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
@@ -36,11 +38,16 @@ our $REVISION = 1;
 our $SINGLETON = undef;
 
 # Accessor generation
-use Class::XSAccessor::Array getters => {
+use Class::XSAccessor::Array
+getters => {
 	host    => Padre::Constant::HOST,
 	human   => Padre::Constant::HUMAN,
 	project => Padre::Constant::PROJECT,
 };
+
+
+
+
 
 #####################################################################
 # Settings Specification
@@ -48,137 +55,512 @@ use Class::XSAccessor::Array getters => {
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
 
-my %settings = (
-	human => [
+#
+# setting( %params );
+#
+# create a new setting, with %params used to feed the new object.
+#
+sub setting {
 
-		# for each setting, add an array ref:
-		# [ $setting_name, $setting_type, $setting_default ]
-
-		# -- user identity (simplistic initial version)
-		[ 'identity_name',  Padre::Constant::ASCII, '' ],    # Initially, this must be ascii only
-		[ 'identity_email', Padre::Constant::ASCII, '' ],
-
-		# -- for module::starter
-		[ 'license',                Padre::Constant::ASCII, '' ],
-		[ 'builder',                Padre::Constant::ASCII, '' ],
-		[ 'module_start_directory', Padre::Constant::ASCII, '' ],
-
-		# -- indent settings
-		# allow projects to forcefully override personal settings
-		[ 'editor_indent_auto',      Padre::Constant::BOOLEAN, 1 ],
-		[ 'editor_indent_tab',       Padre::Constant::BOOLEAN, 1 ],
-		[ 'editor_indent_tab_width', Padre::Constant::POSINT,  8 ],
-		[ 'editor_indent_width',     Padre::Constant::POSINT,  8 ],
-
-		# -- pages and panels
-		# startup mode, if no files given on the command line this can be
-		#   new        - a new empty buffer
-		#   nothing    - nothing to open
-		#   last       - the files that were open last time
-		[ 'main_startup',         Padre::Constant::ASCII,   'new' ],
-		[ 'main_singleinstance',  Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_lockinterface',   Padre::Constant::BOOLEAN, 1 ],
-		[ 'main_functions',       Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_functions_order', Padre::Constant::ASCII,   'alphabetical' ],
-		[ 'main_outline',         Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_directory',       Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_output',          Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_output_ansi',     Padre::Constant::BOOLEAN, 1 ],
-		[ 'main_syntaxcheck',     Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_errorlist',       Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_statusbar',       Padre::Constant::BOOLEAN, 1 ],
-		[ 'main_toolbar',         Padre::Constant::BOOLEAN, 1 ],
-
-		# -- editor settings
-		[ 'editor_font',              Padre::Constant::ASCII,   '' ],
-		[ 'editor_linenumbers',       Padre::Constant::BOOLEAN, 1 ],
-		[ 'editor_eol',               Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_whitespace',        Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_indentationguides', Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_calltips',          Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_autoindent',        Padre::Constant::ASCII,   'deep' ],
-		[ 'editor_folding',           Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_fold_pod',          Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_currentline',       Padre::Constant::BOOLEAN, 1 ],
-		[ 'editor_currentline_color', Padre::Constant::ASCII,   'FFFF04' ],
-		[ 'editor_beginner',          Padre::Constant::BOOLEAN, 1 ],
-		[ 'editor_wordwrap',          Padre::Constant::BOOLEAN, 0 ],
-		[ 'editor_file_size_limit',   Padre::Constant::POSINT,  500_000 ],
-		[ 'find_case',                Padre::Constant::BOOLEAN, 1 ],
-		[ 'find_regex',               Padre::Constant::BOOLEAN, 0 ],
-		[ 'find_reverse',             Padre::Constant::BOOLEAN, 0 ],
-		[ 'find_first',               Padre::Constant::BOOLEAN, 0 ],
-		[ 'find_nohidden',            Padre::Constant::BOOLEAN, 1 ],
-		[ 'find_quick',               Padre::Constant::BOOLEAN, 0 ],
-		[ 'ppi_highlight',            Padre::Constant::BOOLEAN, 0 ],
-		[ 'ppi_highlight_limit',      Padre::Constant::POSINT,  2000 ],
-
-		# -- behaviour tuning
-		# When running a script from the application some of the files might have
-		# not been saved yet. There are several option what to do before running the
-		# script:
-		# none - don't save anything (the script will be run without current modifications)
-		# unsaved - as above but including modifications present in the buffer
-		# same - save the file in the current buffer
-		# all_files - all the files (but not buffers that have no filenames)
-		# all_buffers - all the buffers even if they don't have a name yet
-		[ 'run_save', Padre::Constant::ASCII, 'same' ],
-
-		# move of stacktrace to run menu: will be removed (run_stacktrace)
-		[ 'run_stacktrace',        Padre::Constant::BOOLEAN, 0 ],
-		[ 'autocomplete_brackets', Padre::Constant::BOOLEAN, 0 ],
-
-		# by default use background threads unless profiling
-		# TODO - Make the default actually change
-		[ 'threads',         Padre::Constant::BOOLEAN, 1 ],
-		[ 'locale',          Padre::Constant::ASCII,   '' ],
-		[ 'locale_perldiag', Padre::Constant::ASCII,   '' ],
-		[ 'experimental',    Padre::Constant::BOOLEAN, 0 ],
-	],
-	host => [
-
-		# for each setting, add an array ref:
-		# [ $setting_name, $setting_type, $setting_default ]
-
-		# -- color data
-		# since it's in local files, it has to be a host-specific setting
-		[ 'editor_style', Padre::Constant::ASCII, 'default' ],
-
-		# -- window geometry
-		[ 'main_maximized', Padre::Constant::BOOLEAN, 0 ],
-		[ 'main_top',       Padre::Constant::INTEGER, 40 ],
-		[ 'main_left',      Padre::Constant::INTEGER, 20 ],
-		[ 'main_width',     Padre::Constant::POSINT,  600 ],
-		[ 'main_height',    Padre::Constant::POSINT,  400 ],
-
-		[ 'logging',       Padre::Constant::BOOLEAN, 0 ],
-		[ 'logging_trace', Padre::Constant::BOOLEAN, 0 ],
-
-		# -- default run parameters
-		[ 'run_interpreter_args_default', Padre::Constant::ASCII, '' ],
-		[ 'run_script_args_default',      Padre::Constant::ASCII, '' ],
-		[ 'run_use_external_window',      Padre::Constant::BOOLEAN, 0 ],
-		[ 'external_diff_tool',           Padre::Constant::ASCII, '' ],
-	],
-);
-
-my %store = (
-	human => Padre::Constant::HUMAN,
-	host  => Padre::Constant::HOST,
-);
-foreach my $type ( keys %settings ) {
-	my $settings = $settings{$type};
-	my $store    = $store{$type};
-	foreach my $setting (@$settings) {
-		my ( $name, $type, $default ) = @$setting;
-		_setting(
-			name    => $name,
-			type    => $type,
-			store   => $store,
-			default => $default,
-		);
+	# Validate the setting
+	my $object = Padre::Config::Setting->new(@_);
+	if ( $SETTING{ $object->{name} } ) {
+		Carp::croak("The $object->{name} setting is already defined");
 	}
+
+	# Generate the accessor
+	my $code = <<"END_PERL";
+package Padre::Config;
+
+sub $object->{name} {
+	my \$self = shift;
+	if ( exists \$self->[$object->{store}]->{'$object->{name}'} ) {
+		return \$self->[$object->{store}]->{'$object->{name}'};
+	}
+	return \$DEFAULT{'$object->{name}'};
 }
+END_PERL
+
+	# Compile the accessor
+	eval $code; ## no critic
+	if ( $@ ) {
+		Carp::croak("Failed to compile setting $object->{name}");
+	}
+
+	# Save the setting
+	$SETTING{ $object->{name} } = $object;
+	$DEFAULT{ $object->{name} } = $object->{default};
+
+	return 1;
+}
+
+# User identity (simplistic initial version)
+# Initially, this must be ascii only
+setting(
+	name    => 'identity_name',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'identity_email',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+
+# Support for Module::Starter
+setting(
+	name    => 'license',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'builder',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'module_start_directory',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+
+# Indent settings
+# Allow projects to forcefully override personal settings
+setting(
+	name    => 'editor_indent_auto',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+	project => 1,
+);
+setting(
+	name    => 'editor_indent_tab',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+	project => 1,
+);
+setting(
+	name    => 'editor_indent_tab_width',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 8,
+	project => 1,
+);
+setting(
+	name    => 'editor_indent_width',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 8,
+	project => 1,
+);
+
+# Startup mode, if no files given on the command line this can be
+#   new        - a new empty buffer
+#   nothing    - nothing to open
+#   last       - the files that were open last time
+setting(
+	name    => 'main_startup',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'new',
+	options => [
+		'last'    => _T('Previous open files'),
+		'new'     => _T('A new empty file'),
+		'nothing' => _T('No open files'),
+	],
+);
+
+# Pages and panels
+setting(
+	name    => 'main_singleinstance',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+	apply   => sub {
+		my $main  = shift;
+		my $value = shift;
+		if ( $value ) {
+			$main->single_instance_start;
+		} else {
+			$main->single_instance_stop;
+		}
+		return 1;
+	},
+);
+setting(
+	name    => 'main_lockinterface',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+	apply   => sub {
+		my $main  = shift;
+		my $value = shift;
+
+		# Update the lock status
+		$main->aui->lock_panels( $value );
+
+		# The toolbar can't dynamically switch between
+		# tearable and non-tearable so rebuild it.
+		# TODO: Review this assumption
+		if ( Padre::Wx::Toolbar::DOCKABLE() ) {
+			$main->rebuild_toolbar;
+		}
+
+		return 1;
+	}
+);
+setting(
+	name    => 'main_functions',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_functions_order',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'alphabetical',
+	options => [
+		'original'                  => _T('Code Order'),
+		'alphabetical'              => _T('Alphabetical Order'),
+		'alphabetical_private_last' => _T('Alphabetical Order (Private Last)'),
+	],
+);
+setting(
+	name    => 'main_outline',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_directory',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_output',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_output_ansi',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'main_syntaxcheck',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_errorlist',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'main_statusbar',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'main_toolbar',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+
+# Editor Settings
+setting(
+	name    => 'editor_font',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'editor_linenumbers',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_eol',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_whitespace',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_indentationguides',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_calltips',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_autoindent',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'deep',
+	options => [
+		'no'   => 'No Autoindent',
+		'same' => 'Indent to Same Depth',
+		'deep' => 'Indent Deeply',
+	],
+);
+setting(
+	name    => 'editor_folding',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_fold_pod',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_currentline',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_currentline_color',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'FFFF04',
+);
+setting(
+	name    => 'editor_beginner',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'editor_wordwrap',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_file_size_limit',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 500_000,
+);
+setting(
+	name    => 'find_case',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'find_regex',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_reverse',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_first',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'find_nohidden',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'find_quick',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'ppi_highlight',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'ppi_highlight_limit',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 2000,
+);
+
+# Behaviour Tuning
+# When running a script from the application some of the files might have
+# not been saved yet. There are several option what to do before running the
+# script:
+# none - don't save anything (the script will be run without current modifications)
+# unsaved - as above but including modifications present in the buffer
+# same - save the file in the current buffer
+# all_files - all the files (but not buffers that have no filenames)
+# all_buffers - all the buffers even if they don't have a name yet
+setting(
+	name    => 'run_save',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'same',
+);
+
+# Move of stacktrace to run menu: will be removed (run_stacktrace)
+setting(
+	name    => 'run_stacktrace',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'autocomplete_brackets',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# By default use background threads unless profiling
+# TODO - Make the default actually change
+setting(
+	name    => 'threads',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'locale',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'locale_perldiag',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
+setting(
+	name    => 'experimental',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+# Colour Data
+# Since it's in local files, it has to be a host-specific setting.
+setting(
+	name    => 'editor_style',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => 'default',
+);
+
+# Window Geometry
+setting(
+	name    => 'main_maximized',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 0,
+);
+setting(
+	name    => 'main_top',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HOST,
+	default => 40,
+);
+setting(
+	name    => 'main_left',
+	type    => Padre::Constant::INTEGER,
+	store   => Padre::Constant::HOST,
+	default => 20,
+);
+setting(
+	name    => 'main_width',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HOST,
+	default => 600,
+);
+setting(
+	name    => 'main_height',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HOST,
+	default => 400,
+);
+
+# Logging
+setting(
+	name    => 'logging',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 0,
+);
+setting(
+	name    => 'logging_trace',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 0,
+);
+
+# Run Parameters
+setting(
+	name    => 'run_interpreter_args_default',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => '',
+);
+setting(
+	name    => 'run_script_args_default',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => '',
+);
+setting(
+	name    => 'run_use_external_window',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 0,
+);
+setting(
+	name    => 'external_diff_tool',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	default => '',
+);
+
+
+
+
 
 #####################################################################
 # Constructor and Accessors
@@ -198,7 +580,7 @@ sub new {
 	my $self = bless [ $host, $human, undef ], $class;
 
 	# Add the optional third element
-	if (@_) {
+	if ( @_ ) {
 		my $project = shift;
 		unless ( Params::Util::_INSTANCE( $project, 'Padre::Config::Project' ) ) {
 			Carp::croak("Did not provide a project config to Padre::Config->new");
@@ -208,6 +590,60 @@ sub new {
 
 	return $self;
 }
+
+sub read {
+	my $class = shift;
+
+	unless ($SINGLETON) {
+
+		# Load the host configuration
+		my $host = Padre::Config::Host->read;
+
+		# Load the user configuration
+		my $human = Padre::Config::Human->read
+		         || Padre::Config::Human->create;
+
+		# Hand off to the constructor
+		$SINGLETON = $class->new( $host, $human );
+
+		# TODO - Check the version
+	}
+
+	return $SINGLETON;
+}
+
+sub write {
+	my $self = shift;
+
+	# Save the user configuration
+	$self->[Padre::Constant::HUMAN]->{version} = $REVISION;
+	$self->[Padre::Constant::HUMAN]->write;
+
+	# Save the host configuration
+	$self->[Padre::Constant::HOST]->{version} = $REVISION;
+	$self->[Padre::Constant::HOST]->write;
+
+	return 1;
+}
+
+# Fetches an explicitly named default
+sub default {
+	my $self = shift;
+	my $name = shift;
+
+	# Does the setting exist?
+	unless ( $SETTING{$name} ) {
+		Carp::croak("The configuration setting '$name' does not exist");
+	}
+
+	return $DEFAULT{$name};
+}
+
+
+
+
+######################################################################
+# Main Methods
 
 sub set {
 	my $self  = shift;
@@ -250,94 +686,32 @@ sub set {
 	return 1;
 }
 
-# Fetches an explicitly named default
-sub default {
-	my $self = shift;
-	my $name = shift;
+# Set a value in the configuration and apply the preference change
+# to the application.
+sub apply {
+	my $self    = shift;
+	my $name    = shift;
+	my $value   = shift;
+	my $current = _CURRENT(@_);
 
-	# Does the setting exist?
-	unless ( $SETTING{$name} ) {
-		Carp::croak("The configuration setting '$name' does not exist");
+	# Set the config value
+	$self->set( $name => $value );
+
+	# Does this setting have an apply hook
+	my $code = $SETTING{$name}->apply;
+	if ( $code ) {
+		$code->( $current->main, $value );
 	}
-
-	return $DEFAULT{$name};
-}
-
-sub read {
-	my $class = shift;
-
-	unless ($SINGLETON) {
-
-		# Load the host configuration
-		my $host = Padre::Config::Host->read;
-
-		# Load the user configuration
-		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
-
-		# Hand off to the constructor
-		$SINGLETON = $class->new( $host, $human );
-
-		# TODO - Check the version
-	}
-
-	return $SINGLETON;
-}
-
-sub write {
-	my $self = shift;
-
-	# Save the user configuration
-	$self->[Padre::Constant::HUMAN]->{version} = $REVISION;
-	$self->[Padre::Constant::HUMAN]->write;
-
-	# Save the host configuration
-	$self->[Padre::Constant::HOST]->{version} = $REVISION;
-	$self->[Padre::Constant::HOST]->write;
 
 	return 1;
 }
 
-# -- private subs
 
-#
-# _setting( %params );
-#
-# create a new setting, with %params used to feed the new object.
-#
-sub _setting {
 
-	# Validate the setting
-	my $object = Padre::Config::Setting->new(@_);
-	if ( $SETTING{ $object->{name} } ) {
-		Carp::croak("The $object->{name} setting is already defined");
-	}
 
-	# Generate the accessor
-	my $code = <<"END_PERL";
-package Padre::Config;
 
-sub $object->{name} {
-	my \$self = shift;
-	if ( exists \$self->[$object->{store}]->{'$object->{name}'} ) {
-		return \$self->[$object->{store}]->{'$object->{name}'};
-	}
-	return \$DEFAULT{'$object->{name}'};
-}
-END_PERL
-
-	# Compile the accessor
-	eval $code;    ## no critic
-	if ($@) {
-		Carp::croak("Failed to compile setting $object->{name}");
-	}
-
-	# Save the setting
-	$SETTING{ $object->{name} } = $object;
-	$DEFAULT{ $object->{name} } = $object->{default};
-
-	return 1;
-}
+######################################################################
+# Support Functions
 
 #
 # my $is_integer = _INTEGER( $scalar );
@@ -360,9 +734,9 @@ Padre::Config - Configuration subsystem for Padre
 
 =head1 SYNOPSIS
 
-	use Padre::Config;
-	[...]
-	if ( Padre::Config->main_statusbar ) { [...] }
+    use Padre::Config;
+    [...]
+    if ( Padre::Config->main_statusbar ) { [...] }
 
 =head1 DESCRIPTION
 
