@@ -5,16 +5,14 @@
 use 5.008005;
 use strict;
 use lib 'privinc';
-use inc::Module::Install 0.86;
+use inc::Module::Install 0.91;
 use POSIX qw(locale_h);
-
 
 BEGIN {
 	if ( author_context and not eval("use Locale::Msgfmt 0.12; 1;") ) {
 		die("Install Locale::Msgfmt version 0.12 or higher to build from SVN");
 	}
 }
-
 
 #####################################################################
 # Normal Boring Commands
@@ -100,7 +98,6 @@ test_requires  'Test::Most'               => '0.21';
 test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
-# test_requires  'Test::NeedsDisplay'       => '1.07';
 
 # Extra deps to squelch DIE complaints from dev.pl
 if ( author_context ) {
