@@ -11,13 +11,17 @@ use Padre::Wx::Editor ();
 our $VERSION = '0.38';
 our @ISA     = 'Wx::ToolBar';
 
+# NOTE: Something is wrong with dockable toolbars on Windows
+#       so disable them for now.
+use constant DOCKABLE => ! Padre::Constant::WXWIN32;
+
 sub new {
 	my $class = shift;
 	my $main  = shift;
 
 	# Prepare the style
 	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
-	unless ( $main->config->main_lockinterface ) {
+	if ( DOCKABLE and not $main->config->main_lockinterface ) {
 		$style = $style | Wx::wxTB_DOCKABLE;
 	}
 
@@ -64,7 +68,7 @@ sub new {
 	);
 	
 	$self->add_tool(
-		id	=> 1000, 			# I don't like these hard set ID's for Wx.
+		id	=> 1000, # I don't like these hard set ID's for Wx.
 		icon	=> 'actions/stock_data-save',
 		short	=> Wx::gettext('Save All'),
 		event => sub {
