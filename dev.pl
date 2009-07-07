@@ -24,7 +24,14 @@ unless ( -d "$FindBin::Bin/blib" ) {
 	error("You must now have run 'perl Makefile.PL' and '$make' in order to run dev.pl");
 }
 
-msgfmt($FindBin::Bin);
+sub vmsgfmt {
+    # I wonder if it should be verbose by default...
+    my $d = shift . "/share/locale/";
+    print "msgfmting $d\n";
+    msgfmt({in => $d, verbose => 1});
+}
+
+vmsgfmt($FindBin::Bin);
 
 my $perl = get_perl();
 
@@ -53,9 +60,9 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 		foreach my $plugin ( @plugins ) {
 			(my $path = $plugin) =~ s{-}{/}g;
 			if (-d  "$dir/$plugin/share/locale" ) {
-				msgfmt("$dir/$plugin");
+				vmsgfmt("$dir/$plugin");
 			} elsif (-d "$dir/$plugin/lib/$path/share/locale") {
-				msgfmt("$dir/$plugin/lib/$path");
+				vmsgfmt("$dir/$plugin/lib/$path");
 			}
 			push @cmd, "-I$dir/$plugin/lib";
 		}
