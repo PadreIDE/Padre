@@ -2495,6 +2495,10 @@ sub on_open_selection {
 		return;
 	}
 
+	# eliminate duplicates
+	my %seen;
+	@files = grep { !$seen{$_} } @files;
+
 	require Wx::Perl::Dialog::Simple;
 	my $file = Wx::Perl::Dialog::Simple::single_choice( choices => \@files );
 
