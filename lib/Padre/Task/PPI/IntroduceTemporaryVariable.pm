@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 
 use base 'Padre::Task::PPI';
 use PPIx::EditorTools::IntroduceTemporaryVariable;

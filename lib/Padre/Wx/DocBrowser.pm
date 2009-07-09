@@ -20,7 +20,7 @@ use Padre::DocBrowser       ();
 use Padre::Util qw( _T );
 use Wx::Perl::Dialog::Simple ();
 
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 our @ISA     = 'Wx::Frame';
 
 use Class::XSAccessor accessors => {

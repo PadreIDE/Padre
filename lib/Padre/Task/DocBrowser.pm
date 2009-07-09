@@ -5,7 +5,7 @@ use warnings;
 use threads;
 use Padre::Task ();
 
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 our @ISA     = 'Padre::Task';
 
 sub run {

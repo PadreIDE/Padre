@@ -9,7 +9,7 @@ use Padre::Wx ();
 
 use base qw(Wx::PlPopupTransientWindow);
 
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 
 sub on_paint {
 	my ( $self, $event ) = @_;

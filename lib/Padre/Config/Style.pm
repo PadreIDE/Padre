@@ -8,7 +8,7 @@ use Carp ();
 use Params::Util qw{ _IDENTIFIER _HASH };
 use YAML::Tiny ();
 
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 
 ######################################################################
 # Constructor

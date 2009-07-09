@@ -3,7 +3,7 @@ package Padre::DB::Plugin;
 use strict;
 use warnings;
 
-our $VERSION = '0.38';
+our $VERSION = '0.39';
 
 # Finds and returns a single element by name
 sub fetch_name {
