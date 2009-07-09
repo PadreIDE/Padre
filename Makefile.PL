@@ -9,8 +9,8 @@ use inc::Module::Install 0.91;
 use POSIX qw(locale_h);
 
 BEGIN {
-	if ( author_context and not eval("use Locale::Msgfmt 0.12; 1;") ) {
-		die("Install Locale::Msgfmt version 0.12 or higher to build from SVN");
+	if ( author_context and not eval("use Locale::Msgfmt 0.14; 1;") ) {
+		die("Install Locale::Msgfmt version 0.14 or higher to build from SVN");
 	}
 }
 
