@@ -44,8 +44,7 @@ sub prepare {
 	delete $self->{document};
 	if ( not defined $mto->{document} ) {
 		require Carp;
-		Carp::croak(
-			"Missing Padre::Document::Perl object as {document} attribute of the FindVariableDeclaration task" );
+		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the FindVariableDeclaration task");
 	}
 
 	if ( not defined $self->{location} ) {
@@ -88,7 +87,7 @@ sub finish {
 		if ( $self->{error} =~ /no token/ ) {
 			$text = Wx::gettext("Current cursor does not seem to point at a variable");
 		} elsif ( $self->{error} =~ /no declaration/ ) {
-			$text = Wx::gettext( "No declaration could be found for the specified (lexical?) variable" );
+			$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
 		} else {
 			$text = Wx::gettext("Unknown error");
 		}

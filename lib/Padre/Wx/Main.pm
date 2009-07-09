@@ -1502,7 +1502,7 @@ sub run_command {
 	# and the Run/Stop is not turned on as we currently cannot control
 	# the external execution.
 	my $config = $self->config;
-	if ($config->run_use_external_window) {
+	if ( $config->run_use_external_window ) {
 		if (Padre::Util::WIN32) {
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
@@ -1515,7 +1515,6 @@ sub run_command {
 
 	# Clear the error list
 	$self->errorlist->clear;
-
 
 	# Prepare the output window for the output
 	$self->show_output(1);
@@ -2061,12 +2060,12 @@ Prompt user for a line, and jump to this line in current document.
 =cut
 
 sub on_goto {
-	my $self        = shift;
-	
-	my $editor = $self->current->editor;
-	my $max = $editor->GetLineCount;
+	my $self = shift;
+
+	my $editor      = $self->current->editor;
+	my $max         = $editor->GetLineCount;
 	my $line_number = $self->prompt(
-		sprintf(Wx::gettext("Line number between (1-%s):"), $max),
+		sprintf( Wx::gettext("Line number between (1-%s):"), $max ),
 		Wx::gettext("Go to line number"),
 		"GOTO_LINE_NUMBER"
 	);
@@ -2133,16 +2132,11 @@ sub on_close_window {
 
 	Padre::Util::debug("Files saved (or not), hiding window");
 
-
 	# Immediately hide the window so that the user
 	# perceives the application as closing faster.
 	# This knocks about quarter of a second off the speed
 	# at which Padre appears to close.
 	$self->Show(0);
-
-
-
-
 
 	# Save the window geometry
 	#$config->set( main_auilayout => $self->aui->SavePerspective );
@@ -2180,6 +2174,7 @@ sub on_close_window {
 	$event->Skip;
 
 	Padre::Util::debug("Tell TaskManager to cleanup");
+
 	# Stop all Task Manager's worker threads
 	$self->ide->task_manager->cleanup;
 
@@ -2412,7 +2407,7 @@ sub on_open_selection {
 	my $self    = shift;
 	my $current = $self->current;
 	return if not $current->editor;
-	my $text    = $current->text;
+	my $text = $current->text;
 
 	# get selection, ask for it if needed
 	unless ( length $text ) {
@@ -2638,11 +2633,12 @@ sub on_save_as {
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 			return;
 		}
-		# GetPath will return the typed in string 
+
+		# GetPath will return the typed in string
 		# for a file path to be saved to.
-		# now we need to work out if we use GetPath 
+		# now we need to work out if we use GetPath
 		# or concatinate the two values used.
-		
+
 		#my $filename = $dialog->GetFilename;
 		#print "FileName: $filename\n";
 		#my $dir = $dialog->GetDirectory;
@@ -2650,8 +2646,9 @@ sub on_save_as {
 		#print "Path: " . $dialog->GetPath  . "\n";
 		$self->{cwd} = $dialog->GetDirectory;
 		my $saveto = $dialog->GetPath;
+
 		#my $path = File::Spec->catfile( $self->cwd, $filename );
-		my $path = File::Spec->catfile( $saveto );
+		my $path = File::Spec->catfile($saveto);
 		if ( -e $path ) {
 			my $response = Wx::MessageBox(
 				Wx::gettext("File already exists. Overwrite it?"),
@@ -3760,8 +3757,8 @@ sub on_doc_stats {
 		return;
 	}
 
-	my ($lines, $chars_with_space, $chars_without_space, $words, $is_readonly,
-		$filename, $newline_type, $encoding
+	my ($lines,    $chars_with_space, $chars_without_space, $words, $is_readonly,
+		$filename, $newline_type,     $encoding
 	) = $doc->stats;
 
 	my @messages = (
@@ -4218,19 +4215,20 @@ sub show_as_numbers {
 
 	my $current = $self->current;
 	return if not $current->editor;
-	my $text    = $current->text;
+	my $text = $current->text;
 	if ($text) {
 		$self->show_output(1);
 		my $output = $self->output;
 		$output->Remove( 0, $output->GetLastPosition );
+
 		# TODO deal with wide characters ?
 		# TODO split lines, show location ?
-		foreach my $i (0..length($text)) {
-			my $decimal = ord(substr($text, $i, 1));
-			$output->AppendText( ($form eq 'decimal' ? $decimal : uc(sprintf('%0.2x', $decimal))) . ' ' );
+		foreach my $i ( 0 .. length($text) ) {
+			my $decimal = ord( substr( $text, $i, 1 ) );
+			$output->AppendText( ( $form eq 'decimal' ? $decimal : uc( sprintf( '%0.2x', $decimal ) ) ) . ' ' );
 		}
 	} else {
-		$self->message(Wx::gettext('Need to select text in order to translate to hex'));
+		$self->message( Wx::gettext('Need to select text in order to translate to hex') );
 	}
 
 	$event->Skip;

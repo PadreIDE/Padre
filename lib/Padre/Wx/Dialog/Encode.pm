@@ -24,27 +24,27 @@ sub _encode {
 
 sub encode_document_to_system_default {
 	my ( $window, $event ) = @_;
-	_encode($window, Padre::Locale::encoding_system_default() || 'utf-8');
+	_encode( $window, Padre::Locale::encoding_system_default() || 'utf-8' );
 	return;
 }
 
 sub encode_document_to_utf8 {
 	my ( $window, $event ) = @_;
-	_encode($window, 'utf-8');
+	_encode( $window, 'utf-8' );
 	return;
 }
 
 sub encode_document_to {
 	my ( $window, $event ) = @_;
 
-#	my @ENCODINGS = qw(
-#		cp932
-#		cp949
-#		euc-jp
-#		euc-kr
-#		shift-jis
-#		utf-8
-#	);
+	#	my @ENCODINGS = qw(
+	#		cp932
+	#		cp949
+	#		euc-jp
+	#		euc-kr
+	#		shift-jis
+	#		utf-8
+	#	);
 	require Encode;
 	my @ENCODINGS = Encode->encodings(":all");
 
@@ -87,7 +87,7 @@ sub encode_ok_clicked {
 	my $data   = $dialog->get_data;
 	$dialog->Destroy;
 
-	_encode($window, $data->{_encoding_});
+	_encode( $window, $data->{_encoding_} );
 	return;
 }
 

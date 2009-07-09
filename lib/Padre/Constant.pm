@@ -35,7 +35,8 @@ use constant {
 	NEWLINE => {
 		MSWin32 => 'WIN',
 		darwin  => 'MAC',
-	}->{$^O} || 'UNIX'
+		}->{$^O}
+		|| 'UNIX'
 };
 
 # Setting Types (based on Firefox types)
@@ -72,20 +73,18 @@ use constant {
 # Files and Directories
 use constant CONFIG_DIR => File::Spec->rel2abs(
 	File::Spec->catdir(
-		defined( $ENV{PADRE_HOME} )
-		? ( $ENV{PADRE_HOME}, '.padre' )
+		defined( $ENV{PADRE_HOME} ) ? ( $ENV{PADRE_HOME}, '.padre' )
 		: ( File::HomeDir->my_data,
-			File::Spec->isa('File::Spec::Win32')
-				? qw{ Perl Padre }
-				: qw{ .padre }
+			File::Spec->isa('File::Spec::Win32') ? qw{ Perl Padre }
+			: qw{ .padre }
 		)
 	)
 );
 
-use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml'      );
-use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db'       );
-use constant PLUGIN_DIR   => File::Spec->catdir(  CONFIG_DIR, 'plugins'         );
-use constant PLUGIN_LIB   => File::Spec->catdir(  PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
+use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db' );
+use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
+use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
 
 # Check and create the directories that need to exist
 unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {

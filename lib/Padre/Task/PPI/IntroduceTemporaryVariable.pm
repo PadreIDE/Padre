@@ -48,7 +48,7 @@ sub prepare {
 	delete $self->{document};
 	if ( not defined $mto->{document} ) {
 		require Carp;
-		Carp::croak( "Missing Padre::Document::Perl object as {document} attribute of the temporary-variable task" );
+		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the temporary-variable task");
 	}
 
 	foreach my $key (qw(start_location end_location)) {
@@ -99,7 +99,7 @@ sub finish {
 	} else {
 		my $text;
 		if ( $self->{error} =~ /no token/ ) {
-			$text = Wx::gettext( "First character of selection does not seem to point at a token." );
+			$text = Wx::gettext("First character of selection does not seem to point at a token.");
 		} elsif ( $self->{error} =~ /no statement/ ) {
 			$text = Wx::gettext("Selection not part of a Perl statement?");
 		} else {

@@ -498,7 +498,6 @@ sub new {
 		$self->{show_as_number}
 	);
 
-
 	$self->{show_as_hex} = $self->{show_as_number}->Append(
 		-1,
 		Wx::gettext("Show as hexa")
@@ -507,7 +506,7 @@ sub new {
 		$main,
 		$self->{show_as_hex},
 		sub {
-			Padre::Wx::Main::show_as_numbers(@_, 'hex');
+			Padre::Wx::Main::show_as_numbers( @_, 'hex' );
 		},
 	);
 
@@ -519,7 +518,7 @@ sub new {
 		$main,
 		$self->{show_as_decimal},
 		sub {
-			Padre::Wx::Main::show_as_numbers(@_, 'decimal');
+			Padre::Wx::Main::show_as_numbers( @_, 'decimal' );
 		},
 	);
 

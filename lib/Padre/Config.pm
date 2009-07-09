@@ -38,16 +38,11 @@ our $REVISION = 1;
 our $SINGLETON = undef;
 
 # Accessor generation
-use Class::XSAccessor::Array
-getters => {
+use Class::XSAccessor::Array getters => {
 	host    => Padre::Constant::HOST,
 	human   => Padre::Constant::HUMAN,
 	project => Padre::Constant::PROJECT,
 };
-
-
-
-
 
 #####################################################################
 # Settings Specification
@@ -82,8 +77,8 @@ sub $object->{name} {
 END_PERL
 
 	# Compile the accessor
-	eval $code; ## no critic
-	if ( $@ ) {
+	eval $code;    ## no critic
+	if ($@) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}
 
@@ -185,7 +180,7 @@ setting(
 	apply   => sub {
 		my $main  = shift;
 		my $value = shift;
-		if ( $value ) {
+		if ($value) {
 			$main->single_instance_start;
 		} else {
 			$main->single_instance_stop;
@@ -203,7 +198,7 @@ setting(
 		my $value = shift;
 
 		# Update the lock status
-		$main->aui->lock_panels( $value );
+		$main->aui->lock_panels($value);
 
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
@@ -558,10 +553,6 @@ setting(
 	default => '',
 );
 
-
-
-
-
 #####################################################################
 # Constructor and Accessors
 
@@ -580,7 +571,7 @@ sub new {
 	my $self = bless [ $host, $human, undef ], $class;
 
 	# Add the optional third element
-	if ( @_ ) {
+	if (@_) {
 		my $project = shift;
 		unless ( Params::Util::_INSTANCE( $project, 'Padre::Config::Project' ) ) {
 			Carp::croak("Did not provide a project config to Padre::Config->new");
@@ -601,7 +592,7 @@ sub read {
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-		         || Padre::Config::Human->create;
+			|| Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
@@ -638,9 +629,6 @@ sub default {
 
 	return $DEFAULT{$name};
 }
-
-
-
 
 ######################################################################
 # Main Methods
@@ -699,16 +687,12 @@ sub apply {
 
 	# Does this setting have an apply hook
 	my $code = $SETTING{$name}->apply;
-	if ( $code ) {
+	if ($code) {
 		$code->( $current->main, $value );
 	}
 
 	return 1;
 }
-
-
-
-
 
 ######################################################################
 # Support Functions

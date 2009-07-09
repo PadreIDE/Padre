@@ -209,6 +209,7 @@ sub _create_buttons {
 	$sizer->Add( $bc, Wx::GBPosition->new( 2, 3 ) );
 
 	$bs->SetDefault;
+
 	# save button is disabled at first
 	$bs->Disable;
 	$self->_butsave($bs);

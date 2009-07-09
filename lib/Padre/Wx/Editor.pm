@@ -55,8 +55,8 @@ sub new {
 	$self->SetMarginWidth( 1, 0 );
 	$self->SetMarginWidth( 2, 0 );
 
-    # Set word chars to match Perl variables
-    $self->SetWordChars(join '', ('$@%&_:[]{}', 0..9, 'A'..'Z','a'..'z'));
+	# Set word chars to match Perl variables
+	$self->SetWordChars( join '', ( '$@%&_:[]{}', 0 .. 9, 'A' .. 'Z', 'a' .. 'z' ) );
 
 	Wx::Event::EVT_RIGHT_DOWN( $self, \&on_right_down );
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );

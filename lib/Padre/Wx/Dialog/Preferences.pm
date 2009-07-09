@@ -50,8 +50,7 @@ sub _external_tools_panel {
 
 	my $config = Padre->ide->config;
 	my $table  = [
-		[
-			[ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
+		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],
 	];
@@ -273,7 +272,7 @@ END_TEXT
 	$editor->SetCaretLineBackground( Padre::Wx::Editor::_color( substr( $bgcolor, 1 ) ) );
 	$editor->SetCaretLineVisible(1);
 	my $editor_font = $self->_create_font($font_desc);
-	$editor->SetFont( $editor_font );
+	$editor->SetFont($editor_font);
 	$editor->StyleSetFont( Wx::wxSTC_STYLE_DEFAULT, $editor_font );
 	$editor->SetReadOnly(1);
 	$editor->SetExtraStyle(Wx::wxWS_EX_BLOCK_EVENTS);
@@ -287,14 +286,14 @@ END_TEXT
 
 #
 # A font description is a string that you get from $font->GetNativeFontInfoUserDesc()
-# 
-# Important Note: You cannot create a font directly from it. This workaround is 
+#
+# Important Note: You cannot create a font directly from it. This workaround is
 # necessary. If you do not believe me, turn Wx debugging and you'll see what I mean :)
 #
 sub _create_font {
-	my ($self, $font_desc) = @_;
+	my ( $self, $font_desc ) = @_;
 	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	$font->SetNativeFontInfoUserDesc( $font_desc );
+	$font->SetNativeFontInfoUserDesc($font_desc);
 	return $font;
 }
 
@@ -393,7 +392,7 @@ END_TEXT
 		[   [ 'Wx::StaticText', undef,                     Wx::gettext('Script arguments:') ],
 			[ 'Wx::TextCtrl',   'run_script_args_default', $config->run_script_args_default ]
 		],
-		[   [ 'Wx::CheckBox', 'run_use_external_window', ( $config->run_use_external_window ? 1 : 0 ),
+		[   [   'Wx::CheckBox', 'run_use_external_window', ( $config->run_use_external_window ? 1 : 0 ),
 				Wx::gettext('Use external window for execution (xterm)')
 			],
 			[]

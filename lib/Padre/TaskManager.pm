@@ -110,7 +110,7 @@ our $REAP_TIMER;
 # You can instantiate this class only once.
 our $SINGLETON;
 
-# This is set in the worker threads only! 
+# This is set in the worker threads only!
 our $_main;
 
 sub new {
@@ -119,8 +119,8 @@ sub new {
 	return $SINGLETON if defined $SINGLETON;
 
 	my $self = $SINGLETON = bless {
-		min_no_workers => 2, # there were config settings for 
-		max_no_workers => 6, #  these long ago?
+		min_no_workers => 2,       # there were config settings for
+		max_no_workers => 6,       #  these long ago?
 		use_threads    => 1,       # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
@@ -137,8 +137,7 @@ sub new {
 	my $main = Padre->ide->wx->main;
 	_init_events($main);
 
-	$self->{task_queue}    = Thread::Queue->new;
-
+	$self->{task_queue} = Thread::Queue->new;
 
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
@@ -206,9 +205,10 @@ sub schedule {
 	my $task = _INSTANCE( shift, 'Padre::Task' )
 		or die "Invalid task scheduled!";    # TODO: grace
 
-	if ( _INSTANCE( $task , 'Padre::Service' ) ) {
+	if ( _INSTANCE( $task, 'Padre::Service' ) ) {
 		$self->{running_services}{$task} = $task;
 	}
+
 	# Cleanup old threads and refill the pool
 	$self->reap();
 
@@ -218,10 +218,9 @@ sub schedule {
 		return;
 	}
 
-
 	my $string;
 	$task->serialize( \$string );
-	
+
 	if ( $self->use_threads ) {
 		require Time::HiRes;
 
@@ -292,9 +291,9 @@ sub _make_worker_thread {
 	return unless $self->use_threads;
 
 	@_ = ();    # avoid "Scalars leaked"
-	my $worker = threads->create( 
+	my $worker = threads->create(
 		{ 'exit' => 'thread_only' }, \&worker_loop,
-		 $main, $self->task_queue 
+		$main, $self->task_queue
 	);
 	push @{ $self->{workers} }, $worker;
 }
@@ -397,15 +396,15 @@ Called on editor shutdown.
 sub cleanup {
 	my $self = shift;
 	return if not $self->use_threads;
-	
+
 	# Send all services a HANGUP , they will (hopefully)
 	# catch this and break the run loop, returning below as
 	# regular tasks. :|
-	Padre::Util::debug( 'Tell services to hangup' );
+	Padre::Util::debug('Tell services to hangup');
 	$self->shutdown_services;
-	
+
 	# the nice way:
-	Padre::Util::debug( 'Tell all tasks to stop' );
+	Padre::Util::debug('Tell all tasks to stop');
 	my @workers = $self->workers;
 	$self->task_queue->insert( 0, ("STOP") x scalar(@workers) );
 	while ( threads->list(threads::running) >= 1 ) {
@@ -415,7 +414,7 @@ sub cleanup {
 		Padre::Util::debug( 'Joining thread ' . $thread->tid );
 		$thread->join;
 	}
-	
+
 	# didn't work the nice way?
 	while ( threads->list(threads::running) >= 1 ) {
 		Padre::Util::debug( 'Killing thread ' . $_->tid );
@@ -474,10 +473,10 @@ and return via the usual Task mechanism.
 ## ERM FIXME where are is the {running_services} populated then eh?
 sub shutdown_services {
 	my $self = shift;
-	Padre::Util::debug( 'Shutdown services' );
-	
-	while ( my  ($sid,$service) = each %{ $self->{running_services} } ) {
-		Padre::Util::debug( "Hangup service $sid!" );
+	Padre::Util::debug('Shutdown services');
+
+	while ( my ( $sid, $service ) = each %{ $self->{running_services} } ) {
+		Padre::Util::debug("Hangup service $sid!");
 		$service->shutdown;
 	}
 }
@@ -512,10 +511,10 @@ because C<finish> most likely updates the GUI.)
 sub on_task_done_event {
 	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
 	my $frozen = $event->GetData;
-	
-	# FIXME - can we know the _real_ class so the an extender 
+
+	# FIXME - can we know the _real_ class so the an extender
 	#  may hook de/serialize
-	my $task   = Padre::Task->deserialize( \$frozen );
+	my $task = Padre::Task->deserialize( \$frozen );
 
 	$task->finish($main);
 	my $tid = $task->{__thread_id};

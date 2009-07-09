@@ -151,6 +151,7 @@ sub on_tree_item_activated {
 	my $item  = $event->GetItem or return;
 	my $error = $self->GetPlData($item);
 	my $main  = $self->main;
+
 	#TODO: The <$error eq 'Data'> clause prevents
 	#Padre from crashing when pressing [enter] before
 	#the main window is fully loaded. Further implications

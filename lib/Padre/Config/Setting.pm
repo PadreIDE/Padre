@@ -11,8 +11,7 @@ use Padre::Constant ();
 
 our $VERSION = '0.38';
 
-use Class::XSAccessor
-getters => {
+use Class::XSAccessor getters => {
 	name    => 'name',
 	type    => 'type',
 	store   => 'store',
@@ -24,7 +23,7 @@ getters => {
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Param checking
 	unless ( $self->name ) {
@@ -41,24 +40,20 @@ sub new {
 	}
 
 	# Normalise
-	$self->{project} = !! $self->project;
+	$self->{project} = !!$self->project;
 
 	return $self;
 }
-
-
-
-
 
 #####################################################################
 # Support Functions
 
 sub _TYPE {
-	return !! ( defined $_[0] and not ref $_[0] and $_[0] =~ /^[0-4]\z/ );
+	return !!( defined $_[0] and not ref $_[0] and $_[0] =~ /^[0-4]\z/ );
 }
 
 sub _STORE {
-	return !! ( defined $_[0] and not ref $_[0] and $_[0] =~ /^[0-2]\z/ );
+	return !!( defined $_[0] and not ref $_[0] and $_[0] =~ /^[0-2]\z/ );
 }
 
 1;

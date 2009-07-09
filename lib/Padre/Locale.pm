@@ -563,7 +563,7 @@ sub encoding_system_default {
 			. "Please check it manually and report your environment to the Padre development team.";
 		return;
 	}
-	
+
 	Padre::Util::debug("Encoding system default: ($encoding)");
 
 	return $encoding;
@@ -600,7 +600,7 @@ sub encoding_from_string {
 	unless ( defined $guess ) {
 		$guess = '';                    # to avoid warnings
 	}
-	
+
 	Padre::Util::debug("Encoding guess: ($guess)");
 
 	# Wow, nice!

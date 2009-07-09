@@ -13,7 +13,7 @@ our @ISA     = 'Wx::ToolBar';
 
 # NOTE: Something is wrong with dockable toolbars on Windows
 #       so disable them for now.
-use constant DOCKABLE => ! Padre::Constant::WXWIN32;
+use constant DOCKABLE => !Padre::Constant::WXWIN32;
 
 sub new {
 	my $class = shift;
@@ -62,20 +62,20 @@ sub new {
 	);
 
 	$self->add_tool(
-		id	=> Wx::wxID_SAVEAS,
-		icon	=> 'actions/document-save-as',
-		short	=> Wx::gettext('Save as...'),
+		id    => Wx::wxID_SAVEAS,
+		icon  => 'actions/document-save-as',
+		short => Wx::gettext('Save as...'),
 	);
-	
+
 	$self->add_tool(
-		id	=> 1000, # I don't like these hard set ID's for Wx.
-		icon	=> 'actions/stock_data-save',
-		short	=> Wx::gettext('Save All'),
+		id    => 1000,                        # I don't like these hard set ID's for Wx.
+		icon  => 'actions/stock_data-save',
+		short => Wx::gettext('Save All'),
 		event => sub {
 			Padre::Wx::Main::on_save_all(@_);
 		},
 	);
-	
+
 	$self->add_tool(
 		id    => Wx::wxID_CLOSE,
 		icon  => 'actions/x-document-close',
@@ -142,19 +142,19 @@ sub new {
 
 	# find and replace
 	$self->AddSeparator;
-	
+
 	$self->add_tool(
-		id	=> Wx::wxID_FIND,
-		icon	=> 'actions/edit-find',
-		short	=> Wx::gettext('Find'),
+		id    => Wx::wxID_FIND,
+		icon  => 'actions/edit-find',
+		short => Wx::gettext('Find'),
 	);
-	
+
 	$self->add_tool(
-		id	=> Wx::wxID_REPLACE,
-		icon	=> 'actions/edit-find-replace',
-		short	=> Wx::gettext('Find and Replace'),
+		id    => Wx::wxID_REPLACE,
+		icon  => 'actions/edit-find-replace',
+		short => Wx::gettext('Find and Replace'),
 	);
-	
+
 	# Document Transforms
 	$self->AddSeparator;
 
@@ -166,14 +166,14 @@ sub new {
 			Padre::Wx::Main::on_comment_toggle_block(@_);
 		},
 	);
-	
+
 	$self->AddSeparator;
-	
+
 	$self->add_tool(
-		id 	=> 1001,
-		icon	=> 'actions/document-properties',
-		short	=> Wx::gettext('Document Stats'),
-		event	=> sub {
+		id    => 1001,
+		icon  => 'actions/document-properties',
+		short => Wx::gettext('Document Stats'),
+		event => sub {
 			Padre::Wx::Main::on_doc_stats(@_);
 		},
 	);
@@ -190,11 +190,11 @@ sub refresh {
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
 	$self->EnableTool( Wx::wxID_SAVE, ( $document and $document->is_modified ? 1 : 0 ) );
-	$self->EnableTool( Wx::wxID_SAVEAS,( $document));
-	
+	$self->EnableTool( Wx::wxID_SAVEAS, ($document) );
+
 	# trying out the Comment Code method here
-	$self->EnableTool( 1000, ( $document ) ); # Save All
-	
+	$self->EnableTool( 1000, ($document) );    # Save All
+
 	$self->EnableTool( Wx::wxID_CLOSE, ( $editor ? 1 : 0 ) );
 	$self->EnableTool( Wx::wxID_UNDO,  ( $editor and $editor->CanUndo ) );
 	$self->EnableTool( Wx::wxID_REDO,  ( $editor and $editor->CanRedo ) );
