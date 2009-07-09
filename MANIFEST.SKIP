@@ -48,3 +48,5 @@ dev.pl
 /lex/
 ^lex/
 
+# no need for the .mo files as they are generated on the target machine
+\.mo$
