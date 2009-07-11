@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.40 to be released
+
+
 0.39 2009.07.09
     - Some of the refactoring code was moved to PPIx-EditorTools (MGRIMES)
     - Detection of Moose attributes in Outline view (JQUELIN)
