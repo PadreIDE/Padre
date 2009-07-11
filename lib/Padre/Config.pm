@@ -103,7 +103,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
-
+setting(
+	name    => 'identity_nickname',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '',
+);
 # Support for Module::Starter
 setting(
 	name    => 'license',
