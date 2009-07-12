@@ -49,8 +49,10 @@ if ( grep { $_ eq '-p' } @ARGV ) {
 	push @cmd, '-dt:NYTProf';
 }
 if ( grep { $_ eq '-h' } @ARGV ) {
+	usage();
+} elsif ( grep { $_ eq '-a' } @ARGV ) {
 	# Rebuild translations
-	@ARGV = grep { $_ ne '-h' } @ARGV;
+	@ARGV = grep { $_ ne '-a' } @ARGV;
 	my $dir = File::Basename::dirname($ENV{PADRE_HOME});
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
@@ -73,5 +75,18 @@ sub error {
 	$msg =~ s/\n$//s;
 	print "\nError:\n$msg\n\n";
 	exit(255);
+}
+
+sub usage {
+	print <<"END_USAGE";
+Usage: $0
+        -h     show this help
+        -d     run Padre in the command line debugger (-d)
+        -p     run Padre under -dt:NYTProf
+        -a     add the pathe to the lib directory of all the plugins in trunk/
+
+       LIST OF FILES    list of files to open
+END_USAGE
+	exit 0;
 }
 
