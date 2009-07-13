@@ -92,7 +92,9 @@ sub on_tree_item_activated {
 	return;
 }
 
+{
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
+my $total_files = 0;
 
 sub list_dir {
 	my ( $dir, $depth ) = @_;
@@ -101,10 +103,18 @@ sub list_dir {
 
 	# Avoid deep recursion
 	# TODO: make this more clever then simply stopping after 10 levels
+	# or when 500 files were indexed. Either way, there should be an
+	# element in the window saying there -are- more files that are not displayed.
+	# Note that this is just a quick fix to make Padre usable for opening files
+	# inside huge directory structures with the "Directory View" enabled. A 
+	# better and much cleaner approach would be to "load" those files only in
+	# the level the user is viewing (single depth) and loading directory contents
+	# only when the user clicks on that on the view.
 	return if $depth > 10;
 	if ( opendir my $dh, $dir ) {
 		my @items = sort grep { not $SKIP{$_} } readdir $dh;
 		foreach my $thing (@items) {
+			last if ++$total_files > 500;
 			my $path = File::Spec->catfile( $dir, $thing );
 			my %item = (
 				name => $thing,
@@ -115,8 +125,11 @@ sub list_dir {
 			}
 			push @data, \%item;
 		}
+		closedir $dh;
 	}
+	$total_files = 0 if $depth == 1;
 	return \@data;
+}
 }
 
 sub update_gui {
