@@ -236,6 +236,7 @@ sub about {
 	$about->AddDeveloper("Patrick Donelan");
 	$about->AddDeveloper("Paweł Murias");
 	$about->AddDeveloper("Petar Shangov");
+	$about->AddDeveloper("Ryan Niebur");
 	$about->AddDeveloper("Steffen Müller");
 
 	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
