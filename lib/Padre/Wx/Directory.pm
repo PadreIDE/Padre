@@ -77,13 +77,13 @@ sub force_next {
 sub on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $item_obj = $event->GetItem;
-	my $item = $self->GetPlData( $item_obj );
+	my $itemObj = $event->GetItem;
+	my $item = $self->GetPlData( $itemObj );
 
 	return if not defined $item;
 
 	if($item->{type} eq "folder"){
-		$self->Toggle( $item_obj );
+		$self->Toggle( $itemObj );
 		return;
 	}
 
@@ -115,29 +115,12 @@ sub on_tree_item_activated {
 					name => $thing,
 					dir  => $dir,
 				);
-				if ( -d $path ) {
-					$item{content} = count_dir_content( $path );
-				}
+				$item{isDir} = 1 if -d $path;
 				push @data, \%item;
 			}
 			closedir $dh;
 		}
 		return \@data;
-	}
-
-	sub count_dir_content {
-		my $dir = shift;
-		my %content;
-
-		if ( opendir my $dh, $dir ) {
-			my @items = sort grep { not $SKIP{$_} } readdir $dh;
-			foreach my $thing (@items) {
-				my $path = File::Spec->catfile( $dir, $thing );
-				$content{-d $path?'dir':'file'}++;
-			}
-			closedir $dh;
-		}
-		return \%content;
 	}
 }
 
@@ -150,14 +133,15 @@ sub update_gui {
 	my $dir = Padre::Util::get_project_dir($filename)
 		|| File::Basename::dirname($filename);
 
-	# TODO empty CACHE if forced ?
-	# TODO how to recognize real change in ?
 	return if $current_dir and $current_dir eq $dir;
-	unless ( $CACHED{$dir} ) {
-		$CACHED{$dir} = list_dir($dir);
+
+	my $dirChange = (stat $dir)[10];
+	if ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}{Change} ) {
+		$CACHED{$dir}->{Data} = list_dir($dir);
+		$CACHED{$dir}->{Change} = $dirChange;
 	}
 
-	return unless @{ $CACHED{$dir} };
+	return unless @{ $CACHED{$dir}->{Data} };
 
 	my $directory = $self->main->directory;
 	$directory->Freeze;
@@ -170,7 +154,7 @@ sub update_gui {
 		Wx::TreeItemData->new('')
 	);
 
-	_update_treectrl( $directory, $CACHED{$dir}, $root );
+	_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
 
 	Wx::Event::EVT_TREE_ITEM_MENU(
 		$directory,
@@ -184,14 +168,53 @@ sub update_gui {
 		\&_on_tree_item_expanding,
 	);
 
+	Wx::Event::EVT_TREE_BEGIN_LABEL_EDIT(
+		$directory,
+		$directory,
+		\&_on_tree_begin_label_edit,
+	);
+
+	Wx::Event::EVT_TREE_END_LABEL_EDIT(
+		$directory,
+		$directory,
+		\&_on_tree_end_label_edit,
+	);
+
 	$directory->GetBestSize;
 	$directory->Thaw;
 }
+
+
+sub _on_tree_begin_label_edit {
+	my ( $dir, $event ) = @_;
+
+	# If any restriction, can do veto here
+}
+
+sub _on_tree_end_label_edit {
+	my ( $dir, $event ) = @_;
+	my $itemObj = $event->GetItem;
+	my $itemData = $dir->GetPlData( $itemObj );
+
+	my $newLabel = $event->GetLabel();
+		
+	my $oldFile = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+	my $newFile = File::Spec->catfile( $itemData->{dir}, $newLabel );
+
+	if ( rename $oldFile, $newFile  ) {
+		$itemData->{name} = $newLabel;
+	} else {
+		$event->Veto();
+	}
+}
+
 sub _on_tree_item_expanding {
 	my ( $dir, $event ) = @_;
 	my $itemData = $dir->GetPlData( $event->GetItem );
 
-	if($itemData->{type} eq "folder"){
+	if(	defined( $itemData->{type} )
+		&& $itemData->{type} eq 'folder' )
+	{
 		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
 		$dir->DeleteChildren( $event->GetItem );
 		_update_treectrl( $dir, list_dir($path), $event->GetItem);
@@ -201,56 +224,87 @@ sub _on_tree_item_expanding {
 sub _on_tree_item_menu {
 	my ( $dir, $event ) = @_;
 
-	my $showMenu = 0;
-	my $menu     = Wx::Menu->new;
-	my $itemData = $dir->GetPlData( $event->GetItem );
+	my $itemObj  = $event->GetItem;
+	my $itemData = $dir->GetPlData( $itemObj );
 
-	if ( defined $itemData && $itemData->{type} ne "folder") {
-		my $goTo = $menu->Append( -1, Wx::gettext("Open File") );
+	if( defined $itemData ) {
+
+		my $menu     = Wx::Menu->new;
+
+		if (	defined ( $itemData->{type} )
+			&& $itemData->{type} eq 'folder' )
+		{
+			my $default = $menu->Append( -1, "Expand / Collapse");
+			Wx::Event::EVT_MENU(
+				$dir, $default,
+				sub {
+					$dir->Toggle( $itemObj );
+				}
+			),
+		} else {
+			my $default = $menu->Append( -1, Wx::gettext("Open File") );
+			Wx::Event::EVT_MENU(
+				$dir, $default,
+				sub {
+					$dir->on_tree_item_activated( $event );
+				},
+			);
+		}
+
+		$menu->AppendSeparator();
+
+		my $rename = $menu->Append( -1, "Rename..." );
 		Wx::Event::EVT_MENU(
-			$dir, $goTo,
+			$dir, $rename,
 			sub {
-				$dir->on_tree_item_activated($event);
+				$dir->EditLabel( $itemObj );
 			},
 		);
 
-		$showMenu++;
-	}
 
-	if (   defined($itemData)
-		&& defined( $itemData->{type} )
-		&& ( $itemData->{type} eq 'modules' || $itemData->{type} eq 'pragmata' ) )
-	{
-		my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
+		if (	defined( $itemData->{type} )
+			&& ( $itemData->{type} eq 'modules' || $itemData->{type} eq 'pragmata' ) )
+		{
+			my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
+			Wx::Event::EVT_MENU(
+				$dir, $pod,
+				sub {
+
+					# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+					require Padre::Wx::DocBrowser;
+					my $help = Padre::Wx::DocBrowser->new;
+					$help->help( $itemData->{name} );
+					$help->SetFocus;
+					$help->Show(1);
+					return;
+				},
+			);
+		}
+
+
+
+		$menu->AppendSeparator();
+
+		my $reload= $menu->Append( -1, "Reload..." );
 		Wx::Event::EVT_MENU(
-			$dir, $pod,
+			$dir, $reload,
 			sub {
-
-				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
-				require Padre::Wx::DocBrowser;
-				my $help = Padre::Wx::DocBrowser->new;
-				$help->help( $itemData->{name} );
-				$help->SetFocus;
-				$help->Show(1);
-				return;
+				$dir->update_gui;
 			},
 		);
-		$showMenu++;
-	}
 
-	if ( $showMenu > 0 ) {
+
 		my $x = $event->GetPoint->x;
 		my $y = $event->GetPoint->y;
 		$dir->PopupMenu( $menu, $x, $y );
 	}
-
 	return;
 }
 
 sub _update_treectrl {
 	my ( $dir, $data, $root ) = @_;
 	foreach my $pkg ( @{$data} ) {
-		if ( keys %{$pkg->{content}} ) {
+		if ( $pkg->{isDir} ) {
 			my $type_elem = $dir->AppendItem(
 				$root,
 				$pkg->{name},
