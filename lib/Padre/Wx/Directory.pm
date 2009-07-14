@@ -284,7 +284,7 @@ sub _on_tree_item_menu {
 		$menu->AppendSeparator();
 
 		#####################################################################
-		# Show / Hide dot started files and folers
+		# Shows / Hides dot started files and folers
 if( $^O !~ /^win32/i ){
 		my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext( "Show hidden files" ) );
 
