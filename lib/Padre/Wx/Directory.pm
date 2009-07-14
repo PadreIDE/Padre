@@ -109,18 +109,17 @@ sub list_dir {
 		my @items = sort grep { not $SKIP{$_} } readdir $dh;
 		@items = grep { not /^\./ } @items unless $CACHED{$dir}->{ShowHidden};
 
-print $CACHED{$dir}->{ShowHidden},$/;
-
-
 		foreach my $thing (@items) {
 			my $path = File::Spec->catfile( $dir, $thing );
 			my %item = (
 				name => $thing,
 				dir  => $dir,
 			);
-			$item{isDir} = 1 if -d $path;
+			$item{isDir} = -d $path?1:0;
 			push @data, \%item;
 		}
+
+		@data = sort { $b->{isDir} <=> $a->{isDir} } @data;
 		closedir $dh;
 	}
 	return \@data;
@@ -284,9 +283,9 @@ sub _on_tree_item_menu {
 
 		$menu->AppendSeparator();
 
-		######################
+		#####################################################################
 		# Show / Hide dot started files and folers
-		
+if( $^O !~ /^win32/i ){
 		my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext( "Show hidden files" ) );
 
 		my $SelectDir = $itemData->{dir};
@@ -301,8 +300,8 @@ sub _on_tree_item_menu {
 				$dir->update_gui;
 			},
 		);
-
-		######################
+}
+		#####################################################################
 		# Updates the directory listing
 
 		my $reload= $menu->Append( -1, Wx::gettext( "Reload" ) );
