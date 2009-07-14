@@ -234,7 +234,7 @@ sub _on_tree_item_menu {
 		if (	defined ( $itemData->{type} )
 			&& $itemData->{type} eq 'folder' )
 		{
-			my $default = $menu->Append( -1, "Expand / Collapse");
+			my $default = $menu->Append( -1, Wx::gettext( "Expand / Collapse" ) );
 			Wx::Event::EVT_MENU(
 				$dir, $default,
 				sub {
@@ -253,7 +253,7 @@ sub _on_tree_item_menu {
 
 		$menu->AppendSeparator();
 
-		my $rename = $menu->Append( -1, "Rename..." );
+		my $rename = $menu->Append( -1, Wx::gettext( "Rename" ) );
 		Wx::Event::EVT_MENU(
 			$dir, $rename,
 			sub {
@@ -285,7 +285,7 @@ sub _on_tree_item_menu {
 
 		$menu->AppendSeparator();
 
-		my $reload= $menu->Append( -1, "Reload..." );
+		my $reload= $menu->Append( -1, Wx::gettext( "Reload" ) );
 		Wx::Event::EVT_MENU(
 			$dir, $reload,
 			sub {
