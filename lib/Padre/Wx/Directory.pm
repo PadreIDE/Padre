@@ -14,6 +14,7 @@ our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
 my $current_dir;
+my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
 sub new {
 	my $class = shift;
@@ -99,29 +100,30 @@ sub on_tree_item_activated {
 	return;
 }
 
-{
-	my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
+sub list_dir {
+	my $dir = shift;
+	my @data;
 
-	sub list_dir {
-		my $dir = shift;
-		my @data;
+	if ( opendir my $dh, $dir ) {
 
-		if ( opendir my $dh, $dir ) {
-			my @items = sort grep { not $SKIP{$_} } readdir $dh;
-			
-			foreach my $thing (@items) {
-				my $path = File::Spec->catfile( $dir, $thing );
-				my %item = (
-					name => $thing,
-					dir  => $dir,
-				);
-				$item{isDir} = 1 if -d $path;
-				push @data, \%item;
-			}
-			closedir $dh;
+		my @items = sort grep { not $SKIP{$_} } readdir $dh;
+		@items = grep { not /^\./ } @items unless $CACHED{$dir}->{ShowHidden};
+
+print $CACHED{$dir}->{ShowHidden},$/;
+
+
+		foreach my $thing (@items) {
+			my $path = File::Spec->catfile( $dir, $thing );
+			my %item = (
+				name => $thing,
+				dir  => $dir,
+			);
+			$item{isDir} = 1 if -d $path;
+			push @data, \%item;
 		}
-		return \@data;
+		closedir $dh;
 	}
+	return \@data;
 }
 
 sub update_gui {
@@ -183,7 +185,6 @@ sub update_gui {
 	$directory->GetBestSize;
 	$directory->Thaw;
 }
-
 
 sub _on_tree_begin_label_edit {
 	my ( $dir, $event ) = @_;
@@ -281,9 +282,28 @@ sub _on_tree_item_menu {
 			);
 		}
 
-
-
 		$menu->AppendSeparator();
+
+		######################
+		# Show / Hide dot started files and folers
+		
+		my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext( "Show hidden files" ) );
+
+		my $SelectDir = $itemData->{dir};
+		my $show = $CACHED{ $SelectDir }->{ShowHidden};
+		$hiddenFiles->Check( $show );
+
+		Wx::Event::EVT_MENU(
+			$dir, $hiddenFiles,
+			sub {
+				$CACHED{$SelectDir}->{ShowHidden} = !$show;
+				delete $CACHED{$SelectDir}->{Data};
+				$dir->update_gui;
+			},
+		);
+
+		######################
+		# Updates the directory listing
 
 		my $reload= $menu->Append( -1, Wx::gettext( "Reload" ) );
 		Wx::Event::EVT_MENU(
