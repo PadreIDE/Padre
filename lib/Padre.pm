@@ -1078,6 +1078,8 @@ Claudio Ramirez (CLAUDIO) E<lt>padre.claudio@apt-get.beE<gt>
 
 Fayland Lam (FAYLAND) E<lt>fayland@gmail.comE<gt>
 
+Gabriel Vieira (GABRIELMAD)
+
 Gábor Szabó - גאבור סבו (SZABGAB) E<lt>szabgab@gmail.comE<gt>
 
 Heiko Jansen (HJANSEN) E<lt>heiko_jansen@web.deE<gt>

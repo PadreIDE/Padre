@@ -23,7 +23,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS | Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS | Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE | Wx::wxTR_FULL_ROW_HIGHLIGHT
 	);
 	$self->SetIndent(10);
 	$self->{force_next} = 0;
@@ -77,8 +77,15 @@ sub force_next {
 sub on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $item = $self->GetPlData( $event->GetItem );
-	return if not defined $item or $item->{type} eq "folder";
+	my $item_obj = $event->GetItem;
+	my $item = $self->GetPlData( $item_obj );
+
+	return if not defined $item;
+
+	if($item->{type} eq "folder"){
+		$self->Toggle( $item_obj );
+		return;
+	}
 
 	my $path = File::Spec->catfile( $item->{dir}, $item->{name} );
 	return if not defined $path;
@@ -165,10 +172,10 @@ sub update_gui {
 
 	_update_treectrl( $directory, $CACHED{$dir}, $root );
 
-	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
+	Wx::Event::EVT_TREE_ITEM_MENU(
 		$directory,
 		$directory,
-		\&_on_tree_item_right_click,
+		\&_on_tree_item_menu,
 	);
 
 	Wx::Event::EVT_TREE_ITEM_EXPANDING(
@@ -178,7 +185,6 @@ sub update_gui {
 	);
 
 	$directory->GetBestSize;
-
 	$directory->Thaw;
 }
 sub _on_tree_item_expanding {
@@ -187,12 +193,12 @@ sub _on_tree_item_expanding {
 
 	if($itemData->{type} eq "folder"){
 		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
-		$dir->DeleteChildren($event->GetItem);
-		_update_treectrl( $dir,list_dir($path),$event->GetItem);
+		$dir->DeleteChildren( $event->GetItem );
+		_update_treectrl( $dir, list_dir($path), $event->GetItem);
 	}
 }
 
-sub _on_tree_item_right_click {
+sub _on_tree_item_menu {
 	my ( $dir, $event ) = @_;
 
 	my $showMenu = 0;
@@ -257,18 +263,7 @@ sub _update_treectrl {
 					}
 				)
 			);
-			my $branch = $dir->AppendItem(
-				$type_elem,
-				'',
-				-1, -1,
-				Wx::TreeItemData->new(
-					{	dir  => '',
-						name => '',
-						type => 'Temporary',
-					}
-				)
-			);
-			$dir->Expand($branch);
+			$dir->SetItemHasChildren($type_elem,1);
 		} else {
 			my $branch = $dir->AppendItem(
 				$root,
@@ -278,16 +273,11 @@ sub _update_treectrl {
 					{	dir  => $pkg->{dir},
 						name => $pkg->{name},
 						type => 'package',
-						short => "testing",
-						title => "testing2",
-						label => "testing4",
 					}
 				)
 			);
-			$dir->Expand($branch);
 		}
 	}
-
 	return;
 }
 

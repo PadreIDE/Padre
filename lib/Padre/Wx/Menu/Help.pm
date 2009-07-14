@@ -225,6 +225,7 @@ sub about {
 	$about->AddDeveloper("Chris Dolan");
 	$about->AddDeveloper("Claudio Ramirez");
 	$about->AddDeveloper("Fayland Lam");
+	$about->AddDeveloper("Gabriel Vieira");
 	$about->AddDeveloper("Gábor Szabó - גאבור סבו ");
 	$about->AddDeveloper("Heiko Jansen");
 	$about->AddDeveloper("Jérôme Quelin");
