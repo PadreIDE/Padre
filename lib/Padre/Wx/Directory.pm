@@ -94,12 +94,10 @@ sub on_tree_item_activated {
 
 {
 	my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
-	my $total_files = 0;
 
 	sub list_dir {
-		my ( $dir, $depth ) = @_;
+		my $dir = shift;
 		my @data;
-		$depth ||= 1;
 
 		if ( opendir my $dh, $dir ) {
 			my @items = sort grep { not $SKIP{$_} } readdir $dh;
@@ -117,7 +115,6 @@ sub on_tree_item_activated {
 			}
 			closedir $dh;
 		}
-		$total_files = 0 if $depth == 1;
 		return \@data;
 	}
 
