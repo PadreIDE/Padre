@@ -8,7 +8,7 @@ use Params::Util qw{_INSTANCE};
 use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
-use Foo;
+
 our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
 
