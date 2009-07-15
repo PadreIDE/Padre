@@ -14,7 +14,7 @@ our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
 my $current_dir;
-my $NotFirstTime;
+my $current_item;
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
 sub new {
@@ -228,10 +228,9 @@ sub _update_subdirs {
 		( my $node, $cookie ) = $item == 1 ? $self->GetFirstChild( $root ) : $self->GetNextChild( $root, $cookie ) ;
 
 		my $itemData = $self->GetPlData( $node );
-		last if not defined $itemData->{type} or $itemData->{type} ne 'folder';
 		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
 
-		if ( defined $CACHED{$current_dir}->{Expanded}->{$path} ) {
+		if ( defined $itemData->{type} and $itemData->{type} eq 'folder' and defined $CACHED{$current_dir}->{Expanded}->{$path} ) {
 
 			$self->Expand( $node );
 
@@ -240,6 +239,11 @@ sub _update_subdirs {
 				_update_treectrl( $self, list_dir( $path ), $node );
 			}
 			_update_subdirs( $self, $node );
+		}
+		if ( defined $current_item and $current_item eq $path ) {
+			$self->SelectItem( $node );
+			$self->ScrollTo( $node );
+			undef $current_item;
 		}
 	}
 }
@@ -251,10 +255,10 @@ sub _on_tree_begin_label_edit {
 }
 
 sub _on_tree_end_label_edit {
-	my ( $dir, $event ) = @_;
+	my ( $self, $event ) = @_;
 
 	my $itemObj = $event->GetItem;
-	my $itemData = $dir->GetPlData( $itemObj );
+	my $itemData = $self->GetPlData( $itemObj );
 
 	my $newLabel = $event->GetLabel();
 		
@@ -266,6 +270,7 @@ sub _on_tree_end_label_edit {
 	} else {
 		$event->Veto();
 	}
+	$current_item = $newFile;
 }
 
 sub _on_tree_item_expanding {
@@ -408,10 +413,10 @@ sub _update_tree_folder {
 }
 
 sub _update_treectrl {
-	my ( $dir, $data, $root ) = @_;
+	my ( $self, $data, $root ) = @_;
 	foreach my $pkg ( @{$data} ) {
 		if ( $pkg->{isDir} ) {
-			my $type_elem = $dir->AppendItem(
+			my $type_elem = $self->AppendItem(
 				$root,
 				$pkg->{name},
 				-1, -1,
@@ -423,9 +428,9 @@ sub _update_treectrl {
 					}
 				)
 			);
-			$dir->SetItemHasChildren($type_elem,1);
+			$self->SetItemHasChildren($type_elem,1);
 		} else {
-			my $branch = $dir->AppendItem(
+			my $branch = $self->AppendItem(
 				$root,
 				$pkg->{name},
 				-1, -1,
@@ -438,6 +443,7 @@ sub _update_treectrl {
 			);
 		}
 	}
+
 	return;
 }
 
