@@ -8,12 +8,13 @@ use Params::Util qw{_INSTANCE};
 use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
-
+use Foo;
 our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
 my $current_dir;
+my $FirstTime = 1;
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
 sub new {
@@ -104,10 +105,9 @@ sub list_dir {
 	my $dir = shift;
 	my @data;
 
-	my $dirChange = (stat $dir)[10];
-	if ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}{Change} ) {
+	if ( UpdatedDir($dir) ) {
 
-		$CACHED{$dir}->{Change} = $dirChange;
+		$CACHED{$dir}->{Change} = (stat $dir)[10];
 
 		if ( opendir my $dh, $dir ) {
 
@@ -132,6 +132,13 @@ sub list_dir {
 	return $CACHED{$dir}->{Data};
 }
 
+sub UpdatedDir {
+	my $dir = shift;
+	my $dirChange = (stat $dir)[10];
+	
+	return ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}->{Change} ) ? 1 : 0;
+}
+
 sub update_gui {
 	my $self    = shift;
 	my $current = $self->current;
@@ -143,49 +150,58 @@ sub update_gui {
 
 	return if $current_dir and $current_dir eq $dir;
 
-	$CACHED{$dir}->{Data} = list_dir($dir);
-
+	my $update = UpdatedDir( $dir );
+	$CACHED{$dir}->{Data} = list_dir($dir) if $update;
 	return unless @{ $CACHED{$dir}->{Data} };
 
-	my $directory = $self->main->directory;
-	$directory->Freeze;
-	$directory->clear;
+	my ( $directory, $root );
+	if ( $FirstTime ) {
 
-	my $root = $directory->AddRoot(
-		Wx::gettext('Directory'),
-		-1,
-		-1,
-		Wx::TreeItemData->new('')
-	);
+		$directory = $self->main->directory;
+		$directory->Freeze;
+		$directory->clear;
 
-	_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
+		$root = $directory->AddRoot(
+			Wx::gettext('Directory'),
+			-1,
+			-1,
+			Wx::TreeItemData->new('')
+		);
 
-	Wx::Event::EVT_TREE_ITEM_MENU(
-		$directory,
-		$directory,
-		\&_on_tree_item_menu,
-	);
+		Wx::Event::EVT_TREE_ITEM_MENU(
+			$directory,
+			$directory,
+			\&_on_tree_item_menu,
+		);
 
-	Wx::Event::EVT_TREE_ITEM_EXPANDING(
-		$directory,
-		$directory,
-		\&_on_tree_item_expanding,
-	);
+		Wx::Event::EVT_TREE_ITEM_EXPANDING(
+			$directory,
+			$directory,
+			\&_on_tree_item_expanding,
+		);
 
-	Wx::Event::EVT_TREE_BEGIN_LABEL_EDIT(
-		$directory,
-		$directory,
-		\&_on_tree_begin_label_edit,
-	);
+		Wx::Event::EVT_TREE_BEGIN_LABEL_EDIT(
+			$directory,
+			$directory,
+			\&_on_tree_begin_label_edit,
+		);
 
-	Wx::Event::EVT_TREE_END_LABEL_EDIT(
-		$directory,
-		$directory,
-		\&_on_tree_end_label_edit,
-	);
+		Wx::Event::EVT_TREE_END_LABEL_EDIT(
+			$directory,
+			$directory,
+			\&_on_tree_end_label_edit,
+		);
 
-	$directory->GetBestSize;
-	$directory->Thaw;
+		$directory->GetBestSize;
+		$directory->Thaw;
+		$FirstTime = 0;
+
+		_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
+	} elsif ( $update ) {
+		my $root = $self->GetRootItem;
+		$self->DeleteChildren($root);
+		_update_treectrl( $self, $CACHED{$dir}->{Data}, $root );
+	}
 }
 
 sub _on_tree_begin_label_edit {
