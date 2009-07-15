@@ -14,12 +14,13 @@ our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
 my $current_dir;
-my $FirstTime = 1;
+my $NotFirstTime;
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
 sub new {
 	my $class = shift;
 	my $main  = shift;
+
 	my $self  = $class->SUPER::new(
 		$main->right,
 		-1,
@@ -37,9 +38,54 @@ sub new {
 		},
 	);
 
+	Wx::Event::EVT_SET_FOCUS( $self,
+		\&on_focus
+	);
+
+	Wx::Event::EVT_TREE_ITEM_MENU(
+		$self, $self,
+		\&_on_tree_item_menu,
+	);
+
+	Wx::Event::EVT_TREE_ITEM_EXPANDING(
+		$self, $self,
+		\&_on_tree_item_expanding,
+	);
+
+	Wx::Event::EVT_TREE_BEGIN_LABEL_EDIT(
+		$self, $self,
+		\&_on_tree_begin_label_edit,
+	);
+
+	Wx::Event::EVT_TREE_END_LABEL_EDIT(
+		$self, $self,
+		\&_on_tree_end_label_edit,
+	);
+
+	my $root = $self->AddRoot(
+		Wx::gettext('Directory'),
+		-1,
+		-1,
+		Wx::TreeItemData->new('')
+	);
+
+	$self->GetBestSize;
+	$self->Thaw;
+
 	$self->Hide;
 
 	return $self;
+}
+
+sub on_focus {
+	my ( $self, $event ) = @_;
+	my $main = $self->main;
+
+	if ( $main->has_directory ) {
+		if ( $main->menu->view->{directory}->IsChecked ) {
+			$main->directory->update_gui;
+		}
+	}
 }
 
 sub right {
@@ -59,7 +105,10 @@ sub gettext_label {
 }
 
 sub clear {
-	$_[0]->DeleteAllItems;
+	unless( $_[0]->current->filename ) {
+		$_[0]->DeleteChildren( $_[0]->GetRootItem );
+		$current_dir = "";
+	}
 	return;
 }
 
@@ -135,7 +184,6 @@ sub list_dir {
 sub UpdatedDir {
 	my $dir = shift;
 	my $dirChange = (stat $dir)[10];
-	
 	return ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}->{Change} ) ? 1 : 0;
 }
 
@@ -148,60 +196,21 @@ sub update_gui {
 	my $dir = Padre::Util::get_project_dir($filename)
 		|| File::Basename::dirname($filename);
 
-	return if $current_dir and $current_dir eq $dir;
-
-	my $update = UpdatedDir( $dir );
-	$CACHED{$dir}->{Data} = list_dir($dir) if $update;
+	my $updated = UpdatedDir( $dir );
+	$CACHED{$dir}->{Data} = list_dir($dir) if $updated;
 	return unless @{ $CACHED{$dir}->{Data} };
 
-	my ( $directory, $root );
-	if ( $FirstTime ) {
+	my $directory = $self->main->directory;
+	my $root = $directory->GetRootItem;
 
-		$directory = $self->main->directory;
-		$directory->Freeze;
-		$directory->clear;
+	_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root ) unless defined $current_dir;
 
-		$root = $directory->AddRoot(
-			Wx::gettext('Directory'),
-			-1,
-			-1,
-			Wx::TreeItemData->new('')
-		);
-
-		Wx::Event::EVT_TREE_ITEM_MENU(
-			$directory,
-			$directory,
-			\&_on_tree_item_menu,
-		);
-
-		Wx::Event::EVT_TREE_ITEM_EXPANDING(
-			$directory,
-			$directory,
-			\&_on_tree_item_expanding,
-		);
-
-		Wx::Event::EVT_TREE_BEGIN_LABEL_EDIT(
-			$directory,
-			$directory,
-			\&_on_tree_begin_label_edit,
-		);
-
-		Wx::Event::EVT_TREE_END_LABEL_EDIT(
-			$directory,
-			$directory,
-			\&_on_tree_end_label_edit,
-		);
-
-		$directory->GetBestSize;
-		$directory->Thaw;
-		$FirstTime = 0;
-
+	if( (defined( $current_dir ) and $current_dir ne $dir) or $updated){
+		$directory->DeleteChildren( $root );
 		_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
-	} elsif ( $update ) {
-		my $root = $self->GetRootItem;
-		$self->DeleteChildren($root);
-		_update_treectrl( $self, $CACHED{$dir}->{Data}, $root );
 	}
+
+	$current_dir = $dir;
 }
 
 sub _on_tree_begin_label_edit {
