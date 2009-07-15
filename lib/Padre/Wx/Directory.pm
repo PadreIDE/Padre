@@ -52,6 +52,11 @@ sub new {
 		\&_on_tree_item_expanding,
 	);
 
+	Wx::Event::EVT_TREE_ITEM_COLLAPSING(
+		$self, $self,
+		\&_on_tree_item_collapsing,
+	);
+
 	Wx::Event::EVT_TREE_BEGIN_LABEL_EDIT(
 		$self, $self,
 		\&_on_tree_begin_label_edit,
@@ -209,36 +214,33 @@ sub update_gui {
 		_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
 	}
 
-	_update_subdirs( $directory, $root, $dir );
-
 	$current_dir = $dir;
+
+	_update_subdirs( $directory, $root );
 }
 
 sub _update_subdirs {
-	my ( $directory, $root, $path ) = @_;
-	my @dirs = grep { $_->{isDir} } @{$CACHED{$path}->{Data}};
+	my ( $self, $root ) = @_;
 
-	my $cookie = $directory->GetFirstChild( $root );
+	my $cookie;
+	for my $item ( 1.. $self->GetChildrenCount( $root ) ) {
 
-	for my $item (1.. @dirs) {
+		( my $node, $cookie ) = $item == 1 ? $self->GetFirstChild( $root ) : $self->GetNextChild( $root, $cookie ) ;
 
-		( my $node, $cookie ) = $directory->GetNextChild( $root, $cookie );
-		
-		if ( $directory->IsExpanded( $node ) ) {
+		my $itemData = $self->GetPlData( $node );
+		last if not defined $itemData->{type} or $itemData->{type} ne 'folder';
+		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
 
-			my $itemData = $directory->GetPlData( $node );
-			my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+		if ( defined $CACHED{$current_dir}->{Expanded}->{$path} ) {
 
-			if( UpdatedDir( $path) ) {
-				$directory->DeleteChildren( $node );
-				_update_treectrl( $directory, list_dir( $path ), $node );
-				last;
+			$self->Expand( $node );
+
+			if( UpdatedDir( $path ) ) {
+				$self->DeleteChildren( $node );
+				_update_treectrl( $self, list_dir( $path ), $node );
 			}
-			else {
-				_update_subdirs( $directory, $node, $path );
-			}
+			_update_subdirs( $self, $node );
 		}
-		
 	}
 }
 
@@ -267,17 +269,31 @@ sub _on_tree_end_label_edit {
 }
 
 sub _on_tree_item_expanding {
-	my ( $dir, $event ) = @_;
-	my $itemData = $dir->GetPlData( $event->GetItem );
+	my ( $self, $event ) = @_;
+	my $current = $self->current;
+	my $itemObj = $event->GetItem;
+	my $itemData = $self->GetPlData( $itemObj );
 
-	if(	defined( $itemData->{type} )
-		&& $itemData->{type} eq 'folder' )
-	{
+	if( defined( $itemData->{type} ) && $itemData->{type} eq 'folder' ) {
+
 		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
-		$dir->DeleteChildren( $event->GetItem );
-		_update_treectrl( $dir, list_dir( $path ), $event->GetItem );
+		$CACHED{$current_dir}->{Expanded}->{ $path } = 1;
+
+		if( UpdatedDir( $path) or !$self->GetChildrenCount( $itemObj ) ){
+			$self->DeleteChildren( $itemObj );
+			_update_treectrl( $self, list_dir( $path ), $itemObj );
+		}
 	}
 }
+
+sub _on_tree_item_collapsing {
+	my ( $self, $event ) = @_;
+	my $itemObj = $event->GetItem;
+	my $itemData = $self->GetPlData( $itemObj );
+	my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+	delete $CACHED{$current_dir}->{Expanded}->{ $path };
+}
+
 
 sub _on_tree_item_menu {
 	my ( $dir, $event ) = @_;
