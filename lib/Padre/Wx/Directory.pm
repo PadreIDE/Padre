@@ -173,10 +173,9 @@ sub list_dir {
 				push @data, \%item;
 			}
 
-			@data = sort { $b->{isDir} <=> $a->{isDir} } @data;
+			@{$CACHED{$dir}->{Data}} = sort { $b->{isDir} <=> $a->{isDir} } @data;
 			closedir $dh;
 		}
-		return \@data;
 	}
 	return $CACHED{$dir}->{Data};
 }
@@ -197,7 +196,7 @@ sub update_gui {
 		|| File::Basename::dirname($filename);
 
 	my $updated = UpdatedDir( $dir );
-	$CACHED{$dir}->{Data} = list_dir($dir) if $updated;
+	list_dir( $dir );
 	return unless @{ $CACHED{$dir}->{Data} };
 
 	my $directory = $self->main->directory;
@@ -210,7 +209,37 @@ sub update_gui {
 		_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
 	}
 
+	_update_subdirs( $directory, $root, $dir );
+
 	$current_dir = $dir;
+}
+
+sub _update_subdirs {
+	my ( $directory, $root, $path ) = @_;
+	my @dirs = grep { $_->{isDir} } @{$CACHED{$path}->{Data}};
+
+	my $cookie = $directory->GetFirstChild( $root );
+
+	for my $item (1.. @dirs) {
+
+		( my $node, $cookie ) = $directory->GetNextChild( $root, $cookie );
+		
+		if ( $directory->IsExpanded( $node ) ) {
+
+			my $itemData = $directory->GetPlData( $node );
+			my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+
+			if( UpdatedDir( $path) ) {
+				$directory->DeleteChildren( $node );
+				_update_treectrl( $directory, list_dir( $path ), $node );
+				last;
+			}
+			else {
+				_update_subdirs( $directory, $node, $path );
+			}
+		}
+		
+	}
 }
 
 sub _on_tree_begin_label_edit {
@@ -246,7 +275,7 @@ sub _on_tree_item_expanding {
 	{
 		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
 		$dir->DeleteChildren( $event->GetItem );
-		_update_treectrl( $dir, list_dir($path), $event->GetItem);
+		_update_treectrl( $dir, list_dir( $path ), $event->GetItem );
 	}
 }
 
@@ -354,7 +383,7 @@ sub _update_tree_folder {
 	my $SelectDir = $itemData->{dir};
 
 	# Updates Cache if directory has changed
-	$CACHED{$SelectDir}->{Data} = list_dir($SelectDir);
+	list_dir( $SelectDir );
 
 	my $parent = $dir->GetItemParent($itemObj);
 
