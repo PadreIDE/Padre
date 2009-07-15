@@ -13,7 +13,6 @@ our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
-my $updateOk = 1;
 my $current_dir;
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
