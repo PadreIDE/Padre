@@ -57,7 +57,12 @@ sub resolve {
 	);
 
 	my $pd = Padre::DocBrowser::pseudoPerldoc->new( args => \@args );
-	my $perldoc_return = eval { $pd->process() };
+	{
+		local *STDERR = IO::Scalar->new;
+		local *STDOUT = IO::Scalar->new;
+		eval { $pd->process() };
+	}
+
 	return unless -s $tempfile;
 
 	my $pa = Pod::Abstract->load_file($tempfile);
