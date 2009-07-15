@@ -72,23 +72,17 @@ sub _check_syntax {
 			'-c',
 			$file->filename,
 			);
-		require IPC::Cmd;
-		require IPC::Open3;
-
-		# damn global variables. This is likely unnecessary, but safe
-		local $IPC::Cmd::USE_IPC_OPEN3 = 1;
-		$IPC::Cmd::USE_IPC_OPEN3 = 1;    # silence warning
+		require Capture::Tiny;
 
 		# Make sure we execute from the correct directory
-		my $stderr_buf = [];
 		if ( $self->{cwd} ) {
 			require File::pushd;
 			my $pushd = File::pushd::pushd( $self->{cwd} );
-			$stderr_buf = ( IPC::Cmd::run( command => \@cmd, verbose => 0 ) )[4];
+			
+			(undef, $stderr) = Capture::Tiny::capture( sub { system @cmd; } );
 		} else {
-			$stderr_buf = ( IPC::Cmd::run( command => \@cmd, verbose => 0 ) )[4];
+			(undef, $stderr) = Capture::Tiny::capture( sub { system @cmd; } );
 		}
-		$stderr = join '', @$stderr_buf if ref($stderr_buf) eq 'ARRAY';
 	}
 
 	# Don't really know where that comes from...
