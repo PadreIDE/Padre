@@ -933,6 +933,21 @@ sub project {
 	}
 }
 
+sub project_name {
+	my $self = shift;
+	
+        my $project_dir = $self->project_dir;
+        return unless $project_dir;
+
+    require File::Spec;
+    my @dirs = File::Spec->splitdir($project_dir);
+    my $project_name = lc($dirs[-1]);
+    $project_name =~ tr{-}{_};
+
+    return $project_name;
+}
+
+
 sub project_dir {
 	my $self = shift;
 	$self->{project_dir}
