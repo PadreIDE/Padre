@@ -13,6 +13,7 @@ our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
+my $updateOk = 1;
 my $current_dir;
 my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
@@ -104,25 +105,32 @@ sub list_dir {
 	my $dir = shift;
 	my @data;
 
-	if ( opendir my $dh, $dir ) {
+	my $dirChange = (stat $dir)[10];
+	if ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}{Change} ) {
 
-		my @items = sort grep { not $SKIP{$_} } readdir $dh;
-		@items = grep { not /^\./ } @items unless $CACHED{$dir}->{ShowHidden};
+		$CACHED{$dir}->{Change} = $dirChange;
 
-		foreach my $thing (@items) {
-			my $path = File::Spec->catfile( $dir, $thing );
-			my %item = (
-				name => $thing,
-				dir  => $dir,
-			);
-			$item{isDir} = -d $path?1:0;
-			push @data, \%item;
+		if ( opendir my $dh, $dir ) {
+
+			my @items = sort { lc($a) cmp lc($b) } grep { not $SKIP{$_} } readdir $dh;
+			@items = grep { not /^\./ } @items unless $CACHED{$dir}->{ShowHidden};
+
+			foreach my $thing (@items) {
+				my $path = File::Spec->catfile( $dir, $thing );
+				my %item = (
+					name => $thing,
+					dir  => $dir,
+				);
+				$item{isDir} = -d $path?1:0;
+				push @data, \%item;
+			}
+
+			@data = sort { $b->{isDir} <=> $a->{isDir} } @data;
+			closedir $dh;
 		}
-
-		@data = sort { $b->{isDir} <=> $a->{isDir} } @data;
-		closedir $dh;
+		return \@data;
 	}
-	return \@data;
+	return $CACHED{$dir}->{Data};
 }
 
 sub update_gui {
@@ -136,11 +144,7 @@ sub update_gui {
 
 	return if $current_dir and $current_dir eq $dir;
 
-	my $dirChange = (stat $dir)[10];
-	if ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}{Change} ) {
-		$CACHED{$dir}->{Data} = list_dir($dir);
-		$CACHED{$dir}->{Change} = $dirChange;
-	}
+	$CACHED{$dir}->{Data} = list_dir($dir);
 
 	return unless @{ $CACHED{$dir}->{Data} };
 
@@ -193,6 +197,7 @@ sub _on_tree_begin_label_edit {
 
 sub _on_tree_end_label_edit {
 	my ( $dir, $event ) = @_;
+
 	my $itemObj = $event->GetItem;
 	my $itemData = $dir->GetPlData( $itemObj );
 
@@ -226,6 +231,7 @@ sub _on_tree_item_menu {
 
 	my $itemObj  = $event->GetItem;
 	my $itemData = $dir->GetPlData( $itemObj );
+	my $SelectDir = $itemData->{dir};
 
 	if( defined $itemData ) {
 
@@ -288,7 +294,6 @@ sub _on_tree_item_menu {
 if( $^O !~ /^win32/i ){
 		my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext( "Show hidden files" ) );
 
-		my $SelectDir = $itemData->{dir};
 		my $show = $CACHED{ $SelectDir }->{ShowHidden};
 		$hiddenFiles->Check( $show );
 
@@ -297,7 +302,7 @@ if( $^O !~ /^win32/i ){
 			sub {
 				$CACHED{$SelectDir}->{ShowHidden} = !$show;
 				delete $CACHED{$SelectDir}->{Data};
-				$dir->update_gui;
+				_update_tree_folder( $dir, $itemObj );
 			},
 		);
 }
@@ -308,16 +313,29 @@ if( $^O !~ /^win32/i ){
 		Wx::Event::EVT_MENU(
 			$dir, $reload,
 			sub {
-				$dir->update_gui;
-			},
+				_update_tree_folder( $dir, $itemObj );
+			}
 		);
-
 
 		my $x = $event->GetPoint->x;
 		my $y = $event->GetPoint->y;
 		$dir->PopupMenu( $menu, $x, $y );
 	}
 	return;
+}
+
+sub _update_tree_folder {
+	my ( $dir, $itemObj ) = @_;
+	my $itemData = $dir->GetPlData( $itemObj );
+	my $SelectDir = $itemData->{dir};
+
+	# Updates Cache if directory has changed
+	$CACHED{$SelectDir}->{Data} = list_dir($SelectDir);
+
+	my $parent = $dir->GetItemParent($itemObj);
+
+	$dir->DeleteChildren($parent);
+	_update_treectrl( $dir, $CACHED{$SelectDir}->{Data}, $parent );
 }
 
 sub _update_treectrl {
