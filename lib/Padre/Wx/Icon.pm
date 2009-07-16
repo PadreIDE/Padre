@@ -60,15 +60,15 @@ sub find {
 
 	# If you _really_ are competant ;), prefer size,icons,ext
 	# over the defaults
-	my %pref
-		= _HASH($prefs)
+	my %pref =
+		_HASH($prefs)
 		? ( %PREFS, %$prefs )
 		: %PREFS;
 
 	# Search through the theme list
 	foreach my $theme (THEMES) {
-		my $hinted
-			= ( $HINT{$theme} and $HINT{$theme}->{$name} )
+		my $hinted =
+			( $HINT{$theme} and $HINT{$theme}->{$name} )
 			? $HINT{$theme}->{$name}
 			: $name;
 		my $file = File::Spec->catfile(

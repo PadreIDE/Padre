@@ -77,7 +77,7 @@ sub $object->{name} {
 END_PERL
 
 	# Compile the accessor
-	eval $code;    ## no critic
+	eval $code; ## no critic
 	if ($@) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}
@@ -109,6 +109,7 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
+
 # Support for Module::Starter
 setting(
 	name    => 'license',

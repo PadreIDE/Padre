@@ -124,7 +124,7 @@ sub on_list_item_activated {
 	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
 		$document->get_function_regex($subname),
-		$editor->GetSelection,    # Provides two params
+		$editor->GetSelection, # Provides two params
 	);
 	unless ( defined $start ) {
 

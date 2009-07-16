@@ -22,7 +22,7 @@ sub new {
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new( 200, 500 ),    # used when pane is floated
+		Wx::Size->new( 200, 500 ), # used when pane is floated
 		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE,
 	);
 

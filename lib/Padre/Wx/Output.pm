@@ -89,28 +89,28 @@ SCOPE: {
 	# but the main editor style support is too wacky
 	# to add this at the moment.
 	my $fg_colors = [
-		Wx::Colour->new('#000000'),    # black
-		Wx::Colour->new('#FF0000'),    # red
-		Wx::Colour->new('#00FF00'),    # green
-		Wx::Colour->new('#FFFF00'),    # yellow
-		Wx::Colour->new('#0000FF'),    # blue
-		Wx::Colour->new('#FF00FF'),    # magenta
-		Wx::Colour->new('#00FFFF'),    # cyan
-		Wx::Colour->new('#FFFFFF'),    # white
+		Wx::Colour->new('#000000'), # black
+		Wx::Colour->new('#FF0000'), # red
+		Wx::Colour->new('#00FF00'), # green
+		Wx::Colour->new('#FFFF00'), # yellow
+		Wx::Colour->new('#0000FF'), # blue
+		Wx::Colour->new('#FF00FF'), # magenta
+		Wx::Colour->new('#00FFFF'), # cyan
+		Wx::Colour->new('#FFFFFF'), # white
 		undef,
-		Wx::Colour->new('#000000'),    # reset to default (black)
+		Wx::Colour->new('#000000'), # reset to default (black)
 	];
 	my $bg_colors = [
-		Wx::Colour->new('#000000'),    # black
-		Wx::Colour->new('#FF0000'),    # red
-		Wx::Colour->new('#00FF00'),    # green
-		Wx::Colour->new('#FFFF00'),    # yellow
-		Wx::Colour->new('#0000FF'),    # blue
-		Wx::Colour->new('#FF00FF'),    # magenta
-		Wx::Colour->new('#00FFFF'),    # cyan
-		Wx::Colour->new('#FFFFFF'),    # white
+		Wx::Colour->new('#000000'), # black
+		Wx::Colour->new('#FF0000'), # red
+		Wx::Colour->new('#00FF00'), # green
+		Wx::Colour->new('#FFFF00'), # yellow
+		Wx::Colour->new('#0000FF'), # blue
+		Wx::Colour->new('#FF00FF'), # magenta
+		Wx::Colour->new('#00FFFF'), # cyan
+		Wx::Colour->new('#FFFFFF'), # white
 		undef,
-		Wx::Colour->new('#FFFFFF'),    # reset to default (white)
+		Wx::Colour->new('#FFFFFF'), # reset to default (white)
 	];
 
 	sub _handle_ansi_escapes {
@@ -136,24 +136,24 @@ SCOPE: {
 
 					# for all these, we need the font object:
 					my $font = $style->GetFont;
-					if ( $cmd == 0 ) {    # reset
-						$style->SetTextColour( $fg_colors->[9] );          # reset text color
-						$style->SetBackgroundColour( $bg_colors->[9] );    # reset bg color
-						                                                   # reset bold/italic/underlined state
+					if ( $cmd == 0 ) { # reset
+						$style->SetTextColour( $fg_colors->[9] );       # reset text color
+						$style->SetBackgroundColour( $bg_colors->[9] ); # reset bg color
+						                                                # reset bold/italic/underlined state
 						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
 						$font->SetUnderlined(0);
 						$font->SetStyle(Wx::wxFONTSTYLE_NORMAL);
-					} elsif ( $cmd == 1 ) {                                # bold
+					} elsif ( $cmd == 1 ) {                             # bold
 						$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
-					} elsif ( $cmd == 2 ) {                                # faint
+					} elsif ( $cmd == 2 ) {                             # faint
 						$font->SetWeight(Wx::wxFONTWEIGHT_LIGHT);
-					} elsif ( $cmd == 3 ) {                                # italic
+					} elsif ( $cmd == 3 ) {                             # italic
 						$font->SetStyle(Wx::wxFONTSTYLE_ITALIC);
-					} elsif ( $cmd == 4 || $cmd == 21 ) {    # underline (21==double, but we can't do that)
+					} elsif ( $cmd == 4 || $cmd == 21 ) {               # underline (21==double, but we can't do that)
 						$font->SetUnderlined(1);
-					} elsif ( $cmd == 22 ) {                 # reset bold and faint
+					} elsif ( $cmd == 22 ) {                            # reset bold and faint
 						$font->SetWeight(Wx::wxFONTWEIGHT_NORMAL);
-					} elsif ( $cmd == 24 ) {                 # reset underline
+					} elsif ( $cmd == 24 ) {                            # reset underline
 						$font->SetUnderlined(0);
 					}
 					$style->SetFont($font);
@@ -183,8 +183,8 @@ SCOPE: {
 				}
 
 				$self->SetDefaultStyle($style);
-			}    # end foreach command in the sequence
-		}    # end while more control sequences
+			} # end foreach command in the sequence
+		} # end while more control sequences
 
 		# the remaining text
 		if ( defined( pos($newtext) ) ) {
@@ -239,7 +239,7 @@ sub set_font {
 	my $self   = shift;
 	my $config = $self->main->config;
 	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font && length $config->editor_font > 0 ) {    # empty default...
+	if ( defined $config->editor_font && length $config->editor_font > 0 ) { # empty default...
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	my $style = $self->GetDefaultStyle;

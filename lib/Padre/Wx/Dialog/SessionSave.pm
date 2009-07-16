@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 use Class::XSAccessor accessors => {
-	_butsave => '_butsave',    # save button
-	_combo   => '_combo',      # combo box holding the session names
-	_names   => '_names',      # list of all session names
-	_sizer   => '_sizer',      # the window sizer
-	_text    => '_text',       # text control holding the description
+	_butsave => '_butsave', # save button
+	_combo   => '_combo',   # combo box holding the session names
+	_names   => '_names',   # list of all session names
+	_sizer   => '_sizer',   # the window sizer
+	_text    => '_text',    # text control holding the description
 };
 use Padre::Wx ();
 

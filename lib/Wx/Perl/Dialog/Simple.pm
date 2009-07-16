@@ -193,8 +193,8 @@ sub file_picker {
 	require Cwd;
 	return dialog(
 		sub { Wx::FilePickerCtrl->new( $_[0] ) },
-		sub { $_[0]->SetPath( Cwd::cwd() ) },       # setup
-		sub { $_[0]->GetPath; },                    # get data
+		sub { $_[0]->SetPath( Cwd::cwd() ) },    # setup
+		sub { $_[0]->GetPath; },                 # get data
 		{   title => 'Select file',
 		},
 	);
@@ -208,8 +208,8 @@ sub dir_picker {
 	require Cwd;
 	return dialog(
 		sub { Wx::DirPickerCtrl->new( $_[0] ) },
-		sub { $_[0]->SetPath( Cwd::cwd() ) },      # setup
-		sub { $_[0]->GetPath; },                   # get data
+		sub { $_[0]->SetPath( Cwd::cwd() ) },   # setup
+		sub { $_[0]->GetPath; },                # get data
 		{   title => 'Select directory',
 		},
 	);

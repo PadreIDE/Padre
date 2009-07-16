@@ -12,10 +12,10 @@ sub class_to_color {
 	my $class  = shift;
 	my $css    = class_to_css($class);
 	my %colors = (
-		keyword      => 4,    # dark green
+		keyword      => 4, # dark green
 		structure    => 6,
-		core         => 1,    # red
-		pragma       => 7,    # purple
+		core         => 1, # red
+		pragma       => 7, # purple
 		'Whitespace' => 0,
 		'Structure'  => 0,
 
@@ -25,11 +25,11 @@ sub class_to_color {
 		'HereDoc'       => 4,
 		'Data'          => 4,
 		'Operator'      => 6,
-		'Comment'       => 2,    # it's good, it's green
+		'Comment'       => 2, # it's good, it's green
 		'Pod'           => 2,
 		'End'           => 2,
 		'Label'         => 0,
-		'Word'          => 0,    # stay the black
+		'Word'          => 0, # stay the black
 		'Quote'         => 9,
 		'Single'        => 9,
 		'Double'        => 9,
@@ -74,13 +74,13 @@ sub colorize {
 	$start_pos ||= 0;
 	$end_pos   ||= $editor->GetLength;
 
-	my ($text,                 # the text that we will send to PPI for parsing
-		$start_line,           # number of first line of text to parse and style
-		$end_line,             # number of last line of text to parse and style
-		$styling_start_pos,    # number of first character to parse and style
-		$styling_end_pos,      # number of last character to parse and style
-		$line_count,           # number of lines within the document
-		$last_char,            # index of the last character in the file
+	my ($text,              # the text that we will send to PPI for parsing
+		$start_line,        # number of first line of text to parse and style
+		$end_line,          # number of last line of text to parse and style
+		$styling_start_pos, # number of first character to parse and style
+		$styling_end_pos,   # number of last character to parse and style
+		$line_count,        # number of lines within the document
+		$last_char,         # index of the last character in the file
 	);
 
 	# convert start and end position to start of first line and end of last line

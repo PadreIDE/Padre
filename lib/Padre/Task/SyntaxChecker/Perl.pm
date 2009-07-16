@@ -78,10 +78,10 @@ sub _check_syntax {
 		if ( $self->{cwd} ) {
 			require File::pushd;
 			my $pushd = File::pushd::pushd( $self->{cwd} );
-			
-			(undef, $stderr) = Capture::Tiny::capture( sub { system @cmd; } );
+
+			( undef, $stderr ) = Capture::Tiny::capture( sub { system @cmd; } );
 		} else {
-			(undef, $stderr) = Capture::Tiny::capture( sub { system @cmd; } );
+			( undef, $stderr ) = Capture::Tiny::capture( sub { system @cmd; } );
 		}
 	}
 

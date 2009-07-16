@@ -122,8 +122,8 @@ sub plugin_names {
 		# full names, but always puts "My Plugin" first.
 		$self->{plugin_names} = [
 			map { $_->[0] }
-				sort { ( $b->[0] eq 'My' ) <=> ( $a->[0] eq 'My' ) or $a->[1] cmp $b->[1] }
-				map { [ $_->name, $_->plugin_name ] } values %{ $self->{plugins} }
+			sort { ( $b->[0] eq 'My' ) <=> ( $a->[0] eq 'My' ) or $a->[1] cmp $b->[1] }
+			map { [ $_->name, $_->plugin_name ] } values %{ $self->{plugins} }
 		];
 	}
 	return @{ $self->{plugin_names} };
@@ -468,7 +468,7 @@ sub _load_plugin {
 
 	# Does the plugin load without error
 	my $code = "use $module ();";
-	eval $code;    ## no critic
+	eval $code; ## no critic
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
@@ -683,7 +683,7 @@ sub plugin_db {
 		$object = Padre::DB::Plugin->create(
 			name    => $plugin->class,
 			version => $plugin->version,
-			enabled => undef,              # undef means no preference yet
+			enabled => undef,           # undef means no preference yet
 			config  => undef,
 		);
 	}
@@ -884,7 +884,7 @@ sub test_a_plugin {
 		return;
 	}
 
-	$filename =~ s/\.pm$//;        # remove last .pm
+	$filename =~ s/\.pm$//;     # remove last .pm
 	$filename =~ s/[\\\/]/\:\:/;
 	unless ( $INC[0] eq $default_dir ) {
 		unshift @INC, $default_dir;

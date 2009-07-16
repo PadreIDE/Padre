@@ -70,7 +70,7 @@ sub open_config {
 	eval {
 		require CPAN;
 		$default_dir = $INC{'CPAN.pm'};
-		$default_dir =~ s/\.pm$//is;    # remove .pm
+		$default_dir =~ s/\.pm$//is; # remove .pm
 	};
 
 	# Load the main config first
@@ -103,9 +103,9 @@ sub install_file {
 	my $dialog = Wx::FileDialog->new(
 		$main,
 		Wx::gettext("Select distribution to install"),
-		'',                                     # Default directory
-		'',                                     # Default file
-		'CPAN Packages (*.tar.gz)|*.tar.gz',    # wildcard
+		'',                                  # Default directory
+		'',                                  # Default file
+		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
 		Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST
 	);
 	$dialog->CentreOnParent;

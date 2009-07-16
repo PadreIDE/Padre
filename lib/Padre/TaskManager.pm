@@ -119,9 +119,9 @@ sub new {
 	return $SINGLETON if defined $SINGLETON;
 
 	my $self = $SINGLETON = bless {
-		min_no_workers => 2,       # there were config settings for
-		max_no_workers => 6,       #  these long ago?
-		use_threads    => 1,       # can be explicitly disabled
+		min_no_workers => 2,    # there were config settings for
+		max_no_workers => 6,    #  these long ago?
+		use_threads    => 1,    # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
 		workers       => [],
@@ -203,7 +203,7 @@ proxy to this method for convenience.
 sub schedule {
 	my $self = shift;
 	my $task = _INSTANCE( shift, 'Padre::Task' )
-		or die "Invalid task scheduled!";    # TODO: grace
+		or die "Invalid task scheduled!"; # TODO: grace
 
 	if ( _INSTANCE( $task, 'Padre::Service' ) ) {
 		$self->{running_services}{$task} = $task;
@@ -261,7 +261,7 @@ typically need to call this.
 
 sub setup_workers {
 	my $self = shift;
-	@_ = ();    # Avoid "Scalars leaked"
+	@_ = (); # Avoid "Scalars leaked"
 
 	return unless $self->use_threads;
 
@@ -290,7 +290,7 @@ sub _make_worker_thread {
 	my $main = shift;
 	return unless $self->use_threads;
 
-	@_ = ();    # avoid "Scalars leaked"
+	@_ = (); # avoid "Scalars leaked"
 	my $worker = threads->create(
 		{ 'exit' => 'thread_only' }, \&worker_loop,
 		$main, $self->task_queue
@@ -317,7 +317,7 @@ sub reap {
 	my $self = shift;
 	return if not $self->use_threads;
 
-	@_ = ();    # avoid "Scalars leaked"
+	@_ = (); # avoid "Scalars leaked"
 	my $workers = $self->{workers};
 
 	my @active_or_waiting;
@@ -370,7 +370,7 @@ sub _stop_task {
 
 	my $running = $self->{running_tasks};
 
-	if ( not defined $task_type ) {    # attempt cleanup after crash
+	if ( not defined $task_type ) { # attempt cleanup after crash
 		foreach my $task_type ( keys %$running ) {
 			delete $running->{$task_type}{$tid};
 			delete $running->{$task_type} if not keys %{ $running->{$task_type} };
@@ -509,7 +509,7 @@ because C<finish> most likely updates the GUI.)
 =cut
 
 sub on_task_done_event {
-	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
+	my ( $main, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
 	my $frozen = $event->GetData;
 
 	# FIXME - can we know the _real_ class so the an extender
@@ -541,10 +541,10 @@ It simply increments the running task counter.
 =cut
 
 sub on_task_start_event {
-	my ( $main, $event ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
-	                                       # TODO/FIXME:
-	                                       # This should somehow get at the specific TaskManager object
-	                                       # instead of going through the Padre globals!
+	my ( $main, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	                                    # TODO/FIXME:
+	                                    # This should somehow get at the specific TaskManager object
+	                                    # instead of going through the Padre globals!
 	my $manager           = Padre->ide->task_manager;
 	my $tid_and_task_type = $event->GetData();
 	my ( $tid, $task_type ) = split /;/, $tid_and_task_type, 2;
@@ -622,7 +622,7 @@ sub on_dump_running_tasks {
 ##########################
 # Worker thread main loop
 sub worker_loop {
-	my ( $main, $queue ) = @_; @_ = ();    # hack to avoid "Scalars leaked"
+	my ( $main, $queue ) = @_; @_ = (); # hack to avoid "Scalars leaked"
 	require Storable;
 
 	# Set the thread-specific main-window pointer
@@ -640,8 +640,8 @@ sub worker_loop {
 		my $task = Padre::Task->deserialize( \$frozen_task );
 		$task->{__thread_id} = threads->tid();
 
-		my $thread_start_event
-			= Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, $task->{__thread_id} . ";" . ref($task) );
+		my $thread_start_event =
+			Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, $task->{__thread_id} . ";" . ref($task) );
 		Wx::PostEvent( $main, $thread_start_event );
 
 		# RUN

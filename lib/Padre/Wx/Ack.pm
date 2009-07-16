@@ -38,7 +38,7 @@ sub load {
 
 	# try to load app::ack - we don't require $minver in the eval to
 	# provide a meaningful error message if needed.
-	eval "use App::Ack";    ## no critic
+	eval "use App::Ack"; ## no critic
 	if ($@) {
 		return "$error (module not installed)";
 	}
@@ -159,7 +159,7 @@ sub on_pick_dir {
 	my $main = Padre->ide->wx->main;
 
 	my $default_dir = $dialog->{_widgets_}->{_ack_dir_}->GetValue;
-	unless ($default_dir) {    # we use currect editor
+	unless ($default_dir) { # we use currect editor
 		my $filename = $main->current->filename;
 		if ($filename) {
 			$default_dir = File::Basename::dirname($filename);
@@ -193,7 +193,7 @@ sub find_clicked {
 
 	my $main = Padre->ide->wx->main;
 
-	@_ = ();    # cargo cult or bug? see Wx::Thread / Creating new threads
+	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
 
 	# TODO kill the thread before closing the application
 
@@ -205,7 +205,7 @@ sub find_clicked {
 	if ( $search->{ignore_hidden_subdirs} ) {
 		$opts{all} = 1;
 	} else {
-		$opts{u} = 1;    # unrestricted
+		$opts{u} = 1; # unrestricted
 	}
 
 	# file_type

@@ -11,14 +11,14 @@ our $VERSION = '0.39';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
-	_butdelete   => '_butdelete',      # delete button
-	_butopen     => '_butopen',        # open button
-	_currow      => '_currow',         # current list row number
-	_curname     => '_curname',        # name of current session selected
-	_list        => '_list',           # list on the left of the pane
-	_sortcolumn  => '_sortcolumn',     # column used for list sorting
-	_sortreverse => '_sortreverse',    # list sorting is reversed
-	_vbox        => '_vbox',           # the window vbox sizer
+	_butdelete   => '_butdelete',   # delete button
+	_butopen     => '_butopen',     # open button
+	_currow      => '_currow',      # current list row number
+	_curname     => '_curname',     # name of current session selected
+	_list        => '_list',        # list on the left of the pane
+	_sortcolumn  => '_sortcolumn',  # column used for list sorting
+	_sortreverse => '_sortreverse', # list sorting is reversed
+	_vbox        => '_vbox',        # the window vbox sizer
 };
 
 # -- constructor
@@ -129,8 +129,8 @@ sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
 	my $name = $event->GetLabel;
-	$self->_curname($name);                # storing selected session
-	$self->_currow( $event->GetIndex );    # storing selected row
+	$self->_curname($name);             # storing selected session
+	$self->_currow( $event->GetIndex ); # storing selected row
 
 	# update buttons
 	$self->_update_buttons_state;
@@ -274,7 +274,7 @@ sub _refresh_list {
 	# default sorting
 	$column  ||= 0;
 	$reverse ||= 0;
-	my @fields = qw{ name description last_update };    # db fields of table session
+	my @fields = qw{ name description last_update }; # db fields of table session
 
 	# get list of sessions, sorted.
 	my $sort = "ORDER BY $fields[$column]";
@@ -300,14 +300,14 @@ sub _refresh_list {
 	}
 
 	# auto-resize columns
-	my $flag
-		= $list->GetItemCount
+	my $flag =
+		$list->GetItemCount
 		? Wx::wxLIST_AUTOSIZE
 		: Wx::wxLIST_AUTOSIZE_USEHEADER;
 	$list->SetColumnWidth( $_, $flag ) for 0 .. 2;
 
 	# making sure the list can show all columns
-	my $width = 15;    # taking vertical scrollbar into account
+	my $width = 15; # taking vertical scrollbar into account
 	$width += $list->GetColumnWidth($_) for 0 .. 2;
 	$list->SetMinSize( [ $width, -1 ] );
 }

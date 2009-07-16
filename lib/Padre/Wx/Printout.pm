@@ -31,8 +31,8 @@ sub OnPrintPage {
 	if ( $page == 1 ) {
 		$self->{PRINTED} = 0;
 	}
-	$self->{PRINTED}
-		= $e->FormatRange( 1, $self->{PRINTED}, $e->GetLength, $dc, $dc, $self->{printRect}, $self->{pageRect} );
+	$self->{PRINTED} =
+		$e->FormatRange( 1, $self->{PRINTED}, $e->GetLength, $dc, $dc, $self->{printRect}, $self->{pageRect} );
 
 	return 1;
 }
@@ -58,12 +58,12 @@ sub GetPageInfo {
 	$self->{pageRect} = Wx::Rect->new( 0, 0, $pageSize->GetWidth, $pageSize->GetHeight );
 
 	# my $topLeft  = $psdd->GetMarginTopLeft;
-	my $left = 25.4;    # $topLeft->x;
-	my $top  = 25.4;    # $topLeft->y;
+	my $left = 25.4; # $topLeft->x;
+	my $top  = 25.4; # $topLeft->y;
 
 	# my $btmRight = $psdd->GetMarginBottomRight;
-	my $right  = Wx::Size->new( $self->GetPageSizeMM )->GetWidth - 50.8;    # $btmRight->x;
-	my $bottom = 25.4;                                                      # $btmRight->y;
+	my $right  = Wx::Size->new( $self->GetPageSizeMM )->GetWidth - 50.8; # $btmRight->x;
+	my $bottom = 25.4;                                                   # $btmRight->y;
 
 	$top    = int( $top * $ppiScr->GetHeight / 25.4 );
 	$bottom = int( $bottom * $ppiScr->GetHeight / 25.4 );
@@ -116,7 +116,7 @@ sub PrintScaling {
 	my ( $sx, $sy ) = $self->GetPPIScreen;
 
 	my $ppiScr = Wx::Size->new( $sx, $sy );
-	if ( $ppiScr->GetWidth == 0 ) {    # guessing 96 dpi
+	if ( $ppiScr->GetWidth == 0 ) { # guessing 96 dpi
 		$ppiScr->SetWidth(96);
 		$ppiScr->SetHeight(96);
 	}
@@ -124,7 +124,7 @@ sub PrintScaling {
 	my ( $px, $py ) = $self->GetPPIPrinter;
 	my $ppiPrt = Wx::Size->new( $px, $py );
 
-	if ( $ppiPrt->GetWidth == 0 ) {    # scaling factor 1
+	if ( $ppiPrt->GetWidth == 0 ) { # scaling factor 1
 		$ppiPrt->SetWidth( $ppiScr->GetWidth );
 		$ppiPrt->SetHeight( $ppiScr->GetHeight );
 	}

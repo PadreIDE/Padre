@@ -51,9 +51,9 @@ sub new {
 
 	$self->{sizer}->Add(
 		$self->{renderer},
-		1,    # Growth proportion
+		1, # Growth proportion
 		Wx::wxEXPAND,
-		5,    # Border size
+		5, # Border size
 	);
 
 	# Tie the sizing to the panel

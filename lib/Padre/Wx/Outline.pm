@@ -68,7 +68,7 @@ sub clear {
 # Timer Control
 
 sub start {
-	my $self = shift; @_ = ();    # Feeble attempt to kill Scalars Leaked ($self is leaking)
+	my $self = shift; @_ = (); # Feeble attempt to kill Scalars Leaked ($self is leaking)
 
 	# TODO: GUI on-start initialisation here
 

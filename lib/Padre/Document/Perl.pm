@@ -142,10 +142,10 @@ sub colorize {
 	}
 
 	my %colors = (
-		keyword      => 4,    # dark green
+		keyword      => 4, # dark green
 		structure    => 6,
-		core         => 1,    # red
-		pragma       => 7,    # purple
+		core         => 1, # red
+		pragma       => 7, # purple
 		'Whitespace' => 0,
 		'Structure'  => 0,
 
@@ -155,11 +155,11 @@ sub colorize {
 		'HereDoc'       => 4,
 		'Data'          => 4,
 		'Operator'      => 6,
-		'Comment'       => 2,    # it's good, it's green
+		'Comment'       => 2, # it's good, it's green
 		'Pod'           => 2,
 		'End'           => 2,
 		'Label'         => 0,
-		'Word'          => 0,    # stay the black
+		'Word'          => 0, # stay the black
 		'Quote'         => 9,
 		'Single'        => 9,
 		'Double'        => 9,
@@ -304,8 +304,8 @@ sub get_command {
 	my $config = Padre->ide->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
-	my $filename
-		= $config->run_save eq 'unsaved' && !$self->is_saved
+	my $filename =
+		  $config->run_save eq 'unsaved' && !$self->is_saved
 		? $self->store_in_tempfile
 		: $self->filename;
 
@@ -738,12 +738,12 @@ sub event_on_char {
 
 	if ( Padre->ide->config->autocomplete_brackets ) {
 		my %table = (
-			34  => 34,     # " "
-			39  => 39,     # ' '
-			40  => 41,     # ( )
-			60  => 62,     # < >
-			91  => 93,     # [ ]
-			123 => 125,    # { }
+			34  => 34,  # " "
+			39  => 39,  # ' '
+			40  => 41,  # ( )
+			60  => 62,  # < >
+			91  => 93,  # [ ]
+			123 => 125, # { }
 		);
 		my $pos = $editor->GetCurrentPos;
 		foreach my $code ( keys %table ) {
@@ -809,7 +809,7 @@ sub event_on_right_down {
 			$findDecl,
 			sub {
 				my $editor = shift;
-				my $doc    = $self;    # FIXME if Padre::Wx::Editor had a method to access its Document...
+				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 				$doc->find_variable_declaration;
 			},
@@ -822,7 +822,7 @@ sub event_on_right_down {
 
 				# FIXME near duplication of the code in Padre::Wx::Menu::Perl
 				my $editor = shift;
-				my $doc    = $self;    # FIXME if Padre::Wx::Editor had a method to access its Document...
+				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 				require Padre::Wx::History::TextEntryDialog;
 				my $dialog = Padre::Wx::History::TextEntryDialog->new(
@@ -838,11 +838,11 @@ sub event_on_right_down {
 				$doc->lexical_variable_replacement($replacement);
 			},
 		);
-	}    # end if it's a variable
+	} # end if it's a variable
 
 	my $select_start = $editor->GetSelectionStart;
 	my $select_end   = $editor->GetSelectionEnd;
-	if ( $select_start != $select_end ) {    # if something's selected
+	if ( $select_start != $select_end ) { # if something's selected
 		$menu->AppendSeparator if not $introduced_separator++;
 
 		my $intro_temp = $menu->Append( -1, Wx::gettext("Introduce Temporary Variable") );
@@ -869,7 +869,7 @@ sub event_on_right_down {
 				$doc->introduce_temporary_variable($replacement);
 			},
 		);
-	}    # end if something's selected
+	} # end if something's selected
 }
 
 sub event_on_left_up {
@@ -903,7 +903,7 @@ sub event_on_left_up {
 			my ( $start, $end ) = Padre::Util::get_matches(
 				$editor->GetText,
 				$self->get_function_regex($token),
-				$editor->GetSelection,    # Provides two params
+				$editor->GetSelection, # Provides two params
 			);
 			if ( defined $start ) {
 
@@ -911,7 +911,7 @@ sub event_on_left_up {
 				$editor->goto_pos_centerize($start);
 			}
 		}
-	}    # end if control-click
+	} # end if control-click
 }
 
 1;

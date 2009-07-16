@@ -47,7 +47,7 @@ sub read {
 #
 sub version {
 	my $self = shift;
-	$self->{version};    # stored as other preferences!
+	$self->{version}; # stored as other preferences!
 }
 
 #

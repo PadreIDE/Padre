@@ -105,8 +105,8 @@ sub guess_mimetype {
 		keys %EXT_MIME
 	);
 
-	my $type
-		= exists $EXT_MIME{$suffix}
+	my $type =
+		exists $EXT_MIME{$suffix}
 		? $EXT_MIME{$suffix}
 		: '';
 	return $type;

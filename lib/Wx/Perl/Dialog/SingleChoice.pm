@@ -35,8 +35,8 @@ sub dialog {
 
 	my $dialog = Wx::Dialog->new(undef);
 	$dialog->SetTitle( $args{title} );
-	my $height = @{ $args{values} } * 25;    # should be height of font
-	my $width  = 25;                         # should be widest string?
+	my $height = @{ $args{values} } * 25; # should be height of font
+	my $width  = 25;                      # should be widest string?
 
 	my $tb = Wx::Treebook->new( $dialog, -1, [ -1, -1 ], [ $width, $height ] );
 	foreach my $name ( @{ $args{values} } ) {

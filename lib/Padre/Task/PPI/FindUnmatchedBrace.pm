@@ -59,7 +59,7 @@ sub process_ppi {
 		$self->{error} = $@;
 		return;
 	}
-	$self->{bad_element} = $brace->element->location;    # remember for gui update
+	$self->{bad_element} = $brace->element->location; # remember for gui update
 
 	return ();
 }

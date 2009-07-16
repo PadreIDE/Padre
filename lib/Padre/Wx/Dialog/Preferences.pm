@@ -158,13 +158,13 @@ sub _appearance_panel {
 	);
 	my $main_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	my $font_desc
-		= ( defined $config->editor_font && length $config->editor_font > 0 )
+	my $font_desc =
+		( defined $config->editor_font && length $config->editor_font > 0 )
 		? $config->editor_font
 		: Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL )->GetNativeFontInfoUserDesc;
 
-	my $bgcolor
-		= ( defined $config->editor_currentline_color )
+	my $bgcolor =
+		( defined $config->editor_currentline_color )
 		? '#' . $config->editor_currentline_color
 		: '#ffff04';
 
@@ -401,7 +401,7 @@ END_TEXT
 	];
 
 	# Per document values (overwrite defaults) stored in history
-	my $doc_flag = 0;                        # value of 1 means that there is no document currently open
+	my $doc_flag = 0;                     # value of 1 means that there is no document currently open
 	my $filename = Wx::gettext('Unsaved');
 	my $path     = Wx::gettext('N/A');
 	my %run_args = (

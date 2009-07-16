@@ -27,7 +27,7 @@ sub prepare {
 # The event handler
 sub on_say_hello {
 	my ( $main, $event ) = @_;
-	@_ = ();    # hack to avoid "Scalars leaked"
+	@_ = (); # hack to avoid "Scalars leaked"
 
 	# Write a message to the beginning of the document
 	my $editor = $main->current->editor;

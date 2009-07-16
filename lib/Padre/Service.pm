@@ -80,7 +80,7 @@ with no arguments B<IN A TIGHT LOOP>.
 	sub running {$running}
 
 	sub stop  { $running = 0 }
-	sub start { $running = 1 };    #??
+	sub start { $running = 1 }; #??
 
 	sub run {
 		croak "Already running!" if $running;

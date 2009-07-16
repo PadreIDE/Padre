@@ -26,7 +26,7 @@ our %MIME_STYLE = (
 	'text/x-makefile'    => 'make',
 	'text/x-yaml'        => 'yaml',
 	'text/css'           => 'css',
-	'application/x-php'  => 'perl',    # temporary solution
+	'application/x-php'  => 'perl', # temporary solution
 );
 
 my $data;
@@ -83,8 +83,8 @@ sub data {
 	return $data if not defined $name;
 	return $data if defined $data and $name eq $data_name;
 
-	my $file
-		= $private
+	my $file =
+		$private
 		? File::Spec->catfile(
 		Padre::Constant::CONFIG_DIR,
 		'styles', "$name.yml"
@@ -209,7 +209,7 @@ sub setup_style_from_config {
 		if ( $k =~ /^PADRE_/ ) {
 			$f = 'Padre::Constant::' . $k;
 		}
-		no strict "refs";    ## no critic
+		no strict "refs"; ## no critic
 		my $v = eval { $f->() };
 		if ($@) {
 			warn "invalid key '$k'\n";
@@ -256,7 +256,7 @@ sub _color {
 sub highlight_braces {
 	my ($self) = @_;
 
-	$self->BraceHighlight( -1, -1 );    # Wx::wxSTC_INVALID_POSITION
+	$self->BraceHighlight( -1, -1 ); # Wx::wxSTC_INVALID_POSITION
 	my $pos1 = $self->GetCurrentPos;
 	my $chr  = chr( $self->GetCharAt($pos1) );
 
@@ -272,7 +272,7 @@ sub highlight_braces {
 	my $pos2 = $self->BraceMatch($pos1);
 	return if abs( $pos1 - $pos2 ) < 2;
 
-	return if $pos2 == -1;    #Wx::wxSTC_INVALID_POSITION  #????
+	return if $pos2 == -1; #Wx::wxSTC_INVALID_POSITION  #????
 
 	$self->BraceHighlight( $pos1, $pos2 );
 
@@ -288,7 +288,7 @@ sub show_line_numbers {
 
 	# premature optimization, caching the with that was on the 3rd place at load time
 	# as timed my Deve::NYTProf
-	$width ||= $self->TextWidth( Wx::wxSTC_STYLE_LINENUMBER, "m" );    # width of a single character
+	$width ||= $self->TextWidth( Wx::wxSTC_STYLE_LINENUMBER, "m" ); # width of a single character
 	if ($on) {
 		my $n = 1 + List::Util::max( 2, length( $self->GetLineCount * 2 ) );
 		my $width = $n * $width;
@@ -320,10 +320,10 @@ sub show_folding {
 	if ($on) {
 
 		# Setup a margin to hold fold markers
-		$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL );    # margin number 2 for symbols
-		$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );     # set up mask for folding symbols
-		$self->SetMarginSensitive( 2, 1 );                     # this one needs to be mouse-aware
-		$self->SetMarginWidth( 2, 16 );                        # set margin 2 16 px wide
+		$self->SetMarginType( 2, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 2 for symbols
+		$self->SetMarginMask( 2, Wx::wxSTC_MASK_FOLDERS );  # set up mask for folding symbols
+		$self->SetMarginSensitive( 2, 1 );                  # this one needs to be mouse-aware
+		$self->SetMarginWidth( 2, 16 );                     # set margin 2 16 px wide
 
 		# define folding markers
 		my $w = Wx::Colour->new("white");
@@ -376,7 +376,7 @@ sub set_font {
 	my $self   = shift;
 	my $config = $self->main->ide->config;
 	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font && length $config->editor_font > 0 ) {    # empty default...
+	if ( defined $config->editor_font && length $config->editor_font > 0 ) { # empty default...
 		$font->SetNativeFontInfoUserDesc( $config->editor_font );
 	}
 	$self->SetFont($font);
@@ -410,7 +410,7 @@ sub show_calltip {
 	my $pos    = $self->GetCurrentPos;
 	my $line   = $self->LineFromPosition($pos);
 	my $first  = $self->PositionFromLine($line);
-	my $prefix = $self->GetTextRange( $first, $pos );    # line from beginning to current position
+	my $prefix = $self->GetTextRange( $first, $pos ); # line from beginning to current position
 	if ( $self->CallTipActive ) {
 		$self->CallTipCancel;
 	}
@@ -639,7 +639,7 @@ sub on_focus {
 		$self->needs_stc_colorize(0);
 	}
 
-	$event->Skip(1);    # so the cursor will show up
+	$event->Skip(1); # so the cursor will show up
 	return;
 }
 
@@ -693,7 +693,7 @@ sub on_right_down {
 		$undo->Enable(0);
 	}
 	my $z = Wx::Event::EVT_MENU(
-		$main,    # Ctrl-Z
+		$main, # Ctrl-Z
 		$undo,
 		sub {
 			my $editor = Padre::Current->editor;
@@ -709,7 +709,7 @@ sub on_right_down {
 	}
 
 	Wx::Event::EVT_MENU(
-		$main,    # Ctrl-Y
+		$main, # Ctrl-Y
 		$redo,
 		sub {
 			my $editor = Padre::Current->editor;
@@ -735,7 +735,7 @@ sub on_right_down {
 		$sel_all->Enable(0);
 	}
 	Wx::Event::EVT_MENU(
-		$main,    # Ctrl-A
+		$main, # Ctrl-A
 		$sel_all,
 		sub { \&text_select_all(@_) },
 	);
@@ -746,7 +746,7 @@ sub on_right_down {
 		$copy->Enable(0);
 	}
 	Wx::Event::EVT_MENU(
-		$main,    # Ctrl-C
+		$main, # Ctrl-C
 		$copy,
 		sub {
 			Padre::Current->editor->Copy;
@@ -758,7 +758,7 @@ sub on_right_down {
 		$cut->Enable(0);
 	}
 	Wx::Event::EVT_MENU(
-		$main,    # Ctrl-X
+		$main, # Ctrl-X
 		$cut,
 		sub {
 			Padre::Current->editor->Cut;
@@ -770,7 +770,7 @@ sub on_right_down {
 
 	if ( length($text) && $main->notebook->GetPage($id)->CanPaste ) {
 		Wx::Event::EVT_MENU(
-			$main,    # Ctrl-V
+			$main, # Ctrl-V
 			$paste,
 			sub {
 				Padre::Current->editor->Paste;
@@ -854,8 +854,8 @@ sub on_right_down {
 
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
-	} else {    #Wx::CommandEvent
-		$self->PopupMenu( $menu, 50, 50 );    # TODO better location
+	} else { #Wx::CommandEvent
+		$self->PopupMenu( $menu, 50, 50 ); # TODO better location
 	}
 }
 
@@ -976,7 +976,7 @@ sub current_paragraph {
 
 sub put_text_to_clipboard {
 	my ( $self, $text ) = @_;
-	@_ = ();    # Feeble attempt to kill Scalars Leaked
+	@_ = (); # Feeble attempt to kill Scalars Leaked
 
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );

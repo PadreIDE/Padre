@@ -12,20 +12,20 @@ our $VERSION = '0.39';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
-	_action       => '_action',          # action of default button
-	_button       => '_button',          # general-purpose button
-	_butprefs     => '_butprefs',        # preferences button
-	_currow       => '_currow',          # current list row number
-	_curplugin    => '_curplugin',       # current plugin selected
-	_hbox         => '_hbox',            # the window hbox sizer
-	_imagelist    => '_imagelist',       # image list for the listctrl
-	_label        => '_label',           # label at top of right pane
-	_list         => '_list',            # list on the left of the pane
-	_manager      => '_manager',         # ref to plugin manager
-	_plugin_names => '_plugin_names',    # mapping of short/full plugin names
-	_sortcolumn   => '_sortcolumn',      # column used for list sorting
-	_sortreverse  => '_sortreverse',     # list sorting is reversed
-	_whtml        => '_whtml',           # html space for plugin doc
+	_action       => '_action',       # action of default button
+	_button       => '_button',       # general-purpose button
+	_butprefs     => '_butprefs',     # preferences button
+	_currow       => '_currow',       # current list row number
+	_curplugin    => '_curplugin',    # current plugin selected
+	_hbox         => '_hbox',         # the window hbox sizer
+	_imagelist    => '_imagelist',    # image list for the listctrl
+	_label        => '_label',        # label at top of right pane
+	_list         => '_list',         # list on the left of the pane
+	_manager      => '_manager',      # ref to plugin manager
+	_plugin_names => '_plugin_names', # mapping of short/full plugin names
+	_sortcolumn   => '_sortcolumn',   # column used for list sorting
+	_sortreverse  => '_sortreverse',  # list sorting is reversed
+	_whtml        => '_whtml',        # html space for plugin doc
 };
 
 # -- constructor
@@ -157,8 +157,8 @@ sub _on_list_item_selected {
 	my $fullname = $event->GetLabel;
 	my $name     = $self->_plugin_names->{$fullname};
 	my $plugin   = $self->_manager->plugins->{$name};
-	$self->_curplugin($plugin);            # storing selected plugin
-	$self->_currow( $event->GetIndex );    # storing selected row
+	$self->_curplugin($plugin);         # storing selected plugin
+	$self->_currow( $event->GetIndex ); # storing selected row
 
 	# updating plugin name in right pane
 	$self->_label->SetLabel( $plugin->plugin_name );
@@ -169,8 +169,8 @@ sub _on_list_item_selected {
 	my $class   = $plugin->class;
 	my $doc     = $browser->resolve($class);
 	my $output  = eval { $browser->browse($doc) };
-	my $html
-		= $@
+	my $html =
+		$@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
 		: $output->body;
 	$self->_whtml->SetPage($html);
@@ -440,7 +440,7 @@ sub _refresh_list {
 	$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE ) for 0 .. 2;
 
 	# making sure the list can show all columns
-	my $width = 15;    # taking vertical scrollbar into account
+	my $width = 15; # taking vertical scrollbar into account
 	$width += $list->GetColumnWidth($_) for 0 .. 2;
 	$list->SetMinSize( [ $width, -1 ] );
 }

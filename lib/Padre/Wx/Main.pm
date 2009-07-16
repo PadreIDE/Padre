@@ -945,9 +945,9 @@ sub refresh_functions {
 	} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
 
 		# ~ comes after \w
-		@methods = map { tr/~/_/; $_ }    ## no critic
+		@methods = map { tr/~/_/; $_ } ## no critic
 			sort
-			map { tr/_/~/; $_ }           ## no critic
+			map { tr/_/~/; $_ }        ## no critic
 			@methods;
 	} else {
 
@@ -1758,7 +1758,7 @@ sub open_session {
 		my $filename = $document->file;
 		next unless -f $filename;
 		my $id = $self->setup_editor($filename);
-		next unless $id;    # documents already opened have undef $id
+		next unless $id; # documents already opened have undef $id
 		Padre::Util::debug("Setting focus on $filename");
 		$focus = $id if $document->focus;
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
@@ -1946,14 +1946,14 @@ sub on_brace_matching {
 	my $page = $self->current->editor;
 	my $pos1 = $page->GetCurrentPos;
 	my $pos2 = $page->BraceMatch($pos1);
-	if ( $pos2 == -1 ) {    #Wx::wxSTC_INVALID_POSITION
+	if ( $pos2 == -1 ) { #Wx::wxSTC_INVALID_POSITION
 		if ( $pos1 > 0 ) {
 			$pos1--;
 			$pos2 = $page->BraceMatch($pos1);
 		}
 	}
 
-	if ( $pos2 != -1 ) {    #Wx::wxSTC_INVALID_POSITION
+	if ( $pos2 != -1 ) { #Wx::wxSTC_INVALID_POSITION
 		$page->GotoPos($pos2);
 	}
 
@@ -2294,7 +2294,7 @@ sub setup_editor {
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 	if ($file) {
-		$file = Cwd::realpath($file);    # get absolute path
+		$file = Cwd::realpath($file); # get absolute path
 		my $id = $self->find_editor_of_file($file);
 		if ( defined $id ) {
 			$self->on_nth_pane($id);
@@ -2325,7 +2325,7 @@ sub setup_editor {
 		filename => $file,
 	);
 
-	$file ||= '';    #to avoid warnings
+	$file ||= ''; #to avoid warnings
 	if ( $doc->errstr ) {
 		warn $doc->errstr . " when trying to open '$file'";
 		return;
@@ -2346,8 +2346,8 @@ sub setup_editor {
 
 	if ( $config->main_syntaxcheck ) {
 		if ( $editor->GetMarginWidth(1) == 0 ) {
-			$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );    # margin number 1 for symbols
-			$editor->SetMarginWidth( 1, 16 );                        # set margin 1 16 px wide
+			$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 1 for symbols
+			$editor->SetMarginWidth( 1, 16 );                     # set margin 1 16 px wide
 		}
 	}
 
@@ -2455,7 +2455,7 @@ sub on_open_selection {
 			}
 		}
 	}
-	unless (@files) {    # TODO: and if we are in a Perl environment
+	unless (@files) { # TODO: and if we are in a Perl environment
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
@@ -2552,8 +2552,8 @@ sub on_open {
 		Wx::gettext("Text Files"),       "*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
 		Wx::gettext("Web Files"),        "*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
 	);
-	$wildcards
-		= Padre::Constant::WIN32
+	$wildcards =
+		Padre::Constant::WIN32
 		? Wx::gettext("All Files") . "|*.*|" . $wildcards
 		: Wx::gettext("All Files") . "|*|" . $wildcards;
 	my $dialog = Wx::FileDialog->new(
@@ -2728,7 +2728,7 @@ sub on_save_all {
 	my $self = shift;
 	foreach my $id ( $self->pageids ) {
 		my $editor = $self->notebook->GetPage($id) or next;
-		my $doc = $editor->{Document};    # TODO no accessor for document?
+		my $doc = $editor->{Document}; # TODO no accessor for document?
 		if ( $doc->is_modified ) {
 			$self->on_save($doc) or return 0;
 		}
@@ -2933,7 +2933,7 @@ sub on_nth_pane {
 	if ($page) {
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
-		$page->{Document}->set_indentation_style();    # TODO: encapsulation?
+		$page->{Document}->set_indentation_style(); # TODO: encapsulation?
 		return 1;
 	}
 	return;
@@ -3493,7 +3493,7 @@ sub convert_to {
 	my $current = $self->current;
 	my $editor  = $current->editor;
 	SCOPE: {
-		no warnings 'once';    # TODO eliminate?
+		no warnings 'once'; # TODO eliminate?
 		$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline} );
 	}
 
@@ -3566,7 +3566,7 @@ sub run_in_padre {
 	my $self = shift;
 	my $doc  = $self->current->document or return;
 	my $code = $doc->text_get;
-	my @rv   = eval $code;                           ## no critic
+	my @rv   = eval $code;                        ## no critic
 	if ($@) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Error: %s"), $@ ),
@@ -3696,9 +3696,9 @@ sub on_stc_char_added {
 	my $self  = shift;
 	my $event = shift;
 	my $key   = $event->GetKey;
-	if ( $key == 10 ) {    # ENTER
+	if ( $key == 10 ) { # ENTER
 		$self->current->editor->autoindent('indent');
-	} elsif ( $key == 125 ) {    # Closing brace
+	} elsif ( $key == 125 ) { # Closing brace
 		$self->current->editor->autoindent('deindent');
 	}
 	return;
@@ -3799,8 +3799,8 @@ sub on_tab_and_space {
 	my $type     = shift;
 	my $current  = $self->current;
 	my $document = $current->document or return;
-	my $title
-		= $type eq 'Space_to_Tab'
+	my $title =
+		$type eq 'Space_to_Tab'
 		? Wx::gettext('Space to Tab')
 		: Wx::gettext('Tab to Space');
 
@@ -4177,13 +4177,13 @@ sub key_up {
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
-	if ( $mod == Wx::wxMOD_CMD ) {    # Ctrl
-		                              # Ctrl-TAB  #TODO it is already in the menu
+	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
+		                           # Ctrl-TAB  #TODO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 			$self->on_next_pane;
 		}
-	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) {    # Ctrl-Shift
-		                                                         # Ctrl-Shift-TAB #TODO it is already in the menu
+	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
+		                                                      # Ctrl-Shift-TAB #TODO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 

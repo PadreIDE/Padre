@@ -46,7 +46,7 @@ sub new {
 		$main,
 		$self->{run_document_debug},
 		sub {
-			$_[0]->run_document(1);    # Enable debug info
+			$_[0]->run_document(1); # Enable debug info
 		},
 	);
 

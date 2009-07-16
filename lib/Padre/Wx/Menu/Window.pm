@@ -216,7 +216,7 @@ sub refresh {
 	$self->{window_right_click}->Enable($pages);
 
 	# Update the labels to match the notebooks
-	my $config_shorten_path = 1;    # TODO should be configurable ?
+	my $config_shorten_path = 1; # TODO should be configurable ?
 	my $prefix_length       = 0;
 	if ($config_shorten_path) {
 		$prefix_length = length get_common_prefix( $#$alt, $notebook );

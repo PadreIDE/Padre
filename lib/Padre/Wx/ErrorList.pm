@@ -128,8 +128,8 @@ sub on_menu_help_context_help {
 		$diagnostics = $error->diagnostics;
 		$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
 	}
-	$diagnostics
-		= Padre::Constant::WIN32
+	$diagnostics =
+		Padre::Constant::WIN32
 		? $diagnostics
 		: Encode::encode( 'utf8', $diagnostics );
 	my $dialog_title = Wx::gettext("Diagnostics");

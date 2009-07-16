@@ -233,7 +233,7 @@ sub _extract_data {
 
 	foreach my $i ( 0 .. @$layout - 1 ) {
 		foreach my $j ( 0 .. @{ $layout->[$i] } - 1 ) {
-			next if not @{ $layout->[$i][$j] };    # [] means Expand
+			next if not @{ $layout->[$i][$j] }; # [] means Expand
 			my ( $class, $name, $arg, @params ) = @{ $layout->[$i][$j] };
 			if ($name) {
 				next if $class eq 'Wx::Button';
@@ -303,8 +303,8 @@ sub _build_multipage_layout {
 	);
 
 	foreach my $i ( 0 .. @{ $args{layout} } - 1 ) {
-		my $panel
-			= Wx::Panel->new( $notebook, Wx::wxID_ANY, Wx::wxDefaultPosition, Wx::wxDefaultSize, Wx::wxTAB_TRAVERSAL );
+		my $panel =
+			Wx::Panel->new( $notebook, Wx::wxID_ANY, Wx::wxDefaultPosition, Wx::wxDefaultSize, Wx::wxTAB_TRAVERSAL );
 		_build_layout( $panel, %args, 'layout', ${ $args{layout} }[$i] );
 		foreach my $k ( keys %{ $panel->{_widgets_} } ) {
 			$dialog->{_widgets_}{$k} = $panel->{_widgets_}{$k};
@@ -376,7 +376,7 @@ sub _build_layout {
 		foreach my $j ( 0 .. @{ $args{layout}[$i] } - 1 ) {
 			my $width = [ $args{width}[$j], -1 ];
 
-			if ( not @{ $args{layout}[$i][$j] } ) {    # [] means Expand
+			if ( not @{ $args{layout}[$i][$j] } ) { # [] means Expand
 				$row->Add( $args{width}[$j], 0, 0, Wx::wxEXPAND, 0 );
 				next;
 			}
@@ -424,7 +424,7 @@ sub _build_layout {
 			} elsif ( $class eq 'Wx::StaticLine' ) {
 				$widget = $class->new( $dialog, -1, Wx::wxDefaultPosition, $width, $arg, @params );
 			} elsif ( $class eq 'Wx::Treebook' ) {
-				my $height = @$arg * 27;    # should be height of font
+				my $height = @$arg * 27; # should be height of font
 				$widget = $class->new( $dialog, -1, Wx::wxDefaultPosition, [ $args{width}[$j], $height ] );
 				foreach my $name (@$arg) {
 					my $count = $widget->GetPageCount;
@@ -459,9 +459,9 @@ sub _build_layout {
 				$dialog->{_widgets_}{$name} = $widget;
 			}
 		}
-		$row->Add( $args{right}, 0, 0, Wx::wxEXPAND, 0 ) if $args{right};    # margin
+		$row->Add( $args{right}, 0, 0, Wx::wxEXPAND, 0 ) if $args{right}; # margin
 	}
-	$box->Add( 0, $args{bottom}, 0 ) if $args{bottom};                       # margin
+	$box->Add( 0, $args{bottom}, 0 ) if $args{bottom};                    # margin
 
 	$dialog->SetSizerAndFit($box);
 

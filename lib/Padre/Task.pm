@@ -303,11 +303,11 @@ SCOPE: {
 		my $userclass = $padretask->{_process_class};
 		delete $padretask->{_process_class};
 
-		no strict 'refs';    ## no critic
+		no strict 'refs'; ## no critic
 		my $ref = \%{"${userclass}::"};
 		use strict 'refs';
 		my $loaded = exists $ref->{"ISA"};
-		unless ( $loaded or eval("require $userclass;") ) {    ## no critic
+		unless ( $loaded or eval("require $userclass;") ) { ## no critic
 			require Carp;
 			if ($@) {
 				Carp::croak("Failed to load Padre::Task subclass '$userclass': $@");
@@ -414,7 +414,7 @@ sub _deserialize {
 # The main-thread stdout hook
 sub _on_stdout {
 	my ( $main, $event ) = @_;
-	@_ = ();    # hack to avoid "Scalars leaked"
+	@_ = (); # hack to avoid "Scalars leaked"
 	my $out = $main->output();
 	$main->show_output(1);
 	$out->style_neutral();
@@ -425,7 +425,7 @@ sub _on_stdout {
 # The main-thread stderr hook
 sub _on_stderr {
 	my ( $main, $event ) = @_;
-	@_ = ();    # hack to avoid "Scalars leaked"
+	@_ = (); # hack to avoid "Scalars leaked"
 	my $out = $main->output();
 	$main->show_output(1);
 	$out->style_bad();

@@ -43,9 +43,9 @@ use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
 use Class::XSAccessor accessors => {
-	_task_sbmp   => '_task_sbmp',      # Static bitmap holding the task status
-	_task_status => '_task_status',    # Current task status
-	_task_width  => '_task_width',     # Current width of task field
+	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
+	_task_status => '_task_status', # Current task status
+	_task_width  => '_task_width',  # Current width of task field
 };
 
 our $VERSION = '0.39';
@@ -91,7 +91,7 @@ sub new {
 	# create the static bitmap that will hold the task load status
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
-	$self->_task_status('foobar');    # init status to sthg defined
+	$self->_task_status('foobar'); # init status to sthg defined
 	Wx::Event::EVT_LEFT_DOWN(
 		$sbmp,
 		sub {
@@ -156,8 +156,8 @@ sub refresh {
 	my $pageid   = $notebook->GetSelection;
 	my $filename = $document->filename || '';
 	my $old      = $notebook->GetPageText($pageid);
-	my $text
-		= $filename
+	my $text =
+		$filename
 		? File::Basename::basename($filename)
 		: substr( $old, 1 );
 	my $modified = $editor->GetModify ? '*' : ' ';
@@ -214,7 +214,7 @@ the icon to one of the other states
 sub update_task_status {
 	my $self   = shift;
 	my $status = $self->_get_task_status;
-	return if $status eq $self->_task_status;    # Nothing to do
+	return if $status eq $self->_task_status; # Nothing to do
 
 	# Store new status
 	$self->_task_status($status);

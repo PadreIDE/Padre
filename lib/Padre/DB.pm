@@ -9,7 +9,7 @@ use Params::Util        ();
 use Padre::Constant     ();
 use Padre::Current      ();
 
-use ORLite 1.17 ();    # Need truncate
+use ORLite 1.17 (); # Need truncate
 use ORLite::Migrate 0.01 {
 	create        => 1,
 	tables        => ['Modules'],
@@ -19,7 +19,7 @@ use ORLite::Migrate 0.01 {
 		File::ShareDir::PAR::dist_dir('Padre'),
 		'timeline',
 	),
-};                     # add parameter '-DEBUG' after the hash ref to get info on orlite magic
+};                  # add parameter '-DEBUG' after the hash ref to get info on orlite magic
 
 # Overlay classes to enhance the ORLite defaults
 use Padre::DB::Plugin             ();

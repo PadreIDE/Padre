@@ -410,7 +410,7 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
-	return if not $self->current->editor;    # no replace if no file is open
+	return if not $self->current->editor; # no replace if no file is open
 
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and not as the string to be used
@@ -765,8 +765,8 @@ sub _on_hotkey {
 	my $self = shift;
 	my $code = shift;
 
-	$self->find_clicked    if $code == 102;    # pressed 'f' hotkey
-	$self->replace_clicked if $code == 114;    # pressed 'r' hotkey
+	$self->find_clicked    if $code == 102; # pressed 'f' hotkey
+	$self->replace_clicked if $code == 114; # pressed 'r' hotkey
 
 	return;
 }

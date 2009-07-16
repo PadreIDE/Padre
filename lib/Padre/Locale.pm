@@ -129,7 +129,7 @@ BEGIN {
 		'x-unknown' => {
 			gettext  => _T('Unknown'),
 			utf8text => 'Unknown',
-			iso639   => 'en',                     # For convenience
+			iso639   => 'en',                  # For convenience
 			iso3166  => undef,
 			wxid     => Wx::wxLANGUAGE_UNKNOWN,
 			fallback => [],
@@ -430,11 +430,11 @@ BEGIN {
 		# a language is not supported by various older standards.
 		'x-klingon' => {
 			gettext   => _T('Klingon'),
-			utf8text  => 'Klingon',       # TODO Fix this at some point
+			utf8text  => 'Klingon',    # TODO Fix this at some point
 			iso639    => undef,
 			iso3166   => undef,
 			wxid      => undef,
-			fallback  => ['en-gb'],       # Debatable... :)
+			fallback  => ['en-gb'],    # Debatable... :)
 			supported => 0,
 		},
 	);
@@ -584,11 +584,11 @@ sub encoding_from_string {
 	my @guesses  = ();
 	my $encoding = '';
 	my $language = rfc4646();
-	if ( $language eq 'ko' ) {    # Korean
+	if ( $language eq 'ko' ) { # Korean
 		@guesses = qw/utf-8 euc-kr/;
-	} elsif ( $language eq 'ja' ) {    # Japan (not yet tested)
+	} elsif ( $language eq 'ja' ) { # Japan (not yet tested)
 		@guesses = qw/utf-8 iso8859-1 euc-jp shiftjis 7bit-jis/;
-	} elsif ( $language =~ /^zh/ ) {    # Chinese (not yet tested)
+	} elsif ( $language =~ /^zh/ ) { # Chinese (not yet tested)
 		@guesses = qw/utf-8 iso8859-1 euc-cn/;
 	} else {
 		$default ||= encoding_system_default();
@@ -598,7 +598,7 @@ sub encoding_from_string {
 	require Encode::Guess;
 	my $guess = Encode::Guess::guess_encoding( $content, @guesses );
 	unless ( defined $guess ) {
-		$guess = '';                    # to avoid warnings
+		$guess = '';                 # to avoid warnings
 	}
 
 	Padre::Util::debug("Encoding guess: ($guess)");

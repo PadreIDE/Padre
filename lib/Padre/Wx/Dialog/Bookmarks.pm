@@ -50,8 +50,8 @@ sub dialog {
 	my $main  = shift;
 	my $text  = shift;
 	my $names = Padre::DB::Bookmark->select_names;
-	my $title
-		= $text
+	my $title =
+		$text
 		? Wx::gettext("Set Bookmark")
 		: Wx::gettext("GoTo Bookmark");
 
