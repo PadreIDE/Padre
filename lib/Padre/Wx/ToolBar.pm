@@ -195,14 +195,17 @@ sub refresh {
 	# trying out the Comment Code method here
 	$self->EnableTool( 1000, ($document) );    # Save All
 
-	$self->EnableTool( Wx::wxID_CLOSE, ( $editor ? 1 : 0 ) );
-	$self->EnableTool( Wx::wxID_UNDO,  ( $editor and $editor->CanUndo ) );
-	$self->EnableTool( Wx::wxID_REDO,  ( $editor and $editor->CanRedo ) );
-	$self->EnableTool( Wx::wxID_CUT,   ($selection) );
-	$self->EnableTool( Wx::wxID_COPY,  ($selection) );
-	$self->EnableTool( Wx::wxID_PASTE, ( $editor and $editor->CanPaste ) );
-	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor ? 1 : 0 ) );
-	$self->EnableTool( 999, ( $document ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_CLOSE,     ( $editor ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_UNDO,      ( $editor and $editor->CanUndo ) );
+	$self->EnableTool( Wx::wxID_REDO,      ( $editor and $editor->CanRedo ) );
+	$self->EnableTool( Wx::wxID_CUT,       ( $selection ) );
+	$self->EnableTool( Wx::wxID_COPY,      ( $selection ) );
+	$self->EnableTool( Wx::wxID_PASTE,     ( $editor and $editor->CanPaste ) );
+	$self->EnableTool( Wx::wxID_SELECTALL, ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_FIND       ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( Wx::wxID_REPLACE    ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( 999,                ( $document ? 1 : 0 ) );
+	$self->EnableTool( 1001,               ( $editor   ? 1 : 0 ) );
 
 	return;
 }
