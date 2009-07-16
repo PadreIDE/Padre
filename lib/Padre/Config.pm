@@ -16,7 +16,7 @@ use Carp                   ();
 use Params::Util           ();
 use Padre::Constant        ();
 use Padre::Util            ('_T');
-use Padre::Current         ();
+use Padre::Current         ('_CURRENT');
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
@@ -209,7 +209,7 @@ setting(
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
 		# TODO: Review this assumption
-		if ( Padre::Wx::Toolbar::DOCKABLE() ) {
+		if ( $Padre::Wx::Toolbar::DOCKABLE ) {
 			$main->rebuild_toolbar;
 		}
 
