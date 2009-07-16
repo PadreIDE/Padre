@@ -38,13 +38,19 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_SET_FOCUS( $self,
-		\&on_focus
+	Wx::Event::EVT_SET_FOCUS(
+		$self,
+		\&_on_focus
 	);
 
 	Wx::Event::EVT_TREE_ITEM_MENU(
 		$self, $self,
 		\&_on_tree_item_menu,
+	);
+
+	Wx::Event::EVT_TREE_SEL_CHANGED(
+		$self, $self,
+		\&_on_tree_sel_changed,
 	);
 
 	Wx::Event::EVT_TREE_ITEM_EXPANDING(
@@ -80,17 +86,6 @@ sub new {
 	$self->Hide;
 
 	return $self;
-}
-
-sub on_focus {
-	my ( $self, $event ) = @_;
-	my $main = $self->main;
-
-	if ( $main->has_directory ) {
-		if ( $main->menu->view->{directory}->IsChecked ) {
-			$main->directory->update_gui;
-		}
-	}
 }
 
 sub right {
@@ -188,7 +183,7 @@ sub list_dir {
 sub UpdatedDir {
 	my $dir = shift;
 	my $dirChange = (stat $dir)[10];
-	return ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || $dirChange != $CACHED{$dir}->{Change} ) ? 1 : 0;
+	return ( !defined $CACHED{$dir} || !$CACHED{$dir}->{Data} || !$CACHED{$dir}->{Change} || $dirChange != $CACHED{$dir}->{Change} ) ? 1 : 0;
 }
 
 sub update_gui {
@@ -207,15 +202,12 @@ sub update_gui {
 	my $directory = $self->main->directory;
 	my $root = $directory->GetRootItem;
 
-	_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root ) unless defined $current_dir;
-
 	if( (defined( $current_dir ) and $current_dir ne $dir) or $updated){
 		$directory->DeleteChildren( $root );
 		_update_treectrl( $directory, $CACHED{$dir}->{Data}, $root );
 	}
 
 	$current_dir = $dir;
-
 	_update_subdirs( $directory, $root );
 }
 
@@ -240,11 +232,19 @@ sub _update_subdirs {
 			}
 			_update_subdirs( $self, $node );
 		}
-		if ( defined $current_item and $current_item eq $path ) {
+		if ( defined $current_item->{$current_dir} and $current_item->{$current_dir} eq $path ) {
 			$self->SelectItem( $node );
 			$self->ScrollTo( $node );
-			undef $current_item;
 		}
+	}
+}
+
+sub _on_focus {
+	my ( $self, $event ) = @_;
+	my $main = $self->main;
+
+	if ( $main->has_directory ) {
+		$main->directory->update_gui;
 	}
 }
 
@@ -256,21 +256,38 @@ sub _on_tree_begin_label_edit {
 
 sub _on_tree_end_label_edit {
 	my ( $self, $event ) = @_;
-
 	my $itemObj = $event->GetItem;
 	my $itemData = $self->GetPlData( $itemObj );
 
 	my $newLabel = $event->GetLabel();
-		
+
+	$event->Veto() if $newLabel =~ m#/$#;
+
 	my $oldFile = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
 	my $newFile = File::Spec->catfile( $itemData->{dir}, $newLabel );
 
 	if ( rename $oldFile, $newFile  ) {
+
 		$itemData->{name} = $newLabel;
+		$current_item->{$current_dir} = $newFile;		
+
+		if ( defined $CACHED{$current_dir}->{Expanded}->{$oldFile} ) {
+			$CACHED{$current_dir}->{Expanded}->{$newFile} = 1;
+			delete $CACHED{$current_dir}->{Expanded}->{$oldFile};
+		}
+		map { $CACHED{ $newFile.(defined $1 ? $1 : '') } = $CACHED{ $_ }, delete $CACHED{ $_ } if $_ =~ m#^$oldFile(\/.+)?$# } keys %CACHED;
 	} else {
 		$event->Veto();
 	}
-	$current_item = $newFile;
+}
+
+sub _on_tree_sel_changed {
+	my ( $self, $event ) = @_;
+	my $itemObj = $event->GetItem;
+	my $itemData = $self->GetPlData( $itemObj );
+	if ( ref $itemData eq 'HASH' ) {
+		$current_item->{$current_dir} = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+	}
 }
 
 sub _on_tree_item_expanding {
@@ -295,8 +312,11 @@ sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
 	my $itemObj = $event->GetItem;
 	my $itemData = $self->GetPlData( $itemObj );
-	my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
-	delete $CACHED{$current_dir}->{Expanded}->{ $path };
+	
+	if( defined( $itemData->{type} ) && $itemData->{type} eq 'folder' ) {
+		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+		delete $CACHED{$current_dir}->{Expanded}->{ $path };
+	}
 }
 
 
@@ -376,7 +396,6 @@ if( $^O !~ /^win32/i ){
 			sub {
 				$CACHED{$SelectDir}->{ShowHidden} = !$show;
 				delete $CACHED{$SelectDir}->{Data};
-				_update_tree_folder( $dir, $itemObj );
 			},
 		);
 }
@@ -387,7 +406,7 @@ if( $^O !~ /^win32/i ){
 		Wx::Event::EVT_MENU(
 			$dir, $reload,
 			sub {
-				_update_tree_folder( $dir, $itemObj );
+				delete $CACHED{ $dir->GetPlData( $itemObj )->{dir} }->{Change}
 			}
 		);
 
@@ -398,52 +417,23 @@ if( $^O !~ /^win32/i ){
 	return;
 }
 
-sub _update_tree_folder {
-	my ( $dir, $itemObj ) = @_;
-	my $itemData = $dir->GetPlData( $itemObj );
-	my $SelectDir = $itemData->{dir};
-
-	# Updates Cache if directory has changed
-	list_dir( $SelectDir );
-
-	my $parent = $dir->GetItemParent($itemObj);
-
-	$dir->DeleteChildren($parent);
-	_update_treectrl( $dir, $CACHED{$SelectDir}->{Data}, $parent );
-}
-
 sub _update_treectrl {
 	my ( $self, $data, $root ) = @_;
 	foreach my $pkg ( @{$data} ) {
-		if ( $pkg->{isDir} ) {
-			my $type_elem = $self->AppendItem(
-				$root,
-				$pkg->{name},
-				-1, -1,
-				Wx::TreeItemData->new(
-					{
-						dir => $pkg->{dir},
-						name =>$pkg->{name},
-						type => 'folder',
-					}
-				)
-			);
-			$self->SetItemHasChildren($type_elem,1);
-		} else {
-			my $branch = $self->AppendItem(
-				$root,
-				$pkg->{name},
-				-1, -1,
-				Wx::TreeItemData->new(
-					{	dir  => $pkg->{dir},
-						name => $pkg->{name},
-						type => 'package',
-					}
-				)
-			);
-		}
+		my $type_elem = $self->AppendItem(
+			$root,
+			$pkg->{name},
+			-1, -1,
+			Wx::TreeItemData->new(
+				{
+					dir  => $pkg->{dir},
+					name => $pkg->{name},
+					type => $pkg->{isDir} ? 'folder' : 'package',
+				}
+			)
+		);
+		$self->SetItemHasChildren($type_elem,1) if $pkg->{isDir};
 	}
-
 	return;
 }
 
