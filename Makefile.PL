@@ -60,7 +60,6 @@ requires       'IO::Socket'               => '1.30';
 requires       'IO::String'               => '1.08';
 requires       'List::Util'               => '1.18';
 requires       'List::MoreUtils'          => '0.22';
-requires       'Module::Inspector'        => '0.04';
 requires       'Module::Refresh'          => '0.13';
 requires       'Module::Starter'          => '1.50';
 requires       'ORLite'                   => '1.20';
