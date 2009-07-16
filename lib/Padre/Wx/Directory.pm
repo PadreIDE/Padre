@@ -13,9 +13,12 @@ our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
 
 my %CACHED;
+my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
+
+# TODO - This violates encapsulation.
+#        Do not store application state in package variables.
 my $current_dir;
 my $current_item;
-my %SKIP = map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' );
 
 sub new {
 	my $class = shift;
