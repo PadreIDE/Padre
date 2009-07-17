@@ -36,11 +36,6 @@ sub new {
 
 	$self->SetIndent(10);
 
-	#	Do they need to be used?
-	#	$self->GetBestSize;
-	#	$self->Thaw;
-	#	$self->Hide;
-
 	return $self;
 }
 
@@ -180,11 +175,11 @@ sub _list_dir {
 					name => $thing,
 					dir  => $dir,
 				);
-				$item{isDir} = -d $path ? 1 : 0;
+				$item{is_dir} = -d $path ? 1 : 0;
 				push @data, \%item;
 			}
 
-			@{ $cached->{Data} } = sort { $b->{isDir} <=> $a->{isDir} } @data;
+			@{ $cached->{Data} } = sort { $b->{is_dir} <=> $a->{is_dir} } @data;
 			closedir $dh;
 		}
 	}
@@ -237,11 +232,11 @@ sub _update_subdirs {
 
 		( my $node, $cookie ) = $item == 1 ? $self->GetFirstChild($root) : $self->GetNextChild( $root, $cookie );
 
-		my $itemData = $self->GetPlData($node);
-		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+		my $item_data = $self->GetPlData($node);
+		my $path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 
-		if (    defined $itemData->{type}
-			and $itemData->{type} eq 'folder'
+		if (    defined $item_data->{type}
+			and $item_data->{type} eq 'folder'
 			and defined $self->{CACHED}->{$project}->{Expanded}->{$path} )
 		{
 
@@ -270,13 +265,13 @@ sub _on_focus {
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $itemObj = $event->GetItem;
-	my $item    = $self->GetPlData($itemObj);
+	my $item_obj = $event->GetItem;
+	my $item    = $self->GetPlData($item_obj);
 
 	return if not defined $item;
 
 	if ( $item->{type} eq "folder" ) {
-		$self->Toggle($itemObj);
+		$self->Toggle($item_obj);
 		return;
 	}
 
@@ -300,36 +295,34 @@ sub _on_tree_begin_label_edit {
 
 sub _on_tree_end_label_edit {
 	my ( $self, $event ) = @_;
-	my $itemObj  = $event->GetItem;
-	my $itemData = $self->GetPlData($itemObj);
+	my $item_obj  = $event->GetItem;
+	my $item_data = $self->GetPlData($item_obj);
 
-	my $newLabel = $event->GetLabel();
+	my $new_label = $event->GetLabel();
 
-	$event->Veto() if $newLabel =~ m#/$#;
+	my $old_file = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
+	my $new_file = File::Spec->catfile( $item_data->{dir}, $new_label );
 
-	my $oldFile = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
-	my $newFile = File::Spec->catfile( $itemData->{dir}, $newLabel );
-
-	if ( -e $newFile ){
+	if ( -e $new_file or $new_label =~ m#/$#){
 		$event->Veto();
 		return;
 	}
 
-	if ( rename $oldFile, $newFile ) {
+	if ( rename $old_file, $new_file ) {
 
-		$itemData->{name} = $newLabel;
+		$item_data->{name} = $new_label;
 		my $project = $self->{current_project};
-		$self->{current_item}->{$project} = $newFile;
+		$self->{current_item}->{$project} = $new_file;
 
 		my $cached = $self->{CACHED};
 
-		if ( defined $cached->{$project}->{Expanded}->{$oldFile} ) {
-			$cached->{$project}->{Expanded}->{$newFile} = 1;
-			delete $cached->{$project}->{Expanded}->{$oldFile};
+		if ( defined $cached->{$project}->{Expanded}->{$old_file} ) {
+			$cached->{$project}->{Expanded}->{$new_file} = 1;
+			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 		map {
-			$cached->{ $newFile . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
-				if $_ =~ m#^$oldFile(\/.+)?$#
+			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
+				if $_ =~ m#^$old_file((\/|\\).+)?$#
 		} keys %$cached;
 	} else {
 		$event->Veto();
@@ -338,39 +331,39 @@ sub _on_tree_end_label_edit {
 
 sub _on_tree_sel_changed {
 	my ( $self, $event ) = @_;
-	my $itemObj  = $event->GetItem;
-	my $itemData = $self->GetPlData($itemObj);
-	if ( ref $itemData eq 'HASH' ) {
+	my $item_obj  = $event->GetItem;
+	my $item_data = $self->GetPlData($item_obj);
+	if ( ref $item_data eq 'HASH' ) {
 		$self->{current_item}->{ $self->{current_project} } =
-			File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+			File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 	}
 }
 
 sub _on_tree_item_expanding {
 	my ( $self, $event ) = @_;
 	my $current  = $self->current;
-	my $itemObj  = $event->GetItem;
-	my $itemData = $self->GetPlData($itemObj);
+	my $item_obj  = $event->GetItem;
+	my $item_data = $self->GetPlData($item_obj);
 
-	if ( defined( $itemData->{type} ) && $itemData->{type} eq 'folder' ) {
+	if ( defined( $item_data->{type} ) && $item_data->{type} eq 'folder' ) {
 
-		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+		my $path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 		$self->{CACHED}->{ $self->{current_project} }->{Expanded}->{$path} = 1;
 
-		if ( $self->_updated_dir($path) or !$self->GetChildrenCount($itemObj) ) {
-			$self->DeleteChildren($itemObj);
-			_update_treectrl( $self, $self->_list_dir($path), $itemObj );
+		if ( $self->_updated_dir($path) or !$self->GetChildrenCount($item_obj) ) {
+			$self->DeleteChildren($item_obj);
+			_update_treectrl( $self, $self->_list_dir($path), $item_obj );
 		}
 	}
 }
 
 sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
-	my $itemObj  = $event->GetItem;
-	my $itemData = $self->GetPlData($itemObj);
+	my $item_obj  = $event->GetItem;
+	my $item_data = $self->GetPlData($item_obj);
 
-	if ( defined( $itemData->{type} ) && $itemData->{type} eq 'folder' ) {
-		my $path = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
+	if ( defined( $item_data->{type} ) and $item_data->{type} eq 'folder' ) {
+		my $path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 		delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}->{$path};
 	}
 }
@@ -378,8 +371,8 @@ sub _on_tree_item_collapsing {
 sub _on_tree_item_menu {
 	my ( $self, $event ) = @_;
 
-	my $itemObj   = $event->GetItem;
-	my $item_data = $self->GetPlData($itemObj);
+	my $item_obj   = $event->GetItem;
+	my $item_data = $self->GetPlData($item_obj);
 
 	if ( defined $item_data ) {
 
@@ -393,7 +386,7 @@ sub _on_tree_item_menu {
 			my $default = $menu->Append( -1, Wx::gettext("Expand / Collapse") );
 			Wx::Event::EVT_MENU(
 				$self, $default,
-				sub { $self->Toggle($itemObj) },
+				sub { $self->Toggle($item_obj) },
 			);
 		} else {
 			my $default = $menu->Append( -1, Wx::gettext("Open File") );
@@ -411,7 +404,7 @@ sub _on_tree_item_menu {
 		Wx::Event::EVT_MENU(
 			$self, $rename,
 			sub {
-				$self->EditLabel($itemObj);
+				$self->EditLabel($item_obj);
 			},
 		);
 
@@ -463,7 +456,7 @@ sub _on_tree_item_menu {
 		Wx::Event::EVT_MENU(
 			$self, $reload,
 			sub {
-				delete $self->{CACHED}->{ $self->GetPlData($itemObj)->{dir} }->{Change};
+				delete $self->{CACHED}->{ $self->GetPlData($item_obj)->{dir} }->{Change};
 			}
 		);
 
@@ -486,11 +479,11 @@ sub _update_treectrl {
 			Wx::TreeItemData->new(
 				{   dir  => $pkg->{dir},
 					name => $pkg->{name},
-					type => $pkg->{isDir} ? 'folder' : 'package',
+					type => $pkg->{is_dir} ? 'folder' : 'package',
 				}
 			)
 		);
-		$self->SetItemHasChildren( $type_elem, 1 ) if $pkg->{isDir};
+		$self->SetItemHasChildren( $type_elem, 1 ) if $pkg->{is_dir};
 	}
 	return;
 }
