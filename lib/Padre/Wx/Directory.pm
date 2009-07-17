@@ -28,12 +28,13 @@ sub new {
 			| Wx::wxTR_FULL_ROW_HIGHLIGHT
 	);
 
-	$self->{SKIP}            = { map { $_ => 1 } ( '.', '..', '.svn', 'CVS', '.git' ) };
+	$self->{SKIP}            = map { $_ => 1 } ( '.', '..' ) }; # '.svn', 'CVS', '.git'
 	$self->{CACHED}          = {};
 	$self->{force_next}      = 0;
 	$self->{current_item}    = {};
 	$self->{current_project} = '';
 
+	$self->_setup_image_list;
 	$self->_setup_events;
 	$self->_add_root();
 
@@ -75,6 +76,28 @@ sub force_next {
 	} else {
 		return $self->{force_next};
 	}
+}
+
+sub _setup_image_list {
+	my $self = shift;
+
+	my %file_types = (
+		folder => 'wxART_FOLDER',
+		package => 'wxART_NORMAL_FILE',
+		@_,
+	);
+
+	my $image_list = Wx::ImageList->new( 16, 16 );
+
+	for my $type (keys %file_types){
+		$self->{file_types}->{$type} = $image_list->Add(
+							Wx::ArtProvider::GetBitmap( $file_types{$type},
+							'wxART_OTHER_C',
+							[16, 16] )
+						)
+	}
+
+	$self->AssignImageList($image_list);
 }
 
 sub _setup_events {
@@ -169,14 +192,15 @@ sub _list_dir {
 			foreach my $thing (@items) {
 				my $path = File::Spec->catfile( $dir, $thing );
 				my %item = (
+					type => 'package' ,
 					name => $thing,
 					dir  => $dir,
 				);
-				$item{is_dir} = -d $path ? 1 : 0;
+				$item{type} = 'folder' if  -d $path;
 				push @data, \%item;
 			}
 
-			@{ $cached->{Data} } = sort { $b->{is_dir} <=> $a->{is_dir} } @data;
+			@{ $cached->{Data} } = sort {($b->{type} eq 'folder') <=> ($a->{type} eq 'folder')} @data;
 			closedir $dh;
 		}
 	}
@@ -404,7 +428,7 @@ sub _on_tree_item_menu {
 			$default_sub = sub { $self->Toggle($item_obj) };
 		} else {
 			$default_text = Wx::gettext('Open File');
-			$default_sub = sub { $self->on_tree_item_activated($event) };
+			$default_sub = sub { $self->_on_tree_item_activated($event) };
 		}
 
 		Wx::Event::EVT_MENU(
@@ -543,11 +567,12 @@ sub _update_treectrl {
 			Wx::TreeItemData->new(
 				{   dir  => $pkg->{dir},
 					name => $pkg->{name},
-					type => $pkg->{is_dir} ? 'folder' : 'package',
+					type => $pkg->{type},
 				}
 			)
 		);
-		$self->SetItemHasChildren( $type_elem, 1 ) if $pkg->{is_dir};
+		$self->SetItemHasChildren( $type_elem, 1 ) if $pkg->{type} eq 'folder';
+		$self->SetItemImage( $type_elem, $self->{file_types}->{$pkg->{type}}, Wx::wxTreeItemIcon_Normal);
 	}
 	return;
 }
