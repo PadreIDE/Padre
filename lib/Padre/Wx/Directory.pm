@@ -298,14 +298,27 @@ sub _on_tree_end_label_edit {
 	my $item_obj  = $event->GetItem;
 	my $item_data = $self->GetPlData($item_obj);
 
-	my $new_label = $event->GetLabel();
-
 	my $old_file = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
-	my $new_file = File::Spec->catfile( $item_data->{dir}, $new_label );
+	my $new_file = File::Spec->catfile( $item_data->{dir}, $event->GetLabel() );
+	my $new_label = ( File::Spec->splitpath($new_file) )[2];
 
-	if ( -e $new_file or $new_label =~ m#/$#){
-		$event->Veto();
-		return;
+	while ( -e $new_file ) {
+
+		my $prompt = Wx::TextEntryDialog->new(
+			undef,
+			Wx::gettext('Please, choose a different name.'),
+			Wx::gettext('File already exists'),
+			$new_label,
+		);
+
+		if ( $prompt->ShowModal == Wx::wxID_CANCEL ) {
+			$event->Veto();
+			return;
+		}
+
+		$new_file = File::Spec->catfile( $item_data->{dir}, $prompt->GetValue );
+		$new_label = ( File::Spec->splitpath($new_file) )[2];
+		$prompt->Destroy;
 	}
 
 	if ( rename $old_file, $new_file ) {
@@ -315,18 +328,23 @@ sub _on_tree_end_label_edit {
 		$self->{current_item}->{$project} = $new_file;
 
 		my $cached = $self->{CACHED};
-
 		if ( defined $cached->{$project}->{Expanded}->{$old_file} ) {
 			$cached->{$project}->{Expanded}->{$new_file} = 1;
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
+
+		# TODO: find a better way to identify dirs separetor
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
 				if $_ =~ m#^$old_file((\/|\\).+)?$#
 		} keys %$cached;
-	} else {
+	}
+	else {
+		my $error_msg = $!;
+		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE );
 		$event->Veto();
 	}
+	return;
 }
 
 sub _on_tree_sel_changed {
