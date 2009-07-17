@@ -11,6 +11,8 @@ use Padre::Wx      ();
 
 our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
+
+use constant IS_MAC   => !! ( $^O eq 'darwin' );
 use constant IS_WIN32 => !!( $^O =~ /^MSWin/ or $^O eq 'cygwin' );
 
 sub new {
@@ -424,22 +426,25 @@ sub _on_tree_item_menu {
 
 		#####################################################################
 		# Move item to trash
-		my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
-		Wx::Event::EVT_MENU(
-			$self, $trash,
-			sub {
-				eval {
-					require File::Remove;
-					File::Remove->trash($selected_path);
-				};
-				if ($@) {
-					my $error_msg = $@;
-					Wx::MessageBox( $error_msg, Wx::gettext('Error'),
-						Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
-				}
-				return;
-			},
-		);
+		# Note: File::Remove->trash() Works only in Win and Mac
+		if (IS_WIN32 or IS_MAC ) {
+			my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
+			Wx::Event::EVT_MENU(
+				$self, $trash,
+				sub {
+					eval {
+						require File::Remove;
+						File::Remove->trash($selected_path);
+					};
+					if ($@) {
+						my $error_msg = $@;
+						Wx::MessageBox( $error_msg, Wx::gettext('Error'),
+							Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+					}
+					return;
+				},
+			);
+		}
 
 		#####################################################################
 		# Delete item
