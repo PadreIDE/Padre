@@ -310,7 +310,10 @@ sub _on_tree_end_label_edit {
 	my $oldFile = File::Spec->catfile( $itemData->{dir}, $itemData->{name} );
 	my $newFile = File::Spec->catfile( $itemData->{dir}, $newLabel );
 
-	$event->Veto() if -e $newFile;
+	if ( -e $newFile ){
+		$event->Veto();
+		return;
+	}
 
 	if ( rename $oldFile, $newFile ) {
 
