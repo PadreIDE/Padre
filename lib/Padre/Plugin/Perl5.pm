@@ -7,7 +7,7 @@ use Padre::Wx      ();
 use Padre::Plugin  ();
 use Padre::Current ();
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 our @ISA     = 'Padre::Plugin';
 
 #####################################################################

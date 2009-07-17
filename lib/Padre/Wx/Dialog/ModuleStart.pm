@@ -10,7 +10,7 @@ use File::Spec        ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 
 sub get_layout {
 

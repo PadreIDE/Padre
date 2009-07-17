@@ -6,7 +6,7 @@ use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Wx ();
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 our @ISA     = 'Wx::ListView';
 
 sub new {

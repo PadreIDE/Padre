@@ -8,7 +8,7 @@ use Carp 'croak';
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {

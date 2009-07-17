@@ -7,7 +7,7 @@ use Params::Util qw{ _STRING };
 use Padre::Wx      ();
 use Padre::Current ();
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 our @ISA     = 'Wx::ListCtrl';
 
 #####################################################################

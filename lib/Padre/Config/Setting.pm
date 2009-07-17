@@ -9,7 +9,7 @@ use Carp            ();
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.39';
+our $VERSION = '0.40';
 
 use Class::XSAccessor getters => {
 	name    => 'name',
