@@ -11,6 +11,7 @@ use Padre::Wx      ();
 
 our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
+use constant IS_WIN32 => !!( $^O =~ /^MSWin/ or $^O eq 'cygwin' );
 
 sub new {
 	my $class = shift;
@@ -139,6 +140,7 @@ sub _list_dir {
 	my ( $self, $dir ) = @_;
 
 	my $cached = $self->{CACHED}->{$dir};
+	$self->{CACHED}->{$dir} = {} unless $cached;
 
 	if ( $self->_updated_dir($dir) ) {
 
@@ -148,24 +150,17 @@ sub _list_dir {
 
 			my @items = sort { lc($a) cmp lc($b) } grep { not $self->{SKIP}->{$_} } readdir $dh;
 
-
 			unless ( $cached->{ShowHidden} ) {
 
-#####################################################################
-# Show/Hide Windows hidden files and directories - NEED TO BE TESTED
-#
-#				if ( $^O !~ /^win32/i ) {
-#					require Win32::File;
-#					my $attribs;
-#					@items = grep { Win32::File::GetAttributes( $_, $attribs ) and !( $attribs & HIDDEN ) } @items;
-#				}
-#				else {
-#
-				@items = grep { not /^\./ } @items;
-
-#
-#				}
-#####################################################################
+				#####################################################################
+				# TODO Test if this Windows solutions works
+				if (IS_WIN32) {
+					#require Win32::File;
+					#my $attribs;
+					#@items = grep { Win32::File::GetAttributes( $_, $attribs ) and !( $attribs & HIDDEN ) } @items;
+				} else {
+					@items = grep { not /^\./ } @items;
+				}
 			}
 
 			my @data;
@@ -185,7 +180,6 @@ sub _list_dir {
 	}
 	return $cached->{Data};
 }
-
 
 sub update_gui {
 	my $self    = shift;
@@ -213,8 +207,9 @@ sub update_gui {
 }
 
 sub _updated_dir {
-	my $self   = shift;
-	my $dir    = shift;
+	my $self = shift;
+	my $dir  = shift;
+
 	my $cached = $self->{CACHED}->{$dir};
 
 	if ( not defined($cached) or !$cached->{Data} or !$cached->{Change} or ( stat $dir )[10] != $cached->{Change} ) {
@@ -266,7 +261,7 @@ sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
 	my $item_obj = $event->GetItem;
-	my $item    = $self->GetPlData($item_obj);
+	my $item     = $self->GetPlData($item_obj);
 
 	return if not defined $item;
 
@@ -295,6 +290,9 @@ sub _on_tree_begin_label_edit {
 
 sub _on_tree_end_label_edit {
 	my ( $self, $event ) = @_;
+
+	return unless $event->GetLabel();
+
 	my $item_obj  = $event->GetItem;
 	my $item_data = $self->GetPlData($item_obj);
 
@@ -305,7 +303,7 @@ sub _on_tree_end_label_edit {
 	while ( -e $new_file ) {
 
 		my $prompt = Wx::TextEntryDialog->new(
-			undef,
+			$self,
 			Wx::gettext('Please, choose a different name.'),
 			Wx::gettext('File already exists'),
 			$new_label,
@@ -333,15 +331,14 @@ sub _on_tree_end_label_edit {
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 
-		# TODO: find a better way to identify dirs separetor
+		# TODO Find a better way to identify dirs separetor
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
 				if $_ =~ m#^$old_file((\/|\\).+)?$#
 		} keys %$cached;
-	}
-	else {
+	} else {
 		my $error_msg = $!;
-		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE );
+		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
 		$event->Veto();
 	}
 	return;
@@ -359,7 +356,7 @@ sub _on_tree_sel_changed {
 
 sub _on_tree_item_expanding {
 	my ( $self, $event ) = @_;
-	my $current  = $self->current;
+	my $current   = $self->current;
 	my $item_obj  = $event->GetItem;
 	my $item_data = $self->GetPlData($item_obj);
 
@@ -388,43 +385,90 @@ sub _on_tree_item_collapsing {
 
 sub _on_tree_item_menu {
 	my ( $self, $event ) = @_;
-
-	my $item_obj   = $event->GetItem;
+	my $item_obj  = $event->GetItem;
 	my $item_data = $self->GetPlData($item_obj);
 
 	if ( defined $item_data ) {
 
-		my $menu         = Wx::Menu->new;
-		my $selected_dir = $item_data->{dir};
+		my $menu          = Wx::Menu->new;
+		my $selected_dir  = $item_data->{dir};
+		my $selected_path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 
 		#####################################################################
 		# Default action - same when the item is activated
-		#
-		if ( defined $item_data->{type} and $item_data->{type} eq 'folder' ) {
-			my $default = $menu->Append( -1, Wx::gettext("Expand / Collapse") );
-			Wx::Event::EVT_MENU(
-				$self, $default,
-				sub { $self->Toggle($item_obj) },
-			);
+		my ( $default_text, $default_sub );
+		if ( $item_data->{type} eq 'folder' ) {
+			$default_text = Wx::gettext('Expand / Collapse');
+			$default_sub = sub { $self->Toggle($item_obj) };
 		} else {
-			my $default = $menu->Append( -1, Wx::gettext("Open File") );
-			Wx::Event::EVT_MENU(
-				$self, $default,
-				sub { $self->on_tree_item_activated($event) },
-			);
+			$default_text = Wx::gettext('Open File');
+			$default_sub = sub { $self->on_tree_item_activated($event) };
 		}
 
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, $default_text ),
+			$default_sub,
+		);
 		$menu->AppendSeparator();
 
 		#####################################################################
 		# Rename and/or move the item
-		my $rename = $menu->Append( -1, Wx::gettext("Rename") );
+		my $rename = $menu->Append( -1, Wx::gettext('Rename / Move') );
 		Wx::Event::EVT_MENU(
 			$self, $rename,
 			sub {
 				$self->EditLabel($item_obj);
 			},
 		);
+
+		#####################################################################
+		# Move item to trash
+		my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
+		Wx::Event::EVT_MENU(
+			$self, $trash,
+			sub {
+				eval {
+					require File::Remove;
+					File::Remove->trash($selected_path);
+				};
+				if ($@) {
+					my $error_msg = $@;
+					Wx::MessageBox( $error_msg, Wx::gettext('Error'),
+						Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+				}
+				return;
+			},
+		);
+
+		#####################################################################
+		# Delete item
+		my $delete = $menu->Append( -1, Wx::gettext('Delete') );
+		Wx::Event::EVT_MENU(
+			$self, $delete,
+			sub {
+
+				my $dialog = Wx::MessageDialog->new(
+					$self,
+					Wx::gettext('You sure want to delete this item?') . $/ . $selected_path,
+					Wx::gettext('Delete'),
+					Wx::wxYES_NO | Wx::wxICON_QUESTION | Wx::wxCENTRE
+				);
+				return if $dialog->ShowModal == Wx::wxID_NO;
+
+				eval {
+					require File::Remove;
+					File::Remove->remove($selected_path);
+				};
+				if ($@) {
+					my $error_msg = $@;
+					Wx::MessageBox( $error_msg, Wx::gettext('Error'),
+						Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+				}
+				return;
+			},
+		);
+
 
 		#####################################################################
 		# ?????
@@ -448,29 +492,26 @@ sub _on_tree_item_menu {
 
 		#####################################################################
 		# Shows / Hides dot started files and folers (not avaiable for Windows)
-		if ( $^O !~ /^win32/i ) {
-
-			my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext("Show hidden files") );
-			if ( $item_data->{type} eq 'folder' ) {
-				$selected_dir = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
-			}
-			my $cached = $self->{CACHED}->{$selected_dir};
-			my $show   = $cached->{ShowHidden};
-			$hiddenFiles->Check($show);
-			Wx::Event::EVT_MENU(
-				$self,
-				$hiddenFiles,
-				sub {
-					$cached->{ShowHidden} = !$show;
-					delete $cached->{Data};
-				},
-			);
-
+		my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext('Show hidden files') );
+		if ( $item_data->{type} eq 'folder' ) {
+			$selected_dir = $selected_path;
 		}
+		my $cached = $self->{CACHED}->{$selected_dir};
+		my $show   = $cached->{ShowHidden};
+		$hiddenFiles->Check($show);
+		Wx::Event::EVT_MENU(
+			$self,
+			$hiddenFiles,
+			sub {
+				$cached->{ShowHidden} = !$show;
+				delete $cached->{Data};
+			},
+		);
+
 
 		#####################################################################
 		# Updates the directory listing
-		my $reload = $menu->Append( -1, Wx::gettext("Reload") );
+		my $reload = $menu->Append( -1, Wx::gettext('Reload') );
 		Wx::Event::EVT_MENU(
 			$self, $reload,
 			sub {
