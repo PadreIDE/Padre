@@ -1,6 +1,10 @@
 Changes for Perl Application Development and Refactoring Environment
 
-0.40 to be released
+0.41 to be released
+
+
+
+0.40 2009.07.17
     - Removed about 10 dependencies, including several with lots of FAIL
       reports in CPAN Testers (ADAMK)
     - Complete refactoring of the Directory Browser, gaining a lot of 
