@@ -28,7 +28,7 @@ sub new {
 			| Wx::wxTR_FULL_ROW_HIGHLIGHT
 	);
 
-	$self->{SKIP}            = map { $_ => 1 } ( '.', '..' ) }; # '.svn', 'CVS', '.git'
+	$self->{SKIP}            = map { $_ => 1 } ( '.', '..' ) ; # '.svn', 'CVS', '.git'
 	$self->{CACHED}          = {};
 	$self->{force_next}      = 0;
 	$self->{current_item}    = {};
