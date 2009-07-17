@@ -39,7 +39,7 @@ msgstr "发现新插件"
 #: lib/Padre/PluginManager.pm:475
 #, perl-format
 msgid "Plugin:%s - Failed to load module: %s"
-msgstr "插件 %s - 载入模块失败：%s"
+msgstr "插件:%s - 载入模块失败: %s"
 
 #: lib/Padre/PluginManager.pm:489
 #, perl-format
