@@ -126,7 +126,7 @@ msgstr "按字母排序（私有最后）"
 #: lib/Padre/Document.pm:754
 #, perl-format
 msgid "Unsaved %d"
-msgstr "为保存 %d"
+msgstr "未保存 %d"
 
 #: lib/Padre/Document.pm:1023 lib/Padre/Document.pm:1024
 msgid "Skipped for large files"
@@ -929,7 +929,7 @@ msgstr "文件已更改。是否保存？"
 
 #: lib/Padre/Wx/Main.pm:2833
 msgid "Unsaved File"
-msgstr "为保存文件"
+msgstr "未保存文件"
 
 #: lib/Padre/Wx/Main.pm:3006
 msgid "Cannot diff if file was never saved"
@@ -1218,7 +1218,7 @@ msgstr "使用外部窗口来运行 (xterm)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:405
 msgid "Unsaved"
-msgstr "为保存"
+msgstr "未保存"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:406
 msgid "N/A"
