@@ -22,7 +22,6 @@ my %modules = map {
 plan( tests => scalar(keys %modules) * 5 );
 
 # Compile all of Padre
-eval "use Class::Autouse ':devel';";
 use File::Temp;
 use POSIX qw(locale_h);
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
