@@ -64,6 +64,8 @@ sub class_to_color {
 sub colorize {
 	my $class = shift;
 
+	Padre::Util::debug("Lexer colorize called");
+
 	my $doc    = Padre::Current->document;
 	my $editor = $doc->editor;
 
