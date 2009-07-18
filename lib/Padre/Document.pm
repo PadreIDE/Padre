@@ -181,7 +181,7 @@ my %EXT_MIME = (
 	pm    => \&perl_mime_type,
 	pod   => \&perl_mime_type,
 	t     => \&perl_mime_type,
-	conf  => 'text/plain',
+	conf  => 'text/x-config',
 	sh    => 'application/x-shellscript',
 	ksh   => 'application/x-shellscript',
 	txt   => 'text/plain',
@@ -230,6 +230,8 @@ my %MIME_LEXER = (
 	'text/x-sql'                => Wx::wxSTC_LEX_SQL,       # CONFIRMED
 	'application/x-tcl'         => Wx::wxSTC_LEX_TCL,       # CONFIRMED
 	'text/vbscript'             => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
+
+	'text/x-config'             => Wx::wxSTC_LEX_CONF,
 
 	# text/xml specifically means "human-readable XML".
 	# This is prefered to the more generic application/xml
@@ -774,20 +776,6 @@ sub lexer {
 	my $self = shift;
 	return Wx::wxSTC_LEX_AUTOMATIC unless $self->get_mimetype;
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined $MIME_LEXER{ $self->get_mimetype };
-
-	Padre::Util::debug("Trying to determine the lexer");
-
-	# If mime type is not sufficient to figure out file type
-	# than use suffix for lexer
-	my $filename = $self->filename || q{};
-	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
-		my $ext = lc $1;
-		if ( $EXT_MIME{$ext} ) {
-			if ( $EXT_MIME{$ext} eq 'text/plain' ) {
-				return Wx::wxSTC_LEX_CONF if $ext eq 'conf';
-			}
-		}
-	}
 
 	Padre::Util::debug( 'Lexer will be based on mime type "' . $self->get_mimetype . '"' );
 	return $MIME_LEXER{ $self->get_mimetype };
