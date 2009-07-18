@@ -1507,11 +1507,10 @@ sub run_command {
 			# '"' is needed to escape spaces and other characters in paths
 			$cmd =~ s/"/^/g;
 			system "cmd.exe /C \"start $cmd\"";;
-			return;
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
-			return;
 		}
+		return;
 	}
 
 	# Disable access to the run menus
