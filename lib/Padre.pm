@@ -488,7 +488,13 @@ The share/styles/default.yml file is the mapping between the Scintialla defined
 constants for various syntactical elements of each language and the RGB values
 of the color to be used to highlight them.
 
-We plan to allow the user to switch between styles.
+To set up a custom syntax highlighting scheme, you create a .yml file that defines
+the mappings decribed above. The easiest way to create your own scheme is probably to copy an existing
+.yml file (for instance, default.yml) from the C<share/styles/> folder, put it in
+C<~/.padre/styles>, and then modify it. Padre checks this folder on startup and adds
+any styles in the .yml files there to the View -> Style menu.
+
+TODO does this stuff below really belong here?
 
 =head3 Adding new syntax highlighting
 
