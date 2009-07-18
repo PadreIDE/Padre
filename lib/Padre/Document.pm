@@ -228,12 +228,21 @@ sub add_mime_class {
 	my $self  = shift;
 	my $mime  = shift;
 	my $class = shift;
+	if ($MIME_CLASS{$mime}) {
+		# TODO: display on the GUI
+		warn "Mime type $mime already has a class '$MIME_CLASS{$mime}' when add_mime_class($class) was called\n";
+		return;
+	}
 	$MIME_CLASS{$mime} = $class;
 }
 
 sub remove_mime_class {
 	my $self  = shift;
 	my $mime  = shift;
+	if (not $MIME_CLASS{$mime}) {
+		# TODO: display on GUI
+		warn "Mime type $mime does not have an entry in the MIME_CLASS when remove_mime_class($mime) was called\n";
+	}
 	delete $MIME_CLASS{$mime};
 }
 
