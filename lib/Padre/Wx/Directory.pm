@@ -142,19 +142,26 @@ sub _setup_events {
 		\&_on_tree_end_label_edit,
 	);
 
+	Wx::Event::EVT_TREE_BEGIN_DRAG(
+		$self, $self,
+		\&_on_tree_begin_drag,
+	);
+
+	Wx::Event::EVT_TREE_END_DRAG(
+		$self, $self,
+		\&_on_tree_end_drag,
+	);
 }
 
 sub _add_root {
-	my ( $self, $name, $data ) = @_;
-
-	$name |= Wx::gettext('Directory');
-	$data |= {};
-
-	$self->AddRoot(
-		$name,
-		-1,
-		-1,
-		Wx::TreeItemData->new($data)
+	shift->AddRoot(
+		Wx::gettext('Directory'),
+		-1, -1,
+		Wx::TreeItemData->new({
+				dir  => '',
+				name => '',
+				type => 'folder',
+		})
 	);
 }
 
@@ -225,11 +232,21 @@ sub update_gui {
 
 	if ( ( defined($project) and $project ne $dir ) or $updated ) {
 		$self->DeleteChildren($root);
+		$self->_update_root_data($dir);
 		_update_treectrl( $self, $data, $root );
 	}
 
 	$project = $dir;
 	_update_subdirs( $self, $root );
+}
+
+sub _update_root_data {
+	my $self = shift;
+	my ( $volume, $path, $name ) = File::Spec->splitpath( shift );
+
+	my $root_data = $self->GetPlData( $self->GetRootItem );
+	$root_data->{dir} = $volume . $path;
+	$root_data->{name} = $name;
 }
 
 sub _updated_dir {
@@ -407,6 +424,71 @@ sub _on_tree_item_collapsing {
 		my $path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 		delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}->{$path};
 	}
+}
+
+sub _on_tree_begin_drag {
+	my( $self, $event ) = @_;
+	my $item_obj = $event->GetItem;
+	if( $item_obj != $self->GetRootItem ) {
+		$self->{dragged_item} = $item_obj;
+		$event->Allow;
+	}
+}
+
+sub _on_tree_end_drag {
+	my( $self, $event ) = @_;
+	my $item_obj = $event->GetItem;
+
+	#####################################################################
+	# If drops to a file, the new destination will be it's folder
+	if( $item_obj->IsOk and !$self->ItemHasChildren( $item_obj ) ) {
+		$item_obj = $self->GetItemParent( $item_obj );
+	}
+
+	return if !$item_obj->IsOk;
+
+	my $new_data = $self->GetPlData( $item_obj );
+	my $old_data = $self->GetPlData( $self->{dragged_item} );
+
+	my $from = $old_data->{dir};
+	my $to = File::Spec->catfile($new_data->{dir}, $new_data->{name} );
+	return if $from eq $to;
+
+	my $old_file = File::Spec->catfile($old_data->{dir}, $old_data->{name} );
+	my $new_file = File::Spec->catfile($to, $old_data->{name} );
+	
+	if(-e $new_file){
+		Wx::MessageBox(
+			Wx::gettext('Already exists a file with the same name in this directory'),
+			Wx::gettext('Error'),
+			Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
+		);
+		return;
+	}
+
+print 	"de:   $old_file$/Para: $new_file$/";
+	if ( rename $old_file, $new_file ) {
+		my $project = $self->{current_project};
+		$self->{current_item}->{$project} = $new_file;
+
+		my $cached = $self->{CACHED};
+		$cached->{$project}->{Expanded}->{$to} = 1;
+		if ( defined $cached->{$project}->{Expanded}->{$old_file} ) {
+			$cached->{$project}->{Expanded}->{$new_file} = 1;
+			delete $cached->{$project}->{Expanded}->{$old_file};
+		}
+
+		# TODO Find a better way to identify dirs separetor
+		map {
+			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
+				if $_ =~ m#^$old_file((\/|\\).+)?$#
+		} keys %$cached;
+	} else {
+		my $error_msg = $!;
+		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+	}
+	$self->update_gui;
+	return;
 }
 
 sub _on_tree_item_menu {
