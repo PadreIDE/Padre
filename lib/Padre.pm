@@ -481,12 +481,14 @@ With a rectangular text selection you can select only the keys, only the values,
 =head2 Syntax highlighting
 
 Padre is using L<Wx> (aka wxPerl), wxWidgtes for GUI and Scintilla for the editor.
-Scintiall provides very good syntax highlighting for many languages but Padre is still
+Scintilla provides very good syntax highlighting for many languages but Padre is still
 bound by the version of Scintilla included.
 
-The share/styles/default.yml file is the mapping between the Scintialla defined
+The share/styles/default.yml file is the mapping between the Scintilla defined
 constants for various syntactical elements of each language and the RGB values
 of the color to be used to highlight them.
+
+=head3 Adding new syntax highlighting
 
 To set up a custom syntax highlighting scheme, you create a .yml file that defines
 the mappings decribed above. The easiest way to create your own scheme is probably to copy an existing
@@ -495,8 +497,6 @@ C<~/.padre/styles>, and then modify it. Padre checks this folder on startup and 
 any styles in the .yml files there to the View -> Style menu.
 
 TODO does this stuff below really belong here?
-
-=head3 Adding new syntax highlighting
 
 Need to define constants in L<Padre::Util> to be in the Padre::Constant namespace.
 
