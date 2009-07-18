@@ -1497,7 +1497,6 @@ sub run_command {
 	my $cmd  = shift;
 
 	# experimental
-	# TODO: add windows version
 	# when this mode is used the Run menu options are not turned off
 	# and the Run/Stop is not turned on as we currently cannot control
 	# the external execution.
