@@ -374,10 +374,11 @@ sub _on_tree_end_label_edit {
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 
-		# TODO Find a better way to identify dirs separetor
+		my $separator = File::Spec->catfile($old_file,"temp");
+		$separator =~ s/^$old_file(.?)temp$/$1/;
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
-				if $_ =~ m#^$old_file((\/|\\).+)?$#
+				if $_ =~ m#^$old_file(($separator).+)?$#
 		} keys %$cached;
 	} else {
 		my $error_msg = $!;
@@ -466,7 +467,6 @@ sub _on_tree_end_drag {
 		return;
 	}
 
-print 	"de:   $old_file$/Para: $new_file$/";
 	if ( rename $old_file, $new_file ) {
 		my $project = $self->{current_project};
 		$self->{current_item}->{$project} = $new_file;
@@ -478,11 +478,13 @@ print 	"de:   $old_file$/Para: $new_file$/";
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 
-		# TODO Find a better way to identify dirs separetor
+		my $separator = File::Spec->catfile($old_file,"temp");
+		$separator =~ s/^$old_file(.?)temp$/$1/;
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
-				if $_ =~ m#^$old_file((\/|\\).+)?$#
+				if $_ =~ m#^$old_file(($separator).+)?$#
 		} keys %$cached;
+
 	} else {
 		my $error_msg = $!;
 		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
