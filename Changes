@@ -1,8 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.41 to be released
-    - Remove Eperimental mode.
-
+    - Remove Experimental mode.
+    - Fixed a bug in Plugin config_write where ->selectrow_array was used 
+      instead of ->do to SQL update (Thanks to tlbdk++) (AZAWAWI)
 
 0.40 2009.07.17
     - Removed about 10 dependencies, including several with lots of FAIL
