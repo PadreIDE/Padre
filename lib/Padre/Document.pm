@@ -75,16 +75,41 @@ either check for collisions if a plugin already wants to provide
 an already suported mime-type or should allow multiple support
 modules with a way to select the current one. (Again I think we
 probably don't need this. People can just come and add the 
-mime-types to Padre core.)
+mime-types to Padre core.) (not yet implemented)
+
+A plugin can register zero or more modules that implement 
+special features needed by certain mime-types. Every mime-type
+can have only one module that implements its features. Padre is
+checking if a mime-type already has a registered module and
+does not let to replace it.
+(Special features such as commenting out a few lines at once,
+autocompletion or refactoring tools).
+
+Padre should check if the given mime-type is one that is
+in the supported mime-type list. (TODO)
+
 
 Each mime-type is mapped to one or more lexers that provide 
 the syntax highlighting. Every mime-type has to be mapped to at least 
 one lexer but it can be mapped to several lexers as well. 
 The user is able to select the lexer for each mime-type.
-(For this each lexer should have a reasonable name too.)
+(For this each lexer should have a reasonable name too.) (TODO)
 
-The mime-types are also mapped to modules that implement 
-special features needed by that kind of file.
+Every plugin should be able to add a list of lexers to the existing 
+mime-types regardless if the plugin also provides the class that 
+implements the features of that mime-type. By default Padre
+suppors the built-in syntax highlighting of Scintialla but. 
+Perl 5 currently has two PPI based syntax highlighter,
+Perl 6 can use the STD.pm or Rakudo/PGE for syntax highlighting but 
+there are two plugins Parrot and Kate that can provide synax 
+highlighting to a wide range of mime-types.
+
+ supported_lexers() returns a list of arrays (the name part is optional 
+ and defaults to the name of the plugin)
+    [ mime-type => 'Module with a colorize function' => 'Name']
+
+
+
 
 The user can change the mime-type mapping of individual 
 files and Padre should remember this choice and allow the
