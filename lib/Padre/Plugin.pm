@@ -403,7 +403,7 @@ sub config_write {
 
 	# Write the config string to the database
 	my $class = Scalar::Util::blessed($self);
-	Padre::DB->selectrow_array(
+	Padre::DB->do(
 		'update plugin set config = ? where name = ?', {},
 		$string, $class,
 	);
