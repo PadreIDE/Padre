@@ -37,7 +37,6 @@ use Class::XSAccessor getters => {
 	plugins      => 'plugins',
 	window       => 'window',
 	help         => 'help',
-	experimental => 'experimental',
 };
 
 sub new {
@@ -79,16 +78,6 @@ sub new {
 	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
 
 	my $config = $self->main->ide->config;
-	if ( $config->experimental ) {
-
-		# Create the Experimental menu
-		# All the crap that doesn't work, have a home,
-		# or should never be seen be real users goes here.
-		require Padre::Wx::Menu::Experimental;
-		$self->{experimental} = Padre::Wx::Menu::Experimental->new($main);
-		$self->wx->Append( $self->experimental->wx, Wx::gettext("E&xperimental") );
-		$self->{default}++;
-	}
 
 	Wx::Event::EVT_MENU_OPEN(
 		$main,
@@ -140,10 +129,6 @@ sub refresh {
 	}
 	$self->window->refresh($current);
 	$self->help->refresh($current);
-
-	if ( $self->experimental ) {
-		$self->experimental->refresh($current);
-	}
 
 	return 1;
 }

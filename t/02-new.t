@@ -27,7 +27,6 @@ SCOPE: {
 	my $config = $app->config;
 	isa_ok( $config, 'Padre::Config' );
 
-	is( $config->experimental             => 0              );
 	is( $config->main_startup             => 'new'          );
 	is( $config->main_lockinterface       => 1              );
 	is( $config->main_functions           => 0              );

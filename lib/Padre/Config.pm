@@ -471,12 +471,6 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => '',
 );
-setting(
-	name    => 'experimental',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
 
 # Colour Data
 # Since it's in local files, it has to be a host-specific setting.
