@@ -626,17 +626,23 @@ sub on_focus {
 		}
 	}
 
+# TODO
+# this is called even if the mouse is moved away from padre and back again
+# we should restrict some of the updates to cases when we switch from one file to
+# another
+
 	if ( $self->needs_manual_colorize ) {
-
-		#Padre::Util::debug("needs manual");
-		$doc->colorize;
+		Padre::Util::debug("needs_manual_colorize");
+		my $lexer = $self->GetLexer;
+		if ($lexer == Wx::wxSTC_LEX_CONTAINER) {
+			$doc->colorize;
+		} else {
+			$doc->remove_color;
+			$self->Colourise( 0, $self->GetLength );
+		}
 		$self->needs_manual_colorize(0);
-	} elsif ( $self->needs_stc_colorize ) {
-
-		#Padre::Util::debug("needs stc");
-		$doc->remove_color;
-		$self->Colourise( 0, $self->GetLength );
-		$self->needs_stc_colorize(0);
+	} else {
+		Padre::Util::debug("no need to colorize");
 	}
 
 	$event->Skip(1); # so the cursor will show up
@@ -1249,13 +1255,6 @@ sub needs_manual_colorize {
 		$_[0]->{needs_manual_colorize} = $_[1];
 	}
 	return $_[0]->{needs_manual_colorize};
-}
-
-sub needs_stc_colorize {
-	if ( defined $_[1] ) {
-		$_[0]->{needs_stc_colorize} = $_[1];
-	}
-	return $_[0]->{needs_stc_colorize};
 }
 
 1;

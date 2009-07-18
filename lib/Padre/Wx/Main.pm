@@ -4134,25 +4134,17 @@ sub set_ppi_highlight {
 
 		# TODO maybe the document should have a method that tells us if it was setup
 		# to be colored by ppi or not instead of fetching the lexer again.
-		Padre::Util::debug("lexer: $lexer");
-
+		Padre::Util::debug("Editor $editor focused $focused lexer: $lexer");
 		if ( $editor eq $focused ) {
 			$editor->needs_manual_colorize(0);
-			$editor->needs_stc_colorize(0);
-			if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER ) {
+			if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 				$document->colorize;
 			} else {
 				$document->remove_color;
 				$editor->Colourise( 0, $editor->GetLength );
 			}
 		} else {
-			if ( $config->ppi_highlight and $lexer == Wx::wxSTC_LEX_CONTAINER ) {
-				$editor->needs_manual_colorize(1);
-				$editor->needs_stc_colorize(0);
-			} else {
-				$editor->needs_manual_colorize(0);
-				$editor->needs_stc_colorize(1);
-			}
+			$editor->needs_manual_colorize(1);
 		}
 	}
 	return;
