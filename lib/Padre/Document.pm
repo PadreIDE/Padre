@@ -115,7 +115,7 @@ my $unsaved_number = 0;
 
 # This is the list of binary files
 # (which we don't support loading in fallback text mode)
-our %EXT_BINARY = map { $_ => 1 } qw{
+my %EXT_BINARY = map { $_ => 1 } qw{
 	aiff  au    avi  bmp  cache  dat   doc  gif  gz   icns
 	jar   jpeg  jpg  m4a  mov    mp3   mpg  ogg  pdf  png
 	pnt   ppt   qt   ra   svg    svgz  svn  swf  tar  tgz
@@ -173,7 +173,7 @@ my %EXT_MIME = (
 # Lines marked with CONFIRMED indicate that the mime-typehas been checked
 # to confirm that the MIME type is either the official type, or the primary
 # one in use by the relevant language community.
-our %MIME_LEXER = (
+my %MIME_LEXER = (
 	'text/x-abc' => Wx::wxSTC_LEX_CONTAINER,
 
 	'text/x-adasrc' => Wx::wxSTC_LEX_ADA, # CONFIRMED
@@ -217,11 +217,25 @@ our %MIME_LEXER = (
 	'text/plain'          => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 );
 
+
 # This is the mime-type to document class mapping
-our %MIME_CLASS = (
+my %MIME_CLASS = (
 	'application/x-perl' => 'Padre::Document::Perl',
 	'text/x-pod'         => 'Padre::Document::POD',
 );
+
+sub add_mime_class {
+	my $self  = shift;
+	my $mime  = shift;
+	my $class = shift;
+	$MIME_CLASS{$mime} = $class;
+}
+
+sub remove_mime_class {
+	my $self  = shift;
+	my $mime  = shift;
+	delete $MIME_CLASS{$mime};
+}
 
 sub menu_view_mimes {
 	'00Plain Text'     => 'text/plain',

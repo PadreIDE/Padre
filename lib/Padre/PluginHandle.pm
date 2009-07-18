@@ -183,7 +183,7 @@ sub enable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		$Padre::Document::MIME_CLASS{$type} = $class;
+		Padre::Document->add_mime_class($type, $class);
 	}
 
 	# If the plugin has a hook for the context menu, cache it
@@ -210,7 +210,7 @@ sub disable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		delete $Padre::Document::MIME_CLASS{$type};
+		Padre::Document->remove_mime_class($type);
 	}
 
 	# Call the plugin's own disable method
