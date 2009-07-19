@@ -12,26 +12,8 @@ use warnings FATAL => 'all';
 
 our $VERSION = '0.01';
 
-=head1 NAME
-
-Wx::Tutorial - there is a Wx::Demo so this should be a pod viewer, for a start
-
-=head1 SYNOPSIS
-
- perl wx_perl_tutorial.pl
-
-=cut
-
-use File::HomeDir         qw();
 use File::Spec::Functions qw(catfile);
-use DBI                   qw();
 use Carp                  qw();
-use YAML                  qw(LoadFile DumpFile);
-
-use base 'Class::Accessor';
-
-__PACKAGE__->follow_best_practice;
-__PACKAGE__->mk_accessors(qw(config));
 
 sub new {
     my ($class) = @_;
@@ -49,50 +31,6 @@ sub run_editor {
 sub run {
     my $app = Wx::Tutorial::App->new;
     $app->MainLoop;
-}
-
-sub _config_dir {
-    my $dir = catfile(
-            File::HomeDir->my_data, 
-            ($^O =~ /win32/i ? '_' : '.') . 'podviewer');
-    if (not -e $dir) {
-        mkdir $dir or die "Cannot create config dir '$dir' $!";
-    }
-    return $dir;
-}
-
-sub config_dbh {
-    my ($self) = @_;
-
-    my $dir = $self->_config_dir();
-    my $path = catfile($dir, "config.db");
-    my $new = not -e $path;
-    my $dbh = DBI->connect("dbi:SQLite:dbname=$path", "", "", {
-        RaiseError       => 1,
-        PrintError       => 1,
-        AutoCommit       => 1,
-        FetchHashKeyName => 'NAME_lc',
-    });
-    if ($new) {
-       $self->create_config($dbh);
-    }
-    return $dbh;
-}
-
-sub config_yaml {
-    my ($self) = @_;
-    return catfile($self->_config_dir(), "config.yml");
-}
-
-sub set_defaults {
-    my ($self) = @_;
-
-    my $config = $self->get_config;
-    $config->{DISPLAY_MAX_LIMIT} ||= 200;
-    $config->{DISPLAY_MIN_LIMIT} ||= 2;
-    $self->set_config($config);
-
-    return;
 }
 
 
