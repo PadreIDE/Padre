@@ -10,15 +10,12 @@ package Wx::Tutorial;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.01';
-
 use File::Spec::Functions qw(catfile);
 use Carp                  qw();
 
 sub new {
     my ($class) = @_;
     my $self = bless {}, $class;
-    $self->{recent} = [];
 
     return $self;
 }
@@ -28,42 +25,6 @@ sub run_editor {
     $app->MainLoop;
 }
 
-sub run {
-    my $app = Wx::Tutorial::App->new;
-    $app->MainLoop;
-}
-
-
-sub add_to_recent {
-    my ($self, $module) = @_;
-    my @recent = $self->get_recent;
-    if (not grep {$_ eq $module} @recent) {
-        push @{ $self->{recent} }, $module;
-        $self->{current} = @recent;
-    }
-    return;
-}
-
-sub get_recent {
-    my ($self) = @_;
-    return @{ $self->{recent} };
-}
-sub get_current {
-    my ($self) = @_;
-
-    return if not defined $self->{current};
-    return $self->{recent}[ $self->{current} ];
-}
-sub set_current {
-    my ($self, $module) = @_;
-    foreach my $i (0.. @{ $self->{recent} } -1) {
-        if ($self->{recent}[$i] eq $module) {
-            $self->{current} = $i;
-            last;
-        }
-    }
-    return; 
-}
 
 
 package Wx::Tutorial::Editor;
