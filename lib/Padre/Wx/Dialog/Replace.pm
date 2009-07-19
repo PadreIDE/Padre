@@ -401,7 +401,7 @@ Grab currently selected text, if any, and place it in find combo box.
 Bring up the dialog or perform search for strings' next occurence
 if dialog is already displayed.
 
-TODO: if selection is more than one line then consider it as the limit
+If selection is more than one line then consider it as the limit
 of the search and not as the string to be used.
 
 =cut
@@ -410,11 +410,20 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
-	return if not $self->current->editor; # no replace if no file is open
+	my $editor = $self->current->editor;
+	return unless $editor; # no replace if no file is open
 
-	# TODO: if selection is more than one lines then consider it as the limit
-	# of the search and not as the string to be used
-	$text = '' if $text =~ /\n/;
+	# If selection is more than one line then consider it as the limit
+	# of the search and not as the string to be used (which becomes '')
+	if ($text =~ /\n/ ) {
+		$self->{text_offset}     = $editor->GetSelectionStart;
+		$self->{text_offset_end} = $editor->GetSelectionEnd;
+		$text = '';
+	}
+	else {
+		$self->{text_offset} = 0;
+		$self->{text_offset_end} = $editor->GetLenght;
+	}
 
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh;
@@ -550,13 +559,13 @@ sub search {
 
 	# Find the range to search within
 	my $editor = $self->current->editor;
-	my $text = $editor->GetTextRange( 0, $editor->GetLength );
+	$self->{text} = $editor->GetTextRange( $self->{text_offset}, $self->{text_offset_end} );
 	my ( $from, $to ) = $editor->GetSelection;
 
 	# Execute the search and move to the resulting location
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, $from, $to, $backwards );
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $self->{text}, $regex, $from - $self->{text_offset}, $to - $self->{text_offset}, $backwards );
 	return unless defined $start;
-	$editor->SetSelection( $start, $end );
+	$editor->SetSelection( $start + $self->{text_offset}, $end + $self->{text_offset});
 
 	return;
 }
@@ -634,15 +643,15 @@ sub replace_all {
 
 	# Execute the search for all matches
 	my $editor = $self->current->editor;
-	my $text = $editor->GetTextRange( 0, $editor->GetLength );
+	my $text = $editor->GetTextRange( $self->{text_offset}, $self->{text_offset_end} );
 	my ( undef, undef, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
 
 	# Replace all matches as a single undo
 	if (@matches) {
 		$editor->BeginUndoAction;
 		foreach my $match ( reverse @matches ) {
-			$editor->SetTargetStart( $match->[0] );
-			$editor->SetTargetEnd( $match->[1] );
+			$editor->SetTargetStart( $match->[0] + $self->{text_offset});
+			$editor->SetTargetEnd( $match->[1] + $self->{text_offset});
 			$editor->ReplaceTarget($replace);
 		}
 		$editor->EndUndoAction;
@@ -679,11 +688,20 @@ sub replace {
 	$replace =~ s/\\t/\t/g if length $replace;
 
 	# Get current search condition and check if they match
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0,0 );
 
 	# If they match replace it
 	if ( defined $start and $start == 0 and $end == length($text) ) {
 		$current->editor->ReplaceSelection($replace);
+
+		# If replaced text is smaller or larger than original, 
+		# change our offset end accordingly
+		if( length($replace) != ($end - $start) ) {
+			$self->{text_offset_end} += (length($replace) - ($end - $start));
+		}
+		
+		# Update text to search with replaced values
+	###################	$self->{text} = $current->editor->GetTextRange( $self->{text_offset}, $self->{text_offset_end} );
 	}
 
 	# If search window is still open, run a search on the whole text again
