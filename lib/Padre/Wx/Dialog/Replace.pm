@@ -422,7 +422,7 @@ sub find {
 	}
 	else {
 		$self->{text_offset} = 0;
-		$self->{text_offset_end} = $editor->GetLenght;
+		$self->{text_offset_end} = $editor->GetLength;
 	}
 
 	# Clear out and reset the dialog, then prepare the new find
