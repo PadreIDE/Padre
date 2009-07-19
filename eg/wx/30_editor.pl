@@ -6,32 +6,9 @@ use warnings;
 
 # see package main at the bottom of the file
 
-package Wx::Tutorial;
-use strict;
-use warnings FATAL => 'all';
-
-use File::Spec::Functions qw(catfile);
-use Carp                  qw();
-
-sub new {
-    my ($class) = @_;
-    my $self = bless {}, $class;
-
-    return $self;
-}
-
-sub run_editor {
-    my $app = Wx::Tutorial::Editor->new;
-    $app->MainLoop;
-}
-
-
-
 package Wx::Tutorial::Editor;
 use strict;
 use warnings FATAL => 'all';
-
-our $VERSION = '0.01';
 
 use base 'Wx::App';
 
@@ -45,7 +22,6 @@ package Wx::Tutorial::EditorFrame;
 use strict;
 use warnings FATAL => 'all';
 
-our $VERSION = '0.01';
 
 use Wx qw(:sizer);
 use Wx qw(:textctrl :sizer :window :id);
@@ -310,6 +286,8 @@ sub on_find {
 sub on_about {
     my ( $self ) = @_;
 
+    my $VERSION = '0.01';
+
     Wx::MessageBox( "wxPerl editor, (c) 2008 Gabor Szabo\n" .
                     "wxPerl edotr $VERSION, " . wxVERSION_STRING,
                     "About wxPerl editor", wxOK|wxCENTRE, $self );
@@ -366,26 +344,11 @@ sub new {
     $self->SetLayoutDirection( wxLayout_LeftToRight )
       if $self->can( 'SetLayoutDirection' );
 
-    ##print $self->GetModEventMask() & wxSTC_MOD_INSERTTEXT;
-    ##print "\n";
-    #$self->SetModEventMask( wxSTC_MOD_INSERTTEXT  | wxSTC_PERFORMED_USER );
-    #EVT_STC_CHANGE($self, -1, \&on_change );
     return $self;
 }
 
-sub on_change {
-    #print "@_\n";
-    my $nb = $Wx::Tutorial::EditorFrame::nb;
-    #print $nb->GetCurrentPage, "\n";
-    print $nb->GetSelection, "\n";
-    return;
-}
-
-
 package main;
 
-our $app = Wx::Tutorial->new;
-$app->run_editor;
-
-
+my $app = Wx::Tutorial::Editor->new;
+$app->MainLoop;
 
