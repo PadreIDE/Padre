@@ -23,15 +23,10 @@ use strict;
 use warnings FATAL => 'all';
 
 
-use Wx qw(:sizer);
-use Wx qw(:textctrl :sizer :window :id);
-use Wx qw(wxDefaultPosition wxDefaultSize 
-          wxDEFAULT_FRAME_STYLE wxNO_FULL_REPAINT_ON_RESIZE wxCLIP_CHILDREN wxFD_OPEN wxFD_SAVE);
-use Wx qw(wxOK wxCANCEL wxYES_NO  wxCENTRE wxVERSION_STRING  wxLB_MULTIPLE);
-use Wx::Event qw(EVT_TREE_SEL_CHANGED EVT_MENU EVT_CLOSE EVT_LISTBOX EVT_LISTBOX_DCLICK);
-use Wx::Event qw(EVT_BUTTON EVT_CHOICE);
-use Wx::Event qw(EVT_COMBOBOX EVT_TEXT EVT_TEXT_ENTER
-                EVT_NOTEBOOK_PAGE_CHANGED);
+use Wx ':everything';
+use Wx::Event ':everything';
+use Wx::STC     ();
+
 
 use File::Spec::Functions qw(catfile);
 use File::Slurp     qw(read_file write_file);
@@ -40,7 +35,7 @@ use File::Basename  qw(basename);
 
 use base 'Wx::Frame';
 
-
+our $VERSION = '0.01';
 my $default_dir = "";
 my $editor;
 our $nb;
@@ -133,28 +128,6 @@ sub setup_editor {
         filename => $file,
         content  => $content,
     };
-    #print $nb->GetPageText(0), "\n";
-    #my $id = $nb->GetCurrentPage;
-    #print "$id\n";
-    #$nb{$id} = {
-    #        file    => $file,
-    #        changed => 0,
-    #};
-    #$editor->SetFocus;
-
-
-#    my $top_s   = Wx::BoxSizer->new( wxVERTICAL );
-#    my $but_s   = Wx::BoxSizer->new( wxHORIZONTAL );
-#
-#    my $forward = Wx::Button->new( $panel, -1, "Forward" );
-#    my $back = Wx::Button->new( $panel, -1, "Back" );
-#    $but_s->Add( $forward );
-#    #$but_s->Add( $back );
-#
-#    $top_s->Add( $but_s, 0, wxALL, 5 );
-#    $top_s->Add( $editor,  1, wxGROW|wxALL, 5 );
-#    $panel->SetSizer( $top_s );
-#    $panel->SetAutoLayout( 1 );
 
     return;
 }
@@ -286,8 +259,6 @@ sub on_find {
 sub on_about {
     my ( $self ) = @_;
 
-    my $VERSION = '0.01';
-
     Wx::MessageBox( "wxPerl editor, (c) 2008 Gabor Szabo\n" .
                     "wxPerl edotr $VERSION, " . wxVERSION_STRING,
                     "About wxPerl editor", wxOK|wxCENTRE, $self );
@@ -302,12 +273,8 @@ our $VERSION = '0.01';
 use Wx::STC;
 use base 'Wx::StyledTextCtrl';
 
-use Wx;
-use Wx qw(:stc :textctrl :font wxDefaultPosition wxDefaultSize :id
-          wxNO_FULL_REPAINT_ON_RESIZE wxLayout_LeftToRight);
-use Wx qw(wxDefaultPosition wxDefaultSize wxTheClipboard 
-          wxDEFAULT_FRAME_STYLE wxNO_FULL_REPAINT_ON_RESIZE wxCLIP_CHILDREN);
-use Wx::Event qw(EVT_TREE_SEL_CHANGED EVT_MENU EVT_CLOSE EVT_STC_CHANGE);
+use Wx ':everything';
+use Wx::Event ':everything';
 
 sub new {
     my( $class, $parent ) = @_;
