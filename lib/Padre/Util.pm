@@ -110,7 +110,7 @@ Parameters:
 * The offset within the text where we the last match ended so the next
   backward match must end before this.
 
-* backward bit (1 = search backward, 0 = search forward)
+* backward bit (1 = search backward, 0 = search forward) - Optional. Defaults to 0.
 
 =cut
 
