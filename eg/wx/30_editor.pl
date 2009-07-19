@@ -2,23 +2,34 @@
 use strict;
 use warnings;
 
-# based on a very early version of Padre...
+
+#############################################################################
+##
+## Based on a very early version of Padre...
+## The first version that could already save files.
+##
+## Copyright:   (c) The Padre development team
+## Licence:     This program is free software; you can redistribute it and/or
+##              modify it under the same terms as Perl itself
+#############################################################################
 
 # see package main at the bottom of the file
 
-package Wx::Tutorial::Editor;
+
+#####################
+package Demo::Editor;
 use strict;
 use warnings FATAL => 'all';
 
 use base 'Wx::App';
 
 sub OnInit {
-    my $frame = Wx::Tutorial::EditorFrame->new;
+    my $frame = Demo::Frame->new;
     $frame->Show( 1 );
 }
 
-
-package Wx::Tutorial::EditorFrame;
+#####################
+package Demo::Frame;
 use strict;
 use warnings FATAL => 'all';
 
@@ -40,6 +51,8 @@ my $default_dir = "";
 my $editor;
 our $nb;
 my %nb;
+my $search_term = '';
+
 
 sub new {
     my ($class) = @_;
@@ -53,7 +66,6 @@ sub new {
     $nb = Wx::Notebook->new
       ( $self, -1, wxDefaultPosition, wxDefaultSize,
         wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN );
-    #EVT_NOTEBOOK_PAGE_CHANGED($nb, 1, sub {print " @_\n"});
 
     $self->_create_menu_bar;
 
@@ -64,7 +76,6 @@ sub new {
 sub _create_menu_bar {
     my ($self) = @_;
 
-    # create menu bar
     my $bar = Wx::MenuBar->new;
     my $file = Wx::Menu->new;
     $file->Append( wxID_OPEN, "&Open" );
@@ -114,7 +125,7 @@ sub on_exit {
 sub setup_editor {
     my ($self, $file) = @_;
 
-    my $editor = Wx::Tutorial::EditorPanel->new($nb);
+    my $editor = Demo::Panel->new($nb);
 
     my $title = "Unsaved Document 1";
     my $content = '';
@@ -123,7 +134,7 @@ sub setup_editor {
         $title   = basename($file);
         $editor->SetText( $content );
     }
-    $nb->AddPage($editor, $title, 1); # TODO add closing x
+    $nb->AddPage($editor, $title, 1);
     $nb{$nb->GetSelection} = {
         filename => $file,
         content  => $content,
@@ -151,12 +162,11 @@ sub on_open {
 
     my $file = catfile($default_dir, $filename);
 
-    # if the current buffer is empty then fill that with the content of the current file
-    # otherwise open a new buffer and open the file there
     $self->setup_editor($file);
 
     return;
 }
+
 sub on_save_as {
     my ($self) = @_;
 
@@ -227,8 +237,6 @@ sub _buffer_changed {
     my ($id) = @_;
 
     my $page = $nb->GetPage($id);
-    #print "$page\n";
-    #print $nb->GetPage($id), "\n";
     my $content = $page->GetText;
     return $content ne $nb{$id}{content};
 }
@@ -238,7 +246,6 @@ sub on_setup {
     Wx::MessageBox( "Not implemented yet.", wxOK|wxCENTRE, $self );
 }
 
-my $search_term = '';
 
 sub on_find {
     my ( $self ) = @_;
@@ -251,7 +258,7 @@ sub on_find {
     $dialog->Destroy;
     return if not defined $search_term or $search_term eq '';
 
-    #print "$search_term\n";
+    print "$search_term\n";
     return;
 }
 
@@ -264,8 +271,8 @@ sub on_about {
                     "About wxPerl editor", wxOK|wxCENTRE, $self );
 }
 
-
-package Wx::Tutorial::EditorPanel;
+#####################
+package Demo::Panel;
 use strict;
 use warnings FATAL => 'all';
 
@@ -314,8 +321,9 @@ sub new {
     return $self;
 }
 
+#####################
 package main;
 
-my $app = Wx::Tutorial::Editor->new;
+my $app = Demo::Editor->new;
 $app->MainLoop;
 
