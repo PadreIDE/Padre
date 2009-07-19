@@ -61,6 +61,18 @@ sub new {
     $nb->AddPage($editor, 'Editor', 1);
 
 
+    my $choices = [ 'This example', 'was borrowed',
+                    'from an example', 'of the Wx::Demo', 'written by Mattia Barbon'];
+    my $listbox = Wx::ListBox->new($nb, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize, $choices );
+    $nb->AddPage($listbox, 'Listbox', 1);
+    EVT_LISTBOX_DCLICK( $self, $listbox, \&on_listbox_double_click );
+
+
     return $self;
 }
 
+sub on_listbox_double_click {
+    my ( $self, $event ) = @_;
+
+    Wx::MessageBox( "Double clicked: '" . $event->GetString() . "'", '', Wx::wxOK|Wx::wxCENTRE, $self);
+}
