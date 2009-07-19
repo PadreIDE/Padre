@@ -6,6 +6,7 @@ Changes for Perl Application Development and Refactoring Environment
       instead of ->do to SQL update (Thanks to tlbdk++). (AZAWAWI)
     - run_command in a separate window now works in win32 to support prompt('...') 
       in Perl 6 and <STDIN> in Perl 5. (AZAWAWI)
+    - Now Padre can find/replace inside selections (GARU)
 
 0.40 2009.07.17
     - Removed about 10 dependencies, including several with lots of FAIL
