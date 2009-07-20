@@ -12,7 +12,7 @@ use Padre::Wx      ();
 our $VERSION = '0.39';
 our @ISA     = 'Wx::TreeCtrl';
 
-use constant IS_MAC   => !! ( $^O eq 'darwin' );
+use constant IS_MAC => !!( $^O eq 'darwin' );
 use constant IS_WIN32 => !!( $^O =~ /^MSWin/ or $^O eq 'cygwin' );
 
 sub new {
@@ -82,18 +82,20 @@ sub _setup_image_list {
 	my $self = shift;
 
 	my %file_types = (
-		folder => 'wxART_FOLDER',
+		folder  => 'wxART_FOLDER',
 		package => 'wxART_NORMAL_FILE',
 	);
 
 	my $image_list = Wx::ImageList->new( 16, 16 );
 
-	for my $type (keys %file_types){
+	for my $type ( keys %file_types ) {
 		$self->{file_types}->{$type} = $image_list->Add(
-							Wx::ArtProvider::GetBitmap( $file_types{$type},
-							'wxART_OTHER_C',
-							[16, 16] )
-						)
+			Wx::ArtProvider::GetBitmap(
+				$file_types{$type},
+				'wxART_OTHER_C',
+				[ 16, 16 ]
+			)
+		);
 	}
 
 	$self->AssignImageList($image_list);
@@ -156,11 +158,12 @@ sub _add_root {
 	shift->AddRoot(
 		Wx::gettext('Directory'),
 		-1, -1,
-		Wx::TreeItemData->new({
-				dir  => '',
+		Wx::TreeItemData->new(
+			{   dir  => '',
 				name => '',
 				type => 'folder',
-		})
+			}
+		)
 	);
 }
 
@@ -173,8 +176,8 @@ sub _add_root {
 sub _list_dir {
 	my ( $self, $node ) = @_;
 	my $node_data = $self->GetPlData($node);
-	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
-	my $cached = \%{$self->{CACHED}->{$path}};
+	my $path      = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	my $cached    = \%{ $self->{CACHED}->{$path} };
 
 	#####################################################################
 	# If the folder had changes or isn't cached, read its content and cache
@@ -183,16 +186,20 @@ sub _list_dir {
 		#####################################################################
 		# Open the folder and sort its content by name and type
 		opendir( my $dh, $path ) or return;
-		my @items = sort {(-d File::Spec->catfile( $path, $b)) <=> (-d File::Spec->catfile( $path, $a))} sort { lc($a) cmp lc($b) } grep { not $self->{SKIP}->{$_} } readdir $dh;
+		my @items =
+			sort { ( -d File::Spec->catfile( $path, $b ) ) <=> ( -d File::Spec->catfile( $path, $a ) ) }
+			sort { lc($a) cmp lc($b) } grep { not $self->{SKIP}->{$_} } readdir $dh;
 		closedir $dh;
 
 		#####################################################################
 		# For each item, creates its CACHE data
-		@{$cached->{Data}} = map { { name => $_, dir => $path, type => (-d File::Spec->catfile( $path, $_ ) ? 'folder' : 'package' ) } } @items;
+		@{ $cached->{Data} } =
+			map { { name => $_, dir => $path, type => ( -d File::Spec->catfile( $path, $_ ) ? 'folder' : 'package' ) } }
+			@items;
 		$cached->{Change} = ( stat $path )[10];
 	}
 
-	my @data = @{$cached->{Data}};
+	my @data = @{ $cached->{Data} };
 	#####################################################################
 	# Shows / hides hidden files
 	unless ( $cached->{ShowHidden} ) {
@@ -200,9 +207,12 @@ sub _list_dir {
 			require Win32::File;
 			use constant HIDDEN => 2;
 			my $attribs;
-			@data = grep { Win32::File::GetAttributes(File::Spec->catfile( $_->{dir}, $_->{name}), $attribs) and !($attribs & HIDDEN) } @{$cached->{Data}};
+			@data = grep {
+				Win32::File::GetAttributes( File::Spec->catfile( $_->{dir}, $_->{name} ), $attribs )
+					and !( $attribs & HIDDEN )
+			} @{ $cached->{Data} };
 		} else {
-			@data = grep { $_->{name} !~ /^\./ } @{$cached->{Data}}
+			@data = grep { $_->{name} !~ /^\./ } @{ $cached->{Data} };
 		}
 	}
 
@@ -214,10 +224,10 @@ sub _list_dir {
 			$node,
 			$each->{name},
 			-1, -1,
-			Wx::TreeItemData->new( { dir  => $each->{dir}, name => $each->{name}, type => $each->{type} } )
+			Wx::TreeItemData->new( { dir => $each->{dir}, name => $each->{name}, type => $each->{type} } )
 		);
 		$self->SetItemHasChildren( $new_elem, 1 ) if $each->{type} eq 'folder';
-		$self->SetItemImage( $new_elem, $self->{file_types}->{$each->{type}}, Wx::wxTreeItemIcon_Normal);
+		$self->SetItemImage( $new_elem, $self->{file_types}->{ $each->{type} }, Wx::wxTreeItemIcon_Normal );
 	}
 }
 
@@ -235,9 +245,9 @@ sub update_gui {
 	my $root    = $self->GetRootItem;
 	my $project = $self->{current_project};
 
-	if ( defined($project) and ($project ne $dir) or $self->_updated_dir($dir) ) {
+	if ( defined($project) and ( $project ne $dir ) or $self->_updated_dir($dir) ) {
 		$self->_update_root_data($dir);
-		$self->_list_dir( $root );
+		$self->_list_dir($root);
 	}
 
 	$self->{current_project} = $dir;
@@ -246,16 +256,16 @@ sub update_gui {
 
 sub _update_root_data {
 	my $self = shift;
-	my ( $volume, $path, $name ) = File::Spec->splitpath( shift );
+	my ( $volume, $path, $name ) = File::Spec->splitpath(shift);
 
 	my $root_data = $self->GetPlData( $self->GetRootItem );
-	$root_data->{dir} = $volume . $path;
+	$root_data->{dir}  = $volume . $path;
 	$root_data->{name} = $name;
 }
 
 sub _updated_dir {
-	my $self = shift;
-	my $dir  = shift;
+	my $self   = shift;
+	my $dir    = shift;
 	my $cached = $self->{CACHED}->{$dir};
 
 	if ( not defined($cached) or !$cached->{Data} or !$cached->{Change} or ( stat $dir )[10] != $cached->{Change} ) {
@@ -275,9 +285,9 @@ sub _update_subdirs {
 		my $item_data = $self->GetPlData($node);
 		my $path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
 
-		if ( defined $self->{CACHED}->{$project}->{Expanded}->{$path} )	{
+		if ( defined $self->{CACHED}->{$project}->{Expanded}->{$path} ) {
 			$self->Expand($node);
-			$self->_list_dir( $node ) if $self->_updated_dir($path);
+			$self->_list_dir($node) if $self->_updated_dir($path);
 			_update_subdirs( $self, $node );
 		}
 		if ( defined $self->{current_item}->{$project} and $self->{current_item}->{$project} eq $path ) {
@@ -297,16 +307,16 @@ sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
 	my $node = $event->GetItem;
-	my $item     = $self->GetPlData($node);
+	my $node_data = $self->GetPlData($node);
 
-	return if not defined $item;
+	return if not defined $node_data;
 
-	if ( $item->{type} eq "folder" ) {
+	if ( $node_data->{type} eq "folder" ) {
 		$self->Toggle($node);
 		return;
 	}
 
-	my $path = File::Spec->catfile( $item->{dir}, $item->{name} );
+	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 	return if not defined $path;
 	my $main = $self->main;
 	if ( my $id = $main->find_editor_of_file($path) ) {
@@ -329,11 +339,9 @@ sub _on_tree_end_label_edit {
 
 	return unless $event->GetLabel();
 
-	my $item_obj  = $event->GetItem;
-	my $item_data = $self->GetPlData($item_obj);
-
-	my $old_file = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
-	my $new_file = File::Spec->catfile( $item_data->{dir}, $event->GetLabel() );
+	my $node_data = $self->GetPlData( $event->GetItem );
+	my $old_file  = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	my $new_file  = File::Spec->catfile( $node_data->{dir}, $event->GetLabel() );
 	my $new_label = ( File::Spec->splitpath($new_file) )[2];
 
 	while ( -e $new_file ) {
@@ -350,7 +358,7 @@ sub _on_tree_end_label_edit {
 			return;
 		}
 
-		$new_file = File::Spec->catfile( $item_data->{dir}, $prompt->GetValue );
+		$new_file = File::Spec->catfile( $node_data->{dir}, $prompt->GetValue );
 		$new_label = ( File::Spec->splitpath($new_file) )[2];
 		$prompt->Destroy;
 	}
@@ -366,7 +374,7 @@ sub _on_tree_end_label_edit {
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 
-		my $separator = File::Spec->catfile($old_file,"temp");
+		my $separator = File::Spec->catfile( $old_file, "temp" );
 		$separator =~ s/^$old_file(.?)temp$/$1/;
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
@@ -382,18 +390,17 @@ sub _on_tree_end_label_edit {
 
 sub _on_tree_sel_changed {
 	my ( $self, $event ) = @_;
-	my $item_obj  = $event->GetItem;
-	my $item_data = $self->GetPlData($item_obj);
-	if ( ref $item_data eq 'HASH' ) {
+	my $node_data = $self->GetPlData( $event->GetItem );
+	if ( ref $node_data eq 'HASH' ) {
 		$self->{current_item}->{ $self->{current_project} } =
-			File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
+			File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 	}
 }
 
 sub _on_tree_item_expanding {
 	my ( $self, $event ) = @_;
 	my $current   = $self->current;
-	my $node  = $event->GetItem;
+	my $node      = $event->GetItem;
 	my $node_data = $self->GetPlData($node);
 
 	if ( defined( $node_data->{type} ) && $node_data->{type} eq 'folder' ) {
@@ -402,54 +409,53 @@ sub _on_tree_item_expanding {
 		$self->{CACHED}->{ $self->{current_project} }->{Expanded}->{$path} = 1;
 
 		if ( $self->_updated_dir($path) or !$self->GetChildrenCount($node) ) {
-			$self->_list_dir( $node );
+			$self->_list_dir($node);
 		}
 	}
 }
 
 sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
-	my $item_obj  = $event->GetItem;
-	my $item_data = $self->GetPlData($item_obj);
+	my $node_data = $self->GetPlData( $event->GetItem );
 
-	if ( defined( $item_data->{type} ) and $item_data->{type} eq 'folder' ) {
-		my $path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
+	if ( defined( $node_data->{type} ) and $node_data->{type} eq 'folder' ) {
+		my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 		delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}->{$path};
 	}
 }
 
 sub _on_tree_begin_drag {
-	my( $self, $event ) = @_;
-	my $item_obj = $event->GetItem;
-	if( $item_obj != $self->GetRootItem ) {
-		$self->{dragged_item} = $item_obj;
+	my ( $self, $event ) = @_;
+	my $node = $event->GetItem;
+	if ( $node != $self->GetRootItem ) {
+		$self->{dragged_item} = $node;
 		$event->Allow;
 	}
 }
 
 sub _on_tree_end_drag {
-	my( $self, $event ) = @_;
-	my $item_obj = $event->GetItem;
+	my ( $self, $event ) = @_;
+	my $node = $event->GetItem;
 
 	#####################################################################
 	# If drops to a file, the new destination will be it's folder
-	if( $item_obj->IsOk and !$self->ItemHasChildren( $item_obj ) ) {
-		$item_obj = $self->GetItemParent( $item_obj );
+	if ( $node->IsOk and !$self->ItemHasChildren($node) ) {
+		$node = $self->GetItemParent($node);
 	}
 
-	return if !$item_obj->IsOk;
+	return if !$node->IsOk;
 
-	my $new_data = $self->GetPlData( $item_obj );
+	my $new_data = $self->GetPlData($node);
 	my $old_data = $self->GetPlData( $self->{dragged_item} );
 
 	my $from = $old_data->{dir};
-	my $to = File::Spec->catfile($new_data->{dir}, $new_data->{name} );
+	my $to = File::Spec->catfile( $new_data->{dir}, $new_data->{name} );
 	return if $from eq $to;
 
-	my $old_file = File::Spec->catfile($old_data->{dir}, $old_data->{name} );
-	my $new_file = File::Spec->catfile($to, $old_data->{name} );
-	
-	if(-e $new_file){
+	my $old_file = File::Spec->catfile( $old_data->{dir}, $old_data->{name} );
+	my $new_file = File::Spec->catfile( $to, $old_data->{name} );
+
+	if ( -e $new_file ) {
 		Wx::MessageBox(
 			Wx::gettext('Already exists a file with the same name in this directory'),
 			Wx::gettext('Error'),
@@ -469,7 +475,7 @@ sub _on_tree_end_drag {
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 
-		my $separator = File::Spec->catfile($old_file,"temp");
+		my $separator = File::Spec->catfile( $old_file, "temp" );
 		$separator =~ s/^$old_file(.?)temp$/$1/;
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
@@ -486,21 +492,21 @@ sub _on_tree_end_drag {
 
 sub _on_tree_item_menu {
 	my ( $self, $event ) = @_;
-	my $item_obj  = $event->GetItem;
-	my $item_data = $self->GetPlData($item_obj);
+	my $node      = $event->GetItem;
+	my $node_data = $self->GetPlData($node);
 
-	if ( defined $item_data ) {
+	if ( defined $node_data ) {
 
 		my $menu          = Wx::Menu->new;
-		my $selected_dir  = $item_data->{dir};
-		my $selected_path = File::Spec->catfile( $item_data->{dir}, $item_data->{name} );
+		my $selected_dir  = $node_data->{dir};
+		my $selected_path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
 		#####################################################################
 		# Default action - same when the item is activated
 		my ( $default_text, $default_sub );
-		if ( $item_data->{type} eq 'folder' ) {
+		if ( $node_data->{type} eq 'folder' ) {
 			$default_text = Wx::gettext('Expand / Collapse\t');
-			$default_sub = sub { $self->Toggle($item_obj) };
+			$default_sub = sub { $self->Toggle($node) };
 		} else {
 			$default_text = Wx::gettext('Open File');
 			$default_sub = sub { $self->_on_tree_item_activated($event) };
@@ -519,14 +525,14 @@ sub _on_tree_item_menu {
 		Wx::Event::EVT_MENU(
 			$self, $rename,
 			sub {
-				$self->EditLabel($item_obj);
+				$self->EditLabel($node);
 			},
 		);
 
 		#####################################################################
 		# Move item to trash
 		# Note: File::Remove->trash() Works only in Win and Mac
-		if (IS_WIN32 or IS_MAC ) {
+		if ( IS_WIN32 or IS_MAC ) {
 			my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
 			Wx::Event::EVT_MENU(
 				$self, $trash,
@@ -537,8 +543,10 @@ sub _on_tree_item_menu {
 					};
 					if ($@) {
 						my $error_msg = $@;
-						Wx::MessageBox( $error_msg, Wx::gettext('Error'),
-							Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+						Wx::MessageBox(
+							$error_msg, Wx::gettext('Error'),
+							Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
+						);
 					}
 					return;
 				},
@@ -566,8 +574,10 @@ sub _on_tree_item_menu {
 				};
 				if ($@) {
 					my $error_msg = $@;
-					Wx::MessageBox( $error_msg, Wx::gettext('Error'),
-						Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+					Wx::MessageBox(
+						$error_msg, Wx::gettext('Error'),
+						Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
+					);
 				}
 				return;
 			},
@@ -575,7 +585,7 @@ sub _on_tree_item_menu {
 
 		#####################################################################
 		# ?????
-		if ( defined $item_data->{type} and ( $item_data->{type} eq 'modules' or $item_data->{type} eq 'pragmata' ) ) {
+		if ( defined $node_data->{type} and ( $node_data->{type} eq 'modules' or $node_data->{type} eq 'pragmata' ) ) {
 			my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
 			Wx::Event::EVT_MENU(
 				$self, $pod,
@@ -584,7 +594,7 @@ sub _on_tree_item_menu {
 					# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 					require Padre::Wx::DocBrowser;
 					my $help = Padre::Wx::DocBrowser->new;
-					$help->help( $item_data->{name} );
+					$help->help( $node_data->{name} );
 					$help->SetFocus;
 					$help->Show(1);
 					return;
@@ -595,15 +605,15 @@ sub _on_tree_item_menu {
 
 		#####################################################################
 		# Shows / Hides dot started files and folers (not avaiable for Windows)
-		my $hiddenFiles = $menu->AppendCheckItem( -1, Wx::gettext('Show hidden files') );
-		my $applies_to_node = $item_obj;
+		my $hiddenFiles     = $menu->AppendCheckItem( -1, Wx::gettext('Show hidden files') );
+		my $applies_to_node = $node;
 		my $applies_to_path = $selected_path;
-		if ( $item_data->{type} ne 'folder' ) {
+		if ( $node_data->{type} ne 'folder' ) {
 			$applies_to_path = $selected_dir;
-			$applies_to_node = $self->GetParent($item_obj);
+			$applies_to_node = $self->GetParent($node);
 		}
 
-		my $cached = \%{$self->{CACHED}->{$applies_to_path}};
+		my $cached = \%{ $self->{CACHED}->{$applies_to_path} };
 		my $show   = $cached->{ShowHidden};
 		$hiddenFiles->Check($show);
 		Wx::Event::EVT_MENU(
@@ -621,7 +631,7 @@ sub _on_tree_item_menu {
 		Wx::Event::EVT_MENU(
 			$self, $reload,
 			sub {
-				delete $self->{CACHED}->{ $self->GetPlData($item_obj)->{dir} }->{Change};
+				delete $self->{CACHED}->{ $self->GetPlData($node)->{dir} }->{Change};
 			}
 		);
 
