@@ -186,6 +186,26 @@ sub enable {
 		Padre::Document->add_mime_class($type, $class);
 	}
 
+	# TODO remove these when plugin is disabled (and make sure files are not highlighted with this any more)
+	if (my @highlighters = $self->object->provided_highlighters) {
+		require Padre::Document;
+		foreach my $h (@highlighters) {
+			# TODO check if $h is an ARRAY ref 
+			# if there are 3 values and if the first one is really a module in this plugin.
+			Padre::Document->add_highlighter(@$h);
+		}
+	}
+	# TODO remove these when plugin is disabled (and make sure files are not highlighted with this any more)
+	if (my %mime_types = $self->object->highlighting_mime_types) {
+		require Padre::Document;
+		foreach my $module (keys %mime_types) {
+			# TODO sanity check here too.
+			foreach my $mime_type (@{ $mime_types{$module} }) {
+				Padre::Document->add_highlighter_to_mime_type($mime_type, $module);
+			}
+		}
+	}
+
 	# If the plugin has a hook for the context menu, cache it
 	if ( $self->object->can('event_on_context_menu') ) {
 		my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;

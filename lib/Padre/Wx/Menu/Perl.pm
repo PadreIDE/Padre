@@ -129,19 +129,6 @@ sub new {
 
 	$self->AppendSeparator;
 
-	# Perl-Specific Options
-	$self->{ppi_highlight} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Use PPI Syntax Highlighting")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{ppi_highlight},
-		sub {
-			$_[0]->set_ppi_highlight( $_[1]->IsChecked ? 1 : 0 );
-		}
-	);
-
 	# Move of stacktrace to Run
 	#	# Make it easier to access stack traces
 	#	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
@@ -187,7 +174,6 @@ sub refresh {
 	$self->{rename_variable}->Enable($perl);
 
 	# Apply config-driven state
-	$self->{ppi_highlight}->Check( $config->ppi_highlight );
 	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
 
 	return;

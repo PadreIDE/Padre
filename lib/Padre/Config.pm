@@ -408,18 +408,6 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
-setting(
-	name    => 'ppi_highlight',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 0,
-);
-setting(
-	name    => 'ppi_highlight_limit',
-	type    => Padre::Constant::POSINT,
-	store   => Padre::Constant::HUMAN,
-	default => 2000,
-);
 
 # Behaviour Tuning
 # When running a script from the application some of the files might have

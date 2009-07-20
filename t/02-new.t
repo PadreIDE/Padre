@@ -8,7 +8,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 62 );
+	plan( tests => 60 );
 }
 use Test::NoWarnings;
 use t::lib::Padre;
@@ -60,8 +60,6 @@ SCOPE: {
 	is( $config->find_first               => 0              );
 	is( $config->find_nohidden            => 1              );
 	is( $config->find_quick               => 0              );
-	is( $config->ppi_highlight            => 0              );
-	is( $config->ppi_highlight_limit      => 2000           );
 	is( $config->run_save                 => 'same'         );
 	is( $config->threads                  => 1              );
 	is( $config->locale                   => ''             );

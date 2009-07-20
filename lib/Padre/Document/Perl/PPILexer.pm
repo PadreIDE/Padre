@@ -86,7 +86,7 @@ sub colorize {
 
 		#		next if $row < $first;
 		#		next if $row > $first + $lines;
-		my $css = $doc->_css_class($t);
+		my $css = $self->_css_class($t);
 
 		#		if ($row > $first and $row < $first + 5) {
 		#			print "$row, $rowchar, ", $t->length, "  ", $t->class, "  ", $css, "  ", $t->content, "\n";

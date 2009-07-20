@@ -252,6 +252,28 @@ sub registered_documents {
 	return ();
 }
 
+=head2 provided_highlighters
+
+Default method returning an empty array.
+
+TBD. See Padre::Document
+
+=cut
+
+sub provided_highlighters { 
+	return ();
+}
+
+=head2 highlighting_mime_types
+
+TBD. See Padre::Document
+
+=cut
+
+sub highlighting_mime_types {
+	return ();
+}
+
 =pod
 
 =head2 event_on_context_menu

@@ -3112,12 +3112,27 @@ Open Padre's preferences dialog. No return value.
 sub on_preferences {
 	my $self = shift;
 
+	my %old_highlighters = Padre::Document->get_current_highlighters;
+	
 	require Padre::Wx::Dialog::Preferences;
 	my $prefDlg = Padre::Wx::Dialog::Preferences->new;
 	if ( $prefDlg->run($self) ) {
+		my %mime_types; # all the mime-types of currently open files
 		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
+			$mime_types{$editor->{Document}->get_mimetype} = 1;
 		}
+
+		my %new_highlighters = Padre::Document->get_current_highlighters;
+		
+		foreach my $mime_type (keys %mime_types) {
+			my $old_highlighter = $old_highlighters{$mime_type};
+			my $new_highlighter = $new_highlighters{$mime_type};
+			if ($old_highlighter ne $new_highlighter) {
+				$self->change_highlighter($mime_type, $new_highlighter);
+			}
+		}
+
 		$self->refresh_functions( $self->current );
 	}
 	$self->ide->save_config;
@@ -4100,38 +4115,25 @@ sub setup_bindings {
 	return;
 }
 
-=pod
 
-=item * $main->set_ppi_highlight( $on );
-
-Toggle C<$on> the fact that we're using PPI to highlight current Perl document.
-If not using PPI, we're using syntax highlighting provided by wxSTC.
-
-Note: this is Perl specific but for now we could not find a better place for
-this.
-
-=cut
-
-sub set_ppi_highlight {
-	my $self   = shift;
-	my $on     = shift;
-	my $config = $self->config;
-
-	# Update the saved config setting
-	$config->set( ppi_highlight => $on );
+sub change_highlighter {
+	my $self      = shift;
+	my $mime_type = shift;
+	my $module    = shift;
 
 	# Refresh the menu (and MIME_LEXER hook)
 	# probably no need for this
 	# $self->refresh;
 
-	# Update the colourise for each Perl editor
-	# TODO try to delay the actual color updating for the
+	# Update the colourise for each editor of the relevant mime-type
+	# Trying to delay the actual color updating for the
 	# pages that are not in focus till they get in focus
 	my $focused = $self->current->editor;
 	foreach my $editor ( $self->editors ) {
 		my $document = $editor->{Document};
-		next unless $document->isa('Padre::Document::Perl');
-		Padre::Util::debug( "Set ppi to $on for $document in file " . ( $document->filename || '' ) );
+		next if $document->get_mimetype ne $mime_type;
+		$document->set_highlighter($module);
+		Padre::Util::debug( "Set highlighter to to $module for $document in file " . ( $document->filename || '' ) );
 		my $lexer = $document->lexer;
 		$editor->SetLexer($lexer);
 
@@ -4150,6 +4152,7 @@ sub set_ppi_highlight {
 			$editor->needs_manual_colorize(1);
 		}
 	}
+
 	return;
 }
 
