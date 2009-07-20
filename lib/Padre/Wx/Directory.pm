@@ -306,7 +306,7 @@ sub _on_focus {
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
 
-	my $node = $event->GetItem;
+	my $node      = $event->GetItem;
 	my $node_data = $self->GetPlData($node);
 
 	return if not defined $node_data;
@@ -363,28 +363,7 @@ sub _on_tree_end_label_edit {
 		$prompt->Destroy;
 	}
 
-	if ( rename $old_file, $new_file ) {
-
-		my $project = $self->{current_project};
-		$self->{current_item}->{$project} = $new_file;
-
-		my $cached = $self->{CACHED};
-		if ( defined $cached->{$project}->{Expanded}->{$old_file} ) {
-			$cached->{$project}->{Expanded}->{$new_file} = 1;
-			delete $cached->{$project}->{Expanded}->{$old_file};
-		}
-
-		my $separator = File::Spec->catfile( $old_file, "temp" );
-		$separator =~ s/^$old_file(.?)temp$/$1/;
-		map {
-			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
-				if $_ =~ m#^$old_file(($separator).+)?$#
-		} keys %$cached;
-	} else {
-		my $error_msg = $!;
-		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
-		$event->Veto();
-	}
+	$self->Veto() unless $self->_rename_or_move( $old_file, $new_file );
 	return;
 }
 
@@ -464,30 +443,50 @@ sub _on_tree_end_drag {
 		return;
 	}
 
+	$self->update_gui if $self->_rename_or_move( $old_file, $new_file );
+	return;
+}
+
+#####################################################################
+# Removes '..' and its previous directories
+sub _removes_double_dot {
+	my ( $self, $file ) = @_;
+	my @dirs = File::Spec->splitdir($file);
+	for ( my $i = 0; $i < @dirs; $i++ ) {
+		splice @dirs, $i - 1, 2 if $i > 0 and $dirs[$i] eq "..";
+	}
+	return File::Spec->catfile(@dirs);
+}
+
+sub _rename_or_move {
+	my $self     = shift;
+	my $old_file = $self->_removes_double_dot(shift);
+	my $new_file = $self->_removes_double_dot(shift);
+
 	if ( rename $old_file, $new_file ) {
+
 		my $project = $self->{current_project};
 		$self->{current_item}->{$project} = $new_file;
 
 		my $cached = $self->{CACHED};
-		$cached->{$project}->{Expanded}->{$to} = 1;
+		$cached->{$project}->{Expanded}->{ File::Basename::dirname($new_file) } = 1;
 		if ( defined $cached->{$project}->{Expanded}->{$old_file} ) {
 			$cached->{$project}->{Expanded}->{$new_file} = 1;
 			delete $cached->{$project}->{Expanded}->{$old_file};
 		}
 
-		my $separator = File::Spec->catfile( $old_file, "temp" );
+		my $separator = File::Spec->catfile( $old_file, 'temp' );
 		$separator =~ s/^$old_file(.?)temp$/$1/;
 		map {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
-				if $_ =~ m#^$old_file(($separator).+)?$#
+				if $_ =~ /^$old_file($separator.+?)?$/
 		} keys %$cached;
-
+		return 1;
 	} else {
 		my $error_msg = $!;
 		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
+		return 0;
 	}
-	$self->update_gui;
-	return;
 }
 
 sub _on_tree_item_menu {
@@ -604,7 +603,7 @@ sub _on_tree_item_menu {
 		$menu->AppendSeparator();
 
 		#####################################################################
-		# Shows / Hides dot started files and folers (not avaiable for Windows)
+		# Shows / Hides hidden files - applied to each directory
 		my $hiddenFiles     = $menu->AppendCheckItem( -1, Wx::gettext('Show hidden files') );
 		my $applies_to_node = $node;
 		my $applies_to_path = $selected_path;
