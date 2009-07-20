@@ -571,13 +571,13 @@ sub colorize {
 
 	my $module = $self->get_highlighter;
 	if ($module eq 'stc') {
-		warn "highlighter is set to 'stc' while colorize() is called\n";
+		Carp::cluck("highlighter is set to 'stc' while colorize() is called for " . ($self->filename || '') . "\n");
 		return;
 	}
 
 	eval "use $module";
 	if ($@) {
-		warn "Could not load module '$module' for file '" . ($self->filename || '') . "'\n";
+		Carp::cluck("Could not load module '$module' for file '" . ($self->filename || '') . "'\n");
 		return;
 	}
 	$module->colorize(@_);

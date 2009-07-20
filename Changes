@@ -7,6 +7,8 @@ Changes for Perl Application Development and Refactoring Environment
     - run_command in a separate window now works in win32 to support 
       prompt('...') in Perl 6 and <STDIN> in Perl 5. (AZAWAWI)
     - Now Padre can find/replace inside selections (GARU)
+    - New Syntax highlighter configuration system. Plugins now can add more
+      syntax highlighters and users can pick one per mime-type. (SZABGAB)
 
 0.40 2009.07.17
     - Removed about 10 dependencies, including several with lots of FAIL
