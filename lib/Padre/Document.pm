@@ -286,7 +286,7 @@ sub menu_view_mimes {
 		'15YAML'       => 'text/x-yaml',
 		'17VBScript'   => 'text/vbscript',
 		'19SQL'        => 'text/x-sql',
-		'21Perl6'      => 'application/x-perl6',
+		'21Perl 6'      => 'application/x-perl6',
 		;
 }
 
