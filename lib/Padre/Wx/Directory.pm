@@ -188,7 +188,7 @@ sub _list_dir {
 		# Open the folder and sort its content by name and type
 		opendir( my $dh, $path ) or return;
 		my @items =
-			sort { ( -d File::Spec->catfile( $path, $b ) ) <=> ( -d File::Spec->catfile( $path, $a ) ) }
+			sort { ( -d File::Spec->catfile( $path, $b ) ? 1 : 0 ) <=> ( -d File::Spec->catfile( $path, $a ) ? 1 : 0) }
 			sort { lc($a) cmp lc($b) } grep { not $self->{SKIP}->{$_} } readdir $dh;
 		closedir $dh;
 
