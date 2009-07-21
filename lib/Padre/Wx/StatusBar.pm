@@ -169,8 +169,13 @@ sub refresh {
 	my $char     = $position - $start;
 	my $width    = $self->GetCharWidth;
 	my $mimetype = $document->get_mimetype;
-	my $maxstring = Wx::gettext('L:') . ( $lines + 1 ) . ' ' . Wx::gettext('Ch:') . $char;
-	my $postring  = Wx::gettext('L:') . ( $line + 1 ) . ' ' . Wx::gettext('Ch:') . $char;
+	my $percent  = int (100 * $line / $lines);
+	#my $maxstring = Wx::gettext('L:') . ( $lines + 1 ) . ' ' . Wx::gettext('Ch:') . "99 $percent%";
+	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
+	my $format = '%' . length($lines+1) . 's,%-3s %3s%%';
+	my $length = length($lines+1) + 8;
+	#my $maxstring = sprintf($format, ( $lines + 1 ), 100, 99;
+	my $postring  = sprintf($format, ( $line + 1  ), $char, $percent);
 
 	# update task load status
 	$self->update_task_status;
@@ -185,7 +190,7 @@ sub refresh {
 		$self->_task_width,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
-		( length($maxstring) + 4 ) * $width,
+		( $length + 2 ) * $width,
 	);
 
 	# move the static bitmap holding the task load status
