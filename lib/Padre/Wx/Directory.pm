@@ -538,7 +538,7 @@ sub _on_tree_end_label_edit {
 		$prompt->Destroy;
 	}
 
-	$self->Veto() unless $self->_rename_or_move( $old_file, $new_file );
+	$event->Veto() unless $self->_rename_or_move( $old_file, $new_file );
 	return;
 }
 
@@ -550,10 +550,7 @@ sub _on_tree_end_label_edit {
 sub _on_tree_sel_changed {
 	my ( $self, $event ) = @_;
 	my $node_data = $self->GetPlData( $event->GetItem );
-	if ( ref $node_data eq 'HASH' ) {
-		$self->{current_item}->{ $self->{current_project} } =
-			File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
-	}
+	$self->{current_item}->{ $self->{current_project} } = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 }
 
 ################################################################################
