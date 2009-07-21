@@ -120,7 +120,8 @@ sub set_highlighter {
 		$length = $editor->GetTextLength;
 	}
 
-	Padre::Util::debug( "Setting highlighter for Perl 5 code. length: $length limit is $limit");
+	Padre::Util::debug("Setting highlighter for Perl 5 code. length: $length" . 
+		($limit ? " limit is $limit" : '') );
 
 	if ( defined $limit and $length > $limit ) {
 		Padre::Util::debug("Forcing STC highlighting");
