@@ -102,11 +102,11 @@ sub update_highlighters {
 	my $mime_types = Padre::Document->get_mime_type_names;
 	my $mime_type_name = $mime_types->[$selection];
 	
-	print "mime '$mime_type_name'\n";
+	#print "mime '$mime_type_name'\n";
 	$self->{_highlighters_}{$mime_type_name} ||= $self->{_start_highlighters_}{$mime_type_name};
 
 	my $highlighters = Padre::Document->get_highlighters_of_mime_type_name( $mime_type_name );
-	print "hl '$highlighters'\n";
+	#print "hl '$highlighters'\n";
 	my ($id) = grep { $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} }
 		(0 .. @$highlighters - 1);
 	$id ||= 0;
@@ -135,7 +135,7 @@ sub update_description {
 	my $highlighter  = $highlighters->[ $highlighter_selection ];
 
 	$self->{_highlighters_}{$mime_type_name} = $highlighter;
-	print "Highlighter $highlighter\n";
+	#print "Highlighter $highlighter\n";
 
 	$self->get_widget('description')->SetLabel( Padre::Document->get_highlighter_explanation( $highlighter ))
 }
@@ -732,7 +732,7 @@ sub run {
 	foreach my $mime_type_name ( keys %{ $self->{_highlighters_} }  ) {
 		if ( $self->{_start_highlighters_}{$mime_type_name} ne $self->{_highlighters_}{$mime_type_name} ) {
 			$changed_highlighters{$mime_type_name} = $self->{_highlighters_}{$mime_type_name};
-			print "Changing highlighter of $mime_type_name from $self->{_start_highlighters_}{$mime_type_name} to $self->{_highlighters_}{$mime_type_name}\n";
+			#print "Changing highlighter of $mime_type_name from $self->{_start_highlighters_}{$mime_type_name} to $self->{_highlighters_}{$mime_type_name}\n";
 		}
 	}
 	Padre::Document->change_highlighters(\%changed_highlighters);
