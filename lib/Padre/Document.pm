@@ -571,7 +571,14 @@ sub colorize {
 
 	my $module = $self->get_highlighter;
 	if ($module eq 'stc') {
-		Carp::cluck("highlighter is set to 'stc' while colorize() is called for " . ($self->filename || '') . "\n");
+		#TODO sometime this happens when I open Padre with several file
+		# I think this can be somehow related to the quick (or slow ?) switching of 
+		# what is the current document while the code is still running.
+		# for now I hide the warnings as this would just frighten people and the 
+		# actual problem seems to be only the warning or maybe late highighting 
+		# of a single document - szabgab
+		#Carp::cluck("highlighter is set to 'stc' while colorize() is called for " . ($self->filename || '') . "\n");
+		#warn "Length: " . $self->editor->GetTextLength;
 		return;
 	}
 
@@ -996,6 +1003,8 @@ sub restore_cursor_position {
 # Determine the Scintilla lexer to use
 sub lexer {
 	my $self = shift;
+	
+	# this should never happen as now we set mime-type on everything
 	return Wx::wxSTC_LEX_AUTOMATIC unless $self->get_mimetype;
 
 	my $highlighter = $self->get_highlighter;
