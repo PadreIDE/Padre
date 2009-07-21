@@ -586,12 +586,19 @@ sub colorize {
 		return;
 	}
 
-	eval "use $module";
-	if ($@) {
-		Carp::cluck("Could not load module '$module' for file '" . ($self->filename || '') . "'\n");
-		return;
+	# allow virtual modules if they have a colorize method
+	if (not $module->can('colorize')) {
+		eval "use $module";
+		if ($@) {
+			Carp::cluck("Could not load module '$module' for file '" . ($self->filename || '') . "'\n");
+			return;
+		}
 	}
-	$module->colorize(@_);
+	if ($module->can('colorize')) {
+		$module->colorize(@_);
+	} else {
+		warn("Module $module does not have a colorize method\n");
+	}
 	return;
 }
 
