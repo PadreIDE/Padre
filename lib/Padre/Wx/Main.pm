@@ -2661,11 +2661,13 @@ sub on_save_as {
 			);
 			if ( $response == Wx::wxYES ) {
 				$document->_set_filename($path);
+				$document->save_file;
 				$document->set_newline_type(Padre::Constant::NEWLINE);
 				last;
 			}
 		} else {
 			$document->_set_filename($path);
+			$document->save_file;
 			$document->set_newline_type(Padre::Constant::NEWLINE);
 			last;
 		}
