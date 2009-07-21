@@ -102,10 +102,17 @@ sub set_highlighter {
 	my $self   = shift;
 	my $module = shift;
 
-	# This is a hard coded limit because the PPI highlighter
+	# These are hard coded limits because the PPI highlighter
 	# is slow. Probably there is not much use in moving this back to a
 	# configuration variable
-	my $limit = 2000;
+	my $limit;
+	if ($module eq 'Padre::Document::Perl::PPILexer') {
+		$limit = 2000;
+	} elsif ($module eq 'Padre::Document::Perl::Lexer') {
+		$limit = 2000;
+	} elsif ($module eq 'Padre::Plugin::Kate') {
+		$limit = 2000;
+	}
 
 	my $length = $self->{original_content} ? length $self->{original_content} : 0;
 	my $editor = $self->editor;
@@ -114,7 +121,8 @@ sub set_highlighter {
 	}
 
 	Padre::Util::debug( "Setting highlighter for Perl 5 code. length: $length limit is $limit");
-	if ( $length > $limit ) {
+
+	if ( defined $limit and $length > $limit ) {
 		Padre::Util::debug("Forcing STC highlighting");
 		$module = 'stc';
 	}
