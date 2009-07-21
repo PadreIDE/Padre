@@ -121,6 +121,9 @@ sub force_next {
 ################################################################################
 # update_gui                                                                   #
 #                                                                              #
+# Updates the gui if needed                                                    #
+#                                                                              #
+# Called outside Directory.pm, on directory browser focus and item dragging    #
 #                                                                              #
 ################################################################################
 sub update_gui {
@@ -578,21 +581,23 @@ sub _on_tree_item_expanding {
 ################################################################################
 # _on_tree_item_collapsing                                                     #
 #                                                                              #
+# Deletes nodes Expanded cache param                                           #
+#                                                                              #
+# Called when a folder is collapsed                                            #
 #                                                                              #
 ################################################################################
 sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
 	my $node_data = $self->GetPlData( $event->GetItem );
-
-	if ( defined( $node_data->{type} ) and $node_data->{type} eq 'folder' ) {
-		my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
-		delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}->{$path};
-	}
+	delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
 }
 
 ################################################################################
 # _on_tree_begin_drag                                                          #
 #                                                                              #
+# If the item is not the root node let it to be dragged                        #
+#                                                                              #
+# Called when a item is dragged                                                #
 #                                                                              #
 ################################################################################
 sub _on_tree_begin_drag {
@@ -607,6 +612,10 @@ sub _on_tree_begin_drag {
 ################################################################################
 # _on_tree_end_drag                                                            #
 #                                                                              #
+# If dragged to a different folder, tries to move (renaming) it to the new     #
+# folder.                                                                      #
+#                                                                              #
+# Called just after the item is dragged                                        #
 #                                                                              #
 ################################################################################
 sub _on_tree_end_drag {
