@@ -370,14 +370,18 @@ sub read_current_highlighters_from_db {
 	require Padre::DB::SyntaxHighlight;
 
 	my $current_highlighters = Padre::DB::SyntaxHighlight->select || [];
-	foreach my $e (@$current_highlighters) {
-		$MIME_TYPES{ $e->mime_type }{current_highlighter} = $e->value;
-	}
-	
+
 	# set defaults
 	foreach my $mime_type (keys %MIME_TYPES) {
-		$MIME_TYPES{ $mime_type }{current_highlighter} ||= 'stc';
+		$MIME_TYPES{ $mime_type }{current_highlighter} = 'stc';
 	}
+
+	foreach my $e (@$current_highlighters) {
+		$MIME_TYPES{ $e->mime_type }{current_highlighter} = $e->value;
+		#printf("%s   %s\n", $e->mime_type, $e->value);
+	}
+	#use Data::Dumper;
+	#print Data::Dumper::Dumper \%MIME_TYPES;
 }
 
 # returns hash of mime_type => highlighter
