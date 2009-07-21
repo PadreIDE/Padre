@@ -55,11 +55,12 @@ our @ISA     = qw{
 };
 
 use constant {
-	FILENAME => 0,
-	TASKLOAD => 1,
-	MIMETYPE => 2,
-	NEWLINE  => 3,
-	POSTRING => 4,
+	FILENAME    => 0,
+	TASKLOAD    => 1,
+	HIGHLIGHTER => 2,
+	MIMETYPE    => 3,
+	NEWLINE     => 4,
+	POSTRING    => 5,
 };
 
 #####################################################################
@@ -101,8 +102,8 @@ sub new {
 	);
 
 	# Set up the fields
-	$self->SetFieldsCount(5);
-	$self->SetStatusWidths( -1, 0, 100, 50, 100 );
+	$self->SetFieldsCount(6);
+	#$self->SetStatusWidths( -1, 0, 100, 100, 50, 100 );
 
 	# react to resize events, to adapt size of icon field
 	Wx::Event::EVT_SIZE( $self, \&on_resize );
@@ -126,6 +127,7 @@ in all fields.
 sub clear {
 	my $self = shift;
 	$self->SetStatusText( "", FILENAME );
+	$self->SetStatusText( "", HIGHLIGHTER );
 	$self->SetStatusText( "", MIMETYPE );
 	$self->SetStatusText( "", NEWLINE );
 	$self->SetStatusText( "", POSTRING );
@@ -168,13 +170,12 @@ sub refresh {
 	my $lines    = $editor->GetLineCount;
 	my $char     = $position - $start;
 	my $width    = $self->GetCharWidth;
+	my $highlighter  = $document->get_highlighter_name($document->get_highlighter);
 	my $mimetype = $document->get_mimetype;
 	my $percent  = int (100 * $line / $lines);
-	#my $maxstring = Wx::gettext('L:') . ( $lines + 1 ) . ' ' . Wx::gettext('Ch:') . "99 $percent%";
 	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
 	my $format = '%' . length($lines+1) . 's,%-3s %3s%%';
 	my $length = length($lines+1) + 8;
-	#my $maxstring = sprintf($format, ( $lines + 1 ), 100, 99;
 	my $postring  = sprintf($format, ( $line + 1  ), $char, $percent);
 
 	# update task load status
@@ -182,12 +183,14 @@ sub refresh {
 
 	# Write the new values into the status bar and update sizes
 	$self->SetStatusText( "$modified $filename", FILENAME );
+	$self->SetStatusText( $highlighter,          HIGHLIGHTER );
 	$self->SetStatusText( $mimetype,             MIMETYPE );
 	$self->SetStatusText( $newline,              NEWLINE );
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,
+		( length($highlighter) + 2 ) * $width,
 		( length($mimetype) ) * $width,
 		( length($newline) + 2 ) * $width,
 		( $length + 2 ) * $width,
