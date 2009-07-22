@@ -27,9 +27,10 @@ use t::lib::Padre;
 use t::lib::Padre::Editor;
 use Padre::Document;
 use Padre::Document::Perl;
+use Padre::MimeTypes;
 
 # Fake that Perl 6 support is enabled
-Padre::Document->add_mime_class('application/x-perl6', 'Padre::Document::Perl');
+Padre::MimeTypes->add_mime_class('application/x-perl6', 'Padre::Document::Perl');
 
 my $editor_1 = t::lib::Padre::Editor->new;
 my $doc_1    = Padre::Document->new;
