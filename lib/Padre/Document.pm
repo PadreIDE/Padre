@@ -639,11 +639,11 @@ sub dirname {
 # NOTE: This is NOT an excuse to invent somewhere new that's just as
 # innappropriate just to get them out of here.
 
-sub guess_mimetype {
-	my $self     = shift;
-	my $text     = $self->{original_content};
-	my $filename = $self->filename || q{};
-
+sub _guess_mimetype {
+	my $self = shift;
+	my $text = shift;
+	my $filename = shift;
+	
 	# Default mime-type of new files, should be configurable in the GUI
 	# TODO: Make it configurable in the GUI :)
 	unless ($filename) {
@@ -655,7 +655,7 @@ sub guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->( $self->{original_content} );
+				return $EXT_MIME{$ext}->( $text );
 			} else {
 				return $EXT_MIME{$ext};
 			}
@@ -675,7 +675,7 @@ sub guess_mimetype {
 
 		# Found a hash bang line
 		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-			return $self->perl_mime_type( $self->{original_content} );
+			return $self->perl_mime_type( $text );
 		}
 		if ( $text =~ /\A---/ ) {
 			return 'text/x-yaml';
@@ -702,6 +702,16 @@ sub perl_mime_type {
 sub mime_type_by_extension {
 	$EXT_MIME{ $_[1] };
 }
+
+
+sub guess_mimetype {
+	my $self     = shift;
+	my $text     = $self->{original_content};
+	my $filename = $self->filename || q{};
+
+	return $self->_guess_mimetype($text, $filename);
+}
+
 
 # For ts without a newline type
 # TODO: get it from config
