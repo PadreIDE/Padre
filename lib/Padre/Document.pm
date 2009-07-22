@@ -484,6 +484,80 @@ sub get_highlighters_of_mime_type_name {
 }
 
 
+
+#####################################################################
+# Bad/Ugly/Broken Methods
+# These don't really completely belong in this class, but there's
+# currently nowhere better for them. Some break API boundaries...
+# NOTE: This is NOT an excuse to invent somewhere new that's just as
+# innappropriate just to get them out of here.
+
+sub _guess_mimetype {
+	my $self = shift;
+	my $text = shift;
+	my $filename = shift;
+	
+	# Default mime-type of new files, should be configurable in the GUI
+	# TODO: Make it configurable in the GUI :)
+	unless ($filename) {
+		return 'application/x-perl';
+	}
+
+	# Try derive the mime type from the file extension
+	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
+		my $ext = lc $1;
+		if ( $EXT_MIME{$ext} ) {
+			if ( ref $EXT_MIME{$ext} ) {
+				return $EXT_MIME{$ext}->( $text );
+			} else {
+				return $EXT_MIME{$ext};
+			}
+		}
+	}
+
+	# Try derive the mime type from the basename
+	my $basename = File::Basename::basename($filename);
+	if ($basename) {
+		return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
+	}
+
+	# Fall back on deriving the type from the content.
+	# Hardcode this for now for the cases that we care about and
+	# are obvious.
+	if ( $text and $text =~ /\A#!/m ) {
+
+		# Found a hash bang line
+		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
+			return $self->perl_mime_type( $text );
+		}
+		if ( $text =~ /\A---/ ) {
+			return 'text/x-yaml';
+		}
+	}
+
+	# Fall back to plain text file
+	return 'text/plain';
+}
+
+sub perl_mime_type {
+	my $self = shift;
+	my $text = shift;
+
+	# Sometimes Perl 6 will look like Perl 5
+	# But only do this test if the Perl 6 plugin is enabled.
+	if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
+		return 'application/x-perl6';
+	} else {
+		return 'application/x-perl';
+	}
+}
+
+sub mime_type_by_extension {
+	$EXT_MIME{ $_[1] };
+}
+
+#########
+
 sub menu_view_mimes {
 	'00Plain Text'     => 'text/plain',
 		'01Perl'       => 'application/x-perl',
@@ -584,80 +658,6 @@ sub rebless {
 
 	return;
 }
-
-#####################################################################
-# Bad/Ugly/Broken Methods
-# These don't really completely belong in this class, but there's
-# currently nowhere better for them. Some break API boundaries...
-# NOTE: This is NOT an excuse to invent somewhere new that's just as
-# innappropriate just to get them out of here.
-
-sub _guess_mimetype {
-	my $self = shift;
-	my $text = shift;
-	my $filename = shift;
-	
-	# Default mime-type of new files, should be configurable in the GUI
-	# TODO: Make it configurable in the GUI :)
-	unless ($filename) {
-		return 'application/x-perl';
-	}
-
-	# Try derive the mime type from the file extension
-	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
-		my $ext = lc $1;
-		if ( $EXT_MIME{$ext} ) {
-			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->( $text );
-			} else {
-				return $EXT_MIME{$ext};
-			}
-		}
-	}
-
-	# Try derive the mime type from the basename
-	my $basename = File::Basename::basename($filename);
-	if ($basename) {
-		return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
-	}
-
-	# Fall back on deriving the type from the content.
-	# Hardcode this for now for the cases that we care about and
-	# are obvious.
-	if ( $text and $text =~ /\A#!/m ) {
-
-		# Found a hash bang line
-		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-			return $self->perl_mime_type( $text );
-		}
-		if ( $text =~ /\A---/ ) {
-			return 'text/x-yaml';
-		}
-	}
-
-	# Fall back to plain text file
-	return 'text/plain';
-}
-
-sub perl_mime_type {
-	my $self = shift;
-	my $text = shift;
-
-	# Sometimes Perl 6 will look like Perl 5
-	# But only do this test if the Perl 6 plugin is enabled.
-	if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
-		return 'application/x-perl6';
-	} else {
-		return 'application/x-perl';
-	}
-}
-
-sub mime_type_by_extension {
-	$EXT_MIME{ $_[1] };
-}
-
-#########
-
 
 #####################################################################
 # Padre::Document GUI Integration
