@@ -246,11 +246,6 @@ my %MIME_LEXER = (
 	'text/plain'          => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 );
 
-#	'text/x-abc' => Wx::wxSTC_LEX_CONTAINER,
-#	'application/x-pir'   => Wx::wxSTC_LEX_CONTAINER,       # CONFIRMED
-#	'application/x-pasm'  => Wx::wxSTC_LEX_CONTAINER,       # CONFIRMED
-#	'application/x-perl6' => Wx::wxSTC_LEX_CONTAINER,       # CONFIRMED
-
 # TODO: Set some reasonable default highlighers for each mime-type for when there
 # are no plugins. e.g. For Perl 6 style files that should be plain text.
 # Either allow the plugins to set the defaults (maybe allow the plugin that implements
