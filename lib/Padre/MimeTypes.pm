@@ -103,50 +103,151 @@ sub _initialize {
 	# Lines marked with CONFIRMED indicate that the mime-typehas been checked
 	# to confirm that the MIME type is either the official type, or the primary
 	# one in use by the relevant language community.
-	my %MIME_LEXER = (
-		'text/x-abc' => Wx::wxSTC_LEX_NULL,
-
-		'text/x-adasrc' => Wx::wxSTC_LEX_ADA, # CONFIRMED
-		'text/x-asm'    => Wx::wxSTC_LEX_ASM, # CONFIRMED
+	%MIME_TYPES = (
+		'text/x-abc' => {
+			name => 'ABC',
+			lexer => Wx::wxSTC_LEX_NULL,
+		},
+		'text/x-adasrc' => {
+			name => 'ADA',
+			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
+		},
+		'text/x-asm'    => {
+			name => 'ASM',
+			lexer => Wx::wxSTC_LEX_ASM, # CONFIRMED
+		},
 
 		# application/x-msdos-program includes .exe and .com, so don't use it
-		'application/x-bat' => Wx::wxSTC_LEX_BATCH, # CONFIRMED
+		'application/x-bat' => {
+			name => 'BAT',
+			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
+		},
 
-		'text/x-c++src'             => Wx::wxSTC_LEX_CPP,       # CONFIRMED
-		'text/css'                  => Wx::wxSTC_LEX_CSS,       # CONFIRMED
-		'text/x-patch'              => Wx::wxSTC_LEX_DIFF,      # CONFIRMED
-		'text/x-eiffel'             => Wx::wxSTC_LEX_EIFFEL,    # CONFIRMED
-		'text/x-forth'              => Wx::wxSTC_LEX_FORTH,     # CONFIRMED
-		'text/x-fortran'            => Wx::wxSTC_LEX_FORTRAN,   # CONFIRMED
-		'text/html'                 => Wx::wxSTC_LEX_HTML,      # CONFIRMED
-		'application/javascript'    => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
-		'application/json'          => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
-		'application/x-latex'       => Wx::wxSTC_LEX_LATEX,     # CONFIRMED
-		'application/x-lisp'        => Wx::wxSTC_LEX_LISP,      # CONFIRMED
-		'application/x-shellscript' => Wx::wxSTC_LEX_BASH,
-		'text/x-lua'                => Wx::wxSTC_LEX_LUA,       # CONFIRMED
-		'text/x-makefile'           => Wx::wxSTC_LEX_MAKEFILE,  # CONFIRMED
-		'text/x-matlab'             => Wx::wxSTC_LEX_MATLAB,    # CONFIRMED
-		'text/x-pascal'             => Wx::wxSTC_LEX_PASCAL,    # CONFIRMED
-		'application/x-perl'        => Wx::wxSTC_LEX_PERL,      # CONFIRMED
-		'text/x-python'             => Wx::wxSTC_LEX_PYTHON,    # CONFIRMED
-		'application/x-php'         => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
-		'application/x-ruby'        => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
-		'text/x-sql'                => Wx::wxSTC_LEX_SQL,       # CONFIRMED
-		'application/x-tcl'         => Wx::wxSTC_LEX_TCL,       # CONFIRMED
-		'text/vbscript'             => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
+		'text/x-c++src'             => {
+			name => 'c++',
+			lexer => Wx::wxSTC_LEX_CPP,       # CONFIRMED
+		},
+		'text/css'                  => {
+			name => 'CSS',
+			lexer => Wx::wxSTC_LEX_CSS,       # CONFIRMED
+		},
+		'text/x-patch'              => {
+			name => 'Patch',
+			lexer => Wx::wxSTC_LEX_DIFF,      # CONFIRMED
+		},
+		'text/x-eiffel'             => {
+			name => 'Eiffel',
+			lexer => Wx::wxSTC_LEX_EIFFEL,    # CONFIRMED
+		},
+		'text/x-forth'              => {
+			name => 'Forth',
+			lexer => Wx::wxSTC_LEX_FORTH,     # CONFIRMED
+		},
+		'text/x-fortran'            => {
+			name => 'Fortran',
+			lexer => Wx::wxSTC_LEX_FORTRAN,   # CONFIRMED
+		},
+		'text/html'                 => {
+			name => 'HTML',
+			lexer => Wx::wxSTC_LEX_HTML,      # CONFIRMED
+		},
+		'application/javascript'    => {
+			name => 'Javascript',
+			lexer => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
+		},
+		'application/json'          => {
+			name => 'JSON',
+			lexer => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
+		},
+		'application/x-latex'       => {
+			name => 'Latex',
+			lexer => Wx::wxSTC_LEX_LATEX,     # CONFIRMED
+		},
+		'application/x-lisp'        => {
+			name => 'LISP',
+			lexer => Wx::wxSTC_LEX_LISP,      # CONFIRMED
+		},
+		'application/x-shellscript' => {
+			name => 'Shellscript',
+			lexer => Wx::wxSTC_LEX_BASH,
+		},
+		'text/x-lua'                => {
+			name => 'Lua',
+			lexer => Wx::wxSTC_LEX_LUA,       # CONFIRMED
+		},
+		'text/x-makefile'           => {
+			name => 'Makefile',
+			lexer => Wx::wxSTC_LEX_MAKEFILE,  # CONFIRMED
+		},
+		'text/x-matlab'             => {
+			name => 'Matlab',
+			lexer => Wx::wxSTC_LEX_MATLAB,    # CONFIRMED
+		},
+		'text/x-pascal'             => {
+			name => 'Pascal',
+			lexer => Wx::wxSTC_LEX_PASCAL,    # CONFIRMED
+		},
+		'application/x-perl' => {
+			name  => 'Perl 5',
+			lexer =>         => Wx::wxSTC_LEX_PERL,      # CONFIRMED
+		},
+		'text/x-python'             => {
+			name => 'Python',
+			lexer => Wx::wxSTC_LEX_PYTHON,    # CONFIRMED
+		},
+		'application/x-php'         => {
+			name => 'PHP',
+			lexer => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
+		},
+		'application/x-ruby'        => {
+			name => 'Ruby',
+			lexer => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
+		},
+		'text/x-sql'                => {
+			name => 'SQL',
+			lexer => Wx::wxSTC_LEX_SQL,       # CONFIRMED
+		},
+		'application/x-tcl'         => {
+			name => 'Tcl',
+			lexer => Wx::wxSTC_LEX_TCL,       # CONFIRMED
+		},
+		'text/vbscript'             => {
+			name => 'VBScript',
+			lexer => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
+		},
 
-		'text/x-config' => Wx::wxSTC_LEX_CONF,
+		'text/x-config' => {
+			name => 'Config',
+			lexer => Wx::wxSTC_LEX_CONF,
+		},
 
 		# text/xml specifically means "human-readable XML".
 		# This is prefered to the more generic application/xml
-		'text/xml' => Wx::wxSTC_LEX_XML,                        # CONFIRMED
+		'text/xml' => {
+			name => 'XML',
+			lexer => Wx::wxSTC_LEX_XML,                        # CONFIRMED
+		},
 
-		'text/x-yaml'         => Wx::wxSTC_LEX_YAML,            # CONFIRMED
-		'application/x-pir'   => Wx::wxSTC_LEX_NULL,            # CONFIRMED
-		'application/x-pasm'  => Wx::wxSTC_LEX_NULL,            # CONFIRMED
-		'application/x-perl6' => Wx::wxSTC_LEX_NULL,            # CONFIRMED
-		'text/plain'          => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		'text/x-yaml'         => {
+			name => 'YAML',
+			lexer => Wx::wxSTC_LEX_YAML,            # CONFIRMED
+		},
+		'application/x-pir'   => {
+			name => 'PIR',
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		},
+		'application/x-pasm'  => {
+			name => 'PASM',
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		},
+		'application/x-perl6' => {
+			name => 'Perl 6',
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		},
+		'text/plain'          => {
+			name => 'Text',
+			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		},
 	);
 
 	%MIME_CLASS = (
@@ -154,18 +255,6 @@ sub _initialize {
 		'text/x-pod'         => 'Padre::Document::POD',
 	);
 
-	%MIME_TYPES = (
-		'application/x-perl' => {
-			name  => 'Perl 5',
-		},
-		'application/x-perl6' => {
-			name => 'Perl 6',
-		}
-	);
-	foreach my $mt ( keys %MIME_LEXER ) {
-		$MIME_TYPES{$mt}{name} = $mt unless $MIME_TYPES{$mt};
-		$MIME_TYPES{$mt}{lexer} = $MIME_LEXER{$mt};
-	}
 
 	# array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->read_current_highlighters_from_db();
