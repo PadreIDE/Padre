@@ -190,9 +190,10 @@ sub enable {
 	if ( my @highlighters = $self->object->provided_highlighters ) {
 		require Padre::MimeTypes;
 		foreach my $h (@highlighters) {
-
-			# TODO check if $h is an ARRAY ref
-			# if there are 3 values and if the first one is really a module in this plugin.
+			if (ref $h ne 'ARRAY') {
+				warn "Not array reference '$h'\n";
+				next;
+			}
 			Padre::MimeTypes->add_highlighter(@$h);
 		}
 	}
