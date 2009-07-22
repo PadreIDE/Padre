@@ -580,59 +580,6 @@ sub rebless {
 }
 
 #####################################################################
-# Padre::Document GUI Integration
-
-sub colorize {
-	my $self = shift;
-
-	Padre::Util::debug("colorize called");
-
-	my $module = $self->get_highlighter;
-	if ( $module eq 'stc' ) {
-
-		#TODO sometime this happens when I open Padre with several file
-		# I think this can be somehow related to the quick (or slow ?) switching of
-		# what is the current document while the code is still running.
-		# for now I hide the warnings as this would just frighten people and the
-		# actual problem seems to be only the warning or maybe late highighting
-		# of a single document - szabgab
-		#Carp::cluck("highlighter is set to 'stc' while colorize() is called for " . ($self->filename || '') . "\n");
-		#warn "Length: " . $self->editor->GetTextLength;
-		return;
-	}
-
-	# allow virtual modules if they have a colorize method
-	if ( not $module->can('colorize') ) {
-		eval "use $module";
-		if ($@) {
-			Carp::cluck( "Could not load module '$module' for file '" . ( $self->filename || '' ) . "'\n" );
-			return;
-		}
-	}
-	if ( $module->can('colorize') ) {
-		$module->colorize(@_);
-	} else {
-		warn("Module $module does not have a colorize method\n");
-	}
-	return;
-}
-
-
-sub last_sync {
-	return $_[0]->{_timestamp};
-}
-
-sub basename {
-	my $filename = $_[0]->filename;
-	defined($filename) ? File::Basename::basename($filename) : undef;
-}
-
-sub dirname {
-	my $filename = $_[0]->filename;
-	defined($filename) ? File::Basename::dirname($filename) : undef;
-}
-
-#####################################################################
 # Bad/Ugly/Broken Methods
 # These don't really completely belong in this class, but there's
 # currently nowhere better for them. Some break API boundaries...
@@ -703,7 +650,63 @@ sub mime_type_by_extension {
 	$EXT_MIME{ $_[1] };
 }
 
+#########
 
+
+#####################################################################
+# Padre::Document GUI Integration
+
+sub colorize {
+	my $self = shift;
+
+	Padre::Util::debug("colorize called");
+
+	my $module = $self->get_highlighter;
+	if ( $module eq 'stc' ) {
+
+		#TODO sometime this happens when I open Padre with several file
+		# I think this can be somehow related to the quick (or slow ?) switching of
+		# what is the current document while the code is still running.
+		# for now I hide the warnings as this would just frighten people and the
+		# actual problem seems to be only the warning or maybe late highighting
+		# of a single document - szabgab
+		#Carp::cluck("highlighter is set to 'stc' while colorize() is called for " . ($self->filename || '') . "\n");
+		#warn "Length: " . $self->editor->GetTextLength;
+		return;
+	}
+
+	# allow virtual modules if they have a colorize method
+	if ( not $module->can('colorize') ) {
+		eval "use $module";
+		if ($@) {
+			Carp::cluck( "Could not load module '$module' for file '" . ( $self->filename || '' ) . "'\n" );
+			return;
+		}
+	}
+	if ( $module->can('colorize') ) {
+		$module->colorize(@_);
+	} else {
+		warn("Module $module does not have a colorize method\n");
+	}
+	return;
+}
+
+
+sub last_sync {
+	return $_[0]->{_timestamp};
+}
+
+sub basename {
+	my $filename = $_[0]->filename;
+	defined($filename) ? File::Basename::basename($filename) : undef;
+}
+
+sub dirname {
+	my $filename = $_[0]->filename;
+	defined($filename) ? File::Basename::dirname($filename) : undef;
+}
+
+#left here a it is used in many places. Maybe we need to remove this sub.
 sub guess_mimetype {
 	my $self     = shift;
 	my $text     = $self->{original_content};
