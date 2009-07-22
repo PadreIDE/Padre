@@ -1021,6 +1021,10 @@ sub restore_cursor_position {
 #####################################################################
 # GUI Integration Methods
 
+sub get_lexer {
+	my ($self, $mime_type) = @_;
+	return $MIME_LEXER{ $mime_type };
+}
 # Determine the Scintilla lexer to use
 sub lexer {
 	my $self = shift;
@@ -1034,10 +1038,10 @@ sub lexer {
 		$highlighter = 'stc';
 	}
 	return Wx::wxSTC_LEX_CONTAINER if $highlighter ne 'stc';
-	return Wx::wxSTC_LEX_AUTOMATIC unless defined $MIME_LEXER{ $self->get_mimetype };
+	return Wx::wxSTC_LEX_AUTOMATIC unless defined $self->get_lexer( $self->get_mimetype );
 
 	Padre::Util::debug( 'STC Lexer will be based on mime type "' . $self->get_mimetype . '"' );
-	return $MIME_LEXER{ $self->get_mimetype };
+	return $self->get_lexer( $self->get_mimetype );
 }
 
 # What should be shown in the notebook tab
