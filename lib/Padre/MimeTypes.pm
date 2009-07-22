@@ -30,20 +30,13 @@ our $VERSION = '0.40';
 # (which we don't support loading in fallback text mode)
 my %EXT_BINARY;
 my %EXT_MIME;
-
-
-# TODO fill this hash and use this name in various places where a human readable
-# display of file type is needed
-# TODO move the whole mime-type and highlighter related code to its own class
 my %AVAILABLE_HIGHLIGHTERS;
 my %MIME_TYPES;
-# This is the mime-type to document class mapping
-my %MIME_CLASS;
 
 _initialize();
 
 sub _initialize {
-	return if %EXT_BINARY;
+	return if %EXT_BINARY; # call it only once
 
 	%EXT_BINARY = map { $_ => 1 } qw{
 		aiff  au    avi  bmp  cache  dat   doc  gif  gz   icns
@@ -103,6 +96,11 @@ sub _initialize {
 	# Lines marked with CONFIRMED indicate that the mime-typehas been checked
 	# to confirm that the MIME type is either the official type, or the primary
 	# one in use by the relevant language community.
+	
+	# name => Human readable name
+	# lexer => The Scintilla lexer to be used
+	# class => document class 
+
 	%MIME_TYPES = (
 		'text/x-abc' => {
 			name => 'ABC',
@@ -190,6 +188,7 @@ sub _initialize {
 		'application/x-perl' => {
 			name  => 'Perl 5',
 			lexer => Wx::wxSTC_LEX_PERL,      # CONFIRMED
+			class => 'Padre::Document::Perl',
 		},
 		'text/x-python'             => {
 			name => 'Python',
@@ -249,11 +248,11 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 		},
 	);
+	# TODO: 
+	# add some mime-type for pod files
+	# or remove the whole Padre::Document::POD class as it is not in use
+	#'text/x-pod'         => 'Padre::Document::POD',
 
-	%MIME_CLASS = (
-		'application/x-perl' => 'Padre::Document::Perl',
-		'text/x-pod'         => 'Padre::Document::POD',
-	);
 
 
 	# array ref of objects with value and mime_type fields that have the raw values
@@ -293,38 +292,53 @@ sub get_lexer {
 # prefered default values ?
 
 
-
-
-
-
 sub add_mime_class {
 	my $self  = shift;
 	my $mime  = shift;
 	my $class = shift;
-	if ( $MIME_CLASS{$mime} ) {
-
+	if ( not $MIME_TYPES{$mime} ) {
 		# TODO: display on the GUI
-		warn "Mime type $mime already has a class '$MIME_CLASS{$mime}' when add_mime_class($class) was called\n";
+		warn "Mime type $mime is not supported when add_mime_class($class) was called\n";
 		return;
 	}
-	$MIME_CLASS{$mime} = $class;
+
+	if ( $MIME_TYPES{$mime}{class} ) {
+		# TODO: display on the GUI
+		warn "Mime type $mime already has a class '$MIME_TYPES{$mime}{class}' when add_mime_class($class) was called\n";
+		return;
+	}
+	$MIME_TYPES{$mime}{class} = $class;
 }
 
 sub remove_mime_class {
 	my $self = shift;
 	my $mime = shift;
-	if ( not $MIME_CLASS{$mime} ) {
-
+	
+	if ( not $MIME_TYPES{$mime} ) {
 		# TODO: display on GUI
-		warn "Mime type $mime does not have an entry in the MIME_CLASS when remove_mime_class($mime) was called\n";
+		warn "Mime type $mime is not supported when remove_mime_class($mime) was called\n";
+		return;
 	}
-	delete $MIME_CLASS{$mime};
+	
+	if ( not $MIME_TYPES{$mime}{class} ) {
+		# TODO: display on GUI
+		warn "Mime type $mime does not have a class entry when remove_mime_class($mime) was called\n";
+		return;
+	}
+	delete $MIME_TYPES{$mime}{class};
 }
 
 sub get_mime_class {
 	my $self = shift;
 	my $mime = shift;
-	return $MIME_CLASS{$mime};
+
+	if ( not $MIME_TYPES{$mime} ) {
+		# TODO: display on GUI
+		warn "Mime type $mime is not supported when remove_mime_class($mime) was called\n";
+		return;
+	}
+	
+	return $MIME_TYPES{$mime}{class};
 }
 
 sub add_highlighter {
@@ -550,7 +564,7 @@ sub perl_mime_type {
 
 	# Sometimes Perl 6 will look like Perl 5
 	# But only do this test if the Perl 6 plugin is enabled.
-	if ( $MIME_CLASS{'application/x-perl6'} and is_perl6($text) ) {
+	if ( $MIME_TYPES{'application/x-perl6'}{class} and is_perl6($text) ) {
 		return 'application/x-perl6';
 	} else {
 		return 'application/x-perl';
