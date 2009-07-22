@@ -572,6 +572,21 @@ sub text_like {
 	return !!( $self->text_get =~ /$_[0]/m );
 }
 
+sub text_with_one_nl {
+	my $self = shift;
+	my $text = $self->text_get;
+	my $nlchar = "\n";
+	if ( $self->get_newline_type eq 'WIN' ) {
+		$nlchar = "\r\n";
+	}
+	elsif ( $self->get_newline_type eq 'MAC' ) {
+		$nlchar = "\r";
+	}
+	$text =~ s/$nlchar/\n/g;
+	return $text;
+}
+
+
 # --
 
 #
