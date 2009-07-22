@@ -189,7 +189,7 @@ sub _initialize {
 		},
 		'application/x-perl' => {
 			name  => 'Perl 5',
-			lexer =>         => Wx::wxSTC_LEX_PERL,      # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PERL,      # CONFIRMED
 		},
 		'text/x-python'             => {
 			name => 'Python',

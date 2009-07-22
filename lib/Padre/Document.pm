@@ -141,6 +141,7 @@ our $VERSION = '0.40';
 # NOTE: This is probably a bad place to store this
 my $unsaved_number = 0;
 
+# TODO generate this from the the MIME_TYPES in the Padre::MimeTypes class?
 sub menu_view_mimes {
 	'00Plain Text'     => 'text/plain',
 		'01Perl'       => 'application/x-perl',
