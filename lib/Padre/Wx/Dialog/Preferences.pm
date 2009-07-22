@@ -498,7 +498,7 @@ END_TEXT
 
 	# Trap exception if there is no document currently open
 	eval {
-		unless ( $document->is_new )
+		if ( $document and !$document->is_new )
 		{
 			( $filename, $path ) = File::Basename::fileparse( Padre::Current->filename );
 			foreach my $arg ( keys %run_args ) {
@@ -823,18 +823,20 @@ sub run {
 	# Quite like in _run_params_panel, trap exception if there
 	# is no document currently open
 	eval {
-		unless ( Padre::Current->document->is_new )
+		my $doc = Padre::Current->document;
+		unless ( $doc and $doc->is_new )
 		{
 
 			# These are a bit different as run_* variable name depends
 			# on current document's filename
-			foreach ( grep { /^run_/ and not /_default$/ } keys %$data ) {
-				if ( Padre::DB::History->previous($_) eq $data->{$_} ) {
+			foreach my $type ( grep { /^run_/ and not /_default$/ } keys %$data ) {
+				my $previous = Padre::DB::History->previous($type);
+				if ( $previous and $previous eq $data->{$type} ) {
 					next;
 				}
 				Padre::DB::History->create(
-					type => $_,
-					name => $data->{$_},
+					type => $type,
+					name => $data->{$type},
 				);
 			}
 		}
