@@ -246,6 +246,11 @@ my %MIME_LEXER = (
 	'text/plain'          => Wx::wxSTC_LEX_NULL,            # CONFIRMED
 );
 
+sub get_lexer {
+	my ($self, $mime_type) = @_;
+	return $MIME_LEXER{ $mime_type };
+}
+
 # TODO: Set some reasonable default highlighers for each mime-type for when there
 # are no plugins. e.g. For Perl 6 style files that should be plain text.
 # Either allow the plugins to set the defaults (maybe allow the plugin that implements
@@ -650,7 +655,7 @@ sub guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->();
+				return $EXT_MIME{$ext}->( $self->{original_content} );
 			} else {
 				return $EXT_MIME{$ext};
 			}
@@ -670,7 +675,7 @@ sub guess_mimetype {
 
 		# Found a hash bang line
 		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-			return $self->perl_mime_type;
+			return $self->perl_mime_type( $self->{original_content} );
 		}
 		if ( $text =~ /\A---/ ) {
 			return 'text/x-yaml';
@@ -683,8 +688,7 @@ sub guess_mimetype {
 
 sub perl_mime_type {
 	my $self = shift;
-
-	my $text = $self->{original_content};
+	my $text = shift;
 
 	# Sometimes Perl 6 will look like Perl 5
 	# But only do this test if the Perl 6 plugin is enabled.
@@ -1021,10 +1025,6 @@ sub restore_cursor_position {
 #####################################################################
 # GUI Integration Methods
 
-sub get_lexer {
-	my ($self, $mime_type) = @_;
-	return $MIME_LEXER{ $mime_type };
-}
 # Determine the Scintilla lexer to use
 sub lexer {
 	my $self = shift;
