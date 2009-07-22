@@ -415,13 +415,12 @@ sub find {
 
 	# If selection is more than one line then consider it as the limit
 	# of the search and not as the string to be used (which becomes '')
-	if ($text =~ /\n/ ) {
+	if ( $text =~ /\n/ ) {
 		$self->{text_offset}     = $editor->GetSelectionStart;
 		$self->{text_offset_end} = $editor->GetSelectionEnd;
-		$text = '';
-	}
-	else {
-		$self->{text_offset} = 0;
+		$text                    = '';
+	} else {
+		$self->{text_offset}     = 0;
 		$self->{text_offset_end} = $editor->GetLength;
 	}
 
@@ -563,9 +562,11 @@ sub search {
 	my ( $from, $to ) = $editor->GetSelection;
 
 	# Execute the search and move to the resulting location
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $self->{text}, $regex, $from - $self->{text_offset}, $to - $self->{text_offset}, $backwards );
+	my ( $start, $end, @matches ) =
+		Padre::Util::get_matches( $self->{text}, $regex, $from - $self->{text_offset}, $to - $self->{text_offset},
+		$backwards );
 	return unless defined $start;
-	$editor->SetSelection( $start + $self->{text_offset}, $end + $self->{text_offset});
+	$editor->SetSelection( $start + $self->{text_offset}, $end + $self->{text_offset} );
 
 	return;
 }
@@ -650,8 +651,8 @@ sub replace_all {
 	if (@matches) {
 		$editor->BeginUndoAction;
 		foreach my $match ( reverse @matches ) {
-			$editor->SetTargetStart( $match->[0] + $self->{text_offset});
-			$editor->SetTargetEnd( $match->[1] + $self->{text_offset});
+			$editor->SetTargetStart( $match->[0] + $self->{text_offset} );
+			$editor->SetTargetEnd( $match->[1] + $self->{text_offset} );
 			$editor->ReplaceTarget($replace);
 		}
 		$editor->EndUndoAction;
@@ -688,20 +689,20 @@ sub replace {
 	$replace =~ s/\\t/\t/g if length $replace;
 
 	# Get current search condition and check if they match
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0,0 );
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, 0, 0 );
 
 	# If they match replace it
 	if ( defined $start and $start == 0 and $end == length($text) ) {
 		$current->editor->ReplaceSelection($replace);
 
-		# If replaced text is smaller or larger than original, 
+		# If replaced text is smaller or larger than original,
 		# change our offset end accordingly
-		if( length($replace) != ($end - $start) ) {
-			$self->{text_offset_end} += (length($replace) - ($end - $start));
+		if ( length($replace) != ( $end - $start ) ) {
+			$self->{text_offset_end} += ( length($replace) - ( $end - $start ) );
 		}
-		
+
 		# Update text to search with replaced values
-	###################	$self->{text} = $current->editor->GetTextRange( $self->{text_offset}, $self->{text_offset_end} );
+		###################	$self->{text} = $current->editor->GetTextRange( $self->{text_offset}, $self->{text_offset_end} );
 	}
 
 	# If search window is still open, run a search on the whole text again

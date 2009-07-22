@@ -12,7 +12,7 @@ our $VERSION = '0.40';
 sub colorize {
 	my $self = shift;
 
-	my $doc    = Padre::Current->document;
+	my $doc = Padre::Current->document;
 
 	Padre::Util::debug("PPILexer colorize called");
 

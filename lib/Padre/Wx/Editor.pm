@@ -626,15 +626,15 @@ sub on_focus {
 		}
 	}
 
-# TODO
-# this is called even if the mouse is moved away from padre and back again
-# we should restrict some of the updates to cases when we switch from one file to
-# another
+	# TODO
+	# this is called even if the mouse is moved away from padre and back again
+	# we should restrict some of the updates to cases when we switch from one file to
+	# another
 
 	if ( $self->needs_manual_colorize ) {
 		Padre::Util::debug("needs_manual_colorize");
 		my $lexer = $self->GetLexer;
-		if ($lexer == Wx::wxSTC_LEX_CONTAINER) {
+		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 			$doc->colorize;
 		} else {
 			$doc->remove_color;

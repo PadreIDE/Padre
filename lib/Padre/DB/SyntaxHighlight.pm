@@ -18,7 +18,7 @@ sub set_mime_type {
 	my $class     = shift;
 	my $mime_type = shift;
 	my $module    = shift;
-	
+
 	Padre::DB->begin;
 	$class->delete(
 		'where mime_type = ?', $mime_type,

@@ -1503,10 +1503,11 @@ sub run_command {
 	my $config = $self->config;
 	if ( $config->run_use_external_window ) {
 		if (Padre::Util::WIN32) {
+
 			# '^' is the escape character in win32 command line
 			# '"' is needed to escape spaces and other characters in paths
 			$cmd =~ s/"/^/g;
-			system "cmd.exe /C \"start $cmd\"";;
+			system "cmd.exe /C \"start $cmd\"";
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
 		}
@@ -3115,23 +3116,23 @@ sub on_preferences {
 	my $self = shift;
 
 	my %old_highlighters = Padre::Document->get_current_highlighters;
-	
+
 	require Padre::Wx::Dialog::Preferences;
 	my $prefDlg = Padre::Wx::Dialog::Preferences->new;
 	if ( $prefDlg->run($self) ) {
 		my %mime_types; # all the mime-types of currently open files
 		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
-			$mime_types{$editor->{Document}->get_mimetype} = 1;
+			$mime_types{ $editor->{Document}->get_mimetype } = 1;
 		}
 
 		my %new_highlighters = Padre::Document->get_current_highlighters;
-		
-		foreach my $mime_type (keys %mime_types) {
+
+		foreach my $mime_type ( keys %mime_types ) {
 			my $old_highlighter = $old_highlighters{$mime_type};
 			my $new_highlighter = $new_highlighters{$mime_type};
-			if ($old_highlighter ne $new_highlighter) {
-				$self->change_highlighter($mime_type, $new_highlighter);
+			if ( $old_highlighter ne $new_highlighter ) {
+				$self->change_highlighter( $mime_type, $new_highlighter );
 			}
 		}
 

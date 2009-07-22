@@ -106,11 +106,11 @@ sub set_highlighter {
 	# is slow. Probably there is not much use in moving this back to a
 	# configuration variable
 	my $limit;
-	if ($module eq 'Padre::Document::Perl::PPILexer') {
+	if ( $module eq 'Padre::Document::Perl::PPILexer' ) {
 		$limit = 2000;
-	} elsif ($module eq 'Padre::Document::Perl::Lexer') {
+	} elsif ( $module eq 'Padre::Document::Perl::Lexer' ) {
 		$limit = 2000;
-	} elsif ($module eq 'Padre::Plugin::Kate') {
+	} elsif ( $module eq 'Padre::Plugin::Kate' ) {
 		$limit = 2000;
 	}
 
@@ -120,8 +120,7 @@ sub set_highlighter {
 		$length = $editor->GetTextLength;
 	}
 
-	Padre::Util::debug("Setting highlighter for Perl 5 code. length: $length" . 
-		($limit ? " limit is $limit" : '') );
+	Padre::Util::debug( "Setting highlighter for Perl 5 code. length: $length" . ( $limit ? " limit is $limit" : '' ) );
 
 	if ( defined $limit and $length > $limit ) {
 		Padre::Util::debug("Forcing STC highlighting");

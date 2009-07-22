@@ -183,25 +183,28 @@ sub enable {
 	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
-		Padre::Document->add_mime_class($type, $class);
+		Padre::Document->add_mime_class( $type, $class );
 	}
 
 	# TODO remove these when plugin is disabled (and make sure files are not highlighted with this any more)
-	if (my @highlighters = $self->object->provided_highlighters) {
+	if ( my @highlighters = $self->object->provided_highlighters ) {
 		require Padre::Document;
 		foreach my $h (@highlighters) {
-			# TODO check if $h is an ARRAY ref 
+
+			# TODO check if $h is an ARRAY ref
 			# if there are 3 values and if the first one is really a module in this plugin.
 			Padre::Document->add_highlighter(@$h);
 		}
 	}
+
 	# TODO remove these when plugin is disabled (and make sure files are not highlighted with this any more)
-	if (my %mime_types = $self->object->highlighting_mime_types) {
+	if ( my %mime_types = $self->object->highlighting_mime_types ) {
 		require Padre::Document;
-		foreach my $module (keys %mime_types) {
+		foreach my $module ( keys %mime_types ) {
+
 			# TODO sanity check here too.
-			foreach my $mime_type (@{ $mime_types{$module} }) {
-				Padre::Document->add_highlighter_to_mime_type($mime_type, $module);
+			foreach my $mime_type ( @{ $mime_types{$module} } ) {
+				Padre::Document->add_highlighter_to_mime_type( $mime_type, $module );
 			}
 		}
 	}

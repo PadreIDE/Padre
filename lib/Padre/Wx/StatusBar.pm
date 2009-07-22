@@ -103,6 +103,7 @@ sub new {
 
 	# Set up the fields
 	$self->SetFieldsCount(6);
+
 	#$self->SetStatusWidths( -1, 0, 100, 100, 50, 100 );
 
 	# react to resize events, to adapt size of icon field
@@ -162,21 +163,22 @@ sub refresh {
 		$filename
 		? File::Basename::basename($filename)
 		: substr( $old, 1 );
-	my $modified = $editor->GetModify ? '*' : ' ';
-	my $title    = $modified . $text;
-	my $position = $editor->GetCurrentPos;
-	my $line     = $editor->GetCurrentLine;
-	my $start    = $editor->PositionFromLine($line);
-	my $lines    = $editor->GetLineCount;
-	my $char     = $position - $start;
-	my $width    = $self->GetCharWidth;
-	my $highlighter  = $document->get_highlighter_name($document->get_highlighter);
-	my $mimetype = $document->get_mimetype;
-	my $percent  = int (100 * $line / $lines);
+	my $modified    = $editor->GetModify ? '*' : ' ';
+	my $title       = $modified . $text;
+	my $position    = $editor->GetCurrentPos;
+	my $line        = $editor->GetCurrentLine;
+	my $start       = $editor->PositionFromLine($line);
+	my $lines       = $editor->GetLineCount;
+	my $char        = $position - $start;
+	my $width       = $self->GetCharWidth;
+	my $highlighter = $document->get_highlighter_name( $document->get_highlighter );
+	my $mimetype    = $document->get_mimetype;
+	my $percent     = int( 100 * $line / $lines );
+
 	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
-	my $format = '%' . length($lines+1) . 's,%-3s %3s%%';
-	my $length = length($lines+1) + 8;
-	my $postring  = sprintf($format, ( $line + 1  ), $char, $percent);
+	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
+	my $length   = length( $lines + 1 ) + 8;
+	my $postring = sprintf( $format, ( $line + 1 ), $char, $percent );
 
 	# update task load status
 	$self->update_task_status;

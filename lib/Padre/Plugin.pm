@@ -260,7 +260,7 @@ TBD. See Padre::Document
 
 =cut
 
-sub provided_highlighters { 
+sub provided_highlighters {
 	return ();
 }
 

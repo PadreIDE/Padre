@@ -64,26 +64,30 @@ sub _external_tools_panel {
 sub _mime_type_panel {
 	my ( $self, $treebook ) = @_;
 
-	my $mime_types   = Padre::Document->get_mime_type_names;
-	
+	my $mime_types = Padre::Document->get_mime_type_names;
+
 	# get list of mime-types
 	my $table = [
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Mime type') ],
-			[ 'Wx::Choice',  'mime_type', $mime_types ]
+		[   [ 'Wx::StaticText', undef,       Wx::gettext('Mime type') ],
+			[ 'Wx::Choice',     'mime_type', $mime_types ]
 		],
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Select the highlighter:') ],
-			[ 'Wx::Choice',  'highlighters', [] ]
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Select the highlighter:') ],
+			[ 'Wx::Choice', 'highlighters', [] ]
 		],
-		[   [ 'Wx::StaticText', 'description',   [] ],
+		[   [ 'Wx::StaticText', 'description', [] ],
 		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
 	$self->fill_panel_by_table( $panel, $table );
-	Wx::Event::EVT_CHOICE( $panel, $self->get_widget('mime_type'), 
-		sub { _on_mime_type_changed($self, @_) } );
-	Wx::Event::EVT_CHOICE( $panel, $self->get_widget('highlighters'), 
-		sub { _on_highlighter_changed($self, @_) } );
+	Wx::Event::EVT_CHOICE(
+		$panel, $self->get_widget('mime_type'),
+		sub { _on_mime_type_changed( $self, @_ ) }
+	);
+	Wx::Event::EVT_CHOICE(
+		$panel, $self->get_widget('highlighters'),
+		sub { _on_highlighter_changed( $self, @_ ) }
+	);
 	$self->update_highlighters;
 	$self->update_description;
 	$self->get_widget('description')->Wrap(200); # TODO should be based on the width of the page !
@@ -91,29 +95,30 @@ sub _mime_type_panel {
 }
 
 sub _on_mime_type_changed {
-	my ($self, $panel, $event) = @_;
+	my ( $self, $panel, $event ) = @_;
 	$self->update_highlighters;
 	$self->update_description;
 }
+
 sub update_highlighters {
 	my ($self) = @_;
 
-	my $selection = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types = Padre::Document->get_mime_type_names;
+	my $selection      = $self->get_widget('mime_type')->GetSelection;
+	my $mime_types     = Padre::Document->get_mime_type_names;
 	my $mime_type_name = $mime_types->[$selection];
-	
+
 	#print "mime '$mime_type_name'\n";
 	$self->{_highlighters_}{$mime_type_name} ||= $self->{_start_highlighters_}{$mime_type_name};
 
-	my $highlighters = Padre::Document->get_highlighters_of_mime_type_name( $mime_type_name );
+	my $highlighters = Padre::Document->get_highlighters_of_mime_type_name($mime_type_name);
+
 	#print "hl '$highlighters'\n";
-	my ($id) = grep { $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} }
-		(0 .. @$highlighters - 1);
+	my ($id) = grep { $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} } ( 0 .. @$highlighters - 1 );
 	$id ||= 0;
 
-	my $list    = $self->get_widget('highlighters');
+	my $list = $self->get_widget('highlighters');
 	$list->Clear;
-	$list->AppendItems( $highlighters );
+	$list->AppendItems($highlighters);
 	$list->SetSelection($id);
 }
 
@@ -126,18 +131,19 @@ sub update_description {
 	my ($self) = @_;
 
 	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types   = Padre::Document->get_mime_type_names;
+	my $mime_types          = Padre::Document->get_mime_type_names;
 
-	my $mime_type_name = $mime_types->[ $mime_type_selection ];
+	my $mime_type_name = $mime_types->[$mime_type_selection];
 
-	my $highlighters = Padre::Document->get_highlighters_of_mime_type_name( $mime_type_name ) ; 
+	my $highlighters          = Padre::Document->get_highlighters_of_mime_type_name($mime_type_name);
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
-	my $highlighter  = $highlighters->[ $highlighter_selection ];
+	my $highlighter           = $highlighters->[$highlighter_selection];
 
 	$self->{_highlighters_}{$mime_type_name} = $highlighter;
+
 	#print "Highlighter $highlighter\n";
 
-	$self->get_widget('description')->SetLabel( Padre::Document->get_highlighter_explanation( $highlighter ))
+	$self->get_widget('description')->SetLabel( Padre::Document->get_highlighter_explanation($highlighter) );
 }
 
 
@@ -592,7 +598,7 @@ sub dialog {
 		Wx::gettext('Run Parameters')
 	);
 
-	my $mime_types = $self->_mime_type_panel( $tb );
+	my $mime_types = $self->_mime_type_panel($tb);
 	$tb->AddPage( $mime_types, Wx::gettext('Mime-types') );
 
 	my $indentation = $self->_indentation_panel( $tb, $editor_autoindent );
@@ -729,13 +735,14 @@ sub run {
 
 	# Save the highlighters
 	my %changed_highlighters;
-	foreach my $mime_type_name ( keys %{ $self->{_highlighters_} }  ) {
+	foreach my $mime_type_name ( keys %{ $self->{_highlighters_} } ) {
 		if ( $self->{_start_highlighters_}{$mime_type_name} ne $self->{_highlighters_}{$mime_type_name} ) {
 			$changed_highlighters{$mime_type_name} = $self->{_highlighters_}{$mime_type_name};
+
 			#print "Changing highlighter of $mime_type_name from $self->{_start_highlighters_}{$mime_type_name} to $self->{_highlighters_}{$mime_type_name}\n";
 		}
 	}
-	Padre::Document->change_highlighters(\%changed_highlighters);
+	Padre::Document->change_highlighters( \%changed_highlighters );
 
 	my $data = $self->get_widgets_values;
 	$config->set(

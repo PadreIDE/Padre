@@ -188,7 +188,7 @@ sub _list_dir {
 		# Open the folder and sort its content by name and type
 		opendir( my $dh, $path ) or return;
 		my @items =
-			sort { ( -d File::Spec->catfile( $path, $b ) ? 1 : 0 ) <=> ( -d File::Spec->catfile( $path, $a ) ? 1 : 0) }
+			sort { ( -d File::Spec->catfile( $path, $b ) ? 1 : 0 ) <=> ( -d File::Spec->catfile( $path, $a ) ? 1 : 0 ) }
 			sort { lc($a) cmp lc($b) } grep { not $self->{SKIP}->{$_} } readdir $dh;
 		closedir $dh;
 
@@ -589,7 +589,8 @@ sub _on_tree_item_expanding {
 sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
 	my $node_data = $self->GetPlData( $event->GetItem );
-	delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
+	delete $self->{CACHED}->{ $self->{current_project} }->{Expanded}
+		->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
 }
 
 ################################################################################
