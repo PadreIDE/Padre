@@ -326,6 +326,12 @@ sub remove_mime_class {
 	delete $MIME_CLASS{$mime};
 }
 
+sub get_mime_class {
+	my $self = shift;
+	my $mime = shift;
+	return $MIME_CLASS{$mime};
+}
+
 sub add_highlighter {
 	my $self        = shift;
 	my $module      = shift;
@@ -559,7 +565,7 @@ sub rebless {
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
 	my $mime_type = $self->get_mimetype;
-	my $class = $MIME_CLASS{$mime_type} || __PACKAGE__;
+	my $class = $self->get_mime_class($mime_type) || __PACKAGE__;
 	Padre::Util::debug("Reblessing to mimetype: '$class'");
 	if ($class) {
 		unless ( $class->VERSION ) {
