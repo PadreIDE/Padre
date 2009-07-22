@@ -41,6 +41,7 @@ use Padre::Current             ();
 use Padre::Util                ();
 use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
+use Padre::MimeTypes           ();
 
 use Class::XSAccessor accessors => {
 	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
@@ -171,7 +172,7 @@ sub refresh {
 	my $lines       = $editor->GetLineCount;
 	my $char        = $position - $start;
 	my $width       = $self->GetCharWidth;
-	my $highlighter = $document->get_highlighter_name( $document->get_highlighter );
+	my $highlighter = Padre::MimeTypes->get_highlighter_name( $document->get_highlighter );
 	my $mimetype    = $document->get_mimetype;
 	my $percent     = int( 100 * $line / $lines );
 

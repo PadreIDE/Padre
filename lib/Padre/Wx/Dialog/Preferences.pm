@@ -8,6 +8,7 @@ use Padre::Wx                              ();
 use Padre::Wx::Dialog                      ();
 use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
+use Padre::MimeTypes                       ();
 
 our $VERSION = '0.40';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -64,7 +65,7 @@ sub _external_tools_panel {
 sub _mime_type_panel {
 	my ( $self, $treebook ) = @_;
 
-	my $mime_types = Padre::Document->get_mime_type_names;
+	my $mime_types = Padre::MimeTypes->get_mime_type_names;
 
 	# get list of mime-types
 	my $table = [
@@ -104,13 +105,13 @@ sub update_highlighters {
 	my ($self) = @_;
 
 	my $selection      = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types     = Padre::Document->get_mime_type_names;
+	my $mime_types     = Padre::MimeTypes->get_mime_type_names;
 	my $mime_type_name = $mime_types->[$selection];
 
 	#print "mime '$mime_type_name'\n";
 	$self->{_highlighters_}{$mime_type_name} ||= $self->{_start_highlighters_}{$mime_type_name};
 
-	my $highlighters = Padre::Document->get_highlighters_of_mime_type_name($mime_type_name);
+	my $highlighters = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
 
 	#print "hl '$highlighters'\n";
 	my ($id) = grep { $highlighters->[$_] eq $self->{_highlighters_}{$mime_type_name} } ( 0 .. @$highlighters - 1 );
@@ -131,11 +132,11 @@ sub update_description {
 	my ($self) = @_;
 
 	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types          = Padre::Document->get_mime_type_names;
+	my $mime_types          = Padre::MimeTypes->get_mime_type_names;
 
 	my $mime_type_name = $mime_types->[$mime_type_selection];
 
-	my $highlighters          = Padre::Document->get_highlighters_of_mime_type_name($mime_type_name);
+	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
 	my $highlighter           = $highlighters->[$highlighter_selection];
 
@@ -143,7 +144,7 @@ sub update_description {
 
 	#print "Highlighter $highlighter\n";
 
-	$self->get_widget('description')->SetLabel( Padre::Document->get_highlighter_explanation($highlighter) );
+	$self->get_widget('description')->SetLabel( Padre::MimeTypes->get_highlighter_explanation($highlighter) );
 }
 
 
@@ -689,7 +690,7 @@ sub run {
 		Wx::gettext('alphabetical_private_last'),
 	);
 
-	$self->{_start_highlighters_} = Padre::Document->get_current_highlighter_names;
+	$self->{_start_highlighters_} = Padre::MimeTypes->get_current_highlighter_names;
 
 	# Startup preparation
 	my $main_startup       = $config->main_startup;
@@ -742,7 +743,7 @@ sub run {
 			#print "Changing highlighter of $mime_type_name from $self->{_start_highlighters_}{$mime_type_name} to $self->{_highlighters_}{$mime_type_name}\n";
 		}
 	}
-	Padre::Document->change_highlighters( \%changed_highlighters );
+	Padre::MimeTypes->change_highlighters( \%changed_highlighters );
 
 	my $data = $self->get_widgets_values;
 	$config->set(

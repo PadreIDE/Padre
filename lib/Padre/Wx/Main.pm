@@ -3115,7 +3115,8 @@ Open Padre's preferences dialog. No return value.
 sub on_preferences {
 	my $self = shift;
 
-	my %old_highlighters = Padre::Document->get_current_highlighters;
+	require Padre::MimeTypes;
+	my %old_highlighters = Padre::MimeTypes->get_current_highlighters;
 
 	require Padre::Wx::Dialog::Preferences;
 	my $prefDlg = Padre::Wx::Dialog::Preferences->new;
@@ -3126,7 +3127,7 @@ sub on_preferences {
 			$mime_types{ $editor->{Document}->get_mimetype } = 1;
 		}
 
-		my %new_highlighters = Padre::Document->get_current_highlighters;
+		my %new_highlighters = Padre::MimeTypes->get_current_highlighters;
 
 		foreach my $mime_type ( keys %mime_types ) {
 			my $old_highlighter = $old_highlighters{$mime_type};
