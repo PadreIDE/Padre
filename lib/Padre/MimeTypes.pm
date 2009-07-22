@@ -20,11 +20,6 @@ use warnings;
 use Carp            ();
 use Data::Dumper    ();
 use File::Basename  ();
-#use File::Spec      ();
-#use Padre::Constant ();
-#use Padre::Util     ();
-#use Padre::Wx       ();
-#use Padre           ();
 
 our $VERSION = '0.40';
 
@@ -36,19 +31,12 @@ our $VERSION = '0.40';
 my %EXT_BINARY;
 my %EXT_MIME;
 
-# This is the mime-type to Scintilla lexer mapping.
-# Lines marked with CONFIRMED indicate that the mime-typehas been checked
-# to confirm that the MIME type is either the official type, or the primary
-# one in use by the relevant language community.
-my %MIME_LEXER;
-
 
 # TODO fill this hash and use this name in various places where a human readable
 # display of file type is needed
 # TODO move the whole mime-type and highlighter related code to its own class
 my %AVAILABLE_HIGHLIGHTERS;
 my %MIME_TYPES;
-# TODO include this data in the MIME_TYPES hash
 # This is the mime-type to document class mapping
 my %MIME_CLASS;
 
@@ -111,7 +99,11 @@ sub _initialize {
 		p6    => 'application/x-perl6',
 	);
 
-	%MIME_LEXER = (
+	# This is the mime-type to Scintilla lexer mapping.
+	# Lines marked with CONFIRMED indicate that the mime-typehas been checked
+	# to confirm that the MIME type is either the official type, or the primary
+	# one in use by the relevant language community.
+	my %MIME_LEXER = (
 		'text/x-abc' => Wx::wxSTC_LEX_NULL,
 
 		'text/x-adasrc' => Wx::wxSTC_LEX_ADA, # CONFIRMED
@@ -162,11 +154,17 @@ sub _initialize {
 		'text/x-pod'         => 'Padre::Document::POD',
 	);
 
-	
-	$MIME_TYPES{'application/x-perl'}{name}  = 'Perl 5';
-	$MIME_TYPES{'application/x-perl6'}{name} = 'Perl 6';
+	%MIME_TYPES = (
+		'application/x-perl' => {
+			name  => 'Perl 5',
+		},
+		'application/x-perl6' => {
+			name => 'Perl 6',
+		}
+	);
 	foreach my $mt ( keys %MIME_LEXER ) {
 		$MIME_TYPES{$mt}{name} = $mt unless $MIME_TYPES{$mt};
+		$MIME_TYPES{$mt}{lexer} = $MIME_LEXER{$mt};
 	}
 
 	# array ref of objects with value and mime_type fields that have the raw values
@@ -174,7 +172,7 @@ sub _initialize {
 
 	__PACKAGE__->add_highlighter( 'stc', 'Scintilla', Wx::gettext('Scintilla, fast but might be out of date') );
 
-	foreach my $mime ( keys %MIME_LEXER ) {
+	foreach my $mime ( keys %MIME_TYPES ) {
 		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
 	}
 
@@ -196,7 +194,7 @@ sub _initialize {
 
 sub get_lexer {
 	my ($self, $mime_type) = @_;
-	return $MIME_LEXER{ $mime_type };
+	return $MIME_TYPES{ $mime_type }{lexer};
 }
 
 # TODO: Set some reasonable default highlighers for each mime-type for when there
