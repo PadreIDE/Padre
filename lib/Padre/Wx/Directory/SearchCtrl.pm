@@ -146,11 +146,24 @@ sub _search {
 	}
 
 	######################################################################
-	# Clears '\' words or trailing '\' and returns if the word is null
-	my $word = $self->GetValue;
-	$word =~ s/^\\$//g;
-	$word =~ s/\\$//g;
-	return unless $word;
+	# Quotes meta characters
+	my $word = quotemeta( $self->GetValue );
+
+	######################################################################
+	# If there is a Cached Word (in case that the user is still typing)
+	if ( my $last_word = $self->{CACHED}->{$current_project}->{value} ){
+
+		######################################################################
+		# Quotes meta characters
+		$last_word = quotemeta($last_word);;
+
+		######################################################################
+		# If the typed word contains the cached word, use Cached result to do
+		# the new search and returns the result
+		if ( $self->GetValue =~ /$last_word/i ) {
+			return $self->_search_in_cache( $node, $self->{CACHED}->{$current_project}->{Data} );
+		}
+	}
 
 	######################################################################
 	# Gets the node's data and generates its path
@@ -241,6 +254,97 @@ sub _search {
 	# deletes parent node if none
 	return @result;
 }
+
+################################################################################
+# _search_in_cache                                                             #
+#                                                                              #
+# Searchs recursively per items that matchs the REGEX typed in search field,   #
+# using the cached result. Only when the new word contains the lastest         #
+# searched word                                                                #
+#                                                                              #
+################################################################################
+sub _search_in_cache {
+	my ( $self, $node, $data ) = @_;
+	my $browser = $self->browser;
+
+	######################################################################
+	# Quotes meta characters
+	my $word = quotemeta($self->GetValue);
+
+	my @result = ();
+	######################################################################
+	# Goes thought each item from $data, if is a folder , searchs
+	# recursively inside it, if is a file tries to match its name
+	foreach ( @$data ) {
+
+		######################################################################
+		# If it is a folder, searchs recursively below it
+		if ( defined $_->{data} ) {
+			my %temp = (
+				dir => $_->{dir},
+				name => $_->{name},
+				type => $_->{type}
+			);
+
+			######################################################################
+			# Creates each folder node
+			my $new_folder = $browser->AppendItem(
+				$node, $_->{name}, -1, -1,
+				Wx::TreeItemData->new( {
+					dir  => $_->{dir},
+					name => $_->{name},
+					type => $_->{type},
+				} )
+			);
+			
+			$browser->SetItemImage(
+				$new_folder,
+				$browser->{file_types}->{folder},
+				Wx::wxTreeItemIcon_Normal,
+			);
+
+			######################################################################
+			# Deletes the folder node if any file below it was found
+			if ( @{$temp{data}} = $self->_search_in_cache( $new_folder, $_->{data} ) ) {
+				push @result, \%temp;
+			} else{
+				$browser->Delete($new_folder);
+			}
+		}
+		else {
+			######################################################################
+			# Adds each matched file
+			if ( $_->{name} =~ /$word/i ) {
+
+				my $new_elem = $browser->AppendItem(
+					$node, $_->{name}, -1,-1,
+					Wx::TreeItemData->new( {
+						name => $_->{name},
+						dir  => $_->{dir},
+						type => 'package',
+					} )
+				);
+				$browser->SetItemImage(
+					$new_elem,
+					$browser->{file_types}->{package},
+					Wx::wxTreeItemIcon_Normal,
+				);
+
+				push @result, {
+					name => $_->{name},
+					dir  => $_->{dir},
+					type => 'package',
+				};
+			}
+		}
+	}
+
+	######################################################################
+	# Returns 1 if any file above this path node was found or 0 and
+	# deletes parent node if none
+	return @result;
+}
+
 
 ################################################################################
 # _display_cached_search                                                       #
@@ -391,10 +495,6 @@ sub _on_text {
 	# Sets that the search is in use
 	$self->{in_use}->{ $current_project } = 1;
 
-	######################################################################
-	# Caches the searched word to the project
-	$self->{CACHED}->{ $current_project }->{value} = $value;
-
 	# Lock the gui here to make the updates look slicker
 	# The locker holds the gui freeze until the update is done.
 	my $locker = $self->main->freezer;
@@ -407,6 +507,10 @@ sub _on_text {
 	######################################################################
 	# Searchs below the root path and caches it
 	@{$self->{CACHED}->{ $current_project }->{Data}} = $self->_search($root);
+
+	######################################################################
+	# Caches the searched word to the project
+	$self->{CACHED}->{ $current_project }->{value} = $value;
 
 	######################################################################
 	# Expands all the folders to the files matched
