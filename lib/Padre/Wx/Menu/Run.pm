@@ -26,63 +26,52 @@ sub new {
 	$self->{main} = $main;
 
 	# Script Execution
-	$self->{run_document} = $self->Append(
-		-1,
-		Wx::gettext("Run Script\tF5")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{run_document},
-		sub {
+	$self->{run_document} = $self->add_menu_item(
+		$self,
+		name       => 'run.run_document', 
+		label      => Wx::gettext('Run Script'), 
+		shortcut   => 'F5',
+		menu_event => sub {
 			$_[0]->run_document;
 		},
 	);
 
-	$self->{run_document_debug} = $self->Append(
-		-1,
-		Wx::gettext("Run Script (debug info)\tShift-F5")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{run_document_debug},
-		sub {
+	$self->{run_document_debug} = $self->add_menu_item(
+		$self,
+		name       => 'run.run_document_debug', 
+		label      => Wx::gettext('Run Script (debug info)'), 
+		shortcut   => 'Shift-F5',
+		menu_event => sub {
 			$_[0]->run_document(1); # Enable debug info
 		},
 	);
 
-	$self->{run_command} = $self->Append(
-		-1,
-		Wx::gettext("Run Command\tCtrl-F5")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{run_command},
-		sub {
+	$self->{run_command} = $self->add_menu_item(
+		$self,
+		name       => 'run.run_command', 
+		label      => Wx::gettext('Run Command'), 
+		shortcut   => 'Ctrl-F5',
+		menu_event => sub {
 			$_[0]->on_run_command;
 		},
 	);
 
-	$self->{run_tests} = $self->Append(
-		-1,
-		Wx::gettext("Run Tests")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{run_tests},
-		sub {
+	$self->{run_tests} = $self->add_menu_item(
+		$self,
+		name       => 'run.run_tests', 
+		label      => Wx::gettext('Run Tests'), 
+		menu_event => sub {
 			$_[0]->on_run_tests;
 		},
 	);
 	$self->AppendSeparator;
 
-	$self->{stop} = $self->Append(
-		-1,
-		Wx::gettext("Stop\tF6")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{stop},
-		sub {
+	$self->{stop} = $self->add_menu_item(
+		$self,
+		name       => 'run.stop', 
+		label      => Wx::gettext('Run Tests'), 
+		shortcut   => 'F6',
+		menu_event => sub {
 			if ( $_[0]->{command} ) {
 				$_[0]->{command}->TerminateProcess;
 			}

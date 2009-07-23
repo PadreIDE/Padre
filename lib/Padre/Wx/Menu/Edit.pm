@@ -24,28 +24,26 @@ sub new {
 
 	# Add additional properties
 	$self->{main} = $main;
-
+	
 	# Undo/Redo
-	$self->{undo} = $self->Append(
-		Wx::wxID_UNDO,
-		Wx::gettext("&Undo")
-	);
-	Wx::Event::EVT_MENU(
-		$main, # Ctrl-Z
-		$self->{undo},
-		sub {
+	$self->{undo} = $self->add_menu_item(
+		$self,
+		name       => 'edit.undo', 
+		id         => Wx::wxID_UNDO,
+		label      => Wx::gettext('&Undo'), 
+		shortcut   => 'Ctrl-Z', 
+		menu_event => sub {
 			Padre::Current->editor->Undo;
 		},
 	);
 
-	$self->{redo} = $self->Append(
-		Wx::wxID_REDO,
-		Wx::gettext("&Redo")
-	);
-	Wx::Event::EVT_MENU(
-		$main, # Ctrl-Y
-		$self->{redo},
-		sub {
+	$self->{redo} = $self->add_menu_item(
+		$self,
+		name       => 'edit.redo', 
+		id         => Wx::wxID_REDO,
+		label      => Wx::gettext('&Redo'), 
+		shortcut   => 'Ctrl-Y', 
+		menu_event => sub {
 			Padre::Current->editor->Redo;
 		},
 	);
@@ -59,90 +57,86 @@ sub new {
 		Wx::gettext("Select"),
 		$edit_select
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$edit_select->Append(
-			Wx::wxID_SELECTALL,
-			Wx::gettext("Select all\tCtrl-A")
-		),
-		sub {
+	$self->add_menu_item(
+		$edit_select,
+		name       => 'edit.select_all', 
+		id         => Wx::wxID_SELECTALL,
+		label      => Wx::gettext('Select all'), 
+		shortcut   => 'Ctrl-A', 
+		menu_event => sub {
 			require Padre::Wx::Editor;
 			Padre::Wx::Editor::text_select_all(@_);
 		},
 	);
 
 	$edit_select->AppendSeparator;
-	Wx::Event::EVT_MENU(
-		$main,
-		$edit_select->Append(
-			-1,
-			Wx::gettext("Mark selection start\tCtrl-[")
-		),
-		sub {
+	$self->add_menu_item(
+		$edit_select,
+		name       => 'edit.mark_selection_start', 
+		id         => Wx::wxID_SELECTALL,
+		label      => Wx::gettext('Mark selection start'), 
+		shortcut   => 'Ctrl-[', 
+		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->text_selection_mark_start;
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$edit_select->Append(
-			-1,
-			Wx::gettext("Mark selection end\tCtrl-]")
-		),
-		sub {
+	$self->add_menu_item(
+		$edit_select,
+		name       => 'edit.mark_selection_end', 
+		id         => Wx::wxID_SELECTALL,
+		label      => Wx::gettext('Mark selection end'), 
+		shortcut   => 'Ctrl-]', 
+		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->text_selection_mark_end;
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$edit_select->Append(
-			-1,
-			Wx::gettext("Clear selection marks")
-		),
-		sub {
+	$self->add_menu_item(
+		$edit_select,
+		name       => 'edit.clear_selection_marks', 
+		id         => Wx::wxID_SELECTALL,
+		label      => Wx::gettext('Clear selection marks'), 
+		menu_event => sub {
 			require Padre::Wx::Editor;
 			Padre::Wx::Editor::text_selection_clear_marks(@_);
 		},
 	);
 
 	# Cut and Paste
-	$self->{cut} = $self->Append(
-		Wx::wxID_CUT,
-		Wx::gettext("Cu&t\tCtrl-X")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{cut},
-		sub {
+	$self->{cut} = $self->add_menu_item(
+		$self,
+		name       => 'edit.cut', 
+		id         => Wx::wxID_CUT,
+		label      => Wx::gettext('Cu&t'), 
+		shortcut   => 'Ctrl-X', 
+		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Cut;
-		}
+		},
 	);
 
-	$self->{copy} = $self->Append(
-		Wx::wxID_COPY,
-		Wx::gettext("&Copy\tCtrl-C")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{copy},
-		sub {
+	$self->{copy} = $self->add_menu_item(
+		$self,
+		name       => 'edit.copy', 
+		id         => Wx::wxID_COPY,
+		label      => Wx::gettext('&Copy'), 
+		shortcut   => 'Ctrl-C', 
+		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Copy;
-		}
+		},
 	);
 
-	$self->{paste} = $self->Append(
-		Wx::wxID_PASTE,
-		Wx::gettext("&Paste\tCtrl-V")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{paste},
-		sub {
+	$self->{paste} = $self->add_menu_item(
+		$self,
+		name       => 'edit.paste', 
+		id         => Wx::wxID_PASTE,
+		label      => Wx::gettext('&Paste'), 
+		shortcut   => 'Ctrl-V', 
+		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Paste;
 		},
@@ -151,62 +145,52 @@ sub new {
 	$self->AppendSeparator;
 
 	# Miscellaneous Actions
-	$self->{goto} = $self->Append(
-		-1,
-		Wx::gettext("&Goto\tCtrl-G")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{goto},
-		sub {
+	$self->{goto} = $self->add_menu_item(
+		$self,
+		name       => 'edit.goto', 
+		label      => Wx::gettext('&Goto'), 
+		shortcut   => 'Ctrl-G', 
+		menu_event => sub {
 			Padre::Wx::Main::on_goto(@_);
 		},
 	);
 
-	$self->{autocomp} = $self->Append(
-		-1,
-		Wx::gettext("&AutoComp\tCtrl-P")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{autocomp},
-		sub {
+	$self->{autocomp} = $self->add_menu_item(
+		$self,
+		name       => 'edit.autocomp', 
+		label      => Wx::gettext('&AutoComp'), 
+		shortcut   => 'Ctrl-P', 
+		menu_event => sub {
 			Padre::Wx::Main::on_autocompletition(@_);
 		},
 	);
 
-	$self->{brace_match} = $self->Append(
-		-1,
-		Wx::gettext("&Brace matching\tCtrl-1")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{brace_match},
-		sub {
+	$self->{brace_match} = $self->add_menu_item(
+		$self,
+		name       => 'edit.brace_match', 
+		label      => Wx::gettext('&Brace matching'), 
+		shortcut   => 'Ctrl-1', 
+		menu_event => sub {
 			Padre::Wx::Main::on_brace_matching(@_);
 		},
 	);
 
-	$self->{join_lines} = $self->Append(
-		-1,
-		Wx::gettext("&Join lines\tCtrl-J")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{join_lines},
-		sub {
+	$self->{join_lines} = $self->add_menu_item(
+		$self,
+		name       => 'edit.join_lines', 
+		label      => Wx::gettext('&Join lines'), 
+		shortcut   => 'Ctrl-J', 
+		menu_event => sub {
 			Padre::Wx::Main::on_join_lines(@_);
 		},
 	);
 
-	$self->{snippets} = $self->Append(
-		-1,
-		Wx::gettext("Snippets\tCtrl-Shift-A")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{snippets},
-		sub {
+	$self->{snippets} = $self->add_menu_item(
+		$self,
+		name       => 'edit.snippets', 
+		label      => Wx::gettext('Snippets'), 
+		shortcut   => 'Ctrl-Shift-A', 
+		menu_event => sub {
 			require Padre::Wx::Dialog::Snippets;
 			Padre::Wx::Dialog::Snippets->snippets(@_);
 		},
@@ -215,38 +199,32 @@ sub new {
 	$self->AppendSeparator;
 
 	# Commenting
-	$self->{comment_toggle} = $self->Append(
-		-1,
-		Wx::gettext("&Toggle Comment\tCtrl-Shift-C")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{comment_toggle},
-		sub {
+	$self->{comment_toggle} = $self->add_menu_item(
+		$self,
+		name       => 'edit.comment_toggle', 
+		label      => Wx::gettext('&Toggle Comment'), 
+		shortcut   => 'Ctrl-Shift-C', 
+		menu_event => sub {
 			Padre::Wx::Main::on_comment_toggle_block(@_);
 		},
 	);
 
-	$self->{comment_out} = $self->Append(
-		-1,
-		Wx::gettext("&Comment Selected Lines\tCtrl-M")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{comment_out},
-		sub {
+	$self->{comment_out} = $self->add_menu_item(
+		$self,
+		name       => 'edit.comment_out', 
+		label      => Wx::gettext('&Comment Selected Lines'), 
+		shortcut   => 'Ctrl-M', 
+		menu_event => sub {
 			Padre::Wx::Main::on_comment_out_block(@_);
 		},
 	);
 
-	$self->{uncomment} = $self->Append(
-		-1,
-		Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{uncomment},
-		sub {
+	$self->{uncomment} = $self->add_menu_item(
+		$self,
+		name       => 'edit.uncomment', 
+		label      => Wx::gettext('&Uncomment Selected Lines'), 
+		shortcut   => 'Ctrl-Shift-M', 
+		menu_event => sub {
 			Padre::Wx::Main::on_uncomment_block(@_);
 		},
 	);
@@ -260,40 +238,31 @@ sub new {
 		$self->{convert_encoding}
 	);
 
-	$self->{convert_encoding_system} = $self->{convert_encoding}->Append(
-		-1,
-		Wx::gettext('Encode document to System Default')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_encoding_system},
-		sub {
+	$self->{convert_encoding_system} = $self->add_menu_item(
+		$self->{convert_encoding},
+		name       => 'edit.convert_encoding_system', 
+		label      => Wx::gettext('Encode document to System Default'), 
+		menu_event => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
 		},
 	);
 
-	$self->{convert_encoding_utf8} = $self->{convert_encoding}->Append(
-		-1,
-		Wx::gettext('Encode document to utf-8')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_encoding_utf8},
-		sub {
+	$self->{convert_encoding_utf8} = $self->add_menu_item(
+		$self->{convert_encoding},
+		name       => 'edit.convert_encoding_utf8', 
+		label      => Wx::gettext('Encode document to utf-8'), 
+		menu_event => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_utf8(@_);
 		},
 	);
 
-	$self->{convert_encoding_to} = $self->{convert_encoding}->Append(
-		-1,
-		Wx::gettext('Encode document to...')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_encoding_to},
-		sub {
+	$self->{convert_encoding_to} = $self->add_menu_item(
+		$self->{convert_encoding},
+		name       => 'edit.convert_encoding_to', 
+		label      => Wx::gettext('Encode document to...'), 
+		menu_event => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to(@_);
 		},
@@ -306,38 +275,29 @@ sub new {
 		$self->{convert_nl}
 	);
 
-	$self->{convert_nl_windows} = $self->{convert_nl}->Append(
-		-1,
-		Wx::gettext("EOL to Windows")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_nl_windows},
-		sub {
+	$self->{convert_nl_windows} = $self->add_menu_item(
+		$self->{convert_nl},
+		name       => 'edit.convert_nl_windows', 
+		label      => Wx::gettext('EOL to Windows'), 
+		menu_event => sub {
 			$_[0]->convert_to("WIN");
 		},
 	);
 
-	$self->{convert_nl_unix} = $self->{convert_nl}->Append(
-		-1,
-		Wx::gettext("EOL to Unix")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_nl_unix},
-		sub {
+	$self->{convert_nl_unix} = $self->add_menu_item(
+		$self->{convert_nl},
+		name       => 'edit.convert_nl_unix', 
+		label      => Wx::gettext('EOL to Unix'), 
+		menu_event => sub {
 			$_[0]->convert_to("UNIX");
 		},
 	);
 
-	$self->{convert_nl_mac} = $self->{convert_nl}->Append(
-		-1,
-		Wx::gettext("EOL to Mac Classic")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{convert_nl_mac},
-		sub {
+	$self->{convert_nl_mac} = $self->add_menu_item(
+		$self->{convert_nl},
+		name       => 'edit.convert_nl_mac', 
+		label      => Wx::gettext('EOL to Mac Classic'), 
+		menu_event => sub {
 			$_[0]->convert_to("MAC");
 		},
 	);
@@ -350,52 +310,40 @@ sub new {
 		$self->{tabs},
 	);
 
-	$self->{tabs_to_spaces} = $self->{tabs}->Append(
-		-1,
-		Wx::gettext("Tabs to Spaces...")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{tabs_to_spaces},
-		sub {
+	$self->{tabs_to_spaces} = $self->add_menu_item(
+		$self->{tabs},
+		name       => 'edit.tabs_to_spaces', 
+		label      => Wx::gettext('Tabs to Spaces...'), 
+		menu_event => sub {
 			$_[0]->on_tab_and_space('Tab_to_Space');
 		},
 	);
 
-	$self->{spaces_to_tabs} = $self->{tabs}->Append(
-		-1,
-		Wx::gettext("Spaces to Tabs...")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{spaces_to_tabs},
-		sub {
+	$self->{spaces_to_tabs} = $self->add_menu_item(
+		$self->{tabs},
+		name       => 'edit.spaces_to_tabs', 
+		label      => Wx::gettext('Spaces to Tabs...'), 
+		menu_event => sub {
 			$_[0]->on_tab_and_space('Space_to_Tab');
 		},
 	);
 
 	$self->{tabs}->AppendSeparator;
 
-	$self->{delete_trailing} = $self->{tabs}->Append(
-		-1,
-		Wx::gettext("Delete Trailing Spaces")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{delete_trailing},
-		sub {
+	$self->{delete_trailing} = $self->add_menu_item(
+		$self,
+		name       => 'edit.delete_trailing', 
+		label      => Wx::gettext('Delete Trailing Spaces'), 
+		menu_event => sub {
 			$_[0]->on_delete_ending_space;
 		},
 	);
 
-	$self->{delete_leading} = $self->{tabs}->Append(
-		-1,
-		Wx::gettext("Delete Leading Spaces")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{delete_leading},
-		sub {
+	$self->{delete_leading} = $self->add_menu_item(
+		$self,
+		name       => 'edit.delete_leading', 
+		label      => Wx::gettext('Delete Leading Spaces'), 
+		menu_event => sub {
 			$_[0]->on_delete_leading_space;
 		},
 	);
@@ -408,26 +356,22 @@ sub new {
 		$self->{case},
 	);
 
-	$self->{case_upper} = $self->{case}->Append(
-		-1,
-		Wx::gettext("Upper All\tCtrl-Shift-U"),
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{case_upper},
-		sub {
+	$self->{case_upper} = $self->add_menu_item(
+		$self->{case},
+		name       => 'edit.case_upper', 
+		label      => Wx::gettext('Upper All'), 
+		shortcut   => 'Ctrl-Shift-U', 
+		menu_event => sub {
 			$_[0]->current->editor->UpperCase;
 		},
 	);
 
-	$self->{case_lower} = $self->{case}->Append(
-		-1,
-		Wx::gettext("Lower All\tCtrl-U"),
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{case_lower},
-		sub {
+	$self->{case_lower} = $self->add_menu_item(
+		$self->{case},
+		name       => 'edit.case_lower', 
+		label      => Wx::gettext('Lower All'), 
+		shortcut   => 'Ctrl-U', 
+		menu_event => sub {
 			$_[0]->current->editor->LowerCase;
 		},
 	);
@@ -442,49 +386,37 @@ sub new {
 		$self->{diff},
 	);
 
-	$self->{diff2saved} = $self->{diff}->Append(
-		-1,
-		Wx::gettext("Diff to Saved Version")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{diff2saved},
-		sub {
+	$self->{diff2saved} = $self->add_menu_item(
+		$self->{diff},
+		name       => 'edit.diff2saved', 
+		label      => Wx::gettext('Diff to Saved Version'), 
+		menu_event => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
 	$self->{diff}->AppendSeparator;
-	$self->{applydiff2file} = $self->{diff}->Append(
-		-1,
-		Wx::gettext("Apply Diff to File")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{applydiff2file},
-		sub {
+	$self->{applydiff2file} = $self->add_menu_item(
+		$self->{diff},
+		name       => 'edit.applydiff2file', 
+		label      => Wx::gettext('Apply Diff to File'), 
+		menu_event => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
-	$self->{applydiff2project} = $self->{diff}->Append(
-		-1,
-		Wx::gettext("Apply Diff to Project")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{applydiff2project},
-		sub {
+	$self->{applydiff2project} = $self->add_menu_item(
+		$self->{diff},
+		name       => 'edit.applydiff2project', 
+		label      => Wx::gettext('Apply Diff to Project'), 
+		menu_event => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
 
-	$self->{insert_from_file} = $self->Append(
-		-1,
-		Wx::gettext("Insert From File...")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{insert_from_file},
-		sub {
+	$self->{insert_from_file} = $self->add_menu_item(
+		$self,
+		name       => 'edit.insert_from_file', 
+		label      => Wx::gettext('Insert From File...'), 
+		menu_event => sub {
 			Padre::Wx::Main::on_insert_from_file(@_);
 		},
 	);
@@ -498,26 +430,20 @@ sub new {
 		$self->{show_as_number}
 	);
 
-	$self->{show_as_hex} = $self->{show_as_number}->Append(
-		-1,
-		Wx::gettext("Show as hexa")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{show_as_hex},
-		sub {
+	$self->{show_as_hex} = $self->add_menu_item(
+		$self->{show_as_number},
+		name       => 'edit.show_as_hex', 
+		label      => Wx::gettext('Show as hexa'), 
+		menu_event => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'hex' );
 		},
 	);
 
-	$self->{show_as_decimal} = $self->{show_as_number}->Append(
-		-1,
-		Wx::gettext("Show as decimal")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{show_as_decimal},
-		sub {
+	$self->{show_as_decimal} = $self->add_menu_item(
+		$self->{show_as_number},
+		name       => 'edit.show_as_decimal', 
+		label      => Wx::gettext('Show as decimal'), 
+		menu_event => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'decimal' );
 		},
 	);
@@ -525,13 +451,11 @@ sub new {
 	$self->AppendSeparator;
 
 	# User Preferences
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Preferences")
-		),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'edit.preferences', 
+		label      => Wx::gettext('Preferences'), 
+		menu_event => sub {
 			Padre::Wx::Main::on_preferences(@_);
 		},
 	);

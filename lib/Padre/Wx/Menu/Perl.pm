@@ -34,28 +34,22 @@ sub new {
 	$self->{config} = Padre->ide->config;
 
 	# Perl-Specific Searches
-	$self->{find_brace} = $self->Append(
-		-1,
-		Wx::gettext("Find Unmatched Brace")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{find_brace},
-		sub {
+	$self->{find_brace} = $self->add_menu_item(
+		$self,
+		name       => 'perl.find_brace', 
+		label      => Wx::gettext('Find Unmatched Brace'), 
+		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_unmatched_brace;
 		},
 	);
 
-	$self->{find_variable} = $self->Append(
-		-1,
-		Wx::gettext("Find Variable Declaration")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{find_variable},
-		sub {
+	$self->{find_variable} = $self->add_menu_item(
+		$self,
+		name       => 'perl.find_variable', 
+		label      => Wx::gettext('Find Variable Declaration'), 
+		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_variable_declaration;
@@ -65,14 +59,11 @@ sub new {
 	$self->AppendSeparator;
 
 	# Perl-Specific Refactoring
-	$self->{rename_variable} = $self->Append(
-		-1,
-		Wx::gettext("Lexically Rename Variable")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{rename_variable},
-		sub {
+	$self->{rename_variable} = $self->add_menu_item(
+		$self,
+		name       => 'perl.rename_variable', 
+		label      => Wx::gettext('Lexically Rename Variable'), 
+		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			require Padre::Wx::History::TextEntryDialog;
@@ -90,14 +81,11 @@ sub new {
 		},
 	);
 
-	$self->{introduce_temporary} = $self->Append(
-		-1,
-		Wx::gettext("Introduce Temporary Variable")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{introduce_temporary},
-		sub {
+	$self->{introduce_temporary} = $self->add_menu_item(
+		$self,
+		name       => 'perl.introduce_temporary', 
+		label      => Wx::gettext('Introduce Temporary Variable'), 
+		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			require Padre::Wx::History::TextEntryDialog;
@@ -115,13 +103,11 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Vertically Align Selected")
-		),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'perl.vertically_align_selected', 
+		label      => Wx::gettext('Vertically Align Selected'), 
+		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;
 			$editor->vertically_align;
 		},
@@ -143,15 +129,11 @@ sub new {
 	#		}
 	#	);
 
-	$self->{autocomplete_brackets} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Automatic bracket completion")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{autocomplete_brackets},
-		sub {
-
+	$self->{autocomplete_brackets} = $self->add_checked_menu_item(
+		$self,
+		name       => 'perl.autocomplete_brackets', 
+		label      => Wx::gettext('Automatic bracket completion'), 
+		menu_event => sub {
 			# Update the saved config setting
 			my $config = Padre->ide->config;
 			$config->set( autocomplete_brackets => $_[1]->IsChecked ? 1 : 0 );

@@ -40,6 +40,9 @@ use Class::XSAccessor getters => {
 	wx             => 'wx',
 	task_manager   => 'task_manager',
 	plugin_manager => 'plugin_manager',
+
+}, accessors => {
+	actions        => 'actions',
 };
 
 # Globally shared detection of the "current" Perl
@@ -102,6 +105,10 @@ sub new {
 
 	# Load (and sync if needed) the configuration
 	$self->{config} = Padre::Config->read;
+
+	# Actions registry
+	my %actions = ();
+	$self->actions( \%actions );
 
 	# Connect to the server if we are running in single instance mode
 	if ( $self->config->main_singleinstance ) {

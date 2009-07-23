@@ -30,14 +30,11 @@ sub new {
 	$self->{main} = $main;
 
 	# Can the user move stuff around
-	$self->{lockinterface} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Lock User Interface")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{lockinterface},
-		sub {
+	$self->{lockinterface} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.lockinterface',
+		label      => Wx::gettext('Lock User Interface'), 
+		menu_event => sub {
 			$_[0]->on_toggle_lockinterface( $_[1] );
 		},
 	);
@@ -45,26 +42,20 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
-	$self->{output} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Output")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{output},
-		sub {
+	$self->{output} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.output',
+		label      => Wx::gettext('Show Output'), 
+		menu_event => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
 		},
 	);
 
-	$self->{functions} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Functions")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{functions},
-		sub {
+	$self->{functions} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.functions',
+		label      => Wx::gettext('Show Functions'), 
+		menu_event => sub {
 			if ( $_[1]->IsChecked ) {
 				$_[0]->refresh_functions;
 				$_[0]->show_functions(1);
@@ -75,79 +66,61 @@ sub new {
 	);
 
 	# Show or hide GUI elements
-	$self->{outline} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Outline")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{outline},
-		sub {
+	$self->{outline} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.outline',
+		label      => Wx::gettext('Show Outline'), 
+		menu_event => sub {
 			$_[0]->show_outline( $_[1]->IsChecked );
 		},
 	);
 
-	$self->{directory} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Directory Tree")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{directory},
-		sub {
+	$self->{directory} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.directory',
+		label      => Wx::gettext('Show Directory Tree'), 
+		menu_event => sub {
 			$_[0]->show_directory( $_[1]->IsChecked );
 		},
 	);
 
-	$self->{show_syntaxcheck} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Syntax Check")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{show_syntaxcheck},
-		sub {
+	$self->{show_syntaxcheck} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.show_syntaxcheck',
+		label      => Wx::gettext('Show Syntax Check'), 
+		menu_event => sub {
 			$_[0]->on_toggle_syntax_check( $_[1] );
 		},
 	);
 
-	$self->{show_errorlist} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Error List")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{show_errorlist},
-		sub {
+	$self->{show_errorlist} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.show_errorlist',
+		label      => Wx::gettext('Show Error List'), 
+		menu_event => sub {
 			$_[0]->on_toggle_errorlist( $_[1] );
 		},
 	);
 
 	# On Windows disabling the status bar doesn't work, so don't allow it
 	unless (Padre::Constant::WXWIN32) {
-		$self->{statusbar} = $self->AppendCheckItem(
-			-1,
-			Wx::gettext("Show StatusBar")
-		);
-		Wx::Event::EVT_MENU(
-			$main,
-			$self->{statusbar},
-			sub {
+		$self->{statusbar} = $self->add_checked_menu_item(
+			$self,
+			name       => 'view.statusbar',
+			label      => Wx::gettext('Show StatusBar'), 
+			menu_event => sub {
 				$_[0]->on_toggle_statusbar( $_[1] );
 			},
 		);
 	}
 
-	$self->{toolbar} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Toolbar")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{toolbar},
-		sub {
+	$self->{toolbar} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.toolbar',
+		label      => Wx::gettext('Show Toolbar'), 
+		menu_event => sub {
 			$_[0]->on_toggle_toolbar( $_[1] );
-		}
+		},
 	);
 
 	$self->AppendSeparator;
@@ -164,10 +137,13 @@ sub new {
 	foreach my $name ( sort keys %mimes ) {
 		my $label = $name;
 		$label =~ s/^\d+//;
-		my $radio = $self->{view_as_highlighting}->AppendRadioItem( -1, $label );
-		Wx::Event::EVT_MENU(
-			$main, $radio,
-			sub {
+		my $tag = "view.view_as" . lc $label;
+		$tag =~ s/\s/_/g;
+		$self->add_radio_menu_item(
+			$self->{view_as_highlighting},
+			name       => $tag,
+			label      => $label, 
+			menu_event => sub {
 				my $doc = $_[0]->current->document;
 				if ($doc) {
 					$doc->set_mimetype( $mimes{$name} );
@@ -188,38 +164,29 @@ sub new {
 	$self->AppendSeparator;
 
 	# Editor Functionality
-	$self->{lines} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Line Numbers")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{lines},
-		sub {
+	$self->{lines} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.lines',
+		label      => Wx::gettext('Show Line Numbers'), 
+		menu_event => sub {
 			$_[0]->on_toggle_line_numbers( $_[1] );
 		},
 	);
 
-	$self->{folding} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Code Folding")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{folding},
-		sub {
+	$self->{folding} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.folding',
+		label      => Wx::gettext('Show Code Folding'), 
+		menu_event => sub {
 			$_[0]->on_toggle_code_folding( $_[1] );
 		},
 	);
 
-	$self->{show_calltips} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Call Tips")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{show_calltips},
-		sub {
+	$self->{show_calltips} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.show_calltips',
+		label      => Wx::gettext('Show Call Tips'), 
+		menu_event => sub {
 			$_[0]->config->set(
 				'editor_calltips',
 				$_[1]->IsChecked ? 1 : 0,
@@ -228,14 +195,11 @@ sub new {
 		},
 	);
 
-	$self->{currentline} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Current Line")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{currentline},
-		sub {
+	$self->{currentline} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.currentline',
+		label      => Wx::gettext('Show Current Line'), 
+		menu_event => sub {
 			$_[0]->on_toggle_currentline( $_[1] );
 		},
 	);
@@ -243,50 +207,38 @@ sub new {
 	$self->AppendSeparator;
 
 	# Editor Whitespace Layout
-	$self->{eol} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Newlines")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{eol},
-		sub {
+	$self->{eol} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.eol',
+		label      => Wx::gettext('Show Newlines'), 
+		menu_event => sub {
 			$_[0]->on_toggle_eol( $_[1] );
 		},
 	);
 
-	$self->{whitespaces} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Whitespaces")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{whitespaces},
-		sub {
+	$self->{whitespaces} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.whitespaces',
+		label      => Wx::gettext('Show Whitespaces'), 
+		menu_event => sub {
 			$_[0]->on_toggle_whitespaces( $_[1] );
 		},
 	);
 
-	$self->{indentation_guide} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Show Indentation Guide")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{indentation_guide},
-		sub {
+	$self->{indentation_guide} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.indentation_guide',
+		label      => Wx::gettext('Show Indentation Guide'), 
+		menu_event => sub {
 			$_[0]->on_toggle_indentation_guide( $_[1] );
 		},
 	);
 
-	$self->{word_wrap} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Word-Wrap")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{word_wrap},
-		sub {
+	$self->{word_wrap} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.word_wrap',
+		label      => Wx::gettext('Word-Wrap'), 
+		menu_event => sub {
 			$_[0]->on_word_wrap( $_[1]->IsChecked );
 		},
 	);
@@ -294,38 +246,32 @@ sub new {
 	$self->AppendSeparator;
 
 	# Font Size
-	$self->{font_increase} = $self->Append(
-		-1,
-		Wx::gettext("Increase Font Size\tCtrl-+")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{font_increase},
-		sub {
+	$self->{font_increase} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.font_increase',
+		label      => Wx::gettext('Increase Font Size'),
+		shortcut   => 'Ctrl-+',
+		menu_event => sub {
 			$_[0]->zoom(+1);
 		},
 	);
 
-	$self->{font_decrease} = $self->Append(
-		-1,
-		Wx::gettext("Decrease Font Size\tCtrl--")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{font_decrease},
-		sub {
+	$self->{font_decrease} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.font_decrease',
+		label      => Wx::gettext('Decrease Font Size'),
+		shortcut   => 'Ctrl--',
+		menu_event => sub {
 			$_[0]->zoom(-1);
 		},
 	);
 
-	$self->{font_reset} = $self->Append(
-		-1,
-		Wx::gettext("Reset Font Size\tCtrl-/")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{font_reset},
-		sub {
+	$self->{font_reset} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.font_reset',
+		label      => Wx::gettext('Reset Font Size'),
+		shortcut   => 'Ctrl-/',
+		menu_event => sub {
 			$_[0]->zoom( -1 * $_[0]->current->editor->GetZoom );
 		},
 	);
@@ -333,27 +279,23 @@ sub new {
 	$self->AppendSeparator;
 
 	# Bookmark Support
-	$self->{bookmark_set} = $self->Append(
-		-1,
-		Wx::gettext("Set Bookmark\tCtrl-B")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{bookmark_set},
-		sub {
+	$self->{bookmark_set} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.bookmark_set',
+		label      => Wx::gettext('Set Bookmark'),
+		shortcut   => 'Ctrl-B',
+		menu_event => sub {
 			require Padre::Wx::Dialog::Bookmarks;
 			Padre::Wx::Dialog::Bookmarks->set_bookmark( $_[0] );
 		},
 	);
 
-	$self->{bookmark_goto} = $self->Append(
-		-1,
-		Wx::gettext("Goto Bookmark\tCtrl-Shift-B")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{bookmark_goto},
-		sub {
+	$self->{bookmark_goto} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.bookmark_goto',
+		label      => Wx::gettext('Goto Bookmark'),
+		shortcut   => 'Ctrl-Shift-B',
+		menu_event => sub {
 			require Padre::Wx::Dialog::Bookmarks;
 			Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
 		},
@@ -377,16 +319,19 @@ sub new {
 	my @order = sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
 	foreach my $name (@order) {
 		my $label = $styles{$name};
-		my $radio = $self->{style}->AppendRadioItem( -1, $label );
-		if ( $config->editor_style and $config->editor_style eq $name ) {
-			$radio->Check(1);
-		}
-		Wx::Event::EVT_MENU(
-			$main, $radio,
-			sub {
+		my $tag = "view.view_as_" . lc $label;
+		$tag =~ s/\s/_/g;
+		my $radio =  $self->add_radio_menu_item(
+			$self->{style},
+			name       => $tag,
+			label      => $label,
+			menu_event => sub {
 				$_[0]->change_style($name);
 			},
 		);
+		if ( $config->editor_style and $config->editor_style eq $name ) {
+			$radio->Check(1);
+		}
 	}
 
 	my $dir = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
@@ -396,16 +341,19 @@ sub new {
 		$self->AppendSeparator;
 		foreach my $name (@private) {
 			my $label = $name;
-			my $radio = $self->{style}->AppendRadioItem( -1, $label );
-			if ( $config->editor_style and $config->editor_style eq $name ) {
-				$radio->Check(1);
-			}
-			Wx::Event::EVT_MENU(
-				$main, $radio,
-				sub {
+			my $tag = "view.view_as_" . lc $label;
+			$tag =~ s/\s/_/g;
+			my $radio =  $self->add_radio_menu_item(
+				$self->{style},
+				name       => $tag,
+				label      => $label,
+				menu_event => sub {
 					$_[0]->change_style( $name, 1 );
 				},
 			);
+			if ( $config->editor_style and $config->editor_style eq $name ) {
+				$radio->Check(1);
+			}
 		}
 	}
 
@@ -424,14 +372,11 @@ sub new {
 	);
 
 	# Default menu entry
-	$self->{language_default} = $self->{language}->AppendCheckItem(
-		-1,
-		Wx::gettext("System Default") . " ($default)"
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{language_default},
-		sub {
+	$self->{language_default} = $self->add_checked_menu_item(
+		$self->{language},
+		name       => 'view.language_default',
+		label      => Wx::gettext('System Default') . " ($default)",
+		menu_event => sub {
 			$_[0]->change_locale;
 		},
 	);
@@ -454,10 +399,13 @@ sub new {
 			# speakers, non-English localisations do NOT show this.
 			$label = "English (New Britstralian)";
 		}
-		my $radio = $self->{language}->AppendRadioItem( -1, $label );
-		Wx::Event::EVT_MENU(
-			$main, $radio,
-			sub {
+		my $tag = "view.view_as_" . lc $label;
+		$tag =~ s/\s/_/g;
+		my $radio =  $self->add_radio_menu_item(
+			$self->{language},
+			name       => $tag,
+			label      => $label,
+			menu_event => sub {
 				$_[0]->change_locale($name);
 			},
 		);
@@ -469,13 +417,12 @@ sub new {
 	$self->AppendSeparator;
 
 	# Window Effects
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("&Full Screen\tF11")
-		),
-		sub {
+	$self->add_checked_menu_item(
+		$self,
+		name       => 'view.full_screen',
+		label      => Wx::gettext('&Full Screen'),
+		shortcut   => 'F11',
+		menu_event => sub {
 			if ( $_[0]->IsFullScreen ) {
 				$_[0]->ShowFullScreen(0);
 			} else {

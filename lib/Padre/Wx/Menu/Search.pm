@@ -26,53 +26,45 @@ sub new {
 	$self->{main} = $main;
 
 	# Search
-	$self->{find} = $self->Append(
-		Wx::wxID_FIND,
-		Wx::gettext("&Find\tCtrl-F")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{find},
-		sub {
+	$self->{find} = $self->add_menu_item(
+		$self,
+		name       => 'search.find',
+		id         => Wx::wxID_FIND,
+		label      => Wx::gettext('&Find'), 
+		shortcut   => 'Ctrl-F', 
+		menu_event => sub {
 			$_[0]->find->find;
 		},
 	);
 
-	$self->{find_next} = $self->Append(
-		-1,
-		Wx::gettext("Find Next\tF3")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{find_next},
-		sub {
+	$self->{find_next} = $self->add_menu_item(
+		$self,
+		name       => 'search.find_next',
+		label      => Wx::gettext('Find Next'), 
+		shortcut   => 'F3', 
+		menu_event => sub {
 			$_[0]->find->find_next;
 		},
 	);
 
-	$self->{find_previous} = $self->Append(
-		-1,
-		Wx::gettext("Find Previous\tShift-F3")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{find_previous},
-		sub {
+	$self->{find_previous} = $self->add_menu_item(
+		$self,
+		name       => 'search.find_previous',
+		label      => Wx::gettext('&Find Previous'), 
+		shortcut   => 'Shift-F3', 
+		menu_event => sub {
 			$_[0]->find->find_previous;
 		},
 	);
 
 	$self->AppendSeparator;
 
-	# Quick Find: Press F3 to start search with selected text
-	$self->{quick_find} = $self->AppendCheckItem(
-		-1,
-		Wx::gettext("Quick Find")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{quick_find},
-		sub {
+	# Quick Find: starts search with selected text
+	$self->{quick_find} = $self->add_checked_menu_item(
+		$self,
+		name       => 'search.quick_find',
+		label      => Wx::gettext('Quick Find'), 
+		menu_event => sub {
 			Padre->ide->config->set(
 				'find_quick',
 				$_[1]->IsChecked ? 1 : 0,
@@ -84,41 +76,35 @@ sub new {
 
 	# We should be able to remove F4 and shift-F4 and hook this functionality
 	# to F3 and shift-F3 Incremental find (#60)
-	$self->{quick_find_next} = $self->Append(
-		-1,
-		Wx::gettext("Find Next\tF4")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{quick_find_next},
-		sub {
+	$self->{quick_find_next} = $self->add_menu_item(
+		$self,
+		name       => 'search.quick_find_next',
+		label      => Wx::gettext('Find Next'), 
+		shortcut   => 'F4', 
+		menu_event => sub {
 			$_[0]->fast_find->search('next');
 		},
 	);
 
-	$self->{quick_find_previous} = $self->Append(
-		-1,
-		Wx::gettext("Find Previous\tShift-F4")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{quick_find_previous},
-		sub {
+	$self->{quick_find_previous} = $self->add_menu_item(
+		$self,
+		name       => 'search.quick_find_previous',
+		label      => Wx::gettext('Find Previous'), 
+		shortcut   => 'Shift-F4', 
+		menu_event => sub {
 			$_[0]->fast_find->search('previous');
-		}
+		},
 	);
 
 	$self->AppendSeparator;
 
 	# Search and Replace
-	$self->{replace} = $self->Append(
-		-1,
-		Wx::gettext("Replace\tCtrl-R")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{replace},
-		sub {
+	$self->{replace} = $self->add_menu_item(
+		$self,
+		name       => 'search.replace',
+		label      => Wx::gettext('Replace'), 
+		shortcut   => 'Ctrl-R', 
+		menu_event => sub {
 			$_[0]->replace->find;
 		},
 	);
@@ -126,13 +112,11 @@ sub new {
 	$self->AppendSeparator;
 
 	# Recursive Search
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append(
-			-1,
-			Wx::gettext("Find in Fi&les...")
-		),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'search.find_in_files',
+		label      => Wx::gettext('Find in Fi&les...'), 
+		menu_event => sub {
 			require Padre::Wx::Ack;
 			Padre::Wx::Ack::on_ack(@_);
 		},

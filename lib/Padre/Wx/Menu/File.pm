@@ -26,18 +26,13 @@ sub new {
 	$self->{main} = $main;
 
 	# Create new things
-	$self->{new} = $self->Append(
-		Wx::wxID_NEW,
-		Wx::gettext("&New\tCtrl-N"),
-	);
 
-	#$self->{new}->SetBitmap(
-	#	Padre::Wx::gnome('actions', 'document-new.png')
-	#);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{new},
-		sub {
+	$self->{new} = $self->add_menu_item(
+		$self,
+		name       => 'file.new', 
+		label      => Wx::gettext('&New'), 
+		shortcut   => 'Ctrl-N', 
+		menu_event => sub {
 			$_[0]->on_new;
 		},
 	);
@@ -48,112 +43,92 @@ sub new {
 		Wx::gettext("New..."),
 		$file_new,
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$file_new->Append(
-			-1,
-			Wx::gettext('Perl 5 Script')
-		),
-		sub {
+	$self->add_menu_item(
+		$file_new,
+		name       => 'file.new_p5_script', 
+		label      => Wx::gettext('Perl 5 Script'), 
+		menu_event => sub {
 			$_[0]->on_new_from_template('pl');
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$file_new->Append(
-			-1,
-			Wx::gettext('Perl 5 Module')
-		),
-		sub {
+	$self->add_menu_item(
+		$file_new,
+		name       => 'file.new_p5_module', 
+		label      => Wx::gettext('Perl 5 Module'), 
+		menu_event => sub {
 			$_[0]->on_new_from_template('pm');
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$file_new->Append(
-			-1,
-			Wx::gettext('Perl 5 Test')
-		),
-		sub {
+	$self->add_menu_item(
+		$file_new,
+		name       => 'file.new_p5_test', 
+		label      => Wx::gettext('Perl 5 Test'), 
+		menu_event => sub {
 			$_[0]->on_new_from_template('t');
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$file_new->Append(
-			-1,
-			Wx::gettext('Perl 6 Script')
-		),
-		sub {
+	$self->add_menu_item(
+		$file_new,
+		name       => 'file.new_p6_script', 
+		label      => Wx::gettext('Perl 6 Script'), 
+		menu_event => sub {
 			$_[0]->on_new_from_template('p6');
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$file_new->Append(
-			-1,
-			Wx::gettext('Perl Distribution (Module::Starter)')
-		),
-		sub {
+	$self->add_menu_item(
+		$file_new,
+		name       => 'file.new_p5_distro', 
+		label      => Wx::gettext('Perl Distribution (Module::Starter)'), 
+		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;
 			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
 		},
 	);
 
 	# Open and close files
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append(
-			Wx::wxID_OPEN,
-			Wx::gettext("&Open...\tCtrl-O")
-		),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'file.open', 
+		id         => Wx::wxID_OPEN,
+		label      => Wx::gettext('&Open...'), 
+		shortcut   => 'Ctrl-O',
+		menu_event => sub {
 			$_[0]->on_open;
 		},
 	);
 
-	$self->{close} = $self->Append(
-		Wx::wxID_CLOSE,
-		Wx::gettext("&Close\tCtrl-W"),
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{close},
-		sub {
+	$self->{close} = $self->add_menu_item(
+		$self,
+		name       => 'file.close', 
+		id         => Wx::wxID_CLOSE,
+		label      => Wx::gettext('&Close...'), 
+		shortcut   => 'Ctrl-W',
+		menu_event => sub {
 			$_[0]->on_close;
 		},
 	);
 
-	$self->{close_all} = $self->Append(
-		-1,
-		Wx::gettext('Close All')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{close_all},
-		sub {
+	$self->{close_all} = $self->add_menu_item(
+		$self,
+		name       => 'file.close_all', 
+		label      => Wx::gettext('Close All'), 
+		menu_event => sub {
 			$_[0]->on_close_all;
 		},
 	);
-	$self->{close_all_but_current} = $self->Append(
-		-1,
-		Wx::gettext('Close All but Current')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{close_all_but_current},
-		sub {
+	$self->{close_all_but_current} = $self->add_menu_item(
+		$self,
+		name       => 'file.close_all_but_current', 
+		label      => Wx::gettext('Close All but Current'), 
+		menu_event => sub {
 			$_[0]->on_close_all_but_current;
 		},
 	);
-	$self->{reload_file} = $self->Append(
-		-1,
-		Wx::gettext('Reload File')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{reload_file},
-		sub {
+	$self->{reload_file} = $self->add_menu_item(
+		$self,
+		name       => 'file.reload_file', 
+		label      => Wx::gettext('Reload File'), 
+		menu_event => sub {
 			$_[0]->on_reload_file;
 		},
 	);
@@ -161,36 +136,31 @@ sub new {
 	$self->AppendSeparator;
 
 	# Save files
-	$self->{save} = $self->Append(
-		Wx::wxID_SAVE,
-		Wx::gettext("&Save\tCtrl-S")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{save},
-		sub {
+	$self->{save} = $self->add_menu_item(
+		$self,
+		name       => 'file.save', 
+		id         => Wx::wxID_SAVE,
+		label      => Wx::gettext('&Save'), 
+		shortcut   => 'Ctrl-S',
+		menu_event => sub {
 			$_[0]->on_save;
 		},
 	);
-	$self->{save_as} = $self->Append(
-		Wx::wxID_SAVEAS,
-		Wx::gettext("Save &As...\tF12")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{save_as},
-		sub {
+	$self->{save_as} = $self->add_menu_item(
+		$self,
+		name       => 'file.save_as', 
+		id         => Wx::wxID_SAVEAS,
+		label      => Wx::gettext('Save &As'), 
+		shortcut   => 'F12',
+		menu_event => sub {
 			$_[0]->on_save_as;
 		},
 	);
-	$self->{save_all} = $self->Append(
-		-1,
-		Wx::gettext('Save All')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{save_all},
-		sub {
+	$self->{save_all} = $self->add_menu_item(
+		$self,
+		name       => 'file.save_all', 
+		label      => Wx::gettext('Save All'), 
+		menu_event => sub {
 			$_[0]->on_save_all;
 		},
 	);
@@ -198,39 +168,33 @@ sub new {
 	$self->AppendSeparator;
 
 	# Specialised open and close functions
-	$self->{open_selection} = $self->Append(
-		-1,
-		Wx::gettext("Open Selection\tCtrl-Shift-O")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{open_selection},
-		sub {
+	$self->{open_selection} = $self->add_menu_item(
+		$self,
+		name       => 'file.open_selection', 
+		label      => Wx::gettext('Open Selection'), 
+		shortcut   => 'Ctrl-Shift-O',
+		menu_event => sub {
 			$_[0]->on_open_selection;
 		},
 	);
 
-	$self->{open_session} = $self->Append(
-		-1,
-		Wx::gettext("Open Session...\tCtrl-Alt-O")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{open_session},
-		sub {
+	$self->{open_session} = $self->add_menu_item(
+		$self,
+		name       => 'file.open_session', 
+		label      => Wx::gettext('Open Session'), 
+		shortcut   => 'Ctrl-Alt-O',
+		menu_event => sub {
 			require Padre::Wx::Dialog::SessionManager;
 			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
 		},
 	);
 
-	$self->{save_session} = $self->Append(
-		-1,
-		Wx::gettext("Save Session...\tCtrl-Alt-S")
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{save_session},
-		sub {
+	$self->{save_session} = $self->add_menu_item(
+		$self,
+		name       => 'file.save_session', 
+		label      => Wx::gettext('Save Session'), 
+		shortcut   => 'Ctrl-Alt-S',
+		menu_event => sub {
 			require Padre::Wx::Dialog::SessionSave;
 			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
 		},
@@ -239,14 +203,12 @@ sub new {
 	$self->AppendSeparator;
 
 	# Print files
-	$self->{print} = $self->Append(
-		Wx::wxID_PRINT,
-		Wx::gettext('&Print...'),
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{print},
-		sub {
+	$self->{print} = $self->add_menu_item(
+		$self,
+		name       => 'file.print', 
+		id         => Wx::wxID_PRINT,
+		label      => Wx::gettext('&Print'), 
+		menu_event => sub {
 			require Wx::Print;
 			require Padre::Wx::Printout;
 			my $printer  = Wx::Printer->new;
@@ -268,23 +230,19 @@ sub new {
 		Wx::gettext("&Recent Files"),
 		$self->{recentfiles}
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{recentfiles}->Append(
-			-1,
-			Wx::gettext("Open All Recent Files")
-		),
-		sub {
+	$self->add_menu_item(
+		$self->{recentfiles},
+		name       => 'file.open_recent_files', 
+		label      => Wx::gettext('Open All Recent Files'),
+		menu_event => sub {
 			$_[0]->on_open_all_recent_files;
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{recentfiles}->Append(
-			-1,
-			Wx::gettext("Clean Recent Files List")
-		),
-		sub {
+	$self->add_menu_item(
+		$self->{recentfiles},
+		name       => 'file.clean_recent_files', 
+		label      => Wx::gettext('Clean Recent Files List'),
+		menu_event => sub {
 			Padre::DB::History->delete( 'where type = ?', 'files' );
 			$self->update_recentfiles;
 		},
@@ -297,14 +255,11 @@ sub new {
 	$self->AppendSeparator;
 
 	# Word Stats
-	$self->{docstat} = $self->Append(
-		-1,
-		Wx::gettext('Document Statistics')
-	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{docstat},
-		sub {
+	$self->{docstat} = $self->add_menu_item(
+		$self,
+		name       => 'file.doc_stat', 
+		label      => Wx::gettext('Document Statistics'),
+		menu_event => sub {
 			$_[0]->on_doc_stats;
 		},
 	);
@@ -312,13 +267,12 @@ sub new {
 	$self->AppendSeparator;
 
 	# Exiting
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append(
-			Wx::wxID_EXIT,
-			Wx::gettext("&Quit\tCtrl-Q")
-		),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'file.quit', 
+		label      => Wx::gettext('&Quit'),
+		shortcut   => 'Ctrl-Q',
+		menu_event => sub {
 			$_[0]->Close;
 		},
 	);
@@ -359,13 +313,11 @@ sub update_recentfiles {
 
 	my $idx = 0;
 	foreach my $file ( grep { -f if $_ } Padre::DB::History->recent('files') ) {
-		Wx::Event::EVT_MENU(
-			$self->{main},
-			$self->{recentfiles}->Append(
-				-1,
-				++$idx < 10 ? "&$idx. $file" : "$idx. $file"
-			),
-			sub {
+		$self->add_menu_item(
+			$self->{recentfiles},
+			name       => "file.open_recent_" . $idx, 
+			label      => ++$idx < 10 ? "&$idx. $file" : "$idx. $file",
+			menu_event => sub {
 				$_[0]->setup_editors($file);
 			},
 		);

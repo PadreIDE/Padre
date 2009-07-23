@@ -29,10 +29,11 @@ sub new {
 	$self->{main} = $main;
 
 	# Link to the Plugin Manager
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("Plugin Manager") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'plugins.plugin_manager', 
+		label      => Wx::gettext('Plugin Manager'), 
+		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
 			Padre::Wx::Dialog::PluginManager->new(
 				$_[0],
@@ -44,20 +45,22 @@ sub new {
 	# TODO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
 	# better yet, by a window that also allows the installation of all the plugins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("Plugin List (CPAN)") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'plugins.plugin_list', 
+		label      => Wx::gettext('Plugin List (CPAN)'), 
+		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
 	);
 
 	# Create the plugin tools submenu
 	my $tools = Wx::Menu->new;
-	Wx::Event::EVT_MENU(
-		$main,
-		$tools->Append( -1, Wx::gettext("Edit My Plugin") ),
-		sub {
+	$self->add_menu_item(
+		$tools,
+		name       => 'plugins.edit_my_plugin', 
+		label      => Wx::gettext('Edit My Plugin'), 
+		menu_event => sub {
 			my $file = File::Spec->catfile(
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
@@ -70,18 +73,20 @@ sub new {
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$tools->Append( -1, Wx::gettext("Reload My Plugin") ),
-		sub {
+	$self->add_menu_item(
+		$tools,
+		name       => 'plugins.reload_my_plugin', 
+		label      => Wx::gettext('Reload My Plugin'), 
+		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugin('My');
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$tools->Append( -1, Wx::gettext("Reset My Plugin") ),
-		sub {
+	$self->add_menu_item(
+		$tools,
+		name       => 'plugins.reset_my_plugin', 
+		label      => Wx::gettext('Reset My Plugin'), 
+		menu_event => sub {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("Reset My Plugin"),
 				Wx::gettext("Reset My Plugin"),
@@ -99,26 +104,29 @@ sub new {
 
 	$tools->AppendSeparator;
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$tools->Append( -1, Wx::gettext("Reload All Plugins") ),
-		sub {
+	$self->add_menu_item(
+		$tools,
+		name       => 'plugins.reload_all_plugins', 
+		label      => Wx::gettext('Reload All Plugins'), 
+		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugins;
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$tools->Append( -1, Wx::gettext("(Re)load Current Plugin") ),
-		sub {
+	$self->add_menu_item(
+		$tools,
+		name       => 'plugins.reload_current_plugin', 
+		label      => Wx::gettext('(Re)load Current Plugin'), 
+		menu_event => sub {
 			Padre->ide->plugin_manager->reload_current_plugin;
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$tools->Append( -1, Wx::gettext("Test A Plugin From Local Dir") ),
-		sub {
+	$self->add_menu_item(
+		$tools,
+		name       => 'plugins.test_a_plugin', 
+		label      => Wx::gettext('Test A Plugin From Local Dir'), 
+		menu_event => sub {
 			Padre->ide->plugin_manager->test_a_plugin;
 		},
 	);

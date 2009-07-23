@@ -27,17 +27,21 @@ sub new {
 	$self->{main} = $main;
 
 	# Add the POD-based help launchers
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( Wx::wxID_HELP, '' ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.help', 
+		id         => Wx::wxID_HELP,
+		label      => Wx::gettext('Help'), 
+		menu_event => sub {
 			$_[0]->menu->help->help( $_[0] );
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("Context Help\tF1") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.context_help', 
+		label      => Wx::gettext('Context Help'), 
+		shortcut   => 'F1',
+		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
 			if ( ( defined $focus ) and $focus->isa('Padre::Wx::ErrorList') ) {
 				$_[0]->errorlist->on_menu_help_context_help;
@@ -54,11 +58,11 @@ sub new {
 			}
 		},
 	);
-	$self->{current} = $self->Append( -1, Wx::gettext('Current Document') );
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{current},
-		sub {
+	$self->{current} = $self->add_menu_item(
+		$self,
+		name       => 'help.current', 
+		label      => Wx::gettext('Current Document'), 
+		menu_event => sub {
 			$_[0]->menu->help->help( $_[0] );
 			$_[0]->{help}->help( $_[0]->current->document );
 		},
@@ -74,30 +78,32 @@ sub new {
 		$self->{live}
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{live}->Append( -1, Wx::gettext('Padre Support (English)') ),
-		sub {
+	$self->add_menu_item(
+		$self->{live},
+		name       => 'help.live_support', 
+		label      => Wx::gettext('Padre Support (English)'), 
+		menu_event => sub {
 			Padre::Wx::launch_irc('padre');
 		},
 	);
 
 	$self->{live}->AppendSeparator;
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->{live}->Append( -1, Wx::gettext('Perl Help') ),
-		sub {
+	$self->add_menu_item(
+		$self->{live},
+		name       => 'help.perl_help', 
+		label      => Wx::gettext('Perl Help'), 
+		menu_event => sub {
 			Padre::Wx::launch_irc('general');
 		},
 	);
 
 	if (Padre::Util::WIN32) {
-
-		Wx::Event::EVT_MENU(
-			$main,
-			$self->{live}->Append( -1, Wx::gettext('Win32 Questions (English)') ),
-			sub {
+		$self->add_menu_item(
+			$self->{live},
+			name       => 'help.win32_questions', 
+			label      => Wx::gettext('Win32 Questions (English)'), 
+			menu_event => sub {
 				Padre::Wx::launch_irc('win32');
 			},
 		);
@@ -106,45 +112,51 @@ sub new {
 	# Add interesting and helpful websites
 	$self->AppendSeparator;
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext('Visit the PerlMonks') ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.visit_perlmonks', 
+		label      => Wx::gettext('Visit the PerlMonks'), 
+		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
 		},
 	);
 
 	# Add Padre website tools
 	$self->AppendSeparator;
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("Report a New &Bug") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.report_a_bug', 
+		label      => Wx::gettext('Report a New &Bug'), 
+		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
 		},
 	);
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("View All &Open Bugs") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.view_all_open_bugs', 
+		label      => Wx::gettext('View All &Open Bugs'), 
+		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
 		},
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( -1, Wx::gettext("&Translate Padre...") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.translate_padre', 
+		label      => Wx::gettext('&Translate Padre...'), 
+		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
 		},
 	);
 
 	# Add the About
 	$self->AppendSeparator;
-	Wx::Event::EVT_MENU(
-		$main,
-		$self->Append( Wx::wxID_ABOUT, Wx::gettext("&About") ),
-		sub {
+	$self->add_menu_item(
+		$self,
+		name       => 'help.about', 
+		id         => Wx::wxID_ABOUT,
+		label      => Wx::gettext('&About'), 
+		menu_event => sub {
 			$_[0]->menu->help->about;
 		},
 	);
