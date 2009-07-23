@@ -151,8 +151,17 @@ sub select_line_in_editor {
 
 sub on_timer {
 	my ( $self, $event, $force ) = @_;
+	my $main = $self->main;
+	
+	# TODO: this prevents Padre from crashing if timer is called
+	# while user is moving the panel around. A better approach
+	# would probably be to disable timer call while floating.
+	# Either way, if the user leaves the panel floating without
+	# docking, outline will not work, so a better approach would
+	# be to get Padre's singleton in a way other than $self->main.
+	return if ref $main eq 'Wx::AuiFloatingFrame';
 
-	my $document = $self->main->current->document or return;
+	my $document = $main->current->document or return;
 
 	unless ( $document->can('get_outline') ) {
 		$self->clear;
