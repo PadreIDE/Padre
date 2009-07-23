@@ -1371,7 +1371,7 @@ sub _on_tree_item_menu {
 		$menu->Append( -1, Wx::gettext( $node_data->{type} eq 'folder' ? 'Expand / Collapse' : 'Open File' ) );
 	Wx::Event::EVT_MENU(
 		$self, $default,
-		\&_on_tree_item_activated($event)
+		sub { $self->_on_tree_item_activated($event) }
 	);
 	$menu->AppendSeparator();
 
