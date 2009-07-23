@@ -322,6 +322,9 @@ sub _list_dir {
 			my $rule = $project->ignore_rule;
 			@data = grep { $rule->() } @data;
 		}
+		else {
+			@data = grep { $_->{name} !~ /^\./ } @data;
+		}
 	}
 
 	######################################################################

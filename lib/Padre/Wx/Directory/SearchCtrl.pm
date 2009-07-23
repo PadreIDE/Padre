@@ -108,7 +108,7 @@ sub update_gui {
 	######################################################################
 	# Compares if they are not the same, if not updates search field
 	# content
-	if ( defined($current_project) and (not defined($last_project) or $last_project ne $current_project ) ) {
+	if ( defined($current_project) and defined($last_project) and $last_project ne $current_project ) {
 		$self->{use_cache} = 1;
 		my $value = $self->{CACHED}->{$current_project}->{value};
 		$self->SetValue(defined $value ? $value : '');
@@ -137,10 +137,12 @@ sub _search {
 	# switching)
 	if ( $self->{use_cache} ) {
 		delete $self->{use_cache};
-		return $self->_display_cached_search(
-			$node,
-			$self->{CACHED}->{$current_project}->{Data},
-		);
+		if ( defined $self->{CACHED}->{$current_project}->{Data} ) {
+			return $self->_display_cached_search(
+				$node,
+				$self->{CACHED}->{$current_project}->{Data},
+			);
+		}
 	}
 
 	######################################################################
@@ -180,6 +182,9 @@ sub _search {
 			unless ( $rule->() ) {
 				next;
 			}
+		}
+		elsif ( $temp{name} =~ /^\./ ) {
+			next;
 		}
 
 		######################################################################
@@ -348,7 +353,7 @@ sub _setup_menu {
 #                                                                              #
 ################################################################################
 sub _on_text {
-	my ( $self, $event ) = @_;
+	my $self = shift;
 
 	my $parent  = $self->parent;
 	my $browser = $self->browser;
