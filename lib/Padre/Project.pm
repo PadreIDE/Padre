@@ -16,6 +16,10 @@ use Class::XSAccessor getters => {
 	padre_yml => 'padre_yml',
 };
 
+
+
+
+
 ######################################################################
 # Class Methods
 
@@ -40,6 +44,10 @@ sub class {
 	return 'Padre::Project::Null';
 
 }
+
+
+
+
 
 ######################################################################
 # Constructor and Accessors
@@ -68,6 +76,13 @@ sub new {
 	return $self;
 }
 
+
+
+
+
+######################################################################
+# Configuration Support
+
 sub config {
 	my $self = shift;
 	unless ( $self->{config} ) {
@@ -93,6 +108,29 @@ sub config {
 		}
 	}
 	return $self->{config};
+}
+
+
+
+
+
+######################################################################
+# Directory Integration
+
+# A file/directory pattern to support the directory browser.
+# The function takes three parameters of the full file path,
+# the directory path, and the file name.
+# Returns true if the file is visible.
+# Returns false if the file is ignored.
+# This method is used to support the functionality of the directory browser.
+sub ignore_rule {
+	return sub {
+		if ( $_->{name} =~ /^\./ ) {
+			return 0;
+		} else {
+			return 1;
+		}
+	};
 }
 
 1;

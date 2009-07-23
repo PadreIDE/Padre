@@ -2,6 +2,7 @@ package Padre::Wx::Directory::TreeCtrl;
 
 use strict;
 use warnings;
+use File::Spec     ();
 use File::Basename ();
 use Params::Util   ('_INSTANCE');
 use Padre::Current ();
@@ -22,26 +23,102 @@ use constant IS_WIN32 => !!( $^O =~ /^MSWin/ or $^O eq 'cygwin' );
 ################################################################################
 sub new {
 	my $class = shift;
-	my $panel  = shift;
-
-	my $self = $class->SUPER::new(
+	my $panel = shift;
+	my $self  = $class->SUPER::new(
 		$panel,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS | Wx::wxBORDER_NONE
-			| Wx::wxTR_LINES_AT_ROOT
+		Wx::wxTR_HIDE_ROOT
+		| Wx::wxTR_SINGLE
+		| Wx::wxTR_FULL_ROW_HIGHLIGHT
+		| Wx::wxTR_HAS_BUTTONS
+		| Wx::wxTR_LINES_AT_ROOT
+		| Wx::wxBORDER_NONE
 	);
 
-	$self->{SKIP}            = { map { $_ => 1 } ( '.', '..' ) }; # files that must be skipped
-	$self->{CACHED}          = {};                                #
-	$self->{current_item}    = {};                                # selected item of each project
+	# Files that must be skipped
+	$self->{SKIP}   = sub { return ! 1 };
+	$self->{CACHED} = {};
 
-	$self->_setup_image_list;                                     # assigns a ImageList to it
-	$self->_setup_events;                                         # setups its events
-	$self->_setup_root;                                           # adds it a root node
+	# Selected item of each project
+	$self->{current_item} = {};
 
-	$self->SetIndent(10);                                         # Ident to sub nodes
+	# Create the image list
+	my $images = Wx::ImageList->new( 16, 16 );
+	$self->{file_types} = {
+		folder => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_FOLDER', 'wxART_OTHER_C', [ 16, 16 ]
+			),
+		),
+		package => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_NORMAL_FILE', 'wxART_OTHER_C', [ 16, 16 ]
+			),
+		),
+	};
+	$self->AssignImageList($images);
+
+	# Set up the events
+	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
+		$self, $self,
+		\&_on_tree_item_activated
+	);
+
+	Wx::Event::EVT_SET_FOCUS(
+		$self,
+		\&_on_focus
+	);
+
+	Wx::Event::EVT_TREE_ITEM_MENU(
+		$self, $self,
+		\&_on_tree_item_menu,
+	);
+
+	Wx::Event::EVT_TREE_SEL_CHANGED(
+		$self, $self,
+		\&_on_tree_sel_changed,
+	);
+
+	Wx::Event::EVT_TREE_ITEM_EXPANDING(
+		$self, $self,
+		\&_on_tree_item_expanding,
+	);
+
+	Wx::Event::EVT_TREE_ITEM_COLLAPSING(
+		$self, $self,
+		\&_on_tree_item_collapsing,
+	);
+
+	Wx::Event::EVT_TREE_END_LABEL_EDIT(
+		$self, $self,
+		\&_on_tree_end_label_edit,
+	);
+
+	Wx::Event::EVT_TREE_BEGIN_DRAG(
+		$self, $self,
+		\&_on_tree_begin_drag,
+	);
+
+	Wx::Event::EVT_TREE_END_DRAG(
+		$self, $self,
+		\&_on_tree_end_drag,
+	);
+
+	# Set up the root
+	$self->AddRoot(
+		Wx::gettext('Directory'),
+		-1, -1,
+		Wx::TreeItemData->new( {
+			dir  => '',
+			name => '',
+			type => 'folder',
+		} ),
+	);
+
+	# Ident to sub nodes
+	$self->SetIndent(10);
 
 	return $self;
 }
@@ -104,10 +181,10 @@ sub clear {
 #                                                                              #
 ################################################################################
 sub update_gui {
-	my $self    = shift;
-	my $parent = $self->parent;
+	my $self     = shift;
+	my $parent   = $self->parent;
 	my $searcher = $self->parent->_searcher;
-	
+
 	######################################################################
 	# Gets the last and current actived projects
 	my $last_project = $parent->_last_project;
@@ -125,6 +202,10 @@ sub update_gui {
 	# Gets Root node
 	my $root = $self->GetRootItem;
 
+	# Lock the gui here to make the updates look slicker
+	# The locker holds the gui freeze until the update is done.
+	my $locker = $self->main->freezer;
+
 	######################################################################
 	# If the project have changed or the project root folder updates or
 	# the search is not in use anymore (was just used)
@@ -132,10 +213,40 @@ sub update_gui {
 		$self->_list_dir($root);
 		delete $searcher->{just_used}->{$current_project};
 	}
-	
+
 	######################################################################
 	# Checks expanded sub folders and its content recursively
 	_update_subdirs( $self, $root );
+}
+
+# Read a directory, removing the current and updir only.
+# Returns the contents pre-split into directories and files so that
+# we only have to do a -d file stat once and return by reference.
+sub readdir {
+	my $self      = shift;
+	my $directory = shift;
+
+	# Read the directory, and do the cheap name presort
+	opendir( my $dh, $directory ) or return;
+	my @buffer = sort { lc($a) cmp lc($b) } CORE::readdir( $dh );
+	closedir( $dh );
+
+	# Filter out ignored files and split out the directories
+	# We don't use sort for the directory split, because it can
+	# end up calling extra extra -d filesystem stats.
+	my @files = ();
+	my @dirs  = ();
+	my $skip  = $self->{SKIP};
+	foreach ( @buffer ) {
+		if ( -d File::Spec->catfile( $directory, $_ ) ) {
+			next if /^\.\.?\z/;
+			push @dirs, $_;
+		} else {
+			push @files, $_;
+		}
+	}
+
+	return ( \@dirs, \@files );
 }
 
 ################################################################################
@@ -148,16 +259,18 @@ sub update_gui {
 ################################################################################
 sub _update_root_data {
 	my $self = shift;
-	
+
 	######################################################################
 	# Splits the path to get the Root folder name and its path
-	my ( $volume, $path, $name ) = File::Spec->splitpath( $self->parent->_current_project );
+	my ($volume, $path, $name) = File::Spec->splitpath(
+		$self->parent->_current_project,
+	);
 
 	######################################################################
 	# Updates Root node data
-	my $root_data = $self->GetPlData( $self->GetRootItem );
-	$root_data->{dir}  = $volume . $path;
-	$root_data->{name} = $name;
+	my $root = $self->GetPlData( $self->GetRootItem );
+	$root->{dir}  = $volume . $path;
+	$root->{name} = $name;
 }
 
 ################################################################################
@@ -170,7 +283,8 @@ sub _update_root_data {
 #                                                                              #
 ################################################################################
 sub _list_dir {
-	my ( $self, $node ) = @_;
+	my $self      = shift;
+	my $node      = shift;
 	my $node_data = $self->GetPlData($node);
 	my $path      = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 	my $cached    = \%{ $self->{CACHED}->{$path} };
@@ -181,50 +295,57 @@ sub _list_dir {
 
 		######################################################################
 		# Open the folder and sort its content by name and type
-		opendir( my $dh, $path ) or return;
-		my @items =
-			sort { ( -d File::Spec->catfile( $path, $b ) ? 1 : 0 ) <=> ( -d File::Spec->catfile( $path, $a ) ? 1 : 0 ) }
-			sort { lc($a) cmp lc($b) } grep { not $self->{SKIP}->{$_} } readdir $dh;
-		closedir $dh;
+		my ($dirs, $files) = $self->readdir( $path );
 
 		######################################################################
 		# For each item, creates its CACHE data
-		@{ $cached->{Data} } =
-			map { { name => $_, dir => $path, type => ( -d File::Spec->catfile( $path, $_ ) ? 'folder' : 'package' ) } }
-			@items;
+		my @Data = map { {
+			name => $_,
+			dir  => $path,
+			type => 'folder',
+		} } @$dirs;
+		push @Data, map { {
+			name => $_,
+			dir  => $path,
+			type => 'package',
+		} } @$files;
+		$cached->{Data}   = \@Data;
 		$cached->{Change} = ( stat $path )[10];
 	}
-	my @data = @{ $cached->{Data} };
 
 	######################################################################
-	# Shows / hides hidden files
+	# Show or hide hidden files
+	my @data = @{ $cached->{Data} };
 	unless ( $cached->{ShowHidden} ) {
-
-		# TODO Test if this Windows solutions works
-		if (IS_WIN32) {
-			require Win32::File;
-			my $attribs;
-			@data = grep {
-				Win32::File::GetAttributes( File::Spec->catfile( $_->{dir}, $_->{name} ), $attribs )
-					and !( $attribs & 2 )
-			} @{ $cached->{Data} };
-		} else {
-			@data = grep { $_->{name} !~ /^\./ } @{ $cached->{Data} };
+		my $project = $self->current->project;
+		if ( $project ) {
+			my $rule = $project->ignore_rule;
+			@data = grep { $rule->() } @data;
 		}
 	}
 
 	######################################################################
 	# Delete node children and populates it again
 	$self->DeleteChildren($node);
-	foreach my $each (@data) {
+	foreach my $each ( @data ) {
 		my $new_elem = $self->AppendItem(
 			$node,
 			$each->{name},
 			-1, -1,
-			Wx::TreeItemData->new( { dir => $each->{dir}, name => $each->{name}, type => $each->{type} } )
+			Wx::TreeItemData->new( {
+				name => $each->{name},
+				dir  => $each->{dir},
+				type => $each->{type},
+			} )
 		);
-		$self->SetItemHasChildren( $new_elem, 1 ) if $each->{type} eq 'folder';
-		$self->SetItemImage( $new_elem, $self->{file_types}->{ $each->{type} }, Wx::wxTreeItemIcon_Normal );
+		if ( $each->{type} eq 'folder' ) {
+			$self->SetItemHasChildren( $new_elem, 1 );
+		}
+		$self->SetItemImage(
+			$new_elem,
+			$self->{file_types}->{ $each->{type} },
+			Wx::wxTreeItemIcon_Normal,
+		);
 	}
 }
 
@@ -364,120 +485,6 @@ sub _rename_or_move {
 		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
 		return 0;
 	}
-}
-
-################################################################################
-#                                                                              #
-#                                                                              #
-#                                                                              #
-#                               SETUP FUNCTIONS                                #
-#                                                                              #
-#              Runned only when a new Directory object is created              #
-#                                                                              #
-#                                                                              #
-#                                                                              #
-################################################################################
-
-################################################################################
-# _setup_image_list                                                            #
-#                                                                              #
-# Assigns a ImageList object to the Directory Tree                             #
-#                                                                              #
-################################################################################
-sub _setup_image_list {
-	my $self = shift;
-
-	######################################################################
-	# File type and its icon
-	my %file_types = (
-		folder  => 'wxART_FOLDER',
-		package => 'wxART_NORMAL_FILE',
-	);
-
-	######################################################################
-	# Creates a new ImageList object
-	my $image_list = Wx::ImageList->new( 16, 16 );
-
-	######################################################################
-	# Adds each type and its icon to the ImageList object
-	for my $type ( keys %file_types ) {
-		$self->{file_types}->{$type} = $image_list->Add( Wx::ArtProvider::GetBitmap( $file_types{$type}, 'wxART_OTHER_C', [ 16, 16 ] ) );
-	}
-
-	$self->AssignImageList($image_list);
-}
-
-################################################################################
-# _setup_events                                                                #
-#                                                                              #
-# Setups the Directory Browser Events and the respective action                #
-#                                                                              #
-################################################################################
-sub _setup_events {
-	my $self = shift;
-	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self,
-		\&_on_tree_item_activated
-	);
-
-	Wx::Event::EVT_SET_FOCUS(
-		$self,
-		\&_on_focus
-	);
-
-	Wx::Event::EVT_TREE_ITEM_MENU(
-		$self, $self,
-		\&_on_tree_item_menu,
-	);
-
-	Wx::Event::EVT_TREE_SEL_CHANGED(
-		$self, $self,
-		\&_on_tree_sel_changed,
-	);
-
-	Wx::Event::EVT_TREE_ITEM_EXPANDING(
-		$self, $self,
-		\&_on_tree_item_expanding,
-	);
-
-	Wx::Event::EVT_TREE_ITEM_COLLAPSING(
-		$self, $self,
-		\&_on_tree_item_collapsing,
-	);
-
-	Wx::Event::EVT_TREE_END_LABEL_EDIT(
-		$self, $self,
-		\&_on_tree_end_label_edit,
-	);
-
-	Wx::Event::EVT_TREE_BEGIN_DRAG(
-		$self, $self,
-		\&_on_tree_begin_drag,
-	);
-
-	Wx::Event::EVT_TREE_END_DRAG(
-		$self, $self,
-		\&_on_tree_end_drag,
-	);
-}
-
-################################################################################
-# _setup_root                                                                  #
-#                                                                              #
-# Adds a root node to the directory tree                                       #
-#                                                                              #
-################################################################################
-sub _setup_root {
-	shift->AddRoot(
-		Wx::gettext('Directory'),
-		-1, -1,
-		Wx::TreeItemData->new(
-			{	dir  => '',
-				name => '',
-				type => 'folder',
-			}
-		)
-	);
 }
 
 ################################################################################

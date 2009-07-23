@@ -16,11 +16,12 @@ our @ISA     = 'Wx::SearchCtrl';
 sub new {
 	my $class = shift;
 	my $panel = shift;
-
-	my $self = $class->SUPER::new(
-			$panel, -1, '',
-			Wx::wxDefaultPosition, Wx::wxDefaultSize, Wx::wxTE_PROCESS_ENTER
-		);
+	my $self  = $class->SUPER::new(
+		$panel, -1, '',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_PROCESS_ENTER
+	);
 
 	######################################################################
 	# Caches each project search WORD and result
@@ -78,8 +79,11 @@ sub browser {
 #                                                                              #
 ################################################################################
 sub clear {
-	my $self = shift;
-	delete $self->{CACHED}->{$self->parent->_current_project};
+	my $self    = shift;
+	my $project = $self->parent->_current_project;
+	if ( $project ) {
+		delete $self->{CACHED}->{$project};
+	}
 	$self->SetValue('');
 	return;
 }
@@ -114,7 +118,7 @@ sub update_gui {
 ################################################################################
 # _search                                                                      #
 #                                                                              #
-# Serachs recursively per items that matchs the REGEX typed in search field,   #
+# Searchs recursively per items that matchs the REGEX typed in search field,   #
 # showing all items matched below the ROOT project directory will all the      #
 # folders that paths to them expanded                                          #
 #                                                                              #
@@ -124,17 +128,24 @@ sub _search {
 	my $parent = $self->parent;
 	my $current_project = $parent->_current_project;
 
+	# Fetch the ignore criteria
+	my $project = $self->parent->current->project;
+	my $rule    = $project ? $project->ignore_rule : undef;
+
 	######################################################################
 	# Check if it is to use the Cached search (in case of a project
 	# switching)
 	if ( $self->{use_cache} ) {
 		delete $self->{use_cache};
-		return $self->_display_cached_search( $node, $self->{CACHED}->{$current_project}->{Data} );
+		return $self->_display_cached_search(
+			$node,
+			$self->{CACHED}->{$current_project}->{Data},
+		);
 	}
 
-	my $word = $self->GetValue;
 	######################################################################
 	# Clears '\' words or trailing '\' and returns if the word is null
+	my $word = $self->GetValue;
 	$word =~ s/^\\$//g;
 	$word =~ s/\\$//g;
 	return unless $word;
@@ -147,37 +158,51 @@ sub _search {
 
 	######################################################################
 	# Opens the current directory and sort its items by type and name
-	opendir( my $dh, $path ) or return;
-	my @items = sort { ( -d File::Spec->catfile( $path, $b ) ? 1 : 0 ) <=> ( -d File::Spec->catfile( $path, $a ) ? 1 : 0 ) } sort { lc($a) cmp lc($b) } grep { not $browser->{SKIP}->{$_} } readdir $dh;
-	closedir $dh;
+	my ($dirs, $files) = $browser->readdir( $path );
 
-	######################################################################
-	# Hidden files
-	@items = grep { $_ !~ /^\./ } @items;
-
-	######################################################################
-	# Files that matchs and Dirs arrays
-	my @dirs  = grep { -d File::Spec->catfile( $path, $_ ) } @items;
-	my $found = my @files = grep { $_ =~ /$word/i } grep { not -d File::Spec->catfile( $path, $_ ) } @items;
-	my @result;
+	# Filter the file list by the search criteria (but not the dir list)
+	@$files = grep { $_ =~ /$word/i } @$files;
 
 	######################################################################
 	# Search recursively inside each folder of the current folder
-	for (@dirs) {
-		my %temp = ( name => $_, dir => $path, type => 'folder' );
+	my $found  = scalar @$files;
+	my @result = ();
+	foreach ( @$dirs ) {
+		my %temp = (
+			name => $_,
+			dir  => $path,
+			type => 'folder',
+		);
+
+		# Are we ignoring this directory
+		if ( $rule ) {
+			local $_ = \%temp;
+			unless ( $rule->() ) {
+				next;
+			}
+		}
+
 		######################################################################
 		# Creates each folder node
 		my $new_folder = $browser->AppendItem(
-					$node, $_, -1, -1,
-					Wx::TreeItemData->new( { dir => $path, name => $_, type => 'folder' } )
-				);
-		$browser->SetItemImage( $new_folder, $browser->{file_types}->{folder}, Wx::wxTreeItemIcon_Normal );
+			$node, $_, -1, -1,
+			Wx::TreeItemData->new( {
+				dir  => $path,
+				name => $_,
+				type => 'folder',
+			} )
+		);
+		$browser->SetItemImage(
+			$new_folder,
+			$browser->{file_types}->{folder},
+			Wx::wxTreeItemIcon_Normal,
+		);
 
 		######################################################################
 		# Deletes the folder node if any file below it was found
 		if ( @{$temp{data}} = $self->_search($new_folder) ) {
 			$found = 1;
-			push(@result,\%temp);
+			push @result, \%temp;
 		} else{
 			$browser->Delete($new_folder);
 		}
@@ -185,16 +210,27 @@ sub _search {
 
 	######################################################################
 	# Adds each matched file
-	for (@files) {
+	foreach ( @$files ) {
 		my $new_elem = $browser->AppendItem(
-				$node, $_, -1,-1,
-				Wx::TreeItemData->new( { dir => $path, name => $_, type => 'package' } )
-			);
-		$browser->SetItemImage( $new_elem, $browser->{file_types}->{package}, Wx::wxTreeItemIcon_Normal );
-		my %temp = ( name => $_, dir => $path, type => 'package');
-		push(@result,\%temp);
+			$node, $_, -1,-1,
+			Wx::TreeItemData->new( {
+				name => $_,
+				dir  => $path,
+				type => 'package',
+			} )
+		);
+		$browser->SetItemImage(
+			$new_elem,
+			$browser->{file_types}->{package},
+			Wx::wxTreeItemIcon_Normal,
+		);
+		push @result, {
+			name => $_,
+			dir  => $path,
+			type => 'package',
+		};
 	}
-	
+
 	######################################################################
 	# Returns 1 if any file above this path node was found or 0 and
 	# deletes parent node if none
@@ -314,9 +350,9 @@ sub _setup_menu {
 sub _on_text {
 	my ( $self, $event ) = @_;
 
-	my $parent = $self->parent;
+	my $parent  = $self->parent;
 	my $browser = $self->browser;
-	my $value = $self->GetValue;
+	my $value   = $self->GetValue;
 	my $current_project = $parent->_current_project;
 
 	######################################################################
@@ -353,6 +389,10 @@ sub _on_text {
 	######################################################################
 	# Caches the searched word to the project
 	$self->{CACHED}->{ $current_project }->{value} = $value;
+
+	# Lock the gui here to make the updates look slicker
+	# The locker holds the gui freeze until the update is done.
+	my $locker = $self->main->freezer;
 
 	######################################################################
 	# Cleans the Directory Browser window to show the result
