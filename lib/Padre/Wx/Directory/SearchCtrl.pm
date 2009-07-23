@@ -109,9 +109,18 @@ sub update_gui {
 	# Compares if they are not the same, if not updates search field
 	# content
 	if ( defined($current_project) and defined($last_project) and $last_project ne $current_project ) {
+
 		$self->{use_cache} = 1;
 		my $value = $self->{CACHED}->{$current_project}->{value};
 		$self->SetValue(defined $value ? $value : '');
+
+		######################################################################
+		# (Un)Checks current project Searcher Menu Skips options
+		my $skips_hidden = $self->{_skip_hidden}->{ $current_project };
+		my $skips_vcs = $self->{_skip_vcs}->{ $current_project };
+
+		$self->{skip_hidden}->Check( defined $skips_hidden ? $skips_hidden : 1 );
+		$self->{skip_vcs}->Check( defined $skips_vcs ? $skips_vcs : 1 );
 	}
 }
 
@@ -146,10 +155,6 @@ sub _search {
 	}
 
 	######################################################################
-	# Quotes meta characters
-	my $word = quotemeta( $self->GetValue );
-
-	######################################################################
 	# If there is a Cached Word (in case that the user is still typing)
 	if ( my $last_word = $self->{CACHED}->{$current_project}->{value} ){
 
@@ -164,6 +169,10 @@ sub _search {
 			return $self->_search_in_cache( $node, $self->{CACHED}->{$current_project}->{Data} );
 		}
 	}
+
+	######################################################################
+	# Quotes meta characters
+	my $word = quotemeta( $self->GetValue );
 
 	######################################################################
 	# Gets the node's data and generates its path
@@ -190,16 +199,17 @@ sub _search {
 		);
 
 		# Are we ignoring this directory
-		if ( $rule ) {
-			local $_ = \%temp;
-			unless ( $rule->() ) {
+		if ( $self->{skip_hidden}->IsChecked ){
+			if ( $rule ) {
+				local $_ = \%temp;
+				unless ( $rule->() ) {
+					next;
+				}
+			}
+			elsif ( $temp{name} =~ /^\./ ) {
 				next;
 			}
 		}
-		elsif ( $temp{name} =~ /^\./ ) {
-			next;
-		}
-
 		######################################################################
 		# Creates each folder node
 		my $new_folder = $browser->AppendItem(
@@ -428,12 +438,39 @@ sub _setup_events {
 #                                                                              #
 # Setups the Searcher menu                                                     #
 #                                                                              #
-# TODO                                                                         #
 ################################################################################
 sub _setup_menu {
 	my $self = shift;
+	my $current_project = $self->parent->_current_project;
 	my $menu = Wx::Menu->new;
-	Wx::Event::EVT_MENU($self, $menu->AppendCheckItem( -1, Wx::gettext( 'Skip hidden files' ) ),sub {},);
+	
+	######################################################################
+	# Skip hidden files
+	$self->{skip_hidden} = $menu->AppendCheckItem( -1, Wx::gettext( 'Skip hidden files' ) );
+	$self->{skip_hidden}->Check(1);
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{skip_hidden},
+		sub {
+			$self->{_skip_hidden}->{ $self->parent->_current_project } = $self->{skip_hidden}->IsChecked ? 1 : 0;
+		},
+	);
+
+	######################################################################
+	# Skip CVS / .svn / blib and .git folders
+	# TODO: Make this works
+	$self->{skip_vcs} = $menu->AppendCheckItem( -1, Wx::gettext( 'Skip CVS/.svn/.git/blib folders' ));
+	$self->{skip_vcs}->Check(1);
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{skip_vcs},
+		sub {
+			$self->{_skip_vcs}->{ $self->parent->_current_project } = $self->{skip_vcs}->IsChecked ? 1 : 0;
+		},
+	);
+
 	return $menu;
 }
 
