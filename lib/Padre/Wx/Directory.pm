@@ -315,6 +315,14 @@ sub _search {
 	}
 
 	my $word = $self->GetValue;
+	######################################################################
+	# Clears '\' words or trailing '\' and returns if the word is null
+	$word =~ s/^\\$//g;
+	$word =~ s/\\$//g;
+	return unless $word;
+
+	######################################################################
+	# Gets the node's data and generates its path
 	my $browser = $self->browser;
 	my $node_data = $browser->GetPlData( $node );
 	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
