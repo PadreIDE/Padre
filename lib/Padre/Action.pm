@@ -73,6 +73,16 @@ sub new {
 	return $self;
 }
 
+#
+# A label textual data without any strange menu characters
+#
+sub label_text {
+	my $self = shift;
+	my $label = $self->label;
+	$label =~ s/\&//g;
+	return $label;
+}
+
 #####################################################################
 # Main Methods
 
