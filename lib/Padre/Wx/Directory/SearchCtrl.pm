@@ -199,17 +199,24 @@ sub _search {
 		);
 
 		# Are we ignoring this directory
-		if ( $self->{skip_hidden}->IsChecked ){
+		if ( $self->{skip_hidden}->IsChecked ) {
 			if ( $rule ) {
 				local $_ = \%temp;
 				unless ( $rule->() ) {
 					next;
 				}
-			}
-			elsif ( $temp{name} =~ /^\./ ) {
+			} elsif ( $temp{name} =~ /^\./ ) {
 				next;
 			}
 		}
+
+		# Skips VCS folders if selected to
+		if ( $self->{skip_vcs}->IsChecked ) {
+			if ( $temp{name} =~ /^(cvs|blib|\.(svn|git))$/i ) {
+				next;
+			}
+		}
+		
 		######################################################################
 		# Creates each folder node
 		my $new_folder = $browser->AppendItem(
@@ -459,7 +466,6 @@ sub _setup_menu {
 
 	######################################################################
 	# Skip CVS / .svn / blib and .git folders
-	# TODO: Make this works
 	$self->{skip_vcs} = $menu->AppendCheckItem( -1, Wx::gettext( 'Skip CVS/.svn/.git/blib folders' ));
 	$self->{skip_vcs}->Check(1);
 
