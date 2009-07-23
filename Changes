@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.42 to be released
+
+
 0.41 2009.07.23
     - Remove Experimental mode.
     - Fixed a bug in Plugin config_write where ->selectrow_array was used 
