@@ -133,7 +133,7 @@ use Padre::Wx        ();
 use Padre            ();
 use Padre::MimeTypes ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 #####################################################################
 # Document Registration

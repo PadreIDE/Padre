@@ -19,7 +19,7 @@ use strict;
 use warnings;
 use Padre::Current ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 # The three most common things we need are implemented directly
 

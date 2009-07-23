@@ -8,7 +8,7 @@ package Padre::DB::Session;
 use strict;
 use warnings;
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 my $PADRE_SESSION = 'padre-last';
 

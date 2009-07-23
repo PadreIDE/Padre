@@ -7,7 +7,7 @@ use URI              ();
 use HTTP::Request    ();
 use Padre::Task::LWP ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 our @ISA     = 'Padre::Task::LWP';
 
 =pod

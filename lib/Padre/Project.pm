@@ -9,7 +9,7 @@ use File::Spec    ();
 use YAML::Tiny    ();
 use Padre::Config ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 use Class::XSAccessor getters => {
 	root      => 'root',

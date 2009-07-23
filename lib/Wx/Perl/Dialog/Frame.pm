@@ -9,7 +9,7 @@ use Wx::STC ();
 
 use base 'Wx::Frame';
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 sub new {
 	my ($class) = @_;

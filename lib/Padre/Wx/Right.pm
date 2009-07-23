@@ -7,7 +7,7 @@ use warnings;
 use Padre::Constant ();
 use Padre::Wx       ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 our @ISA     = qw{
 	Padre::Wx::Role::MainChild
 	Wx::AuiNotebook

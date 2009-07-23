@@ -47,7 +47,7 @@ use warnings;
 use Exporter   ();
 use File::Spec ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 our @ISA     = 'Exporter';
 
 $| = 1;

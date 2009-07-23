@@ -21,7 +21,7 @@ use Carp           ();
 use Data::Dumper   ();
 use File::Basename ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 #####################################################################
 # Document Registration

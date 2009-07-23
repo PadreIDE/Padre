@@ -14,7 +14,7 @@ use Padre::Wx::Menu ();
 use Padre::Locale   ();
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################

@@ -14,7 +14,7 @@ use Padre::Wx ();
 
 use base 'Wx::Dialog';
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 # -- constructor
 

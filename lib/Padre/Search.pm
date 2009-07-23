@@ -31,7 +31,7 @@ use Encode     ();
 use List::Util ();
 use Params::Util '_INSTANCE';
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 use Class::XSAccessor getters => {
 	find_term    => 'find_term',

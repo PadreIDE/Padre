@@ -35,7 +35,7 @@ use Padre::PluginHandle      ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::Plugins ();
 
-our $VERSION = '0.40';
+our $VERSION = '0.41';
 
 #####################################################################
 # Constructor and Accessors
