@@ -302,7 +302,7 @@ sub guess_mimetype {
 	my $text     = $self->{original_content};
 	my $filename = $self->filename || q{};
 
-	return Padre::MimeTypes->_guess_mimetype($text, $filename);
+	return Padre::MimeTypes->_guess_mimetype( $text, $filename );
 }
 
 
@@ -574,13 +574,12 @@ sub text_like {
 }
 
 sub text_with_one_nl {
-	my $self = shift;
-	my $text = $self->text_get;
+	my $self   = shift;
+	my $text   = $self->text_get;
 	my $nlchar = "\n";
 	if ( $self->get_newline_type eq 'WIN' ) {
 		$nlchar = "\r\n";
-	}
-	elsif ( $self->get_newline_type eq 'MAC' ) {
+	} elsif ( $self->get_newline_type eq 'MAC' ) {
 		$nlchar = "\r";
 	}
 	$text =~ s/$nlchar/\n/g;

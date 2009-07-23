@@ -190,7 +190,7 @@ sub enable {
 	if ( my @highlighters = $self->object->provided_highlighters ) {
 		require Padre::MimeTypes;
 		foreach my $h (@highlighters) {
-			if (ref $h ne 'ARRAY') {
+			if ( ref $h ne 'ARRAY' ) {
 				warn "Not array reference '$h'\n";
 				next;
 			}

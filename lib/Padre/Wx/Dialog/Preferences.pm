@@ -824,8 +824,7 @@ sub run {
 	# is no document currently open
 	eval {
 		my $doc = Padre::Current->document;
-		unless ( $doc and $doc->is_new )
-		{
+		unless ( $doc and $doc->is_new ) {
 
 			# These are a bit different as run_* variable name depends
 			# on current document's filename

@@ -562,9 +562,10 @@ sub search {
 	my ( $from, $to ) = $editor->GetSelection;
 
 	# Execute the search and move to the resulting location
-	my ( $start, $end, @matches ) =
-		Padre::Util::get_matches( $self->{text}, $regex, $from - $self->{text_offset}, $to - $self->{text_offset},
-		$backwards );
+	my ( $start, $end, @matches ) = Padre::Util::get_matches(
+		$self->{text}, $regex, $from - $self->{text_offset}, $to - $self->{text_offset},
+		$backwards
+	);
 	return unless defined $start;
 	$editor->SetSelection( $start + $self->{text_offset}, $end + $self->{text_offset} );
 

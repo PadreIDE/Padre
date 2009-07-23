@@ -17,9 +17,9 @@ See L<Padre::Document>
 use 5.008;
 use strict;
 use warnings;
-use Carp            ();
-use Data::Dumper    ();
-use File::Basename  ();
+use Carp           ();
+use Data::Dumper   ();
+use File::Basename ();
 
 our $VERSION = '0.40';
 
@@ -96,159 +96,160 @@ sub _initialize {
 	# Lines marked with CONFIRMED indicate that the mime-typehas been checked
 	# to confirm that the MIME type is either the official type, or the primary
 	# one in use by the relevant language community.
-	
+
 	# name => Human readable name
 	# lexer => The Scintilla lexer to be used
-	# class => document class 
+	# class => document class
 
 	%MIME_TYPES = (
 		'text/x-abc' => {
-			name => 'ABC',
+			name  => 'ABC',
 			lexer => Wx::wxSTC_LEX_NULL,
 		},
 		'text/x-adasrc' => {
-			name => 'ADA',
+			name  => 'ADA',
 			lexer => Wx::wxSTC_LEX_ADA, # CONFIRMED
 		},
-		'text/x-asm'    => {
-			name => 'ASM',
+		'text/x-asm' => {
+			name  => 'ASM',
 			lexer => Wx::wxSTC_LEX_ASM, # CONFIRMED
 		},
 
 		# application/x-msdos-program includes .exe and .com, so don't use it
 		'application/x-bat' => {
-			name => 'BAT',
+			name  => 'BAT',
 			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
 		},
 
-		'text/x-c++src'             => {
-			name => 'c++',
-			lexer => Wx::wxSTC_LEX_CPP,       # CONFIRMED
+		'text/x-c++src' => {
+			name  => 'c++',
+			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
 		},
-		'text/css'                  => {
-			name => 'CSS',
-			lexer => Wx::wxSTC_LEX_CSS,       # CONFIRMED
+		'text/css' => {
+			name  => 'CSS',
+			lexer => Wx::wxSTC_LEX_CSS,   # CONFIRMED
 		},
-		'text/x-patch'              => {
-			name => 'Patch',
-			lexer => Wx::wxSTC_LEX_DIFF,      # CONFIRMED
+		'text/x-patch' => {
+			name  => 'Patch',
+			lexer => Wx::wxSTC_LEX_DIFF,  # CONFIRMED
 		},
-		'text/x-eiffel'             => {
-			name => 'Eiffel',
-			lexer => Wx::wxSTC_LEX_EIFFEL,    # CONFIRMED
+		'text/x-eiffel' => {
+			name  => 'Eiffel',
+			lexer => Wx::wxSTC_LEX_EIFFEL, # CONFIRMED
 		},
-		'text/x-forth'              => {
-			name => 'Forth',
-			lexer => Wx::wxSTC_LEX_FORTH,     # CONFIRMED
+		'text/x-forth' => {
+			name  => 'Forth',
+			lexer => Wx::wxSTC_LEX_FORTH,  # CONFIRMED
 		},
-		'text/x-fortran'            => {
-			name => 'Fortran',
-			lexer => Wx::wxSTC_LEX_FORTRAN,   # CONFIRMED
+		'text/x-fortran' => {
+			name  => 'Fortran',
+			lexer => Wx::wxSTC_LEX_FORTRAN, # CONFIRMED
 		},
-		'text/html'                 => {
-			name => 'HTML',
-			lexer => Wx::wxSTC_LEX_HTML,      # CONFIRMED
+		'text/html' => {
+			name  => 'HTML',
+			lexer => Wx::wxSTC_LEX_HTML,    # CONFIRMED
 		},
-		'application/javascript'    => {
-			name => 'Javascript',
-			lexer => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
+		'application/javascript' => {
+			name  => 'Javascript',
+			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
-		'application/json'          => {
-			name => 'JSON',
-			lexer => Wx::wxSTC_LEX_ESCRIPT,   # CONFIRMED
+		'application/json' => {
+			name  => 'JSON',
+			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
-		'application/x-latex'       => {
-			name => 'Latex',
-			lexer => Wx::wxSTC_LEX_LATEX,     # CONFIRMED
+		'application/x-latex' => {
+			name  => 'Latex',
+			lexer => Wx::wxSTC_LEX_LATEX,   # CONFIRMED
 		},
-		'application/x-lisp'        => {
-			name => 'LISP',
-			lexer => Wx::wxSTC_LEX_LISP,      # CONFIRMED
+		'application/x-lisp' => {
+			name  => 'LISP',
+			lexer => Wx::wxSTC_LEX_LISP,    # CONFIRMED
 		},
 		'application/x-shellscript' => {
-			name => 'Shellscript',
+			name  => 'Shellscript',
 			lexer => Wx::wxSTC_LEX_BASH,
 		},
-		'text/x-lua'                => {
-			name => 'Lua',
-			lexer => Wx::wxSTC_LEX_LUA,       # CONFIRMED
+		'text/x-lua' => {
+			name  => 'Lua',
+			lexer => Wx::wxSTC_LEX_LUA,     # CONFIRMED
 		},
-		'text/x-makefile'           => {
-			name => 'Makefile',
-			lexer => Wx::wxSTC_LEX_MAKEFILE,  # CONFIRMED
+		'text/x-makefile' => {
+			name  => 'Makefile',
+			lexer => Wx::wxSTC_LEX_MAKEFILE, # CONFIRMED
 		},
-		'text/x-matlab'             => {
-			name => 'Matlab',
-			lexer => Wx::wxSTC_LEX_MATLAB,    # CONFIRMED
+		'text/x-matlab' => {
+			name  => 'Matlab',
+			lexer => Wx::wxSTC_LEX_MATLAB,   # CONFIRMED
 		},
-		'text/x-pascal'             => {
-			name => 'Pascal',
-			lexer => Wx::wxSTC_LEX_PASCAL,    # CONFIRMED
+		'text/x-pascal' => {
+			name  => 'Pascal',
+			lexer => Wx::wxSTC_LEX_PASCAL,   # CONFIRMED
 		},
 		'application/x-perl' => {
 			name  => 'Perl 5',
-			lexer => Wx::wxSTC_LEX_PERL,      # CONFIRMED
+			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 			class => 'Padre::Document::Perl',
 		},
-		'text/x-python'             => {
-			name => 'Python',
-			lexer => Wx::wxSTC_LEX_PYTHON,    # CONFIRMED
+		'text/x-python' => {
+			name  => 'Python',
+			lexer => Wx::wxSTC_LEX_PYTHON,   # CONFIRMED
 		},
-		'application/x-php'         => {
-			name => 'PHP',
+		'application/x-php' => {
+			name  => 'PHP',
 			lexer => Wx::wxSTC_LEX_PHPSCRIPT, # CONFIRMED
 		},
-		'application/x-ruby'        => {
-			name => 'Ruby',
+		'application/x-ruby' => {
+			name  => 'Ruby',
 			lexer => Wx::wxSTC_LEX_RUBY,      # CONFIRMED
 		},
-		'text/x-sql'                => {
-			name => 'SQL',
+		'text/x-sql' => {
+			name  => 'SQL',
 			lexer => Wx::wxSTC_LEX_SQL,       # CONFIRMED
 		},
-		'application/x-tcl'         => {
-			name => 'Tcl',
+		'application/x-tcl' => {
+			name  => 'Tcl',
 			lexer => Wx::wxSTC_LEX_TCL,       # CONFIRMED
 		},
-		'text/vbscript'             => {
-			name => 'VBScript',
+		'text/vbscript' => {
+			name  => 'VBScript',
 			lexer => Wx::wxSTC_LEX_VBSCRIPT,  # CONFIRMED
 		},
 
 		'text/x-config' => {
-			name => 'Config',
+			name  => 'Config',
 			lexer => Wx::wxSTC_LEX_CONF,
 		},
 
 		# text/xml specifically means "human-readable XML".
 		# This is prefered to the more generic application/xml
 		'text/xml' => {
-			name => 'XML',
-			lexer => Wx::wxSTC_LEX_XML,                        # CONFIRMED
+			name  => 'XML',
+			lexer => Wx::wxSTC_LEX_XML,       # CONFIRMED
 		},
 
-		'text/x-yaml'         => {
-			name => 'YAML',
-			lexer => Wx::wxSTC_LEX_YAML,            # CONFIRMED
+		'text/x-yaml' => {
+			name  => 'YAML',
+			lexer => Wx::wxSTC_LEX_YAML,      # CONFIRMED
 		},
-		'application/x-pir'   => {
-			name => 'PIR',
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		'application/x-pir' => {
+			name  => 'PIR',
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
-		'application/x-pasm'  => {
-			name => 'PASM',
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		'application/x-pasm' => {
+			name  => 'PASM',
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
 		'application/x-perl6' => {
-			name => 'Perl 6',
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+			name  => 'Perl 6',
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
-		'text/plain'          => {
-			name => 'Text',
-			lexer => Wx::wxSTC_LEX_NULL,            # CONFIRMED
+		'text/plain' => {
+			name  => 'Text',
+			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
 	);
-	# TODO: 
+
+	# TODO:
 	# add some mime-type for pod files
 	# or remove the whole Padre::Document::POD class as it is not in use
 	#'text/x-pod'         => 'Padre::Document::POD',
@@ -281,8 +282,8 @@ sub _initialize {
 }
 
 sub get_lexer {
-	my ($self, $mime_type) = @_;
-	return $MIME_TYPES{ $mime_type }{lexer};
+	my ( $self, $mime_type ) = @_;
+	return $MIME_TYPES{$mime_type}{lexer};
 }
 
 # TODO: Set some reasonable default highlighers for each mime-type for when there
@@ -297,12 +298,14 @@ sub add_mime_class {
 	my $mime  = shift;
 	my $class = shift;
 	if ( not $MIME_TYPES{$mime} ) {
+
 		# TODO: display on the GUI
 		warn "Mime type $mime is not supported when add_mime_class($class) was called\n";
 		return;
 	}
 
 	if ( $MIME_TYPES{$mime}{class} ) {
+
 		# TODO: display on the GUI
 		warn "Mime type $mime already has a class '$MIME_TYPES{$mime}{class}' when add_mime_class($class) was called\n";
 		return;
@@ -313,14 +316,16 @@ sub add_mime_class {
 sub remove_mime_class {
 	my $self = shift;
 	my $mime = shift;
-	
+
 	if ( not $MIME_TYPES{$mime} ) {
+
 		# TODO: display on GUI
 		warn "Mime type $mime is not supported when remove_mime_class($mime) was called\n";
 		return;
 	}
-	
+
 	if ( not $MIME_TYPES{$mime}{class} ) {
+
 		# TODO: display on GUI
 		warn "Mime type $mime does not have a class entry when remove_mime_class($mime) was called\n";
 		return;
@@ -333,11 +338,12 @@ sub get_mime_class {
 	my $mime = shift;
 
 	if ( not $MIME_TYPES{$mime} ) {
+
 		# TODO: display on GUI
 		warn "Mime type $mime is not supported when remove_mime_class($mime) was called\n";
 		return;
 	}
-	
+
 	return $MIME_TYPES{$mime}{class};
 }
 
@@ -347,7 +353,7 @@ sub add_highlighter {
 	my $human       = shift;
 	my $explanation = shift || '';
 
-	if (not defined $human) {
+	if ( not defined $human ) {
 		Carp::Cluck("human name not defined for '$module'\n");
 		return;
 	}
@@ -360,6 +366,7 @@ sub add_highlighter {
 sub get_highlighter_explanation {
 	my $self = shift;
 	my $name = shift;
+
 	#print Data::Dumper::Dumper \%AVAILABLE_HIGHLIGHTERS;
 	my ($highlighter) = grep { $AVAILABLE_HIGHLIGHTERS{$_}{name} eq $name } keys %AVAILABLE_HIGHLIGHTERS;
 	if ( not $highlighter ) {
@@ -372,6 +379,7 @@ sub get_highlighter_explanation {
 sub get_highlighter_name {
 	my $self        = shift;
 	my $highlighter = shift;
+
 	# TODO this can happen if the user configureda highlighter but on the next start
 	# the highlighter is not available any more
 	# we need to handle this situation
@@ -512,10 +520,10 @@ sub get_highlighters_of_mime_type_name {
 # innappropriate just to get them out of here.
 
 sub _guess_mimetype {
-	my $self = shift;
-	my $text = shift;
+	my $self     = shift;
+	my $text     = shift;
 	my $filename = shift;
-	
+
 	# Default mime-type of new files, should be configurable in the GUI
 	# TODO: Make it configurable in the GUI :)
 	unless ($filename) {
@@ -527,7 +535,7 @@ sub _guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->( $text );
+				return $EXT_MIME{$ext}->($text);
 			} else {
 				return $EXT_MIME{$ext};
 			}
@@ -547,7 +555,7 @@ sub _guess_mimetype {
 
 		# Found a hash bang line
 		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-			return $self->perl_mime_type( $text );
+			return $self->perl_mime_type($text);
 		}
 		if ( $text =~ /\A---/ ) {
 			return 'text/x-yaml';
