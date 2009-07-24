@@ -135,10 +135,11 @@ sub update_gui {
 
 	######################################################################
 	# Finds project base
-	my $dir = $self->{home_dir};
-	if( my $filename = $current->filename ) {
-		$dir = Padre::Util::get_project_dir($filename)
-		|| File::Basename::dirname($filename);
+	my $dir;
+	if ( my $doc = $current->document ) {
+		$dir = $doc->project_dir;
+	} else {
+		$dir = $self->{home_dir};
 	}
 
 	######################################################################

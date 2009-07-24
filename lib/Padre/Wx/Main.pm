@@ -2363,6 +2363,11 @@ sub setup_editor {
 		);
 		$self->menu->file->update_recentfiles;
 	}
+	else {
+		$doc->{project_dir} =	$self->current->document ?
+					$self->current->document->project_dir :
+					File::HomeDir->my_home ;
+	}
 
 	my $id = $self->create_tab( $editor, $title );
 

@@ -534,7 +534,7 @@ sub _on_tree_item_activated {
 
 	######################################################################
 	# If its a folder, expands/collapses it and returns
-	if ( $node_data->{type} eq "folder" ) {
+	if ( $node_data->{type} eq 'folder' ) {
 		$self->Toggle($node);
 		return;
 	}

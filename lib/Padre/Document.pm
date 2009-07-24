@@ -859,7 +859,7 @@ sub project_find {
 	unless ( defined $dirs ) {
 
 		# This document is part of the null project
-		return File::Spec->catpath( $v, $d, '' );
+		return File::Spec->catpath( $v, File::Spec->catdir( @d ), '' );
 	}
 
 	return File::Spec->catpath( $v, $dirs, '' );
