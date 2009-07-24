@@ -373,6 +373,18 @@ setting(
 	default => 500_000,
 );
 setting(
+	name    => 'editor_right_margin_enable',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
+	name    => 'editor_right_margin_column',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 80,
+);
+setting(
 	name    => 'find_case',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,

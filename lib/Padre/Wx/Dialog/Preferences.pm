@@ -261,6 +261,11 @@ sub _appearance_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox', 'editor_right_margin_enable', ( $config->editor_right_margin_enable ? 1 : 0 ),
+				Wx::gettext('Show right margin at column:')
+			],
+			[ 'Wx::TextCtrl', 'editor_right_margin_column', $config->editor_right_margin_column ]
+		],
 		[   [ 'Wx::StaticText',     'undef',       Wx::gettext('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font', $font_desc ]
 		],
@@ -292,6 +297,19 @@ sub _appearance_panel {
 			my $color = $self->get_widget_value('editor_currentline_color');
 			$self->get_widget('preview_editor')
 				->SetCaretLineBackground( Padre::Wx::Editor::_color( substr( $color, 1 ) ) );
+		},
+	);
+
+	Wx::Event::EVT_CHECKBOX(
+		$settings_subpanel,
+		$self->get_widget('editor_right_margin_enable'),
+		sub {
+            my $preview = $self->get_widget('preview_editor');
+            my $enabled = $self->get_widget_value('editor_right_margin_enable');
+            my $col = $self->get_widget_value('editor_right_margin_column');
+
+            $preview->SetEdgeColumn( $col );
+            $preview->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
 		},
 	);
 
@@ -801,6 +819,14 @@ sub run {
 	$config->set(
 		'main_output_ansi',
 		$data->{main_output_ansi} ? 1 : 0
+	);
+	$config->set(
+		'editor_right_margin_enable',
+		$data->{editor_right_margin_enable} ? 1 : 0
+	);
+	$config->set(
+		'editor_right_margin_column',
+		$data->{ editor_right_margin_column },
 	);
 	$config->set(
 		'run_interpreter_args_default',

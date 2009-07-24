@@ -176,6 +176,9 @@ sub padre_setup_plain {
 		$self->SetLayoutDirection(Wx::wxLayout_LeftToRight);
 	}
 
+    $self->SetEdgeColumn( $config->editor_right_margin_column );
+    $self->SetEdgeMode( $config->editor_right_margin_enable ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
+
 	$self->setup_style_from_config('plain');
 
 	return;

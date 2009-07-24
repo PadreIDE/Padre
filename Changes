@@ -14,6 +14,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added the "Artistic" and "COPYING" (GPLv1) files as well a note to the
       "README" about licensing per the request of the 
       http://directory.fsf.org/ maintainers. (SHLOMIF)
+    - Added a "right margin" option which will show a line at the specified
+      column (BRICAS)
 
 0.41 2009.07.23
     - Remove Experimental mode.
