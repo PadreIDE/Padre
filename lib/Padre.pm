@@ -40,10 +40,10 @@ use Class::XSAccessor getters => {
 	wx             => 'wx',
 	task_manager   => 'task_manager',
 	plugin_manager => 'plugin_manager',
-
-}, accessors => {
-	actions        => 'actions',
-};
+	},
+	accessors => {
+	actions => 'actions',
+	};
 
 # Globally shared detection of the "current" Perl
 SCOPE: {

@@ -56,14 +56,14 @@ A default contructor for action objects.
 =cut
 
 sub new {
-	my ($class, %opts) = @_;
+	my ( $class, %opts ) = @_;
 
 	#XXX - validate options
 
 	my $self = bless {}, $class;
 
 	$self->name( $opts{name} );
-	$self->id( $opts{id} || -1 );   
+	$self->id( $opts{id} || -1 );
 	$self->label( $opts{label} );
 	$self->icon( $opts{icon} );
 	$self->shortcut( $opts{shortcut} );
@@ -77,7 +77,7 @@ sub new {
 # A label textual data without any strange menu characters
 #
 sub label_text {
-	my $self = shift;
+	my $self  = shift;
 	my $label = $self->label;
 	$label =~ s/\&//g;
 	return $label;
