@@ -11,3 +11,13 @@ Padre
 For detailed installation look at 
 
 http://padre.perlide.org/wiki/Download
+
+--------------------------------------------------------
+
+The Padre source code is distributed under the same terms as Perl itself. 
+Namely:
+
+1. The GNU General Public License, either version 1 or at your option,
+any later version. (see the file "COPYING").
+
+2. The Artistic License of Perl. (see the file "Artistic").
