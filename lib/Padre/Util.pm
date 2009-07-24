@@ -258,6 +258,24 @@ sub find_perldiag_translations {
 	return sort keys %languages;
 }
 
+=pod get_project_rcs
+
+Given a project dir (see "get_project_dir"), returns the project's 
+Revision Control System (RCS) by name. This can be either 'CVS', 
+'SVN' or 'GIT'. Returns undef if none was found.
+
+=cut
+
+sub get_project_rcs {
+	my $project_dir = shift;
+
+	foreach my $rcs (qw(cvs svn git)) {
+		my $dir = File::Spec->catdir($project_dir, ".$rcs");
+		return uc $rcs if -e $dir;
+	}
+	return;
+}
+
 =pod
 
 =head2 get_project_dir
