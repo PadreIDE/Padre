@@ -268,10 +268,16 @@ Revision Control System (RCS) by name. This can be either 'CVS',
 
 sub get_project_rcs {
 	my $project_dir = shift;
+	
+	my %evidence_of = (
+		'CVS' => 'CVS',
+		'SVN' => '.svn',
+		'GIT' => '.git',
+	);
 
-	foreach my $rcs (qw(cvs svn git)) {
-		my $dir = File::Spec->catdir($project_dir, ".$rcs");
-		return uc $rcs if -e $dir;
+	foreach my $rcs (keys %evidence_of) {
+		my $dir = File::Spec->catdir($project_dir, $evidence_of{$rcs});
+		return $rcs if -d $dir;
 	}
 	return;
 }
