@@ -161,7 +161,7 @@ sub add_tool_item {
 	$self->AddTool(
 		$id, '',
 		Padre::Wx::Icon::find( $args{icon} ),
-		$action->label,
+		$action->label_text,
 	);
 
 	# Add the optional event hook
