@@ -6,8 +6,8 @@ Padre::Manual::Hacking - Guide to hacking on Padre
 
 This is the Padre Developers Guide.
 
-It is intended for people are interested
-in hacking on Padre, and specifically hacking the core distribution.
+It is intended for people interested in hacking on Padre, and specifically 
+hacking the core distribution.
 
 =head2 Getting Started
 
@@ -22,6 +22,7 @@ distributions as well.
 The specific path you want to check out is...
 
   http://svn.perlide.org/padre/trunk
+
 
 =head2 Extra Files
 
@@ -48,7 +49,7 @@ Similar to the B<ppi_version> tool from CPAN, this updates the version number.
 
 =head2 Bug Tracking
 
-Padre uses Trac for bug tracking this.
+Padre uses Trac for bug tracking.
 
 The main web site of Padre is actually its Trac L<http://padre.perlide.org/>
 
