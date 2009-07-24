@@ -2675,6 +2675,7 @@ sub on_save_as {
 			$document->_set_filename($path);
 			$document->save_file;
 			$document->set_newline_type(Padre::Constant::NEWLINE);
+			delete $document->{project_dir};
 			last;
 		}
 	}
