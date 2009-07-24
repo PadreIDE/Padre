@@ -29,17 +29,17 @@ sub new {
 	# Add the POD-based help launchers
 	$self->add_menu_item(
 		$self,
-		name       => 'help.help', 
+		name       => 'help.help',
 		id         => Wx::wxID_HELP,
-		label      => Wx::gettext('Help'), 
+		label      => Wx::gettext('Help'),
 		menu_event => sub {
 			$_[0]->menu->help->help( $_[0] );
 		},
 	);
 	$self->add_menu_item(
 		$self,
-		name       => 'help.context_help', 
-		label      => Wx::gettext('Context Help'), 
+		name       => 'help.context_help',
+		label      => Wx::gettext('Context Help'),
 		shortcut   => 'F1',
 		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
@@ -60,8 +60,8 @@ sub new {
 	);
 	$self->{current} = $self->add_menu_item(
 		$self,
-		name       => 'help.current', 
-		label      => Wx::gettext('Current Document'), 
+		name       => 'help.current',
+		label      => Wx::gettext('Current Document'),
 		menu_event => sub {
 			$_[0]->menu->help->help( $_[0] );
 			$_[0]->{help}->help( $_[0]->current->document );
@@ -80,8 +80,8 @@ sub new {
 
 	$self->add_menu_item(
 		$self->{live},
-		name       => 'help.live_support', 
-		label      => Wx::gettext('Padre Support (English)'), 
+		name       => 'help.live_support',
+		label      => Wx::gettext('Padre Support (English)'),
 		menu_event => sub {
 			Padre::Wx::launch_irc('padre');
 		},
@@ -91,8 +91,8 @@ sub new {
 
 	$self->add_menu_item(
 		$self->{live},
-		name       => 'help.perl_help', 
-		label      => Wx::gettext('Perl Help'), 
+		name       => 'help.perl_help',
+		label      => Wx::gettext('Perl Help'),
 		menu_event => sub {
 			Padre::Wx::launch_irc('general');
 		},
@@ -101,8 +101,8 @@ sub new {
 	if (Padre::Util::WIN32) {
 		$self->add_menu_item(
 			$self->{live},
-			name       => 'help.win32_questions', 
-			label      => Wx::gettext('Win32 Questions (English)'), 
+			name       => 'help.win32_questions',
+			label      => Wx::gettext('Win32 Questions (English)'),
 			menu_event => sub {
 				Padre::Wx::launch_irc('win32');
 			},
@@ -114,8 +114,8 @@ sub new {
 
 	$self->add_menu_item(
 		$self,
-		name       => 'help.visit_perlmonks', 
-		label      => Wx::gettext('Visit the PerlMonks'), 
+		name       => 'help.visit_perlmonks',
+		label      => Wx::gettext('Visit the PerlMonks'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
 		},
@@ -125,16 +125,16 @@ sub new {
 	$self->AppendSeparator;
 	$self->add_menu_item(
 		$self,
-		name       => 'help.report_a_bug', 
-		label      => Wx::gettext('Report a New &Bug'), 
+		name       => 'help.report_a_bug',
+		label      => Wx::gettext('Report a New &Bug'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
 		},
 	);
 	$self->add_menu_item(
 		$self,
-		name       => 'help.view_all_open_bugs', 
-		label      => Wx::gettext('View All &Open Bugs'), 
+		name       => 'help.view_all_open_bugs',
+		label      => Wx::gettext('View All &Open Bugs'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
 		},
@@ -142,8 +142,8 @@ sub new {
 
 	$self->add_menu_item(
 		$self,
-		name       => 'help.translate_padre', 
-		label      => Wx::gettext('&Translate Padre...'), 
+		name       => 'help.translate_padre',
+		label      => Wx::gettext('&Translate Padre...'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
 		},
@@ -153,9 +153,9 @@ sub new {
 	$self->AppendSeparator;
 	$self->add_menu_item(
 		$self,
-		name       => 'help.about', 
+		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
-		label      => Wx::gettext('&About'), 
+		label      => Wx::gettext('&About'),
 		menu_event => sub {
 			$_[0]->menu->help->about;
 		},

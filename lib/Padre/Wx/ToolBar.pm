@@ -33,7 +33,7 @@ sub new {
 		$style,
 		5050,
 	);
-	
+
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
 	$self->SetToolBitmapSize( Wx::Size->new( 16, 16 ) );
@@ -144,16 +144,16 @@ sub new {
 # Add a tool item to the toolbar re-using Padre menu action name
 #
 sub add_tool_item {
-	my ($self,%args) = @_;
+	my ( $self, %args ) = @_;
 
 	my $actions = Padre::ide->actions;
 
-	my $action = $actions->{$args{action}};
-	die ("No action with the name " . $args{name}) 
+	my $action = $actions->{ $args{action} };
+	die( "No action with the name " . $args{name} )
 		unless $action;
 
-	# the ID code should be unique otherwise it can break the event system. 
-	# If set to -1 such as in the default call below, it will override 
+	# the ID code should be unique otherwise it can break the event system.
+	# If set to -1 such as in the default call below, it will override
 	# any previous item with that id.
 	my $id = $self->{next_id}++;
 
@@ -194,11 +194,11 @@ sub refresh {
 	$self->EnableTool( $self->{cut},   ($selection) );
 	$self->EnableTool( $self->{copy},  ($selection) );
 	$self->EnableTool( $self->{paste}, ( $editor and $editor->CanPaste ) );
-	$self->EnableTool( $self->{select_all}, ( $editor ? 1 : 0 ) );
-	$self->EnableTool( $self->{find},      ( $editor ? 1 : 0 ) );
-	$self->EnableTool( $self->{replace},   ( $editor ? 1 : 0 ) );
-	$self->EnableTool( $self->{comment_toggle},  ( $document ? 1 : 0 ) );
-	$self->EnableTool( $self->{doc_stat}, ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( $self->{select_all},     ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( $self->{find},           ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( $self->{replace},        ( $editor   ? 1 : 0 ) );
+	$self->EnableTool( $self->{comment_toggle}, ( $document ? 1 : 0 ) );
+	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
 
 	return;
 }

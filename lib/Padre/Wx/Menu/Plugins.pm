@@ -31,8 +31,8 @@ sub new {
 	# Link to the Plugin Manager
 	$self->add_menu_item(
 		$self,
-		name       => 'plugins.plugin_manager', 
-		label      => Wx::gettext('Plugin Manager'), 
+		name       => 'plugins.plugin_manager',
+		label      => Wx::gettext('Plugin Manager'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
 			Padre::Wx::Dialog::PluginManager->new(
@@ -47,8 +47,8 @@ sub new {
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	$self->add_menu_item(
 		$self,
-		name       => 'plugins.plugin_list', 
-		label      => Wx::gettext('Plugin List (CPAN)'), 
+		name       => 'plugins.plugin_list',
+		label      => Wx::gettext('Plugin List (CPAN)'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
@@ -58,8 +58,8 @@ sub new {
 	my $tools = Wx::Menu->new;
 	$self->add_menu_item(
 		$tools,
-		name       => 'plugins.edit_my_plugin', 
-		label      => Wx::gettext('Edit My Plugin'), 
+		name       => 'plugins.edit_my_plugin',
+		label      => Wx::gettext('Edit My Plugin'),
 		menu_event => sub {
 			my $file = File::Spec->catfile(
 				Padre::Constant::CONFIG_DIR,
@@ -75,8 +75,8 @@ sub new {
 
 	$self->add_menu_item(
 		$tools,
-		name       => 'plugins.reload_my_plugin', 
-		label      => Wx::gettext('Reload My Plugin'), 
+		name       => 'plugins.reload_my_plugin',
+		label      => Wx::gettext('Reload My Plugin'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugin('My');
 		},
@@ -84,8 +84,8 @@ sub new {
 
 	$self->add_menu_item(
 		$tools,
-		name       => 'plugins.reset_my_plugin', 
-		label      => Wx::gettext('Reset My Plugin'), 
+		name       => 'plugins.reset_my_plugin',
+		label      => Wx::gettext('Reset My Plugin'),
 		menu_event => sub {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("Reset My Plugin"),
@@ -106,8 +106,8 @@ sub new {
 
 	$self->add_menu_item(
 		$tools,
-		name       => 'plugins.reload_all_plugins', 
-		label      => Wx::gettext('Reload All Plugins'), 
+		name       => 'plugins.reload_all_plugins',
+		label      => Wx::gettext('Reload All Plugins'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugins;
 		},
@@ -115,8 +115,8 @@ sub new {
 
 	$self->add_menu_item(
 		$tools,
-		name       => 'plugins.reload_current_plugin', 
-		label      => Wx::gettext('(Re)load Current Plugin'), 
+		name       => 'plugins.reload_current_plugin',
+		label      => Wx::gettext('(Re)load Current Plugin'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_current_plugin;
 		},
@@ -124,8 +124,8 @@ sub new {
 
 	$self->add_menu_item(
 		$tools,
-		name       => 'plugins.test_a_plugin', 
-		label      => Wx::gettext('Test A Plugin From Local Dir'), 
+		name       => 'plugins.test_a_plugin',
+		label      => Wx::gettext('Test A Plugin From Local Dir'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->test_a_plugin;
 		},

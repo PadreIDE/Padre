@@ -36,8 +36,8 @@ sub new {
 	# Perl-Specific Searches
 	$self->{find_brace} = $self->add_menu_item(
 		$self,
-		name       => 'perl.find_brace', 
-		label      => Wx::gettext('Find Unmatched Brace'), 
+		name       => 'perl.find_brace',
+		label      => Wx::gettext('Find Unmatched Brace'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -47,8 +47,8 @@ sub new {
 
 	$self->{find_variable} = $self->add_menu_item(
 		$self,
-		name       => 'perl.find_variable', 
-		label      => Wx::gettext('Find Variable Declaration'), 
+		name       => 'perl.find_variable',
+		label      => Wx::gettext('Find Variable Declaration'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -61,8 +61,8 @@ sub new {
 	# Perl-Specific Refactoring
 	$self->{rename_variable} = $self->add_menu_item(
 		$self,
-		name       => 'perl.rename_variable', 
-		label      => Wx::gettext('Lexically Rename Variable'), 
+		name       => 'perl.rename_variable',
+		label      => Wx::gettext('Lexically Rename Variable'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -83,8 +83,8 @@ sub new {
 
 	$self->{introduce_temporary} = $self->add_menu_item(
 		$self,
-		name       => 'perl.introduce_temporary', 
-		label      => Wx::gettext('Introduce Temporary Variable'), 
+		name       => 'perl.introduce_temporary',
+		label      => Wx::gettext('Introduce Temporary Variable'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -105,8 +105,8 @@ sub new {
 
 	$self->add_menu_item(
 		$self,
-		name       => 'perl.vertically_align_selected', 
-		label      => Wx::gettext('Vertically Align Selected'), 
+		name       => 'perl.vertically_align_selected',
+		label      => Wx::gettext('Vertically Align Selected'),
 		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;
 			$editor->vertically_align;
@@ -131,9 +131,10 @@ sub new {
 
 	$self->{autocomplete_brackets} = $self->add_checked_menu_item(
 		$self,
-		name       => 'perl.autocomplete_brackets', 
-		label      => Wx::gettext('Automatic bracket completion'), 
+		name       => 'perl.autocomplete_brackets',
+		label      => Wx::gettext('Automatic bracket completion'),
 		menu_event => sub {
+
 			# Update the saved config setting
 			my $config = Padre->ide->config;
 			$config->set( autocomplete_brackets => $_[1]->IsChecked ? 1 : 0 );

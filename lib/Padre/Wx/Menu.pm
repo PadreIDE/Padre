@@ -51,7 +51,7 @@ sub Append {
 sub add_menu_item {
 	my $self = shift;
 	my $menu = shift;
-	return $self->_add_menu_item($menu, 'normal', @_);
+	return $self->_add_menu_item( $menu, 'normal', @_ );
 }
 
 
@@ -61,7 +61,7 @@ sub add_menu_item {
 sub add_checked_menu_item {
 	my $self = shift;
 	my $menu = shift;
-	return $self->_add_menu_item($menu, 'checked', @_);
+	return $self->_add_menu_item( $menu, 'checked', @_ );
 }
 
 #
@@ -70,7 +70,7 @@ sub add_checked_menu_item {
 sub add_radio_menu_item {
 	my $self = shift;
 	my $menu = shift;
-	return $self->_add_menu_item($menu, 'radio', @_);
+	return $self->_add_menu_item( $menu, 'radio', @_ );
 }
 
 #
@@ -82,44 +82,48 @@ sub _add_menu_item {
 	my $menu = shift;
 	my $type = shift;
 	require Padre::Action;
-	my $action = Padre::Action->new(@_);
+	my $action   = Padre::Action->new(@_);
 	my $shortcut = $action->shortcut;
 	my $menu_item;
-	if($type eq 'normal') {
+	if ( $type eq 'normal' ) {
 		$menu_item = $menu->Append(
 			$action->id,
-			$action->label . ($shortcut ? ("\t" . $shortcut) : ''),
+			$action->label . ( $shortcut ? ( "\t" . $shortcut ) : '' ),
 		);
-	} elsif($type eq 'checked') {
+	} elsif ( $type eq 'checked' ) {
 		$menu_item = $menu->AppendCheckItem(
 			$action->id,
-			$action->label . ($shortcut ? ("\t" . $shortcut) : ''),
+			$action->label . ( $shortcut ? ( "\t" . $shortcut ) : '' ),
 		);
-	} elsif($type eq 'radio') {
+	} elsif ( $type eq 'radio' ) {
 		$menu_item = $menu->AppendRadioItem(
 			$action->id,
-			$action->label . ($shortcut ? ("\t" . $shortcut) : ''),
+			$action->label . ( $shortcut ? ( "\t" . $shortcut ) : '' ),
 		);
-	}  else {
+	} else {
 		die "Unknown menu item type: '$type'";
 	}
 	Wx::Event::EVT_MENU( $self->{main}, $menu_item, $action->menu_event );
 
 	my $actions = Padre::ide->actions;
-	if($actions->{$action->name}) {
+	if ( $actions->{ $action->name } ) {
 		warn "Found a duplicate action '" . $action->name . "'\n";
 	}
-	if($shortcut) {
-		foreach my $action_name (keys %{$actions}) {
+	if ($shortcut) {
+		foreach my $action_name ( keys %{$actions} ) {
 			my $a = $actions->{$action_name};
-			if($a->shortcut && $a->shortcut eq $shortcut) {
-				warn "Found a duplicate shortcut '" . $action->shortcut . 
-					"' with " . $a->name . " for '" . $action->name . "'\n";
+			if ( $a->shortcut && $a->shortcut eq $shortcut ) {
+				warn "Found a duplicate shortcut '"
+					. $action->shortcut
+					. "' with "
+					. $a->name
+					. " for '"
+					. $action->name . "'\n";
 				last;
 			}
 		}
 	}
-	$actions->{$action->name} = $action;
+	$actions->{ $action->name } = $action;
 
 	return $menu_item;
 }

@@ -29,9 +29,9 @@ sub new {
 
 	$self->{new} = $self->add_menu_item(
 		$self,
-		name       => 'file.new', 
-		label      => Wx::gettext('&New'), 
-		shortcut   => 'Ctrl-N', 
+		name       => 'file.new',
+		label      => Wx::gettext('&New'),
+		shortcut   => 'Ctrl-N',
 		menu_event => sub {
 			$_[0]->on_new;
 		},
@@ -45,40 +45,40 @@ sub new {
 	);
 	$self->add_menu_item(
 		$file_new,
-		name       => 'file.new_p5_script', 
-		label      => Wx::gettext('Perl 5 Script'), 
+		name       => 'file.new_p5_script',
+		label      => Wx::gettext('Perl 5 Script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pl');
 		},
 	);
 	$self->add_menu_item(
 		$file_new,
-		name       => 'file.new_p5_module', 
-		label      => Wx::gettext('Perl 5 Module'), 
+		name       => 'file.new_p5_module',
+		label      => Wx::gettext('Perl 5 Module'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pm');
 		},
 	);
 	$self->add_menu_item(
 		$file_new,
-		name       => 'file.new_p5_test', 
-		label      => Wx::gettext('Perl 5 Test'), 
+		name       => 'file.new_p5_test',
+		label      => Wx::gettext('Perl 5 Test'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('t');
 		},
 	);
 	$self->add_menu_item(
 		$file_new,
-		name       => 'file.new_p6_script', 
-		label      => Wx::gettext('Perl 6 Script'), 
+		name       => 'file.new_p6_script',
+		label      => Wx::gettext('Perl 6 Script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('p6');
 		},
 	);
 	$self->add_menu_item(
 		$file_new,
-		name       => 'file.new_p5_distro', 
-		label      => Wx::gettext('Perl Distribution (Module::Starter)'), 
+		name       => 'file.new_p5_distro',
+		label      => Wx::gettext('Perl Distribution (Module::Starter)'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;
 			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
@@ -88,9 +88,9 @@ sub new {
 	# Open and close files
 	$self->add_menu_item(
 		$self,
-		name       => 'file.open', 
+		name       => 'file.open',
 		id         => Wx::wxID_OPEN,
-		label      => Wx::gettext('&Open...'), 
+		label      => Wx::gettext('&Open...'),
 		shortcut   => 'Ctrl-O',
 		menu_event => sub {
 			$_[0]->on_open;
@@ -99,9 +99,9 @@ sub new {
 
 	$self->{close} = $self->add_menu_item(
 		$self,
-		name       => 'file.close', 
+		name       => 'file.close',
 		id         => Wx::wxID_CLOSE,
-		label      => Wx::gettext('&Close...'), 
+		label      => Wx::gettext('&Close...'),
 		shortcut   => 'Ctrl-W',
 		menu_event => sub {
 			$_[0]->on_close;
@@ -110,24 +110,24 @@ sub new {
 
 	$self->{close_all} = $self->add_menu_item(
 		$self,
-		name       => 'file.close_all', 
-		label      => Wx::gettext('Close All'), 
+		name       => 'file.close_all',
+		label      => Wx::gettext('Close All'),
 		menu_event => sub {
 			$_[0]->on_close_all;
 		},
 	);
 	$self->{close_all_but_current} = $self->add_menu_item(
 		$self,
-		name       => 'file.close_all_but_current', 
-		label      => Wx::gettext('Close All but Current'), 
+		name       => 'file.close_all_but_current',
+		label      => Wx::gettext('Close All but Current'),
 		menu_event => sub {
 			$_[0]->on_close_all_but_current;
 		},
 	);
 	$self->{reload_file} = $self->add_menu_item(
 		$self,
-		name       => 'file.reload_file', 
-		label      => Wx::gettext('Reload File'), 
+		name       => 'file.reload_file',
+		label      => Wx::gettext('Reload File'),
 		menu_event => sub {
 			$_[0]->on_reload_file;
 		},
@@ -138,9 +138,9 @@ sub new {
 	# Save files
 	$self->{save} = $self->add_menu_item(
 		$self,
-		name       => 'file.save', 
+		name       => 'file.save',
 		id         => Wx::wxID_SAVE,
-		label      => Wx::gettext('&Save'), 
+		label      => Wx::gettext('&Save'),
 		shortcut   => 'Ctrl-S',
 		menu_event => sub {
 			$_[0]->on_save;
@@ -148,9 +148,9 @@ sub new {
 	);
 	$self->{save_as} = $self->add_menu_item(
 		$self,
-		name       => 'file.save_as', 
+		name       => 'file.save_as',
 		id         => Wx::wxID_SAVEAS,
-		label      => Wx::gettext('Save &As'), 
+		label      => Wx::gettext('Save &As'),
 		shortcut   => 'F12',
 		menu_event => sub {
 			$_[0]->on_save_as;
@@ -158,8 +158,8 @@ sub new {
 	);
 	$self->{save_all} = $self->add_menu_item(
 		$self,
-		name       => 'file.save_all', 
-		label      => Wx::gettext('Save All'), 
+		name       => 'file.save_all',
+		label      => Wx::gettext('Save All'),
 		menu_event => sub {
 			$_[0]->on_save_all;
 		},
@@ -170,8 +170,8 @@ sub new {
 	# Specialised open and close functions
 	$self->{open_selection} = $self->add_menu_item(
 		$self,
-		name       => 'file.open_selection', 
-		label      => Wx::gettext('Open Selection'), 
+		name       => 'file.open_selection',
+		label      => Wx::gettext('Open Selection'),
 		shortcut   => 'Ctrl-Shift-O',
 		menu_event => sub {
 			$_[0]->on_open_selection;
@@ -180,8 +180,8 @@ sub new {
 
 	$self->{open_session} = $self->add_menu_item(
 		$self,
-		name       => 'file.open_session', 
-		label      => Wx::gettext('Open Session'), 
+		name       => 'file.open_session',
+		label      => Wx::gettext('Open Session'),
 		shortcut   => 'Ctrl-Alt-O',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionManager;
@@ -191,8 +191,8 @@ sub new {
 
 	$self->{save_session} = $self->add_menu_item(
 		$self,
-		name       => 'file.save_session', 
-		label      => Wx::gettext('Save Session'), 
+		name       => 'file.save_session',
+		label      => Wx::gettext('Save Session'),
 		shortcut   => 'Ctrl-Alt-S',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionSave;
@@ -205,9 +205,9 @@ sub new {
 	# Print files
 	$self->{print} = $self->add_menu_item(
 		$self,
-		name       => 'file.print', 
+		name       => 'file.print',
 		id         => Wx::wxID_PRINT,
-		label      => Wx::gettext('&Print'), 
+		label      => Wx::gettext('&Print'),
 		menu_event => sub {
 			require Wx::Print;
 			require Padre::Wx::Printout;
@@ -232,7 +232,7 @@ sub new {
 	);
 	$self->add_menu_item(
 		$self->{recentfiles},
-		name       => 'file.open_recent_files', 
+		name       => 'file.open_recent_files',
 		label      => Wx::gettext('Open All Recent Files'),
 		menu_event => sub {
 			$_[0]->on_open_all_recent_files;
@@ -240,7 +240,7 @@ sub new {
 	);
 	$self->add_menu_item(
 		$self->{recentfiles},
-		name       => 'file.clean_recent_files', 
+		name       => 'file.clean_recent_files',
 		label      => Wx::gettext('Clean Recent Files List'),
 		menu_event => sub {
 			Padre::DB::History->delete( 'where type = ?', 'files' );
@@ -257,7 +257,7 @@ sub new {
 	# Word Stats
 	$self->{docstat} = $self->add_menu_item(
 		$self,
-		name       => 'file.doc_stat', 
+		name       => 'file.doc_stat',
 		label      => Wx::gettext('Document Statistics'),
 		menu_event => sub {
 			$_[0]->on_doc_stats;
@@ -269,7 +269,7 @@ sub new {
 	# Exiting
 	$self->add_menu_item(
 		$self,
-		name       => 'file.quit', 
+		name       => 'file.quit',
 		label      => Wx::gettext('&Quit'),
 		shortcut   => 'Ctrl-Q',
 		menu_event => sub {

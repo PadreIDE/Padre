@@ -30,8 +30,8 @@ sub new {
 		$self,
 		name       => 'search.find',
 		id         => Wx::wxID_FIND,
-		label      => Wx::gettext('&Find'), 
-		shortcut   => 'Ctrl-F', 
+		label      => Wx::gettext('&Find'),
+		shortcut   => 'Ctrl-F',
 		menu_event => sub {
 			$_[0]->find->find;
 		},
@@ -40,8 +40,8 @@ sub new {
 	$self->{find_next} = $self->add_menu_item(
 		$self,
 		name       => 'search.find_next',
-		label      => Wx::gettext('Find Next'), 
-		shortcut   => 'F3', 
+		label      => Wx::gettext('Find Next'),
+		shortcut   => 'F3',
 		menu_event => sub {
 			$_[0]->find->find_next;
 		},
@@ -50,8 +50,8 @@ sub new {
 	$self->{find_previous} = $self->add_menu_item(
 		$self,
 		name       => 'search.find_previous',
-		label      => Wx::gettext('&Find Previous'), 
-		shortcut   => 'Shift-F3', 
+		label      => Wx::gettext('&Find Previous'),
+		shortcut   => 'Shift-F3',
 		menu_event => sub {
 			$_[0]->find->find_previous;
 		},
@@ -63,7 +63,7 @@ sub new {
 	$self->{quick_find} = $self->add_checked_menu_item(
 		$self,
 		name       => 'search.quick_find',
-		label      => Wx::gettext('Quick Find'), 
+		label      => Wx::gettext('Quick Find'),
 		menu_event => sub {
 			Padre->ide->config->set(
 				'find_quick',
@@ -79,8 +79,8 @@ sub new {
 	$self->{quick_find_next} = $self->add_menu_item(
 		$self,
 		name       => 'search.quick_find_next',
-		label      => Wx::gettext('Find Next'), 
-		shortcut   => 'F4', 
+		label      => Wx::gettext('Find Next'),
+		shortcut   => 'F4',
 		menu_event => sub {
 			$_[0]->fast_find->search('next');
 		},
@@ -89,8 +89,8 @@ sub new {
 	$self->{quick_find_previous} = $self->add_menu_item(
 		$self,
 		name       => 'search.quick_find_previous',
-		label      => Wx::gettext('Find Previous'), 
-		shortcut   => 'Shift-F4', 
+		label      => Wx::gettext('Find Previous'),
+		shortcut   => 'Shift-F4',
 		menu_event => sub {
 			$_[0]->fast_find->search('previous');
 		},
@@ -102,8 +102,8 @@ sub new {
 	$self->{replace} = $self->add_menu_item(
 		$self,
 		name       => 'search.replace',
-		label      => Wx::gettext('Replace'), 
-		shortcut   => 'Ctrl-R', 
+		label      => Wx::gettext('Replace'),
+		shortcut   => 'Ctrl-R',
 		menu_event => sub {
 			$_[0]->replace->find;
 		},
@@ -115,7 +115,7 @@ sub new {
 	$self->add_menu_item(
 		$self,
 		name       => 'search.find_in_files',
-		label      => Wx::gettext('Find in Fi&les...'), 
+		label      => Wx::gettext('Find in Fi&les...'),
 		menu_event => sub {
 			require Padre::Wx::Ack;
 			Padre::Wx::Ack::on_ack(@_);

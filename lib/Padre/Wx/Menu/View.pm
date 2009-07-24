@@ -33,7 +33,7 @@ sub new {
 	$self->{lockinterface} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.lockinterface',
-		label      => Wx::gettext('Lock User Interface'), 
+		label      => Wx::gettext('Lock User Interface'),
 		menu_event => sub {
 			$_[0]->on_toggle_lockinterface( $_[1] );
 		},
@@ -45,7 +45,7 @@ sub new {
 	$self->{output} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.output',
-		label      => Wx::gettext('Show Output'), 
+		label      => Wx::gettext('Show Output'),
 		menu_event => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
 		},
@@ -54,7 +54,7 @@ sub new {
 	$self->{functions} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.functions',
-		label      => Wx::gettext('Show Functions'), 
+		label      => Wx::gettext('Show Functions'),
 		menu_event => sub {
 			if ( $_[1]->IsChecked ) {
 				$_[0]->refresh_functions;
@@ -69,7 +69,7 @@ sub new {
 	$self->{outline} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.outline',
-		label      => Wx::gettext('Show Outline'), 
+		label      => Wx::gettext('Show Outline'),
 		menu_event => sub {
 			$_[0]->show_outline( $_[1]->IsChecked );
 		},
@@ -78,7 +78,7 @@ sub new {
 	$self->{directory} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.directory',
-		label      => Wx::gettext('Show Directory Tree'), 
+		label      => Wx::gettext('Show Directory Tree'),
 		menu_event => sub {
 			$_[0]->show_directory( $_[1]->IsChecked );
 		},
@@ -87,7 +87,7 @@ sub new {
 	$self->{show_syntaxcheck} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.show_syntaxcheck',
-		label      => Wx::gettext('Show Syntax Check'), 
+		label      => Wx::gettext('Show Syntax Check'),
 		menu_event => sub {
 			$_[0]->on_toggle_syntax_check( $_[1] );
 		},
@@ -96,7 +96,7 @@ sub new {
 	$self->{show_errorlist} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.show_errorlist',
-		label      => Wx::gettext('Show Error List'), 
+		label      => Wx::gettext('Show Error List'),
 		menu_event => sub {
 			$_[0]->on_toggle_errorlist( $_[1] );
 		},
@@ -107,7 +107,7 @@ sub new {
 		$self->{statusbar} = $self->add_checked_menu_item(
 			$self,
 			name       => 'view.statusbar',
-			label      => Wx::gettext('Show StatusBar'), 
+			label      => Wx::gettext('Show StatusBar'),
 			menu_event => sub {
 				$_[0]->on_toggle_statusbar( $_[1] );
 			},
@@ -117,7 +117,7 @@ sub new {
 	$self->{toolbar} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.toolbar',
-		label      => Wx::gettext('Show Toolbar'), 
+		label      => Wx::gettext('Show Toolbar'),
 		menu_event => sub {
 			$_[0]->on_toggle_toolbar( $_[1] );
 		},
@@ -142,7 +142,7 @@ sub new {
 		$self->add_radio_menu_item(
 			$self->{view_as_highlighting},
 			name       => $tag,
-			label      => $label, 
+			label      => $label,
 			menu_event => sub {
 				my $doc = $_[0]->current->document;
 				if ($doc) {
@@ -167,7 +167,7 @@ sub new {
 	$self->{lines} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.lines',
-		label      => Wx::gettext('Show Line Numbers'), 
+		label      => Wx::gettext('Show Line Numbers'),
 		menu_event => sub {
 			$_[0]->on_toggle_line_numbers( $_[1] );
 		},
@@ -176,7 +176,7 @@ sub new {
 	$self->{folding} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.folding',
-		label      => Wx::gettext('Show Code Folding'), 
+		label      => Wx::gettext('Show Code Folding'),
 		menu_event => sub {
 			$_[0]->on_toggle_code_folding( $_[1] );
 		},
@@ -185,7 +185,7 @@ sub new {
 	$self->{show_calltips} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.show_calltips',
-		label      => Wx::gettext('Show Call Tips'), 
+		label      => Wx::gettext('Show Call Tips'),
 		menu_event => sub {
 			$_[0]->config->set(
 				'editor_calltips',
@@ -198,7 +198,7 @@ sub new {
 	$self->{currentline} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.currentline',
-		label      => Wx::gettext('Show Current Line'), 
+		label      => Wx::gettext('Show Current Line'),
 		menu_event => sub {
 			$_[0]->on_toggle_currentline( $_[1] );
 		},
@@ -210,7 +210,7 @@ sub new {
 	$self->{eol} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.eol',
-		label      => Wx::gettext('Show Newlines'), 
+		label      => Wx::gettext('Show Newlines'),
 		menu_event => sub {
 			$_[0]->on_toggle_eol( $_[1] );
 		},
@@ -219,7 +219,7 @@ sub new {
 	$self->{whitespaces} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.whitespaces',
-		label      => Wx::gettext('Show Whitespaces'), 
+		label      => Wx::gettext('Show Whitespaces'),
 		menu_event => sub {
 			$_[0]->on_toggle_whitespaces( $_[1] );
 		},
@@ -228,7 +228,7 @@ sub new {
 	$self->{indentation_guide} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.indentation_guide',
-		label      => Wx::gettext('Show Indentation Guide'), 
+		label      => Wx::gettext('Show Indentation Guide'),
 		menu_event => sub {
 			$_[0]->on_toggle_indentation_guide( $_[1] );
 		},
@@ -237,7 +237,7 @@ sub new {
 	$self->{word_wrap} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.word_wrap',
-		label      => Wx::gettext('Word-Wrap'), 
+		label      => Wx::gettext('Word-Wrap'),
 		menu_event => sub {
 			$_[0]->on_word_wrap( $_[1]->IsChecked );
 		},
@@ -319,9 +319,9 @@ sub new {
 	my @order = sort { ( $b eq 'default' ) <=> ( $a eq 'default' ) or $styles{$a} cmp $styles{$b} } keys %styles;
 	foreach my $name (@order) {
 		my $label = $styles{$name};
-		my $tag = "view.view_as_" . lc $label;
+		my $tag   = "view.view_as_" . lc $label;
 		$tag =~ s/\s/_/g;
-		my $radio =  $self->add_radio_menu_item(
+		my $radio = $self->add_radio_menu_item(
 			$self->{style},
 			name       => $tag,
 			label      => $label,
@@ -341,9 +341,9 @@ sub new {
 		$self->AppendSeparator;
 		foreach my $name (@private) {
 			my $label = $name;
-			my $tag = "view.view_as_" . lc $label;
+			my $tag   = "view.view_as_" . lc $label;
 			$tag =~ s/\s/_/g;
-			my $radio =  $self->add_radio_menu_item(
+			my $radio = $self->add_radio_menu_item(
 				$self->{style},
 				name       => $tag,
 				label      => $label,
@@ -401,7 +401,7 @@ sub new {
 		}
 		my $tag = "view.view_as_" . lc $label;
 		$tag =~ s/\s/_/g;
-		my $radio =  $self->add_radio_menu_item(
+		my $radio = $self->add_radio_menu_item(
 			$self->{language},
 			name       => $tag,
 			label      => $label,

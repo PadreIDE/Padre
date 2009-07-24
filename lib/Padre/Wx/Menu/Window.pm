@@ -29,8 +29,8 @@ sub new {
 	# Split Window
 	$self->{window_split_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.split_window', 
-		label      => Wx::gettext('&Split window'), 
+		name       => 'window.split_window',
+		label      => Wx::gettext('&Split window'),
 		menu_event => sub {
 			Padre::Wx::Main::on_split_window(@_);
 		},
@@ -41,7 +41,7 @@ sub new {
 	# File Navigation
 	$self->{window_next_file} = $self->add_menu_item(
 		$self,
-		name       => 'window.next_file', 
+		name       => 'window.next_file',
 		label      => Wx::gettext('Next File'),
 		shortcut   => 'Ctrl-TAB',
 		menu_event => sub {
@@ -51,7 +51,7 @@ sub new {
 
 	$self->{window_previous_file} = $self->add_menu_item(
 		$self,
-		name       => 'window.previous_file', 
+		name       => 'window.previous_file',
 		label      => Wx::gettext('Previous File'),
 		shortcut   => 'Ctrl-Shift-TAB',
 		menu_event => sub {
@@ -61,7 +61,7 @@ sub new {
 
 	$self->{window_last_visited_file} = $self->add_menu_item(
 		$self,
-		name       => 'window.last_visited_file', 
+		name       => 'window.last_visited_file',
 		label      => Wx::gettext('Last Visited File'),
 		shortcut   => 'Ctrl-Shift-P',
 		menu_event => sub {
@@ -71,7 +71,7 @@ sub new {
 
 	$self->{window_right_click} = $self->add_menu_item(
 		$self,
-		name       => 'window.right_click', 
+		name       => 'window.right_click',
 		label      => Wx::gettext('Right Click'),
 		shortcut   => 'Alt-/',
 		menu_event => sub {
@@ -87,7 +87,7 @@ sub new {
 	# Window Navigation
 	$self->{window_goto_subs_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.goto_subs_window', 
+		name       => 'window.goto_subs_window',
 		label      => Wx::gettext('GoTo Subs Window'),
 		menu_event => sub {
 			$_[0]->refresh_functions( $_[0]->current );
@@ -98,7 +98,7 @@ sub new {
 
 	$self->{window_goto_outline_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.goto_outline_window', 
+		name       => 'window.goto_outline_window',
 		label      => Wx::gettext('GoTo Outline Window'),
 		shortcut   => 'Alt-L',
 		menu_event => sub {
@@ -109,7 +109,7 @@ sub new {
 
 	$self->{window_goto_outline_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.goto_output_window', 
+		name       => 'window.goto_output_window',
 		label      => Wx::gettext('GoTo Output Window'),
 		shortcut   => 'Alt-O',
 		menu_event => sub {
@@ -120,7 +120,7 @@ sub new {
 
 	$self->{window_goto_syntax_check_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.goto_syntax_check_window', 
+		name       => 'window.goto_syntax_check_window',
 		label      => Wx::gettext('GoTo Syntax Check Window'),
 		shortcut   => 'Alt-C',
 		menu_event => sub {
@@ -131,7 +131,7 @@ sub new {
 
 	$self->{window_goto_main_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.goto_main_window', 
+		name       => 'window.goto_main_window',
 		label      => Wx::gettext('GoTo Main Window'),
 		shortcut   => 'Alt-M',
 		menu_event => sub {

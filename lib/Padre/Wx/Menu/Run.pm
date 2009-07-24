@@ -28,8 +28,8 @@ sub new {
 	# Script Execution
 	$self->{run_document} = $self->add_menu_item(
 		$self,
-		name       => 'run.run_document', 
-		label      => Wx::gettext('Run Script'), 
+		name       => 'run.run_document',
+		label      => Wx::gettext('Run Script'),
 		shortcut   => 'F5',
 		menu_event => sub {
 			$_[0]->run_document;
@@ -38,8 +38,8 @@ sub new {
 
 	$self->{run_document_debug} = $self->add_menu_item(
 		$self,
-		name       => 'run.run_document_debug', 
-		label      => Wx::gettext('Run Script (debug info)'), 
+		name       => 'run.run_document_debug',
+		label      => Wx::gettext('Run Script (debug info)'),
 		shortcut   => 'Shift-F5',
 		menu_event => sub {
 			$_[0]->run_document(1); # Enable debug info
@@ -48,8 +48,8 @@ sub new {
 
 	$self->{run_command} = $self->add_menu_item(
 		$self,
-		name       => 'run.run_command', 
-		label      => Wx::gettext('Run Command'), 
+		name       => 'run.run_command',
+		label      => Wx::gettext('Run Command'),
 		shortcut   => 'Ctrl-F5',
 		menu_event => sub {
 			$_[0]->on_run_command;
@@ -58,8 +58,8 @@ sub new {
 
 	$self->{run_tests} = $self->add_menu_item(
 		$self,
-		name       => 'run.run_tests', 
-		label      => Wx::gettext('Run Tests'), 
+		name       => 'run.run_tests',
+		label      => Wx::gettext('Run Tests'),
 		menu_event => sub {
 			$_[0]->on_run_tests;
 		},
@@ -68,8 +68,8 @@ sub new {
 
 	$self->{stop} = $self->add_menu_item(
 		$self,
-		name       => 'run.stop', 
-		label      => Wx::gettext('Run Tests'), 
+		name       => 'run.stop',
+		label      => Wx::gettext('Run Tests'),
 		shortcut   => 'F6',
 		menu_event => sub {
 			if ( $_[0]->{command} ) {
