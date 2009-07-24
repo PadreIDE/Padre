@@ -60,6 +60,10 @@ sub new {
 	$self->SetSizerAndFit($self->_sizerh);
 	$self->_sizerh->SetSizeHints($self);
 
+	######################################################################
+	# Sets default Directory Tree directory
+	$self->{home_dir} = File::HomeDir->my_home;
+
 	return $self;
 }
 
@@ -105,17 +109,13 @@ sub gettext_label {
 ################################################################################
 # clear                                                                        #
 #                                                                              #
-# Sets the current_project to 'none', and calls Directory Searcher's and       #
-# Browser clear functions                                                      #
+# Updates the gui, so each compoment can uptade itself according to the new    #
+# state                                                                        #
 #                                                                              #
 ################################################################################
 sub clear {
 	my $self = shift;
-	unless ( $self->current->filename ) {
-		$self->_searcher->clear;
-		$self->_browser->clear;
-		$self->_last_project(undef);
-	}
+	$self->update_gui;
 	return;
 }
 
@@ -135,11 +135,11 @@ sub update_gui {
 
 	######################################################################
 	# Finds project base
-	my $filename = $current->filename or return;
-	my $dir = Padre::Util::get_project_dir($filename)
+	my $dir = $self->{home_dir};
+	if( my $filename = $current->filename ) {
+		$dir = Padre::Util::get_project_dir($filename)
 		|| File::Basename::dirname($filename);
-
-	return unless -e $dir;
+	}
 
 	######################################################################
 	# Updates the current_project to the current one

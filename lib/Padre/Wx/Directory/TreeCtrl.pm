@@ -29,8 +29,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT
-		| Wx::wxTR_SINGLE
+		Wx::wxTR_SINGLE
 		| Wx::wxTR_FULL_ROW_HIGHLIGHT
 		| Wx::wxTR_HAS_BUTTONS
 		| Wx::wxTR_LINES_AT_ROOT
@@ -107,7 +106,7 @@ sub new {
 	);
 
 	# Set up the root
-	$self->AddRoot(
+	my $root = $self->AddRoot(
 		Wx::gettext('Directory'),
 		-1, -1,
 		Wx::TreeItemData->new( {
@@ -115,6 +114,12 @@ sub new {
 			name => '',
 			type => 'folder',
 		} ),
+	);
+
+	$self->SetItemImage(
+		$root,
+		$self->{file_types}->{ folder },
+		Wx::wxTreeItemIcon_Normal,
 	);
 
 	# Ident to sub nodes
@@ -160,18 +165,6 @@ sub main {
 ################################################################################
 sub current {
 	Padre::Current->new( main => $_[0]->main );
-}
-
-################################################################################
-# clear                                                                        #
-#                                                                              #
-# Clears root node children                                                    #
-#                                                                              #
-################################################################################
-sub clear {
-	my $self = shift;
-	$self->DeleteChildren( $self->GetRootItem );
-	return;
 }
 
 ################################################################################
@@ -259,18 +252,32 @@ sub readdir {
 ################################################################################
 sub _update_root_data {
 	my $self = shift;
+	my $project = $self->parent->_current_project;
 
 	######################################################################
 	# Splits the path to get the Root folder name and its path
-	my ($volume, $path, $name) = File::Spec->splitpath(
-		$self->parent->_current_project,
-	);
+	my ( $volume, $path, $name ) = File::Spec->splitpath($project);
 
 	######################################################################
 	# Updates Root node data
-	my $root = $self->GetPlData( $self->GetRootItem );
-	$root->{dir}  = $volume . $path;
-	$root->{name} = $name;
+	my $root = $self->GetRootItem;
+	my $root_data = $self->GetPlData( $root );
+	$root_data->{dir}  = $volume . $path;
+	$root_data->{name} = $name;
+
+	######################################################################
+	# Renames the root label to the current project root name
+	$self->SetItemText( $root, $name );
+
+	######################################################################
+	# If the project Root was expanded, expands it, if not, collapses it
+	my $expand_state = $self->{CACHED}->{ $project }->{Expanded}->{ $project };
+	if( ( not defined $expand_state ) or $expand_state ) {
+		$self->Expand( $root );
+	}
+	else {
+		$self->Collapse( $root );
+	}
 }
 
 ################################################################################
@@ -468,8 +475,7 @@ sub _rename_or_move {
 
 		######################################################################
 		# Finds which is the OS separator character
-		my $separator = File::Spec->catfile( $old_file, 'temp' );
-		$separator =~ s/^$old_file(.?)temp$/$1/;
+		my $separator = File::Spec->catfile( '', '' );
 
 		######################################################################
 		# Moves all cached data of the node and above it to the new path
@@ -509,9 +515,8 @@ sub _rename_or_move {
 #                                                                              #
 ################################################################################
 sub _on_focus {
-	my ( $self, $event ) = @_;
-	my $main = $self->main;
-	$self->update_gui if $main->has_directory;
+	my $self = shift;
+	$self->update_gui;
 }
 
 ################################################################################
@@ -666,11 +671,20 @@ sub _on_tree_item_expanding {
 ################################################################################
 sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
-	my $node_data = $self->GetPlData( $event->GetItem );
+	my $node = $event->GetItem;
+	my $node_data = $self->GetPlData( $node );
+	my $current_project = $self->parent->_current_project;
+
+	######################################################################
+	# If it is the Root node, set Expanded to 0
+	if ( $node == $self->GetRootItem ) {
+		$self->{CACHED}->{ $current_project }->{Expanded}->{ $current_project } = 0;
+		return;
+	}
 
 	######################################################################
 	# Deletes cache expanded state of the node
-	delete $self->{CACHED}->{ $self->parent->_current_project }->{Expanded}->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
+	delete $self->{CACHED}->{ $current_project }->{Expanded}->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
 }
 
 ################################################################################
@@ -779,27 +793,62 @@ sub _on_tree_item_menu {
 	$menu->AppendSeparator();
 
 	######################################################################
-	# Rename and/or move the item
-	my $rename = $menu->Append( -1, Wx::gettext('Rename / Move') );
-	Wx::Event::EVT_MENU(
-		$self, $rename,
-		sub {
-			$self->EditLabel($node);
-		},
-	);
+	# Do not show if it is the root node
+	if( $node != $self->GetRootItem ){
 
-	######################################################################
-	# Move item to trash
-	# Note: File::Remove->trash() only works in Win and Mac
-
-	if ( IS_WIN32 or IS_MAC ) {
-		my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
+		######################################################################
+		# Rename and/or move the item
+		my $rename = $menu->Append( -1, Wx::gettext('Rename / Move') );
 		Wx::Event::EVT_MENU(
-			$self, $trash,
+			$self, $rename,
 			sub {
+				$self->EditLabel($node);
+			},
+		);
+
+		######################################################################
+		# Move item to trash
+		# Note: File::Remove->trash() only works in Win and Mac
+
+		if ( IS_WIN32 or IS_MAC ) {
+			my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
+			Wx::Event::EVT_MENU(
+				$self, $trash,
+				sub {
+					eval {
+						require File::Remove;
+						File::Remove->trash($selected_path);
+					};
+					if ($@) {
+						my $error_msg = $@;
+						Wx::MessageBox(
+							$error_msg, Wx::gettext('Error'),
+							Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
+						);
+					}
+					return;
+				},
+			);
+		}
+
+		######################################################################
+		# Delete item
+		my $delete = $menu->Append( -1, Wx::gettext('Delete') );
+		Wx::Event::EVT_MENU(
+			$self, $delete,
+			sub {
+
+				my $dialog = Wx::MessageDialog->new(
+					$self,
+					Wx::gettext('You sure want to delete this item?') . $/ . $selected_path,
+					Wx::gettext('Delete'),
+					Wx::wxYES_NO | Wx::wxICON_QUESTION | Wx::wxCENTRE
+				);
+				return if $dialog->ShowModal == Wx::wxID_NO;
+
 				eval {
 					require File::Remove;
-					File::Remove->trash($selected_path);
+					File::Remove->remove($selected_path);
 				};
 				if ($@) {
 					my $error_msg = $@;
@@ -811,57 +860,27 @@ sub _on_tree_item_menu {
 				return;
 			},
 		);
-	}
 
-	######################################################################
-	# Delete item
-	my $delete = $menu->Append( -1, Wx::gettext('Delete') );
-	Wx::Event::EVT_MENU(
-		$self, $delete,
-		sub {
+		######################################################################
+		# ?????
+		if ( defined $node_data->{type} and ( $node_data->{type} eq 'modules' or $node_data->{type} eq 'pragmata' ) ) {
+			my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
+			Wx::Event::EVT_MENU(
+				$self, $pod,
+				sub {
 
-			my $dialog = Wx::MessageDialog->new(
-				$self,
-				Wx::gettext('You sure want to delete this item?') . $/ . $selected_path,
-				Wx::gettext('Delete'),
-				Wx::wxYES_NO | Wx::wxICON_QUESTION | Wx::wxCENTRE
+					# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+					require Padre::Wx::DocBrowser;
+					my $help = Padre::Wx::DocBrowser->new;
+					$help->help( $node_data->{name} );
+					$help->SetFocus;
+					$help->Show(1);
+					return;
+				},
 			);
-			return if $dialog->ShowModal == Wx::wxID_NO;
-
-			eval {
-				require File::Remove;
-				File::Remove->remove($selected_path);
-			};
-			if ($@) {
-				my $error_msg = $@;
-				Wx::MessageBox(
-					$error_msg, Wx::gettext('Error'),
-					Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
-				);
-			}
-			return;
-		},
-	);
-
-	######################################################################
-	# ?????
-	if ( defined $node_data->{type} and ( $node_data->{type} eq 'modules' or $node_data->{type} eq 'pragmata' ) ) {
-		my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
-		Wx::Event::EVT_MENU(
-			$self, $pod,
-			sub {
-
-				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
-				require Padre::Wx::DocBrowser;
-				my $help = Padre::Wx::DocBrowser->new;
-				$help->help( $node_data->{name} );
-				$help->SetFocus;
-				$help->Show(1);
-				return;
-			},
-		);
+		}
+		$menu->AppendSeparator();
 	}
-	$menu->AppendSeparator();
 
 	######################################################################
 	# Shows / Hides hidden files - applied to each directory

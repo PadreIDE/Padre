@@ -73,22 +73,6 @@ sub browser {
 }
 
 ################################################################################
-# clear                                                                        #
-#                                                                              #
-# Clears search field content                                                  #
-#                                                                              #
-################################################################################
-sub clear {
-	my $self    = shift;
-	my $project = $self->parent->_current_project;
-	if ( $project ) {
-		delete $self->{CACHED}->{$project};
-	}
-	$self->SetValue('');
-	return;
-}
-
-################################################################################
 # update_gui                                                                   #
 #                                                                              #
 # Updates the gui if needed                                                    #
