@@ -16,7 +16,7 @@ Changes for Perl Application Development and Refactoring Environment
       http://directory.fsf.org/ maintainers. (SHLOMIF)
     - Added a "right margin" option which will show a line at the specified
       column (BRICAS)
-    - Now new files belongs to the project from where they were created till
+    - Now new files belong to the project from where they were created till
       they are saved (GABRIELMAD)
     - Directory Tree shows the project directory or if none file is opened the
       user's home directory (GABRIELMAD)
