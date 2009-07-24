@@ -2629,6 +2629,8 @@ sub on_save_as {
 	my $current  = $document->filename;
 	if ( defined $current ) {
 		$self->{cwd} = File::Basename::dirname($current);
+	} elsif ( defined $document->project_dir ) {
+		$self->{cwd} = $document->project_dir;
 	}
 	while (1) {
 		my $dialog = Wx::FileDialog->new(
