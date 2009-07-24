@@ -4019,7 +4019,7 @@ sub on_new_from_template {
 	$editor->insert_from_file($file);
 
 	my $document = $editor->{Document};
-	$document->set_mimetype( $document->mime_type_by_extension($extension) );
+	$document->set_mimetype( Padre::MimeTypes->mime_type_by_extension($extension) );
 	$document->editor->padre_setup;
 	$document->rebless;
 
