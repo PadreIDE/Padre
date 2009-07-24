@@ -204,6 +204,15 @@ sub new {
 		},
 	);
 
+	$self->{rightmargin} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.rightmargin',
+		label      => Wx::gettext('Show Right Margin'),
+		menu_event => sub {
+			$_[0]->on_toggle_right_margin( $_[1] );
+		},
+	);
+
 	$self->AppendSeparator;
 
 	# Editor Whitespace Layout
@@ -453,6 +462,7 @@ sub refresh {
 	$self->{lines}->Check( $config->editor_linenumbers );
 	$self->{folding}->Check( $config->editor_folding );
 	$self->{currentline}->Check( $config->editor_currentline );
+    $self->{rightmargin}->Check( $config->editor_right_margin_enable );
 	$self->{eol}->Check( $config->editor_eol );
 	$self->{whitespaces}->Check( $config->editor_whitespace );
 	$self->{output}->Check( $config->main_output );

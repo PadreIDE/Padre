@@ -3215,6 +3215,31 @@ sub on_toggle_currentline {
 	return;
 }
 
+=item * $main->on_toggle_right_margin;
+
+Toggle display of right margin. No return value.
+
+=cut
+
+sub on_toggle_right_margin {
+	my ( $self, $event ) = @_;
+
+	my $config = $self->config;
+	$config->set( editor_right_margin_enable => $event->IsChecked ? 1 : 0 );
+
+    my $enabled = $config->editor_right_margin_enable;
+    my $col     = $config->editor_right_margin_column;
+
+	foreach my $editor ( $self->editors ) {
+        $editor->SetEdgeColumn( $col );
+        $editor->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
+	}
+
+	$config->write;
+
+	return;
+}
+
 =pod
 
 =item * $main->on_toggle_syntax_check;
