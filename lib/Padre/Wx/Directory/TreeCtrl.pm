@@ -708,6 +708,18 @@ sub _on_tree_item_menu {
 		}
 	);
 
+	$menu->AppendSeparator();
+	
+	# Changes the project directory
+	my $change_dir = $menu->Append( -1,
+		Wx::gettext('Change project directory')
+	);
+	Wx::Event::EVT_MENU(
+		$self,
+		$change_dir,
+		sub { $self->parent->_change_project_dir }
+	);
+
 	# Pops up the context menu
 	my $x = $event->GetPoint->x;
 	my $y = $event->GetPoint->y;

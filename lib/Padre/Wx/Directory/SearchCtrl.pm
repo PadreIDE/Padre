@@ -363,8 +363,10 @@ sub _display_cached_search {
 # Create the dropdown menu attached to the looking glass icon
 sub create_menu {
 	my $self        = shift;
+	my $parent      = $self->parent;
+	my $project_dir = $parent->project_dir;
+
 	my $menu        = Wx::Menu->new;
-	my $project_dir = $self->parent->project_dir;
 
 	# Skip hidden files
 	$self->{skip_hidden} = $menu->AppendCheckItem( -1,
@@ -394,6 +396,18 @@ sub create_menu {
 			$self->{_skip_vcs}->{$project_dir}
 				= $self->{skip_vcs}->IsChecked ? 1 : 0;
 		},
+	);
+	$menu->AppendSeparator();
+	
+	# Changes the project directory
+	$self->{project_dir} = $menu->Append( -1,
+		Wx::gettext('Change project directory')
+	);
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{project_dir},
+		sub { $parent->_change_project_dir }
 	);
 
 	return $menu;

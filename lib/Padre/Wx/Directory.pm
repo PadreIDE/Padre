@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use Padre::Wx                        ();
 use Padre::Wx::Directory::TreeCtrl   ();
-use Padre::Wx::Directory::DirPicker  ();
 use Padre::Wx::Directory::SearchCtrl ();
 
 our $VERSION = '0.41';
@@ -15,7 +14,6 @@ getters => {
 	tree     => 'tree',
 	search   => 'search',
 	fallback => 'fallback',
-	dirpicker => 'dirpicker',
 },
 accessors => {
 	project_dir  => 'project_dir',
@@ -41,15 +39,13 @@ sub new {
 	# Creates the Search Field and the Directory Browser
 	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
 	$self->{search} = Padre::Wx::Directory::SearchCtrl->new($self);
-	$self->{dirpicker} =  Padre::Wx::Directory::DirPicker->new($self);
 
 	# Fill the panel
 	my $sizerv = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	my $sizerh = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
-	$sizerv->Add( $self->search,    0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerv->Add( $self->dirpicker, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerv->Add( $self->tree,      1, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerh->Add( $sizerv,          1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerv->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerv->Add( $self->tree,   1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerh->Add( $sizerv,       1, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);
@@ -106,13 +102,23 @@ sub refresh {
 	# Calls Searcher and Browser refresh
 	$self->tree->refresh;
 	$self->search->refresh;
-	$self->dirpicker->refresh;
 
 	# Sets the last project to the current one
 	$self->previous_dir( $self->{projects_dirs}->{$dir} );
 	$self->previous_dir_original( $dir );
 
 	return 1;
+}
+
+# When a project folder is changed
+sub _change_project_dir {
+	my $self = shift;
+	my $dialog = Wx::DirDialog->new( undef, Wx::gettext('Choose a directory'), $self->project_dir );
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	$self->{projects_dirs}->{$self->project_dir_original} = $dialog->GetPath;
+	$self->refresh;
 }
 
 1;
