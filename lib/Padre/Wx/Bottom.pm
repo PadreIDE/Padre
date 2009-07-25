@@ -35,8 +35,20 @@ sub new {
 	# Add ourself to the window manager
 	$aui->AddPane(
 		$self,
-		Wx::AuiPaneInfo->new->Name('bottom')->Resizable(1)->PaneBorder(0)->Movable(1)->CaptionVisible(1)->CloseButton(0)
-			->DestroyOnClose(0)->MaximizeButton(1)->Floatable(1)->Dockable(1)->Position(2)->Bottom->Layer(4)->Hide
+		Padre::Wx->aui_pane_info(
+			Name           => 'bottom',
+			Resizable      => 1,
+			PaneBorder     => 0,
+			Movable        => 1,
+			CaptionVisible => 1,
+			CloseButton    => 0,
+			DestroyOnClose => 0,
+			MaximizeButton => 1,
+			Floatable      => 1,
+			Dockable       => 1,
+			Position       => 2,
+			Layer          => 4,
+		)->Bottom->Hide,
 	);
 
 	# Set the locale-aware caption

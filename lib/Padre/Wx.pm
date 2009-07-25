@@ -22,12 +22,20 @@ use Padre::Util ();
 
 our $VERSION = '0.41';
 
+
+
+
+
 #####################################################################
 # Defines for sidebar marker; others may be needed for breakpoint
 # icons etc.
 
 sub MarkError {1}
 sub MarkWarn  {2}
+
+
+
+
 
 #####################################################################
 # Defines for object IDs
@@ -36,6 +44,10 @@ sub ID_TIMER_SYNTAX    {30001}
 sub ID_TIMER_FILECHECK {30002}
 sub ID_TIMER_POSTINIT  {30003}
 sub ID_TIMER_OUTLINE   {30004}
+
+
+
+
 
 #####################################################################
 # Convenience Functions
@@ -55,6 +67,22 @@ sub color {
 	}
 	return Wx::Colour->new(@c);
 }
+
+# The Wx::AuiPaneInfo method-chaining API is stupid.
+# This method provides a less insane way to create one.
+sub aui_pane_info {
+	my $class = shift;
+	my $info  = Wx::AuiPaneInfo->new;
+	while ( @_ ) {
+		my $method = shift;
+		$info->$method(shift);
+	}
+	return $info;
+}
+
+
+
+
 
 #####################################################################
 # External Website Integration
@@ -105,8 +133,6 @@ Isolates any Wx.pm twiddling away from the actual Padre implementation code.
 Load every exportable constant, so that they come into
 existance in the Wx:: packages, allowing everywhere else in the code to
 use them without braces.
-
-
 
 =cut
 

@@ -205,7 +205,11 @@ sub _create_panel {
 	# manage the pane in aui
 	$main->aui->AddPane(
 		$self->{panel},
-		Wx::AuiPaneInfo->new->Name('find')->Bottom->CaptionVisible(0)->Layer(1)->Fixed->Hide
+		Padre::Wx->aui_pane_info(
+			Name           => 'find',
+			CaptionVisible => 0,
+			Layer          => 1,
+		)->Bottom->Fixed->Hide,
 	);
 
 	return 1;
