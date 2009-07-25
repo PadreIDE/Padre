@@ -33,7 +33,8 @@ sub new {
 		label      => Wx::gettext('&Undo'),
 		shortcut   => 'Ctrl-Z',
 		menu_event => sub {
-			Padre::Current->editor->Undo;
+			my $editor = Padre::Current->editor or return;
+			$editor->Undo;
 		},
 	);
 
@@ -44,7 +45,8 @@ sub new {
 		label      => Wx::gettext('&Redo'),
 		shortcut   => 'Ctrl-Y',
 		menu_event => sub {
-			Padre::Current->editor->Redo;
+			my $editor = Padre::Current->editor or return;
+			$editor->Redo;
 		},
 	);
 
