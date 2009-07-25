@@ -9,6 +9,10 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
+	if ( $^O eq 'MSWin32' ) {
+		plan skip_all => 'Windows currently has too many problems with this. Please fix!';
+		exit(0);
+	}
 }
 use threads;         # need to be loaded before Padre
 use threads::shared; # need to be loaded before Padre
