@@ -625,7 +625,7 @@ sub on_focus {
 	# update the directory listing
 	if ( $main->has_directory ) {
 		if ( $main->menu->view->{directory}->IsChecked ) {
-			$main->directory->update_gui;
+			$main->directory->refresh;
 		}
 	}
 

@@ -105,13 +105,13 @@ if ( author_context ) {
 my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
 if ( win32 and $locale =~ /^English/ ) {
-	tests     't/*.t t/win32/*.t';
+	tests 't/*.t t/win32/*.t';
 }
 
-no_index       'directory'                => qw{ t xt eg share inc privinc };
-homepage       'http://padre.perlide.org/';
-bugtracker     'http://padre.perlide.org/';
-repository     'http://svn.perlide.org/padre/trunk/Padre/';
+no_index   'directory' => qw{ t xt eg share inc privinc };
+homepage   'http://padre.perlide.org/';
+bugtracker 'http://padre.perlide.org/';
+repository 'http://svn.perlide.org/padre/trunk/Padre/';
 
 keywords(
 	"auto-completion",

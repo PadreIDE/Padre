@@ -41,8 +41,8 @@ gather structure info on the current document
   $task->schedule;
   
   my $task2 = Padre::Task::Outline::MyLanguage->new(
-    text          => Padre::Current->document->text_get,
-    editor => Padre::Current->editor,
+      text   => Padre::Current->document->text_get,
+      editor => Padre::Current->editor,
   );
   $task2->schedule;
 
@@ -81,7 +81,8 @@ sub new {
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
 
-	my $editor = $self->{editor} || $self->{main_thread_only}->{editor};
+	my $editor = $self->{editor}
+	          || $self->{main_thread_only}->{editor};
 	delete $self->{editor};
 	unless ( defined $editor ) {
 		$editor = Padre::Current->editor;
@@ -112,16 +113,15 @@ sub prepare {
 }
 
 sub finish {
-	my $self = shift;
-
-	$self->update_gui;
-
+	$_[0]->update_gui;
 	return;
 }
 
 1;
 
 __END__
+
+=pod
 
 =head1 SEE ALSO
 
@@ -133,8 +133,9 @@ with L<Storable>.
 
 =head1 AUTHOR
 
- Steffen Mueller C<smueller@cpan.org>
- Heiko Jansen C<heiko_jansen@web.de>
+Steffen Mueller E<lt>smueller@cpan.orgR<gt>
+
+Heiko Jansen E<lt>heiko_jansen@web.deE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

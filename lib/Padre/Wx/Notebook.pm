@@ -17,17 +17,24 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	my $self  = $class->SUPER::new(
+	my $aui   = $main->aui;
+
+	# Create the basic object
+	my $self = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE | Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TAB_MOVE
-			| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB | Wx::wxAUI_NB_WINDOWLIST_BUTTON
+		Wx::wxAUI_NB_TOP
+		| Wx::wxBORDER_NONE
+		| Wx::wxAUI_NB_SCROLL_BUTTONS
+		| Wx::wxAUI_NB_TAB_MOVE
+		| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
+		| Wx::wxAUI_NB_WINDOWLIST_BUTTON
 	);
 
 	# Add ourself to the main window
-	$main->aui->AddPane(
+	$aui->AddPane(
 		$self,
 		Padre::Wx->aui_pane_info(
 			Name           => 'notebook',
@@ -42,7 +49,7 @@ sub new {
 			Layer          => 1,
 		)->CenterPane,
 	);
-	$main->aui->caption(
+	$aui->caption(
 		'notebook' => Wx::gettext('Files'),
 	);
 

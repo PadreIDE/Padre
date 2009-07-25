@@ -16,18 +16,21 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $main  = shift;
+	my $aui   = $main->aui;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new( 200, 500 ), # used when pane is floated
-		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE,
+		Wx::Size->new( 200, 500 ), # Used when floating
+		Wx::wxAUI_NB_SCROLL_BUTTONS
+		| Wx::wxAUI_NB_TOP
+		| Wx::wxBORDER_NONE
 	);
 
 	# Add ourself to the window manager
-	$self->aui->AddPane(
+	$aui->AddPane(
 		$self,
 		Padre::Wx->aui_pane_info(
 			Name           => 'right',
@@ -44,9 +47,9 @@ sub new {
 			Layer          => 3,
 		)->Right->Hide,
 	);
-
-	# Set the locale-aware caption
-	$self->aui->caption( 'right' => Wx::gettext('Workspace View') );
+	$aui->caption(
+		'right' => Wx::gettext('Document Tools')
+	);
 
 	return $self;
 }

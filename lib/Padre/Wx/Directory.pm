@@ -9,150 +9,101 @@ use Padre::Wx::Directory::SearchCtrl ();
 our $VERSION = '0.41';
 our @ISA     = 'Wx::Panel';
 
-######################################################################
-# Creates Accessor
-use Class::XSAccessor accessors => {
-	_sizerv             => '_sizerv',
-	_sizerh             => '_sizerh',
-	_searcher           => '_searcher',
-	_browser            => '_browser',
-	_last_project       => '_last_project',
-	_current_project    => '_current_project',
+use Class::XSAccessor
+getters => {
+	tree     => 'tree',
+	search   => 'search',
+	fallback => 'fallback',
+},
+accessors => {
+	project_dir  => 'project_dir',
+	previous_dir => 'previous_dir',
 };
 
-################################################################################
-# new                                                                          #
-#                                                                              #
-# Creates the Directory Right Panel with a Search field and the Directory      #
-# Browser                                                                      #
-#                                                                              #
-################################################################################
+# Creates the Directory Left Panel with a Search field
+# and the Directory Browser
 sub new {
-	my ( $class , $main ) = @_;
+	my $class = shift;
+	my $main  = shift;
 
-	######################################################################
-	# Creates the Panel where Search Field and Directory Browser will be
-	# placed
-	my $self = $class->SUPER::new(	$main->right,
-					-1,
-					Wx::wxDefaultPosition,
-					Wx::wxDefaultSize,
+	# Create the parent panel, which will contain the search and tree
+	my $self = $class->SUPER::new(
+		$main->left,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
-	######################################################################
-	# BoxSizer to fill all the Panel space
-	$self->_sizerv( Wx::BoxSizer->new( Wx::wxVERTICAL ) );
-	$self->_sizerh( Wx::BoxSizer->new( Wx::wxHORIZONTAL ) );
-
-	######################################################################
 	# Creates the Search Field and the Directory Browser
-	$self->_searcher( Padre::Wx::Directory::SearchCtrl->new($self) );
-	$self->_browser( Padre::Wx::Directory::TreeCtrl->new($self) );
+	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
+	$self->{search} = Padre::Wx::Directory::SearchCtrl->new($self);
 
-	######################################################################
-	# Adds each component to the panel
-	$self->_sizerv->Add( $self->_searcher, 0, Wx::wxALL|Wx::wxEXPAND, 0 );
-	$self->_sizerv->Add( $self->_browser,  1, Wx::wxALL|Wx::wxEXPAND, 0 );
-	$self->_sizerh->Add( $self->_sizerv,   1, Wx::wxALL|Wx::wxEXPAND, 0 );
+	# Fill the panel
+	my $sizerv = Wx::BoxSizer->new( Wx::wxVERTICAL );
+	$sizerv->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerv->Add( $self->tree,   1, Wx::wxALL | Wx::wxEXPAND, 0 );
 
-	######################################################################
+	my $sizerh = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$sizerh->Add( $sizerv, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
+
 	# Fits panel layout
-	$self->SetSizerAndFit($self->_sizerh);
-	$self->_sizerh->SetSizeHints($self);
+	$self->SetSizerAndFit($sizerh);
+	$sizerh->SetSizeHints($self);
 
-	######################################################################
 	# Sets default Directory Tree directory
-	$self->{home_dir} = File::HomeDir->my_home;
+	$self->{fallback} = File::HomeDir->my_documents;
 
 	return $self;
 }
 
-################################################################################
-# right                                                                        #
-#                                                                              #
-# Returns the right object reference (where the Directory Browser is placed)   #
-#                                                                              #
-################################################################################
-sub right {
+# Returns the left object reference (where the Directory Browser is placed)
+sub left {
 	$_[0]->GetParent;
 }
 
-################################################################################
-# main                                                                         #
-#                                                                              #
-# Returns the main object reference                                            #
-#                                                                              #
-################################################################################
+# Returns the main object reference
 sub main {
 	$_[0]->GetGrandParent;
 }
 
-################################################################################
-# current                                                                      #
-#                                                                              #
-#                                                                              #
-################################################################################
 sub current {
 	Padre::Current->new( main => $_[0]->main );
 }
 
-################################################################################
-# gettext_label                                                                #
-#                                                                              #
-# Returns the window label                                                     #
-#                                                                              #
-################################################################################
+# Returns the window label
 sub gettext_label {
 	Wx::gettext('Directory');
 }
 
-################################################################################
-# clear                                                                        #
-#                                                                              #
-# Updates the gui, so each compoment can uptade itself according to the new    #
-# state                                                                        #
-#                                                                              #
-################################################################################
+# Updates the gui, so each compoment can update itself
+# according to the new state
 sub clear {
-	my $self = shift;
-	$self->update_gui;
+	$_[0]->refresh;
 	return;
 }
 
-################################################################################
-# update_gui                                                                   #
-#                                                                              #
-# Updates the gui if needed, calling Searcher and Browser respectives          #
-# update_gui function                                                          #
-#                                                                              #
-# Called outside Directory.pm, on directory browser focus and item dragging    #
-#                                                                              #
-################################################################################
-sub update_gui {
+# Updates the gui if needed, calling Searcher and Browser respectives
+# refresh function.
+# Called outside Directory.pm, on directory browser focus and item dragging
+sub refresh {
 	my $self    = shift;
 	my $current = $self->current;
 
-	######################################################################
 	# Finds project base
-	my $dir;
-	if ( my $doc = $current->document ) {
-		$dir = $doc->project_dir;
-	} else {
-		$dir = $self->{home_dir};
-	}
+	my $doc = $current->document;
+	my $dir = $doc ? $doc->project_dir : $self->fallback;
 
-	######################################################################
-	# Updates the current_project to the current one
-	$self->_current_project($dir);
+	# Save the current project path
+	$self->project_dir($dir);
 
-	######################################################################
-	# Calls Searcher and Browser update_gui
-	$self->_browser->update_gui;
-	$self->_searcher->update_gui;
+	# Calls Searcher and Browser refresh
+	$self->tree->refresh;
+	$self->search->refresh;
 
-	######################################################################
 	# Sets the last project to the current one
-	$self->_last_project($dir);
+	$self->previous_dir($dir);
+
+	return 1;
 }
 
 1;

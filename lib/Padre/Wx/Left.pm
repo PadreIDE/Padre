@@ -1,12 +1,11 @@
-package Padre::Wx::Bottom;
+package Padre::Wx::Left;
 
-# The bottom notebook
+# The left-hand notebook
 
 use strict;
 use warnings;
-use Padre::Constant            ();
-use Padre::Wx                  ();
-use Padre::Wx::Role::MainChild ();
+use Padre::Constant ();
+use Padre::Wx       ();
 
 our $VERSION = '0.41';
 our @ISA     = qw{
@@ -24,7 +23,7 @@ sub new {
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new( 350, 300 ), # Used when floating
+		Wx::Size->new( 200, 500 ), # Used when floating
 		Wx::wxAUI_NB_SCROLL_BUTTONS
 		| Wx::wxAUI_NB_TOP
 		| Wx::wxBORDER_NONE
@@ -34,31 +33,34 @@ sub new {
 	$aui->AddPane(
 		$self,
 		Padre::Wx->aui_pane_info(
-			Name           => 'bottom',
+			Name           => 'left',
 			Resizable      => 1,
 			PaneBorder     => 0,
 			Movable        => 1,
 			CaptionVisible => 1,
 			CloseButton    => 0,
 			DestroyOnClose => 0,
-			MaximizeButton => 1,
+			MaximizeButton => 0,
 			Floatable      => 1,
 			Dockable       => 1,
-			Position       => 2,
-			Layer          => 4,
-		)->Bottom->Hide,
+			Position       => 4,
+			Layer          => 2,
+		)->Left->Hide,
 	);
 	$aui->caption(
-		'bottom' => Wx::gettext('Output View')
+		'left' => Wx::gettext('Project Tools')
 	);
 
 	return $self;
 }
 
 sub aui {
-	#$_[0]->GetParent->aui;
-	Padre::Current->main($_[0])->aui;
+	$_[0]->GetParent->aui;
 }
+
+
+
+
 
 #####################################################################
 # Page Management
