@@ -24,7 +24,8 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_SINGLE
+		Wx::wxTR_HIDE_ROOT
+		| Wx::wxTR_SINGLE
 		| Wx::wxTR_FULL_ROW_HIGHLIGHT
 		| Wx::wxTR_HAS_BUTTONS
 		| Wx::wxTR_LINES_AT_ROOT
@@ -112,14 +113,6 @@ sub new {
 		} ),
 	);
 
-	$self->SetItemImage(
-		$root,
-		$self->{file_types}->{ folder },
-		Wx::wxTreeItemIcon_Normal,
-	);
-
-	$self->SetItemHasChildren( $root, 1 );
-
 	# Ident to sub nodes
 	$self->SetIndent(10);
 
@@ -155,12 +148,6 @@ sub refresh {
 	my $project_dir  = $parent->project_dir;
 	my $previous_dir = $parent->previous_dir;
 
-	# Updates Root node data
-	$self->_update_root_data;
-
-	# Returns if Search is in use
-	return if $search->{in_use}->{$project_dir};
-
 	# Gets Root node
 	my $root = $self->GetRootItem;
 
@@ -171,6 +158,13 @@ sub refresh {
 	# If the project have changed or the project root folder updates or
 	# the search is not in use anymore (was just used)
 	if ( (defined($project_dir) and (not defined($previous_dir) or $previous_dir ne $project_dir ) ) or $self->_updated_dir($project_dir) or $search->{just_used}->{$project_dir} ) {
+
+		# Updates Root node data
+		$self->_update_root_data;
+
+		# Returns if Search is in use
+		return if $search->{in_use}->{$project_dir};
+
 		$self->_list_dir($root);
 		delete $search->{just_used}->{$project_dir};
 	}
@@ -222,17 +216,6 @@ sub _update_root_data {
 	my $data = $self->GetPlData( $root );
 	$data->{dir}  = $volume . $path;
 	$data->{name} = $name;
-
-	# Renames the root label to the current project root name
-	$self->SetItemText( $root, $name );
-
-	# If the project Root was expanded, expands it, if not, collapses it
-	my $expand_state = $self->{CACHED}->{ $project }->{Expanded}->{ $project };
-	if( ( not defined $expand_state ) or $expand_state ) {
-		$self->Expand( $root );
-	} else {
-		$self->Collapse( $root );
-	}
 }
 
 # Updates a node's content
