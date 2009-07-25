@@ -54,9 +54,9 @@ sub new {
 	return $self;
 }
 
-sub aui {
-	$_[0]->GetParent->aui;
-}
+
+
+
 
 #####################################################################
 # Page Management

@@ -24,6 +24,8 @@ Changes for Perl Application Development and Refactoring Environment
       Open Example menu option (SZABGAB)
     - Adding Padre::Wx->add_pane_info convenience method to prevent the need
       for the stupid ugly Wx::AuiPaneInfo method chaining (ADAMK)
+    - Create the Left panel and moved the Directory tool into it (ADAMK)
+    - Upgrade Wx tree navigation to handle detached floating panels (ADAMK)
 
 0.41 2009.07.23
     - Remove Experimental mode.

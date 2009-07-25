@@ -50,7 +50,6 @@ sub new {
 	$sizerh->SetSizeHints($self);
 
 	# Sets default Directory Tree directory
-	$DB::single = 1;
 	$self->{fallback} = File::HomeDir->my_documents;
 
 	return $self;
