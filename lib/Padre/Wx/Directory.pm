@@ -131,7 +131,6 @@ sub clear {
 sub update_gui {
 	my $self    = shift;
 	my $current = $self->current;
-	$current->ide->wx or return;
 
 	######################################################################
 	# Finds project base

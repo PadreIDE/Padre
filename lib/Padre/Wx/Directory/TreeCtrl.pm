@@ -122,6 +122,8 @@ sub new {
 		Wx::wxTreeItemIcon_Normal,
 	);
 
+	$self->SetItemHasChildren( $root, 1 );
+
 	# Ident to sub nodes
 	$self->SetIndent(10);
 
@@ -139,23 +141,13 @@ sub parent {
 }
 
 ################################################################################
-# right                                                                        #
-#                                                                              #
-# Returns the right object reference (where the Directory Browser is placed)   #
-#                                                                              #
-################################################################################
-sub right {
-	$_[0]->GetGrandParent;
-}
-
-################################################################################
 # main                                                                         #
 #                                                                              #
 # Returns the main object reference                                            #
 #                                                                              #
 ################################################################################
 sub main {
-	$_[0]->GetGrandParent->GetParent;
+	$_[0]->parent->main;
 }
 
 ################################################################################
