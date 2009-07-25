@@ -71,7 +71,7 @@ sub clear {
 	my $self = shift;
 
 	# Remove the margins for the syntax markers
-	foreach my $editor ( $self->main->editors ) {
+	foreach my $editor ( Padre::Current->main($self)->editors ) {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 	}
@@ -116,7 +116,7 @@ sub start {
 	my $self = shift;
 
 	# Add the margins for the syntax markers
-	foreach my $editor ( $self->main->editors ) {
+	foreach my $editor ( Padre::Current->main($self)->editors ) {
 
 		# Margin number 1 for symbols
 		$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
@@ -175,7 +175,7 @@ sub stop {
 	$self->clear;
 
 	# Remove the editor margin
-	foreach my $editor ( $self->main->editors ) {
+	foreach my $editor ( Padre::Current->main($self)->editors ) {
 		$editor->SetMarginWidth( 1, 0 );
 	}
 
@@ -192,7 +192,7 @@ sub running {
 sub on_list_item_activated {
 	my $self   = shift;
 	my $event  = shift;
-	my $editor = $self->main->current->editor;
+	my $editor = Padre::Current->main($self)->current->editor;
 	my $line   = $event->GetItem->GetText;
 
 	if (   not defined($line)
@@ -214,7 +214,7 @@ sub on_timer {
 	my $self   = shift;
 	my $event  = shift;
 	my $force  = shift;
-	my $editor = $self->main->current->editor or return;
+	my $editor = Padre::Current->main($self)->current->editor or return;
 
 	my $document = $editor->{Document};
 	unless ( $document and $document->can('check_syntax') ) {
