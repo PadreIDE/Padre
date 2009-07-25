@@ -73,6 +73,12 @@ sub new {
 		icon   => 'actions/x-document-close',
 	);
 
+	$self->AddSeparator;
+	$self->{open_example} = $self->add_tool_item(
+		action => 'file.open_example',
+		icon   => 'stock/generic/stock_example',
+	);
+	
 	# Undo/Redo Support
 	$self->AddSeparator;
 
