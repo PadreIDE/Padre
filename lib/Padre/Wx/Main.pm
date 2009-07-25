@@ -2544,7 +2544,14 @@ sub on_open {
 	if ($filename) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
+	$self->_open_file_dialog;
+	
+	return;
+}
 
+sub _open_file_dialog {
+	my $self = shift;
+	
 	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
 	# "It must be noted that wildcard support in the native Motif file dialog is quite
 	# limited: only one alternative is supported, and it is displayed without
@@ -2584,6 +2591,15 @@ sub on_open {
 
 	return;
 }
+
+sub on_open_example {
+	my $self     = shift;
+	$self->{cwd} = Padre::Util::sharedir('examples');
+	$self->_open_file_dialog;
+	
+	return;
+}
+	
 
 =pod
 

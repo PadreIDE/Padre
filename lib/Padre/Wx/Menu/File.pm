@@ -132,6 +132,14 @@ sub new {
 			$_[0]->on_reload_file;
 		},
 	);
+	$self->{open_example} = $self->add_menu_item(
+		$self,
+		name       => 'file.open_example',
+		label      => Wx::gettext('Open Example'),
+		menu_event => sub {
+			$_[0]->on_open_example;
+		},
+	);
 
 	$self->AppendSeparator;
 

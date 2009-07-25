@@ -1,0 +1,4 @@
+The real examples are in share/examples, they are installed along with 
+the application.
+
+Other files, that were mostly used for tests were moved to t/files/

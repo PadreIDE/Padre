@@ -20,6 +20,8 @@ Changes for Perl Application Development and Refactoring Environment
       they are saved (GABRIELMAD)
     - Directory Tree shows the project directory or if none file is opened the
       user's home directory (GABRIELMAD)
+    - Install some of the examples in the share directory and add an
+      Open Example menu option (SZABGAB)
 
 0.41 2009.07.23
     - Remove Experimental mode.
