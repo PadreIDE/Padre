@@ -331,7 +331,7 @@ sub new {
 	$self->{tabs}->AppendSeparator;
 
 	$self->{delete_trailing} = $self->add_menu_item(
-		$self,
+		$self->{tabs},
 		name       => 'edit.delete_trailing',
 		label      => Wx::gettext('Delete Trailing Spaces'),
 		menu_event => sub {
@@ -340,7 +340,7 @@ sub new {
 	);
 
 	$self->{delete_leading} = $self->add_menu_item(
-		$self,
+		$self->{tabs},
 		name       => 'edit.delete_leading',
 		label      => Wx::gettext('Delete Leading Spaces'),
 		menu_event => sub {
