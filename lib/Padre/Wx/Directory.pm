@@ -40,17 +40,17 @@ sub new {
 
 	# Fill the panel
 	my $sizerv = Wx::BoxSizer->new( Wx::wxVERTICAL );
+	my $sizerh = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
 	$sizerv->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
 	$sizerv->Add( $self->tree,   1, Wx::wxALL | Wx::wxEXPAND, 0 );
-
-	my $sizerh = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
-	$sizerh->Add( $sizerv, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerh->Add( $sizerv,       1, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);
 	$sizerh->SetSizeHints($self);
 
 	# Sets default Directory Tree directory
+	$DB::single = 1;
 	$self->{fallback} = File::HomeDir->my_documents;
 
 	return $self;

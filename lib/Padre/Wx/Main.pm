@@ -1277,10 +1277,10 @@ sub show_directory {
 
 	if ( $on ) {
 		my $directory = $self->directory;
-		$self->right->show($directory);
+		$self->left->show($directory);
 		$directory->refresh;
 	} elsif ( $self->has_directory ) {
-		$self->right->hide( $self->directory );
+		$self->left->hide( $self->directory );
 	}
 
 	$self->aui->Update;
@@ -1310,7 +1310,7 @@ sub show_output {
 	$self->config->set( main_output => $on );
 	$self->config->write;
 
-	if ($on) {
+	if ( $on ) {
 		$self->bottom->show( $self->output );
 	} else {
 		$self->bottom->hide( $self->output );
@@ -1343,7 +1343,7 @@ sub show_syntax {
 		$self->menu->view->{show_syntaxcheck}->Check($on);
 	}
 
-	if ($on) {
+	if ( $on ) {
 		$self->bottom->show($syntax);
 		$syntax->start unless $syntax->running;
 	} else {
@@ -2387,18 +2387,17 @@ sub setup_editor {
 		}
 	}
 
-	if ( !$doc->is_new ) {
+	if ( ! $doc->is_new ) {
 		Padre::Util::debug( "Adding new file to history: " . $doc->filename );
 		Padre::DB::History->create(
 			type => 'files',
 			name => $doc->filename,
 		);
 		$self->menu->file->update_recentfiles;
-	}
-	else {
-		$doc->{project_dir} =	$self->current->document ?
-					$self->current->document->project_dir :
-					File::HomeDir->my_home ;
+	} else {
+		$doc->{project_dir} = $self->current->document
+			? $self->current->document->project_dir
+			: File::HomeDir->my_documents;
 	}
 
 	my $id = $self->create_tab( $editor, $title );
