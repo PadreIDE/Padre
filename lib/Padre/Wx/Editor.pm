@@ -62,6 +62,13 @@ sub new {
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
+	
+	# Smart highlighting...
+	my @styles = ();
+	$self->{styles} = \@styles;
+	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_smart_highlight_begin);
+	Wx::Event::EVT_LEFT_DOWN( $self, \&on_smart_highlight_end);
+	Wx::Event::EVT_KEY_DOWN( $self, \&on_smart_highlight_end);
 
 	if ( $config->editor_wordwrap ) {
 		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
@@ -662,6 +669,52 @@ sub on_char {
 
 	$event->Skip;
 	return;
+}
+
+sub clear_smart_highlight {
+	my $self = shift;
+
+	my @styles = @{$self->{styles}};
+	if(scalar @styles) {
+		foreach my $style (@styles) {
+			$self->StartStyling( $style->{start}, 0xFF );
+			$self->SetStyling( $style->{len}, $style->{style} );
+		}
+		$#{$self->{styles}} = -1;
+	}
+}
+
+sub on_smart_highlight_begin {
+	my ( $self, $event ) = @_;
+
+	$self->clear_smart_highlight;
+
+	my $selection = $self->GetSelectedText or return;
+	my $selection_length = length $selection;
+	my $selection_re = quotemeta $selection;
+	my $line_count = $self->GetLineCount;
+
+	for(my $i = 0; $i < $line_count; $i++) {
+		my $line_start = $self->PositionFromLine($i);
+		my $line = $self->GetLine($i);
+		while ($line =~ /$selection_re/g) {
+			my $start = $line_start + pos($line) - $selection_length;
+			#print "Found $selection at line $i column " . (pos $line) . ", position: $start\n";
+			push @{$self->{styles}}, {
+				start    => $start,
+				len      => $selection_length,
+				style    => $self->GetStyleAt( $start ) };
+			$self->StartStyling( $start, 0xFF );
+			$self->SetStyling( $selection_length, 32 );
+		}
+	}
+}
+
+sub on_smart_highlight_end {
+	my ( $self, $event ) = @_;
+
+	$self->clear_smart_highlight;
+	$event->Skip;
 }
 
 sub on_left_up {
