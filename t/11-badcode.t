@@ -47,6 +47,8 @@ foreach my $module ( sort keys %modules ) {
 			eval { $module->can('current') }
 			and
 			$module ne 'Padre::Current'
+			and
+			$module ne 'Padre::Wx::Role::MainChild'
 		) {
 			skip("No ->current method", 1);
 		}
