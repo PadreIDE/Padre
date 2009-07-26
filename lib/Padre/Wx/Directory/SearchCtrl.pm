@@ -145,6 +145,16 @@ sub _search {
 	# Opens the current directory and sort its items by type and name
 	my ($dirs, $files) = $tree->readdir( $path );
 
+	# Accept some regex like characters
+	#   ^ = begin with
+	#   $ = end with
+	#   * = any string
+	#   ? = any character
+	$word =~ s/^\\\^/^/g;
+	$word =~ s/\\\$$/\$/g;
+	$word =~ s/\\\*/.*?/g;
+	$word =~ s/\\\?/./g;
+
 	# Filter the file list by the search criteria (but not the dir list)
 	@$files = grep { $_ =~ /$word/i } @$files;
 
@@ -239,6 +249,16 @@ sub _search_in_cache {
 
 	# Quotes meta characters
 	my $word = quotemeta($self->GetValue);
+
+	# Accept some regex like characters
+	#   ^ = begin with
+	#   $ = end with
+	#   * = any string
+	#   ? = any character
+	$word =~ s/^\\\^/^/g;
+	$word =~ s/\\\$$/\$/g;
+	$word =~ s/\\\*/.*?/g;
+	$word =~ s/\\\?/./g;
 
 	# Goes thought each item from $data, if is a folder , searchs
 	# recursively inside it, if is a file tries to match its name

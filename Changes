@@ -7,7 +7,8 @@ Changes for Perl Application Development and Refactoring Environment
       recognises intermediate directories (blib etc) in Perl distributions,
       and correctly ignores them (ADAMK)
     - Various performance improvements to directory tree (ADAMK)
-    - New search engine accomplished to directory tree (GABRIELMAD)
+    - New search engine coupled to directory tree with some regex
+      characters support (GABRIELMAD)
     - Initial Padre actions support which means an action can be re-used 
       by anything running on Padre. Keyboard shortcut conflict warnings are
       implemented (AZAWAWI)
@@ -19,7 +20,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Now new files belong to the project from where they were created till
       they are saved (GABRIELMAD)
     - Directory Tree shows the project directory or if none file is opened
-      the user's home directory (GABRIELMAD)
+      the user's home documents directory (GABRIELMAD)
     - Install some of the examples in the share directory and add an
       Open Example menu option (SZABGAB)
     - Adding Padre::Wx->add_pane_info convenience method to prevent the need
