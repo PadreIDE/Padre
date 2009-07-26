@@ -88,7 +88,7 @@ sub refresh {
 
 	# Finds project base
 	my $doc = $current->document;
-	my $dir = $doc ? $doc->project_dir : Padre->ide->config->default_projects_directory;
+	my $dir = $doc ? $doc->project_dir : $self->main->ide->config->default_projects_directory;
 	$self->{projects_dirs}->{$dir} ||= $dir;
 
 	# Do nothing if the project directory hasn't changed
