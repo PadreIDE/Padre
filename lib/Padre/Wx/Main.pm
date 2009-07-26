@@ -2466,7 +2466,7 @@ No return value.
 sub on_open_selection {
 	my $self    = shift;
 	my $current = $self->current;
-	return if not $current->editor;
+	return unless $current->editor;
 	my $text = $current->text;
 
 	# get selection, ask for it if needed
@@ -2529,7 +2529,7 @@ sub on_open_selection {
 
 			# relative to the project dir
 			my $filename = File::Spec->catfile(
-				Padre::Current->document->project_dir,
+				$self->current->document->project_dir,
 				'lib',
 				$module,
 			);
