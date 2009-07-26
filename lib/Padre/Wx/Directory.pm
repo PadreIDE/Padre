@@ -98,7 +98,7 @@ sub refresh {
 	$self->{projects_dirs}->{$dir} ||= $dir;
 
 	# Do nothing if the project directory hasn't changed
-	if ( $self->project_dir eq $dir ) {
+	if ( defined $self->project_dir and $self->project_dir eq $dir ) {
 		return 1;
 	}
 
