@@ -75,7 +75,6 @@ sub new {
 	$self->add_menu_item(
 		$edit_select,
 		name       => 'edit.mark_selection_start',
-		id         => Wx::wxID_SELECTALL,
 		label      => Wx::gettext('Mark selection start'),
 		shortcut   => 'Ctrl-[',
 		menu_event => sub {
@@ -87,7 +86,6 @@ sub new {
 	$self->add_menu_item(
 		$edit_select,
 		name       => 'edit.mark_selection_end',
-		id         => Wx::wxID_SELECTALL,
 		label      => Wx::gettext('Mark selection end'),
 		shortcut   => 'Ctrl-]',
 		menu_event => sub {
@@ -99,7 +97,6 @@ sub new {
 	$self->add_menu_item(
 		$edit_select,
 		name       => 'edit.clear_selection_marks',
-		id         => Wx::wxID_SELECTALL,
 		label      => Wx::gettext('Clear selection marks'),
 		menu_event => sub {
 			require Padre::Wx::Editor;
