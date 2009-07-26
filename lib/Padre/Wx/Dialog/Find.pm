@@ -449,7 +449,7 @@ sub search {
 	my $regex = $self->_get_search or return;
 
 	# Forwards or backwards
-	my $backwards = $self->config->find_reverse;
+	my $backwards = $self->current->config->find_reverse;
 	if ( $args{rev} ) {
 		$backwards = not $backwards;
 	}
@@ -495,7 +495,7 @@ sub _sync_config {
 # Prepare and return search term defined as a regular expression.
 sub _get_search {
 	my $self   = shift;
-	my $config = $self->config;
+	my $config = $self->current->config;
 	my $term   = Padre::DB::History->previous('search');
 
 	# Escape the raw search term
