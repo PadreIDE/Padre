@@ -87,6 +87,8 @@ sub clear {
 # refresh function.
 # Called outside Directory.pm, on directory browser focus and item dragging
 sub refresh {
+	$DB::single = 1;
+
 	my $self    = shift;
 	my $current = $self->current;
 
@@ -94,6 +96,11 @@ sub refresh {
 	my $doc = $current->document;
 	my $dir = $doc ? $doc->project_dir : $self->fallback;
 	$self->{projects_dirs}->{$dir} ||= $dir;
+
+	# Do nothing if the project directory hasn't changed
+	if ( $self->project_dir eq $dir ) {
+		return 1;
+	}
 
 	# Save the current project path
 	$self->project_dir( $self->{projects_dirs}->{$dir} );
