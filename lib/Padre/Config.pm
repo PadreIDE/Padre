@@ -282,6 +282,14 @@ setting(
 	default => 1,
 );
 
+# Directory Tree Settings
+setting(
+	name    => 'default_projects_directory',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => File::HomeDir->my_documents,
+);
+
 # Editor Settings
 setting(
 	name    => 'editor_font',

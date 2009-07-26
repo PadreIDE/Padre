@@ -41,6 +41,13 @@ sub new {
 		}
 	);
 
+	Wx::Event::EVT_SET_FOCUS(
+		$self,
+		sub {
+			$_[0]->parent->refresh;
+		},
+	);
+
 	return $self;
 }
 

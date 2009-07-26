@@ -2412,7 +2412,7 @@ sub setup_editor {
 	} else {
 		$doc->{project_dir} = $self->current->document
 			? $self->current->document->project_dir
-			: File::HomeDir->my_documents;
+			: Padre->ide->config->default_projects_directory;
 	}
 
 	my $id = $self->create_tab( $editor, $title );

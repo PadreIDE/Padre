@@ -13,7 +13,6 @@ use Class::XSAccessor
 getters => {
 	tree     => 'tree',
 	search   => 'search',
-	fallback => 'fallback',
 },
 accessors => {
 	project_dir  => 'project_dir',
@@ -50,9 +49,6 @@ sub new {
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);
 	$sizerh->SetSizeHints($self);
-
-	# Sets default Directory Tree directory
-	$self->{fallback} = File::HomeDir->my_documents;
 
 	return $self;
 }
@@ -92,7 +88,7 @@ sub refresh {
 
 	# Finds project base
 	my $doc = $current->document;
-	my $dir = $doc ? $doc->project_dir : $self->fallback;
+	my $dir = $doc ? $doc->project_dir : Padre->ide->config->default_projects_directory;
 	$self->{projects_dirs}->{$dir} ||= $dir;
 
 	# Do nothing if the project directory hasn't changed

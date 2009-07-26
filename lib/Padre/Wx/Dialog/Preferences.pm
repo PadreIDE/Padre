@@ -212,6 +212,9 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
 			[ 'Wx::Choice',     'main_startup', $main_startup ]
 		],
+		[   [ 'Wx::StaticText', undef,          Wx::gettext('Default projects directory:') ],
+			[ 'Wx::DirPickerCtrl' , 'default_projects_directory', $config->default_projects_directory, Wx::gettext('Choose the default projects directory') ]
+		],
 		[   [   'Wx::CheckBox', 'main_singleinstance', ( $config->main_singleinstance ? 1 : 0 ),
 				Wx::gettext('Open files in existing Padre')
 			],
@@ -801,6 +804,10 @@ sub run {
 		$data->{editor_beginner} ? 1 : 0
 	);
 	$config->set(
+		'default_projects_directory',
+		$data->{default_projects_directory}
+	);
+	$config->set(
 		'main_singleinstance',
 		$data->{main_singleinstance} ? 1 : 0
 	);
@@ -840,7 +847,6 @@ sub run {
 		'run_use_external_window',
 		$data->{run_use_external_window}
 	);
-
 	$config->set(
 		'external_diff_tool',
 		$data->{external_diff_tool}
