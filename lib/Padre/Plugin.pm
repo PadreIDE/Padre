@@ -58,6 +58,10 @@ our $COMPATIBLE = '0.18';
 # Link plugins back to their IDE
 my %IDE = ();
 
+
+
+
+
 ######################################################################
 # Static Methods
 
@@ -120,18 +124,29 @@ sub plugin_share_directory {
 	$pkg =~ s/::/-/g;
 
 	if ( $ENV{PADRE_DEV} ) {
-		my $root = File::Spec->catdir( $FindBin::Bin, File::Spec->updir, File::Spec->updir, $pkg );
+		my $root = File::Spec->catdir(
+			$FindBin::Bin,
+			File::Spec->updir,
+			File::Spec->updir,
+			$pkg,
+		);
 		my $path = File::Spec->catdir( $root, 'share' );
 		return $path if -d $path;
-
-		$path = File::Spec->catdir( $root, 'lib', split( /-/, $pkg ), 'share' );
+		$path = File::Spec->catdir(
+			$root,
+			'lib',
+			split( /-/, $pkg ),
+			'share',
+		);
 		return $path if -d $path;
 		return;
 	}
 
 	# Find the distribution directory
 	require File::ShareDir::PAR;
-	my $distdir = eval { File::ShareDir::PAR::dist_dir($pkg); };
+	my $distdir = eval {
+		File::ShareDir::PAR::dist_dir($pkg);
+	};
 	return undef if $@;
 
 	return File::Spec->catdir(
@@ -176,6 +191,10 @@ sub padre_interfaces {
 	return ();
 }
 
+
+
+
+
 ######################################################################
 # Default Constructor
 
@@ -213,6 +232,10 @@ sub new {
 sub DESTROY {
 	delete $IDE{ Scalar::Util::refaddr( $_[0] ) };
 }
+
+
+
+
 
 #####################################################################
 # Instance Methods
@@ -592,6 +615,10 @@ sub _menu_plugins_submenu {
 	return $menu;
 }
 
+
+
+
+
 ######################################################################
 # Event Handlers
 
@@ -661,6 +688,10 @@ deep integration with the editor widget.
 sub editor_disable {
 	return 1;
 }
+
+
+
+
 
 #####################################################################
 # Padre Integration Methods

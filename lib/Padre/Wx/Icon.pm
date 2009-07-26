@@ -48,27 +48,30 @@ my %PREFS = (
 our $DEFAULT_ICON_NAME = 'status/padre-fallback-icon';
 our $DEFAULT_ICON;
 
+
+
+
+
 #####################################################################
 # Icon Resolver
 
-# For now, assume the people using this are competent and don't
-# bother to check params.
+# For now, assume the people using this are competent
+# and don't bother to check params.
 # TODO: Clearly this assumption can't last...
 sub find {
 	my $name  = shift;
 	my $prefs = shift;
 
-	# If you _really_ are competant ;), prefer size,icons,ext
+	# If you _really_ are competant ;),
+	# prefer size, icons, ext
 	# over the defaults
-	my %pref =
-		_HASH($prefs)
+	my %pref = _HASH($prefs)
 		? ( %PREFS, %$prefs )
 		: %PREFS;
 
 	# Search through the theme list
-	foreach my $theme (THEMES) {
-		my $hinted =
-			( $HINT{$theme} and $HINT{$theme}->{$name} )
+	foreach my $theme ( THEMES ) {
+		my $hinted = ( $HINT{$theme} and $HINT{$theme}->{$name} )
 			? $HINT{$theme}->{$name}
 			: $name;
 		my $file = File::Spec->catfile(
@@ -82,13 +85,10 @@ sub find {
 	}
 
 	if ( defined $DEFAULT_ICON ) {
-
 		# fallback with a pretty ?
 		return $DEFAULT_ICON;
-	}
-
-	# setup and return the default icon
-	elsif ( $name ne $DEFAULT_ICON_NAME ) {
+	} elsif ( $name ne $DEFAULT_ICON_NAME ) {
+		# setup and return the default icon
 		$DEFAULT_ICON = find($DEFAULT_ICON_NAME);
 		return $DEFAULT_ICON if defined $DEFAULT_ICON;
 	}
