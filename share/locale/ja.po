@@ -612,7 +612,7 @@ msgstr "ヘルプ(&H)"
 
 #: lib/Padre/Wx/Menubar.pm:107 lib/Padre/Wx/Menubar.pm:147
 msgid "&Perl"
-msgstr ""
+msgstr "&Perl"
 
 #: lib/Padre/Wx/StatusBar.pm:249
 msgid "Background Tasks are running"
@@ -990,7 +990,8 @@ msgstr "Padreについて(&A)"
 
 #: lib/Padre/Wx/Menu/Help.pm:225
 msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
-msgstr ""
+msgstr "Copyright 2008-2009 The Padre development team as listed in 
+Padre.pm"
 
 #: lib/Padre/Wx/Menu/File.pm:33
 msgid "&New"
@@ -1302,19 +1303,19 @@ msgstr "スタイル"
 
 #: lib/Padre/Wx/Menu/View.pm:323
 msgid "Padre"
-msgstr ""
+msgstr "Padre"
 
 #: lib/Padre/Wx/Menu/View.pm:324
 msgid "Night"
-msgstr ""
+msgstr "Night"
 
 #: lib/Padre/Wx/Menu/View.pm:325
 msgid "Ultraedit"
-msgstr ""
+msgstr "Ultraedit"
 
 #: lib/Padre/Wx/Menu/View.pm:326
 msgid "Notepad++"
-msgstr ""
+msgstr "Notepad++"
 
 #: lib/Padre/Wx/Menu/View.pm:379
 msgid "Language"
@@ -2033,7 +2034,7 @@ msgstr "親ディレクトリを選択してください"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:68
 msgid "Module Start"
-msgstr ""
+msgstr "Module Start"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:110
 #, perl-format
