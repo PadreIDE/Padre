@@ -22,7 +22,7 @@ use Padre::Current ();
 
 our $VERSION = '0.41';
 
-# The three most common things we need are implemented directly
+# The four most common things we need are implemented directly
 
 =pod
 
@@ -37,7 +37,7 @@ Get the L<Padre> IDE instance that this object is a child of.
 sub ide {
 	my $main = $_[0]->GetParent;
 	if ( _INSTANCE($main, 'Padre::Wx::Main') ) {
-		return $main;
+		return $main->ide;
 	}
 	Padre::Current->ide;
 }
@@ -56,7 +56,7 @@ convenience because it is needed so often.
 sub config {
 	my $main = $_[0]->GetParent;
 	if ( _INSTANCE($main, 'Padre::Wx::Main') ) {
-		return $main;
+		return $main->config;
 	}
 	Padre::Current->config;
 }
