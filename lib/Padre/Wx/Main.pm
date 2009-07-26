@@ -2511,7 +2511,17 @@ sub on_open_selection {
 			push @files, $filename;
 		} else {
 
-			# TODO: mayb it should not be our @INC but the @INC of the perl used for
+			# relative to the project dir
+			my $filename = File::Spec->catfile(
+				Padre::Current->document->project_dir,
+				'lib',
+				$module,
+			);
+			if (-e $filename) {
+				push @files, $filename;
+			}
+
+			# TODO: it should not be our @INC but the @INC of the perl used for
 			# script execution
 			foreach my $path (@INC) {
 				my $filename = File::Spec->catfile( $path, $module );
