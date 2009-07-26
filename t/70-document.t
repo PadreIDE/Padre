@@ -15,8 +15,8 @@ my %MIMES = (
 	'eg/perl5/hello_world.pl'                => 'application/x-perl',
 	'eg/perl5/perl5.pod'                     => 'application/x-perl',
 	'eg/perl5/perl5_with_perl6_example.pod'  => 'application/x-perl',
-	'eg/perl6/perl6.pod'                     => 'application/x-perl',
-	'eg/perl6/Perl6Class.pm'                 => 'application/x-perl',
+	'eg/perl6/perl6.pod'                     => 'application/x-perl6',
+	'eg/perl6/Perl6Class.pm'                 => 'application/x-perl6',
 );
 
 plan tests => 11;
