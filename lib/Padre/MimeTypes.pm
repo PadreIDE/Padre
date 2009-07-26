@@ -535,7 +535,7 @@ sub _guess_mimetype {
 		my $ext = lc $1;
 		if ( $EXT_MIME{$ext} ) {
 			if ( ref $EXT_MIME{$ext} ) {
-				return $EXT_MIME{$ext}->($text);
+				return $EXT_MIME{$ext}->($self, $text);
 			} else {
 				return $EXT_MIME{$ext};
 			}
