@@ -742,7 +742,6 @@ sub _get_search {
 
 	# Escape the raw search term
 	if ( $config->find_regex ) {
-
 		# Escape non-trailing $ so they won't interpolate
 		$term =~ s/\$(?!\z)/\\\$/g;
 	} else {

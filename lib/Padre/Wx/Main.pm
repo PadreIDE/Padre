@@ -1429,6 +1429,21 @@ sub editors {
 
 =pod
 
+=head3 documents
+
+    my @document = $main->documents;
+
+Return a list of all current docunments, in the specific order
+they are open in the notepad.
+
+=cut
+
+sub documents {
+	return map { $_->{Document} } $_[0]->editors;
+}
+
+=pod
+
 =head2 Process Execution
 
 The following methods run an external command, for example to evaluate
@@ -1763,8 +1778,8 @@ sub open_session {
 	# prevent redrawing until we're done
 	$self->Freeze;
 
-	# close all files
-	$self->on_close_all;
+	# Close all files
+	$self->close_all;
 
 	# get list of files in the session
 	my @files = $session->files;
@@ -2148,8 +2163,8 @@ sub on_close_window {
 				return;
 			}
 		} else {
-			my $closed = $self->on_close_all;
-			unless ($closed) {
+			my $closed = $self->close_all;
+			unless ( $closed ) {
 
 				# They cancelled at some point
 				$event->Veto;
@@ -2960,49 +2975,19 @@ sub close {
 
 	return 1;
 }
-
+ 
 =pod
 
-=head3 on_close_all
+=head3 close_all
 
-    my $success = $main->on_close_all;
-
-Event called when menu item close all has been hit. Return true if all
-documents were closed, false otherwise.
-
-=cut
-
-sub on_close_all {
-	$_[0]->_close_all;
-}
-
-=pod
-
-=head3 on_close_all_but_current
-
-    my $success = $main->on_close_all_but_current;
-
-Event called when menu item close all but current has been hit. Return
-true upon success, false otherwise.
-
-=cut
-
-sub on_close_all_but_current {
-	$_[0]->_close_all( $_[0]->notebook->GetSelection );
-}
-
-=pod
-
-=head3 _on_close_all
-
-    my $success = $main->_on_close_all( $skip );
+    my $success = $main->close_all( $skip );
 
 Try to close all documents. If C<$skip> is specified (an integer), don't
 close the tab with this id. Return true upon success, false otherwise.
 
 =cut
 
-sub _close_all {
+sub close_all {
 	my $self  = shift;
 	my $skip  = shift;
 	my $guard = $self->freezer;
@@ -3011,6 +2996,39 @@ sub _close_all {
 			next;
 		}
 		$self->close($id) or return 0;
+	}
+	$self->refresh;
+	return 1;
+}
+
+=pod
+
+=head3 close_where
+
+    # Close all files in current project
+    my $project = Padre::Current->document->project_dir;
+    my $success = $main->close_where( sub {
+        $_[0]->project_dir eq $project
+    } );
+
+The C<close_where> method is a programatically enhanceable mass-close
+tool. It takes a subroutine as a parameter and calls that subroutine
+for each currently open document, passing the document as the first
+parameter.
+
+Any documents that return true will be closed.
+
+=cut
+
+sub close_where {
+	my $self     = shift;
+	my $where    = shift;
+	my $notebook = $self->notebook;
+	my $guard    = $self->freezer;
+	foreach my $id ( reverse $self->pageids ) {
+		if ( $where->( $notebook->GetPage($id)->{Document} ) ) {
+			$self->close($id) or return 0;
+		}
 	}
 	$self->refresh;
 	return 1;

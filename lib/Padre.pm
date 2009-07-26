@@ -147,7 +147,8 @@ sub new {
 		}
 	}
 
-	# Load a few more bits and pieces now we know that we'll need them
+	# Load a few more bits and pieces now we know
+	# that we'll need them
 	require Padre::Project;
 
 	# Create the plugin manager
@@ -171,7 +172,9 @@ sub run {
 	my $self = shift;
 
 	# Clean arguments
-	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
+	$self->{ARGV} = [ map {
+		File::Spec->rel2abs( $_, $self->{original_cwd} )
+	} @ARGV ];
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
@@ -201,6 +204,10 @@ sub run {
 sub save_config {
 	$_[0]->config->write;
 }
+
+
+
+
 
 #####################################################################
 # Project Management
@@ -1121,50 +1128,94 @@ Mark Grimes E<lt>mgrimes@cpan.orgE<gt>
 
 =head2 Translators
 
-Arabic - Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
+=head3 Arabic
 
-Chinese (Simplified) - Fayland Lam (FAYLAND)
+Ahmad M. Zawawi - أحمد محمد زواوي (AZAWAWI)
 
-Chinese (Traditional) - BlueT - Matthew Lien - 練喆明 (BLUET) E<lt>bluet@cpan.orgE<gt>
+=head3 Chinese (Simplified)
 
-Dutch - Dirk De Nijs (ddn123456)
+Fayland Lam (FAYLAND)
 
-English - Everyone on the team
+=head3 Chinese (Traditional)
 
-French - Jérôme Quelin (JQUELIN)
+BlueT - Matthew Lien - 練喆明 (BLUET) E<lt>bluet@cpan.orgE<gt>
 
-German - Heiko Jansen (HJANSEN)
+=head3 Dutch
 
-Hebrew - Omer Zak  - עומר זק, Shlomi Fish  - שלומי פיש (SHLOMIF) and Amir E. Aharoni - אמיר א. אהרוני
+Dirk De Nijs (ddn123456)
 
-Hungarian - György Pásztor (GYU)
+=head3 English
 
-Italian - Simone Blandino (SBLANDIN)
+Everyone on the team
 
-Japanese - Kenichi Ishigaki - 石垣憲一 (ISHIGAKI)
+=head3 French
 
-Korean - Keedi Kim - 김도형 (KEEDI)
+Jérôme Quelin (JQUELIN)
 
-Russian - Andrew Shitov
+=head3 German
 
-Polish - Cezary Morga (THEREK)
+Heiko Jansen (HJANSEN)
 
-Portuguese (Brazilian) - Breno G. de Oliveira (GARU)
+=head3 Hebrew
 
-Spanish - Paco Alguacil (PacoLinux), Enrique Nell (ENELL)
+Omer Zak  - עומר זק
 
-Czech - Marcela Mašláňová (mmaslano)
+Shlomi Fish  - שלומי פיש (SHLOMIF)
 
-Norwegian - Kjetil Skotheim (KJETIL)
+Amir E. Aharoni - אמיר א. אהרוני
+
+=head3 Hungarian
+
+György Pásztor (GYU)
+
+=head3 Italian
+
+Simone Blandino (SBLANDIN)
+
+=head3 Japanese
+
+Kenichi Ishigaki - 石垣憲一 (ISHIGAKI)
+
+=head3 Korean
+
+Keedi Kim - 김도형 (KEEDI)
+
+=head3 Russian
+
+Andrew Shitov
+
+=head3 Polish
+
+Cezary Morga (THEREK)
+
+=head3 Portugese (Brazilian)
+
+Breno G. de Oliveira (GARU)
+
+=head3 Spanish
+
+Paco Alguacil (PacoLinux)
+
+Enrique Nell (ENELL)
+
+=head3 Czech
+
+Marcela Mašláňová (mmaslano)
+
+=head3 Norwegian
+
+Kjetil Skotheim (KJETIL)
 
 =head2 Thanks
 
-To Mattia Barbon for providing WxPerl.
+Mattia Barbon for providing WxPerl.
 Part of the code was copied from his Wx::Demo application.
 
-To Herbert Breunung for letting me work on Kephra.
+Herbert Breunung for letting me work on Kephra.
 
-To Octavian Rasnita for early testing and bug reports.
+Octavian Rasnita for early testing and bug reports.
+
+Tatsuhiko Miyagawa for consulting on our I18N and L10N support.
 
 =cut
 

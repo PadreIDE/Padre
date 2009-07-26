@@ -87,8 +87,6 @@ sub clear {
 # refresh function.
 # Called outside Directory.pm, on directory browser focus and item dragging
 sub refresh {
-	$DB::single = 1;
-
 	my $self    = shift;
 	my $current = $self->current;
 

@@ -134,7 +134,7 @@ my @events = (
 				$T->is_num($end,   215, 'end is 215');
 			}
 
-			$main->on_close_all_but_current;
+			$main->close_all( $main->notebook->GetSelection );
 			SCOPE: {
 				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 1, '1 editor');
@@ -164,7 +164,7 @@ my @events = (
 		code  => sub {
 			my $main = $ide->wx->main;
 			my $T = Test::Builder->new;
-			$main->on_close_all;
+			$main->close_all;
 			SCOPE: {
 				my @editors = $main->editors;
 				$T->is_num(scalar(@editors), 0, '0 editor');
@@ -226,7 +226,7 @@ my @events = (
 		code  => sub {
 			my $T = Test::Builder->new;
 			my $main = $ide->wx->main;
-			$main->on_close_all();
+			$main->close_all;
 			$T->diag("create a new editor");
 			$main->on_new();
 			my @editors = $main->pages;

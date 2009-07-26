@@ -85,7 +85,8 @@ sub new {
 		},
 	);
 
-	# Open and close files
+	# Open things
+
 	$self->add_menu_item(
 		$self,
 		name       => 'file.open',
@@ -101,29 +102,74 @@ sub new {
 		$self,
 		name       => 'file.close',
 		id         => Wx::wxID_CLOSE,
-		label      => Wx::gettext('&Close...'),
+		label      => Wx::gettext('&Close'),
 		shortcut   => 'Ctrl-W',
 		menu_event => sub {
 			$_[0]->on_close;
 		},
 	);
 
+	# Close things
+
+	my $file_close = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Close..."),
+		$file_close,
+	);
+
 	$self->{close_all} = $self->add_menu_item(
-		$self,
+		$file_close,
 		name       => 'file.close_all',
-		label      => Wx::gettext('Close All'),
+		label      => Wx::gettext('Close All Files'),
 		menu_event => sub {
-			$_[0]->on_close_all;
+			$_[0]->close_all;
 		},
 	);
+
 	$self->{close_all_but_current} = $self->add_menu_item(
-		$self,
+		$file_close,
 		name       => 'file.close_all_but_current',
-		label      => Wx::gettext('Close All but Current'),
+		label      => Wx::gettext('Close All Other Files'),
 		menu_event => sub {
-			$_[0]->on_close_all_but_current;
+			$_[0]->close_all( $_[0]->notebook->GetSelection );
 		},
 	);
+
+	$self->{close_current_project} = $self->add_menu_item(
+		$file_close,
+		name       => 'file.close_current_project',
+		label      => Wx::gettext('Close This Project'),
+		menu_event => sub {
+			my $dir = $_[0]->current->document->project_dir;
+			unless ( defined $dir ) {
+				$_[0]->error( Wx::gettext("File is not in a project") );
+			}
+			$_[0]->close_where( sub {
+				defined $_[0]->project_dir
+				and
+				$_[0]->project_dir eq $dir
+			} );
+		},
+	);
+
+	$self->{close_other_projects} = $self->add_menu_item(
+		$file_close,
+		name       => 'file.close_other_projects',
+		label      => Wx::gettext('Close Other Projects'),
+		menu_event => sub {
+			my $dir = $_[0]->current->document->project_dir;
+			unless ( defined $dir ) {
+				$_[0]->error( Wx::gettext("File is not in a project") );
+			}
+			$_[0]->close_where( sub {
+				$_[0]->project_dir
+				and
+				$_[0]->project_dir ne $dir
+			} );
+		},
+	);
+
 	$self->{reload_file} = $self->add_menu_item(
 		$self,
 		name       => 'file.reload_file',
@@ -132,6 +178,7 @@ sub new {
 			$_[0]->on_reload_file;
 		},
 	);
+
 	$self->{open_example} = $self->add_menu_item(
 		$self,
 		name       => 'file.open_example',

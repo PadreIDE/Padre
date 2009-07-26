@@ -135,6 +135,10 @@ use Padre::MimeTypes ();
 
 our $VERSION = '0.41';
 
+
+
+
+
 #####################################################################
 # Document Registration
 
@@ -143,7 +147,8 @@ my $unsaved_number = 0;
 
 # TODO generate this from the the MIME_TYPES in the Padre::MimeTypes class?
 sub menu_view_mimes {
-	'00Plain Text'     => 'text/plain',
+	return (
+		'00Plain Text' => 'text/plain',
 		'01Perl'       => 'application/x-perl',
 		'02Shell'      => 'application/x-shellscript',
 		'03HTML'       => 'text/html',
@@ -156,8 +161,12 @@ sub menu_view_mimes {
 		'17VBScript'   => 'text/vbscript',
 		'19SQL'        => 'text/x-sql',
 		'21Perl 6'     => 'application/x-perl6',
-		;
+	);
 }
+
+
+
+
 
 #####################################################################
 # Constructor and Accessors
@@ -243,6 +252,10 @@ sub rebless {
 	return;
 }
 
+
+
+
+
 #####################################################################
 # Padre::Document GUI Integration
 
@@ -305,7 +318,6 @@ sub guess_mimetype {
 	return Padre::MimeTypes->_guess_mimetype( $text, $filename );
 }
 
-
 # For ts without a newline type
 # TODO: get it from config
 sub _get_default_newline_type {
@@ -329,6 +341,10 @@ sub _auto_convert {
 	# TODO get from config
 	return 0;
 }
+
+
+
+
 
 #####################################################################
 # Disk Interaction Methods
