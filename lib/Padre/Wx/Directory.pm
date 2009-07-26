@@ -98,9 +98,9 @@ sub refresh {
 	$self->{projects_dirs}->{$dir} ||= $dir;
 
 	# Do nothing if the project directory hasn't changed
-	if ( defined $self->project_dir and $self->project_dir eq $dir ) {
-		return 1;
-	}
+	#if ( defined $self->project_dir and $self->project_dir eq $dir ) {
+	#	return 1;
+	#}
 
 	# Save the current project path
 	$self->project_dir( $self->{projects_dirs}->{$dir} );

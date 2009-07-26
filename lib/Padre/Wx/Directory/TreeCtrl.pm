@@ -337,9 +337,8 @@ sub _update_subdirs {
 		}
 
 		# If the item was the last selected item, selects and scrolls to it
-		if ( defined $self->{current_item}->{$project} and $self->{current_item}->{$project} eq $path ) {
+		if ( defined $self->{current_item}->{$project} and $self->{current_item}->{$project} eq $path and delete $self->{select_item} ) {
 			$self->SelectItem($node);
-			$self->ScrollTo($node);
 		}
 	}
 }
@@ -385,6 +384,8 @@ sub _rename_or_move {
 			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
 				if $_ =~ /^$old_file($separator.+?)?$/
 		} keys %$cached;
+
+		$self->{select_item} = 1;
 
 		# Returns success
 		return 1;
