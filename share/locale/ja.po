@@ -990,8 +990,7 @@ msgstr "Padreについて(&A)"
 
 #: lib/Padre/Wx/Menu/Help.pm:225
 msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
-msgstr "Copyright 2008-2009 The Padre development team as listed in 
-Padre.pm"
+msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
 
 #: lib/Padre/Wx/Menu/File.pm:33
 msgid "&New"
