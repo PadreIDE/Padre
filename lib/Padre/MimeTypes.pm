@@ -259,7 +259,7 @@ sub _initialize {
 	# array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->read_current_highlighters_from_db();
 
-	__PACKAGE__->add_highlighter( 'stc', 'Scintilla', Wx::gettext('Scintilla, fast but might be out of date') );
+	__PACKAGE__->add_highlighter( 'stc', 'Scintilla', Wx::gettext('Fast but might be out of date') );
 
 	foreach my $mime ( keys %MIME_TYPES ) {
 		__PACKAGE__->add_highlighter_to_mime_type( $mime, 'stc' );
