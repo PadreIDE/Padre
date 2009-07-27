@@ -13,6 +13,32 @@ Make damn sure it stays that way!
 Icons:
 
 =============================
+logo.png
+=============================
+
+Original source http://commons.wikimedia.org/wiki/File:Blue_morpho_butterfly.jpg
+
+Transform by http://commons.wikimedia.org/wiki/User:Lycaon as transparent image
+as http://commons.wikimedia.org/wiki/File:Morpho_menelaus.png
+
+Colour-enhanced and modified for transparent icon use by Adam Kennedy.
+
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in
+the section entitled "GNU Free Documentation License".
+
+http://en.wikipedia.org/wiki/GNU_Free_Documentation_License
+
+This file is licensed under the Creative Commons Attribution ShareAlike 3.0
+License. In short: you are free to share and make derivative works of the file
+under the conditions that you appropriately attribute it, and that you
+distribute it only under a license identical to this one.
+
+http://creativecommons.org/licenses/by-sa/3.0/
+
+=============================
 actions/x-document-close.png
 =============================
 
