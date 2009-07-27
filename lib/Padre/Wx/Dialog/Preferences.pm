@@ -150,7 +150,7 @@ sub update_description {
 	#print "Highlighter $highlighter\n";
 
 	$self->get_widget('description')->SetLabel( Padre::MimeTypes->get_highlighter_explanation($highlighter) );
-	$self->get_widget('mime_type_name')->SetLabel( "aaa = " .$mime_types->[$mime_type_selection] );
+	$self->get_widget('mime_type_name')->SetLabel( $mime_types->[$mime_type_selection] );
 }
 
 
