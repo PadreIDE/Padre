@@ -228,7 +228,7 @@ sub new {
 	# As ugly as the WxPerl icon is, the new file toolbar image we
 	# used to use was far uglier
 	# Wx::GetWxPerlIcon() 
-	$self->SetIcon(	Padre::Wx::Icon::icon('logo') );
+	$self->SetIcon(	Padre::Wx::Icon::PADRE );
 
 	# Show the tools that the configuration dictates
 	$self->show_functions( $self->config->main_functions );
