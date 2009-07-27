@@ -55,6 +55,14 @@ our $DEFAULT_ICON;
 #####################################################################
 # Icon Resolver
 
+# Find an icon bitmap and convert to a real Wx::Icon in a single call
+sub icon {
+	my $image = find(@_);
+	my $icon  = Wx::Icon->new;
+	$icon->CopyFromBitmap($image);
+	return $icon;
+}
+
 # For now, assume the people using this are competent
 # and don't bother to check params.
 # TODO: Clearly this assumption can't last...
