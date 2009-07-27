@@ -3,8 +3,9 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
-use Padre::Wx ();
+use Params::Util    qw{_INSTANCE};
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
 
 our $VERSION = '0.41';
 our @ISA     = 'Wx::ListView';
@@ -19,26 +20,14 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
+		Wx::wxLC_REPORT
+		| Wx::wxLC_SINGLE_SEL
 	);
 
-	my $imagelist = Wx::ImageList->new( 14, 7 );
-
-	my $errorImg = Wx::Icon->new;
-	$errorImg->LoadFile(
-		Padre::Util::sharefile( split( '/', 'icons/padre/16x16/status/padre-syntax-error.png' ) ),
-		Wx::wxBITMAP_TYPE_PNG
-	);
-	$imagelist->Add($errorImg);
-
-	my $warningImg = Wx::Icon->new;
-	$warningImg->LoadFile(
-		Padre::Util::sharefile( split( '/', 'icons/padre/16x16/status/padre-syntax-warning.png' ) ),
-		Wx::wxBITMAP_TYPE_PNG
-	);
-	$imagelist->Add($warningImg);
-
-	$self->AssignImageList( $imagelist, Wx::wxIMAGE_LIST_SMALL );
+	my $list = Wx::ImageList->new( 14, 7 );
+	$list->Add(Padre::Wx::Icon::icon('status/padre-syntax-error'));
+	$list->Add(Padre::Wx::Icon::icon('status/padre-syntax-warning'));
+	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
 
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 2;
 
