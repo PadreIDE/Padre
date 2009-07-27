@@ -561,7 +561,7 @@ sub _on_tree_end_drag {
 	# Alerts if there is a file with the same name in the target
 	if ( -e $new_file ) {
 		Wx::MessageBox(
-			Wx::gettext('Already exists a file with the same name in this directory'),
+			Wx::gettext('A file with the same name already exists in this directory'),
 			Wx::gettext('Error'),
 			Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
 		);
