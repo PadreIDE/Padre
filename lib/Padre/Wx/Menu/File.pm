@@ -136,6 +136,8 @@ sub new {
 		},
 	);
 
+	$file_close->AppendSeparator;
+
 	$self->{close_current_project} = $self->add_menu_item(
 		$file_close,
 		name       => 'file.close_current_project',
