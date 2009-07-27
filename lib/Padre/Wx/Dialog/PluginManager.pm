@@ -42,7 +42,8 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
-	$self->SetIcon( Wx::GetWxPerlIcon() );
+
+	$self->SetIcon( Padre::Wx::Icon::PADRE );
 	$self->_sortcolumn(0);
 	$self->_sortreverse(0);
 
