@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-27 12:09+0300\n"
-"PO-Revision-Date: 2009-07-27 12:11+0200\n"
+"POT-Creation-Date: 2009-07-27 12:27+0300\n"
+"PO-Revision-Date: 2009-07-27 12:28+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -1252,8 +1252,8 @@ msgid "Diff tool:"
 msgstr "اداة المقارنة Diff:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:72
-msgid "Mime type"
-msgstr ""
+msgid "File type"
+msgstr "نوع الملف"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:75
 msgid "Select the highlighter:"
@@ -1423,8 +1423,8 @@ msgid "Run Parameters"
 msgstr "باراميترز التشغيل"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:624
-msgid "Mime-types"
-msgstr ""
+msgid "Files and Colors"
+msgstr "ملفات وألوان"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:627
 msgid "Indentation"
