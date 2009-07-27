@@ -84,7 +84,7 @@ does interesting stuff, please consider sharing it on CPAN!
 
 Currently it's copyright (c) 2008-2009 The Padre develoment team as
 listed in Padre.pm... But update it and it will become Copyright (c) you
-C<< you@your-domain.com> >>! How exciting! :-)
+E<lt>C<you@your-domain.com>E<gt>! How exciting! :-)
 
 =cut
 
