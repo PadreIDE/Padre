@@ -383,14 +383,17 @@ sub _refresh_list {
 	$imglist->RemoveAll;
 
 	# default plugin icon
-	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
+	$imglist->Add(
+		Padre::Wx::Icon::find('status/padre-plugin')
+	);
 	my %icon = ( plugin => 0 );
 
 	# plugin status
 	my $i = 0;
 	foreach my $name (qw{ enabled disabled error crashed incompatible }) {
-		my $icon = Padre::Wx::Icon::find("status/padre-plugin-$name");
-		$imglist->Add($icon);
+		$imglist->Add(
+			Padre::Wx::Icon::find("status/padre-plugin-$name")
+		);
 		$icon{$name} = ++$i;
 	}
 
