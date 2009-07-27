@@ -40,6 +40,7 @@ use Padre::Constant            ();
 use Padre::Current             ();
 use Padre::Util                ();
 use Padre::Wx                  ();
+use Padre::Wx::Icon            ();
 use Padre::Wx::Role::MainChild ();
 use Padre::MimeTypes           ();
 
@@ -243,13 +244,14 @@ sub update_task_status {
 	}
 
 	# Not idling, show the correct icon in the statusbar
-	my $icon = Padre::Wx::Icon::find("status/padre-tasks-$status");
+	$sbmp->SetBitmap(
+		Padre::Wx::Icon::find("status/padre-tasks-$status")
+	);
 	$sbmp->SetToolTip(
 		$status eq 'running'
 		? Wx::gettext('Background Tasks are running')
 		: Wx::gettext('Background Tasks are running with high load')
 	);
-	$sbmp->SetBitmap($icon);
 	$sbmp->Show;
 	$self->_task_width(20);
 }
