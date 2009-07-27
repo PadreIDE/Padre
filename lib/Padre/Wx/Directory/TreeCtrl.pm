@@ -41,6 +41,11 @@ sub new {
 	# Create the image list
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{file_types} = {
+		upper => $images->Add(
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_DIR_UP', 'wxART_OTHER_C', [ 16, 16 ]
+			),
+		),
 		folder => $images->Add(
 			Wx::ArtProvider::GetBitmap(
 				'wxART_FOLDER', 'wxART_OTHER_C', [ 16, 16 ]
@@ -166,11 +171,46 @@ sub refresh {
 		return if $search->{in_use}->{$project_dir};
 
 		$self->_list_dir($root);
+		$self->_append_upper;
 		delete $search->{just_used}->{$project_dir};
 	}
 
 	# Checks expanded sub folders and its content recursively
 	_update_subdirs( $self, $root );
+}
+
+# Appends an Upper item to the node beginning
+# if the current dir is not the system root 
+sub _append_upper {
+	my $self        = shift;
+	my $root        = $self->GetRootItem;
+	my $project_dir = $self->parent->project_dir;
+
+	# Gets the current directory path
+	my $current_base_dir = File::Basename::dirname( $project_dir );
+
+	# Returns if project's dir is the same of it's
+	# basename (usually system's root dir)
+	return if $project_dir eq $current_base_dir;
+
+	# Splits the current directory base to get its
+	# name and path		
+	my ( $volume, $path, $name ) =	File::Spec->splitpath( $current_base_dir );
+	
+	# Joins the volume and path
+	$path = File::Spec->catdir( $volume, $path );
+
+	# Inserts the Upper item to the root node
+	$self->InsertItem(
+		$root, 0,
+		Wx::gettext('Upper'),
+		$self->{file_types}->{upper}, -1,
+		Wx::TreeItemData->new( {
+				name => $name,
+				dir  => $path,
+				type => 'upper',
+			} )
+	);
 }
 
 # Read a directory, removing the current and updir only.
@@ -210,11 +250,12 @@ sub _update_root_data {
 
 	# Splits the path to get the Root folder name and its path
 	my ( $volume, $path, $name ) = File::Spec->splitpath($project);
+	$path = File::Spec->catdir( $volume, $path );
 
 	# Updates Root node data
 	my $root = $self->GetRootItem;
 	my $data = $self->GetPlData( $root );
-	$data->{dir}  = $volume . $path;
+	$data->{dir}  = $path;
 	$data->{name} = $name;
 }
 
@@ -266,7 +307,7 @@ sub _list_dir {
 		my $new_elem = $self->AppendItem(
 			$node,
 			$each->{name},
-			-1, -1,
+			$self->{file_types}->{$each->{type}}, -1,
 			Wx::TreeItemData->new( {
 				name => $each->{name},
 				dir  => $each->{dir},
@@ -276,11 +317,6 @@ sub _list_dir {
 		if ( $each->{type} eq 'folder' ) {
 			$self->SetItemHasChildren( $new_elem, 1 );
 		}
-		$self->SetItemImage(
-			$new_elem,
-			$self->{file_types}->{ $each->{type} },
-			Wx::wxTreeItemIcon_Normal,
-		);
 	}
 }
 
@@ -367,8 +403,11 @@ sub _rename_or_move {
 		$self->{current_item}->{$project} = $new_file;
 
 		# Expands the node's parent (one level expand)
-		my $cached = $self->{CACHED};
-		$cached->{$project}->{Expanded}->{ File::Basename::dirname($new_file) } = 1;
+		my $cached     = $self->{CACHED};
+		my $parent_dir = File::Basename::dirname($new_file);
+		if ( $parent_dir =~ /^$project/ ) {
+			$cached->{$project}->{Expanded}->{ $parent_dir  } = 1;
+		}
 
 		# If the old file was expanded, keeps the new one expanded
 		if ( defined $cached->{$project}->{Expanded}->{$old_file} ) {
@@ -405,8 +444,11 @@ sub _on_tree_item_activated {
 	my $node_data = $self->GetPlData($node);
 
 	# If its a folder, expands/collapses it and returns
-	if ( $node_data->{type} eq 'folder' ) {
-		$self->Toggle($node);
+	if ( $node_data->{type} eq 'folder' or
+	     $node_data->{type} eq 'upper') {
+		my $parent = $self->parent;
+		$parent->{projects_dirs}->{$parent->project_dir_original} = File::Spec->catdir( $node_data->{dir}, $node_data->{name} );
+		$parent->refresh;
 		return;
 	}
 
@@ -522,9 +564,12 @@ sub _on_tree_item_collapsing {
 sub _on_tree_begin_drag {
 	my ( $self, $event ) = @_;
 	my $node = $event->GetItem;
+	my $node_data = $self->GetPlData( $node );
 
 	# Only drags if it's not the Root node
-	if ( $node != $self->GetRootItem ) {
+	# and if it's not the upper item
+	if ( $node != $self->GetRootItem and
+	     $node_data->{type} ne 'upper' ) {
 		$self->{dragged_item} = $node;
 		$event->Allow;
 	}
@@ -536,9 +581,10 @@ sub _on_tree_begin_drag {
 sub _on_tree_end_drag {
 	my ( $self, $event ) = @_;
 	my $node = $event->GetItem;
+	my $node_data = $self->GetPlData( $node );
 
 	# If drops to a file, the new destination will be it's folder
-	if ( $node->IsOk and !$self->ItemHasChildren($node) ) {
+	if ( $node->IsOk and ( !$self->ItemHasChildren($node) and $node_data->{type} ne 'upper' ) ) {
 		$node = $self->GetItemParent($node);
 	}
 
@@ -581,13 +627,16 @@ sub _on_tree_item_menu {
 	my $node      = $event->GetItem;
 	my $node_data = $self->GetPlData($node);
 
+	# Do not show if it is the upper item
+	return if $node_data->{type} eq 'upper';
+
 	my $menu          = Wx::Menu->new;
 	my $selected_dir  = $node_data->{dir};
 	my $selected_path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
 	# Default action - same when the item is activated
 	my $default = $menu->Append( -1,
-		Wx::gettext( $node_data->{type} eq 'folder' ? 'Expand / Collapse' : 'Open File' )
+		Wx::gettext( $node_data->{type} eq 'folder' ? 'Open Folder' : 'Open File' )
 	);
 	Wx::Event::EVT_MENU(
 		$self, $default,
@@ -595,58 +644,26 @@ sub _on_tree_item_menu {
 	);
 	$menu->AppendSeparator();
 
-	# Do not show if it is the root node
-	if( $node != $self->GetRootItem ){
-		# Rename and/or move the item
-		my $rename = $menu->Append( -1, Wx::gettext('Rename / Move') );
+	# Rename and/or move the item
+	my $rename = $menu->Append( -1, Wx::gettext('Rename / Move') );
+	Wx::Event::EVT_MENU(
+		$self, $rename,
+		sub {
+			$self->EditLabel($node);
+		},
+	);
+
+	# Move item to trash
+	# Note: File::Remove->trash() only works in Win and Mac
+
+	if ( IS_WIN32 or IS_MAC ) {
+		my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
 		Wx::Event::EVT_MENU(
-			$self, $rename,
+			$self, $trash,
 			sub {
-				$self->EditLabel($node);
-			},
-		);
-
-		# Move item to trash
-		# Note: File::Remove->trash() only works in Win and Mac
-
-		if ( IS_WIN32 or IS_MAC ) {
-			my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
-			Wx::Event::EVT_MENU(
-				$self, $trash,
-				sub {
-					eval {
-						require File::Remove;
-						File::Remove->trash($selected_path);
-					};
-					if ($@) {
-						my $error_msg = $@;
-						Wx::MessageBox(
-							$error_msg, Wx::gettext('Error'),
-							Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
-						);
-					}
-					return;
-				},
-			);
-		}
-
-		# Delete item
-		my $delete = $menu->Append( -1, Wx::gettext('Delete') );
-		Wx::Event::EVT_MENU(
-			$self, $delete,
-			sub {
-
-				my $dialog = Wx::MessageDialog->new(
-					$self,
-					Wx::gettext('Are you sure you want to delete this item?') . $/ . $selected_path,
-					Wx::gettext('Delete'),
-					Wx::wxYES_NO | Wx::wxICON_QUESTION | Wx::wxCENTRE
-				);
-				return if $dialog->ShowModal == Wx::wxID_NO;
-
 				eval {
 					require File::Remove;
-					File::Remove->remove($selected_path);
+					File::Remove->trash($selected_path);
 				};
 				if ($@) {
 					my $error_msg = $@;
@@ -658,26 +675,55 @@ sub _on_tree_item_menu {
 				return;
 			},
 		);
-
-		# ?????
-		if ( defined $node_data->{type} and ( $node_data->{type} eq 'modules' or $node_data->{type} eq 'pragmata' ) ) {
-			my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
-			Wx::Event::EVT_MENU(
-				$self, $pod,
-				sub {
-
-					# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
-					require Padre::Wx::DocBrowser;
-					my $help = Padre::Wx::DocBrowser->new;
-					$help->help( $node_data->{name} );
-					$help->SetFocus;
-					$help->Show(1);
-					return;
-				},
-			);
-		}
-		$menu->AppendSeparator();
 	}
+
+	# Delete item
+	my $delete = $menu->Append( -1, Wx::gettext('Delete') );
+	Wx::Event::EVT_MENU(
+		$self, $delete,
+		sub {
+
+			my $dialog = Wx::MessageDialog->new(
+				$self,
+				Wx::gettext('Are you sure you want to delete this item?') . $/ . $selected_path,
+				Wx::gettext('Delete'),
+				Wx::wxYES_NO | Wx::wxICON_QUESTION | Wx::wxCENTRE
+			);
+			return if $dialog->ShowModal == Wx::wxID_NO;
+
+			eval {
+				require File::Remove;
+				File::Remove->remove($selected_path);
+			};
+			if ($@) {
+				my $error_msg = $@;
+				Wx::MessageBox(
+					$error_msg, Wx::gettext('Error'),
+					Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR
+				);
+			}
+			return;
+		},
+	);
+
+	# ?????
+	if ( defined $node_data->{type} and ( $node_data->{type} eq 'modules' or $node_data->{type} eq 'pragmata' ) ) {
+		my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
+		Wx::Event::EVT_MENU(
+			$self, $pod,
+			sub {
+
+				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+				require Padre::Wx::DocBrowser;
+				my $help = Padre::Wx::DocBrowser->new;
+				$help->help( $node_data->{name} );
+				$help->SetFocus;
+				$help->Show(1);
+				return;
+			},
+		);
+	}
+	$menu->AppendSeparator();
 
 	# Shows / Hides hidden files - applied to each directory
 	my $hiddenFiles     = $menu->AppendCheckItem( -1, Wx::gettext('Show hidden files') );
@@ -707,18 +753,6 @@ sub _on_tree_item_menu {
 		sub {
 			delete $self->{CACHED}->{ $self->GetPlData($node)->{dir} }->{Change};
 		}
-	);
-
-	$menu->AppendSeparator();
-	
-	# Changes the project directory
-	my $change_dir = $menu->Append( -1,
-		Wx::gettext('Change project directory')
-	);
-	Wx::Event::EVT_MENU(
-		$self,
-		$change_dir,
-		sub { $self->parent->_change_project_dir }
 	);
 
 	# Pops up the context menu

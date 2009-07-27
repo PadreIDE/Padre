@@ -281,18 +281,13 @@ sub _search_in_cache {
 
 			# Creates each folder node
 			my $new_folder = $tree->AppendItem(
-				$node, $_->{name}, -1, -1,
+				$node, $_->{name},
+				$tree->{file_types}->{folder}, -1,
 				Wx::TreeItemData->new( {
 					dir  => $_->{dir},
 					name => $_->{name},
 					type => $_->{type},
 				} )
-			);
-
-			$tree->SetItemImage(
-				$new_folder,
-				$tree->{file_types}->{folder},
-				Wx::wxTreeItemIcon_Normal,
 			);
 
 			# Deletes the folder node if any file below it was found
@@ -305,17 +300,13 @@ sub _search_in_cache {
 			# Adds each matched file
 			if ( $_->{name} =~ /$word/i ) {
 				my $new_elem = $tree->AppendItem(
-					$node, $_->{name}, -1,-1,
+					$node, $_->{name},
+					$tree->{file_types}->{package},-1,
 					Wx::TreeItemData->new( {
 						name => $_->{name},
 						dir  => $_->{dir},
 						type => 'package',
 					} )
-				);
-				$tree->SetItemImage(
-					$new_elem,
-					$tree->{file_types}->{package},
-					Wx::wxTreeItemIcon_Normal,
 				);
 				push @result, {
 					name => $_->{name},
@@ -347,17 +338,13 @@ sub _display_cached_search {
 	for (@dirs) {
 		# Creates each folder node
 		my $new_folder = $tree->AppendItem(
-			$node, $_->{name}, -1, -1,
+			$node, $_->{name},
+			$tree->{file_types}->{folder}, -1,
 			Wx::TreeItemData->new( {
 				dir  => $path,
 				name => $_->{name},
 				type => 'folder',
 			} )
-		);
-		$tree->SetItemImage(
-			$new_folder,
-			$tree->{file_types}->{folder},
-			Wx::wxTreeItemIcon_Normal,
 		);
 
 		# Deletes the folder node if any file below it was found
@@ -369,18 +356,12 @@ sub _display_cached_search {
 		my $new_elem = $tree->AppendItem(
 			$node,
 			$_->{name},
-			-1,
-			-1,
+			$tree->{file_types}->{package},	-1,
 			Wx::TreeItemData->new( {
 				dir  => $path,
 				name => $_->{name},
 				type => 'package',
 			} )
-		);
-		$tree->SetItemImage(
-			$new_elem,
-			$tree->{file_types}->{package},
-			Wx::wxTreeItemIcon_Normal,
 		);
 	}
 
