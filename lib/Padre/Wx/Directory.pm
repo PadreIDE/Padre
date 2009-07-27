@@ -58,11 +58,6 @@ sub panel {
 	$_[0]->GetParent;
 }
 
-# Returns the left panel (Where the Directory Browser is placed)
-sub left {
-	$_[0]->GetParent;
-}
-
 # Returns the main object reference
 sub main {
 	$_[0]->GetGrandParent;
