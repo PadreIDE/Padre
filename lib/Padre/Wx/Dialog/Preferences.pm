@@ -72,10 +72,14 @@ sub _mime_type_panel {
 		[   [ 'Wx::StaticText', undef,       Wx::gettext('File type') ],
 			[ 'Wx::Choice',     'mime_type', $mime_types ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Select the highlighter:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Highlighter:') ],
 			[ 'Wx::Choice', 'highlighters', [] ]
 		],
-		[   [ 'Wx::StaticText', 'description', [] ],
+		[	[ 'Wx::StaticText', undef, Wx::gettext('Description:') ],
+			[ 'Wx::StaticText', 'description', [] ]
+		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Mime-type:') ],
+			[ 'Wx::StaticText', 'mime_type_name', [] ]
 		],
 	];
 
@@ -132,9 +136,10 @@ sub update_description {
 	my ($self) = @_;
 
 	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
-	my $mime_types          = Padre::MimeTypes->get_mime_type_names;
+	my $mime_type_names          = Padre::MimeTypes->get_mime_type_names;
+	my $mime_types = Padre::MimeTypes->get_mime_types;
 
-	my $mime_type_name = $mime_types->[$mime_type_selection];
+	my $mime_type_name = $mime_type_names->[$mime_type_selection];
 
 	my $highlighters          = Padre::MimeTypes->get_highlighters_of_mime_type_name($mime_type_name);
 	my $highlighter_selection = $self->get_widget('highlighters')->GetSelection;
@@ -145,6 +150,7 @@ sub update_description {
 	#print "Highlighter $highlighter\n";
 
 	$self->get_widget('description')->SetLabel( Padre::MimeTypes->get_highlighter_explanation($highlighter) );
+	$self->get_widget('mime_type_name')->SetLabel( "aaa = " .$mime_types->[$mime_type_selection] );
 }
 
 
