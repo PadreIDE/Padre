@@ -48,6 +48,11 @@ my %PREFS = (
 our $DEFAULT_ICON_NAME = 'status/padre-fallback-icon';
 our $DEFAULT_ICON;
 
+# Convenience access to the official Padre icon
+sub PADRE () {
+	icon('logo');
+}
+
 
 
 
