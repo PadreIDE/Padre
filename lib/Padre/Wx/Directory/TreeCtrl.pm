@@ -445,7 +445,7 @@ sub _on_tree_end_label_edit {
 		# Prompts the user asking for a new name for the file
 		my $prompt = Wx::TextEntryDialog->new(
 			$self,
-			Wx::gettext('Please, choose a different name.'),
+			Wx::gettext('Please choose a different name.'),
 			Wx::gettext('File already exists'),
 			$new_label,
 		);
