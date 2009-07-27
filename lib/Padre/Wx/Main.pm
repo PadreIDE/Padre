@@ -69,7 +69,7 @@ There's only one constructor for this class.
 
 =head3 new
 
-    my $main = Padre::Wx::Main->new( $ide );
+    my $main = Padre::Wx::Main->new($ide);
 
 Create and return a new Padre main window. One should pass a C<Padre>
 object as argument, to get a reference to the Padre application.
@@ -227,7 +227,8 @@ sub new {
 
 	# As ugly as the WxPerl icon is, the new file toolbar image we
 	# used to use was far uglier
-	$self->SetIcon( Wx::GetWxPerlIcon() );
+	# Wx::GetWxPerlIcon() 
+	$self->SetIcon(	Padre::Wx::Icon::icon('logo') );
 
 	# Show the tools that the configuration dictates
 	$self->show_functions( $self->config->main_functions );
