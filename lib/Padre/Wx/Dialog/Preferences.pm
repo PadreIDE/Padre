@@ -93,6 +93,15 @@ sub _mime_type_panel {
 		$panel, $self->get_widget('highlighters'),
 		sub { _on_highlighter_changed( $self, @_ ) }
 	);
+
+	# Select the 'Perl 5' file type by default
+	for(my $i = 0; $i < scalar @{$mime_types}; $i++) {
+		if($mime_types->[$i] eq 'Perl 5') {
+			$self->get_widget('mime_type')->Select($i);
+			last;
+		}
+	}
+
 	$self->update_highlighters;
 	$self->update_description;
 	$self->get_widget('description')->Wrap(200); # TODO should be based on the width of the page !
