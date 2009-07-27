@@ -382,6 +382,12 @@ sub directory {
 	};
 }
 
+sub directory_panel {
+	my $self = shift;
+	my $side = $self->config->main_directory_panel;
+	return $self->$side();
+}
+
 =pod
 
 =head2 Public Methods
@@ -1278,10 +1284,10 @@ sub show_directory {
 
 	if ( $on ) {
 		my $directory = $self->directory;
-		$self->left->show($directory);
+		$self->directory_panel->show($directory);
 		$directory->refresh;
 	} elsif ( $self->has_directory ) {
-		$self->left->hide( $self->directory );
+		$self->directory_panel->hide( $self->directory );
 	}
 
 	$self->aui->Update;

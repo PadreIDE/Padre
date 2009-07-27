@@ -53,7 +53,12 @@ sub new {
 	return $self;
 }
 
-# Returns the left object reference (where the Directory Browser is placed)
+# The parent panel
+sub panel {
+	$_[0]->GetParent;
+}
+
+# Returns the left panel (Where the Directory Browser is placed)
 sub left {
 	$_[0]->GetParent;
 }
@@ -88,7 +93,9 @@ sub refresh {
 
 	# Finds project base
 	my $doc = $current->document;
-	my $dir = $doc ? $doc->project_dir : $self->main->ide->config->default_projects_directory;
+	my $dir = $doc
+		? $doc->project_dir
+		: $self->main->config->default_projects_directory;
 	$self->{projects_dirs}->{$dir} ||= $dir;
 
 	# Do nothing if the project directory hasn't changed
@@ -114,7 +121,11 @@ sub refresh {
 # When a project folder is changed
 sub _change_project_dir {
 	my $self = shift;
-	my $dialog = Wx::DirDialog->new( undef, Wx::gettext('Choose a directory'), $self->project_dir );
+	my $dialog = Wx::DirDialog->new(
+		undef,
+		Wx::gettext('Choose a directory'),
+		$self->project_dir,
+	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
@@ -122,8 +133,33 @@ sub _change_project_dir {
 	$self->refresh;
 }
 
+# What side of the application are we on
+sub side {
+	my $self  = shift;
+	my $panel = $self->GetParent;
+	if ( $panel->isa('Padre::Wx::Left') ) {
+		return 'left';
+	}
+	if ( $panel->isa('Padre::Wx::Right') ) {
+		return 'right';
+	}
+	die "Bad parent panel";
+}
+
 # Moves the panel to the other side
-sub move_panel {}
+sub move {
+	$DB::single = 1;
+	my $self   = shift;
+	my $config = $self->main->config;
+	my $side   = $config->main_directory_panel;
+	if ( $side eq 'left' ) {
+		$config->apply( main_directory_panel => 'right' );
+	} elsif ( $side eq 'right' ) {
+		$config->apply( main_directory_panel => 'left'  );
+	} else {
+		die "Bad main_directory_panel setting '$side'";
+	}
+}
 
 1;
 

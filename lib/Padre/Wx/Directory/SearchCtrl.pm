@@ -392,7 +392,6 @@ sub create_menu {
 	my $self        = shift;
 	my $parent      = $self->parent;
 	my $project_dir = $parent->project_dir;
-
 	my $menu        = Wx::Menu->new;
 
 	# Skip hidden files
@@ -434,7 +433,9 @@ sub create_menu {
 	Wx::Event::EVT_MENU(
 		$self,
 		$self->{project_dir},
-		sub { $parent->_change_project_dir }
+		sub {
+			$_[0]->parent->_change_project_dir;
+		}
 	);
 
 	# Changes the panel side
@@ -445,7 +446,9 @@ sub create_menu {
 	Wx::Event::EVT_MENU(
 		$self,
 		$self->{move_panel},
-		sub { $parent->move_panel }
+		sub {
+			$_[0]->parent->move;
+		}
 	);
 
 	return $menu;

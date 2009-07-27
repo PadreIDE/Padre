@@ -44,6 +44,10 @@ use Class::XSAccessor::Array getters => {
 	project => Padre::Constant::PROJECT,
 };
 
+
+
+
+
 #####################################################################
 # Settings Specification
 
@@ -209,7 +213,7 @@ setting(
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
 		# TODO: Review this assumption
-		if ($Padre::Wx::Toolbar::DOCKABLE) {
+		if ( $Padre::Wx::Toolbar::DOCKABLE ) {
 			$main->rebuild_toolbar;
 		}
 
@@ -244,6 +248,34 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+);
+setting(
+	name    => 'main_directory_panel',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'left',
+	options => [
+		'left'  => _T('Project Tools (Left)'),
+		'right' => _T('Document Tools (Right)'),
+	],
+	apply   => sub {
+		my $main  = shift;
+		my $value = shift;
+
+		# Is it visible and on the wrong side?
+		return 1 unless $main->has_directory;
+		my $directory = $main->directory;
+		return 1 unless $directory->IsShown;
+		return 1 unless $directory->side ne $value;
+
+		# Hide and reshow the tool with the new setting
+		$directory->panel->hide($directory);
+		$main->directory_panel->show($directory);
+		$main->Layout;
+		$main->Update;
+
+		return 1;
+	}
 );
 setting(
 	name    => 'main_output',
@@ -561,6 +593,10 @@ setting(
 	default => '',
 );
 
+
+
+
+
 #####################################################################
 # Constructor and Accessors
 
@@ -638,6 +674,10 @@ sub default {
 	return $DEFAULT{$name};
 }
 
+
+
+
+
 ######################################################################
 # Main Methods
 
@@ -695,12 +735,16 @@ sub apply {
 
 	# Does this setting have an apply hook
 	my $code = $SETTING{$name}->apply;
-	if ($code) {
+	if ( $code ) {
 		$code->( $current->main, $value );
 	}
 
 	return 1;
 }
+
+
+
+
 
 ######################################################################
 # Support Functions
