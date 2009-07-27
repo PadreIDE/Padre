@@ -4,7 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
-use Padre::Wx ();
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
 
 our $VERSION = '0.41';
 our @ISA     = 'Wx::ListView';
@@ -22,28 +23,17 @@ sub new {
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 	$self->{cpan} = $frame->cpan;
+
 	my $imagelist = Wx::ImageList->new( 14, 7 );
-
-	my $errorImg = Wx::Icon->new;
-	$errorImg->LoadFile(
-		Padre::Util::sharefile( split( '/', 'icons/padre/16x16/status/padre-syntax-error.png' ) ),
-		Wx::wxBITMAP_TYPE_PNG
+	$imagelist->Add(
+		Padre::Wx::Icon::icon('status/padre-syntax-error')
 	);
-	$imagelist->Add($errorImg);
-
-	my $warningImg = Wx::Icon->new;
-	$warningImg->LoadFile(
-		Padre::Util::sharefile( split( '/', 'icons/padre/16x16/status/padre-syntax-warning.png' ) ),
-		Wx::wxBITMAP_TYPE_PNG
+	$imagelist->Add(
+		Padre::Wx::Icon::icon('status/padre-syntax-warning')
 	);
-	$imagelist->Add($warningImg);
-
 	$self->AssignImageList( $imagelist, Wx::wxIMAGE_LIST_SMALL );
 
 	$self->InsertColumn( 0, Wx::gettext('Status') );
-
-	#$self->InsertColumn( 1, Wx::gettext('Type')        );
-	#$self->InsertColumn( 1, Wx::gettext('Description') );
 
 	$self->SetColumnWidth( 0, 750 );
 
