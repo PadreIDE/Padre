@@ -39,6 +39,7 @@ Changes for Perl Application Development and Refactoring Environment
       than the project of the current file (ADAMK)
     - Changed a bunch of documentation from using items or comma-separation
       to using =head3 pod entries (ADAMK)
+    - Adding new Blue Morpho logo (ADAMK)
 
 0.41 2009.07.23
     - Remove Experimental mode.
