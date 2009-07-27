@@ -29,7 +29,7 @@ sub new {
 
 	# Create the parent panel, which will contain the search and tree
 	my $self = $class->SUPER::new(
-		$main->left,
+		$main->directory_panel,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -97,11 +97,6 @@ sub refresh {
 		? $doc->project_dir
 		: $self->main->config->default_projects_directory;
 	$self->{projects_dirs}->{$dir} ||= $dir;
-
-	# Do nothing if the project directory hasn't changed
-	#if ( defined $self->project_dir and $self->project_dir eq $dir ) {
-	#	return 1;
-	#}
 
 	# Save the current project path
 	$self->project_dir( $self->{projects_dirs}->{$dir} );
