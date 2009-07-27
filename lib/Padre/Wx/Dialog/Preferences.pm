@@ -69,7 +69,7 @@ sub _mime_type_panel {
 
 	# get list of mime-types
 	my $table = [
-		[   [ 'Wx::StaticText', undef,       Wx::gettext('File type') ],
+		[   [ 'Wx::StaticText', undef,       Wx::gettext('File type:') ],
 			[ 'Wx::Choice',     'mime_type', $mime_types ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Highlighter:') ],
@@ -78,7 +78,7 @@ sub _mime_type_panel {
 		[	[ 'Wx::StaticText', undef, Wx::gettext('Description:') ],
 			[ 'Wx::StaticText', 'description', [] ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Mime-type:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Mime type:') ],
 			[ 'Wx::StaticText', 'mime_type_name', [] ]
 		],
 	];
