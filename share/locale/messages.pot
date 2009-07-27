@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-27 11:41+0300\n"
+"POT-Creation-Date: 2009-07-27 11:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1560,7 +1560,7 @@ msgid "Move to other panel"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:448
-msgid "Please, choose a different name."
+msgid "Please choose a different name."
 msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:449
@@ -1568,7 +1568,7 @@ msgid "File already exists"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:564
-msgid "Already exists a file with the same name in this directory"
+msgid "A file with the same name already exists in this directory"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:601
