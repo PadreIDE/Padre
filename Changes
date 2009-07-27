@@ -21,7 +21,7 @@ Changes for Perl Application Development and Refactoring Environment
       they are saved (GABRIELMAD)
     - Directory Tree shows the project directory or if none file is opened
       the default projects directory (configurable in Preferences > Behavior
-      - none configured, default is user's documents directory) (GABRIELMAD)
+    - none configured, default is user's documents directory) (GABRIELMAD)
     - Install some of the examples in the share directory and add an
       Open Example menu option (SZABGAB)
     - Adding Padre::Wx->add_pane_info convenience method to prevent the need
