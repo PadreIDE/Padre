@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-27 11:52+0300\n"
-"PO-Revision-Date: 2009-07-27 12:00+0200\n"
+"POT-Creation-Date: 2009-07-27 12:09+0300\n"
+"PO-Revision-Date: 2009-07-27 12:11+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -176,8 +176,8 @@ msgid "Klingon"
 msgstr "كلينون ستار ترك"
 
 #: lib/Padre/MimeTypes.pm:262
-msgid "Scintilla, fast but might be out of date"
-msgstr ""
+msgid "Fast but might be out of date"
+msgstr "سريع ولكنه قد يكون قديم"
 
 #: lib/Padre/MimeTypes.pm:271
 msgid "PPI Experimental"
@@ -185,15 +185,15 @@ msgstr "PPI تجريبي"
 
 #: lib/Padre/MimeTypes.pm:272
 msgid "Slow but accurate and we have full control so bugs can be fixed"
-msgstr ""
+msgstr "بطيء لكنه دقيق ويمكننا من السيطرة الكلية على تصليح البقات"
 
 #: lib/Padre/MimeTypes.pm:276
 msgid "PPI Standard"
-msgstr ""
+msgstr "ملون PPI القياسي"
 
 #: lib/Padre/MimeTypes.pm:277
 msgid "Hopefully faster than the PPI Traditional"
-msgstr ""
+msgstr "يؤمل أن يكون أسرع من PPI التقليدي"
 
 #: lib/Padre/PluginHandle.pm:71
 #: lib/Padre/Wx/Dialog/PluginManager.pm:470

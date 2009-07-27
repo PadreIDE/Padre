@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-27 11:52+0300\n"
+"POT-Creation-Date: 2009-07-27 12:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -174,7 +174,7 @@ msgid "Klingon"
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:262
-msgid "Scintilla, fast but might be out of date"
+msgid "Fast but might be out of date"
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:271
