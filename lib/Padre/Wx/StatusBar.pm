@@ -174,7 +174,7 @@ sub refresh {
 	my $char        = $position - $start;
 	my $width       = $self->GetCharWidth;
 	my $highlighter = Padre::MimeTypes->get_highlighter_name( $document->get_highlighter );
-	my $mimetype    = $document->get_mimetype;
+	my $mimetype    = Padre::MimeTypes->get_mime_type_name( $document->get_mimetype );
 	my $percent     = int( 100 * $line / $lines );
 
 	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
