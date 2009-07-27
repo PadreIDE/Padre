@@ -425,7 +425,7 @@ sub create_menu {
 		},
 	);
 	$menu->AppendSeparator();
-	
+
 	# Changes the project directory
 	$self->{project_dir} = $menu->Append( -1,
 		Wx::gettext('Change project directory')
@@ -435,6 +435,17 @@ sub create_menu {
 		$self,
 		$self->{project_dir},
 		sub { $parent->_change_project_dir }
+	);
+
+	# Changes the panel side
+	$self->{move_panel} = $menu->Append( -1,
+		Wx::gettext('Move to other panel')
+	);
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{move_panel},
+		sub { $parent->move_panel }
 	);
 
 	return $menu;

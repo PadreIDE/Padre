@@ -122,6 +122,9 @@ sub _change_project_dir {
 	$self->refresh;
 }
 
+# Moves the panel to the other side
+sub move_panel {}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
