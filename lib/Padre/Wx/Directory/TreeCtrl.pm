@@ -638,7 +638,7 @@ sub _on_tree_item_menu {
 
 				my $dialog = Wx::MessageDialog->new(
 					$self,
-					Wx::gettext('You sure want to delete this item?') . $/ . $selected_path,
+					Wx::gettext('Are you sure you want to delete this item?') . $/ . $selected_path,
 					Wx::gettext('Delete'),
 					Wx::wxYES_NO | Wx::wxICON_QUESTION | Wx::wxCENTRE
 				);
