@@ -69,7 +69,7 @@ sub _mime_type_panel {
 
 	# get list of mime-types
 	my $table = [
-		[   [ 'Wx::StaticText', undef,       Wx::gettext('Mime type') ],
+		[   [ 'Wx::StaticText', undef,       Wx::gettext('File type') ],
 			[ 'Wx::Choice',     'mime_type', $mime_types ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Select the highlighter:') ],
@@ -621,7 +621,7 @@ sub dialog {
 	);
 
 	my $mime_types = $self->_mime_type_panel($tb);
-	$tb->AddPage( $mime_types, Wx::gettext('Mime-types') );
+	$tb->AddPage( $mime_types, Wx::gettext('Files and Colors') );
 
 	my $indentation = $self->_indentation_panel( $tb, $editor_autoindent );
 	$tb->AddPage( $indentation, Wx::gettext('Indentation') );
