@@ -216,23 +216,28 @@ sub clear {
 	my $self = shift;
 	$self->SetBackgroundColour('#FFFFFF');
 	$self->Remove( 0, $self->GetLastPosition );
+	$self->Refresh;
 	return 1;
 }
 
 sub style_good {
 	$_[0]->SetBackgroundColour('#CCFFCC');
+	$_[0]->Refresh;
 }
 
 sub style_bad {
 	$_[0]->SetBackgroundColour('#FFCCCC');
+	$_[0]->Refresh;
 }
 
 sub style_neutral {
 	$_[0]->SetBackgroundColour('#FFFFFF');
+	$_[0]->Refresh;
 }
 
 sub style_busy {
 	$_[0]->SetBackgroundColour('#CCCCCC');
+	$_[0]->Refresh;
 }
 
 sub set_font {
