@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-26 22:37+0900\n"
-"PO-Revision-Date: 2009-07-27 10:26+0200\n"
+"PO-Revision-Date: 2009-07-27 10:37+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -239,9 +239,8 @@ msgid "Scintilla, fast but might be out of date"
 msgstr ""
 
 #: lib/Padre/MimeTypes.pm:271
-#, fuzzy
 msgid "PPI Experimental"
-msgstr "ت&جريبي"
+msgstr "PPI تجريبي"
 
 #: lib/Padre/MimeTypes.pm:272
 msgid "Slow but accurate and we have full control so bugs can be fixed"
@@ -912,9 +911,8 @@ msgid "Functions"
 msgstr "اظهار الوظائف"
 
 #: lib/Padre/Wx/Right.pm:51
-#, fuzzy
 msgid "Document Tools"
-msgstr "احصائيات الوثيقه"
+msgstr "أدوات الوثيقة"
 
 #: lib/Padre/Wx/Directory.pm:76
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:107
@@ -922,7 +920,6 @@ msgid "Directory"
 msgstr "الدليل"
 
 #: lib/Padre/Wx/Directory.pm:116
-#, fuzzy
 msgid "Choose a directory"
 msgstr "اختيار الدليل"
 
@@ -952,7 +949,7 @@ msgstr "وصف"
 
 #: lib/Padre/Wx/Left.pm:51
 msgid "Project Tools"
-msgstr ""
+msgstr "أدوات المشروع"
 
 #: lib/Padre/Wx/Bottom.pm:52
 msgid "Output View"
@@ -969,9 +966,8 @@ msgid "Help"
 msgstr "المساعده"
 
 #: lib/Padre/Wx/Menu/Help.pm:42
-#, fuzzy
 msgid "Context Help"
-msgstr "مساعده السياق\tF1"
+msgstr "مساعده السياق"
 
 #: lib/Padre/Wx/Menu/Help.pm:64
 msgid "Current Document"
@@ -1018,9 +1014,8 @@ msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
 msgstr "حقوق الطبع  2008-2009 لفريق مطوري برنامج Padre كما في Padre.pm"
 
 #: lib/Padre/Wx/Menu/File.pm:33
-#, fuzzy
 msgid "&New"
-msgstr "عرض&"
+msgstr "&جديد"
 
 #: lib/Padre/Wx/Menu/File.pm:43
 msgid "New..."
@@ -1214,7 +1209,7 @@ msgstr "آخر ملف تم زيارته"
 
 #: lib/Padre/Wx/Menu/Window.pm:75
 msgid "Right Click"
-msgstr "نقر على اليمين"
+msgstr "نقر الزر الأيمن"
 
 #: lib/Padre/Wx/Menu/Window.pm:91
 msgid "GoTo Subs Window"
@@ -1294,7 +1289,7 @@ msgstr "اظهار السطر الحالي"
 
 #: lib/Padre/Wx/Menu/View.pm:210
 msgid "Show Right Margin"
-msgstr ""
+msgstr "اظهار الهامش الأيمن"
 
 #: lib/Padre/Wx/Menu/View.pm:222
 msgid "Show Newlines"
@@ -1407,7 +1402,7 @@ msgstr "لصق&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:153
 msgid "&Goto"
-msgstr ""
+msgstr "&ذهاب"
 
 #: lib/Padre/Wx/Menu/Edit.pm:163
 msgid "&AutoComp"
@@ -1497,7 +1492,7 @@ msgstr "تكبير/تصغير حاله الاحرف"
 
 #: lib/Padre/Wx/Menu/Edit.pm:364
 msgid "Upper All"
-msgstr ""
+msgstr "تكبير حاله كل الاحرف"
 
 #: lib/Padre/Wx/Menu/Edit.pm:374
 msgid "Lower All"
@@ -1628,7 +1623,7 @@ msgstr "اعادة تسمية / نقل"
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:612
 msgid "Move to trash"
-msgstr ""
+msgstr "انقل الى سلة المهملات"
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:633
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:641
@@ -1840,7 +1835,7 @@ msgstr "النص الملون في نافذه النتائج (ANSI)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:265
 msgid "Show right margin at column:"
-msgstr ""
+msgstr "اظهار الهامش الأيمن عند العمود:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:269
 msgid "Editor Font:"
