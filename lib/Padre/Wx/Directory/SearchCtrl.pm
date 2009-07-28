@@ -92,6 +92,10 @@ sub refresh {
 		my $value = $self->{CACHED}->{$project_dir}->{value};
 		$self->SetValue( defined $value ? $value : '' );
 
+		# Checks the currently mode view
+		my $mode = "sub_" . $parent->mode;
+		$self->{$mode}->Check( 1 );
+
 		# (Un)Checks current project Searcher Menu Skips options
 		my $skips_hidden = $self->{_skip_hidden}->{ $project_dir };
 		my $skips_vcs = $self->{_skip_vcs}->{ $project_dir };
@@ -416,6 +420,32 @@ sub create_menu {
 		$self->{project_dir},
 		sub {
 			$_[0]->parent->_change_project_dir;
+		}
+	);
+
+	# Changes the Tree mode view
+	my $submenu           = Wx::Menu->new;
+	$self->{sub_tree}     = $submenu->AppendRadioItem( 1, Wx::gettext('Tree listing') );
+	$self->{sub_navigate} = $submenu->AppendRadioItem( 2, Wx::gettext('Navigate') );
+	$self->{mode}         = $menu->AppendSubMenu( $submenu, Wx::gettext('Change listing mode view') );
+
+	Wx::Event::EVT_MENU(
+		$submenu,
+		$self->{sub_tree},
+		sub {
+			$parent->{projects}->{$parent->project_dir}->{mode} = 'tree';
+			$parent->{mode_change} = 1;
+			$parent->refresh;
+		}
+	);
+
+	Wx::Event::EVT_MENU(
+		$submenu,
+		$self->{sub_navigate},
+		sub {
+			$parent->{projects}->{$parent->project_dir}->{mode} = 'navigate';
+			$parent->{mode_change} = 1;
+			$parent->refresh;
 		}
 	);
 

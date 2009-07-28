@@ -162,7 +162,7 @@ sub refresh {
 
 	# If the project have changed or the project root folder updates or
 	# the search is not in use anymore (was just used)
-	if ( (defined($project_dir) and (not defined($previous_dir) or $previous_dir ne $project_dir ) ) or $self->_updated_dir($project_dir) or $search->{just_used}->{$project_dir} ) {
+	if ( (defined($project_dir) and (not defined($previous_dir) or $previous_dir ne $project_dir ) ) or $self->_updated_dir($project_dir) or $search->{just_used}->{$project_dir} or $parent->{mode_change}) {
 
 		# Updates Root node data
 		$self->_update_root_data;
@@ -171,8 +171,9 @@ sub refresh {
 		return if $search->{in_use}->{$project_dir};
 
 		$self->_list_dir($root);
-		$self->_append_upper;
+		$self->_append_upper if $parent->mode eq 'navigate';
 		delete $search->{just_used}->{$project_dir};
+		delete $parent->{mode_change};
 	}
 
 	# Checks expanded sub folders and its content recursively
@@ -440,15 +441,21 @@ sub _rename_or_move {
 # Called when the item is actived
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
+	my $parent    = $self->parent;
 	my $node      = $event->GetItem;
 	my $node_data = $self->GetPlData($node);
 
-	# If its a folder, expands/collapses it and returns
-	if ( $node_data->{type} eq 'folder' or
-	     $node_data->{type} eq 'upper') {
-		my $parent = $self->parent;
-		$parent->{projects_dirs}->{$parent->project_dir_original} = File::Spec->catdir( $node_data->{dir}, $node_data->{name} );
-		$parent->refresh;
+	# If its a folder expands/collapses it and returns
+	# or makes it the current project folder, depending
+	# of the mode view
+	if ( $node_data->{type} eq 'folder' or $node_data->{type} eq 'upper' ) {
+		if ( $parent->mode eq 'navigate' ) {
+			$parent->{projects}->{$parent->project_dir_original}->{dir} = File::Spec->catdir( $node_data->{dir}, $node_data->{name} );
+			$parent->refresh;
+		}
+		else {
+			$self->Toggle( $node );
+		}
 		return;
 	}
 

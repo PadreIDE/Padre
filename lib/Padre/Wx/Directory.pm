@@ -15,6 +15,7 @@ getters => {
 	search   => 'search',
 },
 accessors => {
+	mode         => 'mode',
 	project_dir  => 'project_dir',
 	previous_dir => 'previous_dir',
 	project_dir_original  => 'project_dir_original',
@@ -91,10 +92,17 @@ sub refresh {
 	my $dir = $doc
 		? $doc->project_dir
 		: $self->main->config->default_projects_directory;
-	$self->{projects_dirs}->{$dir} ||= $dir;
+
+	$self->{projects}->{$dir}->{dir}  ||= $dir;
+	$self->{projects}->{$dir}->{mode} ||= $doc->{is_project}
+					      ? 'tree'
+					      : 'navigate' ;
+
+	# The currently view mode
+	$self->mode( $self->{projects}->{$dir}->{mode} );
 
 	# Save the current project path
-	$self->project_dir( $self->{projects_dirs}->{$dir} );
+	$self->project_dir( $self->{projects}->{$dir}->{dir} );
 	$self->project_dir_original( $dir );
 
 	# Calls Searcher and Browser refresh
@@ -102,7 +110,7 @@ sub refresh {
 	$self->search->refresh;
 
 	# Sets the last project to the current one
-	$self->previous_dir( $self->{projects_dirs}->{$dir} );
+	$self->previous_dir( $self->{projects}->{$dir}->{dir} );
 	$self->previous_dir_original( $dir );
 
 	return 1;

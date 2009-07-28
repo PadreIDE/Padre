@@ -877,7 +877,7 @@ sub project_find {
 		# This document is part of the null project
 		return File::Spec->catpath( $v, File::Spec->catdir( @d ), '' );
 	}
-
+	$self->{is_project} = 1;
 	return File::Spec->catpath( $v, $dirs, '' );
 }
 
