@@ -503,7 +503,9 @@ sub autocomplete {
 			while ( defined($tag) ) {
 
 				# TODO check file scope?
-				if ( $tag->{kind} eq 'v' ) {
+				if ( ! defined($tag->{kind})) {
+					# This happens with some tagfiles which have no kind
+				} elsif ( $tag->{kind} eq 'v' ) {
 
 					# TODO potentially don't skip depending on circumstances.
 					if ( not $seen{ $tag->{name} }++ ) {
@@ -528,7 +530,9 @@ sub autocomplete {
 
 			# TODO: INHERITANCE!
 			while ( defined($tag) ) {
-				if (    $tag->{kind} eq 's'
+				if ( ! defined($tag->{kind})) {
+					# This happens with some tagfiles which have no kind
+				} elsif ($tag->{kind} eq 's'
 					and defined $tag->{extension}{class}
 					and $tag->{extension}{class} eq $class )
 				{
@@ -551,7 +555,9 @@ sub autocomplete {
 			while ( defined($tag) ) {
 
 				# TODO check file scope?
-				if ( $tag->{kind} eq 'p' ) {
+				if ( ! defined($tag->{kind})) {
+					# This happens with some tagfiles which have no kind
+				} elsif ( $tag->{kind} eq 'p' ) {
 
 					# TODO potentially don't skip depending on circumstances.
 					if ( not $seen{ $tag->{name} }++ ) {
