@@ -21,6 +21,7 @@ use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
+use Wx;
 
 our $VERSION = '0.41';
 
@@ -459,6 +460,12 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+);
+setting(
+	name    => 'update_file_from_disk_interval',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 2,
 );
 
 # Behaviour Tuning

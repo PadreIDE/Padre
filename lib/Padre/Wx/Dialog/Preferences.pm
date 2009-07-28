@@ -207,7 +207,6 @@ sub _behaviour_panel {
 	my ( $self, $treebook, $main_startup, $main_functions_order, $perldiag_locales ) = @_;
 
 	my $config = Padre->ide->config;
-
 	my $table = [
 		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
 				Wx::gettext('Default word wrap on for each file')
@@ -240,6 +239,9 @@ sub _behaviour_panel {
 		],
 		[   [ 'Wx::StaticText', undef,             Wx::gettext('Preferred language for error diagnostics:') ],
 			[ 'Wx::Choice',     'locale_perldiag', $perldiag_locales ]
+		],
+		[   [ 'Wx::StaticText', undef,          Wx::gettext('Check for file updates on disk every (seconds):') ],
+			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
 		],
 	];
 
@@ -865,6 +867,10 @@ sub run {
 	$config->set(
 		'external_diff_tool',
 		$data->{external_diff_tool}
+	);
+	$config->set(
+		'update_file_from_disk_interval',
+		$data->{update_file_from_disk_interval}
 	);
 
 	# Quite like in _run_params_panel, trap exception if there

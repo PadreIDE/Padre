@@ -384,8 +384,10 @@ sub has_changed_on_disk {
 	my ($self) = @_;
 	return 0 unless defined $self->filename;
 	return 0 unless defined $self->last_sync;
-	return 1 unless $self->time_on_file;
-	return $self->last_sync < $self->time_on_file ? 1 : 0;
+	# Caching the result for two lines saved on stat64 each time this sub is run (about every 2 sec.)
+	my $Time_on_file = $self->time_on_file;
+	return 1 unless $Time_on_file;
+	return $self->last_sync < $Time_on_file ? 1 : 0;
 }
 
 sub time_on_file {

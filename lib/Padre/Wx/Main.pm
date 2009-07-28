@@ -527,7 +527,7 @@ sub _timer_post_init {
 			$_[0]->timer_check_overwrite;
 		},
 	);
-	$timer->Start( 2 * SECONDS, 0 );
+	$timer->Start( $self->ide->config->update_file_from_disk_interval * SECONDS, 0 );
 
 	return;
 }
