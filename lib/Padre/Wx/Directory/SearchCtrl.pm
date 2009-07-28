@@ -428,6 +428,7 @@ sub create_menu {
 	$self->{sub_tree}     = $submenu->AppendRadioItem( 1, Wx::gettext('Tree listing') );
 	$self->{sub_navigate} = $submenu->AppendRadioItem( 2, Wx::gettext('Navigate') );
 	$self->{mode}         = $menu->AppendSubMenu( $submenu, Wx::gettext('Change listing mode view') );
+	$self->{sub_navigate}->Check(1);
 
 	Wx::Event::EVT_MENU(
 		$submenu,
