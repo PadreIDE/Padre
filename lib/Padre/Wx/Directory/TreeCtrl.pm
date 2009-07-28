@@ -203,7 +203,7 @@ sub _append_upper {
 	# Inserts the Upper item to the root node
 	$self->InsertItem(
 		$root, 0,
-		Wx::gettext('Upper'),
+		Wx::gettext('..'),
 		$self->{file_types}->{upper}, -1,
 		Wx::TreeItemData->new( {
 				name => $name,
