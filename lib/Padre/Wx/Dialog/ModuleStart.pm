@@ -73,8 +73,13 @@ sub dialog {
 
 	$dialog->{_widgets_}->{_author_name_}->SetValue( $config->identity_name );
 	$dialog->{_widgets_}->{_email_}->SetValue( $config->identity_email );
-	$dialog->{_widgets_}->{_builder_choice_}->SetValue( $config->builder );
-	$dialog->{_widgets_}->{_license_choice_}->SetValue( $config->license );
+	if ($config->builder) {
+		$dialog->{_widgets_}->{_builder_choice_}->SetValue( $config->builder );
+	}
+	else { $dialog->{_widgets_}->{_builder_choice_}->SetValue( 'ExtUtils::MakeMaker' ) }
+	if ($config->license) {
+	$dialog->{_widgets_}->{_license_choice_}->SetValue( $config->license ); }
+	else { $dialog->{_widgets_}->{_license_choice_}->SetValue( 'restrictive'); }
 	$dialog->{_widgets_}->{_directory_}->SetPath( $config->module_start_directory );
 
 	$dialog->{_widgets_}->{_ok_}->SetDefault;
