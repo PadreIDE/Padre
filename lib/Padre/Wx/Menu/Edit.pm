@@ -147,7 +147,7 @@ sub new {
 	$self->{goto} = $self->add_menu_item(
 		$self,
 		name       => 'edit.goto',
-		label      => Wx::gettext('&Goto'),
+		label      => Wx::gettext('&Goto Line'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
 			Padre::Wx::Main::on_goto(@_);
