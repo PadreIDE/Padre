@@ -616,26 +616,24 @@ sub event_on_char {
 			123 => 125, # { }
 		);
 		my $pos = $editor->GetCurrentPos;
-		foreach my $code ( keys %table ) {
-			if ( $key == $code ) {
-				if ($selection_exists) {
-					my $start = $editor->GetSelectionStart;
-					my $end   = $editor->GetSelectionEnd;
-					$editor->GotoPos($end);
-					$editor->AddText( chr( $table{$code} ) );
-					$editor->GotoPos($start);
-				} else {
-					my $nextChar;
-					if ( $editor->GetTextLength > $pos ) {
-						$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
-					}
-					unless ( defined($nextChar)
-						&& ord($nextChar) == $table{$code} )
-					{
-						$editor->AddText( chr( $table{$code} ) );
-						$editor->CharLeft;
-						last;
-					}
+		if ($table{$key}) {
+			if ($selection_exists) {
+				my $start = $editor->GetSelectionStart;
+				my $end   = $editor->GetSelectionEnd;
+				$editor->GotoPos($end);
+				$editor->AddText( chr( $table{$key} ) );
+				$editor->GotoPos($start);
+			} else {
+				my $nextChar;
+				if ( $editor->GetTextLength > $pos ) {
+					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
+				}
+				unless ( defined($nextChar)
+					&& ord($nextChar) == $table{$key} )
+				{
+					$editor->AddText( chr( $table{$key} ) );
+					$editor->CharLeft;
+					last;
 				}
 			}
 		}
