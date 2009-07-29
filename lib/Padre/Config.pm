@@ -21,7 +21,6 @@ use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
-use Wx;
 
 our $VERSION = '0.41';
 
