@@ -633,7 +633,6 @@ sub event_on_char {
 				{
 					$editor->AddText( chr( $table{$key} ) );
 					$editor->CharLeft;
-					last;
 				}
 			}
 		}
