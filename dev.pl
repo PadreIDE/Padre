@@ -12,7 +12,6 @@ use FindBin;
 use File::Basename ();
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
-$ENV{PADRE_DIE}  = 1;
 
 use lib $FindBin::Bin;
 use privlib::Tools;
@@ -42,6 +41,11 @@ if ( grep { $_ eq '-d' } @ARGV ) {
 	# Command line debugging
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-d';
+}
+if ( grep { $_ eq '--die' } @ARGV ) {
+	# Command line debugging
+	@ARGV = grep { $_ ne '--die' } @ARGV;
+	$ENV{PADRE_DIE}  = 1;
 }
 if ( grep { $_ eq '-p' } @ARGV ) {
 	# Profiling
@@ -84,6 +88,7 @@ Usage: $0
         -d     run Padre in the command line debugger (-d)
         -p     run Padre under -dt:NYTProf
         -a     add the pathe to the lib directory of all the plugins in trunk/
+        --die  add DIE handler
 
        LIST OF FILES    list of files to open
 END_USAGE
