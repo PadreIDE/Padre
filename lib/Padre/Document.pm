@@ -384,7 +384,7 @@ sub has_changed_on_disk {
 	my ($self) = @_;
 	return 0 unless defined $self->filename;
 	return 0 unless defined $self->last_sync;
-	# Caching the result for two lines saved on stat64 each time this sub is run (about every 2 sec.)
+	# Caching the result for two lines saved one stat-I/O each time this sub is run (about every 2 sec.)
 	my $Time_on_file = $self->time_on_file;
 	return 1 unless $Time_on_file;
 	return $self->last_sync < $Time_on_file ? 1 : 0;
@@ -393,8 +393,10 @@ sub has_changed_on_disk {
 sub time_on_file {
 	my $filename = $_[0]->filename;
 	return 0 unless defined $filename;
-	return 0 unless -e $filename;
-	return ( stat($filename) )[9];
+	# using one stat instead of -e and does one I/O instead of two every few seconds
+	my @FileInfo = stat($filename);
+	return 0 if $#FileInfo == -1; # file does not exist
+	return $FileInfo[9];
 }
 
 =pod

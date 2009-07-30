@@ -76,6 +76,10 @@ sub check {
 		$self->{error} = "You need to write use warnings (with an s at the end) and not use warning.";
 		return;
 	}
+	if ( $text =~ /map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
+		$self->{error} = "map (),x uses x also as list value for map.";
+		return;
+	}
 
 	return 1;
 }
