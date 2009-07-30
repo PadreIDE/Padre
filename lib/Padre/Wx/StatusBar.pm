@@ -177,6 +177,9 @@ sub refresh {
 	my $mime_type_name    = Padre::MimeTypes->get_mime_type_name( $document->get_mimetype );
 	my $percent     = int( 100 * $line / $lines );
 
+        # Set some defaults to advoid "use of uninittialized value" - messages:
+        $mime_type_name = '???' if ! defined($mime_type_name);
+
 	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
 	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
 	my $length   = length( $lines + 1 ) + 8;
@@ -188,7 +191,7 @@ sub refresh {
 	# Write the new values into the status bar and update sizes
 	$self->SetStatusText( "$modified $filename", FILENAME );
 	$self->SetStatusText( $highlighter,          HIGHLIGHTER );
-	$self->SetStatusText( $mime_type_name,             MIMETYPE );
+	$self->SetStatusText( $mime_type_name,       MIMETYPE );
 	$self->SetStatusText( $newline,              NEWLINE );
 	$self->SetStatusText( $postring,             POSTRING );
 	$self->SetStatusWidths(

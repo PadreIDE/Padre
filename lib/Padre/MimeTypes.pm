@@ -383,6 +383,7 @@ sub get_highlighter_name {
 	# TODO this can happen if the user configureda highlighter but on the next start
 	# the highlighter is not available any more
 	# we need to handle this situation
+	return '' if ! defined($highlighter);
 	return '' if not $AVAILABLE_HIGHLIGHTERS{$highlighter}; # avoid autovivification
 	return $AVAILABLE_HIGHLIGHTERS{$highlighter}{name};
 }
