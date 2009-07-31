@@ -397,6 +397,7 @@ sub change_highlighters {
 	my %mtn          = map { $MIME_TYPES{$_}{name}             => $_ } keys %MIME_TYPES;
 	my %highlighters = map { $AVAILABLE_HIGHLIGHTERS{$_}{name} => $_ } keys %AVAILABLE_HIGHLIGHTERS;
 
+	require Padre::DB;
 	require Padre::DB::SyntaxHighlight;
 	foreach my $mime_type_name ( keys %$changed_highlighters ) {
 		my $mime_type   = $mtn{$mime_type_name};                                     # get mime_type from name
