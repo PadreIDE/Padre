@@ -13,6 +13,7 @@ use Scalar::Util          ();
 use Params::Util qw(
 	_INSTANCE _INVOCANT _CLASSISA _HASH _STRING
 );
+use Padre::Wx::Icon         ();
 use Padre::Wx::AuiManager   ();
 use Padre::Wx::Dialog       ();
 use Padre::Task::DocBrowser ();
