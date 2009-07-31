@@ -98,7 +98,7 @@ sub new {
 	Wx::InitAllImageHandlers();
 
 	# Determine the window title
-	my $title = 'Padre';
+	my $title = '     \o/ Padre - 1st Birthday Edition! \o/     ';
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
