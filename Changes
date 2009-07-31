@@ -40,6 +40,10 @@ Changes for Perl Application Development and Refactoring Environment
     - Changed a bunch of documentation from using items or comma-separation
       to using =head3 pod entries (ADAMK)
     - Adding new Blue Morpho logo (ADAMK)
+    - Removed dependency on prefork.pm, it was only there to shut up the dev.pl
+      DIE: warnings (ADAMK)
+    - Removed dependency on Test::More, and with it about 5-10 other excessive
+      test-related dependencies (ADAMK)
 
 0.41 2009.07.23
     - Remove Experimental mode.

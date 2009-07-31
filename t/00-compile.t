@@ -1,8 +1,8 @@
 use strict;
 use warnings;
-use Test::Most;
+use Test::More;
 BEGIN {
-	unless ( $ENV{DISPLAY} and $^O eq 'MSWin32' ) {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
@@ -11,8 +11,6 @@ use Test::Script;
 use File::Temp;
 use File::Find::Rule;
 use POSIX qw(locale_h);
-
-bail_on_fail;
 
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 
@@ -30,7 +28,7 @@ foreach my $file ( @files ) {
 		$module =~ s/\.pm$//;
 		if ( $module eq 'Padre::CPAN' ) {
 			foreach ( 1 .. 2 ) {
-				Test::Most->builder->skip ("Cannot load CPAN shell under the CPAN shell");
+				Test::More->builder->skip ("Cannot load CPAN shell under the CPAN shell");
 			}
 			next;
 		}
@@ -43,6 +41,18 @@ foreach my $file ( @files ) {
 }
 
 script_compiles_ok('script/padre');
+
+# Bail out if any of the tests failed
+BAIL_OUT("Aborting test suite") if scalar grep {
+	not $_->{ok}
+} Test::More->builder->details;
+
+
+
+
+
+######################################################################
+# Support Functions
 
 sub slurp {
 	my $file = shift;
