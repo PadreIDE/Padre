@@ -2,6 +2,11 @@ package Padre::Wx::Dialog::SessionSave;
 
 use strict;
 use warnings;
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
+
+our $VERSION = '0.42';
+our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
 	_butsave => '_butsave', # save button
@@ -10,11 +15,6 @@ use Class::XSAccessor accessors => {
 	_sizer   => '_sizer',   # the window sizer
 	_text    => '_text',    # text control holding the description
 };
-use Padre::Wx ();
-
-use base 'Wx::Dialog';
-
-our $VERSION = '0.42';
 
 # -- constructor
 
