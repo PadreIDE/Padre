@@ -147,11 +147,12 @@ sub new {
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}
-			$_[0]->close_where( sub {
-				defined $_[0]->project_dir
-				and
-				$_[0]->project_dir eq $dir
-			} );
+			$_[0]->close_where(
+				sub {
+					defined $_[0]->project_dir
+						and $_[0]->project_dir eq $dir;
+				}
+			);
 		},
 	);
 
@@ -164,11 +165,12 @@ sub new {
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}
-			$_[0]->close_where( sub {
-				$_[0]->project_dir
-				and
-				$_[0]->project_dir ne $dir
-			} );
+			$_[0]->close_where(
+				sub {
+					$_[0]->project_dir
+						and $_[0]->project_dir ne $dir;
+				}
+			);
 		},
 	);
 

@@ -213,7 +213,7 @@ setting(
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
 		# TODO: Review this assumption
-		if ( $Padre::Wx::Toolbar::DOCKABLE ) {
+		if ($Padre::Wx::Toolbar::DOCKABLE) {
 			$main->rebuild_toolbar;
 		}
 
@@ -258,7 +258,7 @@ setting(
 		'left'  => _T('Project Tools (Left)'),
 		'right' => _T('Document Tools (Right)'),
 	],
-	apply   => sub {
+	apply => sub {
 		my $main  = shift;
 		my $value = shift;
 
@@ -741,7 +741,7 @@ sub apply {
 
 	# Does this setting have an apply hook
 	my $code = $SETTING{$name}->apply;
-	if ( $code ) {
+	if ($code) {
 		$code->( $current->main, $value );
 	}
 

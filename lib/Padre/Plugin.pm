@@ -144,9 +144,7 @@ sub plugin_share_directory {
 
 	# Find the distribution directory
 	require File::ShareDir::PAR;
-	my $distdir = eval {
-		File::ShareDir::PAR::dist_dir($pkg);
-	};
+	my $distdir = eval { File::ShareDir::PAR::dist_dir($pkg); };
 	return undef if $@;
 
 	return File::Spec->catdir(

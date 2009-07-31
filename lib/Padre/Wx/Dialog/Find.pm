@@ -54,10 +54,7 @@ sub new {
 		Wx::gettext('Find'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU
-		| Wx::wxRESIZE_BORDER
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU | Wx::wxRESIZE_BORDER
 	);
 
 	# The text to search for

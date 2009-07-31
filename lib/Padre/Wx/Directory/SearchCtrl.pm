@@ -26,7 +26,7 @@ sub new {
 	$self->SetDescriptiveText( Wx::gettext('Search') );
 
 	# Setups the search box menu
-	$self->SetMenu($self->create_menu);
+	$self->SetMenu( $self->create_menu );
 
 	# Setups events related with the search field
 	Wx::Event::EVT_TEXT(
@@ -81,27 +81,24 @@ sub refresh {
 
 	# Compares if they are not the same, if not updates search field
 	# content
-	if (
-		defined($project_dir)
-		and
-		defined($previous_dir)
-		and
-		$previous_dir ne $project_dir
-	) {
+	if (    defined($project_dir)
+		and defined($previous_dir)
+		and $previous_dir ne $project_dir )
+	{
 		$self->{use_cache} = 1;
 		my $value = $self->{CACHED}->{$project_dir}->{value};
 		$self->SetValue( defined $value ? $value : '' );
 
 		# Checks the currently mode view
 		my $mode = "sub_" . $parent->mode;
-		$self->{$mode}->Check( 1 );
+		$self->{$mode}->Check(1);
 
 		# (Un)Checks current project Searcher Menu Skips options
-		my $skips_hidden = $self->{_skip_hidden}->{ $project_dir };
-		my $skips_vcs = $self->{_skip_vcs}->{ $project_dir };
+		my $skips_hidden = $self->{_skip_hidden}->{$project_dir};
+		my $skips_vcs    = $self->{_skip_vcs}->{$project_dir};
 
 		$self->{skip_hidden}->Check( defined $skips_hidden ? $skips_hidden : 1 );
-		$self->{skip_vcs}->Check( defined $skips_vcs ? $skips_vcs : 1 );
+		$self->{skip_vcs}->Check( defined $skips_vcs       ? $skips_vcs    : 1 );
 	}
 }
 
@@ -110,12 +107,12 @@ sub refresh {
 # folders that paths to them expanded.
 sub _search {
 	my ( $self, $node ) = @_;
-	my $parent = $self->parent;
+	my $parent      = $self->parent;
 	my $project_dir = $parent->project_dir;
 
 	# Fetch the ignore criteria
 	my $project = $self->current->project;
-	my $rule    = $project ? $project->ignore_rule : undef;
+	my $rule = $project ? $project->ignore_rule : undef;
 
 	# Check if it is to use the Cached search (in case of a project
 	# switching)
@@ -130,10 +127,10 @@ sub _search {
 	}
 
 	# If there is a Cached Word (in case that the user is still typing)
-	if ( my $last_word = $self->{CACHED}->{$project_dir}->{value} ){
+	if ( my $last_word = $self->{CACHED}->{$project_dir}->{value} ) {
 
 		# Quotes meta characters
-		$last_word = quotemeta($last_word);;
+		$last_word = quotemeta($last_word);
 
 		# If the typed word contains the cached word, use Cached result to do
 		# the new search and returns the result
@@ -149,12 +146,12 @@ sub _search {
 	my $word = quotemeta( $self->GetValue );
 
 	# Gets the node's data and generates its path
-	my $tree = $self->tree;
-	my $node_data = $tree->GetPlData( $node );
-	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	my $tree      = $self->tree;
+	my $node_data = $tree->GetPlData($node);
+	my $path      = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
 	# Opens the current directory and sort its items by type and name
-	my ($dirs, $files) = $tree->readdir( $path );
+	my ( $dirs, $files ) = $tree->readdir($path);
 
 	# Accept some regex like characters
 	#   ^ = begin with
@@ -172,7 +169,7 @@ sub _search {
 	# Search recursively inside each folder of the current folder
 	my $found  = scalar @$files;
 	my @result = ();
-	foreach ( @$dirs ) {
+	foreach (@$dirs) {
 		my %temp = (
 			name => $_,
 			dir  => $path,
@@ -181,7 +178,7 @@ sub _search {
 
 		# Are we ignoring this directory
 		if ( $self->{skip_hidden}->IsChecked ) {
-			if ( $rule ) {
+			if ($rule) {
 				local $_ = \%temp;
 				unless ( $rule->() ) {
 					next;
@@ -197,15 +194,16 @@ sub _search {
 				next;
 			}
 		}
-		
+
 		# Creates each folder node
 		my $new_folder = $tree->AppendItem(
 			$node, $_, -1, -1,
-			Wx::TreeItemData->new( {
-				dir  => $path,
-				name => $_,
-				type => 'folder',
-			} )
+			Wx::TreeItemData->new(
+				{   dir  => $path,
+					name => $_,
+					type => 'folder',
+				}
+			)
 		);
 		$tree->SetItemImage(
 			$new_folder,
@@ -214,34 +212,36 @@ sub _search {
 		);
 
 		# Deletes the folder node if any file below it was found
-		if ( @{$temp{data}} = $self->_search($new_folder) ) {
+		if ( @{ $temp{data} } = $self->_search($new_folder) ) {
 			$found = 1;
 			push @result, \%temp;
-		} else{
+		} else {
 			$tree->Delete($new_folder);
 		}
 	}
 
 	# Adds each matched file
-	foreach ( @$files ) {
+	foreach (@$files) {
 		my $new_elem = $tree->AppendItem(
-			$node, $_, -1,-1,
-			Wx::TreeItemData->new( {
-				name => $_,
-				dir  => $path,
-				type => 'package',
-			} )
+			$node, $_, -1, -1,
+			Wx::TreeItemData->new(
+				{   name => $_,
+					dir  => $path,
+					type => 'package',
+				}
+			)
 		);
 		$tree->SetItemImage(
 			$new_elem,
 			$tree->{file_types}->{package},
 			Wx::wxTreeItemIcon_Normal,
 		);
-		push @result, {
+		push @result,
+			{
 			name => $_,
 			dir  => $path,
 			type => 'package',
-		};
+			};
 	}
 
 	# Returns 1 if any file above this path node was found or 0 and
@@ -259,7 +259,7 @@ sub _search_in_cache {
 	my $tree = $self->tree;
 
 	# Quotes meta characters
-	my $word = quotemeta($self->GetValue);
+	my $word = quotemeta( $self->GetValue );
 
 	# Accept some regex like characters
 	#   ^ = begin with
@@ -274,7 +274,8 @@ sub _search_in_cache {
 	# Goes thought each item from $data, if is a folder , searchs
 	# recursively inside it, if is a file tries to match its name
 	my @result = ();
-	foreach ( @$data ) {
+	foreach (@$data) {
+
 		# If it is a folder, searchs recursively below it
 		if ( defined $_->{data} ) {
 			my %temp = (
@@ -285,38 +286,46 @@ sub _search_in_cache {
 
 			# Creates each folder node
 			my $new_folder = $tree->AppendItem(
-				$node, $_->{name},
-				$tree->{file_types}->{folder}, -1,
-				Wx::TreeItemData->new( {
-					dir  => $_->{dir},
-					name => $_->{name},
-					type => $_->{type},
-				} )
+				$node,
+				$_->{name},
+				$tree->{file_types}->{folder},
+				-1,
+				Wx::TreeItemData->new(
+					{   dir  => $_->{dir},
+						name => $_->{name},
+						type => $_->{type},
+					}
+				)
 			);
 
 			# Deletes the folder node if any file below it was found
-			if ( @{$temp{data}} = $self->_search_in_cache( $new_folder, $_->{data} ) ) {
+			if ( @{ $temp{data} } = $self->_search_in_cache( $new_folder, $_->{data} ) ) {
 				push @result, \%temp;
 			} else {
 				$tree->Delete($new_folder);
 			}
 		} else {
+
 			# Adds each matched file
 			if ( $_->{name} =~ /$word/i ) {
 				my $new_elem = $tree->AppendItem(
-					$node, $_->{name},
-					$tree->{file_types}->{package},-1,
-					Wx::TreeItemData->new( {
-						name => $_->{name},
-						dir  => $_->{dir},
-						type => 'package',
-					} )
+					$node,
+					$_->{name},
+					$tree->{file_types}->{package},
+					-1,
+					Wx::TreeItemData->new(
+						{   name => $_->{name},
+							dir  => $_->{dir},
+							type => 'package',
+						}
+					)
 				);
-				push @result, {
+				push @result,
+					{
 					name => $_->{name},
 					dir  => $_->{dir},
 					type => 'package',
-				};
+					};
 			}
 		}
 	}
@@ -330,25 +339,29 @@ sub _search_in_cache {
 # result set instead of doing the search again
 sub _display_cached_search {
 	my ( $self, $node, $data ) = @_;
-	my $tree = $self->tree;
-	my $node_data = $tree->GetPlData( $node );
-	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	my $tree      = $self->tree;
+	my $node_data = $tree->GetPlData($node);
+	my $path      = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
 	# Files that matchs and Dirs arrays
-	my @dirs  = grep { $_->{type} eq 'folder'  } @{$data};
+	my @dirs  = grep { $_->{type} eq 'folder' } @{$data};
 	my @files = grep { $_->{type} eq 'package' } @{$data};
 
 	# Search recursively inside each folder of the current folder
 	for (@dirs) {
+
 		# Creates each folder node
 		my $new_folder = $tree->AppendItem(
-			$node, $_->{name},
-			$tree->{file_types}->{folder}, -1,
-			Wx::TreeItemData->new( {
-				dir  => $path,
-				name => $_->{name},
-				type => 'folder',
-			} )
+			$node,
+			$_->{name},
+			$tree->{file_types}->{folder},
+			-1,
+			Wx::TreeItemData->new(
+				{   dir  => $path,
+					name => $_->{name},
+					type => 'folder',
+				}
+			)
 		);
 
 		# Deletes the folder node if any file below it was found
@@ -356,16 +369,18 @@ sub _display_cached_search {
 	}
 
 	# Adds each matched file
-	foreach ( @files ) {
+	foreach (@files) {
 		my $new_elem = $tree->AppendItem(
 			$node,
 			$_->{name},
-			$tree->{file_types}->{package},	-1,
-			Wx::TreeItemData->new( {
-				dir  => $path,
-				name => $_->{name},
-				type => 'package',
-			} )
+			$tree->{file_types}->{package},
+			-1,
+			Wx::TreeItemData->new(
+				{   dir  => $path,
+					name => $_->{name},
+					type => 'package',
+				}
+			)
 		);
 	}
 
@@ -380,7 +395,8 @@ sub create_menu {
 	my $menu        = Wx::Menu->new;
 
 	# Skip hidden files
-	$self->{skip_hidden} = $menu->AppendCheckItem( -1,
+	$self->{skip_hidden} = $menu->AppendCheckItem(
+		-1,
 		Wx::gettext('Skip hidden files')
 	);
 	$self->{skip_hidden}->Check(1);
@@ -389,13 +405,13 @@ sub create_menu {
 		$self,
 		$self->{skip_hidden},
 		sub {
-			$self->{_skip_hidden}->{$project_dir}
-				= $self->{skip_hidden}->IsChecked ? 1 : 0;
+			$self->{_skip_hidden}->{$project_dir} = $self->{skip_hidden}->IsChecked ? 1 : 0;
 		},
 	);
 
 	# Skip CVS / .svn / blib and .git folders
-	$self->{skip_vcs} = $menu->AppendCheckItem( -1,
+	$self->{skip_vcs} = $menu->AppendCheckItem(
+		-1,
 		Wx::gettext('Skip CVS/.svn/.git/blib folders')
 	);
 	$self->{skip_vcs}->Check(1);
@@ -404,14 +420,14 @@ sub create_menu {
 		$self,
 		$self->{skip_vcs},
 		sub {
-			$self->{_skip_vcs}->{$project_dir}
-				= $self->{skip_vcs}->IsChecked ? 1 : 0;
+			$self->{_skip_vcs}->{$project_dir} = $self->{skip_vcs}->IsChecked ? 1 : 0;
 		},
 	);
 	$menu->AppendSeparator();
 
 	# Changes the project directory
-	$self->{project_dir} = $menu->Append( -1,
+	$self->{project_dir} = $menu->Append(
+		-1,
 		Wx::gettext('Change project directory')
 	);
 
@@ -424,17 +440,17 @@ sub create_menu {
 	);
 
 	# Changes the Tree mode view
-	my $submenu           = Wx::Menu->new;
+	my $submenu = Wx::Menu->new;
 	$self->{sub_tree}     = $submenu->AppendRadioItem( 1, Wx::gettext('Tree listing') );
 	$self->{sub_navigate} = $submenu->AppendRadioItem( 2, Wx::gettext('Navigate') );
-	$self->{mode}         = $menu->AppendSubMenu( $submenu, Wx::gettext('Change listing mode view') );
+	$self->{mode} = $menu->AppendSubMenu( $submenu, Wx::gettext('Change listing mode view') );
 	$self->{sub_navigate}->Check(1);
 
 	Wx::Event::EVT_MENU(
 		$submenu,
 		$self->{sub_tree},
 		sub {
-			$parent->{projects}->{$parent->project_dir}->{mode} = 'tree';
+			$parent->{projects}->{ $parent->project_dir }->{mode} = 'tree';
 			$parent->{mode_change} = 1;
 			$parent->refresh;
 		}
@@ -444,14 +460,15 @@ sub create_menu {
 		$submenu,
 		$self->{sub_navigate},
 		sub {
-			$parent->{projects}->{$parent->project_dir}->{mode} = 'navigate';
+			$parent->{projects}->{ $parent->project_dir }->{mode} = 'navigate';
 			$parent->{mode_change} = 1;
 			$parent->refresh;
 		}
 	);
 
 	# Changes the panel side
-	$self->{move_panel} = $menu->Append( -1,
+	$self->{move_panel} = $menu->Append(
+		-1,
 		Wx::gettext('Move to other panel')
 	);
 
@@ -477,15 +494,16 @@ sub _on_text {
 
 	# If nothing is typed hides the Cancel button
 	# and sets that the search is not in use
-	unless ( $value ) {
+	unless ($value) {
+
 		# Hides Cancel Button
 		$self->ShowCancelButton(0);
 
 		# Sets that the search for this project was just used
 		# and is not in use anymore
-		$self->{just_used}->{ $project_dir } = 1;
-		delete $self->{in_use}->{ $project_dir };
-		delete $self->{CACHED}->{ $project_dir };
+		$self->{just_used}->{$project_dir} = 1;
+		delete $self->{in_use}->{$project_dir};
+		delete $self->{CACHED}->{$project_dir};
 
 		# Updates the Directory Browser window
 		$self->tree->refresh;
@@ -494,21 +512,21 @@ sub _on_text {
 	}
 
 	# Sets that the search is in use
-	$self->{in_use}->{ $project_dir } = 1;
+	$self->{in_use}->{$project_dir} = 1;
 
 	# Lock the gui here to make the updates look slicker
 	# The locker holds the gui freeze until the update is done.
-	my $locker = $self->main->freezer;
+	my $locker = Padre::Current->main($self)->freezer;
 
 	# Cleans the Directory Browser window to show the result
 	my $root = $tree->GetRootItem;
-	$tree->DeleteChildren( $root );
+	$tree->DeleteChildren($root);
 
 	# Searchs below the root path and caches it
-	@{$self->{CACHED}->{ $project_dir }->{Data}} = $self->_search($root);
+	@{ $self->{CACHED}->{$project_dir}->{Data} } = $self->_search($root);
 
 	# Caches the searched word to the project
-	$self->{CACHED}->{ $project_dir }->{value} = $value;
+	$self->{CACHED}->{$project_dir}->{value} = $value;
 
 	# Expands all the folders to the files matched
 	$tree->ExpandAll;

@@ -43,7 +43,7 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 	$self->_sortcolumn(0);
 	$self->_sortreverse(0);
 
@@ -384,17 +384,13 @@ sub _refresh_list {
 	$imglist->RemoveAll;
 
 	# default plugin icon
-	$imglist->Add(
-		Padre::Wx::Icon::find('status/padre-plugin')
-	);
+	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 	my %icon = ( plugin => 0 );
 
 	# plugin status
 	my $i = 0;
 	foreach my $name (qw{ enabled disabled error crashed incompatible }) {
-		$imglist->Add(
-			Padre::Wx::Icon::find("status/padre-plugin-$name")
-		);
+		$imglist->Add( Padre::Wx::Icon::find("status/padre-plugin-$name") );
 		$icon{$name} = ++$i;
 	}
 

@@ -24,9 +24,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::Size->new( 200, 500 ), # Used when floating
-		Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_TOP
-		| Wx::wxBORDER_NONE
+		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
 	);
 
 	# Add ourself to the window manager
@@ -45,11 +43,9 @@ sub new {
 			Dockable       => 1,
 			Position       => 3,
 			Layer          => 3,
-		)->Right->Hide,
+			)->Right->Hide,
 	);
-	$aui->caption(
-		'right' => Wx::gettext('Document Tools')
-	);
+	$aui->caption( 'right' => Wx::gettext('Document Tools') );
 
 	return $self;
 }

@@ -78,13 +78,15 @@ sub find {
 	# If you _really_ are competant ;),
 	# prefer size, icons, ext
 	# over the defaults
-	my %pref = _HASH($prefs)
+	my %pref =
+		_HASH($prefs)
 		? ( %PREFS, %$prefs )
 		: %PREFS;
 
 	# Search through the theme list
-	foreach my $theme ( THEMES ) {
-		my $hinted = ( $HINT{$theme} and $HINT{$theme}->{$name} )
+	foreach my $theme (THEMES) {
+		my $hinted =
+			( $HINT{$theme} and $HINT{$theme}->{$name} )
 			? $HINT{$theme}->{$name}
 			: $name;
 		my $file = File::Spec->catfile(
@@ -98,9 +100,11 @@ sub find {
 	}
 
 	if ( defined $DEFAULT_ICON ) {
+
 		# fallback with a pretty ?
 		return $DEFAULT_ICON;
 	} elsif ( $name ne $DEFAULT_ICON_NAME ) {
+
 		# setup and return the default icon
 		$DEFAULT_ICON = find($DEFAULT_ICON_NAME);
 		return $DEFAULT_ICON if defined $DEFAULT_ICON;

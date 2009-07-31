@@ -165,20 +165,20 @@ sub refresh {
 		$filename
 		? File::Basename::basename($filename)
 		: substr( $old, 1 );
-	my $modified    = $editor->GetModify ? '*' : ' ';
-	my $title       = $modified . $text;
-	my $position    = $editor->GetCurrentPos;
-	my $line        = $editor->GetCurrentLine;
-	my $start       = $editor->PositionFromLine($line);
-	my $lines       = $editor->GetLineCount;
-	my $char        = $position - $start;
-	my $width       = $self->GetCharWidth;
-	my $highlighter = Padre::MimeTypes->get_highlighter_name( $document->get_highlighter );
-	my $mime_type_name    = Padre::MimeTypes->get_mime_type_name( $document->get_mimetype );
-	my $percent     = int( 100 * $line / $lines );
+	my $modified       = $editor->GetModify ? '*' : ' ';
+	my $title          = $modified . $text;
+	my $position       = $editor->GetCurrentPos;
+	my $line           = $editor->GetCurrentLine;
+	my $start          = $editor->PositionFromLine($line);
+	my $lines          = $editor->GetLineCount;
+	my $char           = $position - $start;
+	my $width          = $self->GetCharWidth;
+	my $highlighter    = Padre::MimeTypes->get_highlighter_name( $document->get_highlighter );
+	my $mime_type_name = Padre::MimeTypes->get_mime_type_name( $document->get_mimetype );
+	my $percent        = int( 100 * $line / $lines );
 
-        # Set some defaults to advoid "use of uninittialized value" - messages:
-        $mime_type_name = '???' if ! defined($mime_type_name);
+	# Set some defaults to advoid "use of uninittialized value" - messages:
+	$mime_type_name = '???' if !defined($mime_type_name);
 
 	#my $postring  = Wx::gettext('L:') . ( $line + 1  ) . ' ' . Wx::gettext('Ch:') . "$char $percent%";
 	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
@@ -247,9 +247,7 @@ sub update_task_status {
 	}
 
 	# Not idling, show the correct icon in the statusbar
-	$sbmp->SetBitmap(
-		Padre::Wx::Icon::find("status/padre-tasks-$status")
-	);
+	$sbmp->SetBitmap( Padre::Wx::Icon::find("status/padre-tasks-$status") );
 	$sbmp->SetToolTip(
 		$status eq 'running'
 		? Wx::gettext('Background Tasks are running')

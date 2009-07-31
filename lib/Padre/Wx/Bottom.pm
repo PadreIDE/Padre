@@ -25,9 +25,7 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::Size->new( 350, 300 ), # Used when floating
-		Wx::wxAUI_NB_SCROLL_BUTTONS
-		| Wx::wxAUI_NB_TOP
-		| Wx::wxBORDER_NONE
+		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
 	);
 
 	# Add ourself to the window manager
@@ -46,11 +44,9 @@ sub new {
 			Dockable       => 1,
 			Position       => 2,
 			Layer          => 4,
-		)->Bottom->Hide,
+			)->Bottom->Hide,
 	);
-	$aui->caption(
-		'bottom' => Wx::gettext('Output View')
-	);
+	$aui->caption( 'bottom' => Wx::gettext('Output View') );
 
 	return $self;
 }

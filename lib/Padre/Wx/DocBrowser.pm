@@ -85,7 +85,7 @@ sub new {
 	$self->{provider} = Padre::DocBrowser->new;
 
 	# Until we get a real icon use the same one as the others
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);

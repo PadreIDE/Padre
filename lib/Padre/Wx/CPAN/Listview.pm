@@ -25,12 +25,8 @@ sub new {
 	$self->{cpan} = $frame->cpan;
 
 	my $imagelist = Wx::ImageList->new( 14, 7 );
-	$imagelist->Add(
-		Padre::Wx::Icon::icon('status/padre-syntax-error')
-	);
-	$imagelist->Add(
-		Padre::Wx::Icon::icon('status/padre-syntax-warning')
-	);
+	$imagelist->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
+	$imagelist->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
 	$self->AssignImageList( $imagelist, Wx::wxIMAGE_LIST_SMALL );
 
 	$self->InsertColumn( 0, Wx::gettext('Status') );

@@ -82,7 +82,7 @@ sub new {
 	$self->{main_thread_only} ||= {};
 
 	my $editor = $self->{editor}
-	          || $self->{main_thread_only}->{editor};
+		|| $self->{main_thread_only}->{editor};
 	delete $self->{editor};
 	unless ( defined $editor ) {
 		$editor = Padre::Current->editor;

@@ -3,7 +3,7 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util    qw{_INSTANCE};
+use Params::Util qw{_INSTANCE};
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
@@ -20,13 +20,12 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT
-		| Wx::wxLC_SINGLE_SEL
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
 	my $list = Wx::ImageList->new( 14, 7 );
-	$list->Add(Padre::Wx::Icon::icon('status/padre-syntax-error'));
-	$list->Add(Padre::Wx::Icon::icon('status/padre-syntax-warning'));
+	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
+	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
 	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
 
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 2;

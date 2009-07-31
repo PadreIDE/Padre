@@ -75,7 +75,7 @@ sub _mime_type_panel {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Highlighter:') ],
 			[ 'Wx::Choice', 'highlighters', [] ]
 		],
-		[	[ 'Wx::StaticText', undef, Wx::gettext('Description:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Description:') ],
 			[ 'Wx::StaticText', 'description', [] ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Mime type:') ],
@@ -95,8 +95,8 @@ sub _mime_type_panel {
 	);
 
 	# Select the 'Perl 5' file type by default
-	for(my $i = 0; $i < scalar @{$mime_types}; $i++) {
-		if($mime_types->[$i] eq 'Perl 5') {
+	for ( my $i = 0; $i < scalar @{$mime_types}; $i++ ) {
+		if ( $mime_types->[$i] eq 'Perl 5' ) {
 			$self->get_widget('mime_type')->Select($i);
 			last;
 		}
@@ -145,8 +145,8 @@ sub update_description {
 	my ($self) = @_;
 
 	my $mime_type_selection = $self->get_widget('mime_type')->GetSelection;
-	my $mime_type_names          = Padre::MimeTypes->get_mime_type_names;
-	my $mime_types = Padre::MimeTypes->get_mime_types;
+	my $mime_type_names     = Padre::MimeTypes->get_mime_type_names;
+	my $mime_types          = Padre::MimeTypes->get_mime_types;
 
 	my $mime_type_name = $mime_type_names->[$mime_type_selection];
 
@@ -207,7 +207,7 @@ sub _behaviour_panel {
 	my ( $self, $treebook, $main_startup, $main_functions_order, $perldiag_locales ) = @_;
 
 	my $config = Padre->ide->config;
-	my $table = [
+	my $table  = [
 		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
 				Wx::gettext('Default word wrap on for each file')
 			],
@@ -226,8 +226,10 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
 			[ 'Wx::Choice',     'main_startup', $main_startup ]
 		],
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Default projects directory:') ],
-			[ 'Wx::DirPickerCtrl' , 'default_projects_directory', $config->default_projects_directory, Wx::gettext('Choose the default projects directory') ]
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Default projects directory:') ],
+			[   'Wx::DirPickerCtrl', 'default_projects_directory', $config->default_projects_directory,
+				Wx::gettext('Choose the default projects directory')
+			]
 		],
 		[   [   'Wx::CheckBox', 'main_singleinstance', ( $config->main_singleinstance ? 1 : 0 ),
 				Wx::gettext('Open files in existing Padre')
@@ -240,7 +242,7 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef,             Wx::gettext('Preferred language for error diagnostics:') ],
 			[ 'Wx::Choice',     'locale_perldiag', $perldiag_locales ]
 		],
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Check for file updates on disk every (seconds):') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Check for file updates on disk every (seconds):') ],
 			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
 		],
 	];
@@ -324,12 +326,12 @@ sub _appearance_panel {
 		$settings_subpanel,
 		$self->get_widget('editor_right_margin_enable'),
 		sub {
-            my $preview = $self->get_widget('preview_editor');
-            my $enabled = $self->get_widget_value('editor_right_margin_enable');
-            my $col = $self->get_widget_value('editor_right_margin_column');
+			my $preview = $self->get_widget('preview_editor');
+			my $enabled = $self->get_widget_value('editor_right_margin_enable');
+			my $col     = $self->get_widget_value('editor_right_margin_column');
 
-            $preview->SetEdgeColumn( $col );
-            $preview->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
+			$preview->SetEdgeColumn($col);
+			$preview->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
 		},
 	);
 
@@ -850,7 +852,7 @@ sub run {
 	);
 	$config->set(
 		'editor_right_margin_column',
-		$data->{ editor_right_margin_column },
+		$data->{editor_right_margin_column},
 	);
 	$config->set(
 		'run_interpreter_args_default',

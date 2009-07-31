@@ -153,14 +153,14 @@ sub select_line_in_editor {
 
 sub on_timer {
 	my ( $self, $event, $force ) = @_;
-	
+
 	### NOTE:
 	# floating windows, when undocked (err... "floating"), will
 	# return Wx::AuiFloatingFrame as their parent. So floating
 	# windows should always get their "main" from Padre::Current->main
 	# and -not- from $self->main.
-    my $main = Padre::Current->main($self);
-	
+	my $main = Padre::Current->main($self);
+
 	my $document = $main->current->document or return;
 
 	unless ( $document->can('get_outline') ) {

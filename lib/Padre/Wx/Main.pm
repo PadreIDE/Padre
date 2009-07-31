@@ -85,7 +85,7 @@ object as argument, to get a reference to the Padre application.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE($ide, 'Padre') ) {
+	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 
@@ -183,10 +183,10 @@ sub new {
 
 	# Create the notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
-	$self->{notebook}  = Padre::Wx::Notebook->new($self);
-	$self->{left}      = Padre::Wx::Left->new($self);
-	$self->{right}     = Padre::Wx::Right->new($self);
-	$self->{bottom}    = Padre::Wx::Bottom->new($self);
+	$self->{notebook} = Padre::Wx::Notebook->new($self);
+	$self->{left}     = Padre::Wx::Left->new($self);
+	$self->{right}    = Padre::Wx::Right->new($self);
+	$self->{bottom}   = Padre::Wx::Bottom->new($self);
 
 	# Creat the various tools that will live in the panes
 	$self->{output}    = Padre::Wx::Output->new($self);
@@ -227,8 +227,8 @@ sub new {
 
 	# As ugly as the WxPerl icon is, the new file toolbar image we
 	# used to use was far uglier
-	# Wx::GetWxPerlIcon() 
-	$self->SetIcon(	Padre::Wx::Icon::PADRE );
+	# Wx::GetWxPerlIcon()
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Show the tools that the configuration dictates
 	$self->show_functions( $self->config->main_functions );
@@ -237,9 +237,7 @@ sub new {
 	$self->show_output( $self->config->main_output );
 
 	# Lock the panels if needed
-	$self->aui->lock_panels(
-		$self->config->main_lockinterface
-	);
+	$self->aui->lock_panels( $self->config->main_lockinterface );
 
 	# we need an event immediately after the window opened
 	# (we had an issue that if the default of main_statusbar was false it did
@@ -332,54 +330,53 @@ Accessors that may not belong to this class:
 
 =cut
 
-use Class::XSAccessor
-predicates => {
+use Class::XSAccessor predicates => {
+
 	# Needed for lazily-constructed gui elements
 	has_find      => 'find',
 	has_replace   => 'replace',
 	has_outline   => 'outline',
 	has_directory => 'directory',
-},
-getters => {
+	},
+	getters => {
+
 	# GUI Elements
-	title         => 'title',
-	config        => 'config',
-	ide           => 'ide',
-	aui           => 'aui',
-	menu          => 'menu',
-	notebook      => 'notebook',
-	left          => 'left',
-	right         => 'right',
-	functions     => 'functions',
-	bottom        => 'bottom',
-	output        => 'output',
-	syntax        => 'syntax',
-	errorlist     => 'errorlist',
+	title     => 'title',
+	config    => 'config',
+	ide       => 'ide',
+	aui       => 'aui',
+	menu      => 'menu',
+	notebook  => 'notebook',
+	left      => 'left',
+	right     => 'right',
+	functions => 'functions',
+	bottom    => 'bottom',
+	output    => 'output',
+	syntax    => 'syntax',
+	errorlist => 'errorlist',
 
 	# Operating Data
-	cwd           => 'cwd',
-	no_refresh    => '_no_refresh',
+	cwd        => 'cwd',
+	no_refresh => '_no_refresh',
 
 	# Things that are probably in the wrong place
-	ack           => 'ack',
-};
+	ack => 'ack',
+	};
 
 sub outline {
 	$_[0]->{outline}
-	or
-	$_[0]->{outline} = do {
+		or $_[0]->{outline} = do {
 		require Padre::Wx::Outline;
 		Padre::Wx::Outline->new( $_[0] );
-	};
+		};
 }
 
 sub directory {
 	$_[0]->{directory}
-	or
-	$_[0]->{directory} = do {
+		or $_[0]->{directory} = do {
 		require Padre::Wx::Directory;
 		Padre::Wx::Directory->new( $_[0] );
-	};
+		};
 }
 
 sub directory_panel {
@@ -724,8 +721,7 @@ sub single_instance_command {
 
 			# If a file is already loaded switch to it instead
 			$self->notebook->show_file($line)
-			or
-			$self->setup_editors($line);
+				or $self->setup_editors($line);
 		}
 
 	} else {
@@ -1282,7 +1278,7 @@ sub show_directory {
 	$self->config->set( main_directory => $on );
 	$self->config->write;
 
-	if ( $on ) {
+	if ($on) {
 		my $directory = $self->directory;
 		$self->directory_panel->show($directory);
 		$directory->refresh;
@@ -1317,7 +1313,7 @@ sub show_output {
 	$self->config->set( main_output => $on );
 	$self->config->write;
 
-	if ( $on ) {
+	if ($on) {
 		$self->bottom->show( $self->output );
 	} else {
 		$self->bottom->hide( $self->output );
@@ -1350,7 +1346,7 @@ sub show_syntax {
 		$self->menu->view->{show_syntaxcheck}->Check($on);
 	}
 
-	if ( $on ) {
+	if ($on) {
 		$self->bottom->show($syntax);
 		$syntax->start unless $syntax->running;
 	} else {
@@ -2171,7 +2167,7 @@ sub on_close_window {
 			}
 		} else {
 			my $closed = $self->close_all;
-			unless ( $closed ) {
+			unless ($closed) {
 
 				# They cancelled at some point
 				$event->Veto;
@@ -2409,7 +2405,7 @@ sub setup_editor {
 		}
 	}
 
-	if ( ! $doc->is_new ) {
+	if ( !$doc->is_new ) {
 		Padre::Util::debug( "Adding new file to history: " . $doc->filename );
 		Padre::DB::History->create(
 			type => 'files',
@@ -2417,7 +2413,8 @@ sub setup_editor {
 		);
 		$self->menu->file->update_recentfiles;
 	} else {
-		$doc->{project_dir} = $self->current->document
+		$doc->{project_dir} =
+			  $self->current->document
 			? $self->current->document->project_dir
 			: $self->ide->config->default_projects_directory;
 	}
@@ -2540,7 +2537,7 @@ sub on_open_selection {
 				'lib',
 				$module,
 			);
-			if (-e $filename) {
+			if ( -e $filename ) {
 				push @files, $filename;
 			}
 
@@ -2617,13 +2614,13 @@ sub on_open {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
 	$self->_open_file_dialog;
-	
+
 	return;
 }
 
 sub _open_file_dialog {
 	my $self = shift;
-	
+
 	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
 	# "It must be noted that wildcard support in the native Motif file dialog is quite
 	# limited: only one alternative is supported, and it is displayed without
@@ -2665,13 +2662,13 @@ sub _open_file_dialog {
 }
 
 sub on_open_example {
-	my $self     = shift;
+	my $self = shift;
 	$self->{cwd} = Padre::Util::sharedir('examples');
 	$self->_open_file_dialog;
-	
+
 	return;
 }
-	
+
 
 =pod
 
@@ -2982,7 +2979,7 @@ sub close {
 
 	return 1;
 }
- 
+
 =pod
 
 =head3 close_all
@@ -3360,7 +3357,7 @@ sub on_toggle_right_margin {
 	my $col     = $config->editor_right_margin_column;
 
 	foreach my $editor ( $self->editors ) {
-		$editor->SetEdgeColumn( $col );
+		$editor->SetEdgeColumn($col);
 		$editor->SetEdgeMode( $enabled ? Wx::wxSTC_EDGE_LINE : Wx::wxSTC_EDGE_NONE );
 	}
 

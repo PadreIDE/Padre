@@ -63,16 +63,12 @@ sub relocale {
 
 # Set the lock status of the panels
 sub lock_panels {
-	my $self   = shift;
+	my $self = shift;
 	my $unlock = $_[0] ? 0 : 1;
 
 	$self->Update;
-	foreach ( qw{left right bottom} ) {
-		$self->GetPane($_)
-		     ->CaptionVisible($unlock)
-		     ->Floatable($unlock)
-		     ->Dockable($unlock)
-		     ->Movable($unlock);
+	foreach (qw{left right bottom}) {
+		$self->GetPane($_)->CaptionVisible($unlock)->Floatable($unlock)->Dockable($unlock)->Movable($unlock);
 	}
 	$self->Update;
 
@@ -105,6 +101,7 @@ SCOPE: {
 	my $destroy  = \&Wx::AuiManager::DESTROY;
 	my %managers = ();
 	*Wx::AuiManager::DESTROY = sub {
+
 		#print "$_[0]\n";
 		#my $i = 0;
 		#while (1) {

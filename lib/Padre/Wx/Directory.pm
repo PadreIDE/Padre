@@ -9,18 +9,17 @@ use Padre::Wx::Directory::SearchCtrl ();
 our $VERSION = '0.41';
 our @ISA     = 'Wx::Panel';
 
-use Class::XSAccessor
-getters => {
-	tree     => 'tree',
-	search   => 'search',
-},
-accessors => {
-	mode         => 'mode',
-	project_dir  => 'project_dir',
-	previous_dir => 'previous_dir',
+use Class::XSAccessor getters => {
+	tree   => 'tree',
+	search => 'search',
+	},
+	accessors => {
+	mode                  => 'mode',
+	project_dir           => 'project_dir',
+	previous_dir          => 'previous_dir',
 	project_dir_original  => 'project_dir_original',
 	previous_dir_original => 'previous_dir_original',
-};
+	};
 
 # Creates the Directory Left Panel with a Search field
 # and the Directory Browser
@@ -41,8 +40,8 @@ sub new {
 	$self->{search} = Padre::Wx::Directory::SearchCtrl->new($self);
 
 	# Fill the panel
-	my $sizerv = Wx::BoxSizer->new( Wx::wxVERTICAL );
-	my $sizerh = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizerv->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
 	$sizerv->Add( $self->tree,   1, Wx::wxALL | Wx::wxEXPAND, 0 );
 	$sizerh->Add( $sizerv,       1, Wx::wxALL | Wx::wxEXPAND, 0 );
@@ -89,21 +88,23 @@ sub refresh {
 
 	# Finds project base
 	my $doc = $current->document;
-	my $dir = $doc
+	my $dir =
+		  $doc
 		? $doc->project_dir
 		: $self->main->config->default_projects_directory;
 
-	$self->{projects}->{$dir}->{dir}  ||= $dir;
-	$self->{projects}->{$dir}->{mode} ||= $doc->{is_project}
-					      ? 'tree'
-					      : 'navigate' ;
+	$self->{projects}->{$dir}->{dir} ||= $dir;
+	$self->{projects}->{$dir}->{mode} ||=
+		$doc->{is_project}
+		? 'tree'
+		: 'navigate';
 
 	# The currently view mode
 	$self->mode( $self->{projects}->{$dir}->{mode} );
 
 	# Save the current project path
 	$self->project_dir( $self->{projects}->{$dir}->{dir} );
-	$self->project_dir_original( $dir );
+	$self->project_dir_original($dir);
 
 	# Calls Searcher and Browser refresh
 	$self->tree->refresh;
@@ -111,14 +112,14 @@ sub refresh {
 
 	# Sets the last project to the current one
 	$self->previous_dir( $self->{projects}->{$dir}->{dir} );
-	$self->previous_dir_original( $dir );
+	$self->previous_dir_original($dir);
 
 	return 1;
 }
 
 # When a project folder is changed
 sub _change_project_dir {
-	my $self = shift;
+	my $self   = shift;
 	my $dialog = Wx::DirDialog->new(
 		undef,
 		Wx::gettext('Choose a directory'),
@@ -127,7 +128,7 @@ sub _change_project_dir {
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
 	}
-	$self->{projects_dirs}->{$self->project_dir_original} = $dialog->GetPath;
+	$self->{projects_dirs}->{ $self->project_dir_original } = $dialog->GetPath;
 	$self->refresh;
 }
 
@@ -153,7 +154,7 @@ sub move {
 	if ( $side eq 'left' ) {
 		$config->apply( main_directory_panel => 'right' );
 	} elsif ( $side eq 'right' ) {
-		$config->apply( main_directory_panel => 'left'  );
+		$config->apply( main_directory_panel => 'left' );
 	} else {
 		die "Bad main_directory_panel setting '$side'";
 	}

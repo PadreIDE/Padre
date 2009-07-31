@@ -12,7 +12,7 @@ use Padre::Wx      ();
 our $VERSION = '0.41';
 our @ISA     = 'Wx::TreeCtrl';
 
-use constant IS_MAC   => !!( $^O eq 'darwin' );
+use constant IS_MAC => !!( $^O eq 'darwin' );
 use constant IS_WIN32 => !!( $^O =~ /^MSWin/ or $^O eq 'cygwin' );
 
 # Creates a new Directory Browser object
@@ -24,12 +24,8 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT
-		| Wx::wxTR_SINGLE
-		| Wx::wxTR_FULL_ROW_HIGHLIGHT
-		| Wx::wxTR_HAS_BUTTONS
-		| Wx::wxTR_LINES_AT_ROOT
-		| Wx::wxBORDER_NONE
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
+			| Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE
 	);
 
 	# Files that must be skipped
@@ -42,19 +38,13 @@ sub new {
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{file_types} = {
 		upper => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_GO_DIR_UP', 'wxART_OTHER_C', [ 16, 16 ]
-			),
+			Wx::ArtProvider::GetBitmap( 'wxART_GO_DIR_UP', 'wxART_OTHER_C', [ 16, 16 ] ),
 		),
 		folder => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_FOLDER', 'wxART_OTHER_C', [ 16, 16 ]
-			),
+			Wx::ArtProvider::GetBitmap( 'wxART_FOLDER', 'wxART_OTHER_C', [ 16, 16 ] ),
 		),
 		package => $images->Add(
-			Wx::ArtProvider::GetBitmap(
-				'wxART_NORMAL_FILE', 'wxART_OTHER_C', [ 16, 16 ]
-			),
+			Wx::ArtProvider::GetBitmap( 'wxART_NORMAL_FILE', 'wxART_OTHER_C', [ 16, 16 ] ),
 		),
 	};
 	$self->AssignImageList($images);
@@ -111,11 +101,12 @@ sub new {
 	my $root = $self->AddRoot(
 		Wx::gettext('Directory'),
 		-1, -1,
-		Wx::TreeItemData->new( {
-			dir  => '',
-			name => '',
-			type => 'folder',
-		} ),
+		Wx::TreeItemData->new(
+			{   dir  => '',
+				name => '',
+				type => 'folder',
+			}
+		),
 	);
 
 	# Ident to sub nodes
@@ -162,7 +153,11 @@ sub refresh {
 
 	# If the project have changed or the project root folder updates or
 	# the search is not in use anymore (was just used)
-	if ( (defined($project_dir) and (not defined($previous_dir) or $previous_dir ne $project_dir ) ) or $self->_updated_dir($project_dir) or $search->{just_used}->{$project_dir} or $parent->{mode_change}) {
+	if (   ( defined($project_dir) and ( not defined($previous_dir) or $previous_dir ne $project_dir ) )
+		or $self->_updated_dir($project_dir)
+		or $search->{just_used}->{$project_dir}
+		or $parent->{mode_change} )
+	{
 
 		# Updates Root node data
 		$self->_update_root_data;
@@ -181,36 +176,37 @@ sub refresh {
 }
 
 # Appends an Upper item to the node beginning
-# if the current dir is not the system root 
+# if the current dir is not the system root
 sub _append_upper {
 	my $self        = shift;
 	my $root        = $self->GetRootItem;
 	my $project_dir = $self->parent->project_dir;
 
 	# Gets the current directory path
-	my $current_base_dir = File::Basename::dirname( $project_dir );
+	my $current_base_dir = File::Basename::dirname($project_dir);
 
 	# Returns if project's dir is the same of it's
 	# basename (usually system's root dir)
 	return if $project_dir eq $current_base_dir;
 
 	# Splits the current directory base to get its
-	# name and path		
-	my ( $volume, $path, $name ) =	File::Spec->splitpath( $current_base_dir );
-	
+	# name and path
+	my ( $volume, $path, $name ) = File::Spec->splitpath($current_base_dir);
+
 	# Joins the volume and path
 	$path = File::Spec->catdir( $volume, $path );
 
 	# Inserts the Upper item to the root node
 	$self->InsertItem(
-		$root, 0,
-		'..',
-		$self->{file_types}->{upper}, -1,
-		Wx::TreeItemData->new( {
-				name => $name,
+		$root, 0, '..',
+		$self->{file_types}->{upper},
+		-1,
+		Wx::TreeItemData->new(
+			{   name => $name,
 				dir  => $path,
 				type => 'upper',
-			} )
+			}
+		)
 	);
 }
 
@@ -223,15 +219,15 @@ sub readdir {
 
 	# Read the directory, and do the cheap name presort
 	opendir( my $dh, $directory ) or return;
-	my @buffer = sort { lc($a) cmp lc($b) } CORE::readdir( $dh );
-	closedir( $dh );
+	my @buffer = sort { lc($a) cmp lc($b) } CORE::readdir($dh);
+	closedir($dh);
 
 	# Filter out ignored files and split out the directories
 	# We don't use sort for the directory split, because it can
 	# end up calling extra extra -d filesystem stats.
 	my @files = ();
 	my @dirs  = ();
-	foreach ( @buffer ) {
+	foreach (@buffer) {
 		if ( -d File::Spec->catfile( $directory, $_ ) ) {
 			next if /^\.\.?\z/;
 			push @dirs, $_;
@@ -255,7 +251,7 @@ sub _update_root_data {
 
 	# Updates Root node data
 	my $root = $self->GetRootItem;
-	my $data = $self->GetPlData( $root );
+	my $data = $self->GetPlData($root);
 	$data->{dir}  = $path;
 	$data->{name} = $name;
 }
@@ -272,20 +268,13 @@ sub _list_dir {
 
 	# Read folder's content and cache if it had changed or isn't cached
 	if ( $self->_updated_dir($path) ) {
+
 		# Open the folder and sort its content by name and type
-		my ($dirs, $files) = $self->readdir( $path );
+		my ( $dirs, $files ) = $self->readdir($path);
 
 		# For each item, creates its CACHE data
-		my @Data = map { {
-			name => $_,
-			dir  => $path,
-			type => 'folder',
-		} } @$dirs;
-		push @Data, map { {
-			name => $_,
-			dir  => $path,
-			type => 'package',
-		} } @$files;
+		my @Data = map { { name => $_, dir => $path, type => 'folder', } } @$dirs;
+		push @Data, map { { name => $_, dir => $path, type => 'package', } } @$files;
 		$cached->{Data}   = \@Data;
 		$cached->{Change} = ( stat $path )[10];
 	}
@@ -294,7 +283,7 @@ sub _list_dir {
 	my @data = @{ $cached->{Data} };
 	unless ( $cached->{ShowHidden} ) {
 		my $project = $self->current->project;
-		if ( $project ) {
+		if ($project) {
 			my $rule = $project->ignore_rule;
 			@data = grep { $rule->() } @data;
 		} else {
@@ -304,16 +293,18 @@ sub _list_dir {
 
 	# Delete node children and populates it again
 	$self->DeleteChildren($node);
-	foreach my $each ( @data ) {
+	foreach my $each (@data) {
 		my $new_elem = $self->AppendItem(
 			$node,
 			$each->{name},
-			$self->{file_types}->{$each->{type}}, -1,
-			Wx::TreeItemData->new( {
-				name => $each->{name},
-				dir  => $each->{dir},
-				type => $each->{type},
-			} )
+			$self->{file_types}->{ $each->{type} },
+			-1,
+			Wx::TreeItemData->new(
+				{   name => $each->{name},
+					dir  => $each->{dir},
+					type => $each->{type},
+				}
+			)
 		);
 		if ( $each->{type} eq 'folder' ) {
 			$self->SetItemHasChildren( $new_elem, 1 );
@@ -328,17 +319,12 @@ sub _updated_dir {
 	my $dir    = shift;
 	my $cached = $self->{CACHED}->{$dir};
 
-	if (
-		not defined $cached
-		or
-		! $cached->{Data}
-		or
-		! $cached->{Change}
-		or
-		(stat $dir)[10] != $cached->{Change}
-		or
-		$self->search->{just_used}->{$dir}
-	) {
+	if (   not defined $cached
+		or !$cached->{Data}
+		or !$cached->{Change}
+		or ( stat $dir )[10] != $cached->{Change}
+		or $self->search->{just_used}->{$dir} )
+	{
 		return 1;
 	}
 
@@ -349,10 +335,11 @@ sub _updated_dir {
 # has changed and updates it                                                   #
 sub _update_subdirs {
 	my ( $self, $root ) = @_;
-	my $parent = $self->parent;
+	my $parent  = $self->parent;
 	my $project = $parent->project_dir;
 
 	my $cookie;
+
 	# Loops thought the node's total children
 	for my $item ( 1 .. $self->GetChildrenCount($root) ) {
 
@@ -363,6 +350,7 @@ sub _update_subdirs {
 		# If the item (folder) was expanded, then expands its node and updates
 		# its content recursively
 		if ( defined $self->{CACHED}->{$project}->{Expanded}->{$path} ) {
+
 			# Expands the folder node
 			$self->Expand($node);
 
@@ -374,7 +362,10 @@ sub _update_subdirs {
 		}
 
 		# If the item was the last selected item, selects and scrolls to it
-		if ( defined $self->{current_item}->{$project} and $self->{current_item}->{$project} eq $path and delete $self->{select_item} ) {
+		if (    defined $self->{current_item}->{$project}
+			and $self->{current_item}->{$project} eq $path
+			and delete $self->{select_item} )
+		{
 			$self->SelectItem($node);
 		}
 	}
@@ -399,6 +390,7 @@ sub _rename_or_move {
 
 	# Renames/moves the old file name to the new file name
 	if ( rename $old_file, $new_file ) {
+
 		# Sets the new file to be selected
 		my $project = $self->parent->project_dir;
 		$self->{current_item}->{$project} = $new_file;
@@ -407,7 +399,7 @@ sub _rename_or_move {
 		my $cached     = $self->{CACHED};
 		my $parent_dir = File::Basename::dirname($new_file);
 		if ( $parent_dir =~ /^$project/ ) {
-			$cached->{$project}->{Expanded}->{ $parent_dir  } = 1;
+			$cached->{$project}->{Expanded}->{$parent_dir} = 1;
 		}
 
 		# If the old file was expanded, keeps the new one expanded
@@ -430,6 +422,7 @@ sub _rename_or_move {
 		# Returns success
 		return 1;
 	} else {
+
 		# Popups the error message and returns fail
 		my $error_msg = $!;
 		Wx::MessageBox( $error_msg, Wx::gettext('Error'), Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_ERROR );
@@ -450,11 +443,11 @@ sub _on_tree_item_activated {
 	# of the mode view
 	if ( $node_data->{type} eq 'folder' or $node_data->{type} eq 'upper' ) {
 		if ( $parent->mode eq 'navigate' ) {
-			$parent->{projects}->{$parent->project_dir_original}->{dir} = File::Spec->catdir( $node_data->{dir}, $node_data->{name} );
+			$parent->{projects}->{ $parent->project_dir_original }->{dir} =
+				File::Spec->catdir( $node_data->{dir}, $node_data->{name} );
 			$parent->refresh;
-		}
-		else {
-			$self->Toggle( $node );
+		} else {
+			$self->Toggle($node);
 		}
 		return;
 	}
@@ -491,6 +484,7 @@ sub _on_tree_end_label_edit {
 
 	# Loops while already exists a file with the new label name
 	while ( -e $new_file ) {
+
 		# Prompts the user asking for a new name for the file
 		my $prompt = Wx::TextEntryDialog->new(
 			$self,
@@ -523,7 +517,8 @@ sub _on_tree_sel_changed {
 	my $node_data = $self->GetPlData( $event->GetItem );
 
 	# Caches the item path
-	$self->{current_item}->{ $self->parent->project_dir } = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	$self->{current_item}->{ $self->parent->project_dir } =
+		File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 }
 
 # Expands the node and loads its content.
@@ -534,7 +529,7 @@ sub _on_tree_item_expanding {
 	my $node_data = $self->GetPlData($node);
 
 	# Returns if a search is being done (expands only the browser listing)
-	return if $self->search->{in_use}->{$self->parent->project_dir};
+	return if $self->search->{in_use}->{ $self->parent->project_dir };
 
 	# The item complete path
 	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
@@ -552,31 +547,33 @@ sub _on_tree_item_expanding {
 # Called when a folder is collapsed.
 sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
-	my $node = $event->GetItem;
-	my $node_data = $self->GetPlData( $node );
+	my $node        = $event->GetItem;
+	my $node_data   = $self->GetPlData($node);
 	my $project_dir = $self->parent->project_dir;
 
 	# If it is the Root node, set Expanded to 0
 	if ( $node == $self->GetRootItem ) {
-		$self->{CACHED}->{ $project_dir }->{Expanded}->{ $project_dir } = 0;
+		$self->{CACHED}->{$project_dir}->{Expanded}->{$project_dir} = 0;
 		return;
 	}
 
 	# Deletes cache expanded state of the node
-	delete $self->{CACHED}->{ $project_dir }->{Expanded}->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
+	delete $self->{CACHED}->{$project_dir}->{Expanded}
+		->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
 }
 
 # If the item is not the root node let it to be dragged.
 # Called when a item is dragged.
 sub _on_tree_begin_drag {
 	my ( $self, $event ) = @_;
-	my $node = $event->GetItem;
-	my $node_data = $self->GetPlData( $node );
+	my $node      = $event->GetItem;
+	my $node_data = $self->GetPlData($node);
 
 	# Only drags if it's not the Root node
 	# and if it's not the upper item
-	if ( $node != $self->GetRootItem and
-	     $node_data->{type} ne 'upper' ) {
+	if (    $node != $self->GetRootItem
+		and $node_data->{type} ne 'upper' )
+	{
 		$self->{dragged_item} = $node;
 		$event->Allow;
 	}
@@ -587,8 +584,8 @@ sub _on_tree_begin_drag {
 # Called just after the item is dragged.
 sub _on_tree_end_drag {
 	my ( $self, $event ) = @_;
-	my $node = $event->GetItem;
-	my $node_data = $self->GetPlData( $node );
+	my $node      = $event->GetItem;
+	my $node_data = $self->GetPlData($node);
 
 	# If drops to a file, the new destination will be it's folder
 	if ( $node->IsOk and ( !$self->ItemHasChildren($node) and $node_data->{type} ne 'upper' ) ) {
@@ -642,7 +639,8 @@ sub _on_tree_item_menu {
 	my $selected_path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
 	# Default action - same when the item is activated
-	my $default = $menu->Append( -1,
+	my $default = $menu->Append(
+		-1,
 		Wx::gettext( $node_data->{type} eq 'folder' ? 'Open Folder' : 'Open File' )
 	);
 	Wx::Event::EVT_MENU(

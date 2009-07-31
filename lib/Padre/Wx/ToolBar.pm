@@ -78,7 +78,7 @@ sub new {
 		action => 'file.open_example',
 		icon   => 'stock/generic/stock_example',
 	);
-	
+
 	# Undo/Redo Support
 	$self->AddSeparator;
 

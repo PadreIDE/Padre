@@ -503,7 +503,8 @@ sub autocomplete {
 			while ( defined($tag) ) {
 
 				# TODO check file scope?
-				if ( ! defined($tag->{kind})) {
+				if ( !defined( $tag->{kind} ) ) {
+
 					# This happens with some tagfiles which have no kind
 				} elsif ( $tag->{kind} eq 'v' ) {
 
@@ -530,9 +531,10 @@ sub autocomplete {
 
 			# TODO: INHERITANCE!
 			while ( defined($tag) ) {
-				if ( ! defined($tag->{kind})) {
+				if ( !defined( $tag->{kind} ) ) {
+
 					# This happens with some tagfiles which have no kind
-				} elsif ($tag->{kind} eq 's'
+				} elsif ( $tag->{kind} eq 's'
 					and defined $tag->{extension}{class}
 					and $tag->{extension}{class} eq $class )
 				{
@@ -555,7 +557,8 @@ sub autocomplete {
 			while ( defined($tag) ) {
 
 				# TODO check file scope?
-				if ( ! defined($tag->{kind})) {
+				if ( !defined( $tag->{kind} ) ) {
+
 					# This happens with some tagfiles which have no kind
 				} elsif ( $tag->{kind} eq 'p' ) {
 
@@ -616,7 +619,7 @@ sub event_on_char {
 			123 => 125, # { }
 		);
 		my $pos = $editor->GetCurrentPos;
-		if ($table{$key}) {
+		if ( $table{$key} ) {
 			if ($selection_exists) {
 				my $start = $editor->GetSelectionStart;
 				my $end   = $editor->GetSelectionEnd;

@@ -209,7 +209,7 @@ sub _create_panel {
 			Name           => 'find',
 			CaptionVisible => 0,
 			Layer          => 1,
-		)->Bottom->Fixed->Hide,
+			)->Bottom->Fixed->Hide,
 	);
 
 	return 1;

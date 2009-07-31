@@ -36,7 +36,7 @@ Get the L<Padre> IDE instance that this object is a child of.
 
 sub ide {
 	my $main = $_[0]->GetParent;
-	if ( _INSTANCE($main, 'Padre::Wx::Main') ) {
+	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
 		return $main->ide;
 	}
 	Padre::Current->ide;
@@ -55,7 +55,7 @@ convenience because it is needed so often.
 
 sub config {
 	my $main = $_[0]->GetParent;
-	if ( _INSTANCE($main, 'Padre::Wx::Main') ) {
+	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
 		return $main->config;
 	}
 	Padre::Current->config;
@@ -73,7 +73,7 @@ Get the L<Padre::Wx::Main> main window that this object is a child of.
 
 sub main {
 	my $main = $_[0]->GetParent;
-	if ( _INSTANCE($main, 'Padre::Wx::Main') ) {
+	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
 		return $main;
 	}
 	Padre::Current->main;
@@ -105,7 +105,7 @@ Get a new C<Padre::Current> context object.
 
 sub current {
 	my $main = shift->GetParent;
-	if ( _INSTANCE($main, 'Padre::Wx::Main') ) {
+	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
 		return Padre::Current->new( main => $main );
 	}
 	Padre::Current->new;

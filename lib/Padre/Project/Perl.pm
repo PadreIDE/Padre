@@ -23,13 +23,12 @@ sub from_file {
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
 	my $dirs = List::Util::first {
-		-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
-		or -f File::Spec->catpath( $v, $_, 'Build.PL' )
-		or -f File::Spec->catpath( $v, $_, 'dist.ini' )
-		or -f File::Spec->catpath( $v, $_, 'padre.yml' );
-	} map {
-		File::Spec->catdir( @d[ 0 .. $_ ] )
-	} reverse( 0 .. $#d );
+		       -f File::Spec->catpath( $v, $_, 'Makefile.PL' )
+			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
+			or -f File::Spec->catpath( $v, $_, 'dist.ini' )
+			or -f File::Spec->catpath( $v, $_, 'padre.yml' );
+	}
+	map { File::Spec->catdir( @d[ 0 .. $_ ] ) } reverse( 0 .. $#d );
 	unless ( defined $dirs ) {
 		return;
 	}
@@ -49,6 +48,7 @@ sub from_file {
 
 sub ignore_rule {
 	return sub {
+
 		# Default filter as per normal
 		if ( $_->{name} =~ /^\./ ) {
 			return 0;

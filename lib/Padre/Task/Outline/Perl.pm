@@ -150,12 +150,12 @@ sub update_gui {
 	require Padre::Wx;
 
 	# If there is no structure, clear the outline pane and return.
-	unless ( $outline ) {
+	unless ($outline) {
 		return;
 	}
 
 	# Again, slightly differently
-	unless ( @$outline ) {
+	unless (@$outline) {
 		return 1;
 	}
 
