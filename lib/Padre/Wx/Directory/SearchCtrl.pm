@@ -516,7 +516,7 @@ sub _on_text {
 
 	# Lock the gui here to make the updates look slicker
 	# The locker holds the gui freeze until the update is done.
-	my $locker = Padre::Current->main($self)->freezer;
+	my $locker = $self->current->main->freezer;
 
 	# Cleans the Directory Browser window to show the result
 	my $root = $tree->GetRootItem;
