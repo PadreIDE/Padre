@@ -22,7 +22,7 @@ use Data::Dumper   ();
 use File::Basename ();
 use Padre::Wx      ();
 
-our $VERSION = '0.41';
+our $VERSION = '0.42';
 
 #####################################################################
 # Document Registration
