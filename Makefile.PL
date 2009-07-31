@@ -97,11 +97,6 @@ test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
 
-# Extra deps to squelch DIE complaints from dev.pl
-if ( author_context ) {
-	requires 'prefork' => '1.03';
-}
-
 my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
 if ( win32 and $locale =~ /^English/ ) {
