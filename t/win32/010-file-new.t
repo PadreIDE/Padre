@@ -5,7 +5,8 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 use Win32;
-#use FindBin qw/$RealBin/;
+
+plan( skip_all => 'Disabled for 1st Birthday Edition' );
 
 eval {
 	require Win32::GuiTest;

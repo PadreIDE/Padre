@@ -5,6 +5,8 @@ use warnings;
 use Test::More;
 use Data::Dumper;
 
+plan( skip_all => 'Disabled for 1st Birthday Edition' );
+
 eval {
 	require Win32::GuiTest;
 	import Win32::GuiTest qw(:ALL);
