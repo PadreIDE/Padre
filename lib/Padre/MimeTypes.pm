@@ -20,6 +20,7 @@ use warnings;
 use Carp           ();
 use Data::Dumper   ();
 use File::Basename ();
+use Padre::Wx      ();
 
 our $VERSION = '0.41';
 
