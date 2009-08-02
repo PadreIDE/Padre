@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-02 09:20+0300\n"
-"PO-Revision-Date: 2009-08-02 09:21+0200\n"
+"POT-Creation-Date: 2009-08-02 09:33+0300\n"
+"PO-Revision-Date: 2009-08-02 09:35+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -42,14 +42,12 @@ msgid "Alphabetical Order (Private Last)"
 msgstr "ترتيب ابجدي (الخاص آخرا)"
 
 #: lib/Padre/Config.pm:258
-#, fuzzy
 msgid "Project Tools (Left)"
-msgstr "أدوات المشروع"
+msgstr "أدوات المشروع (اليسار)"
 
 #: lib/Padre/Config.pm:259
-#, fuzzy
 msgid "Document Tools (Right)"
-msgstr "أدوات الوثيقة"
+msgstr "أدوات الوثيقة (اليمين)"
 
 #: lib/Padre/Document.pm:674
 #, perl-format
@@ -1262,14 +1260,12 @@ msgid "Diff tool:"
 msgstr "اداة المقارنة Diff:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:72
-#, fuzzy
 msgid "File type:"
-msgstr "نوع الملف"
+msgstr "نوع الملف:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:75
-#, fuzzy
 msgid "Highlighter:"
-msgstr "اختر الملون:"
+msgstr "الملون:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:78
 #: lib/Padre/Wx/Dialog/SessionSave.pm:184
@@ -1277,9 +1273,8 @@ msgid "Description:"
 msgstr "الوصف:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:81
-#, fuzzy
-msgid "Mime type:"
-msgstr "نوع الملف"
+msgid "Content type:"
+msgstr "نوع المحتوى:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:173
 msgid "Automatic indentation style detection"
@@ -1347,7 +1342,7 @@ msgstr "اللغه المفضله لتشخيص الخطأ:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:245
 msgid "Check for file updates on disk every (seconds):"
-msgstr ""
+msgstr "تأكد من تحديثات الملف على القرص كل (ثانية):"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:282
 msgid "Colored text in output window (ANSI)"
@@ -1738,9 +1733,8 @@ msgid "&Paste"
 msgstr "لصق&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:150
-#, fuzzy
 msgid "&Goto Line"
-msgstr "&ذهاب"
+msgstr "&ذهاب إلى سطر"
 
 #: lib/Padre/Wx/Menu/Edit.pm:160
 msgid "&AutoComp"
@@ -2267,6 +2261,9 @@ msgstr "ذهاب الى نافذه فحص بناء الجمل"
 msgid "GoTo Main Window"
 msgstr "ذهاب الى النافذه الرئيسيه"
 
+#, fuzzy
+#~ msgid "Mime type:"
+#~ msgstr "نوع الملف"
 #~ msgid "Close All"
 #~ msgstr "اغلاق الكل"
 #~ msgid "Close All but Current"
