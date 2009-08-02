@@ -78,7 +78,7 @@ sub _mime_type_panel {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Description:') ],
 			[ 'Wx::StaticText', 'description', [] ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Mime type:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Content type:') ],
 			[ 'Wx::StaticText', 'mime_type_name', [] ]
 		],
 	];
