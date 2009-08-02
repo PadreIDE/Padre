@@ -95,8 +95,8 @@ sub new {
 	# call Wx::InitAllImageHeaders() or whatever)
 	{
         my $splash_bmp = Wx::Bitmap->new( 
-	                      Padre::Util::sharefile('padre-splash.xpm'),
-                          Wx::wxBITMAP_TYPE_XPM 
+	                      Padre::Util::sharefile('padre-splash.bmp'),
+                          Wx::wxBITMAP_TYPE_BMP 
                      );
 	    Wx::SplashScreen->new( $splash_bmp,
                            Wx::wxSPLASH_CENTRE_ON_SCREEN|Wx::wxSPLASH_TIMEOUT,
