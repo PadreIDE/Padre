@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-02 09:33+0300\n"
-"PO-Revision-Date: 2009-08-02 09:35+0200\n"
+"PO-Revision-Date: 2009-08-02 09:52+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -1645,16 +1645,15 @@ msgstr "اختيار دليل المشروع"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:444
 msgid "Tree listing"
-msgstr ""
+msgstr "عرض كشجرة"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:445
-#, fuzzy
 msgid "Navigate"
-msgstr "ليلي"
+msgstr "اجتياز"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:446
 msgid "Change listing mode view"
-msgstr ""
+msgstr "اختر طريقة عرض القائمة"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:472
 msgid "Move to other panel"
