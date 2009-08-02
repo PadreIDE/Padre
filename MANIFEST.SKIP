@@ -43,6 +43,7 @@
 dev.pl
 \bprivlib
 ^padre(?:\.exe)?$
+padre-splash-original.xcf
 
 # Perl 6 lexer temp dir
 /lex/

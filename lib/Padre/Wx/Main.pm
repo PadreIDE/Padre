@@ -88,6 +88,20 @@ sub new {
 	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
+	
+	# display Padre's Splash Screen. It is saved as XPM
+	# as it seems (from wxWidgets documentation) that it
+	# is the most portable format (and we don't need to
+	# call Wx::InitAllImageHeaders() or whatever)
+	{
+        my $splash_bmp = Wx::Bitmap->new( 
+	                      Padre::Util::sharefile('padre-splash.xpm'),
+                          Wx::wxBITMAP_TYPE_XPM 
+                     );
+	    Wx::SplashScreen->new( $splash_bmp,
+                           Wx::wxSPLASH_CENTRE_ON_SCREEN|Wx::wxSPLASH_TIMEOUT,
+                           3500, undef, -1 );
+	}
 
 	# Bootstrap some Wx internals
 	my $config = $ide->config;
