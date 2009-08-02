@@ -213,11 +213,7 @@ sub about {
 
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName("Padre");
-	$about->SetIcon(
-	    Padre::Wx::Icon::cast_to_icon(
-		 Padre::Wx::Icon::find('logo',{size=>'64x64'} ) 
-	    )
-	);
+	$about->SetIcon( Padre::Wx::Icon::cast_to_icon( Padre::Wx::Icon::find( 'logo', { size => '64x64' } ) ) );
 	$about->SetDescription( "Perl Application Development and Refactoring Environment\n\n"
 			. "Based on Wx.pm $Wx::VERSION and "
 			. Wx::wxVERSION_STRING . "\n"
