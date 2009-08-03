@@ -567,13 +567,14 @@ sub _guess_mimetype {
 	# Try to identify Perl Scripts based on soft criterias as a last resort
 	# TODO: Improve the tests
 	my $Score = 0;
-	if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )      { $Score += 2; }
-	if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ )                    { $Score += 1; }
-	if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ ) { $Score += 1; }
-	if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{[\r\n]/ )          { $Score += 1; }
-	if ( $text =~ /\=\~ ?\// )                                     { $Score += 1; }
-	if ( $text =~ /\bmy [\$\%\@]/ )                                { $Score += .5; }
-	if ( $text =~ /1\;[\r\n]+$/ )                                  { $Score += .5; }
+	if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )     	{ $Score += 2; }
+	if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ )                   	{ $Score += 1; }
+	if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ )	{ $Score += 1; }
+	if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{[\r\n]/ )         	{ $Score += 1; }
+	if ( $text =~ /\=\~ ?[sm]?\// )                                 { $Score += 1; }
+	if ( $text =~ /\bmy [\$\%\@]/ )                               	{ $Score += .5; }
+	if ( $text =~ /1\;[\r\n]+$/ )                                 	{ $Score += .5; }
+	if ( $text =~ /\$\w+\{/)                                  	{ $Score += .5; }
 	return $self->perl_mime_type($text) if $Score >= 3;
 
 	# Fall back to plain text file
