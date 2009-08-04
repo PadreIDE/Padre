@@ -33,6 +33,7 @@ use Scalar::Util   ();
 use Params::Util qw{_INSTANCE};
 use Padre::Constant ();
 use Padre::Util     ();
+use Padre::Perl     ();
 use Padre::Locale   ();
 use Padre::Current qw{_CURRENT};
 use Padre::Document           ();
@@ -1734,7 +1735,7 @@ sub debug_perl {
 	local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
 
 	# Run with the same Perl that launched Padre
-	my $perl = Padre->perl_interpreter;
+	my $perl = Padre::Perl::perl();
 	$self->run_command(qq["$perl" -d "$filename"]);
 
 }
@@ -4260,7 +4261,7 @@ sub install_cpan {
 	# Validation?
 	#$main->setup_bindings;
 	# Run with the same Perl that launched Padre
-	#my $perl = Padre->perl_interpreter;
+	#my $perl = Padre::Perl::perl();
 	#my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
 	my $cpan = Padre::CPAN->new;

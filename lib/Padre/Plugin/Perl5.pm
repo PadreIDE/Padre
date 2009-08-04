@@ -6,9 +6,14 @@ use warnings;
 use Padre::Wx      ();
 use Padre::Plugin  ();
 use Padre::Current ();
+use Padre::Perl    ();
 
 our $VERSION = '0.42';
 our @ISA     = 'Padre::Plugin';
+
+
+
+
 
 #####################################################################
 # Padre::Plugin Methods
@@ -46,6 +51,10 @@ sub menu_plugins_simple {
 		],
 	];
 }
+
+
+
+
 
 #####################################################################
 # Plugin Methods
@@ -148,6 +157,10 @@ sub install_url {
 	return;
 }
 
+
+
+
+
 #####################################################################
 # Auxiliary Methods
 
@@ -167,7 +180,7 @@ sub install_with_pip {
 	$main->setup_bindings;
 
 	# Run with the same Perl that launched Padre
-	my $perl = Padre->perl_interpreter;
+	my $perl = Padre::Perl::perl();
 	my $cmd  = qq{"$perl" "$pip" "$module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
 	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );

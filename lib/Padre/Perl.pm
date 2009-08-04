@@ -4,10 +4,15 @@ package Padre::Perl;
 # difference between a Perl for GUI purposes and a Perl for command line
 # purposes.
 
+# TODO: Merge this into Probe::Perl some day in the future when this is
+#       perfected, stable and beyond reproach.
+
 use 5.008005;
 use strict;
 use warnings;
-use Padre::Constant ();
+
+# Because this is sometimes used outside the Padre codebase,
+# don't put any dependencies on other Padre modules in here.
 
 my $perl = undef;
 
@@ -34,7 +39,7 @@ sub perl () {
 
 sub wperl () {
 	my $perl = perl();
-	unless ( Padre::Constant::WIN32 ) {
+	unless ( $^O eq 'MSWin32' ) {
 		# No distinction on this platform
 		return $perl;
 	}
@@ -50,7 +55,7 @@ sub wperl () {
 
 sub cperl () {
 	my $perl = perl();
-	unless ( Padre::Constant::WIN32 ) {
+	unless ( $^O eq 'MSWin32' ) {
 		# No distinction on this platform
 		return $perl;
 	}

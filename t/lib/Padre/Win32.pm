@@ -2,7 +2,7 @@ package t::lib::Padre::Win32;
 
 use strict;
 use warnings;
-use Probe::Perl ();
+use Padre::Perl ();
 
 sub setup {
 	require Win32::GuiTest;
@@ -15,15 +15,7 @@ sub setup {
 	my %existing_windows = map { $_ => 1 } FindWindowLike(0, "^Padre");
 
 	# Find Perl (ideally the gui one)
-	my $perl = Probe::Perl->find_perl_interpreter;
-	#if ( $perl =~ /\bperl\.exe\z/ ) {
-		#my $wperl = $perl;
-		#$wperl =~ s/perl\.exe\z/wperl.exe/;
-		#if ( -f $wperl and -e $wperl ) {
-			#$perl = $wperl;
-		#}
-	#}
-
+	my $perl = Padre::Perl::wperl();
 	my $cmd = "start $perl script\\padre";
 	#$t->diag($cmd);
 	system $cmd;

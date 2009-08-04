@@ -2,10 +2,11 @@ package Padre::Task::SyntaxChecker::Perl;
 
 use strict;
 use warnings;
+use Padre::Perl                ();
+use Padre::Task::SyntaxChecker ();
 
 our $VERSION = '0.42';
-
-use base 'Padre::Task::SyntaxChecker';
+our @ISA     = 'Padre::Task::SyntaxChecker';
 
 use version;
 
@@ -61,7 +62,7 @@ sub _check_syntax {
 		$file->print( $self->{text} );
 		$file->close;
 		my @cmd = (
-			Padre->perl_interpreter,
+			Padre::Perl::perl(),
 		);
 		if ( $self->{perl_cmd} ) {
 			push @cmd, @{ $self->{perl_cmd} };

@@ -33,42 +33,18 @@ use Padre::Config   ();
 use Padre::DB       ();
 
 # Generate faster accessors
-use Class::XSAccessor getters => {
-	original_cwd   => 'original_cwd',
-	opts           => 'opts',
-	config         => 'config',
-	wx             => 'wx',
-	task_manager   => 'task_manager',
-	plugin_manager => 'plugin_manager',
+use Class::XSAccessor 
+	getters => {
+		original_cwd   => 'original_cwd',
+		opts           => 'opts',
+		config         => 'config',
+		wx             => 'wx',
+		task_manager   => 'task_manager',
+		plugin_manager => 'plugin_manager',
 	},
 	accessors => {
-	actions => 'actions',
+		actions => 'actions',
 	};
-
-# Globally shared detection of the "current" Perl
-SCOPE: {
-	my $perl;
-
-	sub perl_interpreter {
-		return $perl if defined $perl;
-		require Probe::Perl;
-		require File::Which;
-
-		# Use the most correct method first
-		require Probe::Perl;
-		my $_perl = Probe::Perl->find_perl_interpreter;
-		if ( defined $_perl ) {
-			$perl = $_perl;
-			return $perl;
-		}
-
-		# Fallback to a simpler way
-		require File::Which;
-		$_perl = scalar File::Which::which('perl');
-		$perl  = $_perl;
-		return $perl;
-	}
-}
 
 my $SINGLETON = undef;
 

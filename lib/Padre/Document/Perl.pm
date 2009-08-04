@@ -9,6 +9,7 @@ use Params::Util '_INSTANCE';
 use YAML::Tiny      ();
 use Padre::Document ();
 use Padre::Util     ();
+use Padre::Perl     ();
 
 our $VERSION = '0.42';
 our @ISA     = 'Padre::Document';
@@ -27,9 +28,9 @@ sub ppi_get {
 }
 
 sub ppi_set {
-	my $self = shift;
+	my $self     = shift;
 	my $document = _INSTANCE( shift, 'PPI::Document' );
-	unless ($document) {
+	unless ( $document ) {
 		Carp::croak("Did not provide a PPI::Document");
 	}
 
@@ -175,7 +176,7 @@ sub get_command {
 
 	# Run with the same Perl that launched Padre
 	# TODO: get preferred Perl from configuration
-	my $perl = Padre->perl_interpreter;
+	my $perl = Padre::Perl::perl();
 
 	# Set default arguments
 	my %run_args = (
