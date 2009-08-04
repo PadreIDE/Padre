@@ -16,7 +16,7 @@ sub setup {
 
 	# Find Perl (ideally the gui one)
 	my $perl = Padre::Perl::wperl();
-	my $cmd = "start $perl script\\padre";
+	my $cmd  = "start $perl script\\padre";
 	#$t->diag($cmd);
 	system $cmd;
 	my $padre;
