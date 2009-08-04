@@ -480,12 +480,14 @@ sub search {
 sub _sync_config {
 	my $self = shift;
 
-	# Save the search settings to config
+	# Save the search settings to config only if at least one of them has changed
 	my $config = $self->current->config;
-	$config->set( find_case    => !$self->{find_case}->GetValue );
-	$config->set( find_regex   => $self->{find_regex}->GetValue );
-	$config->set( find_first   => $self->{find_first}->GetValue );
-	$config->set( find_reverse => $self->{find_reverse}->GetValue );
+	my $Changed = 0;
+	for ('find_case','find_regex','find_first','find_reverse') {
+	 next if $config->$_ == $self->{$_}->GetValue;
+	 $config->set( $_    => $self->{$_}->GetValue );
+	 $Changed = 1;
+	}
 	$config->write;
 
 	return $config;
