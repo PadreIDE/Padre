@@ -44,13 +44,14 @@ Padre::Plugin - Padre Plugin API 2.1
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
-use File::Spec   ();
-use Scalar::Util ();
-use Params::Util qw{_HASH0 _INSTANCE};
-use YAML::Tiny ();
-use Padre::DB  ();
-use Padre::Wx  ();
+use Carp           ();
+use File::Spec     ();
+use File::ShareDir ();
+use Scalar::Util   ();
+use Params::Util   qw{_HASH0 _INSTANCE};
+use YAML::Tiny     ();
+use Padre::DB      ();
+use Padre::Wx      ();
 
 our $VERSION    = '0.42';
 our $COMPATIBLE = '0.18';
@@ -105,8 +106,7 @@ The C<plugin_directory_locale()> method will be called by Padre to
 know where to look for your plugin l10n catalog.
 
 It defaults to C<$sharedir/locale> (with C<$sharedir> as defined by
-C<File::ShareDir> or more specifically by C<File::ShareDir::PAR>),
-and thus should work as is for your plugin if you're
+C<File::ShareDir> and thus should work as is for your plugin if you're
 using the C<install_share> command of C<Module::Install>.
 
 Your plugin catalogs should be named C<$plugin-$locale.po> (or C<.mo>
@@ -116,7 +116,10 @@ C<Padre::Plugin::Vi>.
 =cut
 
 sub plugin_locale_directory {
-	return File::Spec->catdir( shift->plugin_share_directory(@_), 'locale' );
+	return File::Spec->catdir(
+		shift->plugin_share_directory(@_),
+		'locale'
+	);
 }
 
 sub plugin_share_directory {
@@ -143,13 +146,12 @@ sub plugin_share_directory {
 	}
 
 	# Find the distribution directory
-	require File::ShareDir::PAR;
-	my $distdir = eval { File::ShareDir::PAR::dist_dir($pkg); };
+	my $dist = eval {
+		File::ShareDir::dist_dir($pkg)
+	};
 	return undef if $@;
 
-	return File::Spec->catdir(
-		$distdir, 'share',
-	);
+	File::Spec->catdir( $dist, 'share' );
 }
 
 =pod

@@ -16,7 +16,11 @@ plugins, as well as providing part of the interface to plugin writers.
 =cut
 
 # API NOTES:
-# This class uses english-style verb_noun method naming
+# - This class uses english-style verb_noun method naming
+#
+# MAINTAINER NOTES:
+# - Don't delete the commented-out PAR-related code, we're turning it
+#   back on at some point.
 
 use strict;
 use warnings;
@@ -37,6 +41,10 @@ use Padre::Wx::Menu::Plugins ();
 
 our $VERSION = '0.42';
 
+
+
+
+
 #####################################################################
 # Constructor and Accessors
 
@@ -54,11 +62,10 @@ First argument should be a Padre object.
 =cut
 
 sub new {
-	my $class = shift;
-	my $parent = shift || Padre->ide;
-	unless ( _INSTANCE( $parent, 'Padre' ) ) {
-		Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
-	}
+	my $class  = shift;
+	my $parent = _INSTANCE(shift, 'Padre') or Carp::croak(
+		"Creation of a Padre::PluginManager without a Padre not possible"
+	);
 
 	my $self = bless {
 		parent                    => $parent,
@@ -70,7 +77,7 @@ sub new {
 		@_,
 	}, $class;
 
-	# initialize empty My Plugin if needed
+	# Initialize empty My Plugin if needed
 	$self->reset_my_plugin(0);
 
 	return $self;
@@ -85,8 +92,7 @@ Stores a reference back to the parent IDE object.
 =head2 plugin_dir
 
 Returns the user plugin directory (below the Padre configuration directory).
-This directory was added to the C<@INC> module search path and may contain
-packaged plugins as PAR files.
+This directory was added to the C<@INC> module search path.
 
 =head2 plugins
 
@@ -132,6 +138,10 @@ sub plugin_names {
 sub plugin_objects {
 	map { $_[0]->{plugins}->{$_} } $_[0]->plugin_names;
 }
+
+
+
+
 
 #####################################################################
 # Bulk Plugin Operations
@@ -266,7 +276,10 @@ plugin has changed while Padre was running.
 sub load_plugins {
 	my $self = shift;
 	$self->_load_plugins_from_inc;
-	$self->_load_plugins_from_par;
+
+	# Disabled until someone other than tsee wants to use PAR plugins :)
+	# $self->_load_plugins_from_par;
+
 	$self->_refresh_plugin_menu;
 	if ( my @failed = $self->failed ) {
 
@@ -376,50 +389,61 @@ sub failed {
 	return grep { $plugins->{$_}->status eq 'error' } keys %$plugins;
 }
 
+
+
+
+
 ######################################################################
 # PAR Integration
 
-# Attempt to load all plugins that sit as .par files in the
-# .padre/plugins/ folder
-sub _load_plugins_from_par {
-	my ($self) = @_;
-	$self->_setup_par;
+# NOTE:
+# Temporarily disabled until we actually start using PAR for plugins.
+# Don't delete this code or tsee will be very sad.
 
-	my $plugin_dir = $self->plugin_dir;
-	opendir my $dh, $plugin_dir or return;
-	while ( my $file = readdir $dh ) {
-		if ( $file =~ /^\w+\.par$/i ) {
+## Attempt to load all plugins that sit as .par files in the
+## .padre/plugins/ folder
+#sub _load_plugins_from_par {
+#    my ($self) = @_;
+#    $self->_setup_par;
+#
+#    my $plugin_dir = $self->plugin_dir;
+#    opendir my $dh, $plugin_dir or return;
+#    while ( my $file = readdir $dh ) {
+#        if ( $file =~ /^\w+\.par$/i ) {
+#            # Only single-level plugins for now.
+#            my $parfile = File::Spec->catfile( $plugin_dir, $file );
+#            PAR->import($parfile);
+#            $file =~ s/\.par$//i;
+#            $file =~ s/-/::/g;
+#
+#            # Caller must refresh plugin menu
+#            $self->_load_plugin($file);
+#        }
+#    }
+#    closedir($dh);
+#    return;
+#}
+#
+## Load the PAR module and setup the cache directory.
+#sub _setup_par {
+#    my ($self) = @_;
+#
+#    return if $self->{par_loaded};
+#
+#    # Setup the PAR environment:
+#    require PAR;
+#    my $plugin_dir = $self->plugin_dir;
+#    my $cache_dir = File::Spec->catdir( $plugin_dir, 'cache' );
+#    $ENV{PAR_GLOBAL_TEMP} = $cache_dir;
+#    File::Path::mkpath($cache_dir) unless -e $cache_dir;
+#    $ENV{PAR_TEMP} = $cache_dir;
+#
+#    $self->{par_loaded} = 1;
+#}
 
-			# Only single-level plugins for now.
-			my $parfile = File::Spec->catfile( $plugin_dir, $file );
-			PAR->import($parfile);
-			$file =~ s/\.par$//i;
-			$file =~ s/-/::/g;
 
-			# Caller must refresh plugin menu
-			$self->_load_plugin($file);
-		}
-	}
-	closedir($dh);
-	return;
-}
 
-# Load the PAR module and setup the cache directory.
-sub _setup_par {
-	my ($self) = @_;
 
-	return if $self->{par_loaded};
-
-	# Setup the PAR environment:
-	require PAR;
-	my $plugin_dir = $self->plugin_dir;
-	my $cache_dir = File::Spec->catdir( $plugin_dir, 'cache' );
-	$ENV{PAR_GLOBAL_TEMP} = $cache_dir;
-	File::Path::mkpath($cache_dir) unless -e $cache_dir;
-	$ENV{PAR_TEMP} = $cache_dir;
-
-	$self->{par_loaded} = 1;
-}
 
 ######################################################################
 # Loading and Unloading a Plugin
@@ -635,6 +659,10 @@ sub reload_plugin {
 	return 1;
 }
 
+
+
+
+
 #####################################################################
 # Enabling and Disabling a Plugin
 
@@ -733,6 +761,10 @@ sub enable_editors {
 	}
 	return 1;
 }
+
+
+
+
 
 ######################################################################
 # Menu Integration
@@ -915,6 +947,10 @@ sub _refresh_plugin_menu {
 	$_[0]->parent->wx->main->menu->plugins->refresh;
 }
 
+
+
+
+
 ######################################################################
 # Support Functions
 
@@ -946,15 +982,11 @@ sub _plugin {
 
 1;
 
-__END__
-
 =pod
 
 =head1 SEE ALSO
 
 L<Padre>, L<Padre::Config>
-
-L<PAR> for more on the plugin system.
 
 =head1 COPYRIGHT
 

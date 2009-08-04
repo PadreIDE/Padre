@@ -38,6 +38,7 @@ sub ACTION_plugin {
 	my ($self) = @_;
 
 	# Need PAR::Dist
+	# Don't make a dependency in the Padre Makefile.PL for this
 	if ( not eval { require PAR::Dist; PAR::Dist->VERSION(0.17) } ) {
 		$self->log_warn("In order to create .par files, you need to install PAR::Dist first.");
 		return ();

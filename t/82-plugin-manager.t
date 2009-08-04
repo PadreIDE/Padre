@@ -61,7 +61,9 @@ SCOPE: {
 ## Test With custom plugins
 SCOPE: {
 	my $custom_dir = File::Spec->catfile( $Bin, 'lib' );
-	my $manager  = Padre::PluginManager->new($padre, plugin_dir => $custom_dir);
+	my $manager  = Padre::PluginManager->new( $padre,
+		plugin_dir => $custom_dir,
+	);
 	is( $manager->plugin_dir, $custom_dir );
 	is( keys %{$manager->plugins}, 0 );
 

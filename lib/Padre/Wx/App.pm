@@ -37,6 +37,10 @@ use Padre::Wx ();
 our $VERSION = '0.42';
 our @ISA     = 'Wx::App';
 
+
+
+
+
 #####################################################################
 # Constructor and Accessors
 
@@ -89,6 +93,10 @@ The C<config> accessor returns the L<Padre::Config> for the application.
 sub config {
 	$_[0]->ide->config;
 }
+
+
+
+
 
 #####################################################################
 # Wx Methods
