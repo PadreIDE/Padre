@@ -26,6 +26,25 @@ use version ();
 
 our $VERSION = '0.42';
 
+# Load the splash screen here, before we get bogged
+# down running the database migration scripts.
+# TODO
+# This means we'll splash even if we run the single
+# instance server, but that's better than before.
+# We need it to be even less whacked.
+BEGIN {
+	# Display Padre's Splash Screen. It is saved as XPM
+	# as it seems (from wxWidgets documentation) that it
+	# is the most portable format (and we don't need to
+	# call Wx::InitAllImageHeaders() or whatever)
+	# NOTE:
+	# Don't show the splash screen during testing otherwise
+	# it will spoil the flashy surprise when they upgrade.
+	unless ( $ENV{HARNESS_ACTIVE} ) {
+		require Padre::Splash;
+	}
+}
+
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials
 use Padre::Constant ();
@@ -148,7 +167,9 @@ sub run {
 	my $self = shift;
 
 	# Clean arguments
-	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
+	$self->{ARGV} = [ map {
+		File::Spec->rel2abs( $_, $self->{original_cwd} )
+	} @ARGV ];
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
@@ -709,8 +730,7 @@ modules/functions/etc.
 
 There is a highly experimental but quite simple plugin system.
 
-A plugin is a module in the Padre::Plugin::* namespace optionally
-packaged as a L<PAR> archive.
+A plugin is a module in the Padre::Plugin::* namespace.
 
 At startup time Padre looks for all such modules in @INC and
 in its own private directory and loads them.
