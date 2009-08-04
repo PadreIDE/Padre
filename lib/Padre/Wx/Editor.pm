@@ -33,6 +33,7 @@ my $data;
 my $data_name;
 my $data_private;
 my $width;
+my $Clipboard_Old;
 
 sub new {
 	my $class    = shift;
@@ -62,6 +63,7 @@ sub new {
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
+	Wx::Event::EVT_MIDDLE_UP($self, \&on_middle_up );
 
 	# Smart highlighting...
 	my @styles = ();
@@ -727,14 +729,32 @@ sub on_left_up {
 	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
-		Wx::wxTheClipboard->UsePrimarySelection(1);
+#		Wx::wxTheClipboard->UsePrimarySelection(1);
 		$self->put_text_to_clipboard($text);
-		Wx::wxTheClipboard->UsePrimarySelection(0);
+#		Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
 	my $doc = $self->{Document};
 	if ( $doc->can('event_on_left_up') ) {
 		$doc->event_on_left_up( $self, $event );
+	}
+
+	$event->Skip;
+	return;
+}
+
+sub on_middle_up {
+	my ( $self, $event ) = @_;
+
+	# TODO: Sometimes there are unexpected effects when using the middle button.
+	# It seems that another event is doing something but not within this module.
+	# Please look at ticket #390 for details!
+
+	Padre::Current->editor->Paste;
+
+	my $doc = $self->{Document};
+	if ( $doc->can('event_on_middle_up') ) {
+		$doc->event_on_middle_up( $self, $event );
 	}
 
 	$event->Skip;
@@ -1039,9 +1059,23 @@ sub current_paragraph {
 	return ( $begin, $end );
 }
 
+sub Paste {
+	my $self = shift;
+
+	# Workaround for Copy/Paste bug ticket #390
+	my $text = $self->get_text_from_clipboard;
+	$self->ReplaceSelection($text);
+
+	return 1;
+}
+
 sub put_text_to_clipboard {
 	my ( $self, $text ) = @_;
 	@_ = (); # Feeble attempt to kill Scalars Leaked
+
+        # Backup last clipboard value:
+        $self->{Clipboard_Old} = $self->get_text_from_clipboard
+         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
 
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
@@ -1052,16 +1086,20 @@ sub put_text_to_clipboard {
 
 sub get_text_from_clipboard {
 
-	# This is to be used as a method even if we don't use $self!
-	# my $self = shift;
+	my $self = shift;
+
 	my $text = '';
 	Wx::wxTheClipboard->Open;
 	if ( Wx::wxTheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
 		my $data = Wx::TextDataObject->new;
 		if ( Wx::wxTheClipboard->GetData($data) ) {
-			$text = $data->GetText;
+			$text = $data->GetText if defined($data);
 		}
 	}
+	if ($text eq $self->GetSelectedText) {
+		$text = $self->{Clipboard_Old};
+	}
+
 	Wx::wxTheClipboard->Close;
 	return $text;
 }
