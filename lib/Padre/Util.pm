@@ -36,6 +36,10 @@ our $VERSION   = '0.42';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = qw(newline_type get_matches _T);
 
+
+
+
+
 #####################################################################
 # Officially Supported Constants
 
@@ -57,6 +61,10 @@ use constant WXGTK   => UNIX;
 
 # The local newline type
 use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
+
+
+
+
 
 #####################################################################
 # Miscellaneous Functions
@@ -186,6 +194,10 @@ sub pwhich {
 	my $bin = 1;
 }
 
+
+
+
+
 #####################################################################
 # Developer-Only Functions
 
@@ -212,25 +224,40 @@ sub svn_directory_revision {
 	return "$1";
 }
 
+
+
+
+
 #####################################################################
 # Shared Resources
 
 sub share {
-	return File::Spec->catdir( $FindBin::Bin, File::Spec->updir, 'share' ) if $ENV{PADRE_DEV};
-	if ( defined $ENV{PADRE_PAR_PATH} ) {
-
-		# File::ShareDir new style path
-		my $path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'auto', 'share', 'dist', 'Padre' );
-		return $path if -d $path;
-
-		# File::ShareDir old style path
-		$path = File::Spec->catdir( $ENV{PADRE_PAR_PATH}, 'inc', 'share' );
-		return $path if -d $path;
+	if ( $ENV{PADRE_DEV} ) {
+		return File::Spec->catdir(
+			$FindBin::Bin,
+			File::Spec->updir, 'share'
+		);
 	}
 
+#    if ( defined $ENV{PADRE_PAR_PATH} ) {
+#        # File::ShareDir new style path
+#        my $path = File::Spec->catdir(
+#            $ENV{PADRE_PAR_PATH},
+#            'inc', 'auto', 'share', 'dist', 'Padre'
+#        );
+#        return $path if -d $path;
+#
+#        # File::ShareDir old style path
+#        $path = File::Spec->catdir(
+#            $ENV{PADRE_PAR_PATH},
+#            'inc', 'share'
+#        );
+#        return $path if -d $path;
+#    }
+
 	# rely on automatic handling of everything
-	require File::ShareDir::PAR;
-	return File::ShareDir::PAR::dist_dir('Padre');
+	require File::ShareDir;
+	return File::ShareDir::dist_dir('Padre');
 }
 
 sub sharedir {
