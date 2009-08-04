@@ -2,6 +2,9 @@ Changes for Perl Application Development and Refactoring Environment
 
 0.43 to be released
     - Added a (hopefully) nice splash screen for Padre (GARU)
+    - Added a Padre::Perl API for discovering the location of the system
+      Perl in a way smart enough to handle people that specifically need a
+      command line Perl, or specifically need a windowing Perl (ADAMK)
 
 0.42 2009.07.31
     - Fixed a bug that crashed Padre while moving panels with outline
