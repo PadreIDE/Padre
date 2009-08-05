@@ -6,6 +6,9 @@ Changes for Perl Application Development and Refactoring Environment
       Perl in a way smart enough to handle people that specifically need a
       command line Perl, or specifically need a windowing Perl (ADAMK)
     - Temporarily remove PAR support (ADAMK)
+    - Upgrade the plugin internals to support arbitrary class names,
+      simplifying the implementation and clearing the way for
+      Acme::Padre::Plugin::* modules. (ADAMK)
 
 0.42 2009.07.31
     - Fixed a bug that crashed Padre while moving panels with outline

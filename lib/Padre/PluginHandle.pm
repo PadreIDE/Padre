@@ -3,37 +3,44 @@ package Padre::PluginHandle;
 use 5.008;
 use strict;
 use warnings;
-use Carp 'croak';
-use Params::Util qw{_STRING _IDENTIFIER _CLASS _INSTANCE};
+use Carp           qw{croak confess};
+use Params::Util   qw{_STRING _IDENTIFIER _CLASS _INSTANCE};
 use Padre::Current ();
 use Padre::Locale  ();
 
 our $VERSION = '0.42';
 
 use overload
-	'bool' => sub {1},
-	'""' => 'name',
+	'bool'     => sub {1},
+	'""'       => 'name',
 	'fallback' => 0;
 
-use Class::XSAccessor getters => {
-	name   => 'name',
-	class  => 'class',
-	object => 'object',
+use Class::XSAccessor
+	getters => {
+		class  => 'class',
+		object => 'object',
 	},
 	accessors => {
-	errstr => 'errstr',
+		errstr => 'errstr',
 	};
+
+
+
+
 
 #####################################################################
 # Constructor and Accessors
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_, status => 'unloaded', errstr => '' }, $class;
+	my $self  = bless { @_,
+		status => 'unloaded',
+		errstr => '',
+	}, $class;
 
 	# Check params
-	unless ( _IDENTIFIER( $self->name ) ) {
-		croak("Missing or invalid name param for Padre::PluginHandle");
+	if ( exists $self->{name} ) {
+		confess("PluginHandle->name should no longer be used (foo)");
 	}
 	unless ( _CLASS( $self->class ) ) {
 		croak("Missing or invalid class param for Padre::PluginHandle");
@@ -48,8 +55,20 @@ sub new {
 	return $self;
 }
 
+
+
+
+
+
 #####################################################################
 # Status Methods
+
+sub locale_prefix {
+	my $self = shift;
+	my $string = $self->class;
+	$string =~ s/::/__/g;
+	return $string;
+}
 
 sub status {
 	my $self = shift;
@@ -113,8 +132,13 @@ sub can_disable {
 
 sub can_editor {
 	$_[0]->{status} eq 'enabled'
-		and $_[0]->{object}->can('editor_enable');
+	and
+	$_[0]->{object}->can('editor_enable');
 }
+
+
+
+
 
 ######################################################################
 # Interface Methods
@@ -130,19 +154,23 @@ sub plugin_name {
 	if ( $object and $object->can('plugin_name') ) {
 		return $object->plugin_name;
 	} else {
-		return $self->name;
+		return $self->class;
 	}
 }
 
 sub version {
 	my $self   = shift;
 	my $object = $self->object;
-	if ($object) {
+	if ( $object ) {
 		return $object->VERSION;
 	} else {
 		return '???';
 	}
 }
+
+
+
+
 
 ######################################################################
 # Pass-Through Methods
@@ -156,19 +184,21 @@ sub enable {
 	# add the plugin catalog to the locale
 	my $locale = Padre::Current->main->{locale};
 	my $code   = Padre::Locale::rfc4646();
-	my $name   = $self->name;
-	$locale->AddCatalog("$name-$code");
+	my $prefix = $self->locale_prefix;
+	$locale->AddCatalog("$prefix-$code");
 
 	# Call the enable method for the object
-	eval { $self->object->plugin_enable; };
-	if ($@) {
+	eval {
+		$self->object->plugin_enable;
+	};
+	if ( $@ ) {
 
 		# Crashed during plugin enable
 		$self->status('error');
 		$self->errstr(
 			sprintf(
 				Wx::gettext("Failed to enable plugin '%s': %s"),
-				$self->name,
+				$self->class,
 				$@,
 			)
 		);
@@ -177,10 +207,10 @@ sub enable {
 
 	# If the plugin defines document types, register them
 	my @documents = $self->object->registered_documents;
-	if (@documents) {
+	if ( @documents ) {
 		require Padre::MimeTypes;
 	}
-	while (@documents) {
+	while ( @documents ) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
 		Padre::MimeTypes->add_mime_class( $type, $class );
@@ -213,7 +243,7 @@ sub enable {
 	# If the plugin has a hook for the context menu, cache it
 	if ( $self->object->can('event_on_context_menu') ) {
 		my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
-		$cxt_menu_hook_cache->{$name} = 1;
+		$cxt_menu_hook_cache->{$self->class} = 1;
 	}
 
 	# Update the status
@@ -246,7 +276,7 @@ sub disable {
 		$self->errstr(
 			sprintf(
 				Wx::gettext("Failed to disable plugin '%s': %s"),
-				$self->name,
+				$self->class,
 				$@,
 			)
 		);
@@ -255,7 +285,7 @@ sub disable {
 
 	# If the plugin has a hook for the context menu, cache it
 	my $cxt_menu_hook_cache = Padre->ide->plugin_manager->plugins_with_context_menu;
-	delete $cxt_menu_hook_cache->{ $self->name() };
+	delete $cxt_menu_hook_cache->{ $self->class };
 
 	# Update the status
 	$self->status('disabled');
@@ -263,6 +293,10 @@ sub disable {
 
 	return 0;
 }
+
+
+
+
 
 ######################################################################
 # Support Methods

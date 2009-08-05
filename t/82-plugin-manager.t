@@ -47,13 +47,13 @@ SCOPE: {
 SCOPE: {
 	my $manager = Padre::PluginManager->new($padre);
 	is( keys %{$manager->plugins}, 0, 'No plugins loaded' );
-	ok( ! $manager->load_plugin('My'), 'Loaded My Plugin' );
+	ok( ! $manager->load_plugin('Padre::Plugin::My'), 'Loaded My Plugin' );
 	is( keys %{$manager->plugins}, 1, 'Loaded something' );
-	my $handle = $manager->_plugin('My');
+	my $handle = $manager->_plugin('Padre::Plugin::My');
 	isa_ok( $handle, 'Padre::PluginHandle' );
-	is( $handle->name, 'My', 'Loaded My Plugin' );
+	is( $handle->name, 'Padre::Plugin::My', 'Loaded My Plugin' );
 	ok( $handle->disabled, 'My Plugin is disabled' );
-	ok( $manager->unload_plugin('My'), '->unload_plugin ok' );
+	ok( $manager->unload_plugin('Padre::Plugin::My'), '->unload_plugin ok' );
 	ok( ! defined($manager->plugins->{My}), 'Plugin no longer loaded' );
 	is( eval("\$Padre::Plugin::My::VERSION"), undef, 'My Plugin was cleaned up' );
 }

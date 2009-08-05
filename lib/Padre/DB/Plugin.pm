@@ -97,15 +97,10 @@ Returns a new L<Padre::DB::Plugin> object.
 =head2 create
 
   my $object = Padre::DB::Plugin->create(
-
-      name => 'value',
-
+      name    => 'value',
       version => 'value',
-
       enabled => 'value',
-
-      config => 'value',
-
+      config  => 'value',
   );
 
 The C<create> constructor is a one-step combination of C<new> and

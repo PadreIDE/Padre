@@ -28,7 +28,9 @@ unless ( -d "$FindBin::Bin/blib" ) {
 
 vmsgfmt($FindBin::Bin);
 
-my $perl = Padre::Perl::wxperl();
+my $perl = ($^O eq 'MSWin32')
+	? Padre::Perl::cperl()
+	: Padre::Perl::wxperl();
 unless ( $perl ) {
 	error("Failed to find windowing Perl to run with");
 }

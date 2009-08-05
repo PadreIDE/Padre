@@ -22,7 +22,7 @@ use Class::XSAccessor accessors => {
 	_label        => '_label',        # label at top of right pane
 	_list         => '_list',         # list on the left of the pane
 	_manager      => '_manager',      # ref to plugin manager
-	_plugin_names => '_plugin_names', # mapping of short/full plugin names
+	_plugin_class => '_plugin_class', # mapping of full name to class
 	_sortcolumn   => '_sortcolumn',   # column used for list sorting
 	_sortreverse  => '_sortreverse',  # list sorting is reversed
 	_whtml        => '_whtml',        # html space for plugin doc
@@ -31,7 +31,9 @@ use Class::XSAccessor accessors => {
 # -- constructor
 
 sub new {
-	my ( $class, $parent, $manager ) = @_;
+	my $class   = shift;
+	my $parent  = shift;
+	my $manager = shift;
 
 	# Create object
 	my $self = $class->SUPER::new(
@@ -113,7 +115,7 @@ sub _on_button_clicked {
 	my $method = $self->_action;
 
 	# call method
-	$self->$method;
+	$self->$method();
 }
 
 #
@@ -122,12 +124,13 @@ sub _on_button_clicked {
 # handler called when a column has been clicked, to reorder the list.
 #
 sub _on_list_col_click {
-	my ( $self, $event ) = @_;
-	my $col      = $event->GetColumn;
+	my $self     = shift;
+	my $event    = shift;
+	my $column   = $event->GetColumn;
 	my $prevcol  = $self->_sortcolumn;
 	my $reversed = $self->_sortreverse;
-	$reversed = $col == $prevcol ? !$reversed : 0;
-	$self->_sortcolumn($col);
+	$reversed = $column == $prevcol ? ! $reversed : 0;
+	$self->_sortcolumn($column);
 	$self->_sortreverse($reversed);
 	$self->_refresh_list;
 }
@@ -153,30 +156,31 @@ sub _on_list_col_click {
 # $event is a Wx::ListEvent.
 #
 sub _on_list_item_selected {
-	my ( $self, $event ) = @_;
-
+	my $self     = shift;
+	my $event    = shift;
 	my $fullname = $event->GetLabel;
-	my $name     = $self->_plugin_names->{$fullname};
-	my $plugin   = $self->_manager->plugins->{$name};
-	$self->_curplugin($plugin);         # storing selected plugin
-	$self->_currow( $event->GetIndex ); # storing selected row
+	my $module   = $self->_plugin_class->{$fullname};
+	my $plugin   = $self->_manager->plugins->{$module};
+	$self->_curplugin($plugin);       # storing selected plugin
+	$self->_currow($event->GetIndex); # storing selected row
 
-	# updating plugin name in right pane
+	# Updating plugin name in right pane
 	$self->_label->SetLabel( $plugin->plugin_name );
 
-	# update plugin documentation
+	# Update plugin documentation
 	require Padre::DocBrowser;
 	my $browser = Padre::DocBrowser->new;
 	my $class   = $plugin->class;
 	my $doc     = $browser->resolve($class);
-	my $output  = eval { $browser->browse($doc) };
-	my $html =
-		$@
+	my $output  = eval {
+		$browser->browse($doc)
+	};
+	my $html = $@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
 		: $output->body;
 	$self->_whtml->SetPage($html);
 
-	# update buttons
+	# Update buttons
 	$self->_update_plugin_state;
 
 	# force window to recompute layout. indeed, changes are that plugin
@@ -311,19 +315,18 @@ sub _create_right_pane {
 # disable plugin, and update gui.
 #
 sub _plugin_disable {
-	my $self = shift;
-
+	my $self   = shift;
 	my $plugin = $self->_curplugin;
 	my $parent = $self->GetParent;
 
 	# disable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 0 );
-	$self->_manager->_plugin_disable( $plugin->name );
+	$self->_manager->_plugin_disable( $plugin->class );
 	$parent->menu->refresh(1);
 	$parent->Thaw;
 
-	# update plugin manager dialog to reflect new state
+	# Update plugin manager dialog to reflect new state
 	$self->_update_plugin_state;
 }
 
@@ -333,19 +336,18 @@ sub _plugin_disable {
 # enable plugin, and update gui.
 #
 sub _plugin_enable {
-	my $self = shift;
-
+	my $self   = shift;
 	my $plugin = $self->_curplugin;
 	my $parent = $self->GetParent;
 
 	# enable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
-	$self->_manager->_plugin_enable( $plugin->name );
+	$self->_manager->_plugin_enable( $plugin->class );
 	$parent->menu->refresh(1);
 	$parent->Thaw;
 
-	# update plugin manager dialog to reflect new state
+	# Update plugin manager dialog to reflect new state
 	$self->_update_plugin_state;
 }
 
@@ -355,8 +357,7 @@ sub _plugin_enable {
 # show plugin error message, in an error dialog box.
 #
 sub _plugin_show_error_msg {
-	my $self = shift;
-
+	my $self    = shift;
 	my $message = $self->_curplugin->errstr;
 	my $title   = Wx::gettext('Error');
 	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
@@ -376,29 +377,29 @@ sub _refresh_list {
 	my $plugins = $manager->plugins;
 	my $imglist = $self->_imagelist;
 
-	# default sorting
+	# Default sorting
 	my $column  = $self->_sortcolumn;
 	my $reverse = $self->_sortreverse;
 
-	# clear image list & fill it again
+	# Clear image list & fill it again
 	$imglist->RemoveAll;
 
-	# default plugin icon
+	# Default plugin icon
 	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 	my %icon = ( plugin => 0 );
 
-	# plugin status
+	# Plugin status
 	my $i = 0;
 	foreach my $name (qw{ enabled disabled error crashed incompatible }) {
 		$imglist->Add( Padre::Wx::Icon::find("status/padre-plugin-$name") );
 		$icon{$name} = ++$i;
 	}
 
-	# get list of plugins, and sort it. note that $manager->plugins names
+	# Get list of plugins, and sort it. note that $manager->plugins names
 	# is sorted (with my plugin first), and that perl sort is now stable:
 	# sorting on another criterion will keep the alphabetical order if new
 	# criterion is not enough.
-	my @plugins = map { $plugins->{$_} } $manager->plugin_names;
+	my @plugins = map { $plugins->{$_} } $manager->plugin_order;
 	if ( $column == 1 ) {
 		no warnings;
 		@plugins = map { $_->[0] }
@@ -408,47 +409,51 @@ sub _refresh_list {
 	@plugins = sort { $a->status cmp $b->status } @plugins if $column == 2;
 	@plugins = reverse @plugins if $reverse;
 
-	# clear plugin list & fill it again
+	# Clear plugin list & fill it again
 	$list->DeleteAllItems;
-	my %plugin_names = ();
+	my %plugin_class = ();
 	foreach my $plugin ( reverse @plugins ) {
-		my $name       = $plugin->name;
+		my $module     = $plugin->class;
 		my $fullname   = $plugin->plugin_name;
 		my $version    = $plugin->version || '???';
 		my $status     = $plugin->status;
 		my $l10nstatus = $plugin->status_localized;
-		$plugin_names{$fullname} = $name;
+		$plugin_class{$fullname} = $module;
 
-		# check if plugin is supplying its own icon
-		my $iconidx = 0;
-		my $icon    = $plugin->plugin_icon;
-		if ( defined($icon) ) {
+		# Check if plugin is supplying its own icon
+		my $position = 0;
+		my $icon     = $plugin->plugin_icon;
+		if ( defined $icon ) {
 			$imglist->Add($icon);
-			$iconidx = $imglist->GetImageCount - 1;
+			$position = $imglist->GetImageCount - 1;
 		}
 
-		# inserting the plugin in the list
-		my $idx = $list->InsertStringImageItem( 0, $fullname, $iconidx );
+		# Inserting the plugin in the list
+		my $idx = $list->InsertStringImageItem( 0, $fullname, $position );
 		$list->SetItem( $idx, 1, $version );
 		$list->SetItem( $idx, 2, $l10nstatus, $icon{$status} );
 	}
 
-	# store mapping of full plugin names / short plugin names
-	$self->_plugin_names( \%plugin_names );
+	# Store mapping of full plugin names / short plugin names
+	$self->_plugin_class( \%plugin_class );
 
-	# auto-resize columns
-	$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE ) for 0 .. 2;
+	# Auto-resize columns
+	foreach ( 0 .. 2 ) {
+		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+	}
 
-	# making sure the list can show all columns
-	my $width = 15; # taking vertical scrollbar into account
-	$width += $list->GetColumnWidth($_) for 0 .. 2;
+	# Making sure the list can show all columns
+	my $width = 15; # Taking vertical scrollbar into account
+	foreach ( 0 .. 2 ) {
+		$width += $list->GetColumnWidth($_);
+	}
 	$list->SetMinSize( [ $width, -1 ] );
 }
 
 #
 # $dialog->_update_plugin_state;
 #
-# update button caption & state, as well as status icon in the list,
+# Update button caption & state, as well as status icon in the list,
 # depending on the new plugin state.
 #
 sub _update_plugin_state {
@@ -457,7 +462,7 @@ sub _update_plugin_state {
 	my $list   = $self->_list;
 	my $item   = $list->GetItem( $self->_currow, 2 );
 
-	# updating buttons
+	# Updating buttons
 	my $button   = $self->_button;
 	my $butprefs = $self->_butprefs;
 
@@ -510,7 +515,7 @@ sub _update_plugin_state {
 			$button->Disable;
 		}
 
-		# updating preferences button
+		# Updating preferences button
 		if ( $plugin->object->can('plugin_preferences') ) {
 			$self->_butprefs->Enable;
 		} else {
@@ -518,7 +523,7 @@ sub _update_plugin_state {
 		}
 	}
 
-	# update the list item
+	# Update the list item
 
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.

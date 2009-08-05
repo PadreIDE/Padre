@@ -15,6 +15,10 @@ use Padre::Wx::Menu ();
 our $VERSION = '0.42';
 our @ISA     = 'Padre::Wx::Menu';
 
+
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -78,7 +82,7 @@ sub new {
 		name       => 'plugins.reload_my_plugin',
 		label      => Wx::gettext('Reload My Plugin'),
 		menu_event => sub {
-			Padre->ide->plugin_manager->reload_plugin('My');
+			Padre->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
 		},
 	);
 
@@ -95,9 +99,9 @@ sub new {
 			);
 			if ( $ret == Wx::wxOK ) {
 				my $manager = Padre->ide->plugin_manager;
-				$manager->unload_plugin("My");
+				$manager->unload_plugin('Padre::Plugin::My');
 				$manager->reset_my_plugin(1);
-				$manager->load_plugin("My");
+				$manager->load_plugin('Padre::Plugin::My');
 			}
 		},
 	);
@@ -134,39 +138,38 @@ sub new {
 	# Add the tools submenu
 	$self->Append( -1, Wx::gettext('Plugin Tools'), $tools );
 
-	$self->add_plugin_specific_entries($main);
+	$self->add($main);
 
 	return $self;
 }
 
-sub add_plugin_specific_entries {
+sub add {
 	my $self = shift;
 	my $main = shift;
 
 	# Clear out any existing entries
-	my $manager = Padre->ide->plugin_manager;
 	my $entries = $self->{plugin_menus} || [];
-	$self->remove_plugin_specific_entries if @$entries;
+	$self->remove if @$entries;
 
 	# Add the enabled plugins that want a menu
-	my $need_seperator = 1;
-	foreach my $name ( $manager->plugin_names ) {
-		my $plugin = $manager->_plugin($name);
+	my $need    = 1;
+	my $manager = Padre->ide->plugin_manager;
+	foreach my $module ( $manager->plugin_order ) {
+		my $plugin = $manager->_plugin($module);
 		next unless $plugin->enabled;
 
 		# Generate the menu for the plugin
-		my @menu = $manager->get_menu( $main, $name );
-		next unless @menu;
+		my @menu = $manager->get_menu($main, $module) or next;
 
 		# Did the previous entry needs a separator after it
-		if ($need_seperator) {
+		if ( $need ) {
 			push @$entries, $self->AppendSeparator;
-			$need_seperator = 0;
+			$need = 0;
 		}
 
 		push @$entries, $self->Append( -1, @menu );
-		if ( $name eq 'My' ) {
-			$need_seperator = 1;
+		if ( $module eq 'Padre::Plugin::My' ) {
+			$need = 1;
 		}
 	}
 
@@ -175,11 +178,11 @@ sub add_plugin_specific_entries {
 	return 1;
 }
 
-sub remove_plugin_specific_entries {
-	my $self = shift;
+sub remove {
+	my $self    = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while (@$entries) {
+	while ( @$entries ) {
 		$self->Destroy( pop @$entries );
 	}
 	$self->{plugin_menus} = $entries;
@@ -191,8 +194,8 @@ sub refresh {
 	my $self = shift;
 	my $main = _CURRENT(@_)->main;
 
-	$self->remove_plugin_specific_entries;
-	$self->add_plugin_specific_entries($main);
+	$self->remove;
+	$self->add($main);
 
 	return 1;
 }
