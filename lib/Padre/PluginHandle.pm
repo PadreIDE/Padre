@@ -12,7 +12,7 @@ our $VERSION = '0.42';
 
 use overload
 	'bool'     => sub {1},
-	'""'       => 'name',
+	'""'       => 'plugin_name',
 	'fallback' => 0;
 
 use Class::XSAccessor
