@@ -255,7 +255,7 @@ sub new {
 	$self->AppendSeparator;
 
 	# Font Size
-	$self->{font_increase} = $self->add_checked_menu_item(
+	$self->{font_increase} = $self->add_menu_item(
 		$self,
 		name       => 'view.font_increase',
 		label      => Wx::gettext('Increase Font Size'),
@@ -265,7 +265,7 @@ sub new {
 		},
 	);
 
-	$self->{font_decrease} = $self->add_checked_menu_item(
+	$self->{font_decrease} = $self->add_menu_item(
 		$self,
 		name       => 'view.font_decrease',
 		label      => Wx::gettext('Decrease Font Size'),
@@ -275,7 +275,7 @@ sub new {
 		},
 	);
 
-	$self->{font_reset} = $self->add_checked_menu_item(
+	$self->{font_reset} = $self->add_menu_item(
 		$self,
 		name       => 'view.font_reset',
 		label      => Wx::gettext('Reset Font Size'),
@@ -288,7 +288,7 @@ sub new {
 	$self->AppendSeparator;
 
 	# Bookmark Support
-	$self->{bookmark_set} = $self->add_checked_menu_item(
+	$self->{bookmark_set} = $self->add_menu_item(
 		$self,
 		name       => 'view.bookmark_set',
 		label      => Wx::gettext('Set Bookmark'),
@@ -299,7 +299,7 @@ sub new {
 		},
 	);
 
-	$self->{bookmark_goto} = $self->add_checked_menu_item(
+	$self->{bookmark_goto} = $self->add_menu_item(
 		$self,
 		name       => 'view.bookmark_goto',
 		label      => Wx::gettext('Goto Bookmark'),
