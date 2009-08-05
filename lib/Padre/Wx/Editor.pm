@@ -33,7 +33,7 @@ my $data;
 my $data_name;
 my $data_private;
 my $width;
-my $Clipboard_Old;
+my $Clipboard_Old = '';
 
 sub new {
 	my $class    = shift;
@@ -1073,9 +1073,11 @@ sub put_text_to_clipboard {
 	my ( $self, $text ) = @_;
 	@_ = (); # Feeble attempt to kill Scalars Leaked
 
+	return if $text eq '';
+
         # Backup last clipboard value:
-        $self->{Clipboard_Old} = $self->get_text_from_clipboard
-         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
+        $self->{Clipboard_Old} = $self->get_text_from_clipboard;
+#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
 
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
