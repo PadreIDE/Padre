@@ -74,11 +74,11 @@ SCOPE: {
 	diag(Dumper(\$manager->plugins));
 
 	ok( ! exists $manager->plugins->{'Development::Tools'},  'no second level plugin' );
-	is( $manager->_plugin('TestPlugin')->class, 'Padre::Plugin::TestPlugin' );
+	is( $manager->_plugin('Padre::Plugin::TestPlugin')->class, 'Padre::Plugin::TestPlugin' );
 	ok( !defined $manager->plugins->{'Test::Plugin'},        'no second level plugin' );
 
 	# try load again
-	my $st = $manager->load_plugin('TestPlugin');
+	my $st = $manager->load_plugin('Padre::Plugin::TestPlugin');
 	is( $st, undef );
 }
 
@@ -90,24 +90,24 @@ unshift @INC, $path;
 my $english = setlocale(LC_CTYPE) eq 'en_US.UTF-8' ? 1 : 0;
 SCOPE: {
 	my $manager  = Padre::PluginManager->new($padre);
-	$manager->load_plugin('A');
-	is $manager->plugins->{'A'}->{status}, 'error', 'error in loading A';
-	my $msg1 = $english ? qr/Plugin:A - Failed to load module/ : qr/.*/;
-	like $manager->plugins->{'A'}->errstr, 
+	$manager->load_plugin('Padre::Plugin::A');
+	is $manager->plugins->{'Padre::Plugin::A'}->{status}, 'error', 'error in loading A';
+	my $msg1 = $english ? qr/Padre::Plugin::A - Failed to load module/ : qr/.*/;
+	like $manager->plugins->{'Padre::Plugin::A'}->errstr, 
 		qr/^$msg1: Global symbol "\$syntax_error" requires explicit package name at/,
 		'text of error message';
 
-	$manager->load_plugin('B');
-	is $manager->plugins->{'B'}->{status}, 'error', 'error in loading B';
-	my $msg2 = $english ? qr/Plugin:B - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/ : qr/.*/;
-	like $manager->plugins->{'B'}->errstr,
+	$manager->load_plugin('Padre::Plugin::B');
+	is $manager->plugins->{'Padre::Plugin::B'}->{status}, 'error', 'error in loading B';
+	my $msg2 = $english ? qr/Padre::Plugin::B - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/ : qr/.*/;
+	like $manager->plugins->{'Padre::Plugin::B'}->errstr,
 		qr/^$msg2/,
 		'text of error message';
 
-	$manager->load_plugin('C');
-	is $manager->plugins->{'C'}->{status}, 'disabled', 'disabled in loading C';
-	my $msg3 = $english ? qr/Plugin:C - Does not have menus/ : qr/.*/;
-	like $manager->plugins->{'C'}->errstr,
+	$manager->load_plugin('Padre::Plugin::C');
+	is $manager->plugins->{'Padre::Plugin::C'}->{status}, 'disabled', 'disabled in loading C';
+	my $msg3 = $english ? qr/Padre::Plugin::C - Does not have menus/ : qr/.*/;
+	like $manager->plugins->{'Padre::Plugin::C'}->errstr,
 		qr/$msg3/,
 		'text of error message';
 }
