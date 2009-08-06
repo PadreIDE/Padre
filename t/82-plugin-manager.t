@@ -51,7 +51,7 @@ SCOPE: {
 	is( keys %{$manager->plugins}, 1, 'Loaded something' );
 	my $handle = $manager->_plugin('Padre::Plugin::My');
 	isa_ok( $handle, 'Padre::PluginHandle' );
-	is( $handle->name, 'Padre::Plugin::My', 'Loaded My Plugin' );
+	is( $handle->class, 'Padre::Plugin::My', 'Loaded My Plugin' );
 	ok( $handle->disabled, 'My Plugin is disabled' );
 	ok( $manager->unload_plugin('Padre::Plugin::My'), '->unload_plugin ok' );
 	ok( ! defined($manager->plugins->{My}), 'Plugin no longer loaded' );
