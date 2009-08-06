@@ -9,6 +9,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Upgrade the plugin internals to support arbitrary class names,
       simplifying the implementation and clearing the way for
       Acme::Padre::Plugin::* modules. (ADAMK)
+    - Updated PPI dependencies. Padre now supports 5.10 syntax in PPI-based
+      features (ADAMK)
 
 0.42 2009.07.31
     - Fixed a bug that crashed Padre while moving panels with outline
