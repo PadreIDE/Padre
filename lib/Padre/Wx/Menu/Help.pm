@@ -213,20 +213,22 @@ sub about {
 
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName("Padre");
-	$about->SetIcon( Padre::Wx::Icon::cast_to_icon( Padre::Wx::Icon::find( 'logo', { size => '64x64' } ) ) );
-	$about->SetDescription( "Perl Application Development and Refactoring Environment\n\n"
-			. "Based on Wx.pm $Wx::VERSION and "
-			. Wx::wxVERSION_STRING . "\n"
-			. "Config at "
-			. Padre::Constant::CONFIG_DIR . "\n"
-			. "SQLite user_version at "
-			. Padre::DB->pragma('user_version')
-			. "\n" );
-	$about->SetVersion($Padre::VERSION);
-	$about->SetCopyright( Wx::gettext("Copyright 2008-2009 The Padre development team as listed in Padre.pm") );
+	$about->SetIcon( Padre::Wx::Icon::cast_to_icon(
+		Padre::Wx::Icon::find( 'logo', { size => '64x64' } )
+	) );
+	$about->SetDescription(
+		  "Perl Application Development and Refactoring Environment\n"
+		. "Based on Wx.pm $Wx::VERSION and " . Wx::wxVERSION_STRING . "\n\n"
+		. "Splash imagery courtesy Jerry Charlotte\n"
+		. "http://www.flickr.com/photos/blackbutterfly/\n\n"
+	);
+	$about->SetVersion( $Padre::VERSION );
+	$about->SetCopyright(
+		Wx::gettext("Copyright 2008 - 2009 The Padre Development Team")
+	);
 
 	# Only Unix/GTK native about box supports websites
-	if (Padre::Constant::WXGTK) {
+	if ( Padre::Constant::WXGTK ) {
 		$about->SetWebSite("http://padre.perlide.org/");
 	}
 
