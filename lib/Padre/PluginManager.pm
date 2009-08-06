@@ -287,41 +287,14 @@ plugin has changed while Padre was running.
 
 sub load_plugins {
 	my $self = shift;
-	$self->_load_plugins_from_inc;
 
-	# Disabled until someone other than tsee wants to use PAR plugins :)
-	# $self->_load_plugins_from_par;
-
-	$self->_refresh_plugin_menu;
-	if ( my @failed = $self->failed ) {
-
-		# Until such time as we can show an error message
-		# in a smarter way, this gets annoying.
-		# Every time you start the editor, we tell you what
-		# we DIDN'T do...
-		# Turn this back on once we can track these over time
-		# and only report on plugins that USED to work but now
-		# have started to fail.
-		# $self->parent->wx->main->error(
-		#     Wx::gettext("Failed to load the following plugin(s):\n")
-		#     . join "\n", @failed
-		# ) unless $ENV{HARNESS_ACTIVE};
-		return;
-	}
-	return;
-}
-
-# attempt to load all plugins that sit as .pm files in the
-# .padre/plugins/Padre/Plugin/ folder
-sub _load_plugins_from_inc {
-	my $self = shift;
-
-	# Try the plugin directory first:
+	# Put the plugin directory first in the load order
 	my $plugin_dir = $self->plugin_dir;
 	unless ( grep { $_ eq $plugin_dir } @INC ) {
 		unshift @INC, $plugin_dir;
 	}
 
+	# Attempt to load all plugins in the Padre::Plugin::* namespace
 	my %seen = ();
 	foreach my $inc ( @INC ) {
 		my $dir = File::Spec->catdir( $inc, 'Padre', 'Plugin' );
@@ -338,6 +311,45 @@ sub _load_plugins_from_inc {
 			next if $seen{$module}++;
 			$self->_load_plugin($module);
 		}
+	}
+
+	# Attempt to load all plugins in the Acme::Padre::* namespace
+	# TODO: Put this code behind some kind of future security option,
+	#       once we have one.
+	foreach my $inc ( @INC ) {
+		my $dir = File::Spec->catdir( $inc, 'Acme', 'Padre' );
+		next unless -d $dir;
+
+		local *DIR;
+		opendir( DIR, $dir )       or die("opendir($dir): $!");
+		my @files = readdir( DIR ) or die("readdir($dir): $!");
+		closedir( DIR )            or die("closedir($dir): $!");
+
+		foreach ( @files ) {
+			next unless s/\.pm$//;
+			my $module = "Acme::Padre::$_";
+			next if $seen{$module}++;
+			$self->_load_plugin($module);
+		}
+	}
+
+	# Disabled until someone other than tsee wants to use PAR plugins :)
+	# $self->_load_plugins_from_par;
+
+	$self->_refresh_plugin_menu;
+	if ( my @failed = $self->failed ) {
+		# Until such time as we can show an error message
+		# in a smarter way, this gets annoying.
+		# Every time you start the editor, we tell you what
+		# we DIDN'T do...
+		# Turn this back on once we can track these over time
+		# and only report on plugins that USED to work but now
+		# have started to fail.
+		# $self->parent->wx->main->error(
+		#     Wx::gettext("Failed to load the following plugin(s):\n")
+		#     . join "\n", @failed
+		# ) unless $ENV{HARNESS_ACTIVE};
+		return;
 	}
 
 	return;
