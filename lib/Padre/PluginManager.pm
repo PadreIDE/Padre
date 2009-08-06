@@ -542,7 +542,7 @@ sub _load_plugin {
 	if ( $@ ) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Crashed while instantiating: $@"),
+				Wx::gettext("%s - Crashed while instantiating: %s"),
 				$module, $@,
 			)
 		);
