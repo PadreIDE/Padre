@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-06 17:02-0300\n"
-"PO-Revision-Date: 2009-08-06 22:28+0100\n"
+"PO-Revision-Date: 2009-08-06 22:33+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1022,9 +1022,8 @@ msgid "Output"
 msgstr "Ausgabe"
 
 #: lib/Padre/Wx/Right.pm:48
-#, fuzzy
 msgid "Document Tools"
-msgstr "Speicherort:"
+msgstr "Dokumenten-Tools"
 
 #: lib/Padre/Wx/StatusBar.pm:253
 msgid "Background Tasks are running"
@@ -1751,7 +1750,6 @@ msgid "&Join lines"
 msgstr "Zei&len zusammenführen\tStrg-J"
 
 #: lib/Padre/Wx/Menu/Edit.pm:204
-#, fuzzy
 msgid "&Toggle Comment"
 msgstr "Kommen&tierung umschalten\tStrg-Umschalt-C"
 
@@ -1760,9 +1758,8 @@ msgid "&Comment Selected Lines"
 msgstr "Ausgewählte Zeilen: &Auskommentieren\tStrg-M"
 
 #: lib/Padre/Wx/Menu/Edit.pm:224
-#, fuzzy
 msgid "&Uncomment Selected Lines"
-msgstr "Ausgewählte Zeilen: &Auskommentieren\tStrg-M"
+msgstr "A&usgewählte Zeilen: Kommentar entfernen\tStrg-M"
 
 #: lib/Padre/Wx/Menu/Edit.pm:236
 msgid "Convert Encoding"
@@ -1773,9 +1770,8 @@ msgid "Encode document to System Default"
 msgstr "Dokument in Systemstandard kodieren"
 
 #: lib/Padre/Wx/Menu/Edit.pm:253
-#, fuzzy
 msgid "Encode document to utf-8"
-msgstr "Kein geöffnetes Dokument"
+msgstr "Dokument in utf-8 konvertieren"
 
 #: lib/Padre/Wx/Menu/Edit.pm:273
 msgid "Convert EOL"
@@ -1826,9 +1822,8 @@ msgid "Lower All"
 msgstr "Alles in Kleinbuchstaben\tStrg-U"
 
 #: lib/Padre/Wx/Menu/Edit.pm:384
-#, fuzzy
 msgid "Diff Tools"
-msgstr "Plugin Werkzeuge"
+msgstr "Diff Tools"
 
 #: lib/Padre/Wx/Menu/Edit.pm:391
 msgid "Diff to Saved Version"
