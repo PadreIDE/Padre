@@ -1,6 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.43 to be released
+    - Revised nice splash screen slightly. Move original artwork
+      to Padre-Artwork (BRAMBLE)
     - Added a (hopefully) nice splash screen for Padre (GARU)
     - Added a Padre::Perl API for discovering the location of the system
       Perl in a way smart enough to handle people that specifically need a
