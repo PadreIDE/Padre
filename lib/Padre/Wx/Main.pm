@@ -4215,13 +4215,16 @@ sub on_new_from_template {
 		Padre::Util::sharedir('templates'),
 		"template.$extension"
 	);
-	$editor->insert_from_file($file);
-
-	my $document = $editor->{Document};
-	$document->set_mimetype( Padre::MimeTypes->mime_type_by_extension($extension) );
-	$document->editor->padre_setup;
-	$document->rebless;
-
+	
+	if ( $editor->insert_from_file($file) ) {
+        my $document = $editor->{Document};
+        $document->set_mimetype( Padre::MimeTypes->mime_type_by_extension($extension) );
+        $document->editor->padre_setup;
+        $document->rebless;
+    }
+    else {
+        $self->message( sprintf(Wx::gettext("Error loading template file '%s'"), $file ));
+    }
 	return;
 }
 
