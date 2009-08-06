@@ -67,7 +67,7 @@ SCOPE: {
 	is( $manager->plugin_dir, $custom_dir );
 	is( keys %{$manager->plugins}, 0 );
 
-	$manager->_load_plugins_from_inc;
+	$manager->load_plugins;
 	# cannot compare with the exact numbers as there might be plugins already installed
 	cmp_ok(keys %{$manager->plugins}, '>=', 3, 'at least 3 plugins')
 	or
