@@ -1279,7 +1279,7 @@ sub insert_from_file {
 
 	$self->insert_text($text);
 
-	return;
+	return $file;
 }
 
 sub vertically_align {
