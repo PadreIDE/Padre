@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-06 17:02-0300\n"
-"PO-Revision-Date: 2009-08-06 22:33+0100\n"
+"PO-Revision-Date: 2009-08-07 08:07+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -17,9 +17,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: lib/Padre/Config.pm:178
-#, fuzzy
 msgid "Previous open files"
-msgstr "Offene Dateien:"
+msgstr "Frühere geöffnete Dateien"
 
 #: lib/Padre/Config.pm:179
 msgid "A new empty file"
@@ -1094,9 +1093,8 @@ msgstr "Enkodieren zu:"
 
 #: lib/Padre/Wx/Dialog/Encode.pm:62
 #: lib/Padre/Wx/Menu/Edit.pm:263
-#, fuzzy
 msgid "Encode document to..."
-msgstr "Dokument betrachten als..."
+msgstr "Dokument umkodieren zu..."
 
 #: lib/Padre/Wx/Dialog/Find.pm:54
 #: lib/Padre/Wx/Dialog/Find.pm:160
