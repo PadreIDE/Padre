@@ -112,8 +112,10 @@ sub data {
 }
 
 sub error { # Error Message
- Wx::MessageBox($_[1],    Wx::gettext("Error"),
-			Wx::wxOK, Padre->ide->wx->main);
+ my $self = shift;
+ my $text = shift;
+ Wx::MessageBox($text,    Wx::gettext("Error"),
+			Wx::wxOK, $self->main);
 
 }
 
