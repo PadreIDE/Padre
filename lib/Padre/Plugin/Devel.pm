@@ -79,7 +79,7 @@ sub menu_plugins_simple {
 		Wx::gettext('Simulate Crash')             => 'simulate_crash',
 		Wx::gettext('Simulate Crashing Bg Task')  => 'simulate_task_crash',
 		'---'                                     => undef,
-		Wx::gettext('wxWidgets 2.8.10 Reference') => sub {
+		sprintf(Wx::gettext('wxWidgets %s Reference'),'2.8.10') => sub {
 			Padre::Wx::launch_browser('http://docs.wxwidgets.org/2.8.10/');
 		},
 		Wx::gettext('STC Reference') => sub {
