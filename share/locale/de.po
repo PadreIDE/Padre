@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-07 20:49+0200\n"
-"PO-Revision-Date: 2009-08-07 21:36+0100\n"
+"PO-Revision-Date: 2009-08-07 22:31+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1133,7 +1133,7 @@ msgstr "&Alle ersetzen"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:154
 msgid "&Find Next"
-msgstr "Weitersuchen\tF3"
+msgstr "Weitersuchen"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:174
 msgid "&Replace"
@@ -1154,7 +1154,7 @@ msgstr "Finde"
 #: lib/Padre/Wx/Dialog/Replace.pm:218
 #: lib/Padre/Wx/Dialog/Find.pm:168
 msgid "Find Text:"
-msgstr "Weitersuchen\tF3"
+msgstr "Weitersuchen"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:242
 #: lib/Padre/Wx/Menu/Search.pm:105
@@ -1717,11 +1717,11 @@ msgstr "Zeige als dezimal"
 #: lib/Padre/Wx/Menu/Search.pm:43
 #: lib/Padre/Wx/Menu/Search.pm:82
 msgid "Find Next"
-msgstr "Weitersuchen\tF3"
+msgstr "Weitersuchen"
 
 #: lib/Padre/Wx/Menu/Search.pm:53
 msgid "&Find Previous"
-msgstr "Finde vorhergehende\tUmschalt-F3"
+msgstr "Finde vorhergehende"
 
 #: lib/Padre/Wx/Menu/Search.pm:66
 msgid "Quick Find"
@@ -1729,7 +1729,7 @@ msgstr "Schnell finden"
 
 #: lib/Padre/Wx/Menu/Search.pm:92
 msgid "Find Previous"
-msgstr "Finde vorhergehende\tUmschalt-F3"
+msgstr "Finde vorhergehende"
 
 #: lib/Padre/Wx/Menu/Search.pm:118
 msgid "Find in Fi&les..."
