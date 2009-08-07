@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-06 17:02-0300\n"
-"PO-Revision-Date: 2009-08-07 08:07+0100\n"
+"PO-Revision-Date: 2009-08-07 08:54+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -644,15 +644,15 @@ msgstr "Verzeichnis wählen"
 
 #: lib/Padre/Wx/DocBrowser.pm:148
 msgid "&Close\tCtrl+W"
-msgstr "S&chließen\tStrg-W"
+msgstr "S&chließen\tStrg+W"
 
 #: lib/Padre/Wx/DocBrowser.pm:149
 msgid "&Open\tCtrl+O"
-msgstr "Öffnen...\tStrg-O"
+msgstr "Öffnen...\tStrg+O"
 
 #: lib/Padre/Wx/DocBrowser.pm:152
 msgid "E&xit\tCtrl+X"
-msgstr "&Beenden\tStrg-X"
+msgstr "&Beenden\tStrg+X"
 
 #: lib/Padre/Wx/DocBrowser.pm:328
 msgid "Untitled"
@@ -664,31 +664,31 @@ msgstr "NAME"
 
 #: lib/Padre/Wx/Editor.pm:818
 msgid "Select all\tCtrl-A"
-msgstr "Alles auswählen\tStrg-A"
+msgstr "Alles auswählen\tStrg+A"
 
 #: lib/Padre/Wx/Editor.pm:829
 msgid "&Copy\tCtrl-C"
-msgstr "&Kopieren\tStrg-C"
+msgstr "&Kopieren\tStrg+C"
 
 #: lib/Padre/Wx/Editor.pm:841
 msgid "Cu&t\tCtrl-X"
-msgstr "&Ausschneiden\tStrg-X"
+msgstr "&Ausschneiden\tStrg+X"
 
 #: lib/Padre/Wx/Editor.pm:853
 msgid "&Paste\tCtrl-V"
-msgstr "&Einfügen\tStrg-V"
+msgstr "&Einfügen\tStrg+V"
 
 #: lib/Padre/Wx/Editor.pm:870
 msgid "&Toggle Comment\tCtrl-Shift-C"
-msgstr "Kommen&tierung umschalten\tStrg-Umschalt-C"
+msgstr "Kommen&tierung umschalten\tStrg+Umschalt+C"
 
 #: lib/Padre/Wx/Editor.pm:878
 msgid "&Comment Selected Lines\tCtrl-M"
-msgstr "Ausgewählte Zeilen: &Auskommentieren\tStrg-M"
+msgstr "Ausgewählte Zeilen: &Auskommentieren\tStrg+M"
 
 #: lib/Padre/Wx/Editor.pm:885
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
-msgstr "Ausgewählte Zeilen: Kommentar &entfernen\tStrg-Umschalt-M"
+msgstr "Ausgewählte Zeilen: Kommentar &entfernen\tStrg+Umschalt+M"
 
 #: lib/Padre/Wx/Editor.pm:906
 msgid "Fold all"
@@ -1709,11 +1709,11 @@ msgstr "Alles auswählen"
 
 #: lib/Padre/Wx/Menu/Edit.pm:78
 msgid "Mark selection start"
-msgstr "Anfang der Markierung\tStrg-["
+msgstr "Anfang der Markierung"
 
 #: lib/Padre/Wx/Menu/Edit.pm:89
 msgid "Mark selection end"
-msgstr "Ende der Markierung\tStrg-]"
+msgstr "Ende der Markierung"
 
 #: lib/Padre/Wx/Menu/Edit.pm:100
 msgid "Clear selection marks"
@@ -1737,27 +1737,27 @@ msgstr "&Gehe zu Zeile"
 
 #: lib/Padre/Wx/Menu/Edit.pm:160
 msgid "&AutoComp"
-msgstr "&AutoComp\tStrg-P"
+msgstr "&AutoComp"
 
 #: lib/Padre/Wx/Menu/Edit.pm:170
 msgid "&Brace matching"
-msgstr "&Zugehörige Klammer finden\tStrg-1"
+msgstr "&Zugehörige Klammer finden"
 
 #: lib/Padre/Wx/Menu/Edit.pm:180
 msgid "&Join lines"
-msgstr "Zei&len zusammenführen\tStrg-J"
+msgstr "Zei&len zusammenführen"
 
 #: lib/Padre/Wx/Menu/Edit.pm:204
 msgid "&Toggle Comment"
-msgstr "Kommen&tierung umschalten\tStrg-Umschalt-C"
+msgstr "Kommen&tierung umschalten"
 
 #: lib/Padre/Wx/Menu/Edit.pm:214
 msgid "&Comment Selected Lines"
-msgstr "Ausgewählte Zeilen: &Auskommentieren\tStrg-M"
+msgstr "Ausgewählte Zeilen: &Auskommentieren"
 
 #: lib/Padre/Wx/Menu/Edit.pm:224
 msgid "&Uncomment Selected Lines"
-msgstr "A&usgewählte Zeilen: Kommentar entfernen\tStrg-M"
+msgstr "A&usgewählte Zeilen: Kommentar entfernen"
 
 #: lib/Padre/Wx/Menu/Edit.pm:236
 msgid "Convert Encoding"
@@ -1817,7 +1817,7 @@ msgstr "Alles in Großbuchstaben"
 
 #: lib/Padre/Wx/Menu/Edit.pm:371
 msgid "Lower All"
-msgstr "Alles in Kleinbuchstaben\tStrg-U"
+msgstr "Alles in Kleinbuchstaben"
 
 #: lib/Padre/Wx/Menu/Edit.pm:384
 msgid "Diff Tools"
@@ -1881,7 +1881,7 @@ msgstr "Perl Distribution (Module::Starter)"
 
 #: lib/Padre/Wx/Menu/File.pm:94
 msgid "&Open..."
-msgstr "Öffnen...\tStrg-O"
+msgstr "Öffnen..."
 
 #: lib/Padre/Wx/Menu/File.pm:105
 msgid "&Close"
@@ -2072,7 +2072,7 @@ msgstr "Skript ausführen (Debug Info)\tUmschalt-F5"
 
 #: lib/Padre/Wx/Menu/Run.pm:52
 msgid "Run Command"
-msgstr "Befehl ausführen\tStrg-F5"
+msgstr "Befehl ausführen"
 
 #: lib/Padre/Wx/Menu/Run.pm:62
 #: lib/Padre/Wx/Menu/Run.pm:72
@@ -2178,15 +2178,15 @@ msgstr "Automatischer Zeilenumbruch"
 
 #: lib/Padre/Wx/Menu/View.pm:261
 msgid "Increase Font Size"
-msgstr "Schrift vergrößern\tStrg-+"
+msgstr "Schrift vergrößern"
 
 #: lib/Padre/Wx/Menu/View.pm:271
 msgid "Decrease Font Size"
-msgstr "Schrift verkleinern\tStrg--"
+msgstr "Schrift verkleinern"
 
 #: lib/Padre/Wx/Menu/View.pm:281
 msgid "Reset Font Size"
-msgstr "Schriftgröße zurücksetzen\tStrg-/"
+msgstr "Schriftgröße zurücksetzen"
 
 #: lib/Padre/Wx/Menu/View.pm:305
 msgid "Goto Bookmark"
@@ -2234,7 +2234,7 @@ msgstr "V&orherige Datei"
 
 #: lib/Padre/Wx/Menu/Window.pm:65
 msgid "Last Visited File"
-msgstr "Zuletzt aufgerufene Datei\tStrg-6"
+msgstr "Zuletzt aufgerufene Datei"
 
 #: lib/Padre/Wx/Menu/Window.pm:75
 msgid "Right Click"
@@ -2295,31 +2295,31 @@ msgstr "Editor-Bereich\tAlt-M"
 #~ msgid "Replace With"
 #~ msgstr "Ersetze durch:"
 #~ msgid "&Find\tCtrl-F"
-#~ msgstr "&Finde\tStrg-F"
+#~ msgstr "&Finde\tStrg+F"
 #~ msgid "Replace\tCtrl-R"
-#~ msgstr "Ersetze\tStrg-R"
+#~ msgstr "Ersetze\tStrg+R"
 #~ msgid "Find Next\tF4"
 #~ msgstr "Finde nächste\tF4"
 #~ msgid "Find Previous\tShift-F4"
 #~ msgstr "Finde vorhergehende\tUmschalt-F4"
 #~ msgid "&New\tCtrl-N"
-#~ msgstr "&Neu\tStrg-N"
+#~ msgstr "&Neu\tStrg+N"
 #~ msgid "Open Selection\tCtrl-Shift-O"
-#~ msgstr "Öffne Auswahl\tStrg-Umschalt-O"
+#~ msgstr "Öffne Auswahl\tStrg+Umschalt+O"
 #~ msgid "Open Session...\tCtrl-Alt-O"
-#~ msgstr "Öffne Sitzung...\tStrg-Umschalt-O"
+#~ msgstr "Öffne Sitzung...\tStrg+Umschalt+O"
 #~ msgid "Close All"
 #~ msgstr "Alle schließen"
 #~ msgid "Close All but Current"
 #~ msgstr "Alle schließen außer dem aktiven Dokument"
 #~ msgid "&Save\tCtrl-S"
-#~ msgstr "&Speichern\tStrg-S"
+#~ msgstr "&Speichern\tStrg+S"
 #~ msgid "Save &As...\tF12"
 #~ msgstr "Speichern &als...\tF12"
 #~ msgid "Save Session...\tCtrl-Alt-S"
-#~ msgstr "Sitzung speichern...\tStrg-Alt-S"
+#~ msgstr "Sitzung speichern...\tStrg+Alt+S"
 #~ msgid "&Quit\tCtrl-Q"
-#~ msgstr "&Beenden\tStrg-Q"
+#~ msgstr "&Beenden\tStrg+Q"
 #~ msgid "Stop\tF6"
 #~ msgstr "Stop\tF6"
 #~ msgid "Use PPI Syntax Highlighting"
@@ -2333,21 +2333,21 @@ msgstr "Editor-Bereich\tAlt-M"
 #~ msgid "All available plugins on CPAN"
 #~ msgstr "Alle im CPAN verfügbaren Plugins"
 #~ msgid "&Goto\tCtrl-G"
-#~ msgstr "&Gehe zu\tStrg-G"
+#~ msgstr "&Gehe zu\tStrg+G"
 #~ msgid "Snippets\tCtrl-Shift-A"
-#~ msgstr "Schnipsel\tStrg-Umschalt-A"
+#~ msgstr "Schnipsel\tStrg+Umschalt+A"
 #~ msgid "Upper All\tCtrl-Shift-U"
-#~ msgstr "Alles in Großbuchstaben\tStrg-Umschalt-U"
+#~ msgstr "Alles in Großbuchstaben\tStrg+Umschalt+U"
 #~ msgid "Diff"
 #~ msgstr "Vergleich"
 #~ msgid "Next File\tCtrl-TAB"
-#~ msgstr "Nächste Datei\tStrg-TAB"
+#~ msgstr "Nächste Datei\tStrg+TAB"
 #~ msgid "Previous File\tCtrl-Shift-TAB"
-#~ msgstr "Vorherige Datei\tStrg-Umschalt-TAB"
+#~ msgstr "Vorherige Datei\tStrg+Umschalt+TAB"
 #~ msgid "Set Bookmark\tCtrl-B"
-#~ msgstr "Setze Lesezeichen\tStrg-B"
+#~ msgstr "Setze Lesezeichen\tStrg+B"
 #~ msgid "Goto Bookmark\tCtrl-Shift-B"
-#~ msgstr "Gehe zu Lesezeichen\tStrg-Umschalt-B"
+#~ msgstr "Gehe zu Lesezeichen\tStrg+Umschalt+B"
 #~ msgid "ctrl"
 #~ msgstr "strg"
 #~ msgid "shift"
