@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-07 20:49+0200\n"
-"PO-Revision-Date: 2009-08-07 20:50+0100\n"
+"PO-Revision-Date: 2009-08-07 21:36+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -2178,7 +2178,7 @@ msgstr "Datei erneut laden"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:26
 msgid "Search"
-msgstr "&Suchen"
+msgstr "Suchen"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:400
 msgid "Skip hidden files"
