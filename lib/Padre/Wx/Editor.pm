@@ -111,6 +111,12 @@ sub data {
 	return $data;
 }
 
+sub error { # Error Message
+ Wx::MessageBox($_[1],    Wx::gettext("Error"),
+			Wx::wxOK, Padre->ide->wx->main);
+
+}
+
 # most of this should be read from some external files
 # but for now we use this if statement
 sub padre_setup {
@@ -1289,7 +1295,7 @@ sub vertically_align {
 	my $begin = $editor->LineFromPosition( $editor->GetSelectionStart );
 	my $end   = $editor->LineFromPosition( $editor->GetSelectionEnd );
 	if ( $begin == $end ) {
-		$_[0]->error( Wx::gettext("You must select a range of lines") );
+		$editor->error( Wx::gettext("You must select a range of lines") );
 		return;
 	}
 	my @line = ( $begin .. $end );
@@ -1305,7 +1311,7 @@ sub vertically_align {
 	my $start = $editor->GetSelectionStart;
 	my $c = $editor->GetTextRange( $start, $start + 1 );
 	unless ( defined $c and $c =~ /^[^\s\w]$/ ) {
-		$_[0]->error( Wx::gettext("First character of selection must be a non-word character to align") );
+		$editor->error( Wx::gettext("First character of selection must be a non-word character to align") );
 	}
 
 	# Locate the position of the align character,
