@@ -529,6 +529,7 @@ sub _on_tree_item_expanding {
 	my $node_data = $self->GetPlData($node);
 
 	# Returns if a search is being done (expands only the browser listing)
+	return if ! defined($self->search);
 	return if $self->search->{in_use}->{ $self->parent->project_dir };
 
 	# The item complete path
