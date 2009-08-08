@@ -7,7 +7,6 @@ use FindBin      qw($Bin);
 use File::Spec   ();
 use File::Temp   ();
 use Data::Dumper qw(Dumper);
-use Test::Deep;
 use Test::NoWarnings;
 
 use Padre::Autosave;
@@ -38,7 +37,7 @@ SCOPE: {
 	my @files = $autosave->list_files;
 	is_deeply( \@files, ['a.pl'], 'a.pl in database' );
 	my $revs = $autosave->list_revisions('a.pl');
-	cmp_deeply( $revs, [[1, $ts, 'initial']], 'list revisions' );
+	is_deeply( $revs, [[1, $ts, 'initial']], 'list revisions' );
 }
 
 SCOPE: {
@@ -48,7 +47,7 @@ SCOPE: {
 	my @files = $autosave->list_files;
 	is_deeply( \@files, ['a.pl'], 'a.pl in database');
 	my $revs = $autosave->list_revisions('a.pl');
-	cmp_deeply( $revs, [[1, $ts, 'initial'], [2, $ts, 'usersave']], 'list revisions' );
+	is_deeply( $revs, [[1, $ts, 'initial'], [2, $ts, 'usersave']], 'list revisions' );
 }
 
 my $buffer_1 = 'buffer://1234';
@@ -67,9 +66,9 @@ SCOPE: {
 	my @files = $autosave->list_files;
 	is_deeply( \@files, ['a.pl', $buffer_1], 'a.pl and buffer in database');
 	my $revs = $autosave->list_revisions('a.pl');
-	cmp_deeply( $revs, [[1, $ts, 'initial'], [2, $ts, 'usersave'], [4, $ts, 'autosave']], 'list revisions' );
+	is_deeply( $revs, [[1, $ts, 'initial'], [2, $ts, 'usersave'], [4, $ts, 'autosave']], 'list revisions' );
 	$revs = $autosave->list_revisions($buffer_1);
-	cmp_deeply( $revs, [[3, $ts, 'autosave'], [5, $ts, 'autosave']], 'list revisions' );
+	is_deeply( $revs, [[3, $ts, 'autosave'], [5, $ts, 'autosave']], 'list revisions' );
 }
 
 # TODO do we really need the 'initial' type ?
