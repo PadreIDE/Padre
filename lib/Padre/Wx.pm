@@ -29,7 +29,7 @@ BEGIN {
 		and
 		$Wx::VERSION >= 0.91
 	) {
-		die("You Wx.pm is not new enough (need 0.91, found $Wx::VERSION)";
+		die("You Wx.pm is not new enough (need 0.91, found $Wx::VERSION)");
 	}
 }
 
