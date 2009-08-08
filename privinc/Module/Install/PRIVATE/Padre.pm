@@ -120,7 +120,8 @@ sub make_exe {
 	my $self = shift;
 
 	# temporary tool to create executable using PAR
-	eval "use Module::ScanDeps 0.88; 1;" or die $@;
+	eval "use Module::ScanDeps 0.93; 1;" or die $@;
+	#eval "use PAR::Packer 0.993; 1;" or die $@;
 
 	my @libs    = get_libs();
 	my @modules = get_modules();
@@ -128,7 +129,7 @@ sub make_exe {
 	if ( -e $exe ) {
 		unlink $exe or die "Cannot remove '$exe' $!";
 	}
-	my @cmd	= ( 'pp', '-o', $exe, qw{ -I lib script/padre } );
+	my @cmd	= ( 'pp', '--cachedeps', 'pp_cached_dependencies', '--reusable', '-o', $exe, qw{ -I lib script/padre } );
 	push @cmd, @modules;
 	push @cmd, @libs;
 	if ( $^O =~ /win32/i ) {
