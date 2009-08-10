@@ -11,8 +11,8 @@ Padre::Autosave - autosave and recovery mechanism for Padre
 
 =head1 SYNOPSIS
 
-  my $autosave = Padre:Autosave->new(db => 'path/to/database');
-  $autosave->save_file($path, $type, $data, $timestamp) = @_;
+  my $autosave = Padre:Autosave->new( db => 'path/to/database' );
+  $autosave->save_file( $path, $type, $data, $timestamp ) = @_;
 
 =head1 DESCRIPTION
 
@@ -77,15 +77,13 @@ for the autosave till the first usersave.
 
 The same mechanizm will be really useful when we start
 providing remote editing. Then a file is identifyed by 
-its URI 
-( ftp://machine/path/to/file or scp://machine/path/to/file )
+its URI ( ftp://machine/path/to/file or scp://machine/path/to/file )
 
-
-my @types = qw(initial, autosave, usersave, external);
-
-sub save_data {
-	my ($path, $timestamp, $type, $data) = @_;
-}
+  my @types = qw(initial, autosave, usersave, external);
+  
+  sub save_data {
+      my ($path, $timestamp, $type, $data) = @_;
+  }
 
 =cut
 
@@ -95,7 +93,12 @@ sub new {
 
 	Carp::croak("No filename is given") if not $self->{dbfile};
 
-	require ORLite; import ORLite { file => $self->{dbfile}, create => 1, table => 0 };
+	require ORLite;
+	ORLite->import( {
+		file   => $self->{dbfile},
+		create => 1,
+		table  => 0,
+	} );
 	$self->setup;
 
 	return $self;
@@ -125,13 +128,15 @@ END_SQL
 
 }
 
-sub types { return qw(initial autosave usersave external); }
+sub types {
+	return qw(initial autosave usersave external);
+}
 
 sub list_files {
-	my ($self) = @_;
-
-	my $rows = $self->selectall_arrayref('SELECT DISTINCT path FROM autosave');
-	return map {@$_} @$rows;
+	my $rows = $_[0]->selectall_arrayref(
+		'SELECT DISTINCT path FROM autosave'
+	);
+	return map { @$_ } @$rows;
 }
 
 sub save_file {
@@ -140,6 +145,7 @@ sub save_file {
 	Carp::croak("Missing type")         if not defined $type;
 	Carp::croak("Invalid type '$type'") if not grep { $type eq $_ } $self->types;
 	Carp::croak("Missing file")         if not defined $path;
+
 	$self->do(
 		'INSERT INTO autosave ( path, timestamp, type, content ) values ( ?, ?, ?, ?)',
 		{}, $path, time(), $type, $content,
@@ -153,7 +159,7 @@ sub list_revisions {
 
 	Carp::croak("Missing file") if not defined $path;
 	return $self->selectall_arrayref(
-		"SELECT id, timestamp, type FROM autosave WHERE path=? ORDER BY id",
+		"SELECT id, timestamp, type FROM autosave WHERE path = ? ORDER BY id",
 		undef, $path
 	);
 }
