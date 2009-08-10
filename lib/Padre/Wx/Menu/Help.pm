@@ -15,6 +15,10 @@ use Padre::Wx::Menu ();
 our $VERSION = '0.42';
 our @ISA     = 'Padre::Wx::Menu';
 
+
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -33,7 +37,7 @@ sub new {
 		id         => Wx::wxID_HELP,
 		label      => Wx::gettext('Help'),
 		menu_event => sub {
-			$_[0]->menu->help->help( $_[0] );
+			$_[0]->menu->help->help($_[0]);
 		},
 	);
 	$self->add_menu_item(
@@ -149,15 +153,16 @@ sub new {
 		},
 	);
 
-	# Add the About
 	$self->AppendSeparator;
+
+	# Add the About
 	$self->add_menu_item(
 		$self,
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
 		label      => Wx::gettext('&About'),
 		menu_event => sub {
-			$_[0]->menu->help->about;
+			$_[0]->about->ShowModal;
 		},
 	);
 
@@ -206,76 +211,6 @@ sub on_help_close {
 		delete Padre->ide->wx->main->{help};
 		$help->Destroy;
 	}
-}
-
-sub about {
-	my $self = shift;
-
-	my $about = Wx::AboutDialogInfo->new;
-	$about->SetName("Padre");
-	$about->SetIcon( Padre::Wx::Icon::cast_to_icon(
-		Padre::Wx::Icon::find( 'logo', { size => '64x64' } )
-	) );
-	$about->SetDescription(
-		  "Perl Application Development and Refactoring Environment\n"
-		. "Based on Wx.pm $Wx::VERSION and " . Wx::wxVERSION_STRING . "\n\n"
-		. "Splash imagery courtesy Jerry Charlotte\n"
-		. "http://www.flickr.com/photos/blackbutterfly/\n\n"
-	);
-	$about->SetVersion( $Padre::VERSION );
-	$about->SetCopyright(
-		Wx::gettext("Copyright 2008 - 2009 The Padre Development Team")
-	);
-
-	# Only Unix/GTK native about box supports websites
-	if ( Padre::Constant::WXGTK ) {
-		$about->SetWebSite("http://padre.perlide.org/");
-	}
-
-	$about->AddDeveloper("Adam Kennedy");
-	$about->AddDeveloper("Ahmad Zawawi - أحمد محمد زواوي");
-	$about->AddDeveloper("Breno G. de Oliveira");
-	$about->AddDeveloper("Brian Cassidy");
-	$about->AddDeveloper("Cezary Morga");
-	$about->AddDeveloper("Chris Dolan");
-	$about->AddDeveloper("Claudio Ramirez");
-	$about->AddDeveloper("Fayland Lam");
-	$about->AddDeveloper("Gabriel Vieira");
-	$about->AddDeveloper("Gábor Szabó - גאבור סבו ");
-	$about->AddDeveloper("Heiko Jansen");
-	$about->AddDeveloper("Jérôme Quelin");
-	$about->AddDeveloper("Kaare Rasmussen");
-	$about->AddDeveloper("Keedi Kim - 김도형");
-	$about->AddDeveloper("Kenichi Ishigaki - 石垣憲一");
-	$about->AddDeveloper("Max Maischein");
-	$about->AddDeveloper("Patrick Donelan");
-	$about->AddDeveloper("Paweł Murias");
-	$about->AddDeveloper("Petar Shangov");
-	$about->AddDeveloper("Ryan Niebur");
-	$about->AddDeveloper("Steffen Müller");
-
-	$about->AddTranslator("Arabic - Ahmad Zawawi - أحمد محمد زواوي");
-	$about->AddTranslator("German - Heiko Jansen");
-	$about->AddTranslator("French - Jérôme Quelin");
-	$about->AddTranslator("Hebrew - Omer Zak - עומר זק");
-	$about->AddTranslator("Hebrew - Shlomi Fish - שלומי פיש");
-	$about->AddTranslator("Hebrew - Amir E. Aharoni - אמיר א. אהרוני");
-	$about->AddTranslator("Hungarian - György Pásztor");
-	$about->AddTranslator("Italian - Simone Blandino");
-	$about->AddTranslator("Japanese - Kenichi Ishigaki - 石垣憲一");
-	$about->AddTranslator("Korean - Keedi Kim - 김도형");
-	$about->AddTranslator("Norwegian - Kjetil Skotheim");
-	$about->AddTranslator("Russian - Andrew Shitov");
-	$about->AddTranslator("Dutch - Dirk De Nijs");
-	$about->AddTranslator("Polish - Cezary Morga");
-	$about->AddTranslator("Portuguese (BR) - Breno G. de Oliveira");
-	$about->AddTranslator("Spanish - Paco Alguacil");
-	$about->AddTranslator("Spanish - Enrique Nell");
-	$about->AddTranslator("Czech - Marcela Mašláňová");
-	$about->AddTranslator("Chinese (Trad./TW) - BlueT - Matthew Lien - 練喆明");
-
-	Wx::AboutBox($about);
-	return;
 }
 
 1;
