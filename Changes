@@ -13,6 +13,10 @@ Changes for Perl Application Development and Refactoring Environment
       Acme::Padre::Plugin::* modules. (ADAMK)
     - Updated PPI dependencies. Padre now supports 5.10 syntax in PPI-based
       features (ADAMK)
+    - Find dialog now uses the Padre::Search API. (ADAMK)
+    - New multiple-tabbed About box (ADAMK)
+    - F3 with sub-line selected text converts it directly into an active
+      search without needing to invoke the Find dialog (ADAMK)
 
 0.42 2009.07.31
     - Fixed a bug that crashed Padre while moving panels with outline
