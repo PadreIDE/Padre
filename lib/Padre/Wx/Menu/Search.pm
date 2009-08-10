@@ -5,12 +5,17 @@ package Padre::Wx::Menu::Search;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Search   ();
+use Padre::Current  qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.42';
 our @ISA     = 'Padre::Wx::Menu';
+
+
+
+
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -43,7 +48,39 @@ sub new {
 		label      => Wx::gettext('Find Next'),
 		shortcut   => 'F3',
 		menu_event => sub {
-			$_[0]->find->find_next;
+			my $editor   = $_[0]->current->editor;
+
+			# Handle the obvious case with nothing selected
+			my ($position1, $position2) = $editor->GetSelection;
+			if ( $position1 == $position2 ) {
+				return $_[0]->search_next;
+			}
+
+			# Multiple lines are also done the obvious way
+			my $line1 = $editor->LineFromPosition($position1);
+			my $line2 = $editor->LineFromPosition($position2);
+			unless ( $line1 == $line2 ) {
+				return $_[0]->search_next;
+			}
+
+			# Special case. Make and save a non-regex
+			# case-insensitive search and advance to the next hit.
+			my $search = Padre::Search->new(
+				find_case    => 0,
+				find_regex   => 0,
+				find_reverse => 0,
+				find_term    => $editor->GetTextRange(
+					$position1, $position2,
+				),
+			);
+			$_[0]->search_next($search);
+
+			# If we can't find another match, show a message
+			if ( ($editor->GetSelection)[0] == $position1 ) {
+				$_[0]->error( Wx::gettext(
+					"Failed to find any matches"
+				) );
+			}
 		},
 	);
 
@@ -53,7 +90,7 @@ sub new {
 		label      => Wx::gettext('&Find Previous'),
 		shortcut   => 'Shift-F3',
 		menu_event => sub {
-			$_[0]->find->find_previous;
+			$_[0]->search_previous;
 		},
 	);
 
@@ -65,14 +102,14 @@ sub new {
 		name       => 'search.quick_find',
 		label      => Wx::gettext('Quick Find'),
 		menu_event => sub {
-			Padre->ide->config->set(
+			$_[0]->config->set(
 				'find_quick',
 				$_[1]->IsChecked ? 1 : 0,
 			);
 			return;
 		},
 	);
-	$self->{quick_find}->Check( Padre->ide->config->find_quick );
+	$self->{quick_find}->Check( $main->config->find_quick );
 
 	# We should be able to remove F4 and shift-F4 and hook this functionality
 	# to F3 and shift-F3 Incremental find (#60)
