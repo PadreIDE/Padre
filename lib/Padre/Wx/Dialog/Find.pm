@@ -19,6 +19,7 @@ use strict;
 use warnings;
 use Params::Util qw{_STRING};
 use Padre::Current               ();
+use Padre::Search                ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::MainChild   ();
@@ -43,9 +44,6 @@ Create and return a C<Padre::Wx::Dialog::Find> search widget.
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	unless ($main) {
-		die("Did not pass parent to find dialog constructor");
-	}
 
 	# Create the Wx dialog
 	my $self = $class->SUPER::new(
@@ -56,6 +54,8 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU | Wx::wxRESIZE_BORDER
 	);
+
+	# Form Components
 
 	# The text to search for
 	$self->{find_text} = Padre::Wx::History::ComboBox->new(
@@ -85,7 +85,7 @@ sub new {
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('&Use Regex'),
+		Wx::gettext('&Regular Expression'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -123,34 +123,50 @@ sub new {
 		}
 	);
 
-	# The "Find" button
-	$self->{find} = Wx::Button->new(
+	# The "Find Next" button
+	$self->{find_button} = Wx::Button->new(
 		$self,
 		Wx::wxID_FIND,
-		Wx::gettext("&Find"),
+		Wx::gettext("&Find Next"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{find},
+		$self->{find_button},
 		sub {
-			$_[0]->find_clicked;
-		}
+			$_[0]->find_button;
+		},
 	);
-	$self->{find}->SetDefault;
+	$self->{find_button}->SetDefault;
+
+	# The "Count All" button
+	$self->{count_button} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext("&Count All"),
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{count_button},
+		sub {
+			$_[0]->count_button;
+		},
+	);
 
 	# The "Cancel" button
-	$self->{cancel} = Wx::Button->new(
+	$self->{cancel_button} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("&Cancel"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{cancel},
+		$self->{cancel_button},
 		sub {
-			$_[0]->cancel;
+			$_[0]->cancel_button;
 		}
 	);
+
+	# Form Layout
 
 	# Find sizer begins here
 	my $find = Wx::StaticBoxSizer->new(
@@ -177,16 +193,16 @@ sub new {
 		Wx::wxGROW | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
 		5,
 	);
-	$find->Add(
+
+	# The layout grid for the options
+	my $grid = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
+	$grid->AddGrowableCol(1);
+	$grid->Add(
 		$self->{find_regex},
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
 		5,
 	);
-
-	# The layout grid for the options
-	my $grid = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
-	$grid->AddGrowableCol(1);
 	$grid->Add(
 		$self->{find_case},
 		0,
@@ -225,13 +241,19 @@ sub new {
 	# Sizer for the buttons
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$bottom->Add(
-		$self->{find},
+		$self->{find_button},
 		0,
 		Wx::wxGROW | Wx::wxRIGHT,
 		5,
 	);
 	$bottom->Add(
-		$self->{cancel},
+		$self->{count_button},
+		0,
+		Wx::wxGROW,
+		5,
+	);
+	$bottom->Add(
+		$self->{cancel_button},
 		0,
 		Wx::wxGROW | Wx::wxLEFT,
 		5,
@@ -265,32 +287,107 @@ sub new {
 
 	# Update the dialog from configuration
 	my $config = $self->current->config;
-	$self->{find_case}->SetValue( $config->find_case );
-	$self->{find_regex}->SetValue( $config->find_regex );
-	$self->{find_first}->SetValue( $config->find_first );
+	$self->{find_case   }->SetValue( $config->find_case    );
+	$self->{find_regex  }->SetValue( $config->find_regex   );
+	$self->{find_first  }->SetValue( $config->find_first   );
 	$self->{find_reverse}->SetValue( $config->find_reverse );
 
 	return $self;
 }
 
+
+
+
+
+######################################################################
+# Button Events
+
 =pod
 
-=head2 cancel
+=head2 find_button
 
-  $self->cancel
+  $self->find_button
+
+Executed when Find button is clicked.
+
+Performs search on the term specified in the dialog.
+
+=cut
+
+sub find_button {
+	my $self   = shift;
+	my $main   = $self->main;
+	my $config = $self->save;
+
+	# Generate the search object
+	my $search = $self->as_search;
+	unless ( $search ) {
+		$main->error("Not a valid search");
+		return;
+	}
+
+	# Apply the search to the current editor
+	$main->search_next($search);
+
+	# If we're only searching once, we won't need the dialog any more
+	if ( $self->{find_first}->GetValue ) {
+		$self->Hide;
+	}
+
+	return;
+}
+
+=pod
+
+=head2 count_button
+
+  $self->count_button
+
+Count and announce the number of matches in the document.
+
+=cut
+
+sub count_button {
+	my $self   = shift;
+	my $config = $self->save;
+
+	# Generate the search object
+	my $search = $self->as_search;
+	unless ( $search ) {
+		$self->main->error( Wx::gettext("Not a valid search") );
+		return;
+	}
+
+	# Find the number of matches
+	my $editor  = $self->current->editor or return;
+	my $matches = $search->editor_count_all($editor);
+	$self->main->message( sprintf(
+		Wx::gettext("Found %d matching occurances"),
+		$matches,
+	) );
+}
+
+=pod
+
+=head2 cancel_button
+
+  $self->cancel_button
 
 Hide dialog when pressed cancel button.
 
 =cut
 
-sub cancel {
+sub cancel_button {
 	my $self = shift;
 	$self->Hide;
+
+	# Keep any setting changes.
+	$self->save;
 
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ($editor) {
+	if ( $editor ) {
 		$editor->SetFocus;
 	}
 
@@ -316,7 +413,7 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
-	return if not $self->current->editor; # no search if no file is open (TODO ??)
+	return unless $self->current->editor; # no search if no file is open (TODO ??)
 
 	# TODO: if selection is more than one lines then consider it as the limit
 	# of the search and not as the string to be used
@@ -328,7 +425,7 @@ sub find {
 	$self->{find_text}->SetFocus;
 
 	if ( $self->IsShown ) {
-		$self->find_next;
+		$self->find_button;
 	} else {
 		$self->Show(1);
 	}
@@ -336,209 +433,57 @@ sub find {
 	return;
 }
 
-=pod
 
-=head2 find_clicked
 
-  $self->find_clicked
 
-Executed when Find button is clicked.
-
-Performs search on the term specified in the dialog.
-
-=cut
-
-sub find_clicked {
-	my $self   = shift;
-	my $config = $self->_sync_config;
-
-	# If we're only searching once, we won't need the dialog any more
-	if ( $config->find_first ) {
-		$self->Hide;
-	}
-
-	# Return false if we don't have anything to search for
-	my $search = $self->{find_text}->GetValue;
-	return unless defined _STRING($search);
-
-	# Save the search term
-	Padre::DB::History->create(
-		type => 'search',
-		name => $search,
-	) if $search;
-
-	# Execute the first search
-	$self->search;
-
-	return;
-}
-
-=pod
-
-=head2 find_next
-
-  $self->find_next
-
-Search for given string's next occurence.  If no string is available
-(either as a selected text in editor, if Quick Find is on, or from
-search history) run C<find> method.
-
-=cut
-
-sub find_next {
-	my $self    = shift;
-	my $current = $self->current;
-	my $term    = Padre::DB::History->previous('search');
-
-	# This is for Quick Find
-	# Check if is checked
-	if ( $current->main->menu->search->{quick_find}->IsChecked ) {
-		my $text = $current->text;
-		if ( length $text and $text ne $term ) {
-			Padre::DB::History->create(
-				type => 'search',
-				name => $text,
-			);
-		}
-	}
-
-	if ($term) {
-		$self->search;
-	} else {
-		$self->find;
-	}
-
-	return;
-}
-
-=pod
-
-=head2 find_previous
-
-  $self->find_previous
-
-Perform backward search for string fetched from search history
-or run C<find> method if search history is empty.
-
-=cut
-
-sub find_previous {
-	my $self = shift;
-	my $term = Padre::DB::History->previous('search');
-	if ($term) {
-		$self->search( rev => 1 );
-	} else {
-		$self->find;
-	}
-	return;
-}
-
-=pod
-
-=head2 search
-
-  $self->search
-
-Perform actual search. Highlight (set as selected) found string.
-
-=cut
-
-sub search {
-	my $self  = shift;
-	my %args  = @_;
-	my $regex = $self->_get_search or return;
-
-	# Forwards or backwards
-	my $backwards = $self->current->config->find_reverse;
-	if ( $args{rev} ) {
-		$backwards = not $backwards;
-	}
-
-	# Find the range to search within
-	my $editor = $self->current->editor;
-	return if not $editor; # avoid crash if no file is open
-	my $text = $editor->GetTextRange( 0, $editor->GetLength );
-	my ( $from, $to ) = $editor->GetSelection;
-
-	# Execute the search and move to the resulting location
-	my ( $start, $end, @matches ) = Padre::Util::get_matches( $text, $regex, $from, $to, $backwards );
-
-	if ( !defined $start ) {
-		$self->_not_found;
-		return;
-	}
-	$editor->SetSelection( $start, $end );
-
-	return;
-}
 
 #####################################################################
 # Support Methods
 
-# Save the dialog settings to configuration. Returns the config object
-# as a convenience.
-sub _sync_config {
-	my $self = shift;
+=pod
 
-	# Save the search settings to config only if at least one of them has changed
-	my $config = $self->current->config;
-	my $Changed = 0;
-	for ('find_case','find_regex','find_first','find_reverse') {
-	 next if $config->$_ == $self->{$_}->GetValue;
-	 $config->set( $_    => $self->{$_}->GetValue );
-	 $Changed = 1;
+=head2 as_search
+
+Integration with L<Padre::Search>. Generates a search instance for the currently
+configured information in the Find dialog.
+
+Returns a L<Padre::Search> object, or C<undef> if current state of the dialog
+does not result in a valid search.
+
+=cut
+
+sub as_search {
+	my $self = shift;
+	Padre::Search->new(
+		find_term    => $self->{find_text}->GetValue,
+		find_case    => $self->{find_case}->GetValue,
+		find_regex   => $self->{find_regex}->GetValue,
+		find_reverse => $self->{find_reverse}->GetValue,
+	);
+}
+
+# Save the dialog settings to configuration.
+# Returns the config object as a convenience.
+sub save {
+	my $self    = shift;
+	my $config  = $self->current->config;
+	my $changed = 0;
+
+	foreach my $name ( qw{
+		find_case
+		find_regex
+		find_first
+		find_reverse
+	} ) {
+		my $value = $self->{$name}->GetValue;
+		next if $config->$name() == $value;
+		$config->set( $name => $value );
+		$changed = 1;
 	}
-	$config->write;
+
+	$config->write if $changed;
 
 	return $config;
-}
-
-# Internal method. $self->_get_search( $regex )
-# Prepare and return search term defined as a regular expression.
-sub _get_search {
-	my $self   = shift;
-	my $config = $self->current->config;
-	my $term   = Padre::DB::History->previous('search');
-
-	# Escape the raw search term
-	if ( $config->find_regex ) {
-
-		# Escape non-trailing $ so they won't interpolate
-		$term =~ s/\$(?!\z)/\\\$/g;
-	} else {
-
-		# Escape everything
-		$term = quotemeta $term;
-	}
-
-	# Compile the regex
-	my $regex = eval { $config->find_case ? qr/$term/m : qr/$term/mi };
-	if ($@) {
-		Wx::MessageBox(
-			sprintf( Wx::gettext("Cannot build regex for '%s'"), $term ),
-			Wx::gettext('Search error'),
-			Wx::wxOK,
-			$self->main,
-		);
-		return;
-	}
-
-	return $regex;
-}
-
-sub _not_found {
-	my ($self) = @_;
-
-	# Want to see if not found this is
-	# where to show a MessageBox.
-	my $term = Padre::DB::History->previous('search');
-	Wx::MessageBox(
-		sprintf( Wx::gettext("Failed to find '%s' in current document."), $term ),
-		Wx::gettext('Not Found'),
-		Wx::wxOK,
-		$self,
-	);
-
 }
 
 1;
