@@ -85,7 +85,7 @@ object as argument, to get a reference to the Padre application.
 #       individual step tighter and better abstracted.
 sub new {
 	my $class = shift;
-	my $ide   = shift;
+	my $ide = shift;
 	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
@@ -99,7 +99,7 @@ sub new {
 	Wx::InitAllImageHandlers();
 
 	# Determine the window title
-	my $title = '     \o/ Padre - 1st Birthday Edition! \o/     ';
+	my $title = 'Padre';
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
@@ -331,59 +331,128 @@ Accessors that may not belong to this class:
 
 =cut
 
-use Class::XSAccessor predicates => {
-
-	# Needed for lazily-constructed gui elements
-	has_find      => 'find',
-	has_replace   => 'replace',
-	has_outline   => 'outline',
-	has_directory => 'directory',
+use Class::XSAccessor
+	predicates => {
+		# Needed for lazily-constructed gui elements
+		has_about     => 'about',
+		has_find      => 'find',
+		has_replace   => 'replace',
+		has_outline   => 'outline',
+		has_directory => 'directory',
 	},
 	getters => {
+		# GUI Elements
+		title     => 'title',
+		config    => 'config',
+		ide       => 'ide',
+		aui       => 'aui',
+		menu      => 'menu',
+		notebook  => 'notebook',
+		left      => 'left',
+		right     => 'right',
+		functions => 'functions',
+		bottom    => 'bottom',
+		output    => 'output',
+		syntax    => 'syntax',
+		errorlist => 'errorlist',
 
-	# GUI Elements
-	title     => 'title',
-	config    => 'config',
-	ide       => 'ide',
-	aui       => 'aui',
-	menu      => 'menu',
-	notebook  => 'notebook',
-	left      => 'left',
-	right     => 'right',
-	functions => 'functions',
-	bottom    => 'bottom',
-	output    => 'output',
-	syntax    => 'syntax',
-	errorlist => 'errorlist',
+		# Operating Data
+		cwd        => 'cwd',
+		search     => 'search',
+		no_refresh => '_no_refresh',
 
-	# Operating Data
-	cwd        => 'cwd',
-	no_refresh => '_no_refresh',
-
-	# Things that are probably in the wrong place
-	ack => 'ack',
+		# Things that are probably in the wrong place
+		ack => 'ack',
 	};
 
+sub about {
+	my $self = shift;
+	unless ( defined $self->{about} ) {
+		require Padre::Wx::About;
+		$self->{about} = Padre::Wx::About->new($self);
+	}
+	return $self->{about};
+}
+
 sub outline {
-	$_[0]->{outline}
-		or $_[0]->{outline} = do {
+	my $self = shift;
+	unless ( defined $self->{outline} ) {
 		require Padre::Wx::Outline;
-		Padre::Wx::Outline->new( $_[0] );
-		};
+		$self->{outline} = Padre::Wx::Outline->new($self);
+	}
+	return $self->{outline};
 }
 
 sub directory {
-	$_[0]->{directory}
-		or $_[0]->{directory} = do {
+	my $self = shift;
+	unless ( defined $self->{directory} ) {
 		require Padre::Wx::Directory;
-		Padre::Wx::Directory->new( $_[0] );
-		};
+		$self->{directory} = Padre::Wx::Directory->new($self);
+	}
+	return $self->{directory};
 }
 
 sub directory_panel {
 	my $self = shift;
 	my $side = $self->config->main_directory_panel;
 	return $self->$side();
+}
+
+=pod
+
+=head3 find
+
+    my $find = $main->find;
+
+Returns the find dialog, creating a new one if needed.
+
+=cut
+
+sub find {
+	my $self = shift;
+	unless ( defined $self->{find} ) {
+		require Padre::Wx::Dialog::Find;
+		$self->{find} = Padre::Wx::Dialog::Find->new($self);
+	}
+	return $self->{find};
+}
+
+=pod
+
+=head3 fast_find
+
+    my $find = $main->fast_find;
+
+Return current quick find dialog. Create a new one if needed.
+
+=cut
+
+sub fast_find {
+	my $self = shift;
+	unless ( defined $self->{fast_find} ) {
+		require Padre::Wx::Dialog::Search;
+		$self->{fast_find} = Padre::Wx::Dialog::Search->new;
+	}
+	return $self->{fast_find};
+}
+
+=pod
+
+=head3 replace
+
+    my $replace = $main->replace;
+
+Return current replace dialog. Create a new one if needed.
+
+=cut
+
+sub replace {
+	my $self = shift;
+	unless ( defined $self->{replace} ) {
+		require Padre::Wx::Dialog::Replace;
+		$self->{replace} = Padre::Wx::Dialog::Replace->new($self);
+	}
+	return $self->{replace};
 }
 
 =pod
@@ -681,7 +750,7 @@ sub single_instance_connect {
 
 =pod
 
-=heda3 single_instance_command
+=head3 single_instance_command
 
     $main->single_instance_command( $line );
 
@@ -1143,6 +1212,7 @@ sub reconfig {
 	# TODO - Implement this
 
 	# Show or hide all the main gui elements
+	# TODO - Move this into the config ->apply logic
 	$self->show_functions( $config->main_functions );
 	$self->show_outline( $config->main_outline );
 	$self->show_directory( $config->main_directory );
@@ -1183,7 +1253,7 @@ sub rebuild_toolbar {
 
 =pod
 
-=head2 Panel Tools
+=head2 Tools and Dialogs
 
 Those methods deal with the various panels that Padre provides, and
 allow to show or hide them.
@@ -1541,8 +1611,7 @@ sub run_command {
 	# the external execution.
 	my $config = $self->config;
 	if ( $config->run_use_external_window ) {
-		if (Padre::Util::WIN32) {
-
+		if ( Padre::Util::WIN32 ) {
 			# '^' is the escape character in win32 command line
 			# '"' is needed to escape spaces and other characters in paths
 			$cmd =~ s/"/^/g;
@@ -1871,69 +1940,6 @@ sub error {
 
 =pod
 
-=head3 find
-
-    my $find = $main->find;
-
-Returns the find dialog, creating a new one if needed.
-
-=cut
-
-sub find {
-	my $self = shift;
-
-	unless ( defined $self->{find} ) {
-		require Padre::Wx::Dialog::Find;
-		$self->{find} = Padre::Wx::Dialog::Find->new($self);
-	}
-
-	return $self->{find};
-}
-
-=pod
-
-=head3 fast_find
-
-    my $find = $main->fast_find;
-
-Return current quick find dialog. Create a new one if needed.
-
-=cut
-
-sub fast_find {
-	my $self = shift;
-
-	unless ( defined $self->{fast_find_panel} ) {
-		require Padre::Wx::Dialog::Search;
-		$self->{fast_find_panel} = Padre::Wx::Dialog::Search->new;
-	}
-
-	return $self->{fast_find_panel};
-}
-
-=pod
-
-=head3 replace
-
-    my $replace = $main->replace;
-
-Return current replace dialog. Create a new one if needed.
-
-=cut
-
-sub replace {
-	my $self = shift;
-
-	unless ( defined $self->{replace} ) {
-		require Padre::Wx::Dialog::Replace;
-		$self->{replace} = Padre::Wx::Dialog::Replace->new($self);
-	}
-
-	return $self->{replace};
-}
-
-=pod
-
 =head3 prompt
 
     my $value = $main->prompt( $title, $subtitle, $key );
@@ -1959,6 +1965,76 @@ sub prompt {
 	my $value = $dialog->GetValue;
 	$dialog->Destroy;
 	return $value;
+}
+
+=pod
+
+=head2 Search and Replace
+
+These methods provide the highest level abstraction for entry into the various
+search and replace functions and dialogs.
+
+However, they still represent abstract logic and should NOT be tied directly to
+keystroke or menu events.
+
+=head2 search_next
+
+  # Next match for a new search
+  $main->search_next( $search );
+  
+  # Next match on current search (or show Find dialog if none)
+  $main->search_next;
+
+Find the next match for the current search, or spawn the Find dialog.
+
+If no files are open, silently do nothing (don't even remember the new search)
+
+=cut
+
+sub search_next {
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	if ( _INSTANCE($_[0], 'Padre::Search') ) {
+		$self->{search} = shift;
+	} elsif ( @_ ) {
+		die("Invalid argument to search_next");
+	}
+	if ( $self->search ) {
+		$self->search->search_next($editor);
+	} else {
+		$self->find->find;
+	}
+}
+
+=pod
+
+=head2 search_previous
+
+  # Previous match for a new search
+  $main->search_previous( $search );
+  
+  # Previous match on current search (or show Find dialog if none)
+  $main->search_previous;
+
+Find the previous match for the current search, or spawn the Find dialog.
+
+If no files are open, do nothing
+
+=cut
+
+sub search_previous {
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	if ( _INSTANCE($_[0], 'Padre::Search') ) {
+		$self->{search} = shift;
+	} elsif ( @_ ) {
+		die("Invalid argument to search_previous");
+	}
+	if ( $self->search ) {
+		$self->search->search_previous($editor);
+	} else {
+		$self->find->find;
+	}
 }
 
 =pod
@@ -2200,6 +2276,9 @@ sub on_close_window {
 	}
 
 	# Clean up our secondary windows
+	if ( $self->has_about ) {
+		$self->about->Destroy;
+	}
 	if ( $self->{help} ) {
 		$self->{help}->Destroy;
 	}
@@ -4248,16 +4327,9 @@ sub install_cpan {
 	my $main   = shift;
 	my $module = shift;
 
-	# Validation?
-	#$main->setup_bindings;
 	# Run with the same Perl that launched Padre
-	#my $perl = Padre::Perl::perl();
-	#my $cmd = qq{"$perl" "-MCPAN" "-e" "install $module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
-	my $cpan = Padre::CPAN->new;
-	$cpan->install($module);
-
-	#Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
+	Padre::CPAN->new->install($module);
 
 	return;
 }
@@ -4276,36 +4348,7 @@ Note: I'm not sure those are really needed...
 
 sub setup_bindings {
 	my $main = shift;
-
-	# If this is the first time a command has been run,
-	# set up the ProcessStream bindings.
-	unless ($Wx::Perl::ProcessStream::VERSION) {
-		require Wx::Perl::ProcessStream;
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDERR(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[0]->output->AppendText( $_[1]->GetLine . "\n" );
-				return;
-			},
-		);
-		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_EXIT(
-			$main,
-			sub {
-				$_[1]->Skip(1);
-				$_[1]->GetProcess->Destroy;
-				$main->menu->run->enable;
-			},
-		);
-	}
+	$main->output->setup_bindings;
 
 	# Prepare the output window
 	$main->show_output(1);
