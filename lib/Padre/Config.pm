@@ -642,7 +642,7 @@ sub read {
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
+		         || Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
@@ -694,7 +694,7 @@ sub set {
 
 	# Does the setting exist?
 	my $setting = $SETTING{$name};
-	unless ($setting) {
+	unless ( $setting ) {
 		Carp::croak("The configuration setting '$name' does not exist");
 	}
 
@@ -741,7 +741,7 @@ sub apply {
 
 	# Does this setting have an apply hook
 	my $code = $SETTING{$name}->apply;
-	if ($code) {
+	if ( $code ) {
 		$code->( $current->main, $value );
 	}
 
