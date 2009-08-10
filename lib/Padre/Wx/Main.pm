@@ -3225,7 +3225,7 @@ sub on_diff {
 		if ( open my $fh, '>', $filename ) {
 			print $fh $text;
 			CORE::close($fh);
-			system( $external_diff, $filename, $file );
+			system( $external_diff, $file, $filename );
 		} else {
 			$self->error($!);
 		}
