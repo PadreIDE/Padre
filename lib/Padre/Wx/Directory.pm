@@ -93,7 +93,9 @@ sub refresh {
 		? $doc->project_dir
 		: $self->main->config->default_projects_directory;
 
-	$self->{projects}->{$dir}->{dir} ||= $dir;
+	return unless $dir;
+
+	$self->{projects}->{$dir}->{dir}  ||= $dir;
 	$self->{projects}->{$dir}->{mode} ||=
 		$doc->{is_project}
 		? 'tree'
