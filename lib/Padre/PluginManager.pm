@@ -785,6 +785,8 @@ sub get_menu {
 	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
 	if ($@) {
 		$plugin->errstr( Wx::gettext("Error when calling menu for plugin") . "'$module': $@" );
+		# TODO: make sure these error messages show up somewhere or it will drive
+		# crazy anyone trying to write a plugin
 		return ();
 	}
 	unless ( defined $label and defined $menu ) {
