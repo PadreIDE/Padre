@@ -10,8 +10,6 @@ BEGIN {
 	}
 	plan tests => 29;
 	
-	# TODO: Don't just skip gettexts translation features: use and test it.
-	$ENV{'LANG'} = '';
 }
 
 use FindBin      qw($Bin);
@@ -96,22 +94,24 @@ SCOPE: {
 
 	$manager->load_plugin('Padre::Plugin::A');
 	is $manager->plugins->{'Padre::Plugin::A'}->{status}, 'error', 'error in loading A';
-	my $msg1 = $english ? qr/Padre::Plugin::A - Failed to load module/ : qr/.*/;
+	my $msg1 = $english ? qr/Padre::Plugin::A - Crashed while loading\:/ : qr/.*/;
 	like $manager->plugins->{'Padre::Plugin::A'}->errstr, 
-		qr/^$msg1: Global symbol "\$syntax_error" requires explicit package name at/,
+		qr/^$msg1 Global symbol "\$syntax_error" requires explicit package name at/,
 		'text of error message';
 
 	$manager->load_plugin('Padre::Plugin::B');
 	is $manager->plugins->{'Padre::Plugin::B'}->{status}, 'error', 'error in loading B';
-	my $msg2 = $english ? qr/Padre::Plugin::B - Not compatible with Padre::Plugin API. Need to be subclass of Padre::Plugin/ : qr/.*/;
+	my $msg2 = $english ? qr/Padre::Plugin::B - Not a Padre::Plugin subclass/ : qr/.*/;
 	like $manager->plugins->{'Padre::Plugin::B'}->errstr,
 		qr/^$msg2/,
 		'text of error message';
 
 	$manager->load_plugin('Padre::Plugin::C');
 	is $manager->plugins->{'Padre::Plugin::C'}->{status}, 'disabled', 'disabled in loading C';
-	my $msg3 = $english ? qr/Padre::Plugin::C - Does not have menus/ : qr/.*/;
-	like $manager->plugins->{'Padre::Plugin::C'}->errstr,
-		qr/$msg3/,
-		'text of error message';
+	# Doesn't have an error message since r6891:
+#	my $msg3 = $english ? qr/Padre::Plugin::C - Does not have menus/ : qr/.*/;
+#	like $manager->plugins->{'Padre::Plugin::C'}->errstr,
+#		qr/$msg3/,
+#		'text of error message';
+	is $manager->plugins->{'Padre::Plugin::C'}->errstr, '', 'text of error message';
 }
