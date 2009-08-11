@@ -48,6 +48,7 @@ requires       'File::Glob::Windows'      => '0.1.3' if win32;
 requires       'File::Copy::Recursive'    => '0.37';
 requires       'File::Find::Rule'         => '0.30';
 requires       'File::HomeDir'            => '0.84';
+requires       'File::Next'               => '1.06'; # Force-bump ack dep
 requires       'File::Path'               => 0;
 requires       'File::Remove'             => '1.42';
 requires       'File::ShareDir'           => '1.00';
