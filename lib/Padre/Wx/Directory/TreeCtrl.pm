@@ -658,7 +658,7 @@ sub _on_tree_end_drag {
 	# action do be done
 	my $menu    = Wx::Menu->new;
 
-	# Move file
+	# Move file or directory
 	my $menu_mv = $menu->Append(
 		-1,
 		Wx::gettext( 'Move here' )
@@ -669,14 +669,16 @@ sub _on_tree_end_drag {
 	);
 
 	# Copy file
-	my $menu_cp = $menu->Append(
-		-1,
-		Wx::gettext( 'Copy here' )
-	);
-	Wx::Event::EVT_MENU(
-		$self, $menu_cp,
-		sub{ $self->_copy( $old_file, $new_file ) }
-	);
+	unless ( -d $old_file ) {
+		my $menu_cp = $menu->Append(
+			-1,
+			Wx::gettext( 'Copy here' )
+		);
+		Wx::Event::EVT_MENU(
+			$self, $menu_cp,
+			sub{ $self->_copy( $old_file, $new_file ) }
+		);
+	}
 
 	# Cancel action
 	$menu->AppendSeparator();
