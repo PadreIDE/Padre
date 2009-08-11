@@ -9,6 +9,9 @@ BEGIN {
 		exit 0;
 	}
 	plan tests => 29;
+	
+	# TODO: Don't just skip gettexts translation features: use and test it.
+	$ENV{'LANG'} = '';
 }
 
 use FindBin      qw($Bin);
@@ -90,6 +93,7 @@ unshift @INC, $path;
 my $english = setlocale(LC_CTYPE) eq 'en_US.UTF-8' ? 1 : 0;
 SCOPE: {
 	my $manager  = Padre::PluginManager->new($padre);
+
 	$manager->load_plugin('Padre::Plugin::A');
 	is $manager->plugins->{'Padre::Plugin::A'}->{status}, 'error', 'error in loading A';
 	my $msg1 = $english ? qr/Padre::Plugin::A - Failed to load module/ : qr/.*/;
