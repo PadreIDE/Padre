@@ -520,6 +520,30 @@ sub autocomplete {
 		}
 	}
 
+	# check for hashs
+	elsif ( $prefix =~ /(\$\w+(?:\-\>)?)\{([\'\"]?)([\$\&]?\w*)$/ ) {
+		my $hashname = $1;
+		my $textmarker = $2;
+		my $keyprefix = $3;
+
+		my $last      = $editor->GetLength();
+		my $text      = $editor->GetTextRange( 0, $last );
+
+                my %words;
+		while ($text =~ /\Q$hashname\E\{(([\'\"]?)\Q$keyprefix\E.+?\2)\}/g) {
+			$words{$1} = 1;
+		}
+		
+		return (length($textmarker.$keyprefix),sort {
+				my $a1 = $a;
+				my $b1 = $b;
+				$a1 =~ s/^([\'\"])(.+)\1/$2/;
+				$b1 =~ s/^([\'\"])(.+)\1/$2/;
+				$a1 cmp $b1;
+			} (keys(%words)));
+
+	}
+
 	# check for methods
 	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)\s*->\s*(\w*)$/ ) {
 		my $class  = $1;
