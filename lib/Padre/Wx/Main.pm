@@ -1628,10 +1628,7 @@ sub run_command {
 	my $config = $self->config;
 	if ( $config->run_use_external_window ) {
 		if ( Padre::Util::WIN32 ) {
-			# '^' is the escape character in win32 command line
-			# '"' is needed to escape spaces and other characters in paths
-			$cmd =~ s/"/^/g;
-			system "cmd.exe /C \"start $cmd\"";
+			system "start cmd /C \"$cmd\"";
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
 		}
