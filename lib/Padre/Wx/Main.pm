@@ -823,7 +823,7 @@ sub window_width {
 
 =pod
 
-=heda3 window_height
+=head3 window_height
 
     my $width = $main->window_height;
 
@@ -3832,7 +3832,7 @@ sub find_id_of_editor {
 
 =pod
 
-=heda3 run_in_padre
+=head3 run_in_padre
 
     $main->run_in_padre;
 
