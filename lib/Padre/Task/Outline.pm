@@ -133,7 +133,7 @@ with L<Storable>.
 
 =head1 AUTHOR
 
-Steffen Mueller E<lt>smueller@cpan.orgR<gt>
+Steffen Mueller E<lt>smueller@cpan.orgE<gt>
 
 Heiko Jansen E<lt>heiko_jansen@web.deE<gt>
 
