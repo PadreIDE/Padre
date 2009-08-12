@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::OpenResourceDialog;
+package Padre::Wx::Dialog::OpenResource;
 
 use warnings;
 use strict;
@@ -452,7 +452,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::OpenResourceDialog - Ecliptic's Open Resource dialog
+Padre::Wx::Dialog::OpenResource - Ecliptic's Open Resource dialog
 
 =head1 DESCRIPTION
 
