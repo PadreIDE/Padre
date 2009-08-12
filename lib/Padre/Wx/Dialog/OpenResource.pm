@@ -55,15 +55,14 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->SetIcon( Wx::GetWxPerlIcon() );
 	$self->_directory($directory);
 	$self->_main($main);
 
-	# create dialog
-	$self->_create;
-
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
+
+	# create dialog
+	$self->_create;
 
 	return $self;
 }
