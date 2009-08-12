@@ -185,7 +185,7 @@ sub new {
 		menu_event => sub {
 			#Create and show the dialog
 			require Padre::Wx::Dialog::QuickMenuAccess;
-			Padre::Wx::Dialog::QuickMenuAccess->new($self)->ShowModal;
+			Padre::Wx::Dialog::QuickMenuAccess->new($main)->ShowModal;
 		},
 	);
 
