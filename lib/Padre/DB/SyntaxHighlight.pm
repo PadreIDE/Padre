@@ -43,7 +43,7 @@ Padre::DB::SyntaxHighlight - Database table to store mime-type to syntax highlig
 
 =head1 DESCRIPTION
 
-This class allows storing in L<Padre>'s database the the name of the 
+This class allows storing in L<Padre>'s database the name of the 
 syntax highlighter module.
 
 =head1 PUBLIC METHODS
