@@ -9,6 +9,7 @@ our @ISA       = 'Wx::Dialog';
 
 # module imports
 use Padre::Wx ();
+use Padre::Wx::Icon ();
 
 # accessors
 use Class::XSAccessor accessors => {
@@ -18,16 +19,14 @@ use Class::XSAccessor accessors => {
 	_list          => '_list',          # matches list
 	_targets_index => '_targets_index', # targets index
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
-	_plugin        => '_plugin',        # plugin object
+	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
 	_grok          => '_grok',          # Perl 6 documentation reader instance
 };
 
 # -- constructor
 sub new {
-	my ( $class, $plugin, %opt ) = @_;
-
-	my $main = $plugin->main;
+	my ( $class, $main, %opt ) = @_;
 
 	# create object
 	my $self = $class->SUPER::new(
@@ -39,9 +38,11 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->SetIcon( Wx::GetWxPerlIcon() );
-	$self->_plugin($plugin);
+	$self->_main($main);
 	$self->_topic( $opt{topic} // '' );
+
+	# Dialog's icon as is the same as Padre
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# create dialog
 	$self->_create;
@@ -49,9 +50,6 @@ sub new {
 	# fit and center the dialog
 	$self->Fit;
 	$self->CentreOnParent;
-
-	# Dialog's icon as is the same as plugin's
-	$self->SetIcon( $plugin->logo_icon );
 
 	return $self;
 }
