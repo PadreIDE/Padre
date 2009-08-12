@@ -8,6 +8,7 @@ our $VERSION = '0.42';
 our @ISA     = 'Wx::Dialog';
 
 # module imports
+use Padre::DB ();
 use Padre::Wx ();
 use Padre::Wx::Icon ();
 
