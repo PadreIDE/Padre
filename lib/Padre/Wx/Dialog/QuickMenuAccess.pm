@@ -9,6 +9,7 @@ our @ISA       = 'Wx::Dialog';
 
 # module imports
 use Padre::Wx ();
+use Padre::Wx::Icon ();
 
 # accessors
 use Class::XSAccessor accessors => {
