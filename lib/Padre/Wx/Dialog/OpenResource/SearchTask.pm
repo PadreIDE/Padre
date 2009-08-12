@@ -3,8 +3,6 @@ package Padre::Wx::Dialog::OpenResource::SearchTask;
 use strict;
 use warnings;
 use base 'Padre::Task';
-use Scalar::Util    ();
-use Padre::Constant ();
 
 our $VERSION        = '0.42';
 our $thread_running = 0;
