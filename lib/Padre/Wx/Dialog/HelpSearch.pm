@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::Help;
+package Padre::Wx::Dialog::HelpSearch;
 
 use warnings;
 use strict;
@@ -283,11 +283,11 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::Help - Padre Shiny Help Dialog
+Padre::Wx::Dialog::HelpSearch - Padre Shiny Help Search Dialog
 
 =head1 DESCRIPTION
 
-This opens a dialog where you can search for topics...
+This opens a dialog where you can search for help topics...
 
 =head1 AUTHOR
 
