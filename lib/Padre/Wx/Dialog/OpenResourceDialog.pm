@@ -450,6 +450,23 @@ sub _update_matches_list_box() {
 
 __END__
 
+=head1 NAME
+
+Padre::Wx::Dialog::OpenResourceDialog - Ecliptic's Open Resource dialog
+
+=head1 DESCRIPTION
+
+=head2 Open Resource (Shortcut: Ctrl + Shift + R)
+
+This opens a nice dialog that allows you to find any file that exists 
+in the current document or working directory. You can use ? to replace 
+a single character or * to replace an entire string. The matched files list 
+are sorted alphabetically and you can select one or more files to be opened in 
+Padre when you press the OK button.
+
+You can simply ignore CVS, .svn and .git folders using a simple checkbox 
+(enhancement over Eclipse).
+
 =head1 AUTHOR
 
 Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
