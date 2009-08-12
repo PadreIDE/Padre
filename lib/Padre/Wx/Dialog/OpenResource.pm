@@ -374,10 +374,20 @@ sub _restart_search() {
 sub _show_recently_opened_resources() {
 	my $self = shift;
 
-	# my $config = $self->_main->config;
-	# my @recently_opened = split /\|/, $config->{recently_opened};
-	# $self->_matched_files( \@recently_opened );
+	# Fetch them from Padre's RecentlyUsed database table
+	require Padre::DB::RecentlyUsed;
+	my $current_recently_used = 
+		Padre::DB::RecentlyUsed->select("type = ?", 'RESOURCE') || [];
+	my @recent_files = ();
+	foreach my $e (@$current_recently_used) {
+		push @recent_files, $e->value;
+	}
+
+	# Show results in matching items list
+	$self->_matched_files( \@recent_files );
 	$self->_update_matches_list_box;
+
+	# No need to store them anymore
 	$self->_matched_files(undef);
 }
 
