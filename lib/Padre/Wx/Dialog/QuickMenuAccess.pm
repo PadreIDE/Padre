@@ -12,7 +12,7 @@ use Padre::Wx ();
 
 # accessors
 use Class::XSAccessor accessors => {
-	_plugin       => '_plugin',       # Plugin object
+	_main         => '_main',         # Padre main window
 	_sizer        => '_sizer',        # window sizer
 	_search_text  => '_search_text',  # search text control
 	_matches_list => '_matches_list', # matches list
@@ -21,11 +21,11 @@ use Class::XSAccessor accessors => {
 
 # -- constructor
 sub new {
-	my ( $class, $plugin, %opt ) = @_;
+	my ( $class, $main ) = @_;
 
 	# create object
 	my $self = $class->SUPER::new(
-		$plugin->main,
+		$main,
 		-1,
 		Wx::gettext('Quick Menu Access'),
 		Wx::wxDefaultPosition,
@@ -33,14 +33,13 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->SetIcon(Wx::GetWxPerlIcon);
-	$self->_plugin($plugin);
+	$self->_main($main);
+
+	# Dialog's icon as is the same as Padre
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# create dialog
 	$self->_create;
-
-	# Dialog's icon as is the same as plugin's
-	$self->SetIcon( $plugin->logo_icon );
 
 	return $self;
 }
@@ -54,7 +53,7 @@ sub new {
 sub _on_ok_button_clicked {
 	my ($self) = @_;
 
-	my $main = $self->_plugin->main;
+	my $main = $self->_main;
 
 	# Open the selected menu item if the user pressed OK
 	my $selection   = $self->_matches_list->GetSelection;
@@ -66,19 +65,19 @@ sub _on_ok_button_clicked {
 
 			eval {
 
-				# Keep the last 20 recently opened resources available
-				# and save it to plugin's configuration object
-				my $config = $self->_plugin->config_read;
-				my @recent = split /\|/, $config->{quick_menu_history};
-				if ( scalar @recent >= 20 ) {
-					shift @recent;
-				}
-				push @recent, $menu_action->name;
-				my %unique = map { $_, 1 } @recent;
-				@recent = keys %unique;
-				@recent = sort { $a cmp $b } @recent;
-				$config->{quick_menu_history} = join '|', @recent;
-				$self->_plugin->config_write($config);
+				# # Keep the last 20 recently opened resources available
+				# # and save it to plugin's configuration object
+				# my $config = $self->_plugin->config_read;
+				# my @recent = split /\|/, $config->{quick_menu_history};
+				# if ( scalar @recent >= 20 ) {
+					# shift @recent;
+				# }
+				# push @recent, $menu_action->name;
+				# my %unique = map { $_, 1 } @recent;
+				# @recent = keys %unique;
+				# @recent = sort { $a cmp $b } @recent;
+				# $config->{quick_menu_history} = join '|', @recent;
+				# $self->_plugin->config_write($config);
 
 				&$event($main);
 			};
