@@ -147,12 +147,12 @@ sub new {
 
 	$self->{open_resource} = $self->add_tool_item(
 		action => 'search.open_resource',
-		icon   => 'actions/document-properties',
+		icon   => 'places/folder-saved-search',
 	);
 
 	$self->{quick_menu_access} = $self->add_tool_item(
 		action => 'search.quick_menu_access',
-		icon   => 'actions/document-properties',
+		icon   => 'places/folder-saved-search',
 	);
 
 	return $self;
