@@ -1,4 +1,4 @@
-#!/use/bin/perl
+#!/usr/bin/perl
 
 package main;
 
