@@ -62,6 +62,23 @@ sub new {
 			}
 		},
 	);
+
+	$self->add_menu_item(
+		$self,
+		name       => 'help.search',
+		label      => Wx::gettext('Help Search'),
+		shortcut   => 'F2',
+		menu_event => sub {
+			#Create and show the Help search dialog
+			my $dlg = $_[0]->help_search;
+			if ( $dlg && $dlg->IsShown ) {
+				$dlg->SetFocus;
+			} else {
+				$dlg->Show(1);
+			}
+		},
+	);
+
 	$self->{current} = $self->add_menu_item(
 		$self,
 		name       => 'help.current',
