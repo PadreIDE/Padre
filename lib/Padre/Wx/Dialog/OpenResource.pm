@@ -12,7 +12,7 @@ use Padre::Wx ();
 
 # accessors
 use Class::XSAccessor accessors => {
-	_plugin                   => '_plugin',                   # plugin instance
+	_main                     => '_main',                     # Padre's main window
 	_sizer                    => '_sizer',                    # window sizer
 	_search_text              => '_search_text',              # search text control
 	_matches_list             => '_matches_list',             # matches list
@@ -28,10 +28,9 @@ use Class::XSAccessor accessors => {
 
 # -- constructor
 sub new {
-	my ( $class, $plugin, %opt ) = @_;
+	my ( $class, $main ) = @_;
 
 	#Check if we have an open file so we can use its directory
-	my $main = $plugin->main;
 	my $filename = ( defined $main->current->document ) ? $main->current->document->filename : undef;
 	my $directory;
 	if ($filename) {
@@ -57,13 +56,13 @@ sub new {
 
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 	$self->_directory($directory);
-	$self->_plugin($plugin);
+	$self->_main($main);
 
 	# create dialog
 	$self->_create;
 
-	# Dialog's icon as is the same as plugin's
-	$self->SetIcon( $plugin->logo_icon );
+	# Dialog's icon as is the same as Padre
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	return $self;
 }
@@ -77,7 +76,7 @@ sub new {
 sub _on_ok_button_clicked {
 	my ($self) = @_;
 
-	my $main = $self->_plugin->main;
+	my $main = $self->_main;
 	$self->Hide;
 
 	#Open the selected resources here if the user pressed OK
@@ -87,17 +86,16 @@ sub _on_ok_button_clicked {
 
 		# Keep the last 20 recently opened resources available
 		# and save it to plugin's configuration object
-		my $config = $self->_plugin->config_read;
-		my @recently_opened = split /\|/, $config->{recently_opened};
-		if ( scalar @recently_opened >= 20 ) {
-			shift @recently_opened;
-		}
-		push @recently_opened, $filename;
-		my %unique = map { $_, 1 } @recently_opened;
-		@recently_opened = keys %unique;
-		@recently_opened = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recently_opened;
-		$config->{recently_opened} = join '|', @recently_opened;
-		$self->_plugin->config_write($config);
+		# my $config = $self->_main->config;
+		# my @recently_opened = split /\|/, $config->{recently_opened};
+		# if ( scalar @recently_opened >= 20 ) {
+			# shift @recently_opened;
+		# }
+		# push @recently_opened, $filename;
+		# my %unique = map { $_, 1 } @recently_opened;
+		# @recently_opened = keys %unique;
+		# @recently_opened = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recently_opened;
+		# $config->{recently_opened} = join '|', @recently_opened;
 
 		# try to open the file now
 		if ( my $id = $main->find_editor_of_file($filename) ) {
@@ -375,9 +373,9 @@ sub _restart_search() {
 sub _show_recently_opened_resources() {
 	my $self = shift;
 
-	my $config = $self->_plugin->config_read;
-	my @recently_opened = split /\|/, $config->{recently_opened};
-	$self->_matched_files( \@recently_opened );
+	# my $config = $self->_main->config;
+	# my @recently_opened = split /\|/, $config->{recently_opened};
+	# $self->_matched_files( \@recently_opened );
 	$self->_update_matches_list_box;
 	$self->_matched_files(undef);
 }
