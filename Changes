@@ -17,6 +17,12 @@ Changes for Perl Application Development and Refactoring Environment
     - New multiple-tabbed About box (ADAMK)
     - F3 with sub-line selected text converts it directly into an active
       search without needing to invoke the Find dialog (ADAMK)
+    - Moved Perl 6 Help dialog to Padre core as "Help/Help Search" (AZAWAWI)
+    - Moved Ecliptic's Open Resource to Padre core as "Search/Open Resource" 
+      (AZAWAWI)
+    - Moved Ecliptic's Quick Menu Access to Padre core as "Search/Quick Menu 
+      Access" (AZAWAWI)
+    - Fixed run command in a separate window bug on win32 (AZAWAWI)
 
 0.42 2009.07.31
     - Fixed a bug that crashed Padre while moving panels with outline
