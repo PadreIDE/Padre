@@ -398,6 +398,15 @@ sub directory_panel {
 	return $self->$side();
 }
 
+sub open_resource {
+	my $self = shift;
+	unless ( defined $self->{open_resource} ) {
+		require Padre::Wx::Dialog::OpenResource;
+		$self->{open_resource} = Padre::Wx::Dialog::OpenResource->new($self);
+	}
+	return $self->{open_resource};
+}
+
 =pod
 
 =head3 find

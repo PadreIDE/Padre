@@ -159,6 +159,24 @@ sub new {
 		},
 	);
 
+	$self->AppendSeparator;
+
+	$self->add_menu_item(
+		$self,
+		name       => 'search.open_resource',
+		label      => Wx::gettext('Open Resource'),
+		shortcut   => 'Ctrl-Shift-R',
+		menu_event => sub {
+			#Create and show the dialog
+			my $open_resource_dialog = $_[0]->open_resource;
+			if ( $open_resource_dialog && $open_resource_dialog->IsShown ) {
+				$open_resource_dialog->SetFocus;
+			} else {
+				$open_resource_dialog->Show(1);
+			}
+		},
+	);
+
 	return $self;
 }
 
