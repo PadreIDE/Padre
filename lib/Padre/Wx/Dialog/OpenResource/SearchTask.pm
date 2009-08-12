@@ -1,4 +1,4 @@
-package Padre::Plugin::Ecliptic::OpenResourceSearchTask;
+package Padre::Wx::Dialog::OpenResource::SearchTask;
 
 use strict;
 use warnings;
