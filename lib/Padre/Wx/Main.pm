@@ -809,8 +809,6 @@ sub single_instance_command {
 
 Those methods allow to query properties about the main window.
 
-=over 4
-
 =head3 window_width
 
     my $width = $main->window_width;
