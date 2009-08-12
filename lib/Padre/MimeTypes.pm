@@ -276,7 +276,7 @@ sub _initialize {
 	__PACKAGE__->add_highlighter(
 		'Padre::Document::Perl::PPILexer',
 		Wx::gettext('PPI Standard'),
-		Wx::gettext('Hopefully faster than the PPI Traditional')
+		Wx::gettext('Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter.')
 	);
 
 	__PACKAGE__->add_highlighter_to_mime_type( 'application/x-perl', 'Padre::Document::Perl::Lexer' );
