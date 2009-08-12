@@ -21,7 +21,7 @@ use Class::XSAccessor accessors => {
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
 	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
-	_grok          => '_grok',          # Perl 6 documentation reader instance
+#	_grok          => '_grok',          # Perl 6 documentation reader instance
 };
 
 # -- constructor
@@ -58,7 +58,7 @@ sub new {
 # -- event handler
 
 #
-# Fetches the current selection's help HTML via App::Grok
+# Fetches the current selection's help HTML
 #
 sub display_help_in_viewer {
 	my $self = shift;
@@ -68,13 +68,13 @@ sub display_help_in_viewer {
 	if ( $selection != -1 ) {
 		my $help_target = $self->_list->GetClientData($selection);
 
-		if ($help_target) {
-			eval {
-				$help_html = $self->_grok->render_target( $help_target, 'xhtml' );
-				$self->SetTitle(
-					Wx::gettext('Perl 6 Help (grok)') . " - " . $self->_grok->locate_target($help_target) );
-			};
-		}
+		# if ($help_target) {
+			# eval {
+				# $help_html = $self->_grok->render_target( $help_target, 'xhtml' );
+				# $self->SetTitle(
+					# Wx::gettext('Perl 6 Help (grok)') . " - " . $self->_grok->locate_target($help_target) );
+			# };
+		# }
 	}
 
 	if ( not $help_html ) {
@@ -230,12 +230,14 @@ sub _search() {
 	my $self = shift;
 
 	# Generate a sorted file-list based on filename
-	eval {
-		require App::Grok;
-		$self->_grok( App::Grok->new );
-		my @targets_index = sort $self->_grok->target_index();
-		$self->_targets_index( \@targets_index );
-	};
+	# eval {
+		# require App::Grok;
+		# $self->_grok( App::Grok->new );
+		# my @targets_index = sort $self->_grok->target_index();
+		# $self->_targets_index( \@targets_index );
+	# };
+	my @empty = ();
+	$self->_targets_index( \@empty);
 
 	return;
 }
