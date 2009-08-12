@@ -177,6 +177,18 @@ sub new {
 		},
 	);
 
+	$self->add_menu_item(
+		$self,
+		name       => 'search.quick_menu_access',
+		label      => Wx::gettext('Quick Menu Access'),
+		shortcut   => 'Ctrl-3',
+		menu_event => sub {
+			#Create and show the dialog
+			require Padre::Wx::Dialog::QuickMenuAccess;
+			Padre::Wx::Dialog::QuickMenuAccess->new($self)->ShowModal;
+		},
+	);
+
 	return $self;
 }
 
