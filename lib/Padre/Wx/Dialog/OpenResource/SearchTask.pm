@@ -2,9 +2,9 @@ package Padre::Wx::Dialog::OpenResource::SearchTask;
 
 use strict;
 use warnings;
-use base 'Padre::Task';
 
-our $VERSION        = '0.42';
+our $VERSION = '0.42';
+our @ISA     = 'Padre::Task';
 our $thread_running = 0;
 
 # accessors

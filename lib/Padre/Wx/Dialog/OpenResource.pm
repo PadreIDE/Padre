@@ -4,13 +4,11 @@ use warnings;
 use strict;
 
 # package exports and version
-our $VERSION   = '0.42';
+our $VERSION = '0.42';
+our @ISA     = 'Wx::Dialog';
 
 # module imports
 use Padre::Wx ();
-
-# is a subclass of Wx::Dialog
-use base 'Wx::Dialog';
 
 # accessors
 use Class::XSAccessor accessors => {
