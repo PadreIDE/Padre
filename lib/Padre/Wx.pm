@@ -133,7 +133,7 @@ sub launch_irc {
 
 =head1 NAME
 
-Padre::Wx
+Padre::Wx - Wx integration for Padre
 
 =head1 DESCRIPTION
 
