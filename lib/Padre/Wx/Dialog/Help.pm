@@ -278,17 +278,31 @@ sub _update_list_box() {
 
 1;
 
+
 __END__
+
+=head1 NAME
+
+Padre::Wx::Dialog::Help - Padre Shiny Help Dialog
+
+=head1 DESCRIPTION
+
+This opens a dialog where you can search for topics...
 
 =head1 AUTHOR
 
 Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
 
-Gabor Szabo L<http://szabgab.com/>
+=head1 COPYRIGHT & LICENSE
 
-=head1 COPYRIGHT AND LICENSE
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 
-Copyright 2008-2009 Padre Developers as in Perl6.pm
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
 
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl 5 itself.
+=cut
+
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
