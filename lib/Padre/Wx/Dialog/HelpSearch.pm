@@ -32,7 +32,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Perl 6 Help (Powered by grok)'),
+		Wx::gettext('Help Search'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
