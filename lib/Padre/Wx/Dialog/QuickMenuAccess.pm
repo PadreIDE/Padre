@@ -60,8 +60,10 @@ sub _on_ok_button_clicked {
 
 	# Open the selected menu item if the user pressed OK
 	my $selection   = $self->_list->GetSelection;
-	my $menu_action = $self->_list->GetClientData($selection);
+	my $action = $self->_list->GetClientData($selection);
 	$self->Destroy;
+	my %actions = %{Padre::ide->actions};
+	my $menu_action = $actions{$action->{name}};
 	if ($menu_action) {
 		my $event = $menu_action->menu_event;
 		if ( $event && ref($event) eq 'CODE' ) {
@@ -304,10 +306,15 @@ sub _search() {
 
 	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );
 	my @menu_actions = ();
-	foreach my $menu_action ( values %{ Padre::ide->actions } ) {
-		push @menu_actions, $menu_action;
+	my %actions = %{Padre::ide->actions};
+	foreach my $action_name ( keys %actions ) {
+		my $action = $actions{$action_name};
+		push @menu_actions, { 
+			name  => $action_name,
+			value => $action->label_text, 
+		};
 	}
-	@menu_actions = sort { $a->label_text cmp $b->label_text } @menu_actions;
+	@menu_actions = sort { $a->{value} cmp $b->{value} } @menu_actions;
 	$self->_matched_results( \@menu_actions );
 
 	return;
@@ -331,7 +338,7 @@ sub _update_list_box {
 	my $pos = 0;
 
 	foreach my $menu_action (@{ $self->_matched_results }) {
-		my $label = $menu_action->value;
+		my $label = $menu_action->{value};
 		if ( $label =~ /$search_expr/i ) {
 			$self->_list->Insert( $label, $pos, $menu_action );
 			$pos++;
