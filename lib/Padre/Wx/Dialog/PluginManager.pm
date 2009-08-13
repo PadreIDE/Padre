@@ -339,7 +339,7 @@ sub _plugin_enable {
 	my $plugin = $self->_curplugin;
 	my $parent = $self->GetParent;
 
-	# enable plugin
+	# Enable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
 	$self->_manager->_plugin_enable( $plugin->class );
