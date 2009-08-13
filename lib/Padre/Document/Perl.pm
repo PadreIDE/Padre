@@ -468,8 +468,6 @@ sub introduce_temporary_variable {
 sub autocomplete {
 	my $self = shift;
 
-print join(',',caller)."\n";
-
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
