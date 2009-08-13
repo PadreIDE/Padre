@@ -154,6 +154,16 @@ sub new {
 		},
 	);
 
+	$self->add_menu_item(
+		$self,
+		name       => 'edit.next_problem',
+		label      => Wx::gettext('&Next Problem'),
+		shortcut   => 'Ctrl-.',
+		menu_event => sub {
+			print "Next problem Not implemented!\n";
+		},
+	);
+
 	$self->{autocomp} = $self->add_menu_item(
 		$self,
 		name       => 'edit.autocomp',
