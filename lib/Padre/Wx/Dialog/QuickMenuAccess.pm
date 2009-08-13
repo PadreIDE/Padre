@@ -95,7 +95,7 @@ sub _on_ok_button_clicked {
 				if(not $found) { 
 					Padre::DB::RecentlyUsed->create(
 						name      => $action->{name}, 
-						value     => $action->{value}, 
+						value     => $action->{name}, 
 						type      => 'ACTION', 
 						last_used => time(),
 					);
@@ -296,11 +296,18 @@ sub _show_recently_opened_actions() {
 	my $recently_used = 
 		Padre::DB::RecentlyUsed->select("where type = ?", 'ACTION') || [];
 	my @recent_actions = ();
+	my %actions = %{Padre::ide->actions};
 	foreach my $e (@$recently_used) {
-		push @recent_actions, { 
-			name  => $e->name, 
-			value => $e->value,
-		};
+		my $action_name = $e->name;
+		my $action = $actions{$action_name};
+		if($action) {
+			push @recent_actions, { 
+				name  => $action_name, 
+				value => $action->label_text,
+			};
+		} else {
+			warn "action '$action_name' is not defined anymore!";  
+		}
 	}
 	@recent_actions = sort { $a->{value} cmp $b->{value} } @recent_actions;
 	$self->_matched_results(\@recent_actions);
