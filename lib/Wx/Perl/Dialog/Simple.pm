@@ -44,6 +44,7 @@ Display a text entry dialog
 use 5.008;
 use strict;
 use warnings;
+use Cwd        ();
 use Exporter   ();
 use File::Spec ();
 
@@ -67,7 +68,7 @@ our @EXPORT = qw(
 	calendar
 );
 
-#                 print_out close_app open_frame display_text
+# print_out close_app open_frame display_text
 
 use Wx::Perl::Dialog;
 use Wx::STC ();
@@ -92,10 +93,6 @@ sub entry {
 	return $resp;
 }
 
-=head2 password
-
-=cut
-
 sub password {
 	my (%args) = @_;
 
@@ -103,10 +100,6 @@ sub password {
 
 	return entry(%args);
 }
-
-=head2 file_selector
-
-=cut
 
 sub file_selector {
 	my (%args) = @_;
@@ -128,10 +121,6 @@ sub file_selector {
 	return File::Spec->catfile( $default_dir, $filename );
 }
 
-=head2 dir_selector
-
-=cut
-
 sub dir_selector {
 	my (%args) = @_;
 	%args = (
@@ -149,10 +138,6 @@ sub dir_selector {
 	return $dir;
 }
 
-=head2 date_picker
-
-=cut
-
 sub date_picker {
 
 	require Wx::DateTime;
@@ -169,10 +154,6 @@ sub date_picker {
 	);
 }
 
-=head2 colour_picker
-
-=cut
-
 sub colour_picker {
 
 	return dialog(
@@ -184,13 +165,7 @@ sub colour_picker {
 	);
 }
 
-=head2 file_picker
-
-=cut
-
 sub file_picker {
-
-	require Cwd;
 	return dialog(
 		sub { Wx::FilePickerCtrl->new( $_[0] ) },
 		sub { $_[0]->SetPath( Cwd::cwd() ) },    # setup
@@ -200,12 +175,7 @@ sub file_picker {
 	);
 }
 
-=head2 dir_picker
-
-=cut
-
 sub dir_picker {
-	require Cwd;
 	return dialog(
 		sub { Wx::DirPickerCtrl->new( $_[0] ) },
 		sub { $_[0]->SetPath( Cwd::cwd() ) },   # setup
@@ -214,6 +184,8 @@ sub dir_picker {
 		},
 	);
 }
+
+=pod
 
 =head2 dialog
 
@@ -228,6 +200,7 @@ It needs 4 parameters: 3 subroutines and a hash-ref
           title => "",
           other arguments,
       }
+  );
 
 =cut
 
@@ -269,10 +242,6 @@ sub dialog {
 
 	return $data;
 }
-
-=head2 choice
-
-=cut
 
 sub choice {
 	my (%args) = @_;
@@ -319,10 +288,6 @@ sub single_choice {
 #    return;
 #}
 #
-
-=head2 message
-
-=cut
 
 sub message {
 	my (%args) = @_;
