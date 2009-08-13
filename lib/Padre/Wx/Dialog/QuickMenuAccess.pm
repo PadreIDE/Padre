@@ -307,7 +307,7 @@ sub _show_recently_opened_actions() {
 			value => $e->value,
 		};
 	}
-	@recent_actions = sort { $a->value cmp $a->value } @recent_actions;
+	@recent_actions = sort { $a->{value} cmp $b->{value} } @recent_actions;
 	$self->_matched_results(\@recent_actions);
 
 	# Show results in matching items list
