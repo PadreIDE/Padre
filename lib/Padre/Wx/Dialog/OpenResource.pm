@@ -157,10 +157,6 @@ sub _create {
 	$self->SetMinSize( [ 315, 315 ] );
 	$self->SetSizer($sizer);
 
-
-	# focus on the search text box
-	$self->_search_text->SetFocus();
-
 	# center/fit the dialog
 	$self->Fit;
 	$self->CentreOnParent;
