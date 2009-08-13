@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-13 14:32+0300\n"
-"PO-Revision-Date: 2009-08-13 14:37+0200\n"
+"PO-Revision-Date: 2009-08-13 17:42+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -1236,29 +1236,27 @@ msgstr "فتح المصدر"
 #: lib/Padre/Wx/Dialog/OpenResource.pm:105
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:87
 msgid "Error while trying to perform Padre action"
-msgstr ""
+msgstr "خطأ عند محاولة تأدية عمل Padre"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:178
 msgid "&Select an item to open (? = any character, * = any string):"
-msgstr ""
+msgstr "اختر مادة للفتح (? = أي حرف, * = أي متسلسة حرفية):"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:190
 msgid "&Matching Items:"
-msgstr ""
+msgstr "المواد المطابقة:"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:203
-#, fuzzy
 msgid "Current Directory: "
-msgstr "ابو الدليل:"
+msgstr "الدليل الحالي:"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:228
-#, fuzzy
 msgid "Skip VCS files"
-msgstr "اظهار الملفات المخفية"
+msgstr "تخطي ملفات VCS"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:230
 msgid "Skip using MANIFEST.SKIP"
-msgstr ""
+msgstr "تخطي بواسطة MANIFEST.SKIP"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:42
 #: lib/Padre/Wx/Menu/Plugins.pm:39
@@ -1549,15 +1547,15 @@ msgstr "ابجدي_الوظائف الخاصه_بالاخر"
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:33
 #: lib/Padre/Wx/Menu/Search.pm:179
 msgid "Quick Menu Access"
-msgstr ""
+msgstr "الوصول السريع للقائمة"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:160
 msgid "&Type a menu item name to access:"
-msgstr ""
+msgstr "اطبع اسم مادة القائمة للوصول اليها:"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:167
 msgid "&Matching Menu Items:"
-msgstr ""
+msgstr "مواد القائمة المطابقة:"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:326
 msgid "Reading items. Please wait..."
@@ -1751,9 +1749,8 @@ msgid "A file with the same name already exists in this directory"
 msgstr "يوجد أصلا ملف بنفس اسم الملف الحالي في هذا الدليل"
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:664
-#, fuzzy
 msgid "Move here"
-msgstr "انقل الى لوحة أخرى"
+msgstr "انقل الى هنا"
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:675
 msgid "Copy here"
