@@ -134,7 +134,7 @@ sub _create {
 	# focus on the search text box
 	$self->_search_text->SetFocus();
 
-	# center the dialog
+	# center/fit the dialog
 	$self->Fit;
 	$self->CentreOnParent;
 }

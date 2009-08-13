@@ -113,11 +113,12 @@ sub _create {
 	$self->_create_buttons;
 
 	# wrap everything in a vbox to add some padding
-	$self->SetSizerAndFit($sizer);
-	$sizer->SetSizeHints($self);
+	$self->SetMinSize( [ 315, 315 ] );
+	$self->SetSizer($sizer);
 
-	# center the dialog
-	$self->Centre;
+	# center/fit the dialog
+	$self->Fit;
+	$self->CentreOnParent;
 }
 
 #
@@ -152,7 +153,7 @@ sub _create_controls {
 	);
 	$self->_matches_list(
 		Wx::ListBox->new(
-			$self, -1, [ -1, -1 ], [ 400, 300 ], [],
+			$self, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize, [],
 			Wx::wxLB_SINGLE
 		)
 	);
@@ -164,7 +165,7 @@ sub _create_controls {
 	$self->_sizer->Add( $search_label,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_sizer->Add( $self->_search_text,  0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$self->_sizer->Add( $matches_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_matches_list, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_sizer->Add( $self->_matches_list, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_sizer->Add( $self->_status_text,  0, Wx::wxALL | Wx::wxEXPAND, 10 );
 
 	$self->_setup_events;
