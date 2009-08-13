@@ -125,7 +125,8 @@ END_HTML
             Jérôme Quelin<br>
             <br>
             <b>German</b><br>
-            Heiko Jansen
+            Heiko Jansen<br>
+            Sebastian Willing
           </p>
         </td>
         <td valign="top">

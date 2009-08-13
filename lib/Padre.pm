@@ -1149,6 +1149,7 @@ Jérôme Quelin (JQUELIN)
 =head3 German
 
 Heiko Jansen (HJANSEN)
+Sebastian Willing (SEWI)
 
 =head3 Hebrew
 
