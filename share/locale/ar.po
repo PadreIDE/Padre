@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-08-13 17:44+0300\n"
-"PO-Revision-Date: 2009-08-13 17:45+0200\n"
+"PO-Revision-Date: 2009-08-13 17:55+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -200,9 +200,8 @@ msgid "PPI Standard"
 msgstr "ملون PPI القياسي"
 
 #: lib/Padre/MimeTypes.pm:279
-#, fuzzy
 msgid "Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter."
-msgstr "يؤمل أن يكون أسرع من PPI التقليدي"
+msgstr "يؤمل أن يكون أسرع من ملون PPI التقليدي. في حالة فتح ملف كبير سيتم التراجع إلى ملون scintilla"
 
 #: lib/Padre/PluginHandle.pm:89
 #: lib/Padre/Wx/Dialog/PluginManager.pm:474
@@ -1128,7 +1127,7 @@ msgstr "بحث:"
 
 #: lib/Padre/Wx/Dialog/Find.pm:88
 msgid "&Regular Expression"
-msgstr ""
+msgstr "ال&تعبير العادية"
 
 #: lib/Padre/Wx/Dialog/Find.pm:102
 msgid "Close Window on &Hit"
@@ -1166,12 +1165,12 @@ msgstr "الاختيارات"
 
 #: lib/Padre/Wx/Dialog/Find.pm:357
 msgid "Not a valid search"
-msgstr ""
+msgstr "غير صالح للبحث"
 
 #: lib/Padre/Wx/Dialog/Find.pm:366
 #, perl-format
 msgid "Found %d matching occurrences"
-msgstr ""
+msgstr "العثور على %d تطابق الأحداث"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:36
 #: lib/Padre/Wx/Menu/Help.pm:69
@@ -1559,7 +1558,7 @@ msgstr "مواد القائمة المطابقة:"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:324
 msgid "Reading items. Please wait..."
-msgstr ""
+msgstr "جاري قراءة العناصر. الرجاء الانتظار..."
 
 #: lib/Padre/Wx/Dialog/Replace.pm:54
 msgid "Find and Replace"
