@@ -245,6 +245,12 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Check for file updates on disk every (seconds):') ],
 			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
 		],
+# Will be moved to a own AutoComp-panel as soon as there are enough options for this (and I get the spare time to do it):
+		[   [   'Wx::CheckBox', 'autocomplete_multiclosebracket', ( $config->autocomplete_multiclosebracket ? 1 : 0 ),
+				Wx::gettext("Add another closing bracket if there is already one (and the auto-bracket-function is enabled)")
+			],
+			[]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -873,6 +879,10 @@ sub run {
 	$config->set(
 		'update_file_from_disk_interval',
 		$data->{update_file_from_disk_interval}
+	);
+	$config->set(
+		'autocomplete_multiclosebracket',
+		$data->{autocomplete_multiclosebracket} ? 1 : 0
 	);
 
 	# Quite like in _run_params_panel, trap exception if there

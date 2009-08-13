@@ -627,6 +627,9 @@ sub autocomplete {
 
 sub event_on_char {
 	my ( $self, $editor, $event ) = @_;
+
+	my $config = Padre->ide->config;
+
 	$editor->Freeze;
 
 	my $selection_exists = 0;
@@ -660,7 +663,8 @@ sub event_on_char {
 					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
 				}
 				unless ( defined($nextChar)
-					&& ord($nextChar) == $table{$key} )
+					&& ord($nextChar) == $table{$key} 
+					and ( ! $config->autocomplete_multiclosebracket))
 				{
 					$editor->AddText( chr( $table{$key} ) );
 					$editor->CharLeft;
