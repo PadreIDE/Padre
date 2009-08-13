@@ -255,8 +255,14 @@ sub new {
 	$self->AppendSeparator;
 
 	# Font Size
+	$self->{font_size} = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Font Size"),
+		$self->{font_size}
+	);
 	$self->{font_increase} = $self->add_menu_item(
-		$self,
+		$self->{font_size},
 		name       => 'view.font_increase',
 		label      => Wx::gettext('Increase Font Size'),
 		shortcut   => 'Ctrl-+',
@@ -266,7 +272,7 @@ sub new {
 	);
 
 	$self->{font_decrease} = $self->add_menu_item(
-		$self,
+		$self->{font_size},
 		name       => 'view.font_decrease',
 		label      => Wx::gettext('Decrease Font Size'),
 		shortcut   => 'Ctrl--',
@@ -276,7 +282,7 @@ sub new {
 	);
 
 	$self->{font_reset} = $self->add_menu_item(
-		$self,
+		$self->{font_size},
 		name       => 'view.font_reset',
 		label      => Wx::gettext('Reset Font Size'),
 		shortcut   => 'Ctrl-/',
