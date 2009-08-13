@@ -500,7 +500,6 @@ sub refresh {
 	$self->{insert_from_file}->Enable($hasdoc);
 	$self->{case_upper}->Enable($hasdoc);
 	$self->{case_lower}->Enable($hasdoc);
-
 	unless ( $newline eq 'WIN' ) {
 		$self->{convert_nl_windows}->Enable($hasdoc);
 	}
@@ -514,6 +513,8 @@ sub refresh {
 	$self->{spaces_to_tabs}->Enable($hasdoc);
 	$self->{delete_leading}->Enable($hasdoc);
 	$self->{delete_trailing}->Enable($hasdoc);
+	$self->{show_as_hex}->Enable($hasdoc);
+	$self->{show_as_decimal}->Enable($hasdoc);
 
 	# Handle the complex cases
 	my $selection = !!( defined $text and $text ne '' );

@@ -4487,7 +4487,6 @@ sub show_as_numbers {
 		$self->message( Wx::gettext('Need to select text in order to translate to hex') );
 	}
 
-	$event->Skip;
 	return;
 }
 
