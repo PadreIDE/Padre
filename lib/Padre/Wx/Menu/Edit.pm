@@ -490,6 +490,9 @@ sub refresh {
 	$self->{comment_toggle}->Enable($hasdoc);
 	$self->{comment_out}->Enable($hasdoc);
 	$self->{uncomment}->Enable($hasdoc);
+	$self->{convert_encoding_system}->Enable($hasdoc);
+	$self->{convert_encoding_utf8}->Enable($hasdoc);
+	$self->{convert_encoding_to}->Enable($hasdoc);
 	$self->{diff2saved}->Enable($hasdoc);
 	$self->{applydiff2file}->Enable(0);
 	$self->{applydiff2project}->Enable(0);
