@@ -11,7 +11,7 @@ use Padre::Wx ();
 
 # -- constructor
 sub new {
-	my ( $class ) = @_;
+	my ($class) = @_;
 	return bless {}, $class;
 }
 
@@ -23,7 +23,7 @@ sub _execute {
 	my $result = undef;
 
 	require File::Which;
-	my $cmd    = File::Which::which($exe_name);
+	my $cmd = File::Which::which($exe_name);
 	if ( -e $cmd ) {
 		require IPC::Open2;
 		my $pid = IPC::Open2::open2( \*R, \*W, $cmd, @cmd_args );
@@ -39,7 +39,7 @@ sub _execute {
 # On linux, opens the containing folder for it
 #
 sub open_in_file_browser {
-	my ($self, $filename) = @_;
+	my ( $self, $filename ) = @_;
 	my $main = Padre::Current->main;
 
 	if ( not defined $filename ) {

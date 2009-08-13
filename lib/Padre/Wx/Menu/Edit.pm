@@ -500,6 +500,7 @@ sub refresh {
 	$self->{insert_from_file}->Enable($hasdoc);
 	$self->{case_upper}->Enable($hasdoc);
 	$self->{case_lower}->Enable($hasdoc);
+
 	unless ( $newline eq 'WIN' ) {
 		$self->{convert_nl_windows}->Enable($hasdoc);
 	}
