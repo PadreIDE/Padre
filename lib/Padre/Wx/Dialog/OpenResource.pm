@@ -344,8 +344,6 @@ sub _setup_events {
 		}
 	);
 
-	$self->_show_recent_while_idle;
-
 	Wx::Event::EVT_MENU(
 		$self,
 		$self->_skip_vcs_files,
@@ -369,6 +367,8 @@ sub _setup_events {
 			);
 		}
 	);
+
+	$self->_show_recent_while_idle;
 }
 
 #
