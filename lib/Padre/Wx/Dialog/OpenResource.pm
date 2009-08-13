@@ -2,7 +2,7 @@ package Padre::Wx::Dialog::OpenResource;
 
 use strict;
 use warnings;
-use Cwd ();
+use Cwd             ();
 use Padre::DB       ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();

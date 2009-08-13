@@ -134,7 +134,7 @@ sub types {
 }
 
 sub list_files {
-	my $rows = $_[0]->selectall_arrayref( 'SELECT DISTINCT path FROM autosave' );
+	my $rows = $_[0]->selectall_arrayref('SELECT DISTINCT path FROM autosave');
 	return map {@$_} @$rows;
 }
 

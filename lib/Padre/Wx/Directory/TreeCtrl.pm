@@ -718,15 +718,15 @@ sub _on_tree_item_menu {
 		sub { $self->_on_tree_item_activated($event) }
 	);
 
-	
-	Wx::Event::EVT_MENU( $self, 
-		$menu->Append( -1, Wx::gettext( 'Open In File Browser' ) ),
-		sub { 
+
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append( -1, Wx::gettext('Open In File Browser') ),
+		sub {
+
 			#Open the current node in file browser
 			require Padre::Wx::Directory::OpenInFileBrowserAction;
-			Padre::Wx::Directory::OpenInFileBrowserAction
-				->new($self)
-				->open_in_file_browser;
+			Padre::Wx::Directory::OpenInFileBrowserAction->new($self)->open_in_file_browser;
 		}
 	);
 

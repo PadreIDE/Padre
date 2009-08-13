@@ -46,8 +46,8 @@ our @EXPORT_OK = qw{ newline_type get_matches _T };
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( $^O eq 'MSWin32' );
-use constant MAC   => !!( $^O eq 'darwin'  );
-use constant UNIX  => ! ( WIN32 or MAC     );
+use constant MAC   => !!( $^O eq 'darwin' );
+use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends
 # 1. Win32 Native
@@ -271,7 +271,7 @@ sub sharefile {
 
 sub find_perldiag_translations {
 	my %languages;
-	foreach my $path ( @INC ) {
+	foreach my $path (@INC) {
 		my $dir = File::Spec->catdir( $path, 'POD2' );
 		next if not -e $dir;
 		if ( opendir my $dh, $dir ) {
@@ -337,7 +337,7 @@ sub get_project_dir {
 
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
-	while ( 1 ) {
+	while (1) {
 		return $dir if -e File::Spec->catfile( $dir, 'Makefile.PL' );
 		return $dir if -e File::Spec->catfile( $dir, 'Build.PL' );
 		$olddir = $dir;
@@ -381,7 +381,7 @@ sub parse_version {
 	my $result;
 	local $/ = "\n";
 	local $_;
-	open(my $fh, '<', $parsefile) or die "Could not open '$parsefile': $!";
+	open( my $fh, '<', $parsefile ) or die "Could not open '$parsefile': $!";
 	my $inpod = 0;
 	while (<$fh>) {
 		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;

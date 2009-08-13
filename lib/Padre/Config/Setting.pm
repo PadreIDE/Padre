@@ -40,11 +40,9 @@ sub new {
 	}
 
 	# It is illegal to store paths in the human config
-	if (
-		$self->type == Padre::Constant::PATH
-		and
-		$self->store == Padre::Constant::HUMAN
-	) {
+	if (    $self->type == Padre::Constant::PATH
+		and $self->store == Padre::Constant::HUMAN )
+	{
 		Carp::croak("PATH values must only be placed in the HOST store");
 	}
 

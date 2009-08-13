@@ -178,8 +178,8 @@ sub file_picker {
 sub dir_picker {
 	return dialog(
 		sub { Wx::DirPickerCtrl->new( $_[0] ) },
-		sub { $_[0]->SetPath( Cwd::cwd() ) },   # setup
-		sub { $_[0]->GetPath; },                # get data
+		sub { $_[0]->SetPath( Cwd::cwd() ) },    # setup
+		sub { $_[0]->GetPath; },                 # get data
 		{   title => 'Select directory',
 		},
 	);

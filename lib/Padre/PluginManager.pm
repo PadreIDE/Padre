@@ -64,7 +64,7 @@ First argument should be a Padre object.
 sub new {
 	my $class = shift;
 	my $parent = _INSTANCE( shift, 'Padre' )
-		or Carp::croak( "Creation of a Padre::PluginManager without a Padre not possible" );
+		or Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 
 	my $self = bless {
 		parent       => $parent,

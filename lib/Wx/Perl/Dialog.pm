@@ -3,8 +3,8 @@ package Wx::Perl::Dialog;
 use 5.008;
 use strict;
 use warnings;
-use Cwd       ();
-use Wx        ':everything';
+use Cwd ();
+use Wx ':everything';
 use Wx::Event ':everything';
 
 our $VERSION = '0.42';

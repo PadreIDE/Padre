@@ -143,10 +143,8 @@ sub can_editor {
 
 sub plugin_icon {
 	my $self = shift;
-	my $icon = eval {
-		$self->class->plugin_icon;
-	};
-	if ( _INSTANCE($icon, 'Wx::Bitmap') ) {
+	my $icon = eval { $self->class->plugin_icon; };
+	if ( _INSTANCE( $icon, 'Wx::Bitmap' ) ) {
 		return $icon;
 	} else {
 		return undef;

@@ -77,7 +77,7 @@ sub new {
 
 			# If we can't find another match, show a message
 			if ( ( $editor->GetSelection )[0] == $position1 ) {
-				$_[0]->error( Wx::gettext( "Failed to find any matches" ) );
+				$_[0]->error( Wx::gettext("Failed to find any matches") );
 			}
 		},
 	);
