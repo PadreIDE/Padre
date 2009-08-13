@@ -128,7 +128,7 @@ sub _create {
 	$self->_create_buttons;
 
 	# wrap everything in a vbox to add some padding
-	$self->SetMinSize( [ 315, 315 ] );
+	$self->SetMinSize( [ 360, 340 ] );
 	$self->SetSizer($sizer);
 
 	# center/fit the dialog
@@ -227,13 +227,11 @@ sub _setup_events {
 		$self,
 		$self->_list,
 		sub {
-
 			my $selection = $self->_list->GetSelection;
 			if ( $selection != Wx::wxNOT_FOUND ) {
-				$self->_status_text->SetLabel( $self->_list->GetString($selection) );
+				my $action = $self->_list->GetClientData($selection);
+				$self->_status_text->SetLabel( $self->_list->GetString($selection) . " (" . $action->{name} . ")" );
 			}
-
-			return;
 		}
 	);
 
@@ -362,7 +360,7 @@ sub _update_list_box {
 	foreach my $menu_action (@{ $self->_matched_results }) {
 		my $label = $menu_action->{value};
 		if(not $first_label) {
-			$first_label = $label;
+			$first_label = $label . " (" . $menu_action->{name} . ")";
 		}
 		if ( $label =~ /$search_expr/i ) {
 			$self->_list->Insert( $label, $pos, $menu_action );
