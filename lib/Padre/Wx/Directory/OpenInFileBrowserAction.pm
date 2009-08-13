@@ -9,19 +9,10 @@ our $VERSION = '0.42';
 # module imports
 use Padre::Wx ();
 
-# accessors
-use Class::XSAccessor accessors => {
-	_plugin => '_plugin', # Plugin object
-};
-
 # -- constructor
 sub new {
-	my ( $class, $plugin ) = @_;
-
-	my $self = bless {}, $class;
-	$self->_plugin($plugin);
-
-	return $self;
+	my ( $class ) = @_;
+	return bless {}, $class;
 }
 
 #
@@ -30,6 +21,8 @@ sub new {
 sub _execute {
 	my ( $self, $exe_name, @cmd_args ) = @_;
 	my $result = undef;
+
+	require File::Which;
 	my $cmd    = File::Which::which($exe_name);
 	if ( -e $cmd ) {
 		require IPC::Open2;
@@ -41,21 +34,18 @@ sub _execute {
 }
 
 #
-# For the current "saved" Padre document,
+# Opens the provided filename in the File browser:
 # On win32, selects it in Windows Explorer
 # On linux, opens the containing folder for it
 #
 sub open_in_file_browser {
-	my $self = shift;
+	my ($self, $filename) = @_;
+	my $main = Padre::Current->main;
 
-	my $main     = $self->_plugin->main;
-	my $filename = $main->current->filename;
 	if ( not defined $filename ) {
 		Wx::MessageBox( Wx::gettext("No filename"), Wx::gettext('Error'), Wx::wxOK, $main, );
 		return;
 	}
-
-	require File::Which;
 
 	my $error = undef;
 	if ( $^O =~ /win32/i ) {
