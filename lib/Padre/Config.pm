@@ -317,8 +317,8 @@ setting(
 # Directory Tree Settings
 setting(
 	name    => 'default_projects_directory',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents,
 );
 
