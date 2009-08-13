@@ -152,7 +152,7 @@ sub new {
 
 	$self->{quick_menu_access} = $self->add_tool_item(
 		action => 'search.quick_menu_access',
-		icon   => 'places/folder-saved-search',
+		icon   => 'status/info',
 	);
 
 	return $self;
