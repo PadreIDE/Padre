@@ -423,10 +423,10 @@ sub _show_recently_opened_resources() {
 
 	# Fetch them from Padre's RecentlyUsed database table
 	require Padre::DB::RecentlyUsed;
-	my $current_recently_used = 
+	my $recently_used = 
 		Padre::DB::RecentlyUsed->select("where type = ?", 'RESOURCE') || [];
 	my @recent_files = ();
-	foreach my $e (@$current_recently_used) {
+	foreach my $e (@$recently_used) {
 		push @recent_files, $e->value;
 	}
 	@recent_files = sort { 
