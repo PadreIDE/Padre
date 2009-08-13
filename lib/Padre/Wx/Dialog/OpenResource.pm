@@ -400,7 +400,7 @@ sub showIt {
 	if ( $self->IsShown ) {
 		$self->SetFocus;
 	} else {
-		$self->_search_text->SetValue('');
+		$self->_search_text->ChangeValue('');
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
