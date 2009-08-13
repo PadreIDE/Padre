@@ -68,22 +68,23 @@ sub _on_ok_button_clicked {
 		my $event = $menu_action->menu_event;
 		if ( $event && ref($event) eq 'CODE' ) {
 
+			# Fetch the recently used actions from the database
+			require Padre::DB::RecentlyUsed;
+			my $recently_used = 
+				Padre::DB::RecentlyUsed->select("where type = ?", 'ACTION') || [];
+			my @recent_actions = ();
+			my $found = 0;
+			foreach my $e (@$recently_used) {
+				push @recent_actions, {
+					name  => $e->name,
+					value => $e->value,
+				};
+				if($action->{name} eq $e->name) {
+					$found = 1;
+				}
+			}
+
 			eval {
-
-				# # Keep the last 20 recently opened resources available
-				# # and save it to plugin's configuration object
-				# my $config = $self->_plugin->config_read;
-				# my @recent = split /\|/, $config->{quick_menu_history};
-				# if ( scalar @recent >= 20 ) {
-					# shift @recent;
-				# }
-				# push @recent, $menu_action->name;
-				# my %unique = map { $_, 1 } @recent;
-				# @recent = keys %unique;
-				# @recent = sort { $a cmp $b } @recent;
-				# $config->{quick_menu_history} = join '|', @recent;
-				# $self->_plugin->config_write($config);
-
 				&$event($main);
 			};
 			if ($@) {
@@ -93,6 +94,22 @@ sub _on_ok_button_clicked {
 					Wx::wxOK,
 					$main,
 				);
+			} else {
+				# And insert a recently used tuple if it is not found
+				# and the action is successful.
+				if(not $found) { 
+					Padre::DB::RecentlyUsed->create(
+						name      => $action->{name}, 
+						value     => $action->{value}, 
+						type      => 'ACTION', 
+						last_used => time(),
+					);
+				} else {
+					Padre::DB->do(
+						"update recently_used set last_used = ? where name = ? and type = ?",
+						{}, time(), $action->{name}, 'ACTION',
+					);
+				}
 			}
 		}
 	}
@@ -249,6 +266,8 @@ sub _setup_events {
 		}
 	);
 
+	$self->_show_recent_while_idle;
+
 }
 
 #
@@ -260,7 +279,7 @@ sub _show_recent_while_idle {
 	Wx::Event::EVT_IDLE(
 		$self,
 		sub {
-			$self->_show_recently_opened_resources;
+			$self->_show_recently_opened_actions;
 
 			# focus on the search text box
 			$self->_search_text->SetFocus;
