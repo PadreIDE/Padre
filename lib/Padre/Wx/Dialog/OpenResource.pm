@@ -449,8 +449,8 @@ sub _search() {
 
 	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );
 
-	require Padre::Plugin::Ecliptic::OpenResourceSearchTask;
-	my $search_task = Padre::Plugin::Ecliptic::OpenResourceSearchTask->new(
+	require Padre::Wx::Dialog::OpenResource::SearchTask;
+	my $search_task = Padre::Wx::Dialog::OpenResource::SearchTask->new(
 		dialog                   => $self,
 		directory                => $self->_directory,
 		skip_vcs_files           => $self->_skip_vcs_files->IsChecked,
