@@ -39,6 +39,15 @@ sub new {
 		Carp::croak("Missing or invalid default for setting $self->{name}");
 	}
 
+	# It is illegal to store paths in the human config
+	if (
+		$self->type == Padre::Constant::PATH
+		and
+		$self->store == Padre::Constant::HUMAN
+	) {
+		Carp::croak("PATH values must only be placed in the HOST store");
+	}
+
 	# Normalise
 	$self->{project} = !!$self->project;
 
