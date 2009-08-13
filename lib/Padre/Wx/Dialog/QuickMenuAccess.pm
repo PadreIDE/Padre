@@ -14,11 +14,12 @@ use Padre::Wx::Icon ();
 
 # accessors
 use Class::XSAccessor accessors => {
-	_main         => '_main',         # Padre main window
-	_sizer        => '_sizer',        # window sizer
-	_search_text  => '_search_text',  # search text control
-	_list         => '_list',         # matching items list
-	_status_text  => '_status_text',  # status label
+	_main            => '_main',            # Padre main window
+	_sizer           => '_sizer',           # window sizer
+	_search_text     => '_search_text',     # search text control
+	_list            => '_list',            # matching items list
+	_status_text     => '_status_text',     # status label
+	_matched_results => '_matched_results', # matched results
 };
 
 # -- constructor
@@ -199,6 +200,9 @@ sub _setup_events {
 		$self->_search_text,
 		sub {
 
+			if ( not $self->_matched_results ) {
+				$self->_search();
+			}
 			$self->_update_list_box;
 
 			return;
@@ -279,16 +283,34 @@ sub _show_recently_opened_actions() {
 	foreach my $e (@$recently_used) {
 		push @recent_actions, { 
 			name  => $e->name, 
-			value => $e->value
+			value => $e->value,
 		};
 	}
 	@recent_actions = sort { $a->value cmp $a->value } @recent_actions;
+	$self->_matched_results(\@recent_actions);
 
 	# Show results in matching items list
 	$self->_update_list_box;
 
 	# No need to store them anymore
-	$self->_matched_files(undef);
+	$self->_matched_results(undef);
+}
+
+#
+# Search for files and cache result
+#
+sub _search() {
+	my $self = shift;
+
+	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );
+	my @menu_actions = ();
+	foreach my $menu_action ( values %{ Padre::ide->actions } ) {
+		push @menu_actions, $menu_action;
+	}
+	@menu_actions = sort { $a->label_text cmp $b->label_text } @menu_actions;
+	$self->_matched_results( \@menu_actions );
+
+	return;
 }
 
 #
@@ -296,6 +318,8 @@ sub _show_recently_opened_actions() {
 #
 sub _update_list_box {
 	my $self = shift;
+
+	return if not $self->_matched_results;
 
 	my $search_expr = $self->_search_text->GetValue;
 
@@ -306,13 +330,8 @@ sub _update_list_box {
 	$self->_list->Clear;
 	my $pos = 0;
 
-	my @menu_actions = ();
-	foreach my $menu_action ( values %{ Padre::ide->actions } ) {
-		push @menu_actions, $menu_action;
-	}
-	@menu_actions = sort { $a->label_text cmp $b->label_text } @menu_actions;
-	foreach my $menu_action (@menu_actions) {
-		my $label = $menu_action->label_text;
+	foreach my $menu_action (@{ $self->_matched_results }) {
+		my $label = $menu_action->value;
 		if ( $label =~ /$search_expr/i ) {
 			$self->_list->Insert( $label, $pos, $menu_action );
 			$pos++;
@@ -320,9 +339,9 @@ sub _update_list_box {
 	}
 	if ( $pos > 0 ) {
 		$self->_list->Select(0);
-		$self->_status_text->SetLabel( "" . ( $pos + 1 ) . Wx::gettext(' item(s) found') );
+		$self->_status_text->SetLabel( $self->_list->GetClientData(0) );
 	} else {
-		$self->_status_text->SetLabel( Wx::gettext('No items found') );
+		$self->_status_text->SetLabel('');
 	}
 
 	return;
