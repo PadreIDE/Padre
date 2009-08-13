@@ -392,6 +392,32 @@ sub _restart_search() {
 }
 
 #
+# Focus on it if it shown or restart its state and show it if it is hidden.
+#
+sub showIt {
+	my $self = shift;
+
+	if ( $self->IsShown ) {
+		$self->SetFocus;
+	} else {
+		$self->_search_text->SetValue('');
+		Wx::Event::EVT_IDLE(
+			$self,
+			sub {
+				$self->_show_recently_opened_resources;
+
+				# focus on the search text box
+				$self->_search_text->SetFocus;
+
+				# unregister from idle event
+				Wx::Event::EVT_IDLE( $self, undef );
+			}
+		);
+		$self->Show(1);
+	}
+}
+
+#
 # Shows the recently opened resources
 #
 sub _show_recently_opened_resources() {

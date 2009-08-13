@@ -169,11 +169,7 @@ sub new {
 		menu_event => sub {
 			#Create and show the dialog
 			my $open_resource_dialog = $_[0]->open_resource;
-			if ( $open_resource_dialog && $open_resource_dialog->IsShown ) {
-				$open_resource_dialog->SetFocus;
-			} else {
-				$open_resource_dialog->Show(1);
-			}
+			$open_resource_dialog->showIt;
 		},
 	);
 
