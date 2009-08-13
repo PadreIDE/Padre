@@ -8,12 +8,13 @@ Padre::Action - Padre Action Object
 
 =head1 SYNOPSIS
 
-	my $action = Padre::Action->new( 
-		name => 'file.save', 
-		label => 'Save', 
-		icon => '...', 
-		shortcut => 'CTRL-S', 
-		menu_event => sub { } );
+  my $action = Padre::Action->new( 
+    name       => 'file.save', 
+    label      => 'Save', 
+    icon       => '...', 
+    shortcut   => 'CTRL-S', 
+    menu_event => sub { },
+  );
 
 =head1 DESCRIPTION
 
