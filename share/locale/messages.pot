@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-13 17:44+0300\n"
+"POT-Creation-Date: 2009-08-13 22:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -227,12 +227,12 @@ msgstr ""
 msgid "enabled"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:203
+#: lib/Padre/PluginHandle.pm:201
 #, perl-format
 msgid "Failed to enable plugin '%s': %s"
 msgstr ""
 
-#: lib/Padre/PluginHandle.pm:281
+#: lib/Padre/PluginHandle.pm:279
 #, perl-format
 msgid "Failed to disable plugin '%s': %s"
 msgstr ""
@@ -280,6 +280,7 @@ msgid "No document open"
 msgstr ""
 
 #: lib/Padre/PluginManager.pm:816 lib/Padre/Wx/Main.pm:4077
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:46
 msgid "No filename"
 msgstr ""
 
@@ -498,11 +499,13 @@ msgstr ""
 #: lib/Padre/Wx/Syntax.pm:87 lib/Padre/Wx/Dialog/OpenResource.pm:104
 #: lib/Padre/Wx/Dialog/PluginManager.pm:361
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:85
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:46
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:76
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:429
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:463
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:651
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:746
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:776
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:760
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:790
 msgid "Error"
 msgstr ""
 
@@ -514,7 +517,7 @@ msgstr ""
 msgid "&GoTo Element"
 msgstr ""
 
-#: lib/Padre/Task/Outline/Perl.pm:210 lib/Padre/Wx/Directory/TreeCtrl.pm:786
+#: lib/Padre/Task/Outline/Perl.pm:210 lib/Padre/Wx/Directory/TreeCtrl.pm:800
 msgid "Open &Documentation"
 msgstr ""
 
@@ -554,15 +557,15 @@ msgstr ""
 msgid "Replace Operation Canceled"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:187 lib/Padre/Wx/Menu/View.pm:323
+#: lib/Padre/Wx/About.pm:188 lib/Padre/Wx/Menu/View.pm:329
 msgid "Padre"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:192
+#: lib/Padre/Wx/About.pm:193
 msgid "Development"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:197
+#: lib/Padre/Wx/About.pm:198
 msgid "Translation"
 msgstr ""
 
@@ -1029,7 +1032,7 @@ msgstr ""
 msgid "Delete &All"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:55 lib/Padre/Wx/Menu/View.pm:294
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:55 lib/Padre/Wx/Menu/View.pm:300
 msgid "Set Bookmark"
 msgstr ""
 
@@ -1060,7 +1063,7 @@ msgstr ""
 msgid "Encode to:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Encode.pm:62 lib/Padre/Wx/Menu/Edit.pm:263
+#: lib/Padre/Wx/Dialog/Encode.pm:62 lib/Padre/Wx/Menu/Edit.pm:273
 msgid "Encode document to..."
 msgstr ""
 
@@ -1213,7 +1216,7 @@ msgid "Version"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:296
-#: lib/Padre/Wx/Dialog/Preferences.pm:608 lib/Padre/Wx/Menu/Edit.pm:456
+#: lib/Padre/Wx/Dialog/Preferences.pm:608 lib/Padre/Wx/Menu/Edit.pm:466
 msgid "Preferences"
 msgstr ""
 
@@ -1570,8 +1573,8 @@ msgid "Open"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:244
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:756
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:764
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:770
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:778
 msgid "Delete"
 msgstr ""
 
@@ -1607,7 +1610,7 @@ msgstr ""
 msgid "&Add"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:39 lib/Padre/Wx/Menu/Edit.pm:190
+#: lib/Padre/Wx/Dialog/Snippets.pm:39 lib/Padre/Wx/Menu/Edit.pm:200
 msgid "Snippets"
 msgstr ""
 
@@ -1625,6 +1628,10 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/OpenResource/SearchTask.pm:93
 msgid "Finished Searching"
+msgstr ""
+
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:31
+msgid "Failed to execute process\n"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:26
@@ -1683,23 +1690,27 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:723
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:724
+msgid "Open In File Browser"
+msgstr ""
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:737
 msgid "Rename / Move"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:735
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:749
 msgid "Move to trash"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:763
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:777
 msgid "Are you sure you want to delete this item?"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:804
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:818
 msgid "Show hidden files"
 msgstr ""
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:825
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:839
 msgid "Reload"
 msgstr ""
 
@@ -1748,118 +1759,122 @@ msgid "&Goto Line"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:160
-msgid "&AutoComp"
+msgid "&Next Problem"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:170
-msgid "&Brace matching"
+msgid "&AutoComp"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:180
+msgid "&Brace matching"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Edit.pm:190
 msgid "&Join lines"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:204
+#: lib/Padre/Wx/Menu/Edit.pm:214
 msgid "&Toggle Comment"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:214
+#: lib/Padre/Wx/Menu/Edit.pm:224
 msgid "&Comment Selected Lines"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:224
+#: lib/Padre/Wx/Menu/Edit.pm:234
 msgid "&Uncomment Selected Lines"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:236
+#: lib/Padre/Wx/Menu/Edit.pm:246
 msgid "Convert Encoding"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:243
+#: lib/Padre/Wx/Menu/Edit.pm:253
 msgid "Encode document to System Default"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:253
+#: lib/Padre/Wx/Menu/Edit.pm:263
 msgid "Encode document to utf-8"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:273
+#: lib/Padre/Wx/Menu/Edit.pm:283
 msgid "Convert EOL"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:280
+#: lib/Padre/Wx/Menu/Edit.pm:290
 msgid "EOL to Windows"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:289
+#: lib/Padre/Wx/Menu/Edit.pm:299
 msgid "EOL to Unix"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:298
+#: lib/Padre/Wx/Menu/Edit.pm:308
 msgid "EOL to Mac Classic"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:308
+#: lib/Padre/Wx/Menu/Edit.pm:318
 msgid "Tabs and Spaces"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:315
+#: lib/Padre/Wx/Menu/Edit.pm:325
 msgid "Tabs to Spaces..."
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:324
+#: lib/Padre/Wx/Menu/Edit.pm:334
 msgid "Spaces to Tabs..."
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:335
+#: lib/Padre/Wx/Menu/Edit.pm:345
 msgid "Delete Trailing Spaces"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:344
+#: lib/Padre/Wx/Menu/Edit.pm:354
 msgid "Delete Leading Spaces"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:354
+#: lib/Padre/Wx/Menu/Edit.pm:364
 msgid "Upper/Lower Case"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:361
+#: lib/Padre/Wx/Menu/Edit.pm:371
 msgid "Upper All"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:371
+#: lib/Padre/Wx/Menu/Edit.pm:381
 msgid "Lower All"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:384
+#: lib/Padre/Wx/Menu/Edit.pm:394
 msgid "Diff Tools"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:391
+#: lib/Padre/Wx/Menu/Edit.pm:401
 msgid "Diff to Saved Version"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:400
+#: lib/Padre/Wx/Menu/Edit.pm:410
 msgid "Apply Diff to File"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:408
+#: lib/Padre/Wx/Menu/Edit.pm:418
 msgid "Apply Diff to Project"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:417
+#: lib/Padre/Wx/Menu/Edit.pm:427
 msgid "Insert From File..."
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:428
+#: lib/Padre/Wx/Menu/Edit.pm:438
 msgid "Show as ..."
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:435
+#: lib/Padre/Wx/Menu/Edit.pm:445
 msgid "Show as hexa"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:444
+#: lib/Padre/Wx/Menu/Edit.pm:454
 msgid "Show as decimal"
 msgstr ""
 
@@ -2189,46 +2204,50 @@ msgid "Word-Wrap"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/View.pm:261
+msgid "Font Size"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/View.pm:267
 msgid "Increase Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:271
+#: lib/Padre/Wx/Menu/View.pm:277
 msgid "Decrease Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:281
+#: lib/Padre/Wx/Menu/View.pm:287
 msgid "Reset Font Size"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:305
+#: lib/Padre/Wx/Menu/View.pm:311
 msgid "Goto Bookmark"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:319
+#: lib/Padre/Wx/Menu/View.pm:325
 msgid "Style"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:324
+#: lib/Padre/Wx/Menu/View.pm:330
 msgid "Night"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:325
+#: lib/Padre/Wx/Menu/View.pm:331
 msgid "Ultraedit"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:326
+#: lib/Padre/Wx/Menu/View.pm:332
 msgid "Notepad++"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:379
+#: lib/Padre/Wx/Menu/View.pm:385
 msgid "Language"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:387
+#: lib/Padre/Wx/Menu/View.pm:393
 msgid "System Default"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/View.pm:432
+#: lib/Padre/Wx/Menu/View.pm:438
 msgid "&Full Screen"
 msgstr ""
 
