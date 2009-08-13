@@ -63,7 +63,7 @@ sub new {
 
 # Get the project from the document (and don't cache)
 sub project {
-	my $self     = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $document = $self->document;
 	if ( defined $document ) {
 		return $document->project;
@@ -74,7 +74,7 @@ sub project {
 
 # Get the text from the editor (and don't cache)
 sub text {
-	my $self   = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $editor = $self->editor;
 	return '' unless defined $editor;
 	return $editor->GetSelectedText;
@@ -94,7 +94,7 @@ sub title {
 
 # Get the filename from the document
 sub filename {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( exists $self->{filename} ) {
 		my $document = $self->document;
 		if ( defined $document ) {
@@ -108,7 +108,7 @@ sub filename {
 
 # Get the document from the editor
 sub document {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( exists $self->{document} ) {
 		my $editor = $self->editor;
 		if ( defined $editor ) {
@@ -122,7 +122,7 @@ sub document {
 
 # Derive the editor from the document
 sub editor {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( exists $self->{editor} ) {
 		my $notebook = $self->notebook;
 		my $selected = $notebook->GetSelection;
@@ -142,7 +142,7 @@ sub editor {
 
 # Convenience method
 sub notebook {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{notebook} ) {
 		$self->{notebook} = $self->main->notebook;
 	}
@@ -151,13 +151,13 @@ sub notebook {
 
 # Get the project from the main window (and don't cache)
 sub config {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	$self->main->config;
 }
 
 # Convenience method
 sub main {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 
 	# floating windows (Wx::AuiFloatingFrame) may
 	# call us passing $self as an argument, so
@@ -181,7 +181,7 @@ sub main {
 
 # Convenience method
 sub ide {
-	my $self = ref($_[0]) ? $_[0] : $_[0]->new;
+	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{ide} ) {
 		if ( defined $self->{main} ) {
 			$self->{ide} = $self->{main}->ide;

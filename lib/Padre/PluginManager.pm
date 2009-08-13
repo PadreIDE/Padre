@@ -62,16 +62,16 @@ First argument should be a Padre object.
 =cut
 
 sub new {
-	my $class  = shift;
-	my $parent = _INSTANCE(shift, 'Padre') or Carp::croak(
-		"Creation of a Padre::PluginManager without a Padre not possible"
-	);
+	my $class = shift;
+	my $parent = _INSTANCE( shift, 'Padre' )
+		or Carp::croak( "Creation of a Padre::PluginManager without a Padre not possible" );
 
 	my $self = bless {
-		parent                    => $parent,
-		plugins                   => {},
-		plugin_dir                => Padre::Constant::PLUGIN_DIR,
-		plugin_order              => [],
+		parent       => $parent,
+		plugins      => {},
+		plugin_dir   => Padre::Constant::PLUGIN_DIR,
+		plugin_order => [],
+
 		#par_loaded               => 0,
 		plugins_with_context_menu => {},
 		@_,
@@ -110,13 +110,12 @@ See L<Padre::Plugin>.
 
 =cut
 
-use Class::XSAccessor
-	getters => {
-		parent                    => 'parent',
-		plugin_dir                => 'plugin_dir',
-		plugins                   => 'plugins',
-		plugins_with_context_menu => 'plugins_with_context_menu',
-	};
+use Class::XSAccessor getters => {
+	parent                    => 'parent',
+	plugin_dir                => 'plugin_dir',
+	plugins                   => 'plugins',
+	plugins_with_context_menu => 'plugins_with_context_menu',
+};
 
 # Get the prefered plugin order.
 # The order calculation cost is higher than we might like,
@@ -124,29 +123,23 @@ use Class::XSAccessor
 sub plugin_order {
 	my $self = shift;
 	unless ( $self->{plugin_order} ) {
+
 		# Schwartzian transform that sorts the plugins by their
 		# full names, but always puts "My Plugin" first.
 		$self->{plugin_order} = [
-			map {
-				$_->[0]
-			} sort {
-				($b->[0] eq 'Padre::Plugin::My')
-				<=>
-				($a->[0] eq 'Padre::Plugin::My')
-				or
-				$a->[1] cmp $b->[1]
-			} map {
+			map { $_->[0] } sort {
+				( $b->[0] eq 'Padre::Plugin::My' ) <=> ( $a->[0] eq 'Padre::Plugin::My' )
+					or $a->[1] cmp $b->[1]
+				} map {
 				[ $_->class, $_->plugin_name ]
-			} values %{$self->{plugins}}
+				} values %{ $self->{plugins} }
 		];
 	}
 	return @{ $self->{plugin_order} };
 }
 
 sub plugin_objects {
-	map {
-		$_[0]->{plugins}->{$_}
-	} $_[0]->plugin_order;
+	map { $_[0]->{plugins}->{$_} } $_[0]->plugin_order;
 }
 
 
@@ -217,7 +210,7 @@ sub reset_my_plugin {
 
 	# copy the My Plugin
 	unlink $dst;
-	unless ( File::Copy::copy($src, $dst) ) {
+	unless ( File::Copy::copy( $src, $dst ) ) {
 		Carp::croak("Could not copy the My plugin ($src) to $dst: $!");
 	}
 	chmod( 0644, $dst );
@@ -296,16 +289,16 @@ sub load_plugins {
 
 	# Attempt to load all plugins in the Padre::Plugin::* namespace
 	my %seen = ();
-	foreach my $inc ( @INC ) {
+	foreach my $inc (@INC) {
 		my $dir = File::Spec->catdir( $inc, 'Padre', 'Plugin' );
 		next unless -d $dir;
 
 		local *DIR;
-		opendir( DIR, $dir )       or die("opendir($dir): $!");
-		my @files = readdir( DIR ) or die("readdir($dir): $!");
-		closedir( DIR )            or die("closedir($dir): $!");
+		opendir( DIR, $dir ) or die("opendir($dir): $!");
+		my @files = readdir(DIR) or die("readdir($dir): $!");
+		closedir(DIR) or die("closedir($dir): $!");
 
-		foreach ( @files ) {
+		foreach (@files) {
 			next unless s/\.pm$//;
 			my $module = "Padre::Plugin::$_";
 			next if $seen{$module}++;
@@ -316,16 +309,16 @@ sub load_plugins {
 	# Attempt to load all plugins in the Acme::Padre::* namespace
 	# TODO: Put this code behind some kind of future security option,
 	#       once we have one.
-	foreach my $inc ( @INC ) {
+	foreach my $inc (@INC) {
 		my $dir = File::Spec->catdir( $inc, 'Acme', 'Padre' );
 		next unless -d $dir;
 
 		local *DIR;
-		opendir( DIR, $dir )       or die("opendir($dir): $!");
-		my @files = readdir( DIR ) or die("readdir($dir): $!");
-		closedir( DIR )            or die("closedir($dir): $!");
+		opendir( DIR, $dir ) or die("opendir($dir): $!");
+		my @files = readdir(DIR) or die("readdir($dir): $!");
+		closedir(DIR) or die("closedir($dir): $!");
 
-		foreach ( @files ) {
+		foreach (@files) {
 			next unless s/\.pm$//;
 			my $module = "Acme::Padre::$_";
 			next if $seen{$module}++;
@@ -338,6 +331,7 @@ sub load_plugins {
 
 	$self->_refresh_plugin_menu;
 	if ( my @failed = $self->failed ) {
+
 		# Until such time as we can show an error message
 		# in a smarter way, this gets annoying.
 		# Every time you start the editor, we tell you what
@@ -405,9 +399,7 @@ again when the editor is restarted.
 sub failed {
 	my $self    = shift;
 	my $plugins = $self->plugins;
-	return grep {
-		$plugins->{$_}->status eq 'error'
-	} sort keys %$plugins;
+	return grep { $plugins->{$_}->status eq 'error' } sort keys %$plugins;
 }
 
 
@@ -512,7 +504,7 @@ sub _load_plugin {
 	eval $code; ## no critic
 
 	# Did it compile?
-	if ( $@ ) {
+	if ($@) {
 		$plugin->errstr(
 			sprintf(
 				Wx::gettext("%s - Crashed while loading: %s"),
@@ -536,10 +528,8 @@ sub _load_plugin {
 	}
 
 	# Attempt to instantiate the plugin
-	my $object = eval {
-		$module->new($self->{parent})
-	};
-	if ( $@ ) {
+	my $object = eval { $module->new( $self->{parent} ) };
+	if ($@) {
 		$plugin->errstr(
 			sprintf(
 				Wx::gettext("%s - Crashed while instantiating: %s"),
@@ -549,7 +539,7 @@ sub _load_plugin {
 		$plugin->status('error');
 		return;
 	}
-	unless ( _INSTANCE($object, 'Padre::Plugin') ) {
+	unless ( _INSTANCE( $object, 'Padre::Plugin' ) ) {
 		$plugin->errstr(
 			sprintf(
 				Wx::gettext("%s - Failed to instantiate plugin"),
@@ -565,8 +555,9 @@ sub _load_plugin {
 	$plugin->status('loaded');
 
 	# Should we try to enable the plugin
-	my $config = $self->plugin_db($plugin->class);
+	my $config = $self->plugin_db( $plugin->class );
 	unless ( defined $config->{enabled} ) {
+
 		# Do not enable by default
 		$config->{enabled} = 0;
 	}
@@ -706,10 +697,11 @@ sub plugin_db {
 	# Get the plugin, and from there the config
 	my $plugin = $self->_plugin($module);
 	my $object = Padre::DB::Plugin->fetch_name($module);
-	unless ( $object ) {
+	unless ($object) {
 		$object = Padre::DB::Plugin->create(
 			name    => $plugin->class,
 			version => $plugin->version,
+
 			# Having undef here means no preference yet
 			enabled => undef,
 			config  => undef,
@@ -722,7 +714,7 @@ sub plugin_db {
 sub editor_enable {
 	my $self   = shift;
 	my $editor = shift;
-	foreach my $module ( keys %{$self->{plugins}} ) {
+	foreach my $module ( keys %{ $self->{plugins} } ) {
 		my $plugin = $self->{plugins}->{$module} or return;
 		my $object = $plugin->{object}           or return;
 		next unless $plugin->{status};
@@ -785,6 +777,7 @@ sub get_menu {
 	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
 	if ($@) {
 		$plugin->errstr( Wx::gettext("Error when calling menu for plugin") . "'$module': $@" );
+
 		# TODO: make sure these error messages show up somewhere or it will drive
 		# crazy anyone trying to write a plugin
 		return ();
@@ -819,7 +812,7 @@ sub reload_current_plugin {
 		return $main->error( Wx::gettext('No document open') );
 	}
 	my $filename = $main->current->filename;
-	unless ( $filename ) {
+	unless ($filename) {
 		return $main->error( Wx::gettext('No filename') );
 	}
 
@@ -834,8 +827,7 @@ sub reload_current_plugin {
 	my ($plugin_filename) = glob File::Spec->catdir( $dir, 'Padre', 'Plugin', '*.pm' );
 
 	# Load plugin
-	my $plugin = 'Padre::Plugin::'
-	           . File::Basename::basename($plugin_filename);
+	my $plugin = 'Padre::Plugin::' . File::Basename::basename($plugin_filename);
 	$plugin =~ s/\.pm$//;
 
 	if ( $plugins->{$plugin} ) {
@@ -891,13 +883,13 @@ sub test_a_plugin {
 
 	my $last_filename = $main->current->filename;
 	my $default_dir   = '';
-	if ( $last_filename ) {
+	if ($last_filename) {
 		$default_dir = File::Basename::dirname($last_filename);
 	}
 	my $dialog = Wx::FileDialog->new(
 		$main, Wx::gettext('Open file'), $default_dir, '', '*.*', Wx::wxFD_OPEN,
 	);
-	unless ( Padre::Constant::WIN32 ) {
+	unless (Padre::Constant::WIN32) {
 		$dialog->SetWildcard("*");
 	}
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -910,9 +902,9 @@ sub test_a_plugin {
 	my $file = File::Spec->catfile( $default_dir, $filename );
 
 	# Last catfile's parameter is to ensure trailing slash
-	my $plugin_folder_name    = qr/Padre[\\\/]Plugin[\\\/]/;
-	($default_dir, $filename) = split( $plugin_folder_name, $file, 2 );
-	unless ( $filename ) {
+	my $plugin_folder_name = qr/Padre[\\\/]Plugin[\\\/]/;
+	( $default_dir, $filename ) = split( $plugin_folder_name, $file, 2 );
+	unless ($filename) {
 		Wx::MessageBox(
 			sprintf(
 				Wx::gettext("Plugin must have '%s' as base directory"),
@@ -924,7 +916,7 @@ sub test_a_plugin {
 		return;
 	}
 
-	$filename =~ s/\.pm$//; # Remove last .pm
+	$filename =~ s/\.pm$//;     # Remove last .pm
 	$filename =~ s/[\\\/]/\:\:/;
 	unless ( $INC[0] eq $default_dir ) {
 		unshift @INC, $default_dir;
@@ -965,8 +957,8 @@ sub _refresh_plugin_menu {
 sub _plugin {
 	my $self = shift;
 	my $it   = shift;
-	if ( _INSTANCE($it, 'Padre::PluginHandle') ) {
-		my $current = $self->{plugins}->{$it->class};
+	if ( _INSTANCE( $it, 'Padre::PluginHandle' ) ) {
+		my $current = $self->{plugins}->{ $it->class };
 		unless ( defined $current ) {
 			Carp::croak("Unknown plugin '$it' provided to PluginManager");
 		}
@@ -975,6 +967,7 @@ sub _plugin {
 		}
 		return $it;
 	}
+
 	# Convert from class to name if needed
 	if ( defined _CLASS($it) ) {
 		unless ( defined $self->{plugins}->{$it} ) {

@@ -4,12 +4,12 @@ use warnings;
 use strict;
 
 # package exports and version
-our $VERSION   = '0.42';
-our @ISA       = 'Wx::Dialog';
+our $VERSION = '0.42';
+our @ISA     = 'Wx::Dialog';
 
 # module imports
-use Padre::DB ();
-use Padre::Wx ();
+use Padre::DB       ();
+use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 # accessors
@@ -59,29 +59,26 @@ sub _on_ok_button_clicked {
 	my $main = $self->_main;
 
 	# Open the selected menu item if the user pressed OK
-	my $selection   = $self->_list->GetSelection;
-	my $action = $self->_list->GetClientData($selection);
+	my $selection = $self->_list->GetSelection;
+	my $action    = $self->_list->GetClientData($selection);
 	$self->Destroy;
-	my %actions = %{Padre::ide->actions};
-	my $menu_action = $actions{$action->{name}};
+	my %actions     = %{ Padre::ide->actions };
+	my $menu_action = $actions{ $action->{name} };
 	if ($menu_action) {
 		my $event = $menu_action->menu_event;
 		if ( $event && ref($event) eq 'CODE' ) {
 
 			# Fetch the recently used actions from the database
 			require Padre::DB::RecentlyUsed;
-			my $recently_used = 
-				Padre::DB::RecentlyUsed->select("where type = ?", 'ACTION') || [];
+			my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ?", 'ACTION' ) || [];
 			my $found = 0;
 			foreach my $e (@$recently_used) {
-				if($action->{name} eq $e->name) {
+				if ( $action->{name} eq $e->name ) {
 					$found = 1;
 				}
 			}
 
-			eval {
-				&$event($main);
-			};
+			eval { &$event($main); };
 			if ($@) {
 				Wx::MessageBox(
 					Wx::gettext('Error while trying to perform Padre action'),
@@ -90,13 +87,14 @@ sub _on_ok_button_clicked {
 					$main,
 				);
 			} else {
+
 				# And insert a recently used tuple if it is not found
 				# and the action is successful.
-				if(not $found) { 
+				if ( not $found ) {
 					Padre::DB::RecentlyUsed->create(
-						name      => $action->{name}, 
-						value     => $action->{name}, 
-						type      => 'ACTION', 
+						name      => $action->{name},
+						value     => $action->{name},
+						type      => 'ACTION',
 						last_used => time(),
 					);
 				} else {
@@ -177,11 +175,11 @@ sub _create_controls {
 	$self->_status_text( Wx::StaticText->new( $self, -1, '' ) );
 
 	$self->_sizer->AddSpacer(10);
-	$self->_sizer->Add( $search_label,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_search_text,  0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$self->_sizer->Add( $matches_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_list, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_status_text,  0, Wx::wxALL | Wx::wxEXPAND, 10 );
+	$self->_sizer->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_sizer->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$self->_sizer->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_sizer->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_sizer->Add( $self->_status_text, 0, Wx::wxALL | Wx::wxEXPAND, 10 );
 
 	$self->_setup_events;
 
@@ -291,24 +289,24 @@ sub _show_recently_opened_actions() {
 
 	# Fetch them from Padre's RecentlyUsed database table
 	require Padre::DB::RecentlyUsed;
-	my $recently_used = 
-		Padre::DB::RecentlyUsed->select("where type = ?", 'ACTION') || [];
+	my $recently_used  = Padre::DB::RecentlyUsed->select( "where type = ?", 'ACTION' ) || [];
 	my @recent_actions = ();
-	my %actions = %{Padre::ide->actions};
+	my %actions        = %{ Padre::ide->actions };
 	foreach my $e (@$recently_used) {
 		my $action_name = $e->name;
-		my $action = $actions{$action_name};
-		if($action) {
-			push @recent_actions, { 
-				name  => $action_name, 
+		my $action      = $actions{$action_name};
+		if ($action) {
+			push @recent_actions,
+				{
+				name  => $action_name,
 				value => $action->label_text,
-			};
+				};
 		} else {
-			warn "action '$action_name' is not defined anymore!";  
+			warn "action '$action_name' is not defined anymore!";
 		}
 	}
 	@recent_actions = sort { $a->{value} cmp $b->{value} } @recent_actions;
-	$self->_matched_results(\@recent_actions);
+	$self->_matched_results( \@recent_actions );
 
 	# Show results in matching items list
 	$self->_update_list_box;
@@ -325,13 +323,14 @@ sub _search() {
 
 	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );
 	my @menu_actions = ();
-	my %actions = %{Padre::ide->actions};
+	my %actions      = %{ Padre::ide->actions };
 	foreach my $action_name ( keys %actions ) {
 		my $action = $actions{$action_name};
-		push @menu_actions, { 
+		push @menu_actions,
+			{
 			name  => $action_name,
-			value => $action->label_text, 
-		};
+			value => $action->label_text,
+			};
 	}
 	@menu_actions = sort { $a->{value} cmp $b->{value} } @menu_actions;
 	$self->_matched_results( \@menu_actions );
@@ -357,9 +356,9 @@ sub _update_list_box {
 	my $pos = 0;
 
 	my $first_label = undef;
-	foreach my $menu_action (@{ $self->_matched_results }) {
+	foreach my $menu_action ( @{ $self->_matched_results } ) {
 		my $label = $menu_action->{value};
-		if(not $first_label) {
+		if ( not $first_label ) {
 			$first_label = $label . " (" . $menu_action->{name} . ")";
 		}
 		if ( $label =~ /$search_expr/i ) {
@@ -369,7 +368,7 @@ sub _update_list_box {
 	}
 	if ( $pos > 0 ) {
 		$self->_list->Select(0);
-		$self->_status_text->SetLabel( $first_label );
+		$self->_status_text->SetLabel($first_label);
 	} else {
 		$self->_status_text->SetLabel('');
 	}

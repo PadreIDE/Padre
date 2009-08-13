@@ -239,21 +239,21 @@ sub share {
 		);
 	}
 
-#    if ( defined $ENV{PADRE_PAR_PATH} ) {
-#        # File::ShareDir new style path
-#        my $path = File::Spec->catdir(
-#            $ENV{PADRE_PAR_PATH},
-#            'inc', 'auto', 'share', 'dist', 'Padre'
-#        );
-#        return $path if -d $path;
-#
-#        # File::ShareDir old style path
-#        $path = File::Spec->catdir(
-#            $ENV{PADRE_PAR_PATH},
-#            'inc', 'share'
-#        );
-#        return $path if -d $path;
-#    }
+	#    if ( defined $ENV{PADRE_PAR_PATH} ) {
+	#        # File::ShareDir new style path
+	#        my $path = File::Spec->catdir(
+	#            $ENV{PADRE_PAR_PATH},
+	#            'inc', 'auto', 'share', 'dist', 'Padre'
+	#        );
+	#        return $path if -d $path;
+	#
+	#        # File::ShareDir old style path
+	#        $path = File::Spec->catdir(
+	#            $ENV{PADRE_PAR_PATH},
+	#            'inc', 'share'
+	#        );
+	#        return $path if -d $path;
+	#    }
 
 	# rely on automatic handling of everything
 	require File::ShareDir;

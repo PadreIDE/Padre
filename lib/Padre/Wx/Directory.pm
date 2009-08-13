@@ -95,7 +95,7 @@ sub refresh {
 
 	return unless $dir;
 
-	$self->{projects}->{$dir}->{dir}  ||= $dir;
+	$self->{projects}->{$dir}->{dir} ||= $dir;
 	$self->{projects}->{$dir}->{mode} ||=
 		$doc->{is_project}
 		? 'tree'

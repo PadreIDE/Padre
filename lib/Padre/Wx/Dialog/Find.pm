@@ -287,9 +287,9 @@ sub new {
 
 	# Update the dialog from configuration
 	my $config = $self->current->config;
-	$self->{find_case   }->SetValue( $config->find_case    );
-	$self->{find_regex  }->SetValue( $config->find_regex   );
-	$self->{find_first  }->SetValue( $config->find_first   );
+	$self->{find_case}->SetValue( $config->find_case );
+	$self->{find_regex}->SetValue( $config->find_regex );
+	$self->{find_first}->SetValue( $config->find_first );
 	$self->{find_reverse}->SetValue( $config->find_reverse );
 
 	return $self;
@@ -321,7 +321,7 @@ sub find_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
@@ -353,18 +353,20 @@ sub count_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$self->main->error( Wx::gettext("Not a valid search") );
 		return;
 	}
 
 	# Find the number of matches
-	my $editor  = $self->current->editor or return;
+	my $editor = $self->current->editor or return;
 	my $matches = $search->editor_count_all($editor);
-	$self->main->message( sprintf(
-		Wx::gettext("Found %d matching occurances"),
-		$matches,
-	) );
+	$self->main->message(
+		sprintf(
+			Wx::gettext("Found %d matching occurances"),
+			$matches,
+		)
+	);
 }
 
 =pod
@@ -387,7 +389,7 @@ sub cancel_button {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$editor->SetFocus;
 	}
 
@@ -469,12 +471,15 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name ( qw{
+	foreach my $name (
+		qw{
 		find_case
 		find_regex
 		find_first
 		find_reverse
-	} ) {
+		}
+		)
+	{
 		my $value = $self->{$name}->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

@@ -28,9 +28,9 @@ sub ppi_get {
 }
 
 sub ppi_set {
-	my $self     = shift;
+	my $self = shift;
 	my $document = _INSTANCE( shift, 'PPI::Document' );
-	unless ( $document ) {
+	unless ($document) {
 		Carp::croak("Did not provide a PPI::Document");
 	}
 
@@ -522,25 +522,28 @@ sub autocomplete {
 
 	# check for hashs
 	elsif ( $prefix =~ /(\$\w+(?:\-\>)?)\{([\'\"]?)([\$\&]?\w*)$/ ) {
-		my $hashname = $1;
+		my $hashname   = $1;
 		my $textmarker = $2;
-		my $keyprefix = $3;
+		my $keyprefix  = $3;
 
-		my $last      = $editor->GetLength();
-		my $text      = $editor->GetTextRange( 0, $last );
+		my $last = $editor->GetLength();
+		my $text = $editor->GetTextRange( 0, $last );
 
-                my %words;
-		while ($text =~ /\Q$hashname\E\{(([\'\"]?)\Q$keyprefix\E.+?\2)\}/g) {
+		my %words;
+		while ( $text =~ /\Q$hashname\E\{(([\'\"]?)\Q$keyprefix\E.+?\2)\}/g ) {
 			$words{$1} = 1;
 		}
-		
-		return (length($textmarker.$keyprefix),sort {
+
+		return (
+			length( $textmarker . $keyprefix ),
+			sort {
 				my $a1 = $a;
 				my $b1 = $b;
 				$a1 =~ s/^([\'\"])(.+)\1/$2/;
 				$b1 =~ s/^([\'\"])(.+)\1/$2/;
 				$a1 cmp $b1;
-			} (keys(%words)));
+				} ( keys(%words) )
+		);
 
 	}
 

@@ -48,10 +48,10 @@ use Carp           ();
 use File::Spec     ();
 use File::ShareDir ();
 use Scalar::Util   ();
-use Params::Util   qw{_HASH0 _INSTANCE};
-use YAML::Tiny     ();
-use Padre::DB      ();
-use Padre::Wx      ();
+use Params::Util qw{_HASH0 _INSTANCE};
+use YAML::Tiny ();
+use Padre::DB  ();
+use Padre::Wx  ();
 
 our $VERSION    = '0.42';
 our $COMPATIBLE = '0.18';
@@ -146,9 +146,7 @@ sub plugin_share_directory {
 	}
 
 	# Find the distribution directory
-	my $dist = eval {
-		File::ShareDir::dist_dir($pkg)
-	};
+	my $dist = eval { File::ShareDir::dist_dir($pkg) };
 	return undef if $@;
 
 	File::Spec->catdir( $dist, 'share' );

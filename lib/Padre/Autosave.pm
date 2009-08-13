@@ -94,11 +94,12 @@ sub new {
 	Carp::croak("No filename is given") if not $self->{dbfile};
 
 	require ORLite;
-	ORLite->import( {
-		file   => $self->{dbfile},
-		create => 1,
-		table  => 0,
-	} );
+	ORLite->import(
+		{   file   => $self->{dbfile},
+			create => 1,
+			table  => 0,
+		}
+	);
 	$self->setup;
 
 	return $self;
@@ -133,10 +134,8 @@ sub types {
 }
 
 sub list_files {
-	my $rows = $_[0]->selectall_arrayref(
-		'SELECT DISTINCT path FROM autosave'
-	);
-	return map { @$_ } @$rows;
+	my $rows = $_[0]->selectall_arrayref( 'SELECT DISTINCT path FROM autosave' );
+	return map {@$_} @$rows;
 }
 
 sub save_file {

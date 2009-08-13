@@ -4,11 +4,11 @@ use warnings;
 use strict;
 
 # package exports and version
-our $VERSION   = '0.42';
-our @ISA       = 'Wx::Dialog';
+our $VERSION = '0.42';
+our @ISA     = 'Wx::Dialog';
 
 # module imports
-use Padre::Wx ();
+use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 # accessors
@@ -21,7 +21,8 @@ use Class::XSAccessor accessors => {
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
 	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
-#	_grok          => '_grok',          # Perl 6 documentation reader instance
+
+	#	_grok          => '_grok',          # Perl 6 documentation reader instance
 };
 
 # -- constructor
@@ -69,11 +70,11 @@ sub display_help_in_viewer {
 		my $help_target = $self->_list->GetClientData($selection);
 
 		# if ($help_target) {
-			# eval {
-				# $help_html = $self->_grok->render_target( $help_target, 'xhtml' );
-				# $self->SetTitle(
-					# Wx::gettext('Perl 6 Help (grok)') . " - " . $self->_grok->locate_target($help_target) );
-			# };
+		# eval {
+		# $help_html = $self->_grok->render_target( $help_target, 'xhtml' );
+		# $self->SetTitle(
+		# Wx::gettext('Perl 6 Help (grok)') . " - " . $self->_grok->locate_target($help_target) );
+		# };
 		# }
 	}
 
@@ -231,13 +232,13 @@ sub _search() {
 
 	# Generate a sorted file-list based on filename
 	# eval {
-		# require App::Grok;
-		# $self->_grok( App::Grok->new );
-		# my @targets_index = sort $self->_grok->target_index();
-		# $self->_targets_index( \@targets_index );
+	# require App::Grok;
+	# $self->_grok( App::Grok->new );
+	# my @targets_index = sort $self->_grok->target_index();
+	# $self->_targets_index( \@targets_index );
 	# };
 	my @empty = ();
-	$self->_targets_index( \@empty);
+	$self->_targets_index( \@empty );
 
 	return;
 }

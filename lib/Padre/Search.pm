@@ -33,23 +33,23 @@ use Params::Util '_INSTANCE';
 
 our $VERSION = '0.42';
 
-use Class::XSAccessor
-	getters => {
-		find_term    => 'find_term',
-		find_case    => 'find_case',
-		find_regex   => 'find_regex',
-		find_reverse => 'find_reverse',
-		replace_term => 'replace_term',
-		search_regex => 'search_regex',
-	};
+use Class::XSAccessor getters => {
+	find_term    => 'find_term',
+	find_case    => 'find_case',
+	find_regex   => 'find_regex',
+	find_reverse => 'find_reverse',
+	replace_term => 'replace_term',
+	search_regex => 'search_regex',
+};
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 	unless ( defined $self->find_term ) {
 		die("Did not provide 'find_term' search term");
 	}
 	unless ( length $self->find_term ) {
+
 		# Pointless zero-length search
 		return undef;
 	}
@@ -76,9 +76,7 @@ sub new {
 	}
 
 	# Compile the regex
-	$self->{search_regex} = eval {
-		$self->find_case ? qr/$term/m : qr/$term/mi
-	};
+	$self->{search_regex} = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
 	return undef if $@;
 
 	return $self;

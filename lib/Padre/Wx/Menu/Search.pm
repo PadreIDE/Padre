@@ -5,8 +5,8 @@ package Padre::Wx::Menu::Search;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Search   ();
-use Padre::Current  qw{_CURRENT};
+use Padre::Search ();
+use Padre::Current qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -48,10 +48,10 @@ sub new {
 		label      => Wx::gettext('Find Next'),
 		shortcut   => 'F3',
 		menu_event => sub {
-			my $editor   = $_[0]->current->editor;
+			my $editor = $_[0]->current->editor;
 
 			# Handle the obvious case with nothing selected
-			my ($position1, $position2) = $editor->GetSelection;
+			my ( $position1, $position2 ) = $editor->GetSelection;
 			if ( $position1 == $position2 ) {
 				return $_[0]->search_next;
 			}
@@ -76,10 +76,8 @@ sub new {
 			$_[0]->search_next($search);
 
 			# If we can't find another match, show a message
-			if ( ($editor->GetSelection)[0] == $position1 ) {
-				$_[0]->error( Wx::gettext(
-					"Failed to find any matches"
-				) );
+			if ( ( $editor->GetSelection )[0] == $position1 ) {
+				$_[0]->error( Wx::gettext( "Failed to find any matches" ) );
 			}
 		},
 	);
@@ -167,6 +165,7 @@ sub new {
 		label      => Wx::gettext('Open Resource'),
 		shortcut   => 'Ctrl-Shift-R',
 		menu_event => sub {
+
 			#Create and show the dialog
 			my $open_resource_dialog = $_[0]->open_resource;
 			$open_resource_dialog->showIt;
@@ -179,6 +178,7 @@ sub new {
 		label      => Wx::gettext('Quick Menu Access'),
 		shortcut   => 'Ctrl-3',
 		menu_event => sub {
+
 			#Create and show the dialog
 			require Padre::Wx::Dialog::QuickMenuAccess;
 			Padre::Wx::Dialog::QuickMenuAccess->new($main)->ShowModal;

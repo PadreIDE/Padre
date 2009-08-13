@@ -439,7 +439,7 @@ sub _copy {
 	my $new_file = $self->_removes_double_dot(shift);
 
 	# Renames/moves the old file name to the new file name
-	
+
 	if ( copy( $old_file, $new_file ) ) {
 
 		# Sets the new file to be selected
@@ -564,7 +564,7 @@ sub _on_tree_item_expanding {
 	my $node_data = $self->GetPlData($node);
 
 	# Returns if a search is being done (expands only the browser listing)
-	return if ! defined($self->search);
+	return if !defined( $self->search );
 	return if $self->search->{in_use}->{ $self->parent->project_dir };
 
 	# The item complete path
@@ -656,12 +656,12 @@ sub _on_tree_end_drag {
 
 	# Pops up a menu to confirm the
 	# action do be done
-	my $menu    = Wx::Menu->new;
+	my $menu = Wx::Menu->new;
 
 	# Move file or directory
 	my $menu_mv = $menu->Append(
 		-1,
-		Wx::gettext( 'Move here' )
+		Wx::gettext('Move here')
 	);
 	Wx::Event::EVT_MENU(
 		$self, $menu_mv,
@@ -672,11 +672,11 @@ sub _on_tree_end_drag {
 	unless ( -d $old_file ) {
 		my $menu_cp = $menu->Append(
 			-1,
-			Wx::gettext( 'Copy here' )
+			Wx::gettext('Copy here')
 		);
 		Wx::Event::EVT_MENU(
 			$self, $menu_cp,
-			sub{ $self->_copy( $old_file, $new_file ) }
+			sub { $self->_copy( $old_file, $new_file ) }
 		);
 	}
 
@@ -684,7 +684,7 @@ sub _on_tree_end_drag {
 	$menu->AppendSeparator();
 	my $menu_cl = $menu->Append(
 		-1,
-		Wx::gettext( 'Cancel' )
+		Wx::gettext('Cancel')
 	);
 
 	# Pops up the context menu

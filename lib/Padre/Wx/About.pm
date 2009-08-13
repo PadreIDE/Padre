@@ -180,8 +180,7 @@ END_HTML
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP
-		| Wx::wxBORDER_NONE
+		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
 	);
 	$self->{notebook}->AddPage(
 		$self->{about},
@@ -204,9 +203,11 @@ END_HTML
 	$self->{sizer}->AddGrowableCol(0);
 	$self->{sizer}->AddGrowableRow(0);
 	$self->{sizer}->Add( $self->{notebook}, 0, Wx::wxGROW | Wx::wxEXPAND, 0 );
+
 	# $self->{sizer}->Fit($self);
 	# $self->{sizer}->SetSizeHints($self);
-	$self->SetSizer($self->{sizer});
+	$self->SetSizer( $self->{sizer} );
+
 	# $self->SetAutoLayout(1);
 
 	return $self;

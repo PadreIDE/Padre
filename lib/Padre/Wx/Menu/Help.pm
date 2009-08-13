@@ -37,7 +37,7 @@ sub new {
 		id         => Wx::wxID_HELP,
 		label      => Wx::gettext('Help'),
 		menu_event => sub {
-			$_[0]->menu->help->help($_[0]);
+			$_[0]->menu->help->help( $_[0] );
 		},
 	);
 	$self->add_menu_item(
@@ -69,6 +69,7 @@ sub new {
 		label      => Wx::gettext('Help Search'),
 		shortcut   => 'F2',
 		menu_event => sub {
+
 			#Create and show the Help search dialog
 			my $dlg = $_[0]->help_search;
 			if ( $dlg && $dlg->IsShown ) {

@@ -129,7 +129,7 @@ sub _on_list_col_click {
 	my $column   = $event->GetColumn;
 	my $prevcol  = $self->_sortcolumn;
 	my $reversed = $self->_sortreverse;
-	$reversed = $column == $prevcol ? ! $reversed : 0;
+	$reversed = $column == $prevcol ? !$reversed : 0;
 	$self->_sortcolumn($column);
 	$self->_sortreverse($reversed);
 	$self->_refresh_list;
@@ -161,8 +161,8 @@ sub _on_list_item_selected {
 	my $fullname = $event->GetLabel;
 	my $module   = $self->_plugin_class->{$fullname};
 	my $plugin   = $self->_manager->plugins->{$module};
-	$self->_curplugin($plugin);       # storing selected plugin
-	$self->_currow($event->GetIndex); # storing selected row
+	$self->_curplugin($plugin);         # storing selected plugin
+	$self->_currow( $event->GetIndex ); # storing selected row
 
 	# Updating plugin name in right pane
 	$self->_label->SetLabel( $plugin->plugin_name );
@@ -172,10 +172,9 @@ sub _on_list_item_selected {
 	my $browser = Padre::DocBrowser->new;
 	my $class   = $plugin->class;
 	my $doc     = $browser->resolve($class);
-	my $output  = eval {
-		$browser->browse($doc)
-	};
-	my $html = $@
+	my $output  = eval { $browser->browse($doc) };
+	my $html =
+		$@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
 		: $output->body;
 	$self->_whtml->SetPage($html);

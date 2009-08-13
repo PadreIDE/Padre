@@ -33,6 +33,7 @@ our $VERSION = '0.42';
 # instance server, but that's better than before.
 # We need it to be even less whacked.
 BEGIN {
+
 	# Display Padre's Splash Screen. It is saved as XPM
 	# as it seems (from wxWidgets documentation) that it
 	# is the most portable format (and we don't need to
@@ -52,17 +53,16 @@ use Padre::Config   ();
 use Padre::DB       ();
 
 # Generate faster accessors
-use Class::XSAccessor 
-	getters => {
-		original_cwd   => 'original_cwd',
-		opts           => 'opts',
-		config         => 'config',
-		wx             => 'wx',
-		task_manager   => 'task_manager',
-		plugin_manager => 'plugin_manager',
+use Class::XSAccessor getters => {
+	original_cwd   => 'original_cwd',
+	opts           => 'opts',
+	config         => 'config',
+	wx             => 'wx',
+	task_manager   => 'task_manager',
+	plugin_manager => 'plugin_manager',
 	},
 	accessors => {
-		actions => 'actions',
+	actions => 'actions',
 	};
 
 my $SINGLETON = undef;
@@ -167,9 +167,7 @@ sub run {
 	my $self = shift;
 
 	# Clean arguments
-	$self->{ARGV} = [ map {
-		File::Spec->rel2abs( $_, $self->{original_cwd} )
-	} @ARGV ];
+	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen

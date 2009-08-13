@@ -75,6 +75,7 @@ cannot be found.
 =cut
 
 sub perl () {
+
 	# Find the exact Perl used to launch Padre
 	return $perl if defined $perl;
 	require Probe::Perl;
@@ -118,6 +119,7 @@ sub cperl () {
 
 	if ( $^O eq 'MSWin32' ) {
 		if ( $path =~ s/\b(wperl\.exe)\z// ) {
+
 			# Convert to non-GUI
 			if ( -f "${path}perl.exe" ) {
 				return "${path}perl.exe";
@@ -132,6 +134,7 @@ sub cperl () {
 
 	if ( $^O eq 'darwin' ) {
 		if ( $path =~ s/\b(wxPerl)\z// ) {
+
 			# Convert to non-GUI
 			if ( -f "${path}perl" ) {
 				return "${path}perl";
@@ -173,6 +176,7 @@ sub wxperl () {
 
 	if ( $^O eq 'MSWin32' ) {
 		if ( $path =~ s/\b(perl\.exe)\z// ) {
+
 			# Convert to GUI version if we can
 			if ( -f "${path}wperl.exe" ) {
 				return "${path}wperl.exe";
@@ -187,6 +191,7 @@ sub wxperl () {
 
 	if ( $^O eq 'darwin' ) {
 		if ( $path =~ s/\b(perl)\z// ) {
+
 			# Convert to Wx launcher
 			if ( -f "${path}wxPerl" ) {
 				return "${path}wxPerl";

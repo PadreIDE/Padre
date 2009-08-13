@@ -295,12 +295,10 @@ sub create_ack_pane {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_SINGLE_SEL
-		| Wx::wxLC_NO_HEADER
-		| Wx::wxLC_REPORT
+		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT
 	);
 
-	$main->{ack}->InsertColumn(   0, Wx::gettext('Ack')  );
+	$main->{ack}->InsertColumn( 0, Wx::gettext('Ack') );
 	$main->{ack}->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
@@ -392,13 +390,10 @@ sub print_results {
 	$stats{printed_lines}++;
 
 	# don't print filename again if it's just printed
-	return if (
-		$stats{printed_lines} % 3 == 1
-		and
-		$stats{last_matched_filename}
-		and
-		$stats{last_matched_filename} eq $text
-	);
+	return
+		if ($stats{printed_lines} % 3 == 1
+		and $stats{last_matched_filename}
+		and $stats{last_matched_filename} eq $text );
 	if ( $stats{printed_lines} % 3 == 1 ) {
 		if ( $text =~ /^Binary file/ ) {
 			$stats{printed_lines} = $stats{printed_lines} + 2;
@@ -447,7 +442,7 @@ sub _send_text {
 	$text =~ s/\n\z//g;
 	$text =~ s/\t/        /g;
 
-	my $frame    = Padre->ide->wx->main;
+	my $frame = Padre->ide->wx->main;
 	my $threvent = Wx::PlThreadEvent->new( -1, $DONE_EVENT, $text );
 	Wx::PostEvent( $frame, $threvent );
 }

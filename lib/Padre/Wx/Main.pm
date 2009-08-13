@@ -85,7 +85,7 @@ object as argument, to get a reference to the Padre application.
 #       individual step tighter and better abstracted.
 sub new {
 	my $class = shift;
-	my $ide = shift;
+	my $ide   = shift;
 	unless ( _INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
@@ -331,38 +331,39 @@ Accessors that may not belong to this class:
 
 =cut
 
-use Class::XSAccessor
-	predicates => {
-		# Needed for lazily-constructed gui elements
-		has_about     => 'about',
-		has_find      => 'find',
-		has_replace   => 'replace',
-		has_outline   => 'outline',
-		has_directory => 'directory',
+use Class::XSAccessor predicates => {
+
+	# Needed for lazily-constructed gui elements
+	has_about     => 'about',
+	has_find      => 'find',
+	has_replace   => 'replace',
+	has_outline   => 'outline',
+	has_directory => 'directory',
 	},
 	getters => {
-		# GUI Elements
-		title     => 'title',
-		config    => 'config',
-		ide       => 'ide',
-		aui       => 'aui',
-		menu      => 'menu',
-		notebook  => 'notebook',
-		left      => 'left',
-		right     => 'right',
-		functions => 'functions',
-		bottom    => 'bottom',
-		output    => 'output',
-		syntax    => 'syntax',
-		errorlist => 'errorlist',
 
-		# Operating Data
-		cwd        => 'cwd',
-		search     => 'search',
-		no_refresh => '_no_refresh',
+	# GUI Elements
+	title     => 'title',
+	config    => 'config',
+	ide       => 'ide',
+	aui       => 'aui',
+	menu      => 'menu',
+	notebook  => 'notebook',
+	left      => 'left',
+	right     => 'right',
+	functions => 'functions',
+	bottom    => 'bottom',
+	output    => 'output',
+	syntax    => 'syntax',
+	errorlist => 'errorlist',
 
-		# Things that are probably in the wrong place
-		ack => 'ack',
+	# Operating Data
+	cwd        => 'cwd',
+	search     => 'search',
+	no_refresh => '_no_refresh',
+
+	# Things that are probably in the wrong place
+	ack => 'ack',
 	};
 
 sub about {
@@ -1627,7 +1628,7 @@ sub run_command {
 	# the external execution.
 	my $config = $self->config;
 	if ( $config->run_use_external_window ) {
-		if ( Padre::Util::WIN32 ) {
+		if (Padre::Util::WIN32) {
 			system "start cmd /C \"$cmd\"";
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
@@ -2005,11 +2006,11 @@ If no files are open, silently do nothing (don't even remember the new search)
 =cut
 
 sub search_next {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
-	if ( _INSTANCE($_[0], 'Padre::Search') ) {
+	if ( _INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to search_next");
 	}
 	if ( $self->search ) {
@@ -2036,11 +2037,11 @@ If no files are open, do nothing
 =cut
 
 sub search_previous {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
-	if ( _INSTANCE($_[0], 'Padre::Search') ) {
+	if ( _INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to search_previous");
 	}
 	if ( $self->search ) {
@@ -2440,6 +2441,7 @@ sub setup_editor {
 	my $config = $self->config;
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
+
 	# These need to be TWO if's, because Cwd::realpath returns undef when opening an non-existent file!
 	if ($file) {
 		$file = Cwd::realpath($file); # get absolute path
@@ -4307,16 +4309,15 @@ sub on_new_from_template {
 		Padre::Util::sharedir('templates'),
 		"template.$extension"
 	);
-	
+
 	if ( $editor->insert_from_file($file) ) {
-        my $document = $editor->{Document};
-        $document->set_mimetype( Padre::MimeTypes->mime_type_by_extension($extension) );
-        $document->editor->padre_setup;
-        $document->rebless;
-    }
-    else {
-        $self->message( sprintf(Wx::gettext("Error loading template file '%s'"), $file ));
-    }
+		my $document = $editor->{Document};
+		$document->set_mimetype( Padre::MimeTypes->mime_type_by_extension($extension) );
+		$document->editor->padre_setup;
+		$document->rebless;
+	} else {
+		$self->message( sprintf( Wx::gettext("Error loading template file '%s'"), $file ) );
+	}
 	return;
 }
 

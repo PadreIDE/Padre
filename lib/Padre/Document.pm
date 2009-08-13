@@ -171,24 +171,23 @@ sub menu_view_mimes {
 #####################################################################
 # Constructor and Accessors
 
-use Class::XSAccessor
-	getters => {
-		editor           => 'editor',
-		filename         => 'filename',    # TODO is this read_only or what?
-		get_mimetype     => 'mimetype',
-		get_newline_type => 'newline_type',
-		errstr           => 'errstr',
-		tempfile         => 'tempfile',
-		get_highlighter  => 'highlighter',
+use Class::XSAccessor getters => {
+	editor           => 'editor',
+	filename         => 'filename',    # TODO is this read_only or what?
+	get_mimetype     => 'mimetype',
+	get_newline_type => 'newline_type',
+	errstr           => 'errstr',
+	tempfile         => 'tempfile',
+	get_highlighter  => 'highlighter',
 	},
 	setters => {
-		_set_filename    => 'filename',    # TODO temporary hack
-		set_newline_type => 'newline_type',
-		set_mimetype     => 'mimetype',
-		set_errstr       => 'errstr',
-		set_editor       => 'editor',
-		set_tempfile     => 'tempfile',
-		set_highlighter  => 'highlighter',
+	_set_filename    => 'filename',    # TODO temporary hack
+	set_newline_type => 'newline_type',
+	set_mimetype     => 'mimetype',
+	set_errstr       => 'errstr',
+	set_editor       => 'editor',
+	set_tempfile     => 'tempfile',
+	set_highlighter  => 'highlighter',
 	};
 
 =pod

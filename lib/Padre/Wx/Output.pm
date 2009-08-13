@@ -27,9 +27,9 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTE_READONLY
-		| Wx::wxTE_MULTILINE
-		| Wx::wxTE_DONTWRAP
-		| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
+			| Wx::wxTE_MULTILINE
+			| Wx::wxTE_DONTWRAP
+			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 
 	# Do custom startup stuff here
@@ -70,7 +70,7 @@ sub gettext_label {
 sub setup_bindings {
 	my $self = shift;
 
-	if ( $Wx::Perl::ProcessStream::VERSION ) {
+	if ($Wx::Perl::ProcessStream::VERSION) {
 		return 1;
 	}
 
@@ -119,15 +119,15 @@ sub setup_bindings {
 sub AppendText {
 	my $self     = shift;
 	my $use_ansi = $self->main->ide->config->main_output_ansi;
-	if ( utf8::is_utf8($_[0]) ) {
-		if ( $use_ansi ) {
-			$self->_handle_ansi_escapes($_[0]);
+	if ( utf8::is_utf8( $_[0] ) ) {
+		if ($use_ansi) {
+			$self->_handle_ansi_escapes( $_[0] );
 		} else {
-			$self->SUPER::AppendText($_[0]);
+			$self->SUPER::AppendText( $_[0] );
 		}
 	} else {
-		my $text = Encode::decode('utf8', $_[0]);
-		if ( $use_ansi ) {
+		my $text = Encode::decode( 'utf8', $_[0] );
+		if ($use_ansi) {
 			$self->_handle_ansi_escapes($text);
 		} else {
 			$self->SUPER::AppendText($text);
@@ -137,6 +137,7 @@ sub AppendText {
 }
 
 SCOPE: {
+
 	# TODO: This should be some sort of style file,
 	# but the main editor style support is too wacky
 	# to add this at the moment.
@@ -183,7 +184,7 @@ SCOPE: {
 			# we don't handle any others at the moment (see regexp above)
 			my @cmds = split /;/, $ctrl;
 
-			foreach my $cmd ( @cmds ) {
+			foreach my $cmd (@cmds) {
 				if ( $cmd >= 0 and $cmd < 30 ) {
 
 					# for all these, we need the font object:

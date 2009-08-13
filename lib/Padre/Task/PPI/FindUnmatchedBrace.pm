@@ -59,8 +59,8 @@ sub process_ppi {
 		$self->{error} = $@;
 		return;
 	}
-	if (defined($brace)) { # An undef brace throws a die here. undef = no error found.
-	 $self->{bad_element} = $brace->element->location; # remember for gui update
+	if ( defined($brace) ) { # An undef brace throws a die here. undef = no error found.
+		$self->{bad_element} = $brace->element->location; # remember for gui update
 	}
 
 	return ();

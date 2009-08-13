@@ -63,7 +63,7 @@ sub new {
 	Wx::Event::EVT_LEFT_UP( $self, \&on_left_up );
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
-	Wx::Event::EVT_MIDDLE_UP($self, \&on_middle_up );
+	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 
 	# Smart highlighting...
 	my @styles = ();
@@ -112,10 +112,12 @@ sub data {
 }
 
 sub error { # Error Message
- my $self = shift;
- my $text = shift;
- Wx::MessageBox($text,    Wx::gettext("Error"),
-			Wx::wxOK, $self->main);
+	my $self = shift;
+	my $text = shift;
+	Wx::MessageBox(
+		$text,    Wx::gettext("Error"),
+		Wx::wxOK, $self->main
+	);
 
 }
 
@@ -737,9 +739,10 @@ sub on_left_up {
 	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
-#		Wx::wxTheClipboard->UsePrimarySelection(1);
+		#		Wx::wxTheClipboard->UsePrimarySelection(1);
 		$self->put_text_to_clipboard($text);
-#		Wx::wxTheClipboard->UsePrimarySelection(0);
+
+		#		Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
 	my $doc = $self->{Document};
@@ -1083,9 +1086,10 @@ sub put_text_to_clipboard {
 
 	return if $text eq '';
 
-        # Backup last clipboard value:
-        $self->{Clipboard_Old} = $self->get_text_from_clipboard;
-#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
+	# Backup last clipboard value:
+	$self->{Clipboard_Old} = $self->get_text_from_clipboard;
+
+	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
 
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
@@ -1106,7 +1110,7 @@ sub get_text_from_clipboard {
 			$text = $data->GetText if defined($data);
 		}
 	}
-	if ($text eq $self->GetSelectedText) {
+	if ( $text eq $self->GetSelectedText ) {
 		$text = $self->{Clipboard_Old};
 	}
 

@@ -120,11 +120,11 @@ sub running {
 
 sub on_tree_item_set_focus {
 	my ( $self, $event ) = @_;
-	my $main = Padre::Current->main($self);
-	my $page = $main->current->editor;
+	my $main      = Padre::Current->main($self);
+	my $page      = $main->current->editor;
 	my $selection = $self->GetSelection();
-	if ($selection and $selection->IsOk ) { 
-		my $item = $self->GetPlData( $selection );
+	if ( $selection and $selection->IsOk ) {
+		my $item = $self->GetPlData($selection);
 		if ( defined $item ) {
 			$self->select_line_in_editor( $item->{line} );
 		}

@@ -8,8 +8,8 @@ our $VERSION = '0.42';
 our @ISA     = 'Wx::Dialog';
 
 # module imports
-use Padre::DB ();
-use Padre::Wx ();
+use Padre::DB       ();
+use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 # accessors
@@ -87,11 +87,12 @@ sub _on_ok_button_clicked {
 
 		# Fetch the recently used files from the database
 		require Padre::DB::RecentlyUsed;
-		my $recently_used = 
-			Padre::DB::RecentlyUsed->select("where type = ? and value = ?", 'RESOURCE', $filename) || [];
+		my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ? and value = ?", 'RESOURCE', $filename )
+			|| [];
 		my $found = scalar @$recently_used > 0;
-		
+
 		eval {
+
 			# try to open the file now
 			if ( my $id = $main->find_editor_of_file($filename) ) {
 				my $page = $main->notebook->GetPage($id);
@@ -108,13 +109,14 @@ sub _on_ok_button_clicked {
 				$main,
 			);
 		} else {
+
 			# And insert a recently used tuple if it is not found
 			# and the action is successful.
-			if(not $found) { 
+			if ( not $found ) {
 				Padre::DB::RecentlyUsed->create(
-					name      => $filename, 
-					value     => $filename, 
-					type      => 'RESOURCE', 
+					name      => $filename,
+					value     => $filename,
+					type      => 'RESOURCE',
 					last_used => time(),
 				);
 			} else {
@@ -415,15 +417,12 @@ sub _show_recently_opened_resources() {
 
 	# Fetch them from Padre's RecentlyUsed database table
 	require Padre::DB::RecentlyUsed;
-	my $recently_used = 
-		Padre::DB::RecentlyUsed->select("where type = ?", 'RESOURCE') || [];
+	my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ?", 'RESOURCE' ) || [];
 	my @recent_files = ();
 	foreach my $e (@$recently_used) {
 		push @recent_files, $e->value;
 	}
-	@recent_files = sort { 
-		File::Basename::fileparse($a) cmp File::Basename::fileparse($b) 
-	} @recent_files;
+	@recent_files = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recent_files;
 
 	# Show results in matching items list
 	$self->_matched_files( \@recent_files );
