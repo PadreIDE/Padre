@@ -96,6 +96,7 @@ requires       'Win32::API'               => '0.58' if win32;
 requires       'Wx'                       => '0.91';
 requires       'Wx::Perl::ProcessStream'  => '0.11';
 requires       'YAML::Tiny'               => '1.32';
+requires       'ExtUtils::Manifest'       => '1.56';
 test_requires  'Test::More'               => '0.88';
 test_requires  'Test::Script'             => '1.03';
 test_requires  'Test::Exception'          => '0.27';
