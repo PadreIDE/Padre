@@ -363,7 +363,7 @@ sub count_button {
 	my $matches = $search->editor_count_all($editor);
 	$self->main->message(
 		sprintf(
-			Wx::gettext("Found %d matching occurances"),
+			Wx::gettext("Found %d matching occurrences"),
 			$matches,
 		)
 	);
