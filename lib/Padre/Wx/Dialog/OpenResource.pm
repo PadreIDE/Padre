@@ -344,18 +344,7 @@ sub _setup_events {
 		}
 	);
 
-	Wx::Event::EVT_IDLE(
-		$self,
-		sub {
-			$self->_show_recently_opened_resources;
-
-			# focus on the search text box
-			$self->_search_text->SetFocus;
-
-			# unregister from idle event
-			Wx::Event::EVT_IDLE( $self, undef );
-		}
-	);
+	$self->_show_recent_while_idle;
 
 	Wx::Event::EVT_MENU(
 		$self,
@@ -401,20 +390,29 @@ sub showIt {
 		$self->SetFocus;
 	} else {
 		$self->_search_text->ChangeValue('');
-		Wx::Event::EVT_IDLE(
-			$self,
-			sub {
-				$self->_show_recently_opened_resources;
-
-				# focus on the search text box
-				$self->_search_text->SetFocus;
-
-				# unregister from idle event
-				Wx::Event::EVT_IDLE( $self, undef );
-			}
-		);
+		$self->_show_recent_while_idle;
 		$self->Show(1);
 	}
+}
+
+#
+# Shows recently opened stuff while idle
+#
+sub _show_recent_while_idle {
+	my $self = shift;
+
+	Wx::Event::EVT_IDLE(
+		$self,
+		sub {
+			$self->_show_recently_opened_resources;
+
+			# focus on the search text box
+			$self->_search_text->SetFocus;
+
+			# unregister from idle event
+			Wx::Event::EVT_IDLE( $self, undef );
+		}
+	);
 }
 
 #
