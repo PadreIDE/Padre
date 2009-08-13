@@ -429,6 +429,9 @@ sub _show_recently_opened_resources() {
 	foreach my $e (@$current_recently_used) {
 		push @recent_files, $e->value;
 	}
+	@recent_files = sort { 
+		File::Basename::fileparse($a) cmp File::Basename::fileparse($b) 
+	} @recent_files;
 
 	# Show results in matching items list
 	$self->_matched_files( \@recent_files );
