@@ -88,16 +88,8 @@ sub _on_ok_button_clicked {
 		# Fetch the recently used files from the database
 		require Padre::DB::RecentlyUsed;
 		my $recently_used = 
-			Padre::DB::RecentlyUsed->select("where type = ?", 'RESOURCE') || [];
-		my @recent_files = ();
-		my $found = 0;
-		foreach my $e (@$recently_used) {
-			my $value = $e->value;
-			push @recent_files, $value;
-			if($filename eq $value) {
-				$found = 1;
-			}
-		}
+			Padre::DB::RecentlyUsed->select("where type = ? and value = ?", 'RESOURCE', $filename) || [];
+		my $found = scalar @$recently_used > 0;
 		
 		eval {
 			# try to open the file now

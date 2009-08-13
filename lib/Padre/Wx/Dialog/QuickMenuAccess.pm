@@ -72,13 +72,8 @@ sub _on_ok_button_clicked {
 			require Padre::DB::RecentlyUsed;
 			my $recently_used = 
 				Padre::DB::RecentlyUsed->select("where type = ?", 'ACTION') || [];
-			my @recent_actions = ();
 			my $found = 0;
 			foreach my $e (@$recently_used) {
-				push @recent_actions, {
-					name  => $e->name,
-					value => $e->value,
-				};
 				if($action->{name} eq $e->name) {
 					$found = 1;
 				}
@@ -356,8 +351,12 @@ sub _update_list_box {
 	$self->_list->Clear;
 	my $pos = 0;
 
+	my $first_label = undef;
 	foreach my $menu_action (@{ $self->_matched_results }) {
 		my $label = $menu_action->{value};
+		if(not $first_label) {
+			$first_label = $label;
+		}
 		if ( $label =~ /$search_expr/i ) {
 			$self->_list->Insert( $label, $pos, $menu_action );
 			$pos++;
@@ -365,7 +364,7 @@ sub _update_list_box {
 	}
 	if ( $pos > 0 ) {
 		$self->_list->Select(0);
-		$self->_status_text->SetLabel( $self->_list->GetClientData(0) );
+		$self->_status_text->SetLabel( $first_label );
 	} else {
 		$self->_status_text->SetLabel('');
 	}
