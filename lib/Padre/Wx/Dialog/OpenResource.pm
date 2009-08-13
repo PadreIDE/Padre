@@ -1,18 +1,15 @@
 package Padre::Wx::Dialog::OpenResource;
 
-use warnings;
 use strict;
-
-# package exports and version
-our $VERSION = '0.42';
-our @ISA     = 'Wx::Dialog';
-
-# module imports
+use warnings;
+use Cwd ();
 use Padre::DB       ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
-# accessors
+our $VERSION = '0.42';
+our @ISA     = 'Wx::Dialog';
+
 use Class::XSAccessor accessors => {
 	_main                     => '_main',                     # Padre's main window
 	_sizer                    => '_sizer',                    # window sizer
