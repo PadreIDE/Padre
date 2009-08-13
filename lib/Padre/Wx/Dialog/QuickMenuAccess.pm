@@ -17,7 +17,7 @@ use Class::XSAccessor accessors => {
 	_main         => '_main',         # Padre main window
 	_sizer        => '_sizer',        # window sizer
 	_search_text  => '_search_text',  # search text control
-	_matches_list => '_matches_list', # matches list
+	_list         => '_list',         # matching items list
 	_status_text  => '_status_text',  # status label
 };
 
@@ -58,8 +58,8 @@ sub _on_ok_button_clicked {
 	my $main = $self->_main;
 
 	# Open the selected menu item if the user pressed OK
-	my $selection   = $self->_matches_list->GetSelection;
-	my $menu_action = $self->_matches_list->GetClientData($selection);
+	my $selection   = $self->_list->GetSelection;
+	my $menu_action = $self->_list->GetClientData($selection);
 	$self->Destroy;
 	if ($menu_action) {
 		my $event = $menu_action->menu_event;
@@ -151,7 +151,7 @@ sub _create_controls {
 		$self, -1,
 		Wx::gettext('&Matching Menu Items:')
 	);
-	$self->_matches_list(
+	$self->_list(
 		Wx::ListBox->new(
 			$self, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize, [],
 			Wx::wxLB_SINGLE
@@ -165,7 +165,7 @@ sub _create_controls {
 	$self->_sizer->Add( $search_label,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_sizer->Add( $self->_search_text,  0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$self->_sizer->Add( $matches_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_sizer->Add( $self->_matches_list, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_sizer->Add( $self->_list, 1, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_sizer->Add( $self->_status_text,  0, Wx::wxALL | Wx::wxEXPAND, 10 );
 
 	$self->_setup_events;
@@ -187,7 +187,7 @@ sub _setup_events {
 			my $code  = $event->GetKeyCode;
 
 			if ( $code == Wx::WXK_DOWN ) {
-				$self->_matches_list->SetFocus;
+				$self->_list->SetFocus;
 			}
 
 			$event->Skip(1);
@@ -199,7 +199,7 @@ sub _setup_events {
 		$self->_search_text,
 		sub {
 
-			$self->_update_matches_list_box;
+			$self->_update_list_box;
 
 			return;
 		}
@@ -207,12 +207,12 @@ sub _setup_events {
 
 	Wx::Event::EVT_LISTBOX(
 		$self,
-		$self->_matches_list,
+		$self->_list,
 		sub {
 
-			my $selection = $self->_matches_list->GetSelection;
+			my $selection = $self->_list->GetSelection;
 			if ( $selection != Wx::wxNOT_FOUND ) {
-				$self->_status_text->SetLabel( $self->_matches_list->GetString($selection) );
+				$self->_status_text->SetLabel( $self->_list->GetString($selection) );
 			}
 
 			return;
@@ -221,7 +221,7 @@ sub _setup_events {
 
 	Wx::Event::EVT_LISTBOX_DCLICK(
 		$self,
-		$self->_matches_list,
+		$self->_list,
 		sub {
 			$self->_on_ok_button_clicked();
 			$self->EndModal(0);
@@ -233,7 +233,7 @@ sub _setup_events {
 		sub {
 
 			# update matches list
-			$self->_update_matches_list_box;
+			$self->_update_list_box;
 
 			# focus on the search text box
 			$self->_search_text->SetFocus;
@@ -246,9 +246,55 @@ sub _setup_events {
 }
 
 #
-# Update matches list box from matched files list
+# Shows recently opened stuff while idle
 #
-sub _update_matches_list_box {
+sub _show_recent_while_idle {
+	my $self = shift;
+
+	Wx::Event::EVT_IDLE(
+		$self,
+		sub {
+			$self->_show_recently_opened_resources;
+
+			# focus on the search text box
+			$self->_search_text->SetFocus;
+
+			# unregister from idle event
+			Wx::Event::EVT_IDLE( $self, undef );
+		}
+	);
+}
+
+#
+# Shows the recently opened menu actions
+#
+sub _show_recently_opened_actions() {
+	my $self = shift;
+
+	# Fetch them from Padre's RecentlyUsed database table
+	require Padre::DB::RecentlyUsed;
+	my $recently_used = 
+		Padre::DB::RecentlyUsed->select("where type = ?", 'ACTION') || [];
+	my @recent_actions = ();
+	foreach my $e (@$recently_used) {
+		push @recent_actions, { 
+			name  => $e->name, 
+			value => $e->value
+		};
+	}
+	@recent_actions = sort { $a->value cmp $a->value } @recent_actions;
+
+	# Show results in matching items list
+	$self->_update_list_box;
+
+	# No need to store them anymore
+	$self->_matched_files(undef);
+}
+
+#
+# Update matching items list box from matched files list
+#
+sub _update_list_box {
 	my $self = shift;
 
 	my $search_expr = $self->_search_text->GetValue;
@@ -257,7 +303,7 @@ sub _update_matches_list_box {
 	$search_expr = quotemeta $search_expr;
 
 	#Populate the list box now
-	$self->_matches_list->Clear;
+	$self->_list->Clear;
 	my $pos = 0;
 
 	my @menu_actions = ();
@@ -268,12 +314,12 @@ sub _update_matches_list_box {
 	foreach my $menu_action (@menu_actions) {
 		my $label = $menu_action->label_text;
 		if ( $label =~ /$search_expr/i ) {
-			$self->_matches_list->Insert( $label, $pos, $menu_action );
+			$self->_list->Insert( $label, $pos, $menu_action );
 			$pos++;
 		}
 	}
 	if ( $pos > 0 ) {
-		$self->_matches_list->Select(0);
+		$self->_list->Select(0);
 		$self->_status_text->SetLabel( "" . ( $pos + 1 ) . Wx::gettext(' item(s) found') );
 	} else {
 		$self->_status_text->SetLabel( Wx::gettext('No items found') );
