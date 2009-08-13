@@ -142,8 +142,15 @@ sub can_editor {
 # Interface Methods
 
 sub plugin_icon {
-	my $class = shift->class;
-	$class->can('plugin_icon') and $class->plugin_icon;
+	my $self = shift;
+	my $icon = eval {
+		$self->class->plugin_icon;
+	};
+	if ( _INSTANCE($icon, 'Wx::Bitmap') ) {
+		return $icon;
+	} else {
+		return undef;
+	}
 }
 
 sub plugin_name {

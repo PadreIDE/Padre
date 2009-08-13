@@ -4,7 +4,7 @@ package Padre::Plugin;
 
 =head1 NAME
 
-Padre::Plugin - Padre Plugin API 2.1
+Padre::Plugin - Padre Plugin API 2.2
 
 =head1 SYNOPSIS
 
@@ -30,10 +30,10 @@ Padre::Plugin - Padre Plugin API 2.1
   sub menu_plugins_simple {
       my $self = shift;
       return $self->plugin_name => [
-                'About'   => sub { $self->show_about },
-                'Submenu' => [
-                    'Do Something' => sub { $self->do_something },
-                ],
+          'About'   => sub { $self->show_about },
+          'Submenu' => [
+              'Do Something' => sub { $self->do_something },
+          ],
       ];
   }
   
@@ -48,13 +48,13 @@ use Carp           ();
 use File::Spec     ();
 use File::ShareDir ();
 use Scalar::Util   ();
-use Params::Util qw{_HASH0 _INSTANCE};
-use YAML::Tiny ();
-use Padre::DB  ();
-use Padre::Wx  ();
+use Params::Util   ();
+use YAML::Tiny     ();
+use Padre::DB      ();
+use Padre::Wx      ();
 
 our $VERSION    = '0.42';
-our $COMPATIBLE = '0.18';
+our $COMPATIBLE = '0.42';
 
 # Link plugins back to their IDE
 my %IDE = ();
@@ -83,10 +83,83 @@ of the plugin.
 sub plugin_name {
 	my $class = ref $_[0] || $_[0];
 	my @words = $class =~ /(\w+)/gi;
-	my $name = pop @words;
+	my $name  = pop @words;
 	$name =~ s/([a-z])([A-Z])/$1 $2/g;
 	$name =~ s/([A-Z]+)([A-Z][a-z]+)/$1 $2/g;
 	return $name;
+}
+
+=pod
+
+=head2 plugin_directory_share
+
+The C<plugin_directory_share> method finds the location of the shared
+files directory for the plugin, if one exists.
+
+Returns a path string if the share directory exists, or C<undef> if not.
+
+=cut
+
+sub plugin_directory_share {
+	my $class = shift;
+	$class =~ s/::/-/g;
+
+	if ( $ENV{PADRE_DEV} ) {
+		my $root = File::Spec->catdir(
+			$FindBin::Bin,
+			File::Spec->updir,
+			File::Spec->updir,
+			$class,
+		);
+		my $path = File::Spec->catdir( $root, 'share' );
+		return $path if -d $path;
+		$path = File::Spec->catdir(
+			$root,
+			'lib',
+			split( /-/, $class ),
+			'share',
+		);
+		return $path if -d $path;
+		return;
+	}
+
+	# Find the distribution directory
+	my $dist = eval {
+		File::ShareDir::dist_dir($class)
+	};
+	return $@ ? undef : $dist;
+}
+
+=pod
+
+=head2 plugin_directory_locale
+
+The C<plugin_directory_locale()> method will be called by Padre to
+know where to look for your plugin l10n catalog.
+
+It defaults to C<$sharedir/locale> (with C<$sharedir> as defined by
+C<File::ShareDir> and thus should work as is for your plugin if you're
+using the C<install_share> command of C<Module::Install>.
+
+Your plugin catalogs should be named C<$plugin-$locale.po> (or C<.mo>
+for the compiled form) where $plugin is the class name of your plugin with
+any character that are illegal in file names (on all file systems)
+flattened to underscores.
+
+That is, C<Padre__Plugin__Vi-de.po> for the german locale of
+C<Padre::Plugin::Vi>.
+
+=cut
+
+sub plugin_directory_locale {
+	my $class = shift;
+	my $share = $class->plugin_directory_share or return undef;
+	return File::Spec->catdir( $share, 'locale' );
+}
+
+# NOTE Back-compatibility
+sub plugin_locale_directory {
+	shift->plugin_directory_locale(@_);
 }
 
 =pod
@@ -97,59 +170,20 @@ The C<plugin_icon> method will be called by Padre when it needs an
 icon to display in the user interface. It should return a 16x16
 C<Wx::Bitmap> object.
 
-There is no default implementation, meaning that a default
-plugin icon will be displayed for the plugin.
-
-=head2 plugin_locale_directory
-
-The C<plugin_directory_locale()> method will be called by Padre to
-know where to look for your plugin l10n catalog.
-
-It defaults to C<$sharedir/locale> (with C<$sharedir> as defined by
-C<File::ShareDir> and thus should work as is for your plugin if you're
-using the C<install_share> command of C<Module::Install>.
-
-Your plugin catalogs should be named C<$plugin-$locale.po> (or C<.mo>
-for the compiled form). That is, C<Vi-de.po> for the german locale of
-C<Padre::Plugin::Vi>.
+The default implementation will look for an icon at the path
+F<$plugin_directory_share/icons/16x16/logo.png> and load it for you.
 
 =cut
 
-sub plugin_locale_directory {
-	return File::Spec->catdir(
-		shift->plugin_share_directory(@_),
-		'locale'
+sub plugin_icon {
+	my $class = shift;
+	my $share = $class->plugin_directory_share or return undef;
+	my $file  = File::Spec->catfile(
+		$share, 'icons', '16x16', 'logo.png'
 	);
-}
-
-sub plugin_share_directory {
-	my $pkg = ref $_[0] || $_[0];
-	$pkg =~ s/::/-/g;
-
-	if ( $ENV{PADRE_DEV} ) {
-		my $root = File::Spec->catdir(
-			$FindBin::Bin,
-			File::Spec->updir,
-			File::Spec->updir,
-			$pkg,
-		);
-		my $path = File::Spec->catdir( $root, 'share' );
-		return $path if -d $path;
-		$path = File::Spec->catdir(
-			$root,
-			'lib',
-			split( /-/, $pkg ),
-			'share',
-		);
-		return $path if -d $path;
-		return;
-	}
-
-	# Find the distribution directory
-	my $dist = eval { File::ShareDir::dist_dir($pkg) };
-	return undef if $@;
-
-	File::Spec->catdir( $dist, 'share' );
+	return undef unless -f $file;
+	return undef unless -r $file;
+	return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
 }
 
 =pod
@@ -157,10 +191,10 @@ sub plugin_share_directory {
 =head2 padre_interfaces
 
   sub padre_interfaces {
-      'Padre::Plugin'         => 0.19,
-      'Padre::Document::Perl' => 0.16,
-      'Padre::Wx::Main'       => 0.18,
-      'Padre::DB'             => 0.16,
+      'Padre::Plugin'         => 0.43,
+      'Padre::Document::Perl' => 0.35,
+      'Padre::Wx::Main'       => 0.43,
+      'Padre::DB'             => 0.25,
   }
 
 In Padre, plugins are permitted to make relatively deep calls into
@@ -214,7 +248,7 @@ object.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE( $ide, 'Padre' ) ) {
+	unless ( Params::Util::_INSTANCE($ide, 'Padre') ) {
 		Carp::croak("Did not provide a Padre ide object");
 	}
 
@@ -412,7 +446,7 @@ sub config_read {
 
 	# Parse the config from the string
 	my @config = YAML::Tiny::Load( $row[0] );
-	unless ( _HASH0( $config[0] ) ) {
+	unless ( Params::Util::_HASH0( $config[0] ) ) {
 		Carp::croak('Config for plugin was not a HASH refence');
 	}
 
@@ -437,7 +471,7 @@ C<undef> values is permitted) with a C<HASH> reference at the root.
 sub config_write {
 	my $self   = shift;
 	my $config = shift;
-	unless ( _HASH0($config) ) {
+	unless ( Params::Util::_HASH0($config) ) {
 		Carp::croak('Did not provide a HASH ref to config_write');
 	}
 
