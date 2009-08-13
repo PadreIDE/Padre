@@ -45,8 +45,8 @@ our @EXPORT_OK = qw(newline_type get_matches _T);
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( $^O eq 'MSWin32' );
-use constant MAC   => !!( $^O eq 'darwin' );
-use constant UNIX => !( WIN32 or MAC );
+use constant MAC   => !!( $^O eq 'darwin'  );
+use constant UNIX  => ! ( WIN32 or MAC     );
 
 # Padre targets the three largest Wx backends
 # 1. Win32 Native
@@ -270,12 +270,13 @@ sub sharefile {
 
 sub find_perldiag_translations {
 	my %languages;
-	foreach my $path (@INC) {
+	foreach my $path ( @INC ) {
 		my $dir = File::Spec->catdir( $path, 'POD2' );
 		next if not -e $dir;
 		if ( opendir my $dh, $dir ) {
 			while ( my $lang = readdir $dh ) {
-				next if $lang eq '.' or $lang eq '..';
+				next if $lang eq '.';
+				next if $lang eq '..';
 				if ( -e File::Spec->catfile( $dir, $lang, 'perldiag.pod' ) ) {
 					$languages{$lang} = 1;
 				}
@@ -285,7 +286,9 @@ sub find_perldiag_translations {
 	return sort keys %languages;
 }
 
-=pod get_project_rcs
+=pod
+
+=head2 get_project_rcs
 
 Given a project dir (see "get_project_dir"), returns the project's 
 Revision Control System (RCS) by name. This can be either 'CVS', 
@@ -303,9 +306,13 @@ sub get_project_rcs {
 	);
 
 	foreach my $rcs ( keys %evidence_of ) {
-		my $dir = File::Spec->catdir( $project_dir, $evidence_of{$rcs} );
+		my $dir = File::Spec->catdir(
+			$project_dir,
+			$evidence_of{$rcs},
+		);
 		return $rcs if -d $dir;
 	}
+
 	return;
 }
 
@@ -320,26 +327,101 @@ support but it is used by some (SVK) plugins.
 =cut
 
 sub get_project_dir {
-	my $filename = shift;
-	return unless $filename;
+	my $filename = shift or return;
 
-	# check for potential relative path on filename
+	# Check for potential relative path on filename
 	if ( $filename =~ m{\.\.} ) {
 		require Cwd;
 		$filename = Cwd::realpath($filename);
 	}
+
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
-	while (1) {
+	while ( 1 ) {
 		return $dir if -e File::Spec->catfile( $dir, 'Makefile.PL' );
 		return $dir if -e File::Spec->catfile( $dir, 'Build.PL' );
 		$olddir = $dir;
 		$dir    = File::Basename::dirname($dir);
-
 		last if $olddir eq $dir;
 	}
+
 	return;
 }
+
+
+
+
+
+######################################################################
+# Cloned Functions
+
+=pod
+
+=head2 parse_version
+
+B<This is a clone of ExtUtils::MakeMaker parse_version to prevent loading
+a bunch of other modules>
+
+    my $version = Padre::Util::parse_version($file);
+
+Parse a $file and return what $VERSION is set to by the first assignment.
+It will return the string "undef" if it can't figure out what $VERSION
+is. $VERSION should be for all to see, so C<our $VERSION> or plain $VERSION
+are okay, but C<my $VERSION> is not.
+
+parse_version() will try to C<use version> before checking for
+C<$VERSION> so the following will work.
+
+    $VERSION = qv(1.2.3);
+
+=cut
+
+sub parse_version {
+	my $parsefile = shift;
+	my $result;
+	local $/ = "\n";
+	local $_;
+	open(my $fh, '<', $parsefile) or die "Could not open '$parsefile': $!";
+	my $inpod = 0;
+	while (<$fh>) {
+		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;
+		next if $inpod || /^\s*#/;
+		chop;
+		next if /^\s*(if|unless)/;
+		next unless m{(?<!\\) ([\$*]) (([\w\:\']*) \bVERSION)\b .* =}x;
+		my $eval = qq{
+			package Padre::Util::_version;
+			no strict;
+			BEGIN { eval {
+				# Ensure any version() routine which might have leaked
+				# into this package has been deleted.  Interferes with
+				# version->import()
+				undef *version;
+				require version;
+				"version"->import;
+			} }
+			local $1$2;
+			\$$2=undef;
+			do {
+				$_
+			};
+			\$$2;
+		};
+		local $^W = 0;
+		$result = eval($eval);
+		warn "Could not eval '$eval' in $parsefile: $@" if $@;
+		last if defined $result;
+	}
+	close $fh;
+	return $result;
+}
+
+
+
+
+
+######################################################################
+# Logging and Debugging
 
 SCOPE: {
 	my $logging;
@@ -373,7 +455,7 @@ __END__
 
 =pod
 
-=head1 COPYRIGHT & LICENSE
+=head1 COPYRIGHT
 
 Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 
