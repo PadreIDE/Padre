@@ -24,17 +24,18 @@ moved, removed or changed at any time without notice.
 use 5.008;
 use strict;
 use warnings;
-use Exporter   ();
-use FindBin    ();
-use File::Spec ();
-use List::Util qw(first);
-use File::Basename ();
 use Carp           ();
+use Exporter       ();
+use FindBin        ();
+use Cwd            ();
+use File::Spec     ();
+use File::Basename ();
+use List::Util     ();
 use POSIX          ();
 
 our $VERSION   = '0.42';
 our @ISA       = 'Exporter';
-our @EXPORT_OK = qw(newline_type get_matches _T);
+our @EXPORT_OK = qw{ newline_type get_matches _T };
 
 
 
@@ -138,12 +139,12 @@ sub get_matches {
 
 	my $pair;
 	if ($backward) {
-		$pair = first { $to > $_->[1] } reverse @matches;
+		$pair = List::Util::first { $to > $_->[1] } reverse @matches;
 		if ( not $pair and @matches ) {
 			$pair = $matches[-1];
 		}
 	} else {
-		$pair = first { $from < $_->[0] } @matches;
+		$pair = List::Util::first { $from < $_->[0] } @matches;
 		if ( not $pair and @matches ) {
 			$pair = $matches[0];
 		}
@@ -331,7 +332,6 @@ sub get_project_dir {
 
 	# Check for potential relative path on filename
 	if ( $filename =~ m{\.\.} ) {
-		require Cwd;
 		$filename = Cwd::realpath($filename);
 	}
 
