@@ -85,25 +85,52 @@ sub _on_ok_button_clicked {
 	foreach my $selection (@selections) {
 		my $filename = $self->_matches_list->GetClientData($selection);
 
-		# Keep the last 20 recently opened resources available
-		# and save it to plugin's configuration object
-		# my $config = $self->_main->config;
-		# my @recently_opened = split /\|/, $config->{recently_opened};
-		# if ( scalar @recently_opened >= 20 ) {
-			# shift @recently_opened;
-		# }
-		# push @recently_opened, $filename;
-		# my %unique = map { $_, 1 } @recently_opened;
-		# @recently_opened = keys %unique;
-		# @recently_opened = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recently_opened;
-		# $config->{recently_opened} = join '|', @recently_opened;
-
-		# try to open the file now
-		if ( my $id = $main->find_editor_of_file($filename) ) {
-			my $page = $main->notebook->GetPage($id);
-			$page->SetFocus;
+		# Fetch the recently used files from the database
+		require Padre::DB::RecentlyUsed;
+		my $recently_used = 
+			Padre::DB::RecentlyUsed->select("where type = ?", 'RESOURCE') || [];
+		my @recent_files = ();
+		my $found = 0;
+		foreach my $e (@$recently_used) {
+			my $value = $e->value;
+			push @recent_files, $value;
+			if($filename eq $value) {
+				$found = 1;
+			}
+		}
+		
+		eval {
+			# try to open the file now
+			if ( my $id = $main->find_editor_of_file($filename) ) {
+				my $page = $main->notebook->GetPage($id);
+				$page->SetFocus;
+			} else {
+				$main->setup_editors($filename);
+			}
+		};
+		if ($@) {
+			Wx::MessageBox(
+				Wx::gettext('Error while trying to perform Padre action'),
+				Wx::gettext('Error'),
+				Wx::wxOK,
+				$main,
+			);
 		} else {
-			$main->setup_editors($filename);
+			# And insert a recently used tuple if it is not found
+			# and the action is successful.
+			if(not $found) { 
+				Padre::DB::RecentlyUsed->create(
+					name      => $filename, 
+					value     => $filename, 
+					type      => 'RESOURCE', 
+					last_used => time(),
+				);
+			} else {
+				Padre::DB->do(
+					"update recently_used set last_used = ? where name = ? and type = ?",
+					{}, time(), $filename, 'RESOURCE',
+				);
+			}
 		}
 	}
 
