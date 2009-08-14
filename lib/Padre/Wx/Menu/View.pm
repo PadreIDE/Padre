@@ -252,71 +252,79 @@ sub new {
 		},
 	);
 
-	$self->AppendSeparator;
+	if ($config->func_fontsize) {
 
-	# Font Size
-	$self->{font_size} = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext("Font Size"),
-		$self->{font_size}
-	);
-	$self->{font_increase} = $self->add_menu_item(
-		$self->{font_size},
-		name       => 'view.font_increase',
-		label      => Wx::gettext('Increase Font Size'),
-		shortcut   => 'Ctrl-+',
-		menu_event => sub {
-			$_[0]->zoom(+1);
-		},
-	);
+		$self->AppendSeparator;
 
-	$self->{font_decrease} = $self->add_menu_item(
-		$self->{font_size},
-		name       => 'view.font_decrease',
-		label      => Wx::gettext('Decrease Font Size'),
-		shortcut   => 'Ctrl--',
-		menu_event => sub {
-			$_[0]->zoom(-1);
-		},
-	);
+		# Font Size
+		$self->{font_size} = Wx::Menu->new;
+		$self->Append(
+			-1,
+			Wx::gettext("Font Size"),
+			$self->{font_size}
+		);
+		$self->{font_increase} = $self->add_menu_item(
+			$self->{font_size},
+			name       => 'view.font_increase',
+			label      => Wx::gettext('Increase Font Size'),
+			shortcut   => 'Ctrl-+',
+			menu_event => sub {
+				$_[0]->zoom(+1);
+			},
+		);
 
-	$self->{font_reset} = $self->add_menu_item(
-		$self->{font_size},
-		name       => 'view.font_reset',
-		label      => Wx::gettext('Reset Font Size'),
-		shortcut   => 'Ctrl-/',
-		menu_event => sub {
-			$_[0]->zoom( -1 * $_[0]->current->editor->GetZoom );
-		},
-	);
+		$self->{font_decrease} = $self->add_menu_item(
+			$self->{font_size},
+			name       => 'view.font_decrease',
+			label      => Wx::gettext('Decrease Font Size'),
+			shortcut   => 'Ctrl--',
+			menu_event => sub {
+				$_[0]->zoom(-1);
+			},
+		);
 
-	$self->AppendSeparator;
+		$self->{font_reset} = $self->add_menu_item(
+			$self->{font_size},
+			name       => 'view.font_reset',
+			label      => Wx::gettext('Reset Font Size'),
+			shortcut   => 'Ctrl-/',
+			menu_event => sub {
+				$_[0]->zoom( -1 * $_[0]->current->editor->GetZoom );
+			},
+		);
 
-	# Bookmark Support
-	$self->{bookmark_set} = $self->add_menu_item(
-		$self,
-		name       => 'view.bookmark_set',
-		label      => Wx::gettext('Set Bookmark'),
-		shortcut   => 'Ctrl-B',
-		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->set_bookmark( $_[0] );
-		},
-	);
+	}
 
-	$self->{bookmark_goto} = $self->add_menu_item(
-		$self,
-		name       => 'view.bookmark_goto',
-		label      => Wx::gettext('Goto Bookmark'),
-		shortcut   => 'Ctrl-Shift-B',
-		menu_event => sub {
-			require Padre::Wx::Dialog::Bookmarks;
-			Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
-		},
-	);
+	if ($config->func_bookmark) {
 
-	$self->AppendSeparator;
+		$self->AppendSeparator;
+
+		# Bookmark Support
+		$self->{bookmark_set} = $self->add_menu_item(
+			$self,
+			name       => 'view.bookmark_set',
+			label      => Wx::gettext('Set Bookmark'),
+			shortcut   => 'Ctrl-B',
+			menu_event => sub {
+				require Padre::Wx::Dialog::Bookmarks;
+				Padre::Wx::Dialog::Bookmarks->set_bookmark( $_[0] );
+			},
+		);
+
+		$self->{bookmark_goto} = $self->add_menu_item(
+			$self,
+			name       => 'view.bookmark_goto',
+			label      => Wx::gettext('Goto Bookmark'),
+			shortcut   => 'Ctrl-Shift-B',
+			menu_event => sub {
+				require Padre::Wx::Dialog::Bookmarks;
+				Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
+			},
+		);
+
+		$self->AppendSeparator;
+
+	}
 
 	# Editor Look and Feel
 	$self->{style} = Wx::Menu->new;
@@ -512,13 +520,15 @@ sub refresh {
 	}
 
 	# Disable zooming and bookmarks if there's no current document
-	$self->{font_increase}->Enable($doc);
-	$self->{font_decrease}->Enable($doc);
-	$self->{font_reset}->Enable($doc);
+	defined($self->{font_increase}) and $self->{font_increase}->Enable($doc);
+	defined($self->{font_decrease}) and $self->{font_decrease}->Enable($doc);
+	defined($self->{font_reset}) and $self->{font_reset}->Enable($doc);
 
 	# You cannot set a bookmark unless the current document is on disk.
-	my $set = ( $doc and defined $document->filename ) ? 1 : 0;
-	$self->{bookmark_set}->Enable($set);
+	if (defined($self->{bookmark_set})) {
+		my $set = ( $doc and defined $document->filename ) ? 1 : 0;
+		$self->{bookmark_set}->Enable($set);
+	}
 
 	return;
 }

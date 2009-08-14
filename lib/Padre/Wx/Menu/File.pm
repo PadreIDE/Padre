@@ -19,6 +19,8 @@ sub new {
 	my $class = shift;
 	my $main  = shift;
 
+	my $config = Padre->ide->config;
+
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
 
@@ -224,40 +226,44 @@ sub new {
 		},
 	);
 
-	$self->AppendSeparator;
+	if ($config->func_session) {
 
-	# Specialised open and close functions
-	$self->{open_selection} = $self->add_menu_item(
-		$self,
-		name       => 'file.open_selection',
-		label      => Wx::gettext('Open Selection'),
-		shortcut   => 'Ctrl-Shift-O',
-		menu_event => sub {
-			$_[0]->on_open_selection;
-		},
-	);
+		$self->AppendSeparator;
 
-	$self->{open_session} = $self->add_menu_item(
-		$self,
-		name       => 'file.open_session',
-		label      => Wx::gettext('Open Session'),
-		shortcut   => 'Ctrl-Alt-O',
-		menu_event => sub {
-			require Padre::Wx::Dialog::SessionManager;
-			Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
-		},
-	);
+		# Specialised open and close functions
+		$self->{open_selection} = $self->add_menu_item(
+			$self,
+			name       => 'file.open_selection',
+			label      => Wx::gettext('Open Selection'),
+			shortcut   => 'Ctrl-Shift-O',
+			menu_event => sub {
+				$_[0]->on_open_selection;
+			},
+		);
 
-	$self->{save_session} = $self->add_menu_item(
-		$self,
-		name       => 'file.save_session',
-		label      => Wx::gettext('Save Session'),
-		shortcut   => 'Ctrl-Alt-S',
-		menu_event => sub {
-			require Padre::Wx::Dialog::SessionSave;
-			Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
-		},
-	);
+		$self->{open_session} = $self->add_menu_item(
+			$self,
+			name       => 'file.open_session',
+			label      => Wx::gettext('Open Session'),
+			shortcut   => 'Ctrl-Alt-O',
+			menu_event => sub {
+				require Padre::Wx::Dialog::SessionManager;
+				Padre::Wx::Dialog::SessionManager->new( $_[0] )->show;
+			},
+		);
+
+		$self->{save_session} = $self->add_menu_item(
+			$self,
+			name       => 'file.save_session',
+			label      => Wx::gettext('Save Session'),
+			shortcut   => 'Ctrl-Alt-S',
+			menu_event => sub {
+				require Padre::Wx::Dialog::SessionSave;
+				Padre::Wx::Dialog::SessionSave->new( $_[0] )->show;
+			},
+		);
+
+	}
 
 	$self->AppendSeparator;
 
@@ -352,8 +358,8 @@ sub refresh {
 	$self->{save_as}->Enable($doc);
 	$self->{save_all}->Enable($doc);
 	$self->{print}->Enable($doc);
-	$self->{open_selection}->Enable($doc);
-	$self->{save_session}->Enable($doc);
+	defined($self->{open_session}) and $self->{open_selection}->Enable($doc);
+	defined($self->{save_session}) and $self->{save_session}->Enable($doc);
 	$self->{docstat}->Enable($doc);
 
 	return 1;

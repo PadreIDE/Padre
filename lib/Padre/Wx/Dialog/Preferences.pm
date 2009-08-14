@@ -29,6 +29,11 @@ and save them to the configuration file.
 
 =cut
 
+my @Func_List = (['bookmark',Wx::gettext('Enable bookmarks')],
+		 ['fontsize',Wx::gettext('Change font-size')],
+		 ['session',Wx::gettext('Enable session manager')],
+		);
+
 sub _new_panel {
 	my ( $self, $parent ) = splice( @_, 0, 2 );
 	my $cols = shift || 2;
@@ -366,6 +371,25 @@ sub _appearance_panel {
 	$notebook->AddPage( $editor_panel, Wx::gettext('Settings Demo') );
 
 	$preview_sizer->Add( $notebook, 1, Wx::wxGROW, 5 );
+
+	if ($config->func_config) {
+
+		my @table2 = ([[ 'Wx::StaticText', undef, Wx::gettext('Any changes to this options require a restart:') ]]);
+		
+		for (@Func_List) {
+
+			push @table2,
+				[
+				   [   'Wx::CheckBox', 'func_'.$_->[0], ( eval('$config->func_'.$_->[0]) ? 1 : 0 ),$_->[1]
+				   ]
+			];
+		}
+
+		my $settings_subpanel2 = $self->_new_panel($panel);
+		$self->fill_panel_by_table( $settings_subpanel2, \@table2 );
+
+		$main_sizer->Add($settings_subpanel2);
+	}
 
 	$panel->SetSizerAndFit($main_sizer);
 
@@ -899,6 +923,12 @@ sub run {
 		'autocomplete_multiclosebracket',
 		$data->{autocomplete_multiclosebracket} ? 1 : 0
 	);
+	for (@Func_List) {
+		$config->set(
+			'func_'.$_->[0],
+			$data->{'func_'.$_->[0]} ? 1 : 0
+		);
+	}
 
 	# Quite like in _run_params_panel, trap exception if there
 	# is no document currently open
