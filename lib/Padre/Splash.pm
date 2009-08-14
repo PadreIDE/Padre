@@ -11,7 +11,7 @@ our $VERSION = '0.43';
 use Padre::Util ();
 use Wx          ();
 
-unless ( $ENV{HARNESS_ACTIVE} ) {
+unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH}) {
 	Wx::SplashScreen->new(
 		Wx::Bitmap->new(
 			Padre::Util::sharefile('padre-splash.bmp'),
