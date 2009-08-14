@@ -251,13 +251,14 @@ sub _check_syntax_internals {
 	}
 	$self->{last_syncheck_md5} = $md5;
 
-	my $nlchar = "\n";
-	if ( $self->get_newline_type eq 'WIN' ) {
-		$nlchar = "\r\n";
-	} elsif ( $self->get_newline_type eq 'MAC' ) {
-		$nlchar = "\r";
-	}
-
+	my $nlchar = $self->newline;
+# Obsoleted by ->newline
+#	if ( $self->get_newline_type eq 'WIN' ) {
+#		$nlchar = "\r\n";
+#	} elsif ( $self->get_newline_type eq 'MAC' ) {
+#		$nlchar = "\r";
+#	}
+#
 	require Padre::Task::SyntaxChecker::Perl;
 	my %check = (
 		editor   => $self->editor,
@@ -634,7 +635,8 @@ sub newline_keep_column {
 	my $first  = $editor->PositionFromLine($line);
 	my $col    = $pos - $editor->PositionFromLine($editor->LineFromPosition($pos));
 
-	$editor->AddText("\n");
+	$editor->AddText($self->newline);
+	print STDERR $self->get_newline_type." ".length($self->newline)."\n";
 
 	$pos      = $editor->GetCurrentPos;
 	$first    = $editor->PositionFromLine($editor->LineFromPosition($pos));

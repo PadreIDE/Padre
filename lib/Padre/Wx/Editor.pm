@@ -13,10 +13,12 @@ use Padre::Wx::FileDropTarget ();
 our $VERSION = '0.43';
 our @ISA     = 'Wx::StyledTextCtrl';
 
+# WIN is usually called WIN32, so WIN remains here for backwards compatiblity:
 our %mode = (
-	WIN  => Wx::wxSTC_EOL_CRLF,
-	MAC  => Wx::wxSTC_EOL_CR,
-	UNIX => Wx::wxSTC_EOL_LF,
+	WIN   => Wx::wxSTC_EOL_CRLF,
+	WIN32 => Wx::wxSTC_EOL_CRLF,
+	MAC   => Wx::wxSTC_EOL_CR,
+	UNIX  => Wx::wxSTC_EOL_LF,
 );
 
 # mapping for mime-type to the style name in the share/styles/default.yml file

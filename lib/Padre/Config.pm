@@ -5,7 +5,7 @@ package Padre::Config;
 #
 
 # To help force the break from the first-generate HASH based configuration
-# over to the second-generation method based configuration, initially we
+# over to thdee second-generation method based configuration, initially we
 # will use an ARRAY-based object, so that all existing code is forcefully
 # broken.
 
@@ -459,6 +459,12 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+);
+setting(
+	name    => 'default_line_ending',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => Padre::Constant::NEWLINE
 );
 setting(
 	name    => 'update_file_from_disk_interval',

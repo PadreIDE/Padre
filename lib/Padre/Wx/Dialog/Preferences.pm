@@ -204,7 +204,7 @@ sub _indentation_panel {
 }
 
 sub _behaviour_panel {
-	my ( $self, $treebook, $main_startup, $main_functions_order, $perldiag_locales ) = @_;
+	my ( $self, $treebook, $main_startup, $main_functions_order, $perldiag_locales, $default_line_ending ) = @_;
 
 	my $config = Padre->ide->config;
 	my $table  = [
@@ -241,6 +241,9 @@ sub _behaviour_panel {
 		],
 		[   [ 'Wx::StaticText', undef,             Wx::gettext('Preferred language for error diagnostics:') ],
 			[ 'Wx::Choice',     'locale_perldiag', $perldiag_locales ]
+		],
+		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Default line ending:') ],
+			[ 'Wx::Choice',     'default_line_ending', $default_line_ending ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Check for file updates on disk every (seconds):') ],
 			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
@@ -606,7 +609,7 @@ END_TEXT
 }
 
 sub dialog {
-	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales ) = @_;
+	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales, $default_line_ending ) = @_;
 
 	my $dialog = Wx::Dialog->new(
 		$win,
@@ -635,6 +638,7 @@ sub dialog {
 		$main_startup,
 		$main_functions_order,
 		$perldiag_locales,
+		$default_line_ending,
 	);
 	$tb->AddPage( $behaviour, Wx::gettext('Behaviour') );
 
@@ -767,6 +771,12 @@ sub run {
 		$perldiag_locale,
 		grep { $_ ne $perldiag_locale } ( 'EN', Padre::Util::find_perldiag_translations() )
 	);
+	my $default_line_ending = $config->default_line_ending;
+	my @default_line_ending_items = (
+		$default_line_ending,
+		grep { $_ ne $default_line_ending } qw{WIN32 MAC UNIX}
+	);
+	my @default_line_ending_localized = map { Wx::gettext($_) } @default_line_ending_items;
 
 	$self->{dialog} = $self->dialog(
 		$win,
@@ -774,6 +784,7 @@ sub run {
 		\@editor_autoindent_localized,
 		\@main_functions_order_localized,
 		\@perldiag_locales,
+		\@default_line_ending_localized,
 	);
 	my $ret = $self->{dialog}->ShowModal;
 	if ( $ret eq Wx::wxID_CANCEL ) {
@@ -875,6 +886,10 @@ sub run {
 	$config->set(
 		'external_diff_tool',
 		$data->{external_diff_tool}
+	);
+	$config->set(
+		'default_line_ending',
+		$default_line_ending_items[ $data->{default_line_ending} ]
 	);
 	$config->set(
 		'update_file_from_disk_interval',
