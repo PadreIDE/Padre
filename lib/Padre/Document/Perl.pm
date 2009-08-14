@@ -625,6 +625,26 @@ sub autocomplete {
 	return ( length($prefix), @words );
 }
 
+sub newline_keep_column {
+	my $self = shift;
+
+	my $editor = $self->editor;
+	my $pos    = $editor->GetCurrentPos;
+	my $line   = $editor->LineFromPosition($pos);
+	my $first  = $editor->PositionFromLine($line);
+	my $col    = $pos - $editor->PositionFromLine($editor->LineFromPosition($pos));
+
+	$editor->AddText("\n");
+
+	$pos      = $editor->GetCurrentPos;
+	$first    = $editor->PositionFromLine($editor->LineFromPosition($pos));
+	my $col2  = $pos - $first;
+	$editor->AddText(' 'x($col - $col2));
+	$editor->SetCurrentPos($first + $col);
+	
+	return 1;
+}
+
 sub event_on_char {
 	my ( $self, $editor, $event ) = @_;
 

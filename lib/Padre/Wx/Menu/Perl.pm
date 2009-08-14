@@ -113,6 +113,18 @@ sub new {
 		},
 	);
 
+	$self->add_menu_item(
+		$self,
+		name       => 'perl.newline_keep_column',
+		label      => Wx::gettext('Newline same column'),
+		shortcut   => 'Ctrl-Enter',
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			return unless _INSTANCE( $document, 'Padre::Document::Perl' );
+			$document->newline_keep_column;
+		},
+	);
+
 	$self->AppendSeparator;
 
 	# Move of stacktrace to Run
