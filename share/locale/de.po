@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-13 22:19+0200\n"
-"PO-Revision-Date: 2009-08-13 22:22+0100\n"
+"POT-Creation-Date: 2009-08-14 08:02+0200\n"
+"PO-Revision-Date: 2009-08-14 08:04+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -2188,31 +2188,31 @@ msgid "Find Unmatched Brace"
 msgstr "Finde verwaiste Klammer"
 
 #: lib/Padre/Wx/Menu/Perl.pm:51
-#: lib/Padre/Document/Perl.pm:710
+#: lib/Padre/Document/Perl.pm:728
 msgid "Find Variable Declaration"
 msgstr "Finde Variablen-Deklaration"
 
 #: lib/Padre/Wx/Menu/Perl.pm:65
-#: lib/Padre/Document/Perl.pm:722
+#: lib/Padre/Document/Perl.pm:740
 msgid "Lexically Rename Variable"
 msgstr "Ersetze Variable lexikalisch"
 
 #: lib/Padre/Wx/Menu/Perl.pm:72
 #: lib/Padre/Wx/Menu/Perl.pm:73
-#: lib/Padre/Document/Perl.pm:734
-#: lib/Padre/Document/Perl.pm:735
+#: lib/Padre/Document/Perl.pm:752
+#: lib/Padre/Document/Perl.pm:753
 msgid "Replacement"
 msgstr "Ersatz"
 
 #: lib/Padre/Wx/Menu/Perl.pm:87
-#: lib/Padre/Document/Perl.pm:752
+#: lib/Padre/Document/Perl.pm:770
 msgid "Introduce Temporary Variable"
 msgstr "Temporäre Variable einführen"
 
 #: lib/Padre/Wx/Menu/Perl.pm:94
 #: lib/Padre/Wx/Menu/Perl.pm:95
-#: lib/Padre/Document/Perl.pm:765
-#: lib/Padre/Document/Perl.pm:766
+#: lib/Padre/Document/Perl.pm:783
+#: lib/Padre/Document/Perl.pm:784
 msgid "Variable Name"
 msgstr "Variablenname:"
 
@@ -2220,7 +2220,11 @@ msgstr "Variablenname:"
 msgid "Vertically Align Selected"
 msgstr "Auswahl vertikal ausrichten"
 
-#: lib/Padre/Wx/Menu/Perl.pm:135
+#: lib/Padre/Wx/Menu/Perl.pm:119
+msgid "Newline same column"
+msgstr "Neue Zeile, gleiche Spalte"
+
+#: lib/Padre/Wx/Menu/Perl.pm:147
 msgid "Automatic bracket completion"
 msgstr "Automatische Klammer-Ergänzung"
 
