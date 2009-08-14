@@ -20,7 +20,7 @@ use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Current ();
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 # The four most common things we need are implemented directly
 

@@ -33,7 +33,7 @@ use File::Basename ();
 use List::Util     ();
 use POSIX          ();
 
-our $VERSION   = '0.42';
+our $VERSION   = '0.43';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = qw{ newline_type get_matches _T };
 

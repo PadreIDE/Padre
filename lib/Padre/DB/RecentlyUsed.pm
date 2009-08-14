@@ -6,7 +6,7 @@ package Padre::DB::RecentlyUsed;
 use strict;
 use warnings;
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 1;
 

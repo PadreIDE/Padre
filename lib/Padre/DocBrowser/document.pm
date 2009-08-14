@@ -10,7 +10,7 @@ use Class::XSAccessor constructor => 'new', accessors => {
 	'filename' => 'filename',
 };
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 =pod
 

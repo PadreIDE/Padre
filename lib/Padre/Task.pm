@@ -112,7 +112,7 @@ use IO::String   ();
 use Scalar::Util ();
 use Params::Util '_INSTANCE';
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 # TODO: Why are there require?
 require Padre;

@@ -7,7 +7,7 @@ use Cwd ();
 use Wx ':everything';
 use Wx::Event ':everything';
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 our @ISA     = 'Wx::Dialog';
 
 =pod

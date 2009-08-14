@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Padre::Task ();
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 our @ISA     = 'Padre::Task';
 
 sub run {

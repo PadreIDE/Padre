@@ -10,7 +10,7 @@ use File::Path    ();
 use File::Spec    ();
 use File::HomeDir ();
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( $^O eq 'MSWin32' );

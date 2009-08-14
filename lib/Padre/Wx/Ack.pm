@@ -21,7 +21,7 @@ use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 use File::Basename    ();
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 my $iter;
 my %opts;

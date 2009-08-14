@@ -133,7 +133,7 @@ use Padre::Wx        ();
 use Padre            ();
 use Padre::MimeTypes ();
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 
 

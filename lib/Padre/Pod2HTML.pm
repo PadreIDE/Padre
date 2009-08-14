@@ -33,7 +33,7 @@ use strict;
 use warnings;
 use Pod::Simple::XHTML ();
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 our @ISA     = 'Pod::Simple::XHTML';
 
 use Class::XSAccessor getters => {

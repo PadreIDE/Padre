@@ -53,8 +53,8 @@ use YAML::Tiny     ();
 use Padre::DB      ();
 use Padre::Wx      ();
 
-our $VERSION    = '0.42';
-our $COMPATIBLE = '0.42';
+our $VERSION    = '0.43';
+our $COMPATIBLE = '0.43';
 
 # Link plugins back to their IDE
 my %IDE = ();
