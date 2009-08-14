@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-14 17:35+0200\n"
+"POT-Creation-Date: 2009-08-14 17:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1399,7 +1399,7 @@ msgid "Settings Demo"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:377
-msgid "Any changes to this options require a restart:"
+msgid "Any changes to these options require a restart:"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:488

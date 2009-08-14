@@ -374,7 +374,7 @@ sub _appearance_panel {
 
 	if ($config->func_config) {
 
-		my @table2 = ([[ 'Wx::StaticText', undef, Wx::gettext('Any changes to this options require a restart:') ]]);
+		my @table2 = ([[ 'Wx::StaticText', undef, Wx::gettext('Any changes to these options require a restart:') ]]);
 		
 		for (@Func_List) {
 
