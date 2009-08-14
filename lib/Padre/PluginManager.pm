@@ -264,16 +264,16 @@ sub load_plugins {
 
 	# Attempt to load all plugins in the Padre::Plugin::* namespace
 	my %seen = ();
-	foreach my $inc ( @INC ) {
+	foreach my $inc (@INC) {
 		my $dir = File::Spec->catdir( $inc, 'Padre', 'Plugin' );
 		next unless -d $dir;
 
 		local *DIR;
-		opendir( DIR, $dir )     or die("opendir($dir): $!");
+		opendir( DIR, $dir ) or die("opendir($dir): $!");
 		my @files = readdir(DIR) or die("readdir($dir): $!");
-		closedir(DIR)            or die("closedir($dir): $!");
+		closedir(DIR) or die("closedir($dir): $!");
 
-		foreach ( @files ) {
+		foreach (@files) {
 			next unless s/\.pm$//;
 			my $module = "Padre::Plugin::$_";
 			next if $seen{$module}++;
@@ -284,16 +284,16 @@ sub load_plugins {
 	# Attempt to load all plugins in the Acme::Padre::* namespace
 	# TODO: Put this code behind some kind of future security option,
 	#       once we have one.
-	foreach my $inc ( @INC ) {
+	foreach my $inc (@INC) {
 		my $dir = File::Spec->catdir( $inc, 'Acme', 'Padre' );
 		next unless -d $dir;
 
 		local *DIR;
-		opendir( DIR, $dir )     or die("opendir($dir): $!");
+		opendir( DIR, $dir ) or die("opendir($dir): $!");
 		my @files = readdir(DIR) or die("readdir($dir): $!");
-		closedir(DIR)            or die("closedir($dir): $!");
+		closedir(DIR) or die("closedir($dir): $!");
 
-		foreach ( @files ) {
+		foreach (@files) {
 			next unless s/\.pm$//;
 			my $module = "Acme::Padre::$_";
 			next if $seen{$module}++;
@@ -306,6 +306,7 @@ sub load_plugins {
 
 	$self->_refresh_plugin_menu;
 	if ( my @failed = $self->failed ) {
+
 		# Until such time as we can show an error message
 		# in a smarter way, this gets annoying.
 		# Every time you start the editor, we tell you what

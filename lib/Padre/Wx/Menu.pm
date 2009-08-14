@@ -20,7 +20,7 @@ use Class::XSAccessor getters => {
 
 # Default implementation of refresh
 
-sub refresh { 1 }
+sub refresh {1}
 
 # Overrides and then calls XS wx Menu::Append.
 # Adds any hotkeys to global registry of bound keys
@@ -32,11 +32,11 @@ sub Append {
 	my ($accel)      = ( $string =~ m/(Ctrl-.+|Alt-.+)/ );
 	if ( $underlined or $accel ) {
 		$self->{main}->{accel_keys} ||= {};
-		if ( $underlined ) {
+		if ($underlined) {
 			$underlined =~ s/&(\w)/$1/;
 			$self->{main}->{accel_keys}->{underlined}->{$underlined} = $item;
 		}
-		if ( $accel ) {
+		if ($accel) {
 			my ( $mod, $mod2, $key ) = ( $accel =~ m/(Ctrl|Alt)(-Shift)?\-(.)/ );
 			$mod .= $mod2 if ($mod2);
 			$self->{main}->{accel_keys}->{hotkeys}->{ uc($mod) }->{ ord( uc($key) ) } = $item;
@@ -86,14 +86,12 @@ sub _add_menu_item {
 		warn "Found a duplicate action '$name'\n";
 	}
 
-	if ( $shortcut ) {
+	if ($shortcut) {
 		foreach my $n ( keys %$actions ) {
 			my $a = $actions->{$n};
 			next unless $a->shortcut;
 			next unless $a->shortcut eq $shortcut;
-			warn "Found a duplicate shortcut '$shortcut' with "
-				. $a->name
-				. " for '$name'\n";
+			warn "Found a duplicate shortcut '$shortcut' with " . $a->name . " for '$name'\n";
 			last;
 		}
 	}

@@ -77,9 +77,7 @@ sub new {
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error(
-				Wx::gettext("Could not find the Padre::Plugin::My plugin")
-			) unless -e $file;
+			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plugin") ) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
@@ -147,42 +145,46 @@ sub new {
 
 	# Create the module tools submenu
 	my $modules = Wx::Menu->new;
-	$self->Append( -1,
+	$self->Append(
+		-1,
 		Wx::gettext('Module Tools'),
 		$modules,
 	);
 
 	Wx::Event::EVT_MENU(
 		$main,
-		$modules->Append( -1,
+		$modules->Append(
+			-1,
 			Wx::gettext("Install CPAN Module"),
 		),
 		sub {
 			require Padre::CPAN;
 			require Padre::Wx::CPAN;
 			my $cpan = Padre::CPAN->new;
-			my $gui  = Padre::Wx::CPAN->new( $cpan, $_[0] );
+			my $gui = Padre::Wx::CPAN->new( $cpan, $_[0] );
 			$gui->show;
 		}
 	);
 
 	Wx::Event::EVT_MENU(
 		$main,
-		$modules->Append( -1,
+		$modules->Append(
+			-1,
 			Wx::gettext("Install Local Distribution"),
 		),
 		sub {
-			$self->install_file($_[0]);
+			$self->install_file( $_[0] );
 		},
 	);
 
 	Wx::Event::EVT_MENU(
 		$main,
-		$modules->Append( -1,
+		$modules->Append(
+			-1,
 			Wx::gettext("Install Remote Distribution"),
 		),
 		sub {
-			$self->install_url($_[0]);
+			$self->install_url( $_[0] );
 		},
 	);
 
@@ -190,11 +192,12 @@ sub new {
 
 	Wx::Event::EVT_MENU(
 		$main,
-		$modules->Append( -1,
+		$modules->Append(
+			-1,
 			Wx::gettext("Open CPAN Config File"),
 		),
 		sub {
-			$self->cpan_config($_[0]);
+			$self->cpan_config( $_[0] );
 		},
 	);
 
@@ -222,7 +225,7 @@ sub add {
 		my @menu = $manager->get_menu( $main, $module ) or next;
 
 		# Did the previous entry needs a separator after it
-		if ( $need ) {
+		if ($need) {
 			push @$entries, $self->AppendSeparator;
 			$need = 0;
 		}
@@ -239,10 +242,10 @@ sub add {
 }
 
 sub remove {
-	my $self    = shift;
+	my $self = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while ( @$entries ) {
+	while (@$entries) {
 		$self->Destroy( pop @$entries );
 	}
 
@@ -376,9 +379,7 @@ sub cpan_config {
 		return;
 	}
 
-	$main->error(
-		Wx::gettext("Failed to find your CPAN configuration")
-	);
+	$main->error( Wx::gettext("Failed to find your CPAN configuration") );
 }
 
 1;

@@ -226,7 +226,7 @@ sub new {
 		},
 	);
 
-	if ($config->func_session) {
+	if ( $config->func_session ) {
 
 		$self->AppendSeparator;
 
@@ -358,8 +358,8 @@ sub refresh {
 	$self->{save_as}->Enable($doc);
 	$self->{save_all}->Enable($doc);
 	$self->{print}->Enable($doc);
-	defined($self->{open_session}) and $self->{open_selection}->Enable($doc);
-	defined($self->{save_session}) and $self->{save_session}->Enable($doc);
+	defined( $self->{open_session} ) and $self->{open_selection}->Enable($doc);
+	defined( $self->{save_session} ) and $self->{save_session}->Enable($doc);
 	$self->{docstat}->Enable($doc);
 
 	return 1;

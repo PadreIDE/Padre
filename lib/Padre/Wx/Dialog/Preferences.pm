@@ -29,10 +29,11 @@ and save them to the configuration file.
 
 =cut
 
-my @Func_List = (['bookmark',Wx::gettext('Enable bookmarks')],
-		 ['fontsize',Wx::gettext('Change font-size')],
-		 ['session',Wx::gettext('Enable session manager')],
-		);
+my @Func_List = (
+	[ 'bookmark', Wx::gettext('Enable bookmarks') ],
+	[ 'fontsize', Wx::gettext('Change font-size') ],
+	[ 'session',  Wx::gettext('Enable session manager') ],
+);
 
 sub _new_panel {
 	my ( $self, $parent ) = splice( @_, 0, 2 );
@@ -247,15 +248,19 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', undef,             Wx::gettext('Preferred language for error diagnostics:') ],
 			[ 'Wx::Choice',     'locale_perldiag', $perldiag_locales ]
 		],
-		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Default line ending:') ],
+		[   [ 'Wx::StaticText', undef,                 Wx::gettext('Default line ending:') ],
 			[ 'Wx::Choice',     'default_line_ending', $default_line_ending ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Check for file updates on disk every (seconds):') ],
 			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
 		],
-# Will be moved to a own AutoComp-panel as soon as there are enough options for this (and I get the spare time to do it):
-		[   [   'Wx::CheckBox', 'autocomplete_multiclosebracket', ( $config->autocomplete_multiclosebracket ? 1 : 0 ),
-				Wx::gettext("Add another closing bracket if there is already one (and the auto-bracket-function is enabled)")
+
+		# Will be moved to a own AutoComp-panel as soon as there are enough options for this (and I get the spare time to do it):
+		[   [   'Wx::CheckBox',
+				'autocomplete_multiclosebracket',
+				( $config->autocomplete_multiclosebracket ? 1 : 0 ),
+				Wx::gettext(
+					"Add another closing bracket if there is already one (and the auto-bracket-function is enabled)")
 			],
 			[]
 		],
@@ -372,17 +377,15 @@ sub _appearance_panel {
 
 	$preview_sizer->Add( $notebook, 1, Wx::wxGROW, 5 );
 
-	if ($config->func_config) {
+	if ( $config->func_config ) {
 
-		my @table2 = ([[ 'Wx::StaticText', undef, Wx::gettext('Any changes to these options require a restart:') ]]);
-		
+		my @table2 =
+			( [ [ 'Wx::StaticText', undef, Wx::gettext('Any changes to these options require a restart:') ] ] );
+
 		for (@Func_List) {
 
 			push @table2,
-				[
-				   [   'Wx::CheckBox', 'func_'.$_->[0], ( eval('$config->func_'.$_->[0]) ? 1 : 0 ),$_->[1]
-				   ]
-			];
+				[ [ 'Wx::CheckBox', 'func_' . $_->[0], ( eval( '$config->func_' . $_->[0] ) ? 1 : 0 ), $_->[1] ] ];
 		}
 
 		my $settings_subpanel2 = $self->_new_panel($panel);
@@ -633,7 +636,8 @@ END_TEXT
 }
 
 sub dialog {
-	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales, $default_line_ending ) = @_;
+	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales,
+		$default_line_ending ) = @_;
 
 	my $dialog = Wx::Dialog->new(
 		$win,
@@ -795,7 +799,7 @@ sub run {
 		$perldiag_locale,
 		grep { $_ ne $perldiag_locale } ( 'EN', Padre::Util::find_perldiag_translations() )
 	);
-	my $default_line_ending = $config->default_line_ending;
+	my $default_line_ending       = $config->default_line_ending;
 	my @default_line_ending_items = (
 		$default_line_ending,
 		grep { $_ ne $default_line_ending } qw{WIN32 MAC UNIX}
@@ -811,6 +815,7 @@ sub run {
 		\@default_line_ending_localized,
 	);
 	my $ret = $self->{dialog}->ShowModal;
+
 	if ( $ret eq Wx::wxID_CANCEL ) {
 		return;
 	}
@@ -923,10 +928,11 @@ sub run {
 		'autocomplete_multiclosebracket',
 		$data->{autocomplete_multiclosebracket} ? 1 : 0
 	);
+
 	for (@Func_List) {
 		$config->set(
-			'func_'.$_->[0],
-			$data->{'func_'.$_->[0]} ? 1 : 0
+			'func_' . $_->[0],
+			$data->{ 'func_' . $_->[0] } ? 1 : 0
 		);
 	}
 

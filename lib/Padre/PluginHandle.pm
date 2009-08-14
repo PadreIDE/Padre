@@ -11,17 +11,16 @@ use Params::Util qw{ _STRING _IDENTIFIER _CLASS _INSTANCE };
 our $VERSION = '0.43';
 
 use overload
-	'bool'     => sub () { 1 },
-	'""'       => 'plugin_name',
+	'bool' => sub () {1},
+	'""' => 'plugin_name',
 	'fallback' => 0;
 
-use Class::XSAccessor
-	getters => {
-		class  => 'class',
-		object => 'object',
+use Class::XSAccessor getters => {
+	class  => 'class',
+	object => 'object',
 	},
 	accessors => {
-		errstr => 'errstr',
+	errstr => 'errstr',
 	};
 
 
@@ -43,13 +42,13 @@ sub new {
 	if ( exists $self->{name} ) {
 		Carp::confess("PluginHandle->name should no longer be used (foo)");
 	}
-	unless ( _CLASS($self->class) ) {
+	unless ( _CLASS( $self->class ) ) {
 		Carp::croak("Missing or invalid class param for Padre::PluginHandle");
 	}
-	if ( defined $self->object and not _INSTANCE($self->object, $self->class) ) {
+	if ( defined $self->object and not _INSTANCE( $self->object, $self->class ) ) {
 		Carp::croak("Invalid object param for Padre::PluginHandle");
 	}
-	unless ( _STATUS($self->status) ) {
+	unless ( _STATUS( $self->status ) ) {
 		Carp::croak("Missing or invalid status param for Padre::PluginHandle");
 	}
 
@@ -122,8 +121,8 @@ sub enabled {
 }
 
 sub can_enable {
-	$_[0]->{status} eq 'loaded' or
-	$_[0]->{status} eq 'disabled';
+	$_[0]->{status} eq 'loaded'
+		or $_[0]->{status} eq 'disabled';
 }
 
 sub can_disable {
@@ -131,8 +130,8 @@ sub can_disable {
 }
 
 sub can_editor {
-	$_[0]->{status} eq 'enabled' and
-	$_[0]->{object}->can('editor_enable');
+	$_[0]->{status} eq 'enabled'
+		and $_[0]->{object}->can('editor_enable');
 }
 
 
@@ -144,9 +143,7 @@ sub can_editor {
 
 sub plugin_icon {
 	my $self = shift;
-	my $icon = eval {
-		$self->class->plugin_icon;
-	};
+	my $icon = eval { $self->class->plugin_icon; };
 	if ( _INSTANCE( $icon, 'Wx::Bitmap' ) ) {
 		return $icon;
 	} else {
@@ -194,9 +191,7 @@ sub enable {
 	$locale->AddCatalog("$prefix-$code");
 
 	# Call the enable method for the object
-	eval {
-		$self->object->plugin_enable;
-	};
+	eval { $self->object->plugin_enable; };
 	if ($@) {
 
 		# Crashed during plugin enable
@@ -269,20 +264,19 @@ sub disable {
 
 	# If the plugin defines document types, deregister them
 	my @documents = $self->object->registered_documents;
-	while ( @documents ) {
+	while (@documents) {
 		my $type  = shift @documents;
 		my $class = shift @documents;
 		Padre::MimeTypes->remove_mime_class($type);
 	}
 
 	# Call the plugin's own disable method
-	eval {
-		$self->object->plugin_disable;
-	};
-	if ( $@ ) {
+	eval { $self->object->plugin_disable; };
+	if ($@) {
+
 		# Crashed during plugin disable
 		$self->status('error');
-		$self->errstr( 
+		$self->errstr(
 			sprintf(
 				Wx::gettext("Failed to disable plugin '%s': %s"),
 				$self->class,

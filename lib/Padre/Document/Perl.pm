@@ -252,13 +252,14 @@ sub _check_syntax_internals {
 	$self->{last_syncheck_md5} = $md5;
 
 	my $nlchar = $self->newline;
-# Obsoleted by ->newline
-#	if ( $self->get_newline_type eq 'WIN' ) {
-#		$nlchar = "\r\n";
-#	} elsif ( $self->get_newline_type eq 'MAC' ) {
-#		$nlchar = "\r";
-#	}
-#
+
+	# Obsoleted by ->newline
+	#	if ( $self->get_newline_type eq 'WIN' ) {
+	#		$nlchar = "\r\n";
+	#	} elsif ( $self->get_newline_type eq 'MAC' ) {
+	#		$nlchar = "\r";
+	#	}
+	#
 	require Padre::Task::SyntaxChecker::Perl;
 	my %check = (
 		editor   => $self->editor,
@@ -633,17 +634,17 @@ sub newline_keep_column {
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
 	my $first  = $editor->PositionFromLine($line);
-	my $col    = $pos - $editor->PositionFromLine($editor->LineFromPosition($pos));
+	my $col    = $pos - $editor->PositionFromLine( $editor->LineFromPosition($pos) );
 
-	$editor->AddText($self->newline);
-	print STDERR $self->get_newline_type." ".length($self->newline)."\n";
+	$editor->AddText( $self->newline );
+	print STDERR $self->get_newline_type . " " . length( $self->newline ) . "\n";
 
-	$pos      = $editor->GetCurrentPos;
-	$first    = $editor->PositionFromLine($editor->LineFromPosition($pos));
-	my $col2  = $pos - $first;
-	$editor->AddText(' 'x($col - $col2));
-	$editor->SetCurrentPos($first + $col);
-	
+	$pos   = $editor->GetCurrentPos;
+	$first = $editor->PositionFromLine( $editor->LineFromPosition($pos) );
+	my $col2 = $pos - $first;
+	$editor->AddText( ' ' x ( $col - $col2 ) );
+	$editor->SetCurrentPos( $first + $col );
+
 	return 1;
 }
 
@@ -684,9 +685,8 @@ sub event_on_char {
 				if ( $editor->GetTextLength > $pos ) {
 					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
 				}
-				unless ( defined($nextChar)
-					&& ord($nextChar) == $table{$key} 
-					and ( ! $config->autocomplete_multiclosebracket))
+				unless ( defined($nextChar) && ord($nextChar) == $table{$key}
+					and ( !$config->autocomplete_multiclosebracket ) )
 				{
 					$editor->AddText( chr( $table{$key} ) );
 					$editor->CharLeft;

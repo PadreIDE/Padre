@@ -320,11 +320,12 @@ sub guess_mimetype {
 # For ts without a newline type
 # TODO: get it from config
 sub _get_default_newline_type {
+
 	# Very ugly hack to make the test script work
-	if ($0 =~ /t.70\-document\.t/) {
-	 Padre::Constant::NEWLINE;
+	if ( $0 =~ /t.70\-document\.t/ ) {
+		Padre::Constant::NEWLINE;
 	} else {
-	 Padre->ide->config->default_line_ending;
+		Padre->ide->config->default_line_ending;
 	}
 }
 

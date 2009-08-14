@@ -252,7 +252,7 @@ sub new {
 		},
 	);
 
-	if ($config->func_fontsize) {
+	if ( $config->func_fontsize ) {
 
 		$self->AppendSeparator;
 
@@ -295,7 +295,7 @@ sub new {
 
 	}
 
-	if ($config->func_bookmark) {
+	if ( $config->func_bookmark ) {
 
 		$self->AppendSeparator;
 
@@ -520,12 +520,12 @@ sub refresh {
 	}
 
 	# Disable zooming and bookmarks if there's no current document
-	defined($self->{font_increase}) and $self->{font_increase}->Enable($doc);
-	defined($self->{font_decrease}) and $self->{font_decrease}->Enable($doc);
-	defined($self->{font_reset}) and $self->{font_reset}->Enable($doc);
+	defined( $self->{font_increase} ) and $self->{font_increase}->Enable($doc);
+	defined( $self->{font_decrease} ) and $self->{font_decrease}->Enable($doc);
+	defined( $self->{font_reset} )    and $self->{font_reset}->Enable($doc);
 
 	# You cannot set a bookmark unless the current document is on disk.
-	if (defined($self->{bookmark_set})) {
+	if ( defined( $self->{bookmark_set} ) ) {
 		my $set = ( $doc and defined $document->filename ) ? 1 : 0;
 		$self->{bookmark_set}->Enable($set);
 	}

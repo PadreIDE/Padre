@@ -26,7 +26,7 @@ use Class::XSAccessor getters => {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 	$self->{id} ||= -1;
 	return $self;
 }
