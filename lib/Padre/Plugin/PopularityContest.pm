@@ -72,11 +72,19 @@ use Padre::Plugin ();
 our $VERSION = '0.43';
 our @ISA     = 'Padre::Plugin';
 
+
+
+
+
 ######################################################################
 # Padre::Plugin Methods
 
 sub plugin_name {
 	'Padre Popularity Contest';
+}
+
+sub plugin_interfaces {
+	'Padre::Plugin' => 0.43;
 }
 
 sub plugin_enable {
@@ -115,6 +123,10 @@ sub menu_plugins_simple {
 		Wx::gettext("Ping")  => '_ping',
 	];
 }
+
+
+
+
 
 ######################################################################
 # Private Methods

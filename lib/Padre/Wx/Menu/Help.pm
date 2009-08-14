@@ -120,7 +120,7 @@ sub new {
 		},
 	);
 
-	if (Padre::Util::WIN32) {
+	if ( Padre::Util::WIN32 ) {
 		$self->add_menu_item(
 			$self->{live},
 			name       => 'help.win32_questions',
@@ -131,9 +131,9 @@ sub new {
 		);
 	}
 
-	# Add interesting and helpful websites
 	$self->AppendSeparator;
 
+	# Add interesting and helpful websites
 	$self->add_menu_item(
 		$self,
 		name       => 'help.visit_perlmonks',
@@ -143,8 +143,9 @@ sub new {
 		},
 	);
 
-	# Add Padre website tools
 	$self->AppendSeparator;
+
+	# Add Padre website tools
 	$self->add_menu_item(
 		$self,
 		name       => 'help.report_a_bug',
@@ -203,7 +204,6 @@ sub refresh {
 sub help {
 	my $self = shift;
 	my $main = shift;
-
 	unless ( $main->{help} ) {
 		require Padre::Wx::DocBrowser;
 		$main->{help} = Padre::Wx::DocBrowser->new;

@@ -24,20 +24,20 @@ plugins, as well as providing part of the interface to plugin writers.
 
 use strict;
 use warnings;
-use Carp           ();
-use File::Copy     ();
-use File::Glob     ();
-use File::Path     ();
-use File::Spec     ();
-use File::Basename ();
-use Scalar::Util   ();
-use Params::Util qw{ _IDENTIFIER _CLASS _INSTANCE };
+use Carp                     ();
+use File::Copy               ();
+use File::Glob               ();
+use File::Path               ();
+use File::Spec               ();
+use File::Basename           ();
+use Scalar::Util             ();
 use Padre::Constant          ();
 use Padre::Current           ();
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::Plugins ();
+use Params::Util qw{ _IDENTIFIER _CLASS _INSTANCE };
 
 our $VERSION = '0.43';
 
@@ -161,7 +161,7 @@ sub relocale {
 	foreach my $plugin ( $self->plugin_objects ) {
 
 		# Only process enabled plugins
-		next unless $plugin->status eq 'enabled';
+		next unless $plugin->enabled;
 
 		# Add the plugin locale dir to search path
 		my $object = $plugin->{object};
@@ -243,31 +243,6 @@ sub shutdown {
 
 =pod
 
-=head2 reload_plugins
-
-For all registered plugins, unload them if they were loaded
-and then reload them.
-
-=cut
-
-sub reload_plugins {
-	my $self    = shift;
-	my $plugins = $self->plugins;
-
-	# Do not use the reload_plugin method since that
-	# refreshes the menu every time.
-	foreach my $module ( sort keys %$plugins ) {
-		$self->_unload_plugin($module);
-		$self->_load_plugin($module);
-		$self->enable_editors($module);
-	}
-	$self->_refresh_plugin_menu;
-
-	return 1;
-}
-
-=pod
-
 =head2 load_plugins
 
 Scans for new plugins in the user plugin directory, in C<@INC>,
@@ -289,16 +264,16 @@ sub load_plugins {
 
 	# Attempt to load all plugins in the Padre::Plugin::* namespace
 	my %seen = ();
-	foreach my $inc (@INC) {
+	foreach my $inc ( @INC ) {
 		my $dir = File::Spec->catdir( $inc, 'Padre', 'Plugin' );
 		next unless -d $dir;
 
 		local *DIR;
-		opendir( DIR, $dir ) or die("opendir($dir): $!");
+		opendir( DIR, $dir )     or die("opendir($dir): $!");
 		my @files = readdir(DIR) or die("readdir($dir): $!");
-		closedir(DIR) or die("closedir($dir): $!");
+		closedir(DIR)            or die("closedir($dir): $!");
 
-		foreach (@files) {
+		foreach ( @files ) {
 			next unless s/\.pm$//;
 			my $module = "Padre::Plugin::$_";
 			next if $seen{$module}++;
@@ -309,16 +284,16 @@ sub load_plugins {
 	# Attempt to load all plugins in the Acme::Padre::* namespace
 	# TODO: Put this code behind some kind of future security option,
 	#       once we have one.
-	foreach my $inc (@INC) {
+	foreach my $inc ( @INC ) {
 		my $dir = File::Spec->catdir( $inc, 'Acme', 'Padre' );
 		next unless -d $dir;
 
 		local *DIR;
-		opendir( DIR, $dir ) or die("opendir($dir): $!");
+		opendir( DIR, $dir )     or die("opendir($dir): $!");
 		my @files = readdir(DIR) or die("readdir($dir): $!");
-		closedir(DIR) or die("closedir($dir): $!");
+		closedir(DIR)            or die("closedir($dir): $!");
 
-		foreach (@files) {
+		foreach ( @files ) {
 			next unless s/\.pm$//;
 			my $module = "Acme::Padre::$_";
 			next if $seen{$module}++;
@@ -331,7 +306,6 @@ sub load_plugins {
 
 	$self->_refresh_plugin_menu;
 	if ( my @failed = $self->failed ) {
-
 		# Until such time as we can show an error message
 		# in a smarter way, this gets annoying.
 		# Every time you start the editor, we tell you what
@@ -347,6 +321,31 @@ sub load_plugins {
 	}
 
 	return;
+}
+
+=pod
+
+=head2 reload_plugins
+
+For all registered plugins, unload them if they were loaded
+and then reload them.
+
+=cut
+
+sub reload_plugins {
+	my $self    = shift;
+	my $plugins = $self->plugins;
+
+	# Do not use the reload_plugin method since that
+	# refreshes the menu every time.
+	foreach my $module ( sort keys %$plugins ) {
+		$self->_unload_plugin($module);
+		$self->_load_plugin($module);
+		$self->enable_editors($module);
+	}
+	$self->_refresh_plugin_menu;
+
+	return 1;
 }
 
 =pod

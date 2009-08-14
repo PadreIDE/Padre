@@ -4,21 +4,25 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Constant ();
-use Padre::Wx       ();
 use Padre::Plugin   ();
+use Padre::Wx       ();
 
 our $VERSION = '0.43';
 our @ISA     = 'Padre::Plugin';
 
+
+
+
+
 #####################################################################
 # Padre::Plugin Methods
 
-sub padre_interfaces {
-	'Padre::Plugin' => 0.24;
-}
-
 sub plugin_name {
 	'My Plugin';
+}
+
+sub padre_interfaces {
+	'Padre::Plugin' => 0.43;
 }
 
 sub menu_plugins_simple {
@@ -32,6 +36,10 @@ sub menu_plugins_simple {
 		# ],
 	];
 }
+
+
+
+
 
 #####################################################################
 # Custom Methods

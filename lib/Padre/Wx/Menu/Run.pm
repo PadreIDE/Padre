@@ -12,6 +12,10 @@ use Padre::Current qw{_CURRENT};
 our $VERSION = '0.43';
 our @ISA     = 'Padre::Wx::Menu';
 
+
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -110,6 +114,10 @@ sub refresh {
 
 	return 1;
 }
+
+
+
+
 
 #####################################################################
 # Custom Methods
