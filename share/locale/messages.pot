@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-13 22:19+0200\n"
+"POT-Creation-Date: 2009-08-14 08:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2121,25 +2121,25 @@ msgstr ""
 msgid "Find Unmatched Brace"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:51 lib/Padre/Document/Perl.pm:710
+#: lib/Padre/Wx/Menu/Perl.pm:51 lib/Padre/Document/Perl.pm:728
 msgid "Find Variable Declaration"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:65 lib/Padre/Document/Perl.pm:722
+#: lib/Padre/Wx/Menu/Perl.pm:65 lib/Padre/Document/Perl.pm:740
 msgid "Lexically Rename Variable"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Perl.pm:72 lib/Padre/Wx/Menu/Perl.pm:73
-#: lib/Padre/Document/Perl.pm:734 lib/Padre/Document/Perl.pm:735
+#: lib/Padre/Document/Perl.pm:752 lib/Padre/Document/Perl.pm:753
 msgid "Replacement"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:87 lib/Padre/Document/Perl.pm:752
+#: lib/Padre/Wx/Menu/Perl.pm:87 lib/Padre/Document/Perl.pm:770
 msgid "Introduce Temporary Variable"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Perl.pm:94 lib/Padre/Wx/Menu/Perl.pm:95
-#: lib/Padre/Document/Perl.pm:765 lib/Padre/Document/Perl.pm:766
+#: lib/Padre/Document/Perl.pm:783 lib/Padre/Document/Perl.pm:784
 msgid "Variable Name"
 msgstr ""
 
@@ -2147,7 +2147,11 @@ msgstr ""
 msgid "Vertically Align Selected"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:135
+#: lib/Padre/Wx/Menu/Perl.pm:119
+msgid "Newline same column"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Perl.pm:147
 msgid "Automatic bracket completion"
 msgstr ""
 
