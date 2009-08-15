@@ -21,8 +21,6 @@ use Class::XSAccessor accessors => {
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
 	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
-
-	#	_grok          => '_grok',          # Perl 6 documentation reader instance
 };
 
 # -- constructor
@@ -69,13 +67,15 @@ sub display_help_in_viewer {
 	if ( $selection != -1 ) {
 		my $help_target = $self->_list->GetClientData($selection);
 
-		# if ($help_target) {
-		# eval {
-		# $help_html = $self->_grok->render_target( $help_target, 'xhtml' );
-		# $self->SetTitle(
-		# Wx::gettext('Perl 6 Help (grok)') . " - " . $self->_grok->locate_target($help_target) );
-		# };
-		# }
+		if ($help_target) {
+			my $doc = Padre::Current->document;
+			if($doc && $doc->can('on_help_render')) {
+				eval {
+					my ($help_html, $help_location) = $doc->on_help_render($help_target);
+					$self->SetTitle(Wx::gettext('Help Search') . " - " . $help_location );
+				}
+			}
+		}
 	}
 
 	if ( not $help_html ) {
@@ -230,15 +230,18 @@ sub _setup_events {
 sub _search() {
 	my $self = shift;
 
-	# Generate a sorted file-list based on filename
-	# eval {
-	# require App::Grok;
-	# $self->_grok( App::Grok->new );
-	# my @targets_index = sort $self->_grok->target_index();
-	# $self->_targets_index( \@targets_index );
-	# };
+	# a default..
 	my @empty = ();
 	$self->_targets_index( \@empty );
+
+	# Generate a sorted file-list based on filename
+	my $doc = Padre::Current->document;
+	if($doc && $doc->can('on_help_list')) {
+		eval {
+			my @targets_index = $doc->on_help_list;
+			$self->_targets_index( \@targets_index );
+		}
+	}
 
 	return;
 }
@@ -288,7 +291,10 @@ Padre::Wx::Dialog::HelpSearch - Padre Shiny Help Search Dialog
 
 =head1 DESCRIPTION
 
-This opens a dialog where you can search for help topics...
+This opens a dialog where you can search for help topics... 
+
+Note: This used to be Perl 6 Help Dialog (in Padre::Plugin::Perl6) and but it
+has been moved to Padre core
 
 =head1 AUTHOR
 
