@@ -199,7 +199,8 @@ sub on_list_item_activated {
 }
 
 #
-# Selects the next problem. Wraps the first one when at the end.
+# Selects the next problem in the editor. 
+# Wraps to the first one when at the end.
 #
 sub select_next_problem {
 	my $self = shift;
@@ -207,18 +208,30 @@ sub select_next_problem {
 	my $editor = Padre::Current->main($self)->current->editor;
 	my $current_line = $editor->LineFromPosition($editor->GetCurrentPos);
 
+	my $first_problem = undef;
+	my $match = undef;
 	foreach my $i (0..$self->GetItemCount-1) {
 		my $line = $self->GetItem($i)->GetText;
 		next if (not defined($line)) 
 			or ($line !~ /^\d+$/o)
 			or ($line > $editor->GetLineCount);
 		$line--;
+		if(not $first_problem) {
+			$first_problem = $line;
+		}
 		if($line > $current_line) {
+			$first_problem = undef;
 			$editor->EnsureVisible($line);
 			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 			$editor->SetFocus;
 			last;
 		}
+	}
+
+	if($first_problem) {
+		$editor->EnsureVisible($first_problem);
+		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($first_problem) );
+		$editor->SetFocus;
 	}
 }
 
