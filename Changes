@@ -26,7 +26,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Moved Ecliptic's "Open in file browser" to Padre core as "File/Open in 
       File Browser" and integrated it with Directory browser (AZAWAWI)
     - Moved functionality in Perl 5 plugin to Plugins -> Module Tools (ADAMK)
-    
+    - Implemented "Edit / Next Problem" (AZAWAWI)
+
 0.42 2009.07.31
     - Fixed a bug that crashed Padre while moving panels with outline
       enabled (GARU)
