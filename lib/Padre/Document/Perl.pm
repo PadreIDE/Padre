@@ -847,8 +847,9 @@ sub on_help_render {
 	require Padre::DocBrowser::POD;
 	use Pod::Functions;
 	
+	my $hints = $Type{$topic} ? {perlfunc => 1} : ();
 	my $pod = Padre::DocBrowser::POD->new;
-	my $doc = $pod->resolve($topic, {perlfunc => $Type{$topic}});
+	my $doc = $pod->resolve($topic, $hints);
 
 	my $html = $pod->render($doc);
 	return ($html->body,$topic);
