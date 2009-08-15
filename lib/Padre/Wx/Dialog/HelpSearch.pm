@@ -71,7 +71,8 @@ sub display_help_in_viewer {
 			my $doc = Padre::Current->document;
 			if($doc && $doc->can('on_help_render')) {
 				eval {
-					my ($help_html, $help_location) = $doc->on_help_render($help_target);
+					my $help_location;
+					($help_html, $help_location) = $doc->on_help_render($help_target);
 					$self->SetTitle(Wx::gettext('Help Search') . " - " . $help_location );
 				}
 			}
