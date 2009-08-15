@@ -857,7 +857,8 @@ sub on_help_render {
 #
 sub on_help_list {
 	my @index = (
-		'perlsyn',
+		# Perl language PODs
+		'perlsyn', 
 		'perldata',
 		'perlsub',
 		'perlop',
@@ -894,6 +895,11 @@ sub on_help_list {
 		'perlglossary',
 		'CORE',
 	);
+
+	# Add Perl functions (perlfunc)
+	use Pod::Functions;
+	push @index, keys %Type;
+
 	return sort @index;
 }
 
