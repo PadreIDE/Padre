@@ -933,9 +933,6 @@ sub on_help_list {
 	use Pod::Functions;
 	push @index, keys %Type;
 
-	# Add 'use feature XX' functions
-	push @index, qw/say state break/;
-
 	# Add CORE modules
 	require Module::CoreList;
 	push @index, Module::CoreList->find_modules;
