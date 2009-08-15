@@ -120,7 +120,7 @@ sub _create {
 sub _create_buttons {
 	my $self = shift;
 
-	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
+	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 	$self->_vbox->Add( $close_button, 0, Wx::wxALL | Wx::wxALIGN_LEFT, 5 );
 }
 
