@@ -31,7 +31,7 @@ and save them to the configuration file.
 
 my @Func_List = (
 	[ 'bookmark', Wx::gettext('Enable bookmarks') ],
-	[ 'fontsize', Wx::gettext('Change font-size') ],
+	[ 'fontsize', Wx::gettext('Change font size') ],
 	[ 'session',  Wx::gettext('Enable session manager') ],
 );
 
