@@ -167,10 +167,10 @@ sub new {
 	$self->{autocomp} = $self->add_menu_item(
 		$self,
 		name       => 'edit.autocomp',
-		label      => Wx::gettext('&AutoComp'),
+		label      => Wx::gettext('&AutoComplete'),
 		shortcut   => 'Ctrl-P',
 		menu_event => sub {
-			Padre::Wx::Main::on_autocompletition(@_);
+			Padre::Wx::Main::on_autocompletion(@_);
 		},
 	);
 

@@ -2160,14 +2160,14 @@ sub on_uncomment_block {
 
 =head3 on_autocompletion
 
-    $main->on_autocompletition;
+    $main->on_autocompletion;
 
 Try to autocomplete current word being typed, depending on
 document type.
 
 =cut
 
-sub on_autocompletition {
+sub on_autocompletion {
 	my $self = shift;
 	my $document = $self->current->document or return;
 	my ( $length, @words ) = $document->autocomplete;
