@@ -190,7 +190,7 @@ sub on_list_item_activated {
 		return;
 	}
 
-	$self->select_problem($line-1);
+	$self->select_problem( $line - 1 );
 
 	return;
 }
@@ -199,7 +199,7 @@ sub on_list_item_activated {
 # Selects the problemistic line :)
 #
 sub select_problem {
-	my ($self, $line) = @_;
+	my ( $self, $line ) = @_;
 
 	my $editor = Padre::Current->main($self)->current->editor;
 	return if not $editor;
@@ -210,7 +210,7 @@ sub select_problem {
 }
 
 #
-# Selects the next problem in the editor. 
+# Selects the next problem in the editor.
 # Wraps to the first one when at the end.
 #
 sub select_next_problem {
@@ -218,23 +218,27 @@ sub select_next_problem {
 
 	my $editor = Padre::Current->main($self)->current->editor;
 	return if not $editor;
-	my $current_line = $editor->LineFromPosition($editor->GetCurrentPos);
+	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
 
 	my $first_line = undef;
-	foreach my $i (0..$self->GetItemCount-1) {
+	foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
+
 		# Get the line and check that it is a valid line number
 		my $line = $self->GetItem($i)->GetText;
-		next if (not defined($line)) 
-			or ($line !~ /^\d+$/o)
-			or ($line > $editor->GetLineCount);
+		next
+			if ( not defined($line) )
+			or ( $line !~ /^\d+$/o )
+			or ( $line > $editor->GetLineCount );
 		$line--;
 
-		if(not $first_line) {
+		if ( not $first_line ) {
+
 			# record the position of the first problem
 			$first_line = $line;
 		}
 
-		if($line > $current_line) {
+		if ( $line > $current_line ) {
+
 			# select the next problem
 			$self->select_problem($line);
 
@@ -246,7 +250,8 @@ sub select_next_problem {
 		}
 	}
 
-	if($first_line) {
+	if ($first_line) {
+
 		#the next problem is simply the first (wrap around)
 		$self->select_problem($first_line);
 	}

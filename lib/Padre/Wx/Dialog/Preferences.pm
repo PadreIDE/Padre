@@ -636,8 +636,9 @@ END_TEXT
 }
 
 sub dialog {
-	my ( $self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales,
-		$default_line_ending ) = @_;
+	my ($self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales,
+		$default_line_ending
+	) = @_;
 
 	my $dialog = Wx::Dialog->new(
 		$win,
