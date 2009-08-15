@@ -846,13 +846,13 @@ sub on_help_render {
 
 	require Padre::DocBrowser::POD;
 	use Pod::Functions;
-	
-	my $hints = $Type{$topic} ? {perlfunc => 1} : ();
-	my $pod = Padre::DocBrowser::POD->new;
-	my $doc = $pod->resolve($topic, $hints);
+
+	my $hints = $Type{$topic} ? { perlfunc => 1 } : ();
+	my $pod   = Padre::DocBrowser::POD->new;
+	my $doc   = $pod->resolve( $topic, $hints );
 
 	my $html = $pod->render($doc);
-	return ($html->body,$topic);
+	return ( $html->body, $topic );
 }
 
 #
@@ -862,7 +862,7 @@ sub on_help_list {
 
 	my @index = ();
 
-	# The categorization has been "borrowed" from 
+	# The categorization has been "borrowed" from
 	# http://github.com/jonallen/perldoc.perl.org/tree
 	# In lib/PerlDoc/Section.pm
 
@@ -870,58 +870,61 @@ sub on_help_list {
 	push @index, qw/perl perlintro perlrun perlbook perlcommunity/;
 
 	# Tutorials
-    push @index, qw/perlreftut perldsc perllol perlrequick
-                 perlretut perlboot perltoot perltooc perlbot
-                 perlstyle perlcheat perltrap perldebtut
-                 perlopentut perlpacktut perlthrtut perlothrtut
-                 perlxstut perlunitut perlpragma/;
- 	# FAQ
+	push @index, qw/perlreftut perldsc perllol perlrequick
+		perlretut perlboot perltoot perltooc perlbot
+		perlstyle perlcheat perltrap perldebtut
+		perlopentut perlpacktut perlthrtut perlothrtut
+		perlxstut perlunitut perlpragma/;
+
+	# FAQ
 	push @index, qw/perlunifaq perlfaq/;
-  
+
 	# Language reference
-    push @index, qw/perlsyn perldata perlsub perlop
-                 perlfunc perlpod perlpodspec perldiag
-                 perllexwarn perldebug perlvar perlre
-                 perlreref perlref perlform perlobj perltie
-                 perldbmfilter perlipc perlfork perlnumber
-                 perlport perllocale perluniintro perlunicode
-                 perlebcdic perlsec perlmod perlmodlib
-                 perlmodstyle perlmodinstall perlnewmod
-                 perlcompile perlfilter perlglossary CORE/;
+	push @index, qw/perlsyn perldata perlsub perlop
+		perlfunc perlpod perlpodspec perldiag
+		perllexwarn perldebug perlvar perlre
+		perlreref perlref perlform perlobj perltie
+		perldbmfilter perlipc perlfork perlnumber
+		perlport perllocale perluniintro perlunicode
+		perlebcdic perlsec perlmod perlmodlib
+		perlmodstyle perlmodinstall perlnewmod
+		perlcompile perlfilter perlglossary CORE/;
+
 	# Internals
 	push @index, qw/perlembed perldebguts perlxs perlxstut
-                 perlclib perlguts perlcall perlapi perlintern
-                 perliol perlapio perlhack perlreguts perlreapi/;
+		perlclib perlguts perlcall perlapi perlintern
+		perliol perlapio perlhack perlreguts perlreapi/;
+
 	# History
-    push @index, qw/perlhist perltodo perldelta/;
-	
+	push @index, qw/perlhist perltodo perldelta/;
+
 	# license
-    push @index, qw/perlartistic perlgpl/;
-	
+	push @index, qw/perlartistic perlgpl/;
+
 	# Platform Specific
 	push @index, qw/perlaix perlamiga perlapollo perlbeos perlbs2000
-                 perlce perlcygwin perldgux perldos perlepoc
-                 perlfreebsd perlhpux perlhurd perlirix perllinux
-                 perlmachten perlmacos perlmacosx perlmint perlmpeix
-                 perlnetware perlos2 perlos390 perlos400
-                 perlplan9 perlqnx perlsolaris perlsymbian perltru64 perluts
-                 perlvmesa perlvms perlvos perlwin32/;
-    
+		perlce perlcygwin perldgux perldos perlepoc
+		perlfreebsd perlhpux perlhurd perlirix perllinux
+		perlmachten perlmacos perlmacosx perlmint perlmpeix
+		perlnetware perlos2 perlos390 perlos400
+		perlplan9 perlqnx perlsolaris perlsymbian perltru64 perluts
+		perlvmesa perlvms perlvos perlwin32/;
+
 	# Pragmas
-	push @index, qw/attributes attrs autouse base bigint bignum 
-                     bigrat blib bytes charnames constant diagnostics
-                     encoding feature fields filetest if integer less lib
-                     locale mro open ops overload re sigtrap sort strict
-                     subs threads threads::shared utf8 vars vmsish
-                     warnings warnings::register/;
-  
+	push @index, qw/attributes attrs autouse base bigint bignum
+		bigrat blib bytes charnames constant diagnostics
+		encoding feature fields filetest if integer less lib
+		locale mro open ops overload re sigtrap sort strict
+		subs threads threads::shared utf8 vars vmsish
+		warnings warnings::register/;
+
 	# Utilities
-    push @index, qw/perlutil a2p c2ph config_data corelist cpan cpanp
-                     cpan2dist dprofpp enc2xs find2perl h2ph h2xs instmodsh
-                     libnetcfg perlbug perlcc piconv prove psed podchecker
-                     perldoc perlivp pod2html pod2latex pod2man pod2text
-                     pod2usage podselect pstruct ptar ptardiff s2p shasum
-                     splain xsubpp perlthanks/;
+	push @index, qw/perlutil a2p c2ph config_data corelist cpan cpanp
+		cpan2dist dprofpp enc2xs find2perl h2ph h2xs instmodsh
+		libnetcfg perlbug perlcc piconv prove psed podchecker
+		perldoc perlivp pod2html pod2latex pod2man pod2text
+		pod2usage podselect pstruct ptar ptardiff s2p shasum
+		splain xsubpp perlthanks/;
 
 	# Add Perl functions (perlfunc)
 	use Pod::Functions;
