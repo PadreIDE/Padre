@@ -190,12 +190,23 @@ sub on_list_item_activated {
 		return;
 	}
 
-	$line--;
+	$self->select_problem($line-1);
+
+	return;
+}
+
+#
+# Selects the problemistic line :)
+#
+sub select_problem {
+	my ($self, $line) = @_;
+
+	my $editor = Padre::Current->main($self)->current->editor;
+	return if not $editor;
+
 	$editor->EnsureVisible($line);
 	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 	$editor->SetFocus;
-
-	return;
 }
 
 #
@@ -206,32 +217,38 @@ sub select_next_problem {
 	my $self = shift;
 
 	my $editor = Padre::Current->main($self)->current->editor;
+	return if not $editor;
 	my $current_line = $editor->LineFromPosition($editor->GetCurrentPos);
 
-	my $first_problem = undef;
-	my $match = undef;
+	my $first_line = undef;
 	foreach my $i (0..$self->GetItemCount-1) {
+		# Get the line and check that it is a valid line number
 		my $line = $self->GetItem($i)->GetText;
 		next if (not defined($line)) 
 			or ($line !~ /^\d+$/o)
 			or ($line > $editor->GetLineCount);
 		$line--;
-		if(not $first_problem) {
-			$first_problem = $line;
+
+		if(not $first_line) {
+			# record the position of the first problem
+			$first_line = $line;
 		}
+
 		if($line > $current_line) {
-			$first_problem = undef;
-			$editor->EnsureVisible($line);
-			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-			$editor->SetFocus;
+			# select the next problem
+			$self->select_problem($line);
+
+			# no need to wrap around...
+			$first_line = undef;
+
+			# and we're done here...
 			last;
 		}
 	}
 
-	if($first_problem) {
-		$editor->EnsureVisible($first_problem);
-		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($first_problem) );
-		$editor->SetFocus;
+	if($first_line) {
+		#the next problem is simply the first (wrap around)
+		$self->select_problem($first_line);
 	}
 }
 
