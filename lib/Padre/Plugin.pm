@@ -103,6 +103,7 @@ Returns a path string if the share directory exists, or C<undef> if not.
 sub plugin_directory_share {
 	my $class = shift;
 	$class =~ s/::/-/g;
+	$class =~ s/\=HASH\(.+?\)$//;
 
 	if ( $ENV{PADRE_DEV} ) {
 		my $root = File::Spec->catdir(
