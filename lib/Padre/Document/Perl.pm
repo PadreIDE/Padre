@@ -851,6 +851,10 @@ sub on_help_render {
 	$Type{break} = 1;
 
 	my $hints = $Type{$topic} ? { perlfunc => 1 } : undef;
+
+	# handle topics like q/.../, m//, y///, tr///
+	$topic =~ s/\/.*$//;
+
 	my $pod   = Padre::DocBrowser::POD->new;
 	my $doc   = $pod->resolve( $topic, $hints );
 
