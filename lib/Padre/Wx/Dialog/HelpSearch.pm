@@ -239,6 +239,7 @@ sub showIt {
 	} else {
 		$self->_search_text->ChangeValue('');
 		$self->_search;
+		$self->_update_list_box;
 		$self->Show(1);
 	}
 }
