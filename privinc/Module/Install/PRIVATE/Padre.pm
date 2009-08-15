@@ -200,40 +200,6 @@ sub get_modules {
 	return @args;
 }
 
-# To prevent EU:MM loading modules, we hijack %INC and then set $VERSION
-# into all of the packages so that EU:MM still gets the versions it wants.
-sub trick_eumm {
-	my $self     = shift;
-	my @requires = map { $_ ? @$_ : () } (
-		$self->configure_requires,
-		$self->build_requires,
-		$self->test_requires,
-		$self->requires,
-	);
-	foreach my $module ( map { $_->[0] } @requires ) {
-		# If the module is already loaded leave it alone
-		my $file = _module_file($module);
-		next if $INC{$file};
-
-		# What version of the module is installed
-		my $found = _file_path($file);
-		unless ( defined $found ) {
-			# Leave it to EU:MM to not find as well
-			next;
-		}
-
-		# Parse out the version for the currently installed version
-		my $version = _path_version($found);
-
-		# Make the module look like it is loaded,
-		# and set the version to match the one on disk.
-		$INC{$file} = __PACKAGE__;
-		no strict 'refs';
-		*{"${module}::VERSION"} = sub { $version };
-	}
-	return 1;
-}
-
 sub _module_file {
 	my $module = shift;
 	$module =~ s/::/\//g;

@@ -14,6 +14,9 @@ BEGIN {
 	}
 }
 
+# Configure-time dependencies MUST be done first
+configure_requires 'ExtUtils::MakeMaker' => '6.52';
+
 
 
 
@@ -169,12 +172,5 @@ check_wx_version;
 
 # Add the make exe target
 setup_padre;
-
-# EU:MM incorrectly attempts to load all the dependencies.
-# To prevent this happening we populate the %INC hash and create
-# a VERSION method for each module, so that we can prevent loading
-# any modules while convincing EU:MM that we have the right version.
-# This has to be called immediately before calling WriteAll.
-trick_eumm;
 
 WriteAll;
