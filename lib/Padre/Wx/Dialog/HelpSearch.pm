@@ -74,6 +74,9 @@ sub display_help_in_viewer {
 					my $help_location;
 					($help_html, $help_location) = $doc->on_help_render($help_target);
 					$self->SetTitle(Wx::gettext('Help Search') . " - " . $help_location );
+				};
+				if($@) {
+					warn "Error while calling on_help_render: $@\n";
 				}
 			}
 		}
@@ -256,6 +259,9 @@ sub _search() {
 		eval {
 			my @targets_index = $doc->on_help_list;
 			$self->_targets_index( \@targets_index );
+		};
+		if($@) {
+			warn "Error while calling on_help_list: $@\n";
 		}
 	}
 
