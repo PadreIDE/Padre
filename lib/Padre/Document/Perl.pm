@@ -846,8 +846,11 @@ sub on_help_render {
 
 	require Padre::DocBrowser::POD;
 	use Pod::Functions;
+	$Type{say}   = 1;
+	$Type{state} = 1;
+	$Type{break} = 1;
 
-	my $hints = $Type{$topic} ? { perlfunc => 1 } : ();
+	my $hints = $Type{$topic} ? { perlfunc => 1 } : undef;
 	my $pod   = Padre::DocBrowser::POD->new;
 	my $doc   = $pod->resolve( $topic, $hints );
 
@@ -929,6 +932,9 @@ sub on_help_list {
 	# Add Perl functions (perlfunc)
 	use Pod::Functions;
 	push @index, keys %Type;
+
+	# Add 'use feature XX' functions
+	push @index, qw/say state break/;
 
 	# Add CORE modules
 	require Module::CoreList;
