@@ -198,6 +198,30 @@ sub on_list_item_activated {
 	return;
 }
 
+#
+# Selects the next problem. Wraps the first one when at the end.
+#
+sub select_next_problem {
+	my $self = shift;
+
+	my $editor = Padre::Current->main($self)->current->editor;
+	my $current_line = $editor->LineFromPosition($editor->GetCurrentPos);
+
+	foreach my $i (0..$self->GetItemCount-1) {
+		my $line = $self->GetItem($i)->GetText;
+		next if (not defined($line)) 
+			or ($line !~ /^\d+$/o)
+			or ($line > $editor->GetLineCount);
+		$line--;
+		if($line > $current_line) {
+			$editor->EnsureVisible($line);
+			$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+			$editor->SetFocus;
+			last;
+		}
+	}
+}
+
 sub on_timer {
 	my $self   = shift;
 	my $event  = shift;
