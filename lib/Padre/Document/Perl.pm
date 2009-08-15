@@ -844,8 +844,12 @@ sub event_on_left_up {
 sub on_help_render {
 	my ( $self, $topic ) = @_;
 
-	#XXX- implement on_help_render
-	return ('','');
+	require Padre::DocBrowser::POD;
+	
+	my $pod = Padre::DocBrowser::POD->new;
+	my $doc = $pod->resolve($topic);
+	my $html = $pod->render($doc);
+	return ($html->body,$topic);
 }
 
 #
@@ -859,9 +863,9 @@ sub on_help_list {
 		'perlop',
 		'perlfunc',
 		'perlpod',
-		'perlpodspe',
-		'perldia',
-		'perllexwar',
+		'perlpodspec',
+		'perldiag',
+		'perllexwarn',
 		'perldebug',
 		'perlvar',
 		'perlre',
