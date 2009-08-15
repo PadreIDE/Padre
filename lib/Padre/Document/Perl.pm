@@ -838,6 +838,41 @@ sub event_on_left_up {
 	} # end if control-click
 }
 
+#
+# Render Perl 5 help xhtml for Padre's Help Search facility
+#
+sub on_help_render {
+	my ( $self, $topic ) = @_;
+
+	#XXX- implement on_help_render
+	return ('','');
+}
+
+#
+# Render Perl 5 help list for Padre's Help Search facility
+#
+sub on_help_list {
+	my @index = (
+		'perlsyn',
+		'perldata',
+		'perlsub',
+		'perlop',
+		'perlfunc',
+		'perlpod',
+		'perlpodspe',
+		'perldia',
+		'perllexwar',
+		'perldebug',
+		'perlvar',
+		'perlre',
+		'perlreref',
+		'perlref',
+		'perlform',
+		'perlobj',
+	);
+	return sort @index;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
