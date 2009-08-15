@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-15 06:46+0300\n"
-"PO-Revision-Date: 2009-08-15 07:22+0200\n"
+"POT-Creation-Date: 2009-08-15 23:45+0300\n"
+"PO-Revision-Date: 2009-08-15 23:45+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -1013,15 +1013,15 @@ msgid "Syntax Check"
 msgstr "فحص بناء الجمل"
 
 #: lib/Padre/Wx/Syntax.pm:80
-#: lib/Padre/Wx/Syntax.pm:242
+#: lib/Padre/Wx/Syntax.pm:301
 msgid "Line"
 msgstr "سطر"
 
-#: lib/Padre/Wx/Syntax.pm:243
+#: lib/Padre/Wx/Syntax.pm:302
 msgid "Type"
 msgstr "نوع"
 
-#: lib/Padre/Wx/Syntax.pm:244
+#: lib/Padre/Wx/Syntax.pm:303
 #: lib/Padre/Wx/Dialog/SessionManager.pm:215
 msgid "Description"
 msgstr "وصف"
@@ -1106,7 +1106,7 @@ msgid "&Count All"
 msgstr "&تعداد الكل"
 
 #: lib/Padre/Wx/Dialog/Find.pm:159
-#: lib/Padre/Wx/Dialog/Preferences.pm:725
+#: lib/Padre/Wx/Dialog/Preferences.pm:726
 #: lib/Padre/Wx/Dialog/Replace.pm:195
 msgid "&Cancel"
 msgstr "الغاء"
@@ -1130,7 +1130,7 @@ msgstr "غير صالح للبحث"
 msgid "Found %d matching occurrences"
 msgstr "العثور على %d تطابق الأحداث"
 
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:36
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:34
 #: lib/Padre/Wx/Menu/Help.pm:69
 msgid "Help Search"
 msgstr "بحث المساعدة"
@@ -1235,7 +1235,7 @@ msgid "Version"
 msgstr "النسخه"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:296
-#: lib/Padre/Wx/Dialog/Preferences.pm:645
+#: lib/Padre/Wx/Dialog/Preferences.pm:646
 #: lib/Padre/Wx/Menu/Edit.pm:466
 msgid "Preferences"
 msgstr "تفضيلات"
@@ -1459,69 +1459,69 @@ msgstr "الافتراضي"
 msgid "Current Document: %s"
 msgstr "الوثيقه الحاليه: %s"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:671
+#: lib/Padre/Wx/Dialog/Preferences.pm:672
 msgid "Behaviour"
 msgstr "سلوك"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:674
+#: lib/Padre/Wx/Dialog/Preferences.pm:675
 msgid "Appearance"
 msgstr "منظر"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:677
+#: lib/Padre/Wx/Dialog/Preferences.pm:678
 msgid "Run Parameters"
 msgstr "باراميترز التشغيل"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:681
+#: lib/Padre/Wx/Dialog/Preferences.pm:682
 msgid "Files and Colors"
 msgstr "ملفات وألوان"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:684
+#: lib/Padre/Wx/Dialog/Preferences.pm:685
 msgid "Indentation"
 msgstr "الازاحه عن الهامش"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:687
+#: lib/Padre/Wx/Dialog/Preferences.pm:688
 msgid "External Tools"
 msgstr "الادوات الخارجية"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:714
+#: lib/Padre/Wx/Dialog/Preferences.pm:715
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
 #: lib/Padre/Wx/Menu/File.pm:204
 msgid "&Save"
 msgstr "&حفظ"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:760
+#: lib/Padre/Wx/Dialog/Preferences.pm:761
 msgid "new"
 msgstr "جديد"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:761
+#: lib/Padre/Wx/Dialog/Preferences.pm:762
 msgid "nothing"
 msgstr "لا شيء"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:762
+#: lib/Padre/Wx/Dialog/Preferences.pm:763
 msgid "last"
 msgstr "آخر"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:763
+#: lib/Padre/Wx/Dialog/Preferences.pm:764
 msgid "no"
 msgstr "لا"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:764
+#: lib/Padre/Wx/Dialog/Preferences.pm:765
 msgid "same_level"
 msgstr "نفس_المستوى"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:765
+#: lib/Padre/Wx/Dialog/Preferences.pm:766
 msgid "deep"
 msgstr "عميق"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:766
+#: lib/Padre/Wx/Dialog/Preferences.pm:767
 msgid "alphabetical"
 msgstr "ابجدي"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:767
+#: lib/Padre/Wx/Dialog/Preferences.pm:768
 msgid "original"
 msgstr "اصلي"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:768
+#: lib/Padre/Wx/Dialog/Preferences.pm:769
 msgid "alphabetical_private_last"
 msgstr "ابجدي_الوظائف الخاصه_بالاخر"
 
@@ -1818,7 +1818,7 @@ msgid "&Next Problem"
 msgstr "ال&مشكلة التالية"
 
 #: lib/Padre/Wx/Menu/Edit.pm:170
-msgid "&AutoComp"
+msgid "&AutoComplete"
 msgstr "ا&كمال تلقائي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:180
@@ -2050,43 +2050,43 @@ msgstr "المساعده"
 msgid "Context Help"
 msgstr "مساعده السياق"
 
-#: lib/Padre/Wx/Menu/Help.pm:86
+#: lib/Padre/Wx/Menu/Help.pm:82
 msgid "Current Document"
 msgstr "الوثيقه الحاليه"
 
-#: lib/Padre/Wx/Menu/Help.pm:99
+#: lib/Padre/Wx/Menu/Help.pm:95
 msgid "Live Support"
 msgstr "الدعم المباشر"
 
-#: lib/Padre/Wx/Menu/Help.pm:106
+#: lib/Padre/Wx/Menu/Help.pm:102
 msgid "Padre Support (English)"
 msgstr "دعم Padre (انجليزي)"
 
-#: lib/Padre/Wx/Menu/Help.pm:117
+#: lib/Padre/Wx/Menu/Help.pm:113
 msgid "Perl Help"
 msgstr "مساعدة Perl"
 
-#: lib/Padre/Wx/Menu/Help.pm:127
+#: lib/Padre/Wx/Menu/Help.pm:123
 msgid "Win32 Questions (English)"
 msgstr "أسئلة Win32 (انجليزي)"
 
-#: lib/Padre/Wx/Menu/Help.pm:140
+#: lib/Padre/Wx/Menu/Help.pm:136
 msgid "Visit the PerlMonks"
 msgstr "زياره موقع PerlMonks"
 
-#: lib/Padre/Wx/Menu/Help.pm:152
+#: lib/Padre/Wx/Menu/Help.pm:148
 msgid "Report a New &Bug"
 msgstr "تبليغ عن &بقه جديده"
 
-#: lib/Padre/Wx/Menu/Help.pm:160
+#: lib/Padre/Wx/Menu/Help.pm:156
 msgid "View All &Open Bugs"
 msgstr "رؤيه كل البقات ال&مفتوحه"
 
-#: lib/Padre/Wx/Menu/Help.pm:169
+#: lib/Padre/Wx/Menu/Help.pm:165
 msgid "&Translate Padre..."
 msgstr "&ترجمة Padre..."
 
-#: lib/Padre/Wx/Menu/Help.pm:182
+#: lib/Padre/Wx/Menu/Help.pm:178
 msgid "&About"
 msgstr "حول&"
 

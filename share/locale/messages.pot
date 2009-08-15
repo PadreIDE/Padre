@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-15 06:46+0300\n"
+"POT-Creation-Date: 2009-08-15 23:45+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -965,15 +965,15 @@ msgstr ""
 msgid "Syntax Check"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:80 lib/Padre/Wx/Syntax.pm:242
+#: lib/Padre/Wx/Syntax.pm:80 lib/Padre/Wx/Syntax.pm:301
 msgid "Line"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:243
+#: lib/Padre/Wx/Syntax.pm:302
 msgid "Type"
 msgstr ""
 
-#: lib/Padre/Wx/Syntax.pm:244 lib/Padre/Wx/Dialog/SessionManager.pm:215
+#: lib/Padre/Wx/Syntax.pm:303 lib/Padre/Wx/Dialog/SessionManager.pm:215
 msgid "Description"
 msgstr ""
 
@@ -1050,7 +1050,7 @@ msgstr ""
 msgid "&Count All"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:159 lib/Padre/Wx/Dialog/Preferences.pm:725
+#: lib/Padre/Wx/Dialog/Find.pm:159 lib/Padre/Wx/Dialog/Preferences.pm:726
 #: lib/Padre/Wx/Dialog/Replace.pm:195
 msgid "&Cancel"
 msgstr ""
@@ -1072,7 +1072,7 @@ msgstr ""
 msgid "Found %d matching occurrences"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:36 lib/Padre/Wx/Menu/Help.pm:69
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:34 lib/Padre/Wx/Menu/Help.pm:69
 msgid "Help Search"
 msgstr ""
 
@@ -1174,7 +1174,7 @@ msgid "Version"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:296
-#: lib/Padre/Wx/Dialog/Preferences.pm:645 lib/Padre/Wx/Menu/Edit.pm:466
+#: lib/Padre/Wx/Dialog/Preferences.pm:646 lib/Padre/Wx/Menu/Edit.pm:466
 msgid "Preferences"
 msgstr ""
 
@@ -1393,68 +1393,68 @@ msgstr ""
 msgid "Current Document: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:671
+#: lib/Padre/Wx/Dialog/Preferences.pm:672
 msgid "Behaviour"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:674
+#: lib/Padre/Wx/Dialog/Preferences.pm:675
 msgid "Appearance"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:677
+#: lib/Padre/Wx/Dialog/Preferences.pm:678
 msgid "Run Parameters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:681
+#: lib/Padre/Wx/Dialog/Preferences.pm:682
 msgid "Files and Colors"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:684
+#: lib/Padre/Wx/Dialog/Preferences.pm:685
 msgid "Indentation"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:687
+#: lib/Padre/Wx/Dialog/Preferences.pm:688
 msgid "External Tools"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:714 lib/Padre/Wx/Dialog/Snippets.pm:114
+#: lib/Padre/Wx/Dialog/Preferences.pm:715 lib/Padre/Wx/Dialog/Snippets.pm:114
 #: lib/Padre/Wx/Menu/File.pm:204
 msgid "&Save"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:760
+#: lib/Padre/Wx/Dialog/Preferences.pm:761
 msgid "new"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:761
+#: lib/Padre/Wx/Dialog/Preferences.pm:762
 msgid "nothing"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:762
+#: lib/Padre/Wx/Dialog/Preferences.pm:763
 msgid "last"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:763
+#: lib/Padre/Wx/Dialog/Preferences.pm:764
 msgid "no"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:764
+#: lib/Padre/Wx/Dialog/Preferences.pm:765
 msgid "same_level"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:765
+#: lib/Padre/Wx/Dialog/Preferences.pm:766
 msgid "deep"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:766
+#: lib/Padre/Wx/Dialog/Preferences.pm:767
 msgid "alphabetical"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:767
+#: lib/Padre/Wx/Dialog/Preferences.pm:768
 msgid "original"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:768
+#: lib/Padre/Wx/Dialog/Preferences.pm:769
 msgid "alphabetical_private_last"
 msgstr ""
 
@@ -1747,7 +1747,7 @@ msgid "&Next Problem"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:170
-msgid "&AutoComp"
+msgid "&AutoComplete"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:180
@@ -1978,43 +1978,43 @@ msgstr ""
 msgid "Context Help"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:86
+#: lib/Padre/Wx/Menu/Help.pm:82
 msgid "Current Document"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:99
+#: lib/Padre/Wx/Menu/Help.pm:95
 msgid "Live Support"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:106
+#: lib/Padre/Wx/Menu/Help.pm:102
 msgid "Padre Support (English)"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:117
+#: lib/Padre/Wx/Menu/Help.pm:113
 msgid "Perl Help"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:127
+#: lib/Padre/Wx/Menu/Help.pm:123
 msgid "Win32 Questions (English)"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:140
+#: lib/Padre/Wx/Menu/Help.pm:136
 msgid "Visit the PerlMonks"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:152
+#: lib/Padre/Wx/Menu/Help.pm:148
 msgid "Report a New &Bug"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:160
+#: lib/Padre/Wx/Menu/Help.pm:156
 msgid "View All &Open Bugs"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:169
+#: lib/Padre/Wx/Menu/Help.pm:165
 msgid "&Translate Padre..."
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Help.pm:182
+#: lib/Padre/Wx/Menu/Help.pm:178
 msgid "&About"
 msgstr ""
 
