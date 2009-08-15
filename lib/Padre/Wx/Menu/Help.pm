@@ -72,11 +72,7 @@ sub new {
 
 			#Create and show the Help search dialog
 			my $dlg = $_[0]->help_search;
-			if ( $dlg && $dlg->IsShown ) {
-				$dlg->SetFocus;
-			} else {
-				$dlg->Show(1);
-			}
+			$dlg->showIt;
 		},
 	);
 

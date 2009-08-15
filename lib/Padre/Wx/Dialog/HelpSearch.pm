@@ -225,6 +225,21 @@ sub _setup_events {
 }
 
 #
+# Focus on it if it shown or restart its state and show it if it is hidden.
+#
+sub showIt {
+	my $self = shift;
+
+	if ( $self->IsShown ) {
+		$self->SetFocus;
+	} else {
+		$self->_search_text->ChangeValue('');
+		$self->_search;
+		$self->Show(1);
+	}
+}
+
+#
 # Search for files and cache result
 #
 sub _search() {
@@ -253,7 +268,7 @@ sub _update_list_box() {
 	my $self = shift;
 
 	if ( not $self->_targets_index ) {
-		$self->_search();
+		$self->_search;
 	}
 
 	my $search_expr = $self->_search_text->GetValue();
