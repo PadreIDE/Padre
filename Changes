@@ -18,6 +18,7 @@ Changes for Perl Application Development and Refactoring Environment
     - F3 with sub-line selected text converts it directly into an active
       search without needing to invoke the Find dialog (ADAMK)
     - Moved Perl 6 Help dialog to Padre core as "Help/Help Search" (AZAWAWI)
+    - Help/Help Search now supports Perl 5 (AZAWAWI)
     - Moved Ecliptic's Open Resource to Padre core as "Search/Open Resource" 
       (AZAWAWI)
     - Moved Ecliptic's Quick Menu Access to Padre core as "Search/Quick Menu 
