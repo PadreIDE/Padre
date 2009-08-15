@@ -845,9 +845,11 @@ sub on_help_render {
 	my ( $self, $topic ) = @_;
 
 	require Padre::DocBrowser::POD;
+	use Pod::Functions;
 	
 	my $pod = Padre::DocBrowser::POD->new;
-	my $doc = $pod->resolve($topic);
+	my $doc = $pod->resolve($topic, {perlfunc => $Type{$topic}});
+
 	my $html = $pod->render($doc);
 	return ($html->body,$topic);
 }
