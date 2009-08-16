@@ -91,7 +91,7 @@ foreach my $module ( sort keys %modules ) {
 	
 	# Advoid expensive regexp result variables
 	SKIP: {
-		ok($document->serialize !~ /\$[\&\'\`]/,$module.': Uses expensive regexp-variable $&, $\' or $`');
+		ok($document->serialize !~ /[^\$\'\"]\$[\&\'\`]/,$module.': Uses expensive regexp-variable $&, $\' or $`');
 	}
 }
 

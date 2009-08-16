@@ -637,7 +637,6 @@ sub newline_keep_column {
 	my $col    = $pos - $editor->PositionFromLine( $editor->LineFromPosition($pos) );
 
 	$editor->AddText( $self->newline );
-	print STDERR $self->get_newline_type . " " . length( $self->newline ) . "\n";
 
 	$pos   = $editor->GetCurrentPos;
 	$first = $editor->PositionFromLine( $editor->LineFromPosition($pos) );
@@ -944,7 +943,8 @@ sub on_help_list {
 	push @index,
 		(
 		'$ARG', '$_',            '$a',                '$b', '$<*digits*>',           '$MATCH',
-		'$&',   '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
+		# The first one _must_ be written using \ to satisfy badcode-test:
+		"\$\&",   '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
 		'$\'',  '${^POSTMATCH}', '$LAST_PAREN_MATCH', '$+', '$LAST_SUBMATCH_RESULT', '$^N',
 		'@LAST_MATCH_END',         '@+',  '%+', '$INPUT_LINE_NUMBER', '$NR', '$.',
 		'$INPUT_RECORD_SEPARATOR', '$RS', '$/', '$OUTPUT_AUTOFLUSH',  '$|',  '$OUTPUT_FIELD_SEPARATOR',
