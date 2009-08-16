@@ -939,7 +939,7 @@ sub on_help_list {
 
 	# Add CORE modules
 	require Module::CoreList;
-	push @index, Module::CoreList->find_modules;
+	push @index, Module::CoreList->find_modules(qr//, $]);
 
 	return sort @index;
 }
