@@ -4,6 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 
+use Padre::Constant ();
+
 our $VERSION = '0.43';
 
 # Generate faster accessors
@@ -40,10 +42,14 @@ sub label_text {
 }
 
 # Label for use with menu (with shortcut)
+# In some cases ( http://padre.perlide.org/trac/ticket/485 )
+# if a stock menu item also gets a short-cut it stops working
+# hence we add the shortcut only if id == -1 indicating this was not a
+# stock menu item
 sub label_menu {
 	my $self  = shift;
 	my $label = $self->label;
-	if ( $self->shortcut ) {
+	if ( $self->shortcut and ($self->id == -1 or Padre::Constant::WIN32()) ) {
 		$label .= "\t" . $self->shortcut;
 	}
 	return $label;
