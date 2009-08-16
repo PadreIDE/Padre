@@ -942,7 +942,7 @@ sub on_help_list {
 	# Perl Special Variables (compiled these from perlvar)
 	push @index,
 		(
-		'$ARG', '$_',            '$a',                '$b', '$<*digits*>',           '$MATCH',
+		'$ARG', '$_',            '$a',                '$b', '$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8', '$9', '$MATCH',
 		'$&',   '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
 		'$\'',  '${^POSTMATCH}', '$LAST_PAREN_MATCH', '$+', '$LAST_SUBMATCH_RESULT', '$^N',
 		'@LAST_MATCH_END',         '@+',  '%+', '$INPUT_LINE_NUMBER', '$NR', '$.',
