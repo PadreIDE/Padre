@@ -943,8 +943,7 @@ sub on_help_list {
 	push @index,
 		(
 		'$ARG', '$_',            '$a',                '$b', '$<*digits*>',           '$MATCH',
-		# The first one _must_ be written using \ to satisfy badcode-test:
-		"\$\&",   '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
+		'$&',   '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
 		'$\'',  '${^POSTMATCH}', '$LAST_PAREN_MATCH', '$+', '$LAST_SUBMATCH_RESULT', '$^N',
 		'@LAST_MATCH_END',         '@+',  '%+', '$INPUT_LINE_NUMBER', '$NR', '$.',
 		'$INPUT_RECORD_SEPARATOR', '$RS', '$/', '$OUTPUT_AUTOFLUSH',  '$|',  '$OUTPUT_FIELD_SEPARATOR',
