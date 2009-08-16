@@ -858,7 +858,7 @@ sub on_help_render {
 	}
 
 	# handle topics like q/.../, m//, y///, tr///
-	$topic =~ s/\/.*$//;
+	$topic =~ s/\/.*?\/$//;
 
 	my $pod = Padre::DocBrowser::POD->new;
 	my $doc = $pod->resolve( $topic, $hints );
@@ -974,7 +974,8 @@ sub on_help_list {
 
 	# Add CORE modules
 	require Module::CoreList;
-	push @index, Module::CoreList->find_modules( qr//, $] );
+	# Note the 0 + $] to cast it to number
+	push @index, Module::CoreList->find_modules( qr//, 0 + $] );
 
 	return sort @index;
 }
