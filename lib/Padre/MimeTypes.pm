@@ -545,9 +545,11 @@ sub _guess_mimetype {
 	}
 
 	# Try derive the mime type from the basename
-	my $basename = File::Basename::basename($filename);
-	if ($basename) {
-		return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
+	if ($filename) {
+		my $basename = File::Basename::basename($filename);
+		if ($basename) {
+			return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
+		}
 	}
 
 	# Fall back on deriving the type from the content.
