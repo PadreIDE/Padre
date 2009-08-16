@@ -53,11 +53,7 @@ sub new {
 
 				# TODO This feels wrong, the help menu code shouldn't
 				# populate the main window hash.
-				my $selection = $_[0]->current->text;
-				$_[0]->help();
-				if ($selection) {
-					$_[0]->{help}->help($selection);
-				}
+				$_[0]->help( $_[0]->current->text );
 				return;
 			}
 		},
@@ -81,8 +77,7 @@ sub new {
 		name       => 'help.current',
 		label      => Wx::gettext('Current Document'),
 		menu_event => sub {
-			$_[0]->help();
-			$_[0]->{help}->help( $_[0]->current->document );
+			$_[0]->help( $_[0]->current->document );
 		},
 	);
 

@@ -4494,6 +4494,7 @@ sub show_as_numbers {
 # showing the DocBrowser window
 sub help {
 	my $self = shift;
+	my $param = shift;
 	unless ( $self->{help} ) {
 		require Padre::Wx::DocBrowser;
 		$self->{help} = Padre::Wx::DocBrowser->new;
@@ -4505,6 +4506,9 @@ sub help {
 	}
 	$self->{help}->SetFocus;
 	$self->{help}->Show(1);
+	if ($param) {
+		$self->{help}->help($param);
+	}
 	return;
 }
 

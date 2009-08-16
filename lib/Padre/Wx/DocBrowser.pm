@@ -452,7 +452,7 @@ sub _hints {
 sub _close {
 	my ($self) = @_;
 
-	print "Going to close the docbrowser\n";
+	#print "Going to close the docbrowser\n";
 
 	# in case we have a busy cursor still:
 	$self->{_busyCursor} = undef;
