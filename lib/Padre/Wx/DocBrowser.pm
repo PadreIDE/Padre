@@ -403,8 +403,7 @@ sub padre2docbrowser {
 		filename => $padredoc->filename,
 	);
 
-	# Erk - shouldn't this be ->get_text or something.
-	$doc->body( Encode::encode( 'utf8', $padredoc->{original_content} ) );
+	$doc->body( Encode::encode( 'utf8', $padredoc->text_get ) );
 
 	$doc->mimetype( $doc->guess_mimetype ) unless $doc->mimetype;
 
