@@ -143,21 +143,7 @@ sub new {
 			$self->{view_as_highlighting},
 			name       => $tag,
 			label      => $label,
-			menu_event => sub {
-				my $doc = $_[0]->current->document;
-				if ($doc) {
-					$doc->set_mimetype( $mimes{$name} );
-					$doc->editor->padre_setup;
-					$doc->rebless;
-					$doc->remove_color;
-					if ( $doc->can('colorize') ) {
-						$doc->colorize;
-					} else {
-						$doc->editor->Colourise( 0, $doc->editor->GetLength );
-					}
-				}
-				$_[0]->refresh;
-			},
+			menu_event => sub { $_[0]->set_mimetype( $mimes{$name} ) },
 		);
 	}
 

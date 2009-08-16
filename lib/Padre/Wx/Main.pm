@@ -2874,6 +2874,9 @@ sub on_save_as {
 	$document->set_mimetype( $document->guess_mimetype );
 	$document->editor->padre_setup;
 	$document->rebless;
+	my $lexer = $document->lexer;
+	$document->editor->SetLexer($lexer);
+	$document->colourize;
 
 	Padre::DB::History->create(
 		type => 'files',
@@ -4316,6 +4319,9 @@ sub on_new_from_template {
 		$document->set_mimetype( $document->guess_mimetype );
 		$document->editor->padre_setup;
 		$document->rebless;
+		my $lexer = $document->lexer;
+		$editor->SetLexer($lexer);
+		$document->colourize;
 	} else {
 		$self->message( sprintf( Wx::gettext("Error loading template file '%s'"), $file ) );
 	}
@@ -4394,17 +4400,10 @@ sub change_highlighter {
 		my $lexer = $document->lexer;
 		$editor->SetLexer($lexer);
 
-		# TODO maybe the document should have a method that tells us if it was setup
-		# to be colored by ppi or not instead of fetching the lexer again.
 		Padre::Util::debug("Editor $editor focused $focused lexer: $lexer");
 		if ( $editor eq $focused ) {
 			$editor->needs_manual_colorize(0);
-			if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
-				$document->colorize;
-			} else {
-				$document->remove_color;
-				$editor->Colourise( 0, $editor->GetLength );
-			}
+			$document->colourize();
 		} else {
 			$editor->needs_manual_colorize(1);
 		}
@@ -4523,6 +4522,22 @@ sub on_help_close {
 		delete $self->{help};
 		$help->Destroy;
 	}
+}
+
+sub set_mimetype {
+	my $self = shift;
+	my $mime_type = shift;
+
+	my $doc = $self->current->document;
+	if ($doc) {
+		$doc->set_mimetype( $mime_type );
+		$doc->editor->padre_setup;
+		$doc->rebless;
+		my $lexer = $doc->lexer;
+		$doc->editor->SetLexer($lexer);
+		$doc->colourize;
+	}
+	$self->refresh;
 }
 
 1;
