@@ -15,7 +15,7 @@ sub setup {
 	my %existing_windows = map { $_ => 1 } FindWindowLike(0, "^Padre");
 
 	# Find Perl (ideally the gui one)
-	my $perl = Padre::Perl::wperl();
+	my $perl = Padre::Perl::wxperl();
 	my $cmd  = "start $perl script\\padre";
 	#$t->diag($cmd);
 	system $cmd;
@@ -30,7 +30,7 @@ sub setup {
 		$padre = shift @wins;
 		last if $padre;
 	}
-	die "Could not find Padre" if not $padre;
+	die "Could not find a running version of Padre" if not $padre;
 
 	SetForegroundWindow($padre);
 	sleep 3; # crap, we have to wait for Padre to come to the foreground
