@@ -2874,8 +2874,6 @@ sub on_save_as {
 	$document->set_mimetype( $document->guess_mimetype );
 	$document->editor->padre_setup;
 	$document->rebless;
-	my $lexer = $document->lexer;
-	$document->editor->SetLexer($lexer);
 	$document->colourize;
 
 	Padre::DB::History->create(
@@ -4319,8 +4317,6 @@ sub on_new_from_template {
 		$document->set_mimetype( $document->guess_mimetype );
 		$document->editor->padre_setup;
 		$document->rebless;
-		my $lexer = $document->lexer;
-		$editor->SetLexer($lexer);
 		$document->colourize;
 	} else {
 		$self->message( sprintf( Wx::gettext("Error loading template file '%s'"), $file ) );
@@ -4533,8 +4529,6 @@ sub set_mimetype {
 		$doc->set_mimetype( $mime_type );
 		$doc->editor->padre_setup;
 		$doc->rebless;
-		my $lexer = $doc->lexer;
-		$doc->editor->SetLexer($lexer);
 		$doc->colourize;
 	}
 	$self->refresh;

@@ -261,8 +261,10 @@ sub rebless {
 
 sub colourize {
 	my $self = shift;
+
+	my $lexer = $self->lexer;
 	my $editor = $self->editor;
-	my $lexer = $editor->GetLexer;
+	$editor->SetLexer($lexer);
 
 	$self->remove_color;
 	if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
