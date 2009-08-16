@@ -852,7 +852,7 @@ sub on_help_render {
 
 	my $hints = ();
 
-	if($topic =~ /^(\$|\@)/) {
+	if($topic =~ /^(\$|\@|\%)/) {
 		$hints->{perlvar} = 1;
 	} elsif($Type{$topic}) {
 		$hints->{perlfunc} = 1;
