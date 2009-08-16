@@ -4312,7 +4312,8 @@ sub on_new_from_template {
 
 	if ( $editor->insert_from_file($file) ) {
 		my $document = $editor->{Document};
-		$document->set_mimetype( Padre::MimeTypes->mime_type_by_extension($extension) );
+		$document->{original_content} = $document->text_get;
+		$document->set_mimetype( $document->guess_mimetype );
 		$document->editor->padre_setup;
 		$document->rebless;
 	} else {
