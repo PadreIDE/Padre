@@ -526,12 +526,6 @@ sub _guess_mimetype {
 	my $text     = shift;
 	my $filename = shift;
 
-	# Default mime-type of new files, should be configurable in the GUI
-	# TODO: Make it configurable in the GUI :)
-	unless ($filename) {
-		return 'application/x-perl';
-	}
-
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
@@ -580,6 +574,12 @@ sub _guess_mimetype {
 		if ( $text =~ /\$\w+\{/ )                                           { $Score += .5; }
 		if ( $text =~ /\bsplit[ \(]\// )                                    { $Score += .5; }
 		return $self->perl_mime_type($text) if $Score >= 3;
+	}
+
+	# Fallback mime-type of new files, should be configurable in the GUI
+	# TODO: Make it configurable in the GUI :)
+	unless ($filename) {
+		return $self->perl_mime_type($text);
 	}
 
 	# Fall back to plain text file
