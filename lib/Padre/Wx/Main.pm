@@ -4488,14 +4488,14 @@ sub show_as_numbers {
 
 # showing the DocBrowser window
 sub help {
-	my $self = shift;
+	my $self  = shift;
 	my $param = shift;
 	unless ( $self->{help} ) {
 		require Padre::Wx::DocBrowser;
 		$self->{help} = Padre::Wx::DocBrowser->new;
 		Wx::Event::EVT_CLOSE(
 			$self->{help},
-			sub { $self->on_help_close($_[1]) },
+			sub { $self->on_help_close( $_[1] ) },
 		);
 		$self->{help}->help('Padre');
 	}
@@ -4521,12 +4521,12 @@ sub on_help_close {
 }
 
 sub set_mimetype {
-	my $self = shift;
+	my $self      = shift;
 	my $mime_type = shift;
 
 	my $doc = $self->current->document;
 	if ($doc) {
-		$doc->set_mimetype( $mime_type );
+		$doc->set_mimetype($mime_type);
 		$doc->editor->padre_setup;
 		$doc->rebless;
 		$doc->colourize;

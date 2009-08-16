@@ -183,7 +183,7 @@ sub process {
 	$self->{'pages'} = \@pages;
 	if    ( $self->opt_f ) { @pages = ("perlfunc") }
 	elsif ( $self->opt_q ) { @pages = ( "perlfaq1" .. "perlfaq9" ) }
-	elsif ( $self->opt_v)  { @pages = ("perlvar")                  }
+	elsif ( $self->opt_v ) { @pages = ("perlvar") }
 	else                   { @pages = @{ $self->{'args'} }; }
 
 	return $self->usage_brief unless @pages;

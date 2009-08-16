@@ -262,7 +262,7 @@ sub rebless {
 sub colourize {
 	my $self = shift;
 
-	my $lexer = $self->lexer;
+	my $lexer  = $self->lexer;
 	my $editor = $self->editor;
 	$editor->SetLexer($lexer);
 
