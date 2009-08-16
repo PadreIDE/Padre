@@ -83,7 +83,8 @@ sub display_help_in_viewer {
 	}
 
 	if ( not $help_html ) {
-		$help_html = '<b>No Help found</b>';
+		$self->SetTitle( Wx::gettext('Help Search') );
+		$help_html = '<b>' . Wx::gettext('No Help found') . '</b>';
 	}
 
 	$self->_help_viewer->SetPage($help_html);
