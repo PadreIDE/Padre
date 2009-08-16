@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+    - Force setting of document (MIME) type when using New->Perl 5 test 
+      (#476) (KARL.FORNER) (SZABGAB)
+
 0.43 to be released
     - Revised nice splash screen slightly. Move original artwork
       to Padre-Artwork (BRAMBLE)
