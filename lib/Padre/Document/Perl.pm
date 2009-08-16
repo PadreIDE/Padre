@@ -942,9 +942,9 @@ sub on_help_list {
 	# Perl Special Variables (compiled these from perlvar)
 	push @index,
 		(
-		'$ARG', '$_',            '$a',                '$b', '$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8', '$9', '$MATCH',
-		'$&',   '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
-		'$\'',  '${^POSTMATCH}', '$LAST_PAREN_MATCH', '$+', '$LAST_SUBMATCH_RESULT', '$^N',
+		'$ARG', '$_', '$a', '$b', '$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8', '$9', '$MATCH',
+		'$&',  '${^MATCH}',     '$PREMATCH',         '$`', '${^PREMATCH}',          '$POSTMATCH',
+		'$\'', '${^POSTMATCH}', '$LAST_PAREN_MATCH', '$+', '$LAST_SUBMATCH_RESULT', '$^N',
 		'@LAST_MATCH_END',         '@+',  '%+', '$INPUT_LINE_NUMBER', '$NR', '$.',
 		'$INPUT_RECORD_SEPARATOR', '$RS', '$/', '$OUTPUT_AUTOFLUSH',  '$|',  '$OUTPUT_FIELD_SEPARATOR',
 		'$OFS', '$,',                   '$OUTPUT_RECORD_SEPARATOR', '$ORS', '$\\',                 '$LIST_SEPARATOR',
@@ -974,6 +974,7 @@ sub on_help_list {
 
 	# Add CORE modules
 	require Module::CoreList;
+
 	# Note the 0 + $] to cast it to number
 	push @index, Module::CoreList->find_modules( qr//, 0 + $] );
 
