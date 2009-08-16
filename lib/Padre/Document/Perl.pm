@@ -850,7 +850,13 @@ sub on_help_render {
 	$Type{state} = 1;
 	$Type{break} = 1;
 
-	my $hints = $Type{$topic} ? { perlfunc => 1 } : undef;
+	my $hints = ();
+
+	if($topic =~ /^(\$|\@)/) {
+		$hints->{perlvar} = 1;
+	} elsif($Type{$topic}) {
+		$hints->{perlfunc} = 1;
+	}
 
 	# handle topics like q/.../, m//, y///, tr///
 	$topic =~ s/\/.*$//;
@@ -884,7 +890,8 @@ sub on_help_list {
 		perlxstut perlunitut perlpragma/;
 
 	# FAQ
-	push @index, qw/perlunifaq perlfaq/;
+	push @index, qw/perlunifaq perlfaq1 perlfaq2 perlfaq3 
+		perlfaq4 perlfaq5 perlfaq6 perlfaq7 perlfaq8 perlfaq9/;
 
 	# Language reference
 	push @index, qw/perlsyn perldata perlsub perlop

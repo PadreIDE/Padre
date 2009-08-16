@@ -53,6 +53,8 @@ sub resolve {
 		: (),
 		( exists $hints->{perlfunc} ) ? '-f'
 		: (),
+		( exists $hints->{perlvar} ) ? '-v'
+		: (),
 		$query
 	);
 
