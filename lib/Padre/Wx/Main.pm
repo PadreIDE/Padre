@@ -4491,6 +4491,36 @@ sub show_as_numbers {
 	return;
 }
 
+# showing the DocBrowser window
+sub help {
+	my $self = shift;
+	unless ( $self->{help} ) {
+		require Padre::Wx::DocBrowser;
+		$self->{help} = Padre::Wx::DocBrowser->new;
+		Wx::Event::EVT_CLOSE(
+			$self->{help},
+			sub { $self->on_help_close($_[1]) },
+		);
+		$self->{help}->help('Padre');
+	}
+	$self->{help}->SetFocus;
+	$self->{help}->Show(1);
+	return;
+}
+
+# TODO - why do we need the Hide/Destroy pair?
+sub on_help_close {
+	my ( $self, $event ) = @_;
+	my $help = $self->{help};
+
+	if ( $event->CanVeto ) {
+		$help->Hide;
+	} else {
+		delete Padre->ide->wx->main->{help};
+		$help->Destroy;
+	}
+}
+
 1;
 
 =pod
