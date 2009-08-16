@@ -4516,7 +4516,7 @@ sub on_help_close {
 	if ( $event->CanVeto ) {
 		$help->Hide;
 	} else {
-		delete Padre->ide->wx->main->{help};
+		delete $self->{help};
 		$help->Destroy;
 	}
 }
