@@ -1,7 +1,8 @@
 package Padre::Wx::Dialog::QuickMenuAccess;
 
-use warnings;
+use 5.008;
 use strict;
+use warnings;
 
 # package exports and version
 our $VERSION = '0.43';
