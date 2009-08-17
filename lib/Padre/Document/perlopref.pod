@@ -1,0 +1,1171 @@
+# vi: ts=4 sw=4 ht=4 et textwidth=76 :
+
+=head1 PRECEDENCE
+
+    Associativity     Precedence
+    left              terms and list operators (leftward)
+    left              ->
+    nonassoc          ++ --
+    right             **
+    right             ! ~ \ and unary + and -
+    left              =~ !~
+    left              * / % x
+    left              + - .
+    left              << >>
+    nonassoc          named unary operators
+    nonassoc          < > <= >= lt gt le ge
+    nonassoc          == != <=> eq ne cmp ~~
+    left              &
+    left              | ^
+    left              &&
+    left              || //
+    nonassoc          ..  ...
+    right             ?:
+    right             = += -= *= etc.
+    left              , =>
+    nonassoc          list operators (rightward)
+    right             not
+    left              and
+    left              or xor
+
+=head1 OPERATORS
+
+=head2 X[Y]
+
+=head2 (X)[Y]
+
+=head3 Description
+
+This is the array/list index operator.  It retrieves the Yth value from X.
+If Y is a list then a slice is returned (see L<perldata> for information
+about slices).  Indexes are C<0> based (unless C<$[> has been set to a
+non-zero value). Negative indexes count backwards from the end of the list
+or array.
+
+The index Y is treated as a number, so, it is converted to a number before
+it is used use. If it cannot be converted then it is turned into C<0> (and a
+warning is thrown if L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my @a = ("a", "b", "c", "d");
+    my $x = $a[2];    #$x is now equal to "c"
+    my $y = $a[-3];   #$y is now equal to "b"
+    my @b = @a[1, 2]; #@b is now ("b", "c")
+
+=head2 X{Y}
+
+=head3 Description
+
+This is the hash index operator.  It retrieves the value associated with the
+key Y from X.  If Y is a list of keys then a slice is returned (see
+L<perldata> for information about slices).
+
+=head3 Example
+
+    my %h = (a => 1, b => 2, c => 3);
+    my $x = $h{c};        #$x is now 3
+    my @a = @h{"a", "b"}; #@a is now (1, 2)
+
+=head2 X->[Y]
+
+=head2 X->{Y}
+
+=head2 X->(Y)
+
+=head3 Description
+
+This is the infix dereference operator (AKA The Arrow Operator).  It either
+fetches the value associated with Y (C<< X->[Y] >> and C<< X->{Y} >>) from
+what X refers to or calls the function X refers to with an argument list of
+Y (C<< X->(Y) >>).
+
+=head3 Example
+
+    my @a    = ("a", "b", "c");
+    my $aref = \@a;
+    my $x    = $aref->[1]; #$x is now "b"
+
+    my %h    = (a => 1, b => 2, c => 3);
+    my $href = \%h;
+    my $y    = $href->{b}; #$y is now 2
+
+    my $sub = sub {
+        my ($arg1, $arg2, $arg3) = @_;
+        print "$arg1 = $arg2 + $arg3\n";
+    };
+    $sub->(@a); #prints "a = b + c\n"
+
+=head2 ++X
+
+=head3 Description
+
+This is the prefix auto-increment operator.  It is roughly equivalent to C<X
+= X + 1>, but there is a bit of extra magic to it.  If you increment a
+variable that is numeric, or that has ever been used in a numeric context,
+you get a normal increment.  If, however, the variable has been used in only
+string contexts since it was set, and has a value that is not the empty
+string and matches the pattern C</^[a-zA-Z]*[0-9]*\z/>, the increment is
+done as a string, preserving each character within its range, with carry:
+
+    print ++($foo = '99');      # prints '100'
+    print ++($foo = 'a0');      # prints 'a1'
+    print ++($foo = 'Az');      # prints 'Ba'
+    print ++($foo = 'zz');      # prints 'aaa'
+
+C<undef> is always treated as numeric, and in particular is changed to C<0>
+before incrementing (so that a post-increment of an undef value will return
+C<0> rather than C<undef>).
+
+The incrementing occurs before the use of the value.
+
+=head3 Example
+
+    my $x = 4;
+    my $y = ++$x; #$x and $y are now 5
+
+    my $s = "a";
+    my $t = ++$s; #$s and $t are now "b"
+
+=head2 X++
+
+=head3 Description
+
+This is the postfix auto-increment operator.  It behaves the same way as the
+prefix auto-increment operator C<++X>, including the magic, but the value is
+taken before the incrementing is done. So, the after the following code
+C<$x> will be C<5> and C<$y> will be 4.  Whereas with the prefix
+auto-increment operator, both values would be C<5>.
+
+=head3 Example
+
+    my $x = 4;
+    my $y = ++$x; #$x is now 5 and $y is now 4
+
+    my $s = "a";
+    my $t = ++$s; #$s is now "b" and $t is now "a"
+
+=head2 --X
+
+=head3 Description
+
+This is the prefix auto-decrement operator.  It is equivalent to 
+C<X = X - 1>.  The value returned is reflects the decrementing, so after the
+following code runs, C<$x> and C<$y> will be C<4>.
+
+X will be converted to a number before decrementing, and if it cannot be
+converted it will turned into C<0> (and a warning is thrown if L<<
+C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 5;
+    my $y = --$x; #$x and $y are now 4
+
+=head2 X--
+
+=head3 Description
+
+This is the postfix auto-decrement operator.  It is equivalent to 
+C<X = X - 1>.  The value returned is the value before decrementing, so after
+the following code runs, C<$x> will be 4 and C<$y> will be C<5>.
+
+X will be converted to a number before the operation, and if it cannot be
+converted it will turned into C<0> (and a warning is thrown if L<<
+C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 5;
+    my $y = --$x; #$x and $y are now 4
+
+=head2 X**Y
+
+=head3 Description
+
+This is the exponentiation operator.  It raises X to the Yth power.
+Warning: it binds more tightly than unary minus, so C<-2**4> is C<-(2**4)>,
+not C<(-2)**4>. 
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 2 ** 8; #$x is now 256
+
+=head2 !X
+
+=head3 Description
+
+This is the high-precedence logical negation operator.  It performs logical
+negation, i.e., "not".  There is a low-precedence version C<not>.
+
+=head3 Example
+
+    my $m = !5;     #$m is now the empty string ('')
+    my $n = !0;     #$n is now 1
+    my $o = !'';    #$o is now 1
+    my $p = !undef; #$p is now 1
+
+=head2 ~X
+
+=head3 Description
+
+This is the bitwise negation operator (AKA C<1>'s complement operator).  The
+width of the result is platform-dependent: C<~0> is C<32> bits wide on a
+C<32>-bit platform, but C<64> bits wide on a C<64>-bit platform, so if you
+are expecting a certain bit width, remember to use the C<&> operator to mask
+off the excess bits.
+
+X will be converted to a number before the operation, and if it cannot be
+converted it will turned into C<0> (and a warning is thrown if L<<
+C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = ~0x00_00_00_00 #$x is now 0xFF_FF_FF_FF on 32-bit machines
+
+=head3 See also
+
+L<Bitwise String Operators> and L<Integer Arithmetic> in L<perlop>
+
+=head2 \X
+
+=head3 Description
+
+This is the backslash operator (AKA the reference operator).  It creates a
+reference to X.  
+
+=head3 Example
+
+    my $s    = 5;
+    my $sref = \$s; #$sref is now a reference to $s
+    $$sref   = 6;   #$s is now 6
+
+    my @a      = (1, 2, 3);
+    my $aref   = \@a; #$aref is now a reference to @a
+    $aref->[0] = 5;   #@a is now (5, 2, 3)
+    push @$aref, 6;   #@a is now (5, 2, 3, 6)
+
+    my %h      = (a => 1, b => 2, c => 3);
+    my $href   = \%h;         #$href is now a reference to %h
+    $href->{b} = 5;           #%h is now (a => 1, b => 5, c => 3)
+    my @keys   = keys %$href; #@keys is now ("a", "b", "c")
+
+    sub foo {
+        return join "|", @_;
+    }
+    my $coderef = \&foo;
+    my $x       = $coderef->(1, 2, 3); #$x is now "1|2|3";
+    my $y       = &$coderef(4, 5, 6);  #$y is now "4|5|6";
+
+=head3 See also
+
+L<< X -> Y >> in L<perlopref>, L<perlreftut>, and L<perlref>
+
+=head2 +X
+
+=head3 Description
+
+This is the unary plus operator.  It has no effect whatsoever, even on
+strings.  It is useful syntactically for separating a function name from a
+parenthesized expression that would otherwise be interpreted as the complete
+list of function arguments.
+
+=head3 Example
+
+    print (split ",", "a,b,c,d")[2], "\n";  #syntax error
+    print +(split ",", "a,b,c,d")[2], "\n"; #prints "c\n"
+
+=head2 -X
+
+=head3 Description
+
+The unary minus operator performs arithmetic negation if X is numeric.
+
+If is a bareword it returns a string consisting of C<-> and the bareword.
+
+If X is a string that does not start with an alphabetic character then it
+returns a string consisting of C<-> followed by the original string.
+
+If X begins with C<-> or C<+> then the first character is converted to the
+opposite sign.
+
+In all other cases, X will be converted to a number before the operation,
+and if it cannot be converted it will turned into C<0> (and a warning is
+thrown if L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 10;
+    $x    = -$x;     #$x is now -10
+    $x    = ~$x;     #$x is now 10 again
+    my $y = -option; #$y is now "-option"
+    my $z = -"foo":  #$z is now "-foo"
+    $z = -$z;        #$z is now "+foo"
+    $z = -$z;        #$z is now "-foo"
+    $z = -"*foo"     #$z is now -0
+
+=head2 X =~ Y
+
+=head3 Description
+
+This is the binding operator.  It applies a regex match (C<m//>),
+substitution (C<s///>), or transliteration (C<tr///> or C<y///>) Y against a
+string X.  When used in scalar context, the return value generally indicates
+the success of the operation.  Behavior in list context depends on the
+particular operator.  See L</"Regexp Quote-Like Operators"> for details and
+L<perlretut> for examples using these operators.
+
+If Y is an expression rather than a search pattern, substitution, or
+transliteration, it is interpreted as a search pattern at run time. Note
+that this means that its contents will be interpolated twice, so
+
+  '\\' =~ q'\\';
+
+is not ok, as the regex engine will end up trying to compile the pattern
+C<\>, which it will consider a syntax error.
+
+=head3 Example
+
+    my $x = "foo bar baz";
+
+    #prints "matched\n"
+    if ($x =~ /foo/) {
+        print "matched\n";
+    }
+
+=head3 See also
+
+L<perlop>, L<perlretut>, and L<prelre>
+
+=head2 X !~ Y
+
+=head3 Description
+
+This is the negative binding operator.  It behaves like the C<=~> operator,
+but the return is logically negated.
+
+=head3 Example
+
+    #prints "matched\n"
+    if ("foo bar baz" !~ /foo/) {
+        print "didn't match\n";
+    } else {
+        print "matched\n";
+    }
+
+=head3 See also
+
+L<< C<=~> >>
+
+=head2 X * Y
+
+=head3 Description
+
+This is the multiplication operator.  It returns X multiplied by Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 2 * 21; #$x is now 42
+
+=head2 X / Y
+
+=head3 Description
+
+This is the division operator.  It divides X by Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 84/2; #$x is now 42
+
+=head2 X % Y
+
+=head3 Description
+
+This is the modulo operator.  It computes the remainder of X divided by Y.
+The remainder is affect by the type of the numbers and whether they are
+positive or negative.
+
+Given integer operands X and Y: If Y is positive, then "X % Y" is X minus 
+the largest multiple of Y less than or equal to X.  If Y is negative, then
+"X % Y" is X minus the smallest multiple of Y that is not less than X (i.e.
+the result will be less than or equal to zero).  To illustrate this, here
+are the results of modding C<-9> through C<9> with C<4>:
+
+    when X is     -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
+    the result is  3  0  1  2  3  0  1  2  3  0  1  2  3  0  1  2  3  0  1
+
+And here is C<-9> through C<9> modded with C<-4>:
+
+    when X is     -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
+    the result is -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 
+
+From this we can see a positive Y constrains X to a range from C<0> to 
+C<(Y - 1)> that wraps around and a negative Y constrains X to a range from
+C<(Y + 1)> to C<0>.
+
+When Y is a floating point number whose absolute value is in the range of
+C<0> to C<(UV_MAX + 1)> (where UV_MAX is the maximum of the unsigned 
+integer type) X and Y are truncated to integers.  If the absolute value of
+Y is larger than C<(UV_MAX + 1)> then the formula C<(X - I * Y)> (where I
+is a certain integer that makes the result have the same sign as Y).  For
+example, on 32-bit systems C<4.5 % (2 ** 32 - 1)> is C<4>, but 
+C<4.5 % 2 ** 32> is C<4.5>.
+
+Note: when the L<< C<integer> >> pragma is in scope C<%> gives you direct
+access to the modulo operator as implemented by your C compiler.  This
+operator is not as well defined for negative operands, but it will
+execute faster.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $odd = $x % 2; #$odd is 1 when $x is odd and 0 when $x is even
+
+    my $hour = ($hour + 1) % 24; # 23 (11pm) plus 1 hour is 0 (12am). 
+
+=head2 X x Y
+
+=head2 (X) x Y
+
+=head3 Description
+
+This is the repetition operator.  When X is a scalar value it returns
+a string made up of X repeated Y times.  When X is a list it returns
+a list made up of X repeated Y times.
+
+Y will be converted to a number before the operation, and if it cannot be
+converted it will turned into C<0> (and a warning is thrown if L<<
+C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = "abc" x 3;  #$x is now the string "abcabcabc"
+    my @a = ("abc) x 3; #@a is now ("abc", "abc", "abc")
+
+=head2 X + Y
+
+=head3 Description
+
+This is the addition operator.  It returns the result of X plus Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 40 + 2; #$x is now 42
+
+=head2 X - Y
+
+=head3 Description
+
+This is the subtraction operator.  It returns the result of X minus Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 100 - 58; #$x is now 42
+
+=head2 X << Y
+
+=head3 Description
+
+This is the left bit-shift operator.  It shift bits that make up the integer
+X Y places to the left.  If X is not an integer it will be converted into 
+one before the operation begins.  
+
+New bits added to the right side are all C<0>.  Overflowing the integer type
+on you platform (i.e. creating a number too large to store in your platform's
+integer type) results in behavior that is not well defined (i.e. it is 
+platform specific).  When Y is negative the results are also not well 
+defined.  This is because the left bit-shift operator is implemented by the 
+native C compiler's left bit-shift operator (and those operations are not 
+defined by ISO C).
+
+Shifting 1 bit to the left is the same as multiplying the number by 2.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    #on 32-bit machines
+    my $x = 0xFF_00_FF_00 << 8; #$x is now not well defined
+
+    #on 64-bit machines
+    my $y = 0xFF_00_FF_00 << 8; #$y is now 0xFF_00_FF_00_00
+
+    my $z = 6 << 1; #$z is now 12
+
+=head2 X >> Y
+
+=head3 Description
+
+This is the right-bit shift operator.  It shift bits that make up the integer
+X Y places to the right.  If X is not an integer it will be converted into 
+one before the operation begins.  Bits shifted past the rightmost edge
+are lost.  New bits added to the left side are all 0.  Shifting to the right
+one bit is the same as an integer division by 2.
+
+When Y is negative the results are not well defined (i.e. platform
+specific).  This is because the right bit-shift operator is implemented by
+the native C compiler's right bit-shift operator  (and that is not defined
+by ISO C).
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 0x00_FF_00_FF >> 8; #$x is now 0x00_00_FF_00
+    my $y = 12 >> 1;            #$y is now 6
+
+=head2 X < Y
+
+=head3 Description
+
+This is the numeric less than operator.  It returns a true value if X is
+numerically less than Y or a false value if X is greater than or equal to
+Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    if (4 < 5) {
+        print "this is true unless Perl is broken\n";
+    }
+
+    if (5 < 4) {
+        print "this should never be true\n";
+    } else {
+        print "it should always be false\n";
+    }
+
+=head2 X > Y
+
+=head3 Description
+
+This is the numeric greater than operator.  It returns a true value if X is
+numerically greater than Y or a false value if X is less than or equal to
+Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    if (5 > 4) {
+        print "this is true unless Perl is broken\n";
+    }
+
+    if (4 > 5) {
+        print "this should never be true\n";
+    } else {
+        print "it should always be false\n";
+    }
+
+=head2 X <= Y
+
+=head3 Description
+
+This is the numeric less than or equal to operator.  It returns a true 
+value if X is numerically less than or equal to Y or a false value if 
+X is greater than to Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    if (4 <= 4) {
+        print "this is true unless Perl is broken\n";
+    }
+
+    if (5 <= 4) {
+        print "this should never be true\n";
+    } else {
+        print "it should always be false\n";
+    }
+
+=head2 X >= Y
+
+=head3 Description
+
+This is the numeric less than or equal to operator.  It returns a true 
+value if X is numerically less than or equal to Y or a false value if 
+X is greater than to Y.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    if (4 >= 4) {
+        print "this is true unless Perl is broken\n";
+    }
+
+    if (4 >= 5) {
+        print "this should never be true\n";
+    } else {
+        print "it should always be false\n";
+    }
+
+=head2 X lt Y
+
+=head3 Description
+
+This is the lexical less than operator (also known as the string less than
+operator or the stringwise less than operator).  It returns true if X is
+less than Y and false if X is greater than or equal to Y.  The order of
+various characters is locale dependent.  The default order is determined by
+the Unicode ordinal value (since Unicode contains the ASCII set as its first
+C<127> characters, this order is the same as the ASCII order).
+
+=head3 Example
+
+    if ("a" lt "b") {
+        print "this is true unless the locale is really weird\n";
+    }
+
+    if ("z" lt "a") {
+        print "this should never be true (unless the local is weird)\n";
+    } else {
+        print "it should always be false (unless the local is weird)\n";
+    }
+
+=head2 X gt Y
+
+=head3 Description
+
+This is the lexical greater than operator (also known as the string greater
+than operator or the stringwise greater than operator).  It returns true if
+X is greater than Y and false if X is less than or equal to Y.  The order of
+various characters is locale dependent.  The default order is determined by
+the Unicode ordinal value (since Unicode contains the ASCII set as its first
+C<127> characters, this order is the same as the ASCII order).
+
+=head3 Example
+
+    if ("b" gt "a") {
+        print "this is true unless the locale is really weird\n";
+    }
+
+    if ("a" gt "z") {
+        print "this should never be true (unless the local is weird)\n";
+    } else {
+        print "it should always be false (unless the local is weird)\n";
+    }
+
+=head2 X le Y
+
+=head3 Description
+
+This is the lexical less than or equal to operator (also known as the string
+less than or equal to operator or the stringwise less than or equal to
+operator).  It returns true if X is less than or equal to Y and false if X
+is greater than Y.  The order of various characters is locale dependent.
+The default order is determined by the Unicode ordinal value (since Unicode
+contains the ASCII set as its first C<127> characters, this order is the
+same as the ASCII order).
+
+=head3 Example
+
+    if ("a" le "a") {
+        print "this is true unless Perl is broken\n";
+    }
+
+    if ("z" le "a") {
+        print "this should never be true (unless the local is weird)\n";
+    } else {
+        print "it should always be false (unless the local is weird)\n";
+    }
+
+=head2 X ge Y
+
+=head3 Description
+
+This is the lexical greater than or equal to operator (also known as the
+string greater than or equal to operator or the stringwise greater than or
+equal to operator).  It returns true if X is greater than Y and false if X
+is less than or equal to Y.  The order of various characters is locale
+dependent.  The default order is determined by the Unicode ordinal value
+(since Unicode contains the ASCII set as its first C<127> characters, this
+order is the same as the ASCII order).
+
+=head3 Example
+
+    if ("a" ge "a") {
+        print "this is true unless Perl is broken\n";
+    }
+
+    if ("a" ge "z") {
+        print "this should never be true (unless the local is weird)\n";
+    } else {
+        print "it should always be false (unless the local is weird)\n";
+    }
+
+=head2 X == Y
+
+=head3 Description
+
+This is the numeric equality operator.  It returns true if X and Y evaluate
+as the same number.
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+Important note: the numeric equality operator should not be used with
+floating point numbers as the error introduced by rounding may cause the
+number to not be exactly what you are comparing against.  Always use the
+less than and greater than operators with a small delta:
+
+    my $x = 0;
+    
+    for (1 .. 10) {
+        $x += .1;
+    }
+    
+    if ($x == 1) {
+        print "$x is one\n";
+    } else {
+        print "oops, darn floating point numbers\n";
+    }
+    
+    my $delta = 1e-15; #0.000000000000001
+    if (
+        $x < 1 + $delta and
+        $x > 1 - $delta
+    ) {
+        print "this time it worked\n";
+    }
+
+=head3 Example
+
+    if (5 == 5) {
+        print "this will be trye unless Perl is broken\n"
+    }
+
+=head2 X != Y
+
+=head3 Description
+
+This is the numeric not equals operator.  It returns true if X does not
+evaluate to the same numeric value as Y.  
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+Important note: the numeric equality operator should not be used with
+floating point numbers as the error introduced by rounding may cause the
+number to not be exactly what you are comparing against.  Always use the
+less than and greater than operators with a small delta:
+
+    my $x = 0;
+    
+    for (1 .. 10) {
+        $x += .1;
+    }
+    
+    if ($x != 1) {
+        print "oops, darn floating point numbers\n";
+    }
+    
+    my $delta = 1e-15; #0.000000000000001
+    if (
+        $x > 1 + $delta and
+        $x < 1 - $delta
+    ) {
+        print "wow, your floating point representation is really good\n";
+    } else {
+        print "this time it worked\n";
+    }
+
+=head3 Example
+
+    if (5 != 4) {
+        print "this will be true unless Perl is broken\n"
+    }
+
+=head2 X <=> Y
+
+=head3 Description
+
+This is the numeric comparison operator.  It returns less than C<0>  if X is
+numerically less than Y, C<0> is if X and Y are the same numerically, or
+more than C<0> if X is numerically greater than Y.  It is most often seen
+combined with the C<sort> function:
+
+    my @sorted = sort { $a <=> $b } @unsorted;
+
+Both X and Y will be converted to numbers before the operation; if they
+cannot be converted they will turned into C<0> (and a warning is thrown if
+L<< C<warnings> >> are turned on).
+
+=head3 Example
+
+    my $x = 4 <=> 5; #x is now negative
+    my $y = 5 <=> 5; #y is now 0
+    my $z = 6 <=> 5; #z is now positive
+
+=head2 X eq Y
+
+=head3 Description
+
+This is the lexical equality operator (aka the string equality operator or
+the stringwise equality operator).  It returns true if X and Y evaluate as
+the same string.
+
+=head3 Example
+
+    if ("foo" eq "foo") {
+        print "this is true, unless Perl is broken\n";
+    }
+
+    if ("foo" eq "bar") {
+        print "this is should always be false, unless Perl is broken\n";
+    } else {
+        print "this is false, unless Perl is broken\n";
+    }
+
+=head2 X ne Y
+
+=head3 Description
+
+This is the lexical not equals operator. (aka the string not equals operator
+or the stringwise not equals operator).  It returns false if X and Y
+evaluate as the same string.
+
+=head3 Example
+
+    if ("foo" ne "bar") {
+        print "this is true, unless Perl is broken\n";
+    }
+
+    if ("foo" ne "foo") {
+        print "this is should always be false, unless Perl is broken\n";
+    } else {
+        print "this is false, unless Perl is broken\n";
+    }
+
+=head2 X cmp Y
+
+=head3 Description
+
+This is the lexical comparison operator (also known as the string comparison
+operator or the stringwise comparison operator).  It returns a negative
+value if X is lexically less than Y, C<0> is X and Y are lexically the same,
+or a positive value if X is lexically larger than Y.  This comparison is
+affected by the current locale and the default order is determined by the
+Unicode ordinal value (since Unicode contains the ASCII set as its first
+C<127> characters, this order is the same as the ASCII order).  It is most
+commonly seen used with the C<sort> function:
+
+    my @sorted = sort { $a cmp $b } @unsorted;
+
+=head3 Example
+
+    my $x = "a" <=> "b"; #$x is now negative
+    my $y = "b" <=> "b"; #$x is now 0
+    my $z = "c" <=> "b"; #$x is now positive
+
+=head2 X ~~ Y
+
+=head3 Description
+
+This is the smartmatch operator.  In 5.10 and 5.10.1 it has different
+behavior.  See L<perlsyn/"Smart matching in detail"> for more detail.
+
+=head3 Example
+
+See L<perlsyn/"Smart matching in detail"> for examples.
+
+=head3 See also
+
+L<perlsyn/"Smart matching in detail">
+
+=head2 X & Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X | Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X ^ Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X && Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X || Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X // Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X .. Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X ... Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X ? Y : Z
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X = Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X **= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X += Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X -= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X .= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X *= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X /= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X %= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X x= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X &= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X |= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X ^= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X <<= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X >>= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X &&= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X ||= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X //= Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X, Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X => Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 not X
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X and Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X or Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=head2 X xor Y
+
+=head3 Description
+
+=head3 Example
+
+
+
+=cut

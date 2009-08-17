@@ -843,6 +843,16 @@ sub event_on_left_up {
 sub on_help_render {
 	my ( $self, $topic ) = @_;
 
+	my %perlopref = $self->_parse_perlopref;
+	if($perlopref{$topic}) {
+		my $pod = $perlopref{$topic};
+		print $pod . "\n";
+		require Padre::Pod2HTML;
+		my $html = Padre::Pod2HTML->pod2html( $pod );
+		return ($html, $topic);
+	}
+
+
 	require Padre::DocBrowser::POD;
 	use Pod::Functions;
 	$Type{say}   = 1;
@@ -871,6 +881,7 @@ sub on_help_render {
 # Render Perl 5 help list for Padre's Help Search facility
 #
 sub on_help_list {
+	my $self = shift;
 
 	my @index = ();
 
@@ -978,7 +989,48 @@ sub on_help_list {
 	# Note the 0 + $] to cast it to number
 	push @index, Module::CoreList->find_modules( qr//, 0 + $] );
 
+	my %perlopref = $self->_parse_perlopref;
+	push @index, keys %perlopref;
+
 	return sort @index;
+}
+
+sub _parse_perlopref {
+	my $self = shift;
+
+	# Open perlopref.pod for reading
+	require Cwd;
+	my $perlopref = Cwd::realpath( 
+		File::Spec->join( File::Basename::dirname(__FILE__), 'perlopref.pod' ) );
+	my $fh;
+	open $fh, $perlopref;
+
+	my %index = ();
+
+	# Add PRECEDENCE to index
+	until (<$fh> =~ /=head1 PRECEDENCE/) { }
+
+	my $line;
+	while($line = <$fh>) {
+		last if($line =~ /=head1 OPERATORS/);
+		$index{PRECEDENCE} .= $line;
+	}
+
+	# Add OPERATORS to index
+	my $op;
+	while($line = <$fh>) {
+		if($line =~ /=head2\s+(.+)$/) {
+			$op = $1;
+			$index{$op} = $line;
+		} elsif($op){
+			$index{$op} .= $line;
+		}
+	}
+
+	# and we're done
+	close $fh;
+	
+	return %index;
 }
 
 1;
