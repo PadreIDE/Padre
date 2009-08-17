@@ -38,7 +38,7 @@ sub new {
 	);
 
 	$self->_main($main);
-	$self->_topic( $opt{topic} // '' );
+	$self->_topic( $opt{topic} || '' );
 
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -233,12 +233,13 @@ sub _setup_events {
 # Focus on it if it shown or restart its state and show it if it is hidden.
 #
 sub showIt {
-	my $self = shift;
+	my ($self, $topic) = @_;
 
 	if ( $self->IsShown ) {
 		$self->SetFocus;
 	} else {
-		$self->_search_text->ChangeValue('');
+		$self->_topic( $topic || '' );
+		$self->_search_text->ChangeValue($self->_topic);
 		$self->_search;
 		$self->_update_list_box;
 		$self->Show(1);
