@@ -846,7 +846,6 @@ sub on_help_render {
 	my %perlopref = $self->_parse_perlopref;
 	if ( $perlopref{$topic} ) {
 		my $pod = $perlopref{$topic};
-		print $pod . "\n";
 		require Padre::Pod2HTML;
 		my $html = Padre::Pod2HTML->pod2html($pod);
 		return ( $html, $topic );
