@@ -4244,9 +4244,9 @@ sub timer_check_overwrite {
 
 	my $Text;
 	if ($file_state == -1) {
-		Wx::gettext("File changed on disk since last saved. Do you want to reload it?");
+		$Text = Wx::gettext('File has been deleted on disk, do you want to CLEAR the editor window?');
 	} else {
-		Wx::gettext('File has been deleted on disk, do you want to CLEAR the editor window?');
+		$Text = Wx::gettext("File changed on disk since last saved. Do you want to reload it?");
 	}
 
 	my $ret = Wx::MessageBox(
