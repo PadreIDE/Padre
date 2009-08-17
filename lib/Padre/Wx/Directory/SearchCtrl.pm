@@ -1,5 +1,6 @@
 package Padre::Wx::Directory::SearchCtrl;
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Current ();

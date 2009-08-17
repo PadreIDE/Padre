@@ -1,5 +1,6 @@
 package Padre::Wx::Directory::TreeCtrl;
 
+use 5.008;
 use strict;
 use warnings;
 use File::Copy;

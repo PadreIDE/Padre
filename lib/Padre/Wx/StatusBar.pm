@@ -34,6 +34,7 @@ the available methods that can be applied to it besides the added ones
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Constant            ();
