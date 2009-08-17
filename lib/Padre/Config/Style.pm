@@ -2,6 +2,7 @@ package Padre::Config::Style;
 
 # Interface to the Padre editor look and feel files
 
+use 5.008;
 use strict;
 use warnings;
 use Carp ();

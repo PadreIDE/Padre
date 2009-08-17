@@ -26,6 +26,7 @@ configuration directory (which defaults to C<~/.padre> on Unixy systems).
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
 use Module::Build   ();

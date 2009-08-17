@@ -25,6 +25,7 @@ object that can independantly search and/or replace in an editor object.
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
 use Encode     ();

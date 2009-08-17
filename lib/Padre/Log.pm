@@ -1,4 +1,6 @@
 package Padre::Log;
+
+use 5.008;
 use strict;
 use warnings;
 

@@ -1,8 +1,9 @@
 package Padre::DB;
 
 # Provide an ORLite-based API for the Padre database
-
+use 5.008;
 use strict;
+use warnings;
 use File::Spec      ();
 use File::ShareDir  ();
 use Params::Util    ();
