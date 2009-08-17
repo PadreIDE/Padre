@@ -5,6 +5,7 @@
 
 package Padre::DB::LastPositionInFile;
 
+use 5.008;
 use strict;
 use warnings;
 

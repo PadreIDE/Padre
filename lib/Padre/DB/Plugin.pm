@@ -1,5 +1,6 @@
 package Padre::DB::Plugin;
 
+use 5.008;
 use strict;
 use warnings;
 
