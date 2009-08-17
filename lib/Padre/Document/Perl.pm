@@ -983,9 +983,8 @@ sub on_help_list {
 	push @index, keys %Type;
 
 	# Add CORE modules
-	require Module::CoreList;
-
 	# Note the 0 + $] to cast it to number
+	require Module::CoreList;
 	push @index, Module::CoreList->find_modules( qr//, 0 + $] );
 
 	my %perlopref = $self->_parse_perlopref;
