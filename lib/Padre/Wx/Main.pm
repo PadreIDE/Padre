@@ -4235,13 +4235,22 @@ the document. No return value.
 sub timer_check_overwrite {
 	my $self = shift;
 	my $doc = $self->current->document or return;
+	my $file_state = $doc->has_changed_on_disk; # 1 = updated, 0 = unchanged, -1 = deleted
 
-	return unless $doc->has_changed_on_disk;
+	return unless $file_state;
 	return if $doc->{_already_popup_file_changed};
 
 	$doc->{_already_popup_file_changed} = 1;
+
+	my $Text;
+	if ($file_state == -1) {
+		Wx::gettext("File changed on disk since last saved. Do you want to reload it?");
+	} else {
+		Wx::gettext('File has been deleted on disk, do you want to CLEAR the editor window?');
+	}
+
 	my $ret = Wx::MessageBox(
-		Wx::gettext("File changed on disk since last saved. Do you want to reload it?"),
+		$Text,
 		$doc->filename || Wx::gettext("File not in sync"),
 		Wx::wxYES_NO | Wx::wxCENTRE,
 		$self,
