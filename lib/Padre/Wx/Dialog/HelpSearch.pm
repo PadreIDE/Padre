@@ -233,13 +233,13 @@ sub _setup_events {
 # Focus on it if it shown or restart its state and show it if it is hidden.
 #
 sub showIt {
-	my ($self, $topic) = @_;
+	my ( $self, $topic ) = @_;
 
 	if ( $self->IsShown ) {
 		$self->SetFocus;
 	} else {
 		$self->_topic( $topic || '' );
-		$self->_search_text->ChangeValue($self->_topic);
+		$self->_search_text->ChangeValue( $self->_topic );
 		$self->_search;
 		$self->_update_list_box;
 		$self->Show(1);

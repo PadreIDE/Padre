@@ -409,7 +409,7 @@ sub open_resource {
 }
 
 sub help_search {
-	my ($self, $topic) = @_;
+	my ( $self, $topic ) = @_;
 
 	unless ( defined $self->{help_search} ) {
 		require Padre::Wx::Dialog::HelpSearch;
