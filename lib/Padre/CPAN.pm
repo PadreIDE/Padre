@@ -1,5 +1,6 @@
 package Padre::CPAN;
 
+use 5.008;
 use strict;
 use warnings;
 use Carp ();
