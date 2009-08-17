@@ -2,6 +2,7 @@ package Padre::Wx::Left;
 
 # The left-hand notebook
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Constant ();

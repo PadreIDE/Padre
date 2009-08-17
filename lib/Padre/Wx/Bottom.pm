@@ -2,6 +2,7 @@ package Padre::Wx::Bottom;
 
 # The bottom notebook
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Constant            ();

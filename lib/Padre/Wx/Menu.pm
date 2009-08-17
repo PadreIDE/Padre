@@ -2,6 +2,7 @@ package Padre::Wx::Menu;
 
 # Implements additional functionality to support richer menus
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Action ();
