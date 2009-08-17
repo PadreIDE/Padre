@@ -4233,9 +4233,9 @@ the document. No return value.
 =cut
 
 sub timer_check_overwrite {
-	my $self = shift;
-	my $doc = $self->current->document or return;
-	my $file_state = $doc->has_changed_on_disk; # 1 = updated, 0 = unchanged, -1 = deleted
+	my $self       = shift;
+	my $doc        = $self->current->document or return;
+	my $file_state = $doc->has_changed_on_disk;         # 1 = updated, 0 = unchanged, -1 = deleted
 
 	return unless $file_state;
 	return if $doc->{_already_popup_file_changed};
@@ -4243,7 +4243,7 @@ sub timer_check_overwrite {
 	$doc->{_already_popup_file_changed} = 1;
 
 	my $Text;
-	if ($file_state == -1) {
+	if ( $file_state == -1 ) {
 		$Text = Wx::gettext('File has been deleted on disk, do you want to CLEAR the editor window?');
 	} else {
 		$Text = Wx::gettext("File changed on disk since last saved. Do you want to reload it?");

@@ -844,12 +844,12 @@ sub on_help_render {
 	my ( $self, $topic ) = @_;
 
 	my %perlopref = $self->_parse_perlopref;
-	if($perlopref{$topic}) {
+	if ( $perlopref{$topic} ) {
 		my $pod = $perlopref{$topic};
 		print $pod . "\n";
 		require Padre::Pod2HTML;
-		my $html = Padre::Pod2HTML->pod2html( $pod );
-		return ($html, $topic);
+		my $html = Padre::Pod2HTML->pod2html($pod);
+		return ( $html, $topic );
 	}
 
 
@@ -1000,36 +1000,35 @@ sub _parse_perlopref {
 
 	# Open perlopref.pod for reading
 	require Cwd;
-	my $perlopref = Cwd::realpath( 
-		File::Spec->join( File::Basename::dirname(__FILE__), 'perlopref.pod' ) );
+	my $perlopref = Cwd::realpath( File::Spec->join( File::Basename::dirname(__FILE__), 'perlopref.pod' ) );
 	my $fh;
 	open $fh, $perlopref;
 
 	my %index = ();
 
 	# Add PRECEDENCE to index
-	until (<$fh> =~ /=head1 PRECEDENCE/) { }
+	until ( <$fh> =~ /=head1 PRECEDENCE/ ) { }
 
 	my $line;
-	while($line = <$fh>) {
-		last if($line =~ /=head1 OPERATORS/);
+	while ( $line = <$fh> ) {
+		last if ( $line =~ /=head1 OPERATORS/ );
 		$index{PRECEDENCE} .= $line;
 	}
 
 	# Add OPERATORS to index
 	my $op;
-	while($line = <$fh>) {
-		if($line =~ /=head2\s+(.+)$/) {
+	while ( $line = <$fh> ) {
+		if ( $line =~ /=head2\s+(.+)$/ ) {
 			$op = $1;
 			$index{$op} = $line;
-		} elsif($op){
+		} elsif ($op) {
 			$index{$op} .= $line;
 		}
 	}
 
 	# and we're done
 	close $fh;
-	
+
 	return %index;
 }
 

@@ -407,8 +407,10 @@ sub has_changed_on_disk {
 
 	# Caching the result for two lines saved one stat-I/O each time this sub is run
 	my $Time_on_file = $self->time_on_file;
+
 	# Return -1 if file has been deleted from disk
 	return -1 unless $Time_on_file;
+
 	# Return 1 if the file has changed on disk, otherwise 0
 	return $self->last_sync < $Time_on_file ? 1 : 0;
 }
