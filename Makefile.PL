@@ -115,7 +115,7 @@ if ( win32 and $locale =~ /^English/ ) {
 
 no_index   'directory' => qw{ t xt eg share inc privinc };
 homepage   'http://padre.perlide.org/';
-bugtracker 'http://padre.perlide.org/';
+bugtracker 'http://padre.perlide.org/trac/';
 repository 'http://svn.perlide.org/padre/trunk/Padre/';
 
 keywords(
