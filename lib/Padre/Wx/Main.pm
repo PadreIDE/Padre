@@ -409,12 +409,13 @@ sub open_resource {
 }
 
 sub help_search {
-	my $self = shift;
+	my ($self, $topic) = @_;
+
 	unless ( defined $self->{help_search} ) {
 		require Padre::Wx::Dialog::HelpSearch;
 		$self->{help_search} = Padre::Wx::Dialog::HelpSearch->new($self);
 	}
-	return $self->{help_search};
+	$self->{help_search}->showIt($topic);
 }
 
 =pod

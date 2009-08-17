@@ -66,9 +66,8 @@ sub new {
 		shortcut   => 'F2',
 		menu_event => sub {
 
-			#Create and show the Help search dialog
-			my $dlg = $_[0]->help_search;
-			$dlg->showIt;
+			#Show Help Search with no topic...
+			$_[0]->help_search;
 		},
 	);
 
