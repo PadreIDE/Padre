@@ -31,6 +31,7 @@ Please read its documentation!
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
 use version;

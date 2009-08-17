@@ -1,5 +1,6 @@
 package Padre::Task::PPI::FindVariableDeclaration;
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Wx ();

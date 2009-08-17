@@ -1,4 +1,6 @@
 package Padre::Task::PPI::FindUnmatchedBrace;
+
+use 5.008;
 use strict;
 use warnings;
 

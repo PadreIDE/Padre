@@ -1,5 +1,6 @@
 package Padre::Task::Debug::Crashing;
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Task ();
