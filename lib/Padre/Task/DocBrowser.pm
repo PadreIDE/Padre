@@ -1,5 +1,6 @@
 package Padre::Task::DocBrowser;
 
+use 5.008;
 use strict;
 use warnings;
 use threads;

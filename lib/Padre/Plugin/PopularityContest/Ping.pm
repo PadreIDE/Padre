@@ -2,6 +2,7 @@ package Padre::Plugin::PopularityContest::Ping;
 
 # First-generation live call to the Popularity Contest server
 
+use 5.008;
 use strict;
 use warnings;
 use URI              ();

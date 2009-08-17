@@ -1,5 +1,6 @@
 package Padre::Task::HTTPClient;
 
+use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_CODE _INSTANCE};

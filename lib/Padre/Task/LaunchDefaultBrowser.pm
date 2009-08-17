@@ -5,6 +5,7 @@ package Padre::Task::LaunchDefaultBrowser;
 # Firefox, this can take perhaps a minute.
 # This task moves the function into the background.
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Task ();

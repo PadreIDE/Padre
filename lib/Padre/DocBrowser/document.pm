@@ -1,5 +1,6 @@
 package Padre::DocBrowser::document;
 
+use 5.008;
 use strict;
 use warnings;
 use File::Basename qw(fileparse basename);

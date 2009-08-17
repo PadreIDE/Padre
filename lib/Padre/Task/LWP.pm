@@ -23,6 +23,7 @@ Sending and receiving data via HTTP.
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};

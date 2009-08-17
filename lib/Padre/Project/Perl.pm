@@ -2,6 +2,7 @@ package Padre::Project::Perl;
 
 # This is not usable yet
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Project ();

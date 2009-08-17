@@ -1,5 +1,6 @@
 package Padre::Document::Perl::Lexer;
 
+use 5.008;
 use strict;
 use warnings;
 use PPI::Document;

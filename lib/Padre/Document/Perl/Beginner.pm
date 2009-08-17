@@ -1,5 +1,6 @@
 package Padre::Document::Perl::Beginner;
 
+use 5.008;
 use strict;
 use warnings;
 
