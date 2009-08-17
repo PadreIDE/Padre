@@ -425,6 +425,19 @@ sub time_on_file {
 	return $FileInfo[9];
 }
 
+# Generate MD5-checksum for current file stored on disk
+sub checksum_on_file {
+	return 1;
+	my $filename = $_[0]->filename;
+	return undef unless defined $filename;
+
+	require Digest::MD5;
+
+	open my $FH,$filename or return undef;
+	binmode($FH);
+	return Digest::MD5->new->addfile(*$FH)->hexdigest;
+}
+
 =pod
 
 =head2 load_file
@@ -562,11 +575,15 @@ sub save_file {
 
 	if ( open my $fh, ">$encode", $filename ) {
 		print {$fh} $content;
+		close $fh;
 	} else {
 		$self->set_errstr($!);
 		return;
 	}
+
+	# File must be closed at this time, slow fs/userspace-fs may not return the correct result otherwise!
 	$self->{_timestamp} = $self->time_on_file;
+
 	return 1;
 }
 
