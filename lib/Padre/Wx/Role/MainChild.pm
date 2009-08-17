@@ -15,6 +15,7 @@ are children of L<Padre::Wx::Main>.
 
 =cut
 
+use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};

@@ -1,5 +1,6 @@
 package Padre::Wx::Dialog::Text;
 
+use 5.008;
 use strict;
 use warnings;
 

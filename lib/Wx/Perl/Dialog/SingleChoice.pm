@@ -1,5 +1,6 @@
 package Wx::Perl::Dialog::SingleChoice;
 
+use 5.008;
 use strict;
 use warnings;
 

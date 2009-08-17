@@ -2,6 +2,7 @@ package Padre::Wx::Dialog::HTML;
 
 # Provides a base class for dialogs that are built using dynamic HTML
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Wx             ();

@@ -2,6 +2,7 @@ package Padre::Wx::Dialog::PluginManager;
 
 # The Plugin Manager GUI for Padre
 
+use 5.008;
 use strict;
 use warnings;
 use Carp 'croak';

@@ -2,6 +2,7 @@ package Padre::Wx::Dialog::SessionManager;
 
 # This file is part of Padre, the Perl ide.
 
+use 5.008;
 use strict;
 use warnings;
 use POSIX qw{ strftime };
