@@ -610,12 +610,20 @@ sub mime_type_by_extension {
 sub is_perl6 {
 	my ($text) = @_;
 	return if not $text;
+
+	# Perl 6 POD
 	return 1 if $text =~ /^=begin\s+pod/msx;
 
 	# Needed for eg/perl5_with_perl6_example.pod
 	return if $text =~ /^=head[12]/msx;
 
+	# Special case: If MooseX::Declare is there, then we're in Perl 5 land
+	return if $text =~ /^\s*use\s+MooseX::Declare/msx;
+
+	# Perl 6 'use v6;'
 	return 1 if $text =~ /^\s*use\s+v6;/msx;
+
+	# One of Perl 6 compilation units
 	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
 
 	return;
