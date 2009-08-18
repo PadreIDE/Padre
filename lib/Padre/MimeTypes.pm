@@ -609,6 +609,8 @@ sub mime_type_by_extension {
 # but make sure that is real code and not just a comment or doc in some perl 5 code...
 sub is_perl6 {
 	my ($text) = @_;
+
+	# empty/undef text is not Perl 6 :)
 	return if not $text;
 
 	# Perl 6 POD
@@ -616,6 +618,9 @@ sub is_perl6 {
 
 	# Needed for eg/perl5_with_perl6_example.pod
 	return if $text =~ /^=head[12]/msx;
+
+	# =cut is a sure sign for Perl 5 code (moritz++)
+	return if $text =~ /^=cut/msx;
 
 	# Special case: If MooseX::Declare is there, then we're in Perl 5 land
 	return if $text =~ /^\s*use\s+MooseX::Declare/msx;
@@ -626,6 +631,7 @@ sub is_perl6 {
 	# One of Perl 6 compilation units
 	return 1 if $text =~ /^\s*(?:class|grammar|module|role)\s+\w/msx;
 
+	# Not Perl 6 for sure...
 	return;
 }
 
