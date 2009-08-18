@@ -552,6 +552,7 @@ sub _on_tree_end_label_edit {
 # Called when a item is selected
 sub _on_tree_sel_changed {
 	my ( $self, $event ) = @_;
+	return if not $self->parent->can('project_dir');
 	my $node_data = $self->GetPlData( $event->GetItem );
 
 	# Caches the item path
