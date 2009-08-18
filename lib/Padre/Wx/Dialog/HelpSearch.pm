@@ -112,12 +112,6 @@ sub _create {
 	# wrap everything in a box to add some padding
 	$self->SetMinSize( [ 640, 480 ] );
 	$self->SetSizer( $self->_hbox );
-
-	# focus on the search text box
-	$self->_search_text->SetFocus();
-
-	$self->_search_text->SetValue( $self->_topic );
-	$self->_update_list_box;
 }
 
 #
@@ -236,15 +230,14 @@ sub _setup_events {
 sub showIt {
 	my ( $self, $topic ) = @_;
 
-	if ( $self->IsShown ) {
-		$self->SetFocus;
-	} else {
+	if (not $self->IsShown ) {
 		$self->_topic( $topic || '' );
 		$self->_search_text->ChangeValue( $self->_topic );
 		$self->_search;
 		$self->_update_list_box;
 		$self->Show(1);
 	}
+	$self->_search_text->SetFocus();
 }
 
 #
