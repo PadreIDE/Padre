@@ -346,6 +346,8 @@ sub _update_subdirs {
 	for my $item ( 1 .. $self->GetChildrenCount($root) ) {
 
 		( my $node, $cookie ) = $item == 1 ? $self->GetFirstChild($root) : $self->GetNextChild( $root, $cookie );
+		next if not $node->IsOk;
+
 		my $node_data = $self->GetPlData($node);
 		my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
@@ -553,6 +555,8 @@ sub _on_tree_sel_changed {
 	my $node_data = $self->GetPlData( $event->GetItem );
 
 	# Caches the item path
+	print "_on_tree_sel_changed, " . $self . "\n";
+	print "_on_tree_sel_changed, " . $self->parent . "\n";
 	$self->{current_item}->{ $self->parent->project_dir } =
 		File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 }
