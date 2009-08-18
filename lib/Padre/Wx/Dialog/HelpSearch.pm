@@ -230,7 +230,7 @@ sub _setup_events {
 sub showIt {
 	my ( $self, $topic ) = @_;
 
-	if (not $self->IsShown ) {
+	if ( not $self->IsShown ) {
 		$self->_topic( $topic || '' );
 		$self->_search_text->ChangeValue( $self->_topic );
 		$self->_search;

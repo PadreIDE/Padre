@@ -433,7 +433,7 @@ sub checksum_on_file {
 
 	require Digest::MD5;
 
-	open my $FH,$filename or return undef;
+	open my $FH, $filename or return undef;
 	binmode($FH);
 	return Digest::MD5->new->addfile(*$FH)->hexdigest;
 }
