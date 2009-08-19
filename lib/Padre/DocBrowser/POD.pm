@@ -113,6 +113,7 @@ sub render {
 	my $self = shift;
 	my $doc  = shift;
 	my $data = '';
+	return if not $doc;
 	my $pod  = IO::Scalar->new( \$doc->body );
 	my $out  = IO::Scalar->new( \$data );
 	my $v    = Pod::Simple::XHTML->new;

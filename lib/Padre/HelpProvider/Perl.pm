@@ -201,7 +201,8 @@ sub help_render {
 		# Render using perldoc pseudo code package
 		my $pod = Padre::DocBrowser::POD->new;
 		my $doc = $pod->resolve( $topic, $hints );
-		$html = $pod->render($doc)->body;
+		my $pod_html = $pod->render($doc);
+		$html = $pod_html->body if $pod_html;
 	}
 	return ( $html, $topic );
 }
