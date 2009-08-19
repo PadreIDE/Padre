@@ -228,10 +228,10 @@ sub showIt {
 	my ( $self, $topic ) = @_;
 
 	if ( not $self->IsShown ) {
-		if(not $topic) {
+		if ( not $topic ) {
 			$topic = $self->find_help_topic || '';
 		}
-		$self->_topic( $topic );
+		$self->_topic($topic);
 		$self->_search_text->ChangeValue( $self->_topic );
 		my $doc = Padre::Current->document;
 		if ($doc) {
@@ -283,17 +283,20 @@ sub find_help_topic {
 
 	my $topic = '';
 	my $doc   = Padre::Current->document;
-	if ( $doc ) {
+	if ($doc) {
+
 		# The selected/under the cursor word is a help topic
 		my $editor = $doc->editor;
 		$topic = $editor->GetSelectedText;
 		if ( not $topic ) {
 			my $pos = $editor->GetCurrentPos;
-			$topic = $editor->GetTextRange( $editor->WordStartPosition($pos,1), 
-				$editor->WordEndPosition($pos,1) );
+			$topic = $editor->GetTextRange(
+				$editor->WordStartPosition( $pos, 1 ),
+				$editor->WordEndPosition( $pos, 1 )
+			);
 		}
 	}
-	
+
 	return $topic;
 }
 
