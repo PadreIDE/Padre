@@ -231,7 +231,7 @@ sub showIt {
 		$self->_topic( $topic || '' );
 		$self->_search_text->ChangeValue( $self->_topic );
 		my $doc = Padre::Current->document;
-		if($doc) {
+		if ($doc) {
 			$self->_help_provider(undef);
 		}
 		$self->_search;
@@ -254,7 +254,7 @@ sub _search() {
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
 		my $doc = Padre::Current->document;
-		if($doc) {
+		if ($doc) {
 			eval { $self->_help_provider( $doc->get_help_provider ); };
 			if ($@) {
 				warn "Error while calling get_help_provider: $@\n";

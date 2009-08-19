@@ -128,7 +128,7 @@ sub help_init {
 
 	# Add Perl Operators Reference
 	$self->{perlopref} = $self->_parse_perlopref;
-	push @index, keys %{$self->{perlopref}};
+	push @index, keys %{ $self->{perlopref} };
 
 	# Return a unique sorted index
 	my %seen = ();
@@ -184,23 +184,27 @@ sub help_render {
 	my $html;
 
 	if ( $self->{perlopref}->{$topic} ) {
+
 		# Yes, it is a Perl 5 Operator
-		$html = Padre::Pod2HTML->pod2html($self->{perlopref}->{$topic});
+		$html = Padre::Pod2HTML->pod2html( $self->{perlopref}->{$topic} );
 	} else {
+
 		# Detect perlvar, perlfunc or simply nothing
 		my $hints = ();
 		if ( $topic =~ /^(\$|\@|\%|ARGV$|ARGVOUT$)/ ) {
+
 			# it is definitely a Perl Special Variable
 			$hints->{perlvar} = 1;
 		} elsif ( $Type{$topic} ) {
+
 			# it is Perl function, handle q/.../, m//, y///, tr///
 			$hints->{perlfunc} = 1;
 			$topic =~ s/\/.*?\/$//;
 		}
 
 		# Render using perldoc pseudo code package
-		my $pod = Padre::DocBrowser::POD->new;
-		my $doc = $pod->resolve( $topic, $hints );
+		my $pod      = Padre::DocBrowser::POD->new;
+		my $doc      = $pod->resolve( $topic, $hints );
 		my $pod_html = $pod->render($doc);
 		$html = $pod_html->body if $pod_html;
 	}

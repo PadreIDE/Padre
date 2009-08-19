@@ -114,9 +114,9 @@ sub render {
 	my $doc  = shift;
 	my $data = '';
 	return if not $doc;
-	my $pod  = IO::Scalar->new( \$doc->body );
-	my $out  = IO::Scalar->new( \$data );
-	my $v    = Pod::Simple::XHTML->new;
+	my $pod = IO::Scalar->new( \$doc->body );
+	my $out = IO::Scalar->new( \$data );
+	my $v   = Pod::Simple::XHTML->new;
 	$v->perldoc_url_prefix('perldoc:');
 	$v->output_fh($out);
 	$v->parse_file($pod);
