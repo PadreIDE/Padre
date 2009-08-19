@@ -227,8 +227,12 @@ sub _setup_events {
 sub showIt {
 	my ( $self, $topic ) = @_;
 
+	if(not $topic) {
+		$topic = $self->topic_at_cursor || '';
+	}
+
 	if ( not $self->IsShown ) {
-		$self->_topic( $topic || '' );
+		$self->_topic( $topic );
 		$self->_search_text->ChangeValue( $self->_topic );
 		my $doc = Padre::Current->document;
 		if ($doc) {
@@ -270,6 +274,30 @@ sub _search() {
 	}
 
 	return;
+}
+
+#
+# Returns the context-sensitive Help topic
+#
+sub topic_at_cursor {
+	my $self = shift;
+
+	# find the word under the current cursor position
+	my $topic = '';
+	my $doc   = Padre::Current->document;
+	if ( $doc ) {
+		# make sure it is a Perl document
+		my $editor = $doc->editor;
+		$topic = $editor->GetSelectedText;
+		if ( not $topic ) {
+			my $pos = $editor->GetCurrentPos;
+
+			$topic = $editor->GetTextRange( $editor->WordStartPosition($pos,1), 
+				$editor->WordEndPosition($pos,1) );
+		}
+	}
+	
+	return $topic;
 }
 
 #
