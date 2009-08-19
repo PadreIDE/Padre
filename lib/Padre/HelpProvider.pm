@@ -38,7 +38,7 @@ sub help_render {
 
 #
 # Returns the help topic list
-# 
+#
 sub help_list {
 	warn "help_list, You need to override this to do something useful with help search";
 }

@@ -9,7 +9,8 @@ use Module::CoreList ();
 use Cwd              ();
 
 our $VERSION = '0.43';
-our @ISA = 'Padre::HelpProvider';
+our @ISA     = 'Padre::HelpProvider';
+
 #
 # Initialize help
 #
@@ -124,7 +125,7 @@ sub help_init {
 
 	# Return a unique sorted index
 	my %seen = ();
-	my @unique_sorted_index = sort grep { ! $seen{$_} ++ } @index;
+	my @unique_sorted_index = sort grep { !$seen{$_}++ } @index;
 	$self->{help_index} = @unique_sorted_index;
 }
 
@@ -209,7 +210,7 @@ sub help_render {
 
 #
 # Returns the help topic list
-# 
+#
 sub help_list {
 	my $self = shift;
 	return $self->{help_list};

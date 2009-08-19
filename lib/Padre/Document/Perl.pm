@@ -992,7 +992,7 @@ sub on_help_list {
 
 	# Return a unique sorted index
 	my %seen = ();
-	my @unique_sorted_index = sort grep { ! $seen{$_} ++ } @index;
+	my @unique_sorted_index = sort grep { !$seen{$_}++ } @index;
 	return @unique_sorted_index;
 }
 
@@ -1031,6 +1031,13 @@ sub _parse_perlopref {
 	close $fh;
 
 	return %index;
+}
+
+#
+# Returns Perl's Help Provider
+#
+sub get_help_provider {
+	return Padre::HelpProvider::Perl->new;
 }
 
 1;
