@@ -5,11 +5,11 @@ use strict;
 use warnings;
 
 use Pod::Functions;
-use Module::CoreList ();
-use Cwd              ();
-use Padre::HelpProvider ();
+use Module::CoreList       ();
+use Cwd                    ();
+use Padre::HelpProvider    ();
 use Padre::DocBrowser::POD ();
-use Padre::Pod2HTML ();
+use Padre::Pod2HTML        ();
 
 our $VERSION = '0.43';
 our @ISA     = 'Padre::HelpProvider';
@@ -180,7 +180,7 @@ sub help_render {
 
 	my %perlopref = $self->_parse_perlopref;
 	if ( $perlopref{$topic} ) {
-		my $pod = $perlopref{$topic};
+		my $pod  = $perlopref{$topic};
 		my $html = Padre::Pod2HTML->pod2html($pod);
 		return ( $html, $topic );
 	}

@@ -64,12 +64,12 @@ sub new {
 sub display_help_in_viewer {
 	my $self = shift;
 
-	my ($html, $location);
+	my ( $html, $location );
 	my $selection = $self->_list->GetSelection();
 	if ( $selection != -1 ) {
 		my $topic = $self->_list->GetClientData($selection);
 
-		if ($topic && $self->_help_provider) {
+		if ( $topic && $self->_help_provider ) {
 			eval {
 				( $html, $location ) = $self->_help_provider->help_render($topic);
 				$self->SetTitle( Wx::gettext('Help Search') . " - " . $location );
@@ -250,13 +250,11 @@ sub _search() {
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
 		my $doc = Padre::Current->document;
-		eval {
-			$self->_help_provider( $doc->get_help_provider );
-		};
+		eval { $self->_help_provider( $doc->get_help_provider ); };
 		if ($@) {
 			warn "Error while calling get_help_provider: $@\n";
 		}
-	} 
+	}
 	eval {
 		my @targets_index = @{ $self->_help_provider->help_list };
 		$self->_targets_index( \@targets_index );

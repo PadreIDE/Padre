@@ -841,7 +841,7 @@ sub event_on_left_up {
 # Returns Perl's Help Provider
 #
 sub get_help_provider {
-	require Padre::HelpProvider::Perl; 
+	require Padre::HelpProvider::Perl;
 	return Padre::HelpProvider::Perl->new;
 }
 
