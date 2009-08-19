@@ -63,7 +63,7 @@ sub new {
 sub display_help_in_viewer {
 	my $self = shift;
 
-	my ($help_html, $help_location);
+	my ($html, $location);
 	my $selection = $self->_list->GetSelection();
 	if ( $selection != -1 ) {
 		my $topic = $self->_list->GetClientData($selection);
@@ -72,9 +72,9 @@ sub display_help_in_viewer {
 			my $doc = Padre::Current->document;
 			if ( $doc ) {
 				eval {
-					my $help_provider = $doc->get_help_provider;
-					( $help_html, $help_location ) = $doc->help_render($topic);
-					$self->SetTitle( Wx::gettext('Help Search') . " - " . $help_location );
+					my $provider = $doc->get_help_provider;
+					( $html, $location ) = $provider->help_render($topic);
+					$self->SetTitle( Wx::gettext('Help Search') . " - " . $location );
 				};
 				if ($@) {
 					warn "Error while calling help_render: $@\n";
@@ -83,12 +83,12 @@ sub display_help_in_viewer {
 		}
 	}
 
-	if ( not $help_html ) {
+	if ( not $html ) {
 		$self->SetTitle( Wx::gettext('Help Search') );
-		$help_html = '<b>' . Wx::gettext('No Help found') . '</b>';
+		$html = '<b>' . Wx::gettext('No Help found') . '</b>';
 	}
 
-	$self->_help_viewer->SetPage($help_html);
+	$self->_help_viewer->SetPage($html);
 
 	return;
 }
@@ -255,7 +255,7 @@ sub _search() {
 	if ( $doc ) {
 		eval {
 			my $help_provider = $doc->get_help_provider;
-			my @targets_index = $help_provider->help_list;
+			my @targets_index = @{ $help_provider->help_list };
 			$self->_targets_index( \@targets_index );
 		};
 		if ($@) {
