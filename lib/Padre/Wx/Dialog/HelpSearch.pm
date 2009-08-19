@@ -63,21 +63,21 @@ sub new {
 sub display_help_in_viewer {
 	my $self = shift;
 
-	my $help_html;
+	my ($help_html, $help_location);
 	my $selection = $self->_list->GetSelection();
 	if ( $selection != -1 ) {
-		my $help_target = $self->_list->GetClientData($selection);
+		my $topic = $self->_list->GetClientData($selection);
 
-		if ($help_target) {
+		if ($topic) {
 			my $doc = Padre::Current->document;
-			if ( $doc && $doc->can('on_help_render') ) {
+			if ( $doc ) {
 				eval {
-					my $help_location;
-					( $help_html, $help_location ) = $doc->on_help_render($help_target);
+					my $help_provider = $doc->get_help_provider;
+					( $help_html, $help_location ) = $doc->help_render($topic);
 					$self->SetTitle( Wx::gettext('Help Search') . " - " . $help_location );
 				};
 				if ($@) {
-					warn "Error while calling on_help_render: $@\n";
+					warn "Error while calling help_render: $@\n";
 				}
 			}
 		}
@@ -252,13 +252,14 @@ sub _search() {
 
 	# Generate a sorted file-list based on filename
 	my $doc = Padre::Current->document;
-	if ( $doc && $doc->can('on_help_list') ) {
+	if ( $doc ) {
 		eval {
-			my @targets_index = $doc->on_help_list;
+			my $help_provider = $doc->get_help_provider;
+			my @targets_index = $help_provider->help_list;
 			$self->_targets_index( \@targets_index );
 		};
 		if ($@) {
-			warn "Error while calling on_help_list: $@\n";
+			warn "Error while calling help_list: $@\n";
 		}
 	}
 

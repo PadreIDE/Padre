@@ -7,6 +7,7 @@ use warnings;
 use Pod::Functions;
 use Module::CoreList ();
 use Cwd              ();
+use Padre::HelpProvider ();
 
 our $VERSION = '0.43';
 our @ISA     = 'Padre::HelpProvider';
