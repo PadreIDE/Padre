@@ -916,9 +916,25 @@ L<perlsyn/"Smart matching in detail">
 
 =head3 Description
 
+This is the bitwise and operator.  It ands together the individual bits of X
+and Y.  
+
 =head3 Example
 
+    #In ASCII (and UTF-8)
+    #"a"       is 0b0110_0001
+    #"b"       is 0b0110_0010
+    #"a" & "b" is 0b0110_0000 or "`" 
+    my $x = "a" & "b"; #$x is now "`"
 
+    #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
+    #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
+    #0x4545 & 0x00FF is 0b0000_0000_0000_0000_0000_0100_0000_0101 or 0x0045
+    my $y = 0x4545 & 0x00FF; #$y is now 0x0045
+
+=head3 See also
+
+L<perlop/Integer Arithmetic> and L<perlop/Bitwise String Operators>.
 
 =head2 X | Y
 
