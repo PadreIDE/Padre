@@ -32,7 +32,7 @@ a command line environment.
 On Microsoft Windows F<perl.exe> is the command line Perl binary and
 F<wperl.exe> is the windowing Perl binary.
 
-On Mac OSX (Darwin) F<perl.exe> is the command line Perl binary and
+On Mac OS X (Darwin) F<perl.exe> is the command line Perl binary and
 F<wxPerl.exe> is a wxWidgets-specific Perl binary.
 
 =head2 PAR Support
@@ -159,7 +159,7 @@ The C<wxperl> function is a Perl executable location function that
 specifically tries to find a windowing Perl for running wxWidgets
 applications. In some situations you may critically need a wxWidgets
 Perl so that a command line box is not show (Windows) or so that Wx
-starts up properly at all (Mac OSX).
+starts up properly at all (Mac OS X).
 
 Returns a path to a perl suitable for the execution of L<Wx>-based
 applications, or C<undef> if one cannot be found.

@@ -19,7 +19,7 @@ sub get_perl {
 	require Padre::Perl;
 	my $perl = Padre::Perl::wxperl();
 	unless ( -e $perl ) {
-		error("padre needs to run using wxPerl on OSX");
+		error("padre needs to run using wxPerl on OS X");
 	}
 	return $perl;
 }
