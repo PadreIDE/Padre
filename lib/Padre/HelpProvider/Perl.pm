@@ -8,6 +8,8 @@ use Pod::Functions;
 use Module::CoreList ();
 use Cwd              ();
 use Padre::HelpProvider ();
+use Padre::DocBrowser::POD ();
+use Padre::Pod2HTML ();
 
 our $VERSION = '0.43';
 our @ISA     = 'Padre::HelpProvider';
@@ -127,7 +129,7 @@ sub help_init {
 	# Return a unique sorted index
 	my %seen = ();
 	my @unique_sorted_index = sort grep { !$seen{$_}++ } @index;
-	$self->{help_index} = @unique_sorted_index;
+	$self->{help_list} = \@unique_sorted_index;
 }
 
 #
@@ -179,14 +181,11 @@ sub help_render {
 	my %perlopref = $self->_parse_perlopref;
 	if ( $perlopref{$topic} ) {
 		my $pod = $perlopref{$topic};
-		require Padre::Pod2HTML;
 		my $html = Padre::Pod2HTML->pod2html($pod);
 		return ( $html, $topic );
 	}
 
 
-	require Padre::DocBrowser::POD;
-	use Pod::Functions;
 	$Type{say}   = 1;
 	$Type{state} = 1;
 	$Type{break} = 1;
