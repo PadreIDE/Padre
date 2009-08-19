@@ -4,8 +4,11 @@ Changes for Perl Application Development and Refactoring Environment
     - updated Czech translation (MMASLANO)
     - Help Search now supports perlopref.pod parsing - Perl operator reference 
       (AZAWAWI)
-    - Fixed various "Help Search" dialog bugs for perlvars and CORE modules (AZAWAWI)
+    - Fixed various "Help Search" dialog bugs for perlvars and CORE modules 
+      (AZAWAWI)
     - "Directory Browser" stability fixes (AZAWAWI)
+    - Refactored "Help Search" to use document help providers. This will make it
+      faster (AZAWAWI)
 
 0.43 2009.08.16
     - Revised nice splash screen slightly. Move original artwork
