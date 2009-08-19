@@ -231,6 +231,10 @@ Padre::HelpProvider::Perl - Perl 5 Help Provider
 
 Perl 5 Help index is built here and rendered.
 
+=head1 AUTHOR
+
+Ahmad M. Zawawi C<ahmad.zawawi@gmail.com>
+
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
