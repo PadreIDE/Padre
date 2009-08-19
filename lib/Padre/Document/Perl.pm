@@ -990,7 +990,10 @@ sub on_help_list {
 	my %perlopref = $self->_parse_perlopref;
 	push @index, keys %perlopref;
 
-	return sort @index;
+	# Return a unique sorted index
+	my %seen = ();
+	my @unique_sorted_index = sort grep { ! $seen{$_} ++ } @index;
+	return @unique_sorted_index;
 }
 
 sub _parse_perlopref {
