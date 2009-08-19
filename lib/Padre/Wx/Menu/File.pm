@@ -145,7 +145,9 @@ sub new {
 		name       => 'file.close_current_project',
 		label      => Wx::gettext('Close This Project'),
 		menu_event => sub {
-			my $dir = $_[0]->current->document->project_dir;
+			my $doc = $_[0]->current->document;
+			return if not $doc;
+			my $dir = $doc->project_dir;
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}
