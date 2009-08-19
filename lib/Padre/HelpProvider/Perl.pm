@@ -117,14 +117,18 @@ sub help_init {
 		);
 
 	# Add Perl functions (perlfunc)
+	$Type{say}   = 1;
+	$Type{state} = 1;
+	$Type{break} = 1;
 	push @index, keys %Type;
 
 	# Add CORE modules
 	# Note the 0 + $] to cast it to number
 	push @index, Module::CoreList->find_modules( qr//, 0 + $] );
 
-	my %perlopref = $self->_parse_perlopref;
-	push @index, keys %perlopref;
+	# Add Perl Operators Reference
+	$self->{perlopref} = $self->_parse_perlopref;
+	push @index, keys %{$self->{perlopref}};
 
 	# Return a unique sorted index
 	my %seen = ();
@@ -169,7 +173,7 @@ sub _parse_perlopref {
 	# and we're done
 	close $fh;
 
-	return %index;
+	return \%index;
 }
 
 #
@@ -177,35 +181,29 @@ sub _parse_perlopref {
 #
 sub help_render {
 	my ( $self, $topic ) = @_;
+	my $html;
 
-	my %perlopref = $self->_parse_perlopref;
-	if ( $perlopref{$topic} ) {
-		my $pod  = $perlopref{$topic};
-		my $html = Padre::Pod2HTML->pod2html($pod);
-		return ( $html, $topic );
+	if ( $self->{perlopref}->{$topic} ) {
+		# Yes, it is a Perl 5 Operator
+		$html = Padre::Pod2HTML->pod2html($self->{perlopref}->{$topic});
+	} else {
+		# Detect perlvar, perlfunc or simply nothing
+		my $hints = ();
+		if ( $topic =~ /^(\$|\@|\%|ARGV$|ARGVOUT$)/ ) {
+			# it is definitely a Perl Special Variable
+			$hints->{perlvar} = 1;
+		} elsif ( $Type{$topic} ) {
+			# it is Perl function, handle q/.../, m//, y///, tr///
+			$hints->{perlfunc} = 1;
+			$topic =~ s/\/.*?\/$//;
+		}
+
+		# Render using perldoc pseudo code package
+		my $pod = Padre::DocBrowser::POD->new;
+		my $doc = $pod->resolve( $topic, $hints );
+		$html = $pod->render($doc)->body;
 	}
-
-
-	$Type{say}   = 1;
-	$Type{state} = 1;
-	$Type{break} = 1;
-
-	my $hints = ();
-
-	if ( $topic =~ /^(\$|\@|\%|ARGV$|ARGVOUT$)/ ) {
-		$hints->{perlvar} = 1;
-	} elsif ( $Type{$topic} ) {
-		$hints->{perlfunc} = 1;
-	}
-
-	# handle topics like q/.../, m//, y///, tr///
-	$topic =~ s/\/.*?\/$//;
-
-	my $pod = Padre::DocBrowser::POD->new;
-	my $doc = $pod->resolve( $topic, $hints );
-
-	my $html = $pod->render($doc);
-	return ( $html->body, $topic );
+	return ( $html, $topic );
 }
 
 #
