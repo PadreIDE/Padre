@@ -36,10 +36,6 @@ use Pod::Simple::XHTML ();
 our $VERSION = '0.43';
 our @ISA     = 'Pod::Simple::XHTML';
 
-use Class::XSAccessor getters => {
-	html => 'scratch', # Method to fetch out the scratch
-};
-
 #####################################################################
 # One-Shot Method
 
@@ -47,8 +43,11 @@ sub pod2html {
 	my $class = shift;
 	my $input = shift;
 	my $self  = $class->new(@_);
+
+	$self->{html} = '';
 	$self->parse_string_document($input);
-	return $self->html;
+
+	return $self->{html};
 }
 
 #####################################################################
@@ -66,9 +65,10 @@ sub new {
 	return $self;
 }
 
-# Disable emit so we build up a giant scratch variable
+# Override emit to build html from scratch :)
 sub emit {
-	return;
+	my $self = shift;
+	$self->{html} .= $self->{scratch};
 }
 
 #####################################################################
@@ -81,6 +81,7 @@ sub emit {
 =head1 AUTHOR
 
 Adam Kennedy C<adamk@cpan.org>
+Ahmad M. Zawawi C<ahmad.zawawi@gmail.com>
 
 =head1 SEE ALSO
 
