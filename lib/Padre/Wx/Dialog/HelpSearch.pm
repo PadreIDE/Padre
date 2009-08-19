@@ -230,6 +230,10 @@ sub showIt {
 	if ( not $self->IsShown ) {
 		$self->_topic( $topic || '' );
 		$self->_search_text->ChangeValue( $self->_topic );
+		my $doc = Padre::Current->document;
+		if($doc) {
+			$self->_help_provider(undef);
+		}
 		$self->_search;
 		$self->_update_list_box;
 		$self->Show(1);
@@ -250,9 +254,11 @@ sub _search() {
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
 		my $doc = Padre::Current->document;
-		eval { $self->_help_provider( $doc->get_help_provider ); };
-		if ($@) {
-			warn "Error while calling get_help_provider: $@\n";
+		if($doc) {
+			eval { $self->_help_provider( $doc->get_help_provider ); };
+			if ($@) {
+				warn "Error while calling get_help_provider: $@\n";
+			}
 		}
 	}
 	eval {
