@@ -22,7 +22,7 @@ use Class::XSAccessor accessors => {
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
 	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
-	_help_provider => '_help_provider',  # Help Provider
+	_help_provider => '_help_provider', # Help Provider
 	_status        => '_status'         # status label
 };
 
@@ -154,7 +154,7 @@ sub _create_controls {
 	$self->_help_viewer->SetPage('');
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
-	$self->_status( Wx::StaticText->new( $self, -1, '' ));
+	$self->_status( Wx::StaticText->new( $self, -1, '' ) );
 	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	$self->_vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
@@ -166,8 +166,8 @@ sub _create_controls {
 		$self->_help_viewer,                                                        1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
 	);
-	$self->_vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_vbox->Add( $close_button, 0, Wx::wxALL | Wx::wxALIGN_LEFT, 1 );
+	$self->_vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$self->_vbox->Add( $close_button,  0, Wx::wxALL | Wx::wxALIGN_LEFT, 1 );
 
 	$self->_setup_events();
 
@@ -323,7 +323,7 @@ sub _update_list_box() {
 	if ( $pos > 0 ) {
 		$self->_list->Select(0);
 	}
-	$self->_status->SetLabel( "Found $pos help topic(s)\n" );
+	$self->_status->SetLabel("Found $pos help topic(s)\n");
 	$self->display_help_in_viewer;
 
 	return;
