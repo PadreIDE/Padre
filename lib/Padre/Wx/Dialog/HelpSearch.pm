@@ -70,7 +70,6 @@ sub _display_help_in_viewer {
 		if ( $topic && $self->_help_provider ) {
 			eval {
 				( $html, $location ) = $self->_help_provider->help_render($topic);
-				$self->SetTitle( Wx::gettext('Help Search') . " - " . $location );
 			};
 			if ($@) {
 				warn "Error while calling help_render: $@\n";
@@ -79,10 +78,10 @@ sub _display_help_in_viewer {
 	}
 
 	if ( not $html ) {
-		$self->SetTitle( Wx::gettext('Help Search') );
 		$html = '<b>' . Wx::gettext('No Help found') . '</b>';
 	}
 
+	$self->SetTitle( Wx::gettext('Help Search') . (defined $location ? ' - ' . $location : '') );
 	$self->_help_viewer->SetPage($html);
 
 	return;
@@ -132,7 +131,7 @@ sub _create_controls {
 			$self,
 			-1,
 			Wx::wxDefaultPosition,
-			Wx::wxDefaultSize,
+			[180,-1],
 			[],
 			Wx::wxLB_SINGLE
 		)
@@ -153,7 +152,6 @@ sub _create_controls {
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 	$self->_status( Wx::StaticText->new( $self, -1, '' ) );
-	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
@@ -161,13 +159,13 @@ sub _create_controls {
 	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$vbox->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND,     0 );
+	$vbox->Add( $close_button,  0, Wx::wxALL | Wx::wxALIGN_LEFT, 0 );
 	$self->_hbox->Add( $vbox,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_hbox->Add(
 		$self->_help_viewer,                                                        1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
 	);
-	$vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $close_button,  0, Wx::wxALL | Wx::wxALIGN_LEFT, 1 );
 
 	$self->_setup_events();
 
