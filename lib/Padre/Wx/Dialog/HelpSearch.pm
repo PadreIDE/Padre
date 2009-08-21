@@ -18,7 +18,7 @@ use Class::XSAccessor accessors => {
 	_vbox          => '_vbox',          # vertical box sizer
 	_search_text   => '_search_text',   # search text control
 	_list          => '_list',          # matches list
-	_targets_index => '_targets_index', # targets index
+	_index 	       => '_index',         # help topic list
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
 	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
@@ -56,8 +56,6 @@ sub new {
 	return $self;
 }
 
-
-# -- event handler
 
 #
 # Fetches the current selection's help HTML
@@ -109,6 +107,8 @@ sub _create {
 	# wrap everything in a box to add some padding
 	$self->SetMinSize( [ 640, 480 ] );
 	$self->SetSizer( $self->_hbox );
+	
+	return;
 }
 
 #
@@ -213,7 +213,8 @@ sub _setup_events {
 			$self->display_help_in_viewer;
 		}
 	);
-
+	
+	return;
 }
 
 #
@@ -237,6 +238,8 @@ sub showIt {
 		$self->Show(1);
 	}
 	$self->_search_text->SetFocus();
+
+	return;
 }
 
 #
@@ -247,7 +250,7 @@ sub _search() {
 
 	# a default..
 	my @empty = ();
-	$self->_targets_index( \@empty );
+	$self->_index( \@empty );
 
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
@@ -261,7 +264,7 @@ sub _search() {
 	}
 	eval {
 		my @targets_index = @{ $self->_help_provider->help_list };
-		$self->_targets_index( \@targets_index );
+		$self->_index( \@targets_index );
 	};
 	if ($@) {
 		warn "Error while calling help_list: $@\n";
@@ -301,7 +304,7 @@ sub find_help_topic {
 sub _update_list_box() {
 	my $self = shift;
 
-	if ( not $self->_targets_index ) {
+	if ( not $self->_index ) {
 		$self->_search;
 	}
 
@@ -311,7 +314,7 @@ sub _update_list_box() {
 	#Populate the list box now
 	$self->_list->Clear();
 	my $pos = 0;
-	foreach my $target ( @{ $self->_targets_index } ) {
+	foreach my $target ( @{ $self->_index } ) {
 		if ( $target =~ /^$search_expr$/i ) {
 			$self->_list->Insert( $target, 0, $target );
 			$pos++;
