@@ -60,7 +60,7 @@ sub new {
 #
 # Fetches the current selection's help HTML
 #
-sub display_help_in_viewer {
+sub _display_help_in_viewer {
 	my $self = shift;
 
 	my ( $html, $location );
@@ -210,7 +210,7 @@ sub _setup_events {
 		$self,
 		$self->_list,
 		sub {
-			$self->display_help_in_viewer;
+			$self->_display_help_in_viewer;
 		}
 	);
 	
@@ -327,7 +327,7 @@ sub _update_list_box() {
 		$self->_list->Select(0);
 	}
 	$self->_status->SetLabel("Found $pos help topic(s)\n");
-	$self->display_help_in_viewer;
+	$self->_display_help_in_viewer;
 
 	return;
 }
