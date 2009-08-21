@@ -17,7 +17,7 @@ use Class::XSAccessor accessors => {
 	_hbox          => '_hbox',          # horizontal box sizer
 	_search_text   => '_search_text',   # search text control
 	_list          => '_list',          # matches list
-	_index 	       => '_index',         # help topic list
+	_index         => '_index',         # help topic list
 	_help_viewer   => '_help_viewer',   # HTML Help Viewer
 	_main          => '_main',          # Padre's main window
 	_topic         => '_topic',         # default help topic
@@ -68,9 +68,7 @@ sub _display_help_in_viewer {
 		my $topic = $self->_list->GetClientData($selection);
 
 		if ( $topic && $self->_help_provider ) {
-			eval {
-				( $html, $location ) = $self->_help_provider->help_render($topic);
-			};
+			eval { ( $html, $location ) = $self->_help_provider->help_render($topic); };
 			if ($@) {
 				warn "Error while calling help_render: $@\n";
 			}
@@ -81,7 +79,7 @@ sub _display_help_in_viewer {
 		$html = '<b>' . Wx::gettext('No Help found') . '</b>';
 	}
 
-	$self->SetTitle( Wx::gettext('Help Search') . (defined $location ? ' - ' . $location : '') );
+	$self->SetTitle( Wx::gettext('Help Search') . ( defined $location ? ' - ' . $location : '' ) );
 	$self->_help_viewer->SetPage($html);
 
 	return;
@@ -104,7 +102,7 @@ sub _create {
 	# wrap everything in a box to add some padding
 	$self->SetMinSize( [ 640, 480 ] );
 	$self->SetSizer( $self->_hbox );
-	
+
 	return;
 }
 
@@ -131,7 +129,7 @@ sub _create_controls {
 			$self,
 			-1,
 			Wx::wxDefaultPosition,
-			[180,-1],
+			[ 180, -1 ],
 			[],
 			Wx::wxLB_SINGLE
 		)
@@ -155,13 +153,13 @@ sub _create_controls {
 
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	$vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$vbox->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND,     0 );
-	$vbox->Add( $close_button,  0, Wx::wxALL | Wx::wxALIGN_LEFT, 0 );
-	$self->_hbox->Add( $vbox,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_status,      0, Wx::wxALL | Wx::wxEXPAND,     0 );
+	$vbox->Add( $close_button,       0, Wx::wxALL | Wx::wxALIGN_LEFT, 0 );
+	$self->_hbox->Add( $vbox, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_hbox->Add(
 		$self->_help_viewer,                                                        1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
@@ -211,7 +209,7 @@ sub _setup_events {
 			$self->_display_help_in_viewer;
 		}
 	);
-	
+
 	return;
 }
 
