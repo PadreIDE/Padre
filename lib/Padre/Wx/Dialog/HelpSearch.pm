@@ -15,7 +15,6 @@ use Padre::Wx::Icon ();
 # accessors
 use Class::XSAccessor accessors => {
 	_hbox          => '_hbox',          # horizontal box sizer
-	_vbox          => '_vbox',          # vertical box sizer
 	_search_text   => '_search_text',   # search text control
 	_list          => '_list',          # matches list
 	_index 	       => '_index',         # help topic list
@@ -99,7 +98,6 @@ sub _create {
 
 	# create sizer that will host all controls
 	$self->_hbox( Wx::BoxSizer->new(Wx::wxHORIZONTAL) );
-	$self->_vbox( Wx::BoxSizer->new(Wx::wxVERTICAL) );
 
 	# create the controls
 	$self->_create_controls;
@@ -157,17 +155,19 @@ sub _create_controls {
 	$self->_status( Wx::StaticText->new( $self, -1, '' ) );
 	my $hsizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
-	$self->_vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_vbox->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$self->_hbox->Add( $self->_vbox,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
+
+	$vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vbox->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->_hbox->Add( $vbox,        0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_hbox->Add(
 		$self->_help_viewer,                                                        1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 1
 	);
-	$self->_vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$self->_vbox->Add( $close_button,  0, Wx::wxALL | Wx::wxALIGN_LEFT, 1 );
+	$vbox->Add( $self->_status, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $close_button,  0, Wx::wxALL | Wx::wxALIGN_LEFT, 1 );
 
 	$self->_setup_events();
 
