@@ -2712,12 +2712,13 @@ sub on_open {
 	if ($filename) {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
-	$self->_open_file_dialog;
+	$self->open_file_dialog;
 
 	return;
 }
 
-sub _open_file_dialog {
+# TODO: let's allow this to be used by plugins
+sub open_file_dialog {
 	my $self = shift;
 
 	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
@@ -2763,7 +2764,7 @@ sub _open_file_dialog {
 sub on_open_example {
 	my $self = shift;
 	$self->{cwd} = Padre::Util::sharedir('examples');
-	$self->_open_file_dialog;
+	$self->open_file_dialog;
 
 	return;
 }
