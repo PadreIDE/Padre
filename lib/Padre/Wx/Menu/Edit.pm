@@ -568,6 +568,7 @@ sub refresh {
 	# Handle the simple cases
 	$self->{goto}->Enable($hasdoc);
 	$self->{next_problem}->Enable($hasdoc);
+	$self->{quick_fix}->Enable($hasdoc);
 	$self->{autocomp}->Enable($hasdoc);
 	$self->{brace_match}->Enable($hasdoc);
 	$self->{join_lines}->Enable($hasdoc);
