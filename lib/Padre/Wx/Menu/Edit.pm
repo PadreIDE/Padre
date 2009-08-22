@@ -164,6 +164,19 @@ sub new {
 		},
 	);
 
+	$self->{quick_fix} = $self->add_menu_item(
+		$self,
+		name       => 'edit.quick_fix',
+		label      => Wx::gettext('&Quick Fix'),
+		shortcut   => 'Ctrl-2',
+		menu_event => sub {
+
+			#XXXX - implement quick fixe
+			print "Please implement quick fix\n";
+
+		},
+	);
+
 	$self->{autocomp} = $self->add_menu_item(
 		$self,
 		name       => 'edit.autocomp',
