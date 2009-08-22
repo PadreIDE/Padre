@@ -49,7 +49,7 @@ __END__
 
 =head1 NAME
 
-Padre::HelpProvider - Padre Hel Provider API
+Padre::HelpProvider - Padre Help Provider API
 
 =head1 DESCRIPTION
 
