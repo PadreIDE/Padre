@@ -175,11 +175,23 @@ sub new {
 			return if not $doc;
 			my $editor = $doc->editor;
 			$editor->AutoCompSetSeparator(ord '|');
-			my @list = (
-				'Cult of Done Manifesto',
-				'Not knowing',
-				'Action',
-				'Completion');
+			my @list = ();
+			if ( $doc->can('event_on_quick_fix') ) {
+
+				# add list items from callbacks
+				my @items = $doc->event_on_quick_fix($editor);
+				foreach my $item (@items) {
+
+					# add the list
+					push @list, $item->{text};
+
+					# and register its action
+					#$listeners{$item_count} = $item->{listener};
+				}
+				if(scalar @items == 0) {
+					@list = (Wx::gettext('No suggestions'));
+				}
+			}
 			my $words = join('|', @list);
 			Wx::Event::EVT_STC_USERLISTSELECTION(
 				$main, $editor, sub {
