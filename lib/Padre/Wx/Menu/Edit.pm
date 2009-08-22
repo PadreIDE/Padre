@@ -176,27 +176,41 @@ sub new {
 			my $editor = $doc->editor;
 			$editor->AutoCompSetSeparator(ord '|');
 			my @list = ();
+			my @items = ();
 			if ( $doc->can('event_on_quick_fix') ) {
 
 				# add list items from callbacks
-				my @items = $doc->event_on_quick_fix($editor);
+				@items = $doc->event_on_quick_fix($editor);
+				my $item_count = 0;
 				foreach my $item (@items) {
-
-					# add the list
 					push @list, $item->{text};
-
-					# and register its action
-					#$listeners{$item_count} = $item->{listener};
 				}
 			}
-			if(scalar @list == 0) {
+			my $empty_list = (scalar @list == 0);
+			if($empty_list) {
 				@list = (Wx::gettext('No suggestions'));
-			}
+			} 
 			my $words = join('|', @list);
 			Wx::Event::EVT_STC_USERLISTSELECTION(
 				$main, $editor, sub {
 					my ($self, $event) = @_;
-					print "selected " . $event->GetText ."\n";
+					return if $empty_list;
+					my $text = $event->GetText;
+					my $selection;
+					for my $item (@items) {
+						if($item->{text} eq $text) {
+							$selection = $item;
+							last;
+						}
+					}
+					if($selection) {
+						eval {
+							&{$selection->{listener}}();
+						};
+						if($@) {
+							warn "Failed while calling Quick fix " . $selection->{text} . "\n";
+						}
+					}
 				},
 			);
 			$editor->UserListShow(1, $words);
