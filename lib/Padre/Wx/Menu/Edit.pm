@@ -188,9 +188,9 @@ sub new {
 					# and register its action
 					#$listeners{$item_count} = $item->{listener};
 				}
-				if(scalar @items == 0) {
-					@list = (Wx::gettext('No suggestions'));
-				}
+			}
+			if(scalar @list == 0) {
+				@list = (Wx::gettext('No suggestions'));
 			}
 			my $words = join('|', @list);
 			Wx::Event::EVT_STC_USERLISTSELECTION(
