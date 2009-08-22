@@ -4545,6 +4545,26 @@ sub set_mimetype {
 	$self->refresh;
 }
 
+=pod
+
+=head3 new_document_from_string
+
+    $main->new_document_from_string( $string );
+
+Create a new document in Padre with the string value.
+
+Note: this method may not belong here...
+
+=cut
+sub new_document_from_string {
+	my( $self, $str ) = @_;
+	# we don't know the mimetype of the string being passed in.
+	$self->on_new();
+	my @ids = $self->pageids;
+	my @docs = $self->documents;
+	my $doc = $docs[$ids[-1]];
+	$doc->text_set($str);		
+}
 1;
 
 =pod
