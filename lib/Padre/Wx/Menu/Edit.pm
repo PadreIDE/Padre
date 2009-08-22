@@ -171,8 +171,23 @@ sub new {
 		shortcut   => 'Ctrl-2',
 		menu_event => sub {
 
-			#XXXX - implement quick fixe
-			print "Please implement quick fix\n";
+			my $doc = Padre::Current->document;
+			return if not $doc;
+			my $editor = $doc->editor;
+			$editor->AutoCompSetSeparator(ord '|');
+			my @list = (
+				'Cult of Done Manifesto',
+				'Not knowing',
+				'Action',
+				'Completion');
+			my $words = join('|', @list);
+			Wx::Event::EVT_STC_USERLISTSELECTION(
+				$main, $editor, sub {
+					my ($self, $event) = @_;
+					print "selected " . $event->GetText ."\n";
+				},
+			);
+			$editor->UserListShow(1, $words);
 
 		},
 	);
