@@ -258,6 +258,7 @@ sub _search() {
 			}
 		}
 	}
+	return if not $self->_help_provider;
 	eval {
 		my @targets_index = @{ $self->_help_provider->help_list };
 		$self->_index( \@targets_index );
