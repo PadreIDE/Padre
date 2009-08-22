@@ -174,8 +174,8 @@ sub new {
 			my $doc = Padre::Current->document;
 			return if not $doc;
 			my $editor = $doc->editor;
-			$editor->AutoCompSetSeparator(ord '|');
-			my @list = ();
+			$editor->AutoCompSetSeparator( ord '|' );
+			my @list  = ();
 			my @items = ();
 			if ( $doc->can('event_on_quick_fix') ) {
 
@@ -186,34 +186,34 @@ sub new {
 					push @list, $item->{text};
 				}
 			}
-			my $empty_list = (scalar @list == 0);
-			if($empty_list) {
-				@list = (Wx::gettext('No suggestions'));
-			} 
-			my $words = join('|', @list);
+			my $empty_list = ( scalar @list == 0 );
+			if ($empty_list) {
+				@list = ( Wx::gettext('No suggestions') );
+			}
+			my $words = join( '|', @list );
 			Wx::Event::EVT_STC_USERLISTSELECTION(
-				$main, $editor, sub {
-					my ($self, $event) = @_;
+				$main, $editor,
+				sub {
+					my ( $self, $event ) = @_;
 					return if $empty_list;
 					my $text = $event->GetText;
 					my $selection;
 					for my $item (@items) {
-						if($item->{text} eq $text) {
+						if ( $item->{text} eq $text ) {
 							$selection = $item;
 							last;
 						}
 					}
-					if($selection) {
-						eval {
-							&{$selection->{listener}}();
-						};
-						if($@) {
+					if ($selection) {
+						eval { &{ $selection->{listener} }(); };
+						if ($@) {
 							warn "Failed while calling Quick fix " . $selection->{text} . "\n";
 						}
 					}
 				},
 			);
-			$editor->UserListShow(1, $words);
+			$editor->UserListShow( 1, $words );
+
 =pod
 =head2 Quick Fix (Shortcut: Ctrl + Shift + 1)
 
@@ -244,6 +244,7 @@ Please see the following sample implementation:
 	}
 
 =cut
+
 		},
 	);
 
