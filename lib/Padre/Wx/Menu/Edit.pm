@@ -200,7 +200,36 @@ sub new {
 				},
 			);
 			$editor->UserListShow(1, $words);
+=pod
+=head2 Quick Fix (Shortcut: Ctrl + Shift + 1)
 
+This opens a dialog that lists different actions that relate to 
+fixing the code at the cursor. It will call B<event_on_quick_fix> method 
+passing a L<Padre::Wx::Editor> object on the current Padre document. 
+Please see the following sample implementation:
+
+	sub event_on_quick_fix {
+		my ($self, $editor) = @_;
+		
+		my @items = ( 
+			{
+				text     => '123...', 
+				listener => sub { 
+					print "123...\n";
+				} 
+			},
+			{
+				text     => '456...', 
+				listener => sub { 
+					print "456...\n";
+				} 
+			},
+		);
+		
+		return @items;
+	}
+
+=cut
 		},
 	);
 
