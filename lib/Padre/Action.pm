@@ -46,10 +46,13 @@ sub label_text {
 # if a stock menu item also gets a short-cut it stops working
 # hence we add the shortcut only if id == -1 indicating this was not a
 # stock menu item
+# The case of F12 is a special case as it uses a stock icon that does not have
+# a shortcut in itself so we added one.
+# (BTW Print does not have a shortcut either)
 sub label_menu {
 	my $self  = shift;
 	my $label = $self->label;
-	if ( $self->shortcut and ( $self->id == -1 or Padre::Constant::WIN32() ) ) {
+	if ( $self->shortcut and ( ( $self->shortcut eq 'F12' ) or ( $self->id == -1 or Padre::Constant::WIN32() ) ) ) {
 		$label .= "\t" . $self->shortcut;
 	}
 	return $label;

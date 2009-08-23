@@ -12,6 +12,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Help Search looks up words selected or under the cursor (AZAWAWI)
     - allow the use of $main->open_file_dialog($dir) (SZABGAB)
     - Moved Ecliptic's Quick Fix to Padre core under the Edit menu (AZAWAWI)
+    - Enable the F12 Save as shortcut again (SZBAGAB)
 
 0.43 2009.08.16
     - Revised nice splash screen slightly. Move original artwork
