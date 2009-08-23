@@ -208,6 +208,10 @@ sub help_render {
 		my $pod_html = $pod->render($doc);
 		$html = $pod_html->body if $pod_html;
 	}
+
+	# Highlights <pre> code sections with a grey background
+	$html =~ s/<pre>/<table border="0" width="100%" bgcolor="#EEEEEE"><tr><td><pre>/g;
+	$html =~ s/<\/pre>/<\/pre\><\/td><\/tr><\/table>/g;
 	return ( $html, $topic );
 }
 
