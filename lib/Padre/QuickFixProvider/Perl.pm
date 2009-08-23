@@ -4,7 +4,10 @@ use 5.008;
 use strict;
 use warnings;
 
+use Padre::QuickFixProvider ();
+
 our $VERSION = '0.43';
+our @ISA     = 'Padre::QuickFixProvider';
 
 #
 # Constructor.
@@ -17,6 +20,13 @@ sub new {
 	my $self = bless {}, $class;
 
 	return $self;
+}
+
+#
+# Returns the quick fix list
+#
+sub quick_fix_list {
+	return ();
 }
 
 1;

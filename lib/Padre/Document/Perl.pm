@@ -845,6 +845,14 @@ sub get_help_provider {
 	return Padre::HelpProvider::Perl->new;
 }
 
+#
+# Returns Perl's Quick Fix Provider
+#
+sub get_quick_fix_provider {
+	require Padre::QuickFixProvider::Perl;
+	return Padre::QuickFixProvider::Perl->new;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

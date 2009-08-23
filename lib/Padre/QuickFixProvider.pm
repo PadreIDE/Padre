@@ -19,6 +19,14 @@ sub new {
 	return $self;
 }
 
+#
+# Returns the quick fix list
+#
+sub quick_fix_list {
+	warn "quick_fix_list, You need to override this to do something useful with quick fix";
+	return ();
+}
+
 1;
 
 __END__
