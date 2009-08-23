@@ -159,7 +159,7 @@ sub ok_clicked {
 	}
 
 	my $ret = Wx::MessageBox(
-		sprintf( Wx::gettext("%s apparantly created. Do you want to open it now?"), $data->{_module_name_} ),
+		sprintf( Wx::gettext("%s apparently created. Do you want to open it now?"), $data->{_module_name_} ),
 		Wx::gettext("Done"),
 		Wx::wxYES_NO | Wx::wxCENTRE,
 		$main,
