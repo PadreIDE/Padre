@@ -75,7 +75,11 @@ sub _display_help_in_viewer {
 		}
 	}
 
-	if ( not $html ) {
+	if ( $html ) {
+		# Highlights <pre> code sections with a grey background
+		$html =~ s/<pre>/<table border="0" width="100%" bgcolor="#EEEEEE"><tr><td><pre>/ig;
+		$html =~ s/<\/pre>/<\/pre\><\/td><\/tr><\/table>/ig;
+	} else {
 		$html = '<b>' . Wx::gettext('No Help found') . '</b>';
 	}
 
