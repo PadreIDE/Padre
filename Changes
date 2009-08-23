@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.44 to be released
-    - updated Czech translation (MMASLANO)
+    - Updated Czech translation (MMASLANO)
     - Help Search now supports perlopref.pod parsing - Perl operator reference 
       (AZAWAWI)
     - Fixed various "Help Search" dialog bugs for perlvars and CORE modules 
@@ -13,6 +13,7 @@ Changes for Perl Application Development and Refactoring Environment
     - allow the use of $main->open_file_dialog($dir) (SZABGAB)
     - Moved Ecliptic's Quick Fix to Padre core under the Edit menu (AZAWAWI)
     - Enable the F12 Save as shortcut again (SZBAGAB)
+    - Added Perl 5 Quick Fix for 'use strict; use warnings;' (AZAWAWI)
 
 0.43 2009.08.16
     - Revised nice splash screen slightly. Move original artwork
