@@ -32,22 +32,30 @@ sub quick_fix_list {
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
 
-	if ( $text !~ /^\s*use strict/msx ) {
+	if ( $text !~ /\s*use\s+strict/msx ) {
 		push @items, {
 			text     => qq{Add 'use strict;'},
 			listener => sub {
-				$text = 'use strict;' . $text;
-				}
+				my $line_start = $editor->PositionFromLine($current_line_no);
+				my $line_end   = $editor->GetLineEndPosition($current_line_no);
+				my $line = $editor->GetTextRange($line_start,$line_end);
+				$line = qq{use strict;$line\n};
+				$editor->SetSelection( $line_start, $line_end );
+				$editor->ReplaceSelection($line);
+			}
 		};
 	}
-	if ( $text !~ /^\s*use warnings/msx ) {
+	if ( $text !~ /\s*use\s+warnings/msx ) {
 		push @items, {
 			text     => qq{Add 'use warnings;'},
 			listener => sub {
-				$text = 'use warnings;' . $text;
-
-				#$editor->ReplaceSelection(
-				}
+				my $line_start = $editor->PositionFromLine($current_line_no);
+				my $line_end   = $editor->GetLineEndPosition($current_line_no);
+				my $line = $editor->GetTextRange($line_start,$line_end);
+				$line = qq{use warnings;$line\n};
+				$editor->SetSelection( $line_start, $line_end );
+				$editor->ReplaceSelection($line);
+			}
 		};
 	}
 
