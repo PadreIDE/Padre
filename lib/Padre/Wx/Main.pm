@@ -2720,6 +2720,11 @@ sub on_open {
 # TODO: let's allow this to be used by plugins
 sub open_file_dialog {
 	my $self = shift;
+	my $dir  = shift;
+	
+	if ($dir) {
+		$self->{cwd} = $dir;
+	}
 
 	# http://docs.wxwidgets.org/stable/wx_wxfiledialog.html:
 	# "It must be noted that wildcard support in the native Motif file dialog is quite
@@ -2763,10 +2768,7 @@ sub open_file_dialog {
 
 sub on_open_example {
 	my $self = shift;
-	$self->{cwd} = Padre::Util::sharedir('examples');
-	$self->open_file_dialog;
-
-	return;
+	return $self->open_file_dialog( Padre::Util::sharedir('examples') );
 }
 
 
