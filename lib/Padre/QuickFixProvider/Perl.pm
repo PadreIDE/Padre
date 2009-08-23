@@ -26,7 +26,31 @@ sub new {
 # Returns the quick fix list
 #
 sub quick_fix_list {
-	return ();
+	my ($self, $doc, $editor) = @_;
+	
+	my @items = ();
+	my $text = $editor->GetText;
+	my $current_line_no = $editor->GetCurrentLine;
+
+	if($text !~ /^\s*use strict/msx) {
+		push @items, {
+			text => qq{Add 'use strict;'},
+			listener => sub {
+				$text = 'use strict;' . $text;
+			}
+		};
+	}
+	if($text !~ /^\s*use warnings/msx) {
+		push @items, {
+			text => qq{Add 'use warnings;'},
+			listener => sub {
+				$text = 'use warnings;' . $text;
+				#$editor->ReplaceSelection(
+			}
+		};
+	}
+
+	return @items;
 }
 
 1;
@@ -39,7 +63,7 @@ Padre::QuickFixProvider::Perl - Padre Perl 5 Quick Fix Provider
 
 =head1 DESCRIPTION
 
-Perl 5 quick fix are implemented here
+Perl 5 quick fix feature is implemented here
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
