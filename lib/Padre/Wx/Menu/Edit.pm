@@ -180,7 +180,7 @@ sub new {
 			eval { 
 				# Find available quick fixes from provider
 				my $provider = $doc->get_quick_fix_provider; 
-				@items = $provider->quick_fix_list($editor);
+				@items = $provider->quick_fix_list($doc, $editor);
 
 				# Add quick list items from document's quick fix provider
 				foreach my $item (@items) {

@@ -23,6 +23,7 @@ sub new {
 # Returns the quick fix list
 #
 sub quick_fix_list {
+	my ( $self, $doc, $editor ) = @_;
 	warn "quick_fix_list, You need to override this to do something useful with quick fix";
 	return ();
 }
