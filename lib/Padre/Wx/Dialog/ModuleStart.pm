@@ -145,17 +145,19 @@ sub ok_clicked {
 	};
 	chdir $pwd;
 
-	if($@) {
+	if ($@) {
 		Wx::MessageBox(
-			sprintf( Wx::gettext("An error has occured while generating '%s':\n%s"), 
-				$data->{_module_name_}, $@),
+			sprintf(
+				Wx::gettext("An error has occured while generating '%s':\n%s"),
+				$data->{_module_name_}, $@
+			),
 			Wx::gettext("Error"),
 			Wx::wxOK | Wx::wxCENTRE,
 			$main
 		);
 		return;
 	}
-	
+
 	my $ret = Wx::MessageBox(
 		sprintf( Wx::gettext("%s apparantly created. Do you want to open it now?"), $data->{_module_name_} ),
 		Wx::gettext("Done"),
