@@ -210,8 +210,11 @@ sub help_render {
 	}
 
 	# Highlights <pre> code sections with a grey background
-	$html =~ s/<pre>/<table border="0" width="100%" bgcolor="#EEEEEE"><tr><td><pre>/g;
-	$html =~ s/<\/pre>/<\/pre\><\/td><\/tr><\/table>/g;
+	if($html) {
+		$html =~ s/<pre>/<table border="0" width="100%" bgcolor="#EEEEEE"><tr><td><pre>/ig;
+		$html =~ s/<\/pre>/<\/pre\><\/td><\/tr><\/table>/ig;
+	}
+
 	return ( $html, $topic );
 }
 
