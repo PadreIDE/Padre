@@ -2721,7 +2721,7 @@ sub on_open {
 sub open_file_dialog {
 	my $self = shift;
 	my $dir  = shift;
-	
+
 	if ($dir) {
 		$self->{cwd} = $dir;
 	}

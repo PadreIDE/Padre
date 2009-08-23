@@ -26,27 +26,28 @@ sub new {
 # Returns the quick fix list
 #
 sub quick_fix_list {
-	my ($self, $doc, $editor) = @_;
-	
-	my @items = ();
-	my $text = $editor->GetText;
+	my ( $self, $doc, $editor ) = @_;
+
+	my @items           = ();
+	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
 
-	if($text !~ /^\s*use strict/msx) {
+	if ( $text !~ /^\s*use strict/msx ) {
 		push @items, {
-			text => qq{Add 'use strict;'},
+			text     => qq{Add 'use strict;'},
 			listener => sub {
 				$text = 'use strict;' . $text;
-			}
+				}
 		};
 	}
-	if($text !~ /^\s*use warnings/msx) {
+	if ( $text !~ /^\s*use warnings/msx ) {
 		push @items, {
-			text => qq{Add 'use warnings;'},
+			text     => qq{Add 'use warnings;'},
 			listener => sub {
 				$text = 'use warnings;' . $text;
+
 				#$editor->ReplaceSelection(
-			}
+				}
 		};
 	}
 
