@@ -177,14 +177,18 @@ sub new {
 			$editor->AutoCompSetSeparator( ord '|' );
 			my @list  = ();
 			my @items = ();
-			if ( $doc->can('event_on_quick_fix') ) {
+			eval { 
+				# Find available quick fixes from provider
+				my $provider = $doc->get_quick_fix_provider; 
+				@items = $provider->quick_fix_list($editor);
 
-				# add list items from callbacks
-				@items = $doc->event_on_quick_fix($editor);
-				my $item_count = 0;
+				# Add quick list items from document's quick fix provider
 				foreach my $item (@items) {
 					push @list, $item->{text};
 				}
+			};
+			if($@) {
+				warn "Error while calling get_quick_fix_provider: $@\n";
 			}
 			my $empty_list = ( scalar @list == 0 );
 			if ($empty_list) {
