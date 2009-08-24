@@ -191,10 +191,11 @@ sub colorize {
 					my @tokens     = $next_ppi_doc->tokens;
 					my $next_token = $tokens[0];
 
-					if (   $next_token->isa("PPI::Token::Quote")
+					if ($next_token and
+						($next_token->isa("PPI::Token::Quote")
 						or $next_token->isa("PPI::Token::QuoteLike")
 						or $next_token->isa("PPI::Token::Regexp")
-						or $next_token->isa("PPI::Token::Pod") )
+						or $next_token->isa("PPI::Token::Pod") ) )
 					{
 						$styling_end_pos = $end_of_next_token;
 					}
