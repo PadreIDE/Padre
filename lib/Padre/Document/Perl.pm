@@ -610,7 +610,7 @@ sub autocomplete {
 	my $post_text = $editor->GetTextRange( $first, $last );
 
 	my $regex;
-	eval { $regex = qr{\b($prefix\w+(?:::\w+)*)\b} };
+	eval { $regex = qr{\b(\Q$prefix\E\w+(?:::\w+)*)\b} };
 	if ($@) {
 		return ("Cannot build regex for '$prefix'");
 	}
