@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::OpenResource::SearchTask;
+package Padre::Task::OpenResource::SearchTask;
 
 use 5.008;
 use strict;
