@@ -438,8 +438,8 @@ sub _search() {
 
 	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );
 
-	require Padre::Task::Dialog::OpenResource::SearchTask;
-	my $search_task = Padre::Task::Dialog::OpenResource::SearchTask->new(
+	require Padre::Task::OpenResource::SearchTask;
+	my $search_task = Padre::Task::OpenResource::SearchTask->new(
 		dialog                   => $self,
 		directory                => $self->_directory,
 		skip_vcs_files           => $self->_skip_vcs_files->IsChecked,
