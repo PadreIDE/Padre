@@ -67,7 +67,7 @@ use Wx::Event ':everything';
 
 use base qw(Wx::ScrolledWindow);
 
-my ( $x_size, $y_size ) = ( 800, 800 );
+my ( $x_size, $y_size ) = ( 750, 650 );
 sub new {
   my $class = shift;
   my $this = $class->SUPER::new( @_ );
@@ -92,23 +92,17 @@ sub OnDraw {
   $dc->DrawRotatedText( "Draw Here", 200, 200, 35 );
 
   $dc->DrawEllipse( 20, 20, 50, 50 );
+
+  $dc->SetPen( Wx::Pen->new( wxBLACK, 3, 0 ) );
   $dc->DrawEllipse( 20, $y_size - 50 - 20, 50, 50 );
+
+  $dc->SetPen( Wx::Pen->new( wxGREEN, 5, 0 ) );
   $dc->DrawEllipse( $x_size - 50 - 20, 20, 50, 50 );
+  $dc->SetPen( Wx::Pen->new( wxBLUE, 5, 0 ) );
   $dc->DrawEllipse( $x_size - 50 - 20, $y_size - 50 - 20, 50, 50 );
 
   $dc->SetPen( Wx::Pen->new( wxRED, 5, 0 ) );
-  # wxGTK does not like DrawLines in this context
-  foreach my $i ( @{$this->{LINES}} ) {
-    my $prev;
 
-    foreach my $j ( @$i ) {
-      if( $j != ${$i}[0] ) {
-        $dc->DrawLine( @$prev, @$j );
-#       $dc->DrawLines( $i );
-      }
-      $prev = $j;
-    }
-  }
 }
 
 
@@ -118,7 +112,7 @@ sub OnMouseMove {
   return unless $event->Dragging;
 
   my $dc = Wx::ClientDC->new( $this );
-  $this->PrepareDC( $dc );
+  #$this->PrepareDC( $dc );
   my $pos = $event->GetLogicalPosition( $dc );
   my( $x, $y ) = ( $pos->x, $pos->y );
 
