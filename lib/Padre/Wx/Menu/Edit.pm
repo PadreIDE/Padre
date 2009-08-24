@@ -251,9 +251,24 @@ sub new {
 		},
 	);
 
+	my $submenu = Wx::Menu->new; 
+	$self->{insert_submenu}  = $self->AppendSubMenu( $submenu, Wx::gettext('Insert') );
+	
+	$self->{insert_special} = $self->add_menu_item(
+	    $submenu,
+	    name       => 'edit.insert.insert_special',
+	    label      => Wx::gettext('Insert Special Value'),
+	    shortcut   => 'Ctrl-Shift-I',
+	    menu_event => sub {
+		require Padre::Wx::Dialog::SpecialValues;
+		Padre::Wx::Dialog::SpecialValues->insert_special(@_);
+              },
+
+	    );
+
 	$self->{snippets} = $self->add_menu_item(
-		$self,
-		name       => 'edit.snippets',
+		$submenu,
+		name       => 'edit.insert.snippets',
 		label      => Wx::gettext('Snippets'),
 		shortcut   => 'Ctrl-Shift-A',
 		menu_event => sub {
