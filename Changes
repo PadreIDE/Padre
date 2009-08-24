@@ -13,6 +13,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Moved Ecliptic's Quick Fix to Padre core under the Edit menu (AZAWAWI)
     - Enable the F12 Save as shortcut again (SZBAGAB)
     - Added Perl 5 Quick Fix for 'use strict; use warnings;' (AZAWAWI)
+    - Added Insert submenu and dialog, moved snippets into insert submenu (TEEJAY)
 
 0.43 2009.08.16
     - Revised nice splash screen slightly. Move original artwork
