@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-14 18:34-0300\n"
+"POT-Creation-Date: 2009-08-24 09:53+0300\n"
 "PO-Revision-Date: 2009-01-08 20:15-0500\n"
 "Last-Translator:  <fayland@gmail.com>\n"
 "Language-Team: Chinese\n"
@@ -16,7 +16,105 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Padre/PluginManager.pm:345
+#: lib/Padre/MimeTypes.pm:264
+msgid "Fast but might be out of date"
+msgstr "快速但是可能已过期"
+
+#: lib/Padre/MimeTypes.pm:273
+msgid "PPI Experimental"
+msgstr "实验性 PPI"
+
+#: lib/Padre/MimeTypes.pm:274
+msgid "Slow but accurate and we have full control so bugs can be fixed"
+msgstr "慢但是准确，我们有全部的控制权限所以臭虫能被消灭"
+
+#: lib/Padre/MimeTypes.pm:278
+msgid "PPI Standard"
+msgstr "标准 PPI"
+
+#: lib/Padre/MimeTypes.pm:279
+msgid ""
+"Hopefully faster than the PPI Traditional. Big file will fall back to "
+"Scintilla highlighter."
+msgstr ""
+"比原来的 PPI 要快一点。大文件将返回到原始的 Scintilla 加亮。"
+
+#: lib/Padre/Config.pm:178
+msgid "Previous open files"
+msgstr "以前的打开文件"
+
+#: lib/Padre/Config.pm:179
+msgid "A new empty file"
+msgstr "新的空文件"
+
+#: lib/Padre/Config.pm:180
+msgid "No open files"
+msgstr "没有打开文件"
+
+#: lib/Padre/Config.pm:235
+msgid "Code Order"
+msgstr "代码排序"
+
+#: lib/Padre/Config.pm:236
+msgid "Alphabetical Order"
+msgstr "按字母排序"
+
+#: lib/Padre/Config.pm:237
+msgid "Alphabetical Order (Private Last)"
+msgstr "按字母排序（私有最后）"
+
+#: lib/Padre/Config.pm:258
+msgid "Project Tools (Left)"
+msgstr "项目工具（左）"
+
+#: lib/Padre/Config.pm:259
+msgid "Document Tools (Right)"
+msgstr "文档工具（右）"
+
+#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:475
+msgid "error"
+msgstr "错误"
+
+#: lib/Padre/PluginHandle.pm:90
+msgid "unloaded"
+msgstr "未载入"
+
+#: lib/Padre/PluginHandle.pm:91
+msgid "loaded"
+msgstr "已载入"
+
+#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:485
+msgid "incompatible"
+msgstr "不兼容"
+
+#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:508
+msgid "disabled"
+msgstr "禁用"
+
+#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:498
+msgid "enabled"
+msgstr "启用"
+
+#: lib/Padre/PluginHandle.pm:201
+#, perl-format
+msgid "Failed to enable plugin '%s': %s"
+msgstr "启用插件 '%s' 失败: %s"
+
+#: lib/Padre/PluginHandle.pm:281
+#, perl-format
+msgid "Failed to disable plugin '%s': %s"
+msgstr "禁用插件 '%s' 失败: %s"
+
+#: lib/Padre/Document.pm:730
+#, perl-format
+msgid "Unsaved %d"
+msgstr "未保存 %d"
+
+#: lib/Padre/Document.pm:999 lib/Padre/Document.pm:1000
+msgid "Skipped for large files"
+msgstr "跳过大文件"
+
+#: lib/Padre/PluginManager.pm:372
 msgid ""
 "We found several new plugins.\n"
 "In order to configure and enable them go to\n"
@@ -32,56 +130,48 @@ msgstr ""
 "新插件列表:\n"
 "\n"
 
-#: lib/Padre/PluginManager.pm:355
+#: lib/Padre/PluginManager.pm:382
 msgid "New plugins detected"
 msgstr "发现新插件"
 
-#: lib/Padre/PluginManager.pm:475
+#: lib/Padre/PluginManager.pm:511
 #, perl-format
-msgid "Plugin:%s - Failed to load module: %s"
-msgstr "插件:%s - 载入模块失败: %s"
+msgid "%s - Crashed while loading: %s"
+msgstr "%s - 载入文件时崩溃：%s"
 
-#: lib/Padre/PluginManager.pm:489
+#: lib/Padre/PluginManager.pm:523
 #, perl-format
-msgid ""
-"Plugin:%s - Not compatible with Padre::Plugin API. Need to be subclass of "
-"Padre::Plugin"
-msgstr "插件 %s - 与 Padre::Plugin API 不兼容。必须继承 Padre::Plugin"
+msgid "%s - Not a Padre::Plugin subclass"
+msgstr "%s - 非 Padre::Plugin 之类"
 
-#: lib/Padre/PluginManager.pm:503
+#: lib/Padre/PluginManager.pm:536
 #, perl-format
-msgid "Plugin:%s - Could not instantiate plugin object"
-msgstr "插件 %s - 无法初始化插件"
+msgid "%s - Crashed while instantiating: %s"
+msgstr "%s - 初始化时崩溃：%s"
 
-#: lib/Padre/PluginManager.pm:515
+#: lib/Padre/PluginManager.pm:546
 #, perl-format
-msgid ""
-"Plugin:%s - Could not instantiate plugin object: the constructor does not "
-"return a Padre::Plugin object"
-msgstr "Plugin:%s - 无法初始化插件: 构造器没有返回一个 Padre::Plugin 对象"
+msgid "%s - Failed to instantiate plugin"
+msgstr "%s - 无法初始化插件"
 
-#: lib/Padre/PluginManager.pm:535
-#, perl-format
-msgid "Plugin:%s - Does not have menus"
-msgstr "插件 %s - 没有菜单"
-
-#: lib/Padre/PluginManager.pm:754
+#: lib/Padre/PluginManager.pm:780
 msgid "Error when calling menu for plugin"
 msgstr "为插件调用目录错误"
 
-#: lib/Padre/PluginManager.pm:783 lib/Padre/Wx/Main.pm:1466
+#: lib/Padre/PluginManager.pm:813 lib/Padre/Wx/Main.pm:1591
 msgid "No document open"
 msgstr "没有打开文档"
 
-#: lib/Padre/PluginManager.pm:785 lib/Padre/Wx/Main.pm:3774
+#: lib/Padre/PluginManager.pm:817 lib/Padre/Wx/Main.pm:4082
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:47
 msgid "No filename"
 msgstr "没有文件名"
 
-#: lib/Padre/PluginManager.pm:789
+#: lib/Padre/PluginManager.pm:822
 msgid "Could not locate project dir"
 msgstr "无法载入项目目录"
 
-#: lib/Padre/PluginManager.pm:808 lib/Padre/PluginManager.pm:904
+#: lib/Padre/PluginManager.pm:841 lib/Padre/PluginManager.pm:937
 #, perl-format
 msgid ""
 "Failed to load the plugin '%s'\n"
@@ -90,81 +180,45 @@ msgstr ""
 "载入插件 '%s' 失败\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:858 lib/Padre/Wx/Main.pm:3460
+#: lib/Padre/PluginManager.pm:891 lib/Padre/Wx/Main.pm:3756
 msgid "Open file"
 msgstr "打开文件"
 
-#: lib/Padre/PluginManager.pm:878
+#: lib/Padre/PluginManager.pm:911
 #, perl-format
 msgid "Plugin must have '%s' as base directory"
 msgstr "插件必须以 '%s' 为子目录"
 
-#: lib/Padre/Config.pm:173
-msgid "Previous open files"
-msgstr "以前的打开文件"
-
-#: lib/Padre/Config.pm:174
-msgid "A new empty file"
-msgstr "新的空文件"
-
-#: lib/Padre/Config.pm:175
-msgid "No open files"
-msgstr "没有打开文件"
-
-#: lib/Padre/Config.pm:230
-msgid "Code Order"
-msgstr "代码排序"
-
-#: lib/Padre/Config.pm:231
-msgid "Alphabetical Order"
-msgstr "按字母排序"
-
-#: lib/Padre/Config.pm:232
-msgid "Alphabetical Order (Private Last)"
-msgstr "按字母排序（私有最后）"
-
-#: lib/Padre/Document.pm:754
+#: lib/Padre/TaskManager.pm:592
 #, perl-format
-msgid "Unsaved %d"
-msgstr "未保存 %d"
+msgid "%s worker threads are running.\n"
+msgstr "%s worker threads 正在运行中。\n"
 
-#: lib/Padre/Document.pm:1023 lib/Padre/Document.pm:1024
-msgid "Skipped for large files"
-msgstr "跳过大文件"
+#: lib/Padre/TaskManager.pm:594
+msgid "Currently, no background tasks are being executed.\n"
+msgstr "当前没有任何后台任务在运行。\n"
 
-#: lib/Padre/PluginHandle.pm:71 lib/Padre/Wx/Dialog/PluginManager.pm:470
-msgid "error"
-msgstr "错误"
+#: lib/Padre/TaskManager.pm:600
+msgid "The following tasks are currently executing in the background:\n"
+msgstr "以下任务正在后台运行中：\n"
 
-#: lib/Padre/PluginHandle.pm:72
-msgid "unloaded"
-msgstr "未载入"
-
-#: lib/Padre/PluginHandle.pm:73
-msgid "loaded"
-msgstr "已载入"
-
-#: lib/Padre/PluginHandle.pm:74 lib/Padre/Wx/Dialog/PluginManager.pm:480
-msgid "incompatible"
-msgstr "不兼容"
-
-#: lib/Padre/PluginHandle.pm:75 lib/Padre/Wx/Dialog/PluginManager.pm:503
-msgid "disabled"
-msgstr "禁用"
-
-#: lib/Padre/PluginHandle.pm:76 lib/Padre/Wx/Dialog/PluginManager.pm:493
-msgid "enabled"
-msgstr "启用"
-
-#: lib/Padre/PluginHandle.pm:170
+#: lib/Padre/TaskManager.pm:606
 #, perl-format
-msgid "Failed to enable plugin '%s': %s"
-msgstr "启用插件 '%s' 失败: %s"
+msgid ""
+"- %s of type '%s':\n"
+"  (in thread(s) %s)\n"
+msgstr ""
+"- %s of type '%s':\n"
+"  (in thread(s) %s)\n"
 
-#: lib/Padre/PluginHandle.pm:224
+#: lib/Padre/TaskManager.pm:618
 #, perl-format
-msgid "Failed to disable plugin '%s': %s"
-msgstr "禁用插件 '%s' 失败: %s"
+msgid ""
+"\n"
+"Additionally, there are %s tasks pending execution.\n"
+msgstr ""
+"\n"
+"另外, 任务 %s 正在等待运行。\n"
 
 #: lib/Padre/Locale.pm:73
 msgid "English (United Kingdom)"
@@ -290,312 +344,108 @@ msgstr "繁体中文"
 msgid "Klingon"
 msgstr "克林贡语"
 
-#: lib/Padre/TaskManager.pm:592
-#, perl-format
-msgid "%s worker threads are running.\n"
-msgstr "%s worker threads 正在运行中。\n"
-
-#: lib/Padre/TaskManager.pm:594
-msgid "Currently, no background tasks are being executed.\n"
-msgstr "当前没有任何后台任务在运行。\n"
-
-#: lib/Padre/TaskManager.pm:600
-msgid "The following tasks are currently executing in the background:\n"
-msgstr "以下任务正在后台运行中：\n"
-
-#: lib/Padre/TaskManager.pm:606
-#, perl-format
-msgid ""
-"- %s of type '%s':\n"
-"  (in thread(s) %s)\n"
-msgstr ""
-"- %s of type '%s':\n"
-"  (in thread(s) %s)\n"
-
-#: lib/Padre/TaskManager.pm:618
-#, perl-format
-msgid ""
-"\n"
-"Additionally, there are %s tasks pending execution.\n"
-msgstr ""
-"\n"
-"另外, 任务 %s 正在等待运行。\n"
-
-#: lib/Padre/Document/Perl.pm:538 lib/Padre/Document/Perl.pm:565
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:88
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:101
-msgid "Current cursor does not seem to point at a variable"
-msgstr "Current cursor does not seem to point at a variable"
-
-#: lib/Padre/Document/Perl.pm:539 lib/Padre/Document/Perl.pm:566
-msgid "Check cancelled"
-msgstr "Check cancelled"
-
-#: lib/Padre/Document/Perl.pm:806 lib/Padre/Wx/Menu/Perl.pm:53
-msgid "Find Variable Declaration"
-msgstr "查找变量申明"
-
-#: lib/Padre/Document/Perl.pm:818 lib/Padre/Wx/Menu/Perl.pm:70
-msgid "Lexically Rename Variable"
-msgstr "Lexically Rename Variable"
-
-#: lib/Padre/Document/Perl.pm:830 lib/Padre/Document/Perl.pm:831
-#: lib/Padre/Wx/Menu/Perl.pm:81 lib/Padre/Wx/Menu/Perl.pm:82
-msgid "Replacement"
-msgstr "Replacement"
-
-#: lib/Padre/Document/Perl.pm:848 lib/Padre/Wx/Menu/Perl.pm:95
-msgid "Introduce Temporary Variable"
-msgstr "引入临时变量"
-
-#: lib/Padre/Document/Perl.pm:861 lib/Padre/Document/Perl.pm:862
-#: lib/Padre/Wx/Menu/Perl.pm:106 lib/Padre/Wx/Menu/Perl.pm:107
-msgid "Variable Name"
-msgstr "变量名"
-
-#: lib/Padre/Plugin/Devel.pm:21
+#: lib/Padre/Plugin/Devel.pm:25
 msgid "Padre Developer Tools"
 msgstr "Padre 开发者工具"
 
-#: lib/Padre/Plugin/Devel.pm:55
+#: lib/Padre/Plugin/Devel.pm:59
 msgid "Run Document inside Padre"
 msgstr "在 Padre 里运行"
 
-#: lib/Padre/Plugin/Devel.pm:57
+#: lib/Padre/Plugin/Devel.pm:63
 msgid "Dump Current Document"
 msgstr "导出当前文档"
 
-#: lib/Padre/Plugin/Devel.pm:58
+#: lib/Padre/Plugin/Devel.pm:64
 msgid "Dump Top IDE Object"
 msgstr "导出顶层 IDE 对象"
 
-#: lib/Padre/Plugin/Devel.pm:59
+#: lib/Padre/Plugin/Devel.pm:65
 msgid "Dump %INC and @INC"
 msgstr "导出 %INC 和 @INC"
 
-#: lib/Padre/Plugin/Devel.pm:65
+#: lib/Padre/Plugin/Devel.pm:72
 msgid "Enable logging"
 msgstr "启用日志记录"
 
-#: lib/Padre/Plugin/Devel.pm:68
+#: lib/Padre/Plugin/Devel.pm:75
 msgid "Disable logging"
 msgstr "禁用日志记录"
 
-#: lib/Padre/Plugin/Devel.pm:71
+#: lib/Padre/Plugin/Devel.pm:78
 msgid "Enable trace when logging"
 msgstr "记录日志时启用 trace"
 
-#: lib/Padre/Plugin/Devel.pm:74
+#: lib/Padre/Plugin/Devel.pm:81
 msgid "Disable trace"
 msgstr "禁用 trace"
 
-#: lib/Padre/Plugin/Devel.pm:78
+#: lib/Padre/Plugin/Devel.pm:87
 msgid "Load All Padre Modules"
 msgstr "载入所有 Padre 模块"
 
-#: lib/Padre/Plugin/Devel.pm:79
+#: lib/Padre/Plugin/Devel.pm:88
 msgid "Simulate Crash"
 msgstr "模拟崩溃"
 
-#: lib/Padre/Plugin/Devel.pm:80
+#: lib/Padre/Plugin/Devel.pm:89
 msgid "Simulate Crashing Bg Task"
 msgstr "模拟后台任务崩溃"
 
-#: lib/Padre/Plugin/Devel.pm:82
-msgid "wxWidgets 2.8.10 Reference"
-msgstr "wxWidgets 2.8.8 参考"
+#: lib/Padre/Plugin/Devel.pm:93
+#, perl-format
+msgid "wxWidgets %s Reference"
+msgstr "wxWidgets %s 参考"
 
-#: lib/Padre/Plugin/Devel.pm:85
+#: lib/Padre/Plugin/Devel.pm:96
 msgid "STC Reference"
 msgstr "STC 参考"
 
-#: lib/Padre/Plugin/Devel.pm:88
+#: lib/Padre/Plugin/Devel.pm:99
 msgid "wxPerl Live Support"
 msgstr "wxPerl 在线支持"
 
-#: lib/Padre/Plugin/Devel.pm:92 lib/Padre/Plugin/PopularityContest.pm:114
+#: lib/Padre/Plugin/Devel.pm:105 lib/Padre/Plugin/PopularityContest.pm:122
+#: lib/Padre/Wx/About.pm:21
 msgid "About"
 msgstr "关于"
 
-#: lib/Padre/Plugin/Devel.pm:136
+#: lib/Padre/Plugin/Devel.pm:153
 msgid "No file is open"
 msgstr "没有打开文件"
 
-#: lib/Padre/Plugin/Devel.pm:165
+#: lib/Padre/Plugin/Devel.pm:182
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr "Padre 开发者使用工具（其他）\n"
 
-#: lib/Padre/Plugin/Devel.pm:209 lib/Padre/Wx/Main.pm:3572
+#: lib/Padre/Plugin/Devel.pm:226 lib/Padre/Wx/Main.pm:3876
 #, perl-format
 msgid "Error: %s"
 msgstr "错误: %s"
 
-#: lib/Padre/Plugin/PopularityContest.pm:115
+#: lib/Padre/Plugin/PopularityContest.pm:123
 msgid "Ping"
 msgstr "Ping"
 
-#: lib/Padre/Plugin/Perl5.pm:39
-msgid "Install Module..."
-msgstr "安装模块..."
+#: lib/Padre/Wx/Bottom.pm:50
+msgid "Output View"
+msgstr "输出视图"
 
-#: lib/Padre/Plugin/Perl5.pm:40
-msgid "Install CPAN Module"
-msgstr "安装 CPAN 模块"
+#: lib/Padre/Wx/StatusBar.pm:254
+msgid "Background Tasks are running"
+msgstr "后台任务正在运行"
 
-#: lib/Padre/Plugin/Perl5.pm:42
-msgid "Install Local Distribution"
-msgstr "安装本地包"
+#: lib/Padre/Wx/StatusBar.pm:255
+msgid "Background Tasks are running with high load"
+msgstr "后台任务正在高负载运行"
 
-#: lib/Padre/Plugin/Perl5.pm:43
-msgid "Install Remote Distribution"
-msgstr "安装远程包"
-
-#: lib/Padre/Plugin/Perl5.pm:45
-msgid "Open CPAN Config File"
-msgstr "打开 CPAN 配置文件"
-
-#: lib/Padre/Plugin/Perl5.pm:95
-msgid "Failed to find your CPAN configuration"
-msgstr "查找您的 CPAN 配置文件错误"
-
-#: lib/Padre/Plugin/Perl5.pm:105
-msgid "Select distribution to install"
-msgstr "选择安装包"
-
-#: lib/Padre/Plugin/Perl5.pm:118 lib/Padre/Plugin/Perl5.pm:143
-msgid "Did not provide a distribution"
-msgstr "没有提供包"
-
-#: lib/Padre/Plugin/Perl5.pm:133
-msgid ""
-"Enter URL to install\n"
-"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-msgstr ""
-"输入 URL 来安装\n"
-"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-
-#: lib/Padre/Plugin/Perl5.pm:163
-msgid "pip is unexpectedly not installed"
-msgstr "pip 未安装"
-
-#: lib/Padre/Wx/Directory.pm:57 lib/Padre/Wx/Directory.pm:152
-#: lib/Padre/Wx/Directory2.pm:56 lib/Padre/Wx/Directory2.pm:151
-msgid "Directory"
-msgstr "目录"
-
-#: lib/Padre/Wx/Directory.pm:237
-msgid "Expand / Collapse"
-msgstr "展开/折叠"
-
-#: lib/Padre/Wx/Directory.pm:245 lib/Padre/Wx/Directory2.pm:245
-#: lib/Padre/Wx/ToolBar.pm:55 lib/Padre/Wx/Main.pm:2561
-msgid "Open File"
-msgstr "打开文件"
-
-#: lib/Padre/Wx/Directory.pm:256
-msgid "Rename"
-msgstr "重命名"
-
-#: lib/Padre/Wx/Directory.pm:268 lib/Padre/Wx/Directory2.pm:268
-#: lib/Padre/Task/Outline/Perl.pm:210
-msgid "Open &Documentation"
-msgstr "打开文档(&D)"
-
-#: lib/Padre/Wx/Directory.pm:289
-msgid "Show hidden files"
-msgstr "显示隐藏文件"
-
-#: lib/Padre/Wx/Directory.pm:307
-msgid "Reload"
-msgstr "重载"
-
-#: lib/Padre/Wx/ErrorList.pm:90
-msgid "Error List"
-msgstr "错误列表"
-
-#: lib/Padre/Wx/ErrorList.pm:126
-msgid "No diagnostics available for this error!"
-msgstr "该错误没有诊断信息"
-
-#: lib/Padre/Wx/ErrorList.pm:135
-msgid "Diagnostics"
-msgstr "诊断"
-
-#: lib/Padre/Wx/Menubar.pm:72
-msgid "&File"
-msgstr "文件(&F)"
-
-#: lib/Padre/Wx/Menubar.pm:73 lib/Padre/Wx/Dialog/Snippets.pm:26
-msgid "&Edit"
-msgstr "编辑(&E)"
-
-#: lib/Padre/Wx/Menubar.pm:74
-msgid "&Search"
-msgstr "搜索(&S)"
-
-#: lib/Padre/Wx/Menubar.pm:75
-msgid "&View"
-msgstr "视图(&V)"
-
-#: lib/Padre/Wx/Menubar.pm:76
-msgid "&Run"
-msgstr "运行(&R)"
-
-#: lib/Padre/Wx/Menubar.pm:77
-msgid "Pl&ugins"
-msgstr "插件(&u)"
-
-#: lib/Padre/Wx/Menubar.pm:78
-msgid "&Window"
-msgstr "窗口(&W)"
-
-#: lib/Padre/Wx/Menubar.pm:79
-msgid "&Help"
-msgstr "帮助(&H)"
-
-#: lib/Padre/Wx/Menubar.pm:89
-msgid "E&xperimental"
-msgstr "实验(&x)"
-
-#: lib/Padre/Wx/Menubar.pm:118 lib/Padre/Wx/Menubar.pm:162
-msgid "&Perl"
-msgstr "&Perl"
-
-#: lib/Padre/Wx/FunctionList.pm:71
-msgid "Functions"
-msgstr "函数"
-
-#: lib/Padre/Wx/Syntax.pm:66
-msgid "Syntax Check"
-msgstr "语法检查"
-
-#: lib/Padre/Wx/Syntax.pm:92 lib/Padre/Wx/Syntax.pm:254
-msgid "Line"
-msgstr "行"
-
-#: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Syntax.pm:97
-#: lib/Padre/Task/SyntaxChecker.pm:179
-msgid "Warning"
-msgstr "警告"
-
-#: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Syntax.pm:99
-#: lib/Padre/Wx/Main.pm:1572 lib/Padre/Wx/Main.pm:1834
-#: lib/Padre/Wx/Main.pm:2769 lib/Padre/Wx/Dialog/PluginManager.pm:360
-#: lib/Padre/Task/SyntaxChecker.pm:179
-msgid "Error"
-msgstr "错误"
-
-#: lib/Padre/Wx/Syntax.pm:255
-msgid "Type"
-msgstr "类型"
-
-#: lib/Padre/Wx/Syntax.pm:256 lib/Padre/Wx/Dialog/SessionManager.pm:208
-msgid "Description"
-msgstr "描述"
-
-#: lib/Padre/Wx/Outline.pm:59 lib/Padre/Task/Outline/Perl.pm:164
+#: lib/Padre/Wx/Outline.pm:59 lib/Padre/Task/Outline/Perl.pm:165
 msgid "Outline"
 msgstr "提纲"
+
+#: lib/Padre/Wx/Notebook.pm:50
+msgid "Files"
+msgstr "文件"
 
 #: lib/Padre/Wx/Ack.pm:102
 msgid "Term:"
@@ -613,8 +463,8 @@ msgstr "选择目录(&d)"
 msgid "In Files/Types:"
 msgstr "文件类型"
 
-#: lib/Padre/Wx/Ack.pm:116 lib/Padre/Wx/Dialog/Find.pm:74
-#: lib/Padre/Wx/Dialog/Replace.pm:84
+#: lib/Padre/Wx/Ack.pm:116 lib/Padre/Wx/Dialog/Replace.pm:84
+#: lib/Padre/Wx/Dialog/Find.pm:74
 msgid "Case &Insensitive"
 msgstr "匹配大小写(&I)"
 
@@ -634,140 +484,27 @@ msgstr "选择目录"
 msgid "Ack"
 msgstr "Ack"
 
-#: lib/Padre/Wx/Right.pm:37
-msgid "Workspace View"
-msgstr "工作视图"
+#: lib/Padre/Wx/Directory.pm:73 lib/Padre/Wx/Directory/TreeCtrl.pm:104
+msgid "Directory"
+msgstr "目录"
 
-#: lib/Padre/Wx/ToolBar.pm:46
-msgid "New File"
-msgstr "新建文件"
+#: lib/Padre/Wx/Directory.pm:128
+msgid "Choose a directory"
+msgstr "选择目录"
 
-#: lib/Padre/Wx/ToolBar.pm:61
-msgid "Save File"
-msgstr "保存文件"
-
-#: lib/Padre/Wx/ToolBar.pm:67
-msgid "Save as..."
-msgstr "保存为..."
-
-#: lib/Padre/Wx/ToolBar.pm:73 lib/Padre/Wx/Menu/File.pm:188
-msgid "Save All"
-msgstr "保存所有"
-
-#: lib/Padre/Wx/ToolBar.pm:82
-msgid "Close File"
-msgstr "关闭文件"
-
-#: lib/Padre/Wx/ToolBar.pm:94
-msgid "Undo"
-msgstr "撤销"
-
-#: lib/Padre/Wx/ToolBar.pm:100
-msgid "Redo"
-msgstr "重做"
-
-#: lib/Padre/Wx/ToolBar.pm:109
-msgid "Cut"
-msgstr "剪切"
-
-#: lib/Padre/Wx/ToolBar.pm:118
-msgid "Copy"
-msgstr "复制"
-
-#: lib/Padre/Wx/ToolBar.pm:127
-msgid "Paste"
-msgstr "粘贴"
-
-#: lib/Padre/Wx/ToolBar.pm:137
-msgid "Select All"
-msgstr "全选"
-
-#: lib/Padre/Wx/ToolBar.pm:149 lib/Padre/Wx/Dialog/Find.pm:54
-#: lib/Padre/Wx/Dialog/Find.pm:160 lib/Padre/Wx/Dialog/Replace.pm:210
-msgid "Find"
-msgstr "查找"
-
-#: lib/Padre/Wx/ToolBar.pm:155 lib/Padre/Wx/Dialog/Replace.pm:54
-msgid "Find and Replace"
-msgstr "查找并且替换"
-
-#: lib/Padre/Wx/ToolBar.pm:164
-msgid "Toggle Comments"
-msgstr "切换注释"
-
-#: lib/Padre/Wx/ToolBar.pm:175
-msgid "Document Stats"
-msgstr "文档统计"
-
-#: lib/Padre/Wx/Editor.pm:733 lib/Padre/Wx/Menu/Edit.pm:66
-msgid "Select all\tCtrl-A"
-msgstr "全选\tCtrl-A"
-
-#: lib/Padre/Wx/Editor.pm:744 lib/Padre/Wx/Menu/Edit.pm:127
-msgid "&Copy\tCtrl-C"
-msgstr "复制(&C)\tCtrl-C"
-
-#: lib/Padre/Wx/Editor.pm:756 lib/Padre/Wx/Menu/Edit.pm:114
-msgid "Cu&t\tCtrl-X"
-msgstr "剪切(&t)\tCtrl-X"
-
-#: lib/Padre/Wx/Editor.pm:768 lib/Padre/Wx/Menu/Edit.pm:140
-msgid "&Paste\tCtrl-V"
-msgstr "粘贴(&P)\tCtrl-V"
-
-#: lib/Padre/Wx/Editor.pm:785 lib/Padre/Wx/Menu/Edit.pm:220
-msgid "&Toggle Comment\tCtrl-Shift-C"
-msgstr "切换注释(&T)\tCtrl-Shift-C"
-
-#: lib/Padre/Wx/Editor.pm:793 lib/Padre/Wx/Menu/Edit.pm:232
-msgid "&Comment Selected Lines\tCtrl-M"
-msgstr "添加注释(&C)\tCtrl-M"
-
-#: lib/Padre/Wx/Editor.pm:800 lib/Padre/Wx/Menu/Edit.pm:244
-msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
-msgstr "删除注释(&U)\tCtrl-Shift-M"
-
-#: lib/Padre/Wx/Editor.pm:821
-msgid "Fold all"
-msgstr "展开所有"
-
-#: lib/Padre/Wx/Editor.pm:828
-msgid "Unfold all"
-msgstr "收拢所有"
-
-#: lib/Padre/Wx/Editor.pm:841 lib/Padre/Wx/Menu/Window.pm:32
-msgid "&Split window"
-msgstr "分割窗口(&S)"
-
-#: lib/Padre/Wx/Editor.pm:1187
-msgid "You must select a range of lines"
-msgstr "您必须选择多行"
-
-#: lib/Padre/Wx/Editor.pm:1203
-msgid "First character of selection must be a non-word character to align"
-msgstr "排序选区的首字符必须为非文字"
-
-#: lib/Padre/Wx/Bottom.pm:43
-msgid "Output View"
-msgstr "输出视图"
-
-#: lib/Padre/Wx/Notebook.pm:35
-msgid "Files"
-msgstr "文件"
-
-#: lib/Padre/Wx/DocBrowser.pm:147
+#: lib/Padre/Wx/DocBrowser.pm:148
 msgid "&Close\tCtrl+W"
 msgstr "关闭(&C)\tCtrl+W"
 
-#: lib/Padre/Wx/DocBrowser.pm:148
+#: lib/Padre/Wx/DocBrowser.pm:149
 msgid "&Open\tCtrl+O"
 msgstr "打开(&O)...\tCtrl+O"
 
-#: lib/Padre/Wx/DocBrowser.pm:151
+#: lib/Padre/Wx/DocBrowser.pm:152
 msgid "E&xit\tCtrl+X"
 msgstr "剪切(&x)\tCtrl+X"
 
-#: lib/Padre/Wx/DocBrowser.pm:327
+#: lib/Padre/Wx/DocBrowser.pm:328
 msgid "Untitled"
 msgstr "未命名"
 
@@ -775,418 +512,697 @@ msgstr "未命名"
 msgid "NAME"
 msgstr "NAME"
 
-#: lib/Padre/Wx/Main.pm:410
+#: lib/Padre/Wx/Right.pm:49
+msgid "Document Tools"
+msgstr "文档工具"
+
+#: lib/Padre/Wx/FunctionList.pm:71
+msgid "Functions"
+msgstr "函数"
+
+#: lib/Padre/Wx/Main.pm:511
 #, perl-format
 msgid "No such session %s"
 msgstr "没有该会话 %s"
 
-#: lib/Padre/Wx/Main.pm:573
+#: lib/Padre/Wx/Main.pm:672
 msgid "Failed to create server"
 msgstr "创建服务器失败"
 
-#: lib/Padre/Wx/Main.pm:1438
+#: lib/Padre/Wx/Main.pm:1561
 msgid "Command line"
 msgstr "命令行"
 
-#: lib/Padre/Wx/Main.pm:1439
+#: lib/Padre/Wx/Main.pm:1562
 msgid "Run setup"
 msgstr "Run setup"
 
-#: lib/Padre/Wx/Main.pm:1472
+#: lib/Padre/Wx/Main.pm:1597
 msgid "Current document has no filename"
 msgstr "当前文档没有文件名"
 
-#: lib/Padre/Wx/Main.pm:1478
+#: lib/Padre/Wx/Main.pm:1603
 msgid "Could not find project root"
 msgstr "无法找到项目主目录"
 
-#: lib/Padre/Wx/Main.pm:1571
+#: lib/Padre/Wx/Main.pm:1698
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr "启动 '%s' 命令失败"
 
-#: lib/Padre/Wx/Main.pm:1597
+#: lib/Padre/Wx/Main.pm:1699 lib/Padre/Wx/Main.pm:1953
+#: lib/Padre/Wx/Main.pm:2981 lib/Padre/Wx/Editor.pm:120
+#: lib/Padre/Wx/Syntax.pm:84 lib/Padre/Wx/Syntax.pm:87
+#: lib/Padre/Wx/Dialog/PluginManager.pm:362
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:154
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:86
+#: lib/Padre/Wx/Dialog/OpenResource.pm:105
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:432
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:466
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:655
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:763
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:793
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:47
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:77
+#: lib/Padre/Task/SyntaxChecker.pm:180
+msgid "Error"
+msgstr "错误"
+
+#: lib/Padre/Wx/Main.pm:1726
 msgid "No open document"
 msgstr "没有打开文档"
 
-#: lib/Padre/Wx/Main.pm:1614
+#: lib/Padre/Wx/Main.pm:1743
 msgid "No execution mode was defined for this document"
 msgstr "没有该文档对应的运行方法"
 
-#: lib/Padre/Wx/Main.pm:1646
+#: lib/Padre/Wx/Main.pm:1777
 msgid "Not a Perl document"
 msgstr "不是一个 Perl 文档"
 
-#: lib/Padre/Wx/Main.pm:1819
+#: lib/Padre/Wx/Main.pm:1936
 msgid "Message"
 msgstr "提示"
 
-#: lib/Padre/Wx/Main.pm:2044
+#: lib/Padre/Wx/Main.pm:2178
 msgid "Autocompletion error"
 msgstr "自动完成错误"
 
-#: lib/Padre/Wx/Main.pm:2068
+#: lib/Padre/Wx/Main.pm:2204
 #, perl-format
 msgid "Line number between (1-%s):"
 msgstr "行号（1-%s之间）:"
 
-#: lib/Padre/Wx/Main.pm:2069
+#: lib/Padre/Wx/Main.pm:2205
 msgid "Go to line number"
 msgstr "跳到行号:"
 
-#: lib/Padre/Wx/Main.pm:2314
+#: lib/Padre/Wx/Main.pm:2467
 #, perl-format
 msgid ""
 "Cannot open %s as it is over the arbitrary file size limit of Padre which is "
 "currently %s"
 msgstr "无法打开文件 %s 因为文件大小已超过 Padre 当前设置 %s"
 
-#: lib/Padre/Wx/Main.pm:2416
+#: lib/Padre/Wx/Main.pm:2579
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "无选区。请输入需要打开的:"
 
-#: lib/Padre/Wx/Main.pm:2417
+#: lib/Padre/Wx/Main.pm:2580
 msgid "Open selection"
 msgstr "打开所选"
 
-#: lib/Padre/Wx/Main.pm:2485
+#: lib/Padre/Wx/Main.pm:2658
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "无法找到文件 '%s'"
 
-#: lib/Padre/Wx/Main.pm:2486
+#: lib/Padre/Wx/Main.pm:2659 lib/Padre/Wx/Menu/File.pm:241
 msgid "Open Selection"
 msgstr "打开所选"
 
-#: lib/Padre/Wx/Main.pm:2546
+#: lib/Padre/Wx/Main.pm:2736
 msgid "JavaScript Files"
 msgstr "JavaScript 文件"
 
-#: lib/Padre/Wx/Main.pm:2547
+#: lib/Padre/Wx/Main.pm:2737
 msgid "Perl Files"
 msgstr "Perl 文件"
 
-#: lib/Padre/Wx/Main.pm:2548
+#: lib/Padre/Wx/Main.pm:2738
 msgid "PHP Files"
 msgstr "PHP 文件"
 
-#: lib/Padre/Wx/Main.pm:2549
+#: lib/Padre/Wx/Main.pm:2739
 msgid "Python Files"
 msgstr "Python 文件"
 
-#: lib/Padre/Wx/Main.pm:2550
+#: lib/Padre/Wx/Main.pm:2740
 msgid "Ruby Files"
 msgstr "Ruby 文件"
 
-#: lib/Padre/Wx/Main.pm:2551
+#: lib/Padre/Wx/Main.pm:2741
 msgid "SQL Files"
 msgstr "SQL 文件"
 
-#: lib/Padre/Wx/Main.pm:2552
+#: lib/Padre/Wx/Main.pm:2742
 msgid "Text Files"
 msgstr "文本文件"
 
-#: lib/Padre/Wx/Main.pm:2553
+#: lib/Padre/Wx/Main.pm:2743
 msgid "Web Files"
 msgstr "网页文件"
 
-#: lib/Padre/Wx/Main.pm:2557 lib/Padre/Wx/Main.pm:2558
+#: lib/Padre/Wx/Main.pm:2747 lib/Padre/Wx/Main.pm:2748
 msgid "All Files"
 msgstr "所有文件"
 
-#: lib/Padre/Wx/Main.pm:2600 lib/Padre/Wx/Main.pm:3939
+#: lib/Padre/Wx/Main.pm:2751
+msgid "Open File"
+msgstr "打开文件"
+
+#: lib/Padre/Wx/Main.pm:2798 lib/Padre/Wx/Main.pm:4264
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "无法重载文件: %s"
 
-#: lib/Padre/Wx/Main.pm:2627
+#: lib/Padre/Wx/Main.pm:2829
 msgid "Save file as..."
 msgstr "另存为..."
 
-#: lib/Padre/Wx/Main.pm:2654
+#: lib/Padre/Wx/Main.pm:2856
 msgid "File already exists. Overwrite it?"
 msgstr "文件已存在。是否覆盖？"
 
-#: lib/Padre/Wx/Main.pm:2655
+#: lib/Padre/Wx/Main.pm:2857
 msgid "Exist"
 msgstr "存在"
 
-#: lib/Padre/Wx/Main.pm:2758
+#: lib/Padre/Wx/Main.pm:2970
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "文件在上次保存后有更新。是否覆盖？"
 
-#: lib/Padre/Wx/Main.pm:2759 lib/Padre/Wx/Main.pm:3932
+#: lib/Padre/Wx/Main.pm:2971 lib/Padre/Wx/Main.pm:4257
 msgid "File not in sync"
 msgstr "文件未同步"
 
-#: lib/Padre/Wx/Main.pm:2768
+#: lib/Padre/Wx/Main.pm:2980
 msgid "Could not save file: "
 msgstr "无法保存文件："
 
-#: lib/Padre/Wx/Main.pm:2832
+#: lib/Padre/Wx/Main.pm:3048
 msgid "File changed. Do you want to save it?"
 msgstr "文件已更改。是否保存？"
 
-#: lib/Padre/Wx/Main.pm:2833
+#: lib/Padre/Wx/Main.pm:3049
 msgid "Unsaved File"
 msgstr "未保存文件"
 
-#: lib/Padre/Wx/Main.pm:3006
+#: lib/Padre/Wx/Main.pm:3238
 msgid "Cannot diff if file was never saved"
 msgstr "无法对未保存文件进行比较"
 
-#: lib/Padre/Wx/Main.pm:3027
+#: lib/Padre/Wx/Main.pm:3259
 msgid "There are no differences\n"
 msgstr "无差异\n"
 
-#: lib/Padre/Wx/Main.pm:3573
+#: lib/Padre/Wx/Main.pm:3877
 msgid "Internal error"
 msgstr "内部错误"
 
-#: lib/Padre/Wx/Main.pm:3765
+#: lib/Padre/Wx/Main.pm:4073
 #, perl-format
 msgid "Words: %s"
 msgstr "单词: %s"
 
-#: lib/Padre/Wx/Main.pm:3766
+#: lib/Padre/Wx/Main.pm:4074
 #, perl-format
 msgid "Lines: %d"
 msgstr "行号: %d"
 
-#: lib/Padre/Wx/Main.pm:3767
+#: lib/Padre/Wx/Main.pm:4075
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr "字符（无空格）: %s"
 
-#: lib/Padre/Wx/Main.pm:3768
+#: lib/Padre/Wx/Main.pm:4076
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "字符（带空格）: %d"
 
-#: lib/Padre/Wx/Main.pm:3769
+#: lib/Padre/Wx/Main.pm:4077
 #, perl-format
 msgid "Newline type: %s"
 msgstr "换行类型: %s"
 
-#: lib/Padre/Wx/Main.pm:3770
+#: lib/Padre/Wx/Main.pm:4078
 #, perl-format
 msgid "Encoding: %s"
 msgstr "编码: %s"
 
-#: lib/Padre/Wx/Main.pm:3771
+#: lib/Padre/Wx/Main.pm:4079
 #, perl-format
 msgid "Document type: %s"
 msgstr "文档类型: %s"
 
-#: lib/Padre/Wx/Main.pm:3771
+#: lib/Padre/Wx/Main.pm:4079
 msgid "none"
 msgstr "无"
 
-#: lib/Padre/Wx/Main.pm:3773
+#: lib/Padre/Wx/Main.pm:4081
 #, perl-format
 msgid "Filename: %s"
 msgstr "文件名: %s"
 
-#: lib/Padre/Wx/Main.pm:3804
+#: lib/Padre/Wx/Main.pm:4114
 msgid "Space to Tab"
 msgstr "转换空格为制表符"
 
-#: lib/Padre/Wx/Main.pm:3805
+#: lib/Padre/Wx/Main.pm:4115
 msgid "Tab to Space"
 msgstr "转换制表符为空格"
 
-#: lib/Padre/Wx/Main.pm:3809
+#: lib/Padre/Wx/Main.pm:4119
 msgid "How many spaces for each tab:"
 msgstr "一个制表符转为多个个空格:"
 
-#: lib/Padre/Wx/Main.pm:3931
+#: lib/Padre/Wx/Main.pm:4250
+msgid "File has been deleted on disk, do you want to CLEAR the editor window?"
+msgstr "文件在磁盘中被删除，是否清空编辑窗口？"
+
+#: lib/Padre/Wx/Main.pm:4252
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "文件在上次保存后有更新。是否重新载入？"
 
-#: lib/Padre/Wx/Main.pm:4231
+#: lib/Padre/Wx/Main.pm:4335
+#, perl-format
+msgid "Error loading template file '%s'"
+msgstr "载入模板文件 '%s' 错误"
+
+#: lib/Padre/Wx/Main.pm:4496
 msgid "Need to select text in order to translate to hex"
 msgstr "请选择文本来显示为十六进制"
+
+#: lib/Padre/Wx/ErrorList.pm:91
+msgid "Error List"
+msgstr "错误列表"
+
+#: lib/Padre/Wx/ErrorList.pm:127
+msgid "No diagnostics available for this error!"
+msgstr "该错误没有诊断信息"
+
+#: lib/Padre/Wx/ErrorList.pm:136
+msgid "Diagnostics"
+msgstr "诊断"
+
+#: lib/Padre/Wx/Editor.pm:831
+msgid "Select all\tCtrl-A"
+msgstr "全选\tCtrl-A"
+
+#: lib/Padre/Wx/Editor.pm:842
+msgid "&Copy\tCtrl-C"
+msgstr "复制(&C)\tCtrl-C"
+
+#: lib/Padre/Wx/Editor.pm:854
+msgid "Cu&t\tCtrl-X"
+msgstr "剪切(&t)\tCtrl-X"
+
+#: lib/Padre/Wx/Editor.pm:866
+msgid "&Paste\tCtrl-V"
+msgstr "粘贴(&P)\tCtrl-V"
+
+#: lib/Padre/Wx/Editor.pm:883
+msgid "&Toggle Comment\tCtrl-Shift-C"
+msgstr "切换注释(&T)\tCtrl-Shift-C"
+
+#: lib/Padre/Wx/Editor.pm:891
+msgid "&Comment Selected Lines\tCtrl-M"
+msgstr "添加注释(&C)\tCtrl-M"
+
+#: lib/Padre/Wx/Editor.pm:898
+msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
+msgstr "删除注释(&U)\tCtrl-Shift-M"
+
+#: lib/Padre/Wx/Editor.pm:919
+msgid "Fold all"
+msgstr "展开所有"
+
+#: lib/Padre/Wx/Editor.pm:926
+msgid "Unfold all"
+msgstr "收拢所有"
+
+#: lib/Padre/Wx/Editor.pm:939 lib/Padre/Wx/Menu/Window.pm:33
+msgid "&Split window"
+msgstr "分割窗口(&S)"
+
+#: lib/Padre/Wx/Editor.pm:1306
+msgid "You must select a range of lines"
+msgstr "您必须选择多行"
+
+#: lib/Padre/Wx/Editor.pm:1322
+msgid "First character of selection must be a non-word character to align"
+msgstr "排序选区的首字符必须为非文字"
+
+#: lib/Padre/Wx/Syntax.pm:54
+msgid "Syntax Check"
+msgstr "语法检查"
+
+#: lib/Padre/Wx/Syntax.pm:80 lib/Padre/Wx/Syntax.pm:301
+msgid "Line"
+msgstr "行"
+
+#: lib/Padre/Wx/Syntax.pm:84 lib/Padre/Wx/Syntax.pm:85
+#: lib/Padre/Task/SyntaxChecker.pm:180
+msgid "Warning"
+msgstr "警告"
+
+#: lib/Padre/Wx/Syntax.pm:302
+msgid "Type"
+msgstr "类型"
+
+#: lib/Padre/Wx/Syntax.pm:303 lib/Padre/Wx/Dialog/SessionManager.pm:216
+msgid "Description"
+msgstr "描述"
+
+#: lib/Padre/Wx/Menubar.pm:71
+msgid "&File"
+msgstr "文件(&F)"
+
+#: lib/Padre/Wx/Menubar.pm:72 lib/Padre/Wx/Dialog/Snippets.pm:26
+msgid "&Edit"
+msgstr "编辑(&E)"
+
+#: lib/Padre/Wx/Menubar.pm:73
+msgid "&Search"
+msgstr "搜索(&S)"
+
+#: lib/Padre/Wx/Menubar.pm:74
+msgid "&View"
+msgstr "视图(&V)"
+
+#: lib/Padre/Wx/Menubar.pm:75
+msgid "&Run"
+msgstr "运行(&R)"
+
+#: lib/Padre/Wx/Menubar.pm:76
+msgid "Pl&ugins"
+msgstr "插件(&u)"
+
+#: lib/Padre/Wx/Menubar.pm:77
+msgid "&Window"
+msgstr "窗口(&W)"
+
+#: lib/Padre/Wx/Menubar.pm:78
+msgid "&Help"
+msgstr "帮助(&H)"
+
+#: lib/Padre/Wx/Menubar.pm:107 lib/Padre/Wx/Menubar.pm:147
+msgid "&Perl"
+msgstr "&Perl"
 
 #: lib/Padre/Wx/Output.pm:58
 msgid "Output"
 msgstr "输出"
 
-#: lib/Padre/Wx/StatusBar.pm:171
-msgid "L:"
-msgstr "L:"
+#: lib/Padre/Wx/Left.pm:49
+msgid "Project Tools"
+msgstr "项目工具"
 
-#: lib/Padre/Wx/StatusBar.pm:171
-msgid "Ch:"
-msgstr "Ch:"
+#: lib/Padre/Wx/About.pm:188 lib/Padre/Wx/Menu/View.pm:323
+msgid "Padre"
+msgstr "Padre"
 
-#: lib/Padre/Wx/StatusBar.pm:236
-msgid "Background Tasks are running"
-msgstr "后台任务正在运行"
+#: lib/Padre/Wx/About.pm:193
+msgid "Development"
+msgstr "开发"
 
-#: lib/Padre/Wx/StatusBar.pm:237
-msgid "Background Tasks are running with high load"
-msgstr "后台任务正在高负载运行"
+#: lib/Padre/Wx/About.pm:198
+msgid "Translation"
+msgstr "翻译"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:40 lib/Padre/Wx/Menu/Plugins.pm:34
+#: lib/Padre/Wx/Dialog/Search.pm:135
+msgid "Find:"
+msgstr "查找:"
+
+#: lib/Padre/Wx/Dialog/Search.pm:154
+msgid "Previ&ous"
+msgstr "上一个(&o)"
+
+#: lib/Padre/Wx/Dialog/Search.pm:172
+msgid "&Next"
+msgstr "下一个(&N)"
+
+#: lib/Padre/Wx/Dialog/Search.pm:180
+msgid "Case &insensitive"
+msgstr "忽略大小写(&i)"
+
+#: lib/Padre/Wx/Dialog/Search.pm:184
+msgid "Use rege&x"
+msgstr "使用正则表达式(&x)"
+
+#: lib/Padre/Wx/Dialog/PluginManager.pm:43 lib/Padre/Wx/Menu/Plugins.pm:39
 msgid "Plugin Manager"
 msgstr "插件管理"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:174
+#: lib/Padre/Wx/Dialog/PluginManager.pm:179
 #, perl-format
 msgid "Error loading pod for class '%s': %s"
 msgstr "载入 '%s' pod 错误: %s"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:230
-#: lib/Padre/Wx/Dialog/SessionManager.pm:207
+#: lib/Padre/Wx/Dialog/PluginManager.pm:235
+#: lib/Padre/Wx/Dialog/SessionManager.pm:215
 msgid "Name"
 msgstr "名字:"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:231
+#: lib/Padre/Wx/Dialog/PluginManager.pm:236
 msgid "Version"
 msgstr "版本"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:232 lib/Padre/Wx/CPAN/Listview.pm:43
-#: lib/Padre/Wx/CPAN/Listview.pm:78
+#: lib/Padre/Wx/Dialog/PluginManager.pm:237 lib/Padre/Wx/CPAN/Listview.pm:32
+#: lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
 msgstr "状态"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:292
-#: lib/Padre/Wx/Dialog/Preferences.pm:481 lib/Padre/Wx/Menu/Edit.pm:532
+#: lib/Padre/Wx/Dialog/PluginManager.pm:297
+#: lib/Padre/Wx/Dialog/Preferences.pm:646 lib/Padre/Wx/Menu/Edit.pm:523
 msgid "Preferences"
 msgstr "选项"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:293
-#: lib/Padre/Wx/Dialog/SessionManager.pm:238
-#: lib/Padre/Wx/Dialog/SessionSave.pm:205
+#: lib/Padre/Wx/Dialog/PluginManager.pm:298
+#: lib/Padre/Wx/Dialog/SessionManager.pm:246
+#: lib/Padre/Wx/Dialog/SessionSave.pm:206
 msgid "Close"
 msgstr "关闭"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:467
-#: lib/Padre/Wx/Dialog/PluginManager.pm:477
+#: lib/Padre/Wx/Dialog/PluginManager.pm:472
+#: lib/Padre/Wx/Dialog/PluginManager.pm:482
 msgid "Show error message"
 msgstr "显示错误消息"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:490
+#: lib/Padre/Wx/Dialog/PluginManager.pm:495
 msgid "Disable"
 msgstr "禁用"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:500
+#: lib/Padre/Wx/Dialog/PluginManager.pm:505
 msgid "Enable"
 msgstr "启用"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:33
-msgid "Session Manager"
-msgstr "会话管理"
+#: lib/Padre/Wx/Dialog/Snippets.pm:18
+msgid "All"
+msgstr "所有"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:195
-msgid "List of sessions"
-msgstr "会话列表"
+#: lib/Padre/Wx/Dialog/Snippets.pm:22
+msgid "Class:"
+msgstr "Class:"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:209
-msgid "Last update"
-msgstr "最后更新"
+#: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
+msgid "Snippet:"
+msgstr "Snippet:"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:236
-msgid "Open"
-msgstr "打开"
+#: lib/Padre/Wx/Dialog/Snippets.pm:24
+msgid "&Insert"
+msgstr "插入(&I)"
 
-#: lib/Padre/Wx/Dialog/SessionManager.pm:237
-msgid "Delete"
-msgstr "删除"
+#: lib/Padre/Wx/Dialog/Snippets.pm:26
+msgid "&Add"
+msgstr "&Add"
 
-#: lib/Padre/Wx/Dialog/Encode.pm:52
-msgid "Encode to:"
-msgstr "转换编码为:"
+#: lib/Padre/Wx/Dialog/Snippets.pm:39 lib/Padre/Wx/Menu/Edit.pm:257
+msgid "Snippets"
+msgstr "代码片段"
 
-#: lib/Padre/Wx/Dialog/Encode.pm:62 lib/Padre/Wx/Menu/Edit.pm:291
-msgid "Encode document to..."
-msgstr "转换文档编码为..."
+#: lib/Padre/Wx/Dialog/Snippets.pm:111
+msgid "Category:"
+msgstr "种类:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:53
+#: lib/Padre/Wx/Dialog/Snippets.pm:112
+msgid "Name:"
+msgstr "Name:"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:114 lib/Padre/Wx/Dialog/Preferences.pm:715
+#: lib/Padre/Wx/Menu/File.pm:208
+msgid "&Save"
+msgstr "保存(&S)"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:125
+msgid "Edit/Add Snippets"
+msgstr "Edit/Add Snippets"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:31
+msgid "Existing bookmarks:"
+msgstr "已有书签:"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:43
+msgid "Delete &All"
+msgstr "删除所有(&A)"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:56 lib/Padre/Wx/Menu/View.pm:292
+msgid "Set Bookmark"
+msgstr "设置书签"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:57
+msgid "GoTo Bookmark"
+msgstr "跳转至书签"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:123
+msgid "Cannot set bookmark in unsaved document"
+msgstr "不能给未保存文档设置书签"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:134
+#, perl-format
+msgid "%s line %s: %s"
+msgstr "%s line %s: %s"
+
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:171
+#, perl-format
+msgid "The bookmark '%s' no longer exists"
+msgstr "书签 '%s' 不存在"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:33
+msgid "Enable bookmarks"
+msgstr "启用书签"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:34
+msgid "Change font size"
+msgstr "改变文字大小"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:35
+msgid "Enable session manager"
+msgstr "启用会话管理"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:60
 msgid "Diff tool:"
 msgstr "Diff 工具:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:71
+#: lib/Padre/Wx/Dialog/Preferences.pm:78
+msgid "File type:"
+msgstr "文件类型："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:81
+msgid "Highlighter:"
+msgstr "加亮器："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:84
+#: lib/Padre/Wx/Dialog/SessionSave.pm:185
+msgid "Description:"
+msgstr "描述:"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:87
+msgid "Content type:"
+msgstr "文档类型："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:179
 msgid "Automatic indentation style detection"
 msgstr "自动缩进风格检测"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:75
+#: lib/Padre/Wx/Dialog/Preferences.pm:183
 msgid "Use Tabs"
 msgstr "使用标签"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:78
+#: lib/Padre/Wx/Dialog/Preferences.pm:186
 msgid "TAB display size (in spaces):"
 msgstr "TAB 显示长度（以空格算）"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:81
+#: lib/Padre/Wx/Dialog/Preferences.pm:189
 msgid "Indentation width (in columns):"
 msgstr "缩进宽度 (以列算)："
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:84
+#: lib/Padre/Wx/Dialog/Preferences.pm:192
 msgid "Guess from current document:"
 msgstr "从当前文档猜测:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:85
+#: lib/Padre/Wx/Dialog/Preferences.pm:193
 msgid "Guess"
 msgstr "猜测"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:87
+#: lib/Padre/Wx/Dialog/Preferences.pm:195
 msgid "Autoindent:"
 msgstr "自动缩进:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:111
+#: lib/Padre/Wx/Dialog/Preferences.pm:218
 msgid "Default word wrap on for each file"
 msgstr "默认对所有文件开启换行"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:116
+#: lib/Padre/Wx/Dialog/Preferences.pm:223
 msgid "Auto-fold POD markup when code folding enabled"
 msgstr "当代码启动开展时自动开展 POD 标志"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:121
+#: lib/Padre/Wx/Dialog/Preferences.pm:228
 msgid "Perl beginner mode"
 msgstr "Perl 初学者模式"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:125
+#: lib/Padre/Wx/Dialog/Preferences.pm:232
 msgid "Open files:"
 msgstr "打开文件:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:129
+#: lib/Padre/Wx/Dialog/Preferences.pm:235
+msgid "Default projects directory:"
+msgstr "默认项目目录："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:237
+msgid "Choose the default projects directory"
+msgstr "选择默认的项目目录"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:241
 msgid "Open files in existing Padre"
 msgstr "在已运行 Padre 中打开文件"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:133
+#: lib/Padre/Wx/Dialog/Preferences.pm:245
 msgid "Methods order:"
 msgstr "函数顺序"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:136
+#: lib/Padre/Wx/Dialog/Preferences.pm:248
 msgid "Preferred language for error diagnostics:"
 msgstr "错误诊断的首选语言:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:173
+#: lib/Padre/Wx/Dialog/Preferences.pm:251
+msgid "Default line ending:"
+msgstr "默认行尾："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:254
+msgid "Check for file updates on disk every (seconds):"
+msgstr "检查磁盘文件更新频率（秒）："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:263
+msgid ""
+"Add another closing bracket if there is already one (and the auto-bracket-"
+"function is enabled)"
+msgstr ""
+"当前已经匹配时视图加入另外的关闭括号（自动括号功能已开启）"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:301
 msgid "Colored text in output window (ANSI)"
 msgstr "输出窗口中的加色文字 (ANSI)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:177
+#: lib/Padre/Wx/Dialog/Preferences.pm:306
+msgid "Show right margin at column:"
+msgstr "显示右间距（行）："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:310
 msgid "Editor Font:"
 msgstr "编辑器字体:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:180
+#: lib/Padre/Wx/Dialog/Preferences.pm:313
 msgid "Editor Current Line Background Colour:"
 msgstr "当前行背景颜色"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:230
+#: lib/Padre/Wx/Dialog/Preferences.pm:376
 msgid "Settings Demo"
 msgstr "演示"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:328
+#: lib/Padre/Wx/Dialog/Preferences.pm:383
+msgid "Any changes to these options require a restart:"
+msgstr "如下选项的更改需要重启："
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:491
 msgid "Enable?"
 msgstr "启用?"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:343
+#: lib/Padre/Wx/Dialog/Preferences.pm:506
 msgid "Crashed"
-msgstr "Crashed"
+msgstr "已崩溃"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:376
+#: lib/Padre/Wx/Dialog/Preferences.pm:539
 msgid ""
 "i.e.\n"
 "\tinclude directory:  -I<dir>\n"
@@ -1202,113 +1218,243 @@ msgstr ""
 "\t启用所有警告:  -W\n"
 "\t禁用所有警告:  -X\n"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:386
-#: lib/Padre/Wx/Dialog/Preferences.pm:436
+#: lib/Padre/Wx/Dialog/Preferences.pm:549
+#: lib/Padre/Wx/Dialog/Preferences.pm:599
 msgid "Interpreter arguments:"
 msgstr "解释器参数"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:392
-#: lib/Padre/Wx/Dialog/Preferences.pm:442
+#: lib/Padre/Wx/Dialog/Preferences.pm:555
+#: lib/Padre/Wx/Dialog/Preferences.pm:605
 msgid "Script arguments:"
 msgstr "程序参数"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:396
+#: lib/Padre/Wx/Dialog/Preferences.pm:559
 msgid "Use external window for execution (xterm)"
 msgstr "使用外部窗口来运行 (xterm)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:405
+#: lib/Padre/Wx/Dialog/Preferences.pm:568
 msgid "Unsaved"
 msgstr "未保存"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:406
+#: lib/Padre/Wx/Dialog/Preferences.pm:569
 msgid "N/A"
 msgstr "N/A"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:425
+#: lib/Padre/Wx/Dialog/Preferences.pm:588
 msgid "No Document"
 msgstr "没有文档"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:430
+#: lib/Padre/Wx/Dialog/Preferences.pm:593
 msgid "Document name:"
 msgstr "文档名字:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:433
+#: lib/Padre/Wx/Dialog/Preferences.pm:596
 msgid "Document location:"
 msgstr "文档位置:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:460
+#: lib/Padre/Wx/Dialog/Preferences.pm:623
 msgid "Default"
 msgstr "默认"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:466
+#: lib/Padre/Wx/Dialog/Preferences.pm:629
 #, perl-format
 msgid "Current Document: %s"
 msgstr "当前文档: %s"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:506
+#: lib/Padre/Wx/Dialog/Preferences.pm:672
 msgid "Behaviour"
 msgstr "行为"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:509
+#: lib/Padre/Wx/Dialog/Preferences.pm:675
 msgid "Appearance"
 msgstr "外观"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:512
+#: lib/Padre/Wx/Dialog/Preferences.pm:678
 msgid "Run Parameters"
 msgstr "运行参数"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:516
+#: lib/Padre/Wx/Dialog/Preferences.pm:682
+msgid "Files and Colors"
+msgstr "文件和颜色"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:685
 msgid "Indentation"
 msgstr "缩进"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:519
+#: lib/Padre/Wx/Dialog/Preferences.pm:688
 msgid "External Tools"
 msgstr "外部工具"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:546 lib/Padre/Wx/Dialog/Snippets.pm:114
-msgid "&Save"
-msgstr "保存(&S)"
-
-#: lib/Padre/Wx/Dialog/Preferences.pm:557 lib/Padre/Wx/Dialog/Find.pm:145
-#: lib/Padre/Wx/Dialog/Replace.pm:195
+#: lib/Padre/Wx/Dialog/Preferences.pm:726 lib/Padre/Wx/Dialog/Replace.pm:195
+#: lib/Padre/Wx/Dialog/Find.pm:159
 msgid "&Cancel"
 msgstr "取消(&C)"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:592
+#: lib/Padre/Wx/Dialog/Preferences.pm:761
 msgid "new"
 msgstr "new"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:593
+#: lib/Padre/Wx/Dialog/Preferences.pm:762
 msgid "nothing"
 msgstr "nothing"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:594
+#: lib/Padre/Wx/Dialog/Preferences.pm:763
 msgid "last"
 msgstr "last"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:595
+#: lib/Padre/Wx/Dialog/Preferences.pm:764
 msgid "no"
 msgstr "no"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:596
+#: lib/Padre/Wx/Dialog/Preferences.pm:765
 msgid "same_level"
 msgstr "same_level"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:597
+#: lib/Padre/Wx/Dialog/Preferences.pm:766
 msgid "deep"
 msgstr "deep"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:598
+#: lib/Padre/Wx/Dialog/Preferences.pm:767
 msgid "alphabetical"
 msgstr "按字母排序"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:599
+#: lib/Padre/Wx/Dialog/Preferences.pm:768
 msgid "original"
 msgstr "按原始位置排序"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:600
+#: lib/Padre/Wx/Dialog/Preferences.pm:769
 msgid "alphabetical_private_last"
 msgstr "按字母排序（私有最后）"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:54
+msgid "Find and Replace"
+msgstr "查找并且替换"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:98
+msgid "&Use Regex"
+msgstr "使用正则表达式(&U)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:112
+msgid "Close Window on &hit"
+msgstr "点击时退出该窗口(&h)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:126 lib/Padre/Wx/Dialog/Find.pm:116
+msgid "Search &Backwards"
+msgstr "向前搜索(&B)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:140
+msgid "Replace &All"
+msgstr "替换所有(&A)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:154 lib/Padre/Wx/Dialog/Find.pm:130
+msgid "&Find Next"
+msgstr "查找下一个(&F)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:174
+msgid "&Replace"
+msgstr "替换(&R)"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:210 lib/Padre/Wx/Dialog/Find.pm:52
+#: lib/Padre/Wx/Dialog/Find.pm:176
+msgid "Find"
+msgstr "查找"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:218 lib/Padre/Wx/Dialog/Find.pm:184
+msgid "Find Text:"
+msgstr "查找文本:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:242 lib/Padre/Wx/Menu/Search.pm:140
+msgid "Replace"
+msgstr "替换"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:250
+msgid "Replace Text:"
+msgstr "替换文本:"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:296 lib/Padre/Wx/Dialog/Find.pm:230
+msgid "Options"
+msgstr "选项"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:663
+#, perl-format
+msgid "%s occurences were replaced"
+msgstr "%s 事件已替换"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:668
+msgid "Nothing to replace"
+msgstr "没有可替换的"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:758
+#, perl-format
+msgid "Cannot build regex for '%s'"
+msgstr "无法为 '%s' 创建正则表达式"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:759
+msgid "Search error"
+msgstr "搜索错误"
+
+#: lib/Padre/Wx/Dialog/Encode.pm:53
+msgid "Encode to:"
+msgstr "转换编码为:"
+
+#: lib/Padre/Wx/Dialog/Encode.pm:63 lib/Padre/Wx/Menu/Edit.pm:330
+msgid "Encode document to..."
+msgstr "转换文档编码为..."
+
+#: lib/Padre/Wx/Dialog/Find.pm:88
+msgid "&Regular Expression"
+msgstr "正则表达式(&R)"
+
+#: lib/Padre/Wx/Dialog/Find.pm:102
+msgid "Close Window on &Hit"
+msgstr "点击时退出该窗口(&H)"
+
+#: lib/Padre/Wx/Dialog/Find.pm:145
+msgid "&Count All"
+msgstr "关闭所有(&C)"
+
+#: lib/Padre/Wx/Dialog/Find.pm:357
+msgid "Not a valid search"
+msgstr "非合法搜索"
+
+#: lib/Padre/Wx/Dialog/Find.pm:366
+#, perl-format
+msgid "Found %d matching occurrences"
+msgstr "已找到 %d 处匹配"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:35
+msgid "Session Manager"
+msgstr "会话管理"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:203
+msgid "List of sessions"
+msgstr "会话列表"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:217
+msgid "Last update"
+msgstr "最后更新"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:244
+msgid "Open"
+msgstr "打开"
+
+#: lib/Padre/Wx/Dialog/SessionManager.pm:245
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:773
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:781
+msgid "Delete"
+msgstr "删除"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:29
+msgid "Save session as..."
+msgstr "会话另存为..."
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:176
+msgid "Session name:"
+msgstr "会话名称:"
+
+#: lib/Padre/Wx/Dialog/SessionSave.pm:205
+msgid "Save"
+msgstr "保存"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
 msgid "Module Name:"
@@ -1342,206 +1488,152 @@ msgstr "选择父目录"
 msgid "Module Start"
 msgstr "Module Start"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:110
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:118
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr "Field %s was missing. Module not created."
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:111
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:119
 msgid "missing field"
 msgstr "缺失字段"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:139
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:151
 #, perl-format
-msgid "%s apparantly created. Do you want to open it now?"
+msgid ""
+"An error has occured while generating '%s':\n"
+"%s"
+msgstr ""
+"生成 '%s' 时发生错误:\n"
+"%s"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:162
+#, perl-format
+msgid "%s apparently created. Do you want to open it now?"
 msgstr "%s 已创建。现在就打开文件吗？"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:140
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:163
 msgid "Done"
 msgstr "完成"
 
-#: lib/Padre/Wx/Dialog/Find.pm:88 lib/Padre/Wx/Dialog/Replace.pm:98
-msgid "&Use Regex"
-msgstr "使用正则表达式(&U)"
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:34 lib/Padre/Wx/Menu/Search.pm:178
+msgid "Quick Menu Access"
+msgstr "菜单快捷入口"
 
-#: lib/Padre/Wx/Dialog/Find.pm:102
-msgid "Close Window on &Hit"
-msgstr "点击时退出该窗口(&H)"
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:85
+#: lib/Padre/Wx/Dialog/OpenResource.pm:104
+msgid "Error while trying to perform Padre action"
+msgstr "试图运行 Padre 动作时出错"
 
-#: lib/Padre/Wx/Dialog/Find.pm:116 lib/Padre/Wx/Dialog/Replace.pm:126
-msgid "Search &Backwards"
-msgstr "向前搜索(&B)"
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:159
+msgid "&Type a menu item name to access:"
+msgstr "输入菜单名字：(&T)"
 
-#: lib/Padre/Wx/Dialog/Find.pm:130
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:166
+msgid "&Matching Menu Items:"
+msgstr "匹配菜单选项：(&M)"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:325
+msgid "Reading items. Please wait..."
+msgstr "读取选项。请等待..."
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:51 lib/Padre/Wx/Menu/Search.pm:165
+msgid "Open Resource"
+msgstr "打开资源"
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:178
+msgid "&Select an item to open (? = any character, * = any string):"
+msgstr "选择打开项目(&S) (? 代表任何字符，* 代表任何字符串）"
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:190
+msgid "&Matching Items:"
+msgstr "匹配项目：(&M)"
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:203
+msgid "Current Directory: "
+msgstr "当前目录："
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:228
+msgid "Skip VCS files"
+msgstr "跳过 VCS 文件"
+
+#: lib/Padre/Wx/Dialog/OpenResource.pm:230
+msgid "Skip using MANIFEST.SKIP"
+msgstr "用 MANIFEST.SKIP 跳过文件"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:36 lib/Padre/Wx/Dialog/HelpSearch.pm:87
+#: lib/Padre/Wx/Menu/Help.pm:65
+msgid "Help Search"
+msgstr "帮助搜索"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:84
+msgid "No Help found"
+msgstr "找不到任何帮助"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:123
+msgid "&Type a help topic to read:"
+msgstr "输入帮助主题来阅读：(&T)"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:130
+msgid "&Matching Help Topics:"
+msgstr "匹配帮助主题：(&M)"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:156 lib/Padre/Wx/Menu/File.pm:107
+msgid "&Close"
+msgstr "关闭(&C)"
+
+#: lib/Padre/Wx/Dialog/OpenResource/SearchTask.pm:94
+msgid "Finished Searching"
+msgstr "查找完毕"
+
+#: lib/Padre/Wx/Menu/Search.pm:38
 msgid "&Find"
 msgstr "查找(&F)"
 
-#: lib/Padre/Wx/Dialog/Find.pm:168 lib/Padre/Wx/Dialog/Replace.pm:218
-msgid "Find Text:"
-msgstr "查找文本:"
+#: lib/Padre/Wx/Menu/Search.pm:48 lib/Padre/Wx/Menu/Search.pm:117
+msgid "Find Next"
+msgstr "查找下一个"
 
-#: lib/Padre/Wx/Dialog/Find.pm:214 lib/Padre/Wx/Dialog/Replace.pm:296
-msgid "Options"
-msgstr "选项"
+#: lib/Padre/Wx/Menu/Search.pm:80
+msgid "Failed to find any matches"
+msgstr "无法找到任何匹配"
 
-#: lib/Padre/Wx/Dialog/Find.pm:516 lib/Padre/Wx/Dialog/Replace.pm:738
-#, perl-format
-msgid "Cannot build regex for '%s'"
-msgstr "无法为 '%s' 创建正则表达式"
+#: lib/Padre/Wx/Menu/Search.pm:88
+msgid "&Find Previous"
+msgstr "查找上一个(&F)"
 
-#: lib/Padre/Wx/Dialog/Find.pm:517 lib/Padre/Wx/Dialog/Replace.pm:739
-msgid "Search error"
-msgstr "搜索错误"
+#: lib/Padre/Wx/Menu/Search.pm:101
+msgid "Quick Find"
+msgstr "快速查找"
 
-#: lib/Padre/Wx/Dialog/Find.pm:534
-#, perl-format
-msgid "Failed to find '%s' in current document."
-msgstr "在当前文档查找 '%s' 失败"
+#: lib/Padre/Wx/Menu/Search.pm:127
+msgid "Find Previous"
+msgstr "查找上一个"
 
-#: lib/Padre/Wx/Dialog/Find.pm:535
-msgid "Not Found"
-msgstr "找不到"
+#: lib/Padre/Wx/Menu/Search.pm:153
+msgid "Find in Fi&les..."
+msgstr "在文件中查找(&l)..."
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:30
-msgid "Existing bookmarks:"
-msgstr "已有书签:"
+#: lib/Padre/Wx/Menu/Run.pm:36
+msgid "Run Script"
+msgstr "运行脚本"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:42
-msgid "Delete &All"
-msgstr "删除所有(&A)"
+#: lib/Padre/Wx/Menu/Run.pm:46
+msgid "Run Script (debug info)"
+msgstr "运行脚本（带调式信息）"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:55
-msgid "Set Bookmark"
-msgstr "设置书签"
+#: lib/Padre/Wx/Menu/Run.pm:56
+msgid "Run Command"
+msgstr "运行命令"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:56
-msgid "GoTo Bookmark"
-msgstr "跳转至书签"
+#: lib/Padre/Wx/Menu/Run.pm:66 lib/Padre/Wx/Menu/Run.pm:76
+msgid "Run Tests"
+msgstr "运行测试"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:122
-msgid "Cannot set bookmark in unsaved document"
-msgstr "不能给未保存文档设置书签"
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:133
-#, perl-format
-msgid "%s line %s: %s"
-msgstr "%s line %s: %s"
-
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:170
-#, perl-format
-msgid "The bookmark '%s' no longer exists"
-msgstr "书签 '%s' 不存在"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:112
-msgid "Close Window on &hit"
-msgstr "点击时退出该窗口(&h)"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:140
-msgid "Replace &All"
-msgstr "替换所有(&A)"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:154
-msgid "&Find Next"
-msgstr "查找下一个(&F)"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:174
-msgid "&Replace"
-msgstr "替换(&R)"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:242
-msgid "Replace"
-msgstr "替换"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:250
-msgid "Replace Text:"
-msgstr "替换文本:"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:652
-#, perl-format
-msgid "%s occurences were replaced"
-msgstr "%s 事件已替换"
-
-#: lib/Padre/Wx/Dialog/Replace.pm:657
-msgid "Nothing to replace"
-msgstr "没有可替换的"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:18
-msgid "All"
-msgstr "所有"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:22
-msgid "Class:"
-msgstr "Class:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
-msgid "Snippet:"
-msgstr "Snippet:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:24
-msgid "&Insert"
-msgstr "插入(&I)"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:26
-msgid "&Add"
-msgstr "&Add"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:39
-msgid "Snippets"
-msgstr "代码片段"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:111
-msgid "Category:"
-msgstr "种类:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:112
-msgid "Name:"
-msgstr "Name:"
-
-#: lib/Padre/Wx/Dialog/Snippets.pm:125
-msgid "Edit/Add Snippets"
-msgstr "Edit/Add Snippets"
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:28
-msgid "Save session as..."
-msgstr "会话另存为..."
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:175
-msgid "Session name:"
-msgstr "会话名称:"
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:184
-msgid "Description:"
-msgstr "描述:"
-
-#: lib/Padre/Wx/Dialog/SessionSave.pm:204
-msgid "Save"
-msgstr "保存"
-
-#: lib/Padre/Wx/Dialog/Search.pm:135
-msgid "Find:"
-msgstr "查找:"
-
-#: lib/Padre/Wx/Dialog/Search.pm:154
-msgid "Previ&ous"
-msgstr "上一个(&o)"
-
-#: lib/Padre/Wx/Dialog/Search.pm:172
-msgid "&Next"
-msgstr "下一个(&N)"
-
-#: lib/Padre/Wx/Dialog/Search.pm:180
-msgid "Case &insensitive"
-msgstr "忽略大小写(&i)"
-
-#: lib/Padre/Wx/Dialog/Search.pm:184
-msgid "Use rege&x"
-msgstr "使用正则表达式(&x)"
-
-#: lib/Padre/Wx/Menu/Edit.pm:31
+#: lib/Padre/Wx/Menu/Edit.pm:33
 msgid "&Undo"
 msgstr "撤销(&U)"
 
-#: lib/Padre/Wx/Menu/Edit.pm:43
+#: lib/Padre/Wx/Menu/Edit.pm:45
 msgid "&Redo"
 msgstr "重做(&R)"
 
@@ -1549,583 +1641,735 @@ msgstr "重做(&R)"
 msgid "Select"
 msgstr "选择"
 
-#: lib/Padre/Wx/Menu/Edit.pm:79
-msgid "Mark selection start\tCtrl-["
-msgstr "选区标识开始\tCtrl-["
+#: lib/Padre/Wx/Menu/Edit.pm:66
+msgid "Select all"
+msgstr "选择全部"
 
-#: lib/Padre/Wx/Menu/Edit.pm:91
-msgid "Mark selection end\tCtrl-]"
-msgstr "选区标识结束\tCtrl-]"
+#: lib/Padre/Wx/Menu/Edit.pm:78
+msgid "Mark selection start"
+msgstr "选区标识开始"
 
-#: lib/Padre/Wx/Menu/Edit.pm:103
+#: lib/Padre/Wx/Menu/Edit.pm:89
+msgid "Mark selection end"
+msgstr "选区标识结束"
+
+#: lib/Padre/Wx/Menu/Edit.pm:100
 msgid "Clear selection marks"
 msgstr "清除选区标识"
 
-#: lib/Padre/Wx/Menu/Edit.pm:156
-msgid "&Goto\tCtrl-G"
-msgstr "跳至(&G)\tCtrl-G"
+#: lib/Padre/Wx/Menu/Edit.pm:112
+msgid "Cu&t"
+msgstr "剪切(&t)"
 
-#: lib/Padre/Wx/Menu/Edit.pm:168
-msgid "&AutoComp\tCtrl-P"
-msgstr "自动完成(&A)\tCtrl-P"
+#: lib/Padre/Wx/Menu/Edit.pm:124
+msgid "&Copy"
+msgstr "复制(&C)"
 
-#: lib/Padre/Wx/Menu/Edit.pm:180
-msgid "&Brace matching\tCtrl-1"
-msgstr "匹配括号(&B)\t-Ctrl-1"
+#: lib/Padre/Wx/Menu/Edit.pm:136
+msgid "&Paste"
+msgstr "粘贴(&P)"
 
-#: lib/Padre/Wx/Menu/Edit.pm:192
-msgid "&Join lines\tCtrl-J"
-msgstr "合并行(&J)\tCtrl-J"
+#: lib/Padre/Wx/Menu/Edit.pm:150
+msgid "&Goto Line"
+msgstr "跳到行(&G)"
 
-#: lib/Padre/Wx/Menu/Edit.pm:204
-msgid "Snippets\tCtrl-Shift-A"
-msgstr "代码片段\tCtrl-Shift-A"
+#: lib/Padre/Wx/Menu/Edit.pm:160
+msgid "&Next Problem"
+msgstr "下一个问题(&N)"
 
-#: lib/Padre/Wx/Menu/Edit.pm:259
+#: lib/Padre/Wx/Menu/Edit.pm:170
+msgid "&Quick Fix"
+msgstr "快速修复(&Q)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:196
+msgid "No suggestions"
+msgstr "没有建议"
+
+#: lib/Padre/Wx/Menu/Edit.pm:227
+msgid "&AutoComplete"
+msgstr "自动完成(&A)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:237
+msgid "&Brace matching"
+msgstr "匹配括号(&B)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:247
+msgid "&Join lines"
+msgstr "合并行(&J)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:271
+msgid "&Toggle Comment"
+msgstr "切换注释(&T)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:281
+msgid "&Comment Selected Lines"
+msgstr "注释所选行(&C)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:291
+msgid "&Uncomment Selected Lines"
+msgstr "去掉所选行注释(&U)"
+
+#: lib/Padre/Wx/Menu/Edit.pm:303
 msgid "Convert Encoding"
 msgstr "转换编码"
 
-#: lib/Padre/Wx/Menu/Edit.pm:265
+#: lib/Padre/Wx/Menu/Edit.pm:310
 msgid "Encode document to System Default"
 msgstr "转码文档为系统默认编码"
 
-#: lib/Padre/Wx/Menu/Edit.pm:278
+#: lib/Padre/Wx/Menu/Edit.pm:320
 msgid "Encode document to utf-8"
 msgstr "转换文档编码为 utf-8"
 
-#: lib/Padre/Wx/Menu/Edit.pm:305
+#: lib/Padre/Wx/Menu/Edit.pm:340
 msgid "Convert EOL"
 msgstr "转换 EOL"
 
-#: lib/Padre/Wx/Menu/Edit.pm:311
+#: lib/Padre/Wx/Menu/Edit.pm:347
 msgid "EOL to Windows"
 msgstr "EOL to Windows"
 
-#: lib/Padre/Wx/Menu/Edit.pm:323
+#: lib/Padre/Wx/Menu/Edit.pm:356
 msgid "EOL to Unix"
 msgstr "EOL to Unix"
 
-#: lib/Padre/Wx/Menu/Edit.pm:335
+#: lib/Padre/Wx/Menu/Edit.pm:365
 msgid "EOL to Mac Classic"
 msgstr "EOL to Mac Classic"
 
-#: lib/Padre/Wx/Menu/Edit.pm:349
+#: lib/Padre/Wx/Menu/Edit.pm:375
 msgid "Tabs and Spaces"
 msgstr "制表符和空格"
 
-#: lib/Padre/Wx/Menu/Edit.pm:355
+#: lib/Padre/Wx/Menu/Edit.pm:382
 msgid "Tabs to Spaces..."
 msgstr "转换制表符为空格..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:367
+#: lib/Padre/Wx/Menu/Edit.pm:391
 msgid "Spaces to Tabs..."
 msgstr "转换空格为制表符..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:381
+#: lib/Padre/Wx/Menu/Edit.pm:402
 msgid "Delete Trailing Spaces"
 msgstr "删除尾部空格"
 
-#: lib/Padre/Wx/Menu/Edit.pm:393
+#: lib/Padre/Wx/Menu/Edit.pm:411
 msgid "Delete Leading Spaces"
 msgstr "删除首部空格"
 
-#: lib/Padre/Wx/Menu/Edit.pm:407
+#: lib/Padre/Wx/Menu/Edit.pm:421
 msgid "Upper/Lower Case"
 msgstr "大小写转换"
 
-#: lib/Padre/Wx/Menu/Edit.pm:413
-msgid "Upper All\tCtrl-Shift-U"
-msgstr "全部大写\tCtrl-Shift-U"
+#: lib/Padre/Wx/Menu/Edit.pm:428
+msgid "Upper All"
+msgstr "全部大写"
 
-#: lib/Padre/Wx/Menu/Edit.pm:425
-msgid "Lower All\tCtrl-U"
-msgstr "全部小写\tCtrl-U"
+#: lib/Padre/Wx/Menu/Edit.pm:438
+msgid "Lower All"
+msgstr "全部小写"
 
-#: lib/Padre/Wx/Menu/Edit.pm:441
+#: lib/Padre/Wx/Menu/Edit.pm:451
 msgid "Diff Tools"
 msgstr "Diff 工具"
 
-#: lib/Padre/Wx/Menu/Edit.pm:447
+#: lib/Padre/Wx/Menu/Edit.pm:458
 msgid "Diff to Saved Version"
 msgstr "Diff 到已保存版本"
 
-#: lib/Padre/Wx/Menu/Edit.pm:459
+#: lib/Padre/Wx/Menu/Edit.pm:467
 msgid "Apply Diff to File"
 msgstr "应用 Diff 到文件"
 
-#: lib/Padre/Wx/Menu/Edit.pm:470
+#: lib/Padre/Wx/Menu/Edit.pm:475
 msgid "Apply Diff to Project"
 msgstr "应用 Diff 到项目"
 
-#: lib/Padre/Wx/Menu/Edit.pm:482
+#: lib/Padre/Wx/Menu/Edit.pm:484
 msgid "Insert From File..."
 msgstr "插入文件..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:497
+#: lib/Padre/Wx/Menu/Edit.pm:495
 msgid "Show as ..."
 msgstr "显示为 ..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:503
+#: lib/Padre/Wx/Menu/Edit.pm:502
 msgid "Show as hexa"
 msgstr "显示为十六进制"
 
-#: lib/Padre/Wx/Menu/Edit.pm:515
+#: lib/Padre/Wx/Menu/Edit.pm:511
 msgid "Show as decimal"
 msgstr "显示为十进制"
 
-#: lib/Padre/Wx/Menu/Perl.pm:39
-msgid "Find Unmatched Brace"
-msgstr "查找未匹配括号"
-
-#: lib/Padre/Wx/Menu/Perl.pm:122
-msgid "Vertically Align Selected"
-msgstr "Vertically Align Selected"
-
-#: lib/Padre/Wx/Menu/Perl.pm:135
-msgid "Use PPI Syntax Highlighting"
-msgstr "Use PPI Syntax Highlighting"
-
-#: lib/Padre/Wx/Menu/Perl.pm:161
-msgid "Automatic bracket completion"
-msgstr "括号自动补全"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:49
-msgid "Plugin List (CPAN)"
-msgstr "插件列表 (CPAN)"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:59
-msgid "Edit My Plugin"
-msgstr "编辑我的插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:65
-msgid "Could not find the Padre::Plugin::My plugin"
-msgstr "无法找到 Padre::Plugin::My 插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:75
-msgid "Reload My Plugin"
-msgstr "重载我的插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:83 lib/Padre/Wx/Menu/Plugins.pm:86
-#: lib/Padre/Wx/Menu/Plugins.pm:87
-msgid "Reset My Plugin"
-msgstr "重置我的插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:104
-msgid "Reload All Plugins"
-msgstr "重载所有插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:112
-msgid "(Re)load Current Plugin"
-msgstr "(重)载当前插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:120
-msgid "Test A Plugin From Local Dir"
-msgstr "从本地测试插件"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:127
-msgid "Plugin Tools"
-msgstr "插件工具"
-
-#: lib/Padre/Wx/Menu/View.pm:35
-msgid "Lock User Interface"
-msgstr "锁定用户界面"
-
-#: lib/Padre/Wx/Menu/View.pm:50
-msgid "Show Output"
-msgstr "显示输出"
-
-#: lib/Padre/Wx/Menu/View.pm:62
-msgid "Show Functions"
-msgstr "显示函数列表"
-
-#: lib/Padre/Wx/Menu/View.pm:80
-msgid "Show Outline"
-msgstr "显示提纲"
-
-#: lib/Padre/Wx/Menu/View.pm:92
-msgid "Show Directory Tree"
-msgstr "显示目录树"
-
-#: lib/Padre/Wx/Menu/View.pm:104
-msgid "Show Syntax Check"
-msgstr "显示语法检查"
-
-#: lib/Padre/Wx/Menu/View.pm:116
-msgid "Show Error List"
-msgstr "显示错误列表"
-
-#: lib/Padre/Wx/Menu/View.pm:130
-msgid "Show StatusBar"
-msgstr "显示状态栏"
-
-#: lib/Padre/Wx/Menu/View.pm:143
-msgid "Show Toolbar"
-msgstr "显示工具栏"
-
-#: lib/Padre/Wx/Menu/View.pm:159
-msgid "View Document As..."
-msgstr "查看方式..."
-
-#: lib/Padre/Wx/Menu/View.pm:193
-msgid "Show Line Numbers"
-msgstr "显示行号"
-
-#: lib/Padre/Wx/Menu/View.pm:205
-msgid "Show Code Folding"
-msgstr "显示代码展开"
-
-#: lib/Padre/Wx/Menu/View.pm:217
-msgid "Show Call Tips"
-msgstr "显示提示"
-
-#: lib/Padre/Wx/Menu/View.pm:233
-msgid "Show Current Line"
-msgstr "显示当前行"
-
-#: lib/Padre/Wx/Menu/View.pm:248
-msgid "Show Newlines"
-msgstr "显示 EOL"
-
-#: lib/Padre/Wx/Menu/View.pm:260
-msgid "Show Whitespaces"
-msgstr "显示空格"
-
-#: lib/Padre/Wx/Menu/View.pm:272
-msgid "Show Indentation Guide"
-msgstr "显示缩进指导"
-
-#: lib/Padre/Wx/Menu/View.pm:284
-msgid "Word-Wrap"
-msgstr "切换换行"
-
-#: lib/Padre/Wx/Menu/View.pm:299
-msgid "Increase Font Size\tCtrl-+"
-msgstr "加大字体大小\tCtrl-+"
-
-#: lib/Padre/Wx/Menu/View.pm:311
-msgid "Decrease Font Size\tCtrl--"
-msgstr "缩小字体大小\tCtrl--"
-
-#: lib/Padre/Wx/Menu/View.pm:323
-msgid "Reset Font Size\tCtrl-/"
-msgstr "重置字体大小\tCtrl-/"
-
-#: lib/Padre/Wx/Menu/View.pm:338
-msgid "Set Bookmark\tCtrl-B"
-msgstr "设置书签\tCtrl-B"
-
-#: lib/Padre/Wx/Menu/View.pm:351
-msgid "Goto Bookmark\tCtrl-Shift-B"
-msgstr "跳至书签\tCtrl-Shift-B"
-
-#: lib/Padre/Wx/Menu/View.pm:368
-msgid "Style"
-msgstr "风格"
-
-#: lib/Padre/Wx/Menu/View.pm:372
-msgid "Padre"
-msgstr "Padre"
-
-#: lib/Padre/Wx/Menu/View.pm:373
-msgid "Night"
-msgstr "Night"
-
-#: lib/Padre/Wx/Menu/View.pm:374
-msgid "Ultraedit"
-msgstr "Ultraedit"
-
-#: lib/Padre/Wx/Menu/View.pm:375
-msgid "Notepad++"
-msgstr "Notepad++"
-
-#: lib/Padre/Wx/Menu/View.pm:422
-msgid "Language"
-msgstr "语言"
-
-#: lib/Padre/Wx/Menu/View.pm:429
-msgid "System Default"
-msgstr "系统默认"
-
-#: lib/Padre/Wx/Menu/View.pm:476
-msgid "&Full Screen\tF11"
-msgstr "全屏(&F)\tF11"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:30
-msgid "Disable Experimental Mode"
-msgstr "禁用实验模式"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:44
-msgid "Refresh Menu"
-msgstr "更新菜单"
-
-#: lib/Padre/Wx/Menu/Experimental.pm:55 lib/Padre/Wx/Menu/Experimental.pm:76
-msgid "Refresh Counter: "
-msgstr "更新次数: "
-
-#: lib/Padre/Wx/Menu/Help.pm:39
-msgid "Context Help\tF1"
-msgstr "上下文帮助\tF1"
-
-#: lib/Padre/Wx/Menu/Help.pm:57
-msgid "Current Document"
-msgstr "当前文档"
-
-#: lib/Padre/Wx/Menu/Help.pm:73
-msgid "Live Support"
-msgstr "在线支持"
-
-#: lib/Padre/Wx/Menu/Help.pm:79
-msgid "Padre Support (English)"
-msgstr "Padre 支持 (英文)"
-
-#: lib/Padre/Wx/Menu/Help.pm:89
-msgid "Perl Help"
-msgstr "Perl 帮助"
-
-#: lib/Padre/Wx/Menu/Help.pm:99
-msgid "Win32 Questions (English)"
-msgstr "Win32 问题 (英文)"
-
-#: lib/Padre/Wx/Menu/Help.pm:111
-msgid "Visit the PerlMonks"
-msgstr "访问 PerlMonks"
-
-#: lib/Padre/Wx/Menu/Help.pm:121
-msgid "Report a New &Bug"
-msgstr "报告新问题(&B)"
-
-#: lib/Padre/Wx/Menu/Help.pm:128
-msgid "View All &Open Bugs"
-msgstr "查看所有未解决问题(&O)"
-
-#: lib/Padre/Wx/Menu/Help.pm:136
-msgid "&Translate Padre..."
-msgstr "翻译 Padre(&T)"
-
-#: lib/Padre/Wx/Menu/Help.pm:146
-msgid "&About"
-msgstr "关于(&A)"
-
-#: lib/Padre/Wx/Menu/Help.pm:213
-msgid "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
-msgstr "Copyright 2008-2009 The Padre development team as listed in Padre.pm"
-
-#: lib/Padre/Wx/Menu/File.pm:31
-msgid "&New\tCtrl-N"
-msgstr "新建(&N)\tCtrl-N"
-
-#: lib/Padre/Wx/Menu/File.pm:48
-msgid "New..."
-msgstr "新建..."
-
-#: lib/Padre/Wx/Menu/File.pm:55
-msgid "Perl 5 Script"
-msgstr "Perl5 脚本"
-
-#: lib/Padre/Wx/Menu/File.pm:65
-msgid "Perl 5 Module"
-msgstr "Perl5 模块"
-
-#: lib/Padre/Wx/Menu/File.pm:75
-msgid "Perl 5 Test"
-msgstr "Perl5 测试"
-
-#: lib/Padre/Wx/Menu/File.pm:85
-msgid "Perl 6 Script"
-msgstr "Perl6 脚本"
-
-#: lib/Padre/Wx/Menu/File.pm:95
-msgid "Perl Distribution (Module::Starter)"
-msgstr "Perl 包 (Module::Starter)"
-
-#: lib/Padre/Wx/Menu/File.pm:108
-msgid "&Open...\tCtrl-O"
-msgstr "打开(&O)...\tCtrl-O"
-
-#: lib/Padre/Wx/Menu/File.pm:117
-msgid "&Close\tCtrl-W"
-msgstr "关闭(&C)\tCtrl-W"
-
-#: lib/Padre/Wx/Menu/File.pm:129
-msgid "Close All"
-msgstr "关闭所有"
-
-#: lib/Padre/Wx/Menu/File.pm:140
-msgid "Close All but Current"
-msgstr "关闭除此之外的所有文件"
-
-#: lib/Padre/Wx/Menu/File.pm:151
-msgid "Reload File"
-msgstr "重载文件"
-
-#: lib/Padre/Wx/Menu/File.pm:166
-msgid "&Save\tCtrl-S"
-msgstr "保存(&S)\tCtrl-S"
-
-#: lib/Padre/Wx/Menu/File.pm:177
-msgid "Save &As...\tF12"
-msgstr "另存为(&A)...\tF12"
-
-#: lib/Padre/Wx/Menu/File.pm:203
-msgid "Open Selection\tCtrl-Shift-O"
-msgstr "打开所选\tCtrl-Shift-O"
-
-#: lib/Padre/Wx/Menu/File.pm:215
-msgid "Open Session...\tCtrl-Alt-O"
-msgstr "打开会话\tCtrl-Alt-O"
-
-#: lib/Padre/Wx/Menu/File.pm:228
-msgid "Save Session...\tCtrl-Alt-S"
-msgstr "保存会话...\tCtrl-Alt-S"
-
-#: lib/Padre/Wx/Menu/File.pm:244
-msgid "&Print..."
-msgstr "打印(&P)..."
-
-#: lib/Padre/Wx/Menu/File.pm:268
-msgid "&Recent Files"
-msgstr "最近的文件(&R)"
-
-#: lib/Padre/Wx/Menu/File.pm:275
-msgid "Open All Recent Files"
-msgstr "打开所有最近文件"
-
-#: lib/Padre/Wx/Menu/File.pm:285
-msgid "Clean Recent Files List"
-msgstr "清空最近文件列表"
-
-#: lib/Padre/Wx/Menu/File.pm:302
-msgid "Document Statistics"
-msgstr "文档统计"
-
-#: lib/Padre/Wx/Menu/File.pm:319
-msgid "&Quit\tCtrl-Q"
-msgstr "退出(&Q)\tCtrl-Q"
-
-#: lib/Padre/Wx/Menu/Window.pm:47
-msgid "Next File\tCtrl-TAB"
-msgstr "下一个文件\tCtrl-TAB"
-
-#: lib/Padre/Wx/Menu/Window.pm:59
-msgid "Previous File\tCtrl-Shift-TAB"
-msgstr "上一个文件\tCtrl-Shift-TAB"
-
-#: lib/Padre/Wx/Menu/Window.pm:71
-msgid "Last Visited File\tCtrl-Shift-P"
-msgstr "最近访问的文件\tCtrl-Shift-P"
-
-#: lib/Padre/Wx/Menu/Window.pm:83
-msgid "Right Click\tAlt-/"
-msgstr "右键点击\tAlt-/"
-
-#: lib/Padre/Wx/Menu/Window.pm:101
+#: lib/Padre/Wx/Menu/Window.pm:45
+msgid "Next File"
+msgstr "下一个文件"
+
+#: lib/Padre/Wx/Menu/Window.pm:55
+msgid "Previous File"
+msgstr "上一个文件"
+
+#: lib/Padre/Wx/Menu/Window.pm:65
+msgid "Last Visited File"
+msgstr "最近访问的文件"
+
+#: lib/Padre/Wx/Menu/Window.pm:75
+msgid "Right Click"
+msgstr "右键点击"
+
+#: lib/Padre/Wx/Menu/Window.pm:91
 msgid "GoTo Subs Window"
 msgstr "跳到子函数窗口"
 
-#: lib/Padre/Wx/Menu/Window.pm:115
-msgid "GoTo Outline Window\tAlt-L"
-msgstr "跳到提纲窗口\tAlt-L"
+#: lib/Padre/Wx/Menu/Window.pm:102
+msgid "GoTo Outline Window"
+msgstr "跳到提纲窗口"
 
-#: lib/Padre/Wx/Menu/Window.pm:128
-msgid "GoTo Output Window\tAlt-O"
-msgstr "跳到输出窗口\tAlt-O"
+#: lib/Padre/Wx/Menu/Window.pm:113
+msgid "GoTo Output Window"
+msgstr "跳到输出窗口"
 
-#: lib/Padre/Wx/Menu/Window.pm:141
-msgid "GoTo Syntax Check Window\tAlt-C"
-msgstr "跳到语法检查窗口\tAlt-C"
+#: lib/Padre/Wx/Menu/Window.pm:124
+msgid "GoTo Syntax Check Window"
+msgstr "跳到语法检查窗口"
 
-#: lib/Padre/Wx/Menu/Window.pm:154
-msgid "GoTo Main Window\tAlt-M"
-msgstr "跳到主窗口\tAlt-M"
+#: lib/Padre/Wx/Menu/Window.pm:135
+msgid "GoTo Main Window"
+msgstr "跳到主窗口"
 
-#: lib/Padre/Wx/Menu/Search.pm:31
-msgid "&Find\tCtrl-F"
-msgstr "查找(&F)\tCtrl-F"
+#: lib/Padre/Wx/Menu/Help.pm:38
+msgid "Help"
+msgstr "帮助"
 
-#: lib/Padre/Wx/Menu/Search.pm:43
-msgid "Find Next\tF3"
-msgstr "查找下一个\tF3"
+#: lib/Padre/Wx/Menu/Help.pm:46
+msgid "Context Help"
+msgstr "上下文帮助"
 
-#: lib/Padre/Wx/Menu/Search.pm:55
-msgid "Find Previous\tShift-F3"
-msgstr "查找上一个\tShift-F3"
+#: lib/Padre/Wx/Menu/Help.pm:77
+msgid "Current Document"
+msgstr "当前文档"
 
-#: lib/Padre/Wx/Menu/Search.pm:70
-msgid "Quick Find"
-msgstr "快速查找"
+#: lib/Padre/Wx/Menu/Help.pm:89
+msgid "Live Support"
+msgstr "在线支持"
 
-#: lib/Padre/Wx/Menu/Search.pm:89
-msgid "Find Next\tF4"
-msgstr "查找下一个\tF4"
+#: lib/Padre/Wx/Menu/Help.pm:96
+msgid "Padre Support (English)"
+msgstr "Padre 支持 (英文)"
 
-#: lib/Padre/Wx/Menu/Search.pm:101
-msgid "Find Previous\tShift-F4"
-msgstr "查找上一个\tShift-F4"
+#: lib/Padre/Wx/Menu/Help.pm:107
+msgid "Perl Help"
+msgstr "Perl 帮助"
 
-#: lib/Padre/Wx/Menu/Search.pm:116
-msgid "Replace\tCtrl-R"
-msgstr "替换\tCtrl-R"
+#: lib/Padre/Wx/Menu/Help.pm:117
+msgid "Win32 Questions (English)"
+msgstr "Win32 问题 (英文)"
 
-#: lib/Padre/Wx/Menu/Search.pm:133
-msgid "Find in Fi&les..."
-msgstr "在文件中查找(&l)..."
+#: lib/Padre/Wx/Menu/Help.pm:130
+msgid "Visit the PerlMonks"
+msgstr "访问 PerlMonks"
 
-#: lib/Padre/Wx/Menu/Run.pm:31
-msgid "Run Script\tF5"
-msgstr "运行脚本\tF5"
+#: lib/Padre/Wx/Menu/Help.pm:142
+msgid "Report a New &Bug"
+msgstr "报告新问题(&B)"
 
-#: lib/Padre/Wx/Menu/Run.pm:43
-msgid "Run Script (debug info)\tShift-F5"
-msgstr "运行脚本（带调式信息）\tShift-F5"
+#: lib/Padre/Wx/Menu/Help.pm:150
+msgid "View All &Open Bugs"
+msgstr "查看所有未解决问题(&O)"
 
-#: lib/Padre/Wx/Menu/Run.pm:55
-msgid "Run Command\tCtrl-F5"
-msgstr "运行命令\tCtrl-F5"
+#: lib/Padre/Wx/Menu/Help.pm:159
+msgid "&Translate Padre..."
+msgstr "翻译 Padre(&T)"
 
-#: lib/Padre/Wx/Menu/Run.pm:67
-msgid "Run Tests"
-msgstr "运行测试"
+#: lib/Padre/Wx/Menu/Help.pm:172
+msgid "&About"
+msgstr "关于(&A)"
 
-#: lib/Padre/Wx/Menu/Run.pm:80
-msgid "Stop\tF6"
-msgstr "停止\tF6"
+#: lib/Padre/Wx/Menu/View.pm:36
+msgid "Lock User Interface"
+msgstr "锁定用户界面"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:102
+#: lib/Padre/Wx/Menu/View.pm:48
+msgid "Show Output"
+msgstr "显示输出"
+
+#: lib/Padre/Wx/Menu/View.pm:57
+msgid "Show Functions"
+msgstr "显示函数列表"
+
+#: lib/Padre/Wx/Menu/View.pm:72
+msgid "Show Outline"
+msgstr "显示提纲"
+
+#: lib/Padre/Wx/Menu/View.pm:81
+msgid "Show Directory Tree"
+msgstr "显示目录树"
+
+#: lib/Padre/Wx/Menu/View.pm:90
+msgid "Show Syntax Check"
+msgstr "显示语法检查"
+
+#: lib/Padre/Wx/Menu/View.pm:99
+msgid "Show Error List"
+msgstr "显示错误列表"
+
+#: lib/Padre/Wx/Menu/View.pm:110
+msgid "Show StatusBar"
+msgstr "显示状态栏"
+
+#: lib/Padre/Wx/Menu/View.pm:120
+msgid "Show Toolbar"
+msgstr "显示工具栏"
+
+#: lib/Padre/Wx/Menu/View.pm:132
+msgid "View Document As..."
+msgstr "查看方式..."
+
+#: lib/Padre/Wx/Menu/View.pm:156
+msgid "Show Line Numbers"
+msgstr "显示行号"
+
+#: lib/Padre/Wx/Menu/View.pm:165
+msgid "Show Code Folding"
+msgstr "显示代码展开"
+
+#: lib/Padre/Wx/Menu/View.pm:174
+msgid "Show Call Tips"
+msgstr "显示提示"
+
+#: lib/Padre/Wx/Menu/View.pm:187
+msgid "Show Current Line"
+msgstr "显示当前行"
+
+#: lib/Padre/Wx/Menu/View.pm:196
+msgid "Show Right Margin"
+msgstr "显示右间距"
+
+#: lib/Padre/Wx/Menu/View.pm:208
+msgid "Show Newlines"
+msgstr "显示 EOL"
+
+#: lib/Padre/Wx/Menu/View.pm:217
+msgid "Show Whitespaces"
+msgstr "显示空格"
+
+#: lib/Padre/Wx/Menu/View.pm:226
+msgid "Show Indentation Guide"
+msgstr "显示缩进指导"
+
+#: lib/Padre/Wx/Menu/View.pm:235
+msgid "Word-Wrap"
+msgstr "切换换行"
+
+#: lib/Padre/Wx/Menu/View.pm:249
+msgid "Font Size"
+msgstr "文字大小"
+
+#: lib/Padre/Wx/Menu/View.pm:255
+msgid "Increase Font Size"
+msgstr "加大字体大小"
+
+#: lib/Padre/Wx/Menu/View.pm:265
+msgid "Decrease Font Size"
+msgstr "缩小字体大小"
+
+#: lib/Padre/Wx/Menu/View.pm:275
+msgid "Reset Font Size"
+msgstr "重置字体大小"
+
+#: lib/Padre/Wx/Menu/View.pm:303
+msgid "Goto Bookmark"
+msgstr "跳转至书签"
+
+#: lib/Padre/Wx/Menu/View.pm:319
+msgid "Style"
+msgstr "风格"
+
+#: lib/Padre/Wx/Menu/View.pm:324
+msgid "Night"
+msgstr "Night"
+
+#: lib/Padre/Wx/Menu/View.pm:325
+msgid "Ultraedit"
+msgstr "Ultraedit"
+
+#: lib/Padre/Wx/Menu/View.pm:326
+msgid "Notepad++"
+msgstr "Notepad++"
+
+#: lib/Padre/Wx/Menu/View.pm:379
+msgid "Language"
+msgstr "语言"
+
+#: lib/Padre/Wx/Menu/View.pm:387
+msgid "System Default"
+msgstr "系统默认"
+
+#: lib/Padre/Wx/Menu/View.pm:432
+msgid "&Full Screen"
+msgstr "全屏(&F)"
+
+#: lib/Padre/Wx/Menu/File.pm:35
+msgid "&New"
+msgstr "新建(&N)"
+
+#: lib/Padre/Wx/Menu/File.pm:45
+msgid "New..."
+msgstr "新建..."
+
+#: lib/Padre/Wx/Menu/File.pm:51
+msgid "Perl 5 Script"
+msgstr "Perl5 脚本"
+
+#: lib/Padre/Wx/Menu/File.pm:59
+msgid "Perl 5 Module"
+msgstr "Perl5 模块"
+
+#: lib/Padre/Wx/Menu/File.pm:67
+msgid "Perl 5 Test"
+msgstr "Perl5 测试"
+
+#: lib/Padre/Wx/Menu/File.pm:75
+msgid "Perl 6 Script"
+msgstr "Perl6 脚本"
+
+#: lib/Padre/Wx/Menu/File.pm:83
+msgid "Perl Distribution (Module::Starter)"
+msgstr "Perl 包 (Module::Starter)"
+
+#: lib/Padre/Wx/Menu/File.pm:96
+msgid "&Open..."
+msgstr "打开(&O)...
+
+#: lib/Padre/Wx/Menu/File.pm:119
+msgid "Close..."
+msgstr "关闭..."
+
+#: lib/Padre/Wx/Menu/File.pm:126
+msgid "Close All Files"
+msgstr "关闭所有文件"
+
+#: lib/Padre/Wx/Menu/File.pm:135
+msgid "Close All Other Files"
+msgstr "关闭所有其他文件"
+
+#: lib/Padre/Wx/Menu/File.pm:146
+msgid "Close This Project"
+msgstr "关闭该项目"
+
+#: lib/Padre/Wx/Menu/File.pm:152 lib/Padre/Wx/Menu/File.pm:172
+msgid "File is not in a project"
+msgstr "文件不在任何项目中"
+
+#: lib/Padre/Wx/Menu/File.pm:166
+msgid "Close Other Projects"
+msgstr "关闭其他项目"
+
+#: lib/Padre/Wx/Menu/File.pm:186
+msgid "Reload File"
+msgstr "重载文件"
+
+#: lib/Padre/Wx/Menu/File.pm:195
+msgid "Open Example"
+msgstr "打开例子"
+
+#: lib/Padre/Wx/Menu/File.pm:218
+msgid "Save &As"
+msgstr "另存为(&A)"
+
+#: lib/Padre/Wx/Menu/File.pm:227
+msgid "Save All"
+msgstr "保存所有"
+
+#: lib/Padre/Wx/Menu/File.pm:251
+msgid "Open Session"
+msgstr "打开会话"
+
+#: lib/Padre/Wx/Menu/File.pm:262
+msgid "Save Session"
+msgstr "保存会话"
+
+#: lib/Padre/Wx/Menu/File.pm:279
+msgid "&Print"
+msgstr "打印(&P)"
+
+#: lib/Padre/Wx/Menu/File.pm:299
+msgid "&Recent Files"
+msgstr "最近的文件(&R)"
+
+#: lib/Padre/Wx/Menu/File.pm:305
+msgid "Open All Recent Files"
+msgstr "打开所有最近文件"
+
+#: lib/Padre/Wx/Menu/File.pm:313
+msgid "Clean Recent Files List"
+msgstr "清空最近文件列表"
+
+#: lib/Padre/Wx/Menu/File.pm:330
+msgid "Document Statistics"
+msgstr "文档统计"
+
+#: lib/Padre/Wx/Menu/File.pm:342
+msgid "&Quit"
+msgstr "退出(&Q)"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:53
+msgid "Plugin Tools"
+msgstr "插件工具"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:63
+msgid "Plugin List (CPAN)"
+msgstr "插件列表 (CPAN)"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:74
+msgid "Edit My Plugin"
+msgstr "编辑我的插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:80
+msgid "Could not find the Padre::Plugin::My plugin"
+msgstr "无法找到 Padre::Plugin::My 插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:91
+msgid "Reload My Plugin"
+msgstr "重载我的插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:100 lib/Padre/Wx/Menu/Plugins.pm:103
+#: lib/Padre/Wx/Menu/Plugins.pm:104
+msgid "Reset My Plugin"
+msgstr "重置我的插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:122
+msgid "Reload All Plugins"
+msgstr "重载所有插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:131
+msgid "(Re)load Current Plugin"
+msgstr "(重)载当前插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:140
+msgid "Test A Plugin From Local Dir"
+msgstr "从本地测试插件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:150
+msgid "Module Tools"
+msgstr "模块工具"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:158
+msgid "Install CPAN Module"
+msgstr "安装 CPAN 模块"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:173
+msgid "Install Local Distribution"
+msgstr "安装本地包"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:184
+msgid "Install Remote Distribution"
+msgstr "安装远程包"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:197
+msgid "Open CPAN Config File"
+msgstr "打开 CPAN 配置文件"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:281
+msgid "Select distribution to install"
+msgstr "选择安装包"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:294 lib/Padre/Wx/Menu/Plugins.pm:319
+msgid "Did not provide a distribution"
+msgstr "没有提供包"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:309
+msgid ""
+"Enter URL to install\n"
+"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+msgstr ""
+"输入 URL 来安装\n"
+"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:336
+msgid "pip is unexpectedly not installed"
+msgstr "pip 未安装"
+
+#: lib/Padre/Wx/Menu/Plugins.pm:382
+msgid "Failed to find your CPAN configuration"
+msgstr "查找您的 CPAN 配置文件错误"
+
+#: lib/Padre/Wx/Menu/Perl.pm:40
+msgid "Find Unmatched Brace"
+msgstr "查找未匹配括号"
+
+#: lib/Padre/Wx/Menu/Perl.pm:51 lib/Padre/Document/Perl.pm:729
+msgid "Find Variable Declaration"
+msgstr "查找变量申明"
+
+#: lib/Padre/Wx/Menu/Perl.pm:65 lib/Padre/Document/Perl.pm:741
+msgid "Lexically Rename Variable"
+msgstr "Lexically Rename Variable"
+
+#: lib/Padre/Wx/Menu/Perl.pm:72 lib/Padre/Wx/Menu/Perl.pm:73
+#: lib/Padre/Document/Perl.pm:753 lib/Padre/Document/Perl.pm:754
+msgid "Replacement"
+msgstr "Replacement"
+
+#: lib/Padre/Wx/Menu/Perl.pm:87 lib/Padre/Document/Perl.pm:771
+msgid "Introduce Temporary Variable"
+msgstr "引入临时变量"
+
+#: lib/Padre/Wx/Menu/Perl.pm:94 lib/Padre/Wx/Menu/Perl.pm:95
+#: lib/Padre/Document/Perl.pm:784 lib/Padre/Document/Perl.pm:785
+msgid "Variable Name"
+msgstr "变量名"
+
+#: lib/Padre/Wx/Menu/Perl.pm:109
+msgid "Vertically Align Selected"
+msgstr "Vertically Align Selected"
+
+#: lib/Padre/Wx/Menu/Perl.pm:119
+msgid "Newline same column"
+msgstr "相同列时换行"
+
+#: lib/Padre/Wx/Menu/Perl.pm:147
+msgid "Automatic bracket completion"
+msgstr "括号自动补全"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:27
+msgid "Search"
+msgstr "搜索"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:401
+msgid "Skip hidden files"
+msgstr "跳过隐藏文件"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:416
+msgid "Skip CVS/.svn/.git/blib folders"
+msgstr "跳过 CVS/.svn/.git/blib 目录"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:432
+msgid "Change project directory"
+msgstr "选择项目目录"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:445
+msgid "Tree listing"
+msgstr "树形列表"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:446
+msgid "Navigate"
+msgstr "Navigate"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:447
+msgid "Change listing mode view"
+msgstr "改变列表显示视图"
+
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:473
+msgid "Move to other panel"
+msgstr "移动到其他面板"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:529
+msgid "Please choose a different name."
+msgstr "请选择另一个名字"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:530
+msgid "File already exists"
+msgstr "文件已存在"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:654
+msgid "A file with the same name already exists in this directory"
+msgstr "当前目录中已有相同名字的文件"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:668
+msgid "Move here"
+msgstr "移动到这里"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:679
+msgid "Copy here"
+msgstr "复制到这里"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:691
+msgid "Cancel"
+msgstr "取消"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:718
+msgid "folder"
+msgstr "文件夹"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:728
+msgid "Open In File Browser"
+msgstr "在浏览器中打开文件"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:740
+msgid "Rename / Move"
+msgstr "重命名/移动"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:752
+msgid "Move to trash"
+msgstr "移动到回收站"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:780
+msgid "Are you sure you want to delete this item?"
+msgstr "请确认你想删除该条目？"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:803 lib/Padre/Task/Outline/Perl.pm:211
+msgid "Open &Documentation"
+msgstr "打开文档(&D)"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:821
+msgid "Show hidden files"
+msgstr "显示隐藏文件"
+
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:842
+msgid "Reload"
+msgstr "重载"
+
+#: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:32
+msgid "Failed to execute process\n"
+msgstr "启动进程失败\n"
+
+#: lib/Padre/Task/Outline/Perl.pm:199
+msgid "&GoTo Element"
+msgstr "跳到元素(&G)"
+
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:103
 msgid "First character of selection does not seem to point at a token."
 msgstr "排序选区的首字符必须为标记符号"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:104
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:105
 msgid "Selection not part of a Perl statement?"
 msgstr "选区非 Perl 声明？"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:106
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:92
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:105
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:107
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:107
 msgid "Unknown error"
 msgstr "未知错误"
 
-#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:109
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:108
+#: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:110
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:110
 msgid "Replace Operation Canceled"
 msgstr "替换操作已取消"
 
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:90
-#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
-msgid "No declaration could be found for the specified (lexical?) variable"
-msgstr "No declaration could be found for the specified (lexical?) variable"
-
-#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:95
-msgid "Search Canceled"
-msgstr "检查已取消"
-
-#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:75
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:79
 msgid "All braces appear to be matched"
 msgstr "所有的括号都已匹配"
 
-#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:76
+#: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:80
 msgid "Check Complete"
 msgstr "检查结束"
 
-#: lib/Padre/Task/Outline/Perl.pm:198
-msgid "&GoTo Element"
-msgstr "跳到元素(&G)"
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
+#: lib/Padre/Document/Perl.pm:405 lib/Padre/Document/Perl.pm:432
+msgid "Current cursor does not seem to point at a variable"
+msgstr "Current cursor does not seem to point at a variable"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:91
+#: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:105
+msgid "No declaration could be found for the specified (lexical?) variable"
+msgstr "No declaration could be found for the specified (lexical?) variable"
+
+#: lib/Padre/Task/PPI/FindVariableDeclaration.pm:96
+msgid "Search Canceled"
+msgstr "检查已取消"
+
+#: lib/Padre/Document/Perl.pm:406 lib/Padre/Document/Perl.pm:433
+msgid "Check cancelled"
+msgstr "Check cancelled"
