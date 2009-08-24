@@ -38,11 +38,11 @@ sub quick_fix_list {
 			listener => sub {
 				my $line_start = $editor->PositionFromLine($current_line_no);
 				my $line_end   = $editor->GetLineEndPosition($current_line_no);
-				my $line = $editor->GetTextRange($line_start,$line_end);
+				my $line       = $editor->GetTextRange( $line_start, $line_end );
 				$line = qq{use strict;$line\n};
 				$editor->SetSelection( $line_start, $line_end );
 				$editor->ReplaceSelection($line);
-			}
+				}
 		};
 	}
 	if ( $text !~ /\s*use\s+warnings/msx ) {
@@ -51,11 +51,11 @@ sub quick_fix_list {
 			listener => sub {
 				my $line_start = $editor->PositionFromLine($current_line_no);
 				my $line_end   = $editor->GetLineEndPosition($current_line_no);
-				my $line = $editor->GetTextRange($line_start,$line_end);
+				my $line       = $editor->GetTextRange( $line_start, $line_end );
 				$line = qq{use warnings;$line\n};
 				$editor->SetSelection( $line_start, $line_end );
 				$editor->ReplaceSelection($line);
-			}
+				}
 		};
 	}
 
