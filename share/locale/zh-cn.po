@@ -2039,7 +2039,7 @@ msgstr "Perl 包 (Module::Starter)"
 
 #: lib/Padre/Wx/Menu/File.pm:96
 msgid "&Open..."
-msgstr "打开(&O)...
+msgstr "打开(&O)..."
 
 #: lib/Padre/Wx/Menu/File.pm:119
 msgid "Close..."
