@@ -4568,17 +4568,17 @@ sub new_document_from_string {
 	my $doc = $editor->{Document};
 	$doc->text_set($str);
 
-	if( $mimetype ) {
-		$doc->set_mimetype( $mimetype );
+	if ($mimetype) {
+		$doc->set_mimetype($mimetype);
 	}
 
 	$doc->{original_content} = $doc->text_get;
 	$doc->editor->padre_setup;
 	$doc->rebless;
-	$doc->colourize;	
-	
+	$doc->colourize;
+
 	return 1;
-	
+
 }
 1;
 

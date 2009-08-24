@@ -12,30 +12,32 @@ use Padre::Current    ();
 our $VERSION = '0.01';
 
 my $categories = {
-		  'Dates' => [
-			      { label => 'Now', action => _get_date_info('now')  },
-			      { label => 'Yesterday', action => _get_date_info('epoch') },
-			      { label => 'Tomorrow', action => _get_date_info('epoch') },
-			     ],
-		  'File' => [
-			     { label => 'Size', action => _get_file_info('size') },
-			     { label => 'Name', action => _get_file_info('name') },
-			    ],
-		  'Line' => [
-			     { label => 'Number', action => _get_line_info('number') },
-			    ],
-		 };
+	'Dates' => [
+		{ label => 'Now',       action => _get_date_info('now') },
+		{ label => 'Yesterday', action => _get_date_info('epoch') },
+		{ label => 'Tomorrow',  action => _get_date_info('epoch') },
+	],
+	'File' => [
+		{ label => 'Size', action => _get_file_info('size') },
+		{ label => 'Name', action => _get_file_info('name') },
+	],
+	'Line' => [
+		{ label => 'Number', action => _get_line_info('number') },
+	],
+};
 
 my $cats_list = [ sort keys %$categories ];
 
 sub get_layout {
 	my ($config) = @_;
 
-	my $default_cat_values = [map ($_->{label}, @{$categories->{$cats_list->[0]}})];
+	my $default_cat_values = [ map ( $_->{label}, @{ $categories->{ $cats_list->[0] } } ) ];
 
 	my @layout = (
-		[ [ 'Wx::StaticText', undef, Wx::gettext('Class:') ],   [ 'Wx::Choice', '_find_cat_',  $cats_list ], ],
-		[ [ 'Wx::StaticText', undef, Wx::gettext('SpecialValue:') ], [ 'Wx::Choice', '_find_specialvalue_', $default_cat_values ], ],
+		[ [ 'Wx::StaticText', undef, Wx::gettext('Class:') ], [ 'Wx::Choice', '_find_cat_', $cats_list ], ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('SpecialValue:') ],
+			[ 'Wx::Choice', '_find_specialvalue_', $default_cat_values ],
+		],
 		[ [], [ 'Wx::Button', '_insert_', Wx::gettext('&Insert') ], [ 'Wx::Button', '_cancel_', Wx::wxID_CANCEL ], ],
 	);
 	return \@layout;
@@ -75,7 +77,7 @@ sub insert_special {
 sub find_category {
 	my $dialog   = shift;
 	my $cat_name = _get_cat_name($dialog);
-	my $values   = [map ($_->{label}, @{$categories->{$cat_name}})];
+	my $values   = [ map ( $_->{label}, @{ $categories->{$cat_name} } ) ];
 	my $field    = $dialog->{_widgets_}->{_find_specialvalue_};
 	$field->Clear;
 	$field->AppendItems($values);
@@ -84,11 +86,11 @@ sub find_category {
 }
 
 sub get_value {
-	my $dialog = shift;
-	my $data   = $dialog->get_data or return;
-	my $cat_name    = _get_cat_name($dialog);
+	my $dialog    = shift;
+	my $data      = $dialog->get_data or return;
+	my $cat_name  = _get_cat_name($dialog);
 	my $value_ind = $data->{_find_specialvalue_};
-	my $text   = &{$categories->{$cat_name}[$value_ind]{action}};
+	my $text      = &{ $categories->{$cat_name}[$value_ind]{action} };
 	warn "cat : $cat_name, value $value_ind, text : $text\n";
 
 	my $editor = Padre::Current->editor;
@@ -107,54 +109,55 @@ sub cancel_clicked {
 ######
 
 sub _get_cat_name {
-    my $dialog = shift;
-    my $data   = $dialog->get_data;
-#    warn Dumper (data => $data);
-    my $cat_name  = $cats_list->[$data->{_find_cat_}];
-    return $cat_name;
+	my $dialog = shift;
+	my $data   = $dialog->get_data;
+
+	#    warn Dumper (data => $data);
+	my $cat_name = $cats_list->[ $data->{_find_cat_} ];
+	return $cat_name;
 }
 
 sub _get_date_info {
-    my $type = shift;
-    if ($type eq 'now') {
-	return sub {
-	    return scalar localtime;
+	my $type = shift;
+	if ( $type eq 'now' ) {
+		return sub {
+			return scalar localtime;
+			}
+	} else {
+		return sub {
+			warn "date info $type not implemented yet\n";
+			return '';
+			}
 	}
-    } else {
-	return sub {
-	    warn "date info $type not implemented yet\n";
-	    return '';
-	}
-    }
 }
 
 sub _get_file_info {
-    my $type = shift;
-    if ($type eq 'name') {
-	return sub {
-	    my $document = Padre::Current->document;
-	    my $filename = $document->filename || $document->tempfile;
-	    warn "doc : $document $filename \n";
-	    return $filename
-	};
-    } else {
-	return sub {
-	    my $document = Padre::Current->document;
-	    my $filename = $document->filename || $document->tempfile;
-	    warn "doc : $document $filename \n";
-	    return ($filename) ? -s $filename : 0;
-	};
-    }
+	my $type = shift;
+	if ( $type eq 'name' ) {
+		return sub {
+			my $document = Padre::Current->document;
+			my $filename = $document->filename || $document->tempfile;
+			warn "doc : $document $filename \n";
+			return $filename;
+		};
+	} else {
+		return sub {
+			my $document = Padre::Current->document;
+			my $filename = $document->filename || $document->tempfile;
+			warn "doc : $document $filename \n";
+			return ($filename) ? -s $filename : 0;
+		};
+	}
 }
 
 sub _get_line_info {
-    my $type = shift;
-    return sub {
-	my $editor = Padre::Current->editor;
-	my $pos = $editor->GetCurrentPos;
-	my $line = $editor->GetCurrentLine;
-	return $line + 1;
-    } ;
+	my $type = shift;
+	return sub {
+		my $editor = Padre::Current->editor;
+		my $pos    = $editor->GetCurrentPos;
+		my $line   = $editor->GetCurrentLine;
+		return $line + 1;
+	};
 }
 
 
