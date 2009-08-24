@@ -2,6 +2,7 @@ package Padre::Wx::Dialog::SpecialValues;
 
 # Insert special values such as dates in your code
 
+use 5.008;
 use strict;
 use warnings;
 use Padre::Wx         ();
