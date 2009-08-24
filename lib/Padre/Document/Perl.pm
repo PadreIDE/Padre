@@ -108,11 +108,11 @@ sub set_highlighter {
 	# configuration variable
 	my $limit;
 	if ( $module eq 'Padre::Document::Perl::PPILexer' ) {
-		$limit = 2000;
+		$limit = 4000;
 	} elsif ( $module eq 'Padre::Document::Perl::Lexer' ) {
-		$limit = 2000;
+		$limit = 4000;
 	} elsif ( $module eq 'Padre::Plugin::Kate' ) {
-		$limit = 2000;
+		$limit = 4000;
 	}
 
 	my $length = $self->{original_content} ? length $self->{original_content} : 0;
