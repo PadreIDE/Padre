@@ -4560,14 +4560,25 @@ Note: this method may not belong here...
 =cut
 
 sub new_document_from_string {
-	my ( $self, $str ) = @_;
+	my ( $self, $str, $mimetype ) = @_;
 
-	# we don't know the mimetype of the string being passed in.
 	$self->on_new();
-	my @ids  = $self->pageids;
-	my @docs = $self->documents;
-	my $doc  = $docs[ $ids[-1] ];
+
+	my $editor = $self->current->editor or return;
+	my $doc = $editor->{Document};
 	$doc->text_set($str);
+
+	if( $mimetype ) {
+		$doc->set_mimetype( $mimetype );
+	}
+
+	$doc->{original_content} = $doc->text_get;
+	$doc->editor->padre_setup;
+	$doc->rebless;
+	$doc->colourize;	
+	
+	return 1;
+	
 }
 1;
 
