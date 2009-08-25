@@ -220,13 +220,13 @@ sub new {
 	# Sizer for the buttons
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$bottom->Add( $self->{button_find},   0, Wx::wxGROW | Wx::wxLEFT,  5 );
-	$bottom->Add( $self->{button_count},  0, Wx::wxGROW, 5 );
+	$bottom->Add( $self->{button_count},  0, Wx::wxGROW,               5 );
 	$bottom->Add( $self->{button_cancel}, 0, Wx::wxGROW | Wx::wxRIGHT, 5 );
 
 	# Fill the sizer for the overall dialog
 	my $sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
-	$sizer->Add( $find,    2, Wx::wxGROW | Wx::wxALL, 5 );
-	$sizer->Add( $options, 2, Wx::wxGROW | Wx::wxALL, 5 );
+	$sizer->Add( $find,    2, Wx::wxGROW | Wx::wxALL,        5 );
+	$sizer->Add( $options, 2, Wx::wxGROW | Wx::wxALL,        5 );
 	$sizer->Add( $bottom,  0, Wx::wxALIGN_RIGHT | Wx::wxALL, 5 );
 
 	# Let the widgets control the dialog size
@@ -235,10 +235,10 @@ sub new {
 
 	# Update the dialog from configuration
 	my $config = $self->current->config;
-	$self->{ find_case    }->SetValue( $config->find_case    );
-	$self->{ find_regex   }->SetValue( $config->find_regex   );
-	$self->{ find_first   }->SetValue( $config->find_first   );
-	$self->{ find_reverse }->SetValue( $config->find_reverse );
+	$self->{find_case}->SetValue( $config->find_case );
+	$self->{find_regex}->SetValue( $config->find_regex );
+	$self->{find_first}->SetValue( $config->find_first );
+	$self->{find_reverse}->SetValue( $config->find_reverse );
 
 	return $self;
 }
@@ -309,7 +309,7 @@ sub find_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
@@ -345,7 +345,7 @@ sub cancel_button {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$editor->SetFocus;
 	}
 
@@ -369,13 +369,13 @@ sub count_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error( Wx::gettext("Not a valid search") );
 		return;
 	}
 
 	# Find the number of matches
-	my $editor  = $self->current->editor or return;
+	my $editor = $self->current->editor or return;
 	my $matches = $search->editor_count_all($editor);
 	$main->message(
 		sprintf(

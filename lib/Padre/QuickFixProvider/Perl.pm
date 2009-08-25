@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Padre::QuickFixProvider ();
-use PPI ();
+use PPI                     ();
 
 our $VERSION = '0.44';
 our @ISA     = 'Padre::QuickFixProvider';
@@ -33,52 +33,57 @@ sub quick_fix_list {
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
 
-	my ($use_strict_include, $use_warnings_include);
-	my $doc = PPI::Document->new(\$text);
+	my ( $use_strict_include, $use_warnings_include );
+	my $doc = PPI::Document->new( \$text );
 	$doc->index_locations;
 	my $includes = $doc->find('PPI::Statement::Include');
-	if($includes) {
-		foreach my $include (@{$includes}) {
-			my $type = $include->type;
+	if ($includes) {
+		foreach my $include ( @{$includes} ) {
+			my $type   = $include->type;
 			my $module = $include->module;
 
-			if($type eq 'use') {
-				if($module eq 'strict') {
+			if ( $type eq 'use' ) {
+				if ( $module eq 'strict' ) {
 					$use_strict_include = $include;
-				} elsif($module eq 'warnings') {
+				} elsif ( $module eq 'warnings' ) {
 					$use_warnings_include = $include;
 				}
 			}
 		}
 	}
 
-	my ($replace, $col, $row, $len);
-	if($use_strict_include and not $use_warnings_include) {
+	my ( $replace, $col, $row, $len );
+	if ( $use_strict_include and not $use_warnings_include ) {
+
 		# insert 'use warnings;' afterwards
 		$replace = "use strict;\nuse warnings;";
-		$row = $use_strict_include->line_number-1;
-		$col = $use_strict_include->column_number-1;
-		$len = length $use_strict_include->content;
+		$row     = $use_strict_include->line_number - 1;
+		$col     = $use_strict_include->column_number - 1;
+		$len     = length $use_strict_include->content;
 	}
-	if(not $use_strict_include and $use_warnings_include) {
+	if ( not $use_strict_include and $use_warnings_include ) {
+
 		# insert 'use strict';' before
 		$replace = "use strict;\nuse warnings;";
-		$row = $use_warnings_include->line_number-1;
-		$col = $use_warnings_include->column_number-1;
-		$len = length $use_warnings_include->content;
+		$row     = $use_warnings_include->line_number - 1;
+		$col     = $use_warnings_include->column_number - 1;
+		$len     = length $use_warnings_include->content;
 	}
-	if(not $use_strict_include and not $use_warnings_include) {
+	if ( not $use_strict_include and not $use_warnings_include ) {
+
 		# insert 'use strict; use warnings;' at the top
-		my $first = $doc->find_first(sub {
-			return $_[1]->isa('PPI::Statement') or
-				$_[1]->isa('PPI::Structure');
-		});
+		my $first = $doc->find_first(
+			sub {
+				return $_[1]->isa('PPI::Statement')
+					or $_[1]->isa('PPI::Structure');
+			}
+		);
 		$replace = "use strict;\nuse warnings;\n";
-		if($first) {
-			$row = $first->line_number-1;
-			$col = $first->column_number-1;
+		if ($first) {
+			$row = $first->line_number - 1;
+			$col = $first->column_number - 1;
 			$len = 0;
-			
+
 		} else {
 			$row = $current_line_no;
 			$col = 0;
@@ -86,7 +91,7 @@ sub quick_fix_list {
 		}
 	}
 
-	if($replace) {
+	if ($replace) {
 		push @items, {
 			text     => qq{Fix '$replace'},
 			listener => sub {
@@ -95,10 +100,10 @@ sub quick_fix_list {
 				my $line       = $editor->GetTextRange( $line_start, $line_end );
 				$editor->SetSelection( $line_start, $line_end );
 				$editor->ReplaceSelection($replace);
-			}
+				}
 		};
 	}
-	
+
 	return @items;
 }
 

@@ -400,6 +400,7 @@ sub find {
 		$self->find_button;
 	} else {
 		if ( length $text ) {
+
 			# Go straight to the replace field
 			$self->{find_text}->SetValue($text);
 			$self->{replace_text}->SetFocus;
@@ -438,7 +439,7 @@ sub find_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
@@ -474,7 +475,7 @@ sub cancel_button {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$editor->SetFocus;
 	}
 
@@ -505,7 +506,7 @@ sub replace_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
@@ -540,7 +541,7 @@ sub replace_all {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
@@ -609,9 +610,7 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name (
-		qw{ find_case find_regex find_first find_reverse }
-	) {
+	foreach my $name ( qw{ find_case find_regex find_first find_reverse } ) {
 		my $value = $self->{$name}->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );

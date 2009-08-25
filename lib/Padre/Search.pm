@@ -77,9 +77,7 @@ sub new {
 	}
 
 	# Compile the regex
-	$self->{search_regex} = eval {
-		$self->find_case ? qr/$term/m : qr/$term/mi
-	};
+	$self->{search_regex} = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
 	return undef if $@;
 
 	return $self;
@@ -146,7 +144,7 @@ sub replace_previous {
 	}
 }
 
-	
+
 
 
 
@@ -258,13 +256,8 @@ sub editor_replace {
 	# Are they perfectly selecting a match already?
 	my $selection = [ $editor->GetSelection ];
 	if ( $selection->[0] != $selection->[1] ) {
-		if ( 
-			grep {
-				$selection->[0] == $_->[0]
-				and
-				$selection->[1] == $_->[1]
-			} @matches
-		) {
+		if ( grep { $selection->[0] == $_->[0] and $selection->[1] == $_->[1] } @matches ) {
+
 			# Yes, replace it
 			$editor->ReplaceSelection( $self->replace_term );
 
@@ -273,16 +266,17 @@ sub editor_replace {
 			if ( $self->find_reverse ) {
 				$editor->SetSelection( $start, $start );
 			} else {
+
 				# TODO: There might be unicode bugs in this.
 				# TODO: Someone that understands needs to check.
-				$start = $start + length($self->replace_term);
+				$start = $start + length( $self->replace_term );
 				$editor->SetSelection( $start, $start );
 			}
 		}
 	}
 
 	# Move to the next match
-	$self->search_next( $editor );
+	$self->search_next($editor);
 }
 
 sub editor_replace_all {

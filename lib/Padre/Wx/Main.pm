@@ -2009,11 +2009,11 @@ If no files are open, silently do nothing (don't even remember the new search)
 =cut
 
 sub search_next {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to search_next");
 	}
 	if ( $self->search ) {
@@ -2040,11 +2040,11 @@ If no files are open, do nothing.
 =cut
 
 sub search_previous {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to search_previous");
 	}
 	if ( $self->search ) {
@@ -2071,11 +2071,11 @@ If no files are open, do nothing.
 =cut
 
 sub replace_next {
-	my $self   = shift;
+	my $self = shift;
 	my $editor = $self->current->editor or return;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to replace_next");
 	}
 	if ( $self->search ) {
@@ -2106,7 +2106,7 @@ sub replace_all {
 	my $editor = $self->current->editor or return;
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to replace_all");
 	}
 	if ( $self->search ) {
