@@ -34,7 +34,8 @@ use constant {
 use constant {
 	NEWLINE => {
 		MSWin32 => 'WIN',
-		darwin  => 'MAC',
+		darwin  => 'UNIX',
+#		darwin  => 'MAC', # Only valid for pre-OS X versions!
 		}->{$^O}
 		|| 'UNIX'
 };
