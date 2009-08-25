@@ -2180,7 +2180,7 @@ sub on_autocompletion {
 		);
 	}
 	if (@words) {
-		my $editor = $document->editor; 
+		my $editor = $document->editor;
 		$editor->AutoCompSetSeparator( ord ' ' );
 		$editor->AutoCompShow( $length, join " ", @words );
 	}
