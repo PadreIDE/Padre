@@ -22,20 +22,20 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd            ();
-use Carp           ();
-use File::Spec     ();
-use File::HomeDir  ();
-use File::Basename ();
-use File::Temp     ();
-use List::Util     ();
-use Scalar::Util   ();
-use Params::Util qw{_INSTANCE};
-use Padre::Constant ();
-use Padre::Util     ();
-use Padre::Perl     ();
-use Padre::Locale   ();
-use Padre::Current qw{_CURRENT};
+use Cwd                       ();
+use Carp                      ();
+use File::Spec                ();
+use File::HomeDir             ();
+use File::Basename            ();
+use File::Temp                ();
+use List::Util                ();
+use Scalar::Util              ();
+use Params::Util              ();
+use Padre::Constant           ();
+use Padre::Util               ();
+use Padre::Perl               ();
+use Padre::Locale             ();
+use Padre::Current            ();
 use Padre::Document           ();
 use Padre::DB                 ();
 use Padre::Wx                 ();
@@ -86,7 +86,7 @@ object as argument, to get a reference to the Padre application.
 sub new {
 	my $class = shift;
 	my $ide   = shift;
-	unless ( _INSTANCE( $ide, 'Padre' ) ) {
+	unless ( Params::Util::_INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide an ide object to Padre::Wx::Main->new");
 	}
 
@@ -1039,7 +1039,7 @@ sub refresh_functions {
 	return unless $self->menu->view->{functions}->IsChecked;
 
 	# Flush the list if there is no active document
-	my $current   = _CURRENT(@_);
+	my $current   = Padre::Current::_CURRENT(@_);
 	my $document  = $current->document;
 	my $functions = $self->functions;
 	unless ($document) {
@@ -2007,11 +2007,11 @@ If no files are open, silently do nothing (don't even remember the new search)
 =cut
 
 sub search_next {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor or return;
-	if ( _INSTANCE( $_[0], 'Padre::Search' ) ) {
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif (@_) {
+	} elsif ( @_ ) {
 		die("Invalid argument to search_next");
 	}
 	if ( $self->search ) {
@@ -2033,22 +2033,84 @@ sub search_next {
 
 Find the previous match for the current search, or spawn the Find dialog.
 
-If no files are open, do nothing
+If no files are open, do nothing.
 
 =cut
 
 sub search_previous {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = $self->current->editor or return;
-	if ( _INSTANCE( $_[0], 'Padre::Search' ) ) {
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif (@_) {
+	} elsif ( @_ ) {
 		die("Invalid argument to search_previous");
 	}
 	if ( $self->search ) {
 		$self->search->search_previous($editor);
 	} else {
 		$self->find->find;
+	}
+}
+
+=pod
+
+=head2 replace_next
+
+  # Next replace for a new search
+  $main->replace_next( $search );
+  
+  # Next replace on current search (or show Find dialog if none)
+  $main->replace_next;
+
+Replace the next match for the current search, or spawn the Replace dialog.
+
+If no files are open, do nothing.
+
+=cut
+
+sub replace_next {
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
+		$self->{search} = shift;
+	} elsif ( @_ ) {
+		die("Invalid argument to replace_next");
+	}
+	if ( $self->search ) {
+		$self->search->replace_next($editor);
+	} else {
+		$self->replace->find;
+	}
+}
+
+=pod
+
+=head2 replace_all
+
+  # Replace all for a new search
+  $main->replace_all( $search );
+  
+  # Replace all for the current search (or show Replace dialog if none)
+  $main->replace_all;
+
+Replace all matches for the current search, or spawn the Replace dialog.
+
+If no files are open, do nothing.
+
+=cut
+
+sub replace_all {
+	my $self = shift;
+	my $editor = $self->current->editor or return;
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
+		$self->{search} = shift;
+	} elsif ( @_ ) {
+		die("Invalid argument to replace_all");
+	}
+	if ( $self->search ) {
+		$self->search->replace_all($editor);
+	} else {
+		$self->replace->find;
 	}
 }
 
