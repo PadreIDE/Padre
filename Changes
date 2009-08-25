@@ -1,5 +1,11 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.46 to be released
+
+0.45 to be released
+    - (stable version of Padre for synchronized release)
+    - (please put changes to trunk on 0.46 above, this space is only for bugfixing on the 0.45 release branch. Thanks!)
+
 0.44 2009.08.24
     - Help Search now supports perlopref.pod parsing - Perl operator reference 
       (AZAWAWI)
