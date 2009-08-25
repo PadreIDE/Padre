@@ -200,6 +200,12 @@ sub help_render {
 			# it is Perl function, handle q/.../, m//, y///, tr///
 			$hints->{perlfunc} = 1;
 			$topic =~ s/\/.*?\/$//;
+		} else {
+			# Append the module's release date to the topic
+			my $first_release_by_date = Module::CoreList->first_release_by_date($topic);
+			if($first_release_by_date) {
+				$topic = "$topic (Since Perl v$first_release_by_date)";
+			}
 		}
 
 		# Render using perldoc pseudo code package
