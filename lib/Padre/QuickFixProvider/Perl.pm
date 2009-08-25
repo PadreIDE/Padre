@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::QuickFixProvider ();
+use PPI ();
 
 our $VERSION = '0.44';
 our @ISA     = 'Padre::QuickFixProvider';
@@ -26,39 +27,78 @@ sub new {
 # Returns the quick fix list
 #
 sub quick_fix_list {
-	my ( $self, $doc, $editor ) = @_;
+	my ( $self, $document, $editor ) = @_;
 
 	my @items           = ();
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
 
-	if ( $text !~ /\s*use\s+strict/msx ) {
-		push @items, {
-			text     => qq{Add 'use strict;'},
-			listener => sub {
-				my $line_start = $editor->PositionFromLine($current_line_no);
-				my $line_end   = $editor->GetLineEndPosition($current_line_no);
-				my $line       = $editor->GetTextRange( $line_start, $line_end );
-				$line = qq{use strict;$line\n};
-				$editor->SetSelection( $line_start, $line_end );
-				$editor->ReplaceSelection($line);
+	my ($use_strict_include, $use_warnings_include);
+	my $doc = PPI::Document->new(\$text);
+	$doc->index_locations;
+	my $includes = $doc->find('PPI::Statement::Include');
+	if($includes) {
+		foreach my $include (@{$includes}) {
+			my $type = $include->type;
+			my $module = $include->module;
+
+			if($type eq 'use') {
+				if($module eq 'strict') {
+					$use_strict_include = $include;
+				} elsif($module eq 'warnings') {
+					$use_warnings_include = $include;
 				}
-		};
-	}
-	if ( $text !~ /\s*use\s+warnings/msx ) {
-		push @items, {
-			text     => qq{Add 'use warnings;'},
-			listener => sub {
-				my $line_start = $editor->PositionFromLine($current_line_no);
-				my $line_end   = $editor->GetLineEndPosition($current_line_no);
-				my $line       = $editor->GetTextRange( $line_start, $line_end );
-				$line = qq{use warnings;$line\n};
-				$editor->SetSelection( $line_start, $line_end );
-				$editor->ReplaceSelection($line);
-				}
-		};
+			}
+		}
 	}
 
+	my ($replace, $col, $row, $len);
+	if($use_strict_include and not $use_warnings_include) {
+		# insert 'use warnings;' afterwards
+		$replace = "use strict;\nuse warnings;";
+		$row = $use_strict_include->line_number-1;
+		$col = $use_strict_include->column_number-1;
+		$len = length $use_strict_include->content;
+	}
+	if(not $use_strict_include and $use_warnings_include) {
+		# insert 'use strict';' before
+		$replace = "use strict;\nuse warnings;";
+		$row = $use_warnings_include->line_number-1;
+		$col = $use_warnings_include->column_number-1;
+		$len = length $use_warnings_include->content;
+	}
+	if(not $use_strict_include and not $use_warnings_include) {
+		# insert 'use strict; use warnings;' at the top
+		my $first = $doc->find_first(sub {
+			return $_[1]->isa('PPI::Statement') or
+				$_[1]->isa('PPI::Structure');
+		});
+		$replace = "use strict;\nuse warnings;\n";
+		if($first) {
+			$row = $first->line_number-1;
+			$col = $first->column_number-1;
+			$len = 0;
+			
+		} else {
+			$row = $current_line_no;
+			$col = 0;
+			$len = 0;
+		}
+	}
+
+	if($replace) {
+		push @items, {
+			text     => qq{Fix '$replace'},
+			listener => sub {
+				my $line_start = $editor->PositionFromLine($row) + $col;
+				my $line_end   = $line_start + $len;
+				my $line       = $editor->GetTextRange( $line_start, $line_end );
+				$editor->SetSelection( $line_start, $line_end );
+				$editor->ReplaceSelection($replace);
+			}
+		};
+	}
+	
 	return @items;
 }
 
