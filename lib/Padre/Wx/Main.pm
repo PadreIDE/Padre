@@ -1630,7 +1630,9 @@ sub run_command {
 	my $config = $self->config;
 	if ( $config->run_use_external_window ) {
 		if (Padre::Util::WIN32) {
-			system "start cmd /C \"$cmd\"";
+			my $title = $cmd;
+			$title =~ s/"//g;
+			system "start \"$title\" cmd /C \"$cmd\"";
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
 		}
