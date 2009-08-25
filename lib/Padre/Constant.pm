@@ -36,6 +36,44 @@ use constant {
 		MSWin32 => 'WIN',
 		darwin  => 'UNIX',
 #		darwin  => 'MAC', # Only valid for pre-OS X versions!
+
+# Adapted from Probe::Perl:
+		aix      => 'UNIX',
+		bsdos    => 'UNIX',
+		dgux     => 'UNIX',
+		dynixptx => 'UNIX',
+		freebsd  => 'UNIX',
+		linux    => 'UNIX',
+		hpux     => 'UNIX',
+		irix     => 'UNIX',
+		darwin   => 'UNIX',
+		machten  => 'UNIX',
+		next     => 'UNIX',
+		openbsd  => 'UNIX',
+		netbsd   => 'UNIX',
+		dec_osf  => 'UNIX',
+		svr4     => 'UNIX',
+		svr5     => 'UNIX',
+		sco_sv   => 'UNIX',
+		unicos   => 'UNIX',
+		unicosmk => 'UNIX',
+		solaris  => 'UNIX',
+		sunos    => 'UNIX',
+		cygwin   => 'UNIX',
+		os2      => 'UNIX',
+		dos      => 'WIN',
+# EBCDIC's NEL-char is currently not supported in Padre:
+#		os390     EBCDIC
+#		os400     EBCDIC
+#		posix-bc  EBCDIC
+#		vmesa     EBCDIC
+		MacOS     => 'MAC',
+# Some other unsupported options:
+#		VMS       VMS
+#		VOS       VOS
+#		riscos    RiscOS
+#		amigaos   Amiga
+#		mpeix     MPEiX
 		}->{$^O}
 		|| 'UNIX'
 };
