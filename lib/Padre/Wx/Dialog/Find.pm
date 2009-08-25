@@ -52,7 +52,7 @@ sub new {
 		Wx::gettext('Find'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU | Wx::wxRESIZE_BORDER
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
 	# Form Components
@@ -123,44 +123,44 @@ sub new {
 		}
 	);
 
-	# The "Find Next" button
-	$self->{find_button} = Wx::Button->new(
+	# The "Find" button
+	$self->{button_find} = Wx::Button->new(
 		$self,
 		Wx::wxID_FIND,
 		Wx::gettext("&Find Next"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{find_button},
+		$self->{button_find},
 		sub {
 			$_[0]->find_button;
 		},
 	);
-	$self->{find_button}->SetDefault;
+	$self->{button_find}->SetDefault;
 
 	# The "Count All" button
-	$self->{count_button} = Wx::Button->new(
+	$self->{button_count} = Wx::Button->new(
 		$self,
 		-1,
 		Wx::gettext("&Count All"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{count_button},
+		$self->{button_count},
 		sub {
 			$_[0]->count_button;
 		},
 	);
 
 	# The "Cancel" button
-	$self->{cancel_button} = Wx::Button->new(
+	$self->{button_cancel} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext("&Cancel"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{cancel_button},
+		$self->{button_cancel},
 		sub {
 			$_[0]->cancel_button;
 		}
@@ -195,32 +195,11 @@ sub new {
 	);
 
 	# The layout grid for the options
-	my $grid = Wx::FlexGridSizer->new( 2, 2, 0, 0 );
-	$grid->AddGrowableCol(1);
-	$grid->Add(
-		$self->{find_regex},
-		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5,
-	);
-	$grid->Add(
-		$self->{find_case},
-		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5,
-	);
-	$grid->Add(
-		$self->{find_reverse},
-		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5,
-	);
-	$grid->Add(
-		$self->{find_first},
-		0,
-		Wx::wxALIGN_LEFT | Wx::wxLEFT | Wx::wxRIGHT | Wx::wxTOP,
-		5,
-	);
+	my $grid = Wx::FlexGridSizer->new( 2, 2, 7, 7 );
+	$grid->Add( $self->{find_regex},   0, Wx::wxALIGN_LEFT, 5 );
+	$grid->Add( $self->{find_reverse}, 0, Wx::wxALIGN_LEFT, 5 );
+	$grid->Add( $self->{find_case},    0, Wx::wxALIGN_LEFT, 5 );
+	$grid->Add( $self->{find_first},   0, Wx::wxALIGN_LEFT, 5 );
 
 	# Options sizer begins here
 	my $options = Wx::StaticBoxSizer->new(
@@ -240,46 +219,15 @@ sub new {
 
 	# Sizer for the buttons
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bottom->Add(
-		$self->{find_button},
-		0,
-		Wx::wxGROW | Wx::wxRIGHT,
-		5,
-	);
-	$bottom->Add(
-		$self->{count_button},
-		0,
-		Wx::wxGROW,
-		5,
-	);
-	$bottom->Add(
-		$self->{cancel_button},
-		0,
-		Wx::wxGROW | Wx::wxLEFT,
-		5,
-	);
+	$bottom->Add( $self->{button_find},   0, Wx::wxGROW | Wx::wxLEFT,  5 );
+	$bottom->Add( $self->{button_count},  0, Wx::wxGROW, 5 );
+	$bottom->Add( $self->{button_cancel}, 0, Wx::wxGROW | Wx::wxRIGHT, 5 );
 
 	# Fill the sizer for the overall dialog
 	my $sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
-	$sizer->AddGrowableCol(0);
-	$sizer->Add(
-		$find,
-		2,
-		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
-		5,
-	);
-	$sizer->Add(
-		$options,
-		2,
-		Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxGROW | Wx::wxALL,
-		5,
-	);
-	$sizer->Add(
-		$bottom,
-		0,
-		Wx::wxALIGN_RIGHT | Wx::wxALL,
-		5,
-	);
+	$sizer->Add( $find,    2, Wx::wxGROW | Wx::wxALL, 5 );
+	$sizer->Add( $options, 2, Wx::wxGROW | Wx::wxALL, 5 );
+	$sizer->Add( $bottom,  0, Wx::wxALIGN_RIGHT | Wx::wxALL, 5 );
 
 	# Let the widgets control the dialog size
 	$self->SetSizer($sizer);
@@ -287,12 +235,52 @@ sub new {
 
 	# Update the dialog from configuration
 	my $config = $self->current->config;
-	$self->{find_case}->SetValue( $config->find_case );
-	$self->{find_regex}->SetValue( $config->find_regex );
-	$self->{find_first}->SetValue( $config->find_first );
-	$self->{find_reverse}->SetValue( $config->find_reverse );
+	$self->{ find_case    }->SetValue( $config->find_case    );
+	$self->{ find_regex   }->SetValue( $config->find_regex   );
+	$self->{ find_first   }->SetValue( $config->find_first   );
+	$self->{ find_reverse }->SetValue( $config->find_reverse );
 
 	return $self;
+}
+
+=pod
+
+=head2 find
+
+  $self->find
+
+Grab currently selected text, if any, and place it in find combo box.
+Bring up the dialog or perform search for strings' next occurence
+if dialog is already displayed.
+
+TODO: if selection is more than one line then consider it as the limit
+of the search and not as the string to be used.
+
+=cut
+
+sub find {
+	my $self = shift;
+	my $text = $self->current->text;
+
+	# No search if no file is open (TODO ??)
+	return unless $self->current->editor;
+
+	# TODO: if selection is more than one lines then consider it as the
+	# limit of the search and not as the string to be used.
+	$text = '' if $text =~ /\n/;
+
+	# Clear out and reset the dialog, then prepare the new find
+	$self->{find_text}->refresh;
+	$self->{find_text}->SetValue($text);
+	$self->{find_text}->SetFocus;
+
+	if ( $self->IsShown ) {
+		$self->find_button;
+	} else {
+		$self->Show(1);
+	}
+
+	return;
 }
 
 
@@ -321,7 +309,7 @@ sub find_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ($search) {
+	unless ( $search ) {
 		$main->error("Not a valid search");
 		return;
 	}
@@ -335,38 +323,6 @@ sub find_button {
 	}
 
 	return;
-}
-
-=pod
-
-=head2 count_button
-
-  $self->count_button
-
-Count and announce the number of matches in the document.
-
-=cut
-
-sub count_button {
-	my $self   = shift;
-	my $config = $self->save;
-
-	# Generate the search object
-	my $search = $self->as_search;
-	unless ($search) {
-		$self->main->error( Wx::gettext("Not a valid search") );
-		return;
-	}
-
-	# Find the number of matches
-	my $editor = $self->current->editor or return;
-	my $matches = $search->editor_count_all($editor);
-	$self->main->message(
-		sprintf(
-			Wx::gettext("Found %d matching occurrences"),
-			$matches,
-		)
-	);
 }
 
 =pod
@@ -389,7 +345,7 @@ sub cancel_button {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ($editor) {
+	if ( $editor ) {
 		$editor->SetFocus;
 	}
 
@@ -398,41 +354,35 @@ sub cancel_button {
 
 =pod
 
-=head2 find
+=head2 count_button
 
-  $self->find
+  $self->count_button
 
-Grab currently selected text, if any, and place it in find combo box.
-Bring up the dialog or perform search for strings' next occurence
-if dialog is already displayed.
-
-TODO: if selection is more than one line then consider it as the limit
-of the search and not as the string to be used.
+Count and announce the number of matches in the document.
 
 =cut
 
-sub find {
-	my $self = shift;
-	my $text = $self->current->text;
+sub count_button {
+	my $self   = shift;
+	my $main   = $self->main;
+	my $config = $self->save;
 
-	return unless $self->current->editor; # no search if no file is open (TODO ??)
-
-	# TODO: if selection is more than one lines then consider it as the limit
-	# of the search and not as the string to be used
-	$text = '' if $text =~ /\n/;
-
-	# Clear out and reset the dialog, then prepare the new find
-	$self->{find_text}->refresh;
-	$self->{find_text}->SetValue($text);
-	$self->{find_text}->SetFocus;
-
-	if ( $self->IsShown ) {
-		$self->find_button;
-	} else {
-		$self->Show(1);
+	# Generate the search object
+	my $search = $self->as_search;
+	unless ( $search ) {
+		$main->error( Wx::gettext("Not a valid search") );
+		return;
 	}
 
-	return;
+	# Find the number of matches
+	my $editor  = $self->current->editor or return;
+	my $matches = $search->editor_count_all($editor);
+	$main->message(
+		sprintf(
+			Wx::gettext("Found %d matching occurrences"),
+			$matches,
+		)
+	);
 }
 
 
