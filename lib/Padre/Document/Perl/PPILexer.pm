@@ -6,7 +6,7 @@ use warnings;
 use Padre::Document ();
 use Padre::Util     ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 
 sub colorize {

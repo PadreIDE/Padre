@@ -6,7 +6,7 @@ use warnings;
 use Padre::Current ();
 use Padre::Wx      ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 our @ISA     = 'Wx::SearchCtrl';
 
 # Create a new Search object and show a search text field above the tree

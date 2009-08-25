@@ -49,7 +49,7 @@ use Padre::Wx       ();
 use constant DEFAULT  => 'en-gb';
 use constant SHAREDIR => File::Spec->rel2abs( Padre::Util::sharedir('locale') );
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 # The RFC4646 table is the primary language data table and contains
 # mappings from a Padre-supported language to all the relevant data

@@ -11,7 +11,7 @@ use Padre::Document ();
 use Padre::Util     ();
 use Padre::Perl     ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 our @ISA     = 'Padre::Document';
 
 #####################################################################

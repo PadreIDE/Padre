@@ -7,7 +7,7 @@ use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 # workaround: need to be accessible from outside in oder to write unit test ( t/03-wx.t )
 # TODO - Don't store run-time data in package lexicals

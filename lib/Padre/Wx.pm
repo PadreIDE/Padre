@@ -20,7 +20,7 @@ use Wx::AUI     ();
 use Wx::Locale  ();
 use Padre::Util ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 # Hard version lock on a new enough Wx.pm
 BEGIN {

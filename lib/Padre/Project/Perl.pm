@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Project ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 our @ISA     = 'Padre::Project';
 
 sub from_file {

@@ -24,7 +24,7 @@ use DBD::SQLite   ();
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
 use version ();
 
-our $VERSION = '0.43';
+our $VERSION = '0.44';
 
 # Load the splash screen here, before we get bogged
 # down running the database migration scripts.
