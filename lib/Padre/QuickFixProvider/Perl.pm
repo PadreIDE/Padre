@@ -37,6 +37,7 @@ sub quick_fix_list {
 
 	my @fixes = (
 		'Padre::QuickFixProvider::Perl::StrictWarnings',
+		'Padre::QuickFixProvider::Perl::IncludeModule',
 	);
 
 	foreach my $fix (@fixes) {
