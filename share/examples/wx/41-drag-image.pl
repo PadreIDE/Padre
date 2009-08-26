@@ -11,6 +11,8 @@ use warnings;
 ##              modify it under the same terms as Perl itself
 #############################################################################
 
+# See http://docs.wxwidgets.org/2.8.10/wx_wxdc.html
+
 package Demo::App;
 use strict;
 use warnings;
@@ -65,6 +67,9 @@ use warnings;
 use Wx ':everything';
 use Wx::Event ':everything';
 
+use File::Spec;
+use File::Basename;
+
 use base qw(Wx::ScrolledWindow);
 
 my ( $x_size, $y_size ) = ( 750, 650 );
@@ -74,11 +79,21 @@ sub new {
 
   $this->SetScrollbars( 1, 1, $x_size, $y_size );
   $this->SetBackgroundColour( wxWHITE );
-  $this->SetCursor( Wx::Cursor->new( wxCURSOR_PENCIL ) );
+#  $this->SetCursor( Wx::Cursor->new( wxCURSOR_PENCIL ) );
 
   EVT_MOTION( $this, \&OnMouseMove );
   EVT_LEFT_DOWN( $this, \&OnButton );
   EVT_LEFT_UP( $this, \&OnButton );
+  
+  my $path = File::Spec->catfile(File::Basename::dirname($0), 'img', 'padre_logo_64x64.png');
+  my $image = Wx::Image->new;
+  Wx::InitAllImageHandlers();
+  print "new $path\n";
+  $image->LoadFile($path, Wx::wxBITMAP_TYPE_ANY());
+  #printf("Image (%s, %s)\n", $image->GetWidth, $image->GetHeight);
+  $this->{_bitmap} = Wx::Bitmap->new($image);
+  $this->{_bitmap_x} = 20;
+  $this->{_bitmap_y} = 30;
 
   return $this;
 }
@@ -86,24 +101,13 @@ sub new {
 sub OnDraw {
   my $this = shift;
   my $dc = shift;
-#  my $font = Wx::Font->new( 20, wxSCRIPT, wxSLANT, wxBOLD );
 
-#  $dc->SetFont( $font );
-  $dc->DrawRotatedText( "Draw Here", 200, 200, 35 );
-
-  $dc->DrawEllipse( 20, 20, 50, 50 );
-
-  $dc->SetPen( Wx::Pen->new( wxBLACK, 3, 0 ) );
-  $dc->DrawEllipse( 20, $y_size - 50 - 20, 50, 50 );
-
-  $dc->SetPen( Wx::Pen->new( wxGREEN, 5, 0 ) );
-  $dc->DrawEllipse( $x_size - 50 - 20, 20, 50, 50 );
   $dc->SetPen( Wx::Pen->new( wxBLUE, 5, 0 ) );
-  $dc->DrawEllipse( $x_size - 50 - 20, $y_size - 50 - 20, 50, 50 );
-
   $dc->CrossHair(100, 100);
-  $dc->SetPen( Wx::Pen->new( wxRED, 5, 0 ) );
-  
+  $dc->DrawRotatedText( "Drag the butterfly", 200, 200, 35 );
+
+
+  $dc->DrawBitmap($this->{_bitmap}, $this->{_bitmap_x}, $this->{_bitmap_y}, 1);
 
 }
 
@@ -112,19 +116,20 @@ sub OnMouseMove {
   my( $this, $event ) = @_;
 
   return unless $event->Dragging;
+  return unless $this->{_grab};
 
   my $dc = Wx::ClientDC->new( $this );
   #$this->PrepareDC( $dc );
   my $pos = $event->GetLogicalPosition( $dc );
   my( $x, $y ) = ( $pos->x, $pos->y );
-
-  push @{$this->{CURRENT_LINE}}, [ $x, $y ];
-  my $elems = @{$this->{CURRENT_LINE}};
-
-  $dc->SetPen( Wx::Pen->new( wxRED, 5, 0 ) );
-  $dc->DrawLine( @{$this->{CURRENT_LINE}[$elems-2]},
-                 @{$this->{CURRENT_LINE}[$elems-1]} );
-
+  print "pos ($x, $y)\n";
+  
+  # TODO remove previous image
+  $this->{_bitmap_x} += $x - $this->{_mouse_x};
+  $this->{_bitmap_y} += $y - $this->{_mouse_y};
+  $this->{_mouse_x}  = $x;
+  $this->{_mouse_y}  = $y;
+  $dc->DrawBitmap($this->{_bitmap}, $this->{_bitmap_x}, $this->{_bitmap_y}, 1);
 }
 
 sub OnButton {
@@ -134,18 +139,23 @@ sub OnButton {
   $this->PrepareDC( $dc );
   my $pos = $event->GetLogicalPosition( $dc );
   my( $x, $y ) = ( $pos->x, $pos->y );
+  print "Pos ($x, $y)\n";
+  $this->{_mouse_x} = $x;
+  $this->{_mouse_y} = $y;
+  
 
+  
   if( $event->LeftUp ) {
-    push @{$this->{CURRENT_LINE}}, [ $x, $y ];
-    push @{$this->{LINES}}, $this->{CURRENT_LINE};
     $this->ReleaseMouse();
+    $this->{_grab} = 0;
   } else {
-    $this->{CURRENT_LINE} = [ [ $x, $y ] ];
+      if ($x >= $this->{_bitmap_x} and $x < $this->{_bitmap_x} + $this->{_bitmap}->GetWidth
+          and
+          $y >= $this->{_bitmap_y} and $y < $this->{_bitmap_y} + $this->{_bitmap}->GetHeight) {
+            $this->{_grab} = 1;
+      }
     $this->CaptureMouse();
   }
-
-  $dc->SetPen( Wx::Pen->new( wxRED, 5, 0 ) );
-  $dc->DrawLine( $x, $y, $x, $y );
 }
 
 #####################
