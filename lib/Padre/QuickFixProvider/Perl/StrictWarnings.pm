@@ -25,19 +25,19 @@ sub new {
 sub apply {
 	my ( $self, $doc, $document ) = @_;
 
-	my @items           = ();
+	my @items = ();
 
-	my $editor = $document->editor;
+	my $editor          = $document->editor;
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
-	
+
 	my ( $use_strict_include, $use_warnings_include );
 	my $includes = $doc->find('PPI::Statement::Include');
 	if ($includes) {
 		foreach my $include ( @{$includes} ) {
 			next if $include->type eq 'no';
 			if ( $include->pragma ) {
-				my $pragma   = $include->pragma;
+				my $pragma = $include->pragma;
 				if ( $pragma eq 'strict' ) {
 					$use_strict_include = $include;
 				} elsif ( $pragma eq 'warnings' ) {

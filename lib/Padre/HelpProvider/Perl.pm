@@ -181,7 +181,7 @@ sub _parse_perlopref {
 #
 sub help_render {
 	my ( $self, $topic ) = @_;
-	my ($html, $location);
+	my ( $html, $location );
 
 	if ( $self->{perlopref}->{$topic} ) {
 
@@ -201,9 +201,10 @@ sub help_render {
 			$hints->{perlfunc} = 1;
 			$topic =~ s/\/.*?\/$//;
 		} else {
+
 			# Append the module's release date to the topic
 			my $first_release_by_date = Module::CoreList->first_release_by_date($topic);
-			if($first_release_by_date) {
+			if ($first_release_by_date) {
 				$location = "$topic (Since Perl v$first_release_by_date)";
 			}
 		}

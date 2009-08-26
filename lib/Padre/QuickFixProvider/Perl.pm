@@ -29,10 +29,10 @@ sub new {
 sub quick_fix_list {
 	my ( $self, $document, $editor ) = @_;
 
-	my @items           = ();
+	my @items = ();
 
-	my $text            = $editor->GetText;
-	my $doc = PPI::Document->new( \$text );
+	my $text = $editor->GetText;
+	my $doc  = PPI::Document->new( \$text );
 	$doc->index_locations;
 
 	my @fixes = (
@@ -42,14 +42,14 @@ sub quick_fix_list {
 
 	foreach my $fix (@fixes) {
 		eval "require $fix;";
-		if($@) {
+		if ($@) {
 			warn "failed to load $fix\n";
 		} else {
-			push @items, $fix->new->apply($doc, $document);
+			push @items, $fix->new->apply( $doc, $document );
 		}
 	}
-	
-	
+
+
 	return @items;
 }
 

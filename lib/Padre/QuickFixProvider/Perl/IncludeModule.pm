@@ -25,60 +25,61 @@ sub new {
 sub apply {
 	my ( $self, $doc, $document ) = @_;
 
-	my @items           = ();
+	my @items = ();
 
-	my $editor = $document->editor;
+	my $editor          = $document->editor;
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
-	
+
 	my $includes = $doc->find('PPI::Statement::Include');
 	if ($includes) {
 		foreach my $include ( @{$includes} ) {
 			next if $include->type eq 'no';
 			if ( not $include->pragma ) {
-				my $module   = $include->module;
+				my $module = $include->module;
 				eval "require $module";
-				if($@) {
+				if ($@) {
 					push @items, {
-						text => "Install $module",
+						text     => "Install $module",
 						listener => sub {
+
 							#XXX- implement Install $module
 						},
-					}
+					};
 				}
 
 				my $project_dir = $document->project_dir;
-				if($project_dir) {
-					my $Build_PL = File::Spec->catfile($project_dir, 'Build.PL');
-					my $Makefile_PL = File::Spec->catfile($project_dir, 'Makefile.PL');
-					if(-f $Build_PL) {
+				if ($project_dir) {
+					my $Build_PL    = File::Spec->catfile( $project_dir, 'Build.PL' );
+					my $Makefile_PL = File::Spec->catfile( $project_dir, 'Makefile.PL' );
+					if ( -f $Build_PL ) {
 						open FILE, $Build_PL;
 						my $content = do { local $/ = <FILE> };
 						close FILE;
-						if($content !~ /^\s*requires\s+["']$module["']/) {
+						if ( $content !~ /^\s*requires\s+["']$module["']/ ) {
 							push @items, {
-								text => "Add missing requires '$module' to Build.PL",
+								text     => "Add missing requires '$module' to Build.PL",
 								listener => sub {
-								
+
 								},
-							}
+							};
 						}
-						
-					} elsif(-f $Makefile_PL) {
+
+					} elsif ( -f $Makefile_PL ) {
 						open FILE, $Makefile_PL;
 						my $content = do { local $/ = <FILE> };
 						close FILE;
-						if($content !~ /^\s*requires\s+["']$module["']/) {
+						if ( $content !~ /^\s*requires\s+["']$module["']/ ) {
 							push @items, {
-								text => "Add missing requires '$module' to Makefile.PL",
+								text     => "Add missing requires '$module' to Makefile.PL",
 								listener => sub {
-								
+
 								},
-							}
+							};
 						}
 					}
 				}
-							
+
 			}
 		}
 	}

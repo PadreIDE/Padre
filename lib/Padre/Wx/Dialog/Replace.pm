@@ -610,7 +610,7 @@ sub save {
 	my $config  = $self->current->config;
 	my $changed = 0;
 
-	foreach my $name ( qw{ find_case find_regex find_first find_reverse } ) {
+	foreach my $name (qw{ find_case find_regex find_first find_reverse }) {
 		my $value = $self->{$name}->GetValue;
 		next if $config->$name() == $value;
 		$config->set( $name => $value );
