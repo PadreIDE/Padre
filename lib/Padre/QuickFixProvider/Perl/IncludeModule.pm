@@ -23,74 +23,66 @@ sub new {
 # Returns the quick fix list
 #
 sub apply {
-	my ( $self, $doc, $editor ) = @_;
+	my ( $self, $doc, $document ) = @_;
 
 	my @items           = ();
 
+	my $editor = $document->editor;
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
 	
-	my ( $use_strict_include, $use_warnings_include );
 	my $includes = $doc->find('PPI::Statement::Include');
 	if ($includes) {
 		foreach my $include ( @{$includes} ) {
 			next if $include->type eq 'no';
 			if ( not $include->pragma ) {
 				my $module   = $include->module;
+				eval "require $module";
+				if($@) {
+					push @items, {
+						text => "Install $module",
+						listener => sub {
+							#XXX- implement Install $module
+						},
+					}
+				}
+
+				my $project_dir = $document->project_dir;
+				if($project_dir) {
+					my $Build_PL = File::Spec->catfile($project_dir, 'Build.PL');
+					my $Makefile_PL = File::Spec->catfile($project_dir, 'Makefile.PL');
+					if(-f $Build_PL) {
+						open FILE, $Build_PL;
+						my $content = do { local $/ = <FILE> };
+						close FILE;
+						if($content !~ /^\s*requires\s+["']$module["']/) {
+							push @items, {
+								text => "Add missing requires '$module' to Build.PL",
+								listener => sub {
+								
+								},
+							}
+						}
+						
+					} elsif(-f $Makefile_PL) {
+						open FILE, $Makefile_PL;
+						my $content = do { local $/ = <FILE> };
+						close FILE;
+						if($content !~ /^\s*requires\s+["']$module["']/) {
+							push @items, {
+								text => "Add missing requires '$module' to Makefile.PL",
+								listener => sub {
+								
+								},
+							}
+						}
+					}
+				}
+							
 			}
 		}
 	}
 
-#	my ( $replace, $col, $row, $len );
-#	if ( $use_strict_include and not $use_warnings_include ) {
-#
-#		# insert 'use warnings;' afterwards
-#		$replace = "use strict;\nuse warnings;";
-#		$row     = $use_strict_include->line_number - 1;
-#		$col     = $use_strict_include->column_number - 1;
-#		$len     = length $use_strict_include->content;
-#	} elsif ( not $use_strict_include and $use_warnings_include ) {
-#
-#		# insert 'use strict';' before
-#		$replace = "use strict;\nuse warnings;";
-#		$row     = $use_warnings_include->line_number - 1;
-#		$col     = $use_warnings_include->column_number - 1;
-#		$len     = length $use_warnings_include->content;
-#	} elsif ( not $use_strict_include and not $use_warnings_include ) {
-#
-#		# insert 'use strict; use warnings;' at the top
-#		my $first = $doc->find_first(
-#			sub {
-#				return $_[1]->isa('PPI::Statement')
-#					or $_[1]->isa('PPI::Structure');
-#			}
-#		);
-#		$replace = "use strict;\nuse warnings;\n";
-#		if ($first) {
-#			$row = $first->line_number - 1;
-#			$col = $first->column_number - 1;
-#			$len = 0;
-#
-#		} else {
-#			$row = $current_line_no;
-#			$col = 0;
-#			$len = 0;
-#		}
-#	}
-#
-#	if ($replace) {
-#		push @items, {
-#			text     => qq{Fix '$replace'},
-#			listener => sub {
-#				my $line_start = $editor->PositionFromLine($row) + $col;
-#				my $line_end   = $line_start + $len;
-#				my $line       = $editor->GetTextRange( $line_start, $line_end );
-#				$editor->SetSelection( $line_start, $line_end );
-#				$editor->ReplaceSelection($replace);
-#				}
-#		};
-#	}
-#
 	return @items;
 }
 

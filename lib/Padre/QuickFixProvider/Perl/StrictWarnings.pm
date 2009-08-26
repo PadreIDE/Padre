@@ -23,10 +23,11 @@ sub new {
 # Returns the quick fix list
 #
 sub apply {
-	my ( $self, $doc, $editor ) = @_;
+	my ( $self, $doc, $document ) = @_;
 
 	my @items           = ();
 
+	my $editor = $document->editor;
 	my $text            = $editor->GetText;
 	my $current_line_no = $editor->GetCurrentLine;
 	

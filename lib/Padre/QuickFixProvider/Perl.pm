@@ -45,7 +45,7 @@ sub quick_fix_list {
 		if($@) {
 			warn "failed to load $fix\n";
 		} else {
-			push @items, $fix->new->apply($doc, $editor);
+			push @items, $fix->new->apply($doc, $document);
 		}
 	}
 	
