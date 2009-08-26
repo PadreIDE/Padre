@@ -39,13 +39,12 @@ sub quick_fix_list {
 	my $includes = $doc->find('PPI::Statement::Include');
 	if ($includes) {
 		foreach my $include ( @{$includes} ) {
-			my $type   = $include->type;
-			my $module = $include->module;
-
-			if ( $type eq 'use' ) {
-				if ( $module eq 'strict' ) {
+			next if $include->type eq 'no';
+			if ( $include->pragma ) {
+				my $pragma   = $include->pragma;
+				if ( $pragma eq 'strict' ) {
 					$use_strict_include = $include;
-				} elsif ( $module eq 'warnings' ) {
+				} elsif ( $pragma eq 'warnings' ) {
 					$use_warnings_include = $include;
 				}
 			}
