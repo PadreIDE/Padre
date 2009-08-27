@@ -98,7 +98,7 @@ Usage: $0
         -h     show this help
         -d     run Padre in the command line debugger (-d)
         -p     run Padre under -dt:NYTProf
-        -a     add the pathe to the lib directory of all the plugins in trunk/
+        -a     add the path to the lib directory of all the plugins in trunk/
         --die  add DIE handler
 
        LIST OF FILES    list of files to open
