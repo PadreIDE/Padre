@@ -134,14 +134,14 @@ sub new {
 		},
 	);
 
-	$self->add_menu_item(
-		$tools,
-		name       => 'plugins.test_a_plugin',
-		label      => Wx::gettext('Test A Plugin From Local Dir'),
-		menu_event => sub {
-			Padre->ide->plugin_manager->test_a_plugin;
-		},
-	);
+#	$self->add_menu_item(
+#		$tools,
+#		name       => 'plugins.test_a_plugin',
+#		label      => Wx::gettext('Test A Plugin From Local Dir'),
+#		menu_event => sub {
+#			Padre->ide->plugin_manager->test_a_plugin;
+#		},
+#	);
 
 	# Create the module tools submenu
 	my $modules = Wx::Menu->new;
