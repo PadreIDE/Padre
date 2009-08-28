@@ -171,6 +171,32 @@ Functionally, this function is just a direct pass-through with no effect.
 
 =cut
 
+# Pasting more background information for people that don't understand
+# the POD docs, because at least one person has accidentally broken this
+# by changing it (not cxreg, he actually asked first) :)
+#15:31 cxreg Alias: er, how it's just "shift" ?
+#15:31 Alias cxreg: Wx has a gettext implementation
+#15:31 Alias Wx::gettext
+#15:31 Alias That's the "translate right now" function
+#15:31 Alias But we need a late-binding version, for things that need to be translated, but are kept in memory (for various reasons) as English and only get translated at the last second
+#15:32 Alias So in that case, we do a Wx::gettext($string)
+#15:32 Alias The problem is that the translation tools can't tell what $string is
+#15:32 Alias The translation tools DO, however, recognise _T as a translatable string
+#15:33 Alias So we use _T as a silent pass-through specifically to indicate to the translation tools that this string needs translating
+#15:34 Alias If we did everything as an up-front translation we'd need to flush a crapton of stuff and re-initialise it every time someone changed languages
+#15:35 Alias Instead, we flush the hidden dialogs and rebuild the entire menu
+#15:35 Alias But most of the rest we do with the delayed _T strings
+#15:37 cxreg i get the concept, it's just so magical
+#15:38 Alias It works brilliantly :)
+#15:38 cxreg do you replace the _T symbol at runtime?
+#15:39 Alias symbol?
+#15:39 Alias Why would we do that?
+#15:40 cxreg in order to actually instrument the translation, i wasn't sure if you were swapping out the sub behind the _T symbol
+#15:40 Alias oh, no
+#15:40 Alias _T is ONLY there to hint to the translation tools
+#15:40 Alias The PO editors etc
+#15:40 Alias my $english = _T('Hello World!'); $gui->set_title( Wx::gettext($english) );
+#15:41 Alias It does absolutely nothing inside the code itself
 sub _T {
 	shift;
 }
