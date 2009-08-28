@@ -137,7 +137,7 @@ msgstr "发现新插件"
 #: lib/Padre/PluginManager.pm:511
 #, perl-format
 msgid "%s - Crashed while loading: %s"
-msgstr "%s - 载入文件时崩溃：%s"
+msgstr "%s - 载入文件时崩溃: %s"
 
 #: lib/Padre/PluginManager.pm:523
 #, perl-format
