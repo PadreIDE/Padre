@@ -123,7 +123,7 @@ sub show_rows {
 	my $cpan    = $self->{cpan};
 	my $c       = 10;
 	my $modules = $cpan->get_modules($regex);
-	foreach my $module (@$modules) {
+	foreach my $module (reverse sort @$modules) {
 		my $idx = $self->InsertStringImageItem( 0, $module, 0 );
 
 		#$self->SetItem( $idx, 1,  Wx::gettext('Warning')  );
