@@ -2808,6 +2808,8 @@ sub open_file_dialog {
 	for (@filenames) {
 
 		if (/[\*\?]/) {
+			# Windows usually handles this at the dialog level, but Gnome doesn't,
+			# so this should never appear on Windows:
 			my $ret = Wx::MessageBox(
 				sprintf(
 					Wx::gettext('Filename %s contains * or ? which are special chars on most computers. Skip?'),
@@ -2821,11 +2823,16 @@ sub open_file_dialog {
 			next if $ret == Wx::wxYES;
 		}
 
-		if ( !-e $self->cwd . '/' . $_ ) {
+		my $FN = File::Spec->catfile( $self->cwd, $_ );
+
+		if ( !-e $FN ) {
+			# This could be checked by a Windows dialog, but a Gnome dialog doesn't,
+			# and created empty files when you do a typo in the open box when
+			# entering and not selecting a filename to open:
 			my $ret = Wx::MessageBox(
 				sprintf(
 					Wx::gettext('Filename %s does not exist on disk. Skip?'),
-					$self->cwd . '/' . $_
+					$FN
 				),
 				Wx::gettext("Open Warning"),
 				Wx::wxYES_NO | Wx::wxCENTRE,
@@ -2835,7 +2842,7 @@ sub open_file_dialog {
 			next if $ret == Wx::wxYES;
 		}
 
-		push @files, File::Spec->catfile( $self->cwd, $_ );
+		push @files, $FN;
 	}
 	$self->setup_editors(@files) if $#files > -1;
 
