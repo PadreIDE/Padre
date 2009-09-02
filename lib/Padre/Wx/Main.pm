@@ -2808,6 +2808,7 @@ sub open_file_dialog {
 	for (@filenames) {
 
 		if (/[\*\?]/) {
+
 			# Windows usually handles this at the dialog level, but Gnome doesn't,
 			# so this should never appear on Windows:
 			my $ret = Wx::MessageBox(
@@ -2826,6 +2827,7 @@ sub open_file_dialog {
 		my $FN = File::Spec->catfile( $self->cwd, $_ );
 
 		if ( !-e $FN ) {
+
 			# This could be checked by a Windows dialog, but a Gnome dialog doesn't,
 			# and created empty files when you do a typo in the open box when
 			# entering and not selecting a filename to open:
@@ -3043,7 +3045,7 @@ sub _save_buffer {
 
 	if ( $doc->has_changed_on_disk ) {
 		my $ret = Wx::MessageBox(
-			Wx::gettext( "File changed on disk since last saved. Do you want to overwrite it?" ),
+			Wx::gettext("File changed on disk since last saved. Do you want to overwrite it?"),
 			$doc->filename || Wx::gettext("File not in sync"),
 			Wx::wxYES_NO | Wx::wxCENTRE,
 			$self,
@@ -4314,7 +4316,7 @@ sub timer_check_overwrite {
 
 	my $Text;
 	if ( $file_state == -1 ) {
-		$Text = Wx::gettext( 'File has been deleted on disk, do you want to CLEAR the editor window?' );
+		$Text = Wx::gettext('File has been deleted on disk, do you want to CLEAR the editor window?');
 	} else {
 		$Text = Wx::gettext("File changed on disk since last saved. Do you want to reload it?");
 	}
