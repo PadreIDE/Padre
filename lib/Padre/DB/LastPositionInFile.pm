@@ -9,7 +9,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 
 sub get_last_pos {
 	my ( $class, $name ) = @_;

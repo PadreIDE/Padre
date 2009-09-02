@@ -11,7 +11,7 @@ use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
 
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 our @ISA     = 'Wx::TreeCtrl';
 
 use constant IS_MAC => !!( $^O eq 'darwin' );

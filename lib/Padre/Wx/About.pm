@@ -9,7 +9,7 @@ use utf8;
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
 
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 our @ISA     = 'Wx::Dialog';
 
 sub new {

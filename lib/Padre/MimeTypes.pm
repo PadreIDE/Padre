@@ -23,7 +23,7 @@ use File::Basename ();
 use Padre::Wx      ();
 use Padre::DB      ();
 
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 
 #####################################################################
 # Document Registration

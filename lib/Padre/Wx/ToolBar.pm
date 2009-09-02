@@ -8,7 +8,7 @@ use Padre::Wx         ();
 use Padre::Wx::Icon   ();
 use Padre::Wx::Editor ();
 
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 our @ISA     = 'Wx::ToolBar';
 
 # NOTE: Something is wrong with dockable toolbars on Windows

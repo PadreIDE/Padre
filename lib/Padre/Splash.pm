@@ -4,7 +4,7 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION = '0.44';
+our $VERSION = '0.45';
 
 # Load just enough modules to get Wx bootstrapped far enough
 # to show the splash screen;
