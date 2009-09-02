@@ -28,9 +28,8 @@ msgid "A new empty file"
 msgstr "קובץ ריק חדש"
 
 #: lib/Padre/Config.pm:180
-#, fuzzy
 msgid "No open files"
-msgstr "קבצים פתוחים:"
+msgstr "אין קבצים פתוחים:"
 
 #: lib/Padre/Config.pm:235
 msgid "Code Order"
@@ -39,12 +38,12 @@ msgstr "לפי הסדר שבקוד"
 #: lib/Padre/Config.pm:236
 #, fuzzy
 msgid "Alphabetical Order"
-msgstr "לפי אלפבית"
+msgstr "לפי סדר אלפביתי"
 
 #: lib/Padre/Config.pm:237
 #, fuzzy
 msgid "Alphabetical Order (Private Last)"
-msgstr "לפי אלפבית (פרטי בסוף)"
+msgstr "לפי סדר אלפביתי (פרטי בסוף)"
 
 #: lib/Padre/Config.pm:258
 msgid "Project Tools (Left)"
@@ -95,7 +94,7 @@ msgstr "אנגלית"
 #: lib/Padre/Locale.pm:183
 #, fuzzy
 msgid "English (Canada)"
-msgstr "אנגלית"
+msgstr "אנגלית (קנדה)"
 
 #: lib/Padre/Locale.pm:192
 msgid "English (New Zealand)"
