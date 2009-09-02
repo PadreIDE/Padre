@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.46 to be released
+
 0.45 2009.09.02
     - Disabled 'Test Plugin From Local Dir' menu option until it's properly fixed (GARU)
     - Fixed PluginManager Pod glitch for deprecated Perl5 plugin (ADAMK)
