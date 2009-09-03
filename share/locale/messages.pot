@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-03 11:33+0200\n"
+"POT-Creation-Date: 2009-09-03 12:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1114,6 +1114,19 @@ msgstr ""
 msgid "Options"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/Replace.pm:527
+#, perl-format
+msgid "Replaced %d matches"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Replace.pm:527 lib/Padre/Wx/Dialog/Replace.pm:529
+msgid "Search and Replace"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Replace.pm:529 lib/Padre/Wx/Dialog/Find.pm:324
+msgid "No matches found"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/Encode.pm:53
 msgid "Encode to:"
 msgstr ""
@@ -1156,11 +1169,15 @@ msgstr ""
 msgid "&Count All"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:373
+#: lib/Padre/Wx/Dialog/Find.pm:324 lib/Padre/Wx/Directory/SearchCtrl.pm:27
+msgid "Search"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Find.pm:375
 msgid "Not a valid search"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Find.pm:382
+#: lib/Padre/Wx/Dialog/Find.pm:384
 #, perl-format
 msgid "Found %d matching occurrences"
 msgstr ""
@@ -2263,10 +2280,6 @@ msgstr ""
 
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:842
 msgid "Reload"
-msgstr ""
-
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:27
-msgid "Search"
 msgstr ""
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:401
