@@ -513,15 +513,13 @@ sub replace_button {
 	# The while is here to support replace_all without duplicate code
 	while ($main->replace_next($search)) {
 
-		$self->{replace_all}->GetValue and next; # Replace all
+		$self->{replace_all}->GetValue or last; # Replace all
 
-		# If we're only searching once, we won't need the dialog any more
-		if ( $config->find_first ) {
-			$self->Hide;
-		}
+	}
 
-		last; # Replace all will do a next before
-
+	# If we're only searching once, we won't need the dialog any more
+	if ( $self->{find_first}->GetValue ) {
+		$self->Hide;
 	}
 
 	return;
