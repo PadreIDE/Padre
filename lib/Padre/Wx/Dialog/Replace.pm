@@ -502,8 +502,6 @@ sub replace_button {
 	my $main   = $self->main;
 	my $config = $self->save;
 
-	$DB::single = 1;
-
 	# Generate the search object
 	my $search = $self->as_search;
 	unless ($search) {
@@ -512,48 +510,57 @@ sub replace_button {
 	}
 
 	# Apply the search to the current editor
-	$main->replace_next($search);
+	# The while is here to support replace_all without duplicate code
+	while ($main->replace_next($search)) {
 
-	# If we're only searching once, we won't need the dialog any more
-	if ( $config->find_first ) {
-		$self->Hide;
+		$self->{replace_all}->GetValue and next; # Replace all
+
+		# If we're only searching once, we won't need the dialog any more
+		if ( $config->find_first ) {
+			$self->Hide;
+		}
+
+		last; # Replace all will do a next before
+
 	}
 
 	return;
 }
 
-=pod
-
-=head2 replace_all
-
-  $self->replace_all;
-
-Executed when Replace All button is clicked.
-
-Replace all appearances of given string in the current document.
-
-=cut
-
-sub replace_all {
-	my $self   = shift;
-	my $main   = $self->main;
-	my $config = $self->save;
-
-	# Generate the search object
-	my $search = $self->as_search;
-	unless ($search) {
-		$main->error("Not a valid search");
-		return;
-	}
-
-	# Apply the search to the current editor
-	$main->replace_all($search);
-
-	# Close the dialog
-	$self->Hide;
-
-	return;
-}
+# TODO: This function doesn't seem to work anymore, so it's now scheduled for removal
+#       It's still here because it's unclear if there may be references to it.
+#=pod
+#
+#=head2 replace_all
+#
+#  $self->replace_all;
+#
+#Executed when Replace All button is clicked.
+#
+#Replace all appearances of given string in the current document.
+#
+#=cut
+#
+#sub replace_all {
+#	my $self   = shift;
+#	my $main   = $self->main;
+#	my $config = $self->save;
+#
+#	# Generate the search object
+#	my $search = $self->as_search;
+#	unless ($search) {
+#		$main->error("Not a valid search");
+#		return;
+#	}
+#
+#	# Apply the search to the current editor
+#	$main->replace_all($search);
+#
+#	# Close the dialog
+#	$self->Hide;
+#
+#	return;
+#}
 
 
 
