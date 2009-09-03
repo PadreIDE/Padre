@@ -315,11 +315,13 @@ sub find_button {
 	}
 
 	# Apply the search to the current editor
-	$main->search_next($search);
+	my $Result = $main->search_next($search);
 
 	# If we're only searching once, we won't need the dialog any more
 	if ( $self->{find_first}->GetValue ) {
 		$self->Hide;
+	} elsif ( ! $Result) {
+		$main->message(Wx::gettext('No matches found'),Wx::gettext('Search'));
 	}
 
 	return;
