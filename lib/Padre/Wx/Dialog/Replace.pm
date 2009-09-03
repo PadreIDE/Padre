@@ -92,7 +92,7 @@ sub new {
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('&Regular Expression'),
+		Wx::gettext('Regular &Expression'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
