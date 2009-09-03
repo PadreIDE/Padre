@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-03 11:33+0200\n"
-"PO-Revision-Date: 2009-09-03 11:34+0100\n"
+"POT-Creation-Date: 2009-09-03 12:16+0200\n"
+"PO-Revision-Date: 2009-09-03 12:17+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1168,6 +1168,21 @@ msgstr "Ersetzen durch:"
 msgid "Options"
 msgstr "Optionen"
 
+#: lib/Padre/Wx/Dialog/Replace.pm:527
+#, perl-format
+msgid "Replaced %d matches"
+msgstr "%d Ersetzungen durchgeführt."
+
+#: lib/Padre/Wx/Dialog/Replace.pm:527
+#: lib/Padre/Wx/Dialog/Replace.pm:529
+msgid "Search and Replace"
+msgstr "Suchen und ersetzen"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:529
+#: lib/Padre/Wx/Dialog/Find.pm:324
+msgid "No matches found"
+msgstr "Nichts gefunden"
+
 #: lib/Padre/Wx/Dialog/Encode.pm:53
 msgid "Encode to:"
 msgstr "Enkodieren zu:"
@@ -1211,11 +1226,16 @@ msgstr "Weitersuchen"
 msgid "&Count All"
 msgstr "&Alle zählen"
 
-#: lib/Padre/Wx/Dialog/Find.pm:373
+#: lib/Padre/Wx/Dialog/Find.pm:324
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:27
+msgid "Search"
+msgstr "Suchen"
+
+#: lib/Padre/Wx/Dialog/Find.pm:375
 msgid "Not a valid search"
 msgstr "Keine gültige Suchanfrage"
 
-#: lib/Padre/Wx/Dialog/Find.pm:382
+#: lib/Padre/Wx/Dialog/Find.pm:384
 #, perl-format
 msgid "Found %d matching occurrences"
 msgstr "%d Treffer gefunden"
@@ -2345,10 +2365,6 @@ msgstr "Versteckte Dateien zeigen"
 msgid "Reload"
 msgstr "Datei erneut laden"
 
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:27
-msgid "Search"
-msgstr "Suchen"
-
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:401
 msgid "Skip hidden files"
 msgstr "Versteckte Dateien ignorieren"
@@ -2493,8 +2509,6 @@ msgstr "Check abgebrochen"
 #~ msgstr "Wiederherstellen"
 #~ msgid "Text to find:"
 #~ msgstr "Zu findender Text:"
-#~ msgid "Replace With"
-#~ msgstr "Ersetze durch:"
 #~ msgid "&Find\tCtrl-F"
 #~ msgstr "&Finde\tStrg+F"
 #~ msgid "Replace\tCtrl-R"
