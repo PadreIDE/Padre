@@ -866,7 +866,7 @@ sub on_right_down {
 	my $paste = $menu->Append( Wx::wxID_PASTE, Wx::gettext("&Paste\tCtrl-V") );
 	my $text = $self->get_text_from_clipboard();
 
-	if ( length($text) && $main->notebook->GetPage($id)->CanPaste ) {
+	if ( defined($text) and length($text) && $main->notebook->GetPage($id)->CanPaste ) {
 		Wx::Event::EVT_MENU(
 			$main, # Ctrl-V
 			$paste,
