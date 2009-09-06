@@ -524,8 +524,10 @@ sub replace_button {
 	if ( $Replace_Count and $self->{find_first}->GetValue ) {
 		$self->Hide;
 	} elsif ( $Replace_Count > 1 ) {
-		$main->message( sprintf( Wx::gettext('Replaced %d matches'), $Replace_Count ),
-			Wx::gettext('Search and Replace') );
+		$main->message(
+			sprintf( Wx::gettext('Replaced %d matches'), $Replace_Count ),
+			Wx::gettext('Search and Replace')
+		);
 	} elsif ( $Replace_Count == 0 ) {
 		$main->message( Wx::gettext('No matches found'), Wx::gettext('Search and Replace') );
 	}

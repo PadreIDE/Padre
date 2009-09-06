@@ -206,13 +206,13 @@ sub _setup_events {
 			return;
 		}
 	);
-	
+
 	Wx::Event::EVT_HTML_LINK_CLICKED(
 		$self,
 		$self->_help_viewer,
 		\&on_link_clicked,
 	);
-	
+
 
 	Wx::Event::EVT_LISTBOX(
 		$self,
@@ -342,21 +342,23 @@ sub _update_list_box {
 }
 
 #
-# Called when the user clicks a link in the 
+# Called when the user clicks a link in the
 # help viewer HTML window
 #
 sub on_link_clicked {
-	my $self     = shift;
+	my $self = shift;
 	require URI;
 	my $uri      = URI->new( $_[0]->GetLinkInfo->GetHref );
 	my $linkinfo = $_[0]->GetLinkInfo;
 	my $scheme   = $uri->scheme;
-	if($scheme eq 'perldoc') {
+	if ( $scheme eq 'perldoc' ) {
+
 		# handle 'perldoc' links
 		my $topic = $uri->path;
 		$topic =~ s/^\///;
-		$self->_search_text->SetValue( $topic );
+		$self->_search_text->SetValue($topic);
 	} else {
+
 		# otherwise, let the default browser handle it...
 		Padre::Wx::launch_browser($uri);
 	}

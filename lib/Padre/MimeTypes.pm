@@ -53,7 +53,7 @@ sub _initialize {
 		ada   => 'text/x-adasrc',
 		asm   => 'text/x-asm',
 		bat   => 'text/x-bat',
-		bml   => 'text/x-bml',      # dreamwidth file format
+		bml   => 'text/x-bml',            # dreamwidth file format
 		cpp   => 'text/x-c++src',
 		css   => 'text/css',
 		diff  => 'text/x-patch',
@@ -82,7 +82,8 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
 		t     => \&perl_mime_type,
-		# Compiled Perl Module or gimme5's output 
+
+		# Compiled Perl Module or gimme5's output
 		pmc   => \&perl_mime_type,
 		conf  => 'text/x-config',
 		sh    => 'application/x-shellscript',
@@ -94,13 +95,14 @@ sub _initialize {
 		'4th' => 'text/x-forth',
 		pasm  => 'application/x-pasm',
 		pir   => 'application/x-pir',
+
 		# See docs/Perl6/Spec/S01-overview.pod for the
 		# list of acceptable Perl 6 extensions
-		p6    => 'application/x-perl6',
-		p6l   => 'application/x-perl6',
-		p6m   => 'application/x-perl6',
-		pl6   => 'application/x-perl6',
-		pm6   => 'application/x-perl6',
+		p6  => 'application/x-perl6',
+		p6l => 'application/x-perl6',
+		p6m => 'application/x-perl6',
+		pl6 => 'application/x-perl6',
+		pm6 => 'application/x-perl6',
 	);
 
 	# This is the mime-type to Scintilla lexer mapping.
@@ -134,7 +136,7 @@ sub _initialize {
 
 		'application/x-bml' => {
 			name  => 'BML',
-			lexer => Wx::wxSTC_LEX_NULL, # 
+			lexer => Wx::wxSTC_LEX_NULL,  #
 		},
 
 		'text/x-c++src' => {
