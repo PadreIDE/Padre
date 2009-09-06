@@ -352,10 +352,12 @@ sub on_link_clicked {
 	my $linkinfo = $_[0]->GetLinkInfo;
 	my $scheme   = $uri->scheme;
 	if($scheme eq 'perldoc') {
+		# handle 'perldoc' links
 		my $topic = $uri->path;
 		$topic =~ s/^\///;
 		$self->_search_text->SetValue( $topic );
-	} elsif($uri->scheme =~ /http/) {
+	} else {
+		# otherwise, let the default browser handle it...
 		Padre::Wx::launch_browser($uri);
 	}
 }
