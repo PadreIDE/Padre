@@ -53,6 +53,7 @@ sub _initialize {
 		ada   => 'text/x-adasrc',
 		asm   => 'text/x-asm',
 		bat   => 'text/x-bat',
+		bml   => 'text/x-bml',      # dreamwidth file format
 		cpp   => 'text/x-c++src',
 		css   => 'text/css',
 		diff  => 'text/x-patch',
