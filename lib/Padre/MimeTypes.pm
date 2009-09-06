@@ -82,6 +82,8 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
 		t     => \&perl_mime_type,
+		# Compiled Perl Module or gimme5's output 
+		pmc   => \&perl_mime_type,
 		conf  => 'text/x-config',
 		sh    => 'application/x-shellscript',
 		ksh   => 'application/x-shellscript',
