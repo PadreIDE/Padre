@@ -512,7 +512,7 @@ sub replace_button {
 	# Apply the search to the current editor
 	# The while is here to support replace_all without duplicate code
 	my $Replace_Count;
-	while ($main->replace_next($search)) {
+	while ( $main->replace_next($search) ) {
 
 		++$Replace_Count;
 
@@ -523,10 +523,11 @@ sub replace_button {
 	# If we're only searching once, we won't need the dialog any more
 	if ( $Replace_Count and $self->{find_first}->GetValue ) {
 		$self->Hide;
-	} elsif ($Replace_Count > 1) {
-		$main->message(sprintf( Wx::gettext('Replaced %d matches'),$Replace_Count),Wx::gettext('Search and Replace'));
-	} elsif ($Replace_Count == 0) {
-		$main->message(Wx::gettext('No matches found'),Wx::gettext('Search and Replace'));
+	} elsif ( $Replace_Count > 1 ) {
+		$main->message( sprintf( Wx::gettext('Replaced %d matches'), $Replace_Count ),
+			Wx::gettext('Search and Replace') );
+	} elsif ( $Replace_Count == 0 ) {
+		$main->message( Wx::gettext('No matches found'), Wx::gettext('Search and Replace') );
 	}
 
 	return;

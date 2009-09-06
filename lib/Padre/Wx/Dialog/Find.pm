@@ -320,8 +320,8 @@ sub find_button {
 	# If we're only searching once, we won't need the dialog any more
 	if ( $self->{find_first}->GetValue ) {
 		$self->Hide;
-	} elsif ( ! $Result) {
-		$main->message(Wx::gettext('No matches found'),Wx::gettext('Search'));
+	} elsif ( !$Result ) {
+		$main->message( Wx::gettext('No matches found'), Wx::gettext('Search') );
 	}
 
 	return;
