@@ -130,6 +130,11 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_BATCH, # CONFIRMED
 		},
 
+		'application/x-bml' => {
+			name  => 'BML',
+			lexer => Wx::wxSTC_LEX_NULL, # 
+		},
+
 		'text/x-c++src' => {
 			name  => 'c++',
 			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
