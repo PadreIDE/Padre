@@ -67,9 +67,12 @@ sub new {
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 
-	# Smart highlighting...
+	# Smart highlighting: 
+	# Selecting a word or small block of text causes all other occurrences to be highlighted
+	# with a round box around each of them
 	my @styles = ();
 	$self->{styles} = \@styles;
+	$self->IndicatorSetStyle(0,7);
 	Wx::Event::EVT_STC_DOUBLECLICK( $self, -1, \&on_smart_highlight_begin );
 	Wx::Event::EVT_LEFT_DOWN( $self, \&on_smart_highlight_end );
 	Wx::Event::EVT_KEY_DOWN( $self, \&on_smart_highlight_end );
