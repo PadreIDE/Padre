@@ -206,6 +206,13 @@ sub _setup_events {
 			return;
 		}
 	);
+	
+	Wx::Event::EVT_HTML_LINK_CLICKED(
+		$self,
+		$self->_help_viewer,
+		\&on_link_clicked,
+	);
+	
 
 	Wx::Event::EVT_LISTBOX(
 		$self,
@@ -246,7 +253,7 @@ sub showIt {
 #
 # Search for files and cache result
 #
-sub _search() {
+sub _search {
 	my $self = shift;
 
 	# a default..
@@ -303,7 +310,7 @@ sub find_help_topic {
 #
 # Update matches list box from matched files list
 #
-sub _update_list_box() {
+sub _update_list_box {
 	my $self = shift;
 
 	if ( not $self->_index ) {
@@ -334,6 +341,24 @@ sub _update_list_box() {
 	return;
 }
 
+#
+# Called when the user clicks a link in the 
+# help viewer HTML window
+#
+sub on_link_clicked {
+	my $self     = shift;
+	require URI;
+	my $uri      = URI->new( $_[0]->GetLinkInfo->GetHref );
+	my $linkinfo = $_[0]->GetLinkInfo;
+	my $scheme   = $uri->scheme;
+	if($scheme eq 'perldoc') {
+		my $topic = $uri->path;
+		$topic =~ s/^\///;
+		$self->_search_text->SetValue( $topic );
+	} elsif($uri->scheme =~ /http/) {
+		Padre::Wx::launch_browser($uri);
+	}
+}
 
 1;
 
