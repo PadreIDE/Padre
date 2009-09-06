@@ -91,7 +91,13 @@ sub _initialize {
 		'4th' => 'text/x-forth',
 		pasm  => 'application/x-pasm',
 		pir   => 'application/x-pir',
+		# See docs/Perl6/Spec/S01-overview.pod for the
+		# list of acceptable Perl 6 extensions
 		p6    => 'application/x-perl6',
+		p6l   => 'application/x-perl6',
+		p6m   => 'application/x-perl6',
+		pl6   => 'application/x-perl6',
+		pm6   => 'application/x-perl6',
 	);
 
 	# This is the mime-type to Scintilla lexer mapping.
