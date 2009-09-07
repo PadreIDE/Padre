@@ -711,23 +711,29 @@ sub on_smart_highlight_begin {
 	my $selection_re     = quotemeta $selection;
 	my $line_count       = $self->GetLineCount;
 
-	for ( my $i = 0; $i < $line_count; $i++ ) {
+	# find matching occurrences
+	foreach my $i (0..$line_count-1) {
 		my $line_start = $self->PositionFromLine($i);
 		my $line       = $self->GetLine($i);
 		while ( $line =~ /$selection_re/g ) {
 			my $start = $line_start + pos($line) - $selection_length;
 
-			#print "Found $selection at line $i column " . (pos $line) . ", position: $start\n";
 			push @{ $self->{styles} },
 				{
 				start => $start,
 				len   => $selection_length,
 				style => $self->GetStyleAt($start)
 				};
-			$self->StartStyling( $start, 0xFF );
-			$self->SetStyling( $selection_length, 32 );
 		}
 	}
+	# smart highlight if there are more than one occurrence...
+	if(scalar @{$self->{styles}} > 1) {
+		foreach my $style (@{$self->{styles}}) {
+			$self->StartStyling( $style->{start}, 0xFF );
+			$self->SetStyling( $style->{len}, 32 );
+		}
+	}
+	
 }
 
 sub on_smart_highlight_end {
