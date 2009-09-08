@@ -1622,7 +1622,7 @@ sub run_command {
 		if (Padre::Util::WIN32) {
 			my $title = $cmd;
 			$title =~ s/"//g;
-			system qq(start "$title" cmd /C "$cmd && pause");
+			system qq(start "$title" cmd /C "$cmd & pause");
 		} else {
 			system qq(xterm -e "$cmd; sleep 1000" &);
 		}
