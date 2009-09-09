@@ -1626,7 +1626,7 @@ sub on_run_this_test {
     }
 
 	# Find the project
-	my $project_dir = Padre::Util::get_project_dir($filename);
+	my $project_dir = $document->project_dir;
 	unless ($project_dir) {
 		return $self->error( Wx::gettext("Could not find project root") );
 	}
