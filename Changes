@@ -3,6 +3,12 @@ Changes for Perl Application Development and Refactoring Environment
 0.46 to be released
     - Fixed Smart highlighting to show a pale green round box instead of an 
       ugly squiggle (AZAWAWI)
+    - Run script waits now after completion for key to continue when run in an
+      external win32 window (AZAWAWI).
+    - Padre now supports the following extensions:
+        - For Perl 5, .pmc and .plx (AZAWAWI, SZABGAB)
+        - For Perl 6, .pl6, .pm6, .p6l and .p6m (AZAWAWI)
+    - Help search handles now http:// and perldoc:// links (AZAWAWI)
     - Enabled "Syntax Check" tab is now shown when there is a problem without
       losing editor focus (AZAWAWI)
 
