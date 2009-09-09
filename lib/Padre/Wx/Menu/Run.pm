@@ -68,6 +68,16 @@ sub new {
 			$_[0]->on_run_tests;
 		},
 	);
+    
+    $self->{run_this_test} = $self->add_menu_item(
+        $self,
+        name       => 'run.run_this_test',
+        label      => Wx::gettext('Run This Test'),
+        menu_event => sub {
+            $_[0]->on_run_this_test;
+        },
+    );
+
 	$self->AppendSeparator;
 
 	$self->{stop} = $self->add_menu_item(
@@ -108,6 +118,11 @@ sub refresh {
 	);
 	$self->{run_tests}->Enable(
 		  $document
+		? $self->{run_command}->IsEnabled
+		: 0
+	);
+	$self->{run_this_test}->Enable(
+		  $document && defined($document->filename) && $document->filename =~ /\.t$/
 		? $self->{run_command}->IsEnabled
 		: 0
 	);

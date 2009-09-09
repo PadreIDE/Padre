@@ -1601,6 +1601,44 @@ sub on_run_tests {
 
 =pod
 
+=head3 on_run_this_test
+
+    $main->on_run_this_test;
+
+Callback method, to run the currently open test through prove.
+
+=cut
+
+sub on_run_this_test {
+	my $self     = shift;
+	my $document = $self->current->document;
+	unless ($document) {
+		return $self->error( Wx::gettext("No document open") );
+	}
+
+	# TODO probably should fetch the current project name
+	my $filename = $document->filename;
+	unless ($filename) {
+		return $self->error( Wx::gettext("Current document has no filename") );
+	}
+    unless ($filename =~ /\.t$/) {
+        return $self->error( Wx::gettext("Current document is not a .t file") );
+    }
+
+	# Find the project
+	my $project_dir = Padre::Util::get_project_dir($filename);
+	unless ($project_dir) {
+		return $self->error( Wx::gettext("Could not find project root") );
+	}
+
+	my $dir = Cwd::cwd;
+	chdir $project_dir;
+	$self->run_command("prove -bv $filename");
+	chdir $dir;
+}
+
+=pod
+
 =head3 run_command
 
     $main->run_command( $command );
