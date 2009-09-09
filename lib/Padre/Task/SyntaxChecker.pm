@@ -124,7 +124,8 @@ sub finish {
 sub update_gui {
 	my $self     = shift;
 	my $messages = $self->{syntax_check};
-	my $syntax   = Padre->ide->wx->main->syntax;
+	my $main     = Padre->ide->wx->main;
+	my $syntax   = $main->syntax;
 	my $editor   = $self->{main_thread_only}->{editor};
 
 	# Clear out the existing stuff
@@ -189,6 +190,13 @@ sub update_gui {
 		}
 
 		$syntax->set_column_widths($last_hint);
+
+		if( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
+			# show the "syntax check" tab when there is a problem and it is enabled
+			# and keep the focus on the editor
+			$main->bottom->show($syntax);
+			$editor->SetFocus;
+		}
 	}
 
 	return 1;
