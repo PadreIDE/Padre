@@ -13,14 +13,10 @@ our $VERSION = '0.45';
 ######################################################################
 # Constructor
 
-sub new {
-	my $class = shift;
-	my $self = bless {@_}, $class;
+use Class::XSAccessor
+  constructor => 'new';
 
-	# Check the config
-
-	return $self;
-}
+# TODO Write constructor that checks the config?
 
 sub read {
 	my $class = shift;
