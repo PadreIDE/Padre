@@ -389,7 +389,19 @@ sub update_recentfiles {
 				++$idx < 10 ? "&$idx. $file" : "$idx. $file"
 			),
 			sub {
-				$_[0]->setup_editors($file);
+				if (-f $file) {
+					$_[0]->setup_editors($file);
+				} else {
+					# Handle "File not found" situation
+					Padre::DB::History->delete( 'where name = ? and type = ?', $file, 'files' );
+					$self->update_recentfiles;
+					Wx::MessageBox(
+						sprintf(Wx::gettext("File %s not found."), $file),
+						Wx::gettext("Open cancelled"),
+						Wx::wxOK,
+						$self->{main},
+					);
+				}
 			},
 		);
 		Padre::Util::debug("Recent entry created for '$file'");
