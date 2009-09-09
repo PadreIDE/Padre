@@ -83,7 +83,7 @@ sub new {
 	$self->{stop} = $self->add_menu_item(
 		$self,
 		name       => 'run.stop',
-		label      => Wx::gettext('Run Tests'),
+		label      => Wx::gettext('Stop execution'),
 		shortcut   => 'F6',
 		menu_event => sub {
 			if ( $_[0]->{command} ) {
