@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-09 22:03+0200\n"
+"POT-Creation-Date: 2009-09-09 22:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1598,12 +1598,16 @@ msgstr ""
 msgid "Run Command"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Run.pm:66 lib/Padre/Wx/Menu/Run.pm:86
+#: lib/Padre/Wx/Menu/Run.pm:66
 msgid "Run Tests"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Run.pm:75
 msgid "Run This Test"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Run.pm:86
+msgid "Stop execution"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:33
