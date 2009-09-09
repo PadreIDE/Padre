@@ -193,8 +193,8 @@ sub update_gui {
 
 		if ( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
 
-			# show the "syntax check" tab when there is a problem and it is enabled
-			# and keep the focus on the editor
+			# Enabled "Syntax Check" tab is now shown when
+			# there is a problem without losing editor focus
 			$main->bottom->show($syntax);
 			$editor->SetFocus;
 		}
