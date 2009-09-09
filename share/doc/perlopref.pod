@@ -403,13 +403,13 @@ the largest multiple of Y less than or equal to X.  If Y is negative, then
 the result will be less than or equal to zero).  To illustrate this, here
 are the results of modding C<-9> through C<9> with C<4>:
 
-    when X is     -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
-    the result is  3  0  1  2  3  0  1  2  3  0  1  2  3  0  1  2  3  0  1
+    when X is  -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
+    result is   3  0  1  2  3  0  1  2  3  0  1  2  3  0  1  2  3  0  1
 
 And here is C<-9> through C<9> modded with C<-4>:
 
-    when X is     -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
-    the result is -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 
+    when X is  -9 -8 -7 -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6  7  8  9
+    result is  -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 -2 -1  0 -3 
 
 From this we can see a positive Y constrains X to a range from C<0> to 
 C<(Y - 1)> that wraps around and a negative Y constrains X to a range from
@@ -484,6 +484,20 @@ L<< C<warnings> >> are turned on).
 =head3 Example
 
     my $x = 100 - 58; #$x is now 42
+
+=head2 X . Y
+
+=head3 Description
+
+This is the concatenation operator.  It coerces its arguments to strings,
+then returns a new string that begins with X and ends with Y.  It forces
+scalar context on X and Y.
+
+=head3 Example
+
+    my @a = (1 .. 10);
+    my $x = "foo" . "bar"; #$x is now "foobar"
+    my $y = "the number of elements in \@a is" . @a;
 
 =head2 X << Y
 
@@ -917,7 +931,24 @@ L<perlsyn/"Smart matching in detail">
 =head3 Description
 
 This is the bitwise and operator.  It ands together the individual bits of X
-and Y.  
+and Y.  The truth table for and is:
+
+     X Y   R
+    -----+---
+     0 0 | 0
+     0 1 | 0
+     1 0 | 0
+     1 1 | 1
+
+That is, it sets the result bit to 1 if both the X and Y bits are 1,
+otherwise it sets the result bit to 0.  This operation is done for every bit
+in X and Y.  
+
+If both operands are strings, they are considered character by character.
+The result is determined by anding the ordinal value of the characters, so
+C<"a" & "b"> is equivalent to C<chr(ord("a") & ord("b"))>.  If X and Y are
+different sizes, then the longer string is truncated to the length of the
+shorter string.
 
 =head3 Example
 
@@ -930,7 +961,7 @@ and Y.
     #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
     #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
     #0x4545 & 0x00FF is 0b0000_0000_0000_0000_0000_0100_0000_0101 or 0x0045
-    my $y = 0x4545 & 0x00FF; #$y is now 0x0045
+    my $z = 0x4545 & 0x00FF; #$z is now 0x0045
 
 =head3 See also
 
@@ -940,201 +971,650 @@ L<perlop/Integer Arithmetic> and L<perlop/Bitwise String Operators>.
 
 =head3 Description
 
+This is the bitwise or operator.  It ors together the individual bits of X
+and Y.  The truth table for or is:
+
+     X Y   R
+    -----+---
+     0 0 | 0
+     0 1 | 1
+     1 0 | 1
+     1 1 | 1
+
+That is, it sets the result bit to 0 if both the X and Y bits are 0,
+otherwise it sets the result bit to 1.  This operation is done for every bit
+in X and Y.  
+
+If both operands are strings, they are considered character by character.
+The result is determined by oring the ordinal value of the characters, so
+C<"a" | "b"> is equivalent to C<chr(ord("a") | ord("b"))>.  If X and Y are
+different sizes, then the shorter item is treated as if it had additional
+bits that are set to 0.
+
 =head3 Example
 
+    #In ASCII (and UTF-8)
+    #"a"       is 0b0110_0001
+    #"b"       is 0b0110_0010
+    #"a" | "b" is 0b0110_0011 or "c" 
+    my $x = "a" | "b"; #$x is now "c"
 
+    #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
+    #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
+    #0x4545 | 0x00FF is 0b0000_0100_0000_0101_1111_1111_1111_1111 or 0x45FF
+    my $y = 0x4545 | 0x00FF; #$y is now 0x45FF
+
+=head3 See also
+
+L<perlop/Integer Arithmetic> and L<perlop/Bitwise String Operators>.
 
 =head2 X ^ Y
 
 =head3 Description
 
+This is the bitwise xor operator.  It xors together the individual bits of X
+and Y.  The truth table for xor is:
+
+     X Y   R
+    -----+---
+     0 0 | 0
+     0 1 | 1
+     1 0 | 1
+     1 1 | 0
+
+That is, it sets the result bit to 1 if X or Y is set, or 0 if both or
+neither is set.  This operation is done for every bit in X and Y.  
+
+If both operands are strings, they are considered character by character.
+The result is determined by xoring the ordinal value of the characters, so
+C<"a" ^ "b"> is equivalent to C<chr(ord("a") ^ ord("b"))>.  If X and Y are
+different sizes, then the shorter item is treated as if it had additional
+bits that are set to 0.
+
 =head3 Example
 
+    #In ASCII (and UTF-8)
+    #"a"       is 0b0110_0001
+    #"b"       is 0b0110_0010
+    #"a" ^ "b" is 0b0000_0011 or "\x{03}" 
+    my $x = "a" ^ "b"; #$x is now "\x{03}"
 
+    #0x4545          is 0b0000_0100_0000_0101_0000_0100_0000_0101
+    #0x00FF          is 0b0000_0000_0000_0000_1111_1111_1111_1111
+    #0x4545 ^ 0x00FF is 0b0000_0100_0000_0101_1111_1111_1111_1010 or 0x45BA
+    my $y = 0x4545 ^ 0x00FF; #$y is now 0x45BA
+
+=head3 See also
+
+L<perlop/Integer Arithmetic> and L<perlop/Bitwise String Operators>.
 
 =head2 X && Y
 
 =head3 Description
 
+This is the high-precedence logical and operator.  It returns X if X
+evaluates to false, otherwise it returns Y.
+
+It binds more tightly than the low-precedence logical and operator:
+
+    my $x = 5 && 4; # is equivalent to my $x = (5 && 4);
+
+whereas:
+
+    my $y = 5 and 4; # is equivalent to (my $x = 5) and 4;
+
+It is most commonly used in conditional statements such as C<if>, C<unless>,
+C<while>.
+
 =head3 Example
 
+    my $w = "";
+    my $x = 0;
+    my $y = 1;
+    my $z = "foo";
 
+    print $w && $y, "\n"; #prints "\n"
+    print $x && $y, "\n"; #prints "0\n"
+    print $y && $z, "\n"; #prints "foo\n"
+    print $z && $y, "\n"; #prints "1\n"
 
 =head2 X || Y
 
 =head3 Description
 
+This is the high-precedence logical or operator.  It returns the X if X
+evaluates to true, otherwise it returns Y.
+
+It binds more tightly than the low-precedence logical or operator:
+
+    my $x = 5 && 4; # is equivalent to my $x = (5 || 4);
+
+whereas:
+
+    my $y = 5 or 4; # is equivalent to (my $x = 5) or 4;
+
+It is most commonly used in conditional statements such as C<if>, C<unless>,
+C<while>.  It was used in the recent past to create default values:
+
+    my %config = get_config();
+    #set $x to $config{x} unless it is false, in which case set it to 5
+    my $x = $config{x} || 5;
+
+but this use has the drawback of not respecting a value of 0 or 0.0, since
+they both evaluate to false.  The // operator is now recommend for this
+purpose since it tests if X is defined, not if it is true.
+
 =head3 Example
 
+    my $w = "";
+    my $x = 0;
+    my $y = 1;
+    my $z = "foo";
 
+    print $w || $x, "\n"; #prints "0\n";
+    print $x || $w, "\n"; #prints "\n";
+    print $w || $y, "\n"; #prints "1\n"
+    print $x || $y, "\n"; #prints "1\n"
+    print $y || $z, "\n"; #prints "1\n"
+    print $z || $y, "\n"; #prints "foo\n"
 
 =head2 X // Y
 
 =head3 Description
 
+This is the high-precedence logical defined-or.  It returns X if X is
+defined, otherwise it returns Y.  This operator is only available if you
+have enabled 5.10 features (using the L<feature> pragma or C<use 5.10>).
+
+It is most commonly used to create default values:
+
+    my %config = get_config();
+    #set $x to $config{x} if it is defined, otherwise set it to 5
+    my $x = $config{x} // 5;
+
 =head3 Example
 
+    my $x;
+    my $y = 0;
+    my $z = 5;
 
+    print $x // $y, "\n"; #prints 0
+    print $y // $z, "\n"; #prints 0
+    print $z // $y, "\n"; #prints 5
 
 =head2 X .. Y
 
 =head3 Description
 
+Depending on context, this is either the range operator (if it is list
+context) or the flip-flop operator (if it is in scalar context).
+
+The range operator creates a list starting with X and ending with Y (i.e. it
+is inclusive).  If Y is less than X then an empty list is returned.  If both
+X and Y are strings, then the auto-magical behavior of L<X++> is used to
+generate the list.
+
+The flip-flop operator returns false as long as X is false, once X becomes
+true it returns true until I<after> Y is true, at which time it returns
+false.  Each flip-flop operator keeps track of its own state separately from
+the other flip-flop operators.
+
+Note: it is possible for both the X and Y tests to be true at the same time,
+in which case it will return true and then false on the next test.
+
 =head3 Example
 
+    my @list = 0 .. 5;     #@list is now (0, 1, 2, 3, 4, 5)
+    my @az   = "a" .. "z"; #@az is now the lowercase ASCII alphabet
 
+    prints "4\n", "5\n", "6\n", "7\n", and "8\n"
+    for my $i (0 .. 10) {
+        #start printing when $i is 4 and stop after $i is 8
+        if ($i == 4 .. $i == 8) {
+            print "$i\n";
+        }
+    }
+
+    #prints "4\n"
+    for my $i (0 .. 10) {
+        #start printing when $i is 4 and stop after $i is 4
+        if ($i == 4 .. $i == 8) {
+            print "$i\n";
+        }
+    }
 
 =head2 X ... Y
 
 =head3 Description
 
+This is another form of the range/flip flop operator (L<X .. Y>).  Its
+meaning is context dependent.
+
+In list context it creates a list starting with X and ending with Y (i.e. it
+is inclusive).  If Y is less than X then an empty list is returned.  If both
+X and Y are strings, then the auto-magical behavior of L<X++> is used to
+generate the list.
+
+In scalar context it returns false as long as X is false, once X becomes
+true it returns true until I<after> Y is true, at which time it returns
+false.  Each flip-flop operator keeps track of its own state separately from
+the other flip-flop operators.  It only evaluates X or Y each time it
+called, unlike L<X .. Y> which evaluates both X and Y each time it is
+called.
+
 =head3 Example
 
+    my @list = 0 ... 5;     #@list is now (0, 1, 2, 3, 4, 5)
+    my @az   = "a" ... "z"; #@az is now the lowercase ASCII alphabet
 
+    prints "4\n", "5\n", "6\n", "7\n", and "8\n"
+    for my $i (0 ... 10) {
+        #start printing when $i is 4 and stop after $i is 8
+        if ($i == 4 ... $i == 8) {
+            print "$i\n";
+        }
+    }
+
+    #prints "4\n", "5\n", "6\n", "7\n", "8\n", "9\n", and "10\n"
+    for my $i (0 ... 10) {
+        #start printing when $i is 4 and stop after $i is 4 a second time
+        if ($i == 4 ... $i == 8) {
+            print "$i\n";
+        }
+    }
 
 =head2 X ? Y : Z
 
 =head3 Description
 
+This is the conditional operator.  It works much like an if-then-else.  If
+the X is true then Y is returned otherwise Z is returned.
+
+The context it is called in propagates to Y and Z, so if the operator is
+called in scalar context and X is true then Y will be evaluated in scalar
+context.
+
+The result of the operator is a valid lvalue (i.e. it can be assigned to).
+Note, normal rules about lvalues (e.g. you can't assign to constants) still
+apply.
+
 =head3 Example
 
+    #simple implementation of max
+    sub max {
+        my ($m, $n) = @_;
+        return $m >= $n ? $m : $n;
+    }
 
+    my $x = max 5, 4; #$x is now 5
+    my $y = max 4, 5; #$y is now 5
+
+    my @a = $x == $y ? (1, 2, 3) : (4, 5, 6); #@a is now (1, 2, 3)
+    my @b = $x != $y ? (1, 2, 3) : (4, 5, 6); #@b is now (4, 5, 6)
+
+    ($x == $y ? $x : $y) = 15; #$x is now 15
+    ($x == $y ? $x : $y) = 15; #$y is now 15
 
 =head2 X = Y
 
 =head3 Description
 
+This is the assignment operator.  It assigns Y to X.  The act of assigning
+creates an lvalue, that is the result of an assignment can be used in places
+where you would normally use a plain variable:
+
+    my $str = "foobar";
+    (my $modified = $str) =~ s/foo/bar/; #the substitution affects $modified
+
 =head3 Example
 
+    my $x = 5; #$x is now 5
+    my $y = 6; #$y is now 6
 
+    ($x, $y) = ($y, $x); #$x is now 6 and $y is now 5
+
+    my $i = my $j = my $k = 10; #$i, $j, and $k are now all 10
 
 =head2 X **= Y
 
 =head3 Description
 
+This is the exponentiation assignment operator.  It is equivalent to 
+
+    X = X ** Y
+
+That is it raises the value X to the Yth power and then assigns the result
+to X.  This means that X must be a valid lvalue (i.e. it must be something
+that can be assigned to).
+
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x **= $y; #$x is now 2 ** 8 or 256
+
+=head3 See also
+
+L<X = Y> and L<X ** Y>
 
 =head2 X += Y
 
-=head3 Description
+This is the addition assignment operator.  It is equivalent to 
+
+    X = X + Y
+
+That is it adds X and Y together and then assigns the result to X.  This
+means that X must be a valid lvalue (i.e. it must be something that can be
+assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x += $y; #$x is now 2 + 8 or 10
+
+=head3 See also
+
+L<X = Y> and L<X + Y>
 
 =head2 X -= Y
 
-=head3 Description
+This is the subtraction assignment operator.  It is equivalent to 
+
+    X = X - Y
+
+That is it subtracts Y from X and then assigns the result to X.  This means
+that X must be a valid lvalue (i.e. it must be something that can be
+assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x -= $y; #$x is now 2 - 8 or -6
+
+=head3 See also
+
+L<X = Y> and L<X - Y>
 
 =head2 X .= Y
 
-=head3 Description
+This is the concatenation assignment operator.  It is equivalent to 
+
+    X = X . Y
+
+That is it joins the strings X and Y and then assigns the result
+to X.  This means that X must be a valid lvalue (i.e. it must be something
+that can be assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x .= $y; #$x is now 2 . 8 or "28"
+
+=head3 See also
+
+L<X = Y> and L<X . Y>
 
 =head2 X *= Y
 
-=head3 Description
+This is the multiplication assignment operator.  It is equivalent to 
+
+    X = X * Y
+
+That is it multiplies X by Y and then assigns the result to X.  This means
+that X must be a valid lvalue (i.e. it must be something that can be
+assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x *= $y; #$x is now 2 * 8 or 16
+
+=head3 See also
+
+L<X = Y> and L<X * Y>
 
 =head2 X /= Y
 
-=head3 Description
+This is the division assignment operator.  It is equivalent to 
+
+    X = X / Y
+
+That is it divides X by Y and then assigns the result to X.  This means that
+X must be a valid lvalue (i.e. it must be something that can be assigned
+to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x /= $y; #$x is now 2 / 8 or 0.25
+
+=head3 See also
+
+L<X = Y> and L<X / Y>
 
 =head2 X %= Y
 
-=head3 Description
+This is the modulo assignment operator.  It is equivalent to 
+
+    X = X % Y
+
+That is it computes the remainder of X divided by Y and then assigns the
+result to X.  This means that X must be a valid lvalue (i.e. it must be
+something that can be assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x %= $y; #$x is now 2 % 8 or 2
+
+=head3 See also
+
+L<X = Y> and L<X % Y>
 
 =head2 X x= Y
 
-=head3 Description
+This is the scalar repetition assignment operator.  It is equivalent to 
+
+    X = X x Y
+
+That is it creates a string made up of X repeated Y times and assigns the
+result to X.  This means that X must be a valid lvalue (i.e. it must be
+something that can be assigned to).
+
+Note: this only works for the scalar repetition operator; the list
+repetition operator (L<(X) x Y>) will not work in this context.
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x x= $y; #$x is now 2 x 8 or "22222222"
+
+=head3 See also
+
+L<X = Y> and L<X x Y>
 
 =head2 X &= Y
 
-=head3 Description
+This is the bitwise and assignment operator.  It is equivalent to 
+
+    X = X & Y
+
+That is it ands together X and Y and then assigns the result to X.  This
+means that X must be a valid lvalue (i.e. it must be something that can be
+assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x &= $y; #$x is now 2 & 8 or 0
+
+=head3 See also
+
+L<X = Y> and L<X & Y>
 
 =head2 X |= Y
 
-=head3 Description
+This is the bitwise or assignment operator.  It is equivalent to 
+
+    X = X | Y
+
+That is it ors together X and Y and then assigns the result to X.  This
+means that X must be a valid lvalue (i.e. it must be something that can be
+assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x |= $y; #$x is now 2 & 8 or 10
+
+=head3 See also
+
+L<X = Y> and L<X | Y>
 
 =head2 X ^= Y
 
-=head3 Description
+This is the bitwise xor assignment operator.  It is equivalent to 
+
+    X = X ^ Y
+
+That is it xors together X and Y and then assigns the result to X.  This
+means that X must be a valid lvalue (i.e. it must be something that can be
+assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x ^= $y; #$x is now 2 & 8 or 10
+
+=head3 See also
+
+L<X = Y> and L<X ^ Y>
 
 =head2 X <<= Y
 
-=head3 Description
+This is the left bit-shift assignment operator.  It is equivalent to 
+
+    X = X << Y
+
+That is it bit-shifts X Y places to the left and then assigns the result to
+X.  This means that X must be a valid lvalue (i.e. it must be something that
+can be assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x <<= $y; #$x is now 2 << 8 or 512
+
+=head3 See also
+
+L<X = Y> and L<X << Y>
 
 =head2 X >>= Y
 
-=head3 Description
+This is the right bit-shift assignment operator.  It is equivalent to 
+
+    X = X >> Y
+
+That is it bit-shifts X Y places to the right and then assigns the result to
+X.  This means that X must be a valid lvalue (i.e. it must be something that
+can be assigned to).
 
 =head3 Example
 
+    my $x = 8;
+    my $y = 2;
 
+    $x &= $y; #$x is now 8 & 2 or 2
+
+=head3 See also
+
+L<X = Y> and L<X >> Y>
 
 =head2 X &&= Y
 
-=head3 Description
+This is the logical and assignment operator.  It is equivalent to 
+
+    X = X && Y
+
+That is it assigns X to itself if X evaluates to true, otherwise it assigns
+Y to X.  This means that X must be a valid lvalue (i.e. it must be something
+that can be assigned to).
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
 
+    $x &&= $y; #$x is now 2 && 8 or 8
+    $x &&= 0;  #$x is now 8 && 0 or 0
+    $x &&= 8;  #$x is now 0 && 8 or 0
+
+=head3 See also
+
+L<X = Y> and L<X && Y>
 
 =head2 X ||= Y
 
-=head3 Description
+This is the logical or assignment operator.  It is equivalent to 
+
+    X = X || Y
+
+That is it logically ors together X and Y and then assigns the result to X.
+This means that X must be a valid lvalue (i.e. it must be something that can
+be assigned to).  It was often used in the past to assign a value if the
+variable did not already have a value:
+
+    my $x;
+
+    #intervening code that might set $x or might leave it undefined
+
+    $x ||= 10; #make sure $x gets set to a default value
+
+This has a problem though: if C<$x> is C<0> or C<""> then it will get
+overwritten with C<10>.  The defined-or assignment operator (L<X //= Y>)
+does not have this problem and should, generally, be used for this purpose
+instead.  Of course, if you desire any false value be overwritten, then this
+is the right operator to use.
 
 =head3 Example
 
+    my $x = 2;
+    my $y = 8;
+    my $z;
 
+    $x ||= $y; #$x is now 2 || 8 or 2
+    $y ||= $x; #$y is now 8 || 2 or 8
+
+    my $z ||= $x + $y; #$z is now undef || (2 + 8) or 10
+
+=head3 See also
+
+L<X = Y>, L<X || Y>, and L<X //= Y>
 
 =head2 X //= Y
-
-=head3 Description
-
-=head3 Example
-
-
 
 =head2 X, Y
 
