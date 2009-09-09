@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-09 22:03+0200\n"
-"PO-Revision-Date: 2009-09-09 22:05+0100\n"
+"POT-Creation-Date: 2009-09-09 22:21+0200\n"
+"PO-Revision-Date: 2009-09-09 22:22+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1669,13 +1669,16 @@ msgid "Run Command"
 msgstr "Befehl ausführen"
 
 #: lib/Padre/Wx/Menu/Run.pm:66
-#: lib/Padre/Wx/Menu/Run.pm:86
 msgid "Run Tests"
 msgstr "Tests ausführen"
 
 #: lib/Padre/Wx/Menu/Run.pm:75
 msgid "Run This Test"
 msgstr "Diesen Test starten"
+
+#: lib/Padre/Wx/Menu/Run.pm:86
+msgid "Stop execution"
+msgstr "Ausführung anhalten"
 
 #: lib/Padre/Wx/Menu/Edit.pm:33
 msgid "&Undo"
