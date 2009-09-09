@@ -191,7 +191,8 @@ sub update_gui {
 
 		$syntax->set_column_widths($last_hint);
 
-		if( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
+		if ( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
+
 			# show the "syntax check" tab when there is a problem and it is enabled
 			# and keep the focus on the editor
 			$main->bottom->show($syntax);

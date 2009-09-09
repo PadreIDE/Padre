@@ -712,7 +712,7 @@ sub on_smart_highlight_begin {
 	my $line_count       = $self->GetLineCount;
 
 	# find matching occurrences
-	foreach my $i (0..$line_count-1) {
+	foreach my $i ( 0 .. $line_count - 1 ) {
 		my $line_start = $self->PositionFromLine($i);
 		my $line       = $self->GetLine($i);
 		while ( $line =~ /$selection_re/g ) {
@@ -726,14 +726,15 @@ sub on_smart_highlight_begin {
 				};
 		}
 	}
+
 	# smart highlight if there are more than one occurrence...
-	if(scalar @{$self->{styles}} > 1) {
-		foreach my $style (@{$self->{styles}}) {
+	if ( scalar @{ $self->{styles} } > 1 ) {
+		foreach my $style ( @{ $self->{styles} } ) {
 			$self->StartStyling( $style->{start}, 0xFF );
 			$self->SetStyling( $style->{len}, 32 );
 		}
 	}
-	
+
 }
 
 sub on_smart_highlight_end {
