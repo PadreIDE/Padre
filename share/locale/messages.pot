@@ -8,79 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-10 08:46+0200\n"
+"POT-Creation-Date: 2009-09-10 09:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: lib/Padre/Config.pm:178
-msgid "Previous open files"
-msgstr ""
-
-#: lib/Padre/Config.pm:179
-msgid "A new empty file"
-msgstr ""
-
-#: lib/Padre/Config.pm:180
-msgid "No open files"
-msgstr ""
-
-#: lib/Padre/Config.pm:235
-msgid "Code Order"
-msgstr ""
-
-#: lib/Padre/Config.pm:236
-msgid "Alphabetical Order"
-msgstr ""
-
-#: lib/Padre/Config.pm:237
-msgid "Alphabetical Order (Private Last)"
-msgstr ""
-
-#: lib/Padre/Config.pm:258
-msgid "Project Tools (Left)"
-msgstr ""
-
-#: lib/Padre/Config.pm:259
-msgid "Document Tools (Right)"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:475
-msgid "error"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:90
-msgid "unloaded"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:91
-msgid "loaded"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:485
-msgid "incompatible"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:508
-msgid "disabled"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:498
-msgid "enabled"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:201
-#, perl-format
-msgid "Failed to enable plugin '%s': %s"
-msgstr ""
-
-#: lib/Padre/PluginHandle.pm:281
-#, perl-format
-msgid "Failed to disable plugin '%s': %s"
-msgstr ""
 
 #: lib/Padre/Document.pm:730
 #, perl-format
@@ -310,6 +244,72 @@ msgstr ""
 msgid "Klingon"
 msgstr ""
 
+#: lib/Padre/Config.pm:178
+msgid "Previous open files"
+msgstr ""
+
+#: lib/Padre/Config.pm:179
+msgid "A new empty file"
+msgstr ""
+
+#: lib/Padre/Config.pm:180
+msgid "No open files"
+msgstr ""
+
+#: lib/Padre/Config.pm:235
+msgid "Code Order"
+msgstr ""
+
+#: lib/Padre/Config.pm:236
+msgid "Alphabetical Order"
+msgstr ""
+
+#: lib/Padre/Config.pm:237
+msgid "Alphabetical Order (Private Last)"
+msgstr ""
+
+#: lib/Padre/Config.pm:258
+msgid "Project Tools (Left)"
+msgstr ""
+
+#: lib/Padre/Config.pm:259
+msgid "Document Tools (Right)"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:475
+msgid "error"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:90
+msgid "unloaded"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:91
+msgid "loaded"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:485
+msgid "incompatible"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:508
+msgid "disabled"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:498
+msgid "enabled"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:201
+#, perl-format
+msgid "Failed to enable plugin '%s': %s"
+msgstr ""
+
+#: lib/Padre/PluginHandle.pm:281
+#, perl-format
+msgid "Failed to disable plugin '%s': %s"
+msgstr ""
+
 #: lib/Padre/MimeTypes.pm:280
 msgid "Fast but might be out of date"
 msgstr ""
@@ -413,91 +413,6 @@ msgstr ""
 #: lib/Padre/Plugin/Devel.pm:226 lib/Padre/Wx/Main.pm:3979
 #, perl-format
 msgid "Error: %s"
-msgstr ""
-
-#: lib/Padre/Wx/Bottom.pm:50
-msgid "Output View"
-msgstr ""
-
-#: lib/Padre/Wx/StatusBar.pm:254
-msgid "Background Tasks are running"
-msgstr ""
-
-#: lib/Padre/Wx/StatusBar.pm:255
-msgid "Background Tasks are running with high load"
-msgstr ""
-
-#: lib/Padre/Wx/Outline.pm:59 lib/Padre/Task/Outline/Perl.pm:165
-msgid "Outline"
-msgstr ""
-
-#: lib/Padre/Wx/Notebook.pm:50
-msgid "Files"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:102
-msgid "Term:"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:106
-msgid "Dir:"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:108
-msgid "Pick &directory"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:110
-msgid "In Files/Types:"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:116 lib/Padre/Wx/Dialog/Replace.pm:81
-#: lib/Padre/Wx/Dialog/Find.pm:74
-msgid "Case &Insensitive"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:122
-msgid "I&gnore hidden Subdirectories"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:138
-msgid "Find in Files"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:171
-msgid "Select directory"
-msgstr ""
-
-#: lib/Padre/Wx/Ack.pm:301 lib/Padre/Wx/Ack.pm:324
-msgid "Ack"
-msgstr ""
-
-#: lib/Padre/Wx/Directory.pm:73 lib/Padre/Wx/Directory/TreeCtrl.pm:104
-msgid "Directory"
-msgstr ""
-
-#: lib/Padre/Wx/Directory.pm:128
-msgid "Choose a directory"
-msgstr ""
-
-#: lib/Padre/Wx/DocBrowser.pm:148
-msgid "&Close\tCtrl+W"
-msgstr ""
-
-#: lib/Padre/Wx/DocBrowser.pm:149
-msgid "&Open\tCtrl+O"
-msgstr ""
-
-#: lib/Padre/Wx/DocBrowser.pm:152
-msgid "E&xit\tCtrl+X"
-msgstr ""
-
-#: lib/Padre/Wx/DocBrowser.pm:328
-msgid "Untitled"
-msgstr ""
-
-#: lib/Padre/Wx/DocBrowser.pm:448
-msgid "NAME"
 msgstr ""
 
 #: lib/Padre/Wx/Right.pm:49
@@ -925,6 +840,91 @@ msgstr ""
 
 #: lib/Padre/Wx/Main.pm:4613
 msgid "Need to select text in order to translate to hex"
+msgstr ""
+
+#: lib/Padre/Wx/Bottom.pm:50
+msgid "Output View"
+msgstr ""
+
+#: lib/Padre/Wx/StatusBar.pm:254
+msgid "Background Tasks are running"
+msgstr ""
+
+#: lib/Padre/Wx/StatusBar.pm:255
+msgid "Background Tasks are running with high load"
+msgstr ""
+
+#: lib/Padre/Wx/Outline.pm:59 lib/Padre/Task/Outline/Perl.pm:165
+msgid "Outline"
+msgstr ""
+
+#: lib/Padre/Wx/Notebook.pm:50
+msgid "Files"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:102
+msgid "Term:"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:106
+msgid "Dir:"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:108
+msgid "Pick &directory"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:110
+msgid "In Files/Types:"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:116 lib/Padre/Wx/Dialog/Replace.pm:81
+#: lib/Padre/Wx/Dialog/Find.pm:74
+msgid "Case &Insensitive"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:122
+msgid "I&gnore hidden Subdirectories"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:138
+msgid "Find in Files"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:171
+msgid "Select directory"
+msgstr ""
+
+#: lib/Padre/Wx/Ack.pm:301 lib/Padre/Wx/Ack.pm:324
+msgid "Ack"
+msgstr ""
+
+#: lib/Padre/Wx/Directory.pm:73 lib/Padre/Wx/Directory/TreeCtrl.pm:104
+msgid "Directory"
+msgstr ""
+
+#: lib/Padre/Wx/Directory.pm:128
+msgid "Choose a directory"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:148
+msgid "&Close\tCtrl+W"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:149
+msgid "&Open\tCtrl+O"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:152
+msgid "E&xit\tCtrl+X"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:328
+msgid "Untitled"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:448
+msgid "NAME"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Search.pm:135
@@ -2126,12 +2126,12 @@ msgstr ""
 msgid "&Quit"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:399
+#: lib/Padre/Wx/Menu/File.pm:400
 #, perl-format
 msgid "File %s not found."
 msgstr ""
 
-#: lib/Padre/Wx/Menu/File.pm:400
+#: lib/Padre/Wx/Menu/File.pm:401
 msgid "Open cancelled"
 msgstr ""
 
@@ -2231,24 +2231,36 @@ msgstr ""
 msgid "Replacement"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:98 lib/Padre/Document/Perl.pm:797
+#: lib/Padre/Wx/Menu/Perl.pm:98
+msgid "Extract Subroutine"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Perl.pm:106
+msgid "New Subroutine Name"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Perl.pm:107
+msgid "Please enter a name for the new subroutine"
+msgstr ""
+
+#: lib/Padre/Wx/Menu/Perl.pm:129 lib/Padre/Document/Perl.pm:797
 msgid "Introduce Temporary Variable"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:105 lib/Padre/Wx/Menu/Perl.pm:106
+#: lib/Padre/Wx/Menu/Perl.pm:136 lib/Padre/Wx/Menu/Perl.pm:137
 #: lib/Padre/Document/Perl.pm:810 lib/Padre/Document/Perl.pm:811
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:120
+#: lib/Padre/Wx/Menu/Perl.pm:151
 msgid "Vertically Align Selected"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:130
+#: lib/Padre/Wx/Menu/Perl.pm:161
 msgid "Newline same column"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Perl.pm:158
+#: lib/Padre/Wx/Menu/Perl.pm:189
 msgid "Automatic bracket completion"
 msgstr ""
 
