@@ -43,6 +43,7 @@ requires       'Data::Dumper'             => 0;
 requires       'DBD::SQLite'              => '1.10';
 requires       'DBI'                      => '1.58';
 requires       'Devel::Dumpvar'           => '0.04';
+requires       'Devel::Refactor'          => '0.05';
 requires       'Digest::MD5'              => 0;
 requires       'Encode'                   => '2.26';
 requires       'File::Basename'           => 0;

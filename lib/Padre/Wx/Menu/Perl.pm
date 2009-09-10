@@ -92,6 +92,37 @@ sub new {
 		},
 	);
 
+	$self->{extract_subroutine} = $self->add_menu_item(
+		$self,
+		name       => 'perl.extract_subroutine',
+		label      => Wx::gettext('Extract Subroutine'),
+		menu_event => sub {
+			my $doc    = $_[0]->current->document;
+			my $editor = $doc->editor;
+			my $code   = $editor->GetSelectedText();
+			require Padre::Wx::History::TextEntryDialog;
+			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+				$_[0],
+				Wx::gettext("New Subroutine Name"),
+				Wx::gettext("Please enter a name for the new subroutine"),
+				'$foo',
+			);
+			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			my $newname = $dialog->GetValue;
+			$dialog->Destroy;
+			return unless defined $newname;
+
+			require Devel::Refactor;
+			my $refactory = Devel::Refactor->new;
+			my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
+			$editor->BeginUndoAction(); # do the edit atomically
+			$editor->ReplaceSelection($new_sub_call);
+			$editor->DocumentEnd();     # TODO: find a better place to put the new subroutine
+			$editor->AddText($new_code);
+			$editor->EndUndoAction();
+		},
+	);
+
 	$self->{introduce_temporary} = $self->add_menu_item(
 		$self,
 		name       => 'perl.introduce_temporary',

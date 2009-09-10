@@ -13,6 +13,7 @@ Changes for Perl Application Development and Refactoring Environment
       losing editor focus (AZAWAWI)
     - Bundled latest perlopref.pod to gain more Perl operator documentation
       (AZAWAWI)
+    - Added a "extract subroutine" function (RHEBUS)
 
 0.45 2009.09.02
     - Disabled 'Test Plugin From Local Dir' menu option until it's properly fixed (GARU)
