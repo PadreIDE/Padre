@@ -2535,7 +2535,7 @@ sub setup_editor {
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 
 	# These need to be TWO if's, because Cwd::realpath returns undef when opening an non-existent file!
-	if ($file) {
+	if ($file && -f $file) {
 		$file = Cwd::realpath($file); # get absolute path
 	}
 	if ($file) {
