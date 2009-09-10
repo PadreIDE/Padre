@@ -103,8 +103,8 @@ sub new {
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("New Subroutine Name"),
 				Wx::gettext("Please enter a name for the new subroutine"),
+				Wx::gettext("New Subroutine Name"),
 				'$foo',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;
