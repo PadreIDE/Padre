@@ -1677,6 +1677,9 @@ sub run_command {
 	$self->show_output(1);
 	$self->output->Remove( 0, $self->output->GetLastPosition );
 
+	# ticket #205, reset output style to neutral
+	$self->output->style_neutral;
+
 	# If this is the first time a command has been run,
 	# set up the ProcessStream bindings.
 	unless ($Wx::Perl::ProcessStream::VERSION) {
