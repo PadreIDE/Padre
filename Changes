@@ -18,6 +18,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Added a "extract subroutine" function (RHEBUS)
     - Handle "Open all Recent Files" Padre crash when setup_editor is called 
       with a file that no longer exists (AZAWAWI)
+    - Fixed ticket:536 "Padre auto converts EOLs automatically" (AZAWAWI)
 
 0.45 2009.09.02
     - Disabled 'Test Plugin From Local Dir' menu option until it's properly fixed (GARU)
