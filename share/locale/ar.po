@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-10 09:20+0300\n"
-"PO-Revision-Date: 2009-09-10 09:22+0200\n"
+"PO-Revision-Date: 2009-09-10 09:34+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -741,9 +741,8 @@ msgid "Could not find project root"
 msgstr "فشل العثور على جذر المشروع"
 
 #: lib/Padre/Wx/Main.pm:1625
-#, fuzzy
 msgid "Current document is not a .t file"
-msgstr "ليس للوثيقه الحاليه اسم"
+msgstr "الوثيقة الحالية ليست ملف .t"
 
 #: lib/Padre/Wx/Main.pm:1728
 #, perl-format
@@ -846,7 +845,7 @@ msgstr "فتح ملف"
 #: lib/Padre/Wx/Main.pm:2854
 #, perl-format
 msgid "Filename %s contains * or ? which are special chars on most computers. Skip?"
-msgstr ""
+msgstr "الملف %s يحتوي على * أو ? والتي تكون أحرف خاصة على معظم الحواسيب. هل تريد المتابعة؟"
 
 #: lib/Padre/Wx/Main.pm:2857
 #: lib/Padre/Wx/Main.pm:2877
@@ -856,7 +855,7 @@ msgstr "فتح التحذير"
 #: lib/Padre/Wx/Main.pm:2874
 #, perl-format
 msgid "Filename %s does not exist on disk. Skip?"
-msgstr ""
+msgstr "الملف %s غير موجود على القرص. هل تريد المتابعة?"
 
 #: lib/Padre/Wx/Main.pm:2920
 #: lib/Padre/Wx/Main.pm:4372
@@ -1155,9 +1154,8 @@ msgstr "الاختيارات"
 
 #: lib/Padre/Wx/Dialog/Find.pm:324
 #: lib/Padre/Wx/Dialog/Replace.pm:532
-#, fuzzy
 msgid "No matches found"
-msgstr "فشل العثور على مساعدة"
+msgstr "لا يوجد أي مطابقة"
 
 #: lib/Padre/Wx/Dialog/Find.pm:324
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:27
@@ -1643,9 +1641,9 @@ msgid "Replace Text:"
 msgstr "نص التبديل:"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:528
-#, fuzzy, perl-format
+#, perl-format
 msgid "Replaced %d matches"
-msgstr "استبدال ب"
+msgstr "تم استبدال %d مطابقة"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:529
 #: lib/Padre/Wx/Dialog/Replace.pm:532
