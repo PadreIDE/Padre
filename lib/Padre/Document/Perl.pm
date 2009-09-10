@@ -10,6 +10,7 @@ use YAML::Tiny      ();
 use Padre::Document ();
 use Padre::Util     ();
 use Padre::Perl     ();
+use Padre::Document::Perl::Beginner;
 
 our $VERSION = '0.45';
 our @ISA     = 'Padre::Document';
@@ -290,6 +291,27 @@ sub _check_syntax_internals {
 		$task->run();
 		return $task->{syntax_check};
 	}
+}
+
+# Run the checks for common beginner errors
+sub beginner_check {
+	my $self = shift;
+	
+	# TODO: Make this cool
+	# It isn't, because it should show _all_ warnings instead of one and
+	# it should at least go to the line it's complaining about.
+	
+	my $Beginner = Padre::Document::Perl::Beginner->new();
+	
+	$Beginner->check($self->text_get);
+	
+	my $Error = $Beginner->error;
+
+	defined($Error) or return 1;
+
+	Padre->ide->wx->main->error('Warning: '. $Error);
+	
+	return 1;
 }
 
 sub get_outline {

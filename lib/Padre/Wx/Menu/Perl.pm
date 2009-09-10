@@ -56,6 +56,17 @@ sub new {
 		},
 	);
 
+	$self->{find_variable} = $self->add_menu_item(
+		$self,
+		name       => 'perl.beginner_check',
+		label      => Wx::gettext('Check for common (beginner) errors'),
+		menu_event => sub {
+			my $doc = $_[0]->current->document;
+			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+			$doc->beginner_check;
+		},
+	);
+
 	$self->AppendSeparator;
 
 	# Perl-Specific Refactoring

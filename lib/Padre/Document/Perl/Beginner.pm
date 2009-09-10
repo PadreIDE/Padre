@@ -64,7 +64,7 @@ sub error {
 
 sub check {
 	my ( $self, $text ) = @_;
-	$self->{error} = '';
+	$self->{error} = undef;
 
 	if ( $text =~ m{split([^;]+);} ) {
 		my $cont = $1;
