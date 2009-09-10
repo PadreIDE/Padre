@@ -192,7 +192,7 @@ sub get_command {
 
 	# (Ticket #530) Pack args here, because adding the space later confuses the called Perls @ARGV
 	my $Script_Args = '';
-	$Script_Args = ' '.$run_args{script} if defined($run_args{script}) and ($run_args{script} ne '');
+	$Script_Args = ' ' . $run_args{script} if defined( $run_args{script} ) and ( $run_args{script} ne '' );
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;

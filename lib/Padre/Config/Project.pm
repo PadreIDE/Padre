@@ -13,8 +13,7 @@ our $VERSION = '0.45';
 ######################################################################
 # Constructor
 
-use Class::XSAccessor
-  constructor => 'new';
+use Class::XSAccessor constructor => 'new';
 
 # TODO Write constructor that checks the config?
 

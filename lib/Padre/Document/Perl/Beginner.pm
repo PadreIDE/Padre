@@ -81,6 +81,7 @@ sub check {
 		$self->{error} = "map (),x uses x also as list value for map.";
 		return;
 	}
+
 	# Warn about Perl-standard package names being reused:
 	if ( $text =~ /package DB[\;\:]/ ) {
 		$self->{error} = "This file uses the DB-namespace which is used by the Perl Debugger.";

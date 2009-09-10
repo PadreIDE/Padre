@@ -1621,9 +1621,9 @@ sub on_run_this_test {
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
 	}
-    unless ($filename =~ /\.t$/) {
-        return $self->error( Wx::gettext("Current document is not a .t file") );
-    }
+	unless ( $filename =~ /\.t$/ ) {
+		return $self->error( Wx::gettext("Current document is not a .t file") );
+	}
 
 	# Find the project
 	my $project_dir = $document->project_dir;
