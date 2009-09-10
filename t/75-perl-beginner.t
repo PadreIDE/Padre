@@ -25,7 +25,7 @@ my %TEST = (
 	# @_ ?
 );
 
-plan( tests => scalar(keys %TEST) * 2 + 2 );
+plan( tests => scalar(keys %TEST) * 2 + 14 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new;
@@ -70,6 +70,44 @@ foreach my $file ( keys %TEST ) {
 	ok(! defined($b->check($data)), $file);
 	is($b->error, $TEST{$file}, "$file error");
 }
+
+# No need to create files for all of these:
+# Notice: Text matches are critical as texts may change without notice!
+$b->check('join(",",map { 1; } (@INC),"a");');
+ok($b->error =~ /map/,'map arguments');
+
+$b->check('package DB;');
+ok($b->error =~ /DB/,'kill Perl debugger (1)');
+
+$b->check('package DB::Connect;');
+ok($b->error =~ /DB/,'kill Perl debugger (2)');
+
+$b->check('$X = chomp($ARGV[0]);');
+ok($b->error =~ /chomp/,'chomp return value');
+
+$b->check('join(",",map { s/\//\,/g; } (@INC),"a");');
+ok($b->error =~ /map/,'substitution in map (1)');
+
+$b->check('join(",",map { $_ =~ s/\//\,/g; } (@INC),"a");');
+ok($b->error =~ /map/,'substitution in map (2)');
+
+$b->check('for (<@INC>) { 1; }');
+ok($b->error =~ /Perl6/,'Perl6 loop syntax in Perl5');
+
+$b->check('if ($_ = 1) { 1; }');
+ok($b->error =~ /\=/,'assign instead of compare');
+
+$b->check('open file,"free|tail"');
+ok($b->error =~ /open/,'pipe-open without in or out redirection (2 args)');
+
+$b->check('open file,">","free|tail"');
+ok($b->error =~ /open/,'pipe-open3 without in or out redirection (3 args)');
+
+$b->check('open file,"|cat|"');
+ok($b->error =~ /open/,'pipe-open with in and out redirection (2 args)');
+
+$b->check('open file,"|cat|"');
+ok($b->error =~ /open/,'pipe-open with in and out redirection (3 args)');
 
 sub slurp {
 	my $file = shift;
