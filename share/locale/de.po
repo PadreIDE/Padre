@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-09 22:21+0200\n"
-"PO-Revision-Date: 2009-09-09 22:22+0100\n"
+"POT-Creation-Date: 2009-09-10 08:46+0200\n"
+"PO-Revision-Date: 2009-09-10 08:47+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -2291,43 +2291,47 @@ msgid "Find Unmatched Brace"
 msgstr "Finde verwaiste Klammer"
 
 #: lib/Padre/Wx/Menu/Perl.pm:51
-#: lib/Padre/Document/Perl.pm:729
+#: lib/Padre/Document/Perl.pm:755
 msgid "Find Variable Declaration"
 msgstr "Finde Variablen-Deklaration"
 
-#: lib/Padre/Wx/Menu/Perl.pm:65
-#: lib/Padre/Document/Perl.pm:741
+#: lib/Padre/Wx/Menu/Perl.pm:62
+msgid "Check for common (beginner) errors"
+msgstr "Nach häufigen (Anfänger-)Fehlern suchen"
+
+#: lib/Padre/Wx/Menu/Perl.pm:76
+#: lib/Padre/Document/Perl.pm:767
 msgid "Lexically Rename Variable"
 msgstr "Ersetze Variable lexikalisch"
 
-#: lib/Padre/Wx/Menu/Perl.pm:72
-#: lib/Padre/Wx/Menu/Perl.pm:73
-#: lib/Padre/Document/Perl.pm:753
-#: lib/Padre/Document/Perl.pm:754
+#: lib/Padre/Wx/Menu/Perl.pm:83
+#: lib/Padre/Wx/Menu/Perl.pm:84
+#: lib/Padre/Document/Perl.pm:779
+#: lib/Padre/Document/Perl.pm:780
 msgid "Replacement"
 msgstr "Ersatz"
 
-#: lib/Padre/Wx/Menu/Perl.pm:87
-#: lib/Padre/Document/Perl.pm:771
+#: lib/Padre/Wx/Menu/Perl.pm:98
+#: lib/Padre/Document/Perl.pm:797
 msgid "Introduce Temporary Variable"
 msgstr "Temporäre Variable einführen"
 
-#: lib/Padre/Wx/Menu/Perl.pm:94
-#: lib/Padre/Wx/Menu/Perl.pm:95
-#: lib/Padre/Document/Perl.pm:784
-#: lib/Padre/Document/Perl.pm:785
+#: lib/Padre/Wx/Menu/Perl.pm:105
+#: lib/Padre/Wx/Menu/Perl.pm:106
+#: lib/Padre/Document/Perl.pm:810
+#: lib/Padre/Document/Perl.pm:811
 msgid "Variable Name"
 msgstr "Variablenname:"
 
-#: lib/Padre/Wx/Menu/Perl.pm:109
+#: lib/Padre/Wx/Menu/Perl.pm:120
 msgid "Vertically Align Selected"
 msgstr "Auswahl vertikal ausrichten"
 
-#: lib/Padre/Wx/Menu/Perl.pm:119
+#: lib/Padre/Wx/Menu/Perl.pm:130
 msgid "Newline same column"
 msgstr "Neue Zeile, gleiche Spalte"
 
-#: lib/Padre/Wx/Menu/Perl.pm:147
+#: lib/Padre/Wx/Menu/Perl.pm:158
 msgid "Automatic bracket completion"
 msgstr "Automatische Klammer-Ergänzung"
 
@@ -2453,8 +2457,8 @@ msgstr "Test abgeschlossen"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
-#: lib/Padre/Document/Perl.pm:405
-#: lib/Padre/Document/Perl.pm:432
+#: lib/Padre/Document/Perl.pm:431
+#: lib/Padre/Document/Perl.pm:458
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Cursor zeigt offenbar nicht auf eine Variable"
 
@@ -2471,8 +2475,8 @@ msgstr "Suche abgebrochen"
 msgid "Finished Searching"
 msgstr "Suche abgeschlossen."
 
-#: lib/Padre/Document/Perl.pm:406
-#: lib/Padre/Document/Perl.pm:433
+#: lib/Padre/Document/Perl.pm:432
+#: lib/Padre/Document/Perl.pm:459
 msgid "Check cancelled"
 msgstr "Check abgebrochen"
 
