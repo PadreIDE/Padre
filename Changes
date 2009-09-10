@@ -13,7 +13,11 @@ Changes for Perl Application Development and Refactoring Environment
       losing editor focus (AZAWAWI)
     - Bundled latest perlopref.pod to gain more Perl operator documentation
       (AZAWAWI)
+    - Handle "Recent files" Padre crash when it is called with a file that no 
+      longer exists. The entry is deleted and a message box is shown (AZAWAWI)
     - Added a "extract subroutine" function (RHEBUS)
+    - Handle "Open all Recent Files" Padre crash when setup_editor is called 
+      with a file that no longer exists (AZAWAWI)
 
 0.45 2009.09.02
     - Disabled 'Test Plugin From Local Dir' menu option until it's properly fixed (GARU)
