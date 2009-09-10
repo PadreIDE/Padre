@@ -73,10 +73,12 @@ sub check {
 			return;
 		}
 	}
+
 	if ( $text =~ /use\s+warning\s*;/ ) {
 		$self->{error} = "You need to write use warnings (with an s at the end) and not use warning.";
 		return;
 	}
+
 	if ( $text =~ /map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
 		$self->{error} = "map (),x uses x also as list value for map.";
 		return;
@@ -85,6 +87,36 @@ sub check {
 	# Warn about Perl-standard package names being reused:
 	if ( $text =~ /package DB[\;\:]/ ) {
 		$self->{error} = "This file uses the DB-namespace which is used by the Perl Debugger.";
+		return;
+	}
+
+	if ( $text =~ /\=[\s\t\r\n]*chomp\b/ ) {
+		$self->{error} = "chomp doesn't return the chomped value, it modifies the variable given as argument.";
+		return;
+	}
+
+	if ( $text =~ /map[\s\t\r\n]*\{[\s\t\r\n]*(\$_[\s\t\r\n]*\=\~[\s\t\r\n]*)?s\// ) {
+		$self->{error} = "Substitute (s///) doesn't return the changed value even if map.";
+		return;
+	}
+
+	if ( $text =~ /\(\<\@\w+\>\)/ ) {
+		$self->{error} = "(<\@Foo>) is Perl6 syntax and usually not valid in Perl5: %s";
+		return;
+	}
+
+	if ( $text =~ /if[\s\t\r\n]*\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w]/ ) {
+		$self->{error} = "A single = in a if-condition is usually a typo, use == or eq to compare.";
+		return;
+	}
+
+	if ( $text =~ /open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?\,?([\"\'])[^\2]+?\|[^\2]+?\2/ ) {
+		$self->{error} = "Using a | char in open without a | at the beginning or end is usually a typo.";
+		return;
+	}
+
+	if ( $text =~ /open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|[^\2]+?\|\2/ ) {
+		$self->{error} = "You can't use open to pipe to and from a command at the same time.";
 		return;
 	}
 
