@@ -344,28 +344,6 @@ sub _get_default_newline_type {
 	}
 }
 
-# Where to convert (UNIX, WIN, MAC)
-# or Ask (the user) or Keep (the garbage)
-# mixed files
-# TODO get from config
-sub _mixed_newlines {
-	Padre::Constant::NEWLINE;
-}
-
-# What to do with files that have inconsistent line endings:
-# 0 if keep as they are
-# MAC|UNIX|WIN convert them to the appropriate type
-sub _auto_convert {
-	my ($self) = @_;
-
-	# TODO get from config
-	return 0;
-}
-
-
-
-
-
 #####################################################################
 # Disk Interaction Methods
 # These methods implement the interaction between the document and the
@@ -501,42 +479,13 @@ sub load_file {
 	return 1;
 }
 
-# TODO: Add a menu function to set the file's newline_type
+#
+# New line type can be one of these values:
+# WIN32, MAC (for classic Mac) or UNIX (for Mac OS X and Linux/*BSD)
+#
 sub newline_type {
 	my ($self) = @_;
-
-	my $file         = $self->{filename};
-	my $newline_type = $self->_get_default_newline_type;
-	my $convert_to;
-	my $current_type = Padre::Util::newline_type( $self->{original_content} );
-	if ( $current_type eq 'None' ) {
-
-		# keep default
-	} elsif ( $current_type eq 'Mixed' ) {
-		my $mixed = $self->_mixed_newlines();
-		if ( $mixed eq 'Ask' ) {
-			warn "TODO ask the user what to do with $file";
-
-			# $convert_to = $newline_type = ;
-		} elsif ( $mixed eq 'Keep' ) {
-			warn "TODO probably we should not allow keeping garbage ($file) \n";
-		} else {
-
-			#warn "TODO converting $file";
-			$convert_to = $newline_type = $mixed;
-		}
-	} else {
-		$convert_to = $self->_auto_convert;
-		if ($convert_to) {
-
-			#warn "TODO call converting on $file";
-			$newline_type = $convert_to;
-		} else {
-			$newline_type = $current_type;
-		}
-	}
-
-	return ( $newline_type, $convert_to );
+	return $self->_get_default_newline_type;
 }
 
 # Get the newline char(s) for this document.

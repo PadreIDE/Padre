@@ -1232,7 +1232,7 @@ sub fold_pod {
 sub configure_editor {
 	my ( $self, $doc ) = @_;
 
-	my ( $newline_type, $convert_to ) = $doc->newline_type;
+	my $newline_type = $doc->newline_type;
 
 	$self->SetEOLMode( $mode{$newline_type} );
 
@@ -1240,11 +1240,6 @@ sub configure_editor {
 		$self->SetText( $doc->{original_content} );
 	}
 	$self->EmptyUndoBuffer;
-	if ($convert_to) {
-		my $file = $doc->filename;
-		warn "Converting $file to $convert_to";
-		$self->ConvertEOLs( $mode{$newline_type} );
-	}
 
 	$doc->{newline_type} = $newline_type;
 
