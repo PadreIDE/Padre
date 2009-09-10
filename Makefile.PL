@@ -83,6 +83,7 @@ requires       'Pod::POM'                 => '0.17';
 requires       'Pod::Simple'              => '3.07';
 requires       'Pod::Simple::XHTML'       => '3.04';
 requires       'Pod::Abstract'            => '0.16';
+requires       'Pod::Perldoc'             => '0.35';
 #requires       'Portable'                 => '0.12' if win32;
 requires       'POSIX'                    => 0;
 requires       'PPI'                      => '1.205';
