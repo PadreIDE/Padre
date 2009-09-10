@@ -296,21 +296,21 @@ sub _check_syntax_internals {
 # Run the checks for common beginner errors
 sub beginner_check {
 	my $self = shift;
-	
+
 	# TODO: Make this cool
 	# It isn't, because it should show _all_ warnings instead of one and
 	# it should at least go to the line it's complaining about.
-	
+
 	my $Beginner = Padre::Document::Perl::Beginner->new();
-	
-	$Beginner->check($self->text_get);
-	
+
+	$Beginner->check( $self->text_get );
+
 	my $Error = $Beginner->error;
 
 	defined($Error) or return 1;
 
-	Padre->ide->wx->main->error('Warning: '. $Error);
-	
+	Padre->ide->wx->main->error( 'Warning: ' . $Error );
+
 	return 1;
 }
 
