@@ -2427,25 +2427,4 @@ msgstr "查找完毕"
 
 #: lib/Padre/Document/Perl.pm:432 lib/Padre/Document/Perl.pm:459
 msgid "Check cancelled"
-msgstr "Check cancelled"
-
-#~ msgid "&Use Regex"
-#~ msgstr "使用正则表达式(&U)"
-
-#~ msgid "Close Window on &hit"
-#~ msgstr "点击时退出该窗口(&h)"
-
-#~ msgid "%s occurences were replaced"
-#~ msgstr "%s 事件已替换"
-
-#~ msgid "Nothing to replace"
-#~ msgstr "没有可替换的"
-
-#~ msgid "Cannot build regex for '%s'"
-#~ msgstr "无法为 '%s' 创建正则表达式"
-
-#~ msgid "Search error"
-#~ msgstr "搜索错误"
-
-#~ msgid "Test A Plugin From Local Dir"
-#~ msgstr "从本地测试插件"
+msgstr "检查已取消"
