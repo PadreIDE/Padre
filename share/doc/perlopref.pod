@@ -1606,7 +1606,7 @@ can be assigned to).
 
 L<X = Y> and L<<< X << Y >>>
 
-=head2 X >>= Y
+=head2 X >>= Y 
 
 This is the right bit-shift assignment operator.  It is equivalent to 
 
@@ -1686,7 +1686,7 @@ is the right operator to use.
 
 =head3 See also
 
-L<X = Y>, L<X || Y>, and L<X //= Y>
+L<X = Y>, L<X E<verbar>E<verbar> Y>, and L<X E<sol>E<sol>= Y>
 
 =head2 X //= Y
 
@@ -1717,7 +1717,7 @@ It is commonly used to ensure that a variable has a value:
 
 =head3 See also
 
-L<X = Y>, L<X // Y>, L<X || Y>
+L<X = Y>, L<X E<sol>E<sol> Y>, L<X E<verbar>E<verbar> Y>
 
 =head2 X, Y
 
@@ -1899,7 +1899,7 @@ value).
 
 =head3 See also
 
-L<X || Y>
+L<X E<verbar>E<verbar> Y>
 
 =head2 X xor Y
 
