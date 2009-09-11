@@ -9,7 +9,7 @@ use Params::Util qw( _INSTANCE );
 use Padre::Wx                 ();
 use Padre::Wx::CPAN::Listview ();
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 our @ISA     = 'Wx::Frame';
 
 use Class::XSAccessor accessors => {

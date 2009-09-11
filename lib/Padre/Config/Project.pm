@@ -8,7 +8,7 @@ use warnings;
 use YAML::Tiny ();
 use Params::Util qw{_HASH0};
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 ######################################################################
 # Constructor

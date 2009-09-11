@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 # Encode document to System Default
 # Encode document to utf-8

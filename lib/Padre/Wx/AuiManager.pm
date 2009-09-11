@@ -9,7 +9,7 @@ use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Wx ();
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 # Due to an overly simplistic implementation at the C level,
 # Wx::AuiManager is only a SCALAR reference and cannot be

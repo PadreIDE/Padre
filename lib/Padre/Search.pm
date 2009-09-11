@@ -32,7 +32,7 @@ use Encode     ();
 use List::Util ();
 use Params::Util '_INSTANCE';
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 
 use Class::XSAccessor getters => {
 	find_term    => 'find_term',

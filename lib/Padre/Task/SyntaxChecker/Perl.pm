@@ -6,7 +6,7 @@ use warnings;
 use Padre::Perl                ();
 use Padre::Task::SyntaxChecker ();
 
-our $VERSION = '0.45';
+our $VERSION = '0.46';
 our @ISA     = 'Padre::Task::SyntaxChecker';
 
 use version;
