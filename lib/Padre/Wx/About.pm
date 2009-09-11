@@ -28,7 +28,7 @@ sub new {
 
 	# Create the content for the About window
 	$self->{about} = Padre::Wx::HtmlWindow->new($self);
-	$self->{about}->SetPage(<<"END_HTML");
+	$self->{about}->SetPage($self->_rtl(<<"END_HTML"));
 <html>
   <body bgcolor="#EEEEEE">
     <h1>Padre $VERSION</h1>
@@ -42,7 +42,7 @@ END_HTML
 
 	# Create the content for the Developer team
 	$self->{developers} = Padre::Wx::HtmlWindow->new($self);
-	$self->{developers}->SetPage(<<'END_HTML');
+	$self->{developers}->SetPage($self->_rtl(<<"END_HTML"));
 <html>
   <body bgcolor="#EEEEEE">
     <h1>The Padre Development Team</h1>
@@ -101,7 +101,7 @@ END_HTML
 
 	# Create the content for the Translation team
 	$self->{translators} = Padre::Wx::HtmlWindow->new($self);
-	$self->{translators}->SetPage(<<'END_HTML');
+	$self->{translators}->SetPage($self->_rtl(<<"END_HTML"));
 <html>
   <body bgcolor="#EEEEEE">
     <h1>The Padre Translation Team</h1>
@@ -215,6 +215,16 @@ END_HTML
 	# $self->SetAutoLayout(1);
 
 	return $self;
+}
+
+#
+# Arabic and Hebrew names are not showing up correctly
+#
+sub _rtl {
+	my ($self, $text) = @_;
+	$text =~ s/(\p{InArabic}+)\s+(\p{InArabic}+)\s+(\p{InArabic}+)/$3 $2 $1/g;
+	$text =~ s/(\p{InHebrew}+)\s+(\p{InHebrew}+)/$2 $1/g;
+	return $text;	
 }
 
 1;
