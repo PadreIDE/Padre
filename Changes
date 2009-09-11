@@ -20,6 +20,8 @@ Changes for Perl Application Development and Refactoring Environment
       with a file that no longer exists (AZAWAWI)
     - Fixed ticket:536 "Padre auto converts EOLs automatically" (AZAWAWI)
     - Pod::Perldoc 3.15 is required now. Allowing help on $. and similar. (AZAWAWI)
+    - Fixed Arabic/Hebrew developer/translator names in Padre's about box (AZAWAWI)
+    - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
 
 0.45 2009.09.02
     - Disabled 'Test Plugin From Local Dir' menu option until it's properly fixed (GARU)
