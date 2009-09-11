@@ -12,7 +12,7 @@
     left              * / % x
     left              + - .
     left              << >>
-    nonassoc          named unary operators
+    nonassoc          named unary operators, filetest operators
     nonassoc          < > <= >= lt gt le ge
     nonassoc          == != <=> eq ne cmp ~~
     left              &
@@ -202,12 +202,24 @@ L<< C<warnings> >> are turned on).
 This is the high-precedence logical negation operator.  It performs logical
 negation, i.e., "not".  There is a low-precedence version C<not>.
 
+It is occasionally used in pairs (C<!!>) to convert any false value to 
+C<""> and any true value to C<1>.  
+
 =head3 Example
 
-    my $m = !5;     #$m is now the empty string ('')
-    my $n = !0;     #$n is now 1
-    my $o = !'';    #$o is now 1
-    my $p = !undef; #$p is now 1
+    my $m = !5;      #$m is now the empty string ('')
+    my $n = !0;      #$n is now 1
+    my $o = !'';     #$o is now 1
+    my $p = !undef;  #$p is now 1
+
+    my $q = !!5;     #$q is now 1
+    my $r = !!0;     #$r is now ""
+    my $s = !!'';    #$s is now ""
+    my $t = !!undef; #$t is now ""
+
+=head3 See also
+
+L<not X>
 
 =head2 ~X
 
@@ -229,7 +241,7 @@ C<warnings> >> are turned on).
 
 =head3 See also
 
-L<Bitwise String Operators> and L<Integer Arithmetic> in L<perlop>
+L<perlop/Bitwise String Operators> and L<perlop/Integer Arithmetic> 
 
 =head2 \X
 
@@ -554,6 +566,60 @@ L<< C<warnings> >> are turned on).
 
     my $x = 0x00_FF_00_FF >> 8; #$x is now 0x00_00_FF_00
     my $y = 12 >> 1;            #$y is now 6
+
+=head2 -r
+
+=head2 -w
+
+=head2 -x
+
+=head2 -o
+
+=head2 -R
+
+=head2 -W
+
+=head2 -X
+
+=head2 -O
+
+=head2 -e
+
+=head2 -z
+
+=head2 -s
+
+=head2 -f
+
+=head2 -d
+
+=head2 -l
+
+=head2 -p
+
+=head2 -S
+
+=head2 -b
+
+=head2 -c
+
+=head2 -t
+
+=head2 -u
+
+=head2 -g
+
+=head2 -k
+
+=head2 -T
+
+=head2 -B
+
+=head2 -M
+
+=head2 -A
+
+=head2 -C
 
 =head2 X < Y
 
@@ -1012,8 +1078,8 @@ L<perlop/Integer Arithmetic> and L<perlop/Bitwise String Operators>.
 
 =head3 Description
 
-This is the bitwise xor operator.  It xors together the individual bits of X
-and Y.  The truth table for xor is:
+This is the bitwise exclusive-or operator.  It exclusive-ors together the
+individual bits of X and Y.  The truth table for exclusive-or is:
 
      X Y   R
     -----+---
@@ -1026,10 +1092,10 @@ That is, it sets the result bit to 1 if X or Y is set, or 0 if both or
 neither is set.  This operation is done for every bit in X and Y.  
 
 If both operands are strings, they are considered character by character.
-The result is determined by xoring the ordinal value of the characters, so
-C<"a" ^ "b"> is equivalent to C<chr(ord("a") ^ ord("b"))>.  If X and Y are
-different sizes, then the shorter item is treated as if it had additional
-bits that are set to 0.
+The result is determined by exclusive-oring the ordinal value of the
+characters, so C<"a" ^ "b"> is equivalent to C<chr(ord("a") ^ ord("b"))>.
+If X and Y are different sizes, then the shorter item is treated as if it
+had additional bits that are set to 0.
 
 =head3 Example
 
@@ -1078,6 +1144,10 @@ C<while>.
     print $y && $z, "\n"; #prints "foo\n"
     print $z && $y, "\n"; #prints "1\n"
 
+=head3 See also
+
+L<X and Y>
+
 =head2 X || Y
 
 =head3 Description
@@ -1087,7 +1157,7 @@ evaluates to true, otherwise it returns Y.
 
 It binds more tightly than the low-precedence logical or operator:
 
-    my $x = 5 && 4; # is equivalent to my $x = (5 || 4);
+    my $x = 5 || 4; # is equivalent to my $x = (5 || 4);
 
 whereas:
 
@@ -1117,6 +1187,10 @@ purpose since it tests if X is defined, not if it is true.
     print $x || $y, "\n"; #prints "1\n"
     print $y || $z, "\n"; #prints "1\n"
     print $z || $y, "\n"; #prints "foo\n"
+
+=head3 See also
+
+L<X or Y>
 
 =head2 X // Y
 
@@ -1530,7 +1604,7 @@ can be assigned to).
 
 =head3 See also
 
-L<X = Y> and L<X << Y>
+L<X = Y> and L<<< X << Y >>>
 
 =head2 X >>= Y
 
@@ -1551,7 +1625,7 @@ can be assigned to).
 
 =head3 See also
 
-L<X = Y> and L<X >> Y>
+L<X = Y> and L<<< X >> Y >>>
 
 =head2 X &&= Y
 
@@ -1616,52 +1690,231 @@ L<X = Y>, L<X || Y>, and L<X //= Y>
 
 =head2 X //= Y
 
+This is the defined-or assignment operator.  It is equivalent to 
+
+    X = X // Y
+
+It assigns Y to X if X is not already defined.  This means that X must be a
+valid lvalue (i.e. it must be something that can be assigned to).
+
+It is commonly used to ensure that a variable has a value:
+
+    my $x;
+
+    #intervening code that might set $x or might leave it undefined
+
+    $x //= 10; #make sure $x gets set to a default value
+
+
+=head3 Example
+
+    my $x = 2;
+    my $y = 8;
+    my $z;
+
+    $x //= $y; #$x is now 2 // 8 or 2
+    $z //= $x; #$z is now undef // 2 or 2
+
+=head3 See also
+
+L<X = Y>, L<X // Y>, L<X || Y>
+
 =head2 X, Y
 
 =head3 Description
 
+This is the comma operator.  In list context it builds a list.  In scalar
+context it evaluates each item and returns the value of the last item.
+
+Due to the fact that the assignment operator has higher precedence, you must
+surround the list with parentheses.  For example,
+
+    my @list = 1, 2, 3;
+
+says the same thing as
+
+    (my @list = 1), 2, 3
+
+To get the desired behaviour you must say
+
+    my @list = (1, 2, 3);
+
+Function calls, on the other hand, have a lower precedence, so you can say
+
+    print 1, 2, 3, "\n";
+
+A trailing comma does not add a new element to a list, to the lists
+C<(1,2,3)> and C<(1,2,3,)>) are identical.
+
 =head3 Example
 
-
+    my @a = (1, 2, 3);          #@a is now (1, 2, 3)
+    my $x = ("a", "b", "c");    #$x is now "c"
+    my $y = (++$x, ++$x, ++$x); #$y is now "f"
 
 =head2 X => Y
 
 =head3 Description
 
+This is the fat comma operator.  It behaves much in the same way as the
+comma operator (creates lists in list context, returns the last value in
+scalar context), but it has a special property: it stringifies X if X is a
+bareword (i.e. it matches C</^[a-zA-Z_]\w+$/>).  It is most often used when
+creating hashes because the arrow like appearance makes it easy to identify
+the key versus the value and the auto-stringifing property makes the keys
+look cleaner:
+
+    my %hash = (
+        key1 => "value1",
+        key2 => "value2",
+        key3 => "value3",
+    );
+
+That statement is functionally identical to
+
+    my %hash = (
+        "key1", "value1", 
+        "key2", "value2", 
+        "key3", "value3", 
+    );
+
 =head3 Example
 
+    #%x will contain the list ("a", 1, "b", 2, "c", 3)
+    my %x = (
+        a => 1,
+        b => 2,
+        c => 3,
+    );
 
+    #%y will contain the list ("key with spaces", 1, "b", 1, "c", 1)
+    my %y = (
+        "key with spaces" => 1,
+        b                 => 1,
+        c                 => 1,
+    );
+    
 
 =head2 not X
 
 =head3 Description
 
+This is the low-precedence logical negation operator.  It performs logical
+negation, i.e., "not".  There is a high-precedence version C<!>.
+
 =head3 Example
 
+    my $m = not 5;      #$m is now the empty string ('')
+    my $n = not 0;      #$n is now 1
+    my $o = not '';     #$o is now 1
+    my $p = not undef;  #$p is now 1
 
+=head3 See also
+
+L<!X>
 
 =head2 X and Y
 
 =head3 Description
 
+This is the low-precedence logical and operator.  It returns X if X
+evaluates to false, otherwise it returns Y.
+
+It binds less tightly than the high-precedence logical and operator:
+
+    my $y = 5 and 4; # is equivalent to (my $x = 5) and 4;
+
+whereas:
+
+    my $x = 5 && 4; # is equivalent to my $x = (5 && 4);
+
+It is most commonly used in conditional statements such as C<if>, C<unless>,
+C<while>.  But it is also occasionally used for its short-circuiting affect:
+
+    do_this() and do_that() and do_last();
+
+is functionally the same as
+
+    if (do_this()) {
+        if (do_that()) {
+            do_last();
+        }
+    }
+
 =head3 Example
 
+    my $w = "";
+    my $x = 0;
+    my $y = 1;
+    my $z = "foo";
 
+    #not the use of parentheses vs this example in &&
+    print(($w and $y), "\n"); #prints "\n"
+    print(($x and $y), "\n"); #prints "0\n"
+    print(($y and $z), "\n"); #prints "foo\n"
+    print(($z and $y), "\n"); #prints "1\n"
+
+=head3 See also
+
+L<X && Y>
 
 =head2 X or Y
 
 =head3 Description
 
+This is the low-precedence logical or operator.  It returns the X if X
+evaluates to true, otherwise it returns Y.
+
+It binds less tightly than the high-precedence logical or operator:
+
+    my $y = 5 or 4; # is equivalent to (my $x = 5) or 4;
+
+whereas:
+
+    my $x = 5 && 4; # is equivalent to my $x = (5 || 4);
+
+It is most commonly used in conditional statements such as C<if>, C<unless>,
+C<while>.  It is also often used for its short-circuiting behavior:
+
+    open my $fh, "<", $filename
+        or die "could not open $filename: $!";
+
+That code will not run the C<die> unless the C<open> fails (returns a false
+value).
+
 =head3 Example
 
+    my $w = "";
+    my $x = 0;
+    my $y = 1;
+    my $z = "foo";
 
+    #not the use of parentheses vs this example in ||
+    print(($w or $x), "\n"); #prints "0\n";
+    print(($x or $w), "\n"); #prints "\n";
+    print(($w or $y), "\n"); #prints "1\n"
+    print(($x or $y), "\n"); #prints "1\n"
+    print(($y or $z), "\n"); #prints "1\n"
+    print(($z or $y), "\n"); #prints "foo\n"
+
+=head3 See also
+
+L<X || Y>
 
 =head2 X xor Y
 
 =head3 Description
 
+This is the low-precedence logical exclusive-or operator (there is no
+high-precedence exclusive-or operator).  It returns X if only X is true, It
+returns Y is only Y is true, otherwise (both true or both false) it returns
+an empty string.
+
 =head3 Example
 
-
+    my $m = (0 xor 0); #$m is now ""
+    my $n = (1 xor 0); #$n is now 1
+    my $o = (0 xor 1); #$o is now 1
+    my $p = (1 xor 1); #$p is now ""
 
 =cut
