@@ -47,6 +47,14 @@ sub pod2html {
 	$self->{html} = '';
 	$self->parse_string_document($input);
 
+	#FIXME: this takes care of a bug in Pod::Simple::XHTML
+	$self->{html} =~ s/<</&lt&lt;/g;
+	$self->{html} =~ s/< /&lt /g;
+	$self->{html} =~ s/<=/&lt=/g;
+
+	#FIXME: this is incredibly bad, but the anchors are predictible
+	$self->{html} =~ s#<a href=".*?">|</a>##g;
+
 	return $self->{html};
 }
 
@@ -56,19 +64,14 @@ sub pod2html {
 # Prevent binding to STDOUT
 sub new {
 	my $class = shift;
-	my $self = $class->SUPER::new( output_fh => 1, @_ );
+	my $self = $class->SUPER::new(@_);
 
 	# Ignore POD irregularities
 	$self->no_whining(1);
 	$self->no_errata_section(1);
+	$self->output_string(\$self->{html});
 
 	return $self;
-}
-
-# Override emit to build html from scratch :)
-sub emit {
-	my $self = shift;
-	$self->{html} .= $self->{scratch};
 }
 
 #####################################################################
