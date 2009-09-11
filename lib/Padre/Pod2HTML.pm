@@ -64,12 +64,12 @@ sub pod2html {
 # Prevent binding to STDOUT
 sub new {
 	my $class = shift;
-	my $self = $class->SUPER::new(@_);
+	my $self  = $class->SUPER::new(@_);
 
 	# Ignore POD irregularities
 	$self->no_whining(1);
 	$self->no_errata_section(1);
-	$self->output_string(\$self->{html});
+	$self->output_string( \$self->{html} );
 
 	return $self;
 }
