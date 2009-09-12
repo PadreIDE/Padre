@@ -1302,7 +1302,8 @@ called.
 =head3 Description
 
 This is the conditional operator.  It works much like an if-then-else.  If
-the X is true then Y is returned otherwise Z is returned.
+the X is true then Y is evaluated and returned otherwise Z is evaluated and
+returned.
 
 The context it is called in propagates to Y and Z, so if the operator is
 called in scalar context and X is true then Y will be evaluated in scalar
