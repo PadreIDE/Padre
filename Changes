@@ -1,6 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
-0.46 to be released
+0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
       ugly squiggle (AZAWAWI)
     - Run script waits now after completion for key to continue when run in an

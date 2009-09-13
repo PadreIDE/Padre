@@ -64,7 +64,8 @@ sub run {
 	if ( $self->_skip_using_manifest_skip ) {
 		my $manifest_skip_file = File::Spec->catfile( $self->_directory, 'MANIFEST.SKIP' );
 		if ( -e $manifest_skip_file ) {
-			use ExtUtils::Manifest qw(maniskip);
+			require ExtUtils::Manifest;
+			ExtUtils::Manifest->import(qw(maniskip));
 			my $skip_check = maniskip($manifest_skip_file);
 			my $skip_files = sub {
 				my ( $shortname, $path, $fullname ) = @_;
