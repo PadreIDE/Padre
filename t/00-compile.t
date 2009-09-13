@@ -10,6 +10,7 @@ BEGIN {
 use Test::Script;
 use File::Temp;
 use File::Find::Rule;
+use File::Spec;
 use POSIX qw(locale_h);
 
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
@@ -32,7 +33,7 @@ foreach my $file ( @files ) {
 			}
 			next;
 		}
-		system "$^X -e \"require $module; print 'ok';\" > $out 2>$err";
+		system qq($^X -e "require $module; print 'ok';" > $out 2>$err);
 		my $err_data = slurp($err);
 		is($err_data, '', "STDERR of $file");
 
