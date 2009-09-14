@@ -1010,6 +1010,22 @@ sub refresh_status {
 
 =pod
 
+=head3 refresh_cursorpos
+
+    $main->refresh_cursorpos;
+
+Force a refresh of the position of the cursor on Padre's status bar.
+
+=cut
+
+sub refresh_cursorpos {
+	my $self = shift;
+	return if $self->no_refresh;
+	$self->GetStatusBar->update_pos( $_[0] or $self->current );
+}
+
+=pod
+
 =head3 refresh_functions
 
     $main->refresh_functions;
@@ -4063,7 +4079,9 @@ sub on_stc_update_ui {
 	# TODO maybe we should refresh it on every 20s hit or so
 	# $self->refresh_menu;
 	$self->refresh_toolbar($current);
-	$self->refresh_status($current);
+
+	#	$self->refresh_status($current);
+	$self->refresh_cursorpos($current);
 
 	# $self->refresh_functions;
 	# $self->refresh_syntaxcheck;

@@ -258,6 +258,40 @@ sub update_task_status {
 	$self->_task_width(20);
 }
 
+=pod
+
+=head2 update_pos
+
+    $statusbar->update_pos;
+
+Update the cursor position
+
+=cut
+
+sub update_pos {
+	my $self = shift;
+
+	my $current  = $self->current;
+	my $editor   = $current->editor or return $self->clear;
+	my $position = $editor->GetCurrentPos;
+
+	# Skip expensive update if there is nothing to update:
+	return if $self->{Last_Pos} == $position;
+	$self->{Last_Pos} = $position;
+
+	my $line    = $editor->GetCurrentLine;
+	my $start   = $editor->PositionFromLine($line);
+	my $lines   = $editor->GetLineCount;
+	my $char    = $position - $start;
+	my $percent = int( 100 * $line / $lines );
+
+	my $format = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
+	my $postring = sprintf( $format, ( $line + 1 ), $char, $percent );
+
+	$self->SetStatusText( $postring, POSTRING );
+
+}
+
 #####################################################################
 
 =pod
