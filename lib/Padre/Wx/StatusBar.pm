@@ -276,7 +276,7 @@ sub update_pos {
 	my $position = $editor->GetCurrentPos;
 
 	# Skip expensive update if there is nothing to update:
-	return if $self->{Last_Pos} == $position;
+	return if defined($self->{Last_Pos}) and ($self->{Last_Pos} == $position);
 	$self->{Last_Pos} = $position;
 
 	my $line    = $editor->GetCurrentLine;
