@@ -208,11 +208,11 @@ END_HTML
 	$self->{sizer}->AddGrowableRow(0);
 	$self->{sizer}->Add( $self->{notebook}, 0, Wx::wxGROW | Wx::wxEXPAND, 0 );
 
-	# $self->{sizer}->Fit($self);
-	# $self->{sizer}->SetSizeHints($self);
 	$self->SetSizer( $self->{sizer} );
 
-	# $self->SetAutoLayout(1);
+	# A clever hack to hide the dialog when the user presses the ESCape key
+	# Please see ticket:573
+	Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 
 	return $self;
 }
