@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.47 to be released
-    - add stuff here
+    - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
