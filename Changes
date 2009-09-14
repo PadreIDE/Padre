@@ -15,8 +15,6 @@ Changes for Perl Application Development and Refactoring Environment
     - Help search handles now http:// and perldoc:// links (AZAWAWI)
     - Enabled "Syntax Check" tab is now shown when there is a problem without
       losing editor focus (AZAWAWI)
-    - Bundled latest perlopref.pod to gain more Perl operator documentation
-      (AZAWAWI)
     - Handle "Recent files" Padre crash when it is called with a file that no 
       longer exists. The entry is deleted and a message box is shown (AZAWAWI)
     - Added a "extract subroutine" function (RHEBUS)
