@@ -20,7 +20,7 @@ sub new {
 		-1,
 		Wx::gettext('About'),
 		Wx::wxDefaultPosition,
-		[ 700, 500 ],
+		[ 700, 530 ],
 	);
 
 	# Until we get a real icon use the same one as the others
@@ -208,11 +208,17 @@ END_HTML
 	$self->{sizer}->AddGrowableRow(0);
 	$self->{sizer}->Add( $self->{notebook}, 0, Wx::wxGROW | Wx::wxEXPAND, 0 );
 
-	$self->SetSizer( $self->{sizer} );
-
-	# A clever hack to hide the dialog when the user presses the ESCape key
+	# Hide the dialog when the user presses the ESCape key or clicks Close button
 	# Please see ticket:573
-	Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+	$self->{sizer}->Add(
+		Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') ),
+		0,
+		Wx::wxALIGN_CENTER,
+		0
+	);
+	$self->{sizer}->AddSpacer(0);
+
+	$self->SetSizer( $self->{sizer} );
 
 	return $self;
 }
