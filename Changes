@@ -3,7 +3,6 @@ Changes for Perl Application Development and Refactoring Environment
 0.47 to be released
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
     - Fixed crash when inserting a special value without any document (AZAWAWI)
-    - Made beginner-error-checks work (SEWI)
     - Improved StatusBar - speed (SEWI)
 
 0.46 2009.09.11
@@ -26,6 +25,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Pod::Perldoc 3.15 is required now. Allowing help on $. and similar. (AZAWAWI)
     - Fixed Arabic/Hebrew developer/translator names in Padre's about box (AZAWAWI)
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
+    - Made beginner-error-checks work (SEWI)
 
 0.45 2009.09.02
     - Disabled 'Test Plugin From Local Dir' menu option until it's properly fixed (GARU)
