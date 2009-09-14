@@ -59,7 +59,7 @@ requires       'File::ShareDir'           => '1.00';
 #requires      'File::ShareDir::PAR'      => '0.04';
 requires       'File::Spec'               => '3.2701';
 requires       'File::Spec::Functions'    => '3.2701';
-requires       'File::Which'              => '0.05';
+requires       'File::Which'              => '1.08';
 requires       'FindBin'                  => 0;
 requires       'Getopt::Long'             => 0;
 requires       'HTML::Entities'           => '3.57';
@@ -106,7 +106,7 @@ requires       'ExtUtils::Manifest'       => '1.56';
 requires       'Pod::Functions'           => 0;
 requires       'Module::CoreList'         => 0;
 test_requires  'Test::More'               => '0.88';
-test_requires  'Test::Script'             => '1.03';
+test_requires  'Test::Script'             => '1.05';
 test_requires  'Test::Exception'          => '0.27';
 test_requires  'Test::NoWarnings'         => '0.084';
 
