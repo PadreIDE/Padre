@@ -69,6 +69,7 @@ sub dialog {
 sub insert_special {
 	my $class  = shift;
 	my $main   = shift;
+	return if not Padre::Current->editor;
 	my $dialog = $class->dialog( $main, {} );
 	$dialog->Show(1);
 	return;
