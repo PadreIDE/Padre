@@ -2213,14 +2213,15 @@ sub on_comment_toggle_block {
 	my $current  = $self->current;
 	my $editor   = $current->editor;
 	my $document = $current->document;
-	my ($selection_start, $selection_end) = $editor->GetSelection;	
-	my $begin    = $editor->LineFromPosition( $selection_start );
-	my $end      = $editor->LineFromPosition( $selection_end );
-	my $string   = $document->comment_lines_str;
+	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $begin  = $editor->LineFromPosition($selection_start);
+	my $end    = $editor->LineFromPosition($selection_end);
+	my $string = $document->comment_lines_str;
 	return unless defined $string;
 	$editor->comment_toggle_lines( $begin, $end, $string );
-	if($selection_end > $selection_start) {
-		$editor->SetSelection($selection_start, $editor->GetLineEndPosition($end));
+
+	if ( $selection_end > $selection_start ) {
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) );
 	}
 	return;
 }
@@ -2240,14 +2241,15 @@ sub on_comment_out_block {
 	my $current  = $self->current;
 	my $editor   = $current->editor;
 	my $document = $current->document;
-	my ($selection_start, $selection_end) = $editor->GetSelection;	
-	my $begin    = $editor->LineFromPosition( $selection_start );
-	my $end      = $editor->LineFromPosition( $selection_end );
-	my $string   = $document->comment_lines_str;
+	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $begin  = $editor->LineFromPosition($selection_start);
+	my $end    = $editor->LineFromPosition($selection_end);
+	my $string = $document->comment_lines_str;
 	return unless defined $string;
 	$editor->comment_lines( $begin, $end, $string );
-	if($selection_end > $selection_start) {
-		$editor->SetSelection($selection_start, $editor->GetLineEndPosition($end));
+
+	if ( $selection_end > $selection_start ) {
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) );
 	}
 	return;
 }
@@ -2267,14 +2269,15 @@ sub on_uncomment_block {
 	my $current  = $self->current;
 	my $editor   = $current->editor;
 	my $document = $current->document;
-	my ($selection_start, $selection_end) = $editor->GetSelection;	
-	my $begin    = $editor->LineFromPosition( $selection_start );
-	my $end      = $editor->LineFromPosition( $selection_end );
-	my $string   = $document->comment_lines_str;
+	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $begin  = $editor->LineFromPosition($selection_start);
+	my $end    = $editor->LineFromPosition($selection_end);
+	my $string = $document->comment_lines_str;
 	return unless defined $string;
 	$editor->uncomment_lines( $begin, $end, $string );
-	if($selection_end > $selection_start) {
-		$editor->SetSelection($selection_start, $editor->GetLineEndPosition($end));
+
+	if ( $selection_end > $selection_start ) {
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) );
 	}
 	return;
 }

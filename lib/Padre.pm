@@ -76,7 +76,7 @@ sub new {
 
 	}, $class;
 
-	# Display Padre's Splash Screen. 
+	# Display Padre's Splash Screen.
 	Padre::Splash->show;
 
 	# Save the startup dir before anyone can move us.

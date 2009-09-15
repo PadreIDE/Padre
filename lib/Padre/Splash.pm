@@ -15,7 +15,7 @@ my $SPLASH = undef;
 
 #
 # Shows Padre's splash screen if this is the first time
-# It is saved as BMP as it seems (from wxWidgets documentation) 
+# It is saved as BMP as it seems (from wxWidgets documentation)
 # that it is the most portable format (and we don't need to
 # call Wx::InitAllImageHeaders() or whatever)
 #
@@ -40,14 +40,14 @@ sub show {
 			Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
 			3500, undef, -1
 		);
-	}		
+	}
 }
 
 #
 # Destroy the splash screen if it exists
 #
 sub destroy {
-	if($SPLASH) {
+	if ($SPLASH) {
 		$SPLASH->Destroy;
 		$SPLASH = 1;
 	}
