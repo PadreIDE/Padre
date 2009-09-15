@@ -2221,7 +2221,10 @@ sub on_comment_toggle_block {
 	$editor->comment_toggle_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) );
+		if($end > $begin) {
+			$end--;
+		}
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end)+1 );
 	}
 	return;
 }
@@ -2249,7 +2252,10 @@ sub on_comment_out_block {
 	$editor->comment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) );
+		if($end > $begin) {
+			$end--;
+		}
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end)+1 );
 	}
 	return;
 }
@@ -2277,7 +2283,10 @@ sub on_uncomment_block {
 	$editor->uncomment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) );
+		if($end > $begin) {
+			$end--;
+		}
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end)+1 );
 	}
 	return;
 }
