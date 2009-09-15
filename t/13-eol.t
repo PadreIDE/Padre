@@ -7,23 +7,18 @@ BEGIN {
 		exit 0;
 	}
 }
-use Test::Script;
+
 use File::Find::Rule;
+use t::lib::Padre;
+use Padre::Util ();
 
 my @files = File::Find::Rule->file->name('*.pm')->in('lib');
 
 plan( tests => scalar @files );
-
 foreach my $file ( @files ) {
-	my $module = $file;
-	my $text = slurp($module);
-	unlike($text, qr/(\r\n|\r)/m);
+	my $text = slurp($file);
+	is(Padre::Util::newline_type($text), "UNIX");
 }
-
-# Bail out if any of the tests failed
-BAIL_OUT("Aborting test suite") if scalar grep {
-	not $_->{ok}
-} Test::More->builder->details;
 
 ######################################################################
 # Support Functions
@@ -31,6 +26,7 @@ BAIL_OUT("Aborting test suite") if scalar grep {
 sub slurp {
 	my $file = shift;
 	open my $fh, '<', $file or die $!;
+	binmode $fh;
 	local $/ = undef;
 	return <$fh>;
 }
