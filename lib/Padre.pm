@@ -19,32 +19,13 @@ use Getopt::Long  ();
 use YAML::Tiny    ();
 use DBI           ();
 use DBD::SQLite   ();
+use Padre::Splash ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
 use version ();
 
 our $VERSION = '0.46';
-
-# Load the splash screen here, before we get bogged
-# down running the database migration scripts.
-# TODO
-# This means we'll splash even if we run the single
-# instance server, but that's better than before.
-# We need it to be even less whacked.
-BEGIN {
-
-	# Display Padre's Splash Screen. It is saved as XPM
-	# as it seems (from wxWidgets documentation) that it
-	# is the most portable format (and we don't need to
-	# call Wx::InitAllImageHeaders() or whatever)
-	# NOTE:
-	# Don't show the splash screen during testing otherwise
-	# it will spoil the flashy surprise when they upgrade.
-	unless ( $ENV{HARNESS_ACTIVE} ) {
-		require Padre::Splash;
-	}
-}
 
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials
@@ -95,6 +76,9 @@ sub new {
 
 	}, $class;
 
+	# Display Padre's Splash Screen. 
+	Padre::Splash->show;
+
 	# Save the startup dir before anyone can move us.
 	$self->{original_cwd} = Cwd::cwd();
 
@@ -120,6 +104,9 @@ sub new {
 			my $pid = '';
 			my $read = $socket->sysread( $pid, 10 );
 			if ( defined $read and $read == 10 ) {
+
+				# Kill the splash screen
+				Padre::Splash->destroy;
 
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
@@ -182,6 +169,9 @@ sub run {
 	# HACK: Uncomment this to locate difficult-to-find crashes
 	#       that are throw silent exceptions.
 	# $SIG{__DIE__} = sub { print @_; die $_[0] };
+
+	# Kill the splash screen
+	Padre::Splash->destroy;
 
 	# Switch into runtime mode
 	$self->wx->MainLoop;

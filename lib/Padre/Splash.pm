@@ -11,15 +11,46 @@ our $VERSION = '0.46';
 use Padre::Util ();
 use Wx          ();
 
-unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
-	Wx::SplashScreen->new(
-		Wx::Bitmap->new(
-			Padre::Util::sharefile('padre-splash.bmp'),
-			Wx::wxBITMAP_TYPE_BMP()
-		),
-		Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
-		3500, undef, -1
-	);
+my $SPLASH = undef;
+
+#
+# Shows Padre's splash screen if this is the first time
+# It is saved as BMP as it seems (from wxWidgets documentation) 
+# that it is the most portable format (and we don't need to
+# call Wx::InitAllImageHeaders() or whatever)
+#
+# Load the splash screen here, before we get bogged
+# down running the database migration scripts.
+# TODO
+# This means we'll splash even if we run the single
+# instance server, but that's better than before.
+# We need it to be even less whacked.
+#
+sub show {
+	return if $SPLASH;
+
+	# Don't show the splash screen during testing otherwise
+	# it will spoil the flashy surprise when they upgrade.
+	unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
+		$SPLASH = Wx::SplashScreen->new(
+			Wx::Bitmap->new(
+				Padre::Util::sharefile('padre-splash.bmp'),
+				Wx::wxBITMAP_TYPE_BMP()
+			),
+			Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
+			3500, undef, -1
+		);
+	}		
+}
+
+#
+# Destroy the splash screen if it exists
+#
+sub destroy {
+	if($SPLASH) {
+		$SPLASH->Destroy;
+		$SPLASH = 1;
+	}
 }
 
 1;
