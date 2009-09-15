@@ -35,7 +35,7 @@ sub new {
     <p>Perl Application Development and Refactoring Environment</p>
     <p>Created by Gábor Szabó</p>
     <p>Copyright 2008 - 2009 The Padre Development Team</p>
-    <p>Splash image courtesy XYZ</p>
+    <p>Splash image courtesy of Jerry Charlotte</p>
   </body>
 </html>
 END_HTML
