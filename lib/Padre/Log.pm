@@ -138,7 +138,7 @@ sub _log {
 	}
 }
 
-42;
+1;
 __END__
 
 =head1 NAME
