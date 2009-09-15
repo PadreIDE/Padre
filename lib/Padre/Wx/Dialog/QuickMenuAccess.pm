@@ -12,6 +12,7 @@ our @ISA     = 'Wx::Dialog';
 use Padre::DB       ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
+use Padre::Util     ();
 
 # accessors
 use Class::XSAccessor accessors => {
@@ -81,12 +82,14 @@ sub _on_ok_button_clicked {
 
 			eval { &$event($main); };
 			if ($@) {
+				my $error = $@;
 				Wx::MessageBox(
-					Wx::gettext('Error while trying to perform Padre action'),
+					sprintf(Wx::gettext('Error while trying to perform Padre action: %s'), $error),
 					Wx::gettext('Error'),
 					Wx::wxOK,
 					$main,
 				);
+				Padre::Util::debug("Error while trying to perform Padre action: $error");
 			} else {
 
 				# And insert a recently used tuple if it is not found
