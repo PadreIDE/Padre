@@ -1155,6 +1155,9 @@ sub comment_lines {
 		$pos = $self->GetLineEndPosition($end);
 		$self->InsertText( $pos, $str->[1] );
 	} else {
+		if($end > $begin) {
+			$end--;
+		}
 		for my $line ( $begin .. $end ) {
 
 			# insert $str (# or //)
@@ -1192,6 +1195,9 @@ sub uncomment_lines {
 		}
 	} else {
 		my $length = length $str;
+		if($end > $begin) {
+			$end--;
+		}
 		for my $line ( $begin .. $end ) {
 			my $first = $self->PositionFromLine($line);
 			my $last  = $first + $length;
