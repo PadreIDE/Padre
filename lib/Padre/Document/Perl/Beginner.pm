@@ -101,7 +101,7 @@ sub check {
 	}
 
 	if ( $text =~ /\(\<\@\w+\>\)/ ) {
-		$self->{error} = "(<\@Foo>) is Perl6 syntax and usually not valid in Perl5: %s";
+		$self->{error} = "(<\@Foo>) is Perl6 syntax and usually not valid in Perl5.";
 		return;
 	}
 
@@ -117,6 +117,11 @@ sub check {
 
 	if ( $text =~ /open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|[^\2]+?\|\2/ ) {
 		$self->{error} = "You can't use open to pipe to and from a command at the same time.";
+		return;
+	}
+
+	if ( $text =~ /\=\~[\s\t\r\n]*\/\^?[\+\*\?\{]/ ) {
+		$self->{error} = "A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.";
 		return;
 	}
 
