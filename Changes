@@ -4,6 +4,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
     - Fixed crash when inserting a special value without any document (AZAWAWI)
     - Improved StatusBar - speed (SEWI)
+    - Fixed ticket:573 "ESC does not close About window" (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
