@@ -2212,6 +2212,7 @@ sub on_comment_toggle_block {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $editor   = $current->editor;
+	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
 	my $begin  = $editor->LineFromPosition($selection_start);
@@ -2243,6 +2244,7 @@ sub on_comment_out_block {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $editor   = $current->editor;
+	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
 	my $begin  = $editor->LineFromPosition($selection_start);
@@ -2274,6 +2276,7 @@ sub on_uncomment_block {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $editor   = $current->editor;
+	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
 	my $begin  = $editor->LineFromPosition($selection_start);
