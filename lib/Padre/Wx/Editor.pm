@@ -142,8 +142,8 @@ sub padre_setup {
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
 
-	my $mimetype = $self->{Document}->get_mimetype;
-	if ( $MIME_STYLE{$mimetype} ) {
+	my $mimetype = $self->{Document}->get_mimetype || 'text/plain';
+	if ($MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 	} elsif ( $mimetype eq 'text/plain' ) {
 		$self->padre_setup_plain;
@@ -1087,6 +1087,9 @@ sub Paste {
 
 	# Workaround for Copy/Paste bug ticket #390
 	my $text = $self->get_text_from_clipboard;
+
+	defined($text) or return 1;
+
 	$self->ReplaceSelection($text);
 
 	return 1;
