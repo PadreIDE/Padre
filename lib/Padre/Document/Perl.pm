@@ -258,13 +258,6 @@ sub _check_syntax_internals {
 
 	my $nlchar = $self->newline;
 
-	# Obsoleted by ->newline
-	#	if ( $self->get_newline_type eq 'WIN' ) {
-	#		$nlchar = "\r\n";
-	#	} elsif ( $self->get_newline_type eq 'MAC' ) {
-	#		$nlchar = "\r";
-	#	}
-	#
 	require Padre::Task::SyntaxChecker::Perl;
 	my %check = (
 		editor   => $self->editor,
