@@ -114,7 +114,7 @@ sub cperl () {
 
 	# Cascade failure
 	unless ( defined $path ) {
-		return undef;
+		return;
 	}
 
 	if ( $^O eq 'MSWin32' ) {
@@ -171,7 +171,7 @@ sub wxperl () {
 
 	# Cascade failure
 	unless ( defined $path ) {
-		return undef;
+		return;
 	}
 
 	if ( $^O eq 'MSWin32' ) {

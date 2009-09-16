@@ -152,7 +152,7 @@ C<Padre::Plugin::Vi>.
 
 sub plugin_directory_locale {
 	my $class = shift;
-	my $share = $class->plugin_directory_share or return undef;
+	my $share = $class->plugin_directory_share or return;
 	return File::Spec->catdir( $share, 'locale' );
 }
 
@@ -176,7 +176,7 @@ F<$plugin_directory_share/icons/16x16/logo.png> and load it for you.
 
 sub plugin_icon {
 	my $class = shift;
-	my $share = $class->plugin_directory_share or return undef;
+	my $share = $class->plugin_directory_share or return;
 	my $file  = File::Spec->catfile( $share, 'icons', '16x16', 'logo.png' );
 	return undef unless -f $file;
 	return undef unless -r $file;

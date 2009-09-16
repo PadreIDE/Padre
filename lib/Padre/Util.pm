@@ -244,7 +244,7 @@ sub svn_directory_revision {
 
 	# Find the first number after the first occurance of "dir".
 	unless ( $buffer =~ /\bdir\b\s+(\d+)/m ) {
-		return undef;
+		return;
 	}
 
 	# Quote this to prevent certain aliasing bugs

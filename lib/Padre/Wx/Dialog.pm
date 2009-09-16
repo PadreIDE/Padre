@@ -105,7 +105,7 @@ sub create_widget {
 	} else {
 
 		#warn "Unsupported widget $widgetClass\n";
-		return undef;
+		return;
 	}
 
 	return $widget;
@@ -116,7 +116,7 @@ sub add_widget {
 	my $name = shift;
 
 	unless ( defined $name and $name ne '' ) {
-		return undef;
+		return;
 	}
 
 	my $widget = '';
@@ -137,7 +137,7 @@ sub add_widget {
 		return $widget;
 	}
 
-	return undef;
+	return;
 }
 
 sub get_widget {
@@ -153,7 +153,7 @@ sub get_widget {
 			delete $self->{_widgets_}->{$name};
 		}
 	}
-	return undef;
+	return;
 }
 
 sub get_widget_value {
@@ -187,11 +187,11 @@ sub get_widget_value {
 			if ( $w->can('GetValue') ) {
 				return $w->GetValue;
 			} else {
-				return undef;
+				return;
 			}
 		}
 	}
-	return undef;
+	return;
 }
 
 sub get_widgets_values {

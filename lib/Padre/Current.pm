@@ -68,7 +68,7 @@ sub project {
 	if ( defined $document ) {
 		return $document->project;
 	} else {
-		return undef;
+		return;
 	}
 }
 
@@ -88,7 +88,7 @@ sub title {
 	if ( $selected >= 0 ) {
 		return $notebook->GetPageText($selected);
 	} else {
-		return undef;
+		return;
 	}
 }
 

@@ -147,7 +147,7 @@ sub plugin_icon {
 	if ( _INSTANCE( $icon, 'Wx::Bitmap' ) ) {
 		return $icon;
 	} else {
-		return undef;
+		return;
 	}
 }
 
@@ -305,7 +305,7 @@ sub disable {
 # Support Methods
 
 sub _STATUS {
-	_STRING( $_[0] ) or return undef;
+	_STRING( $_[0] ) or return;
 	return {
 		error        => 1,
 		unloaded     => 1,

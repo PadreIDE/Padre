@@ -38,7 +38,7 @@ sub load {
 	my $data = eval { YAML::Tiny::LoadFile($file); };
 	if ($@) {
 		warn $@;
-		return undef;
+		return;
 	}
 
 	# Create the style

@@ -52,7 +52,7 @@ sub new {
 	unless ( length $self->find_term ) {
 
 		# Pointless zero-length search
-		return undef;
+		return;
 	}
 	unless ( defined $self->find_case ) {
 		$self->{find_case} = $self->config->find_case;
