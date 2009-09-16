@@ -305,11 +305,13 @@ sub beginner_check {
 
 	$Beginner->check( $self->text_get );
 
-	my $Error = $Beginner->error;
+	my $error = $Beginner->error;
 
-	defined($Error) or return 1;
-
-	Padre->ide->wx->main->error( 'Warning: ' . $Error );
+	if ($error) {
+		Padre->ide->wx->main->error( sprintf( Wx::gettext("Error:\n%s"), $error ) );
+	} else {
+		Padre->ide->wx->main->message( Wx::gettext('No errors found.') );
+	}
 
 	return 1;
 }
