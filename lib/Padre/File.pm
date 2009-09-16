@@ -1,0 +1,395 @@
+package Padre::File;
+
+use 5.008;
+use strict;
+use warnings;
+
+our $VERSION = '0.46';
+
+=pod
+
+=head1 NAME
+
+Padre::File - Common API for file functions
+
+=head1 DESCRIPTION
+
+Padre::File provies a common API for file access within Padre.
+It covers all the differences with non-local files by mapping every function
+call to the currently used transport stream.
+
+=head1 METHODS
+
+=head2 new
+
+  my $file = Padre::File->new($File_or_URL);
+
+The C<new> constructor lets you create a new B<Padre::File> object.
+
+Only one parameter is accepted at the moment: The name of the file which should
+be used. As soon as there are HTTP, FTP, SSH and other modules, also URLs
+should be accepted.
+
+If you know the protocol (which should be true every time you build the URL
+by source), it's better to call Padre::File::Protocol->new($URL) directly
+(replacing Protocol by the protocol which should be used, of course).
+
+Returns a new B<Padre::File> or dies on error.
+
+=cut
+
+sub new { # URL
+
+	my $class = shift;
+	my $URL   = $_[0];
+
+	my $self;
+
+	if ( $URL =~ /^file\:(.+)$/i ) {
+		require Padre::File::Local;
+		$self = Padre::File::Local->new($1);
+
+		# Uncomment if you create Padre::File::HTTP
+		#	} elsif ($URL =~ /^https?\:\/\//i) {
+		#	  $self = Padre::File::HTTP->new($URL);
+	} else {
+		require Padre::File::Local;
+		$self = Padre::File::Local->new($URL);
+	}
+
+	return $self;
+
+}
+
+=head2 atime
+
+  $file->atime;
+
+Returns the last-access time of the file.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub atime {
+	return undef;
+}
+
+=head2 blksize
+
+  $file->blocks;
+
+Returns the block size of the filesystem where the file resides
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub blksize {
+	return undef;
+}
+
+=head2 blocks
+
+  $file->blocks;
+
+Returns the number of blockes used by the file.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub blocks {
+	return undef;
+}
+
+=head2 ctime
+
+  $file->ctime;
+
+Returns the last-change time of the inode (not the file!).
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub ctime {
+	return undef;
+}
+
+=head2 dev
+
+  $file->dev;
+
+Returns the device number of the filesystem where the file resides.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub dev {
+	return undef;
+}
+
+=head2 exists
+
+  $file->exists;
+
+Returns true if the file exists.
+Returns false if the file doesn't exist.
+Returns undef if unsure (network problem, not implemented).
+
+=cut
+
+# Fallback if the module has no such function:
+sub exists {
+	return undef;
+}
+
+=head2 gid
+
+  $file->gid;
+
+Returns the GID of the file group.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub gid {
+	return undef;
+}
+
+=head2 inode
+
+  $file->inode;
+
+Returns the inode number of the file.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub inode {
+	return undef;
+}
+
+=head2 mime
+
+  $file->mime;
+  $file->mime('text/plain');
+
+Returns or sets the mime type of the file.
+
+=cut
+
+sub mime {
+	my $self     = shift;
+	my $new_mime = shift;
+	defined($new_mime) and $self->{MIME} = $new_mime;
+	return $self->{MIME};
+}
+
+=head2 mode
+
+  $file->mode;
+
+Returns the file mode (type and rights).
+
+TODO: Add a description what exactly is returned.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub mode {
+	return undef;
+}
+
+=head2 mtime
+
+  $file->mtime;
+
+Returns the last-modification (change) time of the file.
+
+=cut
+
+# Fallback if the module has no such function:
+sub mtime {
+	return undef;
+}
+
+=head2 nlink
+
+  $file->nlink;
+
+Returns the number of hard links to the file
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub nlink {
+	return undef;
+}
+
+=head2 rdev
+
+  $file->rdev;
+
+Returns the device identifier.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub rdev {
+	return undef;
+}
+
+=head2 read
+
+  $file->read;
+
+Reads the file contents and returns them.
+
+Returns undef on error. The error message could be retrieved using the
+->error method.
+
+=cut
+
+sub error {
+	my $self = shift;
+	return $self->{error};
+}
+
+=head2 size
+
+  $file->size;
+
+Returns the file size in bytes.
+
+=cut
+
+# Fallback if the module has no such function:
+sub size {
+	return undef;
+}
+
+=head2 stat
+
+  $file->stat;
+
+This emulates a stat call and returns the same values:
+
+
+  0 dev      device number of filesystem
+  1 ino      inode number
+  2 mode     file mode  (type and permissions)
+  3 nlink    number of (hard) links to the file
+  4 uid      numeric user ID of file's owner
+  5 gid      numeric group ID of file's owner
+  6 rdev     the device identifier (special files only)
+  7 size     total size of file, in bytes
+  8 atime    last access time in seconds since the epoch
+  9 mtime    last modify time in seconds since the epoch
+ 10 ctime    inode change time in seconds since the epoch (*)
+ 11 blksize  preferred block size for file system I/O
+ 12 blocks   actual number of blocks allocated
+
+A module should fill as many items as possible, but if you're thinking
+about using this method, always remember
+  1. Usually, you need only one or two of the items, request them
+     directly.
+  2. Besides from local files, most of the values will not be
+     accessable (resulting in undef values)
+  3. On most protocols these values must be requested one-by-one
+     which is very very expensive
+
+Please always consider using the function for the value you really need
+instead of using ->stat!
+
+=cut
+
+sub stat {
+	my $self = shift;
+
+	# If the module has a own stat function, we won't ever reach this point!
+
+	return (
+		$self->dev,
+		$self->inode,
+		$self->nlink,
+		$self->uid,
+		$self->gid,
+		$self->rdev,
+		$self->size,
+		$self->atime,
+		$self->mtime,
+		$self->ctime,
+		$self->blksize,
+		$self->blocks
+	);
+
+}
+
+=head2 uid
+
+  $file->uid;
+
+Returns the UID of the file owner.
+
+This is usually not possible for non-local files, in these cases, undef
+is returned.
+
+=cut
+
+# Fallback if the module has no such function:
+sub uid {
+	return undef;
+}
+
+=head2 write
+
+  $file->write($Content);
+  $file->write($Content,$Coding);
+
+Writes the given $Content to the file, if a encoding is given and the
+protocol allows the usage of encodings, it is respected.
+
+Returns 1 on success.
+Returns 0 on failure.
+Returns undef if the function is not avaible on the protocol.
+
+=cut
+
+sub write {
+	return undef;
+}
+
+1;
+
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
