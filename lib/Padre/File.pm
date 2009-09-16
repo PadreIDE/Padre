@@ -6,6 +6,8 @@ use warnings;
 
 our $VERSION = '0.46';
 
+my %Registered_Modules;
+
 =pod
 
 =head1 NAME
@@ -17,6 +19,49 @@ Padre::File - Common API for file functions
 Padre::File provies a common API for file access within Padre.
 It covers all the differences with non-local files by mapping every function
 call to the currently used transport stream.
+
+=head1 FUNCTIONS
+
+=head2 REGISTER
+
+  Padre::File::REGISTER($RegExp,$Module);
+
+This function is NOT a OO-method, it may not be called on a Padre::File object!
+
+A plugin could call C<Padre::File::REGISTER> to register a new protocol to
+Padre::File and enable Padre to use URLs handled by this module.
+
+Example:
+	Padre::File::REGISTER('^nfs\:\/\/','Padre::Plugin::NFS');
+
+Every file/URL opened through Padre::File which starts with nfs:// is now
+handled through Padre::Plugin::NFS.
+Padre::File->new() will respect this and call Padre::Plugin::NFS->new() to
+handle such URLs.
+
+Returns true on success or false on error.
+
+REGISTERed protocols may override the internal protocols.
+
+=cut
+
+sub REGISTER { # RegExp,Module
+
+	my $RegExp = shift;
+	my $Module   = shift;
+
+	return 0 if ! defined $RegExp;
+	return 0 if $RegExp eq '';
+	return 0 if ! defined $Module;
+	return 0 if $Module eq '';
+
+	$Registered_Modules{$RegExp} = $Module;
+
+	return 1;
+
+}
+
+=pot
 
 =head1 METHODS
 
@@ -44,6 +89,13 @@ sub new { # URL
 	my $URL   = $_[0];
 
 	my $self;
+
+	for (keys(%Registered_Modules)) {
+		next if $URL !~ /$_/;
+		require $_;
+		$self = $_->new($URL);
+		return $self;
+	}
 
 	if ( $URL =~ /^file\:(.+)$/i ) {
 		require Padre::File::Local;
