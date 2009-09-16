@@ -503,8 +503,8 @@ sub get_mime_type_names {
 # given a mime-type
 # return its display-name
 sub get_mime_type_name {
-	my $self      = shift;
-	my $mime_type = shift;
+	my $self = shift;
+	my $mime_type = shift || '';
 	return $MIME_TYPES{$mime_type}{name};
 }
 

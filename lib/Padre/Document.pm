@@ -132,6 +132,7 @@ use Padre::Util      ();
 use Padre::Wx        ();
 use Padre            ();
 use Padre::MimeTypes ();
+use Padre::File      ();
 
 our $VERSION = '0.46';
 
@@ -174,6 +175,7 @@ sub menu_view_mimes {
 use Class::XSAccessor getters => {
 	editor           => 'editor',
 	filename         => 'filename',    # TODO is this read_only or what?
+	file             => 'file',        # Padre::File - object
 	get_mimetype     => 'mimetype',
 	get_newline_type => 'newline_type',
 	errstr           => 'errstr',
@@ -209,6 +211,7 @@ sub new {
 	my $self = bless {@_}, $class;
 
 	if ( $self->{filename} ) {
+		$self->{file} = Padre::File->new( $self->{filename} );
 		$self->load_file;
 	} else {
 		$unsaved_number++;
@@ -231,7 +234,7 @@ sub rebless {
 	# to the the base class,
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
-	my $mime_type = $self->get_mimetype;
+	my $mime_type = $self->get_mimetype or return;
 	my $class = Padre::MimeTypes->get_mime_class($mime_type) || __PACKAGE__;
 	Padre::Util::debug("Reblessing to mimetype: '$class'");
 	if ($class) {
@@ -325,11 +328,18 @@ sub dirname {
 
 #left here a it is used in many places. Maybe we need to remove this sub.
 sub guess_mimetype {
-	my $self     = shift;
-	my $text     = $self->{original_content};
-	my $filename = $self->filename || q{};
+	my $self = shift;
+	my $text = $self->{original_content};
+	my $file = $self->file;
 
-	return Padre::MimeTypes->_guess_mimetype( $text, $filename );
+	defined($file) or return undef;
+	defined( $file->{Filename} ) or return undef;
+
+	# Combining this to one line would check if the method ->mime exists, not the result!
+	my $MIME = $file->mime;
+	defined($MIME) and return $MIME;
+
+	return Padre::MimeTypes->_guess_mimetype( $text, $file->{Filename} );
 }
 
 # For ts without a newline type
@@ -350,7 +360,7 @@ sub _get_default_newline_type {
 # filesystem.
 
 sub is_new {
-	return !!( not defined $_[0]->filename );
+	return !!( not defined $_[0]->file );
 }
 
 sub is_modified {
@@ -358,7 +368,7 @@ sub is_modified {
 }
 
 sub is_saved {
-	return !!( defined $_[0]->filename and not $_[0]->is_modified );
+	return !!( defined $_[0]->file and not $_[0]->is_modified );
 }
 
 # Returns true if this is a new document that is too insignificant to
@@ -380,7 +390,7 @@ sub is_unused {
 # 3) every time we type something ????
 sub has_changed_on_disk {
 	my ($self) = @_;
-	return 0 unless defined $self->filename;
+	return 0 unless defined $self->file;
 	return 0 unless defined $self->last_sync;
 
 	# Caching the result for two lines saved one stat-I/O each time this sub is run
@@ -394,13 +404,14 @@ sub has_changed_on_disk {
 }
 
 sub time_on_file {
-	my $filename = $_[0]->filename;
-	return 0 unless defined $filename;
+	my $self = shift;
+	my $file = $self->file;
+	return 0 unless defined $file;
 
-	# using one stat instead of -e and does one I/O instead of two every few seconds
-	my @FileInfo = stat($filename);
-	return 0 if $#FileInfo == -1; # file does not exist
-	return $FileInfo[9];
+	# using one call instead of exists and mtime safes I/O:
+	my $Time = $file->mtime;
+	defined($Time) or return 0;
+	return $Time;
 }
 
 # Generate MD5-checksum for current file stored on disk
@@ -437,32 +448,27 @@ Returns true on success false on failure. Sets $doc->errstr;
 sub load_file {
 	my ($self) = @_;
 
-	my $file = $self->{filename};
+	my $file = $self->file;
 
-	Padre::Util::debug("Loading file '$file'");
+	Padre::Util::debug("Loading file '$file->{Filename}'");
 
 	# check if file exists
-	if ( !-e $file ) {
+	if ( !$file->exists ) {
 
 		# file doesn't exist, try to create an empty one
-		if ( not open my $fh, '>', $file ) {
+		if ( !$file->write('') ) {
 
 			# oops, error creating file. abort operation
-			print ">>$file $!\n";
-			$self->set_errstr($!);
+			$self->set_errstr( $file->error );
 			return;
 		}
 	}
 
 	# load file
 	$self->set_errstr('');
-	my $content;
-	if ( open my $fh, '<', $file ) {
-		binmode($fh);
-		local $/ = undef;
-		$content = <$fh>;
-	} else {
-		$self->set_errstr($!);
+	my $content = $file->read;
+	if ( !defined($content) ) {
+		$self->set_errstr( $file->error );
 		return;
 	}
 	$self->{_timestamp} = $self->time_on_file;
@@ -505,8 +511,9 @@ sub save_file {
 	my ($self) = @_;
 	$self->set_errstr('');
 
-	my $content  = $self->text_get;
-	my $filename = $self->filename;
+	my $content = $self->text_get;
+	my $file    = $self->file;
+	defined($file) or $file = Padre::File->new( $self->filename );
 
 	# not set when first time to save
 	# allow the upgrade from ascii to utf-8 if there were unicode characters added
@@ -519,14 +526,11 @@ sub save_file {
 	if ( defined $self->{encoding} ) {
 		$encode = ":raw:encoding($self->{encoding})";
 	} else {
-		warn "encoding is not set, (couldn't get from contents) when saving file $filename\n";
+		warn "encoding is not set, (couldn't get from contents) when saving file $file->{Filename}\n";
 	}
 
-	if ( open my $fh, ">$encode", $filename ) {
-		print {$fh} $content;
-		close $fh;
-	} else {
-		$self->set_errstr($!);
+	if ( !$file->write( $content, $encode ) ) {
+		$self->set_errstr( $file->error );
 		return;
 	}
 
@@ -551,7 +555,7 @@ TODO: In the future it should backup the changes in case the user regrets the ac
 sub reload {
 	my ($self) = @_;
 
-	my $filename = $self->filename or return;
+	my $file = $self->file or return;
 	return $self->load_file;
 }
 
@@ -868,7 +872,7 @@ sub project_find {
 	my $self = shift;
 
 	# Anonymous files don't have a project
-	unless ( defined $self->filename ) {
+	unless ( defined $self->file ) {
 		return;
 	}
 

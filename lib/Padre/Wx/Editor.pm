@@ -143,7 +143,7 @@ sub padre_setup {
 	$self->SetCodePage(65001);
 
 	my $mimetype = $self->{Document}->get_mimetype || 'text/plain';
-	if ($MIME_STYLE{$mimetype} ) {
+	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 	} elsif ( $mimetype eq 'text/plain' ) {
 		$self->padre_setup_plain;
