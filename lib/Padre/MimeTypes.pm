@@ -538,9 +538,29 @@ sub get_highlighters_of_mime_type_name {
 # innappropriate just to get them out of here.
 
 sub _guess_mimetype {
-	my $self     = shift;
-	my $text     = shift;
-	my $filename = shift;
+	warn join( ',', caller ) . ' called MimeTypes::_guess_mimetype which is depreached, use ::guess_mimetype!';
+	return $_[0]->guess_mimetype(@_);
+}
+
+sub guess_mimetype {
+	my $self = shift;
+	my $text = shift;
+	my $file = shift; # Could be a filename or a Padre::File - object
+
+	my $filename;
+
+	if ( ref($file) ) {
+		$filename = $file->{Filename};
+
+		# Combining this to one line would check if the method ->mime exists, not the result!
+		my $MIME = $file->mime;
+		defined($MIME) and return $MIME;
+
+	} else {
+		$filename = $file;
+		undef $file;
+	}
+
 
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {

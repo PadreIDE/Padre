@@ -331,18 +331,8 @@ sub guess_mimetype {
 	my $self = shift;
 	my $text = $self->{original_content};
 	my $file = $self->file;
-	my $filename;
 
-	if ( defined($file) ) {
-
-		# Combining this to one line would check if the method ->mime exists, not the result!
-		my $MIME = $file->mime;
-		defined($MIME) and return $MIME;
-
-		defined($file) and $filename = $file->{Filename};
-	}
-
-	return Padre::MimeTypes->_guess_mimetype( $text, $filename );
+	return Padre::MimeTypes->guess_mimetype( $text, $file );
 }
 
 # For ts without a newline type
