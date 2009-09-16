@@ -409,7 +409,7 @@ sub time_on_file {
 
 # Generate MD5-checksum for current file stored on disk
 sub checksum_on_file {
-	warn join(',',caller).' called Document::checksum_on_file which is out-of-service.'
+	warn join(',',caller).' called Document::checksum_on_file which is out-of-service.';
 	return 1;
 	my $filename = $_[0]->filename;
 	return undef unless defined $filename;
