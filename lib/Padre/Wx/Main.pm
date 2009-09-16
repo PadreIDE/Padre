@@ -1611,7 +1611,13 @@ sub on_run_tests {
 
 	my $dir = Cwd::cwd;
 	chdir $project_dir;
-	$self->run_command("prove -b $project_dir/t");
+	require File::Which;
+	my $prove = File::Which::which('prove');
+	if (Padre::Util::WIN32) {
+		$self->run_command(qq{"$prove" -b "$project_dir\t"});
+	} else {
+		$self->run_command("$prove -b $project_dir/t");
+	}
 	chdir $dir;
 }
 
@@ -1649,7 +1655,14 @@ sub on_run_this_test {
 
 	my $dir = Cwd::cwd;
 	chdir $project_dir;
-	$self->run_command("prove -bv $filename");
+	require File::Which;
+	my $prove = File::Which::which('prove');
+	if (Padre::Util::WIN32) {
+		print qq{"$prove" -bv "$filename"\n};
+		$self->run_command(qq{"$prove" -bv "$filename"});
+	} else {
+		$self->run_command("$prove -bv $filename");
+	}
 	chdir $dir;
 }
 
