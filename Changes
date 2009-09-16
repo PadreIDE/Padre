@@ -8,6 +8,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket:578 "Padre's Splash screen should not get in the way" (AZAWAWI)
     - Fixed ticket:579 "Commenting/uncommenting comments the last unselected 
       line" (AZAWAWI)
+    - Fixed ticket:576 "common (beginner) error check has no feedback if no
+      errors found" (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
