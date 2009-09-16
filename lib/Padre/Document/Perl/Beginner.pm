@@ -121,7 +121,8 @@ sub check {
 	}
 
 	if ( $text =~ /\=\~[\s\t\r\n]*\/\^?[\+\*\?\{]/ ) {
-		$self->{error} = "A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.";
+		$self->{error} =
+			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.";
 		return;
 	}
 

@@ -2209,9 +2209,9 @@ Un/comment selected lines, depending on their current state.
 =cut
 
 sub on_comment_toggle_block {
-	my $self     = shift;
-	my $current  = $self->current;
-	my $editor   = $current->editor;
+	my $self    = shift;
+	my $current = $self->current;
+	my $editor  = $current->editor;
 	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
@@ -2222,10 +2222,10 @@ sub on_comment_toggle_block {
 	$editor->comment_toggle_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		if($end > $begin) {
+		if ( $end > $begin ) {
 			$end--;
 		}
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end)+1 );
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) + 1 );
 	}
 	return;
 }
@@ -2241,9 +2241,9 @@ Comment out selected lines unilateraly.
 =cut
 
 sub on_comment_out_block {
-	my $self     = shift;
-	my $current  = $self->current;
-	my $editor   = $current->editor;
+	my $self    = shift;
+	my $current = $self->current;
+	my $editor  = $current->editor;
 	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
@@ -2254,10 +2254,10 @@ sub on_comment_out_block {
 	$editor->comment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		if($end > $begin) {
+		if ( $end > $begin ) {
 			$end--;
 		}
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end)+1 );
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) + 1 );
 	}
 	return;
 }
@@ -2273,9 +2273,9 @@ Uncomment selected lines unilateraly.
 =cut
 
 sub on_uncomment_block {
-	my $self     = shift;
-	my $current  = $self->current;
-	my $editor   = $current->editor;
+	my $self    = shift;
+	my $current = $self->current;
+	my $editor  = $current->editor;
 	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
@@ -2286,10 +2286,10 @@ sub on_uncomment_block {
 	$editor->uncomment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		if($end > $begin) {
+		if ( $end > $begin ) {
 			$end--;
 		}
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end)+1 );
+		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) + 1 );
 	}
 	return;
 }
