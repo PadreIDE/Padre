@@ -511,7 +511,7 @@ sub replace_button {
 
 	# Apply the search to the current editor
 	# The while is here to support replace_all without duplicate code
-	my $Replace_Count;
+	my $Replace_Count = 0;
 	while ( $main->replace_next($search) ) {
 
 		++$Replace_Count;
