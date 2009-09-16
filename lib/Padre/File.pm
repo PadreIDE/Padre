@@ -126,7 +126,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub atime {
-	return undef;
+	return;
 }
 
 =head2 blksize
@@ -142,7 +142,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub blksize {
-	return undef;
+	return;
 }
 
 =head2 blocks
@@ -158,7 +158,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub blocks {
-	return undef;
+	return;
 }
 
 =head2 ctime
@@ -174,7 +174,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub ctime {
-	return undef;
+	return;
 }
 
 =head2 dev
@@ -190,7 +190,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub dev {
-	return undef;
+	return;
 }
 
 =head2 exists
@@ -205,7 +205,7 @@ Returns undef if unsure (network problem, not implemented).
 
 # Fallback if the module has no such function:
 sub exists {
-	return undef;
+	return;
 }
 
 =head2 gid
@@ -221,7 +221,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub gid {
-	return undef;
+	return;
 }
 
 =head2 inode
@@ -237,7 +237,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub inode {
-	return undef;
+	return;
 }
 
 =head2 mime
@@ -271,7 +271,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub mode {
-	return undef;
+	return;
 }
 
 =head2 mtime
@@ -284,7 +284,7 @@ Returns the last-modification (change) time of the file.
 
 # Fallback if the module has no such function:
 sub mtime {
-	return undef;
+	return;
 }
 
 =head2 nlink
@@ -300,7 +300,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub nlink {
-	return undef;
+	return;
 }
 
 =head2 rdev
@@ -316,7 +316,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub rdev {
-	return undef;
+	return;
 }
 
 =head2 read
@@ -345,7 +345,7 @@ Returns the file size in bytes.
 
 # Fallback if the module has no such function:
 sub size {
-	return undef;
+	return;
 }
 
 =head2 stat
@@ -418,7 +418,7 @@ is returned.
 
 # Fallback if the module has no such function:
 sub uid {
-	return undef;
+	return;
 }
 
 =head2 write
@@ -436,7 +436,7 @@ Returns undef if the function is not avaible on the protocol.
 =cut
 
 sub write {
-	return undef;
+	return;
 }
 
 1;

@@ -95,7 +95,7 @@ sub read {
 	my $fh;
 	if ( !open $fh, '<', $self->{Filename} ) {
 		$self->{error} = $!;
-		return undef;
+		return;
 	}
 	binmode($fh);
 	local $/ = undef;
