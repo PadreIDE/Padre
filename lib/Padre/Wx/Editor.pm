@@ -1158,7 +1158,9 @@ sub comment_lines {
 		$pos = $self->GetLineEndPosition($end);
 		$self->InsertText( $pos, $str->[1] );
 	} else {
-		if ( $end > $begin ) {
+		my $is_first_column = 
+			$self->GetColumn($self->GetCurrentPos) == 0;
+		if ( $is_first_column && $end > $begin ) {
 			$end--;
 		}
 		for my $line ( $begin .. $end ) {
@@ -1198,7 +1200,9 @@ sub uncomment_lines {
 		}
 	} else {
 		my $length = length $str;
-		if ( $end > $begin ) {
+		my $is_first_column = 
+			$self->GetColumn($self->GetCurrentPos) == 0;
+		if ( $is_first_column && $end > $begin ) {
 			$end--;
 		}
 		for my $line ( $begin .. $end ) {

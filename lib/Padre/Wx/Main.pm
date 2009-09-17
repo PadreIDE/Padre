@@ -2228,6 +2228,7 @@ sub on_comment_toggle_block {
 	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $length = length $document->text_get;
 	my $begin  = $editor->LineFromPosition($selection_start);
 	my $end    = $editor->LineFromPosition($selection_end);
 	my $string = $document->comment_lines_str;
@@ -2235,10 +2236,10 @@ sub on_comment_toggle_block {
 	$editor->comment_toggle_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		if ( $end > $begin ) {
-			$end--;
-		}
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) + 1 );
+		$editor->SetSelection( 
+			$selection_start, 
+			$selection_end + (length $document->text_get) - $length 
+		);
 	}
 	return;
 }
@@ -2260,6 +2261,7 @@ sub on_comment_out_block {
 	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $length = length $document->text_get;	
 	my $begin  = $editor->LineFromPosition($selection_start);
 	my $end    = $editor->LineFromPosition($selection_end);
 	my $string = $document->comment_lines_str;
@@ -2267,10 +2269,10 @@ sub on_comment_out_block {
 	$editor->comment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		if ( $end > $begin ) {
-			$end--;
-		}
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) + 1 );
+		$editor->SetSelection( 
+			$selection_start, 
+			$selection_end + (length $document->text_get) - $length 
+		);
 	}
 	return;
 }
@@ -2292,6 +2294,7 @@ sub on_uncomment_block {
 	return if not $editor;
 	my $document = $current->document;
 	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $length = length $document->text_get;
 	my $begin  = $editor->LineFromPosition($selection_start);
 	my $end    = $editor->LineFromPosition($selection_end);
 	my $string = $document->comment_lines_str;
@@ -2299,10 +2302,10 @@ sub on_uncomment_block {
 	$editor->uncomment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
-		if ( $end > $begin ) {
-			$end--;
-		}
-		$editor->SetSelection( $selection_start, $editor->GetLineEndPosition($end) + 1 );
+		$editor->SetSelection( 
+			$selection_start, 
+			$selection_end + (length $document->text_get) - $length 
+		);
 	}
 	return;
 }
