@@ -11,6 +11,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket:576 "common (beginner) error check has no feedback if no
       errors found" (AZAWAWI)
     - Added Padre::File as a API for all operations on edited files (SEWI)
+    - Added 13-eol.t to detect non-UNIX EOL-ed files in Padre (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
