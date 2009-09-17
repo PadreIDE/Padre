@@ -223,29 +223,15 @@ Padre - Perl Application Development and Refactoring Environment
 
 Padre is a text editor aimed to be an IDE for Perl.
 
-You should be able to just type in
+After installation you should be able to just type in
 
   padre
 
 and get the editor working.
 
-While I have been using this editor since version 0.01 myself there
-are still lots of missing features.
-
-Not only it is missing several important feature, everything is in
-a constant flux. Menus, shortcuts and the way they work will change
-from version to version.
-
-Configuration options are also changing which means if you configure it in
-one version you might need to configure it again.
-
-Having said that you can already use it for serious editing and you
-can even get involved and add the missing features.
-
-You should also know that I am mostly working on Linux and I
-have been using vi for many years now. This means that I am
-not that familiar with the expectations of people using
-Windows.
+Padre development started in June 2008 and made a lot of progress but
+there are still lots of missing features and the development is still
+very fast.
 
 =head1 Getting Started
 
