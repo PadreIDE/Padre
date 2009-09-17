@@ -101,9 +101,9 @@ sub new { # URL
 		require Padre::File::Local;
 		$self = Padre::File::Local->new($1);
 
-		# Uncomment if you create Padre::File::HTTP
-		#	} elsif ($URL =~ /^https?\:\/\//i) {
-		#	  $self = Padre::File::HTTP->new($URL);
+	} elsif ( $URL =~ /^https?\:\/\//i ) {
+		require Padre::File::HTTP;
+		$self = Padre::File::HTTP->new($URL);
 	} else {
 		require Padre::File::Local;
 		$self = Padre::File::Local->new($URL);
