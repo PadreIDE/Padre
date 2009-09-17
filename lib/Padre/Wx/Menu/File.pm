@@ -105,7 +105,7 @@ sub new {
 		name => 'file.openurl',
 
 		#		id    => Wx::wxID_OPEN,
-		label => Wx::gettext('Open &URL...'),
+		label => Wx::gettext('Open &URL'),
 
 		#		shortcut   => 'Ctrl-Shift-O',   # Is shown as Ctrl-O and I don't know why
 		menu_event => sub {
