@@ -396,7 +396,7 @@ clicking on the application. It should work...
   Run This (F5) - run the current buffer with the current perl
   this currently only works with files with .pl  extensions.
 
-  Run Any (Ctr-F5) - run any external application
+  Run Any (Ctrl-F5) - run any external application
   First time it will prompt you to a command line that you have to
   type in such as
 
@@ -427,21 +427,24 @@ bookmarks.
 
 =head2 Navigation
 
-  Ctr-1          matching brace
-  Ctr-P          Autocompletition
-  Alt-N          Nth Pane
-  Ctr-TAB        Next Pane
-  Ctr-Shift-TAB  Previous Pane
-  Alt-S          Jump to list of subs window
+  Ctrl-G          Goto Line
+  Ctrl-1          Matching Brace
+  Ctrl-2          Quick Fix
+  Ctrl-.          Next Problem
+  Ctrl-P          Word Auto-completion
+  Alt-N           Nth Pane
+  Ctrl-TAB        Next Pane
+  Ctrl-Shift-TAB  Previous Pane
+  Alt-S           Jump to list of subs window
 
-  Ctr-M Ctr-Shift-M  comment/uncomment selected lines of code
+  Ctrl-M Ctrl-Shift-M  comment/uncomment selected lines of code
 
-  Ctr-H opens a help window where you can see the documentation of
+  Ctrl-H opens a help window where you can see the documentation of
   any perl module. Just use open (in the help window) and type in the name
   of a module.
 
-  Ctr-Shift-H Highlight the name of a module in the editor and then
-  press Ctr-Shift-H. IT will open the help window for the module
+  Ctrl-Shift-H Highlight the name of a module in the editor and then
+  press Ctrl-Shift-H. IT will open the help window for the module
   whose name was highlighted.
 
   In the help window you can also start typing the name of a module. When the
@@ -463,7 +466,7 @@ bookmarks.
 Simple text editors usually only allow you to select contiguous lines of text with your mouse.
 Somtimes, however, it is handy to be able to select a rectangular area of text for more precise
 cutting/copying/pasting or performing search/replace on. You can select a rectangular area in Padre
-by holding down Ctr-Alt whilst selecting text with your mouse.
+by holding down Ctrl-Alt whilst selecting text with your mouse.
 
 For example, imagine you have the following nicely formatted hash assignment in a perl source file:
 
