@@ -368,7 +368,7 @@ sub new {
 		name       => 'edit.convert_nl_windows',
 		label      => Wx::gettext('EOL to Windows'),
 		menu_event => sub {
-			$_[0]->convert_to("WIN");
+			$_[0]->convert_to("WIN32");
 		},
 	);
 
