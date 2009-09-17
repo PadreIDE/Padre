@@ -212,6 +212,22 @@ sub new {
 
 	if ( $self->{filename} ) {
 		$self->{file} = Padre::File->new( $self->{filename} );
+
+		my $config = Padre->ide->config;
+
+		if ( $self->{file}->size > $config->editor_file_size_limit ) {
+			$self->error(
+				sprintf(
+					Wx::gettext(
+						"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
+					),
+					$self->{filename},
+					$config->editor_file_size_limit
+				)
+			);
+			return;
+		}
+
 		$self->load_file;
 	} else {
 		$unsaved_number++;
@@ -346,8 +362,22 @@ sub _get_default_newline_type {
 	}
 }
 
+=pod
 
+=head3 error
 
+    $document->error( $msg );
+
+Open an error dialog box with C<$msg> as main text. There's only one OK
+button. No return value.
+
+=cut
+
+# TODO: A globally used error/message box function may be better instead
+#       of replicating the same function in many files:
+sub error {
+	Padre->ide->wx->main->message( $_[1], Wx::gettext('Error') );
+}
 
 
 #####################################################################

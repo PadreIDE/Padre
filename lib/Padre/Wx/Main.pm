@@ -2571,22 +2571,16 @@ sub setup_editor {
 		#			close $fh;
 		#		}
 
-		if ( -f $file and ( -s $file > $config->editor_file_size_limit ) ) {
-			return $self->error(
-				sprintf(
-					Wx::gettext(
-						"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
-					),
-					$file,
-					$config->editor_file_size_limit
-				)
-			);
-		}
 	}
 
 	local $self->{_no_refresh} = 1;
 
 	my $doc = Padre::Document->new( filename => $file, );
+
+	# Catch critical errors:
+	if (!defined($doc)) {
+		return;
+	}
 
 	$file ||= ''; #to avoid warnings
 	if ( $doc->errstr ) {
@@ -2813,6 +2807,8 @@ sub on_openurl {
 
 	return;
 }
+
+=pod
 
 =head3 on_open
 
