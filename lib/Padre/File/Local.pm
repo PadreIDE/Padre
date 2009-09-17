@@ -12,6 +12,7 @@ our @ISA     = 'Padre::File';
 sub new {
 	my $class = shift;
 	my $self = bless { Filename => $_[0] }, $class;
+	$self->{protocol} = 'local'; # Should not be overridden
 	return $self;
 }
 
