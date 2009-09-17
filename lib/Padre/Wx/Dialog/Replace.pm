@@ -497,6 +497,12 @@ again.
 
 =cut
 
+# TODO: The change to this function that turned it into a dual-purpose function
+#       unintentionally transfered responsibility for the implementation of
+#       "Replace All" from the main class to a dialog class.
+#       This was a mistake, the dialog should not be where this is implemented.
+#       Revert this change and restore the independant "Replace All" code, so
+#       that the dialog goes back to acting only as controller.
 sub replace_button {
 	my $self   = shift;
 	my $main   = $self->main;
@@ -504,20 +510,17 @@ sub replace_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ($search) {
+	unless ( $search ) {
 		$main->error("Not a valid search");
 		return;
 	}
 
-	# Apply the search to the current editor
-	# The while is here to support replace_all without duplicate code
+	# Apply the search to the current editor.
+	# The while is here to support replace_all without duplicate code.
 	my $Replace_Count = 0;
 	while ( $main->replace_next($search) ) {
-
 		++$Replace_Count;
-
 		$self->{replace_all}->GetValue or last; # Replace all
-
 	}
 
 	# If we're only searching once, we won't need the dialog any more
@@ -529,7 +532,10 @@ sub replace_button {
 			Wx::gettext('Search and Replace')
 		);
 	} elsif ( $Replace_Count == 0 ) {
-		$main->message( Wx::gettext('No matches found'), Wx::gettext('Search and Replace') );
+		$main->message(
+			Wx::gettext('No matches found'),
+			Wx::gettext('Search and Replace'),
+		);
 	}
 
 	return;
@@ -537,6 +543,7 @@ sub replace_button {
 
 # TODO: This function doesn't seem to work anymore, so it's now scheduled for removal
 #       It's still here because it's unclear if there may be references to it.
+#
 #=pod
 #
 #=head2 replace_all
@@ -556,7 +563,7 @@ sub replace_button {
 #
 #	# Generate the search object
 #	my $search = $self->as_search;
-#	unless ($search) {
+#	unless ( $search ) {
 #		$main->error("Not a valid search");
 #		return;
 #	}
