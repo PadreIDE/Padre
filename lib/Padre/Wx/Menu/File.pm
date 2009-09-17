@@ -102,10 +102,11 @@ sub new {
 
 	$self->add_menu_item(
 		$self,
-		name       => 'file.openurl',
-		id         => Wx::wxID_OPEN,
-		label      => Wx::gettext('Open &URL...'),
-#		shortcut   => 'Ctrl-Shift-O',   # Is shown as Ctrl-O and I don't know why
+		name  => 'file.openurl',
+		id    => Wx::wxID_OPEN,
+		label => Wx::gettext('Open &URL...'),
+
+		#		shortcut   => 'Ctrl-Shift-O',   # Is shown as Ctrl-O and I don't know why
 		menu_event => sub {
 			$_[0]->on_openurl;
 		},

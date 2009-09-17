@@ -292,7 +292,7 @@ sub new {
 		label      => Wx::gettext('&Toggle Comment'),
 		shortcut   => 'Ctrl-Shift-C',
 		menu_event => sub {
-			Padre::Wx::Main::on_comment_block($_[0], 'TOGGLE');
+			Padre::Wx::Main::on_comment_block( $_[0], 'TOGGLE' );
 		},
 	);
 
@@ -302,7 +302,7 @@ sub new {
 		label      => Wx::gettext('&Comment Selected Lines'),
 		shortcut   => 'Ctrl-M',
 		menu_event => sub {
-			Padre::Wx::Main::on_comment_block($_[0], 'COMMENT');
+			Padre::Wx::Main::on_comment_block( $_[0], 'COMMENT' );
 		},
 	);
 
@@ -312,7 +312,7 @@ sub new {
 		label      => Wx::gettext('&Uncomment Selected Lines'),
 		shortcut   => 'Ctrl-Shift-M',
 		menu_event => sub {
-			Padre::Wx::Main::on_comment_block($_[0], 'UNCOMMENT');
+			Padre::Wx::Main::on_comment_block( $_[0], 'UNCOMMENT' );
 		},
 	);
 

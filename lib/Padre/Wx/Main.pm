@@ -2233,32 +2233,32 @@ Performs one of the following depending the given operation
 =cut
 
 sub on_comment_block {
-	my ($self, $operation)    = @_;
-	my $current = $self->current;
-	my $editor  = $current->editor or return;
-	my $document = $current->document;
+	my ( $self, $operation ) = @_;
+	my $current         = $self->current;
+	my $editor          = $current->editor or return;
+	my $document        = $current->document;
 	my $selection_start = $editor->GetSelectionStart;
-	my $selection_end = $editor->GetSelectionEnd;
-	my $length = length $document->text_get;
-	my $begin  = $editor->LineFromPosition($selection_start);
-	my $end    = $editor->LineFromPosition($selection_end);
-	my $string = $document->comment_lines_str;
+	my $selection_end   = $editor->GetSelectionEnd;
+	my $length          = length $document->text_get;
+	my $begin           = $editor->LineFromPosition($selection_start);
+	my $end             = $editor->LineFromPosition($selection_end);
+	my $string          = $document->comment_lines_str;
 	return unless defined $string;
-	
-	if($operation eq 'TOGGLE') {
+
+	if ( $operation eq 'TOGGLE' ) {
 		$editor->comment_toggle_lines( $begin, $end, $string );
-	} elsif($operation eq 'COMMENT') {
+	} elsif ( $operation eq 'COMMENT' ) {
 		$editor->comment_lines( $begin, $end, $string );
-	} elsif($operation eq 'UNCOMMENT') {
+	} elsif ( $operation eq 'UNCOMMENT' ) {
 		$editor->uncomment_lines( $begin, $end, $string );
 	} else {
 		Padre::Util::debug("Invalid comment operation '$operation'");
 	}
 
 	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection( 
-			$selection_start, 
-			$selection_end + (length $document->text_get) - $length 
+		$editor->SetSelection(
+			$selection_start,
+			$selection_end + ( length $document->text_get ) - $length
 		);
 	}
 	return;
@@ -2566,12 +2566,12 @@ sub setup_editor {
 		# it should stay:
 		# if file does not exist, create it so that future access
 		# (such as size checking) won't warn / blow up padre
-#		if ( not -f $file ) {
-#			open my $fh, '>', $file;
-#			close $fh;
-#		}
+		#		if ( not -f $file ) {
+		#			open my $fh, '>', $file;
+		#			close $fh;
+		#		}
 
-		if ( -f $file and (-s $file > $config->editor_file_size_limit )) {
+		if ( -f $file and ( -s $file > $config->editor_file_size_limit ) ) {
 			return $self->error(
 				sprintf(
 					Wx::gettext(
@@ -2807,9 +2807,9 @@ should be added.
 =cut
 
 sub on_openurl {
-	my $self     = shift;
+	my $self = shift;
 
-	$self->setup_editor(Padre::Wx::Dialog::Text->show($self,Wx::gettext('Open URL'),''));
+	$self->setup_editor( Padre::Wx::Dialog::Text->show( $self, Wx::gettext('Open URL'), '' ) );
 
 	return;
 }
