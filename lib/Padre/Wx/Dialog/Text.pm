@@ -53,7 +53,7 @@ sub show {
 
 	my $dialog = $class->dialog( $main, $title, $text );
 	$dialog->show_modal;
-	return;
+	return $dialog->get_widget_value('display');
 }
 
 1;
