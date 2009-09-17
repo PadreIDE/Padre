@@ -213,21 +213,23 @@ sub new {
 	if ( $self->{filename} ) {
 		$self->{file} = Padre::File->new( $self->{filename} );
 
-		my $config = Padre->ide->config;
+		if ( $self->{file}->exists ) {
 
-		if ( $self->{file}->size > $config->editor_file_size_limit ) {
-			$self->error(
-				sprintf(
-					Wx::gettext(
-						"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
-					),
-					$self->{filename},
-					$config->editor_file_size_limit
-				)
-			);
-			return;
+			# Test script must be able to pass an alternate config object:
+			my $config = $self->{config} || Padre->ide->config;
+			if ( $self->{file}->size > $config->editor_file_size_limit ) {
+				$self->error(
+					sprintf(
+						Wx::gettext(
+							"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
+						),
+						$self->{filename},
+						$config->editor_file_size_limit
+					)
+				);
+				return;
+			}
 		}
-
 		$self->load_file;
 	} else {
 		$unsaved_number++;
@@ -1103,7 +1105,7 @@ sub autocomplete {
 	my $pre  = $editor->GetTextRange( 0, $first + length($prefix) );
 	my $post = $editor->GetTextRange( $first, $last );
 
-	my $regex = eval { qr{\b($prefix\w+)\b} };
+	my $regex = eval {qr{\b($prefix\w+)\b}};
 	if ($@) {
 		return ("Cannot build regex for '$prefix'");
 	}
