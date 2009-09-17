@@ -17,17 +17,12 @@ my @files = File::Find::Rule
 	->file
 	->name('*.pm', '*.pod', '*.pl', '*.p6', '*.t', '*.yml', '*.txt')
 	->in('lib', 't', 'share');
+@files = (@files, 'Artistic', 'COPYING', 'Makefile.PL', 'Changes', 'padre.yml' );
 
-plan( tests => scalar @files + 5);
+plan( tests => scalar @files);
 foreach my $file ( @files ) {
 	is(newline_type(slurp($file)), "UNIX");
 }
-
-is(newline_type(slurp('Artistic')), "UNIX");
-is(newline_type(slurp('COPYING')), "UNIX");
-is(newline_type(slurp('Makefile.PL')), "UNIX");
-is(newline_type(slurp('Changes')), "UNIX");
-is(newline_type(slurp('padre.yml')), "UNIX");
 
 ######################################################################
 # Support Functions
