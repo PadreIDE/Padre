@@ -33,10 +33,35 @@ sub new {
 		Wx::gettext('Open URL'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::wxCAPTION
+		| Wx::wxCLOSE_BOX
+		| Wx::wxSYSTEM_MENU
 	);
 
 	# Form Components
+
+	$self->{openurl_text} = Wx::ComboBox->new(
+		$self,
+		-1,
+		"",
+		wxDefaultPosition,
+		wxDefaultSize,
+		[],
+		wxCB_DROPDOWN
+	);
+	$self->{openurl_text}->SetSelection(-1);
+
+	$self->{button_ok} = Wx::Button->new(
+		$self,
+		wxID_OK,
+		"",
+	);
+
+	$self->{button_cancel} = Wx::Button->new(
+		$self,
+		wxID_CANCEL,
+		"",
+	);
 
 	# Form Layout
 
