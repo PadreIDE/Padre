@@ -895,14 +895,14 @@ sub on_right_down {
 		$main,
 		$commentToggle,
 		sub {
-			Padre::Wx::Main::on_comment_toggle_block(@_);
+			Padre::Wx::Main::on_comment_block($_[0], 'TOGGLE');
 		},
 	);
 	my $comment = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
 	Wx::Event::EVT_MENU(
 		$main, $comment,
 		sub {
-			Padre::Wx::Main::on_comment_out_block(@_);
+			Padre::Wx::Main::on_comment_block($_[0], 'COMMENT');
 		},
 	);
 	my $uncomment = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
@@ -910,7 +910,7 @@ sub on_right_down {
 		$main,
 		$uncomment,
 		sub {
-			Padre::Wx::Main::on_uncomment_block(@_);
+			Padre::Wx::Main::on_comment_block($_[0], 'UNCOMMENT');
 		},
 	);
 
