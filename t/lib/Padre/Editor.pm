@@ -1,9 +1,10 @@
 package t::lib::Padre::Editor;
+
 use strict;
 use warnings;
+use Padre::Wx::Editor ();
 
-use Padre::Wx::Editor;
-use base 'Padre::Wx::Editor';
+our @ISA = 'Padre::Wx::Editor';
 
 sub new {
 	my $self = bless {}, shift;
@@ -11,18 +12,21 @@ sub new {
 }
 
 sub SetEOLMode {
-}
-sub ConvertEOLs {
+
 }
 
+sub ConvertEOLs {
+
+}
 
 sub EmptyUndoBuffer {
+
 }
 
 sub SetText {
 	my ($self, $text) = @_;
-	$self->{text} = $text;
-	$self->{pos}  = 0;
+	$self->{text}            = $text;
+	$self->{pos}             = 0;
 	$self->{selection_start} = 0;
 	$self->{selection_start} = 0;
 	return;
@@ -43,21 +47,20 @@ sub GetLineEndPosition {
 	my $str = join "\n", @lines[0..$line];
 	return length($str)+1;
 }
+
 sub PositionFromLine {
 	my ($self, $line) = @_;
-
 	return 0 if $line == 0;
 	my @lines = split(/\n/, $self->{text}, -1);
 	my $str = join "\n", @lines[0..$line-1];
 	return length($str)+1;
 }
 
-# ??
 sub GetColumn {
 	my ($self, $pos) = @_;
-	my $line = $self->LineFromPosition($pos);
+	my $line  = $self->LineFromPosition($pos);
 	my $start = $self->PositionFromLine($line);
-	return $pos-$start;
+	return $pos - $start;
 }
 
 sub GetText {
@@ -71,6 +74,7 @@ sub GetCurrentPos {
 sub GetSelectionEnd {
 	return $_->{selection_end};
 }
+
 sub SetSelectionStart {
 	$_[0]->{selection_start} = $_[1]
 }
