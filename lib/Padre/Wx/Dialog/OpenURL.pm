@@ -58,6 +58,14 @@ sub new {
 		Wx::wxID_OK,
 		"",
 	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_ok},
+		sub {
+			$_[0]->button_ok;
+		},
+	);
+	$self->{button_ok}->SetDefault;
 
 	# Cancel button (obviously)
 	$self->{button_cancel} = Wx::Button->new(
@@ -118,6 +126,38 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+=pod
+
+=head2 ok_button
+
+  $self->ok_button
+
+Attempt to open the specified URL
+
+=cut
+
+sub ok_button {
+	my $self = shift;
+	$self->Hide;
+
+	# Leave a note for the person who will implement the rest of
+	# the Open URL feature. Far better than dying :)
+	$self->main->message(
+		Wx::gettext('This feature has not been implemented by Sewi'),
+		Wx::gettext('Search'),
+	);
+
+	# As we leave the Find dialog return the user to the current editor
+	# window so they don't need to click it.
+	my $editor = $self->current->editor;
+	if ( $editor ) {
+		$editor->SetFocus;
+	}
+
+	# We don't reuse this dialog
+	$self->Destroy;	
 }
 
 =pod
