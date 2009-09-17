@@ -56,7 +56,7 @@ sub new {
 	$self->{button_ok} = Wx::Button->new(
 		$self,
 		Wx::wxID_OK,
-		"",
+		Wx::gettext("&OK"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -130,6 +130,29 @@ sub new {
 
 =pod
 
+=head2 modal
+
+  my $url = Padre::Wx::Dialog::OpenURL->modal($main);
+
+Single-shot modal dialog call to get a URL from the user.
+
+Returns a string if the user clicks ok (it may be a null string if they did
+not enter anything).
+
+Returns C<undef> if the user hits the cancel button.
+
+=cut
+
+sub modal {
+	my $class = shift;
+	my $self  = $class->new(@_);
+	my $rv    = $self->ShowModal;
+	$self->Destroy;
+	return $rv;
+}
+
+=pod
+
 =head2 ok_button
 
   $self->ok_button
@@ -139,25 +162,9 @@ Attempt to open the specified URL
 =cut
 
 sub ok_button {
-	my $self = shift;
-	$self->Hide;
-
-	# Leave a note for the person who will implement the rest of
-	# the Open URL feature. Far better than dying :)
-	$self->main->message(
-		Wx::gettext('This feature has not been implemented by Sewi'),
-		Wx::gettext('Search'),
+	$_[0]->EndModal(
+		$_[0]->{openurl_text}->GetValue
 	);
-
-	# As we leave the Find dialog return the user to the current editor
-	# window so they don't need to click it.
-	my $editor = $self->current->editor;
-	if ( $editor ) {
-		$editor->SetFocus;
-	}
-
-	# We don't reuse this dialog
-	$self->Destroy;	
 }
 
 =pod
@@ -171,18 +178,7 @@ Hide dialog when pressed cancel button.
 =cut
 
 sub cancel_button {
-	my $self = shift;
-	$self->Hide;
-
-	# As we leave the Find dialog return the user to the current editor
-	# window so they don't need to click it.
-	my $editor = $self->current->editor;
-	if ( $editor ) {
-		$editor->SetFocus;
-	}
-
-	# We don't reuse this dialog
-	$self->Destroy;
+	$_[0]->EndModel(undef);
 }
 
 1;
