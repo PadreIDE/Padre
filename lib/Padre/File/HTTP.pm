@@ -61,13 +61,12 @@ sub mode {
 	return 33024; # Currently fixed: read-only textfile
 }
 
-#TODO: Convert ugly HTTP date-format to a usable timestamp
-#sub mtime {
-#	my $self = shift;
-#	my ($Content,$Result) = $self->_request('HEAD');
-#	$Result->header('Last-Modified');
-#	return;
-#}
+sub mtime {
+	my $self = shift;
+	require HTTP::Date; # Part of LWP which is required for this module but not for Padre
+	my ( $Content, $Result ) = $self->_request('HEAD');
+	return HTTP::Date::str2time( $Result->header('Last-Modified') );
+}
 
 sub exists {
 	my $self = shift;
