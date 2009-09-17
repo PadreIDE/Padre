@@ -2607,13 +2607,17 @@ sub setup_editor {
 			return;
 		}
 
+		# Scheduled for removal: This is done by document->new later and should be
+		# in only one place, please re-enable it and remove this comment if you think
+		# it should stay:
 		# if file does not exist, create it so that future access
 		# (such as size checking) won't warn / blow up padre
-		if ( not -f $file ) {
-			open my $fh, '>', $file;
-			close $fh;
-		}
-		if ( -s $file > $config->editor_file_size_limit ) {
+#		if ( not -f $file ) {
+#			open my $fh, '>', $file;
+#			close $fh;
+#		}
+
+		if ( -f $file and (-s $file > $config->editor_file_size_limit )) {
 			return $self->error(
 				sprintf(
 					Wx::gettext(
