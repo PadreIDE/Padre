@@ -510,17 +510,37 @@ sub replace_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
 
 	# Apply the search to the current editor.
-	# The while is here to support replace_all without duplicate code.
+	# The while is here to support replace_all without duplicate code in the same modul.
 	my $Replace_Count = 0;
-	while ( $main->replace_next($search) ) {
-		++$Replace_Count;
-		$self->{replace_all}->GetValue or last; # Replace all
+
+	my $use_search_pm = 0;
+	if ($use_search_pm) {
+		if ( $self->{replace_all}->GetValue ) { # Replace all
+			$Replace_Count = $main->replace_all($search) . "\n";
+			return;
+		} else {
+			$Replace_Count = 1 if $main->replace_next($search);
+		}
+	} else {
+		while ( $main->replace_next($search) ) {
+			++$Replace_Count;
+			$self->{replace_all}->GetValue or last; # Replace all
+			next if $Replace_Count < 100;
+
+			# This is just left here to have working replace function until Search.pm
+			# is fixed:
+			$main->message( 'This replace_all function could cause a endless loop '
+					. 'and should be removed as soon as Search.pm is repaired. '
+					. 'Your replace_all run has been aborted after 100 replaces, '
+					. 'click the button again to continue.', 'Warning' );
+			last;
+		}
 	}
 
 	# If we're only searching once, we won't need the dialog any more
