@@ -88,6 +88,8 @@ sub new { # URL
 	my $class = shift;
 	my $URL   = $_[0];
 
+	return if ( !defined($URL) ) or ( $URL eq '' );
+
 	my $self;
 
 	for ( keys(%Registered_Modules) ) {
