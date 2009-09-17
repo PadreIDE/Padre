@@ -21,7 +21,7 @@ my @files = File::Find::Rule
 
 plan( tests => scalar @files);
 foreach my $file ( @files ) {
-	is(newline_type(slurp($file)), "UNIX");
+	is(newline_type(slurp($file)), "UNIX", "$file is UNIX");
 }
 
 ######################################################################
