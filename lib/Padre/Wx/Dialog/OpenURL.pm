@@ -6,9 +6,6 @@ use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
-# Temporarily needed, because wxGlade expects exported symbols
-use Wx qw[:everything];
-
 our $VERSION = '0.46';
 our @ISA     = qw{
 	Padre::Wx::Role::MainChild
@@ -48,24 +45,24 @@ sub new {
 		$self,
 		-1,
 		"",
-		wxDefaultPosition,
-		wxDefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 		[],
-		wxCB_DROPDOWN
+		Wx::wxCB_DROPDOWN
 	);
 	$self->{openurl_text}->SetSelection(-1);
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
 		$self,
-		wxID_OK,
+		Wx::wxID_OK,
 		"",
 	);
 
 	# Cancel button (obviously)
 	$self->{button_cancel} = Wx::Button->new(
 		$self,
-		wxID_CANCEL,
+		Wx::wxID_CANCEL,
 		"",
 	);
 
@@ -76,39 +73,39 @@ sub new {
 		$self,
 		-1,
 		"http://svn.perlide.org/padre/trunk/Padre/Makefile.PL",
-		wxDefaultPosition,
-		wxDefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	# Separator line between the controls and the buttons
 	my $line_1 = Wx::StaticLine->new(
 		$self,
 		-1,
-		wxDefaultPosition,
-		wxDefaultSize,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	# Main button cluster
-	my $button_sizer = Wx::BoxSizer->new( wxHORIZONTAL );
+	my $button_sizer = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
 	$button_sizer->Add( $self->{button_ok}, 1, 0, 0 );
-	$button_sizer->Add( $self->{button_cancel}, 1, wxLEFT, 5 );
+	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 
 	# The main layout for the dialog is vertical
-	my $sizer_2 = Wx::BoxSizer->new( wxVERTICAL );
+	my $sizer_2 = Wx::BoxSizer->new( Wx::wxVERTICAL );
 	$sizer_2->Add( $openurl_label, 0, 0, 0 );
-	$sizer_2->Add( $self->{openurl_text}, 0, wxTOP | wxEXPAND, 5 );
-	$sizer_2->Add( $line_1, 0, wxTOP | wxBOTTOM | wxEXPAND, 5 );
-	$sizer_2->Add( $button_sizer, 1, wxALIGN_RIGHT, 5 );
+	$sizer_2->Add( $self->{openurl_text}, 0, Wx::wxTOP | Wx::wxEXPAND, 5 );
+	$sizer_2->Add( $line_1, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$sizer_2->Add( $button_sizer, 1, Wx::wxALIGN_RIGHT, 5 );
 
 	# Wrap it in a horizontal to create an top level border
-	my $sizer_1 = Wx::BoxSizer->new( wxHORIZONTAL );
-	$sizer_1->Add( $sizer_2, 1, wxALL | wxEXPAND, 5 );
+	my $sizer_1 = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$sizer_1->Add( $sizer_2, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# Apply the top sizer in the stack to the window,
 	# and tell the window and the sizer to alter size to fit
 	# to each other correctly, regardless of the platform.
 	# This type of sizing is NOT adaptive, so we must not use
-	# wxRESIZE_BORDER with this dialog.
+	# Wx::wxRESIZE_BORDER with this dialog.
 	$self->SetSizer($sizer_1);
 	$sizer_1->Fit($self);
 	$self->Layout;
@@ -117,6 +114,20 @@ sub new {
 }
 
 1;
+
+=pod
+
+=head1 COPYRIGHT & LICENSE
+
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
+
+The full text of the license can be found in the
+LICENSE file included with this module.
+
+=cut
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 # LICENSE
