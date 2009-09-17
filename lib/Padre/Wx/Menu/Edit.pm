@@ -286,17 +286,17 @@ sub new {
 		label      => Wx::gettext('&Toggle Comment'),
 		shortcut   => 'Ctrl-Shift-C',
 		menu_event => sub {
-			Padre::Wx::Main::on_comment_toggle_block(@_);
+			Padre::Wx::Main::on_comment_block($_[0], 'TOGGLE');
 		},
 	);
 
-	$self->{comment_out} = $self->add_menu_item(
+	$self->{comment} = $self->add_menu_item(
 		$self,
-		name       => 'edit.comment_out',
+		name       => 'edit.comment',
 		label      => Wx::gettext('&Comment Selected Lines'),
 		shortcut   => 'Ctrl-M',
 		menu_event => sub {
-			Padre::Wx::Main::on_comment_out_block(@_);
+			Padre::Wx::Main::on_comment_block($_[0], 'COMMENT');
 		},
 	);
 
@@ -306,7 +306,7 @@ sub new {
 		label      => Wx::gettext('&Uncomment Selected Lines'),
 		shortcut   => 'Ctrl-Shift-M',
 		menu_event => sub {
-			Padre::Wx::Main::on_uncomment_block(@_);
+			Padre::Wx::Main::on_comment_block($_[0], 'UNCOMMENT');
 		},
 	);
 	$self->AppendSeparator;
@@ -564,7 +564,7 @@ sub refresh {
 	#$self->{insert_special}->Enable($hasdoc);
 	$self->{snippets}->Enable($hasdoc);
 	$self->{comment_toggle}->Enable($hasdoc);
-	$self->{comment_out}->Enable($hasdoc);
+	$self->{comment}->Enable($hasdoc);
 	$self->{uncomment}->Enable($hasdoc);
 	$self->{convert_encoding_system}->Enable($hasdoc);
 	$self->{convert_encoding_utf8}->Enable($hasdoc);

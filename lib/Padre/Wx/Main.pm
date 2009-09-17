@@ -2213,93 +2213,46 @@ sub on_brace_matching {
 
 =pod
 
-=head3 on_comment_toggle_block
+=head3 on_comment_block
 
-    $main->on_comment_toggle_block;
+    $main->on_comment_block;
 
-Un/comment selected lines, depending on their current state.
+Performs one of the following depending the given operation
+
+=over 4
+
+=item * Uncomment or comment selected lines, depending on their current state.
+
+=item * Comment out selected lines unilateraly.
+
+=item * Uncomment selected lines unilateraly.
+
+=back
 
 =cut
 
-sub on_comment_toggle_block {
-	my $self    = shift;
+sub on_comment_block {
+	my ($self, $operation)    = @_;
 	my $current = $self->current;
-	my $editor  = $current->editor;
-	return if not $editor;
+	my $editor  = $current->editor or return;
 	my $document = $current->document;
-	my ( $selection_start, $selection_end ) = $editor->GetSelection;
+	my $selection_start = $editor->GetSelectionStart;
+	my $selection_end = $editor->GetSelectionEnd;
 	my $length = length $document->text_get;
 	my $begin  = $editor->LineFromPosition($selection_start);
 	my $end    = $editor->LineFromPosition($selection_end);
 	my $string = $document->comment_lines_str;
 	return unless defined $string;
-	$editor->comment_toggle_lines( $begin, $end, $string );
-
-	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection( 
-			$selection_start, 
-			$selection_end + (length $document->text_get) - $length 
-		);
+	
+	if($operation eq 'TOGGLE') {
+		$editor->comment_toggle_lines( $begin, $end, $string );
+	} elsif($operation eq 'COMMENT') {
+		$editor->comment_lines( $begin, $end, $string );
+	} elsif($operation eq 'UNCOMMENT') {
+		$editor->uncomment_lines( $begin, $end, $string );
+	} else {
+		Padre::Util::debug("Invalid comment operation '$operation'");
 	}
-	return;
-}
-
-=pod
-
-=head3 on_comment_out_block
-
-    $main->on_comment_out_block;
-
-Comment out selected lines unilateraly.
-
-=cut
-
-sub on_comment_out_block {
-	my $self    = shift;
-	my $current = $self->current;
-	my $editor  = $current->editor;
-	return if not $editor;
-	my $document = $current->document;
-	my ( $selection_start, $selection_end ) = $editor->GetSelection;
-	my $length = length $document->text_get;	
-	my $begin  = $editor->LineFromPosition($selection_start);
-	my $end    = $editor->LineFromPosition($selection_end);
-	my $string = $document->comment_lines_str;
-	return unless defined $string;
-	$editor->comment_lines( $begin, $end, $string );
-
-	if ( $selection_end > $selection_start ) {
-		$editor->SetSelection( 
-			$selection_start, 
-			$selection_end + (length $document->text_get) - $length 
-		);
-	}
-	return;
-}
-
-=pod
-
-=head3 on_uncomment_block
-
-    $main->on_uncomment_block;
-
-Uncomment selected lines unilateraly.
-
-=cut
-
-sub on_uncomment_block {
-	my $self    = shift;
-	my $current = $self->current;
-	my $editor  = $current->editor;
-	return if not $editor;
-	my $document = $current->document;
-	my ( $selection_start, $selection_end ) = $editor->GetSelection;
-	my $length = length $document->text_get;
-	my $begin  = $editor->LineFromPosition($selection_start);
-	my $end    = $editor->LineFromPosition($selection_end);
-	my $string = $document->comment_lines_str;
-	return unless defined $string;
-	$editor->uncomment_lines( $begin, $end, $string );
 
 	if ( $selection_end > $selection_start ) {
 		$editor->SetSelection( 
