@@ -12,6 +12,10 @@ use Padre::Wx::Menu ();
 our $VERSION = '0.46';
 our @ISA     = 'Padre::Wx::Menu';
 
+
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -59,6 +63,7 @@ sub new {
 		Wx::gettext("Select"),
 		$edit_select
 	);
+
 	$self->add_menu_item(
 		$edit_select,
 		name       => 'edit.select_all',
@@ -72,6 +77,7 @@ sub new {
 	);
 
 	$edit_select->AppendSeparator;
+
 	$self->add_menu_item(
 		$edit_select,
 		name       => 'edit.mark_selection_start',
@@ -309,6 +315,7 @@ sub new {
 			Padre::Wx::Main::on_comment_block($_[0], 'UNCOMMENT');
 		},
 	);
+
 	$self->AppendSeparator;
 
 	# Conversions and Transforms
