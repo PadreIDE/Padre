@@ -48,11 +48,11 @@ REGISTERed protocols may override the internal protocols.
 sub REGISTER { # RegExp,Module
 
 	my $RegExp = shift;
-	my $Module   = shift;
+	my $Module = shift;
 
-	return 0 if ! defined $RegExp;
+	return 0 if !defined $RegExp;
 	return 0 if $RegExp eq '';
-	return 0 if ! defined $Module;
+	return 0 if !defined $Module;
 	return 0 if $Module eq '';
 
 	$Registered_Modules{$RegExp} = $Module;
@@ -90,7 +90,7 @@ sub new { # URL
 
 	my $self;
 
-	for (keys(%Registered_Modules)) {
+	for ( keys(%Registered_Modules) ) {
 		next if $URL !~ /$_/;
 		require $_;
 		$self = $_->new($URL);
