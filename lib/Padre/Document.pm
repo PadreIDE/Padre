@@ -906,7 +906,7 @@ sub project_find {
 	}
 
 	# Currently no project support for remote files:
-	if ($self->{file}->{protocol} ne 'local') { return; }
+	if ( $self->{file}->{protocol} ne 'local' ) { return; }
 
 	# Search upwards from the file to find the project root
 	my ( $v, $d, $f ) = File::Spec->splitpath( $self->filename );

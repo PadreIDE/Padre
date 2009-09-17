@@ -12,47 +12,47 @@ our @ISA     = 'Padre::File';
 sub new {
 	my $class = shift;
 
-        # Don't add a new overall-dependency to Padre:
-        eval { require LWP::UserAgent; };
-        if ($@) {
-         warn 'LWP::UserAgent is not installed, Padre::File::HTTP currently depends on it.';
-         return;
-        }
+	# Don't add a new overall-dependency to Padre:
+	eval { require LWP::UserAgent; };
+	if ($@) {
+		warn 'LWP::UserAgent is not installed, Padre::File::HTTP currently depends on it.';
+		return;
+	}
 
 	my $self = bless { Filename => $_[0], UA => LWP::UserAgent->new() }, $class;
 	$self->{protocol} = 'http'; # Should not be overridden
-	$self->{UA}->timeout(60); # TODO: Make this configurable
+	$self->{UA}->timeout(60);   # TODO: Make this configurable
 	return $self;
 }
 
 sub _request {
- 
- my $self = shift;
- my $method = shift || 'GET';
- my $URL = shift || $self->{Filename};
 
- my $HTTP_Req = HTTP::Request->new($method,$URL);
+	my $self   = shift;
+	my $method = shift || 'GET';
+	my $URL    = shift || $self->{Filename};
 
- my $Result = $self->{UA}->request($HTTP_Req);
+	my $HTTP_Req = HTTP::Request->new( $method, $URL );
 
- if ($Result->is_success) {
-  if (wantarray) {
-   return $Result->content,$Result;
-  } else {
-   return $Result->content;
-  }
- } else {
-  if (wantarray) {
-   return undef,$Result;
-  } else {
-   return;
-  }
- }
+	my $Result = $self->{UA}->request($HTTP_Req);
+
+	if ( $Result->is_success ) {
+		if (wantarray) {
+			return $Result->content, $Result;
+		} else {
+			return $Result->content;
+		}
+	} else {
+		if (wantarray) {
+			return undef, $Result;
+		} else {
+			return;
+		}
+	}
 }
 
 sub size {
 	my $self = shift;
-	my ($Content,$Result) = $self->_request('HEAD');
+	my ( $Content, $Result ) = $self->_request('HEAD');
 	return $Result->header('Content-Length');
 }
 
@@ -71,14 +71,14 @@ sub mode {
 
 sub exists {
 	my $self = shift;
-	my ($Content,$Result) = $self->_request('HEAD');
+	my ( $Content, $Result ) = $self->_request('HEAD');
 	return 1 if $Result->code == 200;
 	return 0;
 }
 
 sub read {
 	my $self = shift;
-	return scalar($self->_request());
+	return scalar( $self->_request() );
 
 }
 
