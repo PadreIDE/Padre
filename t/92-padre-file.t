@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 27;
+use Test::More tests => 28;
 
 use Padre::File;
 
@@ -41,6 +41,7 @@ ok(defined($file),'HTTP: Create Padre::File object');
 ok(ref($file) eq 'Padre::File::HTTP','HTTP: Check module');
 ok($file->{protocol} eq 'http','HTTP: Check protocol');
 ok($file->size > 0,'HTTP: file size');
+ok($file->mtime >= 1253194791,'HTTP: mtime');
 
 END {
 	unlink $testfile;
