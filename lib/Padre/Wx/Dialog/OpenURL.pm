@@ -6,6 +6,9 @@ use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
+# Temporarily needed, because wxGlade expects exported symbols
+use Wx qw[:everything];
+
 our $VERSION = '0.46';
 our @ISA     = qw{
 	Padre::Wx::Role::MainChild
