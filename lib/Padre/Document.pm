@@ -253,7 +253,7 @@ sub rebless {
 	my $mime_type = $self->get_mimetype or return;
 	my $class = Padre::MimeTypes->get_mime_class($mime_type) || __PACKAGE__;
 	Padre::Util::debug("Reblessing to mimetype: '$class'");
-	if ( $class ) {
+	if ($class) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
 			die("Failed to load $class: $@") if $@;
@@ -314,7 +314,7 @@ sub colorize {
 	# allow virtual modules if they have a colorize method
 	unless ( $module->can('colorize') ) {
 		eval "use $module";
-		if ( $@ ) {
+		if ($@) {
 			Carp::cluck( "Could not load module '$module' for file '" . ( $self->filename || '' ) . "'\n" );
 			return;
 		}
@@ -1103,10 +1103,8 @@ sub autocomplete {
 	my $pre  = $editor->GetTextRange( 0, $first + length($prefix) );
 	my $post = $editor->GetTextRange( $first, $last );
 
-	my $regex = eval {
-		qr{\b($prefix\w+)\b}
-	};
-	if ( $@ ) {
+	my $regex = eval { qr{\b($prefix\w+)\b} };
+	if ($@) {
 		return ("Cannot build regex for '$prefix'");
 	}
 

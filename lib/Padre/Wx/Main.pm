@@ -2578,7 +2578,7 @@ sub setup_editor {
 	my $doc = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
-	if (!defined($doc)) {
+	if ( !defined($doc) ) {
 		return;
 	}
 
