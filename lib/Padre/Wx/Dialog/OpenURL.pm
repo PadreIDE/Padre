@@ -63,7 +63,14 @@ sub new {
 	$self->{button_cancel} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		"",
+		Wx::gettext("&Cancel"),
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_cancel},
+		sub {
+			$_[0]->cancel_button;
+		}
 	);
 
 	# Form Layout
@@ -111,6 +118,31 @@ sub new {
 	$self->Layout;
 
 	return $self;
+}
+
+=pod
+
+=head2 cancel_button
+
+  $self->cancel_button
+
+Hide dialog when pressed cancel button.
+
+=cut
+
+sub cancel_button {
+	my $self = shift;
+	$self->Hide;
+
+	# As we leave the Find dialog return the user to the current editor
+	# window so they don't need to click it.
+	my $editor = $self->current->editor;
+	if ( $editor ) {
+		$editor->SetFocus;
+	}
+
+	# We don't reuse this dialog
+	$self->Destroy;
 }
 
 1;
