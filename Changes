@@ -15,8 +15,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Added "Open URL" menu option (SEWI)
     - Added Padre::File::HTTP (SEWI)
     - No more "WIN32" as a line ending indicator only "WIN"
+    - The status bar provides more space to display longer mime-type names (AZAWAWI)
     - The status bar reflects now the current document's line endings as
-      follows:
+      follows (AZAWAWI):
         - WIN (CR/LF), MAC (CR), UNIX (LF)
         - Mixed, a mixture of the above which is usually an error
         - None which is a one-liner/empty script
