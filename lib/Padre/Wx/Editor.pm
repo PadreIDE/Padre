@@ -16,6 +16,9 @@ our @ISA     = 'Wx::StyledTextCtrl';
 # End-Of-Line modes: 
 # MAC is actually Mac classic. 
 # MAC OS X and later uses UNIX EOLs
+#
+# Please note that WIN32 is the API. DO NOT change it to that :)
+#
 our %mode = (
 	WIN   => Wx::wxSTC_EOL_CRLF,
 	MAC   => Wx::wxSTC_EOL_CR,
