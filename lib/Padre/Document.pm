@@ -237,7 +237,7 @@ sub rebless {
 	my $mime_type = $self->get_mimetype or return;
 	my $class = Padre::MimeTypes->get_mime_class($mime_type) || __PACKAGE__;
 	Padre::Util::debug("Reblessing to mimetype: '$class'");
-	if ($class) {
+	if ( $class ) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
 			die("Failed to load $class: $@") if $@;
@@ -247,7 +247,7 @@ sub rebless {
 
 	my $module = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
 	my $filename = $self->filename || '';
-	warn("No module  mime_type='$mime_type' filename='$filename'\n") if not $module;
+	warn("No module  mime_type='$mime_type' filename='$filename'\n") unless $module;
 
 	#warn("Module '$module' mime_type='$mime_type' filename='$filename'\n") if $module;
 	$self->set_highlighter($module);
@@ -263,8 +263,7 @@ sub rebless {
 # Padre::Document GUI Integration
 
 sub colourize {
-	my $self = shift;
-
+	my $self   = shift;
 	my $lexer  = $self->lexer;
 	my $editor = $self->editor;
 	$editor->SetLexer($lexer);
@@ -297,9 +296,9 @@ sub colorize {
 	}
 
 	# allow virtual modules if they have a colorize method
-	if ( not $module->can('colorize') ) {
+	unless ( $module->can('colorize') ) {
 		eval "use $module";
-		if ($@) {
+		if ( $@ ) {
 			Carp::cluck( "Could not load module '$module' for file '" . ( $self->filename || '' ) . "'\n" );
 			return;
 		}
@@ -347,6 +346,10 @@ sub _get_default_newline_type {
 	}
 }
 
+
+
+
+
 #####################################################################
 # Disk Interaction Methods
 # These methods implement the interaction between the document and the
@@ -387,13 +390,13 @@ sub has_changed_on_disk {
 	return 0 unless defined $self->last_sync;
 
 	# Caching the result for two lines saved one stat-I/O each time this sub is run
-	my $Time_on_file = $self->time_on_file;
+	my $time_on_file = $self->time_on_file;
 
 	# Return -1 if file has been deleted from disk
-	return -1 unless $Time_on_file;
+	return -1 unless $time_on_file;
 
 	# Return 1 if the file has changed on disk, otherwise 0
-	return $self->last_sync < $Time_on_file ? 1 : 0;
+	return $self->last_sync < $time_on_file ? 1 : 0;
 }
 
 sub time_on_file {
@@ -1056,8 +1059,7 @@ sub comment_lines_str { }
 # return ($error_message)
 # in case of some error
 sub autocomplete {
-	my $self = shift;
-
+	my $self   = shift;
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
@@ -1066,21 +1068,22 @@ sub autocomplete {
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
 	$prefix =~ s{^.*?(\w+)$}{$1};
-	my $last      = $editor->GetLength();
-	my $text      = $editor->GetTextRange( 0, $last );
-	my $pre_text  = $editor->GetTextRange( 0, $first + length($prefix) );
-	my $post_text = $editor->GetTextRange( $first, $last );
+	my $last = $editor->GetLength();
+	my $text = $editor->GetTextRange( 0, $last );
+	my $pre  = $editor->GetTextRange( 0, $first + length($prefix) );
+	my $post = $editor->GetTextRange( $first, $last );
 
-	my $regex;
-	eval { $regex = qr{\b($prefix\w+)\b} };
-	if ($@) {
+	my $regex = eval {
+		qr{\b($prefix\w+)\b}
+	};
+	if ( $@ ) {
 		return ("Cannot build regex for '$prefix'");
 	}
 
 	my %seen;
 	my @words;
-	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
-	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
+	push @words, grep { !$seen{$_}++ } reverse( $pre =~ /$regex/g );
+	push @words, grep { !$seen{$_}++ } ( $post =~ /$regex/g );
 
 	if ( @words > 20 ) {
 		@words = @words[ 0 .. 19 ];
@@ -1088,7 +1091,6 @@ sub autocomplete {
 
 	return ( length($prefix), @words );
 }
-
 
 1;
 
