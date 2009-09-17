@@ -468,8 +468,6 @@ Sets the B<Encoding> bit using L<Encode::Guess> and tries to figure
 out what kind of newlines are in the file. Defaults to utf-8 if
 could not figure out the encoding.
 
-Currently it autoconverts files with mixed newlines. TODO we should stop autoconverting.
-
 Returns true on success false on failure. Sets $doc->errstr;
 
 =cut
@@ -511,16 +509,22 @@ sub load_file {
 
 	$self->{original_content} = $content;
 
+	# Determine new line type using file content.
+	$self->{newline_type} = Padre::Util::newline_type($content);
+
 	return 1;
 }
 
 #
 # New line type can be one of these values:
 # WIN, MAC (for classic Mac) or UNIX (for Mac OS X and Linux/*BSD)
+# Special cases:
+# 'Mixed' for mixed end of lines, 
+# 'None' for one-liners (no EOL)
 #
 sub newline_type {
-	my ($self) = @_;
-	return $self->_get_default_newline_type;
+	my $self = shift;
+	return $self->{newline_type} or $self->_get_default_newline_type;
 }
 
 # Get the newline char(s) for this document.
@@ -565,6 +569,9 @@ sub save_file {
 
 	# File must be closed at this time, slow fs/userspace-fs may not return the correct result otherwise!
 	$self->{_timestamp} = $self->time_on_file;
+
+	# Determine new line type using file content.
+	$self->{newline_type} = Padre::Util::newline_type($content);
 
 	return 1;
 }
