@@ -2789,9 +2789,9 @@ sub on_open_all_recent_files {
 
 =pod
 
-=head3 on_openurl
+=head3 on_open_url
 
-    $main->on_openurl;
+    $main->on_open_url;
 
 Prompt user for URL to open and open it as a new tab.
 
@@ -2800,7 +2800,7 @@ should be added.
 
 =cut
 
-sub on_openurl {
+sub on_open_url {
 	my $self = shift;
 
 	$self->setup_editor( Padre::Wx::Dialog::Text->show( $self, Wx::gettext('Open URL'), '' ) );
