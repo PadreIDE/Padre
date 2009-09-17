@@ -85,10 +85,10 @@ sub new {
 	$self->AppendSeparator;
 
 	# Window Navigation
-	$self->{window_goto_subs_window} = $self->add_menu_item(
+	$self->{window_goto_functions_window} = $self->add_menu_item(
 		$self,
-		name       => 'window.goto_subs_window',
-		label      => Wx::gettext('GoTo Subs Window'),
+		name       => 'window.goto_functions_window',
+		label      => Wx::gettext('GoTo Functions Window'),
 		menu_event => sub {
 			$_[0]->refresh_functions( $_[0]->current );
 			$_[0]->show_functions(1);
