@@ -290,6 +290,7 @@ sub editor_replace_all {
 	my ( undef, undef, @matches ) = $self->matches(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$self->search_regex,
+		$editor->GetSelection
 	);
 
 	# Replace all matches as a single undo
