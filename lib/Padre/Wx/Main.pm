@@ -2807,7 +2807,7 @@ sub on_open_url {
 	unless ( defined $url ) {
 		return;
 	}
-	$self->message("This feature has yet to be implemented");
+	$self->setup_editor($url);
 }
 
 =pod
