@@ -1252,7 +1252,7 @@ sub configure_editor {
 	my $newline_type = $doc->newline_type;
 
 	$self->SetEOLMode( 
-		$mode{$newline_type} or $mode{Padre->ide->config->default_line_ending} );
+		$mode{$newline_type} or $mode{$self->main->ide->config->default_line_ending} );
 
 	if ( defined $doc->{original_content} ) {
 		$self->SetText( $doc->{original_content} );
