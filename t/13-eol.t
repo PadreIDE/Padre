@@ -21,7 +21,8 @@ my @files = File::Find::Rule
 
 plan( tests => scalar @files);
 foreach my $file ( @files ) {
-	is(newline_type(slurp($file)), "UNIX", "$file is UNIX");
+	my $eol = newline_type(slurp($file));
+	ok( ($eol eq 'UNIX') || ($eol eq 'None'), "$file has UNIX-EOLs or none");
 }
 
 ######################################################################
