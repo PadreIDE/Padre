@@ -2801,11 +2801,13 @@ should be added.
 =cut
 
 sub on_open_url {
+	require Padre::Wx::Dialog::OpenURL;
 	my $self = shift;
-
-	$self->setup_editor( Padre::Wx::Dialog::Text->show( $self, Wx::gettext('Open URL'), '' ) );
-
-	return;
+	my $url  = Padre::Wx::Dialog::OpenURL->modal($self);
+	unless ( defined $url ) {
+		return;
+	}
+	$self->message("This feature has yet to be implemented");
 }
 
 =pod

@@ -62,7 +62,7 @@ sub new {
 		$self,
 		$self->{button_ok},
 		sub {
-			$_[0]->button_ok;
+			$_[0]->ok_button;
 		},
 	);
 	$self->{button_ok}->SetDefault;
@@ -146,7 +146,10 @@ Returns C<undef> if the user hits the cancel button.
 sub modal {
 	my $class = shift;
 	my $self  = $class->new(@_);
-	my $rv    = $self->ShowModal;
+	my $ok    = $self->ShowModal;
+	my $rv    = ($ok == Wx::wxID_OK)
+	          ? $self->{openurl_text}->GetValue
+	          : undef;
 	$self->Destroy;
 	return $rv;
 }
@@ -162,9 +165,7 @@ Attempt to open the specified URL
 =cut
 
 sub ok_button {
-	$_[0]->EndModal(
-		$_[0]->{openurl_text}->GetValue
-	);
+	$_[0]->EndModal(Wx::wxID_OK);
 }
 
 =pod
@@ -178,7 +179,7 @@ Hide dialog when pressed cancel button.
 =cut
 
 sub cancel_button {
-	$_[0]->EndModel(undef);
+	$_[0]->EndModal(Wx::wxID_CANCEL);
 }
 
 1;
