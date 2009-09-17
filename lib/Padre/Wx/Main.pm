@@ -54,6 +54,7 @@ use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
 use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
+use Padre::Wx::Dialog::Text;
 
 our $VERSION = '0.46';
 our @ISA     = 'Wx::Frame';
@@ -2793,6 +2794,25 @@ sub on_open_all_recent_files {
 }
 
 =pod
+
+=head3 on_openurl
+
+    $main->on_openurl;
+
+Prompt user for URL to open and open it as a new tab.
+
+Should be merged with ->on_open or at least a browsing function
+should be added.
+
+=cut
+
+sub on_openurl {
+	my $self     = shift;
+
+	$self->setup_editor(Padre::Wx::Dialog::Text->show($self,Wx::gettext('Open URL'),''));
+
+	return;
+}
 
 =head3 on_open
 
