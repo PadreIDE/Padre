@@ -14,6 +14,12 @@ Changes for Perl Application Development and Refactoring Environment
     - Added 13-eol.t to detect non-UNIX EOL-ed files in Padre (AZAWAWI)
     - Added "Open URL" menu option (SEWI)
     - Added Padre::File::HTTP (SEWI)
+    - No more "WIN32" as a line ending indicator only "WIN"
+    - The status bar reflects now the current document's line endings as
+      follows:
+        - WIN (CR/LF), MAC (CR), UNIX (LF)
+        - Mixed, a mixture of the above which is usually an error
+        - None which is a one-liner/empty script
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
