@@ -13,10 +13,11 @@ use Padre::Wx::FileDropTarget ();
 our $VERSION = '0.46';
 our @ISA     = 'Wx::StyledTextCtrl';
 
-# WIN is usually called WIN32, so WIN remains here for backwards compatiblity:
+# End-Of-Line modes: 
+# MAC is actually Mac classic. 
+# MAC OS X and later uses UNIX EOLs
 our %mode = (
 	WIN   => Wx::wxSTC_EOL_CRLF,
-	WIN32 => Wx::wxSTC_EOL_CRLF,
 	MAC   => Wx::wxSTC_EOL_CR,
 	UNIX  => Wx::wxSTC_EOL_LF,
 );

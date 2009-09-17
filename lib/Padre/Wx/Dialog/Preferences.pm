@@ -803,7 +803,7 @@ sub run {
 	my $default_line_ending       = $config->default_line_ending;
 	my @default_line_ending_items = (
 		$default_line_ending,
-		grep { $_ ne $default_line_ending } qw{WIN32 MAC UNIX}
+		grep { $_ ne $default_line_ending } qw{WIN MAC UNIX}
 	);
 	my @default_line_ending_localized = map { Wx::gettext($_) } @default_line_ending_items;
 

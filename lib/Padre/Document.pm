@@ -516,7 +516,7 @@ sub load_file {
 
 #
 # New line type can be one of these values:
-# WIN32, MAC (for classic Mac) or UNIX (for Mac OS X and Linux/*BSD)
+# WIN, MAC (for classic Mac) or UNIX (for Mac OS X and Linux/*BSD)
 #
 sub newline_type {
 	my ($self) = @_;
@@ -528,7 +528,7 @@ sub newline_type {
 #       because of speed issues:
 sub newline {
 	my $self = shift;
-	if ( $self->get_newline_type eq 'WIN32' ) {
+	if ( $self->get_newline_type eq 'WIN' ) {
 		return "\r\n";
 	} elsif ( $self->get_newline_type eq 'MAC' ) {
 		return "\r";
