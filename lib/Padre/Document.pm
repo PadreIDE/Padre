@@ -423,6 +423,7 @@ sub has_changed_on_disk {
 
 	# Caching the result for two lines saved one stat-I/O each time this sub is run
 	my $time_on_file = $self->time_on_file;
+	return 0 unless defined $time_on_file; # there may be no mtime on remote files
 
 	# Return -1 if file has been deleted from disk
 	return -1 unless $time_on_file;
@@ -436,9 +437,8 @@ sub time_on_file {
 	my $file = $self->file;
 	return 0 unless defined $file;
 
-	# using one call instead of exists and mtime safes I/O:
+	# It's important to return undef if there is no ->mtime for this filetype
 	my $Time = $file->mtime;
-	defined($Time) or return 0;
 	return $Time;
 }
 
