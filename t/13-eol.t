@@ -8,17 +8,26 @@ BEGIN {
 	}
 }
 
+# Checks for UNIX end of lines (aka newlines)
 use File::Find::Rule;
 use t::lib::Padre;
-use Padre::Util ();
+use Padre::Util qw(newline_type);
 
-my @files = File::Find::Rule->file->name('*.pm')->in('lib');
+my @files = File::Find::Rule
+	->file
+	->name('*.pm', '*.pod', '*.pl', '*.p6', '*.t', '*.yml', '*.txt')
+	->in('lib', 't', 'share');
 
-plan( tests => scalar @files );
+plan( tests => scalar @files + 5);
 foreach my $file ( @files ) {
-	my $text = slurp($file);
-	is(Padre::Util::newline_type($text), "UNIX");
+	is(newline_type(slurp($file)), "UNIX");
 }
+
+is(newline_type(slurp('Artistic')), "UNIX");
+is(newline_type(slurp('COPYING')), "UNIX");
+is(newline_type(slurp('Makefile.PL')), "UNIX");
+is(newline_type(slurp('Changes')), "UNIX");
+is(newline_type(slurp('padre.yml')), "UNIX");
 
 ######################################################################
 # Support Functions
