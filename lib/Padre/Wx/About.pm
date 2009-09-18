@@ -8,6 +8,7 @@ use warnings;
 use utf8;
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
+use Padre::Wx::Icon       ();
 use Padre::Util           ();
 
 our $VERSION = '0.46';
@@ -25,7 +26,7 @@ sub new {
 	);
 
 	# Until we get a real icon use the same one as the others
-	$self->SetIcon( Wx::GetWxPerlIcon() );
+	$self->SetIcon( Padre::Wx::Icon::PADRE );
 
 	# Create the content for the About window
 	my $splash = Padre::Util::sharefile('padre-splash.bmp');
