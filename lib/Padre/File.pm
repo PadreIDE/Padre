@@ -131,6 +131,20 @@ sub atime {
 	return;
 }
 
+=head2 basename
+
+  $file->basename;
+
+Returns the plain filename without path if a path/filename structure
+exists for this module.
+
+=cut
+
+# Fallback if the module has no such function:
+sub basename {
+	return;
+}
+
 =head2 blksize
 
   $file->blocks;
@@ -192,6 +206,20 @@ is returned.
 
 # Fallback if the module has no such function:
 sub dev {
+	return;
+}
+
+=head2 dirname
+
+  $file->dirname;
+
+Returns the plain path without filename if a path/filename structure
+exists for this module.
+
+=cut
+
+# Fallback if the module has no such function:
+sub dirname {
 	return;
 }
 

@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::File;
+use File::Basename ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Padre::File';
@@ -117,6 +118,16 @@ sub write {
 	close $fh;
 
 	return 1;
+}
+
+sub basename {
+	my $self =shift;
+	return File::Basename::basename($self->{Filename});
+}
+
+sub dirname {
+	my $self =shift;
+	return File::Basename::dirname($self->{Filename});
 }
 
 1;
