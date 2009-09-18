@@ -8,6 +8,7 @@ use warnings;
 use utf8;
 use Padre::Wx             ();
 use Padre::Wx::HtmlWindow ();
+use Padre::Util           ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Wx::Dialog';
@@ -27,25 +28,34 @@ sub new {
 	$self->SetIcon( Wx::GetWxPerlIcon() );
 
 	# Create the content for the About window
+	my $splash = Padre::Util::sharefile('padre-splash.bmp');
 	$self->{about} = Padre::Wx::HtmlWindow->new($self);
 	$self->{about}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
-    <h1>Padre $VERSION</h1>
-    <p>Perl Application Development and Refactoring Environment</p>
+    <strong>
+    <font size="+4">Padre $VERSION</font>
+    <font size="+1">&nbsp;&nbsp;Perl Application Development and Refactoring Environment</font>
+    </strong>
     <p>Created by Gábor Szabó</p>
     <p>Copyright 2008 - 2009 The Padre Development Team</p>
     <p>Splash image courtesy of Jerry Charlotte</p>
+    <p>
+    <center>
+        <img src="$splash">
+    </center>
+    </p>
   </body>
 </html>
 END_HTML
 
 	# Create the content for the Developer team
 	$self->{developers} = Padre::Wx::HtmlWindow->new($self);
+	my $padre_dev_team = Wx::gettext('The Padre Development Team');
 	$self->{developers}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
-    <h1>The Padre Development Team</h1>
+    <strong><font size="+4">$padre_dev_team</font></strong>
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
         <td valign="top">
@@ -101,10 +111,11 @@ END_HTML
 
 	# Create the content for the Translation team
 	$self->{translators} = Padre::Wx::HtmlWindow->new($self);
+	my $padre_translation_team = Wx::gettext('The Padre Translation Team');
 	$self->{translators}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
-    <h1>The Padre Translation Team</h1>
+    <strong><font size="+4">$padre_translation_team</font></strong>
     <table width="100%">
       <tr>
         <td valign="top">
