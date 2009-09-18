@@ -335,13 +335,13 @@ sub last_sync {
 
 sub basename {
 	my $self = shift;
-	return $self->{file}->basename if defined($self->{file});
+	return $self->{file}->basename if defined( $self->{file} );
 	return;
 }
 
 sub dirname {
 	my $self = shift;
-	return $self->{file}->dirname if defined($self->{file});
+	return $self->{file}->dirname if defined( $self->{file} );
 	return;
 }
 
@@ -521,7 +521,7 @@ sub load_file {
 # New line type can be one of these values:
 # WIN, MAC (for classic Mac) or UNIX (for Mac OS X and Linux/*BSD)
 # Special cases:
-# 'Mixed' for mixed end of lines, 
+# 'Mixed' for mixed end of lines,
 # 'None' for one-liners (no EOL)
 #
 sub newline_type {

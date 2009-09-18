@@ -121,13 +121,13 @@ sub write {
 }
 
 sub basename {
-	my $self =shift;
-	return File::Basename::basename($self->{Filename});
+	my $self = shift;
+	return File::Basename::basename( $self->{Filename} );
 }
 
 sub dirname {
-	my $self =shift;
-	return File::Basename::dirname($self->{Filename});
+	my $self = shift;
+	return File::Basename::dirname( $self->{Filename} );
 }
 
 1;
