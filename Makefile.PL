@@ -98,6 +98,7 @@ requires       'Thread::Queue'            => '2.11';
 requires       'threads'                  => '1.71';
 requires       'threads::shared'          => '1.26';
 requires       'URI'                      => '0';
+requires       'version'                  => 0;
 requires       'Win32::API'               => '0.58' if win32;
 requires       'Wx'                       => '0.91';
 requires       'Wx::Perl::ProcessStream'  => '0.11';
