@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 28;
+use Test::More tests => 30;
 
 use Padre::File;
 
@@ -32,6 +32,8 @@ for (0..$#Stat1) {
 ok($file->exists,'Local: file exists');
 ok($file->size == $Stat1[7],'Local: file size');
 ok($file->mtime == $Stat1[9],'Local: file size');
+ok($file->basename eq 'padre-file-test','Local: basename');
+ok($file->dirname eq 't/files','Local: dirname');
 
 undef $file;
 
