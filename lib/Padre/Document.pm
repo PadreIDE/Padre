@@ -334,13 +334,15 @@ sub last_sync {
 }
 
 sub basename {
-	my $filename = $_[0]->filename;
-	defined($filename) ? File::Basename::basename($filename) : undef;
+	my $self = shift;
+	return $self->{file}->basename if defined($self->{file});
+	return;
 }
 
 sub dirname {
-	my $filename = $_[0]->filename;
-	defined($filename) ? File::Basename::dirname($filename) : undef;
+	my $self = shift;
+	return $self->{file}->dirname if defined($self->{file});
+	return;
 }
 
 #left here a it is used in many places. Maybe we need to remove this sub.
