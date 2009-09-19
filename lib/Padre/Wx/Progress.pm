@@ -70,17 +70,22 @@ sub new {
 
 	my $self = bless { max => $max, title => $title, main => $main, start => time, @_ }, $class;
 
+	# Lazy mode means: Create the progress bar only when it makes sense. If this is requested,
+	# don't create it here:
 	$self->_create_progress if !$self->{lazy};
+
 	return $self;
 }
 
 sub _create_progress {
 	my $self = shift;
 
+	# Add some default flags:
 	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | Wx::wxPD_AUTO_HIDE;
 	$flags |= Wx::wxPD_APP_MODAL if $self->{modal};
 
-	$self->{dialog} = Wx::ProgressDialog->new( $self->{title}, 'text1', $self->{max}, $self->{main}, $flags );
+	# Create the progress bar dialog:
+	$self->{dialog} = Wx::ProgressDialog->new( $self->{title}, $self->{message}, $self->{max}, $self->{main}, $flags );
 }
 
 =pod
@@ -89,7 +94,7 @@ sub _create_progress {
 
   $progress->update($value,[$text])
 
-Updates the progress bar.
+Updates the progress bar with a new value and optional with a new text message.
 
 =cut
 
@@ -111,6 +116,8 @@ sub update {
 }
 
 sub Destroy {
+
+	# Simulate Wx's ->Destroy function
 	shift->DESTROY;
 }
 
