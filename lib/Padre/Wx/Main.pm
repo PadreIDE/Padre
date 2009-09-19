@@ -54,7 +54,9 @@ use Padre::Wx::ErrorList      ();
 use Padre::Wx::AuiManager     ();
 use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
-use Padre::Wx::Dialog::Text;
+use Padre::Wx::Dialog::Text   ();
+use Padre::Wx::Progress ();
+
 
 our $VERSION = '0.46';
 our @ISA     = 'Wx::Frame';
@@ -1928,17 +1930,28 @@ sub open_session {
 	# prevent redrawing until we're done
 	$self->Freeze;
 
-	# Close all files
-	$self->close_all;
-
 	# get list of files in the session
 	my @files = $session->files;
 	return unless @files;
 
+	my $dialog = Padre::Wx::Progress->new($self,
+		sprintf(
+			Wx::gettext('Opening session %s...'),
+			$session->name,
+		),
+		$#files + 1,
+		lazy  => 1);
+
+	# Close all files
+	# This takes some time, so do it after the progress dialog was displayed
+	$self->close_all;
+	
 	# opening documents
 	my $focus    = undef;
 	my $notebook = $self->notebook;
-	foreach my $document (@files) {
+	foreach my $file_no (0..$#files) {
+		my $document = $files[$file_no];
+		$dialog->update($file_no,$document->file);
 		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 		my $filename = $document->file;
 		my $file     = Padre::File->new($filename);
@@ -1949,6 +1962,10 @@ sub open_session {
 		$focus = $id if $document->focus;
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
+
+# Enabling these requires the user to close the progress dialog manually.
+#	$dialog->update($#files + 1,Wx::gettext('Restore focus...'));
+#	$dialog->Destroy; # Would race with set_focus otherwise
 	$self->on_nth_pane($focus) if defined $focus;
 
 	# now we can redraw
