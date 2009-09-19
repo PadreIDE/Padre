@@ -77,7 +77,7 @@ sub new {
 sub _create_progress {
         my $self = shift;
         
-	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME;
+	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | Wx::wxPD_AUTO_HIDE;
 	$flags |= Wx::wxPD_APP_MODAL if $self->{modal};
 	
 	$self->{dialog} = Wx::ProgressDialog->new($self->{title},'text1',$self->{max},$self->{main},$flags);
