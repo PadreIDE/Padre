@@ -1933,7 +1933,7 @@ sub open_session {
 	my @files = $session->files;
 	return unless @files;
 
-	my $dialog = Padre::Wx::Progress->new(
+	my $progress = Padre::Wx::Progress->new(
 		$self,
 		sprintf(
 			Wx::gettext('Opening session %s...'),
@@ -1952,7 +1952,7 @@ sub open_session {
 	my $notebook = $self->notebook;
 	foreach my $file_no ( 0 .. $#files ) {
 		my $document = $files[$file_no];
-		$dialog->update( $file_no, $document->file );
+		$progress->update( $file_no, $document->file );
 		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 		my $filename = $document->file;
 		my $file     = Padre::File->new($filename);
@@ -1965,7 +1965,7 @@ sub open_session {
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
 
-	$dialog->update( $#files + 1, Wx::gettext('Restore focus...') );
+	$progress->update( $#files + 1, Wx::gettext('Restore focus...') );
 	$self->on_nth_pane($focus) if defined $focus;
 
 	# now we can redraw
