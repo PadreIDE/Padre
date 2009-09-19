@@ -199,7 +199,7 @@ sub refresh {
 		-1,
 		$self->_task_width,
 		( length($highlighter) + 2 ) * $width,
-		( length($mime_type_name) + 2) * $width,
+		( length($mime_type_name) + 2 ) * $width,
 		( length($newline) + 2 ) * $width,
 		( $length + 2 ) * $width,
 	);

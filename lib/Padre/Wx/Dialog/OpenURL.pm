@@ -33,9 +33,7 @@ sub new {
 		Wx::gettext('Open URL'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
 	# Form Components
@@ -101,19 +99,19 @@ sub new {
 	);
 
 	# Main button cluster
-	my $button_sizer = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
-	$button_sizer->Add( $self->{button_ok}, 1, 0, 0 );
+	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 
 	# The main layout for the dialog is vertical
-	my $sizer_2 = Wx::BoxSizer->new( Wx::wxVERTICAL );
-	$sizer_2->Add( $openurl_label, 0, 0, 0 );
-	$sizer_2->Add( $self->{openurl_text}, 0, Wx::wxTOP | Wx::wxEXPAND, 5 );
-	$sizer_2->Add( $line_1, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
-	$sizer_2->Add( $button_sizer, 1, Wx::wxALIGN_RIGHT, 5 );
+	my $sizer_2 = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$sizer_2->Add( $openurl_label,        0, 0,                                       0 );
+	$sizer_2->Add( $self->{openurl_text}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );
+	$sizer_2->Add( $line_1,               0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$sizer_2->Add( $button_sizer,         1, Wx::wxALIGN_RIGHT,                       5 );
 
 	# Wrap it in a horizontal to create an top level border
-	my $sizer_1 = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $sizer_1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizer_1->Add( $sizer_2, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# Apply the top sizer in the stack to the window,
@@ -147,9 +145,10 @@ sub modal {
 	my $class = shift;
 	my $self  = $class->new(@_);
 	my $ok    = $self->ShowModal;
-	my $rv    = ($ok == Wx::wxID_OK)
-	          ? $self->{openurl_text}->GetValue
-	          : undef;
+	my $rv =
+		( $ok == Wx::wxID_OK )
+		? $self->{openurl_text}->GetValue
+		: undef;
 	$self->Destroy;
 	return $rv;
 }
