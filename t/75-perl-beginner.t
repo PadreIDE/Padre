@@ -27,7 +27,7 @@ my %TEST = (
 	# @_ ?
 );
 
-plan( tests => scalar( keys %TEST ) * 2 + 15 );
+plan( tests => scalar( keys %TEST ) * 2 + 17 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new;
@@ -113,6 +113,12 @@ ok( $b->error =~ /open/, 'pipe-open with in and out redirection (3 args)' );
 
 $b->check('elseif');
 ok( $b->error =~ /elseif.*elsif/, 'elseif - typo' );
+
+$b->check('$x=~/+/');
+ok( $b->error =~ /regular expression.*quantifier/, 'RegExp with quantifier (1)' );
+
+$b->check('$x =~ /*/');
+ok( $b->error =~ /regular expression.*quantifier/, 'RegExp with quantifier (2)' );
 
 sub slurp {
 	my $file = shift;
