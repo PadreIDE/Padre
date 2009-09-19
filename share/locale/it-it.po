@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-30 12:31+0100\n"
+"POT-Creation-Date: 2009-09-19 12:53+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simone Blandino <simone.blandino@gmail.com>\n"
 "Language-Team:  <simone.blandino@gmail.com>\n"
@@ -155,65 +155,87 @@ msgstr "Impossibile abilitare il plugin '%s': %s"
 msgid "Failed to disable plugin '%s': %s"
 msgstr "Impossibile disabilitare il plugin '%s': %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:730
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:224
+#, perl-format
+msgid "Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
+msgstr "Impossibile aprire %s perchè supera il limite arbitrario delle dimensioni di un file in Padre, che attualmente è %s"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:383
+msgid "Error"
+msgstr "Errore"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:724
 #, perl-format
 msgid "Unsaved %d"
 msgstr "Da salvare %d"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:999
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:1000
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:996
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document.pm:997
 msgid "Skipped for large files"
 msgstr "Evitato per file di grandi dimensioni"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:264
+#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:280
 msgid "Fast but might be out of date"
 msgstr "Veloce, ma potrebbe essere obsoleto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:273
+#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:289
 msgid "PPI Experimental"
 msgstr "PPI Sperimentale"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:274
+#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:290
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr "Lento ma accurato e abbiamo controllo completo così i bug possono essere eliminati"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:278
+#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:294
 msgid "PPI Standard"
 msgstr "PPI Standard"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:279
+#: /home/simone/Padre/trunk/Padre/lib/Padre/MimeTypes.pm:295
 msgid "Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter."
 msgstr "Forse più veloce del tradizionale PPI. I file di grandi dimensioni continueranno a ricorrere all'evidenziatore di Scintilla."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:405
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:432
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:304
+#, perl-format
+msgid ""
+"Error:\n"
+"%s"
+msgstr ""
+"Errore:\n"
+"%s"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:306
+msgid "No errors found."
+msgstr "Nessun errore trovato"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:426
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:453
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Il cursore non sembra puntare ad una variabile"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:406
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:433
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:427
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:454
 msgid "Check cancelled"
 msgstr "Verifica cancellata"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:729
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:750
 msgid "Find Variable Declaration"
 msgstr "Trova dichiarazione variabile"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:741
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:762
 msgid "Lexically Rename Variable"
 msgstr "Rinomina lessicalmente la variabile"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:753
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:754
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:774
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:775
 msgid "Replacement"
 msgstr "Sostituzione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:771
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:792
 msgid "Introduce Temporary Variable"
 msgstr "Introduci variabile temporanea"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:784
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:785
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:805
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Document/Perl.pm:806
 msgid "Variable Name"
 msgstr "Nome variabile"
 
@@ -300,13 +322,9 @@ msgstr "Errore: %s"
 msgid "Ping"
 msgstr "Ping"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Task/SyntaxChecker.pm:180
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Task/SyntaxChecker.pm:181
 msgid "Warning"
 msgstr "Attenzione"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Task/SyntaxChecker.pm:180
-msgid "Error"
-msgstr "Errore"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:103
 msgid "First character of selection does not seem to point at a token."
@@ -344,7 +362,7 @@ msgstr "Impossibile trovare una dichiarazione per la variabile (lessicale?) spec
 msgid "Search Canceled"
 msgstr "Ricerca annullata"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Task/OpenResource/SearchTask.pm:94
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Task/OpenResource/SearchTask.pm:95
 msgid "Finished Searching"
 msgstr "Ricerca terminata"
 
@@ -364,51 +382,51 @@ msgstr "Apri &Documentazione"
 msgid "Files"
 msgstr "File"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:831
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:845
 msgid "Select all\tCtrl-A"
 msgstr "Seleziona tutto\tCtrl-A"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:842
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:856
 msgid "&Copy\tCtrl-C"
 msgstr "&Copia\tCtrl-C"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:854
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:868
 msgid "Cu&t\tCtrl-X"
 msgstr "&Taglia\tCtrl-X"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:866
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:880
 msgid "&Paste\tCtrl-V"
 msgstr "&Incolla\tCtrl-V"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:883
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:897
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "Imposta/rimuovi commento\tCtrl-Shift-C"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:891
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:905
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "&Commenta le righe selezionate\tCtrl-M"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:898
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:912
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "&Rimuovi commento dalle righe selezionate\tCtrl-Shift-M"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:919
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:933
 msgid "Fold all"
 msgstr "Ripiega tutto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:926
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:940
 msgid "Unfold all"
 msgstr "Dispiega tutto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:939
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:953
 msgid "&Split window"
 msgstr "&Dividi finestra"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:1306
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:1383
 msgid "You must select a range of lines"
 msgstr "Devi selezionare un insieme di righe"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:1322
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Editor.pm:1399
 msgid "First character of selection must be a non-word character to align"
 msgstr "Per allineare, il primo carattere della selezione non deve essere alfabetico"
 
@@ -424,249 +442,265 @@ msgstr "Diagnostica non disponibile per questo errore!"
 msgid "Diagnostics"
 msgstr "Diagnostica"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:511
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:499
 #, perl-format
 msgid "No such session %s"
 msgstr "Sessione %s inesistente"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:672
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:663
 msgid "Failed to create server"
 msgstr "Creazione del server non riuscita"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1561
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1568
 msgid "Command line"
 msgstr "Riga di comando"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1562
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1569
 msgid "Run setup"
 msgstr "Esegui setup"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1597
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1604
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1645
 msgid "Current document has no filename"
 msgstr "Il documento corrente non ha un nome file"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1603
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1610
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1654
 msgid "Could not find project root"
 msgstr "Impossibile trovare la radice del progetto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1700
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1648
+msgid "Current document is not a .t file"
+msgstr "Il documento corrente non è un file .t"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1761
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr "Impossibile eseguire il comando '%s'"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1728
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1788
 msgid "No open document"
 msgstr "Nessun documento aperto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1745
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1805
 msgid "No execution mode was defined for this document"
 msgstr "Nessuna modalità di esecuzione definita per questo documento"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1779
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1839
 msgid "Not a Perl document"
 msgstr "Non è un documento Perl"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1938
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:1999
 msgid "Message"
 msgstr "Messaggio"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2242
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2285
 msgid "Autocompletion error"
 msgstr "Errore del completamento automatico"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2270
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2312
 #, perl-format
 msgid "Line number between (1-%s):"
 msgstr "Numero di righa tra (1-%s)"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2271
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2313
 msgid "Go to line number"
 msgstr "Vai alla riga numero:"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2533
-#, perl-format
-msgid "Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
-msgstr "Impossibile aprire %s perchè supera il limite arbitrario delle dimensioni di un file in Padre, che attualmente è %s"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2645
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2684
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Nessuna selezione. Specificare cosa dovrebbe essere aperto:"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2646
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2685
 msgid "Open selection"
 msgstr "Apri selezione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2724
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2752
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "Impossibile trovare il file '%s'"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2725
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2753
 msgid "Open Selection"
 msgstr "Apri selezione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2802
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2852
 msgid "JavaScript Files"
 msgstr "File JavaScript"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2803
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2854
 msgid "Perl Files"
 msgstr "File Perl"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2804
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2856
 msgid "PHP Files"
 msgstr "File PHP"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2805
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2858
 msgid "Python Files"
 msgstr "File Python"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2806
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2860
 msgid "Ruby Files"
 msgstr "File Ruby"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2807
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2862
 msgid "SQL Files"
 msgstr "File SQL"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2808
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2864
 msgid "Text Files"
 msgstr "File di testo"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2809
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2866
 msgid "Web Files"
 msgstr "File Web"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2813
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2814
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2871
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2872
 msgid "All Files"
 msgstr "Tutti i file"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2817
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2874
 msgid "Open File"
 msgstr "Apri file"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2864
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4330
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2892
+#, perl-format
+msgid "Filename %s contains * or ? which are special chars on most computers. Skip?"
+msgstr "Il nome file %s contiene * o ? che sono caratteri speciali per molti computer. Ignorare?"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2895
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2915
+msgid "Open Warning"
+msgstr "Segnalazione riguardo l'apertura"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2912
+#, perl-format
+msgid "Filename %s does not exist on disk. Skip?"
+msgstr "Il nome file %s non esiste su disco. Ignorarlo?"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2958
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4413
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Impossibile ricaricare il file; %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2895
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2988
 msgid "Save file as..."
 msgstr "Salva con nome..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2922
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3012
 msgid "File already exists. Overwrite it?"
 msgstr "Il file è esistente. Sovrascriverlo?"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:2923
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3013
 msgid "Exist"
 msgstr "Esiste"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3036
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3124
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "Il file è stato modificato su disco dall'ultimo salvataggio. Sovrascriverlo?"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3037
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4323
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3125
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4405
 msgid "File not in sync"
 msgstr "File non sincronizzato"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3046
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3134
 msgid "Could not save file: "
 msgstr "Impossibile salvare il file:W"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3114
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3200
 msgid "File changed. Do you want to save it?"
 msgstr "File modificato. Sovrascriverlo?"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3115
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3201
 msgid "Unsaved File"
 msgstr "File da salvare"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3304
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3388
 msgid "Cannot diff if file was never saved"
 msgstr "Impossibile eseguire diff se il file non è mai stato salvato"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3325
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3412
 msgid "There are no differences\n"
 msgstr "Non ci sono differenze\n"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:3943
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4019
 msgid "Internal error"
 msgstr "Errore interno"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4139
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4216
 #, perl-format
 msgid "Words: %s"
 msgstr "Parole: %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4140
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4217
 #, perl-format
 msgid "Lines: %d"
 msgstr "Righe: %d"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4141
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4218
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr "Caratteri esclusi gli spazi: %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4142
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4219
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "Caratteri comprensivi degli spazi: %d"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4143
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4220
 #, perl-format
 msgid "Newline type: %s"
 msgstr "Tipo fine riga: %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4144
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4221
 #, perl-format
 msgid "Encoding: %s"
 msgstr "Codifica: %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4145
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4223
 #, perl-format
 msgid "Document type: %s"
 msgstr "Tipo documento: %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4145
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4224
 msgid "none"
 msgstr "nessuno"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4147
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4227
 #, perl-format
 msgid "Filename: %s"
 msgstr "Nome file: %s"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4180
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4260
 msgid "Space to Tab"
 msgstr "Da spazi a tabulazioni..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4181
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4261
 msgid "Tab to Space"
 msgstr "Da tabulazioni a spazi..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4185
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4266
 msgid "How many spaces for each tab:"
 msgstr "Quanti spazi per ogni tabulazione:"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4316
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4398
 msgid "File has been deleted on disk, do you want to CLEAR the editor window?"
 msgstr "Il file è stato eliminato dal disco, vuoi RIPULIRE la finestra dell'editor?"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4318
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4400
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "File su disco modificato dall'ultimo salvataggio. Ricaricarlo?"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4401
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4487
 #, perl-format
 msgid "Error loading template file '%s'"
 msgstr "Errore nel caricamento del file template '%s'"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4562
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Main.pm:4654
 msgid "Need to select text in order to translate to hex"
 msgstr "Necessario selezionare del testo da tradurre in esadecimale"
 
@@ -764,17 +798,29 @@ msgstr "Seleziona cartella"
 msgid "Ack"
 msgstr "Ack"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:191
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:55
+msgid "The Padre Development Team"
+msgstr "Il gruppo di sviluppo di Padre"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:115
+msgid "The Padre Translation Team"
+msgstr "Il gruppo di traduzione di Padre"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:203
 msgid "Padre"
 msgstr "Padre"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:196
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:208
 msgid "Development"
 msgstr "Sviluppo"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:201
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:213
 msgid "Translation"
 msgstr "Traduzione"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/About.pm:226
+msgid "&Close"
+msgstr "&Chiudi"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menubar.pm:71
 msgid "&File"
@@ -925,9 +971,16 @@ msgid "Run Command"
 msgstr "Esegui comando"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Run.pm:66
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Run.pm:76
 msgid "Run Tests"
 msgstr "Esegui test"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Run.pm:75
+msgid "Run This Test"
+msgstr "Esegui questo test"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Run.pm:86
+msgid "Stop execution"
+msgstr "Interrompi esecuzione"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/View.pm:36
 msgid "Lock User Interface"
@@ -1057,195 +1110,199 @@ msgstr "Predefinito"
 msgid "&Full Screen"
 msgstr "&Schermo intero"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:33
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:37
 msgid "&Undo"
 msgstr "&Annulla"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:45
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:49
 msgid "&Redo"
 msgstr "&Ripristina"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:59
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:63
 msgid "Select"
 msgstr "Seleziona"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:66
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:71
 msgid "Select all"
 msgstr "Seleziona tutto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:78
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:84
 msgid "Mark selection start"
 msgstr "Indica l'inizio della selezione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:89
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:95
 msgid "Mark selection end"
 msgstr "Indica la fine della selezione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:100
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:106
 msgid "Clear selection marks"
 msgstr "Rimuovi indicatori di selezione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:112
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:118
 msgid "Cu&t"
 msgstr "&Taglia"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:124
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:130
 msgid "&Copy"
 msgstr "&Copia"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:136
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:142
 msgid "&Paste"
 msgstr "&Incolla"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:150
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:156
 msgid "&Goto Line"
 msgstr "&Vai alla riga"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:160
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:166
 msgid "&Next Problem"
 msgstr "Problema &successivo"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:170
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:176
 msgid "&Quick Fix"
 msgstr "&Riparazione rapida"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:196
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:202
 msgid "No suggestions"
 msgstr "Nessun suggerimento"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:227
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:233
 msgid "&AutoComplete"
 msgstr "Completamento &automatico"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:237
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:243
 msgid "&Brace matching"
 msgstr "Co&rrispondenza parentesi"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:247
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:253
 msgid "&Join lines"
 msgstr "&Unisci righe"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:255
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:261
 msgid "Insert"
 msgstr "Inserisci"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:260
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:266
 msgid "Insert Special Value"
 msgstr "Inserisci valore speciale"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:272
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:278
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Snippets.pm:39
 msgid "Snippets"
 msgstr "Frammenti"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:286
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:292
 msgid "&Toggle Comment"
 msgstr "&Imposta/rimuovi commento"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:296
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:302
 msgid "&Comment Selected Lines"
 msgstr "Commenta le righe &selezionate"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:306
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:312
 msgid "&Uncomment Selected Lines"
 msgstr "&Rimuovi commento dalle righe selezionate"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:318
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:325
 msgid "Convert Encoding"
 msgstr "Converti codifica"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:325
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:332
 msgid "Encode document to System Default"
 msgstr "Codifica il documento con la modalità predefinita del sistema"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:335
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:342
 msgid "Encode document to utf-8"
 msgstr "Codifica il documento in utf-8"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:345
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:352
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Encode.pm:63
 msgid "Encode document to..."
 msgstr "Codifica il documento in..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:355
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:362
 msgid "Convert EOL"
 msgstr "Converti fine riga"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:362
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:369
 msgid "EOL to Windows"
 msgstr "Fine riga in formato Windows"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:371
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:378
 msgid "EOL to Unix"
 msgstr "Fine riga in formato Unix"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:380
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:387
 msgid "EOL to Mac Classic"
 msgstr "Fine riga in formato Mac Classic"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:390
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:397
 msgid "Tabs and Spaces"
 msgstr "Tabulazioni e spazi"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:397
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:404
 msgid "Tabs to Spaces..."
 msgstr "Da tabulazioni a spazi..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:406
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:413
 msgid "Spaces to Tabs..."
 msgstr "Da spazi a tabulazioni..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:417
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:424
 msgid "Delete Trailing Spaces"
 msgstr "Elimina spazi vuoti a fine riga"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:426
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:433
 msgid "Delete Leading Spaces"
 msgstr "Elimina spazi vuoti a inizio riga"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:436
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:443
 msgid "Upper/Lower Case"
 msgstr "Maiuscole/minuscole"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:443
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:450
 msgid "Upper All"
 msgstr "Tutto maiuscolo"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:453
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:460
 msgid "Lower All"
 msgstr "Tutto minuscolo"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:466
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:473
 msgid "Diff Tools"
 msgstr "Strumenti per le differenze:"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:473
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:480
 msgid "Diff to Saved Version"
 msgstr "Differenze rispetto alla versione salvata"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:482
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:489
 msgid "Apply Diff to File"
 msgstr "Applica differenze al file"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:490
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:497
 msgid "Apply Diff to Project"
 msgstr "Applica differenze al progetto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:499
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:506
 msgid "Insert From File..."
 msgstr "Inserisci da file..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:510
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:517
 msgid "Show as ..."
 msgstr "Mostra come..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:517
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:524
 msgid "Show as hexa"
 msgstr "Mostra come hexa"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:526
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:533
 msgid "Show as decimal"
 msgstr "Mostra come decimale"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:538
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Edit.pm:545
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/PluginManager.pm:297
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Preferences.pm:646
 msgid "Preferences"
 msgstr "Preferenze"
 
@@ -1281,88 +1338,100 @@ msgstr "Distribuzione Perl (Module::Starter)"
 msgid "&Open..."
 msgstr "&Apri..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:107
-msgid "&Close"
-msgstr "&Chiudi"
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:106
+msgid "Open &URL..."
+msgstr "Apri &URL..."
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:119
-msgid "Close..."
-msgstr "Chiudi..."
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:126
-msgid "Close All Files"
-msgstr "Chiudi tutti i file"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:135
-msgid "Close All Other Files"
-msgstr "Chiudi tutti i file meno questo"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:146
-msgid "Close This Project"
-msgstr "Chiudi questo progetto"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:152
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:172
-msgid "File is not in a project"
-msgstr "Il file non appartiene ad un progetto"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:166
-msgid "Close Other Projects"
-msgstr "Chiudi tutti i progetti meno questo"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:186
-msgid "Reload File"
-msgstr "Ricarica file"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:195
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:118
 msgid "Open Example"
 msgstr "Apri l'esempio"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:208
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:140
+msgid "Close..."
+msgstr "Chiudi..."
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:147
+msgid "Close This Project"
+msgstr "Chiudi questo progetto"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:153
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:173
+msgid "File is not in a project"
+msgstr "Il file non appartiene ad un progetto"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:167
+msgid "Close Other Projects"
+msgstr "Chiudi tutti i progetti meno questo"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:189
+msgid "Close All Files"
+msgstr "Chiudi tutti i file"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:198
+msgid "Close All Other Files"
+msgstr "Chiudi tutti i file meno questo"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:207
+msgid "Reload File"
+msgstr "Ricarica file"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:220
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Snippets.pm:114
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Preferences.pm:715
 msgid "&Save"
 msgstr "&salva"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:218
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:231
 msgid "Save &As"
 msgstr "Salva &tutto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:227
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:241
 msgid "Save All"
 msgstr "Salva tutto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:251
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:265
 msgid "Open Session"
 msgstr "Apri una sessione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:262
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:276
 msgid "Save Session"
 msgstr "Salva la sessione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:279
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:293
 msgid "&Print"
 msgstr "Stam&pa"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:299
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:313
 msgid "&Recent Files"
 msgstr "File &recenti"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:305
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:319
 msgid "Open All Recent Files"
 msgstr "Apri tutti i file recenti"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:313
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:327
 msgid "Clean Recent Files List"
 msgstr "Ripulisci elenco file recenti"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:330
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:344
 msgid "Document Statistics"
 msgstr "Statistiche documento"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:342
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:356
 msgid "&Quit"
 msgstr "&Esci"
 
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:414
+#, perl-format
+msgid "File %s not found."
+msgstr "File %s non trovato"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/File.pm:415
+msgid "Open cancelled"
+msgstr "Apertura annullata"
+
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Search.pm:38
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:151
 msgid "&Find"
 msgstr "Tro&va"
 
@@ -1388,6 +1457,7 @@ msgid "Find Previous"
 msgstr "Trova precedente"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Search.pm:140
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:241
 msgid "Replace"
 msgstr "Sostituisci"
 
@@ -1396,6 +1466,7 @@ msgid "Find in Fi&les..."
 msgstr "Trova nei fi&le..."
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Search.pm:165
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/OpenResource.pm:51
 msgid "Open Resource"
 msgstr "Apri una risorsa"
 
@@ -1420,8 +1491,8 @@ msgid "Right Click"
 msgstr "Menù contestuale"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Window.pm:91
-msgid "GoTo Subs Window"
-msgstr "Vai alla finestra delle sub"
+msgid "GoTo Functions Window"
+msgstr "Vai alla finestra delle funzioni"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Window.pm:102
 msgid "GoTo Outline Window"
@@ -1443,15 +1514,31 @@ msgstr "Vai alla finestra principale"
 msgid "Find Unmatched Brace"
 msgstr "Trova parentesi senza corrispondenza"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:109
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:62
+msgid "Check for common (beginner) errors"
+msgstr "Verifica errori comuni (da principianti)"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:98
+msgid "Extract Subroutine"
+msgstr "Estrai subroutine"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:106
+msgid "Please enter a name for the new subroutine"
+msgstr "Introduci il nome della nuova subroutine"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:107
+msgid "New Subroutine Name"
+msgstr "Nome della nuova subroutine"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:151
 msgid "Vertically Align Selected"
 msgstr "Allinea verticalmente la selezione"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:119
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:161
 msgid "Newline same column"
 msgstr "Nuova riga, stessa colonna"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:147
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Menu/Perl.pm:189
 msgid "Automatic bracket completion"
 msgstr "Completamento automatico delle parentesi"
 
@@ -1512,17 +1599,14 @@ msgid "Find and Replace"
 msgstr "Trova e sostituisci"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:95
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:88
-msgid "&Regular Expression"
-msgstr "Espressioni &Regolari"
+msgid "Regular &Expression"
+msgstr "&Espressione regolare"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:109
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:102
 msgid "Close Window on &Hit"
 msgstr "Chiudi la finestra se trovato"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:123
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:116
 msgid "Search &Backwards"
 msgstr "Cerca in &precedenza"
 
@@ -1536,18 +1620,14 @@ msgstr "&Sostituisci"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:192
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Preferences.pm:726
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:159
 msgid "&Cancel"
 msgstr "&Annulla"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:209
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:52
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:176
 msgid "Find"
 msgstr "Trova"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:217
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:184
 msgid "Find Text:"
 msgstr "Trova il testo:"
 
@@ -1556,12 +1636,24 @@ msgid "Replace Text:"
 msgstr "Testo sostitutivo"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:295
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:209
 msgid "Options"
 msgstr "Opzioni"
 
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:551
+#, perl-format
+msgid "Replaced %d matches"
+msgstr "Sostituite %d corrispondenze:"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:552
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:557
+msgid "Search and Replace"
+msgstr "Trova e sostituisci"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Replace.pm:556
+msgid "No matches found"
+msgstr "Nessuna corrispondenza"
+
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/OpenResource.pm:104
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:85
 msgid "Error while trying to perform Padre action"
 msgstr "Errore nell'esecuzione di un'azione di Padre"
 
@@ -1655,7 +1747,7 @@ msgid "Enable"
 msgstr "Abilita"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/SpecialValues.pm:38
-msgid "SpecialValue:"
+msgid "Special Value:"
 msgstr "Valore speciale:"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/SpecialValues.pm:54
@@ -1829,8 +1921,8 @@ msgid "Script arguments:"
 msgstr "Argomenti script:"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Preferences.pm:559
-msgid "Use external window for execution (xterm)"
-msgstr "Usa una finestra esterna per l'esecuzione (xterm)"
+msgid "Use external window for execution"
+msgstr "Usa una finestra esterna per l'esecuzione"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Preferences.pm:568
 msgid "Unsaved"
@@ -2010,6 +2102,10 @@ msgstr "%s apparentemente creato. Vuoi aprirlo adesso?"
 msgid "Done"
 msgstr "Fatto"
 
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:88
+msgid "&Regular Expression"
+msgstr "Espressioni &Regolari"
+
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:130
 msgid "&Find Next"
 msgstr "Trova successivo"
@@ -2018,11 +2114,16 @@ msgstr "Trova successivo"
 msgid "&Count All"
 msgstr "&Conta tutto"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:373
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:324
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Directory/SearchCtrl.pm:27
+msgid "Search"
+msgstr "Cerca"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:375
 msgid "Not a valid search"
 msgstr "Ricerca non valida"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:382
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/Find.pm:384
 #, perl-format
 msgid "Found %d matching occurrences"
 msgstr "Trovate %d corrispondenze"
@@ -2047,17 +2148,30 @@ msgstr "Ignora maiuscole/minuscole"
 msgid "Use rege&x"
 msgstr "Usa espressioni regolari"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:159
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:87
+#, perl-format
+msgid "Error while trying to perform Padre action: %s"
+msgstr "Errore nell'esecuzione di un'azione di Padre: %s"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:162
 msgid "&Type a menu item name to access:"
 msgstr "&Digita il nome di una voce di menu per accedervi:"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:166
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:169
 msgid "&Matching Menu Items:"
 msgstr "&Voci di menu corrispondenti"
 
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:325
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/QuickMenuAccess.pm:328
 msgid "Reading items. Please wait..."
 msgstr "Lettura degli elementi in corso. Attendere..."
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/OpenURL.pm:33
+msgid "Open URL"
+msgstr "Apri URL"
+
+#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/OpenURL.pm:59
+msgid "&OK"
+msgstr "&OK"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Dialog/SessionSave.pm:29
 msgid "Save session as..."
@@ -2108,10 +2222,6 @@ msgstr "&Argomenti corrispondenti"
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:32
 msgid "Failed to execute process\n"
 msgstr "Impossibile eseguire il processo\n"
-
-#: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Directory/SearchCtrl.pm:27
-msgid "Search"
-msgstr "Cerca"
 
 #: /home/simone/Padre/trunk/Padre/lib/Padre/Wx/Directory/SearchCtrl.pm:401
 msgid "Skip hidden files"
@@ -2209,6 +2319,10 @@ msgstr "Prova un plugin da una cartella locale"
 msgid "&AutoComp"
 msgstr "Completamento &automatico"
 
+#: /home/simone/Padre/trunk/Padre/blib/lib/Padre/Wx/Menu/Window.pm:91
+msgid "GoTo Subs Window"
+msgstr "Vai alla finestra delle sub"
+
 #: /home/simone/Padre/trunk/Padre/blib/lib/Padre/Wx/Dialog/Replace.pm:98
 msgid "&Use Regex"
 msgstr "&Utilizza espressioni regolari"
@@ -2234,6 +2348,10 @@ msgstr "Non posso costruire un espressione regolare con '%s'"
 #: /home/simone/Padre/trunk/Padre/blib/lib/Padre/Wx/Dialog/Replace.pm:759
 msgid "Search error"
 msgstr "Errore di ricerca"
+
+#: /home/simone/Padre/trunk/Padre/blib/lib/Padre/Wx/Dialog/Preferences.pm:523
+msgid "Use external window for execution (xterm)"
+msgstr "Usa una finestra esterna per l'esecuzione (xterm)"
 
 #: /home/simone/Padre/trunk/Padre/blib/lib/Padre/Wx/Dialog/ModuleStart.pm:147
 #, perl-format
@@ -2523,8 +2641,6 @@ msgstr "Trovate %d corrispondenze"
 #~ msgstr "Verifica cancellata"
 #~ msgid "Text to find:"
 #~ msgstr "Testo da trovare:"
-#~ msgid "Replace With"
-#~ msgstr "Sostituisci con:"
 #~ msgid "All available plugins on CPAN"
 #~ msgstr "Tutti i plugin disponibili su CAPN"
 #~ msgid "Arabic"
