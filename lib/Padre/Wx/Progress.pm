@@ -64,23 +64,23 @@ Returns a new B<Padre::Wx::Progress> or dies on error.
 sub new {
 	my $class = shift;
 
-	my $main = shift;
+	my $main  = shift;
 	my $title = shift;
-	my $max = shift;
+	my $max   = shift;
 
-	my $self  = bless { max => $max, title => $title, main => $main, start => time, @_ }, $class;
+	my $self = bless { max => $max, title => $title, main => $main, start => time, @_ }, $class;
 
-        $self->_create_progress if ! $self->{lazy};
+	$self->_create_progress if !$self->{lazy};
 	return $self;
 }
 
 sub _create_progress {
-        my $self = shift;
-        
+	my $self = shift;
+
 	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | Wx::wxPD_AUTO_HIDE;
 	$flags |= Wx::wxPD_APP_MODAL if $self->{modal};
-	
-	$self->{dialog} = Wx::ProgressDialog->new($self->{title},'text1',$self->{max},$self->{main},$flags);
+
+	$self->{dialog} = Wx::ProgressDialog->new( $self->{title}, 'text1', $self->{max}, $self->{main}, $flags );
 }
 
 =pod
@@ -94,28 +94,29 @@ Updates the progress bar.
 =cut
 
 sub update {
-	my $self = shift;
+	my $self  = shift;
 	my $value = shift;
-	my $text = shift;
+	my $text  = shift;
 
-        if ( ! defined($self->{dialog})) {
-                     # Lazy mode: Don't waste CPU time for a box which is destroyed immed.
-                     return 1 if $self->{start} >= (time - 1);
-                     $self->_create_progress;
-        }
+	if ( !defined( $self->{dialog} ) ) {
 
-	$self->{dialog}->Update($value,$text);
+		# Lazy mode: Don't waste CPU time for a box which is destroyed immed.
+		return 1 if $self->{start} >= ( time - 1 );
+		$self->_create_progress;
+	}
+
+	$self->{dialog}->Update( $value, $text );
 
 	return 1;
 }
 
 sub Destroy {
-             shift->DESTROY;
+	shift->DESTROY;
 }
 
 sub DESTROY {
-             my $self = shift;
-             $self->{dialog}->Destroy if defined($self->{dialog});
+	my $self = shift;
+	$self->{dialog}->Destroy if defined( $self->{dialog} );
 }
 
 1;
