@@ -1941,7 +1941,8 @@ sub open_session {
 	foreach my $document (@files) {
 		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 		my $filename = $document->file;
-		next unless -f $filename;
+		my $file     = Padre::File->new($filename);
+		next unless $file->exists;
 		my $id = $self->setup_editor($filename);
 		next unless $id; # documents already opened have undef $id
 		Padre::Util::debug("Setting focus on $filename");
