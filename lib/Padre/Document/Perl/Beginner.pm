@@ -207,11 +207,13 @@ Pipe | in open() not at the end or the beginning.
 
 =item *
 
-Regex starting witha a quantifyer
+Regex starting witha a quantifier such as 
+
+  /+.../
 
 =cut
 
-	if ( $text =~ /\=\~[\s\t\r\n]*\/\^?[\+\*\?\{]/ ) {
+	if ( $text =~ m{\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] }x ) {
 		$self->{error} =
 			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.";
 		return;
