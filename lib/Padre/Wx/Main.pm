@@ -1940,7 +1940,7 @@ sub open_session {
 			$session->name,
 		),
 		$#files + 1,
-		lazy  => 1);
+		lazy  => 0);
 
 	# Close all files
 	# This takes some time, so do it after the progress dialog was displayed
