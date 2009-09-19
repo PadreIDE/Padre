@@ -3930,10 +3930,11 @@ sub convert_to {
 	my $newline = shift;
 	my $current = $self->current;
 	my $editor  = $current->editor;
-	SCOPE: {
-		no warnings 'once'; # TODO eliminate?
-		$editor->ConvertEOLs( $Padre::Wx::Editor::mode{$newline} );
-	}
+
+	# Convert and Set the EOL mode for pastes to work correctly
+	my $eol_mode = $Padre::Wx::Editor::mode{$newline};
+	$editor->ConvertEOLs( $eol_mode );
+	$editor->SetEOLMode( $eol_mode );
 
 	# TODO: include the changing of file type in the undo/redo actions
 	# or better yet somehow fetch it from the document when it is needed.
