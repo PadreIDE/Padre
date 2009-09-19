@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-17 16:24+0300\n"
-"PO-Revision-Date: 2009-09-17 16:26+0200\n"
+"POT-Creation-Date: 2009-09-19 20:23+0300\n"
+"PO-Revision-Date: 2009-09-19 20:25+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -54,12 +54,12 @@ msgstr "أدوات الوثيقة (اليمين)"
 msgid "Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
 msgstr "لا يمكن فتح %s لان حجم الملف أكبر من الحدود المسموحه في Padre والتي هي %s"
 
-#: lib/Padre/Document.pm:381
+#: lib/Padre/Document.pm:383
 #: lib/Padre/Task/SyntaxChecker.pm:181
-#: lib/Padre/Wx/Editor.pm:123
-#: lib/Padre/Wx/Main.pm:1762
-#: lib/Padre/Wx/Main.pm:2015
-#: lib/Padre/Wx/Main.pm:3132
+#: lib/Padre/Wx/Editor.pm:127
+#: lib/Padre/Wx/Main.pm:1763
+#: lib/Padre/Wx/Main.pm:2033
+#: lib/Padre/Wx/Main.pm:3152
 #: lib/Padre/Wx/Syntax.pm:84
 #: lib/Padre/Wx/Syntax.pm:87
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:154
@@ -76,13 +76,13 @@ msgstr "لا يمكن فتح %s لان حجم الملف أكبر من الحد�
 msgid "Error"
 msgstr "خطأ"
 
-#: lib/Padre/Document.pm:712
+#: lib/Padre/Document.pm:724
 #, perl-format
 msgid "Unsaved %d"
 msgstr "غير محفوظ %d"
 
-#: lib/Padre/Document.pm:984
-#: lib/Padre/Document.pm:985
+#: lib/Padre/Document.pm:996
+#: lib/Padre/Document.pm:997
 msgid "Skipped for large files"
 msgstr "تم التخطي للملفات الكبيرة"
 
@@ -313,13 +313,13 @@ msgid "Error when calling menu for plugin"
 msgstr "خطأ عند مناداه قائمه البرنامج المساعد"
 
 #: lib/Padre/PluginManager.pm:817
-#: lib/Padre/Wx/Main.pm:1598
-#: lib/Padre/Wx/Main.pm:1639
+#: lib/Padre/Wx/Main.pm:1600
+#: lib/Padre/Wx/Main.pm:1641
 msgid "No document open"
 msgstr "No document open"
 
 #: lib/Padre/PluginManager.pm:821
-#: lib/Padre/Wx/Main.pm:4224
+#: lib/Padre/Wx/Main.pm:4245
 #: lib/Padre/Wx/Directory/OpenInFileBrowserAction.pm:47
 msgid "No filename"
 msgstr "بلا اسم ملف"
@@ -339,7 +339,7 @@ msgstr ""
 "%s"
 
 #: lib/Padre/PluginManager.pm:895
-#: lib/Padre/Wx/Main.pm:3897
+#: lib/Padre/Wx/Main.pm:3917
 msgid "Open file"
 msgstr "فتح الملف"
 
@@ -405,31 +405,31 @@ msgid "Check cancelled"
 msgstr "تم الغاء الفحص"
 
 #: lib/Padre/Document/Perl.pm:750
-#: lib/Padre/Wx/Menu/Perl.pm:51
+#: lib/Padre/Wx/Menu/Perl.pm:64
 msgid "Find Variable Declaration"
 msgstr "ايجاد اعلان متغير"
 
 #: lib/Padre/Document/Perl.pm:762
-#: lib/Padre/Wx/Menu/Perl.pm:76
+#: lib/Padre/Wx/Menu/Perl.pm:78
 msgid "Lexically Rename Variable"
 msgstr "اعاده تسميه المتغير ضمن النطاق"
 
 #: lib/Padre/Document/Perl.pm:774
 #: lib/Padre/Document/Perl.pm:775
-#: lib/Padre/Wx/Menu/Perl.pm:83
-#: lib/Padre/Wx/Menu/Perl.pm:84
+#: lib/Padre/Wx/Menu/Perl.pm:85
+#: lib/Padre/Wx/Menu/Perl.pm:86
 msgid "Replacement"
 msgstr "بديل"
 
 #: lib/Padre/Document/Perl.pm:792
-#: lib/Padre/Wx/Menu/Perl.pm:129
+#: lib/Padre/Wx/Menu/Perl.pm:131
 msgid "Introduce Temporary Variable"
 msgstr "إدخال متغير مؤقت"
 
 #: lib/Padre/Document/Perl.pm:805
 #: lib/Padre/Document/Perl.pm:806
-#: lib/Padre/Wx/Menu/Perl.pm:136
-#: lib/Padre/Wx/Menu/Perl.pm:137
+#: lib/Padre/Wx/Menu/Perl.pm:138
+#: lib/Padre/Wx/Menu/Perl.pm:139
 msgid "Variable Name"
 msgstr "اسم المتغير"
 
@@ -496,7 +496,7 @@ msgstr "دعم wxPerl المباشر"
 
 #: lib/Padre/Plugin/Devel.pm:105
 #: lib/Padre/Plugin/PopularityContest.pm:122
-#: lib/Padre/Wx/About.pm:21
+#: lib/Padre/Wx/About.pm:23
 msgid "About"
 msgstr "حول"
 
@@ -509,7 +509,7 @@ msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr "مجموعة ادوات غير مترابطة ومستخدمة من مطوري Padre\n"
 
 #: lib/Padre/Plugin/Devel.pm:226
-#: lib/Padre/Wx/Main.pm:4014
+#: lib/Padre/Wx/Main.pm:4035
 #, perl-format
 msgid "Error: %s"
 msgstr "خطأ: %s"
@@ -578,22 +578,30 @@ msgstr "هل الاختيار ليس من ضمن جملة Perl?"
 msgid "Replace Operation Canceled"
 msgstr "تم الغاء عملية التبديل"
 
-#: lib/Padre/Wx/About.pm:191
+#: lib/Padre/Wx/About.pm:55
+msgid "The Padre Development Team"
+msgstr "فريق مطوري برنامج Padre"
+
+#: lib/Padre/Wx/About.pm:115
+msgid "The Padre Translation Team"
+msgstr "فريق ترجمة Padre"
+
+#: lib/Padre/Wx/About.pm:203
 #: lib/Padre/Wx/Menu/View.pm:323
 msgid "Padre"
 msgstr "برنامج Padre"
 
-#: lib/Padre/Wx/About.pm:196
+#: lib/Padre/Wx/About.pm:208
 msgid "Development"
 msgstr "التطوير"
 
-#: lib/Padre/Wx/About.pm:201
+#: lib/Padre/Wx/About.pm:213
 msgid "Translation"
 msgstr "الترجمة"
 
-#: lib/Padre/Wx/About.pm:214
+#: lib/Padre/Wx/About.pm:226
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:156
-#: lib/Padre/Wx/Menu/File.pm:129
+#: lib/Padre/Wx/Menu/File.pm:128
 msgid "&Close"
 msgstr "ا&غلاق"
 
@@ -669,52 +677,52 @@ msgstr "بلا اسم"
 msgid "NAME"
 msgstr "الاسم"
 
-#: lib/Padre/Wx/Editor.pm:841
+#: lib/Padre/Wx/Editor.pm:845
 msgid "Select all\tCtrl-A"
 msgstr "اختيار الكل\tCtrl-A"
 
-#: lib/Padre/Wx/Editor.pm:852
+#: lib/Padre/Wx/Editor.pm:856
 msgid "&Copy\tCtrl-C"
 msgstr "&نسخ\tCtrl-C"
 
-#: lib/Padre/Wx/Editor.pm:864
+#: lib/Padre/Wx/Editor.pm:868
 msgid "Cu&t\tCtrl-X"
 msgstr "&قص\tCtrl-X"
 
-#: lib/Padre/Wx/Editor.pm:876
+#: lib/Padre/Wx/Editor.pm:880
 msgid "&Paste\tCtrl-V"
 msgstr "&لصق\tCtrl-V"
 
-#: lib/Padre/Wx/Editor.pm:893
+#: lib/Padre/Wx/Editor.pm:897
 msgid "&Toggle Comment\tCtrl-Shift-C"
 msgstr "&تبديل التعليق\tCtrl-Shift-C"
 
-#: lib/Padre/Wx/Editor.pm:901
+#: lib/Padre/Wx/Editor.pm:905
 msgid "&Comment Selected Lines\tCtrl-M"
 msgstr "ا&ضافه تعليق للاسطر المختاره\tCtrl-M"
 
-#: lib/Padre/Wx/Editor.pm:908
+#: lib/Padre/Wx/Editor.pm:912
 msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 msgstr "ا&زاله التعليق من الاسطر المختاره\tCtrl-Shift-M"
 
-#: lib/Padre/Wx/Editor.pm:929
+#: lib/Padre/Wx/Editor.pm:933
 msgid "Fold all"
 msgstr "طي الكل"
 
-#: lib/Padre/Wx/Editor.pm:936
+#: lib/Padre/Wx/Editor.pm:940
 msgid "Unfold all"
 msgstr "الغاء طي الكل"
 
-#: lib/Padre/Wx/Editor.pm:949
+#: lib/Padre/Wx/Editor.pm:953
 #: lib/Padre/Wx/Menu/Window.pm:33
 msgid "&Split window"
 msgstr "تقسيم النافذة&"
 
-#: lib/Padre/Wx/Editor.pm:1324
+#: lib/Padre/Wx/Editor.pm:1383
 msgid "You must select a range of lines"
 msgstr "يجب ان تختار مجموعه من الاسطر"
 
-#: lib/Padre/Wx/Editor.pm:1340
+#: lib/Padre/Wx/Editor.pm:1399
 msgid "First character of selection must be a non-word character to align"
 msgstr "لمحاذاه اول حرف من الاختيار وجب ان يكون من غير احرف الكلمات"
 
@@ -738,271 +746,275 @@ msgstr "اظهار الوظائف"
 msgid "Project Tools"
 msgstr "أدوات المشروع"
 
-#: lib/Padre/Wx/Main.pm:499
+#: lib/Padre/Wx/Main.pm:501
 #, perl-format
 msgid "No such session %s"
 msgstr "الجلسه غير موجودة %s"
 
-#: lib/Padre/Wx/Main.pm:663
+#: lib/Padre/Wx/Main.pm:665
 msgid "Failed to create server"
 msgstr "فشل تشغيل خادم"
 
-#: lib/Padre/Wx/Main.pm:1568
+#: lib/Padre/Wx/Main.pm:1570
 msgid "Command line"
 msgstr "سطر الاوامر"
 
-#: lib/Padre/Wx/Main.pm:1569
+#: lib/Padre/Wx/Main.pm:1571
 msgid "Run setup"
 msgstr "تشغيل الإعداد"
 
-#: lib/Padre/Wx/Main.pm:1604
-#: lib/Padre/Wx/Main.pm:1645
+#: lib/Padre/Wx/Main.pm:1606
+#: lib/Padre/Wx/Main.pm:1647
 msgid "Current document has no filename"
 msgstr "ليس للوثيقه الحاليه اسم"
 
-#: lib/Padre/Wx/Main.pm:1610
-#: lib/Padre/Wx/Main.pm:1654
+#: lib/Padre/Wx/Main.pm:1612
+#: lib/Padre/Wx/Main.pm:1656
 msgid "Could not find project root"
 msgstr "فشل العثور على جذر المشروع"
 
-#: lib/Padre/Wx/Main.pm:1648
+#: lib/Padre/Wx/Main.pm:1650
 msgid "Current document is not a .t file"
 msgstr "الوثيقة الحالية ليست ملف .t"
 
-#: lib/Padre/Wx/Main.pm:1761
+#: lib/Padre/Wx/Main.pm:1762
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr "فشل تشغيل الامر '%s'"
 
-#: lib/Padre/Wx/Main.pm:1788
+#: lib/Padre/Wx/Main.pm:1789
 msgid "No open document"
 msgstr "لا يوجد أي وثيقه مفتوحه"
 
-#: lib/Padre/Wx/Main.pm:1805
+#: lib/Padre/Wx/Main.pm:1806
 msgid "No execution mode was defined for this document"
 msgstr "لا توجد طريقة تنفيذ لهذه الوثيقة"
 
-#: lib/Padre/Wx/Main.pm:1839
+#: lib/Padre/Wx/Main.pm:1840
 msgid "Not a Perl document"
 msgstr "ليس وثيقه بيرل"
 
-#: lib/Padre/Wx/Main.pm:1998
+#: lib/Padre/Wx/Main.pm:1939
+#, perl-format
+msgid "Opening session %s..."
+msgstr "جاري فتح الجلسة %s..."
+
+#: lib/Padre/Wx/Main.pm:1968
+msgid "Restore focus..."
+msgstr "استعادة التركيز..."
+
+#: lib/Padre/Wx/Main.pm:2016
 msgid "Message"
 msgstr "رساله"
 
-#: lib/Padre/Wx/Main.pm:2284
+#: lib/Padre/Wx/Main.pm:2302
 msgid "Autocompletion error"
 msgstr "خطأ في الاكمال التلقائي"
 
-#: lib/Padre/Wx/Main.pm:2311
+#: lib/Padre/Wx/Main.pm:2329
 #, perl-format
 msgid "Line number between (1-%s):"
 msgstr "رقم السطر بين (1-%s):"
 
-#: lib/Padre/Wx/Main.pm:2312
+#: lib/Padre/Wx/Main.pm:2330
 msgid "Go to line number"
 msgstr "الذهاب الى السطر رقم"
 
-#: lib/Padre/Wx/Main.pm:2683
+#: lib/Padre/Wx/Main.pm:2701
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "بلا أي اختيار. ادخل ما يجب ان يفتح:"
 
-#: lib/Padre/Wx/Main.pm:2684
+#: lib/Padre/Wx/Main.pm:2702
 msgid "Open selection"
 msgstr "فتح الاختيار"
 
-#: lib/Padre/Wx/Main.pm:2751
+#: lib/Padre/Wx/Main.pm:2769
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "لا يمكن العثور على الملف '%s'"
 
-#: lib/Padre/Wx/Main.pm:2752
-#: lib/Padre/Wx/Menu/File.pm:256
+#: lib/Padre/Wx/Main.pm:2770
+#: lib/Padre/Wx/Menu/File.pm:255
 msgid "Open Selection"
 msgstr "فتح الاختيار"
 
-#: lib/Padre/Wx/Main.pm:2806
-#: lib/Padre/Wx/Dialog/OpenURL.pm:33
-msgid "Open URL"
-msgstr "فتح الرابط"
-
-#: lib/Padre/Wx/Main.pm:2849
+#: lib/Padre/Wx/Main.pm:2869
 msgid "JavaScript Files"
 msgstr "ملفات JavaScript"
 
-#: lib/Padre/Wx/Main.pm:2851
+#: lib/Padre/Wx/Main.pm:2871
 msgid "Perl Files"
 msgstr "ملفات Perl"
 
-#: lib/Padre/Wx/Main.pm:2853
+#: lib/Padre/Wx/Main.pm:2873
 msgid "PHP Files"
 msgstr "ملفات PHP"
 
-#: lib/Padre/Wx/Main.pm:2855
+#: lib/Padre/Wx/Main.pm:2875
 msgid "Python Files"
 msgstr "ملفات Python"
 
-#: lib/Padre/Wx/Main.pm:2857
+#: lib/Padre/Wx/Main.pm:2877
 msgid "Ruby Files"
 msgstr "ملفات Ruby"
 
-#: lib/Padre/Wx/Main.pm:2859
+#: lib/Padre/Wx/Main.pm:2879
 msgid "SQL Files"
 msgstr "ملفات SQL"
 
-#: lib/Padre/Wx/Main.pm:2861
+#: lib/Padre/Wx/Main.pm:2881
 msgid "Text Files"
 msgstr "ملفات نصيه"
 
-#: lib/Padre/Wx/Main.pm:2863
+#: lib/Padre/Wx/Main.pm:2883
 msgid "Web Files"
 msgstr "ملفات ويب"
 
-#: lib/Padre/Wx/Main.pm:2868
-#: lib/Padre/Wx/Main.pm:2869
+#: lib/Padre/Wx/Main.pm:2888
+#: lib/Padre/Wx/Main.pm:2889
 msgid "All Files"
 msgstr "كل الملفات"
 
-#: lib/Padre/Wx/Main.pm:2871
+#: lib/Padre/Wx/Main.pm:2891
 msgid "Open File"
 msgstr "فتح ملف"
 
-#: lib/Padre/Wx/Main.pm:2889
+#: lib/Padre/Wx/Main.pm:2909
 #, perl-format
 msgid "Filename %s contains * or ? which are special chars on most computers. Skip?"
 msgstr "الملف %s يحتوي على * أو ? والتي تكون أحرف خاصة على معظم الحواسيب. هل تريد المتابعة؟"
 
-#: lib/Padre/Wx/Main.pm:2892
 #: lib/Padre/Wx/Main.pm:2912
+#: lib/Padre/Wx/Main.pm:2932
 msgid "Open Warning"
 msgstr "فتح التحذير"
 
-#: lib/Padre/Wx/Main.pm:2909
+#: lib/Padre/Wx/Main.pm:2929
 #, perl-format
 msgid "Filename %s does not exist on disk. Skip?"
 msgstr "الملف %s غير موجود على القرص. هل تريد المتابعة?"
 
-#: lib/Padre/Wx/Main.pm:2955
-#: lib/Padre/Wx/Main.pm:4409
+#: lib/Padre/Wx/Main.pm:2975
+#: lib/Padre/Wx/Main.pm:4430
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "لا يمكن اعاده تحميل الملف: %s"
 
-#: lib/Padre/Wx/Main.pm:2985
+#: lib/Padre/Wx/Main.pm:3005
 msgid "Save file as..."
 msgstr "حفظ الملف ك..."
 
-#: lib/Padre/Wx/Main.pm:3009
+#: lib/Padre/Wx/Main.pm:3029
 msgid "File already exists. Overwrite it?"
 msgstr "الملف موجود بالفعل. هل تريد الكتابة فوقه؟"
 
-#: lib/Padre/Wx/Main.pm:3010
+#: lib/Padre/Wx/Main.pm:3030
 msgid "Exist"
 msgstr "موجود"
 
-#: lib/Padre/Wx/Main.pm:3121
+#: lib/Padre/Wx/Main.pm:3141
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr "الملف على القرص تغير منذ آخر حفظ. هل تريد استبداله؟"
 
-#: lib/Padre/Wx/Main.pm:3122
-#: lib/Padre/Wx/Main.pm:4401
+#: lib/Padre/Wx/Main.pm:3142
+#: lib/Padre/Wx/Main.pm:4422
 msgid "File not in sync"
 msgstr "الملف غير متزامن"
 
-#: lib/Padre/Wx/Main.pm:3131
+#: lib/Padre/Wx/Main.pm:3151
 msgid "Could not save file: "
 msgstr "لا يمكن حفظ الملف :"
 
-#: lib/Padre/Wx/Main.pm:3197
+#: lib/Padre/Wx/Main.pm:3217
 msgid "File changed. Do you want to save it?"
 msgstr "تغير الملف. هل تريد حفظه؟"
 
-#: lib/Padre/Wx/Main.pm:3198
+#: lib/Padre/Wx/Main.pm:3218
 msgid "Unsaved File"
 msgstr "ملف غير محفوظ"
 
-#: lib/Padre/Wx/Main.pm:3385
+#: lib/Padre/Wx/Main.pm:3405
 msgid "Cannot diff if file was never saved"
 msgstr "فشل العثور على التغييرات في حاله عدم حفظ الملف من قبل"
 
-#: lib/Padre/Wx/Main.pm:3409
+#: lib/Padre/Wx/Main.pm:3429
 msgid "There are no differences\n"
 msgstr "لا توجد فروقات\n"
 
-#: lib/Padre/Wx/Main.pm:4015
+#: lib/Padre/Wx/Main.pm:4036
 msgid "Internal error"
 msgstr "خطأ داخلي"
 
-#: lib/Padre/Wx/Main.pm:4212
+#: lib/Padre/Wx/Main.pm:4233
 #, perl-format
 msgid "Words: %s"
 msgstr "كلمات: %s"
 
-#: lib/Padre/Wx/Main.pm:4213
+#: lib/Padre/Wx/Main.pm:4234
 #, perl-format
 msgid "Lines: %d"
 msgstr "اسطر: %d"
 
-#: lib/Padre/Wx/Main.pm:4214
+#: lib/Padre/Wx/Main.pm:4235
 #, perl-format
 msgid "Chars without spaces: %s"
 msgstr "أحرف بدون مسافات: %s"
 
-#: lib/Padre/Wx/Main.pm:4215
+#: lib/Padre/Wx/Main.pm:4236
 #, perl-format
 msgid "Chars with spaces: %d"
 msgstr "أحرف مع مسافات: %d"
 
-#: lib/Padre/Wx/Main.pm:4216
+#: lib/Padre/Wx/Main.pm:4237
 #, perl-format
 msgid "Newline type: %s"
 msgstr "نوع حرف السطر الجديد : %s"
 
-#: lib/Padre/Wx/Main.pm:4217
+#: lib/Padre/Wx/Main.pm:4238
 #, perl-format
 msgid "Encoding: %s"
 msgstr "ترميز: %s"
 
-#: lib/Padre/Wx/Main.pm:4219
+#: lib/Padre/Wx/Main.pm:4240
 #, perl-format
 msgid "Document type: %s"
 msgstr "نوع الوثيقه : %s"
 
-#: lib/Padre/Wx/Main.pm:4220
+#: lib/Padre/Wx/Main.pm:4241
 msgid "none"
 msgstr "بلا"
 
-#: lib/Padre/Wx/Main.pm:4223
+#: lib/Padre/Wx/Main.pm:4244
 #, perl-format
 msgid "Filename: %s"
 msgstr "اسم الملف:  %s"
 
-#: lib/Padre/Wx/Main.pm:4256
+#: lib/Padre/Wx/Main.pm:4277
 msgid "Space to Tab"
 msgstr "تحويل المسافات الى Tabs"
 
-#: lib/Padre/Wx/Main.pm:4257
+#: lib/Padre/Wx/Main.pm:4278
 msgid "Tab to Space"
 msgstr "تحويل Tabs الى مسافات..."
 
-#: lib/Padre/Wx/Main.pm:4262
+#: lib/Padre/Wx/Main.pm:4283
 msgid "How many spaces for each tab:"
 msgstr "كم عدد المسافات لكل تبويبه:"
 
-#: lib/Padre/Wx/Main.pm:4394
+#: lib/Padre/Wx/Main.pm:4415
 msgid "File has been deleted on disk, do you want to CLEAR the editor window?"
 msgstr "تم الغاء الملف على القرص، هل تريد تنظيف نافذة المحرر؟"
 
-#: lib/Padre/Wx/Main.pm:4396
+#: lib/Padre/Wx/Main.pm:4417
 msgid "File changed on disk since last saved. Do you want to reload it?"
 msgstr "الملف على القرص تغير منذ آخر حفظ. هل تريد اعادة تحميله؟"
 
-#: lib/Padre/Wx/Main.pm:4483
+#: lib/Padre/Wx/Main.pm:4504
 #, perl-format
 msgid "Error loading template file '%s'"
 msgstr "فشل تحميل ملف القالب '%s'"
 
-#: lib/Padre/Wx/Main.pm:4650
+#: lib/Padre/Wx/Main.pm:4671
 msgid "Need to select text in order to translate to hex"
 msgstr "وجب اختيار نص للتحويل إلى الست عشري"
 
@@ -1162,6 +1174,7 @@ msgid "&Count All"
 msgstr "&تعداد الكل"
 
 #: lib/Padre/Wx/Dialog/Find.pm:159
+#: lib/Padre/Wx/Dialog/OpenURL.pm:72
 #: lib/Padre/Wx/Dialog/Preferences.pm:726
 #: lib/Padre/Wx/Dialog/Replace.pm:192
 msgid "&Cancel"
@@ -1178,7 +1191,7 @@ msgid "Options"
 msgstr "الاختيارات"
 
 #: lib/Padre/Wx/Dialog/Find.pm:324
-#: lib/Padre/Wx/Dialog/Replace.pm:536
+#: lib/Padre/Wx/Dialog/Replace.pm:556
 msgid "No matches found"
 msgstr "لا يوجد أي مطابقة"
 
@@ -1301,6 +1314,14 @@ msgstr "تخطي ملفات VCS"
 #: lib/Padre/Wx/Dialog/OpenResource.pm:230
 msgid "Skip using MANIFEST.SKIP"
 msgstr "تخطي بواسطة MANIFEST.SKIP"
+
+#: lib/Padre/Wx/Dialog/OpenURL.pm:33
+msgid "Open URL"
+msgstr "فتح الرابط"
+
+#: lib/Padre/Wx/Dialog/OpenURL.pm:57
+msgid "&OK"
+msgstr "&موافق"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:43
 #: lib/Padre/Wx/Menu/Plugins.pm:39
@@ -1572,7 +1593,7 @@ msgstr "الادوات الخارجية"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:715
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
-#: lib/Padre/Wx/Menu/File.pm:221
+#: lib/Padre/Wx/Menu/File.pm:220
 msgid "&Save"
 msgstr "&حفظ"
 
@@ -1664,13 +1685,13 @@ msgstr "استبدال"
 msgid "Replace Text:"
 msgstr "نص التبديل:"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:531
+#: lib/Padre/Wx/Dialog/Replace.pm:551
 #, perl-format
 msgid "Replaced %d matches"
 msgstr "تم استبدال %d مطابقة"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:532
-#: lib/Padre/Wx/Dialog/Replace.pm:537
+#: lib/Padre/Wx/Dialog/Replace.pm:552
+#: lib/Padre/Wx/Dialog/Replace.pm:557
 msgid "Search and Replace"
 msgstr "البحث والتبديل"
 
@@ -2068,89 +2089,89 @@ msgstr "وحده توزيع بيرل (Module::Starter)"
 msgid "&Open..."
 msgstr "&فتح..."
 
-#: lib/Padre/Wx/Menu/File.pm:108
-msgid "Open &URL"
-msgstr "فتح ال&رابط"
+#: lib/Padre/Wx/Menu/File.pm:106
+msgid "Open &URL..."
+msgstr "فتح ال&رابط..."
 
-#: lib/Padre/Wx/Menu/File.pm:119
+#: lib/Padre/Wx/Menu/File.pm:118
 msgid "Open Example"
 msgstr "فتح المثال"
 
-#: lib/Padre/Wx/Menu/File.pm:141
+#: lib/Padre/Wx/Menu/File.pm:140
 msgid "Close..."
 msgstr "اغلاق..."
 
-#: lib/Padre/Wx/Menu/File.pm:148
+#: lib/Padre/Wx/Menu/File.pm:147
 msgid "Close This Project"
 msgstr "اغلاق هذا المشروع"
 
-#: lib/Padre/Wx/Menu/File.pm:154
-#: lib/Padre/Wx/Menu/File.pm:174
+#: lib/Padre/Wx/Menu/File.pm:153
+#: lib/Padre/Wx/Menu/File.pm:173
 msgid "File is not in a project"
 msgstr "الملف ليس في مشروع"
 
-#: lib/Padre/Wx/Menu/File.pm:168
+#: lib/Padre/Wx/Menu/File.pm:167
 msgid "Close Other Projects"
 msgstr "اغلاق المشاريع الأخرى"
 
-#: lib/Padre/Wx/Menu/File.pm:190
+#: lib/Padre/Wx/Menu/File.pm:189
 msgid "Close All Files"
 msgstr "اغلاق كل الملفات"
 
-#: lib/Padre/Wx/Menu/File.pm:199
+#: lib/Padre/Wx/Menu/File.pm:198
 msgid "Close All Other Files"
 msgstr "اغلاق الملف الأخرى"
 
-#: lib/Padre/Wx/Menu/File.pm:208
+#: lib/Padre/Wx/Menu/File.pm:207
 msgid "Reload File"
 msgstr "اعادة تحميل الملف"
 
-#: lib/Padre/Wx/Menu/File.pm:232
+#: lib/Padre/Wx/Menu/File.pm:231
 msgid "Save &As"
 msgstr "حفظ &ك"
 
-#: lib/Padre/Wx/Menu/File.pm:242
+#: lib/Padre/Wx/Menu/File.pm:241
 msgid "Save All"
 msgstr "حفظ الكل"
 
-#: lib/Padre/Wx/Menu/File.pm:266
+#: lib/Padre/Wx/Menu/File.pm:265
 msgid "Open Session"
 msgstr "فتح الجلسة"
 
-#: lib/Padre/Wx/Menu/File.pm:277
+#: lib/Padre/Wx/Menu/File.pm:276
 msgid "Save Session"
 msgstr "حفظ الجلسة ك"
 
-#: lib/Padre/Wx/Menu/File.pm:294
+#: lib/Padre/Wx/Menu/File.pm:293
 msgid "&Print"
 msgstr "&طباعه"
 
-#: lib/Padre/Wx/Menu/File.pm:314
+#: lib/Padre/Wx/Menu/File.pm:313
 msgid "&Recent Files"
 msgstr "ملفات الا&خيره"
 
-#: lib/Padre/Wx/Menu/File.pm:320
+#: lib/Padre/Wx/Menu/File.pm:319
 msgid "Open All Recent Files"
 msgstr "فتح جميع الملفات الاخيرة"
 
-#: lib/Padre/Wx/Menu/File.pm:328
+#: lib/Padre/Wx/Menu/File.pm:327
 msgid "Clean Recent Files List"
 msgstr "حذف قائمه الملفات الاخيرة"
 
-#: lib/Padre/Wx/Menu/File.pm:345
+#: lib/Padre/Wx/Menu/File.pm:344
 msgid "Document Statistics"
 msgstr "احصائيات الوثيقه"
 
-#: lib/Padre/Wx/Menu/File.pm:357
+#: lib/Padre/Wx/Menu/File.pm:356
 msgid "&Quit"
 msgstr "&خروج"
 
-#: lib/Padre/Wx/Menu/File.pm:415
+#: lib/Padre/Wx/Menu/File.pm:414
 #, perl-format
 msgid "File %s not found."
 msgstr "الملف %s غير موجود."
 
-#: lib/Padre/Wx/Menu/File.pm:416
+#: lib/Padre/Wx/Menu/File.pm:415
 msgid "Open cancelled"
 msgstr "تم الغاء الفتح"
 
@@ -2203,34 +2224,34 @@ msgid "&About"
 msgstr "حول&"
 
 #: lib/Padre/Wx/Menu/Perl.pm:40
-msgid "Find Unmatched Brace"
-msgstr "ايجاد قوص بلا مثيل"
-
-#: lib/Padre/Wx/Menu/Perl.pm:62
 msgid "Check for common (beginner) errors"
 msgstr "تأكد من أخطاء (المبتدئين) الشائعة"
 
-#: lib/Padre/Wx/Menu/Perl.pm:98
+#: lib/Padre/Wx/Menu/Perl.pm:53
+msgid "Find Unmatched Brace"
+msgstr "ايجاد قوص بلا مثيل"
+
+#: lib/Padre/Wx/Menu/Perl.pm:100
 msgid "Extract Subroutine"
 msgstr "استخراج روتين ثانوياستخراج روتين ثانوي"
 
-#: lib/Padre/Wx/Menu/Perl.pm:106
+#: lib/Padre/Wx/Menu/Perl.pm:108
 msgid "Please enter a name for the new subroutine"
 msgstr "الرجاء ادخال اسم للروتين الثانوي الجديد"
 
-#: lib/Padre/Wx/Menu/Perl.pm:107
+#: lib/Padre/Wx/Menu/Perl.pm:109
 msgid "New Subroutine Name"
 msgstr "اسم روتين ثانوي جديد"
 
-#: lib/Padre/Wx/Menu/Perl.pm:151
+#: lib/Padre/Wx/Menu/Perl.pm:155
 msgid "Vertically Align Selected"
 msgstr "محاذاة الاسطر المختاره عموديا"
 
-#: lib/Padre/Wx/Menu/Perl.pm:161
+#: lib/Padre/Wx/Menu/Perl.pm:165
 msgid "Newline same column"
 msgstr "سطر الجديد بنفس العمود"
 
-#: lib/Padre/Wx/Menu/Perl.pm:189
+#: lib/Padre/Wx/Menu/Perl.pm:193
 msgid "Automatic bracket completion"
 msgstr "تكميل الأقواص الاتوماتيكي"
 
@@ -2522,13 +2543,12 @@ msgstr "ذهاب الى نافذه فحص بناء الجمل"
 msgid "GoTo Main Window"
 msgstr "ذهاب الى النافذه الرئيسيه"
 
-#, fuzzy
-#~ msgid "Open &URL..."
-#~ msgstr "&فتح..."
-#~ msgid "GoTo Subs Window"
-#~ msgstr "ذهاب الى نافذه الوظائف الفرعيه"
 #~ msgid "folder"
 #~ msgstr "مجلد"
+#~ msgid "Open &URL"
+#~ msgstr "فتح ال&رابط"
+#~ msgid "GoTo Subs Window"
+#~ msgstr "ذهاب الى نافذه الوظائف الفرعيه"
 #~ msgid "&Use Regex"
 #~ msgstr "ا&ستخدام ال Regex"
 #~ msgid "Close Window on &hit"
@@ -2545,8 +2565,6 @@ msgstr "ذهاب الى النافذه الرئيسيه"
 #~ msgstr "فحص برنامج مساعد من الدليل المحلي"
 #~ msgid "Install Module..."
 #~ msgstr "تثبيت وحده..."
-#~ msgid "Copyright 2008 - 2009 The Padre Development Team"
-#~ msgstr "حقوق الطبع 2008 - 2009 فريق مطوري برنامج Padre"
 #~ msgid "Plugin:%s - Failed to load module: %s"
 #~ msgstr "البرنامج المساعد:%s - فشل تحميل الوحده: %s"
 #~ msgid ""
