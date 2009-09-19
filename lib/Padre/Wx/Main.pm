@@ -1661,7 +1661,6 @@ sub on_run_this_test {
 	require File::Which;
 	my $prove = File::Which::which('prove');
 	if (Padre::Util::WIN32) {
-		print qq{"$prove" -bv "$filename"\n};
 		$self->run_command(qq{"$prove" -bv "$filename"});
 	} else {
 		$self->run_command("$prove -bv $filename");
