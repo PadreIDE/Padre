@@ -26,7 +26,7 @@ sub new {
 	);
 
 	# Until we get a real icon use the same one as the others
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Create the content for the About window
 	my $splash = Padre::Util::sharefile('padre-splash.bmp');

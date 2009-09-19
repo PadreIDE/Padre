@@ -13,16 +13,16 @@ use Padre::Wx::FileDropTarget ();
 our $VERSION = '0.46';
 our @ISA     = 'Wx::StyledTextCtrl';
 
-# End-Of-Line modes: 
-# MAC is actually Mac classic. 
+# End-Of-Line modes:
+# MAC is actually Mac classic.
 # MAC OS X and later uses UNIX EOLs
 #
 # Please note that WIN32 is the API. DO NOT change it to that :)
 #
 our %mode = (
-	WIN   => Wx::wxSTC_EOL_CRLF,
-	MAC   => Wx::wxSTC_EOL_CR,
-	UNIX  => Wx::wxSTC_EOL_LF,
+	WIN  => Wx::wxSTC_EOL_CRLF,
+	MAC  => Wx::wxSTC_EOL_CR,
+	UNIX => Wx::wxSTC_EOL_LF,
 );
 
 # mapping for mime-type to the style name in the share/styles/default.yml file
@@ -899,14 +899,14 @@ sub on_right_down {
 		$main,
 		$commentToggle,
 		sub {
-			Padre::Wx::Main::on_comment_block($_[0], 'TOGGLE');
+			Padre::Wx::Main::on_comment_block( $_[0], 'TOGGLE' );
 		},
 	);
 	my $comment = $menu->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
 	Wx::Event::EVT_MENU(
 		$main, $comment,
 		sub {
-			Padre::Wx::Main::on_comment_block($_[0], 'COMMENT');
+			Padre::Wx::Main::on_comment_block( $_[0], 'COMMENT' );
 		},
 	);
 	my $uncomment = $menu->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
@@ -914,7 +914,7 @@ sub on_right_down {
 		$main,
 		$uncomment,
 		sub {
-			Padre::Wx::Main::on_comment_block($_[0], 'UNCOMMENT');
+			Padre::Wx::Main::on_comment_block( $_[0], 'UNCOMMENT' );
 		},
 	);
 
@@ -1092,13 +1092,14 @@ sub Paste {
 	# Workaround for Copy/Paste bug ticket #390
 	my $text = $self->get_text_from_clipboard;
 
-	if($text) {
+	if ($text) {
+
 		# Conversion of pasted text is really needed since it usually comes
 		# with the platform's line endings
 		#
 		# Please see ticket:589, "Pasting in a UNIX document in win32
 		# corrupts it to MIXEd"
-		$self->ReplaceSelection($self->_convert_paste_eols($text));
+		$self->ReplaceSelection( $self->_convert_paste_eols($text) );
 	}
 
 	return 1;
@@ -1109,46 +1110,47 @@ sub Paste {
 # and the newline type for the current text
 #
 sub _convert_paste_eols {
-	my ($self, $paste) = @_;
+	my ( $self, $paste ) = @_;
 
 	my $newline_type = Padre::Util::newline_type($paste);
-	my $eol_mode = $self->GetEOLMode();
+	my $eol_mode     = $self->GetEOLMode();
 
 	# Handle the 'None' one-liner case
-	if($newline_type eq 'None') {
+	if ( $newline_type eq 'None' ) {
 		$newline_type = $self->main->config->default_line_ending;
 	}
 
 	#line endings
-	my $CR = "\015";
-	my $LF = "\012";
+	my $CR   = "\015";
+	my $LF   = "\012";
 	my $CRLF = "$CR$LF";
-	my ($from, $to);
+	my ( $from, $to );
 
 	# From what to convert from?
-	if($newline_type eq 'WIN') {
+	if ( $newline_type eq 'WIN' ) {
 		$from = $CRLF;
-	} elsif($newline_type eq 'UNIX') {
+	} elsif ( $newline_type eq 'UNIX' ) {
 		$from = $LF;
-	} elsif($newline_type eq 'MAC') {
+	} elsif ( $newline_type eq 'MAC' ) {
 		$from = $CR;
 	}
- 
+
 	# To what to convert to?
-	if($eol_mode eq Wx::wxSTC_EOL_CRLF) {
+	if ( $eol_mode eq Wx::wxSTC_EOL_CRLF ) {
 		$to = $CRLF;
-	} elsif($eol_mode eq Wx::wxSTC_EOL_LF) {
+	} elsif ( $eol_mode eq Wx::wxSTC_EOL_LF ) {
 		$to = $LF;
 	} else {
+
 		#must be Wx::wxSTC_EOL_CR
 		$to = $CR;
 	}
-	
+
 	# Convert only when it is needed
-	if($from ne $to) {
+	if ( $from ne $to ) {
 		$paste =~ s/$from/$to/g;
 	}
-	
+
 	return $paste;
 }
 
@@ -1215,8 +1217,7 @@ sub comment_lines {
 		$pos = $self->GetLineEndPosition($end);
 		$self->InsertText( $pos, $str->[1] );
 	} else {
-		my $is_first_column = 
-			$self->GetColumn($self->GetCurrentPos) == 0;
+		my $is_first_column = $self->GetColumn( $self->GetCurrentPos ) == 0;
 		if ( $is_first_column && $end > $begin ) {
 			$end--;
 		}
@@ -1256,9 +1257,8 @@ sub uncomment_lines {
 			$self->ReplaceSelection('');
 		}
 	} else {
-		my $length = length $str;
-		my $is_first_column = 
-			$self->GetColumn($self->GetCurrentPos) == 0;
+		my $length          = length $str;
+		my $is_first_column = $self->GetColumn( $self->GetCurrentPos ) == 0;
 		if ( $is_first_column && $end > $begin ) {
 			$end--;
 		}
@@ -1305,8 +1305,7 @@ sub configure_editor {
 	my $newline_type = $doc->newline_type;
 
 	# Very ugly hack to make the test script work
-	my $default_eol = ( $0 =~ /t.71\-perl\.t/ ) ?
-		Padre::Constant::NEWLINE : $self->main->config->default_line_ending;
+	my $default_eol = ( $0 =~ /t.71\-perl\.t/ ) ? Padre::Constant::NEWLINE : $self->main->config->default_line_ending;
 	$self->SetEOLMode( $mode{$newline_type} or $mode{$default_eol} );
 
 	if ( defined $doc->{original_content} ) {

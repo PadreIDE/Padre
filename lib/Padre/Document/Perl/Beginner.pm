@@ -127,14 +127,12 @@ sub check {
 	}
 
 	if ( $text =~ /else[\s\t\r\n]+if/ ) {
-		$self->{error} =
-			"'else if' is wrong syntax, correct if 'elsif'.";
+		$self->{error} = "'else if' is wrong syntax, correct if 'elsif'.";
 		return;
 	}
 
 	if ( $text =~ /elseif/ ) {
-		$self->{error} =
-			"'elseif' is wrong syntax, correct if 'elsif'.";
+		$self->{error} = "'elseif' is wrong syntax, correct if 'elsif'.";
 		return;
 	}
 
