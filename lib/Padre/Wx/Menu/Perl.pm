@@ -34,6 +34,19 @@ sub new {
 	$self->{config} = Padre->ide->config;
 
 	# Perl-Specific Searches
+	$self->{beginner_check} = $self->add_menu_item(
+		$self,
+		name       => 'perl.beginner_check',
+		label      => Wx::gettext('Check for common (beginner) errors'),
+		menu_event => sub {
+			my $doc = $_[0]->current->document;
+			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+			$doc->beginner_check;
+		},
+	);
+
+	$self->AppendSeparator;
+
 	$self->{find_brace} = $self->add_menu_item(
 		$self,
 		name       => 'perl.find_brace',
@@ -53,17 +66,6 @@ sub new {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_variable_declaration;
-		},
-	);
-
-	$self->{beginner_check} = $self->add_menu_item(
-		$self,
-		name       => 'perl.beginner_check',
-		label      => Wx::gettext('Check for common (beginner) errors'),
-		menu_event => sub {
-			my $doc = $_[0]->current->document;
-			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-			$doc->beginner_check;
 		},
 	);
 
@@ -144,6 +146,8 @@ sub new {
 			$doc->introduce_temporary_variable($replacement);
 		},
 	);
+
+	$self->AppendSeparator;
 
 	$self->add_menu_item(
 		$self,
