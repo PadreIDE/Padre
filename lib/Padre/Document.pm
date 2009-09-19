@@ -548,7 +548,10 @@ sub save_file {
 
 	my $content = $self->text_get;
 	my $file    = $self->file;
-	defined($file) or $file = Padre::File->new( $self->filename );
+	if ( !defined($file) ) {
+		$file = Padre::File->new( $self->filename );
+		$self->{file} = $file;
+	}
 
 	# not set when first time to save
 	# allow the upgrade from ascii to utf-8 if there were unicode characters added
