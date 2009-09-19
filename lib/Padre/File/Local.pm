@@ -6,6 +6,7 @@ use warnings;
 
 use Padre::File;
 use File::Basename ();
+use File::Spec ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Padre::File';
@@ -14,6 +15,11 @@ sub new {
 	my $class = shift;
 	my $self = bless { Filename => $_[0] }, $class;
 	$self->{protocol} = 'local'; # Should not be overridden
+
+	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
+	# file but have different names.
+	$self->{Filename} = File::Spec->catfile(File::Spec->splitdir(File::Basename::dirname($self->{Filename})),File::Basename::basename($self->{Filename}));
+
 	return $self;
 }
 

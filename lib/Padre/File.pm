@@ -79,6 +79,11 @@ If you know the protocol (which should be true every time you build the URL
 by source), it's better to call Padre::File::Protocol->new($URL) directly
 (replacing Protocol by the protocol which should be used, of course).
 
+The module for the selected protocol should fill ->{Filename} property. This
+should be used for all further references to the file as it will contain the
+filename in universal correct format (for example correct the C:\ eq C:/ problem
+on windows).
+
 Returns a new B<Padre::File> or dies on error.
 
 =cut
