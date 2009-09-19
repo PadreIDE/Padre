@@ -23,7 +23,7 @@ Shows a progress bar dialog to tell the user that we're doing something.
 
 =cut
 
-use 5.006;
+use 5.008;
 use strict;
 use warnings;
 use Padre::Wx;
@@ -123,12 +123,19 @@ sub DESTROY {
 
 =pod
 
-=head1 SUPPORT
+=head1 COPYRIGHT & LICENSE
 
-No support is available
+Copyright 2008-2009 The Padre development team as listed in Padre.pm.
 
-=head1 AUTHOR
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
 
-Copyright 2008 Anonymous.
+The full text of the license can be found in the
+LICENSE file included with this module.
 
 =cut
+
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
