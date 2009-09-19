@@ -20,12 +20,13 @@ my %TEST = (
 	'return_stronger_than_or.pl'   => 'TODO',
 	'grep_always_true.pl'          => 'TODO',
 	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
+	'else_if.pl'		       => "'else if' is wrong syntax, correct if 'elsif'.",
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA, 
 	# other special variables ? $a, $b, $ARGV, $AUTOLOAD, etc ? $_ in perls older than 5.10? 
 	# @_ ?
 );
 
-plan( tests => scalar(keys %TEST) * 2 + 14 );
+plan( tests => scalar(keys %TEST) * 2 + 15 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new;
@@ -108,6 +109,9 @@ ok($b->error =~ /open/,'pipe-open with in and out redirection (2 args)');
 
 $b->check('open file,"|cat|"');
 ok($b->error =~ /open/,'pipe-open with in and out redirection (3 args)');
+
+$b->check('elseif');
+ok($b->error =~ /elseif.*elsif/,'elseif - typo');
 
 sub slurp {
 	my $file = shift;
