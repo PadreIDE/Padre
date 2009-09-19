@@ -22,6 +22,8 @@ Changes for Perl Application Development and Refactoring Environment
         - Mixed, a mixture of the above which is usually an error
         - None which is a one-liner/empty script
     - Beautified the about dialog so that it is includes the splash image. (AZAWAWI)
+    - Fixed ticket:589 "Pasting in a UNIX document in win32 corrupts it to
+      MIXEd" (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
