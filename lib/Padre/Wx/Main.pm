@@ -1955,6 +1955,7 @@ sub open_session {
 		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
 		my $filename = $document->file;
 		my $file     = Padre::File->new($filename);
+		next unless defined($file);
 		next unless $file->exists;
 		my $id = $self->setup_editor($filename);
 		next unless $id; # documents already opened have undef $id
