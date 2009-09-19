@@ -1940,7 +1940,7 @@ sub open_session {
 			$session->name,
 		),
 		$#files + 1,
-		lazy  => 0);
+		lazy  => 1);
 
 	# Close all files
 	# This takes some time, so do it after the progress dialog was displayed
@@ -1964,9 +1964,7 @@ sub open_session {
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
 
-# Enabling these requires the user to close the progress dialog manually.
-#	$dialog->update($#files + 1,Wx::gettext('Restore focus...'));
-#	$dialog->Destroy; # Would race with set_focus otherwise
+	$dialog->update($#files + 1,Wx::gettext('Restore focus...'));
 	$self->on_nth_pane($focus) if defined $focus;
 
 	# now we can redraw
