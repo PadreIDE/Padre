@@ -208,7 +208,10 @@ sub refresh {
 	# but not in a Perl document.
 	$self->{find_brace}->Enable($perl);
 	$self->{find_variable}->Enable($perl);
+	$self->{find_variable}->Enable($perl);
 	$self->{rename_variable}->Enable($perl);
+	$self->{introduce_temporary}->Enable($perl);
+	$self->{extract_subroutine}->Enable($perl);
 
 	# Apply config-driven state
 	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
