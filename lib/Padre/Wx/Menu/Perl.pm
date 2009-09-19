@@ -56,7 +56,7 @@ sub new {
 		},
 	);
 
-	$self->{find_variable} = $self->add_menu_item(
+	$self->{beginner_check} = $self->add_menu_item(
 		$self,
 		name       => 'perl.beginner_check',
 		label      => Wx::gettext('Check for common (beginner) errors'),
@@ -212,6 +212,7 @@ sub refresh {
 	$self->{rename_variable}->Enable($perl);
 	$self->{introduce_temporary}->Enable($perl);
 	$self->{extract_subroutine}->Enable($perl);
+	$self->{beginner_check}->Enable($perl);
 
 	# Apply config-driven state
 	$self->{autocomplete_brackets}->Check( $config->autocomplete_brackets );
