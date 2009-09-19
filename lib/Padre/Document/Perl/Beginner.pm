@@ -93,7 +93,17 @@ s is missing at the end.
 
 =item *
 
-TBD.
+  map { $_; } (@items),$extra_item;
+
+is the same as
+
+  map { $_; } (@items,$extra_item);
+
+but you usually want
+
+  (map { $_; } (@items)),$extra_item;
+
+which means: map all @items and them add $extra_item without map'ing it.
 
 =cut
 
@@ -118,17 +128,30 @@ Warn about Perl-standard package names being reused
 =item *
 
   $x = chomp $y;
+  print chomp $y;
   
 =cut
 
-	if ( $text =~ /\=[\s\t\r\n]*chomp\b/ ) {
+# TODO: Change this to
+#	if ( $text =~ /[^\{\;][\s\t\r\n]*chomp\b/ ) {
+# as soon as this module could set the cursor to the occurence line
+# because it may trigger a higher amount of false positives.
+	if ( $text =~ /(print|[\=\.\,])[\s\t\r\n]*chomp\b/ ) {
 		$self->{error} = "chomp doesn't return the chomped value, it modifies the variable given as argument.";
 		return;
 	}
 
 =item *
 
-TBD.
+  map { s/foo/bar/; } (@items);
+
+This returns an array containing true or false values (s/// - return value).
+
+Use
+
+  map { s/foo/bar/; $_; } (@items);
+
+to actually change the array via s///.
 
 =cut
 
