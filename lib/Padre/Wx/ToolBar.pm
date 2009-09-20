@@ -156,6 +156,18 @@ sub new {
 		icon   => 'status/info',
 	);
 
+	$self->AddSeparator;
+
+	$self->{quick_menu_access} = $self->add_tool_item(
+		action => 'run.run_document',
+		icon   => 'actions/player_play',
+	);
+
+	$self->{quick_menu_access} = $self->add_tool_item(
+		action => 'run.stop',
+		icon   => 'actions/stop',
+	);
+
 	return $self;
 }
 
