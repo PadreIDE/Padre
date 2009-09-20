@@ -60,6 +60,7 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
+		Wx::gettext('Dump PPI Document')     => 'dump_ppi_document',
 		Wx::gettext('Dump Current Document') => 'dump_document',
 		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
 		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
@@ -154,6 +155,33 @@ sub dump_document {
 		return;
 	}
 	return $self->_dump($document);
+}
+
+#
+# Dumps the PPI document to the current output window
+#
+sub dump_ppi_document {
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document;
+
+	# validate a bit...
+	unless ($document) {
+		$current->main->message( Wx::gettext('No file is open'), 'Info' );
+		return;
+	}
+
+	# Generate the PPI dump string and set into the output window
+	require PPI::Dumper;
+	require PPI::Document;
+	my $source = $document->text_get;
+	my $doc    = PPI::Document->new( \$source );
+	my $dumper = PPI::Dumper->new( $doc, locations => 1, indent => 4 );
+
+	my $main = $self->current->main;
+	$main->output->SetValue( $dumper->string );
+	$main->output->SetSelection( 0, 0 );
+	$main->show_output(1);
 }
 
 sub dump_padre {
