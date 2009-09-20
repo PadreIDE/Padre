@@ -5,14 +5,31 @@ use strict;
 use warnings;
 
 use Padre::File;
-use File::Basename ();
-use File::Spec     ();
+use File::Basename  ();
+use File::Spec      ();
+use Padre::Constant ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Padre::File';
 
 sub _reformat_filename {
 	my $self = shift;
+
+	if (Padre::Constant::WIN32) {
+
+		# Fixing the case of the filename on Win32.
+		require Win32::API;
+
+		# Calls the following function
+		# DWORD GetLongPathName(STR inShortPath, STR outLongPath, DWORD nBuffer)
+		Win32::API->Import( 'kernel32', 'GetLongPathName', 'PPN', 'N' );
+
+		# Allocate a buffer that can take the maximum win32 path
+		my $MAX_PATH  = 260 + 1;
+		my $long_path = ' ' x $MAX_PATH;
+		my $len       = GetLongPathName( $self->{Filename}, $long_path, $MAX_PATH );
+		$self->{Filename} = $len ? substr( $long_path, 0, $len ) : $self->{Filename};
+	}
 
 	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
 	# file but have different names.
