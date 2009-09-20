@@ -3265,11 +3265,19 @@ sub close_all {
 	my $self  = shift;
 	my $skip  = shift;
 	my $guard = $self->freezer;
-	foreach my $id ( reverse $self->pageids ) {
-		if ( defined $skip and $skip == $id ) {
+
+	my @pages = reverse $self->pageids;
+
+	my $progress = Padre::Wx::Progress->new($self,Wx::gettext('Close all'),$#pages,
+				lazy=>1
+	);
+
+	foreach my $no ( 0..$#pages ) {
+		$progress->update($no,($no + 1).'/'.scalar(@pages));
+		if ( defined $skip and $skip == $pages[$no] ) {
 			next;
 		}
-		$self->close($id) or return 0;
+		$self->close($pages[$no]) or return 0;
 	}
 	$self->refresh;
 	return 1;
