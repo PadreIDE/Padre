@@ -63,9 +63,19 @@ sub mode {
 
 sub mtime {
 	my $self = shift;
+
+	# The file-changed-on-disk - function requests this frequently:
+	if (defined($self->{_cached_mtime_time}) and ($self->{_cached_mtime_time} > (time - 60))) {
+		return $self->{_cached_mtime_value};
+	}
+
 	require HTTP::Date; # Part of LWP which is required for this module but not for Padre
 	my ( $Content, $Result ) = $self->_request('HEAD');
-	return HTTP::Date::str2time( $Result->header('Last-Modified') );
+
+	$self->{_cached_mtime_value} = HTTP::Date::str2time( $Result->header('Last-Modified') );
+	$self->{_cached_mtime_time} = time;
+
+	return $self->{_cached_mtime_value};
 }
 
 sub exists {
