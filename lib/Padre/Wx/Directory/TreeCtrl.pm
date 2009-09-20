@@ -10,12 +10,10 @@ use Params::Util qw{_INSTANCE};
 use Padre::Current ();
 use Padre::Util    ();
 use Padre::Wx      ();
+use Padre::Constant ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Wx::TreeCtrl';
-
-use constant IS_MAC => !!( $^O eq 'darwin' );
-use constant IS_WIN32 => !!( $^O =~ /^MSWin/ or $^O eq 'cygwin' );
 
 # Creates a new Directory Browser object
 sub new {
@@ -748,7 +746,7 @@ sub _on_tree_item_menu {
 	# Move item to trash
 	# Note: File::Remove->trash() only works in Win? and Mac
 	# Please see ticket:553 (http://padre.perlide.org/trac/ticket/553)
-	if (IS_MAC) {
+	if (Padre::Constant::MAC) {
 		my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
 		Wx::Event::EVT_MENU(
 			$self, $trash,

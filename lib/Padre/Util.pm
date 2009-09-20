@@ -32,6 +32,7 @@ use File::Spec     ();
 use File::Basename ();
 use List::Util     ();
 use POSIX          ();
+use Padre::Constant();
 
 our $VERSION   = '0.46';
 our @ISA       = 'Exporter';
@@ -45,9 +46,10 @@ our @EXPORT_OK = qw{ newline_type get_matches _T };
 # Officially Supported Constants
 
 # Convenience constants for the operating system
-use constant WIN32 => !!( $^O eq 'MSWin32' );
-use constant MAC   => !!( $^O eq 'darwin' );
-use constant UNIX => !( WIN32 or MAC );
+# NOTE: They're now in Padre::Constant, if you miss them, please use them from there
+#use constant WIN32 => !!( $^O eq 'MSWin32' );
+#use constant MAC   => !!( $^O eq 'darwin' );
+#use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends
 # 1. Win32 Native
@@ -56,12 +58,14 @@ use constant UNIX => !( WIN32 or MAC );
 # The following defined reusable constants for these platforms,
 # suitable for use in Wx platform-specific adaptation code.
 # Currently (and a bit naively) we align these to the platforms.
-use constant WXWIN32 => WIN32;
-use constant WXMAC   => MAC;
-use constant WXGTK   => UNIX;
+# NOTE: They're now in Padre::Constant, if you miss them, please use them from there
+#use constant WXWIN32 => WIN32;
+#use constant WXMAC   => MAC;
+#use constant WXGTK   => UNIX;
 
 # The local newline type
-use constant NEWLINE => WIN32 ? 'WIN' : MAC ? 'MAC' : 'UNIX';
+# NOTE: It's now in Padre::Constant, if you miss them, please use it from there
+#use constant NEWLINE => Padre::Constant::WIN32 ? 'WIN' : Padre::Constant::MAC ? 'MAC' : 'UNIX';
 
 
 

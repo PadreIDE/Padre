@@ -114,7 +114,7 @@ sub new {
 		},
 	);
 
-	if (Padre::Util::WIN32) {
+	if (Padre::Constant::WIN32) {
 		$self->add_menu_item(
 			$self->{live},
 			name       => 'help.win32_questions',

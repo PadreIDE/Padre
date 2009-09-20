@@ -7,6 +7,7 @@ use Padre::Current qw{_CURRENT};
 use Padre::Wx         ();
 use Padre::Wx::Icon   ();
 use Padre::Wx::Editor ();
+use Padre::Constant();
 
 our $VERSION = '0.46';
 our @ISA     = 'Wx::ToolBar';

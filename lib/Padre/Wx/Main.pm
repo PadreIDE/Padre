@@ -1616,7 +1616,7 @@ sub on_run_tests {
 	chdir $project_dir;
 	require File::Which;
 	my $prove = File::Which::which('prove');
-	if (Padre::Util::WIN32) {
+	if (Padre::Constant::WIN32) {
 		$self->run_command(qq{"$prove" -b "$project_dir\t"});
 	} else {
 		$self->run_command("$prove -b $project_dir/t");
@@ -1660,7 +1660,7 @@ sub on_run_this_test {
 	chdir $project_dir;
 	require File::Which;
 	my $prove = File::Which::which('prove');
-	if (Padre::Util::WIN32) {
+	if (Padre::Constant::WIN32) {
 		$self->run_command(qq{"$prove" -bv "$filename"});
 	} else {
 		$self->run_command("$prove -bv $filename");
@@ -1688,7 +1688,7 @@ sub run_command {
 	# the external execution.
 	my $config = $self->config;
 	if ( $config->run_use_external_window ) {
-		if (Padre::Util::WIN32) {
+		if (Padre::Constant::WIN32) {
 			my $title = $cmd;
 			$title =~ s/"//g;
 			system qq(start "$title" cmd /C "$cmd & pause");
