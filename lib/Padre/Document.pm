@@ -340,7 +340,7 @@ sub last_sync {
 sub basename {
 	my $self = shift;
 	return $self->{file}->basename if defined( $self->{file} );
-	return;
+	return $self->{filename};
 }
 
 sub dirname {
