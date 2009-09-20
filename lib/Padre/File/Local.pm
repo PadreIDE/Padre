@@ -18,7 +18,7 @@ sub _reformat_filename {
 	# file but have different names.
 	my $New_Filename = File::Spec->catfile(File::Spec->splitdir(File::Basename::dirname($self->{Filename})),File::Basename::basename($self->{Filename}));
 
-	if (defined($New_Filename) and ($New_Filename ne '') and ($New_Filename ne '0') and (length($New_Filename) > 0)) {
+	if (defined($New_Filename) and (length($New_Filename) > 0)) {
 	 $self->{Filename} = $New_Filename;
 	}
 }
