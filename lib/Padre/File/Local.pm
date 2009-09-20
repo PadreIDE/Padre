@@ -11,14 +11,24 @@ use File::Spec ();
 our $VERSION = '0.46';
 our @ISA     = 'Padre::File';
 
+sub _reformat_filename {
+	my $self = shift;
+
+	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
+	# file but have different names.
+	my $New_Filename = File::Spec->catfile(File::Spec->splitdir(File::Basename::dirname($self->{Filename})),File::Basename::basename($self->{Filename}));
+
+	if (defined($New_Filename) and ($New_Filename ne '') and ($New_Filename ne '0') and (length($New_Filename) > 0)) {
+	 $self->{Filename} = $New_Filename;
+	}
+}
+
 sub new {
 	my $class = shift;
 	my $self = bless { Filename => $_[0] }, $class;
 	$self->{protocol} = 'local'; # Should not be overridden
 
-	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
-	# file but have different names.
-	$self->{Filename} = File::Spec->catfile(File::Spec->splitdir(File::Basename::dirname($self->{Filename})),File::Basename::basename($self->{Filename}));
+	$self->_reformat_filename;
 
 	return $self;
 }
