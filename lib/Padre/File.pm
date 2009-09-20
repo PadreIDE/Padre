@@ -146,8 +146,11 @@ exists for this module.
 =cut
 
 # Fallback if the module has no such function:
+# It turned out that returning everything is much better
+# than returning undef for this function:
 sub basename {
-	return;
+	my $self = shift;
+	return $self->{Filename};
 }
 
 =head2 blksize
