@@ -87,13 +87,17 @@ sub exists {
 
 sub basename {
 	my $self = shift;
+
 	# Cut the protocol and hostname part or fail if this is no expected syntax:
 	$self->{Filename} =~ /https?\:\/\/.+?\/(.+)/i or return $self->{Filename};
 	my $basename = $1;
+
 	# Cut any arguments and anchor-parts
 	$basename =~ s/[\#\?].+$//;
+
 	# Cut the path including the last /
 	$basename =~ s/^.+\///;
+
 	# Return a HTTP default in case the URL was http://www.google.de/
 	return $basename || 'index.html';
 }
