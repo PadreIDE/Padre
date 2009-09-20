@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 30;
+use Test::More tests => 31;
 
 use Padre::File;
 
@@ -47,6 +47,8 @@ ok( ref($file) eq 'Padre::File::HTTP', 'HTTP: Check module' );
 ok( $file->{protocol} eq 'http', 'HTTP: Check protocol' );
 ok( $file->size > 0,            'HTTP: file size' );
 ok( $file->mtime >= 1253194791, 'HTTP: mtime' );
+$file->{_cached_mtime_value} = 1234567890;
+ok( $file->mtime == 1234567890, 'HTTP: mtime (cached)' );
 
 END {
 	unlink $testfile;
