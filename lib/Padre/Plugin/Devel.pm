@@ -151,7 +151,7 @@ sub dump_document {
 	my $current  = $self->current;
 	my $document = $current->document;
 	unless ($document) {
-		$current->main->message( Wx::gettext('No file is open'), 'Info' );
+		$current->main->error( Wx::gettext('No file is open') );
 		return;
 	}
 	return $self->_dump($document);
