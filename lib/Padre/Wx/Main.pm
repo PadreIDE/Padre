@@ -3268,16 +3268,17 @@ sub close_all {
 
 	my @pages = reverse $self->pageids;
 
-	my $progress = Padre::Wx::Progress->new($self,Wx::gettext('Close all'),$#pages,
-				lazy=>1
+	my $progress = Padre::Wx::Progress->new(
+		$self, Wx::gettext('Close all'), $#pages,
+		lazy => 1
 	);
 
-	foreach my $no ( 0..$#pages ) {
-		$progress->update($no,($no + 1).'/'.scalar(@pages));
+	foreach my $no ( 0 .. $#pages ) {
+		$progress->update( $no, ( $no + 1 ) . '/' . scalar(@pages) );
 		if ( defined $skip and $skip == $pages[$no] ) {
 			next;
 		}
-		$self->close($pages[$no]) or return 0;
+		$self->close( $pages[$no] ) or return 0;
 	}
 	$self->refresh;
 	return 1;
