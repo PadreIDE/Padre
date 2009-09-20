@@ -158,16 +158,18 @@ sub dump_document {
 }
 
 #
-# Dumps the PPI document to the current output window
+# Dumps the current Perl 5 PPI document to the current output window
 #
 sub dump_ppi_document {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document;
+	my $main     = $self->current->main;
 
-	# validate a bit...
-	unless ($document) {
-		$current->main->message( Wx::gettext('No file is open'), 'Info' );
+	# Make sure that there is a Perl 5 document
+	require Params::Util;
+	unless ( Params::Util::_INSTANCE( $current->document, 'Padre::Document::Perl' ) ) {
+		$main->error( Wx::gettext('No Perl 5 file is open') );
 		return;
 	}
 
@@ -178,7 +180,6 @@ sub dump_ppi_document {
 	my $doc    = PPI::Document->new( \$source );
 	my $dumper = PPI::Dumper->new( $doc, locations => 1, indent => 4 );
 
-	my $main = $self->current->main;
 	$main->output->SetValue( $dumper->string );
 	$main->output->SetSelection( 0, 0 );
 	$main->show_output(1);
