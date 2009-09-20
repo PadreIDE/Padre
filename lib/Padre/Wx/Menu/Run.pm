@@ -37,6 +37,7 @@ sub new {
 		shortcut   => 'F5',
 		menu_event => sub {
 			$_[0]->run_document;
+			$_[0]->refresh_toolbar( $_[0]->current );
 		},
 	);
 
@@ -94,6 +95,7 @@ sub new {
 				}
 			}
 			delete $_[0]->{command};
+			$_[0]->refresh_toolbar( $_[0]->current );
 			return;
 		},
 	);

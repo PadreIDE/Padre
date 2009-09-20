@@ -158,12 +158,12 @@ sub new {
 
 	$self->AddSeparator;
 
-	$self->{quick_menu_access} = $self->add_tool_item(
+	$self->{run} = $self->add_tool_item(
 		action => 'run.run_document',
 		icon   => 'actions/player_play',
 	);
 
-	$self->{quick_menu_access} = $self->add_tool_item(
+	$self->{stop} = $self->add_tool_item(
 		action => 'run.stop',
 		icon   => 'actions/stop',
 	);
@@ -230,6 +230,9 @@ sub refresh {
 	$self->EnableTool( $self->{replace},        ( $editor   ? 1 : 0 ) );
 	$self->EnableTool( $self->{comment_toggle}, ( $document ? 1 : 0 ) );
 	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
+
+	$self->EnableTool( $self->{run},  ( $self->GetParent->{command} ? 0 : 1 ) );
+	$self->EnableTool( $self->{stop}, ( $self->GetParent->{command} ? 1 : 0 ) );
 
 	return;
 }
