@@ -2665,6 +2665,7 @@ Create a new tab in the notebook, and return its id (an integer).
 
 sub create_tab {
 	my ( $self, $editor, $title ) = @_;
+	$title ||= '('.Wx::gettext('Unknown').')';
 	$self->notebook->AddPage( $editor, $title, 1 );
 	$editor->SetFocus;
 	my $id = $self->notebook->GetSelection;
