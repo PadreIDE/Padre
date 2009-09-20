@@ -70,6 +70,9 @@ sub new {
 
 	my $self = bless { max => $max, title => $title, main => $main, start => time, @_ }, $class;
 
+	$self->{title} ||= Wx::gettext('Please wait...');
+	$self->{message} ||= '';
+
 	# Lazy mode means: Create the progress bar only when it makes sense. If this is requested,
 	# don't create it here:
 	$self->_create_progress if !$self->{lazy};
