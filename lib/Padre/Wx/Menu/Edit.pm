@@ -568,7 +568,7 @@ sub refresh {
 	$self->{brace_match}->Enable($hasdoc);
 	$self->{join_lines}->Enable($hasdoc);
 
-	#$self->{insert_special}->Enable($hasdoc);
+	$self->{insert_special}->Enable($hasdoc);
 	$self->{snippets}->Enable($hasdoc);
 	$self->{comment_toggle}->Enable($hasdoc);
 	$self->{comment}->Enable($hasdoc);
