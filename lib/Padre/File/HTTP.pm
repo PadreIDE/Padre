@@ -65,7 +65,7 @@ sub mtime {
 	my $self = shift;
 
 	# The file-changed-on-disk - function requests this frequently:
-	if (defined($self->{_cached_mtime_time}) and ($self->{_cached_mtime_time} > (time - 60))) {
+	if ( defined( $self->{_cached_mtime_time} ) and ( $self->{_cached_mtime_time} > ( time - 60 ) ) ) {
 		return $self->{_cached_mtime_value};
 	}
 
@@ -73,7 +73,7 @@ sub mtime {
 	my ( $Content, $Result ) = $self->_request('HEAD');
 
 	$self->{_cached_mtime_value} = HTTP::Date::str2time( $Result->header('Last-Modified') );
-	$self->{_cached_mtime_time} = time;
+	$self->{_cached_mtime_time}  = time;
 
 	return $self->{_cached_mtime_value};
 }

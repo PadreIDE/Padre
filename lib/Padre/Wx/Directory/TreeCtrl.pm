@@ -7,9 +7,9 @@ use File::Copy;
 use File::Spec     ();
 use File::Basename ();
 use Params::Util qw{_INSTANCE};
-use Padre::Current ();
-use Padre::Util    ();
-use Padre::Wx      ();
+use Padre::Current  ();
+use Padre::Util     ();
+use Padre::Wx       ();
 use Padre::Constant ();
 
 our $VERSION = '0.46';

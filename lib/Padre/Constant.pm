@@ -13,8 +13,8 @@ use File::HomeDir ();
 our $VERSION = '0.46';
 
 # Convenience constants for the operating system
-use constant WIN32 => !!( ($^O eq 'MSWin32') or ($^O eq 'cygwin'));
-use constant MAC   => !!( $^O eq 'darwin' );
+use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
+use constant MAC => !!( $^O eq 'darwin' );
 use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends

@@ -212,6 +212,7 @@ sub new {
 
 	if ( $self->{filename} ) {
 		$self->{file} = Padre::File->new( $self->{filename} );
+
 		# The Padre::File - module knows how to format the filename to the right
 		# syntax to correct (for example) .//file.pl to ./file.pl)
 		$self->{filename} = $self->{file}->{Filename};
