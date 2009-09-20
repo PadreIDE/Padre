@@ -87,7 +87,11 @@ sub new {
 		shortcut   => 'F6',
 		menu_event => sub {
 			if ( $_[0]->{command} ) {
-				$_[0]->{command}->TerminateProcess;
+				if (Padre::Constant::WIN32) {
+					$_[0]->{command}->KillProcess;
+				} else {
+					$_[0]->{command}->TerminateProcess;
+				}
 			}
 			delete $_[0]->{command};
 			return;
