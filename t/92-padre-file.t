@@ -34,7 +34,8 @@ ok( $file->exists,             'Local: file exists' );
 ok( $file->size == $Stat1[7],  'Local: file size' );
 ok( $file->mtime == $Stat1[9], 'Local: file size' );
 ok( $file->basename eq 'padre-file-test', 'Local: basename' );
-ok( $file->dirname  eq 't/files',         'Local: dirname' );
+# Allow both results (for windows):
+ok( ($file->dirname  eq 't/files') or ($file->dirname  eq 't\files'),         'Local: dirname' );
 
 undef $file;
 
