@@ -30,12 +30,14 @@ ok( $file->exists,  'File exists' );
 $file->{Filename} = 'T/Files/Padre-File-Test';
 $file->_reformat_filename;
 ok( ( ( $file->{Filename} eq 't/files/padre-file-test' ) or ( $file->{Filename} eq 't\files\padre-file-test' ) ),
-	'Correct wrong case' );
+	'Correct wrong case'
+);
 
 $file->{Filename} = 'T\Files\Padre-File-Test';
 $file->_reformat_filename;
 ok( ( ( $file->{Filename} eq 't/files/padre-file-test' ) or ( $file->{Filename} eq 't\files\padre-file-test' ) ),
-	'Correct wrong case' );
+	'Correct wrong case'
+);
 
 my $Crap = 'X:\foo\bar\padre-nonexistent\testfile';
 $file->{Filename} = $Crap;

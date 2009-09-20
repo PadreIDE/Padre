@@ -6,7 +6,7 @@ use warnings;
 
 use Padre::File;
 use File::Basename ();
-use File::Spec ();
+use File::Spec     ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Padre::File';
@@ -16,10 +16,12 @@ sub _reformat_filename {
 
 	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
 	# file but have different names.
-	my $New_Filename = File::Spec->catfile(File::Spec->splitdir(File::Basename::dirname($self->{Filename})),File::Basename::basename($self->{Filename}));
+	my $New_Filename =
+		File::Spec->catfile( File::Spec->splitdir( File::Basename::dirname( $self->{Filename} ) ),
+		File::Basename::basename( $self->{Filename} ) );
 
-	if (defined($New_Filename) and (length($New_Filename) > 0)) {
-	 $self->{Filename} = $New_Filename;
+	if ( defined($New_Filename) and ( length($New_Filename) > 0 ) ) {
+		$self->{Filename} = $New_Filename;
 	}
 }
 
