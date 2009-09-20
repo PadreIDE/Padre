@@ -29,6 +29,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed Padre ticket:504 and ticket:586 which is basically about being
       able to rename a variable when the cursor is over its declaration (AZAWAWI)
     - Added "Dump PPI Document" to "Padre Developer Tools" core plugin (AZAWAWI)
+    - Added Run/Stop icons to the toolbar per ticket:529 (AZAWAWI)
+    - Fixed ticket:595 "F6 (Stop Executing of script) doesnt work with Output
+      window in Windows" (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
