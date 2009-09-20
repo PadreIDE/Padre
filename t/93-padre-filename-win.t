@@ -12,7 +12,7 @@ if ( $^O !~ /win/i ) {
 	exit;
 }
 
-plan( tests => 6 );
+plan( tests => 7 );
 
 # The test file name is hard-coded because we need to play around with the pathname (/ or \):
 
@@ -29,15 +29,11 @@ ok( $file->exists,  'File exists' );
 
 $file->{Filename} = 'T/Files/Padre-File-Test';
 $file->_reformat_filename;
-ok( ( ( $file->{Filename} eq 't/files/padre-file-test' ) or ( $file->{Filename} eq 't\files\padre-file-test' ) ),
-	'Correct wrong case'
-);
+ok( $file->{Filename} eq 't\files\Padre-File-Test', 'Correct wrong case' );
 
 $file->{Filename} = 'T\Files\Padre-File-Test';
 $file->_reformat_filename;
-ok( ( ( $file->{Filename} eq 't/files/padre-file-test' ) or ( $file->{Filename} eq 't\files\padre-file-test' ) ),
-	'Correct wrong case'
-);
+ok( $file->{Filename} eq 't\files\Padre-File-Test', 'Correct wrong case' );
 
 my $Crap = 'X:\foo\bar\padre-nonexistent\testfile';
 $file->{Filename} = $Crap;
