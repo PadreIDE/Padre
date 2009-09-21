@@ -60,6 +60,52 @@ CODE
 	return $length ? substr( $buf, 0, $length ) : undef;
 }
 
+#
+# Move to recycle bin
+#
+# Returns undef (failed), zero (aborted) or one (success)
+#
+sub Recycle {
+	# Only for win32
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+	
+	my $file_to_recycle = shift;
+
+	# define the win32 structure
+	Win32::API::Struct->typedef(
+		SHFILEOPSTRUCT => qw(
+			HWND hwnd;
+			UINT wFunc;
+			LPCTSTR pFrom;
+			LPCTSTR pTo;
+			FILEOP_FLAGS fFlags;
+			BOOL fAnyOperationsAborted;
+			LPVOID hNameMappings;
+			LPCTSTR lpszProgressTitle;
+		)
+	);
+
+	# prepare structure for win32 call
+	my $op = Win32::API::Struct->new( 'SHFILEOPSTRUCT' );
+	$op->{wFunc}  = 0x0003; # FO_DELETE from ShellAPI.h
+	$op->{fFlags} = 0x0040; # FOF_ALLOWUNDO from ShellAPI.h
+	$op->{pFrom}  = $file_to_recycle . "\0\0";
+
+	# perform the recycling
+	my $result = Win32::API->new(
+		shell32 => q{ int SHFileOperation( LPSHFILEOPSTRUCT lpFileOp ) }
+	)->Call( $op );
+	
+	# failed miserably
+	return undef if $result;
+	
+	# user aborted...
+	return 0 if $op->{fAnyOperationsAborted};
+	
+	# file recycled
+	return 1;
+}
+
 1;
 
 __END__
