@@ -5,38 +5,26 @@ package Padre::Wx::Dialog::PluginManager;
 use 5.008;
 use strict;
 use warnings;
-use Carp 'croak';
+use Carp            ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 our $VERSION = '0.46';
 our @ISA     = 'Wx::Dialog';
 
-use Class::XSAccessor accessors => {
-	_action       => '_action',       # action of default button
-	_button       => '_button',       # general-purpose button
-	_butprefs     => '_butprefs',     # preferences button
-	_currow       => '_currow',       # current list row number
-	_curplugin    => '_curplugin',    # current plugin selected
-	_hbox         => '_hbox',         # the window hbox sizer
-	_imagelist    => '_imagelist',    # image list for the listctrl
-	_label        => '_label',        # label at top of right pane
-	_list         => '_list',         # list on the left of the pane
-	_manager      => '_manager',      # ref to plugin manager
-	_plugin_class => '_plugin_class', # mapping of full name to class
-	_sortcolumn   => '_sortcolumn',   # column used for list sorting
-	_sortreverse  => '_sortreverse',  # list sorting is reversed
-	_whtml        => '_whtml',        # html space for plugin doc
-};
 
-# -- constructor
+
+
+
+######################################################################
+# Constructor
 
 sub new {
 	my $class   = shift;
 	my $parent  = shift;
 	my $manager = shift;
 
-	# Create object
+	# Create the basic object
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
@@ -46,20 +34,155 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
-	$self->SetIcon(Padre::Wx::Icon::PADRE);
-	$self->_sortcolumn(0);
-	$self->_sortreverse(0);
+	# Set some internal parameters
+	$self->{sortcolumn}  = 0;
+	$self->{sortreverse} = 0;
+
+	# Set basic dialog properties
+	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetMinSize( [ 750, 550 ] );
 
 	# Store plugin manager
+	$self->{manager} = $manager;
 	unless ( $manager->isa('Padre::PluginManager') ) {
-		croak("Missing or invalid Padre::PluginManager object");
+		Carp::croak("Missing or invalid Padre::PluginManager object");
 	}
-	$self->_manager($manager);
 
-	# Create dialog
-	$self->_create;
+	# Dialog Controls
+
+	# Create the plugin list
+	$self->{list} = Wx::ListView->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_REPORT
+		| Wx::wxLC_SINGLE_SEL,
+	);
+	$self->{list}->InsertColumn( 0, Wx::gettext('Name')    );
+	$self->{list}->InsertColumn( 1, Wx::gettext('Version') );
+	$self->{list}->InsertColumn( 2, Wx::gettext('Status')  );
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+			shift->list_item_selected(@_);
+		},
+	);
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self,
+		$self->{list},
+		sub {
+			shift->button_main;
+		},
+	);
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->list_col_click(@_);
+		},
+	);
+
+	# Image List
+	$self->{imagelist} = Wx::ImageList->new( 16, 16 );
+	$self->{list}->AssignImageList(
+		$self->{imagelist},
+		Wx::wxIMAGE_LIST_SMALL,
+	);
+
+	# Plugin Name Header
+	$self->{label} = Wx::StaticText->new(
+		$self,
+		-1,
+		Wx::gettext('Plugin Name'),
+	);
+	my $font = $self->{label}->GetFont;
+	$font->SetWeight( Wx::wxFONTWEIGHT_BOLD );
+	$font->SetPointSize( $font->GetPointSize + 4 );
+	$self->{label}->SetFont($font);
+
+	# Plugin Documentation HTML Window
+	require Padre::Wx::HtmlWindow;
+	$self->{whtml} = Wx::HtmlWindow->new( $self );
+
+	# Enable/Disable Button
+	$self->{button_main} = Wx::Button->new(
+		$self,
+		Wx::wxID_OK,
+		Wx::gettext('Enable'),
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_main},
+		sub {
+			$_[0]->button_main;
+		},
+	);
+
+	# Preferences Button
+	$self->{button_preferences} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext('Preferences'),
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_preferences},
+		sub {
+			$_[0]->button_preferences;
+		},
+	);
+
+	# Close Button
+	$self->{button_close} = Wx::Button->new(
+		$self,
+		Wx::wxID_CANCEL,
+		Wx::gettext('Close'),
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_close},
+		sub {
+			$_[0]->button_close;
+		},
+	);
+
+	# Dialog Layout
+
+	# Horizontal button sizer
+	my $buttons = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$buttons->AddStretchSpacer;
+	$buttons->Add( $self->{button_main}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{button_preferences}, 0, Wx::wxALL, 1 );
+	$buttons->AddStretchSpacer;
+	$buttons->Add( $self->{button_close}, 0, Wx::wxALL, 1 );
+	$buttons->AddStretchSpacer;
+
+	# Horizontal plugin name positioning
+	my $header = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$header->AddStretchSpacer;
+	$header->Add( $self->{label}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
+	$header->AddStretchSpacer;
+
+	# Vertical layout of the right hand side
+	my $right = Wx::BoxSizer->new( Wx::wxVERTICAL );
+	$right->Add( $header, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$right->Add(
+		$self->{whtml},
+		1,
+		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
+		1
+	);
+	$right->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+
+	# Main sizer
+	my $sizer = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	$sizer->Add( $self->{list}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$sizer->Add( $right, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# Tune the size and position it appears
+	$self->SetSizer( $sizer );
 	$self->Fit;
 	$self->CentreOnParent;
 
@@ -76,97 +199,34 @@ sub show {
 	# select first item in the list. we don't need to test if
 	# there's at least a plugin, since there will always be
 	# 'my plugin'
-	my $list = $self->_list;
-	my $item = $list->GetItem(0);
-	$item->SetState(Wx::wxLIST_STATE_SELECTED);
-	$list->SetItem($item);
+	my $item = $self->{list}->GetItem(0);
+	$item->SetState( Wx::wxLIST_STATE_SELECTED );
+	$self->{list}->SetItem($item);
 
 	$self->Show;
 }
 
-# -- gui handlers
+# GUI Handlers
 
 #
-# $self->_on_butclose_clicked;
-#
-# handler called when the close button has been clicked.
-#
-sub _on_butclose_clicked {
-	$_[0]->Destroy;
-}
-
-#
-# $self->_on_butprefs_clicked;
-#
-# handler called when the preferences button has been clicked.
-#
-sub _on_butprefs_clicked {
-	$_[0]->_curplugin->object->plugin_preferences;
-}
-
-#
-# $self->_on_button_clicked;
-#
-# handler called when the first button has been clicked.
-#
-sub _on_button_clicked {
-	my $self = shift;
-
-	# find method to call
-	my $method = $self->_action;
-
-	# call method
-	$self->$method();
-}
-
-#
-# $self->_on_list_col_click;
-#
-# handler called when a column has been clicked, to reorder the list.
-#
-sub _on_list_col_click {
-	my $self     = shift;
-	my $event    = shift;
-	my $column   = $event->GetColumn;
-	my $prevcol  = $self->_sortcolumn;
-	my $reversed = $self->_sortreverse;
-	$reversed = $column == $prevcol ? !$reversed : 0;
-	$self->_sortcolumn($column);
-	$self->_sortreverse($reversed);
-	$self->_refresh_list;
-}
-
-#
-# $self->_on_list_item_activated;
-#
-# handler called when a list item has been activated (enter pressed, or
-# double-click). it will enable / disable plugin - or display error message
-# if plugin is currently in error.
-#
-# note that it definitely the same as clicking on the button, but we're
-# keeping a different handler in case we want to do sthg different.
-#
-*_on_list_item_activated = \&_on_button_clicked;
-
-#
-# $self->_on_list_item_selected( $event );
+# $self->list_item_selected( $event );
 #
 # handler called when a list item has been selected. it will in turn update
 # the right part of the frame.
 #
 # $event is a Wx::ListEvent.
 #
-sub _on_list_item_selected {
+sub list_item_selected {
 	my $self     = shift;
 	my $event    = shift;
 	my $fullname = $event->GetLabel;
-	my $module   = $self->_plugin_class->{$fullname};
-	my $plugin   = $self->_manager->plugins->{$module};
-	$self->_curplugin($plugin);         # storing selected plugin
-	$self->_currow( $event->GetIndex ); # storing selected row
+	my $module   = $self->{plugin_class}->{$fullname};
+	my $plugin   = $self->{manager}->plugins->{$module};
+	$self->{plugin} = $plugin;          # storing selected plugin
+	$self->{row}    = $event->GetIndex; # storing selected row
 
 	# Updating plugin name in right pane
-	$self->_label->SetLabel( $plugin->plugin_name );
+	$self->{label}->SetLabel( $plugin->plugin_name );
 
 	# Update plugin documentation
 	require Padre::DocBrowser;
@@ -178,7 +238,7 @@ sub _on_list_item_selected {
 		$@
 		? sprintf( Wx::gettext("Error loading pod for class '%s': %s"), $class, $@ )
 		: $output->body;
-	$self->_whtml->SetPage($html);
+	$self->{whtml}->SetPage($html);
 
 	# Update buttons
 	$self->_update_plugin_state;
@@ -188,141 +248,70 @@ sub _on_list_item_selected {
 	$self->Layout;
 }
 
-# -- private methods
-
 #
-# $self->_create;
+# $self->list_col_click;
 #
-# create the dialog itself. it will have a list on the left with all found
-# plugins, and a pane on the right holding the details for the selected
-# plugin, as well as control buttons.
+# handler called when a column has been clicked, to reorder the list.
 #
-# no params, no return values.
-#
-sub _create {
-	my $self = shift;
-
-	# create vertical box that will host all controls
-	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->SetSizer($hbox);
-	$self->SetMinSize( [ 750, 550 ] );
-	$self->_hbox($hbox);
-	$self->_create_list;
-	$self->_create_right_pane;
-
-	return 1;
+sub list_col_click {
+	my $self     = shift;
+	my $event    = shift;
+	my $column   = $event->GetColumn;
+	my $prevcol  = $self->{sortcolumn};
+	my $reversed = $self->{sortreverse};
+	$reversed = $column == $prevcol ? ! $reversed : 0;
+	$self->{sortcolumn}  = $column;
+	$self->{sortreverse} = $reversed;
+	$self->_refresh_list;
 }
 
 #
-# $dialog->_create_list;
+# $self->button_main;
 #
-# create the list on the left of the frame. it will hold a list of available
-# plugins, along with their version & current status.
+# handler called when the first button has been clicked.
 #
-# no params. no return values.
-#
-sub _create_list {
+sub button_main {
 	my $self = shift;
 
-	# create list
-	my $list = Wx::ListView->new(
-		$self,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
-	);
-	$list->InsertColumn( 0, Wx::gettext('Name') );
-	$list->InsertColumn( 1, Wx::gettext('Version') );
-	$list->InsertColumn( 2, Wx::gettext('Status') );
-	$self->_list($list);
+	# find method to call
+	my $method = $self->{action};
 
-	# install event handler
-	Wx::Event::EVT_LIST_ITEM_SELECTED( $self, $list, \&_on_list_item_selected );
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED( $self, $list, \&_on_list_item_activated );
-	Wx::Event::EVT_LIST_COL_CLICK( $self, $list, \&_on_list_col_click );
-
-	# create imagelist
-	my $imglist = Wx::ImageList->new( 16, 16 );
-	$list->AssignImageList( $imglist, Wx::wxIMAGE_LIST_SMALL );
-	$self->_imagelist($imglist);
-
-	# pack the list
-	$self->_hbox->Add( $list, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	# call method
+	$self->$method();
 }
 
 #
-# $dialog->_create_right_pane;
+# $self->button_preferences;
 #
-# create the right pane of the frame. it will hold the name of the plugin,
-# the associated documentation, and the action buttons to manage the plugin.
+# handler called when the preferences button has been clicked.
 #
-# no params. no return values.
+sub button_preferences {
+	$_[0]->{plugin}->object->plugin_preferences;
+}
+
 #
-sub _create_right_pane {
-	my $self = shift;
-
-	# all controls will be lined up in a vbox
-	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$self->_hbox->Add( $vbox, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-
-	# the plugin name
-	my $hbox1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	my $label = Wx::StaticText->new( $self, -1, 'plugin name' );
-	my $font  = $label->GetFont;
-	$vbox->Add( $hbox1, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
-	$font->SetPointSize( $font->GetPointSize + 2 );
-	$label->SetFont($font);
-	$hbox1->AddStretchSpacer;
-	$hbox1->Add( $label, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
-	$hbox1->AddStretchSpacer;
-	$self->_label($label);
-
-	# the plugin documentation
-	require Padre::Wx::HtmlWindow;
-	my $whtml = Wx::HtmlWindow->new($self);
-	$vbox->Add(
-		$whtml,
-		1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
-		1
-	);
-	$self->_whtml($whtml);
-
-	# the buttons
-	my $hbox2 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$vbox->Add( $hbox2, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	my $b1 = Wx::Button->new( $self, Wx::wxID_OK,     'Button 1' );
-	my $b2 = Wx::Button->new( $self, -1,              Wx::gettext('Preferences') );
-	my $b3 = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
-	Wx::Event::EVT_BUTTON( $self, $b1, \&_on_button_clicked );
-	Wx::Event::EVT_BUTTON( $self, $b2, \&_on_butprefs_clicked );
-	Wx::Event::EVT_BUTTON( $self, $b3, \&_on_butclose_clicked );
-	$hbox2->AddStretchSpacer;
-	$hbox2->Add( $b1, 0, Wx::wxALL, 1 );
-	$hbox2->Add( $b2, 0, Wx::wxALL, 1 );
-	$hbox2->AddStretchSpacer;
-	$hbox2->Add( $b3, 0, Wx::wxALL, 1 );
-	$hbox2->AddStretchSpacer;
-	$self->_button($b1);
-	$self->_butprefs($b2);
+# $self->button_close;
+#
+# handler called when the close button has been clicked.
+#
+sub button_close {
+	$_[0]->Destroy;
 }
 
 #
 # $self->_plugin_disable;
 #
-# disable plugin, and update gui.
+# Disable plugin, and update gui.
 #
 sub _plugin_disable {
 	my $self   = shift;
-	my $plugin = $self->_curplugin;
+	my $plugin = $self->{plugin};
 	my $parent = $self->GetParent;
 
 	# disable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 0 );
-	$self->_manager->_plugin_disable( $plugin->class );
+	$self->{manager}->_plugin_disable( $plugin->class );
 	$parent->menu->refresh(1);
 	$parent->Thaw;
 
@@ -333,21 +322,17 @@ sub _plugin_disable {
 #
 # $self->_plugin_enable;
 #
-# enable plugin, and update gui.
+# Enable plugin, and update gui.
 #
 sub _plugin_enable {
-
-	BEGIN {
-		$DB::single = 1;
-	}
 	my $self   = shift;
-	my $plugin = $self->_curplugin;
+	my $plugin = $self->{plugin};
 	my $parent = $self->GetParent;
 
 	# Enable plugin
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
-	$self->_manager->_plugin_enable( $plugin->class );
+	$self->{manager}->_plugin_enable( $plugin->class );
 	$parent->menu->refresh(1);
 	$parent->Thaw;
 
@@ -356,13 +341,13 @@ sub _plugin_enable {
 }
 
 #
-# $self->_plugin_show_error_msg;
+# $self->show_error_message;
 #
 # show plugin error message, in an error dialog box.
 #
-sub _plugin_show_error_msg {
+sub show_error_message {
 	my $self    = shift;
-	my $message = $self->_curplugin->errstr;
+	my $message = $self->{plugin}->errstr;
 	my $title   = Wx::gettext('Error');
 	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
 }
@@ -374,84 +359,101 @@ sub _plugin_show_error_msg {
 # according to current sort criterion.
 #
 sub _refresh_list {
-	my ($self) = @_;
-
-	my $list    = $self->_list;
-	my $manager = $self->_manager;
-	my $plugins = $manager->plugins;
-	my $imglist = $self->_imagelist;
-
-	# Default sorting
-	my $column  = $self->_sortcolumn;
-	my $reverse = $self->_sortreverse;
+	$DB::single = $DB::single = 1;
+	my $self = shift;
 
 	# Clear image list & fill it again
-	$imglist->RemoveAll;
+	$self->{imagelist}->RemoveAll;
 
 	# Default plugin icon
-	$imglist->Add( Padre::Wx::Icon::find('status/padre-plugin') );
+	$self->{imagelist}->Add(
+		Padre::Wx::Icon::find('status/padre-plugin')
+	);
 	my %icon = ( plugin => 0 );
 
 	# Plugin status
 	my $i = 0;
-	foreach my $name (qw{ enabled disabled error crashed incompatible }) {
-		$imglist->Add( Padre::Wx::Icon::find("status/padre-plugin-$name") );
+	foreach my $name ( qw{
+		enabled
+		disabled
+		error
+		crashed
+		incompatible
+	} ) {
+		$self->{imagelist}->Add(
+			Padre::Wx::Icon::find("status/padre-plugin-$name")
+		);
 		$icon{$name} = ++$i;
 	}
 
-	# Get list of plugins, and sort it. note that $manager->plugins names
-	# is sorted (with my plugin first), and that perl sort is now stable:
-	# sorting on another criterion will keep the alphabetical order if new
-	# criterion is not enough.
-	my @plugins = map { $plugins->{$_} } $manager->plugin_order;
-	if ( $column == 1 ) {
+	# Get list of plugins, and sort it. Note that $self->{manager}->plugins
+	# names is sorted (with my plugin first), and that perl sort is now
+	# stable: sorting on another criterion will keep the alphabetical order
+	# if new criterion is not enough.
+	my $plugins = $self->{manager}->plugins;
+	my @plugins = map { $plugins->{$_} } $self->{manager}->plugin_order;
+	if ( $self->{sortcolumn} == 1 ) {
 		no warnings;
-		@plugins = map { $_->[0] }
-			sort { $a->[1] <=> $b->[1] }
-			map { [ $_, version->new( $_->version || 0 ) ] } @plugins;
+		@plugins = map {
+			$_->[0]
+		} sort {
+			$a->[1] <=> $b->[1]
+		} map {
+			[ $_, version->new( $_->version || 0 ) ]
+		} @plugins;
 	}
-	@plugins = sort { $a->status cmp $b->status } @plugins if $column == 2;
-	@plugins = reverse @plugins if $reverse;
+	if ( $self->{sortcolumn} == 2 ) {
+		@plugins = sort { $a->status cmp $b->status } @plugins;
+	}
+	if ( $self->{sortreverse} ) {
+		@plugins = reverse @plugins;
+	}
 
 	# Clear plugin list & fill it again
-	$list->DeleteAllItems;
+	my $idx          = -1;
 	my %plugin_class = ();
+	$self->{list}->DeleteAllItems;
 	foreach my $plugin ( reverse @plugins ) {
-		my $module     = $plugin->class;
-		my $fullname   = $plugin->plugin_name;
-		my $version    = $plugin->version || '???';
-		my $status     = $plugin->status;
-		my $l10nstatus = $plugin->status_localized;
-		$plugin_class{$fullname} = $module;
+		$plugin_class{ $plugin->plugin_name } = $plugin->class;
 
 		# Check if plugin is supplying its own icon
 		my $position = 0;
 		my $icon     = $plugin->plugin_icon;
 		if ( defined $icon ) {
-			$imglist->Add($icon);
-			$position = $imglist->GetImageCount - 1;
+			$self->{imagelist}->Add($icon);
+			$position = $self->{imagelist}->GetImageCount - 1;
 		}
 
 		# Inserting the plugin in the list
-		my $idx = $list->InsertStringImageItem( 0, $fullname, $position );
-		$list->SetItem( $idx, 1, $version );
-		$list->SetItem( $idx, 2, $l10nstatus, $icon{$status} );
+		$self->{list}->InsertStringImageItem( ++$idx,
+			$plugin->plugin_name,
+			$position,
+		);
+		$self->{list}->SetItem( $idx, 1,
+			$plugin->version || '???'
+		);
+		$self->{list}->SetItem( $idx, 2,
+			$plugin->status_localized,
+			$icon{$plugin->status},
+		);
 	}
 
 	# Store mapping of full plugin names / short plugin names
-	$self->_plugin_class( \%plugin_class );
+	$self->{plugin_class} = \%plugin_class;
 
 	# Auto-resize columns
 	foreach ( 0 .. 2 ) {
-		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+		$self->{list}->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
 
 	# Making sure the list can show all columns
 	my $width = 15; # Taking vertical scrollbar into account
 	foreach ( 0 .. 2 ) {
-		$width += $list->GetColumnWidth($_);
+		$width += $self->{list}->GetColumnWidth($_);
 	}
-	$list->SetMinSize( [ $width, -1 ] );
+	$self->{list}->SetMinSize( [ $width, -1 ] );
+
+	return;
 }
 
 #
@@ -462,72 +464,81 @@ sub _refresh_list {
 #
 sub _update_plugin_state {
 	my $self   = shift;
-	my $plugin = $self->_curplugin;
-	my $list   = $self->_list;
-	my $item   = $list->GetItem( $self->_currow, 2 );
+	my $plugin = $self->{plugin};
+	# my $list   = $self->{list};
+	# my $item   = $list->GetItem( $self->{row}, 2 );
 
 	# Updating buttons
-	my $button   = $self->_button;
-	my $butprefs = $self->_butprefs;
+	my $button_main        = $self->{button_main};
+	my $button_preferences = $self->{button_preferences};
 
 	if ( $plugin->error ) {
 
-		# plugin is in error state
-		$button->SetLabel( Wx::gettext('Show error message') );
-		$self->_action('_plugin_show_error_msg');
-		$butprefs->Disable;
-		$item->SetText( Wx::gettext('error') );
-		$item->SetImage(3);
-		$list->SetItem($item);
+		# Plugin is in error state
+		$self->{action} = 'show_error_message';
+		$button_main->SetLabel(
+			Wx::gettext('Show error message')
+		);
+		$button_preferences->Disable;
+		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('error'), 3 );
+		# $item->SetText( Wx::gettext('error') );
+		# $item->SetImage(3);
+		# $list->SetItem($item);
 
 	} elsif ( $plugin->incompatible ) {
 
-		# plugin is incompatible
-		$button->SetLabel( Wx::gettext('Show error message') );
-		$self->_action('_plugin_show_error_msg');
-		$butprefs->Disable;
-		$item->SetText( Wx::gettext('incompatible') );
-		$item->SetImage(5);
-		$list->SetItem($item);
+		# Plugin is incompatible
+		$self->{action} = 'show_error_message';
+		$button_main->SetLabel(
+			Wx::gettext('Show error message')
+		);
+		$button_preferences->Disable;
+		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('incompatible'), 5 );
+		# $item->SetText( Wx::gettext('incompatible') );
+		# $item->SetImage(5);
+		# $list->SetItem($item);
 
 	} else {
 
-		# plugin is working...
+		# Plugin is working...
 		if ( $plugin->enabled ) {
 
-			# ... and enabled
-			$button->SetLabel( Wx::gettext('Disable') );
-			$self->_action('_plugin_disable');
-			$button->Enable;
-			$item->SetText( Wx::gettext('enabled') );
-			$item->SetImage(1);
-			$list->SetItem($item);
+			# ...and enabled
+			$self->{action} = '_plugin_disable';
+			$button_main->SetLabel( Wx::gettext('Disable') );
+			$button_main->Enable;
+			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('enabled'), 1 );	
+			# $item->SetText( Wx::gettext('enabled') );
+			# $item->SetImage(1);
+			# $list->SetItem($item);
 
 		} elsif ( $plugin->can_enable ) {
 
-			# ... and disabled
-			$button->SetLabel( Wx::gettext('Enable') );
-			$self->_action('_plugin_enable');
-			$button->Enable;
-			$item->SetText( Wx::gettext('disabled') );
-			$item->SetImage(2);
-			$list->SetItem($item);
+			# ...and disabled
+			$self->{action} = '_plugin_enable';
+			$button_main->SetLabel( Wx::gettext('Enable') );
+			$button_main->Enable;
+			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('disabled'), 2 );
+			# $item->SetText( Wx::gettext('disabled') );
+			# $item->SetImage(2);
+			# $list->SetItem($item);
 
 		} else {
 
-			# ... disabled but cannot be enabled
-			$button->Disable;
+			# ...disabled but cannot be enabled
+			$button_main->Disable;
 		}
 
 		# Updating preferences button
 		if ( $plugin->object->can('plugin_preferences') ) {
-			$self->_butprefs->Enable;
+			$button_preferences->Enable;
 		} else {
-			$self->_butprefs->Disable;
+			$button_preferences->Disable;
 		}
 	}
 
 	# Update the list item
+	# $self->_refresh_list;
 
 	# force window to recompute layout. indeed, changes are that plugin
 	# name has a different length, and thus should be recentered.
