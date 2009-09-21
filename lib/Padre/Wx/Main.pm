@@ -1617,13 +1617,14 @@ sub on_run_tests {
 	require File::Which;
 	my $prove = File::Which::which('prove');
 	if (Padre::Constant::WIN32) {
+
 		# This is needed since prove does not work with path containing
 		# spaces. Please see ticket:582
 		require File::Temp;
 		require File::Glob::Windows;
 
-		my $tempfile = File::Temp->new(UNLINK => 0);
-		print $tempfile join("\n", File::Glob::Windows::glob("$project_dir/t/*.t"));
+		my $tempfile = File::Temp->new( UNLINK => 0 );
+		print $tempfile join( "\n", File::Glob::Windows::glob("$project_dir/t/*.t") );
 		close $tempfile;
 
 		my $things_to_test = $tempfile->filename;
@@ -1675,7 +1676,7 @@ sub on_run_this_test {
 		# This is needed since prove does not work with path containing
 		# spaces. Please see ticket:582
 		require File::Temp;
-		my $tempfile = File::Temp->new(UNLINK => 0);
+		my $tempfile = File::Temp->new( UNLINK => 0 );
 		print $tempfile $filename;
 		close $tempfile;
 

@@ -192,10 +192,10 @@ END_HTML
 
 	# Create the content for the Info page
 	$self->{info} = Padre::Wx::HtmlWindow->new($self);
-	my $padre_info = Wx::gettext('Info');
-	my $wx_widgets = Wx::wxVERSION_STRING();
+	my $padre_info     = Wx::gettext('Info');
+	my $wx_widgets     = Wx::wxVERSION_STRING();
 	my $config_dir_txt = Wx::gettext('Config dir:');
-	my $config_dir = Padre::Constant::CONFIG_DIR;
+	my $config_dir     = Padre::Constant::CONFIG_DIR;
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
