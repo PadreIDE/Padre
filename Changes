@@ -32,6 +32,11 @@ Changes for Perl Application Development and Refactoring Environment
     - Added Run/Stop icons to the toolbar per ticket:529 (AZAWAWI)
     - Fixed ticket:595 "F6 (Stop Executing of script) doesnt work with Output
       window in Windows" (AZAWAWI)
+    - Fixed ticket #597: Merged OS detection in Padre::Constant (SEWI)
+    - Fixed ticket #594: F1 key doesn't work (SEWI)
+    - Fixed ticket #593: On Windows, files with / and \ are now the same
+      and files are treated case-insensitive (AZAWAWI, SEWI)
+    - Fixed ticket #591: Save/Save as decision was corrupt (SEWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
