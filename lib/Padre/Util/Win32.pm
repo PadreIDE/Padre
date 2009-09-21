@@ -38,20 +38,26 @@ our @EXPORT_OK = qw{ GetLongPathName };
 # Needs a path string
 # Returns undef for failure, or the long form of the specified path
 #
-# DWORD GetLongPathName(STR inShortPath, STR outLongPath, DWORD nBuffer)
-#
 sub GetLongPathName {
-	my $path = shift;
+	# Only for win32
+	die "Win32 function called!" unless Padre::Constant::WIN32;
 
-	die "Win32 function called" unless Padre::Constant::WIN32;
+	my $path = shift;
 
 	# Allocate a buffer that can take the maximum allowed win32 path
 	my $MAX_PATH = 260 + 1;
 	my $buf      = ' ' x $MAX_PATH;
 
-	my $result = Win32::API->new( 'kernel32', 'GetLongPathName', 'PPN', 'N' )->Call( $path, $buf, $MAX_PATH );
+	my $func = Win32::API->new( kernel32 => <<'CODE');
+	DWORD GetLongPathName( 
+		LPCTSTR lpszShortPath,
+		LPTSTR lpszLongPath,
+		DWORD cchBuffer
+	);
+CODE
+	my $length = $func->Call( $path, $buf, $MAX_PATH );
 
-	return $result ? substr( $buf, 0, $result ) : undef;
+	return $length ? substr( $buf, 0, $length ) : undef;
 }
 
 1;
