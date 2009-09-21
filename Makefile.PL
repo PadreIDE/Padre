@@ -154,7 +154,7 @@ keywords(
 );
 
 install_script 'script/padre';
-install_script 'share/scripts/wpadre.vbs' if win32;
+install_script 'script/wpadre.vbs' if win32;
 install_share_with_mofiles;
 
 
