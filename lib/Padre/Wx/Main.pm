@@ -1661,7 +1661,16 @@ sub on_run_this_test {
 	require File::Which;
 	my $prove = File::Which::which('prove');
 	if (Padre::Constant::WIN32) {
-		$self->run_command(qq{"$prove" -bv "$filename"});
+
+		# This is needed since prove does not work with path containing
+		# spaces. Please see ticket:582
+		require File::Temp;
+		my $tempfile = File::Temp->new(UNLINK => 0);
+		print $tempfile $filename;
+		close $tempfile;
+
+		my $things_to_test = $tempfile->filename;
+		$self->run_command(qq{"$prove" - -bv < "$things_to_test"});
 	} else {
 		$self->run_command("$prove -bv $filename");
 	}
