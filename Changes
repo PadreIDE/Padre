@@ -43,6 +43,7 @@ Changes for Perl Application Development and Refactoring Environment
       working on Vista/win32 (AZAWAWI)
     - Massive refactoring of Plugin Manager. Looks almost exactly the same
       but now the status information actually updates properly (ADAMK)
+    - Added a padre.exe launcher on win32 (SEWI, GETTY, AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
