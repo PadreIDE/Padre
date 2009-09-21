@@ -39,6 +39,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #591: Save/Save as decision was corrupt (SEWI)
     - Fixed ticket #582: Run this test/Run Tests are broken on win32 when there
       is a space in the test file (AZAWAWI)
+    - Fixed ticket #553: Directory browser's "Move to trash" feature is not
+      working on Vista/win32 (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
