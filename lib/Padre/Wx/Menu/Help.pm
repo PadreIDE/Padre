@@ -44,12 +44,7 @@ sub new {
 		$self,
 		name  => 'help.context_help',
 		label => Wx::gettext('Context Help'),
-
-		# TODO: The F1 shortcut is added a second time somewhere else resulting
-		#       on no shortcut on Linux and a "F1F1" shortcut on Windows.
-		#       The TODO is: Find the other place where F1 is defined and remove
-		#       it there. All key bindings should be defind in menus/actions.
-		#		shortcut   => 'F1',
+		shortcut   => 'F1',
 		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
 			if ( ( defined $focus ) and $focus->isa('Padre::Wx::ErrorList') ) {
