@@ -20,6 +20,7 @@ use YAML::Tiny    ();
 use DBI           ();
 use DBD::SQLite   ();
 use Padre::Splash ();
+use Padre::Util::Win32();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
@@ -111,12 +112,8 @@ sub new {
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
 				if (Padre::Constant::WIN32) {
-					require Win32::API;
-					Win32::API->new(
-						'User32.dll',
-						'AllowSetForegroundWindow',
-						'N', 'L',
-					)->Call($pid);
+					# The whole Win32-API moved to Padre::Util::Win32:
+					Padre::Util::Win32->AllowSetForegroundWindow($pid);
 				}
 			}
 			foreach my $file (@ARGV) {
