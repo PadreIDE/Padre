@@ -20,7 +20,7 @@ use YAML::Tiny    ();
 use DBI           ();
 use DBD::SQLite   ();
 use Padre::Splash ();
-use Padre::Util::Win32();
+use Padre::Util::Win32 ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
