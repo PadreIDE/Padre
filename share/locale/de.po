@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-19 13:25+0200\n"
-"PO-Revision-Date: 2009-09-19 13:29+0100\n"
+"PO-Revision-Date: 2009-09-21 13:47+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1870,7 +1870,7 @@ msgstr "&Hilfe"
 
 #: lib/Padre/Wx/Menu/Help.pm:46
 msgid "Context Help"
-msgstr "Kontexthilfe\tF1"
+msgstr "Kontexthilfe"
 
 #: lib/Padre/Wx/Menu/Help.pm:77
 msgid "Current Document"
