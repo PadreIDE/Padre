@@ -26,7 +26,9 @@ use strict;
 use warnings;
 
 use Padre::Constant ();
-use Win32::API      ();
+
+# This module may be loaded by others, so don't crash on Linux when just being loaded:
+require Win32::API if Padre::Constant::WIN32;
 
 our $VERSION   = '0.46';
 our @ISA       = 'Exporter';
