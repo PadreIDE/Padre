@@ -106,6 +106,20 @@ sub Recycle {
 	return 1;
 }
 
+sub AllowSetForegroundWindow { # PID
+
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+
+	my $self = shift;
+	my $pid = shift;
+
+	return Win32::API->new(
+		'User32.dll',
+		'AllowSetForegroundWindow',
+		'N', 'L',
+	)->Call($pid);
+}
+
 1;
 
 __END__
