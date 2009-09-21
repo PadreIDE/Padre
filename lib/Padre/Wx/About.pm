@@ -190,6 +190,38 @@ END_HTML
 
 END_HTML
 
+	# Create the content for the Info page
+	$self->{info} = Padre::Wx::HtmlWindow->new($self);
+	my $padre_info = Wx::gettext('Info');
+	my $wx_widgets = Wx::wxVERSION_STRING();
+	my $config_dir_txt = Wx::gettext('Config dir:');
+	my $config_dir = Padre::Constant::CONFIG_DIR;
+	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
+<html>
+  <body bgcolor="#EEEEEE">
+    <strong><font size="+4">$padre_info</font></strong>
+    <table width="100%">
+      <tr>
+        <td valign="top">
+        Wx
+        </td>
+        <td>
+        $Wx::VERSION
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">wxWidgets</td>
+        <td>$wx_widgets</td>
+      </tr>
+      <tr>
+        <td valign="top">$config_dir_txt</td><td>$config_dir</td>
+      </tr>
+    </table>
+  </body>
+</html>
+END_HTML
+
+
 	# Layout for the About dialog
 	$self->{notebook} = Wx::AuiNotebook->new(
 		$self,
@@ -211,6 +243,11 @@ END_HTML
 	$self->{notebook}->AddPage(
 		$self->{translators},
 		'  ' . Wx::gettext('Translation') . '  ',
+		1,
+	);
+	$self->{notebook}->AddPage(
+		$self->{info},
+		'  ' . Wx::gettext('Info') . '  ',
 		1,
 	);
 	$self->{notebook}->SetSelection(0);
