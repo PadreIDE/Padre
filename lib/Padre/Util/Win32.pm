@@ -24,11 +24,35 @@ moved, removed or changed at any time without notice.
 use 5.008;
 use strict;
 use warnings;
-use Win32::API;
+
+use Padre::Constant ();
+use Win32::API      ();
 
 our $VERSION   = '0.46';
 our @ISA       = 'Exporter';
-our @EXPORT_OK = qw{ };
+our @EXPORT_OK = qw{ GetLongPathName };
+
+#
+# Converts the specified path to its long form.
+#
+# Needs a path string
+# Returns undef for failure, or the long form of the specified path
+#
+# DWORD GetLongPathName(STR inShortPath, STR outLongPath, DWORD nBuffer)
+#
+sub GetLongPathName {
+	my $path = shift;
+
+	die "Win32 function called" unless Padre::Constant::WIN32;
+
+	# Allocate a buffer that can take the maximum allowed win32 path
+	my $MAX_PATH = 260 + 1;
+	my $buf      = ' ' x $MAX_PATH;
+
+	my $result = Win32::API->new( 'kernel32', 'GetLongPathName', 'PPN', 'N' )->Call( $path, $buf, $MAX_PATH );
+
+	return $result ? substr( $buf, 0, $result ) : undef;
+}
 
 1;
 

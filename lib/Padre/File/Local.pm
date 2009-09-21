@@ -17,19 +17,10 @@ sub _reformat_filename {
 
 	if (Padre::Constant::WIN32) {
 
-		# Allocate a buffer that can take the maximum win32 path
-		my $MAX_PATH  = 260 + 1;
-		my $long_path = ' ' x $MAX_PATH;
-
-		# Calls the following function
-		# DWORD GetLongPathName(STR inShortPath, STR outLongPath, DWORD nBuffer)
-		require Win32::API;
-		my $len =
-			Win32::API->new( 'kernel32', 'GetLongPathName', 'PPN', 'N' )
-			->Call( $self->{Filename}, $long_path, $MAX_PATH );
-
 		# Fixing the case of the filename on Win32.
-		$self->{Filename} = $len ? substr( $long_path, 0, $len ) : $self->{Filename};
+		require Padre::Util::Win32;
+		$self->{Filename} = Padre::Util::Win32::GetLongPathName( $self->{Filename} )
+			|| $self->{Filename};
 	}
 
 	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
