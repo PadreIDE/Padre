@@ -4,12 +4,12 @@ Changes for Perl Application Development and Refactoring Environment
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
     - Fixed crash when inserting a special value without any document (AZAWAWI)
     - Improved StatusBar - speed (SEWI)
-    - Fixed ticket:573 "ESC does not close About window" (AZAWAWI)
-    - Fixed ticket:578 "Padre's Splash screen should not get in the way" (AZAWAWI)
-    - Fixed ticket:579 "Commenting/uncommenting comments the last unselected 
-      line" (AZAWAWI)
-    - Fixed ticket:576 "common (beginner) error check has no feedback if no
-      errors found" (AZAWAWI)
+    - Fixed ticket #573 ESC does not close About window (AZAWAWI)
+    - Fixed ticket #578 Padre's Splash screen should not get in the way (AZAWAWI)
+    - Fixed ticket #579 Commenting/uncommenting comments the last unselected 
+      line (AZAWAWI)
+    - Fixed ticket #576 common (beginner) error check has no feedback if no
+      errors found (AZAWAWI)
     - Added Padre::File as a API for all operations on edited files (SEWI)
     - Added 13-eol.t to detect non-UNIX EOL-ed files in Padre (AZAWAWI)
     - Added "Open URL" menu option (SEWI)
@@ -22,23 +22,23 @@ Changes for Perl Application Development and Refactoring Environment
         - Mixed, a mixture of the above which is usually an error
         - None which is a one-liner/empty script
     - Beautified the about dialog so that it is includes the splash image. (AZAWAWI)
-    - Fixed ticket:589 "Pasting in a UNIX document in win32 corrupts it to
-      MIXEd" (AZAWAWI)
+    - Fixed ticket #589 Pasting in a UNIX document in win32 corrupts it to
+      MIXEd (AZAWAWI)
     - Added more beginner-error-checks (SEWI)
     - Improved Perl menu to be more consistent (AZAWAWI)
-    - Fixed Padre ticket:504 and ticket:586 which is basically about being
-      able to rename a variable when the cursor is over its declaration (AZAWAWI)
+    - Fixed ticket #504 and ticket #586 which are basically about being able to
+      lexically rename a variable when the cursor is over its declaration (AZAWAWI)
     - Added "Dump PPI Document" to "Padre Developer Tools" core plugin (AZAWAWI)
-    - Added Run/Stop icons to the toolbar per ticket:529 (AZAWAWI)
-    - Fixed ticket:595 "F6 (Stop Executing of script) doesnt work with Output
-      window in Windows" (AZAWAWI)
+    - Added Run/Stop icons to the toolbar per ticket #529 (AZAWAWI)
+    - Fixed ticket #595 F6 (Stop Executing of script) doesnt work with Output
+      window in Windows (AZAWAWI)
     - Fixed ticket #597: Merged OS detection in Padre::Constant (SEWI)
     - Fixed ticket #594: F1 key doesn't work (SEWI)
     - Fixed ticket #593: On Windows, files with / and \ are now the same
       and files are treated case-insensitive (AZAWAWI, SEWI)
     - Fixed ticket #591: Save/Save as decision was corrupt (SEWI)
-    - Fixed ticket #582: "Run this test" in broken on win32 when there is a
-      space in the test file (AZAWAWI)
+    - Fixed ticket #582: Run this test/Run Tests are broken on win32 when there
+      is a space in the test file (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
@@ -56,7 +56,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Added a "extract subroutine" function (RHEBUS)
     - Handle "Open all Recent Files" Padre crash when setup_editor is called 
       with a file that no longer exists (AZAWAWI)
-    - Fixed ticket:536 "Padre auto converts EOLs automatically" (AZAWAWI)
+    - Fixed ticket #536 Padre auto converts EOLs automatically (AZAWAWI)
     - Pod::Perldoc 3.15 is required now. Allowing help on $. and similar. (AZAWAWI)
     - Fixed Arabic/Hebrew developer/translator names in Padre's about box (AZAWAWI)
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
