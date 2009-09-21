@@ -205,7 +205,7 @@ sub _create {
 	# create vertical box that will host all controls
 	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$self->SetSizer($hbox);
-	$self->SetMinSize( [ 800, 600 ] );
+	$self->SetMinSize( [ 750, 550 ] );
 	$self->_hbox($hbox);
 	$self->_create_list;
 	$self->_create_right_pane;
@@ -336,6 +336,9 @@ sub _plugin_disable {
 # enable plugin, and update gui.
 #
 sub _plugin_enable {
+	BEGIN {
+		$DB::single = 1;
+	}
 	my $self   = shift;
 	my $plugin = $self->_curplugin;
 	my $parent = $self->GetParent;
