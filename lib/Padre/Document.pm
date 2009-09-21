@@ -221,7 +221,7 @@ sub new {
 
 			# Test script must be able to pass an alternate config object:
 			my $config = $self->{config} || Padre->ide->config;
-			if ( $self->{file}->size > $config->editor_file_size_limit ) {
+			if ( defined($self->{file}->size) and ($self->{file}->size > $config->editor_file_size_limit) ) {
 				$self->error(
 					sprintf(
 						Wx::gettext(
