@@ -89,7 +89,7 @@ sub basename {
 	my $self = shift;
 
 	# Cut the protocol and hostname part or fail if this is no expected syntax:
-	$self->{Filename} =~ /https?\:\/\/.+?\/(.+)/i or return $self->{Filename};
+	$self->{Filename} =~ /https?\:\/\/.+?\/(.+)/i or return 'index.html';
 	my $basename = $1;
 
 	# Cut any arguments and anchor-parts
@@ -100,6 +100,14 @@ sub basename {
 
 	# Return a HTTP default in case the URL was http://www.google.de/
 	return $basename || 'index.html';
+}
+
+sub dirname {
+	my $self = shift;
+
+	# Cut the protocol and hostname part or fail if this is no expected syntax:
+	$self->{Filename} =~ /^(https?\:\/\/.+?\/)[^\/\#\?]+?([\#\?].*)?$/i or return $self->{Filename};
+	return $1;
 }
 
 sub read {
