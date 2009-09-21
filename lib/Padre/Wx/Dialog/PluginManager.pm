@@ -336,6 +336,7 @@ sub _plugin_disable {
 # enable plugin, and update gui.
 #
 sub _plugin_enable {
+
 	BEGIN {
 		$DB::single = 1;
 	}

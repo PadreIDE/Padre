@@ -42,8 +42,8 @@ sub new {
 	);
 	$self->add_menu_item(
 		$self,
-		name  => 'help.context_help',
-		label => Wx::gettext('Context Help'),
+		name       => 'help.context_help',
+		label      => Wx::gettext('Context Help'),
 		shortcut   => 'F1',
 		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
