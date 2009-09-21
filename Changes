@@ -37,6 +37,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #593: On Windows, files with / and \ are now the same
       and files are treated case-insensitive (AZAWAWI, SEWI)
     - Fixed ticket #591: Save/Save as decision was corrupt (SEWI)
+    - Fixed ticket #582: "Run this test" in broken on win32 when there is a
+      space in the test file (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
