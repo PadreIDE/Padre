@@ -183,7 +183,6 @@ use Class::XSAccessor getters => {
 	get_highlighter  => 'highlighter',
 	},
 	setters => {
-	_set_filename    => 'filename',    # TODO temporary hack
 	set_newline_type => 'newline_type',
 	set_mimetype     => 'mimetype',
 	set_errstr       => 'errstr',
@@ -544,6 +543,17 @@ sub newline {
 		return "\r";
 	}
 	return "\n";
+}
+
+sub _set_filename {
+	my $self = shift;
+	my $filename = shift;
+
+	return 1 if $self->{filename} eq $filename;
+	
+	undef $self->{file}; # close file object
+	$self->{filename} = $filename;
+	$self->{file} = Padre::File->new($filename);
 }
 
 sub save_file {
