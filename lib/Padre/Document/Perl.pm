@@ -15,6 +15,10 @@ use Padre::Document::Perl::Beginner;
 our $VERSION = '0.46';
 our @ISA     = 'Padre::Document';
 
+
+
+
+
 #####################################################################
 # Padre::Document::Perl Methods
 
@@ -132,8 +136,35 @@ sub set_highlighter {
 }
 
 
+
+
+
 #####################################################################
 # Padre::Document Document Analysis
+
+sub guess_filename {
+	my $self = shift;
+	my $text = $self->text_get;
+
+	# Is this a script?
+	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
+		# It's impossible to predict the name of a script in
+		# advance, but lets default to a standard "script.pl"
+		return 'script.pl';
+	}
+
+	# Is this a module
+	if ( $text =~ /\bpackage\s*([\w\:]+)/s ) {
+		# Take the last section of the package name, and use that
+		# as the file.
+		my $name = $1;
+		$name =~ s/.*\://;
+		return "$name.pm";
+	}
+
+	# Otherwise, no idea
+	return undef;
+}
 
 my $keywords;
 
@@ -440,6 +471,10 @@ sub find_variable_declaration {
 
 	return ();
 }
+
+
+
+
 
 #####################################################################
 # Padre::Document Document Manipulation
