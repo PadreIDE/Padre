@@ -541,7 +541,16 @@ sub _set_filename {
 	my $self     = shift;
 	my $filename = shift;
 
-	return 1 if $self->{filename} eq $filename;
+	# Shortcut if the filename is the same
+	if (
+		defined $self->{filename}
+		and
+		defined $filename
+		and
+		$self->{filename} eq $filename
+	) {
+		return 1;
+	}
 
 	undef $self->{file}; # close file object
 	$self->{file} = Padre::File->new($filename);
