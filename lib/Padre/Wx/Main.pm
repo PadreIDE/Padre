@@ -1412,7 +1412,7 @@ sub show_output {
 	$self->config->write;
 
 	if ($on) {
-		$self->bottom->show( $self->output );
+		$self->bottom->show( $self->output, sub { $self->show_output(0); } );
 	} else {
 		$self->bottom->hide( $self->output );
 	}
@@ -1445,7 +1445,7 @@ sub show_syntax {
 	}
 
 	if ($on) {
-		$self->bottom->show($syntax);
+		$self->bottom->show($syntax, sub { $self->show_syntax(0); });
 		$syntax->start unless $syntax->running;
 	} else {
 		$self->bottom->hide( $self->syntax );

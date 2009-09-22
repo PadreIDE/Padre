@@ -61,8 +61,7 @@ sub new {
 # Page Management
 
 sub show {
-	my $self = shift;
-	my $page = shift;
+	my ($self, $page, $on_close) = @_;
 
 	# Are we currently showing the page
 	my $position = $self->GetPageIndex($page);
@@ -83,6 +82,8 @@ sub show {
 	$page->Show;
 	$self->Show;
 	$self->aui->GetPane($self)->Show;
+
+	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE( $self, $self, $on_close);
 
 	return;
 }
