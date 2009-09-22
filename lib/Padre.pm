@@ -305,7 +305,6 @@ B<File/Save As> - Offer the user to select a new filename and save the content u
 B<File/Save All> - Save all the currently opened files.
 
 B<File/Convert> - Convert line endings to Windows, Unix or Mac Classic style.
-(TODO stop the autoconversion of mixed files, just report them.)
 
 B<Files/Recent Files> - a list of recently opened files to open them easily.
 (TODO: update the list when we open a file, not only when opening padre)
