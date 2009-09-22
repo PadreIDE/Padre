@@ -688,7 +688,7 @@ sub autocomplete {
 sub newline_keep_column {
 	my $self = shift;
 
-	my $editor = $self->editor;
+	my $editor = $self->editor or return;
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
 	my $first  = $editor->PositionFromLine($line);
