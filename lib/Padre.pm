@@ -127,7 +127,7 @@ sub new {
 		}
 	}
 
-	# This allows scripts to detect that it is being executed 
+	# This allows scripts to detect that it is being executed
 	# within Padre or not
 	$ENV{PADRE_VERSION} = $VERSION;
 

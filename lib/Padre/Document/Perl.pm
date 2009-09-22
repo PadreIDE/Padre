@@ -148,6 +148,7 @@ sub guess_filename {
 
 	# Is this a script?
 	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
+
 		# It's impossible to predict the name of a script in
 		# advance, but lets default to a standard "script.pl"
 		return 'script.pl';
@@ -155,6 +156,7 @@ sub guess_filename {
 
 	# Is this a module
 	if ( $text =~ /\bpackage\s*([\w\:]+)/s ) {
+
 		# Take the last section of the package name, and use that
 		# as the file.
 		my $name = $1;

@@ -541,12 +541,12 @@ sub _set_filename {
 	my $self     = shift;
 	my $filename = shift;
 
-	if ( ! defined($filename)) {
-		warn 'Request to set filename to undef from '.join(',',caller);
+	if ( !defined($filename) ) {
+		warn 'Request to set filename to undef from ' . join( ',', caller );
 		return 0;
 	}
 
-	return 1 if defined($self->{filename}) and ($self->{filename} eq $filename);
+	return 1 if defined( $self->{filename} ) and ( $self->{filename} eq $filename );
 
 	undef $self->{file}; # close file object
 	$self->{file} = Padre::File->new($filename);
