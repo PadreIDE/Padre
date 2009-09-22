@@ -552,8 +552,9 @@ sub _set_filename {
 	return 1 if $self->{filename} eq $filename;
 	
 	undef $self->{file}; # close file object
-	$self->{filename} = $filename;
 	$self->{file} = Padre::File->new($filename);
+	# Padre::File reformats filenames to the protocol/OS specific format, so use this:
+	$self->{filename} = $self->{file}->{Filename};
 }
 
 sub save_file {
@@ -565,6 +566,22 @@ sub save_file {
 	if ( !defined($file) ) {
 		$file = Padre::File->new( $self->filename );
 		$self->{file} = $file;
+	}
+
+	# This is just temporary for security and should prevend data loss:
+	if ($self->{filename}.1 ne $file->{Filename}) {
+		my $ret = Wx::MessageBox(
+			sprintf(
+				Wx::gettext('Visual filename %s does not match the internal filename %s, do you want to abort saving?'),
+				$self->{filename},
+				$file->{Filename}
+			),
+			Wx::gettext("Save Warning"),
+			Wx::wxYES_NO | Wx::wxCENTRE,
+			Padre->ide->wx->main,
+		);
+
+		return 0 if $ret == Wx::wxYES;
 	}
 
 	# not set when first time to save
