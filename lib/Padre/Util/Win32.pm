@@ -41,6 +41,7 @@ our @EXPORT_OK = qw{ GetLongPathName };
 # Returns undef for failure, or the long form of the specified path
 #
 sub GetLongPathName {
+
 	# Only for win32
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 
@@ -68,9 +69,10 @@ CODE
 # Returns undef (failed), zero (aborted) or one (success)
 #
 sub Recycle {
+
 	# Only for win32
 	die "Win32 function called!" unless Padre::Constant::WIN32;
-	
+
 	my $file_to_recycle = shift;
 
 	# define the win32 structure
@@ -84,26 +86,24 @@ sub Recycle {
 			BOOL fAnyOperationsAborted;
 			LPVOID hNameMappings;
 			LPCTSTR lpszProgressTitle;
-		)
+			)
 	);
 
 	# prepare structure for win32 call
-	my $op = Win32::API::Struct->new( 'SHFILEOPSTRUCT' );
-	$op->{wFunc}  = 0x0003; # FO_DELETE from ShellAPI.h
-	$op->{fFlags} = 0x0040; # FOF_ALLOWUNDO from ShellAPI.h
+	my $op = Win32::API::Struct->new('SHFILEOPSTRUCT');
+	$op->{wFunc}  = 0x0003;                   # FO_DELETE from ShellAPI.h
+	$op->{fFlags} = 0x0040;                   # FOF_ALLOWUNDO from ShellAPI.h
 	$op->{pFrom}  = $file_to_recycle . "\0\0";
 
 	# perform the recycling
-	my $result = Win32::API->new(
-		shell32 => q{ int SHFileOperation( LPSHFILEOPSTRUCT lpFileOp ) }
-	)->Call( $op );
-	
+	my $result = Win32::API->new( shell32 => q{ int SHFileOperation( LPSHFILEOPSTRUCT lpFileOp ) } )->Call($op);
+
 	# failed miserably
 	return undef if $result;
-	
+
 	# user aborted...
 	return 0 if $op->{fAnyOperationsAborted};
-	
+
 	# file recycled
 	return 1;
 }
@@ -113,7 +113,7 @@ sub AllowSetForegroundWindow { # PID
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 
 	my $self = shift;
-	my $pid = shift;
+	my $pid  = shift;
 
 	return Win32::API->new(
 		'User32.dll',

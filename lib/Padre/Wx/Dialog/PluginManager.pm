@@ -39,7 +39,7 @@ sub new {
 	$self->{sortreverse} = 0;
 
 	# Set basic dialog properties
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 	$self->SetMinSize( [ 750, 550 ] );
 
 	# Store plugin manager
@@ -57,11 +57,11 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT
-		| Wx::wxLC_SINGLE_SEL,
+			| Wx::wxLC_SINGLE_SEL,
 	);
-	$self->{list}->InsertColumn( 0, Wx::gettext('Name')    );
+	$self->{list}->InsertColumn( 0, Wx::gettext('Name') );
 	$self->{list}->InsertColumn( 1, Wx::gettext('Version') );
-	$self->{list}->InsertColumn( 2, Wx::gettext('Status')  );
+	$self->{list}->InsertColumn( 2, Wx::gettext('Status') );
 	Wx::Event::EVT_LIST_ITEM_SELECTED(
 		$self,
 		$self->{list},
@@ -98,13 +98,13 @@ sub new {
 		Wx::gettext('Plugin Name'),
 	);
 	my $font = $self->{label}->GetFont;
-	$font->SetWeight( Wx::wxFONTWEIGHT_BOLD );
+	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 4 );
 	$self->{label}->SetFont($font);
 
 	# Plugin Documentation HTML Window
 	require Padre::Wx::HtmlWindow;
-	$self->{whtml} = Wx::HtmlWindow->new( $self );
+	$self->{whtml} = Wx::HtmlWindow->new($self);
 
 	# Enable/Disable Button
 	$self->{button_main} = Wx::Button->new(
@@ -151,22 +151,22 @@ sub new {
 	# Dialog Layout
 
 	# Horizontal button sizer
-	my $buttons = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{button_main}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{button_main},        0, Wx::wxALL, 1 );
 	$buttons->Add( $self->{button_preferences}, 0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
 	$buttons->Add( $self->{button_close}, 0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Horizontal plugin name positioning
-	my $header = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $header = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$header->AddStretchSpacer;
 	$header->Add( $self->{label}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
 	$header->AddStretchSpacer;
 
 	# Vertical layout of the right hand side
-	my $right = Wx::BoxSizer->new( Wx::wxVERTICAL );
+	my $right = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$right->Add( $header, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$right->Add(
 		$self->{whtml},
@@ -177,12 +177,12 @@ sub new {
 	$right->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# Main sizer
-	my $sizer = Wx::BoxSizer->new( Wx::wxHORIZONTAL );
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizer->Add( $self->{list}, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$sizer->Add( $right, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$sizer->Add( $right,        1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# Tune the size and position it appears
-	$self->SetSizer( $sizer );
+	$self->SetSizer($sizer);
 	$self->Fit;
 	$self->CentreOnParent;
 
@@ -200,7 +200,7 @@ sub show {
 	# there's at least a plugin, since there will always be
 	# 'my plugin'
 	my $item = $self->{list}->GetItem(0);
-	$item->SetState( Wx::wxLIST_STATE_SELECTED );
+	$item->SetState(Wx::wxLIST_STATE_SELECTED);
 	$self->{list}->SetItem($item);
 
 	$self->Show;
@@ -259,7 +259,7 @@ sub list_col_click {
 	my $column   = $event->GetColumn;
 	my $prevcol  = $self->{sortcolumn};
 	my $reversed = $self->{sortreverse};
-	$reversed = $column == $prevcol ? ! $reversed : 0;
+	$reversed = $column == $prevcol ? !$reversed : 0;
 	$self->{sortcolumn}  = $column;
 	$self->{sortreverse} = $reversed;
 	$self->_refresh_list;
@@ -366,23 +366,22 @@ sub _refresh_list {
 	$self->{imagelist}->RemoveAll;
 
 	# Default plugin icon
-	$self->{imagelist}->Add(
-		Padre::Wx::Icon::find('status/padre-plugin')
-	);
+	$self->{imagelist}->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 	my %icon = ( plugin => 0 );
 
 	# Plugin status
 	my $i = 0;
-	foreach my $name ( qw{
+	foreach my $name (
+		qw{
 		enabled
 		disabled
 		error
 		crashed
 		incompatible
-	} ) {
-		$self->{imagelist}->Add(
-			Padre::Wx::Icon::find("status/padre-plugin-$name")
-		);
+		}
+		)
+	{
+		$self->{imagelist}->Add( Padre::Wx::Icon::find("status/padre-plugin-$name") );
 		$icon{$name} = ++$i;
 	}
 
@@ -394,13 +393,8 @@ sub _refresh_list {
 	my @plugins = map { $plugins->{$_} } $self->{manager}->plugin_order;
 	if ( $self->{sortcolumn} == 1 ) {
 		no warnings;
-		@plugins = map {
-			$_->[0]
-		} sort {
-			$a->[1] <=> $b->[1]
-		} map {
-			[ $_, version->new( $_->version || 0 ) ]
-		} @plugins;
+		@plugins =
+			map { $_->[0] } sort { $a->[1] <=> $b->[1] } map { [ $_, version->new( $_->version || 0 ) ] } @plugins;
 	}
 	if ( $self->{sortcolumn} == 2 ) {
 		@plugins = sort { $a->status cmp $b->status } @plugins;
@@ -425,16 +419,19 @@ sub _refresh_list {
 		}
 
 		# Inserting the plugin in the list
-		$self->{list}->InsertStringImageItem( ++$idx,
+		$self->{list}->InsertStringImageItem(
+			++$idx,
 			$plugin->plugin_name,
 			$position,
 		);
-		$self->{list}->SetItem( $idx, 1,
+		$self->{list}->SetItem(
+			$idx, 1,
 			$plugin->version || '???'
 		);
-		$self->{list}->SetItem( $idx, 2,
+		$self->{list}->SetItem(
+			$idx, 2,
 			$plugin->status_localized,
-			$icon{$plugin->status},
+			$icon{ $plugin->status },
 		);
 	}
 
@@ -465,6 +462,7 @@ sub _refresh_list {
 sub _update_plugin_state {
 	my $self   = shift;
 	my $plugin = $self->{plugin};
+
 	# my $list   = $self->{list};
 	# my $item   = $list->GetItem( $self->{row}, 2 );
 
@@ -476,11 +474,10 @@ sub _update_plugin_state {
 
 		# Plugin is in error state
 		$self->{action} = 'show_error_message';
-		$button_main->SetLabel(
-			Wx::gettext('Show error message')
-		);
+		$button_main->SetLabel( Wx::gettext('Show error message') );
 		$button_preferences->Disable;
 		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('error'), 3 );
+
 		# $item->SetText( Wx::gettext('error') );
 		# $item->SetImage(3);
 		# $list->SetItem($item);
@@ -489,11 +486,10 @@ sub _update_plugin_state {
 
 		# Plugin is incompatible
 		$self->{action} = 'show_error_message';
-		$button_main->SetLabel(
-			Wx::gettext('Show error message')
-		);
+		$button_main->SetLabel( Wx::gettext('Show error message') );
 		$button_preferences->Disable;
 		$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('incompatible'), 5 );
+
 		# $item->SetText( Wx::gettext('incompatible') );
 		# $item->SetImage(5);
 		# $list->SetItem($item);
@@ -507,7 +503,8 @@ sub _update_plugin_state {
 			$self->{action} = '_plugin_disable';
 			$button_main->SetLabel( Wx::gettext('Disable') );
 			$button_main->Enable;
-			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('enabled'), 1 );	
+			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('enabled'), 1 );
+
 			# $item->SetText( Wx::gettext('enabled') );
 			# $item->SetImage(1);
 			# $list->SetItem($item);
@@ -519,6 +516,7 @@ sub _update_plugin_state {
 			$button_main->SetLabel( Wx::gettext('Enable') );
 			$button_main->Enable;
 			$self->{list}->SetItem( $self->{row}, 2, Wx::gettext('disabled'), 2 );
+
 			# $item->SetText( Wx::gettext('disabled') );
 			# $item->SetImage(2);
 			# $list->SetItem($item);

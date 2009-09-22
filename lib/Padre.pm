@@ -9,17 +9,17 @@ use utf8;
 
 # Non-Padre modules we need in order to the single-instance
 # check should be loaded early to simplify the load order.
-use Carp          ();
-use Cwd           ();
-use File::Spec    ();
-use File::HomeDir ();
-use List::Util    ();
-use Scalar::Util  ();
-use Getopt::Long  ();
-use YAML::Tiny    ();
-use DBI           ();
-use DBD::SQLite   ();
-use Padre::Splash ();
+use Carp               ();
+use Cwd                ();
+use File::Spec         ();
+use File::HomeDir      ();
+use List::Util         ();
+use Scalar::Util       ();
+use Getopt::Long       ();
+use YAML::Tiny         ();
+use DBI                ();
+use DBD::SQLite        ();
+use Padre::Splash      ();
 use Padre::Util::Win32 ();
 
 # load this before things are messed up to produce versions like '0,76'!
@@ -112,6 +112,7 @@ sub new {
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
 				if (Padre::Constant::WIN32) {
+
 					# The whole Win32-API moved to Padre::Util::Win32:
 					Padre::Util::Win32->AllowSetForegroundWindow($pid);
 				}

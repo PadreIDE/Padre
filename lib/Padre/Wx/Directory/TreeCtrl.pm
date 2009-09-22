@@ -746,17 +746,20 @@ sub _on_tree_item_menu {
 	# Move item to trash
 	# Note: File::Remove->trash() only works on Mac
 	# Please see ticket:553 (http://padre.perlide.org/trac/ticket/553)
-	if (Padre::Constant::MAC or Padre::Constant::WIN32) {
+	if ( Padre::Constant::MAC or Padre::Constant::WIN32 ) {
 		my $trash = $menu->Append( -1, Wx::gettext('Move to trash') );
 		Wx::Event::EVT_MENU(
 			$self, $trash,
 			sub {
 				eval {
-					if(Padre::Constant::WIN32) {
+					if (Padre::Constant::WIN32)
+					{
+
 						# WIN32
 						require Padre::Util::Win32;
 						Padre::Util::Win32::Recycle($selected_path);
 					} else {
+
 						# MAC
 						require File::Remove;
 						File::Remove->trash($selected_path);
