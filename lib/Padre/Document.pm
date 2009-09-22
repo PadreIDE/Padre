@@ -541,16 +541,12 @@ sub _set_filename {
 	my $self     = shift;
 	my $filename = shift;
 
-	# Shortcut if the filename is the same
-	if (
-		defined $self->{filename}
-		and
-		defined $filename
-		and
-		$self->{filename} eq $filename
-	) {
-		return 1;
+	if ( ! defined($filename)) {
+		warn 'Request to set filename to undef from '.join(',',caller);
+		return 0;
 	}
+
+	return 1 if defined($self->{filename}) and ($self->{filename} eq $filename);
 
 	undef $self->{file}; # close file object
 	$self->{file} = Padre::File->new($filename);
