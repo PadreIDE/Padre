@@ -126,6 +126,10 @@ sub new {
 		}
 	}
 
+	# This allows scripts to detect that it is being executed 
+	# within Padre or not
+	$ENV{PADRE_VERSION} = $VERSION;
+
 	# Load a few more bits and pieces now we know
 	# that we'll need them
 	require Padre::Project;
