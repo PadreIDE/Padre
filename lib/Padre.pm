@@ -395,6 +395,9 @@ option. Currently Ctrl-F5 does not save any file.
 
 You can edit the command line using the Run/Setup menu item.
 
+Please Note that you can use C<$ENV{PADRE_VERSION}> to detect whether the script 
+is running inside Padre or not.
+
 =head2 Bookmarks
 
 B<View/Set Bookmark> (Ctrl-B) brings up a window with a
