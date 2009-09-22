@@ -569,7 +569,7 @@ sub save_file {
 	}
 
 	# This is just temporary for security and should prevend data loss:
-	if ($self->{filename}.1 ne $file->{Filename}) {
+	if ($self->{filename} ne $file->{Filename}) {
 		my $ret = Wx::MessageBox(
 			sprintf(
 				Wx::gettext('Visual filename %s does not match the internal filename %s, do you want to abort saving?'),
