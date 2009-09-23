@@ -4,6 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Perl                ();
+use Padre::Constant            ();
+use Padre::Util::Win32         ();
 use Padre::Task::SyntaxChecker ();
 
 our $VERSION = '0.46';
@@ -57,9 +59,10 @@ sub _check_syntax {
 	# Execute the syntax check
 	my $stderr = '';
 	SCOPE: {
+
 		# Create a temporary file with the Perl text
 		require File::Temp;
-		my $file = File::Temp->new;
+		my $file = File::Temp->new( UNLINK => 0 );
 		binmode( $file, ":utf8" );
 		$file->print( $self->{text} );
 		$file->close;
@@ -68,7 +71,7 @@ sub _check_syntax {
 		my @cmd = (
 			Padre::Perl::cperl(),
 		);
-		
+
 		# Append Perl command line options
 		if ( $self->{perl_cmd} ) {
 			push @cmd, @{ $self->{perl_cmd} };
@@ -76,7 +79,7 @@ sub _check_syntax {
 
 		# Open a temporary file for standard error redirection
 		my $err = File::Temp->new( UNLINK => 0 );
-		close $err;
+		$err->close;
 
 		# Redirect perl's output to temporary file
 		push @cmd,
@@ -95,9 +98,17 @@ sub _check_syntax {
 			require File::pushd;
 			my $pushd = File::pushd::pushd( $self->{cwd} );
 
-			system $cmd;
+			if (Padre::Constant::WIN32) {
+				Padre::Util::Win32::ExecuteProcessAndWait( 'cmd.exe', "/C $cmd", 0 );
+			} else {
+				system $cmd;
+			}
 		} else {
-			system $cmd;
+			if (Padre::Constant::WIN32) {
+				Padre::Util::Win32::ExecuteProcessAndWait( 'cmd.exe', "/C $cmd", 0 );
+			} else {
+				system $cmd;
+			}
 		}
 
 		# Slurp Perl's stderr
