@@ -31,8 +31,6 @@ use Padre::Constant ();
 require Win32::API if Padre::Constant::WIN32;
 
 our $VERSION   = '0.46';
-our @ISA       = 'Exporter';
-our @EXPORT_OK = qw{ GetLongPathName };
 
 #
 # Converts the specified path to its long form.
