@@ -1763,6 +1763,7 @@ sub run_command {
 			sub {
 				$_[1]->Skip(1);
 				$_[1]->GetProcess->Destroy;
+				delete $self->{command};
 				$self->menu->run->enable;
 				$_[0]->errorlist->populate;
 			},

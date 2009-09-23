@@ -231,8 +231,8 @@ sub refresh {
 	$self->EnableTool( $self->{comment_toggle}, ( $document ? 1 : 0 ) );
 	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
 
-	$self->EnableTool( $self->{run},  ( $self->GetParent->{command} ? 0 : 1 ) );
-	$self->EnableTool( $self->{stop}, ( $self->GetParent->{command} ? 1 : 0 ) );
+	$self->EnableTool( $self->{run},  ( $document and not $self->GetParent->{command} ) ? 1 : 0 );
+	$self->EnableTool( $self->{stop}, ( $document and $self->GetParent->{command} ) ? 1 : 0 );
 
 	return;
 }
