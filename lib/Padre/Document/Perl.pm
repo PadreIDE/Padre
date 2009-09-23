@@ -210,7 +210,7 @@ sub get_command {
 
 	# Run with the same Perl that launched Padre
 	# TODO: get preferred Perl from configuration
-	my $perl = Padre::Perl::perl();
+	my $perl = Padre::Perl::cperl();
 
 	# Set default arguments
 	my %run_args = (

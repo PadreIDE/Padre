@@ -1887,7 +1887,7 @@ sub debug_perl {
 	local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
 
 	# Run with the same Perl that launched Padre
-	my $perl = Padre::Perl::perl();
+	my $perl = Padre::Perl::cperl();
 	$self->run_command(qq["$perl" -d "$filename"]);
 
 }

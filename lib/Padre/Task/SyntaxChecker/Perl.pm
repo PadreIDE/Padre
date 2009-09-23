@@ -63,7 +63,7 @@ sub _check_syntax {
 		$file->print( $self->{text} );
 		$file->close;
 		my @cmd = (
-			Padre::Perl::perl(),
+			Padre::Perl::cperl(),
 		);
 		if ( $self->{perl_cmd} ) {
 			push @cmd, @{ $self->{perl_cmd} };
