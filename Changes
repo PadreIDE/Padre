@@ -47,6 +47,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #488: allow script to recognize when executed by Padre (AZAWAWI)
     - Padre now uses cperl() console instead perl() for compatiblity with
       wperl (AZAWAWI)
+    - Fixed ticket #603: Background tasks fail to work under wperl win32 (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
