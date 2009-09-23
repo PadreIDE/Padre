@@ -1445,7 +1445,7 @@ sub show_syntax {
 	}
 
 	if ($on) {
-		$self->bottom->show($syntax, sub { $self->show_syntax(0); });
+		$self->bottom->show( $syntax, sub { $self->show_syntax(0); } );
 		$syntax->start unless $syntax->running;
 	} else {
 		$self->bottom->hide( $self->syntax );

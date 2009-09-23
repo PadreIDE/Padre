@@ -70,7 +70,7 @@ sub _check_syntax {
 		}
 
 		# Open a temporary file for standard error redirection
-		my $err = File::Temp->new(UNLINK   => 0);
+		my $err = File::Temp->new( UNLINK => 0 );
 		close $err;
 
 		# Redirect perl's output to temporary file

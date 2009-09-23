@@ -149,7 +149,7 @@ sub enable {
 	$self->{run_document_debug}->Enable(1);
 	$self->{run_command}->Enable(1);
 	$self->{stop}->Enable(0);
-	$self->{main}->refresh_toolbar( _CURRENT );
+	$self->{main}->refresh_toolbar(_CURRENT);
 	return;
 }
 
@@ -159,7 +159,7 @@ sub disable {
 	$self->{run_document_debug}->Enable(0);
 	$self->{run_command}->Enable(0);
 	$self->{stop}->Enable(1);
-	$self->{main}->refresh_toolbar( _CURRENT );
+	$self->{main}->refresh_toolbar(_CURRENT);
 	return;
 }
 

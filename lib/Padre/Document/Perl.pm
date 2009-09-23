@@ -693,15 +693,15 @@ sub newline_keep_column {
 	my $line   = $editor->LineFromPosition($pos);
 	my $first  = $editor->PositionFromLine($line);
 	my $col    = $pos - $editor->PositionFromLine( $editor->LineFromPosition($pos) );
-	my $text = $editor->GetTextRange($first,($pos - $first));
+	my $text   = $editor->GetTextRange( $first, ( $pos - $first ) );
 
 	$editor->AddText( $self->newline );
 
 	$pos   = $editor->GetCurrentPos;
 	$first = $editor->PositionFromLine( $editor->LineFromPosition($pos) );
 
-#	my $col2 = $pos - $first;
-#	$editor->AddText( ' ' x ( $col - $col2 ) );
+	#	my $col2 = $pos - $first;
+	#	$editor->AddText( ' ' x ( $col - $col2 ) );
 
 	# TODO: Remove the part made by auto-ident before addtext:
 	$text =~ s/[^\s\t\r\n]/ /g;

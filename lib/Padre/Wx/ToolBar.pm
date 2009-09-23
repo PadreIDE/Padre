@@ -232,7 +232,7 @@ sub refresh {
 	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
 
 	$self->EnableTool( $self->{run},  ( $document and not $self->GetParent->{command} ) ? 1 : 0 );
-	$self->EnableTool( $self->{stop}, ( $document and $self->GetParent->{command} ) ? 1 : 0 );
+	$self->EnableTool( $self->{stop}, ( $document and $self->GetParent->{command} )     ? 1 : 0 );
 
 	return;
 }
