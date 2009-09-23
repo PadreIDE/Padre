@@ -32,7 +32,6 @@ author         'Gabor Szabo';
 all_from       'lib/Padre.pm';
 requires       'perl'                     => '5.008005';
 requires       'App::Ack'                 => '1.86';
-requires       'Capture::Tiny'            => '0.06';
 requires       'Carp'                     => 0;
 requires       'Class::Adapter'           => '1.05';
 requires       'Class::Unload'            => '0.03';
