@@ -108,18 +108,45 @@ sub Recycle {
 	return 1;
 }
 
-sub AllowSetForegroundWindow { # PID
+#
+# Enables the specified process to set the foreground window
+# via SetForegroundWindow
+#
+sub AllowSetForegroundWindow {
 
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 
-	my $self = shift;
-	my $pid  = shift;
+	my ( $self, $pid ) = @_;
 
-	return Win32::API->new(
-		'User32.dll',
-		'AllowSetForegroundWindow',
-		'N', 'L',
-	)->Call($pid);
+	my $func = Win32::API->new( shell32 => <<'CODE');
+BOOL AllowSetForegroundWindow(      
+    DWORD dwProcessId
+);
+CODE
+	return $func->Call($pid);
+}
+
+#
+# Performs an operation on a specified file.
+#
+sub ShellExecute {
+
+	die "Win32 function called!" unless Padre::Constant::WIN32;
+
+	my ( $operation, $file, $parameters, $directory, $show_cmd ) = @_;
+
+	my $func = Win32::API->new( shell32 => <<'CODE');
+HINSTANCE ShellExecute(      
+    HWND hwnd,
+    LPCTSTR lpOperation,
+    LPCTSTR lpFile,
+    LPCTSTR lpParameters,
+    LPCTSTR lpDirectory,
+    INT nShowCmd
+);
+CODE
+
+	$func->Call( 0, $operation, $file, $parameters, $directory, $show_cmd );
 }
 
 1;
