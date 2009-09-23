@@ -127,26 +127,73 @@ CODE
 }
 
 #
-# Performs an operation on a specified file.
+# Execute a background process and wait for it to end
+# If you set Show to 0, then you have an invisible command line window on win32!
 #
-sub ShellExecute {
+sub ExecuteProcessAndWait {
 
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 
-	my ( $operation, $file, $parameters, $directory, $show_cmd ) = @_;
+	my ( $App_Name, $Cmd_Line, $Show ) = @_;
 
-	my $func = Win32::API->new( shell32 => <<'CODE');
-HINSTANCE ShellExecute(      
-    HWND hwnd,
-    LPCTSTR lpOperation,
-    LPCTSTR lpFile,
-    LPCTSTR lpParameters,
-    LPCTSTR lpDirectory,
-    INT nShowCmd
-);
+	Win32::API::Struct->typedef(
+		'SHELLEXECUTEINFO', qw(
+			DWORD cbSize;
+			ULONG fMask;
+			HWND hwnd;
+			LPCTSTR lpVerb;
+			LPCTSTR lpFile;
+			LPCTSTR lpParameters;
+			LPCTSTR lpDirectory;
+			int nShow;
+			HINSTANCE hInstApp;
+			LPVOID lpIDList;
+			LPCTSTR lpClass;
+			HKEY hkeyClass;
+			DWORD dwHotKey;
+			HANDLE hIconOrMonitor;
+			HANDLE hProcess;
+			)
+	);
+
+	my $info = Win32::API::Struct->new('SHELLEXECUTEINFO');
+	$info->{cbSize}       = $info->sizeof;
+	$info->{lpVerb}       = 'open';
+	$info->{lpFile}       = $App_Name;
+	$info->{lpParameters} = $Cmd_Line;
+	$info->{nShow}        = $Show;
+	$info->{fMask}        = 0x40;         #SEE_MASK_NOCLOSEPROCESS
+	my $ShellExecuteEx = Win32::API->new( shell32 => <<'CODE');
+		BOOL ShellExecuteEx(
+		    LPSHELLEXECUTEINFO lpExecInfo
+		);
 CODE
 
-	return $func->Call( 0, $operation, $file, $parameters, $directory, $show_cmd );
+	if ( $ShellExecuteEx->Call($info) ) {
+
+		# Wait for the process to finish
+		my $WaitForSingleObject = Win32::API->new( kernel32 => <<'CODE');
+			DWORD WaitForSingleObject(
+			    HANDLE hHandle,
+			    DWORD dwMilliseconds
+			);
+CODE
+		$WaitForSingleObject->Call( $info->{hProcess}, 0xFFFFFFFF );
+
+		# Clean process handle!
+		my $CloseHandle = Win32::API->new( kernel32 => <<'CODE');
+			BOOL CloseHandle(
+			    HANDLE hObject
+			);
+CODE
+		$CloseHandle->Call( $info->{hProcess} );
+
+		# And we have finished successfully
+		return 1;
+	}
+
+	# We failed miserably!
+	return 0;
 }
 
 1;
