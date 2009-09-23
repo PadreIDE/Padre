@@ -75,19 +75,22 @@ sub Recycle {
 
 	my $file_to_recycle = shift;
 
-	# define the win32 structure
-	Win32::API::Struct->typedef(
-		SHFILEOPSTRUCT => qw(
-			HWND hwnd;
-			UINT wFunc;
-			LPCTSTR pFrom;
-			LPCTSTR pTo;
-			FILEOP_FLAGS fFlags;
-			BOOL fAnyOperationsAborted;
-			LPVOID hNameMappings;
-			LPCTSTR lpszProgressTitle;
-			)
-	);
+	unless ( $Types{SHFILEOPSTRUCT} ) {
+		# define the win32 structure
+		Win32::API::Struct->typedef(
+			SHFILEOPSTRUCT => qw(
+				HWND hwnd;
+				UINT wFunc;
+				LPCTSTR pFrom;
+				LPCTSTR pTo;
+				FILEOP_FLAGS fFlags;
+				BOOL fAnyOperationsAborted;
+				LPVOID hNameMappings;
+				LPCTSTR lpszProgressTitle;
+				)
+		);
+		$Types{SHFILEOPSTRUCT} = 1;
+	}
 
 	# prepare structure for win32 call
 	my $op = Win32::API::Struct->new('SHFILEOPSTRUCT');
