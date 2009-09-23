@@ -146,7 +146,7 @@ HINSTANCE ShellExecute(
 );
 CODE
 
-	$func->Call( 0, $operation, $file, $parameters, $directory, $show_cmd );
+	return $func->Call( 0, $operation, $file, $parameters, $directory, $show_cmd );
 }
 
 1;
