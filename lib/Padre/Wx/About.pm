@@ -203,6 +203,14 @@ END_HTML
     <table width="100%">
       <tr>
         <td valign="top">
+        Perl
+        </td>
+        <td>
+        $^V
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
         Wx
         </td>
         <td>
