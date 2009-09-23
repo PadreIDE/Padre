@@ -208,7 +208,7 @@ sub get_command {
 		? $self->store_in_tempfile
 		: $self->filename;
 
-	# Run with the same Perl that launched Padre
+	# Run with console Perl to prevent unexpected results under wperl
 	# TODO: get preferred Perl from configuration
 	my $perl = Padre::Perl::cperl();
 

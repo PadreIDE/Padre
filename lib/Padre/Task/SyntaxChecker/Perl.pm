@@ -57,14 +57,19 @@ sub _check_syntax {
 	# Execute the syntax check
 	my $stderr = '';
 	SCOPE: {
+		# Create a temporary file with the Perl text
 		require File::Temp;
 		my $file = File::Temp->new;
 		binmode( $file, ":utf8" );
 		$file->print( $self->{text} );
 		$file->close;
+
+		# Run with console Perl to prevent unexpected results under wperl
 		my @cmd = (
 			Padre::Perl::cperl(),
 		);
+		
+		# Append Perl command line options
 		if ( $self->{perl_cmd} ) {
 			push @cmd, @{ $self->{perl_cmd} };
 		}
