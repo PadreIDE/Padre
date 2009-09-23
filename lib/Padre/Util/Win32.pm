@@ -30,7 +30,9 @@ use Padre::Constant ();
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
 require Win32::API if Padre::Constant::WIN32;
 
-our $VERSION   = '0.46';
+our $VERSION = '0.46';
+
+my %Types = ();
 
 #
 # Converts the specified path to its long form.
@@ -134,25 +136,31 @@ sub ExecuteProcessAndWait {
 
 	my ( $App_Name, $Cmd_Line, $Show ) = @_;
 
-	Win32::API::Struct->typedef(
-		'SHELLEXECUTEINFO', qw(
-			DWORD cbSize;
-			ULONG fMask;
-			HWND hwnd;
-			LPCTSTR lpVerb;
-			LPCTSTR lpFile;
-			LPCTSTR lpParameters;
-			LPCTSTR lpDirectory;
-			int nShow;
-			HINSTANCE hInstApp;
-			LPVOID lpIDList;
-			LPCTSTR lpClass;
-			HKEY hkeyClass;
-			DWORD dwHotKey;
-			HANDLE hIconOrMonitor;
-			HANDLE hProcess;
-			)
-	);
+	unless ( $Types{SHELLEXECUTEINFO} ) {
+		Win32::API::Struct->typedef(
+			'SHELLEXECUTEINFO', qw(
+				DWORD cbSize;
+				ULONG fMask;
+				HWND hwnd;
+				LPCTSTR lpVerb;
+				LPCTSTR lpFile;
+				LPCTSTR lpParameters;
+				LPCTSTR lpDirectory;
+				int nShow;
+				HINSTANCE hInstApp;
+				LPVOID lpIDList;
+				LPCTSTR lpClass;
+				HKEY hkeyClass;
+				DWORD dwHotKey;
+				HANDLE hIconOrMonitor;
+				HANDLE hProcess;
+				)
+		);
+		$Types{SHELLEXECUTEINFO} = 1;
+	}
+
+	# XXX Ignore Win32::API warnings. It's ugly but it works :)
+	local $SIG{__WARN__} = sub { };
 
 	my $info = Win32::API::Struct->new('SHELLEXECUTEINFO');
 	$info->{cbSize}       = $info->sizeof;
