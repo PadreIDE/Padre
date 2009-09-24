@@ -377,6 +377,8 @@ sub _appearance_panel {
 
 	$preview_sizer->Add( $notebook, 1, Wx::wxGROW, 5 );
 
+	# These options are only configurable after adding func_config: 1 to the
+	# config.yml - file to advoid overloading the Preferences dialog:
 	if ( $config->func_config ) {
 
 		my @table2 =
@@ -930,6 +932,8 @@ sub run {
 		$data->{autocomplete_multiclosebracket} ? 1 : 0
 	);
 
+	# Don't save options which are not shown as this may result in
+	# clearing them:
 	if ( $config->func_config ) {
 
 		for (@Func_List) {
