@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-24 16:56+0300\n"
-"PO-Revision-Date: 2009-09-24 16:58+0200\n"
+"PO-Revision-Date: 2009-09-24 17:05+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -83,7 +83,7 @@ msgstr "خطأ"
 #: lib/Padre/Document.pm:573
 #, perl-format
 msgid "Visual filename %s does not match the internal filename %s, do you want to abort saving?"
-msgstr ""
+msgstr "اسم الملف المرئي %s لا يطابق اسم الملف الداخلي %s ، هل تريد الغاء الحفظ؟"
 
 #: lib/Padre/Document.pm:577
 msgid "Save Warning"
@@ -523,9 +523,8 @@ msgid "No file is open"
 msgstr "لا يوجد أي ملف مفتوح"
 
 #: lib/Padre/Plugin/Devel.pm:172
-#, fuzzy
 msgid "No Perl 5 file is open"
-msgstr "لا يوجد أي ملف مفتوح"
+msgstr "لا يوجد أي ملف Perl 5 مفتوح"
 
 #: lib/Padre/Plugin/Devel.pm:211
 msgid "A set of unrelated tools used by the Padre developers\n"
@@ -635,15 +634,15 @@ msgstr "فريق ترجمة Padre"
 
 #: lib/Padre/Wx/About.pm:274
 msgid "Config dir:"
-msgstr ""
+msgstr "دليل التعريف:"
 
 #: lib/Padre/Wx/About.pm:288
 msgid "Uptime"
-msgstr ""
+msgstr "مدة التشغيل"
 
 #: lib/Padre/Wx/About.pm:299
 msgid "unsupported"
-msgstr ""
+msgstr "غير مدعوم"
 
 #: lib/Padre/Wx/Ack.pm:102
 msgid "Term:"
@@ -1109,9 +1108,8 @@ msgid "Output"
 msgstr "نتائج"
 
 #: lib/Padre/Wx/Progress.pm:73
-#, fuzzy
 msgid "Please wait..."
-msgstr "جاري قراءة العناصر. الرجاء الانتظار..."
+msgstr "الرجاء الانتظار..."
 
 #: lib/Padre/Wx/Right.pm:49
 msgid "Document Tools"
@@ -1387,9 +1385,8 @@ msgid "Version"
 msgstr "النسخه"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:98
-#, fuzzy
 msgid "Plugin Name"
-msgstr "مدير البرنامج المساعد"
+msgstr "اسم البرنامج المساعد"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:113
 #: lib/Padre/Wx/Dialog/PluginManager.pm:516
