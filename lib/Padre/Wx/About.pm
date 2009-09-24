@@ -288,6 +288,9 @@ sub _content_info {
 	my $uptime_text = Wx::gettext('Uptime');
 	$uptime = sprintf( '%d:%02d:%02d', @uptime_parts );
 
+        my $ram = Padre::Util::humanbytes((Padre::Util::process_info)[22]);
+        $ram = '('.Wx::gettext('unsupported').')' if $ram eq '0';
+
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -318,10 +321,18 @@ sub _content_info {
       </tr>
       <tr>
         <td valign="top">
-        $uptime_text
+        $uptime_text:
         </td>
         <td>
         $uptime
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+        RAM:
+        </td>
+        <td>
+        $ram
         </td>
       </tr>
     </table>
