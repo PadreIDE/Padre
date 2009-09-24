@@ -114,7 +114,7 @@ sub new {
 				if (Padre::Constant::WIN32) {
 
 					# The whole Win32-API moved to Padre::Util::Win32:
-					Padre::Util::Win32->AllowSetForegroundWindow($pid);
+					Padre::Util::Win32::AllowSetForegroundWindow($pid);
 				}
 			}
 			foreach my $file (@ARGV) {

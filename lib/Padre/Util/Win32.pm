@@ -122,8 +122,8 @@ sub AllowSetForegroundWindow {
 
 	my $pid = shift;
 
-	my $func = Win32::API->new( shell32 => <<'CODE');
-BOOL AllowSetForegroundWindow(      
+	my $func = Win32::API->new( user32 => <<'CODE');
+BOOL AllowSetForegroundWindow(
 	DWORD dwProcessId
 );
 CODE
