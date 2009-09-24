@@ -506,32 +506,29 @@ sub load_files {
 		return;
 	}
 
-	# otherwise, an explicit list on the command line overrides configuration
+	# Otherwise, an explicit list on the command line overrides configuration
 	my $files = $ide->{ARGV};
 	if ( Params::Util::_ARRAY($files) ) {
 		$self->setup_editors(@$files);
 		return;
 	}
 
+	# Config setting 'last' means startup with all the files from the
+	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
-
-		# Config setting 'last' means startup with all the files from the
-		# previous time we used Padre open (if they still exist)
 		my $session = Padre::DB::Session->last_padre_session;
 		$self->open_session($session) if defined($session);
 		return;
-	} elsif ( $startup eq 'nothing' ) {
+	}
 
-		# Config setting 'nothing' means startup with nothing open
+	# Config setting 'nothing' means startup with nothing open
+	if ( $startup eq 'nothing' ) {
 		return;
-	} elsif ( $startup eq 'new' ) {
+	}
 
-		# Config setting 'new' means startup with a single new file open
+	# Config setting 'new' means startup with a single new file open
+	if ( $startup eq 'new' ) {
 		$self->setup_editors;
-		return;
-	} elsif ( $startup eq 'session' ) {
-		require Padre::Wx::Dialog::SessionManager;
-		Padre::Wx::Dialog::SessionManager->new($self)->show;
 		return;
 	}
 
