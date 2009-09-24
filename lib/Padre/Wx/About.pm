@@ -288,7 +288,7 @@ sub _content_info {
 	my $uptime_text = Wx::gettext('Uptime');
 	$uptime = sprintf( '%d:%02d:%02d', @uptime_parts );
 
-	my $ram = Padre::Util::humanbytes(  Padre::Util::process_memory() ) || '0';
+	my $ram = Padre::Util::humanbytes( Padre::Util::process_memory() ) || '0';
 
 	$ram = '(' . Wx::gettext('unsupported') . ')' if $ram eq '0';
 

@@ -493,7 +493,7 @@ sub humanbytes {
 sub process_memory {
 	if (Padre::Constant::UNIX) {
 		open my $meminfo, "/proc/self/stat" or return;
-		return (split( / /, <$meminfo> ))[22];
+		return ( split( / /, <$meminfo> ) )[22];
 	} elsif (Padre::Constant::WIN32) {
 		require Padre::Util::Win32;
 		return Padre::Util::Win32::GetCurrentProcessMemorySize();
