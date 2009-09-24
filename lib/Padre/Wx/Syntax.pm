@@ -134,7 +134,7 @@ sub start {
 			},
 		);
 	}
-	$self->{timer}->Start(1000,0);
+	$self->{timer}->Start( 1000, 0 );
 
 	return;
 }
