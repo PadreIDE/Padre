@@ -76,6 +76,7 @@ sub Recycle {
 	my $file_to_recycle = shift;
 
 	unless ( $Types{SHFILEOPSTRUCT} ) {
+
 		# define the win32 structure
 		Win32::API::Struct->typedef(
 			SHFILEOPSTRUCT => qw(
@@ -123,7 +124,7 @@ sub AllowSetForegroundWindow {
 
 	my $func = Win32::API->new( shell32 => <<'CODE');
 BOOL AllowSetForegroundWindow(      
-    DWORD dwProcessId
+	DWORD dwProcessId
 );
 CODE
 	return $func->Call($pid);
@@ -174,7 +175,7 @@ sub ExecuteProcessAndWait {
 	$info->{fMask}        = 0x40;         #SEE_MASK_NOCLOSEPROCESS
 	my $ShellExecuteEx = Win32::API->new( shell32 => <<'CODE');
 		BOOL ShellExecuteEx(
-		    LPSHELLEXECUTEINFO lpExecInfo
+			LPSHELLEXECUTEINFO lpExecInfo
 		);
 CODE
 
@@ -183,8 +184,8 @@ CODE
 		# Wait for the process to finish
 		my $WaitForSingleObject = Win32::API->new( kernel32 => <<'CODE');
 			DWORD WaitForSingleObject(
-			    HANDLE hHandle,
-			    DWORD dwMilliseconds
+				HANDLE hHandle,
+				DWORD dwMilliseconds
 			);
 CODE
 		$WaitForSingleObject->Call( $info->{hProcess}, 0xFFFFFFFF );
@@ -192,7 +193,7 @@ CODE
 		# Clean process handle!
 		my $CloseHandle = Win32::API->new( kernel32 => <<'CODE');
 			BOOL CloseHandle(
-			    HANDLE hObject
+				HANDLE hObject
 			);
 CODE
 		$CloseHandle->Call( $info->{hProcess} );
@@ -203,6 +204,50 @@ CODE
 
 	# We failed miserably!
 	return 0;
+}
+
+#
+# Retrieves the current process memory size in bytes
+#
+sub GetCurrentProcessMemorySize {
+
+	# Retrieves the current process handle
+	my $hProcess = Win32::API->new( 'kernel32', <<'CODE' )->Call();
+		HANDLE GetCurrentProcess();
+CODE
+
+	# Define the process memory counters structure
+	Win32::API::Struct->typedef(
+		PPROCESS_MEMORY_COUNTERS => qw(
+			DWORD  cb;
+			DWORD  PageFaultCount;
+			SIZE_T PeakWorkingSetSize;
+			SIZE_T WorkingSetSize;
+			SIZE_T QuotaPeakPagedPoolUsage;
+			SIZE_T QuotaPagedPoolUsage;
+			SIZE_T QuotaPeakNonPagedPoolUsage;
+			SIZE_T QuotaNonPagedPoolUsage;
+			SIZE_T PagefileUsage;
+			SIZE_T PeakPagefileUsage;
+			)
+	);
+
+	# Creates the structure
+	my $stats = Win32::API::Struct->new('PPROCESS_MEMORY_COUNTERS');
+	$stats->{cb} = $stats->sizeof;
+
+	# Retrieves process memory information
+	my $GetProcessMemoryInfo = Win32::API->new( 'psapi', <<'CODE' );
+		BOOL GetProcessMemoryInfo(
+			HANDLE Process,
+			PPROCESS_MEMORY_COUNTERS ppsmemCounters,
+			DWORD cb
+		);
+CODE
+	$GetProcessMemoryInfo->Call( $hProcess, $stats, $stats->{cb} );
+
+	# Returns the peak memory size as bytes
+	return $stats->{PeakWorkingSetSize};
 }
 
 1;
