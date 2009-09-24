@@ -531,9 +531,9 @@ sub load_files {
 		$self->setup_editors;
 		return;
 	}
-	
+
 	# Config setting 'session' means: Show the session manager
-	if ($startup eq 'session') {
+	if ( $startup eq 'session' ) {
 		require Padre::Wx::Dialog::SessionManager;
 		Padre::Wx::Dialog::SessionManager->new($self)->show;
 		return;
