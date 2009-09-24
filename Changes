@@ -52,6 +52,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added Perl version, uptime and process information to about box (SEWI)
     - Fixed ticket #603: Background tasks fail to work under wperl win32 (AZAWAWI)
     - Added option to open a saved session on startup (SEWI)
+    - Fixed ticket #580: On win32, Perl 5 syntax checker is invoked in strange 
+      situations (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
