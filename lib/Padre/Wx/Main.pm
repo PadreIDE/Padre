@@ -2419,19 +2419,19 @@ sub on_close_window {
 				return;
 			}
 		}
-		
+
 		# Make sure the user is aware of any rogue processes he might have ran
-		if($self->{command}) {
+		if ( $self->{command} ) {
 			my $ret = Wx::MessageBox(
 				Wx::gettext("You still have a running process. Do you to kill it and exit?"),
 				Wx::gettext("Warning"),
 				Wx::wxYES_NO | Wx::wxCENTRE,
 				$self,
 			);
-			
-			if($ret == Wx::wxYES ) {
-				if($self->{command}) {
-					if(Padre::Constant::WIN32) {
+
+			if ( $ret == Wx::wxYES ) {
+				if ( $self->{command} ) {
+					if (Padre::Constant::WIN32) {
 						$self->{command}->KillProcess;
 					} else {
 						$self->{command}->TerminateProcess;
