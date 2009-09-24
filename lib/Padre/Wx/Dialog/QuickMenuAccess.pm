@@ -306,7 +306,7 @@ sub _show_recently_opened_actions() {
 				value => $action->label_text,
 				};
 		} else {
-			warn "action '$action_name' is not defined anymore!";
+			Padre::Util::debug("action '$action_name' is not defined anymore!");
 		}
 	}
 	@recent_actions = sort { $a->{value} cmp $b->{value} } @recent_actions;
