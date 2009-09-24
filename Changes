@@ -54,6 +54,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added option to open a saved session on startup (SEWI)
     - Fixed ticket #580: On win32, Perl 5 syntax checker is invoked in strange 
       situations (AZAWAWI)
+    - Padre now warns about the running process at exit and asks whether to kill 
+      it and exit or cancel the shutdown (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
