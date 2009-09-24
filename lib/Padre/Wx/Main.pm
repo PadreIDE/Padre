@@ -514,21 +514,24 @@ sub load_files {
 	}
 
 	if ( $startup eq 'last' ) {
-	# Config setting 'last' means startup with all the files from the
-	# previous time we used Padre open (if they still exist)
+
+		# Config setting 'last' means startup with all the files from the
+		# previous time we used Padre open (if they still exist)
 		my $session = Padre::DB::Session->last_padre_session;
 		$self->open_session($session) if defined($session);
 		return;
 	} elsif ( $startup eq 'nothing' ) {
-	# Config setting 'nothing' means startup with nothing open
+
+		# Config setting 'nothing' means startup with nothing open
 		return;
 	} elsif ( $startup eq 'new' ) {
-	# Config setting 'new' means startup with a single new file open
+
+		# Config setting 'new' means startup with a single new file open
 		$self->setup_editors;
 		return;
 	} elsif ( $startup eq 'session' ) {
 		require Padre::Wx::Dialog::SessionManager;
-		Padre::Wx::Dialog::SessionManager->new( $self )->show;
+		Padre::Wx::Dialog::SessionManager->new($self)->show;
 		return;
 	}
 
