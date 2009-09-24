@@ -22,7 +22,7 @@ use Padre::Util qw( _T );
 use Wx::Perl::Dialog::Simple ();
 
 our $VERSION = '0.46';
-our @ISA     = 'Wx::Frame';
+our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
 	notebook => 'notebook',
@@ -78,7 +78,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
-		'DocBrowser',
+		'Help',
 		Wx::wxDefaultPosition,
 		[ 750, 700 ],
 	);
@@ -121,47 +121,23 @@ sub new {
 
 	my $label = Wx::StaticText->new(
 		$self,                 -1, 'Search',
-		Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxDefaultPosition, [50,-1],
 		Wx::wxALIGN_RIGHT
 	);
 	$label->SetToolTip( Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP") );
 
-	$but_s->Add( $label, 2, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
-	$but_s->Add( $entry, 1, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
+	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+
+	$but_s->Add( $label, 0, Wx::wxALIGN_CENTER_VERTICAL );
+	$but_s->Add( $entry, 1, Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL );
+	$but_s->AddStretchSpacer(2);
+	$but_s->Add( $close_button, 0, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
 
 	$top_s->Add( $but_s,    0, Wx::wxEXPAND );
 	$top_s->Add( $notebook, 1, Wx::wxGROW );
 	$self->SetSizer($top_s);
 
 	#$self->_setup_welcome;
-
-	# to do this we really need a menu bar... trial this
-	# not really the case now.. create fictional EVT_MENU items as needed.
-	# http://www.perl.com/lpt/a/960
-	# try to add an Accelerator Table for the escape key for the window
-	# http://www.nntp.perl.org/group/perl.wxperl.users/2008/06/msg5924.html
-	#my $table = Wx::AcceleratorTable->new( [wxACCEL_NORMAL, WXK_ESCAPE, $menuid ] );
-	#$self->SetAcceleratorTable( $table );
-	my $exitMenu = Wx::Menu->new();
-
-	#my @menu_id;
-	$exitMenu->Append( Wx::wxID_CLOSE, Wx::gettext("&Close\tCtrl+W") );
-	$exitMenu->Append( Wx::wxID_OPEN,  Wx::gettext("&Open\tCtrl+O") );
-	my $exitID = Wx::NewId;
-
-	$exitMenu->Append( $exitID, Wx::gettext("E&xit\tCtrl+X") );
-
-	my $menuBar = Wx::MenuBar->new();
-	$menuBar->Append( $exitMenu, "File" );
-	$self->SetMenuBar($menuBar);
-
-	my $table = Wx::AcceleratorTable->new( [ Wx::wxACCEL_NORMAL, Wx::WXK_ESCAPE, $exitID ] );
-	$self->SetAcceleratorTable($table);
-
-	# you can create fictional menu items for use by the accelerator table
-	Wx::Event::EVT_MENU( $self, $exitID,        sub { $_[0]->_close(); } );
-	Wx::Event::EVT_MENU( $self, Wx::wxID_CLOSE, sub { $_[0]->_close_tab(); } );
-	Wx::Event::EVT_MENU( $self, Wx::wxID_OPEN,  sub { $_[0]->_open_doc(); } );
 
 	# not sure about this but we want to throw the close X event ot _close so it gets
 	# rid of a busy cursor if it's busy..
