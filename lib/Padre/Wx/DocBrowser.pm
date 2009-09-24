@@ -120,8 +120,8 @@ sub new {
 	$self->{_searchEntry} = $entry;
 
 	my $label = Wx::StaticText->new(
-		$self,                 -1, 'Search',
-		Wx::wxDefaultPosition, [50,-1],
+		$self, -1, 'Search',
+		Wx::wxDefaultPosition, [ 50, -1 ],
 		Wx::wxALIGN_RIGHT
 	);
 	$label->SetToolTip( Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP") );
