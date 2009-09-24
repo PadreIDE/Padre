@@ -930,11 +930,15 @@ sub run {
 		$data->{autocomplete_multiclosebracket} ? 1 : 0
 	);
 
-	for (@Func_List) {
-		$config->set(
-			'func_' . $_->[0],
-			$data->{ 'func_' . $_->[0] } ? 1 : 0
-		);
+	if ( $config->func_config ) {
+
+		for (@Func_List) {
+			$config->set(
+				'func_' . $_->[0],
+				$data->{ 'func_' . $_->[0] } ? 1 : 0
+			);
+		}
+
 	}
 
 	# Quite like in _run_params_panel, trap exception if there
