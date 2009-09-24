@@ -1197,6 +1197,11 @@ sub relocale {
 	# Relocale the plugins
 	$self->ide->plugin_manager->relocale;
 
+	# Empty actions to stop getting false warnings about duplicated
+	# actions and shortcuts
+	my %actions = ();
+	Padre->ide->actions( \%actions );
+
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};
 	$self->{menu} = Padre::Wx::Menubar->new($self);

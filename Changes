@@ -56,6 +56,8 @@ Changes for Perl Application Development and Refactoring Environment
       situations (AZAWAWI)
     - Padre now warns about the running process at exit and asks whether to kill 
       it and exit or cancel the shutdown (AZAWAWI)
+    - Removed false warnings about duplicated actions/shortcuts when changing 
+      Padre's language (AZAWAWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
