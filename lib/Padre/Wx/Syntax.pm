@@ -119,12 +119,6 @@ sub start {
 	$self->set_column_widths;
 
 	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		Wx::Event::EVT_IDLE(
-			$self,
-			sub {
-				$self->on_idle( $_[1] );
-			},
-		);
 		$self->on_timer( undef, 1 );
 	} else {
 		Padre::Util::debug('Creating new timer');
@@ -139,13 +133,8 @@ sub start {
 				$self->on_timer( $_[1], $_[2] );
 			},
 		);
-		Wx::Event::EVT_IDLE(
-			$self,
-			sub {
-				$self->on_idle( $_[1] );
-			},
-		);
 	}
+	$self->{timer}->Start(1000,0);
 
 	return;
 }
@@ -156,7 +145,6 @@ sub stop {
 	# Stop the timer
 	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop;
-		Wx::Event::EVT_IDLE( $self, sub {return} );
 	}
 
 	# Clear out the existing data
@@ -281,17 +269,6 @@ sub on_timer {
 		$event->Skip(0);
 	}
 
-	return;
-}
-
-sub on_idle {
-	my $self  = shift;
-	my $event = shift;
-	if ( $self->{timer}->IsRunning ) {
-		$self->{timer}->Stop;
-	}
-	$self->{timer}->Start( 300, 1 );
-	$event->Skip(0);
 	return;
 }
 
