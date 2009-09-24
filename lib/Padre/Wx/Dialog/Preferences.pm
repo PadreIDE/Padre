@@ -775,7 +775,7 @@ sub run {
 	my $main_startup       = $config->main_startup;
 	my @main_startup_items = (
 		$main_startup,
-		grep { $_ ne $main_startup } qw{new nothing last}
+		grep { $_ ne $main_startup } qw{new nothing last session}
 	);
 	my @main_startup_localized = map { Wx::gettext($_) } @main_startup_items;
 

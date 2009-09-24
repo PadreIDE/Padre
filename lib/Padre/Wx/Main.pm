@@ -526,6 +526,10 @@ sub load_files {
 	# Config setting 'new' means startup with a single new file open
 		$self->setup_editors;
 		return;
+	} elsif ( $startup eq 'session' ) {
+		require Padre::Wx::Dialog::SessionManager;
+		Padre::Wx::Dialog::SessionManager->new( $self )->show;
+		return;
 	}
 
 	# Configuration has an entry we don't know about

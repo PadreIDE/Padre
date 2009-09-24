@@ -178,6 +178,7 @@ setting(
 		'last'    => _T('Previous open files'),
 		'new'     => _T('A new empty file'),
 		'nothing' => _T('No open files'),
+		'session' => _T('Open session'),
 	],
 );
 
