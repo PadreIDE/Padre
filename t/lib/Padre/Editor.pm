@@ -14,12 +14,9 @@ sub new {
 sub configure_editor {
 	my ( $self, $doc ) = @_;
 
-	my $newline_type = $doc->newline_type;
-
 	if ( defined $doc->{original_content} ) {
 		$self->SetText( $doc->{original_content} );
 	}
-	$doc->{newline_type} = $newline_type;
 }
 
 sub SetEOLMode {
