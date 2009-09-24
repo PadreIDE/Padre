@@ -29,8 +29,8 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Create the content for the About window
-        $self->{about} = Padre::Wx::HtmlWindow->new($self);
-        $self->_content_about;
+	$self->{about} = Padre::Wx::HtmlWindow->new($self);
+	$self->_content_about;
 
 	# Create the content for the Developer team
 	$self->{developers} = Padre::Wx::HtmlWindow->new($self);
@@ -38,7 +38,7 @@ sub new {
 
 	# Create the content for the Translation team
 	$self->{translators} = Padre::Wx::HtmlWindow->new($self);
-        $self->_content_translators;
+	$self->_content_translators;
 
 	# Create the content for the Info page
 	$self->{info} = Padre::Wx::HtmlWindow->new($self);
@@ -95,8 +95,9 @@ sub new {
 }
 
 sub _content_about {
-# Create the content for the About window
-  my $self = shift;
+
+	# Create the content for the About window
+	my $self   = shift;
 	my $splash = Padre::Util::sharefile('padre-splash.bmp');
 	$self->{about}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -119,8 +120,9 @@ END_HTML
 }
 
 sub _content_developers {
-# Create the content for the Developer team
-  my $self = shift;
+
+	# Create the content for the Developer team
+	my $self           = shift;
 	my $padre_dev_team = Wx::gettext('The Padre Development Team');
 	$self->{developers}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -181,8 +183,9 @@ END_HTML
 }
 
 sub _content_translators {
-# Create the content for the Translation team
-  my $self = shift;
+
+	# Create the content for the Translation team
+	my $self                   = shift;
 	my $padre_translation_team = Wx::gettext('The Padre Translation Team');
 	$self->{translators}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -263,26 +266,27 @@ END_HTML
 }
 
 sub _content_info {
-# Create the content for the Info page
-  my $self = shift;
+
+	# Create the content for the Info page
+	my $self           = shift;
 	my $padre_info     = Wx::gettext('Info');
 	my $wx_widgets     = Wx::wxVERSION_STRING();
 	my $config_dir_txt = Wx::gettext('Config dir:');
 	my $config_dir     = Padre::Constant::CONFIG_DIR;
 
 	my $uptime = time - $^T;
-	my @uptime_parts = (0,0,0);
-	if ($uptime > 3600) {
-	  $uptime_parts[0] = int($uptime / 3600);
-	  $uptime -= $uptime_parts[0] * 3600;
-        }
-	if ($uptime > 60) {
-	  $uptime_parts[1] = int($uptime / 60);
-	  $uptime -= $uptime_parts[1] * 60;
-        }
-        $uptime_parts[2] = $uptime;
-        my $uptime_text = Wx::gettext('Uptime');
-        $uptime = sprintf('%d:%02d:%02d',@uptime_parts);
+	my @uptime_parts = ( 0, 0, 0 );
+	if ( $uptime > 3600 ) {
+		$uptime_parts[0] = int( $uptime / 3600 );
+		$uptime -= $uptime_parts[0] * 3600;
+	}
+	if ( $uptime > 60 ) {
+		$uptime_parts[1] = int( $uptime / 60 );
+		$uptime -= $uptime_parts[1] * 60;
+	}
+	$uptime_parts[2] = $uptime;
+	my $uptime_text = Wx::gettext('Uptime');
+	$uptime = sprintf( '%d:%02d:%02d', @uptime_parts );
 
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -328,9 +332,9 @@ END_HTML
 }
 
 sub ShowModal {
-  my $self = shift;
-  $self->_content_info;
-  return $self->Wx::Dialog::ShowModal;
+	my $self = shift;
+	$self->_content_info;
+	return $self->Wx::Dialog::ShowModal;
 }
 
 #
