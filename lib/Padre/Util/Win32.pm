@@ -120,7 +120,7 @@ sub AllowSetForegroundWindow {
 
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 
-	my ( $self, $pid ) = @_;
+	my $pid = shift;
 
 	my $func = Win32::API->new( shell32 => <<'CODE');
 BOOL AllowSetForegroundWindow(      
