@@ -44,10 +44,14 @@ Changes for Perl Application Development and Refactoring Environment
     - Massive refactoring of Plugin Manager. Looks almost exactly the same
       but now the status information actually updates properly (ADAMK)
     - Added a padre.exe launcher on win32 (SEWI, GETTY, AZAWAWI)
+    - Reformat filenames to correct OS-dependend syntax (AZAWAWI, SEWI)
+    - Moved add Win32 API functions to one module (AZAWAWI, SEWI)
     - Fixed ticket #488: allow script to recognize when executed by Padre (AZAWAWI)
     - Padre now uses cperl() console instead perl() for compatiblity with
       wperl (AZAWAWI)
+    - Added Perl version to about box (SEWI)
     - Fixed ticket #603: Background tasks fail to work under wperl win32 (AZAWAWI)
+    - Added option to open a saved session on startup (SEWI)
 
 0.46 2009.09.11
     - Fixed Smart highlighting to show a pale green round box instead of an 
