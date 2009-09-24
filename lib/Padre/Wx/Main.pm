@@ -531,6 +531,13 @@ sub load_files {
 		$self->setup_editors;
 		return;
 	}
+	
+	# Config setting 'session' means: Show the session manager
+	if ($startup eq 'session') {
+		require Padre::Wx::Dialog::SessionManager;
+		Padre::Wx::Dialog::SessionManager->new($self)->show;
+		return;
+	}
 
 	# Configuration has an entry we don't know about
 	# TODO: Once we have a warning system more useful than STDERR
