@@ -1200,7 +1200,7 @@ sub relocale {
 	# Empty actions to stop getting false warnings about duplicated
 	# actions and shortcuts
 	my %actions = ();
-	Padre->ide->actions( \%actions );
+	$self->ide->actions( \%actions );
 
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};
