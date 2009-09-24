@@ -192,43 +192,7 @@ END_HTML
 
 	# Create the content for the Info page
 	$self->{info} = Padre::Wx::HtmlWindow->new($self);
-	my $padre_info     = Wx::gettext('Info');
-	my $wx_widgets     = Wx::wxVERSION_STRING();
-	my $config_dir_txt = Wx::gettext('Config dir:');
-	my $config_dir     = Padre::Constant::CONFIG_DIR;
-	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
-<html>
-  <body bgcolor="#EEEEEE">
-    <strong><font size="+4">$padre_info</font></strong>
-    <table width="100%">
-      <tr>
-        <td valign="top">
-        Perl
-        </td>
-        <td>
-        $^V
-        </td>
-      </tr>
-      <tr>
-        <td valign="top">
-        Wx
-        </td>
-        <td>
-        $Wx::VERSION
-        </td>
-      </tr>
-      <tr>
-        <td valign="top">wxWidgets</td>
-        <td>$wx_widgets</td>
-      </tr>
-      <tr>
-        <td valign="top">$config_dir_txt</td><td>$config_dir</td>
-      </tr>
-    </table>
-  </body>
-</html>
-END_HTML
-
+	$self->_update_info;
 
 	# Layout for the About dialog
 	$self->{notebook} = Wx::AuiNotebook->new(
@@ -278,6 +242,76 @@ END_HTML
 	$self->SetSizer( $self->{sizer} );
 
 	return $self;
+}
+
+sub _update_info {
+  my $self = shift;
+	my $padre_info     = Wx::gettext('Info');
+	my $wx_widgets     = Wx::wxVERSION_STRING();
+	my $config_dir_txt = Wx::gettext('Config dir:');
+	my $config_dir     = Padre::Constant::CONFIG_DIR;
+
+	my $Uptime = time - $^T;
+	my @Uptime_Parts = (0,0,0);
+	if ($Uptime > 3600) {
+	  $Uptime_Parts[0] = int($Uptime / 3600);
+	  $Uptime -= $Uptime_Parts[0] * 3600;
+        }
+	if ($Uptime > 60) {
+	  $Uptime_Parts[1] = int($Uptime / 60);
+	  $Uptime -= $Uptime_Parts[1] * 60;
+        }
+        $Uptime_Parts[2] = $Uptime;
+        my $Uptime_Text = Wx::gettext('Uptime');
+        $Uptime = sprintf('%d:%02d:%02d',@Uptime_Parts);
+
+	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
+<html>
+  <body bgcolor="#EEEEEE">
+    <strong><font size="+4">$padre_info</font></strong>
+    <table width="100%">
+      <tr>
+        <td valign="top">
+        Perl
+        </td>
+        <td>
+        $^V
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+        Wx
+        </td>
+        <td>
+        $Wx::VERSION
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">wxWidgets</td>
+        <td>$wx_widgets</td>
+      </tr>
+      <tr>
+        <td valign="top">$config_dir_txt</td><td>$config_dir</td>
+      </tr>
+      <tr>
+        <td valign="top">
+        $Uptime_Text
+        </td>
+        <td>
+        $Uptime
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+END_HTML
+
+}
+
+sub ShowModal {
+  my $self = shift;
+  $self->_update_info;
+  return $self->Wx::Dialog::ShowModal;
 }
 
 #
