@@ -480,21 +480,21 @@ SCOPE: {
 }
 
 sub humanbytes {
- my $Bytes = $_[0] || 0;
- if ($Bytes > 8192000000000) { return int($Bytes / 1099511627776)."TB"; }
- elsif ($Bytes > 8192000000) { return int($Bytes / 1073741824)."GB"; }
- elsif ($Bytes > 8192000) { return int($Bytes / 1048576)."MB"; }
- elsif ($Bytes > 8192) { return int($Bytes / 1024)."kB"; }
- elsif ($Bytes == 0) { return "0"; }
- else { return $Bytes."B"; }
+	my $Bytes = $_[0] || 0;
+	if    ( $Bytes > 8192000000000 ) { return int( $Bytes / 1099511627776 ) . "TB"; }
+	elsif ( $Bytes > 8192000000 )    { return int( $Bytes / 1073741824 ) . "GB"; }
+	elsif ( $Bytes > 8192000 )       { return int( $Bytes / 1048576 ) . "MB"; }
+	elsif ( $Bytes > 8192 )          { return int( $Bytes / 1024 ) . "kB"; }
+	elsif ( $Bytes == 0 )            { return "0"; }
+	else                             { return $Bytes . "B"; }
 }
 
 sub process_info {
- if (Padre::Constant::UNIX) {
-  open my $meminfo,"/proc/self/stat" or return;
-  return split(/ /,<$meminfo>);
- }
- return;
+	if (Padre::Constant::UNIX) {
+		open my $meminfo, "/proc/self/stat" or return;
+		return split( / /, <$meminfo> );
+	}
+	return;
 }
 
 1;
