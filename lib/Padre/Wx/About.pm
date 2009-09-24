@@ -29,8 +29,75 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Create the content for the About window
+        $self->{about} = Padre::Wx::HtmlWindow->new($self);
+        $self->_content_about;
+
+	# Create the content for the Developer team
+	$self->{developers} = Padre::Wx::HtmlWindow->new($self);
+	$self->_content_developers;
+
+	# Create the content for the Translation team
+	$self->{translators} = Padre::Wx::HtmlWindow->new($self);
+        $self->_content_translators;
+
+	# Create the content for the Info page
+	$self->{info} = Padre::Wx::HtmlWindow->new($self);
+	$self->_content_info;
+
+	# Layout for the About dialog
+	$self->{notebook} = Wx::AuiNotebook->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
+	);
+	$self->{notebook}->AddPage(
+		$self->{about},
+		'  ' . Wx::gettext('Padre') . '  ',
+		1,
+	);
+	$self->{notebook}->AddPage(
+		$self->{developers},
+		'  ' . Wx::gettext('Development') . '  ',
+		1,
+	);
+	$self->{notebook}->AddPage(
+		$self->{translators},
+		'  ' . Wx::gettext('Translation') . '  ',
+		1,
+	);
+	$self->{notebook}->AddPage(
+		$self->{info},
+		'  ' . Wx::gettext('Info') . '  ',
+		1,
+	);
+	$self->{notebook}->SetSelection(0);
+
+	$self->{sizer} = Wx::FlexGridSizer->new( 1, 1, 10, 10 );
+	$self->{sizer}->AddGrowableCol(0);
+	$self->{sizer}->AddGrowableRow(0);
+	$self->{sizer}->Add( $self->{notebook}, 0, Wx::wxGROW | Wx::wxEXPAND, 0 );
+
+	# Hide the dialog when the user presses the ESCape key or clicks Close button
+	# Please see ticket:573
+	$self->{sizer}->Add(
+		Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') ),
+		0,
+		Wx::wxALIGN_CENTER,
+		0
+	);
+	$self->{sizer}->AddSpacer(0);
+
+	$self->SetSizer( $self->{sizer} );
+
+	return $self;
+}
+
+sub _content_about {
+# Create the content for the About window
+  my $self = shift;
 	my $splash = Padre::Util::sharefile('padre-splash.bmp');
-	$self->{about} = Padre::Wx::HtmlWindow->new($self);
 	$self->{about}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -49,9 +116,11 @@ sub new {
   </body>
 </html>
 END_HTML
+}
 
-	# Create the content for the Developer team
-	$self->{developers} = Padre::Wx::HtmlWindow->new($self);
+sub _content_developers {
+# Create the content for the Developer team
+  my $self = shift;
 	my $padre_dev_team = Wx::gettext('The Padre Development Team');
 	$self->{developers}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -109,9 +178,11 @@ END_HTML
     </table>
 </html>
 END_HTML
+}
 
-	# Create the content for the Translation team
-	$self->{translators} = Padre::Wx::HtmlWindow->new($self);
+sub _content_translators {
+# Create the content for the Translation team
+  my $self = shift;
 	my $padre_translation_team = Wx::gettext('The Padre Translation Team');
 	$self->{translators}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -189,81 +260,29 @@ END_HTML
 </html>
 
 END_HTML
-
-	# Create the content for the Info page
-	$self->{info} = Padre::Wx::HtmlWindow->new($self);
-	$self->_update_info;
-
-	# Layout for the About dialog
-	$self->{notebook} = Wx::AuiNotebook->new(
-		$self,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
-	);
-	$self->{notebook}->AddPage(
-		$self->{about},
-		'  ' . Wx::gettext('Padre') . '  ',
-		1,
-	);
-	$self->{notebook}->AddPage(
-		$self->{developers},
-		'  ' . Wx::gettext('Development') . '  ',
-		1,
-	);
-	$self->{notebook}->AddPage(
-		$self->{translators},
-		'  ' . Wx::gettext('Translation') . '  ',
-		1,
-	);
-	$self->{notebook}->AddPage(
-		$self->{info},
-		'  ' . Wx::gettext('Info') . '  ',
-		1,
-	);
-	$self->{notebook}->SetSelection(0);
-
-	$self->{sizer} = Wx::FlexGridSizer->new( 1, 1, 10, 10 );
-	$self->{sizer}->AddGrowableCol(0);
-	$self->{sizer}->AddGrowableRow(0);
-	$self->{sizer}->Add( $self->{notebook}, 0, Wx::wxGROW | Wx::wxEXPAND, 0 );
-
-	# Hide the dialog when the user presses the ESCape key or clicks Close button
-	# Please see ticket:573
-	$self->{sizer}->Add(
-		Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') ),
-		0,
-		Wx::wxALIGN_CENTER,
-		0
-	);
-	$self->{sizer}->AddSpacer(0);
-
-	$self->SetSizer( $self->{sizer} );
-
-	return $self;
 }
 
-sub _update_info {
+sub _content_info {
+# Create the content for the Info page
   my $self = shift;
 	my $padre_info     = Wx::gettext('Info');
 	my $wx_widgets     = Wx::wxVERSION_STRING();
 	my $config_dir_txt = Wx::gettext('Config dir:');
 	my $config_dir     = Padre::Constant::CONFIG_DIR;
 
-	my $Uptime = time - $^T;
-	my @Uptime_Parts = (0,0,0);
-	if ($Uptime > 3600) {
-	  $Uptime_Parts[0] = int($Uptime / 3600);
-	  $Uptime -= $Uptime_Parts[0] * 3600;
+	my $uptime = time - $^T;
+	my @uptime_parts = (0,0,0);
+	if ($uptime > 3600) {
+	  $uptime_parts[0] = int($uptime / 3600);
+	  $uptime -= $uptime_parts[0] * 3600;
         }
-	if ($Uptime > 60) {
-	  $Uptime_Parts[1] = int($Uptime / 60);
-	  $Uptime -= $Uptime_Parts[1] * 60;
+	if ($uptime > 60) {
+	  $uptime_parts[1] = int($uptime / 60);
+	  $uptime -= $uptime_parts[1] * 60;
         }
-        $Uptime_Parts[2] = $Uptime;
-        my $Uptime_Text = Wx::gettext('Uptime');
-        $Uptime = sprintf('%d:%02d:%02d',@Uptime_Parts);
+        $uptime_parts[2] = $uptime;
+        my $uptime_text = Wx::gettext('Uptime');
+        $uptime = sprintf('%d:%02d:%02d',@uptime_parts);
 
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
@@ -295,10 +314,10 @@ sub _update_info {
       </tr>
       <tr>
         <td valign="top">
-        $Uptime_Text
+        $uptime_text
         </td>
         <td>
-        $Uptime
+        $uptime
         </td>
       </tr>
     </table>
@@ -310,7 +329,7 @@ END_HTML
 
 sub ShowModal {
   my $self = shift;
-  $self->_update_info;
+  $self->_content_info;
   return $self->Wx::Dialog::ShowModal;
 }
 
