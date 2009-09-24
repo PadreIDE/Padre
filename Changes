@@ -49,7 +49,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #488: allow script to recognize when executed by Padre (AZAWAWI)
     - Padre now uses cperl() console instead perl() for compatiblity with
       wperl (AZAWAWI)
-    - Added Perl version to about box (SEWI)
+    - Added Perl version, uptime and process information to about box (SEWI)
     - Fixed ticket #603: Background tasks fail to work under wperl win32 (AZAWAWI)
     - Added option to open a saved session on startup (SEWI)
 
