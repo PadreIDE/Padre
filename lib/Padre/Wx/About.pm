@@ -288,13 +288,7 @@ sub _content_info {
 	my $uptime_text = Wx::gettext('Uptime');
 	$uptime = sprintf( '%d:%02d:%02d', @uptime_parts );
 
-	my $ram = '0';
-	if (Padre::Constant::WIN32) {
-		require Padre::Util::Win32;
-		$ram = Padre::Util::humanbytes( Padre::Util::Win32::GetCurrentProcessMemorySize() );
-	} elsif (Padre::Constant::UNIX) {
-		$ram = Padre::Util::humanbytes( ( Padre::Util::process_info() )[22] );
-	}
+	my $ram = Padre::Util::humanbytes(  Padre::Util::process_memory() ) || '0';
 
 	$ram = '(' . Wx::gettext('unsupported') . ')' if $ram eq '0';
 
