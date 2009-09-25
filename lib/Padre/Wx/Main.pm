@@ -2396,10 +2396,8 @@ sub on_close_window {
 	Padre::Util::debug("on_close_window");
 
 	# Capture the current session, before we start the interactive
-	# part of the shutdown which will mess it up. Don't save it to
-	# the config yet, because we haven't committed to the shutdown
-	# until we get past the interactive phase.
-	my @session = $self->capture_session;
+	# part of the shutdown which will mess it up.
+	$self->update_last_session;
 
 	Padre::Util::debug("went over list of files");
 
@@ -2485,13 +2483,6 @@ sub on_close_window {
 	$ide->plugin_manager->shutdown;
 	Padre::Util::debug("After plugin manager shutdown");
 
-	# Write the session to the database
-	Padre::DB->begin;
-	my $session = Padre::DB::Session->last_padre_session;
-	Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
-	Padre::DB->commit;
-	$self->save_session( $session, @session );
-
 	# Write the configuration to disk
 	$ide->save_config;
 	$event->Skip;
@@ -2504,6 +2495,18 @@ sub on_close_window {
 	Padre::Util::debug("Closing Padre");
 
 	return;
+}
+
+sub update_last_session {
+	my $self = shift;
+
+	# Write the current session to the database
+	Padre::DB->begin;
+	my $session = Padre::DB::Session->last_padre_session;
+	Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
+	Padre::DB->commit;
+	$self->save_session( $session, $self->capture_session );
+
 }
 
 =pod
@@ -2571,8 +2574,9 @@ sub setup_editors {
 
 		if (@files) {
 			foreach my $f (@files) {
-				$self->setup_editor($f);
+				$self->setup_editor($f,1);
 			}
+			$self->update_last_session;
 		} else {
 			$self->setup_editor;
 		}
@@ -2620,7 +2624,7 @@ exist, create an empty file before opening it.
 =cut
 
 sub setup_editor {
-	my ( $self, $file ) = @_;
+	my ( $self, $file, $skip_update_session ) = @_;
 	my $config = $self->config;
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
@@ -2706,6 +2710,8 @@ sub setup_editor {
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
 	$doc->restore_cursor_position;
+
+	$self->update_last_session unless $skip_update_session;
 
 	return $id;
 }
@@ -3304,6 +3310,8 @@ sub close {
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh( $self->current );
+
+	$self->update_last_session;
 
 	return 1;
 }
