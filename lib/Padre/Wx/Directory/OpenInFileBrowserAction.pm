@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 # package exports and version
-our $VERSION = '0.46';
+our $VERSION = '0.47';
 
 # module imports
 use Padre::Wx ();

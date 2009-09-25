@@ -134,7 +134,7 @@ use Padre            ();
 use Padre::MimeTypes ();
 use Padre::File      ();
 
-our $VERSION = '0.46';
+our $VERSION = '0.47';
 
 
 

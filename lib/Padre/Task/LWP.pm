@@ -31,7 +31,7 @@ use HTTP::Request  ();
 use HTTP::Response ();
 use Padre::Task    ();
 
-our $VERSION = '0.46';
+our $VERSION = '0.47';
 our @ISA     = 'Padre::Task';
 
 use Class::XSAccessor getters => {

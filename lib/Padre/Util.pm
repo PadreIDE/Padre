@@ -34,7 +34,7 @@ use List::Util     ();
 use POSIX          ();
 use Padre::Constant();
 
-our $VERSION   = '0.46';
+our $VERSION   = '0.47';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = qw{ newline_type get_matches _T };
 

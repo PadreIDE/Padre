@@ -12,7 +12,7 @@ use Padre::Util     ();
 use Padre::Wx       ();
 use Padre::Constant ();
 
-our $VERSION = '0.46';
+our $VERSION = '0.47';
 our @ISA     = 'Wx::TreeCtrl';
 
 # Creates a new Directory Browser object
