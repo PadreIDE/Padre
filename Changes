@@ -1,5 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.48 to be released
+    - "Last session" now restores the last state even if Padre crashed and not
+      the last stated saved by a planned exit (SEWI)
+
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
     - Fixed crash when inserting a special value without any document (AZAWAWI)
