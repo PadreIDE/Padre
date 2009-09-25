@@ -21,7 +21,7 @@ my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
 # for you. Unlike other languages, Perl cares about size and type of
 # information itself, so you don't need to do it yourself. Every variable
 # has a name which has only few naming conventions:
-#  - The first char MUST be a dollar $ sign
+#  - The first char MUST be a dollar sign $
 #  - It may contain letters, numbers and the underscore _
 #  - There must be at least one char after the $ sign.
 # That's it! You could use $egg or $cake_made_of_eggs_and_milk_and_other_things
@@ -29,8 +29,8 @@ my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
 # It's a good idea to name variables by their usage because you need to
 # know why you used it and for which purpose even in a 3000 lines file.
 #
-# This line has many variables all shown in a comma , seperated list. Their
-# name tells you what they contain:
+# This line has many variables all shown in a comma (,) seperated list. Their
+# names tell you what they contain:
 #  - $sec for the seconds
 #  - $min for the minutes
 # and so on. Even if you don't understand every name, it's enough for now.
@@ -43,7 +43,7 @@ my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
 
 # Let's print the time to the user. Variables could be used within printed
 # text like normal words:
-print "The time is $hour:$min:$sec\n";
+print "The time is $hour:$min\n";
 
 # Now press F5 and Padre will execute this script.
 #
@@ -51,4 +51,6 @@ print "The time is $hour:$min:$sec\n";
 # output of this script. Congratulations, now you know the time.
 
 # Please go ahead and write your own print command below showing the current
-# date. You could also inspect the other variables, if you want.
+# time including seconds. You could also inspect the other variables, if you
+# want. Notice that the month and year values won't show what you expect, but
+# this is another story...
