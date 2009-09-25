@@ -1,0 +1,11 @@
+This directory contains a base course for absolute perl and programming
+beginners.
+
+You need to know how to open a file (you already fulfill this requirement,
+because otherwise you won't read this file) and you should know that F5 is
+a dedicated key on your keyboard and no air force jet.
+
+A word to the experts which might reading this:
+This course should help newbies. It explains many things in an easy way and
+often don't fully explain a command or gives limitations which make learning
+easier but may be broken by masters who know what they're doing.
