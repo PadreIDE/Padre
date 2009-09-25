@@ -27,7 +27,7 @@ my %TEST = (
 	# @_ ?
 );
 
-plan( tests => scalar( keys %TEST ) * 2 + 17 );
+plan( tests => scalar( keys %TEST ) * 2 + 18 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new;
@@ -110,6 +110,10 @@ ok( $b->error =~ /open/, 'pipe-open with in and out redirection (2 args)' );
 
 $b->check('open file,"|cat|"');
 ok( $b->error =~ /open/, 'pipe-open with in and out redirection (3 args)' );
+
+# Thanks to meironC for this sample:
+$b->check('open LYNX, "lynx -source http://www.perl.com |" or die " Cant open lynx: $!";');
+ok( ! $b->error, 'Open with pipe and result check' );
 
 $b->check('elseif');
 ok( $b->error =~ /elseif.*elsif/, 'elseif - typo' );
