@@ -1,6 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
-0.47 to be released
+0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
     - Fixed crash when inserting a special value without any document (AZAWAWI)
     - Improved StatusBar - speed (SEWI)
@@ -60,7 +60,7 @@ Changes for Perl Application Development and Refactoring Environment
       Padre's language (AZAWAWI)
     - Fixed ticket #394: Close DocBrowser with Escape key (AZAWAWI)
 
-0.46 2009.09.11
+0.46 2009.09.13
     - Fixed Smart highlighting to show a pale green round box instead of an 
       ugly squiggle (AZAWAWI)
     - Run script waits now after completion for key to continue when run in an
