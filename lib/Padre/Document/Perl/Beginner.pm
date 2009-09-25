@@ -189,8 +189,10 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( ($text =~ /open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\2/)
-	   and (length($3) > 0) and (length($4) > 0)) {
+	if (    ( $text =~ /open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\2/ )
+		and ( length($3) > 0 )
+		and ( length($4) > 0 ) )
+	{
 		$self->{error} = "Using a | char in open without a | at the beginning or end is usually a typo.";
 		return;
 	}

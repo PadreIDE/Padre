@@ -2574,7 +2574,7 @@ sub setup_editors {
 
 		if (@files) {
 			foreach my $f (@files) {
-				$self->setup_editor($f,1);
+				$self->setup_editor( $f, 1 );
 			}
 			$self->update_last_session;
 		} else {
