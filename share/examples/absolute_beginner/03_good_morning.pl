@@ -28,7 +28,7 @@ if ($hour < 10) { print "Good morning!\n"; }
 # As this sample should run at any daytime, we need to add if-lines for
 # the rest of the day:
 
-elsif ($hour == 12) { print "out for lunch...\n"; }
+elsif ($hour == 12) { print "Out for lunch...\n"; }
 elsif ($hour <= 18) { print "Hello world!\n"; }
 elsif ($hour < 23) { print "Good night.\n"; }
 
@@ -53,6 +53,12 @@ else { print "sleep well!\n"; }
 #
 # You'll see a new window on the bottom of Padre which shows you the
 # output of this script. Congratulations, now you know the time.
+
+# You could also fill variables by just assigning a new value to them.
+# If you want to test some times, just write the variable ($hour), the
+# equal-sign = and the new number followed by the mandatory semicolon ;
+# if a line before the if-block starts. Press F5 to see the result for each
+# value.
 
 # What about writing your own if-elsif-else - block, for example showing
 # different messages for different seconds?
