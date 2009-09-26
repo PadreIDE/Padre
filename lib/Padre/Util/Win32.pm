@@ -266,9 +266,10 @@ http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx
 # place.
 
 sub GetLastError {
-#	return Win32::API->new( kernel32 => <<'CODE')->Call();
-#DWORD GetLastError()
-#CODE
+
+	#	return Win32::API->new( kernel32 => <<'CODE')->Call();
+	#DWORD GetLastError()
+	#CODE
 	return $^E;
 }
 

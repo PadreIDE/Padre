@@ -24,7 +24,7 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
-	
+
 	# Store main for other methods
 	$self->{main} = $main;
 
@@ -54,8 +54,8 @@ sub new {
 
 	# Create a sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizer->Add( $self->{functions},   1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizer->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizer->Add( $self->{functions}, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizer);
@@ -79,7 +79,8 @@ sub new {
 
 	# Double-click a function name
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self->{functions}, $self->{functions},
+		$self->{functions},
+		$self->{functions},
 		sub {
 			$self->on_list_item_activated( $_[1] );
 		}
@@ -173,7 +174,7 @@ sub on_list_item_activated {
 # Refresh the functions list
 #
 sub refresh {
-	my ($self, $current) = @_;
+	my ( $self, $current ) = @_;
 
 	# Flush the list if there is no active document
 	my $document  = $current->document;
@@ -222,7 +223,7 @@ sub _update_functions_list {
 
 	#quote the search string to make it safer
 	my $search_expr = $self->{search}->GetValue();
-	if($search_expr eq '') {
+	if ( $search_expr eq '' ) {
 		$search_expr = '.*';
 	} else {
 		$search_expr = quotemeta $search_expr;
@@ -230,8 +231,8 @@ sub _update_functions_list {
 
 	#populate the function list with matching functions
 	$functions->DeleteAllItems;
-	foreach my $method ( reverse @{$self->{_methods}} ) {
-		if($method =~ /$search_expr/i) {
+	foreach my $method ( reverse @{ $self->{_methods} } ) {
+		if ( $method =~ /$search_expr/i ) {
 			$functions->InsertStringItem( 0, $method );
 		}
 	}
