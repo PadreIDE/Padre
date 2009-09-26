@@ -40,22 +40,19 @@ sub new {
 	);
 
 	# Create the functions list
-	$self->{functions} = Wx::ListCtrl->new(
+	$self->{functions} = Wx::ListBox->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxLC_SINGLE_SEL | Wx::wxLC_NO_HEADER | Wx::wxLC_REPORT | Wx::wxBORDER_NONE
+		[],
+		Wx::wxLB_SINGLE | Wx::wxBORDER_NONE
 	);
-
-	# Set up the (only) column
-	$self->{functions}->InsertColumn( 0, $self->gettext_label );
-	$self->{functions}->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
 
 	# Create a sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizer->Add( $self->{functions}, 1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizer->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND );
+	$sizer->Add( $self->{functions}, 1, Wx::wxALL | Wx::wxEXPAND );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizer);
@@ -71,7 +68,7 @@ sub new {
 
 	# Double-click a function name
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self->{functions},
+		$self,
 		$self->{functions},
 		sub {
 			$self->on_list_item_activated( $_[1] );
@@ -79,17 +76,15 @@ sub new {
 	);
 
 	# When DOWN is press, focus on the functions list
-	Wx::Event::EVT_CHAR(
-		$self->{search},
-		sub {
-			my ($this, $event)  = @_;
-
-			if ( $event->GetKeyCode == Wx::WXK_DOWN ) {
-				$self->{functions}->SetFocus();
-			}
-
-			$event->Skip(1);
-		}
+	my $ID_ACCEL_SEARCH = 50011;
+	$self->SetAcceleratorTable(Wx::AcceleratorTable->new(
+		[(Wx::wxACCEL_NORMAL,  Wx::WXK_DOWN, $ID_ACCEL_SEARCH)]));
+	Wx::Event::EVT_MENU( 
+		$self, 
+		$ID_ACCEL_SEARCH,
+		sub { 
+			$self->{functions}->SetFocus; 
+		},
 	);
 
 	# React to user search
@@ -106,7 +101,8 @@ sub new {
 
 	# Cancel the search when the user presses the X
 	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self, $self->{search},
+		$self, 
+		$self->{search},
 		sub {
 			$self->{search}->SetValue('');
 		}
@@ -162,7 +158,7 @@ sub refresh {
 	my $document  = $current->document;
 	my $functions = $self->{functions};
 	unless ($document) {
-		$functions->DeleteAllItems;
+		$functions->Clear;
 		return;
 	}
 
@@ -212,13 +208,12 @@ sub _update_functions_list {
 	}
 
 	#populate the function list with matching functions
-	$functions->DeleteAllItems;
+	$functions->Clear;
 	foreach my $method ( reverse @{ $self->{_methods} } ) {
 		if ( $method =~ /$search_expr/i ) {
-			$functions->InsertStringItem( 0, $method );
+			$functions->Insert( $method, 0 );
 		}
 	}
-	$functions->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
 }
 
 1;
