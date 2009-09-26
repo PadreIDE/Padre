@@ -5,6 +5,7 @@ Changes for Perl Application Development and Refactoring Environment
       the last stated saved by a planned exit (SEWI)
     - Fixed Wx::Perl::ProcessStream installation failure on vista/win7 by
       upgrading to 0.16 (AZAWAWI, Mark Dootson - mdootson)
+    - Fixed the error dialog so that it displays the error icon (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
