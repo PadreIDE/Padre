@@ -77,6 +77,7 @@ sub new {
 		$self,
 		name       => 'window.goto_functions_window',
 		label      => Wx::gettext('GoTo Functions Window'),
+		shortcut   => 'Alt-N',
 		menu_event => sub {
 			$_[0]->refresh_functions( $_[0]->current );
 			$_[0]->show_functions(1);
