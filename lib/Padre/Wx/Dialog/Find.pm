@@ -71,7 +71,7 @@ sub new {
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Case &Insensitive'),
+		Wx::gettext('Case &sensitive'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
