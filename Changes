@@ -8,6 +8,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed the error dialog so that it displays the error icon (AZAWAWI)
     - Fixed ticket #292 "Split window" command does not work by removing
       the non-working feature (AZAWAWI)
+    - Added examples for Perl newbies (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
