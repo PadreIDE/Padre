@@ -250,6 +250,22 @@ CODE
 	return $stats->{PeakWorkingSetSize};
 }
 
+=head2 GetLastError
+
+  Padre::Util::Win32::GetLastError;
+
+Returns the error code of the last WIN32-API - call.
+
+The list of error codes could be found at
+http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx
+=cut
+
+sub GetLastError {
+	return Win32::API->new(kernel32 => <<'CODE')->Call();
+DWORD GetLastError()
+CODE
+}
+
 1;
 
 __END__
