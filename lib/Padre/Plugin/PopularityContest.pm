@@ -21,13 +21,35 @@ ones after that.
 
 =head2 What information will we collect?
 
-Right now? Nothing. It does nothing, and it collects nothing whatsoever.
+At the moment, the following information is collected:
+ - Run time of Padre (Time between start and exit of Padre)
+ - Type of operating system (plattform only: Windows, Linux, MAC, etc.)
+ - Padre version number
+ - Perl, Wx and WxWidgets version numbers
+ - Number of times each menu option is used (directly or via shortcut)
 
-It is merely a stub to store your permission to allow us to collect 
-information later.
+In addition, a random process ID for Padre is created and transmitted just
+to identify multiple reports from a single running instance of Padre. It
+doesn't match or contain your OS process ID but it allows us to count
+duplicate reports from a single running copy only once.
+A new ID is generated each time you start Padre and it doesn't allow any
+identification of you or your computer.
 
-We're not B<exactly> sure what we'll need yet, and the plan is to
-gradually add hooks one at a time as needed.
+The following information may be added sooner or later:
+ - Enabled/disabled features (like: are tooltips enabled or not?)
+ - Selected Padre language
+
+=head2 I feel observed.
+
+Disable this module and no information would be transmitted at all.
+
+All information is anonymus and can't be tracked to you, but it helps
+the developer team to know which functions and features are used and
+which aren't.
+
+This is an open source project and you're invited to check what this
+module does by just opening Padre/Plugin/PopularityContest.pm and check
+that it does.
 
 =head2 What information WON'T we collect?
 
@@ -72,8 +94,7 @@ use Padre::Plugin ();
 our $VERSION = '0.47';
 our @ISA     = 'Padre::Plugin';
 
-
-
+our %stats;
 
 
 ######################################################################
@@ -99,11 +120,29 @@ sub plugin_enable {
 	# for now and see how things end up.
 	$self->_ping;
 
+	# Enable counting on all events:
+	my $actions = Padre->ide->actions;
+	for (keys(%$actions)) {
+		my $action = $actions->{$_};
+		# Don't add my event twice in case someone diables/enables me:
+		next if defined($action->{'_PopularityContest_added'});
+		$action->{'_PopularityContest_added'} = 1;
+
+		$action->add_event(eval(' return sub {'.
+			'++$Padre::Plugin::PopularityContest::stats{'.
+			"'action_".$action->{name}."'};".
+			'};'));
+	}
+
 	return 1;
 }
 
 sub plugin_disable {
 	my $self = shift;
+
+	# Report data to server:
+#	use Data::Dumper;
+#	print Dumper(\%stats)."\n";
 
 	# Save the config (if set)
 	if ( $self->{config} ) {
