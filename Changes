@@ -10,6 +10,8 @@ Changes for Perl Application Development and Refactoring Environment
       the non-working feature (AZAWAWI)
     - Added examples for Perl newbies (SEWI)
     - Added a search field for functions list accessible via ALT-N (AZAWAWI)
+    - Added random instance ID (SEWI)
+    - Added multiple events per action (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
