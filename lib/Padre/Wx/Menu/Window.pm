@@ -26,18 +26,6 @@ sub new {
 	$self->{main} = $main;
 	$self->{alt}  = [];
 
-	# Split Window
-	$self->{window_split_window} = $self->add_menu_item(
-		$self,
-		name       => 'window.split_window',
-		label      => Wx::gettext('&Split window'),
-		menu_event => sub {
-			Padre::Wx::Main::on_split_window(@_);
-		},
-	);
-
-	$self->AppendSeparator;
-
 	# File Navigation
 	$self->{window_next_file} = $self->add_menu_item(
 		$self,
@@ -187,7 +175,6 @@ sub refresh {
 			$self->Destroy( delete $self->{separator} );
 		}
 	}
-	$self->{window_split_window}->Enable($pages);
 	$self->{window_next_file}->Enable($pages);
 	$self->{window_previous_file}->Enable($pages);
 	$self->{window_last_visited_file}->Enable($pages);

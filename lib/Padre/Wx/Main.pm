@@ -2513,38 +2513,6 @@ sub update_last_session {
 
 =pod
 
-=head3 on_split_window
-
-    $main->on_split_window;
-
-Open a new editor with the same current document. No return value.
-
-=cut
-
-sub on_split_window {
-	my $self     = shift;
-	my $current  = $self->current;
-	my $notebook = $current->notebook;
-	my $editor   = $current->editor;
-	my $title    = $current->title;
-	my $file     = $current->filename or return;
-	my $pointer  = $editor->GetDocPointer;
-	$editor->AddRefDocument($pointer);
-
-	my $_editor = Padre::Wx::Editor->new( $self->notebook );
-	$_editor->{Document} = $editor->{Document};
-	$_editor->padre_setup;
-	$_editor->SetDocPointer($pointer);
-	$_editor->set_preferences;
-
-	$self->ide->plugin_manager->editor_enable($_editor);
-	$self->create_tab( $_editor, " $title" );
-
-	return;
-}
-
-=pod
-
 =head3 setup_editors
 
     $main->setup_editors( @files );
