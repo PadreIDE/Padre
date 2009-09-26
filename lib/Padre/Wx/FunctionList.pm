@@ -85,6 +85,16 @@ sub new {
 		}
 	);
 
+	# React to user search
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{search},
+		sub {
+			$self->_update_functions_list;
+		}
+	);
+
+
 	return $self;
 }
 
@@ -197,12 +207,35 @@ sub refresh {
 		return if $old eq $new;
 	}
 
+	$self->{_methods} = \@methods;
+
+	$self->_update_functions_list;
+}
+
+#
+# Populate the functions list with search results
+#
+sub _update_functions_list {
+	my $self = shift;
+
+	my $functions = $self->{functions};
+
+	#quote the search string to make it safer
+	my $search_expr = $self->{search}->GetValue();
+	if($search_expr eq '') {
+		$search_expr = '.*';
+	} else {
+		$search_expr = quotemeta $search_expr;
+	}
+
+	#populate the function list with matching functions
 	$functions->DeleteAllItems;
-	foreach my $method ( reverse @methods ) {
-		$functions->InsertStringItem( 0, $method );
+	foreach my $method ( reverse @{$self->{_methods}} ) {
+		if($method =~ /$search_expr/i) {
+			$functions->InsertStringItem( 0, $method );
+		}
 	}
 	$functions->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
-	$self->{_methods} = \@methods;
 }
 
 1;
