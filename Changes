@@ -3,6 +3,8 @@ Changes for Perl Application Development and Refactoring Environment
 0.48 to be released
     - "Last session" now restores the last state even if Padre crashed and not
       the last stated saved by a planned exit (SEWI)
+    - Fixed Wx::Perl::ProcessStream installation failure on vista/win7 by
+      upgrading to 0.16 (AZAWAWI, Mark Dootson - mdootson)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
