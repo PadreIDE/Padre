@@ -61,14 +61,6 @@ sub new {
 	$self->SetSizerAndFit($sizer);
 	$sizer->SetSizeHints($self);
 
-	# Snap to selected character
-	Wx::Event::EVT_CHAR(
-		$self->{functions},
-		sub {
-			$self->on_char( $_[1] );
-		},
-	);
-
 	# Grab the kill focus to prevent deselection
 	Wx::Event::EVT_KILL_FOCUS(
 		$self->{functions},
@@ -86,15 +78,39 @@ sub new {
 		}
 	);
 
+	# When DOWN is press, focus on the functions list
+	Wx::Event::EVT_CHAR(
+		$self->{search},
+		sub {
+			my ($this, $event)  = @_;
+
+			if ( $event->GetKeyCode == Wx::WXK_DOWN ) {
+				$self->{functions}->SetFocus();
+			}
+
+			$event->Skip(1);
+		}
+	);
+
 	# React to user search
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{search},
 		sub {
+			if($self->{search}->GetValue) {
+				$self->{search}->ShowCancelButton(1);
+			}
 			$self->_update_functions_list;
 		}
 	);
 
+	# Cancel the search when the user presses the X
+	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
+		$self, $self->{search},
+		sub {
+			$self->{search}->SetValue('');
+		}
+	);
 
 	return $self;
 }
@@ -105,40 +121,6 @@ sub gettext_label {
 
 #####################################################################
 # Event Handlers
-
-# To match the Ultraedit behaviour, the characters shouldn't accumulate
-# into an overall string. Mostly this is because nobody can see what
-# that string is, so it gets confusing fast.
-sub on_char {
-	my $self  = shift;
-	my $event = shift;
-	my $mod   = $event->GetModifiers || 0;
-	my $code  = $event->GetKeyCode;
-
-	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
-	# TODO: This is cargo-cult
-	$mod = $mod & ( Wx::wxMOD_ALT + Wx::wxMOD_CMD + Wx::wxMOD_SHIFT );
-	unless ($mod) {
-		if ( $code <= 255 and $code > 0 and chr($code) =~ /^[\w_:-]$/ ) {
-
-			# transform - => _ for convenience
-			$code = 95 if $code == 45;
-
-			# This does a partial match starting at the beginning of the function name
-			my $position = $self->FindItem( 0, $code, 1 );
-			if ( defined $position ) {
-				$self->SetItemState(
-					$position,
-					Wx::wxLIST_STATE_SELECTED,
-					Wx::wxLIST_STATE_SELECTED,
-				);
-			}
-		}
-	}
-
-	$event->Skip(1);
-	return;
-}
 
 sub on_list_item_activated {
 	my $self  = shift;
