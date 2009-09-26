@@ -175,6 +175,12 @@ sub refresh {
 		$functions->Clear;
 		return;
 	}
+	
+	# Clear search when it is a different document
+	if($self->{_document} && $document != $self->{_document}) {
+		$self->{search}->ChangeValue('');
+	}
+	$self->{_document} = $document;
 
 	my $config  = $self->{main}->config;
 	my @methods = $document->get_functions;
