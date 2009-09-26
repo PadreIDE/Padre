@@ -121,7 +121,7 @@ sub plugin_enable {
 	$self->_ping;
 
 	# Enable counting on all events:
-	my $actions = Padre->ide->actions;
+	my $actions = $self->ide->actions;
 	for ( keys(%$actions) ) {
 		my $action = $actions->{$_};
 
