@@ -17,8 +17,10 @@ use warnings;
 # complicated to understand:
 my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
 # "my" at the beginning tells Perl that the following variables are dedicated
-# to this file. A variable is a piece of memory which holds some information
-# for you. Unlike other languages, Perl cares about size and type of
+# to this file. You don't care about this, currently, but remember that at the
+# time of this writing, this editor contains of 158 files - all for one program.
+# A variable is a piece of memory which holds some information for you, just
+# a postit note. Unlike other languages, Perl cares about size and type of
 # information itself, so you don't need to do it yourself. Every variable
 # has a name which has only few naming conventions:
 #  - The first char MUST be a dollar sign $
