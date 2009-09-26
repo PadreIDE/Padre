@@ -52,7 +52,7 @@ else { print "sleep well!\n"; }
 # Now press F5 and Padre will execute this script.
 #
 # You'll see a new window on the bottom of Padre which shows you the
-# output of this script. Congratulations, now you know the time.
+# output of this script.
 
 # You could also fill variables by just assigning a new value to them.
 # If you want to test some times, just write the variable ($hour), the
