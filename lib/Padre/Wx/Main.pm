@@ -1045,7 +1045,7 @@ sub refresh_functions {
 	# TODO now on every ui change (move of the mouse) we refresh
 	# this even though that should not be necessary can that be
 	# eliminated ?
-	my ($self, $current) = @_;
+	my ( $self, $current ) = @_;
 	return if $self->no_refresh;
 	return unless $self->menu->view->{functions}->IsChecked;
 
