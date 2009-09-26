@@ -21,7 +21,7 @@ if ($hour < 10) { print "Good morning!\n"; }
 # All conditions always have "yes" or "no" as a result, even for masters
 # of Perl. On 8:30 o' clock, the result is yes, after lunch it's no.
 # The leading "if" identifies the following as a condition. This must be
-# writtin in surrounding brackets ( ).
+# written in surrounding brackets ( ).
 # The program should do something if the result is yes and this something
 # must be written in brackets, but this time { }.
 
