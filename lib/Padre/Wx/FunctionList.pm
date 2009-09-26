@@ -76,7 +76,7 @@ sub new {
 	);
 
 
-	# DOWN KEY/ENTER on the search field means select functions list
+	# Handle key events
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
@@ -84,12 +84,18 @@ sub new {
 
 			my $code = $event->GetKeyCode;
 			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_RETURN ) {
+
+				# Down and return keys focus on the functions lists
 				$self->{functions}->SetFocus;
 				my $selection = $self->{functions}->GetSelection;
 				if ( $selection == -1 && $self->{functions}->GetCount > 0 ) {
 					$selection = 0;
 				}
 				$self->{functions}->Select($selection);
+			} elsif ( $code == Wx::WXK_ESCAPE ) {
+
+				# Escape key clears search
+				$self->{search}->SetValue('');
 			}
 
 			$event->Skip(1);
