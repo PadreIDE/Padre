@@ -25,12 +25,21 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 	
+	# Store main for other methods
 	$self->{main} = $main;
 
 	# Temporary store for the function list.
 	$self->{_methods} = [];
 
-	# Create the underlying object
+	# Create the search control
+	$self->{search} = Wx::SearchCtrl->new(
+		$self, -1, '',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_PROCESS_ENTER
+	);
+
+	# Create the functions list
 	$self->{functions} = Wx::ListCtrl->new(
 		$self,
 		-1,
@@ -45,7 +54,7 @@ sub new {
 
 	# Create a sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-#	$sizer->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizer->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
 	$sizer->Add( $self->{functions},   1, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Fits panel layout
