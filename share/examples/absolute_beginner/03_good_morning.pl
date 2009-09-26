@@ -5,7 +5,7 @@
 use strict; # This will be discussed later
 use warnings;
 
-my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
 
 # Let's say you want to go out and take a walk. What do you do?
 # First, you look out of the window to check for sun or rain, then you

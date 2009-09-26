@@ -15,7 +15,7 @@ use warnings;
 # This line does nothing more than getting the current time and even if
 # it now looks very, very complex to you, don't worry, it's not too
 # complicated to understand:
-my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
 # "my" at the beginning tells Perl that the following variables are dedicated
 # to this file. A variable is a piece of memory which holds some information
 # for you. Unlike other languages, Perl cares about size and type of
