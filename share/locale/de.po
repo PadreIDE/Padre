@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-24 20:20+0200\n"
-"PO-Revision-Date: 2009-09-24 20:22+0100\n"
+"PO-Revision-Date: 2009-09-26 14:23+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1459,7 +1459,7 @@ msgstr "Perl Anfänger-Modus"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:232
 msgid "Open files:"
-msgstr "Offene Dateien:"
+msgstr "Folgende Dateien beim Start öffnen:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:235
 msgid "Default projects directory:"
