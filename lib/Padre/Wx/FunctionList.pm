@@ -32,11 +32,11 @@ sub new {
 	$self->{_methods} = [];
 
 	# Create the search control
-	$self->{search} = Wx::SearchCtrl->new(
+	$self->{search} = Wx::TextCtrl->new(
 		$self, -1, '',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTE_PROCESS_ENTER
+		Wx::wxTE_PROCESS_ENTER|Wx::wxSIMPLE_BORDER,
 	);
 
 	# Create the functions list
@@ -75,16 +75,25 @@ sub new {
 		}
 	);
 
-	# When DOWN is press, focus on the functions list
-	my $ID_ACCEL_SEARCH = 50011;
-	$self->SetAcceleratorTable(Wx::AcceleratorTable->new(
-		[(Wx::wxACCEL_NORMAL,  Wx::WXK_DOWN, $ID_ACCEL_SEARCH)]));
-	Wx::Event::EVT_MENU( 
-		$self, 
-		$ID_ACCEL_SEARCH,
-		sub { 
-			$self->{functions}->SetFocus; 
-		},
+
+	# DOWN KEY/ENTER on the search field means select functions list
+	Wx::Event::EVT_CHAR(
+		$self->{search},
+		sub {
+			my ($this, $event)  = @_;
+
+			my $code = $event->GetKeyCode;
+			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_RETURN) {
+				$self->{functions}->SetFocus;
+				my $selection = $self->{functions}->GetSelection;
+				if($selection == -1 && $self->{functions}->GetCount > 0) {
+					$selection = 0;
+				}
+				$self->{functions}->Select($selection);
+			} 
+
+			$event->Skip(1);
+		}
 	);
 
 	# React to user search
@@ -92,9 +101,6 @@ sub new {
 		$self,
 		$self->{search},
 		sub {
-			if($self->{search}->GetValue) {
-				$self->{search}->ShowCancelButton(1);
-			}
 			$self->_update_functions_list;
 		}
 	);
