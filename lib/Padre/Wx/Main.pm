@@ -1042,15 +1042,14 @@ Force a refresh of the function list on the right.
 
 sub refresh_functions {
 
-	# TODO now on every ui chnage (move of the mouse) we refresh
+	# TODO now on every ui change (move of the mouse) we refresh
 	# this even though that should not be necessary can that be
 	# eliminated ?
-
-	my $self = shift;
+	my ($self, $current) = @_;
 	return if $self->no_refresh;
 	return unless $self->menu->view->{functions}->IsChecked;
 
-	$self->functions->refresh;
+	$self->functions->refresh($current);
 
 	return;
 }

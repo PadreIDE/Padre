@@ -19,7 +19,7 @@ sub new {
 
 	# Create the parent panel, which will contain the search and tree
 	my $self = $class->SUPER::new(
-		$main,
+		$main->right,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -32,7 +32,7 @@ sub new {
 
 	# Create the underlying object
 	$self->{functions} = Wx::ListCtrl->new(
-		$main->right,
+		$self,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -54,7 +54,7 @@ sub new {
 
 	# Snap to selected character
 	Wx::Event::EVT_CHAR(
-		$self,
+		$self->{functions},
 		sub {
 			$self->on_char( $_[1] );
 		},
@@ -62,7 +62,7 @@ sub new {
 
 	# Grab the kill focus to prevent deselection
 	Wx::Event::EVT_KILL_FOCUS(
-		$self,
+		$self->{functions},
 		sub {
 			return;
 		},
@@ -70,23 +70,13 @@ sub new {
 
 	# Double-click a function name
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self, $self->{functions},
+		$self->{functions}, $self->{functions},
 		sub {
 			$self->on_list_item_activated( $_[1] );
 		}
 	);
 
-	#$self->{functions}->Hide;
-
 	return $self;
-}
-
-sub right {
-	$_[0]->GetParent;
-}
-
-sub main {
-	$_[0]->GetGrandParent;
 }
 
 sub gettext_label {
@@ -141,7 +131,7 @@ sub on_list_item_activated {
 	}
 
 	# Locate the function
-	my $document = $self->main->current->document;
+	my $document = $self->{main}->current->document;
 	my $editor   = $document->editor;
 	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
@@ -164,10 +154,9 @@ sub on_list_item_activated {
 # Refresh the functions list
 #
 sub refresh {
-	my $self = shift;
+	my ($self, $current) = @_;
 
 	# Flush the list if there is no active document
-	my $current   = Padre::Current::_CURRENT;
 	my $document  = $current->document;
 	my $functions = $self->{functions};
 	unless ($document) {
