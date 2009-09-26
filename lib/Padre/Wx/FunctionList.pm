@@ -8,7 +8,7 @@ use Padre::Wx      ();
 use Padre::Current ();
 
 our $VERSION = '0.47';
-our @ISA     = 'Wx::ListCtrl';
+our @ISA     = 'Wx::Panel';
 
 #####################################################################
 # Constructor
@@ -17,8 +17,21 @@ sub new {
 	my $class = shift;
 	my $main  = shift;
 
-	# Create the underlying object
+	# Create the parent panel, which will contain the search and tree
 	my $self = $class->SUPER::new(
+		$main,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+	
+	$self->{main} = $main;
+
+	# Temporary store for the function list.
+	$self->{_methods} = [];
+
+	# Create the underlying object
+	$self->{functions} = Wx::ListCtrl->new(
 		$main->right,
 		-1,
 		Wx::wxDefaultPosition,
@@ -27,8 +40,17 @@ sub new {
 	);
 
 	# Set up the (only) column
-	$self->InsertColumn( 0, $self->gettext_label );
-	$self->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
+	$self->{functions}->InsertColumn( 0, $self->gettext_label );
+	$self->{functions}->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
+
+	# Create a sizer
+	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+#	$sizer->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizer->Add( $self->{functions},   1, Wx::wxALL | Wx::wxEXPAND, 0 );
+
+	# Fits panel layout
+	$self->SetSizerAndFit($sizer);
+	$sizer->SetSizeHints($self);
 
 	# Snap to selected character
 	Wx::Event::EVT_CHAR(
@@ -48,13 +70,13 @@ sub new {
 
 	# Double-click a function name
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self, $self,
+		$self, $self->{functions},
 		sub {
 			$self->on_list_item_activated( $_[1] );
 		}
 	);
 
-	$self->Hide;
+	#$self->{functions}->Hide;
 
 	return $self;
 }
@@ -136,6 +158,53 @@ sub on_list_item_activated {
 	$editor->goto_pos_centerize($start);
 
 	return;
+}
+
+#
+# Refresh the functions list
+#
+sub refresh {
+	my $self = shift;
+
+	# Flush the list if there is no active document
+	my $current   = Padre::Current::_CURRENT;
+	my $document  = $current->document;
+	my $functions = $self->{functions};
+	unless ($document) {
+		$functions->DeleteAllItems;
+		return;
+	}
+
+	my $config  = $self->{main}->config;
+	my @methods = $document->get_functions;
+	if ( $config->main_functions_order eq 'original' ) {
+
+		# That should be the one we got from get_functions
+	} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
+
+		# ~ comes after \w
+		@methods = map { tr/~/_/; $_ } ## no critic
+			sort
+			map { tr/_/~/; $_ }        ## no critic
+			@methods;
+	} else {
+
+		# Alphabetical (aka 'abc')
+		@methods = sort @methods;
+	}
+
+	if ( scalar(@methods) == scalar( @{ $self->{_methods} } ) ) {
+		my $new = join ';', @methods;
+		my $old = join ';', @{ $self->{_methods} };
+		return if $old eq $new;
+	}
+
+	$functions->DeleteAllItems;
+	foreach my $method ( reverse @methods ) {
+		$functions->InsertStringItem( 0, $method );
+	}
+	$functions->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
+	$self->{_methods} = \@methods;
 }
 
 1;

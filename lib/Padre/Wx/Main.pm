@@ -153,10 +153,6 @@ sub new {
 	# Drag and drop support
 	Padre::Wx::FileDropTarget->set($self);
 
-	# Temporary store for the function list.
-	# TODO: Storing this here violates encapsulation.
-	$self->{_methods} = [];
-
 	# Temporary store for the notebook tab history
 	# TODO: Storing this here (might) violate encapsulation.
 	#       It should probably be in the notebook object.
@@ -1054,45 +1050,7 @@ sub refresh_functions {
 	return if $self->no_refresh;
 	return unless $self->menu->view->{functions}->IsChecked;
 
-	# Flush the list if there is no active document
-	my $current   = Padre::Current::_CURRENT(@_);
-	my $document  = $current->document;
-	my $functions = $self->functions;
-	unless ($document) {
-		$functions->DeleteAllItems;
-		return;
-	}
-
-	my $config  = $self->config;
-	my @methods = $document->get_functions;
-	if ( $config->main_functions_order eq 'original' ) {
-
-		# That should be the one we got from get_functions
-	} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
-
-		# ~ comes after \w
-		@methods = map { tr/~/_/; $_ } ## no critic
-			sort
-			map { tr/_/~/; $_ }        ## no critic
-			@methods;
-	} else {
-
-		# Alphabetical (aka 'abc')
-		@methods = sort @methods;
-	}
-
-	if ( scalar(@methods) == scalar( @{ $self->{_methods} } ) ) {
-		my $new = join ';', @methods;
-		my $old = join ';', @{ $self->{_methods} };
-		return if $old eq $new;
-	}
-
-	$functions->DeleteAllItems;
-	foreach my $method ( reverse @methods ) {
-		$functions->InsertStringItem( 0, $method );
-	}
-	$functions->SetColumnWidth( 0, Wx::wxLIST_AUTOSIZE );
-	$self->{_methods} = \@methods;
+	$self->functions->refresh;
 
 	return;
 }
