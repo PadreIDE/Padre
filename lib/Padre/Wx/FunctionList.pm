@@ -173,8 +173,15 @@ sub refresh {
 	my $functions = $self->{functions};
 	unless ($document) {
 		$functions->Clear;
+		$self->{search}->Hide;
+		$self->{functions}->Hide;
+		$self->{_methods} = [];
 		return;
 	}
+
+	# Show them again
+	$self->{search}->Show;
+	$self->{functions}->Show;
 
 	# Clear search when it is a different document
 	if ( $self->{_document} && $document != $self->{_document} ) {
