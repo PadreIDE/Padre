@@ -81,7 +81,7 @@ sub new {
 		menu_event => sub {
 			$_[0]->refresh_functions( $_[0]->current );
 			$_[0]->show_functions(1);
-			$_[0]->functions->SetFocus;
+			$_[0]->functions->focus_on_search;
 		},
 	);
 

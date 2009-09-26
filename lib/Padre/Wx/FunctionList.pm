@@ -155,6 +155,14 @@ sub on_list_item_activated {
 }
 
 #
+# Sets the focus on the search field
+#
+sub focus_on_search {
+	my $self = shift;
+	$self->{search}->SetFocus;
+}
+
+#
 # Refresh the functions list
 #
 sub refresh {
