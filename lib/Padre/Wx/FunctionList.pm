@@ -36,7 +36,7 @@ sub new {
 		$self, -1, '',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTE_PROCESS_ENTER|Wx::wxSIMPLE_BORDER,
+		Wx::wxTE_PROCESS_ENTER | Wx::wxSIMPLE_BORDER,
 	);
 
 	# Create the functions list
@@ -80,17 +80,17 @@ sub new {
 	Wx::Event::EVT_CHAR(
 		$self->{search},
 		sub {
-			my ($this, $event)  = @_;
+			my ( $this, $event ) = @_;
 
 			my $code = $event->GetKeyCode;
-			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_RETURN) {
+			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_RETURN ) {
 				$self->{functions}->SetFocus;
 				my $selection = $self->{functions}->GetSelection;
-				if($selection == -1 && $self->{functions}->GetCount > 0) {
+				if ( $selection == -1 && $self->{functions}->GetCount > 0 ) {
 					$selection = 0;
 				}
 				$self->{functions}->Select($selection);
-			} 
+			}
 
 			$event->Skip(1);
 		}
@@ -107,7 +107,7 @@ sub new {
 
 	# Cancel the search when the user presses the X
 	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self, 
+		$self,
 		$self->{search},
 		sub {
 			$self->{search}->SetValue('');
@@ -175,9 +175,9 @@ sub refresh {
 		$functions->Clear;
 		return;
 	}
-	
+
 	# Clear search when it is a different document
-	if($self->{_document} && $document != $self->{_document}) {
+	if ( $self->{_document} && $document != $self->{_document} ) {
 		$self->{search}->ChangeValue('');
 	}
 	$self->{_document} = $document;
