@@ -122,16 +122,21 @@ sub plugin_enable {
 
 	# Enable counting on all events:
 	my $actions = Padre->ide->actions;
-	for (keys(%$actions)) {
+	for ( keys(%$actions) ) {
 		my $action = $actions->{$_};
+
 		# Don't add my event twice in case someone diables/enables me:
-		next if defined($action->{'_PopularityContest_added'});
+		next if defined( $action->{'_PopularityContest_added'} );
 		$action->{'_PopularityContest_added'} = 1;
 
-		$action->add_event(eval(' return sub {'.
-			'++$Padre::Plugin::PopularityContest::stats{'.
-			"'action_".$action->{name}."'};".
-			'};'));
+		$action->add_event(
+			eval(
+				      ' return sub {'
+					. '++$Padre::Plugin::PopularityContest::stats{'
+					. "'action_"
+					. $action->{name} . "'};" . '};'
+			)
+		);
 	}
 
 	return 1;
@@ -141,8 +146,8 @@ sub plugin_disable {
 	my $self = shift;
 
 	# Report data to server:
-#	use Data::Dumper;
-#	print Dumper(\%stats)."\n";
+	#	use Data::Dumper;
+	#	print Dumper(\%stats)."\n";
 
 	# Save the config (if set)
 	if ( $self->{config} ) {

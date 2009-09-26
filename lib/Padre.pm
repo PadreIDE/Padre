@@ -44,7 +44,7 @@ use Class::XSAccessor getters => {
 	plugin_manager => 'plugin_manager',
 	},
 	accessors => {
-	actions => 'actions',
+	actions     => 'actions',
 	instance_id => 'instance_id',
 	};
 
@@ -82,8 +82,8 @@ sub new {
 	Padre::Splash->show;
 
 	# Create our instance ID:
-	for (1..64) {
-		$self->{instance_id} .= chr((48..57,65..90,97..122)[int(rand(62))]);
+	for ( 1 .. 64 ) {
+		$self->{instance_id} .= chr( ( 48 .. 57, 65 .. 90, 97 .. 122 )[ int( rand(62) ) ] );
 	}
 
 	# Save the startup dir before anyone can move us.
