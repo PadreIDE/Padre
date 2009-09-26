@@ -2063,7 +2063,7 @@ button. No return value.
 =cut
 
 sub error {
-	my ($self, $message)    = @_;
+	my ( $self, $message ) = @_;
 	my $styles = Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_HAND;
 	Wx::MessageBox( $message, Wx::gettext('Error'), $styles, $self );
 }
