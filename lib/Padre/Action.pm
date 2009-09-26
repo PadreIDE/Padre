@@ -21,8 +21,6 @@ use Class::XSAccessor getters => {
 
 
 
-
-
 #####################################################################
 # Constructor
 
@@ -30,6 +28,16 @@ sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
 	$self->{id} ||= -1;
+	
+	if (defined($self->{menu_event})) {
+		# Menu events are handled by Padre::Action, the real events
+		# should go to {event}!
+		$self->add_event($self->{menu_event});
+		$self->{menu_event} = eval ' return sub {'.
+			"Padre->ide->actions->{'".$self->{name}."'}->_event(\@_);".
+			'};';
+	}
+	
 	return $self;
 }
 
@@ -58,9 +66,45 @@ sub label_menu {
 	return $label;
 }
 
+# Add an event to an action:
+sub add_event {
+	my $self = shift;
+	my $new_event = shift;
 
+	if (ref($new_event) ne 'CODE') {
+		warn 'Error: '.join(',',caller).' tried to add "'.$new_event.'" which is no CODE-ref!';
+		return 0;
+	}
+		
+	if (ref($self->{event}) eq 'ARRAY') {
+		push @{$self->{event}},$new_event;
+	} elsif (!defined($self->{event})) {
+		$self->{event} = $new_event;
+	} else {
+		$self->{event} = [$self->{event},$new_event];
+	}
+	
+	return 1;
+}
 
+sub _event {
+	my $self = shift;
+	my @args = @_;
+	
+	return 1 unless defined($self->{event});
+	
+	if (ref($self->{event}) eq 'CODE') {
+		&{$self->{event}}(@args);
+	} elsif (ref($self->{event}) eq 'ARRAY') {
+		for (@{$self->{event}}) {
+			&{$_}(@args);
+		}
+	} else {
+		warn 'Expected array or code reference but got: '.$self->{event};
+	}
 
+	return 1;
+}
 
 #####################################################################
 # Main Methods
