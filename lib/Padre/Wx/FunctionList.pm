@@ -195,10 +195,6 @@ sub refresh {
 		return;
 	}
 
-	# Show them again
-	$self->{search}->Show;
-	$self->{functions}->Show;
-
 	# Clear search when it is a different document
 	if ( $self->{_document} && $document != $self->{_document} ) {
 		$self->{search}->ChangeValue('');
@@ -207,6 +203,15 @@ sub refresh {
 
 	my $config  = $self->{main}->config;
 	my @methods = $document->get_functions;
+
+	if ( scalar @methods == 0 ) {
+		$functions->Clear;
+		$self->{search}->Hide;
+		$self->{functions}->Hide;
+		$self->{_methods} = [];
+		return;
+	}
+
 	if ( $config->main_functions_order eq 'original' ) {
 
 		# That should be the one we got from get_functions
@@ -230,6 +235,10 @@ sub refresh {
 	}
 
 	$self->{_methods} = \@methods;
+
+	# Show them again
+	$self->{search}->Show;
+	$self->{functions}->Show;
 
 	$self->_update_functions_list;
 }
