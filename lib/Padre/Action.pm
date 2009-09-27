@@ -97,6 +97,7 @@ sub _event {
 		&{ $self->{event} }(@args);
 	} elsif ( ref( $self->{event} ) eq 'ARRAY' ) {
 		for ( @{ $self->{event} } ) {
+			next if ref($_) ne 'CODE'; # TODO: Catch error and source
 			&{$_}(@args);
 		}
 	} else {
