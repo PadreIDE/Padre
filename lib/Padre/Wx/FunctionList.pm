@@ -67,7 +67,7 @@ sub new {
 	);
 
 	# Double-click a function name
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+	Wx::Event::EVT_LISTBOX_DCLICK(
 		$self,
 		$self->{functions},
 		sub {
@@ -75,6 +75,17 @@ sub new {
 		}
 	);
 
+	# Handle key events
+	Wx::Event::EVT_KEY_UP(
+		$self->{functions},
+		sub {
+			my ( $this, $event ) = @_;
+			if ( $event->GetKeyCode == Wx::WXK_RETURN ) {
+				$self->on_list_item_activated($event);
+			}
+			$event->Skip(1);
+		}
+	);
 
 	# Handle key events
 	Wx::Event::EVT_CHAR(
@@ -83,15 +94,16 @@ sub new {
 			my ( $this, $event ) = @_;
 
 			my $code = $event->GetKeyCode;
-			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_RETURN ) {
+			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_UP || $code == Wx::WXK_RETURN ) {
 
-				# Down and return keys focus on the functions lists
+				# Up/Down and return keys focus on the functions lists
 				$self->{functions}->SetFocus;
 				my $selection = $self->{functions}->GetSelection;
 				if ( $selection == -1 && $self->{functions}->GetCount > 0 ) {
 					$selection = 0;
 				}
 				$self->{functions}->Select($selection);
+
 			} elsif ( $code == Wx::WXK_ESCAPE ) {
 
 				# Escape key clears search and returns focus
@@ -117,15 +129,6 @@ sub new {
 		}
 	);
 
-	# Cancel the search when the user presses the X
-	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self,
-		$self->{search},
-		sub {
-			$self->{search}->SetValue('');
-		}
-	);
-
 	return $self;
 }
 
@@ -137,11 +140,10 @@ sub gettext_label {
 # Event Handlers
 
 sub on_list_item_activated {
-	my $self  = shift;
-	my $event = shift;
+	my ( $self, $event ) = @_;
 
 	# Which sub did they click
-	my $subname = $event->GetItem->GetText;
+	my $subname = $self->{functions}->GetStringSelection;
 	unless ( defined _STRING($subname) ) {
 		return;
 	}
