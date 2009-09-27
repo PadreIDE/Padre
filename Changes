@@ -14,6 +14,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Added multiple events per action (SEWI)
     - Fixed win32's context menu key to work exactly as the right click behavior 
       or ALT-/ (AZAWAWI)
+    - Fixed ticket #598 CTRL-L kills clipboard (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
