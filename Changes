@@ -12,6 +12,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added a search field for functions list accessible via ALT-N (AZAWAWI)
     - Added random instance ID (SEWI)
     - Added multiple events per action (SEWI)
+    - Fixed win32's context menu key to work exactly as the right click behavior 
+      or ALT-/ (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
