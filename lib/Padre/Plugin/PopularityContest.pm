@@ -145,9 +145,7 @@ sub plugin_enable {
 sub plugin_disable {
 	my $self = shift;
 
-	# Report data to server:
-	#	use Data::Dumper;
-	#	print Dumper(\%stats)."\n";
+	$self->report;
 
 	# Save the config (if set)
 	if ( $self->{config} ) {
@@ -168,7 +166,28 @@ sub menu_plugins_simple {
 	];
 }
 
+sub report {
+	# Report data to server
+	
+	my $self = shift;
+	
+	$stats{_instance_id} = $self->ide->{instance_id};
+	$stats{_Padre} = $Padre::VERSION;
+	if ( $0 =~ /padre$/ ) {
+		my $dir = $0;
+		$dir =~ s/padre$//;
+		$stats{_Padre_rev} = Padre::Util::svn_directory_revision($dir)
+		 if -d "$dir.svn";
+	}
+	$stats{_OS} = $^O;
+	$stats{_uptime} = time - $^T;
+	$stats{_perl} = scalar($^V);
+	$stats{_Wx} = $Wx::VERSION;
+	$stats{_WxWidgets} = Wx::wxVERSION_STRING();
+	use Data::Dumper;
+	print Dumper(\%stats)."\n";
 
+}
 
 
 
