@@ -4,8 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{ _STRING };
-use Padre::Wx      ();
-use Padre::Current ();
+use Padre::Wx ();
+use Padre::Current ('_CURRENT');
 
 our $VERSION = '0.47';
 our @ISA     = 'Wx::Panel';
@@ -94,8 +94,14 @@ sub new {
 				$self->{functions}->Select($selection);
 			} elsif ( $code == Wx::WXK_ESCAPE ) {
 
-				# Escape key clears search
+				# Escape key clears search and returns focus
+				# to the editor
 				$self->{search}->SetValue('');
+				my $current  = _CURRENT( $self->{main}->current );
+				my $document = $current->document;
+				if ($document) {
+					$document->editor->SetFocus;
+				}
 			}
 
 			$event->Skip(1);
@@ -141,7 +147,8 @@ sub on_list_item_activated {
 	}
 
 	# Locate the function
-	my $document = $self->{main}->current->document;
+	my $current  = _CURRENT( $self->{main}->current );
+	my $document = $current->document or return;
 	my $editor   = $document->editor;
 	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
