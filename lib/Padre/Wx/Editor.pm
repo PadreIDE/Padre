@@ -142,8 +142,22 @@ sub padre_setup {
 	# See: http://www.yellowbrain.com/stc/keymap.html
 	#$self->CmdKeyAssign(Wx::wxSTC_KEY_ESCAPE, 0, Wx::wxSTC_CMD_CUT);
 
-	# No more CTRL-L for you :)
-	$self->CmdKeyClear(ord('L'), Wx::wxSTC_SCMOD_CTRL);
+	# No more unsafe CTRL-L for you :)
+	# CTRL-L or line cut should only work when there is no empty line
+	# This prevents the accidental destruction of the clipboard
+	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
+	my $CMD_LINECUT_ID = 50001;
+	$self->SetAcceleratorTable( Wx::AcceleratorTable->new( [ ( Wx::wxACCEL_CTRL, ord('L'), $CMD_LINECUT_ID ), ] ) );
+	Wx::Event::EVT_MENU(
+		$self,
+		$CMD_LINECUT_ID,
+		sub {
+			my $line = $self->GetLine( $self->GetCurrentLine() );
+			if ( $line !~ /^\s*$/ ) {
+				$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
+			}
+		}
+	);
 
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
