@@ -948,14 +948,6 @@ sub on_right_down {
 		}
 	}
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$menu->Append( -1, Wx::gettext("&Split window") ),
-		sub {
-			Padre::Wx::Main::on_split_window(@_);
-		},
-	);
-
 	my $doc = $self->{Document};
 	if ( $doc->can('event_on_right_down') ) {
 		$doc->event_on_right_down( $self, $menu, $event );
