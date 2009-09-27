@@ -775,11 +775,19 @@ sub event_on_right_down {
 	my $pos;
 	if ( $event->isa("Wx::MouseEvent") ) {
 		my $point = $event->GetPosition();
-		$pos = $editor->PositionFromPoint($point);
-	} else {
+		if ( $point != Wx::wxDefaultPosition ) {
+
+			# Then it is really a mouse event...
+			# On Windows, context menu is faked
+			# as a Mouse event
+			$pos = $editor->PositionFromPoint($point);
+		}
+	}
+
+	unless ($pos) {
 
 		# Fall back to the cursor position
-		$editor->GetCurrentPos();
+		$pos = $editor->GetCurrentPos();
 	}
 
 	my $introduced_separator = 0;
