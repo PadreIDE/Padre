@@ -918,11 +918,11 @@ sub on_right_down {
 		},
 	);
 
-	$menu->AppendSeparator;
-
 	if (    $event->isa('Wx::MouseEvent')
 		and $self->main->ide->config->editor_folding )
 	{
+		$menu->AppendSeparator;
+
 		my $mousePos         = $event->GetPosition;
 		my $line             = $self->LineFromPosition( $self->PositionFromPoint($mousePos) );
 		my $firstPointInLine = $self->PointFromPosition( $self->PositionFromLine($line) );
