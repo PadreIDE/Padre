@@ -1959,6 +1959,8 @@ sub open_session {
 	$progress->update( $#files + 1, Wx::gettext('Restore focus...') );
 	$self->on_nth_pane($focus) if defined $focus;
 
+	$self->ide->{session} = $session->{id};
+
 	# now we can redraw
 	$self->Thaw;
 }
@@ -3274,7 +3276,12 @@ sub close_all {
 		}
 		$self->close( $pages[$no] ) or return 0;
 	}
+
 	$self->refresh;
+
+	# Remove current session ID from IDE object:
+	$self->ide->{session} = $session->{id};
+
 	return 1;
 }
 
