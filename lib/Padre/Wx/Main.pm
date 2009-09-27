@@ -1740,9 +1740,10 @@ sub run_command {
 	}
 
 	# Start the command
-	$self->{command} = Wx::Perl::ProcessStream->OpenProcess( $cmd, 'MyName1', $self );
+	$self->{command} = Wx::Perl::ProcessStream::Process->new( $cmd, 'MyName1', $self );
+	$self->{command}->Run;
 
-	# TODO: It appears that Wx::Perl::ProcessStream's OpenProcess()
+	# TODO: It appears that Wx::Perl::ProcessStream::Process's Run()
 	# does not honour the docs, as we don't get to this cleanup code
 	# even if we try to run a program that doesn't exist.
 	unless ( $self->{command} ) {

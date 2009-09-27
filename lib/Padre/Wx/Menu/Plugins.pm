@@ -343,7 +343,7 @@ sub install_pip {
 	my $perl = Padre::Perl::cperl();
 	my $cmd  = qq{"$perl" "$pip" "$module"};
 	local $ENV{AUTOMATED_TESTING} = 1;
-	Wx::Perl::ProcessStream->OpenProcess( $cmd, 'CPAN_mod', $main );
+	Wx::Perl::ProcessStream::Process->new->Run( $cmd, 'CPAN_mod', $main );
 
 	return;
 }
