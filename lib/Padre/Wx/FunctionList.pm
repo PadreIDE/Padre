@@ -175,6 +175,7 @@ sub refresh {
 	my ( $self, $current ) = @_;
 
 	# Flush the list if there is no active document
+	return unless $current;
 	my $document  = $current->document;
 	my $functions = $self->{functions};
 	unless ($document) {

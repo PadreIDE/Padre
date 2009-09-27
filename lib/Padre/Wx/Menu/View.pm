@@ -57,7 +57,7 @@ sub new {
 		label      => Wx::gettext('Show Functions'),
 		menu_event => sub {
 			if ( $_[1]->IsChecked ) {
-				$_[0]->refresh_functions;
+				$_[0]->refresh_functions($_[0]->current);
 				$_[0]->show_functions(1);
 			} else {
 				$_[0]->show_functions(0);
