@@ -184,8 +184,8 @@ sub report {
 	$stats{_perl} = scalar($^V);
 	$stats{_Wx} = $Wx::VERSION;
 	$stats{_WxWidgets} = Wx::wxVERSION_STRING();
-	use Data::Dumper;
-	print Dumper(\%stats)."\n";
+#	use Data::Dumper;
+#	print Dumper(\%stats)."\n";
 
 }
 
