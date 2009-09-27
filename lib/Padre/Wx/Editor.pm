@@ -154,6 +154,8 @@ sub padre_setup {
 				my $line = $self->GetLine( $self->GetCurrentLine() );
 				if ( $line !~ /^\s*$/ ) {
 					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
+				} else {
+					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
 				}
 			}
 		}
