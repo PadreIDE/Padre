@@ -146,15 +146,15 @@ sub padre_setup {
 	# CTRL-L or line cut should only work when there is no empty line
 	# This prevents the accidental destruction of the clipboard
 	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
-	my $CMD_LINECUT_ID = 50001;
-	$self->SetAcceleratorTable( Wx::AcceleratorTable->new( [ ( Wx::wxACCEL_CTRL, ord('L'), $CMD_LINECUT_ID ), ] ) );
-	Wx::Event::EVT_MENU(
+	Wx::Event::EVT_KEY_UP(
 		$self,
-		$CMD_LINECUT_ID,
 		sub {
-			my $line = $self->GetLine( $self->GetCurrentLine() );
-			if ( $line !~ /^\s*$/ ) {
-				$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
+			my ($self, $event) = @_;
+			if($event->GetKeyCode == ord('L') and $event->ControlDown) {
+				my $line = $self->GetLine( $self->GetCurrentLine() );
+				if ( $line !~ /^\s*$/ ) {
+					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
+				}
 			}
 		}
 	);
