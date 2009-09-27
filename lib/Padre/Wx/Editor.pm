@@ -149,8 +149,8 @@ sub padre_setup {
 	Wx::Event::EVT_KEY_UP(
 		$self,
 		sub {
-			my ($self, $event) = @_;
-			if($event->GetKeyCode == ord('L') and $event->ControlDown) {
+			my ( $self, $event ) = @_;
+			if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
 				my $line = $self->GetLine( $self->GetCurrentLine() );
 				if ( $line !~ /^\s*$/ ) {
 					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
