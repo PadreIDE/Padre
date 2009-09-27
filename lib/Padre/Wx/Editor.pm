@@ -142,6 +142,9 @@ sub padre_setup {
 	# See: http://www.yellowbrain.com/stc/keymap.html
 	#$self->CmdKeyAssign(Wx::wxSTC_KEY_ESCAPE, 0, Wx::wxSTC_CMD_CUT);
 
+	# No more CTRL-L for you :)
+	$self->CmdKeyClear(ord('L'), Wx::wxSTC_SCMOD_CTRL);
+
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
