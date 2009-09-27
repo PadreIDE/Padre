@@ -167,25 +167,27 @@ sub menu_plugins_simple {
 }
 
 sub report {
+
 	# Report data to server
-	
+
 	my $self = shift;
-	
+
 	$stats{_instance_id} = $self->ide->{instance_id};
-	$stats{_Padre} = $Padre::VERSION;
+	$stats{_Padre}       = $Padre::VERSION;
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
 		$stats{_Padre_rev} = Padre::Util::svn_directory_revision($dir)
-		 if -d "$dir.svn";
+			if -d "$dir.svn";
 	}
-	$stats{_OS} = $^O;
-	$stats{_uptime} = time - $^T;
-	$stats{_perl} = scalar($^V);
-	$stats{_Wx} = $Wx::VERSION;
+	$stats{_OS}        = $^O;
+	$stats{_uptime}    = time - $^T;
+	$stats{_perl}      = scalar($^V);
+	$stats{_Wx}        = $Wx::VERSION;
 	$stats{_WxWidgets} = Wx::wxVERSION_STRING();
-#	use Data::Dumper;
-#	print Dumper(\%stats)."\n";
+
+	#	use Data::Dumper;
+	#	print Dumper(\%stats)."\n";
 
 }
 
