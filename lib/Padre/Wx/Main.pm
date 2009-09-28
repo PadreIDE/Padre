@@ -3985,13 +3985,14 @@ C<$file>, or undef if file is not opened currently.
 
 sub find_editor_of_file {
 	my $self     = shift;
-	my $file     = shift;
+	my $filename = shift;
+	my $file = Padre::File->new($filename); # This reformats our filename
 	my $notebook = $self->notebook;
 	foreach my $id ( $self->pageids ) {
 		my $editor   = $notebook->GetPage($id) or return;
 		my $document = $editor->{Document}     or return;
-		my $filename = $document->filename     or next;
-		return $id if $filename eq $file;
+		my $doc_filename = $document->file->{Filename}     or next;
+		return $id if $doc_filename eq $file->{Filename};
 	}
 	return;
 }
