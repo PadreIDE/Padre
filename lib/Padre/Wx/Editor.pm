@@ -749,8 +749,8 @@ sub on_smart_highlight_begin {
 	my $line_num         = $self->GetCurrentLine;
 
 	# Limits search to C+N..C-N from current line respecting limits ofcourse
-	# to strain the CPU
-	my $NUM_LINES = 100;
+	# to optimize CPU usage
+	my $NUM_LINES = 400;
 	my $from = ($line_num-$NUM_LINES <= 0) ? 0 : $line_num-$NUM_LINES;
 	my $to = ($line_count <= $line_num+$NUM_LINES) ? $line_count: $line_num+$NUM_LINES;
 
