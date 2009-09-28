@@ -169,18 +169,17 @@ sub report {
 
 	$stats{_instance_id} = $self->ide->{instance_id};
 	$stats{_Padre}       = $Padre::VERSION;
-	$stats{_Padre_rev} = Padre::Util::revision;
-	$stats{_OS}        = $^O;
-	$stats{_uptime}    = time - $^T;
-	$stats{_perl}      = scalar($^V);
-	$stats{_Wx}        = $Wx::VERSION;
-	$stats{_WxWidgets} = Wx::wxVERSION_STRING();
+	$stats{_Padre_rev}   = Padre::Util::revision;
+	$stats{_OS}          = $^O;
+	$stats{_uptime}      = time - $^T;
+	$stats{_perl}        = scalar($^V);
+	$stats{_Wx}          = $Wx::VERSION;
+	$stats{_WxWidgets}   = Wx::wxVERSION_STRING();
 
-	#	use Data::Dumper;
-	#	print Dumper(\%stats)."\n";
-
-#	my $response = Padre::Task::HTTPClient->new(URL => 'http://padre.perlide.org/popularity_contest.cgi',
-#		query => \%stats, method => 'POST')->run;
+	#	my $response = Padre::Task::HTTPClient->new(
+	#		URL   => 'http://padre.perlide.org/popularity_contest.cgi',
+	#		query => \%stats, method => 'POST'
+	#	)->run;
 }
 
 

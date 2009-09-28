@@ -508,7 +508,7 @@ sub revision {
 		$dir =~ s/padre$//;
 		my $revision = Padre::Util::svn_directory_revision($dir);
 		if ( -d "$dir.svn" ) {
-			return 'r'.$revision;
+			return 'r' . $revision;
 		}
 	}
 	return;

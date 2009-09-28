@@ -102,10 +102,10 @@ sub new {
 	Wx::InitAllImageHandlers();
 
 	# Determine the window title
-	my $title = 'Padre';
+	my $title    = 'Padre';
 	my $revision = Padre::Util::revision();
 	$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
-		if  defined($revision);
+		if defined($revision);
 
 	# Determine the initial frame style
 	my $style = Wx::wxDEFAULT_FRAME_STYLE;

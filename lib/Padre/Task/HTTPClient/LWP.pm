@@ -25,7 +25,7 @@ Sending and receiving data via HTTP.
 
 sub new {
 	my $class = shift;
-	my %args = @_;
+	my %args  = @_;
 
 	# These modules are no and should be no global Padre dependency, if they're
 	# installed, use this module, otherwise another one needs to do the job:
@@ -37,7 +37,7 @@ sub new {
 	my $self = bless {@_}, $class;
 
 	$self->{_UA} = LWP::UserAgent->new();
-	$self->{_UA}->timeout(60);   # TODO: Make this configurable
+	$self->{_UA}->timeout(60); # TODO: Make this configurable
 	$self->{_UA}->env_proxy;
 
 	return $self;
@@ -49,28 +49,31 @@ sub run {
 
 	# content (POST data) and query (GET data) may be passed as hash ref's
 	# and they're converted automatically:
-	for my $var ('query','content') {
-		next unless ref($self->{$var}) eq 'HASH';
-		$self->{$var} = join('&',map {
-		  my $value = $self->{$var}->{$_} || '';
-		  $value =~ s/(\W)/"%".uc(unpack("H*",$1))/ge;
-		  $value =~ s/\%20/\+/g;
-		  $_.'='.$value;
-		 } (keys(%{$self->{$var}})));
+	for my $var ( 'query', 'content' ) {
+		next unless ref( $self->{$var} ) eq 'HASH';
+		$self->{$var} = join(
+			'&',
+			map {
+				my $value = $self->{$var}->{$_} || '';
+				$value =~ s/(\W)/"%".uc(unpack("H*",$1))/ge;
+				$value =~ s/\%20/\+/g;
+				$_ . '=' . $value;
+				} ( keys( %{ $self->{$var} } ) )
+		);
 	}
 
-	$self->{query} = '?'.$self->{query} if defined($self->{query});
+	$self->{query} = '?' . $self->{query} if defined( $self->{query} );
 
-	my $Request = HTTP::Request->new( $self->{method}, $self->{URL}.$self->{query} );
+	my $Request = HTTP::Request->new( $self->{method}, $self->{URL} . $self->{query} );
 
-	if ($self->{method} eq 'POST') {
-		$Request->content_type($self->{content_type} || 'application/x-www-form-urlencoded');
-		$Request->content($self->{content});
+	if ( $self->{method} eq 'POST' ) {
+		$Request->content_type( $self->{content_type} || 'application/x-www-form-urlencoded' );
+		$Request->content( $self->{content} );
 	}
 
-	$Request->header(%{$self->{header}}) if defined($self->{header}) and (ref($self->header) eq 'HASH');
+	$Request->header( %{ $self->{header} } ) if defined( $self->{header} ) and ( ref( $self->header ) eq 'HASH' );
 
- 	my $Result = $self->{_UA}->request($Request);
+	my $Result = $self->{_UA}->request($Request);
 
 	if ( $Result->is_success ) {
 		if (wantarray) {
