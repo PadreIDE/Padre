@@ -734,7 +734,8 @@ sub on_smart_highlight_begin {
 
 	$self->clear_smart_highlight;
 
-	my $selection        = $self->GetSelectedText or return;
+	my $selection        = $self->GetSelectedText;
+	return unless defined $selection;
 	my $selection_length = length $selection;
 	my $selection_re     = quotemeta $selection;
 	my $line_count       = $self->GetLineCount;
