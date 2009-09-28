@@ -245,12 +245,12 @@ Returns undef if unsure (network problem, not implemented).
 
 # Fallback if the module has no such function:
 sub exists {
-	
+
 	my $self = shift;
-	
+
 	# A size indicates that the file exists:
 	return 1 if $self->size;
-	
+
 	return;
 }
 
