@@ -3280,7 +3280,7 @@ sub close_all {
 	$self->refresh;
 
 	# Remove current session ID from IDE object:
-	$self->ide->{session} = $session->{id};
+	undef $self->ide->{session};
 
 	return 1;
 }
