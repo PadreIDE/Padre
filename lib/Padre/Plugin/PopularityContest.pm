@@ -1,5 +1,10 @@
 package Padre::Plugin::PopularityContest;
 
+# Note to developers: This module collects data and transmit it to the Padre
+# dev team over the internet. Be very careful which data you collect and
+# always check that it is listed in the following POD and keep this module
+# very very good commented. Each user should be able to verify what it does.
+
 =pod
 
 =head1 NAME
@@ -138,9 +143,11 @@ sub plugin_enable {
 	return 1;
 }
 
+# Called when the plugin is disabled by the user or due to an exit-call for Padre
 sub plugin_disable {
 	my $self = shift;
 
+	# Send a report using the data we collected so far
 	$self->report;
 
 	# Save the config (if set)
@@ -156,6 +163,10 @@ sub plugin_disable {
 }
 
 sub menu_plugins_simple {
+	
+	# TODO: Add menu options to force sending of a report and to show
+	#       the contents of a report.
+	
 	return shift->plugin_name => [
 		Wx::gettext("About") => '_about',
 	];
@@ -167,15 +178,31 @@ sub report {
 
 	my $self = shift;
 
+	# The instance ID id generated randomly on Padre's startup, it is used
+	# to identify multiple reports from one running instance of Padre and
+	# to throw away old data once a fresh report with newer data arrives from
+	# the same instance ID. Otherwise we would double-count the data from
+	# the first report (once at the first and once at the second report which
+	# also includs it).
 	$stats{_instance_id} = $self->ide->{instance_id};
+
+	# Transmit Padre's version and SVN revision number (if avaible)
 	$stats{_Padre}       = $Padre::VERSION;
 	$stats{_Padre_rev}   = Padre::Util::revision;
+	
+	# The OS is transmitted as Win32, Linux or MAC (or other common names)
 	$stats{_OS}          = $^O;
+	
+	# The time this Padre has been running until now
 	$stats{_uptime}      = time - $^T;
+	
+	# Perl and WxWidgets version numbers. They help to know which minimal
+	# version could be required
 	$stats{_perl}        = scalar($^V);
 	$stats{_Wx}          = $Wx::VERSION;
 	$stats{_WxWidgets}   = Wx::wxVERSION_STRING();
 
+	# TODO: Enable as soon as the server is functional:
 	#	my $response = Padre::Task::HTTPClient->new(
 	#		URL   => 'http://padre.perlide.org/popularity_contest.cgi',
 	#		query => \%stats, method => 'POST'
