@@ -19,6 +19,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Windows filename test doesn't run on darwin (Mac) any longer and runs as TODO
       because a failure must not stop the Padre installation. (SEWI)
     - Padre::File::HTTP uses environment settings for proxy (SEWI)
+    - First real working version of the PopularityContest - module (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
