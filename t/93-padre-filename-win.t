@@ -6,7 +6,7 @@ use Test::More;
 
 use Padre::File;
 
-if ( $^O !~ /win/i ) {
+if ( ( $^O ne 'MSWin32' ) and ( $^O ne 'cygwin' )  ) {
 	plan( tests => 1 );
 	ok( 1, 'Skipped, only applies to Windows' );
 	exit;
