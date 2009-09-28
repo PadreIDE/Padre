@@ -90,6 +90,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Plugin ();
+use Padre::Task::HTTPClient;
 
 our $VERSION = '0.47';
 our @ISA     = 'Padre::Plugin';
@@ -114,11 +115,6 @@ sub plugin_enable {
 
 	# Load the config
 	$self->{config} = $self->config_read;
-
-	# Trigger the ping at enable time.
-	# Not sure how load'y this will be, but lets try it
-	# for now and see how things end up.
-	$self->_ping;
 
 	# Enable counting on all events:
 	my $actions = $self->ide->actions;
@@ -162,7 +158,6 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	return shift->plugin_name => [
 		Wx::gettext("About") => '_about',
-		Wx::gettext("Ping")  => '_ping',
 	];
 }
 
@@ -174,12 +169,7 @@ sub report {
 
 	$stats{_instance_id} = $self->ide->{instance_id};
 	$stats{_Padre}       = $Padre::VERSION;
-	if ( $0 =~ /padre$/ ) {
-		my $dir = $0;
-		$dir =~ s/padre$//;
-		$stats{_Padre_rev} = Padre::Util::svn_directory_revision($dir)
-			if -d "$dir.svn";
-	}
+	$stats{_Padre_rev} = Padre::Util::revision;
 	$stats{_OS}        = $^O;
 	$stats{_uptime}    = time - $^T;
 	$stats{_perl}      = scalar($^V);
@@ -189,6 +179,8 @@ sub report {
 	#	use Data::Dumper;
 	#	print Dumper(\%stats)."\n";
 
+#	my $response = Padre::Task::HTTPClient->new(URL => 'http://padre.perlide.org/popularity_contest.cgi',
+#		query => \%stats, method => 'POST')->run;
 }
 
 
@@ -202,16 +194,6 @@ sub _about {
 	$about->SetName(__PACKAGE__);
 	$about->SetDescription("Trying to figure out what do people use?\n");
 	Wx::AboutBox($about);
-	return;
-}
-
-sub _ping {
-	my $self = shift;
-
-	# Send the request
-	require Padre::Plugin::PopularityContest::Ping;
-	Padre::Plugin::PopularityContest::Ping->new->schedule;
-
 	return;
 }
 
