@@ -740,16 +740,25 @@ sub clear_smart_highlight {
 sub on_smart_highlight_begin {
 	my ( $self, $event ) = @_;
 
-	$self->clear_smart_highlight;
-
 	my $selection = $self->GetSelectedText;
 	return unless defined $selection;
+
 	my $selection_length = length $selection;
 	my $selection_re     = quotemeta $selection;
 	my $line_count       = $self->GetLineCount;
+	my $line_num         = $self->GetCurrentLine;
+
+	# Limits search to C+N..C-N from current line respecting limits ofcourse
+	# to strain the CPU
+	my $NUM_LINES = 100;
+	my $from = ($line_num-$NUM_LINES <= 0) ? 0 : $line_num-$NUM_LINES;
+	my $to = ($line_count <= $line_num+$NUM_LINES) ? $line_count: $line_num+$NUM_LINES;
+
+	# Clear previous smart highlights
+	$self->clear_smart_highlight;
 
 	# find matching occurrences
-	foreach my $i ( 0 .. $line_count - 1 ) {
+	foreach my $i ( $from .. $to ) {
 		my $line_start = $self->PositionFromLine($i);
 		my $line       = $self->GetLine($i);
 		while ( $line =~ /$selection_re/g ) {
