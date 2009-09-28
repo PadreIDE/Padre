@@ -13,13 +13,23 @@ our @ISA     = 'Padre::Task::HTTPClient';
 
 =head1 NAME
 
-Padre::Task::HTTPClient::LWP - Generic http client background processing task using LWP
+Padre::Task::HTTPClient::LWP - Generic http client processing task using LWP
 
 =head1 SYNOPSIS
 
 =head1 DESCRIPTION
 
 Sending and receiving data via HTTP.
+
+See Padre::Task::HTTPClient for details.
+
+This module uses "require" instead of "use" to load the required modules
+
+	LWP::UserAgent
+	HTTP::Request
+
+because it need to be use'ed without failing on dependencies which are no
+global Padre dependencies.
 
 =cut
 
@@ -71,7 +81,8 @@ sub run {
 		$Request->content( $self->{content} );
 	}
 
-	$Request->header( %{ $self->{header} } ) if defined( $self->{header} ) and ( ref( $self->header ) eq 'HASH' );
+	$Request->header( %{ $self->{header} } )
+		if defined( $self->{header} ) and ( ref( $self->header ) eq 'HASH' );
 
 	my $Result = $self->{_UA}->request($Request);
 

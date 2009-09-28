@@ -22,6 +22,9 @@ As we don't want a specific HTTP client module dependency to a
 network-independent application like Padre, this module searches
 for installed HTTP client modules and uses one of them.
 
+If none of the "child" modules could be loaded (no HTTP support at all
+on this computer), it fails and returns nothing (scalar undef).
+
 =head1 METHODS
 
 =head2 new
