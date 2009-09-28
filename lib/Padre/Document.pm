@@ -1085,7 +1085,8 @@ sub stats {
 		$chars_without_space = Wx::gettext("Skipped for large files");
 	}
 
-	my $filename = $self->{file}->filename;
+	my $filename = $self->{file}->filename
+		if defined($self->{file});
 
 	# not set when first time to save
 	# allow the upgread of ascii to utf-8
