@@ -160,7 +160,7 @@ sub padre_setup {
 			}
 
 			# Smart highlighting on shift down
-			if($event->ShiftDown) {
+			if ( $event->ShiftDown ) {
 				$self->on_smart_highlight_begin($event);
 			}
 		}
@@ -734,7 +734,7 @@ sub on_smart_highlight_begin {
 
 	$self->clear_smart_highlight;
 
-	my $selection        = $self->GetSelectedText;
+	my $selection = $self->GetSelectedText;
 	return unless defined $selection;
 	my $selection_length = length $selection;
 	my $selection_re     = quotemeta $selection;

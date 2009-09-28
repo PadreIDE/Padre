@@ -82,7 +82,8 @@ sub run {
 	}
 
 	$Request->header( %{ $self->{header} } )
-		if defined( $self->{header} ) and ( ref( $self->header ) eq 'HASH' );
+		if defined( $self->{header} )
+			and ( ref( $self->header ) eq 'HASH' );
 
 	my $Result = $self->{_UA}->request($Request);
 
