@@ -16,6 +16,9 @@ Changes for Perl Application Development and Refactoring Environment
       or ALT-/ (AZAWAWI)
     - Fixed ticket #598 CTRL-L kills clipboard (AZAWAWI)
     - Case sensitive was labeled case insensitive in replace, fixed. (SEWI)
+    - Windows filename test doesn't run on darwin (Mac) any longer and runs as TODO
+      because a failure must not stop the Padre installation. (SEWI)
+    - Padre::File::HTTP uses environment settings for proxy (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
