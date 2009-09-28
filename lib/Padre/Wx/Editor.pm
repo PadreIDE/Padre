@@ -81,6 +81,14 @@ sub new {
 	Wx::Event::EVT_LEFT_DOWN( $self, \&on_smart_highlight_end );
 	Wx::Event::EVT_KEY_DOWN( $self, \&on_smart_highlight_end );
 
+	# No more unsafe CTRL-L for you :)
+	# CTRL-L or line cut should only work when there is no empty line
+	# This prevents the accidental destruction of the clipboard
+	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
+
+	# Setup EVT_KEY_UP for smart highlighting and non-destructive CTRL-L
+	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
+
 	if ( $config->editor_wordwrap ) {
 		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
 	}
@@ -142,30 +150,6 @@ sub padre_setup {
 	# See: http://www.yellowbrain.com/stc/keymap.html
 	#$self->CmdKeyAssign(Wx::wxSTC_KEY_ESCAPE, 0, Wx::wxSTC_CMD_CUT);
 
-	# No more unsafe CTRL-L for you :)
-	# CTRL-L or line cut should only work when there is no empty line
-	# This prevents the accidental destruction of the clipboard
-	$self->CmdKeyClear( ord('L'), Wx::wxSTC_SCMOD_CTRL );
-	Wx::Event::EVT_KEY_UP(
-		$self,
-		sub {
-			my ( $self, $event ) = @_;
-			if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
-				my $line = $self->GetLine( $self->GetCurrentLine() );
-				if ( $line !~ /^\s*$/ ) {
-					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
-				} else {
-					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
-				}
-			}
-
-			# Smart highlighting on shift down
-			if ( $event->ShiftDown ) {
-				$self->on_smart_highlight_begin($event);
-			}
-		}
-	);
-
 	# This is supposed to be Wx::wxSTC_CP_UTF8
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
@@ -195,6 +179,30 @@ sub padre_setup {
 	}
 
 	return;
+}
+
+#
+# Called a key is released in the editor
+#
+sub on_key_up {
+	my ( $self, $event ) = @_;
+
+	# The new behavior for a non-destructive CTRL-L
+	if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
+		my $line = $self->GetLine( $self->GetCurrentLine() );
+		if ( $line !~ /^\s*$/ ) {
+			# Only cut on non-black lines
+			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
+		} else {
+			# Otherwise delete the line
+			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
+		}
+	}
+
+	# Apply smart highlighting when the shift key is down
+	if ( $event->ShiftDown ) {
+		$self->on_smart_highlight_begin($event);
+	}
 }
 
 sub padre_setup_plain {
