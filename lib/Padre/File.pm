@@ -263,6 +263,7 @@ protocol).
 
 # Fallback if the module has no such function:
 sub filename {
+	my $self = shift;
 	return $self->{filename};
 }
 
