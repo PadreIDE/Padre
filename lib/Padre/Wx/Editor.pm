@@ -158,6 +158,11 @@ sub padre_setup {
 					$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
 				}
 			}
+
+			# Smart highlighting on shift down
+			if($event->ShiftDown) {
+				$self->on_smart_highlight_begin($event);
+			}
 		}
 	);
 
