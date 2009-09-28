@@ -103,14 +103,9 @@ sub new {
 
 	# Determine the window title
 	my $title = 'Padre';
-	if ( $0 =~ /padre$/ ) {
-		my $dir = $0;
-		$dir =~ s/padre$//;
-		my $revision = Padre::Util::svn_directory_revision($dir);
-		if ( -d "$dir.svn" ) {
-			$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
-		}
-	}
+	my $revision = Padre::Util::revision();
+	$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
+		if  defined($revision);
 
 	# Determine the initial frame style
 	my $style = Wx::wxDEFAULT_FRAME_STYLE;
