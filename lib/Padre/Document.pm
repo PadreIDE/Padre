@@ -209,6 +209,10 @@ sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
 
+	# This sub creates the document object and is allowed to use self->filename,
+	# once noone else uses it, it shout be deleted from the $self - hash before
+	# leaving the sub.
+	# Use document->{file}->filename instead!
 	if ( $self->{filename} ) {
 		$self->{file} = Padre::File->new( $self->{filename} );
 
@@ -226,7 +230,7 @@ sub new {
 						Wx::gettext(
 							"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
 						),
-						$self->{filename},
+						$self->{file}->{filename},
 						$config->editor_file_size_limit
 					)
 				);
@@ -267,7 +271,9 @@ sub rebless {
 	}
 
 	my $module = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
-	my $filename = $self->filename || '';
+	my $filename = ''; # Not undef
+	$filename = $self->{file}->filename
+		if defined($self->{file}) and defined($self->{file}->{filename});
 	warn("No module  mime_type='$mime_type' filename='$filename'\n") unless $module;
 
 	#warn("Module '$module' mime_type='$mime_type' filename='$filename'\n") if $module;
@@ -320,7 +326,7 @@ sub colorize {
 	unless ( $module->can('colorize') ) {
 		eval "use $module";
 		if ($@) {
-			Carp::cluck( "Could not load module '$module' for file '" . ( $self->filename || '' ) . "'\n" );
+			Carp::cluck( "Could not load module '$module' for file '" . ( $self->{file}->filename || '' ) . "'\n" );
 			return;
 		}
 	}
@@ -339,7 +345,7 @@ sub last_sync {
 sub basename {
 	my $self = shift;
 	return $self->{file}->basename if defined( $self->{file} );
-	return $self->{filename};
+	return $self->{file}->{filename};
 }
 
 sub dirname {
@@ -445,7 +451,10 @@ sub time_on_file {
 sub checksum_on_file {
 	warn join( ',', caller ) . ' called Document::checksum_on_file which is out-of-service.';
 	return 1;
-	my $filename = $_[0]->filename;
+	
+	my $self = shift;
+	
+	my $filename = $self->{file}->filename;
 	return undef unless defined $filename;
 
 	require Digest::MD5;
@@ -476,7 +485,7 @@ sub load_file {
 
 	my $file = $self->file;
 
-	Padre::Util::debug("Loading file '$file->{filename}'");
+	Padre::Util::debug("Loading file '".(defined($file->{file}->{filename}) and $file->{file}->{filename})."'");
 
 	# check if file exists
 	if ( !$file->exists ) {
@@ -699,7 +708,7 @@ sub text_with_one_nl {
 #
 sub store_cursor_position {
 	my $self     = shift;
-	my $filename = $self->filename;
+	my $filename = $self->{file}->filename;
 	my $editor   = $self->editor;
 	return unless $filename && $editor;
 	my $pos = $editor->GetCurrentPos;
@@ -714,7 +723,8 @@ sub store_cursor_position {
 #
 sub restore_cursor_position {
 	my $self     = shift;
-	my $filename = $self->filename;
+	my $filename = $self->{file}->filename
+	 if defined($self->{file});
 	my $editor   = $self->editor;
 	return unless $filename && $editor;
 	my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
@@ -752,7 +762,7 @@ sub lexer {
 # What should be shown in the notebook tab
 sub get_title {
 	my $self = shift;
-	if ( $self->filename ) {
+	if ( defined($self->{file}) and defined($self->{file}->filename) and ($self->{file}->filename ne '') ) {
 		return $self->basename;
 	} else {
 		my $str = sprintf( Wx::gettext("Unsaved %d"), $unsaved_number );
@@ -909,7 +919,7 @@ sub project_find {
 	if ( $self->{file}->{protocol} ne 'local' ) { return; }
 
 	# Search upwards from the file to find the project root
-	my ( $v, $d, $f ) = File::Spec->splitpath( $self->filename );
+	my ( $v, $d, $f ) = File::Spec->splitpath( $self->{file}->filename );
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
 	my $dirs = List::Util::first {
@@ -1074,7 +1084,7 @@ sub stats {
 		$chars_without_space = Wx::gettext("Skipped for large files");
 	}
 
-	my $filename = $self->filename;
+	my $filename = $self->{file}->filename;
 
 	# not set when first time to save
 	# allow the upgread of ascii to utf-8
