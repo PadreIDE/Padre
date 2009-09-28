@@ -270,10 +270,11 @@ sub rebless {
 		bless $self, $class;
 	}
 
-	my $module = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
-	my $filename = ''; # Not undef
+	my $module   = Padre::MimeTypes->get_current_highlighter_of_mime_type($mime_type);
+	my $filename = '';                                                                # Not undef
 	$filename = $self->{file}->filename
-		if defined($self->{file}) and defined($self->{file}->{filename});
+		if defined( $self->{file} )
+			and defined( $self->{file}->{filename} );
 	warn("No module  mime_type='$mime_type' filename='$filename'\n") unless $module;
 
 	#warn("Module '$module' mime_type='$mime_type' filename='$filename'\n") if $module;
@@ -451,9 +452,9 @@ sub time_on_file {
 sub checksum_on_file {
 	warn join( ',', caller ) . ' called Document::checksum_on_file which is out-of-service.';
 	return 1;
-	
+
 	my $self = shift;
-	
+
 	my $filename = $self->{file}->filename;
 	return undef unless defined $filename;
 
@@ -485,7 +486,8 @@ sub load_file {
 
 	my $file = $self->file;
 
-	Padre::Util::debug("Loading file '".(defined($file->{file}->{filename}) and $file->{file}->{filename})."'");
+	Padre::Util::debug(
+		"Loading file '" . ( defined( $file->{file}->{filename} ) and $file->{file}->{filename} ) . "'" );
 
 	# check if file exists
 	if ( !$file->exists ) {
@@ -724,8 +726,8 @@ sub store_cursor_position {
 sub restore_cursor_position {
 	my $self     = shift;
 	my $filename = $self->{file}->filename
-	 if defined($self->{file});
-	my $editor   = $self->editor;
+		if defined( $self->{file} );
+	my $editor = $self->editor;
 	return unless $filename && $editor;
 	my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
 	return unless $pos;
@@ -762,7 +764,7 @@ sub lexer {
 # What should be shown in the notebook tab
 sub get_title {
 	my $self = shift;
-	if ( defined($self->{file}) and defined($self->{file}->filename) and ($self->{file}->filename ne '') ) {
+	if ( defined( $self->{file} ) and defined( $self->{file}->filename ) and ( $self->{file}->filename ne '' ) ) {
 		return $self->basename;
 	} else {
 		my $str = sprintf( Wx::gettext("Unsaved %d"), $unsaved_number );
