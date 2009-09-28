@@ -207,6 +207,13 @@ sub report {
 	#		URL   => 'http://padre.perlide.org/popularity_contest.cgi',
 	#		query => \%stats, method => 'POST'
 	#	)->run;
+	
+	# Temporary: Dump the report
+	open my $reportfile,'>popularity_report.txt' or warn $!;
+	for (sort(keys(%stats))) {
+		print $reportfile "$_ = $stats{$_}\n";
+	}
+	close $reportfile;
 }
 
 
