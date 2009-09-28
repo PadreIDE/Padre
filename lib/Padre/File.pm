@@ -248,6 +248,24 @@ sub exists {
 	return;
 }
 
+=head2 filename
+
+  $file->filename;
+
+Returns the the filename including path handled by this object
+
+Please remember that Padre::File is able to open many URL types. This
+"filename" may also be a URL. Please use the ->basename and ->dirname
+methods to split it (assuming that a path exists in the current
+protocol).
+
+=cut
+
+# Fallback if the module has no such function:
+sub filename {
+	return $self->{filename};
+}
+
 =head2 gid
 
   $file->gid;
