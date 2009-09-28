@@ -214,7 +214,7 @@ sub new {
 
 		# The Padre::File - module knows how to format the filename to the right
 		# syntax to correct (for example) .//file.pl to ./file.pl)
-		$self->{filename} = $self->{file}->{Filename};
+		$self->{filename} = $self->{file}->{filename};
 
 		if ( $self->{file}->exists ) {
 
@@ -476,7 +476,7 @@ sub load_file {
 
 	my $file = $self->file;
 
-	Padre::Util::debug("Loading file '$file->{Filename}'");
+	Padre::Util::debug("Loading file '$file->{filename}'");
 
 	# check if file exists
 	if ( !$file->exists ) {
@@ -552,7 +552,7 @@ sub _set_filename {
 	$self->{file} = Padre::File->new($filename);
 
 	# Padre::File reformats filenames to the protocol/OS specific format, so use this:
-	$self->{filename} = $self->{file}->{Filename};
+	$self->{filename} = $self->{file}->{filename};
 }
 
 sub save_file {
@@ -567,12 +567,12 @@ sub save_file {
 	}
 
 	# This is just temporary for security and should prevend data loss:
-	if ( $self->{filename} ne $file->{Filename} ) {
+	if ( $self->{filename} ne $file->{filename} ) {
 		my $ret = Wx::MessageBox(
 			sprintf(
 				Wx::gettext('Visual filename %s does not match the internal filename %s, do you want to abort saving?'),
 				$self->{filename},
-				$file->{Filename}
+				$file->{filename}
 			),
 			Wx::gettext("Save Warning"),
 			Wx::wxYES_NO | Wx::wxCENTRE,
@@ -593,7 +593,7 @@ sub save_file {
 	if ( defined $self->{encoding} ) {
 		$encode = ":raw:encoding($self->{encoding})";
 	} else {
-		warn "encoding is not set, (couldn't get from contents) when saving file $file->{Filename}\n";
+		warn "encoding is not set, (couldn't get from contents) when saving file $file->{filename}\n";
 	}
 
 	if ( !$file->write( $content, $encode ) ) {
