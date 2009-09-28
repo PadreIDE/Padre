@@ -100,7 +100,7 @@ sub new { # URL
 	for ( keys(%Registered_Modules) ) {
 		next if $URL !~ /$_/;
 		require $_;
-		$self = $_->new($URL);
+		$self = $Registered_Modules{$_}->new($URL);
 		return $self;
 	}
 
