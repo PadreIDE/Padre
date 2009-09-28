@@ -710,7 +710,7 @@ sub text_with_one_nl {
 #
 sub store_cursor_position {
 	my $self     = shift;
-	my $filename = $self->{file}->filename;
+	my $filename = $self->{file}->filename if defined( $self->{file} );
 	my $editor   = $self->editor;
 	return unless $filename && $editor;
 	my $pos = $editor->GetCurrentPos;
@@ -725,9 +725,8 @@ sub store_cursor_position {
 #
 sub restore_cursor_position {
 	my $self     = shift;
-	my $filename = $self->{file}->filename
-		if defined( $self->{file} );
-	my $editor = $self->editor;
+	my $filename = $self->{file}->filename if defined( $self->{file} );
+	my $editor   = $self->editor;
 	return unless $filename && $editor;
 	my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
 	return unless $pos;
