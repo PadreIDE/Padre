@@ -191,9 +191,11 @@ sub on_key_up {
 	if ( $event->GetKeyCode == ord('L') and $event->ControlDown ) {
 		my $line = $self->GetLine( $self->GetCurrentLine() );
 		if ( $line !~ /^\s*$/ ) {
+
 			# Only cut on non-black lines
 			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINECUT);
 		} else {
+
 			# Otherwise delete the line
 			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
 		}
@@ -751,8 +753,8 @@ sub on_smart_highlight_begin {
 	# Limits search to C+N..C-N from current line respecting limits ofcourse
 	# to optimize CPU usage
 	my $NUM_LINES = 400;
-	my $from = ($line_num-$NUM_LINES <= 0) ? 0 : $line_num-$NUM_LINES;
-	my $to = ($line_count <= $line_num+$NUM_LINES) ? $line_count: $line_num+$NUM_LINES;
+	my $from      = ( $line_num - $NUM_LINES <= 0 ) ? 0 : $line_num - $NUM_LINES;
+	my $to        = ( $line_count <= $line_num + $NUM_LINES ) ? $line_count : $line_num + $NUM_LINES;
 
 	# Clear previous smart highlights
 	$self->clear_smart_highlight;
