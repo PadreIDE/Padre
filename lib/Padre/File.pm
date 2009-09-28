@@ -79,7 +79,7 @@ If you know the protocol (which should be true every time you build the URL
 by source), it's better to call Padre::File::Protocol->new($URL) directly
 (replacing Protocol by the protocol which should be used, of course).
 
-The module for the selected protocol should fill ->{Filename} property. This
+The module for the selected protocol should fill ->{filename} property. This
 should be used for all further references to the file as it will contain the
 filename in universal correct format (for example correct the C:\ eq C:/ problem
 on windows).
@@ -116,6 +116,8 @@ sub new { # URL
 		$self = Padre::File::Local->new($URL);
 	}
 
+	$self->{Filename} = $self->{filename}; # Temporary hack
+
 	return $self;
 
 }
@@ -150,7 +152,7 @@ exists for this module.
 # than returning undef for this function:
 sub basename {
 	my $self = shift;
-	return $self->{Filename};
+	return $self->{filename};
 }
 
 =head2 blksize
