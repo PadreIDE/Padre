@@ -19,25 +19,25 @@ sub _reformat_filename {
 
 		# Fixing the case of the filename on Win32.
 		require Padre::Util::Win32;
-		$self->{Filename} = Padre::Util::Win32::GetLongPathName( $self->{Filename} )
-			|| $self->{Filename};
+		$self->{filename} = Padre::Util::Win32::GetLongPathName( $self->{filename} )
+			|| $self->{filename};
 	}
 
 	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
 	# file but have different names.
 	my $New_Filename = File::Spec->catfile(
-		File::Spec->splitdir( File::Basename::dirname( $self->{Filename} ) ),
-		File::Basename::basename( $self->{Filename} )
+		File::Spec->splitdir( File::Basename::dirname( $self->{filename} ) ),
+		File::Basename::basename( $self->{filename} )
 	);
 
 	if ( defined($New_Filename) and ( length($New_Filename) > 0 ) ) {
-		$self->{Filename} = $New_Filename;
+		$self->{filename} = $New_Filename;
 	}
 }
 
 sub new {
 	my $class = shift;
-	my $self = bless { Filename => $_[0] }, $class;
+	my $self = bless { filename => $_[0] }, $class;
 	$self->{protocol} = 'local'; # Should not be overridden
 
 	$self->_reformat_filename;
@@ -47,83 +47,83 @@ sub new {
 
 sub stat {
 	my $self = shift;
-	return CORE::stat( $self->{Filename} );
+	return CORE::stat( $self->{filename} );
 }
 
 sub size {
 	my $self = shift;
-	return -s $self->{Filename};
+	return -s $self->{filename};
 }
 
 sub dev {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[0];
+	return ( CORE::stat( $self->{filename} ) )[0];
 }
 
 sub inode {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[0];
+	return ( CORE::stat( $self->{filename} ) )[0];
 }
 
 sub mode {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[2];
+	return ( CORE::stat( $self->{filename} ) )[2];
 }
 
 sub nlink {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[3];
+	return ( CORE::stat( $self->{filename} ) )[3];
 }
 
 sub uid {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[4];
+	return ( CORE::stat( $self->{filename} ) )[4];
 }
 
 sub gid {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[5];
+	return ( CORE::stat( $self->{filename} ) )[5];
 }
 
 sub rdev {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[6];
+	return ( CORE::stat( $self->{filename} ) )[6];
 }
 
 sub atime {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[8];
+	return ( CORE::stat( $self->{filename} ) )[8];
 }
 
 sub mtime {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[9];
+	return ( CORE::stat( $self->{filename} ) )[9];
 }
 
 sub ctime {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[10];
+	return ( CORE::stat( $self->{filename} ) )[10];
 }
 
 sub blksize {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[11];
+	return ( CORE::stat( $self->{filename} ) )[11];
 }
 
 sub blocks {
 	my $self = shift;
-	return ( CORE::stat( $self->{Filename} ) )[12];
+	return ( CORE::stat( $self->{filename} ) )[12];
 }
 
 sub exists {
 	my $self = shift;
-	return -e $self->{Filename};
+	return -e $self->{filename};
 }
 
 sub read {
 	my $self = shift;
 	my $fh;
-	if ( !open $fh, '<', $self->{Filename} ) {
+	if ( !open $fh, '<', $self->{filename} ) {
 		$self->{error} = $!;
 		return;
 	}
@@ -138,7 +138,7 @@ sub write {
 	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
 
 	my $fh;
-	if ( !open $fh, ">$encode", $self->{Filename} ) {
+	if ( !open $fh, ">$encode", $self->{filename} ) {
 		$self->{error} = $!;
 		return 0;
 	}
@@ -150,12 +150,12 @@ sub write {
 
 sub basename {
 	my $self = shift;
-	return File::Basename::basename( $self->{Filename} );
+	return File::Basename::basename( $self->{filename} );
 }
 
 sub dirname {
 	my $self = shift;
-	return File::Basename::dirname( $self->{Filename} );
+	return File::Basename::dirname( $self->{filename} );
 }
 
 1;

@@ -29,7 +29,7 @@ sub _request {
 
 	my $self   = shift;
 	my $method = shift || 'GET';
-	my $URL    = shift || $self->{Filename};
+	my $URL    = shift || $self->{filename};
 
 	my $HTTP_Req = HTTP::Request->new( $method, $URL );
 
@@ -89,7 +89,7 @@ sub basename {
 	my $self = shift;
 
 	# Cut the protocol and hostname part or fail if this is no expected syntax:
-	$self->{Filename} =~ /https?\:\/\/.+?\/(.+)/i or return 'index.html';
+	$self->{filename} =~ /https?\:\/\/.+?\/(.+)/i or return 'index.html';
 	my $basename = $1;
 
 	# Cut any arguments and anchor-parts
@@ -106,7 +106,7 @@ sub dirname {
 	my $self = shift;
 
 	# Cut the protocol and hostname part or fail if this is no expected syntax:
-	$self->{Filename} =~ /^(https?\:\/\/.+?\/)[^\/\#\?]+?([\#\?].*)?$/i or return $self->{Filename};
+	$self->{filename} =~ /^(https?\:\/\/.+?\/)[^\/\#\?]+?([\#\?].*)?$/i or return $self->{filename};
 	return $1;
 }
 
@@ -123,7 +123,7 @@ sub read {
 #	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
 #
 #	my $fh;
-#	if ( !open $fh, ">$encode", $self->{Filename} ) {
+#	if ( !open $fh, ">$encode", $self->{filename} ) {
 #		$self->{error} = $!;
 #		return 0;
 #	}
