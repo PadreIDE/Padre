@@ -501,6 +501,19 @@ sub process_memory {
 	return;
 }
 
+# TODO: A much better variant would be a constant set by svn.
+sub revision {
+	if ( $0 =~ /padre$/ ) {
+		my $dir = $0;
+		$dir =~ s/padre$//;
+		my $revision = Padre::Util::svn_directory_revision($dir);
+		if ( -d "$dir.svn" ) {
+			return 'r'.$revision;
+		}
+	}
+	return;
+}
+
 1;
 
 __END__
