@@ -26,7 +26,12 @@ sub _reformat_filename {
 	# Convert the filename to correct format. On Windows C:\dir\file.pl and C:/dir/file.pl are the same
 	# file but have different names.
 	my $New_Filename = File::Spec->catfile(
-		File::Spec->splitdir( File::Basename::dirname( $self->{filename} ) ),
+
+		# Handle UNC paths on win32
+		Padre::Constant::WIN32
+			and $self->{filename} =~ m{^\\\\}
+		? File::Spec->splitpath( File::Basename::dirname( $self->{filename} ) )
+		: File::Spec->splitdir( File::Basename::dirname( $self->{filename} ) ),
 		File::Basename::basename( $self->{filename} )
 	);
 

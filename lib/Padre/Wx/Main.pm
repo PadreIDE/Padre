@@ -2554,11 +2554,11 @@ sub setup_editor {
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 
-	# These need to be TWO if's, because Cwd::realpath returns undef when opening an non-existent file!
-	if ( $file && -f $file ) {
-		$file = Cwd::realpath($file); # get absolute path
-	}
 	if ($file) {
+		# Get the absolute path
+		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
+		$file = File::Spec->rel2abs($file); 
+
 		my $id = $self->find_editor_of_file($file);
 		if ( defined $id ) {
 			$self->on_nth_pane($id);
