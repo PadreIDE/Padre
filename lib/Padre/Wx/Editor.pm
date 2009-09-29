@@ -742,13 +742,13 @@ sub clear_smart_highlight {
 sub on_smart_highlight_begin {
 	my ( $self, $event ) = @_;
 
-	my $selection = $self->GetSelectedText;
+	my $selection        = $self->GetSelectedText;
 	my $selection_length = length $selection;
 	return if $selection_length == 0;
 
-	my $selection_re     = quotemeta $selection;
-	my $line_count       = $self->GetLineCount;
-	my $line_num         = $self->GetCurrentLine;
+	my $selection_re = quotemeta $selection;
+	my $line_count   = $self->GetLineCount;
+	my $line_num     = $self->GetCurrentLine;
 
 	# Limits search to C+N..C-N from current line respecting limits ofcourse
 	# to optimize CPU usage
