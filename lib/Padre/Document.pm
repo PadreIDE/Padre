@@ -1086,7 +1086,7 @@ sub stats {
 	}
 
 	my $filename = $self->{file}->filename
-		if defined($self->{file});
+		if defined( $self->{file} );
 
 	# not set when first time to save
 	# allow the upgread of ascii to utf-8
