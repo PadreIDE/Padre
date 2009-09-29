@@ -6,7 +6,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed Wx::Perl::ProcessStream installation failure on vista/win7 by
       upgrading to 0.16 (AZAWAWI, Mark Dootson - mdootson)
     - Fixed the error dialog so that it displays the error icon (AZAWAWI)
-    - Fixed ticket #292 "Split window" command does not work by removing
+    - Fixed ticket #292: "Split window" command does not work by removing
       the non-working feature (AZAWAWI)
     - Added examples for Perl newbies (SEWI)
     - Added a search field for functions list accessible via ALT-N (AZAWAWI)
@@ -14,13 +14,14 @@ Changes for Perl Application Development and Refactoring Environment
     - Added multiple events per action (SEWI)
     - Fixed win32's context menu key to work exactly as the right click behavior 
       or ALT-/ (AZAWAWI)
-    - Fixed ticket #598 CTRL-L kills clipboard (AZAWAWI)
+    - Fixed ticket #598: CTRL-L kills clipboard (AZAWAWI)
     - Case sensitive was labeled case insensitive in replace, fixed. (SEWI)
     - Windows filename test doesn't run on darwin (Mac) any longer and runs as TODO
       because a failure must not stop the Padre installation. (SEWI)
     - Padre::File::HTTP uses environment settings for proxy (SEWI)
     - First real working version of the PopularityContest - module (SEWI)
     - Smart highlighting now works in realtime as you select (AZAWAWI)
+    - Fixed ticket #611: File | Open does not support UNC path (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
