@@ -20,7 +20,7 @@ Changes for Perl Application Development and Refactoring Environment
       because a failure must not stop the Padre installation. (SEWI)
     - Padre::File::HTTP uses environment settings for proxy (SEWI)
     - First real working version of the PopularityContest - module (SEWI)
-    - Smart highlighting now works in realtime as you select (AZAWAWI)
+    - Smart highlighting works now in realtime as you select text (AZAWAWI)
     - Fixed ticket #611: File | Open does not support UNC path (AZAWAWI)
 
 0.47 2009.09.25
