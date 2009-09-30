@@ -208,12 +208,6 @@ sub report {
 	#		query => \%stats, method => 'POST'
 	#	)->run;
 
-	# Temporary: Dump the report
-	open my $reportfile, '>popularity_report.txt' or warn $!;
-	for ( sort( keys(%stats) ) ) {
-		print $reportfile "$_ = $stats{$_}\n";
-	}
-	close $reportfile;
 }
 
 
