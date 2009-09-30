@@ -169,12 +169,13 @@ sub menu_plugins_simple {
 
 	return shift->plugin_name => [
 		Wx::gettext("About") => '_about',
+		Wx::gettext("Show current report") => 'report_show',
 	];
 }
 
-sub report {
+sub _report_complete {
 
-	# Report data to server
+	# Add some version and other information to the report
 
 	my $self = shift;
 
@@ -201,6 +202,15 @@ sub report {
 	$stats{_perl}      = scalar($^V);
 	$stats{_Wx}        = $Wx::VERSION;
 	$stats{_WxWidgets} = Wx::wxVERSION_STRING();
+}
+
+sub report {
+
+	# Report data to server
+
+	my $self = shift;
+
+	$self->_report_complete;
 
 	# TODO: Enable as soon as the server is functional:
 	#	my $response = Padre::Task::HTTPClient->new(
@@ -210,6 +220,18 @@ sub report {
 
 }
 
+sub report_show {
+	my $self  = shift;
+
+	$self->_report_complete;
+
+	my $textbox = Padre::Wx::Dialog::Text->show(
+		$self->main,
+		Wx::gettext('PopulartiyReport - report'),
+		join("\n",map { "$_ => $stats{$_}"; } (sort(keys(%stats)))));
+
+	return;
+}
 
 
 ######################################################################
