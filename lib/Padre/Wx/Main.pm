@@ -1954,7 +1954,7 @@ sub open_session {
 	$self->Thaw;
 
 	# This could run in non-blocking space:
-	$self->set_title;close
+	$self->set_title; close;
 }
 
 =pod
@@ -3985,9 +3985,9 @@ sub find_editor_of_file {
 	my $file     = Padre::File->new($filename); # This reformats our filename
 	my $notebook = $self->notebook;
 	foreach my $id ( $self->pageids ) {
-		my $editor       = $notebook->GetPage($id)     or return;
-		my $document     = $editor->{Document}         or return;
-		defined($document->{file}) or next;
+		my $editor   = $notebook->GetPage($id) or return;
+		my $document = $editor->{Document}     or return;
+		defined( $document->{file} ) or next;
 		my $doc_filename = $document->{file}->{Filename} or next;
 		return $id if $doc_filename eq $file->{Filename};
 	}
@@ -4731,21 +4731,21 @@ sub set_mimetype {
 }
 
 sub set_title {
-	
+
 	# This is the first step, the next will be a fully configurable title line
-	
+
 	my $self = shift;
 
 	# Determine the window title
 	# Keep it for later usage
 
-	$self->{title}    = 'Padre';
+	$self->{title} = 'Padre';
 
-	if (defined($self->ide->{session})) {
+	if ( defined( $self->ide->{session} ) ) {
 		my ($session) = Padre::DB::Session->select(
 			'where id = ?', $self->ide->{session},
 		);
-		$self->{title} .= ' ['.$session->{name}.']';
+		$self->{title} .= ' [' . $session->{name} . ']';
 	}
 
 	my $revision = Padre::Util::revision();
@@ -4753,7 +4753,7 @@ sub set_title {
 		if defined($revision);
 
 	# Push the title to the window
-	$self->SetTitle($self->{title});
+	$self->SetTitle( $self->{title} );
 }
 
 =pod

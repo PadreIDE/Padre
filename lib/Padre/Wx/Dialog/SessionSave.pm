@@ -172,17 +172,18 @@ sub _create_fields {
 	my $self  = shift;
 	my $sizer = $self->_sizer;
 
-	my $Current_Session = (Padre::DB::Session->select(
-		'name where id = ?',
-		Padre->ide->{session}
-	))[0]->{name}
-	if defined(Padre->ide->{session});
+	my $Current_Session = (
+		Padre::DB::Session->select(
+			'name where id = ?',
+			Padre->ide->{session}
+		)
+		)[0]->{name}
+		if defined( Padre->ide->{session} );
 
 
 	# session name
 	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
-	my $combo = Wx::ComboBox->new( $self, -1, $Current_Session
- );
+	my $combo = Wx::ComboBox->new( $self, -1, $Current_Session );
 	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
 	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
 	$self->_combo($combo);

@@ -168,7 +168,7 @@ sub menu_plugins_simple {
 	#       the contents of a report.
 
 	return shift->plugin_name => [
-		Wx::gettext("About") => '_about',
+		Wx::gettext("About")               => '_about',
 		Wx::gettext("Show current report") => 'report_show',
 	];
 }
@@ -221,14 +221,15 @@ sub report {
 }
 
 sub report_show {
-	my $self  = shift;
+	my $self = shift;
 
 	$self->_report_complete;
 
 	my $textbox = Padre::Wx::Dialog::Text->show(
 		$self->main,
 		Wx::gettext('PopulartiyReport - report'),
-		join("\n",map { "$_ => $stats{$_}"; } (sort(keys(%stats)))));
+		join( "\n", map { "$_ => $stats{$_}"; } ( sort( keys(%stats) ) ) )
+	);
 
 	return;
 }
