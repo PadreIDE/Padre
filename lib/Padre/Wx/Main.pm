@@ -101,12 +101,6 @@ sub new {
 	Padre::Util::debug('Logging started');
 	Wx::InitAllImageHandlers();
 
-	# Determine the window title
-	my $title    = 'Padre';
-	my $revision = Padre::Util::revision();
-	$title .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
-		if defined($revision);
-
 	# Determine the initial frame style
 	my $style = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->main_maximized ) {
@@ -116,7 +110,7 @@ sub new {
 
 	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
-		undef, -1, $title,
+		undef, -1, 'Padre: New window',
 		[ $config->main_left, $config->main_top, ],
 		[ $config->main_width, $config->main_height, ], $style,
 	);
@@ -128,8 +122,8 @@ sub new {
 	# This prevents tons of ide->config
 	$self->{config} = $config;
 
-	# Remember the original title we used for later
-	$self->{title} = $title;
+	# Determine the window title (needs ide & config)
+	$self->set_title;
 
 	# Having recorded the "current working directory" move
 	# the OS directory cursor away from this directory, so
@@ -1958,6 +1952,9 @@ sub open_session {
 
 	# now we can redraw
 	$self->Thaw;
+
+	# This could run in non-blocking space:
+	$self->set_title;close
 }
 
 =pod
@@ -3277,6 +3274,9 @@ sub close_all {
 
 	# Remove current session ID from IDE object:
 	undef $self->ide->{session};
+
+	# Recalculate window title
+	$self->set_title;
 
 	return 1;
 }
@@ -4728,6 +4728,32 @@ sub set_mimetype {
 		$doc->colourize;
 	}
 	$self->refresh;
+}
+
+sub set_title {
+	
+	# This is the first step, the next will be a fully configurable title line
+	
+	my $self = shift;
+
+	# Determine the window title
+	# Keep it for later usage
+
+	$self->{title}    = 'Padre';
+
+	if (defined($self->ide->{session})) {
+		my ($session) = Padre::DB::Session->select(
+			'where id = ?', $self->ide->{session},
+		);
+		$self->{title} .= ' ['.$session->{name}.']';
+	}
+
+	my $revision = Padre::Util::revision();
+	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
+		if defined($revision);
+
+	# Push the title to the window
+	$self->SetTitle($self->{title});
 }
 
 =pod
