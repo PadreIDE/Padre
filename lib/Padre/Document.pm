@@ -310,6 +310,7 @@ sub colorize {
 	Padre::Util::debug("colorize called");
 
 	my $module = $self->get_highlighter;
+	Padre::Util::debug("module: '$module'");
 	if ( $module eq 'stc' ) {
 
 		#TODO sometime this happens when I open Padre with several file
@@ -332,6 +333,7 @@ sub colorize {
 		}
 	}
 	if ( $module->can('colorize') ) {
+		Padre::Util::debug("Call '$module->colorize(@_)'");
 		$module->colorize(@_);
 	} else {
 		warn("Module $module does not have a colorize method\n");
@@ -777,8 +779,12 @@ sub get_title {
 sub remove_color {
 	my ($self) = @_;
 
+	Padre::Util::debug("remove_color called (@_)");
+
 	my $editor = $self->editor;
 
+	Padre::Util::debug("editor '$editor'");
+	
 	# TODO this is strange, do we really need to do it with all?
 	for my $i ( 0 .. 31 ) {
 		$editor->StartStyling( 0, $i );
