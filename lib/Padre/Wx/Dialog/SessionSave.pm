@@ -157,7 +157,7 @@ sub _create {
 	$box->SetSizeHints($self);
 	$self->CenterOnParent;
 	$self->_combo->SetFocus;
-	
+
 	# Update description/button status in case of preloaded values
 	# Better re-use the existing functions than rewrite the same
 	# code during component creation
