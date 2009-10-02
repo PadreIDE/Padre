@@ -178,7 +178,7 @@ sub _create_fields {
 			Padre->ide->{session}
 		)
 		)[0]->{name}
-		if defined( Padre->ide->{session} );
+		if defined( Padre->ide->{session} ) || '';
 
 
 	# session name
