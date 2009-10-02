@@ -127,6 +127,12 @@ sub exists {
 
 sub read {
 	my $self = shift;
+
+	# The return value should be the file content, so returning
+	# undef is better than nothing (in this situation) if there
+	# is no filename
+	return undef if ! defined($self->{filename});
+
 	my $fh;
 	if ( !open $fh, '<', $self->{filename} ) {
 		$self->{error} = $!;
