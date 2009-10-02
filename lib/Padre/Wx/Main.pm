@@ -3234,7 +3234,7 @@ sub close {
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh( $self->current );
 
-	$self->update_last_session;
+#	$self->update_last_session;
 
 	return 1;
 }
