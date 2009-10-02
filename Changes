@@ -22,6 +22,7 @@ Changes for Perl Application Development and Refactoring Environment
     - First real working version of the PopularityContest - module (SEWI)
     - Smart highlighting works now in realtime as you select text (AZAWAWI)
     - Fixed ticket #611: File | Open does not support UNC path (AZAWAWI)
+    - Save session now suggest the name of the last opened session for saving (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
