@@ -157,6 +157,11 @@ sub _create {
 	$box->SetSizeHints($self);
 	$self->CenterOnParent;
 	$self->_combo->SetFocus;
+	
+	# Update description/button status in case of preloaded values
+	# Better re-use the existing functions than rewrite the same
+	# code during component creation
+	$self->_on_combo_text_changed;
 }
 
 #
@@ -220,7 +225,7 @@ sub _create_buttons {
 
 	$bs->SetDefault;
 
-	# save button is disabled at first
+	# save button is disabled at first if there is nothing to save
 	$bs->Disable;
 	$self->_butsave($bs);
 }
