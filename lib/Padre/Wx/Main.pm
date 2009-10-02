@@ -3255,6 +3255,10 @@ sub close_all {
 	my $skip  = shift;
 	my $guard = $self->freezer;
 
+	# Remove current session ID from IDE object
+	# Do this before closing as the session shouldn't be affected by a close-all
+	undef $self->ide->{session};
+
 	my @pages = reverse $self->pageids;
 
 	my $progress = Padre::Wx::Progress->new(
@@ -3271,9 +3275,6 @@ sub close_all {
 	}
 
 	$self->refresh;
-
-	# Remove current session ID from IDE object:
-	undef $self->ide->{session};
 
 	# Recalculate window title
 	$self->set_title;
