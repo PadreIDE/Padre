@@ -4247,9 +4247,11 @@ sub on_doc_stats {
 	) = $doc->stats;
 
 	my $disksize = '';
-	if (defined($doc) and defined($doc->{file})) {
-		$disksize = sprintf(Wx::gettext('Size on disk: %s'),
-			Padre::Util::humanbytes($doc->{file}->size)).$/;
+	if ( defined($doc) and defined( $doc->{file} ) ) {
+		$disksize = sprintf(
+			Wx::gettext('Size on disk: %s'),
+			Padre::Util::humanbytes( $doc->{file}->size )
+		) . $/;
 	}
 
 	my @messages = (
@@ -4258,8 +4260,7 @@ sub on_doc_stats {
 		sprintf( Wx::gettext("Chars without spaces: %s"), $chars_without_space ),
 		sprintf( Wx::gettext("Chars with spaces: %d"),    $chars_with_space ),
 		sprintf( Wx::gettext("Newline type: %s"),         $newline_type ),
-		$disksize.
-		sprintf( Wx::gettext("Encoding: %s"),             $encoding ),
+		$disksize . sprintf( Wx::gettext("Encoding: %s"), $encoding ),
 		sprintf(
 			Wx::gettext("Document type: %s"),
 			( defined ref($doc) ? ref($doc) : Wx::gettext("none") )
