@@ -305,22 +305,48 @@ sub on_right_down {
 
 	return if $self->GetItemCount == 0;
 
+	# Create the popup menu
 	my $menu = Wx::Menu->new;
 
-	my $copy = $menu->Append( Wx::wxID_COPY, Wx::gettext("&Copy All") );
+	if($self->GetFirstSelected != -1) {
+		# Copy selected
+		Wx::Event::EVT_MENU(
+			$self,
+			$menu->Append( -1, Wx::gettext("Copy &Selected") ),
+			sub {
+				# Get selected message
+				my $msg = '';
+				my $selection = $self->GetFirstSelected;
+				if($selection != -1) {
+					my $line = $self->GetItem($selection,0)->GetText || '';
+					my $type = $self->GetItem($selection,1)->GetText || '';
+					my $desc = $self->GetItem($selection,2)->GetText || '';
+					$msg = "$line, $type, $desc\n";
+					# And copy it to clipboard
+					if ( (length $msg > 0) and Wx::wxTheClipboard->Open() ) {
+						Wx::wxTheClipboard->SetData(Wx::TextDataObject->new( $msg ));
+						Wx::wxTheClipboard->Close();
+					}
+				}
+			}
+		);
+	}
+
+	# Copy all
 	Wx::Event::EVT_MENU(
 		$self,
-		$copy,
+		$menu->Append( -1, Wx::gettext("Copy &All") ),
 		sub {
+			# Append messages in one string
 			my $msg = '';
 			foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
 
-				# Get the line and check that it is a valid line number
 				my $line = $self->GetItem($i,0)->GetText || '';
 				my $type = $self->GetItem($i,1)->GetText || '';
 				my $desc = $self->GetItem($i,2)->GetText || '';
 				$msg .= "$line, $type, $desc\n";
 			}
+			# And copy it to clipboard
 			if ( (length $msg > 0) and Wx::wxTheClipboard->Open() ) {
 				Wx::wxTheClipboard->SetData(Wx::TextDataObject->new( $msg ));
 				Wx::wxTheClipboard->Close();
