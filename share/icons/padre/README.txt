@@ -13,6 +13,15 @@ Make damn sure it stays that way!
 Icons:
 
 =============================
+logo.png
+=============================
+
+Made specifically for use in Padre and debian.
+
+Copyright 2009 Ahmad M. Zawawi
+You can redistribute and/or modify the icons under the same terms as Perl itself.
+
+=============================
 logo-ccnc.png
 =============================
 
