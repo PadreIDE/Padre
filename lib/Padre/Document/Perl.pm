@@ -327,7 +327,9 @@ sub beginner_check {
 	# It isn't, because it should show _all_ warnings instead of one and
 	# it should at least go to the line it's complaining about.
 
-	my $Beginner = Padre::Document::Perl::Beginner->new();
+	my $Beginner = Padre::Document::Perl::Beginner->new(
+	 document => $self,
+	 editor => $self->editor);
 
 	$Beginner->check( $self->text_get );
 
