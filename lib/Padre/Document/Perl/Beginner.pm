@@ -81,8 +81,7 @@ sub _report {
 sub check {
 	my ( $self, $text ) = @_;
 
-	# TODO: Change this back to undef:
-	$self->{error} = '';
+	$self->{error} = undef;
 
 =item *
 
@@ -213,11 +212,10 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\2/ )
+	if ( ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\3/ )
 		and ( length($4) > 0 )
 		and ( length($5) > 0 ) )
 	{
-		print STDERR join(',',map { "[[$_]]"; }($1,$2,$3,$4,$5,$6))."\n";
 		$self->_report("Using a | char in open without a | at the beginning or end is usually a typo.");
 		return;
 	}
@@ -228,7 +226,7 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\2/s ) {
+	if ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\3/s ) {
 		$self->_report("You can't use open to pipe to and from a command at the same time.");
 		return;
 	}
