@@ -26,6 +26,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #627: Suggestion: Make it possible to copy 'Syntax Check'
       messages (AZAWAWI)
     - require version 0.20 of Wx::Perl::ProcessStream to fix #628 (AZAWAWI, SZABGAB)
+    - Fixed ticket #493: splash image license not suitable for Debian (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
