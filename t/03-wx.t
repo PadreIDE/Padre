@@ -13,6 +13,7 @@ BEGIN {
 		plan skip_all => 'Windows currently has problems with Unicode files';
 		exit(0);
 	}
+
 	# Ticket #643
 	plan( skip_all => 'Sometimes fails for unknown reasons, skipping for release till fixed' );
 	exit 0;
