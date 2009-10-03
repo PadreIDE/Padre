@@ -66,7 +66,10 @@ sub _report {
 	my $document = $self->{document};
 	my $editor   = $document->{editor};
 
-	my $line = $editor->LineFromPosition( length($1) );
+	my $prematch = $1 || '';
+	my $error_start_position = length($prematch);
+
+	my $line = $editor->LineFromPosition( $error_start_position );
 	++$line; # Editor starts counting at 0
 
 	# These are two lines to enable the translators to use argument numbers:
@@ -77,7 +80,9 @@ sub _report {
 
 sub check {
 	my ( $self, $text ) = @_;
-	$self->{error} = undef;
+
+	# TODO: Change this back to undef:
+	$self->{error} = '';
 
 =item *
 
@@ -209,9 +214,10 @@ Pipe | in open() not at the end or the beginning.
 =cut
 
 	if ( ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\2/ )
-		and ( length($3) > 0 )
-		and ( length($4) > 0 ) )
+		and ( length($4) > 0 )
+		and ( length($5) > 0 ) )
 	{
+		print STDERR join(',',map { "[[$_]]"; }($1,$2,$3,$4,$5,$6))."\n";
 		$self->_report("Using a | char in open without a | at the beginning or end is usually a typo.");
 		return;
 	}
@@ -235,7 +241,7 @@ Regex starting witha a quantifier such as
 
 =cut
 
-	if ( $text =~ m{^(.*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] }xs ) {
+	if ( $text =~ m/^(.*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs ) {
 		$self->_report(
 			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\."
 		);
