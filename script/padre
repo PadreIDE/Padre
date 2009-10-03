@@ -32,10 +32,12 @@ my $USAGE   = '';
 my $VERSION = '';
 my $HOME    = undef;
 my $session = undef;
+my $DESKTOP = undef;
 my $getopt  = Getopt::Long::GetOptions(
 	'help'      => \$USAGE,
 	'home=s'    => \$HOME,
 	'session=s' => \$session,
+	'desktop'   => \$DESKTOP,
 	'version'   => \$VERSION,
 );
 if ( $USAGE or !$getopt ) {
@@ -70,6 +72,29 @@ if ($VERSION) {
 	print "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
 	exit(0);
 }
+
+if($DESKTOP) {
+	if($^O eq 'MSWin32') {
+		require File::Temp;
+		my ( $temp, $tempfile ) = File::Temp::tempfile();
+		print $temp <<'CODE';
+' Create a Padre shortcut on the current user's desktop 
+Set shell = CreateObject("WScript.Shell")
+desktop = shell.SpecialFolders("Desktop")
+Set shortcut = shell.CreateShortcut(desktop & "\Padre.lnk")
+shortcut.Description = "Padre - The Perl IDE"
+shortcut.TargetPath = "C:\strawberry\perl\bin\padre.exe"
+shortcut.WorkingDirectory = "c:\strawberry\perl\bin"
+shortcut.Save
+CODE
+		close $temp;
+		system( qq{wscript "$tempfile"} );
+	} else {
+		warn "--desktop not implemented for " . $^O . "\n";
+	}
+	exit(1);
+}
+
 
 my $app = Padre->new(%opts);
 unless ($app) {
