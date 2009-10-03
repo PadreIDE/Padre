@@ -895,6 +895,7 @@ sub refresh {
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 	$self->refresh_functions($current);
+	$self->set_title;
 
 	my $notebook = $self->notebook;
 	if ( $notebook->GetPageCount ) {
@@ -4734,18 +4735,40 @@ sub set_title {
 	# This is the first step, the next will be a fully configurable title line
 
 	my $self = shift;
+	my $config = $self->{config};
 
 	# Determine the window title
 	# Keep it for later usage
 
-	$self->{title} = 'Padre';
+	my %variable_data = (
+		'%'	=> '%',
+		'v'	=> $Padre::VERSION,
+		'f'	=> '', # Initlize space for filename
+		'p'	=> '', # Initlize space for project name
+		);
 
+	# We may run within window startup, there may be no "current" or "document":
+	if (defined($self->current) and defined($self->current->document)) {
+		my $document = $self->current->document;
+		$variable_data{'f'} = $document->file->{filename};
+	}
+
+	# Fill in the session, if any
 	if ( defined( $self->ide->{session} ) ) {
 		my ($session) = Padre::DB::Session->select(
 			'where id = ?', $self->ide->{session},
 		);
-		$self->{title} .= ' [' . $session->{name} . ']';
+		$variable_data{'p'} = $session->{name};
 	}
+
+	$self->{title} = $config->window_title;
+
+	my $Vars = join('',keys(%variable_data));
+
+	$self->{title} =~ s/\%([$Vars])/$variable_data{$1}/g;
+
+	$self->{title} = 'Padre '.$Padre::VERSION
+	 if ! defined($self->{title});
 
 	my $revision = Padre::Util::revision();
 	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
