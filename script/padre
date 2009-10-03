@@ -69,7 +69,20 @@ my %opts = (
 require Padre;
 
 if ($VERSION) {
-	print "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
+	my $msg = "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
+	if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
+
+		# Under wperl, there is no console so we will use
+		# a message box
+		require Padre::Wx;
+		Wx::MessageBox(
+			$msg,
+			Wx::gettext("Version"),
+			Wx::wxOK(),
+		);
+	} else {
+		print $msg;
+	}
 	exit(0);
 }
 
