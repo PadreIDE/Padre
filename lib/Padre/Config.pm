@@ -429,6 +429,12 @@ setting(
 	default => 80,
 );
 setting(
+	name    => 'editor_smart_highlight_enable',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
 	name    => 'find_case',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
