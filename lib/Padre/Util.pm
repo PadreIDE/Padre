@@ -299,6 +299,12 @@ sub sharefile {
 	File::Spec->catfile( share(), @_ );
 }
 
+sub splash {
+	my $original = Padre::Util::sharefile('padre-splash-ccnc.bmp');
+	return -f $original ?
+		$original : Padre::Util::sharefile('padre-splash.bmp');
+}
+
 sub find_perldiag_translations {
 	my %languages;
 	foreach my $path (@INC) {

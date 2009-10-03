@@ -98,7 +98,7 @@ sub _content_about {
 
 	# Create the content for the About window
 	my $self   = shift;
-	my $splash = Padre::Util::sharefile('padre-splash.bmp');
+	my $splash = Padre::Util::splash();
 	$self->{about}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">

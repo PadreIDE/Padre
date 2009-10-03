@@ -31,16 +31,13 @@ sub show {
 
 	# use CCNC version if it exists and fallback to boring splash
 	# so that we can bundle it in Debian
-	my $bmp_ccnc = Padre::Util::sharefile('padre-splash-ccnc.bmp');
-	my $bmp = -f $bmp_ccnc ?
-		$bmp_ccnc : Padre::Util::sharefile('padre-splash.bmp');
-
+	
 	# Don't show the splash screen during testing otherwise
 	# it will spoil the flashy surprise when they upgrade.
 	unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
 		$SPLASH = Wx::SplashScreen->new(
 			Wx::Bitmap->new(
-				$bmp,
+				Padre::Util::splash(),
 				Wx::wxBITMAP_TYPE_BMP()
 			),
 			Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
