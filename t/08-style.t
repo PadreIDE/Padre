@@ -26,14 +26,14 @@ my @styles = qw{
 ######################################################################
 # Make sure the bundled styles all load
 
-foreach my $name ( @styles ) {
+foreach my $name (@styles) {
 	my $file = catfile( $dir, "$name.yml" );
 	ok( -f $file, "Found style file $file" );
 	my $style = Padre::Config::Style->load( $name => $file );
 	isa_ok( $style, 'Padre::Config::Style' );
-	is( $style->name, $name, '->name ok' );
-	is( ref($style->data), 'HASH', '->data is a HASH' );
-	foreach ( qw{ plain padre perl } ) {
-		is( ref($style->data->{$_}), 'HASH', "->data->{$_} is defined" );
+	is( $style->name,        $name,  '->name ok' );
+	is( ref( $style->data ), 'HASH', '->data is a HASH' );
+	foreach (qw{ plain padre perl }) {
+		is( ref( $style->data->{$_} ), 'HASH', "->data->{$_} is defined" );
 	}
 }

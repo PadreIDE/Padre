@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
+
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
@@ -13,16 +14,14 @@ use File::Find::Rule;
 use t::lib::Padre;
 use Padre::Util qw(newline_type);
 
-my @files = File::Find::Rule
-	->file
-	->name('*.pm', '*.pod', '*.pl', '*.p6', '*.t', '*.yml', '*.txt')
-	->in('lib', 't', 'share');
-@files = (@files, 'Artistic', 'COPYING', 'Makefile.PL', 'Changes', 'padre.yml' );
+my @files =
+	File::Find::Rule->file->name( '*.pm', '*.pod', '*.pl', '*.p6', '*.t', '*.yml', '*.txt' )->in( 'lib', 't', 'share' );
+@files = ( @files, 'Artistic', 'COPYING', 'Makefile.PL', 'Changes', 'padre.yml' );
 
-plan( tests => scalar @files);
-foreach my $file ( @files ) {
-	my $eol = newline_type(slurp($file));
-	ok( ($eol eq 'UNIX') || ($eol eq 'None'), "$file has UNIX-EOLs or none");
+plan( tests => scalar @files );
+foreach my $file (@files) {
+	my $eol = newline_type( slurp($file) );
+	ok( ( $eol eq 'UNIX' ) || ( $eol eq 'None' ), "$file has UNIX-EOLs or none" );
 }
 
 ######################################################################

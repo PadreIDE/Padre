@@ -11,19 +11,19 @@ plan tests => scalar @files;
 # TODO: need to be improved
 
 my $copyright = qr{# Copyright 2008-2009 The Padre development team as listed in Padre.pm\.\s*};
-$copyright    = qr{$copyright# LICENSE\s*};
-$copyright    = qr{$copyright# This program is free software; you can redistribute it and/or\s*};
-$copyright    = qr{$copyright# modify it under the same terms as Perl 5 itself.};
+$copyright = qr{$copyright# LICENSE\s*};
+$copyright = qr{$copyright# This program is free software; you can redistribute it and/or\s*};
+$copyright = qr{$copyright# modify it under the same terms as Perl 5 itself.};
 
-my $cp        = qr{=head1 COPYRIGHT\s+};
-$cp           = qr{${cp}Copyright 2008-2009 The Padre development team as listed in Padre.pm\.\s*};
-$cp           = qr{${cp}This program is free software; you can redistribute\s*};
-$cp           = qr{${cp}it and/or modify it under the same terms as Perl itself.};
+my $cp = qr{=head1 COPYRIGHT\s+};
+$cp = qr{${cp}Copyright 2008-2009 The Padre development team as listed in Padre.pm\.\s*};
+$cp = qr{${cp}This program is free software; you can redistribute\s*};
+$cp = qr{${cp}it and/or modify it under the same terms as Perl itself.};
 
 
-foreach my $file ( @files ) {
+foreach my $file (@files) {
 	my $content = slurp($file);
-	ok($content =~ qr{$copyright|$cp}, $file);
+	ok( $content =~ qr{$copyright|$cp}, $file );
 }
 
 sub slurp {

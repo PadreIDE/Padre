@@ -3,8 +3,9 @@
 use strict;
 use warnings;
 use Test::More;
+
 BEGIN {
-	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32') {
+	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
@@ -28,12 +29,12 @@ SCOPE: {
 		name => 'Test2.pm',
 	);
 	@files = Padre::DB::History->recent('files');
-	is_deeply \@files, ['Test2.pm', 'Test.pm'], 'files';
+	is_deeply \@files, [ 'Test2.pm', 'Test.pm' ], 'files';
 
 	# test delete_recent
 	@files = Padre::DB::History->recent('files');
-	is_deeply \@files, ['Test2.pm', 'Test.pm'], 'files still remain after delete_recent pod';
-	ok( Padre::DB::History->delete('where type = ?', 'files') );
+	is_deeply \@files, [ 'Test2.pm', 'Test.pm' ], 'files still remain after delete_recent pod';
+	ok( Padre::DB::History->delete( 'where type = ?', 'files' ) );
 	@files = Padre::DB::History->recent('files');
 	is_deeply \@files, [], 'no files after delete_recent files';
 }

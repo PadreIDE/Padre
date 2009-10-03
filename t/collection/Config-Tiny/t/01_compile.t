@@ -3,6 +3,7 @@
 # Compile testing for Config::Tiny
 
 use strict;
+
 BEGIN {
 	$|  = 1;
 	$^W = 1;

@@ -56,16 +56,17 @@ undef $file;
 	ok( $file->basename eq 'about.html', 'HTTP: basename' );
 	ok( $file->dirname eq 'http://padre.perlide.org/', 'HTTP: dirname' );
 	my %HTTP_Tests = (
-		'http://www.google.de/' => ['http://www.google.de/','index.html'],
-		'http://www.perl.org/rules/the_world.html' => ['http://www.perl.org/rules/','the_world.html'],
-		'http://www.google.de/result.cgi?q=perl' => ['http://www.google.de/','result.cgi'],
+		'http://www.google.de/'                    => [ 'http://www.google.de/',      'index.html' ],
+		'http://www.perl.org/rules/the_world.html' => [ 'http://www.perl.org/rules/', 'the_world.html' ],
+		'http://www.google.de/result.cgi?q=perl'   => [ 'http://www.google.de/',      'result.cgi' ],
 	);
-	for (keys(%HTTP_Tests)) {
+
+	for ( keys(%HTTP_Tests) ) {
 		$file = Padre::File->new($_);
-		ok( defined($file), 'HTTP '.$_.': Create Padre::File object' );
-		ok( $file->{protocol} eq 'http', 'HTTP '.$_.': Check protocol' );
-		ok( $file->dirname eq $HTTP_Tests{$_}->[0], 'HTTP '.$_.': Check dirname' );
-		ok( $file->basename eq $HTTP_Tests{$_}->[1], 'HTTP '.$_.': Check basename' );
+		ok( defined($file), 'HTTP ' . $_ . ': Create Padre::File object' );
+		ok( $file->{protocol} eq 'http',               'HTTP ' . $_ . ': Check protocol' );
+		ok( $file->dirname    eq $HTTP_Tests{$_}->[0], 'HTTP ' . $_ . ': Check dirname' );
+		ok( $file->basename   eq $HTTP_Tests{$_}->[1], 'HTTP ' . $_ . ': Check basename' );
 	}
 }
 

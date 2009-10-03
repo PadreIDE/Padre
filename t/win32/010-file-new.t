@@ -20,23 +20,27 @@ my $padre = t::lib::Padre::Win32::setup();
 ############################
 
 plan tests => 5;
+
 # diag "Window id $padre";
 
 my $text = "If you're reading this inside Padre, ";
-$text   .= "we might consider this test succesful. ";
-$text   .= "Please wait.......";
+$text .= "we might consider this test succesful. ";
+$text .= "Please wait.......";
 
-my $dir      = Win32::GetLongPathName($ENV{PADRE_HOME});
+my $dir      = Win32::GetLongPathName( $ENV{PADRE_HOME} );
 my $save_to  = "$dir/$$.txt";
 my $save_tox = "$dir/x$$.txt";
+
 # Stupid Save box don't accpect '/' in the input
-$save_to =~ s/\//\\/g;
+$save_to  =~ s/\//\\/g;
 $save_tox =~ s/\//\\/g;
+
 # diag "Save to '$save_to'";
 
 SCOPE: {
 	MenuSelect("&File|&New");
 	sleep 1;
+
 	#my @tabs = GetTabItems($padre);
 	#my @children = FindWindowLike($padre, 'Unsaved');
 	#my @children = GetChildWindows($padre);
@@ -57,9 +61,9 @@ SCOPE: {
 	SendKeys("%{S}");
 	sleep 1;
 
-	ok(-e $save_to, "file '$save_to' saved");
+	ok( -e $save_to, "file '$save_to' saved" );
 	my $text_in_file = slurp($save_to);
-	is($text_in_file, $text, 'correct text in file');
+	is( $text_in_file, $text, 'correct text in file' );
 }
 
 SCOPE: {
@@ -67,23 +71,23 @@ SCOPE: {
 	SendKeys("{ENTER}");
 	SendKeys($t);
 	$text .= "\n$t";
-	SendKeys("^{s}");  # Ctrl-s
+	SendKeys("^{s}"); # Ctrl-s
 	sleep 1;
 	my $text_in_file = slurp($save_to);
-	is($text_in_file, $text, 'correct text in file');
+	is( $text_in_file, $text, 'correct text in file' );
 }
 
 SCOPE: {
-	SendKeys("{F12}");  # Save As
+	SendKeys("{F12}"); # Save As
 	sleep 1;
 
 	SendKeys($save_tox);
 	SendKeys("%{S}");
 	sleep 1;
 
-	ok(-e $save_tox, "file '$save_tox' saved");
+	ok( -e $save_tox, "file '$save_tox' saved" );
 	my $text_in_file = slurp($save_tox);
-	is($text_in_file, $text, 'correct text in file');	
+	is( $text_in_file, $text, 'correct text in file' );
 }
 
 #{
@@ -96,11 +100,11 @@ SCOPE: {
 
 MenuSelect("&File|&Close");
 
-SendKeys("%{F4}");  # Alt-F4 to exit
+SendKeys("%{F4}"); # Alt-F4 to exit
 sleep 1;
 
 sub slurp {
-	if (open(my $fh, '<', $save_to)) {
+	if ( open( my $fh, '<', $save_to ) ) {
 		local $/;
 		return <$fh>;
 	} else {
@@ -110,18 +114,18 @@ sub slurp {
 }
 
 sub tree {
-	my ($id, $depth) = @_;
+	my ( $id, $depth ) = @_;
 	$depth ||= 0;
 
-	my $LIMIT = 5;
+	my $LIMIT    = 5;
 	my @children = GetChildWindows($id);
-	my $str = '';
-	if ($depth >= $LIMIT) {
-		return( ("+" x $LIMIT) . "Depth limit of $LIMIT reached\n");
+	my $str      = '';
+	if ( $depth >= $LIMIT ) {
+		return ( ( "+" x $LIMIT ) . "Depth limit of $LIMIT reached\n" );
 	}
 	foreach my $child (@children) {
-		$str .=  ("+" x $depth) . sprintf "Child:  %8s  %s\n",  $child, GetWindowText($child) ;
-		$str .= tree($child, $depth + 1);
+		$str .= ( "+" x $depth ) . sprintf "Child:  %8s  %s\n", $child, GetWindowText($child);
+		$str .= tree( $child, $depth + 1 );
 	}
 	return $str;
 }

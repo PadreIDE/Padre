@@ -6,7 +6,7 @@ use Test::More;
 
 use Padre::File;
 
-if ( ( $^O ne 'MSWin32' ) and ( $^O ne 'cygwin' )  ) {
+if ( ( $^O ne 'MSWin32' ) and ( $^O ne 'cygwin' ) ) {
 	plan( tests => 1 );
 	ok( 1, 'Skipped, only applies to Windows' );
 	exit;
@@ -18,7 +18,7 @@ plan( tests => 7 );
 
 	local $TODO;
 	$TODO = 'Failing this is no reason to stop install' unless $ENV{AUTOMATED_TESTING};
-	
+
 	# The test file name is hard-coded because we need to play around with the pathname (/ or \):
 
 	ok( open( my $fh, '>', 't/files/padre-file-test' ), 'Create test file' );

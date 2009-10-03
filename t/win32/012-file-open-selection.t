@@ -27,12 +27,12 @@ MenuSelect("&File|Open Selection");
 sleep 1;
 
 SendKeys("Wx::Perl::Dialog");
-SendKeys("~"); # press Enter
+SendKeys("~");      # press Enter
 sleep 1;
 
 # check if the Padre.pm is open.
-my @children = FindWindowLike($padre, '', 'msctls_statusbar32');
-my $text = WMGetText($children[0]);
+my @children = FindWindowLike( $padre, '', 'msctls_statusbar32' );
+my $text = WMGetText( $children[0] );
 like( $text, qr/Dialog\.pm$/, 'get Padre on statusbar' );
 
 # Close it

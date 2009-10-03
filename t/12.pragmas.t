@@ -15,12 +15,12 @@ my @files = File::Find::Rule->name('*.pm')->file->in('lib');
 plan tests => scalar @files;
 
 my $pragma = qr{use 5.008(005)?;\s*};
-$pragma    = qr{${pragma}use strict;\s*};
-$pragma    = qr{${pragma}use warnings;\s*};
+$pragma = qr{${pragma}use strict;\s*};
+$pragma = qr{${pragma}use warnings;\s*};
 
-foreach my $file ( @files ) {
+foreach my $file (@files) {
 	my $content = slurp($file);
-	ok($content =~ qr{$pragma}, $file);
+	ok( $content =~ qr{$pragma}, $file );
 }
 
 sub slurp {

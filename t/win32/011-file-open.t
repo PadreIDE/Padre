@@ -25,6 +25,7 @@ MenuSelect("&File|&Open");
 sleep 1;
 
 my $dir = $RealBin;
+
 # Stupid Save box don't accpect '/' in the input
 $dir =~ s/\//\\/g;
 
@@ -33,12 +34,12 @@ SendKeys("%{O}");
 sleep 1;
 
 # check if the missing_brace_1.pl is open.
-my @children = FindWindowLike($padre, '', 'msctls_statusbar32');
-my $text = WMGetText($children[0]);
+my @children = FindWindowLike( $padre, '', 'msctls_statusbar32' );
+my $text = WMGetText( $children[0] );
 like( $text, qr/missing_brace_1\.pl$/, 'get missing_brace_1.pl on statusbar' );
 
 # Close it
 MenuSelect("&File|&Close");
 
-SendKeys("%{F4}");  # Alt-F4 to exit
+SendKeys("%{F4}"); # Alt-F4 to exit
 sleep 1;

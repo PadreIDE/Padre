@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
+
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan( skip_all => 'Needs DISPLAY' );
@@ -37,12 +38,12 @@ ok( $config->write, '->write ok' );
 
 # Create the object so that Padre->ide works
 my $app = Padre->new;
-isa_ok($app, 'Padre');
+isa_ok( $app, 'Padre' );
 
 my $task_manager = Padre::TaskManager->new(
 	use_threads => 0,
 );
-isa_ok($task_manager, 'Padre::TaskManager');
+isa_ok( $task_manager, 'Padre::TaskManager' );
 
 my $padre = Padre->ide;
 is_deeply(
@@ -58,5 +59,6 @@ isa_ok( $task, 'Padre::Task::Test' );
 
 $task->prepare;
 $task->schedule;
+
 # TODO: check the issues with finish, etc.
 $task_manager->cleanup;

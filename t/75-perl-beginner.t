@@ -113,7 +113,7 @@ ok( $b->error =~ /open/, 'pipe-open with in and out redirection (3 args)' );
 
 # Thanks to meironC for this sample:
 $b->check('open LYNX, "lynx -source http://www.perl.com |" or die " Cant open lynx: $!";');
-ok( ! $b->error, 'Open with pipe and result check' );
+ok( !$b->error, 'Open with pipe and result check' );
 
 $b->check('elseif');
 ok( $b->error =~ /elseif.*elsif/, 'elseif - typo' );

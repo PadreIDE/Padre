@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
+
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
@@ -20,33 +21,31 @@ my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
 plan( tests => 2 * @files + 1 );
 diag( "Locale: " . setlocale(LC_CTYPE) );
 
-my $out = File::Spec->catfile($ENV{PADRE_HOME}, 'out.txt');
-my $err = File::Spec->catfile($ENV{PADRE_HOME}, 'err.txt');
+my $out = File::Spec->catfile( $ENV{PADRE_HOME}, 'out.txt' );
+my $err = File::Spec->catfile( $ENV{PADRE_HOME}, 'err.txt' );
 
-foreach my $file ( @files ) {
-		my $module = $file;
-		$module =~ s/[\/\\]/::/g;
-		$module =~ s/\.pm$//;
-		if ( $module eq 'Padre::CPAN' ) {
-			foreach ( 1 .. 2 ) {
-				Test::More->builder->skip ("Cannot load CPAN shell under the CPAN shell");
-			}
-			next;
+foreach my $file (@files) {
+	my $module = $file;
+	$module =~ s/[\/\\]/::/g;
+	$module =~ s/\.pm$//;
+	if ( $module eq 'Padre::CPAN' ) {
+		foreach ( 1 .. 2 ) {
+			Test::More->builder->skip("Cannot load CPAN shell under the CPAN shell");
 		}
-		system qq($^X -e "require $module; print 'ok';" > $out 2>$err);
-		my $err_data = slurp($err);
-		is($err_data, '', "STDERR of $file");
+		next;
+	}
+	system qq($^X -e "require $module; print 'ok';" > $out 2>$err);
+	my $err_data = slurp($err);
+	is( $err_data, '', "STDERR of $file" );
 
-		my $out_data = slurp($out);
-		is($out_data, 'ok', "STDOUT of $file");
+	my $out_data = slurp($out);
+	is( $out_data, 'ok', "STDOUT of $file" );
 }
 
 script_compiles_ok('script/padre');
 
 # Bail out if any of the tests failed
-BAIL_OUT("Aborting test suite") if scalar grep {
-	not $_->{ok}
-} Test::More->builder->details;
+BAIL_OUT("Aborting test suite") if scalar grep { not $_->{ok} } Test::More->builder->details;
 
 
 
