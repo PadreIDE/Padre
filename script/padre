@@ -89,6 +89,19 @@ if ($VERSION) {
 if ($DESKTOP) {
 	if ( $^O eq 'MSWin32' ) {
 
+		# Integrate with registry via regedit...
+		# VBScript and registry on vista = Does not work!
+		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
+		print $reg <<'REG';
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
+
+[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
+@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
+REG
+		close $reg;
+
 		# Create Padre's Desktop Shortcut
 		require File::Temp;
 		my ( $vbs, $vbsfile ) = File::Temp::tempfile( SUFFIX => '.vbs' );
@@ -103,22 +116,14 @@ shortcut.WorkingDirectory = "c:\strawberry\perl\bin"
 shortcut.Save
 MsgBox "Padre has created a shortcut on your desktop", vbOKOnly Or vbInformation, "Information"
 CODE
+
+		print $vbs <<"CODE";
+' Now adding "Edit with Padre" to shell context menu
+shell.Run("regedit.exe /S ""$regfile"""), 1, true
+MsgBox """Edit with Padre"" has been added to your right click menu", vbOKOnly Or vbInformation, "Confirmation"
+CODE
 		close $vbs;
 		system(qq{wscript "$vbsfile"});
-
-		# Integrate with registry via regedit...
-		# VBScript and registry on vista = Does not work!
-		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
-		print $reg <<'REG';
-Windows Registry Editor Version 5.00
-
-[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
-
-[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
-@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
-REG
-		close $reg;
-		system(qq{regedit /S "$regfile"});
 
 	} else {
 		warn "--desktop not implemented for " . $^O . "\n";
