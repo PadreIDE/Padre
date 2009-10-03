@@ -31,12 +31,12 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
 my $USAGE   = '';
 my $VERSION = '';
 my $HOME    = undef;
-my $session = undef;
+my $SESSION = undef;
 my $DESKTOP = undef;
 my $getopt  = Getopt::Long::GetOptions(
 	'help'      => \$USAGE,
 	'home=s'    => \$HOME,
-	'session=s' => \$session,
+	'session=s' => \$SESSION,
 	'desktop'   => \$DESKTOP,
 	'version'   => \$VERSION,
 );
@@ -63,7 +63,7 @@ $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 
 my %opts = (
 	files   => \@ARGV,
-	session => $session,
+	session => $SESSION,
 );
 
 require Padre;
