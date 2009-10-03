@@ -4732,18 +4732,20 @@ sub set_mimetype {
 
 sub set_title {
 
-	# This is the first step, the next will be a fully configurable title line
+	# Determine the window title
+
+	# The syntax string could be set in the preferences dialog.
 
 	my $self = shift;
 	my $config = $self->{config};
-
-	# Determine the window title
-	# Keep it for later usage
 
 	my %variable_data = (
 		'%'	=> '%',
 		'v'	=> $Padre::VERSION,
 		'f'	=> '', # Initlize space for filename
+		'b'	=> '', # Initlize space for filename - basename
+		'd'	=> '', # Initlize space for filename - dirname
+		'F'	=> '', # Initlize space for filename relative to project dir
 		'p'	=> '', # Initlize space for project name
 		);
 
@@ -4751,6 +4753,12 @@ sub set_title {
 	if (defined($self->current) and defined($self->current->document)) {
 		my $document = $self->current->document;
 		$variable_data{'f'} = $document->file->{filename};
+		$variable_data{'b'} = $document->file->basename;
+		$variable_data{'d'} = $document->file->dirname;
+
+		$variable_data{'F'} = $document->file->{filename};
+		my $project_dir = $document->project_dir;
+		$variable_data{'F'} =~ s/^$project_dir//;
 	}
 
 	# Fill in the session, if any
@@ -4761,6 +4769,7 @@ sub set_title {
 		$variable_data{'p'} = $session->{name};
 	}
 
+	# Keep it for later usage
 	$self->{title} = $config->window_title;
 
 	my $Vars = join('',keys(%variable_data));

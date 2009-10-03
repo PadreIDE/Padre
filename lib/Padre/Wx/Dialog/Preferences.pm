@@ -309,6 +309,9 @@ sub _appearance_panel {
 	 '%p' => 'Project name',
 	 '%v' => 'Padre version',
 	 '%f' => 'Current filename',
+	 '%d' => 'Current files dirname',
+	 '%b' => 'Current files basename',
+	 '%F' => 'Current filename relative to project',
 	);
 	my @window_title_keys = sort
 		{ lc($a) cmp lc($b); }
