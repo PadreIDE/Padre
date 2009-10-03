@@ -1904,12 +1904,12 @@ C<$session> (a C<Padre::DB::Session> object). No return value.
 sub open_session {
 	my ( $self, $session ) = @_;
 
-	# prevent redrawing until we're done
-	$self->Freeze;
-
 	# get list of files in the session
 	my @files = $session->files;
 	return unless @files;
+
+	# prevent redrawing until we're done
+	$self->Freeze;
 
 	my $progress = Padre::Wx::Progress->new(
 		$self,
