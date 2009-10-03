@@ -22,6 +22,7 @@ our @ISA     = 'Padre::Document';
 #####################################################################
 # Padre::Document::Perl Methods
 
+# Ticket #637:
 # TODO watch out! These PPI methods may be VERY expensive!
 # (Ballpark: Around 1 Gigahertz-second of *BLOCKING* CPU per 1000 lines)
 # Check out Padre::Task::PPI and its subclasses instead!
@@ -210,6 +211,7 @@ sub get_command {
 
 	# Run with console Perl to prevent unexpected results under wperl
 	# TODO: get preferred Perl from configuration
+	#       Ticket #638
 	my $perl = Padre::Perl::cperl();
 
 	# Set default arguments
@@ -326,6 +328,7 @@ sub beginner_check {
 	# TODO: Make this cool
 	# It isn't, because it should show _all_ warnings instead of one and
 	# it should at least go to the line it's complaining about.
+	# Ticket #534
 
 	my $Beginner = Padre::Document::Perl::Beginner->new(
 		document => $self,
@@ -420,7 +423,9 @@ sub _get_current_symbol {
 	$cursor_col = length($line_content) - 1 if $cursor_col >= length($line_content);
 	my $col = $cursor_col;
 
-	# find start of symbol TODO: This could be more robust, no?
+	# find start of symbol
+	# TODO: This could be more robust, no?
+	# Ticket #639
 	while (1) {
 		if ( $col <= 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/ ) {
 			last;
