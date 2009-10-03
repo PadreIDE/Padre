@@ -9,21 +9,21 @@ use Carp         ();
 
 $| = 1;
 
-if ($ENV{PADRE_DIE}) {
-	$SIG{__DIE__} = sub { print STDERR Carp::longmess "\nDIE: @_\n" . ("-" x80) . "\n" };
+if ( $ENV{PADRE_DIE} ) {
+	$SIG{__DIE__} = sub { print STDERR Carp::longmess "\nDIE: @_\n" . ( "-" x 80 ) . "\n" };
 }
 
 # Must run using wxPerl on OS X.
 if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
-    my $perl = scalar File::Which::which('wxPerl');
-    chomp($perl);
-    if ( -e $perl ) {
-        warn "spawning 'wxPerl' interpreter for OS X\n";
-        system( $perl, '-S', $0, @ARGV );
-    } else {
-        warn "padre cannot find wxPerl executable (which it requires on OS X)\n" ;
-    }
-    exit 0;
+	my $perl = scalar File::Which::which('wxPerl');
+	chomp($perl);
+	if ( -e $perl ) {
+		warn "spawning 'wxPerl' interpreter for OS X\n";
+		system( $perl, '-S', $0, @ARGV );
+	} else {
+		warn "padre cannot find wxPerl executable (which it requires on OS X)\n";
+	}
+	exit 0;
 }
 
 # Handle special command line cases early, because options like --home
@@ -38,7 +38,7 @@ my $getopt  = Getopt::Long::GetOptions(
 	'session=s' => \$session,
 	'version'   => \$VERSION,
 );
-if ( $USAGE or ! $getopt ) {
+if ( $USAGE or !$getopt ) {
 	print <<"END_USAGE";
 Usage: $0 [FILENAMES]
 
@@ -57,24 +57,25 @@ if ( defined $HOME ) {
 require threads;
 require threads::shared;
 
-$ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP}||'';
+$ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 
 my %opts = (
-    files   => \@ARGV,
-    session => $session,
+	files   => \@ARGV,
+	session => $session,
 );
 
 require Padre;
 
-if ( $VERSION ) {
+if ($VERSION) {
 	print "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
 	exit(0);
 }
 
 my $app = Padre->new(%opts);
-unless ( $app ) {
-    # Single instance worked correctly
-    exit(0);
+unless ($app) {
+
+	# Single instance worked correctly
+	exit(0);
 }
 
 # Start the application

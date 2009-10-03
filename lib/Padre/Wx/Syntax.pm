@@ -301,30 +301,33 @@ sub relocale {
 # Called when the user presses a right click or a context menu key (on win32)
 #
 sub on_right_down {
-	my ($self, $event) = @_;
+	my ( $self, $event ) = @_;
 
 	return if $self->GetItemCount == 0;
 
 	# Create the popup menu
 	my $menu = Wx::Menu->new;
 
-	if($self->GetFirstSelected != -1) {
+	if ( $self->GetFirstSelected != -1 ) {
+
 		# Copy selected
 		Wx::Event::EVT_MENU(
 			$self,
 			$menu->Append( -1, Wx::gettext("Copy &Selected") ),
 			sub {
+
 				# Get selected message
-				my $msg = '';
+				my $msg       = '';
 				my $selection = $self->GetFirstSelected;
-				if($selection != -1) {
-					my $line = $self->GetItem($selection,0)->GetText || '';
-					my $type = $self->GetItem($selection,1)->GetText || '';
-					my $desc = $self->GetItem($selection,2)->GetText || '';
+				if ( $selection != -1 ) {
+					my $line = $self->GetItem( $selection, 0 )->GetText || '';
+					my $type = $self->GetItem( $selection, 1 )->GetText || '';
+					my $desc = $self->GetItem( $selection, 2 )->GetText || '';
 					$msg = "$line, $type, $desc\n";
+
 					# And copy it to clipboard
-					if ( (length $msg > 0) and Wx::wxTheClipboard->Open() ) {
-						Wx::wxTheClipboard->SetData(Wx::TextDataObject->new( $msg ));
+					if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
+						Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
 						Wx::wxTheClipboard->Close();
 					}
 				}
@@ -337,18 +340,20 @@ sub on_right_down {
 		$self,
 		$menu->Append( -1, Wx::gettext("Copy &All") ),
 		sub {
+
 			# Append messages in one string
 			my $msg = '';
 			foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
 
-				my $line = $self->GetItem($i,0)->GetText || '';
-				my $type = $self->GetItem($i,1)->GetText || '';
-				my $desc = $self->GetItem($i,2)->GetText || '';
+				my $line = $self->GetItem( $i, 0 )->GetText || '';
+				my $type = $self->GetItem( $i, 1 )->GetText || '';
+				my $desc = $self->GetItem( $i, 2 )->GetText || '';
 				$msg .= "$line, $type, $desc\n";
 			}
+
 			# And copy it to clipboard
-			if ( (length $msg > 0) and Wx::wxTheClipboard->Open() ) {
-				Wx::wxTheClipboard->SetData(Wx::TextDataObject->new( $msg ));
+			if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
+				Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
 				Wx::wxTheClipboard->Close();
 			}
 		}

@@ -2,7 +2,7 @@
 
 # This script is only used to run the application from
 # its development location
-# 
+#
 # It should not be distributed on CPAN or downstream distributions
 
 use 5.008005;
@@ -18,7 +18,7 @@ use lib $FindBin::Bin, "$FindBin::Bin/lib";
 use privlib::Tools;
 use File::Basename ();
 use Locale::Msgfmt 0.12;
-use Padre::Perl    ();
+use Padre::Perl ();
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
@@ -28,10 +28,11 @@ unless ( -d "$FindBin::Bin/blib" ) {
 
 vmsgfmt($FindBin::Bin);
 
-my $perl = ($^O eq 'MSWin32')
+my $perl =
+	( $^O eq 'MSWin32' )
 	? Padre::Perl::cperl()
 	: Padre::Perl::wxperl();
-unless ( $perl ) {
+unless ($perl) {
 	error("Failed to find windowing Perl to run with");
 }
 
@@ -42,33 +43,42 @@ my @cmd = (
 	qq[-I$FindBin::Bin/../PPIx-EditorTools/lib],
 );
 if ( grep { $_ eq '-d' } @ARGV ) {
+
 	# Command line debugging
 	@ARGV = grep { $_ ne '-d' } @ARGV;
 	push @cmd, '-d';
 }
 if ( grep { $_ eq '--die' } @ARGV ) {
+
 	# Command line debugging
 	@ARGV = grep { $_ ne '--die' } @ARGV;
-	$ENV{PADRE_DIE}  = 1;
+	$ENV{PADRE_DIE} = 1;
 }
 if ( grep { $_ eq '-p' } @ARGV ) {
+
 	# Profiling
 	@ARGV = grep { $_ ne '-p' } @ARGV;
 	push @cmd, '-dt:NYTProf';
 }
 if ( grep { $_ eq '-h' } @ARGV ) {
 	usage();
-} elsif ( grep { $_ eq '-a' } @ARGV ) {
+} elsif (
+	grep {
+		$_ eq '-a'
+	} @ARGV
+	)
+{
+
 	# Rebuild translations
 	@ARGV = grep { $_ ne '-a' } @ARGV;
-	my $dir = File::Basename::dirname($ENV{PADRE_HOME});
+	my $dir = File::Basename::dirname( $ENV{PADRE_HOME} );
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
-		foreach my $plugin ( @plugins ) {
-			(my $path = $plugin) =~ s{-}{/}g;
-			if (-d  "$dir/$plugin/share/locale" ) {
+		foreach my $plugin (@plugins) {
+			( my $path = $plugin ) =~ s{-}{/}g;
+			if ( -d "$dir/$plugin/share/locale" ) {
 				vmsgfmt("$dir/$plugin");
-			} elsif (-d "$dir/$plugin/lib/$path/share/locale") {
+			} elsif ( -d "$dir/$plugin/lib/$path/share/locale" ) {
 				vmsgfmt("$dir/$plugin/lib/$path");
 			}
 			push @cmd, "-I$dir/$plugin/lib";
@@ -79,10 +89,11 @@ if ( grep { $_ eq '-h' } @ARGV ) {
 system( @cmd, qq[$FindBin::Bin/script/padre], @ARGV );
 
 sub vmsgfmt {
-	msgfmt( {
-		in      => "$_[0]/share/locale/",
-		verbose => 0,
-	} );
+	msgfmt(
+		{   in      => "$_[0]/share/locale/",
+			verbose => 0,
+		}
+	);
 }
 
 sub error {
