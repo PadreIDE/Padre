@@ -88,6 +88,7 @@ if ($VERSION) {
 
 if ($DESKTOP) {
 	if ( $^O eq 'MSWin32' ) {
+
 		# Create Padre's Desktop Shortcut
 		require File::Temp;
 		my ( $vbs, $vbsfile ) = File::Temp::tempfile( SUFFIX => '.vbs' );
@@ -107,7 +108,7 @@ CODE
 
 		# Integrate with registry via regedit...
 		# VBScript and registry on vista = Does not work!
-		my ($reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
+		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
 		print $reg <<'REG';
 Windows Registry Editor Version 5.00
 
