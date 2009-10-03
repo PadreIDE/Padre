@@ -828,6 +828,16 @@ Padre::Config - Configuration subsystem for Padre
 
 =head1 DESCRIPTION
 
+This module not only stores the complete Padre configuration, it also holds
+the functions for loading and saving the configuration.
+
+The Padre configuration lives in two places:
+
+ - A user-editable text file usually called config.yml
+
+ - A SQlite - database which shouldn't be edited by the
+   user.
+
 =head2 Generic usage
 
 Every setting is accessed by a method named after it, which is a mutator.
@@ -866,6 +876,15 @@ Those preferences are related to the project of the file you are currently
 editing. Examples of those settings are whether to use tabs or spaces, etc.
 
 Those settings are accessed with C<Padre::Config::Project>.
+
+=head1 ADDING CONFIGURATION OPTIONS
+
+Add a "setting()" - call to the correct section of this file.
+
+The setting() call initially creates the option and defines some
+metadata like the type of the option, it's living place and the
+default value which should be used until the user configures
+a own value.
 
 =back
 
