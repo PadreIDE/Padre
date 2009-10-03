@@ -27,6 +27,7 @@ Changes for Perl Application Development and Refactoring Environment
       messages (AZAWAWI)
     - require version 0.20 of Wx::Perl::ProcessStream to fix #628 (AZAWAWI, SZABGAB)
     - Fixed ticket #493: splash image license not suitable for Debian (AZAWAWI)
+    - Fixed t/86-service.t to work again on win32 (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
