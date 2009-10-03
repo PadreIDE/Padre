@@ -182,6 +182,14 @@ setting(
 	],
 );
 
+# Window
+setting(
+	name	=> 'window_title',
+	type	=> Padre::Constant::ASCII,
+	store	=> Padre::Constant::HUMAN,
+	default	=> 'Padre [%p]',
+);
+
 # Pages and panels
 setting(
 	name    => 'main_singleinstance',
