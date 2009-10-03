@@ -88,9 +88,10 @@ if ($VERSION) {
 
 if ($DESKTOP) {
 	if ( $^O eq 'MSWin32' ) {
+		# Create Padre's Desktop Shortcut
 		require File::Temp;
-		my ( $temp, $tempfile ) = File::Temp::tempfile( SUFFIX => '.vbs' );
-		print $temp <<'CODE';
+		my ( $vbs, $vbsfile ) = File::Temp::tempfile( SUFFIX => '.vbs' );
+		print $vbs <<'CODE';
 ' Create a Padre shortcut on the current user's desktop 
 Set shell = CreateObject("WScript.Shell")
 desktop = shell.SpecialFolders("Desktop")
@@ -101,8 +102,23 @@ shortcut.WorkingDirectory = "c:\strawberry\perl\bin"
 shortcut.Save
 MsgBox "Padre has created a shortcut on your desktop", vbOKOnly Or vbInformation, "Information"
 CODE
-		close $temp;
-		system(qq{wscript "$tempfile"});
+		close $vbs;
+		system(qq{wscript "$vbsfile"});
+
+		# Integrate with registry via regedit...
+		# VBScript and registry on vista = Does not work!
+		my ($reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
+		print $reg <<'REG';
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
+
+[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
+@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
+REG
+		close $reg;
+		system(qq{regedit /S "$regfile"});
+
 	} else {
 		warn "--desktop not implemented for " . $^O . "\n";
 	}
