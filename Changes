@@ -30,8 +30,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed t/86-service.t to work again on win32 (AZAWAWI)
     - Fixed ticket #314: Padre broken on MS Vista when starting with no file
       to be opened (AZAWAWI)
-    - Added a '--desktop' command line option that creates a Padre shortcut on
-      a win32 desktop (AZAWAWI)
+    - Added a 'padre --desktop' option which integrates Padre on Windows.
+      This creates a desktop shortcut and an "Edit with Padre" in the shell context
+      menu (AZAWAWI)
     - Made beginner error checks report the line where an error was located (SEWI)
     - Fixed: Syntax checker now only shows errors from current file (SEWI)
     - padre --version displays a MessageBox under wperl.exe (AZAWAWI)
