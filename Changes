@@ -32,6 +32,7 @@ Changes for Perl Application Development and Refactoring Environment
       to be opened (AZAWAWI)
     - Added a '--desktop' command line option that creates a Padre shortcut on
       a win32 desktop (AZAWAWI)
+    - Made beginner error checks report the line where an error was located (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
