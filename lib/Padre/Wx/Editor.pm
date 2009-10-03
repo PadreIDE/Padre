@@ -202,7 +202,7 @@ sub on_key_up {
 	}
 
 	# Apply smart highlighting when the shift key is down
-	if ( $event->ShiftDown ) {
+	if ( $self->main->ide->config->editor_smart_highlight_enable && $event->ShiftDown ) {
 		$self->on_smart_highlight_begin($event);
 	}
 }
