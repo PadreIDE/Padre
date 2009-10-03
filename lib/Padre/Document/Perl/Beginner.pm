@@ -49,7 +49,9 @@ See L<http://padre.perlide.org/ticket/52> and L<http://www.perlmonks.org/?node_i
 
 
 sub new {
-	return bless {}, shift;
+	my $class=shift;
+	
+	return bless { @_ }, $class;
 }
 
 sub error {
@@ -86,7 +88,7 @@ s is missing at the end.
 
 =cut
 
-	if ( $text =~ /use\s+warning\s*;/ ) {
+	if ( $text =~ /^use\s+warning\s*;/ ) {
 		$self->{error} = "You need to write use warnings (with an s at the end) and not use warning.";
 		return;
 	}
