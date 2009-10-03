@@ -4246,12 +4246,19 @@ sub on_doc_stats {
 		$filename, $newline_type,     $encoding
 	) = $doc->stats;
 
+	my $disksize = '';
+	if (defined($doc) and defined($doc->{file})) {
+		$disksize = sprintf(Wx::gettext('Size on disk: %s'),
+			Padre::Util::humanbytes($doc->{file}->size)).$/;
+	}
+
 	my @messages = (
 		sprintf( Wx::gettext("Words: %s"),                $words ),
 		sprintf( Wx::gettext("Lines: %d"),                $lines ),
 		sprintf( Wx::gettext("Chars without spaces: %s"), $chars_without_space ),
 		sprintf( Wx::gettext("Chars with spaces: %d"),    $chars_with_space ),
 		sprintf( Wx::gettext("Newline type: %s"),         $newline_type ),
+		$disksize.
 		sprintf( Wx::gettext("Encoding: %s"),             $encoding ),
 		sprintf(
 			Wx::gettext("Document type: %s"),
