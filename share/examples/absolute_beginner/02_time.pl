@@ -15,7 +15,8 @@ use warnings;
 # This line does nothing more than getting the current time and even if
 # it now looks very, very complex to you, don't worry, it's not too
 # complicated to understand:
-my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
+my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime( time() );
+
 # "my" at the beginning tells Perl that the following variables are dedicated
 # to this file. You don't care about this, currently, but remember that at the
 # time of this writing, this editor contains of 158 files - all for one program.
@@ -27,7 +28,7 @@ my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
 #  - It may contain letters, numbers and the underscore _
 #  - There must be at least one char after the $ sign.
 # That's it! You could use $egg or $cake_made_of_eggs_and_milk_and_other_things
-# it's really up to you what you use. 
+# it's really up to you what you use.
 # It's a good idea to name variables by their usage because you need to
 # know why you used it and for which purpose even in a 3000 lines file.
 #

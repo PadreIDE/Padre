@@ -24,8 +24,8 @@ use warnings FATAL => 'all';
 use base 'Wx::App';
 
 sub OnInit {
-    my $frame = Demo::Frame->new;
-    $frame->Show( 1 );
+	my $frame = Demo::Frame->new;
+	$frame->Show(1);
 }
 
 #####################
@@ -36,12 +36,12 @@ use warnings FATAL => 'all';
 
 use Wx ':everything';
 use Wx::Event ':everything';
-use Wx::STC     ();
+use Wx::STC ();
 
 
 use File::Spec::Functions qw(catfile);
-use File::Slurp     qw(read_file write_file);
-use File::Basename  qw(basename);
+use File::Slurp qw(read_file write_file);
+use File::Basename qw(basename);
 
 
 use base 'Wx::Frame';
@@ -55,220 +55,227 @@ my $search_term = '';
 
 
 sub new {
-    my ($class) = @_;
+	my ($class) = @_;
 
-    my $self = $class->SUPER::new( undef,
-                                 -1,
-                                 'Editor ',
-                                 [-1, -1],
-                                 [750, 700],
-                                 );
-    $nb = Wx::Notebook->new
-      ( $self, -1, wxDefaultPosition, wxDefaultSize,
-        wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN );
+	my $self = $class->SUPER::new(
+		undef,
+		-1,
+		'Editor ',
+		[ -1,  -1 ],
+		[ 750, 700 ],
+	);
+	$nb = Wx::Notebook->new(
+		$self, -1, wxDefaultPosition, wxDefaultSize,
+		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN
+	);
 
-    $self->_create_menu_bar;
+	$self->_create_menu_bar;
 
-    $self->setup_editor;
-    return $self;
+	$self->setup_editor;
+	return $self;
 }
 
 sub _create_menu_bar {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    my $bar = Wx::MenuBar->new;
-    my $file = Wx::Menu->new;
-    $file->Append( wxID_OPEN, "&Open" );
-    $file->Append( wxID_SAVE, "&Save" );
-    $file->Append( wxID_SAVEAS, "Save &As" );
-    $file->Append( wxID_CLOSE, "&Close" );
-    $file->Append( wxID_EXIT, "E&xit" );
+	my $bar  = Wx::MenuBar->new;
+	my $file = Wx::Menu->new;
+	$file->Append( wxID_OPEN,   "&Open" );
+	$file->Append( wxID_SAVE,   "&Save" );
+	$file->Append( wxID_SAVEAS, "Save &As" );
+	$file->Append( wxID_CLOSE,  "&Close" );
+	$file->Append( wxID_EXIT,   "E&xit" );
 
-    my $edit = Wx::Menu->new;
-    $edit->Append( wxID_FIND, "&Find" );
-    $edit->Append( 998,       "&Setup" );
+	my $edit = Wx::Menu->new;
+	$edit->Append( wxID_FIND, "&Find" );
+	$edit->Append( 998,       "&Setup" );
 
-    my $help = Wx::Menu->new;
-    $help->Append( wxID_ABOUT, "&About..." );
+	my $help = Wx::Menu->new;
+	$help->Append( wxID_ABOUT, "&About..." );
 
-    $bar->Append( $file, "&File" );
-    $bar->Append( $edit, "&Edit" );
-    $bar->Append( $help, "&Help" );
+	$bar->Append( $file, "&File" );
+	$bar->Append( $edit, "&Edit" );
+	$bar->Append( $help, "&Help" );
 
-    $self->SetMenuBar( $bar );
+	$self->SetMenuBar($bar);
 
-    EVT_CLOSE( $self,              \&on_close_window);
-    EVT_MENU(  $self, wxID_OPEN,   sub { on_open($self, @_)  } );
-    EVT_MENU(  $self, wxID_SAVE,   sub { on_save($self, @_)  } );
-    EVT_MENU(  $self, wxID_SAVEAS, sub { on_save_as($self, @_)  } );
-    EVT_MENU(  $self, wxID_CLOSE,  sub { on_close($self, @_)  } );
-    EVT_MENU(  $self, 998,         sub { on_setup($self, @_) } );
-    EVT_MENU(  $self, wxID_FIND,   sub { on_find($self, @_)  } );
-    EVT_MENU(  $self, wxID_EXIT,   \&on_exit);
-    EVT_MENU(  $self, wxID_ABOUT,  \&on_about );
+	EVT_CLOSE( $self, \&on_close_window );
+	EVT_MENU( $self, wxID_OPEN, sub { on_open( $self, @_ ) } );
+	EVT_MENU( $self, wxID_SAVE, sub { on_save( $self, @_ ) } );
+	EVT_MENU( $self, wxID_SAVEAS, sub { on_save_as( $self, @_ ) } );
+	EVT_MENU( $self, wxID_CLOSE, sub { on_close( $self, @_ ) } );
+	EVT_MENU( $self, 998, sub { on_setup( $self, @_ ) } );
+	EVT_MENU( $self, wxID_FIND, sub { on_find( $self, @_ ) } );
+	EVT_MENU( $self, wxID_EXIT, \&on_exit );
+	EVT_MENU( $self, wxID_ABOUT, \&on_about );
 
-    return;
+	return;
 }
 
 sub on_exit {
-    my ($self) = @_;
-    foreach my $id (keys %nb) {
-        if (_buffer_changed($id)) {
-            Wx::MessageBox( "One of the files is still not saved", "xx", wxOK|wxCENTRE, $self );
-            return;
-        }
-    }
+	my ($self) = @_;
+	foreach my $id ( keys %nb ) {
+		if ( _buffer_changed($id) ) {
+			Wx::MessageBox( "One of the files is still not saved", "xx", wxOK | wxCENTRE, $self );
+			return;
+		}
+	}
 
-    $self->Close
+	$self->Close;
 }
 
 sub setup_editor {
-    my ($self, $file) = @_;
+	my ( $self, $file ) = @_;
 
-    my $editor = Demo::Panel->new($nb);
+	my $editor = Demo::Panel->new($nb);
 
-    my $title = "Unsaved Document 1";
-    my $content = '';
-    if ($file) {
-        $content = read_file($file);
-        $title   = basename($file);
-        $editor->SetText( $content );
-    }
-    $nb->AddPage($editor, $title, 1);
-    $nb{$nb->GetSelection} = {
-        filename => $file,
-        content  => $content,
-    };
+	my $title   = "Unsaved Document 1";
+	my $content = '';
+	if ($file) {
+		$content = read_file($file);
+		$title   = basename($file);
+		$editor->SetText($content);
+	}
+	$nb->AddPage( $editor, $title, 1 );
+	$nb{ $nb->GetSelection } = {
+		filename => $file,
+		content  => $content,
+	};
 
-    return;
+	return;
 }
 
 sub on_close_window {
-    my ( $self, $event ) = @_;
-    $event->Skip;
+	my ( $self, $event ) = @_;
+	$event->Skip;
 }
 
 sub on_open {
-    my( $self ) = @_;
-    #Wx::MessageBox( "Not implemented yet. Should open a file selector", wxOK|wxCENTRE, $self );
-    my $dialog = Wx::FileDialog->new( $self, "Open file", $default_dir, "", "*.*", wxFD_OPEN);
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        #print "Cancel\n";
-        return;
-    }
-    my $filename = $dialog->GetFilename;
-    #print "OK $filename\n";
-    $default_dir = $dialog->GetDirectory;
+	my ($self) = @_;
 
-    my $file = catfile($default_dir, $filename);
+	#Wx::MessageBox( "Not implemented yet. Should open a file selector", wxOK|wxCENTRE, $self );
+	my $dialog = Wx::FileDialog->new( $self, "Open file", $default_dir, "", "*.*", wxFD_OPEN );
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
 
-    $self->setup_editor($file);
+		#print "Cancel\n";
+		return;
+	}
+	my $filename = $dialog->GetFilename;
 
-    return;
+	#print "OK $filename\n";
+	$default_dir = $dialog->GetDirectory;
+
+	my $file = catfile( $default_dir, $filename );
+
+	$self->setup_editor($file);
+
+	return;
 }
 
 sub on_save_as {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    my $id   = $nb->GetSelection;
-    while (1) {
-        my $dialog = Wx::FileDialog->new( $self, "Save file as...", $default_dir, "", "*.*", wxFD_SAVE);
-        if ($dialog->ShowModal == wxID_CANCEL) {
-            #print "Cancel\n";
-            return;
-        }
-        my $filename = $dialog->GetFilename;
-        #print "OK $filename\n";
-        $default_dir = $dialog->GetDirectory;
+	my $id = $nb->GetSelection;
+	while (1) {
+		my $dialog = Wx::FileDialog->new( $self, "Save file as...", $default_dir, "", "*.*", wxFD_SAVE );
+		if ( $dialog->ShowModal == wxID_CANCEL ) {
 
-        my $path = catfile($default_dir, $filename);
-        if (-e $path) {
-            my $res = Wx::MessageBox("File already exists. Overwrite it?", 3, $self);
-            if ($res == 2) {
-                $nb{$id}{filename} = $path;
-                last;
-            }
-        } else {
-            $nb{$id}{filename} = $path;
-            last;
-        }
-    }
-    $self->_save_buffer($id);
-    return;
+			#print "Cancel\n";
+			return;
+		}
+		my $filename = $dialog->GetFilename;
+
+		#print "OK $filename\n";
+		$default_dir = $dialog->GetDirectory;
+
+		my $path = catfile( $default_dir, $filename );
+		if ( -e $path ) {
+			my $res = Wx::MessageBox( "File already exists. Overwrite it?", 3, $self );
+			if ( $res == 2 ) {
+				$nb{$id}{filename} = $path;
+				last;
+			}
+		} else {
+			$nb{$id}{filename} = $path;
+			last;
+		}
+	}
+	$self->_save_buffer($id);
+	return;
 }
 
 sub on_save {
-    my ($self) = @_;
-    my $id   = $nb->GetSelection;
-    return if not _buffer_changed($id);
+	my ($self) = @_;
+	my $id = $nb->GetSelection;
+	return if not _buffer_changed($id);
 
-    if ($nb{$id}{filename}) {
-        $self->_save_buffer($id);
-    } else {
-        $self->on_save_as();
-    }
-    return;
+	if ( $nb{$id}{filename} ) {
+		$self->_save_buffer($id);
+	} else {
+		$self->on_save_as();
+	}
+	return;
 }
 
 sub _save_buffer {
-    my ($self, $id) = @_;
+	my ( $self, $id ) = @_;
 
-    my $page = $nb->GetPage($id);
-    my $content = $page->GetText;
-    eval {
-        write_file($nb{$id}{filename}, $content);
-    };
-    $nb{$id}{content} = $content;
+	my $page    = $nb->GetPage($id);
+	my $content = $page->GetText;
+	eval { write_file( $nb{$id}{filename}, $content ); };
+	$nb{$id}{content} = $content;
 
-    return; 
+	return;
 }
 
 sub on_close {
-    my ($self) = @_;
-    
-    my $id   = $nb->GetSelection;
-    if (_buffer_changed($id)) {
-        Wx::MessageBox( "File changed.", wxOK|wxCENTRE, $self );
-    }
+	my ($self) = @_;
 
-    return;
+	my $id = $nb->GetSelection;
+	if ( _buffer_changed($id) ) {
+		Wx::MessageBox( "File changed.", wxOK | wxCENTRE, $self );
+	}
+
+	return;
 }
-sub _buffer_changed {
-    my ($id) = @_;
 
-    my $page = $nb->GetPage($id);
-    my $content = $page->GetText;
-    return $content ne $nb{$id}{content};
+sub _buffer_changed {
+	my ($id) = @_;
+
+	my $page    = $nb->GetPage($id);
+	my $content = $page->GetText;
+	return $content ne $nb{$id}{content};
 }
 
 sub on_setup {
-    my( $self ) = @_;
-    Wx::MessageBox( "Not implemented yet.", wxOK|wxCENTRE, $self );
+	my ($self) = @_;
+	Wx::MessageBox( "Not implemented yet.", wxOK | wxCENTRE, $self );
 }
 
 
 sub on_find {
-    my ( $self ) = @_;
+	my ($self) = @_;
 
-    my $dialog = Wx::TextEntryDialog->new( $self, "", "Type in search term", $search_term );
-    if ($dialog->ShowModal == wxID_CANCEL) {
-        return;
-    }   
-    $search_term = $dialog->GetValue;
-    $dialog->Destroy;
-    return if not defined $search_term or $search_term eq '';
+	my $dialog = Wx::TextEntryDialog->new( $self, "", "Type in search term", $search_term );
+	if ( $dialog->ShowModal == wxID_CANCEL ) {
+		return;
+	}
+	$search_term = $dialog->GetValue;
+	$dialog->Destroy;
+	return if not defined $search_term or $search_term eq '';
 
-    print "$search_term\n";
-    return;
+	print "$search_term\n";
+	return;
 }
 
 
 sub on_about {
-    my ( $self ) = @_;
+	my ($self) = @_;
 
-    Wx::MessageBox( "wxPerl editor, (c) 2008 Gabor Szabo\n" .
-                    "wxPerl edotr $VERSION, " . wxVERSION_STRING,
-                    "About wxPerl editor", wxOK|wxCENTRE, $self );
+	Wx::MessageBox(
+		"wxPerl editor, (c) 2008 Gabor Szabo\n" . "wxPerl edotr $VERSION, " . wxVERSION_STRING,
+		"About wxPerl editor", wxOK | wxCENTRE, $self
+	);
 }
 
 #####################
@@ -284,41 +291,41 @@ use Wx ':everything';
 use Wx::Event ':everything';
 
 sub new {
-    my( $class, $parent ) = @_;
-    my $self = $class->SUPER::new( $parent, -1, [-1, -1], [750, 700]); # TODO get the numbers from the frame?
+	my ( $class, $parent ) = @_;
+	my $self = $class->SUPER::new( $parent, -1, [ -1, -1 ], [ 750, 700 ] ); # TODO get the numbers from the frame?
 
-    my $font = Wx::Font->new( 10, wxTELETYPE, wxNORMAL, wxNORMAL );
+	my $font = Wx::Font->new( 10, wxTELETYPE, wxNORMAL, wxNORMAL );
 
-    $self->SetFont( $font );
+	$self->SetFont($font);
 
-    $self->StyleSetFont( wxSTC_STYLE_DEFAULT, $font );
-    $self->StyleClearAll();
+	$self->StyleSetFont( wxSTC_STYLE_DEFAULT, $font );
+	$self->StyleClearAll();
 
-    $self->StyleSetForeground(0, Wx::Colour->new(0x00, 0x00, 0x7f));
-    $self->StyleSetForeground(1,  Wx::Colour->new(0xff, 0x00, 0x00));
-    $self->StyleSetForeground(2,  Wx::Colour->new(0x00, 0x7f, 0x00));
-    $self->StyleSetForeground(3,  Wx::Colour->new(0x7f, 0x7f, 0x7f));
-    $self->StyleSetForeground(4,  Wx::Colour->new(0x00, 0x7f, 0x7f));
-    $self->StyleSetForeground(5,  Wx::Colour->new(0x00, 0x00, 0x7f));
-    $self->StyleSetForeground(6,  Wx::Colour->new(0xff, 0x7f, 0x00));
-    $self->StyleSetForeground(7,  Wx::Colour->new(0x7f, 0x00, 0x7f));
-    $self->StyleSetForeground(8,  Wx::Colour->new(0x00, 0x00, 0x00));
-    $self->StyleSetForeground(9,  Wx::Colour->new(0x7f, 0x7f, 0x7f));
-    $self->StyleSetForeground(10, Wx::Colour->new(0x00, 0x00, 0x7f));
-    $self->StyleSetForeground(11, Wx::Colour->new(0x00, 0x00, 0xff));
-    $self->StyleSetForeground(12, Wx::Colour->new(0x7f, 0x00, 0x7f));
-    $self->StyleSetForeground(13, Wx::Colour->new(0x40, 0x80, 0xff));
-    $self->StyleSetForeground(17, Wx::Colour->new(0xff, 0x00, 0x7f));
-    $self->StyleSetForeground(18, Wx::Colour->new(0x7f, 0x7f, 0x00));
-    $self->StyleSetBold(12,  1);
-    $self->StyleSetSpec( wxSTC_H_TAG, "fore:#0000ff" );
+	$self->StyleSetForeground( 0,  Wx::Colour->new( 0x00, 0x00, 0x7f ) );
+	$self->StyleSetForeground( 1,  Wx::Colour->new( 0xff, 0x00, 0x00 ) );
+	$self->StyleSetForeground( 2,  Wx::Colour->new( 0x00, 0x7f, 0x00 ) );
+	$self->StyleSetForeground( 3,  Wx::Colour->new( 0x7f, 0x7f, 0x7f ) );
+	$self->StyleSetForeground( 4,  Wx::Colour->new( 0x00, 0x7f, 0x7f ) );
+	$self->StyleSetForeground( 5,  Wx::Colour->new( 0x00, 0x00, 0x7f ) );
+	$self->StyleSetForeground( 6,  Wx::Colour->new( 0xff, 0x7f, 0x00 ) );
+	$self->StyleSetForeground( 7,  Wx::Colour->new( 0x7f, 0x00, 0x7f ) );
+	$self->StyleSetForeground( 8,  Wx::Colour->new( 0x00, 0x00, 0x00 ) );
+	$self->StyleSetForeground( 9,  Wx::Colour->new( 0x7f, 0x7f, 0x7f ) );
+	$self->StyleSetForeground( 10, Wx::Colour->new( 0x00, 0x00, 0x7f ) );
+	$self->StyleSetForeground( 11, Wx::Colour->new( 0x00, 0x00, 0xff ) );
+	$self->StyleSetForeground( 12, Wx::Colour->new( 0x7f, 0x00, 0x7f ) );
+	$self->StyleSetForeground( 13, Wx::Colour->new( 0x40, 0x80, 0xff ) );
+	$self->StyleSetForeground( 17, Wx::Colour->new( 0xff, 0x00, 0x7f ) );
+	$self->StyleSetForeground( 18, Wx::Colour->new( 0x7f, 0x7f, 0x00 ) );
+	$self->StyleSetBold( 12, 1 );
+	$self->StyleSetSpec( wxSTC_H_TAG, "fore:#0000ff" );
 
-    $self->SetLexer( wxSTC_LEX_PERL );
+	$self->SetLexer(wxSTC_LEX_PERL);
 
-    $self->SetLayoutDirection( wxLayout_LeftToRight )
-      if $self->can( 'SetLayoutDirection' );
+	$self->SetLayoutDirection(wxLayout_LeftToRight)
+		if $self->can('SetLayoutDirection');
 
-    return $self;
+	return $self;
 }
 
 #####################

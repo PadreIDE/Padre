@@ -7,6 +7,7 @@
 
 # The following line prints (shows) a short text to the user.
 print "Hello World!\n"; # This is output for the user
+
 # The text following the print command is surrounded by " ". They're
 # used to mark the message "Hello World" as text to be printed,
 # otherwise they would be processed as Perl commands.

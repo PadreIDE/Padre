@@ -5,7 +5,7 @@
 use strict; # This will be discussed later
 use warnings;
 
-my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
+my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime( time() );
 
 # Let's say you want to go out and take a walk. What do you do?
 # First, you look out of the window to check for sun or rain, then you
@@ -14,7 +14,8 @@ my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time());
 # Programs always need to decide things and it's as easy like
 # if-there-is-rain-then-get-the-umbrella.
 
-if ($hour < 10) { print "Good morning!\n"; }
+if ( $hour < 10 ) { print "Good morning!\n"; }
+
 # This is a condition. It checks if $hour (which holds the hour of the
 # current time as we knew from the last session) is lower-than the
 # number 10.
@@ -28,9 +29,9 @@ if ($hour < 10) { print "Good morning!\n"; }
 # As this sample should run at any daytime, we need to add if-lines for
 # the rest of the day:
 
-elsif ($hour == 12) { print "Out for lunch...\n"; }
-elsif ($hour <= 18) { print "Hello world!\n"; }
-elsif ($hour < 23) { print "Good night.\n"; }
+elsif ( $hour == 12 ) { print "Out for lunch...\n"; }
+elsif ( $hour <= 18 ) { print "Hello world!\n"; }
+elsif ( $hour < 23 )  { print "Good night.\n"; }
 
 # You noticed the els in front of the if? This means "try this condition
 # only if the result of the last was no". Otherwise the condition <= 18

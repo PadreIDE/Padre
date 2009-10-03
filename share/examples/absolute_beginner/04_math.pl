@@ -3,6 +3,7 @@
 # This file assumes that you already read (and understood) earlier sessions!
 
 use strict;
+
 # Before starting the actual topic of this lesson, lets do a short stop at
 # use strict; which you saw in the last files: If you write this at the
 # beginning, you need to write a "my" before the variable name when you
@@ -21,12 +22,12 @@ print "$Sum\n";
 # You learned something about mathematical brackets and preference rules,
 # did you? Perl respects them all:
 
-my $Result = ((10 * 2 + 1) - (2 + 5)) / 2;
+my $Result = ( ( 10 * 2 + 1 ) - ( 2 + 5 ) ) / 2;
 print "$Result\n";
 
 # Not to forget, there is no need to use a variable for this:
 
-print "Simple math result: ".(1 + 2 + 3)."\n";
+print "Simple math result: " . ( 1 + 2 + 3 ) . "\n";
 
 # Cool, isn't it?
 # Oh, this is a new print syntax we got. Lets look at it in three parts:
@@ -44,11 +45,11 @@ print "Simple math result: ".(1 + 2 + 3)."\n";
 
 # Calculations may also include variables:
 
-print "$Sum + 1 is ".($Sum + 1)."\n";
+print "$Sum + 1 is " . ( $Sum + 1 ) . "\n";
 
 # We could mix some things we used earlier:
 
-print "$Sum + $Result = ".($Sum + $Result)."\n";
+print "$Sum + $Result = " . ( $Sum + $Result ) . "\n";
 
 # One of the most used commands in programming is a simple increment:
 
@@ -61,7 +62,7 @@ $Sum++; # Excatly the same as $Sum = $Sum + 1;
 # Another syntax which is valid for all four simple calculations + - * /
 
 $Sum += 2; # Same as $Sum = $Sum + 2;
-print $Sum."\n";
+print $Sum. "\n";
 
 # Now press F5 and Padre will execute this script.
 #

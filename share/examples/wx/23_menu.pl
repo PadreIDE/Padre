@@ -20,8 +20,8 @@ use warnings FATAL => 'all';
 use base 'Wx::App';
 
 sub OnInit {
-    my $frame = Demo::Frame->new;
-    $frame->Show( 1 );
+	my $frame = Demo::Frame->new;
+	$frame->Show(1);
 }
 
 #####################
@@ -36,50 +36,52 @@ use Wx::Event ':everything';
 use base 'Wx::Frame';
 
 sub new {
-    my ($class) = @_;
+	my ($class) = @_;
 
-    my $self = $class->SUPER::new( undef,
-                                 -1,
-                                 'Editor ',
-                                 [-1, -1],
-                                 [750, 700],
-                                 );
-    my $nb = Wx::Notebook->new
-      ( $self, -1, wxDefaultPosition, wxDefaultSize,
-        wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN );
+	my $self = $class->SUPER::new(
+		undef,
+		-1,
+		'Editor ',
+		[ -1,  -1 ],
+		[ 750, 700 ],
+	);
+	my $nb = Wx::Notebook->new(
+		$self, -1, wxDefaultPosition, wxDefaultSize,
+		wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN
+	);
 
-    $self->_create_menu_bar;
+	$self->_create_menu_bar;
 
-    return $self;
+	return $self;
 }
 
 sub _create_menu_bar {
-    my ($self) = @_;
+	my ($self) = @_;
 
-    my $bar = Wx::MenuBar->new;
-    my $file = Wx::Menu->new;
-    $file->Append( wxID_EXIT, "E&xit" );
-    $file->Append( 998,       "&Open Browser to PerlMonks" );
-    $bar->Append( $file, "&File" );
+	my $bar  = Wx::MenuBar->new;
+	my $file = Wx::Menu->new;
+	$file->Append( wxID_EXIT, "E&xit" );
+	$file->Append( 998,       "&Open Browser to PerlMonks" );
+	$bar->Append( $file, "&File" );
 
-    $self->SetMenuBar( $bar );
+	$self->SetMenuBar($bar);
 
-    EVT_CLOSE( $self,              \&on_close_window);
-    EVT_MENU(  $self, 998,         sub { Wx::LaunchDefaultBrowser('http://perlmonks.org/'); } );
-    EVT_MENU(  $self, wxID_EXIT,   \&on_exit);
+	EVT_CLOSE( $self, \&on_close_window );
+	EVT_MENU( $self, 998, sub { Wx::LaunchDefaultBrowser('http://perlmonks.org/'); } );
+	EVT_MENU( $self, wxID_EXIT, \&on_exit );
 
-    return;
+	return;
 }
 
 sub on_exit {
-    my ($self) = @_;
-    $self->Close
+	my ($self) = @_;
+	$self->Close;
 }
 
 
 sub on_close_window {
-    my ( $self, $event ) = @_;
-    $event->Skip;
+	my ( $self, $event ) = @_;
+	$event->Skip;
 }
 
 
