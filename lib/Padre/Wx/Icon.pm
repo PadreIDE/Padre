@@ -50,7 +50,9 @@ our $DEFAULT_ICON;
 
 # Convenience access to the official Padre icon
 sub PADRE () {
-	icon('logo');
+	# fallback to ugly ccnc-free if the pretty ccnc is not found
+	return (-f Padre::Util::sharefile('padre-splash-ccnc.bmp')) ?
+		icon('logo-ccnc') : icon('logo');
 }
 
 

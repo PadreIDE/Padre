@@ -209,9 +209,7 @@ sub new {
 	Wx::Event::EVT_STC_CHARADDED( $self, -1, \&on_stc_char_added );
 	Wx::Event::EVT_STC_DWELLSTART( $self, -1, \&on_stc_dwell_start );
 
-	# As ugly as the WxPerl icon is, the new file toolbar image we
-	# used to use was far uglier
-	# Wx::GetWxPerlIcon()
+	# Use Padre's icon
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Show the tools that the configuration dictates
