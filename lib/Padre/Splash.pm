@@ -31,7 +31,7 @@ sub show {
 
 	# use CCNC version if it exists and fallback to boring splash
 	# so that we can bundle it in Debian
-	
+
 	# Don't show the splash screen during testing otherwise
 	# it will spoil the flashy surprise when they upgrade.
 	unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
