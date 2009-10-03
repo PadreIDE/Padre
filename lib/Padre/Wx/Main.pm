@@ -4761,7 +4761,7 @@ sub set_title {
 		$variable_data{'d'} = $document->file->dirname;
 
 		$variable_data{'F'} = $document->file->{filename};
-		my $project_dir = $document->project_dir;
+		my $project_dir = quotemeta $document->project_dir;
 		$variable_data{'F'} =~ s/^$project_dir//;
 	}
 
