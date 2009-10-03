@@ -264,12 +264,12 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+
 		# Will be moved to a own AutoComp-panel as soon as there are enough options for this (and I get the spare time to do it):
 		[   [   'Wx::CheckBox',
 				'editor_smart_highlight_enable',
 				( $config->editor_smart_highlight_enable ? 1 : 0 ),
-				Wx::gettext(
-					"Enable Smart highlighting while typing")
+				Wx::gettext("Enable Smart highlighting while typing")
 			],
 			[]
 		],
@@ -944,7 +944,7 @@ sub run {
 		'editor_smart_highlight_enable',
 		$data->{editor_smart_highlight_enable} ? 1 : 0
 	);
-	
+
 
 	# Don't save options which are not shown as this may result in
 	# clearing them:
