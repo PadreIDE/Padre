@@ -242,7 +242,9 @@ sub pre_process {
 
 	if ( Padre->ide->config->editor_beginner ) {
 		require Padre::Document::Perl::Beginner;
-		my $b = Padre::Document::Perl::Beginner->new;
+		my $b = Padre::Document::Perl::Beginner->new(
+		document => $self
+		);
 		if ( $b->check( $self->text_get ) ) {
 			return 1;
 		} else {
