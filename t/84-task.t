@@ -32,12 +32,12 @@ sub fake_run_task {
 	if (threads->tid() == 0) { # main thread
 		# Test the execution in the main thread in case worker threads are disabled
 		ok( exists($recovered->{main_thread_only})
-		    && not exists($recovered->{_main_thread_data_id}),
+		    && (not exists($recovered->{_main_thread_data_id}))
 		    && $recovered->{main_thread_only} eq 'not in sub thread',
 		    "main-thread data stays available in main thread" );
 	} else {
 		# Test the execution in a worker thread
-		ok( not exists($recovered->{main_thread_only}),
+		ok( (not exists($recovered->{main_thread_only}))
 		    && exists($recovered->{_main_thread_data_id}),
 		    "main-thread data not available in worker thread" );
 	}
