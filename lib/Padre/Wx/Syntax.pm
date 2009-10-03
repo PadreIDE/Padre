@@ -303,14 +303,28 @@ sub relocale {
 sub on_right_down {
 	my ($self, $event) = @_;
 
+	return if $self->GetItemCount == 0;
+
 	my $menu = Wx::Menu->new;
 
-	my $copy = $menu->Append( Wx::wxID_COPY, Wx::gettext("&Copy") );
+	my $copy = $menu->Append( Wx::wxID_COPY, Wx::gettext("&Copy All") );
 	Wx::Event::EVT_MENU(
-		$self, # Ctrl-C
+		$self,
 		$copy,
 		sub {
-			#Padre::Current->editor->Copy;
+			my $msg = '';
+			foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
+
+				# Get the line and check that it is a valid line number
+				my $line = $self->GetItem($i,0)->GetText || '';
+				my $type = $self->GetItem($i,1)->GetText || '';
+				my $desc = $self->GetItem($i,2)->GetText || '';
+				$msg .= "$line, $type, $desc\n";
+			}
+			if ( (length $msg > 0) and Wx::wxTheClipboard->Open() ) {
+				Wx::wxTheClipboard->SetData(Wx::TextDataObject->new( $msg ));
+				Wx::wxTheClipboard->Close();
+			}
 		}
 	);
 
