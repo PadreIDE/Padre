@@ -13,7 +13,7 @@ Make damn sure it stays that way!
 Icons:
 
 =============================
-logo.png
+logo-ccnc.png
 =============================
 
 Original source http://commons.wikimedia.org/wiki/File:Blue_morpho_butterfly.jpg

@@ -16,6 +16,15 @@ Images:
 padre-splash.bmp
 =============================
 
+Made specifically for use in Padre and debian.
+
+Copyright 2009 Ahmad M. Zawawi
+You can redistribute and/or modify the icons under the same terms as Perl itself.
+
+=============================
+padre-splash-ccnc.bmp
+=============================
+
 Original source http://www.flickr.com/photos/blackbutterfly/3257936873/
 
 This image is was originally distributed (and is redistributed) under the terms
