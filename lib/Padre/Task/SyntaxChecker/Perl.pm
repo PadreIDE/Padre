@@ -58,6 +58,7 @@ sub _check_syntax {
 
 	# Execute the syntax check
 	my $stderr = '';
+	my $testfilename;
 	SCOPE: {
 
 		# Create a temporary file with the Perl text
@@ -66,6 +67,7 @@ sub _check_syntax {
 		binmode( $file, ":utf8" );
 		$file->print( $self->{text} );
 		$file->close;
+		$testfilename = $file->filename;
 
 		# Run with console Perl to prevent unexpected results under wperl
 		my @cmd = (
@@ -165,8 +167,9 @@ sub _check_syntax {
 			push @diag, join( ' ', split( ' ', $diagtext ) );
 		}
 
-		if ( $message =~ s/\sat(?:\s|\x1F)+.+?(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
-			$cur->{line} = $1;
+		if ( $message =~ s/\sat(?:\s|\x1F)+(.+?)(?:\s|\x1F)line(?:\s|\x1F)(\d+)//o ) {
+			next if $1 ne $testfilename;
+			$cur->{line} = $2;
 			$cur->{msg}  = $message;
 		}
 
