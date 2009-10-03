@@ -6,10 +6,10 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Padre::Wx             ();
-use Padre::Wx::HtmlWindow ();
-use Padre::Wx::Icon       ();
-use Padre::Util           ();
+use Padre::Wx               ();
+use Padre::Wx::HtmlWindow   ();
+use Padre::Wx::Icon         ();
+use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 
 our $VERSION = '0.47';
