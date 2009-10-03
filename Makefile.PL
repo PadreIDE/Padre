@@ -55,12 +55,12 @@ requires 'File::Next'               => '1.06';          # Force-bump ack dep
 requires 'File::Path'               => 0;
 requires 'File::Remove'             => '1.42';
 requires 'File::ShareDir'           => '1.00';
-
 #requires      'File::ShareDir::PAR'      => '0.04';
 requires 'File::Spec'            => '3.2701';
 requires 'File::Spec::Functions' => '3.2701';
 requires 'File::Which'           => '1.08';
 requires 'FindBin'               => 0;
+requires 'Format::Human::Bytes'	 => 0;
 requires 'Getopt::Long'          => 0;
 requires 'HTML::Entities'        => '3.57';
 requires 'HTML::Parser'          => '3.58';

@@ -485,13 +485,16 @@ SCOPE: {
 }
 
 sub humanbytes {
+	
 	my $Bytes = $_[0] || 0;
-	if    ( $Bytes > 8192000000000 ) { return int( $Bytes / 1099511627776 ) . "TB"; }
-	elsif ( $Bytes > 8192000000 )    { return int( $Bytes / 1073741824 ) . "GB"; }
-	elsif ( $Bytes > 8192000 )       { return int( $Bytes / 1048576 ) . "MB"; }
-	elsif ( $Bytes > 8192 )          { return int( $Bytes / 1024 ) . "kB"; }
-	elsif ( $Bytes == 0 )            { return "0"; }
-	else                             { return $Bytes . "B"; }
+	
+	eval {
+		require Format::Human::Bytes;
+	};
+	return $Bytes if $@; # Doesn't look good, but works
+
+	return Format::Human::Bytes::base2($Bytes,1);
+
 }
 
 # Returns the memory currently used by this application:
