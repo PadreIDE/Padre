@@ -149,9 +149,10 @@ my @events = (
 					my $main   = $ide->wx->main;
 					my $T      = Test::Builder->new;
 					my $dialog = Padre::Wx::Dialog::Bookmarks::get_dialog();
-					my $event =
-						Wx::CommandEvent->new( &Wx::wxEVT_COMMAND_BUTTON_CLICKED,
-						$dialog->{_widgets_}->{cancel}->GetId );
+					my $event  = Wx::CommandEvent->new(
+						&Wx::wxEVT_COMMAND_BUTTON_CLICKED,
+						$dialog->{_widgets_}->{cancel}->GetId
+					);
 
 					#$dialog->{_widgets_}->{cancel}->GetEventHandler->ProcessEvent( $event );
 					$dialog->GetEventHandler->ProcessEvent($event);

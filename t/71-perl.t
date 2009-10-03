@@ -94,7 +94,8 @@ SCOPE: {
 
 	# They're not really the same. The manual search finds the entire Statement node. Hence the first_element.
 	ok( $declaration->first_element() == $cmp_declaration,
-		'find_token_at_location returns the same token as a manual search' );
+		'find_token_at_location returns the same token as a manual search'
+	);
 
 	my $result_declaration = Padre::PPI::find_variable_declaration($elem);
 
