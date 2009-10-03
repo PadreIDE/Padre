@@ -69,7 +69,7 @@ sub _report {
 	my $prematch = $1 || '';
 	my $error_start_position = length($prematch);
 
-	my $line = $editor->LineFromPosition( $error_start_position );
+	my $line = $editor->LineFromPosition($error_start_position);
 	++$line; # Editor starts counting at 0
 
 	# These are two lines to enable the translators to use argument numbers:

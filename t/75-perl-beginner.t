@@ -7,13 +7,13 @@ use warnings;
 package local::t75;
 
 sub LineFromPosition {
- return 0;
+	return 0;
 }
 
 package Wx;
 
 sub gettext {
- return $_[0];
+	return $_[0];
 }
 
 # The real test...
@@ -25,10 +25,10 @@ use Data::Dumper qw(Dumper);
 use File::Spec ();
 
 my %TEST = (
-	'split1.pl'                    => "Line 1: The second parameter of split is a string, not an array",
-	'split2.pl'                    => "Line 1: The second parameter of split is a string, not an array",
-	'warning.pl'                   => "Line 1: You need to write use warnings (with an s at the end) and not use warning.",
-	'boolean_expressions_or.pl'    => 'TODO',
+	'split1.pl'                 => "Line 1: The second parameter of split is a string, not an array",
+	'split2.pl'                 => "Line 1: The second parameter of split is a string, not an array",
+	'warning.pl'                => "Line 1: You need to write use warnings (with an s at the end) and not use warning.",
+	'boolean_expressions_or.pl' => 'TODO',
 	'boolean_expressions_pipes.pl' => 'TODO',
 	'match_default_scalar.pl'      => 'TODO',
 	'chomp.pl'                     => 'TODO',
@@ -36,7 +36,7 @@ my %TEST = (
 	'unintented_glob.pl'           => 'TODO',
 	'return_stronger_than_or.pl'   => 'TODO',
 	'grep_always_true.pl'          => 'TODO',
-	'my_argv.pl' => 'TODO',                                          # "my" variable @ARGV masks global variable at ...
+	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
 	'else_if.pl' => "Line 1: 'else if' is wrong syntax, correct if 'elsif'.",
 
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA,
@@ -47,7 +47,7 @@ my %TEST = (
 plan( tests => scalar( keys %TEST ) * 2 + 18 );
 
 use Padre::Document::Perl::Beginner;
-my $b = Padre::Document::Perl::Beginner->new(document => {editor => bless {},'local::t75'});
+my $b = Padre::Document::Perl::Beginner->new( document => { editor => bless {}, 'local::t75' } );
 
 isa_ok $b, 'Padre::Document::Perl::Beginner';
 
