@@ -30,6 +30,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed t/86-service.t to work again on win32 (AZAWAWI)
     - Fixed ticket #314: Padre broken on MS Vista when starting with no file
       to be opened (AZAWAWI)
+    - Added a '--desktop' command line option that creates a Padre shortcut on
+      a win32 desktop (AZAWAWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
