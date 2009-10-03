@@ -1795,10 +1795,9 @@ sub run_document {
 		if ( $document->pre_process ) {
 			$self->run_command($cmd);
 		} else {
-				my $styles = Wx::wxCENTRE | Wx::wxICON_HAND|Wx::wxYES_NO ;
-				my $ret = Wx::MessageBox(
-				$document->errstr."\n".
-				Wx::gettext('Do you want to continue?'),
+			my $styles = Wx::wxCENTRE | Wx::wxICON_HAND | Wx::wxYES_NO;
+			my $ret    = Wx::MessageBox(
+				$document->errstr . "\n" . Wx::gettext('Do you want to continue?'),
 				Wx::gettext("Warning"),
 				$styles,
 				$self,
@@ -1806,7 +1805,7 @@ sub run_document {
 			if ( $ret == Wx::wxYES ) {
 				$self->run_command($cmd);
 			}
-			}
+		}
 	}
 	return;
 }
