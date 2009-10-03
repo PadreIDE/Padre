@@ -49,9 +49,9 @@ See L<http://padre.perlide.org/ticket/52> and L<http://www.perlmonks.org/?node_i
 
 
 sub new {
-	my $class=shift;
-	
-	return bless { @_ }, $class;
+	my $class = shift;
+
+	return bless {@_}, $class;
 }
 
 sub error {
@@ -59,19 +59,18 @@ sub error {
 }
 
 sub _report {
-	my $self = shift;
-	my $text = shift;
+	my $self    = shift;
+	my $text    = shift;
 	my @samples = @_;
-	
+
 	my $document = $self->{document};
-	my $editor = $document->{editor};
-	
-	my $line   = $editor->LineFromPosition(length($1));
+	my $editor   = $document->{editor};
+
+	my $line = $editor->LineFromPosition( length($1) );
 	++$line; # Editor starts counting at 0
 
 	# These are two lines to enable the translators to use argument numbers:
-	$self->{error} = Wx::gettext(sprintf('Line %d: ',$line)).
-		Wx::gettext(sprintf($text,@_));
+	$self->{error} = Wx::gettext( sprintf( 'Line %d: ', $line ) ) . Wx::gettext( sprintf( $text, @_ ) );
 
 	return;
 }
@@ -209,7 +208,7 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if (    ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\2/ )
+	if ( ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\2/ )
 		and ( length($3) > 0 )
 		and ( length($4) > 0 ) )
 	{
@@ -238,7 +237,8 @@ Regex starting witha a quantifier such as
 
 	if ( $text =~ m{^(.*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] }xs ) {
 		$self->_report(
-			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.");
+			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\."
+		);
 		return;
 	}
 

@@ -328,15 +328,16 @@ sub beginner_check {
 	# it should at least go to the line it's complaining about.
 
 	my $Beginner = Padre::Document::Perl::Beginner->new(
-	 document => $self,
-	 editor => $self->editor);
+		document => $self,
+		editor   => $self->editor
+	);
 
 	$Beginner->check( $self->text_get );
 
 	my $error = $Beginner->error;
 
 	if ($error) {
-		Padre->ide->wx->main->error( Wx::gettext("Error:\n"). $error );
+		Padre->ide->wx->main->error( Wx::gettext("Error:\n") . $error );
 	} else {
 		Padre->ide->wx->main->message( Wx::gettext('No errors found.') );
 	}
