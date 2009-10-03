@@ -4749,8 +4749,12 @@ sub set_title {
 		'p' => '',             # Initlize space for project name
 	);
 
-	# We may run within window startup, there may be no "current" or "document":
-	if ( defined( $self->current ) and defined( $self->current->document ) ) {
+	# We may run within window startup, there may be no "current" or
+	# "document" or "document->file":
+	if (    defined( $self->current )
+		and defined( $self->current->document )
+		and defined( $self->current->document->file ) )
+	{
 		my $document = $self->current->document;
 		$variable_data{'f'} = $document->file->{filename};
 		$variable_data{'b'} = $document->file->basename;
