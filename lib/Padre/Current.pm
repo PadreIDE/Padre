@@ -125,7 +125,7 @@ sub editor {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( exists $self->{editor} ) {
 		my $notebook = $self->notebook;
-		if (defined($notebook)){
+		if ( defined($notebook) ) {
 			my $selected = $notebook->GetSelection;
 			if ( $selected == -1 ) {
 				$self->{editor} = undef;
@@ -136,7 +136,8 @@ sub editor {
 				unless ( $self->{editor} ) {
 					Carp::croak("Failed to find page");
 				}
-		}}
+			}
+		}
 	}
 	return $self->{editor};
 }

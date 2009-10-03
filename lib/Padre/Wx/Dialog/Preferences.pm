@@ -306,44 +306,37 @@ sub _appearance_panel {
 		: '#ffff04';
 
 	my %window_title_vars = (
-	 '%p' => 'Project name',
-	 '%v' => 'Padre version',
-	 '%f' => 'Current filename',
-	 '%d' => 'Current files dirname',
-	 '%b' => 'Current files basename',
-	 '%F' => 'Current filename relative to project',
+		'%p' => 'Project name',
+		'%v' => 'Padre version',
+		'%f' => 'Current filename',
+		'%d' => 'Current files dirname',
+		'%b' => 'Current files basename',
+		'%F' => 'Current filename relative to project',
 	);
-	my @window_title_keys = sort
-		{ lc($a) cmp lc($b); }
-		(keys(%window_title_vars));
+	my @window_title_keys = sort { lc($a) cmp lc($b); } ( keys(%window_title_vars) );
 	my $window_title_left;
 	my $window_title_right;
-	while ($#window_title_keys > -1) {
+
+	while ( $#window_title_keys > -1 ) {
 
 		my $key = shift @window_title_keys;
-		$window_title_left .= 
-			$key .
-			' => '.
-			Wx::gettext($window_title_vars{$key})."\n";
+		$window_title_left .= $key . ' => ' . Wx::gettext( $window_title_vars{$key} ) . "\n";
 
 		last if $#window_title_keys < 0;
 
 		$key = shift @window_title_keys;
-		$window_title_right .= 
-			$key .
-			' => '.
-			Wx::gettext($window_title_vars{$key})."\n";
+		$window_title_right .= $key . ' => ' . Wx::gettext( $window_title_vars{$key} ) . "\n";
 
 	}
-	$window_title_left =~ s/\n$//;
+	$window_title_left  =~ s/\n$//;
 	$window_title_right =~ s/\n$//;
 
 	my $table = [
-		[  [ 'Wx::StaticText',     'undef',       Wx::gettext('Window title:') ],
-			[ 'Wx::TextCtrl', 'window_title', $config->window_title ],
+		[   [ 'Wx::StaticText', 'undef',        Wx::gettext('Window title:') ],
+			[ 'Wx::TextCtrl',   'window_title', $config->window_title ],
 		],
-		[  [ 'Wx::StaticText',     'undef',       Wx::gettext($window_title_left) ],
-		   [ 'Wx::StaticText',     'undef',       Wx::gettext($window_title_right) ],
+		[   [ 'Wx::StaticText', 'undef', Wx::gettext($window_title_left) ],
+			[ 'Wx::StaticText', 'undef', Wx::gettext($window_title_right) ],
 		],
 		[   [   'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ),
 				Wx::gettext('Colored text in output window (ANSI)')

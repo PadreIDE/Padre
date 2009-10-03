@@ -4736,21 +4736,21 @@ sub set_title {
 
 	# The syntax string could be set in the preferences dialog.
 
-	my $self = shift;
+	my $self   = shift;
 	my $config = $self->{config};
 
 	my %variable_data = (
-		'%'	=> '%',
-		'v'	=> $Padre::VERSION,
-		'f'	=> '', # Initlize space for filename
-		'b'	=> '', # Initlize space for filename - basename
-		'd'	=> '', # Initlize space for filename - dirname
-		'F'	=> '', # Initlize space for filename relative to project dir
-		'p'	=> '', # Initlize space for project name
-		);
+		'%' => '%',
+		'v' => $Padre::VERSION,
+		'f' => '',             # Initlize space for filename
+		'b' => '',             # Initlize space for filename - basename
+		'd' => '',             # Initlize space for filename - dirname
+		'F' => '',             # Initlize space for filename relative to project dir
+		'p' => '',             # Initlize space for project name
+	);
 
 	# We may run within window startup, there may be no "current" or "document":
-	if (defined($self->current) and defined($self->current->document)) {
+	if ( defined( $self->current ) and defined( $self->current->document ) ) {
 		my $document = $self->current->document;
 		$variable_data{'f'} = $document->file->{filename};
 		$variable_data{'b'} = $document->file->basename;
@@ -4772,12 +4772,12 @@ sub set_title {
 	# Keep it for later usage
 	$self->{title} = $config->window_title;
 
-	my $Vars = join('',keys(%variable_data));
+	my $Vars = join( '', keys(%variable_data) );
 
 	$self->{title} =~ s/\%([$Vars])/$variable_data{$1}/g;
 
-	$self->{title} = 'Padre '.$Padre::VERSION
-	 if ! defined($self->{title});
+	$self->{title} = 'Padre ' . $Padre::VERSION
+		if !defined( $self->{title} );
 
 	my $revision = Padre::Util::revision();
 	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
