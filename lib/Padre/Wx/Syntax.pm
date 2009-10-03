@@ -36,6 +36,9 @@ sub new {
 			$self->on_list_item_activated( $_[1] );
 		},
 	);
+	Wx::Event::EVT_RIGHT_DOWN(
+		$self, \&on_right_down,
+	);
 
 	$self->Hide;
 
@@ -292,6 +295,30 @@ sub relocale {
 	}
 
 	return;
+}
+
+#
+# Called when the user presses a right click or a context menu key (on win32)
+#
+sub on_right_down {
+	my ($self, $event) = @_;
+
+	my $menu = Wx::Menu->new;
+
+	my $copy = $menu->Append( Wx::wxID_COPY, Wx::gettext("&Copy") );
+	Wx::Event::EVT_MENU(
+		$self, # Ctrl-C
+		$copy,
+		sub {
+			#Padre::Current->editor->Copy;
+		}
+	);
+
+	if ( $event->isa('Wx::MouseEvent') ) {
+		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
+	} else { #Wx::CommandEvent
+		$self->PopupMenu( $menu, 50, 50 ); # TODO better location
+	}
 }
 
 1;
