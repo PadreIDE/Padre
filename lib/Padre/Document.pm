@@ -127,6 +127,7 @@ use strict;
 use warnings;
 use Carp             ();
 use File::Spec       ();
+use File::Temp       ();
 use Padre::Constant  ();
 use Padre::Util      ();
 use Padre::Wx        ();
@@ -657,8 +658,6 @@ sub store_in_tempfile {
 }
 
 sub create_tempfile {
-	use File::Temp;
-
 	my $tempfile = File::Temp->new( UNLINK => 0 );
 	$_[0]->set_tempfile( $tempfile->filename );
 	close $tempfile;
