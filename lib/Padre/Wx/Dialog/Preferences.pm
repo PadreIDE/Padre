@@ -274,8 +274,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'autocomplete_always',
 				( $config->autocomplete_always ? 1 : 0 ),
-				Wx::gettext(
-					"Autocomplete always while typing")
+				Wx::gettext("Autocomplete always while typing")
 			],
 			[]
 		],

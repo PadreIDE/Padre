@@ -724,7 +724,7 @@ sub event_on_char {
 	my ( $self, $editor, $event ) = @_;
 
 	my $config = Padre->ide->config;
-	my $main = Padre->ide->wx->main;
+	my $main   = Padre->ide->wx->main;
 
 	$editor->Freeze;
 
@@ -769,9 +769,9 @@ sub event_on_char {
 	}
 
 	$editor->Thaw;
-	
+
 	$main->on_autocompletion if $config->autocomplete_always;
-	
+
 	return;
 }
 
