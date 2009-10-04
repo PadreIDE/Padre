@@ -724,6 +724,7 @@ sub event_on_char {
 	my ( $self, $editor, $event ) = @_;
 
 	my $config = Padre->ide->config;
+	my $main = Padre->ide->wx->main;
 
 	$editor->Freeze;
 
@@ -735,7 +736,7 @@ sub event_on_char {
 
 	my $key = $event->GetUnicodeKey;
 
-	if ( Padre->ide->config->autocomplete_brackets ) {
+	if ( $config->autocomplete_brackets ) {
 		my %table = (
 			34  => 34,  # " "
 			39  => 39,  # ' '
@@ -768,6 +769,9 @@ sub event_on_char {
 	}
 
 	$editor->Thaw;
+	
+	$main->on_autocompletion if $config->autocomplete_always;
+	
 	return;
 }
 
