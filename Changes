@@ -38,6 +38,7 @@ Changes for Perl Application Development and Refactoring Environment
     - padre --version displays a MessageBox under wperl.exe (AZAWAWI)
     - Option to continue on beginner errors (SEWI)
     - Made title bar configurable (SEWI)
+    - Autocomplete on every char (enable it in the preferences) (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
