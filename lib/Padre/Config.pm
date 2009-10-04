@@ -496,6 +496,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+setting(
+	name    => 'autocomplete_always',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
 
 # Behaviour Tuning
 # When running a script from the application some of the files might have
