@@ -533,6 +533,33 @@ sub introduce_temporary_variable {
 	return ();
 }
 
+# This sub handles a cached C-Tags - Parser object which is much faster
+# than recreating it on every autocomplete
+
+sub _perltags_parser {
+	my $self = shift;
+
+	require Parse::ExuberantCTags;
+
+	my $perltags_file = $self->{_perltags_file};
+	# Temporary until this is configurable:
+	if ( ! defined($perltags_file)) {
+		$self->{_perltags_file} = File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' );
+		$perltags_file = $self->{_perltags_file};
+	}
+	
+	my $parser;
+	if (defined($self->{_perltags_parser}) and defined($self->{_perltags_parser_time})
+	 and (($self->{_perltags_parser_time} > (time - 5)) 
+	  or ($self->{_perltags_parser_time} == (stat($perltags_file))[9]))) {
+		$parser = $self->{_perltags_parser};
+	} else {
+		$parser = Parse::ExuberantCTags->new($perltags_file);
+	}
+	
+	return $parser;
+}
+
 sub autocomplete {
 	my $self = shift;
 
@@ -558,13 +585,12 @@ sub autocomplete {
 	# i) hack Perl::Tags to be better (including inheritance)
 	# j) add inheritance support
 	# k) figure out how to do method auto-comp. on objects
-	require Parse::ExuberantCTags;
 
 	# check for variables
 	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
 		my $type   = $1;
-		my $parser = Parse::ExuberantCTags->new( File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' ) );
+		my $parser = $self->_perltags_parser;
 		if ( defined $parser ) {
 			my $tag = $parser->findTag( $prefix, partial => 1 );
 			my @words;
@@ -620,7 +646,7 @@ sub autocomplete {
 		my $class  = $1;
 		my $prefix = $2;
 		$prefix = '' if not defined $prefix;
-		my $parser = Parse::ExuberantCTags->new( File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' ) );
+		my $parser = $self->_perltags_parser;
 		if ( defined $parser ) {
 			my $tag = ( $prefix eq '' ) ? $parser->firstTag() : $parser->findTag( $prefix, partial => 1 );
 			my @words;
@@ -645,7 +671,8 @@ sub autocomplete {
 	# check for packages
 	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/ ) {
 		my $prefix = $1;
-		my $parser = Parse::ExuberantCTags->new( File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' ) );
+				my $parser = $self->_perltags_parser;
+
 		if ( defined $parser ) {
 			my $tag = $parser->findTag( $prefix, partial => 1 );
 			my @words;
