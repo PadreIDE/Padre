@@ -8,7 +8,7 @@ BEGIN {
 
 }
 
-use constant CONFIG_OPTIONS => 74;
+use constant CONFIG_OPTIONS => 75;
 
 # Move of Debug to Run Menu
 use Test::More tests => CONFIG_OPTIONS * 2 + 17;
