@@ -13,9 +13,9 @@ Padre::Document::Perl::Beginner - naive implementation of some beginner specific
 =head1 SYNOPSIS
 
   use Padre::Document::Perl::Beginner;
-  my $b = Padre::Document::Perl::Beginner->new;
-  if (not $b->check($data)) {
-      warn $b->error;
+  my $beginner = Padre::Document::Perl::Beginner->new;
+  if (not $beginner->check($data)) {
+      warn $beginner->error;
   }
 
 =head1 DESCRIPTION
