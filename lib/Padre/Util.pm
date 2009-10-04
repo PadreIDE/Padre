@@ -472,14 +472,18 @@ SCOPE: {
 
 	sub debug {
 		return if not $logging;
-
+		
+		my $logfile = Padre::Constant::LOG_FILE;
+		open my $fh, '>>', $logfile or return;
+		
 		my $ts = POSIX::strftime( "%H:%M:%S", localtime() );
-		print STDERR "$ts - @_\n";
+		
+		print $fh "$ts - @_\n";
 		if ($trace) {
-			print STDERR Carp::longmess();
+			print $fh Carp::longmess();
 		} else {
 			my ( $package, $filename, $line ) = caller;
-			print STDERR "           in line $line of $filename\n";
+			print $fh "           in line $line of $filename\n";
 		}
 	}
 }

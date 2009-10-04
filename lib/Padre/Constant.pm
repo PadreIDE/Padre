@@ -103,6 +103,7 @@ use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
 use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db' );
 use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
 use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
 
 # Check and create the directories that need to exist
 unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
