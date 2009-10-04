@@ -548,13 +548,25 @@ sub _perltags_parser {
 		$perltags_file = $self->{_perltags_file};
 	}
 	
+	# If we don't have a file (none specified in config, for example), return undef
+	# as the object and noone will try to use it
+	return undef if ! defined($perltags_file);
+	
 	my $parser;
+	# Use the cached parser if
+	#  - there is one
+	#  - the last check is younger than 5 seconds (don't check the file again)
+	#    or the file's mtime matches our cached mtime
 	if (defined($self->{_perltags_parser}) and defined($self->{_perltags_parser_time})
-	 and (($self->{_perltags_parser_time} > (time - 5)) 
+	 and (($self->{_perltags_parser_last} > (time - 5)) 
 	  or ($self->{_perltags_parser_time} == (stat($perltags_file))[9]))) {
 		$parser = $self->{_perltags_parser};
+		$self->{_perltags_parser_last} = time;
 	} else {
 		$parser = Parse::ExuberantCTags->new($perltags_file);
+		$self->{_perltags_parser} = $parser;
+		$self->{_perltags_parser_time} = (stat($perltags_file))[9];
+		$self->{_perltags_parser_last} = time;
 	}
 	
 	return $parser;
