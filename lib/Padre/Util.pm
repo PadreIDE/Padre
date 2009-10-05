@@ -472,12 +472,12 @@ SCOPE: {
 
 	sub debug {
 		return if not $logging;
-		
+
 		my $logfile = Padre::Constant::LOG_FILE;
 		open my $fh, '>>', $logfile or return;
-		
+
 		my $ts = POSIX::strftime( "%H:%M:%S", localtime() );
-		
+
 		print $fh "$ts - @_\n";
 		if ($trace) {
 			print $fh Carp::longmess();
@@ -489,15 +489,13 @@ SCOPE: {
 }
 
 sub humanbytes {
-	
+
 	my $Bytes = $_[0] || 0;
-	
-	eval {
-		require Format::Human::Bytes;
-	};
+
+	eval { require Format::Human::Bytes; };
 	return $Bytes if $@; # Doesn't look good, but works
 
-	return Format::Human::Bytes::base2($Bytes,1);
+	return Format::Human::Bytes::base2( $Bytes, 1 );
 
 }
 

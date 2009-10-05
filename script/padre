@@ -125,7 +125,8 @@ CODE
 		close $vbs;
 		system(qq{wscript "$vbsfile"});
 
-	} elsif ( ($^O =~ /linux|bsd/i ) ) {
+	} elsif ( ( $^O =~ /linux|bsd/i ) ) {
+
 		# Create Padre.desktop launcher on KDE/gnome
 		my $filename = "$ENV{HOME}/Desktop/Padre.desktop";
 		open my $fh, ">", $filename
