@@ -44,6 +44,10 @@ Changes for Perl Application Development and Refactoring Environment
     - Show file size on disk in statistics (SEWI)
     - Under Linux and BSD, 'padre --desktop' adds a Padre.desktop inside
       /usr/share/applications (AZAWAWI)
+    - When saving a module for the first time, Padre will attempt to guess the
+      name of the file so you don't need to type it (ADAMK)
+    - Added "Dump Expression" to Developer Plugin to evaluate and dump a single
+      expression within the Padre context (ADAMK)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
