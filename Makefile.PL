@@ -174,6 +174,8 @@ install_share_with_mofiles;
 use Config;
 unless ( $Config{usethreads} ) {
 	warn("Padre requires a perl built using threads\n");
+
+	# Exit 0 without Makefile means "Not Applicable" (NA in CPAN Testers)
 	exit(0);
 }
 
