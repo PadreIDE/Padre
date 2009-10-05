@@ -125,6 +125,14 @@ CODE
 		close $vbs;
 		system(qq{wscript "$vbsfile"});
 
+	} elsif ( $^O =~ /linux|bsd/i ) {
+		if($ENV{KDE_FULL_SESSION}) {
+			# implement KDE launchers here
+		} elsif($ENV{GNOME_DESKTOP_SESSION_ID}) {
+			# implement gnome launchers here
+		} else {
+			warn "--desktop is not supported for " . $^O . "\n";
+		}
 	} else {
 		warn "--desktop not implemented for " . $^O . "\n";
 	}
