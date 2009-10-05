@@ -125,14 +125,22 @@ CODE
 		close $vbs;
 		system(qq{wscript "$vbsfile"});
 
-	} elsif ( $^O =~ /linux|bsd/i ) {
-		if($ENV{KDE_FULL_SESSION}) {
-			# implement KDE launchers here
-		} elsif($ENV{GNOME_DESKTOP_SESSION_ID}) {
-			# implement gnome launchers here
-		} else {
-			warn "--desktop is not supported for " . $^O . "\n";
-		}
+	} elsif ( $^O =~ /linux|bsd/i and ($ENV{KDE_FULL_SESSION} or $ENV{GNOME_DESKTOP_SESSION_ID})) {
+		# Create Padre.desktop launcher inside KDE and/or gnome
+		my $filename = "/usr/share/applications/Padre.desktop";
+		open my $fh, ">", $filename
+			or die "Cannot create $filename: $!\n";
+		print $fh <<'DESKTOP';
+[Desktop Entry]
+Name=Padre
+Comment=Padre - The Perl IDE
+Exec=/usr/local/bin/padre
+Icon=padre.png
+Terminal=false
+Type=Application
+Categories=Development;Utility;			
+DESKTOP
+		close $fh;
 	} else {
 		warn "--desktop not implemented for " . $^O . "\n";
 	}
