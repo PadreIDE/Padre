@@ -1033,6 +1033,14 @@ detection as it sees fit, returning the file name as a string.
 =cut
 
 sub guess_filename {
+	my $self = shift;
+
+	# If the file already has an existing name, guess that
+	my $filename = $self->filename;
+	if ( defined $filename ) {
+		return (File::Spec->splitpath($filename))[2];
+	}
+
 	return undef;
 }
 

@@ -145,9 +145,14 @@ sub set_highlighter {
 
 sub guess_filename {
 	my $self = shift;
-	my $text = $self->text_get;
+
+	# Don't attempt a content-based guess if the file already has a name.
+	if ( $self->filename ) {
+		return $self->SUPER::guess_filename;
+	}
 
 	# Is this a script?
+	my $text = $self->text_get;
 	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
 
 		# It's impossible to predict the name of a script in
