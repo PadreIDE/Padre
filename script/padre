@@ -130,12 +130,14 @@ CODE
 		my $filename = "$ENV{HOME}/Desktop/Padre.desktop";
 		open my $fh, ">", $filename
 			or die "Cannot create $filename: $!\n";
-		print $fh <<'DESKTOP';
+		require Padre::Util;
+		my $logo = Padre::Util::sharedir('icons/padre/64x64/logo.png');
+		print $fh <<"DESKTOP";
 [Desktop Entry]
 Name=Padre
 Comment=Padre - The Perl IDE
 Exec=/usr/local/bin/padre
-Icon=padre.png
+Icon=$logo
 Terminal=false
 Type=Application
 Categories=Development;Utility;			
