@@ -4252,6 +4252,8 @@ sub on_doc_stats {
 			Wx::gettext('Size on disk: %s'),
 			Padre::Util::humanbytes( $doc->{file}->size )
 		) . $/;
+	} else {
+		$disksize = Wx::gettext('(Document not on disk)').$/;
 	}
 
 	my @messages = (
