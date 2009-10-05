@@ -60,9 +60,10 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		Wx::gettext('Dump PPI Document')     => 'dump_ppi_document',
+		Wx::gettext('Dump Expression')       => 'dump_expression',
 		Wx::gettext('Dump Current Document') => 'dump_document',
 		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
+		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
 		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
 
 		'---' => undef,
@@ -140,6 +141,27 @@ sub set_trace {
 	return;
 }
 
+sub dump_expression {
+	my $self = shift;
+
+	$DB::single = 1;
+
+	# Get the expression
+	require Padre::Wx::History::TextEntryDialog;
+	my $dialog = Padre::Wx::History::TextEntryDialog->new(
+		$self->main,
+		Wx::gettext("Expression"),
+		Wx::gettext("Expression"),
+		'Padre::Plugin::Devel.expression',
+	);
+	return if $dialog->ShowModal == Wx::wxID_CANCEL;
+	my $perl = $dialog->GetValue;
+	$dialog->Destroy;
+
+	# Evaluate it
+	return $self->_dump_eval( $perl );	
+}
+
 sub eval_document {
 	my $self = shift;
 	my $document = $self->current->document or return;
@@ -160,7 +182,7 @@ sub dump_document {
 #
 # Dumps the current Perl 5 PPI document to the current output window
 #
-sub dump_ppi_document {
+sub dump_ppi {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document;
