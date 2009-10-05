@@ -2990,15 +2990,22 @@ sub on_save_as {
 	my $self     = shift;
 	my $document = $self->current->document or return;
 	my $current  = $document->filename;
+
+	# Guess the directory to save to
 	if ( defined $current ) {
 		$self->{cwd} = File::Basename::dirname($current);
 	} elsif ( defined $document->project_dir ) {
 		$self->{cwd} = $document->project_dir;
 	}
+
+	# Guess the filename to save to
+	my $filename = $document->guess_filename;
+	$filename = '' unless defined $filename;
+
 	while (1) {
 		my $dialog = Wx::FileDialog->new(
 			$self, Wx::gettext("Save file as..."),
-			$self->{cwd}, "", "*.*", Wx::wxFD_SAVE,
+			$self->{cwd}, $filename, "*.*", Wx::wxFD_SAVE,
 		);
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 			return;
