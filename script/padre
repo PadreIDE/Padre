@@ -140,7 +140,8 @@ Exec=/usr/local/bin/padre
 Icon=$logo
 Terminal=false
 Type=Application
-Categories=Development;Utility;			
+Categories=Development;Utility;
+MimeType=text/plain;application/x-perl;application/x-perl6;
 DESKTOP
 		close $fh;
 	} else {
