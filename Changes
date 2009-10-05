@@ -41,6 +41,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Autocomplete on every char (enable it in the preferences) (SEWI)
     - Add logfile so the developer debugger of padre will print there
       and not on STDERR. (SZABGAB)
+    - Show file size on disk in statistics (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
