@@ -127,6 +127,9 @@ sub plugin_enable {
 	# Load the config
 	$self->{config} = $self->config_read;
 
+	# Enable data collection everywhere in Padre
+	$self->ide->{_popularity_contest} = $self;
+
 	# Enable counting on all events:
 	my $actions = $self->ide->actions;
 	foreach ( keys %$actions ) {
@@ -146,6 +149,9 @@ sub plugin_enable {
 # Called when the plugin is disabled by the user or due to an exit-call for Padre
 sub plugin_disable {
 	my $self = shift;
+
+	# End data collection
+	delete $self->ide->{_popularity_contest};
 
 	# Send a report using the data we collected so far
 	$self->report;
@@ -171,6 +177,21 @@ sub menu_plugins_simple {
 		Wx::gettext("About")               => '_about',
 		Wx::gettext("Show current report") => 'report_show',
 	];
+}
+
+# Add one to the usage statistic of an item
+sub count { # Item to count
+	my $self = shift;
+	my $item = shift;
+
+	$self->{stats} = {} if (!defined($self->{stats})) or (ref($self->{stats}) ne 'HASH');
+
+	# We want to keep our namespace limited to a reduced amount of chars:
+	$item =~ s/[^\w\.\-\+]+/\_/g;
+
+	++$self->{stats}->{$item};
+
+	return 1;
 }
 
 # Compile the report hash
@@ -216,6 +237,13 @@ sub _generate {
 	# Add all the action tracking data
 	foreach ( grep { $ACTION{$_} } sort keys %ACTION ) {
 		$report{"action.$_"} = $ACTION{$_};
+	}
+
+	# Add the stats data
+	if (defined($self->{stats}) and (ref($self->{stats}) eq 'HASH')) {
+		foreach ( keys(%{$self->{stats}}) ) {
+			$report{$_} = $self->{stats}->{$_};
+		}
 	}
 
 	return \%report;
