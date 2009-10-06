@@ -957,10 +957,28 @@ sub run {
 		'editor_right_margin_column',
 		$data->{editor_right_margin_column},
 	);
+
+	# Warn if the Perl interpreter is not executable:
+	if (! -x $data->{run_perl_cmd}){
+	my $ret = Wx::MessageBox(
+		Wx::gettext(sprintf('%s seems to be no executable Perl interpreter, abandon the new value?',$data->{run_perl_cmd})),
+		Wx::gettext('Save settings'),
+		Wx::wxYES_NO | Wx::wxCENTRE, $self,
+	);
+		if ( $ret == Wx::wxNO ) {
 	$config->set(
 		'run_perl_cmd',
 		$data->{run_perl_cmd}
 	);
+	}
+
+	} else {
+	$config->set(
+		'run_perl_cmd',
+		$data->{run_perl_cmd}
+	);
+	}
+
 	$config->set(
 		'run_interpreter_args_default',
 		$data->{run_interpreter_args_default}
