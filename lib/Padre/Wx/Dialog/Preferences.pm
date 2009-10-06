@@ -594,6 +594,9 @@ END_TEXT
 
 	# Default values stored in host configuration
 	my $defaults_table = [
+		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Perl interpreter:') ],
+			[ 'Wx::TextCtrl',   'run_perl_cmd', $config->run_perl_cmd ]
+		],
 		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Interpreter arguments:') ],
 			[ 'Wx::TextCtrl',   'run_interpreter_args_default', $config->run_interpreter_args_default ]
 		],
@@ -721,6 +724,7 @@ sub dialog {
 
 	my $appearance = $self->_appearance_panel($tb);
 	$tb->AddPage( $appearance, Wx::gettext('Appearance') );
+	
 	$tb->AddPage(
 		$self->_run_params_panel($tb),
 		Wx::gettext('Run Parameters')
@@ -952,6 +956,10 @@ sub run {
 	$config->set(
 		'editor_right_margin_column',
 		$data->{editor_right_margin_column},
+	);
+	$config->set(
+		'run_perl_cmd',
+		$data->{run_perl_cmd}
 	);
 	$config->set(
 		'run_interpreter_args_default',
