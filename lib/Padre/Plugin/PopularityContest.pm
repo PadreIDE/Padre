@@ -102,8 +102,8 @@ use Padre::Task::HTTPClient;
 our $VERSION = '0.47';
 our @ISA     = 'Padre::Plugin';
 
-our %ADDED   = ();
-our %STATS   = ();
+# Track the number of times actions are used
+our %ACTION  = ();
 
 
 
@@ -129,21 +129,16 @@ sub plugin_enable {
 
 	# Enable counting on all events:
 	my $actions = $self->ide->actions;
-	for ( keys(%$actions) ) {
+	foreach ( keys %$actions ) {
 		my $action = $actions->{$_};
+		my $name   = $action->name;
 
 		# Don't add my event twice in case someone diables/enables me:
-		my $addr = Scalar::Util::refaddr($action);
-		next if $ADDED{$addr};
-		$ADDED{$addr} = 1;
+		next if exists $ACTION{$name};
 
+		$ACTION{$name} = 0;
 		$action->add_event(
-			eval(
-				      ' return sub {'
-					. '++$Padre::Plugin::PopularityContest::stats{'
-					. "'action."
-					. $action->{name} . "'};" . '};'
-			)
+			sub { $ACTION{$name}++ }
 		);
 	}
 
@@ -180,9 +175,10 @@ sub menu_plugins_simple {
 	];
 }
 
-# Add some version and other information to the report
-sub _report_complete {
-	my $self = shift;
+# Compile the report hash
+sub _generate {
+	my $self   = shift;
+	my %report = ();
 
 	# The instance ID id generated randomly on Padre's startup, it is used
 	# to identify multiple reports from one running instance of Padre and
@@ -190,41 +186,45 @@ sub _report_complete {
 	# the same instance ID. Otherwise we would double-count the data from
 	# the first report (once at the first and once at the second report which
 	# also includs it).
-	$STATS{'padre.instance'} = $self->ide->{instance_id};
+	$report{'padre.instance'} = $self->ide->{instance_id};
 
 	# Versioning information
 	my $revision = Padre::Util::revision;
 	if ( defined $revision ) {
 		# This is a developer build
-		$STATS{'DEV'}            = 1;
-		$STATS{'padre.version'}  = $Padre::VERSION;
-		$STATS{'padre.revision'} = $revision;
+		$report{'DEV'}            = 1;
+		$report{'padre.version'}  = $Padre::VERSION;
+		$report{'padre.revision'} = $revision;
 	} else {
 		# This is a regular build
-		$STATS{'padre.version'}  = $Padre::VERSION;
+		$report{'padre.version'}  = $Padre::VERSION;
 	}
 
 	# The OS is transmitted as Win32, Linux or MAC (or other common names)
-	$STATS{'perl.osname'}   = $^O;
-	$STATS{'perl.archname'} = $Config::Config{archname};
+	$report{'perl.osname'}   = $^O;
+	$report{'perl.archname'} = $Config::Config{archname};
 
 	# The time this Padre has been running until now
-	$STATS{'padre.uptime'} = time - $^T;
+	$report{'padre.uptime'} = time - $^T;
 
 	# Perl and WxWidgets version numbers. They help to know which minimal
 	# version could be required
-	$STATS{'perl.version'}      = scalar($^V);
-	$STATS{'perl.wxversion'}    = $Wx::VERSION;
-	$STATS{'wx.version_string'} = Wx::wxVERSION_STRING();
+	$report{'perl.version'}      = scalar($^V) . '';
+	$report{'perl.wxversion'}    = $Wx::VERSION;
+	$report{'wx.version_string'} = Wx::wxVERSION_STRING();
+
+	# Add all the action tracking data
+	foreach ( grep { $ACTION{$_} } sort keys %ACTION ) {
+		$report{"action.$_"} = $ACTION{$_};
+	}
+
+	return \%report;
 }
 
+# Report data to server
 sub report {
-
-	# Report data to server
-
-	my $self = shift;
-
-	$self->_report_complete;
+	my $self   = shift;
+	my $report = $self->_generate;
 
 	# TODO: Enable as soon as the server is functional:
 	#	my $response = Padre::Task::HTTPClient->new(
@@ -232,20 +232,25 @@ sub report {
 	#		query => \%STATS, method => 'POST'
 	#	)->run;
 
+	return 1;
 }
 
 sub report_show {
-	my $self = shift;
+	my $self   = shift;
+	my $report = $self->_generate;
 
-	$self->_report_complete;
+	$DB::single = 1;
 
-	my $textbox = Padre::Wx::Dialog::Text->show(
+	# Display the report as YAML for mid-level readability
+	require YAML::Tiny;
+	my $yaml = YAML::Tiny::Dump( $report );
+
+	# Show the result in a text box
+	Padre::Wx::Dialog::Text->show(
 		$self->main,
-		Wx::gettext('PopulartiyReport - report'),
-		join( "\n", map { "$_ => $STATS{$_}"; } ( sort( keys(%STATS) ) ) )
+		Wx::gettext('Popularity Contest Report'),
+		$yaml,
 	);
-
-	return;
 }
 
 
