@@ -959,7 +959,7 @@ sub run {
 	);
 
 	# Warn if the Perl interpreter is not executable:
-	if (! -x $data->{run_perl_cmd}){
+	if (defined($data->{run_perl_cmd})and ($data->{run_perl_cmd} ne '') and (! -x $data->{run_perl_cmd})){
 	my $ret = Wx::MessageBox(
 		Wx::gettext(sprintf('%s seems to be no executable Perl interpreter, abandon the new value?',$data->{run_perl_cmd})),
 		Wx::gettext('Save settings'),
