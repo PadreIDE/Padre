@@ -215,13 +215,23 @@ sub get_command {
 		: $self->filename;
 
 	# Run with console Perl to prevent unexpected results under wperl
-	# TODO: get preferred Perl from configuration
-	#       Ticket #638
 	# The configuration values is cheaper to get compared to cperl(),
 	# try it first.
 	my $perl = $config->run_perl_cmd;
-	$perl ||= Padre::Perl::cperl();
+	
+	# Warn if the Perl interpreter is not executable:
+	if (defined($perl) and ($perl ne '') and ( ! -x $perl)) {
+	my $ret = Wx::MessageBox(
+		Wx::gettext(sprintf('%s seems to be no executable Perl interpreter, use the system default perl instead?',$perl)),
+		Wx::gettext('Run'),
+		Wx::wxYES_NO | Wx::wxCENTRE, Padre->ide->wx->main,
+	);
+		$perl = Padre::Perl::cperl()
+				if $ret == Wx::wxYES;
 
+	} else {
+		$perl = Padre::Perl::cperl();
+	}
 	# Set default arguments
 	my %run_args = (
 		interpreter => $config->run_interpreter_args_default,
