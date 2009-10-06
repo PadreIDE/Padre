@@ -159,7 +159,7 @@ sub dump_expression {
 	$dialog->Destroy;
 
 	# Evaluate it
-	return $self->_dump_eval( $perl );	
+	return $self->_dump_eval($perl);
 }
 
 sub eval_document {

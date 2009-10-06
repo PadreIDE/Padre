@@ -103,7 +103,7 @@ our $VERSION = '0.47';
 our @ISA     = 'Padre::Plugin';
 
 # Track the number of times actions are used
-our %ACTION  = ();
+our %ACTION = ();
 
 
 
@@ -137,9 +137,7 @@ sub plugin_enable {
 		next if exists $ACTION{$name};
 
 		$ACTION{$name} = 0;
-		$action->add_event(
-			sub { $ACTION{$name}++ }
-		);
+		$action->add_event( sub { $ACTION{$name}++ } );
 	}
 
 	return 1;
@@ -191,13 +189,15 @@ sub _generate {
 	# Versioning information
 	my $revision = Padre::Util::revision;
 	if ( defined $revision ) {
+
 		# This is a developer build
 		$report{'DEV'}            = 1;
 		$report{'padre.version'}  = $Padre::VERSION;
 		$report{'padre.revision'} = $revision;
 	} else {
+
 		# This is a regular build
-		$report{'padre.version'}  = $Padre::VERSION;
+		$report{'padre.version'} = $Padre::VERSION;
 	}
 
 	# The OS is transmitted as Win32, Linux or MAC (or other common names)
@@ -243,7 +243,7 @@ sub report_show {
 
 	# Display the report as YAML for mid-level readability
 	require YAML::Tiny;
-	my $yaml = YAML::Tiny::Dump( $report );
+	my $yaml = YAML::Tiny::Dump($report);
 
 	# Show the result in a text box
 	Padre::Wx::Dialog::Text->show(

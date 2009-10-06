@@ -1038,7 +1038,7 @@ sub guess_filename {
 	# If the file already has an existing name, guess that
 	my $filename = $self->filename;
 	if ( defined $filename ) {
-		return (File::Spec->splitpath($filename))[2];
+		return ( File::Spec->splitpath($filename) )[2];
 	}
 
 	return undef;
