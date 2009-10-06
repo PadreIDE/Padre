@@ -1962,7 +1962,7 @@ sub open_session {
 	$self->Thaw;
 
 	# This could run in non-blocking space:
-	$self->set_title; close;
+	$self->set_title; 
 }
 
 =pod
