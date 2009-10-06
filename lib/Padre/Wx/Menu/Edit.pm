@@ -179,6 +179,18 @@ sub new {
 		},
 	);
 
+	$self->add_menu_item(
+		$edit_copy,
+		name       => 'edit.copy_content',
+		label      => Wx::gettext('Copy editor content'),
+		menu_event => sub {
+			my $document = Padre::Current->document;
+			return if ! defined($document->{file});
+			my $editor = Padre::Current->editor;
+			$editor->put_text_to_clipboard($document->text_get);
+		},
+	);
+
         # Paste
 	$self->{paste} = $self->add_menu_item(
 		$self,
