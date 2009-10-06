@@ -183,7 +183,8 @@ sub _create_fields {
 			Padre->ide->{session}
 		)
 		)[0]->{name}
-		if defined( Padre->ide->{session} ) || '';
+		if defined( Padre->ide->{session} );
+	$Current_Session ||= ''; # Empty value for combo box, better than undef
 
 
 	# session name
