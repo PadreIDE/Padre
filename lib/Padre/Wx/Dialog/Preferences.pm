@@ -594,7 +594,7 @@ END_TEXT
 
 	# Default values stored in host configuration
 	my $defaults_table = [
-		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Perl interpreter:') ],
+		[   [ 'Wx::StaticText', undef,          Wx::gettext('Perl interpreter:') ],
 			[ 'Wx::TextCtrl',   'run_perl_cmd', $config->run_perl_cmd ]
 		],
 		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Interpreter arguments:') ],
@@ -724,7 +724,7 @@ sub dialog {
 
 	my $appearance = $self->_appearance_panel($tb);
 	$tb->AddPage( $appearance, Wx::gettext('Appearance') );
-	
+
 	$tb->AddPage(
 		$self->_run_params_panel($tb),
 		Wx::gettext('Run Parameters')
@@ -959,24 +959,29 @@ sub run {
 	);
 
 	# Warn if the Perl interpreter is not executable:
-	if (defined($data->{run_perl_cmd})and ($data->{run_perl_cmd} ne '') and (! -x $data->{run_perl_cmd})){
-	my $ret = Wx::MessageBox(
-		Wx::gettext(sprintf('%s seems to be no executable Perl interpreter, abandon the new value?',$data->{run_perl_cmd})),
-		Wx::gettext('Save settings'),
-		Wx::wxYES_NO | Wx::wxCENTRE, $self,
-	);
+	if ( defined( $data->{run_perl_cmd} ) and ( $data->{run_perl_cmd} ne '' ) and ( !-x $data->{run_perl_cmd} ) ) {
+		my $ret = Wx::MessageBox(
+			Wx::gettext(
+				sprintf(
+					'%s seems to be no executable Perl interpreter, abandon the new value?', $data->{run_perl_cmd}
+				)
+			),
+			Wx::gettext('Save settings'),
+			Wx::wxYES_NO | Wx::wxCENTRE,
+			$self,
+		);
 		if ( $ret == Wx::wxNO ) {
-	$config->set(
-		'run_perl_cmd',
-		$data->{run_perl_cmd}
-	);
-	}
+			$config->set(
+				'run_perl_cmd',
+				$data->{run_perl_cmd}
+			);
+		}
 
 	} else {
-	$config->set(
-		'run_perl_cmd',
-		$data->{run_perl_cmd}
-	);
+		$config->set(
+			'run_perl_cmd',
+			$data->{run_perl_cmd}
+		);
 	}
 
 	$config->set(
