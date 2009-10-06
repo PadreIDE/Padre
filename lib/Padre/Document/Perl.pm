@@ -217,7 +217,10 @@ sub get_command {
 	# Run with console Perl to prevent unexpected results under wperl
 	# TODO: get preferred Perl from configuration
 	#       Ticket #638
-	my $perl = Padre::Perl::cperl();
+	# The configuration values is cheaper to get compared to cperl(),
+	# try it first.
+	my $perl = $config->run_perl_cmd;
+	$perl ||= Padre::Perl::cperl();
 
 	# Set default arguments
 	my %run_args = (
