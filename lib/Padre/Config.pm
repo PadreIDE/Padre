@@ -518,6 +518,15 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 'same',
 );
+setting(
+	name    => 'run_perl_cmd',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HOST,
+	# We don't get a default from Padre::Perl, because the saved value
+	# may be outdated sometimes in the future, reading it fresh on
+	# every run makes us more future-compatible
+	default => '',
+);
 
 # Move of stacktrace to run menu: will be removed (run_stacktrace)
 setting(
