@@ -4004,8 +4004,8 @@ sub find_editor_of_file {
 		my $editor   = $notebook->GetPage($id) or return;
 		my $document = $editor->{Document}     or return;
 		defined( $document->{file} ) or next;
-		my $doc_filename = $document->{file}->{Filename} or next;
-		return $id if $doc_filename eq $file->{Filename};
+		my $doc_filename = $document->{file}->{filename} or next;
+		return $id if $doc_filename eq $file->{filename};
 	}
 	return;
 }

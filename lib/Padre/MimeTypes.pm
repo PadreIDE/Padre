@@ -550,7 +550,7 @@ sub guess_mimetype {
 	my $filename;
 
 	if ( ref($file) ) {
-		$filename = $file->{Filename};
+		$filename = $file->{filename};
 
 		# Combining this to one line would check if the method ->mime exists, not the result!
 		my $MIME = $file->mime;
