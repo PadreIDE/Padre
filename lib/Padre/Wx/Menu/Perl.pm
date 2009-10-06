@@ -146,8 +146,8 @@ sub new {
 #			$doc->introduce_temporary_variable($replacement);
 #		},
 #	);
-
-	$self->AppendSeparator;
+#
+#	$self->AppendSeparator;
 
 	$self->add_menu_item(
 		$self,
