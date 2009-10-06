@@ -134,7 +134,52 @@ sub new {
 			$editor->Copy;
 		},
 	);
+	
+	# Special copy
+	my $edit_copy = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Copy specials"),
+		$edit_copy
+	);
 
+	$self->add_menu_item(
+		$edit_copy,
+		name       => 'edit.copy_filename',
+		label      => Wx::gettext('Copy full filename'),
+		menu_event => sub {
+			my $document = Padre::Current->document;
+			return if ! defined($document->{file});
+			my $editor = Padre::Current->editor;
+			$editor->put_text_to_clipboard($document->{file}->{filename});
+		},
+	);
+
+	$self->add_menu_item(
+		$edit_copy,
+		name       => 'edit.copy_basename',
+		label      => Wx::gettext('Copy filename'),
+		menu_event => sub {
+			my $document = Padre::Current->document;
+			return if ! defined($document->{file});
+			my $editor = Padre::Current->editor;
+			$editor->put_text_to_clipboard($document->{file}->basename);
+		},
+	);
+
+	$self->add_menu_item(
+		$edit_copy,
+		name       => 'edit.copy_dirname',
+		label      => Wx::gettext('Copy directory name'),
+		menu_event => sub {
+			my $document = Padre::Current->document;
+			return if ! defined($document->{file});
+			my $editor = Padre::Current->editor;
+			$editor->put_text_to_clipboard($document->{file}->dirname);
+		},
+	);
+
+        # Paste
 	$self->{paste} = $self->add_menu_item(
 		$self,
 		name       => 'edit.paste',
