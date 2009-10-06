@@ -5,13 +5,13 @@ use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Current qw{_CURRENT};
-use Padre::Util              ();
-use Padre::Wx                ();
-use Padre::Wx::Menu::File    ();
-use Padre::Wx::Menu::Edit    ();
-use Padre::Wx::Menu::Search  ();
-use Padre::Wx::Menu::View    ();
-use Padre::Wx::Menu::Perl    ();
+use Padre::Util             ();
+use Padre::Wx               ();
+use Padre::Wx::Menu::File   ();
+use Padre::Wx::Menu::Edit   ();
+use Padre::Wx::Menu::Search ();
+use Padre::Wx::Menu::View   ();
+use Padre::Wx::Menu::Perl   ();
 use Padre::Wx::Menu::Refactor();
 use Padre::Wx::Menu::Run     ();
 use Padre::Wx::Menu::Plugins ();
@@ -29,16 +29,16 @@ use Class::XSAccessor getters => {
 
 	# Don't add accessors to here until they have been
 	# upgraded to be fully encapsulated classes.
-	file    => 'file',
-	edit    => 'edit',
-	search  => 'search',
-	view    => 'view',
-	perl    => 'perl',
-	refactor=> 'refactor',
-	run     => 'run',
-	plugins => 'plugins',
-	window  => 'window',
-	help    => 'help',
+	file     => 'file',
+	edit     => 'edit',
+	search   => 'search',
+	view     => 'view',
+	perl     => 'perl',
+	refactor => 'refactor',
+	run      => 'run',
+	plugins  => 'plugins',
+	window   => 'window',
+	help     => 'help',
 };
 
 sub new {
@@ -57,17 +57,17 @@ sub new {
 	}, $class;
 
 	# Generate the individual menus
-	$self->{main}    = $main;
-	$self->{file}    = Padre::Wx::Menu::File->new($main);
-	$self->{edit}    = Padre::Wx::Menu::Edit->new($main);
-	$self->{search}  = Padre::Wx::Menu::Search->new($main);
-	$self->{view}    = Padre::Wx::Menu::View->new($main);
-	$self->{perl}    = Padre::Wx::Menu::Perl->new($main);
-	$self->{refactor}= Padre::Wx::Menu::Refactor->new($main);
-	$self->{run}     = Padre::Wx::Menu::Run->new($main);
-	$self->{plugins} = Padre::Wx::Menu::Plugins->new($main);
-	$self->{window}  = Padre::Wx::Menu::Window->new($main);
-	$self->{help}    = Padre::Wx::Menu::Help->new($main);
+	$self->{main}     = $main;
+	$self->{file}     = Padre::Wx::Menu::File->new($main);
+	$self->{edit}     = Padre::Wx::Menu::Edit->new($main);
+	$self->{search}   = Padre::Wx::Menu::Search->new($main);
+	$self->{view}     = Padre::Wx::Menu::View->new($main);
+	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
+	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
+	$self->{run}      = Padre::Wx::Menu::Run->new($main);
+	$self->{plugins}  = Padre::Wx::Menu::Plugins->new($main);
+	$self->{window}   = Padre::Wx::Menu::Window->new($main);
+	$self->{help}     = Padre::Wx::Menu::Help->new($main);
 
 	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
@@ -107,7 +107,7 @@ sub refresh {
 
 	# Add/Remove the Perl menu
 	if ( $perl and not $menu ) {
-		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
+		$self->wx->Insert( 4, $self->perl->wx,     Wx::gettext("&Perl") );
 		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
 	} elsif ( $menu and not $perl ) {
 		$self->wx->Remove(5); # refactor
@@ -150,7 +150,7 @@ sub refresh_top {
 
 	# Add/Remove the Perl menu
 	if ( $perl and not $menu ) {
-		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
+		$self->wx->Insert( 4, $self->perl->wx,     Wx::gettext("&Perl") );
 		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
 	} elsif ( $menu and not $perl ) {
 		$self->wx->Remove(5); # refactor

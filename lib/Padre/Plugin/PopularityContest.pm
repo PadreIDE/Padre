@@ -184,7 +184,7 @@ sub count { # Item to count
 	my $self = shift;
 	my $item = shift;
 
-	$self->{stats} = {} if (!defined($self->{stats})) or (ref($self->{stats}) ne 'HASH');
+	$self->{stats} = {} if ( !defined( $self->{stats} ) ) or ( ref( $self->{stats} ) ne 'HASH' );
 
 	# We want to keep our namespace limited to a reduced amount of chars:
 	$item =~ s/[^\w\.\-\+]+/\_/g;
@@ -240,8 +240,8 @@ sub _generate {
 	}
 
 	# Add the stats data
-	if (defined($self->{stats}) and (ref($self->{stats}) eq 'HASH')) {
-		foreach ( keys(%{$self->{stats}}) ) {
+	if ( defined( $self->{stats} ) and ( ref( $self->{stats} ) eq 'HASH' ) ) {
+		foreach ( keys( %{ $self->{stats} } ) ) {
 			$report{$_} = $self->{stats}->{$_};
 		}
 	}

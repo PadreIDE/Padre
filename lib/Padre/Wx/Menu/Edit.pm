@@ -134,7 +134,7 @@ sub new {
 			$editor->Copy;
 		},
 	);
-	
+
 	# Special copy
 	my $edit_copy = Wx::Menu->new;
 	$self->Append(
@@ -149,9 +149,9 @@ sub new {
 		label      => Wx::gettext('Copy full filename'),
 		menu_event => sub {
 			my $document = Padre::Current->document;
-			return if ! defined($document->{file});
+			return if !defined( $document->{file} );
 			my $editor = Padre::Current->editor;
-			$editor->put_text_to_clipboard($document->{file}->{filename});
+			$editor->put_text_to_clipboard( $document->{file}->{filename} );
 		},
 	);
 
@@ -161,9 +161,9 @@ sub new {
 		label      => Wx::gettext('Copy filename'),
 		menu_event => sub {
 			my $document = Padre::Current->document;
-			return if ! defined($document->{file});
+			return if !defined( $document->{file} );
 			my $editor = Padre::Current->editor;
-			$editor->put_text_to_clipboard($document->{file}->basename);
+			$editor->put_text_to_clipboard( $document->{file}->basename );
 		},
 	);
 
@@ -173,9 +173,9 @@ sub new {
 		label      => Wx::gettext('Copy directory name'),
 		menu_event => sub {
 			my $document = Padre::Current->document;
-			return if ! defined($document->{file});
+			return if !defined( $document->{file} );
 			my $editor = Padre::Current->editor;
-			$editor->put_text_to_clipboard($document->{file}->dirname);
+			$editor->put_text_to_clipboard( $document->{file}->dirname );
 		},
 	);
 
@@ -185,13 +185,13 @@ sub new {
 		label      => Wx::gettext('Copy editor content'),
 		menu_event => sub {
 			my $document = Padre::Current->document;
-			return if ! defined($document->{file});
+			return if !defined( $document->{file} );
 			my $editor = Padre::Current->editor;
-			$editor->put_text_to_clipboard($document->text_get);
+			$editor->put_text_to_clipboard( $document->text_get );
 		},
 	);
 
-        # Paste
+	# Paste
 	$self->{paste} = $self->add_menu_item(
 		$self,
 		name       => 'edit.paste',
