@@ -248,7 +248,12 @@ sub new {
 		$self->set_mimetype( $self->guess_mimetype );
 	}
 
+	
+
 	$self->rebless;
+
+	Padre->ide->{_popularity_contest}->count('mime.'.$self->get_mimetype)
+	 if defined(Padre->ide->{_popularity_contest});
 
 	return $self;
 }
