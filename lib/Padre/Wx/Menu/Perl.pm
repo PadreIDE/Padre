@@ -72,80 +72,80 @@ sub new {
 	$self->AppendSeparator;
 
 	# Perl-Specific Refactoring
-	$self->{rename_variable} = $self->add_menu_item(
-		$self,
-		name       => 'perl.rename_variable',
-		label      => Wx::gettext('Lexically Rename Variable'),
-		menu_event => sub {
-			my $doc = $_[0]->current->document;
-			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-			require Padre::Wx::History::TextEntryDialog;
-			my $dialog = Padre::Wx::History::TextEntryDialog->new(
-				$_[0],
-				Wx::gettext("Replacement"),
-				Wx::gettext("Replacement"),
-				'$foo',
-			);
-			return if $dialog->ShowModal == Wx::wxID_CANCEL;
-			my $replacement = $dialog->GetValue;
-			$dialog->Destroy;
-			return unless defined $replacement;
-			$doc->lexical_variable_replacement($replacement);
-		},
-	);
-
-	$self->{extract_subroutine} = $self->add_menu_item(
-		$self,
-		name       => 'perl.extract_subroutine',
-		label      => Wx::gettext('Extract Subroutine'),
-		menu_event => sub {
-			my $doc    = $_[0]->current->document;
-			my $editor = $doc->editor;
-			my $code   = $editor->GetSelectedText();
-			require Padre::Wx::History::TextEntryDialog;
-			my $dialog = Padre::Wx::History::TextEntryDialog->new(
-				$_[0],
-				Wx::gettext("Please enter a name for the new subroutine"),
-				Wx::gettext("New Subroutine Name"),
-				'$foo',
-			);
-			return if $dialog->ShowModal == Wx::wxID_CANCEL;
-			my $newname = $dialog->GetValue;
-			$dialog->Destroy;
-			return unless defined $newname;
-
-			require Devel::Refactor;
-			my $refactory = Devel::Refactor->new;
-			my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
-			$editor->BeginUndoAction(); # do the edit atomically
-			$editor->ReplaceSelection($new_sub_call);
-			$editor->DocumentEnd();     # TODO: find a better place to put the new subroutine
-			$editor->AddText($new_code);
-			$editor->EndUndoAction();
-		},
-	);
-
-	$self->{introduce_temporary} = $self->add_menu_item(
-		$self,
-		name       => 'perl.introduce_temporary',
-		label      => Wx::gettext('Introduce Temporary Variable'),
-		menu_event => sub {
-			my $doc = $_[0]->current->document;
-			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-			require Padre::Wx::History::TextEntryDialog;
-			my $dialog = Padre::Wx::History::TextEntryDialog->new(
-				$_[0],
-				Wx::gettext("Variable Name"),
-				Wx::gettext("Variable Name"),
-				'$tmp',
-			);
-			return if $dialog->ShowModal == Wx::wxID_CANCEL;
-			my $replacement = $dialog->GetValue;
-			$dialog->Destroy;
-			return unless defined $replacement;
-			$doc->introduce_temporary_variable($replacement);
-		},
-	);
+#	$self->{rename_variable} = $self->add_menu_item(
+#		$self,
+#		name       => 'perl.rename_variable',
+#		label      => Wx::gettext('Lexically Rename Variable'),
+#		menu_event => sub {
+#			my $doc = $_[0]->current->document;
+#			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+#			require Padre::Wx::History::TextEntryDialog;
+#			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+#				$_[0],
+#				Wx::gettext("Replacement"),
+#				Wx::gettext("Replacement"),
+#				'$foo',
+#			);
+#			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+#			my $replacement = $dialog->GetValue;
+#			$dialog->Destroy;
+#			return unless defined $replacement;
+#			$doc->lexical_variable_replacement($replacement);
+#		},
+#	);
+#
+#	$self->{extract_subroutine} = $self->add_menu_item(
+#		$self,
+#		name       => 'perl.extract_subroutine',
+#		label      => Wx::gettext('Extract Subroutine'),
+#		menu_event => sub {
+#			my $doc    = $_[0]->current->document;
+#			my $editor = $doc->editor;
+#			my $code   = $editor->GetSelectedText();
+#			require Padre::Wx::History::TextEntryDialog;
+#			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+#				$_[0],
+#				Wx::gettext("Please enter a name for the new subroutine"),
+#				Wx::gettext("New Subroutine Name"),
+#				'$foo',
+#			);
+#			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+#			my $newname = $dialog->GetValue;
+#			$dialog->Destroy;
+#			return unless defined $newname;
+#
+#			require Devel::Refactor;
+#			my $refactory = Devel::Refactor->new;
+#			my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
+#			$editor->BeginUndoAction(); # do the edit atomically
+#			$editor->ReplaceSelection($new_sub_call);
+#			$editor->DocumentEnd();     # TODO: find a better place to put the new subroutine
+#			$editor->AddText($new_code);
+#			$editor->EndUndoAction();
+#		},
+#	);
+#
+#	$self->{introduce_temporary} = $self->add_menu_item(
+#		$self,
+#		name       => 'perl.introduce_temporary',
+#		label      => Wx::gettext('Introduce Temporary Variable'),
+#		menu_event => sub {
+#			my $doc = $_[0]->current->document;
+#			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+#			require Padre::Wx::History::TextEntryDialog;
+#			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+#				$_[0],
+#				Wx::gettext("Variable Name"),
+#				Wx::gettext("Variable Name"),
+#				'$tmp',
+#			);
+#			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+#			my $replacement = $dialog->GetValue;
+#			$dialog->Destroy;
+#			return unless defined $replacement;
+#			$doc->introduce_temporary_variable($replacement);
+#		},
+#	);
 
 	$self->AppendSeparator;
 
@@ -213,9 +213,9 @@ sub refresh {
 	$self->{find_brace}->Enable($perl);
 	$self->{find_variable}->Enable($perl);
 	$self->{find_variable}->Enable($perl);
-	$self->{rename_variable}->Enable($perl);
-	$self->{introduce_temporary}->Enable($perl);
-	$self->{extract_subroutine}->Enable($perl);
+#	$self->{rename_variable}->Enable($perl);
+#	$self->{introduce_temporary}->Enable($perl);
+#	$self->{extract_subroutine}->Enable($perl);
 	$self->{beginner_check}->Enable($perl);
 
 	# Apply config-driven state

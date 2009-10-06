@@ -12,6 +12,7 @@ use Padre::Wx::Menu::Edit    ();
 use Padre::Wx::Menu::Search  ();
 use Padre::Wx::Menu::View    ();
 use Padre::Wx::Menu::Perl    ();
+use Padre::Wx::Menu::Refactor();
 use Padre::Wx::Menu::Run     ();
 use Padre::Wx::Menu::Plugins ();
 use Padre::Wx::Menu::Window  ();
@@ -33,6 +34,7 @@ use Class::XSAccessor getters => {
 	search  => 'search',
 	view    => 'view',
 	perl    => 'perl',
+	refactor=> 'refactor',
 	run     => 'run',
 	plugins => 'plugins',
 	window  => 'window',
@@ -61,6 +63,7 @@ sub new {
 	$self->{search}  = Padre::Wx::Menu::Search->new($main);
 	$self->{view}    = Padre::Wx::Menu::View->new($main);
 	$self->{perl}    = Padre::Wx::Menu::Perl->new($main);
+	$self->{refactor}= Padre::Wx::Menu::Refactor->new($main);
 	$self->{run}     = Padre::Wx::Menu::Run->new($main);
 	$self->{plugins} = Padre::Wx::Menu::Plugins->new($main);
 	$self->{window}  = Padre::Wx::Menu::Window->new($main);
@@ -105,8 +108,10 @@ sub refresh {
 	# Add/Remove the Perl menu
 	if ( $perl and not $menu ) {
 		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
+		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
 	} elsif ( $menu and not $perl ) {
-		$self->wx->Remove(4);
+		$self->wx->Remove(5); # refactor
+		$self->wx->Remove(4); # perl
 	}
 
 	# Refresh individual menus
@@ -120,6 +125,7 @@ sub refresh {
 	# unless we're actually showing it.
 	if ($perl) {
 		$self->perl->refresh($current);
+		$self->refactor->refresh($current);
 	}
 
 	# plugin menu requires special flag as it was leaking memory
@@ -145,8 +151,10 @@ sub refresh_top {
 	# Add/Remove the Perl menu
 	if ( $perl and not $menu ) {
 		$self->wx->Insert( 4, $self->perl->wx, Wx::gettext("&Perl") );
+		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
 	} elsif ( $menu and not $perl ) {
-		$self->wx->Remove(4);
+		$self->wx->Remove(5); # refactor
+		$self->wx->Remove(4); # perl
 	}
 
 	return 1;
