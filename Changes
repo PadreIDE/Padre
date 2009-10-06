@@ -48,6 +48,7 @@ Changes for Perl Application Development and Refactoring Environment
       name of the file so you don't need to type it (ADAMK)
     - Added "Dump Expression" to Developer Plugin to evaluate and dump a single
       expression within the Padre context (ADAMK)
+    - Perl interpreter for running scripts is now configurable (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
