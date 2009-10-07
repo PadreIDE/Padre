@@ -201,6 +201,7 @@ a HTTP or FTP based file (they return 0).
 
 # Fallback if the module has no such function:
 sub can_run {
+
 	# If the module does not state that it could do "run",
 	# we return a safe default of 0.
 	return 0;

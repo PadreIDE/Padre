@@ -253,7 +253,8 @@ sub new {
 	$self->rebless;
 
 	Padre->ide->{_popularity_contest}->count( 'mime.' . $self->get_mimetype )
-		if (! defined($ENV{PADRE_IS_TEST})) and defined( Padre->ide->{_popularity_contest} );
+		if ( !defined( $ENV{PADRE_IS_TEST} ) )
+		and defined( Padre->ide->{_popularity_contest} );
 
 	return $self;
 }
