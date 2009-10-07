@@ -1558,7 +1558,7 @@ sub on_run_tests {
 	}
 
 	# TODO probably should fetch the current project name
-	my $filename = $document->filename;
+	my $filename = $document->{file}->filename if defined($document->{file});
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
 	}
@@ -1610,7 +1610,7 @@ sub on_run_this_test {
 	}
 
 	# TODO probably should fetch the current project name
-	my $filename = $document->filename;
+	my $filename = $document->{file}->filename if defined($document->{file});
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
 	}
@@ -1829,7 +1829,7 @@ sub debug_perl {
 	}
 
 	# Check the file name
-	my $filename = $document->filename;
+	my $filename = $document->{file}->filename if defined($document->{file});
 
 	#	unless ( $filename =~ /\.pl$/i ) {
 	#		return $self->error(Wx::gettext("Only .pl files can be executed"));
@@ -2989,7 +2989,7 @@ Returns true if saved, false if cancelled.
 sub on_save_as {
 	my $self     = shift;
 	my $document = $self->current->document or return;
-	my $current  = $document->filename;
+	my $current  = $document->{file}->filename if defined($document->{file});
 
 	# Guess the directory to save to
 	if ( defined $current ) {
@@ -3053,12 +3053,15 @@ sub on_save_as {
 	$document->rebless;
 	$document->colourize;
 
-	Padre::DB::History->create(
-		type => 'files',
-		name => $document->filename,
-	);
-	$self->menu->file->update_recentfiles;
-
+	$filename = $document->{file}->filename if defined($document->{file});
+	if (defined($filename)) {
+		Padre::DB::History->create(
+			type => 'files',
+			name => $filename,
+		);
+		$self->menu->file->update_recentfiles;
+	}
+	
 	$self->refresh;
 
 	return 1;
@@ -3422,7 +3425,7 @@ sub on_diff {
 	my $self     = shift;
 	my $document = $self->current->document or return;
 	my $text     = $document->text_get;
-	my $file     = $document->filename;
+	my $file     = $document->{file}->filename if defined($document->{file});
 	unless ($file) {
 		return $self->error( Wx::gettext("Cannot diff if file was never saved") );
 	}
@@ -4606,7 +4609,8 @@ sub change_highlighter {
 		my $document = $editor->{Document};
 		next if $document->get_mimetype ne $mime_type;
 		$document->set_highlighter($module);
-		Padre::Util::debug( "Set highlighter to to $module for $document in file " . ( $document->filename || '' ) );
+		my $filename = $document->{file}->filename if defined($document->{file});
+		Padre::Util::debug( "Set highlighter to to $module for $document in file " . ( $filename || '' ) );
 		my $lexer = $document->lexer;
 		$editor->SetLexer($lexer);
 
