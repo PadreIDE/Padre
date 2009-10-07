@@ -838,19 +838,32 @@ sub event_on_char {
 		}
 	}
 	
+	# This only matches if all conditions are met:
+	#  - config option enabled
+	#  - none of the following keys pressed: a-z, A-Z, 0-9
+	#  - cursor position is at end of line
 	if ($config->autocomplete_method and (($key < 48) or (($key>57) and ($key <65))or (($key>90) and ($key <97)) or ($key > 122)) and ($pos == $last)) {
 		# from beginning to current position
 		my $prefix = $editor->GetTextRange( 0, $pos );
+		# methods can't live outside packages, so ignore them
 		if ($prefix =~ /package /) {
 			my $linetext = $editor->GetTextRange( $first,$last );
-			print STDERR ord(substr($linetext,-1))."\n";
+			# we only match "sub foo" at the beginning of a line
+			# but no inline subs (eval, anonymus, etc.)
+			# The end-of-subname match is included in the first if
+			# which match the last key pressed (which is not part of
+			# $linetext at this moment:
 			if ($linetext =~ /^sub[\s\t]+\w+$/) {
+				# Add the default skeleton of a method,
+				# the \t should be replaced by
+				# (space * current_indent_width)
 				$editor->AddText(' {'.$self->newline.
 					"\t".'my $self = shift;'.$self->newline.
 					"\t".$self->newline.
 					'}'.$self->newline.
 					$self->newline
 				);
+				# Ready for typing in the new method:
 				$editor->GotoPos($last + 23);
 				
 			}
