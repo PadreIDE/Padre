@@ -187,6 +187,25 @@ sub blocks {
 	return;
 }
 
+=head2 can_run
+
+  $file->can_run;
+
+Returns 1 if the protocol allows execution of files or 0 if it doesn't.
+
+This is usually not possible for non-local files (which return 1),
+because there is no way to reproduce a save environment for running
+a HTTP or FTP based file (they return 0).
+
+=cut
+
+# Fallback if the module has no such function:
+sub can_run {
+	# If the module does not state that it could do "run",
+	# we return a safe default of 0.
+	return 0;
+}
+
 =head2 ctime
 
   $file->ctime;
