@@ -255,9 +255,26 @@ sub on_timer {
 	my $editor = Padre::Current->main($self)->current->editor or return;
 
 	my $document = $editor->{Document};
+
+	# Don't check without document of if the document has no checker
 	unless ( $document and $document->can('check_syntax') ) {
 		$self->clear;
 		return;
+	}
+
+	# Don't really check while typing but check if typing pauses,
+	# because the user usually won't stop typing to correct a
+	# syntax error but finish the current line and then fix the typo
+	if (defined($document->{last_char_time})) {
+		if (Padre->ide->{has_Time_HiRes}) {
+			# Not typing for 500ms usually means that you got
+			# time to look at the syntax check results
+			return if (&Time::HiRes->time - $document->{last_char_time}) < .5;
+		} else {
+			# Without HiRes, we could only set the timeout to
+			# one second, but this is very inaccurate
+			return if $document->{last_char_time} == time;
+		}
 	}
 
 	my $pre_exec_result = $document->check_syntax_in_background( force => $force );

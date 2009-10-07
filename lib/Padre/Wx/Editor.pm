@@ -722,6 +722,12 @@ sub on_char {
 		$doc->event_on_char( $self, $event );
 	}
 
+	if (Padre->ide->{has_Time_HiRes}) {
+		$doc->{last_char_time} = &Time::HiRes::time;
+	} else {
+		$doc->{last_char_time} = time;
+	}
+
 	$event->Skip;
 	return;
 }
