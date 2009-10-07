@@ -267,8 +267,6 @@ sub report_show {
 	my $self   = shift;
 	my $report = $self->_generate;
 
-	$DB::single = 1;
-
 	# Display the report as YAML for mid-level readability
 	require YAML::Tiny;
 	my $yaml = YAML::Tiny::Dump($report);
