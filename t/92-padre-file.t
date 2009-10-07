@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 45;
+use Test::More tests => 47;
 
 use Padre::File;
 
@@ -28,6 +28,7 @@ my @Stat2 = $file->stat;
 for ( 0 .. $#Stat1 ) {
 	ok( $Stat1[$_] eq $Stat2[$_], 'Local: Check stat value ' . $_ );
 }
+ok($file->can_run,'Local: Can run');
 
 # Check the most interesting functions only:
 ok( $file->exists,             'Local: file exists' );
@@ -55,6 +56,8 @@ undef $file;
 	ok( $file->mtime == 1234567890, 'HTTP: mtime (cached)' );
 	ok( $file->basename eq 'about.html', 'HTTP: basename' );
 	ok( $file->dirname eq 'http://padre.perlide.org/', 'HTTP: dirname' );
+	ok(! $file->can_run,'HTTP: Can not run');
+	
 	my %HTTP_Tests = (
 		'http://www.google.de/'                    => [ 'http://www.google.de/',      'index.html' ],
 		'http://www.perl.org/rules/the_world.html' => [ 'http://www.perl.org/rules/', 'the_world.html' ],
