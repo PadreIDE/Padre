@@ -38,6 +38,11 @@ my %MIMES = (
 
 plan tests => 11;
 
+# This should only be used to skip dependencies out of the Document.pm - scope
+# which are not required for testing, like Padre->ide. Never skip larger blocks
+# with this!
+$ENV{PADRE_IS_TEST} = 1;
+
 use Test::NoWarnings;
 use File::Spec ();
 use t::lib::Padre;
