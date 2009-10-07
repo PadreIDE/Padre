@@ -278,6 +278,13 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox',
+				'autocomplete_method',
+				( $config->autocomplete_method ? 1 : 0 ),
+				Wx::gettext("Autocomplete new methods in packages")
+			],
+			[]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -1019,6 +1026,10 @@ sub run {
 	$config->set(
 		'autocomplete_always',
 		$data->{autocomplete_always} ? 1 : 0
+	);
+	$config->set(
+		'autocomplete_method',
+		$data->{autocomplete_method} ? 1 : 0
 	);
 
 
