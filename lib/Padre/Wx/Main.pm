@@ -3476,6 +3476,9 @@ sub on_join_lines {
 	my $self = shift;
 	my $page = $self->current->editor;
 
+	# Don't crash if no document is open
+	return if ! defined($page);
+
 	# find positions
 	my $pos1 = $page->GetCurrentPos;
 	my $line = $page->LineFromPosition($pos1);
