@@ -49,6 +49,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added "Dump Expression" to Developer Plugin to evaluate and dump a single
       expression within the Padre context (ADAMK)
     - Perl interpreter for running scripts is now configurable (SEWI)
+    - Added MIME type count to PopularityContest, but it's still not sending
+      anything (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
