@@ -176,7 +176,7 @@ sub run {
 
 	# Check if we have Time::HiRes:
 	# This should be better done in a background job
-	if (eval{ require Time::HiRes; } and (!$@)) {
+	if ( eval { require Time::HiRes; } and ( !$@ ) ) {
 		$self->{has_Time_HiRes} = 1;
 	}
 
