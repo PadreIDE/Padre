@@ -51,6 +51,10 @@ sub _request {
 	}
 }
 
+sub can_run {
+	return 0;
+}
+
 sub size {
 	my $self = shift;
 	my ( $Content, $Result ) = $self->_request('HEAD');

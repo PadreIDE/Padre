@@ -50,6 +50,10 @@ sub new {
 	return $self;
 }
 
+sub can_run {
+	return 1;
+}
+
 sub stat {
 	my $self = shift;
 	return CORE::stat( $self->{filename} );
