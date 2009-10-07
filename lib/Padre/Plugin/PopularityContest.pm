@@ -31,7 +31,10 @@ At the moment, the following information is collected:
  - Type of operating system (plattform only: Windows, Linux, MAC, etc.)
  - Padre version number
  - Perl, Wx and WxWidgets version numbers
- - Number of times each menu option is used (directly or via shortcut)
+ - Number of times each menu option is used (directly or via shortcut
+   or toolbar)
+ - MIME type of files (like text/plain or application/perl) which are
+   opened in Padre
 
 In addition, a random process ID for Padre is created and transmitted just
 to identify multiple reports from a single running instance of Padre. It
