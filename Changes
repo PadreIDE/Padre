@@ -53,6 +53,7 @@ Changes for Perl Application Development and Refactoring Environment
       anything (SEWI)
     - Added a runnable-flag to Padre::File and it's current modules (SEWI)
     - Syntax check now doesn't slow down typing (SEWI)
+    - Add autocomplete feature for new methods (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
