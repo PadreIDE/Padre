@@ -51,6 +51,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Perl interpreter for running scripts is now configurable (SEWI)
     - Added MIME type count to PopularityContest, but it's still not sending
       anything (SEWI)
+    - Added a runnable-flag to Padre::File and it's current modules (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
