@@ -802,6 +802,11 @@ sub event_on_char {
 
 	my $key = $event->GetUnicodeKey;
 
+	my $pos = $editor->GetCurrentPos;
+	my $line   = $editor->LineFromPosition($pos);
+	my $first  = $editor->PositionFromLine($line);
+	my $last   = $editor->PositionFromLine($line+1)-1;
+
 	if ( $config->autocomplete_brackets ) {
 		my %table = (
 			34  => 34,  # " "
@@ -811,7 +816,6 @@ sub event_on_char {
 			91  => 93,  # [ ]
 			123 => 125, # { }
 		);
-		my $pos = $editor->GetCurrentPos;
 		if ( $table{$key} ) {
 			if ($selection_exists) {
 				my $start = $editor->GetSelectionStart;
@@ -830,6 +834,25 @@ sub event_on_char {
 					$editor->AddText( chr( $table{$key} ) );
 					$editor->CharLeft;
 				}
+			}
+		}
+	}
+	
+	if ($config->autocomplete_method and (($key < 48) or (($key>57) and ($key <65))or (($key>90) and ($key <97)) or ($key > 122)) and ($pos == $last)) {
+		# from beginning to current position
+		my $prefix = $editor->GetTextRange( 0, $pos );
+		if ($prefix =~ /package /) {
+			my $linetext = $editor->GetTextRange( $first,$last );
+			print STDERR ord(substr($linetext,-1))."\n";
+			if ($linetext =~ /^sub[\s\t]+\w+$/) {
+				$editor->AddText(' {'.$self->newline.
+					"\t".'my $self = shift;'.$self->newline.
+					"\t".$self->newline.
+					'}'.$self->newline.
+					$self->newline
+				);
+				$editor->GotoPos($last + 23);
+				
 			}
 		}
 	}
