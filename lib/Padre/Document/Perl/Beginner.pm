@@ -268,6 +268,17 @@ Regex starting witha a quantifier such as
 		return;
 	}
 
+=item *
+
+ close;
+ 	
+=cut
+
+	if ( $text =~ /close;/s ) {
+		$self->_report("close; usually closes STDIN, STDOUT or something else you don't want.");
+		return;
+	}
+
 	return 1;
 }
 
