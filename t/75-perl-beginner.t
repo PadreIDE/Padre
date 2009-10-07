@@ -44,7 +44,7 @@ my %TEST = (
 	# @_ ?
 );
 
-plan( tests => scalar( keys %TEST ) * 2 + 18 );
+plan( tests => scalar( keys %TEST ) * 2 + 19 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new( document => { editor => bless {}, 'local::t75' } );
@@ -140,6 +140,9 @@ ok( $b->error =~ /regular expression.*quantifier/, 'RegExp with quantifier (1)' 
 
 $b->check('$x =~ /*/');
 ok( $b->error =~ /regular expression.*quantifier/, 'RegExp with quantifier (2)' );
+
+$b->check('close; ');
+ok( $b->error =~ /close.+STDOUT/, 'close;' );
 
 sub slurp {
 	my $file = shift;
