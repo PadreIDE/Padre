@@ -269,7 +269,7 @@ sub on_timer {
 		if (Padre->ide->{has_Time_HiRes}) {
 			# Not typing for 500ms usually means that you got
 			# time to look at the syntax check results
-			return if (&Time::HiRes->time - $document->{last_char_time}) < .5;
+			return if (Time::HiRes::time() - $document->{last_char_time}) < .5;
 		} else {
 			# Without HiRes, we could only set the timeout to
 			# one second, but this is very inaccurate

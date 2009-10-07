@@ -723,7 +723,7 @@ sub on_char {
 	}
 
 	if (Padre->ide->{has_Time_HiRes}) {
-		$doc->{last_char_time} = &Time::HiRes::time;
+		$doc->{last_char_time} = Time::HiRes::time();
 	} else {
 		$doc->{last_char_time} = time;
 	}

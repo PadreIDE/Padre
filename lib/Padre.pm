@@ -174,6 +174,12 @@ sub run {
 		chdir $documents;
 	}
 
+	# Check if we have Time::HiRes:
+	# This should be better done in a background job
+	if (eval{ require Time::HiRes; } and (!$@)) {
+		$self->{has_Time_HiRes} = 1;
+	}
+
 	# HACK: Uncomment this to locate difficult-to-find crashes
 	#       that are throw silent exceptions.
 	# $SIG{__DIE__} = sub { print @_; die $_[0] };
