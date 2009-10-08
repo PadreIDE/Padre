@@ -51,7 +51,6 @@ sub add_menu_item {
 	shift->_add_menu_item( 'Append', @_ );
 }
 
-
 # Add a checked menu item to menu from a Padre action
 sub add_checked_menu_item {
 	shift->_add_menu_item( 'AppendCheckItem', @_ );
@@ -60,6 +59,31 @@ sub add_checked_menu_item {
 # Add a radio menu item to menu from a Padre action
 sub add_radio_menu_item {
 	shift->_add_menu_item( 'AppendRadioItem', @_ );
+}
+
+# Add a normal menu item to menu from a existing Padre action
+sub add_menu_action {
+	my $self     = shift;
+	my $menu     = shift;
+	my $action_name = shift;
+
+	my $actions = Padre->ide->actions;
+	my $action   = $actions->{$action_name};
+	my $name     = $action->name;
+	my $shortcut = $action->shortcut;
+	my $method = $action->menu_method || 'Append';
+
+	my $item = $menu->$method(
+		$action->id,
+		$action->label_menu,
+	);
+	Wx::Event::EVT_MENU(
+		$self->{main},
+		$item,
+		$action->menu_event,
+	);
+
+	return $item;
 }
 
 # (Private method)
