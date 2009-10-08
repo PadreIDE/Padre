@@ -840,12 +840,13 @@ sub event_on_char {
 
 	# This only matches if all conditions are met:
 	#  - config option enabled
-	#  - none of the following keys pressed: a-z, A-Z, 0-9
+	#  - none of the following keys pressed: a-z, A-Z, 0-9, _
 	#  - cursor position is at end of line
 	if ($config->autocomplete_method
 		and (  ( $key < 48 )
 			or ( ( $key > 57 ) and ( $key < 65 ) )
-			or ( ( $key > 90 ) and ( $key < 97 ) )
+			or ( ( $key > 90 ) and ( $key < 95 ) )
+			or ( $key == 96 )
 			or ( $key > 122 ) )
 		and ( $pos == $last )
 		)
