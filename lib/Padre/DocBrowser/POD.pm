@@ -107,7 +107,7 @@ sub generate {
 	$doc->mimetype('application/x-pod');
 	return $doc;
 	#### TODO , pod extract / pod tidy ?
-	
+
 	# (Ticket #671)
 }
 
@@ -168,7 +168,7 @@ sub process {
 
 	# TODO: make it deal with being invoked as various different things
 	#  such as perlfaq".
-	
+
 	# (Ticket #672)
 
 	return $self->usage_brief unless @{ $self->{'args'} };

@@ -31,6 +31,7 @@ use File::Temp                ();
 use List::Util                ();
 use Scalar::Util              ();
 use Params::Util              ();
+use Padre::Action             ();
 use Padre::Constant           ();
 use Padre::Util               ();
 use Padre::Perl               ();
@@ -152,6 +153,9 @@ sub new {
 
 	# Add some additional attribute slots
 	$self->{marker} = {};
+
+	# Create the actions
+	Padre::Action::create;
 
 	# Create the menu bar
 	$self->{menu} = Padre::Wx::Menubar->new($self);
@@ -1992,7 +1996,7 @@ sub save_session {
 
 sub update_directory {
 	my $self = shift;
-	
+
 	# update the directory listing
 	if ( $self->has_directory ) {
 		if ( $self->menu->view->{directory}->IsChecked ) {

@@ -222,9 +222,9 @@ setting(
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
 		# TODO: Review this assumption
-		
+
 		# (Ticket #668)
-		
+
 		if ($Padre::Wx::Toolbar::DOCKABLE) {
 			$main->rebuild_toolbar;
 		}
@@ -729,7 +729,7 @@ sub read {
 		$SINGLETON = $class->new( $host, $human );
 
 		# TODO - Check the version
-		
+
 		# (Ticket #670)
 	}
 

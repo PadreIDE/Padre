@@ -18,7 +18,7 @@ use Class::XSAccessor getters => {
 	shortcut      => 'shortcut',
 	menu_event    => 'menu_event',
 	toolbar_event => 'toolbar_event',
-	menu_method => 'menu_method',
+	menu_method   => 'menu_method',
 };
 
 
@@ -41,8 +41,8 @@ sub new {
 	my $self = bless {@_}, $class;
 	$self->{id} ||= -1;
 
-	if ((! defined($self->{name})) or ($self->{name} eq '')) {
-		warn join(',',caller)." tried to create an action without name";
+	if ( ( !defined( $self->{name} ) ) or ( $self->{name} eq '' ) ) {
+		warn join( ',', caller ) . " tried to create an action without name";
 		return;
 	}
 
@@ -55,7 +55,7 @@ sub new {
 			eval ' return sub {' . "Padre->ide->actions->{'" . $self->{name} . "'}->_event(\@_);" . '};';
 	}
 
-	my $name = $self->{name};
+	my $name     = $self->{name};
 	my $shortcut = $self->{shortcut};
 
 	my $actions = Padre->ide->actions;
@@ -73,7 +73,7 @@ sub new {
 		}
 	}
 
-	$actions->{$self->{name}} = $self;
+	$actions->{ $self->{name} } = $self;
 
 	return $self;
 }

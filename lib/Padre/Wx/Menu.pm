@@ -63,15 +63,15 @@ sub add_radio_menu_item {
 
 # Add a normal menu item to menu from a existing Padre action
 sub add_menu_action {
-	my $self     = shift;
-	my $menu     = shift;
+	my $self        = shift;
+	my $menu        = shift;
 	my $action_name = shift;
 
-	my $actions = Padre->ide->actions;
+	my $actions  = Padre->ide->actions;
 	my $action   = $actions->{$action_name};
 	my $name     = $action->name;
 	my $shortcut = $action->shortcut;
-	my $method = $action->menu_method || 'Append';
+	my $method   = $action->menu_method || 'Append';
 
 	my $item = $menu->$method(
 		$action->id,

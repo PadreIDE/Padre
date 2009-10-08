@@ -14,7 +14,7 @@ various options to run the current file.
 use 5.008;
 use strict;
 use warnings;
-use Padre::Action       ();
+use Padre::Action ();
 use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.47';

@@ -626,9 +626,9 @@ sub autocomplete {
 	# k) figure out how to do method auto-comp. on objects
 
 	# check for variables
-	
+
 	# (Ticket #676)
-	
+
 	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
 		my $type   = $1;
