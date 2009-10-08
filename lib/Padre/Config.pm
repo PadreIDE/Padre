@@ -222,6 +222,9 @@ setting(
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
 		# TODO: Review this assumption
+		
+		# (Ticket #668)
+		
 		if ($Padre::Wx::Toolbar::DOCKABLE) {
 			$main->rebuild_toolbar;
 		}
@@ -551,6 +554,8 @@ setting(
 
 # By default use background threads unless profiling
 # TODO - Make the default actually change
+
+# (Ticket # 669)
 setting(
 	name    => 'threads',
 	type    => Padre::Constant::BOOLEAN,
@@ -724,6 +729,8 @@ sub read {
 		$SINGLETON = $class->new( $host, $human );
 
 		# TODO - Check the version
+		
+		# (Ticket #670)
 	}
 
 	return $SINGLETON;

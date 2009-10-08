@@ -159,6 +159,9 @@ Warn about Perl-standard package names being reused
 	#	if ( $text =~ /[^\{\;][\s\t\r\n]*chomp\b/ ) {
 	# as soon as this module could set the cursor to the occurence line
 	# because it may trigger a higher amount of false positives.
+	
+	# (Ticket #675)
+	
 	if ( $text =~ /^(.*?)(print|[\=\.\,])[\s\t\r\n]*chomp\b/s ) {
 		$self->_report("chomp doesn't return the chomped value, it modifies the variable given as argument.");
 		return;
