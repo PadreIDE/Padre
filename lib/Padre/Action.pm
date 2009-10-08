@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::Constant ();
+use Padre::Action::Run();
 
 our $VERSION = '0.47';
 
@@ -17,7 +18,18 @@ use Class::XSAccessor getters => {
 	shortcut      => 'shortcut',
 	menu_event    => 'menu_event',
 	toolbar_event => 'toolbar_event',
+	menu_method => 'menu_method',
 };
+
+
+
+#####################################################################
+# Functions
+
+# This sub calls all the other files which actually create the actions
+sub create {
+	Padre::Action::Run->new();
+}
 
 
 
@@ -28,6 +40,11 @@ sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
 	$self->{id} ||= -1;
+
+	if ((! defined($self->{name})) or ($self->{name} eq '')) {
+		warn join(',',caller)." tried to create an action without name";
+		return;
+	}
 
 	if ( defined( $self->{menu_event} ) ) {
 
