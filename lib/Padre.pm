@@ -262,7 +262,7 @@ You can run the script by pressing Run/Run Script (F5)
 You can start new files File/New (Ctrl-N)
 or open existing files File/Open (Ctrl-O).
 
-By default Padre uses the same perl interpreter fo
+By default Padre uses the same perl interpreter for
 executing code that it uses for itself but this will be configurable
 later.
 
@@ -298,7 +298,7 @@ find the installed version first while we might want to open the
 development version.)
 
 (TODO: when the file is not of perl type we should have other ways to recognize
-files from internal naming and have pathes to search. Surprise, not every
+files from internal naming and have paths to search. Surprise, not every
 language uses @INC.)
 
 B<File/Close> - checks if the file is saved, if it is closes the current tab.
@@ -452,7 +452,7 @@ bookmarks.
   In the help window you can also start typing the name of a module. When the
   list of the matching possible modules is small enough you'll be able
   to open the drop-down list and select the name.
-  The "small enough" is controled by two configuration options in the
+  The "small enough" is controlled by two configuration options in the
   Edit/Setup menu:
 
   Max Number of modules
@@ -493,7 +493,7 @@ of the color to be used to highlight them.
 =head3 Adding new syntax highlighting
 
 To set up a custom syntax highlighting scheme, you create a .yml file that defines
-the mappings decribed above. The easiest way to create your own scheme is probably to copy an existing
+the mappings described above. The easiest way to create your own scheme is probably to copy an existing
 .yml file (for instance, default.yml) from the C<share/styles/> folder, put it in
 C<~/.padre/styles>, and then modify it. Padre checks this folder on startup and adds
 any styles in the .yml files there to the View -> Style menu.
@@ -554,9 +554,9 @@ or B<Show Line numbers> and there are the project and file
 oriented preferences such as the use of TAB or whitespace
 for indentation.
 
-We would like to achive that the
+We would like to achieve that the
 
-Currently some of the preferences are accesible via the
+Currently some of the preferences are accessible via the
 B<Edit/Preferences> menu options, others via the B<View>
 menu option.
 
@@ -571,7 +571,7 @@ be applied "retroactively". That is when I change the TAB/space
 mode of a file or a project it should ask if I want to reflow the
 file with the new method of indentation?
 
-On the other hand the "TAB display size" is purely a local, edior
+On the other hand the "TAB display size" is purely a local, editor
 oriented preference. It should probably apply to all files currently
 open.
 
@@ -617,7 +617,7 @@ This should be a separate option available only
 if the C<Show indentation guide> and brace matching is on.
 
 If SetHighlightGuide is set to 8 then when the user reaches one
-side of a pair of praces the indentation guide - if there is one
+side of a pair of braces the indentation guide - if there is one
 on column 8 - will be highlighted. (in green).
 
 As I understand Padre should constantly adjust the SetHighlightGuide
@@ -635,14 +635,14 @@ have to make this change with another editor and while Padre is B<not> open.
 
 The config.yml file is in ~/.padre/ on Linux/Unix and in general in
 your home directory on Windows. In any case the B<Help/About> box will show
-you the path of the .padrfe directory of Padre.
+you the path of the .padre directory of Padre.
 
 Once you set the experimental flag when you start Padre you will see a new
 menu on the right side of the menu bar called B<Experimental>.
 
 =item Open file policy
 
-What files to open when launchin Padre?
+What files to open when launching Padre?
 nothing, new, those that were open last time?
 
 =item Max/Min number of modules to display in podviewer
@@ -742,7 +742,7 @@ TODO: What to do if a module was removed ? Shall we keep its data in
 the configuration file or remove it?
 
 TODO: Padre should offer an easy but simple way for plugin authors
-to declare configuration variables and automaticly generate both configuration
+to declare configuration variables and automatically generate both configuration
 file and configuration dialog. Padre should also allow for full customization
 of both for those more advanced in wx foo.
 
@@ -755,7 +755,7 @@ is no selection all the text in the current file.
 
 Change all characters to upper or lower case
 
-Change the first character ot every word to upper/lower
+Change the first character of every word to upper/lower
 case leaving the rest as they were.
 
 =head2 Tab and space conversion
@@ -765,7 +765,7 @@ each tab should substitute. It currently works everywhere.
 We probably should add a mode to operate only at the beginning of
 the lines or better yet only at the indentation levels.
 
-Delete All Ending space does just what it sais.
+Delete All Ending space does just what it says.
 
 Delete Leading Space will ask How many leading spaces and act accordingly.
 
@@ -814,20 +814,20 @@ user can edit text
 
 =head2 Find and Replace
 
-Find - find the next occurance
+Find - find the next occurence
 
 Replace all - do just that
 
-Replace - if currently a match is selected then replace it find the next occurance and select it
+Replace - if currently a match is selected then replace it find the next occurence and select it
 
 =head2 TODO describe what to do if we have to deal with files that are not in the editor
 
 if "Replace all" was pressed then do just that
    1) without opening editors for the files.
-   2) opening an editor for each file and keep it in unsaved state (sounds carzy having 1000 editors open...)
+   2) opening an editor for each file and keep it in unsaved state (sounds crazy having 1000 editors open...)
 if Search or Replace is clicked then we might show the next location in the lower pane.
 If the user then presses Replace we open the file in an editor window and go on.
-If the user presses Search then we show the next occurance.
+If the user presses Search then we show the next occurence.
 Opened and edited files will be left in a not saved state.
 
 =head1 Code layout
@@ -848,7 +848,7 @@ document).
 
 reads/writes the configuration files.
 
-There is an SQLite database and a yml file to keep various pices of information.
+There is an SQLite database and a yml file to keep various pieces of information.
 The database holds host related configuration values while the yaml file holds
 personal configuration options.
 
@@ -1007,7 +1007,7 @@ not in use.
 
 =item L<Padre::Wx::SyntaxCheck>
 
-Implementing the continous syntax check of perl code.
+Implementing the continuous syntax check of perl code.
 
 =item L<Padre::Wx::ToolBar>
 
