@@ -82,22 +82,8 @@ sub _add_menu_item {
 		$action->menu_event,
 	);
 
-	my $actions = Padre->ide->actions;
-	if ( $actions->{$name} ) {
-		warn "Found a duplicate action '$name'\n";
-	}
-
-	if ($shortcut) {
-		foreach my $n ( keys %$actions ) {
-			my $a = $actions->{$n};
-			next unless $a->shortcut;
-			next unless $a->shortcut eq $shortcut;
-			warn "Found a duplicate shortcut '$shortcut' with " . $a->name . " for '$name'\n";
-			last;
-		}
-	}
-
-	$actions->{$name} = $action;
+	# Adding actions to the main action hash has been moved to
+	# Action.pm for compatibility.
 
 	return $item;
 }
