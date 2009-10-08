@@ -684,12 +684,7 @@ sub on_focus {
 	# to show/hide the document specific Perl menu
 	$main->refresh_menu;
 
-	# update the directory listing
-	if ( $main->has_directory ) {
-		if ( $main->menu->view->{directory}->IsChecked ) {
-			$main->directory->refresh;
-		}
-	}
+	$main->update_directory;
 
 	# TODO
 	# this is called even if the mouse is moved away from padre and back again

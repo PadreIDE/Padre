@@ -1962,6 +1962,8 @@ sub open_session {
 	$self->Thaw;
 
 	# This could run in non-blocking space:
+	my $editor = $self->current->editor;
+	$self->update_directory;
 	$self->set_title;
 }
 
@@ -1987,6 +1989,19 @@ sub save_session {
 	}
 	Padre::DB->commit;
 }
+
+sub update_directory {
+	my $self = shift;
+	
+	# update the directory listing
+	if ( $self->has_directory ) {
+		if ( $self->menu->view->{directory}->IsChecked ) {
+			$self->directory->refresh;
+		}
+	}
+
+}
+
 
 =pod
 
