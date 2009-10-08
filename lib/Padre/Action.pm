@@ -38,6 +38,26 @@ sub new {
 			eval ' return sub {' . "Padre->ide->actions->{'" . $self->{name} . "'}->_event(\@_);" . '};';
 	}
 
+	my $name = $self->{name};
+	my $shortcut = $self->{shortcut};
+
+	my $actions = Padre->ide->actions;
+	if ( $actions->{$name} ) {
+		warn "Found a duplicate action '$name'\n";
+	}
+
+	if ($shortcut) {
+		foreach my $n ( keys %$actions ) {
+			my $a = $actions->{$n};
+			next unless $a->shortcut;
+			next unless $a->shortcut eq $shortcut;
+			warn "Found a duplicate shortcut '$shortcut' with " . $a->name . " for '$name'\n";
+			last;
+		}
+	}
+
+	$actions->{$self->{name}} = $self;
+
 	return $self;
 }
 
