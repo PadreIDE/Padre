@@ -26,7 +26,7 @@ In Perl 5 there are lots of pitfals the unaware, especially
 the beginner can easily fall in. While some might expect the perl 
 compiler itself would catch those it does not (yet ?) do it. So we took the 
 initiative and added a beginners mode to Padre in which these extra issues
-are checked. Some are real problems that would trigger a an error anyway
+are checked. Some are real problems that would trigger an error anyway
 we just make them a special case with a more specific error message.
 (e.g. use warning; without the trailing s)
 Others are valid code that can be useful in the hands of a master but that
