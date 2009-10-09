@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-10-03 21:05+0200\n"
-"PO-Revision-Date: 2009-10-03 21:08+0100\n"
+"PO-Revision-Date: 2009-10-09 17:02+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -2057,11 +2057,11 @@ msgstr "Zeige als dezimal"
 
 #: lib/Padre/Wx/Menu/Run.pm:36
 msgid "Run Script"
-msgstr "Skript ausführen\tF5"
+msgstr "Skript ausführen"
 
 #: lib/Padre/Wx/Menu/Run.pm:47
 msgid "Run Script (debug info)"
-msgstr "Skript ausführen (Debug Info)\tUmschalt-F5"
+msgstr "Skript ausführen (Debug Info)"
 
 #: lib/Padre/Wx/Menu/Run.pm:57
 msgid "Run Command"
