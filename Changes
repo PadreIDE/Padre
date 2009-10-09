@@ -55,6 +55,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Syntax check now doesn't slow down typing (SEWI)
     - Add autocomplete feature for new methods (SEWI)
     - Update directory tree on load session (SEWI)
+    - New Padre launcher for Windows (DOLMEN)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
