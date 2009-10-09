@@ -25,7 +25,7 @@ sub new {
 	my $class = shift;
 	my $main  = shift;
 
-	# Create the empty menu as normal
+	# Create the empty object as normal, it won't be used usually
 	my $self = bless {}, $class;
 
 	# Add additional properties
@@ -35,6 +35,8 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.run_document',
 		label      => Wx::gettext('Run Script'),
+		comment	   => Wx::gettext('Runs the current document and '.
+		                          'shows its output in the output panel.'),
 		shortcut   => 'F5',
 		menu_event => sub {
 			$_[0]->run_document;
@@ -45,6 +47,8 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.run_document_debug',
 		label      => Wx::gettext('Run Script (debug info)'),
+		comment    => Wx::gettext('Run the current document but include '.
+		                    'debug info in the output.'),
 		shortcut   => 'Shift-F5',
 		menu_event => sub {
 			$_[0]->run_document(1); # Enable debug info
@@ -54,6 +58,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.run_command',
 		label      => Wx::gettext('Run Command'),
+		comment => Wx::gettext('Runs a shell command and shows the output.'),
 		shortcut   => 'Ctrl-F5',
 		menu_event => sub {
 			$_[0]->on_run_command;
@@ -63,6 +68,8 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.run_tests',
 		label      => Wx::gettext('Run Tests'),
+		comment => Wx::gettext('Run all tests for the current project or '.
+				'document and show the results in the output panel.'),
 		menu_event => sub {
 			$_[0]->on_run_tests;
 		},
@@ -71,6 +78,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.run_this_test',
 		label      => Wx::gettext('Run This Test'),
+		comment => Wx::gettext('Run the current test if the current document is a test.'),
 		menu_event => sub {
 			$_[0]->on_run_this_test;
 		},
@@ -79,6 +87,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.stop',
 		label      => Wx::gettext('Stop execution'),
+		comment => Wx::gettext('Stop a running task.'),
 		shortcut   => 'F6',
 		menu_event => sub {
 			if ( $_[0]->{command} ) {
