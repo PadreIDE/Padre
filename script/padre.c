@@ -1,6 +1,5 @@
 /**
  * Padre Minimal Win32 Executable Launcher
- * @author Ahmad M. Zawawi <ahmad.zawawi@gmail.com>
  * @author Olivier Mengué <dolmen@cpan.org>
  */
 #define WIN32_LEAN_AND_MEAN
@@ -8,7 +7,12 @@
 #include <windows.h>
 #include <tchar.h>
 
+
+#include <EXTERN.h>               /* from the Perl distribution     */
+#include <perl.h>                 /* from the Perl distribution     */
+
 #include "padre-rc.h"
+
 
 static void LocalizedMessageBox(LPCTSTR lpMessage, LPCTSTR lpTitle, DWORD dwFlags)
 {
@@ -38,57 +42,36 @@ static BOOL FileExists(LPCTSTR lpFileName)
 /**
  * When called by windows, we simply launch Padre from here
  */
-#ifdef Mini1
-VOID WINAPI __main(VOID)
-#elif defined(Mini2)
-VOID WINAPI WinMainCRTStartup(VOID)
-#else
-int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
-	LPSTR lpCmdLineArgs, int nCmdShow)
-#endif
+int
+main(int argc, char **argv, char **env)
 {
 	// Padre.exe path
 	TCHAR szExePath[MAX_PATH];
-	// WPerl.exe path
-	TCHAR szWPerl[MAX_PATH];
 	// Padre script path
-	TCHAR szPadre[MAX_PATH];
-	// WPerl Command line
-	TCHAR szCmdLine[1024+1];
+	static TCHAR szPadre[MAX_PATH];
 	HMODULE hModule;
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-	BOOL bSuccess;
 	DWORD dwLength;
-	LPCTSTR lpArgs;
+	HANDLE hHeap;
+	char **new_argv;
+	int i;
+	int r;
 
 	hModule = GetModuleHandle(NULL);
 	//Find the the executable's path
 	dwLength = GetModuleFileName(hModule, szExePath, sizeof(szExePath)/sizeof(szExePath[0]));
-	if (dwLength) {
-		while (dwLength && szExePath[ dwLength ] != '\\' && szExePath[ dwLength ] != '/') {
-			dwLength--;
-		}
-		szExePath[ dwLength + 1 ] = '\0';
-	}
-
-#if 0
-	lstrcpy(szWPerl, _T("C:\\strawberry\\perl\\bin\\wperl.exe"));
-#else
-	lstrcpy(szWPerl, szExePath);
-	lstrcpy(&szWPerl[dwLength+1], _T("wperl.exe"));
-#endif
-
-	//At this point we should check if padre script exists or not
-	if (! FileExists(szWPerl)) {
-		LocalizedMessageBox(MAKEINTRESOURCE(IDS_ERR_WPERL), MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONERROR);
-		ExitProcess(1);
-	}
-
 
 	// Build the 'padre' script path
-	lstrcpy(szPadre, szExePath);
-	lstrcpy(&szPadre[dwLength+1], _T("padre"));
+	if (dwLength) {
+		lstrcpy(szPadre, szExePath);
+		while (--dwLength) {
+			if (szPadre[ dwLength ] == _T('\\') || szPadre[ dwLength ] == _T('/')) {
+				dwLength++;
+				break;
+			}
+		}
+	}
+	lstrcpy(&szPadre[dwLength], _T("padre"));
+	//LocalizedMessageBox(szPadre, MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONINFORMATION);
 
 	//At this point we should check if padre script exists or not
 	if (! FileExists(szPadre)) {
@@ -96,46 +79,19 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		ExitProcess(1);
 	}
 
-	lpArgs = GetCommandLine();
-	//LocalizedMessageBox(lpArgs, MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONINFORMATION);
-	do {
-		while (*lpArgs == _T(' ') || *lpArgs == _T('\t')) lpArgs++;
-		if (!*lpArgs) break;
-		if (*lpArgs == _T('"')) {
-			lpArgs++;
-			while (*lpArgs && *lpArgs != _T('"')) lpArgs++;
-			if (*lpArgs == _T('"')) lpArgs++;
-		} else {
-			while (*lpArgs && *lpArgs != _T(' ') && *lpArgs != _T('\t')) lpArgs++;
-		}
-	} while (0);
-	// Build the command line
-	wsprintf(szCmdLine, "\"%s\" \"%s\"%s", szWPerl, szPadre, lpArgs);
-	szCmdLine[(sizeof(szCmdLine)/sizeof(szCmdLine[0]))-1] = '\0';
+	hHeap = GetProcessHeap();
+	new_argv = HeapAlloc(hHeap, 0, (argc+2)*sizeof(new_argv[0]));
+	new_argv[0] = argv[0];
+	new_argv[1] = "--";
+	new_argv[2] = szPadre;
+	for(i=1; i<argc; i++)
+		new_argv[i+2] = argv[i];
+	argc += 2;
 
-	ZeroMemory( &pi, sizeof(pi) );
-	GetStartupInfo(&si);
-	//LocalizedMessageBox(szCmdLine, MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONINFORMATION);
-	bSuccess = CreateProcess(szWPerl,
-							 szCmdLine,
-							 NULL,
-							 NULL,
-							 TRUE,
-							 GetPriorityClass(hModule),
-							 GetEnvironmentStrings(),
-							 NULL,
-							 &si,
-							 &pi);
-	if (bSuccess) {
-		//WaitForSingleObject( pi.hProcess, INFINITE );
-		CloseHandle(pi.hProcess);
-		CloseHandle(pi.hThread);
-	} else {
-		LocalizedMessageBox(MAKEINTRESOURCE(IDS_ERR_RUN), MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONERROR);
-	}
+	r = RunPerl(argc, new_argv, env);
 
-	// The application's return value
-	ExitProcess(0);
+	HeapFree(hHeap, 0, new_argv);
+	return r;
 }
 /**
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
