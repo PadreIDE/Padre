@@ -18,6 +18,7 @@ use List::Util    ();
 use File::Spec    ();
 use File::HomeDir ();
 use Params::Util qw{_INSTANCE};
+use Padre::Action ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
