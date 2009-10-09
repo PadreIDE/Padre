@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::Constant ();
+use Padre::Action::Refactor();
 use Padre::Action::Run();
 
 our $VERSION = '0.47';
@@ -28,6 +29,7 @@ use Class::XSAccessor getters => {
 
 # This sub calls all the other files which actually create the actions
 sub create {
+	Padre::Action::Refactor->new();
 	Padre::Action::Run->new();
 }
 
