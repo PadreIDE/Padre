@@ -298,13 +298,13 @@ sub _setup_events {
 			my @matches      = $self->_matches_list->GetSelections();
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
-				$self->_status_text->SetLabel( $self->_matches_list->GetClientData( $matches[0] ) );
+				$self->_status_text->ChangeValue( $self->_matches_list->GetClientData( $matches[0] ) );
 				$self->_copy_button->Enable(1);
 			} elsif ( $num_selected > 1 ) {
-				$self->_status_text->SetLabel( $num_selected . " items selected" );
+				$self->_status_text->ChangeValue( $num_selected . " items selected" );
 				$self->_copy_button->Enable(0);
 			} else {
-				$self->_status_text->SetLabel('');
+				$self->_status_text->ChangeValue('');
 				$self->_copy_button->Enable(0);
 			}
 
@@ -436,7 +436,7 @@ sub _show_recently_opened_resources() {
 sub _search() {
 	my $self = shift;
 
-	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );
+	$self->_status_text->ChangeValue( Wx::gettext("Reading items. Please wait...") );
 
 	require Padre::Task::OpenResource::SearchTask;
 	my $search_task = Padre::Task::OpenResource::SearchTask->new(
@@ -478,11 +478,11 @@ sub _update_matches_list_box() {
 	}
 	if ( $pos > 0 ) {
 		$self->_matches_list->Select(0);
-		$self->_status_text->SetLabel( $self->_matches_list->GetClientData(0) );
+		$self->_status_text->ChangeValue( $self->_matches_list->GetClientData(0) );
 		$self->_status_text->Enable(1);
 		$self->_copy_button->Enable(1);
 	} else {
-		$self->_status_text->SetLabel('');
+		$self->_status_text->ChangeValue('');
 		$self->_status_text->Enable(0);
 		$self->_copy_button->Enable(0);
 	}
