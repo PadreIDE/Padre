@@ -18,7 +18,7 @@ use List::Util    ();
 use File::Spec    ();
 use File::HomeDir ();
 use Params::Util qw{_INSTANCE};
-use Padre::Action ();
+use Padre::Action   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
@@ -65,10 +65,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'perl.extract_subroutine',
-		label      => Wx::gettext('Extract Subroutine'),
-		comment	   => 'Cut the current selection and create a new sub from it. '.
-		              'A call to this sub is added in the place where the selection was.',
+		name    => 'perl.extract_subroutine',
+		label   => Wx::gettext('Extract Subroutine'),
+		comment => 'Cut the current selection and create a new sub from it. '
+			. 'A call to this sub is added in the place where the selection was.',
 		menu_event => sub {
 			my $doc    = $_[0]->current->document;
 			my $editor = $doc->editor;
