@@ -172,6 +172,14 @@ Subdir of C<PLUGIN_DIR> with the path C<Padre/Plugin> added
 (or whatever depending on your platform) so that perl can
 load a C<Padre::Plugin::> plugin.
 
+=head2 LOG_FILE
+
+Path and name of Padre's logfile.
+
+=head2 NEWLINE
+
+Newline style (UNIX, WIN or MAC) on the currently used operating system.
+
 =head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2009 The Padre development team as listed in Padre.pm.
