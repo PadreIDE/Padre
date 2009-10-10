@@ -21,6 +21,7 @@ use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
+use Padre::Config::Upgrade ();
 
 our $VERSION = '0.47';
 
@@ -728,9 +729,7 @@ sub read {
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
 
-		# TODO - Check the version
-
-		# (Ticket #670)
+		$SINGLETON->Padre::Config::Upgrade::check();
 	}
 
 	return $SINGLETON;
