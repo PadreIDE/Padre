@@ -57,6 +57,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Update directory tree on load session (SEWI)
     - New Padre launcher for Windows (DOLMEN)
     - Fixed Open Resource status text display on Linux (AZAWAWI)
+    - Added configuration version checking and prepared auto-config-upgrades (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
