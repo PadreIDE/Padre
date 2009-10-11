@@ -21,7 +21,7 @@ my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime( 
 # to this file. You don't care about this, currently, but remember that at the
 # time of this writing, this editor contains of 158 files - all for one program.
 # A variable is a piece of memory which holds some information for you, just
-# a postit note. Unlike other languages, Perl cares about size and type of
+# like a postit note. Unlike other languages, Perl cares about size and type of
 # information itself, so you don't need to do it yourself. Every variable
 # has a name which has only few naming conventions:
 #  - The first char MUST be a dollar sign $
@@ -31,6 +31,10 @@ my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) = localtime( 
 # it's really up to you what you use.
 # It's a good idea to name variables by their usage because you need to
 # know why you used it and for which purpose even in a 3000 lines file.
+#
+# Most Perl developers advoid using upper case chars (A-Z) for variable
+# names. It's a good idea to follow this way even if there is no technical
+# requirement to do so.
 #
 # This line has many variables all shown in a comma (,) seperated list. Their
 # names tell you what they contain:
