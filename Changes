@@ -58,6 +58,9 @@ Changes for Perl Application Development and Refactoring Environment
     - New Padre launcher for Windows (DOLMEN)
     - Fixed Open Resource status text display on Linux (AZAWAWI)
     - Added configuration version checking and prepared auto-config-upgrades (SEWI)
+    - The Perl help search (F2) destroyed the code refernce calling it, so F2
+      was usable only once per Padre start, may also apply to other actions.
+      Fixed. (SEWI)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
