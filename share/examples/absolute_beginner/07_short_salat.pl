@@ -11,28 +11,30 @@ use warnings;
 # Let's start again with our Add-items-sub. I'ld like to Add many things
 # using one sub-call like this
 
-&Add("salt","pepper","dressing");
+# add "salt","pepper","dressing";
 
 # To start a sub, we still need to tell Perl that the following is a sub
 # and how it's called
 
-sub Add {
+sub add {
 
 # The first argument is $_[0], so it should be a good idea to place the 0
 # somewhere
 
-	my $Argument_Number = 0;
+	my $argument_number = 0;
 	
 # Let's just try out something. We got $_[0] and a variable containing a 0,
 # should it be possible to combine them by replacing the fixed 0 by the
 # variable name?
 	
-	print $_[$Argument_Number]."\n";
+	print $_[$argument_number]."\n";
 
 # This should print out the first argument and if you try it out, you'll get
 # the expected salt.
 
 }
+
+add "salt","pepper","dressing";
 
 # Want to try out if this works for the second and third argument? Do it, the
 # more you try, the more you learn!
@@ -43,19 +45,19 @@ sub Add {
 
 print "--- Try #2 ---\n";
 
-sub Add2 {
+sub add2 {
 
 # How do we get the sub to walk through the numbers 0 to 2 to get all arguments?
 # Sounds like a job for a loop and I'll start with a for try
 
-	for my $Argument_Number (0..2) {
-		print $_[$Argument_Number]."\n";
+	for my $argument_number (0..2) {
+		print $_[$argument_number]."\n";
 	}
 }
 
 # We need to call a sub to use it, otherwise the source code won't be executed:
 
-&Add2("salt","pepper","dressing");
+add2 "salt","pepper","dressing";
 
 # I'm sure that you'll figure out how to insert the "Add some" into the sub above.
 
@@ -66,27 +68,29 @@ print "--- Try #3 ---\n";
 
 # I know, how many things I'ld like to add, so I could tell it to the sub:
 
-&Add3(4,"salt","pepper","dressing","nuts");
+# add3 4,"salt","pepper","dressing","nuts";
 
 # Getting the 4 is easy - it became the first argument and the first argument
 # is always called $_[0]
 
-sub Add3 {
+sub add3 {
 
-	my $Number_of_items = $_[0];
+	my $number_of_items = $_[0];
 
 # There is another place where we got numbers and didn't try to replace them by
 # variables until now, but this can't wait any longer
 
-	for my $Argument_Number (0..$Number_of_items) {
+	for my $argument_number (0..$number_of_items) {
 
 # The number of the first argument is fixed, so there is no need to push it
 # into a variable and use it only once. It could stay fixed within the for
 # line. There is nothing new following now:
 
-		print $_[$Argument_Number]."\n";
+		print $_[$argument_number]."\n";
 	}
 }
+
+add3 4,"salt","pepper","dressing","nuts";
 
 # You may notice that the first line contains the number of items to add, the 4
 # We don't want this, so you should try to change the above sample to skip the
@@ -96,39 +100,39 @@ print "--- Try #4 ---\n";
 
 # Our add-item-sub seems to work, so I'll copy it for cutting stripes and pieces:
 
-sub Cut_stripes {
+sub cut_stripes {
 
-	my $Number_of_items = $_[0];
+	my $number_of_items = $_[0];
 
-	for my $Argument_Number (1..$Number_of_items) {
-		print "Cut ".$_[$Argument_Number]." in stripes\n";
+	for my $argument_number (1..$number_of_items) {
+		print "Cut ".$_[$argument_number]." in stripes\n";
 	}
 }
 
-sub Cut_pieces {
+sub cut_pieces {
 
-	my $Number_of_items = $_[0];
+	my $number_of_items = $_[0];
 
-	for my $Argument_Number (1..$Number_of_items) {
-		print "Cut ".$_[$Argument_Number]." in pieces\n";
+	for my $argument_number (1..$number_of_items) {
+		print "Cut ".$_[$argument_number]." in pieces\n";
 	}
 }
 
 print "Ordered salat:\n";
-&Cut_stripes(2,"green salat","a paprika");
-&Cut_pieces(2,"a tomato","half of a cucumber");
-&Add3(1,"nuts");
+cut_stripes 2,"green salat","a paprika";
+cut_pieces 2,"a tomato","half of a cucumber";
+add3 1,"nuts";
 print "Mix everything\n";
-&Add3(3,"dressing","salt","pepper");
-&Cut_stripes("a chicken breast");
+add3 3,"dressing","salt","pepper";
+cut_stripes 1,"a chicken breast";
 print "Roast the chicken breast stripes\n";
 print "Put them over the salat\n";
 
 # We're done! Now go to the kittchen and enjoy our salat or just continue if
 # you don't need a break.
 
-# I don't like duplicate code like the one we used in the Cut_stripes and
-# Cut_pieces. It differs only by one word - the cutting style but if you got
+# I don't like duplicate code like the one we used in the cut_stripes and
+# cut_pieces. It differs only by one word - the cutting style but if you got
 # two subs which 100 lines each and they differ by only one or two lines,
 # it's even worse. I have seen such code much more often than I'ld like and
 # you think.
@@ -150,11 +154,11 @@ print "Put them over the salat\n";
 
 # Remember: A seperator here would help.
 
-# We're passing the number of items to the Add- and Cut-subs, why not also pass
-# the cutting style to the Cut-sub. Create a copy and get the number of items
+# We're passing the number of items to the add- and cut-subs, why not also pass
+# the cutting style to the cut-sub. Create a copy and get the number of items
 # and the cutting style from the arguments before start reading the items.
 
-# A sample call could be: &Cut("stripes",2,"green salat", "a paprika");
+# A sample call could be: cut "stripes",2,"green salat", "a paprika";
 
 # Things will be easier if you get a visual picture of what the arguments.
 # Write down a list containing the number and value of each argument.
@@ -171,19 +175,19 @@ print "Put them over the salat\n";
 
 # Given the following source code
 #print "Ordered salat:\n";
-#&Cut(4,
+#cut 4,
 #	"green salat",		"stripes",
 #	"a paprika",		"stripes",
 #	"a tomato",		"pieces",
 #	"half of a cucumber",	"pieces");
-#&Add(1,"nuts");
+#add 1,"nuts";
 #print "Mix everything\n";
-#&Add(3,"dressing","salt","pepper");
-#&Cut(1,"a chicken breast","stripes");
+#add 3,"dressing","salt","pepper";
+#cut 1,"a chicken breast","stripes";
 #print "Roast the chicken breast stripes\n";
 #print "Put them over the salat\n";
 
-# Select the whole block (from &Cut(4, to the last print) and press Ctrl-Alt-C
+# Select the whole block (from cut 4, to the last print) and press Ctrl-Alt-C
 # or click on the green # sign on the toolbar to remove the # comment signs
 # from each line.
 

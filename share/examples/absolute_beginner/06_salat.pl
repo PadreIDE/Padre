@@ -27,60 +27,66 @@ print "Put them over the salat\n";
 # We need to "cut" some things and "add" some things. Let's combine the
 # "add" items first:
 
-sub Add {
+sub add {
 	print "Add some $_[0]\n";
 }
 
 # A "sub" is a piece of source code which has a name and could be called by
-# this name. The name of a sub follows the same conventions like names for
-# variables: a-z, A-Z, 0-9 and _
+# this name.
+# subs are like Perl commands (think of print, for example) but they are
+# written by the developer and need to be placed in the same file where they
+# are used.
+#
+# The name of a sub follows the same conventions like names for
+# variables: a-z, 0-9 and _
+# A-Z are supported by Perl but rarely used by the developers.
+#
 # A sub uses the same { } brackets to enclose a block of source code you
 # already know from "if" and "for".
-# Our brand new sub shown above is called "Add" and contains one line of
-# source code. I could also name it "The_Sub_which_adds_something_to_our_salat"
-# but I'm, lazy and "Add" is much easier to write.
+# Our brand new sub shown above is called "add" and contains one line of
+# source code. I could also name it "the_sub_which_adds_something_to_our_salat"
+# but I'm, lazy and "add" is much easier to write.
 # There's a special variable called $_[0]. Please take it as it is for the
 # moment, we'll discuss it in a later lesson.
 
-# To call a sub, just prefix his name with a ampersand & and add brackets ( )
-# at the end like on localtime or other functions. Additional arguments could
-# be placed within the brackets:
+# To call a sub, just write its name followed by zero or more arguments which
+# should be given to the sub.
 
-&Add("dressing");
-&Add("salt");
-&Add("pepper");
+add "dressing";
+add "salt";
+add "pepper";
 
 # Whatever you use as an argument will live in the special variable $_[0].
 
 # We'll do the same for the cut-items:
 
-sub Cut {
-	print "Cut $_[0] in $_[1]\n";
+sub cut {
+	print "cut $_[0] in $_[1]\n";
 }
 
 # Here we got two arguments, the foot and the cut style. Many arguments must be
 # seperated by commas.
 
-&Cut("green salat","stripes");
-&Cut("a tomato","pieces");
-&Cut("half of a cucumber","pieces");
-&Cut("a paprika","stripes");
-&Cut("a chicken breast","stripes");
+cut "green salat","stripes";
+cut "a tomato","pieces";
+cut "half of a cucumber","pieces";
+cut "a paprika","stripes";
+cut "a chicken breast","stripes";
 
 # The second arguments goes to $_[1] and if we had a third one, it would go to
 # $_[2] and so on.
 
 # Now order everything to get the same salat
 print "Ordered salat:\n";
-&Cut("green salat","stripes");
-&Cut("a tomato","pieces");
-&Cut("half of a cucumber","pieces");
-&Cut("a paprika","stripes");
+cut "green salat","stripes";
+cut "a tomato","pieces";
+cut "half of a cucumber","pieces";
+cut "a paprika","stripes";
 print "Mix everything\n";
-&Add("dressing");
-&Add("salt");
-&Add("pepper");
-&Cut("a chicken breast","stripes");
+add "dressing";
+add "salt";
+add "pepper";
+cut "a chicken breast","stripes";
 print "Roast the chicken breast stripes\n";
 print "Put them over the salat\n";
 
@@ -105,8 +111,10 @@ print "Put them over the salat\n";
 
 # <Place your sub here>
 
-&printn("First line");
-&printn("Second line");
+#printn "First line";
+#printn "Second line";
+
+# Remove the comment chars # in front of the lines to make them work.
 
 # Now we got a really useful function, so we should use it: Change the subs
 # for cutting and adding items to your your new print-with-newline sub.

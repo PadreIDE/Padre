@@ -6,38 +6,38 @@ use strict;
 use warnings;
 
 # Let's say you want to count from 1 to 10. Pretty easy, just write:
-my $Counter = 0;
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter\n";
-$Counter++;
-print "$Counter - done!\n";
+my $counter = 0;
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter\n";
+$counter++;
+print "$counter - done!\n";
 
 # Works perfectly, but there are some drawbacks:
 #  - It takes 21 lines (imagine you want to count until 100!)
-#  - What happens if you need to change $Counter to $Counter2?
+#  - What happens if you need to change $counter to $counter2?
 
 print "--- next sample ---\n";
 
 # Every time you copy/paste a line of sourcecode, stop a moment and think
 # about looping. This means, let Perl repeat some lines for you:
 
-my $LoopCounter = 0;
+my $loop_counter = 0;
 for ( 1 .. 10 ) {
 
 	# "for" is a special keyword which says Perl: "I'll give you a list of items
@@ -58,8 +58,8 @@ for ( 1 .. 10 ) {
 	# now and you're used to do it in a few days and it will save you very much
 	# time hunting for lines in the wrong block lateron. Perl masters always do it.
 
-	++$LoopCounter;
-	print "$LoopCounter\n";
+	++$loop_counter;
+	print "$loop_counter\n";
 
 }
 
@@ -71,8 +71,8 @@ print "--- next sample ---\n";
 
 # Perl could also be used for cooking:
 
-for my $Fruit ( "Orange", "Apple", "Strawberry", "Melon", "Lemon" ) {
-	print "1 $Fruit\n";
+for my $fruit ( "Orange", "Apple", "Strawberry", "Melon", "Lemon" ) {
+	print "1 $fruit\n";
 }
 print "Cut the fruits in not-too-small pieces and your fruitsalat is done.\n";
 
@@ -85,19 +85,30 @@ print "--- next sample ---\n";
 # "for" - loops got one drawback: You need to know how many times your loop
 # should run before the loop starts and sometimes you don't know this.
 
-my $Number   = 123;
-my $TwoCount = 0;
-while ( $Number > 2 ) {
-	print "$Number\n";
-	$Number /= 2;
-	++$TwoCount;
-}
-print "$Number\n";
-print "2^$TwoCount\n";
+# This sample tries to find out how often a given number (for example 123)
+# could be divided by 2 before it gets lower than two.
 
-# This is a combination of an if and a loop: while the condition is true, the
-# loop is repeated. Always beware of endless loops where the condition always
-# stays true! Your program would never leave the loop.
+my $number   = 123;
+my $two_count = 0;
+
+# Two variables, one holding the number and the second for the number of times
+# we divided the number.
+
+while ( $number > 2 ) {
+
+# while loops run until the condition (which is the same we used for the if's)
+# is no longer true. $number is 123 at the first run which is greater than 2
+# and the following lines are executed.
+
+	print "$number\n";
+	$number /= 2; # Look at the math session to understand this.
+	++$two_count;
+}
+
+print "Divided $two_count times\n";
+
+# Always beware of endless loops where the condition always stays true! Your
+# program would never leave the loop.
 
 # Now press F5 and Padre will execute this script.
 #
