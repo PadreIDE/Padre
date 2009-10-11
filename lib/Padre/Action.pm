@@ -113,7 +113,9 @@ sub label_text {
 sub label_menu {
 	my $self  = shift;
 	my $label = $self->label;
-	if ( $self->shortcut and ( ( $self->shortcut eq 'F12' ) or ( $self->id == -1 or Padre::Constant::WIN32() ) ) ) {
+	if ( $self->shortcut
+		and ( ( $self->shortcut eq 'F12' ) or ( $self->id == -1 or Padre::Constant::WIN32() ) ) )
+	{
 		$label .= "\t" . $self->shortcut;
 	}
 	return $label;
