@@ -57,7 +57,7 @@ $Sum = $Sum + 1;
 
 # This adds 1 to $Sum, but Perl allows you to make things much easier:
 
-$Sum++; # Excatly the same as $Sum = $Sum + 1;
+++$Sum; # Excatly the same as $Sum = $Sum + 1;
 
 # Another syntax which is valid for all four simple calculations + - * /
 
