@@ -68,7 +68,7 @@ sub new {
 		# should go to {event}!
 		$self->add_event( $self->{menu_event} );
 		$self->{menu_event} =
-			eval ' return sub {' . "Padre->ide->actions->{'" . $self->{name} . "'}->_event(\@_);" . '};';
+			eval ' return sub { ' . "Padre->ide->actions->{'" . $self->{name} . "'}->_event(\@_);" . '};';
 	}
 
 	my $name     = $self->{name};
@@ -149,9 +149,9 @@ sub _event {
 	if ( ref( $self->{event} ) eq 'CODE' ) {
 		&{ $self->{event} }(@args);
 	} elsif ( ref( $self->{event} ) eq 'ARRAY' ) {
-		for ( @{ $self->{event} } ) {
-			next if ref($_) ne 'CODE'; # TODO: Catch error and source (Ticket #666)
-			&{$_}(@args);
+		for my $item ( @{ $self->{event} } ) {
+			next if ref($item) ne 'CODE'; # TODO: Catch error and source (Ticket #666)
+			&{$item}(@args);
 		}
 	} else {
 		warn 'Expected array or code reference but got: ' . $self->{event};
