@@ -37,9 +37,10 @@ This method does all the checks when being called on a Padre::Config object.
 sub check {
 	my $self = shift;
 
-	for my $storage ('human','host') {
-		
-		if ( ! defined($self->$storage->{Version})) {
+	for my $storage ( 'human', 'host' ) {
+
+		if ( !defined( $self->$storage->{Version} ) ) {
+
 			# We have a pre-0.48 - config and this module starts
 			# working at upgrades from 0.48 to higher versions.
 			# This may be a new config or a upgrade from a
@@ -47,13 +48,14 @@ sub check {
 			$self->$storage->{Version} = $VERSION;
 			next;
 		}
-		
+
 		# Nothing to do if config is up-to-date
 		next if $self->$storage->{Version} == $VERSION;
-		
+
 		# This is only a sample and should be replaced by the first
 		# real usage of this module
-		if (($storage eq 'human') and ($self->$storage->{Version} == 0.47)) {
+		if ( ( $storage eq 'human' ) and ( $self->$storage->{Version} == 0.47 ) ) {
+
 			# Call subs or methods here or write short upgrades in this
 			# place.
 			# Remember to check if upgrades from older versions work!

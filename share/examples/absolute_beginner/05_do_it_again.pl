@@ -88,7 +88,7 @@ print "--- next sample ---\n";
 # This sample tries to find out how often a given number (for example 123)
 # could be divided by 2 before it gets lower than two.
 
-my $number   = 123;
+my $number    = 123;
 my $two_count = 0;
 
 # Two variables, one holding the number and the second for the number of times
@@ -96,9 +96,9 @@ my $two_count = 0;
 
 while ( $number > 2 ) {
 
-# while loops run until the condition (which is the same we used for the if's)
-# is no longer true. $number is 123 at the first run which is greater than 2
-# and the following lines are executed.
+	# while loops run until the condition (which is the same we used for the if's)
+	# is no longer true. $number is 123 at the first run which is greater than 2
+	# and the following lines are executed.
 
 	print "$number\n";
 	$number /= 2; # Look at the math session to understand this.

@@ -18,23 +18,23 @@ use warnings;
 
 sub add {
 
-# The first argument is $_[0], so it should be a good idea to place the 0
-# somewhere
+	# The first argument is $_[0], so it should be a good idea to place the 0
+	# somewhere
 
 	my $argument_number = 0;
-	
-# Let's just try out something. We got $_[0] and a variable containing a 0,
-# should it be possible to combine them by replacing the fixed 0 by the
-# variable name?
-	
-	print $_[$argument_number]."\n";
 
-# This should print out the first argument and if you try it out, you'll get
-# the expected salt.
+	# Let's just try out something. We got $_[0] and a variable containing a 0,
+	# should it be possible to combine them by replacing the fixed 0 by the
+	# variable name?
+
+	print $_[$argument_number] . "\n";
+
+	# This should print out the first argument and if you try it out, you'll get
+	# the expected salt.
 
 }
 
-add "salt","pepper","dressing";
+add "salt", "pepper", "dressing";
 
 # Want to try out if this works for the second and third argument? Do it, the
 # more you try, the more you learn!
@@ -47,17 +47,17 @@ print "--- Try #2 ---\n";
 
 sub add2 {
 
-# How do we get the sub to walk through the numbers 0 to 2 to get all arguments?
-# Sounds like a job for a loop and I'll start with a for try
+	# How do we get the sub to walk through the numbers 0 to 2 to get all arguments?
+	# Sounds like a job for a loop and I'll start with a for try
 
-	for my $argument_number (0..2) {
-		print $_[$argument_number]."\n";
+	for my $argument_number ( 0 .. 2 ) {
+		print $_[$argument_number] . "\n";
 	}
 }
 
 # We need to call a sub to use it, otherwise the source code won't be executed:
 
-add2 "salt","pepper","dressing";
+add2 "salt", "pepper", "dressing";
 
 # I'm sure that you'll figure out how to insert the "Add some" into the sub above.
 
@@ -77,20 +77,20 @@ sub add3 {
 
 	my $number_of_items = $_[0];
 
-# There is another place where we got numbers and didn't try to replace them by
-# variables until now, but this can't wait any longer
+	# There is another place where we got numbers and didn't try to replace them by
+	# variables until now, but this can't wait any longer
 
-	for my $argument_number (0..$number_of_items) {
+	for my $argument_number ( 0 .. $number_of_items ) {
 
-# The number of the first argument is fixed, so there is no need to push it
-# into a variable and use it only once. It could stay fixed within the for
-# line. There is nothing new following now:
+		# The number of the first argument is fixed, so there is no need to push it
+		# into a variable and use it only once. It could stay fixed within the for
+		# line. There is nothing new following now:
 
-		print $_[$argument_number]."\n";
+		print $_[$argument_number] . "\n";
 	}
 }
 
-add3 4,"salt","pepper","dressing","nuts";
+add3 4, "salt", "pepper", "dressing", "nuts";
 
 # You may notice that the first line contains the number of items to add, the 4
 # We don't want this, so you should try to change the above sample to skip the
@@ -104,8 +104,8 @@ sub cut_stripes {
 
 	my $number_of_items = $_[0];
 
-	for my $argument_number (1..$number_of_items) {
-		print "Cut ".$_[$argument_number]." in stripes\n";
+	for my $argument_number ( 1 .. $number_of_items ) {
+		print "Cut " . $_[$argument_number] . " in stripes\n";
 	}
 }
 
@@ -113,18 +113,18 @@ sub cut_pieces {
 
 	my $number_of_items = $_[0];
 
-	for my $argument_number (1..$number_of_items) {
-		print "Cut ".$_[$argument_number]." in pieces\n";
+	for my $argument_number ( 1 .. $number_of_items ) {
+		print "Cut " . $_[$argument_number] . " in pieces\n";
 	}
 }
 
 print "Ordered salat:\n";
-cut_stripes 2,"green salat","a paprika";
-cut_pieces 2,"a tomato","half of a cucumber";
-add3 1,"nuts";
+cut_stripes 2, "green salat", "a paprika";
+cut_pieces 2,  "a tomato",    "half of a cucumber";
+add3 1,        "nuts";
 print "Mix everything\n";
-add3 3,"dressing","salt","pepper";
-cut_stripes 1,"a chicken breast";
+add3 3, "dressing", "salt", "pepper";
+cut_stripes 1, "a chicken breast";
 print "Roast the chicken breast stripes\n";
 print "Put them over the salat\n";
 

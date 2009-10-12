@@ -67,10 +67,13 @@ sub new {
 	Padre::Action->new(
 		name    => 'perl.extract_subroutine',
 		label   => Wx::gettext('Extract Subroutine'),
-		comment => Wx::gettext('Cut the current selection and create a new sub from it. '
-			. 'A call to this sub is added in the place where the selection was.'),
+		comment => Wx::gettext(
+			      'Cut the current selection and create a new sub from it. '
+				. 'A call to this sub is added in the place where the selection was.'
+		),
 		menu_event => sub {
-			my $doc    = $_[0]->current->document;
+			my $doc = $_[0]->current->document;
+
 			#my $editor = $doc->editor;
 			#my $code   = $editor->GetSelectedText();
 			require Padre::Wx::History::TextEntryDialog;

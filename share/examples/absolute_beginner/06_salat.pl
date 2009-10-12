@@ -67,26 +67,26 @@ sub cut {
 # Here we got two arguments, the foot and the cut style. Many arguments must be
 # seperated by commas.
 
-cut "green salat","stripes";
-cut "a tomato","pieces";
-cut "half of a cucumber","pieces";
-cut "a paprika","stripes";
-cut "a chicken breast","stripes";
+cut "green salat",        "stripes";
+cut "a tomato",           "pieces";
+cut "half of a cucumber", "pieces";
+cut "a paprika",          "stripes";
+cut "a chicken breast",   "stripes";
 
 # The second arguments goes to $_[1] and if we had a third one, it would go to
 # $_[2] and so on.
 
 # Now order everything to get the same salat
 print "Ordered salat:\n";
-cut "green salat","stripes";
-cut "a tomato","pieces";
-cut "half of a cucumber","pieces";
-cut "a paprika","stripes";
+cut "green salat",        "stripes";
+cut "a tomato",           "pieces";
+cut "half of a cucumber", "pieces";
+cut "a paprika",          "stripes";
 print "Mix everything\n";
 add "dressing";
 add "salt";
 add "pepper";
-cut "a chicken breast","stripes";
+cut "a chicken breast", "stripes";
 print "Roast the chicken breast stripes\n";
 print "Put them over the salat\n";
 

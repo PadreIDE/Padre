@@ -1,4 +1,5 @@
 package Padre::Wx::Dialog::RefactorSelectFunction;
+
 # stolen from Padre::Wx::Dialog::SessionManager
 
 # This file is part of Padre, the Perl ide.
@@ -13,7 +14,7 @@ our $VERSION = '0.47';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
-	_butselect   => '_butselect', # select 
+	_butselect   => '_butselect',   # select
 	_currow      => '_currow',      # current list row number
 	_curname     => '_curname',     # name of current session selected
 	_list        => '_list',        # list on the left of the pane
@@ -45,8 +46,8 @@ sub new {
 	# create dialog
 	$self->_create;
 
-	
-	
+
+
 	return $self;
 }
 
@@ -119,7 +120,7 @@ sub _create_buttons {
 	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# the buttons
-	my $bs = Wx::Button->new( $self, -1,              Wx::gettext('Select') );
+	my $bs = Wx::Button->new( $self, -1, Wx::gettext('Select') );
 	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Cancel') );
 	$self->_butselect($bs);
 	Wx::Event::EVT_BUTTON( $self, $bs, \&_on_butselect_clicked );
@@ -138,18 +139,17 @@ sub _refresh_list {
 
 
 	my @sorted;
-	if( $reverse ) {
-		@sorted = sort {uc($b) cmp uc($a)} @{ $self->{functions} } ;
+	if ($reverse) {
+		@sorted = sort { uc($b) cmp uc($a) } @{ $self->{functions} };
+	} else {
+		@sorted = sort { uc($a) cmp uc($b) } @{ $self->{functions} };
 	}
-	else {
-		@sorted = sort {uc($a) cmp uc($b)} @{ $self->{functions} };
-	}
-	
+
 	# clear list & fill it again
 	my $list = $self->_list;
-	$list->DeleteAllItems;	
-	
-	foreach my $function ( @sorted ) {
+	$list->DeleteAllItems;
+
+	foreach my $function (@sorted) {
 
 		# inserting the session in the list
 		my $item = Wx::ListItem->new;
@@ -191,7 +191,7 @@ sub _select_first_item {
 }
 
 sub _on_butclose_clicked {
-	
+
 	my $self = shift;
 	$self->{cancelled} = 1;
 	$self->Destroy;

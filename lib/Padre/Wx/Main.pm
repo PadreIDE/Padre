@@ -2600,11 +2600,11 @@ sub setup_editor {
 		#			close $fh;
 		#		}
 
-	
+
 		#not sure where the best place for this checking is..
-		#I'd actually like to make it recursivly open files 
-		#(but that will require a dialog listing them to avoid opening an infinite number of files) 
-		if (-d $file) {
+		#I'd actually like to make it recursivly open files
+		#(but that will require a dialog listing them to avoid opening an infinite number of files)
+		if ( -d $file ) {
 			$self->error(
 				sprintf(
 					Wx::gettext("Cannot open a Directory: %s"),
