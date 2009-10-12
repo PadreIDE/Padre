@@ -61,6 +61,9 @@ Changes for Perl Application Development and Refactoring Environment
     - The Perl help search (F2) destroyed the code refernce calling it, so F2
       was usable only once per Padre start, may also apply to other actions.
       Fixed. (SEWI)
+    - Ticket #660 - Moved Perl Refactoring tools to it's own Refactor Menu (PLAVEN)
+    - Added the ability to select where to place the "extracted subroutine" in the current
+      document (PLAVEN)
 
 0.47 2009.09.25
     - Bundled more Perl Operators documentation [perlopref.pod] (AZAWAWI, COWENS)
