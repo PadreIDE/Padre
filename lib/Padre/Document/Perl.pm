@@ -555,6 +555,74 @@ sub introduce_temporary_variable {
 	return ();
 }
 
+sub extract_subroutine {
+	my( $self, $newname ) = @_;
+
+	my $editor = $self->editor;
+	my $code   = $editor->GetSelectedText();
+	
+	my $sub_comment = <<EOC;
+# 
+# New subroutine extracted.
+#
+EOC
+	# we want to get a list of the subroutines to pick where to place
+	# the new sub
+	my @functions = $self->get_functions;
+	#print "printing the functions: " . join( "\n", @functions );
+	
+	# Show a list of functions
+	require Padre::Wx::Dialog::RefactorSelectFunction;
+	my $dialog = Padre::Wx::Dialog::RefactorSelectFunction->new($editor->main, \@functions);
+	$dialog->show();
+	if( $dialog->{cancelled} ) {
+	    return();
+	}
+	
+	# testing for now hard set:
+	#my $subname = 'testing2';
+	# check if canceled:
+	
+	my $subname = $dialog->get_function_name;
+
+	# get the new code, replace the selection
+	require Devel::Refactor;
+	my $refactory = Devel::Refactor->new;
+	my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
+
+	# make the change to the selected text
+	$editor->BeginUndoAction(); # do the edit atomically
+	$editor->ReplaceSelection($new_sub_call);
+
+	# with the change made
+	# locate the function:
+	my ( $start, $end ) = Padre::Util::get_matches(
+		$editor->GetText,
+		$self->get_function_regex($subname),
+		$editor->GetSelection, # Provides two params
+	);
+	unless ( defined $start ) {
+
+		# This needs to now rollback the 
+		# the changes made with the editor
+		$editor->Undo();
+		$editor->EndUndoAction();
+		# Couldn't find it
+		# should be dialog
+		#print "Couldn't find the sub: $subname\n";
+		return;
+	}
+	# now instert the text into the right location
+	my $data = Wx::TextDataObject->new;
+	$data->SetText($sub_comment . $new_code);
+	my $length = $data->GetTextLength;
+
+	$editor->InsertText( $start, $data->GetText );
+	$editor->EndUndoAction();	
+	
+	return ();
+	
+}
 # This sub handles a cached C-Tags - Parser object which is much faster
 # than recreating it on every autocomplete
 

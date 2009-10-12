@@ -67,12 +67,12 @@ sub new {
 	Padre::Action->new(
 		name    => 'perl.extract_subroutine',
 		label   => Wx::gettext('Extract Subroutine'),
-		comment => 'Cut the current selection and create a new sub from it. '
-			. 'A call to this sub is added in the place where the selection was.',
+		comment => Wx::gettext('Cut the current selection and create a new sub from it. '
+			. 'A call to this sub is added in the place where the selection was.'),
 		menu_event => sub {
 			my $doc    = $_[0]->current->document;
-			my $editor = $doc->editor;
-			my $code   = $editor->GetSelectedText();
+			#my $editor = $doc->editor;
+			#my $code   = $editor->GetSelectedText();
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
@@ -84,15 +84,8 @@ sub new {
 			my $newname = $dialog->GetValue;
 			$dialog->Destroy;
 			return unless defined $newname;
+			$doc->extract_subroutine($newname);
 
-			require Devel::Refactor;
-			my $refactory = Devel::Refactor->new;
-			my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
-			$editor->BeginUndoAction(); # do the edit atomically
-			$editor->ReplaceSelection($new_sub_call);
-			$editor->DocumentEnd();     # TODO: find a better place to put the new subroutine
-			$editor->AddText($new_code);
-			$editor->EndUndoAction();
 		},
 	);
 
