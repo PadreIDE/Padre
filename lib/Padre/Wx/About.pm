@@ -12,7 +12,7 @@ use Padre::Wx::Icon         ();
 use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 
-our $VERSION = '0.47';
+our $VERSION = '0.48';
 our @ISA     = 'Wx::Dialog';
 
 sub new {

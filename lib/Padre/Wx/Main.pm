@@ -59,7 +59,7 @@ use Padre::Wx::Dialog::Text   ();
 use Padre::Wx::Progress       ();
 
 
-our $VERSION = '0.47';
+our $VERSION = '0.48';
 our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;

@@ -11,7 +11,7 @@ use Pod::Abstract               ();
 use Padre::DocBrowser::document ();
 use File::Temp                  ();
 
-our $VERSION = '0.47';
+our $VERSION = '0.48';
 
 use Class::XSAccessor constructor => 'new', getters => {
 	get_provider => 'provider',

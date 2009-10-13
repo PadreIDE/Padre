@@ -11,7 +11,7 @@ use warnings;
 use Padre::Task ();
 use Padre::Wx   ();
 
-our $VERSION = '0.47';
+our $VERSION = '0.48';
 our @ISA     = 'Padre::Task';
 
 sub run {

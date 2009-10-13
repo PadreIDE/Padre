@@ -8,7 +8,7 @@ use Padre::Constant ();
 use Padre::Action::Refactor();
 use Padre::Action::Run();
 
-our $VERSION = '0.47';
+our $VERSION = '0.48';
 
 # Generate faster accessors
 use Class::XSAccessor getters => {
