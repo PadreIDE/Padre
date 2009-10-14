@@ -7,6 +7,7 @@ use warnings;
 use Padre::Constant ();
 use Padre::Action::Refactor();
 use Padre::Action::Run();
+use Padre::Action::Search();
 
 our $VERSION = '0.48';
 
@@ -29,8 +30,11 @@ use Class::XSAccessor getters => {
 
 # This sub calls all the other files which actually create the actions
 sub create {
-	Padre::Action::Refactor->new();
-	Padre::Action::Run->new();
+	my $main = shift;
+
+	Padre::Action::Refactor->new($main);
+	Padre::Action::Run->new($main);
+	Padre::Action::Search->new($main);
 
 
 	# This is made for usage by the developers to create a complete

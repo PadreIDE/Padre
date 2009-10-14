@@ -31,158 +31,67 @@ sub new {
 	$self->{main} = $main;
 
 	# Search
-	$self->{find} = $self->add_menu_item(
+	$self->{find} = $self->add_menu_action(
 		$self,
-		name       => 'search.find',
-		id         => Wx::wxID_FIND,
-		label      => Wx::gettext('&Find'),
-		shortcut   => 'Ctrl-F',
-		menu_event => sub {
-			$_[0]->find->find;
-		},
+		'search.find',
 	);
 
-	$self->{find_next} = $self->add_menu_item(
+	$self->{find_next} = $self->add_menu_action(
 		$self,
-		name       => 'search.find_next',
-		label      => Wx::gettext('Find Next'),
-		shortcut   => 'F3',
-		menu_event => sub {
-			my $editor = $_[0]->current->editor;
-
-			# Handle the obvious case with nothing selected
-			my ( $position1, $position2 ) = $editor->GetSelection;
-			if ( $position1 == $position2 ) {
-				return $_[0]->search_next;
-			}
-
-			# Multiple lines are also done the obvious way
-			my $line1 = $editor->LineFromPosition($position1);
-			my $line2 = $editor->LineFromPosition($position2);
-			unless ( $line1 == $line2 ) {
-				return $_[0]->search_next;
-			}
-
-			# Special case. Make and save a non-regex
-			# case-insensitive search and advance to the next hit.
-			my $search = Padre::Search->new(
-				find_case    => 0,
-				find_regex   => 0,
-				find_reverse => 0,
-				find_term    => $editor->GetTextRange(
-					$position1, $position2,
-				),
-			);
-			$_[0]->search_next($search);
-
-			# If we can't find another match, show a message
-			if ( ( $editor->GetSelection )[0] == $position1 ) {
-				$_[0]->error( Wx::gettext("Failed to find any matches") );
-			}
-		},
+		'search.find_next',
 	);
 
-	$self->{find_previous} = $self->add_menu_item(
+	$self->{find_previous} = $self->add_menu_action(
 		$self,
-		name       => 'search.find_previous',
-		label      => Wx::gettext('&Find Previous'),
-		shortcut   => 'Shift-F3',
-		menu_event => sub {
-			$_[0]->search_previous;
-		},
+		'search.find_previous',
 	);
 
 	$self->AppendSeparator;
 
 	# Quick Find: starts search with selected text
-	$self->{quick_find} = $self->add_checked_menu_item(
+	$self->{quick_find} = $self->add_menu_action(
 		$self,
-		name       => 'search.quick_find',
-		label      => Wx::gettext('Quick Find'),
-		menu_event => sub {
-			$_[0]->config->set(
-				'find_quick',
-				$_[1]->IsChecked ? 1 : 0,
-			);
-			return;
-		},
+		'search.quick_find',
 	);
-	$self->{quick_find}->Check( $main->config->find_quick );
 
 	# We should be able to remove F4 and shift-F4 and hook this functionality
 	# to F3 and shift-F3 Incremental find (#60)
-	$self->{quick_find_next} = $self->add_menu_item(
+	$self->{quick_find_next} = $self->add_menu_action(
 		$self,
-		name       => 'search.quick_find_next',
-		label      => Wx::gettext('Find Next'),
-		shortcut   => 'F4',
-		menu_event => sub {
-			$_[0]->fast_find->search('next');
-		},
+		'search.quick_find_next',
 	);
 
-	$self->{quick_find_previous} = $self->add_menu_item(
+	$self->{quick_find_previous} = $self->add_menu_action(
 		$self,
-		name       => 'search.quick_find_previous',
-		label      => Wx::gettext('Find Previous'),
-		shortcut   => 'Shift-F4',
-		menu_event => sub {
-			$_[0]->fast_find->search('previous');
-		},
+		'search.quick_find_previous',
 	);
 
 	$self->AppendSeparator;
 
 	# Search and Replace
-	$self->{replace} = $self->add_menu_item(
+	$self->{replace} = $self->add_menu_action(
 		$self,
-		name       => 'search.replace',
-		label      => Wx::gettext('Replace'),
-		shortcut   => 'Ctrl-R',
-		menu_event => sub {
-			$_[0]->replace->find;
-		},
+		'search.replace',
 	);
 
 	$self->AppendSeparator;
 
 	# Recursive Search
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'search.find_in_files',
-		label      => Wx::gettext('Find in Fi&les...'),
-		menu_event => sub {
-			require Padre::Wx::Ack;
-			Padre::Wx::Ack::on_ack(@_);
-		},
+		'search.find_in_files',
 	);
 
 	$self->AppendSeparator;
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'search.open_resource',
-		label      => Wx::gettext('Open Resource'),
-		shortcut   => 'Ctrl-Shift-R',
-		menu_event => sub {
-
-			#Create and show the dialog
-			my $open_resource_dialog = $_[0]->open_resource;
-			$open_resource_dialog->showIt;
-		},
+		'search.open_resource',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'search.quick_menu_access',
-		label      => Wx::gettext('Quick Menu Access'),
-		shortcut   => 'Ctrl-3',
-		menu_event => sub {
-
-			#Create and show the dialog
-			require Padre::Wx::Dialog::QuickMenuAccess;
-			Padre::Wx::Dialog::QuickMenuAccess->new($main)->ShowModal;
-		},
+		'search.quick_menu_access',
 	);
 
 	return $self;
