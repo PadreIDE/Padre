@@ -50,7 +50,7 @@ foreach my $name (@names) {
 }
 
 # The config version number is a requirement for every config and
-# the only key which is allowed to life in an empty config.
+# the only key which is allowed to live in an empty config.
 my %Test_Config = (Version => $Padre::Config::VERSION);
 
 # ... and that they don't leave a permanent state.
