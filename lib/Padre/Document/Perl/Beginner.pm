@@ -94,7 +94,7 @@ Here @data is in scalar context returning the number of elemenets. Spotted in th
 =cut
 
 	if ( $text =~ m/^(.*?)split([^;]+);/s ) {
-		my $cont = $1;
+		my $cont = $2;
 		if ( $cont =~ m{\@} ) {
 			$self->_report("The second parameter of split is a string, not an array");
 			return;
