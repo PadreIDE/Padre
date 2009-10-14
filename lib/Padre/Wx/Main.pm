@@ -155,7 +155,7 @@ sub new {
 	$self->{marker} = {};
 
 	# Create the actions
-	Padre::Action::create;
+	Padre::Action::create($self);
 
 	# Create the menu bar
 	$self->{menu} = Padre::Wx::Menubar->new($self);
