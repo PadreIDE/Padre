@@ -77,8 +77,8 @@ sub add_menu_action {
 		$action->id,
 		$action->label_menu,
 	);
-	$item->Check($action->{checked_default})
-	 if $method eq 'AppendCheckItem';
+	$item->Check( $action->{checked_default} )
+		if $method eq 'AppendCheckItem';
 
 	Wx::Event::EVT_MENU(
 		$self->{main},

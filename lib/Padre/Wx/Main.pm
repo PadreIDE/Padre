@@ -4832,7 +4832,7 @@ sub set_title {
 		$variable_data{'d'} = $document->file->dirname;
 
 		$variable_data{'F'} = $document->file->{filename};
-		if (defined($document->project_dir)) {
+		if ( defined( $document->project_dir ) ) {
 			my $project_dir = quotemeta $document->project_dir;
 			$variable_data{'F'} =~ s/^$project_dir//;
 		}

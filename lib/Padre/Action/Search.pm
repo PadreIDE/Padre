@@ -33,7 +33,7 @@ sub new {
 		name       => 'search.find',
 		id         => Wx::wxID_FIND,
 		label      => Wx::gettext('&Find'),
-		comment	   => Wx::gettext('Find text or regular expressions using a traditional dialog'),
+		comment    => Wx::gettext('Find text or regular expressions using a traditional dialog'),
 		shortcut   => 'Ctrl-F',
 		menu_event => sub {
 			$_[0]->find->find;
@@ -92,10 +92,10 @@ sub new {
 
 	# Quick Find: starts search with selected text
 	Padre::Action->new(
-		name       => 'search.quick_find',
-		label      => Wx::gettext('Quick Find'),
+		name        => 'search.quick_find',
+		label       => Wx::gettext('Quick Find'),
 		menu_method => 'AppendCheckItem',
-		menu_event => sub {
+		menu_event  => sub {
 			$_[0]->config->set(
 				'find_quick',
 				$_[1]->IsChecked ? 1 : 0,
@@ -118,10 +118,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'search.quick_find_previous',
-		label      => Wx::gettext('Find Previous'),
-		comment    => Wx::gettext('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
-		shortcut   => 'Shift-F4',
+		name     => 'search.quick_find_previous',
+		label    => Wx::gettext('Find Previous'),
+		comment  => Wx::gettext('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
+		shortcut => 'Shift-F4',
 		menu_event => sub {
 			$_[0]->fast_find->search('previous');
 		},
@@ -131,7 +131,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'search.replace',
 		label      => Wx::gettext('Replace'),
-		comment	   => Wx::gettext('Find a text and replace it'),
+		comment    => Wx::gettext('Find a text and replace it'),
 		shortcut   => 'Ctrl-R',
 		menu_event => sub {
 			$_[0]->replace->find;

@@ -175,7 +175,7 @@ sub dirname {
 
 sub readonly {
 	my $self = shift;
-	return 1 if (! -w $self->{filename});
+	return 1 if ( !-w $self->{filename} );
 }
 
 1;
