@@ -64,6 +64,7 @@ use constant {
 	MIMETYPE    => 3,
 	NEWLINE     => 4,
 	POSTRING    => 5,
+	ISRDONLY	=> 6,
 };
 
 #####################################################################
@@ -105,7 +106,7 @@ sub new {
 	);
 
 	# Set up the fields
-	$self->SetFieldsCount(6);
+	$self->SetFieldsCount(7);
 
 	#$self->SetStatusWidths( -1, 0, 100, 100, 50, 100 );
 
@@ -135,6 +136,7 @@ sub clear {
 	$self->SetStatusText( "", MIMETYPE );
 	$self->SetStatusText( "", NEWLINE );
 	$self->SetStatusText( "", POSTRING );
+	$self->SetStatusText( "", ISRDONLY );
 	return;
 }
 
@@ -187,6 +189,7 @@ sub refresh {
 	my $format   = '%' . length( $lines + 1 ) . 's,%-3s %3s%%';
 	my $length   = length( $lines + 1 ) + 8;
 	my $postring = sprintf( $format, ( $line + 1 ), $char, $percent );
+	my $rdstatus = $self->is_read_only;
 
 	# update task load status
 	$self->update_task_status;
@@ -197,6 +200,7 @@ sub refresh {
 	$self->SetStatusText( $mime_type_name,       MIMETYPE );
 	$self->SetStatusText( $newline,              NEWLINE );
 	$self->SetStatusText( $postring,             POSTRING );
+	$self->SetStatusText( $rdstatus,             ISRDONLY );
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,
@@ -204,6 +208,7 @@ sub refresh {
 		( length($mime_type_name) + 2 ) * $width,
 		( length($newline) + 2 ) * $width,
 		( $length + 2 ) * $width,
+		length($rdstatus) * $width,
 	);
 
 	# move the static bitmap holding the task load status
@@ -373,6 +378,18 @@ sub _move_bitmap {
 	);
 	$sbmp->Refresh;
 }
+
+sub is_read_only {
+	my ($self)   = @_;
+	my $document = $self->current->document;
+	my $filename = $document->filename || '';
+	my $statustext = ':)';
+	if ( $filename && ! -w $filename) {
+		$statustext = 'Read Only'; 
+	}
+	return $statustext;
+}
+
 
 1;
 

@@ -1022,6 +1022,12 @@ sub refresh_cursorpos {
 	$self->GetStatusBar->update_pos( $_[0] or $self->current );
 }
 
+sub refresh_rdstatus {
+	my $self = shift;
+	return if $self->no_refresh;
+	$self->GetStatusBar->is_read_only( $_[0] or $self->current );
+}
+
 =pod
 
 =head3 refresh_functions
@@ -4181,6 +4187,8 @@ sub on_stc_update_ui {
 
 	#	$self->refresh_status($current);
 	$self->refresh_cursorpos($current);
+
+	$self->refresh_rdstatus($current);
 
 	# $self->refresh_functions;
 	# $self->refresh_syntaxcheck;
