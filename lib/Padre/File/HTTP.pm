@@ -121,6 +121,10 @@ sub read {
 
 }
 
+sub readonly {
+	return 1;
+}
+
 # TODO: Maybe use WebDAV to enable writing
 #sub write {
 #	my $self    = shift;
