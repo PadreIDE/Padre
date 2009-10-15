@@ -383,7 +383,7 @@ sub is_read_only {
 	my ($self)    = @_;
 	my $file      = $self->current->document->file || '';
 	my $is_rdonly = $file->readonly if $file;
-	$is_rdonly ? return 'Read Only' : return ':)';
+	$is_rdonly ? return Wx::gettext('Read Only') : return ':)';
 }
 
 
