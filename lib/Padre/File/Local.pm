@@ -173,6 +173,11 @@ sub dirname {
 	return File::Basename::dirname( $self->{filename} );
 }
 
+sub readonly {
+	my $self = shift;
+	return 1 if (! -w $self->{filename});
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

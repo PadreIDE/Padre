@@ -64,7 +64,7 @@ use constant {
 	MIMETYPE    => 3,
 	NEWLINE     => 4,
 	POSTRING    => 5,
-	ISRDONLY	=> 6,
+	RDONLY      => 6,
 };
 
 #####################################################################
@@ -136,7 +136,7 @@ sub clear {
 	$self->SetStatusText( "", MIMETYPE );
 	$self->SetStatusText( "", NEWLINE );
 	$self->SetStatusText( "", POSTRING );
-	$self->SetStatusText( "", ISRDONLY );
+	$self->SetStatusText( "", RDONLY );
 	return;
 }
 
@@ -200,7 +200,7 @@ sub refresh {
 	$self->SetStatusText( $mime_type_name,       MIMETYPE );
 	$self->SetStatusText( $newline,              NEWLINE );
 	$self->SetStatusText( $postring,             POSTRING );
-	$self->SetStatusText( $rdstatus,             ISRDONLY );
+	$self->SetStatusText( $rdstatus,             RDONLY );
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,
@@ -380,14 +380,10 @@ sub _move_bitmap {
 }
 
 sub is_read_only {
-	my ($self)   = @_;
-	my $document = $self->current->document;
-	my $filename = $document->filename || '';
-	my $statustext = ':)';
-	if ( $filename && ! -w $filename) {
-		$statustext = 'Read Only'; 
-	}
-	return $statustext;
+	my ($self)    = @_;
+	my $file      = $self->current->document->file || '';
+	my $is_rdonly = $file->readonly if $file;
+	$is_rdonly ? return 'Read Only' : return ':)';
 }
 
 
