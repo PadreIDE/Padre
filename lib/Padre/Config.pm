@@ -539,6 +539,13 @@ setting(
 	default => '',
 );
 
+setting(
+	name    => 'info_on_toolbar',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 # Move of stacktrace to run menu: will be removed (run_stacktrace)
 setting(
 	name    => 'run_stacktrace',
