@@ -5007,8 +5007,6 @@ sub filter_tool {
 
 		if (defined($newtext) and ($newtext ne '')) {
 
-			$newtext =~ s{\n$}{};
-
 			my $editor = $self->current->editor;
 			$editor->ReplaceSelection($newtext);
 		}
@@ -5044,20 +5042,22 @@ sub _filter_tool_run {
 		return;
 	}
 
-	print STDERR "$filter_in,$filter_out,$filter_err,$cmd\n";
 	print $filter_in ${$text};
-	close $filter_in; # Send EOF to tool
-	print STDERR "Wrote in\n";
+	CORE::close $filter_in; # Send EOF to tool
 	my $newtext = join('',<$filter_out>);
-	print STDERR "Read out\n";
-	my $errtext = join('',<$filter_err>);
-	print STDERR "Read err\n";
-	
-	if (defined($errtext) and ($errtext ne '')) {
-		$self->error(sprintf(Wx::gettext("Error returned by filter tool:\n%s",$errtext)));
-		# We may also have a result, so don't return here
+
+	if (defined($filter_err)) {
+		
+		# The error channel may not exist
+		
+		my $errtext = join('',<$filter_err>);
+		
+		if (defined($errtext) and ($errtext ne '')) {
+			$self->error(sprintf(Wx::gettext("Error returned by filter tool:\n%s",$errtext)));
+			# We may also have a result, so don't return here
+		}
 	}
-	
+
 	return $newtext;
 }
 
