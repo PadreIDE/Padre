@@ -50,7 +50,7 @@ sub new {
 	# anyone wants to change the toolbar, it needs to be done manuelly
 	# within config.yml.
 
-	for my $item (split(/\,/,$config->main_toolbar_items)) {
+	for my $item (split(/\;/,$config->main_toolbar_items)) {
 
 		if ($item eq '|') {
 			$self->AddSeparator;
