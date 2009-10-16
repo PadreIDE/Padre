@@ -333,6 +333,15 @@ setting(
 	name    => 'main_toolbar_items',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
+	# This lifes here until a better place is found:
+	# This is a list of toolbar items, seperated by ;
+	# The following items are supported:
+	#   action:icon
+	#     Insert the action with the named icon
+	#   action(argument,argument):icon
+	#     Insert an action which requires one or more arguments
+	#   |
+	#     Insert a seperator
 	default => 'file.new:actions/document-new;file.open:actions/document-open',
 );
 
