@@ -210,6 +210,16 @@ sub new {
 		},
 	);
 
+	$self->{reload_all} = $self->add_menu_item(
+		$self,
+		name       => 'file.reload_all',
+		label      => Wx::gettext('Reload all files'),
+		comment	   => Wx::gettext('Reload all files currently open'),
+		menu_event => sub {
+			$_[0]->on_reload_all;
+		},
+	);
+
 	$self->AppendSeparator;
 
 	# Save files
@@ -372,6 +382,7 @@ sub refresh {
 	$self->{close_all}->Enable($doc);
 	$self->{close_all_but_current}->Enable($doc);
 	$self->{reload_file}->Enable($doc);
+	$self->{reload_all}->Enable($doc);
 	$self->{save}->Enable($doc);
 	$self->{save_as}->Enable($doc);
 	$self->{save_all}->Enable($doc);
