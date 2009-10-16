@@ -59,9 +59,9 @@ sub check {
 			# Call subs or methods here or write short upgrades in this
 			# place.
 			# Remember to check if upgrades from older versions work!
-			
-		} elsif ($self->$storage->{Version} < 0.48) {
-			
+
+		} elsif ( $self->$storage->{Version} < 0.48 ) {
+
 			# There is nothing which needs conversation when upgrading from a
 			# config prior 0.48 to our current version, so just update the
 			# config version number

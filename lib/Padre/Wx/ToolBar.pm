@@ -19,7 +19,7 @@ use constant DOCKABLE => !Padre::Constant::WXWIN32;
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	
+
 	my $config = $main->config;
 
 	# Prepare the style
@@ -50,48 +50,48 @@ sub new {
 	# anyone wants to change the toolbar, it needs to be done manuelly
 	# within config.yml.
 
-	for my $item (split(/\;/,$config->main_toolbar_items)) {
+	for my $item ( split( /\;/, $config->main_toolbar_items ) ) {
 
-		if ($item eq '|') {
+		if ( $item eq '|' ) {
 			$self->AddSeparator;
 			next;
 		}
 
-		if ($item =~ /^(.+?)\((.*)\)(\:(.*))?$/) {
+		if ( $item =~ /^(.+?)\((.*)\)(\:(.*))?$/ ) {
 			my $action = $1;
-			my $icon = $4;
+			my $icon   = $4;
 			$self->add_tool_item(
 				action => $action,
-				icon => $icon,
-				args => split(/\,/,$2),
+				icon   => $icon,
+				args   => split( /\,/, $2 ),
 			);
 			next;
 		}
 
-		if ($item =~ /^(.+?)(\:(.*))?$/) {
+		if ( $item =~ /^(.+?)(\:(.*))?$/ ) {
 			my $action = $1;
-			my $icon = $3;
+			my $icon   = $3;
 			$self->add_tool_item(
 				action => $action,
-				icon => $icon,
+				icon   => $icon,
 			);
 			next;
 		}
 
-		warn('Unknown toolbar item: '.$item);
+		warn( 'Unknown toolbar item: ' . $item );
 
 	}
 
 	# Populate the toolbar
-#	$self->add_tool_item(
-#		action => 'file.new',
-#		icon   => 'actions/document-new',
-#	);
-#
-#	$self->add_tool_item(
-#		action => 'file.open',
-#		icon   => 'actions/document-open',
-#	);
+	#	$self->add_tool_item(
+	#		action => 'file.new',
+	#		icon   => 'actions/document-new',
+	#	);
+	#
+	#	$self->add_tool_item(
+	#		action => 'file.open',
+	#		icon   => 'actions/document-open',
+	#	);
 
 	$self->{save} = $self->add_tool_item(
 		action => 'file.save',
@@ -228,8 +228,9 @@ sub add_tool_item {
 	my $id = $self->{next_id}++;
 
 	# Store ID on item list
-	$self->{item_list} = {} if (!defined($self->{item_list}))
-	                           or (ref($self->{item_list})ne 'ARRAY');
+	$self->{item_list} = {}
+		if ( !defined( $self->{item_list} ) )
+		or ( ref( $self->{item_list} ) ne 'ARRAY' );
 	$self->{item_list}->{$id} = $action;
 
 	# Create the tool
@@ -257,14 +258,14 @@ sub refresh {
 	my $text      = $current->text;
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
-	for (keys(%{$self->{item_list}})) {
-		
+	for ( keys( %{ $self->{item_list} } ) ) {
+
 		my $action = $self->{item_list}->{$_};
 
 		my $enabled = 1; # Set default
 
 		$enabled = 0
-		 if $action->{need_editor} and ( ! $editor);
+			if $action->{need_editor} and ( !$editor );
 
 	}
 

@@ -330,9 +330,10 @@ setting(
 	default => Padre::Constant::MAC ? 0 : 1,
 );
 setting(
-	name    => 'main_toolbar_items',
-	type    => Padre::Constant::ASCII,
-	store   => Padre::Constant::HUMAN,
+	name  => 'main_toolbar_items',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HUMAN,
+
 	# This lifes here until a better place is found:
 	# This is a list of toolbar items, seperated by ;
 	# The following items are supported:

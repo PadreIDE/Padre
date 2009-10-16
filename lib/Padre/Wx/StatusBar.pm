@@ -160,7 +160,7 @@ sub refresh {
 	my $editor = $current->editor or return $self->clear;
 
 	# Prepare the various strings that form the status bar
-	my $main = $self->{main};
+	my $main     = $self->{main};
 	my $notebook = $current->notebook;
 	my $document = $current->document;
 	my $newline  = $document->get_newline_type || Padre::Constant::NEWLINE;
@@ -198,17 +198,19 @@ sub refresh {
 	$self->update_task_status;
 
 	# Write the new values into the status bar and update sizes
-	if (defined($main->{infomessage}) and ($main->{infomessage} ne '')
-	 and ($main->{infomessage_timeout} > time)) {
+	if (    defined( $main->{infomessage} )
+		and ( $main->{infomessage} ne '' )
+		and ( $main->{infomessage_timeout} > time ) )
+	{
 		$self->SetStatusText( $main->{infomessage}, FILENAME );
 	} else {
 		$self->SetStatusText( "$modified $filename", FILENAME );
 	}
-	$self->SetStatusText( $highlighter,          HIGHLIGHTER );
-	$self->SetStatusText( $mime_type_name,       MIMETYPE );
-	$self->SetStatusText( $newline,              NEWLINE );
-	$self->SetStatusText( $postring,             POSTRING );
-	$self->SetStatusText( $rdstatus,             RDONLY );
+	$self->SetStatusText( $highlighter,    HIGHLIGHTER );
+	$self->SetStatusText( $mime_type_name, MIMETYPE );
+	$self->SetStatusText( $newline,        NEWLINE );
+	$self->SetStatusText( $postring,       POSTRING );
+	$self->SetStatusText( $rdstatus,       RDONLY );
 	$self->SetStatusWidths(
 		-1,
 		$self->_task_width,

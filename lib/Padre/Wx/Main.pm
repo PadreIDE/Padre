@@ -322,20 +322,20 @@ use Class::XSAccessor predicates => {
 	getters => {
 
 	# GUI Elements
-	title     => 'title',
-	config    => 'config',
-	ide       => 'ide',
-	aui       => 'aui',
-	menu      => 'menu',
-	notebook  => 'notebook',
-	left      => 'left',
-	right     => 'right',
-	functions => 'functions',
-	bottom    => 'bottom',
-	output    => 'output',
-	syntax    => 'syntax',
-	errorlist => 'errorlist',
-	infomessage => 'infomessage',
+	title               => 'title',
+	config              => 'config',
+	ide                 => 'ide',
+	aui                 => 'aui',
+	menu                => 'menu',
+	notebook            => 'notebook',
+	left                => 'left',
+	right               => 'right',
+	functions           => 'functions',
+	bottom              => 'bottom',
+	output              => 'output',
+	syntax              => 'syntax',
+	errorlist           => 'errorlist',
+	infomessage         => 'infomessage',
 	infomessage_timeout => 'infomessage_timeout',
 
 	# Operating Data
@@ -2055,16 +2055,16 @@ sub info {
 	my $self    = shift;
 	my $message = shift;
 
-	my $ide = $self->ide;
+	my $ide    = $self->ide;
 	my $config = $ide->config;
 
-	if ($config->info_on_statusbar) {
+	if ( $config->info_on_statusbar ) {
 		$message =~ s/[\r\n]+/ /g;
-		$self->{infomessage} = $message;
+		$self->{infomessage}         = $message;
 		$self->{infomessage_timeout} = time + 10;
 		$self->refresh_status;
 	} else {
-		my $title   = shift || Wx::gettext('Message');
+		my $title = shift || Wx::gettext('Message');
 		Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTRE, $self );
 	}
 
