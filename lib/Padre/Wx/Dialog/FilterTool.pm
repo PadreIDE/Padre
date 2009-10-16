@@ -125,19 +125,8 @@ sub _create_fields {
 	my $self  = shift;
 	my $sizer = $self->_sizer;
 
-	my $Current_Session = (
-		Padre::DB::Session->select(
-			'name where id = ?',
-			Padre->ide->{session}
-		)
-		)[0]->{name}
-		if defined( Padre->ide->{session} );
-	$Current_Session ||= ''; # Empty value for combo box, better than undef
-
-
-	# session name
-	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Session name:') );
-	my $combo = Wx::ComboBox->new( $self, -1, $Current_Session );
+	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Filter command:') );
+	my $combo = Wx::ComboBox->new( $self, -1, '');
 	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
 	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
 	$self->_combo($combo);
@@ -178,8 +167,8 @@ sub _refresh_combo {
 	my ( $self, $column, $reverse ) = @_;
 
 	# get list of sessions, sorted.
-	my @names = map { $_->name } Padre::DB::Session->select('ORDER BY name');
-	$self->_names( \@names );
+#	my @names = map { $_->name } Padre::DB::FilterTool->select('ORDER BY name');
+#	$self->_names( \@names );
 
 	# clear list & fill it again
 	my $combo = $self->_combo;
