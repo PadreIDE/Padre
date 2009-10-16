@@ -2984,19 +2984,62 @@ sub on_open_example {
 
 =pod
 
-=head3 on_reload_file
+=head3 reload_all
 
-    $main->on_reload_file;
+    my $success = $main->reload_all();
 
-Try to reload current file from disk. Display an error if something went wrong.
-No return value.
+Reload all open files from disk.
 
 =cut
 
-sub on_reload_file {
+sub reload_all {
+	my $self  = shift;
+	my $skip  = shift;
+	my $guard = $self->freezer;
+
+	my @pages = $self->pageids;
+
+	my $progress = Padre::Wx::Progress->new(
+		$self, Wx::gettext('Reload all files'), $#pages,
+		lazy => 1
+	);
+
+	foreach my $no ( 0 .. $#pages ) {
+		$progress->update( $no, ( $no + 1 ) . '/' . scalar(@pages) );
+		$self->reload_file( $pages[$no] ) or return 0;
+	}
+
+	$self->refresh;
+
+	return 1;
+}
+
+=head3 reload_file
+
+    $main->reload_file;
+
+Try to reload a file from disk. Display an error if something went wrong.
+
+
+Returns 1 on success and 0 in case of and error.
+
+=cut
+
+sub reload_file {
 	my $self     = shift;
-	my $document = $self->current->document or return;
-	my $editor   = $document->editor;
+	my $page = shift;
+
+	my $editor;
+	my $document;
+
+	if (defined($page)) {
+		my $notebook = $self->notebook;
+		$editor = $notebook->GetPage($page) or return 0;
+		$document  = $editor->{Document}     or return 0;
+	} else {
+		$document = $self->current->document or return 0;
+		$editor   = $document->editor;
+	}
 
 	$document->store_cursor_position;
 	if ( $document->reload ) {
@@ -3010,7 +3053,38 @@ sub on_reload_file {
 			)
 		);
 	}
-	return;
+	return 1;
+}
+
+=head3 on_reload_file
+
+    $main->on_reload_file;
+
+Try to reload current file from disk. Display an error if something went wrong.
+No return value.
+
+=cut
+
+sub on_reload_file {
+	my $self     = shift;
+
+	return $self->reload_file;
+}
+
+
+=head3 on_reload_all
+
+    $main->on_reload_all;
+
+Reload all currently opened files from disk.
+No return value.
+
+=cut
+
+sub on_reload_all {
+	my $self     = shift;
+
+	return $self->reload_all;
 }
 
 =pod
