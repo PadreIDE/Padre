@@ -134,13 +134,19 @@ sub update_gui {
 	require Padre::Wx;
 
 	# If there are no errors, clear the synax checker pane and return.
-	unless ($messages) {
+	if ((!defined($messages)) or ($#{$messages} = -1)) {
+		my $green = Wx::Colour->new("green");
+		$editor->MarkerDefine(
+			Padre::Wx::MarkError(),
+			Wx::wxSTC_MARK_SMALLRECT,
+			$green,
+			$green,
+		);
+		my $idx = $syntax->InsertStringImageItem( 0, 0, 2 );
+		$syntax->SetItemData( $idx, 0 );
+		$syntax->SetItem( $idx, 1, Wx::gettext('Info') );
+		$syntax->SetItem( $idx, 2, Wx::gettext('No errors or warnings.') );
 		return;
-	}
-
-	# Again, slightly differently
-	unless (@$messages) {
-		return 1;
 	}
 
 	# Update the syntax checker pane
