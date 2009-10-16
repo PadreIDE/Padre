@@ -56,8 +56,9 @@ use Padre::Wx::AuiManager     ();
 use Padre::Wx::FunctionList   ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Wx::Dialog::Text   ();
+use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress       ();
-
+use IPC::Open3 		('open3');
 
 our $VERSION = '0.48';
 our @ISA     = 'Wx::Frame';
@@ -2840,6 +2841,21 @@ sub on_open_all_recent_files {
 
 =pod
 
+=head3 on_filter_tool
+
+    $main->on_filter_tool;
+
+Prompt user for a command to filter the selection/document.
+
+=cut
+
+sub on_filter_tool {
+	require Padre::Wx::Dialog::FilterTool;
+	my $self = shift;
+	my $filter  = Padre::Wx::Dialog::FilterTool->new($self);
+	$filter->show;
+}
+
 =head3 on_open_url
 
     $main->on_open_url;
@@ -4973,6 +4989,81 @@ sub new_document_from_string {
 	return 1;
 
 }
+
+sub filter_tool {
+	my $self = shift;
+	my $cmd = shift;
+
+	return 0 if ! defined($cmd);
+	return 0 if $cmd eq '';
+
+	my $text = $self->current->text;
+    
+	if (defined($text) and ($text ne '')) {
+
+		# Process a selection
+
+		my $newtext = $self->_filter_tool_run($cmd,\$text);
+
+		if (defined($newtext) and ($newtext ne '')) {
+
+			$newtext =~ s{\n$}{};
+
+			my $editor = $self->current->editor;
+			$editor->ReplaceSelection($newtext);
+		}
+
+	} else {
+		
+		# No selection, process whole document
+
+	    my $document = $self->current->document;
+	    my $text = $document->text_get;
+
+	    my $newtext = $self->_filter_tool_run($cmd,\$text);
+
+	    if (defined($newtext) and ($newtext ne '')) {
+		$document->text_set($newtext);
+            }
+        }
+
+	return 1;
+}
+
+sub _filter_tool_run {
+	my $self = shift;
+	my $cmd = shift;
+	my $text = shift; # reference to advoid copiing the content again
+	
+	my $filter_in;
+	my $filter_out;
+	my $filter_err;
+	
+	if ( ! open3($filter_in,$filter_out,$filter_err,$cmd)) {
+		$self->error(sprintf(Wx::gettext("Error running filter tool:\n%s"),$!));
+		return;
+	}
+
+	print STDERR "$filter_in,$filter_out,$filter_err,$cmd\n";
+	print $filter_in ${$text};
+	close $filter_in; # Send EOF to tool
+	print STDERR "Wrote in\n";
+	my $newtext = join('',<$filter_out>);
+	print STDERR "Read out\n";
+	my $errtext = join('',<$filter_err>);
+	print STDERR "Read err\n";
+	
+	if (defined($errtext) and ($errtext ne '')) {
+		$self->error(sprintf(Wx::gettext("Error returned by filter tool:\n%s",$errtext)));
+		# We may also have a result, so don't return here
+	}
+	
+	return $newtext;
+}
+
+
+
+
 1;
 
 =pod
