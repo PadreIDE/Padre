@@ -355,6 +355,11 @@ sub _appearance_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox', 'info_on_statusbar', ( $config->info_on_statusbar ? 1 : 0 ),
+				Wx::gettext('Show low-priority info messages on statusbar (not in a popup)')
+			],
+			[]
+		],
 		[   [   'Wx::CheckBox', 'editor_right_margin_enable', ( $config->editor_right_margin_enable ? 1 : 0 ),
 				Wx::gettext('Show right margin at column:')
 			],
@@ -951,6 +956,10 @@ sub run {
 	$config->set(
 		'main_output_ansi',
 		$data->{main_output_ansi} ? 1 : 0
+	);
+	$config->set(
+		'info_on_statusbar',
+		$data->{info_on_statusbar} ? 1 : 0
 	);
 	$config->set(
 		'window_title',
