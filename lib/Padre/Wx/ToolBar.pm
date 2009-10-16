@@ -62,8 +62,9 @@ sub new {
 			my $icon = $3;
 			$self->add_tool_item(
 				action => $action,
-				icon => $icon);
-			next:
+				icon => $icon,
+			);
+			next;
 		}
 
 		warn('Unknown toolbar item: '.$item);
