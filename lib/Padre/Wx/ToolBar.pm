@@ -57,6 +57,17 @@ sub new {
 			next;
 		}
 
+		if ($item =~ /^(.+?)\((.*)\)(\:(.*))?$/) {
+			my $action = $1;
+			my $icon = $4;
+			$self->add_tool_item(
+				action => $action,
+				icon => $icon,
+				args => split(/\,/,$2),
+			);
+			next;
+		}
+
 		if ($item =~ /^(.+?)(\:(.*))?$/) {
 			my $action = $1;
 			my $icon = $3;
