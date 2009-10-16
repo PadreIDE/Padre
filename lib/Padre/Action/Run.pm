@@ -35,8 +35,9 @@ sub new {
 	Padre::Action->new(
 		name       => 'run.run_document',
 		label      => Wx::gettext('Run Script'),
-		comment    => Wx::gettext( 'Runs the current document and ' . 'shows its output in the output panel.' ),
+		comment    => Wx::gettext( 'Runs the current document and shows its output in the output panel.' ),
 		shortcut   => 'F5',
+		need_editor => 1,
 		menu_event => sub {
 			$_[0]->run_document;
 			$_[0]->refresh_toolbar( $_[0]->current );
@@ -48,6 +49,7 @@ sub new {
 		label      => Wx::gettext('Run Script (debug info)'),
 		comment    => Wx::gettext( 'Run the current document but include ' . 'debug info in the output.' ),
 		shortcut   => 'Shift-F5',
+		need_editor => 1,
 		menu_event => sub {
 			$_[0]->run_document(1); # Enable debug info
 		},
@@ -67,8 +69,10 @@ sub new {
 		name    => 'run.run_tests',
 		label   => Wx::gettext('Run Tests'),
 		comment => Wx::gettext(
-			'Run all tests for the current project or ' . 'document and show the results in the output panel.'
+			'Run all tests for the current project or document and show the results in ' . 
+			'the output panel.'
 		),
+		need_editor => 1,
 		menu_event => sub {
 			$_[0]->on_run_tests;
 		},
@@ -78,6 +82,7 @@ sub new {
 		name       => 'run.run_this_test',
 		label      => Wx::gettext('Run This Test'),
 		comment    => Wx::gettext('Run the current test if the current document is a test.'),
+		need_editor => 1,
 		menu_event => sub {
 			$_[0]->on_run_this_test;
 		},
