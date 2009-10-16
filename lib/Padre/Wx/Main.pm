@@ -2058,9 +2058,10 @@ sub info {
 	my $ide = $self->ide;
 	my $config = $ide->config;
 
-	if ($config->info_on_toolbar) {
-		$self->infomessage($message);
-		$self->infomessage_timeout(time + 10);
+	if ($config->info_on_statusbar) {
+		$self->{infomessage} = $message;
+		$self->{infomessage_timeout} = time + 10;
+		$self->refresh_status;
 	} else {
 		my $title   = shift || Wx::gettext('Message');
 		Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTRE, $self );

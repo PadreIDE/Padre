@@ -93,6 +93,8 @@ sub new {
 		Wx::wxST_SIZEGRIP | Wx::wxFULL_REPAINT_ON_RESIZE
 	);
 
+	$self->{main} = $main;
+
 	# create the static bitmap that will hold the task load status
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
@@ -158,6 +160,7 @@ sub refresh {
 	my $editor = $current->editor or return $self->clear;
 
 	# Prepare the various strings that form the status bar
+	my $main = $self->{main};
 	my $notebook = $current->notebook;
 	my $document = $current->document;
 	my $newline  = $document->get_newline_type || Padre::Constant::NEWLINE;
@@ -195,7 +198,12 @@ sub refresh {
 	$self->update_task_status;
 
 	# Write the new values into the status bar and update sizes
-	$self->SetStatusText( "$modified $filename", FILENAME );
+	if (defined($main->{infomessage}) and ($main->{infomessage} ne '')
+	 and ($main->{infomessage_timeout} > time)) {
+		$self->SetStatusText( $main->{infomessage}, FILENAME );
+	} else {
+		$self->SetStatusText( "$modified $filename", FILENAME );
+	}
 	$self->SetStatusText( $highlighter,          HIGHLIGHTER );
 	$self->SetStatusText( $mime_type_name,       MIMETYPE );
 	$self->SetStatusText( $newline,              NEWLINE );
