@@ -556,6 +556,7 @@ sub new {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
+
 	# End diff tools
 
 	$self->{insert_from_file} = $self->add_menu_item(

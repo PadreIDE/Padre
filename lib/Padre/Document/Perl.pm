@@ -565,12 +565,13 @@ sub extract_subroutine {
 	my ( $self, $newname ) = @_;
 
 	my $editor = $self->editor;
-	# get the selected code 
-	my $code   = $editor->GetSelectedText();
-	
+
+	# get the selected code
+	my $code = $editor->GetSelectedText();
+
 	#print "startlocation: " . join(", ", @$start_position) . "\n";
 	# this could be configurable
-	my $now = localtime;
+	my $now         = localtime;
 	my $sub_comment = <<EOC;
 # 
 # New subroutine "$newname" extracted - $now.
@@ -582,59 +583,63 @@ EOC
 	my $refactory = Devel::Refactor->new;
 	my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
 	my $data = Wx::TextDataObject->new;
-	$data->SetText( $sub_comment . $new_code . "\n\n");	
-	
+	$data->SetText( $sub_comment . $new_code . "\n\n" );
+
 	# we want to get a list of the subroutines to pick where to place
 	# the new sub
 	my @functions = $self->get_functions;
 
 	# need to check there are functions already defined
-	if( scalar(@functions) == 0 ) {
-		
-	    # get the current position of the selected text as we need it for PPI
-	    my $start_position = $self->character_position_to_ppi_location($editor->GetSelectionStart);
-	    my $end_position   = $self->character_position_to_ppi_location($editor->GetSelectionEnd - 1);
-		
-	    # use PPI to find the right place to put the new subroutine
-	    require PPI::Document;
-	    my $text = $editor->GetText;
-	    my $ppi_doc = PPI::Document->new( \$text );
-	    # /usr/local/share/perl/5.10.0/PPIx/EditorTools/IntroduceTemporaryVariable.pm
-	    # we have no subroutines to put before, so we
-	    # really just need to make sure we aren't in a block of any sort 
-	    # and then stick the new subroutine in above where we are.
-	    # being above the selected text also means we won't 
-	    # lose the location when the change is made to the document
-	    #require PPI::Dumper;
-	    #my $dumper = PPI::Dumper->new( $ppi_doc );
-	    #$dumper->print;
-	    require PPIx::EditorTools;
-	    my $token = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
-	    my $statement = $token->statement();
-	    my $parent = $statement;
-	    #print "The statement is: " . $statement->statement() . "\n";
-	    my $last_location; # use this to get the last point before the PPI::Document
-	    while( ! $parent->isa('PPI::Document') ) {
-		    #print "parent currently: " . ref($parent) . "\n";
-		    #print "location: " . join(', ', @{$parent->location} ) . "\n";
-		    
-		    $last_location = $parent->location;
-		    $parent = $parent->parent;
-	    }
-	    #print "location: " . join(', ', @{$parent->location} ) . "\n";
-	    #print "last location: " . join(', ' ,@$last_location) . "\n";
-	    
-	    my $insert_start_location = $self->ppi_location_to_character_position($last_location);
-	    
-	    #print "Document start location is: $doc_start_location\n";
+	if ( scalar(@functions) == 0 ) {
 
-	    # make the change to the selected text
-	    $editor->BeginUndoAction(); # do the edit atomically
-	    $editor->ReplaceSelection($new_sub_call);
-	    $editor->InsertText( $insert_start_location, $data->GetText );
-	    $editor->EndUndoAction();
-	    
-	    return;
+		# get the current position of the selected text as we need it for PPI
+		my $start_position = $self->character_position_to_ppi_location( $editor->GetSelectionStart );
+		my $end_position   = $self->character_position_to_ppi_location( $editor->GetSelectionEnd - 1 );
+
+		# use PPI to find the right place to put the new subroutine
+		require PPI::Document;
+		my $text    = $editor->GetText;
+		my $ppi_doc = PPI::Document->new( \$text );
+
+		# /usr/local/share/perl/5.10.0/PPIx/EditorTools/IntroduceTemporaryVariable.pm
+		# we have no subroutines to put before, so we
+		# really just need to make sure we aren't in a block of any sort
+		# and then stick the new subroutine in above where we are.
+		# being above the selected text also means we won't
+		# lose the location when the change is made to the document
+		#require PPI::Dumper;
+		#my $dumper = PPI::Dumper->new( $ppi_doc );
+		#$dumper->print;
+		require PPIx::EditorTools;
+		my $token     = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
+		my $statement = $token->statement();
+		my $parent    = $statement;
+
+		#print "The statement is: " . $statement->statement() . "\n";
+		my $last_location; # use this to get the last point before the PPI::Document
+		while ( !$parent->isa('PPI::Document') ) {
+
+			#print "parent currently: " . ref($parent) . "\n";
+			#print "location: " . join(', ', @{$parent->location} ) . "\n";
+
+			$last_location = $parent->location;
+			$parent        = $parent->parent;
+		}
+
+		#print "location: " . join(', ', @{$parent->location} ) . "\n";
+		#print "last location: " . join(', ' ,@$last_location) . "\n";
+
+		my $insert_start_location = $self->ppi_location_to_character_position($last_location);
+
+		#print "Document start location is: $doc_start_location\n";
+
+		# make the change to the selected text
+		$editor->BeginUndoAction(); # do the edit atomically
+		$editor->ReplaceSelection($new_sub_call);
+		$editor->InsertText( $insert_start_location, $data->GetText );
+		$editor->EndUndoAction();
+
+		return;
 	}
 
 	# Show a list of functions
@@ -642,13 +647,15 @@ EOC
 	my $dialog = Padre::Wx::Dialog::RefactorSelectFunction->new( $editor->main, \@functions );
 	$dialog->show();
 	if ( $dialog->{cancelled} ) {
+
 		#$dialog->Destroy();
 		return ();
 	}
 
 	my $subname = $dialog->get_function_name;
+
 	#$dialog->Destroy();
-	
+
 	# make the change to the selected text
 	$editor->BeginUndoAction(); # do the edit atomically
 	$editor->ReplaceSelection($new_sub_call);
@@ -672,6 +679,7 @@ EOC
 		#print "Couldn't find the sub: $subname\n";
 		return;
 	}
+
 	# now insert the text into the right location
 	$editor->InsertText( $start, $data->GetText );
 	$editor->EndUndoAction();

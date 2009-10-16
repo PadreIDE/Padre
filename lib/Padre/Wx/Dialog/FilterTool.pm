@@ -11,9 +11,9 @@ our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
 	_butrun => '_butrun', # run button
-	_combo   => '_combo',   # combo box
-	_names   => '_names',   # list of all recent commands
-	_sizer   => '_sizer',   # the window sizer
+	_combo  => '_combo',  # combo box
+	_names  => '_names',  # list of all recent commands
+	_sizer  => '_sizer',  # the window sizer
 };
 
 # -- constructor
@@ -66,19 +66,19 @@ sub _on_butclose_clicked {
 sub _on_butrun_clicked {
 	my $self = shift;
 
-	my $main    = $self->GetParent;
-	
+	my $main = $self->GetParent;
+
 	my $tool = $self->_combo->GetValue;
 
-	if ( defined ($tool) and ($tool ne '')) {
+	if ( defined($tool) and ( $tool ne '' ) ) {
 
-#		$filtertool = Padre::DB::FilterTool->new(
-#			name        => $self->_combo->GetValue,
-#			last_update => time,
-#		);
-#		$filtertool->insert;
+		#		$filtertool = Padre::DB::FilterTool->new(
+		#			name        => $self->_combo->GetValue,
+		#			last_update => time,
+		#		);
+		#		$filtertool->insert;
 
-	$main->filter_tool($tool);
+		$main->filter_tool($tool);
 
 	}
 
@@ -126,7 +126,7 @@ sub _create_fields {
 	my $sizer = $self->_sizer;
 
 	my $lab1 = Wx::StaticText->new( $self, -1, Wx::gettext('Filter command:') );
-	my $combo = Wx::ComboBox->new( $self, -1, '');
+	my $combo = Wx::ComboBox->new( $self, -1, '' );
 	$sizer->Add( $lab1, Wx::GBPosition->new( 0, 0 ) );
 	$sizer->Add( $combo, Wx::GBPosition->new( 0, 1 ), Wx::GBSpan->new( 1, 3 ), Wx::wxEXPAND );
 	$self->_combo($combo);
@@ -167,8 +167,8 @@ sub _refresh_combo {
 	my ( $self, $column, $reverse ) = @_;
 
 	# get list of recent commands, sorted.
-#	my @names = map { $_->name } Padre::DB::FilterTool->select('ORDER BY name');
-#	$self->_names( \@names );
+	#	my @names = map { $_->name } Padre::DB::FilterTool->select('ORDER BY name');
+	#	$self->_names( \@names );
 
 	# clear list & fill it again
 	my $combo = $self->_combo;

@@ -134,7 +134,7 @@ sub update_gui {
 	require Padre::Wx;
 
 	# If there are no errors, clear the synax checker pane and return.
-	if ((!defined($messages)) or ($#{$messages} = -1)) {
+	if ( ( !defined($messages) ) or ( $#{$messages} = -1 ) ) {
 		my $green = Wx::Colour->new("green");
 		$editor->MarkerDefine(
 			Padre::Wx::MarkError(),

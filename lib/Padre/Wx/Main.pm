@@ -22,43 +22,43 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd                       ();
-use Carp                      ();
-use File::Spec                ();
-use File::HomeDir             ();
-use File::Basename            ();
-use File::Temp                ();
-use List::Util                ();
-use Scalar::Util              ();
-use Params::Util              ();
-use Padre::Action             ();
-use Padre::Constant           ();
-use Padre::Util               ();
-use Padre::Perl               ();
-use Padre::Locale             ();
-use Padre::Current            ();
-use Padre::Document           ();
-use Padre::DB                 ();
-use Padre::Wx                 ();
-use Padre::Wx::Icon           ();
-use Padre::Wx::Left           ();
-use Padre::Wx::Right          ();
-use Padre::Wx::Bottom         ();
-use Padre::Wx::Editor         ();
-use Padre::Wx::Output         ();
-use Padre::Wx::Syntax         ();
-use Padre::Wx::Menubar        ();
-use Padre::Wx::ToolBar        ();
-use Padre::Wx::Notebook       ();
-use Padre::Wx::StatusBar      ();
-use Padre::Wx::ErrorList      ();
-use Padre::Wx::AuiManager     ();
-use Padre::Wx::FunctionList   ();
-use Padre::Wx::FileDropTarget ();
-use Padre::Wx::Dialog::Text   ();
+use Cwd                           ();
+use Carp                          ();
+use File::Spec                    ();
+use File::HomeDir                 ();
+use File::Basename                ();
+use File::Temp                    ();
+use List::Util                    ();
+use Scalar::Util                  ();
+use Params::Util                  ();
+use Padre::Action                 ();
+use Padre::Constant               ();
+use Padre::Util                   ();
+use Padre::Perl                   ();
+use Padre::Locale                 ();
+use Padre::Current                ();
+use Padre::Document               ();
+use Padre::DB                     ();
+use Padre::Wx                     ();
+use Padre::Wx::Icon               ();
+use Padre::Wx::Left               ();
+use Padre::Wx::Right              ();
+use Padre::Wx::Bottom             ();
+use Padre::Wx::Editor             ();
+use Padre::Wx::Output             ();
+use Padre::Wx::Syntax             ();
+use Padre::Wx::Menubar            ();
+use Padre::Wx::ToolBar            ();
+use Padre::Wx::Notebook           ();
+use Padre::Wx::StatusBar          ();
+use Padre::Wx::ErrorList          ();
+use Padre::Wx::AuiManager         ();
+use Padre::Wx::FunctionList       ();
+use Padre::Wx::FileDropTarget     ();
+use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
-use Padre::Wx::Progress       ();
-use IPC::Open3 		('open3');
+use Padre::Wx::Progress           ();
+use IPC::Open3                    ('open3');
 
 our $VERSION = '0.48';
 our @ISA     = 'Wx::Frame';
@@ -2851,8 +2851,8 @@ Prompt user for a command to filter the selection/document.
 
 sub on_filter_tool {
 	require Padre::Wx::Dialog::FilterTool;
-	my $self = shift;
-	my $filter  = Padre::Wx::Dialog::FilterTool->new($self);
+	my $self   = shift;
+	my $filter = Padre::Wx::Dialog::FilterTool->new($self);
 	$filter->show;
 }
 
@@ -3042,19 +3042,19 @@ Returns 1 on success and 0 in case of and error.
 =cut
 
 sub reload_file {
-	my $self     = shift;
+	my $self = shift;
 	my $page = shift;
 
 	my $editor;
 	my $document;
 
-	if (defined($page)) {
+	if ( defined($page) ) {
 		my $notebook = $self->notebook;
-		$editor = $notebook->GetPage($page) or return 0;
-		$document  = $editor->{Document}     or return 0;
+		$editor   = $notebook->GetPage($page) or return 0;
+		$document = $editor->{Document}       or return 0;
 	} else {
 		$document = $self->current->document or return 0;
-		$editor   = $document->editor;
+		$editor = $document->editor;
 	}
 
 	$document->store_cursor_position;
@@ -3082,7 +3082,7 @@ No return value.
 =cut
 
 sub on_reload_file {
-	my $self     = shift;
+	my $self = shift;
 
 	return $self->reload_file;
 }
@@ -3098,7 +3098,7 @@ No return value.
 =cut
 
 sub on_reload_all {
-	my $self     = shift;
+	my $self = shift;
 
 	return $self->reload_all;
 }
@@ -4992,68 +4992,69 @@ sub new_document_from_string {
 
 sub filter_tool {
 	my $self = shift;
-	my $cmd = shift;
+	my $cmd  = shift;
 
-	return 0 if ! defined($cmd);
+	return 0 if !defined($cmd);
 	return 0 if $cmd eq '';
 
 	my $text = $self->current->text;
-    
-	if (defined($text) and ($text ne '')) {
+
+	if ( defined($text) and ( $text ne '' ) ) {
 
 		# Process a selection
 
-		my $newtext = $self->_filter_tool_run($cmd,\$text);
+		my $newtext = $self->_filter_tool_run( $cmd, \$text );
 
-		if (defined($newtext) and ($newtext ne '')) {
+		if ( defined($newtext) and ( $newtext ne '' ) ) {
 
 			my $editor = $self->current->editor;
 			$editor->ReplaceSelection($newtext);
 		}
 
 	} else {
-		
+
 		# No selection, process whole document
 
-	    my $document = $self->current->document;
-	    my $text = $document->text_get;
+		my $document = $self->current->document;
+		my $text     = $document->text_get;
 
-	    my $newtext = $self->_filter_tool_run($cmd,\$text);
+		my $newtext = $self->_filter_tool_run( $cmd, \$text );
 
-	    if (defined($newtext) and ($newtext ne '')) {
-		$document->text_set($newtext);
-            }
-        }
+		if ( defined($newtext) and ( $newtext ne '' ) ) {
+			$document->text_set($newtext);
+		}
+	}
 
 	return 1;
 }
 
 sub _filter_tool_run {
 	my $self = shift;
-	my $cmd = shift;
+	my $cmd  = shift;
 	my $text = shift; # reference to advoid copiing the content again
-	
+
 	my $filter_in;
 	my $filter_out;
 	my $filter_err;
-	
-	if ( ! open3($filter_in,$filter_out,$filter_err,$cmd)) {
-		$self->error(sprintf(Wx::gettext("Error running filter tool:\n%s"),$!));
+
+	if ( !open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
+		$self->error( sprintf( Wx::gettext("Error running filter tool:\n%s"), $! ) );
 		return;
 	}
 
 	print $filter_in ${$text};
 	CORE::close $filter_in; # Send EOF to tool
-	my $newtext = join('',<$filter_out>);
+	my $newtext = join( '', <$filter_out> );
 
-	if (defined($filter_err)) {
-		
+	if ( defined($filter_err) ) {
+
 		# The error channel may not exist
-		
-		my $errtext = join('',<$filter_err>);
-		
-		if (defined($errtext) and ($errtext ne '')) {
-			$self->error(sprintf(Wx::gettext("Error returned by filter tool:\n%s",$errtext)));
+
+		my $errtext = join( '', <$filter_err> );
+
+		if ( defined($errtext) and ( $errtext ne '' ) ) {
+			$self->error( sprintf( Wx::gettext( "Error returned by filter tool:\n%s", $errtext ) ) );
+
 			# We may also have a result, so don't return here
 		}
 	}

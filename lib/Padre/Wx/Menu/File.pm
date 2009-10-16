@@ -214,7 +214,7 @@ sub new {
 		$self,
 		name       => 'file.reload_all',
 		label      => Wx::gettext('Reload all files'),
-		comment	   => Wx::gettext('Reload all files currently open'),
+		comment    => Wx::gettext('Reload all files currently open'),
 		menu_event => sub {
 			$_[0]->on_reload_all;
 		},
