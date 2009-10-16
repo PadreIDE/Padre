@@ -227,6 +227,11 @@ sub add_tool_item {
 	# any previous item with that id.
 	my $id = $self->{next_id}++;
 
+	# Store ID on item list
+	$self->{item_list} = {} if (!defined($self->{item_list}))
+	                           or (ref($self->{item_list})ne 'ARRAY');
+	$self->{item_list}->{$id} = $action;
+
 	# Create the tool
 	$self->AddTool(
 		$id, '',
@@ -251,6 +256,17 @@ sub refresh {
 	my $document  = $current->document;
 	my $text      = $current->text;
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
+
+	for (keys(%{$self->{item_list}})) {
+		
+		my $action = $self->{item_list}->{$_};
+
+		my $enabled = 1; # Set default
+
+		$enabled = 0
+		 if $action->{need_editor} and ( ! $editor);
+
+	}
 
 	$self->EnableTool( $self->{save}, ( $document and $document->is_modified ? 1 : 0 ) );
 	$self->EnableTool( $self->{save_as}, ($document) );
