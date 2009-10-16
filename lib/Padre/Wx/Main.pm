@@ -335,6 +335,8 @@ use Class::XSAccessor predicates => {
 	output    => 'output',
 	syntax    => 'syntax',
 	errorlist => 'errorlist',
+	infomessage => 'infomessage',
+	infomessage_timeout => 'infomessage_timeout',
 
 	# Operating Data
 	cwd        => 'cwd',
@@ -2034,6 +2036,36 @@ sub message {
 	my $message = shift;
 	my $title   = shift || Wx::gettext('Message');
 	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTRE, $self );
+	return;
+}
+
+=pod
+
+=head3 info
+
+    $main->info( $msg );
+
+Print a message on the status bar or within a dialog box depending on the
+users preferences setting.
+The dialog has only a OK button and there is no return value.
+
+=cut
+
+sub info {
+	my $self    = shift;
+	my $message = shift;
+
+	my $ide = $self->ide;
+	my $config = $ide->config;
+
+	if ($config->info_on_toolbar) {
+		$self->infomessage($message);
+		$self->infomessage_timeout(time + 10);
+	} else {
+		my $title   = shift || Wx::gettext('Message');
+		Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTRE, $self );
+	}
+
 	return;
 }
 
