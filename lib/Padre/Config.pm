@@ -333,7 +333,7 @@ setting(
 	name    => 'main_toolbar_items',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => 'file.new:actions/document-new,|,file.open:actions/document-open',
+	default => 'file.new:actions/document-new,file.open:actions/document-open',
 );
 
 # Directory Tree Settings
