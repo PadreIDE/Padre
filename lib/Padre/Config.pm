@@ -540,7 +540,7 @@ setting(
 );
 
 setting(
-	name    => 'info_on_toolbar',
+	name    => 'info_on_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
