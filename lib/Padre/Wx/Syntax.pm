@@ -26,6 +26,7 @@ sub new {
 	my $list = Wx::ImageList->new( 14, 7 );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
+	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
 	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
 
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 2;
