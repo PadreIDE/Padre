@@ -5,6 +5,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Moved more menu actions to independent actions (SEWI)
     - Added a readonly flag to the taskbar (AGN)
     - Fixed #698: Syntax checker leaks files in tmpdir (SEWI)
+    - Syntax checker now also shows a successful check (SEWI)
+    - Added menu option to reload all open files (SEWI)
 
 0.48 2009.10.12
     - "Last session" now restores the last state even if Padre crashed and not
