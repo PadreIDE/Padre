@@ -555,43 +555,100 @@ sub introduce_temporary_variable {
 	return ();
 }
 
+# this method takes the new subroutine name
+# and extracts the name and sets a call to it
+# Uses Devel::Refactor to get the code and create the new subroutine code.
+# Uses PPIx::EditorTools when no functions are in the script
+# Otherwise locates the entry point after a user has
+# provided a function name to insert the new code before.
 sub extract_subroutine {
 	my ( $self, $newname ) = @_;
 
 	my $editor = $self->editor;
+	# get the selected code 
 	my $code   = $editor->GetSelectedText();
-
+	
+	#print "startlocation: " . join(", ", @$start_position) . "\n";
+	# this could be configurable
+	my $now = localtime;
 	my $sub_comment = <<EOC;
 # 
-# New subroutine extracted.
+# New subroutine "$newname" extracted - $now.
 #
 EOC
 
+	# get the new code
+	require Devel::Refactor;
+	my $refactory = Devel::Refactor->new;
+	my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
+	my $data = Wx::TextDataObject->new;
+	$data->SetText( $sub_comment . $new_code . "\n\n");	
+	
 	# we want to get a list of the subroutines to pick where to place
 	# the new sub
 	my @functions = $self->get_functions;
 
-	#print "printing the functions: " . join( "\n", @functions );
+	# need to check there are functions already defined
+	if( scalar(@functions) == 0 ) {
+		
+	    # get the current position of the selected text as we need it for PPI
+	    my $start_position = $self->character_position_to_ppi_location($editor->GetSelectionStart);
+	    my $end_position   = $self->character_position_to_ppi_location($editor->GetSelectionEnd - 1);
+		
+	    # use PPI to find the right place to put the new subroutine
+	    require PPI::Document;
+	    my $text = $editor->GetText;
+	    my $ppi_doc = PPI::Document->new( \$text );
+	    # /usr/local/share/perl/5.10.0/PPIx/EditorTools/IntroduceTemporaryVariable.pm
+	    # we have no subroutines to put before, so we
+	    # really just need to make sure we aren't in a block of any sort 
+	    # and then stick the new subroutine in above where we are.
+	    # being above the selected text also means we won't 
+	    # lose the location when the change is made to the document
+	    #require PPI::Dumper;
+	    #my $dumper = PPI::Dumper->new( $ppi_doc );
+	    #$dumper->print;
+	    require PPIx::EditorTools;
+	    my $token = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
+	    my $statement = $token->statement();
+	    my $parent = $statement;
+	    #print "The statement is: " . $statement->statement() . "\n";
+	    my $last_location; # use this to get the last point before the PPI::Document
+	    while( ! $parent->isa('PPI::Document') ) {
+		    #print "parent currently: " . ref($parent) . "\n";
+		    #print "location: " . join(', ', @{$parent->location} ) . "\n";
+		    
+		    $last_location = $parent->location;
+		    $parent = $parent->parent;
+	    }
+	    #print "location: " . join(', ', @{$parent->location} ) . "\n";
+	    #print "last location: " . join(', ' ,@$last_location) . "\n";
+	    
+	    my $insert_start_location = $self->ppi_location_to_character_position($last_location);
+	    
+	    #print "Document start location is: $doc_start_location\n";
+
+	    # make the change to the selected text
+	    $editor->BeginUndoAction(); # do the edit atomically
+	    $editor->ReplaceSelection($new_sub_call);
+	    $editor->InsertText( $insert_start_location, $data->GetText );
+	    $editor->EndUndoAction();
+	    
+	    return;
+	}
 
 	# Show a list of functions
 	require Padre::Wx::Dialog::RefactorSelectFunction;
 	my $dialog = Padre::Wx::Dialog::RefactorSelectFunction->new( $editor->main, \@functions );
 	$dialog->show();
 	if ( $dialog->{cancelled} ) {
+		#$dialog->Destroy();
 		return ();
 	}
 
-	# testing for now hard set:
-	#my $subname = 'testing2';
-	# check if canceled:
-
 	my $subname = $dialog->get_function_name;
-
-	# get the new code, replace the selection
-	require Devel::Refactor;
-	my $refactory = Devel::Refactor->new;
-	my ( $new_sub_call, $new_code ) = $refactory->extract_subroutine( $newname, $code, 1 );
-
+	#$dialog->Destroy();
+	
 	# make the change to the selected text
 	$editor->BeginUndoAction(); # do the edit atomically
 	$editor->ReplaceSelection($new_sub_call);
@@ -615,12 +672,7 @@ EOC
 		#print "Couldn't find the sub: $subname\n";
 		return;
 	}
-
-	# now instert the text into the right location
-	my $data = Wx::TextDataObject->new;
-	$data->SetText( $sub_comment . $new_code );
-	my $length = $data->GetTextLength;
-
+	# now insert the text into the right location
 	$editor->InsertText( $start, $data->GetText );
 	$editor->EndUndoAction();
 
