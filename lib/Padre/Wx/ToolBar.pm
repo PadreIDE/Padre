@@ -19,6 +19,8 @@ use constant DOCKABLE => !Padre::Constant::WXWIN32;
 sub new {
 	my $class = shift;
 	my $main  = shift;
+	
+	my $config = $main->config;
 
 	# Prepare the style
 	my $style = Wx::wxTB_HORIZONTAL | Wx::wxTB_FLAT | Wx::wxTB_NODIVIDER | Wx::wxBORDER_NONE;
@@ -43,16 +45,41 @@ sub new {
 	# Toolbar likes only unique values. Do otherwise on your own risk.
 	$self->{next_id} = 10000;
 
-	# Populate the toolbar
-	$self->add_tool_item(
-		action => 'file.new',
-		icon   => 'actions/document-new',
-	);
+	# This is a very first step to create a customizable toolbar.
+	# Actually there is no dialog for editing this parameter, if
+	# anyone wants to change the toolbar, it needs to be done manuelly
+	# within config.yml.
 
-	$self->add_tool_item(
-		action => 'file.open',
-		icon   => 'actions/document-open',
-	);
+	for my $item (split(/\,/,$config->main_toolbar_items)) {
+
+		if ($item eq '|') {
+			$self->AddSeparator;
+			next;
+		}
+
+		if ($item =~ /^(.+?)(\:(.*))?$/) {
+			my $action = $1;
+			my $icon = $3;
+			$self->add_tool_item(
+				action => $action,
+				icon => $icon);
+			next:
+		}
+
+		warn('Unknown toolbar item: '.$item);
+
+	}
+
+	# Populate the toolbar
+#	$self->add_tool_item(
+#		action => 'file.new',
+#		icon   => 'actions/document-new',
+#	);
+#
+#	$self->add_tool_item(
+#		action => 'file.open',
+#		icon   => 'actions/document-open',
+#	);
 
 	$self->{save} = $self->add_tool_item(
 		action => 'file.save',
