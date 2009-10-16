@@ -54,11 +54,19 @@ sub check {
 
 		# This is only a sample and should be replaced by the first
 		# real usage of this module
-		if ( ( $storage eq 'human' ) and ( $self->$storage->{Version} == 0.47 ) ) {
+		if ( ( $storage eq 'human' ) and ( $self->$storage->{Version} == 0.00 ) ) {
 
 			# Call subs or methods here or write short upgrades in this
 			# place.
 			# Remember to check if upgrades from older versions work!
+			
+		} elsif ($self->$storage->{Version} < 0.48) {
+			
+			# There is nothing which needs conversation when upgrading from a
+			# config prior 0.48 to our current version, so just update the
+			# config version number
+
+			$self->$storage->{Version} = $VERSION;
 		}
 	}
 }
