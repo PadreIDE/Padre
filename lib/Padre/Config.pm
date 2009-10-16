@@ -329,6 +329,12 @@ setting(
 	# Hide it by default so Padre looks "more Mac'ish"
 	default => Padre::Constant::MAC ? 0 : 1,
 );
+setting(
+	name    => 'main_toolbar_items',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 'file.new:actions/document-new,|,file.open:actions/document-open',
+);
 
 # Directory Tree Settings
 setting(
