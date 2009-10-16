@@ -173,7 +173,7 @@ sub _refresh_combo {
 	# clear list & fill it again
 	my $combo = $self->_combo;
 	$combo->Clear;
-	$combo->Append($_) foreach @names;
+#	$combo->Append($_) foreach @names;
 }
 
 
