@@ -11,8 +11,8 @@ our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor accessors => {
 	_butrun => '_butrun', # run button
-	_combo   => '_combo',   # combo box holding the session names
-	_names   => '_names',   # list of all session names
+	_combo   => '_combo',   # combo box
+	_names   => '_names',   # list of all recent commands
 	_sizer   => '_sizer',   # the window sizer
 };
 
@@ -161,12 +161,12 @@ sub _create_buttons {
 #
 # $dialog->_refresh_combo;
 #
-# refresh combo box with list of sessions.
+# refresh combo box
 #
 sub _refresh_combo {
 	my ( $self, $column, $reverse ) = @_;
 
-	# get list of sessions, sorted.
+	# get list of recent commands, sorted.
 #	my @names = map { $_->name } Padre::DB::FilterTool->select('ORDER BY name');
 #	$self->_names( \@names );
 
