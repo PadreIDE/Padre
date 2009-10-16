@@ -2059,6 +2059,7 @@ sub info {
 	my $config = $ide->config;
 
 	if ($config->info_on_statusbar) {
+		$message =~ s/[\r\n]+/ /g;
 		$self->{infomessage} = $message;
 		$self->{infomessage_timeout} = time + 10;
 		$self->refresh_status;
