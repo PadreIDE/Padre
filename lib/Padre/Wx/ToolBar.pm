@@ -230,7 +230,7 @@ sub add_tool_item {
 	# Store ID on item list
 	$self->{item_list} = {}
 		if ( !defined( $self->{item_list} ) )
-		or ( ref( $self->{item_list} ) ne 'ARRAY' );
+		or ( ref( $self->{item_list} ) ne 'HASH' );
 	$self->{item_list}->{$id} = $action;
 
 	# Create the tool
@@ -266,6 +266,8 @@ sub refresh {
 
 		$enabled = 0
 			if $action->{need_editor} and ( !$editor );
+
+		$self->EnableTool($_,$enabled);
 
 	}
 
