@@ -2350,8 +2350,9 @@ document type.
 
 sub on_autocompletion {
 	my $self = shift;
+	my $nextchar = shift;
 	my $document = $self->current->document or return;
-	my ( $length, @words ) = $document->autocomplete;
+	my ( $length, @words ) = $document->autocomplete($nextchar);
 	if ( $length =~ /\D/ ) {
 		Wx::MessageBox(
 			$length, Wx::gettext("Autocompletion error"), Wx::wxOK,
