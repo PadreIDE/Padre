@@ -37,6 +37,8 @@ sub new {
 		5050,
 	);
 
+	$self->{main} = $main;
+
 	# Default icon size is 16x15 for Wx, to use the 16x16 GPL
 	# icon sets we need to be SLIGHTLY bigger.
 	$self->SetToolBitmapSize( Wx::Size->new( 16, 16 ) );
@@ -281,6 +283,8 @@ sub refresh {
 			 and (! &{$action->{need}}
 				(editor => $editor,
 				document => $document,
+				main => $self->{main},
+				config => $self->{main}->config,
 			 ));
 
 		$self->EnableTool($_,$enabled);
