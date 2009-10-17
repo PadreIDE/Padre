@@ -743,6 +743,8 @@ sub autocomplete {
 
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
+	my $suffix = $editor->GetTextRange( $pos,$pos + 15 );
+	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
 
 	# The second parameter may be a reference to the current event or the next
 	# char which will be added to the editor:
@@ -910,6 +912,15 @@ sub autocomplete {
 		return;
 	}
 
+	# While typing within a word, the rest of the word shouldn't be
+	# inserted.
+	if (defined($suffix)) {
+		print STDERR "$suffix\n";
+		for (0..$#words) {
+			$words[$_] =~ s/\Q$suffix\E$//;
+		}
+	}
+	
 	# This is the final result if there is no char which hasn't been
 	# saved to the editor buffer until now
 	return ( length($prefix), @words ) if ! defined($nextchar);
