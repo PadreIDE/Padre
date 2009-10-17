@@ -915,7 +915,6 @@ sub autocomplete {
 	# While typing within a word, the rest of the word shouldn't be
 	# inserted.
 	if (defined($suffix)) {
-		print STDERR "$suffix\n";
 		for (0..$#words) {
 			$words[$_] =~ s/\Q$suffix\E$//;
 		}
