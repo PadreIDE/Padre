@@ -6,10 +6,10 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Padre::Action ();
+use Padre::Action   ();
 use Padre::Constant ();
 use Padre::Current '_CURRENT';
-use Padre::Locale   ();
+use Padre::Locale ();
 
 our $VERSION = '0.48';
 
@@ -72,11 +72,11 @@ sub new {
 	);
 
 	$self->{current} = Padre::Action->new(
-		name       => 'help.current',
+		name        => 'help.current',
 		need_editor => 1,
-		label      => Wx::gettext('Current Document'),
-		comment    => Wx::gettext('Show the POD (Perdoc) version of the current document'),
-		menu_event => sub {
+		label       => Wx::gettext('Current Document'),
+		comment     => Wx::gettext('Show the POD (Perdoc) version of the current document'),
+		menu_event  => sub {
 			$_[0]->help( $_[0]->current->document );
 		},
 	);
@@ -84,41 +84,48 @@ sub new {
 	# Live Support
 
 	Padre::Action->new(
-		name       => 'help.live_support',
-		label      => Wx::gettext('Padre Support (English)'),
-		comment    => Wx::gettext('Open the Padre live support in your default web browser '.
-		                      'and chat to others who may help you with your problem'),
+		name    => 'help.live_support',
+		label   => Wx::gettext('Padre Support (English)'),
+		comment => Wx::gettext(
+			      'Open the Padre live support in your default web browser '
+				. 'and chat to others who may help you with your problem'
+		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('padre');
 		},
 	);
 
 	Padre::Action->new(
-		name       => 'help.perl_help',
-		label      => Wx::gettext('Perl Help'),
-		comment    => Wx::gettext('Open the Perl live support in your default web browser '.
-		                      'and chat to others who may help you with your problem'),
+		name    => 'help.perl_help',
+		label   => Wx::gettext('Perl Help'),
+		comment => Wx::gettext(
+			      'Open the Perl live support in your default web browser '
+				. 'and chat to others who may help you with your problem'
+		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('general');
 		},
 	);
 
-		Padre::Action->new(
-			name       => 'help.win32_questions',
-			label      => Wx::gettext('Win32 Questions (English)'),
-		comment    => Wx::gettext('Open the Perl/Win32 live support in your default web browser '.
-		                      'and chat to others who may help you with your problem'),
-			menu_event => sub {
-				Padre::Wx::launch_irc('win32');
-			},
-		);
+	Padre::Action->new(
+		name    => 'help.win32_questions',
+		label   => Wx::gettext('Win32 Questions (English)'),
+		comment => Wx::gettext(
+			      'Open the Perl/Win32 live support in your default web browser '
+				. 'and chat to others who may help you with your problem'
+		),
+		menu_event => sub {
+			Padre::Wx::launch_irc('win32');
+		},
+	);
 
 	# Add interesting and helpful websites
 	Padre::Action->new(
-		name       => 'help.visit_perlmonks',
-		label      => Wx::gettext('Visit the PerlMonks'),
-		comment    => Wx::gettext('Open perlmonks.org, one of the biggest Perl community sites '.
-		               'in your default webbrowser'),
+		name    => 'help.visit_perlmonks',
+		label   => Wx::gettext('Visit the PerlMonks'),
+		comment => Wx::gettext(
+			'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default webbrowser'
+		),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
 		},
@@ -156,7 +163,7 @@ sub new {
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
 		label      => Wx::gettext('&About'),
-		comment => Wx::gettext('Show the about-Padre information'),
+		comment    => Wx::gettext('Show the about-Padre information'),
 		menu_event => sub {
 			$_[0]->about->ShowModal;
 		},

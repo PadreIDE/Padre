@@ -733,7 +733,7 @@ sub _perltags_parser {
 }
 
 sub autocomplete {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
 
 	my $editor = $self->editor;
@@ -743,17 +743,17 @@ sub autocomplete {
 
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
-	my $suffix = $editor->GetTextRange( $pos,$pos + 15 );
+	my $suffix = $editor->GetTextRange( $pos,   $pos + 15 );
 	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
 
 	# The second parameter may be a reference to the current event or the next
 	# char which will be added to the editor:
 	my $nextchar;
-	if (defined($event) and (ref($event) eq 'Wx::KeyEvent')) {
+	if ( defined($event) and ( ref($event) eq 'Wx::KeyEvent' ) ) {
 		my $key = $event->GetUnicodeKey;
 		$nextchar = chr($key);
-	} elsif (defined($event) and (!ref($event))) {
-		$nextchar=$event;
+	} elsif ( defined($event) and ( !ref($event) ) ) {
+		$nextchar = $event;
 	}
 
 	# WARNING: This is totally not done, but Gabor made me commit it.
@@ -908,29 +908,30 @@ sub autocomplete {
 	# Suggesting the current word as the only solution doesn't help
 	# anything, but your need to close the suggestions window before
 	# you may press ENTER/RETURN.
-	if (($#words == 0) and ($prefix eq $words[0])) {
+	if ( ( $#words == 0 ) and ( $prefix eq $words[0] ) ) {
 		return;
 	}
 
 	# While typing within a word, the rest of the word shouldn't be
 	# inserted.
-	if (defined($suffix)) {
-		for (0..$#words) {
+	if ( defined($suffix) ) {
+		for ( 0 .. $#words ) {
 			$words[$_] =~ s/\Q$suffix\E$//;
 		}
 	}
-	
+
 	# This is the final result if there is no char which hasn't been
 	# saved to the editor buffer until now
-	return ( length($prefix), @words ) if ! defined($nextchar);
-	
+	return ( length($prefix), @words ) if !defined($nextchar);
+
 	# Finally cut out all words which do not match the next char
 	# which will be inserted into the editor (by the current event)
 	my @final_words;
 	for (@words) {
+
 		# Accept everything which has prefix + next char + at least one other char
-		next if ! /^\Q$prefix$nextchar\E./;
-		push @final_words,$_;
+		next if !/^\Q$prefix$nextchar\E./;
+		push @final_words, $_;
 	}
 
 	return ( length($prefix), @final_words );

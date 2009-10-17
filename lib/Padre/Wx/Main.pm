@@ -2349,8 +2349,8 @@ document type.
 =cut
 
 sub on_autocompletion {
-	my $self = shift;
-	my $event = shift;
+	my $self     = shift;
+	my $event    = shift;
 	my $document = $self->current->document or return;
 	my ( $length, @words ) = $document->autocomplete($event);
 	if ( $length =~ /\D/ ) {

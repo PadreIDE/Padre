@@ -84,8 +84,8 @@ sub new {
 
 	}
 
-# This stays here for the moment in case something went wrong while converting
-# the toolbar to a dynamic one.
+	# This stays here for the moment in case something went wrong while converting
+	# the toolbar to a dynamic one.
 
 	# Populate the toolbar
 	#	$self->add_tool_item(
@@ -98,119 +98,119 @@ sub new {
 	#		icon   => 'actions/document-open',
 	#	);
 
-#	$self->{save} = $self->add_tool_item(
-#		action => 'file.save',
-#		icon   => 'actions/document-save',
-#	);
-#
-#	$self->{save_as} = $self->add_tool_item(
-#		action => 'file.save_as',
-#		icon   => 'actions/document-save-as',
-#	);
-#
-#	$self->{save_all} = $self->add_tool_item(
-#		action => 'file.save_all',
-#		icon   => 'actions/stock_data-save',
-#	);
-#
-#	$self->{close} = $self->add_tool_item(
-#		action => 'file.close',
-#		icon   => 'actions/x-document-close',
-#	);
-#
-#	$self->AddSeparator; print "'|;'.\n";
-#	$self->{open_example} = $self->add_tool_item(
-#		action => 'file.open_example',
-#		icon   => 'stock/generic/stock_example',
-#	);
-#
-#	# Undo/Redo Support
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{undo} = $self->add_tool_item(
-#		action => 'edit.undo',
-#		icon   => 'actions/edit-undo',
-#	);
-#
-#	$self->{redo} = $self->add_tool_item(
-#		action => 'edit.redo',
-#		icon   => 'actions/edit-redo',
-#	);
-#
-#	# Cut/Copy/Paste
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{cut} = $self->add_tool_item(
-#		action => 'edit.cut',
-#		icon   => 'actions/edit-cut',
-#	);
-#
-#	$self->{copy} = $self->add_tool_item(
-#		action => 'edit.copy',
-#		icon   => 'actions/edit-copy',
-#	);
-#
-#	$self->{paste} = $self->add_tool_item(
-#		action => 'edit.paste',
-#		icon   => 'actions/edit-paste',
-#	);
-#
-#	$self->{select_all} = $self->add_tool_item(
-#		action => 'edit.select_all',
-#		icon   => 'actions/edit-select-all',
-#	);
-#
-#	# find and replace
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{find} = $self->add_tool_item(
-#		action => 'search.find',
-#		icon   => 'actions/edit-find',
-#	);
-#
-#	$self->{replace} = $self->add_tool_item(
-#		action => 'search.replace',
-#		icon   => 'actions/edit-find-replace',
-#	);
-#
-#	# Document Transforms
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{comment_toggle} = $self->add_tool_item(
-#		action => 'edit.comment_toggle',
-#		icon   => 'actions/toggle-comments',
-#	);
-#
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{doc_stat} = $self->add_tool_item(
-#		action => 'file.doc_stat',
-#		icon   => 'actions/document-properties',
-#	);
-#
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{open_resource} = $self->add_tool_item(
-#		action => 'search.open_resource',
-#		icon   => 'places/folder-saved-search',
-#	);
-#
-#	$self->{quick_menu_access} = $self->add_tool_item(
-#		action => 'search.quick_menu_access',
-#		icon   => 'status/info',
-#	);
-#
-#	$self->AddSeparator; print "'|;'.\n";
-#
-#	$self->{run} = $self->add_tool_item(
-#		action => 'run.run_document',
-#		icon   => 'actions/player_play',
-#	);
-#
-#	$self->{stop} = $self->add_tool_item(
-#		action => 'run.stop',
-#		icon   => 'actions/stop',
-#	);
+	#	$self->{save} = $self->add_tool_item(
+	#		action => 'file.save',
+	#		icon   => 'actions/document-save',
+	#	);
+	#
+	#	$self->{save_as} = $self->add_tool_item(
+	#		action => 'file.save_as',
+	#		icon   => 'actions/document-save-as',
+	#	);
+	#
+	#	$self->{save_all} = $self->add_tool_item(
+	#		action => 'file.save_all',
+	#		icon   => 'actions/stock_data-save',
+	#	);
+	#
+	#	$self->{close} = $self->add_tool_item(
+	#		action => 'file.close',
+	#		icon   => 'actions/x-document-close',
+	#	);
+	#
+	#	$self->AddSeparator; print "'|;'.\n";
+	#	$self->{open_example} = $self->add_tool_item(
+	#		action => 'file.open_example',
+	#		icon   => 'stock/generic/stock_example',
+	#	);
+	#
+	#	# Undo/Redo Support
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{undo} = $self->add_tool_item(
+	#		action => 'edit.undo',
+	#		icon   => 'actions/edit-undo',
+	#	);
+	#
+	#	$self->{redo} = $self->add_tool_item(
+	#		action => 'edit.redo',
+	#		icon   => 'actions/edit-redo',
+	#	);
+	#
+	#	# Cut/Copy/Paste
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{cut} = $self->add_tool_item(
+	#		action => 'edit.cut',
+	#		icon   => 'actions/edit-cut',
+	#	);
+	#
+	#	$self->{copy} = $self->add_tool_item(
+	#		action => 'edit.copy',
+	#		icon   => 'actions/edit-copy',
+	#	);
+	#
+	#	$self->{paste} = $self->add_tool_item(
+	#		action => 'edit.paste',
+	#		icon   => 'actions/edit-paste',
+	#	);
+	#
+	#	$self->{select_all} = $self->add_tool_item(
+	#		action => 'edit.select_all',
+	#		icon   => 'actions/edit-select-all',
+	#	);
+	#
+	#	# find and replace
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{find} = $self->add_tool_item(
+	#		action => 'search.find',
+	#		icon   => 'actions/edit-find',
+	#	);
+	#
+	#	$self->{replace} = $self->add_tool_item(
+	#		action => 'search.replace',
+	#		icon   => 'actions/edit-find-replace',
+	#	);
+	#
+	#	# Document Transforms
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{comment_toggle} = $self->add_tool_item(
+	#		action => 'edit.comment_toggle',
+	#		icon   => 'actions/toggle-comments',
+	#	);
+	#
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{doc_stat} = $self->add_tool_item(
+	#		action => 'file.doc_stat',
+	#		icon   => 'actions/document-properties',
+	#	);
+	#
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{open_resource} = $self->add_tool_item(
+	#		action => 'search.open_resource',
+	#		icon   => 'places/folder-saved-search',
+	#	);
+	#
+	#	$self->{quick_menu_access} = $self->add_tool_item(
+	#		action => 'search.quick_menu_access',
+	#		icon   => 'status/info',
+	#	);
+	#
+	#	$self->AddSeparator; print "'|;'.\n";
+	#
+	#	$self->{run} = $self->add_tool_item(
+	#		action => 'run.run_document',
+	#		icon   => 'actions/player_play',
+	#	);
+	#
+	#	$self->{stop} = $self->add_tool_item(
+	#		action => 'run.stop',
+	#		icon   => 'actions/stop',
+	#	);
 
 	return $self;
 }
@@ -273,47 +273,52 @@ sub refresh {
 			if $action->{need_editor} and ( !$editor );
 
 		$enabled = 0
-			if $action->{need_modified} and defined($document) and ( !$document->is_modified );
+			if $action->{need_modified}
+				and defined($document)
+				and ( !$document->is_modified );
 
 		$enabled = 0
-			if $action->{need_selection} and (!$selection);
+			if $action->{need_selection} and ( !$selection );
 
 		$enabled = 0
-			if defined($action->{need}) and (ref($action->{need}) eq 'CODE')
-			 and (! &{$action->{need}}
-				(editor => $editor,
-				document => $document,
-				main => $self->{main},
-				config => $self->{main}->config,
-			 ));
+			if defined( $action->{need} )
+				and ( ref( $action->{need} ) eq 'CODE' )
+				and (
+					!&{ $action->{need} }(
+						editor   => $editor,
+						document => $document,
+						main     => $self->{main},
+						config   => $self->{main}->config,
+					)
+				);
 
-		$self->EnableTool($_,$enabled);
+		$self->EnableTool( $_, $enabled );
 
 	}
 
-# This stays here for the moment in case something went wrong while converting
-# the toolbar to a dynamic one.
+	# This stays here for the moment in case something went wrong while converting
+	# the toolbar to a dynamic one.
 
-#	$self->EnableTool( $self->{save}, ( $document and $document->is_modified ? 1 : 0 ) );
-#	$self->EnableTool( $self->{save_as}, ($document) );
-#
-#	# trying out the Comment Code method here
-#	$self->EnableTool( $self->{save_all}, ($document) ); # Save All
-#
-#	$self->EnableTool( $self->{close}, ( $editor ? 1 : 0 ) );
-#	$self->EnableTool( $self->{undo},  ( $editor and $editor->CanUndo ) );
-#	$self->EnableTool( $self->{redo},  ( $editor and $editor->CanRedo ) );
-#	$self->EnableTool( $self->{cut},   ($selection) );
-#	$self->EnableTool( $self->{copy},  ($selection) );
-#	$self->EnableTool( $self->{paste}, ( $editor and $editor->CanPaste ) );
-#	$self->EnableTool( $self->{select_all},     ( $editor   ? 1 : 0 ) );
-#	$self->EnableTool( $self->{find},           ( $editor   ? 1 : 0 ) );
-#	$self->EnableTool( $self->{replace},        ( $editor   ? 1 : 0 ) );
-#	$self->EnableTool( $self->{comment_toggle}, ( $document ? 1 : 0 ) );
-#	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
-#
-#	$self->EnableTool( $self->{run},  ( $document and not $self->GetParent->{command} ) ? 1 : 0 );
-#	$self->EnableTool( $self->{stop}, ( $document and $self->GetParent->{command} )     ? 1 : 0 );
+	#	$self->EnableTool( $self->{save}, ( $document and $document->is_modified ? 1 : 0 ) );
+	#	$self->EnableTool( $self->{save_as}, ($document) );
+	#
+	#	# trying out the Comment Code method here
+	#	$self->EnableTool( $self->{save_all}, ($document) ); # Save All
+	#
+	#	$self->EnableTool( $self->{close}, ( $editor ? 1 : 0 ) );
+	#	$self->EnableTool( $self->{undo},  ( $editor and $editor->CanUndo ) );
+	#	$self->EnableTool( $self->{redo},  ( $editor and $editor->CanRedo ) );
+	#	$self->EnableTool( $self->{cut},   ($selection) );
+	#	$self->EnableTool( $self->{copy},  ($selection) );
+	#	$self->EnableTool( $self->{paste}, ( $editor and $editor->CanPaste ) );
+	#	$self->EnableTool( $self->{select_all},     ( $editor   ? 1 : 0 ) );
+	#	$self->EnableTool( $self->{find},           ( $editor   ? 1 : 0 ) );
+	#	$self->EnableTool( $self->{replace},        ( $editor   ? 1 : 0 ) );
+	#	$self->EnableTool( $self->{comment_toggle}, ( $document ? 1 : 0 ) );
+	#	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
+	#
+	#	$self->EnableTool( $self->{run},  ( $document and not $self->GetParent->{command} ) ? 1 : 0 );
+	#	$self->EnableTool( $self->{stop}, ( $document and $self->GetParent->{command} )     ? 1 : 0 );
 
 	return;
 }

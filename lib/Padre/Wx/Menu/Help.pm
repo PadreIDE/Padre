@@ -33,7 +33,8 @@ sub new {
 	# Add the POD-based help launchers
 	$self->add_menu_action(
 		$self,
-		'help.help');
+		'help.help'
+	);
 
 	$self->add_menu_action(
 		$self,

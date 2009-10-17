@@ -30,24 +30,24 @@ sub new {
 
 	# Search
 	Padre::Action->new(
-		name       => 'search.find',
-		id         => Wx::wxID_FIND,
+		name        => 'search.find',
+		id          => Wx::wxID_FIND,
 		need_editor => 1,
-		label      => Wx::gettext('&Find'),
-		comment    => Wx::gettext('Find text or regular expressions using a traditional dialog'),
-		shortcut   => 'Ctrl-F',
-		menu_event => sub {
+		label       => Wx::gettext('&Find'),
+		comment     => Wx::gettext('Find text or regular expressions using a traditional dialog'),
+		shortcut    => 'Ctrl-F',
+		menu_event  => sub {
 			$_[0]->find->find;
 		},
 	);
 
 	Padre::Action->new(
-		name       => 'search.find_next',
-		label      => Wx::gettext('Find Next'),
+		name        => 'search.find_next',
+		label       => Wx::gettext('Find Next'),
 		need_editor => 1,
-		comment    => Wx::gettext('Repeat the last find to find the next match'),
-		shortcut   => 'F3',
-		menu_event => sub {
+		comment     => Wx::gettext('Repeat the last find to find the next match'),
+		shortcut    => 'F3',
+		menu_event  => sub {
 			my $editor = $_[0]->current->editor;
 
 			# Handle the obvious case with nothing selected
@@ -83,12 +83,12 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'search.find_previous',
+		name        => 'search.find_previous',
 		need_editor => 1,
-		label      => Wx::gettext('&Find Previous'),
-		comment    => Wx::gettext('Repeat the last find, but backwards to find the previous match'),
-		shortcut   => 'Shift-F3',
-		menu_event => sub {
+		label       => Wx::gettext('&Find Previous'),
+		comment     => Wx::gettext('Repeat the last find, but backwards to find the previous match'),
+		shortcut    => 'Shift-F3',
+		menu_event  => sub {
 			$_[0]->search_previous;
 		},
 	);
@@ -112,20 +112,20 @@ sub new {
 	# We should be able to remove F4 and shift-F4 and hook this functionality
 	# to F3 and shift-F3 Incremental find (#60)
 	Padre::Action->new(
-		name       => 'search.quick_find_next',
+		name        => 'search.quick_find_next',
 		need_editor => 1,
-		label      => Wx::gettext('Find Next'),
-		comment    => Wx::gettext('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
-		shortcut   => 'F4',
-		menu_event => sub {
+		label       => Wx::gettext('Find Next'),
+		comment     => Wx::gettext('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
+		shortcut    => 'F4',
+		menu_event  => sub {
 			$_[0]->fast_find->search('next');
 		},
 	);
 
 	Padre::Action->new(
-		name     => 'search.quick_find_previous',
+		name        => 'search.quick_find_previous',
 		need_editor => 1,
-		label    => Wx::gettext('Find Previous'),
+		label       => Wx::gettext('Find Previous'),
 		comment  => Wx::gettext('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut => 'Shift-F4',
 		menu_event => sub {
@@ -135,12 +135,12 @@ sub new {
 
 	# Search and Replace
 	Padre::Action->new(
-		name       => 'search.replace',
+		name        => 'search.replace',
 		need_editor => 1,
-		label      => Wx::gettext('Replace'),
-		comment    => Wx::gettext('Find a text and replace it'),
-		shortcut   => 'Ctrl-R',
-		menu_event => sub {
+		label       => Wx::gettext('Replace'),
+		comment     => Wx::gettext('Find a text and replace it'),
+		shortcut    => 'Ctrl-R',
+		menu_event  => sub {
 			$_[0]->replace->find;
 		},
 	);
