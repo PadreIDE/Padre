@@ -270,6 +270,19 @@ sub refresh {
 		$enabled = 0
 			if $action->{need_editor} and ( !$editor );
 
+		$enabled = 0
+			if $action->{need_modified} and defined($document) and ( !$document->is_modified );
+
+		$enabled = 0
+			if $action->{need_selection} and (!$selection);
+
+		$enabled = 0
+			if defined($action->{need}) and (ref($action->{need}) eq 'CODE')
+			 and (! &{$action->{need}}
+				(editor => $editor,
+				document => $document,
+			 ));
+
 		$self->EnableTool($_,$enabled);
 
 	}
