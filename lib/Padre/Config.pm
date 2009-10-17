@@ -343,7 +343,35 @@ setting(
 	#     Insert an action which requires one or more arguments
 	#   |
 	#     Insert a seperator
-	default => 'file.new:actions/document-new;file.open:actions/document-open',
+	default => 'file.new:actions/document-new;'.
+			'file.open:actions/document-open;'.
+			'file.save:actions/document-save;'.
+			'file.save_as:actions/document-save-as;'.
+			'file.save_all:actions/stock_data-save;'.
+			'file.close:actions/x-document-close;'.
+			'|;'.
+			'file.open_example:stock/generic/stock_example;'.
+			'|;'.
+			'edit.undo:actions/edit-undo;'.
+			'edit.redo:actions/edit-redo;'.
+			'|;'.
+			'edit.cut:actions/edit-cut;'.
+			'edit.copy:actions/edit-copy;'.
+			'edit.paste:actions/edit-paste;'.
+			'edit.select_all:actions/edit-select-all;'.
+			'|;'.
+			'search.find:actions/edit-find;'.
+			'search.replace:actions/edit-find-replace;'.
+			'|;'.
+			'edit.comment_toggle:actions/toggle-comments;'.
+			'|;'.
+			'file.doc_stat:actions/document-properties;'.
+			'|;'.
+			'search.open_resource:places/folder-saved-search;'.
+			'search.quick_menu_access:status/info;'.
+			'|;'.
+			'run.run_document:actions/player_play;'.
+			'run.stop:actions/stop;',
 );
 
 # Directory Tree Settings
