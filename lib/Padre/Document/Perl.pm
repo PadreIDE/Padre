@@ -734,6 +734,7 @@ sub _perltags_parser {
 
 sub autocomplete {
 	my $self = shift;
+	my $event = shift;
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
@@ -742,6 +743,16 @@ sub autocomplete {
 
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
+
+	# The second parameter may be a reference to the current event or the next
+	# char which will be added to the editor:
+	my $nextchar;
+	if (defined($event) and (ref($event) eq 'Wx::KeyEvent')) {
+		my $key = $event->GetUnicodeKey;
+		$nextchar = chr($key);
+	} elsif (defined($event) and (!ref($event))) {
+		$nextchar=$event;
+	}
 
 	# WARNING: This is totally not done, but Gabor made me commit it.
 	# TODO:
@@ -892,7 +903,27 @@ sub autocomplete {
 		@words = @words[ 0 .. 19 ];
 	}
 
-	return ( length($prefix), @words );
+	# Suggesting the current word as the only solution doesn't help
+	# anything, but your need to close the suggestions window before
+	# you may press ENTER/RETURN.
+	if (($#words == 0) and ($prefix eq $words[0])) {
+		return;
+	}
+
+	# This is the final result if there is no char which hasn't been
+	# saved to the editor buffer until now
+	return ( length($prefix), @words ) if ! defined($nextchar);
+	
+	# Finally cut out all words which do not match the next char
+	# which will be inserted into the editor (by the current event)
+	my @final_words;
+	for (@words) {
+		# Accept everything which has prefix + next char + at least one other char
+		next if ! /^$prefix$nextchar./;
+		push @final_words,$_;
+	}
+
+	return ( length($prefix), @final_words );
 }
 
 sub newline_keep_column {
@@ -1022,7 +1053,7 @@ sub event_on_char {
 
 	$editor->Thaw;
 
-	$main->on_autocompletion if $config->autocomplete_always;
+	$main->on_autocompletion($event) if $config->autocomplete_always;
 
 	return;
 }
