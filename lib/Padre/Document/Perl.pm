@@ -929,7 +929,7 @@ sub autocomplete {
 	my @final_words;
 	for (@words) {
 		# Accept everything which has prefix + next char + at least one other char
-		next if ! /^$prefix$nextchar./;
+		next if ! /^\Q$prefix$nextchar\E./;
 		push @final_words,$_;
 	}
 
