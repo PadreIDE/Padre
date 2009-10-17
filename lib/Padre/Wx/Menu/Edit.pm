@@ -34,6 +34,12 @@ sub new {
 		$self,
 		name       => 'edit.undo',
 		id         => Wx::wxID_UNDO,
+		need_editor => 1,
+		need 	   => sub {
+			my %objects = @_;
+			return 0 if ! defined($objects{editor});
+			return $objects{editor}->CanUndo;
+			},
 		label      => Wx::gettext('&Undo'),
 		shortcut   => 'Ctrl-Z',
 		menu_event => sub {
@@ -46,6 +52,12 @@ sub new {
 		$self,
 		name       => 'edit.redo',
 		id         => Wx::wxID_REDO,
+		need_editor => 1,
+		need 	   => sub {
+			my %objects = @_;
+			return 0 if ! defined($objects{editor});
+			return $objects{editor}->CanRedo;
+			},
 		label      => Wx::gettext('&Redo'),
 		shortcut   => 'Ctrl-Y',
 		menu_event => sub {
