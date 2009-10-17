@@ -31,53 +31,23 @@ sub new {
 	$self->{main} = $main;
 
 	# Add the POD-based help launchers
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'help.help',
-		id         => Wx::wxID_HELP,
-		label      => Wx::gettext('Help'),
-		menu_event => sub {
-			$_[0]->help();
-		},
-	);
-	$self->add_menu_item(
-		$self,
-		name       => 'help.context_help',
-		label      => Wx::gettext('Context Help'),
-		shortcut   => 'F1',
-		menu_event => sub {
-			my $focus = Wx::Window::FindFocus();
-			if ( ( defined $focus ) and $focus->isa('Padre::Wx::ErrorList') ) {
-				$_[0]->errorlist->on_menu_help_context_help;
-			} else {
+		'help.help');
 
-				# TODO This feels wrong, the help menu code shouldn't
-				# populate the main window hash.
-				$_[0]->help( $_[0]->current->text );
-				return;
-			}
-		},
+	$self->add_menu_action(
+		$self,
+		'help.context_help',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'help.search',
-		label      => Wx::gettext('Help Search'),
-		shortcut   => 'F2',
-		menu_event => sub {
-
-			#Show Help Search with no topic...
-			$_[0]->help_search;
-		},
+		'help.search',
 	);
 
-	$self->{current} = $self->add_menu_item(
+	$self->{current} = $self->add_menu_action(
 		$self,
-		name       => 'help.current',
-		label      => Wx::gettext('Current Document'),
-		menu_event => sub {
-			$_[0]->help( $_[0]->current->document );
-		},
+		'help.current',
 	);
 
 	# Live Support
@@ -90,89 +60,57 @@ sub new {
 		$self->{live}
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self->{live},
-		name       => 'help.live_support',
-		label      => Wx::gettext('Padre Support (English)'),
-		menu_event => sub {
-			Padre::Wx::launch_irc('padre');
-		},
+		'help.live_support',
 	);
 
 	$self->{live}->AppendSeparator;
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self->{live},
-		name       => 'help.perl_help',
-		label      => Wx::gettext('Perl Help'),
-		menu_event => sub {
-			Padre::Wx::launch_irc('general');
-		},
+		'help.perl_help',
 	);
 
 	if (Padre::Constant::WIN32) {
-		$self->add_menu_item(
+		$self->add_menu_action(
 			$self->{live},
-			name       => 'help.win32_questions',
-			label      => Wx::gettext('Win32 Questions (English)'),
-			menu_event => sub {
-				Padre::Wx::launch_irc('win32');
-			},
+			'help.win32_questions',
 		);
 	}
 
 	$self->AppendSeparator;
 
 	# Add interesting and helpful websites
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'help.visit_perlmonks',
-		label      => Wx::gettext('Visit the PerlMonks'),
-		menu_event => sub {
-			Padre::Wx::launch_browser('http://perlmonks.org/');
-		},
+		'help.visit_perlmonks',
 	);
 
 	$self->AppendSeparator;
 
 	# Add Padre website tools
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'help.report_a_bug',
-		label      => Wx::gettext('Report a New &Bug'),
-		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
-		},
-	);
-	$self->add_menu_item(
-		$self,
-		name       => 'help.view_all_open_bugs',
-		label      => Wx::gettext('View All &Open Bugs'),
-		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
-		},
+		'help.report_a_bug',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'help.translate_padre',
-		label      => Wx::gettext('&Translate Padre...'),
-		menu_event => sub {
-			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
-		},
+		'help.view_all_open_bugs',
+	);
+
+	$self->add_menu_action(
+		$self,
+		'help.translate_padre',
 	);
 
 	$self->AppendSeparator;
 
 	# Add the About
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'help.about',
-		id         => Wx::wxID_ABOUT,
-		label      => Wx::gettext('&About'),
-		menu_event => sub {
-			$_[0]->about->ShowModal;
-		},
+		'help.about',
 	);
 
 	return $self;
