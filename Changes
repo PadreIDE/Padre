@@ -12,6 +12,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Low-priority popup messages could be moved to the status bar by setting
       a preferences option (SEWI)
     - require IPC::Open2 and IPC::Open3 as they are both used in the code (SZABGAB)
+    - Improved autocomplete (always) results (SEWI)
 
 
 0.48 2009.10.12
