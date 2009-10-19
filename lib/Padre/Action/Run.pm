@@ -71,6 +71,17 @@ sub new {
 			$_[0]->on_run_command;
 		},
 	);
+	Padre::Action->new(
+		name        => 'run.run_tdd_tests',
+		need_file   => 1,
+		need_editor => 1,
+		label       => Wx::gettext('Build + run all Tests'),
+		comment     => Wx::gettext('Builds the current project, then run all tests.'),
+		shortcut    => 'Ctrl-Shift-F5',
+		menu_event  => sub {
+			$_[0]->on_run_tdd_tests;
+		},
+	);
 
 	Padre::Action->new(
 		name        => 'run.run_tests',

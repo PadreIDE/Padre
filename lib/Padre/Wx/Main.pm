@@ -1553,7 +1553,40 @@ sub on_run_command {
 	return;
 }
 
-=pod
+=pod 
+
+=head3 on_run_tdd_tests
+
+   $main->on_run_tdd_tests;
+   
+Callback method, to build and then call on_run_tests
+
+=cut 
+
+sub on_run_tdd_tests {
+	my $self = shift;
+	my $document = $self->current->document;
+	unless ($document) {
+		return $self->error( Wx::gettext("No document open") );
+	}
+	
+	# Find the project
+	my $project_dir = $document->project_dir;
+	unless ($project_dir) {
+		return $self->error( Wx::gettext("Could not find project root") );
+	
+	
+	}
+	
+	my $dir = Cwd::cwd;
+	chdir $project_dir;
+	$self->run_command('perl Build test') if( -e 'Build');
+	
+	$self->run_command('make test') if( -e 'Makefile'); # this should do dmake, nmake so on
+	chdir $dir;
+}
+
+=pod 
 
 =head3 on_run_tests
 
