@@ -273,6 +273,13 @@ sub refresh {
 			if $action->{need_editor} and ( !$editor );
 
 		$enabled = 0
+			if $action->{need_file}
+				and
+				 ((!defined($document))
+				 or (!defined($document->{file}))
+				 or (!defined($document->file->filename)));
+
+		$enabled = 0
 			if $action->{need_modified}
 				and defined($document)
 				and ( !$document->is_modified );
