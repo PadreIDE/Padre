@@ -198,6 +198,119 @@ To be documented...
 
 -- Ahmad M. Zawawi
 
+=head1 KEYS
+
+Each module is constructed using a number of keys. While only the name is
+technicalls required there are few reasons for actions which lack a label or
+menu_event.
+
+The keys are listed here in the order they usually appear.
+
+=head2 name
+
+Each action requires an unique name which is used to reference and call it.
+
+The name usually has the syntax
+
+	group.action
+
+Both group and action should only contain \w+ chars.
+
+=head2 label
+
+Text which is shown in menus and allows the user to see what this action does.
+
+Remember to use Wx::gettext to make this translateable.
+
+=head2 need_editor
+
+This action should only be enabled/shown if there is a open editor window with
+a (maybe unsafed) document in it.
+
+The action may be called anyway even if there is no editor (all documents
+closed), but it shouldn't.
+
+Set to a value of 1 to use it.
+
+=head2 need_file
+
+This action should only be enabled/shown if the current document has a filename
+(meaning there is a copy on disk which may be older than the in-memory
+document).
+
+The action may be called anyway even if there is no filename for the current
+document, but it shouldn't.
+
+Set to a value of 1 to use it.
+
+=head2 need_modified
+
+This action should only be enabled/shown if the current document has either
+been modified after the last save or was never saved on disk at all.
+
+The action may be called anyway even if the file is up-to-date with the
+in-memory document, but it shouldn't.
+
+Set to a value of 1 to use it.
+
+=head2 need_selection
+
+This action should only be enabled/shown if there is some text selected within
+the current document.
+
+The action may be called anyway even if nothing is selected, but it shouldn't.
+
+Set to a value of 1 to use it.
+
+=head2 need
+
+Expected to contain a CODE reference which returns either true or false.
+
+If the code returns true, the action should be enabled/shown, otherwise it
+shouldn't, usually because it won't make sense to use this action without
+whatever_is_checked_by_the_code. (For example, UNDO can't be used if there
+was no change which could be undone.)
+
+The CODE receives a list of objects which should help with the decision:
+	config		contains the current configuration object
+	editor		the current editor object
+	document	the current document object
+	main		the main Wx object
+
+A typical sub for handling would look like this:
+
+	need => sub {
+			my %objects = @_;
+			return 0 if !defined( $objects{editor} );
+			return $objects{editor}->CanUndo;
+		},
+
+Use this with caution! As this function is called very often there are few
+to no checks and if this isn't a CODE reference, Padre may crash at all or
+get very slow if your CODE is inefficient and requires a lot of processing
+time.
+
+=head2 comment
+
+A comment (longer than label) which could be used in lists. It should contain
+a short decription of what this action does.
+
+Remember to use Wx::gettext to make this translateable.
+
+=head2 icon
+
+If there is an icon for this action, specify it here.
+
+=head2 shortcut
+
+The shortcut may be set by the user. This key sets the default shortcut to
+be used if there is no user-defined value.
+
+=head2 menu_event
+
+This is expected to contain a CODE reference which does the job of this action
+or an ARRAY reference of CODE references which are executed in order.
+
 =head1 METHODS
 
 =head2 new
