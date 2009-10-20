@@ -4,11 +4,12 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::Constant ();
-use Padre::Action::Help();
-use Padre::Action::Refactor();
-use Padre::Action::Run();
-use Padre::Action::Search();
+use Padre::Constant        ();
+use Padre::Action::Help    ();
+use Padre::Action::Plugins ();
+use Padre::Action::Refactor ();
+use Padre::Action::Run ();
+use Padre::Action::Search ();
 
 our $VERSION = '0.48';
 
@@ -34,6 +35,7 @@ sub create {
 	my $main = shift;
 
 	Padre::Action::Help->new($main);
+	Padre::Action::Plugins->new($main);
 	Padre::Action::Refactor->new($main);
 	Padre::Action::Run->new($main);
 	Padre::Action::Search->new($main);
@@ -182,6 +184,7 @@ Padre::Action - Padre Action Object
   my $action = Padre::Action->new( 
     name       => 'file.save', 
     label      => 'Save', 
+    comment    => 'Saves the current file to disk',
     icon       => '...', 
     shortcut   => 'CTRL-S', 
     menu_event => sub { },
