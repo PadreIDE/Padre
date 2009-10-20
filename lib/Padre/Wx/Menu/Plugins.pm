@@ -33,17 +33,9 @@ sub new {
 	$self->{main} = $main;
 
 	# Link to the Plugin Manager
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'plugins.plugin_manager',
-		label      => Wx::gettext('Plugin Manager'),
-		menu_event => sub {
-			require Padre::Wx::Dialog::PluginManager;
-			Padre::Wx::Dialog::PluginManager->new(
-				$_[0],
-				Padre->ide->plugin_manager,
-			)->show;
-		},
+		'plugins.plugin_manager',
 	);
 
 	# Create the plugin tools submenu
@@ -57,90 +49,43 @@ sub new {
 	# TODO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
 	# better yet, by a window that also allows the installation of all the plugins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$tools,
-		name       => 'plugins.plugin_list',
-		label      => Wx::gettext('Plugin List (CPAN)'),
-		menu_event => sub {
-			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
-		},
+		'plugins.plugin_list',
 	);
 
 	$tools->AppendSeparator;
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$tools,
-		name       => 'plugins.edit_my_plugin',
-		label      => Wx::gettext('Edit My Plugin'),
-		menu_event => sub {
-			my $file = File::Spec->catfile(
-				Padre::Constant::CONFIG_DIR,
-				qw{ plugins Padre Plugin My.pm }
-			);
-			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plugin") ) unless -e $file;
-
-			# Use the plural so we get the "close single unused document"
-			# behaviour, and so we get a free freezing and refresh calls.
-			$_[0]->setup_editors($file);
-		},
+		'plugins.edit_my_plugin',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$tools,
-		name       => 'plugins.reload_my_plugin',
-		label      => Wx::gettext('Reload My Plugin'),
-		menu_event => sub {
-			Padre->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
-		},
+		'plugins.reload_my_plugin',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$tools,
-		name       => 'plugins.reset_my_plugin',
-		label      => Wx::gettext('Reset My Plugin'),
-		menu_event => sub {
-			my $ret = Wx::MessageBox(
-				Wx::gettext("Reset My Plugin"),
-				Wx::gettext("Reset My Plugin"),
-				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
-				$main,
-			);
-			if ( $ret == Wx::wxOK ) {
-				my $manager = Padre->ide->plugin_manager;
-				$manager->unload_plugin('Padre::Plugin::My');
-				$manager->reset_my_plugin(1);
-				$manager->load_plugin('Padre::Plugin::My');
-			}
-		},
+		'plugins.reset_my_plugin',
 	);
 
 	$tools->AppendSeparator;
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$tools,
-		name       => 'plugins.reload_all_plugins',
-		label      => Wx::gettext('Reload All Plugins'),
-		menu_event => sub {
-			Padre->ide->plugin_manager->reload_plugins;
-		},
+		'plugins.reload_all_plugins',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$tools,
-		name       => 'plugins.reload_current_plugin',
-		label      => Wx::gettext('(Re)load Current Plugin'),
-		menu_event => sub {
-			Padre->ide->plugin_manager->reload_current_plugin;
-		},
+		'plugins.reload_current_plugin',
 	);
 
-	#	$self->add_menu_item(
+	#	$self->add_menu_action(
 	#		$tools,
-	#		name       => 'plugins.test_a_plugin',
-	#		label      => Wx::gettext('Test A Plugin From Local Dir'),
-	#		menu_event => sub {
-	#			Padre->ide->plugin_manager->test_a_plugin;
-	#		},
+	#		'plugins.test_a_plugin',
 	#	);
 
 	# Create the module tools submenu
@@ -151,54 +96,26 @@ sub new {
 		$modules,
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$modules->Append(
-			-1,
-			Wx::gettext("Install CPAN Module"),
-		),
-		sub {
-			require Padre::CPAN;
-			require Padre::Wx::CPAN;
-			my $cpan = Padre::CPAN->new;
-			my $gui = Padre::Wx::CPAN->new( $cpan, $_[0] );
-			$gui->show;
-		}
+	$self->add_menu_action(
+		$modules,
+		'plugins.install_cpan',
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$modules->Append(
-			-1,
-			Wx::gettext("Install Local Distribution"),
-		),
-		sub {
-			$self->install_file( $_[0] );
-		},
+	$self->add_menu_action(
+		$modules,
+		'plugins.install_local',
 	);
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$modules->Append(
-			-1,
-			Wx::gettext("Install Remote Distribution"),
-		),
-		sub {
-			$self->install_url( $_[0] );
-		},
+	$self->add_menu_action(
+		$modules,
+		'plugins.install_remote',
 	);
 
 	$modules->AppendSeparator;
 
-	Wx::Event::EVT_MENU(
-		$main,
-		$modules->Append(
-			-1,
-			Wx::gettext("Open CPAN Config File"),
-		),
-		sub {
-			$self->cpan_config( $_[0] );
-		},
+	$self->add_menu_action(
+		$modules,
+		'plugins.cpan_config',
 	);
 
 	$self->add($main);
