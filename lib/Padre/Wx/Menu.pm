@@ -68,6 +68,10 @@ sub add_menu_action {
 	my $action_name = shift;
 
 	my $actions  = Padre->ide->actions;
+	if (!defined($actions->{$action_name})) {
+		warn 'Action "'.$action_name.'" could not be found!';
+		return 0;
+	}
 	my $action   = $actions->{$action_name};
 	my $name     = $action->name;
 	my $shortcut = $action->shortcut;
