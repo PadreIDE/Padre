@@ -4,12 +4,12 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::Constant        ();
-use Padre::Action::Help    ();
-use Padre::Action::Plugins ();
+use Padre::Constant         ();
+use Padre::Action::Help     ();
+use Padre::Action::Plugins  ();
 use Padre::Action::Refactor ();
-use Padre::Action::Run ();
-use Padre::Action::Search ();
+use Padre::Action::Run      ();
+use Padre::Action::Search   ();
 
 our $VERSION = '0.48';
 

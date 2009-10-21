@@ -49,7 +49,7 @@ sub new {
 		$self,
 		'run.run_tests',
 	);
-	
+
 	$self->{run_tdd_tests} = $self->add_menu_action(
 		$self,
 		'run.run_tdd_tests',
@@ -100,7 +100,7 @@ sub refresh {
 		: 0
 	);
 	$self->{run_tdd_tests}->Enable(
-		  $document && defined( $document->filename ) 
+		  $document && defined( $document->filename )
 		? $self->{run_command}->IsEnabled
 		: 0
 	);

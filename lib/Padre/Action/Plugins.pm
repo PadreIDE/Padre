@@ -8,7 +8,7 @@ use warnings;
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Config   ();
-use Padre::Action       ();
+use Padre::Action   ();
 use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.48';
@@ -34,7 +34,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.plugin_manager',
 		label      => Wx::gettext('Plugin Manager'),
-		comment	   => Wx::gettext('Show the Padre plugin manager to enable or disable plugins'),
+		comment    => Wx::gettext('Show the Padre plugin manager to enable or disable plugins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
 			Padre::Wx::Dialog::PluginManager->new(
@@ -130,9 +130,9 @@ sub new {
 
 
 	Padre::Action->new(
-		name => 'plugins.install_cpan',
-		label => Wx::gettext("Install CPAN Module"),
-		comment => Wx::gettext('Install a Perl module from CPAN'),
+		name       => 'plugins.install_cpan',
+		label      => Wx::gettext("Install CPAN Module"),
+		comment    => Wx::gettext('Install a Perl module from CPAN'),
 		menu_event => sub {
 			require Padre::CPAN;
 			require Padre::Wx::CPAN;
@@ -143,27 +143,25 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name => 'plugins.install_local',
-		label => 	Wx::gettext("Install Local Distribution"),
-		menu_event => 
-		sub {
+		name       => 'plugins.install_local',
+		label      => Wx::gettext("Install Local Distribution"),
+		menu_event => sub {
 			$self->install_file( $_[0] );
 		},
 	);
 
 	Padre::Action->new(
-		name => 'plugins.install_remote',
-		label => Wx::gettext("Install Remote Distribution"),
+		name       => 'plugins.install_remote',
+		label      => Wx::gettext("Install Remote Distribution"),
 		menu_event => sub {
 			$self->install_url( $_[0] );
 		},
 	);
 
 	Padre::Action->new(
-		name => 'plugins.cpan_config',
-		label => Wx::gettext("Open CPAN Config File"),
-		menu_event => 
-		sub {
+		name       => 'plugins.cpan_config',
+		label      => Wx::gettext("Open CPAN Config File"),
+		menu_event => sub {
 			$self->cpan_config( $_[0] );
 		},
 	);

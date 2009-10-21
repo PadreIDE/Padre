@@ -67,9 +67,9 @@ sub add_menu_action {
 	my $menu        = shift;
 	my $action_name = shift;
 
-	my $actions  = Padre->ide->actions;
-	if (!defined($actions->{$action_name})) {
-		warn 'Action "'.$action_name.'" could not be found!';
+	my $actions = Padre->ide->actions;
+	if ( !defined( $actions->{$action_name} ) ) {
+		warn 'Action "' . $action_name . '" could not be found!';
 		return 0;
 	}
 	my $action   = $actions->{$action_name};

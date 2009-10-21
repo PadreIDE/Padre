@@ -1564,25 +1564,25 @@ Callback method, to build and then call on_run_tests
 =cut 
 
 sub on_run_tdd_tests {
-	my $self = shift;
+	my $self     = shift;
 	my $document = $self->current->document;
 	unless ($document) {
 		return $self->error( Wx::gettext("No document open") );
 	}
-	
+
 	# Find the project
 	my $project_dir = $document->project_dir;
 	unless ($project_dir) {
 		return $self->error( Wx::gettext("Could not find project root") );
-	
-	
+
+
 	}
-	
+
 	my $dir = Cwd::cwd;
 	chdir $project_dir;
-	$self->run_command('perl Build test') if( -e 'Build');
-	
-	$self->run_command('make test') if( -e 'Makefile'); # this should do dmake, nmake so on
+	$self->run_command('perl Build test') if ( -e 'Build' );
+
+	$self->run_command('make test') if ( -e 'Makefile' ); # this should do dmake, nmake so on
 	chdir $dir;
 }
 
@@ -1739,11 +1739,17 @@ sub run_command {
 	unless ($Wx::Perl::ProcessStream::VERSION) {
 		require Wx::Perl::ProcessStream;
 
-		if ($Wx::Perl::ProcessStream::VERSION < .21) {
-			$self->error(sprintf(Wx::gettext(
-			        'Wx::Perl::ProcessStream is version %s'.
-				' which is known to cause problems. Get at least 0.20 by typing'.
-				"\ncpan Wx::Perl::ProcessStream"),$Wx::Perl::ProcessStream::VERSION));
+		if ( $Wx::Perl::ProcessStream::VERSION < .21 ) {
+			$self->error(
+				sprintf(
+					Wx::gettext(
+						      'Wx::Perl::ProcessStream is version %s'
+							. ' which is known to cause problems. Get at least 0.20 by typing'
+							. "\ncpan Wx::Perl::ProcessStream"
+					),
+					$Wx::Perl::ProcessStream::VERSION
+				)
+			);
 			return 1;
 		}
 
