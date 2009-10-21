@@ -1739,10 +1739,11 @@ sub run_command {
 	unless ($Wx::Perl::ProcessStream::VERSION) {
 		require Wx::Perl::ProcessStream;
 
-		if ($Wx::Perl::ProcessStream::VERSION < .20) {
-			$self->error('Wx::Perl::ProcessStream is version '.$Wx::Perl::ProcessStream::VERSION.
+		if ($Wx::Perl::ProcessStream::VERSION < .21) {
+			$self->error(sprintf(Wx::gettext(
+			        'Wx::Perl::ProcessStream is version %s'.
 				' which is known to cause problems. Get at least 0.20 by typing'.
-				"\ncpan Wx::Perl::ProcessStream");
+				"\ncpan Wx::Perl::ProcessStream"),$Wx::Perl::ProcessStream::VERSION));
 			return 1;
 		}
 
