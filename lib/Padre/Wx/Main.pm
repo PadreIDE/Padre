@@ -1738,6 +1738,14 @@ sub run_command {
 	# set up the ProcessStream bindings.
 	unless ($Wx::Perl::ProcessStream::VERSION) {
 		require Wx::Perl::ProcessStream;
+
+		if ($Wx::Perl::ProcessStream::VERSION < .20) {
+			$self->error('Wx::Perl::ProcessStream is version '.$Wx::Perl::ProcessStream::VERSION.
+				' which is known to cause problems. Get at least 0.20 by typing'.
+				"\ncpan Wx::Perl::ProcessStream");
+			return 1;
+		}
+
 		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
 			$self,
 			sub {
