@@ -8,6 +8,7 @@ use warnings;
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Config   ();
+use Padre::Wx ();
 use Padre::Action   ();
 use Padre::Current qw{_CURRENT};
 
