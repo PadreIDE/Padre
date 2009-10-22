@@ -82,15 +82,13 @@ sub new {
 
 	# Hide the dialog when the user presses the ESCape key or clicks Close button
 	# Please see ticket:573
-	$self->{sizer}->Add(
-		Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') ),
-		0,
-		Wx::wxALIGN_CENTER,
-		0
-	);
+	my $button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+	$self->{sizer}->Add($button,0,Wx::wxALIGN_CENTER,0);
 	$self->{sizer}->AddSpacer(0);
-
 	$self->SetSizer( $self->{sizer} );
+
+	# The close button is focused in case the user presses an ENTER
+	$button->SetFocus;
 
 	return $self;
 }
