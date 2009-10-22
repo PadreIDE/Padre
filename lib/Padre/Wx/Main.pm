@@ -1973,7 +1973,9 @@ C<$session> (a C<Padre::DB::Session> object). No return value.
 =cut
 
 sub open_session {
-	my ( $self, $session ) = @_;
+	my ( $self, $session, $autosave ) = @_;
+
+	$autosave ||= 0; # Initilize if it isn't
 
 	# get list of files in the session
 	my @files = $session->files;
@@ -2018,6 +2020,7 @@ sub open_session {
 	$self->on_nth_pane($focus) if defined $focus;
 
 	$self->ide->{session} = $session->{id};
+	$self->ide->{session_autosave} = $autosave;
 
 	# now we can redraw
 	$self->Thaw;
