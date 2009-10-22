@@ -160,7 +160,10 @@ keywords(
 );
 
 install_script 'script/padre';
-install_script 'script/padre.exe' if win32;
+if(win32){
+	system $^X ,qw[-MExtUtils::Command -e mkpath --], qw[ blib/bin ];
+	system $^X ,qw[-MExtUtils::Command -e cp --], qw[ bin/padre.exe blib/bin/padre.exe ];
+}
 install_share_with_mofiles;
 
 
