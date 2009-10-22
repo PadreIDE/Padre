@@ -104,7 +104,7 @@ sub _on_butopen_clicked {
 
 	# close all open documents
 	my $main = $self->GetParent;
-	$main->open_session( $self->_current_session );
+	$main->open_session( $self->_current_session, $self->{autosave}->GetValue );
 	$self->Destroy();
 }
 
@@ -181,6 +181,7 @@ sub _create {
 	$self->_vbox($vbox);
 
 	$self->_create_list;
+	$self->_create_options;
 	$self->_create_buttons;
 	$self->_list->SetFocus;
 }
@@ -224,6 +225,36 @@ sub _create_list {
 
 	# pack the list
 	$vbox->Add( $list, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+}
+
+#
+# $dialog->_create_options;
+#
+# create the options
+#
+# no params. no return values.
+#
+sub _create_options {
+	my $self = shift;
+
+	# the hbox
+	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+
+	# CheckBox
+	$self->{autosave} = Wx::CheckBox->new(
+		$self,
+		-1,
+		Wx::gettext('Save session automatically'),
+	);
+#	Wx::Event::EVT_CHECKBOX(
+#		$self,
+#		$self->{autosave},
+#		sub {
+#			$_[0]->{find_text}->SetFocus;
+#		}
+#	);
+	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
 }
 
 #
