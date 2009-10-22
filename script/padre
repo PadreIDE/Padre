@@ -48,6 +48,7 @@ Usage: $0 [FILENAMES]
 --help            Shows this help message
 --session=name    Open given session during Padre startup
 --version         Prints Padre version and quits
+--desktop         Integrate Padre with your desktop
 
 END_USAGE
 	exit(1);
