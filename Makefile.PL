@@ -161,8 +161,12 @@ keywords(
 
 install_script 'script/padre';
 if (win32) {
+	# Install Padre's Launcher
 	system $^X , qw[-MExtUtils::Command -e mkpath --], qw[ blib/bin ];
 	system $^X , qw[-MExtUtils::Command -e cp --],     qw[ bin/padre.exe blib/bin/padre.exe ];
+
+	# Install XP manifest to get a themed Padre
+	system $^X , qw[-MExtUtils::Command -e cp --],     qw[ bin/wperl.exe.manifest blib/bin/wperl.exe.manifest ];
 }
 install_share_with_mofiles;
 
