@@ -83,7 +83,7 @@ sub new {
 	# Hide the dialog when the user presses the ESCape key or clicks Close button
 	# Please see ticket:573
 	my $button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
-	$self->{sizer}->Add($button,0,Wx::wxALIGN_CENTER,0);
+	$self->{sizer}->Add( $button, 0, Wx::wxALIGN_CENTER, 0 );
 	$self->{sizer}->AddSpacer(0);
 	$self->SetSizer( $self->{sizer} );
 
