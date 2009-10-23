@@ -2019,7 +2019,7 @@ sub open_session {
 	$progress->update( $#files + 1, Wx::gettext('Restore focus...') );
 	$self->on_nth_pane($focus) if defined $focus;
 
-	$self->ide->{session} = $session->{id};
+	$self->ide->{session}          = $session->{id};
 	$self->ide->{session_autosave} = $autosave;
 
 	# now we can redraw
@@ -2074,7 +2074,7 @@ sub save_current_session {
 
 		# session did not exist, create a new one
 		$session = Padre::DB::Session->new(
-			name        => 'New session '.localtime(time),
+			name        => 'New session ' . localtime(time),
 			description => 'Auto-created session',
 			last_update => time,
 		);

@@ -247,13 +247,14 @@ sub _create_options {
 		-1,
 		Wx::gettext('Save session automatically'),
 	);
-#	Wx::Event::EVT_CHECKBOX(
-#		$self,
-#		$self->{autosave},
-#		sub {
-#			$_[0]->{find_text}->SetFocus;
-#		}
-#	);
+
+	#	Wx::Event::EVT_CHECKBOX(
+	#		$self,
+	#		$self->{autosave},
+	#		sub {
+	#			$_[0]->{find_text}->SetFocus;
+	#		}
+	#	);
 	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
 }
 
