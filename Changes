@@ -15,6 +15,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Improved autocomplete (always) results (SEWI)
     - Run make and TDD-tests in one step (KTHAKORE)
     - Padre is now an XP-themed win32 application (AZAWAWI)
+    - Auto-save session state is now possible (SEWI)
 
 0.48 2009.10.12
     - "Last session" now restores the last state even if Padre crashed and not
