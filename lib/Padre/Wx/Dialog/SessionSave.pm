@@ -70,6 +70,8 @@ sub _on_butsave_clicked {
 	my $main    = $self->GetParent;
 	my $session = $self->_current_session;
 
+	# TODO: This must be switched to use the main methods:
+
 	if ( defined $session ) {
 
 		# session exist, remove all files associated to it
