@@ -2054,6 +2054,41 @@ sub save_session {
 	Padre::DB->commit;
 }
 
+sub save_current_session {
+	my $self = shift;
+
+	my ($session) = Padre::DB::Session->select(
+		'where id = ?',
+		$self->{ide}->{session}
+	);
+
+	# TODO: Understand and rewrite this if to match the logical context of this method
+	if ( defined $session ) {
+
+		# session exist, remove all files associated to it
+		Padre::DB::SessionFile->delete(
+			'where session = ?',
+			$session->id
+		);
+	} else {
+
+		# session did not exist, create a new one
+		$session = Padre::DB::Session->new(
+			name        => 'New session '.localtime(time),
+			description => 'Auto-created session',
+			last_update => time,
+		);
+		$session->insert;
+	}
+
+	# capture session and save it
+	my @session = $self->capture_session;
+	$self->save_session( $session, @session );
+
+}
+
+
+
 sub update_directory {
 	my $self = shift;
 
@@ -2961,6 +2996,9 @@ sub on_open_url {
 		return;
 	}
 	$self->setup_editor($url);
+
+	$self->ide->{session_autosave} and $self->save_current_session;
+
 }
 
 =pod
@@ -3075,6 +3113,8 @@ sub open_file_dialog {
 		push @files, $FN;
 	}
 	$self->setup_editors(@files) if $#files > -1;
+
+	$self->ide->{session_autosave} and $self->save_current_session;
 
 	return;
 }
@@ -3486,6 +3526,8 @@ sub close_all {
 	my $self  = shift;
 	my $skip  = shift;
 	my $guard = $self->freezer;
+
+	$self->ide->{session_autosave} and $self->save_current_session;
 
 	# Remove current session ID from IDE object
 	# Do this before closing as the session shouldn't be affected by a close-all
