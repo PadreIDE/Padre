@@ -3444,6 +3444,10 @@ sub on_close {
 	}
 	$self->close;
 	$self->refresh;
+
+	$self->ide->{session_autosave} and $self->save_current_session;
+	$self->update_last_session;
+
 }
 
 =pod
