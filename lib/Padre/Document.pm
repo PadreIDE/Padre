@@ -557,6 +557,85 @@ sub newline {
 	return "\n";
 }
 
+=pod
+
+=head2 autocomplete_matching_char
+
+The first argument needs to be a reference to the editor this method should
+work on.
+
+The second argument is expected to be a event reference to the event object
+which is the reason why the method was launched.
+
+This method expects a hash as the third argument. If the last key typed by the
+user is a key in this hash, the value is automatically added and the cursor is
+set between key and value. Both key and value are expected to be ASCII codes.
+
+Usually used for brackets and text signs like:
+
+	$self->autocomplete_matching_char(
+			$editor,
+			$event,
+			39  => 39,  # ' '
+			40  => 41,  # ( )
+		);
+
+Returns 1 if something was added or 0 otherwise (if anybody cares about this).
+
+=cut
+
+sub autocomplete_matching_char {
+	my $self = shift;
+	my $editor = shift;
+	my $event = shift;
+	my %table = @_;
+
+	my $config = Padre->ide->config;
+	my $main   = Padre->ide->wx->main;
+	
+	my $selection_exists = 0;
+	my $text             = $editor->GetSelectedText;
+	if ( defined($text) && length($text) > 0 ) {
+		$selection_exists = 1;
+	}
+
+	my $key = $event->GetUnicodeKey;
+
+	my $pos   = $editor->GetCurrentPos;
+	my $line  = $editor->LineFromPosition($pos);
+	my $first = $editor->PositionFromLine($line);
+	my $last  = $editor->PositionFromLine( $line + 1 ) - 1;
+
+	if ( $config->autocomplete_brackets ) {
+		if ( $table{$key} ) {
+			if ($selection_exists) {
+				my $start = $editor->GetSelectionStart;
+				my $end   = $editor->GetSelectionEnd;
+				$editor->GotoPos($end);
+				$editor->AddText( chr( $table{$key} ) );
+				$editor->GotoPos($start);
+			} else {
+				my $nextChar;
+				if ( $editor->GetTextLength > $pos ) {
+					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
+				}
+				unless ( defined($nextChar) && ord($nextChar) == $table{$key}
+					and ( !$config->autocomplete_multiclosebracket ) )
+				{
+					$editor->AddText( chr( $table{$key} ) );
+					$editor->CharLeft;
+				}
+			}
+			return 1;
+		}
+	}
+
+	return 0;
+
+}
+
+
+
 sub _set_filename {
 	my $self     = shift;
 	my $filename = shift;

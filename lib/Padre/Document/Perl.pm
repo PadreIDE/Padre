@@ -972,6 +972,15 @@ sub event_on_char {
 
 	$editor->Freeze;
 
+	$self->autocomplete_matching_char($editor,$event,
+			34  => 34,  # " "
+			39  => 39,  # ' '
+			40  => 41,  # ( )
+			60  => 62,  # < >
+			91  => 93,  # [ ]
+			123 => 125, # { }
+		);
+
 	my $selection_exists = 0;
 	my $text             = $editor->GetSelectedText;
 	if ( defined($text) && length($text) > 0 ) {
@@ -984,37 +993,6 @@ sub event_on_char {
 	my $line  = $editor->LineFromPosition($pos);
 	my $first = $editor->PositionFromLine($line);
 	my $last  = $editor->PositionFromLine( $line + 1 ) - 1;
-
-	if ( $config->autocomplete_brackets ) {
-		my %table = (
-			34  => 34,  # " "
-			39  => 39,  # ' '
-			40  => 41,  # ( )
-			60  => 62,  # < >
-			91  => 93,  # [ ]
-			123 => 125, # { }
-		);
-		if ( $table{$key} ) {
-			if ($selection_exists) {
-				my $start = $editor->GetSelectionStart;
-				my $end   = $editor->GetSelectionEnd;
-				$editor->GotoPos($end);
-				$editor->AddText( chr( $table{$key} ) );
-				$editor->GotoPos($start);
-			} else {
-				my $nextChar;
-				if ( $editor->GetTextLength > $pos ) {
-					$nextChar = $editor->GetTextRange( $pos, $pos + 1 );
-				}
-				unless ( defined($nextChar) && ord($nextChar) == $table{$key}
-					and ( !$config->autocomplete_multiclosebracket ) )
-				{
-					$editor->AddText( chr( $table{$key} ) );
-					$editor->CharLeft;
-				}
-			}
-		}
-	}
 
 	# This only matches if all conditions are met:
 	#  - config option enabled
