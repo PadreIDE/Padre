@@ -19,7 +19,7 @@ use List::Util    ();
 use File::Spec    ();
 use File::HomeDir ();
 use Params::Util qw{_INSTANCE};
-use Padre::Locale   ();
+use Padre::Locale ();
 use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.48';
@@ -48,7 +48,7 @@ sub new {
 			$doc->beginner_check;
 		},
 	);
-	
+
 	Padre::Action->new(
 		name       => 'perl.find_brace',
 		label      => Wx::gettext('Find Unmatched Brace'),
@@ -105,9 +105,9 @@ sub new {
 
 	Padre::Action->new(
 		menu_method => 'AppendCheckItem',
-		name       => 'perl.autocomplete_brackets',
-		label      => Wx::gettext('Automatic bracket completion'),
-		menu_event => sub {
+		name        => 'perl.autocomplete_brackets',
+		label       => Wx::gettext('Automatic bracket completion'),
+		menu_event  => sub {
 
 			# Update the saved config setting
 			my $config = Padre->ide->config;
