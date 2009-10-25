@@ -23,7 +23,7 @@ sub new {
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
-	my $list = Wx::ImageList->new( 14, 7 );
+	my $list = Wx::ImageList->new( 16, 16 );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
