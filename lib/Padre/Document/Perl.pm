@@ -1042,7 +1042,11 @@ sub event_on_char {
 
 	$editor->Thaw;
 
-	$main->on_autocompletion($event) if $config->autocomplete_always;
+	# Auto complete only when the user selected 'always'
+	# and no ALT key is pressed
+	if($config->autocomplete_always && (not $event->AltDown) ) {
+		$main->on_autocompletion($event);
+	}
 
 	return;
 }
