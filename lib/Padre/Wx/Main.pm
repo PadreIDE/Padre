@@ -2448,6 +2448,15 @@ sub on_autocompletion {
 		my $editor = $document->editor;
 		$editor->AutoCompSetSeparator( ord ' ' );
 		$editor->AutoCompShow( $length, join " ", @words );
+
+		# Cancel the auto completion list when Padre loses focus
+		Wx::Event::EVT_KILL_FOCUS( $editor, sub {
+			my ($self, $event) = @_;
+			unless($event->GetWindow) {
+				$editor->AutoCompCancel;
+			}
+		});
+
 	}
 	return;
 }
