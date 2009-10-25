@@ -142,10 +142,10 @@ sub update_gui {
 			$green,
 			$green,
 		);
-		my $idx = $syntax->InsertStringImageItem( 0, 0, 2 );
+		my $idx = $syntax->InsertStringImageItem( 0, '', 2 );
 		$syntax->SetItemData( $idx, 0 );
 		$syntax->SetItem( $idx, 1, Wx::gettext('Info') );
-		$syntax->SetItem( $idx, 2, Wx::gettext('No errors or warnings.') );
+		$syntax->SetItem( $idx, 2, Wx::gettext('No errors or warnings found.') );
 		return;
 	}
 
