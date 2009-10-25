@@ -6,6 +6,7 @@ use warnings;
 
 use Padre::Constant         ();
 use Padre::Action::Help     ();
+use Padre::Action::Perl     ();
 use Padre::Action::Plugins  ();
 use Padre::Action::Refactor ();
 use Padre::Action::Run      ();
@@ -35,6 +36,7 @@ sub create {
 	my $main = shift;
 
 	Padre::Action::Help->new($main);
+	Padre::Action::Perl->new($main);
 	Padre::Action::Plugins->new($main);
 	Padre::Action::Refactor->new($main);
 	Padre::Action::Run->new($main);

@@ -34,63 +34,33 @@ sub new {
 	$self->{config} = Padre->ide->config;
 
 	# Perl-Specific Searches
-	$self->{beginner_check} = $self->add_menu_item(
+	$self->{beginner_check} = $self->add_menu_action(
 		$self,
-		name       => 'perl.beginner_check',
-		label      => Wx::gettext('Check for common (beginner) errors'),
-		menu_event => sub {
-			my $doc = $_[0]->current->document;
-			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-			$doc->beginner_check;
-		},
+		'perl.beginner_check',
 	);
 
 	$self->AppendSeparator;
 
-	$self->{find_brace} = $self->add_menu_item(
+	$self->{find_brace} = $self->add_menu_action(
 		$self,
-		name       => 'perl.find_brace',
-		label      => Wx::gettext('Find Unmatched Brace'),
-		menu_event => sub {
-			my $doc = $_[0]->current->document;
-			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-			$doc->find_unmatched_brace;
-		},
+		'perl.find_brace',
 	);
 
-	$self->{find_variable} = $self->add_menu_item(
+	$self->{find_variable} = $self->add_menu_action(
 		$self,
-		name       => 'perl.find_variable',
-		label      => Wx::gettext('Find Variable Declaration'),
-		menu_event => sub {
-			my $doc = $_[0]->current->document;
-			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-			$doc->find_variable_declaration;
-		},
+		'perl.find_variable',
 	);
 
 	$self->AppendSeparator;
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'perl.vertically_align_selected',
-		label      => Wx::gettext('Vertically Align Selected'),
-		menu_event => sub {
-			my $editor = $_[0]->current->editor or return;
-			$editor->vertically_align;
-		},
+		'perl.vertically_align_selected',
 	);
 
-	$self->add_menu_item(
+	$self->add_menu_action(
 		$self,
-		name       => 'perl.newline_keep_column',
-		label      => Wx::gettext('Newline same column'),
-		shortcut   => 'Ctrl-Enter',
-		menu_event => sub {
-			my $document = $_[0]->current->document or return;
-			return unless _INSTANCE( $document, 'Padre::Document::Perl' );
-			$document->newline_keep_column;
-		},
+		'perl.newline_keep_column',
 	);
 
 	$self->AppendSeparator;
@@ -109,16 +79,9 @@ sub new {
 	#		}
 	#	);
 
-	$self->{autocomplete_brackets} = $self->add_checked_menu_item(
+	$self->{autocomplete_brackets} = $self->add_menu_action(
 		$self,
-		name       => 'perl.autocomplete_brackets',
-		label      => Wx::gettext('Automatic bracket completion'),
-		menu_event => sub {
-
-			# Update the saved config setting
-			my $config = Padre->ide->config;
-			$config->set( autocomplete_brackets => $_[1]->IsChecked ? 1 : 0 );
-		}
+		'perl.autocomplete_brackets',
 	);
 
 	return $self;
