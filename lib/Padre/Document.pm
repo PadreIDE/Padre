@@ -585,14 +585,14 @@ Returns 1 if something was added or 0 otherwise (if anybody cares about this).
 =cut
 
 sub autocomplete_matching_char {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = shift;
-	my $event = shift;
-	my %table = @_;
+	my $event  = shift;
+	my %table  = @_;
 
 	my $config = Padre->ide->config;
 	my $main   = Padre->ide->wx->main;
-	
+
 	my $selection_exists = 0;
 	my $text             = $editor->GetSelectedText;
 	if ( defined($text) && length($text) > 0 ) {

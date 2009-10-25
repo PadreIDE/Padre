@@ -972,14 +972,15 @@ sub event_on_char {
 
 	$editor->Freeze;
 
-	$self->autocomplete_matching_char($editor,$event,
-			34  => 34,  # " "
-			39  => 39,  # ' '
-			40  => 41,  # ( )
-			60  => 62,  # < >
-			91  => 93,  # [ ]
-			123 => 125, # { }
-		);
+	$self->autocomplete_matching_char(
+		$editor, $event,
+		34  => 34,  # " "
+		39  => 39,  # ' '
+		40  => 41,  # ( )
+		60  => 62,  # < >
+		91  => 93,  # [ ]
+		123 => 125, # { }
+	);
 
 	my $selection_exists = 0;
 	my $text             = $editor->GetSelectedText;
@@ -1044,7 +1045,7 @@ sub event_on_char {
 
 	# Auto complete only when the user selected 'always'
 	# and no ALT key is pressed
-	if($config->autocomplete_always && (not $event->AltDown) ) {
+	if ( $config->autocomplete_always && ( not $event->AltDown ) ) {
 		$main->on_autocompletion($event);
 	}
 

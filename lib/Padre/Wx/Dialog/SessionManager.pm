@@ -34,7 +34,7 @@ sub new {
 		-1,
 		Wx::gettext('Session Manager'),
 		Wx::wxDefaultPosition,
-		Wx::Size->new(480,300),
+		Wx::Size->new( 480, 300 ),
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 

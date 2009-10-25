@@ -2450,12 +2450,15 @@ sub on_autocompletion {
 		$editor->AutoCompShow( $length, join " ", @words );
 
 		# Cancel the auto completion list when Padre loses focus
-		Wx::Event::EVT_KILL_FOCUS( $editor, sub {
-			my ($self, $event) = @_;
-			unless($event->GetWindow) {
-				$editor->AutoCompCancel;
+		Wx::Event::EVT_KILL_FOCUS(
+			$editor,
+			sub {
+				my ( $self, $event ) = @_;
+				unless ( $event->GetWindow ) {
+					$editor->AutoCompCancel;
+				}
 			}
-		});
+		);
 
 	}
 	return;
