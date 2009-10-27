@@ -144,7 +144,7 @@ sub refresh {
 	my $items    = $self->GetMenuItemCount;
 	my $notebook = $current->notebook;
 	my $pages    = $notebook->GetPageCount;
-	my $main = $self->{main};
+	my $main     = $self->{main};
 
 	# Destroy previous window list so we can add it again
 	$self->Destroy( pop @$alt ) while @$alt;
