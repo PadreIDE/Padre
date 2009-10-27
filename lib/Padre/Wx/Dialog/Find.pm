@@ -181,7 +181,7 @@ sub new {
 		Wx::StaticText->new(
 			$self,
 			Wx::wxID_STATIC,
-			Wx::gettext("Find Text:"),
+			Wx::gettext("Find &Text:"),
 		),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
