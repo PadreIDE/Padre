@@ -22,7 +22,7 @@ Padre::Document::Perl::Beginner - naive implementation of some beginner specific
 
 This is a naive implementation. It needs to be replaced by one using L<PPI>.
 
-In Perl 5 there are lots of pitfals the unaware, especially
+In Perl 5 there are lots of pitfalls the unaware, especially
 the beginner can easily fall in. While some might expect the perl 
 compiler itself would catch those it does not (yet ?) do it. So we took the 
 initiative and added a beginners mode to Padre in which these extra issues
@@ -30,7 +30,7 @@ are checked. Some are real problems that would trigger an error anyway
 we just make them a special case with a more specific error message.
 (e.g. use warning; without the trailing s)
 Others are valid code that can be useful in the hands of a master but that
-are poisinous when written by mistake by someone who does not understand them.
+are poisonous when written by mistake by someone who does not understand them.
 (eg. if ($x = /value/) { } ).
 
 
