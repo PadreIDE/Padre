@@ -144,6 +144,7 @@ sub refresh {
 	my $items    = $self->GetMenuItemCount;
 	my $notebook = $current->notebook;
 	my $pages    = $notebook->GetPageCount;
+	my $main = $self->{main};
 
 	# Destroy previous window list so we can add it again
 	$self->Destroy( pop @$alt ) while @$alt;
@@ -151,7 +152,7 @@ sub refresh {
 
 	# Add or remove menu entries as needed
 	if ($pages) {
-		my $config_shorten_path = 1; # TODO should be configurable ?
+		my $config_shorten_path = $main->ide->config->window_list_shorten_path;
 		my $prefix_length       = 0;
 		if ($config_shorten_path) {
 			$prefix_length = length get_common_prefix( $#$alt, $notebook );
@@ -172,7 +173,6 @@ sub refresh {
 		$self->{separator} = $self->AppendSeparator if $pages;
 
 		# Add notebook labels alphabetically
-		my $main = $self->{main};
 		foreach my $label ( sort keys %windows ) {
 			my $menu_entry = $self->Append( -1, $label );
 			push @$alt, $menu_entry;

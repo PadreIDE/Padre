@@ -726,6 +726,13 @@ setting(
 	default => 1,
 );
 
+# Window menu list shorten common path
+setting(
+	name    => 'window_list_shorten_path',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
 
 
 #####################################################################
