@@ -19,6 +19,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Auto completion usability fixes (AZAWAWI)
     - Padre syntax images are now 16x16 transparent PNG images instead of 14x7 (AZAWAWI)
     - Fixed ticket:372 "window list should be sorted alphabetically" (AZAWAWI)
+    - Added "shorten common path in window list" to preferences (AZAWAWI)
 
 0.48 2009.10.12
     - "Last session" now restores the last state even if Padre crashed and not
