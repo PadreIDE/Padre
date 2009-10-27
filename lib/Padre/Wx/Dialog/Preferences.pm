@@ -285,6 +285,13 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox',
+				'window_list_shorten_path',
+				( $config->window_list_shorten_path ? 1 : 0 ),
+				Wx::gettext("Shorten the common path in window list?")
+			],
+			[]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -1039,6 +1046,10 @@ sub run {
 	$config->set(
 		'autocomplete_method',
 		$data->{autocomplete_method} ? 1 : 0
+	);
+	$config->set(
+		'window_list_shorten_path',
+		$data->{window_list_shorten_path} ? 1 : 0
 	);
 
 
