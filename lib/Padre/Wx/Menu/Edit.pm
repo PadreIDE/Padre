@@ -376,6 +376,27 @@ sub new {
 		},
 	);
 
+	$self->{insert_from_file} = $self->add_menu_item(
+		$submenu,
+		name        => 'edit.insert.from_file',
+		need_editor => 1,
+		label       => Wx::gettext('Insert From File...'),
+		menu_event  => sub {
+			Padre::Wx::Main::on_insert_from_file(@_);
+		},
+	);
+
+	$self->{insert_from_file} = $self->add_menu_item(
+		$self,
+		name        => 'edit.filter_tool',
+		need_editor => 1,
+		label       => Wx::gettext('Filter through external tool'),
+		comment     => Wx::gettext('Filters the selection (or the whole document) through any external command.'),
+		menu_event  => sub {
+			Padre::Wx::Main::on_filter_tool(@_);
+		},
+	);
+
 	$self->AppendSeparator;
 
 	# Commenting
@@ -615,27 +636,6 @@ sub new {
 	);
 
 	# End diff tools
-
-	$self->{insert_from_file} = $self->add_menu_item(
-		$self,
-		name        => 'edit.insert_from_file',
-		need_editor => 1,
-		label       => Wx::gettext('Insert From File...'),
-		menu_event  => sub {
-			Padre::Wx::Main::on_insert_from_file(@_);
-		},
-	);
-
-	$self->{insert_from_file} = $self->add_menu_item(
-		$self,
-		name        => 'edit.filter_tool',
-		need_editor => 1,
-		label       => Wx::gettext('Filter through external tool'),
-		comment     => Wx::gettext('Filters the selection (or the whole document) through any external command.'),
-		menu_event  => sub {
-			Padre::Wx::Main::on_filter_tool(@_);
-		},
-	);
 
 	$self->AppendSeparator;
 
