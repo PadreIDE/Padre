@@ -145,57 +145,48 @@ sub refresh {
 	my $notebook = $current->notebook;
 	my $pages    = $notebook->GetPageCount;
 
+	# Destroy previous window list so we can add it again
+	$self->Destroy( pop @$alt ) while @$alt;
+	$self->Destroy( delete $self->{separator} ) if $self->{separator};
+
 	# Add or remove menu entries as needed
 	if ($pages) {
-		if ( $items == $default ) {
-			$self->{separator} = $self->AppendSeparator;
-			$items++;
+		my $config_shorten_path = 1; # TODO should be configurable ?
+		my $prefix_length       = 0;
+		if ($config_shorten_path) {
+			$prefix_length = length get_common_prefix( $#$alt, $notebook );
 		}
-		my $need = $pages - $items + $default + 1;
-		my $main = $self->{main};
-		if ( $need > 0 ) {
-			foreach my $i ( 1 .. $need ) {
+		
+		# Create a list of notebook labels
+		my %windows = ();
+		foreach my $i ( 0 .. $pages - 1) {
+			my $doc = $notebook->GetPage($i)->{Document} or return;
+			my $label = $doc->filename || $notebook->GetPageText($i);
+			$label =~ s/^\s+//;
+			if ( $prefix_length < length $label ) {
+				$label = substr( $label, $prefix_length );
+			}
+			$windows{$label} = $i;
+		}
+		
+		$self->{separator} = $self->AppendSeparator if $pages;
 
-				# The temporary label 'tmp' is necessary (i.e. must be ne '')
-				# in order not to get a wx assertion failure in debug mode
-				my $menu_entry = $self->Append( -1, 'tmp' );
-				push @$alt, $menu_entry;
-				Wx::Event::EVT_MENU(
-					$main, $menu_entry,
-					sub { $main->on_nth_pane( $pages - $need + $i - 1 ) }
-				);
-			}
-		} elsif ( $need < 0 ) {
-			foreach ( 1 .. -$need ) {
-				$self->Destroy( pop @$alt );
-			}
-		}
-	} else {
-		if ( $items > $default ) {
-			$self->Destroy( pop @$alt ) while @$alt;
-			$self->Destroy( delete $self->{separator} );
+		# Add notebook labels alphabetically
+		my $main = $self->{main};
+		foreach my $label (sort keys %windows) {
+			my $menu_entry = $self->Append( -1, $label );
+			push @$alt, $menu_entry;
+			Wx::Event::EVT_MENU(
+				$main, $menu_entry,
+				sub { $main->on_nth_pane( $windows{$label} ) }
+			);
 		}
 	}
+
 	$self->{window_next_file}->Enable($pages);
 	$self->{window_previous_file}->Enable($pages);
 	$self->{window_last_visited_file}->Enable($pages);
 	$self->{window_right_click}->Enable($pages);
-
-	# Update the labels to match the notebooks
-	my $config_shorten_path = 1; # TODO should be configurable ?
-	my $prefix_length       = 0;
-	if ($config_shorten_path) {
-		$prefix_length = length get_common_prefix( $#$alt, $notebook );
-	}
-	foreach my $i ( 0 .. $#$alt ) {
-		my $doc = $notebook->GetPage($i)->{Document} or return;
-		my $label = $doc->filename || $notebook->GetPageText($i);
-		$label =~ s/^\s+//;
-		if ( $prefix_length < length $label ) {
-			$label = substr( $label, $prefix_length );
-		}
-		$alt->[$i]->SetText($label);
-	}
 
 	return 1;
 }
