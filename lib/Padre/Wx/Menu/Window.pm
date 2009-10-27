@@ -156,10 +156,10 @@ sub refresh {
 		if ($config_shorten_path) {
 			$prefix_length = length get_common_prefix( $#$alt, $notebook );
 		}
-		
+
 		# Create a list of notebook labels
 		my %windows = ();
-		foreach my $i ( 0 .. $pages - 1) {
+		foreach my $i ( 0 .. $pages - 1 ) {
 			my $doc = $notebook->GetPage($i)->{Document} or return;
 			my $label = $doc->filename || $notebook->GetPageText($i);
 			$label =~ s/^\s+//;
@@ -168,12 +168,12 @@ sub refresh {
 			}
 			$windows{$label} = $i;
 		}
-		
+
 		$self->{separator} = $self->AppendSeparator if $pages;
 
 		# Add notebook labels alphabetically
 		my $main = $self->{main};
-		foreach my $label (sort keys %windows) {
+		foreach my $label ( sort keys %windows ) {
 			my $menu_entry = $self->Append( -1, $label );
 			push @$alt, $menu_entry;
 			Wx::Event::EVT_MENU(
