@@ -155,7 +155,7 @@ sub refresh {
 		my $config_shorten_path = $main->ide->config->window_list_shorten_path;
 		my $prefix_length       = 0;
 		if ($config_shorten_path) {
-			$prefix_length = length get_common_prefix( $#$alt, $notebook );
+			$prefix_length = length get_common_prefix( $pages, $notebook );
 		}
 
 		# Create a list of notebook labels
@@ -200,7 +200,7 @@ sub refresh {
 sub get_common_prefix {
 	my ( $count, $notebook ) = @_;
 	my @prefix = ();
-	foreach my $i ( 0 .. $count ) {
+	foreach my $i ( 0 .. $count - 1 ) {
 		my $doc = $notebook->GetPage($i)->{Document} or return;
 		my $label = $doc->filename || $notebook->GetPageText($i);
 		my @label = File::Spec->splitdir($label);
