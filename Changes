@@ -25,6 +25,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Added "shorten common path in window list" to preferences (AZAWAWI)
     - Fixed ticket:709 "Show editor window listed by project, then project-
       relative path" (AZAWAWI)
+    - Added a test to run Padre's beginner error checks on the Padre source (SEWI)
 
 0.48 2009.10.12
     - "Last session" now restores the last state even if Padre crashed and not
