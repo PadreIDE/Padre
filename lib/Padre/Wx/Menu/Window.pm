@@ -160,25 +160,34 @@ sub refresh {
 
 		# Create a list of notebook labels
 		my %windows = ();
-		foreach my $i ( 0 .. $pages - 1 ) {
-			my $doc = $notebook->GetPage($i)->{Document} or return;
-			my $label = $doc->filename || $notebook->GetPageText($i);
+		foreach my $tab_index ( 0 .. $pages - 1 ) {
+			my $doc = $notebook->GetPage($tab_index)->{Document} or return;
+			my $label = $doc->filename || $notebook->GetPageText($tab_index);
 			$label =~ s/^\s+//;
 			if ( $prefix_length < length $label ) {
 				$label = substr( $label, $prefix_length );
 			}
-			$windows{$label} = $i;
+			$windows{$label} = {
+				pane_index => $tab_index, 
+				project => Padre::Util::get_project_dir($doc->filename) || '',
+			};
 		}
 
 		$self->{separator} = $self->AppendSeparator if $pages;
 
+		my @sorted_by_project_then_label = sort {
+			$windows{$a}{project} cmp $windows{$a}{project}
+			||
+			$a cmp $b
+		} keys %windows;
+
 		# Add notebook labels alphabetically
-		foreach my $label ( sort keys %windows ) {
+		foreach my $label ( @sorted_by_project_then_label ) {
 			my $menu_entry = $self->Append( -1, $label );
 			push @$alt, $menu_entry;
 			Wx::Event::EVT_MENU(
 				$main, $menu_entry,
-				sub { $main->on_nth_pane( $windows{$label} ) }
+				sub { $main->on_nth_pane( $windows{$label}{pane_index} ) }
 			);
 		}
 	}
