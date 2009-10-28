@@ -155,10 +155,13 @@ sub refresh {
 		my $config_shorten_path = $main->ide->config->window_list_shorten_path;
 		my $prefix_length       = 0;
 		if ($config_shorten_path) {
+			# This only works when there isnt any unsaved tabs
 			$prefix_length = length get_common_prefix( $pages, $notebook );
 		}
 
-		# Create a list of notebook labels
+		# Create a list of notebook labels. 
+		# A label can be a project (relative/full) path
+		# or unsaved pane label (e.g. Unsaved [0-9]+) 
 		my %windows = ();
 		foreach my $tab_index ( 0 .. $pages - 1 ) {
 			my $doc = $notebook->GetPage($tab_index)->{Document} or return;
@@ -173,12 +176,14 @@ sub refresh {
 			};
 		}
 
+		# A separator is needed here for awesomeness
 		$self->{separator} = $self->AppendSeparator if $pages;
 
+		# Now let us sort by project path and then by label
 		my @sorted_by_project_then_label =
 			sort { $windows{$a}{project} cmp $windows{$a}{project} || $a cmp $b } keys %windows;
 
-		# Add notebook labels alphabetically
+		# Add sorted notebook labels and attach event handlers to them 
 		foreach my $label (@sorted_by_project_then_label) {
 			my $menu_entry = $self->Append( -1, $label );
 			push @$alt, $menu_entry;
@@ -189,6 +194,7 @@ sub refresh {
 		}
 	}
 
+	# toggle window operations based on number of pages
 	$self->{window_next_file}->Enable($pages);
 	$self->{window_previous_file}->Enable($pages);
 	$self->{window_last_visited_file}->Enable($pages);
@@ -197,6 +203,10 @@ sub refresh {
 	return 1;
 }
 
+#
+# Get the common prefix of notebooks
+# Please note that an Unsaved file causes this return undef
+#
 sub get_common_prefix {
 	my ( $count, $notebook ) = @_;
 	my @prefix = ();
