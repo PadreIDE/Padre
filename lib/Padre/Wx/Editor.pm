@@ -583,7 +583,7 @@ sub _auto_deindent {
 		# - same indentation level as prev. line and not a brace on prev line
 		# - higher indentation than pr. l. and a brace on pr. line
 		if ( $prev_indent eq $indent && $prev_content !~ /^\s*{/
-			or length($prev_indent) < length($indent) && $prev_content =~ /{\s*$/ )
+			or length($prev_indent) < length($indent) && $prev_content =~ /\{\s*$/ )
 		{
 			my $indent_width = $indent_style->{indentwidth};
 			my $tab_width    = $indent_style->{tabwidth};
