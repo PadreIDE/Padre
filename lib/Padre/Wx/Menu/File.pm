@@ -310,8 +310,10 @@ sub new {
 	$self->{print} = $self->add_menu_item(
 		$self,
 		name       => 'file.print',
+		# TODO: As long as the ID is here, the shortcut won't work on Ubuntu.
 		id         => Wx::wxID_PRINT,
 		label      => Wx::gettext('&Print'),
+		shortcut    => 'Ctrl-P',
 		menu_event => sub {
 			require Wx::Print;
 			require Padre::Wx::Printout;

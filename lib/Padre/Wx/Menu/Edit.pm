@@ -319,7 +319,7 @@ sub new {
 		name        => 'edit.autocomp',
 		need_editor => 1,
 		label       => Wx::gettext('&AutoComplete'),
-		shortcut    => 'Ctrl-P',
+		shortcut    => 'Ctrl-Space',
 		menu_event  => sub {
 			Padre::Wx::Main::on_autocompletion(@_);
 		},
