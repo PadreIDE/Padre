@@ -168,21 +168,18 @@ sub refresh {
 				$label = substr( $label, $prefix_length );
 			}
 			$windows{$label} = {
-				pane_index => $tab_index, 
-				project => Padre::Util::get_project_dir($doc->filename) || '',
+				pane_index => $tab_index,
+				project    => Padre::Util::get_project_dir( $doc->filename ) || '',
 			};
 		}
 
 		$self->{separator} = $self->AppendSeparator if $pages;
 
-		my @sorted_by_project_then_label = sort {
-			$windows{$a}{project} cmp $windows{$a}{project}
-			||
-			$a cmp $b
-		} keys %windows;
+		my @sorted_by_project_then_label =
+			sort { $windows{$a}{project} cmp $windows{$a}{project} || $a cmp $b } keys %windows;
 
 		# Add notebook labels alphabetically
-		foreach my $label ( @sorted_by_project_then_label ) {
+		foreach my $label (@sorted_by_project_then_label) {
 			my $menu_entry = $self->Append( -1, $label );
 			push @$alt, $menu_entry;
 			Wx::Event::EVT_MENU(
