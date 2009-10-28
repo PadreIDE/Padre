@@ -1,6 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.49 to be released
+    - Fixed #691: Extect subroutine does not work for a script without
+      subroutines (WAXHEAD)
     - Bugfix: The split-beginner-error check got false positives (SEWI)
     - Moved more menu actions to independent actions (SEWI)
     - Added a readonly flag to the taskbar (AGN)
