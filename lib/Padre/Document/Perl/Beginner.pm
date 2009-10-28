@@ -84,7 +84,7 @@ sub check {
 	$self->{error} = undef;
 
 	# Fast exits if there is nothing to check:
-	return 1 if ! defined($text);
+	return 1 if !defined($text);
 	return 1 if $text eq '';
 
 	# Cut POD parts out of the text
@@ -222,9 +222,12 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( ( $text =~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\3/ )
+	if ((   $text
+			=~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\3/
+		)
 		and ( length($4) > 0 )
-		and ( length($5) > 0 ) )
+		and ( length($5) > 0 )
+		)
 	{
 		$self->_report("Using a | char in open without a | at the beginning or end is usually a typo.");
 		return;

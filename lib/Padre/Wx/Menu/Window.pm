@@ -155,13 +155,14 @@ sub refresh {
 		my $config_shorten_path = $main->ide->config->window_list_shorten_path;
 		my $prefix_length       = 0;
 		if ($config_shorten_path) {
+
 			# This only works when there isnt any unsaved tabs
 			$prefix_length = length get_common_prefix( $pages, $notebook );
 		}
 
-		# Create a list of notebook labels. 
+		# Create a list of notebook labels.
 		# A label can be a project (relative/full) path
-		# or unsaved pane label (e.g. Unsaved [0-9]+) 
+		# or unsaved pane label (e.g. Unsaved [0-9]+)
 		my %windows = ();
 		foreach my $tab_index ( 0 .. $pages - 1 ) {
 			my $doc = $notebook->GetPage($tab_index)->{Document} or return;
@@ -183,7 +184,7 @@ sub refresh {
 		my @sorted_by_project_then_label =
 			sort { $windows{$a}{project} cmp $windows{$a}{project} || $a cmp $b } keys %windows;
 
-		# Add sorted notebook labels and attach event handlers to them 
+		# Add sorted notebook labels and attach event handlers to them
 		foreach my $label (@sorted_by_project_then_label) {
 			my $menu_entry = $self->Append( -1, $label );
 			push @$alt, $menu_entry;

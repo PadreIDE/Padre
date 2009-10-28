@@ -93,7 +93,7 @@ foreach my $file ( keys %TEST ) {
 # No need to create files for all of these:
 # Notice: Text matches are critical as texts may change without notice!
 $b->check("=pod\n\nThis is a typical POD test with bad stuff.\npackage DB; if (\$x=1) {}\n\n\=cut\n");
-ok( !defined($b->error), 'No check of POD stuff' );
+ok( !defined( $b->error ), 'No check of POD stuff' );
 
 $b->check('join(",",map { 1; } (@INC),"a");');
 ok( $b->error =~ /map/, 'map arguments' );
