@@ -83,6 +83,9 @@ sub check {
 
 	$self->{error} = undef;
 
+	# Cut POD parts out of the text
+	$text =~ s/(^|[\r\n])(\=(pod|item|head\d)\b.+?[\r\n]\=cut[\r\n])/$1.(" "x(length($2)))/seg;
+
 =item *
 
   split /,/, @data;
