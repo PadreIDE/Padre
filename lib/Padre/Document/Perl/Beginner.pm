@@ -83,6 +83,10 @@ sub check {
 
 	$self->{error} = undef;
 
+	# Fast exits if there is nothing to check:
+	return 1 if ! defined($text);
+	return 1 if $text eq '';
+
 	# Cut POD parts out of the text
 	$text =~ s/(^|[\r\n])(\=(pod|item|head\d)\b.+?[\r\n]\=cut[\r\n])/$1.(" "x(length($2)))/seg;
 
@@ -96,7 +100,7 @@ Here @data is in scalar context returning the number of elemenets. Spotted in th
 
 =cut
 
-	if ( $text =~ m/^(.*?)split([^;]+);/s ) {
+	if ( $text =~ m/^([\x00-\xff]*?)split([^;]+);/ ) {
 		my $cont = $2;
 		if ( $cont =~ m{\@} ) {
 			$self->_report("The second parameter of split is a string, not an array");
@@ -112,7 +116,7 @@ s is missing at the end.
 
 =cut
 
-	if ( $text =~ /^(.*?)use\s+warning\s*;/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)use\s+warning\s*;/ ) {
 		$self->_report("You need to write use warnings (with an s at the end) and not use warning.");
 		return;
 	}
@@ -133,7 +137,7 @@ which means: map all @items and them add $extra_item without map'ing it.
 
 =cut
 
-	if ( $text =~ /^(.*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
 		$self->_report("map (),x uses x also as list value for map.");
 		return;
 	}
@@ -146,7 +150,7 @@ Warn about Perl-standard package names being reused
 
 =cut
 
-	if ( $text =~ /^(.*?)package DB[\;\:]/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)package DB[\;\:]/ ) {
 		$self->_report("This file uses the DB-namespace which is used by the Perl Debugger.");
 		return;
 	}
@@ -165,7 +169,7 @@ Warn about Perl-standard package names being reused
 
 	# (Ticket #675)
 
-	if ( $text =~ /^(.*?)(print|[\=\.\,])[\s\t\r\n]*chomp\b/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)(print|[\=\.\,])[\s\t\r\n]*chomp\b/ ) {
 		$self->_report("chomp doesn't return the chomped value, it modifies the variable given as argument.");
 		return;
 	}
@@ -184,7 +188,7 @@ to actually change the array via s///.
 
 =cut
 
-	if ( $text =~ /^(.*?)map[\s\t\r\n]*\{[\s\t\r\n]*(\$_[\s\t\r\n]*\=\~[\s\t\r\n]*)?s\//s ) {
+	if ( $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{[\s\t\r\n]*(\$_[\s\t\r\n]*\=\~[\s\t\r\n]*)?s\// ) {
 		$self->_report("Substitute (s///) doesn't return the changed value even if map.");
 		return;
 	}
@@ -195,7 +199,7 @@ to actually change the array via s///.
 
 =cut
 
-	if ( $text =~ /^(.*?)\(\<\@\w+\>\)/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)\(\<\@\w+\>\)/ ) {
 		$self->_report("(<\@Foo>) is Perl6 syntax and usually not valid in Perl5.");
 		return;
 	}
@@ -207,7 +211,7 @@ to actually change the array via s///.
 
 =cut
 
-	if ( $text =~ /^(.*?)if[\s\t\r\n]*\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w]/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)if[\s\t\r\n]*\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w]/ ) {
 		$self->_report("A single = in a if-condition is usually a typo, use == or eq to compare.");
 		return;
 	}
@@ -218,7 +222,7 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\3/ )
+	if ( ( $text =~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\3/ )
 		and ( length($4) > 0 )
 		and ( length($5) > 0 ) )
 	{
@@ -232,7 +236,7 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( $text =~ /^(.*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\3/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\3/ ) {
 		$self->_report("You can't use open to pipe to and from a command at the same time.");
 		return;
 	}
@@ -245,7 +249,7 @@ Regex starting witha a quantifier such as
 
 =cut
 
-	if ( $text =~ m/^(.*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs ) {
+	if ( $text =~ m/^([\x00-\xff]*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs ) {
 		$self->_report(
 			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\."
 		);
@@ -258,7 +262,7 @@ Regex starting witha a quantifier such as
 
 =cut
 
-	if ( $text =~ /^(.*?)else[\s\t\r\n]+if/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)else[\s\t\r\n]+if/ ) {
 		$self->_report("'else if' is wrong syntax, correct if 'elsif'.");
 		return;
 	}
@@ -269,7 +273,7 @@ Regex starting witha a quantifier such as
  	
 =cut
 
-	if ( $text =~ /^(.*?)elseif/s ) {
+	if ( $text =~ /^([\x00-\xff]*?)elseif/ ) {
 		$self->_report("'elseif' is wrong syntax, correct if 'elsif'.");
 		return;
 	}
@@ -280,7 +284,7 @@ Regex starting witha a quantifier such as
  	
 =cut
 
-	if ( $text =~ /^(.*?)close;/s ) {
+	if ( $text =~ /^(.*?[^>]?)close;/ ) { # don't match Socket->close;
 		$self->_report("close; usually closes STDIN, STDOUT or something else you don't want.");
 		return;
 	}
