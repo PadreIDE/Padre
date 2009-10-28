@@ -107,7 +107,8 @@ sub _content_about {
     </strong>
     <p>Created by Gábor Szabó</p>
     <p>Copyright 2008 - 2009 The Padre Development Team</p>
-    <p>Splash image courtesy of Jerry Charlotte</p>
+    <p>"Blue butterfly on a green leaf" splash image is based on work by 
+    Jerry Charlotte (blackbutterfly)</p>
     <p>
     <center>
         <img src="$splash">
