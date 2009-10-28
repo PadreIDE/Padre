@@ -280,7 +280,7 @@ Regex starting witha a quantifier such as
  	
 =cut
 
-	if ( $text =~ /close;/s ) {
+	if ( $text =~ /^(.*?)close;/s ) {
 		$self->_report("close; usually closes STDIN, STDOUT or something else you don't want.");
 		return;
 	}
