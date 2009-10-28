@@ -770,10 +770,9 @@ sub autocomplete {
 	# i) hack Perl::Tags to be better (including inheritance)
 	# j) add inheritance support
 	# k) figure out how to do method auto-comp. on objects
+	# (Ticket #676)
 
 	# check for variables
-
-	# (Ticket #676)
 
 	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
