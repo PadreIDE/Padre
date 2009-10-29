@@ -61,7 +61,7 @@ sub REGISTER { # RegExp,Module
 
 }
 
-=pot
+=pod
 
 =head1 METHODS
 

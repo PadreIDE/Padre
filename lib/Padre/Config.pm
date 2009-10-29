@@ -963,6 +963,8 @@ editing. Examples of those settings are whether to use tabs or spaces, etc.
 
 Those settings are accessed with C<Padre::Config::Project>.
 
+=back
+
 =head1 ADDING CONFIGURATION OPTIONS
 
 Add a "setting()" - call to the correct section of this file.
@@ -971,8 +973,6 @@ The setting() call initially creates the option and defines some
 metadata like the type of the option, it's living place and the
 default value which should be used until the user configures
 a own value.
-
-=back
 
 =head1 COPYRIGHT & LICENSE
 
