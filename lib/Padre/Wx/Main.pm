@@ -1705,7 +1705,6 @@ sub run_command {
 	my $self = shift;
 	my $cmd  = shift;
 
-	# experimental
 	# when this mode is used the Run menu options are not turned off
 	# and the Run/Stop is not turned on as we currently cannot control
 	# the external execution.
@@ -1736,9 +1735,8 @@ sub run_command {
 
 	# If this is the first time a command has been run,
 	# set up the ProcessStream bindings.
-	require Wx::Perl::ProcessStream;
 	unless ($Wx::Perl::ProcessStream::VERSION) {
-
+		require Wx::Perl::ProcessStream;
 		if ( $Wx::Perl::ProcessStream::VERSION < .21 ) {
 			$self->error(
 				sprintf(
