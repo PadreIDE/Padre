@@ -148,6 +148,8 @@ sub _content_developers {
             <br>
             Fayland Lam<br>
             <br>
+            Gabriel Vieira<br>
+            <br>
             Gábor Szabó - גאבור סבו <br>
             <br>
             Heiko Jansen<br>
@@ -248,6 +250,7 @@ sub _content_translators {
             <br>
             <b>Portuguese (Brazil)</b><br>
             Breno G. de Oliveira<br>
+            Gabriel Vieira<br>
             <br>
             <b>Spanish</b><br>
             Paco Alguacil<br>
