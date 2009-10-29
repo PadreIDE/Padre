@@ -14,6 +14,10 @@ our @ISA     = qw{
 
 =pod
 
+=head1 NAME
+
+Padre::Wx::Dialog::OpenURL - a dialog for opening URLs
+
 =head2 new
 
   my $find = Padre::Wx::Dialog::OpenURL->new($main);
