@@ -39,7 +39,7 @@ sub check_wx_version {
 		# Allow EU:MM to do it's thing as normal
 		# but give some extra hints to the user
 		warn "** Could not locate Alien::wxWidgets\n";
-		warn "** When installing it please make sure wxWidgetes is compiled with Unicode enabled\n";
+		warn "** When installing it please make sure wxWidgets is compiled with Unicode enabled\n";
 		warn "** Please use the latest version from CPAN\n";
 		return;
 	}
@@ -53,7 +53,7 @@ sub check_wx_version {
 		# If we don't have the alien package,
 		# we should just pass through to EU:MM
 		warn "** Could not locate Alien::wxWidgets\n";
-		warn "** When installing it please make sure wxWidgetes is compiled with Unicode enabled\n";
+		warn "** When installing it please make sure wxWidgets is compiled with Unicode enabled\n";
 		warn "** Please use the latest version from CPAN\n";
 		return;
 	}
