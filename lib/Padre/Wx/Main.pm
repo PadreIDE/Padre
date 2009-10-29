@@ -1736,8 +1736,8 @@ sub run_command {
 
 	# If this is the first time a command has been run,
 	# set up the ProcessStream bindings.
+	require Wx::Perl::ProcessStream;
 	unless ($Wx::Perl::ProcessStream::VERSION) {
-		require Wx::Perl::ProcessStream;
 
 		if ( $Wx::Perl::ProcessStream::VERSION < .21 ) {
 			$self->error(
@@ -1789,12 +1789,10 @@ sub run_command {
 	}
 
 	# Start the command
-	$self->{command} = Wx::Perl::ProcessStream::Process->new( $cmd, 'MyName1', $self );
-	$self->{command}->Run;
+	my $process = Wx::Perl::ProcessStream::Process->new( $cmd, "Run $cmd", $self );
+	$self->{command} = $process->Run;
 
-	# TODO: It appears that Wx::Perl::ProcessStream::Process's Run()
-	# does not honour the docs, as we don't get to this cleanup code
-	# even if we try to run a program that doesn't exist.
+	# Check if we started the process or not
 	unless ( $self->{command} ) {
 
 		# Failed to start the command. Clean up.
