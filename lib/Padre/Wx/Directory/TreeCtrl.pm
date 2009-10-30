@@ -704,7 +704,7 @@ sub _on_tree_item_menu {
 	my $node_data = $self->GetPlData($node);
 
 	# Do not show if it is the upper item
-	return if defined($node_data->{type}) and ($node_data->{type} eq 'upper');
+	return if defined( $node_data->{type} ) and ( $node_data->{type} eq 'upper' );
 
 	$node_data->{type} ||= ''; # Defined but empty
 
@@ -837,7 +837,7 @@ sub _on_tree_item_menu {
 	}
 
 	my $cached = \%{ $self->{CACHED}->{$applies_to_path} } if defined($applies_to_path);
-	my $show   = $cached->{ShowHidden};
+	my $show = $cached->{ShowHidden};
 	$hiddenFiles->Check($show);
 	Wx::Event::EVT_MENU(
 		$self,
