@@ -52,6 +52,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'perl.find_brace',
 		label      => Wx::gettext('Find Unmatched Brace'),
+		comment	   => Wx::gettext('Searches the source code for brackets with lack a matching (opening/closing) part.'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -72,6 +73,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'perl.vertically_align_selected',
 		label      => Wx::gettext('Vertically Align Selected'),
+		comment   => Wx::gettext('Align a selection of text to the same left column.'),
 		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;
 			$editor->vertically_align;
@@ -81,6 +83,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'perl.newline_keep_column',
 		label      => Wx::gettext('Newline same column'),
+		comment    => Wx::gettext('Like pressing ENTER somewhere on a line but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
