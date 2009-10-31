@@ -55,14 +55,14 @@ sub new {
 }
 
 sub refresh {
-	my $self    = shift;
-	my $current = _CURRENT(@_);
-	my $config  = $current->config;
+	my $self     = shift;
+	my $current  = _CURRENT(@_);
+	my $config   = $current->config;
 	my $document = $current->document;
 
-	$self->{rename_variable}->Enable($document->can('lexical_variable_replacement') ? 1 : 0);
-	$self->{introduce_temporary}->Enable($document->can('introduce_temporary_variable') ? 1 : 0);
-	$self->{extract_subroutine}->Enable($document->can('extract_subroutine') ? 1 : 0);
+	$self->{rename_variable}->Enable( $document->can('lexical_variable_replacement')     ? 1 : 0 );
+	$self->{introduce_temporary}->Enable( $document->can('introduce_temporary_variable') ? 1 : 0 );
+	$self->{extract_subroutine}->Enable( $document->can('extract_subroutine')            ? 1 : 0 );
 
 	return;
 }

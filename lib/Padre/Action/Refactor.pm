@@ -74,6 +74,7 @@ sub new {
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless $doc->can('extract_subroutine');
+
 			#my $editor = $doc->editor;
 			#my $code   = $editor->GetSelectedText();
 			require Padre::Wx::History::TextEntryDialog;

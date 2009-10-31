@@ -6,10 +6,10 @@ use warnings;
 use Carp   ();
 use Encode ();
 use Params::Util '_INSTANCE';
-use YAML::Tiny      ();
-use Padre::Document ();
-use Padre::Util     ();
-use Padre::Perl     ();
+use YAML::Tiny                      ();
+use Padre::Document                 ();
+use Padre::Util                     ();
+use Padre::Perl                     ();
 use Padre::Document::Perl::Beginner ();
 
 our $VERSION = '0.48';
@@ -1214,13 +1214,13 @@ sub autoclean {
 	my $self = shift;
 
 	my $editor = $self->editor;
-	my $text = $editor->GetText;
-	
+	my $text   = $editor->GetText;
+
 	$text =~ s/[\s\t]+([\r\n]*?)$/$1/mg;
 	$text .= "\n" if $text !~ /\n$/;
 
 	$editor->SetText($text);
-	
+
 	return 1;
 
 }

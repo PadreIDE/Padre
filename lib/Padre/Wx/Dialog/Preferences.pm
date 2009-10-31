@@ -222,8 +222,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'save_autoclean',
 				( $config->save_autoclean ? 1 : 0 ),
-				Wx::gettext(
-					"Clean up file content on saving (for supported document types)")
+				Wx::gettext("Clean up file content on saving (for supported document types)")
 			],
 			[]
 		],
