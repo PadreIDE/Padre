@@ -219,6 +219,14 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox',
+				'perl_saveautoclean',
+				( $config->perl_saveautoclean ? 1 : 0 ),
+				Wx::gettext(
+					"Clean up Perl files on saving (remove trailing spaces, etc.)")
+			],
+			[]
+		],
 		[   [   'Wx::CheckBox', 'editor_fold_pod', ( $config->editor_fold_pod ? 1 : 0 ),
 				Wx::gettext('Auto-fold POD markup when code folding enabled')
 			],
@@ -931,6 +939,10 @@ sub run {
 	$config->set(
 		'editor_wordwrap',
 		$data->{editor_wordwrap} ? 1 : 0
+	);
+	$config->set(
+		'perl_saveautoclean',
+		$data->{perl_saveautoclean} ? 1 : 0
 	);
 	$config->set(
 		'editor_fold_pod',

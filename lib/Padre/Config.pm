@@ -435,6 +435,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'perl_saveautoclean',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
 	name    => 'editor_currentline',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
