@@ -1214,6 +1214,23 @@ sub get_quick_fix_provider {
 	return Padre::QuickFixProvider::Perl->new;
 }
 
+sub autoclean {
+	my $self = shift;
+
+	my $editor = $self->editor;
+	my $text = $editor->GetText;
+	
+	$text =~ s/[\s\t]+([\r\n]*?)$/$1/mg;
+	$text .= "\n" if $text !~ /\n$/;
+
+	$editor->SetText($text);
+	
+	return 1;
+
+}
+
+
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
