@@ -10,14 +10,10 @@ use YAML::Tiny      ();
 use Padre::Document ();
 use Padre::Util     ();
 use Padre::Perl     ();
-use Padre::Document::Perl::Beginner;
+use Padre::Document::Perl::Beginner ();
 
 our $VERSION = '0.48';
 our @ISA     = 'Padre::Document';
-
-
-
-
 
 #####################################################################
 # Padre::Document::Perl Methods
@@ -1228,8 +1224,6 @@ sub autoclean {
 	return 1;
 
 }
-
-
 
 1;
 
