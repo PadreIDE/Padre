@@ -658,6 +658,10 @@ sub save_file {
 	my ($self) = @_;
 	$self->set_errstr('');
 
+	my $config = Padre->ide->config;
+
+	$self->autoclean if $config->save_autoclean and defined($self->{autoclean});
+
 	my $content = $self->text_get;
 	my $file    = $self->file;
 	if ( !defined($file) ) {
