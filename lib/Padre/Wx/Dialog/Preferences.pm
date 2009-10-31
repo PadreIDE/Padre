@@ -780,7 +780,7 @@ sub dialog {
 		eval 'require '.$_.';';
 		warn $@ if $@;
 		my $preferences_page = $_->new();
-		my $panel = $preferences_page->panel();
+		my $panel = $preferences_page->panel($tb);
 		$tb->AddPage($panel,Wx::gettext($PANELS{$_}));
 		};
 		next unless $@;
