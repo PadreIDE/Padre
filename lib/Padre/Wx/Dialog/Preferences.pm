@@ -13,6 +13,8 @@ use Padre::MimeTypes                       ();
 our $VERSION = '0.48';
 our @ISA     = 'Padre::Wx::Dialog';
 
+our %PANELS;
+
 =pod
 
 =head1 NAME
@@ -500,8 +502,10 @@ sub main {
     return 0;
   }
 }
-__END__
 END_TEXT
+
+	# Including this in the << block would kill the function parsing
+	$dummy_text .= "__END__\n";
 
 	$editor->SetText($dummy_text);
 	$editor->SetWrapMode(Wx::wxSTC_WRAP_WORD);
@@ -768,6 +772,20 @@ sub dialog {
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
 	#$tb->AddPage( $plugin_manager, Wx::gettext('Plugin Manager') );
 	#$self->_add_plugins($tb);
+
+	# Add panels
+	for (sort { Wx::gettext($PANELS{$a}) cmp Wx::gettext($PANELS{$b}); } (keys(%PANELS)) ) {
+		# A plugin or panel should not crash Padre on error:
+		eval {
+		eval 'require '.$_.';';
+		warn $@ if $@;
+		my $preferences_page = $_->new();
+		my $panel = $preferences_page->panel();
+		$tb->AddPage($panel,Wx::gettext($PANELS{$_}));
+		};
+		next unless $@;
+		warn 'Error while adding preference panel '.$_.': '.$@;
+	}
 
 	$dialog_sizer->Add( $tb, 10, Wx::wxGROW | Wx::wxALL, 5 );
 
@@ -1105,6 +1123,11 @@ sub run {
 		'editor_currentline_color',
 		$editor_currentline_color
 	);
+
+	for (keys(%PANELS)) {
+		my $preferences_page = $_->new();
+		$preferences_page->save();
+	}
 
 	$config->write;
 	return 1;
