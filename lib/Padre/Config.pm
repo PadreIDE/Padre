@@ -435,7 +435,7 @@ setting(
 	default => 0,
 );
 setting(
-	name    => 'perl_saveautoclean',
+	name    => 'save_autoclean',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
