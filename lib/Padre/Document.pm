@@ -654,13 +654,22 @@ sub _set_filename {
 	$self->{filename} = $self->{file}->{filename};
 }
 
+# Only a dummy for documents which don't support this
+sub autoclean {
+	my $self = shift;
+
+	return 1;
+}
+
+
+
 sub save_file {
 	my ($self) = @_;
 	$self->set_errstr('');
 
 	my $config = Padre->ide->config;
 
-	$self->autoclean if $config->save_autoclean and defined($self->{autoclean});
+	$self->autoclean if $config->save_autoclean;
 
 	my $content = $self->text_get;
 	my $file    = $self->file;
