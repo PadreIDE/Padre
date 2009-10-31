@@ -63,7 +63,7 @@ use Class::XSAccessor::Array getters => {
 sub setting {
 
 	# Allow this sub to be called as a method or function
-	shift if ref($_[0]) eq __PACKAGE__;
+	shift if ref( $_[0] ) eq __PACKAGE__;
 
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);

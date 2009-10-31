@@ -774,17 +774,18 @@ sub dialog {
 	#$self->_add_plugins($tb);
 
 	# Add panels
-	for (sort { Wx::gettext($PANELS{$a}) cmp Wx::gettext($PANELS{$b}); } (keys(%PANELS)) ) {
+	for ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
+
 		# A plugin or panel should not crash Padre on error:
 		eval {
-		eval 'require '.$_.';';
-		warn $@ if $@;
-		my $preferences_page = $_->new();
-		my $panel = $preferences_page->panel($tb);
-		$tb->AddPage($panel,Wx::gettext($PANELS{$_}));
+			eval 'require ' . $_ . ';';
+			warn $@ if $@;
+			my $preferences_page = $_->new();
+			my $panel            = $preferences_page->panel($tb);
+			$tb->AddPage( $panel, Wx::gettext( $PANELS{$_} ) );
 		};
 		next unless $@;
-		warn 'Error while adding preference panel '.$_.': '.$@;
+		warn 'Error while adding preference panel ' . $_ . ': ' . $@;
 	}
 
 	$dialog_sizer->Add( $tb, 10, Wx::wxGROW | Wx::wxALL, 5 );
@@ -1124,7 +1125,7 @@ sub run {
 		$editor_currentline_color
 	);
 
-	for (keys(%PANELS)) {
+	for ( keys(%PANELS) ) {
 		my $preferences_page = $_->new();
 		$preferences_page->save();
 	}
