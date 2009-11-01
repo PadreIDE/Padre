@@ -774,18 +774,18 @@ sub dialog {
 	#$self->_add_plugins($tb);
 
 	# Add panels
-	for ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
+	for my $module ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
 
 		# A plugin or panel should not crash Padre on error:
 		eval {
-			eval 'require ' . $_ . ';';
+			eval 'require ' . $module . ';';
 			warn $@ if $@;
-			my $preferences_page = $_->new();
+			my $preferences_page = $module->new();
 			my $panel            = $preferences_page->panel($tb);
-			$tb->AddPage( $panel, Wx::gettext( $PANELS{$_} ) );
+			$tb->AddPage( $panel, Wx::gettext( $PANELS{$module} ) );
 		};
 		next unless $@;
-		warn 'Error while adding preference panel ' . $_ . ': ' . $@;
+		warn 'Error while adding preference panel ' . $module . ': ' . $@;
 	}
 
 	$dialog_sizer->Add( $tb, 10, Wx::wxGROW | Wx::wxALL, 5 );
@@ -1087,10 +1087,10 @@ sub run {
 	# clearing them:
 	if ( $config->func_config ) {
 
-		for (@Func_List) {
+		for my $func (@Func_List) {
 			$config->set(
-				'func_' . $_->[0],
-				$data->{ 'func_' . $_->[0] } ? 1 : 0
+				'func_' . $func->[0],
+				$data->{ 'func_' . $func->[0] } ? 1 : 0
 			);
 		}
 
@@ -1125,8 +1125,8 @@ sub run {
 		$editor_currentline_color
 	);
 
-	for ( keys(%PANELS) ) {
-		my $preferences_page = $_->new();
+	for my $module ( keys(%PANELS) ) {
+		my $preferences_page = $module->new();
 		$preferences_page->save();
 	}
 
