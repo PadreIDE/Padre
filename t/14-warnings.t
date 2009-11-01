@@ -5,12 +5,14 @@ use warnings;
 use File::Find::Rule;
 
 # Create test environment...
+# Test replacement for document object
 package local::t14;
 
 sub LineFromPosition {
 	return 0;
 }
 
+# Test replacement for Wx
 package Wx;
 
 sub gettext {
@@ -34,6 +36,7 @@ if ( !$ENV{AUTOMATED_TESTING} ) {
 	exit;
 }
 
+# Create to beginner error check object
 my $b = Padre::Document::Perl::Beginner->new( document => { editor => bless {}, 'local::t14' } );
 
 my %skip_files = (
