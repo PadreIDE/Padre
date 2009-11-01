@@ -775,7 +775,7 @@ sub dialog {
 
 	# Add panels
 	# The panels are ahown in alphabetical order based on the Wx::gettext results
-	
+
 	# TODO: Convert the internal panels to use this
 
 	for my $module ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
