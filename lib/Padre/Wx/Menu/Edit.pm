@@ -20,6 +20,9 @@ our @ISA     = 'Padre::Wx::Menu';
 # Padre::Wx::Menu Methods
 
 sub new {
+
+# TODO: Convert this to Padre::Action::Edit
+
 	my $class = shift;
 	my $main  = shift;
 
