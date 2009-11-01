@@ -263,9 +263,9 @@ sub refresh {
 	my $text      = $current->text;
 	my $selection = ( defined $text and $text ne '' ) ? 1 : 0;
 
-	for ( keys( %{ $self->{item_list} } ) ) {
+	for my $item ( keys( %{ $self->{item_list} } ) ) {
 
-		my $action = $self->{item_list}->{$_};
+		my $action = $self->{item_list}->{$item};
 
 		my $enabled = 1; # Set default
 
@@ -298,7 +298,7 @@ sub refresh {
 					)
 				);
 
-		$self->EnableTool( $_, $enabled );
+		$self->EnableTool( $item, $enabled );
 
 	}
 
