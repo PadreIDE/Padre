@@ -28,6 +28,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Added a test to run Padre's beginner error checks on the Padre source (SEWI)
     - Config option for auto-cleanup of files during save for supported
       document types (SEWI)
+    - Modules/Plugins could now add their panels to the global preferences (SEWI)
 
 0.48 2009.10.12
     - "Last session" now restores the last state even if Padre crashed and not
