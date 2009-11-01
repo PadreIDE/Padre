@@ -302,30 +302,6 @@ sub refresh {
 
 	}
 
-	# This stays here for the moment in case something went wrong while converting
-	# the toolbar to a dynamic one.
-
-	#	$self->EnableTool( $self->{save}, ( $document and $document->is_modified ? 1 : 0 ) );
-	#	$self->EnableTool( $self->{save_as}, ($document) );
-	#
-	#	# trying out the Comment Code method here
-	#	$self->EnableTool( $self->{save_all}, ($document) ); # Save All
-	#
-	#	$self->EnableTool( $self->{close}, ( $editor ? 1 : 0 ) );
-	#	$self->EnableTool( $self->{undo},  ( $editor and $editor->CanUndo ) );
-	#	$self->EnableTool( $self->{redo},  ( $editor and $editor->CanRedo ) );
-	#	$self->EnableTool( $self->{cut},   ($selection) );
-	#	$self->EnableTool( $self->{copy},  ($selection) );
-	#	$self->EnableTool( $self->{paste}, ( $editor and $editor->CanPaste ) );
-	#	$self->EnableTool( $self->{select_all},     ( $editor   ? 1 : 0 ) );
-	#	$self->EnableTool( $self->{find},           ( $editor   ? 1 : 0 ) );
-	#	$self->EnableTool( $self->{replace},        ( $editor   ? 1 : 0 ) );
-	#	$self->EnableTool( $self->{comment_toggle}, ( $document ? 1 : 0 ) );
-	#	$self->EnableTool( $self->{doc_stat},       ( $editor   ? 1 : 0 ) );
-	#
-	#	$self->EnableTool( $self->{run},  ( $document and not $self->GetParent->{command} ) ? 1 : 0 );
-	#	$self->EnableTool( $self->{stop}, ( $document and $self->GetParent->{command} )     ? 1 : 0 );
-
 	return;
 }
 
