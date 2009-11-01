@@ -37,11 +37,11 @@ our $VERSION = '0.01';
       foo => 'bar',
   );
 
-The C<new> constructor lets you create a new B<Module::Install> object.
+The C<new> constructor lets you create a new B<Module::Name> object.
 
 So no big surprises there...
 
-Returns a new B<Module::Install> or dies on error.
+Returns a new B<Module::Name> or dies on error.
 
 =cut
 
@@ -77,6 +77,6 @@ No support is available
 
 =head1 AUTHOR
 
-Copyright 2008 Anonymous.
+Copyright 2009 Anonymous.
 
 =cut
