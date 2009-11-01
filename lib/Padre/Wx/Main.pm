@@ -3081,7 +3081,7 @@ sub open_file_dialog {
 	my @files;
 	for my $filename (@filenames) {
 
-		if ($filename =~ /[\*\?]/) {
+		if ( $filename =~ /[\*\?]/ ) {
 
 			# Windows usually handles this at the dialog level, but Gnome doesn't,
 			# so this should never appear on Windows:
