@@ -3079,16 +3079,16 @@ sub open_file_dialog {
 	$self->{cwd} = $dialog->GetDirectory;
 
 	my @files;
-	for (@filenames) {
+	for my $filename (@filenames) {
 
-		if (/[\*\?]/) {
+		if ($filename =~ /[\*\?]/) {
 
 			# Windows usually handles this at the dialog level, but Gnome doesn't,
 			# so this should never appear on Windows:
 			my $ret = Wx::MessageBox(
 				sprintf(
 					Wx::gettext('Filename %s contains * or ? which are special chars on most computers. Skip?'),
-					$_
+					$filename
 				),
 				Wx::gettext("Open Warning"),
 				Wx::wxYES_NO | Wx::wxCENTRE,
@@ -3098,7 +3098,7 @@ sub open_file_dialog {
 			next if $ret == Wx::wxYES;
 		}
 
-		my $FN = File::Spec->catfile( $self->cwd, $_ );
+		my $FN = File::Spec->catfile( $self->cwd, $filename );
 
 		if ( !-e $FN ) {
 
