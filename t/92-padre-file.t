@@ -66,7 +66,7 @@ SKIP: {
 	for my $url ( keys(%HTTP_Tests) ) {
 		$file = Padre::File->new($url);
 		ok( defined($file), 'HTTP ' . $url . ': Create Padre::File object' );
-		ok( $file->{protocol} eq 'http',               'HTTP ' . $url . ': Check protocol' );
+		ok( $file->{protocol} eq 'http',                 'HTTP ' . $url . ': Check protocol' );
 		ok( $file->dirname    eq $HTTP_Tests{$url}->[0], 'HTTP ' . $url . ': Check dirname' );
 		ok( $file->basename   eq $HTTP_Tests{$url}->[1], 'HTTP ' . $url . ': Check basename' );
 	}

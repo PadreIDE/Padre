@@ -12,9 +12,9 @@ use POSIX qw(locale_h);
 # into memory and when Test::NoWarnings is loaded it will hide
 # the warnings generated from that point.
 # removed in r2208, added again in r9001
-eval  {
-        require Test::NoWarnings;
-        $SIG{__WARN__} = 'DEFAULT';
+eval {
+	require Test::NoWarnings;
+	$SIG{__WARN__} = 'DEFAULT';
 };
 
 BEGIN {
