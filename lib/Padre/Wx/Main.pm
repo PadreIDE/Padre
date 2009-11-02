@@ -3789,6 +3789,28 @@ sub zoom {
 	}
 }
 
+
+=pod
+
+=head3 open_regex_editor
+
+    $main->open_regex_editor;
+
+Open Padre's regex editor. No return value.
+
+=cut
+
+sub open_regex_editor {
+	my $self = shift;
+
+	require Padre::Wx::Dialog::RegexEditor;
+	my $regex = Padre::Wx::Dialog::RegexEditor->new($self);
+	$regex->show();
+	
+	return;
+}
+
+
 =pod
 
 =head3 on_preferences

@@ -643,6 +643,17 @@ sub new {
 
 	$self->AppendSeparator;
 
+	$self->add_menu_item(
+		$self,
+		name       => 'edit.regex',
+		label      => Wx::gettext('Regex editor'),
+		menu_event => sub {
+			Padre::Wx::Main::open_regex_editor(@_);
+		},
+	);
+
+	$self->AppendSeparator;
+
 	$self->{show_as_number} = Wx::Menu->new;
 	$self->Append(
 		-1,

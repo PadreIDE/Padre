@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.50 to be released
+    - Add initial version of a regex editor. (SZABGAB)
+
 0.49 2009.11.02
     - Fixed #691: Extract subroutine does not work for a script without
       subroutines (WAXHEAD)
