@@ -171,6 +171,12 @@ sub remove {
 	return 1;
 }
 
+sub title {
+	my $self = shift;
+	
+	return Wx::gettext('Plugins');
+}
+
 sub refresh {
 	my $self = shift;
 	my $main = _CURRENT(@_)->main;

@@ -117,6 +117,12 @@ sub new {
 	return $self;
 }
 
+sub title {
+	my $self = shift;
+	
+	return Wx::gettext('Help');
+}
+
 sub refresh {
 	my $self    = shift;
 	my $current = _CURRENT(@_);

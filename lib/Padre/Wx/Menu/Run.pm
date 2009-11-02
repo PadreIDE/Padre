@@ -73,6 +73,12 @@ sub new {
 	return $self;
 }
 
+sub title {
+	my $self = shift;
+	
+	return Wx::gettext('Run');
+}
+
 sub refresh {
 	my $self     = shift;
 	my $document = _CURRENT(@_)->document;

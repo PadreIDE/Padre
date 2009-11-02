@@ -97,6 +97,12 @@ sub new {
 	return $self;
 }
 
+sub title {
+	my $self = shift;
+	
+	return Wx::gettext('Search');
+}
+
 sub refresh {
 	my $self = shift;
 	my $doc = _CURRENT(@_)->document ? 1 : 0;

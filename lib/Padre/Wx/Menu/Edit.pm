@@ -696,6 +696,12 @@ sub new {
 	return $self;
 }
 
+sub title {
+	my $self = shift;
+	
+	return Wx::gettext('Edit');
+}
+
 sub refresh {
 	my $self     = shift;
 	my $current  = _CURRENT(@_);
