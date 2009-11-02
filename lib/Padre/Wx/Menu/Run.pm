@@ -75,7 +75,7 @@ sub new {
 
 sub title {
 	my $self = shift;
-	
+
 	return Wx::gettext('Run');
 }
 

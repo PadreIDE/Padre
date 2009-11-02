@@ -17,8 +17,8 @@ our @ISA     = 'Wx::Dialog';
 # Constructor
 
 sub new {
-	my $class   = shift;
-	my $parent  = shift;
+	my $class  = shift;
+	my $parent = shift;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
@@ -54,7 +54,7 @@ sub new {
 
 	# Modifiers
 	my %m = _modifiers();
-	foreach my $name (keys %m) {
+	foreach my $name ( keys %m ) {
 		$self->{$name} = Wx::CheckBox->new(
 			$self,
 			-1,
@@ -68,7 +68,7 @@ sub new {
 			},
 		);
 	}
-	
+
 
 	# Buttons
 	$self->{button_match} = Wx::Button->new(
@@ -117,7 +117,7 @@ sub new {
 	# Horizontal button sizer
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{button_match},        0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{button_match},   0, Wx::wxALL, 1 );
 	$buttons->Add( $self->{button_replace}, 0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
 	$buttons->Add( $self->{button_close}, 0, Wx::wxALL, 1 );
@@ -126,10 +126,10 @@ sub new {
 
 	my $modifiers = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$modifiers->AddStretchSpacer;
-	$modifiers->Add( $self->{ignore_case},     0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{single_line},     0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{multi_line},      0, Wx::wxALL, 1 );
-	$modifiers->Add( $self->{extended},        0, Wx::wxALL, 1 );
+	$modifiers->Add( $self->{ignore_case}, 0, Wx::wxALL, 1 );
+	$modifiers->Add( $self->{single_line}, 0, Wx::wxALL, 1 );
+	$modifiers->Add( $self->{multi_line},  0, Wx::wxALL, 1 );
+	$modifiers->Add( $self->{extended},    0, Wx::wxALL, 1 );
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -162,8 +162,8 @@ sub new {
 
 	# Main sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizer->Add( $left,    0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$sizer->Add( $right,   1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$sizer->Add( $left,  0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$sizer->Add( $right, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# Tune the size and position it appears
 	$self->SetSizer($sizer);
@@ -179,7 +179,7 @@ sub _modifiers {
 		ignore_case => Wx::gettext('Ignore case (i)'),
 		single_line => Wx::gettext('Single-line (s)'),
 		multi_line  => Wx::gettext('Multi-line (m)'),
-		extended    => Wx::gettext('Extended (x)'), 
+		extended    => Wx::gettext('Extended (x)'),
 	);
 }
 
@@ -203,14 +203,15 @@ sub show {
 sub button_match {
 	my $self = shift;
 
-	my $regex = $self->{regex}->GetRange(0, $self->{regex}->GetLastPosition);
-	my $original_text = $self->{original_text}->GetRange(0, $self->{original_text}->GetLastPosition);
+	my $regex = $self->{regex}->GetRange( 0, $self->{regex}->GetLastPosition );
+	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
 
 	# Padre->ide->wx->main->message("Match '$regex' '$original_text'");
-	
+
 	my $match;
-	eval { 
-		if ($original_text =~ /$regex/) {
+	eval {
+		if ( $original_text =~ /$regex/ )
+		{
 			$match = $&;
 		}
 	};
@@ -245,7 +246,7 @@ sub box_clicked {
 	my $main = Padre->ide->wx->main;
 	$main->message("Box $box");
 	return;
-	
+
 }
 
 #

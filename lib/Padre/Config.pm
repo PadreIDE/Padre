@@ -383,16 +383,16 @@ setting(
 	#     Insert an action
 	#   |
 	#     Insert a seperator
-	default => 'menu.File;'.
-		'menu.Edit;'.
-		'menu.Search;'.
-		'menu.View;'.
-		'menu.Perl;'.
-		'menu.Refactor;'.
-		'menu.Run;'.
-		'menu.Plugins;'.
-		'menu.Window;'.
-		'menu.Help',
+	default => 'menu.File;'
+		. 'menu.Edit;'
+		. 'menu.Search;'
+		. 'menu.View;'
+		. 'menu.Perl;'
+		. 'menu.Refactor;'
+		. 'menu.Run;'
+		. 'menu.Plugins;'
+		. 'menu.Window;'
+		. 'menu.Help',
 );
 
 # Directory Tree Settings

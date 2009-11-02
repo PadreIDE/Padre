@@ -3806,7 +3806,7 @@ sub open_regex_editor {
 	require Padre::Wx::Dialog::RegexEditor;
 	my $regex = Padre::Wx::Dialog::RegexEditor->new($self);
 	$regex->show();
-	
+
 	return;
 }
 

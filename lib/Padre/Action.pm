@@ -73,8 +73,8 @@ sub new {
 	}
 
 	# The menu prefix is dedicated to menus and must not be used by actions
-	if ($self->{name} =~ /^menu\./) {
-		warn join(',',caller).' tried to create an action with name prefix menu';
+	if ( $self->{name} =~ /^menu\./ ) {
+		warn join( ',', caller ) . ' tried to create an action with name prefix menu';
 		return;
 	}
 

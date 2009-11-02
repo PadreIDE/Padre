@@ -173,7 +173,7 @@ sub remove {
 
 sub title {
 	my $self = shift;
-	
+
 	return Wx::gettext('Plugins');
 }
 
