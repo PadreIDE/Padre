@@ -8,15 +8,35 @@ use lib 'privinc';
 use inc::Module::Install 0.91;
 use POSIX qw(locale_h);
 
+# workaround for the fact that Module::Install loads the modules
+# into memory and when Test::NoWarnings is loaded it will hide
+# the warnings generated from that point.
+# removed in r2208, added again in
+eval  {
+        require Test::NoWarnings;
+        $SIG{__WARN__} = 'DEFAULT';
+};
+
 BEGIN {
 	if ( author_context and not eval("use Locale::Msgfmt 0.14; 1;") ) {
 		die("Install Locale::Msgfmt version 0.14 or higher to build from SVN");
 	}
 }
 
+
 # Configure-time dependencies MUST be done first
 configure_requires 'ExtUtils::MakeMaker' => '6.52';
 
+# the above line does not seem to force an upgrade
+# the below code might work but not tested
+#eval "use ExtUtils::MakeMaker ()"; # avoid importing prompt() and other subs
+#if ($@) {
+#	print STDERR "Warning: prerequisite ExtUtils::MakeMaker 6.52 not found.\n";
+#	exit 0;
+#} elsif ($ExtUtils::MakeMaker::VERSION <= 6.52) {
+#	print STDERR "Warning: prerequisite ExtUtils::MakeMaker 6.52 not found. We have $ExtUtils::MakeMaker::VERSION.\n";
+#	exit 0;
+#}
 
 
 
