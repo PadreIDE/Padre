@@ -369,6 +369,32 @@ setting(
 		. 'run.stop:actions/stop;',
 );
 
+setting(
+	name  => 'main_menubar_items',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HUMAN,
+
+	# This lifes here until a better place is found:
+	# This is a list of menubar items, seperated by ;
+	# The following items are supported:
+	#   menu.MenuName
+	#     Insert the (sub-)menu MenuName
+	#   some.other_action
+	#     Insert an action
+	#   |
+	#     Insert a seperator
+	default => 'menu.File;'.
+		'menu.Edit;'.
+		'menu.Search;'.
+		'menu.View;'.
+		'menu.Perl;'.
+		'menu.Refactor;'.
+		'menu.Run;'.
+		'menu.Plugins;'.
+		'menu.Window;'.
+		'menu.Help',
+);
+
 # Directory Tree Settings
 setting(
 	name    => 'default_projects_directory',
