@@ -11,7 +11,7 @@ use POSIX qw(locale_h);
 # workaround for the fact that Module::Install loads the modules
 # into memory and when Test::NoWarnings is loaded it will hide
 # the warnings generated from that point.
-# removed in r2208, added again in
+# removed in r2208, added again in r9001
 eval  {
         require Test::NoWarnings;
         $SIG{__WARN__} = 'DEFAULT';

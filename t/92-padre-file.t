@@ -41,9 +41,8 @@ ok( ( ( $file->dirname eq 't/files' ) or ( $file->dirname eq 't\files' ) ), 'Loc
 
 undef $file;
 
-{
-	local $TODO;
-	$TODO = 'Failing this is no reason to stop install' unless $ENV{AUTOMATED_TESTING};
+SKIP: {
+	skip 'Network testing. Failing this is no reason to stop install', 21 unless $ENV{AUTOMATED_TESTING};
 
 	# Padre::File::HTTP
 	$file = Padre::File->new('http://padre.perlide.org/about.html');
@@ -64,12 +63,12 @@ undef $file;
 		'http://www.google.de/result.cgi?q=perl'   => [ 'http://www.google.de/',      'result.cgi' ],
 	);
 
-	for ( keys(%HTTP_Tests) ) {
-		$file = Padre::File->new($_);
-		ok( defined($file), 'HTTP ' . $_ . ': Create Padre::File object' );
-		ok( $file->{protocol} eq 'http',               'HTTP ' . $_ . ': Check protocol' );
-		ok( $file->dirname    eq $HTTP_Tests{$_}->[0], 'HTTP ' . $_ . ': Check dirname' );
-		ok( $file->basename   eq $HTTP_Tests{$_}->[1], 'HTTP ' . $_ . ': Check basename' );
+	for my $url ( keys(%HTTP_Tests) ) {
+		$file = Padre::File->new($url);
+		ok( defined($file), 'HTTP ' . $url . ': Create Padre::File object' );
+		ok( $file->{protocol} eq 'http',               'HTTP ' . $url . ': Check protocol' );
+		ok( $file->dirname    eq $HTTP_Tests{$url}->[0], 'HTTP ' . $url . ': Check dirname' );
+		ok( $file->basename   eq $HTTP_Tests{$url}->[1], 'HTTP ' . $url . ': Check basename' );
 	}
 }
 
