@@ -72,6 +72,12 @@ sub new {
 		return;
 	}
 
+	# The menu prefix is dedicated to menus and must not be used by actions
+	if ($self->{name} =~ /^menu\./) {
+		warn join(',',caller).' tried to create an action with name prefix menu';
+		return;
+	}
+
 	if ( defined( $self->{menu_event} ) ) {
 
 		# Menu events are handled by Padre::Action, the real events
