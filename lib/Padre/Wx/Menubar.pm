@@ -56,6 +56,9 @@ sub new {
 		default => 8,
 		
 		items => [],
+		
+		hotkeys => {},
+
 	}, $class;
 
 	# Generate the individual menus
@@ -138,14 +141,29 @@ sub refresh {
 			# Menu number starting at 0
 			++$count;
 
+			# Dynamically set the hotkeys for menu items:
+			my $title = $self->{$obj}->title;
+			$title =~ s/\&//g;
+			for my $pos (0..(length($title) - 1)) {
+				my $char = substr($title,$pos,1);
+				# Only use a-z for hotkeys
+				next if $char !~ /\w/;
+				# Skip if hotkey is already in use
+				next if defined($self->{hotkeys}->{$char})
+				   and ($self->{hotkeys}->{$char} ne $self->{$obj});
+				$title =~ s/^(.{$pos})(.*)$/$1\&$2/;
+				$self->{hotkeys}->{$char} = $self->{$obj};
+				last;
+			}
+
 			# Replace should be faster than remove/append
 			if ($count <= $self->wx->GetMenuCount) {
-				$self->wx->Replace($count,$self->{$obj}->wx,$self->{$obj}->title)
+				$self->wx->Replace($count,$self->{$obj}->wx,$title)
 				 if defined($self->{items}->[$count]) and ($self->{items}->[$count] eq $self->{$obj});
 			} else {
-				$self->wx->Append($self->{$obj}->wx,$self->{$obj}->title);
+				$self->wx->Append($self->{$obj}->wx,$title);
 			}
-			$self->{items}->[$count] = $self->{obj};
+			$self->{items}->[$count] = $self->{$obj};
 		}
 		
 	}
