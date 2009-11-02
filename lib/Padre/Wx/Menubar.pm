@@ -110,7 +110,7 @@ sub refresh {
 	my $main = $self->main;
 	my $config = $main->ide->config;
 	
-	my $count = 0;
+	my $count = -1;
 
 	for my $item (split(/\;/,$config->main_menubar_items)) {
 
@@ -157,9 +157,10 @@ sub refresh {
 			}
 
 			# Replace should be faster than remove/append
-			if ($count <= $self->wx->GetMenuCount) {
+			if ($count <= ($self->wx->GetMenuCount - 1)) {
+			 if (defined($self->{items}->[$count]) and ($self->{items}->[$count] ne $self->{$obj})) {
 				$self->wx->Replace($count,$self->{$obj}->wx,$title)
-				 if defined($self->{items}->[$count]) and ($self->{items}->[$count] eq $self->{$obj});
+			 }
 			} else {
 				$self->wx->Append($self->{$obj}->wx,$title);
 			}
@@ -169,7 +170,7 @@ sub refresh {
 	}
 
 		# Remove items if there are more than we replaced
-		if ($count < $self->wx->GetMenuCount) {
+		if ($count < ($self->wx->GetMenuCount - 1)) {
 			for my $item_no (($count + 1)..$self->Wx->GetMenuCount) {
 			pop @{$self->{items}};
 			$self->Wx->Remove($item_no);
@@ -221,6 +222,9 @@ sub refresh_top {
 	my $self    = shift;
 	my $current = _CURRENT(@_);
 	my $menu    = $self->wx->GetMenuCount ne $self->{default};
+
+return 1; # This needs to be changed to match ->refresh, otherwise it breaks the menu
+
 	my $perl    = !!(
 		   _INSTANCE( $current->document, 'Padre::Document::Perl' )
 		or _INSTANCE( $current->project, 'Padre::Project::Perl' )
