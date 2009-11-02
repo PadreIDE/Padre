@@ -7,7 +7,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 
 sub set_mime_type {
 	my $class     = shift;

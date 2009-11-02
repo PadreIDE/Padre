@@ -7,7 +7,7 @@ use PPI::Document;
 use PPI::Dumper;
 use Text::Balanced;
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 
 sub class_to_color {
 	my $class  = shift;

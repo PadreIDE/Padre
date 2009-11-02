@@ -48,7 +48,7 @@ use Cwd        ();
 use Exporter   ();
 use File::Spec ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Exporter';
 
 $| = 1;

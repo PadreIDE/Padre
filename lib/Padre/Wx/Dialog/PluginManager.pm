@@ -9,7 +9,7 @@ use Carp            ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Wx::Dialog';
 
 

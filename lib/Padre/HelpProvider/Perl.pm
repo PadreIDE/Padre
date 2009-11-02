@@ -11,7 +11,7 @@ use Padre::HelpProvider    ();
 use Padre::DocBrowser::POD ();
 use Padre::Pod2HTML        ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Padre::HelpProvider';
 
 #

@@ -9,7 +9,7 @@ use URI              ();
 use HTTP::Request    ();
 use Padre::Task::LWP ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Padre::Task::LWP';
 
 sub new {

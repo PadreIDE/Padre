@@ -54,7 +54,7 @@ use warnings;
 # Because this is sometimes used outside the Padre codebase,
 # don't put any dependencies on other Padre modules in here.
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 
 my $perl = undef;
 

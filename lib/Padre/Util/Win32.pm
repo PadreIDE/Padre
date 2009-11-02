@@ -30,7 +30,7 @@ use Padre::Constant ();
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
 require Win32::API if Padre::Constant::WIN32;
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 
 my %Types = ();
 

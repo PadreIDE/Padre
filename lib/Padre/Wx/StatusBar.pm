@@ -51,7 +51,7 @@ use Class::XSAccessor accessors => {
 	_task_width  => '_task_width',  # Current width of task field
 };
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = qw{
 	Padre::Wx::Role::MainChild
 	Wx::StatusBar

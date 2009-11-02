@@ -7,7 +7,7 @@ use Params::Util qw{_INSTANCE};
 use Padre::Wx      ();
 use Padre::Current ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor accessors => {

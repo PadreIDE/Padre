@@ -10,7 +10,7 @@ use Padre::Current            ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Wx::StyledTextCtrl';
 
 # End-Of-Line modes:

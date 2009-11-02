@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Wx::Perl::Dialog ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Wx::Perl::Dialog';
 
 sub create_widget {

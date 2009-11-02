@@ -37,7 +37,7 @@ use warnings;
 use version;
 use Padre::Task::Outline ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Padre::Task::Outline';
 
 sub run {

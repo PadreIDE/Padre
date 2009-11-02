@@ -12,7 +12,7 @@ use Padre::Util                     ();
 use Padre::Perl                     ();
 use Padre::Document::Perl::Beginner ();
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Padre::Document';
 
 #####################################################################

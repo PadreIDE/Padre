@@ -60,7 +60,7 @@ use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress           ();
 use IPC::Open3                    ('open3');
 
-our $VERSION = '0.48';
+our $VERSION = '0.49';
 our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;
