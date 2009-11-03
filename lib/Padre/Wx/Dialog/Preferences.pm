@@ -785,7 +785,7 @@ sub dialog {
 			eval 'require ' . $module . ';';
 			warn $@ if $@;
 			my $preferences_page = $module->new();
-			my $panel            = $preferences_page->panel($tb);
+			my $panel            = $preferences_page->panel($tb,$self);
 			$tb->AddPage( $panel, Wx::gettext( $PANELS{$module} ) );
 		};
 		next unless $@;
@@ -1131,7 +1131,7 @@ sub run {
 
 	for my $module ( keys(%PANELS) ) {
 		my $preferences_page = $module->new();
-		$preferences_page->save();
+		$preferences_page->save($data);
 	}
 
 	$config->write;
