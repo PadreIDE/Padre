@@ -111,29 +111,29 @@ sub refresh {
 	my $main   = $self->main;
 	my $config = $main->ide->config;
 
-# This is a version between fully configurable menus and the old fixed ones, it
-# isn't made to stay forever, but it's working for now
+	# This is a version between fully configurable menus and the old fixed ones, it
+	# isn't made to stay forever, but it's working for now
 
 	my @items;
 
 	for my $item ( split( /\;/, $config->main_menubar_items ) ) {
-		if ($item eq 'menu._document') {
-			next unless defined($main->current);
-			next unless defined($main->current->document);
+		if ( $item eq 'menu._document' ) {
+			next unless defined( $main->current );
+			next unless defined( $main->current->document );
 			next unless $main->current->document->can('menu');
-			next unless defined($main->current->document->menu);
+			next unless defined( $main->current->document->menu );
 			$item = $main->current->document->menu;
 		}
-		
-		if (ref($item) eq 'ARRAY' ) {
-			push @items,@{$item};
+
+		if ( ref($item) eq 'ARRAY' ) {
+			push @items, @{$item};
 		} else {
-			push @items,$item;
+			push @items, $item;
 		}
 	}
 
 	my $count = -1;
-	
+
 	for my $item (@items) {
 
 		if ( $item =~ /^menu\.(.+)$/ ) {
@@ -148,27 +148,27 @@ sub refresh {
 
 			# a fast skip if there is nothing to do
 			# Note: $count (and Wx indices) start at 0, but the Count is a count
-				next if 
-				   $count < $self->wx->GetMenuCount
-				   and defined( $self->{items}->[$count] )
-				   and defined( $self->{$obj} )
-				   and ( $self->{items}->[$count] eq $self->{$obj} );
+			next
+				if $count < $self->wx->GetMenuCount
+					and defined( $self->{items}->[$count] )
+					and defined( $self->{$obj} )
+					and ( $self->{items}->[$count] eq $self->{$obj} );
 
 			# It seems that every submenu-object could be attached only once
 			# even if it's removed lateron, so we need to create a new object
-			
-				# Everything custom/configurable/usable_by_plugins should be
-				# crash-safe
-				eval {
-					my $module = 'Padre::Wx::Menu::' . $menu;
-					eval 'use ' . $module . ';';
-					die $@ if $@;
-					$self->{$obj} = $module->new($main);
-				};
-				if ($@) {
-					warn 'Error loading menu ' . $menu . ': ' . $@;
-					next;
-				}
+
+			# Everything custom/configurable/usable_by_plugins should be
+			# crash-safe
+			eval {
+				my $module = 'Padre::Wx::Menu::' . $menu;
+				eval 'use ' . $module . ';';
+				die $@ if $@;
+				$self->{$obj} = $module->new($main);
+			};
+			if ($@) {
+				warn 'Error loading menu ' . $menu . ': ' . $@;
+				next;
+			}
 
 			# Dynamically set the hotkeys for menu items:
 			my $title = $self->{$obj}->title;
@@ -182,9 +182,9 @@ sub refresh {
 				# Skip if hotkey is already in use
 				next
 					if defined( $self->{hotkeys}->{$char} )
-						and ( $self->{hotkeys}->{$char} ne ref($self->{$obj} ));
+						and ( $self->{hotkeys}->{$char} ne ref( $self->{$obj} ) );
 				$title =~ s/^(.{$pos})(.*)$/$1\&$2/;
-				$self->{hotkeys}->{$char} = ref($self->{$obj});
+				$self->{hotkeys}->{$char} = ref( $self->{$obj} );
 				last;
 			}
 

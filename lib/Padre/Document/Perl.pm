@@ -1227,8 +1227,8 @@ sub autoclean {
 
 sub menu {
 	my $self = shift;
-	
-	return ['menu.Perl','menu.Refactor'];
+
+	return [ 'menu.Perl', 'menu.Refactor' ];
 }
 
 

@@ -403,6 +403,7 @@ sub new {
 		$tag =~ s/\s/_/g;
 
 		if ( $label eq 'English (United Kingdom)' ) {
+
 			# NOTE: A dose of fun in a mostly boring application.
 			# With more Padre developers, more countries, and more
 			# people in total British English instead of American
