@@ -111,9 +111,30 @@ sub refresh {
 	my $main   = $self->main;
 	my $config = $main->ide->config;
 
-	my $count = -1;
+# This is a version between fully configurable menus and the old fixed ones, it
+# isn't made to stay forever, but it's working for now
+
+	my @items;
 
 	for my $item ( split( /\;/, $config->main_menubar_items ) ) {
+		if ($item eq 'menu._document') {
+			next unless defined($main->current);
+			next unless defined($main->current->document);
+			next unless $main->current->document->can('menu');
+			next unless defined($main->current->document->menu);
+			$item = $main->current->document->menu;
+		}
+		
+		if (ref($item) eq 'ARRAY' ) {
+			push @items,@{$item};
+		} else {
+			push @items,$item;
+		}
+	}
+
+	my $count = -1;
+	
+	for my $item (@items) {
 
 		if ( $item =~ /^menu\.(.+)$/ ) {
 			my $menu = $1;
@@ -122,8 +143,20 @@ sub refresh {
 
 			my $obj = lc($menu);
 
-			if ( !defined( $self->{$obj} ) ) {
+			# Menu number starting at 0
+			++$count;
 
+			# a fast skip if there is nothing to do
+			# Note: $count (and Wx indices) start at 0, but the Count is a count
+				next if 
+				   $count < $self->wx->GetMenuCount
+				   and defined( $self->{items}->[$count] )
+				   and defined( $self->{$obj} )
+				   and ( $self->{items}->[$count] eq $self->{$obj} );
+
+			# It seems that every submenu-object could be attached only once
+			# even if it's removed lateron, so we need to create a new object
+			
 				# Everything custom/configurable/usable_by_plugins should be
 				# crash-safe
 				eval {
@@ -137,11 +170,6 @@ sub refresh {
 					next;
 				}
 
-			}
-
-			# Menu number starting at 0
-			++$count;
-
 			# Dynamically set the hotkeys for menu items:
 			my $title = $self->{$obj}->title;
 			$title =~ s/\&//g;
@@ -154,9 +182,9 @@ sub refresh {
 				# Skip if hotkey is already in use
 				next
 					if defined( $self->{hotkeys}->{$char} )
-						and ( $self->{hotkeys}->{$char} ne $self->{$obj} );
+						and ( $self->{hotkeys}->{$char} ne ref($self->{$obj} ));
 				$title =~ s/^(.{$pos})(.*)$/$1\&$2/;
-				$self->{hotkeys}->{$char} = $self->{$obj};
+				$self->{hotkeys}->{$char} = ref($self->{$obj});
 				last;
 			}
 
@@ -175,9 +203,9 @@ sub refresh {
 
 	# Remove items if there are more than we replaced
 	if ( $count < ( $self->wx->GetMenuCount - 1 ) ) {
-		for my $item_no ( ( $count + 1 ) .. $self->Wx->GetMenuCount ) {
+		for my $item_no ( ( $count + 1 ) .. $self->wx->GetMenuCount ) {
 			pop @{ $self->{items} };
-			$self->Wx->Remove($item_no);
+			$self->wx->Remove($item_no);
 		}
 	}
 
