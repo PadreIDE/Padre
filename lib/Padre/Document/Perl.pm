@@ -1225,6 +1225,14 @@ sub autoclean {
 
 }
 
+sub menu {
+	my $self = shift;
+	
+	return ['menu.Perl','menu.Refactor'];
+}
+
+
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
