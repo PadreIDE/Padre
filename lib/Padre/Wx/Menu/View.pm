@@ -397,8 +397,12 @@ sub new {
 
 	foreach my $name ( sort { $language{$a} cmp $language{$b} } keys %language ) {
 		my $label = $language{$name};
-		if ( $label eq 'English (United Kingdom)' ) {
 
+		# Calculate the tag name before we apply any humour :/
+		my $tag = "view.view_as_" . lc $label;
+		$tag =~ s/\s/_/g;
+
+		if ( $label eq 'English (United Kingdom)' ) {
 			# NOTE: A dose of fun in a mostly boring application.
 			# With more Padre developers, more countries, and more
 			# people in total British English instead of American
@@ -408,8 +412,7 @@ sub new {
 			# speakers, non-English localisations do NOT show this.
 			$label = "English (New Britstralian)";
 		}
-		my $tag = "view.view_as_" . lc $label;
-		$tag =~ s/\s/_/g;
+
 		my $radio = $self->add_radio_menu_item(
 			$self->{language},
 			name       => $tag,
