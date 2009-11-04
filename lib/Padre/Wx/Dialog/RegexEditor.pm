@@ -234,6 +234,8 @@ sub run {
 		}
 	}
 	my $xism = "$start-$end";
+
+	$self->{matched_text}->Clear;
 	
 	my $match;
 	eval {
@@ -244,11 +246,11 @@ sub run {
 	};
 	if ($@) {
 		my $main = Padre->ide->wx->main;
-		$main->message("Match failure in $regex:  $@");
+		#$main->message("Match failure in $regex:  $@");
+		$self->{matched_text}->AppendText("Match failure in $regex:  $@");
 		return;
 	}
 
-	$self->{matched_text}->Clear;
 	if (defined $match) {
 		$self->{matched_text}->AppendText("Matched '$match'");
 	} else {
