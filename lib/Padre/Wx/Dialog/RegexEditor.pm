@@ -50,7 +50,16 @@ sub new {
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
-
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{regex},
+		sub { $_[0]->run; },
+	);
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{original_text},
+		sub { $_[0]->run; },
+	);
 
 	# Modifiers
 	my %m = _modifiers();
@@ -263,8 +272,8 @@ sub button_replace {
 
 sub box_clicked {
 	my $self = shift;
-	my $box  = shift;
-
+	#my $box  = shift;
+	$self->run();
 	#my $main = Padre->ide->wx->main;
 	#$main->message("Box $box");
 	return;
@@ -302,10 +311,14 @@ checkboxes for modifiers
 window to enter regex
 window to enter original text
 window to show replaced text
+
 show the match
+
 show $1, $2, etc
+
 English explanation of the regex
 
+TODO allow the change/replacement of the // around the regex
 
 
 =head1 COPYRIGHT & LICENSE
