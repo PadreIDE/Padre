@@ -202,6 +202,12 @@ sub show {
 #
 sub button_match {
 	my $self = shift;
+	$self->run();
+	return;
+}
+
+sub run {
+	my $self = shift;
 
 	my $regex = $self->{regex}->GetRange( 0, $self->{regex}->GetLastPosition );
 	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
