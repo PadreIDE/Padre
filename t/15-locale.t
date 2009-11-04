@@ -23,7 +23,7 @@ isa_ok( $main, 'Padre::Wx::Main' );
 
 # Change locales several times and make sure we don't suffer any
 # crashes or warnings.
-is( $main->change_locale('ar'), undef, '->change_locale(ar)' );
-is( $main->change_locale('de'), undef, '->change_locale(de)' );
+is( $main->change_locale('ar'),    undef, '->change_locale(ar)' );
+is( $main->change_locale('de'),    undef, '->change_locale(de)' );
 is( $main->change_locale('en-au'), undef, '->change_locale(en-au)' );
-is( $main->change_locale, undef, '->change_locale()' );
+is( $main->change_locale,          undef, '->change_locale()' );

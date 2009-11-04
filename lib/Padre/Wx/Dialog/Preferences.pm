@@ -785,7 +785,7 @@ sub dialog {
 			eval 'require ' . $module . ';';
 			warn $@ if $@;
 			my $preferences_page = $module->new();
-			my $panel            = $preferences_page->panel($tb,$self);
+			my $panel = $preferences_page->panel( $tb, $self );
 			$tb->AddPage( $panel, Wx::gettext( $PANELS{$module} ) );
 		};
 		next unless $@;
