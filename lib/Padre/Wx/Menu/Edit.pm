@@ -699,7 +699,7 @@ sub new {
 sub title {
 	my $self = shift;
 
-	return Wx::gettext('Edit');
+	return Wx::gettext('&Edit');
 }
 
 sub refresh {

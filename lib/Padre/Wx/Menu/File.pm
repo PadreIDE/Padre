@@ -393,7 +393,7 @@ sub new {
 sub title {
 	my $self = shift;
 
-	return Wx::gettext('File');
+	return Wx::gettext('&File');
 }
 
 

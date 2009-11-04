@@ -90,7 +90,7 @@ sub new {
 sub title {
 	my $self = shift;
 
-	return Wx::gettext('Perl');
+	return Wx::gettext('&Perl');
 }
 
 sub refresh {

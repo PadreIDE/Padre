@@ -454,7 +454,7 @@ sub new {
 sub title {
 	my $self = shift;
 
-	return Wx::gettext('View');
+	return Wx::gettext('&View');
 }
 
 sub refresh {

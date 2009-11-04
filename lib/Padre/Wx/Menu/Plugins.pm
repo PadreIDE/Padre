@@ -174,7 +174,7 @@ sub remove {
 sub title {
 	my $self = shift;
 
-	return Wx::gettext('Plugins');
+	return Wx::gettext('Pl&ugins');
 }
 
 sub refresh {

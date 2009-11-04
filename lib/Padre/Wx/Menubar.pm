@@ -170,22 +170,38 @@ sub refresh {
 				next;
 			}
 
-			# Dynamically set the hotkeys for menu items:
+			# Check for hotkey collisions
 			my $title = $self->{$obj}->title;
-			$title =~ s/\&//g;
-			for my $pos ( 0 .. ( length($title) - 1 ) ) {
-				my $char = lc(substr( $title, $pos, 1 ));
+			my $hotkey;
+			if ($title =~ /\&(.)/) {
+				my $char = $1;
+				$hotkey = $char if ( ! defined( $self->{hotkeys}->{$char} ))
+					or ( $self->{hotkeys}->{$char} eq ref( $self->{$obj} ) );
+			}
+			if (! defined($hotkey)) {
+				# Dynamically set the hotkeys for menu items
+				# only if there is no defined hotkey or there
+				# is a collision
+				$title =~ s/\&//g;
+				for my $pos ( 0 .. ( length($title) - 1 ) ) {
+					my $char = lc(substr( $title, $pos, 1 ));
 
-				# Only use a-z for hotkeys
-				next if $char !~ /\w/;
+					# Only use a-z for hotkeys
+					next if $char !~ /\w/;
 
-				# Skip if hotkey is already in use
-				next
-					if defined( $self->{hotkeys}->{$char} )
-						and ( $self->{hotkeys}->{$char} ne ref( $self->{$obj} ) );
-				$title =~ s/^(.{$pos})(.*)$/$1\&$2/;
-				$self->{hotkeys}->{$char} = ref( $self->{$obj} );
-				last;
+					# Skip if hotkey is already in use
+					next
+						if defined( $self->{hotkeys}->{$char} )
+							and ( $self->{hotkeys}->{$char} ne ref( $self->{$obj} ) );
+					$title =~ s/^(.{$pos})(.*)$/$1\&$2/;
+					$hotkey = $char;
+					last;
+				}
+			}
+			if (defined($hotkey)) {
+					$self->{hotkeys}->{$hotkey} = ref( $self->{$obj} );
+			} else {
+				warn 'No hotkey defined or assignable for '.$obj;
 			}
 
 			# Replace should be faster than remove/append

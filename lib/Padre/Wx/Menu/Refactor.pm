@@ -57,7 +57,7 @@ sub new {
 sub title {
 	my $self = shift;
 
-	return Wx::gettext('Refactor');
+	return Wx::gettext('Refa&ctor');
 }
 
 sub refresh {
