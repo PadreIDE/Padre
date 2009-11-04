@@ -174,7 +174,7 @@ sub refresh {
 			my $title = $self->{$obj}->title;
 			$title =~ s/\&//g;
 			for my $pos ( 0 .. ( length($title) - 1 ) ) {
-				my $char = substr( $title, $pos, 1 );
+				my $char = lc(substr( $title, $pos, 1 ));
 
 				# Only use a-z for hotkeys
 				next if $char !~ /\w/;
