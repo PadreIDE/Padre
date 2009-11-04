@@ -41,6 +41,11 @@ sub new {
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	$self->{substitute} = Wx::TextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
+
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
@@ -50,9 +55,15 @@ sub new {
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
+
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{regex},
+		sub { $_[0]->run; },
+	);
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{substitute},
 		sub { $_[0]->run; },
 	);
 	Wx::Event::EVT_TEXT(
@@ -78,34 +89,46 @@ sub new {
 		);
 	}
 
+	$self->{matching} = Wx::RadioButton->new(
+		$self,
+		-1,
+		'Matching',
+	);
+	Wx::Event::EVT_RADIOBUTTON($self, $self->{matching}, sub { $_[0]->run; });
+	$self->{substituting} = Wx::RadioButton->new(
+		$self,
+		-1,
+		'Substituting',
+	);
+	Wx::Event::EVT_RADIOBUTTON($self, $self->{substituting}, sub { $_[0]->run; });
 
 	# Buttons
-	$self->{button_match} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext('&Match'),
-	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_match},
-		sub {
-			$_[0]->button_match;
-		},
-	);
-
-	# Preferences Button
-	$self->{button_replace} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext('&Replace'),
-	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_replace},
-		sub {
-			$_[0]->button_replace;
-		},
-	);
+#	$self->{button_match} = Wx::Button->new(
+#		$self,
+#		-1,
+#		Wx::gettext('&Match'),
+#	);
+#	Wx::Event::EVT_BUTTON(
+#		$self,
+#		$self->{button_match},
+#		sub {
+#			$_[0]->button_match;
+#		},
+#	);
+#
+#	# Preferences Button
+#	$self->{button_replace} = Wx::Button->new(
+#		$self,
+#		-1,
+#		Wx::gettext('&Replace'),
+#	);
+#	Wx::Event::EVT_BUTTON(
+#		$self,
+#		$self->{button_replace},
+#		sub {
+#			$_[0]->button_replace;
+#		},
+#	);
 
 	# Close Button
 	$self->{button_close} = Wx::Button->new(
@@ -140,11 +163,23 @@ sub new {
 	$modifiers->Add( $self->{multi_line},  0, Wx::wxALL, 1 );
 	$modifiers->Add( $self->{extended},    0, Wx::wxALL, 1 );
 
+	my $operation = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$operation->AddStretchSpacer;
+	$operation->Add( $self->{matching},    0, Wx::wxALL, 1 );
+	$operation->Add( $self->{substituting},    0, Wx::wxALL, 1 );
+
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $operation, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{regex},
+		1,
+		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
+		1
+	);
+	$left->Add(
+		$self->{substitute},
 		1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
@@ -199,7 +234,9 @@ sub show {
 	my $self = shift;
 
 	$self->{regex}->AppendText("regex");
+	$self->{substitute}->AppendText("substitute");
 	$self->{original_text}->AppendText("Original text");
+	$self->{matching}->SetValue(1);
 
 	$self->Show;
 }
@@ -220,8 +257,8 @@ sub run {
 
 	my $regex = $self->{regex}->GetRange( 0, $self->{regex}->GetLastPosition );
 	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
+	my $substitute = $self->{substitute}->GetRange( 0, $self->{substitute}->GetLastPosition );
 
-	# Padre->ide->wx->main->message("Match '$regex' '$original_text'");
 
 	my $start = '';
 	my $end   = '';
@@ -237,26 +274,31 @@ sub run {
 
 	$self->{matched_text}->Clear;
 
-	my $match;
-	eval {
-		if ( $original_text =~ /(?$xism:$regex)/ )
-		{
-			$match = substr( $original_text, $-[0], $+[0] - $-[0] );
+	if ($self->{matching}->GetValue) {
+		my $match;
+		eval {
+			if ( $original_text =~ /(?$xism:$regex)/ )
+			{
+				$match = substr( $original_text, $-[0], $+[0] - $-[0] );
+			}
+		};
+		if ($@) {
+			my $main = Padre->ide->wx->main;
+
+			#$main->message("Match failure in $regex:  $@");
+			$self->{matched_text}->AppendText("Match failure in $regex:  $@");
+			return;
 		}
-	};
-	if ($@) {
-		my $main = Padre->ide->wx->main;
 
-		#$main->message("Match failure in $regex:  $@");
-		$self->{matched_text}->AppendText("Match failure in $regex:  $@");
-		return;
-	}
-
-	if ( defined $match ) {
-		$self->{matched_text}->AppendText("Matched '$match'");
+		if ( defined $match ) {
+			$self->{matched_text}->AppendText("Matched '$match'");
+		} else {
+			$self->{matched_text}->AppendText("No match");
+		}
 	} else {
-		$self->{matched_text}->AppendText("No match");
+		$self->{matched_text}->AppendText("Substitute not yet implemented");
 	}
+	
 	return;
 }
 
@@ -324,6 +366,15 @@ show $1, $2, etc
 English explanation of the regex
 
 TODO allow the change/replacement of the // around the regex
+
+Display the captured groups in a tree hierarchy similar to Rx ?
+
+Group                  Span (character) Value
+Match 0 (Group 0)      4-7              the actual match
+
+display the various Perl variable containing the relevant values
+e.g. the @- and @+ arrays
+
 
 
 =head1 COPYRIGHT & LICENSE
