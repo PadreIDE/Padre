@@ -4,6 +4,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Add initial version of a regex editor. (SZABGAB)
     - Fixed ticket:728 "Changing locale crashes Padre" (AZAWAWI)
     - Menubar is now configurable but still lacks a dialog for this (SEWI)
+    - Beginner error checks are now configurable (turn each single one on
+      or off) (SEWI)
 
 0.49 2009.11.02
     - Fixed #691: Extract subroutine does not work for a script without
