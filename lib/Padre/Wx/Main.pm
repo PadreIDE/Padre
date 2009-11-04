@@ -1160,6 +1160,9 @@ sub relocale {
 	my %actions = ();
 	$self->ide->actions( \%actions );
 
+	# Create the actions (again)
+	Padre::Action::create($self);
+
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};
 	$self->{menu} = Padre::Wx::Menubar->new($self);
