@@ -240,7 +240,11 @@ sub run {
 	}
 
 	$self->{matched_text}->Clear;
-	$self->{matched_text}->AppendText("Matched '$match'");
+	if (defined $match) {
+		$self->{matched_text}->AppendText("Matched '$match'");
+	} else {
+		$self->{matched_text}->AppendText("No match");
+	}
 	return;
 }
 
