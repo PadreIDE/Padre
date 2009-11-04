@@ -303,6 +303,36 @@ Regex starting witha a quantifier such as
 
 =back
 
+=head1 HOW TO ADD ANOTHER ONE
+
+Please feel free to add as many checks as you like. This is done in three steps:
+
+=head2 Add the test
+
+Add one (or more) tests for this case to t/75-perl-beginner.t
+
+The test should be successful when your supplied sample fails the check and
+returns the correct errror message. As texts of error messages may change,
+try to match a good part which allows identification of the message but
+don't match the very exact text.
+
+Tests could use either oneliners written as strings within the testfile or
+external support files. There are samples for both ways in the test script.
+
+=head2 Add the check
+
+Add the check to the check-sub of this file (Document/Perl/Beginner.pm). There
+are plenty samples here. Remember to add a sample (and maybe short description)
+what would fail the test.
+
+Run the test script to match your test case(s) to the new check.
+
+=head2 Add the config option
+
+Go to Config.pm, look for the beginner error checks configuration and add a new
+setting for your new check there. It defaults to 1 (run the check), but a user
+could turn it off by setting this to 0 within the Padre configuration file.
+
 =head1 COPYRIGHT
 
 Copyright 2008-2009 The Padre development team as listed in Padre.pm.
