@@ -176,10 +176,10 @@ sub new {
 
 sub _modifiers {
 	return (
-		ignore_case => Wx::gettext('Ignore case (i)'),
-		single_line => Wx::gettext('Single-line (s)'),
-		multi_line  => Wx::gettext('Multi-line (m)'),
-		extended    => Wx::gettext('Extended (x)'),
+		ignore_case => sprintf( Wx::gettext('Ignore case (%s)'), 'i'),
+		single_line => sprintf( Wx::gettext('Single-line (%s)'), 's'),
+		multi_line  => sprintf( Wx::gettext('Multi-line (%s)'), 'm'),
+		extended    => sprintf( Wx::gettext('Extended (%s)'), 'x'),
 	);
 }
 
