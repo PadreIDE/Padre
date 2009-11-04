@@ -212,7 +212,7 @@ sub button_match {
 	eval {
 		if ( $original_text =~ /$regex/ )
 		{
-			$match = $&;
+			$match = substr($original_text, $-[0], $+[0] - $-[0]);
 		}
 	};
 	if ($@) {
@@ -280,7 +280,7 @@ checkboxes for modifiers
 window to enter regex
 window to enter original text
 window to show replaced text
-show $&
+show the match
 show $1, $2, etc
 English explanation of the regex
 
