@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 60 );
+	plan( tests => 7 );
 }
 use Test::NoWarnings;
 use t::lib::Padre;
