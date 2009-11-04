@@ -141,7 +141,7 @@ which means: map all @items and them add $extra_item without map'ing it.
 
 =cut
 
-	if ($config->begerror_map and  $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
+	if ( $config->begerror_map and $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
 		$self->_report("map (),x uses x also as list value for map.");
 		return;
 	}
@@ -154,7 +154,7 @@ Warn about Perl-standard package names being reused
 
 =cut
 
-	if ($config->begerror_DB and  $text =~ /^([\x00-\xff]*?)package DB[\;\:]/ ) {
+	if ( $config->begerror_DB and $text =~ /^([\x00-\xff]*?)package DB[\;\:]/ ) {
 		$self->_report("This file uses the DB-namespace which is used by the Perl Debugger.");
 		return;
 	}
@@ -173,7 +173,7 @@ Warn about Perl-standard package names being reused
 
 	# (Ticket #675)
 
-	if ($config->begerror_chomp and  $text =~ /^([\x00-\xff]*?)(print|[\=\.\,])[\s\t\r\n]*chomp\b/ ) {
+	if ( $config->begerror_chomp and $text =~ /^([\x00-\xff]*?)(print|[\=\.\,])[\s\t\r\n]*chomp\b/ ) {
 		$self->_report("chomp doesn't return the chomped value, it modifies the variable given as argument.");
 		return;
 	}
@@ -192,7 +192,9 @@ to actually change the array via s///.
 
 =cut
 
-	if ($config->begerror_map2 and  $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{[\s\t\r\n]*(\$_[\s\t\r\n]*\=\~[\s\t\r\n]*)?s\// ) {
+	if (    $config->begerror_map2
+		and $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{[\s\t\r\n]*(\$_[\s\t\r\n]*\=\~[\s\t\r\n]*)?s\// )
+	{
 		$self->_report("Substitute (s///) doesn't return the changed value even if map.");
 		return;
 	}
@@ -203,7 +205,7 @@ to actually change the array via s///.
 
 =cut
 
-	if ($config->begerror_perl6 and  $text =~ /^([\x00-\xff]*?)\(\<\@\w+\>\)/ ) {
+	if ( $config->begerror_perl6 and $text =~ /^([\x00-\xff]*?)\(\<\@\w+\>\)/ ) {
 		$self->_report("(<\@Foo>) is Perl6 syntax and usually not valid in Perl5.");
 		return;
 	}
@@ -215,7 +217,7 @@ to actually change the array via s///.
 
 =cut
 
-	if ($config->begerror_ifsetvar and  $text =~ /^([\x00-\xff]*?)if[\s\t\r\n]*\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w]/ ) {
+	if ( $config->begerror_ifsetvar and $text =~ /^([\x00-\xff]*?)if[\s\t\r\n]*\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w]/ ) {
 		$self->_report("A single = in a if-condition is usually a typo, use == or eq to compare.");
 		return;
 	}
@@ -226,7 +228,8 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ($config->begerror_pipeopen and (   $text
+	if ($config->begerror_pipeopen
+		and ( $text
 			=~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*(\,.+?)?[\s\t\r\n]*\,[\s\t\r\n]*?([\"\'])(.*?)\|(.*?)\3/
 		)
 		and ( length($4) > 0 )
@@ -243,7 +246,9 @@ Pipe | in open() not at the end or the beginning.
 
 =cut
 
-	if ( $config->begerror_pipe2open and $text =~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\3/ ) {
+	if (    $config->begerror_pipe2open
+		and $text =~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\3/ )
+	{
 		$self->_report("You can't use open to pipe to and from a command at the same time.");
 		return;
 	}

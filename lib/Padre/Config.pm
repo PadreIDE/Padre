@@ -770,94 +770,94 @@ setting(
 
 # Beginner error checks configuration
 setting(
-	name	 => 'begerror_split',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_split',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_warning',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_warning',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_map',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_map',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_DB',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_DB',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_chomp',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_chomp',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_map2',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_map2',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_perl6',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_perl6',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_ifsetvar',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_ifsetvar',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_pipeopen',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_pipeopen',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_pipe2open',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_pipe2open',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_regexq',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_regexq',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_elseif',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_elseif',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 setting(
-	name	 => 'begerror_close',
-	type	 => Padre::Constant::BOOLEAN,
-	store	 => Padre::Constant::HOST,
-	default  => 1,
+	name    => 'begerror_close',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HOST,
+	default => 1,
 );
 
 #####################################################################
