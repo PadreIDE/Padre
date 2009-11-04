@@ -185,10 +185,10 @@ sub new {
 
 sub _modifiers {
 	return (
-		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('Ignore case (%s)'), 'i') },
-		single_line => { mod => 's', name => sprintf( Wx::gettext('Single-line (%s)'), 's') },
-		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('Multi-line (%s)'), 'm')  },
-		extended    => { mod => 'x', name => sprintf( Wx::gettext('Extended (%s)'), 'x')    },
+		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('Ignore case (%s)'), 'i' ) },
+		single_line => { mod => 's', name => sprintf( Wx::gettext('Single-line (%s)'), 's' ) },
+		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('Multi-line (%s)'),  'm' ) },
+		extended    => { mod => 'x', name => sprintf( Wx::gettext('Extended (%s)'),    'x' ) },
 	);
 }
 
@@ -222,36 +222,37 @@ sub run {
 	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
 
 	# Padre->ide->wx->main->message("Match '$regex' '$original_text'");
-	
+
 	my $start = '';
 	my $end   = '';
-	my %m = _modifiers();
-	foreach my $name (keys %m) {
-		if ($self->{$name}->IsChecked) {
+	my %m     = _modifiers();
+	foreach my $name ( keys %m ) {
+		if ( $self->{$name}->IsChecked ) {
 			$start .= $m{$name}{mod};
 		} else {
-			$end .=  $m{$name}{mod};
+			$end .= $m{$name}{mod};
 		}
 	}
 	my $xism = "$start-$end";
 
 	$self->{matched_text}->Clear;
-	
+
 	my $match;
 	eval {
 		if ( $original_text =~ /(?$xism:$regex)/ )
 		{
-			$match = substr($original_text, $-[0], $+[0] - $-[0]);
+			$match = substr( $original_text, $-[0], $+[0] - $-[0] );
 		}
 	};
 	if ($@) {
 		my $main = Padre->ide->wx->main;
+
 		#$main->message("Match failure in $regex:  $@");
 		$self->{matched_text}->AppendText("Match failure in $regex:  $@");
 		return;
 	}
 
-	if (defined $match) {
+	if ( defined $match ) {
 		$self->{matched_text}->AppendText("Matched '$match'");
 	} else {
 		$self->{matched_text}->AppendText("No match");
@@ -274,8 +275,10 @@ sub button_replace {
 
 sub box_clicked {
 	my $self = shift;
+
 	#my $box  = shift;
 	$self->run();
+
 	#my $main = Padre->ide->wx->main;
 	#$main->message("Box $box");
 	return;
