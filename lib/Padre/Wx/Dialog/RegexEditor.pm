@@ -58,7 +58,7 @@ sub new {
 		$self->{$name} = Wx::CheckBox->new(
 			$self,
 			-1,
-			$m{$name},
+			$m{$name}{name},
 		);
 		Wx::Event::EVT_CHECKBOX(
 			$self,
@@ -176,10 +176,10 @@ sub new {
 
 sub _modifiers {
 	return (
-		ignore_case => sprintf( Wx::gettext('Ignore case (%s)'), 'i'),
-		single_line => sprintf( Wx::gettext('Single-line (%s)'), 's'),
-		multi_line  => sprintf( Wx::gettext('Multi-line (%s)'), 'm'),
-		extended    => sprintf( Wx::gettext('Extended (%s)'), 'x'),
+		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('Ignore case (%s)'), 'i') },
+		single_line => { mod => 's', name => sprintf( Wx::gettext('Single-line (%s)'), 's') },
+		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('Multi-line (%s)'), 'm')  },
+		extended    => { mod => 'x', name => sprintf( Wx::gettext('Extended (%s)'), 'x')    },
 	);
 }
 
@@ -207,10 +207,22 @@ sub button_match {
 	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
 
 	# Padre->ide->wx->main->message("Match '$regex' '$original_text'");
-
+	
+	my $start = '';
+	my $end   = '';
+	my %m = _modifiers();
+	foreach my $name (keys %m) {
+		if ($self->{$name}->IsChecked) {
+			$start .= $m{$name}{mod};
+		} else {
+			$end .=  $m{$name}{mod};
+		}
+	}
+	my $xism = "$start-$end";
+	
 	my $match;
 	eval {
-		if ( $original_text =~ /$regex/ )
+		if ( $original_text =~ /(?$xism:$regex)/ )
 		{
 			$match = substr($original_text, $-[0], $+[0] - $-[0]);
 		}
@@ -243,8 +255,8 @@ sub box_clicked {
 	my $self = shift;
 	my $box  = shift;
 
-	my $main = Padre->ide->wx->main;
-	$main->message("Box $box");
+	#my $main = Padre->ide->wx->main;
+	#$main->message("Box $box");
 	return;
 
 }
