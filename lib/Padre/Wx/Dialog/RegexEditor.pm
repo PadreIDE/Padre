@@ -74,7 +74,7 @@ sub new {
 	$self->{button_match} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext('Match'),
+		Wx::gettext('&Match'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -88,7 +88,7 @@ sub new {
 	$self->{button_replace} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext('Replace'),
+		Wx::gettext('&Replace'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -102,7 +102,7 @@ sub new {
 	$self->{button_close} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		Wx::gettext('Close'),
+		Wx::gettext('&Close'),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
