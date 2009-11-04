@@ -174,7 +174,7 @@ sub refresh {
 			my $title = $self->{$obj}->title;
 			my $hotkey;
 			if ($title =~ /\&(.)/) {
-				my $char = $1;
+				my $char = lc($1);
 				$hotkey = $char if ( ! defined( $self->{hotkeys}->{$char} ))
 					or ( $self->{hotkeys}->{$char} eq ref( $self->{$obj} ) );
 			}
@@ -199,7 +199,7 @@ sub refresh {
 				}
 			}
 			if (defined($hotkey)) {
-					$self->{hotkeys}->{$hotkey} = ref( $self->{$obj} );
+					$self->{hotkeys}->{lc($hotkey)} = ref( $self->{$obj} );
 			} else {
 				warn 'No hotkey defined or assignable for '.$obj;
 			}
