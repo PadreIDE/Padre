@@ -10,6 +10,7 @@ use Cwd                    ();
 use Padre::HelpProvider    ();
 use Padre::DocBrowser::POD ();
 use Padre::Pod2HTML        ();
+use Padre::Util            ();
 
 our $VERSION = '0.49';
 our @ISA     = 'Padre::HelpProvider';
@@ -143,35 +144,38 @@ sub help_init {
 sub _parse_perlopref {
 	my $self = shift;
 
-	# Open perlopref.pod for reading
-	my $perlopref = Cwd::realpath( File::Spec->join( Padre::Util::sharedir('doc'), 'perlopref', 'perlopref.pod' ) );
-	my $fh;
-	open $fh, $perlopref;
-
 	my %index = ();
 
-	# Add PRECEDENCE to index
-	until ( <$fh> =~ /=head1 PRECEDENCE/ ) { }
+	# Open perlopref.pod for reading
+	my $perlopref = File::Spec->join( Padre::Util::sharedir('doc'), 'perlopref', 'perlopref.pod' );
+	my $fh;
+	if(open $fh, $perlopref) {
 
-	my $line;
-	while ( $line = <$fh> ) {
-		last if ( $line =~ /=head1 OPERATORS/ );
-		$index{PRECEDENCE} .= $line;
-	}
+		# Add PRECEDENCE to index
+		until ( <$fh> =~ /=head1 PRECEDENCE/ ) { }
 
-	# Add OPERATORS to index
-	my $op;
-	while ( $line = <$fh> ) {
-		if ( $line =~ /=head2\s+(.+)$/ ) {
-			$op = $1;
-			$index{$op} = $line;
-		} elsif ($op) {
-			$index{$op} .= $line;
+		my $line;
+		while ( $line = <$fh> ) {
+			last if ( $line =~ /=head1 OPERATORS/ );
+			$index{PRECEDENCE} .= $line;
 		}
-	}
 
-	# and we're done
-	close $fh;
+		# Add OPERATORS to index
+		my $op;
+		while ( $line = <$fh> ) {
+			if ( $line =~ /=head2\s+(.+)$/ ) {
+				$op = $1;
+				$index{$op} = $line;
+			} elsif ($op) {
+				$index{$op} .= $line;
+			}
+		}
+
+		# and we're done
+		close $fh;
+	} else {
+		Padre::Util::debug("Cannot open perlopref.pod\n");
+	}
 
 	return \%index;
 }
