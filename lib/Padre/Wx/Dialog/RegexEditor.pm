@@ -348,34 +348,50 @@ Padre::Wx::Dialog::RegexEditor - dialog to make it easy to creat a Regular expre
 
 =head1 DESCRIPTION
 
-checkboxes for modifiers
 
-	Ignore case (i), 
-	Single-line (s),
-	Multi-line (m),
- 	Extended (x), 
+The Regex Editor provides an interface to easily create Regular 
+expressions used in Perl.
 
-window to enter regex
-window to enter original text
-window to show replaced text
+The user can insert a regex - the surrounding / characters are not
+needed and a text. The Regex Editor will automatically display the matching 
+text in the bottom right window.
 
-show the match
 
-show $1, $2, etc
+At the top of the window the user can select any of the four
+regex modifiers:
 
-English explanation of the regex
+Ignore case (i)
 
-TODO allow the change/replacement of the // around the regex
+Single-line (s)
+
+Multi-line (m)
+
+Extended (x)
+
+
+=head1 TODO
+
+Implement substitute as well
+
+Global match
+
+Allow the change/replacement of the // around the regex
+
+Highlight the match in the source text instead of in 
+a separate window
 
 Display the captured groups in a tree hierarchy similar to Rx ?
 
-Group                  Span (character) Value
-Match 0 (Group 0)      4-7              the actual match
+  Group                  Span (character) Value
+  Match 0 (Group 0)      4-7              the actual match
 
-display the various Perl variable containing the relevant values
-e.g. the @- and @+ arrays
+Display the various Perl variable containing the relevant values
+e.g. the @- and @+ arrays, the %+ hash
+$1, $2 ..
 
+point out what to use instead of $@ and $' and $`
 
+English explanation of the regex
 
 =head1 COPYRIGHT & LICENSE
 
