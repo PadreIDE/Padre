@@ -152,7 +152,8 @@ sub dirname {
 
 sub read {
 	my $self = shift;
-	print STDERR $self->{_host}.': '.$self->{_file}.' --> '.$self->{_tmpfile}."\n";
+
+	# TODO: Better error handling
 	$self->{_ftp}->get($self->{_file},$self->{_tmpfile}) or warn $@;
 	open my $tmpfh,$self->{_tmpfile};
 	return join('',<$tmpfh>);
@@ -176,6 +177,7 @@ sub write {
 	print {$fh} $content;
 	close $fh;
 	
+	# TODO: Better error handling
 	$self->{_ftp}->put($self->{_tmpfile},$self->{_file}) or warn $@;
 
 	return 1;
