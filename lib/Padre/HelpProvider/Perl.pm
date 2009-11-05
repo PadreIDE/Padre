@@ -144,7 +144,7 @@ sub _parse_perlopref {
 	my $self = shift;
 
 	# Open perlopref.pod for reading
-	my $perlopref = Cwd::realpath( File::Spec->join( Padre::Util::sharedir('doc'), 'perlopref.pod' ) );
+	my $perlopref = Cwd::realpath( File::Spec->join( Padre::Util::sharedir('doc'), 'perlopref', 'perlopref.pod' ) );
 	my $fh;
 	open $fh, $perlopref;
 
