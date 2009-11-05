@@ -2815,6 +2815,9 @@ sub setup_editor {
 
 	$self->update_last_session unless $skip_update_session;
 
+	# Refresh the menu (to include or remove document dependent menu items)
+	Padre->ide->wx->main->menu->refresh;
+
 	return $id;
 }
 
