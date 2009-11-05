@@ -7,6 +7,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Beginner error checks are now configurable (turn each single one on
       or off) (SEWI)
     - Fixed ticket #710: share/doc/perlopref.pod missing author/license (AZAWAWI)
+    - Added basic FTP-remote-editing capability (SEWI)
 
 0.49 2009.11.02
     - Fixed #691: Extract subroutine does not work for a script without
