@@ -916,6 +916,7 @@ sub run {
 		\@perldiag_locales,
 		\@default_line_ending_localized,
 	);
+	$self->{dialog}->Centre;
 	my $ret = $self->{dialog}->ShowModal;
 
 	if ( $ret eq Wx::wxID_CANCEL ) {
