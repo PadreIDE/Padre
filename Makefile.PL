@@ -79,6 +79,7 @@ requires 'File::ShareDir'           => '1.00';
 #requires      'File::ShareDir::PAR'      => '0.04';
 requires 'File::Spec'            => '3.2701';
 requires 'File::Spec::Functions' => '3.2701';
+requires 'File::Temp'            => 0;
 requires 'File::Which'           => '1.08';
 requires 'FindBin'               => 0;
 requires 'Format::Human::Bytes'  => 0;
