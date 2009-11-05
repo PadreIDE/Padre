@@ -160,25 +160,26 @@ sub read {
 
 sub readonly {
 	# Temporary until writing is implemented
-	return 1;
+	return 0;
 }
 
-# TODO: Maybe use WebDAV to enable writing
-#sub _todo_write {
-#	my $self    = shift;
-#	my $content = shift;
-#	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
-#
-#	my $fh;
-#	if ( !open $fh, ">$encode", $self->{filename} ) {
-#		$self->{error} = $!;
-#		return 0;
-#	}
-#	print {$fh} $content;
-#	close $fh;
-#
-#	return 1;
-#}
+sub write {
+	my $self    = shift;
+	my $content = shift;
+	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
+
+	my $fh;
+	if ( !open $fh, ">$encode", $self->{_tmpfile} ) {
+		$self->{error} = $!;
+		return 0;
+	}
+	print {$fh} $content;
+	close $fh;
+	
+	$self->{_ftp}->put($self->{_tmpfile},$self->{_file}) or warn $@;
+
+	return 1;
+}
 
 1;
 
