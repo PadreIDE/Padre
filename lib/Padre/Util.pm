@@ -135,7 +135,7 @@ sub get_matches {
 	$text = Encode::encode( 'utf-8', $text );
 
 	my @matches;
-	while ( $text =~ /($regex)/g ) {
+	while ( $text =~ /$regex/mg ) {
 		my $e = pos($text);
 		my $s = $e - length($1);
 		push @matches, [ $s, $e ];

@@ -188,14 +188,40 @@ sub get_functions {
 	$text =~ s/(\n)\n*__(?:DATA|END)__\b.*\z/$1/s;
 	$text =~ s/\n\n=\w+.+?\n\n=cut\b.+?\n+/\n\n/sg;
 
-	return $text =~ m/\n\s*sub\s+(\w+(?:::\w+)*)/g;
+	# Removes double \
+	$text =~ s/\\{2}//sg;
+
+	# Removes substitution functions
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)s(\W)(?:.*?)(?<!\\)\1(?:.*?)(?<!\\)\1\w*\s*(?<!;)?//g;
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)s\{(?:.*?)(?<!\\)\}\{(?:.*?)(?<!\\)\}\w*\s*(?<!;)?//sg;
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)s\((?:.*?)(?<!\\)\)\((?:.*?)(?<!\\)\)\w*\s*(?<!;)?//sg;
+
+	# Removes translate functions
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)tr(\W)(?:.*?)(?<!\\)\1(?:.*?)(?<!\\)\1\w*\s*//sg;
+
+	# Removes matches functions
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)m(\W)(?:.*?)(?<!\\)\1\w*\s*//sg;
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)m\{(?:.*?)(?<!\\)\}\w*\s*//sg;
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)m\((?:.*?)(?<!\\)\)\w*\s*//sg;
+	$text =~ s/(?:[\$\@\%]\w+\s*[!=]~\s*)?(?<!\w)\/(?:.*?)(?<!\\)\/\w*\s*//sg;
+
+	# Remove quoted strings, attributions and comparations
+	$text =~ s/(?:[\$\@\%]\w+\s*=+\s*|\w+\s*)?(?<![\w\\])(["']).*?(?<!\\)\1//sg;
+
+	# Removes everything after # in each line 
+	$text =~ s/#.*$//mg;
+
+#	return $text =~ m/\n\s*sub\s+(\w+(?:::\w+)*)/g;
+#	return $text =~ m/(?:(?:^[^#]*?)sub\s+(\w+(?:::\w+)*))+?/mg;
+	return $text =~ m/(?:^|[};])\s*sub\s+(\w+(?:::\w+)*)/mg;
 }
 
 sub get_function_regex {
 
 	# This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without
 	# triggering a "Variable length lookbehind not implemented" error.
-	return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
+	#return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
+	return qr/(?:^|[^#\s])\s*(sub\s+$_[1])\b/;
 }
 
 sub get_command {
