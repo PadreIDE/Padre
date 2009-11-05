@@ -295,6 +295,9 @@ sub _content_info {
 
 	$ram = '(' . Wx::gettext('unsupported') . ')' if $ram eq '0';
 
+        # Yes, THIS variable should have this upper case char :-)
+        my $Perl_version = $^V || $];
+
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -305,7 +308,7 @@ sub _content_info {
         Perl
         </td>
         <td>
-        $^V
+        $Perl_version
         </td>
       </tr>
       <tr>
