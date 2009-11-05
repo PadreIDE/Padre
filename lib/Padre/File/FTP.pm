@@ -18,47 +18,49 @@ sub new {
 	# Don't add a new overall-dependency to Padre:
 	eval { require Net::FTP; };
 	if ($@) {
+
 		# TODO: Warning should go to a user popup not to the text console
 		warn 'Net::FTP is not installed, Padre::File::FTP currently depends on it.';
 		return;
 	}
 
 	# Create myself
-		my $self = bless {
-		filename => $url }, $class;
+	my $self = bless { filename => $url }, $class;
 
 ##### START URL parsing #####
 
 ##### NO REGEX's below this line! #####
 
 	# TODO: Improve URL parsing
-	if ($url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i) {
+	if ( $url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i ) {
+
 		# URL parsing failed
 		# TODO: Warning should go to a user popup not to the text console
-		warn 'Unable to parse '.$url;
+		warn 'Unable to parse ' . $url;
 		return;
 	}
 
 
 	# Login data
-	if (defined($2)) {
-	 $self->{_user} = $2;
-	 $self->{_pass} = $4 if defined($4);
+	if ( defined($2) ) {
+		$self->{_user} = $2;
+		$self->{_pass} = $4 if defined($4);
 	} else {
-	 $self->{_user} = 'ftp';
-	 $self->{_pass} = 'padre_user@devnull.perlide.org';
+		$self->{_user} = 'ftp';
+		$self->{_pass} = 'padre_user@devnull.perlide.org';
 	}
-	
+
 	# Host & port
 	$self->{_host} = $5;
 	$self->{_port} = $7 || 21;
-	
+
 	# Path & filename
 	$self->{_file} = $8;
 
 ##### END URL parsing, regex is allowed again #####
 
-	if (! defined($self->{_pass})) {
+	if ( !defined( $self->{_pass} ) ) {
+
 		# TODO: Ask the user for a password
 	}
 
@@ -66,22 +68,25 @@ sub new {
 
 	# Create FTP object and connection
 	$self->{_ftp} = Net::FTP->new(
-		Host => $self->{_host},
-		Port => $self->{_port},
-		Timeout => 120, # TODO: Make this configurable
-		Passive => 1, # TODO: Make this configurable
-#		Debug => 3, # Enable for FTP-debugging to STDERR
+		Host    => $self->{_host},
+		Port    => $self->{_port},
+		Timeout => 120,           # TODO: Make this configurable
+		Passive => 1,             # TODO: Make this configurable
+
+		#		Debug => 3, # Enable for FTP-debugging to STDERR
 	);
 
-	if (!defined($self->{_ftp})) {
+	if ( !defined( $self->{_ftp} ) ) {
+
 		# TODO: Warning should go to a user popup not to the text console
-		warn 'Error connecting to '.$self->{_host}.':'.$self->{_port}.': '.$@;
+		warn 'Error connecting to ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
 		return;
 	}
 
-	if ( ! $self->{_ftp}->login($self->{_user},$self->{_pass})) {
+	if ( !$self->{_ftp}->login( $self->{_user}, $self->{_pass} ) ) {
+
 		# TODO: Warning should go to a user popup not to the text console
-		warn 'Error logging in on '.$self->{_host}.':'.$self->{_port}.': '.$@;
+		warn 'Error logging in on ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
 		return;
 	}
 
@@ -92,7 +97,6 @@ sub new {
 	$self->{_file_temp} = File::Temp->new( UNLINK => 1 );
 	$self->{_tmpfile} = $self->{_file_temp}->filename;
 
-
 	return $self;
 }
 
@@ -102,7 +106,7 @@ sub can_run {
 
 sub size {
 	my $self = shift;
-	return $self->{_ftp}->size($self->{_file});
+	return $self->{_ftp}->size( $self->{_file} );
 }
 
 sub _todo_mode {
@@ -137,7 +141,7 @@ sub basename {
 
 	my $name = $self->{_file};
 	$name =~ s/^.*\///;
-	
+
 	return $name;
 }
 
@@ -146,7 +150,7 @@ sub dirname {
 
 	my $dir = $self->{_file};
 	$dir =~ s/\/[^\/]*$//;
-	
+
 	return $dir;
 }
 
@@ -154,12 +158,13 @@ sub read {
 	my $self = shift;
 
 	# TODO: Better error handling
-	$self->{_ftp}->get($self->{_file},$self->{_tmpfile}) or warn $@;
-	open my $tmpfh,$self->{_tmpfile};
-	return join('',<$tmpfh>);
+	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or warn $@;
+	open my $tmpfh, $self->{_tmpfile};
+	return join( '', <$tmpfh> );
 }
 
 sub readonly {
+
 	# Temporary until writing is implemented
 	return 0;
 }
@@ -176,9 +181,9 @@ sub write {
 	}
 	print {$fh} $content;
 	close $fh;
-	
+
 	# TODO: Better error handling
-	$self->{_ftp}->put($self->{_tmpfile},$self->{_file}) or warn $@;
+	$self->{_ftp}->put( $self->{_tmpfile}, $self->{_file} ) or warn $@;
 
 	return 1;
 }

@@ -82,11 +82,11 @@ EOTEXT
 
 package main;
 
-my $main = main_mockup->new;
+my $main      = main_mockup->new;
 my @functions = Padre::Document::Perl::get_functions($main);
 
 my @expected = qw(test1 test2 test6 test9 test10 test12 test13 test14 test15 test16 test17 test22 test24);
 
-is(scalar @functions, scalar @expected, "all valid subs should be detected");
+is( scalar @functions, scalar @expected, "all valid subs should be detected" );
 
-is_deeply(\@functions, [@expected], "find correct sub names");
+is_deeply( \@functions, [@expected], "find correct sub names" );

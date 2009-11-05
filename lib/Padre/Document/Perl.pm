@@ -208,11 +208,11 @@ sub get_functions {
 	# Remove quoted strings, attributions and comparations
 	$text =~ s/(?:[\$\@\%]\w+\s*=+\s*|\w+\s*)?(?<![\w\\])(["']).*?(?<!\\)\1//sg;
 
-	# Removes everything after # in each line 
+	# Removes everything after # in each line
 	$text =~ s/#.*$//mg;
 
-#	return $text =~ m/\n\s*sub\s+(\w+(?:::\w+)*)/g;
-#	return $text =~ m/(?:(?:^[^#]*?)sub\s+(\w+(?:::\w+)*))+?/mg;
+	#	return $text =~ m/\n\s*sub\s+(\w+(?:::\w+)*)/g;
+	#	return $text =~ m/(?:(?:^[^#]*?)sub\s+(\w+(?:::\w+)*))+?/mg;
 	return $text =~ m/(?:^|[};])\s*sub\s+(\w+(?:::\w+)*)/mg;
 }
 
