@@ -111,6 +111,9 @@ sub new { # URL
 	} elsif ( $URL =~ /^https?\:\/\//i ) {
 		require Padre::File::HTTP;
 		$self = Padre::File::HTTP->new($URL);
+	} elsif ( $URL =~ /^ftp?\:/i ) {
+		require Padre::File::FTP;
+		$self = Padre::File::FTP->new($URL);
 	} else {
 		require Padre::File::Local;
 		$self = Padre::File::Local->new($URL);
