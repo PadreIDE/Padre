@@ -27,41 +27,41 @@ sub new {
 
 	# File Navigation
 	Padre::Action->new(
-		name       => 'window.next_file',
-		label      => Wx::gettext('Next File'),
-		shortcut   => 'Ctrl-TAB',
+		name        => 'window.next_file',
+		label       => Wx::gettext('Next File'),
+		shortcut    => 'Ctrl-TAB',
 		need_editor => 1,
-		menu_event => sub {
+		menu_event  => sub {
 			Padre::Wx::Main::on_next_pane(@_);
 		},
 	);
 
 	Padre::Action->new(
-		name       => 'window.previous_file',
-		label      => Wx::gettext('Previous File'),
-		shortcut   => 'Ctrl-Shift-TAB',
+		name        => 'window.previous_file',
+		label       => Wx::gettext('Previous File'),
+		shortcut    => 'Ctrl-Shift-TAB',
 		need_editor => 1,
-		menu_event => sub {
+		menu_event  => sub {
 			Padre::Wx::Main::on_prev_pane(@_);
 		},
 	);
 
 	Padre::Action->new(
-		name       => 'window.last_visited_file',
-		label      => Wx::gettext('Last Visited File'),
-		shortcut   => 'Ctrl-Shift-P',
+		name        => 'window.last_visited_file',
+		label       => Wx::gettext('Last Visited File'),
+		shortcut    => 'Ctrl-Shift-P',
 		need_editor => 1,
-		menu_event => sub {
+		menu_event  => sub {
 			Padre::Wx::Main::on_last_visited_pane(@_);
 		},
 	);
 
 	Padre::Action->new(
-		name       => 'window.right_click',
-		label      => Wx::gettext('Right Click'),
-		shortcut   => 'Alt-/',
+		name        => 'window.right_click',
+		label       => Wx::gettext('Right Click'),
+		shortcut    => 'Alt-/',
 		need_editor => 1,
-		menu_event => sub {
+		menu_event  => sub {
 			my $editor = $_[0]->current->editor;
 			if ($editor) {
 				$editor->on_right_down( $_[1] );

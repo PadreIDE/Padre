@@ -94,41 +94,41 @@ sub new {
 		-1,
 		'Matching',
 	);
-	Wx::Event::EVT_RADIOBUTTON($self, $self->{matching}, sub { $_[0]->run; });
+	Wx::Event::EVT_RADIOBUTTON( $self, $self->{matching}, sub { $_[0]->run; } );
 	$self->{substituting} = Wx::RadioButton->new(
 		$self,
 		-1,
 		'Substituting',
 	);
-	Wx::Event::EVT_RADIOBUTTON($self, $self->{substituting}, sub { $_[0]->run; });
+	Wx::Event::EVT_RADIOBUTTON( $self, $self->{substituting}, sub { $_[0]->run; } );
 
 	# Buttons
-#	$self->{button_match} = Wx::Button->new(
-#		$self,
-#		-1,
-#		Wx::gettext('&Match'),
-#	);
-#	Wx::Event::EVT_BUTTON(
-#		$self,
-#		$self->{button_match},
-#		sub {
-#			$_[0]->button_match;
-#		},
-#	);
-#
-#	# Preferences Button
-#	$self->{button_replace} = Wx::Button->new(
-#		$self,
-#		-1,
-#		Wx::gettext('&Replace'),
-#	);
-#	Wx::Event::EVT_BUTTON(
-#		$self,
-#		$self->{button_replace},
-#		sub {
-#			$_[0]->button_replace;
-#		},
-#	);
+	#	$self->{button_match} = Wx::Button->new(
+	#		$self,
+	#		-1,
+	#		Wx::gettext('&Match'),
+	#	);
+	#	Wx::Event::EVT_BUTTON(
+	#		$self,
+	#		$self->{button_match},
+	#		sub {
+	#			$_[0]->button_match;
+	#		},
+	#	);
+	#
+	#	# Preferences Button
+	#	$self->{button_replace} = Wx::Button->new(
+	#		$self,
+	#		-1,
+	#		Wx::gettext('&Replace'),
+	#	);
+	#	Wx::Event::EVT_BUTTON(
+	#		$self,
+	#		$self->{button_replace},
+	#		sub {
+	#			$_[0]->button_replace;
+	#		},
+	#	);
 
 	# Close Button
 	$self->{button_close} = Wx::Button->new(
@@ -165,8 +165,8 @@ sub new {
 
 	my $operation = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$operation->AddStretchSpacer;
-	$operation->Add( $self->{matching},    0, Wx::wxALL, 1 );
-	$operation->Add( $self->{substituting},    0, Wx::wxALL, 1 );
+	$operation->Add( $self->{matching},     0, Wx::wxALL, 1 );
+	$operation->Add( $self->{substituting}, 0, Wx::wxALL, 1 );
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -274,7 +274,7 @@ sub run {
 
 	$self->{matched_text}->Clear;
 
-	if ($self->{matching}->GetValue) {
+	if ( $self->{matching}->GetValue ) {
 		my $match;
 		eval {
 			if ( $original_text =~ /(?$xism:$regex)/ )
@@ -298,7 +298,7 @@ sub run {
 	} else {
 		$self->{matched_text}->AppendText("Substitute not yet implemented");
 	}
-	
+
 	return;
 }
 

@@ -149,7 +149,7 @@ sub _parse_perlopref {
 	# Open perlopref.pod for reading
 	my $perlopref = File::Spec->join( Padre::Util::sharedir('doc'), 'perlopref', 'perlopref.pod' );
 	my $fh;
-	if(open $fh, $perlopref) {
+	if ( open $fh, $perlopref ) {
 
 		# Add PRECEDENCE to index
 		until ( <$fh> =~ /=head1 PRECEDENCE/ ) { }

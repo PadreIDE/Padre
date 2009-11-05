@@ -11,7 +11,7 @@ use Padre::Action::Plugins  ();
 use Padre::Action::Refactor ();
 use Padre::Action::Run      ();
 use Padre::Action::Search   ();
-use Padre::Action::Window  ();
+use Padre::Action::Window   ();
 
 our $VERSION = '0.49';
 
