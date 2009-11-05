@@ -15,6 +15,7 @@ sub new {
 	# Don't add a new overall-dependency to Padre:
 	eval { require LWP::UserAgent; };
 	if ($@) {
+		# TODO: This should be an error popup to the user, not a shell window warning
 		warn 'LWP::UserAgent is not installed, Padre::File::HTTP currently depends on it.';
 		return;
 	}
