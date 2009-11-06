@@ -75,7 +75,7 @@ sub new {
 		name        => 'help.current',
 		need_editor => 1,
 		label       => Wx::gettext('Current Document'),
-		comment     => Wx::gettext('Show the POD (Perdoc) version of the current document'),
+		comment     => Wx::gettext('Show the POD (Perldoc) version of the current document'),
 		menu_event  => sub {
 			$_[0]->help( $_[0]->current->document );
 		},
