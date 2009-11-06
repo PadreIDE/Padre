@@ -219,11 +219,13 @@ sub refresh {
 
 	}
 
+	print STDERR "last: $count / items ".$self->wx->GetMenuCount."\n";
 	# Remove items if there are more than we replaced
 	if ( $count < ( $self->wx->GetMenuCount - 1 ) ) {
-		for my $item_no ( ( $count + 1 ) .. $self->wx->GetMenuCount ) {
+		while ( $count < ($self->wx->GetMenuCount - 1) ) {
+			print STDERR "Remove ".($self->wx->GetMenuCount - 1)."\n";
 			pop @{ $self->{items} };
-			$self->wx->Remove($item_no);
+			$self->wx->Remove($self->wx->GetMenuCount - 1);
 		}
 	}
 
