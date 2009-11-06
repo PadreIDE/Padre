@@ -526,8 +526,97 @@ sub find_variable_declaration {
 	return ();
 }
 
+sub find_method_declaration {
+	my ($self) = @_;
 
+	my ( $location, $token ) = _get_current_symbol( $self->editor );
+	unless ( defined $location ) {
+		Wx::MessageBox(
+			Wx::gettext("Current cursor does not seem to point at a method"),
+			Wx::gettext("Check cancelled"),
+			Wx::wxOK,
+			Padre->ide->wx->main
+		);
+		return ();
+	}
+	if ($token =~ /^\w+$/) {
+		# check if there is -> before or (  after or shall we look it up in the list of existing methods?
+		# search for sub someting in
+		#    current file
+		#    all the files in the project directory (if in project)
+		# cache the list of methods found
+	}
 
+	Wx::MessageBox(
+		Wx::gettext("Current '$token' $location"),
+		Wx::gettext("Check cancelled"),
+		Wx::wxOK,
+		Padre->ide->wx->main
+	);
+	my ($found, $filename) = $self->_find_method($token);
+	if (not $found) {
+		Wx::MessageBox(
+			Wx::gettext("Current '$token' not found"),
+			Wx::gettext("Check cancelled"),
+			Wx::wxOK,
+			Padre->ide->wx->main
+		);
+		return;
+	}
+	if (not $filename) {
+		#print "No filename\n";
+		# goto $line in current file
+		$self->goto_sub($token);
+	} else {
+		my $main = Padre->ide->wx->main;
+		# open or switch to file
+		my $id = $main->find_editor_of_file($filename);
+		if (not defined $id) {
+			my $id = $main->setup_editor($filename);
+		}
+		#print "Filename '$filename' id '$id'\n";
+		# goto $line in that file
+		return if not defined $id;
+		my $editor = $main->notebook->GetPage($id);
+		$editor->{Document}->goto_sub($token);
+	}
+	
+
+	return ();
+}
+
+sub _find_method {
+	my ($self, $name) = @_;
+	# TODO unify with code in Padre::Wx::FunctionList
+	if (not $self->{_methods_}{$name}) {
+		$self->{_methods_}{$_} = $self->filename for $self->get_functions;
+		# search also in other files
+	}
+	#use Data::Dumper;
+	#print Dumper $self->{_methods_};
+
+	if ($self->{_methods_}{$name}) {
+		return 1, $self->{_methods_}{$name};
+	}
+	return;
+
+}
+# TODO temp function given a name of a subroutine and move the cursor 
+# to its develaration, need to be improved ~ szabgab
+sub goto_sub {
+	my ($self, $name) = @_;
+	my $text = $self->text_get;
+	my @lines = split /\n/, $text;
+	#print "Name '$name'\n";
+	for my $i (0..@lines-1) {
+		#print "L: $lines[$i]\n";
+		if ($lines[$i] =~ /sub \s+ $name/x) {
+			$self->editor->goto_line_centerize($i);
+			return 1;
+		}
+	}
+	return;
+}
 
 
 #####################################################################

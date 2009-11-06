@@ -71,6 +71,16 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name       => 'perl.find_method',
+		label      => Wx::gettext('Find Method Declaration'),
+		menu_event => sub {
+			my $doc = $_[0]->current->document;
+			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+			$doc->find_method_declaration;
+		},
+	);
+
+	Padre::Action->new(
 		name       => 'perl.vertically_align_selected',
 		label      => Wx::gettext('Vertically Align Selected'),
 		comment    => Wx::gettext('Align a selection of text to the same left column.'),

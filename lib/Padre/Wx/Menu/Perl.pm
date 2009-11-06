@@ -51,6 +51,12 @@ sub new {
 		'perl.find_variable',
 	);
 
+	$self->{find_method} = $self->add_menu_action(
+		$self,
+		'perl.find_method',
+	);
+
+
 	$self->AppendSeparator;
 
 	$self->add_menu_action(
