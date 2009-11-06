@@ -11,6 +11,7 @@ use Padre::Document                 ();
 use Padre::Util                     ();
 use Padre::Perl                     ();
 use Padre::Document::Perl::Beginner ();
+use File::Find::Rule                ();
 
 our $VERSION = '0.49';
 our @ISA     = 'Padre::Document';
@@ -587,10 +588,27 @@ sub find_method_declaration {
 
 sub _find_method {
 	my ($self, $name) = @_;
-	# TODO unify with code in Padre::Wx::FunctionList
+	# TODO: unify with code in Padre::Wx::FunctionList
+	# TODO: lots of improvement needed here
 	if (not $self->{_methods_}{$name}) {
-		$self->{_methods_}{$_} = $self->filename for $self->get_functions;
-		# search also in other files
+		my $filename = $self->filename;
+		$self->{_methods_}{$_} = $filename for $self->get_functions;
+		my $project_dir = Padre::Util::get_project_dir($filename);
+		if ($project_dir) {
+			my @files = File::Find::Rule->file
+					->name('*.pm')
+					->in(File::Spec->catfile($project_dir, 'lib'));
+			foreach my $f (@files) {
+				if (open my $fh, '<', $f) {
+					my $lines = do { local $/ = undef; <$fh> };
+					my @subs = $lines =~ /sub\s+(\w+)/g;
+					#use Data::Dumper;
+					#print Dumper \@subs;
+					$self->{_methods_}{$_} = $f for @subs;
+				}
+			}
+			
+		}
 	}
 	#use Data::Dumper;
 	#print Dumper $self->{_methods_};
