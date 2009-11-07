@@ -25,7 +25,7 @@ sub new {
 
 	my $self = bless { filename => $_[0], UA => LWP::UserAgent->new() }, $class;
 	$self->{protocol} = 'http'; # Should not be overridden
-	$self->{UA}->timeout($config->file_http_timeout);
+	$self->{UA}->timeout( $config->file_http_timeout );
 	$self->{UA}->env_proxy;
 	return $self;
 }

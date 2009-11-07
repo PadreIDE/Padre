@@ -50,7 +50,8 @@ sub new {
 			if ( ( defined $focus ) and $focus->isa('Padre::Wx::ErrorList') ) {
 				$_[0]->errorlist->on_menu_help_context_help;
 			} else {
-	                        #Show help for selected text
+
+				#Show help for selected text
 				$_[0]->help( $_[0]->current->text );
 				return;
 			}

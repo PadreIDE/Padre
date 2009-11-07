@@ -13,7 +13,7 @@ use Padre::MimeTypes                       ();
 our $VERSION = '0.49';
 our @ISA     = 'Padre::Wx::Dialog';
 
-our %PANELS = ('Padre::Wx::Dialog::Preferences::File' => 'Local/Remote file access');
+our %PANELS = ( 'Padre::Wx::Dialog::Preferences::File' => 'Local/Remote file access' );
 
 =pod
 

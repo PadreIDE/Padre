@@ -32,29 +32,30 @@ sub panel {
 
 	my $table = [
 
-# Padre::File::HTTP
-		[   [ 'Wx::StaticText', undef,     Wx::gettext('File access via HTTP') ],
-			[  ]
+		# Padre::File::HTTP
+		[   [ 'Wx::StaticText', undef, Wx::gettext('File access via HTTP') ],
+			[]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout:') ],
 			[ 'Wx::SpinCtrl', 'file_http_timeout', $config->file_http_timeout, 10, 900 ]
 		],
 
-# Padre::File::FTP
-		[   [ 'Wx::StaticText', undef,     Wx::gettext('File access via FTP') ],
-			[  ]
+		# Padre::File::FTP
+		[   [ 'Wx::StaticText', undef, Wx::gettext('File access via FTP') ],
+			[]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout:') ],
 			[ 'Wx::SpinCtrl', 'file_ftp_timeout', $config->file_ftp_timeout, 10, 900 ]
 		],
 		[   [   'Wx::CheckBox', 'file_ftp_passive', ( $config->file_ftp_passive ? 1 : 0 ),
-			Wx::gettext('Use FTP passive mode')
+				Wx::gettext('Use FTP passive mode')
 			],
 			[]
 		],
-#		[   [ 'Wx::StaticText', undef,     Wx::gettext('Sample text input:') ],
-#			[ 'Wx::TextCtrl',   'text_sample', $config->text_sample ]
-#		],
+
+		#		[   [ 'Wx::StaticText', undef,     Wx::gettext('Sample text input:') ],
+		#			[ 'Wx::TextCtrl',   'text_sample', $config->text_sample ]
+		#		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -69,14 +70,14 @@ sub save {
 
 	my $config = Padre->ide->config;
 
-# Padre::File::HTTP
+	# Padre::File::HTTP
 
 	$config->set(
 		'file_http_timeout',
 		$data->{file_http_timeout}
 	);
 
-# Padre::File::FTP
+	# Padre::File::FTP
 
 	$config->set(
 		'file_ftp_timeout',
