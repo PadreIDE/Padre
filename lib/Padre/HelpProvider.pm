@@ -33,7 +33,7 @@ sub help_init {
 # Renders the help topic content into XHTML
 #
 sub help_render {
-	warn "helpi_render, You need to override this to do something useful with help search";
+	warn "help_render, You need to override this to do something useful with help search";
 }
 
 #
