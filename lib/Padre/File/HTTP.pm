@@ -12,6 +12,8 @@ our @ISA     = 'Padre::File';
 sub new {
 	my $class = shift;
 
+	my $config = Padre->ide->config;
+
 	# Don't add a new overall-dependency to Padre:
 	eval { require LWP::UserAgent; };
 	if ($@) {
@@ -23,7 +25,7 @@ sub new {
 
 	my $self = bless { filename => $_[0], UA => LWP::UserAgent->new() }, $class;
 	$self->{protocol} = 'http'; # Should not be overridden
-	$self->{UA}->timeout(60);   # TODO: Make this configurable
+	$self->{UA}->timeout($config->file_http_timeout);
 	$self->{UA}->env_proxy;
 	return $self;
 }

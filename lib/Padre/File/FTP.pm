@@ -15,6 +15,8 @@ sub new {
 
 	my $url = shift;
 
+	my $config = Padre->ide->config;
+
 	# Don't add a new overall-dependency to Padre:
 	eval { require Net::FTP; };
 	if ($@) {
@@ -70,8 +72,8 @@ sub new {
 	$self->{_ftp} = Net::FTP->new(
 		Host    => $self->{_host},
 		Port    => $self->{_port},
-		Timeout => 120,           # TODO: Make this configurable
-		Passive => 1,             # TODO: Make this configurable
+		Timeout => $config->file_ftp_timeout,
+		Passive => $config->file_ftp_passive,
 
 		#		Debug => 3, # Enable for FTP-debugging to STDERR
 	);
