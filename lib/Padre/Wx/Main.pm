@@ -5022,7 +5022,6 @@ sub help {
 			$self->{help},
 			sub { $self->on_help_close( $_[1] ) },
 		);
-		$self->{help}->help('Padre');
 	}
 	$self->{help}->SetFocus;
 	$self->{help}->Show(1);
