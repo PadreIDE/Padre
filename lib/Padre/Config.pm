@@ -399,7 +399,7 @@ setting(
 	name    => 'default_projects_directory',
 	type    => Padre::Constant::PATH,
 	store   => Padre::Constant::HOST,
-	default => File::HomeDir->my_documents,
+	default => File::HomeDir->my_documents || '',
 );
 
 # Editor Settings
