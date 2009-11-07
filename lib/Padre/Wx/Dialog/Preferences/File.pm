@@ -9,6 +9,20 @@ use Padre::Wx::Dialog::Preferences ();
 our $VERSION = '0.49';
 our @ISA     = 'Padre::Wx::Dialog::Preferences';
 
+=pod
+
+=head1 NAME
+
+Padre::Wx::Dialog::Preferences::File - Preferences for Padre::File modules
+
+=head1 DESCRIPTION
+
+This modules provides preference options for the Padre::File - modules.
+
+It uses the Padre preferences panel.
+
+=cut
+
 sub panel {
 	my $self     = shift;
 	my $treebook = shift;
@@ -81,15 +95,15 @@ sub save {
 1;
 __END__
 
-=head1 NAME
+=pod
 
-Padre::Wx::Dialog::Preferences::File - Preferences for Padre::File modules
+=head1 NEW OPTIONS
 
-=head1 DESCRIPTION
+Adding new options is done in three steps:
 
-This modules provides preference options for the Padre::File - modules.
-
-It uses the Padre preferences panel.
+1. Add a setting() - call for the new option to Config.pm
+2. Add the GUI part to the ->panel - method
+3. Save the new value within the ->save method
 
 =head1 COPYRIGHT & LICENSE
 
