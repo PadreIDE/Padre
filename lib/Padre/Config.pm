@@ -860,6 +860,31 @@ setting(
 	default => 1,
 );
 
+# Padre::File options
+
+#   ::HTTP
+setting(
+	name    => 'file_http_timeout',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 30,
+);
+
+#   ::FTP
+setting(
+	name    => 'file_ftp_timeout',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 30,
+);
+
+setting(
+	name    => 'file_ftp_passive',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+
 #####################################################################
 # Constructor and Accessors
 
