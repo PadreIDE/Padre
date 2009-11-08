@@ -549,12 +549,12 @@ sub find_method_declaration {
 		# cache the list of methods found
 	}
 
-	Wx::MessageBox(
-		Wx::gettext("Current '$token' $location"),
-		Wx::gettext("Check cancelled"),
-		Wx::wxOK,
-		Padre->ide->wx->main
-	);
+#	Wx::MessageBox(
+#		Wx::gettext("Current '$token' $location"),
+#		Wx::gettext("Check cancelled"),
+#		Wx::wxOK,
+#		Padre->ide->wx->main
+#	);
 	my ( $found, $filename ) = $self->_find_method($token);
 	if ( not $found ) {
 		Wx::MessageBox(
@@ -576,12 +576,13 @@ sub find_method_declaration {
 		# open or switch to file
 		my $id = $main->find_editor_of_file($filename);
 		if ( not defined $id ) {
-			my $id = $main->setup_editor($filename);
+			$id = $main->setup_editor($filename);
 		}
 
 		#print "Filename '$filename' id '$id'\n";
 		# goto $line in that file
 		return if not defined $id;
+		#print "ID $id\n";
 		my $editor = $main->notebook->GetPage($id);
 		$editor->{Document}->goto_sub($token);
 	}
@@ -636,7 +637,7 @@ sub goto_sub {
 	for my $i ( 0 .. @lines - 1 ) {
 
 		#print "L: $lines[$i]\n";
-		if ( $lines[$i] =~ /sub \s+ $name/x ) {
+		if ( $lines[$i] =~ /sub \s+ $name\b/x ) {
 			$self->editor->goto_line_centerize($i);
 			return 1;
 		}
