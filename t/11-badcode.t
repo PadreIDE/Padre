@@ -70,9 +70,12 @@ foreach my $module ( sort keys %modules ) {
 
 	# If a method has an ide or main method, never use Padre->ide directly
 	SKIP: {
-		unless ( eval { $module->can('ide') or $module->can('main') }
-#			and $module ne 'Padre::Wx::Dialog::RegexEditor'
-			and $module ne 'Padre::Current' )
+		unless (
+			eval { $module->can('ide') or $module->can('main') }
+
+			#			and $module ne 'Padre::Wx::Dialog::RegexEditor'
+			and $module ne 'Padre::Current'
+			)
 		{
 			skip( "$module: No ->ide or ->main method", 1 );
 		}
@@ -94,9 +97,8 @@ foreach my $module ( sort keys %modules ) {
 
 	# Advoid expensive regexp result variables
 	SKIP: {
-		if ( $module eq 'Padre::Wx::Dialog::RegexEditor' )
-		{
-			skip( q($' or $` or $& is in the pod of this module), 1);
+		if ( $module eq 'Padre::Wx::Dialog::RegexEditor' ) {
+			skip( q($' or $` or $& is in the pod of this module), 1 );
 		}
 		ok( $document->serialize !~ /[^\$\'\"]\$[\&\'\`]/, $module . ': Uses expensive regexp-variable $&, $\' or $`' );
 	}

@@ -549,12 +549,12 @@ sub find_method_declaration {
 		# cache the list of methods found
 	}
 
-#	Wx::MessageBox(
-#		Wx::gettext("Current '$token' $location"),
-#		Wx::gettext("Check cancelled"),
-#		Wx::wxOK,
-#		Padre->ide->wx->main
-#	);
+	#	Wx::MessageBox(
+	#		Wx::gettext("Current '$token' $location"),
+	#		Wx::gettext("Check cancelled"),
+	#		Wx::wxOK,
+	#		Padre->ide->wx->main
+	#	);
 	my ( $found, $filename ) = $self->_find_method($token);
 	if ( not $found ) {
 		Wx::MessageBox(
@@ -582,6 +582,7 @@ sub find_method_declaration {
 		#print "Filename '$filename' id '$id'\n";
 		# goto $line in that file
 		return if not defined $id;
+
 		#print "ID $id\n";
 		my $editor = $main->notebook->GetPage($id);
 		$editor->{Document}->goto_sub($token);
@@ -1261,13 +1262,12 @@ sub event_on_right_down {
 			},
 		);
 	} # end if it's a variable
-	
+
 	# TODO connect this to the action of menu item in the Perl menu!
 	if ( defined $location and $token =~ /^\w+$/ ) {
 		my $find = $menu->Append( -1, Wx::gettext("Find Method Declaration") );
 		Wx::Event::EVT_MENU(
-			$editor,
-			$find,
+			$editor, $find,
 			sub {
 				my $editor = shift;
 				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
@@ -1275,7 +1275,7 @@ sub event_on_right_down {
 				$doc->find_method_declaration;
 			},
 		);
-		
+
 	}
 
 

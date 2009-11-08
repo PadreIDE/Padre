@@ -20,11 +20,13 @@ sub gettext {
 package main;
 
 use Test::More;
+
 #use Test::NoWarnings;
 use Data::Dumper qw(Dumper);
 use File::Spec ();
 
 plan skip_all => 'since the errors are now configurable we need to load the Padre class to run this test';
+
 # enable NoWarning if this is fixed
 
 my %TEST = (
