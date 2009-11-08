@@ -1,8 +1,8 @@
 package Padre::Wx::Dialog::Preferences::File;
 
-use warnings;
-use strict;
 use 5.008;
+use strict;
+use warnings;
 
 use Padre::Wx::Dialog::Preferences ();
 
