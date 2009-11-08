@@ -1260,6 +1260,23 @@ sub event_on_right_down {
 			},
 		);
 	} # end if it's a variable
+	
+	# TODO connect this to the action of menu item in the Perl menu!
+	if ( defined $location and $token =~ /^\w+$/ ) {
+		my $find = $menu->Append( -1, Wx::gettext("Find Method Declaration") );
+		Wx::Event::EVT_MENU(
+			$editor,
+			$find,
+			sub {
+				my $editor = shift;
+				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
+				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				$doc->find_method_declaration;
+			},
+		);
+		
+	}
+
 
 	my $select_start = $editor->GetSelectionStart;
 	my $select_end   = $editor->GetSelectionEnd;
