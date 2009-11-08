@@ -7,7 +7,7 @@ use warnings;
 use Padre::File;
 use File::Temp;
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 our @ISA     = 'Padre::File';
 
 sub new {

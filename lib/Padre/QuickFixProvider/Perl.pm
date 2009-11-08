@@ -7,7 +7,7 @@ use warnings;
 use Padre::QuickFixProvider ();
 use PPI                     ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 our @ISA     = 'Padre::QuickFixProvider';
 
 #

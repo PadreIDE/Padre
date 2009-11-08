@@ -10,7 +10,7 @@ use YAML::Tiny      ();
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 
 # Config schema revision
 my $REVISION = 1;

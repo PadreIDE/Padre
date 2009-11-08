@@ -40,7 +40,7 @@ use Padre::Wx                ();
 use Padre::Wx::Menu::Plugins ();
 use Params::Util qw{ _IDENTIFIER _CLASS _INSTANCE };
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 
 
 

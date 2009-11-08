@@ -26,7 +26,7 @@ use Padre::Util::Win32 ();
 # TODO: Bug report dispatched. Likely to be fixed in 0.77.
 use version ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 
 # Since everything is used OO-style,
 # autouse everything other than the bare essentials

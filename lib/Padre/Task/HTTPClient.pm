@@ -6,7 +6,7 @@ use warnings;
 
 # Use all modules which may provide services for us:
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 
 =pod
 

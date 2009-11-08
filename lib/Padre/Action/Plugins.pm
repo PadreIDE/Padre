@@ -12,7 +12,7 @@ use Padre::Wx       ();
 use Padre::Action   ();
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 
 
 

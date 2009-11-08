@@ -11,7 +11,7 @@ use Padre::Constant ();
 use Padre::Current '_CURRENT';
 use Padre::Locale ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 
 
 

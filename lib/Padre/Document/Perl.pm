@@ -13,7 +13,7 @@ use Padre::Perl                     ();
 use Padre::Document::Perl::Beginner ();
 use File::Find::Rule                ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 our @ISA     = 'Padre::Document';
 
 #####################################################################

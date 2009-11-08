@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 use constant HEIGHT => 30;
 
 sub on_right_down {

@@ -10,7 +10,7 @@ use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 use Padre::MimeTypes                       ();
 
-our $VERSION = '0.49';
+our $VERSION = '0.50';
 our @ISA     = 'Padre::Wx::Dialog';
 
 our %PANELS = ( 'Padre::Wx::Dialog::Preferences::File' => 'Local/Remote file access' );
