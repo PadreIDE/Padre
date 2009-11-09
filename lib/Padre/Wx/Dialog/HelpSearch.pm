@@ -117,10 +117,23 @@ sub _create {
 sub _create_controls {
 	my $self = shift;
 
+	my $topic_label = Wx::StaticText->new(
+		$self, -1,
+		Wx::gettext('Select the help &topic')
+	);
+	my @topics = ('perl 5');
+	my $topic_selector = Wx::Choice->new(
+		$self, -1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		\@topics,
+	);
+	#Wx::Event::EVT_CHOICE($self, $topic_selector, \&select_topic);
+
 	# search textbox
 	my $search_label = Wx::StaticText->new(
 		$self, -1,
-		Wx::gettext('&Type a help topic to read:')
+		Wx::gettext('Type a help &keyword to read:')
 	);
 	$self->_search_text( Wx::TextCtrl->new( $self, -1, '' ) );
 
@@ -158,6 +171,8 @@ sub _create_controls {
 
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
+	$vbox->Add( $topic_label,        0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $topic_selector,     0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND,     2 );
