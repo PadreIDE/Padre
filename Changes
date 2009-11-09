@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 
 0.51 To be released
     - Find all option showing all matches in bottom tab (CODE4PAY)
+    - Improved FTP error handling (SEWI)
+    - Open URLs from command line (SEWI)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
