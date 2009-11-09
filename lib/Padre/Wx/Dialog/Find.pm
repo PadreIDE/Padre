@@ -24,6 +24,7 @@ use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::MainChild   ();
 use Padre::Wx::History::ComboBox ();
+use Padre::Wx::FindResult	 ();
 
 our $VERSION = '0.50';
 our @ISA     = qw{
@@ -138,17 +139,17 @@ sub new {
 	);
 	$self->{button_find}->SetDefault;
 
-	# The "Count All" button
-	$self->{button_count} = Wx::Button->new(
+	# The "Find All" button
+	$self->{findall_button} = Wx::Button->new(
 		$self,
 		-1,
-		Wx::gettext("&Count All"),
+		Wx::gettext("Find &All"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{button_count},
+		$self->{findall_button},
 		sub {
-			$_[0]->count_button;
+			$_[0]->findall_button;
 		},
 	);
 
@@ -220,7 +221,7 @@ sub new {
 	# Sizer for the buttons
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$bottom->Add( $self->{button_find},   0, Wx::wxGROW | Wx::wxLEFT,  5 );
-	$bottom->Add( $self->{button_count},  0, Wx::wxGROW,               5 );
+	$bottom->Add( $self->{findall_button},  0, Wx::wxGROW,               5 );
 	$bottom->Add( $self->{button_cancel}, 0, Wx::wxGROW | Wx::wxRIGHT, 5 );
 
 	# Fill the sizer for the overall dialog
@@ -358,33 +359,35 @@ sub cancel_button {
 
 =head2 count_button
 
-  $self->count_button
+  $self->findall_button
 
-Count and announce the number of matches in the document.
+Find all lines with matching text and display in a list.
 
 =cut
 
-sub count_button {
+sub findall_button {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $config = $self->save;
-
-	# Generate the search object
+		# Generate the search object
 	my $search = $self->as_search;
+	
 	unless ($search) {
 		$main->error( Wx::gettext("Not a valid search") );
 		return;
 	}
 
-	# Find the number of matches
+	
+	
 	my $editor = $self->current->editor or return;
-	my $matches = $search->editor_count_all($editor);
-	$main->message(
-		sprintf(
-			Wx::gettext("Found %d matching occurrences"),
-			$matches,
-		)
+	my @matches  = $search->match_lines (
+		$editor->GetTextRange( 0, $editor->GetLength ),
+		$search->search_regex,
+		$editor->GetSelection
 	);
+	
+	Padre::Wx::FindResult->new($main, \@matches,$editor);
+	$self->Hide;
 }
 
 

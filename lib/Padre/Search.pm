@@ -330,6 +330,8 @@ sub editor_count_all {
 
 
 
+
+
 #####################################################################
 # Core Search
 
@@ -386,6 +388,25 @@ sub matches {
 	}
 
 	return ( @$pair, @matches );
+}
+
+sub match_lines {
+	my ($self,$selected_text,$regex)  = @_;
+	
+	# Searches run in unicode
+	my $text = Encode::encode( 'utf-8', $selected_text );
+	my @lines = split (/\n/, $text );
+	
+	my @matches;
+	foreach my $lineNumber (0 .. (scalar(@lines)-1))	{
+		
+		if ($lines[$lineNumber] =~ /$regex/){
+		push (@matches, ({lineNumber=>($lineNumber +1), line=>$lines[$lineNumber]})); 
+	}
+	
+	}
+	return @matches; 
+	
 }
 
 1;
