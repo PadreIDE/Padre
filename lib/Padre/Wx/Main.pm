@@ -2721,12 +2721,16 @@ sub setup_editor {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
-		$file = File::Spec->rel2abs($file) if -f $file;
+#		$file = File::Spec->rel2abs($file) if -f $file; # Mixes up URLs
 
-		my $id = $self->find_editor_of_file($file);
-		if ( defined $id ) {
-			$self->on_nth_pane($id);
-			return;
+		# Use Padre::File to get the real filenames
+		my $file_obj = Padre::File->new($file);
+		if (defined($file_obj) and ref($file_obj) and $file_obj->exists) {
+			my $id = $self->find_editor_of_file($file_obj->{filename});
+			if ( defined $id ) {
+				$self->on_nth_pane($id);
+				return;
+			}
 		}
 
 		# Scheduled for removal: This is done by document->new later and should be
@@ -2743,7 +2747,8 @@ sub setup_editor {
 		#not sure where the best place for this checking is..
 		#I'd actually like to make it recursivly open files
 		#(but that will require a dialog listing them to avoid opening an infinite number of files)
-		if ( -d $file ) {
+		# WARNING: This currently only works on local files!
+		if ( -d $file_obj->{filename} ) {
 			$self->error(
 				sprintf(
 					Wx::gettext("Cannot open a Directory: %s"),

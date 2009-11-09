@@ -161,8 +161,11 @@ sub new {
 sub run {
 	my $self = shift;
 
-	# Clean arguments
-	$self->{ARGV} = [ map { File::Spec->rel2abs( $_, $self->{original_cwd} ) } @ARGV ];
+	# Clean arguments (with a bad patch for saving URLs)
+	$self->{ARGV} = [ map {
+		 if (/\:/) { $_; } else {
+		 	File::Spec->rel2abs( $_, $self->{original_cwd} );} 
+		} @ARGV ];
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
