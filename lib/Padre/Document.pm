@@ -216,14 +216,14 @@ sub new {
 	# Use document->{file}->filename instead!
 	if ( $self->{filename} ) {
 		$self->{file} = Padre::File->new( $self->{filename} );
-		
-		if (!defined($self->{file})) {
-			$self->error(Wx::gettext('Error while opening file: no file object'));
+
+		if ( !defined( $self->{file} ) ) {
+			$self->error( Wx::gettext('Error while opening file: no file object') );
 			return;
 		}
-		
-		if (defined($self->{file}->{error})) {
-			$self->error($self->{file}->{error});
+
+		if ( defined( $self->{file}->{error} ) ) {
+			$self->error( $self->{file}->{error} );
 			return;
 		}
 

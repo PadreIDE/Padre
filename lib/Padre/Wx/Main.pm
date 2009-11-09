@@ -2721,12 +2721,12 @@ sub setup_editor {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
-#		$file = File::Spec->rel2abs($file) if -f $file; # Mixes up URLs
+		#		$file = File::Spec->rel2abs($file) if -f $file; # Mixes up URLs
 
 		# Use Padre::File to get the real filenames
 		my $file_obj = Padre::File->new($file);
-		if (defined($file_obj) and ref($file_obj) and $file_obj->exists) {
-			my $id = $self->find_editor_of_file($file_obj->{filename});
+		if ( defined($file_obj) and ref($file_obj) and $file_obj->exists ) {
+			my $id = $self->find_editor_of_file( $file_obj->{filename} );
 			if ( defined $id ) {
 				$self->on_nth_pane($id);
 				return;
@@ -3088,7 +3088,7 @@ sub open_file_dialog {
 	}
 	my @filenames = $dialog->GetFilenames;
 	$self->{cwd} = $dialog->GetDirectory;
-	
+
 	#print Data::Dumper::Dumper \@filenames;
 	#print $dialog->GetPath, " <- path\n";
 	#print $dialog->GetFilename, " <- filename\n";
@@ -3099,10 +3099,11 @@ sub open_file_dialog {
 	# method will return the name of the file only and GetDirectory will point
 	# to where the file browser is open which is probably not the same directory
 	# in which our file is in
-	if (@filenames == 1) {
+	if ( @filenames == 1 ) {
 		my $fullpath = $dialog->GetPath;
 		$self->{cwd} = File::Basename::dirname($fullpath);
 		@filenames = File::Basename::basename($fullpath);
+
 		#print "Dir: $self->{cwd}\n";
 		#print Data::Dumper::Dumper \@filenames;
 	}

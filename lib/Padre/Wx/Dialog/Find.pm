@@ -24,7 +24,7 @@ use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::MainChild   ();
 use Padre::Wx::History::ComboBox ();
-use Padre::Wx::FindResult	 ();
+use Padre::Wx::FindResult        ();
 
 our $VERSION = '0.50';
 our @ISA     = qw{
@@ -220,9 +220,9 @@ sub new {
 
 	# Sizer for the buttons
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bottom->Add( $self->{button_find},   0, Wx::wxGROW | Wx::wxLEFT,  5 );
-	$bottom->Add( $self->{findall_button},  0, Wx::wxGROW,               5 );
-	$bottom->Add( $self->{button_cancel}, 0, Wx::wxGROW | Wx::wxRIGHT, 5 );
+	$bottom->Add( $self->{button_find},    0, Wx::wxGROW | Wx::wxLEFT,  5 );
+	$bottom->Add( $self->{findall_button}, 0, Wx::wxGROW,               5 );
+	$bottom->Add( $self->{button_cancel},  0, Wx::wxGROW | Wx::wxRIGHT, 5 );
 
 	# Fill the sizer for the overall dialog
 	my $sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
@@ -369,24 +369,25 @@ sub findall_button {
 	my $self   = shift;
 	my $main   = $self->main;
 	my $config = $self->save;
-		# Generate the search object
+
+	# Generate the search object
 	my $search = $self->as_search;
-	
+
 	unless ($search) {
 		$main->error( Wx::gettext("Not a valid search") );
 		return;
 	}
 
-	
-	
+
+
 	my $editor = $self->current->editor or return;
-	my @matches  = $search->match_lines (
+	my @matches = $search->match_lines(
 		$editor->GetTextRange( 0, $editor->GetLength ),
 		$search->search_regex,
 		$editor->GetSelection
 	);
-	
-	Padre::Wx::FindResult->new($main, \@matches,$editor);
+
+	Padre::Wx::FindResult->new( $main, \@matches, $editor );
 	$self->Hide;
 }
 

@@ -121,13 +121,14 @@ sub _create_controls {
 		$self, -1,
 		Wx::gettext('Select the help &topic')
 	);
-	my @topics = ('perl 5');
+	my @topics         = ('perl 5');
 	my $topic_selector = Wx::Choice->new(
 		$self, -1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		\@topics,
 	);
+
 	#Wx::Event::EVT_CHOICE($self, $topic_selector, \&select_topic);
 
 	# search textbox

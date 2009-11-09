@@ -1,4 +1,5 @@
 package Padre::Wx::FindResult;
+
 =pod
 
 =head1 NAME
@@ -16,13 +17,13 @@ use 5.008;
 use strict;
 use warnings;
 use Params::Util qw{_INSTANCE};
-use Padre::Wx       ;
+use Padre::Wx;
 use Wx::Event qw( EVT_BUTTON );
 
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::ListView';
-my $LineCount;	# Global fid count so it can be used in the label
+my $LineCount; # Global fid count so it can be used in the label
 
 =pod
 
@@ -34,11 +35,12 @@ my $LineCount;	# Global fid count so it can be used in the label
 
 
 sub new {
-	my ($class, $main, $lines,$editor) = @_;
+	my ( $class, $main, $lines, $editor ) = @_;
 	$LineCount = scalar(@$lines);
+
 	#ensure the bottom aui is present.
 	$main->show_output(1);
-	
+
 	# Create the underlying object
 	my $self = $class->SUPER::new(
 		Padre::Current->main->bottom,
@@ -47,19 +49,19 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
- 
+
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 1;
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$self, $self,
 		sub {
-			$self->on_list_item_activated( $_[1] ,$main,$editor);
+			$self->on_list_item_activated( $_[1], $main, $editor );
 		},
 	);
 	Wx::Event::EVT_RIGHT_DOWN(
 		$self, \&on_right_down,
 	);
-	
+
 	$self->populate_list($lines);
 	$self->set_column_widths;
 	Padre::Current->main->bottom->show($self);
@@ -79,7 +81,7 @@ sub new {
 =cut
 
 sub gettext_label {
-	Wx::gettext('Find Results ('.$LineCount.')');
+	Wx::gettext( 'Find Results (' . $LineCount . ')' );
 }
 
 
@@ -95,12 +97,12 @@ sub gettext_label {
 =cut
 
 sub set_column_widths {
-	my $self      = shift;
-	
+	my $self = shift;
+
 	my $width0_default = $self->GetCharWidth * length( Wx::gettext('Line No') ) + 16;
 
-	$self->SetColumnWidth( 0,$width0_default );
-	$self->SetColumnWidth( 1, Wx::wxLIST_AUTOSIZE);
+	$self->SetColumnWidth( 0, $width0_default );
+	$self->SetColumnWidth( 1, Wx::wxLIST_AUTOSIZE );
 
 	return;
 }
@@ -117,18 +119,18 @@ sub set_column_widths {
 =cut
 
 sub on_list_item_activated {
-	my ($self, $event,$main, $editor) =@_;
- 
+	my ( $self, $event, $main, $editor ) = @_;
+
 	#If the user has closed the editor the search was origionaly performed
 	#on
-	if (! defined $main->find_id_of_editor($editor)){
-		$self->DeleteAllItems; 
+	if ( !defined $main->find_id_of_editor($editor) ) {
+		$self->DeleteAllItems;
 		my $message_item->[0]->{line} = Wx::gettext('Related Editor Has been Closed');
 		$message_item->[0]->{lineNumber} = '*';
 		$self->populate_list($message_item);
 		return;
 	}
-	my $line   = $event->GetItem->GetText;
+	my $line = $event->GetItem->GetText;
 
 	if (   not defined($line)
 		or $line !~ /^\d+$/o
@@ -136,8 +138,8 @@ sub on_list_item_activated {
 	{
 		return;
 	}
-  
-	$self->select_line( $line - 1 ,$editor);
+
+	$self->select_line( $line - 1, $editor );
 
 	return;
 }
@@ -151,8 +153,9 @@ sub on_list_item_activated {
    Sets the focus to the selected line.
 
 =cut
+
 sub select_line {
-	my ( $self, $line,$editor ) = @_;
+	my ( $self, $line, $editor ) = @_;
 
 	return if not $editor;
 
@@ -177,7 +180,7 @@ sub _get_title {
 	my $c = shift;
 
 	return Wx::gettext('Line No') if $c == 0;
-	return Wx::gettext('Line') if $c == 1;
+	return Wx::gettext('Line')    if $c == 1;
 
 	die "invalid value '$c'";
 }
@@ -285,19 +288,18 @@ sub on_right_down {
 	Populate the list with the line number and text.
 
 =cut
+
 # populates the list
 
-sub populate_list
-{
-	my ($self, $lines) = @_;
-	
-	for (my $i = (scalar(@$lines)-1); $i >= 0; $i--)
-	{
-	
-		my $item = $self->InsertStringItem(0,$lines->[$i]->{lineNumber});
-		$self->SetItem($item,1, $lines->[$i]->{line});
+sub populate_list {
+	my ( $self, $lines ) = @_;
+
+	for ( my $i = ( scalar(@$lines) - 1 ); $i >= 0; $i-- ) {
+
+		my $item = $self->InsertStringItem( 0, $lines->[$i]->{lineNumber} );
+		$self->SetItem( $item, 1, $lines->[$i]->{line} );
 	}
-	
+
 }
 
 1;

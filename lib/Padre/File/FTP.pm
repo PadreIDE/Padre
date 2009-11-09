@@ -105,7 +105,7 @@ sub can_run {
 
 sub size {
 	my $self = shift;
-	return if ! defined($self->{_ftp});
+	return if !defined( $self->{_ftp} );
 	return $self->{_ftp}->size( $self->{_file} );
 }
 
@@ -133,7 +133,7 @@ sub _todo_mtime {
 
 sub exists {
 	my $self = shift;
-	return if ! defined($self->{_ftp});
+	return if !defined( $self->{_ftp} );
 	return $self->size ? 1 : 0;
 }
 
@@ -158,10 +158,10 @@ sub dirname {
 sub read {
 	my $self = shift;
 
-	return if ! defined($self->{_ftp});
+	return if !defined( $self->{_ftp} );
 
 	# TODO: Better error handling
-	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error}= $@;
+	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error} = $@;
 	open my $tmpfh, $self->{_tmpfile};
 	return join( '', <$tmpfh> );
 }
@@ -177,7 +177,7 @@ sub write {
 	my $content = shift;
 	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
 
-	return if ! defined($self->{_ftp});
+	return if !defined( $self->{_ftp} );
 
 	my $fh;
 	if ( !open $fh, ">$encode", $self->{_tmpfile} ) {
