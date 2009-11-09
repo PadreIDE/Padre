@@ -1,5 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.51 To be released
+    - Find all option showing all matches in bottom tab (CODE4PAY)
+
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
     - Add initial version of a regex editor. (SZABGAB)
