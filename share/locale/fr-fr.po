@@ -493,7 +493,7 @@ msgstr "Trouver parenthèse orpheline"
 
 #: lib/Padre/Action/Perl.pm:55
 msgid "Searches the source code for brackets with lack a matching (opening/closing) part."
-msgstr ""
+msgstr "Chercher dans le code source les parenthèses, crochets et accolades non balancées."
 
 #: lib/Padre/Action/Perl.pm:65
 #: lib/Padre/Document/Perl.pm:1112
@@ -506,7 +506,7 @@ msgstr "Aligner verticalement"
 
 #: lib/Padre/Action/Perl.pm:76
 msgid "Align a selection of text to the same left column."
-msgstr ""
+msgstr "Aligner à gauche la sélection de texte."
 
 #: lib/Padre/Action/Perl.pm:85
 msgid "Newline same column"
@@ -514,7 +514,7 @@ msgstr "Retour à la ligne à la même colonne"
 
 #: lib/Padre/Action/Perl.pm:87
 msgid "Like pressing ENTER somewhere on a line but use the current position as ident for the new line."
-msgstr ""
+msgstr "Même comportement que ENTER, mais utilise la position courante comme indentation de la nouvelle ligne."
 
 #: lib/Padre/Action/Perl.pm:113
 msgid "Automatic bracket completion"
@@ -527,7 +527,7 @@ msgstr "Gestion des greffons"
 
 #: lib/Padre/Action/Plugins.pm:38
 msgid "Show the Padre plugin manager to enable or disable plugins"
-msgstr ""
+msgstr "Montre le gestionnaire de greffons de Padre pour les dés/activer."
 
 #: lib/Padre/Action/Plugins.pm:53
 msgid "Plugin List (CPAN)"
@@ -539,7 +539,7 @@ msgstr "Editer Mon Plugin"
 
 #: lib/Padre/Action/Plugins.pm:62
 msgid "My-Plugin is a plugin where developers could extend their Padre installation"
-msgstr ""
+msgstr "My-Plugin est un greffon où les développeurs peuvent étendre leur installation de Padre."
 
 #: lib/Padre/Action/Plugins.pm:68
 msgid "Could not find the Padre::Plugin::My plugin"
@@ -551,7 +551,7 @@ msgstr "Recharger Mon Greffon"
 
 #: lib/Padre/Action/Plugins.pm:79
 msgid "This function reloads the My-Plugin without restarting Padre"
-msgstr ""
+msgstr "Cette fonction recharge le greffon My-Plugin sans redémarrer Padre"
 
 #: lib/Padre/Action/Plugins.pm:87
 #: lib/Padre/Action/Plugins.pm:91
