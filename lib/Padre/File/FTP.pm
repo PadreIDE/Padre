@@ -17,29 +17,28 @@ sub new {
 
 	my $config = Padre->ide->config;
 
+	# Create myself
+	my $self = bless { filename => $url }, $class;
+
 	# Don't add a new overall-dependency to Padre:
 	eval { require Net::FTP; };
 	if ($@) {
 
-		# TODO: Warning should go to a user popup not to the text console
-		warn 'Net::FTP is not installed, Padre::File::FTP currently depends on it.';
-		return;
+		$self->{error} = 'Net::FTP is not installed, Padre::File::FTP currently depends on it.';
+		return $self;
 	}
-
-	# Create myself
-	my $self = bless { filename => $url }, $class;
 
 ##### START URL parsing #####
 
-##### NO REGEX's below this line! #####
+##### NO REGEX's below this line (except the parser)! #####
 
 	# TODO: Improve URL parsing
 	if ( $url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i ) {
 
 		# URL parsing failed
 		# TODO: Warning should go to a user popup not to the text console
-		warn 'Unable to parse ' . $url;
-		return;
+		$self->{error} = 'Unable to parse ' . $url;
+		return $self;
 	}
 
 
@@ -80,16 +79,14 @@ sub new {
 
 	if ( !defined( $self->{_ftp} ) ) {
 
-		# TODO: Warning should go to a user popup not to the text console
-		warn 'Error connecting to ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
-		return;
+		$self->{error} = 'Error connecting to ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
+		return $self;
 	}
 
 	if ( !$self->{_ftp}->login( $self->{_user}, $self->{_pass} ) ) {
 
-		# TODO: Warning should go to a user popup not to the text console
-		warn 'Error logging in on ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
-		return;
+		$self->{error} = 'Error logging in on ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
+		return $self;
 	}
 
 	$self->{_ftp}->binary;
@@ -108,6 +105,7 @@ sub can_run {
 
 sub size {
 	my $self = shift;
+	return if ! defined($self->{_ftp});
 	return $self->{_ftp}->size( $self->{_file} );
 }
 
@@ -135,6 +133,7 @@ sub _todo_mtime {
 
 sub exists {
 	my $self = shift;
+	return if ! defined($self->{_ftp});
 	return $self->size ? 1 : 0;
 }
 
@@ -159,15 +158,17 @@ sub dirname {
 sub read {
 	my $self = shift;
 
+	return if ! defined($self->{_ftp});
+
 	# TODO: Better error handling
-	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or warn $@;
+	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error}= $@;
 	open my $tmpfh, $self->{_tmpfile};
 	return join( '', <$tmpfh> );
 }
 
 sub readonly {
 
-	# Temporary until writing is implemented
+	# TODO: Check file access
 	return 0;
 }
 
@@ -175,6 +176,8 @@ sub write {
 	my $self    = shift;
 	my $content = shift;
 	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
+
+	return if ! defined($self->{_ftp});
 
 	my $fh;
 	if ( !open $fh, ">$encode", $self->{_tmpfile} ) {
