@@ -3083,6 +3083,24 @@ sub open_file_dialog {
 	}
 	my @filenames = $dialog->GetFilenames;
 	$self->{cwd} = $dialog->GetDirectory;
+	
+	#print Data::Dumper::Dumper \@filenames;
+	#print $dialog->GetPath, " <- path\n";
+	#print $dialog->GetFilename, " <- filename\n";
+	#print $dialog->GetDirectory, " <- directory\n";
+	# at least on Linux running Gnome the open file dialog provides a place
+	# to paste a full path of a file. If the user does that then the
+	# GetFilename method will return this full path while the GetFilename
+	# method will return the name of the file only and GetDirectory will point
+	# to where the file browser is open which is probably not the same directory
+	# in which our file is in
+	if (@filenames == 1) {
+		my $fullpath = $dialog->GetPath;
+		$self->{cwd} = File::Basename::dirname($fullpath);
+		@filenames = File::Basename::basename($fullpath);
+		#print "Dir: $self->{cwd}\n";
+		#print Data::Dumper::Dumper \@filenames;
+	}
 
 	my @files;
 	for my $filename (@filenames) {
