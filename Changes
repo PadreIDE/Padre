@@ -4,6 +4,10 @@ Changes for Perl Application Development and Refactoring Environment
     - Find all option showing all matches in bottom tab (CODE4PAY)
     - Improved FTP error handling (SEWI)
     - Open URLs from command line (SEWI)
+    - Fixed ticket #419: find variable declaration does not work at the end of
+      a variable (PATRICKAS)
+    - Fixed ticket #654: Lexical Rename of Variable - Can't highlight the
+      whole variable (PATRICKAS)      
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
