@@ -163,16 +163,17 @@ sub run {
 
 	# Clean arguments (with a bad patch for saving URLs)
 	if (Padre::Constant::WIN32) {
+
 		# Windows has trouble deleting the work directory of a process,
 		# so reset file to full path
-	$self->{ARGV} = [
-		map {
-			if (/\:/) { $_; }
-			else {
-				File::Spec->rel2abs( $_, $self->{original_cwd} );
-			}
-			} @ARGV
-	];
+		$self->{ARGV} = [
+			map {
+				if (/\:/) { $_; }
+				else {
+					File::Spec->rel2abs( $_, $self->{original_cwd} );
+				}
+				} @ARGV
+		];
 	} else {
 		$self->{ARGV} = \@ARGV;
 	}
@@ -183,12 +184,13 @@ sub run {
 
 	# Move our current dir to the user's documents directory by default
 	if (Padre::Constant::WIN32) {
+
 		# Windows has trouble deleting the work directory of a process,
 		# so we change the working dir
-	my $documents = File::HomeDir->my_documents;
-	if ( defined $documents ) {
-		chdir $documents;
-	}
+		my $documents = File::HomeDir->my_documents;
+		if ( defined $documents ) {
+			chdir $documents;
+		}
 	}
 
 	# Check if we have Time::HiRes:

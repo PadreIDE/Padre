@@ -471,7 +471,9 @@ sub _get_current_symbol {
 	# find start of symbol
 	# TODO: This could be more robust, no?
 	# Ticket #639
-	$col-- if (  $col && substr( $line_content, $col-1, 2 ) =~ /^\w\W$/ ) ; # if we are at the end of a symbol (maybe we need better detection?), start counting on the previous letter. this should resolve #419 and #654
+	$col--
+		if ( $col && substr( $line_content, $col - 1, 2 ) =~ /^\w\W$/ )
+		; # if we are at the end of a symbol (maybe we need better detection?), start counting on the previous letter. this should resolve #419 and #654
 	while (1) {
 		if ( $col <= 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/ ) {
 			last;
