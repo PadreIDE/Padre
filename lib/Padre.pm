@@ -162,6 +162,9 @@ sub run {
 	my $self = shift;
 
 	# Clean arguments (with a bad patch for saving URLs)
+	if (Padre::Constant::WIN32) {
+		# Windows has trouble deleting the work directory of a process,
+		# so reset file to full path
 	$self->{ARGV} = [
 		map {
 			if (/\:/) { $_; }
@@ -170,15 +173,22 @@ sub run {
 			}
 			} @ARGV
 	];
+	} else {
+		$self->{ARGV} = \@ARGV;
+	}
 
 	# FIXME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
 	$self->plugin_manager->load_plugins;
 
 	# Move our current dir to the user's documents directory by default
+	if (Padre::Constant::WIN32) {
+		# Windows has trouble deleting the work directory of a process,
+		# so we change the working dir
 	my $documents = File::HomeDir->my_documents;
 	if ( defined $documents ) {
 		chdir $documents;
+	}
 	}
 
 	# Check if we have Time::HiRes:

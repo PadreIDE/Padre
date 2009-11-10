@@ -132,7 +132,10 @@ sub new {
 	# that Padre won't hold a lock on the current directory.
 	# If changing the directory fails, ignore errors (for now)
 	$self->{cwd} = Cwd::cwd();
+	if (Padre::Constant::WIN32) {
+		# Directory locking problem only exists on Win
 	chdir( File::HomeDir->my_home );
+	}
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
