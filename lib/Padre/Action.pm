@@ -234,7 +234,7 @@ Remember to use Wx::gettext to make this translateable.
 =head2 need_editor
 
 This action should only be enabled/shown if there is a open editor window with
-a (maybe unsafed) document in it.
+a (potentially unsaved) document in it.
 
 The action may be called anyway even if there is no editor (all documents
 closed), but it shouldn't.
