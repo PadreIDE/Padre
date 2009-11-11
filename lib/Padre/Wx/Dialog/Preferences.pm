@@ -62,6 +62,9 @@ sub _external_tools_panel {
 		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],
+		[   [ 'Wx::StaticText', undef,                Wx::gettext('Perl ctags file:') ],
+			[ 'Wx::TextCtrl',   'perl_tags_file', $config->perl_tags_file ]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -1053,6 +1056,10 @@ sub run {
 	$config->set(
 		'run_use_external_window',
 		$data->{run_use_external_window}
+	);
+	$config->set(
+		'perl_tags_file',
+		$data->{perl_tags_file}
 	);
 	$config->set(
 		'external_diff_tool',

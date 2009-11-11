@@ -610,6 +610,14 @@ setting(
 );
 
 setting(
+	name  => 'perl_tags_file',
+	type  => Padre::Constant::ASCII,
+	store => Padre::Constant::HOST,
+	# Don't save a default to allow future updates
+	default => '',
+);
+
+setting(
 	name    => 'info_on_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
