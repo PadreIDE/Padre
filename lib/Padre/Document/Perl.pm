@@ -843,8 +843,10 @@ sub _perltags_parser {
 	my $perltags_file = $self->{_perltags_file};
 
 	# Use the configured file (if any) or the old default, reset on config change
-	if (( !defined($perltags_file) ) or (!defined($self->{_perltags_config})) or
-	    ($self->{_perltags_config} ne $config->perl_tags_file)) {
+	if (   ( !defined($perltags_file) )
+		or ( !defined( $self->{_perltags_config} ) )
+		or ( $self->{_perltags_config} ne $config->perl_tags_file ) )
+	{
 
 		$self->{_perltags_file} = $config->perl_tags_file || File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' );
 
@@ -852,7 +854,7 @@ sub _perltags_parser {
 		$self->{_perltags_config} = $config->perl_tags_file;
 
 		$perltags_file = $self->{_perltags_file};
-		
+
 		# Reset timer for new file
 		delete $self->{_perltags_parser_time};
 	}

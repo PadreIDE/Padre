@@ -613,6 +613,7 @@ setting(
 	name  => 'perl_tags_file',
 	type  => Padre::Constant::ASCII,
 	store => Padre::Constant::HOST,
+
 	# Don't save a default to allow future updates
 	default => '',
 );

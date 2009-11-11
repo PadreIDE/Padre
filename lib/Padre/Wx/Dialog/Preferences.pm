@@ -62,7 +62,7 @@ sub _external_tools_panel {
 		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],
-		[   [ 'Wx::StaticText', undef,                Wx::gettext('Perl ctags file:') ],
+		[   [ 'Wx::StaticText', undef,            Wx::gettext('Perl ctags file:') ],
 			[ 'Wx::TextCtrl',   'perl_tags_file', $config->perl_tags_file ]
 		],
 	];
