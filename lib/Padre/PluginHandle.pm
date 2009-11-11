@@ -181,7 +181,7 @@ sub version {
 sub enable {
 	my $self = shift;
 	unless ( $self->can_enable ) {
-		Carp::croak("Cannot enable plugin '$self'");
+		Carp::croak("Cannot enable plug-in '$self'");
 	}
 
 	# add the plugin catalog to the locale
@@ -198,7 +198,7 @@ sub enable {
 		$self->status('error');
 		$self->errstr(
 			sprintf(
-				Wx::gettext("Failed to enable plugin '%s': %s"),
+				Wx::gettext("Failed to enable plug-in '%s': %s"),
 				$self->class,
 				$@,
 			)
@@ -217,7 +217,7 @@ sub enable {
 		Padre::MimeTypes->add_mime_class( $type, $class );
 	}
 
-	# TODO remove these when plugin is disabled (and make sure files
+	# TO DO remove these when plugin is disabled (and make sure files
 	# are not highlighted with this any more)
 	if ( my @highlighters = $self->object->provided_highlighters ) {
 		require Padre::MimeTypes;
@@ -230,13 +230,13 @@ sub enable {
 		}
 	}
 
-	# TODO remove these when plugin is disabled (and make sure files
+	# TO DO remove these when plugin is disabled (and make sure files
 	# are not highlighted with this any more)
 	if ( my %mime_types = $self->object->highlighting_mime_types ) {
 		require Padre::MimeTypes;
 		foreach my $module ( keys %mime_types ) {
 
-			# TODO sanity check here too.
+			# TO DO sanity check here too.
 			foreach my $mime_type ( @{ $mime_types{$module} } ) {
 				Padre::MimeTypes->add_highlighter_to_mime_type( $mime_type, $module );
 			}
@@ -259,7 +259,7 @@ sub enable {
 sub disable {
 	my $self = shift;
 	unless ( $self->can_disable ) {
-		Carp::croak("Cannot disable plugin '$self'");
+		Carp::croak("Cannot disable plug-in '$self'");
 	}
 
 	# If the plugin defines document types, deregister them
@@ -278,7 +278,7 @@ sub disable {
 		$self->status('error');
 		$self->errstr(
 			sprintf(
-				Wx::gettext("Failed to disable plugin '%s': %s"),
+				Wx::gettext("Failed to disable plug-in '%s': %s"),
 				$self->class,
 				$@,
 			)

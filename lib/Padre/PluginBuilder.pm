@@ -4,25 +4,25 @@ package Padre::PluginBuilder;
 
 =head1 NAME
 
-Padre::PluginBuilder - Module::Build subclass for building Padre plugins
+Padre::PluginBuilder - L<Module::Build> subclass for building Padre plug-ins
 
 =head1 DESCRIPTION
 
-This is a Module::Build subclass that can be used in place of L<Module::Build>
-for the C<Build.PL> of Padre plugins. It adds two new build targets for
-the plugins:
+This is a L<Module::Build> subclass that can be used in place of L<Module::Build>
+for the C<Build.PL> of Padre plug-ins. It adds two new build targets for
+the plug-ins:
 
 =head1 ADDITIONAL BUILD TARGETS
 
-=head2 plugin
+=head2 C<plugin>
 
-Generates a C<.par> file that contains all the plugin code. The name of the file
-will be according to the plugin class name: C<Padre::Plugin::Foo> will result
-in C<Foo.par>.
+Generates a F<.par> file that contains all the plug-in code. The name of the file
+will be according to the plug-in class name: C<Padre::Plugin::Foo> will result
+in F<Foo.par>.
 
-Installing the plugin (for the current architecture) will be as simple as copying
-the generated C<.par> file into the C<plugins> directory of the user's Padre
-configuration directory (which defaults to C<~/.padre> on Unixy systems).
+Installing the plug-in (for the current architecture) will be as simple as copying
+the generated F<.par> file into the C<plugins> directory of the user's Padre
+configuration directory (which defaults to F<~/.padre> on Unix systems).
 
 =cut
 
@@ -58,10 +58,10 @@ sub ACTION_plugin {
 
 =pod
 
-=head2 installplugin
+=head2 C<installplugin>
 
-Generates the plugin C<.par> file as the C<plugin> target, but also installs it
-into the user's Padre plugins directory.
+Generates the plug-in F<.par> file as the C<plugin> target, but also installs it
+into the user's Padre plug-ins directory.
 
 =cut
 
@@ -94,7 +94,7 @@ L<Padre>, L<Padre::Config>
 
 L<Module::Build>
 
-L<PAR> for more on the plugin system.
+L<PAR> for more on the plug-in system.
 
 =head1 COPYRIGHT
 

@@ -108,8 +108,8 @@ sub element_depth {
 	return $depth;
 }
 
-# TODO: PPIx::IndexOffsets or something similar might help.
-# TODO: See the 71... tests. If we don#t flush locations there, this breaks.
+# TO DO: PPIx::IndexOffsets or something similar might help.
+# TO DO: See the 71... tests. If we don#t flush locations there, this breaks.
 sub find_token_at_location {
 	my $document = shift;
 	my $location = shift;

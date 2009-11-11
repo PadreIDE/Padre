@@ -18,7 +18,7 @@ sub new {
 	eval { require LWP::UserAgent; };
 	if ($@) {
 
-		# TODO: This should be an error popup to the user, not a shell window warning
+		# TO DO: This should be an error popup to the user, not a shell window warning
 		warn 'LWP::UserAgent is not installed, Padre::File::HTTP currently depends on it.';
 		return;
 	}
@@ -129,7 +129,7 @@ sub readonly {
 	return 1;
 }
 
-# TODO: Maybe use WebDAV to enable writing
+# TO DO: Maybe use WebDAV to enable writing
 #sub write {
 #	my $self    = shift;
 #	my $content = shift;

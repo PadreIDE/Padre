@@ -14,7 +14,7 @@ use PPIx::EditorTools::FindVariableDeclaration;
 
 =head1 NAME
 
-Padre::Task::PPI::FindVariableDeclaration - Finds where a variable was declared using PPI
+Padre::Task::PPI::FindVariableDeclaration - Finds where a variable was declared using L<PPI>
 
 =head1 SYNOPSIS
 
@@ -23,7 +23,7 @@ Padre::Task::PPI::FindVariableDeclaration - Finds where a variable was declared 
           document => $document_obj,
           location => [$line, $column], # ppi-style location is okay, too
   );
-  
+
   $declfinder->schedule();
 
 =head1 DESCRIPTION

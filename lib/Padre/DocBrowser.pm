@@ -31,30 +31,30 @@ Padre::DocBrowser -- documentation browser for Padre
 Provide an interface for retrieving / generating documentation, resolving terms
 to documentation (search?) and formatting documentation.
 
-Allow new packages to be loaded and interrogated for the mimetypes they can
+Allow new packages to be loaded and interrogated for the MIME types they can
 generate documentation for. Provide similar mechanism for registering new
-documentation viewers and uri schemes accepted for resolving. 
+documentation viewers and URI schemes accepted for resolving.
 
-B<NOTE> i think all the method names are wrong. blast it.
+B<NOTE:> I think all the method names are wrong. Blast it.
 
 =head1 SYNOPSIS
 
   # Does perlish things by default via 'Padre::DocBrowser::POD'
   my $browser = Padre::DocBrowser->new();
   my $source = Padre::Document->new( filename=>'source/Package.pm' );
-  
+
   my $docs = $browser->docs( $source );
   # $docs provided by DocBrowser::POD->generate
   #  should be Padre::DocBrowser::document , application/x-pod
-  
+
   my $output = $browser->browse( $docs );
   # $output provided by DocBrowser::POD->render
   #  should be Padre::Document , text/x-html
-  
+
   $browser->load_viewer( 'Padre::DocBrowser::PodAdvanced' );
   # PodAdvanced->render might add an html TOC in addition to
   #  just pod2html
-  
+
   my $new_output = $browser->browse( $docs );
   # $new_output now with a table of contents
 
@@ -62,26 +62,26 @@ B<NOTE> i think all the method names are wrong. blast it.
 
 =head2 new
 
-Boring constructor , pass nothing. yet.
+Boring constructor, pass nothing. Yet.
 
 =head2 load_provider
 
-Accepts a single class name ,  will attempt to Autouse the class and 
-interrogate it's ->provider_for method. Any mimetypes returned will be
-associated with the class for dispatch to ->generate
+Accepts a single class name, will attempt to auto-L<use> the class and
+interrogate its C<provider_for> method. Any MIME types returned will be
+associated with the class for dispatch to C<generate>.
 
-Additionally , interrogate class for ->accept_schemes and associate the class
-with uri schemes for dispatch to ->resolve
+Additionally, interrogate class for C<accept_schemes> and associate the class
+with URI schemes for dispatch to C<resolve>.
 
 =head2 load_viewer
 
-Accepts a single class name , will attempt to Autouse the class and
-interrogate it's ->viewer_for method. Any mimetypes returned will be
-assiciated with the class for dispatch to ->render
+Accepts a single class name, will attempt to auto-L<use> the class and
+interrogate its C<viewer_for> method. Any MIME types returned will be
+associated with the class for dispatch to C<render>.
 
 =head2 resolve
 
-Accepts a URI or scalar 
+Accepts a URI or scalar
 
 =head2 browse
 
@@ -90,31 +90,31 @@ Accepts a URI or scalar
 =head1 EXTENDING
 
   package My::DocBrowser::Doxygen;
-  
+
   # URI of doxygen:$string or doxygen://path?query
   sub accept_schemes {
       'doxygen',
   }
-  
+
   sub provider_for {
       'text/x-c++src'
   }
-  
+
   sub viewer_for {
       'text/x-doxygen',
   }
-  
+
   sub generate {
       my ($self,$doc) = @_;
-      # $doc will be Padre::Document of any type specified 
+      # $doc will be Padre::Document of any type specified
       # by ->provider_for
-      
+
       # push $doc through doxygen
       # ...
       # that was easy :)
-      
+
       # You know your own output type, be explicit
-      my $response = Padre::Document->new();	  
+      my $response = Padre::Document->new();
       $response->{original_content} = $doxygen->output;
       $response->set_mimetype( 'text/x-doxygen' );
       return $response;
@@ -122,18 +122,18 @@ Accepts a URI or scalar
 
   sub render {
       my ($self,$docs) = @_;
-      # $docs will be of any type specified 
+      # $docs will be of any type specified
       # by ->viewer_for;
-      
+
       ## turn $docs into doxygen(y) html document
       #  ...
       #
-      
+
       my $response = Padre::Document->new();
       $response->{original_content} = $doxy2html->output;
       $response->set_mimetype( 'text/x-html' );
       return $response;
-      
+
   }
 
 =cut
@@ -193,7 +193,7 @@ sub register_providers {
 	my ( $self, %provides ) = @_;
 	while ( my ( $type, $class ) = each %provides ) {
 
-		# TODO - handle collisions, ie multi providers
+		# TO DO - handle collisions, ie multi providers
 
 		# (Ticket #673)
 
@@ -272,7 +272,7 @@ sub resolve {
 		return $self->resolve_uri( $ref, $hints );
 	}
 
-	# TODO this doubles up if a provider subscribes to multi
+	# TO DO this doubles up if a provider subscribes to multi
 	# mimetypes .
 
 	# (Ticket #674)

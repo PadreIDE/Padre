@@ -49,7 +49,7 @@ sub new {
 	my $self   = $class->SUPER::new($notebook);
 	my $config = $self->main->ide->config;
 
-	# TODO: Make this suck less
+	# TO DO: Make this suck less
 	$data = data( $config->editor_style );
 
 	# Set the code margins a little larger than the default.
@@ -417,7 +417,7 @@ sub show_folding {
 					my $line_clicked  = $editor->LineFromPosition( $event->GetPosition() );
 					my $level_clicked = $editor->GetFoldLevel($line_clicked);
 
-					# TODO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
+					# TO DO check this (cf. ~/contrib/samples/stc/edit.cpp from wxWidgets)
 					#if ( $level_clicked && wxSTC_FOLDLEVELHEADERFLAG) > 0) {
 					$editor->ToggleFold($line_clicked);
 
@@ -502,7 +502,7 @@ sub show_calltip {
 # 3) while doing all this, respect the current (sadly global) indentation settings
 # For auto-de-indentation (i.e. closing brace), we remove one level of indentation
 # instead.
-# FIXME/TODO: needs some refactoring
+# FIX ME/TO DO: needs some refactoring
 sub autoindent {
 	my ( $self, $mode ) = @_;
 
@@ -618,7 +618,7 @@ sub _auto_deindent {
 	# this is if the line matches "blahblahSomeText}".
 	elsif ( $config->editor_autoindent eq 'deep' and $content =~ /\}\s*$/ ) {
 
-		# TODO: What should happen in this case?
+		# TO DO: What should happen in this case?
 	}
 
 	return;
@@ -686,7 +686,7 @@ sub on_focus {
 
 	$main->update_directory;
 
-	# TODO
+	# TO DO
 	# this is called even if the mouse is moved away from padre and back again
 	# we should restrict some of the updates to cases when we switch from one file to
 	# another
@@ -818,7 +818,7 @@ sub on_left_up {
 sub on_middle_up {
 	my ( $self, $event ) = @_;
 
-	# TODO: Sometimes there are unexpected effects when using the middle button.
+	# TO DO: Sometimes there are unexpected effects when using the middle button.
 	# It seems that another event is doing something but not within this module.
 	# Please look at ticket #390 for details!
 
@@ -1004,7 +1004,7 @@ sub on_right_down {
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
 	} else { #Wx::CommandEvent
-		$self->PopupMenu( $menu, 50, 50 ); # TODO better location
+		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
 	}
 }
 

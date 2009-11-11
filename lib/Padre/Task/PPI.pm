@@ -13,13 +13,13 @@ our @ISA     = 'Padre::Task';
 
 =head1 NAME
 
-Padre::Task::PPI - Generic PPI background processing task
+Padre::Task::PPI - Generic L<PPI> background processing task
 
 =head1 SYNOPSIS
 
   package Padre::Task::PPI::MyFancyTest;
   use base 'Padre::Task::PPI';
-  
+
   # will be called after ppi-parsing:
   sub process_ppi  {
           my $self = shift;
@@ -28,22 +28,22 @@ Padre::Task::PPI - Generic PPI background processing task
           $self->{result} = $result;
           return();
   },
-  
+
   sub finish {
           my $self = shift;
           my $result = $self->{result};
           # update GUI here...
   };
-  
+
   1;
-  
+
   # elsewhere:
-  
+
   # by default, the text of the current document
   # will be fetched.
   my $task = Padre::Task::PPI::MyFancyTest->new();
   $task->schedule;
-  
+
   my $task2 = Padre::Task::PPI::MyFancyTest->new(
     text => 'parse-this!',
   );
@@ -52,11 +52,11 @@ Padre::Task::PPI - Generic PPI background processing task
 =head1 DESCRIPTION
 
 This is a base class for all tasks that need to do
-expensive calculations using PPI. The class will
+expensive calculations using L<PPI>. The class will
 setup a L<PPI::Document> object from a given piece of
 code and then call the C<process_ppi> method on
-the task object and pass the PPI::Document as
-first argument. 
+the task object and pass the L<PPI::Document> as
+first argument.
 
 You can either let C<Padre::Task::PPI> fetch the
 Perl code for parsing from the current document
@@ -66,7 +66,7 @@ the constructor.
 Note: If you don't supply the document text and
 there is no currently open document to fetch it from,
 C<new()> will simply return the empty list instead
-of a Padre::Task::PPI object.
+of a C<Padre::Task::PPI> object.
 
 =cut
 

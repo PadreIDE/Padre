@@ -68,7 +68,7 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		# TODO
+		# TO DO
 		# Should be checkbox but I am too lazy to turn the whole
 		# menu_plugins_simple into a menu_plugins
 		Wx::gettext('Enable logging') => sub {
@@ -325,19 +325,19 @@ Dumps the %INC hash to Output
 
 =head2 wxWidgets 2.8.10 Reference
 
-=head2 STC reference
+=head2 C<STC> reference
 
-Documentation for wxStyledTextCtrl, a control that wraps the Scintilla editor component.
+Documentation for C<wxStyledTextCtrl>, a control that wraps the Scintilla editor component.
 
-=head2 wxPerl Live Support
+=head2 C<wxPerl> Live Support
 
-Connects to #wxperl on irc.perl.org, where people can answer queries on wxPerl problems/usage.
+Connects to C<#wxperl> on C<irc.perl.org>, where people can answer queries on wxPerl problems/usage.
 
 =head2 About
 
 =head1 AUTHOR
 
-Gabor Szabo
+Gábor Szabó
 
 =head1 LICENSE
 

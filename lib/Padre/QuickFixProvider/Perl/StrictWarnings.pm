@@ -106,7 +106,7 @@ __END__
 
 =head1 NAME
 
-Padre::QuickFixProvider::Perl::StrictWarnings - Check for strict and warnings pragmatas
+Padre::QuickFixProvider::Perl::StrictWarnings - Check for strict and warnings pragmas
 
 =head1 DESCRIPTION
 

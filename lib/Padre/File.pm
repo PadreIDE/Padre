@@ -16,7 +16,7 @@ Padre::File - Common API for file functions
 
 =head1 DESCRIPTION
 
-Padre::File provies a common API for file access within Padre.
+C<Padre::File> provides a common API for file access within Padre.
 It covers all the differences with non-local files by mapping every function
 call to the currently used transport stream.
 
@@ -26,22 +26,23 @@ call to the currently used transport stream.
 
   Padre::File::REGISTER($RegExp,$Module);
 
-This function is NOT a OO-method, it may not be called on a Padre::File object!
+Class method, may not be called on a C<Padre::File> object.
 
-A plugin could call C<Padre::File::REGISTER> to register a new protocol to
-Padre::File and enable Padre to use URLs handled by this module.
+A plug-in could call C<Padre::File::REGISTER> to register a new protocol to
+C<Padre::File> and enable Padre to use URLs handled by this module.
 
 Example:
+
 	Padre::File::REGISTER('^nfs\:\/\/','Padre::Plugin::NFS');
 
-Every file/URL opened through Padre::File which starts with nfs:// is now
-handled through Padre::Plugin::NFS.
-Padre::File->new() will respect this and call Padre::Plugin::NFS->new() to
+Every file/URL opened through C<Padre::File> which starts with C<nfs://> is now
+handled through C<Padre::Plugin::NFS>.
+C<< Padre::File->new() >> will respect this and call C<< Padre::Plugin::NFS->new() >> to
 handle such URLs.
 
 Returns true on success or false on error.
 
-REGISTERed protocols may override the internal protocols.
+Registered protocols may override the internal protocols.
 
 =cut
 
@@ -65,26 +66,26 @@ sub REGISTER { # RegExp,Module
 
 =head1 METHODS
 
-=head2 new
+=head2 C<new>
 
   my $file = Padre::File->new($File_or_URL);
 
-The C<new> constructor lets you create a new B<Padre::File> object.
+The C<new> constructor lets you create a new C<Padre::File> object.
 
 Only one parameter is accepted at the moment: The name of the file which should
 be used. As soon as there are HTTP, FTP, SSH and other modules, also URLs
 should be accepted.
 
 If you know the protocol (which should be true every time you build the URL
-by source), it's better to call Padre::File::Protocol->new($URL) directly
+by source), it's better to call C<< Padre::File::Protocol->new($URL) >> directly
 (replacing Protocol by the protocol which should be used, of course).
 
-The module for the selected protocol should fill ->{filename} property. This
+The module for the selected protocol should fill C<< ->{filename} >> property. This
 should be used for all further references to the file as it will contain the
-filename in universal correct format (for example correct the C:\ eq C:/ problem
-on windows).
+file name in universal correct format (for example correct the C<C:\ eq C:/> problem
+on Windows).
 
-Returns a new B<Padre::File> or dies on error.
+Returns a new C<Padre::File> or dies on error.
 
 =cut
 
@@ -125,13 +126,13 @@ sub new { # URL
 
 }
 
-=head2 atime
+=head2 C<atime>
 
   $file->atime;
 
 Returns the last-access time of the file.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -141,11 +142,11 @@ sub atime {
 	return;
 }
 
-=head2 basename
+=head2 C<basename>
 
   $file->basename;
 
-Returns the plain filename without path if a path/filename structure
+Returns the plain file name without path if a path/file name structure
 exists for this module.
 
 =cut
@@ -158,13 +159,13 @@ sub basename {
 	return $self->{filename};
 }
 
-=head2 blksize
+=head2 C<blksize>
 
-  $file->blocks;
+  $file->blksize;
 
-Returns the block size of the filesystem where the file resides
+Returns the block size of the file system where the file resides.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -174,13 +175,13 @@ sub blksize {
 	return;
 }
 
-=head2 blocks
+=head2 C<blocks>
 
   $file->blocks;
 
-Returns the number of blockes used by the file.
+Returns the number of blocks used by the file.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -190,7 +191,7 @@ sub blocks {
 	return;
 }
 
-=head2 can_run
+=head2 C<can_run>
 
   $file->can_run;
 
@@ -210,13 +211,13 @@ sub can_run {
 	return 0;
 }
 
-=head2 ctime
+=head2 C<ctime>
 
   $file->ctime;
 
 Returns the last-change time of the inode (not the file!).
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -226,13 +227,13 @@ sub ctime {
 	return;
 }
 
-=head2 dev
+=head2 C<dev>
 
   $file->dev;
 
-Returns the device number of the filesystem where the file resides.
+Returns the device number of the file system where the file resides.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -242,11 +243,11 @@ sub dev {
 	return;
 }
 
-=head2 dirname
+=head2 C<dirname>
 
   $file->dirname;
 
-Returns the plain path without filename if a path/filename structure
+Returns the plain path without file name if a path/file name structure
 exists for this module.
 
 =cut
@@ -256,13 +257,13 @@ sub dirname {
 	return;
 }
 
-=head2 exists
+=head2 C<exists>
 
   $file->exists;
 
 Returns true if the file exists.
 Returns false if the file doesn't exist.
-Returns undef if unsure (network problem, not implemented).
+Returns C<undef> if unsure (network problem, not implemented).
 
 =cut
 
@@ -277,14 +278,14 @@ sub exists {
 	return;
 }
 
-=head2 filename
+=head2 C<filename>
 
   $file->filename;
 
-Returns the the filename including path handled by this object
+Returns the the file name including path handled by this object.
 
-Please remember that Padre::File is able to open many URL types. This
-"filename" may also be a URL. Please use the ->basename and ->dirname
+Please remember that C<Padre::File> is able to open many URL types. This
+file name may also be a URL. Please use the C<basename> and C<dirname>
 methods to split it (assuming that a path exists in the current
 protocol).
 
@@ -296,13 +297,13 @@ sub filename {
 	return $self->{filename};
 }
 
-=head2 gid
+=head2 C<gid>
 
   $file->gid;
 
-Returns the GID of the file group.
+Returns the real group ID of the file group.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -312,13 +313,13 @@ sub gid {
 	return;
 }
 
-=head2 inode
+=head2 C<inode>
 
   $file->inode;
 
 Returns the inode number of the file.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -328,12 +329,12 @@ sub inode {
 	return;
 }
 
-=head2 mime
+=head2 C<mime>
 
   $file->mime;
   $file->mime('text/plain');
 
-Returns or sets the mime type of the file.
+Returns or sets the MIME type of the file.
 
 =cut
 
@@ -344,15 +345,15 @@ sub mime {
 	return $self->{MIME};
 }
 
-=head2 mode
+=head2 C<mode>
 
   $file->mode;
 
 Returns the file mode (type and rights).
 
-TODO: Add a description what exactly is returned.
+TO DO: Add a description what exactly is returned.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -362,7 +363,7 @@ sub mode {
 	return;
 }
 
-=head2 mtime
+=head2 C<mtime>
 
   $file->mtime;
 
@@ -375,13 +376,13 @@ sub mtime {
 	return;
 }
 
-=head2 nlink
+=head2 C<nlink>
 
   $file->nlink;
 
-Returns the number of hard links to the file
+Returns the number of hard links to the file.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -391,13 +392,13 @@ sub nlink {
 	return;
 }
 
-=head2 rdev
+=head2 C<rdev>
 
   $file->rdev;
 
 Returns the device identifier.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -407,14 +408,14 @@ sub rdev {
 	return;
 }
 
-=head2 read
+=head2 C<read>
 
   $file->read;
 
 Reads the file contents and returns them.
 
-Returns undef on error. The error message could be retrieved using the
-->error method.
+Returns C<undef> on error. The error message could be retrieved using the
+C<error> method.
 
 =cut
 
@@ -423,7 +424,7 @@ sub error {
 	return $self->{error};
 }
 
-=head2 size
+=head2 C<size>
 
   $file->size;
 
@@ -436,14 +437,14 @@ sub size {
 	return;
 }
 
-=head2 stat
+=head2 C<stat>
 
   $file->stat;
 
 This emulates a stat call and returns the same values:
 
 
-  0 dev      device number of filesystem
+  0 dev      device number of file system
   1 ino      inode number
   2 mode     file mode  (type and permissions)
   3 nlink    number of (hard) links to the file
@@ -459,15 +460,27 @@ This emulates a stat call and returns the same values:
 
 A module should fill as many items as possible, but if you're thinking
 about using this method, always remember
-  1. Usually, you need only one or two of the items, request them
-     directly.
-  2. Besides from local files, most of the values will not be
-     accessable (resulting in undef values)
-  3. On most protocols these values must be requested one-by-one
-     which is very very expensive
+
+=over
+
+=item 1.
+
+Usually, you need only one or two of the items, request them directly.
+
+=item 2.
+
+Besides from local files, most of the values will not be accessible (resulting
+in C<undef> values).
+
+=item 3.
+
+On most protocols these values must be requested one-by-one, which is very
+expensive.
+
+=back
 
 Please always consider using the function for the value you really need
-instead of using ->stat!
+instead of using C<stat>!
 
 =cut
 
@@ -493,13 +506,13 @@ sub stat {
 
 }
 
-=head2 uid
+=head2 C<uid>
 
   $file->uid;
 
-Returns the UID of the file owner.
+Returns the real user ID of the file owner.
 
-This is usually not possible for non-local files, in these cases, undef
+This is usually not possible for non-local files, in these cases, C<undef>
 is returned.
 
 =cut
@@ -509,17 +522,17 @@ sub uid {
 	return;
 }
 
-=head2 write
+=head2 C<write>
 
   $file->write($Content);
   $file->write($Content,$Coding);
 
-Writes the given $Content to the file, if a encoding is given and the
-protocol allows the usage of encodings, it is respected.
+Writes the given C<$Content> to the file, if a encoding is given and the
+protocol allows encoding, it is respected.
 
 Returns 1 on success.
 Returns 0 on failure.
-Returns undef if the function is not avaible on the protocol.
+Returns C<undef> if the function is not available on the protocol.
 
 =cut
 

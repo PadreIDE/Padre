@@ -4,7 +4,7 @@ package Padre::Wx::Ack;
 
 =head1 NAME
 
-Padre::Wx::Ack - Find in files, using Ack
+Padre::Wx::Ack - Find in files, using L<Ack>
 
 =head1 DESCRIPTION
 
@@ -195,7 +195,7 @@ sub find_clicked {
 
 	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
 
-	# TODO kill the thread before closing the application
+	# TO DO kill the thread before closing the application
 
 	# prepare \%opts
 	%opts = ();

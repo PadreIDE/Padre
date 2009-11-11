@@ -1,4 +1,7 @@
 package Padre::Wx::Main;
+use utf8;
+
+=encoding UTF-8
 
 =pod
 
@@ -12,7 +15,7 @@ C<Padre::Wx::Main> implements Padre's main window. It is the window
 containing the menus, the notebook with all opened tabs, the various sub-
 windows (outline, subs, output, errors, etc).
 
-It inherits from C<Wx::Frame>, so check wx documentation to see all
+It inherits from C<Wx::Frame>, so check Wx documentation to see all
 the available methods that can be applied to it besides the added ones
 (see below).
 
@@ -73,7 +76,7 @@ use constant SECONDS => 1000;
 
 There's only one constructor for this class.
 
-=head3 new
+=head3 C<new>
 
     my $main = Padre::Wx::Main->new($ide);
 
@@ -149,7 +152,7 @@ sub new {
 	Padre::Wx::FileDropTarget->set($self);
 
 	# Temporary store for the notebook tab history
-	# TODO: Storing this here (might) violate encapsulation.
+	# TO DO: Storing this here (might) violate encapsulation.
 	#       It should probably be in the notebook object.
 	$self->{page_history} = [];
 
@@ -235,7 +238,7 @@ sub new {
 	# not show the status bar which is ok, but then when we selected the menu
 	# to show it, it showed at the top) so now we always turn the status bar on
 	# at the beginning and hide it in the timer, if it was not needed
-	# TODO: there might be better ways to fix that issue...
+	# TO DO: there might be better ways to fix that issue...
 	$statusbar->Show;
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT, );
 	Wx::Event::EVT_TIMER(
@@ -264,33 +267,33 @@ Accessors to GUI elements:
 
 =over 4
 
-=item * title
+=item * C<title>
 
-=item * config
+=item * C<config>
 
-=item * aui
+=item * C<aui>
 
-=item * menu
+=item * C<menu>
 
-=item * notebook
+=item * C<notebook>
 
-=item * left
+=item * C<left>
 
-=item * right
+=item * C<right>
 
-=item * functions
+=item * C<functions>
 
-=item * outline
+=item * C<outline>
 
-=item * directory
+=item * C<directory>
 
-=item * bottom
+=item * C<bottom>
 
-=item * output
+=item * C<output>
 
-=item * syntax
+=item * C<syntax>
 
-=item * errorlist
+=item * C<errorlist>
 
 =back
 
@@ -298,9 +301,9 @@ Accessors to operating data:
 
 =over 4
 
-=item * cwd
+=item * C<cwd>
 
-=item * no_refresh
+=item * C<no_refresh>
 
 =back
 
@@ -308,7 +311,7 @@ Accessors that may not belong to this class:
 
 =over 4
 
-=item * ack
+=item * C<ack>
 
 =back
 
@@ -405,7 +408,7 @@ sub help_search {
 
 =pod
 
-=head3 find
+=head3 C<find>
 
     my $find = $main->find;
 
@@ -424,7 +427,7 @@ sub find {
 
 =pod
 
-=head3 fast_find
+=head3 C<fast_find>
 
     my $find = $main->fast_find;
 
@@ -443,7 +446,7 @@ sub fast_find {
 
 =pod
 
-=head3 replace
+=head3 C<replace>
 
     my $replace = $main->replace;
 
@@ -464,7 +467,7 @@ sub replace {
 
 =head2 Public Methods
 
-=head3 load_files
+=head3 C<load_files>
 
     $main->load_files;
 
@@ -507,7 +510,7 @@ sub load_files {
 		return;
 	}
 
-	# Config setting 'last' means startup with all the files from the
+	# Config setting 'last' means start-up with all the files from the
 	# previous time we used Padre open (if they still exist)
 	if ( $startup eq 'last' ) {
 		my $session = Padre::DB::Session->last_padre_session;
@@ -515,12 +518,12 @@ sub load_files {
 		return;
 	}
 
-	# Config setting 'nothing' means startup with nothing open
+	# Config setting 'nothing' means start-up with nothing open
 	if ( $startup eq 'nothing' ) {
 		return;
 	}
 
-	# Config setting 'new' means startup with a single new file open
+	# Config setting 'new' means start-up with a single new file open
 	if ( $startup eq 'new' ) {
 		$self->setup_editors;
 		return;
@@ -534,7 +537,7 @@ sub load_files {
 	}
 
 	# Configuration has an entry we don't know about
-	# TODO: Once we have a warning system more useful than STDERR
+	# TO DO: Once we have a warning system more useful than STDERR
 	# add a warning. For now though, just do nothing and ignore.
 	return;
 }
@@ -548,7 +551,7 @@ sub _timer_post_init {
 	# without any files loaded. Then immediately Freeze so that the
 	# loading of the files is done in a single render pass.
 	# This gives us an optimum compromise between being PERCEIVED
-	# to startup quickly, and ACTUALLY starting up quickly.
+	# to start-up quickly, and ACTUALLY starting up quickly.
 	$self->Show(1);
 	$self->Freeze;
 
@@ -593,7 +596,7 @@ sub _timer_post_init {
 		$self->single_instance_start;
 	}
 
-	# Check for new plugins and alert the user to them
+	# Check for new plug-ins and alert the user to them
 	$manager->alert_new;
 
 	# Start the change detection timer
@@ -615,11 +618,11 @@ sub _timer_post_init {
 
 =pod
 
-=head2 freezer
+=head2 C<freezer>
 
    my $locker = $main->freezer;
 
-Create and return an automatic Freeze object that Thaw's on destruction.
+Create and return an automatic C<freeze> object that will C<thaw> on destruction.
 
 =cut
 
@@ -640,7 +643,7 @@ my $single_instance_port = 4444;
 
 =pod
 
-=head3 single_instance_start
+=head3 C<single_instance_start>
 
     $main->single_instance_start;
 
@@ -678,7 +681,7 @@ sub single_instance_start {
 
 =pod
 
-=head3 single_instance_stop
+=head3 C<single_instance_stop>
 
     $main->single_instance_stop;
 
@@ -702,7 +705,7 @@ sub single_instance_stop {
 
 =pod
 
-=head3 single_instance_running
+=head3 C<single_instance_running>
 
     my $is_running = $main->single_instance_running;
 
@@ -716,7 +719,7 @@ sub single_instance_running {
 
 =pod
 
-=head3 single_instance_connect
+=head3 C<single_instance_connect>
 
     $main->single_instance_connect;
 
@@ -764,7 +767,7 @@ sub single_instance_connect {
 
 =pod
 
-=head3 single_instance_command
+=head3 C<single_instance_command>
 
     $main->single_instance_command( $line );
 
@@ -823,7 +826,7 @@ sub single_instance_command {
 
 Those methods allow to query properties about the main window.
 
-=head3 window_width
+=head3 C<window_width>
 
     my $width = $main->window_width;
 
@@ -837,7 +840,7 @@ sub window_width {
 
 =pod
 
-=head3 window_height
+=head3 C<window_height>
 
     my $width = $main->window_height;
 
@@ -851,7 +854,7 @@ sub window_height {
 
 =pod
 
-=head3 window_left
+=head3 C<window_left>
 
     my $left = $main->window_left;
 
@@ -865,7 +868,7 @@ sub window_left {
 
 =pod
 
-=head3 window_top
+=head3 C<window_top>
 
     my $top = $main->window_top;
 
@@ -885,7 +888,7 @@ Those methods refresh parts of Padre main window. The term C<refresh>
 and the following methods are reserved for fast, blocking, real-time
 updates to the GUI, implying rapid changes.
 
-=head3 refresh
+=head3 C<refresh>
 
     $main->refresh;
 
@@ -928,7 +931,7 @@ sub refresh {
 
 =pod
 
-=head3 refresh_syntaxcheck
+=head3 C<refresh_syntaxcheck>
 
     $main->refresh_syntaxcheck;
 
@@ -947,7 +950,7 @@ sub refresh_syntaxcheck {
 
 =pod
 
-=head3 refresh_menu
+=head3 C<refresh_menu>
 
     $main->refresh_menu;
 
@@ -964,11 +967,11 @@ sub refresh_menu {
 
 =pod
 
-=head3 refresh_menubar
+=head3 C<refresh_menubar>
 
     $main->refresh_menubar;
 
-Force a refresh of Padre's menubar.
+Force a refresh of Padre's menu bar.
 
 =cut
 
@@ -980,7 +983,7 @@ sub refresh_menubar {
 
 =pod
 
-=head3 refresh_toolbar
+=head3 C<refresh_toolbar>
 
     $main->refresh_toolbar;
 
@@ -999,7 +1002,7 @@ sub refresh_toolbar {
 
 =pod
 
-=head3 refresh_status
+=head3 C<refresh_status>
 
     $main->refresh_status;
 
@@ -1015,7 +1018,7 @@ sub refresh_status {
 
 =pod
 
-=head3 refresh_cursorpos
+=head3 C<refresh_cursorpos>
 
     $main->refresh_cursorpos;
 
@@ -1037,7 +1040,7 @@ sub refresh_rdstatus {
 
 =pod
 
-=head3 refresh_functions
+=head3 C<refresh_functions>
 
     $main->refresh_functions;
 
@@ -1047,7 +1050,7 @@ Force a refresh of the function list on the right.
 
 sub refresh_functions {
 
-	# TODO now on every ui change (move of the mouse) we refresh
+	# TO DO now on every ui change (move of the mouse) we refresh
 	# this even though that should not be necessary can that be
 	# eliminated ?
 	my ( $self, $current ) = @_;
@@ -1066,11 +1069,11 @@ sub refresh_functions {
 Those methods reconfigure Padre's main window in case of drastic changes
 (locale, etc.)
 
-=head3 change_style
+=head3 C<change_style>
 
     $main->change_style( $style, $private );
 
-Apply C<$style> to Padre main window. C<$private> is a boolean true if
+Apply C<$style> to Padre main window. C<$private> is a Boolean true if
 the style is located in user's private Padre directory.
 
 =cut
@@ -1092,7 +1095,7 @@ sub change_style {
 
 =pod
 
-=head3 change_locale
+=head3 C<change_locale>
 
     $main->change_locale( $locale );
 
@@ -1129,7 +1132,7 @@ sub change_locale {
 
 =pod
 
-=head3 relocale
+=head3 C<relocale>
 
     $main->relocale;
 
@@ -1156,7 +1159,7 @@ sub relocale {
 		delete $self->{replace};
 	}
 
-	# Relocale the plugins
+	# Relocale the plug-ins
 	$self->ide->plugin_manager->relocale;
 
 	# Empty actions to stop getting false warnings about duplicated
@@ -1186,11 +1189,11 @@ sub relocale {
 
 =pod
 
-=head3 reconfig
+=head3 C<reconfig>
 
     $main->reconfig( $config );
 
-The term and method "reconfig" is reserved for functionality intended to
+The term and method C<reconfig> is reserved for functionality intended to
 run when Padre's underlying configuration is updated by an external
 actor at run-time. The primary use cases for this method are when the
 user configuration file is synced from a remote network location.
@@ -1208,15 +1211,15 @@ sub reconfig {
 
 	# The biggest potential change is that the user may have a
 	# different forced locale.
-	# TODO - This could get subtle (we have to not only know
+	# TO DO - This could get subtle (we have to not only know
 	# what the current locale is, but also if it was derived from
 	# the system default or not)
 
 	# Rebuild the toolbar if the lockinterface status has changed
-	# TODO - Implement this
+	# TO DO - Implement this
 
 	# Show or hide all the main gui elements
-	# TODO - Move this into the config ->apply logic
+	# TO DO - Move this into the config ->apply logic
 	$self->show_functions( $config->main_functions );
 	$self->show_outline( $config->main_outline );
 	$self->show_directory( $config->main_directory );
@@ -1231,7 +1234,7 @@ sub reconfig {
 
 =pod
 
-=head3 rebuild_toolbar
+=head3 C<rebuild_toolbar>
 
     $main->rebuild_toolbar;
 
@@ -1262,7 +1265,7 @@ sub rebuild_toolbar {
 Those methods deal with the various panels that Padre provides, and
 allow to show or hide them.
 
-=head3 show_functions
+=head3 C<show_functions>
 
     $main->show_functions( $visible );
 
@@ -1295,7 +1298,7 @@ sub show_functions {
 
 =pod
 
-=head3 show_outline
+=head3 C<show_outline>
 
     $main->show_outline( $visible );
 
@@ -1333,7 +1336,7 @@ sub show_outline {
 
 =pod
 
-=head3 show_directory
+=head3 C<show_directory>
 
     $main->show_directory( $visible );
 
@@ -1369,7 +1372,7 @@ sub show_directory {
 
 =pod
 
-=head3 show_output
+=head3 C<show_output>
 
     $main->show_output( $visible );
 
@@ -1402,7 +1405,7 @@ sub show_output {
 
 =pod
 
-=head3 show_syntax
+=head3 C<show_syntax>
 
     $main->show_syntax( $visible );
 
@@ -1441,12 +1444,12 @@ sub show_syntax {
 
 The following methods allow to poke into Padre's internals.
 
-=head3 current
+=head3 C<current>
 
     my $current = $main->current;
 
 Creates a L<Padre::Current> object for the main window, giving you quick
-and cacheing access to the current various whatevers.
+and caching access to the current various object members.
 
 See L<Padre::Current> for more information.
 
@@ -1458,7 +1461,7 @@ sub current {
 
 =pod
 
-=head3 pageids
+=head3 C<pageids>
 
     my @ids = $main->pageids;
 
@@ -1472,7 +1475,7 @@ sub pageids {
 
 =pod
 
-=head3 pages
+=head3 C<pages>
 
     my @pages = $main->pages;
 
@@ -1488,7 +1491,7 @@ sub pages {
 
 =pod
 
-=head3 editors
+=head3 C<editors>
 
     my @editors = $main->editors;
 
@@ -1507,11 +1510,11 @@ sub editors {
 
 =pod
 
-=head3 documents
+=head3 C<documents>
 
     my @document = $main->documents;
 
-Return a list of all current docunments, in the specific order
+Return a list of all current documents, in the specific order
 they are open in the notepad.
 
 =cut
@@ -1527,7 +1530,7 @@ sub documents {
 The following methods run an external command, for example to evaluate
 current document.
 
-=head3 on_run_command
+=head3 C<on_run_command>
 
     $main->on_run_command;
 
@@ -1560,15 +1563,15 @@ sub on_run_command {
 	return;
 }
 
-=pod 
+=pod
 
-=head3 on_run_tdd_tests
+=head3 C<on_run_tdd_tests>
 
    $main->on_run_tdd_tests;
-   
+
 Callback method, to build and then call on_run_tests
 
-=cut 
+=cut
 
 sub on_run_tdd_tests {
 	my $self     = shift;
@@ -1593,9 +1596,9 @@ sub on_run_tdd_tests {
 	chdir $dir;
 }
 
-=pod 
+=pod
 
-=head3 on_run_tests
+=head3 C<on_run_tests>
 
     $main->on_run_tests;
 
@@ -1610,7 +1613,7 @@ sub on_run_tests {
 		return $self->error( Wx::gettext("No document open") );
 	}
 
-	# TODO probably should fetch the current project name
+	# TO DO probably should fetch the current project name
 	my $filename = $document->{file}->filename if defined( $document->{file} );
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
@@ -1647,7 +1650,7 @@ sub on_run_tests {
 
 =pod
 
-=head3 on_run_this_test
+=head3 C<on_run_this_test>
 
     $main->on_run_this_test;
 
@@ -1662,7 +1665,7 @@ sub on_run_this_test {
 		return $self->error( Wx::gettext("No document open") );
 	}
 
-	# TODO probably should fetch the current project name
+	# TO DO probably should fetch the current project name
 	my $filename = $document->{file}->filename if defined( $document->{file} );
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
@@ -1700,7 +1703,7 @@ sub on_run_this_test {
 
 =pod
 
-=head3 run_command
+=head3 C<run_command>
 
     $main->run_command( $command );
 
@@ -1813,7 +1816,7 @@ sub run_command {
 
 =pod
 
-=head3 run_document
+=head3 C<run_document>
 
     $main->run_document( $debug )
 
@@ -1833,7 +1836,7 @@ sub run_document {
 	}
 
 	# Apply the user's save-on-run policy
-	# TODO: Make this code suck less
+	# TO DO: Make this code suck less
 	unless ( $document->is_saved ) {
 		my $config = $self->config;
 		if ( $config->run_save eq 'same' ) {
@@ -1876,11 +1879,11 @@ sub run_document {
 
 =pod
 
-=head3 debug_perl
+=head3 C<debug_perl>
 
     $main->debug_perl;
 
-Run current document under perl debugger. An error is reported if
+Run current document under Perl debugger. An error is reported if
 current is not a Perl document.
 
 =cut
@@ -1900,7 +1903,7 @@ sub debug_perl {
 	#	}
 
 	# Apply the user's save-on-run policy
-	# TODO: Make this code suck less
+	# TO DO: Make this code suck less
 	my $config = $self->config;
 	if ( $config->run_save eq 'same' ) {
 		$self->on_save;
@@ -1931,7 +1934,7 @@ Those methods deal with Padre sessions. A session is a set of files /
 tabs opened, with the position within the files saved, as well as the
 document that has the focus.
 
-=head3 capture_session
+=head3 C<capture_session>
 
     my @session = $main->capture_session;
 
@@ -1966,7 +1969,7 @@ sub capture_session {
 
 =pod
 
-=head3 open_session
+=head3 C<open_session>
 
     $main->open_session( $session );
 
@@ -2036,7 +2039,7 @@ sub open_session {
 
 =pod
 
-=head3 save_session
+=head3 C<save_session>
 
     $main->save_session( $session, @session );
 
@@ -2065,7 +2068,7 @@ sub save_current_session {
 		$self->{ide}->{session}
 	);
 
-	# TODO: Understand and rewrite this if to match the logical context of this method
+	# TO DO: Understand and rewrite this if to match the logical context of this method
 	if ( defined $session ) {
 
 		# session exist, remove all files associated to it
@@ -2111,7 +2114,7 @@ sub update_directory {
 
 Various methods to help send information to user.
 
-=head3 message
+=head3 C<message>
 
     $main->message( $msg, $title );
 
@@ -2130,7 +2133,7 @@ sub message {
 
 =pod
 
-=head3 info
+=head3 C<info>
 
     $main->info( $msg );
 
@@ -2162,7 +2165,7 @@ sub info {
 
 =pod
 
-=head3 error
+=head3 C<error>
 
     $main->error( $msg );
 
@@ -2179,12 +2182,12 @@ sub error {
 
 =pod
 
-=head3 prompt
+=head3 C<prompt>
 
     my $value = $main->prompt( $title, $subtitle, $key );
 
 Prompt user with a dialog box about the value that C<$key> should have.
-Return this value, or undef if user clicked C<cancel>.
+Return this value, or C<undef> if user clicked C<cancel>.
 
 =cut
 
@@ -2216,11 +2219,11 @@ search and replace functions and dialogs.
 However, they still represent abstract logic and should NOT be tied directly to
 keystroke or menu events.
 
-=head2 search_next
+=head2 C<search_next>
 
   # Next match for a new search
   $main->search_next( $search );
-  
+
   # Next match on current search (or show Find dialog if none)
   $main->search_next;
 
@@ -2247,11 +2250,11 @@ sub search_next {
 
 =pod
 
-=head2 search_previous
+=head2 C<search_previous>
 
   # Previous match for a new search
   $main->search_previous( $search );
-  
+
   # Previous match on current search (or show Find dialog if none)
   $main->search_previous;
 
@@ -2278,11 +2281,11 @@ sub search_previous {
 
 =pod
 
-=head2 replace_next
+=head2 C<replace_next>
 
   # Next replace for a new search
   $main->replace_next( $search );
-  
+
   # Next replace on current search (or show Find dialog if none)
   $main->replace_next;
 
@@ -2309,11 +2312,11 @@ sub replace_next {
 
 =pod
 
-=head2 replace_all
+=head2 C<replace_all>
 
   # Replace all for a new search
   $main->replace_all( $search );
-  
+
   # Replace all for the current search (or show Replace dialog if none)
   $main->replace_all;
 
@@ -2345,7 +2348,7 @@ sub replace_all {
 Those methods are the various callbacks registered in the menus or
 whatever widgets Padre has.
 
-=head3 on_brace_matching
+=head3 C<on_brace_matching>
 
     $main->on_brace_matching;
 
@@ -2369,14 +2372,14 @@ sub on_brace_matching {
 		$page->GotoPos($pos2);
 	}
 
-	# TODO: or any nearby position.
+	# TO DO: or any nearby position.
 
 	return;
 }
 
 =pod
 
-=head3 on_comment_block
+=head3 C<on_comment_block>
 
     $main->on_comment_block;
 
@@ -2386,9 +2389,9 @@ Performs one of the following depending the given operation
 
 =item * Uncomment or comment selected lines, depending on their current state.
 
-=item * Comment out selected lines unilateraly.
+=item * Comment out selected lines unilaterally.
 
-=item * Uncomment selected lines unilateraly.
+=item * Uncomment selected lines unilaterally.
 
 =back
 
@@ -2428,11 +2431,11 @@ sub on_comment_block {
 
 =pod
 
-=head3 on_autocompletion
+=head3 C<on_autocompletion>
 
     $main->on_autocompletion;
 
-Try to autocomplete current word being typed, depending on
+Try to auto-complete current word being typed, depending on
 document type.
 
 =cut
@@ -2469,7 +2472,7 @@ sub on_autocompletion {
 
 =pod
 
-=head3 on_goto
+=head3 C<on_goto>
 
     $main->on_goto;
 
@@ -2498,16 +2501,16 @@ sub on_goto {
 
 =pod
 
-=head3 on_close_window
+=head3 C<on_close_window>
 
     $main->on_close_window( $event );
 
 Callback when window is about to be closed. This is our last chance to
-veto the C<$event> close, eg when some files are not yet saved.
+veto the C<$event> close, e.g. when some files are not yet saved.
 
-If close is confirmed, save config to disk. Also, capture current
+If close is confirmed, save configuration to disk. Also, capture current
 session to be able to restore it next time if user set Padre to open
-last session on startup. Clean up all Task Manager's tasks.
+last session on start-up. Clean up all Task Manager's tasks.
 
 =cut
 
@@ -2602,8 +2605,8 @@ sub on_close_window {
 		$self->{help}->Destroy;
 	}
 
-	# Shut down all the plugins before saving the configuration
-	# so that plugins have a change to save their configuration.
+	# Shut down all the plug-ins before saving the configuration
+	# so that plug-ins have a change to save their configuration.
 	$ide->plugin_manager->shutdown;
 	Padre::Util::debug("After plugin manager shutdown");
 
@@ -2635,11 +2638,11 @@ sub update_last_session {
 
 =pod
 
-=head3 setup_editors
+=head3 C<setup_editors>
 
     $main->setup_editors( @files );
 
-Setup (new) tabs for C<@files>, and update the GUI. If C<@files> is undef, open
+Setup (new) tabs for C<@files>, and update the GUI. If C<@files> is C<undef>, open
 an empty document.
 
 =cut
@@ -2685,7 +2688,7 @@ sub setup_editors {
 
 =pod
 
-=head3 on_new
+=head3 C<on_new>
 
     $main->on_new;
 
@@ -2704,7 +2707,7 @@ sub on_new {
 
 =pod
 
-=head3 setup_editor
+=head3 C<setup_editor>
 
     $main->setup_editor( $file );
 
@@ -2832,7 +2835,7 @@ sub setup_editor {
 
 =pod
 
-=head3 create_tab
+=head3 C<create_tab>
 
     my $tab = $main->create_tab;
 
@@ -2852,15 +2855,15 @@ sub create_tab {
 
 =pod
 
-=head3 on_open_selection
+=head3 C<on_open_selection>
 
     $main->on_open_selection;
 
 Try to open current selection in a new tab. Different combinations are
-tried in order: as full path, as path relative to cwd (where the editor
+tried in order: as full path, as path relative to C<cwd> (where the editor
 was started), as path to relative to where the current file is, if we
-are in a perl file or perl environment also try if the thing might be a
-name of a module and try to open it locally or from @INC.
+are in a Perl file or Perl environment also try if the thing might be a
+name of a module and try to open it locally or from C<@INC>.
 
 No return value.
 
@@ -2911,7 +2914,7 @@ sub on_open_selection {
 			}
 		}
 	}
-	unless (@files) { # TODO: and if we are in a Perl environment
+	unless (@files) { # TO DO: and if we are in a Perl environment
 		my $module = $text;
 		$module =~ s{::}{/}g;
 		$module .= ".pm";
@@ -2929,7 +2932,7 @@ sub on_open_selection {
 				push @files, $filename;
 			}
 
-			# TODO: it should not be our @INC but the @INC of the perl used for
+			# TO DO: it should not be our @INC but the @INC of the perl used for
 			# script execution
 			foreach my $path (@INC) {
 				my $filename = File::Spec->catfile( $path, $module );
@@ -2967,7 +2970,7 @@ sub on_open_selection {
 
 =pod
 
-=head3 on_open_all_recent_files
+=head3 C<on_open_all_recent_files>
 
     $main->on_open_all_recent_files;
 
@@ -2985,7 +2988,7 @@ sub on_open_all_recent_files {
 
 =pod
 
-=head3 on_filter_tool
+=head3 C<on_filter_tool>
 
     $main->on_filter_tool;
 
@@ -3000,7 +3003,7 @@ sub on_filter_tool {
 	$filter->show;
 }
 
-=head3 on_open_url
+=head3 C<on_open_url>
 
     $main->on_open_url;
 
@@ -3026,7 +3029,7 @@ sub on_open_url {
 
 =pod
 
-=head3 on_open
+=head3 C<on_open>
 
     $main->on_open;
 
@@ -3046,7 +3049,7 @@ sub on_open {
 	return;
 }
 
-# TODO: let's allow this to be used by plugins
+# TO DO: let's allow this to be used by plug-ins
 sub open_file_dialog {
 	my $self = shift;
 	my $dir  = shift;
@@ -3121,7 +3124,7 @@ sub open_file_dialog {
 			# so this should never appear on Windows:
 			my $ret = Wx::MessageBox(
 				sprintf(
-					Wx::gettext('Filename %s contains * or ? which are special chars on most computers. Skip?'),
+					Wx::gettext('File name %s contains * or ? which are special chars on most computers. Skip?'),
 					$filename
 				),
 				Wx::gettext("Open Warning"),
@@ -3141,7 +3144,7 @@ sub open_file_dialog {
 			# entering and not selecting a filename to open:
 			my $ret = Wx::MessageBox(
 				sprintf(
-					Wx::gettext('Filename %s does not exist on disk. Skip?'),
+					Wx::gettext('File name %s does not exist on disk. Skip?'),
 					$FN
 				),
 				Wx::gettext("Open Warning"),
@@ -3168,7 +3171,7 @@ sub on_open_example {
 
 =pod
 
-=head3 reload_all
+=head3 C<reload_all>
 
     my $success = $main->reload_all();
 
@@ -3198,7 +3201,7 @@ sub reload_all {
 	return 1;
 }
 
-=head3 reload_file
+=head3 C<reload_file>
 
     $main->reload_file;
 
@@ -3240,7 +3243,7 @@ sub reload_file {
 	return 1;
 }
 
-=head3 on_reload_file
+=head3 C<on_reload_file>
 
     $main->on_reload_file;
 
@@ -3256,7 +3259,7 @@ sub on_reload_file {
 }
 
 
-=head3 on_reload_all
+=head3 C<on_reload_all>
 
     $main->on_reload_all;
 
@@ -3273,11 +3276,11 @@ sub on_reload_all {
 
 =pod
 
-=head3 on_save_as
+=head3 C<on_save_as>
 
     my $was_saved = $main->on_save_as;
 
-Prompt user for a new filename to save current document, and save it.
+Prompt user for a new file name to save current document, and save it.
 Returns true if saved, false if cancelled.
 
 =cut
@@ -3365,11 +3368,11 @@ sub on_save_as {
 
 =pod
 
-=head3 on_save
+=head3 C<on_save>
 
     my $success = $main->on_save;
 
-Try to save current document. Prompt user for a filename if document was
+Try to save current document. Prompt user for a file name if document was
 new (see C<on_save_as()> above). Return true if document has been saved,
 false otherwise.
 
@@ -3397,7 +3400,7 @@ sub on_save {
 
 =pod
 
-=head3 on_save_all
+=head3 C<on_save_all>
 
     my $success = $main->on_save_all;
 
@@ -3410,7 +3413,7 @@ sub on_save_all {
 	my $self = shift;
 	foreach my $id ( $self->pageids ) {
 		my $editor = $self->notebook->GetPage($id) or next;
-		my $doc = $editor->{Document}; # TODO no accessor for document?
+		my $doc = $editor->{Document}; # TO DO no accessor for document?
 		if ( $doc->is_modified ) {
 			$self->on_save($doc) or return 0;
 		}
@@ -3420,7 +3423,7 @@ sub on_save_all {
 
 =pod
 
-=head3 _save_buffer
+=head3 C<_save_buffer>
 
     my $success = $main->_save_buffer( $id );
 
@@ -3463,12 +3466,12 @@ sub _save_buffer {
 
 =pod
 
-=head3 on_close
+=head3 C<on_close>
 
     $main->on_close( $event );
 
-Handler when there is a close C<$event>. Veto it if it's from the aui
-notebook, since wx will try to close the tab no matter what. Otherwise,
+Handler when there is a close C<$event>. Veto it if it's from the C<AUI>
+notebook, since Wx will try to close the tab no matter what. Otherwise,
 close current tab. No return value.
 
 =cut
@@ -3494,7 +3497,7 @@ sub on_close {
 
 =pod
 
-=head3 close
+=head3 C<close>
 
     my $success = $main->close( $id );
 
@@ -3559,7 +3562,7 @@ sub close {
 
 =pod
 
-=head3 close_all
+=head3 C<close_all>
 
     my $success = $main->close_all( $skip );
 
@@ -3604,7 +3607,7 @@ sub close_all {
 
 =pod
 
-=head3 close_where
+=head3 C<close_where>
 
     # Close all files in current project
     my $project = Padre::Current->document->project_dir;
@@ -3612,8 +3615,8 @@ sub close_all {
         $_[0]->project_dir eq $project
     } );
 
-The C<close_where> method is a programatically enhanceable mass-close
-tool. It takes a subroutine as a parameter and calls that subroutine
+The C<close_where> method is for closing multiple document windows.
+It takes a subroutine as a parameter and calls that subroutine
 for each currently open document, passing the document as the first
 parameter.
 
@@ -3637,7 +3640,7 @@ sub close_where {
 
 =pod
 
-=head3 on_nth_path
+=head3 C<on_nth_path>
 
     $main->on_nth_pane( $id );
 
@@ -3653,7 +3656,7 @@ sub on_nth_pane {
 	if ($page) {
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
-		$page->{Document}->set_indentation_style(); # TODO: encapsulation?
+		$page->{Document}->set_indentation_style(); # TO DO: encapsulation?
 		return 1;
 	}
 	return;
@@ -3661,7 +3664,7 @@ sub on_nth_pane {
 
 =pod
 
-=head3 on_next_pane
+=head3 C<on_next_pane>
 
     $main->on_next_pane;
 
@@ -3687,7 +3690,7 @@ sub on_next_pane {
 
 =pod
 
-=head3 on_prev_pane
+=head3 C<on_prev_pane>
 
     $main->on_prev_pane;
 
@@ -3713,7 +3716,7 @@ sub on_prev_pane {
 
 =pod
 
-=head3 on_diff
+=head3 C<on_diff>
 
     $main->on_diff;
 
@@ -3766,11 +3769,11 @@ sub on_diff {
 
 =pod
 
-=head3 on_join_lines
+=head3 C<on_join_lines>
 
     $main->on_join_lines;
 
-Join current line with next one (a-la vi with Ctrl+J). No return value.
+Join current line with next one (à la B<vi> with C<Ctrl+J>). No return value.
 
 =cut
 
@@ -3806,7 +3809,7 @@ sub on_join_lines {
 
 Those methods allow to change Padre's preferences.
 
-=head3 zoom
+=head3 C<zoom>
 
     $main->zoom( $factor );
 
@@ -3826,11 +3829,11 @@ sub zoom {
 
 =pod
 
-=head3 open_regex_editor
+=head3 C<open_regex_editor>
 
     $main->open_regex_editor;
 
-Open Padre's regex editor. No return value.
+Open Padre's regular expression editor. No return value.
 
 =cut
 
@@ -3847,7 +3850,7 @@ sub open_regex_editor {
 
 =pod
 
-=head3 on_preferences
+=head3 C<on_preferences>
 
     $main->on_preferences;
 
@@ -3889,7 +3892,7 @@ sub on_preferences {
 
 =pod
 
-=head3 on_toggle_line_numbers
+=head3 C<on_toggle_line_numbers>
 
     $main->on_toggle_line_numbers;
 
@@ -3915,7 +3918,7 @@ sub on_toggle_line_numbers {
 
 =pod
 
-=head3 on_toggle_code_folding
+=head3 C<on_toggle_code_folding>
 
     $main->on_toggle_code_folding;
 
@@ -3942,11 +3945,11 @@ sub on_toggle_code_folding {
 
 =pod
 
-=head3 on_toggle_currentline
+=head3 C<on_toggle_currentline>
 
     $main->on_toggle_currentline;
 
-Toggle overlining of current line. No return value.
+Toggle background highlighting of current line. No return value.
 
 =cut
 
@@ -3965,7 +3968,7 @@ sub on_toggle_currentline {
 	return;
 }
 
-=head3 on_toggle_right_margin
+=head3 C<on_toggle_right_margin>
 
     $main->on_toggle_right_margin;
 
@@ -3994,7 +3997,7 @@ sub on_toggle_right_margin {
 
 =pod
 
-=head3 on_toggle_syntax_check
+=head3 C<on_toggle_syntax_check>
 
     $main->on_toggle_syntax_check;
 
@@ -4013,7 +4016,7 @@ sub on_toggle_syntax_check {
 
 =pod
 
-=head3 on_toggle_errorlist
+=head3 C<on_toggle_errorlist>
 
     $main->on_toggle_errorlist;
 
@@ -4036,7 +4039,7 @@ sub on_toggle_errorlist {
 
 =pod
 
-=head3 on_toggle_indentation_guide
+=head3 C<on_toggle_indentation_guide>
 
     $main->on_toggle_indentation_guide;
 
@@ -4064,11 +4067,11 @@ sub on_toggle_indentation_guide {
 
 =pod
 
-=head3 on_toggle_eol
+=head3 C<on_toggle_eol>
 
     $main->on_toggle_eol;
 
-Toggle visibility of end of line cariage returns. No return value.
+Toggle visibility of end of line carriage returns. No return value.
 
 =cut
 
@@ -4089,7 +4092,7 @@ sub on_toggle_eol {
 
 =pod
 
-=head3 on_toggle_whitespaces
+=head3 C<on_toggle_whitespaces>
 
     $main->on_toggle_whitespaces;
 
@@ -4121,7 +4124,7 @@ sub on_toggle_whitespaces {
 
 =pod
 
-=head3 on_word_wrap
+=head3 C<on_word_wrap>
 
     $main->on_word_wrap;
 
@@ -4147,7 +4150,7 @@ sub on_word_wrap {
 
 =pod
 
-=head3 on_toggle_toolbar
+=head3 C<on_toggle_toolbar>
 
     $main->on_toggle_toolbar;
 
@@ -4187,11 +4190,11 @@ sub on_toggle_toolbar {
 
 =pod
 
-=head3 on_toggle_statusbar
+=head3 C<on_toggle_statusbar>
 
     $main->on_toggle_statusbar;
 
-Toggle statusbar visibility. No return value.
+Toggle status bar visibility. No return value.
 
 =cut
 
@@ -4222,7 +4225,7 @@ sub on_toggle_statusbar {
 
 =pod
 
-=head3 on_toggle_lockinterface
+=head3 C<on_toggle_lockinterface>
 
     $main->on_toggle_lockinterface;
 
@@ -4247,7 +4250,7 @@ sub on_toggle_lockinterface {
 
 =pod
 
-=head3 on_insert_from_file
+=head3 C<on_insert_from_file>
 
     $main->on_insert_from_file;
 
@@ -4286,7 +4289,7 @@ sub on_insert_from_file {
 
 =pod
 
-=head3 convert_to
+=head3 C<convert_to>
 
     $main->convert_to( $eol_style );
 
@@ -4306,7 +4309,7 @@ sub convert_to {
 	$editor->ConvertEOLs($eol_mode);
 	$editor->SetEOLMode($eol_mode);
 
-	# TODO: include the changing of file type in the undo/redo actions
+	# TO DO: include the changing of file type in the undo/redo actions
 	# or better yet somehow fetch it from the document when it is needed.
 	my $document = $current->document or return;
 	$document->set_newline_type($newline);
@@ -4316,12 +4319,12 @@ sub convert_to {
 
 =pod
 
-=head3 find_editor_of_file
+=head3 C<find_editor_of_file>
 
     my $editor = $main->find_editor_of_file( $file );
 
 Return the editor (a C<Padre::Wx::Editor> object) containing the wanted
-C<$file>, or undef if file is not opened currently.
+C<$file>, or C<undef> if file is not opened currently.
 
 =cut
 
@@ -4342,11 +4345,11 @@ sub find_editor_of_file {
 
 =pod
 
-=head3 find_id_of_editor
+=head3 C<find_id_of_editor>
 
     my $id = $main->find_id_of_editor( $editor );
 
-Given C<$editor>, return the tab id holding it, or undef if it was
+Given C<$editor>, return the tab id holding it, or C<undef> if it was
 not found.
 
 Note: can this really work? What happens when we split a window?
@@ -4367,12 +4370,12 @@ sub find_id_of_editor {
 
 =pod
 
-=head3 run_in_padre
+=head3 C<run_in_padre>
 
     $main->run_in_padre;
 
-Eval current document within Padre. It means it can access all of
-Padre's internals, and wreck havoc. Display an error message if the eval
+Evaluate current document within Padre. It means it can access all of
+Padre's internals, and wreak havoc. Display an error message if the evaluation
 went wrong, dump the result in the output panel otherwise.
 
 No return value.
@@ -4406,15 +4409,15 @@ sub run_in_padre {
 
 =pod
 
-=head2 STC related methods
+=head2 C<STC> related methods
 
-Those methods are needed to have a smooth STC experience.
+Those methods are needed to have a smooth C<STC> experience.
 
-=head3 on_stc_style_needed
+=head3 C<on_stc_style_needed>
 
     $main->on_stc_style_needed( $event );
 
-Handler of EVT_STC_STYLENEEDED C<$event>. Used to work around some edge
+Handler of C<EVT_STC_STYLENEEDED> C<$event>. Used to work around some edge
 cases in scintilla. No return value.
 
 =cut
@@ -4444,7 +4447,7 @@ sub on_stc_style_needed {
 
 =pod
 
-=head3 on_stc_update_ui
+=head3 C<on_stc_update_ui>
 
     $main->on_stc_update_ui;
 
@@ -4467,7 +4470,7 @@ sub on_stc_update_ui {
 	$editor->show_calltip;
 
 	# Avoid refreshing the subs as that takes a lot of time
-	# TODO maybe we should refresh it on every 20s hit or so
+	# TO DO maybe we should refresh it on every 20s hit or so
 	# $self->refresh_menu;
 	$self->refresh_toolbar($current);
 
@@ -4484,11 +4487,11 @@ sub on_stc_update_ui {
 
 =pod
 
-=head3 on_stc_change
+=head3 C<on_stc_change>
 
     $main->on_stc_change;
 
-Handler of the EVT_STC_CHANGE event. Doesn't do anythin. No
+Handler of the C<EVT_STC_CHANGE> event. Doesn't do anything. No
 return value.
 
 =cut
@@ -4499,14 +4502,14 @@ sub on_stc_change {
 
 =pod
 
-=head3 on_stc_char_needed
+=head3 C<on_stc_char_needed>
 
     $main->on_stc_char_added;
 
 This handler is called when a character is added. No return value. See
 L<http://www.yellowbrain.com/stc/events.html#EVT_STC_CHARADDED>
 
-TODO: maybe we need to check this more carefully.
+TO DO: maybe we need to check this more carefully.
 
 =cut
 
@@ -4524,11 +4527,11 @@ sub on_stc_char_added {
 
 =pod
 
-=head3 on_stc_dwell_start
+=head3 C<on_stc_dwell_start>
 
     $main->on_stc_dwell_start( $event );
 
-Handler of the DWELLSTART C<$event>. This event is sent when the mouse
+Handler of the C<DWELLSTART> C<$event>. This event is sent when the mouse
 has not moved in a given amount of time. Doesn't do anything by now. No
 return value.
 
@@ -4549,11 +4552,11 @@ sub on_stc_dwell_start {
 
 =pod
 
-=head3 on_aui_pane_close
+=head3 C<on_aui_pane_close>
 
     $main->on_aui_pane_close( $event );
 
-Handler called upon EVT_AUI_PANE_CLOSE C<$event>. Doesn't do anything by now.
+Handler called upon C<EVT_AUI_PANE_CLOSE> C<$event>. Doesn't do anything by now.
 
 =cut
 
@@ -4563,7 +4566,7 @@ sub on_aui_pane_close {
 
 =pod
 
-=head3 on_doc_stats
+=head3 C<on_doc_stats>
 
     $main->on_doc_stats;
 
@@ -4620,7 +4623,7 @@ sub on_doc_stats {
 
 =pod
 
-=head3 on_tab_and_space
+=head3 C<on_tab_and_space>
 
     $main->on_tab_and_space( $style );
 
@@ -4678,7 +4681,7 @@ sub on_tab_and_space {
 
 =pod
 
-=head3 on_delete_ending_space
+=head3 C<on_delete_ending_space>
 
     $main->on_delete_ending_space;
 
@@ -4707,7 +4710,7 @@ sub on_delete_ending_space {
 
 =pod
 
-=head3 on_delete_leading_space
+=head3 C<on_delete_leading_space>
 
     $main->on_delete_leading_space;
 
@@ -4754,7 +4757,7 @@ sub on_delete_leading_space {
 
 =pod
 
-=head3 timer_check_overwrite
+=head3 C<timer_check_overwrite>
 
     $main->timer_check_overwrite;
 
@@ -4808,7 +4811,7 @@ sub timer_check_overwrite {
 
 =pod
 
-=head3 on_last_visited_pane
+=head3 C<on_last_visited_pane>
 
     $main->on_last_visited_pane;
 
@@ -4837,7 +4840,7 @@ sub on_last_visited_pane {
 
 =pod
 
-=head3 on_new_from_template
+=head3 C<on_new_from_template>
 
     $main->on_new_from_template( $extension );
 
@@ -4876,11 +4879,11 @@ sub on_new_from_template {
 
 Various methods that did not fit exactly in above categories...
 
-=head3 install_cpan
+=head3 C<install_cpan>
 
     $main->install_cpan( $module );
 
-Install C<$module> from CPAN.
+Install C<$module> from C<CPAN>.
 
 Note: this method may not belong here...
 
@@ -4899,7 +4902,7 @@ sub install_cpan {
 
 =pod
 
-=head3 setup_bindings
+=head3 C<setup_bindings>
 
     $main->setup_bindings;
 
@@ -4957,12 +4960,12 @@ sub change_highlighter {
 
 =pod
 
-=head3 key_up
+=head3 C<key_up>
 
     $main->key_up( $event );
 
 Callback for when a key up C<$event> happens in Padre. This handles the various
-ctrl+key combinations used within Padre.
+C<Ctrl>+key combinations used within Padre.
 
 =cut
 
@@ -4977,20 +4980,20 @@ sub key_up {
 	# without constants perl will call only the first one.
 	$mod = $mod & ( Wx::wxMOD_ALT() + Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() );
 	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
-		                           # Ctrl-TAB  #TODO it is already in the menu
+		                           # Ctrl-TAB  #TO DO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 			$self->on_next_pane;
 		}
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
-		                                                      # Ctrl-Shift-TAB #TODO it is already in the menu
+		                                                      # Ctrl-Shift-TAB #TO DO it is already in the menu
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 
 		#		my $current_focus = Wx::Window::FindFocus();
 		#		Padre::Util::debug("Current focus: $current_focus");
-		#		# TODO this should be fine tuned later
+		#		# TO DO this should be fine tuned later
 		#		if ($code == Wx::WXK_UP) {
-		#			# TODO get the list of panels at the bottom from some other place
+		#			# TO DO get the list of panels at the bottom from some other place
 		#			if (my $editor = $self->current->editor) {
 		#				if ($current_focus->isa('Padre::Wx::Output') or
 		#					$current_focus->isa('Padre::Wx::ErrorList') or
@@ -5008,7 +5011,7 @@ sub key_up {
 	return;
 }
 
-# TODO enable/disable menu options
+# TO DO enable/disable menu options
 sub show_as_numbers {
 	my ( $self, $event, $form ) = @_;
 
@@ -5020,8 +5023,8 @@ sub show_as_numbers {
 		my $output = $self->output;
 		$output->Remove( 0, $output->GetLastPosition );
 
-		# TODO deal with wide characters ?
-		# TODO split lines, show location ?
+		# TO DO deal with wide characters ?
+		# TO DO split lines, show location ?
 		foreach my $i ( 0 .. length($text) ) {
 			my $decimal = ord( substr( $text, $i, 1 ) );
 			$output->AppendText(
@@ -5059,7 +5062,7 @@ sub help {
 	return;
 }
 
-# TODO - why do we need the Hide/Destroy pair?
+# TO DO - why do we need the Hide/Destroy pair?
 sub on_help_close {
 	my ( $self, $event ) = @_;
 	my $help = $self->{help};
@@ -5105,7 +5108,7 @@ sub set_title {
 		'p' => '',             # Initlize space for project name
 	);
 
-	# We may run within window startup, there may be no "current" or
+	# We may run within window start-up, there may be no "current" or
 	# "document" or "document->file":
 	if (    defined( $self->current )
 		and defined( $self->current->document )
@@ -5151,7 +5154,7 @@ sub set_title {
 
 =pod
 
-=head3 new_document_from_string
+=head3 C<new_document_from_string>
 
     $main->new_document_from_string( $string, $mimetype );
 

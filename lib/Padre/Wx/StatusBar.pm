@@ -8,19 +8,19 @@ Padre::Wx::StatusBar - Encapsulates status bar customizations
 
 =head1 DESCRIPTION
 
-C<Padre::Wx::StatusBar> implements Padre's statusbar. It is the bottom
+C<Padre::Wx::StatusBar> implements Padre's status bar. It is the bottom
 pane holding various, err, status information on Padre.
 
 The information shown are (in order):
 
 =over 4
 
-=item * Filename of current document, with a leading star if file has
+=item * File name of current document, with a leading star if file has
 been updated and not saved
 
 =item * (Optional) Icon showing status of background tasks
 
-=item * (Optional) Mimetype of current document
+=item * (Optional) MIME type of current document
 
 =item * Type of end of lines of current document
 
@@ -28,7 +28,7 @@ been updated and not saved
 
 =back
 
-It inherits from C<Wx::StatusBar>, so check wx documentation to see all
+It inherits from C<Wx::StatusBar>, so check Wx documentation to see all
 the available methods that can be applied to it besides the added ones
 (see below).
 
@@ -73,12 +73,12 @@ use constant {
 
 =head1 METHODS
 
-=head2 new
+=head2 C<new>
 
     my $statusbar = Padre::Wx::StatusBar->new( $main );
 
-Create and return a new Padre statusbar. One should pass the C<$main>
-Padre window as argument, to get a reference to the statusbar parent.
+Create and return a new Padre status bar. One should pass the C<$main>
+Padre window as argument, to get a reference to the status bar parent.
 
 =cut
 
@@ -122,11 +122,11 @@ sub new {
 
 =pod
 
-=head2 clear
+=head2 C<clear>
 
     $statusbar->clear;
 
-Clear all the status bar fields, ie, they will display an empty string
+Clear all the status bar fields, i.e. they will display an empty string
 in all fields.
 
 =cut
@@ -144,11 +144,11 @@ sub clear {
 
 =pod
 
-=head2 refresh
+=head2 C<refresh>
 
     $statusbar->refresh;
 
-Force an update of the document fields in the statusbar.
+Force an update of the document fields in the status bar.
 
 =cut
 
@@ -237,7 +237,7 @@ sub refresh {
 
 =pod
 
-=head2 update_task_status
+=head2 C<update_task_status>
 
     $statusbar->update_task_status;
 
@@ -277,7 +277,7 @@ sub update_task_status {
 
 =pod
 
-=head2 update_pos
+=head2 C<update_pos>
 
     $statusbar->update_pos;
 
@@ -326,11 +326,11 @@ sub update_pos {
 
 =pod
 
-=head2 on_resize
+=head2 C<on_resize>
 
     $statusbar->on_resize( $event );
 
-Handler for the EVT_SIZE C<$event>. Used to move the task load bitmap to
+Handler for the C<EVT_SIZE> C<$event>. Used to move the task load bitmap to
 its position.
 
 =cut
@@ -357,7 +357,7 @@ sub _get_task_status {
 	my $self    = shift;
 	my $manager = $self->current->ide->task_manager;
 
-	# still in editor-startup phase, default to idle
+	# still in editor start-up phase, default to idle
 	return 'idle' unless defined $manager;
 
 	my $running = $manager->running_tasks;

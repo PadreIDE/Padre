@@ -226,7 +226,7 @@ retrieve whatever current object you need.
 
   # Vanilla constructor
   Padre::Current->new;
-  
+
   # Seed the object with some context
   Padre::Current->new( document => $document );
 
@@ -236,7 +236,7 @@ aware of before he calls the constructor.
 
 Providing this seed context allows the context object to derive parts of
 the current context from other parts, without the need to fall back to
-the last-resort C<Padre-E<gt>ide> singleton-fetching method.
+the last-resort C<< Padre->ide >> singleton-fetching method.
 
 Many objects in L<Padre> that are considered to be part of them context
 will have a C<current> method which automatically creates the context
@@ -244,43 +244,43 @@ object with it as a seed.
 
 Returns a new B<Padre::Current> object.
 
-=head2 ide
+=head2 C<ide>
 
 Return the L<Padre> singleton for the IDE instance.
 
-=head2 config
+=head2 C<config>
 
 Returns the current L<Padre::Config> configuration object for the IDE.
 
-=head2 main
+=head2 C<main>
 
 Returns the L<Padre::Wx::Main> object for the main window.
 
-=head2 notebook
+=head2 C<notebook>
 
 Returns the L<Padre::Wx::Notebook> object for the main window.
 
-=head2 document
+=head2 C<document>
 
 Returns the active L<Padre::Document> document object.
 
-=head2 editor
+=head2 C<editor>
 
 Returns the L<Padre::Editor> editor object for the active document.
 
-=head2 filename
+=head2 C<filename>
 
-Returns the filename of the active document, if it has one.
+Returns the file name of the active document, if it has one.
 
-=head2 title
+=head2 C<title>
 
 Return the title of current editor window.
 
-=head2 project
+=head2 C<project>
 
 Return the C<Padre::Project> project object for the active document.
 
-=head2 text
+=head2 C<text>
 
 Returns the selected text, or a null string if nothing is selected.
 

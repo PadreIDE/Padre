@@ -77,12 +77,12 @@ Padre::Config::Human - Padre configuration storing personal preferences
 
 =head1 DESCRIPTION
 
-This class implements the personal preferences of Padre's users. See C<Padre::Config>
+This class implements the personal preferences of Padre's users. See L<Padre::Config>
 for more information on the various types of preferences supported by Padre.
 
 All human settings are stored in a hash as top-level keys (no hierarchy). The hash is
-then dumped in C<config.yml>, a YAML file in Padre's preferences directory (see
-C<Padre::Config>). 
+then dumped in F<config.yml>, a L<YAML> file in Padre's preferences directory (see
+L<Padre::Config>).
 
 =head1 PUBLIC API
 
@@ -90,19 +90,23 @@ C<Padre::Config>).
 
 =over 4
 
-=item my $config = Padre::Config::Human->create;
+=item create
 
-Create & return an empty user configuration. (almost empty, since it will
-still store the config schema revision - see version() below).
+    my $config = Padre::Config::Human->create;
 
-No params.
+Create and return an empty user configuration. (Almost empty, since it will
+still store the configuration schema revision - see L</"version">).
 
-=item my $config = Padre::Config::Human->read;
+No parameters.
 
-Load & return the user configuration from the yaml file. Return undef in
+=item read
+
+    my $config = Padre::Config::Human->read;
+
+Load & return the user configuration from the YAML file. Return C<undef> in
 case of failure.
 
-No params.
+No parameters.
 
 =back
 
@@ -110,19 +114,23 @@ No params.
 
 =over 4
 
-=item my $revision = $config->version;
+=item version
 
-Return the config schema revision. Indeed, we might want to have
-more structured config instead of a plain hash later on. Note that this
+    my $revision = $config->version;
+
+Return the configuration schema revision. Indeed, we might want to have
+more structured configuration instead of a plain hash later on. Note that this
 version is stored with the other user preferences at the same level.
 
-No params.
+No parameters.
 
-=item $config->write;
+=item write
 
-(Over-)write user configuration to the yaml file.
+    $config->write;
 
-No params.
+(Over-)write user configuration to the YAML file.
+
+No parameters.
 
 =back
 

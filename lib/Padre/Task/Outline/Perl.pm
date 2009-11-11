@@ -4,7 +4,7 @@ package Padre::Task::Outline::Perl;
 
 =head1 NAME
 
-Padre::Task::Outline::Perl - Perl document outline structure info 
+Padre::Task::Outline::Perl - Perl document outline structure info
 gathering in the background
 
 =head1 SYNOPSIS
@@ -13,7 +13,7 @@ gathering in the background
   # will be fetched as will the document's notebook page.
   my $task = Padre::Task::Outline::Perl->new;
   $task->schedule;
-  
+
   my $task2 = Padre::Task::Outline::Perl->new(
     text          => Padre::Current->document->text_get,
     editor        => Padre::Current->editor,
@@ -24,7 +24,7 @@ gathering in the background
 
 This class implements structure info gathering of Perl documents in
 the background.
-Also the updating of the GUI is implemented here, because other 
+Also the updating of the GUI is implemented here, because other
 languages might have different outline structures.
 It inherits from L<Padre::Task::Outline>.
 Please read its documentation!
@@ -48,7 +48,7 @@ sub run {
 
 sub _get_outline {
 
-	# TODO switch to using File::PackageIndexer
+	# TO DO switch to using File::PackageIndexer
 	# (which needs to be modified / extended first)
 	my $self = shift;
 
@@ -137,7 +137,7 @@ sub update_gui {
 	$outlinebar->Freeze;
 
 	# Clear out the existing stuff
-	# TODO extract data for keeping (sub)trees collapsed/expanded (see below)
+	# TO DO extract data for keeping (sub)trees collapsed/expanded (see below)
 	#if ( $outlinebar->GetCount > 0 ) {
 	#	my $r = $outlinebar->GetRootItem;
 	#	warn ref $r;
@@ -178,7 +178,7 @@ sub update_gui {
 		\&_on_tree_item_right_click,
 	);
 
-	# TODO Expanding all is not acceptable: We need to keep the state
+	# TO DO Expanding all is not acceptable: We need to keep the state
 	# (i.e., keep the pragmata subtree collapsed if it was collapsed
 	# by the user)
 	#$outlinebar->ExpandAll;
@@ -214,7 +214,7 @@ sub _on_tree_item_right_click {
 			$pod,
 			sub {
 
-				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+				# TO DO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				require Padre::Wx::DocBrowser;
 				my $help = Padre::Wx::DocBrowser->new;
 				$help->help( $itemData->{name} );

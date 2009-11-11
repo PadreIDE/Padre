@@ -109,8 +109,8 @@ sub new {
 		checked_default => $main->config->find_quick,
 	);
 
-	# We should be able to remove F4 and shift-F4 and hook this functionality
-	# to F3 and shift-F3 Incremental find (#60)
+	# We should be able to remove F4 and Shift+F4 and hook this functionality
+	# to F3 and Shift+F3 Incremental find (#60)
 	Padre::Action->new(
 		name        => 'search.quick_find_next',
 		need_editor => 1,

@@ -4,7 +4,7 @@ Padre::DB::Snippets - Padre::DB class for the snippets table
 
 =head1 SYNOPSIS
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 =head1 DESCRIPTION
 
@@ -16,7 +16,7 @@ TO BE COMPLETED
 
   # Get all objects in list context
   my @list = Padre::DB::Snippets->select;
-  
+
   # Get a subset of objects in scalar context
   my $array_ref = Padre::DB::Snippets->select(
       'where id > ? order by id',
@@ -40,8 +40,8 @@ Throws an exception on error, typically directly from the L<DBI> layer.
 
   # How many objects are in the table
   my $rows = Padre::DB::Snippets->count;
-  
-  # How many objects 
+
+  # How many objects
   my $small = Padre::DB::Snippets->count(
       'where id > ?',
       1000,
@@ -61,7 +61,7 @@ Throws an exception on error, typically directly from the L<DBI> layer.
 
 =head2 new
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 The C<new> constructor is used to create a new abstract object that
 is not (yet) written to the database.
@@ -92,7 +92,7 @@ table, and then returns the object.
 If the primary key column C<id> is not provided to the
 constructor (or it is false) the object returned will have
 C<id> set to the new unique identifier.
- 
+
 Returns a new L<snippets> object, or throws an exception on error,
 typically from the L<DBI> layer.
 
@@ -114,7 +114,7 @@ on error, typically from the L<DBI> layer.
 
   # Delete a single instantiated object
   $object->delete;
-  
+
   # Delete multiple rows from the snippets table
   Padre::DB::Snippets->delete('where id > ?', 1000);
 
@@ -172,7 +172,7 @@ following SQL command.
   	id INTEGER PRIMARY KEY,
   	mimetype VARCHAR(255),
   	category VARCHAR(255),
-  	name VARCHAR(255), 
+  	name VARCHAR(255),
   	snippet TEXT
   )
 

@@ -382,7 +382,7 @@ sub on_right_down {
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
 	} else { #Wx::CommandEvent
-		$self->PopupMenu( $menu, 50, 50 ); # TODO better location
+		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
 	}
 }
 

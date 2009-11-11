@@ -66,11 +66,11 @@ sub new {
 
 =pod
 
-=head2 ide
+=head2 C<ide>
 
-The C<ide> accessor provides a link back to the parent L<Padre> ide object.
+The C<ide> accessor provides a link back to the parent L<Padre> IDE object.
 
-=head2 main
+=head2 C<main>
 
 The C<main> accessor returns the L<Padre::Wx::Main> object for the
 application.
@@ -84,7 +84,7 @@ use Class::XSAccessor getters => {
 
 =pod
 
-=head2 config
+=head2 C<config>
 
 The C<config> accessor returns the L<Padre::Config> for the application.
 

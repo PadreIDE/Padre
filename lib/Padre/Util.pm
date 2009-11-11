@@ -4,11 +4,11 @@ package Padre::Util;
 
 =head1 NAME
 
-Padre::Util - Padre Non-Wx Utility Functions
+Padre::Util - Padre non-Wx Utility Functions
 
 =head1 DESCRIPTION
 
-The Padre::Util package is a internal storage area for miscellaneous
+The C<Padre::Util> package is a internal storage area for miscellaneous
 functions that aren't really Padre-specific that we want to throw
 somewhere convenient so they won't clog up task-specific packages.
 
@@ -76,16 +76,16 @@ our @EXPORT_OK = qw{ newline_type get_matches _T };
 
 =pod
 
-=head2 newline_type
+=head2 C<newline_type>
 
     my $type = newline_type( $string );
 
-Returns None if there was not CR or LF in the file.
+Returns C<None> if there was not C<CR> or C<LF> in the file.
 
-Returns UNIX, Mac or Windows if only the appropriate newlines
+Returns C<UNIX>, C<Mac> or C<Windows> if only the appropriate newlines
 were found.
 
-Returns Mixed if line endings are mixed.
+Returns C<Mixed> if line endings are mixed.
 
 =cut
 
@@ -109,21 +109,25 @@ sub newline_type {
 
 =pod
 
-=head2 get_matches
+=head2 C<get_matches>
 
 Parameters:
 
-* The text in which we need to search
+=over
 
-* The regular expression
+=item * The text in which we need to search
 
-* The offset within the text where we the last match started so the next
-  forward match must start after this.
+=item * The regular expression
 
-* The offset within the text where we the last match ended so the next
-  backward match must end before this.
+=item * The offset within the text where we the last match started so the next
+forward match must start after this.
 
-* backward bit (1 = search backward, 0 = search forward) - Optional. Defaults to 0.
+=item * The offset within the text where we the last match ended so the next
+backward match must end before this.
+
+=item * backward bit (1 = search backward, 0 = search forward) - Optional. Defaults to 0.
+
+=back
 
 =cut
 
@@ -162,9 +166,9 @@ sub get_matches {
 
 =pod
 
-=head2 _T
+=head2 C<_T>
 
-The _T function is used for strings that you do not want to translate
+The C<_T> function is used for strings that you do not want to translate
 immediately, but you will be translating later (multiple times).
 
 The only reason this function needs to exist at all is so that the
@@ -207,17 +211,17 @@ sub _T {
 
 =pod
 
-=head2 pwhich
+=head2 C<pwhich>
 
   # Find the prove utility
   my $prove = Padre::Util::pwhich('prove');
 
-The C<pwhich> function discovers the path to the installed perl script
+The C<pwhich> function discovers the path to the installed Perl script
 which is in the same installation directory as the Perl user to run
-Padre itself, ignoring the regular search PATH.
+Padre itself, ignoring the regular search C<PATH>.
 
 Returns the locally-formatted path to the script, or false (null string)
-if the utilily does not exist in the current Perl installation.
+if the utility does not exist in the current Perl installation.
 
 =cut
 
@@ -324,11 +328,11 @@ sub find_perldiag_translations {
 
 =pod
 
-=head2 get_project_rcs
+=head2 C<get_project_rcs>
 
-Given a project dir (see "get_project_dir"), returns the project's 
-Revision Control System (RCS) by name. This can be either 'CVS', 
-'SVN' or 'GIT'. Returns undef if none was found.
+Given a project directory (see C<get_project_dir>), returns the project's
+Revision Control System (C<RCS>) by name. This can be either C<CVS>,
+C<SVN> or C<GIT>. Returns C<undef> if none was found.
 
 =cut
 
@@ -354,11 +358,11 @@ sub get_project_rcs {
 
 =pod
 
-=head2 get_project_dir
+=head2 C<get_project_dir>
 
 Given a file it will try to locate the root directory of the given
 project. This is a temporary work around till we get full project
-support but it is used by some (SVK) plugins.
+support but it is used by some (C<SVK>) plug-ins.
 
 =cut
 
@@ -392,19 +396,19 @@ sub get_project_dir {
 
 =pod
 
-=head2 parse_version
+=head2 C<parse_version>
 
-B<This is a clone of ExtUtils::MakeMaker parse_version to prevent loading
+B<This is a clone of L<ExtUtils::MakeMaker> C<parse_version> to prevent loading
 a bunch of other modules>
 
     my $version = Padre::Util::parse_version($file);
 
-Parse a $file and return what $VERSION is set to by the first assignment.
-It will return the string "undef" if it can't figure out what $VERSION
-is. $VERSION should be for all to see, so C<our $VERSION> or plain $VERSION
+Parse a C<$file> and return what C<$VERSION> is set to by the first assignment.
+It will return the string C<"undef"> if it can't figure out what C<$VERSION>
+is. C<$VERSION> should be for all to see, so C<our $VERSION> or plain C<$VERSION>
 are okay, but C<my $VERSION> is not.
 
-parse_version() will try to C<use version> before checking for
+C<parse_version()> will try to C<use version> before checking for
 C<$VERSION> so the following will work.
 
     $VERSION = qv(1.2.3);
@@ -511,7 +515,7 @@ sub process_memory {
 	return;
 }
 
-# TODO: A much better variant would be a constant set by svn.
+# TO DO: A much better variant would be a constant set by svn.
 sub revision {
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;

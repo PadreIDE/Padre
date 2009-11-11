@@ -23,18 +23,18 @@ Padre::Document::Perl::Beginner - naive implementation of some beginner specific
 This is a naive implementation. It needs to be replaced by one using L<PPI>.
 
 In Perl 5 there are lots of pitfalls the unaware, especially
-the beginner can easily fall in. While some might expect the perl 
-compiler itself would catch those it does not (yet ?) do it. So we took the 
+the beginner can easily fall in. While some might expect the Perl
+compiler itself would catch those it does not (yet ?) do it. So we took the
 initiative and added a beginners mode to Padre in which these extra issues
 are checked. Some are real problems that would trigger an error anyway
 we just make them a special case with a more specific error message.
-(e.g. use warning; without the trailing s)
+(e.g. C<use warning;> without the trailing s)
 Others are valid code that can be useful in the hands of a master but that
 are poisonous when written by mistake by someone who does not understand them.
-(eg. if ($x = /value/) { } ).
+(e.g. C<if ($x = /value/) { }> ).
 
 
-This module provides a method called C<check> that can check a perl script 
+This module provides a method called C<check> that can check a Perl script
 (provided as parameter as a single string) and recognize problematic code.
 
 =head1 Examples
@@ -92,13 +92,13 @@ sub check {
 	# Cut POD parts out of the text
 	$text =~ s/(^|[\r\n])(\=(pod|item|head\d)\b.+?[\r\n]\=cut[\r\n])/$1.(" "x(length($2)))/seg;
 
-	# TODO: Replace all comments by whitespaces, otherwise they could mix up some tests
+	# TO DO: Replace all comments by whitespaces, otherwise they could mix up some tests
 
 =item *
 
   split /,/, @data;
 
-Here @data is in scalar context returning the number of elemenets. Spotted in this form:
+Here @data is in scalar context returning the number of elements. Spotted in this form:
 
   split /,/, @ARGV;
 
@@ -115,7 +115,7 @@ Here @data is in scalar context returning the number of elemenets. Spotted in th
 =item *
 
   use warning;
-  
+
 s is missing at the end.
 
 =cut
@@ -137,7 +137,7 @@ but you usually want
 
   (map { $_; } (@items)),$extra_item;
 
-which means: map all @items and them add $extra_item without map'ing it.
+which means: map all C<@items> and them add C<$extra_item> without mapping it.
 
 =cut
 
@@ -163,10 +163,10 @@ Warn about Perl-standard package names being reused
 
   $x = chomp $y;
   print chomp $y;
-  
+
 =cut
 
-	# TODO: Change this to
+	# TO DO: Change this to
 	#	if ( $text =~ /[^\{\;][\s\t\r\n]*chomp\b/ ) {
 	# as soon as this module could set the cursor to the occurence line
 	# because it may trigger a higher amount of false positives.
@@ -255,7 +255,7 @@ Pipe | in open() not at the end or the beginning.
 
 =item *
 
-Regex starting witha a quantifier such as 
+Regular expression starting with a quantifier such as
 
   /+.../
 
@@ -282,7 +282,7 @@ Regex starting witha a quantifier such as
 =item *
 
  } elseif {
- 	
+
 =cut
 
 	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)elseif/ ) {
@@ -293,7 +293,7 @@ Regex starting witha a quantifier such as
 =item *
 
  close;
- 	
+
 =cut
 
 	if ( $config->begerror_close and $text =~ /^(.*?[^>]?)close;/ ) { # don't match Socket->close;
@@ -314,27 +314,27 @@ Please feel free to add as many checks as you like. This is done in three steps:
 
 =head2 Add the test
 
-Add one (or more) tests for this case to t/75-perl-beginner.t
+Add one (or more) tests for this case to F<t/75-perl-beginner.t>
 
 The test should be successful when your supplied sample fails the check and
-returns the correct errror message. As texts of error messages may change,
+returns the correct error message. As texts of error messages may change,
 try to match a good part which allows identification of the message but
 don't match the very exact text.
 
-Tests could use either oneliners written as strings within the testfile or
+Tests could use either one-liners written as strings within the test file or
 external support files. There are samples for both ways in the test script.
 
 =head2 Add the check
 
-Add the check to the check-sub of this file (Document/Perl/Beginner.pm). There
+Add the check to the check-sub of this file (F<Document/Perl/Beginner.pm>). There
 are plenty samples here. Remember to add a sample (and maybe short description)
 what would fail the test.
 
 Run the test script to match your test case(s) to the new check.
 
-=head2 Add the config option
+=head2 Add the configuration option
 
-Go to Config.pm, look for the beginner error checks configuration and add a new
+Go to F<Config.pm>, look for the beginner error checks configuration and add a new
 setting for your new check there. It defaults to 1 (run the check), but a user
 could turn it off by setting this to 0 within the Padre configuration file.
 

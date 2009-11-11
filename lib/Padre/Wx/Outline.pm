@@ -70,7 +70,7 @@ sub clear {
 sub start {
 	my $self = shift; @_ = (); # Feeble attempt to kill Scalars Leaked ($self is leaking)
 
-	# TODO: GUI on-start initialisation here
+	# TO DO: GUI on-start initialisation here
 
 	# Set up or reinitialise the timer
 	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
@@ -106,7 +106,7 @@ sub stop {
 
 	$self->clear;
 
-	# TODO: GUI on-stop cleanup here
+	# TO DO: GUI on-stop cleanup here
 
 	return ();
 }

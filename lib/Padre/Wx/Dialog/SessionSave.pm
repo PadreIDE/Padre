@@ -70,7 +70,7 @@ sub _on_butsave_clicked {
 	my $main    = $self->GetParent;
 	my $session = $self->_current_session;
 
-	# TODO: This must be switched to use the main methods:
+	# TO DO: This must be switched to use the main methods:
 
 	if ( defined $session ) {
 
@@ -288,30 +288,20 @@ save a session.
 
 =head2 Constructor
 
-=over 4
+=head3 C<new>
 
-=item * my $dialog = PWD::SS->new( $parent )
+    my $dialog = PWD::SS->new( $parent )
 
 Create and return a new Wx dialog allowing to save a session. It needs a
-C<$parent> window (usually padre's main window).
-
-
-=back
-
-
+C<$parent> window (usually Padre's main window).
 
 =head2 Public methods
 
-=over 4
+=head3 C<show>
 
-=item * $dialog->show;
+    $dialog->show;
 
 Request the dialog to be shown.
-
-
-=back
-
-
 
 =head1 COPYRIGHT & LICENSE
 

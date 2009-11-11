@@ -1,7 +1,7 @@
 package Padre::Plugin::PopularityContest;
 
 # Note to developers: This module collects data and transmit it to the Padre
-# dev team over the internet. Be very careful which data you collect and
+# dev team over the Internet. Be very careful which data you collect and
 # always check that it is listed in the following POD and keep this module
 # very very good commented. Each user should be able to verify what it does.
 
@@ -13,28 +13,38 @@ Padre::Plugin::PopularityContest - The Padre Popularity Contest
 
 =head1 DESCRIPTION
 
-The Padre Popularity Contest is a plugin that collects various information
+The Padre Popularity Contest is a plug-in that collects various information
 about your Padre installation as it runs, and reports that information
-over the internet to a central server.
+over the Internet to a central server.
 
-The information collected from the Popularity Contest Plugin is used by the
+The information collected from the Popularity Contest plug-in is used by the
 development team to track the adoption rate of different features, to help
 set the default configuration values, and to prioritise development focus.
 
-In otherwords, to make life better for you in the next release, and the
+In other words, to make life better for you in the next release, and the
 ones after that.
 
 =head2 What information will we collect?
 
 At the moment, the following information is collected:
- - Run time of Padre (Time between start and exit of Padre)
- - Type of operating system (plattform only: Windows, Linux, MAC, etc.)
- - Padre version number
- - Perl, Wx and WxWidgets version numbers
- - Number of times each menu option is used (directly or via shortcut
-   or toolbar)
- - MIME type of files (like text/plain or application/perl) which are
-   opened in Padre
+
+=over
+
+=item Run time of Padre (Time between start and exit of Padre)
+
+=item Type of operating system (platform only: Windows, Linux, Mac, etc.)
+
+=item Padre version number
+
+=item Perl, Wx and wxWidgets version numbers
+
+=item Number of times each menu option is used (directly or via shortcut
+or toolbar)
+
+=item MIME type of files (like C<text/plain> or C<application/perl>) which are
+opened in Padre
+
+=back
 
 In addition, a random process ID for Padre is created and transmitted just
 to identify multiple reports from a single running instance of Padre. It
@@ -44,19 +54,25 @@ A new ID is generated each time you start Padre and it doesn't allow any
 identification of you or your computer.
 
 The following information may be added sooner or later:
- - Enabled/disabled features (like: are tooltips enabled or not?)
- - Selected Padre language
+
+=over
+
+=item Enabled/disabled features (like: are tool tips enabled or not?)
+
+=item Selected Padre language
+
+=back
 
 =head2 I feel observed.
 
 Disable this module and no information would be transmitted at all.
 
-All information is anonymus and can't be tracked to you, but it helps
+All information is anonymous and can't be tracked to you, but it helps
 the developer team to know which functions and features are used and
 which aren't.
 
 This is an open source project and you're invited to check what this
-module does by just opening Padre/Plugin/PopularityContest.pm and check
+module does by just opening F<Padre/Plugin/PopularityContest.pm> and check
 that it does.
 
 =head2 What information WON'T we collect?
@@ -90,7 +106,7 @@ minimize the resource impact while you are actively coding.
 
 Finally, if you really don't trust us (or you aren't allowed to trust us
 because you work inside a secure network) then we encourage you to delete
-this plugin entirely.
+this plug-in entirely.
 
 =cut
 
@@ -173,7 +189,7 @@ sub plugin_disable {
 
 sub menu_plugins_simple {
 
-	# TODO: Add menu options to force sending of a report and to show
+	# TO DO: Add menu options to force sending of a report and to show
 	#       the contents of a report.
 
 	return shift->plugin_name => [
@@ -202,7 +218,7 @@ sub _generate {
 	my $self   = shift;
 	my %report = ();
 
-	# The instance ID id generated randomly on Padre's startup, it is used
+	# The instance ID id generated randomly on Padre's start-up, it is used
 	# to identify multiple reports from one running instance of Padre and
 	# to throw away old data once a fresh report with newer data arrives from
 	# the same instance ID. Otherwise we would double-count the data from
@@ -257,7 +273,7 @@ sub report {
 	my $self   = shift;
 	my $report = $self->_generate;
 
-	# TODO: Enable as soon as the server is functional:
+	# TO DO: Enable as soon as the server is functional:
 	#	my $response = Padre::Task::HTTPClient->new(
 	#		URL   => 'http://padre.perlide.org/popularity_contest.cgi',
 	#		query => \%STATS, method => 'POST'

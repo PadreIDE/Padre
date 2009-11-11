@@ -42,11 +42,11 @@ sub new {
 	my $tools = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Plugin Tools'),
+		Wx::gettext('Plug-in Tools'),
 		$tools,
 	);
 
-	# TODO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
+	# TO DO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
 	# better yet, by a window that also allows the installation of all the plugins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	$self->add_menu_action(

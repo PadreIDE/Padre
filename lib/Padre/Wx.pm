@@ -9,7 +9,7 @@ use FindBin;
 use File::Spec ();
 
 # Load every exportable constant into here, so that they come into
-# existance in the Wx:: packages, allowing everywhere else in the code to
+# existence in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
 use Wx ':everything';
 use Wx 'wxTheClipboard';
@@ -135,12 +135,12 @@ Padre::Wx - Wx integration for Padre
 
 =head1 DESCRIPTION
 
-Support function library for Wx-related things, and bootstrap logic for Wx integration. 
+Support function library for Wx related things, and bootstrap logic for Wx integration.
 
-Isolates any Wx.pm twiddling away from the actual Padre implementation code.
+Isolates any F<Wx.pm> twiddling away from the actual Padre implementation code.
 
 Load every exportable constant, so that they come into
-existance in the Wx:: packages, allowing everywhere else in the code to
+existence in the C<Wx::> packages, allowing everywhere else in the code to
 use them without braces.
 
 =cut

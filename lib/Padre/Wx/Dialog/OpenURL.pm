@@ -18,7 +18,7 @@ our @ISA     = qw{
 
 Padre::Wx::Dialog::OpenURL - a dialog for opening URLs
 
-=head2 new
+=head2 C<new>
 
   my $find = Padre::Wx::Dialog::OpenURL->new($main);
 
@@ -132,13 +132,13 @@ sub new {
 
 =pod
 
-=head2 modal
+=head2 C<modal>
 
   my $url = Padre::Wx::Dialog::OpenURL->modal($main);
 
 Single-shot modal dialog call to get a URL from the user.
 
-Returns a string if the user clicks ok (it may be a null string if they did
+Returns a string if the user clicks B<OK> (it may be a null string if they did
 not enter anything).
 
 Returns C<undef> if the user hits the cancel button.
@@ -159,7 +159,7 @@ sub modal {
 
 =pod
 
-=head2 ok_button
+=head2 C<ok_button>
 
   $self->ok_button
 
@@ -173,7 +173,7 @@ sub ok_button {
 
 =pod
 
-=head2 cancel_button
+=head2 C<cancel_button>
 
   $self->cancel_button
 

@@ -38,31 +38,31 @@ Padre::QuickFixProvider - Padre Quick Fix Provider API
 
 =head1 DESCRIPTION
 
-=head2 Quick Fix (Shortcut: Ctrl-2)
+=head2 Quick Fix (Shortcut: C<Ctrl+2>)
 
-This opens a dialog that lists different actions that relate to 
-fixing the code at the cursor. It will call B<event_on_quick_fix> method 
-passing a L<Padre::Wx::Editor> object on the current Padre document. 
+This opens a dialog that lists different actions that relate to
+fixing the code at the cursor. It will call B<event_on_quick_fix> method
+passing a L<Padre::Wx::Editor> object on the current Padre document.
 Please see the following sample implementation:
 
 	sub quick_fix_list {
 		my ($self, $editor) = @_;
-		
-		my @items = ( 
+
+		my @items = (
 			{
-				text     => '123...', 
-				listener => sub { 
+				text     => '123...',
+				listener => sub {
 					print "123...\n";
-				} 
+				}
 			},
 			{
-				text     => '456...', 
-				listener => sub { 
+				text     => '456...',
+				listener => sub {
 					print "456...\n";
-				} 
+				}
 			},
 		);
-		
+
 		return @items;
 	}
 

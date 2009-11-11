@@ -344,40 +344,43 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::RegexEditor - dialog to make it easy to creat a Regular expression
+Padre::Wx::Dialog::RegexEditor - dialog to make it easy to create a regular expression
 
 =head1 DESCRIPTION
 
 
-The Regex Editor provides an interface to easily create Regular 
+The C<Regex Editor> provides an interface to easily create regular
 expressions used in Perl.
 
-The user can insert a regex - the surrounding / characters are not
-needed and a text. The Regex Editor will automatically display the matching 
+The user can insert a regular expression (the surrounding C</> characters are not
+needed) and a text. The C<Regex Editor> will automatically display the matching
 text in the bottom right window.
 
 
 At the top of the window the user can select any of the four
-regex modifiers:
+regular expression modifiers:
 
-Ignore case (i)
+=over
 
-Single-line (s)
+=item Ignore case (i)
 
-Multi-line (m)
+=item Single-line (s)
 
-Extended (x)
+=item Multi-line (m)
 
+=item Extended (x)
 
-=head1 TODO
+=back
+
+=head1 TO DO
 
 Implement substitute as well
 
 Global match
 
-Allow the change/replacement of the // around the regex
+Allow the change/replacement of the // around the regular expression
 
-Highlight the match in the source text instead of in 
+Highlight the match in the source text instead of in
 a separate window
 
 Display the captured groups in a tree hierarchy similar to Rx ?
@@ -386,12 +389,12 @@ Display the captured groups in a tree hierarchy similar to Rx ?
   Match 0 (Group 0)      4-7              the actual match
 
 Display the various Perl variable containing the relevant values
-e.g. the @- and @+ arrays, the %+ hash
-$1, $2 ..
+e.g. the C<@-> and C<@+> arrays, the C<%+> hash
+C<$1>, C<$2>...
 
-point out what to use instead of $@ and $' and $`
+point out what to use instead of C<$@> and C<$'> and C<$`>
 
-English explanation of the regex
+English explanation of the regular expression
 
 =head1 COPYRIGHT & LICENSE
 

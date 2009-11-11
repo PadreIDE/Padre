@@ -11,15 +11,15 @@ Padre::Search - The Padre Search API
   # Create the search object
   my $search = Padre::Search->new(
       find_term => 'foo',
-  );  
-  
+  );
+
   # Execute the search on the current editor
   $search->search_next(Padre::Current->editor);
 
 =head2 DESCRIPTION
 
 This is the Padre Search API. It allows the creation of abstract objects
-object that can independantly search and/or replace in an editor object.
+object that can independently search and/or replace in an editor object.
 
 =head2 METHODS
 
@@ -267,8 +267,8 @@ sub editor_replace {
 				$editor->SetSelection( $start, $start );
 			} else {
 
-				# TODO: There might be unicode bugs in this.
-				# TODO: Someone that understands needs to check.
+				# TO DO: There might be unicode bugs in this.
+				# TO DO: Someone that understands needs to check.
 				$start = $start + length( $self->replace_term );
 				$editor->SetSelection( $start, $start );
 			}
@@ -401,7 +401,6 @@ sub match_lines {
 		if ( $lines[$lineNumber] =~ /$regex/ ) {
 			push( @matches, ( { lineNumber => ( $lineNumber + 1 ), line => $lines[$lineNumber] } ) );
 		}
-
 	}
 	return @matches;
 

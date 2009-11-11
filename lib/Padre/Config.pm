@@ -225,7 +225,7 @@ setting(
 
 		# The toolbar can't dynamically switch between
 		# tearable and non-tearable so rebuild it.
-		# TODO: Review this assumption
+		# TO DO: Review this assumption
 
 		# (Ticket #668)
 
@@ -631,7 +631,7 @@ setting(
 );
 
 # By default use background threads unless profiling
-# TODO - Make the default actually change
+# TO DO - Make the default actually change
 
 # (Ticket # 669)
 setting(
@@ -1069,22 +1069,25 @@ the functions for loading and saving the configuration.
 
 The Padre configuration lives in two places:
 
- - A user-editable text file usually called config.yml
+=over
 
- - A SQlite - database which shouldn't be edited by the
-   user.
+=item a user-editable text file usually called F<config.yml>
+
+=item an SQLite database which shouldn't be edited by the user
+
+=back
 
 =head2 Generic usage
 
-Every setting is accessed by a method named after it, which is a mutator.
-ie, it can be used both as a getter and a setter, depending on the number
+Every setting is accessed by a mutator named after it,
+i.e. it can be used both as a getter and a setter depending on the number
 of arguments passed to it.
 
 =head2 Different types of settings
 
 Padre needs to store different settings. Those preferences are stored in
 different places depending on their impact. But C<Padre::Config> allows to
-access them with a unified api (a mutator). Only their declaration differ
+access them with a unified API (a mutator). Only their declaration differs
 in the module.
 
 Here are the various types of settings that C<Padre::Config> can manage:
@@ -1094,7 +1097,7 @@ Here are the various types of settings that C<Padre::Config> can manage:
 =item * User settings
 
 Those settings are general settings that relates to user preferences. They range
-from general user interface look&feel (whether to show the line numbers, etc.)
+from general user interface I<look & feel> (whether to show the line numbers, etc.)
 to editor preferences (tab width, etc.) and other personal settings.
 
 Those settings are stored in a YAML file, and accessed with C<Padre::Config::Human>.

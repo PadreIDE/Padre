@@ -4,12 +4,12 @@ package Padre::PluginManager;
 
 =head1 NAME
 
-Padre::PluginManager - Padre plugin manager
+Padre::PluginManager - Padre plug-in manager
 
 =head1 DESCRIPTION
 
-The PluginManager class contains logic for locating and loading Padre
-plugins, as well as providing part of the interface to plugin writers.
+The C<PluginManager> class contains logic for locating and loading Padre
+plug-ins, as well as providing part of the interface to plug-in writers.
 
 =head1 METHODS
 
@@ -51,9 +51,9 @@ our $VERSION = '0.50';
 
 =pod
 
-=head2 new
+=head2 C<new>
 
-The constructor returns a new Padre::PluginManager object, but
+The constructor returns a new C<Padre::PluginManager> object, but
 you should normally access it via the main Padre object:
 
   my $manager = Padre->ide->plugin_manager;
@@ -86,25 +86,25 @@ sub new {
 
 =pod
 
-=head2 parent
+=head2 C<parent>
 
 Stores a reference back to the parent IDE object.
 
-=head2 plugin_dir
+=head2 C<plugin_dir>
 
-Returns the user plugin directory (below the Padre configuration directory).
+Returns the user plug-in directory (below the Padre configuration directory).
 This directory was added to the C<@INC> module search path.
 
-=head2 plugins
+=head2 C<plugins>
 
-Returns a hash (reference) of plugin names associated with a
+Returns a hash (reference) of plug-in names associated with a
 L<Padre::PluginHandle>.
 
 This hash is only populated after C<load_plugins()> was called.
 
-=head2 plugins_with_context_menu
+=head2 C<plugins_with_context_menu>
 
-Returns a hash (reference) with the names of all plugins as
+Returns a hash (reference) with the names of all plug-ins as
 keys which define a hook for the context menu.
 
 See L<Padre::Plugin>.
@@ -126,7 +126,7 @@ sub plugin_order {
 	unless ( $self->{plugin_order} ) {
 
 		# Schwartzian transform that sorts the plugins by their
-		# full names, but always puts "My Plugin" first.
+		# full names, but always puts "My Plug-in" first.
 		$self->{plugin_order} = [
 			map { $_->[0] } sort {
 				( $b->[0] eq 'Padre::Plugin::My' ) <=> ( $a->[0] eq 'Padre::Plugin::My' )
@@ -148,12 +148,12 @@ sub plugin_objects {
 
 
 #####################################################################
-# Bulk Plugin Operations
+# Bulk Plug-in Operations
 
 #
 # $pluginmgr->relocale;
 #
-# update padre's locale object to handle new plugin l10n.
+# update padre's locale object to handle new plug-in l10n.
 #
 sub relocale {
 	my $self   = shift;
@@ -161,10 +161,10 @@ sub relocale {
 
 	foreach my $plugin ( $self->plugin_objects ) {
 
-		# Only process enabled plugins
+		# Only process enabled plug-ins
 		next unless $plugin->enabled;
 
-		# Add the plugin locale dir to search path
+		# Add the plug-in locale dir to search path
 		my $object = $plugin->{object};
 		if ( $object->can('plugin_locale_directory') ) {
 			my $dir = $object->plugin_locale_directory;
@@ -173,7 +173,7 @@ sub relocale {
 			}
 		}
 
-		# Add the plugin catalog to the locale
+		# Add the plug-in catalog to the locale
 		my $code   = Padre::Locale::rfc4646();
 		my $prefix = $plugin->locale_prefix;
 		$locale->AddCatalog("$prefix-$code");
@@ -185,7 +185,7 @@ sub relocale {
 #
 # $pluginmgr->reset_my_plugin( $overwrite );
 #
-# reset the my plugin if needed. if $overwrite is set, remove it first.
+# reset the my plug-in if needed. if $overwrite is set, remove it first.
 #
 sub reset_my_plugin {
 	my $self      = shift;
@@ -200,25 +200,25 @@ sub reset_my_plugin {
 		return;
 	}
 
-	# Find the My Plugin
+	# Find the My Plug-in
 	my $src = File::Spec->catfile(
 		File::Basename::dirname( $INC{'Padre/Config.pm'} ),
 		'Plugin', 'My.pm',
 	);
 	unless ( -e $src ) {
-		Carp::croak("Could not find the original My plugin");
+		Carp::croak("Could not find the original My plug-in");
 	}
 
-	# copy the My Plugin
+	# copy the My Plug-in
 	unlink $dst;
 	unless ( File::Copy::copy( $src, $dst ) ) {
-		Carp::croak("Could not copy the My plugin ($src) to $dst: $!");
+		Carp::croak("Could not copy the My plug-in ($src) to $dst: $!");
 	}
 	chmod( 0644, $dst );
 }
 
-# Disable (but don't unload) all plugins when Padre exits.
-# Save the plugin enable/disable states for the next startup.
+# Disable (but don't unload) all plug-ins when Padre exits.
+# Save the plug-in enable/disable states for the next start-up.
 sub shutdown {
 	my $self = shift;
 
@@ -244,26 +244,26 @@ sub shutdown {
 
 =pod
 
-=head2 load_plugins
+=head2 C<load_plugins>
 
-Scans for new plugins in the user plugin directory, in C<@INC>,
-and in C<.par> files in the user plugin directory.
+Scans for new plug-ins in the user plug-in directory, in C<@INC>,
+and in F<.par> files in the user plug-in directory.
 
 Loads any given module only once, i.e. does not refresh if the
-plugin has changed while Padre was running.
+plug-in has changed while Padre was running.
 
 =cut
 
 sub load_plugins {
 	my $self = shift;
 
-	# Put the plugin directory first in the load order
+	# Put the plug-in directory first in the load order
 	my $plugin_dir = $self->plugin_dir;
 	unless ( grep { $_ eq $plugin_dir } @INC ) {
 		unshift @INC, $plugin_dir;
 	}
 
-	# Attempt to load all plugins in the Padre::Plugin::* namespace
+	# Attempt to load all plug-ins in the Padre::Plugin::* namespace
 	my %seen = ();
 	foreach my $inc (@INC) {
 		my $dir = File::Spec->catdir( $inc, 'Padre', 'Plugin' );
@@ -279,15 +279,15 @@ sub load_plugins {
 			my $module = "Padre::Plugin::$_";
 			next if $seen{$module}++;
 
-			# Specifically ignore the redundant "Perl 5 Plugin"
+			# Specifically ignore the redundant "Perl 5 Plug-in"
 			next if $module eq 'Padre::Plugin::Perl5';
 
 			$self->_load_plugin($module);
 		}
 	}
 
-	# Attempt to load all plugins in the Acme::Padre::* namespace
-	# TODO: Put this code behind some kind of future security option,
+	# Attempt to load all plug-ins in the Acme::Padre::* namespace
+	# TO DO: Put this code behind some kind of future security option,
 	#       once we have one.
 	foreach my $inc (@INC) {
 		my $dir = File::Spec->catdir( $inc, 'Acme', 'Padre' );
@@ -306,7 +306,7 @@ sub load_plugins {
 		}
 	}
 
-	# Disabled until someone other than tsee wants to use PAR plugins :)
+	# Disabled until someone other than tsee wants to use PAR plug-ins :)
 	# $self->_load_plugins_from_par;
 
 	$self->_refresh_plugin_menu;
@@ -317,10 +317,10 @@ sub load_plugins {
 		# Every time you start the editor, we tell you what
 		# we DIDN'T do...
 		# Turn this back on once we can track these over time
-		# and only report on plugins that USED to work but now
+		# and only report on plug-ins that USED to work but now
 		# have started to fail.
 		# $self->parent->wx->main->error(
-		#     Wx::gettext("Failed to load the following plugin(s):\n")
+		#     Wx::gettext("Failed to load the following plug-in(s):\n")
 		#     . join "\n", @failed
 		# ) unless $ENV{HARNESS_ACTIVE};
 		return;
@@ -331,9 +331,9 @@ sub load_plugins {
 
 =pod
 
-=head2 reload_plugins
+=head2 C<reload_plugins>
 
-For all registered plugins, unload them if they were loaded
+For all registered plug-ins, unload them if they were loaded
 and then reload them.
 
 =cut
@@ -356,10 +356,10 @@ sub reload_plugins {
 
 =pod
 
-=head2 alert_new
+=head2 C<alert_new>
 
-The C<alert_new> method is called by the main window post-init and
-checks for new plugins. If any are found, it presents a message to
+The C<alert_new> method is called by the main window post-initialisation and
+checks for new plug-ins. If any are found, it presents a message to
 the user.
 
 =cut
@@ -373,17 +373,17 @@ sub alert_new {
 
 	if ( @loaded and not $ENV{HARNESS_ACTIVE} ) {
 		my $msg = Wx::gettext(<<"END_MSG") . join( "\n", @loaded );
-We found several new plugins.
+We found several new plug-ins.
 In order to configure and enable them go to
-Plugins -> Plugin Manager
+Plug-ins -> Plug-in Manager
 
-List of new plugins:
+List of new plug-ins:
 
 END_MSG
 
 		$self->parent->wx->main->message(
 			$msg,
-			Wx::gettext('New plugins detected')
+			Wx::gettext('New plug-ins detected')
 		);
 	}
 
@@ -392,11 +392,11 @@ END_MSG
 
 =pod
 
-=head2 failed
+=head2 C<failed>
 
-Returns the plugin names (without C<Padre::Plugin::> prefixed) of all plugins
+Returns the plug-in names (without C<Padre::Plugin::> prefixed) of all plug-ins
 that the editor attempted to load but failed. Note that after a failed
-attempt, the plugin is usually disabled in the configuration and not loaded
+attempt, the plug-in is usually disabled in the configuration and not loaded
 again when the editor is restarted.
 
 =cut
@@ -415,10 +415,10 @@ sub failed {
 # PAR Integration
 
 # NOTE:
-# Temporarily disabled until we actually start using PAR for plugins.
+# Temporarily disabled until we actually start using PAR for plug-ins.
 # Don't delete this code or tsee will be very sad.
 
-## Attempt to load all plugins that sit as .par files in the
+## Attempt to load all plug-ins that sit as .par files in the
 ## .padre/plugins/ folder
 #sub _load_plugins_from_par {
 #    my ($self) = @_;
@@ -428,13 +428,13 @@ sub failed {
 #    opendir my $dh, $plugin_dir or return;
 #    while ( my $file = readdir $dh ) {
 #        if ( $file =~ /^\w+\.par$/i ) {
-#            # Only single-level plugins for now.
+#            # Only single-level plug-ins for now.
 #            my $parfile = File::Spec->catfile( $plugin_dir, $file );
 #            PAR->import($parfile);
 #            $file =~ s/\.par$//i;
 #            $file =~ s/-/::/g;
 #
-#            # Caller must refresh plugin menu
+#            # Caller must refresh plug-in menu
 #            $self->_load_plugin($file);
 #        }
 #    }
@@ -464,14 +464,14 @@ sub failed {
 
 
 ######################################################################
-# Loading and Unloading a Plugin
+# Loading and Unloading a Plug-in
 
 =pod
 
-=head2 load_plugin
+=head2 C<load_plugin>
 
-Given a plugin name such as C<Foo> (the part after Padre::Plugin),
-load the corresponding module, enable the plugin and update the Plugins
+Given a plug-in name such as C<Foo> (the part after C<Padre::Plugin>),
+load the corresponding module, enable the plug-in and update the Plug-ins
 menu, etc.
 
 =cut
@@ -483,9 +483,9 @@ sub load_plugin {
 	return $rv;
 }
 
-# This method implements the actual mechanics of loading a plugin,
+# This method implements the actual mechanics of loading a plug-in,
 # without regard to the context it is being called from.
-# So this method doesn't do stuff like refresh the plugin menu.
+# So this method doesn't do stuff like refresh the plug-in menu.
 #
 # MAINTAINER NOTE: This method looks fairly long, but it's doing
 # a very specific and controlled series of steps. Splitting this up
@@ -498,13 +498,13 @@ sub _load_plugin {
 	my $plugins = $self->plugins;
 	return if $plugins->{$module};
 
-	# Create the plugin object (and flush the old sort order)
+	# Create the plug-in object (and flush the old sort order)
 	my $plugin = $plugins->{$module} = Padre::PluginHandle->new(
 		class => $module,
 	);
 	delete $self->{plugin_order};
 
-	# Attempt to load the plugin
+	# Attempt to load the plug-in
 	my $code = "use $module ();";
 	eval $code; ## no critic
 
@@ -520,7 +520,7 @@ sub _load_plugin {
 		return;
 	}
 
-	# Plugin must be a Padre::Plugin subclass
+	# Plug-in must be a Padre::Plugin subclass
 	unless ( $module->isa('Padre::Plugin') ) {
 		$plugin->errstr(
 			sprintf(
@@ -532,7 +532,7 @@ sub _load_plugin {
 		return;
 	}
 
-	# Attempt to instantiate the plugin
+	# Attempt to instantiate the plug-in
 	my $object = eval { $module->new( $self->{parent} ) };
 	if ($@) {
 		$plugin->errstr(
@@ -547,7 +547,7 @@ sub _load_plugin {
 	unless ( _INSTANCE( $object, 'Padre::Plugin' ) ) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Failed to instantiate plugin"),
+				Wx::gettext("%s - Failed to instantiate plug-in"),
 				$module,
 			)
 		);
@@ -555,11 +555,11 @@ sub _load_plugin {
 		return;
 	}
 
-	# Plugin is now loaded
+	# Plug-in is now loaded
 	$plugin->{object} = $object;
 	$plugin->status('loaded');
 
-	# Should we try to enable the plugin
+	# Should we try to enable the plug-in
 	my $config = $self->plugin_db( $plugin->class );
 	unless ( defined $config->{enabled} ) {
 
@@ -580,7 +580,7 @@ sub _load_plugin {
 		}
 	}
 
-	# FINALLY we can enable the plugin
+	# FINALLY we can enable the plug-in
 	$plugin->enable;
 
 	return 1;
@@ -588,10 +588,10 @@ sub _load_plugin {
 
 =pod
 
-=head2 unload_plugin
+=head2 C<unload_plugin>
 
-Given a plugin name such as C<Foo> (the part after Padre::Plugin),
-DISable the plugin, UNload the corresponding module, and update the Plugins
+Given a plug-in name such as C<Foo> (the part after C<Padre::Plugin>),
+B<disable> the plug-in, B<unload> the corresponding module, and update the Plug-ins
 menu, etc.
 
 =cut
@@ -620,12 +620,12 @@ sub _unload_plugin {
 		$handle->disable;
 	}
 
-	# Destruct the plugin
+	# Destruct the plug-in
 	if ( defined $handle->{object} ) {
 		$handle->{object} = undef;
 	}
 
-	# Unload the plugin class itself
+	# Unload the plug-in class itself
 	require Class::Unload;
 	Class::Unload->unload($module);
 
@@ -638,9 +638,9 @@ sub _unload_plugin {
 
 =pod
 
-=head2 reload_plugin
+=head2 C<reload_plugin>
 
-Reload a single plugin whose name (without C<Padre::Plugin::>)
+Reload a single plug-in whose name (without C<Padre::Plugin::>)
 is passed in as first argument.
 
 =cut
@@ -661,28 +661,28 @@ sub reload_plugin {
 #####################################################################
 # Enabling and Disabling a Plugin
 
-# Assume the named plugin exists, enable it
+# Assume the named plug-in exists, enable it
 sub _plugin_enable {
 	$_[0]->_plugin( $_[1] )->enable;
 }
 
-# Assume the named plugin exists, disable it
+# Assume the named plug-in exists, disable it
 sub _plugin_disable {
 	$_[0]->_plugin( $_[1] )->disable;
 }
 
 =pod
 
-=head2 plugin_db
+=head2 C<plugin_db>
 
-Given a plugin name or namespace, returns a hash reference
+Given a plug-in name or namespace, returns a hash reference
 which corresponds to the configuration section in the Padre
-database of that plugin. Any modifications of that
+database of that plug-in. Any modifications of that
 hash reference will, on normal exit, be serialized and
-written back to the databasefile.
+written back to the database file.
 
-If the plugin name is omitted and this method is called from
-a plugin namespace, the plugin name is determine automatically.
+If the plug-in name is omitted and this method is called from
+a plug-in namespace, the plug-in name is determine automatically.
 
 =cut
 
@@ -690,16 +690,16 @@ sub plugin_db {
 	my $self   = shift;
 	my $module = shift;
 
-	# Infer the plugin name from caller if not provided
+	# Infer the plug-in name from caller if not provided
 	unless ( defined $module ) {
 		my ($package) = caller();
 		unless ( $package =~ /^Padre::Plugin::/ ) {
-			Carp::croak("Cannot infer the name of the plugin for which the configuration has been requested");
+			Carp::croak("Cannot infer the name of the plug-in for which the configuration has been requested");
 		}
 		$module = $package;
 	}
 
-	# Get the plugin, and from there the config
+	# Get the plug-in, and from there the config
 	my $plugin = $self->_plugin($module);
 	my $object = Padre::DB::Plugin->fetch_name($module);
 	unless ($object) {
@@ -715,7 +715,7 @@ sub plugin_db {
 	return $object;
 }
 
-# enable all the plugins for a single editor
+# enable all the plug-ins for a single editor
 sub editor_enable {
 	my $self   = shift;
 	my $editor = shift;
@@ -731,7 +731,7 @@ sub editor_enable {
 		if ($@) {
 			warn $@;
 
-			# TODO: report the plugin error!
+			# TO DO: report the plug-in error!
 		}
 	}
 	return;
@@ -767,7 +767,7 @@ sub enable_editors {
 ######################################################################
 # Menu Integration
 
-# Generate the menu for a plugin
+# Generate the menu for a plug-in
 sub get_menu {
 	my $self   = shift;
 	my $main   = shift;
@@ -781,10 +781,10 @@ sub get_menu {
 	}
 	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
 	if ($@) {
-		$plugin->errstr( Wx::gettext("Error when calling menu for plugin") . "'$module': $@" );
+		$plugin->errstr( Wx::gettext("Error when calling menu for plug-in") . "'$module': $@" );
 
-		# TODO: make sure these error messages show up somewhere or it will drive
-		# crazy anyone trying to write a plugin
+		# TO DO: make sure these error messages show up somewhere or it will drive
+		# crazy anyone trying to write a plug-in
 		return ();
 	}
 	unless ( defined $label and defined $menu ) {
@@ -795,15 +795,15 @@ sub get_menu {
 
 =pod
 
-=head2 reload_current_plugin
+=head2 C<reload_current_plugin>
 
-When developing a plugin one usually edits the
-files belonging to the plugin (The Padre::Plugin::Wonder itself
-or Padre::Documents::Wonder located in the same project as the plugin
+When developing a plug-in one usually edits the
+files belonging to the plug-in (The C<Padre::Plugin::Wonder> itself
+or C<Padre::Documents::Wonder> located in the same project as the plug-in
 itself.
 
 This call and the appropriate menu option should be able to load
-(or reload) that plugin.
+(or reload) that plug-in.
 
 =cut
 
@@ -821,17 +821,17 @@ sub reload_current_plugin {
 		return $main->error( Wx::gettext('No filename') );
 	}
 
-	# TODO: locate project
+	# TO DO: locate project
 	my $dir = Padre::Util::get_project_dir($filename);
 	return $main->error( Wx::gettext('Could not locate project dir') ) if not $dir;
 
-	# TODO shall we relax the assumption of a lib subdir?
+	# TO DO shall we relax the assumption of a lib subdir?
 	$dir = File::Spec->catdir( $dir, 'lib' );
 	@INC = ( $dir, grep { $_ ne $dir } @INC );
 
 	my ($plugin_filename) = glob File::Spec->catdir( $dir, 'Padre', 'Plugin', '*.pm' );
 
-	# Load plugin
+	# Load plug-in
 	my $plugin = 'Padre::Plugin::' . File::Basename::basename($plugin_filename);
 	$plugin =~ s/\.pm$//;
 
@@ -842,7 +842,7 @@ sub reload_current_plugin {
 		if ( $self->plugins->{$plugin}->{status} eq 'error' ) {
 			$main->error(
 				sprintf(
-					Wx::gettext("Failed to load the plugin '%s'\n%s"),
+					Wx::gettext("Failed to load the plug-in '%s'\n%s"),
 					$plugin, $self->plugins->{$plugin}->errstr
 				)
 			);
@@ -855,11 +855,11 @@ sub reload_current_plugin {
 
 =pod
 
-=head2 on_context_menu
+=head2 C<on_context_menu>
 
 Called by C<Padre::Wx::Editor> when a context menu is about to
-be displayed. The method calls the context menu hooks in all plugins
-that have one for plugin-specific manipulation of the context menu.
+be displayed. The method calls the context menu hooks in all plug-ins
+that have one for plug-in specific manipulation of the context menu.
 
 =cut
 
@@ -878,8 +878,8 @@ sub on_context_menu {
 	return ();
 }
 
-# TODO: document this.
-# TODO: make it also reload the file?
+# TO DO: document this.
+# TO DO: make it also reload the file?
 sub test_a_plugin {
 	my $self    = shift;
 	my $main    = $self->parent->wx->main;
@@ -903,7 +903,7 @@ sub test_a_plugin {
 	my $filename = $dialog->GetFilename;
 	$default_dir = $dialog->GetDirectory;
 
-	# Save into plugin for next time
+	# Save into plug-in for next time
 	my $file = File::Spec->catfile( $default_dir, $filename );
 
 	# Last catfile's parameter is to ensure trailing slash
@@ -912,10 +912,10 @@ sub test_a_plugin {
 	unless ($filename) {
 		Wx::MessageBox(
 			sprintf(
-				Wx::gettext("Plugin must have '%s' as base directory"),
+				Wx::gettext("Plug-in must have '%s' as base directory"),
 				$plugin_folder_name
 			),
-			'Error loading plugin',
+			'Error loading plug-in',
 			Wx::wxOK, $main
 		);
 		return;
@@ -927,18 +927,18 @@ sub test_a_plugin {
 		unshift @INC, $default_dir;
 	}
 
-	# Unload any previously existant plugin with the same name
+	# Unload any previously existant plug-in with the same name
 	if ( $plugins->{$filename} ) {
 		$self->unload_plugin($filename);
 		delete $plugins->{$filename};
 	}
 
-	# Load the selected plugin
+	# Load the selected plug-in
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
 		$main->error(
 			sprintf(
-				Wx::gettext("Failed to load the plugin '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr
+				Wx::gettext("Failed to load the plug-in '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr
 			)
 		);
 		return;
@@ -947,7 +947,7 @@ sub test_a_plugin {
 	return;
 }
 
-# Refresh the Plugins menu
+# Refresh the Plug-ins menu
 sub _refresh_plugin_menu {
 	$_[0]->parent->wx->main->menu->plugins->refresh;
 }
@@ -965,10 +965,10 @@ sub _plugin {
 	if ( _INSTANCE( $it, 'Padre::PluginHandle' ) ) {
 		my $current = $self->{plugins}->{ $it->class };
 		unless ( defined $current ) {
-			Carp::croak("Unknown plugin '$it' provided to PluginManager");
+			Carp::croak("Unknown plug-in '$it' provided to PluginManager");
 		}
 		unless ( Scalar::Util::refaddr($it) == Scalar::Util::refaddr($current) ) {
-			Carp::croak("Duplicate plugin '$it' provided to PluginManager");
+			Carp::croak("Duplicate plug-in '$it' provided to PluginManager");
 		}
 		return $it;
 	}
@@ -976,11 +976,11 @@ sub _plugin {
 	# Convert from class to name if needed
 	if ( defined _CLASS($it) ) {
 		unless ( defined $self->{plugins}->{$it} ) {
-			Carp::croak("Plugin '$it' does not exist in PluginManager");
+			Carp::croak("Plug-in '$it' does not exist in PluginManager");
 		}
 		return $self->{plugins}->{$it};
 	}
-	Carp::croak("Missing or invalid plugin provided to Padre::PluginManager");
+	Carp::croak("Missing or invalid plug-in provided to Padre::PluginManager");
 }
 
 1;

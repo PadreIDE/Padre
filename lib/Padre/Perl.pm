@@ -1,6 +1,6 @@
 package Padre::Perl;
 
-# TODO: Merge this into Probe::Perl some day in the future when this is
+# TO DO: Merge this into Probe::Perl some day in the future when this is
 #       perfected, stable and beyond reproach.
 
 =pod
@@ -11,16 +11,16 @@ Padre::Perl - A more nuanced "Where is Perl" module than Probe::Perl
 
 =head1 DESCRIPTION
 
-Even thouse it has only had a single release, L<Probe::Perl> is the "best
+Even though it has only had a single release, L<Probe::Perl> is the "best
 practice" method for finding the current Perl interpreter, so that we can
 make a system call to a new instance of the same Perl environment.
 
 However, during the development of L<Padre> we have found the feature set
 of L<Probe::Perl> to be insufficient.
 
-B<Probe::Perl> is an experimental attempt to improve on L<Probe::Perl>
+C<Padre::Perl> is an experimental attempt to improve on L<Probe::Perl>
 and support a wider range of situations. The implementation is being
-contained to the L<Padre> project until we have competantly "solved" all
+contained to the L<Padre> project until we have competently "solved" all
 of the problems that we care about.
 
 =head2 GUI vs Command Line
@@ -37,8 +37,8 @@ F<wxPerl.exe> is a wxWidgets-specific Perl binary.
 
 =head2 PAR Support
 
-PAR executables do not typically support reinvocation, and implementations
-that do are only a recent invention, and do not support the normal perl
+PAR executables do not typically support re-invocation, and implementations
+that do are only a recent invention, and do not support the normal Perl
 flags.
 
 Once implemented, we may try to implement support for them here as well.
@@ -60,7 +60,7 @@ my $perl = undef;
 
 =pod
 
-=head2 perl
+=head2 C<perl>
 
 The C<perl> function is equivalent to (and passes through to) the
 C<find_perl_interpreter> method of L<Probe::Perl>.
@@ -98,14 +98,14 @@ sub perl () {
 
 =pod
 
-=head2 cperl
+=head2 C<cperl>
 
 The C<cperl> function is a Perl executable location function that
 specifically tries to find a command line Perl. In some situations you
 may critically need a command line Perl so that proper C<STDIN>, C<STDOUT>
 and C<STDERR> handles are available.
 
-Returns a path to a command line perl, or C<undef> if one cannot be found.
+Returns a path to a command line Perl, or C<undef> if one cannot be found.
 
 =cut
 
@@ -153,7 +153,7 @@ sub cperl () {
 
 =pod
 
-=head2 wxperl
+=head2 C<wxperl>
 
 The C<wxperl> function is a Perl executable location function that
 specifically tries to find a windowing Perl for running wxWidgets
@@ -161,7 +161,7 @@ applications. In some situations you may critically need a wxWidgets
 Perl so that a command line box is not show (Windows) or so that Wx
 starts up properly at all (Mac OS X).
 
-Returns a path to a perl suitable for the execution of L<Wx>-based
+Returns a path to a Perl suitable for the execution of L<Wx>-based
 applications, or C<undef> if one cannot be found.
 
 =cut

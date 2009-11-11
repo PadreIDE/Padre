@@ -21,7 +21,7 @@ my $SPLASH = undef;
 #
 # Load the splash screen here, before we get bogged
 # down running the database migration scripts.
-# TODO
+# TO DO
 # This means we'll splash even if we run the single
 # instance server, but that's better than before.
 # We need it to be even less whacked.

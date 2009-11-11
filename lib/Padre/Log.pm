@@ -178,7 +178,7 @@ Padre developers are encouraged to use this along the code.
 =head1 HOW TO USE IT
 
 The Padre logging system is set via Padre's configuration file,
-config.yml:
+F<config.yml>:
 
 	log: 1
 	log_level: 'debug'
@@ -186,7 +186,7 @@ config.yml:
 	log_filename: undef
 
 But you should select these options directly via the 'Padre Developer
-Tools' Plugin that comes bundled with Padre.
+Tools' plug-in that comes bundled with Padre.
 
 
 =head2 Log Levels
@@ -194,12 +194,12 @@ Tools' Plugin that comes bundled with Padre.
 There are five predefined log levels: C<debug>, C<info>, C<warn>,
 C<error>, and C<fatal>, in descending priority. This means that, if your
 configured logging level is C<warn>, then messages sent with C<debug>
-and C<info> methods will be supressed, while C<warn>, C<error> and
+and C<info> methods will be suppressed, while C<warn>, C<error> and
 C<fatal> messages will make their way through, since their priority is
 higher or equal than the configured setting.
 
 
-=head2 Level Cheking Methods
+=head2 Level Checking Methods
 
 For every log level, there is a corresponding level checking method,
 useful when the logging level may not be reached and we want to block
@@ -218,7 +218,7 @@ an expensive operation only to figure out shortly after that the string
 can be ignored entirely because the configured logging level is lower
 than C<'error'>.
 
-The availables level checking methods are:
+The available level checking methods are:
 
 	$log->is_debug()    # True if debug messages would go through
 	$log->is_info()     # True if info  messages would go through
@@ -242,7 +242,7 @@ related code.
 
 Returns a new Padre::Log object. You can specify the following
 parameters:
-  
+
 	my $log = Padre::Log->new(
 		filename => '/var/log/padre.log',
 		level    => 'info',
@@ -251,33 +251,33 @@ parameters:
 
 =over 4
 
-=item filename
+=item C<filename>
 
 If you want to save Padre's log messages to a log file, you can specify
-a target filename for it. Doing this, the new() method will
-automatically call C<< set_filename() >> for you.
+a target file name for it. Doing this, the C<new()> method will
+automatically call C<set_filename()> for you.
 
 
-=item level
+=item C<level>
 
 This attribute specifies the minimum log level to use. Doing this, the
-new() method will automatically call C<< set_log_level() >> for you.
+C<new()> method will automatically call C<set_log_level()> for you.
 
 
-=item trace
+=item C<trace>
 
 This attribute specifies whether a trace output should be issued after
-every log message. Doing this, the new() method will automatically call
-C<< enable_trace() >> for you.
+every log message. Doing this, the C<new()> method will automatically call
+C<enable_trace()> for you.
 
 
 =back
 
 
-=head2 set_log_level
+=head2 C<set_log_level>
 
 	$log->set_log_level('debug');
-  
+
 Dynamically switches the minimum log level of your logging object. The
 name is specified as a case insensitive string. If you specify anything
 other than a valid log level (see "Log Levels" above), or don't pass
@@ -291,28 +291,27 @@ level and is never used for logging. So, if you do:
 
 	$log->set_log_level('off');
 
-You will supress all logging.
+You will suppress all logging.
 
 
-=head2 set_filename
+=head2 C<set_filename>
 
 	$log->set_filename('/var/log/padre.log');
 
 Makes the logging object record its received messages into the specified
 file. If it exists, the output will be appended. If it doesn't exist,
 the logger will automatically create it. If it can't create it, an error
-will be issued to STDERR everytime the logger tries to log something. If
-you set the filename value to an empty string, C<undef> or C<0>, STDERR
+will be issued to C<STDERR> every time the logger tries to log something. If
+you set the file name value to an empty string, C<undef> or C<0>, C<STDERR>
 will be used.
 
 
-=head2 enable_trace, disable_trace
+=head2 C<enable_trace>, C<disable_trace>
 
   $log->enable_trace();   # trace output is on
   $log->disable_trace();  # trace output is off
 
-Enables and disables tracing. The trace output is done with C<<
-Carp::longmess >>.
+Enables and disables tracing. The trace output is done with C<Carp::longmess>.
 
 
 
@@ -320,7 +319,7 @@ Carp::longmess >>.
 
 L<Padre::Manual::Hacking>, L<Padre>, L<Padre::Plugin::Devel>, L<Carp>.
 
-This modules's functionallity was heavily based on L<Log::Dispatch> and
+This module's functionality was heavily based on L<Log::Dispatch> and
 L<Log::Log4perl>.
 
 

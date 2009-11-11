@@ -82,7 +82,7 @@ Padre::Config::Host - Padre configuration storing host state data
 =head1 DESCRIPTION
 
 This class implements the state data of the host on which Padre is running.
-See C<Padre::Config> for more information on the various types of preferences
+See L<Padre::Config> for more information on the various types of preferences
 supported by Padre.
 
 All those state data are stored in a database managed with C<Padre::DB>.
@@ -95,12 +95,14 @@ Refer to this module for more information on how this works.
 
 =over 4
 
-=item my $config = Padre::Config::Host->read;
+=item read
 
-Load & return the host configuration from the database. Return undef in
+    my $config = Padre::Config::Host->read;
+
+Load & return the host configuration from the database. Return C<undef> in
 case of failure.
 
-No params.
+No parameters.
 
 
 =back
@@ -110,19 +112,23 @@ No params.
 
 =over 4
 
-=item my $revision = $config->version;
+=item version
 
-Return the config schema revision. Indeed, we might want to change the
+    my $revision = $config->version;
+
+Return the configuration schema revision. Indeed, we might want to change the
 underlying storage later on.
 
-No params.
+No parameters.
 
 
-=item $config->write;
+=item write
+
+    $config->write;
 
 (Over-)write host configuration to the database.
 
-No params.
+No parameters.
 
 =back
 

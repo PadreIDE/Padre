@@ -14,7 +14,7 @@ use PPIx::EditorTools::RenameVariable;
 
 =head1 NAME
 
-Padre::Task::PPI::LexicalReplaceVariable - Lexically variable replace using PPI
+Padre::Task::PPI::LexicalReplaceVariable - Lexically variable replace using L<PPI>
 
 =head1 SYNOPSIS
 
@@ -29,7 +29,7 @@ Padre::Task::PPI::LexicalReplaceVariable - Lexically variable replace using PPI
 
 Given a location in the document (line/column), determines the name of the
 variable at this position, finds where the variable was defined,
-and B<lexically> replaces all occurrances with another variable.
+and B<lexically> replaces all occurrences with another variable.
 
 =cut
 
@@ -83,7 +83,7 @@ sub process_ppi {
 	# for moving the cursor after updating the text
 	$self->{token_location} = $munged->element->location;
 
-	# TODO: passing this back and forth is probably hyper-inefficient, but such is life.
+	# TO DO: passing this back and forth is probably hyper-inefficient, but such is life.
 	$self->{updated_document_string} = $munged->code;
 
 	return ();
@@ -94,7 +94,7 @@ sub finish {
 	if ( defined $self->{updated_document_string} ) {
 
 		# GUI update
-		# TODO: What if the document changed? Bad luck for now.
+		# TO DO: What if the document changed? Bad luck for now.
 		$self->{main_thread_only}->{document}->editor->SetText( $self->{updated_document_string} );
 		$self->{main_thread_only}->{document}->ppi_select( $self->{token_location} );
 	} else {

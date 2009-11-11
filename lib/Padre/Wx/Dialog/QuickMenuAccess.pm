@@ -391,9 +391,9 @@ Padre::Wx::Dialog::QuickMenuAccess - Ecliptic's Quick Menu Access dialog
 
 =head1 DESCRIPTION
 
-=head2 Quick Menu Access (Shortcut: Ctrl + 3)
+=head2 Quick Menu Access (Shortcut: C<Ctrl+3>)
 
-This opens a dialog where you can search for menu labels. When you hit the OK 
+This opens a dialog where you can search for menu labels. When you hit the OK
 button, the menu item will be selected.
 
 =head1 AUTHOR

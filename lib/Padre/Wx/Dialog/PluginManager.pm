@@ -1,6 +1,6 @@
 package Padre::Wx::Dialog::PluginManager;
 
-# The Plugin Manager GUI for Padre
+# The Plug-in Manager GUI for Padre
 
 use 5.008;
 use strict;
@@ -28,7 +28,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::gettext('Plugin Manager'),
+		Wx::gettext('Plug-in Manager'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
@@ -42,7 +42,7 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 	$self->SetMinSize( [ 750, 550 ] );
 
-	# Store plugin manager
+	# Store plug-in manager
 	$self->{manager} = $manager;
 	unless ( $manager->isa('Padre::PluginManager') ) {
 		Carp::croak("Missing or invalid Padre::PluginManager object");
@@ -50,7 +50,7 @@ sub new {
 
 	# Dialog Controls
 
-	# Create the plugin list
+	# Create the plug-in list
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
@@ -91,18 +91,18 @@ sub new {
 		Wx::wxIMAGE_LIST_SMALL,
 	);
 
-	# Plugin Name Header
+	# Plug-in Name Header
 	$self->{label} = Wx::StaticText->new(
 		$self,
 		-1,
-		Wx::gettext('Plugin Name'),
+		Wx::gettext('Plug-in Name'),
 	);
 	my $font = $self->{label}->GetFont;
 	$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
 	$font->SetPointSize( $font->GetPointSize + 4 );
 	$self->{label}->SetFont($font);
 
-	# Plugin Documentation HTML Window
+	# Plug-in Documentation HTML Window
 	require Padre::Wx::HtmlWindow;
 	$self->{whtml} = Wx::HtmlWindow->new($self);
 
@@ -159,7 +159,7 @@ sub new {
 	$buttons->Add( $self->{button_close}, 0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
 
-	# Horizontal plugin name positioning
+	# Horizontal plug-in name positioning
 	my $header = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$header->AddStretchSpacer;
 	$header->Add( $self->{label}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER, 1 );
@@ -197,8 +197,8 @@ sub show {
 	$self->_refresh_list;
 
 	# select first item in the list. we don't need to test if
-	# there's at least a plugin, since there will always be
-	# 'my plugin'
+	# there's at least a plug-in, since there will always be
+	# 'my plug-in'
 	my $item = $self->{list}->GetItem(0);
 	$item->SetState(Wx::wxLIST_STATE_SELECTED);
 	$self->{list}->SetItem($item);
@@ -222,13 +222,13 @@ sub list_item_selected {
 	my $fullname = $event->GetLabel;
 	my $module   = $self->{plugin_class}->{$fullname};
 	my $plugin   = $self->{manager}->plugins->{$module};
-	$self->{plugin} = $plugin;          # storing selected plugin
+	$self->{plugin} = $plugin;          # storing selected plug-in
 	$self->{row}    = $event->GetIndex; # storing selected row
 
-	# Updating plugin name in right pane
+	# Updating plug-in name in right pane
 	$self->{label}->SetLabel( $plugin->plugin_name );
 
-	# Update plugin documentation
+	# Update plug-in documentation
 	require Padre::DocBrowser;
 	my $browser = Padre::DocBrowser->new;
 	my $class   = $plugin->class;
@@ -243,7 +243,7 @@ sub list_item_selected {
 	# Update buttons
 	$self->_update_plugin_state;
 
-	# force window to recompute layout. indeed, changes are that plugin
+	# force window to recompute layout. indeed, changes are that plug-in
 	# name has a different length, and thus should be recentered.
 	$self->Layout;
 }
@@ -301,49 +301,49 @@ sub button_close {
 #
 # $self->_plugin_disable;
 #
-# Disable plugin, and update gui.
+# Disable plug-in, and update GUI.
 #
 sub _plugin_disable {
 	my $self   = shift;
 	my $plugin = $self->{plugin};
 	my $parent = $self->GetParent;
 
-	# disable plugin
+	# disable plug-in
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 0 );
 	$self->{manager}->_plugin_disable( $plugin->class );
 	$parent->menu->refresh(1);
 	$parent->Thaw;
 
-	# Update plugin manager dialog to reflect new state
+	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
 }
 
 #
 # $self->_plugin_enable;
 #
-# Enable plugin, and update gui.
+# Enable plug-in, and update GUI.
 #
 sub _plugin_enable {
 	my $self   = shift;
 	my $plugin = $self->{plugin};
 	my $parent = $self->GetParent;
 
-	# Enable plugin
+	# Enable plug-in
 	$parent->Freeze;
 	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
 	$self->{manager}->_plugin_enable( $plugin->class );
 	$parent->menu->refresh(1);
 	$parent->Thaw;
 
-	# Update plugin manager dialog to reflect new state
+	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
 }
 
 #
 # $self->show_error_message;
 #
-# show plugin error message, in an error dialog box.
+# show plug-in error message, in an error dialog box.
 #
 sub show_error_message {
 	my $self    = shift;
@@ -355,7 +355,7 @@ sub show_error_message {
 #
 # $dialog->_refresh_list;
 #
-# refresh list of plugins and their associated state. list is sorted
+# refresh list of plug-ins and their associated state. list is sorted
 # according to current sort criterion.
 #
 sub _refresh_list {
@@ -365,11 +365,11 @@ sub _refresh_list {
 	# Clear image list & fill it again
 	$self->{imagelist}->RemoveAll;
 
-	# Default plugin icon
+	# Default plug-in icon
 	$self->{imagelist}->Add( Padre::Wx::Icon::find('status/padre-plugin') );
 	my %icon = ( plugin => 0 );
 
-	# Plugin status
+	# Plug-in status
 	my $i = 0;
 	foreach my $name (
 		qw{
@@ -385,8 +385,8 @@ sub _refresh_list {
 		$icon{$name} = ++$i;
 	}
 
-	# Get list of plugins, and sort it. Note that $self->{manager}->plugins
-	# names is sorted (with my plugin first), and that perl sort is now
+	# Get list of plug-ins, and sort it. Note that $self->{manager}->plugins
+	# names is sorted (with my plug-in first), and that perl sort is now
 	# stable: sorting on another criterion will keep the alphabetical order
 	# if new criterion is not enough.
 	my $plugins = $self->{manager}->plugins;
@@ -403,14 +403,14 @@ sub _refresh_list {
 		@plugins = reverse @plugins;
 	}
 
-	# Clear plugin list & fill it again
+	# Clear plug-in list & fill it again
 	my $idx          = -1;
 	my %plugin_class = ();
 	$self->{list}->DeleteAllItems;
 	foreach my $plugin (@plugins) {
 		$plugin_class{ $plugin->plugin_name } = $plugin->class;
 
-		# Check if plugin is supplying its own icon
+		# Check if plug-in is supplying its own icon
 		my $position = 0;
 		my $icon     = $plugin->plugin_icon;
 		if ( defined $icon ) {
@@ -418,7 +418,7 @@ sub _refresh_list {
 			$position = $self->{imagelist}->GetImageCount - 1;
 		}
 
-		# Inserting the plugin in the list
+		# Inserting the plug-in in the list
 		$self->{list}->InsertStringImageItem(
 			++$idx,
 			$plugin->plugin_name,
@@ -435,7 +435,7 @@ sub _refresh_list {
 		);
 	}
 
-	# Store mapping of full plugin names / short plugin names
+	# Store mapping of full plug-in names / short plug-in names
 	$self->{plugin_class} = \%plugin_class;
 
 	# Auto-resize columns
@@ -457,7 +457,7 @@ sub _refresh_list {
 # $dialog->_update_plugin_state;
 #
 # Update button caption & state, as well as status icon in the list,
-# depending on the new plugin state.
+# depending on the new plug-in state.
 #
 sub _update_plugin_state {
 	my $self   = shift;
@@ -472,7 +472,7 @@ sub _update_plugin_state {
 
 	if ( $plugin->error ) {
 
-		# Plugin is in error state
+		# Plug-in is in error state
 		$self->{action} = 'show_error_message';
 		$button_main->SetLabel( Wx::gettext('Show error message') );
 		$button_preferences->Disable;
@@ -496,7 +496,7 @@ sub _update_plugin_state {
 
 	} else {
 
-		# Plugin is working...
+		# Plug-in is working...
 		if ( $plugin->enabled ) {
 
 			# ...and enabled
@@ -538,7 +538,7 @@ sub _update_plugin_state {
 	# Update the list item
 	# $self->_refresh_list;
 
-	# force window to recompute layout. indeed, changes are that plugin
+	# force window to recompute layout. indeed, changes are that plug-in
 	# name has a different length, and thus should be recentered.
 	$self->Layout;
 }
@@ -551,22 +551,22 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::PluginManager - Plugin manager dialog for Padre
+Padre::Wx::Dialog::PluginManager - Plug-in manager dialog for Padre
 
 =head1 DESCRIPTION
 
-Padre will have a lot of plugins. First plugin manager was not taking
-this into account, and the first plugin manager window was too small &
+Padre will have a lot of plug-ins. First plug-in manager was not taking
+this into account, and the first plug-in manager window was too small &
 too crowded to show them all properly.
 
-This revamped plugin manager is now using a list control, and thus can
-show lots of plugins in an effective manner.
+This revamped plug-in manager is now using a list control, and thus can
+show lots of plug-ins in an effective manner.
 
-Upon selection, the right pane will be updated with the plugin name &
-plugin documentation. Two buttons will allow to de/activate the plugin
-(or see plugin error message) and set plugin preferences.
+Upon selection, the right pane will be updated with the plug-in name &
+plug-in documentation. Two buttons will allow to de/activate the plug-in
+(or see plug-in error message) and set plug-in preferences.
 
-Double-clicking on a plugin in the list will de/activate it.
+Double-clicking on a plug-in in the list will de/activate it.
 
 =head1 PUBLIC API
 
@@ -576,9 +576,9 @@ Double-clicking on a plugin in the list will de/activate it.
 
 =item * my $dialog = P::W::D::PM->new( $parent, $manager )
 
-Create and return a new Wx dialog listing all the plugins. It needs a
+Create and return a new Wx dialog listing all the plug-ins. It needs a
 C<$parent> window and a C<Padre::PluginManager> object that really
-handles Padre plugins under the hood.
+handles Padre plug-ins under the hood.
 
 =back
 
@@ -588,8 +588,8 @@ handles Padre plugins under the hood.
 
 =item * $dialog->show;
 
-Request the plugin manager dialog to be shown. It will be refreshed
-first with a current list of plugins with their state.
+Request the plug-in manager dialog to be shown. It will be refreshed
+first with a current list of plug-ins with their state.
 
 =back
 

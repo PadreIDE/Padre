@@ -425,10 +425,10 @@ Padre::Wx::Dialog::HelpSearch - Padre Shiny Help Search Dialog
 
 =head1 DESCRIPTION
 
-This opens a dialog where you can search for help topics... 
+This opens a dialog where you can search for help topics...
 
-Note: This used to be Perl 6 Help Dialog (in Padre::Plugin::Perl6) and but it
-has been moved to Padre core
+Note: This used to be Perl 6 Help Dialog (in C<Padre::Plugin::Perl6>) and but it
+has been moved to Padre core.
 
 =head1 AUTHOR
 

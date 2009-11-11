@@ -34,8 +34,8 @@ sub new {
 	# Link to the Plugin Manager
 	Padre::Action->new(
 		name       => 'plugins.plugin_manager',
-		label      => Wx::gettext('Plugin Manager'),
-		comment    => Wx::gettext('Show the Padre plugin manager to enable or disable plugins'),
+		label      => Wx::gettext('Plug-in Manager'),
+		comment    => Wx::gettext('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
 			Padre::Wx::Dialog::PluginManager->new(
@@ -45,12 +45,12 @@ sub new {
 		},
 	);
 
-	# TODO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
-	# better yet, by a window that also allows the installation of all the plugins that can take into account
+	# TO DO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
+	# better yet, by a window that also allows the installation of all the plug-ins that can take into account
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	Padre::Action->new(
 		name       => 'plugins.plugin_list',
-		label      => Wx::gettext('Plugin List (CPAN)'),
+		label      => Wx::gettext('Plug-in List (CPAN)'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
@@ -58,14 +58,14 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.edit_my_plugin',
-		label      => Wx::gettext('Edit My Plugin'),
-		comment    => Wx::gettext('My-Plugin is a plugin where developers could extend their Padre installation'),
+		label      => Wx::gettext('Edit My Plug-in'),
+		comment    => Wx::gettext('My Plug-in is a plug-in where developers could extend their Padre installation'),
 		menu_event => sub {
 			my $file = File::Spec->catfile(
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plugin") ) unless -e $file;
+			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plug-in") ) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
@@ -75,8 +75,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_my_plugin',
-		label      => Wx::gettext('Reload My Plugin'),
-		comment    => Wx::gettext('This function reloads the My-Plugin without restarting Padre'),
+		label      => Wx::gettext('Reload My Plug-in'),
+		comment    => Wx::gettext('This function reloads the My plug-in without restarting Padre'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
 		},
@@ -84,12 +84,12 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reset_my_plugin',
-		label      => Wx::gettext('Reset My Plugin'),
-		comment    => Wx::gettext('Reset the My-Plugin to the default'),
+		label      => Wx::gettext('Reset My plug-in'),
+		comment    => Wx::gettext('Reset the My plug-in to the default'),
 		menu_event => sub {
 			my $ret = Wx::MessageBox(
-				Wx::gettext("Reset My Plugin"),
-				Wx::gettext("Reset My Plugin"),
+				Wx::gettext("Reset My plug-in"),
+				Wx::gettext("Reset My plug-in"),
 				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
 				$main,
 			);
@@ -104,8 +104,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_all_plugins',
-		label      => Wx::gettext('Reload All Plugins'),
-		comment    => Wx::gettext('Reload all plugins from disk'),
+		label      => Wx::gettext('Reload All Plug-ins'),
+		comment    => Wx::gettext('Reload all plug-ins from disk'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugins;
 		},
@@ -113,8 +113,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_current_plugin',
-		label      => Wx::gettext('(Re)load Current Plugin'),
-		comment    => Wx::gettext('Reloads (or initially loads) the current plugin'),
+		label      => Wx::gettext('(Re)load Current Plug-in'),
+		comment    => Wx::gettext('Reloads (or initially loads) the current plug-in'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_current_plugin;
 		},

@@ -10,14 +10,14 @@ Padre::Wx::PodFrame - Simple Single-Document Pod2HTML Viewer
 
   # Create the Pod viewing window
   my $frame = Padre::Wx::PodFrame->new;
-  
+
   # Load a Pod file or document
   $frame->load_file( 'file.pod' );
   $frame->load_pod( "=head1 THIS IS POD!" );
 
 =head1 DESCRIPTION
 
-Padre::Wx::PodFrame provides a simple standalone window containing a
+C<Padre::Wx::PodFrame> provides a simple standalone window containing a
 Pod2HTML rendering widget, for displaying a single POD document as
 HTML.
 

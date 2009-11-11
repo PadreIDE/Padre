@@ -90,11 +90,11 @@ Padre::Wx::Directory::OpenInFileBrowserAction - Ecliptic's Open in file browser 
 
 =head1 DESCRIPTION
 
-=head2 Open in File Browser (Shortcut: Ctrl + 6)
+=head2 Open in File Browser (Shortcut: C<Ctrl+6>)
 
-For the current saved Padre document, open the platform's file manager/browser and 
-tries to select it if possible. On win32, opens the containing folder and 
-selects the file in its explorer. On *inux KDE/GNOME, opens the containing folder 
+For the current saved Padre document, open the platform's file manager/browser and
+tries to select it if possible. On win32, opens the containing folder and
+selects the file in its explorer. On Linux KDE/GNOME, opens the containing folder
 for it.
 
 =head1 AUTHOR

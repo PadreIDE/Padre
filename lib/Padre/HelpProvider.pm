@@ -53,7 +53,7 @@ Padre::HelpProvider - Padre Help Provider API
 
 =head1 DESCRIPTION
 
-The B<Padre::HelpProvider> class provides a base class, default implementation
+The C<Padre::HelpProvider> class provides a base class, default implementation
 and API documentation for help provision support in L<Padre>.
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

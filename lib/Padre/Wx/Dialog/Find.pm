@@ -251,10 +251,10 @@ sub new {
   $self->find
 
 Grab currently selected text, if any, and place it in find combo box.
-Bring up the dialog or perform search for strings' next occurence
+Bring up the dialog or perform search for string's next occurrence
 if dialog is already displayed.
 
-TODO: if selection is more than one line then consider it as the limit
+TO DO: if selection is more than one line then consider it as the limit
 of the search and not as the string to be used.
 
 =cut
@@ -263,10 +263,10 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
-	# No search if no file is open (TODO ??)
+	# No search if no file is open (TO DO ??)
 	return unless $self->current->editor;
 
-	# TODO: if selection is more than one lines then consider it as the
+	# TO DO: if selection is more than one lines then consider it as the
 	# limit of the search and not as the string to be used.
 	$text = '' if $text =~ /\n/;
 

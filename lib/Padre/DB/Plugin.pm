@@ -27,11 +27,11 @@ __END__
 
 =head1 NAME
 
-Padre::DB::Plugin - Padre::DB class for the plugin table
+Padre::DB::Plugin - L<Padre::DB> class for the C<plugin> table
 
 =head1 SYNOPSIS
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 =head1 DESCRIPTION
 
@@ -43,7 +43,7 @@ TO BE COMPLETED
 
   # Get all objects in list context
   my @list = Padre::DB::Plugin->select;
-  
+
   # Get a subset of objects in scalar context
   my $array_ref = Padre::DB::Plugin->select(
       'where name > ? order by name',
@@ -51,15 +51,15 @@ TO BE COMPLETED
   );
 
 The C<select> method executes a typical SQL C<SELECT> query on the
-plugin table.
+C<plugin> table.
 
 It takes an optional argument of a SQL phrase to be added after the
 C<FROM plugin> section of the query, followed by variables
 to be bound to the placeholders in the SQL phrase. Any SQL that is
 compatible with SQLite can be used in the parameter.
 
-Returns a list of B<Padre::DB::Plugin> objects when called in list context, or a
-reference to an ARRAY of B<Padre::DB::Plugin> objects when called in scalar context.
+Returns a list of C<Padre::DB::Plugin> objects when called in list context, or a
+reference to an ARRAY of C<Padre::DB::Plugin> objects when called in scalar context.
 
 Throws an exception on error, typically directly from the L<DBI> layer.
 
@@ -67,15 +67,15 @@ Throws an exception on error, typically directly from the L<DBI> layer.
 
   # How many objects are in the table
   my $rows = Padre::DB::Plugin->count;
-  
-  # How many objects 
+
+  # How many objects
   my $small = Padre::DB::Plugin->count(
       'where name > ?',
       1000,
   );
 
 The C<count> method executes a C<SELECT COUNT(*)> query on the
-plugin table.
+C<plugin> table.
 
 It takes an optional argument of a SQL phrase to be added after the
 C<FROM plugin> section of the query, followed by variables
@@ -88,12 +88,12 @@ Throws an exception on error, typically directly from the L<DBI> layer.
 
 =head2 new
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 The C<new> constructor is used to create a new abstract object that
 is not (yet) written to the database.
 
-Returns a new L<Padre::DB::Plugin> object.
+Returns a new C<Padre::DB::Plugin> object.
 
 =head2 create
 
@@ -106,14 +106,14 @@ Returns a new L<Padre::DB::Plugin> object.
 
 The C<create> constructor is a one-step combination of C<new> and
 C<insert> that takes the column parameters, creates a new
-L<Padre::DB::Plugin> object, inserts the appropriate row into the L<plugin>
+C<Padre::DB::Plugin> object, inserts the appropriate row into the C<plugin>
 table, and then returns the object.
 
 If the primary key column C<name> is not provided to the
 constructor (or it is false) the object returned will have
 C<name> set to the new unique identifier.
- 
-Returns a new L<plugin> object, or throws an exception on error,
+
+Returns a new C<plugin> object, or throws an exception on error,
 typically from the L<DBI> layer.
 
 =head2 insert
@@ -134,15 +134,15 @@ on error, typically from the L<DBI> layer.
 
   # Delete a single instantiated object
   $object->delete;
-  
+
   # Delete multiple rows from the plugin table
   Padre::DB::Plugin->delete('where name > ?', 1000);
 
 The C<delete> method can be used in a class form and an instance form.
 
-When used on an existing B<Padre::DB::Plugin> instance, the C<delete> method
+When used on an existing C<Padre::DB::Plugin> instance, the C<delete> method
 removes that specific instance from the C<plugin>, leaving
-the object ntact for you to deal with post-delete actions as you wish.
+the object intact for you to deal with post-delete actions as you wish.
 
 When used as a class method, it takes a compulsory argument of a SQL
 phrase to be added after the C<DELETE FROM plugin> section
@@ -168,9 +168,11 @@ all records in a table with specific intent.
 
 Returns true, or throws an exception on error.
 
-=head1 ACCESSORS
+=head1 INTERFACE
 
-=head2 name
+=head2 Accessors
+
+=head3 name
 
   if ( $object->name ) {
       print "Object has been inserted\n";
@@ -181,11 +183,11 @@ Returns true, or throws an exception on error.
 Returns true, or throws an exception on error.
 
 
-REMAINING ACCESSORS TO BE COMPLETED
+  REMAINING ACCESSORS TO BE COMPLETED
 
-=head1 SQL
+=head2 SQL
 
-The plugin table was originally created with the
+The C<plugin> table was originally created with the
 following SQL command.
 
   CREATE TABLE plugin (
@@ -197,7 +199,7 @@ following SQL command.
 
 =head1 SUPPORT
 
-Padre::DB::Plugin is part of the L<Padre::DB> API.
+C<Padre::DB::Plugin> is part of the L<Padre::DB> API.
 
 See the documentation for L<Padre::DB> for more information.
 

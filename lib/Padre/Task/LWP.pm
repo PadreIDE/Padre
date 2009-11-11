@@ -4,7 +4,7 @@ package Padre::Task::LWP;
 
 =head1 NAME
 
-Padre::Task::LWP - Generic http client background processing task
+Padre::Task::LWP - Generic HTTP client background processing task
 
 =head1 SYNOPSIS
 

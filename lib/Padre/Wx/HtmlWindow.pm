@@ -4,17 +4,17 @@ package Padre::Wx::HtmlWindow;
 
 =head1 NAME
 
-Padre::Wx::HtmlWindow - Padre-enhanced version of Wx::HtmlWindow
+Padre::Wx::HtmlWindow - Padre-enhanced version of L<Wx::HtmlWindow>
 
 =head1 DESCRIPTION
 
-L<Padre::Wx::HtmlWindow> provides a Padre-specific sub-class of
-Wx::HtmlWindow that adds some additional features, primarily
-default support for POD2HTML functionality.
+C<Padre::Wx::HtmlWindow> provides a Padre-specific subclass of
+L<Wx::HtmlWindow> that adds some additional features, primarily
+default support for L<pod2html> functionality.
 
 =head1 METHODS
 
-L<Padre::Wx::HtmlWindow> implements all the methods described in
+C<Padre::Wx::HtmlWindow> implements all the methods described in
 the documentation for L<Wx::HtmlWindow>, and adds some additional
 methods.
 

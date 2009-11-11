@@ -17,7 +17,7 @@ our @ISA     = 'Padre::Wx::Menu';
 
 sub new {
 
-	# TODO: Convert this to Padre::Action::File
+	# TO DO: Convert this to Padre::Action::File
 
 	my $class = shift;
 	my $main  = shift;
@@ -314,7 +314,7 @@ sub new {
 		$self,
 		name => 'file.print',
 
-		# TODO: As long as the ID is here, the shortcut won't work on Ubuntu.
+		# TO DO: As long as the ID is here, the shortcut won't work on Ubuntu.
 		id         => Wx::wxID_PRINT,
 		label      => Wx::gettext('&Print'),
 		shortcut   => 'Ctrl-P',

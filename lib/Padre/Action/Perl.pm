@@ -6,8 +6,8 @@ package Padre::Action::Perl;
 
 =head1 NAME
 
-Padre::Action::Perl is a outsourced module. It creates Actions for
-developing Perl files.
+Padre::Action::Perl - outsourced module, creates Actions for
+developing Perl files
 
 =cut
 

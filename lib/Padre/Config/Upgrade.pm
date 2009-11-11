@@ -14,23 +14,23 @@ our $VERSION = '0.50';
 
 =head1 NAME
 
-Padre::Config::Upgrade - Upgrade a config file from an older version
+Padre::Config::Upgrade - Upgrade a configuration file from an older version
 
 
 =head1 DESCRIPTION
 
-If you installed Padre 0.40 and noew you upgrade to 0.47, there are many
-noew config items - which all have safe default values.
+If you installed Padre 0.40 and now you upgrade to 0.47, there are many
+new configuration items - which all have safe default values.
 
 But there may also be some options which have been renamed or places where
-one option has been splitted into two or more. This module deals with them,
-it knows how to upgrade the config from one version to another.
+one option has been split into two or more. This module deals with them,
+it knows how to upgrade the configuration from one version to another.
 
 =head1 PUBLIC METHODS
 
 	$config->check;
 
-This method does all the checks when being called on a Padre::Config object.
+This method does all the checks when being called on a L<Padre::Config> object.
 
 =cut
 

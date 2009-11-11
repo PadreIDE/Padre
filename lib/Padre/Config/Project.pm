@@ -15,7 +15,7 @@ our $VERSION = '0.50';
 
 use Class::XSAccessor constructor => 'new';
 
-# TODO Write constructor that checks the config?
+# TO DO Write constructor that checks the config?
 
 sub read {
 	my $class = shift;

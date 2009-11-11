@@ -112,7 +112,7 @@ sub _mime_type_panel {
 
 	$self->update_highlighters;
 	$self->update_description;
-	$self->get_widget('description')->Wrap(200); # TODO should be based on the width of the page !
+	$self->get_widget('description')->Wrap(200); # TO DO should be based on the width of the page !
 	return $panel;
 }
 
@@ -770,13 +770,13 @@ sub dialog {
 	$tb->AddPage( $external_tools, Wx::gettext('External Tools') );
 
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
-	#$tb->AddPage( $plugin_manager, Wx::gettext('Plugin Manager') );
+	#$tb->AddPage( $plugin_manager, Wx::gettext('Plug-in Manager') );
 	#$self->_add_plugins($tb);
 
 	# Add panels
 	# The panels are ahown in alphabetical order based on the Wx::gettext results
 
-	# TODO: Convert the internal panels to use this
+	# TO DO: Convert the internal panels to use this
 
 	for my $module ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
 

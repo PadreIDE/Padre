@@ -14,7 +14,7 @@ use PPIx::EditorTools::FindUnmatchedBrace;
 
 =head1 NAME
 
-Padre::Task::PPI::FindUnmatchedBrace - PPI-based unmatched-brace-finder
+Padre::Task::PPI::FindUnmatchedBrace - C<PPI> based unmatched brace finder
 
 =head1 SYNOPSIS
 
@@ -23,7 +23,7 @@ Padre::Task::PPI::FindUnmatchedBrace - PPI-based unmatched-brace-finder
   );
   # pass "text => 'foo'" if you want to set the code manually
   # otherwise, the current document will be used
-  
+
   $bracefinder->schedule();
 
 =head1 DESCRIPTION

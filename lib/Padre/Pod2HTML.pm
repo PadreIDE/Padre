@@ -10,7 +10,7 @@ Padre::Pod2HTML - A customised Pod to HTML for Padre
 
   # The quicker way
   $html = Padre::Pod2HTML->pod2html( $pod_string );
-  
+
   # The slower way
   $parser = Padre::Pod2HTML->new;
   $parser->parse_string_document( $pod_string );
@@ -18,11 +18,11 @@ Padre::Pod2HTML - A customised Pod to HTML for Padre
 
 =head1 DESCRIPTION
 
-Padre::Pod2HTML provides a central point for pod2html functionality inside
+C<Padre::Pod2HTML> provides a central point for L<pod2html> functionality inside
 of Padre.
 
-Inititally it just provides an internal convenience that converts
-L<Pod::Simple::XHTML> from printing to STDOUT to capturing the HTML.
+Initially it just provides an internal convenience that converts
+L<Pod::Simple::XHTML> from printing to C<STDOUT> to capturing the HTML.
 
 Currently the constructor does not take any options.
 
@@ -47,12 +47,12 @@ sub pod2html {
 	$self->{html} = '';
 	$self->parse_string_document($input);
 
-	#FIXME: this takes care of a bug in Pod::Simple::XHTML
+	#FIX ME: this takes care of a bug in Pod::Simple::XHTML
 	$self->{html} =~ s/<</&lt&lt;/g;
 	$self->{html} =~ s/< /&lt /g;
 	$self->{html} =~ s/<=/&lt=/g;
 
-	#FIXME: this is incredibly bad, but the anchors are predictible
+	#FIX ME: this is incredibly bad, but the anchors are predictible
 	$self->{html} =~ s#<a href=".*?">|</a>##g;
 
 	return $self->{html};

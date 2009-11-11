@@ -258,7 +258,7 @@ sub refresh {
 	#	}
 	#
 	#	# plugin menu requires special flag as it was leaking memory
-	#	# TODO eliminate the memory leak
+	#	# TO DO eliminate the memory leak
 	#	if ($plugins) {
 	#		$self->plugins->refresh($current);
 	#	}

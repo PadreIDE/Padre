@@ -102,9 +102,21 @@ __END__
 
 Adding new options is done in three steps:
 
-1. Add a setting() - call for the new option to Config.pm
-2. Add the GUI part to the ->panel - method
-3. Save the new value within the ->save method
+=over
+
+=item 1.
+
+Add a C<setting()> call for the new option to F<Config.pm>
+
+=item 2.
+
+Add the GUI part to the C<panel> method
+
+=item 3.
+
+Save the new value within the C<save> method
+
+=back
 
 =head1 COPYRIGHT & LICENSE
 

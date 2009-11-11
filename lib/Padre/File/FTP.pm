@@ -32,11 +32,11 @@ sub new {
 
 ##### NO REGEX's below this line (except the parser)! #####
 
-	# TODO: Improve URL parsing
+	# TO DO: Improve URL parsing
 	if ( $url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i ) {
 
 		# URL parsing failed
-		# TODO: Warning should go to a user popup not to the text console
+		# TO DO: Warning should go to a user popup not to the text console
 		$self->{error} = 'Unable to parse ' . $url;
 		return $self;
 	}
@@ -62,10 +62,10 @@ sub new {
 
 	if ( !defined( $self->{_pass} ) ) {
 
-		# TODO: Ask the user for a password
+		# TO DO: Ask the user for a password
 	}
 
-	# TODO: Handle aborted/timed out connections
+	# TO DO: Handle aborted/timed out connections
 
 	# Create FTP object and connection
 	$self->{_ftp} = Net::FTP->new(
@@ -160,7 +160,7 @@ sub read {
 
 	return if !defined( $self->{_ftp} );
 
-	# TODO: Better error handling
+	# TO DO: Better error handling
 	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error} = $@;
 	open my $tmpfh, $self->{_tmpfile};
 	return join( '', <$tmpfh> );
@@ -168,7 +168,7 @@ sub read {
 
 sub readonly {
 
-	# TODO: Check file access
+	# TO DO: Check file access
 	return 0;
 }
 
@@ -187,7 +187,7 @@ sub write {
 	print {$fh} $content;
 	close $fh;
 
-	# TODO: Better error handling
+	# TO DO: Better error handling
 	$self->{_ftp}->put( $self->{_tmpfile}, $self->{_file} ) or warn $@;
 
 	return 1;

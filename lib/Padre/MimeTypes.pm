@@ -267,7 +267,7 @@ sub _initialize {
 		},
 	);
 
-	# TODO:
+	# TO DO:
 	# add some mime-type for pod files
 	# or remove the whole Padre::Document::POD class as it is not in use
 	#'text/x-pod'         => 'Padre::Document::POD',
@@ -304,7 +304,7 @@ sub get_lexer {
 	return $MIME_TYPES{$mime_type}{lexer};
 }
 
-# TODO: Set some reasonable default highlighers for each mime-type for when there
+# TO DO: Set some reasonable default highlighers for each mime-type for when there
 # are no plugins. e.g. For Perl 6 style files that should be plain text.
 # Either allow the plugins to set the defaults (maybe allow the plugin that implements
 # the special features of this mime-type to pick the default or shall we have a list of
@@ -317,14 +317,14 @@ sub add_mime_class {
 	my $class = shift;
 	if ( not $MIME_TYPES{$mime} ) {
 
-		# TODO: display on the GUI
+		# TO DO: display on the GUI
 		warn "Mime type $mime is not supported when add_mime_class($class) was called\n";
 		return;
 	}
 
 	if ( $MIME_TYPES{$mime}{class} ) {
 
-		# TODO: display on the GUI
+		# TO DO: display on the GUI
 		warn "Mime type $mime already has a class '$MIME_TYPES{$mime}{class}' when add_mime_class($class) was called\n";
 		return;
 	}
@@ -337,14 +337,14 @@ sub remove_mime_class {
 
 	if ( not $MIME_TYPES{$mime} ) {
 
-		# TODO: display on GUI
+		# TO DO: display on GUI
 		warn "Mime type $mime is not supported when remove_mime_class($mime) was called\n";
 		return;
 	}
 
 	if ( not $MIME_TYPES{$mime}{class} ) {
 
-		# TODO: display on GUI
+		# TO DO: display on GUI
 		warn "Mime type $mime does not have a class entry when remove_mime_class($mime) was called\n";
 		return;
 	}
@@ -357,7 +357,7 @@ sub get_mime_class {
 
 	if ( not $MIME_TYPES{$mime} ) {
 
-		# TODO: display on GUI
+		# TO DO: display on GUI
 		warn "Mime type $mime is not supported when remove_mime_class($mime) was called\n";
 		return;
 	}
@@ -398,7 +398,7 @@ sub get_highlighter_name {
 	my $self        = shift;
 	my $highlighter = shift;
 
-	# TODO this can happen if the user configureda highlighter but on the next start
+	# TO DO this can happen if the user configureda highlighter but on the next start
 	# the highlighter is not available any more
 	# we need to handle this situation
 	return '' if !defined($highlighter);
@@ -434,7 +434,7 @@ sub read_current_highlighters_from_db {
 		$MIME_TYPES{$mime_type}{current_highlighter} = 'stc';
 	}
 
-	# TODO check if the highlighter is really available
+	# TO DO check if the highlighter is really available
 	foreach my $e (@$current_highlighters) {
 		$MIME_TYPES{ $e->mime_type }{current_highlighter} = $e->value;
 
@@ -476,7 +476,7 @@ sub add_highlighter_to_mime_type {
 	my $self   = shift;
 	my $mime   = shift;
 	my $module = shift; # module name or stc to indicate Scintilla
-	                    # TODO check overwrite, check if it is listed in HIGHLIGHTER_EXPLANATIONS
+	                    # TO DO check overwrite, check if it is listed in HIGHLIGHTER_EXPLANATIONS
 	$MIME_TYPES{$mime}{highlighters}{$module} = 1;
 }
 
@@ -485,7 +485,7 @@ sub remove_highlighter_from_mime_type {
 	my $mime   = shift;
 	my $module = shift;
 
-	# TODO check overwrite
+	# TO DO check overwrite
 	delete $MIME_TYPES{$mime}{highlighters}{$module};
 }
 
@@ -597,7 +597,7 @@ sub guess_mimetype {
 	}
 
 	# Try to identify Perl Scripts based on soft criterias as a last resort
-	# TODO: Improve the tests
+	# TO DO: Improve the tests
 	if ( defined($text) ) {
 		my $Score = 0;
 		if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )           { $Score += 2; }
@@ -613,7 +613,7 @@ sub guess_mimetype {
 	}
 
 	# Fallback mime-type of new files, should be configurable in the GUI
-	# TODO: Make it configurable in the GUI :)
+	# TO DO: Make it configurable in the GUI :)
 	unless ($filename) {
 		return $self->perl_mime_type($text);
 	}

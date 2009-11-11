@@ -73,8 +73,7 @@ The following accessors are automatically created by C<ORLite>:
 
 =head2 Class methods
 
-The following subs are automatically created by C<ORLite>. Refer to C<ORLite>
-for more information on them:
+The following subs are automatically created by L<ORLite>.
 
 =over 4
 
@@ -96,14 +95,18 @@ for more information on them:
 
 
 
-=head2 set_large_pos( $file, $pos )
+=head2 C<set_large_pos>
+
+    set_large_pos( $file, $pos )
 
 Record C<$pos> as the last known cursor position in C<$file>.
 
 
-=head2 get_large_pos( $file )
+=head2 C<get_large_pos>
 
-Return the last known cursor position for C<$file>. Return undef if
+    get_large_pos( $file )
+
+Return the last known cursor position for C<$file>. Return C<undef> if
 no position was recorded for this file.
 
 

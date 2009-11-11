@@ -815,7 +815,7 @@ sub _on_tree_item_menu {
 			$self, $pod,
 			sub {
 
-				# TODO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+				# TO DO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
 				require Padre::Wx::DocBrowser;
 				my $help = Padre::Wx::DocBrowser->new;
 				$help->help( $node_data->{name} );

@@ -13,7 +13,7 @@ our @ISA     = 'Padre::Task::HTTPClient';
 
 =head1 NAME
 
-Padre::Task::HTTPClient::LWP - Generic http client processing task using LWP
+Padre::Task::HTTPClient::LWP - Generic HTTP client processing task using L<LWP>
 
 =head1 SYNOPSIS
 
@@ -21,14 +21,14 @@ Padre::Task::HTTPClient::LWP - Generic http client processing task using LWP
 
 Sending and receiving data via HTTP.
 
-See Padre::Task::HTTPClient for details.
+See L<Padre::Task::HTTPClient> for details.
 
 This module uses "require" instead of "use" to load the required modules
 
 	LWP::UserAgent
 	HTTP::Request
 
-because it need to be use'ed without failing on dependencies which are no
+because it need to be loaded without failing on dependencies which are no
 global Padre dependencies.
 
 =cut
@@ -47,7 +47,7 @@ sub new {
 	my $self = bless {@_}, $class;
 
 	$self->{_UA} = LWP::UserAgent->new();
-	$self->{_UA}->timeout(60); # TODO: Make this configurable
+	$self->{_UA}->timeout(60); # TO DO: Make this configurable
 	$self->{_UA}->env_proxy;
 
 	return $self;

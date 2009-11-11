@@ -110,7 +110,7 @@ sub ok_clicked {
 
 	my $main = Padre->ide->wx->main;
 
-	# TODO improve input validation !
+	# TO DO improve input validation !
 	my @fields = qw(_module_name_ _author_name_ _email_ _builder_choice_ _license_choice_);
 	foreach my $f (@fields) {
 		if ( not $data->{$f} ) {

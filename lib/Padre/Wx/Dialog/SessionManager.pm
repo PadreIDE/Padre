@@ -413,30 +413,21 @@ module implements this task as a dialog for Padre.
 
 =head2 Constructor
 
-=over 4
+=head3 C<new>
 
-=item * my $dialog = PWD::SM->new( $parent )
+    my $dialog = PWD::SM->new( $parent )
 
 Create and return a new Wx dialog listing all the sessions. It needs a
-C<$parent> window (usually padre's main window).
-
-
-=back
-
-
+C<$parent> window (usually Padre's main window).
 
 =head2 Public methods
 
-=over 4
+=head3 C<show>
 
-=item * $dialog->show;
+    $dialog->show;
 
 Request the session manager dialog to be shown. It will be refreshed first with
 a current list of sessions.
-
-
-=back
-
 
 
 =head1 COPYRIGHT & LICENSE

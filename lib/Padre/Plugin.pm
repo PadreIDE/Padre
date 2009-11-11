@@ -4,29 +4,29 @@ package Padre::Plugin;
 
 =head1 NAME
 
-Padre::Plugin - Padre Plugin API 2.2
+Padre::Plugin - Padre plug-in API 2.2
 
 =head1 SYNOPSIS
 
   package Padre::Plugin::Foo;
-  
+
   use strict;
   use base 'Padre::Plugin';
-  
-  # The plugin name to show in the Plugin Manager and menus
+
+  # The plug-in name to show in the Plug-in Manager and menus
   sub plugin_name {
-      'Example Plugin';
+      'Example Plug-in';
   }
-  
-  # Declare the Padre interfaces this plugin uses
+
+  # Declare the Padre interfaces this plug-in uses
   sub padre_interfaces {
       'Padre::Plugin'         => 0.29,
       'Padre::Document::Perl' => 0.29,
       'Padre::Wx::Main'       => 0.29,
       'Padre::DB'             => 0.29,
   }
-  
-  # The command structure to show in the Plugins menu
+
+  # The command structure to show in the Plug-ins menu
   sub menu_plugins_simple {
       my $self = shift;
       return $self->plugin_name => [
@@ -36,7 +36,7 @@ Padre::Plugin - Padre Plugin API 2.2
           ],
       ];
   }
-  
+
   1;
 
 =cut
@@ -56,7 +56,7 @@ use Padre::Wx      ();
 our $VERSION    = '0.50';
 our $COMPATIBLE = '0.43';
 
-# Link plugins back to their IDE
+# Link plug-ins back to their IDE
 my %IDE = ();
 
 
@@ -70,13 +70,13 @@ my %IDE = ();
 
 =head1 STATIC/CLASS METHODS
 
-=head2 plugin_name
+=head2 C<plugin_name>
 
 The C<plugin_name> method will be called by Padre when it needs a name
-to display in the user inferface.
+to display in the user interface.
 
 The default implementation will generate a name based on the class name
-of the plugin.
+of the plug-in.
 
 =cut
 
@@ -91,10 +91,10 @@ sub plugin_name {
 
 =pod
 
-=head2 plugin_directory_share
+=head2 C<plugin_directory_share>
 
 The C<plugin_directory_share> method finds the location of the shared
-files directory for the plugin, if one exists.
+files directory for the plug-in, if one exists.
 
 Returns a path string if the share directory exists, or C<undef> if not.
 
@@ -131,21 +131,21 @@ sub plugin_directory_share {
 
 =pod
 
-=head2 plugin_directory_locale
+=head2 C<plugin_directory_locale>
 
 The C<plugin_directory_locale()> method will be called by Padre to
-know where to look for your plugin l10n catalog.
+know where to look for your plug-in l10n catalog.
 
-It defaults to C<$sharedir/locale> (with C<$sharedir> as defined by
-C<File::ShareDir> and thus should work as is for your plugin if you're
-using the C<install_share> command of C<Module::Install>.
+It defaults to F<$sharedir/locale> (with C<$sharedir> as defined by
+C<File::ShareDir> and thus should work as is for your plug-in if you're
+using the C<install_share> command of L<Module::Install>.
 
-Your plugin catalogs should be named C<$plugin-$locale.po> (or C<.mo>
-for the compiled form) where $plugin is the class name of your plugin with
+Your plug-in catalogs should be named F<$plugin-$locale.po> (or F<.mo>
+for the compiled form) where C<$plugin> is the class name of your plug-in with
 any character that are illegal in file names (on all file systems)
 flattened to underscores.
 
-That is, C<Padre__Plugin__Vi-de.po> for the german locale of
+That is, F<Padre__Plugin__Vi-de.po> for the German locale of
 C<Padre::Plugin::Vi>.
 
 =cut
@@ -163,7 +163,7 @@ sub plugin_locale_directory {
 
 =pod
 
-=head2 plugin_icon
+=head2 C<plugin_icon>
 
 The C<plugin_icon> method will be called by Padre when it needs an
 icon to display in the user interface. It should return a 16x16
@@ -185,7 +185,7 @@ sub plugin_icon {
 
 =pod
 
-=head2 padre_interfaces
+=head2 C<padre_interfaces>
 
   sub padre_interfaces {
       'Padre::Plugin'         => 0.43,
@@ -194,25 +194,25 @@ sub plugin_icon {
       'Padre::DB'             => 0.25,
   }
 
-In Padre, plugins are permitted to make relatively deep calls into
+In Padre, plug-ins are permitted to make relatively deep calls into
 Padre's internals. This allows a lot of freedom, but comes at the cost
-of allowing plugins to damage or crash the editor.
+of allowing plug-ins to damage or crash the editor.
 
-To help compensate for any potential problems, the Plugin Manager expects each
-Plugin module to define the Padre classes that the Plugin uses, and the version
+To help compensate for any potential problems, the Plug-in Manager expects each
+plug-in module to define the Padre classes that the plug-in uses, and the version
 of Padre that the code was originally written against (for each class).
 
-This information will be used by the plugin manager to calculate whether or
-not the Plugin is still compatible with Padre.
+This information will be used by the Plug-in Manager to calculate whether or
+not the plug-in is still compatible with Padre.
 
 The list of interfaces should be provided as a list of class/version
 pairs, as shown in the example.
 
-The padre_interfaces method will be called on the class, not on the plugin
+The padre_interfaces method will be called on the class, not on the plug-in
 object. By default, this method returns nothing.
 
-In future, plugins that do NOT supply compatibility information may be
-disabled unless the user has specifically allowed experimental plugins.
+In future, plug-ins that do B<not> supply compatibility information may be
+disabled unless the user has specifically allowed experimental plug-ins.
 
 =cut
 
@@ -231,13 +231,13 @@ sub padre_interfaces {
 
 =head1 CONSTRUCTORS
 
-=head2 new
+=head2 C<new>
 
-The new constructor takes no parameters. When a plugin is loaded,
-Padre will instantiate one plugin object for each plugin, to provide
-the plugin with a location to store any private or working data.
+The new constructor takes no parameters. When a plug-in is loaded,
+Padre will instantiate one plug-in object for each plug-in, to provide
+the plug-in with a location to store any private or working data.
 
-A default constructor is provided that creates an empty HASH-based
+A default constructor is provided that creates an empty hash-based
 object.
 
 =cut
@@ -273,30 +273,30 @@ sub DESTROY {
 
 =head1 INSTANCE METHODS
 
-=head2 registered_documents
+=head2 C<registered_documents>
 
   sub registered_documents {
       'application/javascript' => 'Padre::Plugin::JavaScript::Document',
       'application/json'       => 'Padre::Plugin::JavaScript::Document',
   }
 
-The C<registered_documents> methods can be used by a plugin to define
-document types for which the plugin provides a document class
+The C<registered_documents> methods can be used by a plug-in to define
+document types for which the plug-in provides a document class
 (which is used by Padre to enable functionality beyond the level of
 a plain text file with simple Scintilla highlighting).
 
-This method will be called by the Plugin Manager and the information returned
+This method will be called by the Plug-in Manager and the information returned
 will be used to populate various internal data and do various other tasks at
-a time of its choosing. Plugin authors are expected to provide this
+a time of its choosing. Plug-in authors are expected to provide this
 information without having to know how or why Padre will use it.
 
 This (theoretically at this point) should allow Padre to keep a document open
-while a plugin is being enabled or disabled, upgrading or downgrading the
+while a plug-in is being enabled or disabled, upgrading or downgrading the
 document in the process.
 
-The method call is made on the Plugin object, and returns a list of
-MIME-type to class pairs. By default the method returns a null list, 
-which indicates that the plugin does not provide any document types.
+The method call is made on the plug-in object, and returns a list of
+MIME type to class pairs. By default the method returns a null list,
+which indicates that the plug-in does not provide any document types.
 
 =cut
 
@@ -304,11 +304,11 @@ sub registered_documents {
 	return ();
 }
 
-=head2 provided_highlighters
+=head2 C<provided_highlighters>
 
 Default method returning an empty array.
 
-TBD. See Padre::Document
+TO DO. See L<Padre::Document>.
 
 =cut
 
@@ -316,9 +316,9 @@ sub provided_highlighters {
 	return ();
 }
 
-=head2 highlighting_mime_types
+=head2 C<highlighting_mime_types>
 
-TBD. See Padre::Document
+TO DO. See L<Padre::Document>.
 
 =cut
 
@@ -328,9 +328,9 @@ sub highlighting_mime_types {
 
 =pod
 
-=head2 event_on_context_menu
+=head2 C<event_on_context_menu>
 
-If implemented in a plugin, this method will be called when a
+If implemented in a plug-in, this method will be called when a
 context menu is about to be displayed either because the user
 pressed the right mouse button in the editor window (C<Wx::MouseEvent>)
 or because the C<Right-click> menu entry was selected in the C<Window>
@@ -338,27 +338,27 @@ menu (C<Wx::CommandEvent>). The context menu object was created
 and populated by the Editor and then possibly augmented by the
 C<Padre::Document> type (see L<Padre::Document/event_on_right_down>).
 
-Parameters retrieved are the objects for the document, the editor, the 
+Parameters retrieved are the objects for the document, the editor, the
 context menu (C<Wx::Menu>) and the event.
 
 Have a look at the implementation in L<Padre::Document::Perl> for
 an example.
 
-=head2 plugin_enable
+=head2 C<plugin_enable>
 
 The C<plugin_enable> object method will be called (at an arbitrary time of Padre's
-choosing) to allow the plugin object to initialise and start up the Plugin.
+choosing) to allow the plug-in object to initialise and start up the plug-in.
 
-This may involve loading any config files, hooking into existing documents or
+This may involve loading any configuration files, hooking into existing documents or
 editor windows, and otherwise doing anything needed to bootstrap operations.
 
 Please note that Padre will block until this method returns, so you should
 attempt to complete return as quickly as possible.
 
-Any modules that you may use should NOT be loaded during this phase, but should
+Any modules that you may use should B<not> be loaded during this phase, but should
 be C<require>ed when they are needed, at the last moment.
 
-Returns true if the plugin started up ok, or false on failure.
+Returns true if the plug-in started up successfully, or false on failure.
 
 The default implementation does nothing, and returns true.
 
@@ -370,19 +370,19 @@ sub plugin_enable {
 
 =pod
 
-=head2 plugin_disable
+=head2 C<plugin_disable>
 
 The C<plugin_disable> method is called by Padre for various reasons to request
-the plugin do whatever tasks are necesary to shut itself down. This also
+the plug-in do whatever tasks are necessary to shut itself down. This also
 provides an opportunity to save configuration information, save caches to
 disk, and so on.
 
 Most often, this will be when Padre itself is shutting down. Other uses may
-be when the user wishes to disable the plugin, when the plugin is being
-reloaded, or if the plugin is about to be upgraded.
+be when the user wishes to disable the plug-in, when the plug-in is being
+reloaded, or if the plug-in is about to be upgraded.
 
-If you have any private classes other than the standard Padre::Plugin::Foo, you
-should unload them as well as the plugin may be in the process of upgrading
+If you have any private classes other than the standard C<Padre::Plugin::Foo>, you
+should unload them as well as the plug-in may be in the process of upgrading
 and will want those classes freed up for use by the new version.
 
 The recommended way of unloading your extra classes is using
@@ -393,12 +393,12 @@ simply do this in C<plugin_disable>:
   Class::Unload->unload('My::Extra::Class');
 
 Class::Unload takes care of all the tedious bits for you. Note that you
-should B<not> unload any external CPAN dependencies, as these may be needed
-by other plugins or Padre itself. Only classes that are part of your plugin
+should B<not> unload any external C<CPAN> dependencies, as these may be needed
+by other plug-ins or Padre itself. Only classes that are part of your plug-in
 should be unloaded.
 
 Returns true on success, or false if the unloading process failed and your
-plugin has been left in an unknown state.
+plug-in has been left in an unknown state.
 
 =cut
 
@@ -408,7 +408,7 @@ sub plugin_disable {
 
 =pod
 
-=head2 config_read
+=head2 C<config_read>
 
   my $hash = $self->config_read;
   if ( $hash ) {
@@ -418,15 +418,15 @@ sub plugin_disable {
   }
 
 The C<config_read> method provides access to host-specific configuration
-stored in a persistant location by Padre.
+stored in a persistent location by Padre.
 
 At this time, the configuration must be a nested, non-cyclic structure of
 C<HASH> references, C<ARRAY> references and simple scalars (the use of
 C<undef> values is permitted) with a C<HASH> reference at the root.
 
 Returns a nested C<HASH>-root structure if there is an existing saved
-configuration for the plugin, or C<undef> if there is no existing saved
-configuration for the plugin.
+configuration for the plug-in, or C<undef> if there is no existing saved
+configuration for the plug-in.
 
 =cut
 
@@ -452,12 +452,12 @@ sub config_read {
 
 =pod
 
-=head2 config_write
+=head2 C<config_write>
 
   $self->config_write( { foo => 'bar' } );
 
 The C<config_write> method is used to write the host-specific configuration
-information for the plugin into the underlying database storage.
+information for the plug-in into the underlying database storage.
 
 At this time, the configuration must be a nested, non-cyclic structure of
 C<HASH> references, C<ARRAY> references and simple scalars (the use of
@@ -487,51 +487,51 @@ sub config_write {
 
 =pod
 
-=head2 plugin_preferences
+=head2 C<plugin_preferences>
 
   $plugin->plugin_preferences($wx_parent);
 
-The C<plugin_preferences> method allows a plugin to define an entry point
-for the Plugin Manager dialog to trigger to show a preferences or
-configuration dialog for the plugin.
+The C<plugin_preferences> method allows a plug-in to define an entry point
+for the Plug-in Manager dialog to trigger to show a preferences or
+configuration dialog for the plug-in.
 
-The method is passed a wx object that should be used as the wx parent.
+The method is passed a Wx object that should be used as the Wx parent.
 
 =cut
 
-# This method is only implemented in the plugin children
+# This method is only implemented in the plug-in children
 
 =pod
 
-=head2 menu_plugins_simple
+=head2 C<menu_plugins_simple>
 
   sub menu_plugins_simple {
-      'My Plugin' => [
+      'My Plug-in' => [
           Submenu  => [
               'Do Something' => sub { $self->do_something },
           ],
           '---' => undef,        # Separator
           About => 'show_about', # Shorthand for sub { $self->show_about(@_) }
-          "Action\tCtrl+Shift+Z" => 'action', # Also use keyboard shortcuts 
+          "Action\tCtrl+Shift+Z" => 'action', # Also use keyboard shortcuts
 					      # to call sub { $self->show_about(@_) }
       ];
   }
 
 The C<menu_plugins_simple> method defines a simple menu structure for your
-plugin.
+plug-in.
 
 It returns two values, the label for the menu entry to be used in the top
-level Plugins menu, and a reference to an ARRAY containing an B<ordered> set of
+level Plug-ins menu, and a reference to an ARRAY containing an B<ordered> set of
 key/value pairs that will be turned into menus.
 
-If the key is a string containing three hyphons (i.e. '---') the pair will be
-rendered as a menu seperator.
+If the key is a string of three hyphens (i.e. C<--->) the pair will be
+rendered as a menu separator.
 
-If the key is a string containing a tab ("\t") and a keyboard shorcut combination
+If the key is a string containing a tab (C<"\t">) and a keyboard shortcut combination
 the menu action will also be available through a keyboard shortcut.
 
 If the value is a Perl identifier, it will be treated as a method name to be
-called on the plugin object when the menu entry is triggered.
+called on the plug-in object when the menu entry is triggered.
 
 If the value is a reference to an ARRAY, the pair will be rendered as a
 sub-menu containing further menu items.
@@ -547,12 +547,12 @@ sub menu_plugins_simple {
 
 =pod
 
-=head2 menu_plugins
+=head2 C<menu_plugins>
 
   sub menu_plugins {
       my $self        = shift;
       my $main = shift;
-  
+
       # Create a simple menu with a single About entry
       my $menu = Wx::Menu->new;
       Wx::Event::EVT_MENU(
@@ -560,21 +560,21 @@ sub menu_plugins_simple {
           $menu->Append( -1, 'About', ),
           sub { $self->show_about },
       );
-  
-      # Return it and the label for our plugin
+
+      # Return it and the label for our plug-in
       return ( $self->plugin_name => $menu );
 
 The C<menu_plugins> method defines a fully-featured mechanism for building
-your plugin menu.
+your plug-in menu.
 
 It returns two values, the label for the menu entry to be used in the top level
-Plugins menu, and a L<Wx::Menu> object containing the custom-built menu structure.
+Plug-ins menu, and a L<Wx::Menu> object containing the custom-built menu structure.
 
 A default implementation of this method is provided which will call
 C<menu_plugins_simple> and implements the expansion of the simple data into a full
 menu structure.
 
-If the method return a null list, no menu entry will be created for the plugin.
+If the method return a null list, no menu entry will be created for the plug-in.
 
 =cut
 
@@ -653,19 +653,19 @@ sub _menu_plugins_submenu {
 
 =pod
 
-=head2 editor_enable
+=head2 C<editor_enable>
 
   sub editor_enable {
       my $self     = shift;
       my $editor   = shift;
       my $document = shift;
-  
+
       # Make changes to the editor here...
-  
+
       return 1;
   }
 
-The C<editor_enable> method is called by Padre to provide the plugin with
+The C<editor_enable> method is called by Padre to provide the plug-in with
 an opportunity to alter the setup of the editor as it is being loaded.
 
 This method is only triggered when new editor windows are opened. Hooking
@@ -676,7 +676,7 @@ The method is passed two parameters, the fully set up editor object, and
 the L<Padre::Document> being opened.
 
 At the present time, this method has been provided primarily for the use
-of the L<Padre::Plugin::Vi> plugin and other plugins that need
+of the L<Padre::Plugin::Vi> plug-in and other plug-ins that need
 deep integration with the editor widget.
 
 =cut
@@ -687,29 +687,29 @@ sub editor_enable {
 
 =pod
 
-=head2 editor_disable
+=head2 C<editor_disable>
 
   sub editor_disable {
       my $self     = shift;
       my $editor   = shift;
       my $document = shift;
-  
+
       # Undo your changes to the editor here...
-  
+
   return 1;
 
 The C<editor_disable> method is the twin of the previous C<editor_enable>
-method. It is called as the file in the editor is being closed, AFTER the
+method. It is called as the file in the editor is being closed, B<after> the
 used has confirmed the file is to be closed.
 
-It provides the plugin with an opportunity to clean up, remove any gui
+It provides the plug-in with an opportunity to clean up, remove any GUI
 customisations, and complete any other shutdown/close processes.
 
 The method is passed two parameters, the fully set up editor object, and
 the L<Padre::Document> being closed.
 
 At the present time, this method has been provided primarily for the use
-of the L<Padre::Plugin::Vi> plugin and other plugins that need 
+of the L<Padre::Plugin::Vi> plug-in and other plug-ins that need
 deep integration with the editor widget.
 
 =cut
@@ -727,10 +727,10 @@ sub editor_disable {
 
 =pod
 
-=head2 ide
+=head2 C<ide>
 
 The C<ide> convenience method provides access to the root-level L<Padre>
-IDE object, preventing the need to go via the global Padre-E<gt>ide
+IDE object, preventing the need to go via the global C<< Padre->ide >>
 method.
 
 =cut
@@ -741,7 +741,7 @@ sub ide {
 
 =pod
 
-=head2 main
+=head2 C<main>
 
 The C<main> convenience method provides direct access to the
 L<Padre::Wx::Main> (main window) object.
@@ -754,10 +754,10 @@ sub main {
 
 =pod
 
-=head2 current
+=head2 C<current>
 
 The C<current> convenience method provides a L<Padre::Current> context
-object for the current plugin.
+object for the current plug-in.
 
 =cut
 

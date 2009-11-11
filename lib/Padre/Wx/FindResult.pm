@@ -8,8 +8,8 @@ Padre::Wx::FindResult - Find and list all occurrences
 
 =head1 DESCRIPTION
 
-C<Padre::Wx::FindResult> Displays a list of all the occurrences of term 
-in a file.   Clicking on an item in the list will go to the line in that editor. 
+C<Padre::Wx::FindResult> Displays a list of all the occurrences of term
+in a file.   Clicking on an item in the list will go to the line in that editor.
 
 =cut
 
@@ -27,9 +27,9 @@ my $LineCount; # Global fid count so it can be used in the label
 
 =pod
 
-=head3 new
+=head3 C<new>
 
-    Create the new Find results  Panel.
+Create the new B<Find results> panel.
 
 =cut
 
@@ -72,11 +72,9 @@ sub new {
 
 =pod
 
-=head3 new
+=head3 C<gettext_label>
 
-    gettext_label 
-    
-    Sets the label of the tab. called automatically when the obejct is created. 
+Sets the label of the tab. Called automatically when the object is created.
 
 =cut
 
@@ -87,12 +85,11 @@ sub gettext_label {
 
 =pod
 
-=head3 set_column_widths
+=head3 C<set_column_widths>
 
    $self->set_column_widths()
-   
-   works out the correct column widths for the 
-   list columns. 
+
+Works out the correct column widths for the list columns.
 
 =cut
 
@@ -112,17 +109,16 @@ sub set_column_widths {
 
 =pod
 
-=head3 on_list_item_activated
+=head3 C<on_list_item_activated>
 
-   On double click event go to the selectd line in the editor
+On double click event go to the selected line in the editor
 
 =cut
 
 sub on_list_item_activated {
 	my ( $self, $event, $main, $editor ) = @_;
 
-	#If the user has closed the editor the search was origionaly performed
-	#on
+	#If the user has closed the editor the search was originally performed on
 	if ( !defined $main->find_id_of_editor($editor) ) {
 		$self->DeleteAllItems;
 		my $message_item->[0]->{line} = Wx::gettext('Related Editor Has been Closed');
@@ -146,11 +142,11 @@ sub on_list_item_activated {
 
 =pod
 
-=head3 select_line
+=head3 C<select_line>
 
    $self->select_line($lineNumber, $editor);
-   
-   Sets the focus to the selected line.
+
+Sets the focus to the selected line.
 
 =cut
 
@@ -166,11 +162,11 @@ sub select_line {
 
 =pod
 
-=head3 _get_title 
+=head3 C<_get_title>
 
    $self->_get_title();
-   
-   set the column headings to the list. 
+
+Set the column headings to the list.
 
 =cut
 
@@ -187,11 +183,11 @@ sub _get_title {
 
 =pod
 
-=head3 relocale
+=head3 C<relocale>
 
    $self->relocale();
-   
-   Reset the column headings if locales are changed,  
+
+Reset the column headings if locales are changed.
 
 =cut
 
@@ -209,9 +205,9 @@ sub relocale {
 
 =pod
 
-=head3 on_right_down 
+=head3 C<on_right_down>
 
-	Called when the user presses a right click or a context menu key (on win32)
+Called when the user presses a right click or a context menu key (on Win32).
 
 =cut
 
@@ -273,19 +269,19 @@ sub on_right_down {
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
 	} else { #Wx::CommandEvent
-		$self->PopupMenu( $menu, 50, 50 ); # TODO better location
+		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
 	}
 }
 
 =pod
 
-=head3 populate_list
-	
+=head3 C<populate_list>
+
 	my $entry->[0]->{lineNumber} = 10;
 	$entry->[0]->{line} = ' this is at line 10';
 	$self->populate_list($entry);
-	
-	Populate the list with the line number and text.
+
+Populate the list with the line number and text.
 
 =cut
 

@@ -191,7 +191,7 @@ Padre::Wx::Dialog::FilterTool - dialog to filter selection or document through a
 
 =head1 DESCRIPTION
 
-This Dialog askes for the tool which should be used to filter the current
+This dialog asks for the tool which should be used to filter the current
 selection or the whole document.
 
 
@@ -199,29 +199,20 @@ selection or the whole document.
 
 =head2 Constructor
 
-=over 4
+=head3 C<new>
 
-=item * my $dialog = Padre::Wx::Dialog::FilterTool->new( $parent )
+    my $dialog = Padre::Wx::Dialog::FilterTool->new( $parent )
 
 Create and return a new Wx dialog allowing to select a filter tool. It needs a
-C<$parent> window (usually padre's main window).
-
-
-=back
-
-
+C<$parent> window (usually Padre's main window).
 
 =head2 Public methods
 
-=over 4
+=head3 C<show>
 
-=item * $dialog->show;
+    $dialog->show;
 
 Request the dialog to be shown.
-
-
-=back
-
 
 
 =head1 COPYRIGHT & LICENSE

@@ -92,7 +92,7 @@ Padre::DB - An ORLite-based ORM Database API
 
 =head1 SYNOPSIS
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 =head1 DESCRIPTION
 
@@ -123,7 +123,7 @@ following:
 
 =item *
 
-Create a script C<share/timeline/migrate-$i.pl> with $i the next
+Create a script F<share/timeline/migrate-$i.pl> with C<$i> the next
 available integer. This script will look like this:
 
         use strict;
@@ -142,8 +142,8 @@ course).
 =item *
 
 Update the user_revision in C<Padre::DB>'s call to C<ORLite::Migrate> to
-read the new script number (ie, the $i that you have used to name your
-script in the timeline directory).
+read the new script number (i.e., the C<$i> that you have used to name your
+script in the F<timeline> directory).
 
         use ORLite::Migrate 0.01 {
             [...]
@@ -212,14 +212,14 @@ above). Note that the modules automatically created provide both class
 methods and instance methods, where the object instances each represent
 a table record.
 
-=head2 dsn
+=head2 C<dsn>
 
   my $string = Foo::Bar->dsn;
 
-The C<dsn> accessor returns the dbi connection string used to connect
+The C<dsn> accessor returns the L<DBI> connection string used to connect
 to the SQLite database as a string.
 
-=head2 dbh
+=head2 C<dbh>
 
   my $handle = Foo::Bar->dbh;
 
@@ -229,7 +229,7 @@ maintain a single connection to the database.
 
 During a transaction, this will be the same (cached) database handle.
 
-Although in most situations you should not need a direct DBI connection
+Although in most situations you should not need a direct L<DBI> connection
 handle, the C<dbh> method provides a method for getting a direct
 connection in a way that is compatible with ORLite's connection
 management.
@@ -239,24 +239,24 @@ never hold onto a connection beyond the immediate scope.
 
 The transaction system in ORLite is specifically designed so that code
 using the database should never have to know whether or not it is in a
-transation.
+transaction.
 
 Because of this, you should B<never> call the -E<gt>disconnect method
 on the database handles yourself, as the handle may be that of a
 currently running transaction.
 
 Further, you should do your own transaction management on a handle
-provided by the <dbh> method.
+provided by the C<dbh> method.
 
 In cases where there are extreme needs, and you B<absolutely> have to
 violate these connection handling rules, you should create your own
-completely manual DBI-E<gt>connect call to the database, using the connect
+completely manual C<< DBI->connect >> call to the database, using the connect
 string provided by the C<dsn> method.
 
 The C<dbh> method returns a L<DBI::db> object, or throws an exception on
 error.
 
-=head2 begin
+=head2 C<begin>
 
   Foo::Bar->begin;
 
@@ -271,7 +271,7 @@ or doesn't need to care.
 
 Returns true or throws an exception on error.
 
-=head2 commit
+=head2 C<commit>
 
   Foo::Bar->commit;
 
@@ -284,7 +284,7 @@ transaction, you will need to issue a separate -E<gt>begin call.
 
 Returns true or throws an exception on error.
 
-=head2 rollback
+=head2 C<rollback>
 
 The C<rollback> method rolls back the current transaction. If called outside
 of a current transaction, it is accepted and treated as a null operation.
@@ -298,7 +298,7 @@ automatically rolled back.
 
 Returns true or throws an exception on error.
 
-=head2 do
+=head2 C<do>
 
   Foo::Bar->do('insert into table (foo, bar) values (?, ?)', {},
       $foo_value,
@@ -311,7 +311,7 @@ but applied to the appropriate locally-provided connection or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 selectall_arrayref
+=head2 C<selectall_arrayref>
 
 The C<selectall_arrayref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -320,7 +320,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 selectall_hashref
+=head2 C<selectall_hashref>
 
 The C<selectall_hashref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -329,7 +329,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 selectcol_arrayref
+=head2 C<selectcol_arrayref>
 
 The C<selectcol_arrayref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -338,7 +338,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 selectrow_array
+=head2 C<selectrow_array>
 
 The C<selectrow_array> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -347,7 +347,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 selectrow_arrayref
+=head2 C<selectrow_arrayref>
 
 The C<selectrow_arrayref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -356,7 +356,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 selectrow_hashref
+=head2 C<selectrow_hashref>
 
 The C<selectrow_hashref> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -365,7 +365,7 @@ or transaction.
 It takes the same parameters and has the same return values and error
 behaviour.
 
-=head2 prepare
+=head2 C<prepare>
 
 The C<prepare> method is a direct wrapper around the equivalent
 L<DBI> method, but applied to the appropriate locally-provided connection
@@ -378,13 +378,13 @@ In general though, you should try to avoid the use of your own prepared
 statements if possible, although this is only a recommendation and by
 no means prohibited.
 
-=head2 pragma
+=head2 C<pragma>
 
   # Get the user_version for the schema
   my $version = Foo::Bar->pragma('user_version');
 
 The C<pragma> method provides a convenient method for fetching a pragma
-for a datase. See the SQLite documentation for more details.
+for a database. See the SQLite documentation for more details.
 
 =head1 SUPPORT
 

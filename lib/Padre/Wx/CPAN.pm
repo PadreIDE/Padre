@@ -23,18 +23,18 @@ use Class::XSAccessor accessors => {
 
 =head1 NAME
 
-Padre::Wx::CPAN - Wx front-end for CPAN.pm
+Padre::Wx::CPAN - Wx front-end for L<CPAN>
 
 
 =head1 DESCRIPTION
 
-User interface for CPAN.
+User interface for L<CPAN>.
 
 =head1 METHODS
 
 =head2 new
 
-Constructor , see L<Wx::Frame>
+Constructor, see L<Wx::Frame>
 
 =head1 SEE ALSO
 

@@ -373,10 +373,10 @@ sub new {
   $self->find
 
 Grab currently selected text, if any, and place it in find combo box.
-Bring up the dialog or perform search for strings' next occurence
+Bring up the dialog or perform search for string's next occurrence
 if dialog is already displayed.
 
-TODO: if selection is more than one line then consider it as the limit
+TO DO: if selection is more than one line then consider it as the limit
 of the search and not as the string to be used.
 
 =cut
@@ -385,10 +385,10 @@ sub find {
 	my $self = shift;
 	my $text = $self->current->text;
 
-	# No search if no file is open (TODO ??)
+	# No search if no file is open (TO DO ??)
 	return unless $self->current->editor;
 
-	# TODO: if selection is more than one lines then consider it as the
+	# TO DO: if selection is more than one lines then consider it as the
 	# limit of the search and not as the string to be used.
 	$text = '' if $text =~ /\n/;
 
@@ -497,7 +497,7 @@ again.
 
 =cut
 
-# TODO: The change to this function that turned it into a dual-purpose function
+# TO DO: The change to this function that turned it into a dual-purpose function
 #       unintentionally transfered responsibility for the implementation of
 #       "Replace All" from the main class to a dialog class.
 #       This was a mistake, the dialog should not be where this is implemented.
@@ -561,7 +561,7 @@ sub replace_button {
 	return;
 }
 
-# TODO: This function doesn't seem to work anymore, so it's now scheduled for removal
+# TO DO: This function doesn't seem to work anymore, so it's now scheduled for removal
 #       It's still here because it's unclear if there may be references to it.
 #
 #=pod

@@ -430,7 +430,7 @@ BEGIN {
 		# a language is not supported by various older standards.
 		'x-klingon' => {
 			gettext   => _T('Klingon'),
-			utf8text  => 'Klingon',    # TODO Fix this at some point
+			utf8text  => 'Klingon',    # TO DO Fix this at some point
 			iso639    => undef,
 			iso3166   => undef,
 			wxid      => undef,
@@ -572,7 +572,7 @@ sub encoding_system_default {
 sub encoding_from_string {
 	my $content = shift;
 
-	# FIXME
+	# FIX ME
 	# This is a just heuristic approach. Maybe there is a better way. :)
 	# Japanese and Chinese have to be tested. Only Korean is tested.
 	#

@@ -70,7 +70,7 @@ sub icon {
 
 # For now, assume the people using this are competent
 # and don't bother to check params.
-# TODO: Clearly this assumption can't last...
+# TO DO: Clearly this assumption can't last...
 sub find {
 	my $name  = shift;
 	my $prefs = shift;

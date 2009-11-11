@@ -101,11 +101,11 @@ sub on_auinotebook_page_changed {
 		push @$history, $current;
 
 		# Update indentation in case auto-update is on
-		# TODO: Violates encapsulation
+		# TO DO: Violates encapsulation
 		$editor->{Document}->set_indentation_style;
 
 		# make sure the outline is refreshed for the new doc
-		# TODO: Violates encapsulation
+		# TO DO: Violates encapsulation
 		if ( $main->has_outline ) {
 			$main->outline->clear;
 			$main->outline->force_next(1);

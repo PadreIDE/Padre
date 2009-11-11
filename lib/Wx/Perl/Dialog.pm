@@ -38,7 +38,7 @@ Wx::Perl::Dialog - Abstract dialog class for simple dialog creation
 
    	return if not $dialog->show_modal;
 
-	my $data = $dialog->get_data; 
+	my $data = $dialog->get_data;
 
 	#### You may also create a tabbed dialog for more complex tasks:
 
@@ -59,7 +59,7 @@ Where $win is the Wx::Frame of your application.
 =head1 B<WARNING>
 
 This is still an alpha version of the code. It is used mainly by L<Padre> and its
-plugins. The API can change without any warning.
+plug-ins. The API can change without any warning.
 
 
 Actually as of version 0.28 we have move this code back to the Padre distribution
@@ -79,9 +79,9 @@ Every element in the internal array is an array that describes a widget.
 
 The first value in each widget description is the type of the widget.
 
-The second value is an identifyer (or undef if we don't need any access to the widget).
+The second value is an identifier (or C<undef> if we don't need any access to the widget).
 
-The widget will be accessible form the dialog object using $dialog->{_widgets_}{identifyer}
+The widget will be accessible form the dialog object using C<$dialog->{_widgets_}{identifier}>
 
 The rest of the values in the array depend on the widget.
 
@@ -89,36 +89,36 @@ The rest of the values in the array depend on the widget.
 
 =over 4
 
-=item Wx::StaticText
+=item C<Wx::StaticText>
 
  3.: "the text",
 
-=item Wx::Button
+=item C<Wx::Button>
 
  3.: button type (stock item such as Wx::wxID_OK or string "&do this")
- 
-=item Wx::DirPickerCtrl
+
+=item C<Wx::DirPickerCtrl>
 
  3. default directory (must be '')  ???
- 4. title to show on the directory browser 
+ 4. title to show on the directory browser
 
-=item Wx::TextCtrl
+=item C<Wx::TextCtrl>
 
  3. default value, if any
 
-=item Wx::Treebook
+=item C<Wx::Treebook>
 
  3. array ref for list of values
 
-=item Wx::FontPickerCtrl
+=item C<Wx::FontPickerCtrl>
 
  3. A string describing the font
 
-=item Wx::ColourPickerCtrl
+=item C<Wx::ColourPickerCtrl>
 
  3. A HTML-compatible colour description string: '#' plus 6 hex digits; i.e. #FF0000
 
-=item Wx::SpinCtrl
+=item C<Wx::SpinCtrl>
 
  3. Current value (as text value in wxWidgets; an Integer)
  4. Minimum value allowed (Integer)
@@ -126,35 +126,35 @@ The rest of the values in the array depend on the widget.
 
 =back
 
-=head2 Multipage Layout (with a Wx::Notebook)
+=head2 Multi-page Layout (with a Wx::Notebook)
 
-If you pass in a parameter 'multipage', a tabbed dialog will be created using a 
-Wx::Notebook. 
-The value of the 'layout' parameter will be interpreted as an arrayref where each 
-value represents the contents of one page (see section "Layout").
+If you pass in a parameter C<multipage>, a tabbed dialog will be created using a
+C<Wx::Notebook>.
+The value of the C<layout> parameter will be interpreted as an array reference where each
+value represents the contents of one page (see L</"Layout">).
 
-The value of the 'multipage' param should be a hash containing extra options.
+The value of the C<multipage> parameter should be a hash containing extra options.
 
 =over 4
 
-=item auto_ok_cancel
+=item C<auto_ok_cancel>
 
- If set to a true value, an OK and a CANCEL button will be displayed automatically
- below the tabbed pages.
+If set to a true value, an OK and a CANCEL button will be displayed automatically
+below the tabbed pages.
 
-=item ok_widgetid
+=item C<ok_widgetid>
 
- An identifier for the automatically genereated OK button.
- Useful if you want to have access to the button via
- $dialog->{_widgets_}{<ok_widgetid>}
+An identifier for the automatically generated OK button.
+Useful if you want to have access to the button via
+C<< $dialog->{_widgets_}{<ok_widgetid>} >>
 
-=item cancel_widgetid
+=item C<cancel_widgetid>
 
- Same as above but for the CANCEL button
+Same as above but for the CANCEL button
 
-=item pagenames
+=item C<pagenames>
 
- An arrayref of strings which represent the tab titles. 
+An array reference of strings which represent the tab titles.
 
 =back
 
@@ -162,7 +162,7 @@ The value of the 'multipage' param should be a hash containing extra options.
 
 =cut
 
-=head2 new
+=head2 C<new>
 
 =cut
 
@@ -199,14 +199,14 @@ sub new {
 	return $self;
 }
 
-=head2 get_data
+=head2 C<get_data>
 
  my $data = $dialog->get_data;
- 
+
 Returns a hash with the keys being the names you gave for each widgets
 and the value being the value of that widget in the dialog.
 
-=cut 
+=cut
 
 sub get_data {
 	my ($dialog) = @_;
@@ -259,12 +259,12 @@ sub _extract_data {
 	return %data;
 }
 
-=head2 show_modal
+=head2 C<show_modal>
 
 Helper function that will probably change soon...
 
  return if not $dialog->show_modal;
- 
+
 =cut
 
 sub show_modal {
@@ -359,7 +359,7 @@ sub _build_multipage_layout {
 sub _build_layout {
 	my ( $dialog, %args ) = @_;
 
-	# TODO make sure width has enough elements to the widest row
+	# TO DO make sure width has enough elements to the widest row
 	# or maybe we should also check that all the rows has the same number of elements
 	my $box = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
@@ -477,7 +477,7 @@ Please submit bugs you find on L<http://padre.perlide.org/>
 
 =head1 COPYRIGHT
 
-Copyright 2008 Gabor Szabo. L<http://www.szabgab.com/>
+Copyright 2008 Gábor Szabó. L<http://www.szabgab.com/>
 
 =head1 LICENSE
 

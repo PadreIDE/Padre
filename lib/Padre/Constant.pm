@@ -107,10 +107,10 @@ use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
 
 # Check and create the directories that need to exist
 unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
-	Carp::croak( "Cannot create config dir '" . CONFIG_DIR . "': $!" );
+	Carp::croak( "Cannot create config directory '" . CONFIG_DIR . "': $!" );
 }
 unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
-	Carp::croak( "Cannot create plugins dir '" . PLUGIN_LIB . "': $!" );
+	Carp::croak( "Cannot create plug-ins directory '" . PLUGIN_LIB . "': $!" );
 }
 
 1;
@@ -121,7 +121,7 @@ __END__
 
 =head1 NAME
 
-Padre::Constant - constants used by config subsystems
+Padre::Constant - constants used by configuration subsystems
 
 =head1 SYNOPSIS
 
@@ -137,46 +137,46 @@ is defined in this module.
 
 =head1 CONSTANTS
 
-=head2 BOOLEAN, POSINT, INTEGER, ASCII, PATH
+=head2 C<BOOLEAN>, C<POSINT>, C<INTEGER>, C<ASCII>, C<PATH>
 
 Settings data types.
 
-=head2 HOST, HUMAN, PROJECT
+=head2 C<HOST>, C<HUMAN>, C<PROJECT>
 
-Settings storage backends.
+Settings storage back-ends.
 
-=head2 PADRE_BLACK, PADRE_BLUE, PADRE_RED, PADRE_GREEN, PADRE_MAGENTA, PADRE_ORANGE,
-PADRE_DIM_GRAY, PADRE_CRIMSON, PADRE_BROWN
+=head2 C<PADRE_BLACK>, C<PADRE_BLUE>, C<PADRE_RED>, C<PADRE_GREEN>, C<PADRE_MAGENTA>, C<PADRE_ORANGE>,
+C<PADRE_DIM_GRAY>, C<PADRE_CRIMSON>, C<PADRE_BROWN>
 
 Core supported colours.
 
-=head2 CONFIG_HOST
+=head2 C<CONFIG_HOST>
 
 DB configuration file storing host settings.
 
-=head2 CONFIG_HUMAN
+=head2 C<CONFIG_HUMAN>
 
 YAML configuration file storing user settings.
 
-=head2 CONFIG_DIR
+=head2 C<CONFIG_DIR>
 
 Private Padre configuration directory Padre, used to store stuff.
 
-=head2 PLUGIN_DIR
+=head2 C<PLUGIN_DIR>
 
-Private directory where Padre can look for plugins.
+Private directory where Padre can look for plug-ins.
 
-=head2 PLUGIN_LIB
+=head2 C<PLUGIN_LIB>
 
-Subdir of C<PLUGIN_DIR> with the path C<Padre/Plugin> added
-(or whatever depending on your platform) so that perl can
-load a C<Padre::Plugin::> plugin.
+Subdirectory of C<PLUGIN_DIR> with the path C<Padre/Plugin> added
+(or whatever depending on your platform) so that Perl can
+load a C<Padre::Plugin::> plug-in.
 
-=head2 LOG_FILE
+=head2 C<LOG_FILE>
 
-Path and name of Padre's logfile.
+Path and name of Padre's log file.
 
-=head2 NEWLINE
+=head2 C<NEWLINE>
 
 Newline style (UNIX, WIN or MAC) on the currently used operating system.
 

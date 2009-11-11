@@ -12,7 +12,7 @@ Padre::Wx::Progress - Tell the user that we're doing something
                [modal => 1,]
                [lazy  => 1,]
                );
-  
+
   $object->Update($done_count, $current_work_text);
 
 =head1 DESCRIPTION
@@ -40,24 +40,24 @@ our $VERSION = '0.50';
                [lazy  => 1,]
                );
 
-The C<new> constructor lets you create a new B<Padre::Wx::Progress> object.
+The C<new> constructor lets you create a new C<Padre::Wx::Progress> object.
 
-$title is the title of the new box.
+C<$title> is the title of the new box.
 
-$max_count contains the highest item-number being processed.
+C<$max_count> contains the highest item-number being processed.
 
 Options:
 
-A default message could be set (in case ->update should be called without text)
-with the message key. This is overriden by the newest ->update - text.
+A default message could be set (in case C<update> should be called without text)
+with the message key. This is overridden by the newest C<update> text.
 
 Set modal to true to lock other application windows while the progress
-box is displayed
+box is displayed.
 
 Set lazy to true to show the progress dialog only if the whole process
 takes long enough that the progress box makes sense.
 
-Returns a new B<Padre::Wx::Progress> or dies on error.
+Returns a new C<Padre::Wx::Progress> or dies on error.
 
 =cut
 

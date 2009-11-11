@@ -12,9 +12,9 @@ Create a subclass of Padre::Task which implements your background
 task:
 
   package Padre::Task::Foo;
-  
+
   use base 'Padre::Task';
-  
+
   # This is run in the main thread before being handed
   # off to a worker (background) thread. The Wx GUI can be
   # polled for information here.
@@ -24,13 +24,13 @@ task:
           if ( condition_for_not_running_the_task ) {
                   return "BREAK";
           }
-          
+
           return 1;
   }
 
   # This is run in a worker thread and may take a long-ish
   # time to finish. It must not touch the GUI, except through
-  # Wx events. TODO: explain how this works
+  # Wx events. TO DO: explain how this works
   sub run {
           my $self = shift;
           # Do something that takes a long time!
@@ -48,7 +48,7 @@ task:
           # cleanup!
           return 1;
   }
-  
+
   1;
 
 From your code, you can then use this new background task class as
@@ -115,7 +115,7 @@ use Params::Util '_INSTANCE';
 
 our $VERSION = '0.50';
 
-# TODO: Why are there require?
+# TO DO: Why are there require?
 require Padre;
 require Padre::Wx;
 
@@ -180,12 +180,12 @@ SCOPE: {
 
 =head2 run
 
-This is the method that'll be called in the worker thread.
+This is the method that will be called in the worker thread.
 You must implement this in your subclass.
 
 You must not interact with the Wx GUI directly from the
 worker thread. You may use Wx thread events only.
-TODO: Experiment with this and document it.
+TO DO: Experiment with this and document it.
 
 =cut
 
@@ -441,7 +441,7 @@ sub _on_stderr {
 
   $task->task_print("Hi this is immediately sent to the Padre output window\n");
 
-Sends an event to the main Padre thread and dispays a
+Sends an event to the main Padre thread and displays a
 message in the Padre output window.
 
 =cut
@@ -458,7 +458,7 @@ sub task_print {
 
   $task->task_warn("Hi this is immediately sent to the Padre output window\n");
 
-Sends an event to the main Padre thread and dispays a
+Sends an event to the main Padre thread and displays a
 message in the Padre output window with style C<bad>.
 
 =cut
@@ -497,12 +497,12 @@ handler multiple times.
       $FUN_EVENT,
       \&update_gui_with_fun
   );
-  
+
   sub update_gui_with_fun {
       my ($main, $event) = @_; @_=(); # hack to avoid "Scalars leaked"
       my $data = $event->GetData();
   }
-  
+
 After that, you can dispatch events of type C<$FUN_EVENT_TYPE>
 by simply running:
 
@@ -535,7 +535,7 @@ sub post_event {
 Since the task objects are transferred to the worker threads via
 C<Storable::freeze()> / C<Storable::thaw()>, you cannot put any data
 into the objects that cannot be serialized by C<Storable>. I<To the best
-of my knowledge>, that includes filehandles and code references.
+of my knowledge>, that includes file handles and code references.
 
 =head1 SEE ALSO
 

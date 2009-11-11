@@ -32,9 +32,9 @@ our $VERSION = '0.50';
 
 =head2 new
 
-A default contructor for transform objects.
+A default constructor for transform objects.
 
-Takes arbitrary key/value pair params and returns a new object.
+Takes arbitrary key/value pair parameters and returns a new object.
 
 =cut
 

@@ -32,12 +32,12 @@ sub new {
 			| Wx::wxNO_FULL_REPAINT_ON_RESIZE,
 	);
 
-	# Do custom startup stuff here
+	# Do custom start-up stuff here
 	$self->clear;
 	$self->set_font;
 	$self->{main} = $main;
 
-	# see #351: output should be blank by default at startup.
+	# see #351: output should be blank by default at start-up.
 	#$self->AppendText( Wx::gettext('No output') );
 
 	return $self;
@@ -154,7 +154,7 @@ sub AppendText {
 
 SCOPE: {
 
-	# TODO: This should be some sort of style file,
+	# TO DO: This should be some sort of style file,
 	# but the main editor style support is too wacky
 	# to add this at the moment.
 	my $fg_colors = [

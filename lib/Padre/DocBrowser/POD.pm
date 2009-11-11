@@ -106,7 +106,7 @@ sub generate {
 	my $doc  = shift;
 	$doc->mimetype('application/x-pod');
 	return $doc;
-	#### TODO , pod extract / pod tidy ?
+	#### TO DO , pod extract / pod tidy ?
 
 	# (Ticket #671)
 }
@@ -166,7 +166,7 @@ sub process {
 
 	my $self = shift;
 
-	# TODO: make it deal with being invoked as various different things
+	# TO DO: make it deal with being invoked as various different things
 	#  such as perlfaq".
 
 	# (Ticket #672)

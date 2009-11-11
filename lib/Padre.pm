@@ -23,7 +23,7 @@ use Padre::Splash      ();
 use Padre::Util::Win32 ();
 
 # load this before things are messed up to produce versions like '0,76'!
-# TODO: Bug report dispatched. Likely to be fixed in 0.77.
+# TO DO: Bug report dispatched. Likely to be fixed in 0.77.
 use version ();
 
 our $VERSION = '0.50';
@@ -70,7 +70,7 @@ sub new {
 		# Wx Attributes
 		wx => undef,
 
-		# Plugin Attributes
+		# Plug-in Attributes
 		plugin_manager => undef,
 
 		# Project Attributes
@@ -86,7 +86,7 @@ sub new {
 		$self->{instance_id} .= chr( ( 48 .. 57, 65 .. 90, 97 .. 122 )[ int( rand(62) ) ] );
 	}
 
-	# Save the startup dir before anyone can move us.
+	# Save the start-up dir before anyone can move us.
 	$self->{original_cwd} = Cwd::cwd();
 
 	# Load (and sync if needed) the configuration
@@ -178,7 +178,7 @@ sub run {
 		$self->{ARGV} = \@ARGV;
 	}
 
-	# FIXME: RT #1 This call should be delayed until after the
+	# FIX ME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
 	$self->plugin_manager->load_plugins;
 
@@ -271,17 +271,17 @@ very fast.
 After installing Padre you can start it by typing B<padre> on the command line.
 On Windows that would be Start/Run padre.bat
 
-(TODO) By default Padre starts with an editor containing a simple Perl script
+(TO DO) By default Padre starts with an editor containing a simple Perl script
 and instructions.
 
-You can edit the file and save it using File/Save (Ctrl-S).
+You can edit the file and save it using File/Save (C<Ctrl+S>).
 
-You can run the script by pressing Run/Run Script (F5)
+You can run the script by pressing Run/Run Script (C<F5>)
 
-You can start new files File/New (Ctrl-N)
-or open existing files File/Open (Ctrl-O).
+You can start new files File/New (C<Ctrl+N>)
+or open existing files File/Open (C<Ctrl+O>).
 
-By default Padre uses the same perl interpreter for
+By default Padre uses the same Perl interpreter for
 executing code that it uses for itself but this will be configurable
 later.
 
@@ -300,23 +300,23 @@ directory called F<.padre>.
 
 =head2 Files operations
 
-B<File/New> creates a new empty file. By default Padre assumes this is a perl script.
-(TODO later this default will be configurable).
+B<File/New> creates a new empty file. By default Padre assumes this is a Perl script.
+(TO DO later this default will be configurable).
 
 B<File/Open> allows you to browse for a file and select it for opening.
 
-B<File/Open Selection>, (Ctrl-Shift-O) if there is a selected text this will
+B<File/Open Selection>, (C<Ctrl+Shift+O>) if there is a selected text this will
 try to locate files that match the selection. If the selection looks like a path
 Padre will try to open that path either absolute or relative.
 If it looks like a module name (Some::Thing) it will try to find the appropriate file Some/Thing.pm in @INC and open it.
 currently this feature opens the first file encountered.
-(TODO it should find all the possibilities and if there are multiple hits
+(TO DO it should find all the possibilities and if there are multiple hits
 offer the user to choose. This will be especially important if we are
 working on a module that is also already installed. Padre might
 find the installed version first while we might want to open the
 development version.)
 
-(TODO: when the file is not of perl type we should have other ways to recognize
+(TO DO: when the file is not of Perl type we should have other ways to recognize
 files from internal naming and have paths to search. Surprise, not every
 language uses @INC.)
 
@@ -328,22 +328,22 @@ B<File/Close All but Current> - closes all opened files except for the currently
 
 B<File/Reload File> - Reloads the file. This is interesting if you either made changes and want to discard them
 and/or if the file has changed on the disk. If there are unsaved changes Padre will ask
-you if you really want to throw them away. (TODO: make a backup of the file before discarding it)
+you if you really want to throw them away. (TO DO: make a backup of the file before discarding it)
 
-B<File/Save> Ctrl-S - save the current file. If the buffer is not yet saved and has no filename associated with it, Padre will ask you for a filename.
+B<File/Save> C<Ctrl+S> - save the current file. If the buffer is not yet saved and has no file name associated with it, Padre will ask you for a file name.
 
-B<File/Save As> - Offer the user to select a new filename and save the content under that name.
+B<File/Save As> - Offer the user to select a new file name and save the content under that name.
 
 B<File/Save All> - Save all the currently opened files.
 
 B<File/Convert> - Convert line endings to Windows, Unix or Mac Classic style.
 
 B<Files/Recent Files> - a list of recently opened files to open them easily.
-(TODO: update the list when we open a file, not only when opening padre)
-(TODO: allow the user to configure size of history)
+(TO DO: update the list when we open a file, not only when opening padre)
+(TO DO: allow the user to configure size of history)
 
 B<File/Doc Stats> - just random statistics about the current document.
-(TODO: If you miss anything important let us know!)
+(TO DO: If you miss anything important let us know!)
 
 B<File/Quit> - Exits Padre.
 
@@ -352,19 +352,19 @@ B<File/Quit> - Exits Padre.
 The simple editing features (should) provide the expected behavior
 for Windows users.
 
-B<Edit/Undo> Ctrl-Z
+B<Edit/Undo> C<Ctrl+Z>
 
 B<Edit/Redo>
 
-B<Edit/Select All> Ctrl-A , select all the characters in the current document
+B<Edit/Select All> C<Ctrl+A>, select all the characters in the current document
 
-B<Edit/Copy> Ctrl-C
+B<Edit/Copy> C<Ctrl+C>
 
-B<Edit/Cut> Ctrl-X
+B<Edit/Cut> C<Ctrl+X>
 
-B<Edit/Paste> Ctrl-V
+B<Edit/Paste> C<Ctrl+V>
 
-(TODO What is Ctrl-D ?, duplicate the current line?)
+(TO DO What is C<Ctrl+D> ?, duplicate the current line?)
 
 =head2 Mouse right click
 
@@ -372,20 +372,20 @@ Click on the right button of the mouse brings up a context sensitive menu.
 It provides the basic editing functions and will provide other context
 sensitive options.
 
-=head2 Projects (TODO)
+=head2 Projects (TO DO)
 
 Padre will have the notion of a Perl project. As we would like
-to make things as natural as possible for the perl developer
-and we think the distribution methods used for CPAN module are
+to make things as natural as possible for the Perl developer
+and we think the distribution methods used for C<CPAN> module are
 a good way to handle any project Padre will understand a project
-as a CPAN module. This does not mean that your project needs to end
-up on CPAN of course. But if your projects directory structure
-follows that of the modules on CPAN, Padre will be automatically
+as a C<CPAN> module. This does not mean that your project needs to end
+up on C<CPAN> of course. But if your projects directory structure
+follows that of the modules on C<CPAN>, Padre will be automatically
 recognize it.
 
 =head2 Module::Starter
 
-As a first step in the direction of supporting CPAN-style perl
+As a first step in the direction of supporting C<CPAN>-style Perl
 projects we integrated into Padre the use of L<Module::Starter>
 
 B<File/New.../Perl Distribution> will bring up a dialog box where
@@ -396,10 +396,10 @@ your name, e-mail (your e-mail).
 Builder is the tool that you project is going to use to package itself
 and then your user will use to install the project.
 Currently L<Module::Build> and L<ExtUtils::MakeMaker> are supported.
-(TODO add Module::Install as well).
+(TO DO add Module::Install as well).
 
-License is one of the keywords currently listed in the META.yml spec of
-Module::Build. (TODO: update the list or make it dynamic)
+License is one of the keywords currently listed in the F<META.yml> spec of
+Module::Build. (TO DO: update the list or make it dynamic)
 
 Once you click B<OK>, Module::Starter will create a new
 directory called My-Widgets in the parent directory you selected
@@ -408,34 +408,35 @@ in the last field.
 =head2 Other
 
 On Strawberry Perl you can associate .pl file extension with
-C:\strawberry\perl\bin\wxperl and then you can start double
+F<C:\strawberry\perl\bin\wxperl> and then you can start double
 clicking on the application. It should work...
 
-  Run This (F5) - run the current buffer with the current perl
-  this currently only works with files with .pl  extensions.
+Run This (C<F5>) - run the current buffer with the current Perl
+this currently only works with files with F<.pl> extensions.
 
-  Run Any (Ctrl-F5) - run any external application
-  First time it will prompt you to a command line that you have to
-  type in such as
+Run Any (C<Ctrl+F5>) - run any external application
+
+First time it will prompt you to a command line that you have to
+type in such as
 
   perl /full/path/to/my/script.pl
 
-...then it will execute this every time you press Ctrl-F5 or the menu
-option. Currently Ctrl-F5 does not save any file.
+...then it will execute this every time you press C<Ctrl+F5> or the menu
+option. Currently C<Ctrl+F5> does not save any file.
 (This will be added later.)
 
 You can edit the command line using the Run/Setup menu item.
 
-Please Note that you can use C<$ENV{PADRE_VERSION}> to detect whether the script 
+Please Note that you can use C<$ENV{PADRE_VERSION}> to detect whether the script
 is running inside Padre or not.
 
 =head2 Bookmarks
 
-B<View/Set Bookmark> (Ctrl-B) brings up a window with a
+B<View/Set Bookmark> (C<Ctrl+B>) brings up a window with a
 predefined text containing the file name and line number
-(TODO should be the content of the current line).
+(TO DO should be the content of the current line).
 
-B<View/Goto Bookmark> (Ctrl-Shift-B) brings up a window with the
+B<View/Go to Bookmark> (C<Ctrl+Shift+B>) brings up a window with the
 list of available bookmarks. You can select one and press B<OK>
 to jump to that location. If the file where the bookmark belongs
 to is not open currently, it will be opened and the cursor will
@@ -448,24 +449,24 @@ bookmarks.
 
 =head2 Navigation
 
-  Ctrl-G          Goto Line
-  Ctrl-1          Matching Brace
-  Ctrl-2          Quick Fix
-  Ctrl-.          Next Problem
-  Ctrl-P          Word Auto-completion
-  Alt-N           Nth Pane
-  Ctrl-TAB        Next Pane
-  Ctrl-Shift-TAB  Previous Pane
-  Alt-S           Jump to list of subs window
+  Ctrl+G          Go to Line
+  Ctrl+1          Matching Brace
+  Ctrl+2          Quick Fix
+  Ctrl+.          Next Problem
+  Ctrl+P          Word Auto-completion
+  Alt+N           Nth Pane
+  Ctrl+Tab        Next Pane
+  Ctrl+Shift+Tab  Previous Pane
+  Alt+S           Jump to list of subs window
 
-  Ctrl-M Ctrl-Shift-M  comment/uncomment selected lines of code
+  Ctrl+M Ctrl+Shift+M  comment/uncomment selected lines of code
 
-  Ctrl-H opens a help window where you can see the documentation of
-  any perl module. Just use open (in the help window) and type in the name
+  Ctrl+H opens a help window where you can see the documentation of
+  any Perl module. Just use open (in the help window) and type in the name
   of a module.
 
-  Ctrl-Shift-H Highlight the name of a module in the editor and then
-  press Ctrl-Shift-H. IT will open the help window for the module
+  Ctrl+Shift+H Highlight the name of a module in the editor and then
+  press Ctrl+Shift+H. It will open the help window for the module
   whose name was highlighted.
 
   In the help window you can also start typing the name of a module. When the
@@ -485,11 +486,11 @@ bookmarks.
 =head2 Rectangular Text Selection
 
 Simple text editors usually only allow you to select contiguous lines of text with your mouse.
-Somtimes, however, it is handy to be able to select a rectangular area of text for more precise
+Sometimes, however, it is handy to be able to select a rectangular area of text for more precise
 cutting/copying/pasting or performing search/replace on. You can select a rectangular area in Padre
-by holding down Ctrl-Alt whilst selecting text with your mouse.
+by holding down C<Ctrl+Alt> whilst selecting text with your mouse.
 
-For example, imagine you have the following nicely formatted hash assignment in a perl source file:
+For example, imagine you have the following nicely formatted hash assignment in a Perl source file:
 
   my %hash = (
       key1 => 'value1',
@@ -501,39 +502,39 @@ With a rectangular text selection you can select only the keys, only the values,
 
 =head2 Syntax highlighting
 
-Padre is using L<Wx> (aka wxPerl), wxWidgtes for GUI and Scintilla for the editor.
+Padre is using L<Wx> (aka wxPerl), wxWidgets for GUI and Scintilla for the editor.
 Scintilla provides very good syntax highlighting for many languages but Padre is still
 bound by the version of Scintilla included.
 
-The share/styles/default.yml file is the mapping between the Scintilla defined
-constants for various syntactical elements of each language and the RGB values
+The F<share/styles/default.yml> file is the mapping between the Scintilla defined
+constants for various syntactical elements of each language and the C<RGB> values
 of the color to be used to highlight them.
 
 =head3 Adding new syntax highlighting
 
-To set up a custom syntax highlighting scheme, you create a .yml file that defines
+To set up a custom syntax highlighting scheme, you create a F<.yml> file that defines
 the mappings described above. The easiest way to create your own scheme is probably to copy an existing
-.yml file (for instance, default.yml) from the C<share/styles/> folder, put it in
-C<~/.padre/styles>, and then modify it. Padre checks this folder on startup and adds
-any styles in the .yml files there to the View -> Style menu.
+F<.yml> file (for instance, F<default.yml>) from the F<share/styles/> folder, put it in
+F<~/.padre/styles>, and then modify it. Padre checks this folder on start-up and adds
+any styles in the F<.yml> files there to the C<< View -> Style >> menu.
 
-TODO does this stuff below really belong here?
+TO DO does this stuff below really belong here?
 
-Need to define constants in L<Padre::Util> to be in the Padre::Constant namespace.
+Need to define constants in L<Padre::Util> to be in the C<Padre::Constant> namespace.
 
-Need to add the color mapping to share/styles/default.yml
+Need to add the color mapping to F<share/styles/default.yml>
 
 Need to implement the C<Padre::Document::Language> class.
 
-Need to define the mime-type mapping in L<Padre::Document>
+Need to define the MIME type mapping in L<Padre::Document>
 
 For examples see L<Padre::Document::PASM>, L<Padre::Document::PIR>,
 L<Padre::Document::Perl>.
 
 =head2 Syntax checking
 
-Depending on a corresponding support in the respective C<Padre::Document::Language> 
-class, Padre supports real time syntax checking capabilities: 
+Depending on a corresponding support in the respective C<Padre::Document::Language>
+class, Padre supports real time syntax checking capabilities:
 
 =over 4
 
@@ -552,10 +553,10 @@ symbols mark the code lines with problems.
 
 =head3 WARNING NOTE
 
-Syntax checking for Perl5 documents comes bundled with Padre. It is implemented 
-using "perl -c". This means that parts of the code actually get executed (e.g.
-BEGIN blocks). Malicious software might used this fact to damage your system
-(C<BEGIN { system('rm -rf ~') }>) or suck up your resources 
+Syntax checking for Perl5 documents comes bundled with Padre. It is implemented
+using C<perl -c>. This means that parts of the code actually get executed (e.g.
+C<BEGIN> blocks). Malicious software might used this fact to damage your system
+(C<BEGIN { system('rm -rf ~') }>) or suck up your resources
 (C<BEGIN { while(1) { } }>).
 Syntax checking is currently disabled by default and has to be enabled manually
 after every start of Padre. This somewhat increases security when doing
@@ -568,9 +569,9 @@ which unfortunately is currently not available.
 =head1 Preferences
 
 There are several types of preferences we can think of.
-There are the current view orinted preferences such as B<Show newlines>
+There are the current view printed preferences such as B<Show newlines>
 or B<Show Line numbers> and there are the project and file
-oriented preferences such as the use of TAB or whitespace
+oriented preferences such as the use of tabulators or white space
 for indentation.
 
 We would like to achieve that the
@@ -582,15 +583,15 @@ menu option.
 We have to make sure that when changing the preferences via
 the GUI it change for the correct things.
 
-e.g. When changing the B<Use TABs> preference it currently
-applyes to all the files open currently or in the future.
+E.g. when changing the B<Use Tabulators> preference it currently
+applies to all the files open currently or in the future.
 It should probably apply to the current file and/or the
 current project. Such options - when changing them - might even
-be applied "retroactively". That is when I change the TAB/space
+be applied "retroactively". That is when I change the tabulator/space
 mode of a file or a project it should ask if I want to reflow the
 file with the new method of indentation?
 
-On the other hand the "TAB display size" is purely a local, editor
+On the other hand the "Tabulator display size" is purely a local, editor
 oriented preference. It should probably apply to all files currently
 open.
 
@@ -605,7 +606,7 @@ In particular if Padre is installed in a Portable Perl it might
 run on machines with different parameters. Screen size and resolution
 might be different along other parameters. We would like to make sure
 the relevant preferences are separated from those that are constant
-even when moving betwen computers.
+even when moving between computers.
 
 =head2 Editor or view oriented preferences
 
@@ -630,31 +631,31 @@ B<View/Show Indentation Guide>
 When set, Padre will display a thin vertical line at every indentation
 level on every row with are indented more than one level.
 
-=item Highlight indentation guide (TODO)
+=item Highlight indentation guide (TO DO)
 
 This should be a separate option available only
 if the C<Show indentation guide> and brace matching is on.
 
-If SetHighlightGuide is set to 8 then when the user reaches one
+If C<SetHighlightGuide> is set to 8 then when the user reaches one
 side of a pair of braces the indentation guide - if there is one
 on column 8 - will be highlighted. (in green).
 
-As I understand Padre should constantly adjust the SetHighlightGuide
+As I understand Padre should constantly adjust the C<SetHighlightGuide>
 so that in every block the "correct" indentation guide is highlighted.
 
 =item Show Call Tips
 
-=item TAB display size
+=item Tabulator display size
 
 =item Allow experimental features
 
 In order to allow the experimental features one needs to manually turn on the
-experimental flag to 1 in config.yml. As Padre keeps overwriting this file you'll
+experimental flag to 1 in F<config.yml>. As Padre keeps overwriting this file you'll
 have to make this change with another editor and while Padre is B<not> open.
 
-The config.yml file is in ~/.padre/ on Linux/Unix and in general in
+The F<config.yml> file is in F<~/.padre/> on Linux/Unix and in general in
 your home directory on Windows. In any case the B<Help/About> box will show
-you the path of the .padre directory of Padre.
+you the path of the F<.padre> directory of Padre.
 
 Once you set the experimental flag when you start Padre you will see a new
 menu on the right side of the menu bar called B<Experimental>.
@@ -664,13 +665,13 @@ menu on the right side of the menu bar called B<Experimental>.
 What files to open when launching Padre?
 nothing, new, those that were open last time?
 
-=item Max/Min number of modules to display in podviewer
+=item Max/Min number of modules to display in POD viewer
 
-=item Autoindentation
+=item Auto-indentation
 
 Possible values: no/same level/deep
 
-There are at least two levels of autoindentation:
+There are at least two levels of auto-indentation:
 
 1) when ENTER is pressed indent to exactly the same level as the previous line
 
@@ -681,9 +682,9 @@ There are at least two levels of autoindentation:
 When the cursor reaches an opening or closing brace { }, square bracket [ ]
 or parentheses ( ), Padre automatically highlight the pair of the braces.
 
-TODO make this optional, let the user set the color
+TO DO make this optional, let the user set the color
 
-=item Autosave on/off?
+=item Auto-save on/off?
 
 =back
 
@@ -691,7 +692,7 @@ TODO make this optional, let the user set the color
 
 =over 4
 
-=item Indentation should be by TABs or spaces
+=item Indentation should be by tabulators or spaces
 
 =item In case of using spaces for indentation, the width  of every indentation level
 
@@ -699,38 +700,38 @@ TODO make this optional, let the user set the color
 
 =head1 Other features
 
-=head2 Autobackup (Planned)
+=head2 Auto-backup (Planned)
 
 See L<Padre::Autosave>
 
 When Padre opens a file it automatically creates a copy of the original
-in ~/.padre/backup/PATH  where PATH is the same PATH as the full PATH of
+in F<~/.padre/backup/PATH>  where PATH is the same PATH as the full PATH of
 the file. On Windows the initial drive letter is converted to another
-subdirectory so c:\dir\file.txt  will be saved as
-~/padre/backup/c/dir/file.txt
+subdirectory so F<c:\dir\file.txt>  will be saved as
+F<~/padre/backup/c/dir/file.txt>.
 
-When a new file is created no need for autobackup.
+When a new file is created no need for auto-backup.
 
 When a remote file is opened the backup will probably go to
-~/padre/backup_remote/
+F<~/padre/backup_remote/>
 
 Configurable options: on/off
 
-=head2 Autosave files (Planned)
+=head2 Auto-save files (Planned)
 
-Every N seconds all the files changed since the last autosave are
-saved to a temporary place maybe ~/.padre/save.
+Every N seconds all the files changed since the last auto-save are
+saved to a temporary place maybe F<~/.padre/save>.
 
-When the user closes the file, the autosaved file is removed.
+When the user closes the file, the auto-saved file is removed.
 
 Configurable options: on/off, frequency in seconds
 
 =head1 SQLite
 
-Padre is using an SQLite database (~/.padre/config.db) for two
+Padre is using an SQLite database (F<~/.padre/config.db>) for two
 things.
 Part of the preferences/configuration information is kept there
-and it is used for the podreader.
+and it is used for the POD reader.
 
 =head1 Documentation POD reader
 
@@ -738,32 +739,32 @@ Padre currently can index (the names of) all the modules on
 your system and it was planned to have a search capability for
 modules/functions/etc.
 
-=head1 Plugins
+=head1 Plug-ins
 
-There is a highly experimental but quite simple plugin system.
+There is a highly experimental but quite simple plug-in system.
 
-A plugin is a module in the Padre::Plugin::* namespace.
+A plug-in is a module in the C<Padre::Plugin::*> namespace.
 
-At startup time Padre looks for all such modules in @INC and
+At start-up time Padre looks for all such modules in C<@INC> and
 in its own private directory and loads them.
 
-Every plugin must be a subclass of L<Padre::Plugin> and follow the rules
+Every plug-in must be a subclass of L<Padre::Plugin> and follow the rules
 defined in the L<Padre::Plugin> API documentation.
 
 See also L<Padre::PluginManager> and L<Padre::PluginBuilder>
 
-While Padre is running there is a menu option to show the Plugin configuration
-window that shows the list of all the plugins.
+While Padre is running there is a menu option to show the plug-in configuration
+window that shows the list of all the plug-ins.
 
-TODO: What to do if a newer version of the same plugin was installed?
+TO DO: What to do if a newer version of the same plug-in was installed?
 
-TODO: What to do if a module was removed ? Shall we keep its data in
+TO DO: What to do if a module was removed ? Shall we keep its data in
 the configuration file or remove it?
 
-TODO: Padre should offer an easy but simple way for plugin authors
+TO DO: Padre should offer an easy but simple way for plug-in authors
 to declare configuration variables and automatically generate both configuration
 file and configuration dialog. Padre should also allow for full customization
-of both for those more advanced in wx foo.
+of both for those more advanced in Wx.
 
 =head1 Editing tools
 
@@ -795,7 +796,7 @@ Delete Leading Space will ask How many leading spaces and act accordingly.
 
 =head2 Search
 
-Ctrl-F opens the search window, if something was selected then that is given as the search text.
+C<Ctrl+F> opens the search window, if something was selected then that is given as the search text.
 Otherwise the last search string should be displayed.
 
 Provide option to search backwards
@@ -810,7 +811,7 @@ When the user presses Find
 
 =item 1
 
-We find the first hit and the search window disappears. F3 jumps to next one.
+We find the first hit and the search window disappears. C<F3> jumps to next one.
 
 =item 2
 
@@ -822,7 +823,7 @@ is on.
 =item 3
 
 All the matches are highlighted and we go to the first match, window disappears.
-F3 jumps to next one
+C<F3> jumps to next one
 
 =item 4
 
@@ -833,20 +834,20 @@ user can edit text
 
 =head2 Find and Replace
 
-Find - find the next occurence
+Find - find the next occurrence
 
 Replace all - do just that
 
-Replace - if currently a match is selected then replace it find the next occurence and select it
+Replace - if currently a match is selected then replace it find the next occurrence and select it
 
-=head2 TODO describe what to do if we have to deal with files that are not in the editor
+=head2 TO DO describe what to do if we have to deal with files that are not in the editor
 
 if "Replace all" was pressed then do just that
    1) without opening editors for the files.
    2) opening an editor for each file and keep it in unsaved state (sounds crazy having 1000 editors open...)
 if Search or Replace is clicked then we might show the next location in the lower pane.
 If the user then presses Replace we open the file in an editor window and go on.
-If the user presses Search then we show the next occurence.
+If the user presses Search then we show the next occurrence.
 Opened and edited files will be left in a not saved state.
 
 =head1 Code layout
@@ -859,7 +860,7 @@ is the main module.
 
 =item L<Padre::Autosave>
 
-describes some of our plans for an autosave mechanism.
+describes some of our plans for an auto-save mechanism.
 It is not implemented yet. (There is also some description elsewhere in this
 document).
 
@@ -867,8 +868,8 @@ document).
 
 reads/writes the configuration files.
 
-There is an SQLite database and a yml file to keep various pieces of information.
-The database holds host related configuration values while the yaml file holds
+There is an SQLite database and a YAML file to keep various pieces of information.
+The database holds host related configuration values while the YAML file holds
 personal configuration options.
 
 The SQLite database holds the list of modules available on the system.
@@ -898,11 +899,11 @@ is an abstraction class to deal with a single document.
 
 =item L<Padre::PluginManager>
 
-locates and loads the plugins.
+locates and loads the plug-ins.
 
 =item L<Plugin>
 
-Should be the base class of all plugins.
+Should be the base class of all plug-ins.
 
 =item L<Padre::Pod2HTML>
 
@@ -933,9 +934,9 @@ Various utility functions.
 
 =head2 Wx GUI
 
-The Padre::WX::* namespace is supposed to deal with all the
-wx related code. Outside of that the code is not supposed to
-know about wx, but currently it still does.
+The C<Padre::Wx::*> namespace is supposed to deal with all the
+Wx related code. Outside of that the code is not supposed to
+know about Wx, but currently it still does.
 
 =over 4
 
@@ -988,7 +989,7 @@ The code for drag and drop
 =item L<Padre::Wx::Editor>
 
 holds an editor text control instance (one for each buffer/file).
-This is a subclass of L<Wx::StyledTextCtrl> also known as STC or
+This is a subclass of L<Wx::StyledTextCtrl> also known as C<STC> or
 Scintilla.
 
 =item L<Padre::Wx::History::ComboBox>
@@ -1001,12 +1002,12 @@ This is the main window, most of the code is currently there.
 
 =item L<Padre::Wx::Menu>
 
-handles everythin the menu should know and do.
+handles everything the menu should know and do.
 
 =item L<Padre::Wx::Output>
 
 the output window at the bottom of the editor displaying the output
-of running code using F5.
+of running code using C<F5>.
 
 =item L<Padre::Wx::HtmlWindow>
 
@@ -1026,7 +1027,7 @@ not in use.
 
 =item L<Padre::Wx::SyntaxCheck>
 
-Implementing the continuous syntax check of perl code.
+Implementing the continuous syntax check of Perl code.
 
 =item L<Padre::Wx::ToolBar>
 
@@ -1041,7 +1042,7 @@ Please submit your bugs at L<http://padre.perlide.org/>
 =head1 SUPPORT
 
 I hope the L<http://www.perlmonks.org/> will be ready to take
-upon themself supporting this application.
+upon themselves supporting this application.
 
 See also L<http://padre.perlide.org/>
 
@@ -1197,7 +1198,7 @@ Andrew Shitov
 
 Cezary Morga (THEREK)
 
-=head3 Portugese (Brazilian)
+=head3 Portuguese (Brazilian)
 
 Breno G. de Oliveira (GARU)
 
@@ -1217,7 +1218,7 @@ Kjetil Skotheim (KJETIL)
 
 =head2 Thanks
 
-Mattia Barbon for providing WxPerl.
+Mattia Barbon for providing wxPerl.
 Part of the code was copied from his Wx::Demo application.
 
 Herbert Breunung for letting me work on Kephra.

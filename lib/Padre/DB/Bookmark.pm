@@ -27,19 +27,21 @@ Padre::DB::Bookmark - Padre::DB class for the bookmark table
 
 =head1 SYNOPSIS
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 =head1 DESCRIPTION
 
 TO BE COMPLETED
 
-=head1 METHODS
+=head1 INTERFACE
 
-=head2 select
+=head2 Methods
+
+=head3 select
 
   # Get all objects in list context
   my @list = Padre::DB::Bookmark->select;
-  
+
   # Get a subset of objects in scalar context
   my $array_ref = Padre::DB::Bookmark->select(
       'where name > ? order by name',
@@ -59,12 +61,12 @@ reference to an ARRAY of B<Padre::DB::Bookmark> objects when called in scalar co
 
 Throws an exception on error, typically directly from the L<DBI> layer.
 
-=head2 count
+=head3 count
 
   # How many objects are in the table
   my $rows = Padre::DB::Bookmark->count;
-  
-  # How many objects 
+
+  # How many objects
   my $small = Padre::DB::Bookmark->count(
       'where name > ?',
       1000,
@@ -82,16 +84,16 @@ Returns the number of objects that match the condition.
 
 Throws an exception on error, typically directly from the L<DBI> layer.
 
-=head2 new
+=head3 new
 
-  TO BE COMPLETED
+TO BE COMPLETED
 
 The C<new> constructor is used to create a new abstract object that
 is not (yet) written to the database.
 
 Returns a new L<Padre::DB::Bookmark> object.
 
-=head2 create
+=head3 create
 
   my $object = Padre::DB::Bookmark->create(
 
@@ -111,11 +113,11 @@ table, and then returns the object.
 If the primary key column C<name> is not provided to the
 constructor (or it is false) the object returned will have
 C<name> set to the new unique identifier.
- 
+
 Returns a new L<bookmark> object, or throws an exception on error,
 typically from the L<DBI> layer.
 
-=head2 insert
+=head3 insert
 
   $object->insert;
 
@@ -129,11 +131,11 @@ C<name> set to the new unique identifier.
 Returns the object itself as a convenience, or throws an exception
 on error, typically from the L<DBI> layer.
 
-=head2 delete
+=head3 delete
 
   # Delete a single instantiated object
   $object->delete;
-  
+
   # Delete multiple rows from the bookmark table
   Padre::DB::Bookmark->delete('where name > ?', 1000);
 
@@ -141,7 +143,7 @@ The C<delete> method can be used in a class form and an instance form.
 
 When used on an existing B<Padre::DB::Bookmark> instance, the C<delete> method
 removes that specific instance from the C<bookmark>, leaving
-the object ntact for you to deal with post-delete actions as you wish.
+the object intact for you to deal with post-delete actions as you wish.
 
 When used as a class method, it takes a compulsory argument of a SQL
 phrase to be added after the C<DELETE FROM bookmark> section
@@ -152,7 +154,7 @@ in the parameter.
 Returns true on success or throws an exception on error, or if you
 attempt to call delete without a SQL condition phrase.
 
-=head2 truncate
+=head3 truncate
 
   # Delete all records in the bookmark table
   Padre::DB::Bookmark->truncate;
@@ -167,9 +169,9 @@ all records in a table with specific intent.
 
 Returns true, or throws an exception on error.
 
-=head1 ACCESSORS
+=head2 Accessors
 
-=head2 name
+=head3 name
 
   if ( $object->name ) {
       print "Object has been inserted\n";
@@ -180,9 +182,9 @@ Returns true, or throws an exception on error.
 Returns true, or throws an exception on error.
 
 
-REMAINING ACCESSORS TO BE COMPLETED
+  REMAINING ACCESSORS TO BE COMPLETED
 
-=head1 SQL
+=head2 SQL
 
 The bookmark table was originally created with the
 following SQL command.

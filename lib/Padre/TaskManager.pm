@@ -14,7 +14,7 @@ Padre::TaskManager - Padre Background Task Scheduler
 
 =head1 DESCRIPTION
 
-Padre uses threads for asynchroneous background operations
+Padre uses threads for asynchronous background operations
 which may take so long that they would make the GUI unresponsive
 if run in the main (GUI) thread.
 
@@ -25,9 +25,11 @@ are spawned if many background tasks are scheduled for execution.
 When the load goes down, the number of extra threads is (slowly!)
 reduced down to the default.
 
-=head1 CLASS METHODS
+=head1 INTERFACE
 
-=head2 new
+=head2 Class Methods
+
+=head3 C<new>
 
 The constructor returns a C<Padre::TaskManager> object.
 At the moment, C<Padre::TaskManager> is a singleton.
@@ -47,10 +49,10 @@ the first task is being scheduled.
 
 =item use_threads
 
-TODO: This is disabled for now since we need Wx 0.89
+TO DO: This is disabled for now since we need Wx 0.89
 for stable threading.
 
-Disable for profiling runs. In the degraded, threadless mode,
+Disable for profiling runs. In the degraded, thread-less mode,
 all tasks are run in the main thread. Default: 1 (use threads)
 
 =item reap_interval
@@ -143,7 +145,7 @@ sub new {
 	# and setting up new workers
 	if ( not defined $REAP_TIMER and $self->use_threads ) {
 
-		# explicit id necessary to distinguish from startup-timer of the main window
+		# explicit id necessary to distinguish from start-up timer of the main window
 		my $timerid = Wx::NewId();
 		$REAP_TIMER = Wx::Timer->new( $main, $timerid );
 		Wx::Event::EVT_TIMER(
@@ -189,9 +191,9 @@ sub _init_events {
 
 =pod
 
-=head1 INSTANCE METHODS
+=head2 Instance Methods
 
-=head2 schedule
+=head3 C<schedule>
 
 Given a C<Padre::Task> instance (or rather an instance of a subclass),
 schedule that task for execution in a worker thread.
@@ -203,7 +205,7 @@ proxy to this method for convenience.
 sub schedule {
 	my $self = shift;
 	my $task = _INSTANCE( shift, 'Padre::Task' )
-		or die "Invalid task scheduled!"; # TODO: grace
+		or die "Invalid task scheduled!"; # TO DO: grace
 
 	if ( _INSTANCE( $task, 'Padre::Service' ) ) {
 		$self->{running_services}{$task} = $task;
@@ -238,7 +240,7 @@ sub schedule {
 
 	} else {
 
-		# TODO: Instead of this hack, consider
+		# TO DO: Instead of this hack, consider
 		# "reimplementing" the worker loop
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue($string);
@@ -251,7 +253,7 @@ sub schedule {
 
 =pod
 
-=head2 setup_workers
+=head3 C<setup_workers>
 
 Create more workers if necessary. Called by C<reap> which
 is called regularly by the reap timer, so users don't
@@ -300,7 +302,7 @@ sub _make_worker_thread {
 
 =pod
 
-=head2 reap
+=head3 C<reap>
 
 Check for worker threads that have exited and can be joined.
 If there are more worker threads than the normal number and
@@ -386,7 +388,7 @@ sub _stop_task {
 
 =pod
 
-=head2 cleanup
+=head3 C<cleanup>
 
 Shutdown all services with a HANGUP, then stop all worker threads.
 Called on editor shutdown.
@@ -426,9 +428,9 @@ sub cleanup {
 
 =pod
 
-=head1 ACCESSORS
+=head2 Accessors
 
-=head2 task_queue
+=head3 C<task_queue>
 
 Returns the queue of tasks to be processed as a
 L<Thread::Queue> object. The tasks in the
@@ -436,17 +438,17 @@ queue have been serialized for passing between threads,
 so this is mostly useful internally or
 for checking the number of outstanding jobs.
 
-=head2 reap_interval
+=head3 C<reap_interval>
 
 Returns the number of milliseconds between the
-regulary cleanup runs.
+regular cleanup runs.
 
-=head2 use_threads
+=head3 C<use_threads>
 
 Returns whether running in degraded mode (no threads, false)
 or normal operation (threads, true).
 
-=head2 running_tasks
+=head3 C<running_tasks>
 
 Returns the number of tasks that are currently being executed.
 
@@ -463,14 +465,14 @@ sub running_tasks {
 
 =pod
 
-=head2 shutdown_services
+=head3 C<shutdown_services>
 
 Gracefully shutdown the services by instructing them to hangup themselves
 and return via the usual Task mechanism.
 
 =cut
 
-## ERM FIXME where are is the {running_services} populated then eh?
+## ERM FIX ME where are is the {running_services} populated then eh?
 sub shutdown_services {
 	my $self = shift;
 	Padre::Util::debug('Shutdown services');
@@ -483,7 +485,7 @@ sub shutdown_services {
 
 =pod
 
-=head2 workers
+=head3 C<workers>
 
 Returns B<a list> of the worker threads.
 
@@ -496,9 +498,9 @@ sub workers {
 
 =pod
 
-=head1 EVENT HANDLERS
+=head2 Event Handlers
 
-=head2 on_task_done_event
+=head3 C<on_task_done_event>
 
 This event handler is called when a background task has
 finished execution. It deserializes the background task
@@ -519,7 +521,7 @@ sub on_task_done_event {
 	$task->finish($main);
 	my $tid = $task->{__thread_id};
 
-	# TODO/FIXME:
+	# TO DO/FIXME:
 	# This should somehow get at the specific TaskManager object
 	# instead of going through the Padre globals!
 	my $manager   = Padre->ide->task_manager;
@@ -532,7 +534,7 @@ sub on_task_done_event {
 
 =pod
 
-=head2 on_task_start_event
+=head3 C<on_task_start_event>
 
 This event handler is called when a background task is about to start
 execution.
@@ -542,7 +544,7 @@ It simply increments the running task counter.
 
 sub on_task_start_event {
 	my ( $main, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
-	                                    # TODO/FIXME:
+	                                    # TO DO/FIXME:
 	                                    # This should somehow get at the specific TaskManager object
 	                                    # instead of going through the Padre globals!
 	my $manager           = Padre->ide->task_manager;
@@ -556,7 +558,7 @@ sub on_task_start_event {
 
 =pod
 
-=head2 on_service_poll_event
+=head3 C<on_service_poll_event>
 
 =cut
 
@@ -570,7 +572,7 @@ sub on_service_poll_event {
 
 =pod
 
-=head2 on_dump_running_tasks
+=head3 C<on_dump_running_tasks>
 
 Called by the toolbar task-status button.
 Dumps the list of running tasks to the output panel.
@@ -665,19 +667,19 @@ sub worker_loop {
 
 =pod
 
-=head1 TODO
+=head1 TO DO
 
 What if the computer can't keep up with the queued jobs? This needs
-some consideration and probably, the schedule() call needs to block once
-the queue is "full". However, it's not clear how this can work if the
-Wx MainLoop isn't reached for processing finish events.
+some consideration and probably, the C<schedule()> call needs to block once
+the queue is I<"full">. However, it's not clear how this can work if the
+Wx C<MainLoop> isn't reached for processing finish events.
 
-Polling services 'aliveness' in a useful way , something a Wx::Taskmanager
-might like to display. Ability to selectivly kill tasks/services
+Polling services I<aliveness> in a useful way, something a C<Wx::Taskmanager>
+might like to display. Ability to selectively kill tasks/services
 
 =head1 SEE ALSO
 
-The base class of all "work units" is L<Padre::Task>.
+The base class of all I<"work units"> is L<Padre::Task>.
 
 =head1 AUTHOR
 

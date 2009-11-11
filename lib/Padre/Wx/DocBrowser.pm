@@ -39,15 +39,15 @@ our %VIEW = (
 
 =head1 NAME
 
-Padre::Wx::DocBrowser - Wx front-end for Padre::DocBrowser
+Padre::Wx::DocBrowser - Wx front-end for C<Padre::DocBrowser>
 
-=head1 Welcome to Padre DocBrowser
+=head1 Welcome to Padre C<DocBrowser>
 
-Padre::Wx::DocBrowser ( Wx::Frame )
+C<Padre::Wx::DocBrowser> ( C<Wx::Frame> )
 
 =head1 DESCRIPTION
 
-User interface for Padre::DocBrowser. 
+User interface for C<Padre::DocBrowser>.
 
 =head1 METHODS
 
@@ -57,14 +57,14 @@ Constructor , see L<Wx::Frame>
 
 =head2 help
 
-Accepts a string, L<URI> or L<Padre::Document> and attempts to render 
-documentation for such in a new AuiNoteBook tab. Links matching a scheme 
-accepted by L<Padre::DocBrowser> will (when clicked) be resolved and 
+Accepts a string, L<URI> or L<Padre::Document> and attempts to render
+documentation for such in a new C<AuiNoteBook> tab. Links matching a scheme
+accepted by L<Padre::DocBrowser> will (when clicked) be resolved and
 displayed in a new tab.
 
 =head2 display
 
-Accepts a L<Padre::Document> or workalike
+Accepts a L<Padre::Document> or work-alike
 
 =head1 SEE ALSO
 
@@ -148,7 +148,7 @@ sub new {
 	# http://www.gigi.co.uk/wxperl/pdk/perltrayexample.txt
 	# use a similar syntax.... for some reason this doesn't call _close()
 
-	# TODO: Figure out what needs to be done to check and shutdown a
+	# TO DO: Figure out what needs to be done to check and shutdown a
 	# long running thread
 	# To trigger this, search for perltoc in the search text entry.
 
@@ -261,7 +261,7 @@ sub ResolveRef {
 	$task->schedule;
 }
 
-# FIXME , add our own output panel
+# FIX ME , add our own output panel
 sub debug {
 	Padre->ide->wx->main->output->AppendText( $_[1] . $/ );
 }
@@ -276,7 +276,7 @@ sub display {
 	if ( _INSTANCE( $docs, 'Padre::DocBrowser::document' ) ) {
 
 		# if doc is html just display it
-		# TODO, a means to register other wx display windows such as ?!
+		# TO DO, a means to register other wx display windows such as ?!
 		return $self->ShowPage( $docs, $query )
 			if ( $self->viewer_for( $docs->mimetype ) );
 

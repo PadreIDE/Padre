@@ -1,6 +1,7 @@
 package Padre::Plugin::My;
 
 use 5.008;
+use utf8;
 use strict;
 use warnings;
 use Padre::Constant ();
@@ -55,12 +56,12 @@ sub show_about {
 
 	# Generate the About dialog
 	my $about = Wx::AboutDialogInfo->new;
-	$about->SetName('My Plugin');
+	$about->SetName('My Plug-in');
 	$about->SetDescription( <<"END_MESSAGE" );
 The philosophy behind Padre is that every Perl programmer
 should be able to easily modify and improve their own editor.
 
-To help you get started, we've provided you with your own plugin.
+To help you get started, we've provided you with your own plug-in.
 
 It is located in your configuration directory at:
 $path
@@ -81,18 +82,18 @@ __END__
 
 =head1 NAME
 
-Padre::Plugin::My - My personal plugin
+Padre::Plugin::My - My personal plug-in
 
 =head1 DESCRIPTION
 
-This is your personal plugin. Update it to fit your needs. And if it
-does interesting stuff, please consider sharing it on CPAN!
+This is your personal plug-in. Update it to fit your needs. And if it
+does interesting stuff, please consider sharing it on C<CPAN>!
 
 =head1 COPYRIGHT & LICENSE
 
-Currently it's copyright (c) 2008-2009 The Padre develoment team as
-listed in Padre.pm... But update it and it will become Copyright (c) you
-E<lt>C<you@your-domain.com>E<gt>! How exciting! :-)
+Currently it's copyrighted © 2008-2009 by The Padre development team as
+listed in Padre.pm... But update it and it will become copyrighted © You
+C<< <you@example.com> >>! How exciting! :-)
 
 =cut
 

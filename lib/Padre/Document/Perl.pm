@@ -20,7 +20,7 @@ our @ISA     = 'Padre::Document';
 # Padre::Document::Perl Methods
 
 # Ticket #637:
-# TODO watch out! These PPI methods may be VERY expensive!
+# TO DO watch out! These PPI methods may be VERY expensive!
 # (Ballpark: Around 1 Gigahertz-second of *BLOCKING* CPU per 1000 lines)
 # Check out Padre::Task::PPI and its subclasses instead!
 sub ppi_get {
@@ -90,7 +90,7 @@ sub ppi_location_to_character_position {
 
 # Convert an absolute document offset to
 # a ppi-style location [$line, $col, $apparent_col]
-# FIXME: Doesn't handle $apparent_col right
+# FIX ME: Doesn't handle $apparent_col right
 sub character_position_to_ppi_location {
 	my $self     = shift;
 	my $position = shift;
@@ -370,7 +370,7 @@ sub _check_syntax_internals {
 sub beginner_check {
 	my $self = shift;
 
-	# TODO: Make this cool
+	# TO DO: Make this cool
 	# It isn't, because it should show _all_ warnings instead of one and
 	# it should at least go to the line it's complaining about.
 	# Ticket #534
@@ -469,7 +469,7 @@ sub _get_current_symbol {
 	my $col = $cursor_col;
 
 	# find start of symbol
-	# TODO: This could be more robust, no?
+	# TO DO: This could be more robust, no?
 	# Ticket #639
 	$col--
 		if ( $col && substr( $line_content, $col - 1, 2 ) =~ /^\w\W$/ )
@@ -598,8 +598,8 @@ sub find_method_declaration {
 sub _find_method {
 	my ( $self, $name ) = @_;
 
-	# TODO: unify with code in Padre::Wx::FunctionList
-	# TODO: lots of improvement needed here
+	# TO DO: unify with code in Padre::Wx::FunctionList
+	# TO DO: lots of improvement needed here
 	if ( not $self->{_methods_}{$name} ) {
 		my $filename = $self->filename;
 		$self->{_methods_}{$_} = $filename for $self->get_functions;
@@ -630,7 +630,7 @@ sub _find_method {
 
 }
 
-# TODO temp function given a name of a subroutine and move the cursor
+# TO DO temp function given a name of a subroutine and move the cursor
 # to its develaration, need to be improved ~ szabgab
 sub goto_sub {
 	my ( $self, $name ) = @_;
@@ -715,7 +715,7 @@ sub extract_subroutine {
 	# this could be configurable
 	my $now         = localtime;
 	my $sub_comment = <<EOC;
-# 
+#
 # New subroutine "$newname" extracted - $now.
 #
 EOC
@@ -899,7 +899,7 @@ sub autocomplete {
 	}
 
 	# WARNING: This is totally not done, but Gabor made me commit it.
-	# TODO:
+	# TO DO:
 	# a) complete this list
 	# b) make the path configurable
 	# c) make the whole thing optional and/or pluggable
@@ -926,13 +926,13 @@ sub autocomplete {
 			my %seen;
 			while ( defined($tag) ) {
 
-				# TODO check file scope?
+				# TO DO check file scope?
 				if ( !defined( $tag->{kind} ) ) {
 
 					# This happens with some tagfiles which have no kind
 				} elsif ( $tag->{kind} eq 'v' ) {
 
-					# TODO potentially don't skip depending on circumstances.
+					# TO DO potentially don't skip depending on circumstances.
 					if ( not $seen{ $tag->{name} }++ ) {
 						push @words, $tag->{name};
 					}
@@ -980,7 +980,7 @@ sub autocomplete {
 			my $tag = ( $prefix eq '' ) ? $parser->firstTag() : $parser->findTag( $prefix, partial => 1 );
 			my @words;
 
-			# TODO: INHERITANCE!
+			# TO DO: INHERITANCE!
 			while ( defined($tag) ) {
 				if ( !defined( $tag->{kind} ) ) {
 
@@ -1008,13 +1008,13 @@ sub autocomplete {
 			my %seen;
 			while ( defined($tag) ) {
 
-				# TODO check file scope?
+				# TO DO check file scope?
 				if ( !defined( $tag->{kind} ) ) {
 
 					# This happens with some tagfiles which have no kind
 				} elsif ( $tag->{kind} eq 'p' ) {
 
-					# TODO potentially don't skip depending on circumstances.
+					# TO DO potentially don't skip depending on circumstances.
 					if ( not $seen{ $tag->{name} }++ ) {
 						push @words, $tag->{name};
 					}
@@ -1096,7 +1096,7 @@ sub newline_keep_column {
 	#	my $col2 = $pos - $first;
 	#	$editor->AddText( ' ' x ( $col - $col2 ) );
 
-	# TODO: Remove the part made by auto-ident before addtext:
+	# TO DO: Remove the part made by auto-ident before addtext:
 	$text =~ s/[^\s\t\r\n]/ /g;
 	$editor->AddText($text);
 
@@ -1235,7 +1235,7 @@ sub event_on_right_down {
 			$findDecl,
 			sub {
 				my $editor = shift;
-				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
+				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 				$doc->find_variable_declaration;
 			},
@@ -1246,9 +1246,9 @@ sub event_on_right_down {
 			$editor, $lexRepl,
 			sub {
 
-				# FIXME near duplication of the code in Padre::Wx::Menu::Perl
+				# FIX ME near duplication of the code in Padre::Wx::Menu::Perl
 				my $editor = shift;
-				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
+				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 				require Padre::Wx::History::TextEntryDialog;
 				my $dialog = Padre::Wx::History::TextEntryDialog->new(
@@ -1266,14 +1266,14 @@ sub event_on_right_down {
 		);
 	} # end if it's a variable
 
-	# TODO connect this to the action of menu item in the Perl menu!
+	# TO DO connect this to the action of menu item in the Perl menu!
 	if ( defined $location and $token =~ /^\w+$/ ) {
 		my $find = $menu->Append( -1, Wx::gettext("Find Method Declaration") );
 		Wx::Event::EVT_MENU(
 			$editor, $find,
 			sub {
 				my $editor = shift;
-				my $doc    = $self; # FIXME if Padre::Wx::Editor had a method to access its Document...
+				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
 				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
 				$doc->find_method_declaration;
 			},
@@ -1293,7 +1293,7 @@ sub event_on_right_down {
 			$intro_temp,
 			sub {
 
-				# FIXME near duplication of the code in Padre::Wx::Menu::Perl
+				# FIX ME near duplication of the code in Padre::Wx::Menu::Perl
 				my $editor = shift;
 				my $doc    = $self;
 				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -1336,7 +1336,7 @@ sub event_on_left_up {
 		# Does it look like a variable?
 		if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
 
-			# FIXME editor document accessor?
+			# FIX ME editor document accessor?
 			$editor->{Document}->find_variable_declaration();
 		}
 

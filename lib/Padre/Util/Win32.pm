@@ -8,7 +8,7 @@ Padre::Util::Win32 - Padre Win32 Utility Functions
 
 =head1 DESCRIPTION
 
-The Padre::Util::Win32 package is a internal storage area for miscellaneous
+The C<Padre::Util::Win32> package is a internal storage area for miscellaneous
 functions that aren't really Padre-specific that we want to throw
 somewhere convenient so they won't clog up task-specific packages.
 
@@ -52,7 +52,7 @@ sub GetLongPathName {
 	my $buf      = ' ' x $MAX_PATH;
 
 	my $func = Win32::API->new( kernel32 => <<'CODE');
-	DWORD GetLongPathName( 
+	DWORD GetLongPathName(
 		LPCTSTR lpszShortPath,
 		LPTSTR lpszLongPath,
 		DWORD cchBuffer
@@ -250,14 +250,14 @@ CODE
 	return $stats->{PeakWorkingSetSize};
 }
 
-=head2 GetLastError
+=head2 C<GetLastError>
 
   Padre::Util::Win32::GetLastError;
 
-Returns the error code of the last WIN32-API - call.
+Returns the error code of the last Win32 API call.
 
 The list of error codes could be found at
-http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx
+L<http://msdn.microsoft.com/en-us/library/ms681381(VS.85).aspx>.
 
 =cut
 
