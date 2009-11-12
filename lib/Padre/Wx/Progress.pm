@@ -9,8 +9,8 @@ Padre::Wx::Progress - Tell the user that we're doing something
 =head1 SYNOPSIS
 
   my $object = Padre::Wx::Progress->new($title, $max_count,
-               [modal => 1,]
-               [lazy  => 1,]
+               modal => 1,
+               lazy  => 1,
                );
 
   $object->Update($done_count, $current_work_text);
@@ -35,9 +35,9 @@ our $VERSION = '0.50';
 =head2 new
 
   my $object = Padre::Wx::Progress->new($title, $max_count,
-               [message => $default_message]
-               [modal => 1,]
-               [lazy  => 1,]
+               message => $default_message # optional
+               modal => 1, # optional
+               lazy  => 1, # optional
                );
 
 The C<new> constructor lets you create a new C<Padre::Wx::Progress> object.
@@ -50,12 +50,15 @@ Options:
 
 A default message could be set (in case C<update> should be called without text)
 with the message key. This is overridden by the newest C<update> text.
+Default is an empty message.
 
 Set modal to true to lock other application windows while the progress
-box is displayed.
+box is displayed. Default is 0 (non-modal).
 
 Set lazy to true to show the progress dialog only if the whole process
-takes long enough that the progress box makes sense.
+takes long enough that the progress box makes sense. Default if 1 (lazy-mode).
+
+All options are optional, Padre will use fixed defaults if they're missing.
 
 Returns a new C<Padre::Wx::Progress> or dies on error.
 
@@ -84,20 +87,24 @@ sub _create_progress {
 	my $self = shift;
 
 	# Add some default flags:
-	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | Wx::wxPD_AUTO_HIDE;
+	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | 
+	            Wx::wxPD_AUTO_HIDE;
 	$flags |= Wx::wxPD_APP_MODAL if $self->{modal};
 
 	# Create the progress bar dialog:
-	$self->{dialog} = Wx::ProgressDialog->new( $self->{title}, $self->{message}, $self->{max}, $self->{main}, $flags );
+	$self->{dialog} = Wx::ProgressDialog->new( $self->{title}, $self->{message},
+	                                           $self->{max}, $self->{main}, $flags );
 }
 
 =pod
 
 =head2 update
 
-  $progress->update($value,[$text])
+  $progress->update($value,$text);
 
 Updates the progress bar with a new value and optional with a new text message.
+
+The last message will stay if no new text is specified.
 
 =cut
 
@@ -126,6 +133,7 @@ sub Destroy {
 
 sub DESTROY {
 	my $self = shift;
+	# Destroy (and hide )the dialog if it's still defined
 	$self->{dialog}->Destroy if defined( $self->{dialog} );
 }
 
