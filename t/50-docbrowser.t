@@ -5,8 +5,7 @@ use Test::More;
 use Padre::Constant;
 
 BEGIN {
-	my $isWindows = 
-	
+
     require Win32 if Padre::Constant::WIN32;
 	unless ( $ENV{DISPLAY} or Padre::Constant::WIN32 ) {
 		plan skip_all => 'Needs DISPLAY';
