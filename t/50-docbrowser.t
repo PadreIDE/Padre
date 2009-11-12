@@ -2,15 +2,17 @@
 
 use strict;
 use Test::More;
-use constant IS_WINDOWS => $^O =~ m{ \A MSWin }xms;
+use Padre::Constant;
 
 BEGIN {
-    require Win32 if IS_WINDOWS;
-	unless ( $ENV{DISPLAY} or IS_WINDOWS ) {
+	my $isWindows = 
+	
+    require Win32 if Padre::Constant::WIN32;
+	unless ( $ENV{DISPLAY} or Padre::Constant::WIN32 ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	if ( IS_WINDOWS ? Win32::IsAdminUser() : ! $< ) {
+	if ( Padre::Constant::WIN32 ? Win32::IsAdminUser() : ! $< ) {
 		plan skip_all => 'Cannot run as root';
 		exit 0;
 	}
