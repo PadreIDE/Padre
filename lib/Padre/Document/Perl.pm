@@ -225,6 +225,17 @@ sub get_function_regex {
 	return qr/(?:^|[^#\s])\s*(sub\s+$_[1])\b/;
 }
 
+=pod
+
+=head2 get_command
+
+Returns the full command (interpreter, filename (maybe temporary) and arguments
+for both of them) for running the current document.
+
+Accepts one optional argument: a debug flag.
+
+=cut
+
 sub get_command {
 	my $self  = shift;
 	my $debug = shift;
@@ -365,6 +376,18 @@ sub _check_syntax_internals {
 		return $task->{syntax_check};
 	}
 }
+
+=pod
+
+=head2 beginner_check
+
+Run the beginer error checks on the current document.
+
+Shows a popup message for the first error.
+
+Always returns 1 (true).
+
+=cut
 
 # Run the checks for common beginner errors
 sub beginner_check {
@@ -941,6 +964,27 @@ sub perltags_parser {
 	return $parser;
 }
 
+=pod
+
+=head2 autocomplete
+
+This method is called on two events:
+ - Manually using the autocomplete-action (via menu, toolbar, hotkey)
+ - on every char typed by the user if the "autocomplete-always" config option
+   is active
+
+Arguments:
+ - The event object (optional)
+
+Returns the prefix length and an array of suggestions. prefix_length is the
+number of chars left to the cursor position which need to be replaced if
+a suggestion is accepted.
+
+WARNING: This method runs very often (on each keypress), keep it as efficient
+         and fast as possible!
+
+=cut
+
 sub autocomplete {
 	my $self  = shift;
 	my $event = shift;
@@ -1171,6 +1215,26 @@ sub newline_keep_column {
 
 	return 1;
 }
+
+=pod
+
+=head2 event_on_char
+
+This event fires once for every char which should be added to the editor window.
+
+Typing this line fired it about 41 times!
+
+Arguments: Current editor object, current event object
+
+Returns nothing useful.
+
+Notice: The char being typed has not been inserted into the editor at the run
+        time of this method. It could be read using $event->GetUnicodeKey
+
+WARNING: This method runs very often (on each keypress), keep it as efficient
+         and fast as possible!
+
+=cut
 
 sub event_on_char {
 	my ( $self, $editor, $event ) = @_;
