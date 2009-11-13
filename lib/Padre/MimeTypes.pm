@@ -83,7 +83,7 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
 		t     => \&perl_mime_type,
-		xs    => 'text/x-perlxs', # for the lack of a better solution, define our own MIME
+		xs    => 'text/x-perlxs',         # for the lack of a better solution, define our own MIME
 
 		# Compiled Perl Module or gimme5's output
 		pmc   => \&perl_mime_type,
@@ -145,22 +145,22 @@ sub _initialize {
 			name  => 'c',
 			lexer => Wx::wxSTC_LEX_CPP,
 		},
-		'text/x-perlxs' => { # totally not confirmed
+		'text/x-perlxs' => {              # totally not confirmed
 			name  => 'XS',
-			lexer => Wx::wxSTC_LEX_CPP, # for the lack of a better XS lexer (vim?)
+			lexer => Wx::wxSTC_LEX_CPP,    # for the lack of a better XS lexer (vim?)
 			class => 'Padre::Document::XS',
 		},
 		'text/x-c++src' => {
 			name  => 'c++',
-			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CPP,    # CONFIRMED
 		},
 		'text/css' => {
 			name  => 'CSS',
-			lexer => Wx::wxSTC_LEX_CSS,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CSS,    # CONFIRMED
 		},
 		'text/x-patch' => {
 			name  => 'Patch',
-			lexer => Wx::wxSTC_LEX_DIFF,  # CONFIRMED
+			lexer => Wx::wxSTC_LEX_DIFF,   # CONFIRMED
 		},
 		'text/x-eiffel' => {
 			name  => 'Eiffel',

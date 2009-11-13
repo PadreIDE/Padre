@@ -13,9 +13,11 @@ our @ISA     = 'Padre::Document';
 sub keywords {
 	my $self = shift;
 
-	if (not defined $self->{_perlapi_keywords}) {
+	if ( not defined $self->{_perlapi_keywords} ) {
+
 		# TODO support for multiple perlapi versions...
-		$self->{_perlapi_keywords} = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perlapi_current.yml' ) );
+		$self->{_perlapi_keywords} =
+			YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perlapi_current.yml' ) );
 	}
 	return $self->{_perlapi_keywords};
 }

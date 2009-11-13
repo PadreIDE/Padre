@@ -471,7 +471,7 @@ sub _get_current_symbol {
 	# find start of symbol
 	# TO DO: This could be more robust, no?
 	# Ticket #639
-        # if we are at the end of a symbol (maybe we need better detection?), start counting on the previous letter. this should resolve #419 and #654
+	# if we are at the end of a symbol (maybe we need better detection?), start counting on the previous letter. this should resolve #419 and #654
 	$col-- if $col and substr( $line_content, $col - 1, 2 ) =~ /^\w\W$/;
 	while (1) {
 		last if $col <= 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/;
@@ -558,14 +558,14 @@ sub find_method_declaration {
 
 	# Try to extract class methods' class name
 	my $editor       = $self->editor;
-	my $line         = $location->[0]-1;
-	my $col          = $location->[1]-1;
+	my $line         = $location->[0] - 1;
+	my $col          = $location->[1] - 1;
 	my $line_start   = $editor->PositionFromLine($line);
 	my $token_end    = $line_start + $col + 1 + length($token);
 	my $line_content = $editor->GetTextRange( $line_start, $token_end );
 	my ($class) = $line_content =~ /(?:^|[^\w:\$])(\w+(?:::\w+)*)\s*->\s*\Q$token\E$/;
 
-	my ( $found, $filename ) = $self->_find_method($token, $class);
+	my ( $found, $filename ) = $self->_find_method( $token, $class );
 	if ( not $found ) {
 		Wx::MessageBox(
 			Wx::gettext("Current '$token' not found"),
@@ -611,20 +611,22 @@ sub _find_method {
 	my $parser = $self->perltags_parser;
 	if ( defined($parser) ) {
 		my $tag = $parser->findTag($name);
+
 		# Try to match tag AND class first
-		if (defined $class) {
+		if ( defined $class ) {
 			while (1) {
 				last if not defined $tag;
-				next if not defined $tag->{extension}{class}
-				     or not $tag->{extension}{class} eq $class;
+				next
+					if not defined $tag->{extension}{class}
+						or not $tag->{extension}{class} eq $class;
 				last;
-			}
-			continue {
+			} continue {
 				$tag = $parser->findNextTag();
 			}
+
 			# fall back to the first method name match (bad idea?)
 			$tag = $parser->findTag($name)
-			  if not defined $tag;
+				if not defined $tag;
 		}
 
 		return ( 1, $tag->{file} ) if defined $tag;
