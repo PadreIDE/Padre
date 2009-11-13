@@ -595,9 +595,19 @@ sub find_method_declaration {
 	return ();
 }
 
+# Arguments: A method name
+# Returns: Success-Bit, Filename
 sub _find_method {
 	my ( $self, $name ) = @_;
 
+	# Use tags parser if it's configured, return a match
+	my $parser = $self->_perltags_parser;
+	if (defined($parser)) {
+		my $tag = $parser->findTag($name);
+		return 1,$tag->{file} if defined($tag);
+	}
+
+	# Fallback: Search for methods in source
 	# TO DO: unify with code in Padre::Wx::FunctionList
 	# TO DO: lots of improvement needed here
 	if ( not $self->{_methods_}{$name} ) {
