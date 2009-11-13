@@ -6,12 +6,12 @@ use Padre::Constant;
 
 BEGIN {
 
-    require Win32 if Padre::Constant::WIN32;
+	require Win32 if Padre::Constant::WIN32;
 	unless ( $ENV{DISPLAY} or Padre::Constant::WIN32 ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	if ( Padre::Constant::WIN32 ? Win32::IsAdminUser() : ! $< ) {
+	if ( Padre::Constant::WIN32 ? Win32::IsAdminUser() : !$< ) {
 		plan skip_all => 'Cannot run as root';
 		exit 0;
 	}

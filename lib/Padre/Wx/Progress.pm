@@ -87,13 +87,14 @@ sub _create_progress {
 	my $self = shift;
 
 	# Add some default flags:
-	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | 
-	            Wx::wxPD_AUTO_HIDE;
+	my $flags = Wx::wxPD_ELAPSED_TIME | Wx::wxPD_ESTIMATED_TIME | Wx::wxPD_REMAINING_TIME | Wx::wxPD_AUTO_HIDE;
 	$flags |= Wx::wxPD_APP_MODAL if $self->{modal};
 
 	# Create the progress bar dialog:
-	$self->{dialog} = Wx::ProgressDialog->new( $self->{title}, $self->{message},
-	                                           $self->{max}, $self->{main}, $flags );
+	$self->{dialog} = Wx::ProgressDialog->new(
+		$self->{title}, $self->{message},
+		$self->{max}, $self->{main}, $flags
+	);
 }
 
 =pod
@@ -133,6 +134,7 @@ sub Destroy {
 
 sub DESTROY {
 	my $self = shift;
+
 	# Destroy (and hide )the dialog if it's still defined
 	$self->{dialog}->Destroy if defined( $self->{dialog} );
 }

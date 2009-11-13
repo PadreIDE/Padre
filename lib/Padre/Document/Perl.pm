@@ -602,9 +602,9 @@ sub _find_method {
 
 	# Use tags parser if it's configured, return a match
 	my $parser = $self->perltags_parser;
-	if (defined($parser)) {
+	if ( defined($parser) ) {
 		my $tag = $parser->findTag($name);
-		return(1, $tag->{file}) if defined $tag;
+		return ( 1, $tag->{file} ) if defined $tag;
 	}
 
 	# Fallback: Search for methods in source
@@ -634,7 +634,7 @@ sub _find_method {
 	#print Dumper $self->{_methods_};
 
 	if ( $self->{_methods_}{$name} ) {
-		return(1, $self->{_methods_}{$name});
+		return ( 1, $self->{_methods_}{$name} );
 	}
 	return;
 }
@@ -845,13 +845,13 @@ sub perltags_parser {
 	my $self = shift;
 
 	require Parse::ExuberantCTags;
-	my $config = Padre->ide->config;
+	my $config        = Padre->ide->config;
 	my $perltags_file = $self->{_perltags_file};
 
 	# Use the configured file (if any) or the old default, reset on config change
-	if ( not defined$perltags_file
-	     or not defined $self->{_perltags_config}
-	     or $self->{_perltags_config} ne $config->perl_tags_file )
+	if (   not defined $perltags_file
+		or not defined $self->{_perltags_config}
+		or $self->{_perltags_config} ne $config->perl_tags_file )
 	{
 
 		$self->{_perltags_file} = $config->perl_tags_file || File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' );
@@ -875,18 +875,18 @@ sub perltags_parser {
 	#  - there is one
 	#  - the last check is younger than 5 seconds (don't check the file again)
 	#    or the file's mtime matches our cached mtime
-	if ( defined $self->{_perltags_parser} 
-	     and defined $self->{_perltags_parser_time}
-	     and ( $self->{_perltags_parser_last} > time-5
-	           or $self->{_perltags_parser_time} == (stat $perltags_file)[9] )
-	   )
+	if (    defined $self->{_perltags_parser}
+		and defined $self->{_perltags_parser_time}
+		and (  $self->{_perltags_parser_last} > time - 5
+			or $self->{_perltags_parser_time} == ( stat $perltags_file )[9] )
+		)
 	{
 		$parser = $self->{_perltags_parser};
 		$self->{_perltags_parser_last} = time;
 	} else {
 		$parser                        = Parse::ExuberantCTags->new($perltags_file);
 		$self->{_perltags_parser}      = $parser;
-		$self->{_perltags_parser_time} = (stat $perltags_file)[9];
+		$self->{_perltags_parser_time} = ( stat $perltags_file )[9];
 		$self->{_perltags_parser_last} = time;
 	}
 
@@ -1234,6 +1234,7 @@ sub event_on_right_down {
 	}
 
 	unless ($pos) {
+
 		# Fall back to the cursor position
 		$pos = $editor->GetCurrentPos();
 	}
