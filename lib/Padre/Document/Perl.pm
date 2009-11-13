@@ -601,10 +601,10 @@ sub _find_method {
 	my ( $self, $name ) = @_;
 
 	# Use tags parser if it's configured, return a match
-	my $parser = $self->_perltags_parser;
+	my $parser = $self->perltags_parser;
 	if (defined($parser)) {
 		my $tag = $parser->findTag($name);
-		return 1,$tag->{file} if defined($tag);
+		return(1, $tag->{file}) if defined $tag;
 	}
 
 	# Fallback: Search for methods in source
@@ -634,10 +634,9 @@ sub _find_method {
 	#print Dumper $self->{_methods_};
 
 	if ( $self->{_methods_}{$name} ) {
-		return 1, $self->{_methods_}{$name};
+		return(1, $self->{_methods_}{$name});
 	}
 	return;
-
 }
 
 # TO DO temp function given a name of a subroutine and move the cursor
@@ -842,20 +841,17 @@ EOC
 
 # This sub handles a cached C-Tags - Parser object which is much faster
 # than recreating it on every autocomplete
-
-sub _perltags_parser {
+sub perltags_parser {
 	my $self = shift;
 
-	my $config = Padre->ide->config;
-
 	require Parse::ExuberantCTags;
-
+	my $config = Padre->ide->config;
 	my $perltags_file = $self->{_perltags_file};
 
 	# Use the configured file (if any) or the old default, reset on config change
-	if (   ( !defined($perltags_file) )
-		or ( !defined( $self->{_perltags_config} ) )
-		or ( $self->{_perltags_config} ne $config->perl_tags_file ) )
+	if ( not defined$perltags_file
+	     or not defined $self->{_perltags_config}
+	     or $self->{_perltags_config} ne $config->perl_tags_file )
 	{
 
 		$self->{_perltags_file} = $config->perl_tags_file || File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' );
@@ -871,7 +867,7 @@ sub _perltags_parser {
 
 	# If we don't have a file (none specified in config, for example), return undef
 	# as the object and noone will try to use it
-	return undef if !defined($perltags_file);
+	return undef if not defined $perltags_file;
 
 	my $parser;
 
@@ -879,18 +875,18 @@ sub _perltags_parser {
 	#  - there is one
 	#  - the last check is younger than 5 seconds (don't check the file again)
 	#    or the file's mtime matches our cached mtime
-	if (    defined( $self->{_perltags_parser} )
-		and defined( $self->{_perltags_parser_time} )
-		and (  ( $self->{_perltags_parser_last} > ( time - 5 ) )
-			or ( $self->{_perltags_parser_time} == ( stat($perltags_file) )[9] ) )
-		)
+	if ( defined $self->{_perltags_parser} 
+	     and defined $self->{_perltags_parser_time}
+	     and ( $self->{_perltags_parser_last} > time-5
+	           or $self->{_perltags_parser_time} == (stat $perltags_file)[9] )
+	   )
 	{
 		$parser = $self->{_perltags_parser};
 		$self->{_perltags_parser_last} = time;
 	} else {
 		$parser                        = Parse::ExuberantCTags->new($perltags_file);
 		$self->{_perltags_parser}      = $parser;
-		$self->{_perltags_parser_time} = ( stat($perltags_file) )[9];
+		$self->{_perltags_parser_time} = (stat $perltags_file)[9];
 		$self->{_perltags_parser_last} = time;
 	}
 
@@ -942,7 +938,7 @@ sub autocomplete {
 	if ( $prefix =~ /([\$\@\%\*])(\w+(?:::\w+)*)$/ ) {
 		my $prefix = $2;
 		my $type   = $1;
-		my $parser = $self->_perltags_parser;
+		my $parser = $self->perltags_parser;
 		if ( defined $parser ) {
 			my $tag = $parser->findTag( $prefix, partial => 1 );
 			my @words;
@@ -998,7 +994,7 @@ sub autocomplete {
 		my $class  = $1;
 		my $prefix = $2;
 		$prefix = '' if not defined $prefix;
-		my $parser = $self->_perltags_parser;
+		my $parser = $self->perltags_parser;
 		if ( defined $parser ) {
 			my $tag = ( $prefix eq '' ) ? $parser->firstTag() : $parser->findTag( $prefix, partial => 1 );
 			my @words;
@@ -1023,7 +1019,7 @@ sub autocomplete {
 	# check for packages
 	elsif ( $prefix =~ /(?![\$\@\%\*])(\w+(?:::\w+)*)/ ) {
 		my $prefix = $1;
-		my $parser = $self->_perltags_parser;
+		my $parser = $self->perltags_parser;
 
 		if ( defined $parser ) {
 			my $tag = $parser->findTag( $prefix, partial => 1 );
@@ -1238,7 +1234,6 @@ sub event_on_right_down {
 	}
 
 	unless ($pos) {
-
 		# Fall back to the cursor position
 		$pos = $editor->GetCurrentPos();
 	}
@@ -1249,7 +1244,6 @@ sub event_on_right_down {
 
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
-
 		$menu->AppendSeparator if not $introduced_separator++;
 
 		my $findDecl = $menu->Append( -1, Wx::gettext("Find Variable Declaration") );
