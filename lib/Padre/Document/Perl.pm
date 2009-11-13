@@ -8,13 +8,13 @@ use Encode ();
 use Params::Util '_INSTANCE';
 use YAML::Tiny                      ();
 use Padre::Document                 ();
-use Padre::File ();
+use Padre::File                     ();
 use Padre::Util                     ();
 use Padre::Perl                     ();
 use Padre::Document::Perl::Beginner ();
 use File::Find::Rule                ();
-use File::Spec	();
-use File::Temp ();
+use File::Spec                      ();
+use File::Temp                      ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Document';
@@ -905,11 +905,14 @@ sub perltags_parser {
 		or $self->{_perltags_config} ne $config->perl_tags_file )
 	{
 
-		for my $candidate ($self->project_tagsfile, $config->perl_tags_file,
-		     File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' )) {
+		for my $candidate (
+			$self->project_tagsfile, $config->perl_tags_file,
+			File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' )
+			)
+		{
 
 			# project_tagsfile and config value may be undef
-			next if ! defined($candidate);
+			next if !defined($candidate);
 
 			# config value may be defined but empty
 			next if $candidate eq '';
@@ -918,20 +921,22 @@ sub perltags_parser {
 			# to allow "ftp://my.server/~myself/perltags" in config
 			# and remote projects
 			my $tagsfile = Padre::File->new($candidate);
-			next if ! defined($tagsfile);
-			
-			next if ! $tagsfile->exists;
+			next if !defined($tagsfile);
+
+			next if !$tagsfile->exists;
 
 			# For non-local perltags-files, copy the file to a local tempfile,
 			# otherwise the parser won't work or will be very slow.
-			if ($tagsfile->{protocol} ne 'local') {
+			if ( $tagsfile->{protocol} ne 'local' ) {
+
 				# Create temporary local file
-				$self->{_perltags_temp} = File::Temp->new(UNLINK => 1);
+				$self->{_perltags_temp} = File::Temp->new( UNLINK => 1 );
 
 				# Flush tagsfile content to temporary file
 				my $FH = $self->{_perltags_temp};
 				$FH->autoflush(1);
 				print $FH $tagsfile->read;
+
 				# File should not be closed - it may get deleted on close!
 
 				# Use the local temporary file as tagsfile
@@ -939,7 +944,7 @@ sub perltags_parser {
 			} else {
 				$self->{_perltags_file} = $candidate;
 			}
-			
+
 			# Use first existing file
 			last;
 		}
@@ -1553,11 +1558,11 @@ document.
 
 sub project_tagsfile {
 	my $self = shift;
-	
+
 	my $project_dir = $self->project_dir;
-	
-	return if ! defined($project_dir);
-	
+
+	return if !defined($project_dir);
+
 	return File::Spec->catfile( $project_dir, 'perltags' );
 }
 
@@ -1576,8 +1581,8 @@ sub project_create_tagsfile {
 	# First try is using the perl-tags command, next version should so this
 	# internal using Padre::File and should skip at least the "blip" dir.
 
-#	print STDERR join(' ','perl-tags','-o',$self->project_tagsfile,$self->project_dir)."\n";
-	system 'perl-tags','-o',$self->project_tagsfile,$self->project_dir;
+	#	print STDERR join(' ','perl-tags','-o',$self->project_tagsfile,$self->project_dir)."\n";
+	system 'perl-tags', '-o', $self->project_tagsfile, $self->project_dir;
 
 }
 

@@ -104,10 +104,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name    => 'perl.create_tagsfile',
-		label   => Wx::gettext('Create project tagsfile'),
-		comment => Wx::gettext(
-			'Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+		name  => 'perl.create_tagsfile',
+		label => Wx::gettext('Create project tagsfile'),
+		comment =>
+			Wx::gettext('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			return unless _INSTANCE( $document, 'Padre::Document::Perl' );
