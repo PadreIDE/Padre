@@ -54,6 +54,7 @@ sub _initialize {
 		asm   => 'text/x-asm',
 		bat   => 'text/x-bat',
 		bml   => 'text/x-bml',            # dreamwidth file format
+		c     => 'text/x-c',
 		cpp   => 'text/x-c++src',
 		css   => 'text/css',
 		diff  => 'text/x-patch',
@@ -82,6 +83,7 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
 		t     => \&perl_mime_type,
+		xs    => 'text/x-perlxs', # for the lack of a better solution, define our own MIME
 
 		# Compiled Perl Module or gimme5's output
 		pmc   => \&perl_mime_type,
@@ -139,6 +141,15 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_NULL,  #
 		},
 
+		'text/x-c' => {
+			name  => 'c',
+			lexer => Wx::wxSTC_LEX_CPP,
+		},
+		'text/x-perlxs' => { # totally not confirmed
+			name  => 'XS',
+			lexer => Wx::wxSTC_LEX_CPP, # for the lack of a better XS lexer (vim?)
+			class => 'Padre::Document::XS',
+		},
 		'text/x-c++src' => {
 			name  => 'c++',
 			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
