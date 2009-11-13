@@ -4,10 +4,14 @@ Changes for Perl Application Development and Refactoring Environment
     - Find all option showing all matches in bottom tab (CODE4PAY)
     - Improved FTP error handling (SEWI)
     - Open URLs from command line (SEWI)
+    - Configurable location of the 'perltags' file for autocompletion (SEWI)
     - Fixed ticket #419: find variable declaration does not work at the end of
       a variable (PATRICKAS)
     - Fixed ticket #654: Lexical Rename of Variable - Can't highlight the
-      whole variable (PATRICKAS)      
+      whole variable (PATRICKAS)    
+    - Improved "Find Method Declaration" based on perltags (SMUELLER)
+    - Basic XS-Document support (SMUELLER)
+    - XS (perlapi) calltips based on the perlapi of 5.10.1 (SMUELLER)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
@@ -458,7 +462,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fix Ctrl-TAB and Ctrl-Shift-TAB. (SZABGAB)
     - List the available perldiag translations and allow the user to change. (SZABGAB)
     - Fix a few missed cases of the API change. (SZABGAB)
-    - Some sharedir improvement. (TSEE)
+    - Some sharedir improvement. (SMUELLER)
     - List of available perldiag translations. (SZABGAB)
     - Add prompt method to be used by plugins as well. (SZABGAB)
 
