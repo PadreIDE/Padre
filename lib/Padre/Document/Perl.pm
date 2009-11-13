@@ -8,10 +8,13 @@ use Encode ();
 use Params::Util '_INSTANCE';
 use YAML::Tiny                      ();
 use Padre::Document                 ();
+use Padre::File ();
 use Padre::Util                     ();
 use Padre::Perl                     ();
 use Padre::Document::Perl::Beginner ();
 use File::Find::Rule                ();
+use File::Spec	();
+use File::Temp ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Document';
@@ -919,7 +922,23 @@ sub perltags_parser {
 			
 			next if ! $tagsfile->exists;
 
-			$self->{_perltags_file} = $candidate;
+			# For non-local perltags-files, copy the file to a local tempfile,
+			# otherwise the parser won't work or will be very slow.
+			if ($tagsfile->{protocol} ne 'local') {
+				# Create temporary local file
+				$self->{_perltags_temp} = File::Temp->new(UNLINK => 1);
+
+				# Flush tagsfile content to temporary file
+				my $FH = $self->{_perltags_temp};
+				$FH->autoflush(1);
+				print $FH $tagsfile->read;
+				# File should not be closed - it may get deleted on close!
+
+				# Use the local temporary file as tagsfile
+				$self->{_perltags_file} = $self->{_perltags_temp}->filename;
+			} else {
+				$self->{_perltags_file} = $candidate;
+			}
 			
 			# Use first existing file
 			last;
@@ -953,8 +972,6 @@ sub perltags_parser {
 		$parser = $self->{_perltags_parser};
 		$self->{_perltags_parser_last} = time;
 	} else {
-		# TODO: For non-local perltags-files, copy the file to a local tempfile,
-		#       otherwise the parser won't work or will be very slow.x
 		$parser                        = Parse::ExuberantCTags->new($perltags_file);
 		$self->{_perltags_parser}      = $parser;
 		$self->{_perltags_parser_time} = ( stat $perltags_file )[9];
