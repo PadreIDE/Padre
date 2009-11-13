@@ -11,13 +11,13 @@ our @ISA     = 'Padre::Document';
 # TODO better highlighting. Can vim do better? Can we steal? Add an STC highlighter? ...
 
 sub keywords {
-  my $self = shift;
-  
-  if (not defined $self->{_perlapi_keywords}) {
-    # TODO support for multiple perlapi versions...
-    $self->{_perlapi_keywords} = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perlapi_current.yml' ) );
-  }
-  return $self->{_perlapi_keywords};
+	my $self = shift;
+
+	if (not defined $self->{_perlapi_keywords}) {
+		# TODO support for multiple perlapi versions...
+		$self->{_perlapi_keywords} = YAML::Tiny::LoadFile( Padre::Util::sharefile( 'languages', 'perl5', 'perlapi_current.yml' ) );
+	}
+	return $self->{_perlapi_keywords};
 }
 
 1;
