@@ -1436,6 +1436,47 @@ sub menu {
 	return [ 'menu.Perl', 'menu.Refactor' ];
 }
 
+=pod
+
+=head2 project_tagsfile
+
+No arguments.
+
+Returns the full path and filename of the (perl))tagsfile for the current
+document.
+
+=cut
+
+sub project_tagsfile {
+	my $self = shift;
+	
+	my $project_dir = $self->project_dir;
+	
+	return if ! defined($project_dir);
+	
+	return File::Spec->catpath( '',$project_dir, 'perltags' );
+}
+
+=pod
+
+=head2 project_create_tagsfile
+
+Creates a tagsfile for the project of the current document. Includes all Perl
+source files within the project excluding blib.
+
+=cut
+
+sub project_create_tagsfile {
+	my $self = shift;
+
+	# First try is using the perl-tags command, next version should so this
+	# internal using Padre::File and should skip at least the "blip" dir.
+
+	print STDERR join(' ','perl-tags','-o',$self->project_tagsfile,$self->project_dir)."\n";
+	system 'perl-tags','-o',$self->project_tagsfile,$self->project_dir;
+
+}
+
 
 
 1;

@@ -56,6 +56,11 @@ sub new {
 		'perl.find_method',
 	);
 
+	$self->{create_tagsfile} = $self->add_menu_action(
+		$self,
+		'perl.create_tagsfile',
+	);
+
 
 	$self->AppendSeparator;
 
@@ -121,6 +126,9 @@ sub refresh {
 
 	return;
 }
+
+
+
 
 1;
 

@@ -103,6 +103,18 @@ sub new {
 		},
 	);
 
+	Padre::Action->new(
+		name    => 'perl.create_tagsfile',
+		label   => Wx::gettext('Create project tagsfile'),
+		comment => Wx::gettext(
+			'Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			return unless _INSTANCE( $document, 'Padre::Document::Perl' );
+			$document->project_create_tagsfile;
+		},
+	);
+
 	# Move of stacktrace to Run
 	#	# Make it easier to access stack traces
 	#	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
