@@ -879,7 +879,28 @@ sub perltags_parser {
 		or $self->{_perltags_config} ne $config->perl_tags_file )
 	{
 
-		$self->{_perltags_file} = $config->perl_tags_file || File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' );
+		for my $candidate ($self->project_tagsfile, $config->perl_tags_file,
+		     File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' )) {
+
+			# project_tagsfile and config value may be undef
+			next if ! defined($candidate);
+
+			# config value may be defined but empty
+			next if $candidate eq '';
+
+			# Check if the tagsfile exists using Padre::File
+			# to allow "ftp://my.server/~myself/perltags" in config
+			# and remote projects
+			my $tagsfile = Padre::File->new($candidate);
+			next if ! defined($tagsfile);
+			
+			next if ! $tagsfile->exists;
+
+			$self->{_perltags_file} = $candidate;
+			
+			# Use first existing file
+			last;
+		}
 
 		# Remember current value for later checks
 		$self->{_perltags_config} = $config->perl_tags_file;
@@ -909,6 +930,8 @@ sub perltags_parser {
 		$parser = $self->{_perltags_parser};
 		$self->{_perltags_parser_last} = time;
 	} else {
+		# TODO: For non-local perltags-files, copy the file to a local tempfile,
+		#       otherwise the parser won't work or will be very slow.x
 		$parser                        = Parse::ExuberantCTags->new($perltags_file);
 		$self->{_perltags_parser}      = $parser;
 		$self->{_perltags_parser_time} = ( stat $perltags_file )[9];
@@ -1454,7 +1477,7 @@ sub project_tagsfile {
 	
 	return if ! defined($project_dir);
 	
-	return File::Spec->catpath( '',$project_dir, 'perltags' );
+	return File::Spec->catfile( $project_dir, 'perltags' );
 }
 
 =pod
@@ -1472,7 +1495,7 @@ sub project_create_tagsfile {
 	# First try is using the perl-tags command, next version should so this
 	# internal using Padre::File and should skip at least the "blip" dir.
 
-	print STDERR join(' ','perl-tags','-o',$self->project_tagsfile,$self->project_dir)."\n";
+#	print STDERR join(' ','perl-tags','-o',$self->project_tagsfile,$self->project_dir)."\n";
 	system 'perl-tags','-o',$self->project_tagsfile,$self->project_dir;
 
 }
