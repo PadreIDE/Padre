@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More;# tests => 47;
+use Test::More;
 
 use Padre::File;
 
@@ -53,7 +53,7 @@ for my $url ( keys(%HTTP_Tests) ) {
 # Plain file from CPAN
 $file = Padre::File->new('ftp://ftp.cpan.org/pub/CPAN/README');
 ok( defined($file), 'FTP: Create Padre::File object' );
-ok( ref($file) eq 'Padre::File::FTP', 'HTTP: Check module' );
+ok( ref($file) eq 'Padre::File::FTP', 'FTP: Check module' );
 ok( $file->{protocol} eq 'ftp', 'FTP: Check protocol' );
 ok( $file->size > 0,            'FTP: file size' );
 ok( $file->basename eq 'README', 'FTP: basename' );
