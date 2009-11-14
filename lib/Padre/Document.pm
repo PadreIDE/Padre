@@ -1034,7 +1034,7 @@ sub project_find {
 	# Search upwards from the file to find the project root
 	my ( $v, $d, $f ) = File::Spec->splitpath( $self->{file}->filename );
 	my @d = File::Spec->splitdir($d);
-	pop @d if $d[-1] eq '';
+	pop @d if defined($d[-1]) and ($d[-1] eq '');
 	my $dirs = List::Util::first {
 		-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
 			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
