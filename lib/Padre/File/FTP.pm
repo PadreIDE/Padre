@@ -15,10 +15,19 @@ sub new {
 
 	my $url = shift;
 
-	my $config = Padre->ide->config;
-
 	# Create myself
 	my $self = bless { filename => $url }, $class;
+
+	# Using the config is optional, tests and other usages should run without
+	my $config = eval { return Padre->ide->config; };
+	if (defined($config)) {
+		$self->{_timeout} = $config->file_ftp_timeout;
+		$self->{_passive} = $config->file_ftp_passive;
+	} else {
+		# Use defaults if we have no config
+		$self->{_timeout} = 60;
+		$self->{_passive} = 1;
+	}
 
 	# Don't add a new overall-dependency to Padre:
 	eval { require Net::FTP; };
@@ -71,8 +80,8 @@ sub new {
 	$self->{_ftp} = Net::FTP->new(
 		Host    => $self->{_host},
 		Port    => $self->{_port},
-		Timeout => $config->file_ftp_timeout,
-		Passive => $config->file_ftp_passive,
+		Timeout => $self->{_timeout},
+		Passive => $self->{_passive},
 
 		#		Debug => 3, # Enable for FTP-debugging to STDERR
 	);
@@ -134,7 +143,19 @@ sub _todo_mtime {
 sub exists {
 	my $self = shift;
 	return if !defined( $self->{_ftp} );
-	return $self->size ? 1 : 0;
+
+	# Cache basename value
+	my $basename = $self->basename;
+
+	for ($self->{_ftp}->ls($self->{_file})) {
+		return 1 if $_ eq $self->{_file};
+		return 1 if $_ eq $basename;
+	}
+
+	# Fallback if ->ls didn't help. A file heaving a size should exist.
+	return 1 if $self->size;
+
+	return 0;
 }
 
 sub basename {
@@ -146,10 +167,12 @@ sub basename {
 	return $name;
 }
 
+# This method should return the dirname to be used inside Padre, not the one
+# used on the FTP-server.
 sub dirname {
 	my $self = shift;
 
-	my $dir = $self->{_file};
+	my $dir = $self->{filename};
 	$dir =~ s/\/[^\/]*$//;
 
 	return $dir;
@@ -192,6 +215,19 @@ sub write {
 
 	return 1;
 }
+
+###############################################################################
+### Internal FTP helper functions
+
+sub _ftp_dirname {
+	my $self = shift;
+
+	my $dir = $self->{_file};
+	$dir =~ s/\/[^\/]*$//;
+
+	return $dir;
+}
+
 
 1;
 
