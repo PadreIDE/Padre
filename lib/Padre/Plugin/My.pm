@@ -1,9 +1,9 @@
 package Padre::Plugin::My;
 
 use 5.008;
-use utf8;
 use strict;
 use warnings;
+use utf8;
 use Padre::Constant ();
 use Padre::Plugin   ();
 use Padre::Wx       ();
