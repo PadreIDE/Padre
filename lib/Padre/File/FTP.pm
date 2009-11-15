@@ -20,10 +20,11 @@ sub new {
 
 	# Using the config is optional, tests and other usages should run without
 	my $config = eval { return Padre->ide->config; };
-	if (defined($config)) {
+	if ( defined($config) ) {
 		$self->{_timeout} = $config->file_ftp_timeout;
 		$self->{_passive} = $config->file_ftp_passive;
 	} else {
+
 		# Use defaults if we have no config
 		$self->{_timeout} = 60;
 		$self->{_passive} = 1;
@@ -147,7 +148,7 @@ sub exists {
 	# Cache basename value
 	my $basename = $self->basename;
 
-	for ($self->{_ftp}->ls($self->{_file})) {
+	for ( $self->{_ftp}->ls( $self->{_file} ) ) {
 		return 1 if $_ eq $self->{_file};
 		return 1 if $_ eq $basename;
 	}

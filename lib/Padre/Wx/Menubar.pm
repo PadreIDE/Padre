@@ -219,7 +219,7 @@ sub refresh {
 			$self->{items}->[$count] = $self->{$obj};
 
 			# Refresh the menu only if all requirements exist already
-			if (defined($current->main) and defined($current->config)) {
+			if ( defined( $current->main ) and defined( $current->config ) ) {
 				$self->{$obj}->refresh($current);
 			}
 		}

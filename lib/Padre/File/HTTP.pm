@@ -25,9 +25,10 @@ sub new {
 
 	# Using the config is optional, tests and other usages should run without
 	my $config = eval { return Padre->ide->config; };
-	if (defined($config)) {
+	if ( defined($config) ) {
 		$self->{_timeout} = $config->file_http_timeout;
 	} else {
+
 		# Use defaults if we have no config
 		$self->{_timeout} = 60;
 	}
