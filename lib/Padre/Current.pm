@@ -146,6 +146,7 @@ sub editor {
 sub notebook {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	unless ( defined $self->{notebook} ) {
+		return unless defined $self->main;
 		$self->{notebook} = $self->main->notebook;
 	}
 	return $self->{notebook};
@@ -154,6 +155,7 @@ sub notebook {
 # Get the project from the main window (and don't cache)
 sub config {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
+	return unless defined($self->main);
 	$self->main->config;
 }
 
@@ -170,10 +172,12 @@ sub main {
 	}
 	unless ( defined $self->{main} ) {
 		if ( defined $self->{ide} ) {
+			return unless defined($self->{ide}->wx);
 			$self->{main} = $self->{ide}->wx->main;
 		} else {
 			require Padre;
 			$self->{ide}  = Padre->ide;
+			return unless defined($self->{ide}->wx);
 			$self->{main} = $self->{ide}->wx->main;
 		}
 		return $self->{main};

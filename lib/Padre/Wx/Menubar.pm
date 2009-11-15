@@ -111,6 +111,8 @@ sub refresh {
 	my $main   = $self->main;
 	my $config = $main->ide->config;
 
+	my $current = _CURRENT(@_);
+
 	# This is a version between fully configurable menus and the old fixed ones, it
 	# isn't made to stay forever, but it's working for now
 
@@ -215,6 +217,11 @@ sub refresh {
 				$self->wx->Append( $self->{$obj}->wx, $title );
 			}
 			$self->{items}->[$count] = $self->{$obj};
+
+			# Refresh the menu only if all requirements exist already
+			if (defined($current->main) and defined($current->config)) {
+				$self->{$obj}->refresh($current);
+			}
 		}
 
 	}
