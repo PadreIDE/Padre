@@ -40,7 +40,6 @@ use Wx::STC ();
 
 
 use File::Spec::Functions qw(catfile);
-use File::Slurp qw(read_file write_file);
 use File::Basename qw(basename);
 
 
@@ -132,7 +131,10 @@ sub setup_editor {
 	my $title   = "Unsaved Document 1";
 	my $content = '';
 	if ($file) {
-		$content = read_file($file);
+		if (open my $in, '<', $file) {
+			local $/ = undef;
+			$content = <$in>;
+		}
 		$title   = basename($file);
 		$editor->SetText($content);
 	}
@@ -222,7 +224,9 @@ sub _save_buffer {
 
 	my $page    = $nb->GetPage($id);
 	my $content = $page->GetText;
-	eval { write_file( $nb{$id}{filename}, $content ); };
+	if (open my $out, '>', $nb{$id}{filename}) {
+		print $out $content;
+	}
 	$nb{$id}{content} = $content;
 
 	return;
