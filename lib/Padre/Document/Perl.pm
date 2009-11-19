@@ -1011,7 +1011,7 @@ sub autocomplete {
 	my $self  = shift;
 	my $event = shift;
 
-	my $config = Padre->ide->config;
+	my $config    = Padre->ide->config;
 	my $min_chars = $config->perl_autocomplete_min_chars;
 
 	my $editor = $self->editor;
@@ -1020,17 +1020,18 @@ sub autocomplete {
 	my $first  = $editor->PositionFromLine($line);
 
 	# This function is called very often, return asap
-	return if ($pos - $first) < ($min_chars - 1);
+	return if ( $pos - $first ) < ( $min_chars - 1 );
 
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
+
 	# Remove any ident from the beginning of the prefix
 	$prefix =~ s/^[\r\t]+//;
-	
+
 	# One char may be added by the current event
-	return if length($prefix) < ($min_chars - 1);
-	
-	my $suffix = $editor->GetTextRange( $pos,   $pos + 15 );
+	return if length($prefix) < ( $min_chars - 1 );
+
+	my $suffix = $editor->GetTextRange( $pos, $pos + 15 );
 	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
 
 	# The second parameter may be a reference to the current event or the next
@@ -1172,12 +1173,12 @@ sub autocomplete {
 
 	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
 
-	if (defined($nextchar)){
-		return if (length($prefix) + 1) < $min_chars;
+	if ( defined($nextchar) ) {
+		return if ( length($prefix) + 1 ) < $min_chars;
 	} else {
 		return if length($prefix) < $min_chars;
 	}
-	
+
 	my $last      = $editor->GetLength();
 	my $text      = $editor->GetTextRange( 0, $last );
 	my $pre_text  = $editor->GetTextRange( 0, $first + length($prefix) );
@@ -1196,7 +1197,7 @@ sub autocomplete {
 
 	my $max_length = $config->perl_autocomplete_max_suggestions;
 	if ( @words > $max_length ) {
-		@words = @words[ 0 .. ($max_length - 1) ];
+		@words = @words[ 0 .. ( $max_length - 1 ) ];
 	}
 
 	# Suggesting the current word as the only solution doesn't help
@@ -1216,7 +1217,7 @@ sub autocomplete {
 
 	# This is the final result if there is no char which hasn't been
 	# saved to the editor buffer until now
-#	return ( length($prefix), @words ) if !defined($nextchar);
+	#	return ( length($prefix), @words ) if !defined($nextchar);
 
 	my $min_length = $config->perl_autocomplete_min_suggestion_len;
 
@@ -1231,7 +1232,7 @@ sub autocomplete {
 
 		# Accept everything which has prefix + next char + at least one other char
 		# (check only if any char is pending)
-		next if defined($nextchar) and (! /^\Q$prefix$nextchar\E./);
+		next if defined($nextchar) and ( !/^\Q$prefix$nextchar\E./ );
 
 		# All checks passed, add to the final list
 		push @final_words, $_;

@@ -13,8 +13,10 @@ use Padre::MimeTypes                       ();
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Wx::Dialog';
 
-our %PANELS = ( 'Padre::Wx::Dialog::Preferences::File' => 'Local/Remote file access',
-                'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => 'Perl autocomplete' );
+our %PANELS = (
+	'Padre::Wx::Dialog::Preferences::File'             => 'Local/Remote file access',
+	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => 'Perl autocomplete'
+);
 
 =pod
 

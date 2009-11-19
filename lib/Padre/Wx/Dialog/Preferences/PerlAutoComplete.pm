@@ -23,12 +23,12 @@ sub panel {
 		#			],
 		#			[]
 		#		],
-#		[   [ 'Wx::StaticText', undef,     Wx::gettext('Perl interpreter:') ],
-#			[ 'Wx::TextCtrl',   'Perl_cmd', $config->Perl_cmd ]
-#		],
-#		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Perl interpreter arguments:') ],
-#			[ 'Wx::TextCtrl',   'Perl_interpreter_args_default', $config->Perl_interpreter_args_default ]
-#		],
+		#		[   [ 'Wx::StaticText', undef,     Wx::gettext('Perl interpreter:') ],
+		#			[ 'Wx::TextCtrl',   'Perl_cmd', $config->Perl_cmd ]
+		#		],
+		#		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Perl interpreter arguments:') ],
+		#			[ 'Wx::TextCtrl',   'Perl_interpreter_args_default', $config->Perl_interpreter_args_default ]
+		#		],
 		[   [   'Wx::CheckBox',
 				'autocomplete_always',
 				( $config->autocomplete_always ? 1 : 0 ),
@@ -44,7 +44,9 @@ sub panel {
 			[]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. length of suggestions:') ],
-			[ 'Wx::SpinCtrl', 'perl_autocomplete_min_suggestion_len', $config->perl_autocomplete_min_suggestion_len, 1, 64 ]
+			[   'Wx::SpinCtrl', 'perl_autocomplete_min_suggestion_len', $config->perl_autocomplete_min_suggestion_len,
+				1, 64
+			]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Max. number of suggestions:') ],
 			[ 'Wx::SpinCtrl', 'perl_autocomplete_max_suggestions', $config->perl_autocomplete_max_suggestions, 5, 256 ]
@@ -79,17 +81,17 @@ sub save {
 	$config->set(
 		'perl_autocomplete_max_suggestions',
 		$data->{perl_autocomplete_max_suggestions}
-		);
+	);
 
 	$config->set(
 		'perl_autocomplete_min_chars',
 		$data->{perl_autocomplete_min_chars}
-		);
+	);
 
 	$config->set(
 		'perl_autocomplete_min_suggestion_len',
 		$data->{perl_autocomplete_min_suggestion_len}
-		);
+	);
 
 }
 
