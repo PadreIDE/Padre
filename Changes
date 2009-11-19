@@ -13,6 +13,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Basic XS-Document support (SMUELLER)
     - XS (perlapi) calltips based on the perlapi of 5.10.1 (SMUELLER)
     - Padre::Action::Queue for auto-processing of Padre actions (SEWI)
+    - Perl autocompletion is much more configurable now (SEWI)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
