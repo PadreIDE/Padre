@@ -1287,14 +1287,16 @@ sub event_on_char {
 	my $pos   = $editor->GetCurrentPos;
 	my $line  = $editor->LineFromPosition($pos);
 	my $first = $editor->PositionFromLine($line);
-	my $last  = $editor->PositionFromLine( $line + 1 ) - 1;
+	# removed the - 1 at the end
+	my $last  = $editor->PositionFromLine( $line + 1 );
 
+	
 	# This only matches if all conditions are met:
 	#  - config option enabled
 	#  - none of the following keys pressed: a-z, A-Z, 0-9, _
 	#  - cursor position is at end of line
 	if ($config->autocomplete_method
-		and (  ( $key < 48 )
+		 and (  ( $key < 48 )
 			or ( ( $key > 57 ) and ( $key < 65 ) )
 			or ( ( $key > 90 ) and ( $key < 95 ) )
 			or ( $key == 96 )
@@ -1306,9 +1308,12 @@ sub event_on_char {
 		# from beginning to current position
 		my $prefix = $editor->GetTextRange( 0, $pos );
 
+		
+		
 		# methods can't live outside packages, so ignore them
+		my $linetext = $editor->GetTextRange( $first, $last );
 		if ( $prefix =~ /package / ) {
-			my $linetext = $editor->GetTextRange( $first, $last );
+			
 
 			# we only match "sub foo" at the beginning of a line
 			# but no inline subs (eval, anonymus, etc.)
@@ -1325,13 +1330,28 @@ sub event_on_char {
 						. 'my $self = shift;'
 						. $self->newline . "\t"
 						. $self->newline . '}'
-						. $self->newline
 						. $self->newline );
 
 				# Ready for typing in the new method:
 				$editor->GotoPos( $last + 23 );
 
 			}
+		}
+		elsif ( $linetext =~ /^sub[\s\t]+\w+$/ ) {
+
+				#$self->_do_end_check($editor, $line, $pos);
+				# Add the default skeleton of a subroutine,
+				# the \t should be replaced by
+				# (space * current_indent_width)
+				$editor->AddText( ' {'
+						. $self->newline . "\t"
+						. $self->newline . '}'
+						);
+
+				# Ready for typing in the new method:
+				$editor->GotoPos( $last + 4 );
+
+			
 		}
 	}
 
@@ -1345,6 +1365,7 @@ sub event_on_char {
 
 	return;
 }
+
 
 # Our opportunity to implement a context-sensitive right-click menu
 # This would be a lot more powerful if we used PPI, but since that would
