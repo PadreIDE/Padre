@@ -13,7 +13,8 @@ use Padre::MimeTypes                       ();
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Wx::Dialog';
 
-our %PANELS = ( 'Padre::Wx::Dialog::Preferences::File' => 'Local/Remote file access' );
+our %PANELS = ( 'Padre::Wx::Dialog::Preferences::File' => 'Local/Remote file access',
+                'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => 'Perl autocomplete' );
 
 =pod
 
@@ -280,20 +281,6 @@ sub _behaviour_panel {
 				'editor_smart_highlight_enable',
 				( $config->editor_smart_highlight_enable ? 1 : 0 ),
 				Wx::gettext("Enable Smart highlighting while typing")
-			],
-			[]
-		],
-		[   [   'Wx::CheckBox',
-				'autocomplete_always',
-				( $config->autocomplete_always ? 1 : 0 ),
-				Wx::gettext("Autocomplete always while typing")
-			],
-			[]
-		],
-		[   [   'Wx::CheckBox',
-				'autocomplete_method',
-				( $config->autocomplete_method ? 1 : 0 ),
-				Wx::gettext("Autocomplete new methods in packages")
 			],
 			[]
 		],
@@ -1080,14 +1067,6 @@ sub run {
 	$config->set(
 		'editor_smart_highlight_enable',
 		$data->{editor_smart_highlight_enable} ? 1 : 0
-	);
-	$config->set(
-		'autocomplete_always',
-		$data->{autocomplete_always} ? 1 : 0
-	);
-	$config->set(
-		'autocomplete_method',
-		$data->{autocomplete_method} ? 1 : 0
 	);
 	$config->set(
 		'window_list_shorten_path',
