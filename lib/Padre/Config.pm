@@ -564,6 +564,8 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 2,
 );
+
+# Autocomplete settings (global and Perl-specific)
 setting(
 	name    => 'autocomplete_multiclosebracket',
 	type    => Padre::Constant::BOOLEAN,
@@ -581,6 +583,12 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
+);
+setting(
+	name    => 'perl_autocomplete_max_suggestions',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 20,
 );
 
 # Behaviour Tuning

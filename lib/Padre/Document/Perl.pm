@@ -1011,6 +1011,8 @@ sub autocomplete {
 	my $self  = shift;
 	my $event = shift;
 
+	my $config = Padre->ide->config;
+
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
@@ -1175,8 +1177,9 @@ sub autocomplete {
 	push @words, grep { !$seen{$_}++ } reverse( $pre_text =~ /$regex/g );
 	push @words, grep { !$seen{$_}++ } ( $post_text =~ /$regex/g );
 
-	if ( @words > 20 ) {
-		@words = @words[ 0 .. 19 ];
+	my $max_length = $config->perl_autocomplete_max_suggestions;
+	if ( @words > $max_length ) {
+		@words = @words[ 0 .. ($max_length - 1) ];
 	}
 
 	# Suggesting the current word as the only solution doesn't help

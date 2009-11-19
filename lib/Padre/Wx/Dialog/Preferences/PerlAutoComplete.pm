@@ -43,6 +43,9 @@ sub panel {
 			],
 			[]
 		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Max. number of suggestions:') ],
+			[ 'Wx::SpinCtrl', 'perl_autocomplete_max_suggestions', $config->perl_autocomplete_max_suggestions, 5, 255 ]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -66,6 +69,11 @@ sub save {
 		'autocomplete_method',
 		$data->{autocomplete_method} ? 1 : 0
 	);
+
+	$config->set(
+		'perl_autocomplete_max_suggestions',
+		$data->{perl_autocomplete_max_suggestions}
+		);
 
 }
 
