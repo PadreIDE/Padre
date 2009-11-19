@@ -2444,7 +2444,13 @@ sub on_autocompletion {
 	my $self     = shift;
 	my $event    = shift;
 	my $document = $self->current->document or return;
+	
 	my ( $length, @words ) = $document->autocomplete($event);
+
+	# Nothing to show --> early exit
+	return if ! defined($length);
+	return if $#words == -1;
+
 	if ( $length =~ /\D/ ) {
 		Wx::MessageBox(
 			$length, Wx::gettext("Autocompletion error"), Wx::wxOK,

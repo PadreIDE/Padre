@@ -590,6 +590,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 20,
 );
+setting(
+	name    => 'perl_autocomplete_min_chars',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
 
 # Behaviour Tuning
 # When running a script from the application some of the files might have

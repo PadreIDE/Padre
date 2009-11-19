@@ -1012,14 +1012,24 @@ sub autocomplete {
 	my $event = shift;
 
 	my $config = Padre->ide->config;
+	my $min_chars = $config->perl_autocomplete_min_chars;
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
 	my $first  = $editor->PositionFromLine($line);
 
+	# This function is called very often, return asap
+	return if ($pos - $first) < ($min_chars - 1);
+
 	# line from beginning to current position
 	my $prefix = $editor->GetTextRange( $first, $pos );
+	# Remove any ident from the beginning of the prefix
+	$prefix =~ s/^[\r\t]+//;
+	
+	# One char may be added by the current event
+	return if length($prefix) < ($min_chars - 1);
+	
 	my $suffix = $editor->GetTextRange( $pos,   $pos + 15 );
 	$suffix = $1 if $suffix =~ /^(\w*)/; # Cut away any non-word chars
 
@@ -1161,6 +1171,13 @@ sub autocomplete {
 	}
 
 	$prefix =~ s{^.*?((\w+::)*\w+)$}{$1};
+
+	if (defined($nextchar)){
+		return if (length($prefix) + 1) < $min_chars;
+	} else {
+		return if length($prefix) < $min_chars;
+	}
+	
 	my $last      = $editor->GetLength();
 	my $text      = $editor->GetTextRange( 0, $last );
 	my $pre_text  = $editor->GetTextRange( 0, $first + length($prefix) );
