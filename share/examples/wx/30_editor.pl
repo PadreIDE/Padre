@@ -131,11 +131,11 @@ sub setup_editor {
 	my $title   = "Unsaved Document 1";
 	my $content = '';
 	if ($file) {
-		if (open my $in, '<', $file) {
+		if ( open my $in, '<', $file ) {
 			local $/ = undef;
 			$content = <$in>;
 		}
-		$title   = basename($file);
+		$title = basename($file);
 		$editor->SetText($content);
 	}
 	$nb->AddPage( $editor, $title, 1 );
@@ -224,7 +224,7 @@ sub _save_buffer {
 
 	my $page    = $nb->GetPage($id);
 	my $content = $page->GetText;
-	if (open my $out, '>', $nb{$id}{filename}) {
+	if ( open my $out, '>', $nb{$id}{filename} ) {
 		print $out $content;
 	}
 	$nb{$id}{content} = $content;

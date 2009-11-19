@@ -23,14 +23,14 @@ our $VERSION = '0.50';
 
 sub new {
 	my $class = shift;
-	
+
 	my $main = Padre->ide->wx->main;
 
 	# Create myself
 	my $self = bless {
 		actions => Padre->ide->actions,
-		Queue	=> [], # Create an empty queue
-		}, $class;
+		Queue   => [],                 # Create an empty queue
+	}, $class;
 
 	# Create the Wx timer
 	$self->{timer} = Wx::Timer->new(
@@ -51,9 +51,9 @@ sub new {
 
 sub add {
 	my $self = shift;
-	
-	push @{$self->{Queue}},@_;
-	
+
+	push @{ $self->{Queue} }, @_;
+
 	return 1;
 }
 
@@ -61,17 +61,19 @@ sub add {
 
 sub set_timer_interval {
 	my $self = shift;
-	
+
 	# Get current interval
 	my $interval = 0;
 	$interval = $self->{timer}
 		if $self->{timer}->IsRunning;
 
 	my $new_interval;
-	if ($#{$self->{Queue}} == -1) {
+	if ( $#{ $self->{Queue} } == -1 ) {
+
 		# No pending queue actions
 		$new_interval = 1000;
 	} else {
+
 		# Pending actions, execute one of them each 250ms
 		$new_interval = 250;
 	}
@@ -87,23 +89,23 @@ sub set_timer_interval {
 }
 
 sub on_timer {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
 	my $force = shift;
-	
+
 	my $main = Padre->ide->wx->main;
 
-	if ($#{$self->{Queue}} > -1) {
+	if ( $#{ $self->{Queue} } > -1 ) {
 
 		# Advoid another timer event during processing of this event
 		$self->{timer}->Stop;
-		
-		my $action = shift(@{$self->{Queue}});
-		
-		$self->{debug} and print STDERR scalar(localtime(time)).' Action::Queue '.$action."\n";
+
+		my $action = shift( @{ $self->{Queue} } );
+
+		$self->{debug} and print STDERR scalar( localtime(time) ) . ' Action::Queue ' . $action . "\n";
 
 		# Run the event handler
-		&{$self->{actions}->{$action}->{queue_event}}($main,$event,$force);
+		&{ $self->{actions}->{$action}->{queue_event} }( $main, $event, $force );
 
 	}
 
