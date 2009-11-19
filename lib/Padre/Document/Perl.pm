@@ -1216,15 +1216,24 @@ sub autocomplete {
 
 	# This is the final result if there is no char which hasn't been
 	# saved to the editor buffer until now
-	return ( length($prefix), @words ) if !defined($nextchar);
+#	return ( length($prefix), @words ) if !defined($nextchar);
+
+	my $min_length = $config->perl_autocomplete_min_suggestion_len;
 
 	# Finally cut out all words which do not match the next char
 	# which will be inserted into the editor (by the current event)
+	# and remove all which are too short
 	my @final_words;
 	for (@words) {
 
+		# Filter out everything which is too short
+		next if length($_) < $min_length;
+
 		# Accept everything which has prefix + next char + at least one other char
-		next if !/^\Q$prefix$nextchar\E./;
+		# (check only if any char is pending)
+		next if defined($nextchar) and (! /^\Q$prefix$nextchar\E./);
+
+		# All checks passed, add to the final list
 		push @final_words, $_;
 	}
 

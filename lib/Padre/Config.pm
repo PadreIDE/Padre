@@ -596,6 +596,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+setting(
+	name    => 'perl_autocomplete_min_suggestion_len',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => 3,
+);
 
 # Behaviour Tuning
 # When running a script from the application some of the files might have

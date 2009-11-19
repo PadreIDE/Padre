@@ -43,11 +43,14 @@ sub panel {
 			],
 			[]
 		],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. length of suggestions:') ],
+			[ 'Wx::SpinCtrl', 'perl_autocomplete_min_suggestion_len', $config->perl_autocomplete_min_suggestion_len, 1, 64 ]
+		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Max. number of suggestions:') ],
-			[ 'Wx::SpinCtrl', 'perl_autocomplete_max_suggestions', $config->perl_autocomplete_max_suggestions, 5, 255 ]
+			[ 'Wx::SpinCtrl', 'perl_autocomplete_max_suggestions', $config->perl_autocomplete_max_suggestions, 5, 256 ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. chars for autocompletion:') ],
-			[ 'Wx::SpinCtrl', 'perl_autocomplete_min_chars', $config->perl_autocomplete_min_chars, 1, 25 ]
+			[ 'Wx::SpinCtrl', 'perl_autocomplete_min_chars', $config->perl_autocomplete_min_chars, 1, 16 ]
 		],
 	];
 
@@ -81,6 +84,11 @@ sub save {
 	$config->set(
 		'perl_autocomplete_min_chars',
 		$data->{perl_autocomplete_min_chars}
+		);
+
+	$config->set(
+		'perl_autocomplete_min_suggestion_len',
+		$data->{perl_autocomplete_min_suggestion_len}
 		);
 
 }
