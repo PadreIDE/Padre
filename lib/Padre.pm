@@ -33,6 +33,7 @@ our $VERSION = '0.50';
 use Padre::Constant ();
 use Padre::Config   ();
 use Padre::DB       ();
+use Padre::Action::Queue;
 
 # Generate faster accessors
 use Class::XSAccessor getters => {
@@ -154,6 +155,9 @@ sub new {
 	$self->{task_manager} = Padre::TaskManager->new(
 		use_threads => $self->config->threads,
 	);
+
+	# Create the action queue
+	Padre::Action::Queue->new();
 
 	return $self;
 }

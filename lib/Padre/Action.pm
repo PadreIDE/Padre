@@ -56,6 +56,7 @@ sub create {
 		print $action_export_fh Data::Dumper::Dumper( Padre->ide->actions );
 		close $action_export_fh;
 	}
+
 }
 
 
@@ -87,6 +88,8 @@ sub new {
 		$self->{menu_event} =
 			eval ' return sub { ' . "Padre->ide->actions->{'" . $self->{name} . "'}->_event(\@_);" . '};';
 	}
+
+	$self->{queue_event} ||= $self->{menu_event};
 
 	my $name     = $self->{name};
 	my $shortcut = $self->{shortcut};
