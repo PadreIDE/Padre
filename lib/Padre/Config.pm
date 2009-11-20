@@ -639,6 +639,14 @@ setting(
 );
 
 setting(
+	name    => 'xs_calltips_perlapi_version',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::PROJECT,
+	default => 'newest',
+	project => 1,
+);
+
+setting(
 	name    => 'info_on_statusbar',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
@@ -913,6 +921,8 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+
+
 
 #####################################################################
 # Constructor and Accessors
