@@ -148,7 +148,6 @@ sub _initialize {
 		'text/x-perlxs' => {              # totally not confirmed
 			name  => 'XS',
 			lexer => Wx::wxSTC_LEX_CPP,    # for the lack of a better XS lexer (vim?)
-			class => 'Padre::Document::XS',
 		},
 		'text/x-c++src' => {
 			name  => 'c++',
