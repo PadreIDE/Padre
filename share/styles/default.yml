@@ -138,6 +138,61 @@ perl:
 #
 
 #
+# text/x-perlxs
+#
+xs:
+ background: ffffff
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 00ff00
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  wxSTC_C_DEFAULT:
+   foreground: 000000
+  wxSTC_C_COMMENT:
+   foreground: 007f00
+  wxSTC_C_COMMENTLINE:
+   foreground: 007f00
+  wxSTC_C_COMMENTDOC:
+   foreground: 007f00
+  wxSTC_C_NUMBER:
+   foreground: 007f7f
+  wxSTC_C_WORD:
+   foreground: 7f007f
+  wxSTC_C_STRING:
+   foreground: ff7f00
+  wxSTC_C_CHARACTER:
+   foreground: 7f007f
+  wxSTC_C_UUID:
+   foreground: 7f007f
+  wxSTC_C_PREPROCESSOR:
+   foreground: 777777
+   bold: 1
+  wxSTC_C_OPERATOR:
+   foreground: 00007f
+  wxSTC_C_IDENTIFIER:
+   foreground: 0000ff
+  wxSTC_C_STRINGEOL:
+   foreground: ff0000
+  wxSTC_C_VERBATIM:
+   foreground: 7f007f
+  wxSTC_C_REGEX:
+   foreground: ff007f
+  wxSTC_C_COMMENTLINEDOC:
+   foreground: 007f00
+  wxSTC_C_WORD2:
+   foreground: 7f007f
+   bold: 1
+  wxSTC_C_COMMENTDOCKEYWORD:
+   foreground: 000000
+   background: ff0000
+  wxSTC_C_COMMENTDOCKEYWORDERROR:
+   foreground: 000000
+   background: ff0000
+  wxSTC_C_GLOBALCLASS:
+   foreground: 7f007f
+
+#
 # text/x-patch
 #
 diff:
