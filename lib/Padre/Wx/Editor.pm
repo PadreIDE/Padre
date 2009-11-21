@@ -28,6 +28,7 @@ our %mode = (
 # mapping for mime-type to the style name in the share/styles/default.yml file
 our %MIME_STYLE = (
 	'application/x-perl' => 'perl',
+	'text/x-perlxs'      => 'xs', # should be in the plugin...
 	'text/x-patch'       => 'diff',
 	'text/x-makefile'    => 'make',
 	'text/x-yaml'        => 'yaml',
@@ -270,35 +271,43 @@ sub setup_style_from_config {
 	my ( $self, $name ) = @_;
 
 	foreach my $k ( keys %{ $data->{$name}->{colors} } ) {
-		my $f = 'Wx::' . $k;
-		if ( $k =~ /^PADRE_/ ) {
-			$f = 'Padre::Constant::' . $k;
+		my $v;
+		# allow for plain numbers
+		if ($k =~ /^\d+$/) {
+			$v = $k;
 		}
-		no strict "refs"; ## no critic
-		my $v = eval { $f->() };
-		if ($@) {
-			warn "invalid key '$k'\n";
-			next;
+		# but normally, we have Wx:: or PADRE_ constants
+		else {
+			my $f = 'Wx::' . $k;
+			if ( $k =~ /^PADRE_/ ) {
+				$f = 'Padre::Constant::' . $k;
+			}
+			no strict "refs"; ## no critic
+			$v = eval { $f->() };
+			if ($@) {
+				warn "invalid key '$k'\n";
+				next;
+			}
 		}
 
-		my $colors = $data->{$name}->{colors}->{$k};
-		if ( exists $colors->{foreground} ) {
-			$self->StyleSetForeground( $f->(), _color( $colors->{foreground} ) );
+		my $color = $data->{$name}->{colors}->{$k};
+		if ( exists $color->{foreground} ) {
+			$self->StyleSetForeground( $v, _color( $color->{foreground} ) );
 		}
-		if ( exists $colors->{background} ) {
-			$self->StyleSetBackground( $f->(), _color( $colors->{background} ) );
+		if ( exists $color->{background} ) {
+			$self->StyleSetBackground( $v, _color( $color->{background} ) );
 		}
-		if ( exists $colors->{bold} ) {
-			$self->StyleSetBold( $f->(), $colors->{bold} );
+		if ( exists $color->{bold} ) {
+			$self->StyleSetBold( $v, $color->{bold} );
 		}
-		if ( exists $colors->{italics} ) {
-			$self->StyleSetItalic( $f->(), $colors->{italic} );
+		if ( exists $color->{italics} ) {
+			$self->StyleSetItalic( $v, $color->{italic} );
 		}
-		if ( exists $colors->{eolfilled} ) {
-			$self->StyleSetEOLFilled( $f->(), $colors->{eolfilled} );
+		if ( exists $color->{eolfilled} ) {
+			$self->StyleSetEOLFilled( $v, $color->{eolfilled} );
 		}
-		if ( exists $colors->{underlined} ) {
-			$self->StyleSetUnderline( $f->(), $colors->{underline} );
+		if ( exists $color->{underlined} ) {
+			$self->StyleSetUnderline( $v, $color->{underline} );
 		}
 	}
 }
