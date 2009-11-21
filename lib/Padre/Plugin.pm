@@ -286,9 +286,9 @@ document types for which the plug-in provides a document class
 a plain text file with simple Scintilla highlighting).
 
 This method will be called by the Plug-in Manager and the information returned
-will be used to populate various internal data and do various other tasks at
-a time of its choosing. Plug-in authors are expected to provide this
-information without having to know how or why Padre will use it.
+will be used to populate various internal data structures and perform various
+other tasks. Plug-in authors are expected to provide this information without
+having to know how or why Padre will use it.
 
 This (theoretically at this point) should allow Padre to keep a document open
 while a plug-in is being enabled or disabled, upgrading or downgrading the
