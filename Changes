@@ -10,10 +10,10 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #654: Lexical Rename of Variable - Can't highlight the
       whole variable (PATRICKAS)    
     - Improved "Find Method Declaration" based on perltags (SMUELLER)
-    - Basic XS-Document support (SMUELLER)
+    - Basic XS-Document support as needed for the full monty in a plugin (SMUELLER)
     - XS (perlapi) calltips based on the perlapi of 5.10.1 
       by default. Can be configured to show the perlapi of any release of
-      perl back to 5.6.0 if Perl::APIReference is installed. (SMUELLER)
+      perl back to 5.6.0 if Padre::Plugin::XS is installed. (SMUELLER)
     - Padre::Action::Queue for auto-processing of Padre actions (SEWI)
     - Perl autocompletion is much more configurable now (SEWI)
 
