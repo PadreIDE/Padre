@@ -594,7 +594,7 @@ sub find_method_declaration {
 	my ( $found, $filename ) = $self->_find_method( $token, $class );
 	if ( not $found ) {
 		Wx::MessageBox(
-			Wx::gettext("Current '$token' not found"),
+			sprintf( Wx::gettext("Current '%s' not found"), $token ),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
