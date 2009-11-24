@@ -1086,7 +1086,10 @@ sub guess_indentation_style {
 	my $self = shift;
 
 	require Text::FindIndent;
-	my $indentation = Text::FindIndent->parse( $self->text_get );
+	my $indentation = Text::FindIndent->parse(
+		$self->text_get,
+		skip_pod => $self->isa('Padre::Document::Perl'),
+	);
 
 	my $style;
 	if ( $indentation =~ /^t\d+/ ) { # we only do ONE tab
