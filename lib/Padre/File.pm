@@ -128,15 +128,12 @@ sub new { # URL
 
 Returns the last-access time of the file.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub atime {
-	return;
-}
+sub atime {}
 
 =head2 C<basename>
 
@@ -161,15 +158,12 @@ sub basename {
 
 Returns the block size of the file system where the file resides.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub blksize {
-	return;
-}
+sub blksize {}
 
 =head2 C<blocks>
 
@@ -177,34 +171,30 @@ sub blksize {
 
 Returns the number of blocks used by the file.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub blocks {
-	return;
-}
+sub blocks {}
 
 =head2 C<can_run>
 
   $file->can_run;
 
-Returns 1 if the protocol allows execution of files or 0 if it doesn't.
+Returns true if the protocol allows execution of files or the empty
+list if it doesn't.
 
-This is usually not possible for non-local files (which return 1),
+This is usually not possible for non-local files (which return true),
 because there is no way to reproduce a save environment for running
-a HTTP or FTP based file (they return 0).
+a HTTP or FTP based file (they return false).
 
 =cut
 
-# Fallback if the module has no such function:
 sub can_run {
-
 	# If the module does not state that it could do "run",
-	# we return a safe default of 0.
-	return 0;
+	# we return a safe default of false.
+	return();
 }
 
 =head2 C<ctime>
@@ -213,15 +203,12 @@ sub can_run {
 
 Returns the last-change time of the inode (not the file!).
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub ctime {
-	return;
-}
+sub ctime {}
 
 =head2 C<dev>
 
@@ -229,15 +216,12 @@ sub ctime {
 
 Returns the device number of the file system where the file resides.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub dev {
-	return;
-}
+sub dev {}
 
 =head2 C<dirname>
 
@@ -246,12 +230,12 @@ sub dev {
 Returns the plain path without file name if a path/file name structure
 exists for this module.
 
+Returns the empty list on failure or undefined behaviour for the
+given protocol.
+
 =cut
 
-# Fallback if the module has no such function:
-sub dirname {
-	return;
-}
+sub dirname {}
 
 =head2 C<exists>
 
@@ -259,7 +243,7 @@ sub dirname {
 
 Returns true if the file exists.
 Returns false if the file doesn't exist.
-Returns C<undef> if unsure (network problem, not implemented).
+Returns the empty list if unsure (network problem, not implemented).
 
 =cut
 
@@ -299,15 +283,12 @@ sub filename {
 
 Returns the real group ID of the file group.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub gid {
-	return;
-}
+sub gid {}
 
 =head2 C<inode>
 
@@ -315,15 +296,12 @@ sub gid {
 
 Returns the inode number of the file.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub inode {
-	return;
-}
+sub inode {}
 
 =head2 C<mime>
 
@@ -349,15 +327,12 @@ Returns the file mode (type and rights).
 
 TO DO: Add a description what exactly is returned.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub mode {
-	return;
-}
+sub mode {}
 
 =head2 C<mtime>
 
@@ -367,10 +342,7 @@ Returns the last-modification (change) time of the file.
 
 =cut
 
-# Fallback if the module has no such function:
-sub mtime {
-	return;
-}
+sub mtime {}
 
 =head2 C<nlink>
 
@@ -378,15 +350,12 @@ sub mtime {
 
 Returns the number of hard links to the file.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub nlink {
-	return;
-}
+sub nlink {}
 
 =head2 C<rdev>
 
@@ -394,15 +363,12 @@ sub nlink {
 
 Returns the device identifier.
 
-This is usually not possible for non-local files, in these cases, C<undef>
-is returned.
+This is usually not possible for non-local files, in these cases,
+the empty list is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub rdev {
-	return;
-}
+sub rdev {}
 
 =head2 C<read>
 
@@ -410,7 +376,7 @@ sub rdev {
 
 Reads the file contents and returns them.
 
-Returns C<undef> on error. The error message could be retrieved using the
+Returns the empty list on error. The error message can be retrieved using the
 C<error> method.
 
 =cut
@@ -424,14 +390,12 @@ sub error {
 
   $file->size;
 
-Returns the file size in bytes.
+Returns the file size in bytes or the empty list if the
+method was not implemented by the C<Padre::File> subclass.
 
 =cut
 
-# Fallback if the module has no such function:
-sub size {
-	return;
-}
+sub size {}
 
 =head2 C<stat>
 
@@ -466,7 +430,7 @@ Usually, you need only one or two of the items, request them directly.
 =item 2.
 
 Besides from local files, most of the values will not be accessible (resulting
-in C<undef> values).
+in empty lists/false returned).
 
 =item 3.
 
@@ -508,15 +472,12 @@ sub stat {
 
 Returns the real user ID of the file owner.
 
-This is usually not possible for non-local files, in these cases, C<undef>
+This is usually not possible for non-local files, in these cases, the empty list
 is returned.
 
 =cut
 
-# Fallback if the module has no such function:
-sub uid {
-	return;
-}
+sub uid {}
 
 =head2 C<write>
 
@@ -528,13 +489,11 @@ protocol allows encoding, it is respected.
 
 Returns 1 on success.
 Returns 0 on failure.
-Returns C<undef> if the function is not available on the protocol.
+Returns the empty list if the function is not available on the protocol.
 
 =cut
 
-sub write {
-	return;
-}
+sub write {}
 
 1;
 
