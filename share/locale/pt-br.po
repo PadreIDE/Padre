@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PADRE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-05 22:20-0200\n"
-"PO-Revision-Date: 2009-11-05 22:22-0300\n"
+"PO-Revision-Date: 2009-11-24 16:53-0300\n"
 "Last-Translator: Breno G. de Oliveira <garu@cpan.org>\n"
 "Language-Team: Brazilian Portuguese\n"
 "MIME-Version: 1.0\n"
@@ -669,7 +669,7 @@ msgstr "Executa comando na shell e exibe sua saída."
 
 #: lib/Padre/Action/Run.pm:78
 msgid "Build + run all Tests"
-msgstr "faça o Build (montagem) + execute todos os Testse"
+msgstr "faça o Build (montagem) + execute todos os Testes"
 
 #: lib/Padre/Action/Run.pm:79
 msgid "Builds the current project, then run all tests."
@@ -1058,7 +1058,7 @@ msgstr "Não suportado"
 
 #: lib/Padre/Wx/Ack.pm:102
 msgid "Term:"
-msgstr "Term:"
+msgstr "Termo:"
 
 #: lib/Padre/Wx/Ack.pm:106
 msgid "Dir:"
