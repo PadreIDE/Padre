@@ -10,6 +10,10 @@ use File::Temp;
 our $VERSION = '0.50';
 our @ISA     = 'Padre::File';
 
+use Class::XSAccessor {
+  false => [qw/can_run/],
+};
+
 sub new {
 	my $class = shift;
 
@@ -107,10 +111,6 @@ sub new {
 	$self->{_tmpfile} = $self->{_file_temp}->filename;
 
 	return $self;
-}
-
-sub can_run {
-	return 0;
 }
 
 sub size {
