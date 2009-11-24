@@ -6,7 +6,12 @@ use warnings;
 
 our $VERSION = '0.50';
 
-my %Registered_Modules;
+# a list of registered protocol handlers. Structure:
+# regexp => [handler1, handler2, ...]
+# Note that ONLY THE FIRST handler is used! This is meant to allow
+# for plugins to enable and disable handlers with falling back to
+# the previously instantiated handlers.
+our %RegisteredModules;
 
 =pod
 
@@ -46,19 +51,64 @@ Registered protocols may override the internal protocols.
 
 =cut
 
-sub RegisterProtocol { # RegExp,Module
-	my $RegExp = shift;
-	my $Module = shift;
+sub RegisterProtocol {
+	shift if defined $_[0] and $_[0] eq __PACKAGE__;
+	my $regexp = shift;
+	my $module = shift;
 
-	return() if !defined $RegExp;
-	return() if $RegExp eq '';
-	return() if !defined $Module;
-	return() if $Module eq '';
+	return() if not defined $regexp or $regexp eq '';
+	return() if not defined $module or $module eq '';
+	$regexp = "$regexp";
 
-	$Registered_Modules{$RegExp} = $Module;
+	# no double insertion
+	return() if exists $RegisteredModules{$regexp}
+	            and grep {$_ eq $module} @{$RegisteredModules{$regexp}};
+
+	push @{$RegisteredModules{$regexp}}, $module;
 
 	return 1;
 }
+
+=head2 DropProtocol
+
+Drops a previously registered protocol handler. First argument must
+be the same regular expression (matching a protocol from an URI)
+that was used to register the protocol handler in the first place using
+C<RegisterProtocol>. Similarly, the second argument must be the name of
+the class (module) that the handler was registered for. That means
+if you registered your protocol with
+
+  Padre::File->RegisterProtocol(qr/^sftp:\/\//, 'Padre::File::MySFTP');
+
+then you need to drop it with
+
+  Padre::File->DropProtocol(qr/^sftp:\/\//, 'Padre::File::MySFTP');
+
+Returns true if a handler was removed and the empty list if no
+handler was found for the given regular expression.
+
+=cut
+
+sub DropProtocol {
+	shift if defined $_[0] and $_[0] eq __PACKAGE__;
+	my $regexp = shift;
+	my $module = shift;
+
+	return() if not defined $regexp or $regexp eq '';
+	return() if not defined $module or $module eq '';
+	$regexp = "$regexp";
+
+	return() if not exists $RegisteredModules{$regexp};
+
+	my $modules = $RegisteredModules{$regexp};
+	my $n_before = @$modules;
+	@$modules = grep {$_ ne $module} @$modules; # drop this module only
+
+	delete $RegisteredModules{$regexp} if @$modules == 0;
+
+	return $n_before == @$modules;
+}
+
 
 =pod
 
@@ -85,20 +135,21 @@ Returns a new C<Padre::File> or dies on error.
 
 =cut
 
-sub new { # URL
-
+sub new {
 	my $class = shift;
 	my $URL   = $_[0];
 
-	return if ( !defined($URL) ) or ( $URL eq '' );
+	return if not defined($URL) or $URL eq '';
 
 	my $self;
 
-	for ( keys(%Registered_Modules) ) {
+	for ( keys(%RegisteredModules) ) {
 		next if $URL !~ /$_/;
-		require $_;
-		$self = $Registered_Modules{$_}->new($URL);
-		return $self;
+		my $module = $RegisteredModules{$_}->[0];
+		if (eval "require $module; 1;") {
+			$self = $module->new($URL);
+			return $self;
+		}
 	}
 
 	if ( $URL =~ /^file\:(.+)$/i ) {
