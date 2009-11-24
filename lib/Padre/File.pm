@@ -64,7 +64,7 @@ sub RegisterProtocol {
 	return() if exists $RegisteredModules{$regexp}
 	            and grep {$_ eq $module} @{$RegisteredModules{$regexp}};
 
-	push @{$RegisteredModules{$regexp}}, $module;
+	unshift @{$RegisteredModules{$regexp}}, $module;
 
 	return 1;
 }
@@ -106,7 +106,7 @@ sub DropProtocol {
 
 	delete $RegisteredModules{$regexp} if @$modules == 0;
 
-	return $n_before == @$modules;
+	return $n_before != @$modules;
 }
 
 
