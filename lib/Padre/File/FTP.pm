@@ -156,7 +156,7 @@ sub exists {
 	# Fallback if ->ls didn't help. A file heaving a size should exist.
 	return 1 if $self->size;
 
-	return 0;
+	return();
 }
 
 sub basename {
@@ -191,9 +191,8 @@ sub read {
 }
 
 sub readonly {
-
 	# TO DO: Check file access
-	return 0;
+	return();
 }
 
 sub write {
@@ -206,7 +205,7 @@ sub write {
 	my $fh;
 	if ( !open $fh, ">$encode", $self->{_tmpfile} ) {
 		$self->{error} = $!;
-		return 0;
+		return();
 	}
 	print {$fh} $content;
 	close $fh;

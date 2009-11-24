@@ -155,7 +155,7 @@ sub write {
 	my $fh;
 	if ( !open $fh, ">$encode", $self->{filename} ) {
 		$self->{error} = $!;
-		return 0;
+		return();
 	}
 	print {$fh} $content;
 	close $fh;

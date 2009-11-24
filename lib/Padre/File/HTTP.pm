@@ -65,7 +65,7 @@ sub _request {
 }
 
 sub can_run {
-	return 0;
+	return();
 }
 
 sub size {
@@ -100,7 +100,7 @@ sub exists {
 	my $self = shift;
 	my ( $Content, $Result ) = $self->_request('HEAD');
 	return 1 if $Result->code == 200;
-	return 0;
+	return();
 }
 
 sub basename {
@@ -147,7 +147,7 @@ sub readonly {
 #	my $fh;
 #	if ( !open $fh, ">$encode", $self->{filename} ) {
 #		$self->{error} = $!;
-#		return 0;
+#		return();
 #	}
 #	print {$fh} $content;
 #	close $fh;
