@@ -20,20 +20,20 @@ C<Padre::File> provides a common API for file access within Padre.
 It covers all the differences with non-local files by mapping every function
 call to the currently used transport stream.
 
-=head1 FUNCTIONS
+=head1 METHODS
 
-=head2 REGISTER
+=head2 RegisterProtocol
 
-  Padre::File::REGISTER($RegExp,$Module);
+  Padre::File->RegisterProtocol($RegExp, $Module);
 
-Class method, may not be called on a C<Padre::File> object.
+Class method, may not be called on an object.
 
-A plug-in could call C<Padre::File::REGISTER> to register a new protocol to
+A plug-in could call C<Padre::File->RegisterProtocol> to register a new protocol to
 C<Padre::File> and enable Padre to use URLs handled by this module.
 
 Example:
 
-	Padre::File::REGISTER('^nfs\:\/\/','Padre::Plugin::NFS');
+  Padre::File->RegisterProtocol('^nfs\:\/\/','Padre::Plugin::NFS');
 
 Every file/URL opened through C<Padre::File> which starts with C<nfs://> is now
 handled through C<Padre::Plugin::NFS>.
@@ -46,8 +46,7 @@ Registered protocols may override the internal protocols.
 
 =cut
 
-sub REGISTER { # RegExp,Module
-
+sub RegisterProtocol { # RegExp,Module
 	my $RegExp = shift;
 	my $Module = shift;
 
@@ -59,12 +58,9 @@ sub REGISTER { # RegExp,Module
 	$Registered_Modules{$RegExp} = $Module;
 
 	return 1;
-
 }
 
 =pod
-
-=head1 METHODS
 
 =head2 C<new>
 
