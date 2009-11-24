@@ -42,8 +42,8 @@ sub new {
 	);
 	Padre::Action->new(
 		name       => 'help.context_help',
-		label      => Wx::gettext('Context Help'),
-		comment    => Wx::gettext('Show the help article for the current context'),
+		label      => Wx::gettext('Search Help'),
+		comment    => 'Search the Perl help pages (perldoc)',
 		shortcut   => 'F1',
 		menu_event => sub {
 			my $focus = Wx::Window::FindFocus();
@@ -60,8 +60,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'help.search',
-		label      => Wx::gettext('Help Search'),
-		comment    => 'Search the Perl help pages (perldoc)',
+		label      => Wx::gettext('Context Help'),
+		comment    => Wx::gettext('Show the help article for the current context'),
 		shortcut   => 'F2',
 		menu_event => sub {
 
