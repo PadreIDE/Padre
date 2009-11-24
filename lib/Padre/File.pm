@@ -50,10 +50,10 @@ sub RegisterProtocol { # RegExp,Module
 	my $RegExp = shift;
 	my $Module = shift;
 
-	return 0 if !defined $RegExp;
-	return 0 if $RegExp eq '';
-	return 0 if !defined $Module;
-	return 0 if $Module eq '';
+	return() if !defined $RegExp;
+	return() if $RegExp eq '';
+	return() if !defined $Module;
+	return() if $Module eq '';
 
 	$Registered_Modules{$RegExp} = $Module;
 

@@ -15,7 +15,6 @@ sub new {
 	# Don't add a new overall-dependency to Padre:
 	eval { require LWP::UserAgent; };
 	if ($@) {
-
 		# TO DO: This should be an error popup to the user, not a shell window warning
 		warn 'LWP::UserAgent is not installed, Padre::File::HTTP currently depends on it.';
 		return;
@@ -28,9 +27,8 @@ sub new {
 	if ( defined($config) ) {
 		$self->{_timeout} = $config->file_http_timeout;
 	} else {
-
 		# Use defaults if we have no config
-		$self->{_timeout} = 60;
+		$self->{_timeout} = 30;
 	}
 
 	$self->{protocol} = 'http'; # Should not be overridden
@@ -40,7 +38,6 @@ sub new {
 }
 
 sub _request {
-
 	my $self   = shift;
 	my $method = shift || 'GET';
 	my $URL    = shift || $self->{filename};
@@ -131,7 +128,6 @@ sub dirname {
 sub read {
 	my $self = shift;
 	return scalar( $self->_request() );
-
 }
 
 sub readonly {
