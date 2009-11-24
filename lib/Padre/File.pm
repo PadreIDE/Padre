@@ -323,9 +323,12 @@ sub mime {
 
   $file->mode;
 
-Returns the file mode (type and rights).
+Returns the file mode (type and rights). See also: L<perlfunc/stat>.
+To get the Unixy file I<permissions> as the usual octal I<number>
+(as opposed to a I<string>) use:
 
-TO DO: Add a description what exactly is returned.
+  use Fcntl ':mode';
+  my $perms_octal = S_IMODE($file->mode);
 
 This is usually not possible for non-local files, in these cases,
 the empty list is returned.
