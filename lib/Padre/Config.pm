@@ -547,6 +547,12 @@ setting(
 	default => 1,
 );
 setting(
+	name    => 'find_nomatch',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
 	name    => 'find_quick',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
