@@ -400,14 +400,18 @@ sub on_ack_thread {
         App::Ack::print_files_with_matches( $iter, \%opts );
         # summary
         _send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
-        _send_text("Found $stats{cnt_files} files\n");
+        _send_text(Wx::gettext(sprintf("Found %d files\n", $stats{cnt_files})));
     }
     else {
         App::Ack::print_matches( $iter, \%opts );
         
         # summary
         _send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
-        _send_text("Found $stats{cnt_files} files and $stats{cnt_matches} matches\n");
+        _send_text(Wx::gettext(
+            sprintf("Found %d files and %d matches\n", 
+            $stats{cnt_files}, 
+            $stats{cnt_matches},
+        )));
     }
 
 }
@@ -440,13 +444,21 @@ sub print_results {
 
 		# list only file names
 		if ($opts{l}) {
-			$text = "'$opts{regex}' missing in file '$text'\n";
+			$text = Wx::gettext(
+				sprintf("'%s' missing in file '%s'\n", 
+				$opts{regex},
+				$text,
+				));
 		}
 		# list file names and context
 		else {
 			# chop last ':', add \n after $filename
 			chop($text);
-			$text = "Found '$opts{regex}' in '$text':\n";
+			$text = Wx::gettext(
+				sprintf("Found '%s' in '%s':\n",
+				$opts{regex},
+				$text,
+				));
 		}
 
 		# new line between different files
