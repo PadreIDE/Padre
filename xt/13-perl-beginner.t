@@ -16,6 +16,42 @@ sub gettext {
 	return $_[0];
 }
 
+package Padre;
+
+sub ide {
+ return bless {},__PACKAGE__;
+}
+
+sub config {
+ return $_[0];
+}
+
+sub begerror_chomp { 1; }
+
+sub begerror_close { 1; }
+
+sub begerror_DB { 1; }
+
+sub begerror_elseif { 1; }
+
+sub begerror_ifsetvar { 1; }
+
+sub begerror_map { 1; }
+
+sub begerror_map2 { 1; }
+
+sub begerror_perl6 { 1; }
+
+sub begerror_pipe2open { 1; }
+
+sub begerror_pipeopen { 1; }
+
+sub begerror_regexq { 1; }
+
+sub begerror_split { 1; }
+
+sub begerror_warning { 1; }
+
 # The real test...
 package main;
 
@@ -24,8 +60,6 @@ use Test::More;
 #use Test::NoWarnings;
 use Data::Dumper qw(Dumper);
 use File::Spec ();
-
-plan skip_all => 'since the errors are now configurable we need to load the Padre class to run this test';
 
 # enable NoWarning if this is fixed
 
@@ -49,7 +83,7 @@ my %TEST = (
 	# @_ ?
 );
 
-plan( tests => scalar( keys %TEST ) * 2 + 20 );
+plan( tests => scalar( keys %TEST ) * 2 + 19 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new( document => { editor => bless {}, 'local::t75' } );
