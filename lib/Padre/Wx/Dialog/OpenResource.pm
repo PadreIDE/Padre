@@ -433,7 +433,7 @@ sub _show_recently_opened_resources {
 #
 # Search for files and cache result
 #
-sub _search() {
+sub _search {
 	my $self = shift;
 
 	$self->_status_text->ChangeValue( Wx::gettext("Reading items. Please wait...") );

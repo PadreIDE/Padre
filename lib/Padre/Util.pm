@@ -323,7 +323,8 @@ sub find_perldiag_translations {
 			}
 		}
 	}
-	return sort keys %languages;
+	my @tr = sort keys %languages;
+	return @tr;
 }
 
 =pod
