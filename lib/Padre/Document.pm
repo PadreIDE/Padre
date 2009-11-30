@@ -474,11 +474,11 @@ sub checksum_on_file {
 	my $self = shift;
 
 	my $filename = $self->{file}->filename;
-	return undef unless defined $filename;
+	return unless defined $filename;
 
 	require Digest::MD5;
 
-	open my $FH, $filename or return;
+	open my $FH, '<', $filename or return;
 	binmode($FH);
 	return Digest::MD5->new->addfile(*$FH)->hexdigest;
 }

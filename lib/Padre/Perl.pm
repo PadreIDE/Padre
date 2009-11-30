@@ -74,7 +74,7 @@ cannot be found.
 
 =cut
 
-sub perl () {
+sub perl {
 
 	# Find the exact Perl used to launch Padre
 	return $perl if defined $perl;
@@ -109,7 +109,7 @@ Returns a path to a command line Perl, or C<undef> if one cannot be found.
 
 =cut
 
-sub cperl () {
+sub cperl {
 	my $path = perl();
 
 	# Cascade failure
@@ -166,7 +166,7 @@ applications, or C<undef> if one cannot be found.
 
 =cut
 
-sub wxperl () {
+sub wxperl {
 	my $path = perl();
 
 	# Cascade failure

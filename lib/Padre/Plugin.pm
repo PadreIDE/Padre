@@ -178,8 +178,8 @@ sub plugin_icon {
 	my $class = shift;
 	my $share = $class->plugin_directory_share or return;
 	my $file  = File::Spec->catfile( $share, 'icons', '16x16', 'logo.png' );
-	return undef unless -f $file;
-	return undef unless -r $file;
+	return unless -f $file;
+	return unless -r $file;
 	return Wx::Bitmap->new( $file, Wx::wxBITMAP_TYPE_PNG );
 }
 
@@ -439,7 +439,7 @@ sub config_read {
 		'select config from plugin where name = ?', {},
 		$class,
 	);
-	return undef unless defined $row[0];
+	return unless defined $row[0];
 
 	# Parse the config from the string
 	my @config = YAML::Tiny::Load( $row[0] );
