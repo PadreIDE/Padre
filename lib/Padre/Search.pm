@@ -78,7 +78,7 @@ sub new {
 
 	# Compile the regex
 	$self->{search_regex} = eval { $self->find_case ? qr/$term/m : qr/$term/mi };
-	return undef if $@;
+	return if $@;
 
 	return $self;
 }

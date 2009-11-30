@@ -24,9 +24,9 @@ use Padre::Config   ();
 
 # Create the empty config file
 my $empty = Padre::Constant::CONFIG_HUMAN;
-open( FILE, '>', $empty ) or die "Failed to open $empty";
-print FILE "--- {}\n";
-close(FILE);
+open( my $FILE, '>', $empty ) or die "Failed to open $empty";
+print $FILE "--- {}\n";
+close($FILE);
 
 # Load the config
 my $config = Padre::Config->read;

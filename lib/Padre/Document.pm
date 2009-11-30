@@ -757,9 +757,9 @@ sub store_in_tempfile {
 
 	$self->create_tempfile unless $self->tempfile;
 
-	open FH, ">", $self->tempfile;
-	print FH $self->text_get;
-	close FH;
+	open my $FH, ">", $self->tempfile;
+	print $FH $self->text_get;
+	close $FH;
 
 	return $self->tempfile;
 }
@@ -818,7 +818,7 @@ sub text_with_one_nl {
 #
 sub store_cursor_position {
 	my $self     = shift;
-	my $filename = $self->{file}->filename if defined( $self->{file} );
+	my $filename = defined( $self->{file} ) ? $self->{file}->filename : undef;
 	my $editor   = $self->editor;
 	return unless $filename && $editor;
 	my $pos = $editor->GetCurrentPos;
@@ -833,7 +833,7 @@ sub store_cursor_position {
 #
 sub restore_cursor_position {
 	my $self     = shift;
-	my $filename = $self->{file}->filename if defined( $self->{file} );
+	my $filename = defined( $self->{file} ) ? $self->{file}->filename : undef;
 	my $editor   = $self->editor;
 	return unless $filename && $editor;
 	my $pos = Padre::DB::LastPositionInFile->get_last_pos($filename);
@@ -1151,7 +1151,7 @@ sub guess_filename {
 		return ( File::Spec->splitpath($filename) )[2];
 	}
 
-	return undef;
+	return;
 }
 
 # Abstract methods, each subclass should implement it
@@ -1208,8 +1208,7 @@ sub stats {
 		$chars_without_space = Wx::gettext("Skipped for large files");
 	}
 
-	my $filename = $self->{file}->filename
-		if defined( $self->{file} );
+	my $filename = defined( $self->{file} ) ? $self->{file}->filename : undef;
 
 	# not set when first time to save
 	# allow the upgread of ascii to utf-8
