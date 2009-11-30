@@ -12,6 +12,7 @@ use Padre::Action::Refactor ();
 use Padre::Action::Run      ();
 use Padre::Action::Search   ();
 use Padre::Action::Window   ();
+use Padre::Action::Internal ();
 
 our $VERSION = '0.50';
 
@@ -43,6 +44,7 @@ sub create {
 	Padre::Action::Run->new($main);
 	Padre::Action::Search->new($main);
 	Padre::Action::Window->new($main);
+	Padre::Action::Internal->new($main);
 
 	# This is made for usage by the developers to create a complete
 	# list of all actions used in Padre. It outputs some warnings
