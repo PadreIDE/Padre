@@ -33,22 +33,25 @@ my $VERSION = '';
 my $HOME    = undef;
 my $SESSION = undef;
 my $DESKTOP = undef;
+my $ACTIONQUEUE = undef;
 my $getopt  = Getopt::Long::GetOptions(
 	'help'      => \$USAGE,
 	'home=s'    => \$HOME,
 	'session=s' => \$SESSION,
 	'desktop'   => \$DESKTOP,
 	'version'   => \$VERSION,
+	'actionqueue=s' => \$ACTIONQUEUE,
 );
 if ( $USAGE or !$getopt ) {
 	print <<"END_USAGE";
 Usage: $0 [FILENAMES]
 
---home=dir        Forces Padre's "home" directory to a specific location
---help            Shows this help message
---session=name    Open given session during Padre startup
---version         Prints Padre version and quits
---desktop         Integrate Padre with your desktop
+--home=dir          Forces Padre's "home" directory to a specific location
+--help              Shows this help message
+--session=name      Open given session during Padre startup
+--version           Prints Padre version and quits
+--desktop           Integrate Padre with your desktop
+--actionqueue=list  Run a list of comma-seperated actions after Padre startup
 
 END_USAGE
 	exit(1);
@@ -65,6 +68,7 @@ $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 my %opts = (
 	files   => \@ARGV,
 	session => $SESSION,
+	actionqueue => $ACTIONQUEUE,
 );
 
 require Padre;
