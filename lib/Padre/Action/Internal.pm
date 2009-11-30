@@ -47,7 +47,8 @@ sub new {
 			open my $dumpfh,'>',File::Spec->catfile(Padre::Constant::PADRE_HOME,'padre.dump');
 			print $dumpfh "# Begin Padre dump\n".
 			      Data::Dumper::Dumper(Padre->ide).
-			      "# End Padre dump\n";
+			      "# End Padre dump\n".
+			      "1;\n";
 		        close $dumpfh;
 		},
 	);
