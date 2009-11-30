@@ -147,19 +147,19 @@ sub _initialize {
 		},
 		'text/x-perlxs' => {              # totally not confirmed
 			name  => 'XS',
-			lexer => Wx::wxSTC_LEX_CPP,    # for the lack of a better XS lexer (vim?)
+			lexer => Wx::wxSTC_LEX_CPP,   # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-c++src' => {
 			name  => 'c++',
-			lexer => Wx::wxSTC_LEX_CPP,    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
 		},
 		'text/css' => {
 			name  => 'CSS',
-			lexer => Wx::wxSTC_LEX_CSS,    # CONFIRMED
+			lexer => Wx::wxSTC_LEX_CSS,   # CONFIRMED
 		},
 		'text/x-patch' => {
 			name  => 'Patch',
-			lexer => Wx::wxSTC_LEX_DIFF,   # CONFIRMED
+			lexer => Wx::wxSTC_LEX_DIFF,  # CONFIRMED
 		},
 		'text/x-eiffel' => {
 			name  => 'Eiffel',

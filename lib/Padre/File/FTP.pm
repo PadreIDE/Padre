@@ -11,7 +11,7 @@ our $VERSION = '0.50';
 our @ISA     = 'Padre::File';
 
 use Class::XSAccessor {
-  false => [qw/can_run/],
+	false => [qw/can_run/],
 };
 
 sub new {
@@ -156,7 +156,7 @@ sub exists {
 	# Fallback if ->ls didn't help. A file heaving a size should exist.
 	return 1 if $self->size;
 
-	return();
+	return ();
 }
 
 sub basename {
@@ -191,8 +191,9 @@ sub read {
 }
 
 sub readonly {
+
 	# TO DO: Check file access
-	return();
+	return ();
 }
 
 sub write {
@@ -205,7 +206,7 @@ sub write {
 	my $fh;
 	if ( !open $fh, ">$encode", $self->{_tmpfile} ) {
 		$self->{error} = $!;
-		return();
+		return ();
 	}
 	print {$fh} $content;
 	close $fh;

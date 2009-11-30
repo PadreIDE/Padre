@@ -44,10 +44,10 @@ sub new {
 
 	# Perl-Specific Refactoring
 	Padre::Action->new(
-		name       => 'perl.rename_variable',
+		name        => 'perl.rename_variable',
 		need_editor => 1,
-		label      => Wx::gettext('Lexically Rename Variable'),
-		menu_event => sub {
+		label       => Wx::gettext('Lexically Rename Variable'),
+		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless $doc->can('lexical_variable_replacement');
 			require Padre::Wx::History::TextEntryDialog;
@@ -66,10 +66,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name    => 'perl.extract_subroutine',
+		name        => 'perl.extract_subroutine',
 		need_editor => 1,
-		label   => Wx::gettext('Extract Subroutine'),
-		comment => Wx::gettext(
+		label       => Wx::gettext('Extract Subroutine'),
+		comment     => Wx::gettext(
 			      'Cut the current selection and create a new sub from it. '
 				. 'A call to this sub is added in the place where the selection was.'
 		),
@@ -96,10 +96,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'perl.introduce_temporary',
+		name        => 'perl.introduce_temporary',
 		need_editor => 1,
-		label      => Wx::gettext('Introduce Temporary Variable'),
-		menu_event => sub {
+		label       => Wx::gettext('Introduce Temporary Variable'),
+		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless $doc->can('introduce_temporary_variable');
 			require Padre::Wx::History::TextEntryDialog;

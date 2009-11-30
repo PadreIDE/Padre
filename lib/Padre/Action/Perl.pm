@@ -40,10 +40,10 @@ sub new {
 
 	# Perl-Specific Searches
 	Padre::Action->new(
-		name       => 'perl.beginner_check',
+		name        => 'perl.beginner_check',
 		need_editor => 1,
-		label      => Wx::gettext('Check for common (beginner) errors'),
-		menu_event => sub {
+		label       => Wx::gettext('Check for common (beginner) errors'),
+		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->beginner_check;
@@ -51,9 +51,9 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'perl.find_brace',
+		name        => 'perl.find_brace',
 		need_editor => 1,
-		label      => Wx::gettext('Find Unmatched Brace'),
+		label       => Wx::gettext('Find Unmatched Brace'),
 		comment    => Wx::gettext('Searches the source code for brackets with lack a matching (opening/closing) part.'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
@@ -63,10 +63,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'perl.find_variable',
+		name        => 'perl.find_variable',
 		need_editor => 1,
-		label      => Wx::gettext('Find Variable Declaration'),
-		menu_event => sub {
+		label       => Wx::gettext('Find Variable Declaration'),
+		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_variable_declaration;
@@ -74,10 +74,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'perl.find_method',
+		name        => 'perl.find_method',
 		need_editor => 1,
-		label      => Wx::gettext('Find Method Declaration'),
-		menu_event => sub {
+		label       => Wx::gettext('Find Method Declaration'),
+		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_method_declaration;
@@ -85,21 +85,21 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'perl.vertically_align_selected',
+		name        => 'perl.vertically_align_selected',
 		need_editor => 1,
-		label      => Wx::gettext('Vertically Align Selected'),
-		comment    => Wx::gettext('Align a selection of text to the same left column.'),
-		menu_event => sub {
+		label       => Wx::gettext('Vertically Align Selected'),
+		comment     => Wx::gettext('Align a selection of text to the same left column.'),
+		menu_event  => sub {
 			my $editor = $_[0]->current->editor or return;
 			$editor->vertically_align;
 		},
 	);
 
 	Padre::Action->new(
-		name    => 'perl.newline_keep_column',
+		name        => 'perl.newline_keep_column',
 		need_editor => 1,
-		label   => Wx::gettext('Newline same column'),
-		comment => Wx::gettext(
+		label       => Wx::gettext('Newline same column'),
+		comment     => Wx::gettext(
 			'Like pressing ENTER somewhere on a line but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
@@ -110,9 +110,9 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name  => 'perl.create_tagsfile',
+		name        => 'perl.create_tagsfile',
 		need_editor => 1,
-		label => Wx::gettext('Create project tagsfile'),
+		label       => Wx::gettext('Create project tagsfile'),
 		comment =>
 			Wx::gettext('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
 		menu_event => sub {

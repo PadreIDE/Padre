@@ -28,20 +28,21 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
-my $USAGE   = '';
-my $VERSION = '';
-my $HOME    = undef;
-my $SESSION = undef;
-my $DESKTOP = undef;
+my $USAGE       = '';
+my $VERSION     = '';
+my $HOME        = undef;
+my $SESSION     = undef;
+my $DESKTOP     = undef;
 my $ACTIONQUEUE = undef;
-my $getopt  = Getopt::Long::GetOptions(
-	'help'      => \$USAGE,
-	'home=s'    => \$HOME,
-	'session=s' => \$SESSION,
-	'desktop'   => \$DESKTOP,
-	'version'   => \$VERSION,
+my $getopt      = Getopt::Long::GetOptions(
+	'help'          => \$USAGE,
+	'home=s'        => \$HOME,
+	'session=s'     => \$SESSION,
+	'desktop'       => \$DESKTOP,
+	'version'       => \$VERSION,
 	'actionqueue=s' => \$ACTIONQUEUE,
 );
+
 if ( $USAGE or !$getopt ) {
 	print <<"END_USAGE";
 Usage: $0 [FILENAMES]
@@ -66,8 +67,8 @@ require threads::shared;
 $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 
 my %opts = (
-	files   => \@ARGV,
-	session => $SESSION,
+	files       => \@ARGV,
+	session     => $SESSION,
 	actionqueue => $ACTIONQUEUE,
 );
 

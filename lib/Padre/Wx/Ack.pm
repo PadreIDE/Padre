@@ -123,7 +123,7 @@ sub get_layout {
 				$config->find_nohidden,
 			],
 		],
-        [   [   'Wx::CheckBox',
+		[   [   'Wx::CheckBox',
 				'files_without_match',
 				Wx::gettext("Show only files that don't match"),
 				$config->find_nomatch,
@@ -213,7 +213,7 @@ sub find_clicked {
 	} else {
 		$opts{u} = 1; # unrestricted
 	}
-	
+
 	# file_type
 	fill_type_wanted();
 	if ( my $file_types = $search->{file_types} ) {
@@ -231,7 +231,7 @@ sub find_clicked {
 
 	# case_insensitive
 	$opts{i} = $search->{case_insensitive} if $search->{case_insensitive};
-	
+
 	# find only files that do not match
 	if ( $search->{files_without_match} ) {
 		$opts{l} = $opts{v} = 1;
@@ -284,7 +284,7 @@ sub _get_data_from {
 	) if $file_types;
 	Padre::DB->commit;
 
-	$config->set( find_case     => $case_insensitive ? 0 : 1 );
+	$config->set( find_case => $case_insensitive ? 0 : 1 );
 	$config->set( find_nohidden => $ignore_hidden_subdirs );
 	$config->set( find_nomatch  => $files_without_match );
 
@@ -352,15 +352,15 @@ sub on_ack_result_selected {
 	my $text = $event->GetItem->GetText;
 	return if not defined $text;
 
-    my ($file, $line);
-    # TODO: those appear to be very fragile regexps
-    # specially with i18n of the message
-    if ( $opts{l} ) {
-        ($file) = ( $text =~ /'.+'[^']+'(.+)'$/ );
-        $line = 1 if $file;
-    }
-	else {
-	    ( $file, $line ) = ( $text =~ /^(.*?)\((\d+)\)\:/ );
+	my ( $file, $line );
+
+	# TODO: those appear to be very fragile regexps
+	# specially with i18n of the message
+	if ( $opts{l} ) {
+		($file) = ( $text =~ /'.+'[^']+'(.+)'$/ );
+		$line = 1 if $file;
+	} else {
+		( $file, $line ) = ( $text =~ /^(.*?)\((\d+)\)\:/ );
 	}
 	return unless $line;
 
@@ -396,23 +396,27 @@ sub on_ack_thread {
 		cnt_matches => 0,
 	);
 
-    if ($opts{l}) {
-        App::Ack::print_files_with_matches( $iter, \%opts );
-        # summary
-        _send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
-        _send_text(Wx::gettext(sprintf("Found %d files\n", $stats{cnt_files})));
-    }
-    else {
-        App::Ack::print_matches( $iter, \%opts );
-        
-        # summary
-        _send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
-        _send_text(Wx::gettext(
-            sprintf("Found %d files and %d matches\n", 
-            $stats{cnt_files}, 
-            $stats{cnt_matches},
-        )));
-    }
+	if ( $opts{l} ) {
+		App::Ack::print_files_with_matches( $iter, \%opts );
+
+		# summary
+		_send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
+		_send_text( Wx::gettext( sprintf( "Found %d files\n", $stats{cnt_files} ) ) );
+	} else {
+		App::Ack::print_matches( $iter, \%opts );
+
+		# summary
+		_send_text( '-' x 39 . "\n" ) if ( $stats{cnt_files} );
+		_send_text(
+			Wx::gettext(
+				sprintf(
+					"Found %d files and %d matches\n",
+					$stats{cnt_files},
+					$stats{cnt_matches},
+				)
+			)
+		);
+	}
 
 }
 
@@ -443,22 +447,28 @@ sub print_results {
 		$stats{cnt_files}++;
 
 		# list only file names
-		if ($opts{l}) {
+		if ( $opts{l} ) {
 			$text = Wx::gettext(
-				sprintf("'%s' missing in file '%s'\n", 
-				$opts{regex},
-				$text,
-				));
+				sprintf(
+					"'%s' missing in file '%s'\n",
+					$opts{regex},
+					$text,
+				)
+			);
 		}
+
 		# list file names and context
 		else {
+
 			# chop last ':', add \n after $filename
 			chop($text);
 			$text = Wx::gettext(
-				sprintf("Found '%s' in '%s':\n",
-				$opts{regex},
-				$text,
-				));
+				sprintf(
+					"Found '%s' in '%s':\n",
+					$opts{regex},
+					$text,
+				)
+			);
 		}
 
 		# new line between different files

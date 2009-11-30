@@ -28,7 +28,7 @@ our %mode = (
 # mapping for mime-type to the style name in the share/styles/default.yml file
 our %MIME_STYLE = (
 	'application/x-perl' => 'perl',
-	'text/x-perlxs'      => 'xs', # should be in the plugin...
+	'text/x-perlxs'      => 'xs',   # should be in the plugin...
 	'text/x-patch'       => 'diff',
 	'text/x-makefile'    => 'make',
 	'text/x-yaml'        => 'yaml',
@@ -272,10 +272,12 @@ sub setup_style_from_config {
 
 	foreach my $k ( keys %{ $data->{$name}->{colors} } ) {
 		my $v;
+
 		# allow for plain numbers
-		if ($k =~ /^\d+$/) {
+		if ( $k =~ /^\d+$/ ) {
 			$v = $k;
 		}
+
 		# but normally, we have Wx:: or PADRE_ constants
 		else {
 			my $f = 'Wx::' . $k;

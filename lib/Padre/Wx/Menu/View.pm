@@ -346,7 +346,7 @@ sub new {
 	my $dir = File::Spec->catdir( Padre::Constant::CONFIG_DIR, 'styles' );
 	my @private =
 		map { substr( File::Basename::basename($_), 0, -4 ) } File::Glob::glob( File::Spec->catdir( $dir, '*.yml' ) );
-	if ( @private ) {
+	if (@private) {
 		$self->{style}->AppendSeparator;
 		foreach my $name (@private) {
 			my $label = $name;

@@ -40,16 +40,13 @@ sub new {
 
 	# Script Execution
 	Padre::Action->new(
-		name         => 'internal.dump_padre',
-		label        => Wx::gettext('Dump the Padre object to STDOUT'),
-		comment      => Wx::gettext('Dumps the complete Padre object to STDOUT for testing/debugging.'),
-		menu_event   => sub {
-			open my $dumpfh,'>',File::Spec->catfile(Padre::Constant::PADRE_HOME,'padre.dump');
-			print $dumpfh "# Begin Padre dump\n".
-			      Data::Dumper::Dumper(Padre->ide).
-			      "# End Padre dump\n".
-			      "1;\n";
-		        close $dumpfh;
+		name       => 'internal.dump_padre',
+		label      => Wx::gettext('Dump the Padre object to STDOUT'),
+		comment    => Wx::gettext('Dumps the complete Padre object to STDOUT for testing/debugging.'),
+		menu_event => sub {
+			open my $dumpfh, '>', File::Spec->catfile( Padre::Constant::PADRE_HOME, 'padre.dump' );
+			print $dumpfh "# Begin Padre dump\n" . Data::Dumper::Dumper( Padre->ide ) . "# End Padre dump\n" . "1;\n";
+			close $dumpfh;
 		},
 	);
 

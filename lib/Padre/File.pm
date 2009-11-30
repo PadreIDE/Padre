@@ -56,15 +56,16 @@ sub RegisterProtocol {
 	my $regexp = shift;
 	my $module = shift;
 
-	return() if not defined $regexp or $regexp eq '';
-	return() if not defined $module or $module eq '';
+	return () if not defined $regexp or $regexp eq '';
+	return () if not defined $module or $module eq '';
 	$regexp = "$regexp";
 
 	# no double insertion
-	return() if exists $RegisteredModules{$regexp}
-	            and grep {$_ eq $module} @{$RegisteredModules{$regexp}};
+	return ()
+		if exists $RegisteredModules{$regexp}
+			and grep { $_ eq $module } @{ $RegisteredModules{$regexp} };
 
-	unshift @{$RegisteredModules{$regexp}}, $module;
+	unshift @{ $RegisteredModules{$regexp} }, $module;
 
 	return 1;
 }
@@ -94,15 +95,15 @@ sub DropProtocol {
 	my $regexp = shift;
 	my $module = shift;
 
-	return() if not defined $regexp or $regexp eq '';
-	return() if not defined $module or $module eq '';
+	return () if not defined $regexp or $regexp eq '';
+	return () if not defined $module or $module eq '';
 	$regexp = "$regexp";
 
-	return() if not exists $RegisteredModules{$regexp};
+	return () if not exists $RegisteredModules{$regexp};
 
-	my $modules = $RegisteredModules{$regexp};
+	my $modules  = $RegisteredModules{$regexp};
 	my $n_before = @$modules;
-	@$modules = grep {$_ ne $module} @$modules; # drop this module only
+	@$modules = grep { $_ ne $module } @$modules; # drop this module only
 
 	delete $RegisteredModules{$regexp} if @$modules == 0;
 
@@ -146,7 +147,7 @@ sub new {
 	for ( keys(%RegisteredModules) ) {
 		next if $URL !~ /$_/;
 		my $module = $RegisteredModules{$_}->[0];
-		if (eval "require $module; 1;") {
+		if ( eval "require $module; 1;" ) {
 			$self = $module->new($URL);
 			return $self;
 		}
@@ -184,7 +185,7 @@ the empty list is returned.
 
 =cut
 
-sub atime {}
+sub atime { }
 
 =head2 C<basename>
 
@@ -214,7 +215,7 @@ the empty list is returned.
 
 =cut
 
-sub blksize {}
+sub blksize { }
 
 =head2 C<blocks>
 
@@ -227,7 +228,7 @@ the empty list is returned.
 
 =cut
 
-sub blocks {}
+sub blocks { }
 
 =head2 C<can_run>
 
@@ -243,9 +244,10 @@ a HTTP or FTP based file (they return false).
 =cut
 
 sub can_run {
+
 	# If the module does not state that it could do "run",
 	# we return a safe default of false.
-	return();
+	return ();
 }
 
 =head2 C<ctime>
@@ -259,7 +261,7 @@ the empty list is returned.
 
 =cut
 
-sub ctime {}
+sub ctime { }
 
 =head2 C<dev>
 
@@ -272,7 +274,7 @@ the empty list is returned.
 
 =cut
 
-sub dev {}
+sub dev { }
 
 =head2 C<dirname>
 
@@ -286,7 +288,7 @@ given protocol.
 
 =cut
 
-sub dirname {}
+sub dirname { }
 
 =head2 C<exists>
 
@@ -339,7 +341,7 @@ the empty list is returned.
 
 =cut
 
-sub gid {}
+sub gid { }
 
 =head2 C<inode>
 
@@ -352,7 +354,7 @@ the empty list is returned.
 
 =cut
 
-sub inode {}
+sub inode { }
 
 =head2 C<mime>
 
@@ -386,7 +388,7 @@ the empty list is returned.
 
 =cut
 
-sub mode {}
+sub mode { }
 
 =head2 C<mtime>
 
@@ -396,7 +398,7 @@ Returns the last-modification (change) time of the file.
 
 =cut
 
-sub mtime {}
+sub mtime { }
 
 =head2 C<nlink>
 
@@ -409,7 +411,7 @@ the empty list is returned.
 
 =cut
 
-sub nlink {}
+sub nlink { }
 
 =head2 C<rdev>
 
@@ -422,7 +424,7 @@ the empty list is returned.
 
 =cut
 
-sub rdev {}
+sub rdev { }
 
 =head2 C<read>
 
@@ -449,7 +451,7 @@ method was not implemented by the C<Padre::File> subclass.
 
 =cut
 
-sub size {}
+sub size { }
 
 =head2 C<stat>
 
@@ -531,7 +533,7 @@ is returned.
 
 =cut
 
-sub uid {}
+sub uid { }
 
 =head2 C<write>
 
@@ -547,7 +549,7 @@ Returns the empty list if the function is not available on the protocol.
 
 =cut
 
-sub write {}
+sub write { }
 
 1;
 

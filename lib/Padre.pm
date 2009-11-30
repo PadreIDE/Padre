@@ -211,13 +211,14 @@ sub run {
 	Padre::Splash->destroy;
 
 	# Process the action queue
-	if (defined($self->opts->{actionqueue})) {
-		for my $action (split(/\,/,$self->opts->{actionqueue})) {
+	if ( defined( $self->opts->{actionqueue} ) ) {
+		for my $action ( split( /\,/, $self->opts->{actionqueue} ) ) {
 			next if $action eq ''; # Skip empty action names
-			if (!defined($self->actions->{$action})) {
-				warn 'Action "'.$action.'" queued from command line but does not exist.';
+			if ( !defined( $self->actions->{$action} ) ) {
+				warn 'Action "' . $action . '" queued from command line but does not exist.';
 				next;
 			}
+
 			# Add the action to the queue
 			$self->{actionqueue}->add($action);
 		}
