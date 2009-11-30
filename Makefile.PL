@@ -139,9 +139,16 @@ test_requires 'Test::NoWarnings'   => '0.084';
 
 my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
+
+# What tests should we run?
+my @TESTS = 't/*.t';
 if ( win32 and $locale =~ /^English/ ) {
-	tests 't/*.t t/win32/*.t';
+	push @TESTS, 't/win32/*.t';
 }
+if ( author_context or $ENV{RELEASE_TESTING} ) {
+	push @TESTS, 'xt/*.t';
+}
+tests join ' ', @TESTS;
 
 no_index 'directory' => qw{ t xt eg share inc privinc };
 homepage 'http://padre.perlide.org/';
