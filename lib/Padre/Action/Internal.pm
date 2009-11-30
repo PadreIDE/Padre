@@ -16,9 +16,13 @@ Padre::Action::Internal creates Actions for internal usage, for example:
 use 5.008;
 use strict;
 use warnings;
+
+use Data::Dumper ();
+use File::Spec();
+
 use Padre::Action ();
 use Padre::Current qw{_CURRENT};
-use Data::Dumper ();
+use Padre::Constant();
 
 our $VERSION = '0.50';
 
@@ -40,9 +44,11 @@ sub new {
 		label        => Wx::gettext('Dump the Padre object to STDOUT'),
 		comment      => Wx::gettext('Dumps the complete Padre object to STDOUT for testing/debugging.'),
 		menu_event   => sub {
-			print "# Begin Padre dump\n".
+			open my $dumpfh,'>',File::Spec->catfile(Padre::Constant::PADRE_HOME,'padre.dump');
+			print $dumpfh "# Begin Padre dump\n".
 			      Data::Dumper::Dumper(Padre->ide).
 			      "# End Padre dump\n";
+		        close $dumpfh;
 		},
 	);
 
