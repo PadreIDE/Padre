@@ -18,6 +18,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Perl autocompletion is much more configurable now (SEWI)
     - Indentation auto-detection now skips POD for ::Perl documents (SMUELLER)
     - Find in Files now has a checkbox that shows files that do not match (GARU)
+    - Tests which are not needed for end-user installation now in xt (ADAMK)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
