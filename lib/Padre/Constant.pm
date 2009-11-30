@@ -88,6 +88,9 @@ use constant {
 	PADRE_BROWN    => 8,
 };
 
+# Padre's home dir
+use constant PADRE_HOME => $ENV{PADRE_HOME};
+
 # Files and Directories
 use constant CONFIG_DIR => File::Spec->rel2abs(
 	File::Spec->catdir(
