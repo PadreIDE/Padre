@@ -1087,7 +1087,7 @@ sub apply {
 #
 # return true if $scalar is an integer.
 #
-sub _INTEGER ($) {
+sub _INTEGER {
 	return defined $_[0] && !ref $_[0] && $_[0] =~ m/^(?:0|-?[1-9]\d*)$/;
 }
 
