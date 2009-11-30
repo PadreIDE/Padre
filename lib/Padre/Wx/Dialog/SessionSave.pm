@@ -179,13 +179,15 @@ sub _create_fields {
 	my $self  = shift;
 	my $sizer = $self->_sizer;
 
-	my $Current_Session = (
-		Padre::DB::Session->select(
-			'name where id = ?',
-			Padre->ide->{session}
-		)
-		)[0]->{name}
-		if defined( Padre->ide->{session} );
+	my $Current_Session;
+	if ( defined( Padre->ide->{session} ) ) {
+		$Current_Session = (
+			Padre::DB::Session->select(
+				'name where id = ?',
+				Padre->ide->{session}
+			)
+			)[0]->{name};
+	}
 	$Current_Session ||= ''; # Empty value for combo box, better than undef
 
 

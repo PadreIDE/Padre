@@ -506,7 +506,7 @@ sub humanbytes {
 # Returns the memory currently used by this application:
 sub process_memory {
 	if (Padre::Constant::UNIX) {
-		open my $meminfo, "/proc/self/stat" or return;
+		open my $meminfo, '<', '/proc/self/stat' or return;
 		return ( split( / /, <$meminfo> ) )[22];
 	} elsif (Padre::Constant::WIN32) {
 		require Padre::Util::Win32;

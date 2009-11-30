@@ -103,7 +103,7 @@ sub Recycle {
 	my $result = Win32::API->new( shell32 => q{ int SHFileOperation( LPSHFILEOPSTRUCT lpFileOp ) } )->Call($op);
 
 	# failed miserably
-	return undef if $result;
+	return if $result;
 
 	# user aborted...
 	return 0 if $op->{fAnyOperationsAborted};

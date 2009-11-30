@@ -135,10 +135,10 @@ sub read {
 	# The return value should be the file content, so returning
 	# undef is better than nothing (in this situation) if there
 	# is no filename
-	return undef if !defined( $self->{filename} );
+	return if not defined $self->{filename};
 
 	my $fh;
-	if ( !open $fh, '<', $self->{filename} ) {
+	if ( not open $fh, '<', $self->{filename} ) {
 		$self->{error} = $!;
 		return;
 	}

@@ -288,7 +288,7 @@ sub _show_recent_while_idle {
 #
 # Shows the recently opened menu actions
 #
-sub _show_recently_opened_actions() {
+sub _show_recently_opened_actions {
 	my $self = shift;
 
 	# Fetch them from Padre's RecentlyUsed database table
@@ -322,7 +322,7 @@ sub _show_recently_opened_actions() {
 #
 # Search for files and cache result
 #
-sub _search() {
+sub _search {
 	my $self = shift;
 
 	$self->_status_text->SetLabel( Wx::gettext("Reading items. Please wait...") );

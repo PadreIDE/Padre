@@ -186,7 +186,7 @@ sub read {
 
 	# TO DO: Better error handling
 	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error} = $@;
-	open my $tmpfh, $self->{_tmpfile};
+	open my $tmpfh, '<', $self->{_tmpfile};
 	return join( '', <$tmpfh> );
 }
 

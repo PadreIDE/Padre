@@ -836,7 +836,7 @@ sub _on_tree_item_menu {
 		$applies_to_node = $self->GetParent($node);
 	}
 
-	my $cached = \%{ $self->{CACHED}->{$applies_to_path} } if defined($applies_to_path);
+	my $cached = defined($applies_to_path) ? \%{ $self->{CACHED}->{$applies_to_path} } : undef;
 	my $show = $cached->{ShowHidden};
 	$hiddenFiles->Check($show);
 	Wx::Event::EVT_MENU(

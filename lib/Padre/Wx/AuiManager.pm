@@ -98,7 +98,7 @@ sub lock_panels {
 #      occasion!
 SCOPE: {
 	no warnings 'redefine';
-	no strict;
+	no strict;  ## no critic
 	my $destroy  = \&Wx::AuiManager::DESTROY;
 	my %managers = ();
 	*Wx::AuiManager::DESTROY = sub {

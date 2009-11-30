@@ -1614,7 +1614,7 @@ sub on_run_tests {
 	}
 
 	# TO DO probably should fetch the current project name
-	my $filename = $document->{file}->filename if defined( $document->{file} );
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
 	}
@@ -1666,7 +1666,7 @@ sub on_run_this_test {
 	}
 
 	# TO DO probably should fetch the current project name
-	my $filename = $document->{file}->filename if defined( $document->{file} );
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 	unless ($filename) {
 		return $self->error( Wx::gettext("Current document has no filename") );
 	}
@@ -1896,7 +1896,7 @@ sub debug_perl {
 	}
 
 	# Check the file name
-	my $filename = $document->{file}->filename if defined( $document->{file} );
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 
 	#	unless ( $filename =~ /\.pl$/i ) {
 	#		return $self->error(Wx::gettext("Only .pl files can be executed"));
@@ -3294,7 +3294,7 @@ Returns true if saved, false if cancelled.
 sub on_save_as {
 	my $self     = shift;
 	my $document = $self->current->document or return;
-	my $current  = $document->{file}->filename if defined( $document->{file} );
+	my $current  = defined( $document->{file} ) ? $document->{file}->filename : undef;
 
 	# Guess the directory to save to
 	if ( defined $current ) {
@@ -3736,7 +3736,7 @@ sub on_diff {
 	my $self     = shift;
 	my $document = $self->current->document or return;
 	my $text     = $document->text_get;
-	my $file     = $document->{file}->filename if defined( $document->{file} );
+	my $file     = defined( $document->{file} ) ? $document->{file}->filename : undef;
 	unless ($file) {
 		return $self->error( Wx::gettext("Cannot diff if file was never saved") );
 	}
@@ -4947,7 +4947,7 @@ sub change_highlighter {
 		my $document = $editor->{Document};
 		next if $document->get_mimetype ne $mime_type;
 		$document->set_highlighter($module);
-		my $filename = $document->{file}->filename if defined( $document->{file} );
+		my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 		Padre::Util::debug( "Set highlighter to to $module for $document in file " . ( $filename || '' ) );
 		my $lexer = $document->lexer;
 		$editor->SetLexer($lexer);

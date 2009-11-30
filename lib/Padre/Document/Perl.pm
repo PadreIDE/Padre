@@ -171,7 +171,7 @@ sub guess_filename {
 	}
 
 	# Otherwise, no idea
-	return undef;
+	return;
 }
 
 my $keywords;
@@ -960,7 +960,7 @@ sub perltags_parser {
 
 	# If we don't have a file (none specified in config, for example), return undef
 	# as the object and noone will try to use it
-	return undef if not defined $perltags_file;
+	return if not defined $perltags_file;
 
 	my $parser;
 

@@ -366,7 +366,7 @@ sub _setup_events {
 #
 # Restarts search
 #
-sub _restart_search() {
+sub _restart_search {
 	my $self = shift;
 	$self->_search();
 	$self->_update_matches_list_box;
@@ -410,7 +410,7 @@ sub _show_recent_while_idle {
 #
 # Shows the recently opened resources
 #
-sub _show_recently_opened_resources() {
+sub _show_recently_opened_resources {
 	my $self = shift;
 
 	# Fetch them from Padre's RecentlyUsed database table
@@ -453,7 +453,7 @@ sub _search() {
 #
 # Update matches list box from matched files list
 #
-sub _update_matches_list_box() {
+sub _update_matches_list_box {
 	my $self = shift;
 
 	return if not $self->_matched_files;

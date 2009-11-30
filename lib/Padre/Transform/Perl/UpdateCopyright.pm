@@ -103,7 +103,7 @@ sub document {
 			return 1;
 		}
 	);
-	return undef unless defined $elements;
+	return unless defined $elements;
 	return 0 unless $elements;
 
 	# Try to transform any elements
