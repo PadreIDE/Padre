@@ -54,7 +54,9 @@ sub new {
 	# Each module will be tested and the first working one should return
 	# a object, all others should return nothing (undef)
 	for ('LWP') {
-		require 'Padre/Task/HTTPClient/' . $_ . '.pm';
+#		require 'Padre/Task/HTTPClient/' . $_ . '.pm';
+		eval 'require Padre::Task::HTTPClient::'.$_;
+		next if $@;
 		$self = "Padre::Task::HTTPClient::$_"->new(%args);
 		next unless defined($self);
 		return $self;
