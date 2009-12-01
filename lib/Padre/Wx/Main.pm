@@ -61,7 +61,7 @@ use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress           ();
-use IPC::Open3                    ('open3');
+use IPC::Open3                    ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::Frame';
@@ -5241,7 +5241,7 @@ sub _filter_tool_run {
 	my $filter_out;
 	my $filter_err;
 
-	if ( !open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
+	unless ( File::Open3::open3( $filter_in, $filter_out, $filter_err, $cmd ) ) {
 		$self->error( sprintf( Wx::gettext("Error running filter tool:\n%s"), $! ) );
 		return;
 	}
