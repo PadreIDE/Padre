@@ -30,15 +30,14 @@ for ('.','blib/lib','lib') {
  last;
 }
 
+use_ok('Padre::Perl');
+
 my $cmd;
 if ($^O eq 'MSWin32') {
  # Look for Perl on Windows
- for ('perl','cperl','wperl','C:\strawberry\bin\perl.exe','C:\strawberry\bin\cperl.exe') {
-  my $Perl_result = `$_ -e "print 12345;"`;
-  next if $Perl_result != 12345;
-  $cmd = $_.' ';
- }
+ $cmd = Padre::Perl::cperl();
  plan skip_all => 'Need some Perl for this test' unless defined($cmd);
+ $cmd .= ' ';
 }
 
 #plan( tests => scalar( keys %TEST ) * 2 + 20 );
