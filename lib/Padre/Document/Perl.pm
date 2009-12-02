@@ -171,6 +171,40 @@ sub guess_filename {
 	}
 
 	# Otherwise, no idea
+	return undef;
+}
+
+sub guess_subpath {
+	my $self = shift;
+
+	# Don't attempt a content-based guess if the file already has a name.
+	if ( $self->filename ) {
+		return $self->SUPER::guess_subpath;
+	}
+
+	# Is this a script?
+	my $text = $self->text_get;
+	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
+		# Is this a test?
+		if ( $text =~ /use Test::/ ) {
+			return 't';
+		} else {
+			return 'script';
+		}
+	}
+
+	# Is this a module?
+	if ( $text =~ /\bpackage\s*([\w\:]+)/s ) {
+		# Take all but the last section of the package name,
+		# and use that as the file.
+		my $name = $1;
+		my @dirs = split /::/, $name;
+		pop @dirs;
+
+		return ( 'lib', @dirs );
+	}
+
+	# Otherwise, no idea
 	return;
 }
 

@@ -52,7 +52,7 @@ special features needed by that kind of a file type.
 
 Plug-ins can add further mappings.
 
-=head3 Plan
+=head2 Plan
 
 Padre has a built-in mapping of file extension to either
 a single MIME type or function name. In order to determine
@@ -87,7 +87,6 @@ auto-completion or refactoring tools).
 
 Padre should check if the given MIME type is one that is
 in the supported MIME type list. (TO DO)
-
 
 Each MIME type is mapped to one or more lexers that provide
 the syntax highlighting. Every MIME type has to be mapped to at least
@@ -387,7 +386,7 @@ sub _get_default_newline_type {
 
 =pod
 
-=head3 C<error>
+=head2 C<error>
 
     $document->error( $msg );
 
@@ -582,12 +581,12 @@ set between key and value. Both key and value are expected to be ASCII codes.
 
 Usually used for brackets and text signs like:
 
-	$self->autocomplete_matching_char(
-			$editor,
-			$event,
-			39  => 39,  # ' '
-			40  => 41,  # ( )
-		);
+  $self->autocomplete_matching_char(
+      $editor,
+      $event,
+      39  => 39,  # ' '
+      40  => 41,  # ( )
+  );
 
 Returns 1 if something was added or 0 otherwise (if anybody cares about this).
 
@@ -669,8 +668,6 @@ sub autoclean {
 
 	return 1;
 }
-
-
 
 sub save_file {
 	my ($self) = @_;
@@ -1151,7 +1148,37 @@ sub guess_filename {
 		return ( File::Spec->splitpath($filename) )[2];
 	}
 
-	return;
+	return undef;
+}
+
+=head2 C<guess_subpath>
+
+  my $subpath = $document->guess_subpath;
+
+When called on a new unsaved file, this method attempts to guess what the
+subpath of the file should be inside of the current project, based purely
+on the content of the file.
+
+In the base implementation, this returns a null list to indicate that the
+method cannot make a reasonable guess at the name of the file.
+
+Your MIME type specific document subclass should implement any file name
+detection as it sees fit, returning the project-rooted subpath as a list
+of directory names.
+
+These directory names do not need to exist, they only represent intent.
+
+=cut
+
+sub guess_subpath {
+	my $self = shift;
+
+	# IF the file already has an existing name, guess that
+	my $filename = $self->filename;
+
+	$DB::single = 1;
+
+	1;
 }
 
 # Abstract methods, each subclass should implement it

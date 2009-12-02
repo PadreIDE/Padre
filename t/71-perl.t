@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 25 );
+	plan( tests => 27 );
 }
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
@@ -208,6 +208,27 @@ SCOPE: {
 		} ],
 		'Found expected Perl functions',
 	);
+}
+
+# Tests for content intuition
+SCOPE: {
+	my $editor = t::lib::Padre::Editor->new;
+	my $doc    = Padre::Document::Perl->new;
+	$doc->set_editor($editor);
+	$editor->configure_editor($doc);
+	$doc->text_set(<<'END_PERL');
+package Foo::Bar::Baz;
+
+1;
+END_PERL
+
+	# Check the filename
+	my $filename = $doc->guess_filename;
+	is( $filename, 'Baz.pm', '->guess_filename ok' );
+
+	# Check the subpath
+	my @subpath = $doc->guess_subpath;
+	is_deeply( \@subpath, [ qw{ lib Foo Bar } ], '->guess_subpath' );
 }
 
 

@@ -3301,6 +3301,19 @@ sub on_save_as {
 		$self->{cwd} = File::Basename::dirname($current);
 	} elsif ( defined $document->project_dir ) {
 		$self->{cwd} = $document->project_dir;
+
+		# Support sub-directory intuition
+		# if the subdirectory already exists.
+		my @subpath = $document->guess_subpath;
+		if ( @subpath ) {
+			my $subdir = File::Spec->catdir(
+				$document->project_dir,
+				@subpath,
+			);
+			if ( -d $subdir ) {
+				$self->{cwd} = $subdir;
+			}
+		}
 	}
 
 	# Guess the filename to save to
@@ -3310,7 +3323,10 @@ sub on_save_as {
 	while (1) {
 		my $dialog = Wx::FileDialog->new(
 			$self, Wx::gettext("Save file as..."),
-			$self->{cwd}, $filename, "*.*", Wx::wxFD_SAVE,
+			$self->{cwd},
+			$filename,
+			"*.*",
+			Wx::wxFD_SAVE,
 		);
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 			return;

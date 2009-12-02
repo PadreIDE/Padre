@@ -5,11 +5,15 @@ package Padre::Config::Style;
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
-use Params::Util qw{ _IDENTIFIER _HASH };
-use YAML::Tiny ();
+use Carp         ();
+use Params::Util ();
+use YAML::Tiny   ();
 
 our $VERSION = '0.50';
+
+
+
+
 
 ######################################################################
 # Constructor
@@ -17,10 +21,10 @@ our $VERSION = '0.50';
 sub new {
 	my $class = shift;
 	my $self = bless {@_}, $class;
-	unless ( _IDENTIFIER( $self->name ) ) {
+	unless ( Params::Util::_IDENTIFIER( $self->name ) ) {
 		Carp::croak("Missing or invalid style name");
 	}
-	unless ( _HASH( $self->data ) ) {
+	unless ( Params::Util::_HASH( $self->data ) ) {
 		Carp::croak("Missing or invalid style data");
 	}
 	return $self;
