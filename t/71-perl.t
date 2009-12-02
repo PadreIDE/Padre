@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 24 );
+	plan( tests => 25 );
 }
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
@@ -185,6 +185,37 @@ SCOPE: {
 		}
 	);
 }
+
+# Regression test for get_functions
+SCOPE: {
+	my $editor = t::lib::Padre::Editor->new;
+	my $file   = catfile( $files, 'perl_functions.pl' );
+	my $doc    = Padre::Document->new(
+		filename => $file,
+	);
+	$doc->set_editor($editor);
+	$editor->configure_editor($doc);
+
+	my @functions = $doc->get_functions;
+	is_deeply(
+		\@functions,
+		[ qw{
+			guess_indentation_style
+			guess_filename
+			keywords
+			two_lines
+			three_lines
+		} ],
+		'Found expected Perl functions',
+	);
+}
+
+
+
+
+
+######################################################################
+# Support Functions
 
 sub find_var_simple {
 	my $doc     = shift;
