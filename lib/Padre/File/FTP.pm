@@ -113,6 +113,45 @@ sub new {
 	return $self;
 }
 
+sub clone {
+	my $origin = shift;
+
+	my $url = shift;
+
+	# Create myself
+	my $self = bless { filename => $url }, ref($origin);
+
+	# Copy the common values
+	for ('_timeout','_passive','_user','_pass','_port','_host','_ftp') {
+		$self->{$_} = $origin->{$_};
+	}
+
+##### START URL parsing #####
+
+##### NO REGEX's below this line (except the parser)! #####
+
+	# TO DO: Improve URL parsing
+	if ( $url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i ) {
+
+		# URL parsing failed
+		# TO DO: Warning should go to a user popup not to the text console
+		$self->{error} = 'Unable to parse ' . $url;
+		return $self;
+	}
+
+	# Path & filename
+	$self->{_file} = $8;
+
+##### END URL parsing, regex is allowed again #####
+
+	$self->{protocol} = 'ftp'; # Should not be overridden
+
+	$self->{_file_temp} = File::Temp->new( UNLINK => 1 );
+	$self->{_tmpfile} = $self->{_file_temp}->filename;
+
+	return $self;
+}
+
 sub size {
 	my $self = shift;
 	return if !defined( $self->{_ftp} );
@@ -229,6 +268,9 @@ sub _ftp_dirname {
 	return $dir;
 }
 
+sub can_clone {
+	return 1;
+}
 
 1;
 

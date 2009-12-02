@@ -70,6 +70,7 @@ sub RegisterProtocol {
 	return 1;
 }
 
+
 =head2 DropProtocol
 
 Drops a previously registered protocol handler. First argument must
@@ -230,6 +231,31 @@ the empty list is returned.
 
 sub blocks { }
 
+=pod
+
+=head2 C<can_clone>
+
+  $file->can_clone;
+
+Returns true if the protocol allows re-using of connections for new
+files (usually from the same project).
+
+Local files don't use connections at all, HTTP uses one-request-
+connections, cloning has no benefit for them. FTP and SSH use
+connections to a remote server and we should work to get no more
+than one connection per server.
+
+=cut
+
+sub can_clone {
+
+	# Cloning needs to be supported by the protocol, the safer 
+	# option is false here.
+	return 0;
+}
+
+=pod
+
 =head2 C<can_run>
 
   $file->can_run;
@@ -247,8 +273,41 @@ sub can_run {
 
 	# If the module does not state that it could do "run",
 	# we return a safe default of false.
-	return ();
+	return 0;
 }
+
+=pod
+
+=head2 C<clone>
+
+  my $clone = $file->clone($File_or_URL);
+
+The C<clone> constructor lets you create a new C<Padre::File> object reusing
+an existing connection.
+
+Takes the same arguments as the C<new> method.
+
+If the protocol doesn't know about (server) connections/sessions, returns a
+brand new Padre::File object.
+
+NOTICE: If you request a clone which is located on another server, you'll
+        get a Padre::File object using the original connection to the
+        original server and the original authentication data but the new
+        path and filename!
+
+Returns a new C<Padre::File> or dies on error.
+
+=cut
+
+sub clone {
+	my $self = shift;
+	
+	my $class = ref($self);
+	
+	return $class->new(@_);
+}
+
+=pod
 
 =head2 C<create_filename>
 

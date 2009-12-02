@@ -50,6 +50,11 @@ sub new {
 	return $self;
 }
 
+can_clone {
+	# Local files don't have connections, no need to clone objects
+	return 0;
+}
+
 sub can_run {
 	return 1;
 }
@@ -176,6 +181,14 @@ sub dirname {
 sub readonly {
 	my $self = shift;
 	return 1 if ( !-w $self->{filename} );
+}
+
+sub create_filename {
+  my $self = shift;
+  my $path = shift;
+  my $filename = shift;
+  
+	return File::Spec->catfile($path,$filename);
 }
 
 1;

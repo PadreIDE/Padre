@@ -14,7 +14,7 @@ if ( !$ENV{PADRE_NETWORK_T} ) {
 	exit;
 }
 
-plan( tests => 47 );
+plan( tests => 63 );
 
 my $file; # Define for later usage
 
@@ -48,6 +48,16 @@ for my $url ( keys(%HTTP_Tests) ) {
 	ok( $file->basename   eq $HTTP_Tests{$url}->[1], 'HTTP ' . $url . ': Check basename' );
 }
 
+my $clone = $file->clone('http://padre.perlide.org/download.html');
+ok(defined($clone),'HTTP: Create clone');
+is(ref($clone),'Padre::File::HTTP','HTTP: Clone object type');
+is( $clone->{protocol} , 'http', 'HTTP: Check clone protocol' );
+ok( $clone->size > 0,            'HTTP: Clone file size' );
+ok( $clone->mtime >= 1253194791, 'HTTP: Clone mtime' );
+is( $clone->basename , 'download.html', 'HTTP: Clone basename' );
+is( $clone->dirname , 'http://padre.perlide.org/', 'HTTP: Clone dirname' );
+ok( !$clone->can_run, 'HTTP: Clone can not run' );
+
 ###############################################################################
 ### Padre::File::FTP
 
@@ -61,6 +71,7 @@ ok( $file->basename eq 'README', 'FTP: basename' );
 ok( $file->dirname eq 'ftp://ftp.cpan.org/pub/CPAN', 'FTP: dirname' );
 ok( !$file->can_run, 'FTP: Can not run' );
 ok( $file->exists,   'FTP: Exists' );
+my $firstfile = $file;
 
 # Symlink
 $file = Padre::File->new('ftp://ftp.kernel.org/welcome.msg');
@@ -86,5 +97,15 @@ for my $url (
 	my $size = $file->size;
 	ok( defined($size), 'FTP ' . $server . ': ' . $size . ' bytes' );
 }
+
+$clone = $firstfile->clone('ftp://ftp.cpan.org/pub/CPAN/index.html');
+ok( defined($clone), 'FTP: Create Padre::File clone' );
+ok( ref($clone) eq 'Padre::File::FTP', 'FTP: Check clone module' );
+ok( $clone->{protocol} eq 'ftp', 'FTP: Check clone protocol' );
+cmp_ok( $clone->size ,'>' ,0, 'FTP: clone file size' );
+is( $clone->basename , 'index.html', 'FTP: clone basename' );
+is( $clone->dirname, 'ftp://ftp.cpan.org/pub/CPAN', 'FTP: clone dirname' );
+ok( !$clone->can_run, 'FTP: Clone can not run' );
+ok( $clone->exists,   'FTP: Clone exists' );
 
 done_testing();
