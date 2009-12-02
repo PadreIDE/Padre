@@ -27,6 +27,7 @@ use warnings;
 use FindBin;
 use Cwd                           ();
 use Carp                          ();
+use IPC::Open3                    ();
 use File::Spec                    ();
 use File::HomeDir                 ();
 use File::Basename                ();
@@ -61,7 +62,6 @@ use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress           ();
-use IPC::Open3                    ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::Frame';
