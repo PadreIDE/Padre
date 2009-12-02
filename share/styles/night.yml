@@ -77,6 +77,8 @@ perl:
    foreground: 007f00
   wxSTC_PL_POD:
    foreground: 7f7f7f
+  wxSTD_PL_POD_VERB
+   foreground: 7f7f7f
   wxSTC_PL_NUMBER:
    foreground: 007f7f
   wxSTC_PL_WORD:
