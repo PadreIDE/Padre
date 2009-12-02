@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 29;
+use Test::More tests => 26;
 
 use Padre::File;
 
@@ -20,8 +20,6 @@ ok( -s $testfile == 3, 'Local: Check test file size' );
 
 $file = Padre::File->new($testfile);
 ok( defined($file),    'Local: Create Padre::File object' );
-
-is($file->create_filename('/tmp','padre.tmp'),'/tmp/padre.tmp','Create filename (local)');
 
 ok( -s $testfile == 3, 'Local: Check test file size again' );
 ok( ref($file) eq 'Padre::File::Local', 'Local: Check module' );

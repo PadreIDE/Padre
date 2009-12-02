@@ -218,6 +218,15 @@ sub dirname {
 	return $dir;
 }
 
+sub servername {
+	my $self = shift;
+
+	# Don't explicit return ftp default port
+	return $self->{_host} if $self->{_port} == 21;
+
+	return $self->{_host}.':'.$self->{_port};
+}
+
 sub read {
 	my $self = shift;
 

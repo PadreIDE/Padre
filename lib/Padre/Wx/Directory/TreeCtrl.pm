@@ -319,10 +319,20 @@ sub _updated_dir {
 	my $dir    = shift;
 	my $cached = $self->{CACHED}->{$dir};
 
+	my $file = $self->parent->{file};
+	my $mtime;
+
+	if (defined($file)) {
+		$file->browse_mtime($dir)
+	} else {
+		$mtime = (stat($dir))[10];
+	}
+	
 	if (   not defined $cached
 		or !$cached->{Data}
 		or !$cached->{Change}
-		or ( stat $dir )[10] != $cached->{Change}
+		or !defined($mtime)
+		or $mtime != $cached->{Change}
 		or $self->search->{just_used}->{$dir} )
 	{
 		return 1;

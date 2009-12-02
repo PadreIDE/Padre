@@ -231,6 +231,78 @@ the empty list is returned.
 
 sub blocks { }
 
+=head2 C<browse_mtime>
+
+  $file->browse_mtime($path_and_filename);
+
+Returns the modification time of the given file on the remote server.
+
+Leave out the protocol and server name for remote protocols, for example
+
+  my $file = Padre::File->new('http://perlide.org/current/foo.html');
+  $file->browse_mtime('/archive/bar.html');
+
+This returns the mtime of http://perlide.org/archive/bar.html
+
+The default uses one Padre::File clone per request which is a reasonable
+fallback but very inefficient! Please add browse_ - methods to the
+subclass module whenever possible.
+
+=cut
+
+sub browse_mtime {
+  my $self = shift;
+  my $filename = shift;
+  
+  my $file = $self->clone_file($filename);
+  return $file->mtime;
+}
+
+=pod
+
+=head2 C<browse_url_join>
+
+  $file->browse_url_join($server, $path, $basename);
+
+Merges a servername, pathname and a filename to a complete url.
+
+A "path" in this function is meant to be the local path on the server,
+not the Padre path (which includes the servername).
+
+You may think of
+  /tmp + padre.$$                       => /tmp/padre.$$
+  C:\\temp + padre.$$                   => C:\\temp\\padre.$$
+
+...but also remember
+  http://perlide.org + about.html       => http://perlide.org/about.html
+
+Datapoint created a file syntax...
+  common + program/text                 => program/text:common
+This could happen once someone adds a Padre::File::DBCFS for using
+a DB/C FS fileserver. "program" is the filename, "text" the extension
+and "common" is what we call a directory.
+
+The most common seems to be a / as the directory seperator char, so
+we'll use this as the default.
+
+This method should care about merging double / to one if this should
+be done on this filesystem (even if the default doesn't care).
+
+=cut
+
+# Note: Don't use File::Spec->catfile here as it may mix up http or
+#       other pathnames. This is a default and should be overriden
+#       by each Padre::File::* - module!
+sub browse_url_join {
+  my $self = shift;
+  my $server = shift;
+  my $path = shift;
+  my $basename = shift;
+  
+  return $self->{protocol}.'://'.$server.'/'.$path.'/'.$basename if defined($basename);
+  return $self->{protocol}.'://'.$server.'/'.$path;
+}
+
 =pod
 
 =head2 C<can_clone>
@@ -309,42 +381,31 @@ sub clone {
 
 =pod
 
-=head2 C<create_filename>
+=head2 C<clone_file>
 
-  $file->create_filename($path, $basename);
+  my $clone = $file->clone_file($filename_with_path);
+  my $clone = $file->clone_file($path,$filename);
 
-Merges a pathname and a filename to a complete filename_with_path.
+The C<clone> constructor lets you create a new C<Padre::File> object reusing
+an existing connection.
 
-You may think of
-  /tmp + padre.$$                       => /tmp/padre.$$
-  C:\\temp + padre.$$                   => C:\\temp\\padre.$$
+Takes one or two arguments:
+ - either the complete path + filename of an URL
+ - or the path and filename as seperate arguments
 
-...but also remember
-  http://perlide.org + about.html       => http://perlide.org/about.html
+If the protocol doesn't know about (server) connections/sessions, returns a
+brand new Padre::File object.
 
-Datapoint created a file syntax...
-  common + program/text                 => program/text:common
-This could happen once someone adds a Padre::File::DBCFS for using
-a DB/C FS fileserver. "program" is the filename, "text" the extension
-and "common" is what we call a directory.
-
-The most common seems to be a / as the directory seperator char, so
-we'll use this as the default.
-
-This method should care about merging double / to one if this should
-be done on this filesystem (even if the default doesn't care).
+Returns a new C<Padre::File> or dies on error.
 
 =cut
 
-# Note: Don't use File::Spec->catfile here as it may mix up http or
-#       other pathnames. This is a default and should be overriden
-#       by each Padre::File::* - module!
-sub create_filename {
-  my $self = shift;
-  my $path = shift;
-  my $filename = shift;
-  
-  return $path.'/'.$filename;
+sub clone_file {
+	my $self = shift;
+	my $path = shift;
+	my $filename = shift;
+
+	return $self->clone($self->browse_url_join($self->servername,$path,$filename));
 }
 
 =head2 C<ctime>
@@ -386,6 +447,19 @@ given protocol.
 =cut
 
 sub dirname { }
+
+=head2 C<error>
+
+  $file->error;
+
+Returns the last error message (like $! for system calls).
+
+=cut
+
+sub error {
+	my $self = shift;
+	return $self->{error};
+}
 
 =head2 C<exists>
 
@@ -534,10 +608,23 @@ C<error> method.
 
 =cut
 
-sub error {
+=head2 C<servername>
+
+  $file->servername;
+
+Returns the server name for this module - if the protocol knows about a
+server, local files don't.
+
+WARNING: The Padre "path" includes the servername in a protocol dependent
+         syntax!
+
+=cut
+
+sub servername {
 	my $self = shift;
-	return $self->{error};
+	return '';
 }
+
 
 =head2 C<size>
 

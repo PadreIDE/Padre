@@ -127,6 +127,14 @@ sub dirname {
 	return $1;
 }
 
+sub servername {
+	my $self = shift;
+
+	# Cut the protocol and hostname part or fail if this is no expected syntax:
+	$self->{filename} =~ /^https?\:\/\/(.+?)\/[^\/\#\?]+?([\#\?].*)?$/i or return undef;
+	return $1;
+}
+
 sub read {
 	my $self = shift;
 	return scalar( $self->_request() );

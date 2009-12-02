@@ -50,7 +50,7 @@ sub new {
 	return $self;
 }
 
-can_clone {
+sub can_clone {
 	# Local files don't have connections, no need to clone objects
 	return 0;
 }
@@ -183,12 +183,13 @@ sub readonly {
 	return 1 if ( !-w $self->{filename} );
 }
 
-sub create_filename {
+sub browse_url_join {
   my $self = shift;
+  my $server = shift;
   my $path = shift;
   my $filename = shift;
   
-	return File::Spec->catfile($path,$filename);
+	return File::Spec->catfile($server,$path,$filename);
 }
 
 1;

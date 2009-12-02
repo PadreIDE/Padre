@@ -14,7 +14,7 @@ if ( !$ENV{PADRE_NETWORK_T} ) {
 	exit;
 }
 
-plan( tests => 63 );
+plan( tests => 65 );
 
 my $file; # Define for later usage
 
@@ -57,6 +57,8 @@ ok( $clone->mtime >= 1253194791, 'HTTP: Clone mtime' );
 is( $clone->basename , 'download.html', 'HTTP: Clone basename' );
 is( $clone->dirname , 'http://padre.perlide.org/', 'HTTP: Clone dirname' );
 ok( !$clone->can_run, 'HTTP: Clone can not run' );
+
+is($clone->browse_mtime('/download.html'),$clone->mtime,'HTTP: browse_mtime');
 
 ###############################################################################
 ### Padre::File::FTP
@@ -107,5 +109,7 @@ is( $clone->basename , 'index.html', 'FTP: clone basename' );
 is( $clone->dirname, 'ftp://ftp.cpan.org/pub/CPAN', 'FTP: clone dirname' );
 ok( !$clone->can_run, 'FTP: Clone can not run' );
 ok( $clone->exists,   'FTP: Clone exists' );
+
+is($firstfile->mtime,$clone->browse_mtime('/pub/CPAN/README'),'FTP: browse_mtime');
 
 done_testing();
