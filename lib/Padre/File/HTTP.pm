@@ -56,7 +56,7 @@ sub _request {
 		}
 	} else {
 		if (wantarray) {
-			return undef, $Result;
+			return (undef, $Result);
 		} else {
 			return;
 		}

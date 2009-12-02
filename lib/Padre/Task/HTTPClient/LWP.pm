@@ -95,7 +95,7 @@ sub run {
 		}
 	} else {
 		if (wantarray) {
-			return undef, $Result;
+			return (undef, $Result);
 		} else {
 			return;
 		}
