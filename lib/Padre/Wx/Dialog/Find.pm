@@ -310,8 +310,13 @@ sub find_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ($search) {
+	unless ( $search ) {
 		$main->error("Not a valid search");
+
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_text}->SetFocus;
+
 		return;
 	}
 
@@ -321,8 +326,16 @@ sub find_button {
 	# If we're only searching once, we won't need the dialog any more
 	if ( $self->{find_first}->GetValue ) {
 		$self->Hide;
-	} elsif ( !$Result ) {
-		$main->message( Wx::gettext('No matches found'), Wx::gettext('Search') );
+	} elsif ( not $Result ) {
+		$DB::single = 1;
+		$main->error(
+			Wx::gettext('No matches found'),
+			Wx::gettext('Search')
+		);
+
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_text}->SetFocus;
 	}
 
 	return;
@@ -348,7 +361,7 @@ sub cancel_button {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ($editor) {
+	if ( $editor ) {
 		$editor->SetFocus;
 	}
 

@@ -441,6 +441,9 @@ sub find_button {
 	my $search = $self->as_search;
 	unless ($search) {
 		$main->error("Not a valid search");
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_text}->SetFocus;
 		return;
 	}
 
@@ -512,6 +515,9 @@ sub replace_button {
 	my $search = $self->as_search;
 	unless ($search) {
 		$main->error("Not a valid search");
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_text}->SetFocus;
 		return;
 	}
 
@@ -551,11 +557,17 @@ sub replace_button {
 			sprintf( Wx::gettext('Replaced %d matches'), $Replace_Count ),
 			Wx::gettext('Search and Replace')
 		);
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_text}->SetFocus;
 	} elsif ( $Replace_Count == 0 ) {
 		$main->message(
 			Wx::gettext('No matches found'),
 			Wx::gettext('Search and Replace'),
 		);
+		# Move the focus back to the search text
+		# so they can tweak their search.
+		$self->{find_text}->SetFocus;
 	}
 
 	return;
