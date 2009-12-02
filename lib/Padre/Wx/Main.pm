@@ -5173,25 +5173,30 @@ Note: this method may not belong here...
 =cut
 
 sub new_document_from_string {
-	my ( $self, $str, $mimetype ) = @_;
+	my $self     = shift;
+	my $string   = shift;
+	my $mimetype = shift;
 
-	$self->on_new();
+	# If we are currently focused on an unused document,
+	# reuse that instead of making a new one.
+	my $document = $self->current->document;
+	unless ( $document and $document->is_unused ) {
+		$self->on_new;
+	}
+	$document = $self->current->document or return;
 
-	my $editor = $self->current->editor or return;
-	my $doc = $editor->{Document};
-	$doc->text_set($str);
-
-	if ($mimetype) {
-		$doc->set_mimetype($mimetype);
+	# Fill the document
+	$document->text_set($string);
+	if ( $mimetype ) {
+		$document->set_mimetype($mimetype);
 	}
 
-	$doc->{original_content} = $doc->text_get;
-	$doc->editor->padre_setup;
-	$doc->rebless;
-	$doc->colourize;
+	$document->{original_content} = $document->text_get;
+	$document->editor->padre_setup;
+	$document->rebless;
+	$document->colourize;
 
 	return 1;
-
 }
 
 sub filter_tool {
