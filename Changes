@@ -22,6 +22,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Added a test for actions (SEWI)
     - Re-enabled the beginner error check tests (SEWI)
     - Added missing File::Slurp dependency exposed by DMG installer (ADAMK)
+    - Better focus transitions during search/replace, which should make
+      them easier to work with quickly (ADAMK)
+    - Rolled back function list improvements that were causing regressions (ADAMK)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
