@@ -129,7 +129,6 @@ perl:
   wxSTC_PL_STRING_QW:
    foreground: 7f007f
 # missing:
-#define SCE_PL_POD_VERB 31
 #define SCE_PL_SUB_PROTOTYPE 40
 #define SCE_PL_FORMAT_IDENT 41
 #define SCE_PL_FORMAT 42
