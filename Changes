@@ -26,6 +26,7 @@ Changes for Perl Application Development and Refactoring Environment
       them easier to work with quickly (ADAMK)
     - Rolled back function list improvements that were causing regressions (ADAMK)
     - Added project sub-path intuition when saving new files (ADAMK)
+    - Fixed a number of search/replace related bugs (ADAMK)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)

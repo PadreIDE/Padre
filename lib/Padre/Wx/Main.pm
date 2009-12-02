@@ -2329,9 +2329,9 @@ If no files are open, do nothing.
 sub replace_all {
 	my $self = shift;
 	my $editor = $self->current->editor or return;
-	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
+	if ( Params::Util::_INSTANCE($_[0], 'Padre::Search') ) {
 		$self->{search} = shift;
-	} elsif (@_) {
+	} elsif ( @_ ) {
 		die("Invalid argument to replace_all");
 	}
 	if ( $self->search ) {

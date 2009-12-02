@@ -294,8 +294,8 @@ sub editor_replace_all {
 	);
 
 	# Replace all matches as a single undo
-	if (@matches) {
-		my $replace = $self->replace_text;
+	if ( @matches ) {
+		my $replace = $self->replace_term;
 		$editor->BeginUndoAction;
 		foreach my $match ( reverse @matches ) {
 			$editor->SetTargetStart( $match->[0] );
