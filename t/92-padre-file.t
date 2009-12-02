@@ -2,12 +2,19 @@
 
 use strict;
 use warnings;
-use Test::More tests => 26;
+use Test::More tests => 29;
 
 use Padre::File;
 
 my $file = Padre::File->new();
 ok( !defined($file), 'No filename' );
+
+# Padre::File
+
+# class methods
+
+is(Padre::File->create_filename('/tmp','padre.tmp'),'/tmp/padre.tmp','Create filename (default) 1');
+is(Padre::File->create_filename('http://perlide.org','about.html'),'http://perlide.org/about.html','Create filename (default) 1');
 
 # Padre::File::Local
 
@@ -20,6 +27,9 @@ ok( -s $testfile == 3, 'Local: Check test file size' );
 
 $file = Padre::File->new($testfile);
 ok( defined($file),    'Local: Create Padre::File object' );
+
+is($file->create_filename('/tmp','padre.tmp'),'/tmp/padre.tmp','Create filename (local)');
+
 ok( -s $testfile == 3, 'Local: Check test file size again' );
 ok( ref($file) eq 'Padre::File::Local', 'Local: Check module' );
 ok( $file->{protocol} eq 'local', 'Local: Check protocol' );
