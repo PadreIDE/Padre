@@ -3571,13 +3571,13 @@ sub close {
 		$self->outline->clear;
 	}
 	if ( $self->has_directory ) {
-		$self->directory->clear;
+		$self->directory->refresh;
 	}
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh( $self->current );
 
-	#	$self->update_last_session;
+	# $self->update_last_session;
 
 	return 1;
 }
