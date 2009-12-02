@@ -9,13 +9,6 @@ use Padre::File;
 my $file = Padre::File->new();
 ok( !defined($file), 'No filename' );
 
-# Padre::File
-
-# class methods
-
-is(Padre::File->create_filename('/tmp','padre.tmp'),'/tmp/padre.tmp','Create filename (default) 1');
-is(Padre::File->create_filename('http://perlide.org','about.html'),'http://perlide.org/about.html','Create filename (default) 1');
-
 # Padre::File::Local
 
 our $testfile = 't/files/padre-file-test';
