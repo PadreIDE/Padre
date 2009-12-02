@@ -78,7 +78,7 @@ perl:
    foreground: 008800
   wxSTC_PL_POD:
    foreground: 000000
-  wxSTC_PL_POD_VERB
+  wxSTC_PL_POD_VERB:
    foreground: 000000
   wxSTC_PL_NUMBER:
    foreground: ff0000
