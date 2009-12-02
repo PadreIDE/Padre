@@ -284,7 +284,7 @@ sub setup_style_from_config {
 			if ( $k =~ /^PADRE_/ ) {
 				$f = 'Padre::Constant::' . $k;
 			}
-			no strict "refs"; ## no critic
+			no strict "refs";
 			$v = eval { $f->() };
 			if ($@) {
 				warn "invalid key '$k'\n";

@@ -304,11 +304,11 @@ SCOPE: {
 		my $userclass = $padretask->{_process_class};
 		delete $padretask->{_process_class};
 
-		no strict 'refs'; ## no critic
+		no strict 'refs';
 		my $ref = \%{"${userclass}::"};
 		use strict 'refs';
 		my $loaded = exists $ref->{"ISA"};
-		unless ( $loaded or eval("require $userclass;") ) { ## no critic
+		unless ( $loaded or eval("require $userclass;") ) {
 			require Carp;
 			if ($@) {
 				Carp::croak("Failed to load Padre::Task subclass '$userclass': $@");

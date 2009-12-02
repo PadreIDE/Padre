@@ -506,7 +506,7 @@ sub _load_plugin {
 
 	# Attempt to load the plug-in
 	my $code = "use $module ();";
-	eval $code; ## no critic
+	eval $code;
 
 	# Did it compile?
 	if ($@) {

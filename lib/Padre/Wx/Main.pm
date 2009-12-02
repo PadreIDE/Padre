@@ -2730,7 +2730,7 @@ sub setup_editor {
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 
-	if ($file) {
+	if ( $file ) {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
@@ -4392,7 +4392,7 @@ sub run_in_padre {
 	my $self = shift;
 	my $doc  = $self->current->document or return;
 	my $code = $doc->text_get;
-	my @rv   = eval $code;                        ## no critic
+	my @rv   = eval $code;
 	if ($@) {
 		Wx::MessageBox(
 			sprintf( Wx::gettext("Error: %s"), $@ ),

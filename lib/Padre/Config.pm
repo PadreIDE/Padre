@@ -85,7 +85,7 @@ sub $object->{name} {
 END_PERL
 
 	# Compile the accessor
-	eval $code; ## no critic
+	eval $code;
 	if ($@) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}

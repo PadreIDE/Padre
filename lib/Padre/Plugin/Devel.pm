@@ -272,7 +272,7 @@ sub _dump_eval {
 	my $code = shift;
 
 	# Evecute the code and handle errors
-	my @rv = eval $code; ## no critic
+	my @rv = eval $code;
 	if ($@) {
 		$self->current->main->error( sprintf( Wx::gettext("Error: %s"), $@ ) );
 		return;

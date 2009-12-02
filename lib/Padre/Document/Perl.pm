@@ -192,7 +192,7 @@ sub get_functions {
 	$text =~ s/(\n)\n*__(?:DATA|END)__\b.*\z/$1/s;
 	$text =~ s/\n\n=\w+.+?\n\n=cut\b.+?\n+/\n\n/sg;
 
-	return $text =~ m/\n\s*sub\s+(\w+(?:::\w+)*)/g;
+	return $text =~ m/(?:^|\n)\s*sub\s+(\w+(?:::\w+)*)/g;
 }
 
 sub get_function_regex {
