@@ -250,6 +250,44 @@ sub can_run {
 	return ();
 }
 
+=head2 C<create_filename>
+
+  $file->create_filename($path, $basename);
+
+Merges a pathname and a filename to a complete filename_with_path.
+
+You may think of
+  /tmp + padre.$$                       => /tmp/padre.$$
+  C:\\temp + padre.$$                   => C:\\temp\\padre.$$
+
+...but also remember
+  http://perlide.org + about.html       => http://perlide.org/about.html
+
+Datapoint created a file syntax...
+  common + program/text                 => program/text:common
+This could happen once someone adds a Padre::File::DBCFS for using
+a DB/C FS fileserver. "program" is the filename, "text" the extension
+and "common" is what we call a directory.
+
+The most common seems to be a / as the directory seperator char, so
+we'll use this as the default.
+
+This method should care about merging double / to one if this should
+be done on this filesystem (even if the default doesn't care).
+
+=cut
+
+# Note: Don't use File::Spec->catfile here as it may mix up http or
+#       other pathnames. This is a default and should be overriden
+#       by each Padre::File::* - module!
+sub create_filename {
+  my $self = shift;
+  my $path = shift;
+  my $filename = shift;
+  
+  return $path.'/'.$filename;
+}
+
 =head2 C<ctime>
 
   $file->ctime;
