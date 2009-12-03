@@ -1331,9 +1331,12 @@ sub event_on_char {
 	my $first = $editor->PositionFromLine($line);
 
 	# removed the - 1 at the end
-	my $last = $editor->PositionFromLine( $line + 1 );
+	#my $last = $editor->PositionFromLine( $line + 1 );
 
+	my $last = $editor->GetLineEndPosition($line);
 
+	#print "pos,line,first,last: $pos,$line,$first,$last\n";
+	#print "$pos == $last\n";
 	# This only matches if all conditions are met:
 	#  - config option enabled
 	#  - none of the following keys pressed: a-z, A-Z, 0-9, _
@@ -1355,6 +1358,7 @@ sub event_on_char {
 
 		# methods can't live outside packages, so ignore them
 		my $linetext = $editor->GetTextRange( $first, $last );
+		#print "Text:\n'$linetext'\n";
 		if ( $prefix =~ /package / ) {
 
 
@@ -1379,17 +1383,34 @@ sub event_on_char {
 				$editor->GotoPos( $last + 23 );
 
 			}
-		} elsif ( $linetext =~ /^sub[\s\t]+\w+$/ ) {
-
+		} elsif ( $linetext =~ /^sub[\s\t]+(\w+)$/ ) {
+			my $subName = $1;
+			
 			#$self->_do_end_check($editor, $line, $pos);
 			# Add the default skeleton of a subroutine,
 			# the \t should be replaced by
 			# (space * current_indent_width)
+			
 			$editor->AddText( ' {' . $self->newline . "\t" . $self->newline . '}' );
-
+			# $line is where it starts
+			my $starting_line = $line - 1;
+			if( $starting_line < 0 ) {
+				$starting_line = 0;
+			}
+			#print "starting_line: $starting_line\n";
+			$editor->GotoPos($editor->PositionFromLine( $starting_line ));
+			$editor->AddText($self->_pod($subName));
+			# $editor->GetLineEndPosition($editor->PositionFromLine(
+			my $end_line = $starting_line + 10;
+			$editor->GotoLine($end_line);
+			#print "end_line: $end_line\n";
+			my $line_end_pos = $editor->GetLineEndPosition($end_line);
+			#print "Line_end_pos: " . $line_end_pos . "\n";
+			my $last_pos = $editor->GetLineEndPosition($end_line);
+			#print "Last pos: $last_pos\n";
 			# Ready for typing in the new method:
-			$editor->GotoPos( $last + 4 );
-
+			
+			$editor->GotoPos( $last_pos );
 
 		}
 	}
@@ -1403,6 +1424,12 @@ sub event_on_char {
 	}
 
 	return;
+}
+
+sub _pod {
+	my ($self, $method) = @_;
+	my $pod = "\n=pod\n\n=head2 $method\n\n\tTODO: Document $method\n\n=cut\n";
+	return $pod;
 }
 
 
