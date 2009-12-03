@@ -321,6 +321,7 @@ sub new {
 	);
 	my %styles = (
 		default   => Wx::gettext('Padre'),
+		evening   => Wx::gettext('Evening'),
 		night     => Wx::gettext('Night'),
 		ultraedit => Wx::gettext('Ultraedit'),
 		notepad   => Wx::gettext('Notepad++'),
