@@ -134,10 +134,6 @@ sub new {
 		}
 	}
 
-	# This allows scripts to detect that it is being executed
-	# within Padre or not
-	$ENV{PADRE_VERSION} = $VERSION;
-
 	# Load a few more bits and pieces now we know
 	# that we'll need them
 	require Padre::Project;
@@ -165,8 +161,11 @@ sub new {
 sub run {
 	my $self = shift;
 
+	# Allow scripts to detect that they are being executed within Padre
+	local $ENV{PADRE_VERSION} = $VERSION;
+
 	# Clean arguments (with a bad patch for saving URLs)
-	if (Padre::Constant::WIN32) {
+	if ( Padre::Constant::WIN32 ) {
 
 		# Windows has trouble deleting the work directory of a process,
 		# so reset file to full path
@@ -205,7 +204,7 @@ sub run {
 
 	# HACK: Uncomment this to locate difficult-to-find crashes
 	#       that are throw silent exceptions.
-	# $SIG{__DIE__} = sub { print @_; die $_[0] };
+	# local $SIG{__DIE__} = sub { print @_; die $_[0] };
 
 	# Kill the splash screen
 	Padre::Splash->destroy;
