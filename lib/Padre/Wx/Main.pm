@@ -2625,6 +2625,9 @@ sub on_close_window {
 	# Stop all Task Manager's worker threads
 	$self->ide->task_manager->cleanup;
 
+	# Vacuum database on exit so that it does not grow
+	Padre::DB->vacuum;
+
 	Padre::Util::debug("Closing Padre");
 
 	return;
