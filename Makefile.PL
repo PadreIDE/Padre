@@ -190,6 +190,8 @@ install_script 'script/padre';
 if (win32) {
 
 	#--------------- Build Padre.exe --------------
+	print "Building padre.exe\n";
+
 	# Create the blib/bin folder
 	system $^X , qw[-MExtUtils::Command -e mkpath --], qw[ blib/bin ];
 
