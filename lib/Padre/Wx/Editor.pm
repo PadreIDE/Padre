@@ -268,9 +268,22 @@ sub padre_setup_style {
 }
 
 sub setup_style_from_config {
-	my ( $self, $name ) = @_;
+	my $self   = shift;
+	my $name   = shift;
+	my $style  = $data->{$name};
+	my $colors = $style->{colors};
 
-	foreach my $k ( keys %{ $data->{$name}->{colors} } ) {
+	# The selection background (if applicable)
+	# (The Scintilla official selection background colour is cc0000)
+	if ( $style->{selection_background} ) {
+		$self->SetSelBackground( 1, _color($style->{selection_background}) );
+	}
+	if ( $style->{selection_foreground} ) {
+		$self->SetSelForeground( 1, _color($style->{selection_foreground}) );
+	}
+
+	# Set the styles
+	foreach my $k ( keys %$colors ) {
 		my $v;
 
 		# allow for plain numbers
