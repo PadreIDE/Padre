@@ -48,7 +48,7 @@ sub new {
 		comment     => Wx::gettext('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
-			my $editor = $_[0]->current->editor;
+			my $editor = $_[0]->current->editor or return;
 
 			# Handle the obvious case with nothing selected
 			my ( $position1, $position2 ) = $editor->GetSelection;
