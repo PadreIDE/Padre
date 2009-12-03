@@ -27,7 +27,10 @@ Changes for Perl Application Development and Refactoring Environment
     - Rolled back function list improvements that were causing regressions (ADAMK)
     - Added project sub-path intuition when saving new files (ADAMK)
     - Fixed a number of search/replace related bugs (ADAMK)
-    - Fixed ticket #421 "crash: no documents, F3/F4"
+    - Fixed ticket #421: crash: no documents, F3/F4 (AZAWAWI)
+    - Fixed ticket #678: VACUUM the configuration database at shutdown 
+      to keep it small and fast (AZAWAWI)
+    - Fixed ticket #714: [Windows] Have a script to make binary. (AZAWAWI)
     - Styles now allow configuring of the selected text (ADAMK)
     - Upgraded tracing to new Padre::Debug that compiles out when not
       being used. (ADAMK)
@@ -35,7 +38,7 @@ Changes for Perl Application Development and Refactoring Environment
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
     - Add initial version of a regex editor. (SZABGAB)
-    - Fixed ticket:728 "Changing locale crashes Padre" (AZAWAWI)
+    - Fixed ticket #728: Changing locale crashes Padre (AZAWAWI)
     - Menubar is now configurable but still lacks a dialog for this (SEWI)
     - Beginner error checks are now configurable (turn each single one on
       or off) (SEWI)
