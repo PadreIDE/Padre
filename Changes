@@ -34,6 +34,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Styles now allow configuring of the selected text (ADAMK)
     - Upgraded tracing to new Padre::Debug that compiles out when not
       being used. (ADAMK)
+    - Make Capture::Tiny a test prereq in order to eliminate a strange 
+      test failure (SZABGAB).  
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)

@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Capture::Tiny qw(capture);
 
 BEGIN {
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
@@ -23,7 +24,13 @@ isa_ok( $main, 'Padre::Wx::Main' );
 
 # Change locales several times and make sure we don't suffer any
 # crashes or warnings.
-is( $main->change_locale('ar'),    undef, '->change_locale(ar)' );
+
+# using Capture::Tiny to eliminate a test failure using prove --merge
+my $res;
+my ($stdout, $stderr) = capture { $res = $main->change_locale('ar') };
+diag $stdout;
+diag $stderr;
+is( $res ,    undef, '->change_locale(ar)' );
 is( $main->change_locale('de'),    undef, '->change_locale(de)' );
 is( $main->change_locale('en-au'), undef, '->change_locale(en-au)' );
 is( $main->change_locale,          undef, '->change_locale()' );

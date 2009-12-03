@@ -132,6 +132,7 @@ requires 'YAML::Tiny'              => '1.32';
 requires 'ExtUtils::Manifest'      => '1.56';
 requires 'Pod::Functions'          => 0;
 requires 'Module::CoreList'        => 0;
+test_requires 'Capture::Tiny'      => '0.06';
 test_requires 'Test::More'         => '0.88';
 test_requires 'Test::Script'       => '1.05';
 test_requires 'Test::Exception'    => '0.27';
