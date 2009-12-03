@@ -1,0 +1,140 @@
+---
+# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+
+# Items of colors support following properties:
+#   - foreground: color
+#   - background: color
+#   - bold:       0 or 1
+#   - italic:     0 or 1
+#   - eolfilled:  0 or 1
+#   - underline:  0 or 1
+
+#
+# base style
+#
+plain:
+ foregrounds:
+  0: 00007f
+ current_line_foreground: aaaaaa
+ selection_background: 3366ff
+ currentline: 222222
+ colors:
+  wxSTC_STYLE_DEFAULT:
+  wxSTC_STYLE_LINENUMBER:
+    foreground: 7f7f7f
+    background: 111111
+  wxSTC_STYLE_BRACELIGHT:
+  wxSTC_STYLE_BRACEBAD:
+  wxSTC_STYLE_CONTROLCHAR:
+  wxSTC_STYLE_INDENTGUIDE:
+  wxSTC_STYLE_CALLTIP:
+  wxSTC_STYLE_LASTPREDEFINED:
+
+#
+# default style (load after plain)
+#
+padre:
+ background:  000000
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: 222222
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  PADRE_BLACK:
+   foreground: ffffff
+  PADRE_BLUE:
+   foreground: 00ff00
+  PADRE_RED:
+   foreground: ff0000
+  PADRE_GREEN:
+   foreground: 00ff00
+  PADRE_MAGENTA:
+   foreground: 00ff00
+  PADRE_ORANGE:
+   foreground: ffa500
+  PADRE_CRIMSON:
+   foreground: dc143c
+  PADRE_BROWN:
+   foreground: f4a460
+
+#
+# application/x-perl
+#
+perl:
+ background:  000000
+ colors:
+  wxSTC_STYLE_BRACELIGHT:
+   foreground: ffff00
+  wxSTC_STYLE_BRACEBAD:
+   foreground: ff0000
+  wxSTC_PL_DEFAULT:
+   foreground: 66cccc
+  wxSTC_PL_ERROR:
+   foreground: ff0000
+  wxSTC_PL_COMMENTLINE:
+   foreground: 66ff99
+  wxSTC_PL_POD:
+   foreground: 66ff99
+  wxSTC_PL_POD_VERB:
+   foreground: 66ff99  
+  wxSTC_PL_NUMBER:
+   foreground: ff9966
+  wxSTC_PL_WORD:
+   foreground: 00ff00
+  wxSTC_PL_STRING:
+   foreground: 66cccc
+  wxSTC_PL_CHARACTER:
+   foreground: 77ccbb
+  wxSTC_PL_PUNCTUATION:
+   foreground: ffcccc
+  wxSTC_PL_PREPROCESSOR:
+   foreground: c0c0c0
+  wxSTC_PL_OPERATOR:
+   foreground: ffcccc
+  wxSTC_PL_IDENTIFIER:
+   foreground: ffff00
+  wxSTC_PL_SCALAR:
+   foreground: bbbbff
+  wxSTC_PL_ARRAY:
+   foreground: 33ffff
+  wxSTC_PL_HASH:
+   foreground: 66cccc
+  wxSTC_PL_SYMBOLTABLE:
+   foreground: 00ff00
+# missing SCE_PL_VARIABLE_INDEXER (16)
+  wxSTC_PL_REGEX:
+   foreground: ffcc99
+  wxSTC_PL_REGSUBST:
+   foreground: ffdd99
+  wxSTC_PL_LONGQUOTE:
+   foreground: ff7f00
+  wxSTC_PL_BACKTICKS:
+   foreground: ffaa00
+  wxSTC_PL_DATASECTION:
+   foreground: 00cccc
+  wxSTC_PL_HERE_DELIM:
+   foreground: ffddaa
+  wxSTC_PL_HERE_Q:
+   foreground: ffcc99
+  wxSTC_PL_HERE_QQ:
+   foreground: ff7f00
+  wxSTC_PL_HERE_QX:
+   foreground: ffaa00
+  wxSTC_PL_STRING_Q:
+   foreground: 66cccc
+  wxSTC_PL_STRING_QQ:
+   foreground: ff7f00
+  wxSTC_PL_STRING_QX:
+   foreground: ffaa00
+  wxSTC_PL_STRING_QR:
+   foreground: ffcc99
+  wxSTC_PL_STRING_QW:
+   foreground: 66cccc
+# missing:
+#define SCE_PL_POD_VERB 31
+#define SCE_PL_SUB_PROTOTYPE 40
+#define SCE_PL_FORMAT_IDENT 41
+#define SCE_PL_FORMAT 42
