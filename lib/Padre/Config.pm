@@ -737,20 +737,6 @@ setting(
 	default => 400,
 );
 
-# Logging
-setting(
-	name    => 'logging',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HOST,
-	default => 0,
-);
-setting(
-	name    => 'logging_trace',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HOST,
-	default => 0,
-);
-
 # Run Parameters
 setting(
 	name    => 'run_interpreter_args_default',

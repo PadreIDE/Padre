@@ -5,16 +5,17 @@ use strict;
 use warnings;
 use Carp   ();
 use Encode ();
-use Params::Util '_INSTANCE';
-use YAML::Tiny                      ();
-use Padre::Document                 ();
-use Padre::File                     ();
-use Padre::Util                     ();
-use Padre::Perl                     ();
-use Padre::Document::Perl::Beginner ();
-use File::Find::Rule                ();
 use File::Spec                      ();
 use File::Temp                      ();
+use File::Find::Rule                ();
+use Params::Util                    ('_INSTANCE');
+use YAML::Tiny                      ();
+use Padre::Util                     ();
+use Padre::Perl                     ();
+use Padre::Document                 ();
+use Padre::File                     ();
+use Padre::Document::Perl::Beginner ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Document';
@@ -127,12 +128,16 @@ sub set_highlighter {
 		$length = $editor->GetTextLength;
 	}
 
-	Padre::Util::debug( "Setting highlighter for Perl 5 code. length: $length" . ( $limit ? " limit is $limit" : '' ) );
+	TRACE(
+		"Setting highlighter for Perl 5 code. length: $length"
+		. ( $limit ? " limit is $limit" : '' )
+	) if DEBUG;
 
 	if ( defined $limit and $length > $limit ) {
-		Padre::Util::debug("Forcing STC highlighting");
+		TRACE("Forcing STC highlighting") if DEBUG;
 		$module = 'stc';
 	}
+
 	return $self->SUPER::set_highlighter($module);
 }
 

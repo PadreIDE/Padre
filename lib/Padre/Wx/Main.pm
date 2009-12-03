@@ -62,6 +62,7 @@ use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress           ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::Frame';
@@ -99,15 +100,12 @@ sub new {
 	}
 
 	# Bootstrap some Wx internals
-	my $config = $ide->config;
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
-	Padre::Util::set_logging( $config->logging );
-	Padre::Util::set_trace( $config->logging_trace );
-	Padre::Util::debug('Logging started');
 	Wx::InitAllImageHandlers();
 
 	# Determine the initial frame style
-	my $style = Wx::wxDEFAULT_FRAME_STYLE;
+	my $config = $ide->config;
+	my $style  = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
 		$style |= Wx::wxCLIP_CHILDREN;
@@ -1110,7 +1108,7 @@ sub change_locale {
 	unless ( defined $name ) {
 		$name = Padre::Locale::system_rfc4646();
 	}
-	Padre::Util::debug("Changing locale to '$name'");
+	TRACE("Changing locale to '$name'") if DEBUG;
 
 	# Save the locale to the config
 	$self->config->set( locale => $name );
@@ -2010,14 +2008,14 @@ sub open_session {
 	foreach my $file_no ( 0 .. $#files ) {
 		my $document = $files[$file_no];
 		$progress->update( $file_no, $document->file );
-		Padre::Util::debug( "Opening '" . $document->file . "' for $document" );
+		TRACE( "Opening '" . $document->file . "' for $document" ) if DEBUG;
 		my $filename = $document->file;
 		my $file     = Padre::File->new($filename);
 		next unless defined($file);
 		next unless $file->exists;
 		my $id = $self->setup_editor($filename);
 		next unless $id; # documents already opened have undef $id
-		Padre::Util::debug("Setting focus on $filename");
+		TRACE("Setting focus on $filename") if DEBUG;
 		$focus = $id if $document->focus;
 		$notebook->GetPage($id)->goto_pos_centerize( $document->position );
 	}
@@ -2417,7 +2415,7 @@ sub on_comment_block {
 	} elsif ( $operation eq 'UNCOMMENT' ) {
 		$editor->uncomment_lines( $begin, $end, $string );
 	} else {
-		Padre::Util::debug("Invalid comment operation '$operation'");
+		TRACE("Invalid comment operation '$operation'") if DEBUG;
 	}
 
 	if ( $selection_end > $selection_start ) {
@@ -2526,13 +2524,13 @@ sub on_close_window {
 	my $ide    = $self->ide;
 	my $config = $ide->config;
 
-	Padre::Util::debug("on_close_window");
+	TRACE("on_close_window") if DEBUG;
 
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up.
 	$self->update_last_session;
 
-	Padre::Util::debug("went over list of files");
+	TRACE("went over list of files") if DEBUG;
 
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
@@ -2581,7 +2579,7 @@ sub on_close_window {
 		}
 	}
 
-	Padre::Util::debug("Files saved (or not), hiding window");
+	TRACE("Files saved (or not), hiding window") if DEBUG;
 
 	# Immediately hide the window so that the user
 	# perceives the application as closing faster.
@@ -2614,13 +2612,13 @@ sub on_close_window {
 	# Shut down all the plug-ins before saving the configuration
 	# so that plug-ins have a change to save their configuration.
 	$ide->plugin_manager->shutdown;
-	Padre::Util::debug("After plugin manager shutdown");
+	TRACE("After plugin manager shutdown") if DEBUG;
 
 	# Write the configuration to disk
 	$ide->save_config;
 	$event->Skip;
 
-	Padre::Util::debug("Tell TaskManager to cleanup");
+	TRACE("Tell TaskManager to cleanup") if DEBUG;
 
 	# Stop all Task Manager's worker threads
 	$self->ide->task_manager->cleanup;
@@ -2628,7 +2626,7 @@ sub on_close_window {
 	# Vacuum database on exit so that it does not grow
 	Padre::DB->vacuum;
 
-	Padre::Util::debug("Closing Padre");
+	TRACE("Closing Padre") if DEBUG;
 
 	return;
 }
@@ -2659,7 +2657,7 @@ an empty document.
 sub setup_editors {
 	my $self  = shift;
 	my @files = @_;
-	Padre::Util::debug("setup_editors @files");
+	TRACE("setup_editors @files") if DEBUG;
 	SCOPE: {
 
 		# Lock both Perl and Wx-level updates
@@ -2731,7 +2729,7 @@ sub setup_editor {
 	my ( $self, $file, $skip_update_session ) = @_;
 	my $config = $self->config;
 
-	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
+	TRACE( "setup_editor called for '" . ( $file || '' ) . "'" ) if DEBUG;
 
 	if ($file) {
 
@@ -2790,7 +2788,7 @@ sub setup_editor {
 		return;
 	}
 
-	Padre::Util::debug("Document created for '$file'");
+	TRACE("Document created for '$file'") if DEBUG;
 
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
 	$editor->{Document} = $doc;
@@ -2811,7 +2809,7 @@ sub setup_editor {
 	}
 
 	if ( !$doc->is_new ) {
-		Padre::Util::debug( "Adding new file to history: " . $doc->filename );
+		TRACE( "Adding new file to history: " . $doc->filename ) if DEBUG;
 		Padre::DB::History->create(
 			type => 'files',
 			name => $doc->filename,
@@ -4967,11 +4965,11 @@ sub change_highlighter {
 		next if $document->get_mimetype ne $mime_type;
 		$document->set_highlighter($module);
 		my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
-		Padre::Util::debug( "Set highlighter to to $module for $document in file " . ( $filename || '' ) );
+		TRACE( "Set highlighter to to $module for $document in file " . ( $filename || '' ) ) if DEBUG;
 		my $lexer = $document->lexer;
 		$editor->SetLexer($lexer);
 
-		Padre::Util::debug("Editor $editor focused $focused lexer: $lexer");
+		TRACE("Editor $editor focused $focused lexer: $lexer") if DEBUG;
 		if ( $editor eq $focused ) {
 			$editor->needs_manual_colorize(0);
 			$document->colourize();
@@ -5015,7 +5013,7 @@ sub key_up {
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 
 		#		my $current_focus = Wx::Window::FindFocus();
-		#		Padre::Util::debug("Current focus: $current_focus");
+		#		TRACE("Current focus: $current_focus") if DEBUG;
 		#		# TO DO this should be fine tuned later
 		#		if ($code == Wx::WXK_UP) {
 		#			# TO DO get the list of panels at the bottom from some other place
@@ -5028,7 +5026,7 @@ sub key_up {
 		#				}
 		#			}
 		#		} elsif ($code == Wx::WXK_DOWN) {
-		#			#Padre::Util::debug("Selection: " . $self->bottom->GetSelection);
+		#			#TRACE("Selection: " . $self->bottom->GetSelection) if DEBUG;
 		#			#$self->bottom->GetSelection;
 		#		}
 	}

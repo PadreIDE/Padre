@@ -9,6 +9,7 @@ use Padre::Util               ();
 use Padre::Current            ();
 use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::StyledTextCtrl';
@@ -144,7 +145,7 @@ sub error { # Error Message
 sub padre_setup {
 	my $self = shift;
 
-	Padre::Util::debug("before setting the lexer");
+	TRACE("before setting the lexer") if DEBUG;
 	$self->SetLexer( $self->{Document}->lexer );
 
 	# the next line will change the ESC key to cut the current selection
@@ -701,7 +702,7 @@ sub on_focus {
 	my ( $self, $event ) = @_;
 	my $doc = Padre::Current->document;
 
-	Padre::Util::debug( "Focus received file: " . ( $doc->filename || '' ) );
+	TRACE( "Focus received file: " . ( $doc->filename || '' ) ) if DEBUG;
 
 	my $main = $self->main;
 
@@ -716,7 +717,7 @@ sub on_focus {
 	# another
 
 	if ( $self->needs_manual_colorize ) {
-		Padre::Util::debug("needs_manual_colorize");
+		TRACE("needs_manual_colorize") if DEBUG;
 		my $lexer = $self->GetLexer;
 		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
 			$doc->colorize;
@@ -726,7 +727,7 @@ sub on_focus {
 		}
 		$self->needs_manual_colorize(0);
 	} else {
-		Padre::Util::debug("no need to colorize");
+		TRACE("no need to colorize") if DEBUG;
 	}
 
 	$event->Skip(1); # so the cursor will show up

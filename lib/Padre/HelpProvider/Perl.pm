@@ -3,14 +3,14 @@ package Padre::HelpProvider::Perl;
 use 5.008;
 use strict;
 use warnings;
-
 use Pod::Functions;
 use Module::CoreList       ();
 use Cwd                    ();
+use Padre::Util            ();
 use Padre::HelpProvider    ();
 use Padre::DocBrowser::POD ();
 use Padre::Pod2HTML        ();
-use Padre::Util            ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 our @ISA     = 'Padre::HelpProvider';
@@ -174,7 +174,7 @@ sub _parse_perlopref {
 		# and we're done
 		close $fh;
 	} else {
-		Padre::Util::debug("Cannot open perlopref.pod\n");
+		TRACE("Cannot open perlopref.pod\n") if DEBUG;
 	}
 
 	return \%index;

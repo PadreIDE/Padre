@@ -3,9 +3,10 @@ package Padre::Document::Perl::Lexer;
 use 5.008;
 use strict;
 use warnings;
-use PPI::Document;
-use PPI::Dumper;
-use Text::Balanced;
+use PPI::Document  ();
+use PPI::Dumper    ();
+use Text::Balanced ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 
@@ -65,7 +66,7 @@ sub class_to_color {
 sub colorize {
 	my $class = shift;
 
-	Padre::Util::debug("Lexer colorize called");
+	TRACE("Lexer colorize called") if DEBUG;
 
 	my $doc    = Padre::Current->document;
 	my $editor = $doc->editor;

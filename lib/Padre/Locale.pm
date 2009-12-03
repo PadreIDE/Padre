@@ -45,6 +45,7 @@ use Padre::Constant ();
 use Padre::Util     ('_T');
 use Padre::Config   ();
 use Padre::Wx       ();
+use Padre::Debug;
 
 use constant DEFAULT  => 'en-gb';
 use constant SHAREDIR => File::Spec->rel2abs( Padre::Util::sharedir('locale') );
@@ -574,7 +575,7 @@ sub encoding_system_default {
 		return;
 	}
 
-	Padre::Util::debug("Encoding system default: ($encoding)");
+	TRACE("Encoding system default: ($encoding)") if DEBUG;
 
 	return $encoding;
 }
@@ -612,7 +613,7 @@ sub encoding_from_string {
 		$guess = '';                 # to avoid warnings
 	}
 
-	Padre::Util::debug("Encoding guess: ($guess)");
+	TRACE("Encoding guess: ($guess)") if DEBUG;
 
 	# Wow, nice!
 	if ( ref($guess) and ref($guess) =~ m/^Encode::/ ) {
@@ -641,7 +642,7 @@ sub encoding_from_string {
 		$encoding = 'utf-8';
 	}
 
-	Padre::Util::debug("Encoding selected: ($encoding)");
+	TRACE("Encoding selected: ($encoding)") if DEBUG;
 
 	return $encoding;
 }

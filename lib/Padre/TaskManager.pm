@@ -80,9 +80,10 @@ use threads::shared;
 use Thread::Queue 2.11;
 
 require Padre;
-use Padre::Task;
-use Padre::Service;
-use Padre::Wx ();
+use Padre::Task    ();
+use Padre::Service ();
+use Padre::Wx      ();
+use Padre::Debug;
 
 use Class::XSAccessor getters => {
 	task_queue     => 'task_queue',
@@ -402,24 +403,24 @@ sub cleanup {
 	# Send all services a HANGUP , they will (hopefully)
 	# catch this and break the run loop, returning below as
 	# regular tasks. :|
-	Padre::Util::debug('Tell services to hangup');
+	TRACE('Tell services to hangup') if DEBUG;
 	$self->shutdown_services;
 
 	# the nice way:
-	Padre::Util::debug('Tell all tasks to stop');
+	TRACE('Tell all tasks to stop') if DEBUG;
 	my @workers = $self->workers;
 	$self->task_queue->insert( 0, ("STOP") x scalar(@workers) );
 	while ( threads->list(threads::running) >= 1 ) {
 		$_->join for threads->list(threads::joinable);
 	}
 	foreach my $thread ( threads->list(threads::joinable) ) {
-		Padre::Util::debug( 'Joining thread ' . $thread->tid );
+		TRACE( 'Joining thread ' . $thread->tid ) if DEBUG;
 		$thread->join;
 	}
 
 	# didn't work the nice way?
 	while ( threads->list(threads::running) >= 1 ) {
-		Padre::Util::debug( 'Killing thread ' . $_->tid );
+		TRACE( 'Killing thread ' . $_->tid ) if DEBUG;
 		$_->detach(), $_->kill() for threads->list(threads::running);
 	}
 
@@ -475,10 +476,10 @@ and return via the usual Task mechanism.
 ## ERM FIX ME where are is the {running_services} populated then eh?
 sub shutdown_services {
 	my $self = shift;
-	Padre::Util::debug('Shutdown services');
+	TRACE('Shutdown services') if DEBUG;
 
 	while ( my ( $sid, $service ) = each %{ $self->{running_services} } ) {
-		Padre::Util::debug("Hangup service $sid!");
+		TRACE("Hangup service $sid!") if DEBUG;
 		$service->shutdown;
 	}
 }

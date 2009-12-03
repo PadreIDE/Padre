@@ -12,7 +12,7 @@ BEGIN {
 # Checks for UNIX end of lines (aka newlines)
 use File::Find::Rule;
 use t::lib::Padre;
-use Padre::Util qw(newline_type);
+use Padre::Util ();
 
 my @files =
 	File::Find::Rule->file->name( '*.pm', '*.pod', '*.pl', '*.p6', '*.t', '*.yml', '*.txt' )->in( 'lib', 't', 'share' );
@@ -20,7 +20,7 @@ my @files =
 
 plan( tests => scalar @files );
 foreach my $file (@files) {
-	my $eol = newline_type( slurp($file) );
+	my $eol = Padre::Util::newline_type( slurp($file) );
 	ok( ( $eol eq 'UNIX' ) || ( $eol eq 'None' ), "$file has UNIX-EOLs or none" );
 }
 

@@ -3,16 +3,15 @@ package Padre::Wx::Dialog::QuickMenuAccess;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Util     ();
+use Padre::DB       ();
+use Padre::Wx       ();
+use Padre::Wx::Icon ();
+use Padre::Debug;
 
 # package exports and version
 our $VERSION = '0.50';
 our @ISA     = 'Wx::Dialog';
-
-# module imports
-use Padre::DB       ();
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
-use Padre::Util     ();
 
 # accessors
 use Class::XSAccessor accessors => {
@@ -89,7 +88,7 @@ sub _on_ok_button_clicked {
 					Wx::wxOK,
 					$main,
 				);
-				Padre::Util::debug("Error while trying to perform Padre action: $error");
+				TRACE("Error while trying to perform Padre action: $error") if DEBUG;
 			} else {
 
 				# And insert a recently used tuple if it is not found
@@ -306,7 +305,7 @@ sub _show_recently_opened_actions {
 				value => $action->label_text,
 				};
 		} else {
-			Padre::Util::debug("action '$action_name' is not defined anymore!");
+			TRACE("action '$action_name' is not defined anymore!") if DEBUG;
 		}
 	}
 	@recent_actions = sort { $a->{value} cmp $b->{value} } @recent_actions;

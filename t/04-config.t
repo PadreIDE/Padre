@@ -3,12 +3,11 @@
 use strict;
 
 BEGIN {
-	$|  = 1;
 	$^W = 1;
-
+	$|  = 1;
 }
 
-use constant CONFIG_OPTIONS => 104;
+use constant CONFIG_OPTIONS => 102;
 
 # Move of Debug to Run Menu
 use Test::More tests => CONFIG_OPTIONS * 2 + 17;

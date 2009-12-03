@@ -133,6 +133,7 @@ use Padre::Wx        ();
 use Padre            ();
 use Padre::MimeTypes ();
 use Padre::File      ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 
@@ -276,7 +277,7 @@ sub rebless {
 	# do for a first implementation.
 	my $mime_type = $self->get_mimetype or return;
 	my $class = Padre::MimeTypes->get_mime_class($mime_type) || __PACKAGE__;
-	Padre::Util::debug("Reblessing to mimetype: '$class'");
+	TRACE("Reblessing to mimetype: '$class'") if DEBUG;
 	if ($class) {
 		unless ( $class->VERSION ) {
 			eval "require $class;";
@@ -322,10 +323,10 @@ sub colourize {
 sub colorize {
 	my $self = shift;
 
-	Padre::Util::debug("colorize called");
+	TRACE("colorize called") if DEBUG;
 
 	my $module = $self->get_highlighter;
-	Padre::Util::debug("module: '$module'");
+	TRACE("module: '$module'") if DEBUG;
 	if ( $module eq 'stc' ) {
 
 		#TO DO sometime this happens when I open Padre with several file
@@ -348,7 +349,7 @@ sub colorize {
 		}
 	}
 	if ( $module->can('colorize') ) {
-		Padre::Util::debug("Call '$module->colorize(@_)'");
+		TRACE("Call '$module->colorize(@_)'") if DEBUG;
 		$module->colorize(@_);
 	} else {
 		warn("Module $module does not have a colorize method\n");
@@ -500,11 +501,12 @@ Returns true on success false on failure. Sets C<< $doc->errstr >>.
 
 sub load_file {
 	my ($self) = @_;
-
 	my $file = $self->file;
 
-	Padre::Util::debug(
-		"Loading file '" . ( defined( $file->{file}->{filename} ) and $file->{file}->{filename} ) . "'" );
+	if ( DEBUG ) {
+		my $name = $file->{file}->{filename} || '';
+		TRACE("Loading file '$name'");
+	}
 
 	# check if file exists
 	if ( !$file->exists ) {
@@ -861,7 +863,7 @@ sub lexer {
 	return Wx::wxSTC_LEX_CONTAINER if $highlighter ne 'stc';
 	return Wx::wxSTC_LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->get_mimetype );
 
-	Padre::Util::debug( 'STC Lexer will be based on mime type "' . $self->get_mimetype . '"' );
+	TRACE( 'STC Lexer will be based on mime type "' . $self->get_mimetype . '"' ) if DEBUG;
 	return Padre::MimeTypes->get_lexer( $self->get_mimetype );
 }
 
@@ -882,11 +884,11 @@ sub get_title {
 sub remove_color {
 	my ($self) = @_;
 
-	Padre::Util::debug("remove_color called (@_)");
+	TRACE("remove_color called (@_)") if DEBUG;
 
 	my $editor = $self->editor;
 
-	Padre::Util::debug("editor '$editor'");
+	TRACE("editor '$editor'") if DEBUG;
 
 	# TO DO this is strange, do we really need to do it with all?
 	for my $i ( 0 .. 31 ) {

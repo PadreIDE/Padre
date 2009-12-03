@@ -5,16 +5,16 @@ use strict;
 use warnings;
 use Padre::Document ();
 use Padre::Util     ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
-
 
 sub colorize {
 	my $self = shift;
 
 	my $doc = Padre::Current->document;
 
-	Padre::Util::debug("PPILexer colorize called");
+	TRACE("PPILexer colorize called") if DEBUG;
 
 	$doc->remove_color;
 
@@ -25,8 +25,10 @@ sub colorize {
 	require PPI::Document;
 	my $ppi_doc = PPI::Document->new( \$text );
 	if ( not defined $ppi_doc ) {
-		Padre::Util::debug( 'PPI::Document Error %s', PPI::Document->errstr );
-		Padre::Util::debug( 'Original text: %s',      $text );
+		if ( DEBUG ) {
+			TRACE( 'PPI::Document Error %s', PPI::Document->errstr );
+			TRACE( 'Original text: %s',      $text );
+		}
 		return;
 	}
 
@@ -94,7 +96,7 @@ sub colorize {
 		#		last if $row > 10;
 		my $color = $colors{$css};
 		if ( not defined $color ) {
-			Padre::Util::debug("Missing definition for '$css'\n");
+			TRACE("Missing definition for '$css'\n") if DEBUG;
 			next;
 		}
 		next if not $color;

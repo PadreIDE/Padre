@@ -24,19 +24,19 @@ moved, removed or changed at any time without notice.
 use 5.008;
 use strict;
 use warnings;
-use Carp           ();
-use Exporter       ();
-use FindBin        ();
-use Cwd            ();
-use File::Spec     ();
-use File::Basename ();
-use List::Util     ();
-use POSIX          ();
-use Padre::Constant();
+use Carp            ();
+use Exporter        ();
+use FindBin         ();
+use Cwd             ();
+use File::Spec      ();
+use File::Basename  ();
+use List::Util      ();
+use POSIX           ();
+use Padre::Constant ();
 
 our $VERSION   = '0.50';
 our @ISA       = 'Exporter';
-our @EXPORT_OK = qw{ newline_type get_matches _T };
+our @EXPORT_OK = '_T';
 
 
 
@@ -78,7 +78,7 @@ our @EXPORT_OK = qw{ newline_type get_matches _T };
 
 =head2 C<newline_type>
 
-    my $type = newline_type( $string );
+    my $type = Padre::Util::newline_type( $string );
 
 Returns C<None> if there was not C<CR> or C<LF> in the file.
 
@@ -462,36 +462,6 @@ sub parse_version {
 
 ######################################################################
 # Logging and Debugging
-
-SCOPE: {
-	my $logging;
-	my $trace;
-
-	sub set_logging {
-		$logging = shift;
-	}
-
-	sub set_trace {
-		$trace = shift;
-	}
-
-	sub debug {
-		return if not $logging;
-
-		my $logfile = Padre::Constant::LOG_FILE;
-		open my $fh, '>>', $logfile or return;
-
-		my $ts = POSIX::strftime( "%H:%M:%S", localtime() );
-
-		print $fh "$ts - @_\n";
-		if ($trace) {
-			print $fh Carp::longmess();
-		} else {
-			my ( $package, $filename, $line ) = caller;
-			print $fh "           in line $line of $filename\n";
-		}
-	}
-}
 
 sub humanbytes {
 

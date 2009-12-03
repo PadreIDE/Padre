@@ -11,9 +11,10 @@ use threads::shared;
 use Padre::Wx     ();
 use Padre::Task   ();
 use Thread::Queue ();
-our @ISA = 'Padre::Task';
+use Padre::Debug;
 
 our $VERSION = '0.50';
+our @ISA = 'Padre::Task';
 
 =pod
 
@@ -90,7 +91,7 @@ with no arguments B<in a tight loop>.
 
 		my ($self) = @_;
 		my $queue = $self->queue;
-		Padre::Util::debug("Running queue $queue");
+		TRACE("Running queue $queue") if DEBUG;
 		my $tid   = threads->tid;
 		my $event = $self->event;
 
@@ -108,7 +109,7 @@ with no arguments B<in a tight loop>.
 			next unless $queue->pending;
 
 			my $command = $queue->dequeue;
-			Padre::Util::debug("Service dequeued input");
+			TRACE("Service dequeued input") if DEBUG;
 
 			# Respond to HANGUP TERMINATE and PING -
 			if ( ref($command) ) {
@@ -117,7 +118,7 @@ with no arguments B<in a tight loop>.
 
 			# Or possibly a signal from the main thread
 			else {
-				Padre::Util::debug("Caught command signal '$command'");
+				TRACE("Caught command signal '$command'") if DEBUG;
 				if ( $command eq 'HANGUP' ) {
 					$self->hangup( \$running );
 				} elsif ( $command eq 'TERMINATE' ) {
@@ -125,7 +126,7 @@ with no arguments B<in a tight loop>.
 				} elsif ( $command eq 'PING' ) {
 					$self->post_event( $event, "ALIVE" );
 				} else {
-					Padre::Util::debug("Service does not recognise '$command' signal");
+					TRACE("Service does not recognise '$command' signal") if DEBUG;
 				}
 			}
 		}
@@ -305,14 +306,14 @@ the service thread
 
 sub shutdown {
 	my $self = shift;
-	Padre::Util::debug("shutdown - $self");
+	TRACE("shutdown - $self") if DEBUG;
 	my $queue = $self->queue;
 	$queue->enqueue('HANGUP');
 }
 
 sub cleanup {
 	my $self = shift;
-	Padre::Util::debug("cleanup - $self");
+	TRACE("cleanup - $self") if DEBUG;
 }
 
 =head2 tell

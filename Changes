@@ -29,6 +29,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed a number of search/replace related bugs (ADAMK)
     - Fixed ticket #421 "crash: no documents, F3/F4"
     - Styles now allow configuring of the selected text (ADAMK)
+    - Upgraded tracing to new Padre::Debug that compiles out when not
+      being used. (ADAMK)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)

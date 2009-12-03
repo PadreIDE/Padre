@@ -7,7 +7,8 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ('_CURRENT');
+use Padre::Debug;
 
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Wx::Menu';
@@ -455,7 +456,7 @@ sub update_recentfiles {
 				}
 			},
 		);
-		Padre::Util::debug("Recent entry created for '$file'");
+		TRACE("Recent entry created for '$file'") if DEBUG;
 	}
 
 	return;

@@ -3,9 +3,10 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
+use Params::Util    ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
+use Padre::Debug;
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::ListView';
@@ -117,15 +118,15 @@ sub start {
 		$editor->SetMarginWidth( 1, 16 );
 	}
 
-	Padre::Util::debug('still starting the syntax checker');
+	TRACE('still starting the syntax checker') if DEBUG;
 
 	# List appearance: Initialize column widths
 	$self->set_column_widths;
 
-	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
+	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->on_timer( undef, 1 );
 	} else {
-		Padre::Util::debug('Creating new timer');
+		TRACE('Creating new timer') if DEBUG;
 		$self->{timer} = Wx::Timer->new(
 			$self,
 			Padre::Wx::ID_TIMER_SYNTAX
@@ -147,7 +148,7 @@ sub stop {
 	my $self = shift;
 
 	# Stop the timer
-	if ( _INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
+	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop;
 	}
 

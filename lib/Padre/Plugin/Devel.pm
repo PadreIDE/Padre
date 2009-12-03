@@ -68,24 +68,6 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		# TO DO
-		# Should be checkbox but I am too lazy to turn the whole
-		# menu_plugins_simple into a menu_plugins
-		Wx::gettext('Enable logging') => sub {
-			$self->set_logging(1);
-		},
-		Wx::gettext('Disable logging') => sub {
-			$self->set_logging(0);
-		},
-		Wx::gettext('Enable trace when logging') => sub {
-			$self->set_trace(1);
-		},
-		Wx::gettext('Disable trace') => sub {
-			$self->set_trace(0);
-		},
-
-		'---' => undef,
-
 		Wx::gettext('Load All Padre Modules')    => 'load_everything',
 		Wx::gettext('Simulate Crash')            => 'simulate_crash',
 		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_crash',
@@ -114,32 +96,6 @@ sub menu_plugins_simple {
 
 #####################################################################
 # Plugin Methods
-
-sub set_logging {
-	my $self    = shift;
-	my $on      = shift;
-	my $current = $self->current;
-
-	$current->config->set( logging => $on );
-	Padre::Util::set_logging($on);
-	Padre::Util::debug("After setting debugging to '$on'");
-	$current->main->refresh;
-
-	return;
-}
-
-sub set_trace {
-	my $self    = shift;
-	my $on      = shift;
-	my $current = $self->current;
-
-	$current->config->set( logging_trace => $on );
-	Padre::Util::set_trace($on);
-	Padre::Util::debug("After setting trace to '$on'");
-	$current->main->refresh;
-
-	return;
-}
 
 sub dump_expression {
 	my $self = shift;
