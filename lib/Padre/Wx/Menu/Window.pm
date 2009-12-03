@@ -60,11 +60,6 @@ sub new {
 		'window.goto_outline_window',
 	);
 
-	$self->{window_goto_outline_window} = $self->add_menu_action(
-		$self,
-		'window.goto_outline_window',
-	);
-
 	$self->{window_goto_syntax_check_window} = $self->add_menu_action(
 		$self,
 		'window.goto_syntax_check_window',
