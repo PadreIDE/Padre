@@ -421,7 +421,10 @@ sub cleanup {
 	# didn't work the nice way?
 	while ( threads->list(threads::running) >= 1 ) {
 		TRACE( 'Killing thread ' . $_->tid ) if DEBUG;
-		$_->detach(), $_->kill() for threads->list(threads::running);
+		foreach ( threads->list(threads::running) ) {
+			$_->detach;
+			$_->kill;
+		}
 	}
 
 	return 1;

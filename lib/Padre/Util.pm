@@ -248,7 +248,7 @@ sub svn_directory_revision {
 	local $/ = undef;
 	open( my $fh, "<", $entries ) or return;
 	my $buffer = <$fh>;
-	close($fh);
+	close $fh;
 
 	# Find the first number after the first occurance of "dir".
 	unless ( $buffer =~ /\bdir\b\s+(\d+)/m ) {
@@ -314,7 +314,9 @@ sub find_perldiag_translations {
 		my $dir = File::Spec->catdir( $path, 'POD2' );
 		next if not -e $dir;
 		if ( opendir my $dh, $dir ) {
-			while ( my $lang = readdir $dh ) {
+			my @files = readdir $dh;
+			close $dh;
+			foreach my $lang ( @files ) {
 				next if $lang eq '.';
 				next if $lang eq '..';
 				if ( -e File::Spec->catfile( $dir, $lang, 'perldiag.pod' ) ) {
