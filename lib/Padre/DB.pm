@@ -79,11 +79,11 @@ sub find_snippets {
 # Vacuum database to keep it small and fast
 #
 sub vacuum {
-	Padre::Util::debug("VACUUM database");
+	TRACE("VACUUM database") if DEBUG;
 	my $page_size = Padre::DB->pragma("page_size");
 	Padre::DB->do("VACUUM");
 	my $diff = Padre::DB->pragma("page_size") - $page_size;
-	Padre::Util::debug("Page count difference after VACUUM: $diff");
+	TRACE("Page count difference after VACUUM: $diff") if DEBUG;
 
 	return;
 }
