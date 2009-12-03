@@ -1,5 +1,6 @@
 package Padre::DocBrowser::PseudoPerldoc;
 
+use 5.008;
 use strict;
 use warnings;
 use Pod::Perldoc        ();
