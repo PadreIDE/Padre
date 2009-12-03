@@ -11,14 +11,37 @@ use warnings;
 use FindBin;
 use Config;
 
+# Collect options early
+use Getopt::Long ();
+use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS};
+BEGIN {
+	$DEBUG   = 0;
+	$DIE     = 0;
+	$PROFILE = 0;
+	$PLUGINS = 0;
+	Getopt::Long::GetOptions(
+		'usage|help' => sub { usage() },
+		'debug|d'    => \$DEBUG,
+		'trace'      => sub {
+			no warnings;
+			$Padre::Debug::DEBUG = 1;
+		},
+		'die'        => \$DIE,
+		'profile'    => \$PROFILE,
+		'a'          => \$PLUGINS,
+	);
+}
+
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
+$ENV{PADRE_DIE}  = $DIE;
 
 use lib $FindBin::Bin, "$FindBin::Bin/lib";
 use privlib::Tools;
 use File::Basename ();
+use Getopt::Long   ();
 use Locale::Msgfmt 0.12;
-use Padre::Perl ();
+use Padre::Perl    ();
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
@@ -42,35 +65,11 @@ my @cmd = (
 	qq[-I$FindBin::Bin/blib/lib],
 	qq[-I$FindBin::Bin/../PPIx-EditorTools/lib],
 );
-if ( grep { $_ eq '-d' } @ARGV ) {
+push @cmd, '-d'          if $DEBUG;
+push @cmd, '-dt:NYTProf' if $PROFILE;
 
-	# Command line debugging
-	@ARGV = grep { $_ ne '-d' } @ARGV;
-	push @cmd, '-d';
-}
-if ( grep { $_ eq '--die' } @ARGV ) {
-
-	# Command line debugging
-	@ARGV = grep { $_ ne '--die' } @ARGV;
-	$ENV{PADRE_DIE} = 1;
-}
-if ( grep { $_ eq '-p' } @ARGV ) {
-
-	# Profiling
-	@ARGV = grep { $_ ne '-p' } @ARGV;
-	push @cmd, '-dt:NYTProf';
-}
-if ( grep { $_ eq '-h' } @ARGV ) {
-	usage();
-} elsif (
-	grep {
-		$_ eq '-a'
-	} @ARGV
-	)
-{
-
-	# Rebuild translations
-	@ARGV = grep { $_ ne '-a' } @ARGV;
+# Rebuild translations
+if ( $PLUGINS ) {
 	my $dir = File::Basename::dirname( $ENV{PADRE_HOME} );
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
@@ -108,8 +107,9 @@ sub usage {
 Usage: $0
         -h     show this help
         -d     run Padre in the command line debugger (-d)
-        -p     run Padre under -dt:NYTProf
-        -a     add the path to the lib directory of all the plugins in trunk/
+	-t     write tracing information to .padre/debug.log
+        -p     profile using Devel::NYTProf
+        -a     load all plugins in the svn checkout
         --die  add DIE handler
 
        LIST OF FILES    list of files to open
