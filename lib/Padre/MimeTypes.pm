@@ -83,7 +83,10 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
 		t     => \&perl_mime_type,
-		xs    => 'text/x-perlxs',         # for the lack of a better solution, define our own MIME
+
+		# Lacking a better solution, define our own MIME
+		xs    => 'text/x-perlxs',
+		tt    => 'text/x-perltt',
 
 		# Compiled Perl Module or gimme5's output
 		pmc   => \&perl_mime_type,
@@ -112,10 +115,9 @@ sub _initialize {
 	# to confirm that the MIME type is either the official type, or the primary
 	# one in use by the relevant language community.
 
-	# name => Human readable name
+	# name  => Human readable name
 	# lexer => The Scintilla lexer to be used
 	# class => document class
-
 	%MIME_TYPES = (
 		'text/x-abc' => {
 			name  => 'ABC',
@@ -145,10 +147,7 @@ sub _initialize {
 			name  => 'c',
 			lexer => Wx::wxSTC_LEX_CPP,
 		},
-		'text/x-perlxs' => {              # totally not confirmed
-			name  => 'XS',
-			lexer => Wx::wxSTC_LEX_CPP,   # for the lack of a better XS lexer (vim?)
-		},
+
 		'text/x-c++src' => {
 			name  => 'c++',
 			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
@@ -275,14 +274,22 @@ sub _initialize {
 			name  => 'Text',
 			lexer => Wx::wxSTC_LEX_NULL,      # CONFIRMED
 		},
+
+		# Completely custom mime types
+		'text/x-perlxs' => {              # totally not confirmed
+			name  => 'XS',
+			lexer => Wx::wxSTC_LEX_CPP,   # for the lack of a better XS lexer (vim?)
+		},
+		'text/x-perltt' => {
+			name  => 'Template Toolkit',
+			lexer => Wx::wxSTC_LEX_HTML,
+		},
 	);
 
 	# TO DO:
 	# add some mime-type for pod files
 	# or remove the whole Padre::Document::POD class as it is not in use
 	#'text/x-pod'         => 'Padre::Document::POD',
-
-
 
 	# array ref of objects with value and mime_type fields that have the raw values
 	__PACKAGE__->read_current_highlighters_from_db();
@@ -571,7 +578,6 @@ sub guess_mimetype {
 		undef $file;
 	}
 
-
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
@@ -585,7 +591,7 @@ sub guess_mimetype {
 	}
 
 	# Try derive the mime type from the basename
-	if ($filename) {
+	if ( $filename ) {
 		my $basename = File::Basename::basename($filename);
 		if ($basename) {
 			return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
@@ -595,36 +601,50 @@ sub guess_mimetype {
 	# Fall back on deriving the type from the content.
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
-	if ( $text and $text =~ /\A#!/m ) {
-
-		# Found a hash bang line
-		if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-			return $self->perl_mime_type($text);
+	if ( defined $text ) {
+		if ( $text =~ /\A#!/m ) {
+			# Found a hash bang line
+			if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
+				return $self->perl_mime_type($text);
+			}
 		}
+
+		# YAML will start with a ---
 		if ( $text =~ /\A---/ ) {
 			return 'text/x-yaml';
 		}
-	}
 
-	# Try to identify Perl Scripts based on soft criterias as a last resort
-	# TO DO: Improve the tests
-	if ( defined($text) ) {
-		my $Score = 0;
-		if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )           { $Score += 2; }
-		if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ )                         { $Score += 1; }
-		if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ )      { $Score += 1; }
-		if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{([\s\t]+\#.+)?[\r\n]/ ) { $Score += 1; }
-		if ( $text =~ /\=\~ ?[sm]?\// )                                     { $Score += 1; }
-		if ( $text =~ /\bmy [\$\%\@]/ )                                     { $Score += .5; }
-		if ( $text =~ /1\;[\r\n]+$/ )                                       { $Score += .5; }
-		if ( $text =~ /\$\w+\{/ )                                           { $Score += .5; }
-		if ( $text =~ /\bsplit[ \(]\// )                                    { $Score += .5; }
-		return $self->perl_mime_type($text) if $Score >= 3;
+		# Try to identify Perl Scripts based on soft criterias as a last resort
+		# TO DO: Improve the tests
+		SCOPE: {
+			my $score = 0;
+			if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )           { $score += 2; }
+			if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ )                         { $score += 1; }
+			if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ )      { $score += 1; }
+			if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{([\s\t]+\#.+)?[\r\n]/ ) { $score += 1; }
+			if ( $text =~ /\=\~ ?[sm]?\// )                                     { $score += 1; }
+			if ( $text =~ /\bmy [\$\%\@]/ )                                     { $score += .5; }
+			if ( $text =~ /1\;[\r\n]+$/ )                                       { $score += .5; }
+			if ( $text =~ /\$\w+\{/ )                                           { $score += .5; }
+			if ( $text =~ /\bsplit[ \(]\// )                                    { $score += .5; }
+			return $self->perl_mime_type($text) if $score >= 3;
+		}
+
+		# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
+		if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
+			# Is it Template Toolkit HTML?
+			# Only try to text the default [% %]
+			if ( $text =~ /\[\%\-?\s+\w+(?:\.\w+)*\s+\-?\%\]/ ) {
+				return 'text/x-perltt';
+			}
+
+			return 'text/html';
+		}
 	}
 
 	# Fallback mime-type of new files, should be configurable in the GUI
 	# TO DO: Make it configurable in the GUI :)
-	unless ($filename) {
+	unless ( $filename ) {
 		return $self->perl_mime_type($text);
 	}
 

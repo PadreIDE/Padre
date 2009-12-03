@@ -3,10 +3,11 @@ package Padre::Wx::Printout;
 use 5.008;
 use strict;
 use warnings;
-use Wx::Print;
-use base qw(Wx::Printout);
+use Padre::Wx    ();
+use Wx::Print    ();
 
 our $VERSION = '0.50';
+our @ISA     = 'Wx::Printout';
 
 sub new {
 	my $class  = shift;

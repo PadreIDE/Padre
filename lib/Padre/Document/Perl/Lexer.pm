@@ -14,16 +14,14 @@ sub class_to_color {
 	my $class  = shift;
 	my $css    = class_to_css($class);
 	my %colors = (
-		keyword      => 4, # dark green
-		structure    => 6,
-		core         => 1, # red
-		pragma       => 7, # purple
-		'Whitespace' => 0,
-		'Structure'  => 0,
-
-		'Number' => 1,
-		'Float'  => 1,
-
+		'keyword'       => 4, # dark green
+		'structure'     => 6,
+		'core'          => 1, # red
+		'pragma'        => 7, # purple
+		'Whitespace'    => 0,
+		'Structure'     => 0,
+		'Number'        => 1,
+		'Float'         => 1,
 		'HereDoc'       => 4,
 		'Data'          => 4,
 		'Operator'      => 6,

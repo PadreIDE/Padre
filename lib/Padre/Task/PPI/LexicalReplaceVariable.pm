@@ -3,12 +3,12 @@ package Padre::Task::PPI::LexicalReplaceVariable;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Wx                         ();
+use Padre::Task::PPI                  ();
+use PPIx::EditorTools::RenameVariable ();
 
 our $VERSION = '0.50';
-
-use base 'Padre::Task::PPI';
-use Padre::Wx ();
-use PPIx::EditorTools::RenameVariable;
+our @ISA     = 'Padre::Task::PPI';
 
 =pod
 

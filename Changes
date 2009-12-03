@@ -36,6 +36,7 @@ Changes for Perl Application Development and Refactoring Environment
       being used. (ADAMK)
     - Make Capture::Tiny a test prereq in order to eliminate a strange 
       test failure (SZABGAB).  
+    - Added an initial simplistic mime-type + detector for Template Toolkit (ADAMK)
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)

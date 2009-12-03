@@ -3,10 +3,10 @@ package Padre::Task::ErrorParser;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Task ();
 
 our $VERSION = '0.50';
-
-use base 'Padre::Task';
+our @ISA     = 'Padre::Task';
 
 use Class::XSAccessor getters => {
 	parser   => 'parser',

@@ -3,15 +3,10 @@ package Padre::Wx::Popup;
 use 5.008;
 use strict;
 use warnings;
-
-#use base 'Wx::ComboPopup';
-#use base 'Wx::PopupTransientWindow';
-#use base 'Wx::PopupWindow';
 use Padre::Wx ();
 
-use base qw(Wx::PlPopupTransientWindow);
-
 our $VERSION = '0.50';
+our @ISA     = 'Wx::PlPopupTransientWindow';
 
 sub on_paint {
 	my ( $self, $event ) = @_;

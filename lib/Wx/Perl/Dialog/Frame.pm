@@ -3,13 +3,12 @@ package Wx::Perl::Dialog::Frame;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec ();
-use Wx::Perl::Dialog;
-use Wx::STC ();
-
-use base 'Wx::Frame';
+use File::Spec       ();
+use Wx::Perl::Dialog ();
+use Wx::STC          ();
 
 our $VERSION = '0.50';
+our @ISA     = 'Wx::Frame';
 
 sub new {
 	my ($class) = @_;

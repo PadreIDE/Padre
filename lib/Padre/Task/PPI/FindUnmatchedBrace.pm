@@ -3,12 +3,12 @@ package Padre::Task::PPI::FindUnmatchedBrace;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Wx                             ();
+use Padre::Task::PPI                      ();
+use PPIx::EditorTools::FindUnmatchedBrace ();
 
 our $VERSION = '0.50';
-
-use base 'Padre::Task::PPI';
-use Padre::Wx();
-use PPIx::EditorTools::FindUnmatchedBrace;
+our @ISA     = 'Padre::Task::PPI';
 
 =pod
 

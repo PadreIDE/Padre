@@ -3,12 +3,12 @@ package Padre::Task::PPI::FindVariableDeclaration;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx ();
+use Padre::Wx                                  ();
+use Padre::Task::PPI                           ();
+use PPIx::EditorTools::FindVariableDeclaration ();
 
 our $VERSION = '0.50';
-
-use base 'Padre::Task::PPI';
-use PPIx::EditorTools::FindVariableDeclaration;
+our @ISA     = 'Padre::Task::PPI';
 
 =pod
 
