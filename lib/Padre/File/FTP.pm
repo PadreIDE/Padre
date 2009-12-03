@@ -163,7 +163,7 @@ sub _todo_mode {
 	return 33024; # Currently fixed: read-only textfile
 }
 
-sub _todo_mtime {
+sub mtime {
 	my $self = shift;
 
 	# The file-changed-on-disk - function requests this frequently:
@@ -171,10 +171,7 @@ sub _todo_mtime {
 		return $self->{_cached_mtime_value};
 	}
 
-	require HTTP::Date; # Part of LWP which is required for this module but not for Padre
-	my ( $Content, $Result ) = $self->_request('HEAD');
-
-	$self->{_cached_mtime_value} = HTTP::Date::str2time( $Result->header('Last-Modified') );
+	$self->{_cached_mtime_value} = $self->{_ftp}->mdtm($self->{_file});
 	$self->{_cached_mtime_time}  = time;
 
 	return $self->{_cached_mtime_value};
