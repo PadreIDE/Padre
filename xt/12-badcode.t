@@ -20,7 +20,7 @@ my %modules = map {
 	$class =~ s/\.pm$//;
 	$class => "lib/$_"
 } File::Find::Rule->relative->name('*.pm')->file->in('lib');
-plan( tests => scalar( keys %modules ) * 6 );
+plan( tests => scalar( keys %modules ) * 7 );
 
 # Compile all of Padre
 use File::Temp;
@@ -32,7 +32,51 @@ foreach my $module ( sort keys %modules ) {
 	ok( $module->VERSION, "$module: Found \$VERSION" );
 }
 
+# list of non-Wx modules still having Wx code
+my %TODO = map {$_ => 1} qw(
+	Padre::Action::Plugins
+	Padre::Action::Queue
+	Padre::Action::Refactor
+	Padre::Action::Search
+	Padre::Document
+	Padre::Locale
+	Padre::MimeTypes
+	Padre::Plugin
+	Padre::Plugin::Devel
+	Padre::Plugin::My
+	Padre::PluginManager
+	Padre::Service
+	Padre::Splash
+	Padre::Task::LaunchDefaultBrowser
+	Padre::Task::Outline
+	Padre::Task::PPI::FindUnmatchedBrace
+	Padre::Task::PPI::FindVariableDeclaration
+	Padre::Task::PPI::IntroduceTemporaryVariable
+	Padre::Task::PPI::LexicalReplaceVariable
+	Padre::Task::SyntaxChecker
+	Padre::TaskManager
+
+	Padre::Task::Examples::WxEvent
+);
+
 foreach my $module ( sort keys %modules ) {
+
+	# checking if only modules with Wx in their name depend on Wx
+	if ($module =~ /^Padre::Wx/ or $module =~ /^Wx::/) {
+		my $Test = Test::Builder->new;
+		$Test->skip("$module is a Wx module");
+	} else {
+		my $content = read_file($modules{$module});
+		my ($error) = $content =~ m/^use\s+.*Wx.*;/gmx;
+		my $Test = Test::Builder->new;
+		if ($TODO{$module}) {
+			$Test->todo_start("$module should not contain Wx but it still does");
+		}
+		ok(!$error, "$module does not use Wx") or diag $error;
+		if ($TODO{$module}) {
+			$Test->todo_end;
+		}
+	}
 
 	# Load the document
 	my $document = PPI::Document->new(
@@ -102,6 +146,13 @@ foreach my $module ( sort keys %modules ) {
 		}
 		ok( $document->serialize !~ /[^\$\'\"]\$[\&\'\`]/, $module . ': Uses expensive regexp-variable $&, $\' or $`' );
 	}
+}
+
+sub read_file {
+	my $file = shift;
+	open my $fh, '<', $file or die "Could not read '$file': $!";
+	local $/ = undef;
+	return <$fh>;
 }
 
 1;
