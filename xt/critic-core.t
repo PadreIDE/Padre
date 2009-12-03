@@ -8,7 +8,7 @@ use Test::More;
 use File::Spec::Functions ':ALL';
 
 BEGIN {
-	my $config = catfile('xt', 'critic-installed.ini');
+	my $config = catfile('xt', 'critic-core.ini');
 	unless ( eval "use Test::Perl::Critic -profile => '$config'; 1" ) {
 		plan skip_all => 'Test::Perl::Critic required to criticise code';
 	}
