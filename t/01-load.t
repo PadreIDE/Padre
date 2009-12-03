@@ -2,10 +2,9 @@
 
 use 5.008;
 use strict;
-
 BEGIN {
-	$|  = 1;
 	$^W = 1;
+	$|  = 1;
 }
 use Test::More;
 
@@ -16,6 +15,7 @@ BEGIN {
 	}
 }
 plan( tests => 36 );
+
 use Test::Script;
 use Test::NoWarnings;
 
