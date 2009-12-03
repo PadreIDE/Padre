@@ -1,0 +1,13 @@
+README for padre.exe
+
+This is Padre's win32 launcher. It does the following:
+	* Tries to find wperl.exe in the executable path. If it fails, it exits 
+		with a message.
+	* Tries to find padre script in the executable path. If it fails, it exits 
+		with a message.
+	* Runs %padre_exe_path%\wperl.exe %padre_exe_path%\padre.
+
+To compile it, please use compile_padre.bat. You'll ofcourse need Strawberry 
+Perl as it has gcc, strip, and windres out of the box.
+
+padre.exe now lives in Padre/script

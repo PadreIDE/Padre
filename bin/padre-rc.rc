@@ -1,0 +1,38 @@
+/**
+# Copyright 2009 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.
+*/
+/**
+ * @author Olivier Mengué <dolmen@cpan.org>
+ */
+
+#include "padre-rc.h"
+
+IDI_APP ICON DISCARDABLE "padre.ico"
+
+
+// Languages list:
+// http://msdn.microsoft.com/en-us/library/dd318693%28VS.85%29.aspx
+
+STRINGTABLE DISCARDABLE
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+BEGIN
+   IDS_APP_TITLE,  "Padre"
+   IDS_ERR_WPERL,  "Fichier « WPerl.exe » introuvable !"
+   IDS_ERR_SCRIPT, "Script « padre » introuvable !"
+   IDS_ERR_RUN,    "Echec du lancement du script avec « padre » avec « WPerl.exe » !"
+END
+
+STRINGTABLE DISCARDABLE
+LANGUAGE LANG_ENGLISH, SUBLANG_NEUTRAL
+BEGIN
+   IDS_APP_TITLE,  "Padre"
+   IDS_ERR_WPERL,  "Cannot find 'WPerl.exe'!"
+   IDS_ERR_SCRIPT, "Cannot find the 'padre' script!"
+   IDS_ERR_RUN,    "Failed to run 'padre' using 'WPerl.exe'"
+END
+
+
+
