@@ -9,6 +9,7 @@ use File::ShareDir  ();
 use Params::Util    ();
 use Padre::Constant ();
 use Padre::Current  ();
+use Padre::Debug;
 
 # Need truncate
 use ORLite 1.17 ();
