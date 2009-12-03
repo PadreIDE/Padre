@@ -310,7 +310,7 @@ sub find_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 
 		# Move the focus back to the search text
@@ -361,7 +361,7 @@ sub cancel_button {
 	# As we leave the Find dialog, return the user to the current editor
 	# window so they don't need to click it.
 	my $editor = $self->current->editor;
-	if ( $editor ) {
+	if ($editor) {
 		$editor->SetFocus;
 	}
 

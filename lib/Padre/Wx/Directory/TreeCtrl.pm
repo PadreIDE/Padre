@@ -322,12 +322,12 @@ sub _updated_dir {
 	my $file = $self->parent->{file};
 	my $mtime;
 
-	if (defined($file)) {
-		$file->browse_mtime($dir)
+	if ( defined($file) ) {
+		$file->browse_mtime($dir);
 	} else {
-		$mtime = (stat($dir))[10];
+		$mtime = ( stat($dir) )[10];
 	}
-	
+
 	if (   not defined $cached
 		or !$cached->{Data}
 		or !$cached->{Change}

@@ -441,6 +441,7 @@ sub find_button {
 	my $search = $self->as_search;
 	unless ($search) {
 		$main->error("Not a valid search");
+
 		# Move the focus back to the search text
 		# so they can tweak their search.
 		$self->{find_text}->SetFocus;
@@ -513,8 +514,9 @@ sub replace_button {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
+
 		# Move the focus back to the search text
 		# so they can tweak their search.
 		$self->{find_text}->SetFocus;
@@ -528,7 +530,7 @@ sub replace_button {
 
 	# Just replace once
 	my $changed = $main->replace_next($search);
-	unless ( $changed ) {
+	unless ($changed) {
 		$main->message(
 			Wx::gettext('No matches found'),
 			Wx::gettext('Search and Replace'),
@@ -561,14 +563,14 @@ sub replace_all {
 
 	# Generate the search object
 	my $search = $self->as_search;
-	unless ( $search ) {
+	unless ($search) {
 		$main->error("Not a valid search");
 		return;
 	}
 
 	# Apply the search to the current editor
 	my $changes = $main->replace_all($search);
-	if ( $changes ) {
+	if ($changes) {
 		$main->message(
 			sprintf( Wx::gettext('Replaced %d matches'), $changes ),
 			Wx::gettext('Search and Replace')

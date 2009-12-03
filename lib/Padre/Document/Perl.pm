@@ -185,6 +185,7 @@ sub guess_subpath {
 	# Is this a script?
 	my $text = $self->text_get;
 	if ( $text =~ /^\#\![^\n]*\bperl\b/s ) {
+
 		# Is this a test?
 		if ( $text =~ /use Test::/ ) {
 			return 't';
@@ -195,6 +196,7 @@ sub guess_subpath {
 
 	# Is this a module?
 	if ( $text =~ /\bpackage\s*([\w\:]+)/s ) {
+
 		# Take all but the last section of the package name,
 		# and use that as the file.
 		my $name = $1;

@@ -19,7 +19,7 @@ close $fh;
 ok( -s $testfile == 3, 'Local: Check test file size' );
 
 $file = Padre::File->new($testfile);
-ok( defined($file),    'Local: Create Padre::File object' );
+ok( defined($file), 'Local: Create Padre::File object' );
 
 ok( -s $testfile == 3, 'Local: Check test file size again' );
 ok( ref($file) eq 'Padre::File::Local', 'Local: Check module' );

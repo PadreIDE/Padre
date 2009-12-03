@@ -251,11 +251,11 @@ subclass module whenever possible.
 =cut
 
 sub browse_mtime {
-  my $self = shift;
-  my $filename = shift;
-  
-  my $file = $self->clone_file($filename);
-  return $file->mtime;
+	my $self     = shift;
+	my $filename = shift;
+
+	my $file = $self->clone_file($filename);
+	return $file->mtime;
 }
 
 =pod
@@ -294,13 +294,13 @@ be done on this filesystem (even if the default doesn't care).
 #       other pathnames. This is a default and should be overriden
 #       by each Padre::File::* - module!
 sub browse_url_join {
-  my $self = shift;
-  my $server = shift;
-  my $path = shift;
-  my $basename = shift;
-  
-  return $self->{protocol}.'://'.$server.'/'.$path.'/'.$basename if defined($basename);
-  return $self->{protocol}.'://'.$server.'/'.$path;
+	my $self     = shift;
+	my $server   = shift;
+	my $path     = shift;
+	my $basename = shift;
+
+	return $self->{protocol} . '://' . $server . '/' . $path . '/' . $basename if defined($basename);
+	return $self->{protocol} . '://' . $server . '/' . $path;
 }
 
 =pod
@@ -321,7 +321,7 @@ than one connection per server.
 
 sub can_clone {
 
-	# Cloning needs to be supported by the protocol, the safer 
+	# Cloning needs to be supported by the protocol, the safer
 	# option is false here.
 	return 0;
 }
@@ -373,9 +373,9 @@ Returns a new C<Padre::File> or dies on error.
 
 sub clone {
 	my $self = shift;
-	
+
 	my $class = ref($self);
-	
+
 	return $class->new(@_);
 }
 
@@ -401,11 +401,11 @@ Returns a new C<Padre::File> or dies on error.
 =cut
 
 sub clone_file {
-	my $self = shift;
-	my $path = shift;
+	my $self     = shift;
+	my $path     = shift;
 	my $filename = shift;
 
-	return $self->clone($self->browse_url_join($self->servername,$path,$filename));
+	return $self->clone( $self->browse_url_join( $self->servername, $path, $filename ) );
 }
 
 =head2 C<ctime>

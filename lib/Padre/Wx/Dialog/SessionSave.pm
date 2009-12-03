@@ -186,7 +186,7 @@ sub _create_fields {
 				'name where id = ?',
 				Padre->ide->{session}
 			)
-			)[0]->{name};
+		)[0]->{name};
 	}
 	$Current_Session ||= ''; # Empty value for combo box, better than undef
 

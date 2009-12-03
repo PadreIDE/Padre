@@ -51,6 +51,7 @@ sub new {
 }
 
 sub can_clone {
+
 	# Local files don't have connections, no need to clone objects
 	return 0;
 }
@@ -184,12 +185,12 @@ sub readonly {
 }
 
 sub browse_url_join {
-  my $self = shift;
-  my $server = shift;
-  my $path = shift;
-  my $filename = shift;
-  
-	return File::Spec->catfile($server,$path,$filename);
+	my $self     = shift;
+	my $server   = shift;
+	my $path     = shift;
+	my $filename = shift;
+
+	return File::Spec->catfile( $server, $path, $filename );
 }
 
 1;

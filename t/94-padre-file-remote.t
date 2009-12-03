@@ -49,16 +49,16 @@ for my $url ( keys(%HTTP_Tests) ) {
 }
 
 my $clone = $file->clone('http://padre.perlide.org/download.html');
-ok(defined($clone),'HTTP: Create clone');
-is(ref($clone),'Padre::File::HTTP','HTTP: Clone object type');
-is( $clone->{protocol} , 'http', 'HTTP: Check clone protocol' );
+ok( defined($clone), 'HTTP: Create clone' );
+is( ref($clone), 'Padre::File::HTTP', 'HTTP: Clone object type' );
+is( $clone->{protocol}, 'http', 'HTTP: Check clone protocol' );
 ok( $clone->size > 0,            'HTTP: Clone file size' );
 ok( $clone->mtime >= 1253194791, 'HTTP: Clone mtime' );
-is( $clone->basename , 'download.html', 'HTTP: Clone basename' );
-is( $clone->dirname , 'http://padre.perlide.org/', 'HTTP: Clone dirname' );
+is( $clone->basename, 'download.html',             'HTTP: Clone basename' );
+is( $clone->dirname,  'http://padre.perlide.org/', 'HTTP: Clone dirname' );
 ok( !$clone->can_run, 'HTTP: Clone can not run' );
 
-is($clone->browse_mtime('/download.html'),$clone->mtime,'HTTP: browse_mtime');
+is( $clone->browse_mtime('/download.html'), $clone->mtime, 'HTTP: browse_mtime' );
 
 ###############################################################################
 ### Padre::File::FTP
@@ -104,12 +104,12 @@ $clone = $firstfile->clone('ftp://ftp.cpan.org/pub/CPAN/index.html');
 ok( defined($clone), 'FTP: Create Padre::File clone' );
 ok( ref($clone) eq 'Padre::File::FTP', 'FTP: Check clone module' );
 ok( $clone->{protocol} eq 'ftp', 'FTP: Check clone protocol' );
-cmp_ok( $clone->size ,'>' ,0, 'FTP: clone file size' );
-is( $clone->basename , 'index.html', 'FTP: clone basename' );
+cmp_ok( $clone->size, '>', 0, 'FTP: clone file size' );
+is( $clone->basename, 'index.html', 'FTP: clone basename' );
 is( $clone->dirname, 'ftp://ftp.cpan.org/pub/CPAN', 'FTP: clone dirname' );
 ok( !$clone->can_run, 'FTP: Clone can not run' );
 ok( $clone->exists,   'FTP: Clone exists' );
 
-is($firstfile->mtime,$clone->browse_mtime('/pub/CPAN/README'),'FTP: browse_mtime');
+is( $firstfile->mtime, $clone->browse_mtime('/pub/CPAN/README'), 'FTP: browse_mtime' );
 
 done_testing();

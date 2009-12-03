@@ -32,9 +32,7 @@ sub new {
 		Wx::gettext('A Dialog'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
 	$self->{warning_label} = Wx::StaticText->new(
@@ -63,16 +61,16 @@ sub new {
 		Wx::wxID_OK,
 		"",
 	);
-	$self->SetTitle(Wx::gettext("Warning"));
+	$self->SetTitle( Wx::gettext("Warning") );
 	my $sizer_4 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	my $sizer_5 = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizer_6 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizer_5->Add($self->{warning_label}, 0, 0, 0);
-	$sizer_5->Add($self->{warning_checkbox}, 0, Wx::wxTOP | Wx::wxEXPAND, 5);
-	$sizer_5->Add($line_1, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5);
-	$sizer_6->Add($self->{ok_button}, 0, 0, 0);
-	$sizer_5->Add($sizer_6, 1, Wx::wxALIGN_CENTER_HORIZONTAL, 5);
-	$sizer_4->Add($sizer_5, 1, Wx::wxALL | Wx::wxEXPAND, 5);
+	$sizer_5->Add( $self->{warning_label},    0, 0,                                       0 );
+	$sizer_5->Add( $self->{warning_checkbox}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );
+	$sizer_5->Add( $line_1,                   0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$sizer_6->Add( $self->{ok_button},        0, 0,                                       0 );
+	$sizer_5->Add( $sizer_6,                  1, Wx::wxALIGN_CENTER_HORIZONTAL,           5 );
+	$sizer_4->Add( $sizer_5,                  1, Wx::wxALL | Wx::wxEXPAND,                5 );
 	$self->SetSizer($sizer_4);
 	$sizer_4->Fit($self);
 

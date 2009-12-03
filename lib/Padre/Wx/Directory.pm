@@ -90,7 +90,7 @@ sub refresh {
 	# Finds project base
 	my $doc = $current->document;
 	my $dir;
-	if (defined($doc)) {
+	if ( defined($doc) ) {
 		$dir = $doc->project_dir;
 		$self->{file} = $doc->{file};
 	} else {

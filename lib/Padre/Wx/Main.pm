@@ -2329,9 +2329,9 @@ If no files are open, do nothing.
 sub replace_all {
 	my $self = shift;
 	my $editor = $self->current->editor or return;
-	if ( Params::Util::_INSTANCE($_[0], 'Padre::Search') ) {
+	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Search' ) ) {
 		$self->{search} = shift;
-	} elsif ( @_ ) {
+	} elsif (@_) {
 		die("Invalid argument to replace_all");
 	}
 	if ( $self->search ) {
@@ -2730,7 +2730,7 @@ sub setup_editor {
 
 	Padre::Util::debug( "setup_editor called for '" . ( $file || '' ) . "'" );
 
-	if ( $file ) {
+	if ($file) {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
@@ -3305,7 +3305,7 @@ sub on_save_as {
 		# Support sub-directory intuition
 		# if the subdirectory already exists.
 		my @subpath = $document->guess_subpath;
-		if ( @subpath ) {
+		if (@subpath) {
 			my $subdir = File::Spec->catdir(
 				$document->project_dir,
 				@subpath,
@@ -5203,7 +5203,7 @@ sub new_document_from_string {
 
 	# Fill the document
 	$document->text_set($string);
-	if ( $mimetype ) {
+	if ($mimetype) {
 		$document->set_mimetype($mimetype);
 	}
 

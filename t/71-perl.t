@@ -199,13 +199,14 @@ SCOPE: {
 	my @functions = $doc->get_functions;
 	is_deeply(
 		\@functions,
-		[ qw{
-			guess_indentation_style
-			guess_filename
-			keywords
-			two_lines
-			three_lines
-		} ],
+		[   qw{
+				guess_indentation_style
+				guess_filename
+				keywords
+				two_lines
+				three_lines
+				}
+		],
 		'Found expected Perl functions',
 	);
 }
@@ -228,7 +229,7 @@ END_PERL
 
 	# Check the subpath
 	my @subpath = $doc->guess_subpath;
-	is_deeply( \@subpath, [ qw{ lib Foo Bar } ], '->guess_subpath' );
+	is_deeply( \@subpath, [qw{ lib Foo Bar }], '->guess_subpath' );
 }
 
 

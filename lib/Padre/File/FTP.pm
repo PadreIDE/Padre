@@ -122,7 +122,7 @@ sub clone {
 	my $self = bless { filename => $url }, ref($origin);
 
 	# Copy the common values
-	for ('_timeout','_passive','_user','_pass','_port','_host','_ftp') {
+	for ( '_timeout', '_passive', '_user', '_pass', '_port', '_host', '_ftp' ) {
 		$self->{$_} = $origin->{$_};
 	}
 
@@ -224,7 +224,7 @@ sub servername {
 	# Don't explicit return ftp default port
 	return $self->{_host} if $self->{_port} == 21;
 
-	return $self->{_host}.':'.$self->{_port};
+	return $self->{_host} . ':' . $self->{_port};
 }
 
 sub read {
