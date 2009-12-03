@@ -21,6 +21,7 @@ plain:
   0: 00007f
  current_line_foreground: 000000
  currentline: FFFF04
+ selection_background: 0080ff
  colors:
   wxSTC_STYLE_DEFAULT:
   wxSTC_STYLE_LINENUMBER:
