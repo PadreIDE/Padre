@@ -682,6 +682,7 @@ sub _find_method {
 			foreach my $f (@files) {
 				if ( open my $fh, '<', $f ) {
 					my $lines = do { local $/ = undef; <$fh> };
+					close $fh;
 					my @subs = $lines =~ /sub\s+(\w+)/g;
 
 					#use Data::Dumper;

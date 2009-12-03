@@ -423,9 +423,10 @@ sub parse_version {
 	my $result;
 	local $/ = "\n";
 	local $_;
-	open( my $fh, '<', $parsefile ) or die "Could not open '$parsefile': $!";
+	open( my $fh, '<', $parsefile ) ## no critic (RequireBriefOpen)
+		or die "Could not open '$parsefile': $!";
 	my $inpod = 0;
-	while (<$fh>) {
+	while ( <$fh> ) {
 		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;
 		next if $inpod || /^\s*#/;
 		chop;
@@ -478,9 +479,11 @@ sub humanbytes {
 
 # Returns the memory currently used by this application:
 sub process_memory {
-	if (Padre::Constant::UNIX) {
+	if ( Padre::Constant::UNIX ) {
 		open my $meminfo, '<', '/proc/self/stat' or return;
-		return ( split( / /, <$meminfo> ) )[22];
+		my $rv = ( split( / /, <$meminfo> ) )[22];
+		close $meminfo;
+		return $rv;
 	} elsif (Padre::Constant::WIN32) {
 		require Padre::Util::Win32;
 		return Padre::Util::Win32::GetCurrentProcessMemorySize();
