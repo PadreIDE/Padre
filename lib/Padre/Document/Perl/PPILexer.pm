@@ -25,7 +25,7 @@ sub colorize {
 	require PPI::Document;
 	my $ppi_doc = PPI::Document->new( \$text );
 	if ( not defined $ppi_doc ) {
-		if ( DEBUG ) {
+		if (DEBUG) {
 			TRACE( 'PPI::Document Error %s', PPI::Document->errstr );
 			TRACE( 'Original text: %s',      $text );
 		}

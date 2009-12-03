@@ -503,7 +503,7 @@ sub load_file {
 	my ($self) = @_;
 	my $file = $self->file;
 
-	if ( DEBUG ) {
+	if (DEBUG) {
 		my $name = $file->{file}->{filename} || '';
 		TRACE("Loading file '$name'");
 	}

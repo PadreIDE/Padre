@@ -66,25 +66,25 @@ is( $clone->browse_mtime('/download.html'), $clone->mtime, 'HTTP: browse_mtime' 
 # Plain file from CPAN
 $file = Padre::File->new('ftp://ftp.cpan.org/pub/CPAN/README');
 ok( defined($file), 'FTP: Create Padre::File object' );
-is( ref($file) , 'Padre::File::FTP', 'FTP: Check module' );
-is( $file->{protocol} , 'ftp', 'FTP: Check protocol' );
-cmp_ok( $file->size ,'>', 0, 'FTP: file size' );
-is( $file->basename , 'README', 'FTP: basename' );
-is( $file->dirname , 'ftp://ftp.cpan.org/pub/CPAN', 'FTP: dirname' );
-is( $file->servername , 'ftp.cpan.org', 'FTP: servername' );
+is( ref($file), 'Padre::File::FTP', 'FTP: Check module' );
+is( $file->{protocol}, 'ftp', 'FTP: Check protocol' );
+cmp_ok( $file->size, '>', 0, 'FTP: file size' );
+is( $file->basename,   'README',                      'FTP: basename' );
+is( $file->dirname,    'ftp://ftp.cpan.org/pub/CPAN', 'FTP: dirname' );
+is( $file->servername, 'ftp.cpan.org',                'FTP: servername' );
 ok( !$file->can_run, 'FTP: Can not run' );
 ok( $file->exists,   'FTP: Exists' );
-cmp_ok($file->mtime,'>=',918914146,'FTP: mtime');
+cmp_ok( $file->mtime, '>=', 918914146, 'FTP: mtime' );
 my $firstfile = $file;
 
 # Symlink
 $file = Padre::File->new('ftp://ftp.kernel.org/welcome.msg');
-ok( defined($file),  'FTP2: Create Padre::File object' );
-cmp_ok( $file->size ,'>', 0, 'FTP2: file size' );
-is($file->servername,'ftp.kernel.org','FTP2: servername');
-is($file->dirname,'ftp://ftp.kernel.org','FTP2: servername');
-is($file->basename,'welcome.msg','FTP2: servername');
-ok( $file->exists,   'FTP2: Exists' );
+ok( defined($file), 'FTP2: Create Padre::File object' );
+cmp_ok( $file->size, '>', 0, 'FTP2: file size' );
+is( $file->servername, 'ftp.kernel.org',       'FTP2: servername' );
+is( $file->dirname,    'ftp://ftp.kernel.org', 'FTP2: servername' );
+is( $file->basename,   'welcome.msg',          'FTP2: servername' );
+ok( $file->exists, 'FTP2: Exists' );
 
 # Test some FTP servers
 for my $url (
@@ -103,13 +103,13 @@ for my $url (
 	ok( $file->exists,  'FTP ' . $server . ': Exists' );
 	my $size = $file->size;
 	ok( defined($size), 'FTP ' . $server . ': ' . $size . ' bytes' );
-	ok($file->mtime,'FTP '.$server.': mtime '.scalar(localtime($file->mtime)));
+	ok( $file->mtime,   'FTP ' . $server . ': mtime ' . scalar( localtime( $file->mtime ) ) );
 }
 
 $clone = $firstfile->clone('ftp://ftp.cpan.org/pub/CPAN/index.html');
 ok( defined($clone), 'FTP: Create Padre::File clone' );
-is( ref($clone) , 'Padre::File::FTP', 'FTP: Check clone module' );
-is( $clone->{protocol} , 'ftp', 'FTP: Check clone protocol' );
+is( ref($clone), 'Padre::File::FTP', 'FTP: Check clone module' );
+is( $clone->{protocol}, 'ftp', 'FTP: Check clone protocol' );
 cmp_ok( $clone->size, '>', 0, 'FTP: clone file size' );
 is( $clone->basename, 'index.html', 'FTP: clone basename' );
 is( $clone->dirname, 'ftp://ftp.cpan.org/pub/CPAN', 'FTP: clone dirname' );

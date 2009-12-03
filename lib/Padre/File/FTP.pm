@@ -171,7 +171,7 @@ sub mtime {
 		return $self->{_cached_mtime_value};
 	}
 
-	$self->{_cached_mtime_value} = $self->{_ftp}->mdtm($self->{_file});
+	$self->{_cached_mtime_value} = $self->{_ftp}->mdtm( $self->{_file} );
 	$self->{_cached_mtime_time}  = time;
 
 	return $self->{_cached_mtime_value};

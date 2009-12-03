@@ -3,8 +3,8 @@ package Padre::Document::Perl;
 use 5.008;
 use strict;
 use warnings;
-use Carp   ();
-use Encode ();
+use Carp                            ();
+use Encode                          ();
 use File::Spec                      ();
 use File::Temp                      ();
 use File::Find::Rule                ();
@@ -128,10 +128,7 @@ sub set_highlighter {
 		$length = $editor->GetTextLength;
 	}
 
-	TRACE(
-		"Setting highlighter for Perl 5 code. length: $length"
-		. ( $limit ? " limit is $limit" : '' )
-	) if DEBUG;
+	TRACE( "Setting highlighter for Perl 5 code. length: $length" . ( $limit ? " limit is $limit" : '' ) ) if DEBUG;
 
 	if ( defined $limit and $length > $limit ) {
 		TRACE("Forcing STC highlighting") if DEBUG;

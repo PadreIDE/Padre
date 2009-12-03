@@ -2,6 +2,7 @@
 
 use 5.008;
 use strict;
+
 BEGIN {
 	$^W = 1;
 	$|  = 1;

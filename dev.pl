@@ -14,6 +14,7 @@ use Config;
 # Collect options early
 use Getopt::Long ();
 use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS};
+
 BEGIN {
 	$DEBUG   = 0;
 	$DIE     = 0;
@@ -26,9 +27,9 @@ BEGIN {
 			no warnings;
 			$Padre::Debug::DEBUG = 1;
 		},
-		'die'        => \$DIE,
-		'profile'    => \$PROFILE,
-		'a'          => \$PLUGINS,
+		'die'     => \$DIE,
+		'profile' => \$PROFILE,
+		'a'       => \$PLUGINS,
 	);
 }
 
@@ -41,7 +42,7 @@ use privlib::Tools;
 use File::Basename ();
 use Getopt::Long   ();
 use Locale::Msgfmt 0.12;
-use Padre::Perl    ();
+use Padre::Perl ();
 
 # Due to share functionality, we must have run make
 unless ( -d "$FindBin::Bin/blib" ) {
@@ -69,7 +70,7 @@ push @cmd, '-d'          if $DEBUG;
 push @cmd, '-dt:NYTProf' if $PROFILE;
 
 # Rebuild translations
-if ( $PLUGINS ) {
+if ($PLUGINS) {
 	my $dir = File::Basename::dirname( $ENV{PADRE_HOME} );
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;

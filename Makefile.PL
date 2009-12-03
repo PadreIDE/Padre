@@ -197,16 +197,17 @@ if (win32) {
 
 	# Step 1: Make sure we do not have old files
 	unlink "padre-rc.o" if -f "padre-rc.o";
-	unlink "padre.exe" if -f "blib/bin/padre.exe";
+	unlink "padre.exe"  if -f "blib/bin/padre.exe";
 
 	# Step 2: Build Padre's win32 resource using windres
 	system qw[cd bin && windres padre-rc.rc padre-rc.o];
-	
+
 	# Step 3: Build padre.exe using gcc
 	system "cd bin && gcc -Wall -Os -mwin32 -mwindows -Wl,-s padre.c padre-rc.o -o ../blib/bin/padre.exe";
 
 	# Step 4: Install XP manifest to get a themed Padre
 	system $^X , qw[-MExtUtils::Command -e cp --], qw[ bin/wperl.exe.manifest blib/bin/wperl.exe.manifest ];
+
 	#--------------- End of Padre.exe's Build --------------
 }
 install_share_with_mofiles;

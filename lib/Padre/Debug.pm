@@ -40,7 +40,7 @@ use Padre::Constant ();
 our $VERSION = '0.50';
 
 sub import {
-	my $pkg  = (caller())[0];
+	my $pkg = ( caller() )[0];
 	eval <<"END_PERL";
 package $pkg;
 use constant DEBUG => !! (
@@ -61,11 +61,12 @@ END_PERL
 # Global trace function
 sub TRACE {
 	my $time    = scalar localtime time;
-	my $package = (caller())[0];
+	my $package = ( caller() )[0];
 	my $logfile = Padre::Constant::LOG_FILE;
 	open my $fh, '>>', $logfile or return;
-	foreach my $message ( @_ ) {
-		print $fh sprintf( "%.6f %s%s\n",
+	foreach my $message (@_) {
+		print $fh sprintf(
+			"%.6f %s%s\n",
 			$time,
 			$package,
 			$message,
