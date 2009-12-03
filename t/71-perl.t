@@ -64,7 +64,9 @@ SCOPE: {
 	my $text = do {
 		local $/ = undef;
 		open my $fh, '<', $infile or die $!;
-		<$fh>;
+		my $rv = <$fh>;
+		close $fh;
+		$rv;
 	};
 	my $doc = PPI::Document->new( \$text );
 	isa_ok( $doc, "PPI::Document" );
@@ -106,7 +108,13 @@ SCOPE: {
 # and ...find_token_at_location
 SCOPE: {
 	my $infile = catfile( $files, 'find_variable_declaration_2.pm' );
-	my $text = do { local $/ = undef; open my $fh, '<', $infile or die $!; <$fh> };
+	my $text = do {
+		local $/ = undef;
+		open my $fh, '<', $infile or die $!;
+		my $rv = <$fh>;
+		close $fh;
+		$rv;
+	};
 
 	my $doc = PPI::Document->new( \$text );
 	isa_ok( $doc, "PPI::Document" );

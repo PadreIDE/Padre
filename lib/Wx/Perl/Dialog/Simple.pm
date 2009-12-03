@@ -50,10 +50,7 @@ use File::Spec ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Exporter';
-
-$| = 1;
-
-our @EXPORT = qw(
+our @EXPORT  = qw(
 	entry
 	password
 	file_selector

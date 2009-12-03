@@ -1424,6 +1424,7 @@ sub insert_from_file {
 		binmode($fh);
 		local $/ = undef;
 		$text = <$fh>;
+		close $fh;
 	} else {
 		return;
 	}

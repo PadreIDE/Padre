@@ -19,5 +19,8 @@ all_critic_ok(
 	glob('t/*.t'),
 	't/win32/',
 	't/author_tests/',
-	't/lib'
+	't/lib',
+
+	# Sample scripts get lower quality tests as well
+	'blib/lib/auto',
 );

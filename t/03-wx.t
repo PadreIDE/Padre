@@ -33,7 +33,6 @@ diag "PADRE_HOME: $ENV{PADRE_HOME}";
 my $home = $ENV{PADRE_HOME};
 copy catfile( 'eg', 'hello_world.pl' ),   catfile( $home, 'hello_world.pl' );
 copy catfile( 'eg', 'cyrillic_test.pl' ), catfile( $home, 'cyrillic_test.pl' );
-
 copy catfile( 't', 'files', 'one_char.pl' ), catfile( $home, 'one_char.pl' );
 
 my $padreInstance = Padre->new;
@@ -97,6 +96,7 @@ my @events = (
 			# TODO: better report if file could not be opended
 			if ( open my $fh, '<', catfile( $home, 'hello_world.pl' ) ) {
 				$line = <$fh>;
+				close $fh;
 			} else {
 				$T->diag("Could not open hello_world.pl '$!'");
 			}

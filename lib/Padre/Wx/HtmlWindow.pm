@@ -83,6 +83,8 @@ sub load_pod {
 
 1;
 
+__END__
+
 =pod
 
 =head1 SUPPORT

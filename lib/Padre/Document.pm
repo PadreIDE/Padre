@@ -470,18 +470,20 @@ sub time_on_file {
 sub checksum_on_file {
 	warn join( ',', caller ) . ' called Document::checksum_on_file which is out-of-service.';
 	return 1;
-
-	my $self = shift;
-
-	my $filename = $self->{file}->filename;
-	return unless defined $filename;
-
-	require Digest::MD5;
-
-	open my $FH, '<', $filename or return;
-	binmode($FH);
-	return Digest::MD5->new->addfile(*$FH)->hexdigest;
 }
+
+# Part of the above checksum_on_file sub
+# Commented out to keep Perl::Critic happy
+#my $self = shift;
+#
+#my $filename = $self->{file}->filename;
+#return unless defined $filename;
+#
+#require Digest::MD5;
+#
+#open my $FH, '<', $filename or return;
+#binmode($FH);
+#return Digest::MD5->new->addfile(*$FH)->hexdigest;
 
 =pod
 

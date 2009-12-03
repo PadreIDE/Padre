@@ -106,7 +106,9 @@ sleep 1;
 sub slurp {
 	if ( open( my $fh, '<', $save_to ) ) {
 		local $/;
-		return <$fh>;
+		my $rv = <$fh>;
+		close $fh;
+		return $rv;
 	} else {
 		warn("Could not open file $save_to  $!");
 		return;

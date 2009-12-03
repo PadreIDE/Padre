@@ -7,11 +7,10 @@ use File::Which  ();
 use Getopt::Long ();
 use Carp         ();
 
-$| = 1;
-
-if ( $ENV{PADRE_DIE} ) {
-	$SIG{__DIE__} = sub { print STDERR Carp::longmess "\nDIE: @_\n" . ( "-" x 80 ) . "\n" };
-}
+local $| = 1;
+local $SIG{__DIE__} = $ENV{PADRE_DIE}
+	? sub { print STDERR Carp::longmess "\nDIE: @_\n" . ( "-" x 80 ) . "\n" }
+	: $SIG{__DIE__};
 
 # Must run using wxPerl on OS X.
 if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
@@ -57,14 +56,13 @@ Usage: $0 [FILENAMES]
 END_USAGE
 	exit(1);
 }
-if ( defined $HOME ) {
-	$ENV{PADRE_HOME} = $HOME;
-}
+
+local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
 
 require threads;
 require threads::shared;
 
-$ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
+local $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 
 my %opts = (
 	files       => \@ARGV,
@@ -134,12 +132,10 @@ CODE
 	} elsif ( ( $^O =~ /linux|bsd/i ) ) {
 
 		# Create Padre.desktop launcher on KDE/gnome
-		my $filename = "$ENV{HOME}/Desktop/Padre.desktop";
-		open my $fh, ">", $filename
-			or die "Cannot create $filename: $!\n";
 		require Padre::Util;
-		my $logo = Padre::Util::sharedir('icons/padre/64x64/logo.png');
-		print $fh <<"DESKTOP";
+		my $filename = "$ENV{HOME}/Desktop/Padre.desktop";
+		my $logo    = Padre::Util::sharedir('icons/padre/64x64/logo.png');
+		my $content = <<"DESKTOP";
 [Desktop Entry]
 Name=Padre
 Comment=Padre - The Perl IDE
@@ -150,6 +146,8 @@ Type=Application
 Categories=Development;Utility;
 MimeType=text/plain;application/x-perl;application/x-perl6;
 DESKTOP
+		open my $fh, ">", $filename or die "Cannot create $filename: $!\n";
+		print $fh $content;
 		close $fh;
 	} else {
 		warn "--desktop not implemented for " . $^O . "\n";

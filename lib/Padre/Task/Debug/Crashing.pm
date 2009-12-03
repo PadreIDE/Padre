@@ -13,8 +13,8 @@ sub run {
 
 	sleep 5;
 	die "This is a debugging task that simply crashes after running for 5 seconds!";
-	return 1;
-
+	# Commented out temporarily to appease xt/critic.t
+	# return 1;
 }
 
 sub finish {

@@ -2,11 +2,7 @@
 
 use 5.008;
 use strict;
-
-BEGIN {
-	$^W = 1;
-	$|  = 1;
-}
+use warnings;
 use Test::More;
 
 BEGIN {
@@ -19,6 +15,8 @@ plan( tests => 36 );
 
 use Test::Script;
 use Test::NoWarnings;
+
+local $^W = 1;
 
 use_ok('Wx');
 diag( "Tests find Wx: $Wx::VERSION " . Wx::wxVERSION_STRING() );

@@ -32,11 +32,9 @@ use Class::XSAccessor getters => {
 
 sub new {
 	my $class = shift;
-	my $self  = bless {
-		@_,
-		status => 'unloaded',
-		errstr => '',
-	}, $class;
+	my $self  = bless { @_ }, $class;
+	$self->{status} = 'unloaded';
+	$self->{errstr} = '';
 
 	# Check params
 	if ( exists $self->{name} ) {

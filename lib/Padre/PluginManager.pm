@@ -25,6 +25,7 @@ plug-ins, as well as providing part of the interface to plug-in writers.
 use 5.008;
 use strict;
 use warnings;
+use lib                      ();
 use Carp                     ();
 use File::Copy               ();
 use File::Glob               ();
@@ -32,13 +33,13 @@ use File::Path               ();
 use File::Spec               ();
 use File::Basename           ();
 use Scalar::Util             ();
+use Params::Util             ();
 use Padre::Constant          ();
 use Padre::Current           ();
 use Padre::Util              ();
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::Plugins ();
-use Params::Util qw{ _IDENTIFIER _CLASS _INSTANCE };
 
 our $VERSION = '0.50';
 
@@ -64,7 +65,7 @@ First argument should be a Padre object.
 
 sub new {
 	my $class = shift;
-	my $parent = _INSTANCE( shift, 'Padre' )
+	my $parent = Params::Util::_INSTANCE( shift, 'Padre' )
 		or Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 
 	my $self = bless {
@@ -544,7 +545,7 @@ sub _load_plugin {
 		$plugin->status('error');
 		return;
 	}
-	unless ( _INSTANCE( $object, 'Padre::Plugin' ) ) {
+	unless ( Params::Util::_INSTANCE( $object, 'Padre::Plugin' ) ) {
 		$plugin->errstr(
 			sprintf(
 				Wx::gettext("%s - Failed to instantiate plug-in"),
@@ -827,7 +828,7 @@ sub reload_current_plugin {
 
 	# TO DO shall we relax the assumption of a lib subdir?
 	$dir = File::Spec->catdir( $dir, 'lib' );
-	@INC = ( $dir, grep { $_ ne $dir } @INC );
+	local @INC = ( $dir, grep { $_ ne $dir } @INC );
 
 	my ($plugin_filename) = glob File::Spec->catdir( $dir, 'Padre', 'Plugin', '*.pm' );
 
@@ -962,7 +963,7 @@ sub _refresh_plugin_menu {
 sub _plugin {
 	my $self = shift;
 	my $it   = shift;
-	if ( _INSTANCE( $it, 'Padre::PluginHandle' ) ) {
+	if ( Params::Util::_INSTANCE( $it, 'Padre::PluginHandle' ) ) {
 		my $current = $self->{plugins}->{ $it->class };
 		unless ( defined $current ) {
 			Carp::croak("Unknown plug-in '$it' provided to PluginManager");
@@ -974,7 +975,7 @@ sub _plugin {
 	}
 
 	# Convert from class to name if needed
-	if ( defined _CLASS($it) ) {
+	if ( defined Params::Util::_CLASS($it) ) {
 		unless ( defined $self->{plugins}->{$it} ) {
 			Carp::croak("Plug-in '$it' does not exist in PluginManager");
 		}

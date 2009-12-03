@@ -133,7 +133,7 @@ sub ok_clicked {
 	chdir $data->{_directory_};
 	eval {
 		require Module::Starter::App;
-		@ARGV = (
+		local @ARGV = (
 			'--module',  $data->{_module_name_},
 			'--author',  $data->{_author_name_},
 			'--email',   $data->{_email_},
@@ -141,7 +141,6 @@ sub ok_clicked {
 			'--license', $data->{_license_choice_},
 		);
 		Module::Starter::App->run;
-		@ARGV = ();
 	};
 	chdir $pwd;
 

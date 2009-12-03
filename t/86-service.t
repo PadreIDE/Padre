@@ -5,7 +5,6 @@ use warnings;
 use Test::More;
 
 BEGIN {
-	$| = 1; # flush for the threads
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;

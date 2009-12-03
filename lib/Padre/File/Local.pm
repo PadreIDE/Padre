@@ -3,11 +3,10 @@ package Padre::File::Local;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::File;
 use File::Basename  ();
 use File::Spec      ();
 use Padre::Constant ();
+use Padre::File     ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Padre::File';
@@ -15,7 +14,7 @@ our @ISA     = 'Padre::File';
 sub _reformat_filename {
 	my $self = shift;
 
-	if (Padre::Constant::WIN32) {
+	if ( Padre::Constant::WIN32 ) {
 
 		# Fixing the case of the filename on Win32.
 		require Padre::Util::Win32;
@@ -143,14 +142,16 @@ sub read {
 	# is no filename
 	return if not defined $self->{filename};
 
-	my $fh;
-	if ( not open $fh, '<', $self->{filename} ) {
-		$self->{error} = $!;
-		return;
+	if ( open my $fh, '<', $self->{filename} ) {
+		binmode($fh);
+		local $/ = undef;
+		my $buffer = <$fh>;
+		close $fh;
+		return $buffer;
 	}
-	binmode($fh);
-	local $/ = undef;
-	return <$fh>;
+
+	$self->{error} = $!;
+	return;
 }
 
 sub write {
@@ -158,15 +159,14 @@ sub write {
 	my $content = shift;
 	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
 
-	my $fh;
-	if ( !open $fh, ">$encode", $self->{filename} ) {
-		$self->{error} = $!;
-		return ();
+	if ( open my $fh, ">$encode", $self->{filename} ) {
+		print {$fh} $content;
+		close $fh;
+		return 1;
 	}
-	print {$fh} $content;
-	close $fh;
 
-	return 1;
+	$self->{error} = $!;
+	return();
 }
 
 sub basename {

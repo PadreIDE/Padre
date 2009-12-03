@@ -3,33 +3,13 @@
 use strict;
 use warnings;
 use File::Find::Rule;
-
-# Create test environment...
-# Test replacement for document object
-package local::t14;
-
-sub LineFromPosition {
-	return 0;
-}
-
-# Test replacement for Wx
-package Wx;
-
-sub gettext {
-	return $_[0];
-}
-
-# The real test...
-package main;
-
 use Test::More;
 use Test::NoWarnings;
-
 use Padre::Document::Perl::Beginner;
 
 our $SKIP;
 
-if ( !$ENV{AUTOMATED_TESTING} ) {
+unless ( $ENV{AUTOMATED_TESTING} ) {
 	$SKIP = "Only test this on developer versions.";
 	plan( tests => 2 );
 	ok( 1, 'Skip nice-syntax tests on released versions' );
@@ -62,6 +42,9 @@ foreach my $file (@files) {
 }
 
 
+
+
+
 ######################################################################
 # Support Functions
 
@@ -69,5 +52,33 @@ sub slurp {
 	my $file = shift;
 	open my $fh, '<', $file or die $!;
 	local $/ = undef;
-	return <$fh>;
+	my $buffer = <$fh>;
+	close $fh;
+	return $buffer;
+}
+
+
+
+
+
+######################################################################
+# Support Classes
+
+# Create test environment...
+# Test replacement for document object
+SCOPE: {
+	package local::t14;
+
+	sub LineFromPosition {
+		return 0;
+	}
+}
+
+# Test replacement for Wx
+SCOPE: {
+	package Wx;
+
+	sub gettext {
+		return $_[0];
+	}
 }

@@ -16,8 +16,7 @@ use Class::XSAccessor {
 
 sub new {
 	my $class = shift;
-
-	my $url = shift;
+	my $url   = shift;
 
 	# Create myself
 	my $self = bless { filename => $url }, $class;
@@ -48,13 +47,11 @@ sub new {
 
 	# TO DO: Improve URL parsing
 	if ( $url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i ) {
-
 		# URL parsing failed
 		# TO DO: Warning should go to a user popup not to the text console
 		$self->{error} = 'Unable to parse ' . $url;
 		return $self;
 	}
-
 
 	# Login data
 	if ( defined($2) ) {
@@ -88,7 +85,7 @@ sub new {
 		Timeout => $self->{_timeout},
 		Passive => $self->{_passive},
 
-		#		Debug => 3, # Enable for FTP-debugging to STDERR
+		# Debug => 3, # Enable for FTP-debugging to STDERR
 	);
 
 	if ( !defined( $self->{_ftp} ) ) {
@@ -232,7 +229,9 @@ sub read {
 	# TO DO: Better error handling
 	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error} = $@;
 	open my $tmpfh, '<', $self->{_tmpfile};
-	return join( '', <$tmpfh> );
+	my $rv = join( '', <$tmpfh> );
+	close $tmpfh;
+	return $rv;
 }
 
 sub readonly {
@@ -246,20 +245,20 @@ sub write {
 	my $content = shift;
 	my $encode  = shift || ''; # undef encode = default, but undef will trigger a warning
 
-	return if !defined( $self->{_ftp} );
+	return unless defined $self->{_ftp};
 
-	my $fh;
-	if ( !open $fh, ">$encode", $self->{_tmpfile} ) {
-		$self->{error} = $!;
-		return ();
+	if ( open my $fh, ">$encode", $self->{_tmpfile} ) {
+		print {$fh} $content;
+		close $fh;
+
+		# TO DO: Better error handling
+		$self->{_ftp}->put( $self->{_tmpfile}, $self->{_file} ) or warn $@;
+
+		return 1;
 	}
-	print {$fh} $content;
-	close $fh;
 
-	# TO DO: Better error handling
-	$self->{_ftp}->put( $self->{_tmpfile}, $self->{_file} ) or warn $@;
-
-	return 1;
+	$self->{error} = $!;
+	return ();
 }
 
 ###############################################################################

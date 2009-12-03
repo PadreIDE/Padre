@@ -227,7 +227,7 @@ data may be posted to this event and the Wx subscribers will be notified
 	sub prepare {
 		my $self = shift;
 		my $queue : shared;
-		$queue           = new Thread::Queue;
+		$queue           = Thread::Queue->new;
 		$Queues{"$self"} = $queue;
 		$self->{_refid}  = "$self";
 		$self->SUPER::prepare(@_);

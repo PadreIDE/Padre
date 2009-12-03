@@ -16,7 +16,7 @@ use File::Find::Rule;
 use File::Spec;
 use POSIX qw(locale_h);
 
-$ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
+local $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
 
@@ -60,5 +60,7 @@ sub slurp {
 	my $file = shift;
 	open my $fh, '<', $file or die $!;
 	local $/ = undef;
-	return <$fh>;
+	my $buffer = <$fh>;
+	close $fh;
+	return $buffer;
 }

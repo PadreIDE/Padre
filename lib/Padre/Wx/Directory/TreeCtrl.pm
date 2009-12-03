@@ -4,9 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use File::Copy;
-use File::Spec     ();
-use File::Basename ();
-use Params::Util qw{_INSTANCE};
+use File::Spec      ();
+use File::Basename  ();
 use Padre::Current  ();
 use Padre::Util     ();
 use Padre::Wx       ();
@@ -424,10 +423,11 @@ sub _rename_or_move {
 		my $separator = File::Spec->catfile( '', '' );
 
 		# Moves all cached data of the node and above it to the new path
-		map {
-			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_}, delete $cached->{$_}
-				if $_ =~ /^$old_file($separator.+?)?$/
-		} keys %$cached;
+		foreach ( keys %$cached ) {
+			next unless /^$old_file($separator.+?)?$/;
+			$cached->{ $new_file . ( defined $1 ? $1 : '' ) } = $cached->{$_};
+			delete $cached->{$_};
+		}
 
 		$self->{select_item} = 1;
 

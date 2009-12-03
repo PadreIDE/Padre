@@ -43,6 +43,7 @@ use Padre::Locale                 ();
 use Padre::Current                ();
 use Padre::Document               ();
 use Padre::DB                     ();
+use Padre::Locker                 ();
 use Padre::Wx                     ();
 use Padre::Wx::Icon               ();
 use Padre::Wx::Left               ();
@@ -3765,7 +3766,7 @@ sub on_diff {
 			$dir,
 			'IN_EDITOR' . File::Basename::basename($file)
 		);
-		if ( open my $fh, '>', $filename ) {
+		if ( CORE::open( my $fh, '>', $filename ) ) {
 			print $fh $text;
 			CORE::close($fh);
 			system( $external_diff, $file, $filename );

@@ -15,4 +15,9 @@ BEGIN {
 }
 
 # need to skip t/files and t/collection
-all_critic_ok( 'blib' );
+all_critic_ok(
+	'blib/lib/Padre.pm',
+	'blib/lib/Padre',
+	'blib/lib/Wx',
+	'blib/script'
+);

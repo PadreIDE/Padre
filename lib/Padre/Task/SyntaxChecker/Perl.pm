@@ -117,6 +117,7 @@ sub _check_syntax {
 		open my $fh, '<', $err->filename or die $!;
 		local $/ = undef;
 		$stderr = <$fh>;
+		close $fh;
 
 		# and delete it
 		unlink $err->filename;

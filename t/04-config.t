@@ -1,12 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
-
-BEGIN {
-	$^W = 1;
-	$|  = 1;
-}
-
+use warnings;
 use constant CONFIG_OPTIONS => 102;
 
 # Move of Debug to Run Menu
