@@ -44,7 +44,7 @@ sub load {
 sub guess_title {
 	my ($self) = @_;
 	if ( $self->filename ) {
-		return File::Basename $self->filename;
+		return File::Basename::basename( $self->filename );
 	}
 	'Untitled';
 }
