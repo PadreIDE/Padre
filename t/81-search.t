@@ -16,7 +16,7 @@ use t::lib::Padre;
 use Padre::Util ();
 
 SCOPE: {
-	my ( $start, $end, @matches ) = Padre::Util::Padre::Util::get_matches( "abc", qr/x/, 0, 0 );
+	my ( $start, $end, @matches ) = Padre::Util::get_matches( "abc", qr/x/, 0, 0 );
 	is_deeply( \@matches, [], 'no match' );
 }
 
