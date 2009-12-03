@@ -40,7 +40,6 @@ $ENV{PADRE_DIE}  = $DIE;
 use lib $FindBin::Bin, "$FindBin::Bin/lib";
 use privlib::Tools;
 use File::Basename ();
-use Getopt::Long   ();
 use Locale::Msgfmt 0.12;
 use Padre::Perl ();
 
