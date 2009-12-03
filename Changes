@@ -27,6 +27,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Rolled back function list improvements that were causing regressions (ADAMK)
     - Added project sub-path intuition when saving new files (ADAMK)
     - Fixed a number of search/replace related bugs (ADAMK)
+    - Fixed ticket #421 "crash: no documents, F3/F4"
 
 0.50 2009.11.08
     - Fixed #686 DocBrowser launching Padre help (BRAMBLE)
