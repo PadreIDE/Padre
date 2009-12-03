@@ -20,7 +20,4 @@ all_critic_ok(
 	't/win32/',
 	't/author_tests/',
 	't/lib',
-
-	# Sample scripts get lower quality tests as well
-	'blib/lib/auto',
 );
