@@ -20,6 +20,10 @@ use Padre::Debug;
 our $VERSION = '0.50';
 our @ISA     = 'Padre::Document';
 
+
+
+
+
 #####################################################################
 # Padre::Document::Perl Methods
 
@@ -223,18 +227,22 @@ sub keywords {
 
 sub get_functions {
 	my $self = shift;
-	my $text = $self->text_get;
 
 	# Filter out POD
-	$text =~ s/(?:\015{1,2}\012|\015|\012)/\n/sg;
-	$text =~ s/(\n)\n*__(?:DATA|END)__\b.*\z/$1/s;
-	$text =~ s/\n\n=\w+.+?\n\n=cut\b.+?\n+/\n\n/sg;
-
-	return $text =~ m/(?:^|\n)\s*sub\s+(\w+(?:::\w+)*)/g;
+	return grep {
+		defined $_
+	} $self->text_get =~ m/
+		(?:
+		\n*__(?:DATA|END)__\b.*
+		|
+		\n\n=\w+.+?\n\n=cut\b.+?\n+
+		|
+		(?:^|\n)\s*sub\s+(\w+(?:::\w+)*)
+		)
+	/sgx;
 }
 
 sub get_function_regex {
-
 	# This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without
 	# triggering a "Variable length lookbehind not implemented" error.
 	return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
