@@ -95,13 +95,15 @@ sub refresh {
 	# Finds project base
 	my $doc = $current->document;
 	my $dir;
-	if ( defined($doc) ) {
-		$dir = $doc->project_dir;
-		$self->{file} = $doc->{file};
-	} else {
+
+# Disabled for release
+#	if ( defined($doc) ) {
+#		$dir = $doc->project_dir;
+#		$self->{file} = $doc->{file};
+#	} else {
 		$dir = $self->main->config->default_projects_directory;
-		delete $self->{file};
-	}
+#		delete $self->{file};
+#	}
 
 	return unless $dir;
 
