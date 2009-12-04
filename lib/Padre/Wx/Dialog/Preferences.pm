@@ -10,7 +10,7 @@ use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 use Padre::MimeTypes                       ();
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 our @ISA     = 'Padre::Wx::Dialog';
 
 our %PANELS = (

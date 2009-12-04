@@ -10,7 +10,7 @@ use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
 use Padre::Debug;
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################

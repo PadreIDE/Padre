@@ -7,7 +7,7 @@ use Padre::Document ();
 use Padre::Util     ();
 use Padre::Debug;
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 
 sub colorize {
 	my $self = shift;

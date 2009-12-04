@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx ();
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 our @ISA     = 'Wx::PlPopupTransientWindow';
 
 sub on_paint {

@@ -65,7 +65,7 @@ use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress           ();
 use Padre::Debug;
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 our @ISA     = 'Wx::Frame';
 
 use constant SECONDS => 1000;

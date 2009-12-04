@@ -11,7 +11,7 @@ use Class::XSAccessor constructor => 'new', accessors => {
 	'filename' => 'filename',
 };
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 
 =pod
 

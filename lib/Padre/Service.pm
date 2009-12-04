@@ -13,7 +13,7 @@ use Padre::Task   ();
 use Thread::Queue ();
 use Padre::Debug;
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 our @ISA     = 'Padre::Task';
 
 =pod

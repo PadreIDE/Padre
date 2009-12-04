@@ -118,7 +118,7 @@ use Scalar::Util  ();
 use Padre::Plugin ();
 use Padre::Task::HTTPClient;
 
-our $VERSION = '0.50';
+our $VERSION = '0.51';
 our @ISA     = 'Padre::Plugin';
 
 # Track the number of times actions are used
