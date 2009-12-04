@@ -70,7 +70,12 @@ sub current {
 
 # Returns the window label
 sub gettext_label {
-	Wx::gettext('Directory');
+	my $self = shift;
+	if ( $self->mode eq 'tree' ) {
+		return Wx::gettext('Project');
+	} else {
+		return Wx::gettext('Directory');
+	}
 }
 
 # Updates the gui, so each compoment can update itself
@@ -100,7 +105,7 @@ sub refresh {
 
 	return unless $dir;
 
-	$self->{projects}->{$dir}->{dir} ||= $dir;
+	$self->{projects}->{$dir}->{dir}  ||= $dir;
 	$self->{projects}->{$dir}->{mode} ||=
 		$doc->{is_project}
 		? 'tree'
@@ -120,6 +125,9 @@ sub refresh {
 	# Sets the last project to the current one
 	$self->previous_dir( $self->{projects}->{$dir}->{dir} );
 	$self->previous_dir_original($dir);
+
+	# Update the panel label
+	$self->panel->refresh;
 
 	return 1;
 }

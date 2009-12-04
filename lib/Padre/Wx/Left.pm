@@ -108,11 +108,21 @@ sub hide {
 	return;
 }
 
+# This has a refresh so we can do content-adaptive labels
+sub refresh {
+	my $self = shift;
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+	}
+	return;
+}
+
 sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
 		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
 	}
+	return;
 }
 
 1;

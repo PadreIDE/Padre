@@ -21,7 +21,7 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	#    Wx::Event:EVT_ACTIVATE($self, \&on_activate);
+	# Wx::Event:EVT_ACTIVATE($self, \&on_activate);
 	Wx::Event::EVT_CLOSE(
 		$self,
 		sub {
