@@ -71,7 +71,7 @@ sub current {
 # Returns the window label
 sub gettext_label {
 	my $self = shift;
-	if ( $self->mode eq 'tree' ) {
+	if (defined($self->mode) and ( $self->mode eq 'tree' )) {
 		return Wx::gettext('Project');
 	} else {
 		return Wx::gettext('Directory');
