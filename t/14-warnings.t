@@ -67,6 +67,7 @@ sub slurp {
 # Create test environment...
 # Test replacement for document object
 SCOPE: {
+
 	package local::t14;
 
 	sub LineFromPosition {
@@ -76,6 +77,7 @@ SCOPE: {
 
 # Test replacement for Wx
 SCOPE: {
+
 	package Wx;
 
 	sub gettext {

@@ -165,7 +165,7 @@ sub run {
 	local $ENV{PADRE_VERSION} = $VERSION;
 
 	# Clean arguments (with a bad patch for saving URLs)
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 
 		# Windows has trouble deleting the work directory of a process,
 		# so reset file to full path

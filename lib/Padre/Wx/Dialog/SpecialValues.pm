@@ -31,7 +31,7 @@ my $cats_list = [ sort keys %$categories ];
 sub get_layout {
 	my ($config) = @_;
 
-	my $default_cat_values = [ map { $_->{label} } @{ $categories->{$cats_list->[0]} } ];
+	my $default_cat_values = [ map { $_->{label} } @{ $categories->{ $cats_list->[0] } } ];
 
 	my @layout = (
 		[ [ 'Wx::StaticText', undef, Wx::gettext('Class:') ], [ 'Wx::Choice', '_find_cat_', $cats_list ], ],

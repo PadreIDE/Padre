@@ -80,9 +80,7 @@ Returns true on success, or throws an exception on error.
 sub load_pod {
 	my $self = shift;
 	require Padre::Pod2HTML;
-	$self->SetPage(
-		Padre::Pod2HTML->pod2html($_[0])
-	);
+	$self->SetPage( Padre::Pod2HTML->pod2html( $_[0] ) );
 	return 1;
 }
 

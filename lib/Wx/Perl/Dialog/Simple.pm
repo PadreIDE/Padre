@@ -52,8 +52,8 @@ our $VERSION = '0.50';
 our @ISA     = 'Exporter';
 
 # I'd change this, but I suspect it's rather breaky
-our @EXPORT  = ## no critic (ProhibitAutomaticExportation)
-qw(
+our @EXPORT = ## no critic (ProhibitAutomaticExportation)
+	qw(
 	entry
 	password
 	file_selector

@@ -14,7 +14,7 @@ our @ISA     = 'Padre::File';
 sub _reformat_filename {
 	my $self = shift;
 
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 
 		# Fixing the case of the filename on Win32.
 		require Padre::Util::Win32;
@@ -166,7 +166,7 @@ sub write {
 	}
 
 	$self->{error} = $!;
-	return();
+	return ();
 }
 
 sub basename {

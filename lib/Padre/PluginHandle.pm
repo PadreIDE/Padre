@@ -32,7 +32,7 @@ use Class::XSAccessor getters => {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 	$self->{status} = 'unloaded';
 	$self->{errstr} = '';
 

@@ -85,8 +85,8 @@ sub _initialize {
 		t     => \&perl_mime_type,
 
 		# Lacking a better solution, define our own MIME
-		xs    => 'text/x-perlxs',
-		tt    => 'text/x-perltt',
+		xs => 'text/x-perlxs',
+		tt => 'text/x-perltt',
 
 		# Compiled Perl Module or gimme5's output
 		pmc   => \&perl_mime_type,
@@ -276,9 +276,9 @@ sub _initialize {
 		},
 
 		# Completely custom mime types
-		'text/x-perlxs' => {              # totally not confirmed
+		'text/x-perlxs' => {                  # totally not confirmed
 			name  => 'XS',
-			lexer => Wx::wxSTC_LEX_CPP,   # for the lack of a better XS lexer (vim?)
+			lexer => Wx::wxSTC_LEX_CPP,       # for the lack of a better XS lexer (vim?)
 		},
 		'text/x-perltt' => {
 			name  => 'Template Toolkit',
@@ -591,7 +591,7 @@ sub guess_mimetype {
 	}
 
 	# Try derive the mime type from the basename
-	if ( $filename ) {
+	if ($filename) {
 		my $basename = File::Basename::basename($filename);
 		if ($basename) {
 			return 'text/x-makefile' if $basename =~ /^Makefile\.?/i;
@@ -603,6 +603,7 @@ sub guess_mimetype {
 	# are obvious.
 	if ( defined $text ) {
 		if ( $text =~ /\A#!/m ) {
+
 			# Found a hash bang line
 			if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
 				return $self->perl_mime_type($text);
@@ -632,6 +633,7 @@ sub guess_mimetype {
 
 		# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
 		if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
+
 			# Is it Template Toolkit HTML?
 			# Only try to text the default [% %]
 			if ( $text =~ /\[\%\-?\s+\w+(?:\.\w+)*\s+\-?\%\]/ ) {
@@ -644,7 +646,7 @@ sub guess_mimetype {
 
 	# Fallback mime-type of new files, should be configurable in the GUI
 	# TO DO: Make it configurable in the GUI :)
-	unless ( $filename ) {
+	unless ($filename) {
 		return $self->perl_mime_type($text);
 	}
 

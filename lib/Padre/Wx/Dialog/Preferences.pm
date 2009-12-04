@@ -61,7 +61,9 @@ sub _external_tools_panel {
 	my ( $self, $treebook ) = @_;
 
 	my $config = Padre->ide->config;
-	my $table  = [
+
+	# TODO: Really needs a "browse" button.
+	my $table = [
 		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],

@@ -47,6 +47,7 @@ sub new {
 
 	# TO DO: Improve URL parsing
 	if ( $url !~ /ftp\:\/?\/?((.+?)(\:(.+?))?\@)?([a-z0-9\-\.]+)(\:(\d+))?(\/.+)$/i ) {
+
 		# URL parsing failed
 		# TO DO: Warning should go to a user popup not to the text console
 		$self->{error} = 'Unable to parse ' . $url;

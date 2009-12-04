@@ -283,21 +283,21 @@ sub refresh_top {
 	return 1; # This needs to be changed to match ->refresh, otherwise it breaks the menu
 
 	# Commented out temporarily to appease xt/critic.t
-#	my $perl = !!(
-#		   _INSTANCE( $current->document, 'Padre::Document::Perl' )
-#		or _INSTANCE( $current->project, 'Padre::Project::Perl' )
-#	);
-#
-#	# Add/Remove the Perl menu
-#	if ( $perl and not $menu ) {
-#		$self->wx->Insert( 4, $self->perl->wx,     Wx::gettext("&Perl") );
-#		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
-#	} elsif ( $menu and not $perl ) {
-#		$self->wx->Remove(5); # refactor
-#		$self->wx->Remove(4); # perl
-#	}
-#
-#	return 1;
+	#	my $perl = !!(
+	#		   _INSTANCE( $current->document, 'Padre::Document::Perl' )
+	#		or _INSTANCE( $current->project, 'Padre::Project::Perl' )
+	#	);
+	#
+	#	# Add/Remove the Perl menu
+	#	if ( $perl and not $menu ) {
+	#		$self->wx->Insert( 4, $self->perl->wx,     Wx::gettext("&Perl") );
+	#		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
+	#	} elsif ( $menu and not $perl ) {
+	#		$self->wx->Remove(5); # refactor
+	#		$self->wx->Remove(4); # perl
+	#	}
+	#
+	#	return 1;
 }
 
 1;

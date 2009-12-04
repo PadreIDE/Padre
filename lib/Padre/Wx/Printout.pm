@@ -3,8 +3,8 @@ package Padre::Wx::Printout;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx    ();
-use Wx::Print    ();
+use Padre::Wx ();
+use Wx::Print ();
 
 our $VERSION = '0.50';
 our @ISA     = 'Wx::Printout';

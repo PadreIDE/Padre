@@ -13,15 +13,15 @@ sub new {
 
 	# Create the object
 	my $self = bless {
-		main          => $main,
+		main => $main,
 
 		# Wx ->Update lock
 		update_depth  => 0,
 		update_locker => undef,
 
 		# Wx "Busy" lock
-		busy_depth    => 0,
-		busy_locker   => undef,
+		busy_depth  => 0,
+		busy_locker => undef,
 
 		# Padre ->refresh lock
 		refresh_depth  => 0,
@@ -31,9 +31,7 @@ sub new {
 
 sub lock {
 	my $self = shift;
-	return Padre::Lock->new(
-		map { $_ => 1 } @_
-	);
+	return Padre::Lock->new( map { $_ => 1 } @_ );
 }
 
 
@@ -46,6 +44,7 @@ sub lock {
 sub update_enable {
 	my $self = shift;
 	unless ( $self->{update_depth}++ ) {
+
 		# Locking for the first time
 		$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{main} );
 	}
@@ -55,6 +54,7 @@ sub update_enable {
 sub update_disable {
 	my $self = shift;
 	unless ( --$self->{update_depth} ) {
+
 		# Unlocked for the final time
 		$self->{update_locker} = undef;
 	}
@@ -64,6 +64,7 @@ sub update_disable {
 sub busy_enable {
 	my $self = shift;
 	unless ( $self->{busy_depth}++ ) {
+
 		# Locking for the first time
 		$self->{busy_locker} = Wx::WindowDisabler->new;
 	}
@@ -73,6 +74,7 @@ sub busy_enable {
 sub busy_disable {
 	my $self = shift;
 	unless ( --$self->{busy_depth} ) {
+
 		# Unlocked for the final time
 		$self->{busy_locker} = undef;
 	}

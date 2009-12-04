@@ -8,7 +8,8 @@ use Getopt::Long ();
 use Carp         ();
 
 local $| = 1;
-local $SIG{__DIE__} = $ENV{PADRE_DIE}
+local $SIG{__DIE__} =
+	$ENV{PADRE_DIE}
 	? sub { print STDERR Carp::longmess "\nDIE: @_\n" . ( "-" x 80 ) . "\n" }
 	: $SIG{__DIE__};
 
@@ -134,8 +135,8 @@ CODE
 		# Create Padre.desktop launcher on KDE/gnome
 		require Padre::Util;
 		my $filename = "$ENV{HOME}/Desktop/Padre.desktop";
-		my $logo    = Padre::Util::sharedir('icons/padre/64x64/logo.png');
-		my $content = <<"DESKTOP";
+		my $logo     = Padre::Util::sharedir('icons/padre/64x64/logo.png');
+		my $content  = <<"DESKTOP";
 [Desktop Entry]
 Name=Padre
 Comment=Padre - The Perl IDE

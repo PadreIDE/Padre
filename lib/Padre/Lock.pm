@@ -8,7 +8,7 @@ our $VERSION = '0.50';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Enable the locks
 	if ( $self->{update} ) {
@@ -22,6 +22,7 @@ sub new {
 }
 
 sub DESTROY {
+
 	# Disable the locks
 	if ( $_[0]->{update} ) {
 		$_[0]->{locker}->update_disable;

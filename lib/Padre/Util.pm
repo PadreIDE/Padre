@@ -316,7 +316,7 @@ sub find_perldiag_translations {
 		if ( opendir my $dh, $dir ) {
 			my @files = readdir $dh;
 			close $dh;
-			foreach my $lang ( @files ) {
+			foreach my $lang (@files) {
 				next if $lang eq '.';
 				next if $lang eq '..';
 				if ( -e File::Spec->catfile( $dir, $lang, 'perldiag.pod' ) ) {
@@ -426,7 +426,7 @@ sub parse_version {
 	open( my $fh, '<', $parsefile ) ## no critic (RequireBriefOpen)
 		or die "Could not open '$parsefile': $!";
 	my $inpod = 0;
-	while ( <$fh> ) {
+	while (<$fh>) {
 		$inpod = /^=(?!cut)/ ? 1 : /^=cut/ ? 0 : $inpod;
 		next if $inpod || /^\s*#/;
 		chop;
@@ -479,7 +479,7 @@ sub humanbytes {
 
 # Returns the memory currently used by this application:
 sub process_memory {
-	if ( Padre::Constant::UNIX ) {
+	if (Padre::Constant::UNIX) {
 		open my $meminfo, '<', '/proc/self/stat' or return;
 		my $rv = ( split( / /, <$meminfo> ) )[22];
 		close $meminfo;
