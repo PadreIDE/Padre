@@ -1,6 +1,6 @@
 Changes for Perl Application Development and Refactoring Environment
 
-0.51 To be released
+0.51 2009.12.04
     - Find all option showing all matches in bottom tab (CODE4PAY)
     - Improved FTP error handling (SEWI)
     - Open URLs from command line (SEWI)
