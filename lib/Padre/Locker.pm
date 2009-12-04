@@ -29,6 +29,20 @@ sub new {
 	}, $class;
 }
 
+sub lock {
+	my $self = shift;
+	return Padre::Lock->new(
+		map { $_ => 1 } @_
+	);
+}
+
+
+
+
+
+######################################################################
+# Locking Mechanism
+
 sub update_enable {
 	my $self = shift;
 	unless ( $self->{update_depth}++ ) {
