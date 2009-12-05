@@ -325,7 +325,7 @@ sub find_help_topic {
 			);
 
 			if ($token) {
-				print $token->class . "\n";
+				#print $token->class . "\n";
 				if ( $token->isa('PPI::Token::Symbol') ) {
 					if ( $token->content =~ /^[\$\@\%].+?$/ ) {
 						$topic = 'perldata';
