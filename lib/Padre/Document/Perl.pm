@@ -1688,6 +1688,40 @@ sub project_create_tagsfile {
 
 }
 
+sub find_help_topic {
+	my $self = shift;
+
+	my $editor = $self->editor;
+	my $pos    = $editor->GetCurrentPos;
+	
+	require PPI;
+	my $text = $editor->GetText;
+	my $doc  = PPI::Document->new( \$text );
+
+	# Find token under the cursor!
+	my $line       = $editor->LineFromPosition($pos);
+	my $line_start = $editor->PositionFromLine($line);
+	my $line_end   = $editor->GetLineEndPosition($line);
+	my $col        = $pos - $line_start;
+
+	require Padre::PPI;
+	my $token = Padre::PPI::find_token_at_location(
+		$doc, [ $line + 1, $col + 1 ],
+	);
+
+	if ($token) {
+		#print $token->class . "\n";
+		if ( $token->isa('PPI::Token::Symbol') ) {
+			if ( $token->content =~ /^[\$\@\%].+?$/ ) {
+				return 'perldata';
+			}
+		} elsif ( $token->isa('PPI::Token::Operator') ) {
+			return $token->content;
+		}
+	}
+
+	return;
+}
 
 
 1;

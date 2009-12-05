@@ -303,53 +303,26 @@ sub _search {
 sub find_help_topic {
 	my $self = shift;
 
-	my $topic = '';
 	my $doc   = Padre::Current->document;
-	if ($doc) {
+	return '' if not $doc;
+	
+	my $topic;
+	if ($doc->can('find_help_topic')) {
+		$topic = $doc->find_help_topic;
+	}
+
+	#fallback
+	unless ($topic) {
 		my $editor = $doc->editor;
 		my $pos    = $editor->GetCurrentPos;
-		if ( $doc->isa('Padre::Document::Perl') ) {
-			require PPI;
-			my $text = $editor->GetText;
-			my $doc  = PPI::Document->new( \$text );
 
-			# Find token under the cursor!
-			my $line       = $editor->LineFromPosition($pos);
-			my $line_start = $editor->PositionFromLine($line);
-			my $line_end   = $editor->GetLineEndPosition($line);
-			my $col        = $pos - $line_start;
-
-			require Padre::PPI;
-			my $token = Padre::PPI::find_token_at_location(
-				$doc, [ $line + 1, $col + 1 ],
+		# The selected/under the cursor word is a help topic
+		$topic = $editor->GetSelectedText;
+		if ( not $topic ) {
+			$topic = $editor->GetTextRange(
+				$editor->WordStartPosition( $pos, 1 ),
+				$editor->WordEndPosition( $pos, 1 )
 			);
-
-			if ($token) {
-				#print $token->class . "\n";
-				if ( $token->isa('PPI::Token::Symbol') ) {
-					if ( $token->content =~ /^[\$\@\%].+?$/ ) {
-						$topic = 'perldata';
-					}
-				} elsif ( $token->isa('PPI::Token::Operator') ) {
-					$topic = $token->content;
-				}
-			}
-
-		}
-
-
-		unless ($topic) {
-
-			#fallback
-
-			# The selected/under the cursor word is a help topic
-			$topic = $editor->GetSelectedText;
-			if ( not $topic ) {
-				$topic = $editor->GetTextRange(
-					$editor->WordStartPosition( $pos, 1 ),
-					$editor->WordEndPosition( $pos, 1 )
-				);
-			}
 		}
 	}
 
