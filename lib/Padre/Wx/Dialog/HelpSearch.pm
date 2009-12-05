@@ -288,8 +288,7 @@ sub _search {
 	}
 	return if not $self->_help_provider;
 	eval {
-		my @targets_index = @{ $self->_help_provider->help_list };
-		$self->_index( \@targets_index );
+		$self->_index( $self->_help_provider->help_list );
 	};
 	if ($@) {
 		warn "Error while calling help_list: $@\n";
@@ -429,6 +428,8 @@ This opens a dialog where you can search for help topics...
 
 Note: This used to be Perl 6 Help Dialog (in C<Padre::Plugin::Perl6>) and but it
 has been moved to Padre core.
+
+In order to setup a help system see L<Padre::HelpProvider>.
 
 =head1 AUTHOR
 
