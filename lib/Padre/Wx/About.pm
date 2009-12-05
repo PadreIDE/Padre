@@ -11,6 +11,7 @@ use Padre::Wx::HtmlWindow   ();
 use Padre::Wx::Icon         ();
 use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
+use PPI ();
 
 our $VERSION = '0.51';
 our @ISA     = 'Wx::Dialog';
@@ -329,6 +330,14 @@ sub _content_info {
         </td>
         <td>
         $Wx::Perl::ProcessStream::VERSION
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+        PPI
+        </td>
+        <td>
+        $PPI::VERSION
         </td>
       </tr>
       <tr>
