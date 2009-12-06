@@ -716,26 +716,85 @@ sub plugin_db {
 	return $object;
 }
 
+# Fire a event on all active plugins
+sub plugin_event {
+	my $self   = shift;
+	my $event = shift;
+
+	for my $module ( keys %{ $self->{plugins} } ) {
+
+# TODO: Re-enable the commented out error messages when the failing modules
+#       are fixed.
+
+		my $plugin = $self->{plugins}->{$module};
+		if ( ! ref($plugin)) {
+#			$self->_error($plugin,Wx::gettext('Not found in plugin list!'));
+			next;
+		}
+
+		my $object = $plugin->{object};
+		if ( ! ref($object)) {
+#			$self->_error($plugin,Wx::gettext('Plugin object missing!'));
+			next;
+		}
+
+		next unless $plugin->{status};
+		next unless $plugin->{status} eq 'enabled';
+
+		eval {
+			return if not $object->can($event);
+			$object->$event( @_ );
+		};
+		if ($@) {
+			$self->_error($plugin,sprintf(Wx::gettext('Plugin error on event %s: %s',$event,$@)));
+			next;
+		}
+	}
+	return 1;
+}
+
+# Show an error message
+sub _error {
+	my $self = shift;
+	my $plugin = shift || Wx::gettext('(core)');
+	my $text = shift || Wx::gettext('Unknown error');
+	
+	# Report detailed plugin error to console
+	my @callerinfo = caller(0);
+	my @callerinfo1 = caller(1);
+#	print STDERR 'Plugin '.$plugin. ' error at '. $callerinfo[1]. ' line '. $callerinfo[2]. 
+#			' in '. $callerinfo[0]. '::'. $callerinfo1[3]. ': '. $text."\n";
+	print STDERR 'Plugin ',$plugin,' error at ', $callerinfo[1]. ' line '. $callerinfo[2],
+		     ' in '. $callerinfo[0]. '::'. $callerinfo1[3], ': '. $text."\n";
+
+	# Report to user
+	my $main = Padre->ide->wx->main;
+	$main->error(sprintf(Wx::gettext('Plugin %s'),$plugin).': '.$text);
+}
+
 # enable all the plug-ins for a single editor
 sub editor_enable {
 	my $self   = shift;
 	my $editor = shift;
-	foreach my $module ( keys %{ $self->{plugins} } ) {
-		my $plugin = $self->{plugins}->{$module} or return;
-		my $object = $plugin->{object}           or return;
-		next unless $plugin->{status};
-		next unless $plugin->{status} eq 'enabled';
-		eval {
-			return if not $object->can('editor_enable');
-			$object->editor_enable( $editor, $editor->{Document} );
-		};
-		if ($@) {
-			warn $@;
 
-			# TO DO: report the plug-in error!
-		}
-	}
-	return;
+#	foreach my $module ( keys %{ $self->{plugins} } ) {
+#		my $plugin = $self->{plugins}->{$module} or return;
+#		my $object = $plugin->{object}           or return;
+#		next unless $plugin->{status};
+#		next unless $plugin->{status} eq 'enabled';
+#		eval {
+#			return if not $object->can('editor_enable');
+#			$object->editor_enable( $editor, $editor->{Document} );
+#		};
+#		if ($@) {
+#			warn $@;
+#
+#			# TO DO: report the plug-in error!
+#		}
+#	}
+#	return;
+
+	return $self->plugin_event('editor_enable',$editor, $editor->{Document});
 }
 
 sub enable_editors_for_all {

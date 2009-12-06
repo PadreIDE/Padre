@@ -2691,6 +2691,9 @@ sub setup_editors {
 	# user to actually perceive the file has been opened.
 	$self->refresh;
 
+	my $manager = Padre->ide->plugin_manager;
+	$manager->plugin_event('editor_changed');
+
 	return;
 }
 
@@ -2729,6 +2732,8 @@ exist, create an empty file before opening it.
 sub setup_editor {
 	my ( $self, $file, $skip_update_session ) = @_;
 	my $config = $self->config;
+
+	my $manager = Padre->ide->plugin_manager;
 
 	TRACE( "setup_editor called for '" . ( $file || '' ) . "'" ) if DEBUG;
 
@@ -2834,6 +2839,7 @@ sub setup_editor {
 	$doc->restore_cursor_position;
 
 	$self->update_last_session unless $skip_update_session;
+	$manager->plugin_event('editor_changed') unless $skip_update_session;
 
 	# Refresh the menu (to include or remove document dependent menu items)
 	$self->menu->refresh;
@@ -3600,6 +3606,8 @@ sub close_all {
 	my $skip  = shift;
 	my $guard = $self->freezer;
 
+	my $manager = Padre->ide->plugin_manager;
+
 	$self->ide->{session_autosave} and $self->save_current_session;
 
 	# Remove current session ID from IDE object
@@ -3625,6 +3633,8 @@ sub close_all {
 
 	# Recalculate window title
 	$self->set_title;
+
+	$manager->plugin_event('editor_changed');
 
 	return 1;
 }
@@ -3678,9 +3688,15 @@ sub on_nth_pane {
 	my $id   = shift;
 	my $page = $self->notebook->GetPage($id);
 	if ($page) {
+		
+		my $manager = Padre->ide->plugin_manager;
+		
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
 		$page->{Document}->set_indentation_style(); # TO DO: encapsulation?
+		
+		$manager->plugin_event('editor_changed');
+		
 		return 1;
 	}
 	return;
