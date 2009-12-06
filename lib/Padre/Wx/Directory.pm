@@ -96,15 +96,13 @@ sub refresh {
 	my $doc = $current->document;
 	my $dir;
 
-	# Disabled for release
-	#	if ( defined($doc) ) {
-	#		$dir = $doc->project_dir;
-	#		$self->{file} = $doc->{file};
-	#	} else {
-	$dir = $self->main->config->default_projects_directory;
-
-	#		delete $self->{file};
-	#	}
+	if ( defined($doc) ) {
+		$dir = $doc->project_dir;
+		$self->{file} = $doc->{file};
+	} else {
+		$dir = $self->main->config->default_projects_directory;
+		delete $self->{file};
+	}
 
 	return unless $dir;
 
