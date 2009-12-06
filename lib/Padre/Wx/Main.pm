@@ -3688,15 +3688,15 @@ sub on_nth_pane {
 	my $id   = shift;
 	my $page = $self->notebook->GetPage($id);
 	if ($page) {
-		
+
 		my $manager = $self->{ide}->plugin_manager;
-		
+
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
 		$page->{Document}->set_indentation_style(); # TO DO: encapsulation?
-		
+
 		$manager->plugin_event('editor_changed');
-		
+
 		return 1;
 	}
 	return;

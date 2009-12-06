@@ -1693,7 +1693,7 @@ sub find_help_topic {
 
 	my $editor = $self->editor;
 	my $pos    = $editor->GetCurrentPos;
-	
+
 	require PPI;
 	my $text = $editor->GetText;
 	my $doc  = PPI::Document->new( \$text );
@@ -1710,6 +1710,7 @@ sub find_help_topic {
 	);
 
 	if ($token) {
+
 		#print $token->class . "\n";
 		if ( $token->isa('PPI::Token::Symbol') ) {
 			if ( $token->content =~ /^[\$\@\%].+?$/ ) {

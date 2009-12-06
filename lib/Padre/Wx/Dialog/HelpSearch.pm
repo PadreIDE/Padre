@@ -287,9 +287,7 @@ sub _search {
 		}
 	}
 	return if not $self->_help_provider;
-	eval {
-		$self->_index( $self->_help_provider->help_list );
-	};
+	eval { $self->_index( $self->_help_provider->help_list ); };
 	if ($@) {
 		warn "Error while calling help_list: $@\n";
 	}
@@ -303,11 +301,11 @@ sub _search {
 sub find_help_topic {
 	my $self = shift;
 
-	my $doc   = Padre::Current->document;
+	my $doc = Padre::Current->document;
 	return '' if not $doc;
-	
+
 	my $topic;
-	if ($doc->can('find_help_topic')) {
+	if ( $doc->can('find_help_topic') ) {
 		$topic = $doc->find_help_topic;
 	}
 
