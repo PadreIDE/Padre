@@ -9,6 +9,7 @@ use Padre::Search ();
 use Padre::Current qw{_CURRENT};
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
+use Padre::Current();
 
 our $VERSION = '0.51';
 our @ISA     = 'Padre::Wx::Menu';
@@ -94,6 +95,8 @@ sub new {
 		'search.quick_menu_access',
 	);
 
+	$self->refresh;
+
 	return $self;
 }
 
@@ -105,7 +108,8 @@ sub title {
 
 sub refresh {
 	my $self = shift;
-	my $doc = _CURRENT(@_)->document ? 1 : 0;
+	my $doc = Padre::Current->editor ? 1 : 0;
+
 	$self->{find}->Enable($doc);
 	$self->{find_next}->Enable($doc);
 	$self->{find_previous}->Enable($doc);

@@ -5,6 +5,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Show the svn revision of Padre's start time at the title bar&about dialog,
       not the current one (SEWI)
     - Fixed: Padre command line arguments work again when using dev.pl (SEWI)
+    - Fixed: Menu options get disabled/enabled as needed again (SEWI)
 
 0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)
