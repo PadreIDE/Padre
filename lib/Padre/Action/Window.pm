@@ -27,9 +27,29 @@ sub new {
 
 	# File Navigation
 	Padre::Action->new(
+		name        => 'window.last_visited_file',
+		label       => Wx::gettext('Last Visited File'),
+		shortcut    => 'Ctrl-Tab',
+		need_editor => 1,
+		menu_event  => sub {
+			Padre::Wx::Main::on_last_visited_pane(@_);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'window.oldest_visited_file',
+		label       => Wx::gettext('Oldest Visited File'),
+		shortcut    => 'Ctrl-Shift-Tab',
+		need_editor => 1,
+		menu_event  => sub {
+			Padre::Wx::Main::on_oldest_visited_pane(@_);
+		},
+	);
+
+	Padre::Action->new(
 		name        => 'window.next_file',
 		label       => Wx::gettext('Next File'),
-		shortcut    => 'Ctrl-TAB',
+		shortcut    => 'Alt-Right',
 		need_editor => 1,
 		menu_event  => sub {
 			Padre::Wx::Main::on_next_pane(@_);
@@ -39,15 +59,17 @@ sub new {
 	Padre::Action->new(
 		name        => 'window.previous_file',
 		label       => Wx::gettext('Previous File'),
-		shortcut    => 'Ctrl-Shift-TAB',
+		shortcut    => 'Alt-Left',
 		need_editor => 1,
 		menu_event  => sub {
 			Padre::Wx::Main::on_prev_pane(@_);
 		},
 	);
 
+	# TODO: Remove this and the menu option as soon as #750 is fixed
+	#       as it's the same like Ctrl-Tab
 	Padre::Action->new(
-		name        => 'window.last_visited_file',
+		name        => 'window.last_visited_file_old',
 		label       => Wx::gettext('Last Visited File'),
 		shortcut    => 'Ctrl-Shift-P',
 		need_editor => 1,

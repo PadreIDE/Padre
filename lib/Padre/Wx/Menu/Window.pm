@@ -27,6 +27,16 @@ sub new {
 	$self->{alt}  = [];
 
 	# File Navigation
+	$self->{window_last_visited_file} = $self->add_menu_action(
+		$self,
+		'window.last_visited_file',
+	);
+
+	$self->{window_oldest_visited_file} = $self->add_menu_action(
+		$self,
+		'window.oldest_visited_file',
+	);
+
 	$self->{window_next_file} = $self->add_menu_action(
 		$self,
 		'window.next_file',
@@ -37,9 +47,11 @@ sub new {
 		'window.previous_file',
 	);
 
-	$self->{window_last_visited_file} = $self->add_menu_action(
+	# TODO: Remove this and the menu option as soon as #750 is fixed
+	#       as it's the same like Ctrl-Tab
+	$self->add_menu_action(
 		$self,
-		'window.last_visited_file',
+		'window.last_visited_file_old',
 	);
 
 	$self->{window_right_click} = $self->add_menu_action(
