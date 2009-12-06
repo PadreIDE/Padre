@@ -35,7 +35,7 @@ use File::Temp                    ();
 use List::Util                    ();
 use Scalar::Util                  ();
 use Params::Util                  ();
-use Time::HiRes ();
+use Time::HiRes                   ();
 use Padre::Action                 ();
 use Padre::Constant               ();
 use Padre::Util                   ();
@@ -4869,15 +4869,15 @@ sub on_last_visited_pane {
 
 		# This works, but isn't perfect, improve if you want!
 		$self->{last_visited_pane_depth} = -1
-		 if (!defined($self->{last_visited_pane_time})) or
-		    $self->{last_visited_pane_time} < (Time::HiRes::time() - 1);
+			if ( !defined( $self->{last_visited_pane_time} ) )
+			or $self->{last_visited_pane_time} < ( Time::HiRes::time() - 1 );
 
 		@$history[ -1, -2 ] = @$history[ -2, -1 ];
 		foreach my $i ( $self->pageids ) {
 			my $editor = $_[0]->notebook->GetPage($i);
-			if ( Scalar::Util::refaddr($editor) eq $history->[$self->{last_visited_pane_depth}] ) {
+			if ( Scalar::Util::refaddr($editor) eq $history->[ $self->{last_visited_pane_depth} ] ) {
 				$self->notebook->SetSelection($i);
-				
+
 				--$self->{last_visited_pane_depth};
 				$self->{last_visited_pane_time} = Time::HiRes::time();
 				last;
@@ -4902,21 +4902,22 @@ Put focus on tab visited the longest time ago. No return value.
 
 sub on_oldest_visited_pane {
 	my ( $self, $event ) = @_;
-	
+
 	my $history = $self->{page_history};
-	
+
 	if ( @$history >= 2 ) {
+
 		# This works, but isn't perfect, improve if you want!
 		$self->{oldest_visited_pane_depth} = 0
-		 if (!defined($self->{oldest_visited_pane_time})) or
-		    $self->{oldest_visited_pane_time} < (Time::HiRes::time() - 1);
+			if ( !defined( $self->{oldest_visited_pane_time} ) )
+			or $self->{oldest_visited_pane_time} < ( Time::HiRes::time() - 1 );
 
 		@$history[ -1, -2 ] = @$history[ -2, -1 ];
 		foreach my $i ( $self->pageids ) {
 			my $editor = $_[0]->notebook->GetPage($i);
-			if ( Scalar::Util::refaddr($editor) eq $history->[$self->{oldest_visited_pane_depth}] ) {
+			if ( Scalar::Util::refaddr($editor) eq $history->[ $self->{oldest_visited_pane_depth} ] ) {
 				$self->notebook->SetSelection($i);
-				
+
 				++$self->{last_visited_pane_depth};
 				$self->{oldest_visited_pane_time} = Time::HiRes::time();
 				last;
@@ -4926,7 +4927,6 @@ sub on_oldest_visited_pane {
 		# Partial refresh
 		$self->refresh_status( $self->current );
 		$self->refresh_toolbar( $self->current );
-	}
 	}
 }
 
