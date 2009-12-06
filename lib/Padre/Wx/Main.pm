@@ -2691,7 +2691,7 @@ sub setup_editors {
 	# user to actually perceive the file has been opened.
 	$self->refresh;
 
-	my $manager = Padre->ide->plugin_manager;
+	my $manager = $self->{ide}->plugin_manager;
 	$manager->plugin_event('editor_changed');
 
 	return;
@@ -2733,7 +2733,7 @@ sub setup_editor {
 	my ( $self, $file, $skip_update_session ) = @_;
 	my $config = $self->config;
 
-	my $manager = Padre->ide->plugin_manager;
+	my $manager = $self->{ide}->plugin_manager;
 
 	TRACE( "setup_editor called for '" . ( $file || '' ) . "'" ) if DEBUG;
 
@@ -3606,7 +3606,7 @@ sub close_all {
 	my $skip  = shift;
 	my $guard = $self->freezer;
 
-	my $manager = Padre->ide->plugin_manager;
+	my $manager = $self->{ide}->plugin_manager;
 
 	$self->ide->{session_autosave} and $self->save_current_session;
 
@@ -3689,7 +3689,7 @@ sub on_nth_pane {
 	my $page = $self->notebook->GetPage($id);
 	if ($page) {
 		
-		my $manager = Padre->ide->plugin_manager;
+		my $manager = $self->{ide}->plugin_manager;
 		
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
