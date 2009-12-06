@@ -3,7 +3,7 @@ Changes for Perl Application Development and Refactoring Environment
 0.52 To Be Released
 
 
-0.51 2009.12.04
+0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)
     - Improved FTP error handling (SEWI)
     - Open URLs from command line (SEWI)
@@ -24,7 +24,6 @@ Changes for Perl Application Development and Refactoring Environment
     - Tests which are not needed for end-user installation now in xt (ADAMK)
     - Added a test for actions (SEWI)
     - Re-enabled the beginner error check tests (SEWI)
-    - Added missing File::Slurp dependency exposed by DMG installer (ADAMK)
     - Better focus transitions during search/replace, which should make
       them easier to work with quickly (ADAMK)
     - Rolled back function list improvements that were causing regressions (ADAMK)
