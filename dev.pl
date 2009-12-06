@@ -20,7 +20,7 @@ BEGIN {
 	$DIE     = 0;
 	$PROFILE = 0;
 	$PLUGINS = 0;
-	$USAGE = 0;
+	$USAGE   = 0;
 	Getopt::Long::GetOptions(
 		'usage|help' => \$USAGE,
 		'debug|d'    => \$DEBUG,
@@ -90,11 +90,11 @@ if ($PLUGINS) {
 
 push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 
-push @cmd,'--help' if $USAGE;
+push @cmd, '--help' if $USAGE;
 
-$DEBUG and print "Running ".join(' ',@cmd)."\n";
+$DEBUG and print "Running " . join( ' ', @cmd ) . "\n";
 
-system( @cmd);
+system(@cmd);
 
 sub vmsgfmt {
 	msgfmt(

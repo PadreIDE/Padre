@@ -150,13 +150,14 @@ sub refresh {
 
 			# a fast skip if there is nothing to do
 			# Note: $count (and Wx indices) start at 0, but the Count is a count
-				if ($count < $self->wx->GetMenuCount
-					and defined( $self->{items}->[$count] )
-					and defined( $self->{$obj} )
-					and ( $self->{items}->[$count] eq $self->{$obj} )) {
-					$self->{$obj}->refresh($current);
-					next;
-				}
+			if (    $count < $self->wx->GetMenuCount
+				and defined( $self->{items}->[$count] )
+				and defined( $self->{$obj} )
+				and ( $self->{items}->[$count] eq $self->{$obj} ) )
+			{
+				$self->{$obj}->refresh($current);
+				next;
+			}
 
 			# It seems that every submenu-object could be attached only once
 			# even if it's removed lateron, so we need to create a new object
