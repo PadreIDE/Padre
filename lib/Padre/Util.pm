@@ -141,6 +141,10 @@ sub get_matches {
 	my @matches;
 	while ( $text =~ /$regex/mg ) {
 		my $e = pos($text);
+		if (!defined($1)) {
+			print STDERR 'WARNING ('.join(",",caller(0))."): $regex has no \$1 match\n";
+			next;
+		}
 		my $s = $e - length($1);
 		push @matches, [ $s, $e ];
 	}
