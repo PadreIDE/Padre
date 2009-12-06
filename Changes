@@ -1,7 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.52 To Be Released
-
+    - Show the svn revision of Padre's start time at the title bar&about dialog,
+      not the current one (SEWI)
 
 0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)

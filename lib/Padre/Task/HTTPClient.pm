@@ -4,6 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 
+use Padre::Constant;
+
 # Use all modules which may provide services for us:
 
 our $VERSION = '0.51';
@@ -46,7 +48,7 @@ sub new {
 	return if ( !defined( $args{URL} ) ) or ( $args{URL} eq '' );
 
 	# Prepare information
-	$args{headers}->{'X-Padre'} ||= 'Padre version ' . $VERSION . ' ' . Padre::Util::revision();
+	$args{headers}->{'X-Padre'} ||= 'Padre version ' . $VERSION . ' ' . Padre::Constant::PADRE_REVISION;
 	$args{method} ||= 'GET';
 
 	my $self;

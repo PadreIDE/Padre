@@ -5184,7 +5184,7 @@ sub set_title {
 	$self->{title} = 'Padre ' . $Padre::VERSION
 		if !defined( $self->{title} );
 
-	my $revision = Padre::Util::revision();
+	my $revision = Padre::Constant::PADRE_REVISION;
 	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
 		if defined($revision);
 

@@ -495,7 +495,7 @@ sub process_memory {
 	return;
 }
 
-# TO DO: A much better variant would be a constant set by svn.
+# TODO: A much better variant would be a constant set by svn.
 sub revision {
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
