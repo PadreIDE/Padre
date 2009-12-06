@@ -9,6 +9,7 @@ use Carp          ();
 use File::Path    ();
 use File::Spec    ();
 use File::HomeDir ();
+
 #use Padre::Util   ();
 
 our $VERSION = '0.51';
@@ -124,6 +125,7 @@ unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
 # This needs to be a pseudo constant as it requires Padre::Util which
 # requires Padre::Constant (this module).
 sub PADRE_REVISION {
+
 	# Get and keep the revision at the first call of this pseudo-constant
 	# (usually at Padre start)
 	require Padre::Util;
