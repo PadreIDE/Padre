@@ -13,8 +13,7 @@ use Config;
 
 # Collect options early
 use Getopt::Long ();
-use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE
-            $HOME $SESSION $DESKTOP $VERSION $ACTIONQUEUE};
+use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE};
 
 BEGIN {
 	$DEBUG   = 0;
@@ -32,12 +31,6 @@ BEGIN {
 		'die'     => \$DIE,
 		'profile' => \$PROFILE,
 		'a'       => \$PLUGINS,
-		# Padre options
-		'home=s'        => \$HOME,
-		'session=s'     => \$SESSION,
-		'desktop'       => \$DESKTOP,
-		'version'       => \$VERSION,
-		'actionqueue=s' => \$ACTIONQUEUE,
 	);
 }
 
@@ -95,15 +88,9 @@ if ($PLUGINS) {
 	}
 }
 
-my @padre_argv;
-push @padre_argv,'--home',$HOME if defined($HOME);
-push @padre_argv,'--session',$SESSION if defined($SESSION);
-push @padre_argv,'--actionqueue',$ACTIONQUEUE if defined($ACTIONQUEUE);
-push @padre_argv,'--desktop' if $DESKTOP;
-push @padre_argv,'--version' if $VERSION;
-push @padre_argv,'--usage' if $USAGE;
+push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 
-push @cmd, qq[$FindBin::Bin/script/padre], @padre_argv,@ARGV;
+push @cmd,'--help' if $USAGE;
 
 $DEBUG and print "Running ".join(' ',@cmd)."\n";
 
@@ -135,6 +122,9 @@ Usage: $0
         --die  add DIE handler
 
        LIST OF FILES    list of files to open
+
+The following Padre options are accepted if you put a -- between
+$0 and Padre options (like "$0 --die -- --version"):
 
 END_USAGE
 }
