@@ -13,15 +13,17 @@ use Config;
 
 # Collect options early
 use Getopt::Long ();
-use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS};
+use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE
+            $HOME $SESSION $DESKTOP $VERSION $ACTIONQUEUE};
 
 BEGIN {
 	$DEBUG   = 0;
 	$DIE     = 0;
 	$PROFILE = 0;
 	$PLUGINS = 0;
+	$USAGE = 0;
 	Getopt::Long::GetOptions(
-		'usage|help' => sub { usage() },
+		'usage|help' => \$USAGE,
 		'debug|d'    => \$DEBUG,
 		'trace'      => sub {
 			no warnings;
@@ -30,8 +32,16 @@ BEGIN {
 		'die'     => \$DIE,
 		'profile' => \$PROFILE,
 		'a'       => \$PLUGINS,
+		# Padre options
+		'home=s'        => \$HOME,
+		'session=s'     => \$SESSION,
+		'desktop'       => \$DESKTOP,
+		'version'       => \$VERSION,
+		'actionqueue=s' => \$ACTIONQUEUE,
 	);
 }
+
+$USAGE and usage();
 
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
@@ -85,7 +95,19 @@ if ($PLUGINS) {
 	}
 }
 
-system( @cmd, qq[$FindBin::Bin/script/padre], @ARGV );
+my @padre_argv;
+push @padre_argv,'--home',$HOME if defined($HOME);
+push @padre_argv,'--session',$SESSION if defined($SESSION);
+push @padre_argv,'--actionqueue',$ACTIONQUEUE if defined($ACTIONQUEUE);
+push @padre_argv,'--desktop' if $DESKTOP;
+push @padre_argv,'--version' if $VERSION;
+push @padre_argv,'--usage' if $USAGE;
+
+push @cmd, qq[$FindBin::Bin/script/padre], @padre_argv,@ARGV;
+
+$DEBUG and print "Running ".join(' ',@cmd)."\n";
+
+system( @cmd);
 
 sub vmsgfmt {
 	msgfmt(
@@ -113,7 +135,7 @@ Usage: $0
         --die  add DIE handler
 
        LIST OF FILES    list of files to open
+
 END_USAGE
-	exit 0;
 }
 

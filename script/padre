@@ -35,7 +35,7 @@ my $SESSION     = undef;
 my $DESKTOP     = undef;
 my $ACTIONQUEUE = undef;
 my $getopt      = Getopt::Long::GetOptions(
-	'help'          => \$USAGE,
+	'help|usage'    => \$USAGE,
 	'home=s'        => \$HOME,
 	'session=s'     => \$SESSION,
 	'desktop'       => \$DESKTOP,
