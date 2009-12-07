@@ -179,7 +179,7 @@ sub browse_mtime {
 	my $self     = shift;
 	my $filename = shift;
 
-	return $self->{_ftp}->mdtm( $filename );
+	return $self->{_ftp}->mdtm($filename);
 }
 
 sub exists {
