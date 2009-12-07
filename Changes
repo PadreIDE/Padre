@@ -7,7 +7,6 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed: Padre command line arguments work again when using dev.pl (SEWI)
     - Fixed: Menu options get disabled/enabled as needed again, this also
       fixed ticket #742, #762, #764 and #771 (SEWI)
-    - Fixed: Ticket #771: Plugin menu items show up again (SEWI)
     - Alt-Left and Alt-Right switch to the neighbor panels which Ctrl-Tab
       uses the last-used order (SEWI)
 
