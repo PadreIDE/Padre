@@ -330,6 +330,21 @@ sub highlighting_mime_types {
 
 =head2 C<event_on_context_menu>
 
+  sub event_on_context_menu {
+    my ($self, $document, $editor, $menu, $event) = (@_);
+    
+    # create our own menu section
+    $menu->AppendSeparator;
+
+    my $item = $menu->Append( -1, _T('Mutley, do something') );
+    Wx::Event::EVT_MENU(
+        $self->main,
+        $item,
+        sub { Wx::MessageBox('sh sh sh sh', 'Mutley', Wx::wxOK, shift) },
+    );
+  }
+
+
 If implemented in a plug-in, this method will be called when a
 context menu is about to be displayed either because the user
 pressed the right mouse button in the editor window (C<Wx::MouseEvent>)
@@ -342,7 +357,13 @@ Parameters retrieved are the objects for the document, the editor, the
 context menu (C<Wx::Menu>) and the event.
 
 Have a look at the implementation in L<Padre::Document::Perl> for
-an example.
+a more thorough example, including how to manipulate the active document.
+
+=cut
+
+# this method is only implemented in the plug-in children
+
+=pod
 
 =head2 C<plugin_enable>
 
