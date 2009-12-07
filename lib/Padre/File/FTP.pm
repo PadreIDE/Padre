@@ -175,6 +175,13 @@ sub mtime {
 	return $self->{_cached_mtime_value};
 }
 
+sub browse_mtime {
+	my $self     = shift;
+	my $filename = shift;
+
+	return $self->{_ftp}->mdtm( $filename );
+}
+
 sub exists {
 	my $self = shift;
 	return if !defined( $self->{_ftp} );
