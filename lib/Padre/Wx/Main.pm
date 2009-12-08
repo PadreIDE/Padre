@@ -5242,6 +5242,9 @@ sub set_title {
 
 	# Push the title to the window
 	$self->SetTitle( $self->{title} );
+	
+	# Push the title to the process list for better identification
+	$0 = $self->{title};
 }
 
 =pod
