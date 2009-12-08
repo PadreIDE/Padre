@@ -218,4 +218,18 @@ sub _path_version {
 	ExtUtils::MM_Unix->parse_version($_[0]);
 }
 
+sub show_debuginfo {
+	my $self      = shift;
+
+	$self->postamble(<<"END_MAKEFILE");
+# --- Padre section:
+
+versioninfo ::
+\t\$(NOECHO) \$(PERL) -MWx -MWx::Perl::ProcessStream -le 'print "Perl \$\$^V"; print "Wx ".\$\$Wx::VERSION; print Wx::wxVERSION_STRING(); print "ProcessStream ".\$\$Wx::Perl::ProcessStream::VERSION;'
+
+END_MAKEFILE
+
+}
+
+
 1;

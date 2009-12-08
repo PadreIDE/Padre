@@ -238,4 +238,6 @@ check_wx_version;
 # Add the make exe target
 setup_padre;
 
+show_debuginfo;
+
 WriteAll;
