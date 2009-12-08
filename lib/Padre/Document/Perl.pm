@@ -834,6 +834,7 @@ EOC
 		#$dumper->print;
 		require PPIx::EditorTools;
 		my $token     = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
+		return unless $token;
 		my $statement = $token->statement();
 		my $parent    = $statement;
 
