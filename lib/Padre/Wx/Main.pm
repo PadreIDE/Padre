@@ -5336,7 +5336,7 @@ sub set_title {
 	$self->SetTitle( $self->{title} );
 	
 	# Push the title to the process list for better identification
-	$0 = $self->{title};
+	$0 = $self->{title}; ## no critic (RequireLocalizedPunctuationVars)
 }
 
 =pod
