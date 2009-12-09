@@ -9,6 +9,7 @@ Changes for Perl Application Development and Refactoring Environment
       fixed ticket #742, #762, #764 and #771 (SEWI)
     - Alt-Left and Alt-Right switch to the neighbor panels which Ctrl-Tab
       uses the last-used order (SEWI)
+    - Fix: Double click on the function list jumps to the sub (again) now (SEWI)
     - Added "Save Intution" to the File menu, to automatically save a new
       file wherever Padre is confident it is appropriate (ADAMK)
 
