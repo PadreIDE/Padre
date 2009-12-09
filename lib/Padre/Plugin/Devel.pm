@@ -100,8 +100,6 @@ sub menu_plugins_simple {
 sub dump_expression {
 	my $self = shift;
 
-	$DB::single = 1;
-
 	# Get the expression
 	require Padre::Wx::History::TextEntryDialog;
 	my $dialog = Padre::Wx::History::TextEntryDialog->new(
