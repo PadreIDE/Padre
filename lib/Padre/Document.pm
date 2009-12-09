@@ -1177,12 +1177,8 @@ These directory names do not need to exist, they only represent intent.
 sub guess_subpath {
 	my $self = shift;
 
-	# IF the file already has an existing name, guess that
-	my $filename = $self->filename;
-
-	$DB::single = 1;
-
-	1;
+	# For an unknown document type, we cannot make any reasonable guess
+	return ();
 }
 
 # Abstract methods, each subclass should implement it

@@ -259,6 +259,18 @@ sub new {
 		},
 	);
 
+	$self->{save_as} = $self->add_menu_item(
+		$self,
+		name        => 'file.save_intuition',
+		id          => -1,
+		need_editor => 1,
+		label       => Wx::gettext('Save Intuition'),
+		shortcut    => 'Ctrl-Shift-S',
+		menu_event  => sub {
+			$_[0]->on_save_intuition;
+		},
+	);
+
 	$self->{save_all} = $self->add_menu_item(
 		$self,
 		name        => 'file.save_all',

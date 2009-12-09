@@ -163,7 +163,6 @@ sub side {
 
 # Moves the panel to the other side
 sub move {
-	$DB::single = 1;
 	my $self   = shift;
 	my $config = $self->main->config;
 	my $side   = $config->main_directory_panel;

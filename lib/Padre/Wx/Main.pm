@@ -3291,6 +3291,38 @@ sub on_reload_all {
 
 =pod
 
+=head3 C<on_save>
+
+    my $success = $main->on_save;
+
+Try to save current document. Prompt user for a file name if document was
+new (see C<on_save_as()> above). Return true if document has been saved,
+false otherwise.
+
+=cut
+
+sub on_save {
+	my $self = shift;
+	my $document = shift || $self->current->document;
+	return unless $document;
+
+	#print $document->filename, "\n";
+
+	my $pageid = $self->find_id_of_editor( $document->editor );
+	if ( $document->is_new ) {
+
+		# move focus to document to be saved
+		$self->on_nth_pane($pageid);
+		return $self->on_save_as;
+	} elsif ( $document->is_modified ) {
+		return $self->_save_buffer($pageid);
+	}
+
+	return;
+}
+
+=pod
+
 =head3 C<on_save_as>
 
     my $was_saved = $main->on_save_as;
@@ -3399,34 +3431,94 @@ sub on_save_as {
 
 =pod
 
-=head3 C<on_save>
+=head3 C<on_save_intuition>
 
-    my $success = $main->on_save;
+    my $success = $main->on_save_intuition;
 
-Try to save current document. Prompt user for a file name if document was
-new (see C<on_save_as()> above). Return true if document has been saved,
-false otherwise.
+Try to automatically determine an appropriate file name and save it,
+based entirely on the content of the file.
+
+Only do this for new documents, otherwise behave like a regular save.
 
 =cut
 
-sub on_save {
-	my $self = shift;
-	my $document = shift || $self->current->document;
-	return unless $document;
+sub on_save_intuition {
+	my $self     = shift;
+	my $document = $self->current->document or return;
 
-	#print $document->filename, "\n";
-
-	my $pageid = $self->find_id_of_editor( $document->editor );
-	if ( $document->is_new ) {
-
-		# move focus to document to be saved
-		$self->on_nth_pane($pageid);
-		return $self->on_save_as;
-	} elsif ( $document->is_modified ) {
-		return $self->_save_buffer($pageid);
+	# We only use Save Intuition for new files
+	unless ( $document->is_new ) {
+		if ( $document->is_saved ) {
+			# Nothing to do
+			return;
+		} else {
+			# Regular save
+			return $self->on_save(@_);
+		}
 	}
 
-	return;
+	# Empty files get done via the normal save
+	if ( $document->is_unused ) {
+		return $self->on_save_as(@_);
+	}
+
+	# We need both a guessed path and file name to do anything
+	my @subpath  = $document->guess_subpath;
+	my $filename = $document->guess_filename;
+	unless ( @subpath and defined Params::Util::_STRING($filename) ) {
+		# Cannot come up with a suitable guess
+		return $self->on_save_as(@_);
+	}
+
+	# Convert the guesses to full paths
+	my $dir  = File::Spec->catdir(  $document->project_dir, @subpath );
+	my $path = File::Spec->catfile( $dir, $filename );
+	if ( -f $path ) {
+		# Potential collision, error and fall back
+		$self->error(Wx::gettext('File already exists'));
+		return $self->on_save_as(@_);
+	}
+
+	# Create the directory, if needed
+	unless ( -d $dir ) {
+		my $error = [ ];
+		File::Path::make_path( $dir, {
+			verbose => 0,
+			error   => \$error,
+		} );
+		if ( @$error ) {
+			$self->error(Wx::gettext("Failed to create path '$dir'"));
+			return $self->on_save_as(@_);
+		}
+	}
+
+	# Save the file
+	$document->_set_filename($path);
+	$document->save_file;
+	$document->set_newline_type(Padre::Constant::NEWLINE);
+
+	# Laborious copy of the above.
+	# Generalise it later
+	my $pageid = $self->notebook->GetSelection;
+	$self->_save_buffer($pageid);
+
+	$document->set_mimetype( $document->guess_mimetype );
+	$document->editor->padre_setup;
+	$document->rebless;
+	$document->colourize;
+
+	$filename = $document->{file}->filename if defined( $document->{file} );
+	if ( defined($filename) ) {
+		Padre::DB::History->create(
+			type => 'files',
+			name => $filename,
+		);
+		$self->menu->file->update_recentfiles;
+	}
+
+	$self->refresh;
+
+	return 1;
 }
 
 =pod
