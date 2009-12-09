@@ -125,6 +125,14 @@ sub refresh {
 			next unless $main->current->document->can('menu');
 			next unless defined( $main->current->document->menu );
 			$item = $main->current->document->menu;
+			if (defined($main->current->document->{menu})){
+				$item = [$item] unless ref($item) eq 'ARRAY';
+				if (ref($main->current->document->{menu}) ne 'ARRAY') {
+					push @{$item},$main->current->document->{menu};
+				} else {
+					push @{$item},@{$main->current->document->{menu}};
+				}
+			}
 		}
 
 		if ( ref($item) eq 'ARRAY' ) {
