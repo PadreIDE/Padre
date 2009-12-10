@@ -15,7 +15,7 @@ Padre::Debug - Compile-time debugging library for Padre
   
   use Padre;
   
-  # In each LP2:: class
+  # In each Padre::Foo class
   use Padre::Debug;
   
   sub method {
