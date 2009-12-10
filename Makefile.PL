@@ -24,7 +24,11 @@ BEGIN {
 }
 
 
-# Configure-time dependencies MUST be done first
+# Configure-time dependencies MUST be done first.
+# This version ensures that we have a new MakeMaker that
+# WON'T load modules to determine the version.
+# This _SHOULD_ theoretically make the "require Test::NoWarnings".
+# stuff above here no longer needed.
 configure_requires 'ExtUtils::MakeMaker' => '6.52';
 
 # the above line does not seem to force an upgrade
@@ -116,6 +120,7 @@ requires 'PPI'                     => '1.205';
 requires 'PPIx::EditorTools'       => '0.09';
 requires 'Probe::Perl'             => '0.01';
 requires 'Storable'                => '2.15';
+requires 'Template::Tiny'          => '0.02';
 requires 'Term::ReadLine'          => 0;
 requires 'Text::Balanced'          => 0;
 requires 'Text::Diff'              => '0.35';
