@@ -2,7 +2,7 @@ package Padre::Wx::Menubar;
 
 use 5.008;
 use strict;
-use warnings;
+#use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Current qw{_CURRENT};
 use Padre::Util             ();
@@ -89,12 +89,13 @@ sub new {
 
 	my $config = $self->main->ide->config;
 
-	Wx::Event::EVT_MENU_OPEN(
-		$main,
-		sub {
-			$self->refresh;
-		}
-	);
+#	Wx::Event::EVT_MENU_OPEN(
+#		$main,
+#		sub {
+#			print "Menubar\n";
+#			$self->refresh;
+#		}
+#	);
 
 	$self->refresh;
 
@@ -107,7 +108,8 @@ sub new {
 sub refresh {
 	my $self    = shift;
 	my $plugins = shift;
-
+print "\n";
+for (0..5) { print join(',',caller($_))."\n"; }
 	my $main   = $self->main;
 	my $config = $main->ide->config;
 
