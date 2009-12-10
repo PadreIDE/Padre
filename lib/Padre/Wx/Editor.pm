@@ -707,7 +707,9 @@ sub on_focus {
 	my $main = $self->main;
 
 	# to show/hide the document specific Perl menu
-	$main->refresh_menu;
+	# don't refresh on each focus event
+	$main->refresh_menu if (!defined($main->{last_refresh_editor}) or ($main->{last_refresh_editor} ne $self);
+	$main->{last_refresh_editor} = $self;
 
 	$main->update_directory;
 
