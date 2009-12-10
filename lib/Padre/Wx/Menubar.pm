@@ -89,6 +89,9 @@ sub new {
 
 	my $config = $self->main->ide->config;
 
+# This event seems to be outdated and slow down Padre.
+# If there are any menu (refresh) problems, re-enable it and open a ticket for
+# deeper checking.
 #	Wx::Event::EVT_MENU_OPEN(
 #		$main,
 #		sub {
@@ -108,8 +111,7 @@ sub new {
 sub refresh {
 	my $self    = shift;
 	my $plugins = shift;
-print "\n";
-for (0..5) { print join(',',caller($_))."\n"; }
+
 	my $main   = $self->main;
 	my $config = $main->ide->config;
 
