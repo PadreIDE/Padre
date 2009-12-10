@@ -213,26 +213,6 @@ sub _T {
 	shift;
 }
 
-=pod
-
-=head2 C<pwhich>
-
-  # Find the prove utility
-  my $prove = Padre::Util::pwhich('prove');
-
-The C<pwhich> function discovers the path to the installed Perl script
-which is in the same installation directory as the Perl user to run
-Padre itself, ignoring the regular search C<PATH>.
-
-Returns the locally-formatted path to the script, or false (null string)
-if the utility does not exist in the current Perl installation.
-
-=cut
-
-sub pwhich {
-	my $bin = 1;
-}
-
 
 
 
