@@ -76,6 +76,45 @@ our @EXPORT_OK = '_T';
 
 =pod
 
+=head2 C<slurp>
+
+    my $content = Padre::Util::slurp( $file );
+    if ( $content ) {
+        print $$content;
+    } else {
+        # Handle errors appropriately
+    }
+
+This is a simple slurp implementation, provided as a convenience for
+internal Padre use when loading trivial unimportant files for which
+we don't need anything more robust.
+
+All file reading is done with binmode enabled, and data is returned by
+reference to avoid needless copying.
+
+Returns the content of the file as a SCALAR reference if the file exists
+and can be read.
+
+Returns false if loading of the file failed.
+
+This function is only expected to be used in situations where the file
+should almost always exist, and thus the reason why reading the file
+failed isn't really important.
+
+=cut
+
+sub slurp {
+	my $file = shift;
+	open my $fh, '<', $file or return '';
+	binmode $fh;
+	local $/ = undef;
+	my $content = <$fh>;
+	close $fh;
+	return \$content;
+}
+
+=pod
+
 =head2 C<newline_type>
 
     my $type = Padre::Util::newline_type( $string );
