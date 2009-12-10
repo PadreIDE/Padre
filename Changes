@@ -12,6 +12,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Fix: Double click on the function list jumps to the sub (again) now (SEWI)
     - Added "Save Intution" to the File menu, to automatically save a new
       file wherever Padre is confident it is appropriate (ADAMK)
+    - New file creation is now driver by Template Toolkit templates (using
+      Template::Tiny). This should allow even basic new file creation to be
+      somewhat adaptive to the user or project context (ADAMK)
 
 0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)

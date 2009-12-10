@@ -73,6 +73,10 @@ sub new {
 			$_[0]->on_new_from_template('t');
 		},
 	);
+
+	# Split by language
+	$file_new->AppendSeparator;
+
 	$self->add_menu_item(
 		$file_new,
 		name       => 'file.new_p6_script',
@@ -81,6 +85,10 @@ sub new {
 			$_[0]->on_new_from_template('p6');
 		},
 	);
+
+	# Split projects from files
+	$file_new->AppendSeparator;
+
 	$self->add_menu_item(
 		$file_new,
 		name       => 'file.new_p5_distro',
@@ -90,6 +98,8 @@ sub new {
 			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
 		},
 	);
+
+	### NOTE: Add support for plugins here
 
 	# Open things
 

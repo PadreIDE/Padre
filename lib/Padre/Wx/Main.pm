@@ -5034,27 +5034,29 @@ file. No return value.
 =cut
 
 sub on_new_from_template {
-	my ( $self, $extension ) = @_;
+	my $self      = shift;
+	my $extension = shift;
 
-	$self->on_new;
-
-	my $editor = $self->current->editor or return;
+	# Load the template
 	my $file = File::Spec->catfile(
 		Padre::Util::sharedir('templates'),
 		"template.$extension"
 	);
-
-	if ( $editor->insert_from_file($file) ) {
-		my $document = $editor->{Document};
-		$document->{original_content} = $document->text_get;
-		$document->set_mimetype( $document->guess_mimetype );
-		$document->editor->padre_setup;
-		$document->rebless;
-		$document->colourize;
-	} else {
-		$self->message( sprintf( Wx::gettext("Error loading template file '%s'"), $file ) );
+	my $template = Padre::Util::slurp($file);
+	unless ( $template ) {
+		# Rare failure, no need to translate
+		$self->error("Failed to find template '$file'");
 	}
-	return;
+
+	# Generate the full file content
+	require Template::Tiny;
+	my $output = Template::Tiny->new->process(
+		$template,
+		$self->current,
+	);
+
+	# Create the file from the content
+	return $self->new_document_from_string( $output, @_ );
 }
 
 =pod
@@ -5368,7 +5370,7 @@ sub new_document_from_string {
 
 	# Fill the document
 	$document->text_set($string);
-	if ($mimetype) {
+	if ( $mimetype ) {
 		$document->set_mimetype($mimetype);
 	}
 
