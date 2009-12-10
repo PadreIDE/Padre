@@ -2,7 +2,7 @@ package Padre::Wx::Menubar;
 
 use 5.008;
 use strict;
-#use warnings;
+use warnings;
 use Params::Util qw{_INSTANCE};
 use Padre::Current qw{_CURRENT};
 use Padre::Util             ();
