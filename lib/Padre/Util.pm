@@ -181,7 +181,7 @@ sub get_matches {
 	while ( $text =~ /$regex/mg ) {
 		my $e = pos($text);
 		if ( !defined($1) ) {
-			print STDERR 'WARNING (' . join( ",", map { $_ || ''; } (caller(0)) ) . "): $regex has no \$1 match\n";
+			print STDERR 'WARNING (' . join( ",", map { $_ || ''; } ( caller(0) ) ) . "): $regex has no \$1 match\n";
 			next;
 		}
 		my $s = $e - length($1);

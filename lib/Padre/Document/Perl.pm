@@ -244,7 +244,7 @@ sub get_function_regex {
 
 	# This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without
 	# triggering a "Variable length lookbehind not implemented" error.
-#	return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
+	#	return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
 	return qr/(?:^|[^#\s])\s*(sub\s+$_[1])\b/;
 }
 
@@ -834,7 +834,7 @@ EOC
 		#my $dumper = PPI::Dumper->new( $ppi_doc );
 		#$dumper->print;
 		require PPIx::EditorTools;
-		my $token     = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
+		my $token = PPIx::EditorTools::find_token_at_location( $ppi_doc, $start_position );
 		return unless $token;
 		my $statement = $token->statement();
 		my $parent    = $statement;

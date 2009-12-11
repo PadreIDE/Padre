@@ -3443,15 +3443,17 @@ Only do this for new documents, otherwise behave like a regular save.
 =cut
 
 sub on_save_intuition {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
 
 	# We only use Save Intuition for new files
 	unless ( $document->is_new ) {
 		if ( $document->is_saved ) {
+
 			# Nothing to do
 			return;
 		} else {
+
 			# Regular save
 			return $self->on_save(@_);
 		}
@@ -3466,28 +3468,32 @@ sub on_save_intuition {
 	my @subpath  = $document->guess_subpath;
 	my $filename = $document->guess_filename;
 	unless ( @subpath and defined Params::Util::_STRING($filename) ) {
+
 		# Cannot come up with a suitable guess
 		return $self->on_save_as(@_);
 	}
 
 	# Convert the guesses to full paths
-	my $dir  = File::Spec->catdir(  $document->project_dir, @subpath );
+	my $dir = File::Spec->catdir( $document->project_dir, @subpath );
 	my $path = File::Spec->catfile( $dir, $filename );
 	if ( -f $path ) {
+
 		# Potential collision, error and fall back
-		$self->error(Wx::gettext('File already exists'));
+		$self->error( Wx::gettext('File already exists') );
 		return $self->on_save_as(@_);
 	}
 
 	# Create the directory, if needed
 	unless ( -d $dir ) {
-		my $error = [ ];
-		File::Path::make_path( $dir, {
-			verbose => 0,
-			error   => \$error,
-		} );
-		if ( @$error ) {
-			$self->error(Wx::gettext("Failed to create path '$dir'"));
+		my $error = [];
+		File::Path::make_path(
+			$dir,
+			{   verbose => 0,
+				error   => \$error,
+			}
+		);
+		if (@$error) {
+			$self->error( Wx::gettext("Failed to create path '$dir'") );
 			return $self->on_save_as(@_);
 		}
 	}
@@ -5043,7 +5049,8 @@ sub on_new_from_template {
 		"template.$extension"
 	);
 	my $template = Padre::Util::slurp($file);
-	unless ( $template ) {
+	unless ($template) {
+
 		# Rare failure, no need to translate
 		$self->error("Failed to find template '$file'");
 	}
@@ -5336,7 +5343,7 @@ sub set_title {
 
 	# Push the title to the window
 	$self->SetTitle( $self->{title} );
-	
+
 	# Push the title to the process list for better identification
 	$0 = $self->{title}; ## no critic (RequireLocalizedPunctuationVars)
 }
@@ -5370,7 +5377,7 @@ sub new_document_from_string {
 
 	# Fill the document
 	$document->text_set($string);
-	if ( $mimetype ) {
+	if ($mimetype) {
 		$document->set_mimetype($mimetype);
 	}
 

@@ -89,16 +89,16 @@ sub new {
 
 	my $config = $self->main->ide->config;
 
-# This event seems to be outdated and slow down Padre.
-# If there are any menu (refresh) problems, re-enable it and open a ticket for
-# deeper checking.
-#	Wx::Event::EVT_MENU_OPEN(
-#		$main,
-#		sub {
-#			print "Menubar\n";
-#			$self->refresh;
-#		}
-#	);
+	# This event seems to be outdated and slow down Padre.
+	# If there are any menu (refresh) problems, re-enable it and open a ticket for
+	# deeper checking.
+	#	Wx::Event::EVT_MENU_OPEN(
+	#		$main,
+	#		sub {
+	#			print "Menubar\n";
+	#			$self->refresh;
+	#		}
+	#	);
 
 	$self->refresh;
 
@@ -129,12 +129,12 @@ sub refresh {
 			next unless $main->current->document->can('menu');
 			next unless defined( $main->current->document->menu );
 			$item = $main->current->document->menu;
-			if (defined($main->current->document->{menu})){
+			if ( defined( $main->current->document->{menu} ) ) {
 				$item = [$item] unless ref($item) eq 'ARRAY';
-				if (ref($main->current->document->{menu}) ne 'ARRAY') {
-					push @{$item},$main->current->document->{menu};
+				if ( ref( $main->current->document->{menu} ) ne 'ARRAY' ) {
+					push @{$item}, $main->current->document->{menu};
 				} else {
-					push @{$item},@{$main->current->document->{menu}};
+					push @{$item}, @{ $main->current->document->{menu} };
 				}
 			}
 		}
