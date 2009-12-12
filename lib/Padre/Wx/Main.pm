@@ -403,7 +403,7 @@ sub help_search {
 		require Padre::Wx::Dialog::HelpSearch;
 		$self->{help_search} = Padre::Wx::Dialog::HelpSearch->new($self);
 	}
-	$self->{help_search}->showIt($topic);
+	$self->{help_search}->show($topic);
 }
 
 =pod

@@ -244,7 +244,7 @@ sub _setup_events {
 #
 # Focus on it if it shown or restart its state and show it if it is hidden.
 #
-sub showIt {
+sub show {
 	my ( $self, $topic ) = @_;
 
 	if ( not $self->IsShown ) {

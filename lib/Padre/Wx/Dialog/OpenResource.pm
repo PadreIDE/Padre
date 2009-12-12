@@ -375,7 +375,7 @@ sub _restart_search {
 #
 # Focus on it if it shown or restart its state and show it if it is hidden.
 #
-sub showIt {
+sub show {
 	my $self = shift;
 
 	if ( $self->IsShown ) {
