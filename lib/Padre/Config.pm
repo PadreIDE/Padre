@@ -908,7 +908,13 @@ setting(
 	default => 1,
 );
 
-
+# Non-preference settings
+setting(
+	name    => 'session_autosave',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
 
 #####################################################################
 # Constructor and Accessors

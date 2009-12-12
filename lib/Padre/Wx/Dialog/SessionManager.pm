@@ -102,9 +102,17 @@ sub _on_butopen_clicked {
 	$self->_butdelete->Disable;
 	$self->_butopen->Disable;
 
-	# close all open documents
+	# Save autosave setting
+	my $config = Padre->ide->config;
+	$config->set(
+		'session_autosave',
+		$self->{autosave}->GetValue ? 1 : 0
+		);
+	$config->write;
+
+	# Open session
 	my $main = $self->GetParent;
-	$main->open_session( $self->_current_session, $self->{autosave}->GetValue );
+	$main->open_session( $self->_current_session, $self->{autosave}->GetValue ? 1:0 );
 	$self->Destroy();
 }
 
@@ -237,6 +245,8 @@ sub _create_list {
 sub _create_options {
 	my $self = shift;
 
+	my $config = Padre->ide->config;
+
 	# the hbox
 	my $hbox = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -247,14 +257,16 @@ sub _create_options {
 		-1,
 		Wx::gettext('Save session automatically'),
 	);
+	$self->{autosave}->SetValue($config->session_autosave ? 1 : 0);
 
-	#	Wx::Event::EVT_CHECKBOX(
-	#		$self,
-	#		$self->{autosave},
-	#		sub {
+#		Wx::Event::EVT_CHECKBOX(
+#			$self,
+#			$self->{autosave},
+#			sub {
 	#			$_[0]->{find_text}->SetFocus;
-	#		}
-	#	);
+#			}
+#		);
+
 	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
 }
 
