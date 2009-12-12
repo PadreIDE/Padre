@@ -5207,7 +5207,7 @@ sub key_up {
 		#			#$self->bottom->GetSelection;
 		#		}
 	}
-	$event->Skip(0);
+	$event->Skip;
 	return;
 }
 
