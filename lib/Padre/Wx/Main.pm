@@ -3958,7 +3958,7 @@ positive or negative.
 =cut
 
 sub zoom {
-	my ($self, $factor) = @_;
+	my ( $self, $factor ) = @_;
 	my $page = $self->current->editor or return;
 
 	my $zoom = $page->GetZoom + $factor;
