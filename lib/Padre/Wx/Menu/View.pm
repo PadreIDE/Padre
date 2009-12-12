@@ -240,47 +240,44 @@ sub new {
 
 	$self->AppendSeparator;
 
-	if ( $config->func_fontsize ) {
 
-		# Font Size
-		$self->{font_size} = Wx::Menu->new;
-		$self->Append(
-			-1,
-			Wx::gettext("Font Size"),
-			$self->{font_size}
-		);
-		$self->{font_increase} = $self->add_menu_item(
-			$self->{font_size},
-			name       => 'view.font_increase',
-			label      => Wx::gettext('Increase Font Size'),
-			shortcut   => 'Ctrl-+',
-			menu_event => sub {
-				$_[0]->zoom(+1);
-			},
-		);
+	# Font Size
+	$self->{font_size} = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Font Size"),
+		$self->{font_size}
+	);
+	$self->{font_increase} = $self->add_menu_item(
+		$self->{font_size},
+		name       => 'view.font_increase',
+		label      => Wx::gettext('Increase Font Size'),
+		shortcut   => 'Ctrl-+',
+		menu_event => sub {
+			$_[0]->zoom(+1);
+		},
+	);
 
-		$self->{font_decrease} = $self->add_menu_item(
-			$self->{font_size},
-			name       => 'view.font_decrease',
-			label      => Wx::gettext('Decrease Font Size'),
-			shortcut   => 'Ctrl--',
-			menu_event => sub {
-				$_[0]->zoom(-1);
-			},
-		);
+	$self->{font_decrease} = $self->add_menu_item(
+		$self->{font_size},
+		name       => 'view.font_decrease',
+		label      => Wx::gettext('Decrease Font Size'),
+		shortcut   => 'Ctrl--',
+		menu_event => sub {
+			$_[0]->zoom(-1);
+		},
+	);
 
-		$self->{font_reset} = $self->add_menu_item(
-			$self->{font_size},
-			name       => 'view.font_reset',
-			label      => Wx::gettext('Reset Font Size'),
-			shortcut   => 'Ctrl-0',
-			menu_event => sub {
-				my $editor = $_[0]->current->editor or return;
-				$_[0]->zoom( -1 * $editor->GetZoom );
-			},
-		);
-
-	}
+	$self->{font_reset} = $self->add_menu_item(
+		$self->{font_size},
+		name       => 'view.font_reset',
+		label      => Wx::gettext('Reset Font Size'),
+		shortcut   => 'Ctrl-0',
+		menu_event => sub {
+			my $editor = $_[0]->current->editor or return;
+			$_[0]->zoom( -1 * $editor->GetZoom );
+		},
+	);
 
 	if ( $config->func_bookmark ) {
 

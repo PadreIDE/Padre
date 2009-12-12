@@ -777,12 +777,6 @@ setting(
 	default => 1,
 );
 setting(
-	name    => 'func_fontsize',
-	type    => Padre::Constant::BOOLEAN,
-	store   => Padre::Constant::HUMAN,
-	default => 1,
-);
-setting(
 	name    => 'func_session',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
