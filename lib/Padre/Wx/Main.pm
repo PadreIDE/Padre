@@ -5177,13 +5177,14 @@ sub key_up {
 	if ( $mod == Wx::wxMOD_CMD ) { # Ctrl
 		                           # Ctrl-TAB  #TO DO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
+
 			# TODO: Catch up the right action for this shortcut
 			$self->on_next_pane;
 		}
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
 		                                                      # Ctrl-Shift-TAB
 		                                                      # TODO it is already in the menu
-		# TODO: Catch up the right action for this shortcut
+		                                                      # TODO: Catch up the right action for this shortcut
 		$self->on_prev_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 
