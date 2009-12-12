@@ -17,6 +17,7 @@ Changes for Perl Application Development and Refactoring Environment
       somewhat adaptive to the user or project context (ADAMK)
     - Padre speedup: Limit number of menu bar refreshs (SEWI)
     - Fixed ticket #790: Ctrl + Caps Lock reduces font size (AZAWAWI)
+    - Re-enabled toggle status bar on win32 (AZAWAWI)
 
 0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)
