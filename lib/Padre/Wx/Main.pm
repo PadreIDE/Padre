@@ -5170,6 +5170,7 @@ sub key_up {
 	my $mod   = $event->GetModifiers || 0;
 	my $code  = $event->GetKeyCode;
 
+	
 	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 	# () needed after the constants as they are functions in Perl and
 	# without constants perl will call only the first one.
@@ -5206,7 +5207,7 @@ sub key_up {
 		#			#$self->bottom->GetSelection;
 		#		}
 	}
-	$event->Skip;
+	$event->Skip(0);
 	return;
 }
 
