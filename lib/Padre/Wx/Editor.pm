@@ -216,7 +216,8 @@ sub on_key_up {
 		$self->on_smart_highlight_begin($event);
 	}
 
-	$self->main->key_up($event);
+	$event->Skip(1); # we need to keep processing this event
+	#$self->main->key_up($event);
 }
 
 sub padre_setup_plain {
