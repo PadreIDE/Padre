@@ -207,12 +207,16 @@ sub on_key_up {
 			# Otherwise delete the line
 			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
 		}
+		return;
 	}
 
 	# Apply smart highlighting when the shift key is down
 	if ( $self->main->ide->config->editor_smart_highlight_enable && $event->ShiftDown ) {
 		$self->on_smart_highlight_begin($event);
 	}
+
+	$self->main->key_up($event);
+
 }
 
 sub padre_setup_plain {
