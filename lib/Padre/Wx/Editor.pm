@@ -97,6 +97,12 @@ sub new {
 
 	$self->SetDropTarget( Padre::Wx::FileDropTarget->new( $self->main ) );
 
+	# Disable CTRL keypad -/+. These seem to emit wrong scan codes
+	# on some laptop keyboards. (e.g. CTRL-Caps lock is the same as CTRL -)
+	# Please see bug #790
+	$self->CmdKeyClear( Wx::wxSTC_KEY_SUBTRACT, Wx::wxSTC_SCMOD_CTRL );
+	$self->CmdKeyClear( Wx::wxSTC_KEY_ADD,      Wx::wxSTC_SCMOD_CTRL );
+
 	return $self;
 }
 
