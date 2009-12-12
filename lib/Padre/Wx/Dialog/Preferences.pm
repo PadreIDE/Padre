@@ -14,8 +14,8 @@ our $VERSION = '0.51';
 our @ISA     = 'Padre::Wx::Dialog';
 
 our %PANELS = (
-	'Padre::Wx::Dialog::Preferences::File'             => 'Local/Remote file access',
-	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => 'Perl autocomplete'
+	'Padre::Wx::Dialog::Preferences::File'             => 'Local/Remote File Access',
+	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => 'Perl Auto Complete'
 );
 
 =pod
