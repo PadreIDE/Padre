@@ -1335,7 +1335,7 @@ sub event_on_char {
 	}
 
 	my $key = $event->GetUnicodeKey;
-		
+
 	my $pos   = $editor->GetCurrentPos;
 	my $line  = $editor->LineFromPosition($pos);
 	my $first = $editor->PositionFromLine($line);

@@ -90,7 +90,7 @@ sub new {
 
 	# Setup EVT_KEY_UP for smart highlighting and non-destructive CTRL-L
 	Wx::Event::EVT_KEY_UP( $self, \&on_key_up );
-	
+
 	if ( $config->editor_wordwrap ) {
 		$self->SetWrapMode(Wx::wxSTC_WRAP_WORD);
 	}
@@ -207,7 +207,7 @@ sub on_key_up {
 			# Otherwise delete the line
 			$self->CmdKeyExecute(Wx::wxSTC_CMD_LINEDELETE);
 		}
-		$event->Skip(0);  # done processing this nothing more to do
+		$event->Skip(0); # done processing this nothing more to do
 		return;
 	}
 
@@ -216,8 +216,8 @@ sub on_key_up {
 		$self->on_smart_highlight_begin($event);
 	}
 
-	$event->Skip(1); # we need to keep processing this event
-	
+	$event->Skip(1);     # we need to keep processing this event
+
 }
 
 sub padre_setup_plain {

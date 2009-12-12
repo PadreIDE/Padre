@@ -61,7 +61,7 @@ sub init_search {
 
 	#Check if we have an open file so we can use its directory
 	my $doc = $self->_main->current->document;
-	my $filename = ( defined $doc) ? $doc->filename : undef;
+	my $filename = ( defined $doc ) ? $doc->filename : undef;
 	my $dir;
 	if ($filename) {
 
@@ -73,16 +73,17 @@ sub init_search {
 		# current working directory
 		$dir = Cwd::getcwd();
 	}
-	
-	
+
+
 	my $old_dir = $self->_directory;
-	if($old_dir && $old_dir ne $dir) {
+	if ( $old_dir && $old_dir ne $dir ) {
+
 		# Restart search if the project/current directory is different
 		$self->_matched_files(undef);
 	}
 
 	$self->_directory($dir);
-	$self->SetLabel( Wx::gettext('Open Resource') . ' - ' . $dir);
+	$self->SetLabel( Wx::gettext('Open Resource') . ' - ' . $dir );
 }
 
 # -- event handler
