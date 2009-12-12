@@ -217,7 +217,7 @@ sub on_key_up {
 	}
 
 	$event->Skip(1); # we need to keep processing this event
-	#$self->main->key_up($event);
+	
 }
 
 sub padre_setup_plain {
