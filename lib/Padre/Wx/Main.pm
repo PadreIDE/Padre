@@ -3958,8 +3958,10 @@ positive or negative.
 =cut
 
 sub zoom {
-	my $self = shift;
-	my $zoom = $self->current->editor->GetZoom + shift;
+	my ($self, $factor) = @_;
+	my $page = $self->current->editor or return;
+
+	my $zoom = $page->GetZoom + $factor;
 	foreach my $page ( $self->editors ) {
 		$page->SetZoom($zoom);
 	}

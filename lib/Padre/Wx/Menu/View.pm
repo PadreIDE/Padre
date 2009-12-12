@@ -238,9 +238,9 @@ sub new {
 		},
 	);
 
-	if ( $config->func_fontsize ) {
+	$self->AppendSeparator;
 
-		$self->AppendSeparator;
+	if ( $config->func_fontsize ) {
 
 		# Font Size
 		$self->{font_size} = Wx::Menu->new;
@@ -273,9 +273,10 @@ sub new {
 			$self->{font_size},
 			name       => 'view.font_reset',
 			label      => Wx::gettext('Reset Font Size'),
-			shortcut   => 'Ctrl-/',
+			shortcut   => 'Ctrl-0',
 			menu_event => sub {
-				$_[0]->zoom( -1 * $_[0]->current->editor->GetZoom );
+				my $editor = $_[0]->current->editor or return;
+				$_[0]->zoom( -1 * $editor->GetZoom );
 			},
 		);
 
