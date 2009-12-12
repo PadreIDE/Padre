@@ -93,9 +93,10 @@ sub on_timer {
 	my $event = shift;
 	my $force = shift;
 
-	my $main = Padre->ide->wx->main;
-
 	if ( $#{ $self->{Queue} } > -1 ) {
+
+		# Get this only if needed
+		my $main = Padre->ide->wx->main;
 
 		# Advoid another timer event during processing of this event
 		$self->{timer}->Stop;
@@ -107,9 +108,10 @@ sub on_timer {
 		# Run the event handler
 		&{ $self->{actions}->{$action}->{queue_event} }( $main, $event, $force );
 
-	}
+		# Reset not needed if timer wasn't stopped
+		$self->set_timer_interval;
 
-	$self->set_timer_interval;
+	}
 
 	if ( defined($event) ) {
 		$event->Skip(0);
