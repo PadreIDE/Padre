@@ -20,6 +20,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Re-enabled toggle status bar on win32 (AZAWAWI)
     - Fixed ticket #750: Ctrl-Tab works again (WAXHEAD, SEWI)
     - Fixed Padre crash in Module Tools/Install Locale/Module/CPAN config (AZAWAWI)
+    - Open Resource restarts search now when project directory or Padre's 
+      current directory changes (AZAWAWI)
 
 0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)
