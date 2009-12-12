@@ -16,6 +16,7 @@ Changes for Perl Application Development and Refactoring Environment
       Template::Tiny). This should allow even basic new file creation to be
       somewhat adaptive to the user or project context (ADAMK)
     - Padre speedup: Limit number of menu bar refreshs (SEWI)
+    - Fixed ticket #790: Ctrl + Caps Lock reduces font size (AZAWAWI)
 
 0.51 2009.12.06
     - Find all option showing all matches in bottom tab (CODE4PAY)
