@@ -102,17 +102,14 @@ sub new {
 		},
 	);
 
-	# On Windows disabling the status bar doesn't work, so don't allow it
-	unless (Padre::Constant::WXWIN32) {
-		$self->{statusbar} = $self->add_checked_menu_item(
-			$self,
-			name       => 'view.statusbar',
-			label      => Wx::gettext('Show StatusBar'),
-			menu_event => sub {
-				$_[0]->on_toggle_statusbar( $_[1] );
-			},
-		);
-	}
+	$self->{statusbar} = $self->add_checked_menu_item(
+		$self,
+		name       => 'view.statusbar',
+		label      => Wx::gettext('Show StatusBar'),
+		menu_event => sub {
+			$_[0]->on_toggle_statusbar( $_[1] );
+		},
+	);
 
 	$self->{toolbar} = $self->add_checked_menu_item(
 		$self,
@@ -464,9 +461,7 @@ sub refresh {
 	my $doc      = $document ? 1 : 0;
 
 	# Simple check state cases from configuration
-	unless (Padre::Constant::WXWIN32) {
-		$self->{statusbar}->Check( $config->main_statusbar );
-	}
+	$self->{statusbar}->Check( $config->main_statusbar );
 
 	$self->{lines}->Check( $config->editor_linenumbers );
 	$self->{folding}->Check( $config->editor_folding );

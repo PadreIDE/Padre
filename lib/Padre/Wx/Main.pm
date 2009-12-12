@@ -239,7 +239,7 @@ sub new {
 	# to show it, it showed at the top) so now we always turn the status bar on
 	# at the beginning and hide it in the timer, if it was not needed
 	# TO DO: there might be better ways to fix that issue...
-	$statusbar->Show;
+	#$statusbar->Show;
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_POSTINIT, );
 	Wx::Event::EVT_TIMER(
 		$self,
@@ -4342,9 +4342,6 @@ Toggle status bar visibility. No return value.
 sub on_toggle_statusbar {
 	my $self = shift;
 
-	# Status bar always shown on Windows
-	return if Padre::Constant::WXWIN32;
-
 	# Update the configuration
 	$self->config->set(
 		'main_statusbar',
@@ -4360,6 +4357,9 @@ sub on_toggle_statusbar {
 
 	# Save configuration
 	$self->config->write;
+
+	# Refresh. This is needed to show/hide the status bar
+	$self->aui->Update;
 
 	return;
 }
