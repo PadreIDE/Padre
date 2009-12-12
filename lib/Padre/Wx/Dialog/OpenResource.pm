@@ -30,32 +30,18 @@ use Class::XSAccessor accessors => {
 sub new {
 	my ( $class, $main ) = @_;
 
-	#Check if we have an open file so we can use its directory
-	my $filename = ( defined $main->current->document ) ? $main->current->document->filename : undef;
-	my $directory;
-	if ($filename) {
-
-		# current document's project or base directory
-		$directory = Padre::Util::get_project_dir($filename)
-			|| File::Basename::dirname($filename);
-	} else {
-
-		# current working directory
-		$directory = Cwd::getcwd();
-	}
-
 	# create object
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Open Resource') . ' - ' . $directory,
+		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->_directory($directory);
 	$self->_main($main);
+	$self->init_search;
 
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
@@ -66,6 +52,38 @@ sub new {
 	return $self;
 }
 
+
+#
+# Initialize search
+#
+sub init_search {
+	my $self = shift;
+
+	#Check if we have an open file so we can use its directory
+	my $doc = $self->_main->current->document;
+	my $filename = ( defined $doc) ? $doc->filename : undef;
+	my $dir;
+	if ($filename) {
+
+		# current document's project or base directory
+		$dir = Padre::Util::get_project_dir($filename)
+			|| File::Basename::dirname($filename);
+	} else {
+
+		# current working directory
+		$dir = Cwd::getcwd();
+	}
+	
+	
+	my $old_dir = $self->_directory;
+	if($old_dir && $old_dir ne $dir) {
+		# Restart search if the project/current directory is different
+		$self->_matched_files(undef);
+	}
+
+	$self->_directory($dir);
+	$self->SetLabel( Wx::gettext('Open Resource') . ' - ' . $dir);
+}
 
 # -- event handler
 
@@ -377,6 +395,8 @@ sub _restart_search {
 #
 sub show {
 	my $self = shift;
+
+	$self->init_search;
 
 	if ( $self->IsShown ) {
 		$self->SetFocus;
