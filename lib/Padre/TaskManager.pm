@@ -49,9 +49,6 @@ the first task is being scheduled.
 
 =item use_threads
 
-TO DO: This is disabled for now since we need Wx 0.89
-for stable threading.
-
 Disable for profiling runs. In the degraded, thread-less mode,
 all tasks are run in the main thread. Default: 1 (use threads)
 
