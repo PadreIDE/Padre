@@ -70,7 +70,8 @@ sub _display_help_in_viewer {
 		if ( $topic && $self->_help_provider ) {
 			eval { ( $html, $location ) = $self->_help_provider->help_render($topic); };
 			if ($@) {
-				warn "Error while calling help_render: $@\n";
+				$self->_main->error(Wx::gettext("Error while calling help_render: ") . $@);
+				return;
 			}
 		}
 	}
@@ -257,7 +258,7 @@ sub show {
 		if ($doc) {
 			$self->_help_provider(undef);
 		}
-		$self->_search;
+		return if not $self->_search;
 		$self->_update_list_box;
 		$self->Show(1);
 	}
@@ -282,17 +283,20 @@ sub _search {
 		if ($doc) {
 			eval { $self->_help_provider( $doc->get_help_provider ); };
 			if ($@) {
-				warn "Error while calling get_help_provider: $@\n";
+				$self->_main->error(Wx::gettext("Error while calling get_help_provider: ") . $@);
+				return;
 			}
+			#if ($self->_help_provider
 		}
 	}
 	return if not $self->_help_provider;
 	eval { $self->_index( $self->_help_provider->help_list ); };
 	if ($@) {
-		warn "Error while calling help_list: $@\n";
+		$self->_main->error(Wx::gettext("Error while calling help_list: ") . $@);
+		return;
 	}
 
-	return;
+	return 1;
 }
 
 #
