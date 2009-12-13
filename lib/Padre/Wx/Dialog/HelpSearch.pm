@@ -286,7 +286,11 @@ sub _search {
 				$self->_main->error(Wx::gettext("Error while calling get_help_provider: ") . $@);
 				return;
 			}
-			#if ($self->_help_provider
+			if (not $self->_help_provider) {
+				$self->_main->error(Wx::gettext("Could not find a help provider for ") . 
+					Padre::MimeTypes->get_mime_type_name( $doc->get_mimetype ) );
+				return;
+			}
 		}
 	}
 	return if not $self->_help_provider;
