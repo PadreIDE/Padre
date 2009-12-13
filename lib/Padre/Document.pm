@@ -1383,6 +1383,15 @@ sub autocomplete {
 	return ( length($prefix), @words );
 }
 
+# Individual document classes should override this method
+# It gets a string (the current selection) and it should
+# return a list of files that are possible matches to that file.
+# In Perl for example A::B  would be mapped to A/B.pm in various places on
+# the filesystem.
+sub guess_filename_to_open {
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

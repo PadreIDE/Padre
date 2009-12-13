@@ -1727,6 +1727,52 @@ sub find_help_topic {
 }
 
 
+sub guess_filename_to_open {
+	my ($self, $text) =  @_;
+
+	my $module = $text;
+	$module =~ s{::}{/}g;
+	$module .= ".pm";
+	my @files;
+	my $filename = File::Spec->catfile( Padre->ide->{original_cwd}, $module, );
+	if ( -e $filename ) {
+		push @files, $filename;
+	} else {
+
+		# relative to the project lib dir
+		my $filename = File::Spec->catfile(
+			$self->project_dir,
+			'lib', $module,
+		);
+		if ( -e $filename ) {
+			push @files, $filename;
+		}
+
+		# relative to the project dir
+		my $filename2 = File::Spec->catfile(
+			$self->project_dir,
+			$module,
+		);
+		if ( -e $filename2 ) {
+			push @files, $filename2;
+		}
+
+		# TO DO: it should not be our @INC but the @INC of the perl used for
+		# script execution
+		foreach my $path (@INC) {
+			my $filename = File::Spec->catfile( $path, $module );
+			if ( -e $filename ) {
+				push @files, $filename;
+
+				#last;
+			}
+		}
+	}
+	
+	return @files;
+}
+
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.

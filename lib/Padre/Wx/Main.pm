@@ -2929,44 +2929,9 @@ sub on_open_selection {
 			}
 		}
 	}
-	unless (@files) { # TO DO: and if we are in a Perl environment
-		my $module = $text;
-		$module =~ s{::}{/}g;
-		$module .= ".pm";
-		my $filename = File::Spec->catfile( $self->ide->{original_cwd}, $module, );
-		if ( -e $filename ) {
-			push @files, $filename;
-		} else {
-
-			# relative to the project lib dir
-			my $filename = File::Spec->catfile(
-				$self->current->document->project_dir,
-				'lib', $module,
-			);
-			if ( -e $filename ) {
-				push @files, $filename;
-			}
-
-			# relative to the project dir
-			my $filename2 = File::Spec->catfile(
-				$self->current->document->project_dir,
-				$module,
-			);
-			if ( -e $filename2 ) {
-				push @files, $filename2;
-			}
-
-			# TO DO: it should not be our @INC but the @INC of the perl used for
-			# script execution
-			foreach my $path (@INC) {
-				my $filename = File::Spec->catfile( $path, $module );
-				if ( -e $filename ) {
-					push @files, $filename;
-
-					#last;
-				}
-			}
-		}
+	unless (@files) {
+		my $doc = $self->current->document;
+		push @files, $doc->guess_filename_to_open($text);
 	}
 
 	unless (@files) {
