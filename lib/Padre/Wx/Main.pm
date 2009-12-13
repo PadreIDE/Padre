@@ -2938,13 +2938,22 @@ sub on_open_selection {
 			push @files, $filename;
 		} else {
 
-			# relative to the project dir
+			# relative to the project lib dir
 			my $filename = File::Spec->catfile(
 				$self->current->document->project_dir,
 				'lib', $module,
 			);
 			if ( -e $filename ) {
 				push @files, $filename;
+			}
+
+			# relative to the project dir
+			my $filename2 = File::Spec->catfile(
+				$self->current->document->project_dir,
+				$module,
+			);
+			if ( -e $filename2 ) {
+				push @files, $filename2;
 			}
 
 			# TO DO: it should not be our @INC but the @INC of the perl used for
