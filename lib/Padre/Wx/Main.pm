@@ -3467,7 +3467,7 @@ sub on_save_intuition {
 			}
 		);
 		if (@$error) {
-			$self->error( Wx::gettext("Failed to create path '$dir'") );
+			$self->error( sprintf(Wx::gettext("Failed to create path '%s'"),$dir) );
 			return $self->on_save_as(@_);
 		}
 	}
