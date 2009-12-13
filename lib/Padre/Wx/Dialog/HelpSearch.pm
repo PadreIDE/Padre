@@ -304,10 +304,7 @@ sub find_help_topic {
 	my $doc = Padre::Current->document;
 	return '' if not $doc;
 
-	my $topic;
-	if ( $doc->can('find_help_topic') ) {
-		$topic = $doc->find_help_topic;
-	}
+	my $topic = $doc->find_help_topic;
 
 	#fallback
 	unless ($topic) {

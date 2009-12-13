@@ -1383,7 +1383,7 @@ sub autocomplete {
 	return ( length($prefix), @words );
 }
 
-# Individual document classes should override this method
+# Individual document classes should override this method.
 # It gets a string (the current selection) and it should
 # return a list of files that are possible matches to that file.
 # In Perl for example A::B  would be mapped to A/B.pm in various places on
@@ -1391,6 +1391,14 @@ sub autocomplete {
 sub guess_filename_to_open {
 	return;
 }
+
+# Individual document classes should override this method.
+# It needs to return the document specific help topic string.
+# In Perl this is using PPI to find the correct token
+sub find_help_topic {
+	return;
+}
+
 
 1;
 
