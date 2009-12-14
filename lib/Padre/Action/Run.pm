@@ -160,7 +160,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Debugger Step In'),
+		label        => Wx::gettext('Step In'),
 		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
 		#shortcut     => 'Shift-F5',
 		need_editor  => 1,
@@ -170,11 +170,55 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name         => 'debug.step_over',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Step Over'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_step_over;
+		},
+	);
+
+
+	Padre::Action->new(
+		name         => 'debug.step_out',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Step Out'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_step_out;
+		},
+	);
+
+
+	Padre::Action->new(
+		name         => 'debug.show_stack_trace',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Show Stack Trace'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_show_stack_trace;
+		},
+	);
+
+	Padre::Action->new(
 		name         => 'debug.show_value',
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Debugger Show Value'),
+		label        => Wx::gettext('Show Value'),
 		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
 		#shortcut     => 'Shift-F5',
 		need_editor  => 1,
@@ -188,7 +232,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Debugger Evaluate Expression'),
+		label        => Wx::gettext('Evaluate Expression'),
 		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
 		#shortcut     => 'Shift-F5',
 		need_editor  => 1,

@@ -66,17 +66,33 @@ sub new {
 		$self,
 		'debug.run_document',
 	);
+
 	$self->{debug_step_in} = $self->add_menu_action(
 		$self,
 		'debug.step_in',
 	);
 
-	$self->{debug_step_in} = $self->add_menu_action(
+	$self->{debug_step_over} = $self->add_menu_action(
+		$self,
+		'debug.step_over',
+	);
+
+	$self->{debug_step_out} = $self->add_menu_action(
+		$self,
+		'debug.step_out',
+	);
+
+	$self->{debug_show_stack_trace} = $self->add_menu_action(
+		$self,
+		'debug.show_stack_trace',
+	);
+
+	$self->{debug_show_value} = $self->add_menu_action(
 		$self,
 		'debug.show_value',
 	);
 
-	$self->{debug_step_in} = $self->add_menu_action(
+	$self->{debug_evaluate_expression} = $self->add_menu_action(
 		$self,
 		'debug.evaluate_expression',
 	);

@@ -1958,6 +1958,40 @@ sub debug_perl_step_in {
 	return;
 }
 
+sub debug_perl_step_over {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	print scalar $self->{_debugger_}->step_over;
+
+	return;
+}
+
+sub debug_perl_step_out {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	print scalar $self->{_debugger_}->step_out;
+
+	return;
+}
+
+
+sub debug_perl_show_stack_trace {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	my ($prompt, $trace) = $self->{_debugger_}->get_stack_trace;
+	my $str = $trace;
+	if (ref($trace) and ref($trace) eq 'ARRAY') {
+		$str = join "\n", @$trace;
+	}
+	$self->message($str);
+
+	return;	
+}	
+
+
 sub debug_perl_show_value {
 	my $self     = shift;
 	return if not $self->{_debugger_};
