@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-04 18:55+0100\n"
-"PO-Revision-Date: 2009-12-14 11:36+0200\n"
+"PO-Revision-Date: 2009-12-14 12:01+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -123,7 +123,6 @@ msgid "Document Tools (Right)"
 msgstr "أدوات الوثيقة (اليمين)"
 
 #: lib/Padre/PluginManager.pm:377
-#, fuzzy
 msgid ""
 "We found several new plug-ins.\n"
 "In order to configure and enable them go to\n"
@@ -186,7 +185,7 @@ msgstr "لا يمكن العثور على دليل المشروع"
 
 #: lib/Padre/PluginManager.pm:846
 #: lib/Padre/PluginManager.pm:942
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
 "%s"
@@ -200,7 +199,7 @@ msgid "Open file"
 msgstr "فتح الملف"
 
 #: lib/Padre/PluginManager.pm:916
-#, fuzzy, perl-format
+#, perl-format
 msgid "Plug-in must have '%s' as base directory"
 msgstr "يجب ان يكون '%s' دليل أساس للبرنامج المساعد"
 
@@ -410,13 +409,12 @@ msgid "About"
 msgstr "حول"
 
 #: lib/Padre/Plugin/PopularityContest.pm:197
-#, fuzzy
 msgid "Show current report"
-msgstr "اظهار السطر الحالي"
+msgstr "اظهار التقرير الحالي"
 
 #: lib/Padre/Plugin/PopularityContest.pm:296
 msgid "Popularity Contest Report"
-msgstr ""
+msgstr "تقرير مسابقة الشعبية"
 
 #: lib/Padre/Plugin/Devel.pm:25
 msgid "Padre Developer Tools"
@@ -541,9 +539,8 @@ msgstr "انسخ الا&ختيار"
 
 #: lib/Padre/Wx/Syntax.pm:362
 #: lib/Padre/Wx/FindResult.pm:250
-#, fuzzy
 msgid "Copy &All"
-msgstr "&تعداد الكل"
+msgstr "نسخ ال&كل"
 
 #: lib/Padre/Wx/Directory.pm:75
 msgid "Project"
@@ -573,6 +570,8 @@ msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get at least 0.20 by typing\n"
 "cpan Wx::Perl::ProcessStream"
 msgstr ""
+"الوحدة Wx::Perl::ProcessStream نسخة %s معروف عنها انها تسبب المشاكل. احصل على نسخة 0.20 على الأقل بطباعة الأمر\n"
+"cpan Wx::Perl::ProcessStream"
 
 #: lib/Padre/Wx/Left.pm:49
 msgid "Project Tools"
@@ -659,14 +658,13 @@ msgid "Go to line number"
 msgstr "الذهاب الى السطر رقم"
 
 #: lib/Padre/Wx/Main.pm:2561
-#, fuzzy
 msgid "You still have a running process. Do you want to kill it and exit?"
 msgstr "يوجد لديك برنامج شغال. هل تريد ايقافه والخروج؟"
 
 #: lib/Padre/Wx/Main.pm:2769
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot open a Directory: %s"
-msgstr "اختيار الدليل"
+msgstr "فشل فتح دليل: %s"
 
 #: lib/Padre/Wx/Main.pm:2890
 msgid "Nothing selected. Enter what should be opened:"
@@ -728,9 +726,9 @@ msgid "Open File"
 msgstr "فتح ملف"
 
 #: lib/Padre/Wx/Main.pm:3135
-#, fuzzy, perl-format
+#, perl-format
 msgid "File name %s contains * or ? which are special chars on most computers. Skip?"
-msgstr "الملف %s يحتوي على * أو ? والتي تكون أحرف خاصة على معظم الحواسيب. هل تريد المتابعة؟"
+msgstr "الملف %s يحتوي على * أو ? والتي تكون أحرف خاصة على معظم الحواسيب. هل تريد اهماله؟"
 
 #: lib/Padre/Wx/Main.pm:3138
 #: lib/Padre/Wx/Main.pm:3158
@@ -738,9 +736,9 @@ msgid "Open Warning"
 msgstr "فتح التحذير"
 
 #: lib/Padre/Wx/Main.pm:3155
-#, fuzzy, perl-format
+#, perl-format
 msgid "File name %s does not exist on disk. Skip?"
-msgstr "الملف %s غير موجود على القرص. هل تريد المتابعة?"
+msgstr "الملف %s غير موجود على القرص. هل تريد اهماله؟"
 
 #: lib/Padre/Wx/Main.pm:3198
 #: lib/Padre/Wx/Menu/File.pm:227
@@ -967,9 +965,8 @@ msgid "Please wait..."
 msgstr "الرجاء الانتظار..."
 
 #: lib/Padre/Wx/FindResult.pm:82
-#, fuzzy
 msgid "Find Results ("
-msgstr "ايجاد التالي"
+msgstr "ايجاد النتائج ("
 
 #: lib/Padre/Wx/FindResult.pm:99
 #: lib/Padre/Wx/FindResult.pm:178
@@ -989,9 +986,8 @@ msgid "Background Tasks are running with high load"
 msgstr " تعمل المهام الخلفيه بجهد عال"
 
 #: lib/Padre/Wx/StatusBar.pm:396
-#, fuzzy
 msgid "Read Only"
-msgstr "اعادة تحميل الملف"
+msgstr "للقراءة فقط"
 
 #: lib/Padre/Wx/Ack.pm:102
 msgid "Term:"
@@ -1174,9 +1170,8 @@ msgid "Select the help &topic"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:137
-#, fuzzy
 msgid "Type a help &keyword to read:"
-msgstr "ا&دخل موضوع بحث للقراءة:"
+msgstr "ادخل موضوع بحث للقراءة:"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:144
 msgid "&Matching Help Topics:"
@@ -1309,9 +1304,8 @@ msgid "Diff tool:"
 msgstr "اداة المقارنة Diff:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:70
-#, fuzzy
 msgid "Perl ctags file:"
-msgstr "ملفات Perl"
+msgstr "ملف Perl ctags:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:88
 msgid "File type:"
@@ -1599,27 +1593,27 @@ msgstr "حفظ الاعدادات"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:27
 msgid "Regex Editor"
-msgstr ""
+msgstr "محرر التعبير العادي"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:223
 #, perl-format
 msgid "Ignore case (%s)"
-msgstr ""
+msgstr "غير حساس لحالة الأحرف (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:224
 #, perl-format
 msgid "Single-line (%s)"
-msgstr ""
+msgstr "سطر واحد (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:225
 #, perl-format
 msgid "Multi-line (%s)"
-msgstr ""
+msgstr "أكثر من سطر (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:226
 #, perl-format
 msgid "Extended (%s)"
-msgstr ""
+msgstr "ممتد (%s)"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:18
 msgid "All"
@@ -1810,15 +1804,14 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/Warning.pm:41
 msgid "See http://padre.perlide.org/ for update information"
-msgstr ""
+msgstr "انظر إلى http://padre.perlide.org/ لتحديث المعلومات"
 
 #: lib/Padre/Wx/Dialog/Warning.pm:49
 msgid "Do not show this again"
-msgstr ""
+msgstr "لا تظهر هذه مرة أخرى"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:31
 #: lib/Padre/Action/Plugins.pm:37
-#, fuzzy
 msgid "Plug-in Manager"
 msgstr "مدير البرنامج المساعد"
 
@@ -1860,9 +1853,8 @@ msgid "Filter through tool"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:128
-#, fuzzy
 msgid "Filter command:"
-msgstr "فشل تشغيل الامر '%s'"
+msgstr "امر الفلتر:"
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:149
 #: lib/Padre/Document/Perl.pm:284
@@ -1878,14 +1870,12 @@ msgid "&Find Next"
 msgstr "ا&يجاد التالي"
 
 #: lib/Padre/Wx/Dialog/Find.pm:146
-#, fuzzy
 msgid "Find &All"
-msgstr "بحث:"
+msgstr "البحث عن ال&كل"
 
 #: lib/Padre/Wx/Dialog/Find.pm:185
-#, fuzzy
 msgid "Find &Text:"
-msgstr "نص البحث:"
+msgstr "البحث عن ال&نص"
 
 #: lib/Padre/Wx/Dialog/Find.pm:333
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:27
@@ -1925,7 +1915,7 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:39
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:47
 msgid "Timeout:"
-msgstr ""
+msgstr "مهلة:"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
 msgid "File access via FTP"
@@ -1944,14 +1934,12 @@ msgid "Autocomplete new methods in packages"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:46
-#, fuzzy
 msgid "Min. length of suggestions:"
-msgstr "بلا اقتراحات"
+msgstr "أقل طول للاقتراحات:"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:51
-#, fuzzy
 msgid "Max. number of suggestions:"
-msgstr "اقصى عدد من الوحدات"
+msgstr "أقصى عدد للاقتراحات:"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:54
 msgid "Min. chars for autocompletion:"
@@ -2326,7 +2314,7 @@ msgstr "نسخ اسم الدليل"
 
 #: lib/Padre/Wx/Menu/Edit.pm:215
 msgid "Copy editor content"
-msgstr ""
+msgstr "نسخ محتوى المحرر"
 
 #: lib/Padre/Wx/Menu/Edit.pm:230
 msgid "&Paste"
@@ -2470,7 +2458,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:649
 msgid "Regex editor"
-msgstr ""
+msgstr "محرر التعبير العادي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:660
 msgid "Show as ..."
@@ -2644,14 +2632,13 @@ msgid "Check cancelled"
 msgstr "تم الغاء الفحص"
 
 #: lib/Padre/Document/Perl.pm:581
-#, fuzzy
 msgid "Current cursor does not seem to point at a method"
-msgstr "المؤشر الحالي لا يبدو انه يوشر على متغير"
+msgstr "المؤشر الحالي لا يبدو انه يوشر على method"
 
 #: lib/Padre/Document/Perl.pm:616
-#, fuzzy, perl-format
+#, perl-format
 msgid "Current '%s' not found"
-msgstr "الملف %s غير موجود."
+msgstr "الملف الحالي '%s' غير موجود"
 
 #: lib/Padre/Document/Perl.pm:1486
 #: lib/Padre/Action/Perl.pm:68
@@ -2672,9 +2659,8 @@ msgstr "بديل"
 
 #: lib/Padre/Document/Perl.pm:1525
 #: lib/Padre/Action/Perl.pm:79
-#, fuzzy
 msgid "Find Method Declaration"
-msgstr "ايجاد اعلان متغير"
+msgstr "ايجاد اعلان الmethod"
 
 #: lib/Padre/Document/Perl.pm:1544
 #: lib/Padre/Action/Refactor.pm:101
@@ -3021,7 +3007,7 @@ msgstr ""
 
 #: lib/Padre/Action/Perl.pm:115
 msgid "Create project tagsfile"
-msgstr ""
+msgstr "انشاء مشروع tagsfile"
 
 #: lib/Padre/Action/Perl.pm:117
 msgid "Creates a perltags - file for the current project supporting find_method and autocomplete."
