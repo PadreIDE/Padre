@@ -68,7 +68,8 @@ L<perlop/Quote and Quote-like Operators>.
 
 =head3 See also
 
-L</qq(X)>, L<perlvar/$">, L<perlop/Quote and Quote‐like Operators>
+L</qq(X)>, L</'X'>, L</q(X)>, L<perlvar/$">, 
+and L<perlop/Quote and Quote‐like Operators>
 
 =head2 qq(X)
 
@@ -123,7 +124,124 @@ L<perlop/Quote and Quote-like Operators>.
 
 =head3 See also
 
-L</"X">, L<perlvar/$">, L<perlop/Quote and Quote‐like Operators>
+L</q(X)>, L</'X'> L</"X">, L<perlvar/$">, 
+and L<perlop/Quote and Quote‐like Operators>
+
+=head2 'X'
+
+=head3 Class
+
+This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+L<perlop/Quote and Quote‐like Operators>.
+
+=head3 Description
+
+This is the single quote operator (aka the non-interpolating string operator).
+It creates a string literal out of X.
+
+To place a C<'> inside the string, you must escape it with C<\>:
+
+    my $quote = 'He said \'I like quotes.\'';
+
+Unlike double quoted strings, that is the only escape sequence.
+
+For a full discussion of how strings work, see 
+L<perlop/Quote and Quote-like Operators>. 
+
+=head3 Example
+
+    my $name   = 'World';
+    my $string = 'Hello, $name!\n'; #$string is now "Hello \$name!\n";
+
+=head3 See also
+
+L</">, L</qq(X)>, L</q(X)>, L<perlvar/$">, 
+and L<perlop/Quote and Quote‐like Operators>
+
+=head2 q(X)
+
+=head3 Class
+
+This belongs to L<perlop/Terms and List Operators (Leftward)> and 
+L<perlop/Quote and Quote‐like Operators>.
+
+=head3 Description
+
+This is the generalized single quote operator (aka the generalized
+non-interpolating string operator).  It creates a string literal out of X.
+
+The delimiters C<()> are chosen by the user and may consist of either
+bracketing characters (C<< q<> >>, C<q()>, C<q{}>, and C<q[]>) or matching
+characters (C<q##>, C<qaa>, etc.).  It is generally used to allow the user
+to avoid having to escape characters:
+
+     my $quote = q/He said 'I like quotes.'/;
+
+If the delimiter is not a bracketing pair, or if the brackets are
+unbalanced, you will need to escape the delimiter with C<\> if you wish to
+have that character in the string:
+
+    my $quote = q{I have too many \} characters};
+
+But it is often better to just choose a delimiter that does not conflict
+with the string:
+
+    my $better = q/I have too many } characters/;
+
+Unlike double quoted strings, the escaping of the delimiter is the only
+escape.
+
+For a full discussion of how strings work, see 
+L<perlop/Quote and Quote-like Operators>. 
+
+=head3 Example
+
+    my $name   = "World";
+    my $string = q/Hello, $name!\n/; #$string is now "Hello \$name!\n";
+
+=head3 See also
+
+L</"X">, L</'X'>, L</q(X)>, L<perlvar/$">, 
+and L<perlop/Quote and Quote‐like Operators>
+
+=head2 qw(X)
+
+=head3 Description
+
+This is the quote word operator.  It creates a list of strings.  The
+individual strings are whitespace separated.  It does not interpolate.
+
+The delimiters C<()> are chosen by the user and may consist of either
+bracketing characters (C<< qw<> >>, C<qw()>, C<qw{}>, and C<qw[]>) or
+matching characters (C<qw##>, C<qwaa>, etc.).  It is generally used to allow
+the user to avoid having to escape characters:
+
+     my @list = qw/'a' 'b' 'c'/; #@list is now ("'a'", "'b'", "'c'")
+
+If the delimiter is not a bracketing pair, or if the brackets are
+unbalanced, you will need to escape the delimiter with C<\> if you wish to
+have that character in the string:
+
+    my @broken   = qw{I have too many } characters};        #broken
+    my @works    = qw{I have too many \} characters};       #works
+    my @balanced = qw{this works {} because it is balanced} #works
+
+But it is often better to just choose a delimiter that does not conflict
+with the string:
+
+    my $better = qw/I have too many } characters/;
+
+Unlike double quoted strings, the escaping of the delimiter is the only
+escape.
+
+=head3 Example
+
+    my @a = qw/ a b c /;     #@a is now ("a", "b", "c", "d")
+    my @b = qw/ $foo $bar /; #@b is now ('$foo', '$bar')
+
+=head3 See Also
+
+L</'X'>, L</q(X)>, and L<perlop/Quote and Quote‐like Operators>
 
 =head2 X[Y]
 

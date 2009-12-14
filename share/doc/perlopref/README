@@ -10,7 +10,8 @@ The perlopref POD document is a quick reference for the various Perl operators.
 It is organized by operator, sorted by precedence groups (inside of a
 precedence group there is no sorting).
 
-INSTALLATION ============
+INSTALLATION
+============
 
 Copy the perlopref.pod file into a place when Perl can find it (i.e. someplace
 in your @INC).
