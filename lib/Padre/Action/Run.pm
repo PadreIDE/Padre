@@ -170,6 +170,20 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name         => 'debug.show_value',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Debugger Show Value'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_show_value;
+		},
+	);
+
+	Padre::Action->new(
 		name         => 'debug.evaluate_expression',
 		need_editor  => 1,
 		need_runable => 1,

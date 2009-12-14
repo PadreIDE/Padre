@@ -73,6 +73,11 @@ sub new {
 
 	$self->{debug_step_in} = $self->add_menu_action(
 		$self,
+		'debug.show_value',
+	);
+
+	$self->{debug_step_in} = $self->add_menu_action(
+		$self,
 		'debug.evaluate_expression',
 	);
 

@@ -1958,6 +1958,20 @@ sub debug_perl_step_in {
 	return;
 }
 
+sub debug_perl_show_value {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	my $current = $self->current;
+	return unless $current->editor;
+	my $text = $current->text;
+	
+	my ($prompt, $value) = $self->{_debugger_}->get_value($text);
+	$self->message("$text = $value");
+
+	return;	
+}	
+
 sub debug_perl_evaluate_expression {
 	my $self     = shift;
 	return if not $self->{_debugger_};
