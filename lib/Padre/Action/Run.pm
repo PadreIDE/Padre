@@ -139,6 +139,66 @@ sub new {
 		},
 	);
 
+
+
+	Padre::Action->new(
+		name         => 'debug.run_document',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Start Debugger (Debug::Client)'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.step_in',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Debugger Step In'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_step_in;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.evaluate_expression',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Debugger Evaluate Expression'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_evaluate_expression;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.quit',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Quit Debugger'),
+		comment      => Wx::gettext( 'Run the current document through the Debug::Client.' ),
+		#shortcut     => 'Shift-F5',
+		need_editor  => 1,
+		menu_event   => sub {
+			$_[0]->debug_perl_quit;
+		},
+	);
+
+
+
 	return $self;
 }
 

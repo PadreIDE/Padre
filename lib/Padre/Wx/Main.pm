@@ -1891,7 +1891,8 @@ current is not a Perl document.
 sub debug_perl {
 	my $self     = shift;
 	my $document = $self->current->document;
-	unless ( $document->isa('Perl::Document::Perl') ) {
+
+	unless ( $document->isa('Padre::Document::Perl') ) {
 		return $self->error( Wx::gettext("Not a Perl document") );
 	}
 
@@ -1915,7 +1916,7 @@ sub debug_perl {
 
 	# Set up the debugger
 	my $host = 'localhost';
-	my $port = 12345;
+	my $port = 12345 + int rand(1000); # TODO make this configurable?
 
 	# $self->_setup_debugger($host, $port);
 	local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
@@ -1923,7 +1924,52 @@ sub debug_perl {
 	# Run with console Perl to prevent unexpected results under wperl
 	my $perl = Padre::Perl::cperl();
 	$self->run_command(qq["$perl" -d "$filename"]);
+	
+	require Debug::Client;
+	my $debugger = Debug::Client->new(host => $host, port => $port);
+	$debugger->listen;
+	$self->{_debugger_} = $debugger;
+	my $out = $debugger->get;
+	print $out;
+#	$self->show_output(1);
+#	$self->output->clear;
+#	$self->output->AppendText($out);
+	
+	return;
+}
 
+
+sub debug_perl_quit {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	print scalar $self->{_debugger_}->quit;
+	delete $self->{_debugger_};
+
+	return;
+}
+
+sub debug_perl_step_in {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	print scalar $self->{_debugger_}->step_in;
+
+	return;
+}
+
+sub debug_perl_evaluate_expression {
+	my $self     = shift;
+	return if not $self->{_debugger_};
+	
+	my $expression = $self->prompt(
+		Wx::gettext("Expression:"),
+		Wx::gettext("Expr"),
+		"EVAL_EXPRESSION"
+	);
+	print scalar $self->{_debugger_}->execute_code($expression);
+
+	return;
 }
 
 =pod

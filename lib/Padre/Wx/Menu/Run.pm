@@ -62,6 +62,27 @@ sub new {
 
 	$self->AppendSeparator;
 
+	$self->{debug_start} = $self->add_menu_action(
+		$self,
+		'debug.run_document',
+	);
+	$self->{debug_step_in} = $self->add_menu_action(
+		$self,
+		'debug.step_in',
+	);
+
+	$self->{debug_step_in} = $self->add_menu_action(
+		$self,
+		'debug.evaluate_expression',
+	);
+
+	$self->{debug_quit} = $self->add_menu_action(
+		$self,
+		'debug.quit',
+	);
+
+	$self->AppendSeparator;
+
 	$self->{stop} = $self->add_menu_action(
 		$self,
 		'run.stop',

@@ -64,6 +64,7 @@ requires 'Cwd'                   => '3.2701';
 requires 'Data::Dumper'          => 0;
 requires 'DBD::SQLite'           => '1.10';
 requires 'DBI'                   => '1.58';
+requires 'Debug::Client'         => '0.06';
 requires 'Devel::Dumpvar'        => '0.04';
 requires 'Devel::Refactor'       => '0.05';
 requires 'Digest::MD5'           => 0;
