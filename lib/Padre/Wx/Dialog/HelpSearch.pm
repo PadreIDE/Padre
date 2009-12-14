@@ -70,7 +70,7 @@ sub _display_help_in_viewer {
 		if ( $topic && $self->_help_provider ) {
 			eval { ( $html, $location ) = $self->_help_provider->help_render($topic); };
 			if ($@) {
-				$self->_main->error(Wx::gettext("Error while calling help_render: ") . $@);
+				$self->_main->error( Wx::gettext("Error while calling help_render: ") . $@ );
 				return;
 			}
 		}
@@ -283,12 +283,12 @@ sub _search {
 		if ($doc) {
 			eval { $self->_help_provider( $doc->get_help_provider ); };
 			if ($@) {
-				$self->_main->error(Wx::gettext("Error while calling get_help_provider: ") . $@);
+				$self->_main->error( Wx::gettext("Error while calling get_help_provider: ") . $@ );
 				return;
 			}
-			if (not $self->_help_provider) {
-				$self->_main->error(Wx::gettext("Could not find a help provider for ") . 
-					Padre::MimeTypes->get_mime_type_name( $doc->get_mimetype ) );
+			if ( not $self->_help_provider ) {
+				$self->_main->error( Wx::gettext("Could not find a help provider for ")
+						. Padre::MimeTypes->get_mime_type_name( $doc->get_mimetype ) );
 				return;
 			}
 		}
@@ -296,7 +296,7 @@ sub _search {
 	return if not $self->_help_provider;
 	eval { $self->_index( $self->_help_provider->help_list ); };
 	if ($@) {
-		$self->_main->error(Wx::gettext("Error while calling help_list: ") . $@);
+		$self->_main->error( Wx::gettext("Error while calling help_list: ") . $@ );
 		return;
 	}
 

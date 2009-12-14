@@ -1728,7 +1728,7 @@ sub find_help_topic {
 
 
 sub guess_filename_to_open {
-	my ($self, $text) =  @_;
+	my ( $self, $text ) = @_;
 
 	my $module = $text;
 	$module =~ s{::}{/}g;
@@ -1768,7 +1768,7 @@ sub guess_filename_to_open {
 			}
 		}
 	}
-	
+
 	return @files;
 }
 

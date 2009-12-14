@@ -111,7 +111,7 @@ sub new {
 		}
 
 		my $shortcuts = Padre->ide->{shortcuts};
-		if (defined($shortcuts->{$shortcut})) {
+		if ( defined( $shortcuts->{$shortcut} ) ) {
 			warn "Found a duplicate shortcut '$shortcut' with " . $shortcuts->{$shortcut}->name . " for '$name'\n";
 		} else {
 			$shortcuts->{$shortcut} = $self;

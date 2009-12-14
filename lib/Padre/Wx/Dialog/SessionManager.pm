@@ -107,12 +107,12 @@ sub _on_butopen_clicked {
 	$config->set(
 		'session_autosave',
 		$self->{autosave}->GetValue ? 1 : 0
-		);
+	);
 	$config->write;
 
 	# Open session
 	my $main = $self->GetParent;
-	$main->open_session( $self->_current_session, $self->{autosave}->GetValue ? 1:0 );
+	$main->open_session( $self->_current_session, $self->{autosave}->GetValue ? 1 : 0 );
 	$self->Destroy();
 }
 
@@ -257,15 +257,15 @@ sub _create_options {
 		-1,
 		Wx::gettext('Save session automatically'),
 	);
-	$self->{autosave}->SetValue($config->session_autosave ? 1 : 0);
+	$self->{autosave}->SetValue( $config->session_autosave ? 1 : 0 );
 
-#		Wx::Event::EVT_CHECKBOX(
-#			$self,
-#			$self->{autosave},
-#			sub {
+	#		Wx::Event::EVT_CHECKBOX(
+	#			$self,
+	#			$self->{autosave},
+	#			sub {
 	#			$_[0]->{find_text}->SetFocus;
-#			}
-#		);
+	#			}
+	#		);
 
 	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
 }
