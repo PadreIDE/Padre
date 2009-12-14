@@ -12,7 +12,7 @@ use Pod::Abstract                    ();
 use Padre::DocBrowser::document      ();
 use Padre::DocBrowser::PseudoPerldoc ();
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 use Class::XSAccessor constructor => 'new', getters => {
 	get_provider => 'provider',

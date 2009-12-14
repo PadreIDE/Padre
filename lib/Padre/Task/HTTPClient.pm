@@ -8,7 +8,7 @@ use Padre::Constant;
 
 # Use all modules which may provide services for us:
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 =pod
 

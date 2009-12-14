@@ -8,7 +8,7 @@ use Padre::Wx      ();
 use Padre::Current ();
 use Padre::Debug;
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor accessors => {

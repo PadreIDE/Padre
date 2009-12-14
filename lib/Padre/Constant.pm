@@ -12,7 +12,7 @@ use File::HomeDir ();
 
 #use Padre::Util   ();
 
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 
 my $revision;
 

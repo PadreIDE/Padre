@@ -10,7 +10,7 @@ use Padre::Wx::Icon ();
 use Padre::Debug;
 
 # package exports and version
-our $VERSION = '0.51';
+our $VERSION = '0.52';
 our @ISA     = 'Wx::Dialog';
 
 # accessors
