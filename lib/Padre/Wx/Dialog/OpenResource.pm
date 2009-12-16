@@ -403,10 +403,10 @@ sub show {
 		$self->SetFocus;
 	} else {
 		my $editor = $self->_main->current->editor;
-		if($editor) {
+		if ($editor) {
 			my $selection        = $editor->GetSelectedText;
 			my $selection_length = length $selection;
-			if($selection_length > 0) {
+			if ( $selection_length > 0 ) {
 				$self->_search_text->ChangeValue($selection);
 				$self->_restart_search;
 			} else {

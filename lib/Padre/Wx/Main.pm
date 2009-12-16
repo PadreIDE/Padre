@@ -1924,25 +1924,26 @@ sub debug_perl {
 	# Run with console Perl to prevent unexpected results under wperl
 	my $perl = Padre::Perl::cperl();
 	$self->run_command(qq["$perl" -d "$filename"]);
-	
+
 	require Debug::Client;
-	my $debugger = Debug::Client->new(host => $host, port => $port);
+	my $debugger = Debug::Client->new( host => $host, port => $port );
 	$debugger->listen;
 	$self->{_debugger_} = $debugger;
 	my $out = $debugger->get;
 	print $out;
-#	$self->show_output(1);
-#	$self->output->clear;
-#	$self->output->AppendText($out);
-	
+
+	#	$self->show_output(1);
+	#	$self->output->clear;
+	#	$self->output->AppendText($out);
+
 	return;
 }
 
 
 sub debug_perl_quit {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
+
 	print scalar $self->{_debugger_}->quit;
 	delete $self->{_debugger_};
 
@@ -1950,27 +1951,27 @@ sub debug_perl_quit {
 }
 
 sub debug_perl_step_in {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
+
 	print scalar $self->{_debugger_}->step_in;
 
 	return;
 }
 
 sub debug_perl_step_over {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
+
 	print scalar $self->{_debugger_}->step_over;
 
 	return;
 }
 
 sub debug_perl_step_out {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
+
 	print scalar $self->{_debugger_}->step_out;
 
 	return;
@@ -1978,38 +1979,38 @@ sub debug_perl_step_out {
 
 
 sub debug_perl_show_stack_trace {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
-	my ($prompt, $trace) = $self->{_debugger_}->get_stack_trace;
+
+	my ( $prompt, $trace ) = $self->{_debugger_}->get_stack_trace;
 	my $str = $trace;
-	if (ref($trace) and ref($trace) eq 'ARRAY') {
+	if ( ref($trace) and ref($trace) eq 'ARRAY' ) {
 		$str = join "\n", @$trace;
 	}
 	$self->message($str);
 
-	return;	
-}	
+	return;
+}
 
 
 sub debug_perl_show_value {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
+
 	my $current = $self->current;
 	return unless $current->editor;
 	my $text = $current->text;
-	
-	my ($prompt, $value) = $self->{_debugger_}->get_value($text);
+
+	my ( $prompt, $value ) = $self->{_debugger_}->get_value($text);
 	$self->message("$text = $value");
 
-	return;	
-}	
+	return;
+}
 
 sub debug_perl_evaluate_expression {
-	my $self     = shift;
+	my $self = shift;
 	return if not $self->{_debugger_};
-	
+
 	my $expression = $self->prompt(
 		Wx::gettext("Expression:"),
 		Wx::gettext("Expr"),
