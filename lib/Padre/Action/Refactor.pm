@@ -48,7 +48,7 @@ sub new {
 		need_editor => 1,
 		label       => Wx::gettext('Lexically Rename Variable'),
 		menu_event  => sub {
-			my $doc = $_[0]->current->document;
+			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('lexical_variable_replacement');
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
@@ -74,7 +74,7 @@ sub new {
 				. 'A call to this sub is added in the place where the selection was.'
 		),
 		menu_event => sub {
-			my $doc = $_[0]->current->document;
+			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('extract_subroutine');
 
 			#my $editor = $doc->editor;
@@ -100,7 +100,7 @@ sub new {
 		need_editor => 1,
 		label       => Wx::gettext('Introduce Temporary Variable'),
 		menu_event  => sub {
-			my $doc = $_[0]->current->document;
+			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('introduce_temporary_variable');
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
