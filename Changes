@@ -4,6 +4,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Add initial version of a debugger using Debug::Client (SZABGAB)
     - Fix crashes when running refactor actions when there
       is no document (AZAWAWI)
+    - Open resource searches now for user selections (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
