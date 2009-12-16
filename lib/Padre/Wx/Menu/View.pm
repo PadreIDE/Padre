@@ -105,7 +105,7 @@ sub new {
 	$self->{statusbar} = $self->add_checked_menu_item(
 		$self,
 		name       => 'view.statusbar',
-		label      => Wx::gettext('Show StatusBar'),
+		label      => Wx::gettext('Show Status Bar'),
 		menu_event => sub {
 			$_[0]->on_toggle_statusbar( $_[1] );
 		},
