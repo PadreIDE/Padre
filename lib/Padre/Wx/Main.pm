@@ -5201,7 +5201,8 @@ sub on_new_from_template {
 	);
 
 	# Create the file from the content
-	return $self->new_document_from_string( $output, @_ );
+	my $mime_type = Padre::MimeTypes->guess_mimetype($output, $file);
+	return $self->new_document_from_string( $output, $mime_type );
 }
 
 =pod
