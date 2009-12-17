@@ -20,7 +20,7 @@ my %modules = map {
 	$class =~ s/\.pm$//;
 	$class => "lib/$_"
 } File::Find::Rule->relative->name('*.pm')->file->in('lib');
-plan( tests => scalar( keys %modules ) * 7 );
+plan( tests => scalar( keys %modules ) * 8 );
 
 # Compile all of Padre
 use File::Temp;
@@ -61,12 +61,13 @@ my %TODO = map {$_ => 1} qw(
 
 foreach my $module ( sort keys %modules ) {
 
+	my $content = read_file($modules{$module});
+
 	# checking if only modules with Wx in their name depend on Wx
 	if ($module =~ /^Padre::Wx/ or $module =~ /^Wx::/) {
 		my $Test = Test::Builder->new;
 		$Test->skip("$module is a Wx module");
 	} else {
-		my $content = read_file($modules{$module});
 		my ($error) = $content =~ m/^use\s+.*Wx.*;/gmx;
 		my $Test = Test::Builder->new;
 		if ($TODO{$module}) {
@@ -77,6 +78,8 @@ foreach my $module ( sort keys %modules ) {
 			$Test->todo_end;
 		}
 	}
+
+	ok($content !~ /\$DB\:\:single/,$module.' uses $DB::Single - please remove before release');
 
 	# Load the document
 	my $document = PPI::Document->new(
