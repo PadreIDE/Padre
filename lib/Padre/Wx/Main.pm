@@ -38,7 +38,7 @@ use Params::Util                  ();
 use Time::HiRes                   ();
 use Padre::Action                 ();
 use Padre::Constant               ();
-use Padre::Util                   ();
+use Padre::Util                   qw(_T);
 use Padre::Perl                   ();
 use Padre::Locale                 ();
 use Padre::Current                ();
@@ -1892,6 +1892,11 @@ sub debug_perl {
 	my $self     = shift;
 	my $document = $self->current->document;
 
+	if ($self->{_debugger_}) {
+		$self->error(_T('Debugger is already running'));
+		return;
+	}
+
 	unless ( $document->isa('Padre::Document::Perl') ) {
 		return $self->error( Wx::gettext("Not a Perl document") );
 	}
@@ -1942,7 +1947,11 @@ sub debug_perl {
 
 sub debug_perl_quit {
 	my $self = shift;
-	return if not $self->{_debugger_};
+
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	print scalar $self->{_debugger_}->quit;
 	delete $self->{_debugger_};
@@ -1952,7 +1961,11 @@ sub debug_perl_quit {
 
 sub debug_perl_step_in {
 	my $self = shift;
-	return if not $self->{_debugger_};
+	
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	print scalar $self->{_debugger_}->step_in;
 
@@ -1961,7 +1974,11 @@ sub debug_perl_step_in {
 
 sub debug_perl_step_over {
 	my $self = shift;
-	return if not $self->{_debugger_};
+
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	print scalar $self->{_debugger_}->step_over;
 
@@ -1970,7 +1987,11 @@ sub debug_perl_step_over {
 
 sub debug_perl_step_out {
 	my $self = shift;
-	return if not $self->{_debugger_};
+
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	print scalar $self->{_debugger_}->step_out;
 
@@ -1980,7 +2001,11 @@ sub debug_perl_step_out {
 
 sub debug_perl_show_stack_trace {
 	my $self = shift;
-	return if not $self->{_debugger_};
+
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	my ( $prompt, $trace ) = $self->{_debugger_}->get_stack_trace;
 	my $str = $trace;
@@ -1995,7 +2020,11 @@ sub debug_perl_show_stack_trace {
 
 sub debug_perl_show_value {
 	my $self = shift;
-	return if not $self->{_debugger_};
+
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	my $current = $self->current;
 	return unless $current->editor;
@@ -2009,7 +2038,11 @@ sub debug_perl_show_value {
 
 sub debug_perl_evaluate_expression {
 	my $self = shift;
-	return if not $self->{_debugger_};
+
+	if (not $self->{_debugger_}) {
+		$self->error(_T('Debugger not running'));
+		return;
+	}
 
 	my $expression = $self->prompt(
 		Wx::gettext("Expression:"),
