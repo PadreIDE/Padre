@@ -8,6 +8,8 @@ Changes for Perl Application Development and Refactoring Environment
     - The Open resource's OK button is disabled when the 
       search results list is empty (AZAWAWI)
     - Help search (F2) now supports *ALL* installed CPAN modules (AZAWAWI)
+    - Fixed "Syntax Check" focus loss bug while switching tabs quickly
+      and a syntax error is in one of them (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
