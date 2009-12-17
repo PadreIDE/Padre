@@ -196,14 +196,6 @@ sub update_gui {
 		}
 
 		$syntax->set_column_widths($last_hint);
-
-		if ( $main->menu->view->{show_syntaxcheck}->IsChecked ) {
-
-			# Enabled "Syntax Check" tab is now shown when
-			# there is a problem without losing editor focus
-			$main->bottom->show($syntax);
-			$editor->SetFocus;
-		}
 	}
 
 	return 1;
