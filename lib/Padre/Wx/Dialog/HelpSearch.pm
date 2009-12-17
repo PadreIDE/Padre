@@ -15,6 +15,7 @@ use Padre::Wx::Icon ();
 # accessors
 use Class::XSAccessor accessors => {
 	_hbox          => '_hbox',          # horizontal box sizer
+	_topic_selector => '_topic_selector', # Topic selector
 	_search_text   => '_search_text',   # search text control
 	_list          => '_list',          # matches list
 	_index         => '_index',         # help topic list
@@ -121,12 +122,12 @@ sub _create_controls {
 		Wx::gettext('Select the help &topic')
 	);
 	my @topics         = ('perl 5');
-	my $topic_selector = Wx::Choice->new(
+	$self->_topic_selector( Wx::Choice->new(
 		$self, -1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		\@topics,
-	);
+	));
 
 	#Wx::Event::EVT_CHOICE($self, $topic_selector, \&select_topic);
 
@@ -172,7 +173,7 @@ sub _create_controls {
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
 	$vbox->Add( $topic_label,        0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $topic_selector,     0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_topic_selector,     0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
 	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND,     2 );
@@ -256,9 +257,23 @@ sub show {
 		if ($doc) {
 			$self->_help_provider(undef);
 		}
-		return if not $self->_search;
-		$self->_update_list_box;
 		$self->Show(1);
+		$self->_search_text->Enable(0);
+		$self->_topic_selector->Enable(0);
+		$self->_list->Enable(0);
+		$self->_help_viewer->SetPage('<b>' . Wx::gettext('Reading items. Please wait') . '</b>');
+		Wx::Event::EVT_IDLE(
+			$self,
+			sub {
+				if($self->_search) {
+					$self->_update_list_box;
+				}
+				$self->_search_text->Enable(1);
+				$self->_topic_selector->Enable(1);
+				$self->_list->Enable(1);
+				Wx::Event::EVT_IDLE( $self, undef );
+			}
+		);
 	}
 	$self->_search_text->SetFocus();
 
