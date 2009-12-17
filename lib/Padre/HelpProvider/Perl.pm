@@ -25,7 +25,7 @@ sub help_init {
 	my $self = shift;
 
 	# serve the cached copy if it is already built
-	if($cached_help_list) {
+	if ($cached_help_list) {
 		$self->{help_list} = $cached_help_list;
 		return;
 	}
@@ -157,11 +157,11 @@ sub _find_installed_modules {
 	my $self = shift;
 	my %seen;
 	for my $path (@INC) {
-	for my $file (File::Find::Rule->name('*.pm')->in($path)) {
-		my $module = substr($file, length($path)+1);
-		$module =~ s/.pm$//;
-		$module =~ s{[\\/]}{::}g;
-		$seen{$module}++;
+		for my $file ( File::Find::Rule->name('*.pm')->in($path) ) {
+			my $module = substr( $file, length($path) + 1 );
+			$module =~ s/.pm$//;
+			$module =~ s{[\\/]}{::}g;
+			$seen{$module}++;
 		}
 	}
 	return keys %seen;
