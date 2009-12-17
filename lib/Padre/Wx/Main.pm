@@ -25,20 +25,20 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd                           ();
-use Carp                          ();
-use IPC::Open3                    ();
-use File::Spec                    ();
-use File::HomeDir                 ();
-use File::Basename                ();
-use File::Temp                    ();
-use List::Util                    ();
-use Scalar::Util                  ();
-use Params::Util                  ();
-use Time::HiRes                   ();
-use Padre::Action                 ();
-use Padre::Constant               ();
-use Padre::Util                   qw(_T);
+use Cwd             ();
+use Carp            ();
+use IPC::Open3      ();
+use File::Spec      ();
+use File::HomeDir   ();
+use File::Basename  ();
+use File::Temp      ();
+use List::Util      ();
+use Scalar::Util    ();
+use Params::Util    ();
+use Time::HiRes     ();
+use Padre::Action   ();
+use Padre::Constant ();
+use Padre::Util qw(_T);
 use Padre::Perl                   ();
 use Padre::Locale                 ();
 use Padre::Current                ();
@@ -1894,8 +1894,8 @@ sub debug_perl {
 	my $self     = shift;
 	my $document = $self->current->document;
 
-	if ($self->{_debugger_}) {
-		$self->error(_T('Debugger is already running'));
+	if ( $self->{_debugger_} ) {
+		$self->error( _T('Debugger is already running') );
 		return;
 	}
 
@@ -1940,8 +1940,9 @@ sub debug_perl {
 	$debugger->listen;
 	$self->{_debugger_} = $debugger;
 
-        my ($prompt, $module, $file, $row, $content) = $debugger->get;
+	my ( $prompt, $module, $file, $row, $content ) = $debugger->get;
 	print("File: $file row: $row\n");
+
 	#print "Prompt: $prompt\n";
 
 	#my @out = $debugger->get;
@@ -1962,8 +1963,8 @@ sub debug_perl {
 sub debug_perl_quit {
 	my $self = shift;
 
-	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
 		return;
 	}
 
@@ -1975,16 +1976,16 @@ sub debug_perl_quit {
 
 sub debug_perl_step_in {
 	my $self = shift;
-	
-	if (not $self->{_debugger_}) {
-		if (not $self->debug_perl) {
-			$self->error(_T('Debugger not running'));
+
+	if ( not $self->{_debugger_} ) {
+		if ( not $self->debug_perl ) {
+			$self->error( _T('Debugger not running') );
 		}
 		return;
 	}
 
-	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_in;
-	if ($module eq '<TERMINATED>') {
+	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_in;
+	if ( $module eq '<TERMINATED>' ) {
 		print "TERMINATED\n";
 		$self->debug_perl_quit;
 		return;
@@ -1997,13 +1998,13 @@ sub debug_perl_step_in {
 sub debug_perl_step_over {
 	my $self = shift;
 
-	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
 		return;
 	}
 
-	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_over;
-	if ($module eq '<TERMINATED>') {
+	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_over;
+	if ( $module eq '<TERMINATED>' ) {
 		print "TERMINATED\n";
 		$self->debug_perl_quit;
 		return;
@@ -2016,13 +2017,13 @@ sub debug_perl_step_over {
 sub debug_perl_step_out {
 	my $self = shift;
 
-	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
 		return;
 	}
 
-	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_out;
-	if ($module eq '<TERMINATED>') {
+	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_out;
+	if ( $module eq '<TERMINATED>' ) {
 		print "TERMINATED\n";
 		$self->debug_perl_quit;
 		return;
@@ -2036,8 +2037,8 @@ sub debug_perl_step_out {
 sub debug_perl_show_stack_trace {
 	my $self = shift;
 
-	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
 		return;
 	}
 
@@ -2055,8 +2056,8 @@ sub debug_perl_show_stack_trace {
 sub debug_perl_show_value {
 	my $self = shift;
 
-	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
 		return;
 	}
 
@@ -2073,8 +2074,8 @@ sub debug_perl_show_value {
 sub debug_perl_evaluate_expression {
 	my $self = shift;
 
-	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
 		return;
 	}
 
@@ -5202,7 +5203,7 @@ sub on_new_from_template {
 
 	# Create the file from the content
 	require Padre::MimeTypes;
-	my $mime_type = Padre::MimeTypes->guess_mimetype($output, $file);
+	my $mime_type = Padre::MimeTypes->guess_mimetype( $output, $file );
 	return $self->new_document_from_string( $output, $mime_type );
 }
 

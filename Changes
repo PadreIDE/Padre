@@ -13,6 +13,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Help search does not block when loading a long help topics
       list (AZAWAWI)
     - Ticket #787: Add a test for breakpoints to testsuite (SEWI)
+    - Fixed missing mime type guessing that caused new Padre documents to
+      default always to Scintilla (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

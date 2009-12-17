@@ -16,7 +16,7 @@ our $VERSION = '0.52';
 our @ISA     = 'Padre::HelpProvider';
 
 # for caching help list (for faster access)
-my ($cached_help_list, $cached_perlopref);
+my ( $cached_help_list, $cached_perlopref );
 
 #
 # Initialize help
