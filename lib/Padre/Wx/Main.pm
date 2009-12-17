@@ -1963,10 +1963,8 @@ sub debug_perl_quit {
 	my $self = shift;
 
 	if (not $self->{_debugger_}) {
-		if (not $self->debug_perl) {
-			$self->error(_T('Debugger not running'));
-			return;
-		}
+		$self->error(_T('Debugger not running'));
+		return;
 	}
 
 	print scalar $self->{_debugger_}->quit;
@@ -1979,11 +1977,14 @@ sub debug_perl_step_in {
 	my $self = shift;
 	
 	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
+		if (not $self->debug_perl) {
+			$self->error(_T('Debugger not running'));
+		}
 		return;
 	}
 
-	print scalar $self->{_debugger_}->step_in;
+	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_in;
+	print("File: $file row: $row Content: $content\n");
 
 	return;
 }
@@ -1996,7 +1997,8 @@ sub debug_perl_step_over {
 		return;
 	}
 
-	print scalar $self->{_debugger_}->step_over;
+	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_over;
+	print("File: $file row: $row Content: $content\n");
 
 	return;
 }
@@ -2009,7 +2011,8 @@ sub debug_perl_step_out {
 		return;
 	}
 
-	print scalar $self->{_debugger_}->step_out;
+	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_out;
+	print("File: $file row: $row Content: $content\n");
 
 	return;
 }
