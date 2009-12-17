@@ -5201,6 +5201,7 @@ sub on_new_from_template {
 	);
 
 	# Create the file from the content
+	require Padre::MimeTypes;
 	my $mime_type = Padre::MimeTypes->guess_mimetype($output, $file);
 	return $self->new_document_from_string( $output, $mime_type );
 }
