@@ -16,7 +16,7 @@ our $VERSION = '0.52';
 our @ISA     = 'Padre::HelpProvider';
 
 # for caching help list (for faster access)
-my $cached_help_list;
+my ($cached_help_list, $cached_perlopref);
 
 #
 # Initialize help
@@ -27,6 +27,7 @@ sub help_init {
 	# serve the cached copy if it is already built
 	if ($cached_help_list) {
 		$self->{help_list} = $cached_help_list;
+		$self->{perlopref} = $cached_perlopref;
 		return;
 	}
 
@@ -146,6 +147,7 @@ sub help_init {
 
 	# Store the cached help list for faster access
 	$cached_help_list = $self->{help_list};
+	$cached_perlopref = $self->{perlopref};
 }
 
 #
