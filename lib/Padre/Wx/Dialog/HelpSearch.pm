@@ -273,6 +273,7 @@ sub show {
 				$self->_search_text->Enable(1);
 				$self->_topic_selector->Enable(1);
 				$self->_list->Enable(1);
+				$self->_search_text->SetFocus();
 				Wx::Event::EVT_IDLE( $self, undef );
 			}
 		);
