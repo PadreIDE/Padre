@@ -81,6 +81,7 @@ sub new {
 		'Help',
 		Wx::wxDefaultPosition,
 		[ 750, 700 ],
+		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
 	$self->{provider} = Padre::DocBrowser->new;
