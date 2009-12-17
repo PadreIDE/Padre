@@ -10,6 +10,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Help search (F2) now supports *ALL* installed CPAN modules (AZAWAWI)
     - Fixed "Syntax Check" focus loss bug while switching tabs quickly
       and a syntax error is in one of them (AZAWAWI)
+    - Help search does not block when loading a long help topics
+      list (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

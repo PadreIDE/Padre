@@ -14,16 +14,16 @@ use Padre::Wx::Icon ();
 
 # accessors
 use Class::XSAccessor accessors => {
-	_hbox          => '_hbox',          # horizontal box sizer
+	_hbox           => '_hbox',           # horizontal box sizer
 	_topic_selector => '_topic_selector', # Topic selector
-	_search_text   => '_search_text',   # search text control
-	_list          => '_list',          # matches list
-	_index         => '_index',         # help topic list
-	_help_viewer   => '_help_viewer',   # HTML Help Viewer
-	_main          => '_main',          # Padre's main window
-	_topic         => '_topic',         # default help topic
-	_help_provider => '_help_provider', # Help Provider
-	_status        => '_status'         # status label
+	_search_text    => '_search_text',    # search text control
+	_list           => '_list',           # matches list
+	_index          => '_index',          # help topic list
+	_help_viewer    => '_help_viewer',    # HTML Help Viewer
+	_main           => '_main',           # Padre's main window
+	_topic          => '_topic',          # default help topic
+	_help_provider  => '_help_provider',  # Help Provider
+	_status         => '_status'          # status label
 };
 
 # -- constructor
@@ -121,13 +121,15 @@ sub _create_controls {
 		$self, -1,
 		Wx::gettext('Select the help &topic')
 	);
-	my @topics         = ('perl 5');
-	$self->_topic_selector( Wx::Choice->new(
-		$self, -1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		\@topics,
-	));
+	my @topics = ('perl 5');
+	$self->_topic_selector(
+		Wx::Choice->new(
+			$self, -1,
+			Wx::wxDefaultPosition,
+			Wx::wxDefaultSize,
+			\@topics,
+		)
+	);
 
 	#Wx::Event::EVT_CHOICE($self, $topic_selector, \&select_topic);
 
@@ -172,14 +174,14 @@ sub _create_controls {
 
 	my $vbox = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	$vbox->Add( $topic_label,        0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_topic_selector,     0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_search_text, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $matches_label,      0, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_list,        1, Wx::wxALL | Wx::wxEXPAND,     2 );
-	$vbox->Add( $self->_status,      0, Wx::wxALL | Wx::wxEXPAND,     0 );
-	$vbox->Add( $close_button,       0, Wx::wxALL | Wx::wxALIGN_LEFT, 0 );
+	$vbox->Add( $topic_label,           0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_topic_selector, 0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $search_label,          0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_search_text,    0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $matches_label,         0, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_list,           1, Wx::wxALL | Wx::wxEXPAND,     2 );
+	$vbox->Add( $self->_status,         0, Wx::wxALL | Wx::wxEXPAND,     0 );
+	$vbox->Add( $close_button,          0, Wx::wxALL | Wx::wxALIGN_LEFT, 0 );
 	$self->_hbox->Add( $vbox, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$self->_hbox->Add(
 		$self->_help_viewer,                                                        1,
@@ -261,11 +263,11 @@ sub show {
 		$self->_search_text->Enable(0);
 		$self->_topic_selector->Enable(0);
 		$self->_list->Enable(0);
-		$self->_help_viewer->SetPage('<b>' . Wx::gettext('Reading items. Please wait') . '</b>');
+		$self->_help_viewer->SetPage( '<b>' . Wx::gettext('Reading items. Please wait') . '</b>' );
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
-				if($self->_search) {
+				if ( $self->_search ) {
 					$self->_update_list_box;
 				}
 				$self->_search_text->Enable(1);
