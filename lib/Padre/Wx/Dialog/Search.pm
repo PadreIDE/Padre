@@ -86,7 +86,7 @@ sub _find {
 		$what = quotemeta $self->{entry}->GetValue;
 	}
 
-	my $regex = $self->{case}->GetValue ? qr/$what/im : qr/$what/m;
+	my $regex = $self->{case}->GetValue ? qr/($what)/im : qr/($what)/m;
 
 	my ( $from, $to ) =
 		$self->{restart}
