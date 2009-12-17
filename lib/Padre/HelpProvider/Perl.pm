@@ -15,11 +15,20 @@ use Padre::Debug;
 our $VERSION = '0.52';
 our @ISA     = 'Padre::HelpProvider';
 
+# for caching help list (for faster access)
+my $cached_help_list;
+
 #
 # Initialize help
 #
 sub help_init {
 	my $self = shift;
+
+	# serve the cached copy if it is already built
+	if($cached_help_list) {
+		$self->{help_list} = $cached_help_list;
+		return;
+	}
 
 	my @index = ();
 
@@ -123,9 +132,8 @@ sub help_init {
 	$Type{break} = 1;
 	push @index, keys %Type;
 
-	# Add CORE modules
-	# Note the 0 + $] to cast it to number
-	push @index, Module::CoreList->find_modules( qr//, 0 + $] );
+	# Add Installed modules
+	push @index, $self->_find_installed_modules;
 
 	# Add Perl Operators Reference
 	$self->{perlopref} = $self->_parse_perlopref;
@@ -135,6 +143,28 @@ sub help_init {
 	my %seen = ();
 	my @unique_sorted_index = sort grep { !$seen{$_}++ } @index;
 	$self->{help_list} = \@unique_sorted_index;
+
+	# Store the cached help list for faster access
+	$cached_help_list = $self->{help_list};
+}
+
+#
+# Finds installed CPAN modules via @INC
+# This solution resides at:
+# http://stackoverflow.com/questions/115425/how-do-i-get-a-list-of-installed-cpan-modules
+#
+sub _find_installed_modules {
+	my $self = shift;
+	my %seen;
+	for my $path (@INC) {
+	for my $file (File::Find::Rule->name('*.pm')->in($path)) {
+		my $module = substr($file, length($path)+1);
+		$module =~ s/.pm$//;
+		$module =~ s{[\\/]}{::}g;
+		$seen{$module}++;
+		}
+	}
+	return keys %seen;
 }
 
 #

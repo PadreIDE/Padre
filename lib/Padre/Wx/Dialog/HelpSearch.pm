@@ -91,8 +91,6 @@ sub _display_help_in_viewer {
 	return;
 }
 
-# -- private methods
-
 #
 # create the dialog itself.
 #
