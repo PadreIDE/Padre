@@ -1886,6 +1886,8 @@ sub run_document {
 Run current document under Perl debugger. An error is reported if
 current is not a Perl document.
 
+Returns true if debugger successfully started.
+
 =cut
 
 sub debug_perl {
@@ -1898,7 +1900,8 @@ sub debug_perl {
 	}
 
 	unless ( $document->isa('Padre::Document::Perl') ) {
-		return $self->error( Wx::gettext("Not a Perl document") );
+		$self->error( Wx::gettext("Not a Perl document") );
+		return;
 	}
 
 	# Check the file name
@@ -1923,25 +1926,36 @@ sub debug_perl {
 	my $host = 'localhost';
 	my $port = 12345 + int rand(1000); # TODO make this configurable?
 
-	# $self->_setup_debugger($host, $port);
-	local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
 
-	# Run with console Perl to prevent unexpected results under wperl
-	my $perl = Padre::Perl::cperl();
-	$self->run_command(qq["$perl" -d "$filename"]);
+	{
+		local $ENV{PERLDB_OPTS} = "RemotePort=$host:$port";
+
+		# Run with console Perl to prevent unexpected results under wperl
+		my $perl = Padre::Perl::cperl();
+		$self->run_command(qq["$perl" -d "$filename"]);
+	}
 
 	require Debug::Client;
 	my $debugger = Debug::Client->new( host => $host, port => $port );
 	$debugger->listen;
 	$self->{_debugger_} = $debugger;
-	my $out = $debugger->get;
-	print $out;
 
-	#	$self->show_output(1);
-	#	$self->output->clear;
-	#	$self->output->AppendText($out);
+        my ($prompt, $module, $file, $row, $content) = $debugger->get;
+	print("File: $file row: $row\n");
+	#print "Prompt: $prompt\n";
 
-	return;
+	#my @out = $debugger->get;
+	#use Data::Dumper;
+	#print Data::Dumper::Dumper \@out;
+
+	#my $out = $debugger->get;
+	#print $out;
+
+	#$self->show_output(1);
+	#$self->output->clear;
+	#$self->output->AppendText("File: $file row: $row");
+
+	return 1;
 }
 
 
@@ -1949,8 +1963,10 @@ sub debug_perl_quit {
 	my $self = shift;
 
 	if (not $self->{_debugger_}) {
-		$self->error(_T('Debugger not running'));
-		return;
+		if (not $self->debug_perl) {
+			$self->error(_T('Debugger not running'));
+			return;
+		}
 	}
 
 	print scalar $self->{_debugger_}->quit;
