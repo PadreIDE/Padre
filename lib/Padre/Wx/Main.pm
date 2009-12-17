@@ -1984,6 +1984,11 @@ sub debug_perl_step_in {
 	}
 
 	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_in;
+	if ($module eq '<TERMINATED>') {
+		print "TERMINATED\n";
+		$self->debug_perl_quit;
+		return;
+	}
 	print("File: $file row: $row Content: $content\n");
 
 	return;
@@ -1998,6 +2003,11 @@ sub debug_perl_step_over {
 	}
 
 	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_over;
+	if ($module eq '<TERMINATED>') {
+		print "TERMINATED\n";
+		$self->debug_perl_quit;
+		return;
+	}
 	print("File: $file row: $row Content: $content\n");
 
 	return;
@@ -2012,6 +2022,11 @@ sub debug_perl_step_out {
 	}
 
 	my ($prompt, $module, $file, $row, $content) = $self->{_debugger_}->step_out;
+	if ($module eq '<TERMINATED>') {
+		print "TERMINATED\n";
+		$self->debug_perl_quit;
+		return;
+	}
 	print("File: $file row: $row Content: $content\n");
 
 	return;
