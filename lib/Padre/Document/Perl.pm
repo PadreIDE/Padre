@@ -1065,6 +1065,7 @@ sub autocomplete {
 	} elsif ( defined($event) and ( !ref($event) ) ) {
 		$nextchar = $event;
 	}
+	$nextchar = '' if ord($nextchar) < 32;
 
 	# WARNING: This is totally not done, but Gabor made me commit it.
 	# TO DO:

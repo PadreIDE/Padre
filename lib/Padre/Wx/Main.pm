@@ -5400,9 +5400,11 @@ C<Ctrl>+key combinations used within Padre.
 sub key_up {
 	my $self  = shift;
 	my $event = shift;
+	
 	my $mod   = $event->GetModifiers || 0;
 	my $code  = $event->GetKeyCode;
 
+	my $config = $self->config;
 
 	# Remove the bit ( Wx::wxMOD_META) set by Num Lock being pressed on Linux
 	# () needed after the constants as they are functions in Perl and
@@ -5440,6 +5442,12 @@ sub key_up {
 		#			#$self->bottom->GetSelection;
 		#		}
 	}
+	
+	if ( $config->autocomplete_always and (!$mod) ) {
+		$DB::single=1;
+		$self->on_autocompletion($event);
+	}
+	
 	$event->Skip;
 	return;
 }
