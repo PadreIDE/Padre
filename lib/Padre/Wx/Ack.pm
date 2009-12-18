@@ -154,7 +154,13 @@ sub dialog {
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_pick_dir_}, \&on_pick_dir );
 	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},   \&cancel_clicked );
 
-	$dialog->{_widgets_}->{_ack_term_}->SetFocus;
+	Wx::Event::EVT_IDLE(
+		$dialog,
+		sub {
+			$dialog->{_widgets_}->{_ack_term_}->SetFocus;
+			Wx::Event::EVT_IDLE( $dialog, undef );
+		}
+	);
 
 	return $dialog;
 }
