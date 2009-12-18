@@ -202,6 +202,37 @@ sub new {
 		},
 	);
 
+	Padre::Action->new(
+		name         => 'debug.run',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Run till breakpoint'),
+		comment      => Wx::gettext('Run'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_run;
+		},
+	);
+
+
+	Padre::Action->new(
+		name         => 'debug.run_to_cursor',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Run to cursor'),
+		comment      => Wx::gettext('Run'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_run_to_cursor;
+		},
+	);
+
 
 	Padre::Action->new(
 		name         => 'debug.show_stack_trace',

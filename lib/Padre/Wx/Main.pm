@@ -2036,7 +2036,9 @@ sub debug_perl_step_in {
 	if ( not $self->{_debugger_} ) {
 		if ( not $self->debug_perl ) {
 			$self->error( _T('Debugger not running') );
+			return;
 		}
+		# no need to make first step
 		return;
 	}
 
@@ -2055,8 +2057,10 @@ sub debug_perl_step_over {
 	my $self = shift;
 
 	if ( not $self->{_debugger_} ) {
-		$self->error( _T('Debugger not running') );
-		return;
+		if ( not $self->debug_perl ) {
+			$self->error( _T('Debugger not running') );
+			return;
+		}
 	}
 
 	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_over;
@@ -2069,6 +2073,40 @@ sub debug_perl_step_over {
 
 	return;
 }
+
+sub debug_perl_run_to_cursor {
+	my $self = shift;
+	my $current = $self->current;
+	return $self->error("Not implemented");
+	
+	my $file = $current->filename;
+	my $row = '';
+	# put a breakpoint to the cursor and then run till there
+	$self->debug_perl_run();
+}
+
+sub debug_perl_run {
+	my $self = shift;
+	my $param = shift;
+
+	if ( not $self->{_debugger_} ) {
+		if ( not $self->debug_perl ) {
+			$self->error( _T('Debugger not running') );
+			return;
+		}
+	}
+
+	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->run($param);
+	if ( $module eq '<TERMINATED>' ) {
+		print "TERMINATED\n";
+		$self->debug_perl_quit;
+		return;
+	}
+	print("File: $file row: $row Content: $content\n");
+
+	return;
+}
+
 
 sub debug_perl_step_out {
 	my $self = shift;
