@@ -223,9 +223,15 @@ sub _behaviour_panel {
 	my ( $self, $treebook, $main_startup, $main_functions_order, $perldiag_locales, $default_line_ending ) = @_;
 
 	my $config = Padre->ide->config;
+
 	my $table  = [
 		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
 				Wx::gettext('Default word wrap on for each file')
+			],
+			[]
+		],
+		[   [   'Wx::CheckBox', 'swap_ctrl_tab_alt_right', ( $config->swap_ctrl_tab_alt_right ? 1 : 0 ),
+				Wx::gettext('Use panel order for Ctrl-Tab (not usage history)')
 			],
 			[]
 		],
@@ -956,6 +962,10 @@ sub run {
 	$config->set(
 		'editor_wordwrap',
 		$data->{editor_wordwrap} ? 1 : 0
+	);
+	$config->set(
+		'swap_ctrl_tab_alt_right',
+		$data->{swap_ctrl_tab_alt_right} ? 1 : 0
 	);
 	$config->set(
 		'save_autoclean',

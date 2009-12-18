@@ -394,6 +394,13 @@ setting(
 		. 'menu.Help',
 );
 
+setting(
+	name    => 'swap_ctrl_tab_alt_right',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 # Directory Tree Settings
 setting(
 	name    => 'default_projects_directory',
@@ -772,6 +779,12 @@ setting(
 );
 setting(
 	name    => 'func_bookmark',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
+setting(
+	name    => 'func_fontsize',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,

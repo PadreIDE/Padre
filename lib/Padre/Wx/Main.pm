@@ -5414,14 +5414,23 @@ sub key_up {
 		                           # Ctrl-TAB  #TO DO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 
-			# TODO: Catch up the right action for this shortcut
-			$self->on_last_visited_pane;
+			if ($config->swap_ctrl_tab_alt_right){
+				&{Padre->ide->actions->{'window.next_file'}->menu_event}($self,$event);
+			} else {
+				&{Padre->ide->actions->{'window.last_visited_file'}->menu_event}($self,$event);
+			}
 		}
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
 		                                                      # Ctrl-Shift-TAB
 		                                                      # TODO it is already in the menu
-		                                                      # TODO: Catch up the right action for this shortcut
-		$self->on_oldest_visited_pane if $code == Wx::WXK_TAB;
+		if ( $code == Wx::WXK_TAB ) {
+
+			if ($config->swap_ctrl_tab_alt_right){
+				&{Padre->ide->actions->{'window.previous_file'}->menu_event}($self,$event);
+			} else {
+				&{self->ide->actions->{'window.oldest_visited_file'}->menu_event}($self,$event);
+			}
+		}
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 
 		#		my $current_focus = Wx::Window::FindFocus();
