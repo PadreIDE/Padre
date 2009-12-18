@@ -151,7 +151,15 @@ sub update_gui {
 		my $idx = $syntax->InsertStringImageItem( 0, '', 2 );
 		$syntax->SetItemData( $idx, 0 );
 		$syntax->SetItem( $idx, 1, Wx::gettext('Info') );
-		$syntax->SetItem( $idx, 2, Wx::gettext('No errors or warnings found.') );
+
+		# Relative-to-the-project filename
+		my $document = Padre::Current->document;
+		my $filename = $document->file->{filename};
+		if ( defined( $document->project_dir ) ) {
+			my $project_dir = quotemeta $document->project_dir;
+			$filename =~ s/^$project_dir//;
+		}
+		$syntax->SetItem( $idx, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
 		return;
 	}
 
