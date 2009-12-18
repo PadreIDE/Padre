@@ -83,7 +83,7 @@ sub _display_help_in_viewer {
 		$html =~ s/<pre>/<table border="0" width="100%" bgcolor="#EEEEEE"><tr><td><pre>/ig;
 		$html =~ s/<\/pre>/<\/pre\><\/td><\/tr><\/table>/ig;
 	} else {
-		$html = '<b>' . Wx::gettext('No Help found') . '</b>';
+		$html = '<b><font size="+2">' . Wx::gettext('No Help found') . '</font></b>';
 	}
 
 	$self->SetTitle( Wx::gettext('Help Search') . ( defined $location ? ' - ' . $location : '' ) );
@@ -105,7 +105,7 @@ sub _create {
 	$self->_create_controls;
 
 	# wrap everything in a box to add some padding
-	$self->SetMinSize( [ 640, 480 ] );
+	$self->SetMinSize( [ 750, 550 ] );
 	$self->SetSizer( $self->_hbox );
 
 	return;
@@ -263,7 +263,7 @@ sub show {
 		$self->_search_text->Enable(0);
 		$self->_topic_selector->Enable(0);
 		$self->_list->Enable(0);
-		$self->_help_viewer->SetPage( '<b>' . Wx::gettext('Reading items. Please wait') . '</b>' );
+		$self->_help_viewer->SetPage( '<b><font size="+2">' . Wx::gettext('Reading items. Please wait') . '</font></b>' );
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
