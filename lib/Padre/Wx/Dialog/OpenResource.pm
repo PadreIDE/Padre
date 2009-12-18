@@ -319,7 +319,7 @@ sub _setup_events {
 			my @matches      = $self->_matches_list->GetSelections();
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
-				$self->_status_text->ChangeValue( $self->_matches_list->GetClientData( $matches[0] ) );
+				$self->_status_text->ChangeValue( $self->_path($self->_matches_list->GetClientData( $matches[0])) );
 				$self->_copy_button->Enable(1);
 			} elsif ( $num_selected > 1 ) {
 				$self->_status_text->ChangeValue( $num_selected . " items selected" );
@@ -455,7 +455,7 @@ sub _show_recently_opened_resources {
 	my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ?", 'RESOURCE' ) || [];
 	my @recent_files = ();
 	foreach my $e (@$recently_used) {
-		push @recent_files, $e->value;
+		push @recent_files,  $self->_path($e->value);
 	}
 	@recent_files = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recent_files;
 
@@ -515,7 +515,7 @@ sub _update_matches_list_box {
 	}
 	if ( $pos > 0 ) {
 		$self->_matches_list->Select(0);
-		$self->_status_text->ChangeValue( $self->_matches_list->GetClientData(0) );
+		$self->_status_text->ChangeValue( $self->_path($self->_matches_list->GetClientData(0)) );
 		$self->_status_text->Enable(1);
 		$self->_copy_button->Enable(1);
 		$self->_ok_button->Enable(1);
@@ -529,6 +529,16 @@ sub _update_matches_list_box {
 	return;
 }
 
+#
+# Cleans a path on various platforms
+#
+sub _path {
+	my ($self, $path) = @_;
+	if(Padre::Constant::WIN32) {
+		$path =~ s/\//\\/g;
+	}
+	return $path;
+}
 
 1;
 
