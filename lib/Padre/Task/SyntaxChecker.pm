@@ -88,7 +88,7 @@ sub new {
 		$editor = Padre::Current->editor;
 	}
 	return () if not defined $editor;
-	$editor = Scalar::Util::refaddr( $editor );
+	$editor = Scalar::Util::refaddr($editor);
 	$self->{main_thread_only}->{on_finish} = $on_finish if $on_finish;
 	$self->{main_thread_only}->{editor} = $editor;
 	return bless $self => $class;
@@ -131,6 +131,7 @@ sub update_gui {
 	my $editor = Padre::Current->editor;
 	my $addr   = delete $self->{main_thread_only}->{editor};
 	if ( not $addr or not $editor or $addr ne Scalar::Util::refaddr($editor) ) {
+
 		# editor reference is not valid any more
 		return 1;
 	}

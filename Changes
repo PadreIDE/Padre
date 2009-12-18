@@ -17,6 +17,8 @@ Changes for Perl Application Development and Refactoring Environment
       default always to Scintilla (AZAWAWI)
     - Landed first phase of new multi-resource locking subsystem (ADAMK)
     - In Open resource, path is now cleaned from slashes on win32 (AZAWAWI)
+    - Fixed Padre crash when closing a Perl 5 script tab quickly while syntax
+      check is on (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
