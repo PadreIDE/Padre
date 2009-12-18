@@ -5415,13 +5415,13 @@ sub key_up {
 		if ( $code == Wx::WXK_TAB ) {
 
 			# TODO: Catch up the right action for this shortcut
-			$self->on_next_pane;
+			$self->on_last_visited_pane;
 		}
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
 		                                                      # Ctrl-Shift-TAB
 		                                                      # TODO it is already in the menu
 		                                                      # TODO: Catch up the right action for this shortcut
-		$self->on_prev_pane if $code == Wx::WXK_TAB;
+		$self->on_oldest_visited_pane if $code == Wx::WXK_TAB;
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
 
 		#		my $current_focus = Wx::Window::FindFocus();
