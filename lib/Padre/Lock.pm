@@ -8,26 +8,25 @@ our $VERSION = '0.52';
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Enable the locks
-	if ( $self->{update} ) {
+	if ( $self->{UPDATE} ) {
 		$self->{locker}->update_enable;
 	}
-	if ( $self->{busy} ) {
+	if ( $self->{BUSY} ) {
 		$self->{locker}->busy_enable;
 	}
 
 	return $self;
 }
 
+# Disable locking on destruction
 sub DESTROY {
-
-	# Disable the locks
-	if ( $_[0]->{update} ) {
+	if ( $_[0]->{UPDATE} ) {
 		$_[0]->{locker}->update_disable;
 	}
-	if ( $_[0]->{busy} ) {
+	if ( $_[0]->{BUSY} ) {
 		$_[0]->{locker}->busy_disable;
 	}
 }

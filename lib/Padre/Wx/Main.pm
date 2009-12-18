@@ -127,26 +127,35 @@ sub new {
 	# This prevents tons of ide->config
 	$self->{config} = $config;
 
+	# Create the lock manager before any gui operations,
+	# so that we can do locking operations during startup.
+	$self->{locker} = Padre::Locker->new($self);
+
 	# Determine the window title (needs ide & config)
 	$self->set_title;
 
-	# Having recorded the "current working directory" move
-	# the OS directory cursor away from this directory, so
-	# that Padre won't hold a lock on the current directory.
-	# If changing the directory fails, ignore errors (for now)
+	# Remember where the editor started from,
+	# this could be handy later.
 	$self->{cwd} = Cwd::cwd();
-	if (Padre::Constant::WIN32) {
 
-		# Directory locking problem only exists on Win
+	# There is a directory locking problem on Win32.
+	# If we open Padre from a directory and leave the Cwd cursor
+	# in that directory, then it can NEVER be deleted.
+	# Having recorded the "current working directory" move
+	# the OS directory cursor away from this starting directory,
+	# so that Padre won't hold an implicit OS lock on it.
+	# NOTE: If changing the directory fails, ignore errors for now,
+	#       since that means we have WAY bigger problems.
+	if ( Padre::Constant::WIN32 ) {
 		chdir( File::HomeDir->my_home );
 	}
+
+	# Bootstrap locale support before we start fiddling with the GUI.
+	$self->{locale} = Padre::Locale::object();
 
 	# A large complex application looks, frankly, utterly stupid
 	# if it gets very small, or even mildly small.
 	$self->SetMinSize( Wx::Size->new( 500, 400 ) );
-
-	# Set the locale
-	$self->{locale} = Padre::Locale::object();
 
 	# Drag and drop support
 	Padre::Wx::FileDropTarget->set($self);
@@ -329,9 +338,9 @@ use Class::XSAccessor predicates => {
 	getters => {
 
 	# GUI Elements
-	title               => 'title',
-	config              => 'config',
 	ide                 => 'ide',
+	config              => 'config',
+	title               => 'title',
 	aui                 => 'aui',
 	menu                => 'menu',
 	notebook            => 'notebook',
@@ -346,6 +355,7 @@ use Class::XSAccessor predicates => {
 	infomessage_timeout => 'infomessage_timeout',
 
 	# Operating Data
+	locker     => 'locker',
 	cwd        => 'cwd',
 	search     => 'search',
 	no_refresh => '_no_refresh',
@@ -618,16 +628,62 @@ sub _timer_post_init {
 
 =pod
 
-=head2 C<freezer>
+=head2 C<lock>
 
-   my $locker = $main->freezer;
+  my $lock = $main->lock('UPDATE', 'BUSY', 'refresh_menu');
 
-Create and return an automatic C<freeze> object that will C<thaw> on destruction.
+Create and return a guard object that holds resource locks of various types.
+
+The method takes a parameter list of the locks you wish to exist for the
+current scope. Special types of locks are provided in capitals,
+refresh/method locks are provided in lowercase.
+
+The C<UPDATE> lock creates a Wx repaint lock using the built in
+L<Wx::WindowUpdateLocker> class.
+
+You should use an update lock during GUI construction/modification to
+prevent screen flicker. As a side effect of not updating, the GUI changes
+happen B<significantly> faster as well. Update locks should only be held for
+short periods of time, as the operating system will begin to treat your\
+application as "hung" if an update lock persists for more than a few
+seconds. In this situation, you may begin to see GUI corruption.
+
+The C<BUSY> lock creates a Wx "busy" lock using the built in
+L<Wx::WindowDisabler> class.
+
+You should use a busy lock during times when Padre has to do a long and/or
+complex operation in the foreground, or when you wish to disable use of any
+user interface elements until a background thread is finished.
+
+Busy locks can be held for long periods of time, however your users may
+start to suspect trouble if you do not provide any periodic feedback to them.
+
+Lowercase lock names are used to delay the firing of methods that will
+themselves generate GUI events you may want to delay until you are sure
+you want to rebuild the GUI.
+
+For example, opening a file will require a Padre::Wx::Main refresh call,
+which will itself generate more refresh calls on the directory browser, the
+function list, output window, menus, and so on.
+
+But if you open more than one file at a time, you don't want to refresh the
+menu for the first file, only to do it again on the second, third and
+fourth files.
+
+By creating refresh locks in the top level operation, you allow the lower
+level operation to make requests for parts of the GUI to be refreshed, but
+have the actual refresh actions delayed until the lock expires.
+
+This should make operations with a high GUI intensity both simpler and
+faster.
+
+The name of the lowercase MUST be the name of a Padre::Wx::Main method,
+which will be fired (with no params) when the method lock expires.
 
 =cut
 
-sub freezer {
-	Wx::WindowUpdateLocker->new( $_[0] );
+sub lock {
+	shift->locker->lock( @_ );
 }
 
 =pod
@@ -902,7 +958,7 @@ sub refresh {
 	return if $self->no_refresh;
 
 	# Freeze during the refresh
-	my $guard   = $self->freezer;
+	my $lock    = $self->lock('UPDATE');
 	my $current = $self->current;
 
 	$self->refresh_menubar($current);
@@ -1207,7 +1263,7 @@ sub reconfig {
 	my $config = shift;
 
 	# Do everything inside a freeze
-	my $guard = $self->freezer;
+	my $lock = $self->lock('UPDATE');
 
 	# The biggest potential change is that the user may have a
 	# different forced locale.
@@ -2827,7 +2883,7 @@ sub setup_editors {
 
 		# Lock both Perl and Wx-level updates
 		local $self->{_no_refresh} = 1;
-		my $guard = $self->freezer;
+		my $lock = $self->lock('UPDATE');
 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
@@ -3332,9 +3388,9 @@ Reload all open files from disk.
 =cut
 
 sub reload_all {
-	my $self  = shift;
-	my $skip  = shift;
-	my $guard = $self->freezer;
+	my $self = shift;
+	my $skip = shift;
+	my $lock = $self->lock('UPDATE');
 
 	my @pages = $self->pageids;
 
@@ -3838,9 +3894,9 @@ close the tab with this id. Return true upon success, false otherwise.
 =cut
 
 sub close_all {
-	my $self  = shift;
-	my $skip  = shift;
-	my $guard = $self->freezer;
+	my $self = shift;
+	my $skip = shift;
+	my $lock = $self->lock('UPDATE');
 
 	my $manager = $self->{ide}->plugin_manager;
 
@@ -3898,7 +3954,7 @@ sub close_where {
 	my $self     = shift;
 	my $where    = shift;
 	my $notebook = $self->notebook;
-	my $guard    = $self->freezer;
+	my $lock     = $self->lock('UPDATE');
 	foreach my $id ( reverse $self->pageids ) {
 		if ( $where->( $notebook->GetPage($id)->{Document} ) ) {
 			$self->close($id) or return 0;

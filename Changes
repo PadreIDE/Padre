@@ -15,6 +15,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Ticket #787: Add a test for breakpoints to testsuite (SEWI)
     - Fixed missing mime type guessing that caused new Padre documents to
       default always to Scintilla (AZAWAWI)
+    - Landed first phase of new multi-resource locking subsystem (ADAMK)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

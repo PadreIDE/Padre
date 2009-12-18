@@ -1,5 +1,13 @@
 package Padre::Locker;
 
+=pod
+
+=head1 NAME
+
+Padre::Locker - The Padre Multi-Resource Lock Manager
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;
@@ -31,7 +39,10 @@ sub new {
 
 sub lock {
 	my $self = shift;
-	return Padre::Lock->new( map { $_ => 1 } @_ );
+	return Padre::Lock->new(
+		locker => $self,
+		map { $_ => 1 } @_
+	);
 }
 
 
@@ -66,7 +77,7 @@ sub busy_enable {
 	unless ( $self->{busy_depth}++ ) {
 
 		# Locking for the first time
-		$self->{busy_locker} = Wx::WindowDisabler->new;
+		$self->{busy_locker} = Wx::BusyCursor->new;
 	}
 	return;
 }

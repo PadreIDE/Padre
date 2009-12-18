@@ -1517,6 +1517,7 @@ sub event_on_right_down {
 				my $replacement = $dialog->GetValue;
 				$dialog->Destroy;
 				return unless defined $replacement;
+				my $lock = $editor->main->lock('BUSY');
 				$doc->lexical_variable_replacement($replacement);
 			},
 		);
