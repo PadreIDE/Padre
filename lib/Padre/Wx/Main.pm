@@ -146,7 +146,7 @@ sub new {
 	# so that Padre won't hold an implicit OS lock on it.
 	# NOTE: If changing the directory fails, ignore errors for now,
 	#       since that means we have WAY bigger problems.
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 		chdir( File::HomeDir->my_home );
 	}
 
@@ -683,7 +683,7 @@ which will be fired (with no params) when the method lock expires.
 =cut
 
 sub lock {
-	shift->locker->lock( @_ );
+	shift->locker->lock(@_);
 }
 
 =pod

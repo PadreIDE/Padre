@@ -32,9 +32,7 @@ sub new {
 		Wx::gettext('A Dialog'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION
-		| Wx::wxCLOSE_BOX
-		| Wx::wxSYSTEM_MENU
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
 	my $label_1 = Wx::StaticText->new(
@@ -97,31 +95,31 @@ sub new {
 		Wx::wxID_CANCEL,
 		"",
 	);
-	$self->SetTitle(Wx::gettext("Padre"));
+	$self->SetTitle( Wx::gettext("Padre") );
 	$combo_box_1->SetSelection(-1);
 	$choice_1->SetSelection(0);
 	$self->{ok}->SetDefault;
 	my $sizer_7 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	my $sizer_8 = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$self->{button_sizer} = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$self->{form_sizer} = Wx::GridSizer->new(
+	$self->{form_sizer}   = Wx::GridSizer->new(
 		3,
 		2,
 		5,
 		5,
 	);
-	$self->{form_sizer}->Add($label_1, 0, Wx::wxALIGN_CENTER_VERTICAL, 0);
-	$self->{form_sizer}->Add($text_ctrl_1, 0, 0, 0);
-	$self->{form_sizer}->Add($label_2, 0, Wx::wxALIGN_CENTER_VERTICAL, 0);
-	$self->{form_sizer}->Add($combo_box_1, 0, 0, 0);
-	$self->{form_sizer}->Add($label_3, 0, Wx::wxALIGN_CENTER_VERTICAL, 0);
-	$self->{form_sizer}->Add($choice_1, 0, 0, 0);
-	$sizer_8->Add($self->{form_sizer}, 1, Wx::wxEXPAND, 0);
-	$sizer_8->Add($static_line_1, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5);
-	$self->{button_sizer}->Add($self->{ok}, 1, 0, 0);
-	$self->{button_sizer}->Add($self->{cancel}, 1, Wx::wxLEFT, 5);
-	$sizer_8->Add($self->{button_sizer}, 0, Wx::wxALIGN_RIGHT, 5);
-	$sizer_7->Add($sizer_8, 1, Wx::wxALL | Wx::wxEXPAND, 5);
+	$self->{form_sizer}->Add( $label_1,     0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{form_sizer}->Add( $text_ctrl_1, 0, 0,                           0 );
+	$self->{form_sizer}->Add( $label_2,     0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{form_sizer}->Add( $combo_box_1, 0, 0,                           0 );
+	$self->{form_sizer}->Add( $label_3,     0, Wx::wxALIGN_CENTER_VERTICAL, 0 );
+	$self->{form_sizer}->Add( $choice_1,    0, 0,                           0 );
+	$sizer_8->Add( $self->{form_sizer}, 1, Wx::wxEXPAND, 0 );
+	$sizer_8->Add( $static_line_1, 0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$self->{button_sizer}->Add( $self->{ok},     1, 0,          0 );
+	$self->{button_sizer}->Add( $self->{cancel}, 1, Wx::wxLEFT, 5 );
+	$sizer_8->Add( $self->{button_sizer}, 0, Wx::wxALIGN_RIGHT,        5 );
+	$sizer_7->Add( $sizer_8,              1, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$self->SetSizer($sizer_7);
 	$sizer_7->Fit($self);
 

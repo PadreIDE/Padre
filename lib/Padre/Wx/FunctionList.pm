@@ -187,7 +187,7 @@ sub refresh {
 	return unless $current;
 	my $document  = $current->document;
 	my $functions = $self->{functions};
-	unless ( $document ) {
+	unless ($document) {
 		$functions->Clear;
 		$self->{search}->Hide;
 		$self->{functions}->Hide;

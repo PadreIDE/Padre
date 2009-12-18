@@ -8,7 +8,7 @@ our $VERSION = '0.52';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Enable the locks
 	if ( $self->{UPDATE} ) {
