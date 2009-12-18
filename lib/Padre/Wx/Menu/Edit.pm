@@ -38,11 +38,11 @@ sub new {
 		name        => 'edit.undo',
 		id          => Wx::wxID_UNDO,
 		need_editor => 1,
-		need        => sub {
-			my %objects = @_;
-			return 0 if !defined( $objects{editor} );
-			return $objects{editor}->CanUndo;
-		},
+#		need        => sub {
+#			my %objects = @_;
+#			return 0 if !defined( $objects{editor} );
+#			return $objects{editor}->CanUndo;
+#		},
 		label      => Wx::gettext('&Undo'),
 		shortcut   => 'Ctrl-Z',
 		menu_event => sub {
@@ -56,11 +56,11 @@ sub new {
 		name        => 'edit.redo',
 		id          => Wx::wxID_REDO,
 		need_editor => 1,
-		need        => sub {
-			my %objects = @_;
-			return 0 if !defined( $objects{editor} );
-			return $objects{editor}->CanRedo;
-		},
+#		need        => sub {
+#			my %objects = @_;
+#			return 0 if !defined( $objects{editor} );
+#			return $objects{editor}->CanRedo;
+#		},
 		label      => Wx::gettext('&Redo'),
 		shortcut   => 'Ctrl-Y',
 		menu_event => sub {
@@ -752,8 +752,8 @@ sub refresh {
 
 	# Handle the complex cases
 	my $selection = !!( defined $text and $text ne '' );
-	$self->{undo}->Enable( $editor and $editor->CanUndo );
-	$self->{redo}->Enable( $editor and $editor->CanRedo );
+	$self->{undo}->Enable( $editor );
+	$self->{redo}->Enable( $editor );
 	$self->{paste}->Enable($editor);
 
 	return 1;
