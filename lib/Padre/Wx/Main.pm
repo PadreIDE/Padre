@@ -2080,11 +2080,12 @@ sub debug_perl_run_to_cursor {
 	my $current = $self->current;
 	return $self->error("Not implemented");
 
-	my $file = $current->filename;
-	my $row  = '';
-
-	# put a breakpoint to the cursor and then run till there
-	$self->debug_perl_run();
+# Commented our for critic:
+#	my $file = $current->filename;
+#	my $row  = '';
+#
+#	# put a breakpoint to the cursor and then run till there
+#	$self->debug_perl_run();
 }
 
 sub debug_perl_run {
@@ -5417,9 +5418,9 @@ sub key_up {
 		if ( $code == Wx::WXK_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
-				&{ Padre->ide->actions->{'window.next_file'}->menu_event }( $self, $event );
+				&{ $self->ide->actions->{'window.next_file'}->menu_event }( $self, $event );
 			} else {
-				&{ Padre->ide->actions->{'window.last_visited_file'}->menu_event }( $self, $event );
+				&{ $self->ide->actions->{'window.last_visited_file'}->menu_event }( $self, $event );
 			}
 		}
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
@@ -5428,9 +5429,9 @@ sub key_up {
 		if ( $code == Wx::WXK_TAB ) {
 
 			if ( $config->swap_ctrl_tab_alt_right ) {
-				&{ Padre->ide->actions->{'window.previous_file'}->menu_event }( $self, $event );
+				&{ $self->ide->actions->{'window.previous_file'}->menu_event }( $self, $event );
 			} else {
-				&{ self->ide->actions->{'window.oldest_visited_file'}->menu_event }( $self, $event );
+				&{ $self->ide->actions->{'window.oldest_visited_file'}->menu_event }( $self, $event );
 			}
 		}
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
@@ -5455,7 +5456,6 @@ sub key_up {
 	}
 
 	if ( $config->autocomplete_always and ( !$mod ) ) {
-		$DB::single = 1;
 		$self->on_autocompletion($event);
 	}
 
