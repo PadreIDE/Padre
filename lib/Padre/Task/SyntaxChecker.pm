@@ -154,12 +154,17 @@ sub update_gui {
 
 		# Relative-to-the-project filename
 		my $document = Padre::Current->document;
-		my $filename = $document->file->{filename};
-		if ( defined( $document->project_dir ) ) {
-			my $project_dir = quotemeta $document->project_dir;
-			$filename =~ s/^$project_dir//;
+ 		if( defined( $document->file ) ) { # check that the document has been saved
+			my $filename = $document->file->{filename};
+			if ( defined( $document->project_dir ) ) {
+				my $project_dir = quotemeta $document->project_dir;
+				$filename =~ s/^$project_dir//;
+			}
+			$syntax->SetItem( $idx, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
 		}
-		$syntax->SetItem( $idx, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
+		else {
+			$syntax->SetItem( $idx, 2, Wx::gettext('No errors or warnings found.' ) );
+		}
 		return;
 	}
 
