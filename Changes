@@ -21,6 +21,8 @@ Changes for Perl Application Development and Refactoring Environment
       check is on (AZAWAWI)
     - Added "No errors/warnings to $project-relative-filename" to syntax
       checker. (AZAWAWI)
+    - Quick Menu access now displays Padre action label, name and comments
+      in an HTML window instead of a static label (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

@@ -176,13 +176,15 @@ sub _create_controls {
 
 	# Shows how many items are selected and information about what is selected
 	require Padre::Wx::HtmlWindow;
-	$self->_status_text( Padre::Wx::HtmlWindow->new(
+	$self->_status_text(
+		Padre::Wx::HtmlWindow->new(
 			$self,
 			-1,
 			Wx::wxDefaultPosition,
-			[-1, 70],
+			[ -1, 70 ],
 			Wx::wxBORDER_STATIC
-	) );
+		)
+	);
 
 	$self->_sizer->AddSpacer(10);
 	$self->_sizer->Add( $search_label,       0, Wx::wxALL | Wx::wxEXPAND, 2 );
@@ -238,7 +240,7 @@ sub _setup_events {
 			my $selection = $self->_list->GetSelection;
 			if ( $selection != Wx::wxNOT_FOUND ) {
 				my $action = $self->_list->GetClientData($selection);
-				$self->_status_text->SetPage($self->_label($action->{value}, $action->{name}));
+				$self->_status_text->SetPage( $self->_label( $action->{value}, $action->{name} ) );
 			}
 		}
 	);
@@ -390,15 +392,13 @@ sub _update_list_box {
 # Returns a formatted html string of the action label, name and comment
 #
 sub _label {
-	my ($self, $action_label, $action_name) = @_;
+	my ( $self, $action_label, $action_name ) = @_;
 
 	my %actions     = %{ Padre::ide->actions };
-	my $menu_action = $actions{ $action_name };
-	my $comment = ($menu_action and defined $menu_action->{comment}) ? 
-		$menu_action->{comment} : '';
+	my $menu_action = $actions{$action_name};
+	my $comment     = ( $menu_action and defined $menu_action->{comment} ) ? $menu_action->{comment} : '';
 
-	return '<b>' . $action_label . '</b> <i>' . $action_name . '</i><br>' . 
-		$comment;
+	return '<b>' . $action_label . '</b> <i>' . $action_name . '</i><br>' . $comment;
 }
 
 
