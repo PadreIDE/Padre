@@ -224,7 +224,7 @@ sub _behaviour_panel {
 
 	my $config = Padre->ide->config;
 
-	my $table  = [
+	my $table = [
 		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
 				Wx::gettext('Default word wrap on for each file')
 			],

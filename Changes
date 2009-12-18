@@ -28,6 +28,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Help Search dialog is now bigger in size and fonts. (AZAWAWI)
     - HTML output in help search dialog for Perl variables and functions has now
       bigger bold fonts for title (AZAWAWI)
+    - Fixed #758: Autocomplete now also works with backspace (SEWI)
+    - Ctrl-Tab behaviour is now configurable (SEWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

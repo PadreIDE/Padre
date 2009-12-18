@@ -2038,6 +2038,7 @@ sub debug_perl_step_in {
 			$self->error( _T('Debugger not running') );
 			return;
 		}
+
 		# no need to make first step
 		return;
 	}
@@ -2075,18 +2076,19 @@ sub debug_perl_step_over {
 }
 
 sub debug_perl_run_to_cursor {
-	my $self = shift;
+	my $self    = shift;
 	my $current = $self->current;
 	return $self->error("Not implemented");
-	
+
 	my $file = $current->filename;
-	my $row = '';
+	my $row  = '';
+
 	# put a breakpoint to the cursor and then run till there
 	$self->debug_perl_run();
 }
 
 sub debug_perl_run {
-	my $self = shift;
+	my $self  = shift;
 	my $param = shift;
 
 	if ( not $self->{_debugger_} ) {
@@ -5400,9 +5402,9 @@ C<Ctrl>+key combinations used within Padre.
 sub key_up {
 	my $self  = shift;
 	my $event = shift;
-	
-	my $mod   = $event->GetModifiers || 0;
-	my $code  = $event->GetKeyCode;
+
+	my $mod = $event->GetModifiers || 0;
+	my $code = $event->GetKeyCode;
 
 	my $config = $self->config;
 
@@ -5414,10 +5416,10 @@ sub key_up {
 		                           # Ctrl-TAB  #TO DO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 
-			if ($config->swap_ctrl_tab_alt_right){
-				&{Padre->ide->actions->{'window.next_file'}->menu_event}($self,$event);
+			if ( $config->swap_ctrl_tab_alt_right ) {
+				&{ Padre->ide->actions->{'window.next_file'}->menu_event }( $self, $event );
 			} else {
-				&{Padre->ide->actions->{'window.last_visited_file'}->menu_event}($self,$event);
+				&{ Padre->ide->actions->{'window.last_visited_file'}->menu_event }( $self, $event );
 			}
 		}
 	} elsif ( $mod == Wx::wxMOD_CMD() + Wx::wxMOD_SHIFT() ) { # Ctrl-Shift
@@ -5425,10 +5427,10 @@ sub key_up {
 		                                                      # TODO it is already in the menu
 		if ( $code == Wx::WXK_TAB ) {
 
-			if ($config->swap_ctrl_tab_alt_right){
-				&{Padre->ide->actions->{'window.previous_file'}->menu_event}($self,$event);
+			if ( $config->swap_ctrl_tab_alt_right ) {
+				&{ Padre->ide->actions->{'window.previous_file'}->menu_event }( $self, $event );
 			} else {
-				&{self->ide->actions->{'window.oldest_visited_file'}->menu_event}($self,$event);
+				&{ self->ide->actions->{'window.oldest_visited_file'}->menu_event }( $self, $event );
 			}
 		}
 	} elsif ( $mod == Wx::wxMOD_ALT() ) {
@@ -5451,12 +5453,12 @@ sub key_up {
 		#			#$self->bottom->GetSelection;
 		#		}
 	}
-	
-	if ( $config->autocomplete_always and (!$mod) ) {
-		$DB::single=1;
+
+	if ( $config->autocomplete_always and ( !$mod ) ) {
+		$DB::single = 1;
 		$self->on_autocompletion($event);
 	}
-	
+
 	$event->Skip;
 	return;
 }

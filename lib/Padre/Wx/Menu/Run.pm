@@ -87,10 +87,10 @@ sub new {
 		'debug.run',
 	);
 
-#	$self->{debug_run_to_cursor} = $self->add_menu_action(
-#		$self,
-#		'debug.run_to_cursor',
-#	);
+	#	$self->{debug_run_to_cursor} = $self->add_menu_action(
+	#		$self,
+	#		'debug.run_to_cursor',
+	#	);
 
 	$self->{debug_show_stack_trace} = $self->add_menu_action(
 		$self,
