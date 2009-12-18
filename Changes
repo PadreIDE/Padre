@@ -23,6 +23,8 @@ Changes for Perl Application Development and Refactoring Environment
       checker. (AZAWAWI)
     - Quick Menu access now displays Padre action label, name and comments
       in an HTML window instead of a static label (AZAWAWI)
+    - Make the focus on "Find in files" work when called from Quick menu 
+      access dialog (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
