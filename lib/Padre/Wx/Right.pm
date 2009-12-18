@@ -24,7 +24,7 @@ sub new {
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new( 200, 500 ), # Used when floating
+		Wx::Size->new( 180, 500 ), # Used when floating
 		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
 	);
 
