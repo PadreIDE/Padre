@@ -19,6 +19,8 @@ Changes for Perl Application Development and Refactoring Environment
     - In Open resource, path is now cleaned from slashes on win32 (AZAWAWI)
     - Fixed Padre crash when closing a Perl 5 script tab quickly while syntax
       check is on (AZAWAWI)
+    - Added "No errors/warnings to $project-relative-filename" to syntax
+      checker. (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
