@@ -247,9 +247,9 @@ sub help_render {
 		my $pod      = Padre::DocBrowser::POD->new;
 		my $doc      = $pod->resolve( $topic, $hints );
 		my $pod_html = $pod->render($doc);
-		if($pod_html) {
+		if ($pod_html) {
 			$html = $pod_html->body;
-			
+
 			# This is needed to make perlfunc and perlvar perldoc
 			# output a bit more consistent
 			$html =~ s/<dt>/<dt><b><font size="+2">/g;

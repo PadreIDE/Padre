@@ -25,6 +25,9 @@ Changes for Perl Application Development and Refactoring Environment
       in an HTML window instead of a static label (AZAWAWI)
     - Make the focus on "Find in files" work when called from Quick menu 
       access dialog (AZAWAWI)
+    - Help Search dialog is now bigger in size and fonts. (AZAWAWI)
+    - HTML output in help search dialog for Perl variables and functions has now
+      bigger bold fonts for title (AZAWAWI)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

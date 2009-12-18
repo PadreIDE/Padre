@@ -263,7 +263,8 @@ sub show {
 		$self->_search_text->Enable(0);
 		$self->_topic_selector->Enable(0);
 		$self->_list->Enable(0);
-		$self->_help_viewer->SetPage( '<b><font size="+2">' . Wx::gettext('Reading items. Please wait') . '</font></b>' );
+		$self->_help_viewer->SetPage(
+			'<b><font size="+2">' . Wx::gettext('Reading items. Please wait') . '</font></b>' );
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
