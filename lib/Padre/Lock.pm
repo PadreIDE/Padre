@@ -7,27 +7,46 @@ use warnings;
 our $VERSION = '0.52';
 
 sub new {
-	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $class  = shift;
+	my $locker = shift;
+	my $self   = bless [ $locker ], $class;
 
-	# Enable the locks
-	if ( $self->{UPDATE} ) {
-		$self->{locker}->update_enable;
+	# Enable the locks	
+	my $busy   = 0;
+	my $update = 0;
+	foreach ( @_ ) {
+		if ( $_ eq 'BUSY' ) {
+			$locker->busy_increment;
+			$busy = 1;
+
+		} elsif ( $_ eq 'UPDATE' ) {
+			$locker->update_increment;
+			$update = 1;
+
+		} else {
+			$locker->method_increment($_);
+			push @$self, $_;
+		}
 	}
-	if ( $self->{BUSY} ) {
-		$self->{locker}->busy_enable;
-	}
+
+	# We always want to unlock busy/update stuff last
+	push @$self, 'BUSY'   if $busy;
+	push @$self, 'UPDATE' if $update;
 
 	return $self;
 }
 
 # Disable locking on destruction
 sub DESTROY {
-	if ( $_[0]->{UPDATE} ) {
-		$_[0]->{locker}->update_disable;
-	}
-	if ( $_[0]->{BUSY} ) {
-		$_[0]->{locker}->busy_disable;
+	my $locker = shift @{$_[0]};
+	foreach ( @{$_[0]} ) {
+		if ( $_ eq 'UPDATE' ) {
+			$locker->update_decrement;
+		} elsif ( $_ eq 'BUSY' ) {
+			$locker->busy_decrement;
+		} else {
+			$locker->method_decrement($_);
+		}
 	}
 }
 

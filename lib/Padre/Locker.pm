@@ -17,11 +17,11 @@ our $VERSION = '0.52';
 
 sub new {
 	my $class = shift;
-	my $main  = shift;
+	my $owner = shift;
 
 	# Create the object
 	my $self = bless {
-		main => $main,
+		owner => $owner,
 
 		# Wx ->Update lock
 		update_depth  => 0,
@@ -32,17 +32,13 @@ sub new {
 		busy_locker => undef,
 
 		# Padre ->refresh lock
-		refresh_depth  => 0,
-		refresh_method => {},
+		method_depth   => 0,
+		method_pending => {},
 	}, $class;
 }
 
 sub lock {
-	my $self = shift;
-	return Padre::Lock->new(
-		locker => $self,
-		map { $_ => 1 } @_
-	);
+	Padre::Lock->new( shift, @_ );
 }
 
 
@@ -52,17 +48,17 @@ sub lock {
 ######################################################################
 # Locking Mechanism
 
-sub update_enable {
+sub update_increment {
 	my $self = shift;
 	unless ( $self->{update_depth}++ ) {
 
 		# Locking for the first time
-		$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{main} );
+		$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
 	}
 	return;
 }
 
-sub update_disable {
+sub update_decrement {
 	my $self = shift;
 	unless ( --$self->{update_depth} ) {
 
@@ -72,7 +68,7 @@ sub update_disable {
 	return;
 }
 
-sub busy_enable {
+sub busy_increment {
 	my $self = shift;
 	unless ( $self->{busy_depth}++ ) {
 
@@ -82,12 +78,30 @@ sub busy_enable {
 	return;
 }
 
-sub busy_disable {
+sub busy_decrement {
 	my $self = shift;
 	unless ( --$self->{busy_depth} ) {
 
 		# Unlocked for the final time
 		$self->{busy_locker} = undef;
+	}
+	return;
+}
+
+sub method_increment {
+	$_[0]->{method_depth}++;
+	$_[0]->{method_pending}->{$_[1]}++;
+	return;
+}
+
+sub method_decrement {
+	my $self = shift;
+	$self->{method_pending}->{$_[1]}--;
+	unless ( --$self->{method_depth} ) {
+		# Run all of the pending methods
+		foreach ( keys %{$self->{method_pending}} ) {
+			$self->{owner}->$_();
+		}
 	}
 	return;
 }
