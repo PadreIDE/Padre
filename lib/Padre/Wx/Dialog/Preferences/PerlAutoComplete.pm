@@ -3,7 +3,6 @@ package Padre::Wx::Dialog::Preferences::PerlAutoComplete;
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Wx::Dialog::Preferences ();
 
 our $VERSION = '0.52';
@@ -95,10 +94,11 @@ sub save {
 
 }
 
-
-
 1;
+
 __END__
+
+=pod
 
 =head1 NAME
 
