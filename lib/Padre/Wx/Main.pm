@@ -1950,28 +1950,8 @@ sub debug_perl {
 	my $self     = shift;
 	my $document = $self->current->document;
 
-	my $green = Wx::Colour->new("green");
 	my $editor = $self->current->editor;
-	$editor->MarkerDefine(
-		Padre::Wx::MarkLocation(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		$green,
-		$green,
-	);
 	
-	
-	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
-	# They should be reunited soon !!!!
-	foreach my $editor ( $self->editors ) {
-
-		# Margin number 1 for symbols
-		$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
-
-		# Set margin 1 16 px wide
-		$editor->SetMarginWidth( 1, 16 );
-	}
-
-
 	if ( $self->{_debugger_} ) {
 		$self->error( _T('Debugger is already running') );
 		return;
@@ -2042,6 +2022,18 @@ sub _set_debugger {
 
 	my $editor = $self->current->editor;
 	return unless $editor;
+	if ($editor->{Document}->filename ne $file) {
+		$self->setup_editor($file);
+		$editor = $self->current->editor;
+	}
+
+	$editor->goto_line_centerize($row);
+
+	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
+	# They should be reunited soon !!!! (or not)
+	$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
+	$editor->SetMarginWidth( 1, 16 );
+	
 	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
 	$editor->MarkerAdd( $row-1, Padre::Wx::MarkLocation );
 	print("File: $file row: $row\n");
@@ -3103,6 +3095,14 @@ sub setup_editor {
 	my $title = $editor->{Document}->get_title;
 
 	$editor->set_preferences;
+
+	my $green = Wx::Colour->new("green");
+	$editor->MarkerDefine(
+		Padre::Wx::MarkLocation(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		$green,
+		$green,
+	);
 
 	if ( $config->main_syntaxcheck ) {
 		if ( $editor->GetMarginWidth(1) == 0 ) {
