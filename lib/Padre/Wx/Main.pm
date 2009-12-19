@@ -1950,6 +1950,28 @@ sub debug_perl {
 	my $self     = shift;
 	my $document = $self->current->document;
 
+	my $green = Wx::Colour->new("green");
+	my $editor = $self->current->editor;
+	$editor->MarkerDefine(
+		Padre::Wx::MarkLocation(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		$green,
+		$green,
+	);
+	
+	
+	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
+	# They should be reunited soon !!!!
+	foreach my $editor ( $self->editors ) {
+
+		# Margin number 1 for symbols
+		$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
+
+		# Set margin 1 16 px wide
+		$editor->SetMarginWidth( 1, 16 );
+	}
+
+
 	if ( $self->{_debugger_} ) {
 		$self->error( _T('Debugger is already running') );
 		return;
@@ -1997,7 +2019,7 @@ sub debug_perl {
 	$self->{_debugger_} = $debugger;
 
 	my ( $prompt, $module, $file, $row, $content ) = $debugger->get;
-	print("File: $file row: $row\n");
+	$self->_set_debugger($file, $row);
 
 	#print "Prompt: $prompt\n";
 
@@ -2015,6 +2037,16 @@ sub debug_perl {
 	return 1;
 }
 
+sub _set_debugger {
+	my ($self, $file, $row) = @_;
+
+	my $editor = $self->current->editor;
+	return unless $editor;
+	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
+	$editor->MarkerAdd( $row-1, Padre::Wx::MarkLocation );
+	print("File: $file row: $row\n");
+	return
+}
 
 sub debug_perl_quit {
 	my $self = shift;
@@ -2023,6 +2055,10 @@ sub debug_perl_quit {
 		$self->error( _T('Debugger not running') );
 		return;
 	}
+
+	my $editor = $self->current->editor;
+	return unless $editor;
+	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
 
 	print scalar $self->{_debugger_}->quit;
 	delete $self->{_debugger_};
@@ -2049,7 +2085,7 @@ sub debug_perl_step_in {
 		$self->debug_perl_quit;
 		return;
 	}
-	print("File: $file row: $row Content: $content\n");
+	$self->_set_debugger($file, $row);
 
 	return;
 }
@@ -2070,7 +2106,7 @@ sub debug_perl_step_over {
 		$self->debug_perl_quit;
 		return;
 	}
-	print("File: $file row: $row Content: $content\n");
+	$self->_set_debugger($file, $row);
 
 	return;
 }
@@ -2105,7 +2141,7 @@ sub debug_perl_run {
 		$self->debug_perl_quit;
 		return;
 	}
-	print("File: $file row: $row Content: $content\n");
+	$self->_set_debugger($file, $row);
 
 	return;
 }
@@ -2125,7 +2161,7 @@ sub debug_perl_step_out {
 		$self->debug_perl_quit;
 		return;
 	}
-	print("File: $file row: $row Content: $content\n");
+	$self->_set_debugger($file, $row);
 
 	return;
 }
