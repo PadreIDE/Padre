@@ -2189,8 +2189,16 @@ sub debug_perl_show_value {
 	my $current = $self->current;
 	return unless $current->editor;
 	my $text = $current->text;
+	if (not $text or $text !~ /^[\$@%\\]/) {
+		$self->error(sprintf(_T("'%s' does not look like a variable"), $text));
+		return;
+	}
 
-	my ( $prompt, $value ) = $self->{_debugger_}->get_value($text);
+	my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($text) };
+	if ($@) {
+		$self->error(sprintf(_T("Could not evaluate '%s'"), $text));
+		return;
+	}
 	$self->message("$text = $value");
 
 	return;
