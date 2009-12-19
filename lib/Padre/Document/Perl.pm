@@ -229,13 +229,14 @@ sub get_functions {
 	my $self = shift;
 
 	# Filter out POD
+	my $n = "\\cM?\\cJ";
 	return grep { defined $_ } $self->text_get =~ m/
 		(?:
-		\n*__(?:DATA|END)__\b.*
+		(?:$n)*__(?:DATA|END)__\b.*
 		|
-		\n\n=\w+.+?\n\n=cut\b.+?\n+
+		$n$n=\w+.*?$n$n=cut\b(?=.*?$n$n)
 		|
-		(?:^|\n)\s*sub\s+(\w+(?:::\w+)*)
+		(?:^|$n)\s*sub\s+(\w+(?:::\w+)*)
 		)
 	/sgx;
 }
