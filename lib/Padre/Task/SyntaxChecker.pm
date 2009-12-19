@@ -196,9 +196,9 @@ sub update_gui {
 		foreach my $hint ( sort { $a->{line} <=> $b->{line} } @{$messages} ) {
 			my $l = $hint->{line} - 1;
 			if ( $hint->{severity} eq 'W' ) {
-				$editor->MarkerAdd( $l, 2 );
+				$editor->MarkerAdd( $l, Padre::Wx::MarkWarn() );
 			} else {
-				$editor->MarkerAdd( $l, 1 );
+				$editor->MarkerAdd( $l, Padre::Wx::MarkError() );
 			}
 			my $idx = $syntax->InsertStringImageItem( $i++, $l + 1, ( $hint->{severity} eq 'W' ? 1 : 0 ) );
 			$syntax->SetItemData( $idx, 0 );

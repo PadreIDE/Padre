@@ -2035,7 +2035,7 @@ sub _set_debugger {
 	$editor->SetMarginWidth( 1, 16 );
 	
 	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
-	$editor->MarkerAdd( $row-1, Padre::Wx::MarkLocation );
+	$editor->MarkerAdd( $row-1, Padre::Wx::MarkLocation() );
 	print("File: $file row: $row\n");
 	return
 }
