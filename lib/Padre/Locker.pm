@@ -100,6 +100,7 @@ sub method_decrement {
 	unless ( --$self->{method_depth} ) {
 		# Run all of the pending methods
 		foreach ( keys %{$self->{method_pending}} ) {
+			next if $_ eq uc($_);
 			$self->{owner}->$_();
 		}
 	}
