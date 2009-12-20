@@ -395,6 +395,7 @@ setting(
 		. 'menu.View;'
 		. 'menu._document;'
 		. 'menu.Run;'
+		. 'menu.Debug;'
 		. 'menu.Plugins;'
 		. 'menu.Window;'
 		. 'menu.Help',

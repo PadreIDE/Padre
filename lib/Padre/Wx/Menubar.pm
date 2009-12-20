@@ -14,6 +14,7 @@ use Padre::Wx::Menu::View   ();
 use Padre::Wx::Menu::Perl   ();
 use Padre::Wx::Menu::Refactor();
 use Padre::Wx::Menu::Run     ();
+use Padre::Wx::Menu::Debug   ();
 use Padre::Wx::Menu::Plugins ();
 use Padre::Wx::Menu::Window  ();
 use Padre::Wx::Menu::Help    ();
