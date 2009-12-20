@@ -952,7 +952,7 @@ individual refresh methods)
 
 sub refresh {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 
 	# Freeze during the refresh
 	my $lock    = $self->lock('UPDATE');
@@ -995,7 +995,7 @@ since actual syntax check is happening in the background.
 
 sub refresh_syntaxcheck {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	return if not $self->menu->view->{show_syntaxcheck}->IsChecked;
 	$self->syntax->on_timer( undef, 1 );
 	return;
@@ -1014,7 +1014,7 @@ depending on current document or Padre internal state.
 
 sub refresh_menu {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	$self->menu->refresh;
 }
 
@@ -1030,7 +1030,7 @@ Force a refresh of Padre's menu bar.
 
 sub refresh_menubar {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	$self->menu->refresh_top;
 }
 
@@ -1046,7 +1046,7 @@ Force a refresh of Padre's toolbar.
 
 sub refresh_toolbar {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	my $toolbar = $self->GetToolBar;
 	if ($toolbar) {
 		$toolbar->refresh( $_[0] or $self->current );
@@ -1065,7 +1065,7 @@ Force a refresh of Padre's status bar.
 
 sub refresh_status {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	$self->GetStatusBar->refresh( $_[0] or $self->current );
 }
 
@@ -1081,13 +1081,13 @@ Force a refresh of the position of the cursor on Padre's status bar.
 
 sub refresh_cursorpos {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	$self->GetStatusBar->update_pos( $_[0] or $self->current );
 }
 
 sub refresh_rdstatus {
 	my $self = shift;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	$self->GetStatusBar->is_read_only( $_[0] or $self->current );
 }
 
@@ -1107,7 +1107,7 @@ sub refresh_functions {
 	# this even though that should not be necessary can that be
 	# eliminated ?
 	my ( $self, $current ) = @_;
-	return if $self->locked('REFRESH');
+	return if $self->{locker}->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
 
 	$self->functions->refresh($current);
