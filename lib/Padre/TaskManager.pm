@@ -80,7 +80,7 @@ require Padre;
 use Padre::Task    ();
 use Padre::Service ();
 use Padre::Wx      ();
-use Padre::Debug;
+use Padre::Logger;
 
 use Class::XSAccessor getters => {
 	task_queue     => 'task_queue',

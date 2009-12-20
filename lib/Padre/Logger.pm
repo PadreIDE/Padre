@@ -1,22 +1,22 @@
-package Padre::Debug;
+package Padre::Logger;
 
 =pod
 
 =head1 NAME
 
-Padre::Debug - Compile-time debugging library for Padre
+Padre::Logger - Compile-time loggin library for Padre
 
 =head1 SYNOPSIS
 
   # In the launch/dev.pl script
   BEGIN {
-      $Padre::Debug::DEBUG = 1;
+      $Padre::Logger::DEBUG = 1;
   }
   
   use Padre;
   
   # In each Padre::Foo class
-  use Padre::Debug;
+  use Padre::Logger;
   
   sub method {
       TRACE('->method') if DEBUG;
@@ -26,8 +26,8 @@ Padre::Debug - Compile-time debugging library for Padre
 
 =head1 DESCRIPTION
 
-This is a debugging utility class for Padre. It provides a basic set of
-simple functionality that allows for debugging/tracing statements to be
+This is a logging utility class for Padre. It provides a basic set of
+simple functionality that allows for loggin/debugging/tracing statements to be
 used in Padre that will compile out of the application when not in use.
 
 =cut
@@ -45,11 +45,11 @@ sub import {
 package $pkg;
 use constant DEBUG => !! (
 	defined(\$${pkg}::DEBUG)     ? \$${pkg}::DEBUG :
-	defined(\$Padre::Debug::DEBUG) ? \$Padre::Debug::DEBUG :
+	defined(\$Padre::Logger::DEBUG) ? \$Padre::Logger::DEBUG :
 	\$ENV{PADRE_DEBUG}
 );
 BEGIN {
-	*TRACE = *Padre::Debug::TRACE;
+	*TRACE = *Padre::Logger::TRACE;
 	TRACE('::DEBUG enabled') if DEBUG;
 }
 1;

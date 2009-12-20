@@ -6,7 +6,7 @@ use warnings;
 use PPI::Document  ();
 use PPI::Dumper    ();
 use Text::Balanced ();
-use Padre::Debug;
+use Padre::Logger;
 
 our $VERSION = '0.52';
 

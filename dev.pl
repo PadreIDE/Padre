@@ -26,7 +26,7 @@ BEGIN {
 		'debug|d'    => \$DEBUG,
 		'trace'      => sub {
 			no warnings;
-			$Padre::Debug::DEBUG = 1;
+			$Padre::Logger::DEBUG = 1;
 		},
 		'die'     => \$DIE,
 		'profile' => \$PROFILE,

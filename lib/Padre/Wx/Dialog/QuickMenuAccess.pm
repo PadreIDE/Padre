@@ -7,7 +7,7 @@ use Padre::Util     ();
 use Padre::DB       ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
-use Padre::Debug;
+use Padre::Logger;
 
 # package exports and version
 our $VERSION = '0.52';

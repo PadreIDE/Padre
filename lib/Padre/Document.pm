@@ -133,7 +133,7 @@ use Padre::Wx        ();
 use Padre            ();
 use Padre::MimeTypes ();
 use Padre::File      ();
-use Padre::Debug;
+use Padre::Logger;
 
 our $VERSION = '0.52';
 

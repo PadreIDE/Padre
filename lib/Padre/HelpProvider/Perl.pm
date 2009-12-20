@@ -10,7 +10,7 @@ use Padre::Util            ();
 use Padre::HelpProvider    ();
 use Padre::DocBrowser::POD ();
 use Padre::Pod2HTML        ();
-use Padre::Debug;
+use Padre::Logger;
 
 our $VERSION = '0.52';
 our @ISA     = 'Padre::HelpProvider';

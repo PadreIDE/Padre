@@ -64,7 +64,7 @@ use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Progress           ();
-use Padre::Debug;
+use Padre::Logger;
 
 our $VERSION = '0.52';
 our @ISA     = 'Wx::Frame';

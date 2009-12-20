@@ -45,7 +45,7 @@ use Padre::Constant ();
 use Padre::Util     ('_T');
 use Padre::Config   ();
 use Padre::Wx       ();
-use Padre::Debug;
+use Padre::Logger;
 
 use constant DEFAULT  => 'en-gb';
 use constant SHAREDIR => File::Spec->rel2abs( Padre::Util::sharedir('locale') );

@@ -31,6 +31,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed #758: Autocomplete now also works with backspace (SEWI)
     - Ctrl-Tab behaviour is now configurable (SEWI)
     - Initial migration of ::Main->{_no_refresh} to Padre::Locker (ADAMK)
+    - Rename Padre::Debug to Padre::Logger (SZABGAB)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)

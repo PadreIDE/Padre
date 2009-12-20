@@ -8,7 +8,7 @@ use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
-use Padre::Debug;
+use Padre::Logger;
 
 our $VERSION = '0.52';
 our @ISA     = 'Padre::Wx::Menu';
