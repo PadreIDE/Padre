@@ -217,6 +217,20 @@ sub new {
 		},
 	);
 
+	Padre::Action->new(
+		name         => 'debug.jump_to',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Jump to current execution line'),
+		comment      => Wx::gettext('Run'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_jumpt_to;
+		},
+	);
 
 	Padre::Action->new(
 		name         => 'debug.run_to_cursor',

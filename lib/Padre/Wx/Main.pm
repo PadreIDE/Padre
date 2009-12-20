@@ -1999,7 +1999,7 @@ sub debug_perl {
 	$self->{_debugger_} = $debugger;
 
 	my ( $prompt, $module, $file, $row, $content ) = $debugger->get;
-	$self->_set_debugger($file, $row);
+	$self->_set_debugger();
 
 	#print "Prompt: $prompt\n";
 
@@ -2018,8 +2018,10 @@ sub debug_perl {
 }
 
 sub _set_debugger {
-	my ($self, $file, $row) = @_;
+	my ($self) = @_;
 
+	my $file = $self->{_debugger_}{filename};
+	my $row  = $self->{_debugger_}{row};
 	my $editor = $self->current->editor;
 	return unless $editor;
 	if ($editor->{Document}->filename ne $file) {
@@ -2038,6 +2040,16 @@ sub _set_debugger {
 	$editor->MarkerAdd( $row-1, Padre::Wx::MarkLocation() );
 	print("File: $file row: $row\n");
 	return
+}
+
+sub debug_perl_jumpt_to {
+	my $self = shift;
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
+		return;
+	}
+	$self->_set_debugger();
+	return;
 }
 
 sub debug_perl_quit {
@@ -2077,7 +2089,7 @@ sub debug_perl_step_in {
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger($file, $row);
+	$self->_set_debugger();
 
 	return;
 }
@@ -2098,7 +2110,7 @@ sub debug_perl_step_over {
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger($file, $row);
+	$self->_set_debugger();
 
 	return;
 }
@@ -2133,7 +2145,7 @@ sub debug_perl_run {
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger($file, $row);
+	$self->_set_debugger();
 
 	return;
 }
@@ -2153,7 +2165,7 @@ sub debug_perl_step_out {
 		$self->debug_perl_quit;
 		return;
 	}
-	$self->_set_debugger($file, $row);
+	$self->_set_debugger();
 
 	return;
 }

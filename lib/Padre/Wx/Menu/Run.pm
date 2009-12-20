@@ -67,6 +67,11 @@ sub new {
 		'debug.run_document',
 	);
 
+	$self->{debug_start} = $self->add_menu_action(
+		$self,
+		'debug.jump_to',
+	);
+
 	$self->{debug_step_in} = $self->add_menu_action(
 		$self,
 		'debug.step_in',
