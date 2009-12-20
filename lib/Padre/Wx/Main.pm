@@ -2892,6 +2892,10 @@ sub on_close_window {
 	# part of the shutdown which will mess it up.
 	$self->update_last_session;
 
+	if ( $self->{_debugger_} ) {
+		$self->debug_perl_quit;
+	}
+
 	TRACE("went over list of files") if DEBUG;
 
 	# Check that all files have been saved
