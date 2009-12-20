@@ -66,7 +66,7 @@ sub TRACE {
 	open my $fh, '>>', $logfile or return;
 	foreach my $message (@_) {
 		print $fh sprintf(
-			"%.6f %s%s\n",
+			"%s %s%s\n",
 			$time,
 			$package,
 			$message,
