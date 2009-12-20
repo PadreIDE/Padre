@@ -96,8 +96,23 @@ sub debug_perl {
 	my $debugger = Debug::Client->new( host => $host, port => $port );
 	$debugger->listen;
 	$self->{_debugger_} = $debugger;
+	
+	$self->{running_file} = $filename;
 
 	my ( $prompt, $module, $file, $row, $content ) = $debugger->get;
+	
+	if ( not $self->{save}{$filename} ) {
+		$self->{save}{$filename} = {};
+	}
+	if ($self->{save}{$filename}{breakpoints}) {
+		foreach my $file (keys %{ $self->{save}{$filename}{breakpoints} }) {
+			foreach my $row (keys %{ $self->{save}{$filename}{breakpoints}{$file} } ) {
+				#$self->{save}{$filename}{breakpoints}{$file}{$row};
+				$self->{_debugger_}->set_breakpoint( $file, $row ); # TODO what if this fails?
+			}
+		}
+	}
+
 	$self->_set_debugger();
 
 	#print "Prompt: $prompt\n";
@@ -184,7 +199,8 @@ sub debug_perl_remove_breakpoint {
 	my $file = $editor->{Document}->filename;
 	my $row  = $editor->GetCurrentLine + 1;
 	$self->{_debugger_}->remove_breakpoint( $file, $row );
-
+	delete $self->{save}{ $self->{running_file} }{breakpoints}{$file}{$row};
+	
 	return;
 }
 
@@ -220,6 +236,7 @@ sub debug_perl_set_breakpoint {
 		$self->error(sprintf(_T("Could not set breakpoint on file '%s' row '%s'"), $file, $row));
 		return;
 	}
+	$self->{save}{ $self->{running_file} }{breakpoints}{$file}{$row} = 1; # TODO that should be the condition I guess
 
 	return;
 }
