@@ -141,13 +141,6 @@ sub update_gui {
 
 	# If there are no errors, clear the synax checker pane and return.
 	if ( ( !defined($messages) ) or ( $#{$messages} == -1 ) ) {
-		my $green = Wx::Colour->new("green");
-		$editor->MarkerDefine(
-			Padre::Wx::MarkError(),
-			Wx::wxSTC_MARK_SMALLRECT,
-			$green,
-			$green,
-		);
 		my $idx = $syntax->InsertStringImageItem( 0, '', 2 );
 		$syntax->SetItemData( $idx, 0 );
 		$syntax->SetItem( $idx, 1, Wx::gettext('Info') );
@@ -169,21 +162,6 @@ sub update_gui {
 
 	# Update the syntax checker pane
 	if ( scalar( @{$messages} ) > 0 ) {
-		my $red    = Wx::Colour->new("red");
-		my $orange = Wx::Colour->new("orange");
-		$editor->MarkerDefine(
-			Padre::Wx::MarkError(),
-			Wx::wxSTC_MARK_SMALLRECT,
-			$red,
-			$red,
-		);
-		$editor->MarkerDefine(
-			Padre::Wx::MarkWarn(),
-			Wx::wxSTC_MARK_SMALLRECT,
-			$orange,
-			$orange,
-		);
-
 		my $i = 0;
 		delete $editor->{synchk_calltips};
 		my $last_hint = '';

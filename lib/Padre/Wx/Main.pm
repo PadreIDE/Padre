@@ -3104,14 +3104,6 @@ sub setup_editor {
 
 	$editor->set_preferences;
 
-	my $green = Wx::Colour->new("green");
-	$editor->MarkerDefine(
-		Padre::Wx::MarkLocation(),
-		Wx::wxSTC_MARK_SMALLRECT,
-		$green,
-		$green,
-	);
-
 	if ( $config->main_syntaxcheck ) {
 		if ( $editor->GetMarginWidth(1) == 0 ) {
 			$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL ); # margin number 1 for symbols

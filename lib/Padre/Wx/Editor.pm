@@ -103,6 +103,28 @@ sub new {
 	$self->CmdKeyClear( Wx::wxSTC_KEY_SUBTRACT, Wx::wxSTC_SCMOD_CTRL );
 	$self->CmdKeyClear( Wx::wxSTC_KEY_ADD,      Wx::wxSTC_SCMOD_CTRL );
 
+	my $green  = Wx::Colour->new("green");
+	my $red    = Wx::Colour->new("red");
+	my $orange = Wx::Colour->new("orange");
+	$self->MarkerDefine(
+		Padre::Wx::MarkError(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		$red,
+		$red,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkWarn(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		$orange,
+		$orange,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkLocation(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		$green,
+		$green,
+	);
+
 	return $self;
 }
 
