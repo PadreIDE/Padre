@@ -136,22 +136,6 @@ sub new {
 	);
 
 
-
-	Padre::Action->new(
-		name         => 'debug.run_document',
-		need_editor  => 1,
-		need_runable => 1,
-		need_file    => 1,
-		label        => Wx::gettext('Start Debugger (Debug::Client)'),
-		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
-
-		#shortcut     => 'Shift-F5',
-		need_editor => 1,
-		menu_event  => sub {
-			$_[0]->debug_perl;
-		},
-	);
-
 	Padre::Action->new(
 		name         => 'debug.step_in',
 		need_editor  => 1,

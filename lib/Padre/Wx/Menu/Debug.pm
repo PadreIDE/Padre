@@ -26,11 +26,6 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	$self->{debug_start} = $self->add_menu_action(
-		$self,
-		'debug.run_document',
-	);
-
 	$self->{debug_step_in} = $self->add_menu_action(
 		$self,
 		'debug.step_in',
