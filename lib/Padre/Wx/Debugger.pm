@@ -8,12 +8,18 @@ our $VERSION = '0.52';
 
 use Padre::Wx       ();
 use Padre::Logger;
+use Padre::Util     ('_T');
 
 =head1 NAME
 
-Padre::Wx::Debugger - auto-save and recovery mechanism for Padre
+Padre::Wx::Debugger - interface to L<Debug::Client>
 
 =head1 DESCRIPTION
+
+=cut
+=head3 C<new>
+
+Simple constructor.
 
 =cut
 
@@ -154,7 +160,7 @@ sub _set_debugger {
 	return
 }
 
-sub debug_perl_remove_breakpoint {
+sub debugger_is_running {
 	my $self = shift;
 
 	my $main = Padre->ide->wx->main;
@@ -165,7 +171,16 @@ sub debug_perl_remove_breakpoint {
 	}
 	my $editor = $main->current->editor;
 	return unless $editor;
+	
+	return 1;
+}
 
+sub debug_perl_remove_breakpoint {
+	my $self = shift;
+
+	return if not $self->debugger_is_running;
+
+	my $editor = Padre::Current->editor;
 	my $file = $editor->{Document}->filename;
 	my $row  = $editor->GetCurrentLine + 1;
 	$self->{_debugger_}->remove_breakpoint( $file, $row );
@@ -173,18 +188,27 @@ sub debug_perl_remove_breakpoint {
 	return;
 }
 
+sub error {
+	my $self = shift;
+	my $msg = shift;
+
+	return Padre->ide->wx->main->error($msg);
+}
+
+sub message {
+	my $self = shift;
+	my $msg = shift;
+
+	return Padre->ide->wx->main->message($msg);
+}
+
+
 sub debug_perl_set_breakpoint {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
+	return if not $self->debugger_is_running;
 
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
-
-	my $editor = $main->current->editor;
-	return unless $editor;
+	my $editor = Padre::Current->editor;
 
 	my $file = $editor->{Document}->filename;
 	my $row  = $editor->GetCurrentLine + 1;
@@ -193,7 +217,7 @@ sub debug_perl_set_breakpoint {
 	# TODO allow setting breakpoints even before the script and the debugger runs
 	# (by saving it in the debugger configuration file?)
 	if (not $self->{_debugger_}->set_breakpoint( $file, $row )) {
-		$main->error(sprintf(_T("Could not set breakpoint on file '%s' row '%s'"), $file, $row));
+		$self->error(sprintf(_T("Could not set breakpoint on file '%s' row '%s'"), $file, $row));
 		return;
 	}
 
@@ -203,13 +227,10 @@ sub debug_perl_set_breakpoint {
 sub debug_perl_list_breakpoints {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
+	return if not $self->debugger_is_running;
 
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
-	$self->{_debugger_}->list_break_watch_action(); # LIST context crashes in Debug::Client 0.10
+	my $msg = $self->{_debugger_}->list_break_watch_action(); # LIST context crashes in Debug::Client 0.10
+	$self->message($msg);
 	
 	return;
 }
@@ -217,12 +238,8 @@ sub debug_perl_list_breakpoints {
 sub debug_perl_jumpt_to {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
+	return if not $self->debugger_is_running;
 
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
 	$self->_set_debugger();
 	return;
 }
@@ -230,18 +247,12 @@ sub debug_perl_jumpt_to {
 sub debug_perl_quit {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
+	return if not $self->debugger_is_running;
 
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
-
-	my $editor = $main->current->editor;
-	return unless $editor;
+	my $editor = Padre::Current->editor;
 	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
 
-	$main->show_debugger(0);
+	Padre->ide->wx->main->show_debugger(0);
 
 	$self->{_debugger_}->quit;
 	delete $self->{_debugger_};
@@ -364,19 +375,14 @@ sub debug_perl_step_out {
 sub debug_perl_show_stack_trace {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
+	return if not $self->debugger_is_running;
 
 	my ( $prompt, $trace ) = $self->{_debugger_}->get_stack_trace;
 	my $str = $trace;
 	if ( ref($trace) and ref($trace) eq 'ARRAY' ) {
 		$str = join "\n", @$trace;
 	}
-	$main->message($str);
+	$self->message($str);
 
 	return;
 }
@@ -385,21 +391,16 @@ sub debug_perl_show_stack_trace {
 sub debug_perl_show_value {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
+	return if not $self->debugger_is_running;
 
 	my $text = $self->_debug_get_variable() or return;
 
 	my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($text) };
 	if ($@) {
-		$main->error(sprintf(_T("Could not evaluate '%s'"), $text));
+		$self->error(sprintf(_T("Could not evaluate '%s'"), $text));
 		return;
 	}
-	$main->message("$text = $value");
+	$self->message("$text = $value");
 
 	return;
 }
@@ -423,13 +424,9 @@ sub _debug_get_variable {
 sub debug_perl_display_value {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
-	
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
+	return if not $self->debugger_is_running;
 
+	my $main = Padre->ide->wx->main;
 	my $text = $self->_debug_get_variable() or return;
 	my $debugger = $main->debugger;
 	
@@ -449,13 +446,9 @@ sub debug_perl_display_value {
 sub debug_perl_evaluate_expression {
 	my $self = shift;
 
+	return if not $self->debugger_is_running;
+
 	my $main = Padre->ide->wx->main;
-
-	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
-		return;
-	}
-
 	my $expression = $main->prompt(
 		Wx::gettext("Expression:"),
 		Wx::gettext("Expr"),
