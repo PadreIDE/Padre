@@ -39,9 +39,7 @@ sub new {
 		label        => Wx::gettext('Run Script'),
 		comment      => Wx::gettext('Runs the current document and shows its output in the output panel.'),
 		shortcut     => 'F5',
-		need_editor  => 1,
 		need_file    => 1,
-		need_runable => 1,
 		menu_event   => sub {
 			$_[0]->run_document;
 			$_[0]->refresh_toolbar( $_[0]->current );
@@ -56,7 +54,6 @@ sub new {
 		label        => Wx::gettext('Run Script (debug info)'),
 		comment      => Wx::gettext( 'Run the current document but include ' . 'debug info in the output.' ),
 		shortcut     => 'Shift-F5',
-		need_editor  => 1,
 		menu_event   => sub {
 			$_[0]->run_document(1); # Enable debug info
 		},
@@ -110,7 +107,6 @@ sub new {
 		},
 		label       => Wx::gettext('Run This Test'),
 		comment     => Wx::gettext('Run the current test if the current document is a test.'),
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->on_run_this_test;
 		},
@@ -165,7 +161,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_step_in;
 		},
@@ -180,7 +175,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_step_over;
 		},
@@ -196,7 +190,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_step_out;
 		},
@@ -211,7 +204,6 @@ sub new {
 		comment      => Wx::gettext('Run'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_run;
 		},
@@ -226,7 +218,6 @@ sub new {
 		comment      => Wx::gettext('Run'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_jumpt_to;
 		},
@@ -241,7 +232,6 @@ sub new {
 		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_set_breakpoint;
 		},
@@ -256,7 +246,6 @@ sub new {
 		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_remove_breakpoint;
 		},
@@ -271,7 +260,6 @@ sub new {
 		comment      => Wx::gettext('List all the breakpoints on the console'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_list_breakpoints;
 		},
@@ -286,7 +274,6 @@ sub new {
 		comment      => Wx::gettext('Run'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_run_to_cursor;
 		},
@@ -302,7 +289,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_show_stack_trace;
 		},
@@ -317,7 +303,6 @@ sub new {
 		comment      => Wx::gettext('Display the current value of a variable'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_display_value;
 		},
@@ -332,7 +317,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_show_value;
 		},
@@ -347,7 +331,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_evaluate_expression;
 		},
@@ -362,7 +345,6 @@ sub new {
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
-		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->debug_perl_quit;
 		},
