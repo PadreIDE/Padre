@@ -25,8 +25,7 @@ BEGIN {
 		'usage|help' => \$USAGE,
 		'debug|d'    => \$DEBUG,
 		'trace'      => sub {
-			no warnings;
-			$Padre::Logger::DEBUG = 1;
+			$ENV{PADRE_DEBUG} = 1;
 		},
 		'die'     => \$DIE,
 		'profile' => \$PROFILE,
