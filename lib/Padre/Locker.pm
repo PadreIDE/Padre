@@ -110,7 +110,7 @@ sub method_increment {
 
 sub method_decrement {
 	my $self = shift;
-	$self->{method_pending}->{$_[1]}--;
+	$self->{method_pending}->{$_[0]}--;
 	unless ( --$self->{method_depth} ) {
 		# Run all of the pending methods
 		foreach ( keys %{$self->{method_pending}} ) {
