@@ -233,6 +233,51 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name         => 'debug.set_breakpoint',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Set breakpoint'),
+		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_set_breakpoint;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.remove_breakpoint',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Remove breakpoint'),
+		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_remove_breakpoint;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.list_breakpoints',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('List all the breakpoints'),
+		comment      => Wx::gettext('List all the breakpoints on the console'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_list_breakpoints;
+		},
+	);
+
+	Padre::Action->new(
 		name         => 'debug.run_to_cursor',
 		need_editor  => 1,
 		need_runable => 1,

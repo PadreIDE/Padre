@@ -2042,6 +2042,58 @@ sub _set_debugger {
 	return
 }
 
+sub debug_perl_remove_breakpoint {
+	my $self = shift;
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
+		return;
+	}
+	my $editor = $self->current->editor;
+	return unless $editor;
+
+	my $file = $editor->{Document}->filename;
+	my $row  = $editor->GetCurrentLine + 1;
+	$self->{_debugger_}->remove_breakpoint( $file, $row );
+
+	return;
+}
+
+sub debug_perl_set_breakpoint {
+	my $self = shift;
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
+		return;
+	}
+
+	my $editor = $self->current->editor;
+	return unless $editor;
+
+	my $file = $editor->{Document}->filename;
+	my $row  = $editor->GetCurrentLine + 1;
+	# TODO ask for a condition
+
+	# TODO allow setting breakpoints even before the script and the debugger runs
+	# (by saving it in the debugger configuration file?)
+	if (not $self->{_debugger_}->set_breakpoint( $file, $row )) {
+		$self->error(sprintf(_T("Could not set breakpoint on file '%s' row '%s'"), $file, $row));
+		return;
+	}
+
+	return;
+}
+
+sub debug_perl_list_breakpoints {
+	my $self = shift;
+
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
+		return;
+	}
+	print scalar $self->{_debugger_}->list_break_watch_action(); # LIST context crashes in Debug::Client 0.10
+	
+	return;
+}
+
 sub debug_perl_jumpt_to {
 	my $self = shift;
 	if ( not $self->{_debugger_} ) {
