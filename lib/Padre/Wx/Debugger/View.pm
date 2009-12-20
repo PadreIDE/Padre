@@ -1,4 +1,4 @@
-package Padre::Wx::Debugger;
+package Padre::Wx::Debugger::View;
 
 use 5.008;
 use strict;

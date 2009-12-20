@@ -374,8 +374,8 @@ sub about {
 sub debugger {
 	my $self = shift;
 	unless ( defined $self->{debugger} ) {
-		require Padre::Wx::Debugger;
-		$self->{debugger} = Padre::Wx::Debugger->new($self);
+		require Padre::Wx::Debugger::View;
+		$self->{debugger} = Padre::Wx::Debugger::View->new($self);
 	}
 	return $self->{debugger};
 }
