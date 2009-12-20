@@ -312,8 +312,6 @@ Accessors to operating data:
 
 =item * C<cwd>
 
-=item * C<no_refresh>
-
 =back
 
 Accessors that may not belong to this class:
@@ -355,10 +353,9 @@ use Class::XSAccessor predicates => {
 	infomessage_timeout => 'infomessage_timeout',
 
 	# Operating Data
-	locker     => 'locker',
-	cwd        => 'cwd',
-	search     => 'search',
-	no_refresh => '_no_refresh',
+	locker => 'locker',
+	cwd    => 'cwd',
+	search => 'search',
 
 	# Things that are probably in the wrong place
 	ack => 'ack',
@@ -955,7 +952,7 @@ individual refresh methods)
 
 sub refresh {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 
 	# Freeze during the refresh
 	my $lock    = $self->lock('UPDATE');
@@ -998,7 +995,7 @@ since actual syntax check is happening in the background.
 
 sub refresh_syntaxcheck {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	return if not $self->menu->view->{show_syntaxcheck}->IsChecked;
 	$self->syntax->on_timer( undef, 1 );
 	return;
@@ -1017,7 +1014,7 @@ depending on current document or Padre internal state.
 
 sub refresh_menu {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	$self->menu->refresh;
 }
 
@@ -1033,7 +1030,7 @@ Force a refresh of Padre's menu bar.
 
 sub refresh_menubar {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	$self->menu->refresh_top;
 }
 
@@ -1049,7 +1046,7 @@ Force a refresh of Padre's toolbar.
 
 sub refresh_toolbar {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	my $toolbar = $self->GetToolBar;
 	if ($toolbar) {
 		$toolbar->refresh( $_[0] or $self->current );
@@ -1068,7 +1065,7 @@ Force a refresh of Padre's status bar.
 
 sub refresh_status {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	$self->GetStatusBar->refresh( $_[0] or $self->current );
 }
 
@@ -1084,13 +1081,13 @@ Force a refresh of the position of the cursor on Padre's status bar.
 
 sub refresh_cursorpos {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	$self->GetStatusBar->update_pos( $_[0] or $self->current );
 }
 
 sub refresh_rdstatus {
 	my $self = shift;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	$self->GetStatusBar->is_read_only( $_[0] or $self->current );
 }
 
@@ -1110,7 +1107,7 @@ sub refresh_functions {
 	# this even though that should not be necessary can that be
 	# eliminated ?
 	my ( $self, $current ) = @_;
-	return if $self->no_refresh;
+	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
 
 	$self->functions->refresh($current);
@@ -3027,8 +3024,7 @@ sub setup_editors {
 	SCOPE: {
 
 		# Lock both Perl and Wx-level updates
-		local $self->{_no_refresh} = 1;
-		my $lock = $self->lock('UPDATE');
+		my $lock = $self->lock('UPDATE', 'REFRESH');
 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
@@ -3144,9 +3140,8 @@ sub setup_editor {
 		}
 	}
 
-	local $self->{_no_refresh} = 1;
-
-	my $doc = Padre::Document->new( filename => $file, );
+	my $lock = $self->lock('REFRESH');
+	my $doc  = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
 	if ( !defined($doc) ) {
@@ -3984,8 +3979,7 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-
-	local $self->{_no_refresh} = 1;
+	my $lock   = $self->lock('REFRESH');
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(

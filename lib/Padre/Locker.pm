@@ -41,6 +41,20 @@ sub lock {
 	Padre::Lock->new( shift, @_ );
 }
 
+sub locked {
+	my $self  = shift;
+	my $asset = shift;
+	if ( $asset eq 'UPDATE' ) {
+		return !! $self->{update_depth};
+	} elsif ( $asset eq 'BUSY' ) {
+		return !! $self->{busy_depth};
+	} elsif ( $asset eq 'REFRESH' ) {
+		return !! $self->{method_depth};
+	} else {
+		return !! $self->{method_pending}->{$asset};
+	}
+}
+
 
 
 
