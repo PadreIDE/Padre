@@ -10,6 +10,10 @@ use Padre::Current ('_CURRENT');
 our $VERSION = '0.52';
 our @ISA     = 'Wx::Panel';
 
+
+
+
+
 #####################################################################
 # Constructor
 
@@ -135,6 +139,10 @@ sub new {
 sub gettext_label {
 	Wx::gettext('Functions');
 }
+
+
+
+
 
 #####################################################################
 # Event Handlers
