@@ -328,6 +328,7 @@ use Class::XSAccessor predicates => {
 
 	# Needed for lazily-constructed gui elements
 	has_about     => 'about',
+	has_debugger  => 'debugger',
 	has_find      => 'find',
 	has_replace   => 'replace',
 	has_outline   => 'outline',
@@ -368,6 +369,15 @@ sub about {
 		$self->{about} = Padre::Wx::About->new($self);
 	}
 	return $self->{about};
+}
+
+sub debugger {
+	my $self = shift;
+	unless ( defined $self->{debugger} ) {
+		require Padre::Wx::Debugger;
+		$self->{debugger} = Padre::Wx::Debugger->new($self);
+	}
+	return $self->{debugger};
 }
 
 sub outline {
@@ -1389,6 +1399,39 @@ sub show_outline {
 
 =pod
 
+=head3 C<show_debugger>
+
+    $main->show_debugger( $visible );
+
+=cut
+
+sub show_debugger {
+	my $self = shift;
+
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+#	unless ( $on == $self->menu->view->{debugger}->IsChecked ) {
+#		$self->menu->view->{debugger}->Check($on);
+#	}
+#	$self->config->set( main_debugger => $on );
+#	$self->config->write;
+
+	if ($on) {
+		my $debugger = $self->debugger;
+		$self->right->show($debugger);
+	} elsif ( $self->has_debugger ) {
+		my $debugger = $self->debugger;
+		$self->right->hide($debugger);
+	}
+
+	$self->aui->Update;
+	$self->ide->save_config;
+
+	return;
+}
+
+
+=pod
+
 =head3 C<show_directory>
 
     $main->show_directory( $visible );
@@ -1948,6 +1991,7 @@ sub debug_perl {
 	my $document = $self->current->document;
 
 	my $editor = $self->current->editor;
+	$self->show_debugger(1);
 	
 	if ( $self->{_debugger_} ) {
 		$self->error( _T('Debugger is already running') );
@@ -2026,7 +2070,7 @@ sub _set_debugger {
 		$editor = $self->current->editor;
 	}
 
-	$editor->goto_line_centerize($row);
+	$editor->goto_line_centerize($row-1);
 
 	#### TODO this was taken from the Padre::Wx::Syntax::start() and  changed a bit.
 	# They should be reunited soon !!!! (or not)
@@ -2035,7 +2079,24 @@ sub _set_debugger {
 	
 	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
 	$editor->MarkerAdd( $row-1, Padre::Wx::MarkLocation() );
-	print("File: $file row: $row\n");
+	#print("File: $file row: $row\n");
+	
+	
+	my $debugger = $self->debugger;
+	my $count = $debugger->GetItemCount;
+	for my $c (0.. $count-1) {
+		my $variable = $debugger->GetItemText($c);
+		#print $debugger->GetItem($c, 0)->GetText, "\n";
+
+		my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($variable) };
+		if ($@) {
+			#$self->error(sprintf(_T("Could not evaluate '%s'"), $text));
+			#return;
+		} else {
+			$debugger->SetItem( $c, 1, $value );
+		}
+	}
+
 	return
 }
 
@@ -2112,6 +2173,8 @@ sub debug_perl_quit {
 	my $editor = $self->current->editor;
 	return unless $editor;
 	$editor->MarkerDeleteAll(Padre::Wx::MarkLocation);
+
+	$self->show_debugger(0);
 
 	print scalar $self->{_debugger_}->quit;
 	delete $self->{_debugger_};
@@ -2247,13 +2310,7 @@ sub debug_perl_show_value {
 		return;
 	}
 
-	my $current = $self->current;
-	return unless $current->editor;
-	my $text = $current->text;
-	if (not $text or $text !~ /^[\$@%\\]/) {
-		$self->error(sprintf(_T("'%s' does not look like a variable"), $text));
-		return;
-	}
+	my $text = $self->_debug_get_variable() or return;
 
 	my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($text) };
 	if ($@) {
@@ -2265,6 +2322,44 @@ sub debug_perl_show_value {
 	return;
 }
 
+sub _debug_get_variable {
+	my $self = shift;
+
+	my $current = $self->current;
+
+	return unless $current->editor;
+	my $text = $current->text;
+	if (not $text or $text !~ /^[\$@%\\]/) {
+		$self->error(sprintf(_T("'%s' does not look like a variable"), $text));
+		return;
+	}
+	return $text;
+}
+
+sub debug_perl_display_value {
+	my $self = shift;
+	
+	if ( not $self->{_debugger_} ) {
+		$self->error( _T('Debugger not running') );
+		return;
+	}
+
+	my $text = $self->_debug_get_variable() or return;
+	my $debugger = $self->debugger;
+	
+	my $count = $debugger->GetItemCount;
+	my $idx = $debugger->InsertStringItem( $count + 1, $text );
+
+#	my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($text) };
+#	if ($@) {
+#		$self->error(sprintf(_T("Could not evaluate '%s'"), $text));
+#		return;
+#	} else {
+#		$debugger->SetItem( $idx, 1, $value );
+#	}
+
+	return;
+}
 sub debug_perl_evaluate_expression {
 	my $self = shift;
 

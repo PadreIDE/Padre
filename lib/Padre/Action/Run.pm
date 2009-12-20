@@ -309,6 +309,21 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name         => 'debug.display_value',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Display value'),
+		comment      => Wx::gettext('Display the current value of a variable'),
+
+		#shortcut     => 'Shift-F5',
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->debug_perl_display_value;
+		},
+	);
+
+	Padre::Action->new(
 		name         => 'debug.show_value',
 		need_editor  => 1,
 		need_runable => 1,

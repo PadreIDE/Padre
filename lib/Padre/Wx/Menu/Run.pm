@@ -117,6 +117,11 @@ sub new {
 		'debug.show_stack_trace',
 	);
 
+	$self->{debug_display_value} = $self->add_menu_action(
+		$self,
+		'debug.display_value',
+	);
+
 	$self->{debug_show_value} = $self->add_menu_action(
 		$self,
 		'debug.show_value',
