@@ -146,7 +146,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_step_in;
+			$_[0]->{_debugger_}->debug_perl_step_in;
 		},
 	);
 
@@ -160,7 +160,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_step_over;
+			$_[0]->{_debugger_}->debug_perl_step_over;
 		},
 	);
 
@@ -175,7 +175,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_step_out;
+			$_[0]->{_debugger_}->debug_perl_step_out;
 		},
 	);
 
@@ -189,7 +189,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_run;
+			$_[0]->{_debugger_}->debug_perl_run;
 		},
 	);
 
@@ -203,7 +203,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_jumpt_to;
+			$_[0]->{_debugger_}->debug_perl_jumpt_to;
 		},
 	);
 
@@ -217,7 +217,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_set_breakpoint;
+			$_[0]->{_debugger_}->debug_perl_set_breakpoint;
 		},
 	);
 
@@ -231,7 +231,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_remove_breakpoint;
+			$_[0]->{_debugger_}->debug_perl_remove_breakpoint;
 		},
 	);
 
@@ -245,7 +245,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_list_breakpoints;
+			$_[0]->{_debugger_}->debug_perl_list_breakpoints;
 		},
 	);
 
@@ -259,7 +259,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_run_to_cursor;
+			$_[0]->{_debugger_}->debug_perl_run_to_cursor;
 		},
 	);
 
@@ -274,7 +274,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_show_stack_trace;
+			$_[0]->{_debugger_}->debug_perl_show_stack_trace;
 		},
 	);
 
@@ -288,7 +288,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_display_value;
+			$_[0]->{_debugger_}->debug_perl_display_value;
 		},
 	);
 
@@ -302,7 +302,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_show_value;
+			$_[0]->{_debugger_}->debug_perl_show_value;
 		},
 	);
 
@@ -316,7 +316,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_evaluate_expression;
+			$_[0]->{_debugger_}->debug_perl_evaluate_expression;
 		},
 	);
 
@@ -330,7 +330,7 @@ sub new {
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
-			$_[0]->debug_perl_quit;
+			$_[0]->{_debugger_}->debug_perl_quit;
 		},
 	);
 
