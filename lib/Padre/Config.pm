@@ -367,10 +367,10 @@ setting(
 		. 'search.quick_menu_access:status/info;' . '|;'
 		. 'run.run_document:actions/player_play;'
 		. 'run.stop:actions/stop;' . '|;'
-		. 'debug.run:stock/code/stock_tools-macro;'
 		. 'debug.step_in:stock/code/stock_macro-stop-after-command;'
 		. 'debug.step_over:stock/code/stock_macro-stop-after-procedure;'
 		. 'debug.step_out:stock/code/stock_macro-jump-back;'
+		. 'debug.run:stock/code/stock_tools-macro;'
 		. 'debug.set_breakpoint:stock/code/stock_macro-insert-breakpoint;'
 		. 'debug.display_value:stock/code/stock_macro-watch-variable;'
 );

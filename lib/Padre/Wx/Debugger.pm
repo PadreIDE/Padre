@@ -6,7 +6,8 @@ use warnings;
 
 our $VERSION = '0.52';
 
-use Padre::Wx;
+use Padre::Wx       ();
+use Padre::Logger;
 
 =head1 NAME
 
@@ -208,7 +209,7 @@ sub debug_perl_list_breakpoints {
 		$main->error( _T('Debugger not running') );
 		return;
 	}
-	print scalar $self->{_debugger_}->list_break_watch_action(); # LIST context crashes in Debug::Client 0.10
+	$self->{_debugger_}->list_break_watch_action(); # LIST context crashes in Debug::Client 0.10
 	
 	return;
 }
@@ -242,7 +243,7 @@ sub debug_perl_quit {
 
 	$main->show_debugger(0);
 
-	print scalar $self->{_debugger_}->quit;
+	$self->{_debugger_}->quit;
 	delete $self->{_debugger_};
 
 	return;
@@ -265,7 +266,7 @@ sub debug_perl_step_in {
 
 	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_in;
 	if ( $module eq '<TERMINATED>' ) {
-		print "TERMINATED\n";
+		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
@@ -288,7 +289,7 @@ sub debug_perl_step_over {
 
 	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_over;
 	if ( $module eq '<TERMINATED>' ) {
-		print "TERMINATED\n";
+		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
@@ -328,7 +329,7 @@ sub debug_perl_run {
 
 	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->run($param);
 	if ( $module eq '<TERMINATED>' ) {
-		print "TERMINATED\n";
+		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
@@ -350,7 +351,7 @@ sub debug_perl_step_out {
 
 	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_out;
 	if ( $module eq '<TERMINATED>' ) {
-		print "TERMINATED\n";
+		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
 		return;
 	}
@@ -460,8 +461,16 @@ sub debug_perl_evaluate_expression {
 		Wx::gettext("Expr"),
 		"EVAL_EXPRESSION"
 	);
-	print scalar $self->{_debugger_}->execute_code($expression);
+	$self->{_debugger_}->execute_code($expression);
 
+	return;
+}
+
+sub quit {
+	my $self = shift;
+	if ( $self->{_debugger_} ) {
+		$self->debug_perl_quit;
+	}
 	return;
 }
 
