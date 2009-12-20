@@ -141,7 +141,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Step In'),
+		label        => Wx::gettext('Step In') . ' (&s) ',
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
@@ -155,7 +155,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Step Over'),
+		label        => Wx::gettext('Step Over') . ' (&n) ',
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
@@ -170,7 +170,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Step Out'),
+		label        => Wx::gettext('Step Out') . ' (&r) ',
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
@@ -184,8 +184,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Run till breakpoint'),
-		comment      => Wx::gettext('Run'),
+		label        => Wx::gettext('Run till breakpoint') . ' (&c) ',
+		comment      => Wx::gettext('Start running and/or continoue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event  => sub {
@@ -212,7 +212,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Set breakpoint'),
+		label        => Wx::gettext('Set breakpoint') . ' (&b) ',
 		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',
@@ -269,7 +269,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Stack Trace'),
+		label        => Wx::gettext('Show Stack Trace') . ' (&T) ',
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
@@ -297,7 +297,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Value'),
+		label        => Wx::gettext('Show Value') . ' (&x) ',
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
@@ -325,7 +325,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Quit Debugger'),
+		label        => Wx::gettext('Quit Debugger') . ' (&q) ',
 		comment      => Wx::gettext('Run the current document through the Debug::Client.'),
 
 		#shortcut     => 'Shift-F5',
