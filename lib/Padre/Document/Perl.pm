@@ -246,7 +246,7 @@ sub get_function_regex {
 	# This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without
 	# triggering a "Variable length lookbehind not implemented" error.
 	#	return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
-	return qr/(?:^|[^#\s])\s*(sub\s+$_[1])\b/;
+	return qr/(?:^|[^# \t])[ \t]*(sub\s+$_[1])\b/;
 }
 
 =pod
