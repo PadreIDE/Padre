@@ -106,6 +106,7 @@ sub new {
 	my $green  = Wx::Colour->new("green");
 	my $red    = Wx::Colour->new("red");
 	my $orange = Wx::Colour->new("orange");
+	my $blue   = Wx::Colour->new("blue");
 	$self->MarkerDefine(
 		Padre::Wx::MarkError(),
 		Wx::wxSTC_MARK_SMALLRECT,
@@ -123,6 +124,12 @@ sub new {
 		Wx::wxSTC_MARK_SMALLRECT,
 		$green,
 		$green,
+	);
+	$self->MarkerDefine(
+		Padre::Wx::MarkBreakpoint(),
+		Wx::wxSTC_MARK_SMALLRECT,
+		$blue,
+		$blue,
 	);
 
 	return $self;

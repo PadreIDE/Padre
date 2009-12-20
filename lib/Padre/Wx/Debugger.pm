@@ -109,6 +109,8 @@ sub debug_perl {
 			foreach my $row (keys %{ $self->{save}{$filename}{breakpoints}{$file} } ) {
 				#$self->{save}{$filename}{breakpoints}{$file}{$row};
 				$self->{_debugger_}->set_breakpoint( $file, $row ); # TODO what if this fails?
+				# TODO find the editor of that $file first!
+				#$editor->MarkerAdd( $row-1, Padre::Wx::MarkBreakpoint() );
 			}
 		}
 	}
@@ -236,6 +238,7 @@ sub debug_perl_set_breakpoint {
 		$self->error(sprintf(_T("Could not set breakpoint on file '%s' row '%s'"), $file, $row));
 		return;
 	}
+	$editor->MarkerAdd( $row-1, Padre::Wx::MarkBreakpoint() );
 	$self->{save}{ $self->{running_file} }{breakpoints}{$file}{$row} = 1; # TODO that should be the condition I guess
 
 	return;
