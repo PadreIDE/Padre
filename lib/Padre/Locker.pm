@@ -103,6 +103,7 @@ sub method_decrement {
 			next if $_ eq uc($_);
 			$self->{owner}->$_();
 		}
+		$self->{method_pending} = {};
 	}
 	return;
 }
