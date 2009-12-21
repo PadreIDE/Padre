@@ -5027,8 +5027,9 @@ sub on_last_visited_pane {
 
 		@$history[ -1, -2 ] = @$history[ -2, -1 ];
 		foreach my $i ( $self->pageids ) {
-			my $editor = $_[0]->notebook->GetPage($i);
-			if ( Scalar::Util::refaddr($editor) eq $history->[ $self->{last_visited_pane_depth} ] ) {
+			my $editor   = $_[0]->notebook->GetPage($i);
+			my $histaddr = $history->[ $self->{last_visited_pane_depth} ];
+			if ( $histaddr and $histaddr eq Scalar::Util::refaddr($editor) ) {
 				$self->notebook->SetSelection($i);
 
 				--$self->{last_visited_pane_depth};
