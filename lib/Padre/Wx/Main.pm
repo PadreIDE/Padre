@@ -1683,15 +1683,33 @@ sub on_run_tdd_tests {
 	my $project_dir = $document->project_dir;
 	unless ($project_dir) {
 		return $self->error( Wx::gettext("Could not find project root") );
-
-
 	}
 
 	my $dir = Cwd::cwd;
 	chdir $project_dir;
-	$self->run_command('perl Build test') if ( -e 'Build' );
 
-	$self->run_command('make test') if ( -e 'Makefile' ); # this should do dmake, nmake so on
+	# TODO maybe add save file(s) to this action?
+
+	my $config = Padre->ide->config;
+	my $perl = $config->run_perl_cmd; # TODO make this the user selected perl also do it in Padre::Document::Perl::get_command
+	unless ($perl) {
+		$perl = Padre::Perl::cperl();
+	}
+
+	if ($perl) {
+		if (-e 'Build.PL') {
+			$self->run_command("$perl Build.PL");
+			$self->run_command("$perl Build test");
+		} elsif (-e 'Makefile.PL') {
+			$self->run_command("$perl Makefile.PL");
+			my $make = 'make';  # TODO this should do dmake, nmake on Win32
+			$self->run_command("$make test");
+		} else {
+			$self->error( Wx::gettext("No Build.PL nor Makefile.PL found") );
+		}
+	} else {
+		$self->error( Wx::gettext("Could not find perl executable") );
+	}
 	chdir $dir;
 }
 
