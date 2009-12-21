@@ -705,7 +705,7 @@ This method provides the ability to check if a resource is currently locked.
 =cut
 
 sub locked {
-	shift->locked(@_);
+	shift->{locker}->locked(@_);
 }
 
 =pod
