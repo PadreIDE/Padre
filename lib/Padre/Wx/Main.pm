@@ -1690,8 +1690,7 @@ sub on_run_tdd_tests {
 
 	# TODO maybe add save file(s) to this action?
 
-	my $config = Padre->ide->config;
-	my $perl = $config->run_perl_cmd; # TODO make this the user selected perl also do it in Padre::Document::Perl::get_command
+	my $perl = $self->config->run_perl_cmd; # TODO make this the user selected perl also do it in Padre::Document::Perl::get_command
 	unless ($perl) {
 		$perl = Padre::Perl::cperl();
 	}
