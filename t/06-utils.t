@@ -3,7 +3,7 @@
 use 5.006;
 use strict;
 use warnings;
-use Test::More tests => 3;
+use Test::More tests => 4;
 use Padre::Util;
 use File::Basename ();
 use File::Spec     ();
@@ -40,3 +40,17 @@ is( Padre::Util::get_project_dir( File::Spec->rootdir() ),
 	undef,
 	'Searching for a non-existant project'
 );
+
+# TODO we need to pass the $main object to the create function
+# and certain other things need to be in place before running
+# Padre::Action::create($main)
+use Padre::Action;
+sub Padre::ide { return bless { shortcuts => {} }, 'Padre::IDE'; }
+sub Padre::IDE::actions { return {} }
+sub Padre::IDE::config { return bless {}, 'Padre::Config' }
+SKIP: {
+	# TODO check if every action has a comment as required
+	skip 'Fix this test!', 1;
+	Padre::Action::create(bless {}, 'Padre::IDE');
+	ok(1);
+}
