@@ -21,6 +21,7 @@ our $VERSION = '0.52';
 use Class::XSAccessor getters => {
 	id            => 'id',
 	icon          => 'icon',
+	comment       => 'comment',
 	name          => 'name',
 	label         => 'label',
 	shortcut      => 'shortcut',

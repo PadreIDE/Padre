@@ -84,6 +84,10 @@ sub add_menu_action {
 	$item->Check( $action->{checked_default} )
 		if $method eq 'AppendCheckItem';
 
+	if ($action->comment) {
+		$item->SetHelp( $action->comment );
+	}
+
 	Wx::Event::EVT_MENU(
 		$self->{main},
 		$item,

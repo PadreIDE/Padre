@@ -32,6 +32,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Ctrl-Tab behaviour is now configurable (SEWI)
     - Initial migration of ::Main->{_no_refresh} to Padre::Locker (ADAMK)
     - Rename Padre::Debug to Padre::Logger (SZABGAB)
+    - Reuse the comment field of the menu actions and show them in the toolbar (SZABGAB)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
