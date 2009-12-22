@@ -29,6 +29,7 @@ our %mode = (
 # mapping for mime-type to the style name in the share/styles/default.yml file
 our %MIME_STYLE = (
 	'application/x-perl' => 'perl',
+	'application/x-psgi' => 'perl',
 	'text/x-perlxs'      => 'xs',   # should be in the plugin...
 	'text/x-patch'       => 'diff',
 	'text/x-makefile'    => 'make',

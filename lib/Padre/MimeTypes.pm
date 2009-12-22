@@ -82,6 +82,7 @@ sub _initialize {
 		plx   => \&perl_mime_type,
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
+		psgi =>  'application/x-psgi',
 		t     => \&perl_mime_type,
 
 		# Lacking a better solution, define our own MIME
@@ -216,6 +217,10 @@ sub _initialize {
 			name  => 'Perl 5',
 			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 			class => 'Padre::Document::Perl',
+		},
+		'application/x-psgi' => {
+			name  => 'PSGI',
+			lexer => Wx::wxSTC_LEX_PERL,     # CONFIRMED
 		},
 		'text/x-python' => {
 			name  => 'Python',
