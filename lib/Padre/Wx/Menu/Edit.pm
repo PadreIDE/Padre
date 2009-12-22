@@ -45,6 +45,7 @@ sub new {
 		#			return $objects{editor}->CanUndo;
 		#		},
 		label      => Wx::gettext('&Undo'),
+		comment    => Wx::gettext('Undo last change in current file'),
 		shortcut   => 'Ctrl-Z',
 		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
@@ -64,6 +65,7 @@ sub new {
 		#			return $objects{editor}->CanRedo;
 		#		},
 		label      => Wx::gettext('&Redo'),
+		comment    => Wx::gettext('Redo last undo'),
 		shortcut   => 'Ctrl-Y',
 		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
@@ -87,6 +89,7 @@ sub new {
 		id          => Wx::wxID_SELECTALL,
 		need_editor => 1,
 		label       => Wx::gettext('Select all'),
+		comment     => Wx::gettext('Select all the text in the current document'),
 		shortcut    => 'Ctrl-A',
 		menu_event  => sub {
 			require Padre::Wx::Editor;
@@ -101,6 +104,7 @@ sub new {
 		name        => 'edit.mark_selection_start',
 		need_editor => 1,
 		label       => Wx::gettext('Mark selection start'),
+		comment     => Wx::gettext('Mark the place where the selection should start'),
 		shortcut    => 'Ctrl-[',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -113,6 +117,7 @@ sub new {
 		name        => 'edit.mark_selection_end',
 		need_editor => 1,
 		label       => Wx::gettext('Mark selection end'),
+		comment     => Wx::gettext('Mark the place where the selection should end'),
 		shortcut    => 'Ctrl-]',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -125,6 +130,7 @@ sub new {
 		name        => 'edit.clear_selection_marks',
 		need_editor => 1,
 		label       => Wx::gettext('Clear selection marks'),
+		comment     => Wx::gettext('Remove all the selection marks'),
 		menu_event  => sub {
 			require Padre::Wx::Editor;
 			Padre::Wx::Editor::text_selection_clear_marks(@_);
@@ -139,6 +145,7 @@ sub new {
 		need_editor    => 1,
 		need_selection => 1,
 		label          => Wx::gettext('Cu&t'),
+		comment        => Wx::gettext('Remove the current selection and put it in the clipboard'),
 		shortcut       => 'Ctrl-X',
 		menu_event     => sub {
 			my $editor = Padre::Current->editor or return;
@@ -153,6 +160,7 @@ sub new {
 		need_editor    => 1,
 		need_selection => 1,
 		label          => Wx::gettext('&Copy'),
+		comment        => Wx::gettext('Put the current selection in the clipboard'),
 		shortcut       => 'Ctrl-C',
 		menu_event     => sub {
 			my $editor = Padre::Current->editor or return;
@@ -174,6 +182,7 @@ sub new {
 		need_editor => 1,
 		need_file   => 1,
 		label       => Wx::gettext('Copy full filename'),
+		comment        => Wx::gettext('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -188,6 +197,7 @@ sub new {
 		need_editor => 1,
 		need_file   => 1,
 		label       => Wx::gettext('Copy filename'),
+		comment     => Wx::gettext('Put the name of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -202,6 +212,7 @@ sub new {
 		need_file   => 1,
 		need_editor => 1,
 		label       => Wx::gettext('Copy directory name'),
+		comment     => Wx::gettext('Put the full path of the directory of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -215,6 +226,7 @@ sub new {
 		name        => 'edit.copy_content',
 		need_editor => 1,
 		label       => Wx::gettext('Copy editor content'),
+		comment     => Wx::gettext('Put the content of the current document in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -230,6 +242,7 @@ sub new {
 		need_editor => 1,
 		id          => Wx::wxID_PASTE,
 		label       => Wx::gettext('&Paste'),
+		comment     => Wx::gettext('Paste the clipboard to the current location'),
 		shortcut    => 'Ctrl-V',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -244,6 +257,7 @@ sub new {
 		$self,
 		name       => 'edit.goto',
 		label      => Wx::gettext('&Goto Line'),
+		comment    => Wx::gettext('Ask the user for a row number and jump there'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
 			Padre::Wx::Main::on_goto(@_);
@@ -255,6 +269,7 @@ sub new {
 		name        => 'edit.next_problem',
 		need_editor => 1,
 		label       => Wx::gettext('&Next Problem'),
+		comment     => Wx::gettext('Jumpt to the code  that triggered the next error'),
 		shortcut    => 'Ctrl-.',
 		menu_event  => sub {
 			$main->{syntax}->select_next_problem;
