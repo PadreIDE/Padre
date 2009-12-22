@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-22 09:53+0200\n"
-"PO-Revision-Date: 2009-12-22 10:06+0200\n"
+"POT-Creation-Date: 2009-12-22 11:05+0200\n"
+"PO-Revision-Date: 2009-12-22 11:05+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,7 @@ msgstr "أدوات الوثيقة (اليمين)"
 
 #: lib/Padre/Document.pm:220
 msgid "Error while opening file: no file object"
-msgstr ""
+msgstr "خطأ أثناء فتح الملف : لا يوجد كائن ملف"
 
 #: lib/Padre/Document.pm:241
 #, perl-format
@@ -333,7 +333,7 @@ msgstr "ال %s - فشل انشاء البرنامج المساعد"
 #: lib/Padre/PluginManager.pm:751
 #, perl-format
 msgid "Plugin error on event %s: %s"
-msgstr ""
+msgstr "خطأ البرنامج المساعد عند الحدث %s: %s"
 
 #: lib/Padre/PluginManager.pm:761
 msgid "(core)"
@@ -425,7 +425,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:40
 msgid "Step In"
-msgstr ""
+msgstr "خطوة للداخل"
 
 #: lib/Padre/Action/Debugger.pm:41
 msgid "Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)"
@@ -433,7 +433,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:54
 msgid "Step Over"
-msgstr ""
+msgstr "خطوة فوق"
 
 #: lib/Padre/Action/Debugger.pm:55
 msgid "Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)"
@@ -441,7 +441,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:69
 msgid "Step Out"
-msgstr ""
+msgstr "خطوة للخارج"
 
 #: lib/Padre/Action/Debugger.pm:70
 msgid "If withing a subroutine, run till return is called and then stop."
@@ -449,7 +449,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:83
 msgid "Run till breakpoint"
-msgstr ""
+msgstr "تشغيل حتى نقطة التوقف"
 
 #: lib/Padre/Action/Debugger.pm:84
 msgid "Start running and/or continoue running till next breakpoint or watch"
@@ -457,7 +457,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:97
 msgid "Jump to current execution line"
-msgstr ""
+msgstr "القفز الى سطر التنفيذ الحالي"
 
 #: lib/Padre/Action/Debugger.pm:98
 msgid "Set focus to the line where the current statement is in the debugging process"
@@ -489,7 +489,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:153
 msgid "Run to cursor"
-msgstr ""
+msgstr "تشغيل حتى المؤشر"
 
 #: lib/Padre/Action/Debugger.pm:154
 msgid "Set a breakpoint at the line where to cursor is and run till there"
@@ -517,7 +517,7 @@ msgstr "إظهار القيمة"
 
 #: lib/Padre/Action/Debugger.pm:197
 msgid "Show the value of a variable."
-msgstr ""
+msgstr "اظهار قيمة متغير."
 
 #: lib/Padre/Action/Debugger.pm:210
 msgid "Evaluate Expression"
@@ -525,7 +525,7 @@ msgstr "تقييم التعبير"
 
 #: lib/Padre/Action/Debugger.pm:211
 msgid "Type in any expression and evaluate it in the debugged process"
-msgstr ""
+msgstr "اطبع أي تعبير واحصل على قيمتها في العملية الذي يتم تصحيحها"
 
 #: lib/Padre/Action/Debugger.pm:224
 msgid "Quit Debugger"
@@ -553,7 +553,7 @@ msgstr "مساعده السياق"
 
 #: lib/Padre/Action/Help.pm:64
 msgid "Show the help article for the current context"
-msgstr ""
+msgstr "اظهار مقالة المساعدة للسياق الحالي"
 
 #: lib/Padre/Action/Help.pm:76
 msgid "Current Document"
@@ -629,7 +629,7 @@ msgstr ""
 
 #: lib/Padre/Action/Internal.pm:44
 msgid "Dump the Padre object to STDOUT"
-msgstr ""
+msgstr "طباعة كائن Padre إلى STDOUT"
 
 #: lib/Padre/Action/Internal.pm:45
 msgid "Dumps the complete Padre object to STDOUT for testing/debugging."
@@ -639,51 +639,67 @@ msgstr ""
 msgid "Check for common (beginner) errors"
 msgstr "تأكد من أخطاء (المبتدئين) الشائعة"
 
-#: lib/Padre/Action/Perl.pm:56
+#: lib/Padre/Action/Perl.pm:46
+msgid "Check the current file"
+msgstr "التحقق من الملف الحالي"
+
+#: lib/Padre/Action/Perl.pm:57
 msgid "Find Unmatched Brace"
 msgstr "ايجاد قوص بلا مثيل"
 
-#: lib/Padre/Action/Perl.pm:57
+#: lib/Padre/Action/Perl.pm:58
 msgid "Searches the source code for brackets with lack a matching (opening/closing) part."
 msgstr ""
 
-#: lib/Padre/Action/Perl.pm:68
+#: lib/Padre/Action/Perl.pm:69
 #: lib/Padre/Document/Perl.pm:1491
 msgid "Find Variable Declaration"
 msgstr "ايجاد اعلان متغير"
 
-#: lib/Padre/Action/Perl.pm:79
+#: lib/Padre/Action/Perl.pm:70
+msgid "Find where the selected variable was declared using \"my\" and put the focus there."
+msgstr ""
+
+#: lib/Padre/Action/Perl.pm:81
 #: lib/Padre/Document/Perl.pm:1531
 msgid "Find Method Declaration"
 msgstr "ايجاد اعلان الmethod"
 
-#: lib/Padre/Action/Perl.pm:90
+#: lib/Padre/Action/Perl.pm:82
+msgid "Find where the selected function was defined and put the focus there."
+msgstr ""
+
+#: lib/Padre/Action/Perl.pm:93
 msgid "Vertically Align Selected"
 msgstr "محاذاة الاسطر المختاره عموديا"
 
-#: lib/Padre/Action/Perl.pm:91
+#: lib/Padre/Action/Perl.pm:94
 msgid "Align a selection of text to the same left column."
 msgstr ""
 
-#: lib/Padre/Action/Perl.pm:101
+#: lib/Padre/Action/Perl.pm:104
 msgid "Newline same column"
 msgstr "سطر الجديد بنفس العمود"
 
-#: lib/Padre/Action/Perl.pm:103
+#: lib/Padre/Action/Perl.pm:106
 msgid "Like pressing ENTER somewhere on a line but use the current position as ident for the new line."
 msgstr ""
 
-#: lib/Padre/Action/Perl.pm:115
+#: lib/Padre/Action/Perl.pm:118
 msgid "Create project tagsfile"
 msgstr "انشاء مشروع tagsfile"
 
-#: lib/Padre/Action/Perl.pm:117
+#: lib/Padre/Action/Perl.pm:120
 msgid "Creates a perltags - file for the current project supporting find_method and autocomplete."
 msgstr ""
 
-#: lib/Padre/Action/Perl.pm:143
+#: lib/Padre/Action/Perl.pm:146
 msgid "Automatic bracket completion"
 msgstr "تكميل الأقواص الاتوماتيكي"
+
+#: lib/Padre/Action/Perl.pm:147
+msgid "When typing { insert a closing } automatically"
+msgstr ""
 
 #: lib/Padre/Action/Plugins.pm:37
 #: lib/Padre/Wx/Dialog/PluginManager.pm:31
@@ -698,82 +714,98 @@ msgstr ""
 msgid "Plug-in List (CPAN)"
 msgstr "قائمة البرامج المساعدة (CPAN)"
 
-#: lib/Padre/Action/Plugins.pm:61
+#: lib/Padre/Action/Plugins.pm:54
+msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
+msgstr ""
+
+#: lib/Padre/Action/Plugins.pm:62
 msgid "Edit My Plug-in"
 msgstr "تحرير برنامجي المساعد"
 
-#: lib/Padre/Action/Plugins.pm:62
+#: lib/Padre/Action/Plugins.pm:63
 msgid "My Plug-in is a plug-in where developers could extend their Padre installation"
 msgstr ""
 
-#: lib/Padre/Action/Plugins.pm:68
+#: lib/Padre/Action/Plugins.pm:69
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr "فشل العثور على البرنامج المساعد  Padre::Plugin::My"
 
-#: lib/Padre/Action/Plugins.pm:78
+#: lib/Padre/Action/Plugins.pm:79
 msgid "Reload My Plug-in"
 msgstr "اعاده تحميل البرنامج المساعد"
 
-#: lib/Padre/Action/Plugins.pm:79
+#: lib/Padre/Action/Plugins.pm:80
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr ""
 
-#: lib/Padre/Action/Plugins.pm:87
-#: lib/Padre/Action/Plugins.pm:91
+#: lib/Padre/Action/Plugins.pm:88
 #: lib/Padre/Action/Plugins.pm:92
+#: lib/Padre/Action/Plugins.pm:93
 msgid "Reset My plug-in"
 msgstr "اعادة تشغيل برنامجي المساعد"
 
-#: lib/Padre/Action/Plugins.pm:88
+#: lib/Padre/Action/Plugins.pm:89
 msgid "Reset the My plug-in to the default"
 msgstr ""
 
-#: lib/Padre/Action/Plugins.pm:107
+#: lib/Padre/Action/Plugins.pm:108
 msgid "Reload All Plug-ins"
 msgstr "اعاده تحميل كل البرامج المساعده"
 
-#: lib/Padre/Action/Plugins.pm:108
+#: lib/Padre/Action/Plugins.pm:109
 msgid "Reload all plug-ins from disk"
 msgstr "اعاده تحميل كل البرامج المساعده من القرص"
 
-#: lib/Padre/Action/Plugins.pm:116
+#: lib/Padre/Action/Plugins.pm:117
 msgid "(Re)load Current Plug-in"
 msgstr "اعاده تحميل البرنامج المساعد الحالي"
 
-#: lib/Padre/Action/Plugins.pm:117
+#: lib/Padre/Action/Plugins.pm:118
 msgid "Reloads (or initially loads) the current plug-in"
 msgstr ""
 
-#: lib/Padre/Action/Plugins.pm:135
+#: lib/Padre/Action/Plugins.pm:136
 msgid "Install CPAN Module"
 msgstr "تثبيت وحدة CPAN"
 
-#: lib/Padre/Action/Plugins.pm:136
+#: lib/Padre/Action/Plugins.pm:137
 msgid "Install a Perl module from CPAN"
 msgstr "تثبيت وحدة Perl من CPAN"
 
-#: lib/Padre/Action/Plugins.pm:148
+#: lib/Padre/Action/Plugins.pm:149
 msgid "Install Local Distribution"
 msgstr "تثبيت التوزيع المحلي"
 
-#: lib/Padre/Action/Plugins.pm:156
+#: lib/Padre/Action/Plugins.pm:150
+msgid "Using CPAN.pm install a CPAN like package opened locally"
+msgstr ""
+
+#: lib/Padre/Action/Plugins.pm:158
 msgid "Install Remote Distribution"
 msgstr "تثبيت التوزيع البعيد"
 
-#: lib/Padre/Action/Plugins.pm:164
+#: lib/Padre/Action/Plugins.pm:159
+msgid "Using pip download a tar.gz file and install it using CPAN.pm"
+msgstr ""
+
+#: lib/Padre/Action/Plugins.pm:167
 msgid "Open CPAN Config File"
 msgstr "فتح ملف تعريفات CPAN"
 
-#: lib/Padre/Action/Plugins.pm:183
+#: lib/Padre/Action/Plugins.pm:168
+msgid "Open CPAN::MyConfig.pm for manual editing by experts"
+msgstr ""
+
+#: lib/Padre/Action/Plugins.pm:187
 msgid "Select distribution to install"
 msgstr "اختر وحده توزيع لتثبيتها"
 
-#: lib/Padre/Action/Plugins.pm:196
-#: lib/Padre/Action/Plugins.pm:221
+#: lib/Padre/Action/Plugins.pm:200
+#: lib/Padre/Action/Plugins.pm:225
 msgid "Did not provide a distribution"
 msgstr "لم تحدد أي توزيع"
 
-#: lib/Padre/Action/Plugins.pm:211
+#: lib/Padre/Action/Plugins.pm:215
 msgid ""
 "Enter URL to install\n"
 "e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
@@ -781,11 +813,11 @@ msgstr ""
 "ادخل عنوان الوحده للتثبيت\n"
 "مثال: http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
 
-#: lib/Padre/Action/Plugins.pm:238
+#: lib/Padre/Action/Plugins.pm:242
 msgid "pip is unexpectedly not installed"
 msgstr "فشل تثبيت برنامج pip"
 
-#: lib/Padre/Action/Plugins.pm:284
+#: lib/Padre/Action/Plugins.pm:288
 msgid "Failed to find your CPAN configuration"
 msgstr "فشل العثور على تعريفات برنامج CPAN الخاص بك"
 
@@ -794,36 +826,44 @@ msgstr "فشل العثور على تعريفات برنامج CPAN الخاص �
 msgid "Lexically Rename Variable"
 msgstr "اعاده تسميه المتغير ضمن النطاق"
 
-#: lib/Padre/Action/Refactor.pm:56
+#: lib/Padre/Action/Refactor.pm:50
+msgid "Prompt for a replacement variable name and replace all occurrance of this variable"
+msgstr ""
+
 #: lib/Padre/Action/Refactor.pm:57
+#: lib/Padre/Action/Refactor.pm:58
 #: lib/Padre/Document/Perl.pm:1515
 #: lib/Padre/Document/Perl.pm:1516
 msgid "Replacement"
 msgstr "بديل"
 
-#: lib/Padre/Action/Refactor.pm:71
+#: lib/Padre/Action/Refactor.pm:72
 msgid "Extract Subroutine"
 msgstr "استخراج روتين ثانوياستخراج روتين ثانوي"
 
-#: lib/Padre/Action/Refactor.pm:73
+#: lib/Padre/Action/Refactor.pm:74
 msgid "Cut the current selection and create a new sub from it. A call to this sub is added in the place where the selection was."
 msgstr ""
 
-#: lib/Padre/Action/Refactor.pm:85
+#: lib/Padre/Action/Refactor.pm:86
 msgid "Please enter a name for the new subroutine"
 msgstr "الرجاء ادخال اسم للروتين الثانوي الجديد"
 
-#: lib/Padre/Action/Refactor.pm:86
+#: lib/Padre/Action/Refactor.pm:87
 msgid "New Subroutine Name"
 msgstr "اسم روتين ثانوي جديد"
 
-#: lib/Padre/Action/Refactor.pm:101
+#: lib/Padre/Action/Refactor.pm:102
 #: lib/Padre/Document/Perl.pm:1550
 msgid "Introduce Temporary Variable"
 msgstr "إدخال متغير مؤقت"
 
-#: lib/Padre/Action/Refactor.pm:108
-#: lib/Padre/Action/Refactor.pm:109
+#: lib/Padre/Action/Refactor.pm:103
+msgid "Assign the selected expression to a newly declared variable"
+msgstr ""
+
+#: lib/Padre/Action/Refactor.pm:110
+#: lib/Padre/Action/Refactor.pm:111
 #: lib/Padre/Document/Perl.pm:1563
 #: lib/Padre/Document/Perl.pm:1564
 msgid "Variable Name"
@@ -883,7 +923,7 @@ msgstr "ايقاف التنفيذ"
 
 #: lib/Padre/Action/Run.pm:122
 msgid "Stop a running task."
-msgstr ""
+msgstr "ايقاف تشغيل مهمة."
 
 #: lib/Padre/Action/Search.pm:36
 #: lib/Padre/Wx/Dialog/Replace.pm:151
@@ -895,7 +935,7 @@ msgid "Find text or regular expressions using a traditional dialog"
 msgstr ""
 
 #: lib/Padre/Action/Search.pm:46
-#: lib/Padre/Action/Search.pm:117
+#: lib/Padre/Action/Search.pm:118
 msgid "Find Next"
 msgstr "ايجاد التالي"
 
@@ -919,89 +959,141 @@ msgstr ""
 msgid "Quick Find"
 msgstr "بحث سريع"
 
-#: lib/Padre/Action/Search.pm:118
+#: lib/Padre/Action/Search.pm:101
+msgid "Incremental search seen at the bottom of the window"
+msgstr ""
+
+#: lib/Padre/Action/Search.pm:119
 msgid "Find next matching text using a toolbar-like dialog at the bottom of the editor"
 msgstr ""
 
-#: lib/Padre/Action/Search.pm:128
+#: lib/Padre/Action/Search.pm:129
 msgid "Find Previous"
 msgstr "ايجاد السابق"
 
-#: lib/Padre/Action/Search.pm:129
+#: lib/Padre/Action/Search.pm:130
 msgid "Find previous matching text using a toolbar-like dialog at the bottom of the editor"
 msgstr ""
 
-#: lib/Padre/Action/Search.pm:140
+#: lib/Padre/Action/Search.pm:141
 #: lib/Padre/Wx/Dialog/Replace.pm:241
 msgid "Replace"
 msgstr "استبدال"
 
-#: lib/Padre/Action/Search.pm:141
+#: lib/Padre/Action/Search.pm:142
 msgid "Find a text and replace it"
 msgstr "ابحث عن نص واستبدله"
 
-#: lib/Padre/Action/Search.pm:151
+#: lib/Padre/Action/Search.pm:152
 msgid "Find in Fi&les..."
 msgstr "...بحث في ال&ملفات"
 
-#: lib/Padre/Action/Search.pm:152
+#: lib/Padre/Action/Search.pm:153
 msgid "Search for a text in all files below a given directory"
-msgstr ""
+msgstr "البحث عن نص في كل الملفات تحت الدليل المعطى"
 
-#: lib/Padre/Action/Search.pm:161
+#: lib/Padre/Action/Search.pm:163
 #: lib/Padre/Wx/Dialog/OpenResource.pm:87
 msgid "Open Resource"
 msgstr "فتح المصدر"
 
-#: lib/Padre/Action/Search.pm:173
+#: lib/Padre/Action/Search.pm:164
+msgid "Type in a filter to select a file"
+msgstr "اطبع اسم فلتر لاختيار ملف"
+
+#: lib/Padre/Action/Search.pm:176
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:35
 msgid "Quick Menu Access"
 msgstr "الوصول السريع للقائمة"
 
-#: lib/Padre/Action/Search.pm:174
+#: lib/Padre/Action/Search.pm:177
 msgid "Quick access to all menu functions"
-msgstr ""
+msgstr "الوصول السريع لجميع وظائف القائمة"
 
 #: lib/Padre/Action/Window.pm:31
-#: lib/Padre/Action/Window.pm:73
+#: lib/Padre/Action/Window.pm:77
 msgid "Last Visited File"
 msgstr "آخر ملف تم زيارته"
 
-#: lib/Padre/Action/Window.pm:41
+#: lib/Padre/Action/Window.pm:32
+msgid "Switch to edit the file that was previously edited (can switch back and forth)"
+msgstr ""
+
+#: lib/Padre/Action/Window.pm:42
 msgid "Oldest Visited File"
 msgstr "أقدم ملف تم زيارته"
 
-#: lib/Padre/Action/Window.pm:51
+#: lib/Padre/Action/Window.pm:43
+msgid "Put focus on tab visited the longest time ago."
+msgstr ""
+
+#: lib/Padre/Action/Window.pm:53
 msgid "Next File"
 msgstr "الملف التالي"
 
-#: lib/Padre/Action/Window.pm:61
+#: lib/Padre/Action/Window.pm:54
+msgid "Put focus on the next tab to the right"
+msgstr ""
+
+#: lib/Padre/Action/Window.pm:64
 msgid "Previous File"
 msgstr "الملف السابق"
 
-#: lib/Padre/Action/Window.pm:83
+#: lib/Padre/Action/Window.pm:65
+msgid "Put focus on the previous tab to the left"
+msgstr ""
+
+#: lib/Padre/Action/Window.pm:78
+msgid "???"
+msgstr "???"
+
+#: lib/Padre/Action/Window.pm:88
 msgid "Right Click"
 msgstr "نقر الزر الأيمن"
 
-#: lib/Padre/Action/Window.pm:97
+#: lib/Padre/Action/Window.pm:89
+msgid "Imitate clickinig on the right button on the mouse"
+msgstr ""
+
+#: lib/Padre/Action/Window.pm:103
 msgid "GoTo Functions Window"
 msgstr "ذهاب الى نافذه الوظائف"
 
-#: lib/Padre/Action/Window.pm:108
+#: lib/Padre/Action/Window.pm:104
+msgid "Set the focus to be the functions window"
+msgstr "تعيين التركيز لنافذة الوظائف"
+
+#: lib/Padre/Action/Window.pm:115
 msgid "GoTo Outline Window"
 msgstr "ذهاب الى نافذه المخطط"
 
-#: lib/Padre/Action/Window.pm:118
+#: lib/Padre/Action/Window.pm:116
+msgid "Set the focus to be the outline window"
+msgstr "تعيين التركيز لنافذة المخطط"
+
+#: lib/Padre/Action/Window.pm:126
 msgid "GoTo Output Window"
 msgstr "ذهاب الى نافذه النتائج"
 
-#: lib/Padre/Action/Window.pm:128
+#: lib/Padre/Action/Window.pm:127
+msgid "Set the focus to be the output window"
+msgstr "تعيين التركيز لنافذة النتائج"
+
+#: lib/Padre/Action/Window.pm:137
 msgid "GoTo Syntax Check Window"
 msgstr "ذهاب الى نافذه فحص بناء الجمل"
 
 #: lib/Padre/Action/Window.pm:138
+msgid "Set the focus to be the syntax check window"
+msgstr "تعيين التركيز لنافذة فحص بناء الجمل"
+
+#: lib/Padre/Action/Window.pm:148
 msgid "GoTo Main Window"
 msgstr "ذهاب الى النافذه الرئيسيه"
+
+#: lib/Padre/Action/Window.pm:149
+msgid "Set the focus to be the main editor window"
+msgstr "تعيين التركيز لنافذة المحرر الرئيسية"
 
 #: lib/Padre/Document/Perl.pm:284
 #, perl-format
@@ -1279,7 +1371,7 @@ msgstr "تجاهل الادله الثانويه المخفيه"
 
 #: lib/Padre/Wx/Ack.pm:128
 msgid "Show only files that don't match"
-msgstr ""
+msgstr "اظهار فقط الملفات الغير مطابقة"
 
 #: lib/Padre/Wx/Ack.pm:144
 msgid "Find in Files"
@@ -1295,24 +1387,24 @@ msgid "Ack"
 msgstr "برنامج Ack"
 
 #: lib/Padre/Wx/Ack.pm:410
-#, fuzzy, perl-format
+#, perl-format
 msgid "Found %d files\n"
-msgstr "البحث في الملفات"
+msgstr "تم العثور على %d ملفات\n"
 
 #: lib/Padre/Wx/Ack.pm:419
-#, fuzzy, perl-format
+#, perl-format
 msgid "Found %d files and %d matches\n"
-msgstr "فشل العثور على أي مطابقة."
+msgstr "تم العثور على %d ملفات و %d تطابقات\n"
 
 #: lib/Padre/Wx/Ack.pm:459
-#, fuzzy, perl-format
+#, perl-format
 msgid "'%s' missing in file '%s'\n"
-msgstr "لا يمكن العثور على الملف '%s'"
+msgstr "ال '%s' غير موجود في الملف '%s'\n"
 
 #: lib/Padre/Wx/Ack.pm:473
-#, fuzzy, perl-format
+#, perl-format
 msgid "Found '%s' in '%s':\n"
-msgstr "البحث في الملفات"
+msgstr "تم العثور على '%s' في '%s':\n"
 
 #: lib/Padre/Wx/Bottom.pm:50
 msgid "Output View"
@@ -1320,7 +1412,7 @@ msgstr "عرض النتائج"
 
 #: lib/Padre/Wx/Debugger.pm:55
 msgid "Debugger is already running"
-msgstr ""
+msgstr "المصحح بالفعل قيد التشغيل"
 
 #: lib/Padre/Wx/Debugger.pm:60
 msgid "Not a Perl document"
@@ -1332,22 +1424,22 @@ msgstr "ليس وثيقه بيرل"
 #: lib/Padre/Wx/Debugger.pm:356
 #: lib/Padre/Wx/Debugger.pm:379
 msgid "Debugger not running"
-msgstr ""
+msgstr "المصحح ليس قيد التشغيل"
 
 #: lib/Padre/Wx/Debugger.pm:238
-#, fuzzy, perl-format
+#, perl-format
 msgid "Could not set breakpoint on file '%s' row '%s'"
-msgstr "لا يمكن العثور على الملف '%s'"
+msgstr "فشل تعيين نقطة التوقف على الملف '%s' row '%s'"
 
 #: lib/Padre/Wx/Debugger.pm:420
-#, fuzzy, perl-format
+#, perl-format
 msgid "Could not evaluate '%s'"
-msgstr "لا يمكن العثور على الملف '%s'"
+msgstr "لا يمكن تقييم '%s'"
 
 #: lib/Padre/Wx/Debugger.pm:438
 #, perl-format
 msgid "'%s' does not look like a variable"
-msgstr ""
+msgstr "لا يبدو '%s' كمتغيير"
 
 #: lib/Padre/Wx/Debugger.pm:473
 msgid "Expression:"
@@ -1355,7 +1447,7 @@ msgstr "التعبير:"
 
 #: lib/Padre/Wx/Debugger.pm:474
 msgid "Expr"
-msgstr ""
+msgstr "Expr"
 
 #: lib/Padre/Wx/Directory.pm:75
 msgid "Project"
@@ -1445,7 +1537,7 @@ msgstr "رقم السطر"
 
 #: lib/Padre/Wx/FindResult.pm:124
 msgid "Related Editor Has been Closed"
-msgstr ""
+msgstr "تم اغلاق المحرر ذات الصلة"
 
 #: lib/Padre/Wx/FindResult.pm:179
 #: lib/Padre/Wx/Syntax.pm:85
@@ -1496,12 +1588,11 @@ msgstr "فشل العثور على جذر المشروع"
 
 #: lib/Padre/Wx/Main.pm:1719
 msgid "No Build.PL nor Makefile.PL found"
-msgstr ""
+msgstr "لم يتم العثور على Build.PL أو Makefile.PL"
 
 #: lib/Padre/Wx/Main.pm:1722
-#, fuzzy
 msgid "Could not find perl executable"
-msgstr "فشل العثور على جذر المشروع"
+msgstr "فشل العثور على ملف تشغيل perl"
 
 #: lib/Padre/Wx/Main.pm:1747
 #: lib/Padre/Wx/Main.pm:1799
@@ -1802,6 +1893,8 @@ msgid ""
 "Error running filter tool:\n"
 "%s"
 msgstr ""
+"خطأ خلال تشغيل أداة الفلترة:\n"
+"%s"
 
 #: lib/Padre/Wx/Main.pm:5534
 #, perl-format
@@ -1809,6 +1902,8 @@ msgid ""
 "Error returned by filter tool:\n"
 "%s"
 msgstr ""
+"خطأ أرجعه أداة الفلترة:\n"
+"%s"
 
 #: lib/Padre/Wx/Notebook.pm:50
 msgid "Files"
@@ -1859,7 +1954,7 @@ msgstr "الحاله"
 
 #: lib/Padre/Wx/Debugger/View.pm:59
 msgid "Debugger"
-msgstr ""
+msgstr "المصحح"
 
 #: lib/Padre/Wx/Debugger/View.pm:102
 msgid "Variable"
@@ -1901,9 +1996,9 @@ msgid "The bookmark '%s' no longer exists"
 msgstr "لم تعد العلامه '%s' غير موجوده"
 
 #: lib/Padre/Wx/Dialog/Encode.pm:22
-#, fuzzy, perl-format
+#, perl-format
 msgid "Document encoded to (%s)"
-msgstr "(الوثيقة ليست على القرص)"
+msgstr "تم ترميز الوثيقة إلى (%s)"
 
 #: lib/Padre/Wx/Dialog/Encode.pm:53
 msgid "Encode to:"
@@ -1916,7 +2011,7 @@ msgstr "تشفير الوثيقة إلى..."
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:28
 msgid "Filter through tool"
-msgstr ""
+msgstr "الفلترة من خلال الأداة"
 
 #: lib/Padre/Wx/Dialog/FilterTool.pm:128
 msgid "Filter command:"
@@ -1997,19 +2092,19 @@ msgstr "غير صالح للبحث"
 #: lib/Padre/Wx/Dialog/Shortcut.pm:32
 #: lib/Padre/Wx/Dialog/Warning.pm:32
 msgid "A Dialog"
-msgstr ""
+msgstr "مربع حوار"
 
 #: lib/Padre/Wx/Dialog/Form.pm:41
 msgid "Label One"
-msgstr ""
+msgstr "العلامة الأولى"
 
 #: lib/Padre/Wx/Dialog/Form.pm:55
 msgid "Second Label"
-msgstr ""
+msgstr "العلامة الثانية"
 
 #: lib/Padre/Wx/Dialog/Form.pm:71
 msgid "Whatever"
-msgstr ""
+msgstr "أي شيء"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:37
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:89
@@ -2019,9 +2114,9 @@ msgstr "بحث المساعدة"
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:74
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:303
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:316
-#, fuzzy, perl-format
+#, perl-format
 msgid "Error while calling %s"
-msgstr "خطأ عند مناداة help_list: "
+msgstr "خطأ عند مناداة %s "
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:86
 msgid "No Help found"
@@ -2029,7 +2124,7 @@ msgstr "فشل العثور على مساعدة"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:122
 msgid "Select the help &topic"
-msgstr ""
+msgstr "حدد &موضوع المساعدة"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:139
 msgid "Type a help &keyword to read:"
@@ -2642,32 +2737,31 @@ msgid "Save"
 msgstr "حفظ"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:43
-#, fuzzy, perl-format
+#, perl-format
 msgid "Action: %s"
-msgstr "ترميز: %s"
+msgstr "العمل: %s"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:56
 msgid "CTRL"
-msgstr ""
+msgstr "CTRL"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:63
 #: lib/Padre/Wx/Dialog/Shortcut.pm:77
 #: lib/Padre/Wx/Dialog/Shortcut.pm:91
 msgid "+"
-msgstr ""
+msgstr "+"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:70
 msgid "ALT"
-msgstr ""
+msgstr "ALT"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:84
 msgid "SHIFT"
-msgstr ""
+msgstr "SHIFT"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:115
-#, fuzzy
 msgid "Shortcut"
-msgstr "اظهار النتائج"
+msgstr "الاختصار"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:18
 msgid "All"
@@ -3029,7 +3123,7 @@ msgstr "تطبيق ملف المقارنة للمشروع"
 
 #: lib/Padre/Wx/Menu/Edit.pm:639
 msgid "Filter through external tool"
-msgstr ""
+msgstr "الفلترة عن طريق أداة خارجية"
 
 #: lib/Padre/Wx/Menu/Edit.pm:640
 msgid "Filters the selection (or the whole document) through any external command."
@@ -3122,7 +3216,7 @@ msgstr "اعادة تحميل الملف"
 
 #: lib/Padre/Wx/Menu/File.pm:238
 msgid "Reload all files currently open"
-msgstr ""
+msgstr "اعادة تحميل كل الملفات المفتوحة حاليا"
 
 #: lib/Padre/Wx/Menu/File.pm:265
 msgid "Save &As"
