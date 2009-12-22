@@ -113,6 +113,7 @@ sub _add_menu_item {
 		$action->id,
 		$action->label_menu,
 	);
+	$item->SetHelp( $action->comment || '' );
 	Wx::Event::EVT_MENU(
 		$self->{main},
 		$item,
