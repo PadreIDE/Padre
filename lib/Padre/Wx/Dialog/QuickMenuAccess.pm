@@ -372,10 +372,10 @@ sub _update_list_box {
 	my $first_label = undef;
 	foreach my $action ( @{ $self->_matched_results } ) {
 		my $label = $action->{value};
-		if ( not $first_label ) {
-			$first_label = $self->_label( $label, $action->{name} );
-		}
 		if ( $label =~ /$search_expr/i ) {
+			if ( not $first_label ) {
+				$first_label = $self->_label( $label, $action->{name} );
+			}
 			$self->_list->Insert( $label, $pos, $action );
 			$pos++;
 		}
