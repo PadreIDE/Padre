@@ -98,6 +98,7 @@ sub new {
 		name        => 'search.quick_find',
 		need_editor => 1,
 		label       => Wx::gettext('Quick Find'),
+		comment     => Wx::gettext('Incremental search seen at the bottom of the window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->config->set(
@@ -159,6 +160,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'search.open_resource',
 		label      => Wx::gettext('Open Resource'),
+		comment     => Wx::gettext('Type in a filter to select a file'),
 		shortcut   => 'Ctrl-Shift-R',
 		menu_event => sub {
 

@@ -51,6 +51,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.plugin_list',
 		label      => Wx::gettext('Plug-in List (CPAN)'),
+		comment    => Wx::gettext('Open browser to a CPAN search showing the Padre::Plugin packages'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
@@ -146,6 +147,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.install_local',
 		label      => Wx::gettext("Install Local Distribution"),
+		comment    => Wx::gettext('Using CPAN.pm install a CPAN like package opened locally'),
 		menu_event => sub {
 			$self->install_file( $_[0] );
 		},
@@ -154,6 +156,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.install_remote',
 		label      => Wx::gettext("Install Remote Distribution"),
+		comment    => Wx::gettext('Using pip download a tar.gz file and install it using CPAN.pm'),
 		menu_event => sub {
 			$self->install_url( $_[0] );
 		},
@@ -162,6 +165,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.cpan_config',
 		label      => Wx::gettext("Open CPAN Config File"),
+		comment    => Wx::gettext('Open CPAN::MyConfig.pm for manual editing by experts'),
 		menu_event => sub {
 			$self->cpan_config( $_[0] );
 		},
