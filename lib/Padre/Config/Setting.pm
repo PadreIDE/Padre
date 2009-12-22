@@ -52,6 +52,45 @@ sub new {
 	return $self;
 }
 
+# Generate the code to implement the setting
+sub code {
+	my $self  = shift;
+	my $name  = $self->name;
+	my $store = $self->store;
+
+	# Special accessor for filesystem paths
+	return <<"END_PERL" if $self->type == Padre::Constant::PATH;
+package Padre::Config;
+
+sub $name {
+	my \$self = shift;
+	if ( exists \$self->[$store]->{'$name'} ) {
+		if ( -e \$self->[$store]->{'$name'} ) {
+			return \$self->[$store]->{'$name'};
+		}
+	}
+	return \$DEFAULT{'$name'};
+}
+END_PERL
+
+	# Generate a Vanilla accessor
+	return <<"END_PERL";
+package Padre::Config;
+
+sub $name {
+	my \$self = shift;
+	if ( exists \$self->[$store]->{'$name'} ) {
+		return \$self->[$store]->{'$name'};
+	}
+	return \$DEFAULT{'$name'};
+}
+END_PERL
+}
+
+
+
+
+
 #####################################################################
 # Support Functions
 

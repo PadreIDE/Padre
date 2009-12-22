@@ -72,21 +72,8 @@ sub setting {
 	}
 
 	# Generate the accessor
-	my $code = <<"END_PERL";
-package Padre::Config;
-
-sub $object->{name} {
-	my \$self = shift;
-	if ( exists \$self->[$object->{store}]->{'$object->{name}'} ) {
-		return \$self->[$object->{store}]->{'$object->{name}'};
-	}
-	return \$DEFAULT{'$object->{name}'};
-}
-END_PERL
-
-	# Compile the accessor
-	eval $code;
-	if ($@) {
+	eval $object->code;
+	if ( $@ ) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}
 
