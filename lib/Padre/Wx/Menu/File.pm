@@ -404,6 +404,7 @@ sub new {
 		$self,
 		name       => 'file.quit',
 		label      => Wx::gettext('&Quit'),
+		comment    => Wx::gettext('Ask if unsaved files should be saved and then exit Padre'),
 		shortcut   => 'Ctrl-Q',
 		menu_event => sub {
 			$_[0]->Close;
