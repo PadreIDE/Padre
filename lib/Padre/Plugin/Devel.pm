@@ -57,6 +57,7 @@ sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
 		Wx::gettext('Run Document inside Padre') => 'eval_document',
+		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
 
 		'---' => undef,
 
@@ -121,6 +122,13 @@ sub eval_document {
 	my $document = $self->current->document or return;
 	return $self->_dump_eval( $document->text_get );
 }
+
+sub eval_selection {
+	my $self = shift;
+	my $document = $self->current->document or return;
+	return $self->_dump_eval( $self->current->text );
+}
+
 
 sub dump_document {
 	my $self     = shift;
