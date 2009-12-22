@@ -37,6 +37,7 @@ sub new {
 		$self,
 		name       => 'file.new',
 		label      => Wx::gettext('&New'),
+		comment    => Wx::gettext('Open a new empty document'),
 		shortcut   => 'Ctrl-N',
 		menu_event => sub {
 			$_[0]->on_new;
@@ -53,6 +54,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_script',
 		label      => Wx::gettext('Perl 5 Script'),
+		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 5 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pl');
 		},
@@ -61,6 +63,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_module',
 		label      => Wx::gettext('Perl 5 Module'),
+		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 5 module'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pm');
 		},
@@ -69,6 +72,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_test',
 		label      => Wx::gettext('Perl 5 Test'),
+		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 5 test  script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('t');
 		},
@@ -81,6 +85,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p6_script',
 		label      => Wx::gettext('Perl 6 Script'),
+		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 6 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('p6');
 		},
@@ -93,6 +98,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_distro',
 		label      => Wx::gettext('Perl Distribution (Module::Starter)'),
+		comment    => Wx::gettext('Setup a skeleton Perl distribution using Module::Starter'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;
 			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
@@ -108,6 +114,7 @@ sub new {
 		name       => 'file.open',
 		id         => Wx::wxID_OPEN,
 		label      => Wx::gettext('&Open...'),
+		comment    => Wx::gettext('Browse directory of the current document to open a file'),
 		shortcut   => 'Ctrl-O',
 		menu_event => sub {
 			$_[0]->on_open;
@@ -118,6 +125,7 @@ sub new {
 		$self,
 		name  => 'file.openurl',
 		label => Wx::gettext('Open &URL...'),
+		comment     => Wx::gettext('Open a file from a remote location'),
 
 		# Is shown as Ctrl-O and I don't know why
 		# shortcut => 'Ctrl-Shift-O',
@@ -130,6 +138,7 @@ sub new {
 		$self,
 		name       => 'file.open_example',
 		label      => Wx::gettext('Open Example'),
+		comment    => Wx::gettext('Browse the directory of the installed examples to open one file'),
 		menu_event => sub {
 			$_[0]->on_open_example;
 		},
@@ -141,6 +150,7 @@ sub new {
 		id          => Wx::wxID_CLOSE,
 		need_editor => 1,
 		label       => Wx::gettext('&Close'),
+		comment     => Wx::gettext('Close current document'),
 		shortcut    => 'Ctrl-W',
 		menu_event  => sub {
 			$_[0]->on_close;
@@ -161,6 +171,7 @@ sub new {
 		name        => 'file.close_current_project',
 		need_editor => 1,
 		label       => Wx::gettext('Close This Project'),
+		comment     => Wx::gettext('Close all the file belonging to the current project'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return if not $doc;
@@ -182,6 +193,7 @@ sub new {
 		name        => 'file.close_other_projects',
 		need_editor => 1,
 		label       => Wx::gettext('Close Other Projects'),
+		comment     => Wx::gettext('Close all the files that do not belong to the current project'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return if not $doc;
@@ -205,6 +217,7 @@ sub new {
 		name        => 'file.close_all',
 		need_editor => 1,
 		label       => Wx::gettext('Close All Files'),
+		comment     => Wx::gettext('Close all the files open in the editor'),
 		menu_event  => sub {
 			$_[0]->close_all;
 		},
@@ -215,6 +228,7 @@ sub new {
 		name        => 'file.close_all_but_current',
 		need_editor => 1,
 		label       => Wx::gettext('Close All Other Files'),
+		comment     => Wx::gettext('Close all the files except the current one'),
 		menu_event  => sub {
 			$_[0]->close_all( $_[0]->notebook->GetSelection );
 		},
@@ -225,6 +239,7 @@ sub new {
 		name        => 'file.reload_file',
 		need_editor => 1,
 		label       => Wx::gettext('Reload File'),
+		comment     => Wx::gettext('Reload current file from disk'),
 		menu_event  => sub {
 			$_[0]->on_reload_file;
 		},
@@ -251,6 +266,7 @@ sub new {
 		need_editor   => 1,
 		need_modified => 1,
 		label         => Wx::gettext('&Save'),
+		comment       => Wx::gettext('Save current document'),
 		shortcut      => 'Ctrl-S',
 		menu_event    => sub {
 			$_[0]->on_save;
@@ -263,6 +279,7 @@ sub new {
 		id          => Wx::wxID_SAVEAS,
 		need_editor => 1,
 		label       => Wx::gettext('Save &As'),
+		comment     => Wx::gettext('Allow the selection of another name to save the current document'),
 		shortcut    => 'F12',
 		menu_event  => sub {
 			$_[0]->on_save_as;
@@ -275,6 +292,7 @@ sub new {
 		id          => -1,
 		need_editor => 1,
 		label       => Wx::gettext('Save Intuition'),
+		comment     => Wx::gettext('For new document try to guess the filename based on the file content and offer to save it.'),
 		shortcut    => 'Ctrl-Shift-S',
 		menu_event  => sub {
 			$_[0]->on_save_intuition;
@@ -286,6 +304,7 @@ sub new {
 		name        => 'file.save_all',
 		need_editor => 1,
 		label       => Wx::gettext('Save All'),
+		comment     => Wx::gettext('Save all the file'),
 		menu_event  => sub {
 			$_[0]->on_save_all;
 		},
@@ -300,6 +319,7 @@ sub new {
 			$self,
 			name       => 'file.open_selection',
 			label      => Wx::gettext('Open Selection'),
+			comment    => Wx::gettext('List the files that match the current selection and let the user pick one to open'),
 			shortcut   => 'Ctrl-Shift-O',
 			menu_event => sub {
 				$_[0]->on_open_selection;
@@ -310,6 +330,7 @@ sub new {
 			$self,
 			name       => 'file.open_session',
 			label      => Wx::gettext('Open Session'),
+			comment    => Wx::gettext('Select a session. Close all the files currently open and open all the listed in the session'),
 			shortcut   => 'Ctrl-Alt-O',
 			menu_event => sub {
 				require Padre::Wx::Dialog::SessionManager;
@@ -321,6 +342,7 @@ sub new {
 			$self,
 			name       => 'file.save_session',
 			label      => Wx::gettext('Save Session'),
+			comment    => Wx::gettext('Ask for a session name and save the list of files currently opened'),
 			shortcut   => 'Ctrl-Alt-S',
 			menu_event => sub {
 				require Padre::Wx::Dialog::SessionSave;
@@ -340,6 +362,7 @@ sub new {
 		# TO DO: As long as the ID is here, the shortcut won't work on Ubuntu.
 		id         => Wx::wxID_PRINT,
 		label      => Wx::gettext('&Print'),
+		comment    => Wx::gettext('Print the current document'),
 		shortcut   => 'Ctrl-P',
 		menu_event => sub {
 			require Wx::Print;
@@ -367,6 +390,7 @@ sub new {
 		$self->{recentfiles},
 		name       => 'file.open_recent_files',
 		label      => Wx::gettext('Open All Recent Files'),
+		comment    => Wx::gettext('Open all the files listed in the recent files list'),
 		menu_event => sub {
 			$_[0]->on_open_all_recent_files;
 		},
@@ -375,6 +399,7 @@ sub new {
 		$self->{recentfiles},
 		name       => 'file.clean_recent_files',
 		label      => Wx::gettext('Clean Recent Files List'),
+		comment    => Wx::gettext('Remove the entries from the recent files list'),
 		menu_event => sub {
 			Padre::DB::History->delete( 'where type = ?', 'files' );
 			$self->update_recentfiles;
@@ -392,6 +417,7 @@ sub new {
 		$self,
 		name       => 'file.doc_stat',
 		label      => Wx::gettext('Document Statistics'),
+		comment    => Wx::gettext('Word count and other statistics of the current document'),
 		menu_event => sub {
 			$_[0]->on_doc_stats;
 		},
