@@ -151,6 +151,7 @@ sub new {
 		name       => 'search.find_in_files',
 		label      => Wx::gettext('Find in Fi&les...'),
 		comment    => Wx::gettext('Search for a text in all files below a given directory'),
+		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
 			require Padre::Wx::Ack;
 			Padre::Wx::Ack::on_ack(@_);
