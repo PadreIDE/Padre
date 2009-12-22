@@ -952,6 +952,44 @@ sub set_indentation_style {
 	return ();
 }
 
+=head2 C<get_indentation_level_string>
+
+Calculates the string that should be used to indent a given
+number of levels for this document.
+
+Takes the indentation level as an integer argument which
+defaults to one. Note that indenting to level 2 may be different
+from just concatenating the indentation string to level one twice
+due to tab compression.
+
+=cut
+
+sub get_indentation_level_string {
+	my $self         = shift;
+	my $level        = shift;
+	$level = 1 if not defined $level;
+	my $style        = $self->get_indentation_style;
+	my $indent_width = $style->{indentwidth};
+	my $tab_width    = $style->{tabwidth};
+	my $indent;
+
+	if ( $style->{use_tabs} and $indent_width != $tab_width ) {
+
+		# do tab compression if necessary
+		# - First, convert all to spaces (aka columns)
+		# - Then, add an indentation level
+		# - Then, convert to tabs as necessary
+		my $tab_equivalent = " " x $tab_width;
+		$indent = (" " x $indent_width) x $level;
+		$indent =~ s/$tab_equivalent/\t/g;
+	} elsif ( $style->{use_tabs} ) {
+		$indent = "\t" x $level;
+	} else {
+		$indent = (" " x $indent_width) x $level;
+	}
+	return $indent;
+}
+
 =head2 C<event_on_char>
 
 NOT IMPLEMENTED IN THE BASE CLASS
