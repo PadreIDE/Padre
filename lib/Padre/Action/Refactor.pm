@@ -47,6 +47,7 @@ sub new {
 		name        => 'perl.rename_variable',
 		need_editor => 1,
 		label       => Wx::gettext('Lexically Rename Variable'),
+		comment     => Wx::gettext('Prompt for a replacement variable name and replace all occurrance of this variable'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('lexical_variable_replacement');
@@ -99,6 +100,7 @@ sub new {
 		name        => 'perl.introduce_temporary',
 		need_editor => 1,
 		label       => Wx::gettext('Introduce Temporary Variable'),
+		comment     => Wx::gettext('Assign the selected expression to a newly declared variable'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('introduce_temporary_variable');

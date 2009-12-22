@@ -43,6 +43,7 @@ sub new {
 		name        => 'perl.beginner_check',
 		need_editor => 1,
 		label       => Wx::gettext('Check for common (beginner) errors'),
+		comment     => Wx::gettext('Check the current file'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -66,6 +67,7 @@ sub new {
 		name        => 'perl.find_variable',
 		need_editor => 1,
 		label       => Wx::gettext('Find Variable Declaration'),
+		comment     => Wx::gettext('Find where the selected variable was declared using "my" and put the focus there.'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -77,6 +79,7 @@ sub new {
 		name        => 'perl.find_method',
 		need_editor => 1,
 		label       => Wx::gettext('Find Method Declaration'),
+		comment     => Wx::gettext('Find where the selected function was defined and put the focus there.'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -141,6 +144,7 @@ sub new {
 		name        => 'perl.autocomplete_brackets',
 		need_editor => 1,
 		label       => Wx::gettext('Automatic bracket completion'),
+		comment     => Wx::gettext('When typing { insert a closing } automatically'),
 		menu_event  => sub {
 
 			# Update the saved config setting
