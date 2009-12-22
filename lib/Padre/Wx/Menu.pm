@@ -86,6 +86,8 @@ sub add_menu_action {
 
 	if ($action->comment) {
 		$item->SetHelp( $action->comment );
+	} else {
+		warn $action->label;
 	}
 
 	Wx::Event::EVT_MENU(
