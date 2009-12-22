@@ -99,7 +99,7 @@ sub debug_perl {
 	
 	$self->{running_file} = $filename;
 
-	my ( $prompt, $module, $file, $row, $content ) = $debugger->get;
+	my ( $module, $file, $row, $content ) = $debugger->get;
 	
 	if ( not $self->{save}{$filename} ) {
 		$self->{save}{$filename} = {};
@@ -116,8 +116,6 @@ sub debug_perl {
 	}
 
 	$self->_set_debugger();
-
-	#print "Prompt: $prompt\n";
 
 	#my @out = $debugger->get;
 	#use Data::Dumper;
@@ -165,7 +163,7 @@ sub _set_debugger {
 		my $variable = $debugger->GetItemText($c);
 		#print $debugger->GetItem($c, 0)->GetText, "\n";
 
-		my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($variable) };
+		my $value = eval { $self->{_debugger_}->get_value($variable) };
 		if ($@) {
 			#$main->error(sprintf(_T("Could not evaluate '%s'"), $text));
 			#return;
@@ -295,7 +293,7 @@ sub debug_perl_step_in {
 		return;
 	}
 
-	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_in;
+	my ( $module, $file, $row, $content ) = $self->{_debugger_}->step_in;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
@@ -318,7 +316,7 @@ sub debug_perl_step_over {
 		}
 	}
 
-	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_over;
+	my ( $module, $file, $row, $content ) = $self->{_debugger_}->step_over;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
@@ -358,7 +356,7 @@ sub debug_perl_run {
 		}
 	}
 
-	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->run($param);
+	my ( $module, $file, $row, $content ) = $self->{_debugger_}->run($param);
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
@@ -380,7 +378,7 @@ sub debug_perl_step_out {
 		return;
 	}
 
-	my ( $prompt, $module, $file, $row, $content ) = $self->{_debugger_}->step_out;
+	my ( $module, $file, $row, $content ) = $self->{_debugger_}->step_out;
 	if ( $module eq '<TERMINATED>' ) {
 		TRACE('TERMINATED') if DEBUG;
 		$self->debug_perl_quit;
@@ -397,7 +395,7 @@ sub debug_perl_show_stack_trace {
 
 	return if not $self->debugger_is_running;
 
-	my ( $prompt, $trace ) = $self->{_debugger_}->get_stack_trace;
+	my $trace = $self->{_debugger_}->get_stack_trace;
 	my $str = $trace;
 	if ( ref($trace) and ref($trace) eq 'ARRAY' ) {
 		$str = join "\n", @$trace;
@@ -415,7 +413,7 @@ sub debug_perl_show_value {
 
 	my $text = $self->_debug_get_variable() or return;
 
-	my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($text) };
+	my $value = eval { $self->{_debugger_}->get_value($text) };
 	if ($@) {
 		$self->error(sprintf(_T("Could not evaluate '%s'"), $text));
 		return;
@@ -453,7 +451,7 @@ sub debug_perl_display_value {
 	my $count = $debugger->GetItemCount;
 	my $idx = $debugger->InsertStringItem( $count + 1, $text );
 
-#	my ( $prompt, $value ) = eval { $self->{_debugger_}->get_value($text) };
+#	my $value = eval { $self->{_debugger_}->get_value($text) };
 #	if ($@) {
 #		$main->error(sprintf(_T("Could not evaluate '%s'"), $text));
 #		return;
