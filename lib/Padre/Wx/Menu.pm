@@ -113,7 +113,11 @@ sub _add_menu_item {
 		$action->id,
 		$action->label_menu,
 	);
-	$item->SetHelp( $action->comment || '' );
+	if ($action->comment) {
+		$item->SetHelp( $action->comment );
+	} else {
+		#warn "comment is missing from menu '$name'";
+	}
 	Wx::Event::EVT_MENU(
 		$self->{main},
 		$item,
