@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-22 09:53+0200\n"
-"PO-Revision-Date: 2009-12-22 09:55+0200\n"
+"PO-Revision-Date: 2009-12-22 10:06+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -465,7 +465,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:111
 msgid "Set breakpoint"
-msgstr ""
+msgstr "تعيين نقطة توقف"
 
 #: lib/Padre/Action/Debugger.pm:112
 msgid "Set a breakpoint to the current location of the cursor with a condition"
@@ -473,7 +473,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:125
 msgid "Remove breakpoint"
-msgstr ""
+msgstr "إزالة نقطة توقف"
 
 #: lib/Padre/Action/Debugger.pm:126
 msgid "Remove the breakpoint at the current location of the cursor"
@@ -481,7 +481,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:139
 msgid "List all the breakpoints"
-msgstr ""
+msgstr "إظهار كل نقاط التوقف"
 
 #: lib/Padre/Action/Debugger.pm:140
 msgid "List all the breakpoints on the console"
@@ -504,9 +504,8 @@ msgid "When in a subroutine call show all the calls since the main of the progra
 msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:182
-#, fuzzy
 msgid "Display value"
-msgstr "تعطيل"
+msgstr "اظهار القيمة"
 
 #: lib/Padre/Action/Debugger.pm:183
 msgid "Display the current value of a variable in the right hand side debugger pane"
@@ -530,11 +529,11 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:224
 msgid "Quit Debugger"
-msgstr ""
+msgstr "الخروج من المصحح"
 
 #: lib/Padre/Action/Debugger.pm:225
 msgid "Quit the process being debugged"
-msgstr ""
+msgstr "إنهاء العملية الذي يتم تصحيحها"
 
 #: lib/Padre/Action/Help.pm:37
 msgid "Help"
@@ -1046,9 +1045,9 @@ msgid "Current '%s' not found"
 msgstr "الملف الحالي '%s' غير موجود"
 
 #: lib/Padre/Document/Perl/Beginner.pm:76
-#, fuzzy, perl-format
+#, perl-format
 msgid "Line %d: "
-msgstr "اسطر: %d"
+msgstr "السطر %d: "
 
 #: lib/Padre/Plugin/Devel.pm:25
 msgid "Padre Developer Tools"
@@ -1863,14 +1862,12 @@ msgid "Debugger"
 msgstr ""
 
 #: lib/Padre/Wx/Debugger/View.pm:102
-#, fuzzy
 msgid "Variable"
-msgstr "اسم المتغير"
+msgstr "المتغير"
 
 #: lib/Padre/Wx/Debugger/View.pm:103
-#, fuzzy
 msgid "Value"
-msgstr "إظهار القيمة"
+msgstr "القيمة"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:31
 msgid "Existing bookmarks:"
@@ -2735,7 +2732,7 @@ msgstr "لا تظهر هذه مرة أخرى"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:36
 msgid "File access via HTTP"
-msgstr ""
+msgstr "الوصول إلى الملف عن طريق HTTP"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:39
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:47
@@ -2744,11 +2741,11 @@ msgstr "مهلة:"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
 msgid "File access via FTP"
-msgstr ""
+msgstr "الوصول إلى الملف عن طريق FTP"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:51
 msgid "Use FTP passive mode"
-msgstr ""
+msgstr "استخدام نمط FTP السلبي"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:34
 msgid "Autocomplete always while typing"
@@ -2844,7 +2841,7 @@ msgstr "اعادة التحميل"
 
 #: lib/Padre/Wx/Menu/Debug.pm:115
 msgid "&Debug"
-msgstr ""
+msgstr "تصحيح&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:47
 msgid "&Undo"
@@ -3210,7 +3207,7 @@ msgstr "ال&برامج المساعده"
 
 #: lib/Padre/Wx/Menu/Refactor.pm:60
 msgid "Refac&tor"
-msgstr ""
+msgstr "اعادة &عوملة"
 
 #: lib/Padre/Wx/Menu/Run.pm:79
 msgid "&Run"
