@@ -73,7 +73,7 @@ sub setting {
 
 	# Generate the accessor
 	eval $object->code;
-	if ( $@ ) {
+	if ($@) {
 		Carp::croak("Failed to compile setting $object->{name}");
 	}
 

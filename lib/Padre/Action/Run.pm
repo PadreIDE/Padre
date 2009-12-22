@@ -105,9 +105,9 @@ sub new {
 			return 0 if !defined( $objects{document}->{file} );
 			return $objects{document}->{file}->{filename} =~ /\.t$/;
 		},
-		label       => Wx::gettext('Run This Test'),
-		comment     => Wx::gettext('Run the current test if the current document is a test. (prove -bv)'),
-		menu_event  => sub {
+		label      => Wx::gettext('Run This Test'),
+		comment    => Wx::gettext('Run the current test if the current document is a test. (prove -bv)'),
+		menu_event => sub {
 			$_[0]->on_run_this_test;
 		},
 	);

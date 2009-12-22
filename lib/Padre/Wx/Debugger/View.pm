@@ -24,23 +24,23 @@ sub new {
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
-#	my $list = Wx::ImageList->new( 16, 16 );
-#	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
-#	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
-#	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
-#	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
+	#	my $list = Wx::ImageList->new( 16, 16 );
+	#	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
+	#	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
+	#	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
+	#	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
 
 	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 1;
 
-#	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-#		$self, $self,
-#		sub {
-#			$self->on_list_item_activated( $_[1] );
-#		},
-#	);
-#	Wx::Event::EVT_RIGHT_DOWN(
-#		$self, \&on_right_down,
-#	);
+	#	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+	#		$self, $self,
+	#		sub {
+	#			$self->on_list_item_activated( $_[1] );
+	#		},
+	#	);
+	#	Wx::Event::EVT_RIGHT_DOWN(
+	#		$self, \&on_right_down,
+	#	);
 
 	$self->Hide;
 
@@ -99,8 +99,8 @@ sub on_list_item_activated {
 sub _get_title {
 	my $c = shift;
 
-	return Wx::gettext('Variable')     if $c == 0;
-	return Wx::gettext('Value')        if $c == 1;
+	return Wx::gettext('Variable') if $c == 0;
+	return Wx::gettext('Value')    if $c == 1;
 
 	die "invalid value '$c'";
 }

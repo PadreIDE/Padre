@@ -965,8 +965,8 @@ due to tab compression.
 =cut
 
 sub get_indentation_level_string {
-	my $self         = shift;
-	my $level        = shift;
+	my $self  = shift;
+	my $level = shift;
 	$level = 1 if not defined $level;
 	my $style        = $self->get_indentation_style;
 	my $indent_width = $style->{indentwidth};
@@ -980,12 +980,12 @@ sub get_indentation_level_string {
 		# - Then, add an indentation level
 		# - Then, convert to tabs as necessary
 		my $tab_equivalent = " " x $tab_width;
-		$indent = (" " x $indent_width) x $level;
+		$indent = ( " " x $indent_width ) x $level;
 		$indent =~ s/$tab_equivalent/\t/g;
 	} elsif ( $style->{use_tabs} ) {
 		$indent = "\t" x $level;
 	} else {
-		$indent = (" " x $indent_width) x $level;
+		$indent = ( " " x $indent_width ) x $level;
 	}
 	return $indent;
 }

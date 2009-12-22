@@ -9,12 +9,12 @@ our $VERSION = '0.52';
 sub new {
 	my $class  = shift;
 	my $locker = shift;
-	my $self   = bless [ $locker ], $class;
+	my $self   = bless [$locker], $class;
 
-	# Enable the locks	
+	# Enable the locks
 	my $busy   = 0;
 	my $update = 0;
-	foreach ( @_ ) {
+	foreach (@_) {
 		if ( $_ eq 'BUSY' ) {
 			$locker->busy_increment;
 			$busy = 1;
@@ -38,8 +38,8 @@ sub new {
 
 # Disable locking on destruction
 sub DESTROY {
-	my $locker = shift @{$_[0]};
-	foreach ( @{$_[0]} ) {
+	my $locker = shift @{ $_[0] };
+	foreach ( @{ $_[0] } ) {
 		if ( $_ eq 'UPDATE' ) {
 			$locker->update_decrement;
 		} elsif ( $_ eq 'BUSY' ) {

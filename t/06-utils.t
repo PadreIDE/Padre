@@ -49,8 +49,9 @@ sub Padre::ide { return bless { shortcuts => {} }, 'Padre::IDE'; }
 sub Padre::IDE::actions { return {} }
 sub Padre::IDE::config { return bless {}, 'Padre::Config' }
 SKIP: {
+
 	# TODO check if every action has a comment as required
 	skip 'Fix this test!', 1;
-	Padre::Action::create(bless {}, 'Padre::IDE');
+	Padre::Action::create( bless {}, 'Padre::IDE' );
 	ok(1);
 }

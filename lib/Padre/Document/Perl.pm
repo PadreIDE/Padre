@@ -1372,6 +1372,7 @@ sub event_on_char {
 
 		#print "Text:\n'$linetext'\n";
 		if ( $prefix =~ /package / ) {
+
 			# we only match "sub foo" at the beginning of a line
 			# but no inline subs (eval, anonymus, etc.)
 			# The end-of-subname match is included in the first if
@@ -1381,23 +1382,23 @@ sub event_on_char {
 				my $indent_string = $self->get_indentation_level_string(1);
 
 				# Add the default skeleton of a method
-				my $newline = $self->newline;
+				my $newline            = $self->newline;
 				my $text_before_cursor = " {$newline${indent_string}my \$self = shift;$newline$indent_string";
 				my $text_after_cursor  = "$newline}$newline";
-				$editor->AddText( $text_before_cursor.$text_after_cursor );
+				$editor->AddText( $text_before_cursor . $text_after_cursor );
 
 				# Ready for typing in the new method:
 				$editor->GotoPos( $last + length($text_before_cursor) );
 			}
 		} elsif ( $linetext =~ /^sub[\s\t]+(\w+)$/ ) {
-			my $subName = $1;
+			my $subName       = $1;
 			my $indent_string = $self->get_indentation_level_string(1);
 
 			#$self->_do_end_check($editor, $line, $pos);
 			# Add the default skeleton of a subroutine,
 
 			my $newline = $self->newline;
-			$editor->AddText( " {$newline$indent_string$newline}" );
+			$editor->AddText(" {$newline$indent_string$newline}");
 
 			# $line is where it starts
 			my $starting_line = $line - 1;

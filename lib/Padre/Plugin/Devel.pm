@@ -56,7 +56,7 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		Wx::gettext('Run Document inside Padre') => 'eval_document',
+		Wx::gettext('Run Document inside Padre')  => 'eval_document',
 		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
 
 		'---' => undef,

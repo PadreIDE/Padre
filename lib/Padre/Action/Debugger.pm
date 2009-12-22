@@ -38,10 +38,11 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		label        => Wx::gettext('Step In') . ' (&s) ',
-		comment      => Wx::gettext('Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)'),
+		comment      => Wx::gettext(
+			'Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_step_in;
 		},
 	);
@@ -52,10 +53,12 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		label        => Wx::gettext('Step Over') . ' (&n) ',
-		comment      => Wx::gettext('Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)'),
+		comment      => Wx::gettext(
+			'Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)'
+		),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_step_over;
 		},
 	);
@@ -70,7 +73,7 @@ sub new {
 		comment      => Wx::gettext('If withing a subroutine, run till return is called and then stop.'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_step_out;
 		},
 	);
@@ -84,7 +87,7 @@ sub new {
 		comment      => Wx::gettext('Start running and/or continoue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_run;
 		},
 	);
@@ -98,7 +101,7 @@ sub new {
 		comment      => Wx::gettext('Set focus to the line where the current statement is in the debugging process'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_jumpt_to;
 		},
 	);
@@ -112,7 +115,7 @@ sub new {
 		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_set_breakpoint;
 		},
 	);
@@ -126,7 +129,7 @@ sub new {
 		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_remove_breakpoint;
 		},
 	);
@@ -140,7 +143,7 @@ sub new {
 		comment      => Wx::gettext('List all the breakpoints on the console'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_list_breakpoints;
 		},
 	);
@@ -154,7 +157,7 @@ sub new {
 		comment      => Wx::gettext('Set a breakpoint at the line where to cursor is and run till there'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_run_to_cursor;
 		},
 	);
@@ -169,7 +172,7 @@ sub new {
 		comment      => Wx::gettext('When in a subroutine call show all the calls since the main of the program'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_show_stack_trace;
 		},
 	);
@@ -183,7 +186,7 @@ sub new {
 		comment      => Wx::gettext('Display the current value of a variable in the right hand side debugger pane'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_display_value;
 		},
 	);
@@ -197,7 +200,7 @@ sub new {
 		comment      => Wx::gettext('Show the value of a variable.'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_show_value;
 		},
 	);
@@ -211,7 +214,7 @@ sub new {
 		comment      => Wx::gettext('Type in any expression and evaluate it in the debugged process'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_evaluate_expression;
 		},
 	);
@@ -225,7 +228,7 @@ sub new {
 		comment      => Wx::gettext('Quit the process being debugged'),
 
 		#shortcut     => 'Shift-F5',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->{_debugger_}->debug_perl_quit;
 		},
 	);

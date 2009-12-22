@@ -39,9 +39,9 @@ BEGIN {
 # Defines for sidebar marker; others may be needed for breakpoint
 # icons etc.
 
-sub MarkError {1}
-sub MarkWarn  {2}
-sub MarkLocation {3} # current location of the debugger
+sub MarkError      {1}
+sub MarkWarn       {2}
+sub MarkLocation   {3} # current location of the debugger
 sub MarkBreakpoint {4} # location of the debugger breakpoint
 
 

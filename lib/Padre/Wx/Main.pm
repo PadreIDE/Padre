@@ -1424,11 +1424,12 @@ sub show_debugger {
 	my $self = shift;
 
 	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-#	unless ( $on == $self->menu->view->{debugger}->IsChecked ) {
-#		$self->menu->view->{debugger}->Check($on);
-#	}
-#	$self->config->set( main_debugger => $on );
-#	$self->config->write;
+
+	#	unless ( $on == $self->menu->view->{debugger}->IsChecked ) {
+	#		$self->menu->view->{debugger}->Check($on);
+	#	}
+	#	$self->config->set( main_debugger => $on );
+	#	$self->config->write;
 
 	if ($on) {
 		my $debugger = $self->debugger;
@@ -1702,18 +1703,20 @@ sub on_run_tdd_tests {
 
 	# TODO maybe add save file(s) to this action?
 
-	my $perl = $self->config->run_perl_cmd; # TODO make this the user selected perl also do it in Padre::Document::Perl::get_command
+	my $perl =
+		$self->config
+		->run_perl_cmd; # TODO make this the user selected perl also do it in Padre::Document::Perl::get_command
 	unless ($perl) {
 		$perl = Padre::Perl::cperl();
 	}
 
 	if ($perl) {
-		if (-e 'Build.PL') {
+		if ( -e 'Build.PL' ) {
 			$self->run_command("$perl Build.PL");
 			$self->run_command("$perl Build test");
-		} elsif (-e 'Makefile.PL') {
+		} elsif ( -e 'Makefile.PL' ) {
 			$self->run_command("$perl Makefile.PL");
-			my $make = 'make';  # TODO this should do dmake, nmake on Win32
+			my $make = 'make'; # TODO this should do dmake, nmake on Win32
 			$self->run_command("$make test");
 		} else {
 			$self->error( Wx::gettext("No Build.PL nor Makefile.PL found") );
@@ -2745,7 +2748,7 @@ sub setup_editors {
 	SCOPE: {
 
 		# Lock both Perl and Wx-level updates
-		my $lock = $self->lock('UPDATE', 'REFRESH');
+		my $lock = $self->lock( 'UPDATE', 'REFRESH' );
 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
@@ -2862,7 +2865,7 @@ sub setup_editor {
 	}
 
 	my $lock = $self->lock('REFRESH');
-	my $doc  = Padre::Document->new( filename => $file, );
+	my $doc = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
 	if ( !defined($doc) ) {

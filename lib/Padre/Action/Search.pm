@@ -161,7 +161,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'search.open_resource',
 		label      => Wx::gettext('Open Resource'),
-		comment     => Wx::gettext('Type in a filter to select a file'),
+		comment    => Wx::gettext('Type in a filter to select a file'),
 		shortcut   => 'Ctrl-Shift-R',
 		menu_event => sub {
 

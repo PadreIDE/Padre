@@ -45,13 +45,13 @@ sub locked {
 	my $self  = shift;
 	my $asset = shift;
 	if ( $asset eq 'UPDATE' ) {
-		return !! $self->{update_depth};
+		return !!$self->{update_depth};
 	} elsif ( $asset eq 'BUSY' ) {
-		return !! $self->{busy_depth};
+		return !!$self->{busy_depth};
 	} elsif ( $asset eq 'REFRESH' ) {
-		return !! $self->{method_depth};
+		return !!$self->{method_depth};
 	} else {
-		return !! $self->{method_pending}->{$asset};
+		return !!$self->{method_pending}->{$asset};
 	}
 }
 
@@ -104,16 +104,17 @@ sub busy_decrement {
 
 sub method_increment {
 	$_[0]->{method_depth}++;
-	$_[0]->{method_pending}->{$_[1]}++;
+	$_[0]->{method_pending}->{ $_[1] }++;
 	return;
 }
 
 sub method_decrement {
 	my $self = shift;
-	$self->{method_pending}->{$_[0]}--;
+	$self->{method_pending}->{ $_[0] }--;
 	unless ( --$self->{method_depth} ) {
+
 		# Run all of the pending methods
-		foreach ( keys %{$self->{method_pending}} ) {
+		foreach ( keys %{ $self->{method_pending} } ) {
 			next if $_ eq uc($_);
 			$self->{owner}->$_();
 		}
