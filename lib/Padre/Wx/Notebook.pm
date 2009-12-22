@@ -112,6 +112,7 @@ sub on_auinotebook_page_changed {
 		}
 	}
 	$main->refresh;
+	$main->{ide}->plugin_manager->plugin_event('editor_changed');
 }
 
 1;
