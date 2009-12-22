@@ -1367,45 +1367,37 @@ sub event_on_char {
 		# from beginning to current position
 		my $prefix = $editor->GetTextRange( 0, $pos );
 
-
-
 		# methods can't live outside packages, so ignore them
 		my $linetext = $editor->GetTextRange( $first, $last );
 
 		#print "Text:\n'$linetext'\n";
 		if ( $prefix =~ /package / ) {
-
-
 			# we only match "sub foo" at the beginning of a line
 			# but no inline subs (eval, anonymus, etc.)
 			# The end-of-subname match is included in the first if
 			# which match the last key pressed (which is not part of
 			# $linetext at this moment:
 			if ( $linetext =~ /^sub[\s\t]+\w+$/ ) {
+				my $indent_string = $self->get_indentation_level_string(1);
 
-				# Add the default skeleton of a method,
-				# the \t should be replaced by
-				# (space * current_indent_width)
-				$editor->AddText( ' {'
-						. $self->newline . "\t"
-						. 'my $self = shift;'
-						. $self->newline . "\t"
-						. $self->newline . '}'
-						. $self->newline );
+				# Add the default skeleton of a method
+				my $newline = $self->newline;
+				my $text_before_cursor = " {$newline${indent_string}my \$self = shift;$newline$indent_string";
+				my $text_after_cursor  = "$newline}$newline";
+				$editor->AddText( $text_before_cursor.$text_after_cursor );
 
 				# Ready for typing in the new method:
-				$editor->GotoPos( $last + 23 );
-
+				$editor->GotoPos( $last + length($text_before_cursor) );
 			}
 		} elsif ( $linetext =~ /^sub[\s\t]+(\w+)$/ ) {
 			my $subName = $1;
+			my $indent_string = $self->get_indentation_level_string(1);
 
 			#$self->_do_end_check($editor, $line, $pos);
 			# Add the default skeleton of a subroutine,
-			# the \t should be replaced by
-			# (space * current_indent_width)
 
-			$editor->AddText( ' {' . $self->newline . "\t" . $self->newline . '}' );
+			my $newline = $self->newline;
+			$editor->AddText( " {$newline$indent_string$newline}" );
 
 			# $line is where it starts
 			my $starting_line = $line - 1;
@@ -1428,7 +1420,7 @@ sub event_on_char {
 			my $last_pos = $editor->GetLineEndPosition($end_line);
 
 			#print "Last pos: $last_pos\n";
-			# Ready for typing in the new method:
+			# Ready for typing in the new function:
 
 			$editor->GotoPos($last_pos);
 
