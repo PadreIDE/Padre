@@ -373,6 +373,7 @@ setting(
 		. 'debug.run:stock/code/stock_tools-macro;'
 		. 'debug.set_breakpoint:stock/code/stock_macro-insert-breakpoint;'
 		. 'debug.display_value:stock/code/stock_macro-watch-variable;'
+		. 'debug.quit:actions/stop;'
 );
 
 setting(
