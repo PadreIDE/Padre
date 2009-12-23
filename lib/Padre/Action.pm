@@ -7,6 +7,7 @@ use warnings;
 use Padre::Constant         ();
 use Padre::Action::File     ();
 use Padre::Action::Help     ();
+use Padre::Action::Edit     ();
 use Padre::Action::Perl     ();
 use Padre::Action::Plugins  ();
 use Padre::Action::Refactor ();
@@ -42,6 +43,7 @@ sub create {
 
 	Padre::Action::File->new($main);
 	Padre::Action::Help->new($main);
+	Padre::Action::Edit->new($main);
 	Padre::Action::Perl->new($main);
 	Padre::Action::Plugins->new($main);
 	Padre::Action::Refactor->new($main);
