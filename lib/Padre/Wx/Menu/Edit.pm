@@ -482,7 +482,7 @@ sub new {
 		name        => 'edit.convert_encoding_utf8',
 		need_editor => 1,
 		label       => Wx::gettext('Encode document to utf-8'),
-		comment     => Wx::gettext('Change the encoding og the current document to utf-8'),
+		comment     => Wx::gettext('Change the encoding of the current document to utf-8'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_utf8(@_);

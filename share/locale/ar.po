@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-23 09:45+0200\n"
-"PO-Revision-Date: 2009-12-23 10:27+0200\n"
+"POT-Creation-Date: 2009-12-23 10:29+0200\n"
+"PO-Revision-Date: 2009-12-23 10:35+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -2950,9 +2950,8 @@ msgid "&Undo"
 msgstr "ا&لغاء التغييرات"
 
 #: lib/Padre/Wx/Menu/Edit.pm:48
-#, fuzzy
 msgid "Undo last change in current file"
-msgstr "التحقق من الملف الحالي"
+msgstr "الغاء آخر تغيير في الملف الحالي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:67
 msgid "&Redo"
@@ -2968,7 +2967,7 @@ msgstr "اختيار الكل"
 
 #: lib/Padre/Wx/Menu/Edit.pm:92
 msgid "Select all the text in the current document"
-msgstr ""
+msgstr "اختيار كل النص في الوثيقة الحالية"
 
 #: lib/Padre/Wx/Menu/Edit.pm:106
 msgid "Mark selection start"
@@ -2976,7 +2975,7 @@ msgstr "تحديد بدايه الاختيار"
 
 #: lib/Padre/Wx/Menu/Edit.pm:107
 msgid "Mark the place where the selection should start"
-msgstr ""
+msgstr "تحديد مكان بدء الاختيار"
 
 #: lib/Padre/Wx/Menu/Edit.pm:119
 msgid "Mark selection end"
@@ -2984,7 +2983,7 @@ msgstr "تحديد نهايه الاختيار"
 
 #: lib/Padre/Wx/Menu/Edit.pm:120
 msgid "Mark the place where the selection should end"
-msgstr ""
+msgstr "تحديد مكان انتهاء الاختيار"
 
 #: lib/Padre/Wx/Menu/Edit.pm:132
 msgid "Clear selection marks"
@@ -3062,7 +3061,7 @@ msgstr "&ذهاب إلى سطر"
 
 #: lib/Padre/Wx/Menu/Edit.pm:260
 msgid "Ask the user for a row number and jump there"
-msgstr ""
+msgstr "سؤال المستخدم عن رقم السطر والقفز هناك"
 
 #: lib/Padre/Wx/Menu/Edit.pm:271
 msgid "&Next Problem"
@@ -3174,9 +3173,8 @@ msgid "Encode document to utf-8"
 msgstr "تشفير الوثيقة إلى  utf-8"
 
 #: lib/Padre/Wx/Menu/Edit.pm:485
-#, fuzzy
-msgid "Change the encoding og the current document to utf-8"
-msgstr "تشفير الوثيقة إلى  utf-8"
+msgid "Change the encoding of the current document to utf-8"
+msgstr "تغيير التشفير للوثيقة الحالية ل utf-8"
 
 #: lib/Padre/Wx/Menu/Edit.pm:497
 msgid "Select an encoding and encode the document to that"
@@ -3424,7 +3422,7 @@ msgid "Close This Project"
 msgstr "اغلاق هذا المشروع"
 
 #: lib/Padre/Wx/Menu/File.pm:174
-msgid "Close all the file belonging to the current project"
+msgid "Close all the files belonging to the current project"
 msgstr "إغلاق كافة الملفات المنتمين إلى المشروع الحالي"
 
 #: lib/Padre/Wx/Menu/File.pm:180
@@ -3453,9 +3451,8 @@ msgid "Close All Other Files"
 msgstr "اغلاق الملف الأخرى"
 
 #: lib/Padre/Wx/Menu/File.pm:231
-#, fuzzy
 msgid "Close all the files except the current one"
-msgstr "اعادة تحميل كل الملفات المفتوحة حاليا"
+msgstr "اغلاق جميع الملفات باستثناء الملف الحالي"
 
 #: lib/Padre/Wx/Menu/File.pm:241
 msgid "Reload File"

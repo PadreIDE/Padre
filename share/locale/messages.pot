@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-23 09:45+0200\n"
+"POT-Creation-Date: 2009-12-23 10:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3101,7 +3101,7 @@ msgid "Encode document to utf-8"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:485
-msgid "Change the encoding og the current document to utf-8"
+msgid "Change the encoding of the current document to utf-8"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:497
@@ -3360,7 +3360,7 @@ msgid "Close This Project"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/File.pm:174
-msgid "Close all the file belonging to the current project"
+msgid "Close all the files belonging to the current project"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/File.pm:180 lib/Padre/Wx/Menu/File.pm:202
