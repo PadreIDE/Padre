@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-23 10:29+0200\n"
-"PO-Revision-Date: 2009-12-23 10:35+0200\n"
+"POT-Creation-Date: 2009-12-23 10:36+0200\n"
+"PO-Revision-Date: 2009-12-23 10:46+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -609,7 +609,7 @@ msgstr "رؤيه كل البقات ال&مفتوحه"
 
 #: lib/Padre/Action/Help.pm:145
 msgid "View all known and currently unsolved bugs in Padre"
-msgstr ""
+msgstr "عرض كل البقات المعروفة والغير محلوله في Padre"
 
 #: lib/Padre/Action/Help.pm:153
 msgid "&Translate Padre..."
@@ -1025,7 +1025,7 @@ msgstr "أقدم ملف تم زيارته"
 
 #: lib/Padre/Action/Window.pm:43
 msgid "Put focus on tab visited the longest time ago."
-msgstr ""
+msgstr "تعيين التركيز على التبويب الذي تم زيارته منذ وقت أطول"
 
 #: lib/Padre/Action/Window.pm:53
 msgid "Next File"
@@ -1033,7 +1033,7 @@ msgstr "الملف التالي"
 
 #: lib/Padre/Action/Window.pm:54
 msgid "Put focus on the next tab to the right"
-msgstr ""
+msgstr "تعيين التركيز على التبويب التالية إلى اليمين"
 
 #: lib/Padre/Action/Window.pm:64
 msgid "Previous File"
@@ -1041,7 +1041,7 @@ msgstr "الملف السابق"
 
 #: lib/Padre/Action/Window.pm:65
 msgid "Put focus on the previous tab to the left"
-msgstr ""
+msgstr "تعيين التركيز على التبويب السابقة إلى اليسار"
 
 #: lib/Padre/Action/Window.pm:78
 msgid "???"
