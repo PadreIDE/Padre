@@ -147,7 +147,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.install_local',
 		label      => Wx::gettext("Install Local Distribution"),
-		comment    => Wx::gettext('Using CPAN.pm install a CPAN like package opened locally'),
+		comment    => Wx::gettext('Using CPAN.pm to install a CPAN like package opened locally'),
 		menu_event => sub {
 			$self->install_file( $_[0] );
 		},
@@ -156,7 +156,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'plugins.install_remote',
 		label      => Wx::gettext("Install Remote Distribution"),
-		comment    => Wx::gettext('Using pip download a tar.gz file and install it using CPAN.pm'),
+		comment    => Wx::gettext('Using pip to download a tar.gz file and install it using CPAN.pm'),
 		menu_event => sub {
 			$self->install_url( $_[0] );
 		},
