@@ -588,25 +588,28 @@ sub _timer_post_init {
 		$self->CentreOnScreen;
 	}
 
-	# Load all files and refresh the application so that it
-	# represents the loaded state.
-	$self->load_files;
+	# Lock during the opening of files
+	SCOPE: {
+		my $lock = $self->lock('UPDATE', 'refresh');
 
-	# Cannot use the toggle sub here as that one reads from the Menu and
-	# on some machines the Menu is not configured yet at this point.
-	if ( $config->main_statusbar ) {
-		$self->GetStatusBar->Show;
-	} else {
-		$self->GetStatusBar->Hide;
+		# Load all files and refresh the application so that it
+		# represents the loaded state.
+		$self->load_files;
+
+		# Cannot use the toggle sub here as that one reads from the Menu and
+		# on some machines the Menu is not configured yet at this point.
+		if ( $config->main_statusbar ) {
+			$self->GetStatusBar->Show;
+		} else {
+			$self->GetStatusBar->Hide;
+		}
+		$manager->enable_editors_for_all;
+
+		$self->show_syntax( $config->main_syntaxcheck );
+		if ( $config->main_errorlist ) {
+			$self->errorlist->enable;
+		}
 	}
-	$manager->enable_editors_for_all;
-
-	$self->show_syntax( $config->main_syntaxcheck );
-	if ( $config->main_errorlist ) {
-		$self->errorlist->enable;
-	}
-
-	$self->refresh;
 
 	# Now we are fully loaded and can paint continuously
 	$self->Thaw;
