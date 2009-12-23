@@ -568,16 +568,17 @@ sub _timer_post_init {
 	my $manager = $self->ide->plugin_manager;
 
 	# Do an initial Show/paint of the complete-looking main window
-	# without any files loaded. Then immediately Freeze so that the
-	# loading of the files is done in a single render pass.
+	# without any files loaded. We'll then immediately start an Update lock
+	# so that loading of the files is done in a single render pass.
 	# This gives us an optimum compromise between being PERCEIVED
 	# to start-up quickly, and ACTUALLY starting up quickly.
 	$self->Show(1);
-	$self->Freeze;
 
 	# If the position mandated by the configuration is now
 	# off the screen (typically because we've changed the screen
 	# size, reposition to the defaults).
+	# This must happen AFTER the initial ->Show(1) because otherwise
+	# ->IsShownOnScreen returns a false-negative result.
 	unless ( $self->IsShownOnScreen ) {
 		$self->SetSize(
 			Wx::Size->new(
@@ -588,9 +589,9 @@ sub _timer_post_init {
 		$self->CentreOnScreen;
 	}
 
-	# Lock during the opening of files
+	# Lock everything during the initial opening of files
 	SCOPE: {
-		my $lock = $self->lock('UPDATE', 'refresh');
+		my $lock = $self->lock('UPDATE', 'DB', 'refresh');
 
 		# Load all files and refresh the application so that it
 		# represents the loaded state.
@@ -610,9 +611,6 @@ sub _timer_post_init {
 			$self->errorlist->enable;
 		}
 	}
-
-	# Now we are fully loaded and can paint continuously
-	$self->Thaw;
 
 	# Start the single instance server
 	if ( $config->main_singleinstance ) {
@@ -2724,6 +2722,13 @@ sub on_close_window {
 
 	TRACE("on_close_window") if DEBUG;
 
+	# Wrap one big database transaction around this entire shutdown process.
+	# If the user aborts the shutdown, then the resulting commit will
+	# just save some basic parts like the last session and so on.
+	# Some of the steps in the shutdown have transactions anyway, but
+	# this will expand them to cover everything.
+	my $transaction = $self->lock('DB');
+
 	# Capture the current session, before we start the interactive
 	# part of the shutdown which will mess it up.
 	$self->update_last_session;
@@ -2824,7 +2829,9 @@ sub on_close_window {
 	# Stop all Task Manager's worker threads
 	$self->ide->task_manager->cleanup;
 
-	# Vacuum database on exit so that it does not grow
+	# Vacuum database on exit so that it does not grow.
+	# Since you can't VACUUM inside a transaction, finish it here.
+	undef $transaction;
 	Padre::DB->vacuum;
 
 	TRACE("Closing Padre") if DEBUG;
@@ -2862,8 +2869,9 @@ sub setup_editors {
 		# because it makes file loading LOOK faster.
 		# Do the menu/etc refresh in the time it takes the
 		# user to actually perceive the file has been opened.
-		# Lock both Perl and Wx-level updates
-		my $lock = $self->lock( 'UPDATE', 'refresh' );
+		# Lock both Perl and Wx-level updates, and throw in a
+		# database transaction for good measure.
+		my $lock = $self->lock( 'UPDATE', 'DB', 'refresh' );
 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
