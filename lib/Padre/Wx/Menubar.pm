@@ -65,28 +65,9 @@ sub new {
 	# Generate the individual menus
 	$self->{main} = $main;
 
-	#	$self->{file}     = Padre::Wx::Menu::File->new($main);
-	#	$self->{edit}     = Padre::Wx::Menu::Edit->new($main);
-	#	$self->{search}   = Padre::Wx::Menu::Search->new($main);
-	#	$self->{view}     = Padre::Wx::Menu::View->new($main);
-	#	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
-	#	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
-	#	$self->{run}      = Padre::Wx::Menu::Run->new($main);
-	#	$self->{plugins}  = Padre::Wx::Menu::Plugins->new($main);
-	#	$self->{window}   = Padre::Wx::Menu::Window->new($main);
-	#	$self->{help}     = Padre::Wx::Menu::Help->new($main);
 	#
 	#	# Generate the final menubar
 	$self->{wx} = Wx::MenuBar->new;
-
-	#	$self->wx->Append( $self->file->wx,    Wx::gettext("&File") );
-	#	$self->wx->Append( $self->edit->wx,    Wx::gettext("&Edit") );
-	#	$self->wx->Append( $self->search->wx,  Wx::gettext("&Search") );
-	#	$self->wx->Append( $self->view->wx,    Wx::gettext("&View") );
-	#	$self->wx->Append( $self->run->wx,     Wx::gettext("&Run") );
-	#	$self->wx->Append( $self->plugins->wx, Wx::gettext("Pl&ugins") );
-	#	$self->wx->Append( $self->window->wx,  Wx::gettext("&Window") );
-	#	$self->wx->Append( $self->help->wx,    Wx::gettext("&Help") );
 
 	my $config = $self->main->ide->config;
 
