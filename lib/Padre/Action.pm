@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::Constant         ();
+use Padre::Action::File     ();
 use Padre::Action::Help     ();
 use Padre::Action::Perl     ();
 use Padre::Action::Plugins  ();
@@ -39,6 +40,7 @@ use Class::XSAccessor getters => {
 sub create {
 	my $main = shift;
 
+	Padre::Action::File->new($main);
 	Padre::Action::Help->new($main);
 	Padre::Action::Perl->new($main);
 	Padre::Action::Plugins->new($main);
