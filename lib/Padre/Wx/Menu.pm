@@ -115,7 +115,7 @@ sub _add_menu_item {
 	if ($action->comment) {
 		$item->SetHelp( $action->comment );
 	} else {
-		#warn "comment is missing from menu '$name'";
+		warn "comment is missing from menu '$name'";
 	}
 	Wx::Event::EVT_MENU(
 		$self->{main},
