@@ -152,11 +152,18 @@ sub notebook {
 	return $self->{notebook};
 }
 
-# Get the project from the main window (and don't cache)
+# Get the project from the main window (and don't cache).
+# If we are in startup phase and there IS no main window
+# try to fall back to the underlying IDE object.
 sub config {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
-	return unless defined( $self->main );
-	$self->main->config;
+	if ( defined $self->main ) {
+		return $self->main->config;
+	} elsif ( $self->ide ) {
+		return $self->ide->config;
+	} else {
+		return;
+	}
 }
 
 # Convenience method

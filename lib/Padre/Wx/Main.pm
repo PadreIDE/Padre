@@ -234,11 +234,13 @@ sub new {
 	# Use Padre's icon
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
-	# Show the tools that the configuration dictates
-	$self->show_functions( $self->config->main_functions );
-	$self->show_outline( $self->config->main_outline );
-	$self->show_directory( $self->config->main_directory );
-	$self->show_output( $self->config->main_output );
+	# Show the tools that the configuration dictates.
+	# Use the fast and crude internal versions here only,
+	# so we don't accidentally trigger any configuration writes.
+	$self->_show_functions( $self->config->main_functions );
+	$self->_show_outline( $self->config->main_outline );
+	$self->_show_directory( $self->config->main_directory );
+	$self->_show_output( $self->config->main_output );
 
 	# Lock the panels if needed
 	$self->aui->lock_panels( $self->config->main_lockinterface );
@@ -538,6 +540,20 @@ sub load_files {
 		return;
 	}
 
+	# Config setting 'session' means: Show the session manager
+	if ( $startup eq 'session' ) {
+		require Padre::Wx::Dialog::SessionManager;
+		Padre::Wx::Dialog::SessionManager->new($self)->show;
+		return;
+	}
+
+	# Last session functionality is not in use, do we disable it for
+	# performance reasons (it's expensive to maintain the session).
+	# Remove the session if it exists, because we won't be saving
+	# this information and we don't want an old stale session to
+	# be hanging around in the database pointlessly.
+	Padre::DB::Session->clear_last_session;
+
 	# Config setting 'nothing' means start-up with nothing open
 	if ( $startup eq 'nothing' ) {
 		return;
@@ -546,13 +562,6 @@ sub load_files {
 	# Config setting 'new' means start-up with a single new file open
 	if ( $startup eq 'new' ) {
 		$self->setup_editors;
-		return;
-	}
-
-	# Config setting 'session' means: Show the session manager
-	if ( $startup eq 'session' ) {
-		require Padre::Wx::Dialog::SessionManager;
-		Padre::Wx::Dialog::SessionManager->new($self)->show;
 		return;
 	}
 
@@ -1473,16 +1482,21 @@ sub show_functions {
 	$self->config->set( main_functions => $on );
 	$self->config->write;
 
-	if ($on) {
-		$self->right->show( $self->functions );
-	} else {
-		$self->right->hide( $self->functions );
-	}
+	$self->_show_functions( $on );
 
 	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
+}
+
+sub _show_functions {
+	my $self = shift;
+	if ( $_[0] ) {
+		$self->right->show( $self->functions );
+	} else {
+		$self->right->hide( $self->functions );
+	}
 }
 
 =pod
@@ -1507,20 +1521,24 @@ sub show_outline {
 	$self->config->set( main_outline => $on );
 	$self->config->write;
 
-	if ($on) {
-		my $outline = $self->outline;
-		$self->right->show($outline);
-		$outline->start unless $outline->running;
-	} elsif ( $self->has_outline ) {
-		my $outline = $self->outline;
-		$self->right->hide($outline);
-		$outline->stop if $outline->running;
-	}
+	$self->_show_outline($on);
 
 	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
+}
+
+sub _show_outline {
+	my $self    = shift;
+	my $outline = $self->outline;
+	if ( $_[0] ) {
+		$self->right->show($outline);
+		$outline->start unless $outline->running;
+	} elsif ( $self->has_outline ) {
+		$self->right->hide($outline);
+		$outline->stop if $outline->running;
+	}
 }
 
 =pod
@@ -1579,18 +1597,23 @@ sub show_directory {
 	$self->config->set( main_directory => $on );
 	$self->config->write;
 
-	if ($on) {
+	$self->_show_directory($on);
+
+	$self->aui->Update;
+	$self->ide->save_config;
+
+	return;
+}
+
+sub _show_directory {
+	my $self = shift;
+	if ( $_[0] ) {
 		my $directory = $self->directory;
 		$self->directory_panel->show($directory);
 		$directory->refresh;
 	} elsif ( $self->has_directory ) {
 		$self->directory_panel->hide( $self->directory );
 	}
-
-	$self->aui->Update;
-	$self->ide->save_config;
-
-	return;
 }
 
 =pod
@@ -1614,16 +1637,26 @@ sub show_output {
 	$self->config->set( main_output => $on );
 	$self->config->write;
 
-	if ($on) {
-		$self->bottom->show( $self->output, sub { $self->show_output(0); } );
-	} else {
-		$self->bottom->hide( $self->output );
-	}
+	$self->_show_output($on);
 
 	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
+}
+
+sub _show_output {
+	my $self = shift;
+	if ( $_[0] ) {
+		$self->bottom->show(
+			$self->output,
+			sub {
+				$self->show_output(0);
+			}
+		);
+	} else {
+		$self->bottom->hide( $self->output );
+	}	
 }
 
 =pod
@@ -2842,6 +2875,12 @@ sub on_close_window {
 sub update_last_session {
 	my $self = shift;
 
+	# Only save if the user cares about sessions
+	my $main_startup = $self->config->main_startup;
+	unless ( $main_startup eq 'last' or $main_startup eq 'session' ) {
+		return;
+	}
+
 	# Write the current session to the database
 	my $transaction = $self->lock('DB');
 	my $session     = Padre::DB::Session->last_padre_session;
@@ -2871,7 +2910,7 @@ sub setup_editors {
 		# user to actually perceive the file has been opened.
 		# Lock both Perl and Wx-level updates, and throw in a
 		# database transaction for good measure.
-		my $lock = $self->lock( 'UPDATE', 'DB', 'refresh' );
+		my $lock = $self->lock( 'UPDATE', 'DB', 'refresh', 'update_last_session' );
 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
@@ -2883,11 +2922,10 @@ sub setup_editors {
 			}
 		}
 
-		if (@files) {
+		if ( @files ) {
 			foreach my $f (@files) {
-				$self->setup_editor( $f, 1 );
+				$self->setup_editor( $f );
 			}
-			$self->update_last_session;
 		} else {
 			$self->setup_editor;
 		}
@@ -2932,7 +2970,7 @@ exist, create an empty file before opening it.
 =cut
 
 sub setup_editor {
-	my ( $self, $file, $skip_update_session ) = @_;
+	my ( $self, $file ) = @_;
 	my $config = $self->config;
 
 	my $manager = $self->{ide}->plugin_manager;
@@ -3041,11 +3079,11 @@ sub setup_editor {
 
 	$doc->restore_cursor_position;
 
-	$self->update_last_session unless $skip_update_session;
-	$manager->plugin_event('editor_changed') unless $skip_update_session;
+	# Update and refresh immediately if not locked
+	$self->lock('update_last_session', 'refresh_menu');
 
-	# Refresh the menu (to include or remove document dependent menu items)
-	$self->menu->refresh;
+	# Notify plugins
+	$manager->plugin_event('editor_changed');
 
 	return $id;
 }
@@ -3804,11 +3842,16 @@ sub on_close {
 		$event->Veto;
 	}
 	$self->close;
-	$self->refresh;
 
-	$self->ide->{session_autosave} and $self->save_current_session;
-	$self->update_last_session;
+	# Transaction-wrap the session saving, and trigger a full refresh
+	# once we are finished the current action.
+	my $lock = $self->lock('DB', 'update_last_session', 'refresh');
 
+	if ( $self->ide->{session_autosave} ) {
+		$self->save_current_session;
+	}
+
+	return;
 }
 
 =pod
