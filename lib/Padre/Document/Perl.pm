@@ -1409,10 +1409,12 @@ sub event_on_char {
 
 			#print "starting_line: $starting_line\n";
 			$editor->GotoPos( $editor->PositionFromLine($starting_line) );
-			$editor->AddText( $self->_pod($subName) );
+			# TODO Add option for auto pod
+			#$editor->AddText( $self->_pod($subName) );
 
 			# $editor->GetLineEndPosition($editor->PositionFromLine(
-			my $end_line = $starting_line + 10;
+			# TODO For pod this was 10
+			my $end_line = $starting_line + 2;
 			$editor->GotoLine($end_line);
 
 			#print "end_line: $end_line\n";
