@@ -3069,9 +3069,8 @@ msgid "&Quick Fix"
 msgstr "Correction &rapide"
 
 #: lib/Padre/Wx/Menu/Edit.pm:284
-#, fuzzy
 msgid "Apply one of the quick fixes for the current document"
-msgstr "Montrer la version POD (perldoc) du document courant"
+msgstr "Appliquer une correction rapide au document courant"
 
 #: lib/Padre/Wx/Menu/Edit.pm:310
 msgid "No suggestions"
@@ -3138,9 +3137,8 @@ msgid "&Comment Selected Lines"
 msgstr "&Commenter les lignes sélectionnées"
 
 #: lib/Padre/Wx/Menu/Edit.pm:438
-#, fuzzy
 msgid "Comment out selected lines in the document"
-msgstr "&Commenter les lignes sélectionnées"
+msgstr "Commenter les lignes sélectionnées"
 
 #: lib/Padre/Wx/Menu/Edit.pm:450
 msgid "&Uncomment Selected Lines"
@@ -3167,9 +3165,8 @@ msgid "Encode document to utf-8"
 msgstr "Encoder le document en utf-8"
 
 #: lib/Padre/Wx/Menu/Edit.pm:485
-#, fuzzy
 msgid "Change the encoding of the current document to utf-8"
-msgstr "Montrer la version POD (perldoc) du document courant"
+msgstr "Changer l'encodage du document courant en utf-8"
 
 #: lib/Padre/Wx/Menu/Edit.pm:497
 msgid "Select an encoding and encode the document to that"
@@ -3220,9 +3217,8 @@ msgid "Spaces to Tabs..."
 msgstr "Convertir les espaces en tabulations"
 
 #: lib/Padre/Wx/Menu/Edit.pm:568
-#, fuzzy
 msgid "Convert all the spaces to tabs in the current document"
-msgstr "Montrer la version POD (perldoc) du document courant"
+msgstr "Convertir tous les espaces en tabulations dans le document courant"
 
 #: lib/Padre/Wx/Menu/Edit.pm:580
 msgid "Delete Trailing Spaces"
@@ -3277,18 +3273,16 @@ msgid "Apply Diff to File"
 msgstr "Appliquer un diff au fichier"
 
 #: lib/Padre/Wx/Menu/Edit.pm:656
-#, fuzzy
 msgid "Apply a patch file to the current document"
-msgstr "Montrer la version POD (perldoc) du document courant"
+msgstr "Appliquer un patch au document courant"
 
 #: lib/Padre/Wx/Menu/Edit.pm:665
 msgid "Apply Diff to Project"
 msgstr "Appliquer un diff au projet"
 
 #: lib/Padre/Wx/Menu/Edit.pm:666
-#, fuzzy
 msgid "Apply a patch file to the current project"
-msgstr "Afficher l'aide pour le contexte actuel"
+msgstr "Appliquer un patch au projet courant"
 
 #: lib/Padre/Wx/Menu/Edit.pm:679
 msgid "Filter through external tool"
@@ -3303,9 +3297,8 @@ msgid "Regex editor"
 msgstr "Editeur d'expressions régulières"
 
 #: lib/Padre/Wx/Menu/Edit.pm:692
-#, fuzzy
 msgid "Open the regular expression editing window"
-msgstr "Recherche du texte ou une expression régulière avec un dialogue traditionnel"
+msgstr "Ouvrir la fenêtre d'édition des expressions régulières"
 
 #: lib/Padre/Wx/Menu/Edit.pm:704
 msgid "Show as ..."
@@ -3380,9 +3373,8 @@ msgid "Perl Distribution (Module::Starter)"
 msgstr "Distribution Perl (Module::Starter)"
 
 #: lib/Padre/Wx/Menu/File.pm:101
-#, fuzzy
 msgid "Setup a skeleton Perl distribution using Module::Starter"
-msgstr "Distribution Perl (Module::Starter)"
+msgstr "Créer un squelette de distribution Perl en utilisant Module::Starter"
 
 #: lib/Padre/Wx/Menu/File.pm:116
 msgid "&Open..."
@@ -3409,9 +3401,8 @@ msgid "Browse the directory of the installed examples to open one file"
 msgstr "Naviguer dans le répertoire des exemples installés"
 
 #: lib/Padre/Wx/Menu/File.pm:153
-#, fuzzy
 msgid "Close current document"
-msgstr "Document courant"
+msgstr "Fermer le document courant"
 
 #: lib/Padre/Wx/Menu/File.pm:165
 msgid "Close..."
@@ -3451,36 +3442,32 @@ msgid "Close All Other Files"
 msgstr "Fermer tous les autres fichiers"
 
 #: lib/Padre/Wx/Menu/File.pm:231
-#, fuzzy
 msgid "Close all the files except the current one"
-msgstr "Recharger tous les fichiers actuellement ouverts"
+msgstr "Femer tous les fichiers sauf le document courant"
 
 #: lib/Padre/Wx/Menu/File.pm:241
 msgid "Reload File"
 msgstr "Recharger le fichier"
 
 #: lib/Padre/Wx/Menu/File.pm:242
-#, fuzzy
 msgid "Reload current file from disk"
-msgstr "Recharger tous les greffons depuis le disque"
+msgstr "Recharger le fichier courant depuis le disque"
 
 #: lib/Padre/Wx/Menu/File.pm:253
 msgid "Reload all files currently open"
 msgstr "Recharger tous les fichiers actuellement ouverts"
 
 #: lib/Padre/Wx/Menu/File.pm:269
-#, fuzzy
 msgid "Save current document"
-msgstr "Document courant"
+msgstr "Sauvegarder le document courant"
 
 #: lib/Padre/Wx/Menu/File.pm:281
 msgid "Save &As"
 msgstr "Enregistrer &sous"
 
 #: lib/Padre/Wx/Menu/File.pm:282
-#, fuzzy
 msgid "Allow the selection of another name to save the current document"
-msgstr "Montrer la version POD (perldoc) du document courant"
+msgstr "Permettre l'enregistrement du document courant sous un autre nom"
 
 #: lib/Padre/Wx/Menu/File.pm:294
 msgid "Save Intuition"
@@ -3495,9 +3482,8 @@ msgid "Save All"
 msgstr "Tout enregistrer"
 
 #: lib/Padre/Wx/Menu/File.pm:307
-#, fuzzy
 msgid "Save all the files"
-msgstr "Enregistrer le fichier d'abord"
+msgstr "Enregistrer tous les fichiers"
 
 #: lib/Padre/Wx/Menu/File.pm:322
 msgid "List the files that match the current selection and let the user pick one to open"
@@ -3524,9 +3510,8 @@ msgid "&Print"
 msgstr "Im&primer"
 
 #: lib/Padre/Wx/Menu/File.pm:365
-#, fuzzy
 msgid "Print the current document"
-msgstr "Document courant"
+msgstr "Imprimer le document courant"
 
 #: lib/Padre/Wx/Menu/File.pm:386
 msgid "&Recent Files"
@@ -3553,9 +3538,8 @@ msgid "Document Statistics"
 msgstr "Statistiques du document"
 
 #: lib/Padre/Wx/Menu/File.pm:420
-#, fuzzy
 msgid "Word count and other statistics of the current document"
-msgstr "Montrer la version POD (perldoc) du document courant"
+msgstr "Nombre de mots et autres statistiques du document courant"
 
 #: lib/Padre/Wx/Menu/File.pm:432
 msgid "&Quit"
@@ -3659,9 +3643,8 @@ msgid "Show Syntax Check"
 msgstr "Montrer la vérification syntaxique"
 
 #: lib/Padre/Wx/Menu/View.pm:96
-#, fuzzy
 msgid "Turn on syntax checking of the current document and show output in a window"
-msgstr "Lance le document courant et montre sa sortie dans le cadre de sortie."
+msgstr "Activer la vérification syntaxique du document courant et montre sa sortie dans le cadre de sortie"
 
 #: lib/Padre/Wx/Menu/View.pm:105
 msgid "Show Error List"
@@ -3684,18 +3667,17 @@ msgid "Show Toolbar"
 msgstr "Montrer la barre d'outil"
 
 #: lib/Padre/Wx/Menu/View.pm:126
-#, fuzzy
 msgid "Show/hide the toolbar at the top of the editor"
-msgstr "Trouve l'occurrence suivante avec une barre de recherche au bas de l'éditeur"
+msgstr "Montrer/Cacher la barre d'outils en haut de l'éditeur"
 
 #: lib/Padre/Wx/Menu/View.pm:138
 msgid "View Document As..."
 msgstr "Voir le document en tant que..."
 
 #: lib/Padre/Wx/Menu/View.pm:152
-#, fuzzy, perl-format
+#, perl-format
 msgid "Switch document type to %s"
-msgstr "Type de document : %s"
+msgstr "Changer le type de document en %s"
 
 #: lib/Padre/Wx/Menu/View.pm:163
 msgid "Show Line Numbers"
@@ -3766,9 +3748,8 @@ msgid "Word-Wrap"
 msgstr "Retour à la ligne"
 
 #: lib/Padre/Wx/Menu/View.pm:251
-#, fuzzy
 msgid "Wrap long lines"
-msgstr "&Joindre les lignes"
+msgstr "Continuer les longues lignes sur la ligne suivante"
 
 #: lib/Padre/Wx/Menu/View.pm:264
 msgid "Font Size"
@@ -3779,27 +3760,24 @@ msgid "Increase Font Size"
 msgstr "Augmenter la taille de la fonte"
 
 #: lib/Padre/Wx/Menu/View.pm:271
-#, fuzzy
 msgid "Make the letters bigger in the editor window"
-msgstr "Mettre le focus sur l'éditeur principal"
+msgstr "Augmenter la police de la fenêtre éditeur"
 
 #: lib/Padre/Wx/Menu/View.pm:281
 msgid "Decrease Font Size"
 msgstr "Diminuer la taille de la fonte"
 
 #: lib/Padre/Wx/Menu/View.pm:282
-#, fuzzy
 msgid "Make the letters smaller in the editor window"
-msgstr "Mettre le focus sur l'éditeur principal"
+msgstr "Diminuer la police de la fenêtre éditeur"
 
 #: lib/Padre/Wx/Menu/View.pm:292
 msgid "Reset Font Size"
 msgstr "Réinitialiser la taille de la fonte"
 
 #: lib/Padre/Wx/Menu/View.pm:293
-#, fuzzy
 msgid "Reset the the size of the letters to the default in the editor window"
-msgstr "Mettre le focus sur l'éditeur principal"
+msgstr "Remettre la taille par défaut de la police de la fenêtre éditeur"
 
 #: lib/Padre/Wx/Menu/View.pm:310
 msgid "Create a bookmark in the current file current row"
