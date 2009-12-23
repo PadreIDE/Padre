@@ -1076,7 +1076,7 @@ sub refresh_toolbar {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	my $toolbar = $self->GetToolBar;
-	if ($toolbar) {
+	if ( $toolbar ) {
 		$toolbar->refresh( $_[0] or $self->current );
 	}
 }
@@ -1140,6 +1140,23 @@ sub refresh_functions {
 
 	$self->functions->refresh($current);
 
+	return;
+}
+
+=pod
+
+=head3 C<refresh_directory>
+
+Force a refresh of the directory tree
+
+=cut
+
+sub refresh_directory {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	if ( $self->has_directory ) {
+		$self->directory->refresh;
+	}
 	return;
 }
 
@@ -2675,6 +2692,7 @@ sub on_close_window {
 	# perceives the application as closing faster.
 	# This knocks about quarter of a second off the speed
 	# at which Padre appears to close.
+	$self->locker->shutdown;
 	$self->Show(0);
 
 	# Save the window geometry
@@ -3706,7 +3724,7 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock   = $self->lock('REFRESH');
+	my $lock   = $self->lock('REFRESH', 'refresh_directory');
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(
@@ -3736,14 +3754,9 @@ sub close {
 	if ( $self->has_outline ) {
 		$self->outline->clear;
 	}
-	if ( $self->has_directory ) {
-		$self->directory->refresh;
-	}
 
 	# Remove the entry from the Window menu
 	$self->menu->window->refresh( $self->current );
-
-	# $self->update_last_session;
 
 	return 1;
 }
@@ -3779,15 +3792,16 @@ sub close_all {
 		lazy => 1
 	);
 
-	foreach my $no ( 0 .. $#pages ) {
-		$progress->update( $no, ( $no + 1 ) . '/' . scalar(@pages) );
-		if ( defined $skip and $skip == $pages[$no] ) {
-			next;
+	SCOPE: {
+		my $lock = $self->lock('refresh');
+		foreach my $no ( 0 .. $#pages ) {
+			$progress->update( $no, ( $no + 1 ) . '/' . scalar(@pages) );
+			if ( defined $skip and $skip == $pages[$no] ) {
+				next;
+			}
+			$self->close( $pages[$no] ) or return 0;
 		}
-		$self->close( $pages[$no] ) or return 0;
 	}
-
-	$self->refresh;
 
 	# Recalculate window title
 	$self->set_title;

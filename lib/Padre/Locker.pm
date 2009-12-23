@@ -55,6 +55,21 @@ sub locked {
 	}
 }
 
+# During Padre shutdown we should disable all forms of screen updating,
+# once we have completed all user-interactive steps in the shutdown.
+# Calling the shutdown method will apply the UPDATE lock to prevent any
+# further screen painting, and then permanently ignore any and all attempts
+# to call refresh methods.
+# This method does NOT ->Hide the actual application, that is left up to the
+# shutdown process. This action just disables everything lock-related that
+# might slow the shutdown process.
+sub shutdown {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE', 'REFRESH');
+	$self->{shutdown} = 1;
+	return 1;
+}
+
 
 
 
@@ -75,9 +90,10 @@ sub update_increment {
 sub update_decrement {
 	my $self = shift;
 	unless ( --$self->{update_depth} ) {
-
 		# Unlocked for the final time
-		$self->{update_locker} = undef;
+		unless ( $self->{shutdown} ) {
+			$self->{update_locker} = undef;
+		}
 	}
 	return;
 }
@@ -85,9 +101,12 @@ sub update_decrement {
 sub busy_increment {
 	my $self = shift;
 	unless ( $self->{busy_depth}++ ) {
-
 		# Locking for the first time
-		$self->{busy_locker} = Wx::BusyCursor->new;
+		# If we are in shutdown, the application isn't painting anyway
+		# (or possibly even visible) so don't put us into busy state.
+		unless ( $self->{shutdown} ) {
+			$self->{busy_locker} = Wx::BusyCursor->new;
+		}
 	}
 	return;
 }
@@ -95,9 +114,10 @@ sub busy_increment {
 sub busy_decrement {
 	my $self = shift;
 	unless ( --$self->{busy_depth} ) {
-
 		# Unlocked for the final time
-		$self->{busy_locker} = undef;
+		unless ( $self->{shutdown} ) {
+			$self->{busy_locker} = undef;
+		}
 	}
 	return;
 }
@@ -112,6 +132,8 @@ sub method_decrement {
 	my $self = shift;
 	$self->{method_pending}->{ $_[0] }--;
 	unless ( --$self->{method_depth} ) {
+		# Once we start the shutdown process, don't run anything
+		return if $self->{shutdown};
 
 		# Run all of the pending methods
 		foreach ( keys %{ $self->{method_pending} } ) {
