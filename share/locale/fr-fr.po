@@ -3546,7 +3546,7 @@ msgstr "Vider la liste des fichiers récents"
 
 #: lib/Padre/Wx/Menu/File.pm:402
 msgid "Remove the entries from the recent files list"
-msgstr ""
+msgstr "Vider la liste des fichiers récemment ouverts"
 
 #: lib/Padre/Wx/Menu/File.pm:419
 msgid "Document Statistics"
@@ -3563,7 +3563,7 @@ msgstr "&Quitter"
 
 #: lib/Padre/Wx/Menu/File.pm:433
 msgid "Ask if unsaved files should be saved and then exit Padre"
-msgstr ""
+msgstr "Demander si les fichiers non sauvegardés doivent l'être et terminer Padre"
 
 #: lib/Padre/Wx/Menu/File.pm:446
 msgid "&File"
@@ -3620,7 +3620,7 @@ msgstr "Verrouiller l'interface"
 
 #: lib/Padre/Wx/Menu/View.pm:37
 msgid "Allow the user to move around some of the windows"
-msgstr ""
+msgstr "Permettre à l'utilisateur de déplacer les panels"
 
 #: lib/Padre/Wx/Menu/View.pm:49
 msgid "Show Output"
@@ -3628,7 +3628,7 @@ msgstr "Montrer la sortie"
 
 #: lib/Padre/Wx/Menu/View.pm:50
 msgid "Show the window displaying the standard output and standar error of the running scripts"
-msgstr ""
+msgstr "Montrer le panel contenant la sortie et l'erreur standards des scripts lancés"
 
 #: lib/Padre/Wx/Menu/View.pm:59
 msgid "Show Functions"
@@ -3636,7 +3636,7 @@ msgstr "Montrer les fonctions"
 
 #: lib/Padre/Wx/Menu/View.pm:60
 msgid "Show a window listing all the functions in the current document"
-msgstr ""
+msgstr "Montrer le panel listant toutes les fonctions du document courant"
 
 #: lib/Padre/Wx/Menu/View.pm:75
 msgid "Show Outline"
@@ -3644,7 +3644,7 @@ msgstr "Montrer le profil"
 
 #: lib/Padre/Wx/Menu/View.pm:76
 msgid "Show a window listing all the parts of the current file (functions, pragmas, modules)"
-msgstr ""
+msgstr "Montrer le panel listant toutes les parties du fichier courant (fonctions, pragmas, modules)"
 
 #: lib/Padre/Wx/Menu/View.pm:85
 msgid "Show Directory Tree"
@@ -3652,7 +3652,7 @@ msgstr "Montrer l'explorateur de répertoire"
 
 #: lib/Padre/Wx/Menu/View.pm:86
 msgid "Show a window with a directory browser of the current project"
-msgstr ""
+msgstr "Montrer le panel avec un navigateur de fichier pour le fichier courant"
 
 #: lib/Padre/Wx/Menu/View.pm:95
 msgid "Show Syntax Check"
@@ -3669,7 +3669,7 @@ msgstr "Montrer la liste d'erreurs"
 
 #: lib/Padre/Wx/Menu/View.pm:106
 msgid "Show the list of errors received during execution of a script"
-msgstr ""
+msgstr "Montrer la liste des erreurs rencontrées lors de l'exécution d'un script"
 
 #: lib/Padre/Wx/Menu/View.pm:115
 msgid "Show Status Bar"
@@ -3677,7 +3677,7 @@ msgstr "Montrer la barre de statut"
 
 #: lib/Padre/Wx/Menu/View.pm:116
 msgid "Show/hide the status bar at the bottom of the screen"
-msgstr ""
+msgstr "Montrer/Cacher la barre de statut en bas de l'écran"
 
 #: lib/Padre/Wx/Menu/View.pm:125
 msgid "Show Toolbar"
@@ -3703,7 +3703,7 @@ msgstr "Montrer les numéros de ligne"
 
 #: lib/Padre/Wx/Menu/View.pm:164
 msgid "Show/hide the line numbers of all the documents on the left side of the window"
-msgstr ""
+msgstr "Montrer/Cacher les numéros de ligne des documents dans la partie gauche de la fenêtre"
 
 #: lib/Padre/Wx/Menu/View.pm:173
 msgid "Show Code Folding"
@@ -3711,7 +3711,7 @@ msgstr "Montrer les replis de code"
 
 #: lib/Padre/Wx/Menu/View.pm:174
 msgid "Show/hide a vertical line on the left hand side of the window to allow folding rows"
-msgstr ""
+msgstr "Montrer/Cacher une barre verticale sur la gauche pour permettre de replier le code"
 
 #: lib/Padre/Wx/Menu/View.pm:183
 msgid "Show Call Tips"
@@ -3719,7 +3719,7 @@ msgstr "Montrer la syntaxe d'appel"
 
 #: lib/Padre/Wx/Menu/View.pm:184
 msgid "When typing in functions allow showing short examples of the function"
-msgstr ""
+msgstr "Montrer un court exemple de la fonction lorsqu'elle est utilisée"
 
 #: lib/Padre/Wx/Menu/View.pm:197
 msgid "Show Current Line"
@@ -3727,7 +3727,7 @@ msgstr "Surligner la ligne courante"
 
 #: lib/Padre/Wx/Menu/View.pm:198
 msgid "Highlight the line where the cursor is"
-msgstr ""
+msgstr "Surligner la position du curseur"
 
 #: lib/Padre/Wx/Menu/View.pm:207
 msgid "Show Right Margin"
@@ -3735,7 +3735,7 @@ msgstr "Montrer la marge de droite"
 
 #: lib/Padre/Wx/Menu/View.pm:208
 msgid "Show a vertical line indicating the right margin"
-msgstr ""
+msgstr "Montrer une ligne verticale indiquant la marge de droite"
 
 #: lib/Padre/Wx/Menu/View.pm:220
 msgid "Show Newlines"
@@ -3743,7 +3743,7 @@ msgstr "Montrer les retours chariot"
 
 #: lib/Padre/Wx/Menu/View.pm:221
 msgid "Show/hide the newlines with special character"
-msgstr ""
+msgstr "Montrer/Cacher les retours chariot avec un caractère spécial"
 
 #: lib/Padre/Wx/Menu/View.pm:230
 msgid "Show Whitespaces"
@@ -3751,7 +3751,7 @@ msgstr "Montrer les espaces"
 
 #: lib/Padre/Wx/Menu/View.pm:231
 msgid "Show/hide the tabs and the spaces with special characters"
-msgstr ""
+msgstr "Montrer/Cacher les espaces et tabulations avec des caractères spéciaux"
 
 #: lib/Padre/Wx/Menu/View.pm:240
 msgid "Show Indentation Guide"
@@ -3759,7 +3759,7 @@ msgstr "Montrer les guides d'indentation"
 
 #: lib/Padre/Wx/Menu/View.pm:241
 msgid "Show/hide vertical bars at every indentation position on the left of the rows"
-msgstr ""
+msgstr "Montrer/Cacher des lignes verticales à chaque position d'indentation sur la gauche"
 
 #: lib/Padre/Wx/Menu/View.pm:250
 msgid "Word-Wrap"
@@ -3803,7 +3803,7 @@ msgstr "Mettre le focus sur l'éditeur principal"
 
 #: lib/Padre/Wx/Menu/View.pm:310
 msgid "Create a bookmark in the current file current row"
-msgstr ""
+msgstr "Créer un signer dans le document courant à la ligne courante"
 
 #: lib/Padre/Wx/Menu/View.pm:321
 msgid "Goto Bookmark"
@@ -3811,7 +3811,7 @@ msgstr "Aller au signet"
 
 #: lib/Padre/Wx/Menu/View.pm:322
 msgid "Select a bookmark created earlier and jump to that position"
-msgstr ""
+msgstr "Aller à la position sauvegardée par un signet"
 
 #: lib/Padre/Wx/Menu/View.pm:338
 msgid "Style"
@@ -3837,7 +3837,7 @@ msgstr "Notepad++"
 #: lib/Padre/Wx/Menu/View.pm:380
 #, perl-format
 msgid "Switch highlighting colors to %s style"
-msgstr ""
+msgstr "Changer le style de surlignage à %s"
 
 #: lib/Padre/Wx/Menu/View.pm:401
 msgid "Language"
@@ -3850,12 +3850,12 @@ msgstr "Valeur par défaut du système"
 #: lib/Padre/Wx/Menu/View.pm:410
 #, perl-format
 msgid "Switch menus to the default %s"
-msgstr ""
+msgstr "Changer les menus au défaut %s"
 
 #: lib/Padre/Wx/Menu/View.pm:444
 #, perl-format
 msgid "Switch menus to %s"
-msgstr ""
+msgstr "Changer les menus à %s"
 
 #: lib/Padre/Wx/Menu/View.pm:460
 msgid "&Full Screen"
@@ -3863,7 +3863,7 @@ msgstr "&Plein écran"
 
 #: lib/Padre/Wx/Menu/View.pm:461
 msgid "Set Padre in full screen mode"
-msgstr ""
+msgstr "Mettre Padre en mode plein-écran"
 
 #: lib/Padre/Wx/Menu/View.pm:482
 msgid "&View"
