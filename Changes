@@ -39,6 +39,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Audited the startup process for database operations that either weren't
       being done in a transaction, or were doing crazy bizarre things. Startup
       is now noticably faster (ADAMK)
+    - Added Preference setting to control autocomplete when editting a script rather than
+      a Module.  (WAXHEAD)      
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
