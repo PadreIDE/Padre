@@ -54,7 +54,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_script',
 		label      => Wx::gettext('Perl 5 Script'),
-		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 5 script'),
+		comment    => Wx::gettext('Open a document with a skeleton Perl 5 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pl');
 		},
@@ -63,7 +63,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_module',
 		label      => Wx::gettext('Perl 5 Module'),
-		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 5 module'),
+		comment    => Wx::gettext('Open a document with a skeleton Perl 5 module'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('pm');
 		},
@@ -72,7 +72,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p5_test',
 		label      => Wx::gettext('Perl 5 Test'),
-		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 5 test  script'),
+		comment    => Wx::gettext('Open a document with a skeleton Perl 5 test  script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('t');
 		},
@@ -85,7 +85,7 @@ sub new {
 		$file_new,
 		name       => 'file.new_p6_script',
 		label      => Wx::gettext('Perl 6 Script'),
-		comment    => Wx::gettext('Open a docuemnt with a skeleton Perl 6 script'),
+		comment    => Wx::gettext('Open a document with a skeleton Perl 6 script'),
 		menu_event => sub {
 			$_[0]->on_new_from_template('p6');
 		},
