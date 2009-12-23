@@ -600,7 +600,7 @@ sub _timer_post_init {
 
 	# Lock everything during the initial opening of files
 	SCOPE: {
-		my $lock = $self->lock('UPDATE', 'DB', 'refresh');
+		my $lock = $self->lock( 'UPDATE', 'DB', 'refresh' );
 
 		# Load all files and refresh the application so that it
 		# represents the loaded state.
@@ -1042,13 +1042,10 @@ sub refresh_title {
 
 	# We may run within window start-up, there may be no "current" or
 	# "document" or "document->file":
-	if (
-		defined $current
-		and
-		defined $current->document
-		and
-		defined $current->document->file
-	) {
+	if (    defined $current
+		and defined $current->document
+		and defined $current->document->file )
+	{
 		my $document = $current->document;
 		my $file     = $document->file;
 		$variable_data{'f'} = $file->{filename};
@@ -1086,6 +1083,7 @@ sub refresh_title {
 		if defined($revision);
 
 	if ( $self->GetTitle ne $self->{title} ) {
+
 		# Push the title to the window
 		$self->SetTitle( $self->{title} );
 
@@ -1176,7 +1174,7 @@ sub refresh_toolbar {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	my $toolbar = $self->GetToolBar;
-	if ( $toolbar ) {
+	if ($toolbar) {
 		$toolbar->refresh( $_[0] or $self->current );
 	}
 }
@@ -1482,7 +1480,7 @@ sub show_functions {
 	$self->config->set( main_functions => $on );
 	$self->config->write;
 
-	$self->_show_functions( $on );
+	$self->_show_functions($on);
 
 	$self->aui->Update;
 	$self->ide->save_config;
@@ -1656,7 +1654,7 @@ sub _show_output {
 		);
 	} else {
 		$self->bottom->hide( $self->output );
-	}	
+	}
 }
 
 =pod
@@ -2904,6 +2902,7 @@ sub setup_editors {
 	my @files = @_;
 	TRACE("setup_editors @files") if DEBUG;
 	SCOPE: {
+
 		# Update the menus AFTER the initial GUI update,
 		# because it makes file loading LOOK faster.
 		# Do the menu/etc refresh in the time it takes the
@@ -2922,9 +2921,9 @@ sub setup_editors {
 			}
 		}
 
-		if ( @files ) {
+		if (@files) {
 			foreach my $f (@files) {
-				$self->setup_editor( $f );
+				$self->setup_editor($f);
 			}
 		} else {
 			$self->setup_editor;
@@ -3080,7 +3079,7 @@ sub setup_editor {
 	$doc->restore_cursor_position;
 
 	# Update and refresh immediately if not locked
-	$self->lock('update_last_session', 'refresh_menu');
+	$self->lock( 'update_last_session', 'refresh_menu' );
 
 	# Notify plugins
 	$manager->plugin_event('editor_changed');
@@ -3741,6 +3740,7 @@ sub on_save_intuition {
 			type => 'files',
 			name => $filename,
 		);
+
 		# Immediately refresh the recent list, or save the request
 		# for refresh lock expiry. We probably should add a specific
 		# lock method for this non-guard-object case.
@@ -3845,7 +3845,7 @@ sub on_close {
 
 	# Transaction-wrap the session saving, and trigger a full refresh
 	# once we are finished the current action.
-	my $lock = $self->lock('DB', 'update_last_session', 'refresh');
+	my $lock = $self->lock( 'DB', 'update_last_session', 'refresh' );
 
 	if ( $self->ide->{session_autosave} ) {
 		$self->save_current_session;
@@ -3876,7 +3876,7 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock   = $self->lock('REFRESH', 'refresh_directory');
+	my $lock = $self->lock( 'REFRESH', 'refresh_directory' );
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(

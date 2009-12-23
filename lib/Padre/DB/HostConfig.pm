@@ -16,7 +16,7 @@ sub read {
 sub write {
 	my $class = shift;
 	my $hash  = shift;
-	
+
 	my $transaction = Padre::Current->main->lock('DB');
 	Padre::DB::HostConfig->truncate;
 	foreach my $name ( sort keys %$hash ) {

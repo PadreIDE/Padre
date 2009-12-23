@@ -45,9 +45,10 @@ sub new {
 	# Show or hide GUI elements
 	$self->{output} = $self->add_checked_menu_item(
 		$self,
-		name       => 'view.output',
-		label      => Wx::gettext('Show Output'),
-		comment    => Wx::gettext('Show the window displaying the standard output and standar error of the running scripts'),
+		name  => 'view.output',
+		label => Wx::gettext('Show Output'),
+		comment =>
+			Wx::gettext('Show the window displaying the standard output and standar error of the running scripts'),
 		menu_event => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
 		},
@@ -71,9 +72,9 @@ sub new {
 	# Show or hide GUI elements
 	$self->{outline} = $self->add_checked_menu_item(
 		$self,
-		name       => 'view.outline',
-		label      => Wx::gettext('Show Outline'),
-		comment    => Wx::gettext('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
+		name    => 'view.outline',
+		label   => Wx::gettext('Show Outline'),
+		comment => Wx::gettext('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
 		menu_event => sub {
 			$_[0]->show_outline( $_[1]->IsChecked );
 		},
@@ -149,7 +150,7 @@ sub new {
 			$self->{view_as_highlighting},
 			name       => $tag,
 			label      => $label,
-			comment    => sprintf(Wx::gettext('Switch document type to %s'), $label),
+			comment    => sprintf( Wx::gettext('Switch document type to %s'), $label ),
 			menu_event => sub { $_[0]->set_mimetype( $mimes{$name} ) },
 		);
 	}
@@ -169,9 +170,9 @@ sub new {
 
 	$self->{folding} = $self->add_checked_menu_item(
 		$self,
-		name       => 'view.folding',
-		label      => Wx::gettext('Show Code Folding'),
-		comment    => Wx::gettext('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
+		name    => 'view.folding',
+		label   => Wx::gettext('Show Code Folding'),
+		comment => Wx::gettext('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
 		menu_event => sub {
 			$_[0]->on_toggle_code_folding( $_[1] );
 		},
@@ -354,7 +355,7 @@ sub new {
 			$self->{style},
 			name       => $tag,
 			label      => $label,
-			comment    => sprintf(Wx::gettext('Switch highlighting colors to %s style'), $label),
+			comment    => sprintf( Wx::gettext('Switch highlighting colors to %s style'), $label ),
 			menu_event => sub {
 				$_[0]->change_style($name);
 			},
@@ -377,7 +378,7 @@ sub new {
 				$self->{style},
 				name       => $tag,
 				label      => $label,
-				comment    => sprintf(Wx::gettext('Switch highlighting colors to %s style'), $label),
+				comment    => sprintf( Wx::gettext('Switch highlighting colors to %s style'), $label ),
 				menu_event => sub {
 					$_[0]->change_style( $name, 1 );
 				},
@@ -407,7 +408,7 @@ sub new {
 		$self->{language},
 		name       => 'view.language_default',
 		label      => Wx::gettext('System Default') . " ($default)",
-		comment    => sprintf(Wx::gettext('Switch menus to the default %s'), $default),
+		comment    => sprintf( Wx::gettext('Switch menus to the default %s'), $default ),
 		menu_event => sub {
 			$_[0]->change_locale;
 		},
@@ -441,7 +442,7 @@ sub new {
 			$self->{language},
 			name       => $tag,
 			label      => $label,
-			comment    => sprintf(Wx::gettext('Switch menus to %s'), $label),
+			comment    => sprintf( Wx::gettext('Switch menus to %s'), $label ),
 			menu_event => sub {
 				$_[0]->change_locale($name);
 			},

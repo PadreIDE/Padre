@@ -112,7 +112,7 @@ sub _add_menu_item {
 		$action->id,
 		$action->label_menu,
 	);
-	if ($action->comment) {
+	if ( $action->comment ) {
 		$item->SetHelp( $action->comment );
 	} else {
 		warn "comment is missing from menu '$name'";

@@ -48,7 +48,7 @@ sub panel {
 				Wx::gettext("Autocomplete new subroutines in scripts")
 			],
 			[]
-		],		
+		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. length of suggestions:') ],
 			[   'Wx::SpinCtrl', 'perl_autocomplete_min_suggestion_len', $config->perl_autocomplete_min_suggestion_len,
 				1,              64

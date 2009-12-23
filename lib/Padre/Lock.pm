@@ -9,7 +9,7 @@ our $VERSION = '0.52';
 sub new {
 	my $class  = shift;
 	my $locker = shift;
-	my $self   = bless [ $locker ], $class;
+	my $self   = bless [$locker], $class;
 
 	# Enable the locks
 	my $db     = 0;

@@ -112,6 +112,7 @@ sub new {
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
 		if ($socket) {
+
 			# Escape the SQLite transaction before we go any further.
 			# Once we sent the single-instance server commands, it is
 			# almost certainly going to want to use the database.
@@ -196,14 +197,15 @@ sub run {
 	# FIX ME: RT #1 This call should be delayed until after the
 	# window was opened but my Wx skills do not exist. --Steffen
 	SCOPE: {
+
 		# Lock rendering and the database while the plugins are loading
 		# to prevent them doing anything weird or slow.
-		my $lock = $self->wx->main->lock('DB', 'UPDATE');
+		my $lock = $self->wx->main->lock( 'DB', 'UPDATE' );
 		$self->plugin_manager->load_plugins;
 	}
 
 	# Move our current dir to the user's documents directory by default
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 
 		# Windows has trouble deleting the work directory of a process,
 		# so we change the working dir

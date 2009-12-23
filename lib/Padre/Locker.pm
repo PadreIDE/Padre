@@ -23,7 +23,7 @@ sub new {
 	# Create the object
 	my $self = bless {
 		owner => $owner,
-		
+
 		# Padre::DB Transaction lock
 		db_depth => 0,
 
@@ -69,7 +69,7 @@ sub locked {
 # might slow the shutdown process.
 sub shutdown {
 	my $self = shift;
-	my $lock = $self->lock('UPDATE', 'REFRESH');
+	my $lock = $self->lock( 'UPDATE', 'REFRESH' );
 	$self->{shutdown} = 1;
 	return 1;
 }
@@ -113,6 +113,7 @@ sub update_increment {
 sub update_decrement {
 	my $self = shift;
 	unless ( --$self->{update_depth} ) {
+
 		# Unlocked for the final time
 		unless ( $self->{shutdown} ) {
 			$self->{update_locker} = undef;
@@ -124,6 +125,7 @@ sub update_decrement {
 sub busy_increment {
 	my $self = shift;
 	unless ( $self->{busy_depth}++ ) {
+
 		# Locking for the first time
 		# If we are in shutdown, the application isn't painting anyway
 		# (or possibly even visible) so don't put us into busy state.
@@ -137,6 +139,7 @@ sub busy_increment {
 sub busy_decrement {
 	my $self = shift;
 	unless ( --$self->{busy_depth} ) {
+
 		# Unlocked for the final time
 		unless ( $self->{shutdown} ) {
 			$self->{busy_locker} = undef;
@@ -155,6 +158,7 @@ sub method_decrement {
 	my $self = shift;
 	$self->{method_pending}->{ $_[0] }--;
 	unless ( --$self->{method_depth} ) {
+
 		# Once we start the shutdown process, don't run anything
 		return if $self->{shutdown};
 
