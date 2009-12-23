@@ -15,7 +15,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Ticket #787: Add a test for breakpoints to testsuite (SEWI)
     - Fixed missing mime type guessing that caused new Padre documents to
       default always to Scintilla (AZAWAWI)
-    - Landed first phase of new multi-resource locking subsystem (ADAMK)
+    - Landed new multi-resource locking subsystem. Many operations are now
+      prevented from refreshing the GUI multiple times. Startup, shutdown,
+      open and close multiple files, session changing all much faster (ADAMK)
     - In Open resource, path is now cleaned from slashes on win32 (AZAWAWI)
     - Fixed Padre crash when closing a Perl 5 script tab quickly while syntax
       check is on (AZAWAWI)
@@ -30,7 +32,6 @@ Changes for Perl Application Development and Refactoring Environment
       bigger bold fonts for title (AZAWAWI)
     - Fixed #758: Autocomplete now also works with backspace (SEWI)
     - Ctrl-Tab behaviour is now configurable (SEWI)
-    - Initial migration of ::Main->{_no_refresh} to Padre::Locker (ADAMK)
     - Rename Padre::Debug to Padre::Logger (SZABGAB)
     - Reuse the comment field of the menu actions and show them in the toolbar (SZABGAB)
 
