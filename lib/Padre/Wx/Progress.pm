@@ -28,7 +28,7 @@ use strict;
 use warnings;
 use Padre::Wx;
 
-our $VERSION = '0.52';
+our $VERSION = '0.53';
 
 =pod
 

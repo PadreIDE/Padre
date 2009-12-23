@@ -8,7 +8,7 @@ use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();
 
-our $VERSION = '0.52';
+our $VERSION = '0.53';
 our @ISA     = 'Padre::Task';
 
 =pod

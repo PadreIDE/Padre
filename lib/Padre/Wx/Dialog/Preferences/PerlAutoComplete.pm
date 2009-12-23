@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx::Dialog::Preferences ();
 
-our $VERSION = '0.52';
+our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Dialog::Preferences';
 
 sub panel {
