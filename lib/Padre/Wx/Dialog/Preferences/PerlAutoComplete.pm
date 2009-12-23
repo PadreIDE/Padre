@@ -42,6 +42,13 @@ sub panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox',
+				'autocomplete_subroutine',
+				( $config->autocomplete_subroutine ? 1 : 0 ),
+				Wx::gettext("Autocomplete new subroutines in scripts")
+			],
+			[]
+		],		
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. length of suggestions:') ],
 			[   'Wx::SpinCtrl', 'perl_autocomplete_min_suggestion_len', $config->perl_autocomplete_min_suggestion_len,
 				1,              64
@@ -75,6 +82,10 @@ sub save {
 	$config->set(
 		'autocomplete_method',
 		$data->{autocomplete_method} ? 1 : 0
+	);
+	$config->set(
+		'autocomplete_subroutine',
+		$data->{autocomplete_subroutine} ? 1 : 0
 	);
 
 	$config->set(

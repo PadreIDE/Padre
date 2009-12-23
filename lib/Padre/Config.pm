@@ -593,6 +593,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'autocomplete_subroutine',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
 	name    => 'perl_autocomplete_max_suggestions',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,

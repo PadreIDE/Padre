@@ -1354,7 +1354,7 @@ sub event_on_char {
 	#  - config option enabled
 	#  - none of the following keys pressed: a-z, A-Z, 0-9, _
 	#  - cursor position is at end of line
-	if ($config->autocomplete_method
+	if ( ($config->autocomplete_method or $config->autocomplete_subroutine)
 		and (  ( $key < 48 )
 			or ( ( $key > 57 ) and ( $key < 65 ) )
 			or ( ( $key > 90 ) and ( $key < 95 ) )
@@ -1370,14 +1370,16 @@ sub event_on_char {
 		# methods can't live outside packages, so ignore them
 		my $linetext = $editor->GetTextRange( $first, $last );
 
-		#print "Text:\n'$linetext'\n";
+		# TODO: Fix picking up the space char so that 
+		# 	when indenting the cursor isn't one space 'in'.
 		if ( $prefix =~ /package / ) {
-
+			
 			# we only match "sub foo" at the beginning of a line
 			# but no inline subs (eval, anonymus, etc.)
 			# The end-of-subname match is included in the first if
 			# which match the last key pressed (which is not part of
 			# $linetext at this moment:
+			
 			if ( $linetext =~ /^sub[\s\t]+\w+$/ ) {
 				my $indent_string = $self->get_indentation_level_string(1);
 
@@ -1390,13 +1392,12 @@ sub event_on_char {
 				# Ready for typing in the new method:
 				$editor->GotoPos( $last + length($text_before_cursor) );
 			}
-		} elsif ( $linetext =~ /^sub[\s\t]+(\w+)$/ ) {
+		} elsif ( $linetext =~ /^sub[\s\t]+(\w+)$/ && $config->autocomplete_subroutine  ) {
+			
 			my $subName       = $1;
 			my $indent_string = $self->get_indentation_level_string(1);
-
-			#$self->_do_end_check($editor, $line, $pos);
+			
 			# Add the default skeleton of a subroutine,
-
 			my $newline = $self->newline;
 			$editor->AddText(" {$newline$indent_string$newline}");
 
