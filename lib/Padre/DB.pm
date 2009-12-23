@@ -24,7 +24,7 @@ use ORLite::Migrate 0.01 {
 		File::ShareDir::dist_dir('Padre'),
 		'timeline',
 	),
-}, '-DEBUG';
+}; #, '-DEBUG';
 
 # Overlay classes to enhance the ORLite defaults
 use Padre::DB::Plugin             ();
