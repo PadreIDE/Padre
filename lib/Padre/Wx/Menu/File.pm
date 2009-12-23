@@ -171,7 +171,7 @@ sub new {
 		name        => 'file.close_current_project',
 		need_editor => 1,
 		label       => Wx::gettext('Close This Project'),
-		comment     => Wx::gettext('Close all the file belonging to the current project'),
+		comment     => Wx::gettext('Close all the files belonging to the current project'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return if not $doc;
