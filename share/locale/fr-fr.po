@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: padre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-22 09:53+0200\n"
+"POT-Creation-Date: 2009-12-22 11:05+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jérôme Quelin <jquelin@gmail.com>\n"
 "Language-Team:  <jquelin@gmail.com>\n"
@@ -632,51 +632,67 @@ msgstr "Dumpe l'objet Padre complet sur STDOUT pour tester / débugguer."
 msgid "Check for common (beginner) errors"
 msgstr "Vérifier les erreurs classiques (de débutant)"
 
-#: lib/Padre/Action/Perl.pm:56
+#: lib/Padre/Action/Perl.pm:46
+msgid "Check the current file"
+msgstr "Vérifier le fichier courant"
+
+#: lib/Padre/Action/Perl.pm:57
 msgid "Find Unmatched Brace"
 msgstr "Trouver parenthèse orpheline"
 
-#: lib/Padre/Action/Perl.pm:57
+#: lib/Padre/Action/Perl.pm:58
 msgid "Searches the source code for brackets with lack a matching (opening/closing) part."
 msgstr "Chercher dans le code source les parenthèses, crochets et accolades non balancées."
 
-#: lib/Padre/Action/Perl.pm:68
+#: lib/Padre/Action/Perl.pm:69
 #: lib/Padre/Document/Perl.pm:1491
 msgid "Find Variable Declaration"
 msgstr "Trouver la déclaration de la variable"
 
-#: lib/Padre/Action/Perl.pm:79
+#: lib/Padre/Action/Perl.pm:70
+msgid "Find where the selected variable was declared using \"my\" and put the focus there."
+msgstr "Mettre le focus sur la déclaration de la variable sélectionnée."
+
+#: lib/Padre/Action/Perl.pm:81
 #: lib/Padre/Document/Perl.pm:1531
 msgid "Find Method Declaration"
 msgstr "Trouver la déclaration de la méthode"
 
-#: lib/Padre/Action/Perl.pm:90
+#: lib/Padre/Action/Perl.pm:82
+msgid "Find where the selected function was defined and put the focus there."
+msgstr "Mettre le focus sur la déclaration de la fonction sélectionnée."
+
+#: lib/Padre/Action/Perl.pm:93
 msgid "Vertically Align Selected"
 msgstr "Aligner verticalement"
 
-#: lib/Padre/Action/Perl.pm:91
+#: lib/Padre/Action/Perl.pm:94
 msgid "Align a selection of text to the same left column."
 msgstr "Aligner à gauche la sélection de texte."
 
-#: lib/Padre/Action/Perl.pm:101
+#: lib/Padre/Action/Perl.pm:104
 msgid "Newline same column"
 msgstr "Retour à la ligne à la même colonne"
 
-#: lib/Padre/Action/Perl.pm:103
+#: lib/Padre/Action/Perl.pm:106
 msgid "Like pressing ENTER somewhere on a line but use the current position as ident for the new line."
 msgstr "Même comportement que ENTER, mais utilise la position courante comme indentation de la nouvelle ligne."
 
-#: lib/Padre/Action/Perl.pm:115
+#: lib/Padre/Action/Perl.pm:118
 msgid "Create project tagsfile"
 msgstr "Créer le fichier de tags du projet"
 
-#: lib/Padre/Action/Perl.pm:117
+#: lib/Padre/Action/Perl.pm:120
 msgid "Creates a perltags - file for the current project supporting find_method and autocomplete."
 msgstr "Crée un perltags - fichier du projet courant pour soutenir find_method et autocomplete."
 
-#: lib/Padre/Action/Perl.pm:143
+#: lib/Padre/Action/Perl.pm:146
 msgid "Automatic bracket completion"
 msgstr "Complétion d'accolades automatique"
+
+#: lib/Padre/Action/Perl.pm:147
+msgid "When typing { insert a closing } automatically"
+msgstr "Insérer une accolade fermante automatiquement après une {"
 
 #: lib/Padre/Action/Plugins.pm:37
 #: lib/Padre/Wx/Dialog/PluginManager.pm:31
@@ -691,82 +707,98 @@ msgstr "Montre le gestionnaire de greffons de Padre pour les dés/activer."
 msgid "Plug-in List (CPAN)"
 msgstr "Liste de greffons (CPAN)"
 
-#: lib/Padre/Action/Plugins.pm:61
+#: lib/Padre/Action/Plugins.pm:54
+msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
+msgstr "Ouvrir un navigateur pour chercher les greffons Padre sur CPAN"
+
+#: lib/Padre/Action/Plugins.pm:62
 msgid "Edit My Plug-in"
 msgstr "Editer MyPlugin"
 
-#: lib/Padre/Action/Plugins.pm:62
+#: lib/Padre/Action/Plugins.pm:63
 msgid "My Plug-in is a plug-in where developers could extend their Padre installation"
 msgstr "My-Plugin est un greffon où les développeurs peuvent étendre leur installation de Padre"
 
-#: lib/Padre/Action/Plugins.pm:68
+#: lib/Padre/Action/Plugins.pm:69
 msgid "Could not find the Padre::Plugin::My plug-in"
 msgstr "Ne peut pas trouver le greffon Padre::Plugin::My"
 
-#: lib/Padre/Action/Plugins.pm:78
+#: lib/Padre/Action/Plugins.pm:79
 msgid "Reload My Plug-in"
 msgstr "Recharger MyPlugin"
 
-#: lib/Padre/Action/Plugins.pm:79
+#: lib/Padre/Action/Plugins.pm:80
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr "Cette fonction recharge le greffon MyPlugin sans redémarrer Padre"
 
-#: lib/Padre/Action/Plugins.pm:87
-#: lib/Padre/Action/Plugins.pm:91
+#: lib/Padre/Action/Plugins.pm:88
 #: lib/Padre/Action/Plugins.pm:92
+#: lib/Padre/Action/Plugins.pm:93
 msgid "Reset My plug-in"
 msgstr "Réinitialiser MyPlugin"
 
-#: lib/Padre/Action/Plugins.pm:88
+#: lib/Padre/Action/Plugins.pm:89
 msgid "Reset the My plug-in to the default"
 msgstr "Réinitialiser le greffon MyPlugin"
 
-#: lib/Padre/Action/Plugins.pm:107
+#: lib/Padre/Action/Plugins.pm:108
 msgid "Reload All Plug-ins"
 msgstr "Recharger tous les greffons"
 
-#: lib/Padre/Action/Plugins.pm:108
+#: lib/Padre/Action/Plugins.pm:109
 msgid "Reload all plug-ins from disk"
 msgstr "Recharger tous les greffons depuis le disque"
 
-#: lib/Padre/Action/Plugins.pm:116
+#: lib/Padre/Action/Plugins.pm:117
 msgid "(Re)load Current Plug-in"
 msgstr "(Re)charger greffon actuel"
 
-#: lib/Padre/Action/Plugins.pm:117
+#: lib/Padre/Action/Plugins.pm:118
 msgid "Reloads (or initially loads) the current plug-in"
 msgstr "Recharger le greffon courant"
 
-#: lib/Padre/Action/Plugins.pm:135
+#: lib/Padre/Action/Plugins.pm:136
 msgid "Install CPAN Module"
 msgstr "Installation d'un module CPAN"
 
-#: lib/Padre/Action/Plugins.pm:136
+#: lib/Padre/Action/Plugins.pm:137
 msgid "Install a Perl module from CPAN"
 msgstr "Installer un module depuis le CPAN"
 
-#: lib/Padre/Action/Plugins.pm:148
+#: lib/Padre/Action/Plugins.pm:149
 msgid "Install Local Distribution"
 msgstr "Installer une distribution locale"
 
-#: lib/Padre/Action/Plugins.pm:156
+#: lib/Padre/Action/Plugins.pm:150
+msgid "Using CPAN.pm install a CPAN like package opened locally"
+msgstr "Installer un paquetage CPAN décompressé localement en utilisant CPAN.pm"
+
+#: lib/Padre/Action/Plugins.pm:158
 msgid "Install Remote Distribution"
 msgstr "Installer une distribution distante"
 
-#: lib/Padre/Action/Plugins.pm:164
+#: lib/Padre/Action/Plugins.pm:159
+msgid "Using pip download a tar.gz file and install it using CPAN.pm"
+msgstr "Utiliser pip pour télécharger un fichier .tar.gz et l'installer en utilisant CPAN.pm"
+
+#: lib/Padre/Action/Plugins.pm:167
 msgid "Open CPAN Config File"
 msgstr "Ouvrir le fichier de configuration CPAN"
 
-#: lib/Padre/Action/Plugins.pm:183
+#: lib/Padre/Action/Plugins.pm:168
+msgid "Open CPAN::MyConfig.pm for manual editing by experts"
+msgstr "Ouvrir CPAN::MyConfig.pm pour une édition manuelle (pour les experts)"
+
+#: lib/Padre/Action/Plugins.pm:187
 msgid "Select distribution to install"
 msgstr "Sélectionner la distribution à installer"
 
-#: lib/Padre/Action/Plugins.pm:196
-#: lib/Padre/Action/Plugins.pm:221
+#: lib/Padre/Action/Plugins.pm:200
+#: lib/Padre/Action/Plugins.pm:225
 msgid "Did not provide a distribution"
 msgstr "N'a pas fourni de distribution"
 
-#: lib/Padre/Action/Plugins.pm:211
+#: lib/Padre/Action/Plugins.pm:215
 msgid ""
 "Enter URL to install\n"
 "e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
@@ -774,11 +806,11 @@ msgstr ""
 "Entez l'URL à installer\n"
 "ex : http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
 
-#: lib/Padre/Action/Plugins.pm:238
+#: lib/Padre/Action/Plugins.pm:242
 msgid "pip is unexpectedly not installed"
 msgstr "étonnant, pip n'est pas installé"
 
-#: lib/Padre/Action/Plugins.pm:284
+#: lib/Padre/Action/Plugins.pm:288
 msgid "Failed to find your CPAN configuration"
 msgstr "N'a pas réussi à trouver votre configuration CPAN"
 
@@ -787,36 +819,44 @@ msgstr "N'a pas réussi à trouver votre configuration CPAN"
 msgid "Lexically Rename Variable"
 msgstr "Remplacement lexical de variable"
 
-#: lib/Padre/Action/Refactor.pm:56
+#: lib/Padre/Action/Refactor.pm:50
+msgid "Prompt for a replacement variable name and replace all occurrance of this variable"
+msgstr "Demande un nom de remplacement et remplacer toutes les occurrences de cette varibale"
+
 #: lib/Padre/Action/Refactor.pm:57
+#: lib/Padre/Action/Refactor.pm:58
 #: lib/Padre/Document/Perl.pm:1515
 #: lib/Padre/Document/Perl.pm:1516
 msgid "Replacement"
 msgstr "Remplacement"
 
-#: lib/Padre/Action/Refactor.pm:71
+#: lib/Padre/Action/Refactor.pm:72
 msgid "Extract Subroutine"
 msgstr "Extraire la fonction"
 
-#: lib/Padre/Action/Refactor.pm:73
+#: lib/Padre/Action/Refactor.pm:74
 msgid "Cut the current selection and create a new sub from it. A call to this sub is added in the place where the selection was."
 msgstr "Coupe la sélection courante et crée une nouvelle fonction avec. Un appel à cette fonction sera ajouté à la place de cette sélection."
 
-#: lib/Padre/Action/Refactor.pm:85
+#: lib/Padre/Action/Refactor.pm:86
 msgid "Please enter a name for the new subroutine"
 msgstr "Veuillez entrer un nom pour la nouvelle fonction"
 
-#: lib/Padre/Action/Refactor.pm:86
+#: lib/Padre/Action/Refactor.pm:87
 msgid "New Subroutine Name"
 msgstr "Nom de la nouvelle fonction"
 
-#: lib/Padre/Action/Refactor.pm:101
+#: lib/Padre/Action/Refactor.pm:102
 #: lib/Padre/Document/Perl.pm:1550
 msgid "Introduce Temporary Variable"
 msgstr "Introduire une variable temporaire"
 
-#: lib/Padre/Action/Refactor.pm:108
-#: lib/Padre/Action/Refactor.pm:109
+#: lib/Padre/Action/Refactor.pm:103
+msgid "Assign the selected expression to a newly declared variable"
+msgstr "Assigner l'expression sélectionnée à une nouvelle variable"
+
+#: lib/Padre/Action/Refactor.pm:110
+#: lib/Padre/Action/Refactor.pm:111
 #: lib/Padre/Document/Perl.pm:1563
 #: lib/Padre/Document/Perl.pm:1564
 msgid "Variable Name"
@@ -888,7 +928,7 @@ msgid "Find text or regular expressions using a traditional dialog"
 msgstr "Recherche du texte ou une expression régulière avec un dialogue traditionnel"
 
 #: lib/Padre/Action/Search.pm:46
-#: lib/Padre/Action/Search.pm:117
+#: lib/Padre/Action/Search.pm:118
 msgid "Find Next"
 msgstr "Rechercher en avant"
 
@@ -912,89 +952,141 @@ msgstr "Répète la dernière recherche en arrière, pour trouver l'occurrence p
 msgid "Quick Find"
 msgstr "Recherche rapide"
 
-#: lib/Padre/Action/Search.pm:118
+#: lib/Padre/Action/Search.pm:101
+msgid "Incremental search seen at the bottom of the window"
+msgstr "Recherche incrémentale présente en bas de la fenêtre"
+
+#: lib/Padre/Action/Search.pm:119
 msgid "Find next matching text using a toolbar-like dialog at the bottom of the editor"
 msgstr "Trouve l'occurrence suivante avec une barre de recherche au bas de l'éditeur"
 
-#: lib/Padre/Action/Search.pm:128
+#: lib/Padre/Action/Search.pm:129
 msgid "Find Previous"
 msgstr "Rechercher en arrière"
 
-#: lib/Padre/Action/Search.pm:129
+#: lib/Padre/Action/Search.pm:130
 msgid "Find previous matching text using a toolbar-like dialog at the bottom of the editor"
 msgstr "Trouve l'occurrence précédente avec une barre de recherche au bas de l'éditeur"
 
-#: lib/Padre/Action/Search.pm:140
+#: lib/Padre/Action/Search.pm:141
 #: lib/Padre/Wx/Dialog/Replace.pm:241
 msgid "Replace"
 msgstr "Remplacer"
 
-#: lib/Padre/Action/Search.pm:141
+#: lib/Padre/Action/Search.pm:142
 msgid "Find a text and replace it"
 msgstr "Trouver un texte et le remplacer"
 
-#: lib/Padre/Action/Search.pm:151
+#: lib/Padre/Action/Search.pm:152
 msgid "Find in Fi&les..."
 msgstr "Rechercher dans des &fichiers..."
 
-#: lib/Padre/Action/Search.pm:152
+#: lib/Padre/Action/Search.pm:153
 msgid "Search for a text in all files below a given directory"
 msgstr "Chercher un texte dans tous les fichiers en dessous d'un répertoire donné"
 
-#: lib/Padre/Action/Search.pm:161
+#: lib/Padre/Action/Search.pm:163
 #: lib/Padre/Wx/Dialog/OpenResource.pm:87
 msgid "Open Resource"
 msgstr "Ouvrir une ressource"
 
-#: lib/Padre/Action/Search.pm:173
+#: lib/Padre/Action/Search.pm:164
+msgid "Type in a filter to select a file"
+msgstr "Entrer un filtre pour sélectionner un fichier"
+
+#: lib/Padre/Action/Search.pm:176
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:35
 msgid "Quick Menu Access"
 msgstr "Accès menu rapide"
 
-#: lib/Padre/Action/Search.pm:174
+#: lib/Padre/Action/Search.pm:177
 msgid "Quick access to all menu functions"
 msgstr "Accès rapide aux fonctions des menus."
 
 #: lib/Padre/Action/Window.pm:31
-#: lib/Padre/Action/Window.pm:73
+#: lib/Padre/Action/Window.pm:77
 msgid "Last Visited File"
 msgstr "Dernier fichier visité"
 
-#: lib/Padre/Action/Window.pm:41
+#: lib/Padre/Action/Window.pm:32
+msgid "Switch to edit the file that was previously edited (can switch back and forth)"
+msgstr "Aller au fichier précédemment édité (va et vient)"
+
+#: lib/Padre/Action/Window.pm:42
 msgid "Oldest Visited File"
 msgstr "Plus ancien fichier visité"
 
-#: lib/Padre/Action/Window.pm:51
+#: lib/Padre/Action/Window.pm:43
+msgid "Put focus on tab visited the longest time ago."
+msgstr "Mettre le focus sur l'onglet visité le plus longtemps auparavant."
+
+#: lib/Padre/Action/Window.pm:53
 msgid "Next File"
 msgstr "Fichier suivant"
 
-#: lib/Padre/Action/Window.pm:61
+#: lib/Padre/Action/Window.pm:54
+msgid "Put focus on the next tab to the right"
+msgstr "Mettre le focus sur l'onglet de droite"
+
+#: lib/Padre/Action/Window.pm:64
 msgid "Previous File"
 msgstr "Fichier précédent"
 
-#: lib/Padre/Action/Window.pm:83
+#: lib/Padre/Action/Window.pm:65
+msgid "Put focus on the previous tab to the left"
+msgstr "Mettre le focus sur l'onglet de gauche"
+
+#: lib/Padre/Action/Window.pm:78
+msgid "???"
+msgstr "???"
+
+#: lib/Padre/Action/Window.pm:88
 msgid "Right Click"
 msgstr "Clic droit"
 
-#: lib/Padre/Action/Window.pm:97
+#: lib/Padre/Action/Window.pm:89
+msgid "Imitate clickinig on the right button on the mouse"
+msgstr "Imiter le click droit sur la souris"
+
+#: lib/Padre/Action/Window.pm:103
 msgid "GoTo Functions Window"
 msgstr "Aller à la fenêtre des fonctions"
 
-#: lib/Padre/Action/Window.pm:108
+#: lib/Padre/Action/Window.pm:104
+msgid "Set the focus to be the functions window"
+msgstr "Mettre le focus sur le panel des fonctions"
+
+#: lib/Padre/Action/Window.pm:115
 msgid "GoTo Outline Window"
 msgstr "Aller à la fenêtre de profil"
 
-#: lib/Padre/Action/Window.pm:118
+#: lib/Padre/Action/Window.pm:116
+msgid "Set the focus to be the outline window"
+msgstr "Mettre le focus sur le panel du profil"
+
+#: lib/Padre/Action/Window.pm:126
 msgid "GoTo Output Window"
 msgstr "Aller à la fenêtre de Sortie"
 
-#: lib/Padre/Action/Window.pm:128
+#: lib/Padre/Action/Window.pm:127
+msgid "Set the focus to be the output window"
+msgstr "Mettre le focus sur le panel de sortie"
+
+#: lib/Padre/Action/Window.pm:137
 msgid "GoTo Syntax Check Window"
 msgstr "Aller à la fenêtre de vérification syntaxique"
 
 #: lib/Padre/Action/Window.pm:138
+msgid "Set the focus to be the syntax check window"
+msgstr "Mettre le focus sur le panel de vérification syntaxique"
+
+#: lib/Padre/Action/Window.pm:148
 msgid "GoTo Main Window"
 msgstr "Aller à la fenêtre principale"
+
+#: lib/Padre/Action/Window.pm:149
+msgid "Set the focus to be the main editor window"
+msgstr "Mettre le focus sur l'éditeur principal"
 
 #: lib/Padre/Document/Perl.pm:284
 #, perl-format
