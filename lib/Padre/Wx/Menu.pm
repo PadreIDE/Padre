@@ -20,7 +20,6 @@ use Class::XSAccessor getters => {
 };
 
 # Default implementation of refresh
-
 sub refresh {1}
 
 # Overrides and then calls XS wx Menu::Append.

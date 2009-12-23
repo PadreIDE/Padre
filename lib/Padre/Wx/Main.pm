@@ -643,7 +643,7 @@ sub _timer_post_init {
 
 =head2 C<lock>
 
-  my $lock = $main->lock('UPDATE', 'BUSY', 'refresh_menu');
+  my $lock = $main->lock('UPDATE', 'BUSY', 'refresh_toolbar');
 
 Create and return a guard object that holds resource locks of various types.
 
@@ -1139,6 +1139,20 @@ sub refresh_menubar {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->menu->refresh_top;
+}
+
+=pod
+
+=head3 C<refresh_recent>
+
+Specifically refresh the Recent Files entries in the File dialog
+
+=cut
+
+sub refresh_recent {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	$self->menu->file->update_recentfiles;
 }
 
 =pod
@@ -2846,9 +2860,12 @@ sub setup_editors {
 	my @files = @_;
 	TRACE("setup_editors @files") if DEBUG;
 	SCOPE: {
-
+		# Update the menus AFTER the initial GUI update,
+		# because it makes file loading LOOK faster.
+		# Do the menu/etc refresh in the time it takes the
+		# user to actually perceive the file has been opened.
 		# Lock both Perl and Wx-level updates
-		my $lock = $self->lock( 'UPDATE', 'REFRESH' );
+		my $lock = $self->lock( 'UPDATE', 'refresh' );
 
 		# If and only if there is only one current file,
 		# and it is unused, close it. This is a somewhat
@@ -2869,12 +2886,6 @@ sub setup_editors {
 			$self->setup_editor;
 		}
 	}
-
-	# Update the menus AFTER the initial GUI update,
-	# because it makes file loading LOOK faster.
-	# Do the menu/etc refresh in the time it takes the
-	# user to actually perceive the file has been opened.
-	$self->refresh;
 
 	my $manager = $self->{ide}->plugin_manager;
 	$manager->plugin_event('editor_changed');
@@ -3011,7 +3022,7 @@ sub setup_editor {
 		);
 
 		# Call the method immediately if not locked
-		$self->lock('refresh_menu');
+		$self->lock('refresh_recent');
 	}
 
 	my $id = $self->create_tab( $editor, $title );
@@ -3584,7 +3595,11 @@ sub on_save_as {
 			type => 'files',
 			name => $filename,
 		);
-		$self->menu->file->update_recentfiles;
+
+		# Immediately refresh the recent list, or save the request
+		# for refresh lock expiry. We probably should add a specific
+		# lock method for this non-guard-object case.
+		$self->lock('refresh_recent');
 	}
 
 	$self->refresh;
@@ -3682,7 +3697,10 @@ sub on_save_intuition {
 			type => 'files',
 			name => $filename,
 		);
-		$self->menu->file->update_recentfiles;
+		# Immediately refresh the recent list, or save the request
+		# for refresh lock expiry. We probably should add a specific
+		# lock method for this non-guard-object case.
+		$self->lock('refresh_recent');
 	}
 
 	$self->refresh;
