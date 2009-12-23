@@ -86,7 +86,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'window.right_click',
 		label       => Wx::gettext('Right Click'),
-		comment     => Wx::gettext('Imitate clickinig on the right button on the mouse'),
+		comment     => Wx::gettext('Imitate clicking on the right mouse button'),
 		shortcut    => 'Alt-/',
 		need_editor => 1,
 		menu_event  => sub {

@@ -422,7 +422,7 @@ sub new {
 		need_editor    => 1,
 		need_selection => 1,
 		label          => Wx::gettext('&Toggle Comment'),
-		comment     => Wx::gettext('Comment out or remove comment out of selected lines in the docuemnt'),
+		comment     => Wx::gettext('Comment out or remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-C',
 		menu_event     => sub {
 			Padre::Wx::Main::on_comment_block( $_[0], 'TOGGLE' );
@@ -653,7 +653,7 @@ sub new {
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
 		label       => Wx::gettext('Apply Diff to File'),
-		comment    => Wx::gettext('Apply a patch file to a the current document'),
+		comment    => Wx::gettext('Apply a patch file to the current document'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -663,7 +663,7 @@ sub new {
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
 		label       => Wx::gettext('Apply Diff to Project'),
-		comment    => Wx::gettext('Apply a patch file to a the current project'),
+		comment    => Wx::gettext('Apply a patch file to the current project'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},

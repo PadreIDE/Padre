@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-23 10:36+0200\n"
-"PO-Revision-Date: 2009-12-23 10:46+0200\n"
+"POT-Creation-Date: 2009-12-23 11:28+0200\n"
+"PO-Revision-Date: 2009-12-23 11:29+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -337,7 +337,7 @@ msgstr "خطأ البرنامج المساعد عند الحدث %s: %s"
 
 #: lib/Padre/PluginManager.pm:760
 msgid "(core)"
-msgstr ""
+msgstr "(core)"
 
 #: lib/Padre/PluginManager.pm:761
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
@@ -1052,8 +1052,8 @@ msgid "Right Click"
 msgstr "نقر الزر الأيمن"
 
 #: lib/Padre/Action/Window.pm:89
-msgid "Imitate clickinig on the right button on the mouse"
-msgstr ""
+msgid "Imitate clicking on the right mouse button"
+msgstr "تقليد النقر على زر الفأرة الأيمن"
 
 #: lib/Padre/Action/Window.pm:103
 msgid "GoTo Functions Window"
@@ -1098,7 +1098,7 @@ msgstr "تعيين التركيز لنافذة المحرر الرئيسية"
 #: lib/Padre/Document/Perl.pm:284
 #, perl-format
 msgid "%s seems to be no executable Perl interpreter, use the system default perl instead?"
-msgstr ""
+msgstr "لا يبدو أن  %s مترجم Perl قابل للتنفيذ ، هل استخدم Perl افتراضي النظام بدلا عنه?"
 
 #: lib/Padre/Document/Perl.pm:286
 #: lib/Padre/Wx/Dialog/FilterTool.pm:149
@@ -2959,7 +2959,7 @@ msgstr "ا&عاده التغييرات"
 
 #: lib/Padre/Wx/Menu/Edit.pm:68
 msgid "Redo last undo"
-msgstr ""
+msgstr "إعادة الغاء التغييرات الأخير"
 
 #: lib/Padre/Wx/Menu/Edit.pm:91
 msgid "Select all"
@@ -2999,20 +2999,19 @@ msgstr "قص&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:148
 msgid "Remove the current selection and put it in the clipboard"
-msgstr ""
+msgstr "إزالة الاختيار الحالي ووضعه في الحافظة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:162
 msgid "&Copy"
 msgstr "نسخ&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:163
-#, fuzzy
 msgid "Put the current selection in the clipboard"
-msgstr "القفز الى سطر التنفيذ الحالي"
+msgstr "وضع الاختيار الحالي في الحافظة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:175
 msgid "Copy specials"
-msgstr ""
+msgstr "نسخ الخواص"
 
 #: lib/Padre/Wx/Menu/Edit.pm:184
 msgid "Copy full filename"
@@ -3051,9 +3050,8 @@ msgid "&Paste"
 msgstr "لصق&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:245
-#, fuzzy
 msgid "Paste the clipboard to the current location"
-msgstr "اظهار مقالة المساعدة للسياق الحالي"
+msgstr "لصق الحافظة إلى الموقع الحالي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:259
 msgid "&Goto Line"
@@ -3117,11 +3115,11 @@ msgstr "اضافة قيمة خاصة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:383
 msgid "Select a Date, Filename or other value and insert at the current location"
-msgstr ""
+msgstr "اختيار تاريخ ،اسم الملف أو قيمة أخرى واضافتها في الموقع الحالي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:397
 msgid "Select and insert a snippet at the current location"
-msgstr ""
+msgstr "اختيار واضافة قصاصة في الموقع الحالي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:409
 msgid "Insert From File..."
@@ -3129,24 +3127,23 @@ msgstr "اضافه من ملف..."
 
 #: lib/Padre/Wx/Menu/Edit.pm:410
 msgid "Select a file and insert its content at the current location"
-msgstr ""
+msgstr "اختيار ملف واضافة محتواته في الموقع الحالي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:424
 msgid "&Toggle Comment"
 msgstr "تبديل التعليق&"
 
 #: lib/Padre/Wx/Menu/Edit.pm:425
-msgid "Comment out or remove comment out of selected lines in the docuemnt"
-msgstr ""
+msgid "Comment out or remove comment out of selected lines in the document"
+msgstr "اضافه أو ازالة تعليق للاسطر المختاره في الوثيقة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:437
 msgid "&Comment Selected Lines"
 msgstr "ا&ضافه تعليق للاسطر المختاره"
 
 #: lib/Padre/Wx/Menu/Edit.pm:438
-#, fuzzy
 msgid "Comment out selected lines in the document"
-msgstr "ا&ضافه تعليق للاسطر المختاره"
+msgstr "اضافه تعليق للاسطر المختاره في الوثيقة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:450
 msgid "&Uncomment Selected Lines"
@@ -3254,7 +3251,7 @@ msgstr "تكبير حاله كل الاحرف"
 
 #: lib/Padre/Wx/Menu/Edit.pm:611
 msgid "Change the current selection to upper case"
-msgstr ""
+msgstr "تغيير الاختيار الحالي لأحرف كبيرة الحالة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:622
 msgid "Lower All"
@@ -3262,7 +3259,7 @@ msgstr "تصغير حاله كل الاحرف"
 
 #: lib/Padre/Wx/Menu/Edit.pm:623
 msgid "Change the current selection to lower case"
-msgstr ""
+msgstr "تغيير الاختيار الحالي لأحرف صغيرة الحالة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:636
 msgid "Diff Tools"
@@ -3274,23 +3271,23 @@ msgstr "المقارنة مع النسخة المحفوظة"
 
 #: lib/Padre/Wx/Menu/Edit.pm:645
 msgid "Compare the file in the editor to that on the disk and show the diff in the output window"
-msgstr ""
+msgstr "مقارنة الملف في المحرر مع الموجود في القرص وإظهار الفرق في نافذة النتائج"
 
 #: lib/Padre/Wx/Menu/Edit.pm:655
 msgid "Apply Diff to File"
 msgstr "تطبيق ملف المقارنة للملف"
 
 #: lib/Padre/Wx/Menu/Edit.pm:656
-msgid "Apply a patch file to a the current document"
-msgstr ""
+msgid "Apply a patch file to the current document"
+msgstr "تطبيق ملف patch إلى الوثيقة الحالية"
 
 #: lib/Padre/Wx/Menu/Edit.pm:665
 msgid "Apply Diff to Project"
 msgstr "تطبيق ملف المقارنة للمشروع"
 
 #: lib/Padre/Wx/Menu/Edit.pm:666
-msgid "Apply a patch file to a the current project"
-msgstr ""
+msgid "Apply a patch file to the current project"
+msgstr "تطبيق ملف patch إلى المشروع الحالي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:679
 msgid "Filter through external tool"
@@ -3298,7 +3295,7 @@ msgstr "الفلترة عن طريق أداة خارجية"
 
 #: lib/Padre/Wx/Menu/Edit.pm:680
 msgid "Filters the selection (or the whole document) through any external command."
-msgstr ""
+msgstr "يفلتر الاختيار (أو كل الوثيقة) عن طريق أي أمر خارجي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:691
 msgid "Regex editor"
@@ -3306,7 +3303,7 @@ msgstr "محرر التعبير العادي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:692
 msgid "Open the regular expression editing window"
-msgstr ""
+msgstr "فتح نافذة تحرير التعبير العادي"
 
 #: lib/Padre/Wx/Menu/Edit.pm:704
 msgid "Show as ..."
@@ -3391,7 +3388,7 @@ msgstr "&فتح..."
 
 #: lib/Padre/Wx/Menu/File.pm:117
 msgid "Browse directory of the current document to open a file"
-msgstr ""
+msgstr "تصفح دليل الوثيقة الحالية لفتح ملف"
 
 #: lib/Padre/Wx/Menu/File.pm:127
 msgid "Open &URL..."
@@ -3407,7 +3404,7 @@ msgstr "فتح المثال"
 
 #: lib/Padre/Wx/Menu/File.pm:141
 msgid "Browse the directory of the installed examples to open one file"
-msgstr ""
+msgstr "تصفح دليل الأمثلة المثبتة لفتح ملف واحد"
 
 #: lib/Padre/Wx/Menu/File.pm:153
 msgid "Close current document"
@@ -3436,7 +3433,7 @@ msgstr "اغلاق المشاريع الأخرى"
 
 #: lib/Padre/Wx/Menu/File.pm:196
 msgid "Close all the files that do not belong to the current project"
-msgstr ""
+msgstr "اغلاق جميع الملفات التي لا تنتمي إلى المشروع الحالي"
 
 #: lib/Padre/Wx/Menu/File.pm:219
 msgid "Close All Files"
@@ -3444,7 +3441,7 @@ msgstr "اغلاق كل الملفات"
 
 #: lib/Padre/Wx/Menu/File.pm:220
 msgid "Close all the files open in the editor"
-msgstr ""
+msgstr "إغلاق كافة الملفات المفتوحة في المحرر"
 
 #: lib/Padre/Wx/Menu/File.pm:230
 msgid "Close All Other Files"
@@ -3476,7 +3473,7 @@ msgstr "حفظ &ك"
 
 #: lib/Padre/Wx/Menu/File.pm:282
 msgid "Allow the selection of another name to save the current document"
-msgstr ""
+msgstr "السماح لاختيار اسم آخر لحفظ المستند الحالي"
 
 #: lib/Padre/Wx/Menu/File.pm:294
 msgid "Save Intuition"
@@ -3629,7 +3626,7 @@ msgstr "اظهار الوظائف"
 
 #: lib/Padre/Wx/Menu/View.pm:60
 msgid "Show a window listing all the functions in the current document"
-msgstr ""
+msgstr "اظهار نافذة تدرج كل الوظائف في الوثيقة الحالية"
 
 #: lib/Padre/Wx/Menu/View.pm:75
 msgid "Show Outline"
@@ -3645,7 +3642,7 @@ msgstr "اظهار شجرة الدليل"
 
 #: lib/Padre/Wx/Menu/View.pm:86
 msgid "Show a window with a directory browser of the current project"
-msgstr ""
+msgstr "اظهار نافذة مع متصفح دليل المشروع الحالي"
 
 #: lib/Padre/Wx/Menu/View.pm:95
 msgid "Show Syntax Check"
@@ -3653,7 +3650,7 @@ msgstr "اظهار فحص بناء الجمل"
 
 #: lib/Padre/Wx/Menu/View.pm:96
 msgid "Turn on syntax checking of the current document and show output in a window"
-msgstr ""
+msgstr "تشغيل التحقق من بناء الجمل في الوثيقة الحالية واظهار النتائج في نافذة"
 
 #: lib/Padre/Wx/Menu/View.pm:105
 msgid "Show Error List"
@@ -3661,7 +3658,7 @@ msgstr "اظهار قائمه الخطأ"
 
 #: lib/Padre/Wx/Menu/View.pm:106
 msgid "Show the list of errors received during execution of a script"
-msgstr ""
+msgstr "اظهار قائمة الأخطاء التي وردت خلال تنفيذ برنامج نصي"
 
 #: lib/Padre/Wx/Menu/View.pm:115
 msgid "Show Status Bar"

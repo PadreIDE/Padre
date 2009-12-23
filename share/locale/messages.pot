@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-23 10:36+0200\n"
+"POT-Creation-Date: 2009-12-23 11:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1048,7 +1048,7 @@ msgid "Right Click"
 msgstr ""
 
 #: lib/Padre/Action/Window.pm:89
-msgid "Imitate clickinig on the right button on the mouse"
+msgid "Imitate clicking on the right mouse button"
 msgstr ""
 
 #: lib/Padre/Action/Window.pm:103
@@ -3063,7 +3063,7 @@ msgid "&Toggle Comment"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:425
-msgid "Comment out or remove comment out of selected lines in the docuemnt"
+msgid "Comment out or remove comment out of selected lines in the document"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:437
@@ -3217,7 +3217,7 @@ msgid "Apply Diff to File"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:656
-msgid "Apply a patch file to a the current document"
+msgid "Apply a patch file to the current document"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:665
@@ -3225,7 +3225,7 @@ msgid "Apply Diff to Project"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:666
-msgid "Apply a patch file to a the current project"
+msgid "Apply a patch file to the current project"
 msgstr ""
 
 #: lib/Padre/Wx/Menu/Edit.pm:679
