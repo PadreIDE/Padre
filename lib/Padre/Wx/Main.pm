@@ -1042,7 +1042,7 @@ sub refresh_title {
 		and
 		defined $current->document->file
 	) {
-		my $document = $self->document;
+		my $document = $current->document;
 		my $file     = $document->file;
 		$variable_data{'f'} = $file->{filename};
 		$variable_data{'b'} = $file->basename;
