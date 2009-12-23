@@ -36,6 +36,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Reuse the comment field of the menu actions and show them in the toolbar (SZABGAB)
     - Integrated Padre::DB into the Padre::Locker API, so that we can do
       (very basic) nested transactions (ADAMK)
+    - Audited the startup process for database operations that either weren't
+      being done in a transaction, or were doing crazy bizarre things. Startup
+      is now noticably faster (ADAMK)
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
