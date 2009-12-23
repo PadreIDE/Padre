@@ -65,7 +65,7 @@ sub write {
 		local $@;
 		Padre::Current->main;
 	};
-	my $lock = $main->lock('DB') if $main;
+	my $lock = $main ? $main->lock('DB') : undef;
 	Padre::DB->begin unless $lock;
 	Padre::DB::HostConfig->truncate;
 	foreach my $name ( sort keys %$self ) {
