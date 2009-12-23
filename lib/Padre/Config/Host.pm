@@ -7,6 +7,7 @@ package Padre::Config::Host;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Current ();
 
 our $VERSION = '0.52';
 
@@ -57,7 +58,15 @@ sub write {
 	my $self = shift;
 	require Padre::DB;
 
-	Padre::DB->begin;
+	# This code can run before we have a ::Main object.
+	# As a result, it uses slightly bizarre locking code to make sure it runs
+	# inside a transaction correctly in both cases (has a ::Main, or not)
+	my $main = eval {
+		local $@;
+		Padre::Current->main;
+	};
+	my $lock = $main->lock('DB') if $main;
+	Padre::DB->begin unless $lock;
 	Padre::DB::HostConfig->truncate;
 	foreach my $name ( sort keys %$self ) {
 		Padre::DB::HostConfig->create(
@@ -65,7 +74,7 @@ sub write {
 			value => $self->{$name},
 		);
 	}
-	Padre::DB->commit;
+	Padre::DB->commit unless $lock;
 
 	return 1;
 }

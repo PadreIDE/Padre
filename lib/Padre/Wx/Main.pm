@@ -2248,12 +2248,12 @@ associated to C<$session>. Note that C<$session> should already exist.
 sub save_session {
 	my ( $self, $session, @session ) = @_;
 
-	Padre::DB->begin;
+	my $transaction = $self->lock('DB');
 	foreach my $file (@session) {
 		$file->{session} = $session->id;
 		$file->insert;
 	}
-	Padre::DB->commit;
+
 }
 
 sub save_current_session {
@@ -2836,12 +2836,10 @@ sub update_last_session {
 	my $self = shift;
 
 	# Write the current session to the database
-	Padre::DB->begin;
-	my $session = Padre::DB::Session->last_padre_session;
+	my $transaction = $self->lock('DB');
+	my $session     = Padre::DB::Session->last_padre_session;
 	Padre::DB::SessionFile->delete( 'where session = ?', $session->id );
-	Padre::DB->commit;
 	$self->save_session( $session, $self->capture_session );
-
 }
 
 =pod

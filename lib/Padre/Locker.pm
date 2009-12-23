@@ -12,6 +12,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Lock ();
+use Padre::DB   ();
 
 our $VERSION = '0.52';
 
@@ -22,6 +23,9 @@ sub new {
 	# Create the object
 	my $self = bless {
 		owner => $owner,
+		
+		# Padre::DB Transaction lock
+		db_depth => 0,
 
 		# Wx ->Update lock
 		update_depth  => 0,
@@ -76,6 +80,25 @@ sub shutdown {
 
 ######################################################################
 # Locking Mechanism
+
+# Database locking like this is only possible because Padre NEVER makes
+# use of rollback. All bad database requests are considered fatal.
+
+sub db_increment {
+	my $self = shift;
+	unless ( $self->{db_depth}++ ) {
+		Padre::DB->begin;
+	}
+	return;
+}
+
+sub db_decrement {
+	my $self = shift;
+	unless ( --$self->{db_depth} ) {
+		Padre::DB->commit;
+	}
+	return;
+}
 
 sub update_increment {
 	my $self = shift;

@@ -136,9 +136,9 @@ sub set_bookmark {
 	$dialog->show_modal or return;
 
 	# Create (or replace an existing) bookmark
-	my $data = _get_data($dialog);
-	my $name = delete $data->{shortcut} or return;
-	Padre::DB->begin;
+	my $data        = _get_data($dialog);
+	my $name        = delete $data->{shortcut} or return;
+	my $transaction = $main->lock('DB');
 	Padre::DB::Bookmark->delete(
 		'where name = ?', $name,
 	);
@@ -147,7 +147,6 @@ sub set_bookmark {
 		file => $path,
 		line => $line,
 	);
-	Padre::DB->commit;
 
 	return;
 }

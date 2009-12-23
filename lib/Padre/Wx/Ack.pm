@@ -16,10 +16,11 @@ files. It is using C<Ack> underneath, for lots of nifty features.
 use 5.008;
 use strict;
 use warnings;
+use File::Basename    ();
+use Padre::Current    ();
 use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
-use File::Basename    ();
 
 our $VERSION = '0.52';
 
@@ -275,20 +276,22 @@ sub _get_data_from {
 
 	# Save our preferences
 	my $config = Padre->ide->config;
-	Padre::DB->begin;
-	Padre::DB::History->create(
-		type => 'search',
-		name => $term,
-	) if $term;
-	Padre::DB::History->create(
-		type => 'find in',
-		name => $dir,
-	) if $dir;
-	Padre::DB::History->create(
-		type => 'find type',
-		name => $file_types,
-	) if $file_types;
-	Padre::DB->commit;
+
+	TRANSACTION: {
+		my $lock = Padre::Current->main->lock('DB');
+		Padre::DB::History->create(
+			type => 'search',
+			name => $term,
+		) if $term;
+		Padre::DB::History->create(
+			type => 'find in',
+			name => $dir,
+		) if $dir;
+		Padre::DB::History->create(
+			type => 'find type',
+			name => $file_types,
+		) if $file_types;
+	}
 
 	$config->set( find_case => $case_insensitive ? 0 : 1 );
 	$config->set( find_nohidden => $ignore_hidden_subdirs );

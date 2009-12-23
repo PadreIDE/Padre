@@ -9,7 +9,7 @@ our $VERSION = '0.52';
 sub new {
 	my $class  = shift;
 	my $locker = shift;
-	my $self   = bless [$locker], $class;
+	my $self   = bless [ ], $class;
 
 	# Enable the locks
 	my $busy   = 0;
@@ -18,6 +18,12 @@ sub new {
 		if ( $_ eq 'BUSY' ) {
 			$locker->busy_increment;
 			$busy = 1;
+
+		} elsif ( $_ eq 'DB' ) {
+			$locker->db_increment;
+			
+			# We always want to do DB commits first
+			unshift @$self, 'DB';
 
 		} elsif ( $_ eq 'UPDATE' ) {
 			$locker->update_increment;
@@ -33,6 +39,9 @@ sub new {
 	push @$self, 'BUSY'   if $busy;
 	push @$self, 'UPDATE' if $update;
 
+	# Now prepend the locker itself
+	unshift @$self, $locker;
+
 	return $self;
 }
 
@@ -42,6 +51,8 @@ sub DESTROY {
 	foreach ( @{ $_[0] } ) {
 		if ( $_ eq 'UPDATE' ) {
 			$locker->update_decrement;
+		} elsif ( $_ eq 'DB' ) {
+			$locker->db_decrement;
 		} elsif ( $_ eq 'BUSY' ) {
 			$locker->busy_decrement;
 		} else {
