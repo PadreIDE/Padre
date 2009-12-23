@@ -133,7 +133,7 @@ sub new {
 	$self->{locker} = Padre::Locker->new($self);
 
 	# Determine the window title (needs ide & config)
-	$self->set_title;
+	$self->refresh_title;
 
 	# Remember where the editor started from,
 	# this could be handy later.
@@ -990,7 +990,7 @@ sub refresh {
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 	$self->refresh_functions($current);
-	$self->set_title;
+	$self->refresh_title;
 
 	my $notebook = $self->notebook;
 	if ( $notebook->GetPageCount ) {
@@ -1006,6 +1006,85 @@ sub refresh {
 
 	# Update the GUI
 	$self->aui->Update;
+
+	return;
+}
+
+=pod
+
+=head3 C<refresh_title>
+
+Sets or updates the Window title.
+
+=cut
+
+sub refresh_title {
+	my $self    = shift;
+	my $config  = $self->{config};
+	my $current = $self->current;
+
+	my %variable_data = (
+		'%' => '%',
+		'v' => $Padre::VERSION,
+		'f' => '',             # Initlize space for filename
+		'b' => '',             # Initlize space for filename - basename
+		'd' => '',             # Initlize space for filename - dirname
+		'F' => '',             # Initlize space for filename relative to project dir
+		'p' => '',             # Initlize space for project name
+	);
+
+	# We may run within window start-up, there may be no "current" or
+	# "document" or "document->file":
+	if (
+		defined $current
+		and
+		defined $current->document
+		and
+		defined $current->document->file
+	) {
+		my $document = $self->document;
+		my $file     = $document->file;
+		$variable_data{'f'} = $file->{filename};
+		$variable_data{'b'} = $file->basename;
+		$variable_data{'d'} = $file->dirname;
+
+		$variable_data{'F'} = $file->{filename};
+		my $project_dir = $document->project_dir;
+		if ( defined $project_dir ) {
+			$project_dir = quotemeta $project_dir;
+			$variable_data{'F'} =~ s/^$project_dir//;
+		}
+	}
+
+	# Fill in the session, if any
+	if ( defined $self->ide->{session} ) {
+		my ($session) = Padre::DB::Session->select(
+			'where id = ?', $self->ide->{session},
+		);
+		$variable_data{'p'} = $session->{name};
+	}
+
+	# Keep it for later usage
+	$self->{title} = $config->window_title;
+
+	my $Vars = join( '', keys(%variable_data) );
+
+	$self->{title} =~ s/\%([$Vars])/$variable_data{$1}/g;
+
+	$self->{title} = 'Padre ' . $Padre::VERSION
+		if !defined( $self->{title} );
+
+	my $revision = Padre::Constant::PADRE_REVISION;
+	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
+		if defined($revision);
+
+	if ( $self->GetTitle ne $self->{title} ) {
+		# Push the title to the window
+		$self->SetTitle( $self->{title} );
+
+		# Push the title to the process list for better identification
+		$0 = $self->{title}; ## no critic (RequireLocalizedPunctuationVars)
+	}
 
 	return;
 }
@@ -2137,7 +2216,7 @@ sub open_session {
 	# This could run in non-blocking space:
 	my $editor = $self->current->editor;
 	$self->update_directory;
-	$self->set_title;
+	$self->refresh_title;
 }
 
 =pod
@@ -2919,18 +2998,20 @@ sub setup_editor {
 		}
 	}
 
-	if ( !$doc->is_new ) {
+	if ( $doc->is_new ) {
+		$doc->{project_dir} =
+			  $self->current->document
+			? $self->current->document->project_dir
+			: $self->ide->config->default_projects_directory;
+	} else {
 		TRACE( "Adding new file to history: " . $doc->filename ) if DEBUG;
 		Padre::DB::History->create(
 			type => 'files',
 			name => $doc->filename,
 		);
-		$self->menu->file->update_recentfiles;
-	} else {
-		$doc->{project_dir} =
-			  $self->current->document
-			? $self->current->document->project_dir
-			: $self->ide->config->default_projects_directory;
+
+		# Call the method immediately if not locked
+		$self->lock('refresh_menu');
 	}
 
 	my $id = $self->create_tab( $editor, $title );
@@ -3250,7 +3331,11 @@ sub open_file_dialog {
 
 		push @files, $FN;
 	}
-	$self->setup_editors(@files) if $#files > -1;
+
+	if ( $#files > -1 ) {
+		my $lock = $self->lock('REFRESH');
+		$self->setup_editors(@files);
+	}
 
 	$self->ide->{session_autosave} and $self->save_current_session;
 
@@ -3804,7 +3889,7 @@ sub close_all {
 	}
 
 	# Recalculate window title
-	$self->set_title;
+	$self->refresh_title;
 
 	$manager->plugin_event('editor_changed');
 
@@ -5379,72 +5464,6 @@ sub set_mimetype {
 		$doc->colourize;
 	}
 	$self->refresh;
-}
-
-sub set_title {
-
-	# Determine the window title
-
-	# The syntax string could be set in the preferences dialog.
-
-	my $self   = shift;
-	my $config = $self->{config};
-
-	my %variable_data = (
-		'%' => '%',
-		'v' => $Padre::VERSION,
-		'f' => '',             # Initlize space for filename
-		'b' => '',             # Initlize space for filename - basename
-		'd' => '',             # Initlize space for filename - dirname
-		'F' => '',             # Initlize space for filename relative to project dir
-		'p' => '',             # Initlize space for project name
-	);
-
-	# We may run within window start-up, there may be no "current" or
-	# "document" or "document->file":
-	if (    defined( $self->current )
-		and defined( $self->current->document )
-		and defined( $self->current->document->file ) )
-	{
-		my $document = $self->current->document;
-		$variable_data{'f'} = $document->file->{filename};
-		$variable_data{'b'} = $document->file->basename;
-		$variable_data{'d'} = $document->file->dirname;
-
-		$variable_data{'F'} = $document->file->{filename};
-		if ( defined( $document->project_dir ) ) {
-			my $project_dir = quotemeta $document->project_dir;
-			$variable_data{'F'} =~ s/^$project_dir//;
-		}
-	}
-
-	# Fill in the session, if any
-	if ( defined( $self->ide->{session} ) ) {
-		my ($session) = Padre::DB::Session->select(
-			'where id = ?', $self->ide->{session},
-		);
-		$variable_data{'p'} = $session->{name};
-	}
-
-	# Keep it for later usage
-	$self->{title} = $config->window_title;
-
-	my $Vars = join( '', keys(%variable_data) );
-
-	$self->{title} =~ s/\%([$Vars])/$variable_data{$1}/g;
-
-	$self->{title} = 'Padre ' . $Padre::VERSION
-		if !defined( $self->{title} );
-
-	my $revision = Padre::Constant::PADRE_REVISION;
-	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
-		if defined($revision);
-
-	# Push the title to the window
-	$self->SetTitle( $self->{title} );
-
-	# Push the title to the process list for better identification
-	$0 = $self->{title}; ## no critic (RequireLocalizedPunctuationVars)
 }
 
 =pod
