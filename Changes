@@ -34,6 +34,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Ctrl-Tab behaviour is now configurable (SEWI)
     - Rename Padre::Debug to Padre::Logger (SZABGAB)
     - Reuse the comment field of the menu actions and show them in the toolbar (SZABGAB)
+    - Add comment field to all the menu items that did not have yet (SZABGAB)
     - Integrated Padre::DB into the Padre::Locker API, so that we can do
       (very basic) nested transactions (ADAMK)
     - Audited the startup process for database operations that either weren't
