@@ -304,7 +304,7 @@ sub new {
 		name        => 'file.save_all',
 		need_editor => 1,
 		label       => Wx::gettext('Save All'),
-		comment     => Wx::gettext('Save all the file'),
+		comment     => Wx::gettext('Save all the files'),
 		menu_event  => sub {
 			$_[0]->on_save_all;
 		},
