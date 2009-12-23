@@ -1,5 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
+0.54 To Be Released
+
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)
     - Fix crashes when running refactor actions when there
