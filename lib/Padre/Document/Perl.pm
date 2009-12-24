@@ -432,7 +432,7 @@ sub beginner_check {
 	my $error = $Beginner->error;
 
 	if ($error) {
-		Padre->ide->wx->main->error( Wx::gettext("Error:\n") . $error );
+		Padre->ide->wx->main->error( Wx::gettext("Error: ") . $error );
 	} else {
 		Padre->ide->wx->main->message( Wx::gettext('No errors found.') );
 	}
