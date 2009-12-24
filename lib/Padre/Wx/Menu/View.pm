@@ -281,10 +281,6 @@ sub new {
 			$_[0]->change_locale;
 		},
 	);
-	$self->{language_default} = $self->add_menu_action(
-		$self->{language},
-		'view.language_default',
-	);
 	if ( defined $config->locale and $config->locale eq $default ) {
 		$self->{language_default}->Check(1);
 	}
