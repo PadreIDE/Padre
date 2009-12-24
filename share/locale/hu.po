@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.17\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-24 07:25+0200\n"
-"PO-Revision-Date: 2009-12-24 22:57+0200\n"
+"PO-Revision-Date: 2009-12-24 23:08+0200\n"
 "Last-Translator: Gabor Szabo <szabgab@gmail.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -121,7 +121,7 @@ msgstr "Arab"
 
 #: lib/Padre/Locale.pm:155
 msgid "Czech"
-msgstr ""
+msgstr "Cseh"
 
 #: lib/Padre/Locale.pm:165
 msgid "German"
@@ -153,7 +153,7 @@ msgstr "Spanyol"
 
 #: lib/Padre/Locale.pm:237
 msgid "Persian (Iran)"
-msgstr ""
+msgstr "Perzsa"
 
 #: lib/Padre/Locale.pm:247
 msgid "French (France)"
@@ -193,7 +193,7 @@ msgstr "Holland (Belgium)"
 
 #: lib/Padre/Locale.pm:349
 msgid "Norwegian (Norway)"
-msgstr ""
+msgstr "Norvég"
 
 #: lib/Padre/Locale.pm:359
 msgid "Polish"
@@ -213,7 +213,7 @@ msgstr "Orosz"
 
 #: lib/Padre/Locale.pm:399
 msgid "Turkish"
-msgstr ""
+msgstr "Török"
 
 #: lib/Padre/Locale.pm:409
 msgid "Chinese"
@@ -233,7 +233,7 @@ msgstr "Klingon"
 
 #: lib/Padre/MimeTypes.pm:302
 msgid "Fast but might be out of date"
-msgstr ""
+msgstr "Gyors de lehet hogy kissé elavult"
 
 #: lib/Padre/MimeTypes.pm:311
 msgid "PPI Experimental"
@@ -262,7 +262,7 @@ msgstr ""
 
 #: lib/Padre/PluginHandle.pm:89
 msgid "loaded"
-msgstr ""
+msgstr "töltve"
 
 #: lib/Padre/PluginHandle.pm:90
 #: lib/Padre/Wx/Dialog/PluginManager.pm:490
@@ -423,7 +423,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:40
 msgid "Step In"
-msgstr ""
+msgstr "Belépés"
 
 #: lib/Padre/Action/Debugger.pm:42
 msgid "Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)"
@@ -431,7 +431,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:55
 msgid "Step Over"
-msgstr ""
+msgstr "Átlépés"
 
 #: lib/Padre/Action/Debugger.pm:57
 msgid "Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)"
@@ -439,7 +439,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:72
 msgid "Step Out"
-msgstr ""
+msgstr "Kilépés"
 
 #: lib/Padre/Action/Debugger.pm:73
 msgid "If withing a subroutine, run till return is called and then stop."
@@ -530,7 +530,7 @@ msgstr ""
 
 #: lib/Padre/Action/Debugger.pm:227
 msgid "Quit Debugger"
-msgstr ""
+msgstr "Kilépés a debuggerből"
 
 #: lib/Padre/Action/Debugger.pm:228
 msgid "Quit the process being debugged"
@@ -849,9 +849,8 @@ msgid "Change the current selection to upper case"
 msgstr ""
 
 #: lib/Padre/Action/Edit.pm:520
-#, fuzzy
 msgid "Lower All"
-msgstr "Kisbetű Mind\tCtrl-U"
+msgstr "Kisbetű Mind"
 
 #: lib/Padre/Action/Edit.pm:521
 msgid "Change the current selection to lower case"
@@ -898,9 +897,8 @@ msgid "Open the regular expression editing window"
 msgstr ""
 
 #: lib/Padre/Action/Edit.pm:581
-#, fuzzy
 msgid "Show as hexa"
-msgstr "Szintaxisellenőrző megjelenítése"
+msgstr "Megjelenítése hexa alakban"
 
 #: lib/Padre/Action/Edit.pm:582
 msgid "Show the ASCII values of the selected text in hexa in the output window"
@@ -1057,9 +1055,8 @@ msgstr "Aktuális Plugin (újra)töltése"
 
 #: lib/Padre/Action/File.pm:214
 #: lib/Padre/Wx/Main.pm:3422
-#, fuzzy
 msgid "Reload all files"
-msgstr "Fájl újratöltése"
+msgstr "Minden fájl újratöltése"
 
 #: lib/Padre/Action/File.pm:215
 msgid "Reload all files currently open"
@@ -1077,9 +1074,8 @@ msgid "Save current document"
 msgstr "Aktuális dokumentum"
 
 #: lib/Padre/Action/File.pm:239
-#, fuzzy
 msgid "Save &As"
-msgstr "Minden mentése"
+msgstr "Mentés mint..."
 
 #: lib/Padre/Action/File.pm:240
 msgid "Allow the selection of another name to save the current document"
@@ -1098,9 +1094,8 @@ msgid "Save All"
 msgstr "Minden mentése"
 
 #: lib/Padre/Action/File.pm:263
-#, fuzzy
 msgid "Save all the files"
-msgstr "Fájl mentése mint..."
+msgstr "Minden fájl mentése"
 
 #: lib/Padre/Action/File.pm:272
 #: lib/Padre/Wx/Main.pm:3179
@@ -1129,7 +1124,6 @@ msgid "Ask for a session name and save the list of files currently opened"
 msgstr ""
 
 #: lib/Padre/Action/File.pm:308
-#, fuzzy
 msgid "&Print"
 msgstr "Ny&omtatás"
 
@@ -1155,7 +1149,6 @@ msgid "Remove the entries from the recent files list"
 msgstr ""
 
 #: lib/Padre/Action/File.pm:347
-#, fuzzy
 msgid "Document Statistics"
 msgstr "Dokumentum statisztikák"
 
@@ -1912,9 +1905,8 @@ msgstr ""
 #: lib/Padre/Task/SyntaxChecker.pm:146
 #: lib/Padre/Wx/About.pm:74
 #: lib/Padre/Wx/About.pm:276
-#, fuzzy
 msgid "Info"
-msgstr "nem"
+msgstr "Információ"
 
 #: lib/Padre/Task/SyntaxChecker.pm:156
 #, perl-format
@@ -1966,9 +1958,8 @@ msgid "No declaration could be found for the specified (lexical?) variable"
 msgstr "Nem található deklaráció a megadott (lexikális?) változóhoz"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:96
-#, fuzzy
 msgid "Search Canceled"
-msgstr "Ellenőrzés megszakítva"
+msgstr "Keresés megszakítva"
 
 #: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:103
 #, fuzzy
@@ -2124,9 +2115,8 @@ msgid "Expr"
 msgstr ""
 
 #: lib/Padre/Wx/Directory.pm:75
-#, fuzzy
 msgid "Project"
-msgstr "&Projekt"
+msgstr "Projekt"
 
 #: lib/Padre/Wx/Directory.pm:77
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:101
@@ -2228,12 +2218,10 @@ msgstr "A kijelölt másolása"
 
 #: lib/Padre/Wx/FindResult.pm:250
 #: lib/Padre/Wx/Syntax.pm:362
-#, fuzzy
 msgid "Copy &All"
-msgstr "Mind bezárása"
+msgstr "Minden másolása"
 
 #: lib/Padre/Wx/FunctionList.pm:140
-#, fuzzy
 msgid "Functions"
 msgstr "Függvények megjelenítése"
 
@@ -2397,9 +2385,8 @@ msgstr "Fájlok"
 
 #: lib/Padre/Wx/Main.pm:3315
 #: lib/Padre/Wx/Main.pm:3316
-#, fuzzy
 msgid "All Files"
-msgstr "Fájlok"
+msgstr "Minden fájl"
 
 #: lib/Padre/Wx/Main.pm:3318
 msgid "Open File"
@@ -2412,9 +2399,8 @@ msgstr ""
 
 #: lib/Padre/Wx/Main.pm:3358
 #: lib/Padre/Wx/Main.pm:3378
-#, fuzzy
 msgid "Open Warning"
-msgstr "Figyelmeztetés"
+msgstr "Nyitás figyelmeztetés"
 
 #: lib/Padre/Wx/Main.pm:3375
 #, perl-format
@@ -2441,7 +2427,6 @@ msgstr "Létezik"
 
 #: lib/Padre/Wx/Main.pm:3703
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:538
-#, fuzzy
 msgid "File already exists"
 msgstr "A fájl már létezik. Felülírjam?"
 
@@ -2472,7 +2457,6 @@ msgid "Unsaved File"
 msgstr "Nem mentett Fájl"
 
 #: lib/Padre/Wx/Main.pm:3940
-#, fuzzy
 msgid "Close all"
 msgstr "Mind bezárása"
 
@@ -2494,9 +2478,9 @@ msgid "(Document not on disk)"
 msgstr "Dokumentum típus: %s"
 
 #: lib/Padre/Wx/Main.pm:4962
-#, fuzzy, perl-format
+#, perl-format
 msgid "Words: %s"
-msgstr "Szavak: %d"
+msgstr "Szavak: %s"
 
 #: lib/Padre/Wx/Main.pm:4963
 #, perl-format
@@ -2504,9 +2488,9 @@ msgid "Lines: %d"
 msgstr "Sorok: %d"
 
 #: lib/Padre/Wx/Main.pm:4964
-#, fuzzy, perl-format
+#, perl-format
 msgid "Chars without spaces: %s"
-msgstr "Karakterek szóközök nélkül: %d"
+msgstr "Karakterek szóközök nélkül: %s"
 
 #: lib/Padre/Wx/Main.pm:4965
 #, perl-format
@@ -2593,9 +2577,8 @@ msgid "Please wait..."
 msgstr ""
 
 #: lib/Padre/Wx/Right.pm:49
-#, fuzzy
 msgid "Document Tools"
-msgstr "Dokumentum típus: %s"
+msgstr "Dokumentum eszközök"
 
 #: lib/Padre/Wx/StatusBar.pm:271
 msgid "Background Tasks are running"
@@ -2606,9 +2589,8 @@ msgid "Background Tasks are running with high load"
 msgstr "A háttér feladatok nagy terheltséggel futnak"
 
 #: lib/Padre/Wx/StatusBar.pm:396
-#, fuzzy
 msgid "Read Only"
-msgstr "Fájl újratöltése"
+msgstr "Csak olvasható"
 
 #: lib/Padre/Wx/Syntax.pm:59
 msgid "Syntax Check"
@@ -2626,18 +2608,16 @@ msgstr "Leírás"
 #: lib/Padre/Wx/CPAN/Listview.pm:32
 #: lib/Padre/Wx/CPAN/Listview.pm:64
 #: lib/Padre/Wx/Dialog/PluginManager.pm:64
-#, fuzzy
 msgid "Status"
-msgstr "Dokumentum statisztikák"
+msgstr "Státusz"
 
 #: lib/Padre/Wx/Debugger/View.pm:59
 msgid "Debugger"
 msgstr ""
 
 #: lib/Padre/Wx/Debugger/View.pm:102
-#, fuzzy
 msgid "Variable"
-msgstr "Letiltás"
+msgstr "Változó"
 
 #: lib/Padre/Wx/Debugger/View.pm:103
 msgid "Value"
@@ -2695,9 +2675,8 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/PluginManager.pm:141
 #: lib/Padre/Wx/Dialog/SessionManager.pm:289
 #: lib/Padre/Wx/Dialog/SessionSave.pm:225
-#, fuzzy
 msgid "Close"
-msgstr "Mind bezárása"
+msgstr "Bezárás"
 
 #: lib/Padre/Wx/Dialog/Find.pm:53
 #: lib/Padre/Wx/Dialog/Find.pm:177
