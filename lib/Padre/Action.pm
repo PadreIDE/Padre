@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::Constant         ();
+use Padre::Action::View     ();
 use Padre::Action::File     ();
 use Padre::Action::Help     ();
 use Padre::Action::Edit     ();
@@ -41,6 +42,7 @@ use Class::XSAccessor getters => {
 sub create {
 	my $main = shift;
 
+	Padre::Action::View->new($main);
 	Padre::Action::File->new($main);
 	Padre::Action::Help->new($main);
 	Padre::Action::Edit->new($main);
@@ -75,6 +77,7 @@ sub create {
 
 sub new {
 	my $class = shift;
+	Carp::confess(Data::Dumper::Dumper \@_) if @_ % 2;
 	my $self = bless {@_}, $class;
 	$self->{id} ||= -1;
 
