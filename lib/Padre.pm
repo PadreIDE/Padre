@@ -1157,7 +1157,7 @@ Kenichi Ishigaki - 石垣憲一 (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
 
 Max Maischein (CORION)
 
-Patrick Donelan (PATSPAM)
+Patrick Donelan (PDONELAN) E<lt>pat@patspam.comE<gt>
 
 Paweł Murias (PMURIAS)
 
