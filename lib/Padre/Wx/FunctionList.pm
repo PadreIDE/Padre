@@ -195,7 +195,12 @@ sub refresh {
 	return unless $current;
 	my $document  = $current->document;
 	my $functions = $self->{functions};
-	unless ($document) {
+
+	# Hide the widgets when no files are open
+	if ( $document ) {
+		$self->{search}->Show(1);
+		$self->{functions}->Show(1);
+	} else {
 		$functions->Clear;
 		$self->{search}->Hide;
 		$self->{functions}->Hide;
