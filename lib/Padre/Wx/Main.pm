@@ -3876,7 +3876,7 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock = $self->lock( 'REFRESH', 'refresh_directory' );
+	my $lock   = $self->lock('REFRESH', 'refresh_directory', 'refresh_menu');
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(
@@ -3906,9 +3906,6 @@ sub close {
 	if ( $self->has_outline ) {
 		$self->outline->clear;
 	}
-
-	# Remove the entry from the Window menu
-	$self->menu->window->refresh( $self->current );
 
 	return 1;
 }
