@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ar\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-24 06:34+0200\n"
-"PO-Revision-Date: 2009-12-24 06:53+0200\n"
+"POT-Creation-Date: 2009-12-24 07:09+0200\n"
+"PO-Revision-Date: 2009-12-24 07:24+0200\n"
 "Last-Translator: Ahmad M. Zawawi <ahmad.zawawi@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
@@ -771,7 +771,7 @@ msgstr "تحويل نهايه السطر الى ويندوز "
 
 #: lib/Padre/Action/Edit.pm:438
 msgid "Change the end of line character of the current document to those used in files on MS Windows"
-msgstr ""
+msgstr "تغيير حرف نهاية السطر في الوثيقة الحالية لتلك المستخدمة في الملفات على مايكروسوفت ويندوز"
 
 #: lib/Padre/Action/Edit.pm:447
 msgid "EOL to Unix"
@@ -779,7 +779,7 @@ msgstr "تحويل نهايه السطر الى يونكس"
 
 #: lib/Padre/Action/Edit.pm:448
 msgid "Change the end of line character of the current document to that used on Unix, Linux, Mac OSX"
-msgstr ""
+msgstr "تغيير حرف نهاية السطر في الوثيقة الحالية لتلك المستخدمة في الملفات على يونكس، لينكس، وماكنتوش OSX"
 
 #: lib/Padre/Action/Edit.pm:457
 msgid "EOL to Mac Classic"
@@ -787,7 +787,7 @@ msgstr "تحويل نهايه السطر الى ماكنتوش كلاسيك "
 
 #: lib/Padre/Action/Edit.pm:458
 msgid "Change the end of line character of the current document to that used on Mac Classic"
-msgstr ""
+msgstr "تغيير حرف نهاية السطر في الوثيقة الحالية لتلك المستخدمة في الملفات على ماكنتوش الكلاسيكي"
 
 #: lib/Padre/Action/Edit.pm:468
 msgid "Tabs to Spaces..."
@@ -1090,7 +1090,7 @@ msgstr "فتح الجلسة"
 
 #: lib/Padre/Action/File.pm:283
 msgid "Select a session. Close all the files currently open and open all the listed in the session"
-msgstr ""
+msgstr "تحديد جلسة. إغلاق كافة الملفات المفتوحة حاليا وفتح كل الملفات المدرجة في الجلسة"
 
 #: lib/Padre/Action/File.pm:293
 msgid "Save Session"
@@ -1098,7 +1098,7 @@ msgstr "حفظ الجلسة ك"
 
 #: lib/Padre/Action/File.pm:294
 msgid "Ask for a session name and save the list of files currently opened"
-msgstr ""
+msgstr "السؤال عن اسم الجلسة وحفظ قائمة الملفات المفتوحة حاليا"
 
 #: lib/Padre/Action/File.pm:308
 msgid "&Print"
@@ -1114,7 +1114,7 @@ msgstr "فتح جميع الملفات الاخيرة"
 
 #: lib/Padre/Action/File.pm:329
 msgid "Open all the files listed in the recent files list"
-msgstr ""
+msgstr "فتح كافة الملفات المدرجة في قائمة الملفات الأخيرة"
 
 #: lib/Padre/Action/File.pm:336
 msgid "Clean Recent Files List"
@@ -1122,7 +1122,7 @@ msgstr "حذف قائمه الملفات الاخيرة"
 
 #: lib/Padre/Action/File.pm:337
 msgid "Remove the entries from the recent files list"
-msgstr ""
+msgstr "إزالة المدخلات من قائمة الملفات الأخيرة"
 
 #: lib/Padre/Action/File.pm:347
 msgid "Document Statistics"
@@ -1130,7 +1130,7 @@ msgstr "احصائيات الوثيقه"
 
 #: lib/Padre/Action/File.pm:348
 msgid "Word count and other statistics of the current document"
-msgstr ""
+msgstr "عدد الكلمات وإحصاءات أخرى من الوثيقة الحالية"
 
 #: lib/Padre/Action/File.pm:357
 msgid "&Quit"
@@ -1138,7 +1138,7 @@ msgstr "&خروج"
 
 #: lib/Padre/Action/File.pm:358
 msgid "Ask if unsaved files should be saved and then exit Padre"
-msgstr ""
+msgstr "السؤال ما إذا كان ينبغي حفظ الملفات الغير محفوظة ومن ثم الخروج من Padre"
 
 #: lib/Padre/Action/Help.pm:37
 msgid "Help"
@@ -1174,7 +1174,7 @@ msgstr "دعم Padre (انجليزي)"
 
 #: lib/Padre/Action/Help.pm:89
 msgid "Open the Padre live support in your default web browser and chat to others who may help you with your problem"
-msgstr ""
+msgstr "فتح دعم Padre المباشر في متصفح الويب الخاص بك الافتراضي والدردشة إلى آخرين قد يمكنهم مساعدتك مع مشكلتك"
 
 #: lib/Padre/Action/Help.pm:99
 msgid "Perl Help"
@@ -1182,7 +1182,7 @@ msgstr "مساعدة Perl"
 
 #: lib/Padre/Action/Help.pm:101
 msgid "Open the Perl live support in your default web browser and chat to others who may help you with your problem"
-msgstr ""
+msgstr "فتح دعم Perl المباشر في متصفح الويب الخاص بك الافتراضي والدردشة إلى آخرين قد يمكنهم مساعدتك مع مشكلتك"
 
 #: lib/Padre/Action/Help.pm:111
 msgid "Win32 Questions (English)"
@@ -1190,15 +1190,15 @@ msgstr "أسئلة Win32 (انجليزي)"
 
 #: lib/Padre/Action/Help.pm:113
 msgid "Open the Perl/Win32 live support in your default web browser and chat to others who may help you with your problem"
-msgstr ""
+msgstr "فتح دعم Perl/Win32 المباشر في متصفح الويب الخاص بك الافتراضي والدردشة إلى آخرين قد يمكنهم مساعدتك مع مشكلتك"
 
 #: lib/Padre/Action/Help.pm:124
 msgid "Visit the PerlMonks"
 msgstr "زياره موقع PerlMonks"
 
 #: lib/Padre/Action/Help.pm:126
-msgid "Open perlmonks.org, one of the biggest Perl community sites in your default webbrowser"
-msgstr ""
+msgid "Open perlmonks.org, one of the biggest Perl community sites in your default web browser"
+msgstr "فتح perlmonks.org ، واحد من أكبر مواقع مجتمع Perl في متصفح الويب الخاص بك الافتراضي"
 
 #: lib/Padre/Action/Help.pm:136
 msgid "Report a New &Bug"
@@ -1341,7 +1341,7 @@ msgstr "اعاده تحميل البرنامج المساعد"
 
 #: lib/Padre/Action/Plugins.pm:80
 msgid "This function reloads the My plug-in without restarting Padre"
-msgstr ""
+msgstr "هذه الوظيفة تقوم بإعادة تحميل برنامج My المساعد دون إعادة تشغيل Padre"
 
 #: lib/Padre/Action/Plugins.pm:88
 #: lib/Padre/Action/Plugins.pm:92
@@ -1351,7 +1351,7 @@ msgstr "اعادة تشغيل برنامجي المساعد"
 
 #: lib/Padre/Action/Plugins.pm:89
 msgid "Reset the My plug-in to the default"
-msgstr ""
+msgstr "إعادة تعيين برنامج My المساعد للافتراضي"
 
 #: lib/Padre/Action/Plugins.pm:108
 msgid "Reload All Plug-ins"
@@ -1496,7 +1496,7 @@ msgstr "تشغيل الامر"
 
 #: lib/Padre/Action/Run.pm:65
 msgid "Runs a shell command and shows the output."
-msgstr ""
+msgstr "تشغيل أمر مع اظهار النتائج."
 
 #: lib/Padre/Action/Run.pm:75
 msgid "Build + run all Tests"

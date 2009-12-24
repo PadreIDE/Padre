@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-24 06:34+0200\n"
+"POT-Creation-Date: 2009-12-24 07:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1201,7 +1201,7 @@ msgstr ""
 #: lib/Padre/Action/Help.pm:126
 msgid ""
 "Open perlmonks.org, one of the biggest Perl community sites in your default "
-"webbrowser"
+"web browser"
 msgstr ""
 
 #: lib/Padre/Action/Help.pm:136

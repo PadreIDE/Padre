@@ -123,7 +123,7 @@ sub new {
 		name    => 'help.visit_perlmonks',
 		label   => Wx::gettext('Visit the PerlMonks'),
 		comment => Wx::gettext(
-			'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default webbrowser'
+			'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default web browser'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
