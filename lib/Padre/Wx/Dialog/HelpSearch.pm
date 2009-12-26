@@ -308,6 +308,11 @@ sub _search {
 						. Padre::MimeTypes->get_mime_type_name( $doc->get_mimetype ) );
 				return;
 			}
+		} else {
+
+			# If there no document, use Perl 5 help provider
+			require Padre::HelpProvider::Perl;
+			$self->_help_provider( Padre::HelpProvider::Perl->new );
 		}
 	}
 	return if not $self->_help_provider;
