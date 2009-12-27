@@ -113,20 +113,15 @@ sub new {
 		if (   $mousePos->x < $firstPointInLine->x
 			&& $mousePos->x > ( $firstPointInLine->x - 18 ) )
 		{
-			my $fold = $self->Append( -1, Wx::gettext("Fold all") );
-			Wx::Event::EVT_MENU(
-				$main, $fold,
-				sub {
-					$_[0]->current->editor->fold_all;
-				},
+			$self->{fold_all} = $self->add_menu_action(
+				$self,
+				'view.fold_all',
 			);
-			my $unfold = $self->Append( -1, Wx::gettext("Unfold all") );
-			Wx::Event::EVT_MENU(
-				$main, $unfold,
-				sub {
-					$_[0]->current->editor->unfold_all;
-				},
+			$self->{unfold_all} = $self->add_menu_action(
+				$self,
+				'view.unfold_all',
 			);
+
 			$self->AppendSeparator;
 		}
 	}

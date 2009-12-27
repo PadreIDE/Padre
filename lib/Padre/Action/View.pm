@@ -151,6 +151,26 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name    => 'view.fold_all',
+		label   => _T('Fold all'),
+		comment => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
+		need_editor => 1,
+		menu_event => sub {
+			$_[0]->current->editor->fold_all;
+		},
+	);
+
+	Padre::Action->new(
+		name    => 'view.unfold_all',
+		label   => _T('Unold all'),
+		comment => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
+		need_editor => 1,
+		menu_event => sub {
+			$_[0]->current->editor->unfold_all;
+		},
+	);
+
+	Padre::Action->new(
 		name       => 'view.show_calltips',
 		label      => _T('Show Call Tips'),
 		comment    => _T('When typing in functions allow showing short examples of the function'),
