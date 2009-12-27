@@ -844,6 +844,7 @@ sub get_menu {
 	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
 	if ($@) {
 		$plugin->errstr( _T("Error when calling menu for plug-in") . "'$module': $@" );
+		$plugin->{status} = 'error';
 
 		# TO DO: make sure these error messages show up somewhere or it will drive
 		# crazy anyone trying to write a plug-in
