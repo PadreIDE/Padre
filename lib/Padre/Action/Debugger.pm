@@ -16,6 +16,7 @@ use strict;
 use warnings;
 use Padre::Action ();
 use Padre::Current qw{_CURRENT};
+use Padre::Util    ('_T');
 
 our $VERSION = '0.53';
 
@@ -38,8 +39,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-stop-after-command',
-		label        => Wx::gettext('Step In') . ' (&s) ',
-		comment      => Wx::gettext(
+		label        => _T('Step In') . ' (&s) ',
+		comment      => _T(
 			'Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)'),
 
 		#shortcut     => 'Shift-F5',
@@ -54,8 +55,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-stop-after-procedure',
-		label        => Wx::gettext('Step Over') . ' (&n) ',
-		comment      => Wx::gettext(
+		label        => _T('Step Over') . ' (&n) ',
+		comment      => _T(
 			'Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)'
 		),
 
@@ -72,8 +73,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-jump-back',
-		label        => Wx::gettext('Step Out') . ' (&r) ',
-		comment      => Wx::gettext('If withing a subroutine, run till return is called and then stop.'),
+		label        => _T('Step Out') . ' (&r) ',
+		comment      => _T('If withing a subroutine, run till return is called and then stop.'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -87,8 +88,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_tools-macro',
-		label        => Wx::gettext('Run till breakpoint') . ' (&c) ',
-		comment      => Wx::gettext('Start running and/or continoue running till next breakpoint or watch'),
+		label        => _T('Run till breakpoint') . ' (&c) ',
+		comment      => _T('Start running and/or continoue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -101,8 +102,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Jump to current execution line'),
-		comment      => Wx::gettext('Set focus to the line where the current statement is in the debugging process'),
+		label        => _T('Jump to current execution line'),
+		comment      => _T('Set focus to the line where the current statement is in the debugging process'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -116,8 +117,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
-		label        => Wx::gettext('Set breakpoint') . ' (&b) ',
-		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
+		label        => _T('Set breakpoint') . ' (&b) ',
+		comment      => _T('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -130,8 +131,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Remove breakpoint'),
-		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
+		label        => _T('Remove breakpoint'),
+		comment      => _T('Remove the breakpoint at the current location of the cursor'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -144,8 +145,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('List all the breakpoints'),
-		comment      => Wx::gettext('List all the breakpoints on the console'),
+		label        => _T('List all the breakpoints'),
+		comment      => _T('List all the breakpoints on the console'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -158,8 +159,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Run to cursor'),
-		comment      => Wx::gettext('Set a breakpoint at the line where to cursor is and run till there'),
+		label        => _T('Run to cursor'),
+		comment      => _T('Set a breakpoint at the line where to cursor is and run till there'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -173,8 +174,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Stack Trace') . ' (&T) ',
-		comment      => Wx::gettext('When in a subroutine call show all the calls since the main of the program'),
+		label        => _T('Show Stack Trace') . ' (&T) ',
+		comment      => _T('When in a subroutine call show all the calls since the main of the program'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -188,8 +189,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-watch-variable',
-		label        => Wx::gettext('Display value'),
-		comment      => Wx::gettext('Display the current value of a variable in the right hand side debugger pane'),
+		label        => _T('Display value'),
+		comment      => _T('Display the current value of a variable in the right hand side debugger pane'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -202,8 +203,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Value') . ' (&x) ',
-		comment      => Wx::gettext('Show the value of a variable.'),
+		label        => _T('Show Value') . ' (&x) ',
+		comment      => _T('Show the value of a variable.'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -216,8 +217,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Evaluate Expression'),
-		comment      => Wx::gettext('Type in any expression and evaluate it in the debugged process'),
+		label        => _T('Evaluate Expression'),
+		comment      => _T('Type in any expression and evaluate it in the debugged process'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -231,8 +232,8 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'actions/stop',
-		label        => Wx::gettext('Quit Debugger') . ' (&q) ',
-		comment      => Wx::gettext('Quit the process being debugged'),
+		label        => _T('Quit Debugger') . ' (&q) ',
+		comment      => _T('Quit the process being debugged'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
