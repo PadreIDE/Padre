@@ -918,9 +918,9 @@ sub on_right_down {
 	my $menu = Padre::Wx::Menu::RightClick->new($main, $self, $event);
 
 	if ( $event->isa('Wx::MouseEvent') ) {
-		$self->PopupMenu( $menu, $event->GetX, $event->GetY );
+		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );
 	} else { #Wx::CommandEvent
-		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
+		$self->PopupMenu( $menu->wx, 50, 50 ); # TO DO better location
 	}
 }
 

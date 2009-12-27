@@ -19,7 +19,7 @@ sub new {
 	my $event = shift;
 
 	# Create the empty menu as normal
-	my $self = Wx::Menu->new; #$class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
 
 	# Add additional properties
 	#$self->{main} = $main;
