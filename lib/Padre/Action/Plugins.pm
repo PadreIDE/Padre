@@ -1,21 +1,17 @@
 package Padre::Action::Plugins;
 
-# Fully encapsulated Run menu
-
 use 5.008;
 use strict;
 use warnings;
-use Params::Util    ();
+
+use Padre::Action   ();
 use Padre::Constant ();
 use Padre::Config   ();
-use Padre::Wx       ();
-use Padre::Action   ();
 use Padre::Current qw{_CURRENT};
+use Padre::Util    ('_T');
+use Padre::Wx       ();
 
 our $VERSION = '0.53';
-
-
-
 
 
 #####################################################################
@@ -34,8 +30,8 @@ sub new {
 	# Link to the Plugin Manager
 	Padre::Action->new(
 		name       => 'plugins.plugin_manager',
-		label      => Wx::gettext('Plug-in Manager'),
-		comment    => Wx::gettext('Show the Padre plug-in manager to enable or disable plug-ins'),
+		label      => _T('Plug-in Manager'),
+		comment    => _T('Show the Padre plug-in manager to enable or disable plug-ins'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::PluginManager;
 			Padre::Wx::Dialog::PluginManager->new(
@@ -50,8 +46,8 @@ sub new {
 	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
 	Padre::Action->new(
 		name       => 'plugins.plugin_list',
-		label      => Wx::gettext('Plug-in List (CPAN)'),
-		comment    => Wx::gettext('Open browser to a CPAN search showing the Padre::Plugin packages'),
+		label      => _T('Plug-in List (CPAN)'),
+		comment    => _T('Open browser to a CPAN search showing the Padre::Plugin packages'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
 		},
@@ -59,14 +55,14 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.edit_my_plugin',
-		label      => Wx::gettext('Edit My Plug-in'),
-		comment    => Wx::gettext('My Plug-in is a plug-in where developers could extend their Padre installation'),
+		label      => _T('Edit My Plug-in'),
+		comment    => _T('My Plug-in is a plug-in where developers could extend their Padre installation'),
 		menu_event => sub {
 			my $file = File::Spec->catfile(
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error( Wx::gettext("Could not find the Padre::Plugin::My plug-in") ) unless -e $file;
+			return $self->error( _T("Could not find the Padre::Plugin::My plug-in") ) unless -e $file;
 
 			# Use the plural so we get the "close single unused document"
 			# behaviour, and so we get a free freezing and refresh calls.
@@ -76,8 +72,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_my_plugin',
-		label      => Wx::gettext('Reload My Plug-in'),
-		comment    => Wx::gettext('This function reloads the My plug-in without restarting Padre'),
+		label      => _T('Reload My Plug-in'),
+		comment    => _T('This function reloads the My plug-in without restarting Padre'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
 		},
@@ -85,12 +81,12 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reset_my_plugin',
-		label      => Wx::gettext('Reset My plug-in'),
-		comment    => Wx::gettext('Reset the My plug-in to the default'),
+		label      => _T('Reset My plug-in'),
+		comment    => _T('Reset the My plug-in to the default'),
 		menu_event => sub {
 			my $ret = Wx::MessageBox(
-				Wx::gettext("Reset My plug-in"),
-				Wx::gettext("Reset My plug-in"),
+				_T("Reset My plug-in"),
+				_T("Reset My plug-in"),
 				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
 				$main,
 			);
@@ -105,8 +101,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_all_plugins',
-		label      => Wx::gettext('Reload All Plug-ins'),
-		comment    => Wx::gettext('Reload all plug-ins from disk'),
+		label      => _T('Reload All Plug-ins'),
+		comment    => _T('Reload all plug-ins from disk'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_plugins;
 		},
@@ -114,8 +110,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.reload_current_plugin',
-		label      => Wx::gettext('(Re)load Current Plug-in'),
-		comment    => Wx::gettext('Reloads (or initially loads) the current plug-in'),
+		label      => _T('(Re)load Current Plug-in'),
+		comment    => _T('Reloads (or initially loads) the current plug-in'),
 		menu_event => sub {
 			Padre->ide->plugin_manager->reload_current_plugin;
 		},
@@ -124,7 +120,7 @@ sub new {
 	#	Padre::Action->new(
 	#		$tools,
 	#		name       => 'plugins.test_a_plugin',
-	#		label      => Wx::gettext('Test A Plugin From Local Dir'),
+	#		label      => _T('Test A Plugin From Local Dir'),
 	#		menu_event => sub {
 	#			Padre->ide->plugin_manager->test_a_plugin;
 	#		},
@@ -133,8 +129,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.install_cpan',
-		label      => Wx::gettext("Install CPAN Module"),
-		comment    => Wx::gettext('Install a Perl module from CPAN'),
+		label      => _T("Install CPAN Module"),
+		comment    => _T('Install a Perl module from CPAN'),
 		menu_event => sub {
 			require Padre::CPAN;
 			require Padre::Wx::CPAN;
@@ -146,8 +142,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.install_local',
-		label      => Wx::gettext("Install Local Distribution"),
-		comment    => Wx::gettext('Using CPAN.pm to install a CPAN like package opened locally'),
+		label      => _T("Install Local Distribution"),
+		comment    => _T('Using CPAN.pm to install a CPAN like package opened locally'),
 		menu_event => sub {
 			$self->install_file( $_[0] );
 		},
@@ -155,8 +151,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.install_remote',
-		label      => Wx::gettext("Install Remote Distribution"),
-		comment    => Wx::gettext('Using pip to download a tar.gz file and install it using CPAN.pm'),
+		label      => _T("Install Remote Distribution"),
+		comment    => _T('Using pip to download a tar.gz file and install it using CPAN.pm'),
 		menu_event => sub {
 			$self->install_url( $_[0] );
 		},
@@ -164,8 +160,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'plugins.cpan_config',
-		label      => Wx::gettext("Open CPAN Config File"),
-		comment    => Wx::gettext('Open CPAN::MyConfig.pm for manual editing by experts'),
+		label      => _T("Open CPAN Config File"),
+		comment    => _T('Open CPAN::MyConfig.pm for manual editing by experts'),
 		menu_event => sub {
 			$self->cpan_config( $_[0] );
 		},
@@ -184,7 +180,7 @@ sub install_file {
 	# Ask what we should install
 	my $dialog = Wx::FileDialog->new(
 		$main,
-		Wx::gettext("Select distribution to install"),
+		_T("Select distribution to install"),
 		'',                                  # Default directory
 		'',                                  # Default file
 		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
@@ -197,7 +193,7 @@ sub install_file {
 	my $string = $dialog->GetPath;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error( Wx::gettext("Did not provide a distribution") );
+		$main->error( _T("Did not provide a distribution") );
 		return;
 	}
 
@@ -212,7 +208,7 @@ sub install_url {
 	# Ask what we should install
 	my $dialog = Wx::TextEntryDialog->new(
 		$main,
-		Wx::gettext("Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"),
+		_T("Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"),
 		"pip",
 		'',
 	);
@@ -222,7 +218,7 @@ sub install_url {
 	my $string = $dialog->GetValue;
 	$dialog->Destroy;
 	unless ( defined $string and $string =~ /\S/ ) {
-		$main->error( Wx::gettext("Did not provide a distribution") );
+		$main->error( _T("Did not provide a distribution") );
 		return;
 	}
 
@@ -239,7 +235,7 @@ sub install_pip {
 	require File::Which;
 	my $pip = scalar File::Which::which('pip');
 	unless ( -f $pip ) {
-		$main->error( Wx::gettext("pip is unexpectedly not installed") );
+		$main->error( _T("pip is unexpectedly not installed") );
 		return;
 	}
 
@@ -285,7 +281,7 @@ sub cpan_config {
 		return;
 	}
 
-	$main->error( Wx::gettext("Failed to find your CPAN configuration") );
+	$main->error( _T("Failed to find your CPAN configuration") );
 }
 
 1;

@@ -10,10 +10,9 @@ use Padre::Action   ();
 use Padre::Constant ();
 use Padre::Current '_CURRENT';
 use Padre::Locale ();
+use Padre::Util    ('_T');
 
 our $VERSION = '0.53';
-
-
 
 
 
@@ -34,15 +33,15 @@ sub new {
 	Padre::Action->new(
 		name       => 'help.help',
 		id         => Wx::wxID_HELP,
-		label      => Wx::gettext('Help'),
-		comment    => Wx::gettext('Show the Padre help'),
+		label      => _T('Help'),
+		comment    => _T('Show the Padre help'),
 		menu_event => sub {
 			$_[0]->help('Padre');
 		},
 	);
 	Padre::Action->new(
 		name       => 'help.context_help',
-		label      => Wx::gettext('Search Help'),
+		label      => _T('Search Help'),
 		comment    => 'Search the Perl help pages (perldoc)',
 		shortcut   => 'F1',
 		menu_event => sub {
@@ -60,8 +59,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'help.search',
-		label      => Wx::gettext('Context Help'),
-		comment    => Wx::gettext('Show the help article for the current context'),
+		label      => _T('Context Help'),
+		comment    => _T('Show the help article for the current context'),
 		shortcut   => 'F2',
 		menu_event => sub {
 
@@ -73,8 +72,8 @@ sub new {
 	$self->{current} = Padre::Action->new(
 		name        => 'help.current',
 		need_editor => 1,
-		label       => Wx::gettext('Current Document'),
-		comment     => Wx::gettext('Show the POD (Perldoc) version of the current document'),
+		label       => _T('Current Document'),
+		comment     => _T('Show the POD (Perldoc) version of the current document'),
 		menu_event  => sub {
 			$_[0]->help( $_[0]->current->document );
 		},
@@ -84,8 +83,8 @@ sub new {
 
 	Padre::Action->new(
 		name    => 'help.live_support',
-		label   => Wx::gettext('Padre Support (English)'),
-		comment => Wx::gettext(
+		label   => _T('Padre Support (English)'),
+		comment => _T(
 			      'Open the Padre live support in your default web browser '
 				. 'and chat to others who may help you with your problem'
 		),
@@ -96,8 +95,8 @@ sub new {
 
 	Padre::Action->new(
 		name    => 'help.perl_help',
-		label   => Wx::gettext('Perl Help'),
-		comment => Wx::gettext(
+		label   => _T('Perl Help'),
+		comment => _T(
 			      'Open the Perl live support in your default web browser '
 				. 'and chat to others who may help you with your problem'
 		),
@@ -108,8 +107,8 @@ sub new {
 
 	Padre::Action->new(
 		name    => 'help.win32_questions',
-		label   => Wx::gettext('Win32 Questions (English)'),
-		comment => Wx::gettext(
+		label   => _T('Win32 Questions (English)'),
+		comment => _T(
 			      'Open the Perl/Win32 live support in your default web browser '
 				. 'and chat to others who may help you with your problem'
 		),
@@ -121,8 +120,8 @@ sub new {
 	# Add interesting and helpful websites
 	Padre::Action->new(
 		name    => 'help.visit_perlmonks',
-		label   => Wx::gettext('Visit the PerlMonks'),
-		comment => Wx::gettext(
+		label   => _T('Visit the PerlMonks'),
+		comment => _T(
 			'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default web browser'
 		),
 		menu_event => sub {
@@ -133,16 +132,16 @@ sub new {
 	# Add Padre website tools
 	Padre::Action->new(
 		name       => 'help.report_a_bug',
-		label      => Wx::gettext('Report a New &Bug'),
-		comment    => Wx::gettext('Send a bug report to the Padre developer team'),
+		label      => _T('Report a New &Bug'),
+		comment    => _T('Send a bug report to the Padre developer team'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
 		},
 	);
 	Padre::Action->new(
 		name       => 'help.view_all_open_bugs',
-		label      => Wx::gettext('View All &Open Bugs'),
-		comment    => Wx::gettext('View all known and currently unsolved bugs in Padre'),
+		label      => _T('View All &Open Bugs'),
+		comment    => _T('View all known and currently unsolved bugs in Padre'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
 		},
@@ -150,8 +149,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'help.translate_padre',
-		label      => Wx::gettext('&Translate Padre...'),
-		comment    => Wx::gettext('Help by translating Padre to your local language'),
+		label      => _T('&Translate Padre...'),
+		comment    => _T('Help by translating Padre to your local language'),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
 		},
@@ -161,8 +160,8 @@ sub new {
 	Padre::Action->new(
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
-		label      => Wx::gettext('&About'),
-		comment    => Wx::gettext('Show the about-Padre information'),
+		label      => _T('&About'),
+		comment    => _T('Show the about-Padre information'),
 		menu_event => sub {
 			$_[0]->about->ShowModal;
 		},

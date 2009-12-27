@@ -18,11 +18,13 @@ use List::Util    ();
 use File::Spec    ();
 use File::HomeDir ();
 use Params::Util qw{_INSTANCE};
+
 use Padre::Action   ();
+use Padre::Current qw{_CURRENT};
+use Padre::Locale   ();
+use Padre::Util    ('_T');
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Locale   ();
-use Padre::Current qw{_CURRENT};
 
 our $VERSION = '0.53';
 
@@ -46,16 +48,16 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.rename_variable',
 		need_editor => 1,
-		label       => Wx::gettext('Lexically Rename Variable'),
-		comment    => Wx::gettext('Prompt for a replacement variable name and replace all occurrance of this variable'),
+		label       => _T('Lexically Rename Variable'),
+		comment    => _T('Prompt for a replacement variable name and replace all occurrance of this variable'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('lexical_variable_replacement');
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("Replacement"),
-				Wx::gettext("Replacement"),
+				_T("Replacement"),
+				_T("Replacement"),
 				'$foo',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;
@@ -69,8 +71,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.extract_subroutine',
 		need_editor => 1,
-		label       => Wx::gettext('Extract Subroutine'),
-		comment     => Wx::gettext(
+		label       => _T('Extract Subroutine'),
+		comment     => _T(
 			      'Cut the current selection and create a new sub from it. '
 				. 'A call to this sub is added in the place where the selection was.'
 		),
@@ -83,8 +85,8 @@ sub new {
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("Please enter a name for the new subroutine"),
-				Wx::gettext("New Subroutine Name"),
+				_T("Please enter a name for the new subroutine"),
+				_T("New Subroutine Name"),
 				'$foo',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;
@@ -99,16 +101,16 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.introduce_temporary',
 		need_editor => 1,
-		label       => Wx::gettext('Introduce Temporary Variable'),
-		comment     => Wx::gettext('Assign the selected expression to a newly declared variable'),
+		label       => _T('Introduce Temporary Variable'),
+		comment     => _T('Assign the selected expression to a newly declared variable'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('introduce_temporary_variable');
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("Variable Name"),
-				Wx::gettext("Variable Name"),
+				_T("Variable Name"),
+				_T("Variable Name"),
 				'$tmp',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;

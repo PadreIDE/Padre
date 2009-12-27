@@ -6,6 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Current qw{_CURRENT};
+use Padre::Util    ('_T');
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -35,8 +36,8 @@ sub new {
 		#			return 0 if !defined( $objects{editor} );
 		#			return $objects{editor}->CanUndo;
 		#		},
-		label      => Wx::gettext('&Undo'),
-		comment    => Wx::gettext('Undo last change in current file'),
+		label      => _T('&Undo'),
+		comment    => _T('Undo last change in current file'),
 		shortcut   => 'Ctrl-Z',
 		toolbar    => 'actions/edit-undo',
 		menu_event => sub {
@@ -55,8 +56,8 @@ sub new {
 		#			return 0 if !defined( $objects{editor} );
 		#			return $objects{editor}->CanRedo;
 		#		},
-		label      => Wx::gettext('&Redo'),
-		comment    => Wx::gettext('Redo last undo'),
+		label      => _T('&Redo'),
+		comment    => _T('Redo last undo'),
 		shortcut   => 'Ctrl-Y',
 		toolbar    => 'actions/edit-redo',
 		menu_event => sub {
@@ -69,8 +70,8 @@ sub new {
 		name        => 'edit.select_all',
 		id          => Wx::wxID_SELECTALL,
 		need_editor => 1,
-		label       => Wx::gettext('Select all'),
-		comment     => Wx::gettext('Select all the text in the current document'),
+		label       => _T('Select all'),
+		comment     => _T('Select all the text in the current document'),
 		shortcut    => 'Ctrl-A',
 		toolbar     => 'actions/edit-select-all',
 		menu_event  => sub {
@@ -82,8 +83,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.mark_selection_start',
 		need_editor => 1,
-		label       => Wx::gettext('Mark selection start'),
-		comment     => Wx::gettext('Mark the place where the selection should start'),
+		label       => _T('Mark selection start'),
+		comment     => _T('Mark the place where the selection should start'),
 		shortcut    => 'Ctrl-[',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -94,8 +95,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.mark_selection_end',
 		need_editor => 1,
-		label       => Wx::gettext('Mark selection end'),
-		comment     => Wx::gettext('Mark the place where the selection should end'),
+		label       => _T('Mark selection end'),
+		comment     => _T('Mark the place where the selection should end'),
 		shortcut    => 'Ctrl-]',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
@@ -106,8 +107,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.clear_selection_marks',
 		need_editor => 1,
-		label       => Wx::gettext('Clear selection marks'),
-		comment     => Wx::gettext('Remove all the selection marks'),
+		label       => _T('Clear selection marks'),
+		comment     => _T('Remove all the selection marks'),
 		menu_event  => sub {
 			require Padre::Wx::Editor;
 			Padre::Wx::Editor::text_selection_clear_marks(@_);
@@ -120,8 +121,8 @@ sub new {
 		id             => Wx::wxID_CUT,
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('Cu&t'),
-		comment        => Wx::gettext('Remove the current selection and put it in the clipboard'),
+		label          => _T('Cu&t'),
+		comment        => _T('Remove the current selection and put it in the clipboard'),
 		shortcut       => 'Ctrl-X',
 		toolbar        => 'actions/edit-cut',
 		menu_event     => sub {
@@ -135,8 +136,8 @@ sub new {
 		id             => Wx::wxID_COPY,
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Copy'),
-		comment        => Wx::gettext('Put the current selection in the clipboard'),
+		label          => _T('&Copy'),
+		comment        => _T('Put the current selection in the clipboard'),
 		shortcut       => 'Ctrl-C',
 		toolbar        => 'actions/edit-copy',
 		menu_event     => sub {
@@ -151,8 +152,8 @@ sub new {
 		name        => 'edit.copy_filename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Copy full filename'),
-		comment        => Wx::gettext('Put the full path of the current file in the clipboard'),
+		label       => _T('Copy full filename'),
+		comment        => _T('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -165,8 +166,8 @@ sub new {
 		name        => 'edit.copy_basename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Copy filename'),
-		comment     => Wx::gettext('Put the name of the current file in the clipboard'),
+		label       => _T('Copy filename'),
+		comment     => _T('Put the name of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -179,8 +180,8 @@ sub new {
 		name        => 'edit.copy_dirname',
 		need_file   => 1,
 		need_editor => 1,
-		label       => Wx::gettext('Copy directory name'),
-		comment     => Wx::gettext('Put the full path of the directory of the current file in the clipboard'),
+		label       => _T('Copy directory name'),
+		comment     => _T('Put the full path of the directory of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -192,8 +193,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.copy_content',
 		need_editor => 1,
-		label       => Wx::gettext('Copy editor content'),
-		comment     => Wx::gettext('Put the content of the current document in the clipboard'),
+		label       => _T('Copy editor content'),
+		comment     => _T('Put the content of the current document in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -207,8 +208,8 @@ sub new {
 		name        => 'edit.paste',
 		need_editor => 1,
 		id          => Wx::wxID_PASTE,
-		label       => Wx::gettext('&Paste'),
-		comment     => Wx::gettext('Paste the clipboard to the current location'),
+		label       => _T('&Paste'),
+		comment     => _T('Paste the clipboard to the current location'),
 		shortcut    => 'Ctrl-V',
 		toolbar     => 'actions/edit-paste',
 		menu_event  => sub {
@@ -220,8 +221,8 @@ sub new {
 	# Miscellaneous Actions
 	Padre::Action->new(
 		name       => 'edit.goto',
-		label      => Wx::gettext('&Goto Line'),
-		comment    => Wx::gettext('Ask the user for a row number and jump there'),
+		label      => _T('&Goto Line'),
+		comment    => _T('Ask the user for a row number and jump there'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
 			Padre::Wx::Main::on_goto(@_);
@@ -231,8 +232,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.next_problem',
 		need_editor => 1,
-		label       => Wx::gettext('&Next Problem'),
-		comment     => Wx::gettext('Jumpt to the code  that triggered the next error'),
+		label       => _T('&Next Problem'),
+		comment     => _T('Jumpt to the code  that triggered the next error'),
 		shortcut    => 'Ctrl-.',
 		menu_event  => sub {
 			$main->{syntax}->select_next_problem;
@@ -242,8 +243,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.quick_fix',
 		need_editor => 1,
-		label       => Wx::gettext('&Quick Fix'),
-		comment     => Wx::gettext('Apply one of the quick fixes for the current document'),
+		label       => _T('&Quick Fix'),
+		comment     => _T('Apply one of the quick fixes for the current document'),
 		shortcut    => 'Ctrl-2',
 		menu_event  => sub {
 
@@ -269,7 +270,7 @@ sub new {
 			}
 			my $empty_list = ( scalar @list == 0 );
 			if ($empty_list) {
-				@list = ( Wx::gettext('No suggestions') );
+				@list = ( _T('No suggestions') );
 			}
 			my $words = join( '|', @list );
 			Wx::Event::EVT_STC_USERLISTSELECTION(
@@ -300,8 +301,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.autocomp',
 		need_editor => 1,
-		label       => Wx::gettext('&AutoComplete'),
-		comment     => Wx::gettext('Offer completions to the current string. See Preferences'),
+		label       => _T('&AutoComplete'),
+		comment     => _T('Offer completions to the current string. See Preferences'),
 		shortcut    => 'Ctrl-Space',
 		menu_event  => sub {
 			Padre::Wx::Main::on_autocompletion(@_);
@@ -311,8 +312,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.brace_match',
 		need_editor => 1,
-		label       => Wx::gettext('&Brace matching'),
-		comment     => Wx::gettext('Jump to the matching opening or closing brace: {, }, (, )'),
+		label       => _T('&Brace matching'),
+		comment     => _T('Jump to the matching opening or closing brace: {, }, (, )'),
 		shortcut    => 'Ctrl-1',
 		menu_event  => sub {
 			Padre::Wx::Main::on_brace_matching(@_);
@@ -323,8 +324,8 @@ sub new {
 		name           => 'edit.join_lines',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Join lines'),
-		comment        => Wx::gettext('Join the next line to the end of the current line.'),
+		label          => _T('&Join lines'),
+		comment        => _T('Join the next line to the end of the current line.'),
 		shortcut       => 'Ctrl-J',
 		menu_event     => sub {
 			Padre::Wx::Main::on_join_lines(@_);
@@ -334,8 +335,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.insert.insert_special',
 		need_editor => 1,
-		label       => Wx::gettext('Insert Special Value'),
-		comment     => Wx::gettext('Select a Date, Filename or other value and insert at the current location'),
+		label       => _T('Insert Special Value'),
+		comment     => _T('Select a Date, Filename or other value and insert at the current location'),
 		shortcut    => 'Ctrl-Shift-I',
 		menu_event  => sub {
 			require Padre::Wx::Dialog::SpecialValues;
@@ -347,8 +348,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.insert.snippets',
 		need_editor => 1,
-		label       => Wx::gettext('Snippets'),
-		comment     => Wx::gettext('Select and insert a snippet at the current location'),
+		label       => _T('Snippets'),
+		comment     => _T('Select and insert a snippet at the current location'),
 		shortcut    => 'Ctrl-Shift-A',
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Snippets;
@@ -359,8 +360,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.insert.from_file',
 		need_editor => 1,
-		label       => Wx::gettext('Insert From File...'),
-		comment     => Wx::gettext('Select a file and insert its content at the current location'),
+		label       => _T('Insert From File...'),
+		comment     => _T('Select a file and insert its content at the current location'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_insert_from_file(@_);
 		},
@@ -371,8 +372,8 @@ sub new {
 		name           => 'edit.comment_toggle',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Toggle Comment'),
-		comment        => Wx::gettext('Comment out or remove comment out of selected lines in the document'),
+		label          => _T('&Toggle Comment'),
+		comment        => _T('Comment out or remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-C',
 		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
@@ -384,8 +385,8 @@ sub new {
 		name           => 'edit.comment',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Comment Selected Lines'),
-		comment        => Wx::gettext('Comment out selected lines in the document'),
+		label          => _T('&Comment Selected Lines'),
+		comment        => _T('Comment out selected lines in the document'),
 		shortcut       => 'Ctrl-M',
 		menu_event     => sub {
 			Padre::Wx::Main::on_comment_block( $_[0], 'COMMENT' );
@@ -396,8 +397,8 @@ sub new {
 		name           => 'edit.uncomment',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Uncomment Selected Lines'),
-		comment        => Wx::gettext('Remove comment out of selected lines in the document'),
+		label          => _T('&Uncomment Selected Lines'),
+		comment        => _T('Remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-M',
 		menu_event     => sub {
 			Padre::Wx::Main::on_comment_block( $_[0], 'UNCOMMENT' );
@@ -408,8 +409,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
-		label       => Wx::gettext('Encode document to System Default'),
-		comment     => Wx::gettext('Change the encoding of the current document to the default of the operating system'),
+		label       => _T('Encode document to System Default'),
+		comment     => _T('Change the encoding of the current document to the default of the operating system'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
@@ -419,8 +420,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_utf8',
 		need_editor => 1,
-		label       => Wx::gettext('Encode document to utf-8'),
-		comment     => Wx::gettext('Change the encoding of the current document to utf-8'),
+		label       => _T('Encode document to utf-8'),
+		comment     => _T('Change the encoding of the current document to utf-8'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_utf8(@_);
@@ -430,8 +431,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_to',
 		need_editor => 1,
-		label       => Wx::gettext('Encode document to...'),
-		comment     => Wx::gettext('Select an encoding and encode the document to that'),
+		label       => _T('Encode document to...'),
+		comment     => _T('Select an encoding and encode the document to that'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to(@_);
@@ -441,8 +442,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
-		label       => Wx::gettext('EOL to Windows'),
-		comment     => Wx::gettext('Change the end of line character of the current document to those used in files on MS Windows'),
+		label       => _T('EOL to Windows'),
+		comment     => _T('Change the end of line character of the current document to those used in files on MS Windows'),
 		menu_event  => sub {
 			$_[0]->convert_to('WIN');
 		},
@@ -451,8 +452,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
-		label       => Wx::gettext('EOL to Unix'),
-		comment     => Wx::gettext('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
+		label       => _T('EOL to Unix'),
+		comment     => _T('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
 		menu_event  => sub {
 			$_[0]->convert_to('UNIX');
 		},
@@ -461,8 +462,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_nl_mac',
 		need_editor => 1,
-		label       => Wx::gettext('EOL to Mac Classic'),
-		comment     => Wx::gettext('Change the end of line character of the current document to that used on Mac Classic'),
+		label       => _T('EOL to Mac Classic'),
+		comment     => _T('Change the end of line character of the current document to that used on Mac Classic'),
 		menu_event  => sub {
 			$_[0]->convert_to('MAC');
 		},
@@ -472,8 +473,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.tabs_to_spaces',
 		need_editor => 1,
-		label       => Wx::gettext('Tabs to Spaces...'),
-		comment     => Wx::gettext('Convert all tabs to spaces in the current document'),
+		label       => _T('Tabs to Spaces...'),
+		comment     => _T('Convert all tabs to spaces in the current document'),
 		menu_event  => sub {
 			$_[0]->on_tab_and_space('Tab_to_Space');
 		},
@@ -482,8 +483,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.spaces_to_tabs',
 		need_editor => 1,
-		label       => Wx::gettext('Spaces to Tabs...'),
-		comment     => Wx::gettext('Convert all the spaces to tabs in the current document'),
+		label       => _T('Spaces to Tabs...'),
+		comment     => _T('Convert all the spaces to tabs in the current document'),
 		menu_event  => sub {
 			$_[0]->on_tab_and_space('Space_to_Tab');
 		},
@@ -492,8 +493,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.delete_trailing',
 		need_editor => 1,
-		label       => Wx::gettext('Delete Trailing Spaces'),
-		comment     => Wx::gettext('Remove the spaces from the end of the selected lines'),
+		label       => _T('Delete Trailing Spaces'),
+		comment     => _T('Remove the spaces from the end of the selected lines'),
 		menu_event  => sub {
 			$_[0]->on_delete_ending_space;
 		},
@@ -502,8 +503,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.delete_leading',
 		need_editor => 1,
-		label       => Wx::gettext('Delete Leading Spaces'),
-		comment     => Wx::gettext('Remove the spaces from the beginning of the selected lines'),
+		label       => _T('Delete Leading Spaces'),
+		comment     => _T('Remove the spaces from the beginning of the selected lines'),
 		menu_event  => sub {
 			$_[0]->on_delete_leading_space;
 		},
@@ -513,8 +514,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.case_upper',
 		need_editor => 1,
-		label       => Wx::gettext('Upper All'),
-		comment     => Wx::gettext('Change the current selection to upper case'),
+		label       => _T('Upper All'),
+		comment     => _T('Change the current selection to upper case'),
 		shortcut    => 'Ctrl-Shift-U',
 		menu_event  => sub {
 			$_[0]->current->editor->UpperCase;
@@ -524,8 +525,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.case_lower',
 		need_editor => 1,
-		label       => Wx::gettext('Lower All'),
-		comment     => Wx::gettext('Change the current selection to lower case'),
+		label       => _T('Lower All'),
+		comment     => _T('Change the current selection to lower case'),
 		shortcut    => 'Ctrl-U',
 		menu_event  => sub {
 			$_[0]->current->editor->LowerCase;
@@ -535,8 +536,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.diff2saved',
 		need_editor => 1,
-		label       => Wx::gettext('Diff to Saved Version'),
-		comment     => Wx::gettext('Compare the file in the editor to that on the disk and show the diff in the output window'),
+		label       => _T('Diff to Saved Version'),
+		comment     => _T('Compare the file in the editor to that on the disk and show the diff in the output window'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -544,8 +545,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
-		label       => Wx::gettext('Apply Diff to File'),
-		comment    => Wx::gettext('Apply a patch file to the current document'),
+		label       => _T('Apply Diff to File'),
+		comment    => _T('Apply a patch file to the current document'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -553,8 +554,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
-		label       => Wx::gettext('Apply Diff to Project'),
-		comment    => Wx::gettext('Apply a patch file to the current project'),
+		label       => _T('Apply Diff to Project'),
+		comment    => _T('Apply a patch file to the current project'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -565,8 +566,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.filter_tool',
 		need_editor => 1,
-		label       => Wx::gettext('Filter through external tool'),
-		comment     => Wx::gettext('Filters the selection (or the whole document) through any external command.'),
+		label       => _T('Filter through external tool'),
+		comment     => _T('Filters the selection (or the whole document) through any external command.'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_filter_tool(@_);
 		},
@@ -574,8 +575,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'edit.regex',
-		label      => Wx::gettext('Regex editor'),
-		comment    => Wx::gettext('Open the regular expression editing window'),
+		label      => _T('Regex editor'),
+		comment    => _T('Open the regular expression editing window'),
 
 		menu_event => sub {
 			Padre::Wx::Main::open_regex_editor(@_);
@@ -585,8 +586,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
-		label       => Wx::gettext('Show as hexa'),
-		comment     => Wx::gettext('Show the ASCII values of the selected text in hexa in the output window'),
+		label       => _T('Show as hexa'),
+		comment     => _T('Show the ASCII values of the selected text in hexa in the output window'),
 		menu_event  => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'hex' );
 		},
@@ -595,8 +596,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.show_as_decimal',
 		need_editor => 1,
-		label       => Wx::gettext('Show as decimal'),
-		comment     => Wx::gettext('Show the ASCII values of the selected text in decimal numbers in the output window'),
+		label       => _T('Show as decimal'),
+		comment     => _T('Show the ASCII values of the selected text in decimal numbers in the output window'),
 		menu_event  => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'decimal' );
 		},
@@ -605,8 +606,8 @@ sub new {
 	# User Preferences
 	Padre::Action->new(
 		name       => 'edit.preferences',
-		label      => Wx::gettext('Preferences'),
-		comment    => Wx::gettext('Edit the user preferences'),
+		label      => _T('Preferences'),
+		comment    => _T('Edit the user preferences'),
 		menu_event => sub {
 			Padre::Wx::Main::on_preferences(@_);
 		},

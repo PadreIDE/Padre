@@ -6,8 +6,9 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Action;
-use Padre::Search ();
 use Padre::Current qw{_CURRENT};
+use Padre::Search ();
+use Padre::Util    ('_T');
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -33,8 +34,8 @@ sub new {
 		name        => 'search.find',
 		id          => Wx::wxID_FIND,
 		need_editor => 1,
-		label       => Wx::gettext('&Find'),
-		comment     => Wx::gettext('Find text or regular expressions using a traditional dialog'),
+		label       => _T('&Find'),
+		comment     => _T('Find text or regular expressions using a traditional dialog'),
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
@@ -44,9 +45,9 @@ sub new {
 
 	Padre::Action->new(
 		name        => 'search.find_next',
-		label       => Wx::gettext('Find Next'),
+		label       => _T('Find Next'),
 		need_editor => 1,
-		comment     => Wx::gettext('Repeat the last find to find the next match'),
+		comment     => _T('Repeat the last find to find the next match'),
 		shortcut    => 'F3',
 		menu_event  => sub {
 			my $editor = $_[0]->current->editor or return;
@@ -78,7 +79,7 @@ sub new {
 
 			# If we can't find another match, show a message
 			if ( ( $editor->GetSelection )[0] == $position1 ) {
-				$_[0]->error( Wx::gettext("Failed to find any matches") );
+				$_[0]->error( _T("Failed to find any matches") );
 			}
 		},
 	);
@@ -86,8 +87,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'search.find_previous',
 		need_editor => 1,
-		label       => Wx::gettext('&Find Previous'),
-		comment     => Wx::gettext('Repeat the last find, but backwards to find the previous match'),
+		label       => _T('&Find Previous'),
+		comment     => _T('Repeat the last find, but backwards to find the previous match'),
 		shortcut    => 'Shift-F3',
 		menu_event  => sub {
 			$_[0]->search_previous;
@@ -98,8 +99,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'search.quick_find',
 		need_editor => 1,
-		label       => Wx::gettext('Quick Find'),
-		comment     => Wx::gettext('Incremental search seen at the bottom of the window'),
+		label       => _T('Quick Find'),
+		comment     => _T('Incremental search seen at the bottom of the window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->config->set(
@@ -116,8 +117,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'search.quick_find_next',
 		need_editor => 1,
-		label       => Wx::gettext('Find Next'),
-		comment     => Wx::gettext('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
+		label       => _T('Find Next'),
+		comment     => _T('Find next matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut    => 'F4',
 		menu_event  => sub {
 			$_[0]->fast_find->search('next');
@@ -127,8 +128,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'search.quick_find_previous',
 		need_editor => 1,
-		label       => Wx::gettext('Find Previous'),
-		comment  => Wx::gettext('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
+		label       => _T('Find Previous'),
+		comment  => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
 		shortcut => 'Shift-F4',
 		menu_event => sub {
 			$_[0]->fast_find->search('previous');
@@ -139,8 +140,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'search.replace',
 		need_editor => 1,
-		label       => Wx::gettext('Replace'),
-		comment     => Wx::gettext('Find a text and replace it'),
+		label       => _T('Replace'),
+		comment     => _T('Find a text and replace it'),
 		shortcut    => 'Ctrl-R',
 		toolbar     => 'actions/edit-find-replace',
 		menu_event  => sub {
@@ -151,8 +152,8 @@ sub new {
 	# Recursive Search
 	Padre::Action->new(
 		name       => 'search.find_in_files',
-		label      => Wx::gettext('Find in Fi&les...'),
-		comment    => Wx::gettext('Search for a text in all files below a given directory'),
+		label      => _T('Find in Fi&les...'),
+		comment    => _T('Search for a text in all files below a given directory'),
 		shortcut   => 'Ctrl-Shift-F',
 		menu_event => sub {
 			require Padre::Wx::Ack;
@@ -162,8 +163,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'search.open_resource',
-		label      => Wx::gettext('Open Resource'),
-		comment    => Wx::gettext('Type in a filter to select a file'),
+		label      => _T('Open Resource'),
+		comment    => _T('Type in a filter to select a file'),
 		shortcut   => 'Ctrl-Shift-R',
 		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {
@@ -176,8 +177,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'search.quick_menu_access',
-		label      => Wx::gettext('Quick Menu Access'),
-		comment    => Wx::gettext('Quick access to all menu functions'),
+		label      => _T('Quick Menu Access'),
+		comment    => _T('Quick access to all menu functions'),
 		shortcut   => 'Ctrl-3',
 		toolbar    => 'status/info',
 		menu_event => sub {
