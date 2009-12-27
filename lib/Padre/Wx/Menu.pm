@@ -46,9 +46,10 @@ sub Append {
 }
 
 # Add a normal menu item to menu from a Padre action
-sub add_menu_item {
-	shift->_add_menu_item( 'Append', @_ );
-}
+# not in use as all simple menu items should use the action system
+#sub add_menu_item {
+#	shift->_add_menu_item( 'Append', @_ );
+#}
 
 # Add a checked menu item to menu from a Padre action
 sub add_checked_menu_item {
