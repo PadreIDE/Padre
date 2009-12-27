@@ -128,7 +128,7 @@ use Carp             ();
 use File::Spec       ();
 use File::Temp       ();
 use Padre::Constant  ();
-use Padre::Util      ();
+use Padre::Util      ('_T');
 use Padre::Wx        ();
 use Padre            ();
 use Padre::MimeTypes ();
@@ -217,7 +217,7 @@ sub new {
 		$self->{file} = Padre::File->new( $self->{filename} );
 
 		if ( !defined( $self->{file} ) ) {
-			$self->error( Wx::gettext('Error while opening file: no file object') );
+			$self->error( _T('Error while opening file: no file object') );
 			return;
 		}
 
@@ -237,7 +237,7 @@ sub new {
 			if ( defined( $self->{file}->size ) and ( $self->{file}->size > $config->editor_file_size_limit ) ) {
 				$self->error(
 					sprintf(
-						Wx::gettext(
+						_T(
 							"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
 						),
 						$self->{file}->{filename},
@@ -399,7 +399,7 @@ button. No return value.
 # TO DO: A globally used error/message box function may be better instead
 #       of replicating the same function in many files:
 sub error {
-	Padre->ide->wx->main->message( $_[1], Wx::gettext('Error') );
+	Padre->ide->wx->main->message( $_[1], _T('Error') );
 }
 
 
@@ -692,11 +692,11 @@ sub save_file {
 	if ( $self->{filename} ne $file->{filename} ) {
 		my $ret = Wx::MessageBox(
 			sprintf(
-				Wx::gettext('Visual filename %s does not match the internal filename %s, do you want to abort saving?'),
+				_T('Visual filename %s does not match the internal filename %s, do you want to abort saving?'),
 				$self->{filename},
 				$file->{filename}
 			),
-			Wx::gettext("Save Warning"),
+			_T("Save Warning"),
 			Wx::wxYES_NO | Wx::wxCENTRE,
 			Padre->ide->wx->main,
 		);
@@ -875,7 +875,7 @@ sub get_title {
 	if ( defined( $self->{file} ) and defined( $self->{file}->filename ) and ( $self->{file}->filename ne '' ) ) {
 		return $self->basename;
 	} else {
-		my $str = sprintf( Wx::gettext("Unsaved %d"), $unsaved_number );
+		my $str = sprintf( _T("Unsaved %d"), $unsaved_number );
 
 		# A bug in Wx requires a space at the front of the title
 		# (For reasons I don't understand yet)
@@ -1269,8 +1269,8 @@ sub stats {
 		$words++               while ( $code =~ /\b\w+\b/g );
 		$chars_without_space++ while ( $code =~ /\S/g );
 	} else {
-		$words               = Wx::gettext("Skipped for large files");
-		$chars_without_space = Wx::gettext("Skipped for large files");
+		$words               = _T("Skipped for large files");
+		$chars_without_space = _T("Skipped for large files");
 	}
 
 	my $filename = defined( $self->{file} ) ? $self->{file}->filename : undef;

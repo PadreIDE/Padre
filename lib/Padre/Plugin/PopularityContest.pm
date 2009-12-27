@@ -118,6 +118,7 @@ use Scalar::Util  ();
 use Padre::Plugin ();
 use Padre::Task::HTTPClient;
 use Padre::Constant();
+use Padre::Util   ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Plugin';
@@ -194,8 +195,8 @@ sub menu_plugins_simple {
 	#       the contents of a report.
 
 	return shift->plugin_name => [
-		Wx::gettext("About")               => '_about',
-		Wx::gettext("Show current report") => 'report_show',
+		_T("About")               => '_about',
+		_T("Show current report") => 'report_show',
 	];
 }
 
@@ -294,7 +295,7 @@ sub report_show {
 	# Show the result in a text box
 	Padre::Wx::Dialog::Text->show(
 		$self->main,
-		Wx::gettext('Popularity Contest Report'),
+		_T('Popularity Contest Report'),
 		$yaml,
 	);
 }

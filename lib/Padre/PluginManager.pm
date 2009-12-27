@@ -36,7 +36,7 @@ use Scalar::Util             ();
 use Params::Util             ();
 use Padre::Constant          ();
 use Padre::Current           ();
-use Padre::Util              ();
+use Padre::Util              ('_T');
 use Padre::PluginHandle      ();
 use Padre::Wx                ();
 use Padre::Wx::Menu::Plugins ();
@@ -320,7 +320,7 @@ sub load_plugins {
 		# and only report on plug-ins that USED to work but now
 		# have started to fail.
 		# $self->parent->wx->main->error(
-		#     Wx::gettext("Failed to load the following plug-in(s):\n")
+		#     _T("Failed to load the following plug-in(s):\n")
 		#     . join "\n", @failed
 		# ) unless $ENV{HARNESS_ACTIVE};
 		return;
@@ -372,7 +372,7 @@ sub alert_new {
 		grep { $_->loaded } values %$plugins;
 
 	if ( @loaded and not $ENV{HARNESS_ACTIVE} ) {
-		my $msg = Wx::gettext(<<"END_MSG") . join( "\n", @loaded );
+		my $msg = _T(<<"END_MSG") . join( "\n", @loaded );
 We found several new plug-ins.
 In order to configure and enable them go to
 Plug-ins -> Plug-in Manager
@@ -383,7 +383,7 @@ END_MSG
 
 		$self->parent->wx->main->message(
 			$msg,
-			Wx::gettext('New plug-ins detected')
+			_T('New plug-ins detected')
 		);
 	}
 
@@ -512,7 +512,7 @@ sub _load_plugin {
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Crashed while loading: %s"),
+				_T("%s - Crashed while loading: %s"),
 				$module, $@,
 			)
 		);
@@ -524,7 +524,7 @@ sub _load_plugin {
 	unless ( $module->isa('Padre::Plugin') ) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Not a Padre::Plugin subclass"),
+				_T("%s - Not a Padre::Plugin subclass"),
 				$module,
 			)
 		);
@@ -537,7 +537,7 @@ sub _load_plugin {
 	if ($@) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Crashed while instantiating: %s"),
+				_T("%s - Crashed while instantiating: %s"),
 				$module, $@,
 			)
 		);
@@ -547,7 +547,7 @@ sub _load_plugin {
 	unless ( Params::Util::_INSTANCE( $object, 'Padre::Plugin' ) ) {
 		$plugin->errstr(
 			sprintf(
-				Wx::gettext("%s - Failed to instantiate plug-in"),
+				_T("%s - Failed to instantiate plug-in"),
 				$module,
 			)
 		);
@@ -728,14 +728,14 @@ sub plugin_event {
 		my $plugin = $self->{plugins}->{$module};
 		if ( !ref($plugin) ) {
 
-			#			$self->_error($plugin,Wx::gettext('Not found in plugin list!'));
+			#			$self->_error($plugin,_T('Not found in plugin list!'));
 			next;
 		}
 
 		my $object = $plugin->{object};
 		if ( !ref($object) ) {
 
-			#			$self->_error($plugin,Wx::gettext('Plugin object missing!'));
+			#			$self->_error($plugin,_T('Plugin object missing!'));
 			next;
 		}
 
@@ -747,7 +747,7 @@ sub plugin_event {
 			$object->$event(@_);
 		};
 		if ($@) {
-			$self->_error( $plugin, sprintf( Wx::gettext( 'Plugin error on event %s: %s', $event, $@ ) ) );
+			$self->_error( $plugin, sprintf( _T( 'Plugin error on event %s: %s', $event, $@ ) ) );
 			next;
 		}
 	}
@@ -757,8 +757,8 @@ sub plugin_event {
 # Show an error message
 sub _error {
 	my $self   = shift;
-	my $plugin = shift || Wx::gettext('(core)');
-	my $text   = shift || Wx::gettext('Unknown error');
+	my $plugin = shift || _T('(core)');
+	my $text   = shift || _T('Unknown error');
 
 	# Report detailed plugin error to console
 	my @callerinfo  = caller(0);
@@ -771,7 +771,7 @@ sub _error {
 
 	# Report to user
 	my $main = Padre->ide->wx->main;
-	$main->error( sprintf( Wx::gettext('Plugin %s'), $plugin ) . ': ' . $text );
+	$main->error( sprintf( _T('Plugin %s'), $plugin ) . ': ' . $text );
 }
 
 # enable all the plug-ins for a single editor
@@ -843,7 +843,7 @@ sub get_menu {
 	}
 	my ( $label, $menu ) = eval { $plugin->{object}->menu_plugins($main) };
 	if ($@) {
-		$plugin->errstr( Wx::gettext("Error when calling menu for plug-in") . "'$module': $@" );
+		$plugin->errstr( _T("Error when calling menu for plug-in") . "'$module': $@" );
 
 		# TO DO: make sure these error messages show up somewhere or it will drive
 		# crazy anyone trying to write a plug-in
@@ -876,16 +876,16 @@ sub reload_current_plugin {
 	my $plugins = $self->plugins;
 
 	unless ( $main->current ) {
-		return $main->error( Wx::gettext('No document open') );
+		return $main->error( _T('No document open') );
 	}
 	my $filename = $main->current->filename;
 	unless ($filename) {
-		return $main->error( Wx::gettext('No filename') );
+		return $main->error( _T('No filename') );
 	}
 
 	# TO DO: locate project
 	my $dir = Padre::Util::get_project_dir($filename);
-	return $main->error( Wx::gettext('Could not locate project dir') ) if not $dir;
+	return $main->error( _T('Could not locate project dir') ) if not $dir;
 
 	# TO DO shall we relax the assumption of a lib subdir?
 	$dir = File::Spec->catdir( $dir, 'lib' );
@@ -904,7 +904,7 @@ sub reload_current_plugin {
 		if ( $self->plugins->{$plugin}->{status} eq 'error' ) {
 			$main->error(
 				sprintf(
-					Wx::gettext("Failed to load the plug-in '%s'\n%s"),
+					_T("Failed to load the plug-in '%s'\n%s"),
 					$plugin, $self->plugins->{$plugin}->errstr
 				)
 			);
@@ -954,7 +954,7 @@ sub test_a_plugin {
 		$default_dir = File::Basename::dirname($last_filename);
 	}
 	my $dialog = Wx::FileDialog->new(
-		$main, Wx::gettext('Open file'), $default_dir, '', '*.*', Wx::wxFD_OPEN,
+		$main, _T('Open file'), $default_dir, '', '*.*', Wx::wxFD_OPEN,
 	);
 	unless (Padre::Constant::WIN32) {
 		$dialog->SetWildcard("*");
@@ -974,7 +974,7 @@ sub test_a_plugin {
 	unless ($filename) {
 		Wx::MessageBox(
 			sprintf(
-				Wx::gettext("Plug-in must have '%s' as base directory"),
+				_T("Plug-in must have '%s' as base directory"),
 				$plugin_folder_name
 			),
 			'Error loading plug-in',
@@ -1000,7 +1000,7 @@ sub test_a_plugin {
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
 		$main->error(
 			sprintf(
-				Wx::gettext("Failed to load the plug-in '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr
+				_T("Failed to load the plug-in '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr
 			)
 		);
 		return;

@@ -81,6 +81,7 @@ use Padre::Task    ();
 use Padre::Service ();
 use Padre::Wx      ();
 use Padre::Logger;
+use Padre::Util    ('_T');
 
 use Class::XSAccessor getters => {
 	task_queue     => 'task_queue',
@@ -592,21 +593,21 @@ sub on_dump_running_tasks {
 
 	$output->AppendText( "\n-----------------------------------------\n["
 			. localtime() . "] "
-			. sprintf( Wx::gettext("%s worker threads are running.\n"), scalar( $manager->workers ) ) );
+			. sprintf( _T("%s worker threads are running.\n"), scalar( $manager->workers ) ) );
 	if ( $nrunning == 0 ) {
-		$output->AppendText( Wx::gettext("Currently, no background tasks are being executed.\n") );
+		$output->AppendText( _T("Currently, no background tasks are being executed.\n") );
 		return ();
 	}
 
 	my $running = $manager->{running_tasks};
 	my $text;
-	$text .= Wx::gettext("The following tasks are currently executing in the background:\n");
+	$text .= _T("The following tasks are currently executing in the background:\n");
 
 	foreach my $type ( keys %$running ) {
 		my $threads = $running->{$type};
 		my $n       = keys %$threads;
 		$text .= sprintf(
-			Wx::gettext("- %s of type '%s':\n  (in thread(s) %s)\n"),
+			_T("- %s of type '%s':\n  (in thread(s) %s)\n"),
 			$n, $type, join( ", ", sort { $a <=> $b } keys %$threads )
 		);
 	}
@@ -618,7 +619,7 @@ sub on_dump_running_tasks {
 
 	if ($pending) {
 		$output->AppendText(
-			sprintf( Wx::gettext("\nAdditionally, there are %s tasks pending execution.\n"), $pending ) );
+			sprintf( _T("\nAdditionally, there are %s tasks pending execution.\n"), $pending ) );
 	}
 }
 
