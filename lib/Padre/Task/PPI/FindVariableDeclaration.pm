@@ -3,9 +3,10 @@ package Padre::Task::PPI::FindVariableDeclaration;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                                  ();
-use Padre::Task::PPI                           ();
+
 use PPIx::EditorTools::FindVariableDeclaration ();
+use Padre::Task::PPI                           ();
+use Padre::Util                                ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Task::PPI';
@@ -86,16 +87,13 @@ sub finish {
 	} else {
 		my $text;
 		if ( $self->{error} =~ /no token/ ) {
-			$text = Wx::gettext("Current cursor does not seem to point at a variable");
+			$text = _T("Current cursor does not seem to point at a variable");
 		} elsif ( $self->{error} =~ /no declaration/ ) {
-			$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
+			$text = _T("No declaration could be found for the specified (lexical?) variable");
 		} else {
-			$text = Wx::gettext("Unknown error");
+			$text = _T("Unknown error");
 		}
-		Wx::MessageBox(
-			$text,    Wx::gettext("Search Canceled"),
-			Wx::wxOK, Padre->ide->wx->main
-		);
+		Padre->ide->wx->main->message($text, _T("Search Canceled"));
 	}
 	return ();
 }
