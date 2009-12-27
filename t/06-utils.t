@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan(tests => 4);
+plan( tests => 4 );
 use Padre::Util;
 use File::Basename ();
 use File::Spec     ();

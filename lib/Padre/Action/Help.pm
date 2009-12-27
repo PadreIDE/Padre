@@ -10,7 +10,7 @@ use Padre::Action   ();
 use Padre::Constant ();
 use Padre::Current '_CURRENT';
 use Padre::Locale ();
-use Padre::Util    ('_T');
+use Padre::Util   ('_T');
 
 our $VERSION = '0.53';
 
@@ -121,9 +121,7 @@ sub new {
 	Padre::Action->new(
 		name    => 'help.visit_perlmonks',
 		label   => _T('Visit the PerlMonks'),
-		comment => _T(
-			'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default web browser'
-		),
+		comment => _T( 'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default web browser' ),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
 		},

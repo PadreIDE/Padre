@@ -3876,7 +3876,7 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock   = $self->lock('REFRESH', 'refresh_directory', 'refresh_menu');
+	my $lock = $self->lock( 'REFRESH', 'refresh_directory', 'refresh_menu' );
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(

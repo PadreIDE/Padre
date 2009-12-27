@@ -15,13 +15,13 @@ developing Perl files
 use 5.008;
 use strict;
 use warnings;
-use List::Util     ();
-use File::Spec     ();
-use File::HomeDir  ();
-use Params::Util   qw{_INSTANCE};
-use Padre::Locale  ();
+use List::Util    ();
+use File::Spec    ();
+use File::HomeDir ();
+use Params::Util qw{_INSTANCE};
+use Padre::Locale ();
 use Padre::Current qw{_CURRENT};
-use Padre::Util    ('_T');
+use Padre::Util ('_T');
 
 our $VERSION = '0.53';
 
@@ -55,8 +55,8 @@ sub new {
 		name        => 'perl.find_brace',
 		need_editor => 1,
 		label       => _T('Find Unmatched Brace'),
-		comment    => _T('Searches the source code for brackets with lack a matching (opening/closing) part.'),
-		menu_event => sub {
+		comment     => _T('Searches the source code for brackets with lack a matching (opening/closing) part.'),
+		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 			$doc->find_unmatched_brace;
@@ -102,8 +102,8 @@ sub new {
 		name        => 'perl.newline_keep_column',
 		need_editor => 1,
 		label       => _T('Newline same column'),
-		comment     => _T(
-			'Like pressing ENTER somewhere on a line but use the current position as ident for the new line.'),
+		comment =>
+			_T('Like pressing ENTER somewhere on a line but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
@@ -116,9 +116,8 @@ sub new {
 		name        => 'perl.create_tagsfile',
 		need_editor => 1,
 		label       => _T('Create project tagsfile'),
-		comment =>
-			_T('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
-		menu_event => sub {
+		comment     => _T('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			return unless _INSTANCE( $document, 'Padre::Document::Perl' );
 			$document->project_create_tagsfile;

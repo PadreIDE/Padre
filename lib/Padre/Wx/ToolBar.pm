@@ -93,12 +93,12 @@ sub add_tool_item {
 
 	my $action = $actions->{ $args{action} };
 	unless ($action) {
-		warn( "No action called $args{action}\n" );
+		warn("No action called $args{action}\n");
 		return;
 	}
 	my $icon = $action->toolbar_icon;
 	unless ($icon) {
-		warn( "Action $args{action} does not have an icon defined\n" );
+		warn("Action $args{action} does not have an icon defined\n");
 		return;
 	}
 
@@ -116,7 +116,7 @@ sub add_tool_item {
 	# Create the tool
 	$self->AddTool(
 		$id, '',
-		Padre::Wx::Icon::find( $icon ),
+		Padre::Wx::Icon::find($icon),
 		$action->label_text,
 	);
 

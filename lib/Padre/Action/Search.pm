@@ -7,8 +7,8 @@ use strict;
 use warnings;
 use Padre::Action;
 use Padre::Current qw{_CURRENT};
-use Padre::Search ();
-use Padre::Util    ('_T');
+use Padre::Search   ();
+use Padre::Util     ('_T');
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -129,9 +129,9 @@ sub new {
 		name        => 'search.quick_find_previous',
 		need_editor => 1,
 		label       => _T('Find Previous'),
-		comment  => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
-		shortcut => 'Shift-F4',
-		menu_event => sub {
+		comment     => _T('Find previous matching text using a toolbar-like dialog at the bottom of the editor'),
+		shortcut    => 'Shift-F4',
+		menu_event  => sub {
 			$_[0]->fast_find->search('previous');
 		},
 	);
