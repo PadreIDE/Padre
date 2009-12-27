@@ -44,6 +44,14 @@ sub new {
 	}
 
 	$self->AppendSeparator;
+	
+	if ($selection_exists) {
+		$self->{open_selection} = $self->add_menu_action(
+			$self,
+			'file.open_selection',
+		);
+		$self->AppendSeparator;
+	}
 
 	$self->{select_all} = $self->add_menu_action(
 		$self,
