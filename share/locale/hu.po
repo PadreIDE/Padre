@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.17\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-24 07:25+0200\n"
-"PO-Revision-Date: 2009-12-24 23:08+0200\n"
+"PO-Revision-Date: 2009-12-25 19:11+0200\n"
 "Last-Translator: Gabor Szabo <szabgab@gmail.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1509,9 +1509,8 @@ msgid "Variable Name"
 msgstr ""
 
 #: lib/Padre/Action/Run.pm:39
-#, fuzzy
 msgid "Run Script"
-msgstr "Script futtatása\tF5"
+msgstr "Script futtatása"
 
 #: lib/Padre/Action/Run.pm:40
 msgid "Runs the current document and shows its output in the output panel."
@@ -1581,9 +1580,8 @@ msgstr ""
 
 #: lib/Padre/Action/Search.pm:46
 #: lib/Padre/Action/Search.pm:118
-#, fuzzy
 msgid "Find Next"
-msgstr "Következő Keresése\tF3"
+msgstr "Következő Keresése"
 
 #: lib/Padre/Action/Search.pm:48
 msgid "Repeat the last find to find the next match"
