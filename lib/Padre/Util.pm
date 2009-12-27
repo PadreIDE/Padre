@@ -358,7 +358,7 @@ sub find_perldiag_translations {
 
 Given a project directory (see C<get_project_dir>), returns the project's
 Revision Control System (C<RCS>) by name. This can be either C<CVS>,
-C<SVN> or C<GIT>. Returns C<undef> if none was found.
+C<SVN> or C<Git>. Returns C<undef> if none was found.
 
 =cut
 
@@ -368,7 +368,7 @@ sub get_project_rcs {
 	my %evidence_of = (
 		'CVS' => 'CVS',
 		'SVN' => '.svn',
-		'GIT' => '.git',
+		'Git' => '.git',
 	);
 
 	foreach my $rcs ( keys %evidence_of ) {
@@ -378,6 +378,10 @@ sub get_project_rcs {
 		);
 		return $rcs if -d $dir;
 	}
+	
+	# special case one step upwards traverse for the git version of the Padre repository
+	my $dir = File::Spec->catdir( File::Basename::dirname($project_dir), '.git' );
+	return 'Git' if -d $dir;
 
 	return;
 }
