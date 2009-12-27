@@ -40,6 +40,7 @@ sub new {
 		comment      => Wx::gettext('Runs the current document and shows its output in the output panel.'),
 		shortcut     => 'F5',
 		need_file    => 1,
+		toolbar      => 'actions/player_play',
 		menu_event   => sub {
 			$_[0]->run_document;
 			$_[0]->refresh_toolbar( $_[0]->current );
@@ -121,6 +122,7 @@ sub new {
 		label      => Wx::gettext('Stop execution'),
 		comment    => Wx::gettext('Stop a running task.'),
 		shortcut   => 'F6',
+		toolbar    => 'actions/stop',
 		menu_event => sub {
 			if ( $_[0]->{command} ) {
 				if (Padre::Constant::WIN32) {

@@ -33,6 +33,7 @@ sub new {
 		label      => Wx::gettext('&New'),
 		comment    => Wx::gettext('Open a new empty document'),
 		shortcut   => 'Ctrl-N',
+		toolbar    => 'actions/document-new',
 		menu_event => sub {
 			$_[0]->on_new;
 		},
@@ -96,6 +97,7 @@ sub new {
 		label      => Wx::gettext('&Open...'),
 		comment    => Wx::gettext('Browse directory of the current document to open a file'),
 		shortcut   => 'Ctrl-O',
+		toolbar    => 'actions/document-open',
 		menu_event => sub {
 			$_[0]->on_open;
 		},
@@ -117,6 +119,7 @@ sub new {
 		name       => 'file.open_example',
 		label      => Wx::gettext('Open Example'),
 		comment    => Wx::gettext('Browse the directory of the installed examples to open one file'),
+		toolbar    => 'stock/generic/stock_example',
 		menu_event => sub {
 			$_[0]->on_open_example;
 		},
@@ -129,6 +132,7 @@ sub new {
 		label       => Wx::gettext('&Close'),
 		comment     => Wx::gettext('Close current document'),
 		shortcut    => 'Ctrl-W',
+		toolbar     => 'actions/x-document-close',
 		menu_event  => sub {
 			$_[0]->on_close;
 		},
@@ -227,6 +231,7 @@ sub new {
 		label         => Wx::gettext('&Save'),
 		comment       => Wx::gettext('Save current document'),
 		shortcut      => 'Ctrl-S',
+		toolbar       => 'actions/document-save',
 		menu_event    => sub {
 			$_[0]->on_save;
 		},
@@ -239,6 +244,7 @@ sub new {
 		label       => Wx::gettext('Save &As'),
 		comment     => Wx::gettext('Allow the selection of another name to save the current document'),
 		shortcut    => 'F12',
+		toolbar     => 'actions/document-save-as',
 		menu_event  => sub {
 			$_[0]->on_save_as;
 		},
@@ -261,6 +267,7 @@ sub new {
 		need_editor => 1,
 		label       => Wx::gettext('Save All'),
 		comment     => Wx::gettext('Save all the files'),
+		toolbar     => 'actions/stock_data-save',
 		menu_event  => sub {
 			$_[0]->on_save_all;
 		},
@@ -346,6 +353,8 @@ sub new {
 		name       => 'file.doc_stat',
 		label      => Wx::gettext('Document Statistics'),
 		comment    => Wx::gettext('Word count and other statistics of the current document'),
+		need_editor => 1,
+		toolbar    => 'actions/document-properties',
 		menu_event => sub {
 			$_[0]->on_doc_stats;
 		},

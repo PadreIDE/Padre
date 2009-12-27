@@ -31,6 +31,7 @@ use Class::XSAccessor getters => {
 	menu_event    => 'menu_event',
 	toolbar_event => 'toolbar_event',
 	menu_method   => 'menu_method',
+	toolbar_icon  => 'toolbar',
 };
 
 

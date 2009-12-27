@@ -37,6 +37,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-stop-after-command',
 		label        => Wx::gettext('Step In') . ' (&s) ',
 		comment      => Wx::gettext(
 			'Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)'),
@@ -52,6 +53,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-stop-after-procedure',
 		label        => Wx::gettext('Step Over') . ' (&n) ',
 		comment      => Wx::gettext(
 			'Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)'
@@ -69,6 +71,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-jump-back',
 		label        => Wx::gettext('Step Out') . ' (&r) ',
 		comment      => Wx::gettext('If withing a subroutine, run till return is called and then stop.'),
 
@@ -83,6 +86,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'stock/code/stock_tools-macro',
 		label        => Wx::gettext('Run till breakpoint') . ' (&c) ',
 		comment      => Wx::gettext('Start running and/or continoue running till next breakpoint or watch'),
 
@@ -111,6 +115,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
 		label        => Wx::gettext('Set breakpoint') . ' (&b) ',
 		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
 
@@ -182,6 +187,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-watch-variable',
 		label        => Wx::gettext('Display value'),
 		comment      => Wx::gettext('Display the current value of a variable in the right hand side debugger pane'),
 
@@ -224,6 +230,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
+		toolbar      => 'actions/stop',
 		label        => Wx::gettext('Quit Debugger') . ' (&q) ',
 		comment      => Wx::gettext('Quit the process being debugged'),
 

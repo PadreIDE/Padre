@@ -59,23 +59,19 @@ sub new {
 			next;
 		}
 
-		if ( $item =~ /^(.+?)\((.*)\)(\:(.*))?$/ ) {
+		if ( $item =~ /^(.+?)\((.*)\)$/ ) {
 			my $action = $1;
-			my $icon   = $4;
 			$self->add_tool_item(
 				action => $action,
-				icon   => $icon,
 				args   => split( /\,/, $2 ),
 			);
 			next;
 		}
 
-		if ( $item =~ /^(.+?)(\:(.*))?$/ ) {
+		if ( $item =~ /^(.+?)$/ ) {
 			my $action = $1;
-			my $icon   = $3;
 			$self->add_tool_item(
 				action => $action,
-				icon   => $icon,
 			);
 			next;
 		}
@@ -241,7 +237,7 @@ sub add_tool_item {
 	# Create the tool
 	$self->AddTool(
 		$id, '',
-		Padre::Wx::Icon::find( $args{icon} ),
+		Padre::Wx::Icon::find( $action->toolbar_icon ),
 		$action->label_text,
 	);
 

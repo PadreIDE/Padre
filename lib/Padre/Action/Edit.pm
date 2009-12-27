@@ -38,6 +38,7 @@ sub new {
 		label      => Wx::gettext('&Undo'),
 		comment    => Wx::gettext('Undo last change in current file'),
 		shortcut   => 'Ctrl-Z',
+		toolbar    => 'actions/edit-undo',
 		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Undo;
@@ -57,6 +58,7 @@ sub new {
 		label      => Wx::gettext('&Redo'),
 		comment    => Wx::gettext('Redo last undo'),
 		shortcut   => 'Ctrl-Y',
+		toolbar    => 'actions/edit-redo',
 		menu_event => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Redo;
@@ -70,6 +72,7 @@ sub new {
 		label       => Wx::gettext('Select all'),
 		comment     => Wx::gettext('Select all the text in the current document'),
 		shortcut    => 'Ctrl-A',
+		toolbar     => 'actions/edit-select-all',
 		menu_event  => sub {
 			require Padre::Wx::Editor;
 			Padre::Wx::Editor::text_select_all(@_);
@@ -120,6 +123,7 @@ sub new {
 		label          => Wx::gettext('Cu&t'),
 		comment        => Wx::gettext('Remove the current selection and put it in the clipboard'),
 		shortcut       => 'Ctrl-X',
+		toolbar        => 'actions/edit-cut',
 		menu_event     => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Cut;
@@ -134,6 +138,7 @@ sub new {
 		label          => Wx::gettext('&Copy'),
 		comment        => Wx::gettext('Put the current selection in the clipboard'),
 		shortcut       => 'Ctrl-C',
+		toolbar        => 'actions/edit-copy',
 		menu_event     => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Copy;
@@ -205,6 +210,7 @@ sub new {
 		label       => Wx::gettext('&Paste'),
 		comment     => Wx::gettext('Paste the clipboard to the current location'),
 		shortcut    => 'Ctrl-V',
+		toolbar     => 'actions/edit-paste',
 		menu_event  => sub {
 			my $editor = Padre::Current->editor or return;
 			$editor->Paste;
@@ -366,8 +372,9 @@ sub new {
 		need_editor    => 1,
 		need_selection => 1,
 		label          => Wx::gettext('&Toggle Comment'),
-		comment     => Wx::gettext('Comment out or remove comment out of selected lines in the document'),
+		comment        => Wx::gettext('Comment out or remove comment out of selected lines in the document'),
 		shortcut       => 'Ctrl-Shift-C',
+		toolbar        => 'actions/toggle-comments',
 		menu_event     => sub {
 			Padre::Wx::Main::on_comment_block( $_[0], 'TOGGLE' );
 		},

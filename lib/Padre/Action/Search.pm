@@ -36,6 +36,7 @@ sub new {
 		label       => Wx::gettext('&Find'),
 		comment     => Wx::gettext('Find text or regular expressions using a traditional dialog'),
 		shortcut    => 'Ctrl-F',
+		toolbar     => 'actions/edit-find',
 		menu_event  => sub {
 			$_[0]->find->find;
 		},
@@ -141,6 +142,7 @@ sub new {
 		label       => Wx::gettext('Replace'),
 		comment     => Wx::gettext('Find a text and replace it'),
 		shortcut    => 'Ctrl-R',
+		toolbar     => 'actions/edit-find-replace',
 		menu_event  => sub {
 			$_[0]->replace->find;
 		},
@@ -163,6 +165,7 @@ sub new {
 		label      => Wx::gettext('Open Resource'),
 		comment    => Wx::gettext('Type in a filter to select a file'),
 		shortcut   => 'Ctrl-Shift-R',
+		toolbar    => 'places/folder-saved-search',
 		menu_event => sub {
 
 			#Create and show the dialog
@@ -176,6 +179,7 @@ sub new {
 		label      => Wx::gettext('Quick Menu Access'),
 		comment    => Wx::gettext('Quick access to all menu functions'),
 		shortcut   => 'Ctrl-3',
+		toolbar    => 'status/info',
 		menu_event => sub {
 
 			#Create and show the dialog
