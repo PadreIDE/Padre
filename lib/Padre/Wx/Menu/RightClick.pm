@@ -50,14 +50,7 @@ sub new {
 
 	$self->AppendSeparator;
 
-	my $selection_exists = 0;
-	my $id               = $main->notebook->GetSelection;
-	if ( $id != -1 ) {
-		my $text = $main->notebook->GetPage($id)->GetSelectedText;
-		if ( defined($text) && length($text) > 0 ) {
-			$selection_exists = 1;
-		}
-	}
+	my $selection_exists = length($editor->GetSelectedText) > 0 ? 1 : 0;
 
 	$self->{copy} = $self->add_menu_action(
 		$self,
@@ -79,7 +72,7 @@ sub new {
 		'edit.paste',
 	);
 	my $text = $editor->get_text_from_clipboard();
-	if ( not defined($text) or not length($text) or not $main->notebook->GetPage($id)->CanPaste ) {
+	if ( not defined($text) or not length($text) or not $editor->CanPaste ) {
 		$self->{paste}->Enable(0);
 	}
 
