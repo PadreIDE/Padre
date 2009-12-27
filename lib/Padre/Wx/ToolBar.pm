@@ -92,8 +92,15 @@ sub add_tool_item {
 	my $actions = Padre::ide->actions;
 
 	my $action = $actions->{ $args{action} };
-	die( "No action with the name " . $args{name} )
-		unless $action;
+	unless ($action) {
+		warn( "No action called $args{action}\n" );
+		return;
+	}
+	my $icon = $action->toolbar_icon;
+	unless ($icon) {
+		warn( "Action $args{action} does not have an icon defined\n" );
+		return;
+	}
 
 	# the ID code should be unique otherwise it can break the event system.
 	# If set to -1 such as in the default call below, it will override
@@ -109,7 +116,7 @@ sub add_tool_item {
 	# Create the tool
 	$self->AddTool(
 		$id, '',
-		Padre::Wx::Icon::find( $action->toolbar_icon ),
+		Padre::Wx::Icon::find( $icon ),
 		$action->label_text,
 	);
 
