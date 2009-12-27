@@ -22,40 +22,32 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	# Add additional properties
-	#$self->{main} = $main;
+	$self->{main} = $main;
 
-
-	my $undo = $self->Append( Wx::wxID_UNDO, '' );
+	# Undo/Redo
+	$self->{undo} = $self->add_menu_action(
+		$self,
+		'edit.undo',
+	);
 	if ( not $editor->CanUndo ) {
-		$undo->Enable(0);
-	}
-	my $z = Wx::Event::EVT_MENU(
-		$main, # Ctrl-Z
-		$undo,
-		sub {
-			my $editor = Padre::Current->editor;
-			if ( $editor->CanUndo ) {
-				$editor->Undo;
-			}
-			return;
-		},
-	);
-	my $redo = $self->Append( Wx::wxID_REDO, '' );
-	if ( not $editor->CanRedo ) {
-		$redo->Enable(0);
+		$self->{undo}->Enable(0);
 	}
 
-	Wx::Event::EVT_MENU(
-		$main, # Ctrl-Y
-		$redo,
-		sub {
-			my $editor = Padre::Current->editor;
-			if ( $editor->CanRedo ) {
-				$editor->Redo;
-			}
-			return;
-		},
+	$self->{redo} = $self->add_menu_action(
+		$self,
+		'edit.redo',
 	);
+	if ( not $editor->CanRedo ) {
+		$self->{redo}->Enable(0);
+	}
+
+	$self->AppendSeparator;
+
+	$self->{select_all} = $self->add_menu_action(
+		$self,
+		'edit.select_all',
+	);
+
 	$self->AppendSeparator;
 
 	my $selection_exists = 0;
@@ -67,81 +59,47 @@ sub new {
 		}
 	}
 
-	my $sel_all = $self->Append( Wx::wxID_SELECTALL, Wx::gettext("Select all\tCtrl-A") );
-	if ( not $main->notebook->GetPage($id)->GetTextLength > 0 ) {
-		$sel_all->Enable(0);
-	}
-	Wx::Event::EVT_MENU(
-		$main, # Ctrl-A
-		$sel_all,
-		sub { \&text_select_all(@_) },
+	$self->{copy} = $self->add_menu_action(
+		$self,
+		'edit.copy',
 	);
-	$self->AppendSeparator;
-
-	my $copy = $self->Append( Wx::wxID_COPY, Wx::gettext("&Copy\tCtrl-C") );
+	$self->{cut} = $self->add_menu_action(
+		$self,
+		'edit.cut',
+	);
+	
 	if ( not $selection_exists ) {
-		$copy->Enable(0);
+		$self->{copy}->Enable(0);
+		$self->{cut}->Enable(0);
 	}
-	Wx::Event::EVT_MENU(
-		$main, # Ctrl-C
-		$copy,
-		sub {
-			Padre::Current->editor->Copy;
-		}
-	);
 
-	my $cut = $self->Append( Wx::wxID_CUT, Wx::gettext("Cu&t\tCtrl-X") );
-	if ( not $selection_exists ) {
-		$cut->Enable(0);
-	}
-	Wx::Event::EVT_MENU(
-		$main, # Ctrl-X
-		$cut,
-		sub {
-			Padre::Current->editor->Cut;
-		}
-	);
 
-	my $paste = $self->Append( Wx::wxID_PASTE, Wx::gettext("&Paste\tCtrl-V") );
+	$self->{paste} = $self->add_menu_action(
+		$self,
+		'edit.paste',
+	);
 	my $text = $editor->get_text_from_clipboard();
-
-	if ( defined($text) and length($text) && $main->notebook->GetPage($id)->CanPaste ) {
-		Wx::Event::EVT_MENU(
-			$main, # Ctrl-V
-			$paste,
-			sub {
-				Padre::Current->editor->Paste;
-			},
-		);
-	} else {
-		$paste->Enable(0);
+	if ( not defined($text) or not length($text) or not $main->notebook->GetPage($id)->CanPaste ) {
+		$self->{paste}->Enable(0);
 	}
 
 	$self->AppendSeparator;
 
-	my $commentToggle = $self->Append( -1, Wx::gettext("&Toggle Comment\tCtrl-Shift-C") );
-	Wx::Event::EVT_MENU(
-		$main,
-		$commentToggle,
-		sub {
-			Padre::Wx::Main::on_comment_block( $_[0], 'TOGGLE' );
-		},
+	$self->{comment_toggle} = $self->add_menu_action(
+		$self,
+		'edit.comment_toggle',
 	);
-	my $comment = $self->Append( -1, Wx::gettext("&Comment Selected Lines\tCtrl-M") );
-	Wx::Event::EVT_MENU(
-		$main, $comment,
-		sub {
-			Padre::Wx::Main::on_comment_block( $_[0], 'COMMENT' );
-		},
+
+	$self->{comment} = $self->add_menu_action(
+		$self,
+		'edit.comment',
 	);
-	my $uncomment = $self->Append( -1, Wx::gettext("&Uncomment Selected Lines\tCtrl-Shift-M") );
-	Wx::Event::EVT_MENU(
-		$main,
-		$uncomment,
-		sub {
-			Padre::Wx::Main::on_comment_block( $_[0], 'UNCOMMENT' );
-		},
+
+	$self->{uncomment} = $self->add_menu_action(
+		$self,
+		'edit.uncomment',
 	);
+
 
 	if (    $event->isa('Wx::MouseEvent')
 		and $editor->main->ide->config->editor_folding )
