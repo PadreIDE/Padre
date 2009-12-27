@@ -3,9 +3,11 @@ package Padre::Task::SyntaxChecker;
 use 5.008;
 use strict;
 use warnings;
+
 use Params::Util qw{_CODE _INSTANCE};
-use Padre::Task    ();
 use Padre::Current ();
+use Padre::Task    ();
+use Padre::Util ('_T');
 use Padre::Wx      ();
 
 our $VERSION = '0.53';
@@ -143,7 +145,7 @@ sub update_gui {
 	if ( ( !defined($messages) ) or ( $#{$messages} == -1 ) ) {
 		my $idx = $syntax->InsertStringImageItem( 0, '', 2 );
 		$syntax->SetItemData( $idx, 0 );
-		$syntax->SetItem( $idx, 1, Wx::gettext('Info') );
+		$syntax->SetItem( $idx, 1, _T('Info') );
 
 		# Relative-to-the-project filename
 		my $document = Padre::Current->document;
@@ -153,9 +155,9 @@ sub update_gui {
 				my $project_dir = quotemeta $document->project_dir;
 				$filename =~ s/^$project_dir//;
 			}
-			$syntax->SetItem( $idx, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
+			$syntax->SetItem( $idx, 2, sprintf( _T('No errors or warnings found in %s.'), $filename ) );
 		} else {
-			$syntax->SetItem( $idx, 2, Wx::gettext('No errors or warnings found.') );
+			$syntax->SetItem( $idx, 2, _T('No errors or warnings found.') );
 		}
 		return;
 	}
@@ -180,7 +182,7 @@ sub update_gui {
 			}
 			my $idx = $syntax->InsertStringImageItem( $i++, $l + 1, ( $hint->{severity} eq 'W' ? 1 : 0 ) );
 			$syntax->SetItemData( $idx, 0 );
-			$syntax->SetItem( $idx, 1, ( $hint->{severity} eq 'W' ? Wx::gettext('Warning') : Wx::gettext('Error') ) );
+			$syntax->SetItem( $idx, 1, ( $hint->{severity} eq 'W' ? _T('Warning') : _T('Error') ) );
 			$syntax->SetItem( $idx, 2, $hint->{msg} );
 
 			if ( exists $editor->{synchk_calltips}->{$l} ) {

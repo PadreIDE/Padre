@@ -35,7 +35,9 @@ use 5.008;
 use strict;
 use warnings;
 use version;
+
 use Padre::Task::Outline ();
+use Padre::Util ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Task::Outline';
@@ -162,7 +164,7 @@ sub update_gui {
 
 	# Add the hidden unused root
 	my $root = $outlinebar->AddRoot(
-		Wx::gettext('Outline'),
+		_T('Outline'),
 		-1,
 		-1,
 		Wx::TreeItemData->new('')
@@ -196,7 +198,7 @@ sub _on_tree_item_right_click {
 	my $itemData = $outlinebar->GetPlData( $event->GetItem );
 
 	if ( defined($itemData) && defined( $itemData->{line} ) && $itemData->{line} > 0 ) {
-		my $goTo = $menu->Append( -1, Wx::gettext("&GoTo Element") );
+		my $goTo = $menu->Append( -1, _T("&GoTo Element") );
 		Wx::Event::EVT_MENU(
 			$outlinebar, $goTo,
 			sub { $outlinebar->on_tree_item_set_focus($event); },
@@ -208,7 +210,7 @@ sub _on_tree_item_right_click {
 		&& defined( $itemData->{type} )
 		&& ( $itemData->{type} eq 'modules' || $itemData->{type} eq 'pragmata' ) )
 	{
-		my $pod = $menu->Append( -1, Wx::gettext("Open &Documentation") );
+		my $pod = $menu->Append( -1, _T("Open &Documentation") );
 		Wx::Event::EVT_MENU(
 			$outlinebar,
 			$pod,
