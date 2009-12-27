@@ -324,12 +324,12 @@ setting(
 	type  => Padre::Constant::ASCII,
 	store => Padre::Constant::HUMAN,
 
-	# This lifes here until a better place is found:
+	# This lives here until a better place is found:
 	# This is a list of toolbar items, seperated by ;
 	# The following items are supported:
-	#   action:icon
-	#     Insert the action with the named icon
-	#   action(argument,argument):icon
+	#   action
+	#     Insert the action
+	#   action(argument,argument)
 	#     Insert an action which requires one or more arguments
 	#   |
 	#     Insert a seperator
@@ -338,22 +338,31 @@ setting(
 		. 'file.save;'
 		. 'file.save_as;'
 		. 'file.save_all;'
-		. 'file.close;' . '|;'
-		. 'file.open_example;' . '|;'
+		. 'file.close;'
+		. '|;'
+		. 'file.open_example;'
+		. '|;'
 		. 'edit.undo;'
-		. 'edit.redo;' . '|;'
+		. 'edit.redo;'
+		. '|;'
 		. 'edit.cut;'
 		. 'edit.copy;'
 		. 'edit.paste;'
-		. 'edit.select_all;' . '|;'
+		. 'edit.select_all;'
+		. '|;'
 		. 'search.find;'
-		. 'search.replace;' . '|;'
-		. 'edit.comment_toggle;' . '|;'
-		. 'file.doc_stat;' . '|;'
+		. 'search.replace;'
+		. '|;'
+		. 'edit.comment_toggle;'
+		. '|;'
+		. 'file.doc_stat;'
+		. '|;'
 		. 'search.open_resource;'
-		. 'search.quick_menu_access;' . '|;'
+		. 'search.quick_menu_access;'
+		. '|;'
 		. 'run.run_document;'
-		. 'run.stop;' . '|;'
+		. 'run.stop;'
+		. '|;'
 		. 'debug.step_in;'
 		. 'debug.step_over;'
 		. 'debug.step_out;'
@@ -368,7 +377,7 @@ setting(
 	type  => Padre::Constant::ASCII,
 	store => Padre::Constant::HUMAN,
 
-	# This lifes here until a better place is found:
+	# This lives here until a better place is found:
 	# This is a list of menubar items, seperated by ;
 	# The following items are supported:
 	#   menu.MenuName
