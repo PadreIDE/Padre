@@ -24,6 +24,8 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
+	my $selection_exists = length($editor->GetSelectedText) > 0 ? 1 : 0;
+
 	# Undo/Redo
 	$self->{undo} = $self->add_menu_action(
 		$self,
@@ -49,8 +51,6 @@ sub new {
 	);
 
 	$self->AppendSeparator;
-
-	my $selection_exists = length($editor->GetSelectedText) > 0 ? 1 : 0;
 
 	$self->{copy} = $self->add_menu_action(
 		$self,
