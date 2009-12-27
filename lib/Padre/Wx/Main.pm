@@ -2077,10 +2077,7 @@ sub run_command {
 	unless ( $self->{command} ) {
 
 		# Failed to start the command. Clean up.
-		Wx::MessageBox(
-			sprintf( Wx::gettext("Failed to start '%s' command"), $cmd ),
-			Wx::gettext("Error"), Wx::wxOK, $self
-		);
+		$self->error( sprintf( Wx::gettext("Failed to start '%s' command"), $cmd ) );
 		$self->menu->run->enable;
 	}
 
@@ -2371,6 +2368,7 @@ The dialog has only a OK button and there is no return value.
 sub info {
 	my $self    = shift;
 	my $message = shift;
+	my $title   = shift;
 
 	my $ide    = $self->ide;
 	my $config = $ide->config;
@@ -2381,8 +2379,7 @@ sub info {
 		$self->{infomessage_timeout} = time + 10;
 		$self->refresh_status;
 	} else {
-		my $title = shift || Wx::gettext('Message');
-		Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTRE, $self );
+		$self->message( $message, $title);
 	}
 
 	return;
@@ -2678,9 +2675,7 @@ sub on_autocompletion {
 	return if $#words == -1;
 
 	if ( $length =~ /\D/ ) {
-		Wx::MessageBox(
-			$length, Wx::gettext("Autocompletion error"), Wx::wxOK,
-		);
+		$self->message($length, Wx::gettext("Autocompletion error"));
 	}
 	if (@words) {
 		my $editor = $document->editor;
@@ -3175,10 +3170,9 @@ sub on_open_selection {
 	}
 
 	unless (@files) {
-		Wx::MessageBox(
+		$self->message(
 			sprintf( Wx::gettext("Could not find file '%s'"), $text ),
-			Wx::gettext("Open Selection"),
-			Wx::wxOK, $self,
+			Wx::gettext("Open Selection")
 		);
 		return;
 	}
@@ -3806,9 +3800,9 @@ sub _save_buffer {
 	}
 
 	unless ( $doc->save_file ) {
-		Wx::MessageBox(
+		$self->error(
 			Wx::gettext("Could not save file: ") . $doc->errstr,
-			Wx::gettext("Error"), Wx::wxOK, $self,
+			Wx::gettext("Error"),
 		);
 		return;
 	}
@@ -4752,10 +4746,9 @@ sub run_in_padre {
 	my $code = $doc->text_get;
 	my @rv   = eval $code;
 	if ($@) {
-		Wx::MessageBox(
+		$self->error(
 			sprintf( Wx::gettext("Error: %s"), $@ ),
 			Wx::gettext("Internal error"),
-			Wx::wxOK, $self,
 		);
 		return;
 	}
