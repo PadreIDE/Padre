@@ -9,7 +9,7 @@ use utf8;
 use Padre::Wx               ();
 use Padre::Wx::HtmlWindow   ();
 use Padre::Wx::Icon         ();
-use Padre::Util             ('_T');
+use Padre::Util                     ('_T');
 use Wx::Perl::ProcessStream ();
 use PPI                     ();
 

@@ -93,7 +93,7 @@ sub finish {
 		} else {
 			$text = _T("Unknown error");
 		}
-		Padre->ide->wx->main->message( $text, _T("Search Canceled") );
+		Padre->ide->wx->main->message($text, _T("Search Canceled"));
 	}
 	return ();
 }

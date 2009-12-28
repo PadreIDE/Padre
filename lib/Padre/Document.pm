@@ -237,7 +237,8 @@ sub new {
 			if ( defined( $self->{file}->size ) and ( $self->{file}->size > $config->editor_file_size_limit ) ) {
 				$self->error(
 					sprintf(
-						_T( "Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
+						_T(
+							"Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
 						),
 						$self->{file}->{filename},
 						$config->editor_file_size_limit

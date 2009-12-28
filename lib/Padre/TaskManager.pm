@@ -81,7 +81,7 @@ use Padre::Task    ();
 use Padre::Service ();
 use Padre::Wx      ();
 use Padre::Logger;
-use Padre::Util ('_T');
+use Padre::Util    ('_T');
 
 use Class::XSAccessor getters => {
 	task_queue     => 'task_queue',
@@ -618,7 +618,8 @@ sub on_dump_running_tasks {
 	my $pending = $queue->pending;
 
 	if ($pending) {
-		$output->AppendText( sprintf( _T("\nAdditionally, there are %s tasks pending execution.\n"), $pending ) );
+		$output->AppendText(
+			sprintf( _T("\nAdditionally, there are %s tasks pending execution.\n"), $pending ) );
 	}
 }
 

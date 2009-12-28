@@ -280,7 +280,8 @@ sub get_command {
 	# Warn if the Perl interpreter is not executable:
 	if ( defined($perl) and ( $perl ne '' ) and ( !-x $perl ) ) {
 		my $ret = Wx::MessageBox(
-			_T( sprintf( '%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl )
+			_T(
+				sprintf( '%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl )
 			),
 			_T('Run'),
 			Wx::wxYES_NO | Wx::wxCENTRE,

@@ -9,7 +9,7 @@ use Padre::Wx::Dialog                      ();
 use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 use Padre::MimeTypes                       ();
-use Padre::Util                            ('_T');
+use Padre::Util                     ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -283,7 +283,8 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'autocomplete_multiclosebracket',
 				( $config->autocomplete_multiclosebracket ? 1 : 0 ),
-				_T("Add another closing bracket if there is already one (and the auto-bracket-function is enabled)")
+				_T(
+					"Add another closing bracket if there is already one (and the auto-bracket-function is enabled)")
 			],
 			[]
 		],
@@ -384,7 +385,7 @@ sub _appearance_panel {
 		[   [ 'Wx::StaticText',     'undef',       _T('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font', $font_desc ]
 		],
-		[   [ 'Wx::StaticText',       undef,                      _T('Editor Current Line Background Colour:') ],
+		[   [ 'Wx::StaticText', undef, _T('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color', $bgcolor ]
 		],
 	];
@@ -455,7 +456,8 @@ sub _appearance_panel {
 	# config.yml - file to advoid overloading the Preferences dialog:
 	if ( $config->func_config ) {
 
-		my @table2 = ( [ [ 'Wx::StaticText', undef, _T('Any changes to these options require a restart:') ] ] );
+		my @table2 =
+			( [ [ 'Wx::StaticText', undef, _T('Any changes to these options require a restart:') ] ] );
 
 		for (@Func_List) {
 
@@ -644,7 +646,7 @@ END_TEXT
 	];
 
 	# Per document values (overwrite defaults) stored in history
-	my $doc_flag = 0;            # value of 1 means that there is no document currently open
+	my $doc_flag = 0;                     # value of 1 means that there is no document currently open
 	my $filename = _T('Unsaved');
 	my $path     = _T('N/A');
 	my %run_args = (
@@ -1022,7 +1024,8 @@ sub run {
 	# Warn if the Perl interpreter is not executable:
 	if ( defined( $data->{run_perl_cmd} ) and ( $data->{run_perl_cmd} ne '' ) and ( !-x $data->{run_perl_cmd} ) ) {
 		my $ret = Wx::MessageBox(
-			_T( sprintf(
+			_T(
+				sprintf(
 					'%s seems to be no executable Perl interpreter, abandon the new value?', $data->{run_perl_cmd}
 				)
 			),
