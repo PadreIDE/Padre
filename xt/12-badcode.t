@@ -34,6 +34,8 @@ foreach my $module ( sort keys %modules ) {
 
 # list of non-Wx modules still having Wx code
 my %TODO = map {$_ => 1} qw(
+	Padre::Util
+
 	Padre::Action::Edit
 	Padre::Action::View
 	Padre::Action::File
