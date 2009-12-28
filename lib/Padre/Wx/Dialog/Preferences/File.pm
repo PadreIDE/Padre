@@ -5,7 +5,6 @@ use strict;
 use warnings;
 
 use Padre::Wx::Dialog::Preferences ();
-use Padre::Util                     ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Dialog::Preferences';
@@ -34,27 +33,27 @@ sub panel {
 	my $table = [
 
 		# Padre::File::HTTP
-		[   [ 'Wx::StaticText', undef, _T('File access via HTTP') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('File access via HTTP') ],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, _T('Timeout:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout:') ],
 			[ 'Wx::SpinCtrl', 'file_http_timeout', $config->file_http_timeout, 10, 900 ]
 		],
 
 		# Padre::File::FTP
-		[   [ 'Wx::StaticText', undef, _T('File access via FTP') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('File access via FTP') ],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, _T('Timeout:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout:') ],
 			[ 'Wx::SpinCtrl', 'file_ftp_timeout', $config->file_ftp_timeout, 10, 900 ]
 		],
 		[   [   'Wx::CheckBox', 'file_ftp_passive', ( $config->file_ftp_passive ? 1 : 0 ),
-				_T('Use FTP passive mode')
+				Wx::gettext('Use FTP passive mode')
 			],
 			[]
 		],
 
-		#		[   [ 'Wx::StaticText', undef,     _T('Sample text input:') ],
+		#		[   [ 'Wx::StaticText', undef,     Wx::gettext('Sample text input:') ],
 		#			[ 'Wx::TextCtrl',   'text_sample', $config->text_sample ]
 		#		],
 	];

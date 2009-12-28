@@ -9,7 +9,7 @@ use utf8;
 use Padre::Wx               ();
 use Padre::Wx::HtmlWindow   ();
 use Padre::Wx::Icon         ();
-use Padre::Util                     ('_T');
+use Padre::Util             ();
 use Wx::Perl::ProcessStream ();
 use PPI                     ();
 
@@ -22,7 +22,7 @@ sub new {
 	my $self  = $class->SUPER::new(
 		undef,
 		-1,
-		_T('About'),
+		Wx::gettext('About'),
 		Wx::wxDefaultPosition,
 		[ 700, 530 ],
 	);
@@ -56,22 +56,22 @@ sub new {
 	);
 	$self->{notebook}->AddPage(
 		$self->{about},
-		'  ' . _T('Padre') . '  ',
+		'  ' . Wx::gettext('Padre') . '  ',
 		1,
 	);
 	$self->{notebook}->AddPage(
 		$self->{developers},
-		'  ' . _T('Development') . '  ',
+		'  ' . Wx::gettext('Development') . '  ',
 		1,
 	);
 	$self->{notebook}->AddPage(
 		$self->{translators},
-		'  ' . _T('Translation') . '  ',
+		'  ' . Wx::gettext('Translation') . '  ',
 		1,
 	);
 	$self->{notebook}->AddPage(
 		$self->{info},
-		'  ' . _T('Info') . '  ',
+		'  ' . Wx::gettext('Info') . '  ',
 		1,
 	);
 	$self->{notebook}->SetSelection(0);
@@ -83,7 +83,7 @@ sub new {
 
 	# Hide the dialog when the user presses the ESCape key or clicks Close button
 	# Please see ticket:573
-	my $button = Wx::Button->new( $self, Wx::wxID_CANCEL, _T('&Close') );
+	my $button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 	$self->{sizer}->Add( $button, 0, Wx::wxALIGN_CENTER, 0 );
 	$self->{sizer}->AddSpacer(0);
 	$self->SetSizer( $self->{sizer} );
@@ -124,7 +124,7 @@ sub _content_developers {
 
 	# Create the content for the Developer team
 	my $self           = shift;
-	my $padre_dev_team = _T('The Padre Development Team');
+	my $padre_dev_team = Wx::gettext('The Padre Development Team');
 	$self->{developers}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -189,7 +189,7 @@ sub _content_translators {
 
 	# Create the content for the Translation team
 	my $self                   = shift;
-	my $padre_translation_team = _T('The Padre Translation Team');
+	my $padre_translation_team = Wx::gettext('The Padre Translation Team');
 	$self->{translators}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -273,9 +273,9 @@ sub _content_info {
 
 	# Create the content for the Info page
 	my $self           = shift;
-	my $padre_info     = _T('Info');
+	my $padre_info     = Wx::gettext('Info');
 	my $wx_widgets     = Wx::wxVERSION_STRING();
-	my $config_dir_txt = _T('Config dir:');
+	my $config_dir_txt = Wx::gettext('Config dir:');
 	my $config_dir     = Padre::Constant::CONFIG_DIR;
 
 	my $uptime = time - $^T;
@@ -289,12 +289,12 @@ sub _content_info {
 		$uptime -= $uptime_parts[1] * 60;
 	}
 	$uptime_parts[2] = $uptime;
-	my $uptime_text = _T('Uptime');
+	my $uptime_text = Wx::gettext('Uptime');
 	$uptime = sprintf( '%d:%02d:%02d', @uptime_parts );
 
 	my $ram = Padre::Util::humanbytes( Padre::Util::process_memory() ) || '0';
 
-	$ram = '(' . _T('unsupported') . ')' if $ram eq '0';
+	$ram = '(' . Wx::gettext('unsupported') . ')' if $ram eq '0';
 
 	# Yes, THIS variable should have this upper case char :-)
 	my $Perl_version = $^V || $];

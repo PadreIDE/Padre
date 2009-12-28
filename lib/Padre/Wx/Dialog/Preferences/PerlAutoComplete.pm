@@ -3,9 +3,7 @@ package Padre::Wx::Dialog::Preferences::PerlAutoComplete;
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Wx::Dialog::Preferences ();
-use Padre::Util                     ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Dialog::Preferences';
@@ -20,46 +18,46 @@ sub panel {
 	my $table = [
 
 		#		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
-		#				_T('Default word wrap on for each file')
+		#				Wx::gettext('Default word wrap on for each file')
 		#			],
 		#			[]
 		#		],
-		#		[   [ 'Wx::StaticText', undef,     _T('Perl interpreter:') ],
+		#		[   [ 'Wx::StaticText', undef,     Wx::gettext('Perl interpreter:') ],
 		#			[ 'Wx::TextCtrl',   'Perl_cmd', $config->Perl_cmd ]
 		#		],
-		#		[   [ 'Wx::StaticText', undef,                          _T('Perl interpreter arguments:') ],
+		#		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Perl interpreter arguments:') ],
 		#			[ 'Wx::TextCtrl',   'Perl_interpreter_args_default', $config->Perl_interpreter_args_default ]
 		#		],
 		[   [   'Wx::CheckBox',
 				'autocomplete_always',
 				( $config->autocomplete_always ? 1 : 0 ),
-				_T("Autocomplete always while typing")
+				Wx::gettext("Autocomplete always while typing")
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox',
 				'autocomplete_method',
 				( $config->autocomplete_method ? 1 : 0 ),
-				_T("Autocomplete new methods in packages")
+				Wx::gettext("Autocomplete new methods in packages")
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox',
 				'autocomplete_subroutine',
 				( $config->autocomplete_subroutine ? 1 : 0 ),
-				_T("Autocomplete new subroutines in scripts")
+				Wx::gettext("Autocomplete new subroutines in scripts")
 			],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, _T('Min. length of suggestions:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. length of suggestions:') ],
 			[   'Wx::SpinCtrl', 'perl_autocomplete_min_suggestion_len', $config->perl_autocomplete_min_suggestion_len,
 				1,              64
 			]
 		],
-		[   [ 'Wx::StaticText', undef, _T('Max. number of suggestions:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Max. number of suggestions:') ],
 			[ 'Wx::SpinCtrl', 'perl_autocomplete_max_suggestions', $config->perl_autocomplete_max_suggestions, 5, 256 ]
 		],
-		[   [ 'Wx::StaticText', undef, _T('Min. chars for autocompletion:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Min. chars for autocompletion:') ],
 			[ 'Wx::SpinCtrl', 'perl_autocomplete_min_chars', $config->perl_autocomplete_min_chars, 1, 16 ]
 		],
 	];
