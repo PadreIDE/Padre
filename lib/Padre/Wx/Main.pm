@@ -2431,7 +2431,6 @@ sub prompt {
 	return $value;
 }
 
-
 =pod
 
 =head2 Search and Replace
