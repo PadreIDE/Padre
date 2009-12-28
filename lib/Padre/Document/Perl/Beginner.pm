@@ -6,8 +6,6 @@ use warnings;
 
 our $VERSION = '0.53';
 
-use Padre::Util ('_T');
-
 =head1 NAME
 
 Padre::Document::Perl::Beginner - naive implementation of some beginner specific error checking
@@ -75,7 +73,7 @@ sub _report {
 	++$line; # Editor starts counting at 0
 
 	# These are two lines to enable the translators to use argument numbers:
-	$self->{error} = _T( sprintf( 'Line %d: ', $line ) ) . _T( sprintf( $text, @_ ) );
+	$self->{error} = Wx::gettext( sprintf( 'Line %d: ', $line ) ) . Wx::gettext( sprintf( $text, @_ ) );
 
 	return;
 }

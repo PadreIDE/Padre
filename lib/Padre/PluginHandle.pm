@@ -6,7 +6,6 @@ use warnings;
 use Carp           ();
 use Padre::Current ();
 use Padre::Locale  ();
-use Padre::Util    ('_T');
 use Params::Util qw{ _STRING _IDENTIFIER _CLASS _INSTANCE };
 
 our $VERSION = '0.53';
@@ -85,12 +84,12 @@ sub status_localized {
 	# we're forced to have a hash of translation so that gettext
 	# tools can extract those to be localized.
 	my %translation = (
-		error        => _T('error'),
-		unloaded     => _T('unloaded'),
-		loaded       => _T('loaded'),
-		incompatible => _T('incompatible'),
-		disabled     => _T('disabled'),
-		enabled      => _T('enabled'),
+		error        => Wx::gettext('error'),
+		unloaded     => Wx::gettext('unloaded'),
+		loaded       => Wx::gettext('loaded'),
+		incompatible => Wx::gettext('incompatible'),
+		disabled     => Wx::gettext('disabled'),
+		enabled      => Wx::gettext('enabled'),
 	);
 	return $translation{ $self->{status} };
 }
@@ -197,7 +196,7 @@ sub enable {
 		$self->status('error');
 		$self->errstr(
 			sprintf(
-				_T("Failed to enable plug-in '%s': %s"),
+				Wx::gettext("Failed to enable plug-in '%s': %s"),
 				$self->class,
 				$@,
 			)
@@ -277,7 +276,7 @@ sub disable {
 		$self->status('error');
 		$self->errstr(
 			sprintf(
-				_T("Failed to disable plug-in '%s': %s"),
+				Wx::gettext("Failed to disable plug-in '%s': %s"),
 				$self->class,
 				$@,
 			)

@@ -4,8 +4,6 @@ use 5.008;
 use strict;
 use warnings;
 
-use Padre::Util ('_T');
-
 our $VERSION        = '0.53';
 our @ISA            = 'Padre::Task';
 our $thread_running = 0;
@@ -94,7 +92,7 @@ sub finish {
 
 	my $dialog = $self->{main_thread_only}->{dialog};
 	$dialog->_matched_files( $self->_matched_files );
-	$dialog->_status_text->SetLabel( _T("Finished Searching") );
+	$dialog->_status_text->SetLabel( Wx::gettext("Finished Searching") );
 	$dialog->_update_matches_list_box;
 
 	# finished here

@@ -6,7 +6,6 @@ use warnings;
 use Padre::Wx      ();
 use Padre::Plugin  ();
 use Padre::Current ();
-use Padre::Util    ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Plugin';
@@ -23,7 +22,7 @@ sub padre_interfaces {
 }
 
 sub plugin_name {
-	_T('Padre Developer Tools');
+	Wx::gettext('Padre Developer Tools');
 }
 
 sub plugin_enable {
@@ -57,38 +56,38 @@ sub plugin_disable {
 sub menu_plugins_simple {
 	my $self = shift;
 	return $self->plugin_name => [
-		_T('Run Document inside Padre')  => 'eval_document',
-		_T('Run Selection inside Padre') => 'eval_selection',
+		Wx::gettext('Run Document inside Padre')  => 'eval_document',
+		Wx::gettext('Run Selection inside Padre') => 'eval_selection',
 
 		'---' => undef,
 
-		_T('Dump Expression')       => 'dump_expression',
-		_T('Dump Current Document') => 'dump_document',
-		_T('Dump Top IDE Object')   => 'dump_padre',
-		_T('Dump Current PPI Tree') => 'dump_ppi',
-		_T('Dump %INC and @INC')    => 'dump_inc',
+		Wx::gettext('Dump Expression')       => 'dump_expression',
+		Wx::gettext('Dump Current Document') => 'dump_document',
+		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
+		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
+		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
 
 		'---' => undef,
 
-		_T('Load All Padre Modules')    => 'load_everything',
-		_T('Simulate Crash')            => 'simulate_crash',
-		_T('Simulate Crashing Bg Task') => 'simulate_task_crash',
+		Wx::gettext('Load All Padre Modules')    => 'load_everything',
+		Wx::gettext('Simulate Crash')            => 'simulate_crash',
+		Wx::gettext('Simulate Crashing Bg Task') => 'simulate_task_crash',
 
 		'---' => undef,
 
-		sprintf( _T('wxWidgets %s Reference'), '2.8.10' ) => sub {
+		sprintf( Wx::gettext('wxWidgets %s Reference'), '2.8.10' ) => sub {
 			Padre::Wx::launch_browser('http://docs.wxwidgets.org/2.8.10/');
 		},
-		_T('STC Reference') => sub {
+		Wx::gettext('STC Reference') => sub {
 			Padre::Wx::launch_browser('http://www.yellowbrain.com/stc/index.html');
 		},
-		_T('wxPerl Live Support') => sub {
+		Wx::gettext('wxPerl Live Support') => sub {
 			Padre::Wx::launch_irc('wxperl');
 		},
 
 		'---' => undef,
 
-		_T('About') => 'show_about',
+		Wx::gettext('About') => 'show_about',
 	];
 }
 
@@ -106,8 +105,8 @@ sub dump_expression {
 	require Padre::Wx::History::TextEntryDialog;
 	my $dialog = Padre::Wx::History::TextEntryDialog->new(
 		$self->main,
-		_T("Expression"),
-		_T("Expression"),
+		Wx::gettext("Expression"),
+		Wx::gettext("Expression"),
 		'Padre::Plugin::Devel.expression',
 	);
 	return if $dialog->ShowModal == Wx::wxID_CANCEL;
@@ -136,7 +135,7 @@ sub dump_document {
 	my $current  = $self->current;
 	my $document = $current->document;
 	unless ($document) {
-		$current->main->error( _T('No file is open') );
+		$current->main->error( Wx::gettext('No file is open') );
 		return;
 	}
 	return $self->_dump($document);
@@ -154,7 +153,7 @@ sub dump_ppi {
 	# Make sure that there is a Perl 5 document
 	require Params::Util;
 	unless ( Params::Util::_INSTANCE( $current->document, 'Padre::Document::Perl' ) ) {
-		$main->error( _T('No Perl 5 file is open') );
+		$main->error( Wx::gettext('No Perl 5 file is open') );
 		return;
 	}
 
@@ -193,7 +192,7 @@ sub show_about {
 	my $self  = shift;
 	my $about = Wx::AboutDialogInfo->new;
 	$about->SetName('Padre::Plugin::Devel');
-	$about->SetDescription( _T("A set of unrelated tools used by the Padre developers\n") );
+	$about->SetDescription( Wx::gettext("A set of unrelated tools used by the Padre developers\n") );
 	Wx::AboutBox($about);
 	return;
 }
@@ -237,7 +236,7 @@ sub _dump_eval {
 	# Evecute the code and handle errors
 	my @rv = eval $code;
 	if ($@) {
-		$self->current->main->error( sprintf( _T("Error: %s"), $@ ) );
+		$self->current->main->error( sprintf( Wx::gettext("Error: %s"), $@ ) );
 		return;
 	}
 

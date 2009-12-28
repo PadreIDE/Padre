@@ -10,7 +10,7 @@ use File::Temp                      ();
 use File::Find::Rule                ();
 use Params::Util                    ('_INSTANCE');
 use YAML::Tiny                      ();
-use Padre::Util                     ('_T');
+use Padre::Util                     ();
 use Padre::Perl                     ();
 use Padre::Document                 ();
 use Padre::File                     ();
@@ -280,10 +280,10 @@ sub get_command {
 	# Warn if the Perl interpreter is not executable:
 	if ( defined($perl) and ( $perl ne '' ) and ( !-x $perl ) ) {
 		my $ret = Wx::MessageBox(
-			_T(
+			Wx::gettext(
 				sprintf( '%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl )
 			),
-			_T('Run'),
+			Wx::gettext('Run'),
 			Wx::wxYES_NO | Wx::wxCENTRE,
 			Padre->ide->wx->main,
 		);
@@ -432,9 +432,9 @@ sub beginner_check {
 	my $error = $Beginner->error;
 
 	if ($error) {
-		Padre->ide->wx->main->error( _T("Error: ") . $error );
+		Padre->ide->wx->main->error( Wx::gettext("Error: ") . $error );
 	} else {
-		Padre->ide->wx->main->message( _T('No errors found.') );
+		Padre->ide->wx->main->message( Wx::gettext('No errors found.') );
 	}
 
 	return 1;
@@ -556,8 +556,8 @@ sub find_variable_declaration {
 	my ( $location, $token ) = _get_current_symbol( $self->editor );
 	unless ( defined $location ) {
 		Wx::MessageBox(
-			_T("Current cursor does not seem to point at a variable"),
-			_T("Check cancelled"),
+			Wx::gettext("Current cursor does not seem to point at a variable"),
+			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
 		);
@@ -580,8 +580,8 @@ sub find_method_declaration {
 	my ( $location, $token ) = _get_current_symbol( $self->editor );
 	unless ( defined $location ) {
 		Wx::MessageBox(
-			_T("Current cursor does not seem to point at a method"),
-			_T("Check cancelled"),
+			Wx::gettext("Current cursor does not seem to point at a method"),
+			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
 		);
@@ -597,8 +597,8 @@ sub find_method_declaration {
 	}
 
 	#	Wx::MessageBox(
-	#		_T("Current '$token' $location"),
-	#		_T("Check cancelled"),
+	#		Wx::gettext("Current '$token' $location"),
+	#		Wx::gettext("Check cancelled"),
 	#		Wx::wxOK,
 	#		Padre->ide->wx->main
 	#	);
@@ -615,8 +615,8 @@ sub find_method_declaration {
 	my ( $found, $filename ) = $self->_find_method( $token, $class );
 	if ( not $found ) {
 		Wx::MessageBox(
-			sprintf( _T("Current '%s' not found"), $token ),
-			_T("Check cancelled"),
+			sprintf( Wx::gettext("Current '%s' not found"), $token ),
+			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
 		);
@@ -741,8 +741,8 @@ sub lexical_variable_replacement {
 	my ( $location, $token ) = _get_current_symbol( $self->editor );
 	if ( not defined $location ) {
 		Wx::MessageBox(
-			_T("Current cursor does not seem to point at a variable"),
-			_T("Check cancelled"),
+			Wx::gettext("Current cursor does not seem to point at a variable"),
+			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
 			Padre->ide->wx->main
 		);
@@ -1485,7 +1485,7 @@ sub event_on_right_down {
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
 		$menu->AppendSeparator if not $introduced_separator++;
 
-		my $findDecl = $menu->Append( -1, _T("Find Variable Declaration") );
+		my $findDecl = $menu->Append( -1, Wx::gettext("Find Variable Declaration") );
 		Wx::Event::EVT_MENU(
 			$editor,
 			$findDecl,
@@ -1497,7 +1497,7 @@ sub event_on_right_down {
 			},
 		);
 
-		my $lexRepl = $menu->Append( -1, _T("Lexically Rename Variable") );
+		my $lexRepl = $menu->Append( -1, Wx::gettext("Lexically Rename Variable") );
 		Wx::Event::EVT_MENU(
 			$editor, $lexRepl,
 			sub {
@@ -1509,8 +1509,8 @@ sub event_on_right_down {
 				require Padre::Wx::History::TextEntryDialog;
 				my $dialog = Padre::Wx::History::TextEntryDialog->new(
 					$editor->main,
-					_T("Replacement"),
-					_T("Replacement"),
+					Wx::gettext("Replacement"),
+					Wx::gettext("Replacement"),
 					'$foo',
 				);
 				return if $dialog->ShowModal == Wx::wxID_CANCEL;
@@ -1525,7 +1525,7 @@ sub event_on_right_down {
 
 	# TO DO connect this to the action of menu item in the Perl menu!
 	if ( defined $location and $token =~ /^\w+$/ ) {
-		my $find = $menu->Append( -1, _T("Find Method Declaration") );
+		my $find = $menu->Append( -1, Wx::gettext("Find Method Declaration") );
 		Wx::Event::EVT_MENU(
 			$editor, $find,
 			sub {
@@ -1544,7 +1544,7 @@ sub event_on_right_down {
 	if ( $select_start != $select_end ) { # if something's selected
 		$menu->AppendSeparator if not $introduced_separator++;
 
-		my $intro_temp = $menu->Append( -1, _T("Introduce Temporary Variable") );
+		my $intro_temp = $menu->Append( -1, Wx::gettext("Introduce Temporary Variable") );
 		Wx::Event::EVT_MENU(
 			$editor,
 			$intro_temp,
@@ -1557,8 +1557,8 @@ sub event_on_right_down {
 				require Padre::Wx::History::TextEntryDialog;
 				my $dialog = Padre::Wx::History::TextEntryDialog->new(
 					$editor->main,
-					_T("Variable Name"),
-					_T("Variable Name"),
+					Wx::gettext("Variable Name"),
+					Wx::gettext("Variable Name"),
 					'$tmp',
 				);
 				return if $dialog->ShowModal == Wx::wxID_CANCEL;
