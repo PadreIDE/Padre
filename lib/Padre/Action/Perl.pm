@@ -15,15 +15,15 @@ developing Perl files
 use 5.008;
 use strict;
 use warnings;
-use List::Util     ();
-use File::Spec     ();
-use File::HomeDir  ();
-use Params::Util   qw{_INSTANCE};
-use Padre::Locale  ();
+use List::Util    ();
+use File::Spec    ();
+use File::HomeDir ();
+use Params::Util qw{_INSTANCE};
+use Padre::Locale ();
 use Padre::Current qw{_CURRENT};
-use Padre::Util    ('_T');
 
 our $VERSION = '0.53';
+our @ISA     = 'Padre::Wx::Menu';
 
 sub new {
 	my $class = shift;
@@ -42,8 +42,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.beginner_check',
 		need_editor => 1,
-		label       => _T('Check for common (beginner) errors'),
-		comment     => _T('Check the current file'),
+		label       => Wx::gettext('Check for common (beginner) errors'),
+		comment     => Wx::gettext('Check the current file'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -54,8 +54,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.find_brace',
 		need_editor => 1,
-		label       => _T('Find Unmatched Brace'),
-		comment    => _T('Searches the source code for brackets with lack a matching (opening/closing) part.'),
+		label       => Wx::gettext('Find Unmatched Brace'),
+		comment    => Wx::gettext('Searches the source code for brackets with lack a matching (opening/closing) part.'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -66,8 +66,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.find_variable',
 		need_editor => 1,
-		label       => _T('Find Variable Declaration'),
-		comment     => _T('Find where the selected variable was declared using "my" and put the focus there.'),
+		label       => Wx::gettext('Find Variable Declaration'),
+		comment     => Wx::gettext('Find where the selected variable was declared using "my" and put the focus there.'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -78,8 +78,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.find_method',
 		need_editor => 1,
-		label       => _T('Find Method Declaration'),
-		comment     => _T('Find where the selected function was defined and put the focus there.'),
+		label       => Wx::gettext('Find Method Declaration'),
+		comment     => Wx::gettext('Find where the selected function was defined and put the focus there.'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -90,8 +90,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.vertically_align_selected',
 		need_editor => 1,
-		label       => _T('Vertically Align Selected'),
-		comment     => _T('Align a selection of text to the same left column.'),
+		label       => Wx::gettext('Vertically Align Selected'),
+		comment     => Wx::gettext('Align a selection of text to the same left column.'),
 		menu_event  => sub {
 			my $editor = $_[0]->current->editor or return;
 			$editor->vertically_align;
@@ -101,8 +101,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.newline_keep_column',
 		need_editor => 1,
-		label       => _T('Newline same column'),
-		comment     => _T(
+		label       => Wx::gettext('Newline same column'),
+		comment     => Wx::gettext(
 			'Like pressing ENTER somewhere on a line but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
@@ -115,9 +115,9 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.create_tagsfile',
 		need_editor => 1,
-		label       => _T('Create project tagsfile'),
+		label       => Wx::gettext('Create project tagsfile'),
 		comment =>
-			_T('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+			Wx::gettext('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
 			return unless _INSTANCE( $document, 'Padre::Document::Perl' );
@@ -128,7 +128,7 @@ sub new {
 	# Move of stacktrace to Run
 	#	# Make it easier to access stack traces
 	#	$self->{run_stacktrace} = $self->AppendCheckItem( -1,
-	#		_T("Run Scripts with Stack Trace")
+	#		Wx::gettext("Run Scripts with Stack Trace")
 	#	);
 	#	Wx::Event::EVT_MENU( $main, $self->{run_stacktrace},
 	#		sub {
@@ -143,8 +143,8 @@ sub new {
 		menu_method => 'AppendCheckItem',
 		name        => 'perl.autocomplete_brackets',
 		need_editor => 1,
-		label       => _T('Automatic bracket completion'),
-		comment     => _T('When typing { insert a closing } automatically'),
+		label       => Wx::gettext('Automatic bracket completion'),
+		comment     => Wx::gettext('When typing { insert a closing } automatically'),
 		menu_event  => sub {
 
 			# Update the saved config setting

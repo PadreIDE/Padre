@@ -20,10 +20,9 @@ use warnings;
 use Data::Dumper ();
 use File::Spec();
 
-use Padre::Action   ();
-use Padre::Current  qw{_CURRENT};
-use Padre::Constant ();
-use Padre::Util     ('_T');
+use Padre::Action ();
+use Padre::Current qw{_CURRENT};
+use Padre::Constant();
 
 our $VERSION = '0.53';
 
@@ -42,8 +41,8 @@ sub new {
 	# Script Execution
 	Padre::Action->new(
 		name       => 'internal.dump_padre',
-		label      => _T('Dump the Padre object to STDOUT'),
-		comment    => _T('Dumps the complete Padre object to STDOUT for testing/debugging.'),
+		label      => Wx::gettext('Dump the Padre object to STDOUT'),
+		comment    => Wx::gettext('Dumps the complete Padre object to STDOUT for testing/debugging.'),
 		menu_event => sub {
 			open my $dumpfh, '>', File::Spec->catfile( Padre::Constant::PADRE_HOME, 'padre.dump' );
 			print $dumpfh "# Begin Padre dump\n" . Data::Dumper::Dumper( Padre->ide ) . "# End Padre dump\n" . "1;\n";

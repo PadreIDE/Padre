@@ -14,10 +14,8 @@ various options to run the current file.
 use 5.008;
 use strict;
 use warnings;
-
 use Padre::Action ();
 use Padre::Current qw{_CURRENT};
-use Padre::Util    ('_T');
 
 our $VERSION = '0.53';
 
@@ -38,8 +36,8 @@ sub new {
 		name         => 'run.run_document',
 		need_editor  => 1,
 		need_runable => 1,
-		label        => _T('Run Script'),
-		comment      => _T('Runs the current document and shows its output in the output panel.'),
+		label        => Wx::gettext('Run Script'),
+		comment      => Wx::gettext('Runs the current document and shows its output in the output panel.'),
 		shortcut     => 'F5',
 		need_file    => 1,
 		toolbar      => 'actions/player_play',
@@ -54,8 +52,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => _T('Run Script (debug info)'),
-		comment      => _T( 'Run the current document but include ' . 'debug info in the output.' ),
+		label        => Wx::gettext('Run Script (debug info)'),
+		comment      => Wx::gettext( 'Run the current document but include ' . 'debug info in the output.' ),
 		shortcut     => 'Shift-F5',
 		menu_event   => sub {
 			$_[0]->run_document(1); # Enable debug info
@@ -64,8 +62,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'run.run_command',
-		label      => _T('Run Command'),
-		comment    => _T('Runs a shell command and shows the output.'),
+		label      => Wx::gettext('Run Command'),
+		comment    => Wx::gettext('Runs a shell command and shows the output.'),
 		shortcut   => 'Ctrl-F5',
 		menu_event => sub {
 			$_[0]->on_run_command;
@@ -75,8 +73,8 @@ sub new {
 		name        => 'run.run_tdd_tests',
 		need_file   => 1,
 		need_editor => 1,
-		label       => _T('Build + run all Tests'),
-		comment     => _T('Builds the current project, then run all tests.'),
+		label       => Wx::gettext('Build + run all Tests'),
+		comment     => Wx::gettext('Builds the current project, then run all tests.'),
 		shortcut    => 'Ctrl-Shift-F5',
 		menu_event  => sub {
 			$_[0]->on_run_tdd_tests;
@@ -87,8 +85,8 @@ sub new {
 		name        => 'run.run_tests',
 		need_editor => 1,
 		need_file   => 1,
-		label       => _T('Run Tests'),
-		comment     => _T(
+		label       => Wx::gettext('Run Tests'),
+		comment     => Wx::gettext(
 			'Run all tests for the current project or document and show the results in ' . 'the output panel.'
 		),
 		need_editor => 1,
@@ -108,8 +106,8 @@ sub new {
 			return 0 if !defined( $objects{document}->{file} );
 			return $objects{document}->{file}->{filename} =~ /\.t$/;
 		},
-		label      => _T('Run This Test'),
-		comment    => _T('Run the current test if the current document is a test. (prove -bv)'),
+		label      => Wx::gettext('Run This Test'),
+		comment    => Wx::gettext('Run the current test if the current document is a test. (prove -bv)'),
 		menu_event => sub {
 			$_[0]->on_run_this_test;
 		},
@@ -121,8 +119,8 @@ sub new {
 			my %objects = @_;
 			return $main->{command} ? 1 : 0;
 		},
-		label      => _T('Stop execution'),
-		comment    => _T('Stop a running task.'),
+		label      => Wx::gettext('Stop execution'),
+		comment    => Wx::gettext('Stop a running task.'),
 		shortcut   => 'F6',
 		toolbar    => 'actions/stop',
 		menu_event => sub {
