@@ -76,11 +76,11 @@ SCOPE: {
 }
 
 # Test replacement for Wx
-SCOPE: {
-
-	package Wx;
-
-	sub gettext {
-		return $_[0];
-	}
-}
+#SCOPE: {
+#
+#	package Wx;
+#
+#	sub gettext {
+#		return $_[0];
+#	}
+#}
