@@ -52,6 +52,10 @@ my %TODO = map {$_ => 1} qw(
 	Padre::Splash
 	Padre::Task::LaunchDefaultBrowser
 	Padre::Task::Outline
+	Padre::Task::PPI::FindUnmatchedBrace
+	Padre::Task::PPI::FindVariableDeclaration
+	Padre::Task::PPI::IntroduceTemporaryVariable
+	Padre::Task::PPI::LexicalReplaceVariable
 	Padre::Task::SyntaxChecker
 	Padre::TaskManager
 

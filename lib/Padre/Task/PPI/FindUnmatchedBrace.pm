@@ -3,10 +3,9 @@ package Padre::Task::PPI::FindUnmatchedBrace;
 use 5.008;
 use strict;
 use warnings;
-
-use PPIx::EditorTools::FindUnmatchedBrace ();
+use Padre::Wx                             ();
 use Padre::Task::PPI                      ();
-use Padre::Util                           ('_T');
+use PPIx::EditorTools::FindUnmatchedBrace ();
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Task::PPI';
@@ -76,9 +75,10 @@ sub finish {
 		# GUI update
 		$self->{main_thread_only}->{document}->ppi_select( $self->{bad_element} );
 	} else {
-		Padre->ide->wx->main->message(
-			_T("All braces appear to be matched"),
-			_T("Check Complete")
+		Wx::MessageBox(
+			Wx::gettext("All braces appear to be matched"),
+			Wx::gettext("Check Complete"),
+			Wx::wxOK, Padre->ide->wx->main
 		);
 	}
 	return ();

@@ -3,10 +3,9 @@ package Padre::Task::PPI::IntroduceTemporaryVariable;
 use 5.008;
 use strict;
 use warnings;
-
-use PPIx::EditorTools::IntroduceTemporaryVariable ();
-use Padre::Util                                   ('_T');
+use Padre::Wx                                     ();
 use Padre::Task::PPI                              ();
+use PPIx::EditorTools::IntroduceTemporaryVariable ();
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Task::PPI';
@@ -101,13 +100,16 @@ sub finish {
 	} else {
 		my $text;
 		if ( $self->{error} =~ /no token/ ) {
-			$text = _T("First character of selection does not seem to point at a token.");
+			$text = Wx::gettext("First character of selection does not seem to point at a token.");
 		} elsif ( $self->{error} =~ /no statement/ ) {
-			$text = _T("Selection not part of a Perl statement?");
+			$text = Wx::gettext("Selection not part of a Perl statement?");
 		} else {
-			$text = _T("Unknown error");
+			$text = Wx::gettext("Unknown error");
 		}
-		Padre->ide->wx->main->message($text, _T("Replace Operation Canceled"));
+		Wx::MessageBox(
+			$text,    Wx::gettext("Replace Operation Canceled"),
+			Wx::wxOK, Padre->ide->wx->main
+		);
 	}
 	return ();
 }
