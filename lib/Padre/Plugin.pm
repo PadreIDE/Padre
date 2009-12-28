@@ -610,61 +610,13 @@ sub menu_plugins {
 	}
 	my @actions = $self->menu_actions;
 	if (@actions) {
-		my $label   = $actions[0];
 		my $topmenu = Padre::Wx::Menu->new;
-		$topmenu->{main} = $main;
-		eval { $self->_menu_actions_submenu( $main, $topmenu, $topmenu->wx, $actions[1] ) };
-		if ($@) { print $@ }
-		return ( $label, $topmenu->wx );
+		return $topmenu->build_menu_from_actions($main, \@actions);
 	}
+
 	return ();
 }
 
-# Very Experimental !!!
-sub _menu_actions_submenu {
-	my $self    = shift;
-	my $main    = shift;
-	my $topmenu = shift;
-	my $menu    = shift;
-	my $items   = shift;
-	unless ( $items and ref $items and ref $items eq 'ARRAY' ) {
-		Carp::cluck("Invalid list of actions in plugin");
-		return;
-	}
-
-	# Fill the menu
-	while (@$items) {
-		my $value = shift @$items;
-
-		# Separator
-		if ( $value eq '---' ) {
-			$menu->AppendSeparator;
-			next;
-		}
-
-		# Array Reference (submenu)
-		if ( Params::Util::_ARRAY0($value) ) {
-			my $label = shift @$value;
-			if ( not defined $label ) {
-				Carp::cluck("No label in action sublist");
-				next;
-			}
-
-			my $submenu = Wx::Menu->new;
-			$menu->Append( -1, $label, $submenu );
-			$self->_menu_actions_submenu( $main, $topmenu, $submenu, $value );
-			next;
-		}
-
-		# Action name
-		$topmenu->{"menu_$value"} = $topmenu->add_menu_action(
-			$menu,
-			$value,
-		);
-	}
-
-	return;
-}
 
 sub _menu_plugins_submenu {
 	my $self  = shift;

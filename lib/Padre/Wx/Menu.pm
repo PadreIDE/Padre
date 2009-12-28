@@ -130,6 +130,64 @@ sub _add_menu_item {
 	return $item;
 }
 
+
+sub build_menu_from_actions {
+	my $self    = shift;
+	my $main    = shift;
+	my $actions = shift;
+
+	my $label   = $actions->[0];
+	$self->{main} = $main;
+	eval { $self->_menu_actions_submenu( $main, $self, $self->wx, $actions->[1] ) };
+	if ($@) { print $@ }
+	return ( $label, $self->wx );
+}
+# Very Experimental !!!
+sub _menu_actions_submenu {
+	my $self    = shift;
+	my $main    = shift;
+	my $topmenu = shift;
+	my $menu    = shift;
+	my $items   = shift;
+	unless ( $items and ref $items and ref $items eq 'ARRAY' ) {
+		Carp::cluck("Invalid list of actions in plugin");
+		return;
+	}
+
+	# Fill the menu
+	while (@$items) {
+		my $value = shift @$items;
+
+		# Separator
+		if ( $value eq '---' ) {
+			$menu->AppendSeparator;
+			next;
+		}
+
+		# Array Reference (submenu)
+		if ( Params::Util::_ARRAY0($value) ) {
+			my $label = shift @$value;
+			if ( not defined $label ) {
+				Carp::cluck("No label in action sublist");
+				next;
+			}
+
+			my $submenu = Wx::Menu->new;
+			$menu->Append( -1, $label, $submenu );
+			$self->_menu_actions_submenu( $main, $topmenu, $submenu, $value );
+			next;
+		}
+
+		# Action name
+		$topmenu->{"menu_$value"} = $topmenu->add_menu_action(
+			$menu,
+			$value,
+		);
+	}
+
+	return;
+}
+
 1;
 
 # Copyright 2008-2009 The Padre development team as listed in Padre.pm.
