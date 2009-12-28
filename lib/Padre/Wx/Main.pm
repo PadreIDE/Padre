@@ -2379,7 +2379,7 @@ sub info {
 		$self->{infomessage_timeout} = time + 10;
 		$self->refresh_status;
 	} else {
-		$self->message( $message, $title);
+		$self->message( $message, $title );
 	}
 
 	return;
@@ -2675,7 +2675,7 @@ sub on_autocompletion {
 	return if $#words == -1;
 
 	if ( $length =~ /\D/ ) {
-		$self->message($length, Wx::gettext("Autocompletion error"));
+		$self->message( $length, Wx::gettext("Autocompletion error") );
 	}
 	if (@words) {
 		my $editor = $document->editor;

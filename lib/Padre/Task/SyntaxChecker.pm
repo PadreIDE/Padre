@@ -7,7 +7,7 @@ use warnings;
 use Params::Util qw{_CODE _INSTANCE};
 use Padre::Current ();
 use Padre::Task    ();
-use Padre::Util ('_T');
+use Padre::Util    ('_T');
 use Padre::Wx      ();
 
 our $VERSION = '0.53';

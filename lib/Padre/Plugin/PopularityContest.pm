@@ -118,7 +118,7 @@ use Scalar::Util  ();
 use Padre::Plugin ();
 use Padre::Task::HTTPClient;
 use Padre::Constant();
-use Padre::Util   ('_T');
+use Padre::Util ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Plugin';

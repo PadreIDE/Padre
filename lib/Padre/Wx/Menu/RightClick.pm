@@ -17,7 +17,7 @@ sub new {
 	my $main   = shift;
 	my $editor = shift;
 	my $event  = shift;
-	
+
 	return if not $editor;
 
 	# Create the empty menu as normal

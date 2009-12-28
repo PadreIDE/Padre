@@ -1000,10 +1000,7 @@ sub test_a_plugin {
 	$self->load_plugin($filename);
 	if ( $self->plugins->{$filename}->{status} eq 'error' ) {
 		$main->error(
-			sprintf(
-				_T("Failed to load the plug-in '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr
-			)
-		);
+			sprintf( _T("Failed to load the plug-in '%s'\n%s"), $filename, $self->plugins->{$filename}->errstr ) );
 		return;
 	}
 

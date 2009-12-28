@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Padre::Wx::Dialog::Preferences ();
-use Padre::Util                     ('_T');
+use Padre::Util ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Dialog::Preferences';

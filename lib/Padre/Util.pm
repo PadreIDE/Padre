@@ -378,7 +378,7 @@ sub get_project_rcs {
 		);
 		return $rcs if -d $dir;
 	}
-	
+
 	# special case one step upwards traverse for the git version of the Padre repository
 	my $dir = File::Spec->catdir( File::Basename::dirname($project_dir), '.git' );
 	return 'Git' if -d $dir;
