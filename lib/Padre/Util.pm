@@ -33,6 +33,7 @@ use File::Basename  ();
 use List::Util      ();
 use POSIX           ();
 use Padre::Constant ();
+use Wx ();
 
 our $VERSION   = '0.53';
 our @ISA       = 'Exporter';
@@ -249,7 +250,7 @@ Functionally, this function is just a direct pass-through with no effect.
 #15:40 Alias my $english = _T('Hello World!'); $gui->set_title( Wx::gettext($english) );
 #15:41 Alias It does absolutely nothing inside the code itself
 sub _T {
-	shift;
+	return Wx::gettext(shift);
 }
 
 
