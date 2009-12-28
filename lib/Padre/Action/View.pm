@@ -161,7 +161,7 @@ sub new {
 
 	Padre::Action->new(
 		name        => 'view.unfold_all',
-		label       => _T('Unold all'),
+		label       => _T('Unfold all'),
 		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
 		menu_event  => sub {
