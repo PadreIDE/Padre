@@ -915,7 +915,7 @@ sub on_right_down {
 	#print "x: ", $p->x, "\n";
 
 	require Padre::Wx::Menu::RightClick;
-	my $menu = Padre::Wx::Menu::RightClick->new($main, $self, $event);
+	my $menu = Padre::Wx::Menu::RightClick->new( $main, $self, $event );
 
 	if ( $event->isa('Wx::MouseEvent') ) {
 		$self->PopupMenu( $menu->wx, $event->GetX, $event->GetY );

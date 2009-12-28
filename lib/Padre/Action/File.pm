@@ -104,9 +104,9 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name  => 'file.openurl',
-		label => Wx::gettext('Open &URL...'),
-		comment     => Wx::gettext('Open a file from a remote location'),
+		name    => 'file.openurl',
+		label   => Wx::gettext('Open &URL...'),
+		comment => Wx::gettext('Open a file from a remote location'),
 
 		# Is shown as Ctrl-O and I don't know why
 		# shortcut => 'Ctrl-Shift-O',
@@ -255,9 +255,10 @@ sub new {
 		id          => -1,
 		need_editor => 1,
 		label       => Wx::gettext('Save Intuition'),
-		comment     => Wx::gettext('For new document try to guess the filename based on the file content and offer to save it.'),
-		shortcut    => 'Ctrl-Shift-S',
-		menu_event  => sub {
+		comment =>
+			Wx::gettext('For new document try to guess the filename based on the file content and offer to save it.'),
+		shortcut   => 'Ctrl-Shift-S',
+		menu_event => sub {
 			$_[0]->on_save_intuition;
 		},
 	);
@@ -285,9 +286,10 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'file.open_session',
-		label      => Wx::gettext('Open Session'),
-		comment    => Wx::gettext('Select a session. Close all the files currently open and open all the listed in the session'),
+		name  => 'file.open_session',
+		label => Wx::gettext('Open Session'),
+		comment =>
+			Wx::gettext('Select a session. Close all the files currently open and open all the listed in the session'),
 		shortcut   => 'Ctrl-Alt-O',
 		menu_event => sub {
 			require Padre::Wx::Dialog::SessionManager;
@@ -350,12 +352,12 @@ sub new {
 
 	# Word Stats
 	Padre::Action->new(
-		name       => 'file.doc_stat',
-		label      => Wx::gettext('Document Statistics'),
-		comment    => Wx::gettext('Word count and other statistics of the current document'),
+		name        => 'file.doc_stat',
+		label       => Wx::gettext('Document Statistics'),
+		comment     => Wx::gettext('Word count and other statistics of the current document'),
 		need_editor => 1,
-		toolbar    => 'actions/document-properties',
-		menu_event => sub {
+		toolbar     => 'actions/document-properties',
+		menu_event  => sub {
 			$_[0]->on_doc_stats;
 		},
 	);

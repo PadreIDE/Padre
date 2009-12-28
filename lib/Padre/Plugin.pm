@@ -604,15 +604,15 @@ sub menu_plugins {
 	my $main   = shift;
 	my @simple = $self->menu_plugins_simple;
 	if (@simple) {
-		my $label  = $simple[0];
-		my $menu   = $self->_menu_plugins_submenu( $main, $simple[1] ) or return ();
+		my $label = $simple[0];
+		my $menu = $self->_menu_plugins_submenu( $main, $simple[1] ) or return ();
 		return ( $label, $menu );
 	}
 	my @actions = $self->menu_actions;
 	if (@actions) {
-		my $label = $actions[0];
+		my $label   = $actions[0];
 		my $topmenu = Padre::Wx::Menu->new;
-		return $topmenu->build_menu_from_actions($main, \@actions);
+		return $topmenu->build_menu_from_actions( $main, \@actions );
 	}
 
 	return ();
@@ -620,11 +620,11 @@ sub menu_plugins {
 
 # Very Experimental !!!
 sub _menu_actions_submenu {
-	my $self  = shift;
-	my $main  = shift;
-	my $topmenu  = shift;
-	my $menu = shift;
-	my $items = shift;
+	my $self    = shift;
+	my $main    = shift;
+	my $topmenu = shift;
+	my $menu    = shift;
+	my $items   = shift;
 	unless ( $items and ref $items and ref $items eq 'ARRAY' ) {
 		Carp::cluck("Invalid list of actions in plugin");
 		return;
@@ -643,7 +643,7 @@ sub _menu_actions_submenu {
 		# Array Reference (submenu)
 		if ( Params::Util::_ARRAY0($value) ) {
 			my $label = shift @$value;
-			if (not defined $label) {
+			if ( not defined $label ) {
 				Carp::cluck("No label in action sublist");
 				next;
 			}

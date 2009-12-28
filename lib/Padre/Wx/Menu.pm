@@ -136,17 +136,18 @@ sub build_menu_from_actions {
 	my $main    = shift;
 	my $actions = shift;
 
-	my $label   = $actions->[0];
+	my $label = $actions->[0];
 	$self->{main} = $main;
 	$self->_menu_actions_submenu( $main, $self->wx, $actions->[1] );
 	return ( $label, $self->wx );
 }
+
 # Very Experimental !!!
 sub _menu_actions_submenu {
-	my $self    = shift;
-	my $main    = shift;
-	my $menu    = shift;
-	my $items   = shift;
+	my $self  = shift;
+	my $main  = shift;
+	my $menu  = shift;
+	my $items = shift;
 	unless ( $items and ref $items and ref $items eq 'ARRAY' ) {
 		Carp::cluck("Invalid list of actions in plugin");
 		return;

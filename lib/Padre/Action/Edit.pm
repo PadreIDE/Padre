@@ -152,7 +152,7 @@ sub new {
 		need_editor => 1,
 		need_file   => 1,
 		label       => Wx::gettext('Copy full filename'),
-		comment        => Wx::gettext('Put the full path of the current file in the clipboard'),
+		comment     => Wx::gettext('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -409,8 +409,8 @@ sub new {
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
 		label       => Wx::gettext('Encode document to System Default'),
-		comment     => Wx::gettext('Change the encoding of the current document to the default of the operating system'),
-		menu_event  => sub {
+		comment    => Wx::gettext('Change the encoding of the current document to the default of the operating system'),
+		menu_event => sub {
 			require Padre::Wx::Dialog::Encode;
 			Padre::Wx::Dialog::Encode::encode_document_to_system_default(@_);
 		},
@@ -442,8 +442,9 @@ sub new {
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
 		label       => Wx::gettext('EOL to Windows'),
-		comment     => Wx::gettext('Change the end of line character of the current document to those used in files on MS Windows'),
-		menu_event  => sub {
+		comment     => Wx::gettext(
+			'Change the end of line character of the current document to those used in files on MS Windows'),
+		menu_event => sub {
 			$_[0]->convert_to('WIN');
 		},
 	);
@@ -452,8 +453,9 @@ sub new {
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
 		label       => Wx::gettext('EOL to Unix'),
-		comment     => Wx::gettext('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
-		menu_event  => sub {
+		comment     => Wx::gettext(
+			'Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
+		menu_event => sub {
 			$_[0]->convert_to('UNIX');
 		},
 	);
@@ -462,8 +464,8 @@ sub new {
 		name        => 'edit.convert_nl_mac',
 		need_editor => 1,
 		label       => Wx::gettext('EOL to Mac Classic'),
-		comment     => Wx::gettext('Change the end of line character of the current document to that used on Mac Classic'),
-		menu_event  => sub {
+		comment => Wx::gettext('Change the end of line character of the current document to that used on Mac Classic'),
+		menu_event => sub {
 			$_[0]->convert_to('MAC');
 		},
 	);
@@ -536,8 +538,9 @@ sub new {
 		name        => 'edit.diff2saved',
 		need_editor => 1,
 		label       => Wx::gettext('Diff to Saved Version'),
-		comment     => Wx::gettext('Compare the file in the editor to that on the disk and show the diff in the output window'),
-		menu_event  => sub {
+		comment =>
+			Wx::gettext('Compare the file in the editor to that on the disk and show the diff in the output window'),
+		menu_event => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
 	);
@@ -545,7 +548,7 @@ sub new {
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
 		label       => Wx::gettext('Apply Diff to File'),
-		comment    => Wx::gettext('Apply a patch file to the current document'),
+		comment     => Wx::gettext('Apply a patch file to the current document'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -554,7 +557,7 @@ sub new {
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
 		label       => Wx::gettext('Apply Diff to Project'),
-		comment    => Wx::gettext('Apply a patch file to the current project'),
+		comment     => Wx::gettext('Apply a patch file to the current project'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -573,9 +576,9 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name       => 'edit.regex',
-		label      => Wx::gettext('Regex editor'),
-		comment    => Wx::gettext('Open the regular expression editing window'),
+		name    => 'edit.regex',
+		label   => Wx::gettext('Regex editor'),
+		comment => Wx::gettext('Open the regular expression editing window'),
 
 		menu_event => sub {
 			Padre::Wx::Main::open_regex_editor(@_);
@@ -596,8 +599,8 @@ sub new {
 		name        => 'edit.show_as_decimal',
 		need_editor => 1,
 		label       => Wx::gettext('Show as decimal'),
-		comment     => Wx::gettext('Show the ASCII values of the selected text in decimal numbers in the output window'),
-		menu_event  => sub {
+		comment    => Wx::gettext('Show the ASCII values of the selected text in decimal numbers in the output window'),
+		menu_event => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'decimal' );
 		},
 	);
