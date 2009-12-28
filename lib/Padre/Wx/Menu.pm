@@ -138,14 +138,13 @@ sub build_menu_from_actions {
 
 	my $label   = $actions->[0];
 	$self->{main} = $main;
-	$self->_menu_actions_submenu( $main, $self, $self->wx, $actions->[1] );
+	$self->_menu_actions_submenu( $main, $self->wx, $actions->[1] );
 	return ( $label, $self->wx );
 }
 # Very Experimental !!!
 sub _menu_actions_submenu {
 	my $self    = shift;
 	my $main    = shift;
-	my $topmenu = shift;
 	my $menu    = shift;
 	my $items   = shift;
 	unless ( $items and ref $items and ref $items eq 'ARRAY' ) {
@@ -173,12 +172,12 @@ sub _menu_actions_submenu {
 
 			my $submenu = Wx::Menu->new;
 			$menu->Append( -1, $label, $submenu );
-			$self->_menu_actions_submenu( $main, $topmenu, $submenu, $value );
+			$self->_menu_actions_submenu( $main, $submenu, $value );
 			next;
 		}
 
 		# Action name
-		$topmenu->{"menu_$value"} = $topmenu->add_menu_action(
+		$self->{"menu_$value"} = $self->add_menu_action(
 			$menu,
 			$value,
 		);
