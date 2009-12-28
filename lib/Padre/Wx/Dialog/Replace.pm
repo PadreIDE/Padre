@@ -23,6 +23,7 @@ use Padre::DB                    ();
 use Padre::Wx                    ();
 use Padre::Wx::Role::MainChild   ();
 use Padre::Wx::History::ComboBox ();
+use Padre::Util                     ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = qw{
@@ -48,7 +49,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Find and Replace'),
+		_T('Find and Replace'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU | Wx::wxRESIZE_BORDER
@@ -78,7 +79,7 @@ sub new {
 	$self->{find_case} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Case &sensitive'),
+		_T('Case &sensitive'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -92,7 +93,7 @@ sub new {
 	$self->{find_regex} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Regular &Expression'),
+		_T('Regular &Expression'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -106,7 +107,7 @@ sub new {
 	$self->{find_first} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Close Window on &Hit'),
+		_T('Close Window on &Hit'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -120,7 +121,7 @@ sub new {
 	$self->{find_reverse} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Search &Backwards'),
+		_T('Search &Backwards'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -134,7 +135,7 @@ sub new {
 	$self->{replace_all} = Wx::CheckBox->new(
 		$self,
 		-1,
-		Wx::gettext('Replace &All'),
+		_T('Replace &All'),
 	);
 	Wx::Event::EVT_CHECKBOX(
 		$self,
@@ -148,7 +149,7 @@ sub new {
 	$self->{find_button} = Wx::Button->new(
 		$self,
 		Wx::wxID_FIND,
-		Wx::gettext("&Find"),
+		_T("&Find"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -168,7 +169,7 @@ sub new {
 	$self->{replace} = Wx::Button->new(
 		$self,
 		Wx::wxID_REPLACE,
-		Wx::gettext("&Replace"),
+		_T("&Replace"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -189,7 +190,7 @@ sub new {
 	$self->{cancel_button} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		Wx::gettext("&Cancel"),
+		_T("&Cancel"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -206,7 +207,7 @@ sub new {
 		Wx::StaticBox->new(
 			$self,
 			-1,
-			Wx::gettext('Find'),
+			_T('Find'),
 		),
 		Wx::wxVERTICAL,
 	);
@@ -214,7 +215,7 @@ sub new {
 		Wx::StaticText->new(
 			$self,
 			Wx::wxID_STATIC,
-			Wx::gettext("Find Text:"),
+			_T("Find Text:"),
 		),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
@@ -238,7 +239,7 @@ sub new {
 		Wx::StaticBox->new(
 			$self,
 			-1,
-			Wx::gettext('Replace'),
+			_T('Replace'),
 		),
 		Wx::wxVERTICAL,
 	);
@@ -246,7 +247,7 @@ sub new {
 		Wx::StaticText->new(
 			$self,
 			Wx::wxID_STATIC,
-			Wx::gettext("Replace Text:"),
+			_T("Replace Text:"),
 		),
 		0,
 		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL,
@@ -292,7 +293,7 @@ sub new {
 		Wx::StaticBox->new(
 			$self,
 			-1,
-			Wx::gettext('Options')
+			_T('Options')
 		),
 		Wx::wxVERTICAL,
 	);
@@ -532,8 +533,8 @@ sub replace_button {
 	my $changed = $main->replace_next($search);
 	unless ($changed) {
 		$main->message(
-			Wx::gettext('No matches found'),
-			Wx::gettext('Search and Replace'),
+			_T('No matches found'),
+			_T('Search and Replace'),
 		);
 	}
 
@@ -572,13 +573,13 @@ sub replace_all {
 	my $changes = $main->replace_all($search);
 	if ($changes) {
 		$main->message(
-			sprintf( Wx::gettext('Replaced %d matches'), $changes ),
-			Wx::gettext('Search and Replace')
+			sprintf( _T('Replaced %d matches'), $changes ),
+			_T('Search and Replace')
 		);
 	} else {
 		$main->message(
-			Wx::gettext('No matches found'),
-			Wx::gettext('Search and Replace'),
+			_T('No matches found'),
+			_T('Search and Replace'),
 		);
 	}
 

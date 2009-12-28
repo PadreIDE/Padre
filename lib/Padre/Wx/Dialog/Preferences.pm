@@ -9,6 +9,7 @@ use Padre::Wx::Dialog                      ();
 use Padre::Wx::Editor                      ();
 use Padre::Wx::Dialog::Preferences::Editor ();
 use Padre::MimeTypes                       ();
+use Padre::Util                     ('_T');
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Dialog';
@@ -35,9 +36,9 @@ and save them to the configuration file.
 =cut
 
 my @Func_List = (
-	[ 'bookmark', Wx::gettext('Enable bookmarks') ],
-	[ 'fontsize', Wx::gettext('Change font size') ],
-	[ 'session',  Wx::gettext('Enable session manager') ],
+	[ 'bookmark', _T('Enable bookmarks') ],
+	[ 'fontsize', _T('Change font size') ],
+	[ 'session',  _T('Enable session manager') ],
 );
 
 sub _new_panel {
@@ -64,10 +65,10 @@ sub _external_tools_panel {
 
 	# TODO: Really needs a "browse" button.
 	my $table = [
-		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
+		[   [ 'Wx::StaticText', undef,                _T('Diff tool:') ],
 			[ 'Wx::TextCtrl',   'external_diff_tool', $config->external_diff_tool ]
 		],
-		[   [ 'Wx::StaticText', undef,            Wx::gettext('Perl ctags file:') ],
+		[   [ 'Wx::StaticText', undef,            _T('Perl ctags file:') ],
 			[ 'Wx::TextCtrl',   'perl_tags_file', $config->perl_tags_file ]
 		],
 	];
@@ -85,16 +86,16 @@ sub _mime_type_panel {
 
 	# get list of mime-types
 	my $table = [
-		[   [ 'Wx::StaticText', undef,       Wx::gettext('File type:') ],
+		[   [ 'Wx::StaticText', undef,       _T('File type:') ],
 			[ 'Wx::Choice',     'mime_type', $mime_types ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Highlighter:') ],
+		[   [ 'Wx::StaticText', undef, _T('Highlighter:') ],
 			[ 'Wx::Choice', 'highlighters', [] ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Description:') ],
+		[   [ 'Wx::StaticText', undef, _T('Description:') ],
 			[ 'Wx::StaticText', 'description', [] ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Content type:') ],
+		[   [ 'Wx::StaticText', undef, _T('Content type:') ],
 			[ 'Wx::StaticText', 'mime_type_name', [] ]
 		],
 	];
@@ -186,23 +187,23 @@ sub _indentation_panel {
 
 	my $table = [
 		[   [   'Wx::CheckBox', 'editor_indent_auto', ( $config->editor_indent_auto ? 1 : 0 ),
-				Wx::gettext('Automatic indentation style detection')
+				_T('Automatic indentation style detection')
 			],
 			[]
 		],
-		[   [ 'Wx::CheckBox', 'editor_indent_tab', ( $config->editor_indent_tab ? 1 : 0 ), Wx::gettext('Use Tabs') ],
+		[   [ 'Wx::CheckBox', 'editor_indent_tab', ( $config->editor_indent_tab ? 1 : 0 ), _T('Use Tabs') ],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('TAB display size (in spaces):') ],
+		[   [ 'Wx::StaticText', undef, _T('TAB display size (in spaces):') ],
 			[ 'Wx::SpinCtrl', 'editor_indent_tab_width', $config->editor_indent_tab_width, 0, 32 ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Indentation width (in columns):') ],
+		[   [ 'Wx::StaticText', undef, _T('Indentation width (in columns):') ],
 			[ 'Wx::SpinCtrl', 'editor_indent_width', $config->editor_indent_width, 0, 32 ]
 		],
-		[   [ 'Wx::StaticText', undef,     Wx::gettext('Guess from current document:') ],
-			[ 'Wx::Button',     '_guess_', Wx::gettext('Guess') ]
+		[   [ 'Wx::StaticText', undef,     _T('Guess from current document:') ],
+			[ 'Wx::Button',     '_guess_', _T('Guess') ]
 		],
-		[   [ 'Wx::StaticText', undef,               Wx::gettext('Autoindent:') ],
+		[   [ 'Wx::StaticText', undef,               _T('Autoindent:') ],
 			[ 'Wx::Choice',     'editor_autoindent', $editor_autoindent ]
 		],
 	];
@@ -226,55 +227,55 @@ sub _behaviour_panel {
 
 	my $table = [
 		[   [   'Wx::CheckBox', 'editor_wordwrap', ( $config->editor_wordwrap ? 1 : 0 ),
-				Wx::gettext('Default word wrap on for each file')
+				_T('Default word wrap on for each file')
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox', 'swap_ctrl_tab_alt_right', ( $config->swap_ctrl_tab_alt_right ? 1 : 0 ),
-				Wx::gettext('Use panel order for Ctrl-Tab (not usage history)')
+				_T('Use panel order for Ctrl-Tab (not usage history)')
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox',
 				'save_autoclean',
 				( $config->save_autoclean ? 1 : 0 ),
-				Wx::gettext("Clean up file content on saving (for supported document types)")
+				_T("Clean up file content on saving (for supported document types)")
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox', 'editor_fold_pod', ( $config->editor_fold_pod ? 1 : 0 ),
-				Wx::gettext('Auto-fold POD markup when code folding enabled')
+				_T('Auto-fold POD markup when code folding enabled')
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox', 'editor_beginner', ( $config->editor_beginner ? 1 : 0 ),
-				Wx::gettext('Perl beginner mode')
+				_T('Perl beginner mode')
 			],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
+		[   [ 'Wx::StaticText', undef,          _T('Open files:') ],
 			[ 'Wx::Choice',     'main_startup', $main_startup ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Default projects directory:') ],
+		[   [ 'Wx::StaticText', undef, _T('Default projects directory:') ],
 			[   'Wx::DirPickerCtrl', 'default_projects_directory', $config->default_projects_directory,
-				Wx::gettext('Choose the default projects directory')
+				_T('Choose the default projects directory')
 			]
 		],
 		[   [   'Wx::CheckBox', 'main_singleinstance', ( $config->main_singleinstance ? 1 : 0 ),
-				Wx::gettext('Open files in existing Padre')
+				_T('Open files in existing Padre')
 			],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef,                  Wx::gettext('Methods order:') ],
+		[   [ 'Wx::StaticText', undef,                  _T('Methods order:') ],
 			[ 'Wx::Choice',     'main_functions_order', $main_functions_order ]
 		],
-		[   [ 'Wx::StaticText', undef,             Wx::gettext('Preferred language for error diagnostics:') ],
+		[   [ 'Wx::StaticText', undef,             _T('Preferred language for error diagnostics:') ],
 			[ 'Wx::Choice',     'locale_perldiag', $perldiag_locales ]
 		],
-		[   [ 'Wx::StaticText', undef,                 Wx::gettext('Default line ending:') ],
+		[   [ 'Wx::StaticText', undef,                 _T('Default line ending:') ],
 			[ 'Wx::Choice',     'default_line_ending', $default_line_ending ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Check for file updates on disk every (seconds):') ],
+		[   [ 'Wx::StaticText', undef, _T('Check for file updates on disk every (seconds):') ],
 			[ 'Wx::SpinCtrl', 'update_file_from_disk_interval', $config->update_file_from_disk_interval, 0, 90 ]
 		],
 
@@ -282,7 +283,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'autocomplete_multiclosebracket',
 				( $config->autocomplete_multiclosebracket ? 1 : 0 ),
-				Wx::gettext(
+				_T(
 					"Add another closing bracket if there is already one (and the auto-bracket-function is enabled)")
 			],
 			[]
@@ -290,14 +291,14 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'editor_smart_highlight_enable',
 				( $config->editor_smart_highlight_enable ? 1 : 0 ),
-				Wx::gettext("Enable Smart highlighting while typing")
+				_T("Enable Smart highlighting while typing")
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox',
 				'window_list_shorten_path',
 				( $config->window_list_shorten_path ? 1 : 0 ),
-				Wx::gettext("Shorten the common path in window list?")
+				_T("Shorten the common path in window list?")
 			],
 			[]
 		],
@@ -348,43 +349,43 @@ sub _appearance_panel {
 	while ( $#window_title_keys > -1 ) {
 
 		my $key = shift @window_title_keys;
-		$window_title_left .= $key . ' => ' . Wx::gettext( $window_title_vars{$key} ) . "\n";
+		$window_title_left .= $key . ' => ' . _T( $window_title_vars{$key} ) . "\n";
 
 		last if $#window_title_keys < 0;
 
 		$key = shift @window_title_keys;
-		$window_title_right .= $key . ' => ' . Wx::gettext( $window_title_vars{$key} ) . "\n";
+		$window_title_right .= $key . ' => ' . _T( $window_title_vars{$key} ) . "\n";
 
 	}
 	$window_title_left  =~ s/\n$//;
 	$window_title_right =~ s/\n$//;
 
 	my $table = [
-		[   [ 'Wx::StaticText', 'undef',        Wx::gettext('Window title:') ],
+		[   [ 'Wx::StaticText', 'undef',        _T('Window title:') ],
 			[ 'Wx::TextCtrl',   'window_title', $config->window_title ],
 		],
-		[   [ 'Wx::StaticText', 'undef', Wx::gettext($window_title_left) ],
-			[ 'Wx::StaticText', 'undef', Wx::gettext($window_title_right) ],
+		[   [ 'Wx::StaticText', 'undef', _T($window_title_left) ],
+			[ 'Wx::StaticText', 'undef', _T($window_title_right) ],
 		],
 		[   [   'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ),
-				Wx::gettext('Colored text in output window (ANSI)')
+				_T('Colored text in output window (ANSI)')
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox', 'info_on_statusbar', ( $config->info_on_statusbar ? 1 : 0 ),
-				Wx::gettext('Show low-priority info messages on statusbar (not in a popup)')
+				_T('Show low-priority info messages on statusbar (not in a popup)')
 			],
 			[]
 		],
 		[   [   'Wx::CheckBox', 'editor_right_margin_enable', ( $config->editor_right_margin_enable ? 1 : 0 ),
-				Wx::gettext('Show right margin at column:')
+				_T('Show right margin at column:')
 			],
 			[ 'Wx::TextCtrl', 'editor_right_margin_column', $config->editor_right_margin_column ]
 		],
-		[   [ 'Wx::StaticText',     'undef',       Wx::gettext('Editor Font:') ],
+		[   [ 'Wx::StaticText',     'undef',       _T('Editor Font:') ],
 			[ 'Wx::FontPickerCtrl', 'editor_font', $font_desc ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Editor Current Line Background Colour:') ],
+		[   [ 'Wx::StaticText', undef, _T('Editor Current Line Background Colour:') ],
 			[ 'Wx::ColourPickerCtrl', 'editor_currentline_color', $bgcolor ]
 		],
 	];
@@ -447,7 +448,7 @@ sub _appearance_panel {
 		Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL | Wx::wxGROW,
 		3
 	);
-	$notebook->AddPage( $editor_panel, Wx::gettext('Settings Demo') );
+	$notebook->AddPage( $editor_panel, _T('Settings Demo') );
 
 	$preview_sizer->Add( $notebook, 1, Wx::wxGROW, 5 );
 
@@ -456,7 +457,7 @@ sub _appearance_panel {
 	if ( $config->func_config ) {
 
 		my @table2 =
-			( [ [ 'Wx::StaticText', undef, Wx::gettext('Any changes to these options require a restart:') ] ] );
+			( [ [ 'Wx::StaticText', undef, _T('Any changes to these options require a restart:') ] ] );
 
 		for (@Func_List) {
 
@@ -566,7 +567,7 @@ sub _pluginmanager_panel {
 			Wx::CheckBox->new(
 				$panel,
 				-1,
-				Wx::gettext('Enable?')
+				_T('Enable?')
 			)
 		);
 		$self->get_widget( 'plugin_enable_' . $plugins->{$name}->{class} )
@@ -581,7 +582,7 @@ sub _pluginmanager_panel {
 				Wx::Button->new(
 					$panel,
 					-1,
-					Wx::gettext('Crashed')
+					_T('Crashed')
 				)
 			);
 			$fgs->Add( $self->get_widget( 'plugin_info_' . $plugins->{$name}->{class} ), 0, $stdStyle, 3 );
@@ -613,7 +614,7 @@ sub _run_params_panel {
 	my $config   = Padre->ide->config;
 	my $document = Padre::Current->document;
 
-	my $intrp_args_text = Wx::gettext(<<'END_TEXT');
+	my $intrp_args_text = _T(<<'END_TEXT');
 i.e.
 	include directory:  -I<dir>
 	enable tainting checks:  -T
@@ -624,20 +625,20 @@ END_TEXT
 
 	# Default values stored in host configuration
 	my $defaults_table = [
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Perl interpreter:') ],
+		[   [ 'Wx::StaticText', undef,          _T('Perl interpreter:') ],
 			[ 'Wx::TextCtrl',   'run_perl_cmd', $config->run_perl_cmd ]
 		],
-		[   [ 'Wx::StaticText', undef,                          Wx::gettext('Interpreter arguments:') ],
+		[   [ 'Wx::StaticText', undef,                          _T('Interpreter arguments:') ],
 			[ 'Wx::TextCtrl',   'run_interpreter_args_default', $config->run_interpreter_args_default ]
 		],
 		[   [ 'Wx::StaticText', undef, '' ],
 			[ 'Wx::StaticText', undef, $intrp_args_text ]
 		],
-		[   [ 'Wx::StaticText', undef,                     Wx::gettext('Script arguments:') ],
+		[   [ 'Wx::StaticText', undef,                     _T('Script arguments:') ],
 			[ 'Wx::TextCtrl',   'run_script_args_default', $config->run_script_args_default ]
 		],
 		[   [   'Wx::CheckBox', 'run_use_external_window', ( $config->run_use_external_window ? 1 : 0 ),
-				Wx::gettext('Use external window for execution')
+				_T('Use external window for execution')
 			],
 			[]
 		],
@@ -646,8 +647,8 @@ END_TEXT
 
 	# Per document values (overwrite defaults) stored in history
 	my $doc_flag = 0;                     # value of 1 means that there is no document currently open
-	my $filename = Wx::gettext('Unsaved');
-	my $path     = Wx::gettext('N/A');
+	my $filename = _T('Unsaved');
+	my $path     = _T('N/A');
 	my %run_args = (
 		interpreter => '',
 		script      => '',
@@ -666,24 +667,24 @@ END_TEXT
 		}
 	};
 	if ($@) {
-		$filename = Wx::gettext('No Document');
+		$filename = _T('No Document');
 		$doc_flag = 1;
 	}
 
 	my $currentdoc_table = [
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Document name:') ],
+		[   [ 'Wx::StaticText', undef, _T('Document name:') ],
 			[ 'Wx::TextCtrl', undef, $filename, Wx::wxTE_READONLY ]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Document location:') ],
+		[   [ 'Wx::StaticText', undef, _T('Document location:') ],
 			[ 'Wx::TextCtrl', undef, $path, Wx::wxTE_READONLY ]
 		],
-		[   [ 'Wx::StaticText', undef,                            Wx::gettext('Interpreter arguments:') ],
+		[   [ 'Wx::StaticText', undef,                            _T('Interpreter arguments:') ],
 			[ 'Wx::TextCtrl',   "run_interpreter_args_$filename", $run_args{interpreter} ]
 		],
 		[   [ 'Wx::StaticText', undef, '' ],
 			[ 'Wx::StaticText', undef, $intrp_args_text ]
 		],
-		[   [ 'Wx::StaticText', undef,                       Wx::gettext('Script arguments:') ],
+		[   [ 'Wx::StaticText', undef,                       _T('Script arguments:') ],
 			[ 'Wx::TextCtrl',   "run_script_args_$filename", $run_args{script} ]
 		],
 	];
@@ -701,13 +702,13 @@ END_TEXT
 
 	my $defaults_subpanel = $self->_new_panel($notebook);
 	$self->fill_panel_by_table( $defaults_subpanel, $defaults_table );
-	$notebook->AddPage( $defaults_subpanel, Wx::gettext('Default') );
+	$notebook->AddPage( $defaults_subpanel, _T('Default') );
 
 	my $currentdoc_subpanel = $self->_new_panel($notebook);
 	$self->fill_panel_by_table( $currentdoc_subpanel, $currentdoc_table ) unless $doc_flag;
 	$notebook->AddPage(
 		$currentdoc_subpanel,
-		sprintf( Wx::gettext('Current Document: %s'), $filename )
+		sprintf( _T('Current Document: %s'), $filename )
 	);
 
 	$main_sizer->Add( $notebook, 1, Wx::wxGROW );
@@ -724,7 +725,7 @@ sub dialog {
 	my $dialog = Wx::Dialog->new(
 		$win,
 		-1,
-		Wx::gettext('Preferences'),
+		_T('Preferences'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION | Wx::wxRESIZE_BORDER | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU,
@@ -750,35 +751,35 @@ sub dialog {
 		$perldiag_locales,
 		$default_line_ending,
 	);
-	$tb->AddPage( $behaviour, Wx::gettext('Behaviour') );
+	$tb->AddPage( $behaviour, _T('Behaviour') );
 
 	my $appearance = $self->_appearance_panel($tb);
-	$tb->AddPage( $appearance, Wx::gettext('Appearance') );
+	$tb->AddPage( $appearance, _T('Appearance') );
 
 	$tb->AddPage(
 		$self->_run_params_panel($tb),
-		Wx::gettext('Run Parameters')
+		_T('Run Parameters')
 	);
 
 	my $mime_types = $self->_mime_type_panel($tb);
-	$tb->AddPage( $mime_types, Wx::gettext('Files and Colors') );
+	$tb->AddPage( $mime_types, _T('Files and Colors') );
 
 	my $indentation = $self->_indentation_panel( $tb, $editor_autoindent );
-	$tb->AddPage( $indentation, Wx::gettext('Indentation') );
+	$tb->AddPage( $indentation, _T('Indentation') );
 
 	my $external_tools = $self->_external_tools_panel($tb);
-	$tb->AddPage( $external_tools, Wx::gettext('External Tools') );
+	$tb->AddPage( $external_tools, _T('External Tools') );
 
 	#my $plugin_manager = $self->_pluginmanager_panel($tb);
-	#$tb->AddPage( $plugin_manager, Wx::gettext('Plug-in Manager') );
+	#$tb->AddPage( $plugin_manager, _T('Plug-in Manager') );
 	#$self->_add_plugins($tb);
 
 	# Add panels
-	# The panels are ahown in alphabetical order based on the Wx::gettext results
+	# The panels are ahown in alphabetical order based on the _T results
 
 	# TO DO: Convert the internal panels to use this
 
-	for my $module ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
+	for my $module ( sort { _T( $PANELS{$a} ) cmp _T( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
 
 		# A plugin or panel should not crash Padre on error
 		eval {
@@ -786,7 +787,7 @@ sub dialog {
 			warn $@ if $@;
 			my $preferences_page = $module->new();
 			my $panel = $preferences_page->panel( $tb, $self );
-			$tb->AddPage( $panel, Wx::gettext( $PANELS{$module} ) );
+			$tb->AddPage( $panel, _T( $PANELS{$module} ) );
 		};
 		next unless $@;
 		warn 'Error while adding preference panel ' . $module . ': ' . $@;
@@ -813,7 +814,7 @@ sub dialog {
 	my $save = Wx::Button->new(
 		$dialog,
 		Wx::wxID_OK,
-		Wx::gettext('&Save'),
+		_T('&Save'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		0
@@ -824,7 +825,7 @@ sub dialog {
 	my $cancel = Wx::Button->new(
 		$dialog,
 		Wx::wxID_CANCEL,
-		Wx::gettext('&Cancel'),
+		_T('&Cancel'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		0
@@ -859,15 +860,15 @@ sub run {
 	# Keep this in order for tools/update_pot_messages.pl
 	# to pick these messages up.
 	my @keep_me = (
-		Wx::gettext('new'),
-		Wx::gettext('nothing'),
-		Wx::gettext('last'),
-		Wx::gettext('no'),
-		Wx::gettext('same_level'),
-		Wx::gettext('deep'),
-		Wx::gettext('alphabetical'),
-		Wx::gettext('original'),
-		Wx::gettext('alphabetical_private_last'),
+		_T('new'),
+		_T('nothing'),
+		_T('last'),
+		_T('no'),
+		_T('same_level'),
+		_T('deep'),
+		_T('alphabetical'),
+		_T('original'),
+		_T('alphabetical_private_last'),
 	);
 
 	$self->{_start_highlighters_} = Padre::MimeTypes->get_current_highlighter_names;
@@ -878,7 +879,7 @@ sub run {
 		$main_startup,
 		grep { $_ ne $main_startup } qw{new nothing last session}
 	);
-	my @main_startup_localized = map { Wx::gettext($_) } @main_startup_items;
+	my @main_startup_localized = map { _T($_) } @main_startup_items;
 
 	# Autoindent preparation
 	my $editor_autoindent       = $config->editor_autoindent;
@@ -886,7 +887,7 @@ sub run {
 		$editor_autoindent,
 		grep { $_ ne $editor_autoindent } qw{no same_level deep}
 	);
-	my @editor_autoindent_localized = map { Wx::gettext($_) } @editor_autoindent_items;
+	my @editor_autoindent_localized = map { _T($_) } @editor_autoindent_items;
 
 	# Function List Ordering
 	my $main_functions_order       = $config->main_functions_order;
@@ -894,7 +895,7 @@ sub run {
 		$main_functions_order,
 		grep { $_ ne $main_functions_order } qw{alphabetical original alphabetical_private_last}
 	);
-	my @main_functions_order_localized = map { Wx::gettext($_) } @main_functions_order_items;
+	my @main_functions_order_localized = map { _T($_) } @main_functions_order_items;
 
 	my $perldiag_locale  = $config->locale_perldiag;
 	my @perldiag_locales = (
@@ -906,7 +907,7 @@ sub run {
 		$default_line_ending,
 		grep { $_ ne $default_line_ending } qw{WIN MAC UNIX}
 	);
-	my @default_line_ending_localized = map { Wx::gettext($_) } @default_line_ending_items;
+	my @default_line_ending_localized = map { _T($_) } @default_line_ending_items;
 
 	$self->{dialog} = $self->dialog(
 		$win,
@@ -1023,12 +1024,12 @@ sub run {
 	# Warn if the Perl interpreter is not executable:
 	if ( defined( $data->{run_perl_cmd} ) and ( $data->{run_perl_cmd} ne '' ) and ( !-x $data->{run_perl_cmd} ) ) {
 		my $ret = Wx::MessageBox(
-			Wx::gettext(
+			_T(
 				sprintf(
 					'%s seems to be no executable Perl interpreter, abandon the new value?', $data->{run_perl_cmd}
 				)
 			),
-			Wx::gettext('Save settings'),
+			_T('Save settings'),
 			Wx::wxYES_NO | Wx::wxCENTRE,
 			$self,
 		);
