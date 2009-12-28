@@ -5,7 +5,7 @@ package Padre::Action::View;
 use 5.008;
 use strict;
 use warnings;
-use File::Glob ();
+use File::Glob      ();
 
 use Padre::Constant ();
 use Padre::Current qw{_CURRENT};
@@ -32,32 +32,33 @@ sub new {
 
 	# Can the user move stuff around
 	Padre::Action->new(
-		name        => 'view.lockinterface',
-		label       => _T('Lock User Interface'),
-		comment     => _T('Allow the user to move around some of the windows'),
+		name       => 'view.lockinterface',
+		label      => _T('Lock User Interface'),
+		comment    => _T('Allow the user to move around some of the windows'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_lockinterface( $_[1] );
 		},
 	);
 
 	# Show or hide GUI elements
 	Padre::Action->new(
-		name        => 'view.output',
-		label       => _T('Show Output'),
-		comment     => _T('Show the window displaying the standard output and standard error of the running scripts'),
+		name  => 'view.output',
+		label => _T('Show Output'),
+		comment =>
+			_T('Show the window displaying the standard output and standard error of the running scripts'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.functions',
-		label       => _T('Show Functions'),
-		comment     => _T('Show a window listing all the functions in the current document'),
+		name       => 'view.functions',
+		label      => _T('Show Functions'),
+		comment    => _T('Show a window listing all the functions in the current document'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			if ( $_[1]->IsChecked ) {
 				$_[0]->refresh_functions( $_[0]->current );
 				$_[0]->show_functions(1);
@@ -69,112 +70,112 @@ sub new {
 
 	# Show or hide GUI elements
 	Padre::Action->new(
-		name        => 'view.outline',
-		label       => _T('Show Outline'),
-		comment     => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
+		name    => 'view.outline',
+		label   => _T('Show Outline'),
+		comment => _T('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->show_outline( $_[1]->IsChecked );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.directory',
-		label       => _T('Show Directory Tree'),
-		comment     => _T('Show a window with a directory browser of the current project'),
+		name       => 'view.directory',
+		label      => _T('Show Directory Tree'),
+		comment    => _T('Show a window with a directory browser of the current project'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->show_directory( $_[1]->IsChecked );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.show_syntaxcheck',
-		label       => _T('Show Syntax Check'),
-		comment     => _T('Turn on syntax checking of the current document and show output in a window'),
+		name       => 'view.show_syntaxcheck',
+		label      => _T('Show Syntax Check'),
+		comment    => _T('Turn on syntax checking of the current document and show output in a window'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_syntax_check( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.show_errorlist',
-		label       => _T('Show Error List'),
-		comment     => _T('Show the list of errors received during execution of a script'),
+		name       => 'view.show_errorlist',
+		label      => _T('Show Error List'),
+		comment    => _T('Show the list of errors received during execution of a script'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_errorlist( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.statusbar',
-		label       => _T('Show Status Bar'),
-		comment     => _T('Show/hide the status bar at the bottom of the screen'),
+		name       => 'view.statusbar',
+		label      => _T('Show Status Bar'),
+		comment    => _T('Show/hide the status bar at the bottom of the screen'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_statusbar( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.toolbar',
-		label       => _T('Show Toolbar'),
-		comment     => _T('Show/hide the toolbar at the top of the editor'),
+		name       => 'view.toolbar',
+		label      => _T('Show Toolbar'),
+		comment    => _T('Show/hide the toolbar at the top of the editor'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_toolbar( $_[1] );
 		},
 	);
 
 	# Editor Functionality
 	Padre::Action->new(
-		name        => 'view.lines',
-		label       => _T('Show Line Numbers'),
-		comment     => _T('Show/hide the line numbers of all the documents on the left side of the window'),
+		name       => 'view.lines',
+		label      => _T('Show Line Numbers'),
+		comment    => _T('Show/hide the line numbers of all the documents on the left side of the window'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_line_numbers( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.folding',
-		label       => _T('Show Code Folding'),
-		comment     => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
+		name    => 'view.folding',
+		label   => _T('Show Code Folding'),
+		comment => _T('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_code_folding( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.fold_all',
-		label       => _T('Fold all'),
-		comment     => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
+		name    => 'view.fold_all',
+		label   => _T('Fold all'),
+		comment => _T('Fold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->current->editor->fold_all;
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.unfold_all',
-		label       => _T('Unfold all'),
-		comment     => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
+		name    => 'view.unfold_all',
+		label   => _T('Unfold all'),
+		comment => _T('Unfold all the blocks that can be folded (need folding to be enabled)'),
 		need_editor => 1,
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->current->editor->unfold_all;
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.show_calltips',
-		label       => _T('Show Call Tips'),
-		comment     => _T('When typing in functions allow showing short examples of the function'),
+		name       => 'view.show_calltips',
+		label      => _T('Show Call Tips'),
+		comment    => _T('When typing in functions allow showing short examples of the function'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->config->set(
 				'editor_calltips',
 				$_[1]->IsChecked ? 1 : 0,
@@ -184,62 +185,62 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name        => 'view.currentline',
-		label       => _T('Show Current Line'),
-		comment     => _T('Highlight the line where the cursor is'),
+		name       => 'view.currentline',
+		label      => _T('Show Current Line'),
+		comment    => _T('Highlight the line where the cursor is'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_currentline( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.rightmargin',
-		label       => _T('Show Right Margin'),
-		comment     => _T('Show a vertical line indicating the right margin'),
+		name       => 'view.rightmargin',
+		label      => _T('Show Right Margin'),
+		comment    => _T('Show a vertical line indicating the right margin'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_right_margin( $_[1] );
 		},
 	);
 
 	# Editor Whitespace Layout
 	Padre::Action->new(
-		name        => 'view.eol',
-		label       => _T('Show Newlines'),
-		comment     => _T('Show/hide the newlines with special character'),
+		name       => 'view.eol',
+		label      => _T('Show Newlines'),
+		comment    => _T('Show/hide the newlines with special character'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_eol( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.whitespaces',
-		label       => _T('Show Whitespaces'),
-		comment     => _T('Show/hide the tabs and the spaces with special characters'),
+		name       => 'view.whitespaces',
+		label      => _T('Show Whitespaces'),
+		comment    => _T('Show/hide the tabs and the spaces with special characters'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_whitespaces( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.indentation_guide',
-		label       => _T('Show Indentation Guide'),
-		comment     => _T('Show/hide vertical bars at every indentation position on the left of the rows'),
+		name       => 'view.indentation_guide',
+		label      => _T('Show Indentation Guide'),
+		comment    => _T('Show/hide vertical bars at every indentation position on the left of the rows'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_toggle_indentation_guide( $_[1] );
 		},
 	);
 
 	Padre::Action->new(
-		name        => 'view.word_wrap',
-		label       => _T('Word-Wrap'),
-		comment     => _T('Wrap long lines'),
+		name       => 'view.word_wrap',
+		label      => _T('Word-Wrap'),
+		comment    => _T('Wrap long lines'),
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			$_[0]->on_word_wrap( $_[1]->IsChecked );
 		},
 	);
@@ -302,12 +303,12 @@ sub new {
 
 	# Window Effects
 	Padre::Action->new(
-		name        => 'view.full_screen',
-		label       => _T('&Full Screen'),
-		comment     => _T('Set Padre in full screen mode'),
-		shortcut    => 'F11',
+		name       => 'view.full_screen',
+		label      => _T('&Full Screen'),
+		comment    => _T('Set Padre in full screen mode'),
+		shortcut   => 'F11',
 		menu_method => 'AppendCheckItem',
-		menu_event  => sub {
+		menu_event => sub {
 			if ( $_[0]->IsFullScreen ) {
 				$_[0]->ShowFullScreen(0);
 			} else {

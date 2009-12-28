@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Current qw{_CURRENT};
-use Padre::Util     ('_T');
+use Padre::Util    ('_T');
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -153,7 +153,7 @@ sub new {
 		need_editor => 1,
 		need_file   => 1,
 		label       => _T('Copy full filename'),
-		comment     => _T('Put the full path of the current file in the clipboard'),
+		comment        => _T('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
 			return if !defined( $document->{file} );
@@ -443,8 +443,8 @@ sub new {
 		name        => 'edit.convert_nl_windows',
 		need_editor => 1,
 		label       => _T('EOL to Windows'),
-		comment => _T('Change the end of line character of the current document to those used in files on MS Windows'),
-		menu_event => sub {
+		comment     => _T('Change the end of line character of the current document to those used in files on MS Windows'),
+		menu_event  => sub {
 			$_[0]->convert_to('WIN');
 		},
 	);
@@ -453,8 +453,8 @@ sub new {
 		name        => 'edit.convert_nl_unix',
 		need_editor => 1,
 		label       => _T('EOL to Unix'),
-		comment => _T('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
-		menu_event => sub {
+		comment     => _T('Change the end of line character of the current document to that used on Unix, Linux, Mac OSX'),
+		menu_event  => sub {
 			$_[0]->convert_to('UNIX');
 		},
 	);
@@ -546,7 +546,7 @@ sub new {
 		name        => 'edit.applydiff2file',
 		need_editor => 1,
 		label       => _T('Apply Diff to File'),
-		comment     => _T('Apply a patch file to the current document'),
+		comment    => _T('Apply a patch file to the current document'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -555,7 +555,7 @@ sub new {
 		name        => 'edit.applydiff2project',
 		need_editor => 1,
 		label       => _T('Apply Diff to Project'),
-		comment     => _T('Apply a patch file to the current project'),
+		comment    => _T('Apply a patch file to the current project'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_diff(@_);
 		},
@@ -574,9 +574,9 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name    => 'edit.regex',
-		label   => _T('Regex editor'),
-		comment => _T('Open the regular expression editing window'),
+		name       => 'edit.regex',
+		label      => _T('Regex editor'),
+		comment    => _T('Open the regular expression editing window'),
 
 		menu_event => sub {
 			Padre::Wx::Main::open_regex_editor(@_);

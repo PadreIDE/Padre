@@ -17,7 +17,7 @@ use warnings;
 
 use Padre::Action ();
 use Padre::Current qw{_CURRENT};
-use Padre::Util ('_T');
+use Padre::Util    ('_T');
 
 our $VERSION = '0.53';
 
@@ -88,8 +88,9 @@ sub new {
 		need_editor => 1,
 		need_file   => 1,
 		label       => _T('Run Tests'),
-		comment =>
-			_T( 'Run all tests for the current project or document and show the results in ' . 'the output panel.' ),
+		comment     => _T(
+			'Run all tests for the current project or document and show the results in ' . 'the output panel.'
+		),
 		need_editor => 1,
 		menu_event  => sub {
 			$_[0]->on_run_tests;

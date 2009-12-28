@@ -19,10 +19,10 @@ use File::Spec    ();
 use File::HomeDir ();
 use Params::Util qw{_INSTANCE};
 
-use Padre::Action ();
+use Padre::Action   ();
 use Padre::Current qw{_CURRENT};
 use Padre::Locale   ();
-use Padre::Util     ('_T');
+use Padre::Util    ('_T');
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -49,8 +49,8 @@ sub new {
 		name        => 'perl.rename_variable',
 		need_editor => 1,
 		label       => _T('Lexically Rename Variable'),
-		comment     => _T('Prompt for a replacement variable name and replace all occurrance of this variable'),
-		menu_event  => sub {
+		comment    => _T('Prompt for a replacement variable name and replace all occurrance of this variable'),
+		menu_event => sub {
 			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('lexical_variable_replacement');
 			require Padre::Wx::History::TextEntryDialog;

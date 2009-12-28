@@ -13,10 +13,10 @@ our $VERSION = '0.53';
 our @ISA     = 'Padre::Wx::Menu';
 
 sub new {
-	my $class  = shift;
-	my $main   = shift;
+	my $class = shift;
+	my $main  = shift;
 	my $editor = shift;
-	my $event  = shift;
+	my $event = shift;
 	
 	return if not $editor;
 
@@ -26,7 +26,7 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
-	my $selection_exists = length( $editor->GetSelectedText ) > 0 ? 1 : 0;
+	my $selection_exists = length($editor->GetSelectedText) > 0 ? 1 : 0;
 
 	# Undo/Redo
 	$self->{undo} = $self->add_menu_action(
@@ -46,7 +46,7 @@ sub new {
 	}
 
 	$self->AppendSeparator;
-
+	
 	if ($selection_exists) {
 		$self->{open_selection} = $self->add_menu_action(
 			$self,
@@ -70,7 +70,7 @@ sub new {
 		$self,
 		'edit.cut',
 	);
-
+	
 	if ( not $selection_exists ) {
 		$self->{copy}->Enable(0);
 		$self->{cut}->Enable(0);
@@ -136,7 +136,7 @@ sub new {
 
 	# Let the plugins have a go
 	$editor->main->ide->plugin_manager->on_context_menu( $doc, $editor, $self, $event );
-
+	
 	return $self;
 }
 

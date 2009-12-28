@@ -20,10 +20,10 @@ use warnings;
 use Data::Dumper ();
 use File::Spec();
 
-use Padre::Action ();
-use Padre::Current qw{_CURRENT};
+use Padre::Action   ();
+use Padre::Current  qw{_CURRENT};
 use Padre::Constant ();
-use Padre::Util ('_T');
+use Padre::Util     ('_T');
 
 our $VERSION = '0.53';
 

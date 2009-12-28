@@ -8,8 +8,8 @@ use Padre::Action   ();
 use Padre::Constant ();
 use Padre::Config   ();
 use Padre::Current qw{_CURRENT};
-use Padre::Util ('_T');
-use Padre::Wx   ();
+use Padre::Util    ('_T');
+use Padre::Wx       ();
 
 our $VERSION = '0.53';
 

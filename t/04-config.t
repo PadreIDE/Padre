@@ -13,8 +13,8 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-}
-plan( tests => CONFIG_OPTIONS * 2 + 17 );
+} 
+plan(tests => CONFIG_OPTIONS * 2 + 17);
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();

@@ -245,13 +245,13 @@ sub help_render {
 		}
 
 
-		# Determine if the padre locale and/or the
+		# Determine if the padre locale and/or the 
 		#  system language is NOT english
-
+		
 		if ( Padre::Locale::iso639() !~ /^en/i ) {
-			$hints->{lang} = Padre::Locale::iso639();
+		    $hints->{lang} = Padre::Locale::iso639()
 		}
-
+		
 		# Render using perldoc pseudo code package
 		my $pod      = Padre::DocBrowser::POD->new;
 		my $doc      = $pod->resolve( $topic, $hints );

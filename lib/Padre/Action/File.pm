@@ -9,7 +9,7 @@ use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
 use Padre::Logger;
-use Padre::Util ('_T');
+use Padre::Util     ('_T');
 
 our $VERSION = '0.53';
 
@@ -104,9 +104,9 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name    => 'file.openurl',
-		label   => _T('Open &URL...'),
-		comment => _T('Open a file from a remote location'),
+		name  => 'file.openurl',
+		label => _T('Open &URL...'),
+		comment     => _T('Open a file from a remote location'),
 
 		# Is shown as Ctrl-O and I don't know why
 		# shortcut => 'Ctrl-Shift-O',
@@ -350,12 +350,12 @@ sub new {
 
 	# Word Stats
 	Padre::Action->new(
-		name        => 'file.doc_stat',
-		label       => _T('Document Statistics'),
-		comment     => _T('Word count and other statistics of the current document'),
+		name       => 'file.doc_stat',
+		label      => _T('Document Statistics'),
+		comment    => _T('Word count and other statistics of the current document'),
 		need_editor => 1,
-		toolbar     => 'actions/document-properties',
-		menu_event  => sub {
+		toolbar    => 'actions/document-properties',
+		menu_event => sub {
 			$_[0]->on_doc_stats;
 		},
 	);
