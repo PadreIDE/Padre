@@ -89,7 +89,7 @@ sub new {
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_tools-macro',
 		label        => _T('Run till breakpoint') . ' (&c) ',
-		comment      => _T('Start running and/or continoue running till next breakpoint or watch'),
+		comment      => _T('Start running and/or continue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {

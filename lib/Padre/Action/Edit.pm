@@ -233,7 +233,7 @@ sub new {
 		name        => 'edit.next_problem',
 		need_editor => 1,
 		label       => _T('&Next Problem'),
-		comment     => _T('Jumpt to the code  that triggered the next error'),
+		comment     => _T('Jumpt to the code that triggered the next error'),
 		shortcut    => 'Ctrl-.',
 		menu_event  => sub {
 			$main->{syntax}->select_next_problem;

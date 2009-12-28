@@ -45,7 +45,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'view.output',
 		label       => _T('Show Output'),
-		comment     => _T('Show the window displaying the standard output and standar error of the running scripts'),
+		comment     => _T('Show the window displaying the standard output and standard error of the running scripts'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->show_output( $_[1]->IsChecked );
@@ -268,7 +268,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'view.font_reset',
 		label      => _T('Reset Font Size'),
-		comment    => _T('Reset the the size of the letters to the default in the editor window'),
+		comment    => _T('Reset the size of the letters to the default in the editor window'),
 		shortcut   => 'Ctrl-0',
 		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;
