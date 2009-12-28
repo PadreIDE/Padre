@@ -138,8 +138,7 @@ sub build_menu_from_actions {
 
 	my $label   = $actions->[0];
 	$self->{main} = $main;
-	eval { $self->_menu_actions_submenu( $main, $self, $self->wx, $actions->[1] ) };
-	if ($@) { print $@ }
+	$self->_menu_actions_submenu( $main, $self, $self->wx, $actions->[1] );
 	return ( $label, $self->wx );
 }
 # Very Experimental !!!
