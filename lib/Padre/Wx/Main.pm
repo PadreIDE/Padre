@@ -5437,7 +5437,8 @@ sub key_up {
 		#		}
 	}
 
-	if ( $config->autocomplete_always and ( !$mod ) ) {
+
+	if ( $config->autocomplete_always and ( !$mod ) and ($code == 8) ) {
 		$self->on_autocompletion($event);
 	}
 
