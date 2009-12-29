@@ -1404,7 +1404,7 @@ sub autocomplete {
 	my $pre  = $editor->GetTextRange( 0, $first + length($prefix) );
 	my $post = $editor->GetTextRange( $first, $last );
 
-	my $regex = eval {qr{\b($prefix\w+)\b}};
+	my $regex = eval {qr{\b(\Q$prefix\E\w+)\b}};
 	if ($@) {
 		return ("Cannot build regex for '$prefix'");
 	}
