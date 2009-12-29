@@ -73,7 +73,7 @@ sub new {
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
-
+	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
 	# with a round box around each of them
@@ -902,6 +902,23 @@ sub on_middle_up {
 	$event->Skip;
 	return;
 }
+
+# Manipulate the window manager selection buffer when editor looses focus
+sub on_kill_focus {
+	my ($self,$event) = @_;
+	if ( Padre::Constant::WXGTK ) {
+		my $selection = $self->GetSelectedText;
+		Wx::wxTheClipboard->Open;
+		Wx::wxTheClipboard->UsePrimarySelection(1);
+		my $clip = Wx::TextDataObject->new;
+		$clip->SetText($selection);
+		Wx::wxTheClipboard->SetData($clip);
+		Wx::wxTheClipboard->UsePrimarySelection(0);
+		Wx::wxTheClipboard->Close;
+	}
+
+}
+
 
 sub on_right_down {
 	my $self  = shift;
