@@ -276,20 +276,25 @@ sub get_command {
 	# The configuration values is cheaper to get compared to cperl(),
 	# try it first.
 	my $perl = $config->run_perl_cmd;
+	print "Perl: $perl\n";
 
 	# Warn if the Perl interpreter is not executable:
-	if ( defined($perl) and ( $perl ne '' ) and ( !-x $perl ) ) {
-		my $ret = Wx::MessageBox(
-			Wx::gettext(
-				sprintf( '%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl )
-			),
-			Wx::gettext('Run'),
-			Wx::wxYES_NO | Wx::wxCENTRE,
-			Padre->ide->wx->main,
-		);
-		$perl = Padre::Perl::cperl()
-			if $ret == Wx::wxYES;
-
+	if ( defined $perl and $perl ne '' ) {
+		if ( !-x $perl ) {
+			my $ret = Wx::MessageBox(
+				Wx::gettext(
+					sprintf( '%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl )
+				),
+				Wx::gettext('Run'),
+				Wx::wxYES_NO | Wx::wxCENTRE,
+				Padre->ide->wx->main,
+			);
+			if ($ret == Wx::wxYES) {
+				$perl = Padre::Perl::cperl();
+			} else {
+				return;
+			}
+		}
 	} else {
 		$perl = Padre::Perl::cperl();
 	}

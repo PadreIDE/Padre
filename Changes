@@ -3,6 +3,7 @@ Changes for Perl Application Development and Refactoring Environment
 0.54 To Be Released
     - If all files are closed, the function list would ->Hide itself
       permanently and never come back. Resolved (ADAMK)
+    - fix perl interpreter selection (SZABGAB)
 
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)
