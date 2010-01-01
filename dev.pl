@@ -13,7 +13,7 @@ use Config;
 
 # Collect options early
 use Getopt::Long ();
-use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE};
+use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE $FULLTRACE};
 
 BEGIN {
 	$DEBUG   = 0;
@@ -21,6 +21,7 @@ BEGIN {
 	$PROFILE = 0;
 	$PLUGINS = 0;
 	$USAGE   = 0;
+	$FULLTRACE = 0;
 	Getopt::Long::GetOptions(
 		'usage|help' => \$USAGE,
 		'debug|d'    => \$DEBUG,
@@ -30,6 +31,7 @@ BEGIN {
 		'die'     => \$DIE,
 		'profile' => \$PROFILE,
 		'a'       => \$PLUGINS,
+		'fulltrace' => \$FULLTRACE,
 	);
 }
 
@@ -69,6 +71,16 @@ my @cmd = (
 );
 push @cmd, '-d'          if $DEBUG;
 push @cmd, '-dt:NYTProf' if $PROFILE;
+
+if ($FULLTRACE) {
+    eval { require Devel::Trace; };
+    if ($@) {
+	print "Error while initilizing --fulltrace while trying to load Devel::Trace:\n".
+	      "$@Maybe Devel::Trace isn't installed?\n";
+	exit 1;
+    }
+    push @cmd, '-d:Trace';
+}
 
 # Rebuild translations
 if ($PLUGINS) {
@@ -113,12 +125,13 @@ sub error {
 sub usage {
 	print <<"END_USAGE";
 Usage: $0
-        -h     show this help
-        -d     run Padre in the command line debugger (-d)
-	-t     write tracing information to .padre/debug.log
-        -p     profile using Devel::NYTProf
-        -a     load all plugins in the svn checkout
-        --die  add DIE handler
+        -h          show this help
+        -d          run Padre in the command line debugger (-d)
+	-t          write tracing information to .padre/debug.log
+        -p          profile using Devel::NYTProf
+        -a          load all plugins in the svn checkout
+        --die       add DIE handler
+        --fulltrace full sourcecode trace to STDERR
 
        LIST OF FILES    list of files to open
 
