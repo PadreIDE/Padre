@@ -899,7 +899,7 @@ sub on_middle_up {
 		$doc->event_on_middle_up( $self, $event );
 	}
 
-	$event->Skip;
+	$event->Skip(1);
 	return;
 }
 
