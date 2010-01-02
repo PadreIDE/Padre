@@ -74,6 +74,7 @@ sub new {
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
+
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
 	# with a round box around each of them
@@ -873,12 +874,12 @@ sub on_left_up {
 
 		# Only on X11 based platforms
 		#		Wx::wxTheClipboard->UsePrimarySelection(1);
-		if ($config->mid_button_paste){
-			$self->put_text_to_clipboard($text,1);
+		if ( $config->mid_button_paste ) {
+			$self->put_text_to_clipboard( $text, 1 );
 		} else {
 			$self->put_text_to_clipboard($text);
 		}
-		
+
 		#		Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
@@ -901,21 +902,21 @@ sub on_middle_up {
 	# Please look at ticket #390 for details!
 
 	Wx::wxTheClipboard->UsePrimarySelection(1)
-	 if $config->mid_button_paste;
-	
-	if (Padre::Constant::WIN32 or (!$config->mid_button_paste)){
+		if $config->mid_button_paste;
+
+	if ( Padre::Constant::WIN32 or ( !$config->mid_button_paste ) ) {
 		Padre::Current->editor->Paste;
 	}
-	
+
 	my $doc = $self->{Document};
 	if ( $doc->can('event_on_middle_up') ) {
 		$doc->event_on_middle_up( $self, $event );
 	}
 
 	Wx::wxTheClipboard->UsePrimarySelection(0)
-	 if $config->mid_button_paste;
+		if $config->mid_button_paste;
 
-	if ($config->mid_button_paste){
+	if ( $config->mid_button_paste ) {
 		$event->Skip;
 	} else {
 		$event->Skip(0);
@@ -925,8 +926,8 @@ sub on_middle_up {
 
 # Manipulate the window manager selection buffer when editor looses focus
 sub on_kill_focus {
-	my ($self,$event) = @_;
-	if ( Padre::Constant::WXGTK ) {
+	my ( $self, $event ) = @_;
+	if (Padre::Constant::WXGTK) {
 		my $selection = $self->GetSelectedText;
 		Wx::wxTheClipboard->Open;
 		Wx::wxTheClipboard->UsePrimarySelection(1);
@@ -1145,7 +1146,7 @@ sub _convert_paste_eols {
 }
 
 sub put_text_to_clipboard {
-	my ( $self, $text,$clipboard ) = @_;
+	my ( $self, $text, $clipboard ) = @_;
 	@_ = (); # Feeble attempt to kill Scalars Leaked
 
 	return if $text eq '';
@@ -1161,7 +1162,7 @@ sub put_text_to_clipboard {
 
 	Wx::wxTheClipboard->Open;
 	Wx::wxTheClipboard->UsePrimarySelection($clipboard)
-	 if $config->mid_button_paste;
+		if $config->mid_button_paste;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
 	Wx::wxTheClipboard->Close;
 

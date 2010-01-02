@@ -16,11 +16,11 @@ use Getopt::Long ();
 use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE $FULLTRACE};
 
 BEGIN {
-	$DEBUG   = 0;
-	$DIE     = 0;
-	$PROFILE = 0;
-	$PLUGINS = 0;
-	$USAGE   = 0;
+	$DEBUG     = 0;
+	$DIE       = 0;
+	$PROFILE   = 0;
+	$PLUGINS   = 0;
+	$USAGE     = 0;
 	$FULLTRACE = 0;
 	Getopt::Long::GetOptions(
 		'usage|help' => \$USAGE,
@@ -28,9 +28,9 @@ BEGIN {
 		'trace'      => sub {
 			$ENV{PADRE_DEBUG} = 1;
 		},
-		'die'     => \$DIE,
-		'profile' => \$PROFILE,
-		'a'       => \$PLUGINS,
+		'die'       => \$DIE,
+		'profile'   => \$PROFILE,
+		'a'         => \$PLUGINS,
 		'fulltrace' => \$FULLTRACE,
 	);
 }
@@ -73,13 +73,13 @@ push @cmd, '-d'          if $DEBUG;
 push @cmd, '-dt:NYTProf' if $PROFILE;
 
 if ($FULLTRACE) {
-    eval { require Devel::Trace; };
-    if ($@) {
-	print "Error while initilizing --fulltrace while trying to load Devel::Trace:\n".
-	      "$@Maybe Devel::Trace isn't installed?\n";
-	exit 1;
-    }
-    push @cmd, '-d:Trace';
+	eval { require Devel::Trace; };
+	if ($@) {
+		print "Error while initilizing --fulltrace while trying to load Devel::Trace:\n"
+			. "$@Maybe Devel::Trace isn't installed?\n";
+		exit 1;
+	}
+	push @cmd, '-d:Trace';
 }
 
 # Rebuild translations

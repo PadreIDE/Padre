@@ -283,13 +283,15 @@ sub get_command {
 		if ( !-x $perl ) {
 			my $ret = Wx::MessageBox(
 				Wx::gettext(
-					sprintf( '%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl )
+					sprintf(
+						'%s seems to be no executable Perl interpreter, use the system default perl instead?', $perl
+					)
 				),
 				Wx::gettext('Run'),
 				Wx::wxYES_NO | Wx::wxCENTRE,
 				Padre->ide->wx->main,
 			);
-			if ($ret == Wx::wxYES) {
+			if ( $ret == Wx::wxYES ) {
 				$perl = Padre::Perl::cperl();
 			} else {
 				return;
