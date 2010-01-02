@@ -107,7 +107,7 @@ sub _content_about {
     <font size="+1">&nbsp;&nbsp;Perl Application Development and Refactoring Environment</font>
     </strong>
     <p>Created by Gábor Szabó</p>
-    <p>Copyright 2008 - 2009 The Padre Development Team</p>
+    <p>Copyright 2008 - 2010 The Padre Development Team</p>
     <p>"Blue butterfly on a green leaf" splash image is based on work by 
     Jerry Charlotte (blackbutterfly)</p>
     <p>
@@ -384,7 +384,7 @@ sub _rtl {
 
 1;
 
-# Copyright 2008-2009 The Padre development team as listed in Padre.pm.
+# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE
 # This program is free software; you can redistribute it and/or
 # modify it under the same terms as Perl 5 itself.
