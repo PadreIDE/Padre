@@ -301,6 +301,13 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+		[   [   'Wx::CheckBox',
+				'mid_button_paste',
+				( $config->mid_button_paste ? 1 : 0 ),
+				Wx::gettext("Use X11 middle button paste style")
+			],
+			[]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -1085,6 +1092,10 @@ sub run {
 	$config->set(
 		'window_list_shorten_path',
 		$data->{window_list_shorten_path} ? 1 : 0
+	);
+	$config->set(
+		'mid_button_paste',
+		$data->{mid_button_paste} ? 1 : 0
 	);
 
 

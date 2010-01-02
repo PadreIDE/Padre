@@ -866,13 +866,19 @@ sub on_smart_highlight_end {
 sub on_left_up {
 	my ( $self, $event ) = @_;
 
+	my $config = $self->main->ide->config;
+
 	my $text = $self->GetSelectedText;
 	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
 
 		# Only on X11 based platforms
 		#		Wx::wxTheClipboard->UsePrimarySelection(1);
-		$self->put_text_to_clipboard($text);
-
+		if ($config->mid_button_paste){
+			$self->put_text_to_clipboard($text,1);
+		} else {
+			$self->put_text_to_clipboard($text);
+		}
+		
 		#		Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
@@ -888,18 +894,32 @@ sub on_left_up {
 sub on_middle_up {
 	my ( $self, $event ) = @_;
 
+	my $config = $self->main->ide->config;
+
 	# TO DO: Sometimes there are unexpected effects when using the middle button.
 	# It seems that another event is doing something but not within this module.
 	# Please look at ticket #390 for details!
 
-	Padre::Current->editor->Paste;
-
+	Wx::wxTheClipboard->UsePrimarySelection(1)
+	 if $config->mid_button_paste;
+	
+	if (Padre::Constant::WIN32 or (!$config->mid_button_paste)){
+		Padre::Current->editor->Paste;
+	}
+	
 	my $doc = $self->{Document};
 	if ( $doc->can('event_on_middle_up') ) {
 		$doc->event_on_middle_up( $self, $event );
 	}
 
-	$event->Skip(1);
+	Wx::wxTheClipboard->UsePrimarySelection(0)
+	 if $config->mid_button_paste;
+
+	if ($config->mid_button_paste){
+		$event->Skip;
+	} else {
+		$event->Skip(0);
+	}
 	return;
 }
 
@@ -1125,10 +1145,14 @@ sub _convert_paste_eols {
 }
 
 sub put_text_to_clipboard {
-	my ( $self, $text ) = @_;
+	my ( $self, $text,$clipboard ) = @_;
 	@_ = (); # Feeble attempt to kill Scalars Leaked
 
 	return if $text eq '';
+
+	my $config = $self->main->ide->config;
+
+	$clipboard ||= 0;
 
 	# Backup last clipboard value:
 	$self->{Clipboard_Old} = $self->get_text_from_clipboard;
@@ -1136,6 +1160,8 @@ sub put_text_to_clipboard {
 	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
 
 	Wx::wxTheClipboard->Open;
+	Wx::wxTheClipboard->UsePrimarySelection($clipboard)
+	 if $config->mid_button_paste;
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
 	Wx::wxTheClipboard->Close;
 

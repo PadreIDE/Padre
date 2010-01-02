@@ -681,6 +681,14 @@ setting(
 	default => 0,
 );
 
+setting(
+	name    => 'mid_button_paste',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
+
 # By default use background threads unless profiling
 # TO DO - Make the default actually change
 
