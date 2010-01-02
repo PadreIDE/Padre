@@ -62,7 +62,7 @@ requires 'Class::Unload'         => '0.03';
 requires 'Class::XSAccessor'     => '1.05';
 requires 'Cwd'                   => '3.2701';
 requires 'Data::Dumper'          => 0;
-requires 'DBD::SQLite'           => '1.10';
+requires 'DBD::SQLite'           => '1.27';
 requires 'DBI'                   => '1.58';
 requires 'Debug::Client'         => '0.11';
 requires 'Devel::Dumpvar'        => '0.04';
@@ -101,7 +101,7 @@ requires 'List::Util'      => '1.18';
 requires 'List::MoreUtils' => '0.22';
 requires 'Module::Refresh' => '0.13';
 requires 'Module::Starter' => '1.50';
-requires 'ORLite'          => '1.20';
+requires 'ORLite'          => '1.30';
 requires 'ORLite::Migrate' => '0.03';
 
 #requires      'PAR'                      => '0.989';
