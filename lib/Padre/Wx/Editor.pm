@@ -812,9 +812,8 @@ sub clear_smart_highlight {
 
 sub on_smart_highlight_begin {
 	my ( $self, $event ) = @_;
+
 	my $selection        = $self->GetSelectedText;
-	
-	$self->put_text_to_clipboard($selection, 1);
 	my $selection_length = length $selection;
 	return if $selection_length == 0;
 
@@ -854,7 +853,7 @@ sub on_smart_highlight_begin {
 			$self->SetStyling( $style->{len}, 32 );
 		}
 	}
-	
+
 }
 
 sub on_smart_highlight_end {
@@ -870,10 +869,11 @@ sub on_left_up {
 	my $text = $self->GetSelectedText;
 	if ( Padre::Constant::WXGTK and defined $text and $text ne '' ) {
 
-		
-		$self->put_text_to_clipboard($text,1);
+		# Only on X11 based platforms
+		#		Wx::wxTheClipboard->UsePrimarySelection(1);
+		$self->put_text_to_clipboard($text);
 
-		
+		#		Wx::wxTheClipboard->UsePrimarySelection(0);
 	}
 
 	my $doc = $self->{Document};
@@ -891,20 +891,18 @@ sub on_middle_up {
 	# TO DO: Sometimes there are unexpected effects when using the middle button.
 	# It seems that another event is doing something but not within this module.
 	# Please look at ticket #390 for details!
-	Wx::wxTheClipboard->UsePrimarySelection(1);
-	if (Padre::Constant::WIN32)
-	{
-		Padre::Current->editor->Paste;
-	}
-	
+
+	Padre::Current->editor->Paste;
+
 	my $doc = $self->{Document};
 	if ( $doc->can('event_on_middle_up') ) {
 		$doc->event_on_middle_up( $self, $event );
 	}
-	Wx::wxTheClipboard->UsePrimarySelection(0);
+
 	$event->Skip;
 	return;
 }
+
 # Manipulate the window manager selection buffer when editor looses focus
 sub on_kill_focus {
 	my ($self,$event) = @_;
@@ -1060,9 +1058,10 @@ sub current_paragraph {
 
 sub Paste {
 	my $self = shift;
-	
+
+	# Workaround for Copy/Paste bug ticket #390
 	my $text = $self->get_text_from_clipboard;
-	
+
 	if ($text) {
 
 		# Conversion of pasted text is really needed since it usually comes
@@ -1125,41 +1124,28 @@ sub _convert_paste_eols {
 	return $paste;
 }
 
-# put_text_to_clipboard
-# $self->put_text_to_clipboard($text, $clipboard_Number )
-# where X11 based display systems 
-# clipboard number is either the GTK clipboard or the X11
-# clipboard.  Clipboard 1 is used for normal X11 copy onselect and
-# paste on middle button. Has no affect on windows.
-# Puts Text on the clipboard
-
 sub put_text_to_clipboard {
-	my ( $self, $text , $clipboard) = @_;
+	my ( $self, $text ) = @_;
 	@_ = (); # Feeble attempt to kill Scalars Leaked
-	
-	
-	if (!defined($clipboard)){
-		$clipboard = 0 ;
-	}
-	
-	if ($text eq ''){return;}
+
+	return if $text eq '';
+
 	# Backup last clipboard value:
 	$self->{Clipboard_Old} = $self->get_text_from_clipboard;
-	
-	
-	
+
+	#         if $self->{Clipboard_Old} ne $self->get_text_from_clipboard;
+
 	Wx::wxTheClipboard->Open;
-	Wx::wxTheClipboard->UsePrimarySelection($clipboard);
 	Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
 	Wx::wxTheClipboard->Close;
-	
+
 	return;
 }
 
 sub get_text_from_clipboard {
 
 	my $self = shift;
-	
+
 	my $text = '';
 	Wx::wxTheClipboard->Open;
 	if ( Wx::wxTheClipboard->IsSupported(Wx::wxDF_TEXT) ) {
