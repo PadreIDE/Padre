@@ -3,7 +3,12 @@ Changes for Perl Application Development and Refactoring Environment
 0.54 To Be Released
     - If all files are closed, the function list would ->Hide itself
       permanently and never come back. Resolved (ADAMK)
-    - fix perl interpreter selection (SZABGAB)
+    - Fix perl interpreter selection (SZABGAB)
+    - Updated DBD::SQLite dependency to 1.27 and ORLite dependency to 1.30.
+      This should now correctly throw an exception on a corrupt padre.db file
+      which will cause an immediate crash at startup with a SQLite-related
+      error message instead of a secondary error message complaining about
+      missing Padre::DB classes (ADAMK)
 
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)
