@@ -1,11 +1,10 @@
-package Padre::QuickFixProvider::Perl;
+package Padre::Document::Perl::QuickFix;
 
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::QuickFixProvider ();
 use PPI                     ();
+use Padre::QuickFixProvider ();
 
 our $VERSION = '0.53';
 our @ISA     = 'Padre::QuickFixProvider';
@@ -36,8 +35,8 @@ sub quick_fix_list {
 	$doc->index_locations;
 
 	my @fixes = (
-		'Padre::QuickFixProvider::Perl::StrictWarnings',
-		'Padre::QuickFixProvider::Perl::IncludeModule',
+		'Padre::Document::Perl::QuickFix::StrictWarnings',
+		'Padre::Document::Perl::QuickFix::IncludeModule',
 	);
 
 	foreach my $fix (@fixes) {
@@ -59,7 +58,7 @@ __END__
 
 =head1 NAME
 
-Padre::QuickFixProvider::Perl - Padre Perl 5 Quick Fix Provider
+Padre::Document::Perl::QuickFix - Padre Perl 5 Quick Fix Provider
 
 =head1 DESCRIPTION
 

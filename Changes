@@ -12,6 +12,9 @@ Changes for Perl Application Development and Refactoring Environment
     - Moved Padre::HelpProvider::Perl to Padre::Document::Perl::Help to
       prevent plugin classes from being scattered all over the namespace
       tree (ADAMK)
+    - Moved Padre::QuickFixProvider::Perl to Padre::Document::Perl::QuickFix
+      to prevent plugin classes from being scattered all over the namespace
+      tree (ADAMK)
 
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)

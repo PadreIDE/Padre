@@ -1632,8 +1632,8 @@ sub get_help_provider {
 # Returns Perl's Quick Fix Provider
 #
 sub get_quick_fix_provider {
-	require Padre::QuickFixProvider::Perl;
-	return Padre::QuickFixProvider::Perl->new;
+	require Padre::Document::Perl::QuickFix;
+	return Padre::Document::Perl::QuickFix->new;
 }
 
 sub autoclean {

@@ -34,7 +34,7 @@ __END__
 
 =head1 NAME
 
-Padre::QuickFixProvider - Padre Quick Fix Provider API
+Padre::Document::Perl::QuickFix - Padre Quick Fix Provider API
 
 =head1 DESCRIPTION
 
@@ -68,7 +68,7 @@ Please see the following sample implementation:
 
 =cut
 
-The B<Padre::QuickFixProvider> class provides a base class, default implementation
+The B<Padre::Document::Perl::QuickFix> class provides a base class, default implementation
 and API documentation for quick fix provision support in L<Padre>.
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

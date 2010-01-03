@@ -1,4 +1,4 @@
-package Padre::QuickFixProvider::Perl::IncludeModule;
+package Padre::Document::Perl::QuickFix::IncludeModule;
 
 use 5.008;
 use strict;
@@ -93,7 +93,7 @@ __END__
 
 =head1 NAME
 
-Padre::QuickFixProvider::Perl::IncludeModule - Check for module inclusions
+Padre::Document::Perl::QuickFix::IncludeModule - Check for module inclusions
 
 =head1 DESCRIPTION
 

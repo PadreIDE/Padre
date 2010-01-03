@@ -1,4 +1,4 @@
-package Padre::QuickFixProvider::Perl::StrictWarnings;
+package Padre::Document::Perl::QuickFix::StrictWarnings;
 
 use 5.008;
 use strict;
@@ -106,7 +106,7 @@ __END__
 
 =head1 NAME
 
-Padre::QuickFixProvider::Perl::StrictWarnings - Check for strict and warnings pragmas
+Padre::Document::Perl::QuickFix::StrictWarnings - Check for strict and warnings pragmas
 
 =head1 DESCRIPTION
 
