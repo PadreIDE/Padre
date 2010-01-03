@@ -2841,8 +2841,9 @@ sub on_close_window {
 		$self->{help}->Destroy;
 	}
 
-	# Shut down all the plug-ins before saving the configuration
-	# so that plug-ins have a change to save their configuration.
+	# Shut down and destroy all the plug-ins before saving the
+	# configuration so that plug-ins have a change to save their
+	# configuration.
 	$ide->plugin_manager->shutdown;
 	TRACE("After plugin manager shutdown") if DEBUG;
 

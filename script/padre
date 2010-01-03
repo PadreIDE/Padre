@@ -158,7 +158,7 @@ DESKTOP
 
 
 my $app = Padre->new(%opts);
-unless ($app) {
+unless ( $app ) {
 
 	# Single instance worked correctly
 	exit(0);

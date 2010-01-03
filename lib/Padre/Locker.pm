@@ -61,8 +61,7 @@ sub locked {
 
 # During Padre shutdown we should disable all forms of screen updating,
 # once we have completed all user-interactive steps in the shutdown.
-# Calling the shutdown method will apply the UPDATE lock to prevent any
-# further screen painting, and then permanently ignore any and all attempts
+# Calling the shutdown method will permanently ignore any and all attempts
 # to call refresh methods.
 # This method does NOT ->Hide the actual application, that is left up to the
 # shutdown process. This action just disables everything lock-related that
@@ -71,6 +70,11 @@ sub shutdown {
 	my $self = shift;
 	my $lock = $self->lock( 'UPDATE', 'REFRESH' );
 	$self->{shutdown} = 1;
+
+	# If we have an update lock running, stop it manually now.
+	# If we don't do this, Win32 Padre will segfault on exit.
+	$self->{update_locker} = undef;
+
 	return 1;
 }
 
@@ -103,6 +107,7 @@ sub db_decrement {
 sub update_increment {
 	my $self = shift;
 	unless ( $self->{update_depth}++ ) {
+		return if $self->{shutdown};
 
 		# Locking for the first time
 		$self->{update_locker} = Wx::WindowUpdateLocker->new( $self->{owner} );
@@ -113,11 +118,10 @@ sub update_increment {
 sub update_decrement {
 	my $self = shift;
 	unless ( --$self->{update_depth} ) {
+		return if $self->{shutdown};
 
 		# Unlocked for the final time
-		unless ( $self->{shutdown} ) {
-			$self->{update_locker} = undef;
-		}
+		$self->{update_locker} = undef;
 	}
 	return;
 }
@@ -125,13 +129,12 @@ sub update_decrement {
 sub busy_increment {
 	my $self = shift;
 	unless ( $self->{busy_depth}++ ) {
-
-		# Locking for the first time
 		# If we are in shutdown, the application isn't painting anyway
 		# (or possibly even visible) so don't put us into busy state.
-		unless ( $self->{shutdown} ) {
-			$self->{busy_locker} = Wx::BusyCursor->new;
-		}
+		return if $self->{shutdown};
+
+		# Locking for the first time
+		$self->{busy_locker} = Wx::BusyCursor->new;
 	}
 	return;
 }
@@ -139,11 +142,10 @@ sub busy_increment {
 sub busy_decrement {
 	my $self = shift;
 	unless ( --$self->{busy_depth} ) {
+		return if $self->{shutdown};
 
 		# Unlocked for the final time
-		unless ( $self->{shutdown} ) {
-			$self->{busy_locker} = undef;
-		}
+		$self->{busy_locker} = undef;
 	}
 	return;
 }

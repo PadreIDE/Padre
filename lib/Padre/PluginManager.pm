@@ -69,13 +69,12 @@ sub new {
 		or Carp::croak("Creation of a Padre::PluginManager without a Padre not possible");
 
 	my $self = bless {
-		parent       => $parent,
-		plugins      => {},
-		plugin_dir   => Padre::Constant::PLUGIN_DIR,
-		plugin_order => [],
-
-		#par_loaded               => 0,
+		parent                    => $parent,
+		plugins                   => {},
+		plugin_dir                => Padre::Constant::PLUGIN_DIR,
+		plugin_order              => [],
 		plugins_with_context_menu => {},
+		#par_loaded               => 0,
 		@_,
 	}, $class;
 
@@ -238,6 +237,12 @@ sub shutdown {
 			);
 		}
 	}
+
+	# Remove the circular reference between the main application and
+	# the plugin manager to complete the destruction.
+	# This breaks encapsulation a bit, but will do for now.
+	delete $self->{parent}->{plugin_manager};
+	delete $self->{parent};
 
 	return 1;
 }
