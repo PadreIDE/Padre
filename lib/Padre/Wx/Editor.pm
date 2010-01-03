@@ -927,6 +927,11 @@ sub on_middle_up {
 # Manipulate the window manager selection buffer when editor looses focus
 sub on_kill_focus {
 	my ( $self, $event ) = @_;
+
+	# TODO: fix this
+	# Gabor disabled this code as the change that added this code (r10022)
+	# broke copy-paste using the Ctr-C/Ctl-V between files in Padre.
+	return;
 	if (Padre::Constant::WXGTK) {
 		my $selection = $self->GetSelectedText;
 		Wx::wxTheClipboard->Open;
