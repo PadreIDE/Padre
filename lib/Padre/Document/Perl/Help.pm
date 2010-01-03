@@ -1,4 +1,4 @@
-package Padre::HelpProvider::Perl;
+package Padre::Document::Perl::Help;
 
 use 5.008;
 use strict;
@@ -283,7 +283,7 @@ __END__
 
 =head1 NAME
 
-Padre::HelpProvider::Perl - Perl 5 Help Provider
+Padre::Document::Perl::Help - Perl 5 Help Provider
 
 =head1 DESCRIPTION
 

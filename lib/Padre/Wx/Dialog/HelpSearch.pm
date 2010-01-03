@@ -311,8 +311,8 @@ sub _search {
 		} else {
 
 			# If there no document, use Perl 5 help provider
-			require Padre::HelpProvider::Perl;
-			$self->_help_provider( Padre::HelpProvider::Perl->new );
+			require Padre::Document::Perl::Help;
+			$self->_help_provider( Padre::Document::Perl::Help->new );
 		}
 	}
 	return if not $self->_help_provider;
