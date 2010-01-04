@@ -28,8 +28,8 @@ isa_ok( $main, 'Padre::Wx::Main' );
 # using Capture::Tiny to eliminate a test failure using prove --merge
 my $res;
 my ( $stdout, $stderr ) = capture { $res = $main->change_locale('ar') };
-diag $stdout;
-diag $stderr;
+# diag $stdout;
+# diag $stderr;
 is( $res,                          undef, '->change_locale(ar)' );
 is( $main->change_locale('de'),    undef, '->change_locale(de)' );
 is( $main->change_locale('en-au'), undef, '->change_locale(en-au)' );
