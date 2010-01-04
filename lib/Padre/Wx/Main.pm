@@ -2816,6 +2816,8 @@ sub on_close_window {
 	# perceives the application as closing faster.
 	# This knocks about quarter of a second off the speed
 	# at which Padre appears to close.
+	# NOTE: I'm not entirely sure WHY these two statements aren't the
+	# other way around... but I have some vague memories it matters.
 	$self->locker->shutdown;
 	$self->Show(0);
 

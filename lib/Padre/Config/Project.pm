@@ -5,15 +5,26 @@ package Padre::Config::Project;
 use 5.008;
 use strict;
 use warnings;
-use YAML::Tiny ();
-use Params::Util qw{_HASH0};
+use File::Basename ();
+use YAML::Tiny     ();
+use Params::Util   ();
 
 our $VERSION = '0.53';
+
+
+
+
 
 ######################################################################
 # Constructor
 
-use Class::XSAccessor constructor => 'new';
+use Class::XSAccessor {
+	constructor => 'new',
+	getters     => {
+		dirname  => 'dirname',
+		fullname => 'fullname',
+	},
+};
 
 # TO DO Write constructor that checks the config?
 
@@ -21,18 +32,26 @@ sub read {
 	my $class = shift;
 
 	# Check the file
-	my $file = shift;
-	unless ( defined $file and -f $file and -r $file ) {
+	my $fullname = shift;
+	unless ( defined $fullname and -f $fullname and -r $fullname ) {
 		return;
 	}
 
 	# Load the user configuration
-	my $hash = YAML::Tiny::LoadFile($file);
-	return unless _HASH0($hash);
+	my $hash = YAML::Tiny::LoadFile($fullname);
+	return unless Params::Util::_HASH0($hash);
 
-	# Create the object
-	return $class->new(%$hash);
+	# Create the object, saving the file name and directory for later usage
+	my $dirname = File::Basename::dirname($fullname);
+	return $class->new(
+		%$hash,
+		dirname  => $dirname,
+		fullname => $fullname,
+	);
 }
+
+# NOTE: Once we add the ability to edit the project settings, make sure
+# we strip out the path value before we save them.
 
 1;
 

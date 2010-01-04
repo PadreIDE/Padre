@@ -18,6 +18,10 @@ Changes for Perl Application Development and Refactoring Environment
     - During shutdown, be more precise about the order in which we clean up
       and be more careful to ensure that ->Update is NOT disabled, to prevent
       segfaults on Windows from the "disabled update at exit" bug (ADAMK)
+    - Added the first PROJECT-backend config_perltidy setting, so that
+      projects can for the first time define a project tidy policy. This
+      project-specific policy isn't being used by the plugin itself yet,
+      but this change clears the way for that kind of functionality (ADAMK)
 
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)

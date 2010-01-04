@@ -21,18 +21,22 @@ use Padre::Action::Internal ();
 our $VERSION = '0.53';
 
 # Generate faster accessors
-use Class::XSAccessor getters => {
-	id            => 'id',
-	icon          => 'icon',
-	comment       => 'comment',
-	name          => 'name',
-	label         => 'label',
-	shortcut      => 'shortcut',
-	menu_event    => 'menu_event',
-	toolbar_event => 'toolbar_event',
-	menu_method   => 'menu_method',
-	toolbar_icon  => 'toolbar',
+use Class::XSAccessor {
+	getters => {
+		id            => 'id',
+		icon          => 'icon',
+		comment       => 'comment',
+		name          => 'name',
+		label         => 'label',
+		shortcut      => 'shortcut',
+		menu_event    => 'menu_event',
+		toolbar_event => 'toolbar_event',
+		menu_method   => 'menu_method',
+		toolbar_icon  => 'toolbar',
+	}
 };
+
+
 
 
 

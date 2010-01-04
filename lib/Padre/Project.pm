@@ -5,15 +5,18 @@ package Padre::Project;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec    ();
-use YAML::Tiny    ();
-use Padre::Config ();
+use File::Spec     ();
+use YAML::Tiny     ();
+use Padre::Config  ();
+use Padre::Current ();
 
 our $VERSION = '0.53';
 
-use Class::XSAccessor getters => {
-	root      => 'root',
-	padre_yml => 'padre_yml',
+use Class::XSAccessor {
+	getters => {
+		root      => 'root',
+		padre_yml => 'padre_yml',
+	}
 };
 
 
@@ -54,7 +57,7 @@ sub class {
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Check the root directory
 	unless ( defined $self->root ) {
@@ -88,7 +91,7 @@ sub config {
 	unless ( $self->{config} ) {
 
 		# Get the default config object
-		my $config = Padre->ide->config;
+		my $config = Padre::Current->config;
 
 		# If we have a padre.yml file create a custom config object
 		if ( $self->{padre_yml} ) {

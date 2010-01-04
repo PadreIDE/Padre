@@ -39,10 +39,12 @@ our $REVISION = 1;
 our $SINGLETON = undef;
 
 # Accessor generation
-use Class::XSAccessor::Array getters => {
-	host    => Padre::Constant::HOST,
-	human   => Padre::Constant::HUMAN,
-	project => Padre::Constant::PROJECT,
+use Class::XSAccessor::Array {
+	getters => {
+		host    => Padre::Constant::HOST,
+		human   => Padre::Constant::HUMAN,
+		project => Padre::Constant::PROJECT,
+	}
 };
 
 
@@ -317,6 +319,7 @@ setting(
 
 	# Toolbars are not typically used for Mac apps.
 	# Hide it by default so Padre looks "more Mac'ish"
+	# NOTE: Or at least, so we were told. Opinions apparently vary.
 	default => Padre::Constant::MAC ? 0 : 1,
 );
 setting(
@@ -447,9 +450,9 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 'deep',
 	options => [
-		'no'   => 'No Autoindent',
-		'same' => 'Indent to Same Depth',
-		'deep' => 'Indent Deeply',
+		'no'   => _T('No Autoindent'),
+		'same' => _T('Indent to Same Depth'),
+		'deep' => _T('Indent Deeply'),
 	],
 );
 setting(
@@ -779,7 +782,7 @@ setting(
 	default => '',
 );
 
-# Enable/Disable functions
+# Enable/Disable entire functions that some people dislike
 setting(
 	name    => 'func_config',
 	type    => Padre::Constant::BOOLEAN,
@@ -938,13 +941,32 @@ setting(
 	default => 0,
 );
 
+# The "config_" namespace is for the paths of other non-Padre config files
+# for various external tools (usually so that projects can define the
+# the location of their project-specific policies).
+
+# Location of the Perl::Tidy RC file, if a project wants to set a custom one.
+# When set to false, allow Perl::Tidy to use it's own default config location.
+# Load this from the project backend in preference to the host one, so that
+# projects can set their own project-specific config file.
+setting(
+	name    => 'config_perltidy',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::PROJECT,
+	default => '',
+);
+
+
+
+
+
 #####################################################################
 # Constructor and Accessors
 
 sub new {
-	my $class = shift;
-	my $host  = shift;
-	my $human = shift;
+	my $class   = shift;
+	my $host    = shift;
+	my $human   = shift;
 	unless ( Params::Util::_INSTANCE( $host, 'Padre::Config::Host' ) ) {
 		Carp::croak("Did not provide a host config to Padre::Config->new");
 	}
@@ -977,11 +999,12 @@ sub read {
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
+		         || Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
 
+		# NOTE: This is a really evil usage of Perl
 		$SINGLETON->Padre::Config::Upgrade::check();
 	}
 
