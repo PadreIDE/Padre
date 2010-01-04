@@ -946,11 +946,22 @@ setting(
 # the location of their project-specific policies).
 
 # Location of the Perl::Tidy RC file, if a project wants to set a custom one.
-# When set to false, allow Perl::Tidy to use it's own default config location.
+# When set to false, allow Perl::Tidy to use its own default config location.
 # Load this from the project backend in preference to the host one, so that
 # projects can set their own project-specific config file.
 setting(
 	name    => 'config_perltidy',
+	type    => Padre::Constant::PATH,
+	store   => Padre::Constant::PROJECT,
+	default => '',
+);
+
+# Location of the Perl::Critic RC file, if a project wants to set a custom
+# one. When set to false, allow Perl::Critic to use its own default config
+# location. Load this from the project backend in preference to the host one,
+# so that projects can set their own project-specific config file.
+setting(
+	name    => 'config_perlcritic',
 	type    => Padre::Constant::PATH,
 	store   => Padre::Constant::PROJECT,
 	default => '',

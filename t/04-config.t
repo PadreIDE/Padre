@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use constant CONFIG_OPTIONS => 107;
+use constant CONFIG_OPTIONS => 108;
 
 # Move of Debug to Run Menu
 use Test::More;

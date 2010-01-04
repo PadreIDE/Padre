@@ -22,6 +22,8 @@ Changes for Perl Application Development and Refactoring Environment
       projects can for the first time define a project tidy policy. This
       project-specific policy isn't being used by the plugin itself yet,
       but this change clears the way for that kind of functionality (ADAMK)
+    - Added config_perlcritic configuration setting, so that projects can
+      define perlcritic policies (ADAMK)
 
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)
