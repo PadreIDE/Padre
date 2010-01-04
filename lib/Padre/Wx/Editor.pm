@@ -73,7 +73,13 @@ sub new {
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
-	Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
+
+	# TODO: fix this
+	# Gabor disabled this code as the change that added this code (r10022)
+	# broke copy-paste using the Ctr-C/Ctl-V between files in Padre.
+	if ( 0 and Padre::Constant::WXGTK ) {
+		Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
+	}
 
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
@@ -924,27 +930,19 @@ sub on_middle_up {
 	return;
 }
 
-# Manipulate the window manager selection buffer when editor looses focus
+# Manipulate the window manager selection buffer when editor looses focus.
+# NOTE: Only runs under WXGTK
 sub on_kill_focus {
-	my ( $self, $event ) = @_;
-
-	# TODO: fix this
-	# Gabor disabled this code as the change that added this code (r10022)
-	# broke copy-paste using the Ctr-C/Ctl-V between files in Padre.
-	return;
-	if (Padre::Constant::WXGTK) {
-		my $selection = $self->GetSelectedText;
-		Wx::wxTheClipboard->Open;
-		Wx::wxTheClipboard->UsePrimarySelection(1);
-		my $clip = Wx::TextDataObject->new;
-		$clip->SetText($selection);
-		Wx::wxTheClipboard->SetData($clip);
-		Wx::wxTheClipboard->UsePrimarySelection(0);
-		Wx::wxTheClipboard->Close;
-	}
-
+	my $self      = shift;
+	my $selection = $self->GetSelectedText;
+	Wx::wxTheClipboard->Open;
+	Wx::wxTheClipboard->UsePrimarySelection(1);
+	my $clip = Wx::TextDataObject->new;
+	$clip->SetText($selection);
+	Wx::wxTheClipboard->SetData($clip);
+	Wx::wxTheClipboard->UsePrimarySelection(0);
+	Wx::wxTheClipboard->Close;
 }
-
 
 sub on_right_down {
 	my $self  = shift;
