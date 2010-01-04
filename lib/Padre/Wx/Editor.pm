@@ -75,8 +75,11 @@ sub new {
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 
 	# TODO: fix this
-	# Gabor disabled this code as the change that added this code (r10022)
-	# broke copy-paste using the Ctr-C/Ctl-V between files in Padre.
+	#       Gabor disabled this code as the change that added this code
+	#       (r10022) broke copy-paste using the Ctr-C/Ctl-V between files
+	#       in Padre.
+	# NOTE: Enabling this event handler on WXWIN32 causes strange and
+	#       unusual focus jumping behaviour. So don't.
 	if ( 0 and Padre::Constant::WXGTK ) {
 		Wx::Event::EVT_KILL_FOCUS( $self, \&on_kill_focus );
 	}
