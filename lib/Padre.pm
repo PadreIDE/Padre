@@ -36,18 +36,20 @@ use Padre::DB       ();
 use Padre::Action::Queue;
 
 # Generate faster accessors
-use Class::XSAccessor getters => {
-	original_cwd   => 'original_cwd',
-	opts           => 'opts',
-	config         => 'config',
-	wx             => 'wx',
-	task_manager   => 'task_manager',
-	plugin_manager => 'plugin_manager',
+use Class::XSAccessor {
+	getters => {
+		original_cwd   => 'original_cwd',
+		opts           => 'opts',
+		config         => 'config',
+		wx             => 'wx',
+		task_manager   => 'task_manager',
+		plugin_manager => 'plugin_manager',
 	},
 	accessors => {
-	actions     => 'actions',
-	instance_id => 'instance_id',
-	};
+		actions     => 'actions',
+		instance_id => 'instance_id',
+	},
+};
 
 my $SINGLETON = undef;
 
