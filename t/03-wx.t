@@ -324,7 +324,6 @@ t::lib::Padre::setup_event( $frame, \@events, 0 );
 $ide->wx->MainLoop;
 
 ok( 1, 'finished' );
-BEGIN { $tests += 1; }
 
 sub event {
 	my (%args) = @_;
