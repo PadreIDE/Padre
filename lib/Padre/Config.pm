@@ -1015,7 +1015,6 @@ sub read {
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
 
-		# NOTE: This is a really evil usage of Perl
 		Padre::Config::Upgrade::check($SINGLETON);
 	}
 
