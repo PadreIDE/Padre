@@ -2642,7 +2642,11 @@ sub on_comment_block {
 	my $begin           = $editor->LineFromPosition($selection_start);
 	my $end             = $editor->LineFromPosition($selection_end);
 	my $string          = $document->comment_lines_str;
-	return unless defined $string;
+	if (not defined $string) {
+		$self->error(sprintf( Wx::gettext("Could not determine the comment character for %s document type"), 
+			Padre::MimeTypes->get_mime_type_name( $document->get_mimetype ) ));
+		return;
+	}
 
 	if ( $operation eq 'TOGGLE' ) {
 		$editor->comment_toggle_lines( $begin, $end, $string );
