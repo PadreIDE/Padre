@@ -19,7 +19,7 @@ use warnings;
 our $VERSION = '0.53';
 
 # Disable the splash screen
-$ENV{PADRE_NOSPLASH} = 1;
+$ENV{PADRE_NOSPLASH} = 1; ## no critic (RequireLocalizedPunctuationVars)
 
 1;
 
