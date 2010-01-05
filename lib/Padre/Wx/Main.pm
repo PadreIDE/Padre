@@ -267,6 +267,18 @@ sub new {
 	return $self;
 }
 
+# When the $Padre::INVISIBLE variable is set (during testing) never show
+# the main window.
+sub Show {
+	return shift->SUPER::Show(
+		$Padre::Test::VERSION ? 0 : @_
+	);
+}
+
+
+
+
+
 #####################################################################
 
 =pod
