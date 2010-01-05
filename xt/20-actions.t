@@ -47,7 +47,7 @@ my $dir = File::Temp->newdir;
 $ENV{PADRE_HOME} = $dir->dirname;
 
 # Complete the dev.pl - command
-$cmd .= $devpl . ' -- --home=' . $dir->dirname;
+$cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile($dir->dirname,'newfile.txt');
 $cmd .= ' --actionqueue=internal.dump_padre,file.quit';
 
