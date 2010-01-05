@@ -20,7 +20,7 @@ my %modules = map {
 	$class =~ s/\.pm$//;
 	$class => "lib/$_"
 } File::Find::Rule->relative->name('*.pm')->file->in('lib');
-plan( tests => scalar( keys %modules ) * 8 );
+plan( tests => scalar( keys %modules ) * 9 );
 
 # Compile all of Padre
 use File::Temp;
@@ -63,10 +63,9 @@ my %TODO = map {$_ => 1} qw(
 );
 
 foreach my $module ( sort keys %modules ) {
-
 	my $content = read_file($modules{$module});
 
-	# checking if only modules with Wx in their name depend on Wx
+	# Checking if only modules with Wx in their name depend on Wx
 	if ($module =~ /^Padre::Wx/ or $module =~ /^Wx::/) {
 		my $Test = Test::Builder->new;
 		$Test->skip("$module is a Wx module");
@@ -82,7 +81,10 @@ foreach my $module ( sort keys %modules ) {
 		}
 	}
 
-	ok($content !~ /\$DB\:\:single/,$module.' uses $DB::Single - please remove before release');
+	ok(
+		$content !~ /\$DB\:\:single/,
+		$module . ' uses $DB::Single - please remove before release',
+	);
 
 	# Load the document
 	my $document = PPI::Document->new(
@@ -94,7 +96,7 @@ foreach my $module ( sort keys %modules ) {
 		diag( PPI::Document->errstr );
 	}
 
-	# If a method has a current method, never use Padre::Current directly
+	# If a class has a current method, never use Padre::Current directly
 	SKIP: {
 		unless (eval { $module->can('current') }
 			and $module ne 'Padre::Current'
@@ -118,12 +120,12 @@ foreach my $module ( sort keys %modules ) {
 		ok( $good, "$module: Don't use Padre::Current when ->current is possible" );
 	}
 
-	# If a method has an ide or main method, never use Padre->ide directly
+	# If a class has an ide or main method, never use Padre->ide directly
 	SKIP: {
 		unless (
 			eval { $module->can('ide') or $module->can('main') }
 
-			#			and $module ne 'Padre::Wx::Dialog::RegexEditor'
+			# and $module ne 'Padre::Wx::Dialog::RegexEditor'
 			and $module ne 'Padre::Current'
 			)
 		{
@@ -145,7 +147,28 @@ foreach my $module ( sort keys %modules ) {
 		ok( $good, "$module: Don't use Padre->ide when ->ide or ->main is possible" );
 	}
 
-	# Advoid expensive regexp result variables
+	# Method names with :: in them can only be to SUPER::method
+	SCOPE: {
+		my $good = !$document->find_any(
+			sub {
+				$_[1]->isa('PPI::Token::Operator') or return '';
+				$_[1]->content eq '->'             or return '';
+
+				# Get the method name
+				my $name = $_[1]->snext_sibling    or return '';
+				$name->isa('PPI::Token::Word')     or return '';
+				$name->content =~ /::/             or return '';
+				$name->content !~ /^SUPER::\w+$/   or return '';
+
+				# Naughty naughty
+				diag("$module: Evil method name '$name', it should probably be a function call... maybe. Change it, but be careful.");
+				return 1;
+			}
+		);
+		ok( $good, "$module: Don't use extended Method::name other than SUPER::name" );
+	}
+	
+	# Avoid expensive regexp result variables
 	SKIP: {
 		if ( $module eq 'Padre::Wx::Dialog::RegexEditor' ) {
 			skip( q($' or $` or $& is in the pod of this module), 1 );
