@@ -13,6 +13,7 @@ package Padre::Test;
 # In Padre code, the existance of $Padre::Test::VERSION is suitable for
 # assuming we are in the test suite.
 
+use 5.008005;
 use strict;
 use warnings;
 
