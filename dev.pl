@@ -13,7 +13,16 @@ use Config;
 
 # Collect options early
 use Getopt::Long ();
-use vars qw{$DEBUG $TRACE $DIE $PROFILE $PLUGINS $USAGE $FULLTRACE};
+use vars qw{
+	$DEBUG
+	$TRACE
+	$DIE
+	$PROFILE
+	$PLUGINS
+	$USAGE
+	$FULLTRACE
+	$INVISIBLE
+};
 
 BEGIN {
 	$DEBUG     = 0;
@@ -22,6 +31,7 @@ BEGIN {
 	$PLUGINS   = 0;
 	$USAGE     = 0;
 	$FULLTRACE = 0;
+	$INVISIBLE = 0;
 	Getopt::Long::GetOptions(
 		'usage|help' => \$USAGE,
 		'debug|d'    => \$DEBUG,
@@ -32,6 +42,7 @@ BEGIN {
 		'profile'   => \$PROFILE,
 		'a'         => \$PLUGINS,
 		'fulltrace' => \$FULLTRACE,
+		'invisible' => \$INVISIBLE,
 	);
 }
 
@@ -69,8 +80,9 @@ my @cmd = (
 	qq[-I$FindBin::Bin/blib/lib],
 	qq[-I$FindBin::Bin/../PPIx-EditorTools/lib],
 );
-push @cmd, '-d'          if $DEBUG;
-push @cmd, '-dt:NYTProf' if $PROFILE;
+push @cmd, '-MPadre::Test' if $INVISIBLE;
+push @cmd, '-d'            if $DEBUG;
+push @cmd, '-dt:NYTProf'   if $PROFILE;
 
 if ($FULLTRACE) {
 	eval { require Devel::Trace; };
