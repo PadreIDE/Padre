@@ -276,7 +276,6 @@ sub get_command {
 	# The configuration values is cheaper to get compared to cperl(),
 	# try it first.
 	my $perl = $config->run_perl_cmd;
-	print "Perl: $perl\n";
 
 	# Warn if the Perl interpreter is not executable:
 	if ( defined $perl and $perl ne '' ) {
