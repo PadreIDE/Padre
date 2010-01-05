@@ -27,6 +27,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added config_perlcritic configuration setting, so that projects can
       define perlcritic policies (ADAMK)
     - All tests now run without the need for a visible Padre window (ADAMK)
+    - Ticket #756: Wx::Perl::ProcessStream 0.24 solved this issue
+      Changed the dependency to 0.24 (SEWI)
 
 0.53 2009.12.23
     - Add initial version of a debugger using Debug::Client (SZABGAB)
