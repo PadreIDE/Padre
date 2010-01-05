@@ -1016,7 +1016,7 @@ sub read {
 		$SINGLETON = $class->new( $host, $human );
 
 		# NOTE: This is a really evil usage of Perl
-		$SINGLETON->Padre::Config::Upgrade::check();
+		Padre::Config::Upgrade::check($SINGLETON);
 	}
 
 	return $SINGLETON;
