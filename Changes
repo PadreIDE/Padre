@@ -1,6 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.54 To Be Released
+    - Add full list of file types to the View Document As menu (SZABGAB)
+
+0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.
       Currently only matches: <error> at <file> line 5. (PDONELAN)
     - If all files are closed, the function list would ->Hide itself
