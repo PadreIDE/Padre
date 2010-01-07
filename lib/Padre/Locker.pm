@@ -129,6 +129,7 @@ sub update_decrement {
 sub busy_increment {
 	my $self = shift;
 	unless ( $self->{busy_depth}++ ) {
+
 		# If we are in shutdown, the application isn't painting anyway
 		# (or possibly even visible) so don't put us into busy state.
 		return if $self->{shutdown};

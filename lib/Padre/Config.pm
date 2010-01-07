@@ -975,9 +975,9 @@ setting(
 # Constructor and Accessors
 
 sub new {
-	my $class   = shift;
-	my $host    = shift;
-	my $human   = shift;
+	my $class = shift;
+	my $host  = shift;
+	my $human = shift;
 	unless ( Params::Util::_INSTANCE( $host, 'Padre::Config::Host' ) ) {
 		Carp::croak("Did not provide a host config to Padre::Config->new");
 	}
@@ -1010,7 +1010,7 @@ sub read {
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-		         || Padre::Config::Human->create;
+			|| Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );

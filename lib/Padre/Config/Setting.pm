@@ -26,7 +26,7 @@ use Class::XSAccessor {
 
 sub new {
 	my $class = shift;
-	my $self = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Param checking
 	unless ( $self->name ) {
@@ -50,7 +50,7 @@ sub new {
 	}
 
 	# Normalise
-	$self->{project} = !! $self->project;
+	$self->{project} = !!$self->project;
 
 	return $self;
 }

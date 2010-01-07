@@ -14,7 +14,7 @@ use Padre::Wx    ();
 
 our $VERSION = '0.53';
 use Wx::RichText;
-our @ISA     = 'Wx::RichTextCtrl';
+our @ISA = 'Wx::RichTextCtrl';
 
 sub new {
 	my $class = shift;
@@ -40,31 +40,31 @@ sub new {
 
 	# see #351: output should be blank by default at start-up.
 	#$self->AppendText( Wx::gettext('No output') );
-	
+
 	use Padre::Logger;
 	Wx::Event::EVT_TEXT_URL(
-		$self,
-		$self,
+		$self, $self,
 		sub {
-			my $self = shift;
-			my $event = shift;
+			my $self       = shift;
+			my $event      = shift;
 			my $uri_string = $event->GetString or return;
 			require URI;
 			require File::Spec;
 			my $uri = URI->new($uri_string) or return;
 			TRACE(" onclick for URI: $uri") if DEBUG;
-			
+
 			my $file = $uri->file or return;
 			my $path = File::Spec->rel2abs($file) or return;
 			my $line = $uri->fragment || 1;
+
 			#TRACE(" path: $path") if DEBUG;
 			#TRACE(" line: $line") if DEBUG;
-			
+
 			return unless -e $path;
-			
+
 			$self->main->setup_editor($path);
-			if ($self->main->current->document->filename eq $path) {
-				$self->main->current->editor->goto_line_centerize($line - 1);
+			if ( $self->main->current->document->filename eq $path ) {
+				$self->main->current->editor->goto_line_centerize( $line - 1 );
 			} else {
 				TRACE(" Current doc does not match our expectations") if DEBUG;
 			}
@@ -294,31 +294,32 @@ SCOPE: {
 			$self->_handle_links($newtext);
 		}
 	}
-	
+
 	# based on _handle_ansi_escapes
 	sub _handle_links {
 		my $self    = shift;
 		my $newtext = shift;
 
 		my $link_found = 0;
+
 		# matches Perl error messages that look like: <error> at <file> line 45.
 		while ( $newtext =~ m{ \G (.*?) \s at \s (.*) \s line \s (\d+).$ }xcg ) {
 			$link_found = 1;
-			my ($file, $line) = ($2, $3);
+			my ( $file, $line ) = ( $2, $3 );
 
 			# first print the text preceding the link
 			$self->SUPER::AppendText($1);
 			$self->SUPER::AppendText(' at ');
-			
+
 			# Turn the filename into a file: uri
-			$self->BeginURL( "file:$file#$line" );
+			$self->BeginURL("file:$file#$line");
 			$self->BeginUnderline;
-			$self->BeginTextColour($bg_colors->[4]);
+			$self->BeginTextColour( $bg_colors->[4] );
 			$self->AppendText("$file");
 			$self->EndTextColour;
 			$self->EndUnderline;
 			$self->EndURL;
-			
+
 			$self->AppendText(" line $line.");
 		}
 

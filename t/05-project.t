@@ -45,7 +45,7 @@ SCOPE: {
 	isa_ok( $config->project, 'Padre::Config::Project' );
 	is( scalar( keys %{ $config->project } ), 2, 'Project config is empty' );
 	ok( defined $config->project->fullname, '->fullname is defined' );
-	ok(      -f $config->project->fullname, '->fullname exists' );
-	ok( defined $config->project->dirname, '->dirname is defined' );
-	ok(      -d $config->project->dirname, '->dirname exists' );
+	ok( -f $config->project->fullname,      '->fullname exists' );
+	ok( defined $config->project->dirname,  '->dirname is defined' );
+	ok( -d $config->project->dirname,       '->dirname exists' );
 }

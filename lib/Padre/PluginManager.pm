@@ -74,6 +74,7 @@ sub new {
 		plugin_dir                => Padre::Constant::PLUGIN_DIR,
 		plugin_order              => [],
 		plugins_with_context_menu => {},
+
 		#par_loaded               => 0,
 		@_,
 	}, $class;

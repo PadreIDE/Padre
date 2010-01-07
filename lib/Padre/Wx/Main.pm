@@ -270,9 +270,7 @@ sub new {
 # When the $Padre::INVISIBLE variable is set (during testing) never show
 # the main window.
 sub Show {
-	return shift->SUPER::Show(
-		$Padre::Test::VERSION ? 0 : @_
-	);
+	return shift->SUPER::Show( $Padre::Test::VERSION ? 0 : @_ );
 }
 
 
@@ -2642,8 +2640,9 @@ sub on_comment_block {
 	my $begin           = $editor->LineFromPosition($selection_start);
 	my $end             = $editor->LineFromPosition($selection_end);
 	my $string          = $document->comment_lines_str;
-	if (not defined $string) {
-		#$self->error(sprintf( Wx::gettext("Could not determine the comment character for %s document type"), 
+	if ( not defined $string ) {
+
+		#$self->error(sprintf( Wx::gettext("Could not determine the comment character for %s document type"),
 		#	Padre::MimeTypes->get_mime_type_name( $document->get_mimetype ) ));
 		return;
 	}

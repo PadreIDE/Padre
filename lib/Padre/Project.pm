@@ -57,7 +57,7 @@ sub class {
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check the root directory
 	unless ( defined $self->root ) {
