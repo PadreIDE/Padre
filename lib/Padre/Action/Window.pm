@@ -8,7 +8,7 @@ use warnings;
 use Padre::Action;
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 our @ISA     = 'Padre::Wx::Menu';
 
 #####################################################################

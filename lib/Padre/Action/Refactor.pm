@@ -24,7 +24,7 @@ use Padre::Wx::Menu ();
 use Padre::Locale   ();
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 #####################################################################
 # Methods

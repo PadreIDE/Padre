@@ -6,7 +6,7 @@ use warnings;
 use Pod::Perldoc        ();
 use Pod::Perldoc::ToPod ();
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 our @ISA     = 'Pod::Perldoc';
 
 sub new {

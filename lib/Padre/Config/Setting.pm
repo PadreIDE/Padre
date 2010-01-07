@@ -10,7 +10,7 @@ use File::Spec      ();
 use Params::Util    ();
 use Padre::Constant ();
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 use Class::XSAccessor {
 	getters => {

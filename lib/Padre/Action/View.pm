@@ -12,7 +12,7 @@ use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 #####################################################################
 # Padre::Wx::Menu Methods
