@@ -62,8 +62,14 @@ sub write {
 	# As a result, it uses slightly bizarre locking code to make sure it runs
 	# inside a transaction correctly in both cases (has a ::Main, or not)
 	my $main = eval {
-		local $@;
-		Padre::Current->main;
+		# If ::Main isn't even loaded, we don't need the more
+		# intensive Padre::Current call. It also prevents loading
+		# the Wx subsystem when we are running light and headless
+		# with no GUI at all.
+		if ( $Padre::Wx::Main::VERSION ) {
+			local $@;
+			Padre::Current->main;
+		}
 	};
 	my $lock = $main ? $main->lock('DB') : undef;
 	Padre::DB->begin unless $lock;

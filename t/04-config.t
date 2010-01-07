@@ -5,16 +5,7 @@ use warnings;
 use constant CONFIG_OPTIONS => 108;
 
 # Move of Debug to Run Menu
-use Test::More;
-
-# Since r9888 this test requires DISPLAY
-BEGIN {
-	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
-		plan skip_all => 'Needs DISPLAY';
-		exit 0;
-	}
-}
-plan( tests => CONFIG_OPTIONS * 2 + 17 );
+use Test::More tests => CONFIG_OPTIONS * 2 + 21;
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
 use File::Temp ();
@@ -24,6 +15,9 @@ BEGIN {
 }
 use Padre::Constant ();
 use Padre::Config   ();
+
+# Loading the configuration subsystem should NOT result in loading Wx
+is( $Wx::VERSION, undef, 'Wx was not loaded during config load' );
 
 # Create the empty config file
 my $empty = Padre::Constant::CONFIG_HUMAN;
@@ -39,6 +33,9 @@ isa_ok( $config->human, 'Padre::Config::Human' );
 is( $config->project,        undef, '->project is undef' );
 is( $config->host->version,  undef, '->host->version is undef' );
 is( $config->human->version, undef, '->human->version is undef' );
+
+# Loading the config file should not result in Wx loading
+is( $Wx::VERSION, undef, 'Wx was not loaded during config read' );
 
 # Check that the defaults work
 my @names =
@@ -69,6 +66,9 @@ is_deeply(
 # Store the config again
 ok( $config->write, '->write ok' );
 
+# Saving the config file should not result in Wx loading
+is( $Wx::VERSION, undef, 'Wx was not loaded during config write' );
+
 # Check that we have a version for the parts now
 is( $config->host->version,  1, '->host->version is set' );
 is( $config->human->version, 1, '->human->version is set' );
@@ -89,3 +89,6 @@ my $config2 = Padre::Config->read;
 
 # Confirm the config is round-trip safe
 is_deeply( $config2, $config, 'Config round-trips ok' );
+
+# No configuration operations require loading Wx
+is( $Wx::VERSION, undef, 'Wx is never loaded during config operations' );
