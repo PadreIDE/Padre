@@ -89,7 +89,7 @@ sub new {
 		$self->{view_as_highlighting}
 	);
 
-	my %mimes = Padre::Document::menu_view_mimes();
+	my %mimes = Padre::MimeTypes::menu_view_mimes();
 	foreach my $name ( sort keys %mimes ) {
 		my $label = $name;
 		$label =~ s/^\d+//;
@@ -378,7 +378,7 @@ sub refresh {
 		# Set mimetype
 		my $has_checked = 0;
 		if ( $document->get_mimetype ) {
-			my %mimes = Padre::Document::menu_view_mimes();
+			my %mimes = Padre::MimeTypes::menu_view_mimes();
 			my @mimes = sort keys %mimes;
 			foreach my $pos ( 0 .. scalar @mimes - 1 ) {
 				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);

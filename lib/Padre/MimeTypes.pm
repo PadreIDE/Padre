@@ -709,6 +709,10 @@ sub is_perl6 {
 }
 
 
+sub menu_view_mimes {
+	return map { $MIME_TYPES{$_}{name} => $_ } keys %MIME_TYPES
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

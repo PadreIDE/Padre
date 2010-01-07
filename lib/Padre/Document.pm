@@ -147,25 +147,6 @@ our $VERSION = '0.54';
 # NOTE: This is probably a bad place to store this
 my $unsaved_number = 0;
 
-# TO DO generate this from the the MIME_TYPES in the Padre::MimeTypes class?
-sub menu_view_mimes {
-	return (
-		'00Plain Text' => 'text/plain',
-		'01Perl'       => 'application/x-perl',
-		'02Shell'      => 'application/x-shellscript',
-		'03HTML'       => 'text/html',
-		'05JavaScript' => 'application/javascript',
-		'07CSS'        => 'text/css',
-		'09Python'     => 'text/x-python',
-		'11Ruby'       => 'application/x-ruby',
-		'13PHP'        => 'application/x-php',
-		'15YAML'       => 'text/x-yaml',
-		'17VBScript'   => 'text/vbscript',
-		'19SQL'        => 'text/x-sql',
-		'21Perl 6'     => 'application/x-perl6',
-	);
-}
-
 
 
 
