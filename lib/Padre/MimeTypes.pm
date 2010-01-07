@@ -250,6 +250,7 @@ sub _initialize {
 		'text/x-config' => {
 			name  => 'Config',
 			lexer => Wx::wxSTC_LEX_CONF,
+			class => 'Padre::Document::Config',
 		},
 
 		# text/xml specifically means "human-readable XML".
