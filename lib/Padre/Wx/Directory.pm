@@ -10,17 +10,19 @@ use Padre::Wx::Directory::SearchCtrl ();
 our $VERSION = '0.54';
 our @ISA     = 'Wx::Panel';
 
-use Class::XSAccessor getters => {
-	tree   => 'tree',
-	search => 'search',
+use Class::XSAccessor {
+	getters => {
+		tree   => 'tree',
+		search => 'search',
 	},
 	accessors => {
-	mode                  => 'mode',
-	project_dir           => 'project_dir',
-	previous_dir          => 'previous_dir',
-	project_dir_original  => 'project_dir_original',
-	previous_dir_original => 'previous_dir_original',
-	};
+		mode                  => 'mode',
+		project_dir           => 'project_dir',
+		previous_dir          => 'previous_dir',
+		project_dir_original  => 'project_dir_original',
+		previous_dir_original => 'previous_dir_original',
+	},
+};
 
 # Creates the Directory Left Panel with a Search field
 # and the Directory Browser
@@ -89,26 +91,29 @@ sub clear {
 # refresh function.
 # Called outside Directory.pm, on directory browser focus and item dragging
 sub refresh {
-	my $self    = shift;
-	my $current = $self->current;
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document;
 
 	# Finds project base
-	my $doc = $current->document;
 	my $dir;
-
-	if ( defined($doc) ) {
-		$dir = $doc->project_dir;
-		$self->{file} = $doc->{file};
+	if ( defined($document) ) {
+		$dir = $document->project_dir;
+		$self->{file} = $document->{file};
 	} else {
 		$dir = $self->main->config->default_projects_directory;
 		delete $self->{file};
 	}
 
+	# Shortcut if there's no directory, or we haven't changed directory
 	return unless $dir;
+	if ( defined $self->project_dir and $self->project_dir eq $dir ) {
+		return;
+	}
 
 	$self->{projects}->{$dir}->{dir} ||= $dir;
 	$self->{projects}->{$dir}->{mode} ||=
-		$doc->{is_project}
+		$document->{is_project}
 		? 'tree'
 		: 'navigate';
 
