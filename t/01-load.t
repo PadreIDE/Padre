@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 36 );
+plan( tests => 37 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -37,6 +37,10 @@ use_ok('Padre');
 use_ok('Padre::Pod2HTML');
 use_ok('Padre::Plugin::Devel');
 use_ok('Padre::Plugin::My');
+
+# Now load everything else
+my $loaded = Padre->import(':everything');
+ok( $loaded, "Loaded the remaining $loaded classes ok" );
 
 script_compiles_ok('script/padre');
 
