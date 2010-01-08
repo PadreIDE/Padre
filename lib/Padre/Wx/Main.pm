@@ -1870,8 +1870,10 @@ sub on_run_tdd_tests {
 			$self->run_command("$perl Makefile.PL");
 			my $make = 'make'; # TODO this should do dmake, nmake on Win32
 			$self->run_command("$make test");
+		} elsif ( -e 'dist.ini' ) {
+			$self->run_command("dzil test");
 		} else {
-			$self->error( Wx::gettext("No Build.PL nor Makefile.PL found") );
+			$self->error( Wx::gettext("No Build.PL nor Makefile.PL nor dist.ini found") );
 		}
 	} else {
 		$self->error( Wx::gettext("Could not find perl executable") );
