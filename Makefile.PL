@@ -102,7 +102,7 @@ requires 'List::MoreUtils' => '0.22';
 requires 'Module::Refresh' => '0.13';
 requires 'Module::Starter' => '1.50';
 requires 'ORLite'          => '1.30';
-requires 'ORLite::Migrate' => '0.03';
+requires 'ORLite::Migrate' => '1.06';
 
 #requires      'PAR'                      => '0.989';
 requires 'Params::Util'             => '0.33';
