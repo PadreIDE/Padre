@@ -180,8 +180,10 @@ sub new {
 	$self->SetMenuBar( $self->{menu}->wx );
 
 	# Create the tool bar
-	$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
-	$self->GetToolBar->Realize;
+	if ( $config->main_toolbar ) {
+		$self->SetToolBar( Padre::Wx::ToolBar->new($self) );
+		$self->GetToolBar->Realize;
+	}
 
 	# Create the status bar
 	my $statusbar = Padre::Wx::StatusBar->new($self);
@@ -2793,7 +2795,7 @@ sub on_close_window {
 			}
 		} else {
 			my $closed = $self->close_all;
-			unless ($closed) {
+			unless ( $closed ) {
 
 				# They cancelled at some point
 				$event->Veto;
@@ -2828,12 +2830,9 @@ sub on_close_window {
 
 	TRACE("Files saved (or not), hiding window") if DEBUG;
 
-	# Immediately hide the window so that the user
-	# perceives the application as closing faster.
-	# This knocks about quarter of a second off the speed
-	# at which Padre appears to close.
-	# NOTE: I'm not entirely sure WHY these two statements aren't the
-	# other way around... but I have some vague memories it matters.
+	# Immediately hide the window so that the user perceives the application
+	# as closing faster. This knocks about quarter of a second off the speed
+	# at which Padre appears to close compared to letting it close naturally.
 	$self->locker->shutdown;
 	$self->Show(0);
 
