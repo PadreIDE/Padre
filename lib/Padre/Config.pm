@@ -188,7 +188,11 @@ setting(
 	name    => 'main_singleinstance',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => 0,
+	default => sub {
+		# Unlike on Linux, on Windows there's not really any major
+		# reason we should avoid the single-instance server by default
+		Padre::Constant::WIN32 ? 1 : 0
+	},
 	apply   => sub {
 		my $main  = shift;
 		my $value = shift;
