@@ -128,6 +128,7 @@ use Carp             ();
 use File::Spec       ();
 use File::Temp       ();
 use Padre::Constant  ();
+use Padre::Current   ();
 use Padre::Util      ();
 use Padre::Wx        ();
 use Padre            ();
@@ -154,24 +155,26 @@ my $unsaved_number = 0;
 #####################################################################
 # Constructor and Accessors
 
-use Class::XSAccessor getters => {
-	editor           => 'editor',
-	filename         => 'filename',    # TO DO is this read_only or what?
-	file             => 'file',        # Padre::File - object
-	get_mimetype     => 'mimetype',
-	get_newline_type => 'newline_type',
-	errstr           => 'errstr',
-	tempfile         => 'tempfile',
-	get_highlighter  => 'highlighter',
+use Class::XSAccessor {
+	getters => {
+		editor           => 'editor',
+		filename         => 'filename',    # TO DO is this read_only or what?
+		file             => 'file',        # Padre::File - object
+		get_mimetype     => 'mimetype',
+		get_newline_type => 'newline_type',
+		errstr           => 'errstr',
+		tempfile         => 'tempfile',
+		get_highlighter  => 'highlighter',
 	},
 	setters => {
-	set_newline_type => 'newline_type',
-	set_mimetype     => 'mimetype',
-	set_errstr       => 'errstr',
-	set_editor       => 'editor',
-	set_tempfile     => 'tempfile',
-	set_highlighter  => 'highlighter',
-	};
+		set_newline_type => 'newline_type',
+		set_mimetype     => 'mimetype',
+		set_errstr       => 'errstr',
+		set_editor       => 'editor',
+		set_tempfile     => 'tempfile',
+		set_highlighter  => 'highlighter',
+	},
+};
 
 =pod
 
@@ -188,7 +191,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before
@@ -197,12 +200,12 @@ sub new {
 	if ( $self->{filename} ) {
 		$self->{file} = Padre::File->new( $self->{filename} );
 
-		if ( !defined( $self->{file} ) ) {
+		unless ( defined $self->{file} ) {
 			$self->error( Wx::gettext('Error while opening file: no file object') );
 			return;
 		}
 
-		if ( defined( $self->{file}->{error} ) ) {
+		if ( defined $self->{file}->{error} ) {
 			$self->error( $self->{file}->{error} );
 			return;
 		}
@@ -342,18 +345,6 @@ sub last_sync {
 	return $_[0]->{_timestamp};
 }
 
-sub basename {
-	my $self = shift;
-	return $self->{file}->basename if defined( $self->{file} );
-	return $self->{file}->{filename};
-}
-
-sub dirname {
-	my $self = shift;
-	return $self->{file}->dirname if defined( $self->{file} );
-	return;
-}
-
 # For ts without a newline type
 # TO DO: get it from config
 sub _get_default_newline_type {
@@ -391,6 +382,22 @@ sub error {
 # Disk Interaction Methods
 # These methods implement the interaction between the document and the
 # filesystem.
+
+sub basename {
+	my $self = shift;
+	if ( defined $self->{file} ) {
+		return $self->{file}->basename;
+	}
+	return $self->{file}->{filename};
+}
+
+sub dirname {
+	my $self = shift;
+	if ( defined $self->{file} ) {
+		return $self->{file}->dirname;
+	}
+	return;
+}
 
 sub is_new {
 	return !!( not defined $_[0]->file );
@@ -443,8 +450,7 @@ sub time_on_file {
 	return 0 unless defined $file;
 
 	# It's important to return undef if there is no ->mtime for this filetype
-	my $Time = $file->mtime;
-	return $Time;
+	return $file->mtime;
 }
 
 # Generate MD5-checksum for current file stored on disk
@@ -627,20 +633,29 @@ sub autocomplete_matching_char {
 
 }
 
-
-
-sub _set_filename {
+sub set_filename {
 	my $self     = shift;
 	my $filename = shift;
 
-	if ( !defined($filename) ) {
+	unless ( defined $filename ) {
 		warn 'Request to set filename to undef from ' . join( ',', caller );
 		return 0;
 	}
 
-	return 1 if defined( $self->{filename} ) and ( $self->{filename} eq $filename );
+	# Shortcut if no change in file name
+	if ( defined $self->{filename} and $self->{filename} eq $filename ) {
+		return 1;
+	}
 
-	undef $self->{file}; # close file object
+	# Flush out old state information, primarily the file object.
+	# Additionally, whenever we change the name of the file we can no
+	# longer trust that we are in the same project, so flush that as well.
+	delete $self->{filename};
+	delete $self->{file};
+	delete $self->{project_dir};
+	delete $self->{is_project};
+
+	# Save the new filename
 	$self->{file} = Padre::File->new($filename);
 
 	# Padre::File reformats filenames to the protocol/OS specific format, so use this:
@@ -655,16 +670,16 @@ sub autoclean {
 }
 
 sub save_file {
-	my ($self) = @_;
+	my $self   = shift;
+	my $config = $self->project->config;
 	$self->set_errstr('');
-
-	my $config = Padre->ide->config;
 
 	$self->autoclean if $config->save_autoclean;
 
 	my $content = $self->text_get;
 	my $file    = $self->file;
-	if ( !defined($file) ) {
+	unless ( defined $file ) {
+		# NOTE: Now we have ->set_filename, should this situation ever occur?
 		$file = Padre::File->new( $self->filename );
 		$self->{file} = $file;
 	}
@@ -685,10 +700,10 @@ sub save_file {
 		return 0 if $ret == Wx::wxYES;
 	}
 
-	# not set when first time to save
+	# Not set when first time to save
 	# allow the upgrade from ascii to utf-8 if there were unicode characters added
 	require Padre::Locale;
-	if ( not $self->{encoding} or $self->{encoding} eq 'ascii' ) {
+	unless ( $self->{encoding} and $self->{encoding} ne 'ascii' ) {
 		$self->{encoding} = Padre::Locale::encoding_from_string($content);
 	}
 
@@ -704,7 +719,8 @@ sub save_file {
 		return;
 	}
 
-	# File must be closed at this time, slow fs/userspace-fs may not return the correct result otherwise!
+	# File must be closed at this time, slow fs/userspace-fs may not
+	# return the correct result otherwise!
 	$self->{_timestamp} = $self->time_on_file;
 
 	# Determine new line type using file content.

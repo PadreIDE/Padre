@@ -2982,14 +2982,15 @@ exist, create an empty file before opening it.
 =cut
 
 sub setup_editor {
-	my ( $self, $file ) = @_;
-	my $config = $self->config;
-
-	my $manager = $self->{ide}->plugin_manager;
+	my $self    = shift;
+	my $file    = shift;
+	my $ide     = $self->ide;
+	my $config  = $ide->config;
+	my $plugins = $ide->plugin_manager;
 
 	TRACE( "setup_editor called for '" . ( $file || '' ) . "'" ) if DEBUG;
 
-	if ($file) {
+	if ( $file ) {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
@@ -3031,28 +3032,28 @@ sub setup_editor {
 		}
 	}
 
-	my $lock = $self->lock('REFRESH');
-	my $doc = Padre::Document->new( filename => $file, );
+	my $lock     = $self->lock('REFRESH');
+	my $document = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
-	if ( !defined($doc) ) {
+	unless ( defined $document ) {
 		return;
 	}
 
 	$file ||= ''; #to avoid warnings
-	if ( $doc->errstr ) {
-		warn $doc->errstr . " when trying to open '$file'";
+	if ( $document->errstr ) {
+		warn $document->errstr . " when trying to open '$file'";
 		return;
 	}
 
 	TRACE("Document created for '$file'") if DEBUG;
 
 	my $editor = Padre::Wx::Editor->new( $self->notebook );
-	$editor->{Document} = $doc;
-	$doc->set_editor($editor);
-	$editor->configure_editor($doc);
+	$editor->{Document} = $document;
+	$document->set_editor($editor);
+	$editor->configure_editor($document);
 
-	$self->ide->plugin_manager->editor_enable($editor);
+	$plugins->editor_enable($editor);
 
 	my $title = $editor->{Document}->get_title;
 
@@ -3065,16 +3066,17 @@ sub setup_editor {
 		}
 	}
 
-	if ( $doc->is_new ) {
-		$doc->{project_dir} =
+	if ( $document->is_new ) {
+		# The project is probably the same as the previous file we had open
+		$document->{project_dir} =
 			  $self->current->document
 			? $self->current->document->project_dir
-			: $self->ide->config->default_projects_directory;
+			: $config->default_projects_directory;
 	} else {
-		TRACE( "Adding new file to history: " . $doc->filename ) if DEBUG;
+		TRACE( "Adding new file to history: " . $document->filename ) if DEBUG;
 		Padre::DB::History->create(
 			type => 'files',
-			name => $doc->filename,
+			name => $document->filename,
 		);
 
 		# Call the method immediately if not locked
@@ -3085,17 +3087,16 @@ sub setup_editor {
 	$self->notebook->GetPage($id)->SetFocus;
 
 	# no need to call this here as set_preferences already calls padre_setup.
-	#$editor->padre_setup;
-
+	# $editor->padre_setup;
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
-	$doc->restore_cursor_position;
+	$document->restore_cursor_position;
 
 	# Update and refresh immediately if not locked
 	$self->lock( 'update_last_session', 'refresh_menu' );
 
 	# Notify plugins
-	$manager->plugin_event('editor_changed');
+	$plugins->plugin_event('editor_changed');
 
 	return $id;
 }
@@ -3623,13 +3624,13 @@ sub on_save_as {
 				Wx::gettext("Exist"), Wx::wxYES_NO, $self,
 			);
 			if ( $response == Wx::wxYES ) {
-				$document->_set_filename($path);
+				$document->set_filename($path);
 				$document->save_file;
 				$document->set_newline_type(Padre::Constant::NEWLINE);
 				last;
 			}
 		} else {
-			$document->_set_filename($path);
+			$document->set_filename($path);
 			$document->save_file;
 			$document->set_newline_type(Padre::Constant::NEWLINE);
 			delete $document->{project_dir};
@@ -3644,8 +3645,10 @@ sub on_save_as {
 	$document->rebless;
 	$document->colourize;
 
-	$filename = $document->{file}->filename if defined( $document->{file} );
-	if ( defined($filename) ) {
+	if ( defined $document->{file} ) {
+		$filename = $document->{file}->filename;
+	}
+	if ( defined $filename ) {
 		Padre::DB::History->create(
 			type => 'files',
 			name => $filename,
@@ -3654,7 +3657,9 @@ sub on_save_as {
 		# Immediately refresh the recent list, or save the request
 		# for refresh lock expiry. We probably should add a specific
 		# lock method for this non-guard-object case.
-		$self->lock('refresh_recent');
+		# We also need to refresh the directory list, in case a change
+		# in file name means the project context has changed.
+		$self->lock('refresh_recent', 'refresh_directory');
 	}
 
 	$self->refresh;
@@ -3732,7 +3737,7 @@ sub on_save_intuition {
 	}
 
 	# Save the file
-	$document->_set_filename($path);
+	$document->set_filename($path);
 	$document->save_file;
 	$document->set_newline_type(Padre::Constant::NEWLINE);
 
