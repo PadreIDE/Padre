@@ -15,7 +15,7 @@ use Padre::Logger;
 use ORLite 1.17 ();
 
 # Remove the trailing -DEBUG to get debugging info on ORLite magic
-use ORLite::Migrate 0.01 {
+use Padre::DB::Migrate {
 	create        => 1,
 	tables        => ['Modules'],
 	file          => Padre::Constant::CONFIG_HOST,
@@ -117,14 +117,14 @@ database scheme.
 =head2 Updating database scheme
 
 The database is created at runtime if it does not exist, but we are
-relying on C<ORLite::Migrate>. To summarize C<ORLite::Migrate>:
+relying on C<Padre::DB::Migrate>. To summarize C<Padre::DB::Migrate>:
 
 =over 4
 
 =item * We provide scripts to update the database from one revision to
 another.
 
-=item * C<Padre::DB> calls C<ORLite::Migrate> to apply them in order,
+=item * C<Padre::DB> calls C<Padre::DB::Migrate> to apply them in order,
 starting from the current database revision.
 
 =back
@@ -140,7 +140,7 @@ Create a script F<share/timeline/migrate-$i.pl> with C<$i> the next
 available integer. This script will look like this:
 
         use strict;
-        use ORLite::Migrate::Patch;
+        use Padre::DB::Migrate::Patch;
 
         # do some stuff on the base
         do(<<'END_SQL');
@@ -154,11 +154,11 @@ course).
 
 =item *
 
-Update the user_revision in C<Padre::DB>'s call to C<ORLite::Migrate> to
+Update the user_revision in C<Padre::DB>'s call to C<Padre::DB::Migrate> to
 read the new script number (i.e., the C<$i> that you have used to name your
 script in the F<timeline> directory).
 
-        use ORLite::Migrate 0.01 {
+        use Padre::DB::Migrate 0.01 {
             [...]
 	        user_revision => <your-revision-number>,
             [...]
@@ -170,12 +170,12 @@ Once this is done, you can try to load Padre's development and check
 whether the table is updated correctly. Once again, check whether data
 is correctly migrated from old scheme to new scheme (if applicable).
 
-Note that C<ORLite::Migrate> is quiet by default. And if your SQL
+Note that C<Padre::DB::Migrate> is quiet by default. And if your SQL
 statements are buggy, you will not see anything but the database not
 being updated. Therefore, to debug what's going on, add the C<-DEBUG>
-flag to C<ORLite::Migrate> call (add it as the B<last> parameter):
+flag to C<Padre::DB::Migrate> call (add it as the B<last> parameter):
 
-        use ORLite::Migrate 0.01 {
+        use Padre::DB::Migrate 0.01 {
             [...]
         }, '-DEBUG'
 

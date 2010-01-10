@@ -1,5 +1,5 @@
 use strict;
-use ORLite::Migrate::Patch;
+use Padre::DB::Migrate::Patch;
 
 # We now use classes as names
 

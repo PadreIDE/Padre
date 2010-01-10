@@ -1,5 +1,5 @@
 use strict;
-use ORLite::Migrate::Patch;
+use Padre::DB::Migrate::Patch;
 
 # Create the recently used table
 do(<<'END_SQL');

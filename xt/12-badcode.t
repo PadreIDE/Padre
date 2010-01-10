@@ -28,7 +28,12 @@ use POSIX qw(locale_h);
 $ENV{PADRE_HOME} = File::Temp::tempdir( CLEANUP => 1 );
 foreach my $module ( sort keys %modules ) {
 	require_ok($module);
-	$module->import();
+
+	# Padre::DB::Migrate is fatal if called without import params
+	unless ( $module eq 'Padre::DB::Migrate' ) {
+		$module->import();
+	}
+
 	ok( $module->VERSION, "$module: Found \$VERSION" );
 }
 

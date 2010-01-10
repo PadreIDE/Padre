@@ -1,5 +1,5 @@
 use strict;
-use ORLite::Migrate::Patch;
+use Padre::DB::Migrate::Patch;
 
 # add a new table to keep the last position in file
 # note: we're not reusing the history table, since history can be truncated.

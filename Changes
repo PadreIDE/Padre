@@ -3,9 +3,18 @@ Changes for Perl Application Development and Refactoring Environment
 0.55 To Be Released
     - Add full list of file types to the View Document As menu (SZABGAB)
     - dist-zilla projects detection finally fixed (#489) (JQUELIN)
+    - The directory tree refresh method will shortcut if nothing has
+      changed, which should fix a number of bugs relating to the
+      directory tree "doing things" when it shouldn't be (ADAMK)
     - Saving files to somewhere other than the current project will now
       correctly flush the document project state, and triggers a directory
       tree flush so that we communicate the change in project (ADAMK)
+    - Cloned ORLite::Migrate to a private version as Padre::DB::Migrate
+      so we have a better chance of fixing bug #796 (ADAMK)
+    - Tentatively fixed #796 by spawning migration scripts in a manner which
+      does NOT assume the pre-existance of STDOUT. This is at best a
+      short-term hack, because this STDOUT problem is going to come back and
+      bite us in other ways in the future, for sure (ADAMK)
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.

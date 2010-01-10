@@ -1,5 +1,5 @@
 use strict;
-use ORLite::Migrate::Patch;
+use Padre::DB::Migrate::Patch;
 
 # Create the host settings table
 do(<<'END_SQL') unless table_exists('hostconf');

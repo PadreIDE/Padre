@@ -1,5 +1,5 @@
 use strict;
-use ORLite::Migrate::Patch;
+use Padre::DB::Migrate::Patch;
 
 # This patch creates the plugin table.
 # In the initial implementation this stores the enabled/disabled
