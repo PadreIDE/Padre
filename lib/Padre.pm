@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use utf8;
 
-# Non-Padre modules we need in order to the single-instance
+# Non-Padre modules we need in order to do the single-instance
 # check should be loaded early to simplify the load order.
 use Carp               ();
 use Cwd                ();
