@@ -189,9 +189,13 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => sub {
-		# Unlike on Linux, on Windows there's not really any major
-		# reason we should avoid the single-instance server by default
-		Padre::Constant::WIN32 ? 1 : 0
+		# Unlike on Linux, on Windows there's not really
+		# any major reason we should avoid the single-instance
+		# server by default.
+		# However during tests we need to make sure we don't
+		# accidentally connect to a running system-installed
+		# Padre while running the test suite.
+		(Padre::Constant::WIN32 and ! $ENV{HARNESS_ACTIVE}) ? 1 : 0
 	},
 	apply   => sub {
 		my $main  = shift;
