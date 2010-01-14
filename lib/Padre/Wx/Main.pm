@@ -191,7 +191,6 @@ sub new {
 
 	# Create the notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
-	$DB::single = $DB::single = 1;
 	$self->{notebook} = Padre::Wx::Notebook->new($self);
 	$self->{left}     = Padre::Wx::Left->new($self);
 	$self->{right}    = Padre::Wx::Right->new($self);
