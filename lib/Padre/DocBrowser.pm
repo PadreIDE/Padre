@@ -9,16 +9,18 @@ use Padre::DocBrowser::POD ();
 
 our $VERSION = '0.54';
 
-use Class::XSAccessor getters => {
-	get_providers => 'providers',
-	get_viewers   => 'viewers',
-	get_schemes   => 'schemes',
+use Class::XSAccessor {
+	getters => {
+		get_providers => 'providers',
+		get_viewers   => 'viewers',
+		get_schemes   => 'schemes',
 	},
 	setters => {
-	set_providers => 'providers',
-	set_viewers   => 'viewers',
-	set_schemes   => 'schemes',
-	};
+		set_providers => 'providers',
+		set_viewers   => 'viewers',
+		set_schemes   => 'schemes',
+	},
+};
 
 =pod
 

@@ -77,9 +77,11 @@ application.
 
 =cut
 
-use Class::XSAccessor getters => {
-	ide  => 'ide',
-	main => 'main',
+use Class::XSAccessor {
+	getters => {
+		ide  => 'ide',
+		main => 'main',
+	}
 };
 
 =pod

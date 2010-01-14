@@ -34,10 +34,16 @@ use Padre::Task    ();
 our $VERSION = '0.54';
 our @ISA     = 'Padre::Task';
 
-use Class::XSAccessor getters => {
-	request  => 'request',
-	response => 'response',
+use Class::XSAccessor {
+	getters => {
+		request  => 'request',
+		response => 'response',
+	}
 };
+
+
+
+
 
 ######################################################################
 # Constructor

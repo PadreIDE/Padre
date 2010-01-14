@@ -127,7 +127,9 @@ BEGIN {
 	}
 }
 
-use Class::XSAccessor constructor => 'new';
+use Class::XSAccessor {
+	constructor => 'new',
+};
 
 # set up the stdout/stderr printing events
 our $STDOUT_EVENT : shared = Wx::NewEventType();

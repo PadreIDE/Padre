@@ -11,8 +11,10 @@ use Padre::Logger;
 our $VERSION = '0.54';
 our @ISA     = 'Wx::TreeCtrl';
 
-use Class::XSAccessor accessors => {
-	force_next => 'force_next',
+use Class::XSAccessor {
+	accessors => {
+		force_next => 'force_next',
+	}
 };
 
 sub new {

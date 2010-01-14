@@ -13,14 +13,16 @@ use Padre::Wx::Icon ();
 our $VERSION = '0.54';
 our @ISA     = 'Wx::Dialog';
 
-use Class::XSAccessor accessors => {
-	_butselect   => '_butselect',   # select
-	_currow      => '_currow',      # current list row number
-	_curname     => '_curname',     # name of current session selected
-	_list        => '_list',        # list on the left of the pane
-	_sortcolumn  => '_sortcolumn',  # column used for list sorting
-	_sortreverse => '_sortreverse', # list sorting is reversed
-	_vbox        => '_vbox',        # the window vbox sizer
+use Class::XSAccessor {
+	accessors => {
+		_butselect   => '_butselect',   # select
+		_currow      => '_currow',      # current list row number
+		_curname     => '_curname',     # name of current session selected
+		_list        => '_list',        # list on the left of the pane
+		_sortcolumn  => '_sortcolumn',  # column used for list sorting
+		_sortreverse => '_sortreverse', # list sorting is reversed
+		_vbox        => '_vbox',        # the window vbox sizer
+	}
 };
 
 # -- constructor

@@ -9,12 +9,14 @@ use Padre::Wx::Icon ();
 our $VERSION = '0.54';
 our @ISA     = 'Wx::Dialog';
 
-use Class::XSAccessor accessors => {
-	_butsave => '_butsave', # save button
-	_combo   => '_combo',   # combo box holding the session names
-	_names   => '_names',   # list of all session names
-	_sizer   => '_sizer',   # the window sizer
-	_text    => '_text',    # text control holding the description
+use Class::XSAccessor {
+	accessors => {
+		_butsave => '_butsave', # save button
+		_combo   => '_combo',   # combo box holding the session names
+		_names   => '_names',   # list of all session names
+		_sizer   => '_sizer',   # the window sizer
+		_text    => '_text',    # text control holding the description
+	}
 };
 
 # -- constructor

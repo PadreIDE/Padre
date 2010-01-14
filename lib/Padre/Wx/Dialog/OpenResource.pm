@@ -11,20 +11,22 @@ use Padre::Wx::Icon ();
 our $VERSION = '0.54';
 our @ISA     = 'Wx::Dialog';
 
-use Class::XSAccessor accessors => {
-	_main                     => '_main',                     # Padre's main window
-	_sizer                    => '_sizer',                    # window sizer
-	_search_text              => '_search_text',              # search text control
-	_matches_list             => '_matches_list',             # matches list
-	_status_text              => '_status_text',              # status label
-	_directory                => '_directory',                # searched directory
-	_matched_files            => '_matched_files',            # matched files list
-	_ok_button                => '_ok_button',                # OK button
-	_copy_button              => '_copy_button',              # copy button
-	_popup_button             => '_popup_button',             # popup button for options
-	_popup_menu               => '_popup_menu',               # options popup menu
-	_skip_vcs_files           => '_skip_vcs_files',           # Skip VCS files menu item
-	_skip_using_manifest_skip => '_skip_using_manifest_skip', # Skip using MANIFEST.SKIP menu item
+use Class::XSAccessor {
+	accessors => {
+		_main                     => '_main',                     # Padre's main window
+		_sizer                    => '_sizer',                    # window sizer
+		_search_text              => '_search_text',              # search text control
+		_matches_list             => '_matches_list',             # matches list
+		_status_text              => '_status_text',              # status label
+		_directory                => '_directory',                # searched directory
+		_matched_files            => '_matched_files',            # matched files list
+		_ok_button                => '_ok_button',                # OK button
+		_copy_button              => '_copy_button',              # copy button
+		_popup_button             => '_popup_button',             # popup button for options
+		_popup_menu               => '_popup_menu',               # options popup menu
+		_skip_vcs_files           => '_skip_vcs_files',           # Skip VCS files menu item
+		_skip_using_manifest_skip => '_skip_using_manifest_skip', # Skip using MANIFEST.SKIP menu item
+	}
 };
 
 # -- constructor

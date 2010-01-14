@@ -15,13 +15,15 @@ use overload
 	'""' => 'plugin_name',
 	'fallback' => 0;
 
-use Class::XSAccessor getters => {
-	class  => 'class',
-	object => 'object',
+use Class::XSAccessor {
+	getters => {
+		class  => 'class',
+		object => 'object',
 	},
 	accessors => {
-	errstr => 'errstr',
-	};
+		errstr => 'errstr',
+	},
+};
 
 
 

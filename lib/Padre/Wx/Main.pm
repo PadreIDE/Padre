@@ -341,43 +341,43 @@ Accessors that may not belong to this class:
 
 =cut
 
-use Class::XSAccessor predicates => {
-
-	# Needed for lazily-constructed gui elements
-	has_about     => 'about',
-	has_debugger  => 'debugger',
-	has_find      => 'find',
-	has_replace   => 'replace',
-	has_outline   => 'outline',
-	has_directory => 'directory',
+use Class::XSAccessor {
+	predicates => {
+		# Needed for lazily-constructed gui elements
+		has_about     => 'about',
+		has_debugger  => 'debugger',
+		has_find      => 'find',
+		has_replace   => 'replace',
+		has_outline   => 'outline',
+		has_directory => 'directory',
 	},
 	getters => {
+		# GUI Elements
+		ide                 => 'ide',
+		config              => 'config',
+		title               => 'title',
+		aui                 => 'aui',
+		menu                => 'menu',
+		notebook            => 'notebook',
+		left                => 'left',
+		right               => 'right',
+		functions           => 'functions',
+		bottom              => 'bottom',
+		output              => 'output',
+		syntax              => 'syntax',
+		errorlist           => 'errorlist',
+		infomessage         => 'infomessage',
+		infomessage_timeout => 'infomessage_timeout',
 
-	# GUI Elements
-	ide                 => 'ide',
-	config              => 'config',
-	title               => 'title',
-	aui                 => 'aui',
-	menu                => 'menu',
-	notebook            => 'notebook',
-	left                => 'left',
-	right               => 'right',
-	functions           => 'functions',
-	bottom              => 'bottom',
-	output              => 'output',
-	syntax              => 'syntax',
-	errorlist           => 'errorlist',
-	infomessage         => 'infomessage',
-	infomessage_timeout => 'infomessage_timeout',
+		# Operating Data
+		locker => 'locker',
+		cwd    => 'cwd',
+		search => 'search',
 
-	# Operating Data
-	locker => 'locker',
-	cwd    => 'cwd',
-	search => 'search',
-
-	# Things that are probably in the wrong place
-	ack => 'ack',
-	};
+		# Things that are probably in the wrong place
+		ack => 'ack',
+	},
+};
 
 sub about {
 	my $self = shift;

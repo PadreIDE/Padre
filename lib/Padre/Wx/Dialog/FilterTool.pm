@@ -9,11 +9,13 @@ use Padre::Wx::Icon ();
 our $VERSION = '0.54';
 our @ISA     = 'Wx::Dialog';
 
-use Class::XSAccessor accessors => {
-	_butrun => '_butrun', # run button
-	_combo  => '_combo',  # combo box
-	_names  => '_names',  # list of all recent commands
-	_sizer  => '_sizer',  # the window sizer
+use Class::XSAccessor {
+	accessors => {
+		_butrun => '_butrun', # run button
+		_combo  => '_combo',  # combo box
+		_names  => '_names',  # list of all recent commands
+		_sizer  => '_sizer',  # the window sizer
+	}
 };
 
 # -- constructor

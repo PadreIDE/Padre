@@ -14,8 +14,11 @@ use Padre::DocBrowser::PseudoPerldoc ();
 
 our $VERSION = '0.54';
 
-use Class::XSAccessor constructor => 'new', getters => {
-	get_provider => 'provider',
+use Class::XSAccessor {
+	constructor => 'new',
+	getters => {
+		get_provider => 'provider',
+	},
 };
 
 sub provider_for {

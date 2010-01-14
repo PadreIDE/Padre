@@ -45,10 +45,12 @@ use Padre::Wx::Icon            ();
 use Padre::Wx::Role::MainChild ();
 use Padre::MimeTypes           ();
 
-use Class::XSAccessor accessors => {
-	_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
-	_task_status => '_task_status', # Current task status
-	_task_width  => '_task_width',  # Current width of task field
+use Class::XSAccessor {
+	accessors => {
+		_task_sbmp   => '_task_sbmp',   # Static bitmap holding the task status
+		_task_status => '_task_status', # Current task status
+		_task_width  => '_task_width',  # Current width of task field
+	}
 };
 
 our $VERSION = '0.54';

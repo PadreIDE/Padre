@@ -8,11 +8,13 @@ use Padre::Task ();
 our $VERSION = '0.54';
 our @ISA     = 'Padre::Task';
 
-use Class::XSAccessor getters => {
-	parser   => 'parser',
-	old_lang => 'old_lang',
-	cur_lang => 'cur_lang',
-	data     => 'data',
+use Class::XSAccessor {
+	getters => {
+		parser   => 'parser',
+		old_lang => 'old_lang',
+		cur_lang => 'cur_lang',
+		data     => 'data',
+	}
 };
 
 require Parse::ErrorString::Perl;

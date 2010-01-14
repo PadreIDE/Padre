@@ -13,17 +13,19 @@ use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 # accessors
-use Class::XSAccessor accessors => {
-	_hbox           => '_hbox',           # horizontal box sizer
-	_topic_selector => '_topic_selector', # Topic selector
-	_search_text    => '_search_text',    # search text control
-	_list           => '_list',           # matches list
-	_index          => '_index',          # help topic list
-	_help_viewer    => '_help_viewer',    # HTML Help Viewer
-	_main           => '_main',           # Padre's main window
-	_topic          => '_topic',          # default help topic
-	_help_provider  => '_help_provider',  # Help Provider
-	_status         => '_status'          # status label
+use Class::XSAccessor {
+	accessors => {
+		_hbox           => '_hbox',           # horizontal box sizer
+		_topic_selector => '_topic_selector', # Topic selector
+		_search_text    => '_search_text',    # search text control
+		_list           => '_list',           # matches list
+		_index          => '_index',          # help topic list
+		_help_viewer    => '_help_viewer',    # HTML Help Viewer
+		_main           => '_main',           # Padre's main window
+		_topic          => '_topic',          # default help topic
+		_help_provider  => '_help_provider',  # Help Provider
+		_status         => '_status'          # status label
+	}
 };
 
 # -- constructor

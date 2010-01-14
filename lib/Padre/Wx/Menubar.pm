@@ -24,22 +24,24 @@ our $VERSION = '0.54';
 #####################################################################
 # Construction, Setup, and Accessors
 
-use Class::XSAccessor getters => {
-	wx   => 'wx',
-	main => 'main',
+use Class::XSAccessor {
+	getters => {
+		wx   => 'wx',
+		main => 'main',
 
-	# Don't add accessors to here until they have been
-	# upgraded to be fully encapsulated classes.
-	file     => 'file',
-	edit     => 'edit',
-	search   => 'search',
-	view     => 'view',
-	perl     => 'perl',
-	refactor => 'refactor',
-	run      => 'run',
-	plugins  => 'plugins',
-	window   => 'window',
-	help     => 'help',
+		# Don't add accessors to here until they have been
+		# upgraded to be fully encapsulated classes.
+		file     => 'file',
+		edit     => 'edit',
+		search   => 'search',
+		view     => 'view',
+		perl     => 'perl',
+		refactor => 'refactor',
+		run      => 'run',
+		plugins  => 'plugins',
+		window   => 'window',
+		help     => 'help',
+	}
 };
 
 sub new {

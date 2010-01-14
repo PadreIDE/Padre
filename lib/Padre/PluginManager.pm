@@ -112,11 +112,13 @@ See L<Padre::Plugin>.
 
 =cut
 
-use Class::XSAccessor getters => {
-	parent                    => 'parent',
-	plugin_dir                => 'plugin_dir',
-	plugins                   => 'plugins',
-	plugins_with_context_menu => 'plugins_with_context_menu',
+use Class::XSAccessor {
+	getters => {
+		parent                    => 'parent',
+		plugin_dir                => 'plugin_dir',
+		plugins                   => 'plugins',
+		plugins_with_context_menu => 'plugins_with_context_menu',
+	},
 };
 
 # Get the prefered plugin order.

@@ -14,14 +14,16 @@ our $VERSION = '0.54';
 our @ISA     = 'Wx::Dialog';
 
 # accessors
-use Class::XSAccessor accessors => {
-	_main            => '_main',            # Padre main window
-	_sizer           => '_sizer',           # window sizer
-	_search_text     => '_search_text',     # search text control
-	_list            => '_list',            # matching items list
-	_status_text     => '_status_text',     # status label
-	_matched_results => '_matched_results', # matched results
-	_ok_button       => '_ok_button'        # OK button
+use Class::XSAccessor {
+	accessors => {
+		_main            => '_main',            # Padre main window
+		_sizer           => '_sizer',           # window sizer
+		_search_text     => '_search_text',     # search text control
+		_list            => '_list',            # matching items list
+		_status_text     => '_status_text',     # status label
+		_matched_results => '_matched_results', # matched results
+		_ok_button       => '_ok_button'        # OK button
+	}
 };
 
 # -- constructor
