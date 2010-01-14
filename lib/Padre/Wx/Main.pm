@@ -25,20 +25,20 @@ use 5.008;
 use strict;
 use warnings;
 use FindBin;
-use Cwd             ();
-use Carp            ();
-use IPC::Open3      ();
-use File::Spec      ();
-use File::HomeDir   ();
-use File::Basename  ();
-use File::Temp      ();
-use List::Util      ();
-use Scalar::Util    ();
-use Params::Util    ();
-use Time::HiRes     ();
-use Padre::Action   ();
-use Padre::Constant ();
-use Padre::Util qw(_T);
+use Cwd                           ();
+use Carp                          ();
+use IPC::Open3                    ();
+use File::Spec                    ();
+use File::HomeDir                 ();
+use File::Basename                ();
+use File::Temp                    ();
+use List::Util                    ();
+use Scalar::Util                  ();
+use Params::Util                  ();
+use Time::HiRes                   ();
+use Padre::Action                 ();
+use Padre::Constant               ();
+use Padre::Util                   ('_T');
 use Padre::Perl                   ();
 use Padre::Locale                 ();
 use Padre::Current                ();
@@ -191,6 +191,7 @@ sub new {
 
 	# Create the notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
+	$DB::single = $DB::single = 1;
 	$self->{notebook} = Padre::Wx::Notebook->new($self);
 	$self->{left}     = Padre::Wx::Left->new($self);
 	$self->{right}    = Padre::Wx::Right->new($self);
@@ -1009,6 +1010,7 @@ sub refresh {
 	$self->refresh_toolbar($current);
 	$self->refresh_status($current);
 	$self->refresh_functions($current);
+	$self->refresh_directory($current);
 	$self->refresh_title;
 
 	my $notebook = $self->notebook;
@@ -1608,6 +1610,7 @@ sub show_directory {
 	$self->config->write;
 
 	$self->_show_directory($on);
+	$self->directory->refresh if $on;
 
 	$self->aui->Update;
 	$self->ide->save_config;
@@ -1620,7 +1623,6 @@ sub _show_directory {
 	if ( $_[0] ) {
 		my $directory = $self->directory;
 		$self->directory_panel->show($directory);
-		$directory->refresh;
 	} elsif ( $self->has_directory ) {
 		$self->directory_panel->hide( $self->directory );
 	}
