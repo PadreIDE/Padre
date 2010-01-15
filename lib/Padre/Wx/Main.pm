@@ -2931,7 +2931,7 @@ sub setup_editors {
 		# clearly looks wrong when we DON'T do it.
 		if ( $self->notebook->GetPageCount == 1 ) {
 			if ( $self->current->document->is_unused ) {
-				$self->on_close($self);
+				$self->close($self);
 			}
 		}
 
