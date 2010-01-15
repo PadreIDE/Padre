@@ -17,6 +17,12 @@ Changes for Perl Application Development and Refactoring Environment
       bite us in other ways in the future, for sure (ADAMK)
     - Tuned the directory tree refresh logic to improve startup speed when
       launching Padre with specific named files to open (ADAMK)
+    - Tuned the creation and management of tool widgets to remove the need
+      to load or construct tools at startup time that are turned off in the
+      user's configuration.
+    - Tuned lock-release refresh execution to remove low-level refresh
+      methods that are also contained in higher level refresh methods.
+    - Removed a somewhat superfluous AUI Update from the refresh method.
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.

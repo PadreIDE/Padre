@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 60 );
+	plan( tests => 63 );
 }
 use Test::NoWarnings;
 use t::lib::Padre;
@@ -93,6 +93,11 @@ SCOPE: {
 	# The main window
 	my $main = $app->main;
 	isa_ok( $main, 'Padre::Wx::Main' );
+
+	# By default, most of the tools shouldn't exist
+	ok( ! $main->has_output,  '->has_output is false'  );
+	ok( ! $main->has_outline, '->has_outline is false' );
+	ok( ! $main->has_syntax,  '->has_syntax is false'  );
 
 	# The main menu
 	my $menu = $main->menu;

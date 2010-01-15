@@ -168,12 +168,30 @@ sub method_decrement {
 		# Once we start the shutdown process, don't run anything
 		return if $self->{shutdown};
 
+		# Optimise the refresh methods
+		$self->method_trim;
+
 		# Run all of the pending methods
 		foreach ( keys %{ $self->{method_pending} } ) {
 			next if $_ eq uc($_);
 			$self->{owner}->$_();
 		}
 		$self->{method_pending} = {};
+	}
+	return;
+}
+
+# Optimise the refresh by removing low level refresh methods that are
+# contained within high level refresh methods we need to run anyway.
+sub method_trim {
+	my $self    = shift;
+	my $pending = $self->{method_pending};
+	if ( defined $pending->{refresh} ) {
+		delete $pending->{refresh_menubar};
+		delete $pending->{refresh_toolbar};
+		delete $pending->{refresh_status};
+		delete $pending->{refresh_functions};
+		delete $pending->{refresh_directory};
 	}
 	return;
 }

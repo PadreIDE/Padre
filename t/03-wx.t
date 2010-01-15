@@ -247,7 +247,7 @@ my @events = (
 				$T->is_num( scalar( $main->pages ), 2, 'new and abs cyrillic_test open' );
 
 			}
-			$main->on_close();
+			$main->close;
 			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
 			SCOPE: {
 
@@ -258,7 +258,7 @@ my @events = (
 				$main->on_open_selection();
 				$T->is_num( scalar( $main->pages ), 2, 'new and relative cyrillic_test open' );
 			}
-			$main->on_close();
+			$main->close;
 			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
 			SCOPE: {
 
@@ -269,7 +269,7 @@ my @events = (
 				$main->on_open_selection();
 				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
 			}
-			$main->on_close();
+			$main->close;
 			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
 			SCOPE: {
 
@@ -280,7 +280,7 @@ my @events = (
 				$main->on_open_selection();
 				$T->is_num( scalar( $main->pages ), 2, 'relative cyrillic_test open with additional \n' );
 			}
-			$main->on_close();
+			$main->close;
 			$T->is_num( scalar( $main->pages ), 1, 'back to unsaved?' );
 			SCOPE: {
 

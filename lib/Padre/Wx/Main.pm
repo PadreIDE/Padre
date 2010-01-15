@@ -52,19 +52,15 @@ use Padre::Wx::Right              ();
 use Padre::Wx::Bottom             ();
 use Padre::Wx::Debugger           ();
 use Padre::Wx::Editor             ();
-use Padre::Wx::Output             ();
-use Padre::Wx::Syntax             ();
 use Padre::Wx::Menubar            ();
 use Padre::Wx::ToolBar            ();
 use Padre::Wx::Notebook           ();
 use Padre::Wx::StatusBar          ();
 use Padre::Wx::ErrorList          ();
 use Padre::Wx::AuiManager         ();
-use Padre::Wx::FunctionList       ();
 use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
-use Padre::Wx::Progress           ();
 use Padre::Logger;
 
 our $VERSION = '0.54';
@@ -197,9 +193,6 @@ sub new {
 	$self->{bottom}   = Padre::Wx::Bottom->new($self);
 
 	# Creat the various tools that will live in the panes
-	$self->{output}    = Padre::Wx::Output->new($self);
-	$self->{syntax}    = Padre::Wx::Syntax->new($self);
-	$self->{functions} = Padre::Wx::FunctionList->new($self);
 	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
 
 	# Set up the pane close event
@@ -345,11 +338,15 @@ use Class::XSAccessor {
 	predicates => {
 		# Needed for lazily-constructed gui elements
 		has_about     => 'about',
+		has_output    => 'output',
+		has_syntax    => 'syntax',
+		has_functions => 'functions',
 		has_debugger  => 'debugger',
 		has_find      => 'find',
 		has_replace   => 'replace',
 		has_outline   => 'outline',
 		has_directory => 'directory',
+		has_errorlist => 'errorlist',
 	},
 	getters => {
 		# GUI Elements
@@ -361,11 +358,7 @@ use Class::XSAccessor {
 		notebook            => 'notebook',
 		left                => 'left',
 		right               => 'right',
-		functions           => 'functions',
 		bottom              => 'bottom',
-		output              => 'output',
-		syntax              => 'syntax',
-		errorlist           => 'errorlist',
 		infomessage         => 'infomessage',
 		infomessage_timeout => 'infomessage_timeout',
 
@@ -386,6 +379,33 @@ sub about {
 		$self->{about} = Padre::Wx::About->new($self);
 	}
 	return $self->{about};
+}
+
+sub output {
+	my $self = shift;
+	unless ( defined $self->{output} ) {
+		require Padre::Wx::Output;
+		$self->{output} = Padre::Wx::Output->new($self);
+	}
+	return $self->{output};
+}
+
+sub functions {
+	my $self = shift;
+	unless ( defined $self->{functions} ) {
+		require Padre::Wx::FunctionList;
+		$self->{functions} = Padre::Wx::FunctionList->new($self);
+	}
+	return $self->{functions};
+}
+
+sub syntax {
+	my $self = shift;
+	unless ( defined $self->{syntax} ) {
+		require Padre::Wx::Syntax;
+		$self->{syntax} = Padre::Wx::Syntax->new($self);
+	}
+	return $self->{syntax};
 }
 
 sub debugger {
@@ -413,6 +433,15 @@ sub directory {
 		$self->{directory} = Padre::Wx::Directory->new($self);
 	}
 	return $self->{directory};
+}
+
+sub errorlist {
+	my $self = shift;
+	unless ( defined $self->{errorlist} ) {
+		require Padre::Wx::ErrorList;
+		$self->{errorlist} = Padre::Wx::ErrorList->new($self);
+	}
+	return $self->{errorlist};
 }
 
 sub directory_panel {
@@ -1024,9 +1053,6 @@ sub refresh {
 		$self->aui->GetPane('notebook')->PaneBorder(1);
 	}
 
-	# Update the GUI
-	$self->aui->Update;
-
 	return;
 }
 
@@ -1120,8 +1146,9 @@ since actual syntax check is happening in the background.
 
 sub refresh_syntaxcheck {
 	my $self = shift;
+	return unless $self->has_syntax;
 	return if $self->locked('REFRESH');
-	return if not $self->menu->view->{show_syntaxcheck}->IsChecked;
+	return unless $self->menu->view->{show_syntaxcheck}->IsChecked;
 	$self->syntax->on_timer( undef, 1 );
 	return;
 }
@@ -1240,17 +1267,15 @@ Force a refresh of the function list on the right.
 
 =cut
 
+# TO DO now on every ui change (move of the mouse) we refresh
+# this even though that should not be necessary can that be
+# eliminated ?
 sub refresh_functions {
-
-	# TO DO now on every ui change (move of the mouse) we refresh
-	# this even though that should not be necessary can that be
-	# eliminated ?
-	my ( $self, $current ) = @_;
+	my $self = shift;
+	return unless $self->has_functions;
 	return if $self->locked('REFRESH');
 	return unless $self->menu->view->{functions}->IsChecked;
-
-	$self->functions->refresh($current);
-
+	$self->functions->refresh(@_);
 	return;
 }
 
@@ -1264,10 +1289,9 @@ Force a refresh of the directory tree
 
 sub refresh_directory {
 	my $self = shift;
+	return unless $self->has_directory;
 	return if $self->locked('REFRESH');
-	if ( $self->has_directory ) {
-		$self->directory->refresh;
-	}
+	$self->directory->refresh(@_);
 	return;
 }
 
@@ -1505,8 +1529,9 @@ sub _show_functions {
 	my $self = shift;
 	if ( $_[0] ) {
 		$self->right->show( $self->functions );
-	} else {
+	} elsif ( $self->has_functions ) {
 		$self->right->hide( $self->functions );
+		delete $self->{functions};
 	}
 }
 
@@ -1541,14 +1566,16 @@ sub show_outline {
 }
 
 sub _show_outline {
-	my $self    = shift;
-	my $outline = $self->outline;
+	my $self = shift;
 	if ( $_[0] ) {
+		my $outline = $self->outline;
 		$self->right->show($outline);
 		$outline->start unless $outline->running;
 	} elsif ( $self->has_outline ) {
+		my $outline = $self->outline;
 		$self->right->hide($outline);
 		$outline->stop if $outline->running;
+		delete $self->{outline};
 	}
 }
 
@@ -1609,7 +1636,6 @@ sub show_directory {
 	$self->config->write;
 
 	$self->_show_directory($on);
-	$self->directory->refresh if $on;
 
 	$self->aui->Update;
 	$self->ide->save_config;
@@ -1620,10 +1646,10 @@ sub show_directory {
 sub _show_directory {
 	my $self = shift;
 	if ( $_[0] ) {
-		my $directory = $self->directory;
-		$self->directory_panel->show($directory);
+		$self->directory_panel->show($self->directory);
 	} elsif ( $self->has_directory ) {
-		$self->directory_panel->hide( $self->directory );
+		$self->directory_panel->hide($self->directory);
+		delete $self->{directory};
 	}
 }
 
@@ -1641,7 +1667,7 @@ the panel.
 
 sub show_output {
 	my $self = shift;
-	my $on = @_ ? $_[0] ? 1 : 0 : 1;
+	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
@@ -1661,12 +1687,11 @@ sub _show_output {
 	if ( $_[0] ) {
 		$self->bottom->show(
 			$self->output,
-			sub {
-				$self->show_output(0);
-			}
+			sub { $self->show_output(0) },
 		);
-	} else {
+	} elsif ( $self->has_output ) {
 		$self->bottom->hide( $self->output );
+		delete $self->{output};
 	}
 }
 
@@ -1683,26 +1708,36 @@ the panel.
 =cut
 
 sub show_syntax {
-	my $self   = shift;
-	my $syntax = $self->syntax;
+	my $self = shift;
 
 	my $on = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{show_syntaxcheck}->IsChecked ) {
 		$self->menu->view->{show_syntaxcheck}->Check($on);
 	}
 
-	if ($on) {
-		$self->bottom->show( $syntax, sub { $self->show_syntax(0); } );
-		$syntax->start unless $syntax->running;
-	} else {
-		$self->bottom->hide( $self->syntax );
-		$syntax->stop if $syntax->running;
-	}
+	$self->_show_syntax($on);
 
 	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
+}
+
+sub _show_syntax {
+	my $self = shift;
+	if ( $_[0] ) {
+		my $syntax = $self->syntax;
+		$self->bottom->show(
+			$syntax,
+			sub { $self->show_syntax(0) },
+		);
+		$syntax->start unless $syntax->running;
+	} elsif ( $self->has_syntax ) {
+		my $syntax = $self->syntax;
+		$self->bottom->hide( $syntax );
+		$syntax->stop if $syntax->running;
+		delete $self->{syntax};
+	}
 }
 
 =pod
@@ -2227,6 +2262,7 @@ sub open_session {
 	# prevent redrawing until we're done
 	$self->Freeze;
 
+	require Padre::Wx::Progress;
 	my $progress = Padre::Wx::Progress->new(
 		$self,
 		sprintf(
@@ -2931,7 +2967,7 @@ sub setup_editors {
 		# clearly looks wrong when we DON'T do it.
 		if ( $self->notebook->GetPageCount == 1 ) {
 			if ( $self->current->document->is_unused ) {
-				$self->close($self);
+				$self->close;
 			}
 		}
 
@@ -3287,8 +3323,6 @@ sub on_open {
 		$self->{cwd} = File::Basename::dirname($filename);
 	}
 	$self->open_file_dialog;
-
-	return;
 }
 
 # TO DO: let's allow this to be used by plug-ins
@@ -3379,7 +3413,7 @@ sub open_file_dialog {
 
 		my $FN = File::Spec->catfile( $self->cwd, $filename );
 
-		if ( !-e $FN ) {
+		unless ( -e $FN ) {
 
 			# This could be checked by a Windows dialog, but a Gnome dialog doesn't,
 			# and created empty files when you do a typo in the open box when
@@ -3400,19 +3434,15 @@ sub open_file_dialog {
 		push @files, $FN;
 	}
 
-	if ( $#files > -1 ) {
-		my $lock = $self->lock('REFRESH');
-		$self->setup_editors(@files);
-	}
-
-	$self->ide->{session_autosave} and $self->save_current_session;
+	my $lock = $self->lock('REFRESH', 'DB');
+	$self->setup_editors(@files) if $#files > -1;
+	$self->save_current_session if $self->ide->{session_autosave};
 
 	return;
 }
 
 sub on_open_example {
-	my $self = shift;
-	return $self->open_file_dialog( Padre::Util::sharedir('examples') );
+	$_[0]->open_file_dialog( Padre::Util::sharedir('examples') );
 }
 
 =pod
@@ -3426,12 +3456,12 @@ Reload all open files from disk.
 =cut
 
 sub reload_all {
-	my $self = shift;
-	my $skip = shift;
-	my $lock = $self->lock('UPDATE');
-
+	my $self  = shift;
+	my $skip  = shift;
+	my $lock  = $self->lock('UPDATE');
 	my @pages = $self->pageids;
 
+	require Padre::Wx::Progress;
 	my $progress = Padre::Wx::Progress->new(
 		$self, Wx::gettext('Reload all files'), $#pages,
 		lazy => 1
@@ -3920,7 +3950,9 @@ sub close {
 
 	$self->notebook->DeletePage($id);
 
-	$self->syntax->clear;
+	if ( $self->has_syntax ) {
+		$self->syntax->clear;
+	}
 	if ( $self->has_outline ) {
 		$self->outline->clear;
 	}
@@ -3954,6 +3986,7 @@ sub close_all {
 
 	my @pages = reverse $self->pageids;
 
+	require Padre::Wx::Progress;
 	my $progress = Padre::Wx::Progress->new(
 		$self, Wx::gettext('Close all'), $#pages,
 		lazy => 1

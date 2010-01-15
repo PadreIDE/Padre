@@ -23,7 +23,6 @@ BEGIN {
 	}
 }
 
-
 # Configure-time dependencies MUST be done first.
 # This version ensures that we have a new MakeMaker that
 # WON'T load modules to determine the version.
@@ -41,6 +40,7 @@ configure_requires 'ExtUtils::MakeMaker' => '6.52';
 #	print STDERR "Warning: prerequisite ExtUtils::MakeMaker 6.52 not found. We have $ExtUtils::MakeMaker::VERSION.\n";
 #	exit 0;
 #}
+
 
 
 

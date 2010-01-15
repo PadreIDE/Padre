@@ -125,14 +125,15 @@ sub finish {
 sub update_gui {
 	my $self     = shift;
 	my $messages = $self->{syntax_check};
-	my $main     = Padre->ide->wx->main;
+	my $current  = Padre::Current->new;
+	my $main     = $current->main;
+	my $editor   = $current->editor;
 	my $syntax   = $main->syntax;
+	my $addr     = delete $self->{main_thread_only}->{editor};
 
-	my $editor = Padre::Current->editor;
-	my $addr   = delete $self->{main_thread_only}->{editor};
 	if ( not $addr or not $editor or $addr ne Scalar::Util::refaddr($editor) ) {
 
-		# editor reference is not valid any more
+		# Editor reference is not valid any more
 		return 1;
 	}
 
@@ -200,6 +201,8 @@ sub update_gui {
 1;
 
 __END__
+
+=pod
 
 =head1 SEE ALSO
 
