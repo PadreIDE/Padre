@@ -184,26 +184,27 @@ setting(
 );
 
 # Pages and panels
+
+# Unlike on Linux, on Windows there's not really
+# any major reason we should avoid the single-instance
+# server by default.
+# However during tests or in the debugger we need to make
+# sure we don't accidentally connect to a running
+# system-installed Padre while running the test suite.
+my $main_singleinstance_default = (
+	Padre::Constant::WIN32
+	and not (
+		$ENV{HARNESS_ACTIVE}
+		or
+		$^P
+	)
+) ? 1 : 0;
+
 setting(
 	name    => 'main_singleinstance',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => sub {
-		# Unlike on Linux, on Windows there's not really
-		# any major reason we should avoid the single-instance
-		# server by default.
-		# However during tests or in the debugger we need to make
-		# sure we don't accidentally connect to a running
-		# system-installed Padre while running the test suite.
-		(
-			Padre::Constant::WIN32
-			and not (
-				$ENV{HARNESS_ACTIVE}
-				or
-				$^P
-			)
-		) ? 1 : 0
-	},
+	default => $main_singleinstance_default,
 	apply   => sub {
 		my $main  = shift;
 		my $value = shift;
