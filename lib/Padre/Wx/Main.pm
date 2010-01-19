@@ -192,9 +192,6 @@ sub new {
 	$self->{right}    = Padre::Wx::Right->new($self);
 	$self->{bottom}   = Padre::Wx::Bottom->new($self);
 
-	# Creat the various tools that will live in the panes
-	$self->{errorlist} = Padre::Wx::ErrorList->new($self);
-
 	# Set up the pane close event
 	Wx::Event::EVT_AUI_PANE_CLOSE(
 		$self,
