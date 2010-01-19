@@ -497,7 +497,7 @@ sub load_plugin {
 #
 # MAINTAINER NOTE: This method looks fairly long, but it's doing
 # a very specific and controlled series of steps. Splitting this up
-# would just make the process hardner to understand, so please don't.
+# would just make the process harder to understand, so please don't.
 sub _load_plugin {
 	my $self   = shift;
 	my $module = shift;
@@ -513,8 +513,11 @@ sub _load_plugin {
 	delete $self->{plugin_order};
 
 	# Attempt to load the plug-in
-	my $code = "use $module ();";
-	eval $code;
+	SCOPE: {
+		# Suppress warnings while loading plugins
+		local $SIG{__WARN__} = sub () { };
+		eval "use $module ();";
+	}
 
 	# Did it compile?
 	if ($@) {
