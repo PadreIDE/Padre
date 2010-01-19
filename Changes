@@ -22,7 +22,10 @@ Changes for Perl Application Development and Refactoring Environment
       user's configuration.
     - Tuned lock-release refresh execution to remove low-level refresh
       methods that are also contained in higher level refresh methods.
-    - Removed a somewhat superfluous AUI Update from the refresh method.
+    - Removed a superfluous AUI Update from the refresh method (ADAMK)
+    - Delay loading some additional GUI classes and objects until they
+      definitely needed (ADAMK)
+    - Suppress warnings that occur during plugin loading (ADAMK)
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.

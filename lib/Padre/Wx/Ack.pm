@@ -332,11 +332,12 @@ sub create_ack_pane {
 }
 
 sub show_ack_output {
-	my $main = shift;
-	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
-	my $bp   = \$main->{bottom};
-	my $op   = \$main->{ack};
-	my $idx  = ${$bp}->GetPageIndex( ${$op} );
+	my $main   = shift;
+	my $on     = @_ ? $_[0] ? 1 : 0 : 1;
+	my $bottom = $main->bottom;
+	my $bp     = \$bottom;
+	my $op     = \$main->{ack};
+	my $idx    = ${$bp}->GetPageIndex( ${$op} );
 
 	if ( $idx >= 0 ) {
 		${$bp}->SetSelection($idx);

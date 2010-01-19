@@ -47,9 +47,6 @@ use Padre::DB                     ();
 use Padre::Locker                 ();
 use Padre::Wx                     ();
 use Padre::Wx::Icon               ();
-use Padre::Wx::Left               ();
-use Padre::Wx::Right              ();
-use Padre::Wx::Bottom             ();
 use Padre::Wx::Debugger           ();
 use Padre::Wx::Editor             ();
 use Padre::Wx::Menubar            ();
@@ -187,9 +184,6 @@ sub new {
 	# Create the notebooks (document and tools) that
 	# serve as the main AUI manager GUI elements.
 	$self->{notebook} = Padre::Wx::Notebook->new($self);
-	$self->{left}     = Padre::Wx::Left->new($self);
-	$self->{right}    = Padre::Wx::Right->new($self);
-	$self->{bottom}   = Padre::Wx::Bottom->new($self);
 
 	# Set up the pane close event
 	Wx::Event::EVT_AUI_PANE_CLOSE(
@@ -334,7 +328,11 @@ use Class::XSAccessor {
 	predicates => {
 		# Needed for lazily-constructed gui elements
 		has_about     => 'about',
+		has_left      => 'left',
+		has_right     => 'right',
+		has_bottom    => 'bottom',
 		has_output    => 'output',
+		has_ack       => 'ack',
 		has_syntax    => 'syntax',
 		has_functions => 'functions',
 		has_debugger  => 'debugger',
@@ -352,9 +350,6 @@ use Class::XSAccessor {
 		aui                 => 'aui',
 		menu                => 'menu',
 		notebook            => 'notebook',
-		left                => 'left',
-		right               => 'right',
-		bottom              => 'bottom',
 		infomessage         => 'infomessage',
 		infomessage_timeout => 'infomessage_timeout',
 
@@ -362,9 +357,6 @@ use Class::XSAccessor {
 		locker => 'locker',
 		cwd    => 'cwd',
 		search => 'search',
-
-		# Things that are probably in the wrong place
-		ack => 'ack',
 	},
 };
 
@@ -375,6 +367,33 @@ sub about {
 		$self->{about} = Padre::Wx::About->new($self);
 	}
 	return $self->{about};
+}
+
+sub left {
+	my $self = shift;
+	unless ( defined $self->{left} ) {
+		require Padre::Wx::Left;
+		$self->{left} = Padre::Wx::Left->new($self);
+	}
+	return $self->{left};
+}
+
+sub right {
+	my $self = shift;
+	unless ( defined $self->{right} ) {
+		require Padre::Wx::Right;
+		$self->{right} = Padre::Wx::Right->new($self);
+	}
+	return $self->{right};
+}
+
+sub bottom {
+	my $self = shift;
+	unless ( defined $self->{bottom} ) {
+		require Padre::Wx::Bottom;
+		$self->{bottom} = Padre::Wx::Bottom->new($self);
+	}
+	return $self->{bottom};
 }
 
 sub output {
@@ -1409,9 +1428,18 @@ sub relocale {
 
 	# Update window manager captions
 	$self->aui->relocale;
-	$self->bottom->relocale;
-	$self->right->relocale;
-	$self->syntax->relocale;
+	if ( $self->has_left ) {
+		$self->left->relocale;
+	}
+	if ( $self->has_right ) {
+		$self->right->relocale;
+	}
+	if ( $self->has_bottom ) {
+		$self->bottom->relocale;
+	}
+	if ( $self->has_syntax ) {
+		$self->syntax->relocale;
+	}
 
 	return;
 }
@@ -1484,6 +1512,10 @@ sub rebuild_toolbar {
 	$self->GetToolBar->Realize;
 	return 1;
 }
+
+
+
+
 
 #####################################################################
 
