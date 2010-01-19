@@ -56,7 +56,6 @@ use Padre::Wx::Menubar            ();
 use Padre::Wx::ToolBar            ();
 use Padre::Wx::Notebook           ();
 use Padre::Wx::StatusBar          ();
-use Padre::Wx::ErrorList          ();
 use Padre::Wx::AuiManager         ();
 use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
