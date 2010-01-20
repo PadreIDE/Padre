@@ -110,7 +110,6 @@ sub quicklaunch {
 		# NOTE: Use Padre::Perl to make this distribution agnostic
 		require Win32::Shortcut;
 		my $link = Win32::Shortcut->new;
-		$link->{Description}      = "Padre - The Perl IDE";
 		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
 		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
 		$link->Save( $padre_lnk );
