@@ -26,8 +26,9 @@ our $VERSION = '0.54';
 
 use Class::XSAccessor {
 	getters => {
-		wx   => 'wx',
-		main => 'main',
+		wx       => 'wx',
+		main     => 'main',
+		mimetype => 'mimetype',
 
 		# Don't add accessors to here until they have been
 		# upgraded to be fully encapsulated classes.
@@ -53,6 +54,8 @@ sub new {
 
 		# Link back to the main window
 		main => $main,
+
+		mimetype => '',
 
 		# The number of menus in the default set.
 		# That is, EXCLUDING the special Perl menu.
@@ -93,13 +96,20 @@ sub new {
 # Reflowing the Menu
 
 sub refresh {
-	my $self    = shift;
-	my $plugins = shift;
+	my $self     = shift;
+	my $plugins  = shift;
+	my $current  = _CURRENT(@_);
+	my $main     = $self->main;
+	my $config   = $current->config;
+	my $document = $current->document;
+	my $mimetype = $document ? $document->get_mimetype : '';
 
-	my $main   = $self->main;
-	my $config = $main->ide->config;
-
-	my $current = _CURRENT(@_);
+	# Shortcut if no change
+	if ( $self->{mimetype} and $mimetype and $self->{mimetype} eq $mimetype ) {
+		return 1;
+	} else {
+		$self->{mimetype} = $mimetype;
+	}
 
 	# This is a version between fully configurable menus and the old fixed ones, it
 	# isn't made to stay forever, but it's working for now
