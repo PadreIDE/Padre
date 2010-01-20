@@ -27,7 +27,7 @@ Changes for Perl Application Development and Refactoring Environment
       definitely needed (ADAMK)
     - Suppress warnings that occur during plugin loading (ADAMK)
     - 'Simple' possible fix for #331 to update the tabs when 'save all' is 
-      run in Padre.
+      run in Padre. (PLAVEN)
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.
