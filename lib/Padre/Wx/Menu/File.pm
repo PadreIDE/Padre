@@ -86,6 +86,11 @@ sub new {
 		'file.openurl',
 	);
 
+	$self->{open_selection} = $self->add_menu_action(
+		$self,
+		'file.open_selection',
+	);
+
 	$self->{open_example} = $self->add_menu_action(
 		$self,
 		'file.open_example',
@@ -165,11 +170,6 @@ sub new {
 		$self->AppendSeparator;
 
 		# Specialised open and close functions
-		$self->{open_selection} = $self->add_menu_action(
-			$self,
-			'file.open_selection',
-		);
-
 		$self->{open_session} = $self->add_menu_action(
 			$self,
 			'file.open_session',
