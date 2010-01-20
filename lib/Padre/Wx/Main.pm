@@ -3841,13 +3841,20 @@ saved, false otherwise.
 
 sub on_save_all {
 	my $self = shift;
+	
+	# TODO: Discuss this implementation
+	# trac ticket is: http://padre.perlide.org/trac/ticket/331
+	my $currentID = $self->notebook->GetSelection; 
 	foreach my $id ( $self->pageids ) {
 		my $editor = $self->notebook->GetPage($id) or next;
+		$editor->SetFocus;
 		my $doc = $editor->{Document}; # TO DO no accessor for document?
 		if ( $doc->is_modified ) {
 			$self->on_save($doc) or return 0;
 		}
 	}
+	# set focus back to the currentDocument
+	$self->notebook->SetSelection($currentID);
 	return 1;
 }
 
