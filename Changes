@@ -26,6 +26,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Delay loading some additional GUI classes and objects until they
       definitely needed (ADAMK)
     - Suppress warnings that occur during plugin loading (ADAMK)
+    - 'Simple' possible fix for #331 to update the tabs when 'save all' is 
+      run in Padre.
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.
