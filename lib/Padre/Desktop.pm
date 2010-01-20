@@ -57,7 +57,6 @@ sub desktop {
 		$link->{Description}      = "Padre - The Perl IDE";
 		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
 		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
-
 		$link->Save( $padre_lnk );
 		$link->Close;
 
