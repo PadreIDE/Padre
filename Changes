@@ -29,6 +29,9 @@ Changes for Perl Application Development and Refactoring Environment
     - 'Simple' possible fix for #331 to update the tabs when 'save all' is 
       run in Padre. (PLAVEN)
     - Fixed #819: Don't crash on missing project dir (SEWI)
+    - Upgrading --desktop option from VBScript to a new Win32::Shortcut-based
+      Padre::Desktop. Desktop link creation works on Vista and newer
+      operating systems again (ADAMK)
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.

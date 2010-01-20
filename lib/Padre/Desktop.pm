@@ -22,6 +22,7 @@ The workings of this module are currently undocumented.
 use 5.008005;
 use strict;
 use warnings;
+use File::Spec      ();
 use Padre::Constant ();
 
 our $VERSION = '0.51';
@@ -29,41 +30,36 @@ our $VERSION = '0.51';
 sub desktop {
 	if (Padre::Constant::WXWIN32) {
 
-		# Integrate with registry via regedit...
-		# VBScript and registry on vista = Does not work!
-		require File::Temp;
-		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
-		print $reg <<'REG';
-Windows Registry Editor Version 5.00
-
-[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
-
-[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
-@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
-REG
-		close $reg;
+		# NOTE: Convert this to use Win32::TieRegistry
+#		require File::Temp;
+#		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
+#		print $reg <<'REG';
+#Windows Registry Editor Version 5.00
+#
+#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
+#
+#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
+#@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
+#REG
+#		close $reg;
 
 		# Create Padre's Desktop Shortcut
-		my ( $vbs, $vbsfile ) = File::Temp::tempfile( SUFFIX => '.vbs' );
-		print $vbs <<'CODE';
-' Create a Padre shortcut on the current user's desktop 
-Set shell = CreateObject("WScript.Shell")
-desktop = shell.SpecialFolders("Desktop")
-Set shortcut = shell.CreateShortcut(desktop & "\Padre.lnk")
-shortcut.Description = "Padre - The Perl IDE"
-shortcut.TargetPath = "C:\strawberry\perl\bin\padre.exe"
-shortcut.WorkingDirectory = "c:\strawberry\perl\bin"
-shortcut.Save
-MsgBox "Padre has created a shortcut on your desktop", vbOKOnly Or vbInformation, "Information"
-CODE
+		require File::HomeDir;
+		my $padre_lnk = File::Spec->catfile(
+			File::HomeDir->my_desktop,
+			'Padre.lnk',
+		);
+		return 1 if -f $padre_lnk;		
 
-		print $vbs <<"CODE";
-' Now adding "Edit with Padre" to shell context menu
-shell.Run("regedit.exe /S ""$regfile"""), 1, true
-MsgBox """Edit with Padre"" has been added to your right click menu", vbOKOnly Or vbInformation, "Confirmation"
-CODE
-		close $vbs;
-		system(qq{wscript "$vbsfile"});
+		# NOTE: Use Padre::Perl to make this distribution agnostic
+		require Win32::Shortcut;
+		my $link = Win32::Shortcut->new;
+		$link->{Description}      = "Padre - The Perl IDE";
+		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
+		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
+
+		$link->Save( $padre_lnk );
+		$link->Close;
 
 		return 1;
 	}
