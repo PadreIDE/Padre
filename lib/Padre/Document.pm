@@ -191,7 +191,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before
@@ -679,6 +679,7 @@ sub save_file {
 	my $content = $self->text_get;
 	my $file    = $self->file;
 	unless ( defined $file ) {
+
 		# NOTE: Now we have ->set_filename, should this situation ever occur?
 		$file = Padre::File->new( $self->filename );
 		$self->{file} = $file;
@@ -1072,7 +1073,7 @@ sub project_find {
 	my @d = File::Spec->splitdir($d);
 	pop @d if defined( $d[-1] ) and ( $d[-1] eq '' );
 	my $dirs = List::Util::first {
-		-f File::Spec->catpath( $v, $_, 'Makefile.PL' )
+		       -f File::Spec->catpath( $v, $_, 'Makefile.PL' )
 			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
 			or -f File::Spec->catpath( $v, $_, 'dist.ini' )
 			or -f File::Spec->catpath( $v, $_, 'padre.yml' );

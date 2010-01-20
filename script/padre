@@ -44,7 +44,7 @@ my $getopt      = Getopt::Long::GetOptions(
 	'actionqueue=s' => \$ACTIONQUEUE,
 
 	# Keep this secret for now --ADAMK
-	'preload'       => \$PRELOAD,
+	'preload' => \$PRELOAD,
 );
 
 if ( $USAGE or !$getopt ) {
@@ -78,6 +78,7 @@ my %opts = (
 require Padre;
 
 if ($PRELOAD) {
+
 	# Load the entire application into memory immediately
 	Padre->import(':everything');
 }

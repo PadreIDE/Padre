@@ -52,12 +52,12 @@ use Class::XSAccessor {
 };
 
 sub import {
-	unless ( $_[1] and $_[1] eq ':everything') {
+	unless ( $_[1] and $_[1] eq ':everything' ) {
 		return;
 	}
 
 	# Find the location of Padre.pm
-	my $padre  = $INC{'Padre.pm'};
+	my $padre = $INC{'Padre.pm'};
 	my $parent = substr( $padre, 0, length($padre) - 3 );
 
 	# Find everything under Padre:: with a matching version,
@@ -72,7 +72,7 @@ sub import {
 
 	# Load all of them (ignoring errors)
 	my $loaded = 0;
-	foreach my $child ( @children ) {
+	foreach my $child (@children) {
 		eval { require $child; };
 		next if $@;
 		$loaded++;

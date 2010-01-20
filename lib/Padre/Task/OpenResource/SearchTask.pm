@@ -11,12 +11,16 @@ our $thread_running = 0;
 # accessors
 use Class::XSAccessor {
 	accessors => {
+
 		# Searched directory
-		_directory                => '_directory',
+		_directory => '_directory',
+
 		# Matched files list
-		_matched_files            => '_matched_files',
+		_matched_files => '_matched_files',
+
 		# Skip VCS files menu item
-		_skip_vcs_files           => '_skip_vcs_files',
+		_skip_vcs_files => '_skip_vcs_files',
+
 		# Skip using MANIFEST.SKIP menu item
 		_skip_using_manifest_skip => '_skip_using_manifest_skip',
 	}

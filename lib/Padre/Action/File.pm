@@ -83,7 +83,7 @@ sub new {
 		comment    => Wx::gettext('Setup a skeleton Perl distribution using Module::Starter'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;
-			Padre::Wx::Dialog::ModuleStart->start($_[0]);
+			Padre::Wx::Dialog::ModuleStart->start( $_[0] );
 		},
 	);
 

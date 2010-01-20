@@ -326,6 +326,7 @@ Accessors that may not belong to this class:
 
 use Class::XSAccessor {
 	predicates => {
+
 		# Needed for lazily-constructed gui elements
 		has_about     => 'about',
 		has_left      => 'left',
@@ -343,6 +344,7 @@ use Class::XSAccessor {
 		has_errorlist => 'errorlist',
 	},
 	getters => {
+
 		# GUI Elements
 		ide                 => 'ide',
 		config              => 'config',
@@ -1674,9 +1676,9 @@ sub show_directory {
 sub _show_directory {
 	my $self = shift;
 	if ( $_[0] ) {
-		$self->directory_panel->show($self->directory);
+		$self->directory_panel->show( $self->directory );
 	} elsif ( $self->has_directory ) {
-		$self->directory_panel->hide($self->directory);
+		$self->directory_panel->hide( $self->directory );
 		delete $self->{directory};
 	}
 }
@@ -1695,7 +1697,7 @@ the panel.
 
 sub show_output {
 	my $self = shift;
-	my $on   = @_ ? $_[0] ? 1 : 0 : 1;
+	my $on = @_ ? $_[0] ? 1 : 0 : 1;
 	unless ( $on == $self->menu->view->{output}->IsChecked ) {
 		$self->menu->view->{output}->Check($on);
 	}
@@ -1762,7 +1764,7 @@ sub _show_syntax {
 		$syntax->start unless $syntax->running;
 	} elsif ( $self->has_syntax ) {
 		my $syntax = $self->syntax;
-		$self->bottom->hide( $syntax );
+		$self->bottom->hide($syntax);
 		$syntax->stop if $syntax->running;
 		delete $self->{syntax};
 	}
@@ -2710,8 +2712,12 @@ sub on_comment_block {
 	my $end             = $editor->LineFromPosition($selection_end);
 	my $string          = $document->comment_lines_str;
 	if ( not defined $string ) {
-		$self->error(sprintf( Wx::gettext("Could not determine the comment character for %s document type"), 
-			Padre::MimeTypes->get_mime_type_name( $document->get_mimetype ) ));
+		$self->error(
+			sprintf(
+				Wx::gettext("Could not determine the comment character for %s document type"),
+				Padre::MimeTypes->get_mime_type_name( $document->get_mimetype )
+			)
+		);
 		return;
 	}
 
@@ -2860,7 +2866,7 @@ sub on_close_window {
 			}
 		} else {
 			my $closed = $self->close_all;
-			unless ( $closed ) {
+			unless ($closed) {
 
 				# They cancelled at some point
 				$event->Veto;
@@ -3055,7 +3061,7 @@ sub setup_editor {
 
 	TRACE( "setup_editor called for '" . ( $file || '' ) . "'" ) if DEBUG;
 
-	if ( $file ) {
+	if ($file) {
 
 		# Get the absolute path
 		# Please Dont use Cwd::realpath, UNC paths do not work on win32)
@@ -3097,7 +3103,7 @@ sub setup_editor {
 		}
 	}
 
-	my $lock     = $self->lock('REFRESH');
+	my $lock = $self->lock('REFRESH');
 	my $document = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
@@ -3132,6 +3138,7 @@ sub setup_editor {
 	}
 
 	if ( $document->is_new ) {
+
 		# The project is probably the same as the previous file we had open
 		$document->{project_dir} =
 			  $self->current->document
@@ -3462,9 +3469,9 @@ sub open_file_dialog {
 		push @files, $FN;
 	}
 
-	my $lock = $self->lock('REFRESH', 'DB');
+	my $lock = $self->lock( 'REFRESH', 'DB' );
 	$self->setup_editors(@files) if $#files > -1;
-	$self->save_current_session if $self->ide->{session_autosave};
+	$self->save_current_session  if $self->ide->{session_autosave};
 
 	return;
 }
@@ -3718,7 +3725,7 @@ sub on_save_as {
 		# lock method for this non-guard-object case.
 		# We also need to refresh the directory list, in case a change
 		# in file name means the project context has changed.
-		$self->lock('refresh_recent', 'refresh_directory');
+		$self->lock( 'refresh_recent', 'refresh_directory' );
 	}
 
 	$self->refresh;
@@ -3841,19 +3848,20 @@ saved, false otherwise.
 
 sub on_save_all {
 	my $self = shift;
-	
+
 	# TODO: Discuss this implementation
 	# trac ticket is: http://padre.perlide.org/trac/ticket/331
-	my $currentID = $self->notebook->GetSelection; 
+	my $currentID = $self->notebook->GetSelection;
 	foreach my $id ( $self->pageids ) {
 		my $editor = $self->notebook->GetPage($id) or next;
-		
+
 		my $doc = $editor->{Document}; # TO DO no accessor for document?
 		if ( $doc->is_modified ) {
 			$editor->SetFocus;
 			$self->on_save($doc) or return 0;
 		}
 	}
+
 	# set focus back to the currentDocument
 	$self->notebook->SetSelection($currentID);
 	return 1;

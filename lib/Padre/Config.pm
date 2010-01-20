@@ -192,12 +192,8 @@ setting(
 # sure we don't accidentally connect to a running
 # system-installed Padre while running the test suite.
 my $main_singleinstance_default = (
-	Padre::Constant::WIN32
-	and not (
-		$ENV{HARNESS_ACTIVE}
-		or
-		$^P
-	)
+	Padre::Constant::WIN32 and not( $ENV{HARNESS_ACTIVE}
+		or $^P )
 ) ? 1 : 0;
 
 setting(

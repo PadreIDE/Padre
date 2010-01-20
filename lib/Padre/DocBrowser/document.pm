@@ -6,7 +6,7 @@ use warnings;
 use File::Basename ();
 use Class::XSAccessor {
 	constructor => 'new',
-	accessors => {
+	accessors   => {
 		mimetype => 'mime_type',
 		body     => 'body',
 		title    => 'title',

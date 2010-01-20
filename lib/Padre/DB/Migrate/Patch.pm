@@ -10,6 +10,7 @@ use DBI         ();
 use DBD::SQLite ();
 
 use vars qw{$VERSION @ISA @EXPORT $FILE};
+
 BEGIN {
 	$VERSION = '1.06';
 	@ISA     = 'Exporter';
@@ -33,7 +34,8 @@ BEGIN {
 }
 
 sub file {
-	unless ( $FILE ) {
+	unless ($FILE) {
+
 		# The filename is passed on STDIN
 		$FILE = $ARGV[0];
 		chomp($FILE);

@@ -5,18 +5,19 @@ package Padre::DB::Migrate;
 use 5.008005;
 use strict;
 use warnings;
-use Carp              ();
+use Carp ();
 use File::Spec 3.2701 ();
-use File::Path   2.04 ();
-use File::Basename    ();
+use File::Path 2.04   ();
+use File::Basename ();
 use Params::Util 0.37 ();
-use DBI          1.58 ();
-use DBD::SQLite  1.21 ();
-use ORLite       1.28 ();
+use DBI 1.58          ();
+use DBD::SQLite 1.21  ();
+use ORLite 1.28       ();
 
 use Padre::DB::Migrate::Patch ();
 
 use vars qw{$VERSION @ISA};
+
 BEGIN {
 	$VERSION = '1.06';
 	@ISA     = 'ORLite';
@@ -27,34 +28,33 @@ sub import {
 
 	# Check for debug mode
 	my $DEBUG = 0;
-	if ( defined Params::Util::_STRING($_[-1]) and $_[-1] eq '-DEBUG' ) {
+	if ( defined Params::Util::_STRING( $_[-1] ) and $_[-1] eq '-DEBUG' ) {
 		$DEBUG = 1;
 		pop @_;
 	}
 
 	# Check params and apply defaults
 	my %params;
-	if ( defined Params::Util::_STRING($_[1]) ) {
+	if ( defined Params::Util::_STRING( $_[1] ) ) {
+
 		# Migrate needs at least two params
 		Carp::croak("Padre::DB::Migrate must be invoked in HASH form");
-	} elsif ( Params::Util::_HASH($_[1]) ) {
+	} elsif ( Params::Util::_HASH( $_[1] ) ) {
 		%params = %{ $_[1] };
 	} else {
 		Carp::croak("Missing, empty or invalid params HASH");
 	}
 	$params{create} = $params{create} ? 1 : 0;
 	unless (
-		defined Params::Util::_STRING($params{file})
-		and (
-			$params{create}
-			or
-			-f $params{file}
+		defined Params::Util::_STRING( $params{file} )
+		and ( $params{create}
+			or -f $params{file} )
 		)
-	) {
+	{
 		Carp::croak("Missing or invalid file param");
 	}
 	unless ( defined $params{readonly} ) {
-		$params{readonly} = $params{create} ? 0 : ! -w $params{file};
+		$params{readonly} = $params{create} ? 0 : !-w $params{file};
 	}
 	unless ( defined $params{tables} ) {
 		$params{tables} = 1;
@@ -62,7 +62,7 @@ sub import {
 	unless ( defined $params{package} ) {
 		$params{package} = scalar caller;
 	}
-	unless ( Params::Util::_CLASS($params{package}) ) {
+	unless ( Params::Util::_CLASS( $params{package} ) ) {
 		Carp::croak("Missing or invalid package class");
 	}
 	unless ( $params{timeline} and -d $params{timeline} and -r $params{timeline} ) {
@@ -75,9 +75,10 @@ sub import {
 	}
 
 	# Get the schema version
-	my $file     = File::Spec->rel2abs($params{file});
-	my $created  = ! -f $params{file};
-	if ( $created ) {
+	my $file    = File::Spec->rel2abs( $params{file} );
+	my $created = !-f $params{file};
+	if ($created) {
+
 		# Create the parent directory
 		my $dir = File::Basename::dirname($file);
 		unless ( -d $dir ) {
@@ -86,27 +87,26 @@ sub import {
 		}
 		$class->prune($file) if $params{prune};
 	}
-	my $dsn      = "dbi:SQLite:$file";
-	my $dbh      = DBI->connect($dsn);
-	my $version  = $dbh->selectrow_arrayref('pragma user_version')->[0];
+	my $dsn     = "dbi:SQLite:$file";
+	my $dbh     = DBI->connect($dsn);
+	my $version = $dbh->selectrow_arrayref('pragma user_version')->[0];
 	$dbh->disconnect;
 
 	# We're done with the prune setting now
 	$params{prune} = 0;
 
 	# Build the migration plan
-	my $timeline = File::Spec->rel2abs($params{timeline});
-	my @plan     = plan( $params{timeline}, $version );
+	my $timeline = File::Spec->rel2abs( $params{timeline} );
+	my @plan = plan( $params{timeline}, $version );
 
 	# Execute the migration plan
-	if ( @plan ) {
+	if (@plan) {
+
 		# Does the migration plan reach the required destination
 		my $destination = $version + scalar(@plan);
-		if (
-			exists $params{user_version}
-			and
-			$destination != $params{user_version}
-		) {
+		if ( exists $params{user_version}
+			and $destination != $params{user_version} )
+		{
 			die "Schema migration destination user_version mismatch (got $destination, wanted $params{user_version})";
 		}
 
@@ -117,22 +117,22 @@ sub import {
 		# Locate the include path we need for Padre::DB::Migrate::Patch,
 		# so we can force-include it and be sure they find the right one.
 		my $patch_pm = 'Padre/DB/Migrate/Patch.pm';
-		my $include  = $INC{$patch_pm} or die("Failed to find path");
-		    $include = substr( $include, 0, length($include) - length($patch_pm) );
+		my $include = $INC{$patch_pm} or die("Failed to find path");
+		$include = substr( $include, 0, length($include) - length($patch_pm) );
 
 		# Execute each script
 		my $perl  = Padre::Perl::wxperl();
 		my $pushd = File::pushd::pushd($timeline);
-		foreach my $patch ( @plan ) {
+		foreach my $patch (@plan) {
 			my $stdin = "$file\n";
-			if ( $DEBUG ) {
+			if ($DEBUG) {
 				print STDERR "Applying schema patch $patch...\n";
 			}
 			my $exit = system( $perl, "-I$include", $patch, $file );
-			if ( $exit == - 1 ) {
+			if ( $exit == -1 ) {
 				Carp::croak("Migration patch $patch failed, database in unknown state");
 			} elsif ( $? & 127 ) {
-				Carp::croak( sprintf("Child died with signal %d", ($? & 127)) );
+				Carp::croak( sprintf( "Child died with signal %d", ( $? & 127 ) ) );
 			}
 		}
 
@@ -161,13 +161,13 @@ sub patches {
 
 	# Find all files in a directory
 	local *DIR;
-	opendir( DIR, $dir )       or die "opendir: $!";
-	my @files = readdir( DIR ) or die "readdir: $!";
-	closedir( DIR )            or die "closedir: $!";
+	opendir( DIR, $dir ) or die "opendir: $!";
+	my @files = readdir(DIR) or die "readdir: $!";
+	closedir(DIR) or die "closedir: $!";
 
 	# Filter to get the patch set
 	my @patches = ();
-	foreach ( @files ) {
+	foreach (@files) {
 		next unless /^migrate-(\d+)\.pl$/;
 		$patches["$1"] = $_;
 	}
@@ -180,12 +180,12 @@ sub plan {
 	my $version   = shift;
 
 	# Find the list of patches
-	my @patches = patches( $directory );
+	my @patches = patches($directory);
 
 	# Assemble the plan by integer stepping forwards
 	# until we run out of timeline hits.
 	my @plan = ();
-	while ( $patches[++$version] ) {
+	while ( $patches[ ++$version ] ) {
 		push @plan, $patches[$version];
 	}
 

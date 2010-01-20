@@ -27,7 +27,8 @@ use Padre::Constant ();
 our $VERSION = '0.51';
 
 sub desktop {
-	if ( Padre::Constant::WXWIN32 ) {
+	if (Padre::Constant::WXWIN32) {
+
 		# Integrate with registry via regedit...
 		# VBScript and registry on vista = Does not work!
 		require File::Temp;
@@ -67,7 +68,7 @@ CODE
 		return 1;
 	}
 
-	if ( Padre::Constant::WXGTK ) {
+	if (Padre::Constant::WXGTK) {
 
 		# Create Padre.desktop launcher on KDE/gnome
 		require Padre::Util;

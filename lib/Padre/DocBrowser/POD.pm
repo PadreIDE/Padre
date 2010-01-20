@@ -16,7 +16,7 @@ our $VERSION = '0.54';
 
 use Class::XSAccessor {
 	constructor => 'new',
-	getters => {
+	getters     => {
 		get_provider => 'provider',
 	},
 };

@@ -102,6 +102,7 @@ requires 'List::MoreUtils' => '0.22';
 requires 'Module::Refresh' => '0.13';
 requires 'Module::Starter' => '1.50';
 requires 'ORLite'          => '1.30';
+
 # Temporarily disabled as we have cloned a private copy
 # requires 'ORLite::Migrate' => '1.06';
 

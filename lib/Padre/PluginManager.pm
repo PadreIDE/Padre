@@ -514,6 +514,7 @@ sub _load_plugin {
 
 	# Attempt to load the plug-in
 	SCOPE: {
+
 		# Suppress warnings while loading plugins
 		local $SIG{__WARN__} = sub () { };
 		eval "use $module ();";

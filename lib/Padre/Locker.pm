@@ -107,6 +107,7 @@ sub db_decrement {
 sub update_increment {
 	my $self = shift;
 	unless ( $self->{update_depth}++ ) {
+
 		# When a Wx application quits with ->Update locked, windows will segfault.
 		# During shutdown, do not allow the application to enable an update lock.
 		# This should be pointless anyway, because the window shouldn't be visible.
