@@ -40,9 +40,11 @@ my $getopt      = Getopt::Long::GetOptions(
 	'version'       => \$VERSION,
 	'home=s'        => \$HOME,
 	'session=s'     => \$SESSION,
-	'preload'       => \$PRELOAD,
 	'desktop'       => \$DESKTOP,
 	'actionqueue=s' => \$ACTIONQUEUE,
+
+	# Keep this secret for now --ADAMK
+	'preload'       => \$PRELOAD,
 );
 
 if ( $USAGE or !$getopt ) {
@@ -75,6 +77,11 @@ my %opts = (
 
 require Padre;
 
+if ($PRELOAD) {
+	# Load the entire application into memory immediately
+	Padre->import(':everything');
+}
+
 if ($VERSION) {
 	my $msg = "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
 	if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
@@ -93,7 +100,7 @@ if ($VERSION) {
 	exit(0);
 }
 
-if ( $DESKTOP ) {
+if ($DESKTOP) {
 	require Padre::Desktop;
 	unless ( Padre::Desktop::desktop() ) {
 		warn "--desktop not implemented for " . $^O . "\n";
