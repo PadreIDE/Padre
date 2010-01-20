@@ -54,13 +54,15 @@ sub new {
 	);
 
 	# Create a sizer
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND );
-	$sizer->Add( $self->{functions}, 1, Wx::wxALL | Wx::wxEXPAND );
+	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$sizerv->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND );
+	$sizerv->Add( $self->{functions}, 1, Wx::wxALL | Wx::wxEXPAND );
+	$sizerh->Add( $sizerv,            1, Wx::wxALL | Wx::wxEXPAND );
 
 	# Fits panel layout
-	$self->SetSizerAndFit($sizer);
-	$sizer->SetSizeHints($self);
+	$self->SetSizerAndFit($sizerh);
+	$sizerh->SetSizeHints($self);
 
 	# Grab the kill focus to prevent deselection
 	Wx::Event::EVT_KILL_FOCUS(
