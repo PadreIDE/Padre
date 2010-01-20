@@ -32,6 +32,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Upgrading --desktop option from VBScript to a new Win32::Shortcut-based
       Padre::Desktop. Desktop link creation works on Vista and newer
       operating systems again (ADAMK)
+    - Tuned menubar refresh to only fire if we change document mimetype,
+      which saves a ton of CPU and seems to reduce flicker (ADAMK)
 
 0.54 2010.01.07
     - Added experimental support for clickable filenames in Output panel.
