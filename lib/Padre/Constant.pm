@@ -121,7 +121,7 @@ unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
 }
 
 # Get the svn revision of the currently running Padre once:
-#eval 'use constant PADRE_REVISION => Padre::Util::revision;';
+# eval 'use constant PADRE_REVISION => Padre::Util::revision;';
 # This needs to be a pseudo constant as it requires Padre::Util which
 # requires Padre::Constant (this module).
 sub PADRE_REVISION {
@@ -132,7 +132,6 @@ sub PADRE_REVISION {
 	$revision ||= Padre::Util::revision();
 	return $revision;
 }
-
 
 1;
 
@@ -203,7 +202,7 @@ Newline style (UNIX, WIN or MAC) on the currently used operating system.
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+Copyright 2008 - 2010 The Padre development team as listed in Padre.pm.
 
 This program is free software; you can redistribute it and/or modify it under the
 same terms as Perl 5 itself.
