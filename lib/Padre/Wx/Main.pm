@@ -3847,9 +3847,10 @@ sub on_save_all {
 	my $currentID = $self->notebook->GetSelection; 
 	foreach my $id ( $self->pageids ) {
 		my $editor = $self->notebook->GetPage($id) or next;
-		$editor->SetFocus;
+		
 		my $doc = $editor->{Document}; # TO DO no accessor for document?
 		if ( $doc->is_modified ) {
+			$editor->SetFocus;
 			$self->on_save($doc) or return 0;
 		}
 	}
