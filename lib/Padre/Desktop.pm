@@ -90,6 +90,38 @@ DESKTOP
 	return 0;
 }
 
+sub quicklaunch {
+	if ( Padre::Constant::WXWIN32 ) {
+		# Code stolen and modified from File::HomeDir, which doesn't
+		# natively support the non-local APPDATA folder.
+		require Win32;
+		my $dir = File::Spec->catdir(
+			Win32::GetFolderPath(Win32::CSIDL_APPDATA(), 1),
+			'Microsoft',
+			'Internet Explorer',
+			'Quick Launch',
+		);
+		return 0 unless $dir and -d $dir;
+
+		# Where the file should be specifically
+		my $padre_lnk = File::Spec->catfile( $dir, 'Padre.lnk' );
+		return 1 if -f $padre_lnk;		
+
+		# NOTE: Use Padre::Perl to make this distribution agnostic
+		require Win32::Shortcut;
+		my $link = Win32::Shortcut->new;
+		$link->{Description}      = "Padre - The Perl IDE";
+		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
+		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
+		$link->Save( $padre_lnk );
+		$link->Close;
+
+		return 1;
+	}
+
+	return 0;
+}
+
 1;
 
 __END__
