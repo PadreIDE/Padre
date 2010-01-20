@@ -81,18 +81,25 @@ sub new {
 		'file.open',
 	);
 
+	my $file_open = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Open..."),
+		$file_open,
+	);
+
 	$self->add_menu_action(
-		$self,
+		$file_open,
 		'file.openurl',
 	);
 
 	$self->{open_selection} = $self->add_menu_action(
-		$self,
+		$file_open,
 		'file.open_selection',
 	);
 
 	$self->{open_example} = $self->add_menu_action(
-		$self,
+		$file_open,
 		'file.open_example',
 	);
 

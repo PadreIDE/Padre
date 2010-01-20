@@ -94,7 +94,7 @@ sub new {
 	Padre::Action->new(
 		name       => 'file.open',
 		id         => Wx::wxID_OPEN,
-		label      => Wx::gettext('&Open...'),
+		label      => Wx::gettext('&Open'),
 		comment    => Wx::gettext('Browse directory of the current document to open a file'),
 		shortcut   => 'Ctrl-O',
 		toolbar    => 'actions/document-open',
