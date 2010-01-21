@@ -16,10 +16,13 @@ use ORLite 1.28       ();
 
 use Padre::DB::Migrate::Patch ();
 
-use vars qw{$VERSION @ISA};
+use vars qw{@ISA};
+
+our $VERSION = '0.55';
+
 
 BEGIN {
-	$VERSION = '0.54';
+	
 	@ISA     = 'ORLite';
 }
 
