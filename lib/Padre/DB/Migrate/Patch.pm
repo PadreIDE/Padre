@@ -12,7 +12,7 @@ use DBD::SQLite ();
 use vars qw{$VERSION @ISA @EXPORT $FILE};
 
 BEGIN {
-	$VERSION = '1.06';
+	$VERSION = '0.54';
 	@ISA     = 'Exporter';
 	@EXPORT  = qw{
 		file
