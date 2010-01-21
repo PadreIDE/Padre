@@ -1,6 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
-0.55 To Be Released
+0.56 To Be Released
+
+0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
     - dist-zilla projects detection finally fixed (#489) (JQUELIN)
     - The directory tree refresh method will shortcut if nothing has
