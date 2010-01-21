@@ -27,6 +27,7 @@ use warnings;
 use FindBin;
 use Cwd                           ();
 use Carp                          ();
+use Config			  ();
 use IPC::Open3                    ();
 use File::Spec                    ();
 use File::HomeDir                 ();
@@ -1935,7 +1936,8 @@ sub on_run_tdd_tests {
 			$self->run_command("$perl Build test");
 		} elsif ( -e 'Makefile.PL' ) {
 			$self->run_command("$perl Makefile.PL");
-			my $make = 'make'; # TODO this should do dmake, nmake on Win32
+			my $make = $Config::Config{make};
+		        $make = 'make' unless defined $make;	
 			$self->run_command("$make test");
 		} elsif ( -e 'dist.ini' ) {
 			$self->run_command("dzil test");
