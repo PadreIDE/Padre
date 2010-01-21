@@ -103,7 +103,6 @@ sub new {
 	my $style  = Wx::wxDEFAULT_FRAME_STYLE;
 	if ( $config->main_maximized ) {
 		$style |= Wx::wxMAXIMIZE;
-		$style |= Wx::wxCLIP_CHILDREN;
 	}
 
 	# Create the underlying Wx frame
