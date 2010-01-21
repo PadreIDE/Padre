@@ -27,7 +27,7 @@ use warnings;
 use FindBin;
 use Cwd                           ();
 use Carp                          ();
-use Config			  ();
+use Config                        ();
 use IPC::Open3                    ();
 use File::Spec                    ();
 use File::HomeDir                 ();
@@ -1937,7 +1937,7 @@ sub on_run_tdd_tests {
 		} elsif ( -e 'Makefile.PL' ) {
 			$self->run_command("$perl Makefile.PL");
 			my $make = $Config::Config{make};
-		        $make = 'make' unless defined $make;	
+			$make = 'make' unless defined $make;
 			$self->run_command("$make test");
 		} elsif ( -e 'dist.ini' ) {
 			$self->run_command("dzil test");

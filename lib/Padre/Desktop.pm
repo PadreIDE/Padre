@@ -31,17 +31,17 @@ sub desktop {
 	if (Padre::Constant::WXWIN32) {
 
 		# NOTE: Convert this to use Win32::TieRegistry
-#		require File::Temp;
-#		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
-#		print $reg <<'REG';
-#Windows Registry Editor Version 5.00
-#
-#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
-#
-#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
-#@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
-#REG
-#		close $reg;
+		#		require File::Temp;
+		#		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
+		#		print $reg <<'REG';
+		#Windows Registry Editor Version 5.00
+		#
+		#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
+		#
+		#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
+		#@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
+		#REG
+		#		close $reg;
 
 		# Create Padre's Desktop Shortcut
 		require File::HomeDir;
@@ -49,7 +49,7 @@ sub desktop {
 			File::HomeDir->my_desktop,
 			'Padre.lnk',
 		);
-		return 1 if -f $padre_lnk;		
+		return 1 if -f $padre_lnk;
 
 		# NOTE: Use Padre::Perl to make this distribution agnostic
 		require Win32::Shortcut;
@@ -57,7 +57,7 @@ sub desktop {
 		$link->{Description}      = "Padre - The Perl IDE";
 		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
 		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
-		$link->Save( $padre_lnk );
+		$link->Save($padre_lnk);
 		$link->Close;
 
 		return 1;
@@ -91,12 +91,13 @@ DESKTOP
 }
 
 sub quicklaunch {
-	if ( Padre::Constant::WXWIN32 ) {
+	if (Padre::Constant::WXWIN32) {
+
 		# Code stolen and modified from File::HomeDir, which doesn't
 		# natively support the non-local APPDATA folder.
 		require Win32;
 		my $dir = File::Spec->catdir(
-			Win32::GetFolderPath(Win32::CSIDL_APPDATA(), 1),
+			Win32::GetFolderPath( Win32::CSIDL_APPDATA(), 1 ),
 			'Microsoft',
 			'Internet Explorer',
 			'Quick Launch',
@@ -105,14 +106,14 @@ sub quicklaunch {
 
 		# Where the file should be specifically
 		my $padre_lnk = File::Spec->catfile( $dir, 'Padre.lnk' );
-		return 1 if -f $padre_lnk;		
+		return 1 if -f $padre_lnk;
 
 		# NOTE: Use Padre::Perl to make this distribution agnostic
 		require Win32::Shortcut;
 		my $link = Win32::Shortcut->new;
 		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
 		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
-		$link->Save( $padre_lnk );
+		$link->Save($padre_lnk);
 		$link->Close;
 
 		return 1;
