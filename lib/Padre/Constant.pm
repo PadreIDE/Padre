@@ -157,13 +157,28 @@ is defined in this module.
 
 =head1 CONSTANTS
 
+=head2 C<WIN32>, C<MAC>, C<UNIX>
+
+Operating Systems.
+
+=head2 C<WXWIN32>, C<WXMAC>, C<WXGTK>
+
+Padre targets the three largest Wx backends and maps to the OS constants.
+	WXWIN32 => WIN32,
+	WXMAC   => MAC,
+	WXGTK   => UNIX,
+
 =head2 C<BOOLEAN>, C<POSINT>, C<INTEGER>, C<ASCII>, C<PATH>
 
-Settings data types.
+Settings data types (based on Firefox types).
 
 =head2 C<HOST>, C<HUMAN>, C<PROJECT>
 
 Settings storage back-ends.
+
+=head2 C<PADRE_REVISION>
+
+The SVN Revision ( when running dev ).
 
 =head2 C<PADRE_BLACK>, C<PADRE_BLUE>, C<PADRE_RED>, C<PADRE_GREEN>, C<PADRE_MAGENTA>, C<PADRE_ORANGE>,
 C<PADRE_DIM_GRAY>, C<PADRE_CRIMSON>, C<PADRE_BROWN>
