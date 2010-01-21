@@ -9,10 +9,12 @@ use Exporter    ();
 use DBI         ();
 use DBD::SQLite ();
 
-use vars qw{$VERSION @ISA @EXPORT $FILE};
+use vars qw{@ISA @EXPORT $FILE};
+
+our $VERSION = '0.55';
 
 BEGIN {
-	$VERSION = '0.54';
+	
 	@ISA     = 'Exporter';
 	@EXPORT  = qw{
 		file
