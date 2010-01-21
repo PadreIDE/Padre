@@ -140,10 +140,11 @@ sub refresh {
 		}
 	}
 
+	# Throw in an Wx repainting lock to kill off any gui flicker
+	my $lock = $main->lock('UPDATE');
+
 	my $count = -1;
-
 	for my $item (@items) {
-
 		if ( $item =~ /^menu\.(.+)$/ ) {
 			my $menu = $1;
 
