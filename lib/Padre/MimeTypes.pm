@@ -145,12 +145,12 @@ sub _initialize {
 		},
 
 		'text/x-c' => {
-			name  => 'c',
+			name  => 'C',
 			lexer => Wx::wxSTC_LEX_CPP,
 		},
 
 		'text/x-c++src' => {
-			name  => 'c++',
+			name  => 'C++',
 			lexer => Wx::wxSTC_LEX_CPP,   # CONFIRMED
 		},
 		'text/css' => {

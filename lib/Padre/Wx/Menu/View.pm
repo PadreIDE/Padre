@@ -90,7 +90,7 @@ sub new {
 	);
 
 	my %mimes = Padre::MimeTypes::menu_view_mimes();
-	foreach my $name ( sort keys %mimes ) {
+	foreach my $name ( sort { lc($a) cmp lc($b)} keys %mimes ) {
 		my $label = $name;
 		$label =~ s/^\d+//;
 		my $tag = "view.view_as" . lc $label;
