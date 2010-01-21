@@ -9,7 +9,7 @@ use warnings;
 use Padre::DB      ();
 use Padre::Current ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 sub set_mime_type {
 	my $class     = shift;

@@ -9,7 +9,7 @@ use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 use Padre::Current    ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 my $categories = {
 	'Dates' => [

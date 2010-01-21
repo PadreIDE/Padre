@@ -14,7 +14,7 @@ use warnings;
 use Padre::Lock ();
 use Padre::DB   ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 sub new {
 	my $class = shift;

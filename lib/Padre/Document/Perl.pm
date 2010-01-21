@@ -17,7 +17,7 @@ use Padre::File                     ();
 use Padre::Document::Perl::Beginner ();
 use Padre::Logger;
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Padre::Document';
 
 

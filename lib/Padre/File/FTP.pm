@@ -7,7 +7,7 @@ use warnings;
 use Padre::File;
 use File::Temp;
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Padre::File';
 
 use Class::XSAccessor {

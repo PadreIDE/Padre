@@ -8,7 +8,7 @@ use Padre::Constant            ();
 use Padre::Util::Win32         ();
 use Padre::Task::SyntaxChecker ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Padre::Task::SyntaxChecker';
 
 use version;

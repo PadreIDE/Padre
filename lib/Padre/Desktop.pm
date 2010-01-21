@@ -25,7 +25,7 @@ use warnings;
 use File::Spec      ();
 use Padre::Constant ();
 
-our $VERSION = '0.51';
+our $VERSION = '0.55';
 
 sub desktop {
 	if (Padre::Constant::WXWIN32) {

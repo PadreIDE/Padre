@@ -17,7 +17,7 @@ use warnings;
 use Padre::Action ();
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 #####################################################################
 

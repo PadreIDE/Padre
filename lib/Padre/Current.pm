@@ -9,7 +9,7 @@ use Carp         ();
 use Exporter     ();
 use Params::Util ();
 
-our $VERSION   = '0.54';
+our $VERSION   = '0.55';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_CURRENT';
 

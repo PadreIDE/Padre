@@ -119,7 +119,7 @@ use Padre::Plugin ();
 use Padre::Task::HTTPClient;
 use Padre::Constant();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Padre::Plugin';
 
 # Track the number of times actions are used

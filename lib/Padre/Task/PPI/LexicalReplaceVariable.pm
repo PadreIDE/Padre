@@ -7,7 +7,7 @@ use Padre::Wx                         ();
 use Padre::Task::PPI                  ();
 use PPIx::EditorTools::RenameVariable ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Padre::Task::PPI';
 
 =pod

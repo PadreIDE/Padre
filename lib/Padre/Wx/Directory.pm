@@ -7,7 +7,7 @@ use Padre::Wx                        ();
 use Padre::Wx::Directory::TreeCtrl   ();
 use Padre::Wx::Directory::SearchCtrl ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Wx::Panel';
 
 use Class::XSAccessor {

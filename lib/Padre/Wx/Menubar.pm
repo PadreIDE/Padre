@@ -19,7 +19,7 @@ use Padre::Wx::Menu::Plugins ();
 use Padre::Wx::Menu::Window  ();
 use Padre::Wx::Menu::Help    ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 #####################################################################
 # Construction, Setup, and Accessors

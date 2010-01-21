@@ -18,7 +18,7 @@ use Padre::Action::Search   ();
 use Padre::Action::Window   ();
 use Padre::Action::Internal ();
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 # Generate faster accessors
 use Class::XSAccessor {
