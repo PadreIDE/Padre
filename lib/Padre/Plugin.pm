@@ -156,11 +156,6 @@ sub plugin_directory_locale {
 	return File::Spec->catdir( $share, 'locale' );
 }
 
-# NOTE Back-compatibility
-sub plugin_locale_directory {
-	shift->plugin_directory_locale(@_);
-}
-
 =pod
 
 =head2 C<plugin_icon>

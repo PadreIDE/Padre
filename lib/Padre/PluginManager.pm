@@ -169,8 +169,8 @@ sub relocale {
 
 		# Add the plug-in locale dir to search path
 		my $object = $plugin->{object};
-		if ( $object->can('plugin_locale_directory') ) {
-			my $dir = $object->plugin_locale_directory;
+		if ( $object->can('plugin_directory_locale') ) {
+			my $dir = $object->plugin_directory_locale;
 			if ( defined $dir and -d $dir ) {
 				$locale->AddCatalogLookupPathPrefix($dir);
 			}
@@ -584,8 +584,8 @@ sub _load_plugin {
 	}
 
 	# Add a new directory for locale to search translation catalogs.
-	if ( $object->can('plugin_locale_directory') ) {
-		my $dir = $object->plugin_locale_directory;
+	if ( $object->can('plugin_directory_locale') ) {
+		my $dir = $object->plugin_directory_locale;
 		if ( defined $dir and -d $dir ) {
 			my $locale = Padre::Current->main->{locale};
 			$locale->AddCatalogLookupPathPrefix($dir);
