@@ -1058,6 +1058,15 @@ sub refresh {
 	$self->refresh_directory($current);
 	$self->refresh_title;
 
+	# Now signal the refresh to all remaining listeners
+	for (@{ $self->{refresh_listeners}}) {
+		next unless defined; # guard against expired weak references
+		if (my $refresh = $_->can('refresh')) {
+			$_->refresh($current)
+		} else {
+			$_->($current);
+		}
+	}
 	my $notebook = $self->notebook;
 	if ( $notebook->GetPageCount ) {
 		my $id = $notebook->GetSelection;
@@ -1071,6 +1080,34 @@ sub refresh {
 	}
 
 	return;
+}
+
+=pod
+
+=head3 C<add_refresh_listener>
+
+Adds an object which will have its C<< ->refresh() >> method
+called whenever the main refresh event is triggered. The
+refresh listener is stored as a weak reference so make sure
+that you keep the listener alive elsewhere.
+
+If your object does not have a C<< ->refresh() >> method, pass in
+a code reference - it will be called instead.
+
+Note that this method must return really quick. If you plan to
+do work that takes longer, launch it via the L<Action::Queue> mechanism
+and perform it in the background.
+
+=cut
+
+sub add_refresh_listener {
+	my ($self,@listeners) = @_;
+	for my $l (@listeners) {
+		if (! grep { $_ eq $l } @{ $self->{refresh_listeners} }) {
+			Scalar::Util::weaken( $l );
+			push @{ $self->{refresh_listeners} }, $l
+		}
+	}
 }
 
 =pod
