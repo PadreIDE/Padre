@@ -3608,7 +3608,7 @@ msgstr "Zu einem Lesezeichen springen"
 
 #: lib/Padre/Action/View.pm:305
 msgid "&Full Screen"
-msgstr "&Vollbild\tF11"
+msgstr "&Vollbild"
 
 #: lib/Padre/Action/View.pm:306
 msgid "Set Padre in full screen mode"
