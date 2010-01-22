@@ -207,10 +207,11 @@ sub refresh {
 	$self->{_document} = $document;
 
 	my $config  = $self->{main}->config;
+	my $regexp = $config->todo_regexp;
 	#my @items = $document->get_todo; # XXX retrieving the list of items should become a method of ->document
 	my $text = $document->text_get();
 	my @items;
-	while ($text =~ /#\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \t]*[:-]?)(?:[ \t]*)(.*?)\s*$/gim) {
+	while ($text =~ /$regexp/gim) {
 		push @items, { text => $1 || '<no text>', 'pos' => pos($text) }
 	};
 	while ($text =~ /#\s*(Ticket #\d+.*?)$/gim) {

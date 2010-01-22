@@ -308,6 +308,9 @@ sub _behaviour_panel {
 			],
 			[]
 		],
+		[   [ 'Wx::StaticText', 'undef',        Wx::gettext('RegExp for TODO-panel:') ],
+			[ 'Wx::TextCtrl',   'todo_regexp', $config->todo_regexp ],
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -1096,6 +1099,10 @@ sub run {
 	$config->set(
 		'mid_button_paste',
 		$data->{mid_button_paste} ? 1 : 0
+	);
+	$config->set(
+		'todo_regexp',
+		$data->{todo_regexp}
 	);
 
 

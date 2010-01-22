@@ -708,6 +708,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+setting(
+	name    => 'todo_regexp',
+	type    => Padre::Constant::ASCII,
+	store   => Padre::Constant::HUMAN,
+	default => '#\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \t]*[:-]?)(?:[ \t]*)(.*?)\s*$',
+);
 
 
 # By default use background threads unless profiling
