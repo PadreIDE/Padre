@@ -222,6 +222,7 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
+	$self->_show_todo( $self->config->main_todo );
 	$self->_show_functions( $self->config->main_functions );
 	$self->_show_outline( $self->config->main_outline );
 	$self->_show_directory( $self->config->main_directory );
@@ -292,6 +293,8 @@ Accessors to GUI elements:
 
 =item * C<functions>
 
+=item * C<todo>
+
 =item * C<outline>
 
 =item * C<directory>
@@ -336,6 +339,7 @@ use Class::XSAccessor {
 		has_ack       => 'ack',
 		has_syntax    => 'syntax',
 		has_functions => 'functions',
+		has_todo => 'todo',
 		has_debugger  => 'debugger',
 		has_find      => 'find',
 		has_replace   => 'replace',
@@ -414,6 +418,15 @@ sub functions {
 		$self->{functions} = Padre::Wx::FunctionList->new($self);
 	}
 	return $self->{functions};
+}
+
+sub todo {
+	my $self = shift;
+	unless ( defined $self->{todo} ) {
+		require Padre::Wx::TodoList;
+		$self->{todo} = Padre::Wx::TodoList->new($self);
+	}
+	return $self->{todo};
 }
 
 sub syntax {
@@ -1059,14 +1072,17 @@ sub refresh {
 	$self->refresh_title;
 
 	# Now signal the refresh to all remaining listeners
+	# weed out expired weak references
+	@{ $self->{refresh_listeners} }
+	  = grep {; defined} @{ $self->{refresh_listeners} };
 	for (@{ $self->{refresh_listeners}}) {
-		next unless defined; # guard against expired weak references
 		if (my $refresh = $_->can('refresh')) {
 			$_->refresh($current)
 		} else {
 			$_->($current);
 		}
 	}
+	
 	my $notebook = $self->notebook;
 	if ( $notebook->GetPageCount ) {
 		my $id = $notebook->GetSelection;
@@ -1333,6 +1349,18 @@ sub refresh_functions {
 	return;
 }
 
+# TO DO now on every ui change (move of the mouse) we refresh
+# this even though that should not be necessary can that be
+# eliminated ?
+sub refresh_todo {
+	my $self = shift;
+	return unless $self->has_todo;
+	return if $self->locked('REFRESH');
+	return unless $self->menu->view->{todo}->IsChecked;
+	$self->todo->refresh(@_);
+	return;
+}
+
 =pod
 
 =head3 C<refresh_directory>
@@ -1517,6 +1545,7 @@ sub reconfig {
 	# Show or hide all the main gui elements
 	# TO DO - Move this into the config ->apply logic
 	$self->show_functions( $config->main_functions );
+	$self->show_todo( $config->main_todo );
 	$self->show_outline( $config->main_outline );
 	$self->show_directory( $config->main_directory );
 	$self->show_output( $config->main_output );
@@ -1599,6 +1628,44 @@ sub _show_functions {
 	} elsif ( $self->has_functions ) {
 		$self->right->hide( $self->functions );
 		delete $self->{functions};
+	}
+}
+
+=head3 C<show_todo>
+
+    $main->show_todo( $visible );
+
+Show the todo panel on the right if C<$visible> is true. Hide it
+otherwise. If C<$visible> is not provided, the method defaults to show
+the panel.
+
+=cut
+
+sub show_todo {
+	my $self = shift;
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	unless ( $on == $self->menu->view->{todo}->IsChecked ) {
+		$self->menu->view->{todo}->Check($on);
+	}
+	$self->config->set( main_todo => $on );
+	$self->config->write;
+
+	$self->_show_todo($on);
+
+	$self->aui->Update;
+	$self->ide->save_config;
+
+	return;
+}
+
+# XXX This should be merged with _show_functions again
+sub _show_todo {
+	my $self = shift;
+	if ( $_[0] ) {
+		$self->right->show( $self->todo );
+	} elsif ( $self->has_functions ) {
+		$self->right->hide( $self->todo );
+		delete $self->{todo};
 	}
 }
 

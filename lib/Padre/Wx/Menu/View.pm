@@ -26,6 +26,7 @@ our @ISA     = 'Padre::Wx::Menu';
 our @GUI_ELEMENTS = (
 	'output',
 	'functions',
+	'todo',
 	'outline',
 	'directory',
 	'show_syntaxcheck',
@@ -351,6 +352,7 @@ sub refresh {
 	$self->{outline}->Check( $config->main_outline );
 	$self->{directory}->Check( $config->main_directory );
 	$self->{functions}->Check( $config->main_functions );
+	$self->{todo}->Check( $config->main_todo );
 	$self->{lockinterface}->Check( $config->main_lockinterface );
 	$self->{indentation_guide}->Check( $config->editor_indentationguides );
 	$self->{show_calltips}->Check( $config->editor_calltips );

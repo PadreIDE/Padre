@@ -244,6 +244,12 @@ setting(
 	default => 0,
 );
 setting(
+	name    => 'main_todo',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+setting(
 	name    => 'main_functions_order',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,

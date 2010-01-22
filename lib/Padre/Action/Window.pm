@@ -110,6 +110,19 @@ sub new {
 		},
 	);
 
+	# Window Navigation
+	Padre::Action->new(
+		name       => 'window.goto_todo_window',
+		label      => Wx::gettext('GoTo Todo Window'),
+		comment    => Wx::gettext('Set the focus to be the todo window'),
+		shortcut   => 'Alt-T',
+		menu_event => sub {
+			$_[0]->refresh_todo( $_[0]->current );
+			$_[0]->show_todo(1);
+			$_[0]->todo->focus_on_search;
+		},
+	);
+
 	Padre::Action->new(
 		name       => 'window.goto_outline_window',
 		label      => Wx::gettext('GoTo Outline Window'),

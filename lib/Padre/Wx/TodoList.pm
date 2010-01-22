@@ -1,4 +1,4 @@
-package Padre::Plugin::Todo::UI;
+package Padre::Wx::TodoList;
 
 use 5.008;
 use strict;
@@ -7,7 +7,7 @@ use Params::Util qw{ _STRING };
 use Padre::Wx ();
 use Padre::Current ('_CURRENT');
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 our @ISA     = 'Wx::Panel';
 
 #####################################################################
@@ -128,6 +128,8 @@ sub new {
 			$self->_update_list;
 		}
 	);
+	
+	$main->add_refresh_listener($self);
 
 	return $self;
 }

@@ -66,6 +66,21 @@ sub new {
 		},
 	);
 
+	Padre::Action->new(
+		name        => 'view.todo',
+		label       => Wx::gettext('Show To-do List'),
+		comment     => Wx::gettext('Show a window listing all todo items in the current document'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			if ( $_[1]->IsChecked ) {
+				$_[0]->refresh_todo( $_[0]->current );
+				$_[0]->show_todo(1);
+			} else {
+				$_[0]->show_todo(0);
+			}
+		},
+	);
+
 	# Show or hide GUI elements
 	Padre::Action->new(
 		name    => 'view.outline',
