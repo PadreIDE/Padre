@@ -10,11 +10,7 @@ use File::Path    ();
 use File::Spec    ();
 use File::HomeDir ();
 
-#use Padre::Util   ();
-
 our $VERSION = '0.55';
-
-my $revision;
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
@@ -106,11 +102,12 @@ use constant CONFIG_DIR => File::Spec->rel2abs(
 	)
 );
 
-use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
-use constant CONFIG_HOST  => File::Spec->catfile( CONFIG_DIR, 'config.db' );
+use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
 use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
 use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
-use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
+use constant CONFIG_HOST => File::Spec->catfile( CONFIG_DIR, 'config.db' );
+use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
+use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.yml' );
 
 # Check and create the directories that need to exist
 unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
@@ -120,12 +117,20 @@ unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
 	Carp::croak( "Cannot create plug-ins directory '" . PLUGIN_LIB . "': $!" );
 }
 
+
+
+
+
+#####################################################################
+# Pseudo Constants
+
+my $revision;
+
 # Get the svn revision of the currently running Padre once:
 # eval 'use constant PADRE_REVISION => Padre::Util::revision;';
 # This needs to be a pseudo constant as it requires Padre::Util which
 # requires Padre::Constant (this module).
-sub PADRE_REVISION {
-
+sub PADRE_REVISION () {
 	# Get and keep the revision at the first call of this pseudo-constant
 	# (usually at Padre start)
 	require Padre::Util;
