@@ -19,7 +19,6 @@ use Getopt::Long       ();
 use YAML::Tiny         ();
 use DBI                ();
 use DBD::SQLite        ();
-use Padre::Splash      ();
 use Padre::Util::Win32 ();
 
 # load this before things are messed up to produce versions like '0,76'!
@@ -72,7 +71,17 @@ sub import {
 
 	# Load all of them (ignoring errors)
 	my $loaded = 0;
-	foreach my $child (@children) {
+	my %skip   = map { $_ => 1 } qw{
+		Padre/CPAN.pm
+		Padre/Test.pm
+	};
+	foreach my $child ( @children ) {
+		# Evil modules we should avoid
+		next if $skip{$child};
+
+		# We are not permitted to tread in plugin territory
+		next if $child =~ /^Padre\/Plugin\//;
+
 		eval { require $child; };
 		next if $@;
 		$loaded++;
@@ -112,7 +121,8 @@ sub new {
 	}, $class;
 
 	# Display Padre's Splash Screen.
-	Padre::Splash->show;
+	require Padre::Startup;
+	Padre::Startup->show_splash;
 
 	# Create our instance ID:
 	for ( 1 .. 64 ) {
@@ -156,7 +166,9 @@ sub new {
 			if ( defined $read and $read == 10 ) {
 
 				# Kill the splash screen
-				Padre::Splash->destroy;
+				if ( $Padre::Startup::VERSION ) {
+					Padre::Startup->destroy_splash;
+				}
 
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
@@ -232,7 +244,7 @@ sub run {
 
 		# Lock rendering and the database while the plugins are loading
 		# to prevent them doing anything weird or slow.
-		my $lock = $self->wx->main->lock( 'DB', 'UPDATE' );
+		my $lock = $self->wx->main->lock('DB');
 		$self->plugin_manager->load_plugins;
 	}
 
@@ -258,7 +270,9 @@ sub run {
 	# local $SIG{__DIE__} = sub { print @_; die $_[0] };
 
 	# Kill the splash screen
-	Padre::Splash->destroy;
+	if ( $Padre::Startup::VERSION ) {
+		Padre::Startup->destroy_splash;
+	}
 
 	# Process the action queue
 	if ( defined( $self->opts->{actionqueue} ) ) {
