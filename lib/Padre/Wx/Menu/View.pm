@@ -400,7 +400,7 @@ sub gui_element_add {
 	my ($element,$action,$id) = @_;
 	
 	# Don't add duplicates
-	return 1 if grep(/^\Q$id\E$/, map { return '' unless ref($_) eq 'ARRAY'; $_->[2]; } (@GUI_ELEMENTS));
+	return 1 if grep {/^\Q$id\E$/} (map { return '' unless ref($_) eq 'ARRAY'; $_->[2]; } (@GUI_ELEMENTS));
 	
 	push @GUI_ELEMENTS,[$element,$action,$id];
 	
