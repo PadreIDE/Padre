@@ -1663,7 +1663,7 @@ sub _show_todo {
 	my $self = shift;
 	if ( $_[0] ) {
 		$self->right->show( $self->todo );
-	} elsif ( $self->has_functions ) {
+	} elsif ( $self->has_todo ) {
 		$self->right->hide( $self->todo );
 		delete $self->{todo};
 	}
