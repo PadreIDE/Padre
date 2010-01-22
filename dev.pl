@@ -121,7 +121,6 @@ push @cmd, '--help' if $USAGE;
 
 $DEBUG and print "Running " . join( ' ', @cmd ) . "\n";
 
-warn "@cmd";
 system(@cmd);
 
 sub vmsgfmt {
