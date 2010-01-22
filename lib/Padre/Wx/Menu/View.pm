@@ -15,15 +15,7 @@ use Padre::Locale   ();
 our $VERSION = '0.55';
 our @ISA     = 'Padre::Wx::Menu';
 
-# Every plugin/function may add another GUI element to the view menu.
-# Just push your item onto GUI_ELEMENTS:
-#    push @Padre::Wx::Menu::View::GUI_ELEMENTS,
-#         [$my_item_name,
-#          $my_item_action];
-#
-# When removing your item, please check the action to proof that you
-# don't remove the wrong item!
-our @GUI_ELEMENTS = (
+my @GUI_ELEMENTS = (
 	'output',
 	'functions',
 	'todo',
@@ -401,6 +393,32 @@ sub refresh {
 	}
 
 	return;
+}
+
+sub gui_element_add {
+	my $self = shift;
+	my ($element,$action,$id) = @_;
+	
+	# Don't add duplicates
+	return 1 if grep(/^\Q$id\E$/, map { return '' unless ref($_) eq 'ARRAY'; $_->[2]; } (@GUI_ELEMENTS));
+	
+	push @GUI_ELEMENTS,[$element,$action,$id];
+	
+	return 1;
+}
+
+sub gui_element_remove {
+	my $self = shift;
+	my $id = shift;
+
+	my @new_gui_elements;
+	
+	for (@GUI_ELEMENTS) {
+		next if (ref($_) eq 'ARRAY') and ($_->[2] eq $id);
+		push @new_gui_elements,$_;
+	}
+	
+	return 1;
 }
 
 1;
