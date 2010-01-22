@@ -40,11 +40,11 @@ BEGIN {
 		'trace'      => sub {
 			$ENV{PADRE_DEBUG} = 1;
 		},
-		'die'         => \$DIE,
-		'profile'     => \$PROFILE,
-		'a'           => \$PLUGINS,
-		'fulltrace'   => \$FULLTRACE,
-		'invisible'   => \$INVISIBLE,
+		'die'       => \$DIE,
+		'profile'   => \$PROFILE,
+		'a'         => \$PLUGINS,
+		'fulltrace' => \$FULLTRACE,
+		'invisible' => \$INVISIBLE,
 		'include|i:s' => \@INCLUDE,
 	);
 }
