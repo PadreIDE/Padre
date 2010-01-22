@@ -712,7 +712,7 @@ setting(
 	name    => 'todo_regexp',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
-	default => '#\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \t]*[:-]?)(?:[ \t]*)(.*?)\s*$',
+	default => "#\\s*(?:TO[- ]?DO|XXX|FIX[- ]?ME)(?:[ \\t]*[:-]?)(?:[ \\t]*)(.*?)\\s*\$",
 );
 
 
