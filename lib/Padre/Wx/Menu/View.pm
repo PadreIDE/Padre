@@ -15,6 +15,25 @@ use Padre::Locale   ();
 our $VERSION = '0.55';
 our @ISA     = 'Padre::Wx::Menu';
 
+# Every plugin/function may add another GUI element to the view menu.
+# Just push your item onto GUI_ELEMENTS:
+#    push @Padre::Wx::Menu::View::GUI_ELEMENTS,
+#         [$my_item_name,
+#          $my_item_action];
+#
+# When removing your item, please check the action to proof that you
+# don't remove the wrong item!
+our @GUI_ELEMENTS = (
+	'output',
+	'functions',
+	'outline',
+	'directory',
+	'show_syntaxcheck',
+	'show_errorlist',
+	'statusbar',
+	'toolbar',
+	);
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -38,46 +57,21 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
-	$self->{output} = $self->add_menu_action(
-		$self,
-		'view.output',
-	);
-
-	$self->{functions} = $self->add_menu_action(
-		$self,
-		'view.functions',
-	);
-
-	# Show or hide GUI elements
-	$self->{outline} = $self->add_menu_action(
-		$self,
-		'view.outline',
-	);
-
-	$self->{directory} = $self->add_menu_action(
-		$self,
-		'view.directory',
-	);
-
-	$self->{show_syntaxcheck} = $self->add_menu_action(
-		$self,
-		'view.show_syntaxcheck',
-	);
-
-	$self->{show_errorlist} = $self->add_menu_action(
-		$self,
-		'view.show_errorlist',
-	);
-
-	$self->{statusbar} = $self->add_menu_action(
-		$self,
-		'view.statusbar',
-	);
-
-	$self->{toolbar} = $self->add_menu_action(
-		$self,
-		'view.toolbar',
-	);
+	for my $element (@GUI_ELEMENTS) {
+		
+		next unless defined($element);
+		
+		my $action = 'view.'.$element;
+		
+		if (ref($element) eq 'ARRAY'){
+			($element,$action) = @{$element};
+		}
+		
+		$self->{$element} = $self->add_menu_action(
+			$self,
+			$action,
+		);
+	}
 
 	$self->AppendSeparator;
 
