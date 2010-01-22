@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 
 0.56 To Be Released
     - Plugins may now add their GUI elements to the view menu (SEWI)
+    - Padre now displays a dynamic to-do list generated from comments
+      in your source code (CORION)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
