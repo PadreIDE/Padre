@@ -97,30 +97,6 @@ sub desktop {
 		return 1;
 	}
 
-	if (Padre::Constant::WXGTK) {
-
-		# Create Padre.desktop launcher on KDE/gnome
-		require Padre::Util;
-		my $filename = "$ENV{HOME}/Desktop/Padre.desktop";
-		my $logo     = Padre::Util::sharedir('icons/padre/64x64/logo.png');
-		my $content  = <<"DESKTOP";
-[Desktop Entry]
-Name=Padre
-Comment=Padre - The Perl IDE
-Exec=/usr/local/bin/padre
-Icon=$logo
-Terminal=false
-Type=Application
-Categories=Development;Utility;
-MimeType=text/plain;application/x-perl;application/x-perl6;
-DESKTOP
-		open my $fh, ">", $filename or die "Cannot create $filename: $!\n";
-		print $fh $content;
-		close $fh;
-
-		return 1;
-	}
-
 	return 0;
 }
 
