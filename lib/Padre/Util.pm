@@ -399,7 +399,7 @@ support but it is used by some (C<SVK>) plug-ins.
 sub get_project_dir {
 	my $filename = shift or return;
 
-	if (defined($project_dir_cache{$filename}) and ($project_dir_cache{$filename}->{timeout} >= time)) {
+	if ( defined( $project_dir_cache{$filename} ) and ( $project_dir_cache{$filename}->{timeout} >= time ) ) {
 		return $project_dir_cache{$filename}->{dir};
 	}
 
@@ -412,12 +412,12 @@ sub get_project_dir {
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
 	while (1) {
-		for my $testfilename ('Makefile.PL','Build.PL','dist.ini','padre.yml') {
+		for my $testfilename ( 'Makefile.PL', 'Build.PL', 'dist.ini', 'padre.yml' ) {
 			next unless -e File::Spec->catfile( $dir, $testfilename );
 
 			$project_dir_cache{$filename} = {
 				timeout => time + 60,
-				dir => $dir,
+				dir     => $dir,
 			};
 
 			return $dir;

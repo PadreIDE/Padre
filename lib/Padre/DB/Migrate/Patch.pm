@@ -14,9 +14,9 @@ use vars qw{@ISA @EXPORT $FILE};
 our $VERSION = '0.55';
 
 BEGIN {
-	
-	@ISA     = 'Exporter';
-	@EXPORT  = qw{
+
+	@ISA    = 'Exporter';
+	@EXPORT = qw{
 		file
 		dbh
 		do

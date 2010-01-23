@@ -51,8 +51,8 @@ sub new {
 
 	# Create a sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND );
-	$sizer->Add( $self->{items},     1, Wx::wxALL | Wx::wxEXPAND );
+	$sizer->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND );
+	$sizer->Add( $self->{items},  1, Wx::wxALL | Wx::wxEXPAND );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizer);
@@ -128,7 +128,7 @@ sub new {
 			$self->_update_list;
 		}
 	);
-	
+
 	$main->add_refresh_listener($self);
 
 	return $self;
@@ -154,9 +154,9 @@ sub on_list_item_activated {
 	my $current  = _CURRENT( $self->{main}->current );
 	my $document = $current->document or return;
 	my $editor   = $document->editor;
-	
+
 	my $start = $self->{_items}->[$item];
-	
+
 	unless ( defined $start ) {
 
 		# Couldn't find it
@@ -164,7 +164,7 @@ sub on_list_item_activated {
 	}
 
 	# Move the selection to the location
-	$editor->goto_pos_centerize($start->{pos});
+	$editor->goto_pos_centerize( $start->{pos} );
 
 	return;
 }
@@ -185,8 +185,8 @@ sub refresh {
 
 	# Flush the list if there is no active document
 	return unless $current;
-	my $document  = $current->document;
-	my $items = $self->{items};
+	my $document = $current->document;
+	my $items    = $self->{items};
 
 	# Hide the widgets when no files are open
 	if ($document) {
@@ -206,17 +206,18 @@ sub refresh {
 	}
 	$self->{_document} = $document;
 
-	my $config  = $self->{main}->config;
+	my $config = $self->{main}->config;
 	my $regexp = $config->todo_regexp;
+
 	#my @items = $document->get_todo; # XXX retrieving the list of items should become a method of ->document
 	my $text = $document->text_get();
 	my @items;
-	while ($text =~ /$regexp/gim) {
-		push @items, { text => $1 || '<no text>', 'pos' => pos($text) }
-	};
-	while ($text =~ /#\s*(Ticket #\d+.*?)$/gim) {
-		push @items, { text => $1, 'pos' => pos($text) }
-	};
+	while ( $text =~ /$regexp/gim ) {
+		push @items, { text => $1 || '<no text>', 'pos' => pos($text) };
+	}
+	while ( $text =~ /#\s*(Ticket #\d+.*?)$/gim ) {
+		push @items, { text => $1, 'pos' => pos($text) };
+	}
 
 	if ( scalar @items == 0 ) {
 		$items->Clear;
@@ -226,17 +227,17 @@ sub refresh {
 
 	#if ( $config->main_functions_order eq 'original' ) {
 
-		# That should be the one we got from get_functions
+	# That should be the one we got from get_functions
 	#} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
-        #
+	#
 	#	# ~ comes after \w
 	#	tr/_/~/ foreach @methods;
 	#	@methods = sort @methods;
 	#	tr/~/_/ foreach @methods;
 	#} else {
 
-		# Alphabetical (aka 'abc')
-		#@items = sort { $a->{text} cmp $b->{text} } @items;
+	# Alphabetical (aka 'abc')
+	#@items = sort { $a->{text} cmp $b->{text} } @items;
 	#}
 
 	if ( scalar(@items) == scalar( @{ $self->{_items} } ) ) {

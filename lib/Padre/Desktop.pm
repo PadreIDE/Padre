@@ -37,18 +37,19 @@ Returns Padre's executable path and parent folder as (padre_exe, padre_exe_dir).
 Returns undef if not found.
 
 =cut
+
 sub find_padre_exe {
 	return unless Padre::Constant::WXWIN32;
-	
+
 	my $self = shift;
 	require File::Which;
 	require File::Basename;
 	my $padre_exe = File::Which::which('padre.exe');
 
 	#exit if we could not find Padre's executable in PATH
-	if($padre_exe) {
+	if ($padre_exe) {
 		my $padre_exe_dir = File::Basename::dirname($padre_exe);
-		return ($padre_exe, $padre_exe_dir);
+		return ( $padre_exe, $padre_exe_dir );
 	} else {
 		return;
 	}
@@ -56,23 +57,25 @@ sub find_padre_exe {
 
 sub desktop {
 	if (Padre::Constant::WXWIN32) {
+
 		# Find Padre's executable
-		my ($padre_exe, $padre_exe_dir) = find_padre_exe();
+		my ( $padre_exe, $padre_exe_dir ) = find_padre_exe();
 		return 0 unless $padre_exe;
 
-		# Write to the registry to get the "Edit with Padre" in the 
+		# Write to the registry to get the "Edit with Padre" in the
 		# right-click-shell-context menu
 		require Win32::TieRegistry;
 		my $Registry;
 		Win32::TieRegistry->import(
-			TiedRef => \$Registry,  Delimiter => "/",  ArrayValues => 1,
+			TiedRef => \$Registry, Delimiter => "/", ArrayValues => 1,
 		);
 		$Registry->Delimiter('/');
 		$Registry->{'HKEY_CLASSES_ROOT/*/shell/'} = {
 			'Edit with Padre/' => {
 				'Command/' => { "" => 'c:\\strawberry\\perl\\bin\\padre.exe "%1"' },
 			}
-		} or return 0;
+			}
+			or return 0;
 
 		# Create Padre's Desktop Shortcut
 		require File::HomeDir;
@@ -125,7 +128,7 @@ sub quicklaunch {
 	if (Padre::Constant::WXWIN32) {
 
 		# Find Padre's executable
-		my ($padre_exe, $padre_exe_dir) = find_padre_exe();
+		my ( $padre_exe, $padre_exe_dir ) = find_padre_exe();
 		return 0 unless $padre_exe;
 
 		# Code stolen and modified from File::HomeDir, which doesn't

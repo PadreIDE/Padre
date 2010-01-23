@@ -308,7 +308,7 @@ sub _behaviour_panel {
 			],
 			[]
 		],
-		[   [ 'Wx::StaticText', 'undef',        Wx::gettext('RegExp for TODO-panel:') ],
+		[   [ 'Wx::StaticText', 'undef',       Wx::gettext('RegExp for TODO-panel:') ],
 			[ 'Wx::TextCtrl',   'todo_regexp', $config->todo_regexp ],
 		],
 	];

@@ -55,6 +55,7 @@ sub show_splash {
 	# Don't show the splash screen during testing otherwise
 	# it will spoil the flashy surprise when they upgrade.
 	unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
+
 		# Load just enough modules to get Wx bootstrapped
 		# to the point it can show the splash screen.
 		require Padre::Util;
@@ -72,7 +73,7 @@ sub show_splash {
 
 # Destroy the splash screen if it exists
 sub destroy_splash {
-	if ( $SPLASH ) {
+	if ($SPLASH) {
 		$SPLASH->Destroy;
 		$SPLASH = 1;
 	}

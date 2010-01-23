@@ -71,11 +71,12 @@ sub import {
 
 	# Load all of them (ignoring errors)
 	my $loaded = 0;
-	my %skip   = map { $_ => 1 } qw{
+	my %skip = map { $_ => 1 } qw{
 		Padre/CPAN.pm
 		Padre/Test.pm
 	};
-	foreach my $child ( @children ) {
+	foreach my $child (@children) {
+
 		# Evil modules we should avoid
 		next if $skip{$child};
 
@@ -166,7 +167,7 @@ sub new {
 			if ( defined $read and $read == 10 ) {
 
 				# Kill the splash screen
-				if ( $Padre::Startup::VERSION ) {
+				if ($Padre::Startup::VERSION) {
 					Padre::Startup->destroy_splash;
 				}
 
@@ -270,7 +271,7 @@ sub run {
 	# local $SIG{__DIE__} = sub { print @_; die $_[0] };
 
 	# Kill the splash screen
-	if ( $Padre::Startup::VERSION ) {
+	if ($Padre::Startup::VERSION) {
 		Padre::Startup->destroy_splash;
 	}
 

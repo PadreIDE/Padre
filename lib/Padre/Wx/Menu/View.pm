@@ -25,7 +25,7 @@ my @GUI_ELEMENTS = (
 	'show_errorlist',
 	'statusbar',
 	'toolbar',
-	);
+);
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -51,15 +51,15 @@ sub new {
 
 	# Show or hide GUI elements
 	for my $element (@GUI_ELEMENTS) {
-		
+
 		next unless defined($element);
-		
-		my $action = 'view.'.$element;
-		
-		if (ref($element) eq 'ARRAY'){
-			($element,$action) = @{$element};
+
+		my $action = 'view.' . $element;
+
+		if ( ref($element) eq 'ARRAY' ) {
+			( $element, $action ) = @{$element};
 		}
-		
+
 		$self->{$element} = $self->add_menu_action(
 			$self,
 			$action,
@@ -77,7 +77,7 @@ sub new {
 	);
 
 	my %mimes = Padre::MimeTypes::menu_view_mimes();
-	foreach my $name ( sort { lc($a) cmp lc($b)} keys %mimes ) {
+	foreach my $name ( sort { lc($a) cmp lc($b) } keys %mimes ) {
 		my $label = $name;
 		$label =~ s/^\d+//;
 		my $tag = "view.view_as" . lc $label;
@@ -397,27 +397,27 @@ sub refresh {
 
 sub gui_element_add {
 	my $self = shift;
-	my ($element,$action,$id) = @_;
-	
+	my ( $element, $action, $id ) = @_;
+
 	# Don't add duplicates
-	return 1 if grep {/^\Q$id\E$/} (map { return '' unless ref($_) eq 'ARRAY'; $_->[2]; } (@GUI_ELEMENTS));
-	
-	push @GUI_ELEMENTS,[$element,$action,$id];
-	
+	return 1 if grep {/^\Q$id\E$/} ( map { return '' unless ref($_) eq 'ARRAY'; $_->[2]; } (@GUI_ELEMENTS) );
+
+	push @GUI_ELEMENTS, [ $element, $action, $id ];
+
 	return 1;
 }
 
 sub gui_element_remove {
 	my $self = shift;
-	my $id = shift;
+	my $id   = shift;
 
 	my @new_gui_elements;
-	
+
 	for (@GUI_ELEMENTS) {
-		next if (ref($_) eq 'ARRAY') and ($_->[2] eq $id);
-		push @new_gui_elements,$_;
+		next if ( ref($_) eq 'ARRAY' ) and ( $_->[2] eq $id );
+		push @new_gui_elements, $_;
 	}
-	
+
 	return 1;
 }
 

@@ -105,8 +105,8 @@ use constant CONFIG_DIR => File::Spec->rel2abs(
 use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
 use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
 use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
-use constant CONFIG_HOST => File::Spec->catfile( CONFIG_DIR, 'config.db' );
-use constant CONFIG_HUMAN => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
+use constant CONFIG_HOST    => File::Spec->catfile( CONFIG_DIR, 'config.db' );
+use constant CONFIG_HUMAN   => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
 use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.yml' );
 
 # Check and create the directories that need to exist
@@ -131,6 +131,7 @@ my $revision;
 # This needs to be a pseudo constant as it requires Padre::Util which
 # requires Padre::Constant (this module).
 sub PADRE_REVISION () {
+
 	# Get and keep the revision at the first call of this pseudo-constant
 	# (usually at Padre start)
 	require Padre::Util;

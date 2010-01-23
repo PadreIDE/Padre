@@ -33,18 +33,18 @@ BEGIN {
 	$USAGE     = 0;
 	$FULLTRACE = 0;
 	$INVISIBLE = 0;
-	@INCLUDE = ();
+	@INCLUDE   = ();
 	Getopt::Long::GetOptions(
 		'usage|help' => \$USAGE,
 		'debug|d'    => \$DEBUG,
 		'trace'      => sub {
 			$ENV{PADRE_DEBUG} = 1;
 		},
-		'die'       => \$DIE,
-		'profile'   => \$PROFILE,
-		'a'         => \$PLUGINS,
-		'fulltrace' => \$FULLTRACE,
-		'invisible' => \$INVISIBLE,
+		'die'         => \$DIE,
+		'profile'     => \$PROFILE,
+		'a'           => \$PLUGINS,
+		'fulltrace'   => \$FULLTRACE,
+		'invisible'   => \$INVISIBLE,
 		'include|i:s' => \@INCLUDE,
 	);
 }
@@ -86,7 +86,7 @@ my @cmd = (
 push @cmd, '-MPadre::Test' if $INVISIBLE;
 push @cmd, '-d'            if $DEBUG;
 push @cmd, '-dt:NYTProf'   if $PROFILE;
-push @cmd, map { qq[-I$_] } @INCLUDE;
+push @cmd, map {qq[-I$_]} @INCLUDE;
 
 if ($FULLTRACE) {
 	eval { require Devel::Trace; };

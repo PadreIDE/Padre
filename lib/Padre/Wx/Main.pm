@@ -339,7 +339,7 @@ use Class::XSAccessor {
 		has_ack       => 'ack',
 		has_syntax    => 'syntax',
 		has_functions => 'functions',
-		has_todo => 'todo',
+		has_todo      => 'todo',
 		has_debugger  => 'debugger',
 		has_find      => 'find',
 		has_replace   => 'replace',
@@ -1073,16 +1073,15 @@ sub refresh {
 
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
-	@{ $self->{refresh_listeners} }
-	  = grep {; defined} @{ $self->{refresh_listeners} };
-	for (@{ $self->{refresh_listeners}}) {
-		if (my $refresh = $_->can('refresh')) {
-			$_->refresh($current)
+	@{ $self->{refresh_listeners} } = grep { ; defined } @{ $self->{refresh_listeners} };
+	for ( @{ $self->{refresh_listeners} } ) {
+		if ( my $refresh = $_->can('refresh') ) {
+			$_->refresh($current);
 		} else {
 			$_->($current);
 		}
 	}
-	
+
 	my $notebook = $self->notebook;
 	if ( $notebook->GetPageCount ) {
 		my $id = $notebook->GetSelection;
@@ -1117,11 +1116,11 @@ and perform it in the background.
 =cut
 
 sub add_refresh_listener {
-	my ($self,@listeners) = @_;
+	my ( $self, @listeners ) = @_;
 	for my $l (@listeners) {
-		if (! grep { $_ eq $l } @{ $self->{refresh_listeners} }) {
-			Scalar::Util::weaken( $l );
-			push @{ $self->{refresh_listeners} }, $l
+		if ( !grep { $_ eq $l } @{ $self->{refresh_listeners} } ) {
+			Scalar::Util::weaken($l);
+			push @{ $self->{refresh_listeners} }, $l;
 		}
 	}
 }

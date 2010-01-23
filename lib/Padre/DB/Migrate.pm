@@ -22,8 +22,8 @@ our $VERSION = '0.55';
 
 
 BEGIN {
-	
-	@ISA     = 'ORLite';
+
+	@ISA = 'ORLite';
 }
 
 sub import {
