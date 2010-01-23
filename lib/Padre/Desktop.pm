@@ -60,18 +60,19 @@ sub desktop {
 		my ($padre_exe, $padre_exe_dir) = find_padre_exe();
 		return 0 unless $padre_exe;
 
-		# NOTE: Convert this to use Win32::TieRegistry
-		#		require File::Temp;
-		#		my ( $reg, $regfile ) = File::Temp::tempfile( SUFFIX => '.reg' );
-		#		print $reg <<'REG';
-		#Windows Registry Editor Version 5.00
-		#
-		#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre]
-		#
-		#[HKEY_CLASSES_ROOT\*\shell\Edit with Padre\Command]
-		#@="c:\\strawberry\\perl\\bin\\padre.exe \"%1\""
-		#REG
-		#		close $reg;
+		# Write to the registry to get the "Edit with Padre" in the 
+		# right-click-shell-context menu
+		require Win32::TieRegistry;
+		my $Registry;
+		Win32::TieRegistry->import(
+			TiedRef => \$Registry,  Delimiter => "/",  ArrayValues => 1,
+		);
+		$Registry->Delimiter('/');
+		$Registry->{'HKEY_CLASSES_ROOT/*/shell/'} = {
+			'Edit with Padre/' => {
+				'Command/' => { "" => 'c:\\strawberry\\perl\\bin\\padre.exe "%1"' },
+			}
+		} or return 0;
 
 		# Create Padre's Desktop Shortcut
 		require File::HomeDir;
