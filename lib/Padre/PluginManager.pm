@@ -811,6 +811,12 @@ sub editor_enable {
 	return $self->plugin_event( 'editor_enable', $editor, $editor->{Document} );
 }
 
+sub editor_disable {
+	my $self = shift;
+	my $editor = shift;
+	return $self->plugin_event( 'editor_disable', $editor, $editor->{Document} );
+}
+
 sub enable_editors_for_all {
 	my $self    = shift;
 	my $plugins = $self->plugins;

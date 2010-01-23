@@ -4093,6 +4093,10 @@ sub close {
 		}
 	}
 
+        # Ticket #828 - ordering is probably important here
+        #   when should plugins be notified ?
+        $self->ide->plugin_manager->editor_disable( $editor );
+
 	$doc->store_cursor_position;
 	$doc->remove_tempfile if $doc->tempfile;
 
