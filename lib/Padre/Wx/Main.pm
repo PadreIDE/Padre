@@ -573,7 +573,7 @@ sub load_files {
 	my $self    = shift;
 	my $ide     = $self->ide;
 	my $config  = $self->config;
-	my $startup = $config->main_startup;
+	my $startup = $config->startup_files;
 
 	# explicit session on command line takes precedence
 	if ( defined $ide->opts->{session} ) {
@@ -1064,12 +1064,15 @@ sub refresh {
 	my $lock    = $self->lock('UPDATE');
 	my $current = $self->current;
 
+	# Refresh the highest and quickest things first,
+	# and work downwards and slower from there.
+	# Humans tend to look at the top of the screen first.
+	$self->refresh_title($current);
 	$self->refresh_menubar($current);
 	$self->refresh_toolbar($current);
-	$self->refresh_status($current);
 	$self->refresh_functions($current);
 	$self->refresh_directory($current);
-	$self->refresh_title;
+	$self->refresh_status($current);
 
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
@@ -1177,7 +1180,7 @@ sub refresh_title {
 	}
 
 	# Keep it for later usage
-	$self->{title} = $config->window_title;
+	$self->{title} = $config->main_title;
 
 	my $Vars = join( '', keys(%variable_data) );
 
@@ -2958,7 +2961,7 @@ sub on_close_window {
 
 	# Check that all files have been saved
 	if ( $event->CanVeto ) {
-		if ( $config->main_startup eq 'same' ) {
+		if ( $config->startup_files eq 'same' ) {
 
 			# Save the files, but don't close
 			my $saved = $self->on_save_all;
@@ -3062,8 +3065,8 @@ sub update_last_session {
 	my $self = shift;
 
 	# Only save if the user cares about sessions
-	my $main_startup = $self->config->main_startup;
-	unless ( $main_startup eq 'last' or $main_startup eq 'session' ) {
+	my $startup_files = $self->config->startup_files;
+	unless ( $startup_files eq 'last' or $startup_files eq 'session' ) {
 		return;
 	}
 

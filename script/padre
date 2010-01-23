@@ -64,25 +64,7 @@ END_USAGE
 
 local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
 
-require threads;
-require threads::shared;
-
-local $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
-
-my %opts = (
-	files       => \@ARGV,
-	session     => $SESSION,
-	actionqueue => $ACTIONQUEUE,
-);
-
-require Padre;
-
-if ($PRELOAD) {
-
-	# Load the entire application into memory immediately
-	Padre->import(':everything');
-}
-
+# Special execution modes
 if ($VERSION) {
 	my $msg = "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
 	if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
@@ -109,11 +91,40 @@ if ($DESKTOP) {
 	exit(1);
 }
 
-my $app = Padre->new(%opts);
-unless ($app) {
+require threads;
+require threads::shared;
 
-	# Single instance worked correctly
-	exit(0);
+# local $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
+
+my %opts = (
+	files       => \@ARGV,
+	session     => $SESSION,
+	actionqueue => $ACTIONQUEUE,
+);
+
+# If we have an action queue then we are running for automation reasons.
+# Avoid the startup logic and continue to the main startup.
+unless ( defined $ACTIONQUEUE ) {
+	# Run the Padre startup sequence before we load the main application
+	require Padre::Startup;
+	unless ( Padre::Startup::startup() ) {
+		# Startup process says to abort the main load and exit now
+		exit(0);
+	}
+}
+
+require Padre;
+
+if ($PRELOAD) {
+
+	# Load the entire application into memory immediately
+	Padre->import(':everything');
+}
+
+# Build the application
+my $app = Padre->new(%opts);
+unless ( $app ) {
+	die "Failed to create Padre instance";
 }
 
 # Start the application

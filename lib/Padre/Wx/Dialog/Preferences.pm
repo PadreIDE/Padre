@@ -220,7 +220,7 @@ sub _indentation_panel {
 }
 
 sub _behaviour_panel {
-	my ( $self, $treebook, $main_startup, $main_functions_order, $perldiag_locales, $default_line_ending ) = @_;
+	my ( $self, $treebook, $startup_files, $main_functions_order, $perldiag_locales, $default_line_ending ) = @_;
 
 	my $config = Padre->ide->config;
 
@@ -253,7 +253,7 @@ sub _behaviour_panel {
 			[]
 		],
 		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
-			[ 'Wx::Choice',     'main_startup', $main_startup ]
+			[ 'Wx::Choice',     'startup_files', $startup_files ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Default projects directory:') ],
 			[   'Wx::DirPickerCtrl', 'default_projects_directory', $config->default_projects_directory,
@@ -343,7 +343,7 @@ sub _appearance_panel {
 		? '#' . $config->editor_currentline_color
 		: '#ffff04';
 
-	my %window_title_vars = (
+	my %main_title_vars = (
 		'%p' => 'Project name',
 		'%v' => 'Padre version',
 		'%f' => 'Current filename',
@@ -351,30 +351,30 @@ sub _appearance_panel {
 		'%b' => 'Current files basename',
 		'%F' => 'Current filename relative to project',
 	);
-	my @window_title_keys = sort { lc($a) cmp lc($b); } ( keys(%window_title_vars) );
-	my $window_title_left;
-	my $window_title_right;
+	my @main_title_keys = sort { lc($a) cmp lc($b); } ( keys(%main_title_vars) );
+	my $main_title_left;
+	my $main_title_right;
 
-	while ( $#window_title_keys > -1 ) {
+	while ( $#main_title_keys > -1 ) {
 
-		my $key = shift @window_title_keys;
-		$window_title_left .= $key . ' => ' . Wx::gettext( $window_title_vars{$key} ) . "\n";
+		my $key = shift @main_title_keys;
+		$main_title_left .= $key . ' => ' . Wx::gettext( $main_title_vars{$key} ) . "\n";
 
-		last if $#window_title_keys < 0;
+		last if $#main_title_keys < 0;
 
-		$key = shift @window_title_keys;
-		$window_title_right .= $key . ' => ' . Wx::gettext( $window_title_vars{$key} ) . "\n";
+		$key = shift @main_title_keys;
+		$main_title_right .= $key . ' => ' . Wx::gettext( $main_title_vars{$key} ) . "\n";
 
 	}
-	$window_title_left  =~ s/\n$//;
-	$window_title_right =~ s/\n$//;
+	$main_title_left  =~ s/\n$//;
+	$main_title_right =~ s/\n$//;
 
 	my $table = [
 		[   [ 'Wx::StaticText', 'undef',        Wx::gettext('Window title:') ],
-			[ 'Wx::TextCtrl',   'window_title', $config->window_title ],
+			[ 'Wx::TextCtrl',   'main_title', $config->main_title ],
 		],
-		[   [ 'Wx::StaticText', 'undef', Wx::gettext($window_title_left) ],
-			[ 'Wx::StaticText', 'undef', Wx::gettext($window_title_right) ],
+		[   [ 'Wx::StaticText', 'undef', Wx::gettext($main_title_left) ],
+			[ 'Wx::StaticText', 'undef', Wx::gettext($main_title_right) ],
 		],
 		[   [   'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ),
 				Wx::gettext('Colored text in output window (ANSI)')
@@ -727,7 +727,7 @@ END_TEXT
 }
 
 sub dialog {
-	my ($self, $win, $main_startup, $editor_autoindent, $main_functions_order, $perldiag_locales,
+	my ($self, $win, $startup_files, $editor_autoindent, $main_functions_order, $perldiag_locales,
 		$default_line_ending
 	) = @_;
 
@@ -755,7 +755,7 @@ sub dialog {
 
 	my $behaviour = $self->_behaviour_panel(
 		$tb,
-		$main_startup,
+		$startup_files,
 		$main_functions_order,
 		$perldiag_locales,
 		$default_line_ending,
@@ -883,12 +883,12 @@ sub run {
 	$self->{_start_highlighters_} = Padre::MimeTypes->get_current_highlighter_names;
 
 	# Startup preparation
-	my $main_startup       = $config->main_startup;
-	my @main_startup_items = (
-		$main_startup,
-		grep { $_ ne $main_startup } qw{new nothing last session}
+	my $startup_files       = $config->startup_files;
+	my @startup_files_items = (
+		$startup_files,
+		grep { $_ ne $startup_files } qw{new nothing last session}
 	);
-	my @main_startup_localized = map { Wx::gettext($_) } @main_startup_items;
+	my @startup_files_localized = map { Wx::gettext($_) } @startup_files_items;
 
 	# Autoindent preparation
 	my $editor_autoindent       = $config->editor_autoindent;
@@ -920,7 +920,7 @@ sub run {
 
 	$self->{dialog} = $self->dialog(
 		$win,
-		\@main_startup_localized,
+		\@startup_files_localized,
 		\@editor_autoindent_localized,
 		\@main_functions_order_localized,
 		\@perldiag_locales,
@@ -1002,8 +1002,8 @@ sub run {
 		$editor_autoindent_items[ $data->{editor_autoindent} ]
 	);
 	$config->set(
-		'main_startup',
-		$main_startup_items[ $data->{main_startup} ]
+		'startup_files',
+		$startup_files_items[ $data->{startup_files} ]
 	);
 	$config->set(
 		'main_functions_order',
@@ -1018,8 +1018,8 @@ sub run {
 		$data->{info_on_statusbar} ? 1 : 0
 	);
 	$config->set(
-		'window_title',
-		$data->{window_title}
+		'main_title',
+		$data->{main_title}
 	);
 	$config->set(
 		'editor_right_margin_enable',

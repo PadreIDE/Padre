@@ -13,20 +13,21 @@ use Padre::Constant ();
 our $VERSION = '0.55';
 
 use Class::XSAccessor {
-	getters => {
-		name    => 'name',
-		type    => 'type',
-		store   => 'store',
-		default => 'default',
-		project => 'project',
-		options => 'options',
-		apply   => 'apply',
-	}
+	getters => [ qw{
+		name 
+		type
+		store
+		startup
+		default
+		project
+		options
+		apply
+	} ],
 };
 
 sub new {
 	my $class = shift;
-	my $self = bless {@_}, $class;
+	my $self  = bless { @_ }, $class;
 
 	# Param checking
 	unless ( $self->name ) {
@@ -43,14 +44,16 @@ sub new {
 	}
 
 	# It is illegal to store paths in the human config
-	if (    $self->type == Padre::Constant::PATH
-		and $self->store == Padre::Constant::HUMAN )
-	{
+	if (
+		$self->type == Padre::Constant::PATH
+		and
+		$self->store == Padre::Constant::HUMAN
+	) {
 		Carp::croak("PATH values must only be placed in the HOST store");
 	}
 
 	# Normalise
-	$self->{project} = !!$self->project;
+	$self->{project} = !! $self->project;
 
 	return $self;
 }
@@ -66,10 +69,8 @@ sub code {
 package Padre::Config;
 
 sub $name {
-	my \$self = shift;
-	if ( exists \$self->[$store]->{$name} ) {
-		return \$self->[$store]->{$name};
-	}
+	my \$config = \$_[0]->[$store];
+	return \$config->{$name} if exists \$config->{$name};
 	return \$DEFAULT{$name};
 }
 END_PERL
@@ -80,11 +81,9 @@ END_PERL
 package Padre::Config;
 
 sub $name {
-	my \$self = shift;
-	if ( exists \$self->[$store]->{$name} ) {
-		if ( -e \$self->[$store]->{$name} ) {
-			return \$self->[$store]->{$name};
-		}
+	my \$config = \$_[0]->[$store];
+	if ( exists \$config->{$name} and -e \$config->{$name} ) {
+		return \$config->{$name};
 	}
 	return \$DEFAULT{$name};
 }
@@ -95,10 +94,10 @@ END_PERL
 package Padre::Config;
 
 sub $name {
-	my \$self = shift;
-	if ( \$self->[$store] ) {
-		my \$dirname  = \$self->[$store]->dirname;
-		my \$relative = \$self->[$store]->{$name};
+	my \$config = \$_[0]->[$store];
+	if ( \$config ) {
+		my \$dirname  = \$config->dirname;
+		my \$relative = \$config->{$name};
 		if ( defined \$relative ) {
 			my \$literal = File::Spec->catfile(
 				\$dirname, \$relative,

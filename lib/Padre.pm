@@ -19,7 +19,6 @@ use Getopt::Long       ();
 use YAML::Tiny         ();
 use DBI                ();
 use DBD::SQLite        ();
-use Padre::Util::Win32 ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TO DO: Bug report dispatched. Likely to be fixed in 0.77.
@@ -27,8 +26,8 @@ use version ();
 
 our $VERSION = '0.55';
 
-# Since everything is used OO-style,
-# autouse everything other than the bare essentials
+# Since everything is used OO-style, we will be require'ing
+# everything other than the bare essentials
 use Padre::Constant ();
 use Padre::Config   ();
 use Padre::DB       ();
@@ -56,7 +55,7 @@ sub import {
 	}
 
 	# Find the location of Padre.pm
-	my $padre = $INC{'Padre.pm'};
+	my $padre  = $INC{'Padre.pm'};
 	my $parent = substr( $padre, 0, length($padre) - 3 );
 
 	# Find everything under Padre:: with a matching version,
@@ -107,7 +106,7 @@ sub new {
 	# Create the empty object
 	my $self = $SINGLETON = bless {
 
-		# parsed command-line options
+		# Parsed command-line options
 		opts => \%opts,
 
 		# Wx Attributes
@@ -120,10 +119,6 @@ sub new {
 		project => {},
 
 	}, $class;
-
-	# Display Padre's Splash Screen.
-	require Padre::Startup;
-	Padre::Startup->show_splash;
 
 	# Create our instance ID:
 	for ( 1 .. 64 ) {
@@ -142,52 +137,6 @@ sub new {
 	# Actions registry
 	my %actions = ();
 	$self->actions( \%actions );
-
-	# Connect to the server if we are running in single instance mode
-	if ( $self->config->main_singleinstance ) {
-
-		# This blocks for about 1 second
-		require IO::Socket;
-		my $socket = IO::Socket::INET->new(
-			PeerAddr => '127.0.0.1',
-			PeerPort => 4444,
-			Proto    => 'tcp',
-			Type     => IO::Socket::SOCK_STREAM(),
-		);
-		if ($socket) {
-
-			# Escape the SQLite transaction before we go any further.
-			# Once we sent the single-instance server commands, it is
-			# almost certainly going to want to use the database.
-			# We need to let go of any locks we might have.
-			Padre::DB->rollback;
-
-			my $pid = '';
-			my $read = $socket->sysread( $pid, 10 );
-			if ( defined $read and $read == 10 ) {
-
-				# Kill the splash screen
-				if ($Padre::Startup::VERSION) {
-					Padre::Startup->destroy_splash;
-				}
-
-				# Got the single instance PID
-				$pid =~ s/\s+\s//;
-				if (Padre::Constant::WIN32) {
-
-					# The whole Win32-API moved to Padre::Util::Win32:
-					Padre::Util::Win32::AllowSetForegroundWindow($pid);
-				}
-			}
-			foreach my $file (@ARGV) {
-				my $path = File::Spec->rel2abs($file);
-				$socket->print("open $path\n");
-			}
-			$socket->print("focus\n");
-			$socket->close;
-			return 0;
-		}
-	}
 
 	# Load a few more bits and pieces now we know
 	# that we'll need them
@@ -276,11 +225,11 @@ sub run {
 	}
 
 	# Process the action queue
-	if ( defined( $self->opts->{actionqueue} ) ) {
+	if ( defined $self->opts->{actionqueue} ) {
 		for my $action ( split( /\,/, $self->opts->{actionqueue} ) ) {
 			next if $action eq ''; # Skip empty action names
-			if ( !defined( $self->actions->{$action} ) ) {
-				warn 'Action "' . $action . '" queued from command line but does not exist.';
+			unless ( defined $self->actions->{$action} ) {
+				warn 'Action "$action" queued from command line but does not exist';
 				next;
 			}
 

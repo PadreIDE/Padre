@@ -30,45 +30,137 @@ writing the F<startup.yml> file.
 use 5.008005;
 use strict;
 use warnings;
+use Padre::Constant ();
 
 our $VERSION = '0.55';
+
+my $AllowSetForeground = <<'END_API';
+BOOL AllowSetForegroundWindow(
+	DWORD dwProcessId
+);
+END_API
+
+my $SPLASH  = undef;
 
 
 
 
 
 #####################################################################
-# Splash Screen Support
+# Main Startup Procedure
 
-my $SPLASH = undef;
+# Runs the (as light as possible) startup process for Padre.
+# Returns true if we should continue with the startup.
+# Returns false if we should abort the startup and exit.
+sub startup {
+	# Start with the default settings
+	my %setting = (
+		main_singleinstance      => Padre::Constant::DEFAULT_SINGLEINSTANCE,
+		main_singleinstance_port => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
+		startup_splash           => 1,		
+	);
 
-# Shows Padre's splash screen if this is the first time
-# It is saved as BMP as it seems (from wxWidgets documentation)
-# that it is the most portable format (and we don't need to
-# call Wx::InitAllImageHeaders() or whatever)
-sub show_splash {
-	return if $SPLASH;
-
-	# Use CCNC version if it exists and fallback to boring splash
-	# so that we can bundle it in Debian
-
-	# Don't show the splash screen during testing otherwise
-	# it will spoil the flashy surprise when they upgrade.
-	unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
-
-		# Load just enough modules to get Wx bootstrapped
-		# to the point it can show the splash screen.
-		require Padre::Util;
-		require Wx;
-		$SPLASH = Wx::SplashScreen->new(
-			Wx::Bitmap->new(
-				Padre::Util::splash(),
-				Wx::wxBITMAP_TYPE_BMP()
-			),
-			Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
-			3500, undef, -1
+	# Load and overlay the startup.yml file
+	if ( -f Padre::Constant::CONFIG_STARTUP ) {
+		require YAML::Tiny;
+		my $yaml = YAML::Tiny::LoadFile(
+			Padre::Constant::CONFIG_STARTUP
 		);
+		foreach ( sort keys %setting ) {
+			next unless exists $yaml->{$_};
+			$setting{$_} = $yaml->{$_};
+		}
 	}
+
+	# Attempt to connect to the single instance server
+	if ( $setting{main_singleinstance} ) {
+		# This blocks for about 1 second
+		require IO::Socket;
+		my $socket = IO::Socket::INET->new(
+			PeerAddr => '127.0.0.1',
+			PeerPort => $setting{main_singleinstance_port},
+			Proto    => 'tcp',
+			Type     => IO::Socket::SOCK_STREAM(),
+		);
+		if ( $socket ) {
+			my $pid = '';
+			my $read = $socket->sysread( $pid, 10 );
+			if ( defined $read and $read == 10 ) {
+				# Got the single instance PID
+				$pid =~ s/\s+\s//;
+				require Win32::API;
+				if ( Padre::Constant::WIN32 ) {
+					Win32::API->new(
+						user32 => $AllowSetForeground,
+					)->Call($pid);
+				}
+			}
+			foreach my $file ( @ARGV ) {
+				my $path = File::Spec->rel2abs($file);
+				$socket->print("open $path\n");
+			}
+			$socket->print("focus\n");
+			$socket->close;
+			return 0;
+		}
+	}
+
+	# Show the splash image now we are starting a new instance
+	# Shows Padre's splash screen if this is the first time
+	# It is saved as BMP as it seems (from wxWidgets documentation)
+	# that it is the most portable format (and we don't need to
+	# call Wx::InitAllImageHeaders() or whatever)
+	if ( $setting{startup_splash} ) {
+		# Don't show the splash screen during testing otherwise
+		# it will spoil the flashy surprise when they upgrade.
+		unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
+			require File::Spec;
+
+			# Find the base share directory
+			my $share = undef;
+			if ( $ENV{PADRE_DEV} ) {
+				require FindBin;
+				$share = File::Spec->catdir(
+					$FindBin::Bin,
+					File::Spec->updir,
+					'share',
+				);
+			} else {
+				require File::ShareDir;
+				$share = File::ShareDir::dist_dir('Padre');
+			}
+
+			# Locate the splash image without resorting to the use
+			# of any Padre::Util functions whatsoever.
+			my $splash = File::Spec->catfile(
+				$share, 'padre-splash-ccnc.bmp'
+			);
+
+			# Use CCNC-licensed version if it exists and fallback
+			# to the boring splash so that we can bundle it in
+			# Debian without their packaging team needing to apply
+			# any custom patches to the code, just delete the file.
+			unless ( -f $splash ) {
+				$splash = File::Spec->catfile(
+					$share, 'padre-splash.bmp',
+				);
+			}
+
+			# Load just enough modules to get Wx bootstrapped
+			# to the point it can show the splash screen.
+			require Wx;
+			$SPLASH = Wx::SplashScreen->new(
+				Wx::Bitmap->new(
+					$splash,
+					Wx::wxBITMAP_TYPE_BMP()
+				),
+				Wx::wxSPLASH_CENTRE_ON_SCREEN() | Wx::wxSPLASH_TIMEOUT(),
+				3500, undef, -1
+			);
+		}
+	}
+
+	return 1;
 }
 
 # Destroy the splash screen if it exists

@@ -13,6 +13,7 @@ use 5.008;
 use strict;
 use warnings;
 use Carp                   ();
+use YAML::Tiny             ();
 use Params::Util           ();
 use Padre::Constant        ();
 use Padre::Util            ('_T');
@@ -30,6 +31,9 @@ our %SETTING = ();
 
 # A cache for the defaults
 our %DEFAULT = ();
+
+# A cache for the settings that need to be added to startup.yml
+our %STARTUP = ();
 
 # The configuration revision.
 # (Functionally similar to the database revision)
@@ -69,19 +73,19 @@ sub setting {
 
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
-	if ( $SETTING{ $object->{name} } ) {
-		Carp::croak("The $object->{name} setting is already defined");
+	my $name   = $object->{name};
+	if ( $SETTING{ $name } ) {
+		Carp::croak("The $name setting is already defined");
 	}
 
 	# Generate the accessor
 	eval $object->code;
-	if ($@) {
-		Carp::croak("Failed to compile setting $object->{name}");
-	}
+	Carp::croak("Failed to compile setting $object->{name}: $@") if $@;
 
 	# Save the setting
-	$SETTING{ $object->{name} } = $object;
-	$DEFAULT{ $object->{name} } = $object->{default};
+	$SETTING{$name} = $object;
+	$DEFAULT{$name} = $object->{default};
+	$STARTUP{$name} = 1 if $object->{startup};
 
 	return 1;
 }
@@ -158,12 +162,27 @@ setting(
 	project => 1,
 );
 
+
+
+
+
+#####################################################################
+# Startup Behaviour Rules
+
+setting(
+	name    => 'startup_splash',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+	startup => 1,
+);
+
 # Startup mode, if no files given on the command line this can be
 #   new        - a new empty buffer
 #   nothing    - nothing to open
 #   last       - the files that were open last time
 setting(
-	name    => 'main_startup',
+	name    => 'startup_files',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'new',
@@ -175,32 +194,27 @@ setting(
 	],
 );
 
+
+
+
+
+######################################################################
+# Main Window Tools and Layout
+
 # Window
 setting(
-	name    => 'window_title',
+	name    => 'main_title',
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'Padre [%p]',
 );
 
-# Pages and panels
-
-# Unlike on Linux, on Windows there's not really
-# any major reason we should avoid the single-instance
-# server by default.
-# However during tests or in the debugger we need to make
-# sure we don't accidentally connect to a running
-# system-installed Padre while running the test suite.
-my $main_singleinstance_default = (
-	Padre::Constant::WIN32 and not( $ENV{HARNESS_ACTIVE}
-		or $^P )
-) ? 1 : 0;
-
 setting(
 	name    => 'main_singleinstance',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
-	default => $main_singleinstance_default,
+	default => Padre::Constant::DEFAULT_SINGLEINSTANCE,
+	startup => 1,
 	apply   => sub {
 		my $main  = shift;
 		my $value = shift;
@@ -212,6 +226,15 @@ setting(
 		return 1;
 	},
 );
+
+setting(
+	name    => 'main_singleinstance_port',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HOST,
+	default => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
+	startup => 1,
+);
+
 setting(
 	name    => 'main_lockinterface',
 	type    => Padre::Constant::BOOLEAN,
@@ -1055,6 +1078,13 @@ sub write {
 	# Save the host configuration
 	$self->[Padre::Constant::HOST]->{version} = $REVISION;
 	$self->[Padre::Constant::HOST]->write;
+
+	# Write the startup subset copy of the configuration
+	my %startup = map { $_ => $self->$_() } sort keys %STARTUP;
+	YAML::Tiny::DumpFile(
+		Padre::Constant::CONFIG_STARTUP,
+		\%startup,
+	);
 
 	return 1;
 }

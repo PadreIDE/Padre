@@ -313,7 +313,7 @@ sub share {
 	#        return $path if -d $path;
 	#    }
 
-	# rely on automatic handling of everything
+	# Rely on automatic handling of everything
 	require File::ShareDir;
 	return File::ShareDir::dist_dir('Padre');
 }

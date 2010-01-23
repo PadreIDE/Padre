@@ -14,7 +14,7 @@ our $VERSION = '0.55';
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
-use constant MAC => !!( $^O eq 'darwin' );
+use constant MAC  => !!( $^O eq 'darwin' );
 use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends
@@ -74,8 +74,7 @@ use constant {
 };
 
 # Syntax Highlighter Colours.
-# Note: It's not clear why these need "PADRE_" in the name,
-# but they do.
+# NOTE: It's not clear why these need "PADRE_" in the name, but they do.
 use constant {
 	PADRE_BLACK    => 0,
 	PADRE_BLUE     => 1,
@@ -116,6 +115,27 @@ unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
 unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
 	Carp::croak( "Cannot create plug-ins directory '" . PLUGIN_LIB . "': $!" );
 }
+
+
+
+
+
+#####################################################################
+# Config Defaults Needed At Startup
+
+# Unlike on Linux, on Windows there's not really
+# any major reason we should avoid the single-instance
+# server by default.
+# However during tests or in the debugger we need to make
+# sure we don't accidentally connect to a running
+# system-installed Padre while running the test suite.
+# NOTE: The only reason this is here is that it is needed both during
+# main configuration, and also during Padre::Startup.
+use constant DEFAULT_SINGLEINSTANCE => (
+	 WIN32 and not ( $ENV{HARNESS_ACTIVE} or $^P )
+) ? 1 : 0;
+
+use constant DEFAULT_SINGLEINSTANCE_PORT => 4444;
 
 
 

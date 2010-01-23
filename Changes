@@ -4,6 +4,12 @@ Changes for Perl Application Development and Refactoring Environment
     - Plugins may now add their GUI elements to the view menu (SEWI)
     - Padre now displays a dynamic to-do list generated from comments
       in your source code (CORION)
+    - Landed new Padre::Startup module which is dramatically faster
+      when loading files into an existing Padre via the single instance
+      server, and finally provides a mechanism for allowing configuration
+      to disable the startup splash image (ADAMK)
+    - Changed a few configuration settings to create a more consistent
+      naming pattern for them (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
