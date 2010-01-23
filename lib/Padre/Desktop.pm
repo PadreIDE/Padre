@@ -27,8 +27,38 @@ use Padre::Constant ();
 
 our $VERSION = '0.55';
 
+=pod
+
+=head3 C<find_padre_exe>
+
+Note: this only works under WIN32
+
+Returns Padre's executable path and parent folder as (padre_exe, padre_exe_dir). 
+Returns undef if not found.
+
+=cut
+sub find_padre_exe {
+	return unless Padre::Constant::WXWIN32;
+	
+	my $self = shift;
+	require File::Which;
+	require File::Basename;
+	my $padre_exe = File::Which::which('padre.exe');
+
+	#exit if we could not find Padre's executable in PATH
+	if($padre_exe) {
+		my $padre_exe_dir = File::Basename::dirname($padre_exe);
+		return ($padre_exe, $padre_exe_dir);
+	} else {
+		return;
+	}
+}
+
 sub desktop {
 	if (Padre::Constant::WXWIN32) {
+		# Find Padre's executable
+		my ($padre_exe, $padre_exe_dir) = find_padre_exe();
+		return 0 unless $padre_exe;
 
 		# NOTE: Convert this to use Win32::TieRegistry
 		#		require File::Temp;
@@ -55,8 +85,8 @@ sub desktop {
 		require Win32::Shortcut;
 		my $link = Win32::Shortcut->new;
 		$link->{Description}      = "Padre - The Perl IDE";
-		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
-		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
+		$link->{Path}             = $padre_exe;
+		$link->{WorkingDirectory} = $padre_exe_dir;
 		$link->Save($padre_lnk);
 		$link->Close;
 
@@ -93,6 +123,10 @@ DESKTOP
 sub quicklaunch {
 	if (Padre::Constant::WXWIN32) {
 
+		# Find Padre's executable
+		my ($padre_exe, $padre_exe_dir) = find_padre_exe();
+		return 0 unless $padre_exe;
+
 		# Code stolen and modified from File::HomeDir, which doesn't
 		# natively support the non-local APPDATA folder.
 		require Win32;
@@ -111,8 +145,8 @@ sub quicklaunch {
 		# NOTE: Use Padre::Perl to make this distribution agnostic
 		require Win32::Shortcut;
 		my $link = Win32::Shortcut->new;
-		$link->{Path}             = "C:\\strawberry\\perl\\bin\\padre.exe";
-		$link->{WorkingDirectory} = "C:\\strawberry\\perl\\bin";
+		$link->{Path}             = $padre_exe;
+		$link->{WorkingDirectory} = $padre_exe_dir;
 		$link->Save($padre_lnk);
 		$link->Close;
 
