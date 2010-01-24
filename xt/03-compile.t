@@ -44,7 +44,7 @@ foreach my $file (@files) {
 	is( $out_data, 'ok', "STDOUT of $file" );
 }
 
-script_compiles_ok('script/padre');
+script_compiles('script/padre');
 
 # Bail out if any of the tests failed
 BAIL_OUT("Aborting test suite") if scalar grep { not $_->{ok} } Test::More->builder->details;

@@ -42,10 +42,10 @@ use_ok('Padre::Plugin::My');
 my $loaded = Padre->import(':everything');
 ok( $loaded, "Loaded the remaining $loaded classes ok" );
 
-script_compiles_ok('script/padre');
+script_compiles('script/padre');
 
 foreach ( 1 .. 9 ) {
-	script_compiles_ok("share/timeline/migrate-$_.pl");
+	script_compiles("share/timeline/migrate-$_.pl");
 }
 
 foreach (
@@ -61,5 +61,5 @@ foreach (
 	}
 	)
 {
-	script_compiles_ok("share/examples/wx/$_");
+	script_compiles("share/examples/wx/$_");
 }
