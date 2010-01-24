@@ -13,21 +13,23 @@ use Padre::Constant ();
 our $VERSION = '0.55';
 
 use Class::XSAccessor {
-	getters => [ qw{
-		name 
-		type
-		store
-		startup
-		default
-		project
-		options
-		apply
-	} ],
+	getters => [
+		qw{
+			name
+			type
+			store
+			startup
+			default
+			project
+			options
+			apply
+			}
+	],
 };
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Param checking
 	unless ( $self->name ) {
@@ -44,16 +46,14 @@ sub new {
 	}
 
 	# It is illegal to store paths in the human config
-	if (
-		$self->type == Padre::Constant::PATH
-		and
-		$self->store == Padre::Constant::HUMAN
-	) {
+	if (    $self->type == Padre::Constant::PATH
+		and $self->store == Padre::Constant::HUMAN )
+	{
 		Carp::croak("PATH values must only be placed in the HOST store");
 	}
 
 	# Normalise
-	$self->{project} = !! $self->project;
+	$self->{project} = !!$self->project;
 
 	return $self;
 }

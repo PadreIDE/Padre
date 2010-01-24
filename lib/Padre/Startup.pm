@@ -40,7 +40,7 @@ BOOL AllowSetForegroundWindow(
 );
 END_API
 
-my $SPLASH  = undef;
+my $SPLASH = undef;
 
 
 
@@ -53,19 +53,18 @@ my $SPLASH  = undef;
 # Returns true if we should continue with the startup.
 # Returns false if we should abort the startup and exit.
 sub startup {
+
 	# Start with the default settings
 	my %setting = (
 		main_singleinstance      => Padre::Constant::DEFAULT_SINGLEINSTANCE,
 		main_singleinstance_port => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
-		startup_splash           => 1,		
+		startup_splash           => 1,
 	);
 
 	# Load and overlay the startup.yml file
 	if ( -f Padre::Constant::CONFIG_STARTUP ) {
 		require YAML::Tiny;
-		my $yaml = YAML::Tiny::LoadFile(
-			Padre::Constant::CONFIG_STARTUP
-		);
+		my $yaml = YAML::Tiny::LoadFile( Padre::Constant::CONFIG_STARTUP );
 		foreach ( sort keys %setting ) {
 			next unless exists $yaml->{$_};
 			$setting{$_} = $yaml->{$_};
@@ -74,6 +73,7 @@ sub startup {
 
 	# Attempt to connect to the single instance server
 	if ( $setting{main_singleinstance} ) {
+
 		# This blocks for about 1 second
 		require IO::Socket;
 		my $socket = IO::Socket::INET->new(
@@ -82,20 +82,21 @@ sub startup {
 			Proto    => 'tcp',
 			Type     => IO::Socket::SOCK_STREAM(),
 		);
-		if ( $socket ) {
+		if ($socket) {
 			my $pid = '';
 			my $read = $socket->sysread( $pid, 10 );
 			if ( defined $read and $read == 10 ) {
+
 				# Got the single instance PID
 				$pid =~ s/\s+\s//;
 				require Win32::API;
-				if ( Padre::Constant::WIN32 ) {
+				if (Padre::Constant::WIN32) {
 					Win32::API->new(
 						user32 => $AllowSetForeground,
 					)->Call($pid);
 				}
 			}
-			foreach my $file ( @ARGV ) {
+			foreach my $file (@ARGV) {
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}
@@ -111,6 +112,7 @@ sub startup {
 	# that it is the most portable format (and we don't need to
 	# call Wx::InitAllImageHeaders() or whatever)
 	if ( $setting{startup_splash} ) {
+
 		# Don't show the splash screen during testing otherwise
 		# it will spoil the flashy surprise when they upgrade.
 		unless ( $ENV{HARNESS_ACTIVE} or $ENV{PADRE_NOSPLASH} ) {
@@ -132,9 +134,7 @@ sub startup {
 
 			# Locate the splash image without resorting to the use
 			# of any Padre::Util functions whatsoever.
-			my $splash = File::Spec->catfile(
-				$share, 'padre-splash-ccnc.bmp'
-			);
+			my $splash = File::Spec->catfile( $share, 'padre-splash-ccnc.bmp' );
 
 			# Use CCNC-licensed version if it exists and fallback
 			# to the boring splash so that we can bundle it in

@@ -148,7 +148,7 @@ sub new {
 		shortcut    => 'Ctrl-Shift-W',
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			my $dir      = $document->project_dir;
+			my $dir = $document->project_dir;
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}

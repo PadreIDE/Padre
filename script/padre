@@ -105,9 +105,11 @@ my %opts = (
 # If we have an action queue then we are running for automation reasons.
 # Avoid the startup logic and continue to the main startup.
 unless ( defined $ACTIONQUEUE ) {
+
 	# Run the Padre startup sequence before we load the main application
 	require Padre::Startup;
 	unless ( Padre::Startup::startup() ) {
+
 		# Startup process says to abort the main load and exit now
 		exit(0);
 	}
@@ -123,7 +125,7 @@ if ($PRELOAD) {
 
 # Build the application
 my $app = Padre->new(%opts);
-unless ( $app ) {
+unless ($app) {
 	die "Failed to create Padre instance";
 }
 

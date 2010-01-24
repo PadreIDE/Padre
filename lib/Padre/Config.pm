@@ -74,7 +74,7 @@ sub setting {
 	# Validate the setting
 	my $object = Padre::Config::Setting->new(@_);
 	my $name   = $object->{name};
-	if ( $SETTING{ $name } ) {
+	if ( $SETTING{$name} ) {
 		Carp::croak("The $name setting is already defined");
 	}
 

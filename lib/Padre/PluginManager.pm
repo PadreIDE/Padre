@@ -812,7 +812,7 @@ sub editor_enable {
 }
 
 sub editor_disable {
-	my $self = shift;
+	my $self   = shift;
 	my $editor = shift;
 	return $self->plugin_event( 'editor_disable', $editor, $editor->{Document} );
 }

@@ -9,16 +9,16 @@ use utf8;
 
 # Non-Padre modules we need in order to do the single-instance
 # check should be loaded early to simplify the load order.
-use Carp               ();
-use Cwd                ();
-use File::Spec         ();
-use File::HomeDir      ();
-use List::Util         ();
-use Scalar::Util       ();
-use Getopt::Long       ();
-use YAML::Tiny         ();
-use DBI                ();
-use DBD::SQLite        ();
+use Carp          ();
+use Cwd           ();
+use File::Spec    ();
+use File::HomeDir ();
+use List::Util    ();
+use Scalar::Util  ();
+use Getopt::Long  ();
+use YAML::Tiny    ();
+use DBI           ();
+use DBD::SQLite   ();
 
 # load this before things are messed up to produce versions like '0,76'!
 # TO DO: Bug report dispatched. Likely to be fixed in 0.77.
@@ -55,7 +55,7 @@ sub import {
 	}
 
 	# Find the location of Padre.pm
-	my $padre  = $INC{'Padre.pm'};
+	my $padre = $INC{'Padre.pm'};
 	my $parent = substr( $padre, 0, length($padre) - 3 );
 
 	# Find everything under Padre:: with a matching version,

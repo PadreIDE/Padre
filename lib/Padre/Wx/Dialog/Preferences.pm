@@ -252,7 +252,7 @@ sub _behaviour_panel {
 			],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef,          Wx::gettext('Open files:') ],
+		[   [ 'Wx::StaticText', undef,           Wx::gettext('Open files:') ],
 			[ 'Wx::Choice',     'startup_files', $startup_files ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Default projects directory:') ],
@@ -370,7 +370,7 @@ sub _appearance_panel {
 	$main_title_right =~ s/\n$//;
 
 	my $table = [
-		[   [ 'Wx::StaticText', 'undef',        Wx::gettext('Window title:') ],
+		[   [ 'Wx::StaticText', 'undef',      Wx::gettext('Window title:') ],
 			[ 'Wx::TextCtrl',   'main_title', $config->main_title ],
 		],
 		[   [ 'Wx::StaticText', 'undef', Wx::gettext($main_title_left) ],
