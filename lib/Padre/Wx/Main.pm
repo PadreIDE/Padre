@@ -1980,11 +1980,11 @@ Note: it probably needs to be combined with C<run_command()> itself.
 =cut
 
 sub on_run_command {
-	my $main = shift;
+	my $self = shift;
 
 	require Padre::Wx::History::TextEntryDialog;
 	my $dialog = Padre::Wx::History::TextEntryDialog->new(
-		$main,
+		$self,
 		Wx::gettext("Command line"),
 		Wx::gettext("Run setup"),
 		"run_command",
@@ -1997,7 +1997,7 @@ sub on_run_command {
 	unless ( defined $command and $command ne '' ) {
 		return;
 	}
-	$main->run_command($command);
+	$self->run_command($command);
 	return;
 }
 
