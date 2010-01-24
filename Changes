@@ -12,7 +12,7 @@ Changes for Perl Application Development and Refactoring Environment
       naming pattern for them (ADAMK)
     - Audited dependencies and updated a variety of them (ADAMK)
     - Ctrl-Shift-W is now bound to "Close This Project" (ADAMK)
-
+ 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
     - dist-zilla projects detection finally fixed (#489) (JQUELIN)
