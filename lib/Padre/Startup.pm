@@ -34,7 +34,7 @@ use Padre::Constant ();
 
 our $VERSION = '0.55';
 
-my $AllowSetForeground = <<'END_API';
+our $AllowSetForeground = <<'END_API';
 BOOL AllowSetForegroundWindow(
 	DWORD dwProcessId
 );
