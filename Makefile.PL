@@ -79,7 +79,7 @@ requires 'File::Path'            => '2.07';
 requires 'File::Remove'          => '1.42';
 requires 'File::ShareDir'        => '1.00';
 
-#requires      'File::ShareDir::PAR'      => '0.04';
+#requires 'File::ShareDir::PAR'   => '0.04';
 requires 'File::Spec'            => '3.2701';
 requires 'File::Spec::Functions' => '3.2701';
 requires 'File::Temp'            => 0;
@@ -105,7 +105,7 @@ requires 'ORLite'          => '1.30';
 # Temporarily disabled as we have cloned a private copy
 # requires 'ORLite::Migrate' => '1.06';
 
-#requires      'PAR'                      => '0.989';
+#requires 'PAR'                      => '0.989';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.11';
 requires 'Parse::ExuberantCTags'    => '1.00';
@@ -116,7 +116,7 @@ requires 'Pod::Simple::XHTML'       => '3.04';
 requires 'Pod::Abstract'            => '0.16';
 requires 'Pod::Perldoc'             => '3.15';
 
-#requires       'Portable'                 => '0.12' if win32;
+#requires 'Portable'                => '0.12' if win32;
 requires 'POSIX'                   => 0;
 requires 'PPI'                     => '1.205';
 requires 'PPIx::EditorTools'       => '0.09';
