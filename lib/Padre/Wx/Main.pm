@@ -920,7 +920,7 @@ sub single_instance_connect {
 			while ( $_[0]->Read( $buffer, 128 ) ) {
 				$command .= $buffer;
 				while ( $command =~ s/^(.*?)[\012\015]+//s ) {
-					$_[1]->single_instance_command("$1");
+					$_[1]->single_instance_command("$1",$_[0]);
 				}
 			}
 			return 1;
@@ -951,6 +951,7 @@ $file> and C<focus>.
 sub single_instance_command {
 	my $self = shift;
 	my $line = shift;
+	my $socket = shift;
 
 	# $line should be defined
 	return 1 unless defined $line && length $line;
@@ -981,6 +982,26 @@ sub single_instance_command {
 			$self->notebook->show_file($line)
 				or $self->setup_editors($line);
 		}
+
+	} elsif ( $1 eq 'open-sync' ) {
+		# XXX: This should be two commands, 'open'+'wait-for-close'
+		my $editor;
+		if ( -f $line ) {
+
+			# If a file is already loaded switch to it instead
+			$editor = $self->notebook->show_file($line);
+			$editor ||= $self->setup_editors($line);
+		}
+		# Notify the client when we close
+		# this window
+		$self->{on_close_watchers} ||= {};
+		$self->{on_close_watchers}->{$line} ||= [];
+		push @{ $self->{on_close_watchers}->{$line} }, sub {
+			#warn "Closing $line / " . $_[0]->filename;
+			my $buf = "closed:$line\r\n"; # XXX Should we worry about encoding things as utf-8 or do we rely on both client and server speaking the same filesystem encoding?
+			$socket->Write( $buf, length($buf) ); # XXX length is encoding-sensitive!
+			return 1; # signal that we want to be removed
+		};
 
 	} else {
 
@@ -4088,6 +4109,7 @@ sub close {
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
 	my $lock = $self->lock( 'REFRESH', 'refresh_directory', 'refresh_menu' );
+	warn join ' ', "Closing ", ref $doc, $doc->filename;
 
 	if ( $doc->is_modified and not $doc->is_unused ) {
 		my $ret = Wx::MessageBox(
@@ -4111,6 +4133,15 @@ sub close {
 	# Ticket #828 - ordering is probably important here
 	#   when should plugins be notified ?
 	$self->ide->plugin_manager->editor_disable($editor);
+        
+        # Also, if any padre-client or other listeners to this file exist,
+        # notify it that we're done with it:
+        my $fn = $doc->filename;
+        @{ $self->{on_close_watchers}->{ $fn } } = map {
+        	warn "Calling on_close() callback";
+        	my $remove = $_->($doc);
+        	$remove ? () : $_
+        } @{ $self->{on_close_watchers}->{ $fn } };
 
 	$doc->store_cursor_position;
 	$doc->remove_tempfile if $doc->tempfile;

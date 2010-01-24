@@ -20,6 +20,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Speedup while changing tabs (use the correct project dir) (SEWI)
     - Simple refocus on document after command run (KTHAKORE)
     - Fixed ticket #822: main window could be off screen on start (BLAKEW)
+    - padre-client allows you to use Padre for commit messages and other
+      synchronous edit events
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
