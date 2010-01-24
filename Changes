@@ -18,6 +18,7 @@ Changes for Perl Application Development and Refactoring Environment
       run tests (kthakore)
     - Speedup and less false-shows for autocomplete (SEWI)
     - Speedup while changing tabs (use the correct project dir) (SEWI)
+    - Simple refocus on document after command run (kthakore)
  
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
