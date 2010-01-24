@@ -2267,7 +2267,7 @@ sub run_command {
 		$self->error( sprintf( Wx::gettext("Failed to start '%s' command"), $cmd ) );
 		$self->menu->run->enable;
 	}
-
+	$self->current->editor->SetFocus();
 	return;
 }
 
