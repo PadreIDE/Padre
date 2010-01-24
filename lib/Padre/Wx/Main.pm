@@ -642,6 +642,18 @@ sub load_files {
 	return;
 }
 
+sub _xy_on_screen {
+    # Returns true if the initial xy coordinate is on the screen
+    # See ticket #822
+    my $self = shift;
+    my $config = $self->config;
+    if ( $config->main_top < 0 or $config->main_left < 0 ) {
+        return 0;
+    }
+    # TODO: Add check for values > screen size?
+    return 1;
+}
+
 sub _timer_post_init {
 	my $self    = shift;
 	my $config  = $self->config;
@@ -659,7 +671,7 @@ sub _timer_post_init {
 	# size, reposition to the defaults).
 	# This must happen AFTER the initial ->Show(1) because otherwise
 	# ->IsShownOnScreen returns a false-negative result.
-	unless ( $self->IsShownOnScreen ) {
+	unless ( $self->IsShownOnScreen and $self->_xy_on_screen ) {
 		$self->SetSize(
 			Wx::Size->new(
 				$config->default('main_width'),
