@@ -136,7 +136,7 @@ requires 'Win32'                   => '0.31' if win32;
 requires 'Win32::API'              => '0.58' if win32;
 requires 'Win32::Shortcut'         => '0.07' if win32;
 requires 'Win32::TieRegistry'      => '0.26' if win32;
-requires 'Wx'                      => '0.91';
+requires 'Wx'                      => (win32 and $] >= 5.01) ? '0.94' : '0.91';
 requires 'Wx::Perl::ProcessStream' => '0.24';
 requires 'YAML::Tiny'              => '1.32';
 requires 'ExtUtils::Manifest'      => '1.56';
