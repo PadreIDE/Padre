@@ -132,7 +132,7 @@ sub refresh {
 			}
 			$windows{$label} = {
 				pane_index => $tab_index,
-				project    => Padre::Util::get_project_dir( $doc->filename ) || '',
+				project    => $doc->project_dir || '',
 			};
 		}
 

@@ -17,6 +17,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Uses correct make from Config.pm for the run menu item -> Build and
       run tests (kthakore)
     - Speedup and less false-shows for autocomplete (SEWI)
+    - Speedup while changing tabs (use the correct project dir) (SEWI)
  
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
