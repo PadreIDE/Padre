@@ -12,7 +12,11 @@ Changes for Perl Application Development and Refactoring Environment
       naming pattern for them (ADAMK)
     - Audited dependencies and updated a variety of them (ADAMK)
     - Ctrl-Shift-W is now bound to "Close This Project" (ADAMK)
-    - Uses correct make from Config.pm for the run menu item -> Build and run tests (kthakore)
+    - Added an option for traceing Padre subroutine calls to the
+      developer plugin (SEWI)
+    - Uses correct make from Config.pm for the run menu item -> Build and
+      run tests (kthakore)
+    - Speedup and less false-shows for autocomplete (SEWI)
  
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)

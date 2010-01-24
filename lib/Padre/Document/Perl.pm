@@ -924,9 +924,12 @@ EOC
 sub perltags_parser {
 	my $self = shift;
 
+	# Don't scan on every char if there is no file
+	return if $self->{_perltags_file_none};
+	my $perltags_file = $self->{_perltags_file};
+
 	require Parse::ExuberantCTags;
 	my $config        = Padre->ide->config;
-	my $perltags_file = $self->{_perltags_file};
 
 	# Use the configured file (if any) or the old default, reset on config change
 	if (   not defined $perltags_file
@@ -982,9 +985,16 @@ sub perltags_parser {
 		$self->{_perltags_config} = $config->perl_tags_file;
 
 		$perltags_file = $self->{_perltags_file};
+		# Remember that we don't have a file if we don't have one
+		if (defined($perltags_file)) {
+			$self->{_perltags_file_none} = 0;
+		} else {
+			$self->{_perltags_file_none} = 1;
+		}
 
 		# Reset timer for new file
 		delete $self->{_perltags_parser_time};
+		
 	}
 
 	# If we don't have a file (none specified in config, for example), return undef
@@ -1056,6 +1066,7 @@ sub autocomplete {
 
 	# Remove any ident from the beginning of the prefix
 	$prefix =~ s/^[\r\t]+//;
+	return if length($prefix) == 0;
 
 	# One char may be added by the current event
 	return if length($prefix) < ( $min_chars - 1 );
