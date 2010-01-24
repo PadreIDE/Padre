@@ -145,10 +145,10 @@ sub new {
 		need_editor => 1,
 		label       => Wx::gettext('Close This Project'),
 		comment     => Wx::gettext('Close all the files belonging to the current project'),
+		shortcut    => 'Ctrl-Shift-W',
 		menu_event  => sub {
-			my $doc = $_[0]->current->document;
-			return if not $doc;
-			my $dir = $doc->project_dir;
+			my $document = $_[0]->current->document or return;
+			my $dir      = $document->project_dir;
 			unless ( defined $dir ) {
 				$_[0]->error( Wx::gettext("File is not in a project") );
 			}
