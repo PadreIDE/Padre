@@ -62,12 +62,6 @@ sub debug_perl {
 		return;
 	}
 
-	# Check the file name
-	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
-
-	#	unless ( $filename =~ /\.pl$/i ) {
-	#		return $main->error(Wx::gettext("Only .pl files can be executed"));
-	#	}
 
 	# Apply the user's save-on-run policy
 	# TO DO: Make this code suck less
@@ -79,6 +73,13 @@ sub debug_perl {
 	} elsif ( $config->run_save eq 'all_buffer' ) {
 		$main->on_save_all;
 	}
+
+	# Get the filename
+	my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
+
+	# TODO: improve the message displayed to the user
+	# If the document is not saved, simply return for now
+	return unless $filename;
 
 	# Set up the debugger
 	my $host = 'localhost';
