@@ -34,13 +34,13 @@ use Padre::Constant ();
 
 our $VERSION = '0.55';
 
-our $AllowSetForeground = <<'END_API';
+my $SPLASH = undef;
+
+use constant AllowSetForeground => <<'END_API';
 BOOL AllowSetForegroundWindow(
 	DWORD dwProcessId
 );
 END_API
-
-my $SPLASH = undef;
 
 
 
@@ -92,7 +92,7 @@ sub startup {
 				require Win32::API;
 				if (Padre::Constant::WIN32) {
 					Win32::API->new(
-						user32 => $AllowSetForeground,
+						user32 => AllowSetForeground,
 					)->Call($pid);
 				}
 			}
