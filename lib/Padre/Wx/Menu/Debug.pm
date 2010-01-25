@@ -118,6 +118,20 @@ sub title {
 sub refresh {
 	my $self     = shift;
 	my $document = _CURRENT(@_)->document;
+	my $hasdoc   = $document ? 1 : 0;
+
+	$self->{debug_step_in}->Enable($hasdoc);
+	$self->{debug_step_over}->Enable($hasdoc);
+	$self->{debug_step_out}->Enable($hasdoc);
+	$self->{debug_run}->Enable($hasdoc);
+	$self->{debug_jump_to}->Enable($hasdoc);
+	$self->{debug_set_breakpoint}->Enable($hasdoc);
+	$self->{debug_remove_breakpoint}->Enable($hasdoc);
+	$self->{debug_list_breakpoints}->Enable($hasdoc);
+	$self->{debug_show_stack_trace}->Enable($hasdoc);
+	$self->{debug_display_value}->Enable($hasdoc);
+	$self->{debug_show_value}->Enable($hasdoc);
+	$self->{debug_evaluate_expression}->Enable($hasdoc);
 
 	return 1;
 }
