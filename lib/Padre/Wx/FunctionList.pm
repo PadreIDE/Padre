@@ -1,14 +1,18 @@
 package Padre::Wx::FunctionList;
 
-use 5.008;
+use 5.008005;
 use strict;
 use warnings;
-use Params::Util qw{ _STRING };
-use Padre::Wx ();
-use Padre::Current ('_CURRENT');
+use Params::Util          ('_STRING');
+use Padre::Current        ('_CURRENT');
+use Padre::Wx             ();
+use Padre::Wx::Role::View ();
 
 our $VERSION = '0.55';
-our @ISA     = 'Wx::Panel';
+our @ISA     = qw{
+	Padre::Wx::Role::View
+	Wx::Panel
+};
 
 
 
@@ -20,10 +24,11 @@ our @ISA     = 'Wx::Panel';
 sub new {
 	my $class = shift;
 	my $main  = shift;
+	my $panel = shift || $main->right;
 
 	# Create the parent panel, which will contain the search and tree
 	my $self = $class->SUPER::new(
-		$main->right,
+		$panel,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
@@ -33,7 +38,7 @@ sub new {
 	$self->{main} = $main;
 
 	# Temporary store for the function list.
-	$self->{_methods} = [];
+	$self->{names} = [];
 
 	# Create the search control
 	$self->{search} = Wx::TextCtrl->new(
@@ -138,8 +143,19 @@ sub new {
 	return $self;
 }
 
-sub gettext_label {
-	Wx::gettext('Functions');
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	return 'right';
+}
+
+sub view_label {
+	shift->gettext_label;
 }
 
 
@@ -179,17 +195,23 @@ sub on_list_item_activated {
 	return;
 }
 
-#
 # Sets the focus on the search field
-#
 sub focus_on_search {
-	my $self = shift;
-	$self->{search}->SetFocus;
+	$_[0]->{search}->SetFocus;
 }
 
-#
+
+
+
+
+######################################################################
+# General Methods
+
+sub gettext_label {
+	Wx::gettext('Functions');
+}
+
 # Refresh the functions list
-#
 sub refresh {
 	my ( $self, $current ) = @_;
 
@@ -206,7 +228,7 @@ sub refresh {
 		$functions->Clear;
 		$self->{search}->Hide;
 		$self->{functions}->Hide;
-		$self->{_methods} = [];
+		$self->{names} = [];
 		return;
 	}
 
@@ -221,7 +243,7 @@ sub refresh {
 
 	if ( scalar @methods == 0 ) {
 		$functions->Clear;
-		$self->{_methods} = [];
+		$self->{names} = [];
 		return;
 	}
 
@@ -232,21 +254,21 @@ sub refresh {
 
 		# ~ comes after \w
 		tr/_/~/ foreach @methods;
-		@methods = sort @methods;
+		@methods = sort { lc($a) cmp lc($b) } @methods;
 		tr/~/_/ foreach @methods;
 	} else {
 
 		# Alphabetical (aka 'abc')
-		@methods = sort @methods;
+		@methods = sort { lc($a) cmp lc($b) } @methods;
 	}
 
-	if ( scalar(@methods) == scalar( @{ $self->{_methods} } ) ) {
+	if ( scalar(@methods) == scalar( @{ $self->{names} } ) ) {
 		my $new = join ';', @methods;
-		my $old = join ';', @{ $self->{_methods} };
+		my $old = join ';', @{ $self->{names} };
 		return if $old eq $new;
 	}
 
-	$self->{_methods} = \@methods;
+	$self->{names} = \@methods;
 
 	# Show them again
 	$self->{search}->Show;
@@ -255,12 +277,9 @@ sub refresh {
 	$self->_update_functions_list;
 }
 
-#
 # Populate the functions list with search results
-#
 sub _update_functions_list {
-	my $self = shift;
-
+	my $self      = shift;
 	my $functions = $self->{functions};
 
 	#quote the search string to make it safer
@@ -271,9 +290,9 @@ sub _update_functions_list {
 		$search_expr = quotemeta $search_expr;
 	}
 
-	#populate the function list with matching functions
+	# Populate the function list with matching functions
 	$functions->Clear;
-	foreach my $method ( reverse @{ $self->{_methods} } ) {
+	foreach my $method ( reverse @{ $self->{names} } ) {
 		if ( $method =~ /$search_expr/i ) {
 			$functions->Insert( $method, 0 );
 		}
