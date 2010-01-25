@@ -26,6 +26,7 @@ Changes for Perl Application Development and Refactoring Environment
       and removed hardcoded strawberry paths (AZAWAWI)
     - WIN32, padre.exe will run with the same UAC privileges as same as
       the invoker (AZAWAWI)
+    - Disable debugger menu items when there is no document (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
