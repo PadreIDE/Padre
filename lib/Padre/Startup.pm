@@ -64,7 +64,7 @@ sub startup {
 	# Load and overlay the startup.yml file
 	if ( -f Padre::Constant::CONFIG_STARTUP ) {
 		require YAML::Tiny;
-		my $yaml = YAML::Tiny::LoadFile( Padre::Constant::CONFIG_STARTUP );
+		my $yaml = YAML::Tiny::LoadFile(Padre::Constant::CONFIG_STARTUP);
 		foreach ( sort keys %setting ) {
 			next unless exists $yaml->{$_};
 			$setting{$_} = $yaml->{$_};

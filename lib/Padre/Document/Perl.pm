@@ -929,7 +929,7 @@ sub perltags_parser {
 	my $perltags_file = $self->{_perltags_file};
 
 	require Parse::ExuberantCTags;
-	my $config        = Padre->ide->config;
+	my $config = Padre->ide->config;
 
 	# Use the configured file (if any) or the old default, reset on config change
 	if (   not defined $perltags_file
@@ -985,8 +985,9 @@ sub perltags_parser {
 		$self->{_perltags_config} = $config->perl_tags_file;
 
 		$perltags_file = $self->{_perltags_file};
+
 		# Remember that we don't have a file if we don't have one
-		if (defined($perltags_file)) {
+		if ( defined($perltags_file) ) {
 			$self->{_perltags_file_none} = 0;
 		} else {
 			$self->{_perltags_file_none} = 1;
@@ -994,7 +995,7 @@ sub perltags_parser {
 
 		# Reset timer for new file
 		delete $self->{_perltags_parser_time};
-		
+
 	}
 
 	# If we don't have a file (none specified in config, for example), return undef

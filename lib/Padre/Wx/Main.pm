@@ -643,15 +643,17 @@ sub load_files {
 }
 
 sub _xy_on_screen {
-    # Returns true if the initial xy coordinate is on the screen
-    # See ticket #822
-    my $self = shift;
-    my $config = $self->config;
-    if ( $config->main_top < 0 or $config->main_left < 0 ) {
-        return 0;
-    }
-    # TODO: Add check for values > screen size?
-    return 1;
+
+	# Returns true if the initial xy coordinate is on the screen
+	# See ticket #822
+	my $self   = shift;
+	my $config = $self->config;
+	if ( $config->main_top < 0 or $config->main_left < 0 ) {
+		return 0;
+	}
+
+	# TODO: Add check for values > screen size?
+	return 1;
 }
 
 sub _timer_post_init {
@@ -920,7 +922,7 @@ sub single_instance_connect {
 			while ( $_[0]->Read( $buffer, 128 ) ) {
 				$command .= $buffer;
 				while ( $command =~ s/^(.*?)[\012\015]+//s ) {
-					$_[1]->single_instance_command("$1",$_[0]);
+					$_[1]->single_instance_command( "$1", $_[0] );
 				}
 			}
 			return 1;
@@ -949,8 +951,8 @@ $file> and C<focus>.
 =cut
 
 sub single_instance_command {
-	my $self = shift;
-	my $line = shift;
+	my $self   = shift;
+	my $line   = shift;
 	my $socket = shift;
 
 	# $line should be defined
@@ -984,6 +986,7 @@ sub single_instance_command {
 		}
 
 	} elsif ( $1 eq 'open-sync' ) {
+
 		# XXX: This should be two commands, 'open'+'wait-for-close'
 		my $editor;
 		if ( -f $line ) {
@@ -992,15 +995,18 @@ sub single_instance_command {
 			$editor = $self->notebook->show_file($line);
 			$editor ||= $self->setup_editors($line);
 		}
+
 		# Notify the client when we close
 		# this window
 		$self->{on_close_watchers} ||= {};
 		$self->{on_close_watchers}->{$line} ||= [];
 		push @{ $self->{on_close_watchers}->{$line} }, sub {
+
 			#warn "Closing $line / " . $_[0]->filename;
-			my $buf = "closed:$line\r\n"; # XXX Should we worry about encoding things as utf-8 or do we rely on both client and server speaking the same filesystem encoding?
+			my $buf = "closed:$line\r\n"
+				; # XXX Should we worry about encoding things as utf-8 or do we rely on both client and server speaking the same filesystem encoding?
 			$socket->Write( $buf, length($buf) ); # XXX length is encoding-sensitive!
-			return 1; # signal that we want to be removed
+			return 1;                             # signal that we want to be removed
 		};
 
 	} else {
@@ -4133,15 +4139,15 @@ sub close {
 	# Ticket #828 - ordering is probably important here
 	#   when should plugins be notified ?
 	$self->ide->plugin_manager->editor_disable($editor);
-        
-        # Also, if any padre-client or other listeners to this file exist,
-        # notify it that we're done with it:
-        my $fn = $doc->filename;
-        @{ $self->{on_close_watchers}->{ $fn } } = map {
-        	warn "Calling on_close() callback";
-        	my $remove = $_->($doc);
-        	$remove ? () : $_
-        } @{ $self->{on_close_watchers}->{ $fn } };
+
+	# Also, if any padre-client or other listeners to this file exist,
+	# notify it that we're done with it:
+	my $fn = $doc->filename;
+	@{ $self->{on_close_watchers}->{$fn} } = map {
+		warn "Calling on_close() callback";
+		my $remove = $_->($doc);
+		$remove ? () : $_
+	} @{ $self->{on_close_watchers}->{$fn} };
 
 	$doc->store_cursor_position;
 	$doc->remove_tempfile if $doc->tempfile;
