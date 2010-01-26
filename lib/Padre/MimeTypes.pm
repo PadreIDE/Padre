@@ -714,7 +714,7 @@ sub menu_view_mimes {
 	my %menu_view_mimes = ();
 	for my $mime_type ( keys %MIME_TYPES ) {
 		my $mime_type_name = $MIME_TYPES{$mime_type}{name};
-		if ( $mime_type_name ) {
+		if ($mime_type_name) {
 			$menu_view_mimes{$mime_type_name} = $mime_type;
 		}
 	}

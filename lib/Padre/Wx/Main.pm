@@ -4143,13 +4143,12 @@ sub close {
 	# Also, if any padre-client or other listeners to this file exist,
 	# notify it that we're done with it:
 	my $fn = $doc->filename;
-	if ($fn)
-	{
-	@{ $self->{on_close_watchers}->{$fn} } = map {
-		warn "Calling on_close() callback";
-		my $remove = $_->($doc);
-		$remove ? () : $_
-	} @{ $self->{on_close_watchers}->{$fn} };
+	if ($fn) {
+		@{ $self->{on_close_watchers}->{$fn} } = map {
+			warn "Calling on_close() callback";
+			my $remove = $_->($doc);
+			$remove ? () : $_
+		} @{ $self->{on_close_watchers}->{$fn} };
 	}
 	$doc->store_cursor_position;
 	$doc->remove_tempfile if $doc->tempfile;
