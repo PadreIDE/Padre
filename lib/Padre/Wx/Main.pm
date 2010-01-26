@@ -4238,13 +4238,12 @@ sub close_where {
 	my $self     = shift;
 	my $where    = shift;
 	my $notebook = $self->notebook;
-	my $lock     = $self->lock('UPDATE');
+	my $lock     = $self->lock('UPDATE', 'refresh');
 	foreach my $id ( reverse $self->pageids ) {
 		if ( $where->( $notebook->GetPage($id)->{Document} ) ) {
 			$self->close($id) or return 0;
 		}
 	}
-	$self->refresh;
 	return 1;
 }
 

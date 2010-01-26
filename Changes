@@ -40,6 +40,9 @@ Changes for Perl Application Development and Refactoring Environment
       of test scripts and such should now work as intended (ADAMK)
     - Audit uses of Padre::Util::Win32 to only load it via require. Added a
       TRACE warning to verify it never gets loaded on non-Win32 (ADAMK)
+    - Tuned the locking for ->close_where, which should make a variety of
+      functions like "Close This Project" and "Close Other Projects"
+      noticably faster (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
