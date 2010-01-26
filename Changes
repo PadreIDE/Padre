@@ -32,6 +32,8 @@ Changes for Perl Application Development and Refactoring Environment
       (AZAWAWI)
     - Make sure that windows context key shows the refactor menu 
       items in the right-click pop-up menu (AZAWAWI)
+    - Used Module::CoreList::is_deprecated to display deprecated CORE modules
+      in help search title (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
