@@ -855,7 +855,7 @@ sub dialog {
 
 sub guess_indentation_settings {
 	my $self   = shift;
-	my $doc    = Padre::Current->document;
+	my $doc    = Padre::Current->document or return;
 	my $indent = $doc->guess_indentation_style;
 	$self->get_widget('editor_indent_tab')->SetValue( $indent->{use_tabs} );
 	$self->get_widget('editor_indent_tab_width')->SetValue( $indent->{tabwidth} );
