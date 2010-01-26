@@ -30,6 +30,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed a Padre debugger crash when an unsaved document is debugged (AZAWAWI)
     - Fixed Padre no-document crash with Find Next/Find Previous functionality
       (AZAWAWI)
+    - Make sure that windows context key shows the refactor menu 
+      items in the right-click pop-up menu (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)

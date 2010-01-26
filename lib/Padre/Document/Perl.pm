@@ -1477,23 +1477,11 @@ sub event_on_right_down {
 	my $menu   = shift;
 	my $event  = shift;
 
-	my $pos;
-	if ( $event->isa("Wx::MouseEvent") ) {
-		my $point = $event->GetPosition();
-		if ( $point != Wx::wxDefaultPosition ) {
-
-			# Then it is really a mouse event...
-			# On Windows, context menu is faked
-			# as a Mouse event
-			$pos = $editor->PositionFromPoint($point);
-		}
-	}
-
-	unless ($pos) {
-
-		# Fall back to the cursor position
-		$pos = $editor->GetCurrentPos();
-	}
+	# Use the editor's current cursor position
+	# PLEASE DO NOT use the mouse event position
+	# You will get inconsistent results regarding refactor tools
+	# when pressing Windows context "right click" key
+	my $pos = $editor->GetCurrentPos();
 
 	my $introduced_separator = 0;
 
