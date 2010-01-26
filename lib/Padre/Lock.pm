@@ -50,7 +50,7 @@ sub new {
 
 # Disable locking on destruction
 sub DESTROY {
-	my $locker = shift @{ $_[0] };
+	my $locker = shift @{ $_[0] } or return;
 	foreach ( @{ $_[0] } ) {
 		if ( $_ eq 'UPDATE' ) {
 			$locker->update_decrement;
