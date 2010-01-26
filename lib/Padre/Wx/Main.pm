@@ -652,7 +652,6 @@ sub _xy_on_screen {
 		return 0;
 	}
 
-	# TODO: Add check for values > screen size?
 	return 1;
 }
 
