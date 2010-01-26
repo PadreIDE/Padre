@@ -1053,10 +1053,6 @@ not in use.
 
 Implementing the printing capability of Padre.
 
-=item L<Padre::Wx::RightClick>
-
-not in use.
-
 =item L<Padre::Wx::SyntaxCheck>
 
 Implementing the continuous syntax check of Perl code.
