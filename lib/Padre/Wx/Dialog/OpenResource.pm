@@ -291,7 +291,7 @@ sub _setup_events {
 			my $event = shift;
 			my $code  = $event->GetKeyCode;
 
-			if ( $code == Wx::WXK_DOWN ) {
+			if ( $code == Wx::WXK_DOWN or $code == Wx::WXK_NUMPAD_PAGEDOWN ) {
 				$self->_matches_list->SetFocus();
 			}
 
