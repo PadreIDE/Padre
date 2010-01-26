@@ -4238,9 +4238,15 @@ sub close_where {
 	my $self     = shift;
 	my $where    = shift;
 	my $notebook = $self->notebook;
-	my $lock     = $self->lock('UPDATE', 'refresh');
-	foreach my $id ( reverse $self->pageids ) {
-		if ( $where->( $notebook->GetPage($id)->{Document} ) ) {
+
+	# Generate the list of ids to close before we go to the
+	# expensive of taking any locks.
+	my @close = grep {
+		$where->( $notebook->GetPage($_)->{Document} )
+	} reverse $self->pageids;
+	if ( @close ) {
+		my $lock = $self->lock('UPDATE', 'DB', 'refresh');
+		foreach my $id ( @close ) {
 			$self->close($id) or return 0;
 		}
 	}
