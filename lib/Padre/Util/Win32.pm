@@ -26,9 +26,14 @@ use strict;
 use warnings;
 
 use Padre::Constant ();
+use Padre::Logger;
 
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
-require Win32::API if Padre::Constant::WIN32;
+if ( Padre::Constant::WIN32 ) {
+	require Win32::API;
+} else {
+	TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
+}
 
 our $VERSION = '0.55';
 
