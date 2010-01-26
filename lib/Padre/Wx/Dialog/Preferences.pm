@@ -311,6 +311,13 @@ sub _behaviour_panel {
 		[   [ 'Wx::StaticText', 'undef',       Wx::gettext('RegExp for TODO-panel:') ],
 			[ 'Wx::TextCtrl',   'todo_regexp', $config->todo_regexp ],
 		],
+		[   [   'Wx::CheckBox',
+				'startup_splash',
+				( $config->startup_splash ? 1 : 0 ),
+				Wx::gettext("Use Splash Screen?")
+			],
+			[]
+		],
 	];
 
 	my $panel = $self->_new_panel($treebook);
@@ -1099,6 +1106,10 @@ sub run {
 	$config->set(
 		'mid_button_paste',
 		$data->{mid_button_paste} ? 1 : 0
+	);
+	$config->set(
+		'startup_splash',
+		$data->{startup_splash} ? 1 : 0
 	);
 	$config->set(
 		'todo_regexp',
