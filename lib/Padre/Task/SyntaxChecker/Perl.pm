@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use Padre::Perl                ();
 use Padre::Constant            ();
-use Padre::Util::Win32         ();
 use Padre::Task::SyntaxChecker ();
 
 our $VERSION = '0.55';
@@ -96,18 +95,18 @@ sub _check_syntax {
 		my $cmd = join ' ', @cmd;
 
 		# Make sure we execute from the correct directory
-		if ( $self->{cwd} ) {
-			require File::pushd;
-			my $pushd = File::pushd::pushd( $self->{cwd} );
-
-			if (Padre::Constant::WIN32) {
-				Padre::Util::Win32::ExecuteProcessAndWait( 'cmd.exe', "/C $cmd", 0 );
-			} else {
-				system $cmd;
-			}
+		if ( Padre::Constant::WIN32 ) {
+			require Padre::Util::Win32;
+			Padre::Util::Win32::ExecuteProcessAndWait(
+				directory  => $self->{cwd},
+				file       => 'cmd.exe',
+				parameters => "/C $cmd",
+			);
 		} else {
-			if (Padre::Constant::WIN32) {
-				Padre::Util::Win32::ExecuteProcessAndWait( 'cmd.exe', "/C $cmd", 0 );
+			if ( $self->{cwd} ) {
+				require File::pushd;
+				my $pushd = File::pushd::pushd( $self->{cwd} );
+				system $cmd;
 			} else {
 				system $cmd;
 			}

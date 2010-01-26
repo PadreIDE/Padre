@@ -3,7 +3,8 @@ package Padre::Task::SyntaxChecker;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_CODE _INSTANCE};
+use Carp           ();
+use Params::Util   qw{_CODE _INSTANCE};
 use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();
@@ -102,11 +103,9 @@ sub run {
 sub prepare {
 	my $self = shift;
 	unless ( defined $self->{text} ) {
-		require Carp;
 		Carp::croak("Could not find the document's text for syntax checking.");
 	}
 	unless ( defined $self->{main_thread_only}->{editor} ) {
-		require Carp;
 		Carp::croak("Could not find the reference to the notebook page for GUI updating.");
 	}
 	return 1;
@@ -147,7 +146,7 @@ sub update_gui {
 		$syntax->SetItem( $idx, 1, Wx::gettext('Info') );
 
 		# Relative-to-the-project filename
-		my $document = Padre::Current->document;
+		my $document = $current->document;
 		if ( defined( $document->file ) ) { # check that the document has been saved
 			my $filename = $document->file->{filename};
 			if ( defined( $document->project_dir ) ) {

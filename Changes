@@ -34,6 +34,12 @@ Changes for Perl Application Development and Refactoring Environment
       items in the right-click pop-up menu (AZAWAWI)
     - Used Module::CoreList::is_deprecated to display deprecated CORE modules
       in help search title (AZAWAWI)
+    - Padre::Util::Win32::ExecuteProcessAndWait doesn't automatically inherit
+      the same Cwd as the parent process. Added support for explicit cwd
+      parameter and make the syntax checker pass the cwd to it. Syntax checking
+      of test scripts and such should now work as intended (ADAMK)
+    - Audit uses of Padre::Util::Win32 to only load it via require. Added a
+      TRACE warning to verify it never gets loaded on non-Win32 (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
