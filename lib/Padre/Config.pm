@@ -856,6 +856,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
+setting(
+	name    => 'feature_position',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 1,
+);
 
 # Window menu list shorten common path
 setting(

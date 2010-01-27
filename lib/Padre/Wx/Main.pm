@@ -3307,7 +3307,9 @@ sub setup_editor {
 	# $editor->padre_setup;
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
-	$document->restore_cursor_position;
+	if ( $config->feature_position ) {
+		$document->restore_cursor_position;
+	}
 
 	# Update and refresh immediately if not locked
 	$self->lock( 'update_last_session', 'refresh_menu' );
@@ -3684,10 +3686,11 @@ sub reload_file {
 		$editor = $document->editor;
 	}
 
-	$document->store_cursor_position;
+	my $pos  = $self->config->feature_position;
+	$document->store_cursor_position if $pos;
 	if ( $document->reload ) {
 		$document->editor->configure_editor($document);
-		$document->restore_cursor_position;
+		$document->restore_cursor_position if $pos;
 	} else {
 		$self->error(
 			sprintf(
@@ -4149,8 +4152,13 @@ sub close {
 			$remove ? () : $_
 		} @{ $self->{on_close_watchers}->{$fn} };
 	}
-	$doc->store_cursor_position;
-	$doc->remove_tempfile if $doc->tempfile;
+
+	if ( $self->config->feature_position ) {
+		$doc->store_cursor_position;
+	}
+	if ( $doc->tempfile ) {
+		$doc->remove_tempfile;
+	}
 
 	# Now we are past the confirmation, apply an update lock as well
 	my $lock2 = $self->lock('UPDATE');
