@@ -133,9 +133,13 @@ sub _content_developers {
       <tr>
         <td valign="top">
           <p>
+            <br>
+            <br>
             Adam Kennedy<br>
             <br>
             Ahmad Zawawi - أحمد محمد زواوي<br>
+            <br>
+            Blake Willmarth<br>
             <br>
             Breno G. de Oliveira<br>
             <br>
@@ -146,6 +150,13 @@ sub _content_developers {
             Chris Dolan<br>
             <br>
             Claudio Ramirez<br>
+          </p>
+        </td>
+        <td valign="top">
+          <p>
+            <br>
+            <br>
+            code4pay (pseudonym only)<br>
             <br>
             Fayland Lam<br>
             <br>
@@ -154,15 +165,19 @@ sub _content_developers {
             Gábor Szabó - גאבור סבו <br>
             <br>
             Heiko Jansen<br>
-          </p>
-        </td>
-        <td valign="top">
-          <p>
+            <br>
             Jérôme Quelin<br>
             <br>
             Kaare Rasmussen<br>
             <br>
+            Kartik Thakore<br>
+            <br>
             Keedi Kim - 김도형<br>
+          </p>
+        </td>
+        <td valign="top">
+          <p>
+            <br>
             <br>
             Kenichi Ishigaki - 石垣憲一<br>
             <br>
@@ -173,6 +188,8 @@ sub _content_developers {
             Paweł Murias<br>
             <br>
             Petar Shangov<br>
+            <br>
+            Peter Lavender<br>
             <br>
             Sebastian Willing<br>
             <br>
