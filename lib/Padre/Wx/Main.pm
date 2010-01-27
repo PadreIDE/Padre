@@ -1214,7 +1214,7 @@ sub refresh_title {
 		my ($session) = Padre::DB::Session->select(
 			'where id = ?', $self->ide->{session},
 		);
-		$variable_data{'p'} = $session->{name};
+		$variable_data{'p'} = $session->name;
 	}
 
 	# Keep it for later usage
@@ -2481,7 +2481,7 @@ sub open_session {
 	$progress->update( $#files + 1, Wx::gettext('Restore focus...') );
 	$self->on_nth_pane($focus) if defined $focus;
 
-	$self->ide->{session}          = $session->{id};
+	$self->ide->{session}          = $session->id;
 	$self->ide->{session_autosave} = $autosave;
 
 	# now we can redraw
@@ -2510,7 +2510,7 @@ sub save_session {
 
 	my $transaction = $self->lock('DB');
 	foreach my $file (@session) {
-		$file->{session} = $session->id;
+		$file->[4] = $session->id;
 		$file->insert;
 	}
 
