@@ -21,7 +21,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Simple refocus on document after command run (KTHAKORE)
     - Fixed ticket #822: main window could be off screen on start (BLAKEW)
     - padre-client allows you to use Padre for commit messages and other
-      synchronous edit events
+      synchronous edit events (CORION)
     - WIN32, Converted the --desktop registry code to Win32::TieRegistry 
       and removed hardcoded strawberry paths (AZAWAWI)
     - WIN32, padre.exe will run with the same UAC privileges as same as
@@ -37,7 +37,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Padre::Util::Win32::ExecuteProcessAndWait doesn't automatically inherit
       the same Cwd as the parent process. Added support for explicit cwd
       parameter and make the syntax checker pass the cwd to it. Syntax checking
-      of test scripts and such should now work as intended (ADAMK)
+      of test scripts and such should now work as intended on Win32(ADAMK)
     - Audit uses of Padre::Util::Win32 to only load it via require. Added a
       TRACE warning to verify it never gets loaded on non-Win32 (ADAMK)
     - Tuned the locking for ->close_where, which should make a variety of
@@ -156,7 +156,7 @@ Changes for Perl Application Development and Refactoring Environment
       being done in a transaction, or were doing crazy bizarre things. Startup
       is now noticably faster (ADAMK)
     - Added Preference setting to control autocomplete when editting a script rather than
-      a Module.  (WAXHEAD)      
+      a Module. (PLAVEN)      
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
@@ -176,7 +176,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Padre speedup: Limit number of menu bar refreshs (SEWI)
     - Fixed ticket #790: Ctrl + Caps Lock reduces font size (AZAWAWI)
     - Re-enabled toggle status bar on win32 (AZAWAWI)
-    - Fixed ticket #750: Ctrl-Tab works again (WAXHEAD, SEWI)
+    - Fixed ticket #750: Ctrl-Tab works again (PLAVEN, SEWI)
     - Fixed Padre crash in Module Tools/Install Locale/Module/CPAN config (AZAWAWI)
     - Open Resource restarts search now when project directory or Padre's 
       current directory changes (AZAWAWI)
@@ -235,7 +235,7 @@ Changes for Perl Application Development and Refactoring Environment
 
 0.49 2009.11.02
     - Fixed #691: Extract subroutine does not work for a script without
-      subroutines (WAXHEAD)
+      subroutines (PLAVEN)
     - Bugfix: The split-beginner-error check got false positives (SEWI)
     - Moved more menu actions to independent actions (SEWI)
     - Added a readonly flag to the taskbar (AGN)
