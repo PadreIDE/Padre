@@ -43,6 +43,10 @@ Changes for Perl Application Development and Refactoring Environment
     - Tuned the locking for ->close_where, which should make a variety of
       functions like "Close This Project" and "Close Other Projects"
       noticably faster (ADAMK)
+    - Changed func_foo config variables to feature_foo, in anticipation of
+      of a future equivalent to the Mozilla "about:config" control (ADAMK)
+    - Added feature_position to allow disabling of Padre's feature to
+      remember the location in the file you were scrolled to (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)

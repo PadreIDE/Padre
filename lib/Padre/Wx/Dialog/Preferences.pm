@@ -468,9 +468,9 @@ sub _appearance_panel {
 
 	$preview_sizer->Add( $notebook, 1, Wx::wxGROW, 5 );
 
-	# These options are only configurable after adding func_config: 1 to the
+	# These options are only configurable after adding feature_config: 1 to the
 	# config.yml - file to advoid overloading the Preferences dialog:
-	if ( $config->func_config ) {
+	if ( $config->feature_config ) {
 
 		my @table2 =
 			( [ [ 'Wx::StaticText', undef, Wx::gettext('Any changes to these options require a restart:') ] ] );
@@ -478,7 +478,7 @@ sub _appearance_panel {
 		for (@Func_List) {
 
 			push @table2,
-				[ [ 'Wx::CheckBox', 'func_' . $_->[0], ( eval( '$config->func_' . $_->[0] ) ? 1 : 0 ), $_->[1] ] ];
+				[ [ 'Wx::CheckBox', 'feature_' . $_->[0], ( eval( '$config->feature_' . $_->[0] ) ? 1 : 0 ), $_->[1] ] ];
 		}
 
 		my $settings_subpanel2 = $self->_new_panel($panel);
@@ -1119,12 +1119,12 @@ sub run {
 
 	# Don't save options which are not shown as this may result in
 	# clearing them:
-	if ( $config->func_config ) {
+	if ( $config->feature_config ) {
 
-		for my $func (@Func_List) {
+		for my $feature (@Func_List) {
 			$config->set(
-				'func_' . $func->[0],
-				$data->{ 'func_' . $func->[0] } ? 1 : 0
+				'feature_' . $feature->[0],
+				$data->{ 'feature_' . $feature->[0] } ? 1 : 0
 			);
 		}
 

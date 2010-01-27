@@ -829,27 +829,29 @@ setting(
 	default => '',
 );
 
-# Enable/Disable entire functions that some people dislike
+# Enable/Disable entire functions that some people dislike.
+# Normally these should be enabled by default (or should be
+# planned to eventually be enabled by default).
 setting(
-	name    => 'func_config',
+	name    => 'feature_config',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
 setting(
-	name    => 'func_bookmark',
+	name    => 'feature_bookmark',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
 setting(
-	name    => 'func_fontsize',
+	name    => 'feature_fontsize',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
 );
 setting(
-	name    => 'func_session',
+	name    => 'feature_session',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,

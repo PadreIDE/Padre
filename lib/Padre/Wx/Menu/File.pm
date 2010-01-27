@@ -172,11 +172,11 @@ sub new {
 		'file.save_all',
 	);
 
-	if ( $config->func_session ) {
+	if ( $config->feature_session ) {
 
 		$self->AppendSeparator;
 
-		# Specialised open and close functions
+		# Session operations
 		$self->{open_session} = $self->add_menu_action(
 			$self,
 			'file.open_session',

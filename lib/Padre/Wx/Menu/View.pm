@@ -167,7 +167,7 @@ sub new {
 		'view.font_reset',
 	);
 
-	if ( $config->func_bookmark ) {
+	if ( $config->feature_bookmark ) {
 
 		$self->AppendSeparator;
 
