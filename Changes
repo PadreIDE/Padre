@@ -49,6 +49,7 @@ Changes for Perl Application Development and Refactoring Environment
       remember the location in the file you were scrolled to (ADAMK)
     - Added a fast ascii shortcut to the very slow encode detector. Opening
       files all of a sudden gets much faster if you have ascii files (ADAMK)
+    - Bumped ORLite to 1.36 to get Class::XSAccessor support (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
