@@ -4135,6 +4135,9 @@ sub close {
 		}
 	}
 
+	# Now we are past the confirmation, apply an update lock as well
+	my $lock2 = $self->lock('UPDATE');
+
 	# Ticket #828 - ordering is probably important here
 	#   when should plugins be notified ?
 	$self->ide->plugin_manager->editor_disable($editor);
@@ -4154,6 +4157,8 @@ sub close {
 
 	$self->notebook->DeletePage($id);
 
+	# NOTE: Why are we doing an explicit clear?
+	# Wouldn't a refresh to them clear if needed anyway?
 	if ( $self->has_syntax ) {
 		$self->syntax->clear;
 	}
