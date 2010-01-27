@@ -4135,9 +4135,6 @@ sub close {
 		}
 	}
 
-	# Now we are past the confirmation, apply an update lock as well
-	my $lock2 = $self->lock('UPDATE');
-
 	# Ticket #828 - ordering is probably important here
 	#   when should plugins be notified ?
 	$self->ide->plugin_manager->editor_disable($editor);
@@ -4154,6 +4151,9 @@ sub close {
 	}
 	$doc->store_cursor_position;
 	$doc->remove_tempfile if $doc->tempfile;
+
+	# Now we are past the confirmation, apply an update lock as well
+	my $lock2 = $self->lock('UPDATE');
 
 	$self->notebook->DeletePage($id);
 
