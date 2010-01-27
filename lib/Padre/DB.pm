@@ -19,12 +19,15 @@ use Padre::DB::Migrate {
 	create        => 1,
 	tables        => [ 'Modules' ],
 	file          => Padre::Constant::CONFIG_HOST,
-	xsaccessor    => 1,
 	user_revision => 11,
 	timeline      => File::Spec->catdir(
 		File::ShareDir::dist_dir('Padre'),
 		'timeline',
 	),
+
+	# Acceleration options (remove these if they cause trouble)
+	array      => 1,
+	xsaccessor => 1,
 }; #, '-DEBUG';
 
 # Overlay classes to enhance the ORLite defaults
