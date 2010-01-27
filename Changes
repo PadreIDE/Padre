@@ -47,6 +47,8 @@ Changes for Perl Application Development and Refactoring Environment
       of a future equivalent to the Mozilla "about:config" control (ADAMK)
     - Added feature_position to allow disabling of Padre's feature to
       remember the location in the file you were scrolled to (ADAMK)
+    - Added a fast ascii shortcut to the very slow encode detector. Opening
+      files all of a sudden gets much faster if you have ascii files (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
