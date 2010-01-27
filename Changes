@@ -45,7 +45,7 @@ Changes for Perl Application Development and Refactoring Environment
       noticably faster (ADAMK)
     - Changed func_foo config variables to feature_foo, in anticipation of
       of a future equivalent to the Mozilla "about:config" control (ADAMK)
-    - Added feature_position to allow disabling of Padre's feature to
+    - Added feature_cursormemory to allow disabling of Padre's feature to
       remember the location in the file you were scrolled to (ADAMK)
     - Added a fast ascii shortcut to the very slow encode detector. Opening
       files all of a sudden gets much faster if you have ascii files (ADAMK)

@@ -857,7 +857,7 @@ setting(
 	default => 1,
 );
 setting(
-	name    => 'feature_position',
+	name    => 'feature_cursormemory',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,

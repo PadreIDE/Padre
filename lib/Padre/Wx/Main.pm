@@ -3315,7 +3315,7 @@ sub setup_editor {
 	# $editor->padre_setup;
 	Wx::Event::EVT_MOTION( $editor, \&Padre::Wx::Editor::on_mouse_motion );
 
-	if ( $config->feature_position ) {
+	if ( $config->feature_cursormemory ) {
 		$document->restore_cursor_position;
 	}
 
@@ -3694,7 +3694,7 @@ sub reload_file {
 		$editor = $document->editor;
 	}
 
-	my $pos  = $self->config->feature_position;
+	my $pos  = $self->config->feature_cursormemory;
 	$document->store_cursor_position if $pos;
 	if ( $document->reload ) {
 		$document->editor->configure_editor($document);
@@ -4161,7 +4161,7 @@ sub close {
 		} @{ $self->{on_close_watchers}->{$fn} };
 	}
 
-	if ( $self->config->feature_position ) {
+	if ( $self->config->feature_cursormemory ) {
 		$doc->store_cursor_position;
 	}
 	if ( $doc->tempfile ) {
