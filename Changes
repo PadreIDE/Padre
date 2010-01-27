@@ -50,7 +50,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added a fast ascii shortcut to the very slow encode detector. Opening
       files all of a sudden gets much faster if you have ascii files (ADAMK)
     - Bumped ORLite to 1.37 to get ARRAY object support and
-      Class::XSAccessor acceleration support (ADAMK)
+      Class::XSAccessor acceleration support. If they cause problems,
+      these changes can be safely backed out. (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
