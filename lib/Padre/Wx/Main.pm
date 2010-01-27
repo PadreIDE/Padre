@@ -2355,7 +2355,11 @@ sub run_document {
 	}
 	if ($cmd) {
 		if ( $document->pre_process ) {
-			$self->run_command($cmd);
+			SCOPE: {
+				require File::pushd;
+				my $pushd = File::pushd::pushd( $document->project_dir );
+				$self->run_command($cmd);
+			}
 		} else {
 			my $styles = Wx::wxCENTRE | Wx::wxICON_HAND | Wx::wxYES_NO;
 			my $ret    = Wx::MessageBox(
@@ -2365,7 +2369,11 @@ sub run_document {
 				$self,
 			);
 			if ( $ret == Wx::wxYES ) {
-				$self->run_command($cmd);
+				SCOPE: {
+					require File::pushd;
+					my $pushd = File::pushd::pushd( $document->project_dir );
+					$self->run_command($cmd);
+				}
 			}
 		}
 	}
