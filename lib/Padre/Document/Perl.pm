@@ -261,10 +261,10 @@ Accepts one optional argument: a debug flag.
 =cut
 
 sub get_command {
-	my $self  = shift;
-	my $debug = shift;
-
-	my $config = Padre->ide->config;
+	my $self    = shift;
+	my $debug   = shift;
+	my $current = Padre::Current->new( document => $self );
+	my $config  = $current->config;
 
 	# Use a temporary file if run_save is set to 'unsaved'
 	my $filename =
@@ -288,7 +288,7 @@ sub get_command {
 				),
 				Wx::gettext('Run'),
 				Wx::wxYES_NO | Wx::wxCENTRE,
-				Padre->ide->wx->main,
+				$current->main,
 			);
 			if ( $ret == Wx::wxYES ) {
 				$perl = Padre::Perl::cperl();
