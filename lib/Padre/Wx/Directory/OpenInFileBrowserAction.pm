@@ -26,8 +26,22 @@ sub _execute {
 	require File::Which;
 	my $cmd = File::Which::which($exe_name);
 	if ( -e $cmd ) {
-		require IPC::Open2;
-		my $pid = IPC::Open2::open2( \*R, \*W, $cmd, @cmd_args );
+		# On Windows, if we don't have STDIN/STDOUT, avoid IPC::Open3
+		# because it crashes when launching a non-console app
+		if ($^O =~ /MSWin/i) {
+			system($cmd, @cmd_args); # we know that Explorer.exe will quit quickly
+		} else {
+			require IPC::Open2;
+			my $ok = eval {
+				my $r = '';
+				my $w = '';
+				my $pid = IPC::Open2::open2( $r,$w, $cmd, @cmd_args );
+				1
+			};
+			if (! $ok) {
+				$result = $@;
+			};
+		};
 	} else {
 		$result = Wx::gettext("Failed to execute process\n");
 	}
@@ -53,7 +67,7 @@ sub open_in_file_browser {
 
 		# In windows, simply execute: explorer.exe /select,"$filename"
 		$filename =~ s/\//\\/g;
-		$error = $self->_execute( 'explorer.exe', "/select,\"$filename\"" );
+		$error = $self->_execute( 'cmd', '/c', 'explorer.exe', "/select,\"$filename\"" );
 	} elsif ( $^O =~ /linux|bsd/i ) {
 		my $parent_folder = File::Basename::dirname($filename);
 		if ( defined $ENV{KDE_FULL_SESSION} ) {
