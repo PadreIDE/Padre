@@ -573,12 +573,11 @@ sub _load_plugin {
 
 	# Should we try to enable the plug-in
 	my $config = $self->plugin_db( $plugin->class );
-	unless ( defined $config->[2] ) {
-
+	unless ( defined $config->enabled ) {
 		# Do not enable by default
-		$config->[2] = 0;
+		$config->set( enabled => 0 );
 	}
-	unless ( $config->[2] ) {
+	unless ( $config->enabled ) {
 		$plugin->status('disabled');
 		return;
 	}
