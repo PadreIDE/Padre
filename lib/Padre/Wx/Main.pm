@@ -2510,8 +2510,7 @@ sub save_session {
 
 	my $transaction = $self->lock('DB');
 	foreach my $file (@session) {
-#		$file->set( session => $session->id );
-		$file->[4] = $session->id;
+		$file->set( session => $session->id );
 		$file->insert;
 	}
 
