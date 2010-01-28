@@ -1077,7 +1077,7 @@ sub autocomplete {
 
 	# The second parameter may be a reference to the current event or the next
 	# char which will be added to the editor:
-	my $nextchar;
+	my $nextchar = ''; # Use empty instead of undef
 	if ( defined($event) and ( ref($event) eq 'Wx::KeyEvent' ) ) {
 		my $key = $event->GetUnicodeKey;
 		$nextchar = chr($key);
