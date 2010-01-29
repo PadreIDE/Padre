@@ -3694,7 +3694,7 @@ sub reload_file {
 		$editor = $document->editor;
 	}
 
-	my $pos  = $self->config->feature_cursormemory;
+	my $pos = $self->config->feature_cursormemory;
 	$document->store_cursor_position if $pos;
 	if ( $document->reload ) {
 		$document->editor->configure_editor($document);
@@ -4262,12 +4262,10 @@ sub close_where {
 
 	# Generate the list of ids to close before we go to the
 	# expensive of taking any locks.
-	my @close = grep {
-		$where->( $notebook->GetPage($_)->{Document} )
-	} reverse $self->pageids;
-	if ( @close ) {
-		my $lock = $self->lock('UPDATE', 'DB', 'refresh');
-		foreach my $id ( @close ) {
+	my @close = grep { $where->( $notebook->GetPage($_)->{Document} ) } reverse $self->pageids;
+	if (@close) {
+		my $lock = $self->lock( 'UPDATE', 'DB', 'refresh' );
+		foreach my $id (@close) {
 			$self->close($id) or return 0;
 		}
 	}

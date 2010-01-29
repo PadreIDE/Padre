@@ -26,22 +26,23 @@ sub _execute {
 	require File::Which;
 	my $cmd = File::Which::which($exe_name);
 	if ( -e $cmd ) {
+
 		# On Windows, if we don't have STDIN/STDOUT, avoid IPC::Open3
 		# because it crashes when launching a non-console app
-		if ($^O =~ /MSWin/i) {
-			system($cmd, @cmd_args); # we know that Explorer.exe will quit quickly
+		if ( $^O =~ /MSWin/i ) {
+			system( $cmd, @cmd_args ); # we know that Explorer.exe will quit quickly
 		} else {
 			require IPC::Open2;
 			my $ok = eval {
-				my $r = '';
-				my $w = '';
-				my $pid = IPC::Open2::open2( $r,$w, $cmd, @cmd_args );
-				1
+				my $r   = '';
+				my $w   = '';
+				my $pid = IPC::Open2::open2( $r, $w, $cmd, @cmd_args );
+				1;
 			};
-			if (! $ok) {
+			if ( !$ok ) {
 				$result = $@;
-			};
-		};
+			}
+		}
 	} else {
 		$result = Wx::gettext("Failed to execute process\n");
 	}

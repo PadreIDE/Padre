@@ -608,6 +608,7 @@ sub guess_mimetype {
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
 	if ( defined $text ) {
+
 		# Is this a script of some kind?
 		if ( $text =~ /\A#!/m ) {
 			if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {

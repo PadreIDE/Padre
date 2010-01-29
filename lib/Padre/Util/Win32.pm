@@ -29,7 +29,7 @@ use Padre::Constant ();
 use Padre::Logger;
 
 # This module may be loaded by others, so don't crash on Linux when just being loaded:
-if ( Padre::Constant::WIN32 ) {
+if (Padre::Constant::WIN32) {
 	require Win32::API;
 } else {
 	TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
@@ -177,7 +177,7 @@ sub ExecuteProcessAndWait {
 	$info->{lpFile}       = $params{file};
 	$info->{lpParameters} = $params{parameters};
 	$info->{nShow}        = $params{show} ? 1 : 0;
-	$info->{fMask}        = 0x40; # SEE_MASK_NOCLOSEPROCESS
+	$info->{fMask}        = 0x40;                                    # SEE_MASK_NOCLOSEPROCESS
 	my $ShellExecuteEx = Win32::API->new( shell32 => <<'CODE');
 		BOOL ShellExecuteEx(
 			LPSHELLEXECUTEINFO lpExecInfo

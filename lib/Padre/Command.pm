@@ -14,6 +14,7 @@ our $VERSION = '0.55';
 
 use Class::XSAccessor {
 	getters => {
+
 		# The fully resolved path to the program to execute
 		program => 'program',
 
@@ -41,18 +42,18 @@ use Class::XSAccessor {
 # NOTE: Currently, this does no validation
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Defaults
 	unless ( defined $self->{parameters} ) {
-		$self->{parameters} = [ ];
+		$self->{parameters} = [];
 	}
 	unless ( defined $self->{directory} ) {
 		require File::HomeDir;
 		$self->{directory} = File::HomeDir->my_home;
 	}
 	unless ( defined $self->{environment} ) {
-		$self->{environment} = { };
+		$self->{environment} = {};
 	}
 	unless ( defined $self->{visible} ) {
 		$self->{visible} = 0;

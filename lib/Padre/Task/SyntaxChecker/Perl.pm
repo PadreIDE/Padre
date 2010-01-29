@@ -95,7 +95,7 @@ sub _check_syntax {
 		my $cmd = join ' ', @cmd;
 
 		# Make sure we execute from the correct directory
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
 			require Padre::Util::Win32;
 			Padre::Util::Win32::ExecuteProcessAndWait(
 				directory  => $self->{cwd},
