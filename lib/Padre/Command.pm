@@ -9,7 +9,6 @@ package Padre::Command;
 use 5.008005;
 use strict;
 use warnings;
-use File::HomeDir ();
 
 our $VERSION = '0.55';
 
@@ -49,6 +48,7 @@ sub new {
 		$self->{parameters} = [ ];
 	}
 	unless ( defined $self->{directory} ) {
+		require File::HomeDir;
 		$self->{directory} = File::HomeDir->my_home;
 	}
 	unless ( defined $self->{environment} ) {
