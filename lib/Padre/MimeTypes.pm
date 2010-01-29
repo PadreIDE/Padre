@@ -608,11 +608,13 @@ sub guess_mimetype {
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
 	if ( defined $text ) {
+		# Is this a script of some kind?
 		if ( $text =~ /\A#!/m ) {
-
-			# Found a hash bang line
 			if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
 				return $self->perl_mime_type($text);
+			}
+			if ( $text =~ /\A#![^\n]*\b(?:z|k|ba)?sh\b/ ) {
+				return 'application/x-shellscript';
 			}
 		}
 
