@@ -53,6 +53,10 @@ Changes for Perl Application Development and Refactoring Environment
       Class::XSAccessor acceleration support. If they cause problems,
       these changes can be safely backed out. (ADAMK)
     - Fixed the mass-error-popups on mimetypes without help provider (SEWI)
+    - During DB locks (which are the most likely place for things to make
+      changes to the database) disable synchronous SQLite writes. This will
+      reduce the time that Padre blocks, at the risk of config.db corruption
+      if there is a hardware failure or operating system crash. (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
