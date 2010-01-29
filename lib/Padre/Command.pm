@@ -9,8 +9,28 @@ package Padre::Command;
 use 5.008005;
 use strict;
 use warnings;
+use File::HomeDir ();
 
 our $VERSION = '0.55';
+
+use Class::XSAccessor {
+	getters => {
+		# The fully resolved path to the program to execute
+		program => 'program',
+
+		# Parameters to the command as an ARRAY reference
+		parameters => 'parameters',
+
+		# Where to set the directory when starting the command
+		directory => 'directory',
+
+		# Differences to the environment while running the command
+		environment => 'environment',
+
+		# Should the command be run in a visible shell
+		visible => 'visible',
+	},
+};
 
 
 
@@ -23,23 +43,22 @@ our $VERSION = '0.55';
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
+
+	# Defaults
+	unless ( defined $self->{parameters} ) {
+		$self->{parameters} = [ ];
+	}
+	unless ( defined $self->{directory} ) {
+		$self->{directory} = File::HomeDir->my_home;
+	}
+	unless ( defined $self->{environment} ) {
+		$self->{environment} = { };
+	}
+	unless ( defined $self->{visible} ) {
+		$self->{visible} = 0;
+	}
+
 	return $self;
-}
-
-sub directory {
-	$_[0]->{directory};
-}
-
-sub program {
-	$_[0]->{program};
-}
-
-sub parameters {
-	$_[0]->{parameters};
-}
-
-sub environment {
-	$_[0]->{environment};
 }
 
 1;
