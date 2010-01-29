@@ -192,7 +192,7 @@ sub trace_sub_startstop {
 
 	eval 'use Aspect;';
 	if ($@) {
-		$main->error( Wx::gettext( 'Error while loading Aspect, is it installed?' . "\n$@" ) );
+		$main->error( Wx::gettext( 'Error while loading Aspect, is it installed?') . "\n$@" );
 		return;
 	}
 
