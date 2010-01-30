@@ -50,11 +50,7 @@ sub new {
 	$self->_bind_events;
 
 	# wrap everything in a vbox to add some padding
-	$self->SetMinSize( [ 360, 340 ] );
-	$self->SetSizer($sizer);
-
-	# center/fit the dialog
-	$self->Fit;
+	$self->SetSizerAndFit($sizer);
 	$self->CentreOnParent;
 
 	return $self;
@@ -70,60 +66,47 @@ sub _create_controls {
 
 	# Goto line label
 	$self->{gotoline_label} = Wx::StaticText->new(
-		$self,
-		-1,
-		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
 	);
 
 	# Input text control for the line number
 	$self->{gotoline_text} = Wx::TextCtrl->new(
-		$self,                 -1, '',
-		Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
 	$self->{status_line} = Wx::StaticText->new(
-		$self,
-		-1,
-		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
-		$self,
-		Wx::wxID_OK,
-		Wx::gettext("&OK"),
+		$self, Wx::wxID_OK, Wx::gettext("&OK"),
 	);
 	$self->{button_ok}->SetDefault;
 	$self->{button_ok}->Enable(0);
 
 	# Cancel button (obviously)
 	$self->{button_cancel} = Wx::Button->new(
-		$self,
-		Wx::wxID_CANCEL,
-		Wx::gettext("&Cancel"),
+		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
 	);
 
 	#----- Dialog Layout
-
-
 
 	# Main button cluster
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
+	$button_sizer->AddSpacer(5);
 
 	# The main layout for the dialog is vertical
 
 	# Create the main sizer
-	$sizer->AddSpacer(10);
-	$sizer->Add( $self->{gotoline_label}, 0, Wx::wxEXPAND,             0 );
-	$sizer->Add( $self->{gotoline_text},  0, Wx::wxTOP | Wx::wxEXPAND, 5 );
-	$sizer->Add( $self->{status_line},    0, Wx::wxEXPAND,             0 );
-	$sizer->Add( $button_sizer,           0, Wx::wxALIGN_RIGHT,        5 );
+	$sizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$sizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$sizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$sizer->AddSpacer(5);
+	$sizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
+	$sizer->AddSpacer(5);
 
 	return;
 
@@ -146,9 +129,8 @@ sub _bind_events {
 			}
 
 			my $editor = $self->current->editor;
-			my $max    = $editor->GetLineCount;
-			if ( $line_number > $max or $line_number < 0 ) {
-				$self->{status_line}->SetLabel( Wx::gettext('Out of range') );
+			if ( $line_number > $self->{max_line_number} ) {
+				$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
 				$self->{button_ok}->Enable(0);
 				return;
 			}
@@ -178,8 +160,7 @@ sub _bind_events {
 
 			my $line_number = $self->{gotoline_text}->GetValue;
 			my $editor      = $self->current->editor;
-			my $max         = $editor->GetLineCount;
-			$line_number = $max if $line_number > $max;
+			$line_number = $self->{max_line_number} if $line_number > $self->{max_line_number};
 			$line_number--;
 			$editor->goto_line_centerize($line_number);
 		},
@@ -202,10 +183,13 @@ sub modal {
 	my $class = shift;
 	my $self  = $class->new(@_);
 
+	# Update Goto line number label
 	my $editor = $self->current->editor;
-	my $max    = $editor->GetLineCount;
-	$self->{gotoline_label}->SetLabel( sprintf( Wx::gettext("Enter line number between 1 and %s:"), $max ) );
+	$self->{max_line_number} = $editor->GetLineCount;
+	$self->{gotoline_label}
+		->SetLabel( sprintf( Wx::gettext("Enter line number between 1 and %s:"), $self->{max_line_number} ) );
 
+	# Go modal!
 	my $ok = $self->ShowModal;
 
 	return;
