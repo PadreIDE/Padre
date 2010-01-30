@@ -41,10 +41,10 @@ sub _initialize {
 	return if %EXT_BINARY; # call it only once
 
 	%EXT_BINARY = map { $_ => 1 } qw{
-		aiff  au    avi  bmp  cache  dat   doc  gif  gz   icns
+		aiff  au    avi  bmp  cache  dat   doc  docx gif  gz   icns
 		jar   jpeg  jpg  m4a  mov    mp3   mpg  ogg  pdf  png
 		pnt   ppt   qt   ra   svg    svgz  svn  swf  tar  tgz
-		tif   tiff  wav  xls  xlw    zip
+		tif   tiff  wav  xls  xlw    xlsx  zip
 	};
 
 	# This is the primary file extension to mime-type mapping
