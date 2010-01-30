@@ -190,7 +190,7 @@ sub modal {
 	my $editor = $self->current->editor;
 	$self->{max_line_number} = $editor->GetLineCount;
 	$self->{gotoline_label}
-		->SetLabel( sprintf( Wx::gettext("Enter line number between 1 and %s:"), $self->{max_line_number} ) );
+		->SetLabel( sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
 
 	# Go modal!
 	my $ok = $self->ShowModal;
