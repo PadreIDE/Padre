@@ -11,12 +11,14 @@ use Padre::Logger;
 
 # package exports and version
 our $VERSION = '0.55';
-our @ISA     = 'Wx::Dialog';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::Dialog
+};
 
 # accessors
 use Class::XSAccessor {
 	accessors => {
-		_main            => '_main',            # Padre main window
 		_sizer           => '_sizer',           # window sizer
 		_search_text     => '_search_text',     # search text control
 		_list            => '_list',            # matching items list
@@ -40,8 +42,6 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->_main($main);
-
 	# Dialog's icon as is the same as Padre
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
@@ -60,7 +60,7 @@ sub new {
 sub _on_ok_button_clicked {
 	my ($self) = @_;
 
-	my $main = $self->_main;
+	my $main = $self->main;
 
 	# Open the selected menu item if the user pressed OK
 	my $selection = $self->_list->GetSelection;
