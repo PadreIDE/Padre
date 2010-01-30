@@ -512,15 +512,16 @@ sub _update_matches_list_box {
 	foreach my $file ( @{ $self->_matched_files } ) {
 		my $filename = File::Basename::fileparse($file);
 		if ( $filename =~ /^$search_expr/i ) {
+
 			# Display package name if it is a Perl file
 			my $pkg = '';
-			if($file =~ /(.pm|.pl)$/i) {
+			if ( $file =~ /(.pm|.pl)$/i ) {
 				my $contents = Padre::Util::slurp($file);
-				if($contents && $$contents =~ /\s*package\s+(.+);/) {
+				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
 					$pkg = "  ($1)";
 				}
 			}
-			$self->_matches_list->Insert( $filename . $pkg , $pos, $file );
+			$self->_matches_list->Insert( $filename . $pkg, $pos, $file );
 			$pos++;
 		}
 	}

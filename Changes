@@ -61,6 +61,8 @@ Changes for Perl Application Development and Refactoring Environment
       c:\strawberry\perl\site\bin (AZAWAWI)
     - Improved "Goto Line" dialog to be smarter with better validation/error
       messages (AZAWAWI)
+    - Open Resource can now display Perl package names for matching resources
+      (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
