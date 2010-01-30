@@ -40,19 +40,13 @@ sub new {
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
-	# Form Components
+	#----- Form Components
 
-	# Input combobox for the URL
-	$self->{gotoline_text} = Wx::ComboBox->new(
-		$self,
-		-1,
-		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		[],
-		Wx::wxCB_DROPDOWN
+	# Input text control for the line number
+	$self->{gotoline_text} = Wx::TextCtrl->new(
+			$self,                 -1, '',
+			Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
-	$self->{gotoline_text}->SetSelection(-1);
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
@@ -83,21 +77,13 @@ sub new {
 		}
 	);
 
-	# Form Layout
+	#----- Form Layout
 
 	# Sample URL label
-	my $gotoline_label = Wx::StaticText->new(
+	$self->{gotoline_label} = Wx::StaticText->new(
 		$self,
 		-1,
-		"",
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-	);
-
-	# Separator line between the controls and the buttons
-	my $line_1 = Wx::StaticLine->new(
-		$self,
-		-1,
+		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
@@ -109,9 +95,8 @@ sub new {
 
 	# The main layout for the dialog is vertical
 	my $sizer_2 = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer_2->Add( $gotoline_label,        0, 0,                                       0 );
+	$sizer_2->Add( $self->{gotoline_label},        0, 0,                                       0 );
 	$sizer_2->Add( $self->{gotoline_text}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );
-	$sizer_2->Add( $line_1,               0, Wx::wxTOP | Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
 	$sizer_2->Add( $button_sizer,         1, Wx::wxALIGN_RIGHT,                       5 );
 
 	# Wrap it in a horizontal to create an top level border
@@ -148,13 +133,15 @@ Returns C<undef> if the user hits the cancel button.
 sub modal {
 	my $class = shift;
 	my $self  = $class->new(@_);
+	
+	my $editor      = $self->current->editor;
+	my $max         = $editor->GetLineCount;
+	$self->{gotoline_label}->SetLabel(
+		sprintf( Wx::gettext("Line number between (1..%s):"), $max ));
+	
 	my $ok    = $self->ShowModal;
-	my $rv =
-		( $ok == Wx::wxID_OK )
-		? $self->{gotoline_text}->GetValue
-		: undef;
-	$self->Destroy;
-	return $rv;
+
+	return;
 }
 
 =pod
@@ -168,7 +155,15 @@ Attempt to open the specified URL
 =cut
 
 sub ok_button {
-	$_[0]->EndModal(Wx::wxID_OK);
+	my $self = shift;
+
+	$self->EndModal(Wx::wxID_OK);
+	
+#	return if not defined $line_number or $line_number !~ /^\d+$/;
+#
+#	$line_number = $max if $line_number > $max;
+#	$line_number--;
+#	$editor->goto_line_centerize($line_number);
 }
 
 =pod
