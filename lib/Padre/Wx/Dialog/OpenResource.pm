@@ -9,11 +9,13 @@ use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
 our $VERSION = '0.55';
-our @ISA     = 'Wx::Dialog';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::Dialog
+};
 
 use Class::XSAccessor {
 	accessors => {
-		_main                     => '_main',                     # Padre's main window
 		_sizer                    => '_sizer',                    # window sizer
 		_search_text              => '_search_text',              # search text control
 		_matches_list             => '_matches_list',             # matches list
@@ -43,7 +45,6 @@ sub new {
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	$self->_main($main);
 	$self->init_search;
 
 	# Dialog's icon as is the same as Padre
@@ -63,7 +64,7 @@ sub init_search {
 	my $self = shift;
 
 	#Check if we have an open file so we can use its directory
-	my $doc = $self->_main->current->document;
+	my $doc = $self->current->document;
 	my $filename = ( defined $doc ) ? $doc->filename : undef;
 	my $dir;
 	if ($filename) {
@@ -97,7 +98,7 @@ sub init_search {
 sub _on_ok_button_clicked {
 	my ($self) = @_;
 
-	my $main = $self->_main;
+	my $main = $self->main;
 	$self->Hide;
 
 	#Open the selected resources here if the user pressed OK
@@ -406,7 +407,7 @@ sub show {
 	if ( $self->IsShown ) {
 		$self->SetFocus;
 	} else {
-		my $editor = $self->_main->current->editor;
+		my $editor = $self->current->editor;
 		if ($editor) {
 			my $selection        = $editor->GetSelectedText;
 			my $selection_length = length $selection;
