@@ -59,6 +59,8 @@ Changes for Perl Application Development and Refactoring Environment
       if there is a hardware failure or operating system crash. (ADAMK)
     - Fixed ticket #837: padre.exe should be able to be placed in
       c:\strawberry\perl\site\bin (AZAWAWI)
+    - Improved "Goto Line" dialog to be smarter with better validation/error
+      messages (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)

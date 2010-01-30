@@ -109,7 +109,7 @@ sub _create_controls {
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
-	$sizer->Add	( $vsizer,    0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $vsizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	return;
 
