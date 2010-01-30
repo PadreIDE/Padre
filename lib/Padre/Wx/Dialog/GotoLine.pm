@@ -41,7 +41,7 @@ sub new {
 	);
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	# Create the controls
 	$self->_create_controls($sizer);
@@ -75,7 +75,7 @@ sub _create_controls {
 	);
 
 	$self->{status_line} = Wx::StaticText->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, Wx::gettext('Not a line number!'), Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
 	# OK button (obviously)
@@ -101,12 +101,15 @@ sub _create_controls {
 	# The main layout for the dialog is vertical
 
 	# Create the main sizer
-	$sizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$sizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$sizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$sizer->AddSpacer(5);
-	$sizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
-	$sizer->AddSpacer(5);
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vsizer->AddSpacer(5);
+	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
+	$vsizer->AddSpacer(5);
+
+	$sizer->Add	( $vsizer,    0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	return;
 
