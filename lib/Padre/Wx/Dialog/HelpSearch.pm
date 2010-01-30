@@ -354,6 +354,9 @@ sub find_help_topic {
 				$editor->WordEndPosition( $pos, 1 )
 			);
 		}
+
+		# trim whitespace
+		$topic =~ s/^\s*(.*?)\s*$/$1/;
 	}
 
 	return $topic;
