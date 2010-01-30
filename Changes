@@ -63,6 +63,8 @@ Changes for Perl Application Development and Refactoring Environment
       messages (AZAWAWI)
     - Open Resource can now display Perl package names for matching resources
       (AZAWAWI)
+    - Fixed #838: Author tests should all check RELEASE_TESTING and/or 
+      AUTOMATED_TESTING (RHEBUS, AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
