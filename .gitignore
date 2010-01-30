@@ -1,0 +1,8 @@
+.padre/
+META.yml
+Makefile
+blib/
+inc/
+pm_to_blib
+share/locale/*.mo
+
