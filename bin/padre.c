@@ -79,10 +79,19 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	lstrcpy(&szWPerl[dwLength+1], _T("wperl.exe"));
 #endif
 
-	//At this point we should check if padre script exists or not
+	//At this point we should check if wperl.exe exists or not
 	if (! FileExists(szWPerl)) {
-		LocalizedMessageBox(MAKEINTRESOURCE(IDS_ERR_WPERL), MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONERROR);
-		ExitProcess(1);
+		//if it does not exist, let us try to find it
+		//in ..\..\bin (to support vendor perl)
+		//see ticket #837
+		lstrcpy(szWPerl, szExePath);
+		lstrcpy(szWPerl, _T("..\\..\\bin\\wperl.exe") );
+
+		//Display an error message if wperl.exe is not found
+		if (! FileExists(szWPerl)) {
+			LocalizedMessageBox(MAKEINTRESOURCE(IDS_ERR_WPERL), MAKEINTRESOURCE(IDS_APP_TITLE), MB_OK|MB_ICONERROR);
+			ExitProcess(1);
+		}
 	}
 
 
