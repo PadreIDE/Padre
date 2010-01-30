@@ -40,46 +40,35 @@ sub new {
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
 	);
 
-	#----- Form Components
+	# create sizer that will host all controls
+	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
-	# Input text control for the line number
-	$self->{gotoline_text} = Wx::TextCtrl->new(
-			$self,                 -1, '',
-			Wx::wxDefaultPosition, Wx::wxDefaultSize,
-	);
+	# Create the controls
+	$self->_create_controls($sizer);
+	
+	# Bind the control events
+	$self->_bind_events;
 
-	# OK button (obviously)
-	$self->{button_ok} = Wx::Button->new(
-		$self,
-		Wx::wxID_OK,
-		Wx::gettext("&OK"),
-	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_ok},
-		sub {
-			$_[0]->ok_button;
-		},
-	);
-	$self->{button_ok}->SetDefault;
+	# wrap everything in a vbox to add some padding
+	$self->SetMinSize( [ 360, 340 ] );
+	$self->SetSizer($sizer);
 
-	# Cancel button (obviously)
-	$self->{button_cancel} = Wx::Button->new(
-		$self,
-		Wx::wxID_CANCEL,
-		Wx::gettext("&Cancel"),
-	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_cancel},
-		sub {
-			$_[0]->cancel_button;
-		}
-	);
+	# center/fit the dialog
+	$self->Fit;
+	$self->CentreOnParent;
 
-	#----- Form Layout
+	return $self;
+}
 
-	# Sample URL label
+#
+# Create dialog controls
+#
+sub _create_controls {
+	my ($self, $sizer) = @_;
+	 
+	#----- dialog controls
+
+	# Goto line label
 	$self->{gotoline_label} = Wx::StaticText->new(
 		$self,
 		-1,
@@ -88,45 +77,126 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
+	# Input text control for the line number
+	$self->{gotoline_text} = Wx::TextCtrl->new(
+			$self,                 -1, '',
+			Wx::wxDefaultPosition, Wx::wxDefaultSize,
+	);
+
+	$self->{status_line} = Wx::StaticText->new(
+		$self,
+		-1,
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+	);
+
+	# OK button (obviously)
+	$self->{button_ok} = Wx::Button->new(
+		$self,
+		Wx::wxID_OK,
+		Wx::gettext("&OK"),
+	);
+	$self->{button_ok}->SetDefault;
+	$self->{button_ok}->Enable(0);
+
+	# Cancel button (obviously)
+	$self->{button_cancel} = Wx::Button->new(
+		$self,
+		Wx::wxID_CANCEL,
+		Wx::gettext("&Cancel"),
+	);
+
+	#----- Dialog Layout
+
+	
+
 	# Main button cluster
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 
 	# The main layout for the dialog is vertical
-	my $sizer_2 = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$sizer_2->Add( $self->{gotoline_label},        0, 0,                                       0 );
-	$sizer_2->Add( $self->{gotoline_text}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );
-	$sizer_2->Add( $button_sizer,         1, Wx::wxALIGN_RIGHT,                       5 );
+	
+	# Create the main sizer
+	$sizer->AddSpacer(10);
+	$sizer->Add( $self->{gotoline_label},        0, Wx::wxEXPAND,                                       0 );
+	$sizer->Add( $self->{gotoline_text}, 0, Wx::wxTOP | Wx::wxEXPAND,                5 );
+	$sizer->Add( $self->{status_line},        0, Wx::wxEXPAND,                                       0 );
+	$sizer->Add( $button_sizer,         0, Wx::wxALIGN_RIGHT,                       5 );
 
-	# Wrap it in a horizontal to create an top level border
-	my $sizer_1 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizer_1->Add( $sizer_2, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	return;
 
-	# Apply the top sizer in the stack to the window,
-	# and tell the window and the sizer to alter size to fit
-	# to each other correctly, regardless of the platform.
-	# This type of sizing is NOT adaptive, so we must not use
-	# Wx::wxRESIZE_BORDER with this dialog.
-	$self->SetSizer($sizer_1);
-	$sizer_1->Fit($self);
-	$self->Layout;
+}
 
-	return $self;
+#
+# Binds control events
+#
+sub _bind_events {
+	my $self = shift;
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{gotoline_text},
+		sub {
+			my $line_number = $self->{gotoline_text}->GetValue;
+			if($line_number !~ /^\d+$/) {
+				$self->{status_line}->SetLabel(
+					Wx::gettext('Not a line number!'));
+				$self->{button_ok}->Enable(0);
+				return;
+			}
+			
+			my $editor      = $self->current->editor;
+			my $max         = $editor->GetLineCount;
+			if($line_number > $max or $line_number < 0) {
+				$self->{status_line}->SetLabel(
+					Wx::gettext('Out of range'));
+				$self->{button_ok}->Enable(0);
+				return;
+			}
+			
+			$self->{button_ok}->Enable(1);
+			$self->{status_line}->SetLabel('');
+
+			return;
+		}
+	);
+
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_cancel},
+		sub {
+			$_[0]->EndModal(Wx::wxID_CANCEL);
+
+		}
+	);
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_ok},
+		sub {
+			my $self = shift;
+
+			$self->EndModal(Wx::wxID_OK);
+
+			my $line_number = $self->{gotoline_text}->GetValue;
+			my $editor      = $self->current->editor;
+			my $max         = $editor->GetLineCount;
+			$line_number = $max if $line_number > $max;
+			$line_number--;
+			$editor->goto_line_centerize($line_number);
+		},
+	);
+	 
 }
 
 =pod
 
 =head2 C<modal>
 
-  my $url = Padre::Wx::Dialog::OpenURL->modal($main);
+  Padre::Wx::Dialog::GotoLine->modal($main);
 
-Single-shot modal dialog call to get a URL from the user.
-
-Returns a string if the user clicks B<OK> (it may be a null string if they did
-not enter anything).
-
-Returns C<undef> if the user hits the cancel button.
+Single-shot modal dialog call to set the line number from the user.
+Returns C<undef>.
 
 =cut
 
@@ -137,47 +207,11 @@ sub modal {
 	my $editor      = $self->current->editor;
 	my $max         = $editor->GetLineCount;
 	$self->{gotoline_label}->SetLabel(
-		sprintf( Wx::gettext("Line number between (1..%s):"), $max ));
+		sprintf( Wx::gettext("Enter line number between 1 and %s:"), $max ));
 	
 	my $ok    = $self->ShowModal;
 
 	return;
-}
-
-=pod
-
-=head2 C<ok_button>
-
-  $self->ok_button
-
-Attempt to open the specified URL
-
-=cut
-
-sub ok_button {
-	my $self = shift;
-
-	$self->EndModal(Wx::wxID_OK);
-	
-#	return if not defined $line_number or $line_number !~ /^\d+$/;
-#
-#	$line_number = $max if $line_number > $max;
-#	$line_number--;
-#	$editor->goto_line_centerize($line_number);
-}
-
-=pod
-
-=head2 C<cancel_button>
-
-  $self->cancel_button
-
-Hide dialog when pressed cancel button.
-
-=cut
-
-sub cancel_button {
-	$_[0]->EndModal(Wx::wxID_CANCEL);
 }
 
 1;
