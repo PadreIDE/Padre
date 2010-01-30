@@ -16,7 +16,9 @@ our @ISA     = qw{
 
 =head1 NAME
 
-Padre::Wx::Dialog::GotoLine - a dialog to goto a line number in the current editor
+Padre::Wx::Dialog::GotoLine - a dialog to jump to a user-specifed line
+
+=head1 PUBLIC API
 
 =head2 C<new>
 
