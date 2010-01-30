@@ -75,9 +75,12 @@ sub _create_controls {
 	$self->{gotoline_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
-
+	# have the text field grab the focus so we can just start typing.
+	$self->{gotoline_text}->SetFocus();
+	
 	$self->{status_line} = Wx::StaticText->new(
-		$self, -1, Wx::gettext('Not a line number!'), Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		#$self, -1, Wx::gettext('Not a line number!'), Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
 	# OK button (obviously)
