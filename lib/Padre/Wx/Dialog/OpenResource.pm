@@ -3,10 +3,10 @@ package Padre::Wx::Dialog::OpenResource;
 use 5.008;
 use strict;
 use warnings;
-use Cwd             ();
-use Padre::DB       ();
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Cwd              ();
+use Padre::DB        ();
+use Padre::Wx        ();
+use Padre::Wx::Icon  ();
 use Padre::MimeTypes ();
 
 our $VERSION = '0.55';
@@ -516,7 +516,7 @@ sub _update_matches_list_box {
 
 			# Display package name if it is a Perl file
 			my $pkg = '';
-			my $mime_type = Padre::MimeTypes->guess_mimetype(undef, $file);
+			my $mime_type = Padre::MimeTypes->guess_mimetype( undef, $file );
 			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
 				my $contents = Padre::Util::slurp($file);
 				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
