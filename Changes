@@ -57,6 +57,8 @@ Changes for Perl Application Development and Refactoring Environment
       changes to the database) disable synchronous SQLite writes. This will
       reduce the time that Padre blocks, at the risk of config.db corruption
       if there is a hardware failure or operating system crash. (ADAMK)
+    - Fixed ticket #837: padre.exe should be able to be placed in
+      c:\strawberry\perl\site\bin (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
