@@ -136,13 +136,6 @@ sub new {
 		Wx::wxID_CANCEL,
 		Wx::gettext('&Close'),
 	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_close},
-		sub {
-			$_[0]->button_close;
-		},
-	);
 
 	# Dialog Layout
 
@@ -325,15 +318,6 @@ sub box_clicked {
 	#$main->message("Box $box");
 	return;
 
-}
-
-#
-# $self->button_close;
-#
-# handler called when the close button has been clicked.
-#
-sub button_close {
-	$_[0]->Destroy;
 }
 
 1;
