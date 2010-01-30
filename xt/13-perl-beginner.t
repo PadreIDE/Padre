@@ -61,6 +61,11 @@ use Test::More;
 use Data::Dumper qw(Dumper);
 use File::Spec ();
 
+# Don't run tests for installs
+unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
+	plan( skip_all => "Author tests not required for installation" );
+}
+
 # enable NoWarning if this is fixed
 
 my %TEST = (

@@ -5,6 +5,11 @@ use warnings;
 use Test::More;
 
 BEGIN {
+	# Don't run tests for installs
+	unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
+		plan( skip_all => "Author tests not required for installation" );
+	}
+
 	unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;

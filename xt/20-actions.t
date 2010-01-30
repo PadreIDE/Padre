@@ -18,6 +18,11 @@ use File::Spec();
 plan skip_all => 'DISPLAY not set'
  unless  $ENV{DISPLAY} or ($^O eq 'MSWin32');
 
+# Don't run tests for installs
+unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
+	plan( skip_all => "Author tests not required for installation" );
+}
+
 my $devpl;
 # Search for dev.pl
 for ('.','blib/lib','lib') {
