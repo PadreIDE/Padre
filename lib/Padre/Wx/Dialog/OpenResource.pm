@@ -7,6 +7,7 @@ use Cwd             ();
 use Padre::DB       ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
+use Padre::MimeTypes ();
 
 our $VERSION = '0.55';
 our @ISA     = qw{
@@ -515,7 +516,8 @@ sub _update_matches_list_box {
 
 			# Display package name if it is a Perl file
 			my $pkg = '';
-			if ( $file =~ /(.pm|.pl)$/i ) {
+			my $mime_type = Padre::MimeTypes->guess_mimetype(undef, $file);
+			if ( $mime_type eq 'application/x-perl' or $mime_type eq 'application/x-perl6' ) {
 				my $contents = Padre::Util::slurp($file);
 				if ( $contents && $$contents =~ /\s*package\s+(.+);/ ) {
 					$pkg = "  ($1)";
