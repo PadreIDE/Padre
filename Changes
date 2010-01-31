@@ -67,6 +67,10 @@ Changes for Perl Application Development and Refactoring Environment
       AUTOMATED_TESTING (RHEBUS, AZAWAWI)
     - Fixed Regex Editor dialog destruction bug where multiple ->Show and
       ->Destroy could lead to a Padre crash on WIN32 (AZAWAWI)
+    - Project detection differentiates between four different subclasses
+      of Perl build systems (three of those correctly) (ADAMK)
+    - Function List has resource locking around it and properly triggers a
+      refresh when we show it for an already open document (ADAMK)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
