@@ -1646,16 +1646,14 @@ the panel.
 
 sub show_functions {
 	my $self = shift;
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $lock = $self->lock('UPDATE', 'refresh_functions');
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
+
 	$self->config->set( main_functions => $on );
-	$self->config->write;
-
 	$self->_show_functions($on);
-
-	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
