@@ -1419,6 +1419,22 @@ sub refresh_directory {
 
 =pod
 
+=head2 C<refresh_aui>
+
+This is a refresh method wrapper around the AUI C<Update> method so
+that it can be lock-managed by the existing locking system.
+
+=cut
+
+sub refresh_aui {
+	my $self = shift;
+	return if $self->locked('refresh_aui');
+	$self->aui->Update;
+	return;
+}
+
+=pod
+
 =head2 Interface Rebuilding Methods
 
 Those methods reconfigure Padre's main window in case of drastic changes
