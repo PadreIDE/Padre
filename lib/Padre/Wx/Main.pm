@@ -1654,6 +1654,7 @@ sub show_functions {
 
 	$self->config->set( main_functions => $on );
 	$self->_show_functions($on);
+	$self->aui->Update;
 	$self->ide->save_config;
 
 	return;
