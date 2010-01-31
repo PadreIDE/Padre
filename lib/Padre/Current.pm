@@ -13,6 +13,10 @@ our $VERSION   = '0.55';
 our @ISA       = 'Exporter';
 our @EXPORT_OK = '_CURRENT';
 
+use Class::XSAccessor {
+	constructor => 'new',
+};
+
 
 
 
@@ -27,12 +31,8 @@ our @EXPORT_OK = '_CURRENT';
 sub _CURRENT {
 
 	# Most likely options
-	unless ( defined $_[0] ) {
-		return Padre::Current->new;
-	}
-	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Current' ) ) {
-		return shift;
-	}
+	return Padre::Current->new unless defined $_[0];
+	return shift if Params::Util::_INSTANCE( $_[0], 'Padre::Current' );
 
 	# Fallback options
 	if ( Params::Util::_INSTANCE( $_[0], 'Padre::Document' ) ) {
@@ -40,18 +40,6 @@ sub _CURRENT {
 	}
 
 	return Padre::Current->new;
-}
-
-
-
-
-
-#####################################################################
-# Constructor
-
-sub new {
-	my $class = shift;
-	bless {@_}, $class;
 }
 
 
@@ -176,33 +164,51 @@ sub main {
 		my $parent = $_[1]->main;
 		return $parent if ref $parent eq 'Padre::Wx::Main';
 	}
-	unless ( defined $self->{main} ) {
-		if ( defined $self->{ide} ) {
-			return unless defined( $self->{ide}->wx );
-			$self->{main} = $self->{ide}->wx->main;
-		} else {
-			require Padre;
-			$self->{ide} = Padre->ide;
-			return unless defined( $self->{ide}->wx );
-			$self->{main} = $self->{ide}->wx->main;
-		}
+	if ( defined $self->{main} ) {
 		return $self->{main};
 	}
-	return $self->{main};
+	if ( defined $self->{ide} ) {
+		return unless defined( $self->{ide}->wx );
+		return $self->{main} = $self->{ide}->wx->main;
+	}
+	if ( defined $self->{editor} ) {
+		return $self->{main} = $self->{editor}->main;
+	}
+	if ( defined $self->{document} ) {
+		my $editor = $self->{document}->{editor};
+		if ( $editor ) {
+			my $main = $editor->main;
+			return $self->{main} = $main if $main;
+		}
+	}
+
+	# Last resort fallback
+	require Padre;
+	$self->{ide} = Padre->ide;
+	return unless defined( $self->{ide}->wx );
+	return $self->{main} = $self->{ide}->wx->main;
 }
 
 # Convenience method
 sub ide {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
-	unless ( defined $self->{ide} ) {
-		if ( defined $self->{main} ) {
-			$self->{ide} = $self->{main}->ide;
-		} else {
-			require Padre;
-			$self->{ide} = Padre->ide;
-		}
+	if ( defined $self->{ide} ) {
+		return $self->{ide};
 	}
-	return $self->{ide};
+	if ( defined $self->{main} ) {
+		return $self->{ide} = $self->{main}->ide;
+	}
+	if ( 
+		defined $self->{document}
+		or
+		defined $self->{editor}
+	) {
+		return $self->{ide} = $self->main->ide;
+	}
+
+	# Last resort
+	require Padre;
+	return $self->{ide} = Padre->ide;
 }
 
 1;
