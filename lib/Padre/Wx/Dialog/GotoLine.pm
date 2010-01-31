@@ -20,12 +20,6 @@ Padre::Wx::Dialog::GotoLine - a dialog to jump to a user-specifed line
 
 =head1 PUBLIC API
 
-=head2 C<new>
-
-  my $find = Padre::Wx::Dialog::GotoLine->new($main);
-
-Create and return a C<Padre::Wx::Dialog::GotoLine> "Goto Line" dialog.
-
 =cut
 
 sub new {
@@ -75,9 +69,12 @@ sub _create_controls {
 	$self->{gotoline_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
-	# have the text field grab the focus so we can just start typing.
-	$self->{gotoline_text}->SetFocus();
-	
+
+	unless(Padre::Constant::WIN32) {
+		#non-win32: Have the text field grab the focus so we can just start typing.
+		$self->{gotoline_text}->SetFocus();
+	}
+
 	$self->{status_line} = Wx::StaticText->new(
 		#$self, -1, Wx::gettext('Not a line number!'), Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
