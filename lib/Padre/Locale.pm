@@ -48,7 +48,7 @@ use Padre::Wx       ();
 use Padre::Logger;
 
 use constant DEFAULT  => 'en-gb';
-use constant SHAREDIR => File::Spec->rel2abs( Padre::Util::sharedir('locale') );
+use constant SHAREDIR => Padre::Util::sharedir('locale');
 
 our $VERSION = '0.55';
 
