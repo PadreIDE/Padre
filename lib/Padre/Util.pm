@@ -290,10 +290,14 @@ sub svn_directory_revision {
 # Shared Resources
 
 sub share {
+	$DB::single = 1;
 	if ( $ENV{PADRE_DEV} ) {
-		return File::Spec->catdir(
-			$FindBin::Bin,
-			File::Spec->updir, 'share'
+		return File::Spec->rel2abs(
+			File::Spec->catdir(
+				$FindBin::Bin,
+				File::Spec->updir,
+				'share',
+			),
 		);
 	}
 
@@ -315,7 +319,9 @@ sub share {
 
 	# Rely on automatic handling of everything
 	require File::ShareDir;
-	return File::ShareDir::dist_dir('Padre');
+	return File::Spec->rel2abs(
+		File::ShareDir::dist_dir('Padre')
+	);
 }
 
 sub sharedir {
