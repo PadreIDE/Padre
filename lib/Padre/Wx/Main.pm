@@ -4243,6 +4243,64 @@ sub close_all {
 
 =pod
 
+=head3 C<close_some>
+
+    my $success = $main->close_some(@pages_to_close);
+
+Try to close all documents. Return true upon success, false otherwise.
+
+=cut
+
+sub on_close_some {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+
+	require Padre::Wx::Dialog::WindowList;
+	Padre::Wx::Dialog::WindowList->new($self,
+			title => Wx::gettext('Close some files'),
+			list_title => Wx::gettext('Select files to close:'),
+			buttons => [['Close selected',sub { Padre->ide->wx->main->close_some(@_); }]],
+		)->show;
+}
+
+sub close_some {
+	my $self = shift;
+	my @close_pages = @_;
+
+	my $notebook = $self->notebook;
+
+	my $manager = $self->{ide}->plugin_manager;
+
+	require Padre::Wx::Progress;
+	my $progress = Padre::Wx::Progress->new(
+		$self, Wx::gettext('Close some'), $#close_pages,
+		lazy => 1
+	);
+
+	SCOPE: {
+		my $lock = $self->lock('refresh');
+		for my $close_page_no (0..$#close_pages) {
+			$progress->update( $close_page_no, ( $close_page_no + 1 ) . '/' . scalar(@close_pages) );
+
+			foreach my $pageid ( $self->pageids ) {
+				my $page = $notebook->GetPage($pageid);
+				next unless defined($page);
+				next unless $page eq $close_pages[$close_page_no];
+				$self->close( $pageid ) or return 0;
+			}
+		}
+	}
+
+	# Recalculate window title
+	$self->refresh_title;
+
+	$manager->plugin_event('editor_changed');
+
+	return 1;
+}
+
+=pod
+
 =head3 C<close_where>
 
     # Close all files in current project

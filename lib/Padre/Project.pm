@@ -8,6 +8,7 @@ use warnings;
 use File::Spec     ();
 use Padre::Config  ();
 use Padre::Current ();
+use File::Spec     ();
 
 our $VERSION = '0.55';
 
@@ -223,6 +224,19 @@ sub ignore_rule {
 		}
 	};
 }
+
+sub name {
+	my $self = shift;
+
+	my $name = (reverse(File::Spec->splitdir($self->root)))[0];
+	if ((!defined($name)) or ($name eq '')) { # Fallback
+		$name = $self->root;
+		$name =~ s/^.*[\/\\]//;
+	}
+
+	return $name;
+}
+
 
 1;
 

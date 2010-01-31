@@ -203,6 +203,16 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name        => 'file.close_some',
+		need_editor => 1,
+		label       => Wx::gettext('Close some Files'),
+		comment     => Wx::gettext('Select some open files for closing'),
+		menu_event  => sub {
+			$_[0]->on_close_some;
+		},
+	);
+
+	Padre::Action->new(
 		name        => 'file.reload_file',
 		need_editor => 1,
 		label       => Wx::gettext('Reload File'),
