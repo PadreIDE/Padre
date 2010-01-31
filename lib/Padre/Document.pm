@@ -158,8 +158,8 @@ my $unsaved_number = 0;
 use Class::XSAccessor {
 	getters => {
 		editor           => 'editor',
-		filename         => 'filename', # TO DO is this read_only or what?
-		file             => 'file',     # Padre::File - object
+		filename         => 'filename',    # TO DO is this read_only or what?
+		file             => 'file',        # Padre::File - object
 		get_mimetype     => 'mimetype',
 		get_newline_type => 'newline_type',
 		errstr           => 'errstr',
@@ -1057,6 +1057,7 @@ sub project {
 sub project_dir {
 	my $self = shift;
 	unless ( $self->{project_dir} ) {
+
 		# Load the project object and project_dir in one step
 		my $project     = $self->project_find;
 		my $project_dir = $project->root;

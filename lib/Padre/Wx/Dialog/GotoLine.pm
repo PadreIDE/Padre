@@ -70,12 +70,14 @@ sub _create_controls {
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
-	unless(Padre::Constant::WIN32) {
+	unless (Padre::Constant::WIN32) {
+
 		#non-win32: Have the text field grab the focus so we can just start typing.
 		$self->{gotoline_text}->SetFocus();
 	}
 
 	$self->{status_line} = Wx::StaticText->new(
+
 		#$self, -1, Wx::gettext('Not a line number!'), Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);

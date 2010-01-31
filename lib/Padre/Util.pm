@@ -318,9 +318,7 @@ sub share {
 
 	# Rely on automatic handling of everything
 	require File::ShareDir;
-	return File::Spec->rel2abs(
-		File::ShareDir::dist_dir('Padre')
-	);
+	return File::Spec->rel2abs( File::ShareDir::dist_dir('Padre') );
 }
 
 sub sharedir {

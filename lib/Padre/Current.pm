@@ -176,7 +176,7 @@ sub main {
 	}
 	if ( defined $self->{document} ) {
 		my $editor = $self->{document}->{editor};
-		if ( $editor ) {
+		if ($editor) {
 			my $main = $editor->main;
 			return $self->{main} = $main if $main;
 		}
@@ -198,11 +198,9 @@ sub ide {
 	if ( defined $self->{main} ) {
 		return $self->{ide} = $self->{main}->ide;
 	}
-	if ( 
-		defined $self->{document}
-		or
-		defined $self->{editor}
-	) {
+	if (   defined $self->{document}
+		or defined $self->{editor} )
+	{
 		return $self->{ide} = $self->main->ide;
 	}
 

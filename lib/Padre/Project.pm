@@ -29,15 +29,16 @@ sub class {
 	my $class = shift;
 	my $root  = shift;
 	unless ( -d $root ) {
+
 		# Carp::croak("Project directory '$root' does not exist");
 		# Project root doesn't exist, this might cause problems
 		# but croaking completly crashs Padre. Fix for #819
 		Padre->ide->wx->main->error(
 			sprintf(
 				Wx::gettext(
-					'Project directory %s does not exist (any longer). '
-					. 'This is fatal and will cause problems, please close or '
-					. 'save-as this file unless you know what you are doing.'
+					      'Project directory %s does not exist (any longer). '
+						. 'This is fatal and will cause problems, please close or '
+						. 'save-as this file unless you know what you are doing.'
 				),
 				$root
 			)
@@ -76,6 +77,7 @@ sub new {
 	}
 	unless ( -d $self->root ) {
 		return undef;
+
 		# Carp::croak( "Root directory " . $self->root . " does not exist" );
 	}
 
@@ -96,7 +98,7 @@ sub from_file {
 	my $file  = shift;
 
 	# Split and scan
-	my ( $v, $d, $f ) = File::Spec->splitpath( $file );
+	my ( $v, $d, $f ) = File::Spec->splitpath($file);
 	my @d = File::Spec->splitdir($d);
 	if ( defined $d[-1] and $d[-1] eq '' ) {
 		pop @d;
@@ -127,8 +129,9 @@ sub from_file {
 		# Check for ExtUtils::MakeMaker and Module::Install support
 		my $makefile_pl = File::Spec->catpath( $v, $dir, 'Makefile.PL' );
 		if ( -f $makefile_pl ) {
+
 			# Differentiate between Module::Install and ExtUtils::MakeMaker
-			if ( 0 ) {
+			if (0) {
 				require Padre::Project::Perl::MI;
 				return Padre::Project::Perl::MI->new(
 					root        => File::Spec->catpath( $v, $dir, '' ),
@@ -147,7 +150,7 @@ sub from_file {
 		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
 		if ( -f $padre_yml ) {
 			return Padre::Project->new(
-				root => File::Spec->catpath( $v, $dir, '' ),
+				root      => File::Spec->catpath( $v, $dir, '' ),
 				padre_yml => $padre_yml,
 			);
 		}

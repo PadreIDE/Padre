@@ -1663,7 +1663,7 @@ the panel.
 sub show_functions {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock('UPDATE', 'refresh_functions');
+	my $lock = $self->lock( 'UPDATE', 'refresh_functions' );
 	unless ( $on == $self->menu->view->{functions}->IsChecked ) {
 		$self->menu->view->{functions}->Check($on);
 	}
