@@ -290,7 +290,6 @@ sub svn_directory_revision {
 # Shared Resources
 
 sub share {
-	$DB::single = 1;
 	if ( $ENV{PADRE_DEV} ) {
 		return File::Spec->rel2abs(
 			File::Spec->catdir(
