@@ -19,6 +19,10 @@ sub configure_editor {
 	}
 }
 
+sub main {
+	undef;
+}
+
 sub SetEOLMode {
 
 }
