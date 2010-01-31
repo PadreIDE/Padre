@@ -2951,8 +2951,7 @@ sub on_goto {
 	my $self = shift;
 
 	require Padre::Wx::Dialog::GotoLine;
-	my $goto_line_dlg = Padre::Wx::Dialog::GotoLine->new;
-	$goto_line_dlg->modal;
+	Padre::Wx::Dialog::GotoLine->modal;
 
 	return;
 }
