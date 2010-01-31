@@ -153,8 +153,7 @@ sub _bind_events {
 		$self,
 		$self->{button_cancel},
 		sub {
-			$_[0]->EndModal(Wx::wxID_CANCEL);
-
+			$_[0]->Destroy;
 		}
 	);
 	Wx::Event::EVT_BUTTON(
@@ -163,12 +162,12 @@ sub _bind_events {
 		sub {
 			my $self = shift;
 
-			$self->EndModal(Wx::wxID_OK);
-
 			my $line_number = $self->{gotoline_text}->GetValue;
 			my $editor      = $self->current->editor;
 			$line_number = $self->{max_line_number} if $line_number > $self->{max_line_number};
 			$line_number--;
+
+			$self->Destroy;
 			$editor->goto_line_centerize($line_number);
 		},
 	);
