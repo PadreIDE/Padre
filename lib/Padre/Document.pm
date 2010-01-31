@@ -283,6 +283,10 @@ sub rebless {
 	return;
 }
 
+sub current {
+	Padre::Current->new( document => $_[0] );
+}
+
 
 
 
@@ -306,7 +310,6 @@ sub colourize {
 
 sub colorize {
 	my $self = shift;
-
 	TRACE("colorize called") if DEBUG;
 
 	my $module = $self->get_highlighter;
@@ -342,7 +345,7 @@ sub colorize {
 }
 
 sub last_sync {
-	return $_[0]->{_timestamp};
+	$_[0]->{_timestamp};
 }
 
 # For ts without a newline type
@@ -1053,8 +1056,18 @@ sub project {
 
 sub project_dir {
 	my $self = shift;
-	$self->{project_dir}
-		or $self->{project_dir} = $self->project_find;
+	unless ( $self->{project_dir} ) {
+		# Load the project object and project_dir in one step
+		my $project     = $self->project_find;
+		my $project_dir = $project->root;
+		my $ide         = $self->current->ide;
+		$self->{project_dir} = $project_dir;
+		$ide->{project}->{$project_dir} = $project;
+		unless ( $project->isa('Padre::Project::Null') ) {
+			$self->{is_project} = 1;
+		}
+	}
+	return $self->{project_dir};
 }
 
 sub project_find {
@@ -1067,68 +1080,8 @@ sub project_find {
 	return unless $self->{file}->{protocol} eq 'local';
 
 	# Search upwards from the file to find the project root
-	my ( $v, $d, $f ) = File::Spec->splitpath( $self->{file}->filename );
-	my @d = File::Spec->splitdir($d);
-	pop @d if defined( $d[-1] ) and ( $d[-1] eq '' );
-	foreach ( reverse 0 .. $#d ) {
-		my $dir = File::Spec->catdir( @d[ 0 .. $_ ] );
-
-		# Check for Dist::Zilla support
-		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
-		if ( -f $dist_ini ) {
-			$self->{is_project} = 1;
-			require Padre::Project::Perl::DZ;
-			return Padre::Project::Perl::DZ->new(
-				root     => File::Spec->catpath( $v, $dir, '' ),
-				dist_ini => $dist_ini,
-			);
-		}
-
-		# Check for Module::Build support
-		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
-		if ( -f $build_pl ) {
-			$self->{is_project} = 1;
-			require Padre::Project::Perl::MB;
-			return Padre::Project::Perl::MB->new(
-				root     => File::Spec->catpath( $v, $dir, '' ),
-				build_pl => $build_pl,
-			);
-		}
-
-		# Check for ExtUtils::MakeMaker and Module::Install support
-		my $makefile_pl = File::Spec->catpath( $v, $dir, 'Makefile.PL' );
-		if ( -f $makefile_pl ) {
-			# Differentiate between Module::Install and ExtUtils::MakeMaker
-			if ( 0 ) {
-				$self->{is_project} = 1;
-				require Padre::Project::Perl::MI;
-				return Padre::Project::Perl::MI->new(
-					root        => File::Spec->catpath( $v, $dir, '' ),
-					makefile_pl => $makefile_pl,
-				);
-			} else {
-				$self->{is_project} = 1;
-				require Padre::Project::Perl::EUMM;
-				return Padre::Project::Perl::EUMM->new(
-					root        => File::Spec->catpath( $v, $dir, '' ),
-					makefile_pl => $makefile_pl,
-				);
-			}
-		}
-
-		# Fall back to looking for null projects
-		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
-		if ( -f $padre_yml ) {
-			require Padre::Project::Perl;
-			return Padre::Project::Perl->new(
-				root => File::Spec->catpath( $v, $dir ),
-				padre_yml => $padre_yml,
-			);
-		}
-	}
-
-	# This document is part of the null project
-	return File::Spec->catpath( $v, File::Spec->catdir(@d), '' );
+	require Padre::Project;
+	Padre::Project->from_file( $self->{file}->{filename} );
 }
 
 

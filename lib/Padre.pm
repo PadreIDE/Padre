@@ -264,12 +264,8 @@ sub project {
 	my $self = shift;
 	my $root = shift;
 	unless ( $self->{project}->{$root} ) {
-		my $class = Padre::Project->class($root);
-		unless ( $class->VERSION ) {
-			eval "require $class;";
-			die("Failed to load $class: $@") if $@;
-		}
-		$self->{project}->{$root} = $class->new( root => $root, );
+		my $nofile = File::Spec->catfile( $root, 'a' );
+		$self->{project}->{$root} = Padre::Project->from_file($nofile);
 	}
 	return $self->{project}->{$root};
 }
