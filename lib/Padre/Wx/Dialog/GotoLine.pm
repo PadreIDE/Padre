@@ -191,7 +191,7 @@ sub modal {
 	my $self  = $class->new(@_);
 
 	# Update Goto line number label
-	my $editor = $self->current->editor;
+	my $editor = $self->current->editor or return;
 	$self->{max_line_number} = $editor->GetLineCount;
 	$self->{gotoline_label}
 		->SetLabel( sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
