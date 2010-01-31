@@ -1065,7 +1065,7 @@ sub read {
 
 		# Load the user configuration
 		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
+		         || Padre::Config::Human->create;
 
 		# Hand off to the constructor
 		$SINGLETON = $class->new( $host, $human );
