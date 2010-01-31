@@ -30,16 +30,15 @@ sub class {
 	my $class = shift;
 	my $root  = shift;
 	unless ( -d $root ) {
-
-		#		Carp::croak("Project directory '$root' does not exist");
+		# Carp::croak("Project directory '$root' does not exist");
 		# Project root doesn't exist, this might cause problems
 		# but croaking completly crashs Padre. Fix for #819
 		Padre->ide->wx->main->error(
 			sprintf(
 				Wx::gettext(
-					      'Project directory %s does not exist (any longer). '
-						. 'This is fatal and will cause problems, please close or '
-						. 'save-as this file unless you know what you are doing.'
+					'Project directory %s does not exist (any longer). '
+					. 'This is fatal and will cause problems, please close or '
+					. 'save-as this file unless you know what you are doing.'
 				),
 				$root
 			)
