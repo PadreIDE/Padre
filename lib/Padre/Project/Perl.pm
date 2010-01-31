@@ -5,7 +5,11 @@ package Padre::Project::Perl;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Project ();
+use Padre::Project             ();
+use Padre::Project::Perl::MI   ();
+use Padre::Project::Perl::MB   ();
+use Padre::Project::Perl::DZ   ();
+use Padre::Project::Perl::EUMM ();
 
 our $VERSION = '0.55';
 our @ISA     = 'Padre::Project';
@@ -15,29 +19,54 @@ sub from_file {
 
 	# Check the file argument
 	my $focus_file = shift;
-	unless ( -f $focus_file ) {
-		return;
-	}
+	return unless -f $focus_file;
 
 	# Search upwards from the file to find the project root
 	my ( $v, $d, $f ) = File::Spec->splitpath($focus_file);
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
-	my $dirs = List::Util::first {
-		       -f File::Spec->catpath( $v, $_, 'Makefile.PL' )
-			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
-			or -f File::Spec->catpath( $v, $_, 'dist.ini' )
-			or -f File::Spec->catpath( $v, $_, 'padre.yml' );
-	}
-	map { File::Spec->catdir( @d[ 0 .. $_ ] ) } reverse( 0 .. $#d );
-	unless ( defined $dirs ) {
+	foreach ( reverse 0 .. $#d ) {
+		my $dir = File::Spec->catdir( @d[ 0 .. $_ ] );
+
+		# Check for Dist::Zilla support
+		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
+		if ( -f $dist_ini ) {
+			return Padre::Project::Perl::DZ->new(
+				root     => File::Spec->catpath( $v, $dir ),
+				dist_ini => $dist_ini,
+			);
+		}
+
+		# Check for Module::Build support
+		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
+		if ( -f $build_pl ) {
+			return Padre::Project::Perl::MB->new(
+				root     => File::Spec->catpath( $v, $dir ),
+				build_pl => $build_pl,
+			);
+		}
+
+		# Check for ExtUtils::MakeMaker and Module::Install support
+		my $makefile_pl = File::Spec->catpath( $v, $dir, 'Makefile.PL' );
+		if ( -f $makefile_pl ) {
+			# Differentiate between Module::Install and ExtUtils::MakeMaker
+			return Padre::Project::Perl::EUMM->new(
+				root        => File::Spec->catpath( $v, $dir ),
+				makefile_pl => $makefile_pl,
+			);
+		}
+
+		# Fall back to looking for null projects
+		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
+		if ( -f $padre_yml ) {
+			return Padre::Project::Perl->new(
+				root => File::Spec->catpath( $v, $dir ),
+				padre_yml => $padre_yml,
+			);
+		}
+
 		return;
 	}
-
-	# Hand off to the regular constructor
-	return $class->new(
-		root => File::Spec->catpath( $v, $dirs ),
-	);
 }
 
 
