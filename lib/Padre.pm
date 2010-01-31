@@ -55,7 +55,7 @@ sub import {
 	}
 
 	# Find the location of Padre.pm
-	my $padre = $INC{'Padre.pm'};
+	my $padre  = $INC{'Padre.pm'};
 	my $parent = substr( $padre, 0, length($padre) - 3 );
 
 	# Find everything under Padre:: with a matching version,
