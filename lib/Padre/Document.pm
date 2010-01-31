@@ -1061,32 +1061,74 @@ sub project_find {
 	my $self = shift;
 
 	# Anonymous files don't have a project
-	unless ( defined $self->file ) {
-		return;
-	}
+	return unless defined $self->file;
 
-	# Currently no project support for remote files:
-	if ( $self->{file}->{protocol} ne 'local' ) { return; }
+	# Currently no project support for remote files
+	return unless $self->{file}->{protocol} eq 'local';
 
 	# Search upwards from the file to find the project root
 	my ( $v, $d, $f ) = File::Spec->splitpath( $self->{file}->filename );
 	my @d = File::Spec->splitdir($d);
 	pop @d if defined( $d[-1] ) and ( $d[-1] eq '' );
-	my $dirs = List::Util::first {
-		       -f File::Spec->catpath( $v, $_, 'Makefile.PL' )
-			or -f File::Spec->catpath( $v, $_, 'Build.PL' )
-			or -f File::Spec->catpath( $v, $_, 'dist.ini' )
-			or -f File::Spec->catpath( $v, $_, 'padre.yml' );
-	}
-	map { File::Spec->catdir( @d[ 0 .. $_ ] ) } reverse( 0 .. $#d );
+	foreach ( reverse 0 .. $#d ) {
+		my $dir = File::Spec->catdir( @d[ 0 .. $_ ] );
 
-	unless ( defined $dirs ) {
+		# Check for Dist::Zilla support
+		my $dist_ini = File::Spec->catpath( $v, $dir, 'dist.ini' );
+		if ( -f $dist_ini ) {
+			$self->{is_project} = 1;
+			require Padre::Project::Perl::DZ;
+			return Padre::Project::Perl::DZ->new(
+				root     => File::Spec->catpath( $v, $dir, '' ),
+				dist_ini => $dist_ini,
+			);
+		}
 
-		# This document is part of the null project
-		return File::Spec->catpath( $v, File::Spec->catdir(@d), '' );
+		# Check for Module::Build support
+		my $build_pl = File::Spec->catpath( $v, $dir, 'Build.PL' );
+		if ( -f $build_pl ) {
+			$self->{is_project} = 1;
+			require Padre::Project::Perl::MB;
+			return Padre::Project::Perl::MB->new(
+				root     => File::Spec->catpath( $v, $dir, '' ),
+				build_pl => $build_pl,
+			);
+		}
+
+		# Check for ExtUtils::MakeMaker and Module::Install support
+		my $makefile_pl = File::Spec->catpath( $v, $dir, 'Makefile.PL' );
+		if ( -f $makefile_pl ) {
+			# Differentiate between Module::Install and ExtUtils::MakeMaker
+			if ( 0 ) {
+				$self->{is_project} = 1;
+				require Padre::Project::Perl::MI;
+				return Padre::Project::Perl::MI->new(
+					root        => File::Spec->catpath( $v, $dir, '' ),
+					makefile_pl => $makefile_pl,
+				);
+			} else {
+				$self->{is_project} = 1;
+				require Padre::Project::Perl::EUMM;
+				return Padre::Project::Perl::EUMM->new(
+					root        => File::Spec->catpath( $v, $dir, '' ),
+					makefile_pl => $makefile_pl,
+				);
+			}
+		}
+
+		# Fall back to looking for null projects
+		my $padre_yml = File::Spec->catpath( $v, $dir, 'padre.yml' );
+		if ( -f $padre_yml ) {
+			require Padre::Project::Perl;
+			return Padre::Project::Perl->new(
+				root => File::Spec->catpath( $v, $dir ),
+				padre_yml => $padre_yml,
+			);
+		}
 	}
-	$self->{is_project} = 1;
-	return File::Spec->catpath( $v, $dirs, '' );
+
+	# This document is part of the null project
+	return File::Spec->catpath( $v, File::Spec->catdir(@d), '' );
 }
 
 
