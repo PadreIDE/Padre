@@ -72,6 +72,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Function List has resource locking around it and properly triggers a
       refresh when we show it for an already open document (ADAMK)
     - "Goto Line" dialog now supports going to lines and positions (AZAWAWI)
+    - Fixed perl to refactor action prefix for refactor menu for 
+      consistency (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
