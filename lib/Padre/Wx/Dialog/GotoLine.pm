@@ -134,17 +134,20 @@ sub _bind_events {
 		$self,
 		$self->{gotoline_text},
 		sub {
-			my $line_number = $self->{gotoline_text}->GetValue;
-			if ( $line_number !~ /^\d+$/ ) {
-				$self->{status_line}->SetLabel( Wx::gettext('Not a line number!') );
+			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+			my $value = $self->{gotoline_text}->GetValue;
+			if ( $value !~ /^\d+$/ ) {
+				$self->{status_line}->SetLabel( Wx::gettext('Not a number!') );
 				$self->{button_ok}->Enable(0);
 				return;
 			}
 
 			my $editor = $self->current->editor;
-			if ( $line_number == 0 or $line_number > $self->{max_line_number} ) {
+			if($line_mode and ( $value == 0 or $value > $self->{max_line_number} )
+			   or (not $line_mode and ($value > $self->{max_position} )) ) {
 				$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
 				$self->{button_ok}->Enable(0);
+			
 				return;
 			}
 
@@ -159,13 +162,10 @@ sub _bind_events {
 		$self,
 		$self->{line_or_position_checkbox},
 		sub {
-			if($self->{line_or_position_checkbox}->IsChecked) {
-				$self->{gotoline_label}->SetLabel( 
-					sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
-			} else {
-				$self->{gotoline_label}->SetLabel( 
-					sprintf( Wx::gettext("Enter a position between 1 and %s:"), $self->{max_position} ) );
-			}
+			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+			$self->{gotoline_label}->SetLabel( $line_mode ? 
+				sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} )
+				:sprintf( Wx::gettext("Enter a position between 1 and %s:"), $self->{max_position} ) );
 			return;
 		},
 	);
@@ -184,13 +184,23 @@ sub _bind_events {
 		sub {
 			my $self = shift;
 
-			my $line_number = $self->{gotoline_text}->GetValue;
+			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+
+			my $value = $self->{gotoline_text}->GetValue;
 			my $editor      = $self->current->editor;
-			$line_number = $self->{max_line_number} if $line_number > $self->{max_line_number};
-			$line_number--;
+			if($line_mode and $value > $self->{max_line_number}) {
+				$value = $self->{max_line_number};
+			} elsif (not $line_mode and $value > $self->{max_position}) {
+				$value = $self->{max_position};
+			}
+			$value--;
 
 			$self->Destroy;
-			$editor->goto_line_centerize($line_number);
+			if($line_mode) {
+				$editor->goto_line_centerize($value);
+			} else {
+				$editor->goto_pos_centerize($value);
+			}
 		},
 	);
 
@@ -218,7 +228,7 @@ sub modal {
 		return;
 	}
 	$self->{max_line_number} = $editor->GetLineCount;
-	$self->{max_position} = $editor->GetLength;
+	$self->{max_position} = $editor->GetLength + 1;
 	$self->{gotoline_label}
 		->SetLabel( sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
 
