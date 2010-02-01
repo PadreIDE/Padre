@@ -373,17 +373,17 @@ sub _update_list_box {
 
 	#TODO: think how to make actions and menus relate to each other
 	my %menu_name_by_prefix = (
-		"file" => Wx::gettext('File'),
-		"edit" => Wx::gettext('Edit'),
-		"search" => Wx::gettext('Search'),
-		"view" => Wx::gettext('View'),
-		"perl" => Wx::gettext('Perl'),
+		"file"     => Wx::gettext('File'),
+		"edit"     => Wx::gettext('Edit'),
+		"search"   => Wx::gettext('Search'),
+		"view"     => Wx::gettext('View'),
+		"perl"     => Wx::gettext('Perl'),
 		"refactor" => Wx::gettext('Refactor'),
-		"run" => Wx::gettext('Run'),
-		"debug" => Wx::gettext('Debug'),
-		"plugins" => Wx::gettext('Plugins'),
-		"window" => Wx::gettext('Window'),
-		"help" => Wx::gettext('Help'),
+		"run"      => Wx::gettext('Run'),
+		"debug"    => Wx::gettext('Debug'),
+		"plugins"  => Wx::gettext('Plugins'),
+		"window"   => Wx::gettext('Window'),
+		"help"     => Wx::gettext('Help'),
 	);
 
 	my $first_label = undef;
@@ -395,7 +395,7 @@ sub _update_list_box {
 				$first_label = $self->_label( $label, $action_name );
 			}
 			my $label_suffix = '';
-			my $prefix = $action_name;
+			my $prefix       = $action_name;
 			$prefix =~ s/^(\w+)\.\w+/$1/s;
 			my $menu_name = $menu_name_by_prefix{$prefix};
 			$label_suffix = "  ($menu_name)" if $menu_name;
