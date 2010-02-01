@@ -220,8 +220,8 @@ sub new {
 	# Miscellaneous Actions
 	Padre::Action->new(
 		name       => 'edit.goto',
-		label      => Wx::gettext('&Goto Line'),
-		comment    => Wx::gettext('Ask the user for a row number and jump there'),
+		label      => Wx::gettext('&Goto'),
+		comment    => Wx::gettext('Ask the user for a line number or a character position and jump there'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
 			Padre::Wx::Main::on_goto(@_);
