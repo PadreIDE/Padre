@@ -44,7 +44,7 @@ sub _request {
 	my $method = shift || 'GET';
 	my $URL    = shift || $self->{filename};
 
-	$self->_info(sprintf(Wx::gettext('Sending HTTP request %s...'),$URL));
+	$self->_info( sprintf( Wx::gettext('Sending HTTP request %s...'), $URL ) );
 
 	my $HTTP_Req = HTTP::Request->new( $method, $URL );
 

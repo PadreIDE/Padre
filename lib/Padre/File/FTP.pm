@@ -34,7 +34,7 @@ sub new {
 	}
 
 	# Don't add a new overall-dependency to Padre:
-	$self->_info(Wx::gettext('Looking for Net::FTP...'));
+	$self->_info( Wx::gettext('Looking for Net::FTP...') );
 	eval { require Net::FTP; };
 	if ($@) {
 
@@ -81,7 +81,7 @@ sub new {
 	# TO DO: Handle aborted/timed out connections
 
 	# Create FTP object and connection
-	$self->_info(sprintf(Wx::gettext('Connecting to FTP server %s...'),$self->{_host}.':'.$self->{_port}));
+	$self->_info( sprintf( Wx::gettext('Connecting to FTP server %s...'), $self->{_host} . ':' . $self->{_port} ) );
 	$self->{_ftp} = Net::FTP->new(
 		Host    => $self->{_host},
 		Port    => $self->{_port},
@@ -98,7 +98,7 @@ sub new {
 	}
 
 	# Log into the FTP server
-	$self->_info(sprintf(Wx::gettext('Logging into FTP server as %s...'),$self->{_user}));
+	$self->_info( sprintf( Wx::gettext('Logging into FTP server as %s...'), $self->{_user} ) );
 	if ( !$self->{_ftp}->login( $self->{_user}, $self->{_pass} ) ) {
 
 		$self->{error} = 'Error logging in on ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
@@ -112,7 +112,7 @@ sub new {
 	$self->{_file_temp} = File::Temp->new( UNLINK => 1 );
 	$self->{_tmpfile} = $self->{_file_temp}->filename;
 
-	$self->_info(Wx::gettext('Connection to FTP server successful!'));
+	$self->_info( Wx::gettext('Connection to FTP server successful!') );
 
 	return $self;
 }
@@ -240,7 +240,8 @@ sub read {
 
 	return if !defined( $self->{_ftp} );
 
-	$self->_info(Wx::gettext('Reading file from FTP server...'));
+	$self->_info( Wx::gettext('Reading file from FTP server...') );
+
 	# TO DO: Better error handling
 	$self->{_ftp}->get( $self->{_file}, $self->{_tmpfile} ) or $self->{error} = $@;
 	open my $tmpfh, '<', $self->{_tmpfile};
@@ -262,7 +263,7 @@ sub write {
 
 	return unless defined $self->{_ftp};
 
-	$self->_info(Wx::gettext('Writing file to FTP server...'));
+	$self->_info( Wx::gettext('Writing file to FTP server...') );
 	if ( open my $fh, ">$encode", $self->{_tmpfile} ) {
 		print {$fh} $content;
 		close $fh;
