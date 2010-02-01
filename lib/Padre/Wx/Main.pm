@@ -3696,7 +3696,7 @@ sub on_reload_some {
 }
 
 sub reload_some {
-	my $self        = shift;
+	my $self         = shift;
 	my @reload_pages = @_;
 
 	my $notebook = $self->notebook;
