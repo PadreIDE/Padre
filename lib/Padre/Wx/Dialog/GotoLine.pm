@@ -58,8 +58,6 @@ sub new {
 sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
-	#----- dialog controls
-
 	# Goto line label
 	$self->{gotoline_label} = Wx::StaticText->new(
 		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
@@ -96,15 +94,13 @@ sub _create_controls {
 
 	#----- Dialog Layout
 
-	# Main button cluster
+	# Main button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
-	# The main layout for the dialog is vertical
-
-	# Create the main sizer
+	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
@@ -113,6 +109,7 @@ sub _create_controls {
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
+	# Wrap with a horizontal sizer to get left/right padding
 	$sizer->Add( $vsizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	return;
@@ -136,7 +133,7 @@ sub _bind_events {
 			}
 
 			my $editor = $self->current->editor;
-			if ( $line_number > $self->{max_line_number} ) {
+			if ( $line_number == 0 or $line_number > $self->{max_line_number} ) {
 				$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
 				$self->{button_ok}->Enable(0);
 				return;
