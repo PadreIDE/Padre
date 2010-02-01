@@ -148,15 +148,30 @@ sub new {
 
 	### End of close submenu
 
+	# Reload file(s)
+	my $file_reload = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext("Reload file(s)"),
+		$file_reload,
+	);
+
 	$self->{reload_file} = $self->add_menu_action(
-		$self,
+		$file_reload,
 		'file.reload_file',
 	);
 
 	$self->{reload_all} = $self->add_menu_action(
-		$self,
+		$file_reload,
 		'file.reload_all',
 	);
+
+	$self->{reload_all} = $self->add_menu_action(
+		$file_reload,
+		'file.reload_some',
+	);
+
+	### End of reload submenu
 
 	$self->AppendSeparator;
 

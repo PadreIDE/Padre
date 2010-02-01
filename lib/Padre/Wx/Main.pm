@@ -3672,6 +3672,66 @@ sub reload_all {
 	return 1;
 }
 
+=pod
+
+=head3 C<reload_some>
+
+    my $success = $main->reload_some(@pages_to_reload);
+
+Reloads the given documents. Return true upon success, false otherwise.
+
+=cut
+
+sub on_reload_some {
+	my $self = shift;
+	my $lock = $self->lock('UPDATE');
+
+	require Padre::Wx::Dialog::WindowList;
+	Padre::Wx::Dialog::WindowList->new(
+		$self,
+		title      => Wx::gettext('Reload some files'),
+		list_title => Wx::gettext('Select files to reload:'),
+		buttons    => [ [ 'Reload selected', sub { Padre->ide->wx->main->reload_some(@_); } ] ],
+	)->show;
+}
+
+sub reload_some {
+	my $self        = shift;
+	my @reload_pages = @_;
+
+	my $notebook = $self->notebook;
+
+	my $manager = $self->{ide}->plugin_manager;
+
+	require Padre::Wx::Progress;
+	my $progress = Padre::Wx::Progress->new(
+		$self, Wx::gettext('Reload some'), $#reload_pages,
+		lazy => 1
+	);
+
+	SCOPE: {
+		my $lock = $self->lock('refresh');
+		for my $reload_page_no ( 0 .. $#reload_pages ) {
+			$progress->update( $reload_page_no, ( $reload_page_no + 1 ) . '/' . scalar(@reload_pages) );
+
+			foreach my $pageid ( $self->pageids ) {
+				my $page = $notebook->GetPage($pageid);
+				next unless defined($page);
+				next unless $page eq $reload_pages[$reload_page_no];
+				$self->reload_file($pageid) or return 0;
+			}
+		}
+	}
+
+	# Recalculate window title
+	$self->refresh_title;
+
+	$manager->plugin_event('editor_changed');
+
+	return 1;
+}
+
+
 =head3 C<reload_file>
 
     $main->reload_file;

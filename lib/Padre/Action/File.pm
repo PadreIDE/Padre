@@ -232,6 +232,16 @@ sub new {
 		},
 	);
 
+	Padre::Action->new(
+		name        => 'file.reload_some',
+		need_editor => 1,
+		label       => Wx::gettext('Reload some files'),
+		comment     => Wx::gettext('Select some open files for reload'),
+		menu_event  => sub {
+			$_[0]->on_reload_some;
+		},
+	);
+
 	# Save files
 	Padre::Action->new(
 		name          => 'file.save',
