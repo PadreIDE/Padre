@@ -266,8 +266,8 @@ sub _validate {
 
   Padre::Wx::Dialog::GotoLine->modal($main);
 
-Single-shot modal dialog call to set the line number from the user.
-Returns C<undef>.
+Single-shot modal dialog call to go to the line number or character position 
+that the user entered. Returns C<undef>.
 
 =cut
 
