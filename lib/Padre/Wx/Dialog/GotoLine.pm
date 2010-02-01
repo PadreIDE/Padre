@@ -30,7 +30,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Go to line number/position'),
+		Wx::gettext('Go to a line number or position'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
@@ -61,7 +61,7 @@ sub _create_controls {
 
 	# Line or position checkbox
 	$self->{line_or_position_checkbox} = Wx::CheckBox->new(
-		$self, -1, Wx::gettext('Is it a line number or a position?'),
+		$self, -1, Wx::gettext('&Is it a line number or a position?'),
 	);
 	$self->{line_or_position_checkbox}->SetValue(1);
 
@@ -132,7 +132,7 @@ sub _bind_events {
 		$self,
 		$self->{gotoline_text},
 		sub {
-			$self->_validate;
+			$_[0]->_validate;
 			return;
 		}
 	);
@@ -141,8 +141,8 @@ sub _bind_events {
 		$self,
 		$self->{line_or_position_checkbox},
 		sub {
+			my $self = shift;
 			$self->_update_label;
-
 			$self->_validate;
 			return;
 		},
@@ -153,6 +153,7 @@ sub _bind_events {
 		$self->{button_cancel},
 		sub {
 			$_[0]->Destroy;
+			return;
 		}
 	);
 
@@ -160,27 +161,42 @@ sub _bind_events {
 		$self,
 		$self->{button_ok},
 		sub {
-			my $self = shift;
-
-			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
-
-			my $value  = $self->{gotoline_text}->GetValue;
-			my $editor = $self->current->editor;
-
-			# Bounds checking
-			my $max_value = $line_mode ? $self->{max_line_number} : $self->{max_position};
-			$value = $max_value if $value > $max_value;
-			$value--;
-
-			$self->Destroy;
-			if ($line_mode) {
-				$editor->goto_line_centerize($value);
-			} else {
-				$editor->goto_pos_centerize($value);
-			}
+			$_[0]->_on_ok_button;
+			return;
 		},
 	);
 
+}
+
+#
+# Private method to handle the pressing of the OK button
+#
+sub _on_ok_button {
+	my $self = shift;
+
+	# Fetch values
+	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+	my $value     = $self->{gotoline_text}->GetValue;
+	my $editor    = $self->current->editor;
+
+	# Bounds checking
+	my $max_value = $line_mode ? $self->{max_line_number} : $self->{max_position};
+	$value = $max_value if $value > $max_value;
+	$value--;
+
+	# Destroy the dialog
+	$self->Destroy;
+
+	# And then goto to the line or position
+	# keeping it in the center of the editor
+	# if possible
+	if ($line_mode) {
+		$editor->goto_line_centerize($value);
+	} else {
+		$editor->goto_pos_centerize($value);
+	}
+
+	return;
 }
 
 #
