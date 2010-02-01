@@ -1059,7 +1059,7 @@ sub project_dir {
 	unless ( $self->{project_dir} ) {
 
 		# Load the project object and project_dir in one step
-		my $project     = $self->project_find;
+		my $project = $self->project_find;
 		return unless defined($project);
 		my $project_dir = $project->root;
 		my $ide         = $self->current->ide;
