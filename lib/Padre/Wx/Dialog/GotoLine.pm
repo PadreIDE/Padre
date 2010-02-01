@@ -204,7 +204,7 @@ sub _validate {
 
 	# Should be an integer number
 	if ( $value !~ /^\d+$/ ) {
-		$self->{status_line}->SetLabel( Wx::gettext('Not a number!') );
+		$self->{status_line}->SetLabel( Wx::gettext('Not a positive number!') );
 		$self->{button_ok}->Enable(0);
 		return;
 	}
