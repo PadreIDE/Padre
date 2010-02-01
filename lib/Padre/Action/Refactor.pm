@@ -44,7 +44,7 @@ sub new {
 
 	# Perl-Specific Refactoring
 	Padre::Action->new(
-		name        => 'perl.rename_variable',
+		name        => 'refactor.rename_variable',
 		need_editor => 1,
 		label       => Wx::gettext('Lexically Rename Variable'),
 		comment    => Wx::gettext('Prompt for a replacement variable name and replace all occurrance of this variable'),
@@ -67,7 +67,7 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name        => 'perl.extract_subroutine',
+		name        => 'refactor.extract_subroutine',
 		need_editor => 1,
 		label       => Wx::gettext('Extract Subroutine'),
 		comment     => Wx::gettext(
@@ -97,7 +97,7 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name        => 'perl.introduce_temporary',
+		name        => 'refactor.introduce_temporary',
 		need_editor => 1,
 		label       => Wx::gettext('Introduce Temporary Variable'),
 		comment     => Wx::gettext('Assign the selected expression to a newly declared variable'),
