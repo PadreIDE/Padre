@@ -68,18 +68,12 @@ sub _create_controls {
 	# a label to display current line/position
 	$self->{current} = Wx::StaticText->new( $self, -1, '' );
 
-	# Line or position checkbox
-	$self->{line_mode} = Wx::CheckBox->new(
-		$self, -1, Wx::gettext('&Line number or character position?'),
-	);
-	$self->{line_mode}->SetValue(1);
-
 	# Goto line label
 	$self->{goto_label} = Wx::StaticText->new(
 		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
 	);
 
-	# Input text control for the line number/position
+	# Field #1: text field for the line number/position
 	$self->{goto_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
@@ -92,6 +86,12 @@ sub _create_controls {
 
 	$self->{status_line} = Wx::StaticText->new( $self, -1, '' );
 
+	# Field #2: Line or position checkbox
+	$self->{line_mode} = Wx::CheckBox->new(
+		$self, -1, Wx::gettext('&Line number or character position?'),
+	);
+	$self->{line_mode}->SetValue(1);
+
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
 		$self, Wx::wxID_OK, Wx::gettext("&OK"),
@@ -103,9 +103,6 @@ sub _create_controls {
 	$self->{button_cancel} = Wx::Button->new(
 		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
 	);
-
-	$self->{goto_text}->MoveBeforeInTabOrder( $self->{line_mode} );
-	$self->{line_mode}->MoveAfterInTabOrder( $self->{button_cancel} );
 
 	#----- Dialog Layout
 
@@ -138,6 +135,18 @@ sub _create_controls {
 #
 sub _bind_events {
 	my $self = shift;
+
+	Wx::Event::EVT_ACTIVATE(
+		$self,
+		sub {
+			my $self = shift;
+			$self->_update_from_editor;
+			$self->_update_label;
+			$self->_validate;
+			return;
+		}
+	);
+
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{goto_text},
@@ -266,6 +275,28 @@ sub _validate {
 	$self->{status_line}->SetLabel('');
 }
 
+#
+# Private method to update statistics from the current editor
+#
+sub _update_from_editor {
+	my $self = shift;
+	# Get the current editor
+	my $editor = $self->current->editor;
+	unless ($editor) {
+		$self->Hide;
+		return;
+	}
+
+	# Update max line number and position fields
+	$self->{max_line_number}     = $editor->GetLineCount;
+	$self->{max_position}        = $editor->GetLength + 1;
+	$self->{current_line_number} = $editor->GetCurrentLine + 1;
+	$self->{current_position}    = $editor->GetCurrentPos + 1;
+
+	return;
+}
+
+
 =pod
 
 =head2 C<show>
@@ -280,19 +311,8 @@ position. Returns C<undef>.
 sub show {
 	my $self = shift;
 
-	# Get the current editor
-	my $editor = $self->current->editor;
-	unless ($editor) {
-		$self->Hide;
-		return;
-	}
-
-	# Update max line number and position fields
-	$self->{max_line_number}     = $editor->GetLineCount;
-	$self->{max_position}        = $editor->GetLength + 1;
-	$self->{current_line_number} = $editor->GetCurrentLine + 1;
-	$self->{current_position}    = $editor->GetCurrentPos + 1;
-
+	# Update current, and max bounds from the current editor
+	$self->_update_from_editor;
 
 	# Update Goto labels
 	$self->_update_label;
