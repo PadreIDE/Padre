@@ -139,6 +139,15 @@ sub new {
 		'file.close_all_but_current',
 	);
 
+	$file_close->AppendSeparator;
+
+	$self->{close_some} = $self->add_menu_action(
+		$file_close,
+		'file.close_some',
+	);
+
+	### End of close submenu
+
 	$self->{reload_file} = $self->add_menu_action(
 		$self,
 		'file.reload_file',
