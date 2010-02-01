@@ -191,7 +191,7 @@ sub modal {
 
 	# Update Goto line number label
 	my $editor = $self->current->editor;
-	unless( $editor ) {
+	unless ($editor) {
 		$self->Destroy;
 		return;
 	}

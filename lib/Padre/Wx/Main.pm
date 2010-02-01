@@ -4256,15 +4256,16 @@ sub on_close_some {
 	my $lock = $self->lock('UPDATE');
 
 	require Padre::Wx::Dialog::WindowList;
-	Padre::Wx::Dialog::WindowList->new($self,
-			title => Wx::gettext('Close some files'),
-			list_title => Wx::gettext('Select files to close:'),
-			buttons => [['Close selected',sub { Padre->ide->wx->main->close_some(@_); }]],
-		)->show;
+	Padre::Wx::Dialog::WindowList->new(
+		$self,
+		title      => Wx::gettext('Close some files'),
+		list_title => Wx::gettext('Select files to close:'),
+		buttons    => [ [ 'Close selected', sub { Padre->ide->wx->main->close_some(@_); } ] ],
+	)->show;
 }
 
 sub close_some {
-	my $self = shift;
+	my $self        = shift;
 	my @close_pages = @_;
 
 	my $notebook = $self->notebook;
@@ -4279,14 +4280,14 @@ sub close_some {
 
 	SCOPE: {
 		my $lock = $self->lock('refresh');
-		for my $close_page_no (0..$#close_pages) {
+		for my $close_page_no ( 0 .. $#close_pages ) {
 			$progress->update( $close_page_no, ( $close_page_no + 1 ) . '/' . scalar(@close_pages) );
 
 			foreach my $pageid ( $self->pageids ) {
 				my $page = $notebook->GetPage($pageid);
 				next unless defined($page);
 				next unless $page eq $close_pages[$close_page_no];
-				$self->close( $pageid ) or return 0;
+				$self->close($pageid) or return 0;
 			}
 		}
 	}

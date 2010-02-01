@@ -26,28 +26,30 @@ use Class::XSAccessor {
 # -- constructor
 
 sub new {
-	my $class = shift;
+	my $class  = shift;
 	my $parent = shift;
-	my %args = @_;
+	my %args   = @_;
 
 	# create object
 	my $self = $class->SUPER::new(
 		$parent,
 		-1,
-		Wx::gettext($args{title} || Wx::gettext('Window list')),
+		Wx::gettext( $args{title} || Wx::gettext('Window list') ),
 		Wx::wxDefaultPosition,
 		Wx::Size->new( 480, 300 ),
 		Wx::wxDEFAULT_FRAME_STYLE | Wx::wxTAB_TRAVERSAL,
 	);
 
-	for (keys(%args)) {
+	for ( keys(%args) ) {
 		$self->{$_} = $args{$_};
 	}
 
-	$self->{button_clicks} = [\&_button_clicked_0,\&_button_clicked_1,
-	\&_button_clicked_2,\&_button_clicked_3,\&_button_clicked_4,
-	\&_button_clicked_5,\&_button_clicked_6,\&_button_clicked_7,
-	\&_button_clicked_8,\&_button_clicked_9 ];
+	$self->{button_clicks} = [
+		\&_button_clicked_0, \&_button_clicked_1,
+		\&_button_clicked_2, \&_button_clicked_3, \&_button_clicked_4,
+		\&_button_clicked_5, \&_button_clicked_6, \&_button_clicked_7,
+		\&_button_clicked_8, \&_button_clicked_9
+	];
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
@@ -80,23 +82,23 @@ sub _on_butclose_clicked {
 }
 
 sub _on_button_clicked {
-	my $self = shift;
+	my $self      = shift;
 	my $button_no = shift;
 
 	my @pages;
 
-	for my $listitem (0..($self->_list->GetItemCount - 1)) {
-		my $item = $self->{items}->[$self->_list->GetItem($listitem)->GetData];
+	for my $listitem ( 0 .. ( $self->_list->GetItemCount - 1 ) ) {
+		my $item = $self->{items}->[ $self->_list->GetItem($listitem)->GetData ];
 		next unless $item->{selected};
-		push @pages,$item->{page};
+		push @pages, $item->{page};
 	}
 
 	my $code = $self->{buttons}->[$button_no]->[1];
 
-	if (ref($code) eq 'CODE') {
+	if ( ref($code) eq 'CODE' ) {
 		&{$code}(@pages);
 	} else {
-		warn 'Button code is no CODE reference: '.$code.' ('.ref($code).')';
+		warn 'Button code is no CODE reference: ' . $code . ' (' . ref($code) . ')';
 	}
 
 	$self->Destroy;
@@ -130,7 +132,7 @@ sub _on_list_col_click {
 sub _on_list_item_selected {
 	my ( $self, $event ) = @_;
 
-	$self->{items}->[$event->GetIndex]->{selected} = 1;
+	$self->{items}->[ $event->GetIndex ]->{selected} = 1;
 
 	# update buttons
 	$self->_update_buttons_state;
@@ -147,7 +149,7 @@ sub _on_list_item_selected {
 sub _on_list_item_deselected {
 	my ( $self, $event ) = @_;
 
-	$self->{items}->[$event->GetIndex]->{selected} = 0;
+	$self->{items}->[ $event->GetIndex ]->{selected} = 0;
 
 	# update buttons
 	$self->_update_buttons_state;
@@ -236,14 +238,14 @@ sub _create_options {
 	$self->_vbox->Add( $hbox, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	# CheckBox
-#	$self->{autosave} = Wx::CheckBox->new(
-#		$self,
-#		-1,
-#		Wx::gettext('Save session automatically'),
-#	);
-#	$self->{autosave}->SetValue( $config->session_autosave ? 1 : 0 );
-#
-#	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
+	#	$self->{autosave} = Wx::CheckBox->new(
+	#		$self,
+	#		-1,
+	#		Wx::gettext('Save session automatically'),
+	#	);
+	#	$self->{autosave}->SetValue( $config->session_autosave ? 1 : 0 );
+	#
+	#	$hbox->Add( $self->{autosave}, 0, Wx::wxALL, 5 );
 }
 
 #
@@ -264,8 +266,8 @@ sub _create_buttons {
 	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 
-	for my $button_no (0..$#{$self->{buttons} || []}) {
-		if (!defined($self->{button_clicks}->[$button_no])) {
+	for my $button_no ( 0 .. $#{ $self->{buttons} || [] } ) {
+		if ( !defined( $self->{button_clicks}->[$button_no] ) ) {
 			warn 'Too many buttons defined!';
 			last;
 		}
@@ -298,10 +300,10 @@ sub _refresh_list {
 	$list->DeleteAllItems;
 	$self->{items} = []; # Clear
 	foreach my $page ( $main->pages ) {
-		
+
 		my $document = $page->{Document};
-		
-		my $filename = $document->file->filename;
+
+		my $filename    = $document->file->filename;
 		my $project_dir = $document->project_dir;
 		$filename =~ s/^\Q$project_dir\E//;
 
@@ -309,11 +311,11 @@ sub _refresh_list {
 		my $item = Wx::ListItem->new;
 		$item->SetId(0);
 		$item->SetColumn(0);
-		$item->SetText($document->project->name);
-		push @{$self->{items}},{ page => $page };
-		$item->SetData($#{$self->{items}});
+		$item->SetText( $document->project->name );
+		push @{ $self->{items} }, { page => $page };
+		$item->SetData( $#{ $self->{items} } );
 		my $idx = $list->InsertItem($item);
-		$list->SetItem( $idx, 1, $filename);
+		$list->SetItem( $idx, 1, $filename );
 	}
 
 	# auto-resize columns
@@ -363,14 +365,14 @@ sub _update_buttons_state {
 	my ($self) = @_;
 
 	my $count;
-	for my $item (@{$self->{items}}) {
+	for my $item ( @{ $self->{items} } ) {
 		++$count if $item->{selected};
 	}
 
 	my $method = $count ? 'Enable' : 'Disable';
 
-	for my $button (@{$self->{buttons} || []}) {
-		$button->[2]->$method if defined($button->[2]);
+	for my $button ( @{ $self->{buttons} || [] } ) {
+		$button->[2]->$method if defined( $button->[2] );
 	}
 
 }
