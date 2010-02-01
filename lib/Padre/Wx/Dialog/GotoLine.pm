@@ -58,6 +58,12 @@ sub new {
 sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
+	
+	# Line or position checkbox
+	$self->{line_or_position_checkbox} = Wx::CheckBox->new(
+		$self, -1, Wx::gettext('Line or position?'),
+	);
+
 	# Goto line label
 	$self->{gotoline_label} = Wx::StaticText->new(
 		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
@@ -67,6 +73,7 @@ sub _create_controls {
 	$self->{gotoline_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
+	$self->{gotoline_text}->MoveBeforeInTabOrder($self->{line_or_position_checkbox});
 
 	unless (Padre::Constant::WIN32) {
 
@@ -102,6 +109,7 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $self->{line_or_position_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
