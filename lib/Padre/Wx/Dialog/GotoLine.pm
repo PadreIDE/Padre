@@ -59,11 +59,14 @@ sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
 
+	# a label to display current line/position
+	$self->{current} = Wx::StaticText->new( $self, -1, '');
+
 	# Line or position checkbox
-	$self->{line_or_position_checkbox} = Wx::CheckBox->new(
-		$self, -1, Wx::gettext('&Is it a line number or a position?'),
+	$self->{line_mode} = Wx::CheckBox->new(
+		$self, -1, Wx::gettext('&Line number or character position?'),
 	);
-	$self->{line_or_position_checkbox}->SetValue(1);
+	$self->{line_mode}->SetValue(1);
 
 	# Goto line label
 	$self->{gotoline_label} = Wx::StaticText->new(
@@ -74,7 +77,6 @@ sub _create_controls {
 	$self->{gotoline_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
-	$self->{gotoline_text}->MoveBeforeInTabOrder( $self->{line_or_position_checkbox} );
 
 	unless (Padre::Constant::WIN32) {
 
@@ -82,9 +84,7 @@ sub _create_controls {
 		$self->{gotoline_text}->SetFocus();
 	}
 
-	$self->{status_line} = Wx::StaticText->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-	);
+	$self->{status_line} = Wx::StaticText->new( $self, -1, '');
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
@@ -98,6 +98,9 @@ sub _create_controls {
 		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
 	);
 
+	$self->{gotoline_text}->MoveBeforeInTabOrder( $self->{line_mode} );
+	$self->{line_mode}->MoveAfterInTabOrder( $self->{button_cancel} );
+
 	#----- Dialog Layout
 
 	# Main button sizer
@@ -108,7 +111,8 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{line_or_position_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{line_mode}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{current}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{gotoline_label},            0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{gotoline_text},             0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{status_line},               0, Wx::wxALL | Wx::wxEXPAND, 2 );
@@ -139,7 +143,7 @@ sub _bind_events {
 
 	Wx::Event::EVT_CHECKBOX(
 		$self,
-		$self->{line_or_position_checkbox},
+		$self->{line_mode},
 		sub {
 			my $self = shift;
 			$self->_update_label;
@@ -175,7 +179,7 @@ sub _on_ok_button {
 	my $self = shift;
 
 	# Fetch values
-	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+	my $line_mode = $self->{line_mode}->IsChecked;
 	my $value     = $self->{gotoline_text}->GetValue;
 	my $editor    = $self->current->editor;
 
@@ -204,12 +208,17 @@ sub _on_ok_button {
 #
 sub _update_label {
 	my $self      = shift;
-	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+	my $line_mode = $self->{line_mode}->IsChecked;
 	$self->{gotoline_label}->SetLabel(
 		$line_mode
 		? sprintf( Wx::gettext("&Enter a line number between 1 and %s:"), $self->{max_line_number} )
 		: sprintf( Wx::gettext("&Enter a position between 1 and %s:"),    $self->{max_position} )
 	);
+	$self->{current}->SetLabel(
+		$line_mode
+		? sprintf( Wx::gettext("Current line number: %s"), $self->{current_line_number} )
+		: sprintf( Wx::gettext("Current position: %s"), $self->{current_position} ) );
+
 }
 
 #
@@ -218,7 +227,7 @@ sub _update_label {
 sub _validate {
 	my $self = shift;
 
-	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+	my $line_mode = $self->{line_mode}->IsChecked;
 	my $value     = $self->{gotoline_text}->GetValue;
 
 	# If it is empty, do not warn about it but disable it though
@@ -277,6 +286,8 @@ sub modal {
 	# Update max line number and position fields
 	$self->{max_line_number} = $editor->GetLineCount;
 	$self->{max_position}    = $editor->GetLength + 1;
+	$self->{current_line_number} = $editor->GetCurrentLine + 1;
+	$self->{current_position} = $editor->GetCurrentPos + 1;
 
 
 	# Update Goto line number label
