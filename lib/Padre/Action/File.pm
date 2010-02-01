@@ -10,7 +10,7 @@ use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
 use Padre::Logger;
 
-our $VERSION = '0.55';
+our $VERSION = '0.56';
 
 #####################################################################
 # Padre::Wx::Menu Methods

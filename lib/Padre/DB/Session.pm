@@ -9,7 +9,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.55';
+our $VERSION = '0.56';
 
 my $PADRE_SESSION = 'padre-last';
 

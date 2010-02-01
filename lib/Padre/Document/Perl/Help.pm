@@ -12,7 +12,7 @@ use Padre::DocBrowser::POD ();
 use Padre::Pod2HTML        ();
 use Padre::Logger;
 
-our $VERSION = '0.55';
+our $VERSION = '0.56';
 our @ISA     = 'Padre::HelpProvider';
 
 # for caching help list (for faster access)

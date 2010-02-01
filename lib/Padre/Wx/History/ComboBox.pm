@@ -9,7 +9,7 @@ use Padre::Wx          ();
 use Padre::DB          ();
 use Padre::DB::History ();
 
-our $VERSION = '0.55';
+our $VERSION = '0.56';
 our @ISA     = 'Wx::ComboBox';
 
 sub new {

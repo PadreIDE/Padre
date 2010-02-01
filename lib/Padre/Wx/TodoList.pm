@@ -7,7 +7,7 @@ use Params::Util qw{ _STRING };
 use Padre::Wx ();
 use Padre::Current ('_CURRENT');
 
-our $VERSION = '0.55';
+our $VERSION = '0.56';
 our @ISA     = 'Wx::Panel';
 
 #####################################################################

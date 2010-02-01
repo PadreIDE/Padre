@@ -9,7 +9,7 @@ use YAML::Tiny    ();
 use Exporter      ();
 use Padre::Config ();
 
-our $VERSION = '0.55';
+our $VERSION = '0.56';
 
 1;
 
