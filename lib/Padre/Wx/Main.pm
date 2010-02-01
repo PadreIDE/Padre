@@ -2968,8 +2968,8 @@ sub on_goto {
 	my $self = shift;
 
 	unless ( defined $self->{goto} ) {
-		require Padre::Wx::Dialog::GotoLine;
-		$self->{goto} = Padre::Wx::Dialog::GotoLine->new($self);
+		require Padre::Wx::Dialog::Goto;
+		$self->{goto} = Padre::Wx::Dialog::Goto->new($self);
 	}
 	$self->{goto}->show;
 
