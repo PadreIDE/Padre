@@ -141,12 +141,8 @@ sub _bind_events {
 		$self,
 		$self->{line_or_position_checkbox},
 		sub {
-			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
-			$self->{gotoline_label}->SetLabel(
-				$line_mode
-				? sprintf( Wx::gettext("&Enter a line number between 1 and %s:"), $self->{max_line_number} )
-				: sprintf( Wx::gettext("&Enter a position between 1 and %s:"),    $self->{max_position} )
-			);
+			$self->_update_label;
+
 			$self->_validate;
 			return;
 		},
@@ -188,7 +184,20 @@ sub _bind_events {
 }
 
 #
-# Internal method to validate user input
+# Private method to update the goto line/position label
+#
+sub _update_label {
+	my $self      = shift;
+	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+	$self->{gotoline_label}->SetLabel(
+		$line_mode
+		? sprintf( Wx::gettext("&Enter a line number between 1 and %s:"), $self->{max_line_number} )
+		: sprintf( Wx::gettext("&Enter a position between 1 and %s:"),    $self->{max_position} )
+	);
+}
+
+#
+# Private method to validate user input
 #
 sub _validate {
 	my $self = shift;
@@ -238,18 +247,24 @@ Returns C<undef>.
 
 sub modal {
 	my $class = shift;
-	my $self  = $class->new(@_);
 
-	# Update Goto line number label
+	# Instantiate a new object of myself :)
+	my $self = $class->new(@_);
+
+	# Get the current editor
 	my $editor = $self->current->editor;
 	unless ($editor) {
 		$self->Destroy;
 		return;
 	}
+
+	# Update max line number and position fields
 	$self->{max_line_number} = $editor->GetLineCount;
 	$self->{max_position}    = $editor->GetLength + 1;
-	$self->{gotoline_label}
-		->SetLabel( sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
+
+
+	# Update Goto line number label
+	$self->_update_label;
 
 	# Go modal!
 	my $ok = $self->ShowModal;
