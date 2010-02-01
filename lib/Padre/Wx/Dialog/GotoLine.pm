@@ -16,7 +16,7 @@ our @ISA     = qw{
 
 =head1 NAME
 
-Padre::Wx::Dialog::GotoLine - a dialog to jump to a user-specifed line
+Padre::Wx::Dialog::GotoLine - a dialog to jump to a user-specifed line/position
 
 =head1 PUBLIC API
 
@@ -30,7 +30,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Go to Line number'),
+		Wx::gettext('Go to line number/position'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
@@ -61,7 +61,7 @@ sub _create_controls {
 
 	# Line or position checkbox
 	$self->{line_or_position_checkbox} = Wx::CheckBox->new(
-		$self, -1, Wx::gettext('Line or position?'),
+		$self, -1, Wx::gettext('Is it a line number or a position?'),
 	);
 	$self->{line_or_position_checkbox}->SetValue(1);
 
@@ -70,7 +70,7 @@ sub _create_controls {
 		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
 	);
 
-	# Input text control for the line number
+	# Input text control for the line number/position
 	$self->{gotoline_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
@@ -83,8 +83,6 @@ sub _create_controls {
 	}
 
 	$self->{status_line} = Wx::StaticText->new(
-
-		#$self, -1, Wx::gettext('Not a line number!'), Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
@@ -146,8 +144,8 @@ sub _bind_events {
 			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
 			$self->{gotoline_label}->SetLabel(
 				$line_mode
-				? sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} )
-				: sprintf( Wx::gettext("Enter a position between 1 and %s:"),    $self->{max_position} )
+				? sprintf( Wx::gettext("&Enter a line number between 1 and %s:"), $self->{max_line_number} )
+				: sprintf( Wx::gettext("&Enter a position between 1 and %s:"),    $self->{max_position} )
 			);
 			$self->_validate;
 			return;
@@ -174,8 +172,7 @@ sub _bind_events {
 			my $editor = $self->current->editor;
 
 			# Bounds checking
-			my $max_value = $line_mode ? 
-				$self->{max_line_number} : $self->{max_position};
+			my $max_value = $line_mode ? $self->{max_line_number} : $self->{max_position};
 			$value = $max_value if $value > $max_value;
 			$value--;
 
@@ -199,6 +196,12 @@ sub _validate {
 	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
 	my $value     = $self->{gotoline_text}->GetValue;
 
+	# If it is empty, do not warn about it but disable it though
+	if ( $value eq '' ) {
+		$self->{button_ok}->Enable(0);
+		return;
+	}
+
 	# Should be an integer number
 	if ( $value !~ /^\d+$/ ) {
 		$self->{status_line}->SetLabel( Wx::gettext('Not a number!') );
@@ -208,10 +211,8 @@ sub _validate {
 
 	# Bounds checking
 	my $editor = $self->current->editor;
-	my $max_value = $line_mode ? 
-		$self->{max_line_number} : $self->{max_position};
-	if ( $value == 0 or $value > $max_value )
-	{
+	my $max_value = $line_mode ? $self->{max_line_number} : $self->{max_position};
+	if ( $value == 0 or $value > $max_value ) {
 		$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
 		$self->{button_ok}->Enable(0);
 
