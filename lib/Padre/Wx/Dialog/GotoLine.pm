@@ -60,7 +60,7 @@ sub _create_controls {
 
 
 	# a label to display current line/position
-	$self->{current} = Wx::StaticText->new( $self, -1, '');
+	$self->{current} = Wx::StaticText->new( $self, -1, '' );
 
 	# Line or position checkbox
 	$self->{line_mode} = Wx::CheckBox->new(
@@ -84,7 +84,7 @@ sub _create_controls {
 		$self->{gotoline_text}->SetFocus();
 	}
 
-	$self->{status_line} = Wx::StaticText->new( $self, -1, '');
+	$self->{status_line} = Wx::StaticText->new( $self, -1, '' );
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
@@ -111,11 +111,11 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{line_mode}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{current}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{gotoline_label},            0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{gotoline_text},             0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{status_line},               0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vsizer->Add( $self->{line_mode},      0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{current},        0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -217,7 +217,8 @@ sub _update_label {
 	$self->{current}->SetLabel(
 		$line_mode
 		? sprintf( Wx::gettext("Current line number: %s"), $self->{current_line_number} )
-		: sprintf( Wx::gettext("Current position: %s"), $self->{current_position} ) );
+		: sprintf( Wx::gettext("Current position: %s"),    $self->{current_position} )
+	);
 
 }
 
@@ -284,10 +285,10 @@ sub modal {
 	}
 
 	# Update max line number and position fields
-	$self->{max_line_number} = $editor->GetLineCount;
-	$self->{max_position}    = $editor->GetLength + 1;
+	$self->{max_line_number}     = $editor->GetLineCount;
+	$self->{max_position}        = $editor->GetLength + 1;
 	$self->{current_line_number} = $editor->GetCurrentLine + 1;
-	$self->{current_position} = $editor->GetCurrentPos + 1;
+	$self->{current_position}    = $editor->GetCurrentPos + 1;
 
 
 	# Update Goto line number label
