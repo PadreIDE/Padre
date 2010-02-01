@@ -1,6 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
-0.56 To Be Released
+0.57 To Be Released
+
+
+0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
     - Padre now displays a dynamic to-do list generated from comments
       in your source code (CORION)
