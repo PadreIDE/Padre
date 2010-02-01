@@ -16,6 +16,12 @@ if ( !$ENV{PADRE_NETWORK_T} ) {
 
 plan( tests => 75 );
 
+package Wx;
+
+sub gettext { shift; }
+
+package main;
+
 my $file; # Define for later usage
 
 ###############################################################################

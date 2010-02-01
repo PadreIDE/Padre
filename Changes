@@ -1,7 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.57 To Be Released
-
+    - Add status messages for Padre::File operations (SEWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)

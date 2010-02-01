@@ -139,7 +139,8 @@ Returns a new C<Padre::File> or dies on error.
 
 sub new {
 	my $class = shift;
-	my $URL   = $_[0];
+	my $URL   = shift;
+	my %args = @_;
 
 	return if not defined($URL) or $URL eq '';
 
@@ -156,20 +157,23 @@ sub new {
 
 	if ( $URL =~ /^file\:(.+)$/i ) {
 		require Padre::File::Local;
-		$self = Padre::File::Local->new($1);
+		$self = Padre::File::Local->new($1,@_);
 
 	} elsif ( $URL =~ /^https?\:\/\//i ) {
 		require Padre::File::HTTP;
-		$self = Padre::File::HTTP->new($URL);
+		$self = Padre::File::HTTP->new($URL,@_);
 	} elsif ( $URL =~ /^ftp?\:/i ) {
 		require Padre::File::FTP;
-		$self = Padre::File::FTP->new($URL);
+		$self = Padre::File::FTP->new($URL,@_);
 	} else {
 		require Padre::File::Local;
-		$self = Padre::File::Local->new($URL);
+		$self = Padre::File::Local->new($URL,@_);
 	}
 
 	$self->{Filename} = $self->{filename}; # Temporary hack
+
+	# Copy the info message handler to self
+	$self->{info_handler} = $args{info_handler} if defined($args{info_handler});
 
 	return $self;
 
@@ -734,6 +738,33 @@ Returns the empty list if the function is not available on the protocol.
 =cut
 
 sub write { }
+
+=head1 INTERNAL METHODS
+
+=head2 C<_info>
+
+  $file->_info($message);
+
+Shows $message to the user as an information. The output is guranteed to
+be non-blocking and messages shown this way must be safe to be ignored by
+the user.
+
+Doesn't return anything.
+
+=cut
+
+sub _info {
+	my $self = shift;
+	my $message = shift;
+	
+	# Return silently if no handler for info message is defined
+	return unless defined($self->{info_handler}) and (ref($self->{info_handler}) eq 'CODE');
+	
+	# Handle the info message but don't fail on DIEs:
+	eval {
+		&{$self->{info_handler}}($self,$message);
+	};
+}
 
 1;
 

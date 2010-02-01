@@ -198,7 +198,12 @@ sub new {
 	# leaving the sub.
 	# Use document->{file}->filename instead!
 	if ( $self->{filename} ) {
-		$self->{file} = Padre::File->new( $self->{filename} );
+		$self->{file} = Padre::File->new( $self->{filename},
+		info_handler => sub {
+			my $self = shift;
+			my $message = shift;
+			Padre->ide->wx->main->info($message);
+		} );
 
 		unless ( defined $self->{file} ) {
 			$self->error( Wx::gettext('Error while opening file: no file object') );
