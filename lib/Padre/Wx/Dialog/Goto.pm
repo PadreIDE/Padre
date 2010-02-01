@@ -1,4 +1,4 @@
-package Padre::Wx::Dialog::GotoLine;
+package Padre::Wx::Dialog::Goto;
 
 use 5.008;
 use strict;
@@ -16,15 +16,15 @@ our @ISA     = qw{
 
 =head1 NAME
 
-Padre::Wx::Dialog::GotoLine - a dialog to jump to a user-specifed line/position
+Padre::Wx::Dialog::Goto - a dialog to jump to a user-specifed line/position
 
 =head1 PUBLIC API
 
 =head2 C<new>
 
-  my $goto = Padre::Wx::Dialog::GotoLine->new($main);
+  my $goto = Padre::Wx::Dialog::Goto->new($main);
 
-Returns a new C<Padre::Wx::Dialog::GotoLine> instance
+Returns a new C<Padre::Wx::Dialog::Goto> instance
 
 =cut
 
@@ -75,19 +75,19 @@ sub _create_controls {
 	$self->{line_mode}->SetValue(1);
 
 	# Goto line label
-	$self->{gotoline_label} = Wx::StaticText->new(
+	$self->{goto_label} = Wx::StaticText->new(
 		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
 	);
 
 	# Input text control for the line number/position
-	$self->{gotoline_text} = Wx::TextCtrl->new(
+	$self->{goto_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
 	unless (Padre::Constant::WIN32) {
 
 		#non-win32: Have the text field grab the focus so we can just start typing.
-		$self->{gotoline_text}->SetFocus();
+		$self->{goto_text}->SetFocus();
 	}
 
 	$self->{status_line} = Wx::StaticText->new( $self, -1, '' );
@@ -104,7 +104,7 @@ sub _create_controls {
 		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
 	);
 
-	$self->{gotoline_text}->MoveBeforeInTabOrder( $self->{line_mode} );
+	$self->{goto_text}->MoveBeforeInTabOrder( $self->{line_mode} );
 	$self->{line_mode}->MoveAfterInTabOrder( $self->{button_cancel} );
 
 	#----- Dialog Layout
@@ -119,8 +119,8 @@ sub _create_controls {
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $self->{line_mode},      0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{current},        0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{goto_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{goto_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
@@ -140,7 +140,7 @@ sub _bind_events {
 	my $self = shift;
 	Wx::Event::EVT_TEXT(
 		$self,
-		$self->{gotoline_text},
+		$self->{goto_text},
 		sub {
 			$_[0]->_validate;
 			return;
@@ -186,7 +186,7 @@ sub _on_ok_button {
 
 	# Fetch values
 	my $line_mode = $self->{line_mode}->IsChecked;
-	my $value     = $self->{gotoline_text}->GetValue;
+	my $value     = $self->{goto_text}->GetValue;
 	my $editor    = $self->current->editor;
 
 	# Bounds checking
@@ -215,7 +215,7 @@ sub _on_ok_button {
 sub _update_label {
 	my $self      = shift;
 	my $line_mode = $self->{line_mode}->IsChecked;
-	$self->{gotoline_label}->SetLabel(
+	$self->{goto_label}->SetLabel(
 		$line_mode
 		? sprintf( Wx::gettext("&Enter a line number between 1 and %s:"), $self->{max_line_number} )
 		: sprintf( Wx::gettext("&Enter a position between 1 and %s:"),    $self->{max_position} )
@@ -235,7 +235,7 @@ sub _validate {
 	my $self = shift;
 
 	my $line_mode = $self->{line_mode}->IsChecked;
-	my $value     = $self->{gotoline_text}->GetValue;
+	my $value     = $self->{goto_text}->GetValue;
 
 	# If it is empty, do not warn about it but disable it though
 	if ( $value eq '' ) {
