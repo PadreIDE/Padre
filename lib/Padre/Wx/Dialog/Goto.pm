@@ -114,11 +114,11 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{line_mode},      0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{current},        0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{goto_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{goto_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vsizer->Add( $self->{line_mode},   0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{current},     0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{goto_label},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{goto_text},   0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{status_line}, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -280,6 +280,7 @@ sub _validate {
 #
 sub _update_from_editor {
 	my $self = shift;
+
 	# Get the current editor
 	my $editor = $self->current->editor;
 	unless ($editor) {
@@ -318,9 +319,11 @@ sub show {
 	$self->_update_label;
 
 	if ( $self->IsShown ) {
+
 		# If it is already open, focus on it
 		$self->SetFocus;
 	} else {
+
 		# Otherwise show the dialog
 		$self->Show;
 	}
