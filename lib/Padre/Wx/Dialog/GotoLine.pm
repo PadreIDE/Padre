@@ -63,6 +63,7 @@ sub _create_controls {
 	$self->{line_or_position_checkbox} = Wx::CheckBox->new(
 		$self, -1, Wx::gettext('Line or position?'),
 	);
+	$self->{line_or_position_checkbox}->SetValue(1);
 
 	# Goto line label
 	$self->{gotoline_label} = Wx::StaticText->new(
@@ -154,6 +155,21 @@ sub _bind_events {
 		}
 	);
 
+	Wx::Event::EVT_CHECKBOX(
+		$self,
+		$self->{line_or_position_checkbox},
+		sub {
+			if($self->{line_or_position_checkbox}->IsChecked) {
+				$self->{gotoline_label}->SetLabel( 
+					sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
+			} else {
+				$self->{gotoline_label}->SetLabel( 
+					sprintf( Wx::gettext("Enter a position between 1 and %s:"), $self->{max_position} ) );
+			}
+			return;
+		},
+	);
+
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{button_cancel},
@@ -161,6 +177,7 @@ sub _bind_events {
 			$_[0]->Destroy;
 		}
 	);
+
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$self->{button_ok},
@@ -201,6 +218,7 @@ sub modal {
 		return;
 	}
 	$self->{max_line_number} = $editor->GetLineCount;
+	$self->{max_position} = $editor->GetLength;
 	$self->{gotoline_label}
 		->SetLabel( sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
 
