@@ -198,6 +198,7 @@ sub _validate {
 
 	# If it is empty, do not warn about it but disable it though
 	if ( $value eq '' ) {
+		$self->{status_line}->SetLabel('');
 		$self->{button_ok}->Enable(0);
 		return;
 	}
