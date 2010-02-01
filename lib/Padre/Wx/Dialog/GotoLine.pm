@@ -134,27 +134,7 @@ sub _bind_events {
 		$self,
 		$self->{gotoline_text},
 		sub {
-			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
-			my $value     = $self->{gotoline_text}->GetValue;
-			if ( $value !~ /^\d+$/ ) {
-				$self->{status_line}->SetLabel( Wx::gettext('Not a number!') );
-				$self->{button_ok}->Enable(0);
-				return;
-			}
-
-			my $editor = $self->current->editor;
-			if ( $line_mode and ( $value == 0 or $value > $self->{max_line_number} )
-				or ( not $line_mode and ( $value > $self->{max_position} ) ) )
-			{
-				$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
-				$self->{button_ok}->Enable(0);
-
-				return;
-			}
-
-			$self->{button_ok}->Enable(1);
-			$self->{status_line}->SetLabel('');
-
+			$self->_validate;
 			return;
 		}
 	);
@@ -169,6 +149,7 @@ sub _bind_events {
 				? sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} )
 				: sprintf( Wx::gettext("Enter a position between 1 and %s:"),    $self->{max_position} )
 			);
+			$self->_validate;
 			return;
 		},
 	);
@@ -191,11 +172,11 @@ sub _bind_events {
 
 			my $value  = $self->{gotoline_text}->GetValue;
 			my $editor = $self->current->editor;
-			if ( $line_mode and $value > $self->{max_line_number} ) {
-				$value = $self->{max_line_number};
-			} elsif ( not $line_mode and $value > $self->{max_position} ) {
-				$value = $self->{max_position};
-			}
+
+			# Bounds checking
+			my $max_value = $line_mode ? 
+				$self->{max_line_number} : $self->{max_position};
+			$value = $max_value if $value > $max_value;
 			$value--;
 
 			$self->Destroy;
@@ -207,6 +188,39 @@ sub _bind_events {
 		},
 	);
 
+}
+
+#
+# Internal method to validate user input
+#
+sub _validate {
+	my $self = shift;
+
+	my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
+	my $value     = $self->{gotoline_text}->GetValue;
+
+	# Should be an integer number
+	if ( $value !~ /^\d+$/ ) {
+		$self->{status_line}->SetLabel( Wx::gettext('Not a number!') );
+		$self->{button_ok}->Enable(0);
+		return;
+	}
+
+	# Bounds checking
+	my $editor = $self->current->editor;
+	my $max_value = $line_mode ? 
+		$self->{max_line_number} : $self->{max_position};
+	if ( $value == 0 or $value > $max_value )
+	{
+		$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
+		$self->{button_ok}->Enable(0);
+
+		return;
+	}
+
+	# Not problem, enable everything and clear errors
+	$self->{button_ok}->Enable(1);
+	$self->{status_line}->SetLabel('');
 }
 
 =pod
