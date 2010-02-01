@@ -74,6 +74,8 @@ Changes for Perl Application Development and Refactoring Environment
     - "Goto Line" dialog now supports going to lines and positions (AZAWAWI)
     - Fixed perl to refactor action prefix for refactor menu for 
       consistency (AZAWAWI)
+    - Fixed ticket #841: Quick Menu Access should show the location of the 
+      menu item on the menu system (AZAWAWI)
 
 0.55 2010.01.21
     - Add full list of file types to the View Document As menu (SZABGAB)
