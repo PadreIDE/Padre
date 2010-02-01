@@ -58,7 +58,7 @@ sub new {
 sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
-	
+
 	# Line or position checkbox
 	$self->{line_or_position_checkbox} = Wx::CheckBox->new(
 		$self, -1, Wx::gettext('Line or position?'),
@@ -74,7 +74,7 @@ sub _create_controls {
 	$self->{gotoline_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
-	$self->{gotoline_text}->MoveBeforeInTabOrder($self->{line_or_position_checkbox});
+	$self->{gotoline_text}->MoveBeforeInTabOrder( $self->{line_or_position_checkbox} );
 
 	unless (Padre::Constant::WIN32) {
 
@@ -111,9 +111,9 @@ sub _create_controls {
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $self->{line_or_position_checkbox}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{gotoline_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{gotoline_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{status_line},    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$vsizer->Add( $self->{gotoline_label},            0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{gotoline_text},             0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{status_line},               0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -135,7 +135,7 @@ sub _bind_events {
 		$self->{gotoline_text},
 		sub {
 			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
-			my $value = $self->{gotoline_text}->GetValue;
+			my $value     = $self->{gotoline_text}->GetValue;
 			if ( $value !~ /^\d+$/ ) {
 				$self->{status_line}->SetLabel( Wx::gettext('Not a number!') );
 				$self->{button_ok}->Enable(0);
@@ -143,11 +143,12 @@ sub _bind_events {
 			}
 
 			my $editor = $self->current->editor;
-			if($line_mode and ( $value == 0 or $value > $self->{max_line_number} )
-			   or (not $line_mode and ($value > $self->{max_position} )) ) {
+			if ( $line_mode and ( $value == 0 or $value > $self->{max_line_number} )
+				or ( not $line_mode and ( $value > $self->{max_position} ) ) )
+			{
 				$self->{status_line}->SetLabel( Wx::gettext('Out of range!') );
 				$self->{button_ok}->Enable(0);
-			
+
 				return;
 			}
 
@@ -163,9 +164,11 @@ sub _bind_events {
 		$self->{line_or_position_checkbox},
 		sub {
 			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
-			$self->{gotoline_label}->SetLabel( $line_mode ? 
-				sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} )
-				:sprintf( Wx::gettext("Enter a position between 1 and %s:"), $self->{max_position} ) );
+			$self->{gotoline_label}->SetLabel(
+				$line_mode
+				? sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} )
+				: sprintf( Wx::gettext("Enter a position between 1 and %s:"),    $self->{max_position} )
+			);
 			return;
 		},
 	);
@@ -186,17 +189,17 @@ sub _bind_events {
 
 			my $line_mode = $self->{line_or_position_checkbox}->IsChecked;
 
-			my $value = $self->{gotoline_text}->GetValue;
-			my $editor      = $self->current->editor;
-			if($line_mode and $value > $self->{max_line_number}) {
+			my $value  = $self->{gotoline_text}->GetValue;
+			my $editor = $self->current->editor;
+			if ( $line_mode and $value > $self->{max_line_number} ) {
 				$value = $self->{max_line_number};
-			} elsif (not $line_mode and $value > $self->{max_position}) {
+			} elsif ( not $line_mode and $value > $self->{max_position} ) {
 				$value = $self->{max_position};
 			}
 			$value--;
 
 			$self->Destroy;
-			if($line_mode) {
+			if ($line_mode) {
 				$editor->goto_line_centerize($value);
 			} else {
 				$editor->goto_pos_centerize($value);
@@ -228,7 +231,7 @@ sub modal {
 		return;
 	}
 	$self->{max_line_number} = $editor->GetLineCount;
-	$self->{max_position} = $editor->GetLength + 1;
+	$self->{max_position}    = $editor->GetLength + 1;
 	$self->{gotoline_label}
 		->SetLabel( sprintf( Wx::gettext("Enter a line number between 1 and %s:"), $self->{max_line_number} ) );
 
