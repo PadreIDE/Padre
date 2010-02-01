@@ -371,14 +371,35 @@ sub _update_list_box {
 	$self->_list->Clear;
 	my $pos = 0;
 
+	#TODO: think how to make actions and menus relate to each other
+	my %menu_name_by_prefix = (
+		"file" => Wx::gettext('File'),
+		"edit" => Wx::gettext('Edit'),
+		"search" => Wx::gettext('Search'),
+		"view" => Wx::gettext('View'),
+		"perl" => Wx::gettext('Perl'),
+		"refactor" => Wx::gettext('Refactor'),
+		"run" => Wx::gettext('Run'),
+		"debug" => Wx::gettext('Debug'),
+		"plugins" => Wx::gettext('Plugins'),
+		"window" => Wx::gettext('Window'),
+		"help" => Wx::gettext('Help'),
+	);
+
 	my $first_label = undef;
 	foreach my $action ( @{ $self->_matched_results } ) {
 		my $label = $action->{value};
 		if ( $label =~ /$search_expr/i ) {
+			my $action_name = $action->{name};
 			if ( not $first_label ) {
-				$first_label = $self->_label( $label, $action->{name} );
+				$first_label = $self->_label( $label, $action_name );
 			}
-			$self->_list->Insert( $label, $pos, $action );
+			my $label_suffix = '';
+			my $prefix = $action_name;
+			$prefix =~ s/^(\w+)\.\w+/$1/s;
+			my $menu_name = $menu_name_by_prefix{$prefix};
+			$label_suffix = "  ($menu_name)" if $menu_name;
+			$self->_list->Insert( $label . $label_suffix, $pos, $action );
 			$pos++;
 		}
 	}
