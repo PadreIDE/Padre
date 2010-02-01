@@ -2959,15 +2959,19 @@ sub on_autocompletion {
 
     $main->on_goto;
 
-Prompt user for a line, and jump to this line in current document.
+Prompt user for a line or character position, and jump to this line 
+or character position in current document.
 
 =cut
 
 sub on_goto {
 	my $self = shift;
 
-	require Padre::Wx::Dialog::GotoLine;
-	Padre::Wx::Dialog::GotoLine->modal;
+	unless ( defined $self->{goto} ) {
+		require Padre::Wx::Dialog::GotoLine;
+		$self->{goto} = Padre::Wx::Dialog::GotoLine->new($self);
+	}
+	$self->{goto}->show;
 
 	return;
 }

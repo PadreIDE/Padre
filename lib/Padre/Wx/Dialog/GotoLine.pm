@@ -20,6 +20,12 @@ Padre::Wx::Dialog::GotoLine - a dialog to jump to a user-specifed line/position
 
 =head1 PUBLIC API
 
+=head2 C<new>
+
+  my $goto = Padre::Wx::Dialog::GotoLine->new($main);
+
+Returns a new C<Padre::Wx::Dialog::GotoLine> instance
+
 =cut
 
 sub new {
@@ -156,7 +162,7 @@ sub _bind_events {
 		$self,
 		$self->{button_cancel},
 		sub {
-			$_[0]->Destroy;
+			$_[0]->Hide;
 			return;
 		}
 	);
@@ -189,7 +195,7 @@ sub _on_ok_button {
 	$value--;
 
 	# Destroy the dialog
-	$self->Destroy;
+	$self->Hide;
 
 	# And then goto to the line or position
 	# keeping it in the center of the editor
@@ -262,25 +268,22 @@ sub _validate {
 
 =pod
 
-=head2 C<modal>
+=head2 C<show>
 
-  Padre::Wx::Dialog::GotoLine->modal($main);
+  $goto->show($main);
 
-Single-shot modal dialog call to go to the line number or character position 
-that the user entered. Returns C<undef>.
+Show the dialog that the user can use to goto to a line number or character 
+position. Returns C<undef>.
 
 =cut
 
-sub modal {
-	my $class = shift;
-
-	# Instantiate a new object of myself :)
-	my $self = $class->new(@_);
+sub show {
+	my $self = shift;
 
 	# Get the current editor
 	my $editor = $self->current->editor;
 	unless ($editor) {
-		$self->Destroy;
+		$self->Hide;
 		return;
 	}
 
@@ -291,11 +294,16 @@ sub modal {
 	$self->{current_position}    = $editor->GetCurrentPos + 1;
 
 
-	# Update Goto line number label
+	# Update Goto labels
 	$self->_update_label;
 
-	# Go modal!
-	my $ok = $self->ShowModal;
+	if ( $self->IsShown ) {
+		# If it is already open, focus on it
+		$self->SetFocus;
+	} else {
+		# Otherwise show the dialog
+		$self->Show;
+	}
 
 	return;
 }
