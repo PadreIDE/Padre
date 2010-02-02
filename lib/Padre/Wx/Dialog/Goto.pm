@@ -285,7 +285,7 @@ sub _update_from_editor {
 	my $editor = $self->current->editor;
 	unless ($editor) {
 		$self->Hide;
-		return;
+		return 0;
 	}
 
 	# Update max line number and position fields
@@ -294,7 +294,7 @@ sub _update_from_editor {
 	$self->{current_line_number} = $editor->GetCurrentLine + 1;
 	$self->{current_position}    = $editor->GetCurrentPos + 1;
 
-	return;
+	return 1;
 }
 
 
@@ -313,7 +313,7 @@ sub show {
 	my $self = shift;
 
 	# Update current, and max bounds from the current editor
-	$self->_update_from_editor;
+	return unless $self->_update_from_editor;
 
 	# Update Goto labels
 	$self->_update_label;
