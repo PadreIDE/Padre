@@ -5,12 +5,15 @@ package Padre::Wx::Dialog::RegexEditor;
 use 5.008;
 use strict;
 use warnings;
-use Carp            ();
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
+use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.56';
-our @ISA     = 'Wx::Dialog';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::Dialog
+};
 
 
 ######################################################################
@@ -276,9 +279,6 @@ sub run {
 			}
 		};
 		if ($@) {
-			my $main = Padre->ide->wx->main;
-
-			#$main->message("Match failure in $regex:  $@");
 			$self->{matched_text}->AppendText("Match failure in $regex:  $@");
 			return;
 		}
@@ -302,22 +302,15 @@ sub run {
 #
 sub button_replace {
 	my $self = shift;
-	my $main = Padre->ide->wx->main;
-	$main->message("Replace");
+	$self->main->message("Replace");
 	return;
 }
 
 
 sub box_clicked {
 	my $self = shift;
-
-	#my $box  = shift;
 	$self->run();
-
-	#my $main = Padre->ide->wx->main;
-	#$main->message("Box $box");
 	return;
-
 }
 
 1;
