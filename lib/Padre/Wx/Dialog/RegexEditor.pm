@@ -55,6 +55,43 @@ sub new {
 }
 
 
+sub _regex_syntax {
+	my $self = shift;
+
+	return (
+		'Character Classes' => (
+			'.' => Wx::gettext('Any character except a newline'),
+			#\dAny decimal digit
+			#\DAny non-digit
+			#\sAny whitespace character
+			#\SAny non-whitespace character
+			#\wAny word character
+			#\WAny non-word character
+		),
+		'Quantifiers' => (
+			'*' => Wx::gettext('Zero or more of the preceding block'),
+			'+' => Wx::gettext('One or more of the preceding block'),
+			'?' => Wx::gettext('Zero or one of the preceding block'),
+			'{m}' => Wx::gettext('Exactly m of the preceding block'),
+			'{m,n}' => Wx::gettext('m to n of the preceding block'),
+		),
+		'Miscellaneous' => (
+			'|' => Wx::gettext('Alternation'),
+			#[ ]Character set
+			#^Beginning of line
+			#$End of line
+			#\bA word boundary
+			#\BNOT a word boundary
+		),
+		'Grouping constructs' => (
+			'( )' => Wx::gettext('A group'),
+			#(?: )Non-capturing group
+			#(?= )Positive lookahead assertion
+			#(?! )Negative lookahead assertion
+			#\nBackreference to the nth group
+		) );
+}
+
 sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
@@ -94,6 +131,10 @@ sub _create_controls {
 			$m{$name}{name},
 		);
 	}
+
+	$self->{foo} = Wx::HyperlinkCtrl->new(
+		$self, -1, 'Foobar', Wx::wxDefaultPosition, [200,-1],
+	);
 
 	$self->{matching} = Wx::RadioButton->new(
 		$self,
@@ -148,8 +189,6 @@ sub _create_controls {
 	);
 
 
-	# Vertical layout of the right hand side
-	my $right = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$left->Add( $original_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{original_text},
@@ -166,6 +205,9 @@ sub _create_controls {
 	);
 	$left->Add( $self->{button_close}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
+	# Vertical layout of the right hand side
+	my $right = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	#$right->Add( $self->{foo}, 0, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxEX, 1 );
 
 	# Main sizer
 	$sizer->Add( $left,  0, Wx::wxALL | Wx::wxEXPAND, 1 );
