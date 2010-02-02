@@ -78,12 +78,6 @@ sub _create_controls {
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 	);
 
-	unless (Padre::Constant::WIN32) {
-
-		#non-win32: Have the text field grab the focus so we can just start typing.
-		$self->{goto_text}->SetFocus();
-	}
-
 	$self->{status_line} = Wx::StaticText->new( $self, -1, '' );
 
 	# Field #2: Line or position checkbox
@@ -322,15 +316,15 @@ sub show {
 	# it quickly if he wants it
 	$self->{goto_text}->SetSelection( -1, -1 );
 
-	if ( $self->IsShown ) {
+	unless ( $self->IsShown ) {
 
-		# If it is already open, focus on it
-		$self->SetFocus;
-	} else {
-
-		# Otherwise show the dialog
+		# If it is not shown, show the dialog
 		$self->Show;
 	}
+
+	# Win32 tip: Always focus on wxwidgets controls only after
+	# showing the dialog, otherwise you will lose the focus
+	$self->{goto_text}->SetFocus;
 
 	return;
 }
