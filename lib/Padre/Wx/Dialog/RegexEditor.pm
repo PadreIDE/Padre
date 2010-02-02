@@ -35,7 +35,7 @@ sub new {
 
 	# Set basic dialog properties
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
-	$self->SetMinSize( [ 750, 550 ] );
+	$self->SetMinSize( [ 350, 550 ] );
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -61,12 +61,12 @@ sub _regex_syntax {
 	return (
 		'Character Classes' => (
 			'.' => Wx::gettext('Any character except a newline'),
-			#\dAny decimal digit
-			#\DAny non-digit
-			#\sAny whitespace character
-			#\SAny non-whitespace character
-			#\wAny word character
-			#\WAny non-word character
+			'\d' => Wx::gettext('Any decimal digit'),
+			'\D' => Wx::gettext('Any non-digit'),
+			'\s' => Wx::gettext('Any whitespace character'),
+			'\S' => Wx::gettext('Any non-whitespace character'),
+			'\w' => Wx::gettext('Any word character'),
+			'\W' => Wx::gettext('Any non-word character'),
 		),
 		'Quantifiers' => (
 			'*' => Wx::gettext('Zero or more of the preceding block'),
@@ -77,18 +77,18 @@ sub _regex_syntax {
 		),
 		'Miscellaneous' => (
 			'|' => Wx::gettext('Alternation'),
-			#[ ]Character set
-			#^Beginning of line
-			#$End of line
-			#\bA word boundary
-			#\BNOT a word boundary
+			'[ ]' => 'Character set',
+			'^' => 'Beginning of line',
+			'$' => 'End of line',
+			'\b' => 'A word boundary',
+			'\B' => 'Not a word boundary',
 		),
 		'Grouping constructs' => (
 			'( )' => Wx::gettext('A group'),
-			#(?: )Non-capturing group
-			#(?= )Positive lookahead assertion
-			#(?! )Negative lookahead assertion
-			#\nBackreference to the nth group
+			'(?: )' => 'Non-capturing group',
+			'(?= )' => 'Positive lookahead assertion',
+			'(?! )' => 'Negative lookahead assertion',
+			'\n' => 'Backreference to the nth group',
 		) );
 }
 
@@ -132,10 +132,6 @@ sub _create_controls {
 		);
 	}
 
-	$self->{foo} = Wx::HyperlinkCtrl->new(
-		$self, -1, 'Foobar', Wx::wxDefaultPosition, [200,-1],
-	);
-
 	$self->{matching} = Wx::RadioButton->new(
 		$self,
 		-1,
@@ -171,6 +167,7 @@ sub _create_controls {
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$left->AddSpacer(3);
 	$left->Add( $modifiers,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $operation,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -203,15 +200,11 @@ sub _create_controls {
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
+	$left->AddSpacer(5);
 	$left->Add( $self->{button_close}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
-	# Vertical layout of the right hand side
-	my $right = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	#$right->Add( $self->{foo}, 0, Wx::wxALIGN_CENTER_HORIZONTAL|Wx::wxEX, 1 );
-
 	# Main sizer
-	$sizer->Add( $left,  0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$sizer->Add( $right, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$sizer->Add( $left,  1, Wx::wxALL | Wx::wxEXPAND, 5 );
 }
 
 sub _bind_events {
