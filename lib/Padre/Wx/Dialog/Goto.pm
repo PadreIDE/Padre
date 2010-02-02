@@ -318,6 +318,10 @@ sub show {
 	# Update Goto labels
 	$self->_update_label;
 
+	# Select all of the line number/position so the user can overwrite 
+	# it quickly if he wants it
+	$self->{goto_text}->SetSelection(-1, -1);
+
 	if ( $self->IsShown ) {
 
 		# If it is already open, focus on it
