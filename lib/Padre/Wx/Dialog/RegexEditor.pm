@@ -59,37 +59,49 @@ sub _regex_syntax {
 	my $self = shift;
 
 	return (
-		'Character Classes' => (
-			'.'  => Wx::gettext('Any character except a newline'),
-			'\d' => Wx::gettext('Any decimal digit'),
-			'\D' => Wx::gettext('Any non-digit'),
-			'\s' => Wx::gettext('Any whitespace character'),
-			'\S' => Wx::gettext('Any non-whitespace character'),
-			'\w' => Wx::gettext('Any word character'),
-			'\W' => Wx::gettext('Any non-word character'),
-		),
-		'Quantifiers' => (
-			'*'     => Wx::gettext('Zero or more of the preceding block'),
-			'+'     => Wx::gettext('One or more of the preceding block'),
-			'?'     => Wx::gettext('Zero or one of the preceding block'),
-			'{m}'   => Wx::gettext('Exactly m of the preceding block'),
-			'{m,n}' => Wx::gettext('m to n of the preceding block'),
-		),
-		'Miscellaneous' => (
-			'|'   => Wx::gettext('Alternation'),
-			'[ ]' => 'Character set',
-			'^'   => 'Beginning of line',
-			'$'   => 'End of line',
-			'\b'  => 'A word boundary',
-			'\B'  => 'Not a word boundary',
-		),
-		'Grouping constructs' => (
-			'( )'   => Wx::gettext('A group'),
-			'(?: )' => 'Non-capturing group',
-			'(?= )' => 'Positive lookahead assertion',
-			'(?! )' => 'Negative lookahead assertion',
-			'\n'    => 'Backreference to the nth group',
-		)
+		'01' => {
+			label => Wx::gettext('Character Classes'),
+			value => {
+				'.'  => Wx::gettext('Any character except a newline'),
+				'\d' => Wx::gettext('Any decimal digit'),
+				'\D' => Wx::gettext('Any non-digit'),
+				'\s' => Wx::gettext('Any whitespace character'),
+				'\S' => Wx::gettext('Any non-whitespace character'),
+				'\w' => Wx::gettext('Any word character'),
+				'\W' => Wx::gettext('Any non-word character'),
+			}
+		},
+		'02' => {
+			label => Wx::gettext('Quantifiers'),
+			value => {
+				'*'     => Wx::gettext('Zero or more of the preceding block'),
+				'+'     => Wx::gettext('One or more of the preceding block'),
+				'?'     => Wx::gettext('Zero or one of the preceding block'),
+				'{m}'   => Wx::gettext('Exactly m of the preceding block'),
+				'{m,n}' => Wx::gettext('m to n of the preceding block'),
+			}
+		},
+		'03' => {
+			label => Wx::gettext('Miscellaneous'),
+			value => {
+				'|'   => Wx::gettext('Alternation'),
+				'[ ]' => Wx::gettext('Character set'),
+				'^'   => Wx::gettext('Beginning of line'),
+				'$'   => Wx::gettext('End of line'),
+				'\b'  => Wx::gettext('A word boundary'),
+				'\B'  => Wx::gettext('Not a word boundary'),
+			}
+		},
+		'04' => {
+			label => Wx::gettext('Grouping constructs'),
+			value => {
+				'( )'   => Wx::gettext('A group'),
+				'(?: )' => Wx::gettext('Non-capturing group'),
+				'(?= )' => Wx::gettext('Positive lookahead assertion'),
+				'(?! )' => Wx::gettext('Negative lookahead assertion'),
+				'\n'    => Wx::gettext('Backreference to the nth group'),
+			}
+		}
 	);
 }
 
@@ -133,6 +145,26 @@ sub _create_controls {
 		);
 	}
 
+	$self->{menu} = Wx::Menu->new;
+#	my %regex_syntax = $self->_regex_syntax;
+#	foreach my $name (keys %regex_syntax) {
+#		my %subgroup = $regex_syntax{$name};
+#		$self->{menu}->Append( -1, $subgroup{label} );
+#		$self->{menu}->AppendSeparator();
+#		my $subgroup_value = $subgroup{value};
+#		foreach my $name (keys %subgroup_value) {
+#			my $menu_item = $self->{menu}->Append( -1, $subgroup_value{$name} );
+#			$self->{menu}->AppendSeparator();
+#		}
+#	}
+#	Wx::Event::EVT_MENU(
+#		$self,
+#		$self->{menu},
+#		sub {
+#		},
+#	);
+
+
 	$self->{matching} = Wx::RadioButton->new(
 		$self,
 		-1,
@@ -142,6 +174,12 @@ sub _create_controls {
 		$self,
 		-1,
 		'Substituting',
+	);
+
+	$self->{button_menu} = Wx::Button->new(
+		$self,
+		-1,
+		Wx::gettext('&Insert'),
 	);
 
 	# Close Button
@@ -171,6 +209,7 @@ sub _create_controls {
 	$left->AddSpacer(3);
 	$left->Add( $modifiers,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $operation,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{button_menu}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{regex},
@@ -211,6 +250,14 @@ sub _create_controls {
 sub _bind_events {
 	my $self = shift;
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_menu},
+		sub {
+			my ($self, $event) = @_;
+			$self->PopupMenu( $self->{menu}, 0, 0 );
+		}
+	);
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{regex},
@@ -274,17 +321,6 @@ sub show {
 	$self->{matching}->SetValue(1);
 
 	$self->Show;
-}
-
-#
-# $self->button_match;
-#
-# handler called when the Match button has been clicked.
-#
-sub button_match {
-	my $self = shift;
-	$self->run();
-	return;
 }
 
 sub run {
