@@ -577,7 +577,7 @@ sub new {
 
 	Padre::Action->new(
 		name    => 'edit.regex',
-		label   => Wx::gettext('Regex editor'),
+		label   => Wx::gettext('Regex Editor'),
 		comment => Wx::gettext('Open the regular expression editing window'),
 
 		menu_event => sub {

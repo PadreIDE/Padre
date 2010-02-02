@@ -60,7 +60,7 @@ sub _regex_syntax {
 
 	return (
 		'Character Classes' => (
-			'.' => Wx::gettext('Any character except a newline'),
+			'.'  => Wx::gettext('Any character except a newline'),
 			'\d' => Wx::gettext('Any decimal digit'),
 			'\D' => Wx::gettext('Any non-digit'),
 			'\s' => Wx::gettext('Any whitespace character'),
@@ -69,27 +69,28 @@ sub _regex_syntax {
 			'\W' => Wx::gettext('Any non-word character'),
 		),
 		'Quantifiers' => (
-			'*' => Wx::gettext('Zero or more of the preceding block'),
-			'+' => Wx::gettext('One or more of the preceding block'),
-			'?' => Wx::gettext('Zero or one of the preceding block'),
-			'{m}' => Wx::gettext('Exactly m of the preceding block'),
+			'*'     => Wx::gettext('Zero or more of the preceding block'),
+			'+'     => Wx::gettext('One or more of the preceding block'),
+			'?'     => Wx::gettext('Zero or one of the preceding block'),
+			'{m}'   => Wx::gettext('Exactly m of the preceding block'),
 			'{m,n}' => Wx::gettext('m to n of the preceding block'),
 		),
 		'Miscellaneous' => (
-			'|' => Wx::gettext('Alternation'),
+			'|'   => Wx::gettext('Alternation'),
 			'[ ]' => 'Character set',
-			'^' => 'Beginning of line',
-			'$' => 'End of line',
-			'\b' => 'A word boundary',
-			'\B' => 'Not a word boundary',
+			'^'   => 'Beginning of line',
+			'$'   => 'End of line',
+			'\b'  => 'A word boundary',
+			'\B'  => 'Not a word boundary',
 		),
 		'Grouping constructs' => (
-			'( )' => Wx::gettext('A group'),
+			'( )'   => Wx::gettext('A group'),
 			'(?: )' => 'Non-capturing group',
 			'(?= )' => 'Positive lookahead assertion',
 			'(?! )' => 'Negative lookahead assertion',
-			'\n' => 'Backreference to the nth group',
-		) );
+			'\n'    => 'Backreference to the nth group',
+		)
+	);
 }
 
 sub _create_controls {
@@ -204,7 +205,7 @@ sub _create_controls {
 	$left->Add( $self->{button_close}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
 	# Main sizer
-	$sizer->Add( $left,  1, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 }
 
 sub _bind_events {
