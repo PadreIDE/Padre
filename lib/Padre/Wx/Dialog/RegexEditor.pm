@@ -5,8 +5,8 @@ package Padre::Wx::Dialog::RegexEditor;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Padre::Wx                  ();
+use Padre::Wx::Icon            ();
 use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.56';
@@ -56,25 +56,30 @@ sub new {
 
 
 sub _create_controls {
-	my ($self, $sizer) = @_;
+	my ( $self, $sizer ) = @_;
 
 	# Dialog Controls
+
+	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular Expression:') );
 
 	$self->{regex} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	my $substitute_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Substitute text with:') );
 	$self->{substitute} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
 	$self->{matched_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
@@ -95,13 +100,11 @@ sub _create_controls {
 		-1,
 		'Matching',
 	);
-	Wx::Event::EVT_RADIOBUTTON( $self, $self->{matching}, sub { $_[0]->run; } );
 	$self->{substituting} = Wx::RadioButton->new(
 		$self,
 		-1,
 		'Substituting',
 	);
-	Wx::Event::EVT_RADIOBUTTON( $self, $self->{substituting}, sub { $_[0]->run; } );
 
 	# Close Button
 	$self->{button_close} = Wx::Button->new(
@@ -112,16 +115,6 @@ sub _create_controls {
 
 
 	# Dialog Layout
-
-	# Horizontal button sizer
-	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{button_match},   0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{button_replace}, 0, Wx::wxALL, 1 );
-	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{button_close}, 0, Wx::wxALL, 1 );
-	$buttons->AddStretchSpacer;
-
 
 	my $modifiers = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$modifiers->AddStretchSpacer;
@@ -137,14 +130,16 @@ sub _create_controls {
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $operation, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $modifiers,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $operation,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{regex},
 		1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
+	$left->Add( $substitute_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{substitute},
 		1,
@@ -155,20 +150,21 @@ sub _create_controls {
 
 	# Vertical layout of the right hand side
 	my $right = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$right->Add(
+	$left->Add( $original_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add(
 		$self->{original_text},
 		1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
-	$right->Add(
+	$left->Add( $matched_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add(
 		$self->{matched_text},
 		1,
 		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
-	$right->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-
+	$left->Add( $self->{button_close}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
 
 	# Main sizer
@@ -178,7 +174,7 @@ sub _create_controls {
 
 sub _bind_events {
 	my $self = shift;
-	
+
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{regex},
@@ -194,6 +190,7 @@ sub _bind_events {
 		$self->{original_text},
 		sub { $_[0]->run; },
 	);
+
 	# Modifiers
 	my %m = $self->_modifiers();
 	foreach my $name ( keys %m ) {
@@ -207,13 +204,13 @@ sub _bind_events {
 	}
 
 	Wx::Event::EVT_RADIOBUTTON(
-		$self, 
-		$self->{matching}, 
-		sub { $_[0]->run; }, 
+		$self,
+		$self->{matching},
+		sub { $_[0]->run; },
 	);
-	Wx::Event::EVT_RADIOBUTTON( 
-		$self, 
-		$self->{substituting}, 
+	Wx::Event::EVT_RADIOBUTTON(
+		$self,
+		$self->{substituting},
 		sub { $_[0]->run; },
 	);
 }
