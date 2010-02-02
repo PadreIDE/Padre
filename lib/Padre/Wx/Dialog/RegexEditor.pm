@@ -37,6 +37,27 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 	$self->SetMinSize( [ 750, 550 ] );
 
+	# create sizer that will host all controls
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+
+	# Create the controls
+	$self->_create_controls($sizer);
+
+	# Bind the control events
+	$self->_bind_events;
+
+	# Tune the size and position it appears
+	$self->SetSizer($sizer);
+	$self->Fit;
+	$self->CentreOnParent;
+
+	return $self;
+}
+
+
+sub _create_controls {
+	my ($self, $sizer) = @_;
+
 	# Dialog Controls
 
 	$self->{regex} = Wx::TextCtrl->new(
@@ -59,36 +80,13 @@ sub new {
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
-	Wx::Event::EVT_TEXT(
-		$self,
-		$self->{regex},
-		sub { $_[0]->run; },
-	);
-	Wx::Event::EVT_TEXT(
-		$self,
-		$self->{substitute},
-		sub { $_[0]->run; },
-	);
-	Wx::Event::EVT_TEXT(
-		$self,
-		$self->{original_text},
-		sub { $_[0]->run; },
-	);
-
 	# Modifiers
-	my %m = _modifiers();
+	my %m = $self->_modifiers();
 	foreach my $name ( keys %m ) {
 		$self->{$name} = Wx::CheckBox->new(
 			$self,
 			-1,
 			$m{$name}{name},
-		);
-		Wx::Event::EVT_CHECKBOX(
-			$self,
-			$self->{$name},
-			sub {
-				$_[0]->box_clicked($name);
-			},
 		);
 	}
 
@@ -105,40 +103,13 @@ sub new {
 	);
 	Wx::Event::EVT_RADIOBUTTON( $self, $self->{substituting}, sub { $_[0]->run; } );
 
-	# Buttons
-	#	$self->{button_match} = Wx::Button->new(
-	#		$self,
-	#		-1,
-	#		Wx::gettext('&Match'),
-	#	);
-	#	Wx::Event::EVT_BUTTON(
-	#		$self,
-	#		$self->{button_match},
-	#		sub {
-	#			$_[0]->button_match;
-	#		},
-	#	);
-	#
-	#	# Preferences Button
-	#	$self->{button_replace} = Wx::Button->new(
-	#		$self,
-	#		-1,
-	#		Wx::gettext('&Replace'),
-	#	);
-	#	Wx::Event::EVT_BUTTON(
-	#		$self,
-	#		$self->{button_replace},
-	#		sub {
-	#			$_[0]->button_replace;
-	#		},
-	#	);
-
 	# Close Button
 	$self->{button_close} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
 		Wx::gettext('&Close'),
 	);
+
 
 	# Dialog Layout
 
@@ -201,20 +172,55 @@ sub new {
 
 
 	# Main sizer
-	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizer->Add( $left,  0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$sizer->Add( $right, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+}
 
-	# Tune the size and position it appears
-	$self->SetSizer($sizer);
-	$self->Fit;
-	$self->CentreOnParent;
+sub _bind_events {
+	my $self = shift;
+	
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{regex},
+		sub { $_[0]->run; },
+	);
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{substitute},
+		sub { $_[0]->run; },
+	);
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{original_text},
+		sub { $_[0]->run; },
+	);
+	# Modifiers
+	my %m = $self->_modifiers();
+	foreach my $name ( keys %m ) {
+		Wx::Event::EVT_CHECKBOX(
+			$self,
+			$self->{$name},
+			sub {
+				$_[0]->box_clicked($name);
+			},
+		);
+	}
 
-	return $self;
+	Wx::Event::EVT_RADIOBUTTON(
+		$self, 
+		$self->{matching}, 
+		sub { $_[0]->run; }, 
+	);
+	Wx::Event::EVT_RADIOBUTTON( 
+		$self, 
+		$self->{substituting}, 
+		sub { $_[0]->run; },
+	);
 }
 
 
 sub _modifiers {
+	my $self = shift;
 	return (
 		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('Ignore case (%s)'), 'i' ) },
 		single_line => { mod => 's', name => sprintf( Wx::gettext('Single-line (%s)'), 's' ) },
@@ -258,7 +264,7 @@ sub run {
 
 	my $start = '';
 	my $end   = '';
-	my %m     = _modifiers();
+	my %m     = $self->_modifiers();
 	foreach my $name ( keys %m ) {
 		if ( $self->{$name}->IsChecked ) {
 			$start .= $m{$name}{mod};
@@ -294,18 +300,6 @@ sub run {
 
 	return;
 }
-
-#
-# $self->button_replace;
-#
-# handler called when the Match button has been clicked.
-#
-sub button_replace {
-	my $self = shift;
-	$self->main->message("Replace");
-	return;
-}
-
 
 sub box_clicked {
 	my $self = shift;
