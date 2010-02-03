@@ -157,13 +157,32 @@ sub _create_controls {
 		);
 
 		my $menu_name = $code . '_menu';
+
+		Wx::Event::EVT_BUTTON(
+			$self,
+			$self->{$button_name},
+			sub {
+				my @pos = $self->{$button_name}->GetPositionXY;
+				my @size = $self->{$button_name}->GetSizeWH;
+				$self->PopupMenu($self->{$menu_name}, $pos[0], $pos[1] + $size[1]);
+			},
+		);
+
 		$self->{$menu_name} = Wx::Menu->new;
 		my %sub_group_value = %{$sub_group{value}};
 		foreach my $element (sort keys %sub_group_value) {
 			my $label = $element;
 			$label =~ s/^\d{2}//;
-			$self->{$menu_name}->Append( 
+			my $menu_item = $self->{$menu_name}->Append( 
 				-1, $label . "\t" . $sub_group_value{$element} );
+
+			Wx::Event::EVT_MENU(
+				$self,
+				$menu_item,
+				sub {
+					$_[0]->{regex}->WriteText($label);
+				},
+			);
 		}
 	}
 
@@ -234,29 +253,6 @@ sub _create_controls {
 
 sub _bind_events {
 	my $self = shift;
-
-	my %regex_groups = $self->_regex_groups;
-	foreach my $code ( keys %regex_groups ) {
-		my %sub_group = %{ $regex_groups{$code} };
-		my $button_name = $code . '_button';
-		my $menu_name = $code . '_menu';
-		Wx::Event::EVT_BUTTON(
-			$self,
-			$self->{$button_name},
-			sub {
-				my @pos = $self->{$button_name}->GetPositionXY;
-				my @size = $self->{$button_name}->GetSizeWH;
-				$self->PopupMenu($self->{$menu_name}, $pos[0], $pos[1] + $size[1]);
-			},
-		);
-	}
-
-	#	Wx::Event::EVT_MENU(
-	#		$self,
-	#		$self->{menu},
-	#		sub {
-	#		},
-	#	);
 
 	Wx::Event::EVT_TEXT(
 		$self,
