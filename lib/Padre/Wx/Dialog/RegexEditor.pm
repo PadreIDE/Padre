@@ -35,7 +35,7 @@ sub new {
 
 	# Set basic dialog properties
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
-	$self->SetMinSize( [ 350, 550 ] );
+	$self->SetMinSize( [ 350, 450 ] );
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -77,7 +77,6 @@ sub _regex_groups {
 		'01' => {
 			label => Wx::gettext('POSIX Character classes'),
 			value => {
-				#Alphanumeric characters plus underscore
 				'00[:alpha:]'  => Wx::gettext('Alphabetic characters'),
 				'01[:alnum:])' => Wx::gettext('Alphanumeric characters'),
 				'02[:ascii:]'  => Wx::gettext('7-bit US-ASCII character'),
@@ -228,6 +227,7 @@ sub _create_controls {
 	$modifiers->Add( $self->{single_line}, 0, Wx::wxALL, 1 );
 	$modifiers->Add( $self->{multi_line},  0, Wx::wxALL, 1 );
 	$modifiers->Add( $self->{extended},    0, Wx::wxALL, 1 );
+	$modifiers->AddStretchSpacer;
 
 	my $operation = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$operation->AddStretchSpacer;
