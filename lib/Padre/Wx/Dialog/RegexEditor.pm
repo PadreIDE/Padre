@@ -157,6 +157,12 @@ sub _create_controls {
 		Wx::wxRE_READONLY | Wx::wxRE_MULTILINE
 	);
 
+	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
+	$self->{result_text} = Wx::RichTextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_READONLY | Wx::wxRE_MULTILINE
+	);
+
 	# Modifiers
 	my %m = $self->_modifiers();
 	foreach my $name ( keys %m ) {
@@ -246,6 +252,8 @@ sub _create_controls {
 	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $matched_label,         0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{matched_text},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->AddSpacer(5);
 	$left->Add( $self->{close_button}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
@@ -307,8 +315,8 @@ sub show {
 	my $self = shift;
 
 	$self->{regex}->AppendText('\w+');
-	$self->{replace}->AppendText("replace");
-	$self->{original_text}->AppendText("Original text");
+	$self->{replace}->AppendText("Baz");
+	$self->{original_text}->AppendText("Foo Bar");
 
 	$self->Show;
 }
@@ -319,6 +327,7 @@ sub run {
 	my $regex = $self->{regex}->GetRange( 0, $self->{regex}->GetLastPosition );
 	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
 	my $replace = $self->{replace}->GetRange( 0, $self->{replace}->GetLastPosition );
+	my $result_text = $original_text;
 
 
 	my $start     = '';
@@ -335,6 +344,8 @@ sub run {
 
 	$self->{matched_text}->Clear;
 	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
+	$self->{result_text}->Clear;
+	$self->{result_text}->BeginTextColour(Wx::wxBLACK);
 
 	my $match;
 	my $match_start;
@@ -349,6 +360,13 @@ sub run {
 	};
 	if ($@) {
 		$self->{matched_text}->AppendText("Match failure in $regex:  $@");
+		$self->{matched_text}->EndTextColour;
+		return;
+	}
+
+	eval { $result_text =~ s/$regex/$replace/; };
+	if ($@) {
+		$self->{matched_text}->AppendText("Replace failure in $replace:  $@");
 		$self->{matched_text}->EndTextColour;
 		return;
 	}
@@ -368,10 +386,15 @@ sub run {
 			$pos++;
 		}
 	} else {
-		$self->{matched_text}->AppendText("No match");
+		$self->{matched_text}->AppendText( Wx::gettext("No match") );
+	}
+
+	if ( defined $result_text ) {
+		$self->{result_text}->AppendText($result_text);
 	}
 
 	$self->{matched_text}->EndTextColour;
+	$self->{result_text}->EndTextColour;
 
 	return;
 }
@@ -417,10 +440,6 @@ regular expression modifiers:
 =item Extended (x)
 
 =back
-
-=head1 TO DO
-
-Implement replace as well
 
 Global match
 
