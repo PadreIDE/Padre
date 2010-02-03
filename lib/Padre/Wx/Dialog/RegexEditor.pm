@@ -204,16 +204,11 @@ sub _create_controls {
 	$operation->AddStretchSpacer;
 
 	my $regex = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$regex->Add(
-		$self->{regex},
-		1,
-		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
-		1
-	);
+	$regex->Add( $self->{regex}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	my $regex_groups = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	foreach my $code ( keys %regex_groups ) {
-		$regex_groups->Add( $self->{$code}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
+		$regex_groups->Add( $self->{$code}, 0, Wx::wxEXPAND, 1 );
 	}
 
 	my $combined = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -229,28 +224,12 @@ sub _create_controls {
 	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
 
 	$left->Add( $substitute_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add(
-		$self->{substitute},
-		1,
-		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
-		1
-	);
-
+	$left->Add( $self->{substitute},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $original_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add(
-		$self->{original_text},
-		1,
-		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
-		1
-	);
+	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $matched_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add(
-		$self->{matched_text},
-		1,
-		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
-		1
-	);
+	$left->Add( $self->{matched_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->AddSpacer(5);
 	$left->Add( $self->{close_button}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
