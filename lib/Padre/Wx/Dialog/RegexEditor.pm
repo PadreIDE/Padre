@@ -55,7 +55,10 @@ sub new {
 }
 
 
-sub _regex_syntax {
+#
+# A private method that returns a hash of regex groups along with their meaning
+# 
+sub _regex_groups {
 	my $self = shift;
 
 	return (
@@ -146,9 +149,13 @@ sub _create_controls {
 	}
 
 	$self->{menu} = Wx::Menu->new;
-#	my %regex_syntax = $self->_regex_syntax;
-#	foreach my $name (keys %regex_syntax) {
-#		my %subgroup = $regex_syntax{$name};
+	my %regex_groups = $self->_regex_groups;
+
+	foreach my $code (keys %regex_groups) {
+		my %sub_group = %{$regex_groups{$code}};
+		$self->{$code} = Wx::Button->new(
+			$self, -1, $sub_group{label},
+		);
 #		$self->{menu}->Append( -1, $subgroup{label} );
 #		$self->{menu}->AppendSeparator();
 #		my $subgroup_value = $subgroup{value};
@@ -156,7 +163,7 @@ sub _create_controls {
 #			my $menu_item = $self->{menu}->Append( -1, $subgroup_value{$name} );
 #			$self->{menu}->AppendSeparator();
 #		}
-#	}
+	}
 #	Wx::Event::EVT_MENU(
 #		$self,
 #		$self->{menu},
@@ -164,31 +171,20 @@ sub _create_controls {
 #		},
 #	);
 
-
+	# Matching radio button
 	$self->{matching} = Wx::RadioButton->new(
-		$self,
-		-1,
-		'Matching',
+		$self, -1, Wx::gettext('Matching'),
 	);
+	
+	# Substitution radio button
 	$self->{substituting} = Wx::RadioButton->new(
-		$self,
-		-1,
-		'Substituting',
+		$self, -1, Wx::gettext('Substituting'),
 	);
 
-	$self->{button_menu} = Wx::Button->new(
-		$self,
-		-1,
-		Wx::gettext('&Insert'),
+	# Close button
+	$self->{close_button} = Wx::Button->new(
+		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
 	);
-
-	# Close Button
-	$self->{button_close} = Wx::Button->new(
-		$self,
-		Wx::wxID_CANCEL,
-		Wx::gettext('&Close'),
-	);
-
 
 	# Dialog Layout
 
@@ -203,25 +199,38 @@ sub _create_controls {
 	$operation->AddStretchSpacer;
 	$operation->Add( $self->{matching},     0, Wx::wxALL, 1 );
 	$operation->Add( $self->{substituting}, 0, Wx::wxALL, 1 );
+	$operation->AddStretchSpacer;
+
+	my $regex = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$regex->Add(
+		$self->{regex}, 
+		1, 
+		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 
+		1
+	);
+
+	my $regex_groups = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	foreach my $code (keys %regex_groups) {
+		$regex_groups->Add( $self->{$code}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
+	}
+	
+	my $combined = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$combined->Add( $regex, 2, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$combined->Add( $regex_groups, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$left->AddSpacer(3);
-	$left->Add( $modifiers,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $operation,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{button_menu}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
-	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add(
-		$self->{regex},
-		1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
-		1
-	);
+	$left->Add( $operation,   0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $modifiers,   0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->AddSpacer(5);
+	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );	
+	$left->Add( $combined,   0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	
 	$left->Add( $substitute_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{substitute},
 		1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
+		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
 
@@ -230,18 +239,18 @@ sub _create_controls {
 	$left->Add(
 		$self->{original_text},
 		1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
+		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
 	$left->Add( $matched_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{matched_text},
 		1,
-		Wx::wxALL | Wx::wxALIGN_TOP | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
+		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
 	$left->AddSpacer(5);
-	$left->Add( $self->{button_close}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
+	$left->Add( $self->{close_button}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
 	# Main sizer
 	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -250,14 +259,6 @@ sub _create_controls {
 sub _bind_events {
 	my $self = shift;
 
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_menu},
-		sub {
-			my ($self, $event) = @_;
-			$self->PopupMenu( $self->{menu}, 0, 0 );
-		}
-	);
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{regex},
@@ -299,6 +300,9 @@ sub _bind_events {
 }
 
 
+#
+# A private method that returns a hash of regex modifiers
+#
 sub _modifiers {
 	my $self = shift;
 	return (
