@@ -152,9 +152,9 @@ sub _create_controls {
 	);
 
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
-	$self->{matched_text} = Wx::TextCtrl->new(
+	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::wxRE_READONLY|Wx::wxRE_MULTILINE
 	);
 
 	# Modifiers
@@ -351,24 +351,29 @@ sub run {
 
 	my $start = '';
 	my $end   = '';
-	my %m     = $self->_modifiers();
-	foreach my $name ( keys %m ) {
+	my %modifiers    = $self->_modifiers();
+	foreach my $name ( keys %modifiers ) {
 		if ( $self->{$name}->IsChecked ) {
-			$start .= $m{$name}{mod};
+			$start .= $modifiers{$name}{mod};
 		} else {
-			$end .= $m{$name}{mod};
+			$end .= $modifiers{$name}{mod};
 		}
 	}
 	my $xism = "$start-$end";
 
 	$self->{matched_text}->Clear;
+	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
 
 	if ( $self->{matching}->GetValue ) {
 		my $match;
+		my $match_start;
+		my $match_end;
 		eval {
 			if ( $original_text =~ /(?$xism:$regex)/ )
 			{
-				$match = substr( $original_text, $-[0], $+[0] - $-[0] );
+				$match_start = $-[0];
+				$match_end = $+[0];
+				$match = substr( $original_text, $match_start, $match_end - $match_start );
 			}
 		};
 		if ($@) {
@@ -377,13 +382,27 @@ sub run {
 		}
 
 		if ( defined $match ) {
-			$self->{matched_text}->AppendText("Matched '$match'");
+			my @chars = split(//, $original_text);
+			my $pos = 0;
+			for my $char (@chars) {
+				if($pos == $match_start) {
+					$self->{matched_text}->BeginTextColour(Wx::wxRED);
+					$self->{matched_text}->BeginUnderline;
+				} elsif($pos == $match_end) {
+					$self->{matched_text}->EndUnderline;
+					$self->{matched_text}->EndTextColour;
+				}
+				$self->{matched_text}->AppendText($char);
+				$pos++;
+			}
 		} else {
 			$self->{matched_text}->AppendText("No match");
 		}
 	} else {
 		$self->{matched_text}->AppendText("Substitute not yet implemented");
 	}
+
+	$self->{matched_text}->EndTextColour;
 
 	return;
 }
