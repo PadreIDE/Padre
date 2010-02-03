@@ -154,7 +154,7 @@ sub _create_controls {
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
 	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_READONLY|Wx::wxRE_MULTILINE
+		Wx::wxRE_READONLY | Wx::wxRE_MULTILINE
 	);
 
 	# Modifiers
@@ -321,9 +321,9 @@ sub run {
 	my $replace = $self->{replace}->GetRange( 0, $self->{replace}->GetLastPosition );
 
 
-	my $start = '';
-	my $end   = '';
-	my %modifiers    = $self->_modifiers();
+	my $start     = '';
+	my $end       = '';
+	my %modifiers = $self->_modifiers();
 	foreach my $name ( keys %modifiers ) {
 		if ( $self->{$name}->IsChecked ) {
 			$start .= $modifiers{$name}{mod};
@@ -343,8 +343,8 @@ sub run {
 		if ( $original_text =~ /(?$xism:$regex)/ )
 		{
 			$match_start = $-[0];
-			$match_end = $+[0];
-			$match = substr( $original_text, $match_start, $match_end - $match_start );
+			$match_end   = $+[0];
+			$match       = substr( $original_text, $match_start, $match_end - $match_start );
 		}
 	};
 	if ($@) {
@@ -354,13 +354,13 @@ sub run {
 	}
 
 	if ( defined $match ) {
-		my @chars = split(//, $original_text);
+		my @chars = split( //, $original_text );
 		my $pos = 0;
 		for my $char (@chars) {
-			if($pos == $match_start) {
+			if ( $pos == $match_start ) {
 				$self->{matched_text}->BeginTextColour(Wx::wxRED);
 				$self->{matched_text}->BeginUnderline;
-			} elsif($pos == $match_end) {
+			} elsif ( $pos == $match_end ) {
 				$self->{matched_text}->EndUnderline;
 				$self->{matched_text}->EndTextColour;
 			}
