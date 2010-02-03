@@ -57,7 +57,7 @@ sub new {
 
 #
 # A private method that returns a hash of regex groups along with their meaning
-# 
+#
 sub _regex_groups {
 	my $self = shift;
 
@@ -151,31 +151,33 @@ sub _create_controls {
 	$self->{menu} = Wx::Menu->new;
 	my %regex_groups = $self->_regex_groups;
 
-	foreach my $code (keys %regex_groups) {
-		my %sub_group = %{$regex_groups{$code}};
+	foreach my $code ( keys %regex_groups ) {
+		my %sub_group = %{ $regex_groups{$code} };
 		$self->{$code} = Wx::Button->new(
 			$self, -1, $sub_group{label},
 		);
-#		$self->{menu}->Append( -1, $subgroup{label} );
-#		$self->{menu}->AppendSeparator();
-#		my $subgroup_value = $subgroup{value};
-#		foreach my $name (keys %subgroup_value) {
-#			my $menu_item = $self->{menu}->Append( -1, $subgroup_value{$name} );
-#			$self->{menu}->AppendSeparator();
-#		}
+
+		#		$self->{menu}->Append( -1, $subgroup{label} );
+		#		$self->{menu}->AppendSeparator();
+		#		my $subgroup_value = $subgroup{value};
+		#		foreach my $name (keys %subgroup_value) {
+		#			my $menu_item = $self->{menu}->Append( -1, $subgroup_value{$name} );
+		#			$self->{menu}->AppendSeparator();
+		#		}
 	}
-#	Wx::Event::EVT_MENU(
-#		$self,
-#		$self->{menu},
-#		sub {
-#		},
-#	);
+
+	#	Wx::Event::EVT_MENU(
+	#		$self,
+	#		$self->{menu},
+	#		sub {
+	#		},
+	#	);
 
 	# Matching radio button
 	$self->{matching} = Wx::RadioButton->new(
 		$self, -1, Wx::gettext('Matching'),
 	);
-	
+
 	# Substitution radio button
 	$self->{substituting} = Wx::RadioButton->new(
 		$self, -1, Wx::gettext('Substituting'),
@@ -203,29 +205,29 @@ sub _create_controls {
 
 	my $regex = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$regex->Add(
-		$self->{regex}, 
-		1, 
-		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND, 
+		$self->{regex},
+		1,
+		Wx::wxALL | Wx::wxALIGN_CENTER_HORIZONTAL | Wx::wxEXPAND,
 		1
 	);
 
 	my $regex_groups = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	foreach my $code (keys %regex_groups) {
+	foreach my $code ( keys %regex_groups ) {
 		$regex_groups->Add( $self->{$code}, 0, Wx::wxEXPAND | Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 	}
-	
+
 	my $combined = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$combined->Add( $regex, 2, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$combined->Add( $regex,        2, Wx::wxALL | Wx::wxEXPAND, 0 );
 	$combined->Add( $regex_groups, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$left->Add( $operation,   0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$left->Add( $modifiers,   0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $operation, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->AddSpacer(5);
-	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );	
-	$left->Add( $combined,   0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	
+	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+
 	$left->Add( $substitute_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add(
 		$self->{substitute},
