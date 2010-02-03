@@ -35,7 +35,7 @@ sub new {
 
 	# Set basic dialog properties
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
-	$self->SetMinSize( [ 350, 450 ] );
+	$self->SetMinSize( [ 380, 500 ] );
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -314,8 +314,8 @@ sub _modifiers {
 sub show {
 	my $self = shift;
 
-	$self->{regex}->AppendText('\w+');
-	$self->{replace}->AppendText("Baz");
+	$self->{regex}->ChangeValue('\w+');
+	$self->{replace}->ChangeValue("Baz");
 	$self->{original_text}->AppendText("Foo Bar");
 
 	$self->Show;
@@ -364,13 +364,6 @@ sub run {
 		return;
 	}
 
-	eval { $result_text =~ s/$regex/$replace/; };
-	if ($@) {
-		$self->{matched_text}->AppendText("Replace failure in $replace:  $@");
-		$self->{matched_text}->EndTextColour;
-		return;
-	}
-
 	if ( defined $match ) {
 		my @chars = split( //, $original_text );
 		my $pos = 0;
@@ -387,6 +380,13 @@ sub run {
 		}
 	} else {
 		$self->{matched_text}->AppendText( Wx::gettext("No match") );
+	}
+
+	eval { $result_text =~ s{$regex}{$replace}; };
+	if ($@) {
+		$self->{result_text}->AppendText("Replace failure in $replace:  $@");
+		$self->{result_text}->EndTextColour;
+		return;
 	}
 
 	if ( defined $result_text ) {
