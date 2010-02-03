@@ -7,6 +7,8 @@ Changes for Perl Application Development and Refactoring Environment
     - GotoLine is now called Goto dialog (AZAWAWI)
     - Goto dialog is now non-modal lazy single instance dialog (AZAWAWI)
     - Goto dialog has a current positon/line number field (AZAWAWI)
+    - Regex editor dialog is now more compact and it includes regex helper
+      buttons (AZAWAWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
