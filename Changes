@@ -9,6 +9,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Goto dialog has a current positon/line number field (AZAWAWI)
     - Regex editor dialog is now more compact and it includes regex helper
       buttons (AZAWAWI)
+    - Regex editor dialog can now highlight matched text (AZAWAWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
