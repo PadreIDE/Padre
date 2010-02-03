@@ -63,7 +63,7 @@ sub _regex_groups {
 
 	return (
 		'00' => {
-			label => Wx::gettext('Character Classes'),
+			label => Wx::gettext('Character classes'),
 			value => {
 				'00.'  => Wx::gettext('Any character except a newline'),
 				'01\d' => Wx::gettext('Any decimal digit'),
@@ -75,6 +75,26 @@ sub _regex_groups {
 			}
 		},
 		'01' => {
+			label => Wx::gettext('POSIX Character classes'),
+			value => {
+				#Alphanumeric characters plus underscore
+				'00[:alpha:]'  => Wx::gettext('Alphabetic characters'),
+				'01[:alnum:])' => Wx::gettext('Alphanumeric characters'),
+				'02[:ascii:]'  => Wx::gettext('7-bit US-ASCII character'),
+				'03[:blank:]'  => Wx::gettext('Space and tab'),
+				'04[:cntrl:]'  => Wx::gettext('Control characters'),
+				'05[:digit:]'  => Wx::gettext('Digits'),
+				'06[:graph:]'  => Wx::gettext('Visible characters'),
+				'07[:lower:]'  => Wx::gettext('Lowercase characters'),
+				'08[:print:]'  => Wx::gettext('Visible characters and spaces'),
+				'09[:punct:]'  => Wx::gettext('Punctuation characters'),
+				'10[:space:]'  => Wx::gettext('Whitespace characters'),
+				'11[:upper:]'  => Wx::gettext('Uppercase characters'),
+				'12[:word:]'   => Wx::gettext('Alphanumeric characters plus "_"'),
+				'13[:xdigit:]' => Wx::gettext('Hexadecimal digits'),
+			}
+		},
+		'02' => {
 			label => Wx::gettext('Quantifiers'),
 			value => {
 				'00*'     => Wx::gettext('Zero or more of the preceding block'),
@@ -84,7 +104,7 @@ sub _regex_groups {
 				'04{m,n}' => Wx::gettext('m to n of the preceding block'),
 			}
 		},
-		'02' => {
+		'03' => {
 			label => Wx::gettext('Miscellaneous'),
 			value => {
 				'00|'   => Wx::gettext('Alternation'),
@@ -95,7 +115,7 @@ sub _regex_groups {
 				'05\B'  => Wx::gettext('Not a word boundary'),
 			}
 		},
-		'03' => {
+		'04' => {
 			label => Wx::gettext('Grouping constructs'),
 			value => {
 				'00( )'   => Wx::gettext('A group'),
