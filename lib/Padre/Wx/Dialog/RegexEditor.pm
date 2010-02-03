@@ -139,8 +139,8 @@ sub _create_controls {
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
-	my $substitute_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Substitute text with:') );
-	$self->{substitute} = Wx::TextCtrl->new(
+	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
+	$self->{replace} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
@@ -204,16 +204,6 @@ sub _create_controls {
 		}
 	}
 
-	# Matching radio button
-	$self->{matching} = Wx::RadioButton->new(
-		$self, -1, Wx::gettext('Matching'),
-	);
-
-	# Substitution radio button
-	$self->{substituting} = Wx::RadioButton->new(
-		$self, -1, Wx::gettext('Substituting'),
-	);
-
 	# Close button
 	$self->{close_button} = Wx::Button->new(
 		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
@@ -228,12 +218,6 @@ sub _create_controls {
 	$modifiers->Add( $self->{multi_line},  0, Wx::wxALL, 1 );
 	$modifiers->Add( $self->{extended},    0, Wx::wxALL, 1 );
 	$modifiers->AddStretchSpacer;
-
-	my $operation = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$operation->AddStretchSpacer;
-	$operation->Add( $self->{matching},     0, Wx::wxALL, 1 );
-	$operation->Add( $self->{substituting}, 0, Wx::wxALL, 1 );
-	$operation->AddStretchSpacer;
 
 	my $regex = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$regex->Add( $self->{regex}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -250,14 +234,13 @@ sub _create_controls {
 
 	# Vertical layout of the left hand side
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$left->Add( $operation, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->AddSpacer(5);
 	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
 
-	$left->Add( $substitute_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{substitute}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $replace_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{replace}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -280,7 +263,7 @@ sub _bind_events {
 	);
 	Wx::Event::EVT_TEXT(
 		$self,
-		$self->{substitute},
+		$self->{replace},
 		sub { $_[0]->run; },
 	);
 	Wx::Event::EVT_TEXT(
@@ -290,8 +273,8 @@ sub _bind_events {
 	);
 
 	# Modifiers
-	my %m = $self->_modifiers();
-	foreach my $name ( keys %m ) {
+	my %modifiers = $self->_modifiers();
+	foreach my $name ( keys %modifiers ) {
 		Wx::Event::EVT_CHECKBOX(
 			$self,
 			$self->{$name},
@@ -301,16 +284,6 @@ sub _bind_events {
 		);
 	}
 
-	Wx::Event::EVT_RADIOBUTTON(
-		$self,
-		$self->{matching},
-		sub { $_[0]->run; },
-	);
-	Wx::Event::EVT_RADIOBUTTON(
-		$self,
-		$self->{substituting},
-		sub { $_[0]->run; },
-	);
 }
 
 
@@ -333,10 +306,9 @@ sub _modifiers {
 sub show {
 	my $self = shift;
 
-	$self->{regex}->AppendText("regex");
-	$self->{substitute}->AppendText("substitute");
+	$self->{regex}->AppendText('\w+');
+	$self->{replace}->AppendText("replace");
 	$self->{original_text}->AppendText("Original text");
-	$self->{matching}->SetValue(1);
 
 	$self->Show;
 }
@@ -346,7 +318,7 @@ sub run {
 
 	my $regex = $self->{regex}->GetRange( 0, $self->{regex}->GetLastPosition );
 	my $original_text = $self->{original_text}->GetRange( 0, $self->{original_text}->GetLastPosition );
-	my $substitute = $self->{substitute}->GetRange( 0, $self->{substitute}->GetLastPosition );
+	my $replace = $self->{replace}->GetRange( 0, $self->{replace}->GetLastPosition );
 
 
 	my $start = '';
@@ -364,42 +336,39 @@ sub run {
 	$self->{matched_text}->Clear;
 	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
 
-	if ( $self->{matching}->GetValue ) {
-		my $match;
-		my $match_start;
-		my $match_end;
-		eval {
-			if ( $original_text =~ /(?$xism:$regex)/ )
-			{
-				$match_start = $-[0];
-				$match_end = $+[0];
-				$match = substr( $original_text, $match_start, $match_end - $match_start );
-			}
-		};
-		if ($@) {
-			$self->{matched_text}->AppendText("Match failure in $regex:  $@");
-			return;
+	my $match;
+	my $match_start;
+	my $match_end;
+	eval {
+		if ( $original_text =~ /(?$xism:$regex)/ )
+		{
+			$match_start = $-[0];
+			$match_end = $+[0];
+			$match = substr( $original_text, $match_start, $match_end - $match_start );
 		}
+	};
+	if ($@) {
+		$self->{matched_text}->AppendText("Match failure in $regex:  $@");
+		$self->{matched_text}->EndTextColour;
+		return;
+	}
 
-		if ( defined $match ) {
-			my @chars = split(//, $original_text);
-			my $pos = 0;
-			for my $char (@chars) {
-				if($pos == $match_start) {
-					$self->{matched_text}->BeginTextColour(Wx::wxRED);
-					$self->{matched_text}->BeginUnderline;
-				} elsif($pos == $match_end) {
-					$self->{matched_text}->EndUnderline;
-					$self->{matched_text}->EndTextColour;
-				}
-				$self->{matched_text}->AppendText($char);
-				$pos++;
+	if ( defined $match ) {
+		my @chars = split(//, $original_text);
+		my $pos = 0;
+		for my $char (@chars) {
+			if($pos == $match_start) {
+				$self->{matched_text}->BeginTextColour(Wx::wxRED);
+				$self->{matched_text}->BeginUnderline;
+			} elsif($pos == $match_end) {
+				$self->{matched_text}->EndUnderline;
+				$self->{matched_text}->EndTextColour;
 			}
-		} else {
-			$self->{matched_text}->AppendText("No match");
+			$self->{matched_text}->AppendText($char);
+			$pos++;
 		}
 	} else {
-		$self->{matched_text}->AppendText("Substitute not yet implemented");
+		$self->{matched_text}->AppendText("No match");
 	}
 
 	$self->{matched_text}->EndTextColour;
@@ -451,7 +420,7 @@ regular expression modifiers:
 
 =head1 TO DO
 
-Implement substitute as well
+Implement replace as well
 
 Global match
 
