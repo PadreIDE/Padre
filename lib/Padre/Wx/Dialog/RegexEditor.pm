@@ -150,7 +150,7 @@ sub _create_controls {
 
 	my %regex_groups = $self->_regex_groups;
 	foreach my $code ( sort keys %regex_groups ) {
-		my %sub_group = %{ $regex_groups{$code} };
+		my %sub_group   = %{ $regex_groups{$code} };
 		my $button_name = $code . '_button';
 		$self->{$button_name} = Wx::Button->new(
 			$self, -1, $sub_group{label},
@@ -162,19 +162,18 @@ sub _create_controls {
 			$self,
 			$self->{$button_name},
 			sub {
-				my @pos = $self->{$button_name}->GetPositionXY;
+				my @pos  = $self->{$button_name}->GetPositionXY;
 				my @size = $self->{$button_name}->GetSizeWH;
-				$self->PopupMenu($self->{$menu_name}, $pos[0], $pos[1] + $size[1]);
+				$self->PopupMenu( $self->{$menu_name}, $pos[0], $pos[1] + $size[1] );
 			},
 		);
 
 		$self->{$menu_name} = Wx::Menu->new;
-		my %sub_group_value = %{$sub_group{value}};
-		foreach my $element (sort keys %sub_group_value) {
+		my %sub_group_value = %{ $sub_group{value} };
+		foreach my $element ( sort keys %sub_group_value ) {
 			my $label = $element;
 			$label =~ s/^\d{2}//;
-			my $menu_item = $self->{$menu_name}->Append( 
-				-1, $label . "\t" . $sub_group_value{$element} );
+			my $menu_item = $self->{$menu_name}->Append( -1, $label . "\t" . $sub_group_value{$element} );
 
 			Wx::Event::EVT_MENU(
 				$self,
@@ -237,13 +236,13 @@ sub _create_controls {
 	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
 
-	$left->Add( $substitute_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{substitute},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $substitute_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{substitute}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
 
-	$left->Add( $original_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $original_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{original_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $matched_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{matched_text}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $matched_label,         0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{matched_text},  1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->AddSpacer(5);
 	$left->Add( $self->{close_button}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
 
