@@ -55,6 +55,10 @@ sub main {
 	$_[0]->GetGrandParent;
 }
 
+sub current {
+	Padre::Current->new( main => $_[0]->main );
+}
+
 sub gettext_label {
 	Wx::gettext('Syntax Check');
 }
@@ -64,7 +68,7 @@ sub clear {
 	my $self = shift;
 
 	# Remove the margins for the syntax markers
-	foreach my $editor ( Padre::Current->main($self)->editors ) {
+	foreach my $editor ( $self->main->editors ) {
 		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
 		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
 	}
@@ -109,7 +113,7 @@ sub start {
 	my $self = shift;
 
 	# Add the margins for the syntax markers
-	foreach my $editor ( Padre::Current->main($self)->editors ) {
+	foreach my $editor ( $self->main->editors ) {
 
 		# Margin number 1 for symbols
 		$editor->SetMarginType( 1, Wx::wxSTC_MARGIN_SYMBOL );
@@ -156,7 +160,7 @@ sub stop {
 	$self->clear;
 
 	# Remove the editor margin
-	foreach my $editor ( Padre::Current->main($self)->editors ) {
+	foreach my $editor ( $self->main->editors ) {
 		$editor->SetMarginWidth( 1, 0 );
 	}
 
@@ -173,7 +177,7 @@ sub running {
 sub on_list_item_activated {
 	my $self   = shift;
 	my $event  = shift;
-	my $editor = Padre::Current->main($self)->current->editor;
+	my $editor = $self->current->editor or return;
 	my $line   = $event->GetItem->GetText;
 
 	if (   not defined($line)
@@ -188,30 +192,24 @@ sub on_list_item_activated {
 	return;
 }
 
-#
 # Selects the problemistic line :)
-#
 sub select_problem {
-	my ( $self, $line ) = @_;
-
-	my $editor = Padre::Current->main($self)->current->editor;
-	return if not $editor;
-
+	my $self = shift;
+	my $line = shift;
+	my $editor = $self->current->editor or return;
 	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+	$editor->goto_pos_centerize(
+		$editor->GetLineIndentPosition($line)
+	);
 	$editor->SetFocus;
 }
 
-#
 # Selects the next problem in the editor.
 # Wraps to the first one when at the end.
-#
 sub select_next_problem {
-	my $self = shift;
-
-	my $editor = Padre::Current->main($self)->current->editor;
-	return if not $editor;
-	my $current_line = $editor->LineFromPosition( $editor->GetCurrentPos );
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	my $line   = $editor->LineFromPosition( $editor->GetCurrentPos );
 
 	my $first_line = undef;
 	foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
@@ -230,7 +228,7 @@ sub select_next_problem {
 			$first_line = $line;
 		}
 
-		if ( $line > $current_line ) {
+		if ( $line > $line ) {
 
 			# select the next problem
 			$self->select_problem($line);
@@ -243,19 +241,15 @@ sub select_next_problem {
 		}
 	}
 
-	if ($first_line) {
-
-		#the next problem is simply the first (wrap around)
-		$self->select_problem($first_line);
-	}
+	# The next problem is simply the first (wrap around)
+	$self->select_problem($first_line) if $first_line;
 }
 
 sub on_timer {
-	my $self   = shift;
-	my $event  = shift;
-	my $force  = shift;
-	my $editor = Padre::Current->main($self)->current->editor or return;
-
+	my $self     = shift;
+	my $event    = shift;
+	my $force    = shift;
+	my $editor   = $self->current->editor or return;
 	my $document = $editor->{Document};
 
 	# Don't check without document of if the document has no checker
@@ -318,9 +312,7 @@ sub relocale {
 	return;
 }
 
-#
 # Called when the user presses a right click or a context menu key (on win32)
-#
 sub on_right_down {
 	my ( $self, $event ) = @_;
 
