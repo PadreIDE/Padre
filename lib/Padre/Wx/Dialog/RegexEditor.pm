@@ -96,11 +96,12 @@ sub _regex_groups {
 		'02' => {
 			label => Wx::gettext('Quantifiers'),
 			value => {
-				'00*'     => Wx::gettext('Zero or more of the preceding block'),
-				'01+'     => Wx::gettext('One or more of the preceding block'),
-				'02?'     => Wx::gettext('Zero or one of the preceding block'),
-				'03{m}'   => Wx::gettext('Exactly m of the preceding block'),
-				'04{m,n}' => Wx::gettext('m to n of the preceding block'),
+				'00*'     => Wx::gettext('Match 0 or more times'),
+				'01+'     => Wx::gettext('Match 1 or more times'),
+				'02?'     => Wx::gettext('Match 1 or 0 times'),
+				'03{m}'   => Wx::gettext('Match exactly n times'),
+				'05{n,}'  => Wx::gettext('Match at least n times'),
+				'05{m,n}' => Wx::gettext('Match at least n but not more than m times'),
 			}
 		},
 		'03' => {
