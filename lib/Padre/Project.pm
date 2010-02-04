@@ -211,7 +211,25 @@ sub headline {
 
 
 ######################################################################
-# Directory Integration
+# Process Execution Resources
+
+sub temp {
+	my $self = shift;
+	$self->{temp} or
+	$self->{temp} = $self->_temp;
+}
+
+sub _temp {
+	require Padre::Project::Temp;
+	Padre::Project::Temp->new;
+}
+
+
+
+
+
+######################################################################
+# Directory Tree Integration
 
 # A file/directory pattern to support the directory browser.
 # The function takes three parameters of the full file path,
