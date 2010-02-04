@@ -63,7 +63,7 @@ sub _regex_groups {
 
 	return (
 		'00' => {
-			label => Wx::gettext('Character classes'),
+			label => Wx::gettext('&Character classes'),
 			value => {
 				'00.'  => Wx::gettext('Any character except a newline'),
 				'01\d' => Wx::gettext('Any decimal digit'),
@@ -75,7 +75,7 @@ sub _regex_groups {
 			}
 		},
 		'01' => {
-			label => Wx::gettext('POSIX Character classes'),
+			label => Wx::gettext('&POSIX Character classes'),
 			value => {
 				'00[:alpha:]'  => Wx::gettext('Alphabetic characters'),
 				'01[:alnum:])' => Wx::gettext('Alphanumeric characters'),
@@ -94,7 +94,7 @@ sub _regex_groups {
 			}
 		},
 		'02' => {
-			label => Wx::gettext('Quantifiers'),
+			label => Wx::gettext('&Quantifiers'),
 			value => {
 				'00*'     => Wx::gettext('Match 0 or more times'),
 				'01+'     => Wx::gettext('Match 1 or more times'),
@@ -105,7 +105,7 @@ sub _regex_groups {
 			}
 		},
 		'03' => {
-			label => Wx::gettext('Miscellaneous'),
+			label => Wx::gettext('&Miscellaneous'),
 			value => {
 				'00|'   => Wx::gettext('Alternation'),
 				'01[ ]' => Wx::gettext('Character set'),
@@ -116,7 +116,7 @@ sub _regex_groups {
 			}
 		},
 		'04' => {
-			label => Wx::gettext('Grouping constructs'),
+			label => Wx::gettext('&Grouping constructs'),
 			value => {
 				'00( )'   => Wx::gettext('A group'),
 				'01(?: )' => Wx::gettext('Non-capturing group'),
