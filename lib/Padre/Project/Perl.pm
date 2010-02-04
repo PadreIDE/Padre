@@ -20,10 +20,10 @@ our @ISA     = 'Padre::Project';
 
 sub headline {
 	my $self = shift;
-	$self->{headline} or
-	$self->{headline} = $self->_headline;
+	$self->{headline}
+		or $self->{headline} = $self->_headline;
 }
-		
+
 sub _headline {
 	my $self = shift;
 	my $root = $self->root;
@@ -32,18 +32,19 @@ sub _headline {
 	# in the lib directory.
 	my $cursor = File::Spec->catdir( $root, 'lib' );
 	unless ( -d $cursor ) {
+
 		# Weird-looking Perl distro...
 		return undef;
 	}
 
-	while ( 1 ) {
+	while (1) {
 		local *DIRECTORY;
-		opendir( DIRECTORY, $cursor )    or last;
-		my @files = readdir( DIRECTORY ) or last;
-		closedir( DIRECTORY )            or last;
+		opendir( DIRECTORY, $cursor ) or last;
+		my @files = readdir(DIRECTORY) or last;
+		closedir(DIRECTORY) or last;
 
 		# Can we find a single dominant module?
-		my @modules = grep { /\.pm\z/ } @files;
+		my @modules = grep {/\.pm\z/} @files;
 		if ( @modules == 1 ) {
 			return File::Spec->catfile( $cursor, $modules[0] );
 		}
@@ -53,11 +54,12 @@ sub _headline {
 		# as soon as we see the second subdirectory (because this scanning
 		# happens in the foreground and we don't want to overblock)
 		my $candidate = undef;
-		foreach my $file ( @files ) {
+		foreach my $file (@files) {
 			next if $file =~ /\./;
 			my $path = File::Spec->catdir( $cursor, $file );
 			next unless -d $path;
-			if ( $candidate ) {
+			if ($candidate) {
+
 				# Shortcut, more than one
 				last;
 			} else {

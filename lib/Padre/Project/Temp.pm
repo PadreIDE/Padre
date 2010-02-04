@@ -28,7 +28,8 @@ use Class::XSAccessor {
 sub new {
 	bless {
 		root => File::Temp::tempdir( CLEANUP => 1 ),
-	}, $_[0];
+		},
+		$_[0];
 }
 
 1;

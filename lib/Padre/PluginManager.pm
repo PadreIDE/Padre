@@ -759,7 +759,7 @@ sub plugin_event {
 			$object->$event(@_);
 		};
 		if ($@) {
-			$self->_error( $plugin, sprintf( Wx::gettext( 'Plugin error on event %s: %s' ), $event, $@  ) );
+			$self->_error( $plugin, sprintf( Wx::gettext('Plugin error on event %s: %s'), $event, $@ ) );
 			next;
 		}
 	}

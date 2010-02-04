@@ -194,13 +194,11 @@ sub on_list_item_activated {
 
 # Selects the problemistic line :)
 sub select_problem {
-	my $self = shift;
-	my $line = shift;
+	my $self   = shift;
+	my $line   = shift;
 	my $editor = $self->current->editor or return;
 	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize(
-		$editor->GetLineIndentPosition($line)
-	);
+	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 	$editor->SetFocus;
 }
 
