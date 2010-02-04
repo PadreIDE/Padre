@@ -12,6 +12,9 @@ Changes for Perl Application Development and Refactoring Environment
       buttons (AZAWAWI)
     - Regex editor dialog can now highlight matched text (AZAWAWI)
     - Implemented Replace (aka substitution) in Regex editor (AZAWAWI)
+    - Added "headline" method to Padre::Project, which allows a project
+      to try and intuit the "primary" file in the project (for a CPAN
+      distribution of Foo::Bar this will be lib/Foo/Bar.pm) (ADAMK)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)

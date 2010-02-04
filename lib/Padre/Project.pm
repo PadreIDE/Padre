@@ -8,7 +8,6 @@ use warnings;
 use File::Spec     ();
 use Padre::Config  ();
 use Padre::Current ();
-use File::Spec     ();
 
 our $VERSION = '0.56';
 
@@ -173,7 +172,7 @@ sub from_file {
 
 
 ######################################################################
-# Configuration Support
+# Configuration and Intuition
 
 sub config {
 	my $self = shift;
@@ -202,6 +201,11 @@ sub config {
 	return $self->{config};
 }
 
+# Locate the "primary" file, if the project has one
+sub headline {
+	return undef;	
+}
+
 
 
 
@@ -227,16 +231,15 @@ sub ignore_rule {
 
 sub name {
 	my $self = shift;
-
 	my $name = ( reverse( File::Spec->splitdir( $self->root ) ) )[0];
-	if ( ( !defined($name) ) or ( $name eq '' ) ) { # Fallback
+	
+	if ( ! defined $name or $name eq '' ) { # Fallback
 		$name = $self->root;
 		$name =~ s/^.*[\/\\]//;
 	}
 
 	return $name;
 }
-
 
 1;
 
