@@ -1,6 +1,7 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.57 To Be Released
+    - Fix pluginmanager error dialog for plugin-event failure (BRAMBLE)
     - Add status messages for Padre::File operations (SEWI)
     - Select some files to close (SEWI)
     - Select some files to reload (SEWI)
