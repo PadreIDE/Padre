@@ -224,6 +224,8 @@ sub _create_controls {
 	$modifiers->Add( $self->{single_line}, 0, Wx::wxALL, 1 );
 	$modifiers->Add( $self->{multi_line},  0, Wx::wxALL, 1 );
 	$modifiers->Add( $self->{extended},    0, Wx::wxALL, 1 );
+	$modifiers->Add( $self->{global},      0, Wx::wxALL, 1 );
+
 	$modifiers->AddStretchSpacer;
 
 	my $regex = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -306,6 +308,7 @@ sub _modifiers {
 		single_line => { mod => 's', name => sprintf( Wx::gettext('Single-line (%s)'), 's' ) },
 		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('Multi-line (%s)'),  'm' ) },
 		extended    => { mod => 'x', name => sprintf( Wx::gettext('Extended (%s)'),    'x' ) },
+		global      => { mod => 'g', name => sprintf( Wx::gettext('Global (%s)'),      'g' ) },
 	);
 }
 
