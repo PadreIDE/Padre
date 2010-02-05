@@ -156,10 +156,10 @@ sub _create_buttons {
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
-	$buttons->Add( $self->{ok_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$buttons->Add( $self->{ok_button},     0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$sizer->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
-	
+
 	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button_clicked );
 }
 
