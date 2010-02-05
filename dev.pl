@@ -101,6 +101,7 @@ if ($FULLTRACE) {
 # Rebuild translations
 if ($PLUGINS) {
 	my $dir = File::Basename::dirname( $ENV{PADRE_HOME} );
+        $dir =~ s/\bbranches$/trunk/;
 	if ( opendir my $dh, $dir ) {
 		my @plugins = grep { $_ =~ /^Padre-Plugin-/ } readdir $dh;
 		foreach my $plugin (@plugins) {
