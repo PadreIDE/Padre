@@ -414,6 +414,12 @@ sub run {
 	my $match;
 	my $match_start;
 	my $match_end;
+
+	my $warning;
+
+	# XXX Ignore Win32::API warnings. It's ugly but it works :)
+	local $SIG{__WARN__} = sub { $warning = $_[0] };
+
 	eval {
 
 		# /g modifier is useless in this case
@@ -427,6 +433,13 @@ sub run {
 	};
 	if ($@) {
 		$matched_html .= '<font color="red">' . "Match failure in $regex:  $@" . '</font>';
+		$self->{matched_text}->SetPage($matched_html);
+		return;
+	}
+
+	if ($warning) {
+		$matched_html .= '<font color="red">' . "Match warning in $regex:  $warning" . '</font>';
+		$self->{matched_text}->SetPage($matched_html);
 		return;
 	}
 
