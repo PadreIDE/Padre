@@ -8,6 +8,7 @@ use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::Icon            ();
 use Padre::Wx::Role::MainChild ();
+use Padre::Wx::HtmlWindow      ();
 
 our $VERSION = '0.56';
 our @ISA     = qw{
@@ -163,9 +164,12 @@ sub _create_controls {
 
 	# Matched readonly text field
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
-	$self->{matched_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_READONLY | Wx::wxRE_MULTILINE
+	$self->{matched_text} = Padre::Wx::HtmlWindow->new(
+			$self,
+			-1,
+			Wx::wxDefaultPosition,
+			Wx::wxDefaultSize,
+			Wx::wxBORDER_STATIC
 	);
 
 	# Result from replace text field
@@ -380,8 +384,7 @@ sub run {
 	}
 	my $xism = "$start-$end";
 
-	$self->{matched_text}->Clear;
-	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
+	my $matched_html = '';
 	$self->{result_text}->Clear;
 	$self->{result_text}->BeginTextColour(Wx::wxBLACK);
 
@@ -400,8 +403,9 @@ sub run {
 		}
 	};
 	if ($@) {
-		$self->{matched_text}->AppendText("Match failure in $regex:  $@");
-		$self->{matched_text}->EndTextColour;
+		$matched_html .= '<font color="red">' .
+		"Match failure in $regex:  $@" .
+		'</font>';
 		return;
 	}
 
@@ -410,17 +414,15 @@ sub run {
 		my $pos = 0;
 		for my $char (@chars) {
 			if ( $pos == $match_start ) {
-				$self->{matched_text}->BeginTextColour(Wx::wxRED);
-				$self->{matched_text}->BeginUnderline;
+				$matched_html .= '<font color="red"><u>';
 			} elsif ( $pos == $match_end ) {
-				$self->{matched_text}->EndUnderline;
-				$self->{matched_text}->EndTextColour;
+				$matched_html .= '</u></font>';
 			}
-			$self->{matched_text}->AppendText($char);
+			$matched_html .= $char;
 			$pos++;
 		}
 	} else {
-		$self->{matched_text}->AppendText( Wx::gettext("No match") );
+		$matched_html = Wx::gettext("No match");
 	}
 
 	eval { $result_text =~ s{$regex}{$replace}; };
@@ -434,7 +436,7 @@ sub run {
 		$self->{result_text}->AppendText($result_text);
 	}
 
-	$self->{matched_text}->EndTextColour;
+	$self->{matched_text}->SetPage($matched_html);
 	$self->{result_text}->EndTextColour;
 
 	return;
