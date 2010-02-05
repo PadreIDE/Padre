@@ -355,6 +355,9 @@ sub run {
 	my $match_start;
 	my $match_end;
 	eval {
+		# /g modifier is useless in this case
+		# TODO loop on all matches
+		$xism =~ s/g//g;
 		if ( $original_text =~ /(?$xism:$regex)/ )
 		{
 			$match_start = $-[0];
