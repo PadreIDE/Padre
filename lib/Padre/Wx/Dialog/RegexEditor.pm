@@ -369,20 +369,20 @@ sub show {
 }
 
 #
-# Private method to dump the regular expression 
+# Private method to dump the regular expression
 # description as text
 #
 sub _dump_regex {
-	my ($self, $parent, $str, $level) = @_;
-	$str = '' unless $str;
-	$level = 0 unless $level;
+	my ( $self, $parent, $str, $level ) = @_;
+	$str   = '' unless $str;
+	$level = 0  unless $level;
 	my @children = $parent->children if $parent->isa('PPIx::Regexp::Node');
 	for my $child (@children) {
 		next if $child->content eq '';
 		my $class_name = $child->class;
 		$class_name =~ s/PPIx::Regexp:://;
-		$str .= (" " x ($level * 4)) . $class_name .  "     (" . $child->content . ")\n";
-		$str = $self->_dump_regex($child, $str, $level + 1);
+		$str .= ( " " x ( $level * 4 ) ) . $class_name . "     (" . $child->content . ")\n";
+		$str = $self->_dump_regex( $child, $str, $level + 1 );
 	}
 	return $str;
 }
@@ -458,7 +458,7 @@ sub run {
 
 	require PPIx::Regexp;
 	my $regexp = PPIx::Regexp->new("/$regex/");
-	$self->{description_text}->SetValue($self->_dump_regex($regexp));
+	$self->{description_text}->SetValue( $self->_dump_regex($regexp) );
 
 	$self->{matched_text}->SetPage($matched_html);
 	$self->{result_text}->SetPage($result_html);
