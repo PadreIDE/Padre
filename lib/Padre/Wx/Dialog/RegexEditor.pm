@@ -165,21 +165,21 @@ sub _create_controls {
 	# Matched readonly text field
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
 	$self->{matched_text} = Padre::Wx::HtmlWindow->new(
-			$self,
-			-1,
-			Wx::wxDefaultPosition,
-			Wx::wxDefaultSize,
-			Wx::wxBORDER_STATIC
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxBORDER_STATIC
 	);
 
 	# Result from replace text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Padre::Wx::HtmlWindow->new(
-			$self,
-			-1,
-			Wx::wxDefaultPosition,
-			Wx::wxDefaultSize,
-			Wx::wxBORDER_STATIC
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxBORDER_STATIC
 	);
 
 	# Modifiers
@@ -345,11 +345,11 @@ sub _bind_events {
 sub _modifiers {
 	my $self = shift;
 	return (
-		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('Ignore case (%s)'), 'i' ) },
-		single_line => { mod => 's', name => sprintf( Wx::gettext('Single-line (%s)'), 's' ) },
-		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('Multi-line (%s)'),  'm' ) },
-		extended    => { mod => 'x', name => sprintf( Wx::gettext('Extended (%s)'),    'x' ) },
-		global      => { mod => 'g', name => sprintf( Wx::gettext('Global (%s)'),      'g' ) },
+		ignore_case => { mod => 'i', name => sprintf( Wx::gettext('&Ignore case (%s)'), 'i' ) },
+		single_line => { mod => 's', name => sprintf( Wx::gettext('&Single-line (%s)'), 's' ) },
+		multi_line  => { mod => 'm', name => sprintf( Wx::gettext('&Multi-line (%s)'),  'm' ) },
+		extended    => { mod => 'x', name => sprintf( Wx::gettext('&Extended (%s)'),    'x' ) },
+		global      => { mod => 'g', name => sprintf( Wx::gettext('&Global (%s)'),      'g' ) },
 	);
 }
 
@@ -362,6 +362,8 @@ sub show {
 	$self->{regex}->ChangeValue('\w+');
 	$self->{replace}->ChangeValue("Baz");
 	$self->{original_text}->AppendText("Foo Bar");
+
+	$self->{regex}->SetFocus;
 
 	$self->Show;
 }
@@ -388,7 +390,7 @@ sub run {
 	my $xism = "$start-$end";
 
 	my $matched_html = '';
-	my $result_html = '';
+	my $result_html  = '';
 
 	my $match;
 	my $match_start;
@@ -405,9 +407,7 @@ sub run {
 		}
 	};
 	if ($@) {
-		$matched_html .= '<font color="red">' .
-		"Match failure in $regex:  $@" .
-		'</font>';
+		$matched_html .= '<font color="red">' . "Match failure in $regex:  $@" . '</font>';
 		return;
 	}
 
@@ -429,9 +429,7 @@ sub run {
 
 	eval { $result_text =~ s{$regex}{$replace}; };
 	if ($@) {
-		$result_html .= '<font color="red">' .
-		"Replace failure in $regex:  $@" .
-		'</font>';
+		$result_html .= '<font color="red">' . "Replace failure in $regex:  $@" . '</font>';
 		return;
 	}
 
