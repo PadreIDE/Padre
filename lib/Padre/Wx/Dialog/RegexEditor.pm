@@ -133,36 +133,42 @@ sub _create_controls {
 
 	# Dialog Controls
 
+	# Regex text field
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
-
 	$self->{regex} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	# Replace regex text field
 	my $replace_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Replace text with:') );
 	$self->{replace} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	# Describe-the-regex text field
 	my $description_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Description:') );
 	$self->{description_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
+
+	# Original input text field
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	# Matched readonly text field
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
 	$self->{matched_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
 		Wx::wxRE_READONLY | Wx::wxRE_MULTILINE
 	);
 
+	# Result from replace text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
 	$self->{result_text} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
