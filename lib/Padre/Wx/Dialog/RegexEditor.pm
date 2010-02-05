@@ -174,9 +174,12 @@ sub _create_controls {
 
 	# Result from replace text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
-	$self->{result_text} = Wx::RichTextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_READONLY | Wx::wxRE_MULTILINE
+	$self->{result_text} = Padre::Wx::HtmlWindow->new(
+			$self,
+			-1,
+			Wx::wxDefaultPosition,
+			Wx::wxDefaultSize,
+			Wx::wxBORDER_STATIC
 	);
 
 	# Modifiers
@@ -385,8 +388,7 @@ sub run {
 	my $xism = "$start-$end";
 
 	my $matched_html = '';
-	$self->{result_text}->Clear;
-	$self->{result_text}->BeginTextColour(Wx::wxBLACK);
+	my $result_html = '';
 
 	my $match;
 	my $match_start;
@@ -427,17 +429,18 @@ sub run {
 
 	eval { $result_text =~ s{$regex}{$replace}; };
 	if ($@) {
-		$self->{result_text}->AppendText("Replace failure in $replace:  $@");
-		$self->{result_text}->EndTextColour;
+		$result_html .= '<font color="red">' .
+		"Replace failure in $regex:  $@" .
+		'</font>';
 		return;
 	}
 
 	if ( defined $result_text ) {
-		$self->{result_text}->AppendText($result_text);
+		$result_html .= $result_text;
 	}
 
 	$self->{matched_text}->SetPage($matched_html);
-	$self->{result_text}->EndTextColour;
+	$self->{result_text}->SetPage($result_html);
 
 	return;
 }
