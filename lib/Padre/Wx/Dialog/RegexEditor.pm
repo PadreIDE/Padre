@@ -230,7 +230,7 @@ sub _create_controls {
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
 	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
-	$buttons->Add( $self->{close_button}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{close_button},  0, Wx::wxALL, 1 );
 	$buttons->AddStretchSpacer;
 
 	# Dialog Layout
@@ -262,10 +262,10 @@ sub _create_controls {
 	my $left = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$left->Add( $modifiers, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$left->AddSpacer(5);
-	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
-	$left->Add( $description_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
-	$left->Add( $self->{description_text},   2, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $regex_label,              0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $combined,                 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $description_label,        0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{description_text}, 2, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $replace_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{replace}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
@@ -383,11 +383,11 @@ sub run {
 	my $match_start;
 	my $match_end;
 	eval {
+
 		# /g modifier is useless in this case
 		# TODO loop on all matches
 		$xism =~ s/g//g;
-		if ( $original_text =~ /(?$xism:$regex)/ )
-		{
+		if ( $original_text =~ /(?$xism:$regex)/ ) {
 			$match_start = $-[0];
 			$match_end   = $+[0];
 			$match       = substr( $original_text, $match_start, $match_end - $match_start );

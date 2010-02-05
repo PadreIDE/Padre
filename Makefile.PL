@@ -124,8 +124,8 @@ requires 'PPI'               => '1.205';
 requires 'PPIx::EditorTools' => '0.09';
 
 # for PPIx::Regexp Readonly dependency
-requires 'Readonly::XS'      => '1.05';
-requires 'PPIx::Regexp'      => '0.005';
+requires 'Readonly::XS' => '1.05';
+requires 'PPIx::Regexp' => '0.005';
 
 #requires 'Probe::Perl'             => '0.01';
 requires 'Storable'                => '2.15';
