@@ -211,10 +211,22 @@ sub _create_controls {
 		}
 	}
 
+
+	# Insert regex into current document button_name
+	$self->{insert_button} = Wx::Button->new(
+		$self, -1, Wx::gettext('&Insert'),
+	);
+
 	# Close button
 	$self->{close_button} = Wx::Button->new(
 		$self, Wx::wxID_CANCEL, Wx::gettext('&Close'),
 	);
+
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$buttons->AddStretchSpacer;
+	$buttons->Add( $self->{insert_button}, 0, Wx::wxALL, 1 );
+	$buttons->Add( $self->{close_button}, 0, Wx::wxALL, 1 );
+	$buttons->AddStretchSpacer;
 
 	# Dialog Layout
 
@@ -258,7 +270,7 @@ sub _create_controls {
 	$left->Add( $result_label,          0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{result_text},   1, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->AddSpacer(5);
-	$left->Add( $self->{close_button}, 0, Wx::wxALIGN_CENTER_HORIZONTAL, 1 );
+	$left->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	# Main sizer
 	$sizer->Add( $left, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
@@ -295,6 +307,15 @@ sub _bind_events {
 		);
 	}
 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{insert_button},
+		sub {
+			my $self = shift;
+			my $editor = $self->current->editor or return;
+			$editor->InsertText( $editor->GetCurrentPos, $self->{regex}->GetValue );
+		},
+	);
 }
 
 
