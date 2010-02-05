@@ -23,7 +23,6 @@ use Class::XSAccessor {
 		_status_text              => '_status_text',              # status label
 		_directory                => '_directory',                # searched directory
 		_matched_files            => '_matched_files',            # matched files list
-		_ok_button                => '_ok_button',                # OK button
 		_copy_button              => '_copy_button',              # copy button
 		_popup_button             => '_popup_button',             # popup button for options
 		_popup_menu               => '_popup_menu',               # options popup menu
@@ -185,10 +184,21 @@ sub _create_buttons {
 	my ($self) = @_;
 	my $sizer = $self->_sizer;
 
-	my $butsizer = $self->CreateStdDialogButtonSizer( Wx::wxOK | Wx::wxCANCEL );
-	$sizer->Add( $butsizer, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
+	$self->{ok_button} = Wx::Button->new(
+		$self, Wx::wxID_OK, Wx::gettext('&OK'),
+	);
+	$self->{ok_button}->SetDefault;
+	$self->{cancel_button} = Wx::Button->new(
+		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
+	);
+
+	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$buttons->AddStretchSpacer;
+	$buttons->Add( $self->{ok_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
+	
 	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button_clicked );
-	$self->_ok_button( Wx::Window::FindWindowById( Wx::wxID_OK, $self ) );
 }
 
 #
@@ -532,12 +542,12 @@ sub _update_matches_list_box {
 		$self->_status_text->ChangeValue( $self->_path( $self->_matches_list->GetClientData(0) ) );
 		$self->_status_text->Enable(1);
 		$self->_copy_button->Enable(1);
-		$self->_ok_button->Enable(1);
+		$self->{ok_button}->Enable(1);
 	} else {
 		$self->_status_text->ChangeValue('');
 		$self->_status_text->Enable(0);
 		$self->_copy_button->Enable(0);
-		$self->_ok_button->Enable(0);
+		$self->{ok_button}->Enable(0);
 	}
 
 	return;
