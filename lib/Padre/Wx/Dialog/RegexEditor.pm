@@ -133,7 +133,7 @@ sub _create_controls {
 
 	# Dialog Controls
 
-	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular Expression:') );
+	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
 
 	$self->{regex} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
@@ -146,6 +146,11 @@ sub _create_controls {
 		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
 	);
 
+	my $description_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Description:') );
+	$self->{description_text} = Wx::TextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+	);
 	my $original_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Original text:') );
 	$self->{original_text} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
@@ -259,6 +264,8 @@ sub _create_controls {
 	$left->AddSpacer(5);
 	$left->Add( $regex_label, 0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $combined,    0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$left->Add( $description_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
+	$left->Add( $self->{description_text},   2, Wx::wxALL | Wx::wxEXPAND, 1 );
 
 	$left->Add( $replace_label,   0, Wx::wxALL | Wx::wxEXPAND, 1 );
 	$left->Add( $self->{replace}, 1, Wx::wxALL | Wx::wxEXPAND, 1 );
