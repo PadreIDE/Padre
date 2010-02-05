@@ -114,6 +114,7 @@ sub _regex_groups {
 				'03$'   => Wx::gettext('End of line'),
 				'04\b'  => Wx::gettext('A word boundary'),
 				'05\B'  => Wx::gettext('Not a word boundary'),
+				'06(?# )' => Wx::gettext('A comment'),
 			}
 		},
 		'04' => {
@@ -123,7 +124,9 @@ sub _regex_groups {
 				'01(?: )' => Wx::gettext('Non-capturing group'),
 				'02(?= )' => Wx::gettext('Positive lookahead assertion'),
 				'03(?! )' => Wx::gettext('Negative lookahead assertion'),
-				'04\n'    => Wx::gettext('Backreference to the nth group'),
+				'04(?< )' => Wx::gettext('Positive lookbehind assertion'),
+				'05(?<! )' => Wx::gettext('Negative lookbehind assertion'),
+				'06\n'    => Wx::gettext('Backreference to the nth group'),
 			}
 		}
 	);
