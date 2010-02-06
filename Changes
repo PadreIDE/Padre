@@ -13,6 +13,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Regex editor dialog can now highlight matched text (AZAWAWI)
     - Regex editor dialog can now display regex description (AZAWAWI)
     - Implemented Replace (aka substitution) in Regex editor (AZAWAWI)
+    - Right click "Edit with Regex Editor" now works on user-selected
+      text (AZAWAWI)
     - Added "headline" method to Padre::Project, which allows a project
       to try and intuit the "primary" file in the project (for a CPAN
       distribution of Foo::Bar this will be lib/Foo/Bar.pm) (ADAMK)
