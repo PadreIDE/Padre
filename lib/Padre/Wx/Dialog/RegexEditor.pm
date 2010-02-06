@@ -10,6 +10,9 @@ use Padre::Wx::Icon            ();
 use Padre::Wx::Role::MainChild ();
 use Padre::Wx::HtmlWindow      ();
 
+# RichTextCtrl
+use Wx::RichText               ();
+
 our $VERSION = '0.56';
 our @ISA     = qw{
 	Padre::Wx::Role::MainChild
@@ -139,9 +142,10 @@ sub _create_controls {
 
 	# Regex text field
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
-	$self->{regex} = Wx::TextCtrl->new(
+	$self->{regex} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxTE_MULTILINE | Wx::wxNO_FULL_REPAINT_ON_RESIZE
+		Wx::wxRE_MULTILINE | 
+		Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Replace regex text field
