@@ -1583,10 +1583,7 @@ sub event_on_right_down {
 				my $editor = shift;
 				my $doc    = $self;
 				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
-
-				require Padre::Wx::Dialog::RegexEditor;
-				my $regex = Padre::Wx::Dialog::RegexEditor->new($editor->main);
-				$regex->show();
+				$editor->main->open_regex_editor;
 			},
 		);
 		
