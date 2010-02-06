@@ -95,14 +95,14 @@ actually be read within a few hours of you making the commit.
 We are using Trac as the issue and bug tracker.
 
 When adding a note that relates to one of the commit in SVN please use the
-r780 format. That allows Trak to create links to the diff of that revision.
+r780 format. That allows Trac to create links to the diff of that revision.
 
 =head2 Code review
 
 We don't have formal code-review but in response to the commit messages
 we sometimes reply with comments to the padre-dev mailing list.
 
-You are also encourgaed to do so!
+You are also encouraged to do so!
 
 =head1 STYLE
 
