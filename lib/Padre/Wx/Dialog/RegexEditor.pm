@@ -411,6 +411,29 @@ sub _dump_regex {
 	return $str;
 }
 
+#
+# Private method to return all the parsed regex elements as an array
+#
+sub _parse_regex_elements {
+	my ( $parent, $position, @array ) = @_;
+	$position   = 0 unless $position;
+	@array   = () unless @array;
+	my @elements = $parent->elements if $parent->isa('PPIx::Regexp::Node');
+	for my $element (@elements) {
+		my $content = $element->content;
+		next if $content eq '';
+		my $class_name = $element->class;
+		push @array, {
+			element  => $element,
+			offset   => $position,
+			len      => length $content
+		};
+		@array = _parse_regex_elements( $element, $position, @array );
+		$position += length $content;
+	}
+	return @array;
+}
+
 sub run {
 	my $self = shift;
 
