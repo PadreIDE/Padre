@@ -1574,6 +1574,22 @@ sub event_on_right_down {
 				$doc->introduce_temporary_variable($replacement);
 			},
 		);
+
+		my $edit_regex = $menu->Append( -1, Wx::gettext("Edit with Regex Editor") );
+		Wx::Event::EVT_MENU(
+			$editor,
+			$edit_regex,
+			sub {
+				my $editor = shift;
+				my $doc    = $self;
+				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
+
+				require Padre::Wx::Dialog::RegexEditor;
+				my $regex = Padre::Wx::Dialog::RegexEditor->new($editor->main);
+				$regex->show();
+			},
+		);
+		
 	} # end if something's selected
 }
 
