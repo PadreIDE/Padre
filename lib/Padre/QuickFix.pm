@@ -1,4 +1,4 @@
-package Padre::QuickFixProvider;
+package Padre::QuickFix;
 
 use 5.008;
 use strict;
@@ -6,22 +6,13 @@ use warnings;
 
 our $VERSION = '0.56';
 
-#
 # Constructor.
 # No need to override this
-#
 sub new {
-	my ($class) = @_;
-
-	# Create myself :)
-	my $self = bless {}, $class;
-
-	return $self;
+	bless { }, $_[0];
 }
 
-#
 # Returns the quick fix list
-#
 sub quick_fix_list {
 	my ( $self, $doc, $editor ) = @_;
 	warn "quick_fix_list, You need to override this to do something useful with quick fix";
@@ -34,7 +25,7 @@ __END__
 
 =head1 NAME
 
-Padre::Document::Perl::QuickFix - Padre Quick Fix Provider API
+Padre::QuickFix - Padre Quick Fix Provider API
 
 =head1 DESCRIPTION
 
@@ -68,7 +59,7 @@ Please see the following sample implementation:
 
 =cut
 
-The B<Padre::Document::Perl::QuickFix> class provides a base class, default implementation
+The B<Padre::QuickFix> class provides a base class, default implementation
 and API documentation for quick fix provision support in L<Padre>.
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

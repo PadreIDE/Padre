@@ -152,7 +152,7 @@ sub new {
 	my $file_reload = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Reload file(s)"),
+		Wx::gettext("Reload..."),
 		$file_reload,
 	);
 

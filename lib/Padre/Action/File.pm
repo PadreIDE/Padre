@@ -16,12 +16,10 @@ our $VERSION = '0.56';
 # Padre::Wx::Menu Methods
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
-
+	my $class  = shift;
+	my $main   = shift;
 	my $config = Padre->ide->config;
-
-	my $self = bless {}, $class;
+	my $self   = bless {}, $class;
 
 	# Add additional properties
 	$self->{main} = $main;
@@ -205,7 +203,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'file.close_some',
 		need_editor => 1,
-		label       => Wx::gettext('Close some Files'),
+		label       => Wx::gettext('Close Files Dialog...'),
 		comment     => Wx::gettext('Select some open files for closing'),
 		menu_event  => sub {
 			$_[0]->on_close_some;
@@ -225,7 +223,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'file.reload_all',
 		need_editor => 1,
-		label       => Wx::gettext('Reload all files'),
+		label       => Wx::gettext('Reload All'),
 		comment     => Wx::gettext('Reload all files currently open'),
 		menu_event  => sub {
 			$_[0]->on_reload_all;
@@ -235,7 +233,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'file.reload_some',
 		need_editor => 1,
-		label       => Wx::gettext('Reload some files'),
+		label       => Wx::gettext('Reload Some Dialog...'),
 		comment     => Wx::gettext('Select some open files for reload'),
 		menu_event  => sub {
 			$_[0]->on_reload_some;

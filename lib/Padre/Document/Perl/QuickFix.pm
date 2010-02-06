@@ -3,28 +3,13 @@ package Padre::Document::Perl::QuickFix;
 use 5.008;
 use strict;
 use warnings;
-use PPI                     ();
-use Padre::QuickFixProvider ();
+use PPI             ();
+use Padre::QuickFix ();
 
 our $VERSION = '0.56';
-our @ISA     = 'Padre::QuickFixProvider';
+our @ISA     = 'Padre::QuickFix';
 
-#
-# Constructor.
-# No need to override this
-#
-sub new {
-	my ($class) = @_;
-
-	# Create myself :)
-	my $self = bless {}, $class;
-
-	return $self;
-}
-
-#
 # Returns the quick fix list
-#
 sub quick_fix_list {
 	my ( $self, $document, $editor ) = @_;
 
@@ -58,7 +43,7 @@ __END__
 
 =head1 NAME
 
-Padre::Document::Perl::QuickFix - Padre Perl 5 Quick Fix Provider
+Padre::Document::Perl::QuickFix - Padre Perl 5 Quick Fix 
 
 =head1 DESCRIPTION
 

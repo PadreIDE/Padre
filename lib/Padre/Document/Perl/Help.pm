@@ -4,23 +4,18 @@ use 5.008;
 use strict;
 use warnings;
 use Pod::Functions;
-use Module::CoreList       ();
-use Cwd                    ();
-use Padre::Util            ();
-use Padre::HelpProvider    ();
-use Padre::DocBrowser::POD ();
-use Padre::Pod2HTML        ();
+use Cwd              ();
+use Padre::Util      ();
+use Padre::Help      ();
 use Padre::Logger;
 
 our $VERSION = '0.56';
-our @ISA     = 'Padre::HelpProvider';
+our @ISA     = 'Padre::Help';
 
 # for caching help list (for faster access)
 my ( $cached_help_list, $cached_perlopref );
 
-#
 # Initialize help
-#
 sub help_init {
 	my $self = shift;
 
@@ -150,11 +145,9 @@ sub help_init {
 	$cached_perlopref = $self->{perlopref};
 }
 
-#
 # Finds installed CPAN modules via @INC
 # This solution resides at:
 # http://stackoverflow.com/questions/115425/how-do-i-get-a-list-of-installed-cpan-modules
-#
 sub _find_installed_modules {
 	my $self = shift;
 	my %seen;
@@ -170,13 +163,10 @@ sub _find_installed_modules {
 	return keys %seen;
 }
 
-#
 # Parses perlopref.pod (Perl Operator Reference)
 # http://github.com/cowens/perlopref/tree/master
-#
 sub _parse_perlopref {
-	my $self = shift;
-
+	my $self  = shift;
 	my %index = ();
 
 	# Open perlopref.pod for reading
@@ -211,79 +201,82 @@ sub _parse_perlopref {
 	return \%index;
 }
 
-#
 # Renders the help topic content into XHTML
-#
 sub help_render {
-	my ( $self, $topic ) = @_;
-	my ( $html, $location );
+	my $self  = shift;
+	my $topic = shift;
 
 	if ( $self->{perlopref}->{$topic} ) {
-
 		# Yes, it is a Perl 5 Operator
-		$html = Padre::Pod2HTML->pod2html( $self->{perlopref}->{$topic} );
+		require Padre::Pod2HTML;
+		return (
+			Padre::Pod2HTML->pod2html(
+				$self->{perlopref}->{$topic}
+			),
+			$topic,
+		);
+	}
+
+	# Detect perlvar, perlfunc or simply nothing
+	my $html     = undef;
+	my $hints    = {};
+	my $location = undef;
+	if ( $topic =~ /^(\$|\@|\%|ARGV$|ARGVOUT$)/ ) {
+
+		# it is definitely a Perl Special Variable
+		$hints->{perlvar} = 1;
+	} elsif ( $Type{$topic} ) {
+
+		# it is Perl function, handle q/.../, m//, y///, tr///
+		$hints->{perlfunc} = 1;
+		$topic =~ s/\/.*?\/$//;
 	} else {
 
-		# Detect perlvar, perlfunc or simply nothing
-		my $hints = ();
-		if ( $topic =~ /^(\$|\@|\%|ARGV$|ARGVOUT$)/ ) {
+		# Append the module's release date to the topic
+		require Module::CoreList;
+		my $first_release_by_date = Module::CoreList->first_release_by_date($topic);
+		my $since_version =
+			$first_release_by_date ? sprintf( Wx::gettext('(Since Perl v%s)'), $first_release_by_date ) : '';
+		my $deprecated =
+			( Module::CoreList->can('is_deprecated') && Module::CoreList::is_deprecated($topic) )
+			? Wx::gettext('- DEPRECATED!')
+			: '';
+		$location = sprintf( '%s %s %s', $topic, $since_version, $deprecated );
+	}
 
-			# it is definitely a Perl Special Variable
-			$hints->{perlvar} = 1;
-		} elsif ( $Type{$topic} ) {
+	# Determine if the padre locale and/or the
+	#  system language is NOT english
+	if ( Padre::Locale::iso639() !~ /^en/i ) {
+		$hints->{lang} = Padre::Locale::iso639();
+	}
 
-			# it is Perl function, handle q/.../, m//, y///, tr///
-			$hints->{perlfunc} = 1;
-			$topic =~ s/\/.*?\/$//;
-		} else {
+	# Render using perldoc pseudo code package
+	require Padre::DocBrowser::POD;
+	my $pod      = Padre::DocBrowser::POD->new;
+	my $doc      = $pod->resolve( $topic, $hints );
+	my $pod_html = $pod->render($doc);
+	if ( $pod_html ) {
+		$html = $pod_html->body;
 
-			# Append the module's release date to the topic
-			my $first_release_by_date = Module::CoreList->first_release_by_date($topic);
-			my $since_version =
-				$first_release_by_date ? sprintf( Wx::gettext('(Since Perl v%s)'), $first_release_by_date ) : '';
-			my $deprecated =
-				( Module::CoreList->can('is_deprecated') && Module::CoreList::is_deprecated($topic) )
-				? Wx::gettext('- DEPRECATED!')
-				: '';
-			$location = sprintf( '%s %s %s', $topic, $since_version, $deprecated );
-		}
-
-
-		# Determine if the padre locale and/or the
-		#  system language is NOT english
-
-		if ( Padre::Locale::iso639() !~ /^en/i ) {
-			$hints->{lang} = Padre::Locale::iso639();
-		}
-
-		# Render using perldoc pseudo code package
-		my $pod      = Padre::DocBrowser::POD->new;
-		my $doc      = $pod->resolve( $topic, $hints );
-		my $pod_html = $pod->render($doc);
-		if ($pod_html) {
-			$html = $pod_html->body;
-
-			# This is needed to make perlfunc and perlvar perldoc
-			# output a bit more consistent
-			$html =~ s/<dt>/<dt><b><font size="+2">/g;
-			$html =~ s/<\/dt>/<\/b><\/font><\/dt>/g;
-		}
+		# This is needed to make perlfunc and perlvar perldoc
+		# output a bit more consistent
+		$html =~ s/<dt>/<dt><b><font size="+2">/g;
+		$html =~ s/<\/dt>/<\/b><\/font><\/dt>/g;
 	}
 
 	return ( $html, $location || $topic );
 }
 
-#
 # Returns the help topic list
-#
 sub help_list {
-	my $self = shift;
-	return $self->{help_list};
+	$_[0]->{help_list};
 }
 
 1;
 
 __END__
+
+=pod
 
 =head1 NAME
 
@@ -296,6 +289,8 @@ Perl 5 Help index is built here and rendered.
 =head1 AUTHOR
 
 Ahmad M. Zawawi C<ahmad.zawawi@gmail.com>
+
+=cut
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE

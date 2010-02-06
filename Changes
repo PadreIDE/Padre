@@ -16,6 +16,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added "headline" method to Padre::Project, which allows a project
       to try and intuit the "primary" file in the project (for a CPAN
       distribution of Foo::Bar this will be lib/Foo/Bar.pm) (ADAMK)
+    - Removed the final usage of the "Provider" phrasing, and made more
+      of the modules used by the Perl help provider run-time loaded (ADAMK)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
