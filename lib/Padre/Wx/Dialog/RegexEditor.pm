@@ -523,6 +523,23 @@ sub run {
 	$self->{matched_text}->SetPage($matched_html);
 	$self->{result_text}->SetPage($result_html);
 
+#	$self->{regex}->Clear;
+#	my @elements = _parse_regex_elements;
+#	for my $element (@elements) {
+#		my $class_name = $element->element->class;
+#		if ($class_name eq 'PPIx::Regexp::Token::CharClass::Simple') {
+#			$self->{regex}->BeginTextColour(Wx::wxRED);
+#		} elsif( $class_name eq 'PPIx::Regexp::Token::Quantifier') {
+#			$self->{regex}->BeginTextColour(Wx::wxBLUE);
+#		} elsif( $class_name eq 'PPIx::Regexp::Token::Operator') {
+#			$self->{regex}->BeginTextColour(Wx::wxLIGHT_GREY);
+#		} elsif( $class_name eq 'PPIx::Regexp::Structure::Capture') {
+#			$self->{regex}->BeginTextColour(Wx::wxCYAN);
+#		}
+#		$self->{regex}->AppendText($element->content);
+#	$self->{regex}->EndTextColour;
+#	}
+
 	return;
 }
 
