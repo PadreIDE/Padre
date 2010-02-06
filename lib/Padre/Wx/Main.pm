@@ -4610,9 +4610,11 @@ Open Padre's regular expression editor. No return value.
 sub open_regex_editor {
 	my $self = shift;
 
-	require Padre::Wx::Dialog::RegexEditor;
-	my $regex = Padre::Wx::Dialog::RegexEditor->new($self);
-	$regex->show();
+	unless ( defined $self->{regex_editor} ) {
+		require Padre::Wx::Dialog::RegexEditor;
+		$self->{regex_editor} = Padre::Wx::Dialog::RegexEditor->new($self);
+	}
+	$self->{regex_editor}->show;
 
 	return;
 }

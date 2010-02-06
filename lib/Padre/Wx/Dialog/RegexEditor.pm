@@ -366,13 +366,31 @@ sub _modifiers {
 sub show {
 	my $self = shift;
 
-	$self->{regex}->ChangeValue('\w+');
-	$self->{replace}->ChangeValue("Baz");
-	$self->{original_text}->AppendText("Foo Bar");
+	if ( $self->IsShown ) {
+		$self->SetFocus;
+	} else {
+		my $editor = $self->current->editor;
+		if ($editor) {
+			my $selection        = $editor->GetSelectedText;
+			my $selection_length = length $selection;
+			if ( $selection_length > 0 ) {
+				$self->{regex}->ChangeValue($selection);
+			} else {
+				$self->{regex}->ChangeValue('\w+');
+			}
+		} else {
+			$self->{regex}->ChangeValue('\w+');
+		}
+
+		$self->{replace}->ChangeValue("Baz");
+		$self->{original_text}->AppendText("Foo Bar");
+
+		$self->Show;
+	}
 
 	$self->{regex}->SetFocus;
 
-	$self->Show;
+	return;
 }
 
 #
