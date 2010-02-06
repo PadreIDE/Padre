@@ -1586,7 +1586,7 @@ sub event_on_right_down {
 				$editor->main->open_regex_editor;
 			},
 		);
-		
+
 	} # end if something's selected
 }
 

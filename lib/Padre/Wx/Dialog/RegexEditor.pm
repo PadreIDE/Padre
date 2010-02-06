@@ -11,7 +11,7 @@ use Padre::Wx::Role::MainChild ();
 use Padre::Wx::HtmlWindow      ();
 
 # RichTextCtrl
-use Wx::RichText               ();
+use Wx::RichText ();
 
 our $VERSION = '0.56';
 our @ISA     = qw{
@@ -111,25 +111,25 @@ sub _regex_groups {
 		'03' => {
 			label => Wx::gettext('&Miscellaneous'),
 			value => {
-				'00|'   => Wx::gettext('Alternation'),
-				'01[ ]' => Wx::gettext('Character set'),
-				'02^'   => Wx::gettext('Beginning of line'),
-				'03$'   => Wx::gettext('End of line'),
-				'04\b'  => Wx::gettext('A word boundary'),
-				'05\B'  => Wx::gettext('Not a word boundary'),
+				'00|'     => Wx::gettext('Alternation'),
+				'01[ ]'   => Wx::gettext('Character set'),
+				'02^'     => Wx::gettext('Beginning of line'),
+				'03$'     => Wx::gettext('End of line'),
+				'04\b'    => Wx::gettext('A word boundary'),
+				'05\B'    => Wx::gettext('Not a word boundary'),
 				'06(?# )' => Wx::gettext('A comment'),
 			}
 		},
 		'04' => {
 			label => Wx::gettext('&Grouping constructs'),
 			value => {
-				'00( )'   => Wx::gettext('A group'),
-				'01(?: )' => Wx::gettext('Non-capturing group'),
-				'02(?= )' => Wx::gettext('Positive lookahead assertion'),
-				'03(?! )' => Wx::gettext('Negative lookahead assertion'),
-				'04(?< )' => Wx::gettext('Positive lookbehind assertion'),
+				'00( )'    => Wx::gettext('A group'),
+				'01(?: )'  => Wx::gettext('Non-capturing group'),
+				'02(?= )'  => Wx::gettext('Positive lookahead assertion'),
+				'03(?! )'  => Wx::gettext('Negative lookahead assertion'),
+				'04(?< )'  => Wx::gettext('Positive lookbehind assertion'),
 				'05(?<! )' => Wx::gettext('Negative lookbehind assertion'),
-				'06\n'    => Wx::gettext('Backreference to the nth group'),
+				'06\n'     => Wx::gettext('Backreference to the nth group'),
 			}
 		}
 	);
@@ -144,8 +144,7 @@ sub _create_controls {
 	my $regex_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Regular expression:') );
 	$self->{regex} = Wx::RichTextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		Wx::wxRE_MULTILINE | 
-		Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
+		Wx::wxRE_MULTILINE | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Replace regex text field
