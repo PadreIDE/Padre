@@ -20,6 +20,8 @@ Changes for Perl Application Development and Refactoring Environment
       distribution of Foo::Bar this will be lib/Foo/Bar.pm) (ADAMK)
     - Removed the final usage of the "Provider" phrasing, and made more
       of the modules used by the Perl help provider run-time loaded (ADAMK)
+    - Moved padre.exe build from bin to win32-loader folder since bin is a
+      bad location for putting the Padre win32 launcher code (SMUELLER, AZAWAWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
