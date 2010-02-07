@@ -132,8 +132,10 @@ use Class::XSAccessor {
 };
 
 # set up the stdout/stderr printing events
-our $STDOUT_EVENT : shared = Wx::NewEventType();
-our $STDERR_EVENT : shared = Wx::NewEventType();
+our $STDOUT_EVENT : shared;
+BEGIN { $STDOUT_EVENT = Wx::NewEventType(); }
+our $STDERR_EVENT : shared;
+BEGIN { $STDERR_EVENT = Wx::NewEventType(); }
 
 =pod
 
@@ -485,7 +487,8 @@ C<Padre::Task::Example::WxEvent>.
 You can set up a new event ID in your Padre::Task subclass
 like this:
 
-  our $FUN_EVENT_TYPE =  : shared = Wx::NewEventType();
+  our $FUN_EVENT_TYPE : shared;
+  BEGIN { $FUN_EVENT_TYPE = Wx::NewEventType(); }
 
 Then you have to setup the event handler (for example in the
 C<prepare()> method. This should happen in the main thread!

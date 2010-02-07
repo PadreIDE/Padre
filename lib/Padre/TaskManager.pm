@@ -92,17 +92,10 @@ use Class::XSAccessor {
 	}
 };
 
-# This event is triggered by the worker thread main loop after
-# finishing a task.
-our $TASK_DONE_EVENT : shared = Wx::NewEventType;
-
-# This event is triggered by the worker thread main loop before
-# running a task.
-our $TASK_START_EVENT : shared = Wx::NewEventType;
-
 # This event is triggered by a worker thread DURING ->run to incrementally
 # communicate to the main thread over the life of a service.
-our $SERVICE_POLL_EVENT : shared = Wx::NewEventType;
+our $SERVICE_POLL_EVENT : shared;
+BEGIN { $SERVICE_POLL_EVENT = Wx::NewEventType; }
 
 # remember whether the event handlers were initialized...
 our $EVENTS_INITIALIZED = 0;
@@ -128,7 +121,8 @@ sub new {
 		reap_interval  => 15000,
 		@_,
 		workers       => [],
-		task_queue    => undef,
+                # grab a copy of the task_queue that's now handled by the slave driver
+		task_queue    => Padre::SlaveDriver->new()->task_queue,
 		running_tasks => {},
 	}, $class;
 
@@ -140,7 +134,8 @@ sub new {
 	my $main = Padre->ide->wx->main;
 	_init_events($main);
 
-	$self->{task_queue} = Thread::Queue->new;
+        # To be removed: Old task queue instantiation => Padre::SlaveDriver
+	#$self->{task_queue} = Thread::Queue->new;
 
 	# Set up a regular action for reaping dead workers
 	# and setting up new workers
@@ -173,12 +168,12 @@ sub _init_events {
 	unless ($EVENTS_INITIALIZED) {
 		Wx::Event::EVT_COMMAND(
 			$main, -1,
-			$TASK_DONE_EVENT,
+			$Padre::SlaveDriver::TASK_DONE_EVENT,
 			\&on_task_done_event,
 		);
 		Wx::Event::EVT_COMMAND(
 			$main, -1,
-			$TASK_START_EVENT,
+			$Padre::SlaveDriver::TASK_START_EVENT,
 			\&on_task_start_event,
 		);
 		Wx::Event::EVT_COMMAND(
@@ -293,7 +288,9 @@ sub _make_worker_thread {
 	my $main = shift;
 	return unless $self->use_threads;
 
-	@_ = (); # avoid "Scalars leaked"
+
+        # To be removed: Old worker thread cration. => Padre::SlaveDriver
+#	@_ = (); # avoid "Scalars leaked"
 #	my $worker = threads->create(
 #		{ 'exit' => 'thread_only' }, \&worker_loop,
 #		$main, $self->task_queue
@@ -412,13 +409,16 @@ sub cleanup {
 	TRACE('Tell all tasks to stop') if DEBUG;
 	my @workers = $self->workers;
 	$self->task_queue->insert( 0, ("STOP") x scalar(@workers) );
-	while ( threads->list(threads::running) >= 1 ) {
+	while ( threads->list(threads::running) >= 2 ) {
 		$_->join for threads->list(threads::joinable);
 	}
 	foreach my $thread ( threads->list(threads::joinable) ) {
 		TRACE( 'Joining thread ' . $thread->tid ) if DEBUG;
 		$thread->join;
 	}
+
+        # cleanup master thread, too
+        Padre::SlaveDriver->new->cleanup();
 
 	# didn't work the nice way?
 	while ( threads->list(threads::running) >= 1 ) {
