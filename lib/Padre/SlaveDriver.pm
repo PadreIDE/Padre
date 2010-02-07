@@ -73,7 +73,7 @@ SCOPE: {
 			tid_queue  => Thread::Queue->new(),
 			task_queue => Thread::Queue->new(),
 		} => $class;
-                $SlaveDriver->_init_events();
+		$SlaveDriver->_init_events();
 		$SlaveDriver->{master} = threads->create(
 			\&_slave_driver_loop,
 			$SlaveDriver->{cmd_queue},
@@ -89,8 +89,8 @@ SCOPE: {
 
 # done late so that the full Wx has been loaded for sure
 sub _init_events {
-  $TASK_DONE_EVENT = Wx::NewEventType() if not defined $TASK_DONE_EVENT;
-  $TASK_START_EVENT = Wx::NewEventType() if not defined $TASK_START_EVENT;
+	$TASK_DONE_EVENT = Wx::NewEventType() if not defined $TASK_DONE_EVENT;
+	$TASK_START_EVENT = Wx::NewEventType() if not defined $TASK_START_EVENT;
 }
 
 =head2 Object methods
