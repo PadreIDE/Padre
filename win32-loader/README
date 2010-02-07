@@ -7,7 +7,5 @@ This is Padre's win32 launcher. It does the following:
 		with a message.
 	* Runs %padre_exe_path%\wperl.exe %padre_exe_path%\padre.
 
-To compile it, please use compile_padre.bat. You'll ofcourse need Strawberry 
-Perl as it has gcc, strip, and windres out of the box.
-
-padre.exe now lives in Padre/script
+To compile it, simply 'perl Makefile.PL' or 'cpan .' in the parent folder. You'll
+ofcourse need Strawberry Perl as it has gcc and windres out of the box.
