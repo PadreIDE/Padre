@@ -1447,7 +1447,7 @@ sub find_help_topic {
 }
 
 # Individual document classes should override this method.
-# see L<Padre::HelpProvider>
+# see L<Padre::Help>
 sub get_help_provider {
 	return;
 }
