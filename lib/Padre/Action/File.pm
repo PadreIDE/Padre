@@ -126,6 +126,15 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name       => 'file.open_with_default_system_editor',
+		label      => Wx::gettext('Open with Default System Editor'),
+		comment    => Wx::gettext('Opens the file with the default system editor'),
+		menu_event => sub {
+			$_[0]->on_open_with_default_system_editor;
+		},
+	);
+
+	Padre::Action->new(
 		name       => 'file.open_example',
 		label      => Wx::gettext('Open Example'),
 		comment    => Wx::gettext('Browse the directory of the installed examples to open one file'),

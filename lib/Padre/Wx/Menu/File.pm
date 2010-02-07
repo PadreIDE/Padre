@@ -103,6 +103,11 @@ sub new {
 		'file.open_in_file_browser',
 	);
 
+	$self->{open_with_default_system_editor} = $self->add_menu_action(
+		$file_open,
+		'file.open_with_default_system_editor',
+	);
+
 	$self->{open_example} = $self->add_menu_action(
 		$file_open,
 		'file.open_example',

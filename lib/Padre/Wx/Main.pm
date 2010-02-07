@@ -3657,6 +3657,25 @@ sub open_file_dialog {
 	return;
 }
 
+sub on_open_with_default_system_editor {
+	my $self = shift;
+	my $document = $self->current->document or return;
+	my $filename = $document->filename or return;
+
+	if(Padre::Constant::WIN32) {
+		# Win32
+		require Padre::Util::Win32;
+		Padre::Util::Win32::ExecuteProcessAndWait(
+			directory  => $self->{cwd},
+			file       => $document->filename,
+			parameters => '',
+			show       => 1);
+	} else {
+		#TODO please implement for other platforms
+		$self->error(Wx::gettext("Not implemented!"));
+	}
+}
+
 sub on_open_example {
 	$_[0]->open_file_dialog( Padre::Util::sharedir('examples') );
 }
