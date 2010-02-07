@@ -66,10 +66,11 @@ An object is instantiated when the editor object is created.
 
 SCOPE: {
 	my $SlaveDriver;
+
 	sub new {
 		my $class = shift;
 		return $SlaveDriver if defined $SlaveDriver;
-		@_ = ();
+		@_           = ();
 		$SlaveDriver = bless {
 			cmd_queue  => Thread::Queue->new,
 			tid_queue  => Thread::Queue->new,
@@ -110,15 +111,11 @@ Returns a new worker thread object.
 =cut
 
 sub spawn {
-	my $self = shift;
+	my $self         = shift;
 	my $task_manager = shift;
 	require Storable;
-	$self->{cmd_queue}->enqueue(
-		Storable::freeze( [ $task_manager->task_queue ] )
-	);
-	return threads->object(
-		$self->{tid_queue}->dequeue
-	);
+	$self->{cmd_queue}->enqueue( Storable::freeze( [ $task_manager->task_queue ] ) );
+	return threads->object( $self->{tid_queue}->dequeue );
 }
 
 =pod
@@ -149,14 +146,15 @@ on global destruction.
 
 sub cleanup {
 	my $self = shift;
-	if (defined $self->{master} and defined $self->{cmd_queue}) {
+	if ( defined $self->{master} and defined $self->{cmd_queue} ) {
 		$self->{cmd_queue}->enqueue('STOP');
 		require Time::HiRes;
 		Time::HiRes::usleep(5000); # 5 milli-sec
-		if ($self->{master}->is_joinable) {
+		if ( $self->{master}->is_joinable ) {
 			$self->{master}->join;
 		}
 	}
+
 	# TaskManager does handle thread *killing*
 }
 
@@ -167,14 +165,14 @@ sub DESTROY {
 ##########################
 # Worker thread main loop
 sub _worker_loop {
-	my ( $queue ) = @_;
+	my ($queue) = @_;
 	@_ = (); # hack to avoid "Scalars leaked"
 
 	require Storable;
 	require Padre::TaskManager;
 
 	# Set the thread-specific main-window pointer
-	my $main = Padre->ide->wx; 
+	my $main = Padre->ide->wx;
 
 	#warn threads->tid() . " -- Hi, I'm a thread.";
 
@@ -213,9 +211,9 @@ sub _slave_driver_loop {
 
 	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		my $task_queue = Padre::SlaveDriver->new->task_queue;
-		my $worker_thread = threads->create(\&_worker_loop, $task_queue);
-		my $tid = $worker_thread->tid;
+		my $task_queue    = Padre::SlaveDriver->new->task_queue;
+		my $worker_thread = threads->create( \&_worker_loop, $task_queue );
+		my $tid           = $worker_thread->tid;
 		$outqueue->enqueue($tid);
 	}
 	return 1;

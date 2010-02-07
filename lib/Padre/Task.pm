@@ -152,6 +152,7 @@ sub new {
 	}
 	return $self;
 }
+
 =head2 schedule
 
 C<Padre::Task> implements the scheduling logic for your
@@ -164,9 +165,10 @@ Calling this multiple times will submit multiple jobs.
 
 SCOPE: {
 	my $event_hooks_initialized = 0;
+
 	sub schedule {
 		my $self = shift;
-		if (not $event_hooks_initialized) {
+		if ( not $event_hooks_initialized ) {
 			$event_hooks_initialized = 1;
 			my $main = Padre->ide->wx;
 			Wx::Event::EVT_COMMAND(
@@ -427,7 +429,7 @@ sub _on_stdout {
 	my ( $wx, $event ) = @_;
 	@_ = (); # hack to avoid "Scalars leaked"
 	my $main = $wx->main;
-	my $out = $main->output();
+	my $out  = $main->output();
 	$main->show_output(1);
 	$out->style_neutral();
 	$out->AppendText( $event->GetData );
@@ -439,7 +441,7 @@ sub _on_stderr {
 	my ( $wx, $event ) = @_;
 	@_ = (); # hack to avoid "Scalars leaked"
 	my $main = $wx->main;
-	my $out = $main->output();
+	my $out  = $main->output();
 	$main->show_output(1);
 	$out->style_bad();
 	$out->AppendText( $event->GetData );

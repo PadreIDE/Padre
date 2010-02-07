@@ -14,6 +14,7 @@ use threads;         # need to be loaded before Padre
 use threads::shared; # need to be loaded before Padre
 use t::lib::Padre;
 use Padre::Service;
+
 # Create the object so that Padre->ide works
 my $app = Padre->new;
 isa_ok( $app, 'Padre' );

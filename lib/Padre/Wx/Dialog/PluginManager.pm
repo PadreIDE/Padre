@@ -349,10 +349,10 @@ sub show_error_message {
 	my $self    = shift;
 	my $message = $self->{plugin}->errstr;
 	my $title   = Wx::gettext('Error');
-	
+
 	# @INC gets printed out between () remove that for now
 	$message =~ s/\(\@INC.*\)//;
-	
+
 	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTER, $self );
 }
 

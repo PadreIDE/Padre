@@ -117,8 +117,9 @@ sub new {
 		use_threads    => 1,    # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
-		workers       => [],
-                # grab a copy of the task_queue that's now handled by the slave driver
+		workers => [],
+
+		# grab a copy of the task_queue that's now handled by the slave driver
 		task_queue    => Padre::SlaveDriver->new()->task_queue,
 		running_tasks => {},
 	}, $class;
@@ -131,7 +132,7 @@ sub new {
 	my $main = Padre->ide->wx;
 	_init_events($main);
 
-        # To be removed: Old task queue instantiation => Padre::SlaveDriver
+	# To be removed: Old task queue instantiation => Padre::SlaveDriver
 	#$self->{task_queue} = Thread::Queue->new;
 
 	# Set up a regular action for reaping dead workers
@@ -239,11 +240,11 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue($string);
 		$self->task_queue->enqueue("STOP");
-                require Padre::SlaveDriver;
-                no warnings 'once';
-                if (not defined $Padre::SlaveDriver::TASK_DONE_EVENT) {
-                  Padre::SlaveDriver->_init_events();
-                }
+		require Padre::SlaveDriver;
+		no warnings 'once';
+		if ( not defined $Padre::SlaveDriver::TASK_DONE_EVENT ) {
+			Padre::SlaveDriver->_init_events();
+		}
 		Padre::SlaveDriver::_worker_loop( $self->task_queue );
 	}
 
@@ -292,12 +293,12 @@ sub _make_worker_thread {
 	return unless $self->use_threads;
 
 
-        # To be removed: Old worker thread cration. => Padre::SlaveDriver
-#	@_ = (); # avoid "Scalars leaked"
-#	my $worker = threads->create(
-#		{ 'exit' => 'thread_only' }, \&worker_loop,
-#		$main, $self->task_queue
-#	);
+	# To be removed: Old worker thread cration. => Padre::SlaveDriver
+	#	@_ = (); # avoid "Scalars leaked"
+	#	my $worker = threads->create(
+	#		{ 'exit' => 'thread_only' }, \&worker_loop,
+	#		$main, $self->task_queue
+	#	);
 	my $worker = Padre::SlaveDriver->new->spawn($self);
 	die if not ref $worker;
 	push @{ $self->{workers} }, $worker;
@@ -420,8 +421,8 @@ sub cleanup {
 		$thread->join;
 	}
 
-        # cleanup master thread, too
-        Padre::SlaveDriver->new->cleanup();
+	# cleanup master thread, too
+	Padre::SlaveDriver->new->cleanup();
 
 	# didn't work the nice way?
 	while ( threads->list(threads::running) >= 1 ) {
@@ -553,10 +554,10 @@ It simply increments the running task counter.
 
 sub on_task_start_event {
 	my ( $wx, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
-	                                    # TO DO/FIXME:
-	                                    # This should somehow get at the specific TaskManager object
-	                                    # instead of going through the Padre globals!
-	my $main = $wx->main;
+	                                  # TO DO/FIXME:
+	                                  # This should somehow get at the specific TaskManager object
+	                                  # instead of going through the Padre globals!
+	my $main              = $wx->main;
 	my $manager           = Padre->ide->task_manager;
 	my $tid_and_task_type = $event->GetData();
 	my ( $tid, $task_type ) = split /;/, $tid_and_task_type, 2;
