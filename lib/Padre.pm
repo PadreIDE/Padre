@@ -34,7 +34,7 @@ use Padre::DB       ();
 use Padre::Action::Queue;
 
 # Generate faster accessors
-use Class::XSAccessor {
+use Class::XSAccessor 1.05 {
 	getters => {
 		original_cwd   => 'original_cwd',
 		opts           => 'opts',
