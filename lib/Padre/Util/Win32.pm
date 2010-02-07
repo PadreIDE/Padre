@@ -155,10 +155,15 @@ CODE
 
 =head2 C<ExecuteProcessAndWait>
 
-  Padre::Util::Win32::ExecuteProcessAndWait;
+  Padre::Util::Win32::ExecuteProcessAndWait(
+	directory  => $directory,
+	file       => $file,
+	parameters => $parameters,
+	show       => $show)
 
-Execute a background process and wait for it to end
-If you set Show to 0, then you have an invisible command line window on win32!
+Execute a background process named "C<$file> C<$parameters>" with the current
+directory set to C<$directory> and wait for it to end. If you set C<$show> to 0,
+then you have an invisible command line window on win32!
 
 =cut
 
