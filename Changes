@@ -27,6 +27,8 @@ Changes for Perl Application Development and Refactoring Environment
       bad location for putting the Padre win32 launcher code (SMUELLER, AZAWAWI)
     - Added "Open in File Browser" in the File and right-click menu (AZAWAWI)
     - No need to launch a command shell to execute explorer.exe on win32 (AZAWAWI)
+    - Added "Open with Default System Editor" for WIN32 in "File -> Open..."
+      sub-menu (AZAWAWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
