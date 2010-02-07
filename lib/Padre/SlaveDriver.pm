@@ -10,7 +10,7 @@ Padre::SlaveDriver - Padre thread spawner
 
   use Padre::SlaveDriver;
   my $sd = Padre::SlaveDriver->new();
-  my $slave_thread = $sd->spawn($mainWindow, $taskManager);
+  my $slave_thread = $sd->spawn($taskManager);
 
 =head1 DESCRIPTION
 
@@ -92,14 +92,13 @@ SCOPE: {
 
 =head3 spawn
 
-Takes main window and Padre::TaskManager objects as arguments.
+Takes the Padre::TaskManager object as argument.
 Returns a new worker thread object.
 
 =cut
 
 sub spawn {
 	my $self = shift;
-	my $main = shift;
 	my $task_manager = shift;
 	require Storable;
 	$self->{cmd_queue}->enqueue(Storable::freeze([$task_manager->task_queue]));

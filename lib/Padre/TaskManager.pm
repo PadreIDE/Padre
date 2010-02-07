@@ -295,7 +295,7 @@ sub _make_worker_thread {
 #		{ 'exit' => 'thread_only' }, \&worker_loop,
 #		$main, $self->task_queue
 #	);
-	my $worker = Padre::SlaveDriver->new->spawn($main, $self);
+	my $worker = Padre::SlaveDriver->new->spawn($self);
 	die if not ref $worker;
 	push @{ $self->{workers} }, $worker;
 }
