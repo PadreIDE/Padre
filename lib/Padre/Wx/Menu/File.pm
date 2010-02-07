@@ -98,14 +98,14 @@ sub new {
 		'file.open_selection',
 	);
 
-	$self->{open_example} = $self->add_menu_action(
-		$file_open,
-		'file.open_example',
-	);
-
 	$self->{open_in_file_browser} = $self->add_menu_action(
 		$file_open,
 		'file.open_in_file_browser',
+	);
+
+	$self->{open_example} = $self->add_menu_action(
+		$file_open,
+		'file.open_example',
 	);
 
 	$self->{close} = $self->add_menu_action(
