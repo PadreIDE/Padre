@@ -242,6 +242,11 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue($string);
 		$self->task_queue->enqueue("STOP");
+                require Padre::SlaveDriver;
+                no warnings 'once';
+                if (not defined $Padre::SlaveDriver::TASK_DONE_EVENT) {
+                  Padre::SlaveDriver->_init_events();
+                }
 		Padre::SlaveDriver::_worker_loop( $self->task_queue );
 	}
 
