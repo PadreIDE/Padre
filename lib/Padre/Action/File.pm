@@ -128,6 +128,8 @@ sub new {
 	Padre::Action->new(
 		name       => 'file.open_with_default_system_editor',
 		label      => Wx::gettext('Open with Default System Editor'),
+		need_editor => 1,
+		need_file   => 1,
 		comment    => Wx::gettext('Opens the file with the default system editor'),
 		menu_event => sub {
 			$_[0]->on_open_with_default_system_editor;

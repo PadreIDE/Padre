@@ -3660,7 +3660,12 @@ sub open_file_dialog {
 sub on_open_with_default_system_editor {
 	my $self = shift;
 	my $document = $self->current->document or return;
-	my $filename = $document->filename or return;
+	my $filename = $document->filename;
+
+	unless( $filename ) {
+		$self->error( Wx::gettext("No filename") );
+		return;
+	}
 
 	if(Padre::Constant::WIN32) {
 		# Win32

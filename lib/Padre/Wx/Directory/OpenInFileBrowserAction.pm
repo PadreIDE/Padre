@@ -58,8 +58,8 @@ sub open_in_file_browser {
 	my ( $self, $filename ) = @_;
 	my $main = Padre::Current->main;
 
-	if ( not defined $filename ) {
-		Wx::MessageBox( Wx::gettext("No filename"), Wx::gettext('Error'), Wx::wxOK, $main, );
+	unless( $filename ) {
+		$main->error( Wx::gettext("No filename") );
 		return;
 	}
 
