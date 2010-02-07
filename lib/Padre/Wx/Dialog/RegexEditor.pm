@@ -8,7 +8,6 @@ use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::Icon            ();
 use Padre::Wx::Role::MainChild ();
-use Padre::Wx::HtmlWindow      ();
 
 # RichTextCtrl
 use Wx::RichText ();
@@ -170,22 +169,16 @@ sub _create_controls {
 
 	# Matched readonly text field
 	my $matched_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Matched text:') );
-	$self->{matched_text} = Padre::Wx::HtmlWindow->new(
-		$self,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxBORDER_STATIC
+	$self->{matched_text} = Wx::RichTextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Result from replace text field
 	my $result_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Result from replace:') );
-	$self->{result_text} = Padre::Wx::HtmlWindow->new(
-		$self,
-		-1,
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxBORDER_STATIC
+	$self->{result_text} = Wx::RichTextCtrl->new(
+		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		Wx::wxRE_MULTILINE | Wx::wxRE_READONLY | Wx::wxWANTS_CHARS # Otherwise arrows will not work on win32
 	);
 
 	# Modifiers
@@ -456,9 +449,11 @@ sub run {
 	}
 	my $xism = "$start-$end";
 
-	my $matched_html = '';
-	my $result_html  = '';
-
+	$self->{matched_text}->Clear;
+	$self->{result_text}->Clear;
+	
+	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
+	
 	my $match;
 	my $match_start;
 	my $match_end;
@@ -480,14 +475,16 @@ sub run {
 		}
 	};
 	if ($@) {
-		$matched_html .= '<font color="red">' . "Match failure in $regex:  $@" . '</font>';
-		$self->{matched_text}->SetPage($matched_html);
+		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->SetValue(sprintf(Wx::gettext("Match failure in %s:  %s"), $regex, $@));
+		$self->{matched_text}->EndTextColour;
 		return;
 	}
 
 	if ($warning) {
-		$matched_html .= '<font color="red">' . "Match warning in $regex:  $warning" . '</font>';
-		$self->{matched_text}->SetPage($matched_html);
+		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->SetValue(sprintf(Wx::gettext("Match warning in %s:  %s"), $regex, $warning));
+		$self->{matched_text}->EndTextColour;
 		return;
 	}
 
@@ -496,33 +493,36 @@ sub run {
 		my $pos = 0;
 		for my $char (@chars) {
 			if ( $pos == $match_start ) {
-				$matched_html .= '<font color="red"><u>';
+				$self->{matched_text}->BeginTextColour(Wx::wxRED);
 			} elsif ( $pos == $match_end ) {
-				$matched_html .= '</u></font>';
+				$self->{matched_text}->EndTextColour;
 			}
-			$matched_html .= $char;
+			$self->{matched_text}->AppendText($char);
 			$pos++;
 		}
 	} else {
-		$matched_html = Wx::gettext("No match");
+		$self->{matched_text}->BeginTextColour(Wx::wxRED);
+		$self->{matched_text}->SetValue(Wx::gettext("No match"));
+		$self->{matched_text}->EndTextColour;
 	}
 
 	eval { $result_text =~ s{$regex}{$replace}; };
 	if ($@) {
-		$result_html .= '<font color="red">' . "Replace failure in $regex:  $@" . '</font>';
+		$self->{result_text}->BeginTextColour(Wx::wxRED);
+		$self->{result_text}->AppendText("Replace failure in $regex:  $@");
+		$self->{result_text}->EndTextColour;
 		return;
 	}
 
 	if ( defined $result_text ) {
-		$result_html .= $result_text;
+		$self->{result_text}->SetValue($result_text);
 	}
+	
+	$self->{matched_text}->EndTextColour;
 
 	require PPIx::Regexp;
 	my $regexp = PPIx::Regexp->new("/$regex/");
 	$self->{description_text}->SetValue( $self->_dump_regex($regexp) );
-
-	$self->{matched_text}->SetPage($matched_html);
-	$self->{result_text}->SetPage($result_html);
 
 	#	$self->{regex}->Clear;
 	#	my @elements = _parse_regex_elements;
