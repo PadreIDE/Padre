@@ -166,6 +166,7 @@ sub _init_events {
 	my $main = shift;
 	@_ = ();
 	unless ($EVENTS_INITIALIZED) {
+		no warnings 'once';
 		Wx::Event::EVT_COMMAND(
 			$main, -1,
 			$Padre::SlaveDriver::TASK_DONE_EVENT,
