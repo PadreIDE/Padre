@@ -9,7 +9,7 @@ our $VERSION = '0.56';
 # Constructor.
 # No need to override this, just override help_init
 sub new {
-	my $self = bless { }, $_[0];
+	my $self = bless {}, $_[0];
 
 	# Initialize
 	$self->help_init;

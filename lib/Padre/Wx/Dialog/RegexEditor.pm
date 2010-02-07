@@ -416,18 +416,19 @@ sub _dump_regex {
 #
 sub _parse_regex_elements {
 	my ( $parent, $position, @array ) = @_;
-	$position   = 0 unless $position;
-	@array   = () unless @array;
+	$position = 0  unless $position;
+	@array    = () unless @array;
 	my @elements = $parent->elements if $parent->isa('PPIx::Regexp::Node');
 	for my $element (@elements) {
 		my $content = $element->content;
 		next if $content eq '';
 		my $class_name = $element->class;
-		push @array, {
-			element  => $element,
-			offset   => $position,
-			len      => length $content
-		};
+		push @array,
+			{
+			element => $element,
+			offset  => $position,
+			len     => length $content
+			};
 		@array = _parse_regex_elements( $element, $position, @array );
 		$position += length $content;
 	}
@@ -523,22 +524,22 @@ sub run {
 	$self->{matched_text}->SetPage($matched_html);
 	$self->{result_text}->SetPage($result_html);
 
-#	$self->{regex}->Clear;
-#	my @elements = _parse_regex_elements;
-#	for my $element (@elements) {
-#		my $class_name = $element->element->class;
-#		if ($class_name eq 'PPIx::Regexp::Token::CharClass::Simple') {
-#			$self->{regex}->BeginTextColour(Wx::wxRED);
-#		} elsif( $class_name eq 'PPIx::Regexp::Token::Quantifier') {
-#			$self->{regex}->BeginTextColour(Wx::wxBLUE);
-#		} elsif( $class_name eq 'PPIx::Regexp::Token::Operator') {
-#			$self->{regex}->BeginTextColour(Wx::wxLIGHT_GREY);
-#		} elsif( $class_name eq 'PPIx::Regexp::Structure::Capture') {
-#			$self->{regex}->BeginTextColour(Wx::wxCYAN);
-#		}
-#		$self->{regex}->AppendText($element->content);
-#	$self->{regex}->EndTextColour;
-#	}
+	#	$self->{regex}->Clear;
+	#	my @elements = _parse_regex_elements;
+	#	for my $element (@elements) {
+	#		my $class_name = $element->element->class;
+	#		if ($class_name eq 'PPIx::Regexp::Token::CharClass::Simple') {
+	#			$self->{regex}->BeginTextColour(Wx::wxRED);
+	#		} elsif( $class_name eq 'PPIx::Regexp::Token::Quantifier') {
+	#			$self->{regex}->BeginTextColour(Wx::wxBLUE);
+	#		} elsif( $class_name eq 'PPIx::Regexp::Token::Operator') {
+	#			$self->{regex}->BeginTextColour(Wx::wxLIGHT_GREY);
+	#		} elsif( $class_name eq 'PPIx::Regexp::Structure::Capture') {
+	#			$self->{regex}->BeginTextColour(Wx::wxCYAN);
+	#		}
+	#		$self->{regex}->AppendText($element->content);
+	#	$self->{regex}->EndTextColour;
+	#	}
 
 	return;
 }

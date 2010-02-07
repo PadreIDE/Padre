@@ -4,9 +4,9 @@ use 5.008;
 use strict;
 use warnings;
 use Pod::Functions;
-use Cwd              ();
-use Padre::Util      ();
-use Padre::Help      ();
+use Cwd         ();
+use Padre::Util ();
+use Padre::Help ();
 use Padre::Logger;
 
 our $VERSION = '0.56';
@@ -207,12 +207,11 @@ sub help_render {
 	my $topic = shift;
 
 	if ( $self->{perlopref}->{$topic} ) {
+
 		# Yes, it is a Perl 5 Operator
 		require Padre::Pod2HTML;
 		return (
-			Padre::Pod2HTML->pod2html(
-				$self->{perlopref}->{$topic}
-			),
+			Padre::Pod2HTML->pod2html( $self->{perlopref}->{$topic} ),
 			$topic,
 		);
 	}
@@ -255,7 +254,7 @@ sub help_render {
 	my $pod      = Padre::DocBrowser::POD->new;
 	my $doc      = $pod->resolve( $topic, $hints );
 	my $pod_html = $pod->render($doc);
-	if ( $pod_html ) {
+	if ($pod_html) {
 		$html = $pod_html->body;
 
 		# This is needed to make perlfunc and perlvar perldoc

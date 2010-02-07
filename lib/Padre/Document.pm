@@ -680,7 +680,7 @@ sub autoclean {
 }
 
 sub save_file {
-	my $self   = shift;
+	my $self = shift;
 
 	#If padre is run on files that have no project
 	#   I.E Padre foo.pl &

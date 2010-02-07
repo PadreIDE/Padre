@@ -9,7 +9,7 @@ our $VERSION = '0.56';
 # Constructor.
 # No need to override this
 sub new {
-	bless { }, $_[0];
+	bless {}, $_[0];
 }
 
 # Returns the quick fix list
