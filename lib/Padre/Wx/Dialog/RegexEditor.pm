@@ -382,7 +382,7 @@ sub show {
 		}
 
 		$self->{replace}->ChangeValue("Baz");
-		$self->{original_text}->AppendText("Foo Bar");
+		$self->{original_text}->SetValue("Foo Bar");
 
 		$self->Show;
 	}
