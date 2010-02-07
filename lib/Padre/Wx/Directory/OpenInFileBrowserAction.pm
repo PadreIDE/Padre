@@ -68,7 +68,7 @@ sub open_in_file_browser {
 
 		# In windows, simply execute: explorer.exe /select,"$filename"
 		$filename =~ s/\//\\/g;
-		$error = $self->_execute( 'cmd', '/c', 'explorer.exe', "/select,\"$filename\"" );
+		$error = $self->_execute( 'explorer.exe', "/select,\"$filename\"" );
 	} elsif (Padre::Constant::UNIX) {
 		my $parent_folder = File::Basename::dirname($filename);
 		if ( defined $ENV{KDE_FULL_SESSION} ) {
