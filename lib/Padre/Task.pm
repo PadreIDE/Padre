@@ -168,7 +168,7 @@ SCOPE: {
 		my $self = shift;
 		if (not $event_hooks_initialized) {
 			$event_hooks_initialized = 1;
-			my $main = Padre->ide->wx->main;
+			my $main = Padre->ide->wx;
 			Wx::Event::EVT_COMMAND(
 				$main,
 				-1,
@@ -424,8 +424,9 @@ sub _deserialize {
 
 # The main-thread stdout hook
 sub _on_stdout {
-	my ( $main, $event ) = @_;
+	my ( $wx, $event ) = @_;
 	@_ = (); # hack to avoid "Scalars leaked"
+	my $main = $wx->main;
 	my $out = $main->output();
 	$main->show_output(1);
 	$out->style_neutral();
@@ -435,8 +436,9 @@ sub _on_stdout {
 
 # The main-thread stderr hook
 sub _on_stderr {
-	my ( $main, $event ) = @_;
+	my ( $wx, $event ) = @_;
 	@_ = (); # hack to avoid "Scalars leaked"
+	my $main = $wx->main;
 	my $out = $main->output();
 	$main->show_output(1);
 	$out->style_bad();
@@ -531,7 +533,7 @@ sub post_event {
 		unless ( defined $data and length($data) );
 
 	Wx::PostEvent(
-		$Padre::TaskManager::_main,
+		Padre->ide->wx,
 		Wx::PlThreadEvent->new( -1, $eventid, $data ),
 	);
 	return ();

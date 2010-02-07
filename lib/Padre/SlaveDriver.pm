@@ -161,8 +161,7 @@ sub _worker_loop {
 	require Padre::TaskManager;
 
 	# Set the thread-specific main-window pointer
-	my $main = Wx::wxTheApp->GetTopWindow();
-	$Padre::TaskManager::_main = $main;
+	my $main = Padre->ide->wx; 
 
 	#warn threads->tid() . " -- Hi, I'm a thread.";
 

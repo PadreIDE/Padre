@@ -131,7 +131,7 @@ sub new {
 		$self->{use_threads} = 0;
 	}
 
-	my $main = Padre->ide->wx->main;
+	my $main = Padre->ide->wx;
 	_init_events($main);
 
         # To be removed: Old task queue instantiation => Padre::SlaveDriver
@@ -555,10 +555,11 @@ It simply increments the running task counter.
 =cut
 
 sub on_task_start_event {
-	my ( $main, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ( $wx, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
 	                                    # TO DO/FIXME:
 	                                    # This should somehow get at the specific TaskManager object
 	                                    # instead of going through the Padre globals!
+	my $main = $wx->main;
 	my $manager           = Padre->ide->task_manager;
 	my $tid_and_task_type = $event->GetData();
 	my ( $tid, $task_type ) = split /;/, $tid_and_task_type, 2;
