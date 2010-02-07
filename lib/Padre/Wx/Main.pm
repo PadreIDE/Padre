@@ -3657,6 +3657,16 @@ sub open_file_dialog {
 	return;
 }
 
+=pod
+
+=head3 C<on_open_with_default_system_editor>
+
+    $main->on_open_with_default_system_editor;
+
+Opens the current document in the default system editor
+
+=cut
+
 sub on_open_with_default_system_editor {
 	my $self = shift;
 	my $document = $self->current->document or return;
@@ -3681,6 +3691,16 @@ sub on_open_with_default_system_editor {
 	}
 }
 
+=pod
+
+=head3 C<on_open_example>
+
+    $main->on_open_example;
+
+Opens the examples file dialog
+
+=cut
+
 sub on_open_example {
 	$_[0]->open_file_dialog( Padre::Util::sharedir('examples') );
 }
@@ -3689,7 +3709,7 @@ sub on_open_example {
 
 =head3 C<reload_all>
 
-    my $success = $main->reload_all();
+    my $success = $main->reload_all;
 
 Reload all open files from disk.
 
