@@ -238,6 +238,7 @@ sub build_padre_exe {
 	
 	print "Building padre.exe\n";
 
+	# source folder
 	my $src = "win32-loader";
 
 	# Create the blib/bin folder
@@ -245,7 +246,6 @@ sub build_padre_exe {
 
 	# Step 1: Make sure we do not have old files
 	unlink "$src/padre-rc.o" if -f "$src/padre-rc.o";
-	unlink "$src/padre.exe"  if -f "blib/bin/padre.exe";
 
 	# Step 2: Build Padre's win32 resource using windres
 	system qq[cd $src && windres padre-rc.rc padre-rc.o];
