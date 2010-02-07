@@ -37,7 +37,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.54';
+our $VERSION = '0.56';
 
 # According to Wx docs,
 # this MUST be loaded before Wx,
@@ -54,6 +54,8 @@ our $TASK_DONE_EVENT : shared;
 # running a task.
 our $TASK_START_EVENT : shared;
 
+=pod
+
 =head3 C<new>
 
 The constructor returns a C<Padre::SlaveDriver> object.
@@ -69,11 +71,11 @@ SCOPE: {
 		return $SlaveDriver if defined $SlaveDriver;
 		@_ = ();
 		$SlaveDriver = bless {
-			cmd_queue  => Thread::Queue->new(),
-			tid_queue  => Thread::Queue->new(),
-			task_queue => Thread::Queue->new(),
+			cmd_queue  => Thread::Queue->new,
+			tid_queue  => Thread::Queue->new,
+			task_queue => Thread::Queue->new,
 		} => $class;
-		$SlaveDriver->_init_events();
+		$SlaveDriver->_init_events;
 		$SlaveDriver->{master} = threads->create(
 			\&_slave_driver_loop,
 			$SlaveDriver->{cmd_queue},
@@ -83,15 +85,20 @@ SCOPE: {
 	}
 
 	END {
-		$SlaveDriver->cleanup(), undef $SlaveDriver if defined $SlaveDriver;
+		if ( defined $SlaveDriver ) {
+			$SlaveDriver->cleanup;
+			undef $SlaveDriver;
+		}
 	}
 }
 
 # done late so that the full Wx has been loaded for sure
 sub _init_events {
-	$TASK_DONE_EVENT = Wx::NewEventType() if not defined $TASK_DONE_EVENT;
+	$TASK_DONE_EVENT  = Wx::NewEventType() if not defined $TASK_DONE_EVENT;
 	$TASK_START_EVENT = Wx::NewEventType() if not defined $TASK_START_EVENT;
 }
+
+=pod
 
 =head2 Object methods
 
@@ -106,11 +113,15 @@ sub spawn {
 	my $self = shift;
 	my $task_manager = shift;
 	require Storable;
-	$self->{cmd_queue}->enqueue(Storable::freeze([$task_manager->task_queue]));
-	my $tid = $self->{tid_queue}->dequeue();
-	return threads->object($tid);
+	$self->{cmd_queue}->enqueue(
+		Storable::freeze( [ $task_manager->task_queue ] )
+	);
+	return threads->object(
+		$self->{tid_queue}->dequeue
+	);
 }
 
+=pod
 
 =head3 task_queue
 
@@ -124,9 +135,10 @@ early for passing to the master thread.
 =cut
 
 sub task_queue {
-	my $self = shift;
-	return $self->{task_queue};
+	$_[0]->{task_queue};
 }
+
+=pod
 
 =head3 cleanup
 
@@ -149,14 +161,15 @@ sub cleanup {
 }
 
 sub DESTROY {
-	my $self = shift;
-	$self->cleanup();
+	$_[0]->cleanup;
 }
 
 ##########################
 # Worker thread main loop
 sub _worker_loop {
-	my ( $queue ) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ( $queue ) = @_;
+	@_ = (); # hack to avoid "Scalars leaked"
+
 	require Storable;
 	require Padre::TaskManager;
 
@@ -194,16 +207,15 @@ sub _worker_loop {
 
 }
 
-
 sub _slave_driver_loop {
-	my ( $inqueue, $outqueue ) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ( $inqueue, $outqueue ) = @_;
+	@_ = (); # hack to avoid "Scalars leaked"
 
 	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		
 		my $task_queue = Padre::SlaveDriver->new->task_queue;
 		my $worker_thread = threads->create(\&_worker_loop, $task_queue);
-		my $tid = $worker_thread->tid();
+		my $tid = $worker_thread->tid;
 		$outqueue->enqueue($tid);
 	}
 	return 1;
