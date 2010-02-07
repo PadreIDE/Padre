@@ -81,6 +81,7 @@ use Padre::Task    ();
 use Padre::Service ();
 use Padre::Wx      ();
 use Padre::Logger;
+require Padre::SlaveDriver;
 
 use Class::XSAccessor {
 	getters => {
@@ -245,7 +246,7 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue($string);
 		$self->task_queue->enqueue("STOP");
-		worker_loop( Padre->ide->wx->main, $self->task_queue );
+		Padre::SlaveDriver::worker_loop( Padre->ide->wx->main, $self->task_queue );
 	}
 
 	return 1;
@@ -293,10 +294,12 @@ sub _make_worker_thread {
 	return unless $self->use_threads;
 
 	@_ = (); # avoid "Scalars leaked"
-	my $worker = threads->create(
-		{ 'exit' => 'thread_only' }, \&worker_loop,
-		$main, $self->task_queue
-	);
+#	my $worker = threads->create(
+#		{ 'exit' => 'thread_only' }, \&worker_loop,
+#		$main, $self->task_queue
+#	);
+	my $worker = Padre::SlaveDriver->new->spawn($main, $self);
+	die if not ref $worker;
 	push @{ $self->{workers} }, $worker;
 }
 
@@ -624,47 +627,6 @@ sub on_dump_running_tasks {
 	}
 }
 
-##########################
-# Worker thread main loop
-sub worker_loop {
-	my ( $main, $queue ) = @_; @_ = (); # hack to avoid "Scalars leaked"
-	require Storable;
-
-	# Set the thread-specific main-window pointer
-	$_main = $main;
-
-	#warn threads->tid() . " -- Hi, I'm a thread.";
-
-	while ( my $frozen_task = $queue->dequeue ) {
-
-		#warn threads->tid() . " -- got task.";
-
-		#warn("THREAD TERMINATING"), return 1 if not ref($task) and $task eq 'STOP';
-		return 1 if not ref($frozen_task) and $frozen_task eq 'STOP';
-
-		my $task = Padre::Task->deserialize( \$frozen_task );
-		$task->{__thread_id} = threads->tid();
-
-		my $thread_start_event =
-			Wx::PlThreadEvent->new( -1, $TASK_START_EVENT, $task->{__thread_id} . ";" . ref($task) );
-		Wx::PostEvent( $main, $thread_start_event );
-
-		# RUN
-		$task->run;
-
-		# FREEZE THE PROCESS AND PASS IT BACK
-		undef $frozen_task;
-		$task->serialize( \$frozen_task );
-
-		my $thread_done_event = Wx::PlThreadEvent->new( -1, $TASK_DONE_EVENT, $frozen_task );
-		Wx::PostEvent( $main, $thread_done_event );
-
-		#warn threads->tid() . " -- done with task.";
-	}
-
-	# clean up
-	undef $_main;
-}
 
 1;
 
