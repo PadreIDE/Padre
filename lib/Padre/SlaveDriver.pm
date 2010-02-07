@@ -192,8 +192,6 @@ sub _worker_loop {
 		#warn threads->tid() . " -- done with task.";
 	}
 
-	# clean up
-	undef $Padre::TaskManager::_main;
 }
 
 

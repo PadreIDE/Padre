@@ -106,9 +106,6 @@ our $REAP_TIMER;
 # You can instantiate this class only once.
 our $SINGLETON;
 
-# This is set in the worker threads only!
-our $_main;
-
 sub new {
 	my $class = shift;
 
