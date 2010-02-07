@@ -1,6 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.57 To Be Released
+    - Spawn a master thread very early in the startup process. Use that
+      master to create worker threads as necessary. Cuts down on memory
+      usage and fixes the "Leaked Scalars" warning (BRAMBLE, SMUELLER)
     - Fix pluginmanager error dialog for plugin-event failure (BRAMBLE)
     - Add status messages for Padre::File operations (SEWI)
     - Select some files to close (SEWI)
