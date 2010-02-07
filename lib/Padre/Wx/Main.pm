@@ -2216,6 +2216,22 @@ sub on_run_this_test {
 
 =pod
 
+=head3 C<on_open_in_file_browser>
+
+    $main->on_open_in_file_browser( $filename );
+
+Opens the current C<$filename> using the operating system's file browser
+
+=cut
+sub on_open_in_file_browser {
+	my ($self, $filename) = @_;
+
+	require Padre::Wx::Directory::OpenInFileBrowserAction;
+	Padre::Wx::Directory::OpenInFileBrowserAction->new->open_in_file_browser($filename);
+}
+
+=pod
+
 =head3 C<run_command>
 
     $main->run_command( $command );

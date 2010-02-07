@@ -103,6 +103,11 @@ sub new {
 		'file.open_example',
 	);
 
+	$self->{open_in_file_browser} = $self->add_menu_action(
+		$file_open,
+		'file.open_in_file_browser',
+	);
+
 	$self->{close} = $self->add_menu_action(
 		$self,
 		'file.close',

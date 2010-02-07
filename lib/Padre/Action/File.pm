@@ -102,6 +102,18 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name         => 'file.open_in_file_browser',
+		need_editor  => 1,
+		need_file    => 1,
+		label      => Wx::gettext('Open in File Browser'),
+		comment    => Wx::gettext('Opens the current document using the file browser'),
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			$_[0]->on_open_in_file_browser($document->filename);
+		},
+	);
+
+	Padre::Action->new(
 		name    => 'file.openurl',
 		label   => Wx::gettext('Open &URL...'),
 		comment => Wx::gettext('Open a file from a remote location'),
