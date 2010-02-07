@@ -238,21 +238,26 @@ sub build_padre_exe {
 	
 	print "Building padre.exe\n";
 
+	my $src = "win32-loader";
+
 	# Create the blib/bin folder
 	system $^X , qw[-MExtUtils::Command -e mkpath --], qw[ blib/bin ];
 
 	# Step 1: Make sure we do not have old files
-	unlink "padre-rc.o" if -f "padre-rc.o";
-	unlink "padre.exe"  if -f "blib/bin/padre.exe";
+	unlink "$src/padre-rc.o" if -f "$src/padre-rc.o";
+	unlink "$src/padre.exe"  if -f "blib/bin/padre.exe";
 
 	# Step 2: Build Padre's win32 resource using windres
-	system qw[cd bin && windres padre-rc.rc padre-rc.o];
+	system qq[cd $src && windres padre-rc.rc padre-rc.o];
 
 	# Step 3: Build padre.exe using gcc
-	system "cd bin && gcc -Wall -Os -mwin32 -mwindows -Wl,-s padre.c padre-rc.o -o ../blib/bin/padre.exe";
+	system "cd $src && gcc -Wall -Os -mwin32 -mwindows -Wl,-s padre.c padre-rc.o -o ../blib/bin/padre.exe";
+
+	# Remove temporary file
+	unlink "$src/padre-rc.o" if -f "$src/padre-rc.o";
 
 	# Step 4: Install XP manifest to get a themed Padre
-	system $^X , qw[-MExtUtils::Command -e cp --], qw[ bin/wperl.exe.manifest blib/bin/wperl.exe.manifest ];
+	system $^X , qw[-MExtUtils::Command -e cp --], qw[ $src/wperl.exe.manifest blib/bin/wperl.exe.manifest ];
 }
 
 1;
