@@ -451,9 +451,9 @@ sub run {
 
 	$self->{matched_text}->Clear;
 	$self->{result_text}->Clear;
-	
+
 	$self->{matched_text}->BeginTextColour(Wx::wxBLACK);
-	
+
 	my $match;
 	my $match_start;
 	my $match_end;
@@ -476,14 +476,14 @@ sub run {
 	};
 	if ($@) {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
-		$self->{matched_text}->SetValue(sprintf(Wx::gettext("Match failure in %s:  %s"), $regex, $@));
+		$self->{matched_text}->SetValue( sprintf( Wx::gettext("Match failure in %s:  %s"), $regex, $@ ) );
 		$self->{matched_text}->EndTextColour;
 		return;
 	}
 
 	if ($warning) {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
-		$self->{matched_text}->SetValue(sprintf(Wx::gettext("Match warning in %s:  %s"), $regex, $warning));
+		$self->{matched_text}->SetValue( sprintf( Wx::gettext("Match warning in %s:  %s"), $regex, $warning ) );
 		$self->{matched_text}->EndTextColour;
 		return;
 	}
@@ -502,7 +502,7 @@ sub run {
 		}
 	} else {
 		$self->{matched_text}->BeginTextColour(Wx::wxRED);
-		$self->{matched_text}->SetValue(Wx::gettext("No match"));
+		$self->{matched_text}->SetValue( Wx::gettext("No match") );
 		$self->{matched_text}->EndTextColour;
 	}
 
@@ -517,7 +517,7 @@ sub run {
 	if ( defined $result_text ) {
 		$self->{result_text}->SetValue($result_text);
 	}
-	
+
 	$self->{matched_text}->EndTextColour;
 
 	require PPIx::Regexp;
