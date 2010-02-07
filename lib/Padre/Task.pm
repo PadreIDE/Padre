@@ -115,6 +115,10 @@ use Params::Util '_INSTANCE';
 
 our $VERSION = '0.56';
 
+# set up the stdout/stderr printing events => initialized during run time
+our $STDOUT_EVENT : shared;
+our $STDERR_EVENT : shared;
+
 # TO DO: Why are there require?
 require Padre;
 require Padre::Wx;
@@ -128,14 +132,6 @@ BEGIN {
 	}
 }
 
-use Class::XSAccessor {
-	constructor => 'new',
-};
-
-# set up the stdout/stderr printing events => initialized during run time
-our $STDOUT_EVENT : shared;
-our $STDERR_EVENT : shared;
-
 =pod
 
 =head2 new
@@ -144,6 +140,18 @@ C<Padre::Task> provides a basic constructor for you to
 inherit. It simply stores all provided data in the internal
 hash reference.
 
+=cut
+
+
+sub new {
+	my $class = shift;
+	my $self = bless {@_} => $class;
+	if ( not defined $STDOUT_EVENT ) {
+		$STDOUT_EVENT = Wx::NewEventType();
+		$STDERR_EVENT = Wx::NewEventType();
+	}
+	return $self;
+}
 =head2 schedule
 
 C<Padre::Task> implements the scheduling logic for your
@@ -154,26 +162,28 @@ Calling this multiple times will submit multiple jobs.
 
 =cut
 
-sub schedule {
-	my $self = shift;
-	if ( not defined $STDOUT_EVENT ) {
-		$STDOUT_EVENT = Wx::NewEventType();
-		$STDERR_EVENT = Wx::NewEventType();
-		my $main = Padre->ide->wx->main;
-		Wx::Event::EVT_COMMAND(
-			$main,
-			-1,
-			$STDOUT_EVENT,
-			\&_on_stdout,
-		);
-		Wx::Event::EVT_COMMAND(
-			$main,
-			-1,
-			$STDERR_EVENT,
-			\&_on_stderr,
-		);
+SCOPE: {
+	my $event_hooks_initialized = 0;
+	sub schedule {
+		my $self = shift;
+		if (not $event_hooks_initialized) {
+			$event_hooks_initialized = 1;
+			my $main = Padre->ide->wx->main;
+			Wx::Event::EVT_COMMAND(
+				$main,
+				-1,
+				$STDOUT_EVENT,
+				\&_on_stdout,
+			);
+			Wx::Event::EVT_COMMAND(
+				$main,
+				-1,
+				$STDERR_EVENT,
+				\&_on_stderr,
+			);
+		}
+		Padre->ide->task_manager->schedule($self);
 	}
-	Padre->ide->task_manager->schedule($self);
 }
 
 =pod
