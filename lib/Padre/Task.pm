@@ -118,6 +118,7 @@ our $VERSION = '0.56';
 # TO DO: Why are there require?
 require Padre;
 require Padre::Wx;
+require Wx;
 
 BEGIN {
 
@@ -131,11 +132,9 @@ use Class::XSAccessor {
 	constructor => 'new',
 };
 
-# set up the stdout/stderr printing events
+# set up the stdout/stderr printing events => initialized during run time
 our $STDOUT_EVENT : shared;
-BEGIN { $STDOUT_EVENT = Wx::NewEventType(); }
 our $STDERR_EVENT : shared;
-BEGIN { $STDERR_EVENT = Wx::NewEventType(); }
 
 =pod
 
@@ -155,29 +154,26 @@ Calling this multiple times will submit multiple jobs.
 
 =cut
 
-SCOPE: {
-	my $events_initialized = 0;
-
-	sub schedule {
-		my $self = shift;
-		if ( !$events_initialized ) {
-			my $main = Padre->ide->wx->main;
-			Wx::Event::EVT_COMMAND(
-				$main,
-				-1,
-				$STDOUT_EVENT,
-				\&_on_stdout,
-			);
-			Wx::Event::EVT_COMMAND(
-				$main,
-				-1,
-				$STDERR_EVENT,
-				\&_on_stderr,
-			);
-			$events_initialized = 1;
-		}
-		Padre->ide->task_manager->schedule($self);
+sub schedule {
+	my $self = shift;
+	if ( not defined $STDOUT_EVENT ) {
+		$STDOUT_EVENT = Wx::NewEventType();
+		$STDERR_EVENT = Wx::NewEventType();
+		my $main = Padre->ide->wx->main;
+		Wx::Event::EVT_COMMAND(
+			$main,
+			-1,
+			$STDOUT_EVENT,
+			\&_on_stdout,
+		);
+		Wx::Event::EVT_COMMAND(
+			$main,
+			-1,
+			$STDERR_EVENT,
+			\&_on_stderr,
+		);
 	}
+	Padre->ide->task_manager->schedule($self);
 }
 
 =pod
