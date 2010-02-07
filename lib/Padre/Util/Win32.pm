@@ -39,12 +39,15 @@ our $VERSION = '0.56';
 
 my %Types = ();
 
-#
-# Converts the specified path to its long form.
-#
-# Needs a path string
-# Returns undef for failure, or the long form of the specified path
-#
+=head2 C<GetLongPathName>
+
+  Padre::Util::Win32::GetLongPathName($path);
+
+Converts the specified path C<$path> to its long form.
+Returns undef for failure, or the long form of the specified path
+
+=cut
+
 sub GetLongPathName {
 
 	# Only for win32
@@ -68,11 +71,15 @@ CODE
 	return $length ? substr( $buf, 0, $length ) : undef;
 }
 
-#
-# Move to recycle bin
-#
-# Returns undef (failed), zero (aborted) or one (success)
-#
+=head2 C<Recycle>
+
+  Padre::Util::Win32::Recycle($file_to_recycle);
+
+Move C<$file_to_recycle> to recycle bin
+Returns undef (failed), zero (aborted) or one (success)
+
+=cut
+
 sub Recycle {
 
 	# Only for win32
@@ -117,6 +124,17 @@ sub Recycle {
 	return 1;
 }
 
+=head2 C<AllowSetForegroundWindow>
+
+  Padre::Util::Win32::AllowSetForegroundWindow($pid);
+
+Enables the specified process C<$pid> to set the foreground window
+via C<SetForegroundWindow>
+
+L<http://msdn.microsoft.com/en-us/library/ms633539(VS.85).aspx>
+
+=cut
+
 #
 # Enables the specified process to set the foreground window
 # via SetForegroundWindow
@@ -135,10 +153,15 @@ CODE
 	return $func->Call($pid);
 }
 
-#
-# Execute a background process and wait for it to end
-# If you set Show to 0, then you have an invisible command line window on win32!
-#
+=head2 C<ExecuteProcessAndWait>
+
+  Padre::Util::Win32::ExecuteProcessAndWait;
+
+Execute a background process and wait for it to end
+If you set Show to 0, then you have an invisible command line window on win32!
+
+=cut
+
 sub ExecuteProcessAndWait {
 	die "Win32 function called!" unless Padre::Constant::WIN32;
 
@@ -211,9 +234,14 @@ CODE
 	return 0;
 }
 
-#
-# Retrieves the current process memory size in bytes
-#
+=head2 C<GetCurrentProcessMemorySize>
+
+  Padre::Util::Win32::GetCurrentProcessMemorySize;
+
+Returns the current process memory size in bytes
+
+=cut
+
 sub GetCurrentProcessMemorySize {
 
 	# Retrieves the current process handle
