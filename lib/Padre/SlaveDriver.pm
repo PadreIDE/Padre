@@ -49,12 +49,10 @@ use Thread::Queue 2.11;
 # This event is triggered by the worker thread main loop after
 # finishing a task.
 our $TASK_DONE_EVENT : shared;
-BEGIN { $TASK_DONE_EVENT = Wx::NewEventType; }
 
 # This event is triggered by the worker thread main loop before
 # running a task.
 our $TASK_START_EVENT : shared;
-BEGIN { $TASK_START_EVENT = Wx::NewEventType; }
 
 =head3 C<new>
 
@@ -75,6 +73,7 @@ SCOPE: {
 			tid_queue  => Thread::Queue->new(),
 			task_queue => Thread::Queue->new(),
 		} => $class;
+                $SlaveDriver->_init_events();
 		$SlaveDriver->{master} = threads->create(
 			\&_slave_driver_loop,
 			$SlaveDriver->{cmd_queue},
@@ -86,6 +85,12 @@ SCOPE: {
 	END {
 		$SlaveDriver->cleanup(), undef $SlaveDriver if defined $SlaveDriver;
 	}
+}
+
+# done late so that the full Wx has been loaded for sure
+sub _init_events {
+  $TASK_DONE_EVENT = Wx::NewEventType() if not defined $TASK_DONE_EVENT;
+  $TASK_START_EVENT = Wx::NewEventType() if not defined $TASK_START_EVENT;
 }
 
 =head2 Object methods
