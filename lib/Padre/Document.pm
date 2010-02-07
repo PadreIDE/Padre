@@ -681,10 +681,16 @@ sub autoclean {
 
 sub save_file {
 	my $self   = shift;
-	my $config = $self->project->config;
+
+	#If padre is run on files that have no project
+	#   I.E Padre foo.pl &
+	#   The assumption of $self->project as defined will cause a fail
+	#   Please be more careful mkkkay!
+
+	my $config = $self->project->config if $self->project;
 	$self->set_errstr('');
 
-	$self->autoclean if $config->save_autoclean;
+	$self->autoclean if $config && $config->save_autoclean;
 
 	my $content = $self->text_get;
 	my $file    = $self->file;
