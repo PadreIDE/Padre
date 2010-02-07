@@ -318,6 +318,17 @@ sub get_command {
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
+	
+	# (Ticket #845) if Padre folder/script.pl is called filename has folder/ in it so we check for that
+
+	if( $filename =~ /\\|\//)
+	{
+	my @file_name = split /\\|\//, $filename;
+	$filename = $file_name[$#file_name];
+	}
+
+
+
 	return $debug
 		? qq{"$perl" -Mdiagnostics(-traceonly) $run_args{interpreter} "$filename"$Script_Args}
 		: qq{"$perl" $run_args{interpreter} "$filename"$Script_Args};

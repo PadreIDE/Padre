@@ -2389,7 +2389,12 @@ sub run_document {
 		if ( $document->pre_process ) {
 			SCOPE: {
 				require File::pushd;
-				my $pushd = File::pushd::pushd( $document->project_dir );
+				# Ticket #845 this project_dir is created in correctly when you do padre somedir/script.pl and run F5 on that
+				# real stupid think so we don't crash
+				# to fix this $document->get_command needs to recognize which folder it is in
+				# The other part of this fix is in lib/Padre/Document/Perl.pm in get_command
+				# Please feel free to fix this
+				my $pushd = File::pushd::pushd( $document->project_dir) if -e $document->project_dir;
 				$self->run_command($cmd);
 			}
 		} else {
@@ -2403,7 +2408,7 @@ sub run_document {
 			if ( $ret == Wx::wxYES ) {
 				SCOPE: {
 					require File::pushd;
-					my $pushd = File::pushd::pushd( $document->project_dir );
+					my $pushd = File::pushd::pushd( $document->project_dir ) if -e  $document->project_dir;
 					$self->run_command($cmd);
 				}
 			}
