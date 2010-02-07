@@ -242,7 +242,7 @@ sub schedule {
 		# as a non-threading, non-queued, fake worker loop
 		$self->task_queue->enqueue($string);
 		$self->task_queue->enqueue("STOP");
-		Padre::SlaveDriver::worker_loop( Padre->ide->wx->main, $self->task_queue );
+		Padre::SlaveDriver::_worker_loop( $self->task_queue );
 	}
 
 	return 1;
