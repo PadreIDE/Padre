@@ -102,14 +102,14 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name         => 'file.open_in_file_browser',
-		need_editor  => 1,
-		need_file    => 1,
-		label      => Wx::gettext('Open in File Browser'),
-		comment    => Wx::gettext('Opens the current document using the file browser'),
-		menu_event => sub {
+		name        => 'file.open_in_file_browser',
+		need_editor => 1,
+		need_file   => 1,
+		label       => Wx::gettext('Open in File Browser'),
+		comment     => Wx::gettext('Opens the current document using the file browser'),
+		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
-			$_[0]->on_open_in_file_browser($document->filename);
+			$_[0]->on_open_in_file_browser( $document->filename );
 		},
 	);
 

@@ -2223,8 +2223,9 @@ sub on_run_this_test {
 Opens the current C<$filename> using the operating system's file browser
 
 =cut
+
 sub on_open_in_file_browser {
-	my ($self, $filename) = @_;
+	my ( $self, $filename ) = @_;
 
 	require Padre::Wx::Directory::OpenInFileBrowserAction;
 	Padre::Wx::Directory::OpenInFileBrowserAction->new->open_in_file_browser($filename);

@@ -737,7 +737,7 @@ sub _on_tree_item_menu {
 		$self,
 		$menu->Append( -1, Wx::gettext('Open in File Browser') ),
 		sub {
-			$_[0]->main->on_open_in_file_browser( $selected_path );
+			$_[0]->main->on_open_in_file_browser($selected_path);
 		}
 	);
 
