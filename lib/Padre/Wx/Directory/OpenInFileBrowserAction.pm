@@ -1,5 +1,20 @@
 package Padre::Wx::Directory::OpenInFileBrowserAction;
 
+=head1 NAME
+
+Padre::Wx::Directory::OpenInFileBrowserAction - Open in file browser action
+
+=head1 DESCRIPTION
+
+For the current saved Padre document, open the platform's file manager/browser and
+tries to select it if possible. On win32, opens the containing folder and
+selects the file in its explorer. On Linux KDE/GNOME, opens the containing folder
+for it.
+
+=head1 FUNCTIONS
+
+=cut
+
 use 5.008;
 use strict;
 use warnings;
@@ -50,11 +65,16 @@ sub _execute {
 	return $result;
 }
 
-#
-# Opens the provided filename in the File browser:
-# On win32, selects it in Windows Explorer
-# On linux, opens the containing folder for it
-#
+=head2 C<open_in_file_browser>
+
+  $action->open_in_file_browser($filename);
+
+Opens the provided C<$filename> in the file browser
+On win32, selects it in Windows Explorer
+On UNIX, opens the containing folder for it using either KDE or GNOME
+
+=cut
+
 sub open_in_file_browser {
 	my ( $self, $filename ) = @_;
 	my $main = Padre::Current->main;
@@ -86,9 +106,14 @@ sub open_in_file_browser {
 	return;
 }
 
-#
-# Open with default system editor
-#
+=head2 C<open_with_default_system_editor>
+
+  $action->open_in_file_browser($filename);
+
+Opens the provided C<$filename> using the default system editor
+
+=cut
+
 sub open_with_default_system_editor {
 	my ( $self, $filename ) = @_;
 
@@ -127,7 +152,7 @@ sub open_with_default_system_editor {
 }
 
 #
-# Try to execute a file in KDE or GNOME
+# Private method to execute a file in KDE or GNOME
 #
 sub _execute_unix {
 	die "Only to be called in UNIX!" unless Padre::Constant::UNIX;
@@ -154,22 +179,7 @@ sub _execute_unix {
 
 __END__
 
-=head1 NAME
-
-Padre::Wx::Directory::OpenInFileBrowserAction - Open in file browser action
-
-=head1 DESCRIPTION
-
-=head2 Open in File Browser
-
-For the current saved Padre document, open the platform's file manager/browser and
-tries to select it if possible. On win32, opens the containing folder and
-selects the file in its explorer. On Linux KDE/GNOME, opens the containing folder
-for it.
-
-=head1 AUTHOR
-
-Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
+=pod
 
 =head1 COPYRIGHT & LICENSE
 
