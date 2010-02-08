@@ -29,7 +29,7 @@ sub _execute {
 
 		# On Windows, if we don't have STDIN/STDOUT, avoid IPC::Open3
 		# because it crashes when launching a non-console app
-		if ( $^O =~ /MSWin/i ) {
+		if ( Padre::Constant::WIN32 ) {
 			system( $cmd, @cmd_args ); # we know that Explorer.exe will quit quickly
 		} else {
 			require IPC::Open2;
