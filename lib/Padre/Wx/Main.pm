@@ -3666,34 +3666,17 @@ sub open_file_dialog {
 
 =head3 C<on_open_with_default_system_editor>
 
-    $main->on_open_with_default_system_editor;
+    $main->on_open_with_default_system_editor($filename);
 
-Opens the current document in the default system editor
+Opens C<$filename> in the default system editor
 
 =cut
 
 sub on_open_with_default_system_editor {
-	my $self = shift;
-	my $document = $self->current->document or return;
-	my $filename = $document->filename;
+	my ( $self, $filename ) = @_;
 
-	unless( $filename ) {
-		$self->error( Wx::gettext("No filename") );
-		return;
-	}
-
-	if(Padre::Constant::WIN32) {
-		# Win32
-		require Padre::Util::Win32;
-		Padre::Util::Win32::ExecuteProcessAndWait(
-			directory  => $self->{cwd},
-			file       => $document->filename,
-			parameters => '',
-			show       => 1);
-	} else {
-		#TODO please implement for other platforms
-		$self->error(Wx::gettext("Not implemented!"));
-	}
+	require Padre::Wx::Directory::OpenInFileBrowserAction;
+	Padre::Wx::Directory::OpenInFileBrowserAction->new->open_with_default_system_editor($filename);
 }
 
 =pod

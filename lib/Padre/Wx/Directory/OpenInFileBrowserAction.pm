@@ -63,7 +63,7 @@ sub open_in_file_browser {
 		return;
 	}
 
-	my $error = undef;
+	my $error;
 	if (Padre::Constant::WIN32) {
 
 		# In windows, simply execute: explorer.exe /select,"$filename"
@@ -71,28 +71,78 @@ sub open_in_file_browser {
 		$error = $self->_execute( 'explorer.exe', "/select,\"$filename\"" );
 	} elsif (Padre::Constant::UNIX) {
 		my $parent_folder = File::Basename::dirname($filename);
-		if ( defined $ENV{KDE_FULL_SESSION} ) {
-
-			# In KDE, execute: kfmclient exec $filename
-			$error = $self->_execute( 'kfmclient', "exec", $parent_folder );
-		} elsif ( defined $ENV{GNOME_DESKTOP_SESSION_ID} ) {
-
-			# In Gnome, execute: nautilus --nodesktop --browser $filename
-			$error = $self->_execute( 'nautilus', "--no-desktop", "--browser", $parent_folder );
-		} else {
-			$error = "Could not find KDE or GNOME";
-		}
+		$error = $self->_execute_unix($parent_folder);
 	} else {
 
-		#Unsupported Operating system.
-		$error = "Unsupported operating system: '$^O'";
+		# Unsupported
+		$error = sprintf(Wx::gettext("Unsupported OS: %s"), '$^O');
 	}
 
-	if ( defined $error ) {
-		Wx::MessageBox( $error, Wx::gettext("Error"), Wx::wxOK, $main, );
+	if ( $error ) {
+		$main->error( $error );
 	}
 
 	return;
+}
+
+#
+# Open with default system editor
+#
+sub open_with_default_system_editor {
+	my ($self, $filename) = @_;
+
+	my $main = Padre::Current->main;
+	unless( $filename ) {
+		$main->error( Wx::gettext("No filename") );
+		return;
+	}
+	
+	my $error;
+	if(Padre::Constant::WIN32) {
+		# Win32
+		require Padre::Util::Win32;
+		Padre::Util::Win32::ExecuteProcessAndWait(
+			directory  => $self->{cwd},
+			file       => $filename,
+			parameters => '',
+			show       => 1);
+	} elsif(Padre::Constant::UNIX) {
+		# Unix
+		$error = $self->_execute_in_file_mananger($filename);
+	} else {
+		# Unsupported
+		$error = sprintf(Wx::gettext("Unsupported OS: %s"), '$^O');
+	}
+	
+	if ( $error ) {
+		$main->error( $error );
+	}
+
+	return;	
+}
+
+#
+# Try to execute a file in KDE or GNOME
+#
+sub _execute_unix {
+	die "Only to be called in UNIX!" unless Padre::Constant::UNIX;
+
+	my ($self, $filename) = @_;
+	
+	my $error;
+	if ( defined $ENV{KDE_FULL_SESSION} ) {
+
+		# In KDE, execute: kfmclient exec $filename
+		$error = $self->_execute( 'kfmclient', "exec", $filename );
+	} elsif ( defined $ENV{GNOME_DESKTOP_SESSION_ID} ) {
+
+		# In Gnome, execute: nautilus --nodesktop --browser $filename
+		$error = $self->_execute( 'nautilus', "--no-desktop", "--browser", $filename );
+	} else {
+		$error = Wx::gettext("Could not find KDE or GNOME");
+	}
+
+	return $error;
 }
 
 1;
@@ -101,11 +151,11 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Directory::OpenInFileBrowserAction - Ecliptic's Open in file browser action
+Padre::Wx::Directory::OpenInFileBrowserAction - Open in file browser action
 
 =head1 DESCRIPTION
 
-=head2 Open in File Browser (Shortcut: C<Ctrl+6>)
+=head2 Open in File Browser
 
 For the current saved Padre document, open the platform's file manager/browser and
 tries to select it if possible. On win32, opens the containing folder and

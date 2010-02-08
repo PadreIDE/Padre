@@ -132,7 +132,8 @@ sub new {
 		need_file   => 1,
 		comment    => Wx::gettext('Opens the file with the default system editor'),
 		menu_event => sub {
-			$_[0]->on_open_with_default_system_editor;
+			my $document = $_[0]->current->document or return;
+			$_[0]->on_open_with_default_system_editor( $document->filename );
 		},
 	);
 
