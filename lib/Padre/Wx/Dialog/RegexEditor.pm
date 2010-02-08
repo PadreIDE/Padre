@@ -393,7 +393,7 @@ sub _dump_regex {
 	my ( $self, $parent, $str, $level ) = @_;
 	$str   = '' unless $str;
 	$level = 0  unless $level;
-	my @children = $parent->isa('PPIx::Regexp::Node') ? $parent->children: ();
+	my @children = $parent->isa('PPIx::Regexp::Node') ? $parent->children : ();
 	for my $child (@children) {
 		next if $child->content eq '';
 		my $class_name = $child->class;
@@ -411,7 +411,7 @@ sub _parse_regex_elements {
 	my ( $parent, $position, @array ) = @_;
 	$position = 0  unless $position;
 	@array    = () unless @array;
-	my @elements = $parent->isa('PPIx::Regexp::Node') ? $parent->elements: ();
+	my @elements = $parent->isa('PPIx::Regexp::Node') ? $parent->elements : ();
 	for my $element (@elements) {
 		my $content = $element->content;
 		next if $content eq '';

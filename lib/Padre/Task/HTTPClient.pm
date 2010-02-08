@@ -51,12 +51,12 @@ sub new {
 	# Prepare information
 	require Padre::Util::SVN;
 	my $revision = Padre::Util::SVN::padre_version();
-	$args{method}               ||= 'GET';
+	$args{method} ||= 'GET';
 	$args{headers}->{'X-Padre'} ||= "Padre version $VERSION $revision";
 
 	# Each module will be tested and the first working one should return
 	# a object, all others should return nothing (undef)
-	foreach my $driver ( @DRIVERS ) {
+	foreach my $driver (@DRIVERS) {
 		eval "require $driver;";
 		next if $@;
 		my $self = $driver->new(%args) or next;

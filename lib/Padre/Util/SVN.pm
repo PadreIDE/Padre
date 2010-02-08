@@ -14,7 +14,7 @@ my $PADRE = undef;
 
 # TODO: A much better variant would be a constant set by svn.
 sub padre_revision {
-	unless ( $PADRE ) {
+	unless ($PADRE) {
 		if ( $0 =~ /padre$/ ) {
 			my $dir = $0;
 			$dir =~ s/padre$//;

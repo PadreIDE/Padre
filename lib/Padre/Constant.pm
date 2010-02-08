@@ -101,9 +101,9 @@ use constant CONFIG_DIR => File::Spec->rel2abs(
 	)
 );
 
-use constant LOG_FILE       => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
-use constant PLUGIN_DIR     => File::Spec->catdir( CONFIG_DIR, 'plugins' );
-use constant PLUGIN_LIB     => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
+use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
+use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
 use constant CONFIG_HOST    => File::Spec->catfile( CONFIG_DIR, 'config.db' );
 use constant CONFIG_HUMAN   => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
 use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.yml' );
@@ -111,6 +111,7 @@ use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.yml' );
 # Do the initialisation in a function,
 # so we can run it again later if needed.
 sub init {
+
 	# Check and create the directories that need to exist
 	unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
 		Carp::croak( "Cannot create config directory '" . CONFIG_DIR . "': $!" );
@@ -139,9 +140,7 @@ BEGIN {
 # system-installed Padre while running the test suite.
 # NOTE: The only reason this is here is that it is needed both during
 # main configuration, and also during Padre::Startup.
-use constant DEFAULT_SINGLEINSTANCE => (
-	WIN32 and not( $ENV{HARNESS_ACTIVE} or $^P )
-) ? 1 : 0;
+use constant DEFAULT_SINGLEINSTANCE => ( WIN32 and not( $ENV{HARNESS_ACTIVE} or $^P ) ) ? 1 : 0;
 
 use constant DEFAULT_SINGLEINSTANCE_PORT => 4444;
 

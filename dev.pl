@@ -35,7 +35,7 @@ BEGIN {
 		'usage|help'  => \$USAGE,
 		'debug|d'     => \$DEBUG,
 		'trace'       => sub { $ENV{PADRE_DEBUG} = 1 },
-		'die'         => sub { $ENV{PADRE_DIE}   = 1 },
+		'die'         => sub { $ENV{PADRE_DIE} = 1 },
 		'profile'     => \$PROFILE,
 		'a'           => \$PLUGINS,
 		'fulltrace'   => \$FULLTRACE,
@@ -81,9 +81,7 @@ push @cmd, '-dt:NYTProf'   if $PROFILE;
 push @cmd, map {qq[-I$_]} @INCLUDE;
 
 if ($FULLTRACE) {
-	eval {
-		require Devel::Trace;
-	};
+	eval { require Devel::Trace; };
 	if ($@) {
 		print "Error while initilizing --fulltrace while trying to load Devel::Trace:\n"
 			. "$@Maybe Devel::Trace isn't installed?\n";
@@ -114,11 +112,11 @@ push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 
 push @cmd, '--help' if $USAGE;
 
-if ( $DEBUG ) {
+if ($DEBUG) {
 	print "Running " . join( ' ', @cmd ) . "\n";
 }
 
-if ( $USAGE ) {
+if ($USAGE) {
 	usage();
 }
 
