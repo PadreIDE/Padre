@@ -40,8 +40,8 @@ On UNIX, opens the containing folder for it using either KDE or GNOME
 =cut
 
 sub open_in_file_browser {
-	my ($class, $filename) = @_;
-	my $self  = $class->new(@_);
+	my ( $class, $filename ) = @_;
+	my $self = $class->new(@_);
 	my $main = Padre::Current->main;
 
 	unless ($filename) {
@@ -80,8 +80,8 @@ Single shot method to open the provided C<$filename> using the default system ed
 =cut
 
 sub open_with_default_system_editor {
-	my ($class, $filename) = @_;
-	my $self  = $class->new(@_);
+	my ( $class, $filename ) = @_;
+	my $self = $class->new(@_);
 	my $main = Padre::Current->main;
 
 	unless ($filename) {
