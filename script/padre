@@ -3,9 +3,7 @@
 use 5.008005;
 use strict;
 use warnings;
-use File::Which  ();
-use Getopt::Long ();
-use Carp         ();
+use Carp ();
 
 local $| = 1;
 local $SIG{__DIE__} =
@@ -15,6 +13,7 @@ local $SIG{__DIE__} =
 
 # Must run using wxPerl on OS X.
 if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
+	require File::Which;
 	my $perl = scalar File::Which::which('wxPerl');
 	chomp($perl);
 	if ( -e $perl ) {
@@ -28,31 +27,41 @@ if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
 
 # Handle special command line cases early, because options like --home
 # MUST be processed before the Padre.pm library is loaded.
-my $USAGE       = '';
-my $VERSION     = '';
-my $HOME        = undef;
-my $SESSION     = undef;
-my $PRELOAD     = undef;
-my $DESKTOP     = undef;
-my $ACTIONQUEUE = undef;
-my $getopt      = Getopt::Long::GetOptions(
+require Getopt::Long;
+my $USAGE   = '';
+my $VERSION = '';
+my $HOME    = undef;
+my $RESET   = undef;
+my $SESSION = undef;
+my $PRELOAD = undef;
+my $DESKTOP = undef;
+my $ACTIONS = undef;
+my $getopt  = Getopt::Long::GetOptions(
 	'help|usage'    => \$USAGE,
 	'version'       => \$VERSION,
 	'home=s'        => \$HOME,
+	'reset'         => \$RESET,
 	'session=s'     => \$SESSION,
 	'desktop'       => \$DESKTOP,
-	'actionqueue=s' => \$ACTIONQUEUE,
-
-	# Keep this secret for now --ADAMK
-	'preload' => \$PRELOAD,
+	'actionqueue=s' => \$ACTIONS,
+	'preload'       => \$PRELOAD, # Keep this sekrit for now --ADAMK
 );
 
-if ( $USAGE or !$getopt ) {
+
+
+
+
+#####################################################################
+# Special Execution Modules
+
+# Padre command line usage
+if ( $USAGE or not $getopt ) {
 	print <<"END_USAGE";
 Usage: $0 [FILENAMES]
 
---home=dir          Forces Padre's "home" directory to a specific location
 --help              Shows this help message
+--home=dir          Forces Padre "home" directory to a specific location
+--reset             Flush entire local config directory and reset to defaults
 --session=name      Open given session during Padre startup
 --version           Prints Padre version and quits
 --desktop           Integrate Padre with your desktop
@@ -62,9 +71,7 @@ END_USAGE
 	exit(1);
 }
 
-local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
-
-# Special execution modes
+# Padre version
 if ($VERSION) {
 	my $msg = "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
 	if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
@@ -83,10 +90,21 @@ if ($VERSION) {
 	exit(0);
 }
 
+# Lock in the home and constants, which are needed for everything else
+local $ENV{PADRE_HOME} = defined($HOME) ? $HOME : $ENV{PADRE_HOME};
+require Padre::Constant;
+
+# Destroy and reinitialise our config directory
+if ($RESET) {
+	require File::Remove;
+	File::Remove::remove( \1, Padre::Constant::CONFIG_DIR() );
+	Padre::Constant::init();
+}
+
 if ($DESKTOP) {
 	require Padre::Desktop;
 	unless ( Padre::Desktop::desktop() ) {
-		warn "--desktop not implemented for " . $^O . "\n";
+		warn "--desktop not implemented for $^O\n";
 	}
 	exit(1);
 }
@@ -96,15 +114,9 @@ require threads::shared;
 
 # local $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 
-my %opts = (
-	files       => \@ARGV,
-	session     => $SESSION,
-	actionqueue => $ACTIONQUEUE,
-);
-
 # If we have an action queue then we are running for automation reasons.
 # Avoid the startup logic and continue to the main startup.
-unless ( defined $ACTIONQUEUE ) {
+unless ( defined $ACTIONS ) {
 
 	# Run the Padre startup sequence before we load the main application
 	require Padre::Startup;
@@ -124,13 +136,14 @@ if ($PRELOAD) {
 }
 
 # Build the application
-my $app = Padre->new(%opts);
-unless ($app) {
-	die "Failed to create Padre instance";
-}
+my $ide = Padre->new(
+	files       => \@ARGV,
+	session     => $SESSION,
+	actionqueue => $ACTIONS,
+) or die "Failed to create Padre instance";
 
 # Start the application
-$app->run;
+$ide->run;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE

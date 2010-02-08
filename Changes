@@ -24,10 +24,15 @@ Changes for Perl Application Development and Refactoring Environment
     - Removed the final usage of the "Provider" phrasing, and made more
       of the modules used by the Perl help provider run-time loaded (ADAMK)
     - Moved padre.exe build from bin to win32-loader folder since bin is a
-      bad location for putting the Padre win32 launcher code (SMUELLER, AZAWAWI)
+      bad path for putting the Padre win32 launcher code (SMUELLER, AZAWAWI)
     - Added "Open in File Browser" in the File and right-click menu (AZAWAWI)
-    - No need to launch a command shell to execute explorer.exe on win32 (AZAWAWI)
+    - No need to launch a command shell to execute explorer.exe on
+      win32 (AZAWAWI)
     - Added "Open with Default System Editor" in "File -> Open..." (AZAWAWI)
+    - Implemented padre --reset to flush and reset the current Padre
+      configuration in otherwise unrecoverable situations, such as now
+      when the Swarm plugin causes the slave-driver code to instantly
+      segfault at startup (ADAMK)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
@@ -56,7 +61,7 @@ Changes for Perl Application Development and Refactoring Environment
     - WIN32, padre.exe will run with the same UAC privileges as same as
       the invoker (AZAWAWI)
     - Disable debugger menu items when there is no document (AZAWAWI)
-    - Fixed a Padre debugger crash when an unsaved document is debugged (AZAWAWI)
+    - Fixed a Padre debugger crash when unsaved document is debugged (AZAWAWI)
     - Fixed Padre no-document crash with Find Next/Find Previous functionality
       (AZAWAWI)
     - Make sure that windows context key shows the refactor menu 
@@ -204,15 +209,16 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed #758: Autocomplete now also works with backspace (SEWI)
     - Ctrl-Tab behaviour is now configurable (SEWI)
     - Rename Padre::Debug to Padre::Logger (SZABGAB)
-    - Reuse the comment field of the menu actions and show them in the toolbar (SZABGAB)
+    - Reuse the comment field of the menu actions and show them in
+      the toolbar (SZABGAB)
     - Add comment field to all the menu items that did not have yet (SZABGAB)
     - Integrated Padre::DB into the Padre::Locker API, so that we can do
       (very basic) nested transactions (ADAMK)
     - Audited the startup process for database operations that either weren't
       being done in a transaction, or were doing crazy bizarre things. Startup
       is now noticably faster (ADAMK)
-    - Added Preference setting to control autocomplete when editting a script rather than
-      a Module. (PLAVEN)      
+    - Added Preference setting to control autocomplete when editting a
+      script rather than a Module. (PLAVEN)      
 
 0.52 2009.12.14
     - Add a plugin hook on change of current editor tab (SEWI)
@@ -346,7 +352,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Save session now suggest the name of the last opened session for saving (SEWI)
     - Fixed ticket #627: Suggestion: Make it possible to copy 'Syntax Check'
       messages (AZAWAWI)
-    - require version 0.20 of Wx::Perl::ProcessStream to fix #628 (AZAWAWI, SZABGAB)
+    - Require version 0.20 of Wx::Perl::ProcessStream to fix #628 (AZAWAWI, SZABGAB)
     - Fixed ticket #493: splash image license not suitable for Debian (AZAWAWI)
     - Fixed t/86-service.t to work again on win32 (AZAWAWI)
     - Fixed ticket #314: Padre broken on MS Vista when starting with no file
@@ -1197,23 +1203,24 @@ Changes for Perl Application Development and Refactoring Environment
     - Syntax highlighting of more file types (PATSPAM)
 
 0.04 2008.08.08
-    - add Devel::PerlySense as prereq
-    - stop checking for wx version for now
-    - change the create_makefile_pl to passthrough as the traditional did not do the extra work done by Build.PL
+    - Add Devel::PerlySense as prereq
+    - Stop checking for wx version for now
+    - Change the create_makefile_pl to passthrough as the traditional did
+      not do the extra work done by Build.PL
     - Mark the buffer that is unsaved with a star.
-    - stop saving the content of the loaded file and use GetModify
+    - Stop saving the content of the loaded file and use GetModify
       to find out if the file has been modifyed since last save
-    - replace the search_term by search_terms in the config file
-    - allow remembering of search terms
-    - replace the text dialog by a full dialog box and a Wx::ComboBox
+    - Replace the search_term by search_terms in the config file
+    - Allow remembering of search terms
+    - Replace the text dialog by a full dialog box and a Wx::ComboBox
     - Setup http://padre.perlide.org/ using trac
     - Move the repository to http://svn.perlide.org/padre/
 
 0.03_02 2008.08.03
-    - add experimental code for plugins
-    - add experimental version of Padre::Plugin::PAR
-    - fix the shortcuts of some of the menues in windows, thanks to Octavian Rasnita
-    - replace the AppendSubMenu calls by Append calls to support older version of wxWidgets
+    - Add experimental code for plugins
+    - Add experimental version of Padre::Plugin::PAR
+    - Fix the shortcuts of some of the menues in windows, thanks to Octavian Rasnita
+    - Replace the AppendSubMenu calls by Append calls to support older version of wxWidgets
 
 0.03_01 2008.07.31
     - Experimental code in Build.PL to avoid test failures when wxWidgets is too old.

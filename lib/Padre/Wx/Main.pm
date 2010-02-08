@@ -1175,18 +1175,17 @@ Sets or updates the Window title.
 =cut
 
 sub refresh_title {
-	my $self    = shift;
-	my $config  = $self->{config};
-	my $current = $self->current;
-
-	my %variable_data = (
+	my $self     = shift;
+	my $config   = $self->{config};
+	my $current  = $self->current;
+	my %variable = (
 		'%' => '%',
 		'v' => $Padre::VERSION,
-		'f' => '',             # Initlize space for filename
-		'b' => '',             # Initlize space for filename - basename
-		'd' => '',             # Initlize space for filename - dirname
-		'F' => '',             # Initlize space for filename relative to project dir
-		'p' => '',             # Initlize space for project name
+		'f' => '',             # Initialize space for filename
+		'b' => '',             # Initialize space for filename - basename
+		'd' => '',             # Initialize space for filename - dirname
+		'F' => '',             # Initialize space for filename relative to project dir
+		'p' => '',             # Initialize space for project name
 	);
 
 	# We may run within window start-up, there may be no "current" or
@@ -1197,15 +1196,14 @@ sub refresh_title {
 	{
 		my $document = $current->document;
 		my $file     = $document->file;
-		$variable_data{'f'} = $file->{filename};
-		$variable_data{'b'} = $file->basename;
-		$variable_data{'d'} = $file->dirname;
-
-		$variable_data{'F'} = $file->{filename};
+		$variable{'f'} = $file->{filename};
+		$variable{'b'} = $file->basename;
+		$variable{'d'} = $file->dirname;
+		$variable{'F'} = $file->{filename};
 		my $project_dir = $document->project_dir;
 		if ( defined $project_dir ) {
 			$project_dir = quotemeta $project_dir;
-			$variable_data{'F'} =~ s/^$project_dir//;
+			$variable{'F'} =~ s/^$project_dir//;
 		}
 	}
 
@@ -1214,22 +1212,23 @@ sub refresh_title {
 		my ($session) = Padre::DB::Session->select(
 			'where id = ?', $self->ide->{session},
 		);
-		$variable_data{'p'} = $session->name;
+		$variable{'p'} = $session->name;
 	}
 
 	# Keep it for later usage
 	$self->{title} = $config->main_title;
 
-	my $Vars = join( '', keys(%variable_data) );
+	my $variables = join '', keys %variable;
+	$self->{title} =~ s/\%([$variables])/$variable{$1}/g;
+	unless ( defined $self->{title} ) {
+		$self->{title} = "Padre $Padre::VERSION";
+	}
 
-	$self->{title} =~ s/\%([$Vars])/$variable_data{$1}/g;
-
-	$self->{title} = 'Padre ' . $Padre::VERSION
-		if !defined( $self->{title} );
-
-	my $revision = Padre::Constant::PADRE_REVISION;
-	$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)"
-		if defined($revision);
+	require Padre::Util::SVN;
+	my $revision = Padre::Util::SVN::padre_revision();
+	if ( defined $revision ) {
+		$self->{title} .= " SVN \@$revision (\$VERSION = $Padre::VERSION)";
+	}
 
 	if ( $self->GetTitle ne $self->{title} ) {
 

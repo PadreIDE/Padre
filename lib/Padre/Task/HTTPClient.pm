@@ -3,12 +3,14 @@ package Padre::Task::HTTPClient;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::Constant;
+use Padre::Constant ();
 
 # Use all modules which may provide services for us:
 
 our $VERSION = '0.56';
+our @DRIVERS = qw{
+	Padre::Task::HTTPClient::LWP
+};
 
 =pod
 
@@ -40,33 +42,28 @@ Returns a new C<Padre::Task::HTTPClient> or dies on error.
 =cut
 
 sub new {
-
 	my $class = shift;
-
-	my %args = @_;
-
-	return if ( !defined( $args{URL} ) ) or ( $args{URL} eq '' );
+	my %args  = @_;
+	unless ( defined $args{URL} and length $args{URL} ) {
+		return;
+	}
 
 	# Prepare information
-	$args{headers}->{'X-Padre'} ||= 'Padre version ' . $VERSION . ' ' . Padre::Constant::PADRE_REVISION;
-	$args{method} ||= 'GET';
-
-	my $self;
+	require Padre::Util::SVN;
+	my $revision = Padre::Util::SVN::padre_version();
+	$args{method}               ||= 'GET';
+	$args{headers}->{'X-Padre'} ||= "Padre version $VERSION $revision";
 
 	# Each module will be tested and the first working one should return
 	# a object, all others should return nothing (undef)
-	for ('LWP') {
-
-		#		require 'Padre/Task/HTTPClient/' . $_ . '.pm';
-		eval 'require Padre::Task::HTTPClient::' . $_;
+	foreach my $driver ( @DRIVERS ) {
+		eval "require $driver;";
 		next if $@;
-		$self = "Padre::Task::HTTPClient::$_"->new(%args);
-		next unless defined($self);
+		my $self = $driver->new(%args) or next;
 		return $self;
 	}
 
 	return;
-
 }
 
 #=head2 atime

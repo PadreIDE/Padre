@@ -24,10 +24,9 @@ sub new {
 	if ( $0 =~ /padre$/ ) {
 		my $dir = $0;
 		$dir =~ s/padre$//;
-		my $revision = Padre::Util::svn_directory_revision($dir);
-		if ( -d "$dir.svn" ) {
-			$data{svn} = $revision;
-		}
+		require Padre::Util::SVN;
+		my $revision = Padre::Util::SVN::directory_revision($dir);
+		$data{svn} = $revision if -d "$dir.svn";
 	}
 
 	# Generate the request URL
@@ -35,7 +34,9 @@ sub new {
 	$url->query_form( \%data, ';' );
 
 	# Hand off to the parent constructor
-	return $class->SUPER::new( request => HTTP::Request->new( GET => $url->as_string ) );
+	return $class->SUPER::new(
+		request => HTTP::Request->new( GET => $url->as_string )
+	);
 }
 
 1;

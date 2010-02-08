@@ -228,7 +228,8 @@ sub _generate {
 	$report{'padre.instance'} = $self->ide->{instance_id};
 
 	# Versioning information
-	my $revision = Padre::Constant::PADRE_REVISION;
+	require Padre::Util::SVN;
+	my $revision = Padre::Util::SVN::padre_revision();
 	if ( defined $revision ) {
 
 		# This is a developer build

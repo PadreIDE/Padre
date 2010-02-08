@@ -101,19 +101,27 @@ use constant CONFIG_DIR => File::Spec->rel2abs(
 	)
 );
 
-use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
-use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
-use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant LOG_FILE       => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
+use constant PLUGIN_DIR     => File::Spec->catdir( CONFIG_DIR, 'plugins' );
+use constant PLUGIN_LIB     => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
 use constant CONFIG_HOST    => File::Spec->catfile( CONFIG_DIR, 'config.db' );
 use constant CONFIG_HUMAN   => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
 use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.yml' );
 
-# Check and create the directories that need to exist
-unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
-	Carp::croak( "Cannot create config directory '" . CONFIG_DIR . "': $!" );
+# Do the initialisation in a function,
+# so we can run it again later if needed.
+sub init {
+	# Check and create the directories that need to exist
+	unless ( -e CONFIG_DIR or File::Path::mkpath(CONFIG_DIR) ) {
+		Carp::croak( "Cannot create config directory '" . CONFIG_DIR . "': $!" );
+	}
+	unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
+		Carp::croak( "Cannot create plug-ins directory '" . PLUGIN_LIB . "': $!" );
+	}
 }
-unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
-	Carp::croak( "Cannot create plug-ins directory '" . PLUGIN_LIB . "': $!" );
+
+BEGIN {
+	init();
 }
 
 
@@ -131,31 +139,11 @@ unless ( -e PLUGIN_LIB or File::Path::mkpath(PLUGIN_LIB) ) {
 # system-installed Padre while running the test suite.
 # NOTE: The only reason this is here is that it is needed both during
 # main configuration, and also during Padre::Startup.
-use constant DEFAULT_SINGLEINSTANCE => ( WIN32 and not( $ENV{HARNESS_ACTIVE} or $^P ) ) ? 1 : 0;
+use constant DEFAULT_SINGLEINSTANCE => (
+	WIN32 and not( $ENV{HARNESS_ACTIVE} or $^P )
+) ? 1 : 0;
 
 use constant DEFAULT_SINGLEINSTANCE_PORT => 4444;
-
-
-
-
-
-#####################################################################
-# Pseudo Constants
-
-my $revision;
-
-# Get the svn revision of the currently running Padre once:
-# eval 'use constant PADRE_REVISION => Padre::Util::revision;';
-# This needs to be a pseudo constant as it requires Padre::Util which
-# requires Padre::Constant (this module).
-sub PADRE_REVISION () {
-
-	# Get and keep the revision at the first call of this pseudo-constant
-	# (usually at Padre start)
-	require Padre::Util;
-	$revision ||= Padre::Util::revision();
-	return $revision;
-}
 
 1;
 

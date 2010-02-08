@@ -14,33 +14,28 @@ use Config;
 # Collect options early
 use Getopt::Long ();
 use vars qw{
+	$USAGE
 	$DEBUG
-	$TRACE
-	$DIE
 	$PROFILE
 	$PLUGINS
-	$USAGE
 	$FULLTRACE
 	$INVISIBLE
 	@INCLUDE
 };
 
 BEGIN {
+	$USAGE     = 0;
 	$DEBUG     = 0;
-	$DIE       = 0;
 	$PROFILE   = 0;
 	$PLUGINS   = 0;
-	$USAGE     = 0;
 	$FULLTRACE = 0;
 	$INVISIBLE = 0;
 	@INCLUDE   = ();
 	Getopt::Long::GetOptions(
-		'usage|help' => \$USAGE,
-		'debug|d'    => \$DEBUG,
-		'trace'      => sub {
-			$ENV{PADRE_DEBUG} = 1;
-		},
-		'die'         => \$DIE,
+		'usage|help'  => \$USAGE,
+		'debug|d'     => \$DEBUG,
+		'trace'       => sub { $ENV{PADRE_DEBUG} = 1 },
+		'die'         => sub { $ENV{PADRE_DIE}   = 1 },
 		'profile'     => \$PROFILE,
 		'a'           => \$PLUGINS,
 		'fulltrace'   => \$FULLTRACE,
@@ -49,11 +44,8 @@ BEGIN {
 	);
 }
 
-$USAGE and usage();
-
 $ENV{PADRE_DEV}  = 1;
 $ENV{PADRE_HOME} = $FindBin::Bin;
-$ENV{PADRE_DIE}  = $DIE;
 
 use lib $FindBin::Bin, "$FindBin::Bin/lib";
 use privlib::Tools;
@@ -89,11 +81,13 @@ push @cmd, '-dt:NYTProf'   if $PROFILE;
 push @cmd, map {qq[-I$_]} @INCLUDE;
 
 if ($FULLTRACE) {
-	eval { require Devel::Trace; };
+	eval {
+		require Devel::Trace;
+	};
 	if ($@) {
 		print "Error while initilizing --fulltrace while trying to load Devel::Trace:\n"
 			. "$@Maybe Devel::Trace isn't installed?\n";
-		exit 1;
+		exit(1);
 	}
 	push @cmd, '-d:Trace';
 }
@@ -120,16 +114,18 @@ push @cmd, qq[$FindBin::Bin/script/padre], @ARGV;
 
 push @cmd, '--help' if $USAGE;
 
-$DEBUG and print "Running " . join( ' ', @cmd ) . "\n";
+if ( $DEBUG ) {
+	print "Running " . join( ' ', @cmd ) . "\n";
+}
+
+if ( $USAGE ) {
+	usage();
+}
 
 system(@cmd);
 
 sub vmsgfmt {
-	msgfmt(
-		{   in      => "$_[0]/share/locale/",
-			verbose => 0,
-		}
-	);
+	msgfmt( { in => "$_[0]/share/locale/", verbose => 0 } );
 }
 
 sub error {
