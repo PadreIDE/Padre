@@ -6,10 +6,8 @@ Padre::Wx::Directory::OpenInFileBrowserAction - Open in file browser action
 
 =head1 DESCRIPTION
 
-For the current saved Padre document, open the platform's file manager/browser and
-tries to select it if possible. On win32, opens the containing folder and
-selects the file in its explorer. On Linux KDE/GNOME, opens the containing folder
-for it.
+A collection of methods to open a file in the platform's file manager or 
+browser while trying to select it if possible.
 
 =head1 FUNCTIONS
 
