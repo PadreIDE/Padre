@@ -318,7 +318,7 @@ sub get_command {
 
 	my $dir = File::Basename::dirname($filename);
 	chdir $dir;
-	
+
 	return $debug
 		? qq{"$perl" -Mdiagnostics(-traceonly) $run_args{interpreter} "$filename"$Script_Args}
 		: qq{"$perl" $run_args{interpreter} "$filename"$Script_Args};

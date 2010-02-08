@@ -29,7 +29,7 @@ sub _execute {
 
 		# On Windows, if we don't have STDIN/STDOUT, avoid IPC::Open3
 		# because it crashes when launching a non-console app
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
 			system( $cmd, @cmd_args ); # we know that Explorer.exe will quit quickly
 		} else {
 			require IPC::Open2;
@@ -58,7 +58,7 @@ sub open_in_file_browser {
 	my ( $self, $filename ) = @_;
 	my $main = Padre::Current->main;
 
-	unless( $filename ) {
+	unless ($filename) {
 		$main->error( Wx::gettext("No filename") );
 		return;
 	}
@@ -75,11 +75,11 @@ sub open_in_file_browser {
 	} else {
 
 		# Unsupported
-		$error = sprintf(Wx::gettext("Unsupported OS: %s"), '$^O');
+		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
 	}
 
-	if ( $error ) {
-		$main->error( $error );
+	if ($error) {
+		$main->error($error);
 	}
 
 	return;
@@ -89,36 +89,40 @@ sub open_in_file_browser {
 # Open with default system editor
 #
 sub open_with_default_system_editor {
-	my ($self, $filename) = @_;
+	my ( $self, $filename ) = @_;
 
 	my $main = Padre::Current->main;
-	unless( $filename ) {
+	unless ($filename) {
 		$main->error( Wx::gettext("No filename") );
 		return;
 	}
-	
+
 	my $error;
-	if(Padre::Constant::WIN32) {
+	if (Padre::Constant::WIN32) {
+
 		# Win32
 		require Padre::Util::Win32;
 		Padre::Util::Win32::ExecuteProcessAndWait(
 			directory  => $self->{cwd},
 			file       => $filename,
 			parameters => '',
-			show       => 1);
-	} elsif(Padre::Constant::UNIX) {
+			show       => 1
+		);
+	} elsif (Padre::Constant::UNIX) {
+
 		# Unix
 		$error = $self->_execute_in_file_mananger($filename);
 	} else {
+
 		# Unsupported
-		$error = sprintf(Wx::gettext("Unsupported OS: %s"), '$^O');
-	}
-	
-	if ( $error ) {
-		$main->error( $error );
+		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
 	}
 
-	return;	
+	if ($error) {
+		$main->error($error);
+	}
+
+	return;
 }
 
 #
@@ -127,8 +131,8 @@ sub open_with_default_system_editor {
 sub _execute_unix {
 	die "Only to be called in UNIX!" unless Padre::Constant::UNIX;
 
-	my ($self, $filename) = @_;
-	
+	my ( $self, $filename ) = @_;
+
 	my $error;
 	if ( defined $ENV{KDE_FULL_SESSION} ) {
 
