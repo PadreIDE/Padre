@@ -3744,7 +3744,7 @@ sub on_reload_some {
 		$self,
 		title      => Wx::gettext('Reload some files'),
 		list_title => Wx::gettext('Select files to reload:'),
-		buttons    => [ [ 'Reload selected', sub { Padre->ide->wx->main->reload_some(@_); } ] ],
+		buttons    => [ [ 'Reload selected', sub { $_[0]->main->reload_some(@_); } ] ],
 	)->show;
 }
 
@@ -4373,7 +4373,7 @@ sub on_close_some {
 		$self,
 		title      => Wx::gettext('Close some files'),
 		list_title => Wx::gettext('Select files to close:'),
-		buttons    => [ [ 'Close selected', sub { Padre->ide->wx->main->close_some(@_); } ] ],
+		buttons    => [ [ 'Close selected', sub { $_[0]->main->close_some(@_); } ] ],
 	)->show;
 }
 
