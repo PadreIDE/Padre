@@ -689,8 +689,8 @@ sub save_file {
 	#   I.E Padre foo.pl &
 	#   The assumption of $self->project as defined will cause a fail
 	#   Please be more careful mkkkay!
-
-	my $config = $self->project->config if $self->project;
+	my $config;
+	$config = $self->project->config if $self->project;
 	$self->set_errstr('');
 
 	$self->autoclean if $config && $config->save_autoclean;
