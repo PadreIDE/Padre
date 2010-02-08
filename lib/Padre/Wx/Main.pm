@@ -2227,7 +2227,7 @@ sub on_open_in_file_browser {
 	my ( $self, $filename ) = @_;
 
 	require Padre::Wx::Directory::OpenInFileBrowserAction;
-	Padre::Wx::Directory::OpenInFileBrowserAction->new->open_in_file_browser($filename);
+	Padre::Wx::Directory::OpenInFileBrowserAction->open_in_file_browser($filename);
 }
 
 =pod
@@ -3676,7 +3676,7 @@ sub on_open_with_default_system_editor {
 	my ( $self, $filename ) = @_;
 
 	require Padre::Wx::Directory::OpenInFileBrowserAction;
-	Padre::Wx::Directory::OpenInFileBrowserAction->new->open_with_default_system_editor($filename);
+	Padre::Wx::Directory::OpenInFileBrowserAction->open_with_default_system_editor($filename);
 }
 
 =pod

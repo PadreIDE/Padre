@@ -6,10 +6,10 @@ Padre::Wx::Directory::OpenInFileBrowserAction - Open in file browser action
 
 =head1 DESCRIPTION
 
-A collection of methods to open a file in the platform's file manager or 
-browser while trying to select it if possible.
+A collection of single-shot methods to open a file in the platform's file
+manager or browser while trying to select it if possible.
 
-=head1 FUNCTIONS
+=head1 METHODS
 
 =cut
 
@@ -27,6 +27,94 @@ use Padre::Wx ();
 sub new {
 	my ($class) = @_;
 	return bless {}, $class;
+}
+
+=head2 C<open_in_file_browser>
+
+  Padre::Wx::Directory::OpenInFileBrowserAction->open_in_file_browser($filename);
+
+Single shot method to open the provided C<$filename> in the file browser
+On win32, selects it in Windows Explorer
+On UNIX, opens the containing folder for it using either KDE or GNOME
+
+=cut
+
+sub open_in_file_browser {
+	my ($class, $filename) = @_;
+	my $self  = $class->new(@_);
+	my $main = Padre::Current->main;
+
+	unless ($filename) {
+		$main->error( Wx::gettext("No filename") );
+		return;
+	}
+
+	my $error;
+	if (Padre::Constant::WIN32) {
+
+		# In windows, simply execute: explorer.exe /select,"$filename"
+		$filename =~ s/\//\\/g;
+		$error = $self->_execute( 'explorer.exe', "/select,\"$filename\"" );
+	} elsif (Padre::Constant::UNIX) {
+		my $parent_folder = File::Basename::dirname($filename);
+		$error = $self->_execute_unix($parent_folder);
+	} else {
+
+		# Unsupported
+		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
+	}
+
+	if ($error) {
+		$main->error($error);
+	}
+
+	return;
+}
+
+=head2 C<open_with_default_system_editor>
+
+  Padre::Wx::Directory::OpenInFileBrowserAction->open_in_file_browser($filename);
+
+Single shot method to open the provided C<$filename> using the default system editor
+
+=cut
+
+sub open_with_default_system_editor {
+	my ($class, $filename) = @_;
+	my $self  = $class->new(@_);
+	my $main = Padre::Current->main;
+
+	unless ($filename) {
+		$main->error( Wx::gettext("No filename") );
+		return;
+	}
+
+	my $error;
+	if (Padre::Constant::WIN32) {
+
+		# Win32
+		require Padre::Util::Win32;
+		Padre::Util::Win32::ExecuteProcessAndWait(
+			directory  => $self->{cwd},
+			file       => $filename,
+			parameters => '',
+			show       => 1
+		);
+	} elsif (Padre::Constant::UNIX) {
+
+		# Unix
+		$error = $self->_execute_in_file_mananger($filename);
+	} else {
+
+		# Unsupported
+		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
+	}
+
+	if ($error) {
+		$main->error($error);
+	}
+
+	return;
 }
 
 #
@@ -62,92 +150,6 @@ sub _execute {
 		$result = Wx::gettext("Failed to execute process\n");
 	}
 	return $result;
-}
-
-=head2 C<open_in_file_browser>
-
-  $action->open_in_file_browser($filename);
-
-Opens the provided C<$filename> in the file browser
-On win32, selects it in Windows Explorer
-On UNIX, opens the containing folder for it using either KDE or GNOME
-
-=cut
-
-sub open_in_file_browser {
-	my ( $self, $filename ) = @_;
-	my $main = Padre::Current->main;
-
-	unless ($filename) {
-		$main->error( Wx::gettext("No filename") );
-		return;
-	}
-
-	my $error;
-	if (Padre::Constant::WIN32) {
-
-		# In windows, simply execute: explorer.exe /select,"$filename"
-		$filename =~ s/\//\\/g;
-		$error = $self->_execute( 'explorer.exe', "/select,\"$filename\"" );
-	} elsif (Padre::Constant::UNIX) {
-		my $parent_folder = File::Basename::dirname($filename);
-		$error = $self->_execute_unix($parent_folder);
-	} else {
-
-		# Unsupported
-		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
-	}
-
-	if ($error) {
-		$main->error($error);
-	}
-
-	return;
-}
-
-=head2 C<open_with_default_system_editor>
-
-  $action->open_in_file_browser($filename);
-
-Opens the provided C<$filename> using the default system editor
-
-=cut
-
-sub open_with_default_system_editor {
-	my ( $self, $filename ) = @_;
-
-	my $main = Padre::Current->main;
-	unless ($filename) {
-		$main->error( Wx::gettext("No filename") );
-		return;
-	}
-
-	my $error;
-	if (Padre::Constant::WIN32) {
-
-		# Win32
-		require Padre::Util::Win32;
-		Padre::Util::Win32::ExecuteProcessAndWait(
-			directory  => $self->{cwd},
-			file       => $filename,
-			parameters => '',
-			show       => 1
-		);
-	} elsif (Padre::Constant::UNIX) {
-
-		# Unix
-		$error = $self->_execute_in_file_mananger($filename);
-	} else {
-
-		# Unsupported
-		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
-	}
-
-	if ($error) {
-		$main->error($error);
-	}
-
-	return;
 }
 
 #
