@@ -43,6 +43,7 @@ sub _execute {
 		# On Windows, if we don't have STDIN/STDOUT, avoid IPC::Open3
 		# because it crashes when launching a non-console app
 		if (Padre::Constant::WIN32) {
+
 			# Spawn process without waiting (only on win32, see perlport)
 			system( 1, $cmd, @cmd_args );
 		} else {
