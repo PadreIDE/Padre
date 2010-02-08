@@ -1,8 +1,8 @@
-package Padre::Wx::Directory::OpenInFileBrowserAction;
+package Padre::Util::FileBrowser;
 
 =head1 NAME
 
-Padre::Wx::Directory::OpenInFileBrowserAction - Open in file browser action
+Padre::Util::FileBrowser - Open in file browser action
 
 =head1 DESCRIPTION
 
@@ -31,7 +31,7 @@ sub new {
 
 =head2 C<open_in_file_browser>
 
-  Padre::Wx::Directory::OpenInFileBrowserAction->open_in_file_browser($filename);
+  Padre::Util::FileBrowser->open_in_file_browser($filename);
 
 Single shot method to open the provided C<$filename> in the file browser
 On win32, selects it in Windows Explorer
@@ -73,7 +73,7 @@ sub open_in_file_browser {
 
 =head2 C<open_with_default_system_editor>
 
-  Padre::Wx::Directory::OpenInFileBrowserAction->open_in_file_browser($filename);
+  Padre::Util::FileBrowser->open_in_file_browser($filename);
 
 Single shot method to open the provided C<$filename> using the default system editor
 

@@ -2226,8 +2226,8 @@ Opens the current C<$filename> using the operating system's file browser
 sub on_open_in_file_browser {
 	my ( $self, $filename ) = @_;
 
-	require Padre::Wx::Directory::OpenInFileBrowserAction;
-	Padre::Wx::Directory::OpenInFileBrowserAction->open_in_file_browser($filename);
+	require Padre::Util::FileBrowser;
+	Padre::Util::FileBrowser->open_in_file_browser($filename);
 }
 
 =pod
@@ -3675,8 +3675,8 @@ Opens C<$filename> in the default system editor
 sub on_open_with_default_system_editor {
 	my ( $self, $filename ) = @_;
 
-	require Padre::Wx::Directory::OpenInFileBrowserAction;
-	Padre::Wx::Directory::OpenInFileBrowserAction->open_with_default_system_editor($filename);
+	require Padre::Util::FileBrowser;
+	Padre::Util::FileBrowser->open_with_default_system_editor($filename);
 }
 
 =pod
