@@ -285,6 +285,8 @@ sub refresh {
 	my $current = _CURRENT(@_);
 	my $doc     = $current->document ? 1 : 0;
 
+	$self->{open_in_file_browser}->Enable($doc);
+	$self->{open_with_default_system_editor}->Enable($doc);
 	$self->{close}->Enable($doc);
 	$self->{close_all}->Enable($doc);
 	$self->{close_all_but_current}->Enable($doc);
