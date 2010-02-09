@@ -20,7 +20,7 @@ Padre::Task::PPI::LexicalReplaceVariable - Lexically variable replace using L<PP
 
   my $replacer = Padre::Task::PPI::LexicalReplaceVariable->new(
           document    => $document_obj,
-          location    => [$line, $column], # the position of *any* occurrance of the variable
+          location    => [$line, $column], # the position of *any* occurrence of the variable
           replacement => '$foo',
   );
   $replacer->schedule();
