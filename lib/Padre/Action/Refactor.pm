@@ -7,7 +7,7 @@ package Padre::Action::Refactor;
 =head1 NAME
 
 Padre::Action::Refactor is a outsourced module. It creates Actions for
-various helper function for refactoring.
+various helper functions for refactoring.
 
 =cut
 
