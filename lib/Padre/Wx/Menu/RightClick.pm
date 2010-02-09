@@ -52,17 +52,11 @@ sub new {
 			$self,
 			'file.open_selection',
 		);
-		$self->AppendSeparator;
 	}
 
 	$self->{open_in_file_browser} = $self->add_menu_action(
 		$self,
 		'file.open_in_file_browser',
-	);
-
-	$self->{select_all} = $self->add_menu_action(
-		$self,
-		'edit.select_all',
 	);
 
 	$self->AppendSeparator;
@@ -90,6 +84,11 @@ sub new {
 	if ( not defined($text) or not length($text) or not $editor->CanPaste ) {
 		$self->{paste}->Enable(0);
 	}
+
+	$self->{select_all} = $self->add_menu_action(
+		$self,
+		'edit.select_all',
+	);
 
 	$self->AppendSeparator;
 
