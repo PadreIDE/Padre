@@ -41,8 +41,19 @@ configure_requires 'ExtUtils::MakeMaker' => '6.52';
 #	exit 0;
 #}
 
+# This makes sure that we didn't compile Alien::wxWidgets with the wrong options.
+configure_requires 'Alien::wxWidgets' => 0;
 
-
+my $wxw = eval { use Alien::wxWidgets; 1; };
+if ($@ || !$wxw ) {
+	print STDERR "Warning: prerequisite Alien::wxWidgets not found.\n";
+	exit 0;
+}
+if ('2.009000' eq Alien::wxWidgets->version()) {
+	print STDERR "Warning: Alien::wxWidgets was compiled with the development version of wxWidgets.\n";
+	print STDERR "This is known to cause Padre to crash.\n";
+	exit 0;
+}
 
 
 #####################################################################
