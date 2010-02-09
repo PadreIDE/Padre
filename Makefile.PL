@@ -50,8 +50,8 @@ if ($@ || !$wxw ) {
 	exit 0;
 }
 if ('2.009000' eq Alien::wxWidgets->version()) {
-	print STDERR "Warning: Alien::wxWidgets was compiled with the development version of wxWidgets.\n";
-	print STDERR "This is known to cause Padre to crash.\n";
+	print STDERR "Warning: Alien::wxWidgets was compiled with the development version of\n";
+	print STDERR "wxWidgets. This is known to cause Padre to crash.\n";
 	exit 0;
 }
 
