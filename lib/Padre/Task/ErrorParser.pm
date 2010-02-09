@@ -39,7 +39,7 @@ sub finish {
 	my $errorlist = $main->errorlist;
 	my $data      = $self->data;
 	my $parser    = $self->parser;
-	$errorlist->{parser} = $parser;
+	$errorlist->{parser} = $parser if $errorlist;
 
 	my @errors = defined $data && $data ne '' ? $parser->parse_string($data) : ();
 
