@@ -33,6 +33,7 @@ Changes for Perl Application Development and Refactoring Environment
       configuration in otherwise unrecoverable situations, such as now
       when the Swarm plugin causes the slave-driver code to instantly
       segfault at startup (ADAMK)
+    - Add mimetype detection for Template::Toolkit and CSS files (SEWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
