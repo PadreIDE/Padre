@@ -5,12 +5,16 @@ package Padre::Wx::Dialog::PluginManager;
 use 5.008;
 use strict;
 use warnings;
-use Carp            ();
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Carp                       ();
+use Padre::Wx                  ();
+use Padre::Wx::Icon            ();
+use Padre::Wx::Role::MainChild ();
 
 our $VERSION = '0.56';
-our @ISA     = 'Wx::Dialog';
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::Dialog
+};
 
 
 
@@ -21,12 +25,12 @@ our @ISA     = 'Wx::Dialog';
 
 sub new {
 	my $class   = shift;
-	my $parent  = shift;
+	my $main    = shift;
 	my $manager = shift;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
-		$parent,
+		$main,
 		-1,
 		Wx::gettext('Plug-in Manager'),
 		Wx::wxDefaultPosition,
@@ -305,15 +309,12 @@ sub button_close {
 #
 sub _plugin_disable {
 	my $self   = shift;
-	my $plugin = $self->{plugin};
-	my $parent = $self->GetParent;
-
+	my $lock   = $self->main->lock('UPDATE', 'DB', 'refresh_plugins');
+	my $plugin = $self->{plugin}->class;
+	
 	# disable plug-in
-	$parent->Freeze;
-	Padre::DB::Plugin->update_enabled( $plugin->class => 0 );
-	$self->{manager}->_plugin_disable( $plugin->class );
-	$parent->menu->refresh(1);
-	$parent->Thaw;
+	Padre::DB::Plugin->update_enabled( $plugin => 0 );
+	$self->{manager}->_plugin_disable($plugin);
 
 	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
@@ -326,15 +327,12 @@ sub _plugin_disable {
 #
 sub _plugin_enable {
 	my $self   = shift;
-	my $plugin = $self->{plugin};
-	my $parent = $self->GetParent;
+	my $lock   = $self->main->lock('UPDATE', 'DB', 'refresh_plugins');
+	my $plugin = $self->{plugin}->class;
 
 	# Enable plug-in
-	$parent->Freeze;
-	Padre::DB::Plugin->update_enabled( $plugin->class => 1 );
-	$self->{manager}->_plugin_enable( $plugin->class );
-	$parent->menu->refresh(1);
-	$parent->Thaw;
+	Padre::DB::Plugin->update_enabled( $plugin => 1 );
+	$self->{manager}->_plugin_enable($plugin);
 
 	# Update plug-in manager dialog to reflect new state
 	$self->_update_plugin_state;
@@ -541,7 +539,7 @@ sub _update_plugin_state {
 	# Update the list item
 	# $self->_refresh_list;
 
-	# force window to recompute layout. indeed, changes are that plug-in
+	# Force window to recompute layout. indeed, changes are that plug-in
 	# name has a different length, and thus should be recentered.
 	$self->Layout;
 }

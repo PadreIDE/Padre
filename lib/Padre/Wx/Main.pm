@@ -1279,6 +1279,20 @@ sub refresh_menu {
 	$self->menu->refresh;
 }
 
+=head3 C<refresh_plugins>
+
+    $main->refresh_plugins;
+
+Force a refresh of the plugin menus.
+
+=cut
+
+sub refresh_plugins {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	$self->menu->plugins->refresh($self);
+}
+
 =pod
 
 =head3 C<refresh_menubar>
@@ -2471,17 +2485,17 @@ C<$session> (a C<Padre::DB::Session> object). No return value.
 =cut
 
 sub open_session {
-	my ( $self, $session, $autosave ) = @_;
+	my $self     = shift;
+	my $session  = shift;
+	my $autosave = shift || 0;
 
-	$autosave ||= 0; # Initilize if it isn't
+	# Are there any files in the session?
+	my @files = $session->files or return;
 
-	# get list of files in the session
-	my @files = $session->files;
-	return unless @files;
+	# Prevent redrawing until we're done
+	my $lock = $self->lock('UPDATE', 'DB', 'refresh');
 
-	# prevent redrawing until we're done
-	$self->Freeze;
-
+	# Progress dialog for the session changes
 	require Padre::Wx::Progress;
 	my $progress = Padre::Wx::Progress->new(
 		$self,
@@ -2521,13 +2535,7 @@ sub open_session {
 	$self->ide->{session}          = $session->id;
 	$self->ide->{session_autosave} = $autosave;
 
-	# now we can redraw
-	$self->Thaw;
-
-	# This could run in non-blocking space:
-	my $editor = $self->current->editor;
-	$self->update_directory;
-	$self->refresh_title;
+	return 1;
 }
 
 =pod
@@ -3216,10 +3224,8 @@ Create a new empty tab. No return value.
 
 sub on_new {
 	my $self = shift;
-	$self->Freeze;
+	my $lock = $self->lock('UPDATE', 'refresh');
 	$self->setup_editor;
-	$self->Thaw;
-	$self->refresh;
 	return;
 }
 
@@ -3287,7 +3293,7 @@ sub setup_editor {
 		}
 	}
 
-	my $lock = $self->lock('REFRESH');
+	my $lock     = $self->lock('REFRESH');
 	my $document = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:

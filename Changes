@@ -34,6 +34,9 @@ Changes for Perl Application Development and Refactoring Environment
       when the Swarm plugin causes the slave-driver code to instantly
       segfault at startup (ADAMK)
     - Add mimetype detection for Template::Toolkit and CSS files (SEWI)
+    - Added plugin menu refreshing to the resource locking system (ADAMK)
+    - Fixed three cases where code was still manually calling ->Freeze
+      and ->Thaw on the main window, breaking the resource locked (ADAMK)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)

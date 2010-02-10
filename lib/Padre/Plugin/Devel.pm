@@ -66,6 +66,7 @@ sub menu_plugins_simple {
 		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
 		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
 		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
+		Wx::gettext('Dump Display Data')     => 'dump_display',
 		Wx::gettext('Start/Stop sub trace')  => 'trace_sub_startstop',
 
 		'---' => undef,
@@ -177,6 +178,24 @@ sub dump_padre {
 
 sub dump_inc {
 	$_[0]->_dump( \%INC, \@INC );
+}
+
+sub dump_display {
+	my $self     = shift;
+	my $count    = Wx::Display->GetCount;
+	my @displays = ();
+	foreach ( 0 .. $count ) {
+		my $display  = Wx::Display->new($_);
+		push @displays, {
+			IsPrimary     => $display->IsPrimary,
+			GetGeometry   => $display->GetGeometry,
+			GetClientArea => $display->GetClientArea,
+		};
+	}
+	$self->_dump( {
+		GetCount => $count,
+		DisplayList => \@displays,
+	} );
 }
 
 sub trace_sub_startstop {
