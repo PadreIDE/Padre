@@ -717,8 +717,8 @@ sub save_file {
 
 	# Not set when first time to save
 	# Allow the upgrade from ascii to utf-8 if there were unicode characters added
-	require Padre::Locale;
 	unless ( $self->{encoding} and $self->{encoding} ne 'ascii' ) {
+		require Padre::Locale;
 		$self->{encoding} = Padre::Locale::encoding_from_string($content);
 	}
 
@@ -729,7 +729,7 @@ sub save_file {
 		warn "encoding is not set, (couldn't get from contents) when saving file $file->{filename}\n";
 	}
 
-	if ( !$file->write( $content, $encode ) ) {
+	unless ( $file->write( $content, $encode ) ) {
 		$self->set_errstr( $file->error );
 		return;
 	}
@@ -754,10 +754,26 @@ as when we do a full file save.
 =cut
 
 sub write {
-	my $self    = shift;
-	my $file    = shift;
-	my $content = $self->text_get;
-	
+	my $self = shift;
+	my $file = shift; # File object, not just path
+	my $text = $self->text_get;
+
+	# Get the locale, but don't save it.
+	# This could fire when only one of two characters have been
+	# typed, and we may not know the encoding yet.
+	# Not set when first time to save
+	# Allow the upgrade from ascii to utf-8 if there were unicode characters added
+	my $encoding = $self->{encoding};
+	unless ( $encoding and $encoding ne 'ascii' ) {
+		require Padre::Locale;
+		$encoding = Padre::Locale::encoding_from_string($text);
+	}
+	if ( defined $encoding ) {
+		$encoding = ":raw:encoding($encoding)";
+	}
+
+	# Write the file
+	$file->write( $text, $encoding );
 }
 
 =pod
