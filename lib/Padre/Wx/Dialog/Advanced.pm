@@ -16,7 +16,7 @@ our @ISA     = qw{
 
 =head1 NAME
 
-Padre::Wx::Dialog::Advanced - a dialog to show advanced settings
+Padre::Wx::Dialog::Advanced - a dialog to show and configure advanced preferences
 
 =head1 PUBLIC API
 
