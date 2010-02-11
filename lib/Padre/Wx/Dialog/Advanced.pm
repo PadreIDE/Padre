@@ -173,35 +173,40 @@ sub _update_list {
 	my $self = shift;
 	
 	my $config = $self->main->config;
-	my $host = $config->host;
-	my $human = $config->human;
+
+	my $filter = $self->{filter}->GetValue();
+
+	#quote the search string for safety
+	$filter = quotemeta $filter;
+
+	my %types = (
+		Padre::Constant::BOOLEAN => Wx::gettext("Boolean"),
+		Padre::Constant::POSINT => Wx::gettext("Positive integer"),
+		Padre::Constant::INTEGER => Wx::gettext("Integer"),
+		Padre::Constant::ASCII => Wx::gettext("ASCII"),
+		Padre::Constant::PATH => Wx::gettext("Path"),
+	);
 
 	my %settings = %Padre::Config::SETTING;
 	$self->{list}->DeleteAllItems;
 	my $index          = -1;
 	for my $config_name (keys %settings) {
+		
+		# Ignore setting if it does not match the filter
+		next if $config_name !~ /^$filter/i;
+	
+		# Add the setting to the list control
 		my $setting = $settings{$config_name};
 
 		my $type = $setting->type;
-		my $type_name = "unknown";
-		if($type == Padre::Constant::BOOLEAN) {
-			$type_name = "boolean";
-		} elsif($type == Padre::Constant::POSINT) {
-			$type_name = "posint";
-		} elsif($type == Padre::Constant::INTEGER) {
-			$type_name = "integer";
-		} elsif($type == Padre::Constant::ASCII) {
-			$type_name = "ascii";
-		} elsif($type == Padre::Constant::PATH) {
-			$type_name = "path";
-		} else {
-			warn "Unknown type: $type while reading configuration data\n";
-		}
+		my $type_name = $types{$type};
+		warn "Unknown type: $type while reading $config_name\n" unless $type_name;
 
+		my $value = $config->$config_name;
 		$self->{list}->InsertStringItem( ++$index, $config_name );
 		$self->{list}->SetItem( $index, 1, "default" );
 		$self->{list}->SetItem( $index, 2, $type_name );
-		$self->{list}->SetItem( $index, 3, $config->$config_name );
+		$self->{list}->SetItem( $index, 3, $value );
 	}
 	
 
