@@ -1102,6 +1102,11 @@ sub project_find {
 	Padre::Project->from_file( $self->{file}->{filename} );
 }
 
+# Find the project-relative file name
+sub filename_relative {
+	File::Spec->abs2rel( $_[0]->filename, $_[0]->project_dir );
+}
+
 
 
 
