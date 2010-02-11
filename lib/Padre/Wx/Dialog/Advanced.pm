@@ -149,6 +149,15 @@ sub _create_controls {
 sub _bind_events {
 	my $self = shift;
 
+	Wx::Event::EVT_TEXT(
+		$self,
+		$self->{filter},
+		sub {
+			$_[0]->_update_list;
+			return;
+		}
+	);
+
 	Wx::Event::EVT_BUTTON( $self, $self->{button_ok},     sub { $_[0]->_on_ok_button; } );
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
 }
@@ -208,8 +217,8 @@ sub _update_list {
 		$self->{list}->SetItem( $index, 2, $type_name );
 		$self->{list}->SetItem( $index, 3, $value );
 	}
-	
 
+	return;
 }
 
 =pod
