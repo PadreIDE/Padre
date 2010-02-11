@@ -45,16 +45,22 @@ my $width;
 my $Clipboard_Old = '';
 
 sub new {
-	my $class    = shift;
-	my $notebook = shift;
-	my $main     = $notebook->main;
-	my $config   = $main->config;
+	my $class  = shift;
+	my $parent = shift;
+
+	# NOTE: This hack is only here because the Preferences dialog uses
+	# an editor object for their style preview thingy.
+	my $main = $parent;
+	while ( not $main->isa('Padre::Wx::Main') ) {
+		$main = $main->GetParent;
+	}
 
 	# Create the underlying Wx object
 	my $lock = $main->lock('UPDATE', 'refresh_menu_window');
-	my $self = $class->SUPER::new($notebook);
+	my $self = $class->SUPER::new($parent);
 
 	# TO DO: Make this suck less
+	my $config = $main->config;
 	$data = data( $config->editor_style );
 
 	# Set the code margins a little larger than the default.
@@ -139,7 +145,7 @@ sub new {
 }
 
 sub main {
-	return $_[0]->GetGrandParent;
+	$_[0]->GetGrandParent;
 }
 
 sub data {
