@@ -84,10 +84,10 @@ sub _create_controls {
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
-	$self->{list}->InsertColumn( 0, Wx::gettext('Preference Name'));
-	$self->{list}->InsertColumn( 1, Wx::gettext('Status'));
-	$self->{list}->InsertColumn( 2, Wx::gettext('Type'));
-	$self->{list}->InsertColumn( 3, Wx::gettext('Value'));
+	$self->{list}->InsertColumn( 0, Wx::gettext('Preference Name') );
+	$self->{list}->InsertColumn( 1, Wx::gettext('Status') );
+	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
+	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
 	Wx::Event::EVT_LIST_ITEM_SELECTED(
 		$self,
 		$self->{list},
@@ -97,13 +97,13 @@ sub _create_controls {
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$self,
 		$self->{list},
-		sub { 
+		sub {
 		},
 	);
 	Wx::Event::EVT_LIST_COL_CLICK(
 		$self,
 		$self->{list},
-		sub { 
+		sub {
 		},
 	);
 
@@ -128,13 +128,13 @@ sub _create_controls {
 	$button_sizer->AddSpacer(5);
 
 	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$filter_sizer->Add( $filter_label,     0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$filter_sizer->Add( $self->{filter},   1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -183,7 +183,7 @@ sub _on_ok_button {
 #
 sub _update_list {
 	my $self = shift;
-	
+
 	my $config = $self->main->config;
 
 	my $filter = $self->{filter}->GetValue();
@@ -193,27 +193,27 @@ sub _update_list {
 
 	my %types = (
 		Padre::Constant::BOOLEAN => Wx::gettext("Boolean"),
-		Padre::Constant::POSINT => Wx::gettext("Positive integer"),
+		Padre::Constant::POSINT  => Wx::gettext("Positive integer"),
 		Padre::Constant::INTEGER => Wx::gettext("Integer"),
-		Padre::Constant::ASCII => Wx::gettext("ASCII"),
-		Padre::Constant::PATH => Wx::gettext("Path"),
+		Padre::Constant::ASCII   => Wx::gettext("ASCII"),
+		Padre::Constant::PATH    => Wx::gettext("Path"),
 	);
 
 	my %settings = %Padre::Config::SETTING;
-	my $list = $self->{list};
+	my $list     = $self->{list};
 	$list->DeleteAllItems;
-	my $index          = -1;
-	for my $config_name (keys %settings) {
-		
+	my $index = -1;
+	for my $config_name ( keys %settings ) {
+
 		# Ignore setting if it does not match the filter
 		next if $config_name !~ /$filter/i;
-	
+
 		# Add the setting to the list control
 		my $setting = $settings{$config_name};
 
-		my $type = $setting->type;
+		my $type      = $setting->type;
 		my $type_name = $types{$type};
-		unless($type_name) {
+		unless ($type_name) {
 			warn "Unknown type: $type while reading $config_name\n";
 			next;
 		}
@@ -248,8 +248,8 @@ sub show {
 	$self->_update_list;
 
 	# Resize columns to their biggest item width
-	for(0..3) {
-		$self->{list}->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE);
+	for ( 0 .. 3 ) {
+		$self->{list}->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
 
 	# If it is not shown, show the dialog
