@@ -70,7 +70,7 @@ sub _create_controls {
 
 
 	# a label to display current line/position
-	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter' );
+	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter:' );
 
 	# Field #1: text field for the line number/position
 	$self->{filter} = Wx::TextCtrl->new(
@@ -127,10 +127,13 @@ sub _create_controls {
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
+	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$filter_sizer->Add( $filter_label,     0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$filter_sizer->Add( $self->{filter},   1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $filter_label, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{filter},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
@@ -210,7 +213,10 @@ sub _update_list {
 
 		my $type = $setting->type;
 		my $type_name = $types{$type};
-		warn "Unknown type: $type while reading $config_name\n" unless $type_name;
+		unless($type_name) {
+			warn "Unknown type: $type while reading $config_name\n";
+			next;
+		}
 
 		my $value = $config->$config_name;
 		$list->InsertStringItem( ++$index, $config_name );
