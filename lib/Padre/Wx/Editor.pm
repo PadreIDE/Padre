@@ -47,10 +47,12 @@ my $Clipboard_Old = '';
 sub new {
 	my $class    = shift;
 	my $notebook = shift;
+	my $main     = $notebook->main;
+	my $config   = $main->config;
 
 	# Create the underlying Wx object
-	my $self   = $class->SUPER::new($notebook);
-	my $config = $self->main->ide->config;
+	my $lock = $main->lock('UPDATE', 'refresh_menu_window');
+	my $self = $class->SUPER::new($notebook);
 
 	# TO DO: Make this suck less
 	$data = data( $config->editor_style );
@@ -73,7 +75,6 @@ sub new {
 	Wx::Event::EVT_CHAR( $self, \&on_char );
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
-
 
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
@@ -167,17 +168,19 @@ sub data {
 	return $data;
 }
 
-sub error { # Error Message
+# Error Message
+sub error {
 	my $self = shift;
 	my $text = shift;
 	Wx::MessageBox(
-		$text,    Wx::gettext("Error"),
-		Wx::wxOK, $self->main
+		$text,
+		Wx::gettext("Error"),
+		Wx::wxOK,
+		$self->main
 	);
-
 }
 
-# most of this should be read from some external files
+# Most of this should be read from some external files
 # but for now we use this if statement
 sub padre_setup {
 	my $self = shift;
@@ -196,6 +199,7 @@ sub padre_setup {
 	my $mimetype = $self->{Document}->get_mimetype || 'text/plain';
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
+
 	} elsif ( $mimetype eq 'text/plain' ) {
 		$self->padre_setup_plain;
 		my $filename = $self->{Document}->filename || q{};
@@ -205,6 +209,7 @@ sub padre_setup {
 			# re-setup if file extension is .conf
 			$self->padre_setup_style('conf') if $ext eq 'conf';
 		}
+
 	} elsif ($mimetype) {
 
 		# setup some default coloring
@@ -220,9 +225,7 @@ sub padre_setup {
 	return;
 }
 
-#
 # Called a key is released in the editor
-#
 sub on_key_up {
 	my ( $self, $event ) = @_;
 

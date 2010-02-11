@@ -1279,18 +1279,32 @@ sub refresh_menu {
 	$self->menu->refresh;
 }
 
-=head3 C<refresh_plugins>
+=head3 C<refresh_menu_plugins>
 
-    $main->refresh_plugins;
+    $main->refresh_menu_plugins;
 
 Force a refresh of the plugin menus.
 
 =cut
 
-sub refresh_plugins {
+sub refresh_menu_plugins {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->menu->plugins->refresh($self);
+}
+
+=head3 C<refresh_menu_window>
+
+    $main->refresh_menu_window
+
+Force a refresh of the window menu
+
+=cut
+
+sub refresh_menu_window {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	$self->menu->window->refresh($self);
 }
 
 =pod
@@ -4248,7 +4262,10 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock = $self->lock( 'REFRESH', 'DB', 'refresh_directory', 'refresh_menu' );
+	my $lock = $self->lock( qw{
+		REFRESH DB
+		refresh_directory refresh_menu refresh_menu_window
+	} );
 	TRACE( join ' ', "Closing ", ref $doc, $doc->filename || 'Unknown' ) if DEBUG;
 
 	if ( $doc->is_modified and not $doc->is_unused ) {

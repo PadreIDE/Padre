@@ -7,10 +7,14 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ('_CURRENT');
 
 our $VERSION = '0.56';
 our @ISA     = 'Padre::Wx::Menu';
+
+
+
+
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -90,9 +94,7 @@ sub new {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('&Window');
+	Wx::gettext('&Window');
 }
 
 sub refresh {
@@ -112,11 +114,13 @@ sub refresh {
 	# Add or remove menu entries as needed
 	if ($pages) {
 		my $config_shorten_path = $main->ide->config->window_list_shorten_path;
+		my $prefix              = 0;
 		my $prefix_length       = 0;
 		if ($config_shorten_path) {
 
-			# This only works when there isnt any unsaved tabs
-			$prefix_length = length get_common_prefix( $pages, $notebook );
+			# This only works when there isn't any unsaved tabs
+			$prefix        = get_common_prefix( $pages, $notebook );
+			$prefix_length = length $prefix;
 		}
 
 		# Create a list of notebook labels.
@@ -124,11 +128,11 @@ sub refresh {
 		# or unsaved pane label (e.g. Unsaved [0-9]+)
 		my %windows = ();
 		foreach my $tab_index ( 0 .. $pages - 1 ) {
-			my $doc = $notebook->GetPage($tab_index)->{Document} or return;
+			my $doc   = $notebook->GetPage($tab_index)->{Document} or return;
 			my $label = $doc->filename || $notebook->GetPageText($tab_index);
 			$label =~ s/^\s+//;
 			if ( $prefix_length < length $label ) {
-				$label = substr( $label, $prefix_length );
+				$label = File::Spec->abs2rel( $label, $prefix );
 			}
 			$windows{$label} = {
 				pane_index => $tab_index,
@@ -154,7 +158,7 @@ sub refresh {
 		}
 	}
 
-	# toggle window operations based on number of pages
+	# Toggle window operations based on number of pages
 	$self->{window_next_file}->Enable($pages);
 	$self->{window_previous_file}->Enable($pages);
 	$self->{window_last_visited_file}->Enable($pages);
@@ -163,10 +167,8 @@ sub refresh {
 	return 1;
 }
 
-#
 # Get the common prefix of notebooks
 # Please note that an Unsaved file causes this return undef
-#
 sub get_common_prefix {
 	my ( $count, $notebook ) = @_;
 	my @prefix = ();

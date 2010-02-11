@@ -172,6 +172,21 @@ sub from_file {
 
 
 ######################################################################
+# Navigation Convenience Methods
+
+sub documents {
+	my $self = shift;
+	my $root = $self->root;
+	return grep {
+		$_->project_dir eq $root
+	} Padre::Current->main->documents;
+}
+
+
+
+
+
+######################################################################
 # Configuration and Intuition
 
 sub config {
@@ -215,13 +230,24 @@ sub headline {
 
 sub temp {
 	my $self = shift;
-	$self->{temp}
-		or $self->{temp} = $self->_temp;
+	$self->{temp} or $self->{temp} = $self->_temp;
 }
 
 sub _temp {
 	require Padre::Project::Temp;
 	Padre::Project::Temp->new;
+}
+
+sub temp_sync {
+	my $self = shift;
+
+	# What files do we need to save
+	my @changed = grep {
+		! $_->is_new and $_->is_modified
+	} $self->documents or return;
+
+	# Save the files to the temporary directory
+	die "CODE INCOMPLETE";
 }
 
 

@@ -274,7 +274,7 @@ plug-in has changed while Padre was running.
 
 sub load_plugins {
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE', 'DB', 'refresh_plugins');
+	my $lock = $self->main->lock('UPDATE', 'DB', 'refresh_menu_plugins');
 
 	# Put the plug-in directory first in the load order
 	my $plugin_dir = $self->plugin_dir;
@@ -357,7 +357,7 @@ and then reload them.
 
 sub reload_plugins {
 	my $self = shift;
-	my $lock = $self->main->lock('UPDATE', 'DB', 'refresh_plugins');
+	my $lock = $self->main->lock('UPDATE', 'DB', 'refresh_menu_plugins');
 
 	# Do not use the reload_plugin method since that
 	# refreshes the menu every time.
@@ -495,7 +495,7 @@ menu, etc.
 
 sub load_plugin {
 	my $self = shift;
-	my $lock = $self->main->lock('refresh_plugins');
+	my $lock = $self->main->lock('refresh_menu_plugins');
 	$self->_load_plugin(@_);
 }
 
@@ -618,7 +618,7 @@ menu, etc.
 
 sub unload_plugin {
 	my $self = shift;
-	my $lock = $self->main->lock('refresh_plugins');
+	my $lock = $self->main->lock('refresh_menu_plugins');
 	$self->_unload_plugin(@_);
 }
 
@@ -666,7 +666,7 @@ is passed in as first argument.
 
 sub reload_plugin {
 	my $self   = shift;
-	my $lock   = $self->main->lock('UPDATE', 'DB', 'refresh_plugins');
+	my $lock   = $self->main->lock('UPDATE', 'DB', 'refresh_menu_plugins');
 	my $module = shift;
 	$self->_unload_plugin($module);
 	$self->_load_plugin($module)   or return;

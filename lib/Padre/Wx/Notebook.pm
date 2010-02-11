@@ -12,6 +12,10 @@ our @ISA     = qw{
 	Wx::AuiNotebook
 };
 
+
+
+
+
 ######################################################################
 # Constructor and Accessors
 
