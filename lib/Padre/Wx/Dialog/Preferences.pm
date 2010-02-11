@@ -1187,11 +1187,13 @@ sub run {
 sub _show_advanced_settings {
 	my $self = shift;
 
-	#Cancel the preferences dialog
+	#Cancel the preferences dialog since it is not needed
 	$self->{dialog}->EndModal(Wx::wxID_CANCEL);
 
-	#TODO show advanced settings dialog
-	Padre->ide->{wx}->main->info('Advanced settings dialog should be shown here');
+	#show the advanced settings dialog instead
+	require Padre::Wx::Dialog::Advanced;
+	my $advanced = Padre::Wx::Dialog::Advanced->new(Padre->ide->{wx}->main);
+	$advanced->show;
 
 	return;
 }
