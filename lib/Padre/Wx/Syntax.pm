@@ -277,7 +277,7 @@ sub on_timer {
 
 	# In case we have created a new and still completely empty doc we
 	# need to clean up the message list
-	if ( ref $pre_exec_result eq 'ARRAY' && !@{$pre_exec_result} ) {
+	if ( ref $pre_exec_result eq 'ARRAY' and not @{$pre_exec_result} ) {
 		$self->clear;
 	}
 
@@ -365,7 +365,7 @@ sub on_right_down {
 			# And copy it to clipboard
 			if ( ( length $msg > 0 ) and Wx::wxTheClipboard->Open() ) {
 				Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($msg) );
-				Wx::wxTheClipboard->Close();
+				Wx::wxTheClipboard->Close;
 			}
 		}
 	);
