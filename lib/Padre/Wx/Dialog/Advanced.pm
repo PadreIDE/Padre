@@ -200,11 +200,10 @@ sub _update_list {
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 	my $index          = -1;
-	my $count = 0;
 	for my $config_name (keys %settings) {
 		
 		# Ignore setting if it does not match the filter
-		next if $config_name !~ /^$filter/i;
+		next if $config_name !~ /$filter/i;
 	
 		# Add the setting to the list control
 		my $setting = $settings{$config_name};
@@ -218,15 +217,6 @@ sub _update_list {
 		$list->SetItem( $index, 1, "default" );
 		$list->SetItem( $index, 2, $type_name );
 		$list->SetItem( $index, 3, $value );
-		
-		$count++;
-	}
-
-	if($count) {
-		# Resize columns to their biggest item width
-		for(0..3) {
-			$list->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE);
-		}
 	}
 
 	return;
@@ -250,6 +240,11 @@ sub show {
 
 	# Update the preferences list
 	$self->_update_list;
+
+	# Resize columns to their biggest item width
+	for(0..3) {
+		$self->{list}->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE);
+	}
 
 	# If it is not shown, show the dialog
 	$self->ShowModal;
