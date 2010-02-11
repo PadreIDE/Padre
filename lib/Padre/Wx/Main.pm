@@ -1705,6 +1705,7 @@ sub show_functions {
 
 sub _show_functions {
 	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->right->show( $self->functions );
 	} elsif ( $self->has_functions ) {
@@ -1743,6 +1744,7 @@ sub show_todo {
 # XXX This should be merged with _show_functions again
 sub _show_todo {
 	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->right->show( $self->todo );
 	} elsif ( $self->has_todo ) {
@@ -1783,6 +1785,7 @@ sub show_outline {
 
 sub _show_outline {
 	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		my $outline = $self->outline;
 		$self->right->show($outline);
@@ -1805,8 +1808,7 @@ sub _show_outline {
 
 sub show_debugger {
 	my $self = shift;
-
-	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 
 	#	unless ( $on == $self->menu->view->{debugger}->IsChecked ) {
 	#		$self->menu->view->{debugger}->Check($on);
@@ -1861,6 +1863,7 @@ sub show_directory {
 
 sub _show_directory {
 	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->directory_panel->show( $self->directory );
 	} elsif ( $self->has_directory ) {
@@ -1900,6 +1903,7 @@ sub show_output {
 
 sub _show_output {
 	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		$self->bottom->show(
 			$self->output,
@@ -1941,6 +1945,7 @@ sub show_syntax {
 
 sub _show_syntax {
 	my $self = shift;
+	my $lock = $self->lock('UPDATE');
 	if ( $_[0] ) {
 		my $syntax = $self->syntax;
 		$self->bottom->show(
