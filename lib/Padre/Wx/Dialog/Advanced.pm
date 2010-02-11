@@ -166,6 +166,47 @@ sub _on_ok_button {
 }
 
 
+#
+# Private method to update the preferences list
+#
+sub _update_list {
+	my $self = shift;
+	
+	my $config = $self->main->config;
+	my $host = $config->host;
+	my $human = $config->human;
+
+	my %settings = %Padre::Config::SETTING;
+	$self->{list}->DeleteAllItems;
+	my $index          = -1;
+	for my $config_name (keys %settings) {
+		my $setting = $settings{$config_name};
+
+		my $type = $setting->type;
+		my $type_name = "unknown";
+		if($type == Padre::Constant::BOOLEAN) {
+			$type_name = "boolean";
+		} elsif($type == Padre::Constant::POSINT) {
+			$type_name = "posint";
+		} elsif($type == Padre::Constant::INTEGER) {
+			$type_name = "integer";
+		} elsif($type == Padre::Constant::ASCII) {
+			$type_name = "ascii";
+		} elsif($type == Padre::Constant::PATH) {
+			$type_name = "path";
+		} else {
+			warn "Unknown type: $type while reading configuration data\n";
+		}
+
+		$self->{list}->InsertStringItem( ++$index, $config_name );
+		$self->{list}->SetItem( $index, 1, "default" );
+		$self->{list}->SetItem( $index, 2, $type_name );
+		$self->{list}->SetItem( $index, 3, $config->$config_name );
+	}
+	
+
+}
+
 =pod
 
 =head2 C<show>
@@ -181,6 +222,9 @@ sub show {
 
 	# Set focus on the filter text field
 	$self->{filter}->SetFocus;
+
+	# Update the preferences list
+	$self->_update_list;
 
 	# If it is not shown, show the dialog
 	$self->ShowModal;
