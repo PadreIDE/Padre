@@ -197,8 +197,10 @@ sub _update_list {
 	);
 
 	my %settings = %Padre::Config::SETTING;
-	$self->{list}->DeleteAllItems;
+	my $list = $self->{list};
+	$list->DeleteAllItems;
 	my $index          = -1;
+	my $count = 0;
 	for my $config_name (keys %settings) {
 		
 		# Ignore setting if it does not match the filter
@@ -212,10 +214,19 @@ sub _update_list {
 		warn "Unknown type: $type while reading $config_name\n" unless $type_name;
 
 		my $value = $config->$config_name;
-		$self->{list}->InsertStringItem( ++$index, $config_name );
-		$self->{list}->SetItem( $index, 1, "default" );
-		$self->{list}->SetItem( $index, 2, $type_name );
-		$self->{list}->SetItem( $index, 3, $value );
+		$list->InsertStringItem( ++$index, $config_name );
+		$list->SetItem( $index, 1, "default" );
+		$list->SetItem( $index, 2, $type_name );
+		$list->SetItem( $index, 3, $value );
+		
+		$count++;
+	}
+
+	if($count) {
+		# Resize columns to their biggest item width
+		for(0..3) {
+			$list->SetColumnWidth($_, Wx::wxLIST_AUTOSIZE);
+		}
 	}
 
 	return;
