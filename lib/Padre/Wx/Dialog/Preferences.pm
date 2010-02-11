@@ -840,21 +840,14 @@ sub dialog {
 	$save->SetDefault;
 
 	# Advanced settings (Firefox about:config style)
-	my $advanced = Wx::Button->new(
-		$dialog,
-		-1,
-		Wx::gettext('&Advanced...'),
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		0
-	);
+	my $advanced = Wx::Button->new( $dialog, -1, Wx::gettext('&Advanced...') );
 	$button_row_sizer->Add( $advanced, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 
 	# Advanced settings button action
 	Wx::Event::EVT_BUTTON(
 		$dialog,
 		$advanced,
-		sub { $self->show_advanced_settings; },
+		sub { $self->_show_advanced_settings; },
 	);
 
 	my $cancel = Wx::Button->new(
@@ -1188,16 +1181,19 @@ sub run {
 }
 
 #
-# Shows advanced settings which should be a Firefox's about:config tab
+# Shows advanced settings dialog which should be a bit like Firefox's
+# about:config tab
 #
-sub show_advanced_settings {
+sub _show_advanced_settings {
 	my $self = shift;
 
-	#TODO kill preferences dialog
-	
-	#TODO show advanced settings dialog
+	#Cancel the preferences dialog
+	$self->{dialog}->EndModal(Wx::wxID_CANCEL);
 
+	#TODO show advanced settings dialog
 	Padre->ide->{wx}->main->info('Advanced settings dialog should be shown here');
+
+	return;
 }
 
 1;
