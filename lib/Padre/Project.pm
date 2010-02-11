@@ -252,7 +252,7 @@ sub temp_sync {
 
 	# Save the files to the temporary directory
 	my $temp = $self->temp;
-	foreach my $file ( @changes ) {
+	foreach my $file ( @changed ) {
 		my $dir = File::Basename::basename($file);
 		File::Path::mkpath($dir);
 		

@@ -196,7 +196,7 @@ sub padre_setup {
 	# and Wx::wxUNICODE or wxUSE_UNICODE should be on
 	$self->SetCodePage(65001);
 
-	my $mimetype = $self->{Document}->get_mimetype || 'text/plain';
+	my $mimetype = $self->{Document}->mimetype || 'text/plain';
 	if ( $MIME_STYLE{$mimetype} ) {
 		$self->padre_setup_style( $MIME_STYLE{$mimetype} );
 

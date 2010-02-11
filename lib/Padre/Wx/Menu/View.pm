@@ -365,12 +365,12 @@ sub refresh {
 
 		# Set mimetype
 		my $has_checked = 0;
-		if ( $document->get_mimetype ) {
+		if ( $document->mimetype ) {
 			my %mimes = Padre::MimeTypes::menu_view_mimes();
 			my @mimes = sort keys %mimes;
 			foreach my $pos ( 0 .. scalar @mimes - 1 ) {
 				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
-				if ( $document->get_mimetype eq $mimes{ $mimes[$pos] } ) {
+				if ( $document->mimetype eq $mimes{ $mimes[$pos] } ) {
 					$radio->Check(1);
 					$has_checked = 1;
 				}

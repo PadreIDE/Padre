@@ -360,7 +360,7 @@ sub refresh {
 	my $text     = $current->text;
 	my $document = $current->document;
 	my $hasdoc   = $document ? 1 : 0;
-	my $newline  = $hasdoc ? $document->get_newline_type : '';
+	my $newline  = $hasdoc ? $document->newline_type : '';
 
 	# Handle the simple cases
 	$self->{goto}->Enable($hasdoc);

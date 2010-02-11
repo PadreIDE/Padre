@@ -102,7 +102,7 @@ sub refresh {
 	my $main     = $self->main;
 	my $config   = $current->config;
 	my $document = $current->document;
-	my $mimetype = $document ? $document->get_mimetype : '';
+	my $mimetype = $document ? $document->mimetype : '';
 
 	# Shortcut if no change
 	if ( $self->{mimetype} and $mimetype and $self->{mimetype} eq $mimetype ) {

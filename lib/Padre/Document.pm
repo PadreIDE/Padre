@@ -157,20 +157,21 @@ my $unsaved_number = 0;
 
 use Class::XSAccessor {
 	getters => {
-		editor           => 'editor',
-		filename         => 'filename',    # TO DO is this read_only or what?
-		file             => 'file',        # Padre::File - object
-		get_mimetype     => 'mimetype',
-		get_newline_type => 'newline_type',
-		errstr           => 'errstr',
-		tempfile         => 'tempfile',
-		get_highlighter  => 'highlighter',
+		filename     => 'filename', # TO DO is this read_only or what?
+		file         => 'file',     # Padre::File - object
+		editor       => 'editor',
+		timestamp    => 'timestamp',
+		mimetype     => 'mimetype',
+		errstr       => 'errstr',
+		tempfile     => 'tempfile',
+		highlighter  => 'highlighter',
 	},
 	setters => {
-		set_newline_type => 'newline_type',
-		set_mimetype     => 'mimetype',
-		set_errstr       => 'errstr',
 		set_editor       => 'editor',
+		set_timestamp    => 'timestamp',
+		set_mimetype     => 'mimetype',
+		set_newline_type => 'newline_type',
+		set_errstr       => 'errstr',
 		set_tempfile     => 'tempfile',
 		set_highlighter  => 'highlighter',
 	},
@@ -244,18 +245,16 @@ sub new {
 		$self->load_file;
 	} else {
 		$unsaved_number++;
-		$self->{newline_type} = $self->_get_default_newline_type;
+		$self->{newline_type} = $self->default_newline_type;
 	}
 
-	unless ( $self->get_mimetype ) {
+	unless ( $self->mimetype ) {
 		$self->set_mimetype( $self->guess_mimetype );
 	}
 
-
-
 	$self->rebless;
 
-	Padre->ide->{_popularity_contest}->count( 'mime.' . $self->get_mimetype )
+	Padre->ide->{_popularity_contest}->count( 'mime.' . $self->mimetype )
 		if ( !defined( $ENV{PADRE_IS_TEST} ) )
 		and defined( Padre->ide->{_popularity_contest} );
 
@@ -269,7 +268,7 @@ sub rebless {
 	# to the the base class,
 	# This isn't exactly the most elegant way to do this, but will
 	# do for a first implementation.
-	my $mime_type = $self->get_mimetype or return;
+	my $mime_type = $self->mimetype or return;
 	my $class = Padre::MimeTypes->get_mime_class($mime_type) || __PACKAGE__;
 	TRACE("Reblessing to mimetype: '$class'") if DEBUG;
 	if ($class) {
@@ -322,7 +321,7 @@ sub colorize {
 	my $self = shift;
 	TRACE("colorize called") if DEBUG;
 
-	my $module = $self->get_highlighter;
+	my $module = $self->highlighter;
 	TRACE("module: '$module'") if DEBUG;
 	if ( $module eq 'stc' ) {
 
@@ -354,20 +353,26 @@ sub colorize {
 	return;
 }
 
-sub last_sync {
-	$_[0]->{_timestamp};
+sub timestamp_now {
+	my $self = shift;
+	my $file = $self->file;
+	return 0 unless defined $file;
+
+	# It's important to return undef if there is no ->mtime for this filetype
+	return $file->mtime;
 }
 
 # For ts without a newline type
 # TO DO: get it from config
-sub _get_default_newline_type {
+sub default_newline_type {
+	my $self = shift;
 
 	# Very ugly hack to make the test script work
 	if ( $0 =~ /t.70\-document\.t/ ) {
-		Padre::Constant::NEWLINE;
-	} else {
-		Padre->ide->config->default_line_ending;
+		return Padre::Constant::NEWLINE;
 	}
+
+	$self->current->config->default_line_ending;
 }
 
 =pod
@@ -444,26 +449,17 @@ sub is_unused {
 sub has_changed_on_disk {
 	my ($self) = @_;
 	return 0 unless defined $self->file;
-	return 0 unless defined $self->last_sync;
+	return 0 unless defined $self->timestamp;
 
 	# Caching the result for two lines saved one stat-I/O each time this sub is run
-	my $time_on_file = $self->time_on_file;
-	return 0 unless defined $time_on_file; # there may be no mtime on remote files
+	my $timestamp_now = $self->timestamp_now;
+	return 0 unless defined $timestamp_now; # there may be no mtime on remote files
 
 	# Return -1 if file has been deleted from disk
-	return -1 unless $time_on_file;
+	return -1 unless $timestamp_now;
 
 	# Return 1 if the file has changed on disk, otherwise 0
-	return $self->last_sync < $time_on_file ? 1 : 0;
-}
-
-sub time_on_file {
-	my $self = shift;
-	my $file = $self->file;
-	return 0 unless defined $file;
-
-	# It's important to return undef if there is no ->mtime for this filetype
-	return $file->mtime;
+	return $self->timestamp < $timestamp_now ? 1 : 0;
 }
 
 # Generate MD5-checksum for current file stored on disk
@@ -529,7 +525,7 @@ sub load_file {
 		$self->set_errstr( $file->error );
 		return;
 	}
-	$self->{_timestamp} = $self->time_on_file;
+	$self->{timestamp} = $self->timestamp_now;
 
 	# if guess encoding fails then use 'utf-8'
 	require Padre::Locale;
@@ -552,8 +548,7 @@ sub load_file {
 # 'Mixed' for mixed end of lines,
 # 'None' for one-liners (no EOL)
 sub newline_type {
-	my $self = shift;
-	return $self->{newline_type} or $self->_get_default_newline_type;
+	$_[0]->{newline_type} or $_[0]->default_newline_type;
 }
 
 # Get the newline char(s) for this document.
@@ -561,9 +556,9 @@ sub newline_type {
 #       because of speed issues:
 sub newline {
 	my $self = shift;
-	if ( $self->get_newline_type eq 'WIN' ) {
+	if ( $self->newline_type eq 'WIN' ) {
 		return "\r\n";
-	} elsif ( $self->get_newline_type eq 'MAC' ) {
+	} elsif ( $self->newline_type eq 'MAC' ) {
 		return "\r";
 	}
 	return "\n";
@@ -741,7 +736,7 @@ sub save_file {
 
 	# File must be closed at this time, slow fs/userspace-fs may not
 	# return the correct result otherwise!
-	$self->{_timestamp} = $self->time_on_file;
+	$self->{timestamp} = $self->timestamp_now;
 
 	# Determine new line type using file content.
 	$self->{newline_type} = Padre::Util::newline_type($content);
@@ -835,9 +830,9 @@ sub text_with_one_nl {
 	my $self   = shift;
 	my $text   = $self->text_get;
 	my $nlchar = "\n";
-	if ( $self->get_newline_type eq 'WIN' ) {
+	if ( $self->newline_type eq 'WIN' ) {
 		$nlchar = "\r\n";
-	} elsif ( $self->get_newline_type eq 'MAC' ) {
+	} elsif ( $self->newline_type eq 'MAC' ) {
 		$nlchar = "\r";
 	}
 	$text =~ s/$nlchar/\n/g;
@@ -888,18 +883,18 @@ sub lexer {
 	my $self = shift;
 
 	# this should never happen as now we set mime-type on everything
-	return Wx::wxSTC_LEX_AUTOMATIC unless $self->get_mimetype;
+	return Wx::wxSTC_LEX_AUTOMATIC unless $self->mimetype;
 
-	my $highlighter = $self->get_highlighter;
+	my $highlighter = $self->highlighter;
 	if ( not $highlighter ) {
 		warn "no highlighter\n";
 		$highlighter = 'stc';
 	}
 	return Wx::wxSTC_LEX_CONTAINER if $highlighter ne 'stc';
-	return Wx::wxSTC_LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->get_mimetype );
+	return Wx::wxSTC_LEX_AUTOMATIC unless defined Padre::MimeTypes->get_lexer( $self->mimetype );
 
-	TRACE( 'STC Lexer will be based on mime type "' . $self->get_mimetype . '"' ) if DEBUG;
-	return Padre::MimeTypes->get_lexer( $self->get_mimetype );
+	TRACE( 'STC Lexer will be based on mime type "' . $self->mimetype . '"' ) if DEBUG;
+	return Padre::MimeTypes->get_lexer( $self->mimetype );
 }
 
 # What should be shown in the notebook tab

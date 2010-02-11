@@ -309,7 +309,7 @@ sub _search {
 			if ( not $self->_help_provider ) {
 				$self->{canceled} = 1;
 				$self->_main->error( Wx::gettext("Could not find a help provider for ")
-						. Padre::MimeTypes->get_mime_type_name( $doc->get_mimetype ) );
+						. Padre::MimeTypes->get_mime_type_name( $doc->mimetype ) );
 				exit if ++$self->{errorcount} > 5;
 				return;
 			}

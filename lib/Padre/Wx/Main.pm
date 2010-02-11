@@ -2932,7 +2932,7 @@ sub on_comment_block {
 		$self->error(
 			sprintf(
 				Wx::gettext("Could not determine the comment character for %s document type"),
-				Padre::MimeTypes->get_mime_type_name( $document->get_mimetype )
+				Padre::MimeTypes->get_mime_type_name( $document->mimetype )
 			)
 		);
 		return;
@@ -4719,7 +4719,7 @@ sub on_preferences {
 		my %mime_types; # all the mime-types of currently open files
 		foreach my $editor ( $self->editors ) {
 			$editor->set_preferences;
-			$mime_types{ $editor->{Document}->get_mimetype } = 1;
+			$mime_types{ $editor->{Document}->mimetype } = 1;
 		}
 
 		my %new_highlighters = Padre::MimeTypes->get_current_highlighters;
@@ -5154,9 +5154,9 @@ sub convert_to {
 	my $editor  = $current->editor;
 
 	# Convert and Set the EOL mode for pastes to work correctly
-	my $eol_mode = $Padre::Wx::Editor::mode{$newline};
-	$editor->ConvertEOLs($eol_mode);
-	$editor->SetEOLMode($eol_mode);
+	my $mode = $Padre::Wx::Editor::mode{$newline};
+	$editor->ConvertEOLs($mode);
+	$editor->SetEOLMode($mode);
 
 	# TO DO: include the changing of file type in the undo/redo actions
 	# or better yet somehow fetch it from the document when it is needed.
@@ -5650,8 +5650,9 @@ sub timer_check_overwrite {
 			$doc->editor->configure_editor($doc);
 		}
 	} else {
-		$doc->{_timestamp} = $doc->time_on_file;
+		$doc->{timestamp} = $doc->timestamp_now;
 	}
+
 	$doc->{_already_popup_file_changed} = 0;
 
 	return;
@@ -5844,7 +5845,7 @@ sub change_highlighter {
 	my $focused = $self->current->editor;
 	foreach my $editor ( $self->editors ) {
 		my $document = $editor->{Document};
-		next if $document->get_mimetype ne $mime_type;
+		next if $document->mimetype ne $mime_type;
 		$document->set_highlighter($module);
 		my $filename = defined( $document->{file} ) ? $document->{file}->filename : undef;
 		TRACE( "Set highlighter to to $module for $document in file " . ( $filename || '' ) ) if DEBUG;

@@ -377,7 +377,7 @@ sub NewPage {
 sub padre2docbrowser {
 	my ( $class, $padredoc ) = @_;
 	my $doc = Padre::DocBrowser::document->new(
-		mimetype => $padredoc->get_mimetype,
+		mimetype => $padredoc->mimetype,
 		title    => $padredoc->get_title,
 		filename => $padredoc->filename,
 	);

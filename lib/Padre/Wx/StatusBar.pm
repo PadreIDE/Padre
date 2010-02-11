@@ -165,7 +165,7 @@ sub refresh {
 	my $main     = $self->{main};
 	my $notebook = $current->notebook;
 	my $document = $current->document;
-	my $newline  = $document->get_newline_type || Padre::Constant::NEWLINE;
+	my $newline  = $document->newline_type || Padre::Constant::NEWLINE;
 	my $pageid   = $notebook->GetSelection;
 	my $filename = $document->filename || '';
 	my $old      = $notebook->GetPageText($pageid);
@@ -183,8 +183,8 @@ sub refresh {
 	my $lines          = $editor->GetLineCount;
 	my $char           = $position - $start;
 	my $width          = $self->GetCharWidth;
-	my $highlighter    = Padre::MimeTypes->get_highlighter_name( $document->get_highlighter );
-	my $mime_type_name = Padre::MimeTypes->get_mime_type_name( $document->get_mimetype );
+	my $highlighter    = Padre::MimeTypes->get_highlighter_name( $document->highlighter );
+	my $mime_type_name = Padre::MimeTypes->get_mime_type_name( $document->mimetype );
 	my $percent        = int( 100 * $line / $lines );
 
 	# Set some defaults to advoid "use of uninittialized value" - messages:
@@ -223,7 +223,7 @@ sub refresh {
 		length($rdstatus) * $width,
 	);
 
-	# move the static bitmap holding the task load status
+	# Move the static bitmap holding the task load status
 	$self->_move_bitmap;
 
 	# Fixed ticket #190: Massive GDI object leakages
