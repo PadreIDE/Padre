@@ -247,16 +247,22 @@ sub temp_sync {
 	# What files do we need to save
 	my @changed = grep {
 		! $_->is_new and $_->is_modified
-	} $self->documents;
-	return 0 unless @changed;
+	} $self->documents or return 0;
 
 	# Save the files to the temporary directory
-	my $temp = $self->temp;
-	foreach my $file ( @changed ) {
-		my $dir = File::Basename::basename($file);
-		File::Path::mkpath($dir);
-		
+	my $temp  = $self->temp;
+	my $root  = $temp->root;
+	my $files = 0;
+	foreach my $document ( @changed ) {
+		my $relative = $document->filename_relative;
+		my $tempfile = File::Spec->rel2abs( $relative, $root );
+		my $tempdir  = File::Basename::basedir($tempfile);
+		File::Path::mkpath($tempdir);
+		my $file = Padre::File->new($tempfile);
+		$document->write($file) and $files++;
 	}
+
+	return $files;
 }
 
 
