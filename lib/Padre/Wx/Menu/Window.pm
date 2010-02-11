@@ -119,7 +119,7 @@ sub refresh {
 		if ($config_shorten_path) {
 
 			# This only works when there isn't any unsaved tabs
-			$prefix        = get_common_prefix( $pages, $notebook );
+			$prefix = get_common_prefix( $pages, $notebook );
 			$prefix_length = length $prefix;
 		}
 
@@ -128,7 +128,7 @@ sub refresh {
 		# or unsaved pane label (e.g. Unsaved [0-9]+)
 		my %windows = ();
 		foreach my $tab_index ( 0 .. $pages - 1 ) {
-			my $doc   = $notebook->GetPage($tab_index)->{Document} or return;
+			my $doc = $notebook->GetPage($tab_index)->{Document} or return;
 			my $label = $doc->filename || $notebook->GetPageText($tab_index);
 			$label =~ s/^\s+//;
 			if ( $prefix_length < length $label ) {

@@ -185,17 +185,19 @@ sub dump_display {
 	my $count    = Wx::Display->GetCount;
 	my @displays = ();
 	foreach ( 0 .. $count ) {
-		my $display  = Wx::Display->new($_);
-		push @displays, {
+		my $display = Wx::Display->new($_);
+		push @displays,
+			{
 			IsPrimary     => $display->IsPrimary,
 			GetGeometry   => $display->GetGeometry,
 			GetClientArea => $display->GetClientArea,
-		};
+			};
 	}
-	$self->_dump( {
-		GetCount => $count,
-		DisplayList => \@displays,
-	} );
+	$self->_dump(
+		{   GetCount    => $count,
+			DisplayList => \@displays,
+		}
+	);
 }
 
 sub trace_sub_startstop {

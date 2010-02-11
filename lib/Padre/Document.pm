@@ -157,14 +157,14 @@ my $unsaved_number = 0;
 
 use Class::XSAccessor {
 	getters => {
-		filename     => 'filename', # TO DO is this read_only or what?
-		file         => 'file',     # Padre::File - object
-		editor       => 'editor',
-		timestamp    => 'timestamp',
-		mimetype     => 'mimetype',
-		errstr       => 'errstr',
-		tempfile     => 'tempfile',
-		highlighter  => 'highlighter',
+		filename    => 'filename',   # TO DO is this read_only or what?
+		file        => 'file',       # Padre::File - object
+		editor      => 'editor',
+		timestamp   => 'timestamp',
+		mimetype    => 'mimetype',
+		errstr      => 'errstr',
+		tempfile    => 'tempfile',
+		highlighter => 'highlighter',
 	},
 	setters => {
 		set_editor       => 'editor',
@@ -755,7 +755,7 @@ as when we do a full file save.
 
 sub write {
 	my $self = shift;
-	my $file = shift; # File object, not just path
+	my $file = shift;          # File object, not just path
 	my $text = $self->text_get;
 
 	# Get the locale, but don't save it.
@@ -1448,8 +1448,8 @@ sub autocomplete {
 	my $pre  = $editor->GetTextRange( 0, $first + length($prefix) );
 	my $post = $editor->GetTextRange( $first, $last );
 
-	my $regex = eval { qr{\b(\Q$prefix\E\w+)\b} };
-	return("Cannot build regex for '$prefix'") if $@;
+	my $regex = eval {qr{\b(\Q$prefix\E\w+)\b}};
+	return ("Cannot build regex for '$prefix'") if $@;
 
 	my %seen;
 	my @words;

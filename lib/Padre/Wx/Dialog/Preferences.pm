@@ -1192,7 +1192,7 @@ sub _show_advanced_settings {
 
 	#show the advanced settings dialog instead
 	require Padre::Wx::Dialog::Advanced;
-	my $advanced = Padre::Wx::Dialog::Advanced->new(Padre->ide->{wx}->main);
+	my $advanced = Padre::Wx::Dialog::Advanced->new( Padre->ide->{wx}->main );
 	$advanced->show;
 
 	return;

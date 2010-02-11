@@ -66,8 +66,8 @@ Get the L<Padre::Wx::Main> main window that this object is a child of.
 
 sub main {
 	my $main = shift->GetParent;
-	while ( not _INSTANCE($main, 'Padre::Wx::Main') ) {
-		$main = $main->GetParent or return Padre::Current->main; 
+	while ( not _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
+		$main = $main->GetParent or return Padre::Current->main;
 	}
 	return $main;
 }

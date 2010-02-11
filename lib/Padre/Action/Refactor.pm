@@ -47,7 +47,7 @@ sub new {
 		name        => 'refactor.rename_variable',
 		need_editor => 1,
 		label       => Wx::gettext('Lexically Rename Variable'),
-		comment    => Wx::gettext('Prompt for a replacement variable name and replace all occurrences of this variable'),
+		comment => Wx::gettext('Prompt for a replacement variable name and replace all occurrences of this variable'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document or return;
 			return unless $doc->can('lexical_variable_replacement');

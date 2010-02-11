@@ -104,7 +104,7 @@ requires 'HTML::Entities'        => '3.57';
 requires 'HTML::Parser'          => '3.58';
 
 # In the Padre.ppd file we need to list IO-stringy instead
-requires 'IO::Scalar'      => '2.110';
+requires 'IO::Scalar' => '2.110';
 
 requires 'IO::Socket'      => '1.30';
 requires 'IO::String'      => '1.08';

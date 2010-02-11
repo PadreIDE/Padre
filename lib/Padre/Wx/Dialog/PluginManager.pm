@@ -309,9 +309,9 @@ sub button_close {
 #
 sub _plugin_disable {
 	my $self   = shift;
-	my $lock   = $self->main->lock('UPDATE', 'DB', 'refresh_menu_plugins');
+	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
 	my $plugin = $self->{plugin}->class;
-	
+
 	# disable plug-in
 	Padre::DB::Plugin->update_enabled( $plugin => 0 );
 	$self->{manager}->_plugin_disable($plugin);
@@ -327,7 +327,7 @@ sub _plugin_disable {
 #
 sub _plugin_enable {
 	my $self   = shift;
-	my $lock   = $self->main->lock('UPDATE', 'DB', 'refresh_menu_plugins');
+	my $lock   = $self->main->lock( 'UPDATE', 'DB', 'refresh_menu_plugins' );
 	my $plugin = $self->{plugin}->class;
 
 	# Enable plug-in

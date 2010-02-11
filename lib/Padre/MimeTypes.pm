@@ -642,16 +642,31 @@ sub guess_mimetype {
 
 		# Look for Template::Toolkit syntax
 		#  - traditional syntax:
-		return 'text/x-perltt' if $text =~ /\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\]/;
+		return 'text/x-perltt'
+			if $text =~ /\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\]/;
+
 		#  - default alternate styles (match 2 tags)
-		return 'text/x-perltt' if $text =~ /(\%\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\%.*){2}/s;
-		return 'text/x-perltt' if $text =~ /(\[\*[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\*\].*){2}/s;
+		return 'text/x-perltt'
+			if $text
+				=~ /(\%\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\%.*){2}/s;
+		return 'text/x-perltt'
+			if $text
+				=~ /(\[\*[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\*\].*){2}/s;
+
 		#  - other languages defaults (match 3 tags)
-		return 'text/x-perltt' if $text =~ /(\<([\?\%])[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\1\>.*){3}/s;
-		return 'text/x-perltt' if $text =~ /(\<\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\>.*){3}/s;
-		return 'text/x-perltt' if $text =~ /(\<\!\-\-[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\-\-\>.*){3}/s;
+		return 'text/x-perltt'
+			if $text
+				=~ /(\<([\?\%])[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\1\>.*){3}/s;
+		return 'text/x-perltt'
+			if $text =~ /(\<\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\>.*){3}/s;
+		return 'text/x-perltt'
+			if $text
+				=~ /(\<\!\-\-[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\-\-\>.*){3}/s;
+
 		#  - traditional, but lowercase syntax (3 tags)
-		return 'text/x-perltt' if $text =~ /(\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\].*){3}/si;
+		return 'text/x-perltt'
+			if $text
+				=~ /(\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\].*){3}/si;
 
 		# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
 		if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
@@ -666,8 +681,9 @@ sub guess_mimetype {
 		}
 
 		# Try to detect plain CSS without HTML around it
-		return 'text/css' if
-		 ($text !~ /\<\w+\/?\>/) and ($text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\r\t\r\n]*\{/);
+		return 'text/css'
+			if ( $text !~ /\<\w+\/?\>/ )
+			and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\r\t\r\n]*\{/ );
 
 	}
 

@@ -56,7 +56,7 @@ sub new {
 	}
 
 	# Create the underlying Wx object
-	my $lock = $main->lock('UPDATE', 'refresh_menu_window');
+	my $lock = $main->lock( 'UPDATE', 'refresh_menu_window' );
 	my $self = $class->SUPER::new($parent);
 
 	# TO DO: Make this suck less

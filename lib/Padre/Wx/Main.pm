@@ -1808,7 +1808,7 @@ sub _show_outline {
 
 sub show_debugger {
 	my $self = shift;
-	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
+	my $on = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
 
 	#	unless ( $on == $self->menu->view->{debugger}->IsChecked ) {
 	#		$self->menu->view->{debugger}->Check($on);
@@ -2512,7 +2512,7 @@ sub open_session {
 	my @files = $session->files or return;
 
 	# Prevent redrawing until we're done
-	my $lock = $self->lock('UPDATE', 'DB', 'refresh');
+	my $lock = $self->lock( 'UPDATE', 'DB', 'refresh' );
 
 	# Progress dialog for the session changes
 	require Padre::Wx::Progress;
@@ -3243,7 +3243,7 @@ Create a new empty tab. No return value.
 
 sub on_new {
 	my $self = shift;
-	my $lock = $self->lock('UPDATE', 'refresh');
+	my $lock = $self->lock( 'UPDATE', 'refresh' );
 	$self->setup_editor;
 	return;
 }
@@ -3312,7 +3312,7 @@ sub setup_editor {
 		}
 	}
 
-	my $lock     = $self->lock('REFRESH');
+	my $lock = $self->lock('REFRESH');
 	my $document = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
@@ -4267,10 +4267,12 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock = $self->lock( qw{
-		REFRESH DB
-		refresh_directory refresh_menu refresh_menu_window
-	} );
+	my $lock   = $self->lock(
+		qw{
+			REFRESH DB
+			refresh_directory refresh_menu refresh_menu_window
+			}
+	);
 	TRACE( join ' ', "Closing ", ref $doc, $doc->filename || 'Unknown' ) if DEBUG;
 
 	if ( $doc->is_modified and not $doc->is_unused ) {

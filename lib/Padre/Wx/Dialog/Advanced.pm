@@ -95,8 +95,8 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{filter_label},   0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{filter_text},     0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{filter_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{filter_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -114,7 +114,7 @@ sub _create_controls {
 sub _bind_events {
 	my $self = shift;
 
-	Wx::Event::EVT_BUTTON( $self, $self->{button_ok}, sub { $_[0]->_on_ok_button; } );
+	Wx::Event::EVT_BUTTON( $self, $self->{button_ok},     sub { $_[0]->_on_ok_button; } );
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
 }
 

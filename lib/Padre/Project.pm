@@ -179,9 +179,7 @@ sub from_file {
 sub documents {
 	my $self = shift;
 	my $root = $self->root;
-	return grep {
-		$_->project_dir eq $root
-	} Padre::Current->main->documents;
+	return grep { $_->project_dir eq $root } Padre::Current->main->documents;
 }
 
 
@@ -245,15 +243,13 @@ sub temp_sync {
 	my $self = shift;
 
 	# What files do we need to save
-	my @changed = grep {
-		! $_->is_new and $_->is_modified
-	} $self->documents or return 0;
+	my @changed = grep { !$_->is_new and $_->is_modified } $self->documents or return 0;
 
 	# Save the files to the temporary directory
 	my $temp  = $self->temp;
 	my $root  = $temp->root;
 	my $files = 0;
-	foreach my $document ( @changed ) {
+	foreach my $document (@changed) {
 		my $relative = $document->filename_relative;
 		my $tempfile = File::Spec->rel2abs( $relative, $root );
 		my $tempdir  = File::Basename::basedir($tempfile);
