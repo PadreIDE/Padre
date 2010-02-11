@@ -37,6 +37,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Added plugin menu refreshing to the resource locking system (ADAMK)
     - Fixed three cases where code was still manually calling ->Freeze
       and ->Thaw on the main window, breaking the resource locked (ADAMK)
+    - Initial Fix to ticket #847: "Implement Mozilla-style about:config for Padre"
+      (AZAWAWI)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)
