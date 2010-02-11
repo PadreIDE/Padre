@@ -8,10 +8,10 @@ use lib 'privinc';
 use inc::Module::Install 0.91;
 use POSIX qw(locale_h);
 
-# workaround for the fact that Module::Install loads the modules
+# Workaround for the fact that Module::Install loads the modules
 # into memory and when Test::NoWarnings is loaded it will hide
 # the warnings generated from that point.
-# removed in r2208, added again in r9001
+# Removed in r2208, added again in r9001
 eval {
 	require Test::NoWarnings;
 	$SIG{__WARN__} = 'DEFAULT';
@@ -42,18 +42,21 @@ configure_requires 'ExtUtils::MakeMaker' => '6.52';
 #}
 
 # This makes sure that we didn't compile Alien::wxWidgets with the wrong options.
-configure_requires 'Alien::wxWidgets' => 0;
+configure_requires 'Alien::wxWidgets' => '0.46';
 
 my $wxw = eval { use Alien::wxWidgets; 1; };
-if ($@ || !$wxw ) {
+if ( $@ || !$wxw ) {
 	print STDERR "Warning: prerequisite Alien::wxWidgets not found.\n";
 	exit 0;
 }
-if ('2.009000' eq Alien::wxWidgets->version()) {
+if ( '2.009000' eq Alien::wxWidgets->version ) {
 	print STDERR "Warning: Alien::wxWidgets was compiled with the development version of\n";
 	print STDERR "wxWidgets. This is known to cause Padre to crash.\n";
 	exit 0;
 }
+
+
+
 
 
 #####################################################################
@@ -90,8 +93,6 @@ requires 'File::Next'            => '1.06';          # Force-bump ack dep
 requires 'File::Path'            => '2.07';
 requires 'File::Remove'          => '1.42';
 requires 'File::ShareDir'        => '1.00';
-
-#requires 'File::ShareDir::PAR'   => '0.04';
 requires 'File::Spec'            => '3.2701';
 requires 'File::Spec::Functions' => '3.2701';
 requires 'File::Temp'            => 0;
@@ -104,6 +105,7 @@ requires 'HTML::Parser'          => '3.58';
 
 # In the Padre.ppd file we need to list IO-stringy instead
 requires 'IO::Scalar'      => '2.110';
+
 requires 'IO::Socket'      => '1.30';
 requires 'IO::String'      => '1.08';
 requires 'IPC::Open2'      => 0;
@@ -118,7 +120,6 @@ requires 'ORLite'          => '1.38';
 # Temporarily disabled as we have cloned a private copy
 # requires 'ORLite::Migrate' => '1.06';
 
-#requires 'PAR'                      => '0.989';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.11';
 requires 'Parse::ExuberantCTags'    => '1.00';
@@ -129,16 +130,17 @@ requires 'Pod::Simple::XHTML'       => '3.04';
 requires 'Pod::Abstract'            => '0.16';
 requires 'Pod::Perldoc'             => '3.15';
 
+# Add later, once we native support portability
 #requires 'Portable'                => '0.12' if win32;
+
 requires 'POSIX'             => 0;
 requires 'PPI'               => '1.205';
 requires 'PPIx::EditorTools' => '0.09';
 
-# for PPIx::Regexp Readonly dependency
+# For PPIx::Regexp Readonly dependency
 requires 'Readonly::XS' => '1.05';
-requires 'PPIx::Regexp' => '0.005';
 
-#requires 'Probe::Perl'             => '0.01';
+requires 'PPIx::Regexp'            => '0.005';
 requires 'Storable'                => '2.15';
 requires 'Template::Tiny'          => '0.03';
 requires 'Term::ReadLine'          => 0;
@@ -165,6 +167,10 @@ test_requires 'Test::More'         => '0.88';
 test_requires 'Test::Script'       => '1.07';
 test_requires 'Test::Exception'    => '0.27';
 test_requires 'Test::NoWarnings'   => '0.084';
+
+# PAR support disabled for now
+#requires 'File::ShareDir::PAR' => '0.04';
+#requires 'PAR'                 => '0.989';
 
 my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
