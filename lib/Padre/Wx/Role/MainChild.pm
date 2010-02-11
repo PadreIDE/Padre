@@ -36,11 +36,7 @@ Get the L<Padre> IDE instance that this object is a child of.
 =cut
 
 sub ide {
-	my $main = $_[0]->GetParent;
-	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
-		return $main->ide;
-	}
-	Padre::Current->ide;
+	shift->main->ide;
 }
 
 =pod
@@ -55,11 +51,7 @@ convenience because it is needed so often.
 =cut
 
 sub config {
-	my $main = $_[0]->GetParent;
-	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
-		return $main->config;
-	}
-	Padre::Current->config;
+	shift->main->config;
 }
 
 =pod
@@ -73,11 +65,11 @@ Get the L<Padre::Wx::Main> main window that this object is a child of.
 =cut
 
 sub main {
-	my $main = $_[0]->GetParent;
-	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
-		return $main;
+	my $main = shift->GetParent;
+	while ( not _INSTANCE($main, 'Padre::Wx::Main') ) {
+		$main = $main->GetParent or return Padre::Current->main; 
 	}
-	Padre::Current->main;
+	return $main;
 }
 
 =pod
@@ -105,11 +97,7 @@ Get a new C<Padre::Current> context object.
 =cut
 
 sub current {
-	my $main = shift->GetParent;
-	if ( _INSTANCE( $main, 'Padre::Wx::Main' ) ) {
-		return Padre::Current->new( main => $main );
-	}
-	Padre::Current->new;
+	Padre::Current->new( main => shift->main );
 }
 
 1;
