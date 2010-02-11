@@ -6,6 +6,8 @@ use 5.008;
 use strict;
 use warnings;
 use File::Spec     ();
+use File::Path     ();
+use File::Basename ();
 use Padre::Config  ();
 use Padre::Current ();
 
@@ -229,8 +231,7 @@ sub headline {
 # Process Execution Resources
 
 sub temp {
-	my $self = shift;
-	$self->{temp} or $self->{temp} = $self->_temp;
+	$_[0]->{temp} or $_[0]->{temp} = $_[0]->_temp;
 }
 
 sub _temp {
@@ -238,16 +239,24 @@ sub _temp {
 	Padre::Project::Temp->new;
 }
 
+# Synchronise all content from unsaved files in a project to the
+# project-specific temporary directory.
 sub temp_sync {
 	my $self = shift;
 
 	# What files do we need to save
 	my @changed = grep {
 		! $_->is_new and $_->is_modified
-	} $self->documents or return;
+	} $self->documents;
+	return 0 unless @changed;
 
 	# Save the files to the temporary directory
-	die "CODE INCOMPLETE";
+	my $temp = $self->temp;
+	foreach my $file ( @changes ) {
+		my $dir = File::Basename::basename($file);
+		File::Path::mkpath($dir);
+		
+	}
 }
 
 
