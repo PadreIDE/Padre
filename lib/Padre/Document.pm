@@ -685,10 +685,10 @@ sub autoclean {
 sub save_file {
 	my $self = shift;
 
-	#If padre is run on files that have no project
-	#   I.E Padre foo.pl &
-	#   The assumption of $self->project as defined will cause a fail
-	#   Please be more careful mkkkay!
+	# If padre is run on files that have no project
+	# I.E Padre foo.pl &
+	# The assumption of $self->project as defined will cause a fail
+	# Please be more careful mkkkay!
 	my $config;
 	$config = $self->project->config if $self->project;
 	$self->set_errstr('');
@@ -721,7 +721,7 @@ sub save_file {
 	}
 
 	# Not set when first time to save
-	# allow the upgrade from ascii to utf-8 if there were unicode characters added
+	# Allow the upgrade from ascii to utf-8 if there were unicode characters added
 	require Padre::Locale;
 	unless ( $self->{encoding} and $self->{encoding} ne 'ascii' ) {
 		$self->{encoding} = Padre::Locale::encoding_from_string($content);
@@ -747,6 +747,22 @@ sub save_file {
 	$self->{newline_type} = Padre::Util::newline_type($content);
 
 	return 1;
+}
+
+=pod
+
+=head2 C<write>
+
+Writes the document to an arbitrary local file using the same semantics
+as when we do a full file save.
+
+=cut
+
+sub write {
+	my $self    = shift;
+	my $file    = shift;
+	my $content = $self->text_get;
+	
 }
 
 =pod
