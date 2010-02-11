@@ -39,8 +39,11 @@ sub new {
 		Wx::gettext('Advanced Settings'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::wxDEFAULT_FRAME_STYLE,
 	);
+
+	# Minimum dialog size
+	$self->SetMinSize( [ 500, 550 ] );
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -52,7 +55,8 @@ sub new {
 	$self->_bind_events;
 
 	# wrap everything in a vbox to add some padding
-	$self->SetSizerAndFit($sizer);
+	$self->SetSizer($sizer);
+	$self->Fit;
 	$self->CentreOnParent;
 
 	return $self;
@@ -66,11 +70,41 @@ sub _create_controls {
 
 
 	# a label to display current line/position
-	$self->{filter_label} = Wx::StaticText->new( $self, -1, '&Filter' );
+	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter' );
 
 	# Field #1: text field for the line number/position
-	$self->{filter_text} = Wx::TextCtrl->new(
+	$self->{filter} = Wx::TextCtrl->new(
 		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
+	);
+
+	$self->{list} = Wx::ListView->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
+	);
+	$self->{list}->InsertColumn( 0, Wx::gettext('Preference Name'));
+	$self->{list}->InsertColumn( 1, Wx::gettext('Status'));
+	$self->{list}->InsertColumn( 2, Wx::gettext('Type'));
+	$self->{list}->InsertColumn( 3, Wx::gettext('Value'));
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+		},
+	);
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self,
+		$self->{list},
+		sub { 
+		},
+	);
+	Wx::Event::EVT_LIST_COL_CLICK(
+		$self,
+		$self->{list},
+		sub { 
+		},
 	);
 
 	# OK button (obviously)
@@ -95,14 +129,15 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $self->{filter_label}, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{filter_text},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $filter_label, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{filter},  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
 	# Wrap with a horizontal sizer to get left/right padding
-	$sizer->Add( $vsizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	return;
 
@@ -145,7 +180,7 @@ sub show {
 	my $self = shift;
 
 	# Set focus on the filter text field
-	$self->{filter_text}->SetFocus;
+	$self->{filter}->SetFocus;
 
 	# If it is not shown, show the dialog
 	$self->ShowModal;
