@@ -64,7 +64,7 @@ sub relocale {
 
 # Set the lock status of the panels
 sub lock_panels {
-	my $self = shift;
+	my $self   = shift;
 	my $unlock = $_[0] ? 0 : 1;
 
 	$self->Update;

@@ -239,7 +239,7 @@ sub build_padre_exe {
 	print "Building padre.exe\n";
 
 	# source folder
-	my $src = "win32-loader";
+	my $src = "win32";
 	my $bin = "blib/bin";
 
 	# Create the blib/bin folder

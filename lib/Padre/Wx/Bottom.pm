@@ -18,7 +18,6 @@ our @ISA     = qw{
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	my $aui   = $main->aui;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
@@ -26,10 +25,14 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::Size->new( 350, 300 ), # Used when floating
-		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE | Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
+		Wx::wxAUI_NB_SCROLL_BUTTONS
+			| Wx::wxAUI_NB_TOP
+			| Wx::wxBORDER_NONE
+			| Wx::wxAUI_NB_CLOSE_ON_ACTIVE_TAB
 	);
 
 	# Add ourself to the window manager
+	my $aui = $main->aui;
 	$aui->AddPane(
 		$self,
 		Padre::Wx->aui_pane_info(
@@ -45,7 +48,7 @@ sub new {
 			Dockable       => 1,
 			Position       => 2,
 			Layer          => 4,
-			)->Bottom->Hide,
+		)->Bottom->Hide,
 	);
 	$aui->caption( 'bottom' => Wx::gettext('Output View') );
 
