@@ -293,7 +293,7 @@ sub _on_list_item_activated {
 
 		# and update the fields/list items accordingly
 		$self->{value}->SetValue( $value );
-		$self->{button_reset}->Enable( $is_default ); 
+		$self->{button_reset}->Enable( not $is_default ); 
 		$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
 		$list->SetItem( $selected_index, 3, $value );
 		if($is_default) {
@@ -334,10 +334,13 @@ sub _on_reset_button {
 	my $pref = $self->{preferences}{$setting_name};
 	
 	#Reset the value to the default setting
+	my $value = $pref->{default};
 	$pref->{value} = $pref->{default};
 	$pref->{is_default} = 1;
-	$self->{value}->SetValue( $pref->{value} );
+	$self->{value}->SetValue( $value );
 	$self->{button_reset}->Enable(0);
+	$list->SetItem( $selected_index, 1, Wx::gettext('Default') );
+	$list->SetItem( $selected_index, 3, $value );
 	$list->SetItemTextColour($selected_index, Wx::wxBLACK);
 
 	return;
