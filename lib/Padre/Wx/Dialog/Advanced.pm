@@ -99,16 +99,19 @@ sub _create_controls {
 
 	# Preference value text field
 	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
+	$self->{value}->Enable(0);
 
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
 	);
+	$self->{button_set}->Enable(0);
 
 	# Reset to default preference value button
 	$self->{button_reset} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Reset"),
 	);
+	$self->{button_reset}->Enable(0);
 
 	# Save button
 	$self->{button_save} = Wx::Button->new(
@@ -261,11 +264,14 @@ sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
 
-	my $setting_name = $event->GetLabel;
-	my $config       = $self->main->config;
+	$self->{selected} = $event->GetLabel;
+	my $pref = $self->{preferences}{$self->{selected}};
 
-	$self->{value}->SetValue( $config->$setting_name );
-	$self->{button_reset}->Enable( not $self->{preferences}{$setting_name}->{is_default} );
+	$self->{value}->SetValue( $pref->{value} );
+
+	$self->{value}->Enable(1);
+	$self->{button_reset}->Enable( not $pref->{is_default} );
+	$self->{button_set}->Enable(1);
 
 	return;
 }
@@ -274,8 +280,7 @@ sub _on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
 
-	my $setting_name = $event->GetLabel;
-	my $config       = $self->main->config;
+	my $pref = $self->{preferences}{$event->GetLabel};
 
 	#print "value: " . $config->$setting_name . "\n";
 	#	my $value = ($config->$setting_name) ? 0 : 1;
@@ -304,6 +309,13 @@ sub _on_reset_button {
 	my $self = shift;
 
 	#TODO implement reset button action
+	my $setting_name = $self->{list}->GetItemText(($self->{list}->GetFirstSelected));
+	my $pref = $self->{preferences}{$setting_name};
+	
+	$pref->{value} = $pref->{default};
+	$pref->{is_default} = 1;
+
+	$self->{value}->SetValue( $pref->{value} );
 
 	return;
 }
