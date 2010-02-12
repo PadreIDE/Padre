@@ -445,11 +445,7 @@ sub _update_ui {
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
 	$list->SetItem( $selected_index, 3, $value );
-	if ($is_default) {
-		$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
-	} else {
-		$list->SetItemTextColour( $selected_index, Wx::wxRED );
-	}
+	$self->_set_item_bold_font( $selected_index, not $is_default );
 
 	return;
 }
@@ -566,9 +562,26 @@ sub _update_list {
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
 
-		# User-set or non-default preferences are colored differently
-		$list->SetItemTextColour( $index, Wx::wxRED ) unless $is_default;
+		# User-set or non-default preferences have bold font
+		$self->_set_item_bold_font( $index, not $is_default );
 	}
+
+	return;
+}
+
+#
+# Private method to set item to bold
+# Somehow SetItemFont is not there... hence i had to write this long workaround
+#
+sub _set_item_bold_font {
+	my ($self, $index, $bold) = @_;
+
+	my $list = $self->{list};
+	my $item = $list->GetItem($index);
+	my $font = $item->GetFont;
+	$font->SetWeight($bold ? Wx::wxFONTWEIGHT_BOLD : Wx::wxFONTWEIGHT_NORMAL);
+	$item->SetFont($font);
+	$list->SetItem($item);
 
 	return;
 }
@@ -629,6 +642,9 @@ sub _resize_columns {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 		$total_column_width += $list->GetColumnWidth($_);
 	}
+
+	# The second column (status) can be bold
+	$list->SetColumnWidth( 1, $list->GetColumnWidth(1) + 10 );
 
 	# the last column gets the remaining list width
 	$list->SetColumnWidth( 3, $list->GetSize->GetWidth - $total_column_width - 21 );
