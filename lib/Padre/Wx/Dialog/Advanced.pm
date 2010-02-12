@@ -96,9 +96,9 @@ sub _create_controls {
 
 	# Popup right-click menu
 	$self->{popup} = Wx::Menu->new;
-	$self->{popup}->Append( -1, Wx::gettext("Copy") );
-	$self->{popup}->Append( -1, Wx::gettext("Copy Name") );
-	$self->{popup}->Append( -1, Wx::gettext("Copy Value") );
+	$self->{copy} = $self->{popup}->Append( -1, Wx::gettext("Copy") );
+	$self->{copy_name} = $self->{popup}->Append( -1, Wx::gettext("Copy Name") );
+	$self->{copy_value} = $self->{popup}->Append( -1, Wx::gettext("Copy Value") );
 
 	# Preference value label
 	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
@@ -229,6 +229,33 @@ sub _bind_events {
 		}
 	);
 
+	# Copy everything to clipboard
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{copy},
+		sub {
+			shift->_copy_to_clipboard(@_, "copy");
+		}
+	);
+
+	# Copy name to clipboard
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{copy_name},
+		sub {
+			shift->_copy_to_clipboard(@_, "copy_name");
+		}
+	);
+
+	# Copy value to clipboard
+	Wx::Event::EVT_MENU(
+		$self,
+		$self->{copy_value},
+		sub {
+			shift->_copy_to_clipboard(@_, "copy_value");
+		}
+	);
+
 	# Set button
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -272,6 +299,36 @@ sub _bind_events {
 			shift->_on_resize;
 		}
 	);
+}
+
+#
+# Copy to clipboard
+#
+sub _copy_to_clipboard {
+	my ($self, $event, $obj) = @_;
+
+	my $list = $self->{list};
+	my $name   = $list->GetItemText($list->GetFirstSelected);
+	my $pref = $self->{preferences}{ $name };
+
+	my $text;
+	if($obj eq "copy") {
+		$text = $name . ";" . 
+			($pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set')) . ";" .
+			$pref->{type_name} . ";" . 
+			$pref->{value};
+	} elsif($obj eq "copy_name") {
+		$text = $name;
+	} elsif($obj eq "copy_value") {
+		$text = $pref->{value};
+	}
+	if ( $text and Wx::wxTheClipboard->Open() ) {
+		Wx::wxTheClipboard->SetData(
+			Wx::TextDataObject->new( $text ));
+		Wx::wxTheClipboard->Close();
+	}
+	
+	return;
 }
 
 #
@@ -327,8 +384,7 @@ sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
 
-	$self->{selected} = $event->GetLabel;
-	my $pref = $self->{preferences}{ $self->{selected} };
+	my $pref = $self->{preferences}{ $event->GetLabel };
 
 	$self->{value}->SetValue( $pref->{value} );
 	$self->{default_value}->SetLabel( $pref->{default} );
