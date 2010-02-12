@@ -311,7 +311,7 @@ sub _init_preferences {
 	for my $name ( sort keys %settings ) {
 		my $setting = $settings{$name};
 
-		my $type      = $setting->type;
+		my $type = $setting->type;
 		my $type_name = $types{$type};
 		unless ($type_name) {
 			warn "Unknown type: $type while reading $name\n";
@@ -320,10 +320,17 @@ sub _init_preferences {
 
 		my $value         = $config->$name;
 		my $default_value = $setting->default;
+		my $is_default;
+		if($type == Padre::Constant::ASCII or $type == Padre::Constant::PATH) {
+			$is_default = $value eq $default_value;
+		} else {
+			$is_default = $value == $default_value;
+		}
+
 		$self->{preferences}{$name} = {
-			'is_default' => $value ne $default_value,
+			'is_default' => $is_default,
 			'default'    => $default_value,
-			'type'       => $setting->type,
+			'type'       => $type,
 			'type_name'  => $type_name,
 			'value'      => $value,
 		};
