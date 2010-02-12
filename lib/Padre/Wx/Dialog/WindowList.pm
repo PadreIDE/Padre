@@ -210,6 +210,8 @@ sub _create_list {
 	);
 	$list->InsertColumn( 0, Wx::gettext('Project') );
 	$list->InsertColumn( 1, Wx::gettext('File') );
+	$list->InsertColumn( 2, Wx::gettext('Editor') );
+	$list->InsertColumn( 3, Wx::gettext('Disk') );
 	$self->_list($list);
 
 	# install event handler
@@ -305,17 +307,24 @@ sub _refresh_list {
 
 		my $filename    = $document->file->filename;
 		my $project_dir = $document->project_dir;
-		$filename =~ s/^\Q$project_dir\E//;
+		$filename =~ s/^\Q$project_dir\E// if  defined($project_dir);
+
+		# Apply filter (if any)
+		if (defined($self->{filter})) {
+			next unless &{$self->{filter}}($page,$project_dir,$filename,$document);
+		}
 
 		# inserting the file in the list
 		my $item = Wx::ListItem->new;
 		$item->SetId(0);
 		$item->SetColumn(0);
-		$item->SetText( $document->project->name );
+		$item->SetText( defined($document->project) ? $document->project->name : '');
 		push @{ $self->{items} }, { page => $page };
 		$item->SetData( $#{ $self->{items} } );
 		my $idx = $list->InsertItem($item);
 		$list->SetItem( $idx, 1, $filename );
+		$list->SetItem( $idx, 2, Wx::gettext($document->is_modified ? 'CHANGED' : 'fresh'));
+		$list->SetItem( $idx, 3, Wx::gettext($document->has_changed_on_disk ? 'CHANGED' : 'fresh'));
 	}
 
 	# auto-resize columns
