@@ -80,7 +80,7 @@ sub _create_controls {
 	# Filter text field
 	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
 
-	# Filtered list contains preferences
+	# Filtered preferences list
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
@@ -93,51 +93,55 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
 	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
 
-	# Value label
+	# Preference value label
 	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
 
-	# Value text field
+	# Preference value text field
 	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
 
-	# Set value button
+	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
 	);
 
-	# Reset to default value button
+	# Reset to default preference value button
 	$self->{button_reset} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Reset"),
 	);
 
-	# OK button (obviously)
-	$self->{button_ok} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext("&OK"),
+	# Save button
+	$self->{button_save} = Wx::Button->new(
+		$self, Wx::wxID_OK, Wx::gettext("&Save"),
 	);
-	$self->{button_ok}->SetDefault;
-	$self->{button_ok}->Enable(0);
+	$self->{button_save}->SetDefault;
+	$self->{button_save}->Enable(0);
 
-	# Cancel button (obviously)
+	# Cancel button
 	$self->{button_cancel} = Wx::Button->new(
 		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
 	);
 
-	#----- Dialog Layout
+	#
+	#----- Dialog Layout -------
+	#
 
-	# Main button sizer
-	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $self->{button_ok},     1, 0,          0 );
-	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
-	$button_sizer->AddSpacer(5);
-
+	# Top filter sizer
 	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
+	# Bottom preference value setter sizer
 	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$bottom_sizer->Add( $value_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$bottom_sizer->Add( $self->{value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$bottom_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$bottom_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+
+	# Bottom button sizer
+	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$button_sizer->Add( $self->{button_save},     1, 0,          0 );
+	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
+	$button_sizer->AddSpacer(5);
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -152,7 +156,6 @@ sub _create_controls {
 	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	return;
-
 }
 
 #
@@ -195,17 +198,17 @@ sub _bind_events {
 		},
 	);
 
-	# Ok button
-	Wx::Event::EVT_BUTTON( $self, $self->{button_ok},     sub { $_[0]->_on_ok_button; } );
+	# Save button
+	Wx::Event::EVT_BUTTON( $self, $self->{button_save},     sub { $_[0]->_on_save_button; } );
 	
 	# Cancel button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
 }
 
 #
-# Private method to handle the pressing of the OK button
+# Private method to handle the pressing of the save button
 #
-sub _on_ok_button {
+sub _on_save_button {
 	my $self = shift;
 
 	# Destroy the dialog
