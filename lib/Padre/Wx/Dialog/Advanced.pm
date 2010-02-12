@@ -406,9 +406,9 @@ sub _on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
 
-	my $selected_index = $event->GetIndex;
-	my $list           = $self->{list};
-	my $pref           = $self->{preferences}{ $event->GetLabel };
+	my $index = $event->GetIndex;
+	my $list  = $self->{list};
+	my $pref  = $self->{preferences}{ $event->GetLabel };
 
 	if ( $pref->{type} == Padre::Constant::BOOLEAN ) {
 
@@ -435,17 +435,17 @@ sub _on_list_item_activated {
 sub _update_ui {
 	my ( $self, $pref ) = @_;
 
-	my $list           = $self->{list};
-	my $selected_index = $list->GetFirstSelected;
-	my $value          = $pref->{value};
-	my $is_default     = $pref->{is_default};
+	my $list       = $self->{list};
+	my $index      = $list->GetFirstSelected;
+	my $value      = $pref->{value};
+	my $is_default = $pref->{is_default};
 
 	$self->{value}->SetValue($value);
 	$self->{default_value}->SetLabel( $pref->{default} );
 	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
-	$list->SetItem( $selected_index, 3, $value );
-	$self->_set_item_bold_font( $selected_index, not $is_default );
+	$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
+	$list->SetItem( $index, 3, $value );
+	$self->_set_item_bold_font( $index, not $is_default );
 
 	return;
 }
@@ -469,10 +469,10 @@ sub _on_set_button {
 	my $self = shift;
 
 	# Prepare the preferences
-	my $list           = $self->{list};
-	my $selected_index = $list->GetFirstSelected;
-	my $setting_name   = $list->GetItemText($selected_index);
-	my $pref           = $self->{preferences}{$setting_name};
+	my $list  = $self->{list};
+	my $index = $list->GetFirstSelected;
+	my $name  = $list->GetItemText($index);
+	my $pref  = $self->{preferences}{$name};
 
 	#TODO Implement some validation based on the preference type
 
@@ -497,10 +497,10 @@ sub _on_reset_button {
 	my $self = shift;
 
 	# Prepare the preferences
-	my $list           = $self->{list};
-	my $selected_index = $list->GetFirstSelected;
-	my $setting_name   = $list->GetItemText($selected_index);
-	my $pref           = $self->{preferences}{$setting_name};
+	my $list  = $self->{list};
+	my $index = $list->GetFirstSelected;
+	my $name  = $list->GetItemText($index);
+	my $pref  = $self->{preferences}{$name};
 
 	#Reset the value to the default setting
 	my $value = $pref->{default};
@@ -574,12 +574,12 @@ sub _update_list {
 # Somehow SetItemFont is not there... hence i had to write this long workaround
 #
 sub _set_item_bold_font {
-	my ($self, $index, $bold) = @_;
+	my ( $self, $index, $bold ) = @_;
 
 	my $list = $self->{list};
 	my $item = $list->GetItem($index);
 	my $font = $item->GetFont;
-	$font->SetWeight($bold ? Wx::wxFONTWEIGHT_BOLD : Wx::wxFONTWEIGHT_NORMAL);
+	$font->SetWeight( $bold ? Wx::wxFONTWEIGHT_BOLD : Wx::wxFONTWEIGHT_NORMAL );
 	$item->SetFont($font);
 	$list->SetItem($item);
 
