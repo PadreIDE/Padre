@@ -132,10 +132,9 @@ sub _create_controls {
 
 	# Save button
 	$self->{button_save} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext("&Save"),
+		$self, Wx::wxID_OK, Wx::gettext("S&ave"),
 	);
 	$self->{button_save}->SetDefault;
-	$self->{button_save}->Enable(0);
 
 	# Cancel button
 	$self->{button_cancel} = Wx::Button->new(
@@ -518,9 +517,27 @@ sub _on_reset_button {
 sub _on_save_button {
 	my $self = shift;
 
-	#TODO Implement save to config
+	#Save only changed stuff to config
+	my $config   = $self->main->config;
+	my $prefs    = $self->{preferences};
+	for my $name ( sort keys %$prefs ) {
+		my $pref = $prefs->{$name};
+		my $type = $pref->{type};
+		my $value = $pref->{value};
+		my $original = $pref->{original};
+		my $changed = ( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH ) ?
+			$value ne $original :
+			$value != $original;
 
-	# Destroy the dialog
+		if($changed) {
+			$config->set( $name, $value );
+		}
+	}
+	
+	# And commit configuration...
+	$config->write;
+	
+	# Bye bye dialog
 	$self->Hide;
 
 	return;
@@ -623,6 +640,7 @@ sub _init_preferences {
 			'type'       => $type,
 			'type_name'  => $type_name,
 			'value'      => $value,
+			'original'   => $value,
 		};
 	}
 
