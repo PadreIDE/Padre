@@ -168,7 +168,7 @@ sub _bind_events {
 			my ($this, $event)  = @_;
 			my $code  = $event->GetKeyCode;
 
-			$self->{list}->SetFocus()
+			$self->{list}->SetFocus
 				if ($code == Wx::WXK_DOWN) or 
 			           ($code == Wx::WXK_NUMPAD_PAGEDOWN) or
 			           ($code == Wx::WXK_PAGEDOWN);
