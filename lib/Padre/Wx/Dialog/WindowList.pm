@@ -64,9 +64,11 @@ sub new {
 sub show {
 	my $self = shift;
 
+	$self->{visible} = 1;
+
 	$self->_refresh_list;
 	$self->_select_first_item;
-	$self->Show;
+	$self->ShowModal;
 }
 
 # -- gui handlers
@@ -79,6 +81,7 @@ sub show {
 sub _on_butclose_clicked {
 	my $self = shift;
 	$self->Destroy;
+	$self->{visible} = 0;
 }
 
 sub _on_button_clicked {
@@ -102,6 +105,7 @@ sub _on_button_clicked {
 	}
 
 	$self->Destroy;
+	$self->{visible} = 0;
 }
 
 #
