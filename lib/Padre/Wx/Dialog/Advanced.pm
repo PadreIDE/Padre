@@ -297,7 +297,7 @@ sub _update_list {
 	$list->DeleteAllItems;
 	my $index       = -1;
 	my $preferences = $self->{preferences};
-	my $alternateColor = Wx::Colour->new(0xF2,0xF2,0xF2);
+	my $alternateColor = Wx::Colour->new(0xED,0xF5,0xFF);
 	for my $name ( sort keys %$preferences ) {
 
 		# Ignore setting if it does not match the filter
