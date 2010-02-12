@@ -336,7 +336,33 @@ sub _on_list_item_activated {
 sub _on_set_button {
 	my $self = shift;
 
-	#TODO implement set button action
+	# Prepare the preferences
+	my $list = $self->{list};
+	my $selected_index = $list->GetFirstSelected;
+	my $setting_name = $list->GetItemText($selected_index);
+	my $pref = $self->{preferences}{$setting_name};
+
+	#TODO some validation based on the preference type
+
+	#Reset the value to the default setting
+	my $type = $pref->{type};
+	my $value = $self->{value}->GetValue;
+	my $default_value = $pref->{default};
+	my $is_default = 
+		($type == Padre::Constant::ASCII or $type == Padre::Constant::PATH) ?
+		$value eq $default_value :
+		$value == $default_value;
+
+	$pref->{value} = $value;
+	$pref->{is_default} = $is_default;
+	$self->{button_reset}->Enable( not $is_default );
+	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
+	$list->SetItem( $selected_index, 3, $value );
+	if($is_default) {
+		$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
+	} else {
+		$list->SetItemTextColour( $selected_index, Wx::wxRED );
+	}
 
 	return;
 }
