@@ -44,6 +44,9 @@ sub new {
 	my $self = bless { filename => $_[0] }, $class;
 	$self->{protocol} = 'local'; # Should not be overridden
 
+	$self->{filename} = File::Spec->rel2abs($self->{filename})
+	 unless File::Spec->file_name_is_absolute($self->{filename});
+
 	$self->_reformat_filename;
 
 	return $self;
