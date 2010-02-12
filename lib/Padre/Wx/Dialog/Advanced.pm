@@ -199,6 +199,24 @@ sub _bind_events {
 		}
 	);
 
+	# Set button
+	Wx::Event::EVT_BUTTON( 
+		$self, 
+		$self->{button_set}, 
+		sub { 
+			shift->_on_set_button; 
+		} 
+	);
+
+	# Reset button
+	Wx::Event::EVT_BUTTON( 
+		$self, 
+		$self->{button_reset}, 
+		sub { 
+			shift->_on_reset_button; 
+		} 
+	);
+
 	# Save button
 	Wx::Event::EVT_BUTTON( 
 		$self, 
@@ -247,6 +265,7 @@ sub _on_list_item_selected {
 	my $config       = $self->main->config;
 
 	$self->{value}->SetValue( $config->$setting_name );
+	$self->{button_reset}->Enable( not $self->{preferences}{$setting_name}->{is_default} );
 
 	return;
 }
@@ -266,6 +285,28 @@ sub _on_list_item_activated {
 	return;
 }
 
+
+#
+# Private method to handle the pressing of the set value button
+#
+sub _on_set_button {
+	my $self = shift;
+
+	#TODO implement set button action
+
+	return;
+}
+
+#
+# Private method to handle the pressing of the reset to default button
+#
+sub _on_reset_button {
+	my $self = shift;
+
+	#TODO implement reset button action
+
+	return;
+}
 
 #
 # Private method to handle the pressing of the save button
