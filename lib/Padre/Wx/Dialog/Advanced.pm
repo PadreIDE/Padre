@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
+use Padre::Config              ();
 
 our $VERSION = '0.56';
 our @ISA     = qw{
@@ -168,15 +169,7 @@ sub _bind_events {
 	Wx::Event::EVT_CHAR(
 		$self->{filter},
 		sub {
-			my ( $this, $event ) = @_;
-			my $code = $event->GetKeyCode;
-
-			$self->{list}->SetFocus
-				if ( $code == Wx::WXK_DOWN )
-				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
-				or ( $code == Wx::WXK_PAGEDOWN );
-
-			$event->Skip(1);
+			$self->_on_char($_[1]);
 		}
 	);
 
@@ -211,6 +204,24 @@ sub _bind_events {
 
 	# Cancel button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
+}
+
+#
+# Private method to handle on character pressed event
+#
+sub _on_char {
+	my $self = shift;
+	my $event = shift;
+	my $code = $event->GetKeyCode;
+
+	$self->{list}->SetFocus
+		if ( $code == Wx::WXK_DOWN )
+		or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
+		or ( $code == Wx::WXK_PAGEDOWN );
+
+	$event->Skip(1);
+
+	return;
 }
 
 #
