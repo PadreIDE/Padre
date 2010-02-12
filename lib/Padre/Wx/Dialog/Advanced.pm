@@ -172,7 +172,7 @@ sub _bind_events {
 	Wx::Event::EVT_CHAR(
 		$self->{filter},
 		sub {
-			$self->_on_char($_[1]);
+			$self->_on_char( $_[1] );
 		}
 	);
 
@@ -203,45 +203,45 @@ sub _bind_events {
 	);
 
 	# Set button
-	Wx::Event::EVT_BUTTON( 
-		$self, 
-		$self->{button_set}, 
-		sub { 
-			shift->_on_set_button; 
-		} 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_set},
+		sub {
+			shift->_on_set_button;
+		}
 	);
 
 	# Reset button
-	Wx::Event::EVT_BUTTON( 
-		$self, 
-		$self->{button_reset}, 
-		sub { 
-			shift->_on_reset_button; 
-		} 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_reset},
+		sub {
+			shift->_on_reset_button;
+		}
 	);
 
 	# Save button
-	Wx::Event::EVT_BUTTON( 
-		$self, 
-		$self->{button_save}, 
-		sub { 
-			shift->_on_save_button; 
-		} 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_save},
+		sub {
+			shift->_on_save_button;
+		}
 	);
 
 	# Cancel button
-	Wx::Event::EVT_BUTTON( 
-		$self, 
-		$self->{button_cancel}, 
-		sub { 
-			shift->Hide; 
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_cancel},
+		sub {
+			shift->Hide;
 		}
 	);
 
 	# Resize dialog event
-	Wx::Event::EVT_SIZE( 
-		$self, 
-		sub { 
+	Wx::Event::EVT_SIZE(
+		$self,
+		sub {
 			shift->_on_resize;
 		}
 	);
@@ -252,10 +252,10 @@ sub _bind_events {
 #
 sub _on_resize {
 	my $self = shift;
-	
+
 	$self->Layout;
-	$self->_resize_columns; 
-	
+	$self->_resize_columns;
+
 	return;
 }
 
@@ -263,9 +263,9 @@ sub _on_resize {
 # Private method to handle on character pressed event
 #
 sub _on_char {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
-	my $code = $event->GetKeyCode;
+	my $code  = $event->GetKeyCode;
 
 	$self->{list}->SetFocus
 		if ( $code == Wx::WXK_DOWN )
@@ -285,7 +285,7 @@ sub _on_list_item_selected {
 	my $event = shift;
 
 	$self->{selected} = $event->GetLabel;
-	my $pref = $self->{preferences}{$self->{selected}};
+	my $pref = $self->{preferences}{ $self->{selected} };
 
 	$self->{value}->SetValue( $pref->{value} );
 
@@ -301,27 +301,29 @@ sub _on_list_item_activated {
 	my $event = shift;
 
 	my $selected_index = $event->GetIndex;
-	my $list = $self->{list};
-	my $pref = $self->{preferences}{$event->GetLabel};
+	my $list           = $self->{list};
+	my $pref           = $self->{preferences}{ $event->GetLabel };
 
-	if($pref->{type} == Padre::Constant::BOOLEAN) {
+	if ( $pref->{type} == Padre::Constant::BOOLEAN ) {
+
 		# Reverse boolean
 		my $value = $pref->{value} ? 0 : 1;
 		my $is_default = not $pref->{is_default};
 		$pref->{is_default} = $is_default;
-		$pref->{value} = $value;
+		$pref->{value}      = $value;
 
 		# and update the fields/list items accordingly
-		$self->{value}->SetValue( $value );
-		$self->{button_reset}->Enable( not $is_default ); 
+		$self->{value}->SetValue($value);
+		$self->{button_reset}->Enable( not $is_default );
 		$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
 		$list->SetItem( $selected_index, 3, $value );
-		if($is_default) {
+		if ($is_default) {
 			$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
 		} else {
 			$list->SetItemTextColour( $selected_index, Wx::wxRED );
 		}
 	} else {
+
 		# Focus on the text value so we can edit it...
 		$self->{value}->SetFocus;
 	}
@@ -337,28 +339,28 @@ sub _on_set_button {
 	my $self = shift;
 
 	# Prepare the preferences
-	my $list = $self->{list};
+	my $list           = $self->{list};
 	my $selected_index = $list->GetFirstSelected;
-	my $setting_name = $list->GetItemText($selected_index);
-	my $pref = $self->{preferences}{$setting_name};
+	my $setting_name   = $list->GetItemText($selected_index);
+	my $pref           = $self->{preferences}{$setting_name};
 
-	#TODO some validation based on the preference type
+	#TODO Implement some validation based on the preference type
 
 	#Reset the value to the default setting
-	my $type = $pref->{type};
-	my $value = $self->{value}->GetValue;
+	my $type          = $pref->{type};
+	my $value         = $self->{value}->GetValue;
 	my $default_value = $pref->{default};
-	my $is_default = 
-		($type == Padre::Constant::ASCII or $type == Padre::Constant::PATH) ?
-		$value eq $default_value :
-		$value == $default_value;
+	my $is_default =
+		( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH )
+		? $value eq $default_value
+		: $value == $default_value;
 
-	$pref->{value} = $value;
+	$pref->{value}      = $value;
 	$pref->{is_default} = $is_default;
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
 	$list->SetItem( $selected_index, 3, $value );
-	if($is_default) {
+	if ($is_default) {
 		$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
 	} else {
 		$list->SetItemTextColour( $selected_index, Wx::wxRED );
@@ -374,20 +376,20 @@ sub _on_reset_button {
 	my $self = shift;
 
 	# Prepare the preferences
-	my $list = $self->{list};
+	my $list           = $self->{list};
 	my $selected_index = $list->GetFirstSelected;
-	my $setting_name = $list->GetItemText($selected_index);
-	my $pref = $self->{preferences}{$setting_name};
-	
+	my $setting_name   = $list->GetItemText($selected_index);
+	my $pref           = $self->{preferences}{$setting_name};
+
 	#Reset the value to the default setting
 	my $value = $pref->{default};
-	$pref->{value} = $pref->{default};
+	$pref->{value}      = $pref->{default};
 	$pref->{is_default} = 1;
-	$self->{value}->SetValue( $value );
+	$self->{value}->SetValue($value);
 	$self->{button_reset}->Enable(0);
 	$list->SetItem( $selected_index, 1, Wx::gettext('Default') );
 	$list->SetItem( $selected_index, 3, $value );
-	$list->SetItemTextColour($selected_index, Wx::wxBLACK);
+	$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
 
 	return;
 }
@@ -397,6 +399,8 @@ sub _on_reset_button {
 #
 sub _on_save_button {
 	my $self = shift;
+
+	#TODO Implement save to config
 
 	# Destroy the dialog
 	$self->Hide;
@@ -420,16 +424,16 @@ sub _update_list {
 
 	my $list = $self->{list};
 	$list->DeleteAllItems;
-	my $index       = -1;
-	my $preferences = $self->{preferences};
-	my $alternateColor = Wx::Colour->new(0xED,0xF5,0xFF);
+	my $index          = -1;
+	my $preferences    = $self->{preferences};
+	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
 	for my $name ( sort keys %$preferences ) {
 
 		# Ignore setting if it does not match the filter
 		next if $name !~ /$filter/i;
 
 		# Add the setting to the list control
-		my $setting = $preferences->{$name};
+		my $setting    = $preferences->{$name};
 		my $is_default = $setting->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
@@ -438,8 +442,8 @@ sub _update_list {
 		$list->SetItem( $index, 3, $setting->{value} );
 
 		# Alternating table colors
-		$list->SetItemBackgroundColour( $index, $alternateColor) unless $index % 2;
-		
+		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
+
 		# User-set or non-default preferences are colored differently
 		$list->SetItemTextColour( $index, Wx::wxRED ) unless $is_default;
 	}
@@ -467,7 +471,7 @@ sub _init_preferences {
 	for my $name ( sort keys %settings ) {
 		my $setting = $settings{$name};
 
-		my $type = $setting->type;
+		my $type      = $setting->type;
 		my $type_name = $types{$type};
 		unless ($type_name) {
 			warn "Unknown type: $type while reading $name\n";
@@ -476,10 +480,10 @@ sub _init_preferences {
 
 		my $value         = $config->$name;
 		my $default_value = $setting->default;
-		my $is_default = 
-			($type == Padre::Constant::ASCII or $type == Padre::Constant::PATH) ?
-			$value eq $default_value :
-			$value == $default_value;
+		my $is_default =
+			( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH )
+			? $value eq $default_value
+			: $value == $default_value;
 
 		$self->{preferences}{$name} = {
 			'is_default' => $is_default,
@@ -498,15 +502,15 @@ sub _init_preferences {
 #
 sub _resize_columns {
 	my $self = shift;
-	
+
 	# Resize all columns but the last to their biggest item width
-	my $list = $self->{list};
+	my $list               = $self->{list};
 	my $total_column_width = 0;
 	for ( 0 .. 2 ) {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
-		$total_column_width += $list->GetColumnWidth( $_ );
+		$total_column_width += $list->GetColumnWidth($_);
 	}
-	
+
 	# the last column gets the remaining list width
 	$list->SetColumnWidth( 3, $list->GetSize->GetWidth - $total_column_width - 21 );
 }
