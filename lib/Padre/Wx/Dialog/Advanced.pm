@@ -237,6 +237,26 @@ sub _bind_events {
 			shift->Hide; 
 		}
 	);
+
+	# Resize dialog event
+	Wx::Event::EVT_SIZE( 
+		$self, 
+		sub { 
+			shift->_on_resize;
+		}
+	);
+}
+
+#
+# Private method to handle the dialog resize event
+#
+sub _on_resize {
+	my $self = shift;
+	
+	$self->Layout;
+	$self->_resize_columns; 
+	
+	return;
 }
 
 #
@@ -447,6 +467,24 @@ sub _init_preferences {
 	return;
 }
 
+#
+# Private method to resize list columns
+#
+sub _resize_columns {
+	my $self = shift;
+	
+	# Resize all columns but the last to their biggest item width
+	my $list = $self->{list};
+	my $total_column_width = 0;
+	for ( 0 .. 2 ) {
+		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
+		$total_column_width += $list->GetColumnWidth( $_ );
+	}
+	
+	# the last column gets the remaining list width
+	$list->SetColumnWidth( 3, $list->GetSize->GetWidth - $total_column_width - 21 );
+}
+
 =pod
 
 =head2 C<show>
@@ -469,10 +507,8 @@ sub show {
 	# Update the preferences list
 	$self->_update_list;
 
-	# Resize columns to their biggest item width
-	for ( 0 .. 3 ) {
-		$self->{list}->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
-	}
+	# resize columns
+	$self->_resize_columns;
 
 	# If it is not shown, show the dialog
 	$self->ShowModal;
