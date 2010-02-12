@@ -359,6 +359,7 @@ sub timestamp_now {
 	return 0 unless defined $file;
 
 	# It's important to return undef if there is no ->mtime for this filetype
+	return unless $file->can('mtime');
 	return $file->mtime;
 }
 

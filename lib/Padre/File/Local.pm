@@ -66,7 +66,7 @@ sub stat {
 
 sub size {
 	my $self = shift;
-	return -s $self->{filename};
+	return -s $self->{filename} || 0;
 }
 
 sub dev {
@@ -106,27 +106,27 @@ sub rdev {
 
 sub atime {
 	my $self = shift;
-	return ( CORE::stat( $self->{filename} ) )[8];
+	return ( CORE::stat( $self->{filename} ) )[8] || 0;
 }
 
 sub mtime {
 	my $self = shift;
-	return ( CORE::stat( $self->{filename} ) )[9];
+	return ( CORE::stat( $self->{filename} ) )[9] || 0;
 }
 
 sub ctime {
 	my $self = shift;
-	return ( CORE::stat( $self->{filename} ) )[10];
+	return ( CORE::stat( $self->{filename} ) )[10] || 0;
 }
 
 sub blksize {
 	my $self = shift;
-	return ( CORE::stat( $self->{filename} ) )[11];
+	return ( CORE::stat( $self->{filename} ) )[11] || 0;
 }
 
 sub blocks {
 	my $self = shift;
-	return ( CORE::stat( $self->{filename} ) )[12];
+	return ( CORE::stat( $self->{filename} ) )[12] || 0;
 }
 
 sub exists {
