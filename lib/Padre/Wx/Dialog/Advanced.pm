@@ -169,7 +169,9 @@ sub _bind_events {
 			my $code  = $event->GetKeyCode;
 
 			$self->{list}->SetFocus()
-				if ($code == Wx::WXK_DOWN) or ($code == Wx::WXK_NUMPAD_PAGEDOWN);
+				if ($code == Wx::WXK_DOWN) or 
+			           ($code == Wx::WXK_NUMPAD_PAGEDOWN) or
+			           ($code == Wx::WXK_PAGEDOWN);
 
 			$event->Skip(1);
 		}
