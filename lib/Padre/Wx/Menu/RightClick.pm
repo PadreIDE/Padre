@@ -59,6 +59,13 @@ sub new {
 		'file.open_in_file_browser',
 	);
 
+	if ($selection_exists) {
+		$self->{find_in_files} = $self->add_menu_action(
+			$self,
+			'search.find_in_files',
+		);
+	}
+
 	$self->AppendSeparator;
 
 	$self->{copy} = $self->add_menu_action(
