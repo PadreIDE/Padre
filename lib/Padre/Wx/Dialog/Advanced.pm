@@ -74,14 +74,13 @@ sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
 
-	# a label to display current line/position
+	# Filter label
 	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter:' );
 
-	# Field #1: text field for the line number/position
-	$self->{filter} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-	);
+	# Filter text field
+	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
 
+	# Filtered list contains preferences
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
@@ -93,6 +92,22 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 1, Wx::gettext('Status') );
 	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
 	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
+
+	# Value label
+	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
+
+	# Value text field
+	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
+
+	# Set value button
+	$self->{button_set} = Wx::Button->new(
+		$self, -1, Wx::gettext("&Set"),
+	);
+
+	# Reset to default value button
+	$self->{button_reset} = Wx::Button->new(
+		$self, -1, Wx::gettext("&Reset"),
+	);
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
@@ -118,10 +133,17 @@ sub _create_controls {
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
+	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$bottom_sizer->Add( $value_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $self->{value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $bottom_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
