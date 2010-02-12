@@ -198,6 +198,14 @@ sub _bind_events {
 		},
 	);
 
+	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
+		$self,
+		$self->{list},
+		sub {
+			shift->_on_list_item_activated(@_);
+		},
+	);
+
 	# Save button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_save},     sub { $_[0]->_on_save_button; } );
 	
@@ -219,6 +227,22 @@ sub _on_list_item_selected {
 
 	return;
 }
+
+sub _on_list_item_activated {
+	my $self = shift;
+	my $event = shift;
+
+	my $setting_name = $event->GetLabel;
+	my $config = $self->main->config;
+
+#print "value: " . $config->$setting_name . "\n";
+#	my $value = ($config->$setting_name) ? 0 : 1;
+#	$self->{value}->SetValue( $value );
+#	$config->$setting_name( $value );
+
+	return;
+}
+
 
 #
 # Private method to handle the pressing of the save button
@@ -246,6 +270,35 @@ sub _update_list {
 	#quote the search string for safety
 	$filter = quotemeta $filter;
 
+	my $list     = $self->{list};
+	$list->DeleteAllItems;
+	my $index = -1;
+	my $preferences = $self->{preferences};
+	for my $name ( sort keys %$preferences ) {
+
+		# Ignore setting if it does not match the filter
+		next if $name !~ /$filter/i;
+
+		# Add the setting to the list control
+		my $setting = $preferences->{$name};
+
+		$list->InsertStringItem( ++$index, $name );
+		$list->SetItem( $index, 1, $setting->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set') );
+		$list->SetItem( $index, 2, $setting->{type_name} );
+		$list->SetItem( $index, 3, $setting->{value} );
+	}
+
+	return;
+}
+
+#
+# Private method to initialize a preferences hash from the local configuration
+#
+sub _init_preferences {
+	my $self = shift;
+
+	my %settings = %Padre::Config::SETTING;
+	my $config = $self->main->config;
 	my %types = (
 		Padre::Constant::BOOLEAN => Wx::gettext("Boolean"),
 		Padre::Constant::POSINT  => Wx::gettext("Positive integer"),
@@ -254,32 +307,28 @@ sub _update_list {
 		Padre::Constant::PATH    => Wx::gettext("Path"),
 	);
 
-	my %settings = %Padre::Config::SETTING;
-	my $list     = $self->{list};
-	$list->DeleteAllItems;
-	my $index = -1;
-	for my $config_name ( sort keys %settings ) {
-
-		# Ignore setting if it does not match the filter
-		next if $config_name !~ /$filter/i;
-
-		# Add the setting to the list control
-		my $setting = $settings{$config_name};
+	$self->{preferences} = ();
+	for my $name ( sort keys %settings ) {
+		my $setting = $settings{$name};
 
 		my $type      = $setting->type;
 		my $type_name = $types{$type};
 		unless ($type_name) {
-			warn "Unknown type: $type while reading $config_name\n";
+			warn "Unknown type: $type while reading $name\n";
 			next;
 		}
 
-		my $value = $config->$config_name;
-		$list->InsertStringItem( ++$index, $config_name );
-		$list->SetItem( $index, 1, "default" );
-		$list->SetItem( $index, 2, $type_name );
-		$list->SetItem( $index, 3, $value );
+		my $value = $config->$name;
+		my $default_value = $setting->default;
+		$self->{preferences}{$name} = {
+			'is_default' => $value ne $default_value,
+			'default' => $default_value,
+			'type'    => $setting->type,
+			'type_name' => $type_name,
+			'value'   => $value,
+		}; 
 	}
-
+	
 	return;
 }
 
@@ -295,6 +344,9 @@ Shows the dialog. Returns C<undef>.
 
 sub show {
 	my $self = shift;
+
+	# Initialize Preferences
+	$self->_init_preferences;
 
 	# Set focus on the filter text field
 	$self->{filter}->SetFocus;
