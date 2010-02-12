@@ -132,14 +132,14 @@ sub _create_controls {
 
 	# Bottom preference value setter sizer
 	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bottom_sizer->Add( $value_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$bottom_sizer->Add( $self->{value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$bottom_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$bottom_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Bottom button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $self->{button_save},     1, 0,          0 );
+	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
@@ -168,13 +168,13 @@ sub _bind_events {
 	Wx::Event::EVT_CHAR(
 		$self->{filter},
 		sub {
-			my ($this, $event)  = @_;
-			my $code  = $event->GetKeyCode;
+			my ( $this, $event ) = @_;
+			my $code = $event->GetKeyCode;
 
 			$self->{list}->SetFocus
-				if ($code == Wx::WXK_DOWN) or 
-			           ($code == Wx::WXK_NUMPAD_PAGEDOWN) or
-			           ($code == Wx::WXK_PAGEDOWN);
+				if ( $code == Wx::WXK_DOWN )
+				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
+				or ( $code == Wx::WXK_PAGEDOWN );
 
 			$event->Skip(1);
 		}
@@ -207,8 +207,8 @@ sub _bind_events {
 	);
 
 	# Save button
-	Wx::Event::EVT_BUTTON( $self, $self->{button_save},     sub { $_[0]->_on_save_button; } );
-	
+	Wx::Event::EVT_BUTTON( $self, $self->{button_save}, sub { $_[0]->_on_save_button; } );
+
 	# Cancel button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
 }
@@ -217,11 +217,11 @@ sub _bind_events {
 # Private method to handle the selection of a preference item
 #
 sub _on_list_item_selected {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
 
 	my $setting_name = $event->GetLabel;
-	my $config = $self->main->config;
+	my $config       = $self->main->config;
 
 	$self->{value}->SetValue( $config->$setting_name );
 
@@ -229,16 +229,16 @@ sub _on_list_item_selected {
 }
 
 sub _on_list_item_activated {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
 
 	my $setting_name = $event->GetLabel;
-	my $config = $self->main->config;
+	my $config       = $self->main->config;
 
-#print "value: " . $config->$setting_name . "\n";
-#	my $value = ($config->$setting_name) ? 0 : 1;
-#	$self->{value}->SetValue( $value );
-#	$config->$setting_name( $value );
+	#print "value: " . $config->$setting_name . "\n";
+	#	my $value = ($config->$setting_name) ? 0 : 1;
+	#	$self->{value}->SetValue( $value );
+	#	$config->$setting_name( $value );
 
 	return;
 }
@@ -270,9 +270,9 @@ sub _update_list {
 	#quote the search string for safety
 	$filter = quotemeta $filter;
 
-	my $list     = $self->{list};
+	my $list = $self->{list};
 	$list->DeleteAllItems;
-	my $index = -1;
+	my $index       = -1;
 	my $preferences = $self->{preferences};
 	for my $name ( sort keys %$preferences ) {
 
@@ -298,8 +298,8 @@ sub _init_preferences {
 	my $self = shift;
 
 	my %settings = %Padre::Config::SETTING;
-	my $config = $self->main->config;
-	my %types = (
+	my $config   = $self->main->config;
+	my %types    = (
 		Padre::Constant::BOOLEAN => Wx::gettext("Boolean"),
 		Padre::Constant::POSINT  => Wx::gettext("Positive integer"),
 		Padre::Constant::INTEGER => Wx::gettext("Integer"),
@@ -318,17 +318,17 @@ sub _init_preferences {
 			next;
 		}
 
-		my $value = $config->$name;
+		my $value         = $config->$name;
 		my $default_value = $setting->default;
 		$self->{preferences}{$name} = {
 			'is_default' => $value ne $default_value,
-			'default' => $default_value,
-			'type'    => $setting->type,
-			'type_name' => $type_name,
-			'value'   => $value,
-		}; 
+			'default'    => $default_value,
+			'type'       => $setting->type,
+			'type_name'  => $type_name,
+			'value'      => $value,
+		};
 	}
-	
+
 	return;
 }
 
