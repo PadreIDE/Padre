@@ -1219,7 +1219,9 @@ sub refresh_title {
 	$self->{title} = $config->main_title;
 
 	my $variables = join '', keys %variable;
-	$self->{title} =~ s/\%([$variables])/$variable{$1}/g;
+
+	$self->{title} =~ s/\%([$variables])/$variable{$1}/g if $variables;
+
 	unless ( defined $self->{title} ) {
 		$self->{title} = "Padre $Padre::VERSION";
 	}
