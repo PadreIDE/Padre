@@ -95,9 +95,9 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
 
 	# Popup right-click menu
-	$self->{popup} = Wx::Menu->new;
-	$self->{copy} = $self->{popup}->Append( -1, Wx::gettext("Copy") );
-	$self->{copy_name} = $self->{popup}->Append( -1, Wx::gettext("Copy Name") );
+	$self->{popup}      = Wx::Menu->new;
+	$self->{copy}       = $self->{popup}->Append( -1, Wx::gettext("Copy") );
+	$self->{copy_name}  = $self->{popup}->Append( -1, Wx::gettext("Copy Name") );
 	$self->{copy_value} = $self->{popup}->Append( -1, Wx::gettext("Copy Value") );
 
 	# Preference value label
@@ -109,8 +109,14 @@ sub _create_controls {
 
 	# System default
 	my $default_label = Wx::StaticText->new( $self, -1, Wx::gettext('Default value:') );
-	$self->{default_value} = Wx::TextCtrl->new( $self, -1, '', 
-		Wx::wxDefaultPosition, Wx::wxDefaultSize, Wx::wxTE_READONLY );
+	$self->{default_value} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_READONLY
+	);
 
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
@@ -167,7 +173,7 @@ sub _create_controls {
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $filter_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $value_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $default_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
@@ -219,7 +225,7 @@ sub _bind_events {
 			shift->_on_list_item_activated(@_);
 		}
 	);
-	
+
 	# When an right click is pressed, let us show a popup menu
 	Wx::Event::EVT_LIST_ITEM_RIGHT_CLICK(
 		$self,
@@ -234,7 +240,7 @@ sub _bind_events {
 		$self,
 		$self->{copy},
 		sub {
-			shift->_copy_to_clipboard(@_, "copy");
+			shift->_copy_to_clipboard( @_, "copy" );
 		}
 	);
 
@@ -243,7 +249,7 @@ sub _bind_events {
 		$self,
 		$self->{copy_name},
 		sub {
-			shift->_copy_to_clipboard(@_, "copy_name");
+			shift->_copy_to_clipboard( @_, "copy_name" );
 		}
 	);
 
@@ -252,7 +258,7 @@ sub _bind_events {
 		$self,
 		$self->{copy_value},
 		sub {
-			shift->_copy_to_clipboard(@_, "copy_value");
+			shift->_copy_to_clipboard( @_, "copy_value" );
 		}
 	);
 
@@ -305,29 +311,29 @@ sub _bind_events {
 # Copy to clipboard
 #
 sub _copy_to_clipboard {
-	my ($self, $event, $obj) = @_;
+	my ( $self, $event, $obj ) = @_;
 
 	my $list = $self->{list};
-	my $name   = $list->GetItemText($list->GetFirstSelected);
-	my $pref = $self->{preferences}{ $name };
+	my $name = $list->GetItemText( $list->GetFirstSelected );
+	my $pref = $self->{preferences}{$name};
 
 	my $text;
-	if($obj eq "copy") {
-		$text = $name . ";" . 
-			($pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set')) . ";" .
-			$pref->{type_name} . ";" . 
-			$pref->{value};
-	} elsif($obj eq "copy_name") {
+	if ( $obj eq "copy" ) {
+		$text =
+			  $name . ";"
+			. ( $pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set') ) . ";"
+			. $pref->{type_name} . ";"
+			. $pref->{value};
+	} elsif ( $obj eq "copy_name" ) {
 		$text = $name;
-	} elsif($obj eq "copy_value") {
+	} elsif ( $obj eq "copy_value" ) {
 		$text = $pref->{value};
 	}
 	if ( $text and Wx::wxTheClipboard->Open() ) {
-		Wx::wxTheClipboard->SetData(
-			Wx::TextDataObject->new( $text ));
+		Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
 		Wx::wxTheClipboard->Close();
 	}
-	
+
 	return;
 }
 
@@ -335,7 +341,7 @@ sub _copy_to_clipboard {
 # Private method to show a popup menu when a list item is right-clicked
 #
 sub _on_list_item_right_click {
-	my $self = shift;
+	my $self  = shift;
 	my $event = shift;
 
 	$self->{list}->PopupMenu(
