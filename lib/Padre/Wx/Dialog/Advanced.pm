@@ -518,25 +518,26 @@ sub _on_save_button {
 	my $self = shift;
 
 	#Save only changed stuff to config
-	my $config   = $self->main->config;
-	my $prefs    = $self->{preferences};
+	my $config = $self->main->config;
+	my $prefs  = $self->{preferences};
 	for my $name ( sort keys %$prefs ) {
-		my $pref = $prefs->{$name};
-		my $type = $pref->{type};
-		my $value = $pref->{value};
+		my $pref     = $prefs->{$name};
+		my $type     = $pref->{type};
+		my $value    = $pref->{value};
 		my $original = $pref->{original};
-		my $changed = ( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH ) ?
-			$value ne $original :
-			$value != $original;
+		my $changed =
+			( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH )
+			? $value ne $original
+			: $value != $original;
 
-		if($changed) {
+		if ($changed) {
 			$config->set( $name, $value );
 		}
 	}
-	
+
 	# And commit configuration...
 	$config->write;
-	
+
 	# Bye bye dialog
 	$self->Hide;
 
