@@ -147,8 +147,8 @@ sub _create_controls {
 
 	# Sizer for default value
 	my $bottom_sizer2 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bottom_sizer2->Add( $default_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$bottom_sizer2->Add( $self->{default_value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer2->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer2->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Bottom button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -158,9 +158,9 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $bottom_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $filter_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $bottom_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $bottom_sizer2, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
