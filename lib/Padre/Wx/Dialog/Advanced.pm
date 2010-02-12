@@ -301,6 +301,9 @@ sub _on_list_item_activated {
 		} else {
 			$list->SetItemTextColour( $selected_index, Wx::wxRED );
 		}
+	} else {
+		# Focus on the text value so we can edit it...
+		$self->{value}->SetFocus;
 	}
 
 	return;
