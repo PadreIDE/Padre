@@ -188,7 +188,7 @@ sub _bind_events {
 		$self->{list},
 		sub {
 			shift->_on_list_item_selected(@_);
-		},
+		}
 	);
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
@@ -196,14 +196,26 @@ sub _bind_events {
 		$self->{list},
 		sub {
 			shift->_on_list_item_activated(@_);
-		},
+		}
 	);
 
 	# Save button
-	Wx::Event::EVT_BUTTON( $self, $self->{button_save}, sub { $_[0]->_on_save_button; } );
+	Wx::Event::EVT_BUTTON( 
+		$self, 
+		$self->{button_save}, 
+		sub { 
+			shift->_on_save_button; 
+		} 
+	);
 
 	# Cancel button
-	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
+	Wx::Event::EVT_BUTTON( 
+		$self, 
+		$self->{button_cancel}, 
+		sub { 
+			shift->Hide; 
+		}
+	);
 }
 
 #
@@ -276,7 +288,7 @@ sub _update_list {
 
 	my $config = $self->main->config;
 
-	my $filter = $self->{filter}->GetValue();
+	my $filter = $self->{filter}->GetValue;
 
 	#quote the search string for safety
 	$filter = quotemeta $filter;
@@ -285,6 +297,7 @@ sub _update_list {
 	$list->DeleteAllItems;
 	my $index       = -1;
 	my $preferences = $self->{preferences};
+	my $alternateColor = Wx::Colour->new(0xF2,0xF2,0xF2);
 	for my $name ( sort keys %$preferences ) {
 
 		# Ignore setting if it does not match the filter
@@ -292,11 +305,25 @@ sub _update_list {
 
 		# Add the setting to the list control
 		my $setting = $preferences->{$name};
+		my $is_default = $setting->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
-		$list->SetItem( $index, 1, $setting->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set') );
+		$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
 		$list->SetItem( $index, 2, $setting->{type_name} );
 		$list->SetItem( $index, 3, $setting->{value} );
+
+		# Alternating table colors
+		unless($index % 2) {
+			$list->SetItemBackgroundColour( $index, $alternateColor);
+		}
+
+		unless($is_default) {
+			my $item = $list->GetItem( $index );
+			my $font = $item->GetFont;
+			$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
+			$item->SetFont($font);
+			$list->SetItemTextColour( $index, Wx::wxRED );
+		}
 	}
 
 	return;
@@ -331,12 +358,10 @@ sub _init_preferences {
 
 		my $value         = $config->$name;
 		my $default_value = $setting->default;
-		my $is_default;
-		if($type == Padre::Constant::ASCII or $type == Padre::Constant::PATH) {
-			$is_default = $value eq $default_value;
-		} else {
-			$is_default = $value == $default_value;
-		}
+		my $is_default = 
+			($type == Padre::Constant::ASCII or $type == Padre::Constant::PATH) ?
+			$value eq $default_value :
+			$value == $default_value;
 
 		$self->{preferences}{$name} = {
 			'is_default' => $is_default,
