@@ -324,7 +324,17 @@ sub _refresh_list {
 		my $idx = $list->InsertItem($item);
 		$list->SetItem( $idx, 1, $filename );
 		$list->SetItem( $idx, 2, Wx::gettext($document->is_modified ? 'CHANGED' : 'fresh'));
-		$list->SetItem( $idx, 3, Wx::gettext($document->has_changed_on_disk ? 'CHANGED' : 'fresh'));
+
+		my $disk_state = $document->has_changed_on_disk;
+		my $disk_text;
+		if ($disk_state == 0) {
+			$disk_text = 'fresh';
+		} elsif ($disk_state == -1) {
+			$disk_text = 'DELETED';
+		} else {
+			$disk_text = 'CHANGED';
+		}
+		$list->SetItem( $idx, 3, Wx::gettext($disk_text));
 	}
 
 	# auto-resize columns
