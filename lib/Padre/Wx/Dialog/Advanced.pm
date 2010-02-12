@@ -313,19 +313,35 @@ sub _on_list_item_activated {
 		$pref->{value}      = $value;
 
 		# and update the fields/list items accordingly
-		$self->{value}->SetValue($value);
-		$self->{button_reset}->Enable( not $is_default );
-		$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
-		$list->SetItem( $selected_index, 3, $value );
-		if ($is_default) {
-			$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
-		} else {
-			$list->SetItemTextColour( $selected_index, Wx::wxRED );
-		}
+		$self->_update_ui($pref);
 	} else {
 
 		# Focus on the text value so we can edit it...
 		$self->{value}->SetFocus;
+	}
+
+	return;
+}
+
+#
+# Private method to update the UI from the provided preference
+#
+sub _update_ui {
+	my ($self, $pref) = @_;
+
+	my $list           = $self->{list};
+	my $selected_index = $list->GetFirstSelected;
+	my $value = $pref->{value};
+	my $is_default = $pref->{is_default};
+	
+	$self->{value}->SetValue($value);
+	$self->{button_reset}->Enable( not $is_default );
+	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
+	$list->SetItem( $selected_index, 3, $value );
+	if ($is_default) {
+		$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
+	} else {
+		$list->SetItemTextColour( $selected_index, Wx::wxRED );
 	}
 
 	return;
@@ -357,14 +373,8 @@ sub _on_set_button {
 
 	$pref->{value}      = $value;
 	$pref->{is_default} = $is_default;
-	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
-	$list->SetItem( $selected_index, 3, $value );
-	if ($is_default) {
-		$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
-	} else {
-		$list->SetItemTextColour( $selected_index, Wx::wxRED );
-	}
+
+	$self->_update_ui($pref);
 
 	return;
 }
@@ -385,11 +395,8 @@ sub _on_reset_button {
 	my $value = $pref->{default};
 	$pref->{value}      = $pref->{default};
 	$pref->{is_default} = 1;
-	$self->{value}->SetValue($value);
-	$self->{button_reset}->Enable(0);
-	$list->SetItem( $selected_index, 1, Wx::gettext('Default') );
-	$list->SetItem( $selected_index, 3, $value );
-	$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
+
+	$self->_update_ui($pref);
 
 	return;
 }
