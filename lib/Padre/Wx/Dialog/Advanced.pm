@@ -18,6 +18,11 @@ our @ISA     = qw{
 
 Padre::Wx::Dialog::Advanced - a dialog to show and configure advanced preferences
 
+=head1 DESCRIPTION
+
+The idea is to implement a Mozilla-style about:config for Padre. This will make
+playing with experimental, advanced, and sekrit settings a breeze.
+
 =head1 PUBLIC API
 
 =head2 C<new>
