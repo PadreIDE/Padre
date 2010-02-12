@@ -185,8 +185,7 @@ sub _bind_events {
 		$self,
 		$self->{filter},
 		sub {
-			$_[0]->_update_list;
-			return;
+			shift->_update_list;
 		}
 	);
 
@@ -195,6 +194,7 @@ sub _bind_events {
 		$self,
 		$self->{list},
 		sub {
+			shift->_on_list_item_selected(@_);
 		},
 	);
 
@@ -203,6 +203,21 @@ sub _bind_events {
 	
 	# Cancel button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
+}
+
+#
+# Private method to handle the selection of a preference item
+#
+sub _on_list_item_selected {
+	my $self = shift;
+	my $event = shift;
+
+	my $setting_name = $event->GetLabel;
+	my $config = $self->main->config;
+
+	$self->{value}->SetValue( $config->$setting_name );
+
+	return;
 }
 
 #
@@ -243,7 +258,7 @@ sub _update_list {
 	my $list     = $self->{list};
 	$list->DeleteAllItems;
 	my $index = -1;
-	for my $config_name ( keys %settings ) {
+	for my $config_name ( sort keys %settings ) {
 
 		# Ignore setting if it does not match the filter
 		next if $config_name !~ /$filter/i;
