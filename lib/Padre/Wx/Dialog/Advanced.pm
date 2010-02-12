@@ -370,17 +370,10 @@ sub _update_list {
 		$list->SetItem( $index, 3, $setting->{value} );
 
 		# Alternating table colors
-		unless($index % 2) {
-			$list->SetItemBackgroundColour( $index, $alternateColor);
-		}
-
-		unless($is_default) {
-			my $item = $list->GetItem( $index );
-			my $font = $item->GetFont;
-			$font->SetWeight(Wx::wxFONTWEIGHT_BOLD);
-			$item->SetFont($font);
-			$list->SetItemTextColour( $index, Wx::wxRED );
-		}
+		$list->SetItemBackgroundColour( $index, $alternateColor) unless $index % 2;
+		
+		# User-set or non-default preferences are colored differently
+		$list->SetItemTextColour( $index, Wx::wxRED ) unless $is_default;
 	}
 
 	return;
