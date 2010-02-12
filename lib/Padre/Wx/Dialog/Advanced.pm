@@ -308,14 +308,18 @@ sub _on_set_button {
 sub _on_reset_button {
 	my $self = shift;
 
-	#TODO implement reset button action
-	my $setting_name = $self->{list}->GetItemText(($self->{list}->GetFirstSelected));
+	# Prepare the preferences
+	my $list = $self->{list};
+	my $selected_index = $list->GetFirstSelected;
+	my $setting_name = $list->GetItemText($selected_index);
 	my $pref = $self->{preferences}{$setting_name};
 	
+	#Reset the value to the default setting
 	$pref->{value} = $pref->{default};
 	$pref->{is_default} = 1;
-
 	$self->{value}->SetValue( $pref->{value} );
+	$self->{button_reset}->Enable(0);
+	$list->SetItemTextColour($selected_index, Wx::wxBLACK);
 
 	return;
 }
