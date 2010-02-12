@@ -683,7 +683,7 @@ sub guess_mimetype {
 		# Try to detect plain CSS without HTML around it
 		return 'text/css'
 			if ( $text !~ /\<\w+\/?\>/ )
-			and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\r\t\r\n]*\{/ );
+			and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/ );
 
 	}
 
