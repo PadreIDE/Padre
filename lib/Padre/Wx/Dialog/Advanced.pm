@@ -280,12 +280,28 @@ sub _on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
 
+	my $selected_index = $event->GetIndex;
+	my $list = $self->{list};
 	my $pref = $self->{preferences}{$event->GetLabel};
 
-	#print "value: " . $config->$setting_name . "\n";
-	#	my $value = ($config->$setting_name) ? 0 : 1;
-	#	$self->{value}->SetValue( $value );
-	#	$config->$setting_name( $value );
+	if($pref->{type} == Padre::Constant::BOOLEAN) {
+		# Reverse boolean
+		my $value = $pref->{value} ? 0 : 1;
+		my $is_default = not $pref->{is_default};
+		$pref->{is_default} = $is_default;
+		$pref->{value} = $value;
+
+		# and update the fields/list items accordingly
+		$self->{value}->SetValue( $value );
+		$self->{button_reset}->Enable( $is_default ); 
+		$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
+		$list->SetItem( $selected_index, 3, $value );
+		if($is_default) {
+			$list->SetItemTextColour( $selected_index, Wx::wxBLACK );
+		} else {
+			$list->SetItemTextColour( $selected_index, Wx::wxRED );
+		}
+	}
 
 	return;
 }
