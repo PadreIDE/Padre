@@ -327,13 +327,13 @@ sub _on_list_item_activated {
 # Private method to update the UI from the provided preference
 #
 sub _update_ui {
-	my ($self, $pref) = @_;
+	my ( $self, $pref ) = @_;
 
 	my $list           = $self->{list};
 	my $selected_index = $list->GetFirstSelected;
-	my $value = $pref->{value};
-	my $is_default = $pref->{is_default};
-	
+	my $value          = $pref->{value};
+	my $is_default     = $pref->{is_default};
+
 	$self->{value}->SetValue($value);
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
@@ -352,7 +352,7 @@ sub _update_ui {
 # Determines whether the preference value is default or not based on its type
 #
 sub _is_default {
-	my ($self, $type, $value, $default_value) = @_;
+	my ( $self, $type, $value, $default_value ) = @_;
 
 	return ( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH )
 		? $value eq $default_value
@@ -377,7 +377,7 @@ sub _on_set_button {
 	my $type          = $pref->{type};
 	my $value         = $self->{value}->GetValue;
 	my $default_value = $pref->{default};
-	my $is_default = $self->_is_default($type, $value, $default_value);
+	my $is_default    = $self->_is_default( $type, $value, $default_value );
 
 	$pref->{value}      = $value;
 	$pref->{is_default} = $is_default;
@@ -495,7 +495,7 @@ sub _init_preferences {
 
 		my $value         = $config->$name;
 		my $default_value = $setting->default;
-		my $is_default = $self->_is_default($type, $value, $default_value);
+		my $is_default    = $self->_is_default( $type, $value, $default_value );
 
 		$self->{preferences}{$name} = {
 			'is_default' => $is_default,
