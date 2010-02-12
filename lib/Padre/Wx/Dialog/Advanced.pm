@@ -93,24 +93,6 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 1, Wx::gettext('Status') );
 	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
 	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
-	Wx::Event::EVT_LIST_ITEM_SELECTED(
-		$self,
-		$self->{list},
-		sub {
-		},
-	);
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self->{list},
-		sub {
-		},
-	);
-	Wx::Event::EVT_LIST_COL_CLICK(
-		$self,
-		$self->{list},
-		sub {
-		},
-	);
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
@@ -157,6 +139,21 @@ sub _create_controls {
 sub _bind_events {
 	my $self = shift;
 
+	# Set focus when Keypad Down or page down keys are pressed
+	Wx::Event::EVT_CHAR(
+		$self->{filter},
+		sub {
+			my ($this, $event)  = @_;
+			my $code  = $event->GetKeyCode;
+
+			$self->{list}->SetFocus()
+				if ($code == Wx::WXK_DOWN) or ($code == Wx::WXK_NUMPAD_PAGEDOWN);
+
+			$event->Skip(1);
+		}
+	);
+
+	# Update filter search results on each text change
 	Wx::Event::EVT_TEXT(
 		$self,
 		$self->{filter},
@@ -166,7 +163,18 @@ sub _bind_events {
 		}
 	);
 
+	# When an item is selected, its values must be populated below
+	Wx::Event::EVT_LIST_ITEM_SELECTED(
+		$self,
+		$self->{list},
+		sub {
+		},
+	);
+
+	# Ok button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_ok},     sub { $_[0]->_on_ok_button; } );
+	
+	# Cancel button
 	Wx::Event::EVT_BUTTON( $self, $self->{button_cancel}, sub { $_[0]->Hide; } );
 }
 
