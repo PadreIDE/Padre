@@ -94,6 +94,12 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
 	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
 
+	# Popup right-click menu
+	$self->{popup} = Wx::Menu->new;
+	$self->{popup}->Append( -1, Wx::gettext("Copy") );
+	$self->{popup}->Append( -1, Wx::gettext("Copy Name") );
+	$self->{popup}->Append( -1, Wx::gettext("Copy Value") );
+
 	# Preference value label
 	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
 
@@ -102,8 +108,9 @@ sub _create_controls {
 	$self->{value}->Enable(0);
 
 	# System default
-	my $default_label = Wx::StaticText->new( $self, -1, 'Default value:' );
-	$self->{default_value} = Wx::StaticText->new( $self, -1, '' );
+	my $default_label = Wx::StaticText->new( $self, -1, Wx::gettext('Default value:') );
+	$self->{default_value} = Wx::TextCtrl->new( $self, -1, '', 
+		Wx::wxDefaultPosition, Wx::wxDefaultSize, Wx::wxTE_READONLY );
 
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
@@ -139,18 +146,18 @@ sub _create_controls {
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Bottom preference value setter sizer
-	my $bottom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bottom_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$bottom_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$bottom_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$bottom_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Sizer for default value
-	my $bottom_sizer2 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$bottom_sizer2->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$bottom_sizer2->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $default_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$default_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$default_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# Bottom button sizer
+	# button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
@@ -160,8 +167,8 @@ sub _create_controls {
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $filter_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $bottom_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $bottom_sizer2, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $default_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -204,11 +211,21 @@ sub _bind_events {
 		}
 	);
 
+	# When an item is activated (e.g. double-clicked, space-ed or enter-ed)
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
 		$self,
 		$self->{list},
 		sub {
 			shift->_on_list_item_activated(@_);
+		}
+	);
+	
+	# When an right click is pressed, let us show a popup menu
+	Wx::Event::EVT_LIST_ITEM_RIGHT_CLICK(
+		$self,
+		$self->{list},
+		sub {
+			shift->_on_list_item_right_click(@_);
 		}
 	);
 
@@ -255,6 +272,22 @@ sub _bind_events {
 			shift->_on_resize;
 		}
 	);
+}
+
+#
+# Private method to show a popup menu when a list item is right-clicked
+#
+sub _on_list_item_right_click {
+	my $self = shift;
+	my $event = shift;
+
+	$self->{list}->PopupMenu(
+		$self->{popup},
+		$event->GetPoint->x,
+		$event->GetPoint->y,
+	);
+
+	return;
 }
 
 #
