@@ -685,6 +685,16 @@ sub guess_mimetype {
 			if ( $text !~ /\<\w+\/?\>/ )
 			and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/ );
 
+		# LUA detection
+		my $lua_score = 0;
+		for ('end','it','in','nil','repeat','...','~=') {
+		     	$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
+		}
+		$lua_score += 2.01 if $text =~ /^[\s\t]?function[\s\t]+\w+[\s\t]*\([\w\,]*\)[\s\t\r\n]+[^\{]/;
+		$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
+		$lua_score += 3.04 if $text =~ /\-\-\[.+?\]\]\-\-/s; # Comment
+		return 'text/x-lua' if $lua_score >= 5;
+
 	}
 
 	# Fallback mime-type of new files, should be configurable in the GUI

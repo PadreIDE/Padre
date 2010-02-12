@@ -13,6 +13,7 @@ my %test_texts = (
 	'=begin pod' => 'application/x-perl6',
 	'use v6;' => 'application/x-perl6',
 	'use strict; sub foo { 1; } my $self = split(/y/,$ENV{foo}));' => 'application/x-perl',
+	"function lua_fct()\n\t--[[This\n\tis\n\ta\ncomment\n\t]]--repeat\nend\n" => 'text/x-lua',
 		);
 
 my %test_files = (
