@@ -240,7 +240,7 @@ sub _bind_events {
 		$self,
 		$self->{copy},
 		sub {
-			shift->_copy_to_clipboard( @_, "copy" );
+			shift->_on_copy_to_clipboard( @_, "copy" );
 		}
 	);
 
@@ -249,7 +249,7 @@ sub _bind_events {
 		$self,
 		$self->{copy_name},
 		sub {
-			shift->_copy_to_clipboard( @_, "copy_name" );
+			shift->_on_copy_to_clipboard( @_, "copy_name" );
 		}
 	);
 
@@ -258,7 +258,7 @@ sub _bind_events {
 		$self,
 		$self->{copy_value},
 		sub {
-			shift->_copy_to_clipboard( @_, "copy_value" );
+			shift->_on_copy_to_clipboard( @_, "copy_value" );
 		}
 	);
 
@@ -308,9 +308,9 @@ sub _bind_events {
 }
 
 #
-# Copy to clipboard
+# Private method to copy preferences to clipboard
 #
-sub _copy_to_clipboard {
+sub _on_copy_to_clipboard {
 	my ( $self, $event, $obj ) = @_;
 
 	my $list = $self->{list};
