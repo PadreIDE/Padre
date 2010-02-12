@@ -101,6 +101,10 @@ sub _create_controls {
 	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
 	$self->{value}->Enable(0);
 
+	# System default
+	my $default_label = Wx::StaticText->new( $self, -1, 'Default value:' );
+	$self->{default_value} = Wx::StaticText->new( $self, -1, '' );
+
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
@@ -141,6 +145,11 @@ sub _create_controls {
 	$bottom_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$bottom_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
+	# Sizer for default value
+	my $bottom_sizer2 = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$bottom_sizer2->Add( $default_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$bottom_sizer2->Add( $self->{default_value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+
 	# Bottom button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
@@ -152,6 +161,7 @@ sub _create_controls {
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $bottom_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $bottom_sizer2, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -288,6 +298,7 @@ sub _on_list_item_selected {
 	my $pref = $self->{preferences}{ $self->{selected} };
 
 	$self->{value}->SetValue( $pref->{value} );
+	$self->{default_value}->SetLabel( $pref->{default} );
 
 	$self->{value}->Enable(1);
 	$self->{button_reset}->Enable( not $pref->{is_default} );
@@ -335,6 +346,7 @@ sub _update_ui {
 	my $is_default     = $pref->{is_default};
 
 	$self->{value}->SetValue($value);
+	$self->{default_value}->SetLabel( $pref->{default} );
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $selected_index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
 	$list->SetItem( $selected_index, 3, $value );
