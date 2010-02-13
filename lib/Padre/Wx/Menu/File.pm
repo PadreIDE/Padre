@@ -103,15 +103,18 @@ sub new {
 		'file.open_in_file_browser',
 	);
 
-	$self->{open_with_default_system_editor} = $self->add_menu_action(
-		$file_open,
-		'file.open_with_default_system_editor',
-	);
+	#TODO remove once the unix implementation is done (see Padre::Util::FileBrowser)
+	if(Padre::Constant::WIN32) {
+		$self->{open_with_default_system_editor} = $self->add_menu_action(
+			$file_open,
+			'file.open_with_default_system_editor',
+		);
 
-	$self->{open_in_command_line} = $self->add_menu_action(
-		$file_open,
-		'file.open_in_command_line',
-	);
+		$self->{open_in_command_line} = $self->add_menu_action(
+			$file_open,
+			'file.open_in_command_line',
+		);
+	}
 
 	$self->{open_example} = $self->add_menu_action(
 		$file_open,
