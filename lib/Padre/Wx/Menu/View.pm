@@ -142,8 +142,24 @@ sub new {
 		'view.word_wrap',
 	);
 
-	$self->AppendSeparator;
+	if ( $config->feature_bookmark ) {
 
+		$self->AppendSeparator;
+
+		# Bookmark Support
+		$self->{bookmark_set} = $self->add_menu_action(
+			$self,
+			'view.bookmark_set',
+		);
+
+		$self->{bookmark_goto} = $self->add_menu_action(
+			$self,
+			'view.bookmark_goto',
+		);
+
+		$self->AppendSeparator;
+
+	}
 
 	# Font Size
 	$self->{font_size} = Wx::Menu->new;
@@ -166,25 +182,6 @@ sub new {
 		$self->{font_size},
 		'view.font_reset',
 	);
-
-	if ( $config->feature_bookmark ) {
-
-		$self->AppendSeparator;
-
-		# Bookmark Support
-		$self->{bookmark_set} = $self->add_menu_action(
-			$self,
-			'view.bookmark_set',
-		);
-
-		$self->{bookmark_goto} = $self->add_menu_action(
-			$self,
-			'view.bookmark_goto',
-		);
-
-		$self->AppendSeparator;
-
-	}
 
 	# Editor Look and Feel
 	$self->{style} = Wx::Menu->new;
