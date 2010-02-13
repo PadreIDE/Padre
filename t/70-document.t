@@ -65,7 +65,7 @@ SCOPE: {
 }
 
 my $editor_3 = t::lib::Padre::Editor->new;
-my $file_3   = File::Spec->rel2abs(File::Spec->catfile( 'eg', 'hello_world.pl' ));
+my $file_3   = File::Spec->rel2abs( File::Spec->catfile( 'eg', 'hello_world.pl' ) );
 my $doc_3    = Padre::Document->new(
 	filename => $file_3,
 	config   => $config,

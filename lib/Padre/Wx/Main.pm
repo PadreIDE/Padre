@@ -3717,7 +3717,7 @@ Opens a command line/shell using the working directory of C<$filename>
 =cut
 
 sub on_open_in_command_line {
-	my ($self, $filename) = @_;
+	my ( $self, $filename ) = @_;
 
 	require Padre::Util::FileBrowser;
 	Padre::Util::FileBrowser->open_in_command_line($filename);

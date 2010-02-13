@@ -138,13 +138,14 @@ sub open_in_command_line {
 
 	my $error;
 	if (Padre::Constant::WIN32) {
+
 		# Win32
 		my $parent_folder = File::Basename::dirname($filename);
-		system(1, 'cmd', '/C', 'start', '/D', qq{"$parent_folder"});
+		system( 1, 'cmd', '/C', 'start', '/D', qq{"$parent_folder"} );
 	} elsif (Padre::Constant::UNIX) {
 
 		# Unix
-		
+
 		#TODO implement for UNIX
 	} else {
 

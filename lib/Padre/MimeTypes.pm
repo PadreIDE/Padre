@@ -687,8 +687,8 @@ sub guess_mimetype {
 
 		# LUA detection
 		my $lua_score = 0;
-		for ('end','it','in','nil','repeat','...','~=') {
-		     	$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
+		for ( 'end', 'it', 'in', 'nil', 'repeat', '...', '~=' ) {
+			$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
 		}
 		$lua_score += 2.01 if $text =~ /^[\s\t]?function[\s\t]+\w+[\s\t]*\([\w\,]*\)[\s\t\r\n]+[^\{]/;
 		$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
