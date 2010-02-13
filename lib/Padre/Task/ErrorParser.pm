@@ -36,6 +36,7 @@ sub run {
 sub finish {
 	my $self      = shift;
 	my $main      = shift;
+	return if !$main;
 	my $errorlist = $main->errorlist if $main;
 	my $data      = $self->data;
 	my $parser    = $self->parser;
