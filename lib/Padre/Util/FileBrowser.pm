@@ -103,6 +103,7 @@ sub open_with_default_system_editor {
 	} elsif (Padre::Constant::UNIX) {
 
 		# Unix
+		#TODO implement for UNIX
 		$error = $self->_execute_unix($filename);
 	} else {
 
