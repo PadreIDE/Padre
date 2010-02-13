@@ -116,8 +116,6 @@ sub new {
 	if (    $event->isa('Wx::MouseEvent')
 		and $editor->main->ide->config->editor_folding )
 	{
-		$self->AppendSeparator;
-
 		my $mousePos         = $event->GetPosition;
 		my $line             = $editor->LineFromPosition( $editor->PositionFromPoint($mousePos) );
 		my $firstPointInLine = $editor->PointFromPosition( $editor->PositionFromLine($line) );
@@ -125,6 +123,8 @@ sub new {
 		if (   $mousePos->x < $firstPointInLine->x
 			&& $mousePos->x > ( $firstPointInLine->x - 18 ) )
 		{
+			$self->AppendSeparator;
+
 			$self->{fold_all} = $self->add_menu_action(
 				$self,
 				'view.fold_all',
