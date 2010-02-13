@@ -3712,15 +3712,15 @@ sub on_open_with_default_system_editor {
 
     $main->on_open_in_command_line($filename);
 
-Opens a command line/shell using C<$filename>'s folder
+Opens a command line/shell using the working directory of C<$filename>
 
 =cut
 
 sub on_open_in_command_line {
 	my ($self, $filename) = @_;
 
-	#TODO implement open_in_command_line
-	$self->error("TODO implement open_in_command_line");
+	require Padre::Util::FileBrowser;
+	Padre::Util::FileBrowser->open_in_command_line($filename);
 }
 
 

@@ -117,6 +117,48 @@ sub open_with_default_system_editor {
 	return;
 }
 
+=head2 C<open_in_command_line>
+
+  Padre::Util::FileBrowser->open_in_command_line($filename);
+
+Single shot method to open a command line/shell using the working
+directory of C<$filename>
+
+=cut
+
+sub open_in_command_line {
+	my ( $class, $filename ) = @_;
+	my $self = $class->new(@_);
+	my $main = Padre::Current->main;
+
+	unless ($filename) {
+		$main->error( Wx::gettext("No filename") );
+		return;
+	}
+
+	my $error;
+	if (Padre::Constant::WIN32) {
+		# Win32
+		my $parent_folder = File::Basename::dirname($filename);
+		system(1, 'cmd', '/C', 'start', '/D', qq{"$parent_folder"});
+	} elsif (Padre::Constant::UNIX) {
+
+		# Unix
+		
+		#TODO implement for UNIX
+	} else {
+
+		# Unsupported
+		$error = sprintf( Wx::gettext("Unsupported OS: %s"), '$^O' );
+	}
+
+	if ($error) {
+		$main->error($error);
+	}
+
+	return;
+}
+
 #
 # private method for executing a process without waiting
 #
