@@ -108,6 +108,11 @@ sub new {
 		'file.open_with_default_system_editor',
 	);
 
+	$self->{open_in_command_line} = $self->add_menu_action(
+		$file_open,
+		'file.open_in_command_line',
+	);
+
 	$self->{open_example} = $self->add_menu_action(
 		$file_open,
 		'file.open_example',

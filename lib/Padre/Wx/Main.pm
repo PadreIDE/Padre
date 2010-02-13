@@ -3708,6 +3708,24 @@ sub on_open_with_default_system_editor {
 
 =pod
 
+=head3 C<on_open_in_command_line>
+
+    $main->on_open_in_command_line($filename);
+
+Opens a command line/shell using C<$filename>'s folder
+
+=cut
+
+sub on_open_in_command_line {
+	my ($self, $filename) = @_;
+
+	#TODO implement open_in_command_line
+	$self->error("TODO implement open_in_command_line");
+}
+
+
+=pod
+
 =head3 C<on_open_example>
 
     $main->on_open_example;

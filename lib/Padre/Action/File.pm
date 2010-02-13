@@ -102,18 +102,6 @@ sub new {
 	);
 
 	Padre::Action->new(
-		name        => 'file.open_in_file_browser',
-		need_editor => 1,
-		need_file   => 1,
-		label       => Wx::gettext('Open in File Browser'),
-		comment     => Wx::gettext('Opens the current document using the file browser'),
-		menu_event  => sub {
-			my $document = $_[0]->current->document or return;
-			$_[0]->on_open_in_file_browser( $document->filename );
-		},
-	);
-
-	Padre::Action->new(
 		name    => 'file.openurl',
 		label   => Wx::gettext('Open &URL...'),
 		comment => Wx::gettext('Open a file from a remote location'),
@@ -126,14 +114,38 @@ sub new {
 	);
 
 	Padre::Action->new(
+		name        => 'file.open_in_file_browser',
+		need_editor => 1,
+		need_file   => 1,
+		label       => Wx::gettext('Open In File Browser'),
+		comment     => Wx::gettext('Opens the current document using the file browser'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$_[0]->on_open_in_file_browser( $document->filename );
+		},
+	);
+
+	Padre::Action->new(
 		name        => 'file.open_with_default_system_editor',
-		label       => Wx::gettext('Open with Default System Editor'),
+		label       => Wx::gettext('Open With Default System Editor'),
 		need_editor => 1,
 		need_file   => 1,
 		comment     => Wx::gettext('Opens the file with the default system editor'),
 		menu_event  => sub {
 			my $document = $_[0]->current->document or return;
 			$_[0]->on_open_with_default_system_editor( $document->filename );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'file.open_in_command_line',
+		need_editor => 1,
+		need_file   => 1,
+		label       => Wx::gettext('Open In Command Line'),
+		comment     => Wx::gettext('Opens a command line using the current document folder'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$_[0]->on_open_in_command_line( $document->filename );
 		},
 	);
 
