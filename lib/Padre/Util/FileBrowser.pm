@@ -103,7 +103,7 @@ sub open_with_default_system_editor {
 	} elsif (Padre::Constant::UNIX) {
 
 		# Unix
-		$error = $self->_execute_in_file_mananger($filename);
+		$error = $self->_execute_unix($filename);
 	} else {
 
 		# Unsupported
