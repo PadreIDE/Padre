@@ -8,7 +8,6 @@ our $VERSION = '0.56';
 
 use Padre::Wx ();
 use Padre::Logger;
-use Padre::Util ('_T');
 
 =head1 NAME
 
@@ -53,7 +52,7 @@ sub debug_perl {
 	$main->show_debugger(1);
 
 	if ( $self->{_debugger_} ) {
-		$main->error( _T('Debugger is already running') );
+		$main->error( Wx::gettext('Debugger is already running') );
 		return;
 	}
 
@@ -171,7 +170,7 @@ sub _set_debugger {
 		my $value = eval { $self->{_debugger_}->get_value($variable) };
 		if ($@) {
 
-			#$main->error(sprintf(_T("Could not evaluate '%s'"), $text));
+			#$main->error(sprintf(Wx::gettext("Could not evaluate '%s'"), $text));
 			#return;
 		} else {
 			$debugger->SetItem( $c, 1, $value );
@@ -187,7 +186,7 @@ sub debugger_is_running {
 	my $main = Padre->ide->wx->main;
 
 	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
+		$main->error( Wx::gettext('Debugger not running') );
 		return;
 	}
 	my $editor = $main->current->editor;
@@ -240,7 +239,7 @@ sub debug_perl_set_breakpoint {
 	# TODO allow setting breakpoints even before the script and the debugger runs
 	# (by saving it in the debugger configuration file?)
 	if ( not $self->{_debugger_}->set_breakpoint( $file, $row ) ) {
-		$self->error( sprintf( _T("Could not set breakpoint on file '%s' row '%s'"), $file, $row ) );
+		$self->error( sprintf( Wx::gettext("Could not set breakpoint on file '%s' row '%s'"), $file, $row ) );
 		return;
 	}
 	$editor->MarkerAdd( $row - 1, Padre::Wx::MarkBreakpoint() );
@@ -292,7 +291,7 @@ sub debug_perl_step_in {
 
 	if ( not $self->{_debugger_} ) {
 		if ( not $self->debug_perl ) {
-			$main->error( _T('Debugger not running') );
+			$main->error( Wx::gettext('Debugger not running') );
 			return;
 		}
 
@@ -318,7 +317,7 @@ sub debug_perl_step_over {
 
 	if ( not $self->{_debugger_} ) {
 		if ( not $self->debug_perl ) {
-			$main->error( _T('Debugger not running') );
+			$main->error( Wx::gettext('Debugger not running') );
 			return;
 		}
 	}
@@ -358,7 +357,7 @@ sub debug_perl_run {
 
 	if ( not $self->{_debugger_} ) {
 		if ( not $self->debug_perl ) {
-			$main->error( _T('Debugger not running') );
+			$main->error( Wx::gettext('Debugger not running') );
 			return;
 		}
 	}
@@ -381,7 +380,7 @@ sub debug_perl_step_out {
 	my $main = Padre->ide->wx->main;
 
 	if ( not $self->{_debugger_} ) {
-		$main->error( _T('Debugger not running') );
+		$main->error( Wx::gettext('Debugger not running') );
 		return;
 	}
 
@@ -422,7 +421,7 @@ sub debug_perl_show_value {
 
 	my $value = eval { $self->{_debugger_}->get_value($text) };
 	if ($@) {
-		$self->error( sprintf( _T("Could not evaluate '%s'"), $text ) );
+		$self->error( sprintf( Wx::gettext("Could not evaluate '%s'"), $text ) );
 		return;
 	}
 	$self->message("$text = $value");
@@ -440,7 +439,7 @@ sub _debug_get_variable {
 	return unless $current->editor;
 	my $text = $current->text;
 	if ( not $text or $text !~ /^[\$@%\\]/ ) {
-		$main->error( sprintf( _T("'%s' does not look like a variable"), $text ) );
+		$main->error( sprintf( Wx::gettext("'%s' does not look like a variable"), $text ) );
 		return;
 	}
 	return $text;
@@ -460,7 +459,7 @@ sub debug_perl_display_value {
 
 	#	my $value = eval { $self->{_debugger_}->get_value($text) };
 	#	if ($@) {
-	#		$main->error(sprintf(_T("Could not evaluate '%s'"), $text));
+	#		$main->error(sprintf(Wx::gettext("Could not evaluate '%s'"), $text));
 	#		return;
 	#	} else {
 	#		$debugger->SetItem( $idx, 1, $value );
