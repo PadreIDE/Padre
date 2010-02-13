@@ -12,7 +12,7 @@ use Padre::Action::Edit     ();
 use Padre::Action::Perl     ();
 use Padre::Action::Plugins  ();
 use Padre::Action::Refactor ();
-use Padre::Action::Debugger ();
+use Padre::Action::Debug    ();
 use Padre::Action::Run      ();
 use Padre::Action::Search   ();
 use Padre::Action::Window   ();
@@ -54,7 +54,7 @@ sub create {
 	Padre::Action::Perl->new($main);
 	Padre::Action::Plugins->new($main);
 	Padre::Action::Refactor->new($main);
-	Padre::Action::Debugger->new($main);
+	Padre::Action::Debug->new($main);
 	Padre::Action::Run->new($main);
 	Padre::Action::Search->new($main);
 	Padre::Action::Window->new($main);

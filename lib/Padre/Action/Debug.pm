@@ -1,4 +1,4 @@
-package Padre::Action::Debugger;
+package Padre::Action::Debug;
 
 # Actions for debugging the current document
 
@@ -6,7 +6,7 @@ package Padre::Action::Debugger;
 
 =head1 NAME
 
-Padre::Action::Debugger is a outsourced module. It creates Actions for
+Padre::Action::Debug is a outsourced module. It creates Actions for
 various options to run the current file.
 
 =cut
