@@ -123,6 +123,7 @@ sub _create_controls {
 		Wx::wxDefaultSize,
 		Wx::wxTE_READONLY
 	);
+	$self->{default_value}->Enable(0);
 
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
@@ -383,6 +384,7 @@ sub _on_list_item_selected {
 	$self->{default_value}->SetLabel( $pref->{default} );
 
 	$self->{value}->Enable(1);
+	$self->{default_value}->Enable(1);
 	$self->{button_reset}->Enable( not $pref->{is_default} );
 	$self->{button_set}->Enable(1);
 
