@@ -298,7 +298,7 @@ sub _bind_events {
 		$self,
 		$self->{button_cancel},
 		sub {
-			shift->Hide;
+			shift->EndModal(Wx::wxID_CANCEL);
 		}
 	);
 
