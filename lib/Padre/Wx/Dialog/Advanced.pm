@@ -381,6 +381,10 @@ sub _on_list_item_selected {
 	return;
 }
 
+# Private method to handle item activation
+# (i.e. the list item is SPACEd, ENTERed, or double-clicked).
+# It toggles the status of a boolean preference or changes focus
+# to the value text field if it is not a boolean
 sub _on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
