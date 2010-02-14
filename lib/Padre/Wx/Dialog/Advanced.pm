@@ -3,15 +3,24 @@ package Padre::Wx::Dialog::Advanced;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Constant            ();
+use Padre::Config              ();
 use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
-use Padre::Config              ();
 
 our $VERSION = '0.56';
 our @ISA     = qw{
 	Padre::Wx::Role::MainChild
 	Wx::Dialog
 };
+
+my %TYPES = (
+	Padre::Constant::BOOLEAN => Wx::gettext('Boolean'),
+	Padre::Constant::POSINT  => Wx::gettext('Positive Integer'),
+	Padre::Constant::INTEGER => Wx::gettext('Integer'),
+	Padre::Constant::ASCII   => Wx::gettext('String'),
+	Padre::Constant::PATH    => Wx::gettext('File/Directory'),
+);
 
 =pod
 
@@ -51,7 +60,7 @@ sub new {
 	# Minimum dialog size
 	$self->SetMinSize( [ 500, 550 ] );
 
-	# create sizer that will host all controls
+	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	# Create the controls
@@ -60,7 +69,7 @@ sub new {
 	# Bind the control events
 	$self->_bind_events;
 
-	# wrap everything in a vbox to add some padding
+	# Wrap everything in a vbox to add some padding
 	$self->SetSizer($sizer);
 	$self->Fit;
 	$self->CentreOnParent;
@@ -68,12 +77,9 @@ sub new {
 	return $self;
 }
 
-#
 # Create dialog controls
-#
 sub _create_controls {
 	my ( $self, $sizer ) = @_;
-
 
 	# Filter label
 	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter:' );
@@ -184,9 +190,7 @@ sub _create_controls {
 	return;
 }
 
-#
 # A Private method to binds events to controls
-#
 sub _bind_events {
 	my $self = shift;
 
@@ -306,15 +310,13 @@ sub _bind_events {
 	);
 }
 
-#
 # Private method to copy preferences to clipboard
-#
 sub _on_copy_to_clipboard {
 	my ( $self, $event, $obj ) = @_;
 
 	my $list = $self->{list};
 	my $name = $list->GetItemText( $list->GetFirstSelected );
-	my $pref = $self->{preferences}{$name};
+	my $pref = $self->{preferences}->{$name};
 
 	my $text;
 	if ( $obj eq "copy" ) {
@@ -336,9 +338,7 @@ sub _on_copy_to_clipboard {
 	return;
 }
 
-#
 # Private method to show a popup menu when a list item is right-clicked
-#
 sub _on_list_item_right_click {
 	my $self  = shift;
 	my $event = shift;
@@ -352,9 +352,7 @@ sub _on_list_item_right_click {
 	return;
 }
 
-#
 # Private method to handle the dialog resize event
-#
 sub _on_resize {
 	my $self = shift;
 
@@ -364,9 +362,7 @@ sub _on_resize {
 	return;
 }
 
-#
 # Private method to handle on character pressed event
-#
 sub _on_char {
 	my $self  = shift;
 	my $event = shift;
@@ -382,14 +378,11 @@ sub _on_char {
 	return;
 }
 
-#
 # Private method to handle the selection of a preference item
-#
 sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
-
-	my $pref = $self->{preferences}{ $event->GetLabel };
+	my $pref  = $self->{preferences}->{ $event->GetLabel };
 
 	$self->{value}->SetValue( $pref->{value} );
 	$self->{default_value}->SetLabel( $pref->{default} );
@@ -404,10 +397,9 @@ sub _on_list_item_selected {
 sub _on_list_item_activated {
 	my $self  = shift;
 	my $event = shift;
-
 	my $index = $event->GetIndex;
 	my $list  = $self->{list};
-	my $pref  = $self->{preferences}{ $event->GetLabel };
+	my $pref  = $self->{preferences}->{ $event->GetLabel };
 
 	if ( $pref->{type} == Padre::Constant::BOOLEAN ) {
 
@@ -428,9 +420,7 @@ sub _on_list_item_activated {
 	return;
 }
 
-#
 # Private method to update the UI from the provided preference
-#
 sub _update_ui {
 	my ( $self, $pref ) = @_;
 
@@ -450,9 +440,7 @@ sub _update_ui {
 }
 
 
-#
 # Determines whether the preference value is default or not based on its type
-#
 sub _is_default {
 	my ( $self, $type, $value, $default_value ) = @_;
 
@@ -461,9 +449,7 @@ sub _is_default {
 		: $value == $default_value;
 }
 
-#
 # Private method to handle the pressing of the set value button
-#
 sub _on_set_button {
 	my $self = shift;
 
@@ -471,7 +457,7 @@ sub _on_set_button {
 	my $list  = $self->{list};
 	my $index = $list->GetFirstSelected;
 	my $name  = $list->GetItemText($index);
-	my $pref  = $self->{preferences}{$name};
+	my $pref  = $self->{preferences}->{$name};
 
 	#TODO Implement some validation based on the preference type
 
@@ -489,9 +475,7 @@ sub _on_set_button {
 	return;
 }
 
-#
 # Private method to handle the pressing of the reset to default button
-#
 sub _on_reset_button {
 	my $self = shift;
 
@@ -499,7 +483,7 @@ sub _on_reset_button {
 	my $list  = $self->{list};
 	my $index = $list->GetFirstSelected;
 	my $name  = $list->GetItemText($index);
-	my $pref  = $self->{preferences}{$name};
+	my $pref  = $self->{preferences}->{$name};
 
 	#Reset the value to the default setting
 	my $value = $pref->{default};
@@ -511,9 +495,7 @@ sub _on_reset_button {
 	return;
 }
 
-#
 # Private method to handle the pressing of the save button
-#
 sub _on_save_button {
 	my $self = shift;
 
@@ -544,26 +526,19 @@ sub _on_save_button {
 	return;
 }
 
-
-#
 # Private method to update the preferences list
-#
 sub _update_list {
-	my $self = shift;
-
+	my $self   = shift;
 	my $config = $self->main->config;
-
-	my $filter = $self->{filter}->GetValue;
-
-	#quote the search string for safety
-	$filter = quotemeta $filter;
+	my $filter = quotemeta $self->{filter}->GetValue;
 
 	my $list = $self->{list};
 	$list->DeleteAllItems;
+
 	my $index          = -1;
 	my $preferences    = $self->{preferences};
 	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	for my $name ( sort keys %$preferences ) {
+	foreach my $name ( sort keys %$preferences ) {
 
 		# Ignore setting if it does not match the filter
 		next if $name !~ /$filter/i;
@@ -573,9 +548,17 @@ sub _update_list {
 		my $is_default = $setting->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
-		$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
+		if ( $is_default ) {
+			$list->SetItem( $index, 1, Wx::gettext('Default') );
+		} else {
+			$list->SetItem( $index, 1, Wx::gettext('User') );
+		}
 		$list->SetItem( $index, 2, $setting->{type_name} );
-		$list->SetItem( $index, 3, $setting->{value} );
+		if ( $setting->{type} == Padre::Constant::BOOLEAN ) {
+			$list->SetItem( $index, 3, $setting->{value} ? 'true' : 'false' );
+		} else {
+			$list->SetItem( $index, 3, $setting->{value} );
+		}
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
@@ -587,10 +570,8 @@ sub _update_list {
 	return;
 }
 
-#
 # Private method to set item to bold
 # Somehow SetItemFont is not there... hence i had to write this long workaround
-#
 sub _set_item_bold_font {
 	my ( $self, $index, $bold ) = @_;
 
@@ -604,40 +585,28 @@ sub _set_item_bold_font {
 	return;
 }
 
-#
 # Private method to initialize a preferences hash from the local configuration
-#
 sub _init_preferences {
-	my $self = shift;
-
-	my %settings = %Padre::Config::SETTING;
-	my $config   = $self->main->config;
-	my %types    = (
-		Padre::Constant::BOOLEAN => Wx::gettext("Boolean"),
-		Padre::Constant::POSINT  => Wx::gettext("Positive integer"),
-		Padre::Constant::INTEGER => Wx::gettext("Integer"),
-		Padre::Constant::ASCII   => Wx::gettext("ASCII"),
-		Padre::Constant::PATH    => Wx::gettext("Path"),
-	);
+	my $self   = shift;
+	my $config = $self->main->config;
 
 	$self->{preferences} = ();
-	for my $name ( sort keys %settings ) {
-		my $setting = $settings{$name};
-
+	for my $name ( Padre::Config->settings ) {
+		my $setting   = Padre::Config->meta($name);
 		my $type      = $setting->type;
-		my $type_name = $types{$type};
-		unless ($type_name) {
+		my $type_name = $TYPES{$type};
+		unless ( $type_name ) {
 			warn "Unknown type: $type while reading $name\n";
 			next;
 		}
 
-		my $value         = $config->$name;
-		my $default_value = $setting->default;
-		my $is_default    = $self->_is_default( $type, $value, $default_value );
+		my $value      = $config->$name;
+		my $default    = $setting->default;
+		my $is_default = $self->_is_default( $type, $value, $default );
 
-		$self->{preferences}{$name} = {
+		$self->{preferences}->{$name} = {
 			'is_default' => $is_default,
-			'default'    => $default_value,
+			'default'    => $default,
 			'type'       => $type,
 			'type_name'  => $type_name,
 			'value'      => $value,
@@ -648,9 +617,7 @@ sub _init_preferences {
 	return;
 }
 
-#
 # Private method to resize list columns
-#
 sub _resize_columns {
 	my $self = shift;
 

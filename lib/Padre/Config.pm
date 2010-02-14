@@ -61,6 +61,10 @@ use Class::XSAccessor::Array {
 # This section identifies the set of all named configuration entries,
 # and where the configuration system should resolve them to.
 
+sub settings {
+	sort keys %SETTING;
+}
+
 #
 # setting( %params );
 #
@@ -1097,6 +1101,13 @@ sub write {
 	return 1;
 }
 
+
+
+
+
+######################################################################
+# Main Methods
+
 # Fetches an explicitly named default
 sub default {
 	my $self = shift;
@@ -1109,13 +1120,6 @@ sub default {
 
 	return $DEFAULT{$name};
 }
-
-
-
-
-
-######################################################################
-# Main Methods
 
 sub set {
 	my $self  = shift;
@@ -1176,6 +1180,10 @@ sub apply {
 	}
 
 	return 1;
+}
+
+sub meta {
+	$SETTING{$_[1]} or die("Missing or invalid setting name '$_[1]'");
 }
 
 
