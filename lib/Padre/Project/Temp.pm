@@ -26,10 +26,7 @@ use Class::XSAccessor {
 # Constructor
 
 sub new {
-	bless {
-		root => File::Temp::tempdir( CLEANUP => 1 ),
-		},
-		$_[0];
+	bless { root => File::Temp::tempdir( CLEANUP => 1 ) }, $_[0];
 }
 
 1;
