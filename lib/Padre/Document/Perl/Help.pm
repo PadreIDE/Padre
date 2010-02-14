@@ -152,8 +152,8 @@ sub _find_installed_modules {
 	my $self = shift;
 	my %seen;
 	require File::Find::Rule;
-	for my $path (@INC) {
-		for my $file ( File::Find::Rule->name('*.pm')->in($path) ) {
+	foreach my $path (@INC) {
+		foreach my $file ( File::Find::Rule->name('*.pm')->in($path) ) {
 			my $module = substr( $file, length($path) + 1 );
 			$module =~ s/.pm$//;
 			$module =~ s{[\\/]}{::}g;

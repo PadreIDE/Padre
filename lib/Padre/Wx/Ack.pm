@@ -226,7 +226,7 @@ sub find_clicked {
 	if ( my $file_types = $search->{file_types} ) {
 		my $is_regex = 1;
 		my $wanted = ( $file_types =~ s/^no// ) ? 0 : 1;
-		for my $i ( App::Ack::filetypes_supported() ) {
+		foreach my $i ( App::Ack::filetypes_supported() ) {
 			if ( $i eq $file_types ) {
 				$App::Ack::type_wanted{$i} = $wanted;
 				$is_regex = 0;
@@ -524,7 +524,7 @@ sub _send_text {
 
 # see t/module.t in ack distro
 sub fill_type_wanted {
-	for my $i ( App::Ack::filetypes_supported() ) {
+	foreach my $i ( App::Ack::filetypes_supported() ) {
 		$App::Ack::type_wanted{$i} = undef;
 	}
 }

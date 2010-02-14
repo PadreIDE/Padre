@@ -53,12 +53,12 @@ foreach my $file (@files) {
 }
 
 # Some fixed test texts
-for my $text (sort(keys(%test_texts))) {
+foreach my $text (sort(keys(%test_texts))) {
 	is(Padre::MimeTypes->guess_mimetype($text,''),$test_texts{$text},$test_texts{$text});
 }
 
 # Some fixed test filenames
-for my $file (sort(keys(%test_files))) {
+foreach my $file (sort(keys(%test_files))) {
 	is(Padre::MimeTypes->guess_mimetype('',$file),$test_files{$file},$file);
 }
 

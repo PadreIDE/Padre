@@ -67,7 +67,7 @@ our $VAR1;
 require_ok($dump_fn);
 
 # Run the action checks...
-for my $action (sort(keys(%{$VAR1->{actions}}))) {
+foreach my $action (sort(keys(%{$VAR1->{actions}}))) {
 
  if ($action =~ /^run\./) {
   # All run actions need a open editor window and a saved file

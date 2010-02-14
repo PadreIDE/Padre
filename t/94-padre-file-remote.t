@@ -46,7 +46,7 @@ my %HTTP_Tests = (
 	'http://www.google.de/result.cgi?q=perl'   => [ 'http://www.google.de/',      'result.cgi' ],
 );
 
-for my $url ( keys(%HTTP_Tests) ) {
+foreach my $url ( keys(%HTTP_Tests) ) {
 	$file = Padre::File->new($url);
 	ok( defined($file), 'HTTP ' . $url . ': Create Padre::File object' );
 	ok( $file->{protocol} eq 'http',                 'HTTP ' . $url . ': Check protocol' );
@@ -93,7 +93,7 @@ is( $file->basename,   'welcome.msg',          'FTP2: servername' );
 ok( $file->exists, 'FTP2: Exists' );
 
 # Test some FTP servers
-for my $url (
+foreach my $url (
 	'ftp://ftp.ubuntu.com/ubuntu/project/ubuntu-archive-keyring.gpg',
 	'ftp://ftp.proftpd.org/README.MIRRORS',                        # Proftpd
 	'ftp://ftp.redhat.com/pub/redhat/linux/README',                # vsftpd

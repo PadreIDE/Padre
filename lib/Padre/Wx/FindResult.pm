@@ -194,7 +194,7 @@ Reset the column headings if locales are changed.
 sub relocale {
 	my $self = shift;
 
-	for my $i ( 0 .. 1 ) {
+	foreach my $i ( 0 .. 1 ) {
 		my $col = $self->GetColumn($i);
 		$col->SetText( _get_title($i) );
 		$self->SetColumn( $i, $col );

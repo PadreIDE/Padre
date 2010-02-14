@@ -256,7 +256,9 @@ sub new {
 
 	$self->{recentfiles}->AppendSeparator;
 
-	$self->update_recentfiles;
+	# NOTE: Do NOT do an initial fill during the constructor
+	# We'll do one later anyway, and the list is premature at this point.
+	# $self->refresh_recent;
 
 	$self->AppendSeparator;
 
@@ -278,24 +280,20 @@ sub new {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('&File');
+	Wx::gettext('&File');
 }
 
-
-
 sub refresh {
-	my $self    = shift;
-	my $current = _CURRENT(@_);
-	my $doc     = $current->document ? 1 : 0;
+	my $self     = shift;
+	my $current  = _CURRENT(@_);
+	my $document = $current->document ? 1 : 0;
 
-	$self->{open_in_file_browser}->Enable($doc);
+	$self->{open_in_file_browser}->Enable($document);
 	if (Padre::Constant::WIN32) {
 
 		#Win32
-		$self->{open_with_default_system_editor}->Enable($doc);
-		$self->{open_in_command_line}->Enable($doc);
+		$self->{open_with_default_system_editor}->Enable($document);
+		$self->{open_in_command_line}->Enable($document);
 	} else {
 
 		#Disabled until a unix implementation is actually working
@@ -303,23 +301,23 @@ sub refresh {
 		$self->{open_with_default_system_editor}->Enable(0);
 		$self->{open_in_command_line}->Enable(0);
 	}
-	$self->{close}->Enable($doc);
-	$self->{close_all}->Enable($doc);
-	$self->{close_all_but_current}->Enable($doc);
-	$self->{reload_file}->Enable($doc);
-	$self->{reload_all}->Enable($doc);
-	$self->{save}->Enable($doc);
-	$self->{save_as}->Enable($doc);
-	$self->{save_all}->Enable($doc);
-	$self->{print}->Enable($doc);
-	defined( $self->{open_session} ) and $self->{open_selection}->Enable($doc);
-	defined( $self->{save_session} ) and $self->{save_session}->Enable($doc);
-	$self->{docstat}->Enable($doc);
+	$self->{close}->Enable($document);
+	$self->{close_all}->Enable($document);
+	$self->{close_all_but_current}->Enable($document);
+	$self->{reload_file}->Enable($document);
+	$self->{reload_all}->Enable($document);
+	$self->{save}->Enable($document);
+	$self->{save_as}->Enable($document);
+	$self->{save_all}->Enable($document);
+	$self->{print}->Enable($document);
+	defined( $self->{open_session} ) and $self->{open_selection}->Enable($document);
+	defined( $self->{save_session} ) and $self->{save_session}->Enable($document);
+	$self->{docstat}->Enable($document);
 
 	return 1;
 }
 
-sub update_recentfiles {
+sub refresh_recent {
 	my $self = shift;
 
 	# menu entry count starts at 0
@@ -344,8 +342,11 @@ sub update_recentfiles {
 				} else {
 
 					# Handle "File not found" situation
-					Padre::DB::History->delete( 'where name = ? and type = ?', $file, 'files' );
-					$self->update_recentfiles;
+					Padre::Current->main->lock('UPDATE', 'DB', 'refresh_recent');
+					Padre::DB::History->delete(
+						'where name = ? and type = ?',
+						$file, 'files',
+					);
 					Wx::MessageBox(
 						sprintf( Wx::gettext("File %s not found."), $file ),
 						Wx::gettext("Open cancelled"),

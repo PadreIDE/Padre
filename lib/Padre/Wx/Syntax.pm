@@ -301,7 +301,7 @@ sub _get_title {
 sub relocale {
 	my $self = shift;
 
-	for my $i ( 0 .. 2 ) {
+	foreach my $i ( 0 .. 2 ) {
 		my $col = $self->GetColumn($i);
 		$col->SetText( _get_title($i) );
 		$self->SetColumn( $i, $col );

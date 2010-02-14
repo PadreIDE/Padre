@@ -59,7 +59,7 @@ sub run {
 
 	# content (POST data) and query (GET data) may be passed as hash ref's
 	# and they're converted automatically:
-	for my $var ( 'query', 'content' ) {
+	foreach my $var ( 'query', 'content' ) {
 		next unless ref( $self->{$var} ) eq 'HASH';
 		$self->{$var} = join(
 			'&',

@@ -50,7 +50,7 @@ sub add2 {
 	# How do we get the sub to walk through the numbers 0 to 2 to get all arguments?
 	# Sounds like a job for a loop and I'll start with a for try
 
-	for my $argument_number ( 0 .. 2 ) {
+	foreach my $argument_number ( 0 .. 2 ) {
 		print $_[$argument_number] . "\n";
 	}
 }
@@ -80,7 +80,7 @@ sub add3 {
 	# There is another place where we got numbers and didn't try to replace them by
 	# variables until now, but this can't wait any longer
 
-	for my $argument_number ( 0 .. $number_of_items ) {
+	foreach my $argument_number ( 0 .. $number_of_items ) {
 
 		# The number of the first argument is fixed, so there is no need to push it
 		# into a variable and use it only once. It could stay fixed within the for
@@ -104,7 +104,7 @@ sub cut_stripes {
 
 	my $number_of_items = $_[0];
 
-	for my $argument_number ( 1 .. $number_of_items ) {
+	foreach my $argument_number ( 1 .. $number_of_items ) {
 		print "Cut " . $_[$argument_number] . " in stripes\n";
 	}
 }
@@ -113,7 +113,7 @@ sub cut_pieces {
 
 	my $number_of_items = $_[0];
 
-	for my $argument_number ( 1 .. $number_of_items ) {
+	foreach my $argument_number ( 1 .. $number_of_items ) {
 		print "Cut " . $_[$argument_number] . " in pieces\n";
 	}
 }

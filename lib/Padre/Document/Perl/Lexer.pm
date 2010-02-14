@@ -360,7 +360,7 @@ sub clear_style {
 	my $doc    = Padre::Current->document;
 	my $editor = $doc->editor;
 
-	for my $i ( 0 .. 31 ) {
+	foreach my $i ( 0 .. 31 ) {
 		$editor->StartStyling( $styling_start_pos, $i );
 		$editor->SetStyling( $styling_end_pos - $styling_start_pos, 0 );
 	}

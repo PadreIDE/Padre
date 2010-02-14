@@ -721,7 +721,7 @@ sub goto_sub {
 	my @lines = split /\n/, $text;
 
 	#print "Name '$name'\n";
-	for my $i ( 0 .. @lines - 1 ) {
+	foreach my $i ( 0 .. @lines - 1 ) {
 
 		#print "L: $lines[$i]\n";
 		if ( $lines[$i] =~ /sub \s+ $name\b/x ) {
@@ -932,7 +932,7 @@ sub perltags_parser {
 		or $self->{_perltags_config} ne $config->perl_tags_file )
 	{
 
-		for my $candidate (
+		foreach my $candidate (
 			$self->project_tagsfile, $config->perl_tags_file,
 			File::Spec->catfile( $ENV{PADRE_HOME}, 'perltags' )
 			)

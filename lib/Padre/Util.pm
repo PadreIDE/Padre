@@ -415,7 +415,7 @@ sub get_project_dir {
 	my $olddir = File::Basename::dirname($filename);
 	my $dir    = $olddir;
 	while (1) {
-		for my $testfilename ( 'Makefile.PL', 'Build.PL', 'dist.ini', 'padre.yml' ) {
+		foreach my $testfilename ( 'Makefile.PL', 'Build.PL', 'dist.ini', 'padre.yml' ) {
 			next unless -e File::Spec->catfile( $dir, $testfilename );
 
 			$project_dir_cache{$filename} = {

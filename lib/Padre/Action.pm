@@ -195,7 +195,7 @@ sub _event {
 	if ( ref( $self->{event} ) eq 'CODE' ) {
 		&{ $self->{event} }(@args);
 	} elsif ( ref( $self->{event} ) eq 'ARRAY' ) {
-		for my $item ( @{ $self->{event} } ) {
+		foreach my $item ( @{ $self->{event} } ) {
 			next if ref($item) ne 'CODE'; # TO DO: Catch error and source (Ticket #666)
 			&{$item}(@args);
 		}

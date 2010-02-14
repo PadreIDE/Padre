@@ -226,7 +226,7 @@ sub run {
 
 	# Process the action queue
 	if ( defined $self->opts->{actionqueue} ) {
-		for my $action ( split( /\,/, $self->opts->{actionqueue} ) ) {
+		foreach my $action ( split( /\,/, $self->opts->{actionqueue} ) ) {
 			next if $action eq ''; # Skip empty action names
 			unless ( defined $self->actions->{$action} ) {
 				warn 'Action "$action" queued from command line but does not exist';

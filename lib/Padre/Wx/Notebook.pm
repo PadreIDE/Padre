@@ -71,6 +71,10 @@ sub new {
 	return $self;
 }
 
+
+
+
+
 ######################################################################
 # Main Methods
 
@@ -91,14 +95,20 @@ sub show_file {
 	return;
 }
 
+
+
+
+
 ######################################################################
 # Event Handlers
 
 sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
+	my $lock   = $main->lock('UPDATE', 'refresh', 'refresh_outline');
 	my $editor = $self->current->editor;
-	if ($editor) {
+
+	if ( $editor ) {
 		my $history = $main->{page_history};
 		my $current = Scalar::Util::refaddr($editor);
 		@$history = grep { $_ != $current } @$history;
@@ -107,15 +117,8 @@ sub on_auinotebook_page_changed {
 		# Update indentation in case auto-update is on
 		# TO DO: Violates encapsulation
 		$editor->{Document}->set_indentation_style;
-
-		# make sure the outline is refreshed for the new doc
-		# TO DO: Violates encapsulation
-		if ( $main->has_outline ) {
-			$main->outline->clear;
-			$main->outline->force_next(1);
-		}
 	}
-	$main->refresh;
+
 	$main->{ide}->plugin_manager->plugin_event('editor_changed');
 }
 

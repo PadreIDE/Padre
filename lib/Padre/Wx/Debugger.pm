@@ -162,7 +162,7 @@ sub _set_debugger {
 
 	my $debugger = $main->debugger;
 	my $count    = $debugger->GetItemCount;
-	for my $c ( 0 .. $count - 1 ) {
+	foreach my $c ( 0 .. $count - 1 ) {
 		my $variable = $debugger->GetItemText($c);
 
 		#print $debugger->GetItem($c, 0)->GetText, "\n";

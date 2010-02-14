@@ -113,6 +113,9 @@ sub new {
 		[ $config->main_width, $config->main_height, ], $style,
 	);
 
+	# Start with a simple placeholder title
+	$self->SetTitle('Padre');
+
 	# Save a reference back to the parent IDE
 	$self->{ide} = $ide;
 
@@ -123,9 +126,6 @@ sub new {
 	# Create the lock manager before any gui operations,
 	# so that we can do locking operations during startup.
 	$self->{locker} = Padre::Locker->new($self);
-
-	# Determine the window title (needs ide & config)
-	$self->refresh_title;
 
 	# Remember where the editor started from,
 	# this could be handy later.
@@ -245,7 +245,7 @@ sub new {
 		$self,
 		Padre::Wx::ID_TIMER_POSTINIT,
 		sub {
-			$_[0]->_timer_post_init;
+			$_[0]->timer_post_init;
 		},
 	);
 	$timer->Start( 1, 1 );
@@ -655,7 +655,7 @@ sub _xy_on_screen {
 	return 1;
 }
 
-sub _timer_post_init {
+sub timer_post_init {
 	my $self    = shift;
 	my $config  = $self->config;
 	my $manager = $self->ide->plugin_manager;
@@ -1158,7 +1158,7 @@ and perform it in the background.
 
 sub add_refresh_listener {
 	my ( $self, @listeners ) = @_;
-	for my $l (@listeners) {
+	foreach my $l (@listeners) {
 		if ( !grep { $_ eq $l } @{ $self->{refresh_listeners} } ) {
 			Scalar::Util::weaken($l);
 			push @{ $self->{refresh_listeners} }, $l;
@@ -1266,6 +1266,25 @@ sub refresh_syntaxcheck {
 
 =pod
 
+=head2 C<refresh_outline>
+
+    $main->refresh_outline;
+
+Force a refresh of the outline panel.
+
+=cut
+
+sub refresh_outline {
+	my $self = shift;
+	return unless $self->has_outline;
+	return if $self->locked('REFRESH');
+	return unless $self->menu->view->{show_outline}->IsChecked;
+	$self->outline->refresh;
+	return;
+}
+
+=pod
+
 =head3 C<refresh_menu>
 
     $main->refresh_menu;
@@ -1336,7 +1355,7 @@ Specifically refresh the Recent Files entries in the File dialog
 sub refresh_recent {
 	my $self = shift;
 	return if $self->locked('REFRESH');
-	$self->menu->file->update_recentfiles;
+	$self->menu->file->refresh_recent;
 }
 
 =pod
@@ -2615,21 +2634,6 @@ sub save_current_session {
 
 }
 
-
-
-sub update_directory {
-	my $self = shift;
-
-	# update the directory listing
-	if ( $self->has_directory ) {
-		if ( $self->menu->view->{directory}->IsChecked ) {
-			$self->directory->refresh;
-		}
-	}
-
-}
-
-
 =pod
 
 =head2 User Interaction
@@ -3314,7 +3318,7 @@ sub setup_editor {
 		}
 	}
 
-	my $lock = $self->lock('REFRESH');
+	my $lock     = $self->lock('REFRESH');
 	my $document = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:
@@ -3397,13 +3401,15 @@ Create a new tab in the notebook, and return its id (an integer).
 =cut
 
 sub create_tab {
-	my ( $self, $editor, $title ) = @_;
+	my $self   = shift;
+	my $editor = shift;
+	my $title  = shift;
 	$title ||= '(' . Wx::gettext('Unknown') . ')';
+
+	my $lock = $self->lock('refresh');
 	$self->notebook->AddPage( $editor, $title, 1 );
 	$editor->SetFocus;
-	my $id = $self->notebook->GetSelection;
-	$self->refresh;
-	return $id;
+	return $self->notebook->GetSelection;
 }
 
 =pod
@@ -3640,7 +3646,7 @@ sub open_file_dialog {
 	}
 
 	my @files;
-	for my $filename (@filenames) {
+	foreach my $filename (@filenames) {
 
 		if ( $filename =~ /[\*\?]/ ) {
 
@@ -3809,7 +3815,7 @@ sub reload_some {
 
 	SCOPE: {
 		my $lock = $self->lock('refresh');
-		for my $reload_page_no ( 0 .. $#reload_pages ) {
+		foreach my $reload_page_no ( 0 .. $#reload_pages ) {
 			$progress->update( $reload_page_no, ( $reload_page_no + 1 ) . '/' . scalar(@reload_pages) );
 
 			foreach my $pageid ( $self->pageids ) {
@@ -4443,7 +4449,7 @@ sub close_some {
 
 	SCOPE: {
 		my $lock = $self->lock('refresh');
-		for my $close_page_no ( 0 .. $#close_pages ) {
+		foreach my $close_page_no ( 0 .. $#close_pages ) {
 			$progress->update( $close_page_no, ( $close_page_no + 1 ) . '/' . scalar(@close_pages) );
 
 			foreach my $pageid ( $self->pageids ) {

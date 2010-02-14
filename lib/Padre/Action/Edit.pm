@@ -279,7 +279,7 @@ sub new {
 					return if $empty_list;
 					my $text = $event->GetText;
 					my $selection;
-					for my $item (@items) {
+					foreach my $item (@items) {
 						if ( $item->{text} eq $text ) {
 							$selection = $item;
 							last;

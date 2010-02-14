@@ -394,7 +394,7 @@ sub _dump_regex {
 	$str   = '' unless $str;
 	$level = 0  unless $level;
 	my @children = $parent->isa('PPIx::Regexp::Node') ? $parent->children : ();
-	for my $child (@children) {
+	foreach my $child (@children) {
 		next if $child->content eq '';
 		my $class_name = $child->class;
 		$class_name =~ s/PPIx::Regexp:://;
@@ -412,7 +412,7 @@ sub _parse_regex_elements {
 	$position = 0  unless $position;
 	@array    = () unless @array;
 	my @elements = $parent->isa('PPIx::Regexp::Node') ? $parent->elements : ();
-	for my $element (@elements) {
+	foreach my $element (@elements) {
 		my $content = $element->content;
 		next if $content eq '';
 		my $class_name = $element->class;
@@ -491,7 +491,7 @@ sub run {
 	if ( defined $match ) {
 		my @chars = split( //, $original_text );
 		my $pos = 0;
-		for my $char (@chars) {
+		foreach my $char (@chars) {
 			if ( $pos == $match_start ) {
 				$self->{matched_text}->BeginTextColour(Wx::wxRED);
 			} elsif ( $pos == $match_end ) {
@@ -526,7 +526,7 @@ sub run {
 
 	#	$self->{regex}->Clear;
 	#	my @elements = _parse_regex_elements;
-	#	for my $element (@elements) {
+	#	foreach my $element (@elements) {
 	#		my $class_name = $element->element->class;
 	#		if ($class_name eq 'PPIx::Regexp::Token::CharClass::Simple') {
 	#			$self->{regex}->BeginTextColour(Wx::wxRED);

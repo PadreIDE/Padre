@@ -350,7 +350,7 @@ sub _update_subdirs {
 	my $cookie;
 
 	# Loops thought the node's total children
-	for my $item ( 1 .. $self->GetChildrenCount($root) ) {
+	foreach my $item ( 1 .. $self->GetChildrenCount($root) ) {
 
 		( my $node, $cookie ) = $item == 1 ? $self->GetFirstChild($root) : $self->GetNextChild( $root, $cookie );
 		next if not $node->IsOk;

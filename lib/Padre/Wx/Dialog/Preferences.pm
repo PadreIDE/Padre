@@ -796,7 +796,7 @@ sub dialog {
 
 	# TO DO: Convert the internal panels to use this
 
-	for my $module ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
+	foreach my $module ( sort { Wx::gettext( $PANELS{$a} ) cmp Wx::gettext( $PANELS{$b} ); } ( keys(%PANELS) ) ) {
 
 		# A plugin or panel should not crash Padre on error
 		eval {
@@ -1133,7 +1133,7 @@ sub run {
 	# clearing them:
 	if ( $config->feature_config ) {
 
-		for my $feature (@Func_List) {
+		foreach my $feature (@Func_List) {
 			$config->set(
 				'feature_' . $feature->[0],
 				$data->{ 'feature_' . $feature->[0] } ? 1 : 0
@@ -1171,7 +1171,7 @@ sub run {
 		$editor_currentline_color
 	);
 
-	for my $module ( keys(%PANELS) ) {
+	foreach my $module ( keys(%PANELS) ) {
 		my $preferences_page = $module->new();
 		$preferences_page->save($data);
 	}

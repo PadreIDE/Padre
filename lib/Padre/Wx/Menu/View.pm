@@ -50,7 +50,7 @@ sub new {
 	$self->AppendSeparator;
 
 	# Show or hide GUI elements
-	for my $element (@GUI_ELEMENTS) {
+	foreach my $element (@GUI_ELEMENTS) {
 
 		next unless defined($element);
 

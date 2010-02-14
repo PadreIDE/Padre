@@ -90,7 +90,7 @@ sub _on_button_clicked {
 
 	my @pages;
 
-	for my $listitem ( 0 .. ( $self->_list->GetItemCount - 1 ) ) {
+	foreach my $listitem ( 0 .. ( $self->_list->GetItemCount - 1 ) ) {
 		my $item = $self->{items}->[ $self->_list->GetItem($listitem)->GetData ];
 		next unless $item->{selected};
 		push @pages, $item->{page};
@@ -272,7 +272,7 @@ sub _create_buttons {
 	my $bc = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('Close') );
 	Wx::Event::EVT_BUTTON( $self, $bc, \&_on_butclose_clicked );
 
-	for my $button_no ( 0 .. $#{ $self->{buttons} || [] } ) {
+	foreach my $button_no ( 0 .. $#{ $self->{buttons} || [] } ) {
 		if ( !defined( $self->{button_clicks}->[$button_no] ) ) {
 			warn 'Too many buttons defined!';
 			last;
@@ -388,13 +388,13 @@ sub _update_buttons_state {
 	my ($self) = @_;
 
 	my $count;
-	for my $item ( @{ $self->{items} } ) {
+	foreach my $item ( @{ $self->{items} } ) {
 		++$count if $item->{selected};
 	}
 
 	my $method = $count ? 'Enable' : 'Disable';
 
-	for my $button ( @{ $self->{buttons} || [] } ) {
+	foreach my $button ( @{ $self->{buttons} || [] } ) {
 		$button->[2]->$method if defined( $button->[2] );
 	}
 

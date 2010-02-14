@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ('_CURRENT');
 
 our $VERSION = '0.56';
 our @ISA     = 'Padre::Wx::Menu';
@@ -126,7 +126,6 @@ sub enable {
 	$self->{run_document_debug}->Enable(1);
 	$self->{run_command}->Enable(1);
 	$self->{stop}->Enable(0);
-	$self->{main}->refresh_toolbar(_CURRENT);
 	return;
 }
 
@@ -136,7 +135,6 @@ sub disable {
 	$self->{run_document_debug}->Enable(0);
 	$self->{run_command}->Enable(0);
 	$self->{stop}->Enable(1);
-	$self->{main}->refresh_toolbar(_CURRENT);
 	return;
 }
 

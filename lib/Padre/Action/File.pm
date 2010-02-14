@@ -399,8 +399,8 @@ sub new {
 		label      => Wx::gettext('Clean Recent Files List'),
 		comment    => Wx::gettext('Remove the entries from the recent files list'),
 		menu_event => sub {
+			my $lock = Padre::Current->main->lock('UPDATE', 'DB', 'refresh_recent');
 			Padre::DB::History->delete( 'where type = ?', 'files' );
-			$self->update_recentfiles;
 		},
 	);
 

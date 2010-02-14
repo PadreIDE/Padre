@@ -71,7 +71,7 @@ print "--- next sample ---\n";
 
 # Perl could also be used for cooking:
 
-for my $fruit ( "Orange", "Apple", "Strawberry", "Melon", "Lemon" ) {
+foreach my $fruit ( "Orange", "Apple", "Strawberry", "Melon", "Lemon" ) {
 	print "1 $fruit\n";
 }
 print "Cut the fruits in not-too-small pieces and your fruitsalat is done.\n";

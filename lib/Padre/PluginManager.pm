@@ -740,7 +740,7 @@ sub plugin_event {
 	my $self  = shift;
 	my $event = shift;
 
-	for my $module ( keys %{ $self->{plugins} } ) {
+	foreach my $module ( keys %{ $self->{plugins} } ) {
 
 		# TODO: Re-enable the commented out error messages when the failing modules
 		#       are fixed.

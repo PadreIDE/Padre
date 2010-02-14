@@ -938,7 +938,7 @@ sub remove_color {
 	TRACE("editor '$editor'") if DEBUG;
 
 	# TO DO this is strange, do we really need to do it with all?
-	for my $i ( 0 .. 31 ) {
+	foreach my $i ( 0 .. 31 ) {
 		$editor->StartStyling( 0, $i );
 		$editor->SetStyling( $editor->GetLength, 0 );
 	}

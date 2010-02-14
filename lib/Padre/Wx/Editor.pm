@@ -748,36 +748,29 @@ sub unfold_all {
 	return;
 }
 
-# when the focus is received by the editor
+# When the focus is received by the editor
 sub on_focus {
-	my ( $self, $event ) = @_;
-	my $doc = Padre::Current->document;
+	my $self     = shift;
+	my $event    = shift;
+	my $main     = $self->main;
+	my $document = $main->current->document;
+	TRACE( "Focus received file: " . ( $document->filename || '' ) ) if DEBUG;
 
-	TRACE( "Focus received file: " . ( $doc->filename || '' ) ) if DEBUG;
-
-	my $main = $self->main;
-
-	# to show/hide the document specific Perl menu
+	# To show/hide the document specific Perl menu
 	# don't refresh on each focus event
-	$main->refresh_menu
-		if ( !defined( $main->{last_refresh_editor} ) )
-		or ( $main->{last_refresh_editor} ne $self );
-	$main->{last_refresh_editor} = $self;
-
-	$main->update_directory;
+	my $lock = $main->lock('UPDATE', 'refresh_menu', 'refresh_directory');
 
 	# TO DO
 	# this is called even if the mouse is moved away from padre and back again
 	# we should restrict some of the updates to cases when we switch from one file to
 	# another
-
 	if ( $self->needs_manual_colorize ) {
 		TRACE("needs_manual_colorize") if DEBUG;
 		my $lexer = $self->GetLexer;
 		if ( $lexer == Wx::wxSTC_LEX_CONTAINER ) {
-			$doc->colorize;
+			$document->colorize;
 		} else {
-			$doc->remove_color;
+			$document->remove_color;
 			$self->Colourise( 0, $self->GetLength );
 		}
 		$self->needs_manual_colorize(0);
@@ -1211,7 +1204,7 @@ sub comment_lines {
 		if ( $is_first_column && $end > $begin ) {
 			$end--;
 		}
-		for my $line ( $begin .. $end ) {
+		foreach my $line ( $begin .. $end ) {
 
 			# insert $str (# or //)
 			my $pos = $self->PositionFromLine($line);
@@ -1252,7 +1245,7 @@ sub uncomment_lines {
 		if ( $is_first_column && $end > $begin ) {
 			$end--;
 		}
-		for my $line ( $begin .. $end ) {
+		foreach my $line ( $begin .. $end ) {
 			my $first = $self->PositionFromLine($line);
 			my $last  = $first + $length;
 			my $text  = $self->GetTextRange( $first, $last );

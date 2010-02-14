@@ -37,7 +37,7 @@ This method does all the checks when being called on a L<Padre::Config> object.
 sub check {
 	my $self = shift;
 
-	for my $storage ( 'human', 'host' ) {
+	foreach my $storage ( 'human', 'host' ) {
 
 		if ( !defined( $self->$storage->{Version} ) ) {
 

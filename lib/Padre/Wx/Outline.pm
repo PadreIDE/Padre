@@ -114,6 +114,12 @@ sub stop {
 	return ();
 }
 
+sub refresh {
+	my $self = shift;
+	$self->clear;
+	$self->force_next(1);
+}
+
 sub running {
 	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
 }

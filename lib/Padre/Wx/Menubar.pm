@@ -116,7 +116,7 @@ sub refresh {
 
 	my @items;
 
-	for my $item ( split( /\;/, $config->main_menubar_items ) ) {
+	foreach my $item ( split( /\;/, $config->main_menubar_items ) ) {
 		if ( $item eq 'menu._document' ) {
 			next unless defined( $main->current );
 			next unless defined( $main->current->document );
@@ -144,7 +144,7 @@ sub refresh {
 	my $lock = $main->lock('UPDATE');
 
 	my $count = -1;
-	for my $item (@items) {
+	foreach my $item (@items) {
 		if ( $item =~ /^menu\.(.+)$/ ) {
 			my $menu = $1;
 
@@ -197,7 +197,7 @@ sub refresh {
 				# only if there is no defined hotkey or there
 				# is a collision
 				$title =~ s/\&//g;
-				for my $pos ( 0 .. ( length($title) - 1 ) ) {
+				foreach my $pos ( 0 .. ( length($title) - 1 ) ) {
 					my $char = lc( substr( $title, $pos, 1 ) );
 
 					# Only use a-z for hotkeys
