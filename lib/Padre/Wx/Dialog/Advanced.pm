@@ -301,13 +301,8 @@ sub _bind_events {
 		}
 	);
 
-	# Resize dialog event
-	Wx::Event::EVT_SIZE(
-		$self,
-		sub {
-			shift->_on_resize;
-		}
-	);
+
+	return;
 }
 
 # Private method to copy preferences to clipboard
@@ -521,7 +516,7 @@ sub _on_save_button {
 	$config->write;
 
 	# Bye bye dialog
-	$self->Hide;
+	$self->EndModal(Wx::wxID_OK);
 
 	return;
 }
@@ -623,17 +618,18 @@ sub _resize_columns {
 
 	# Resize all columns but the last to their biggest item width
 	my $list               = $self->{list};
-	my $total_column_width = 0;
 	for ( 0 .. 2 ) {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
-		$total_column_width += $list->GetColumnWidth($_);
 	}
 
 	# The second column (status) can be bold
 	$list->SetColumnWidth( 1, $list->GetColumnWidth(1) + 10 );
 
-	# the last column gets the remaining list width
-	$list->SetColumnWidth( 3, $list->GetSize->GetWidth - $total_column_width - 21 );
+	# the last column gets a bigger static width. 
+	# i.e. we do not want to be too long
+	$list->SetColumnWidth( 3, 600 );
+
+	return;
 }
 
 =pod
