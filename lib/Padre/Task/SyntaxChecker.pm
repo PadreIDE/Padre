@@ -3,8 +3,8 @@ package Padre::Task::SyntaxChecker;
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
-use Params::Util qw{_CODE _INSTANCE};
+use Carp           ();
+use Params::Util   (qw{_CODE _INSTANCE});
 use Padre::Task    ();
 use Padre::Current ();
 use Padre::Wx      ();
@@ -41,7 +41,7 @@ Padre::Task::SyntaxChecker - Generic syntax-checking background processing task
   $task->schedule;
   
   my $task2 = Padre::Task::SyntaxChecker::MyLanguage->new(
-    text          => Padre::Current->document->text_get,
+    text   => Padre::Current->document->text_get,
     editor => Padre::Current->editor,
   );
   $task2->schedule;
@@ -79,7 +79,7 @@ sub new {
 		$self->{text} = Padre::Current->document->text_get;
 	}
 
-	# put notebook page and callback into main-thread-only storage
+	# Put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
 	my $editor    = $self->{editor}    || $self->{main_thread_only}->{editor};
 	my $on_finish = $self->{on_finish} || $self->{main_thread_only}->{on_finish};
