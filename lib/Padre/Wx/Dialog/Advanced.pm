@@ -348,16 +348,6 @@ sub _on_list_item_right_click {
 	return;
 }
 
-# Private method to handle the dialog resize event
-sub _on_resize {
-	my $self = shift;
-
-	$self->Layout;
-	$self->_resize_columns;
-
-	return;
-}
-
 # Private method to handle on character pressed event
 sub _on_char {
 	my $self  = shift;
