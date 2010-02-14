@@ -18,7 +18,7 @@ are children of L<Padre::Wx::Main>.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{_INSTANCE};
+use Params::Util   ('_INSTANCE');
 use Padre::Current ();
 
 our $VERSION = '0.56';
