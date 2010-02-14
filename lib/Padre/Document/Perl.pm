@@ -345,17 +345,11 @@ sub pre_process {
 # Documented in Padre::Document!
 # Implemented as a task. See Padre::Task::SyntaxChecker::Perl
 sub check_syntax {
-	my $self = shift;
-	my %args = @_;
-	$args{background} = 0;
-	return $self->_check_syntax_internals( \%args );
+	shift->_check_syntax_internals( { @_, background => 0 } );
 }
 
 sub check_syntax_in_background {
-	my $self = shift;
-	my %args = @_;
-	$args{background} = 1;
-	return $self->_check_syntax_internals( \%args );
+	shift->_check_syntax_internals( { @_, background => 1 } );
 }
 
 sub _check_syntax_internals {
