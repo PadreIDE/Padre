@@ -169,7 +169,7 @@ sub write {
 	}
 
 	$self->{error} = $!;
-	return ();
+	return;
 }
 
 sub basename {
