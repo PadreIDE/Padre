@@ -182,6 +182,20 @@ sub dirname {
 	return File::Basename::dirname( $self->{filename} );
 }
 
+sub splitvdir {
+	my ($v, $d, $f) = File::Spec->splitpath($_[0]->{filename});
+	my @d = File::Spec->splitdir($d);
+	pop @d if $d[-1] eq '';
+	return $v, @d;
+}
+
+sub splitall {
+	my ($v, $d, $f) = File::Spec->splitpath($_[0]->{filename});
+	my @d = File::Spec->splitdir($d);
+	pop @d if $d[-1] eq '';
+	return $v, @d, $f;
+}
+
 sub readonly {
 	my $self = shift;
 	return 1 if ( !-w $self->{filename} );

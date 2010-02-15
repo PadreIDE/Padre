@@ -3,6 +3,7 @@ package Padre::Wx::Notebook;
 use 5.008;
 use strict;
 use warnings;
+use Params::Util               ();
 use Padre::Wx                  ();
 use Padre::Wx::Role::MainChild ();
 
@@ -120,6 +121,86 @@ sub on_auinotebook_page_changed {
 	}
 
 	$main->{ide}->plugin_manager->plugin_event('editor_changed');
+}
+
+
+
+
+
+######################################################################
+# Introspection and Convenience
+
+# Find the common root path for saved files
+sub prefix {
+	my $self   = shift;
+	my $found  = 0;
+	my @prefix = ();
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		my $document = $self->GetPage($i)->{Document} or next;
+		my $file     = $document->file                or next;
+		$file->isa('Padre::File::Local')              or next;
+		unless ( $found++ ) {
+			@prefix = $file->splitvdir;
+			next;
+		}
+
+		# How deep do the paths match
+		my @path = $file->splitvdir;
+		if ( @prefix > @path ) {
+			foreach ( 0 .. $#path ) {
+				unless ( $prefix[$_] eq $path[$_] ) {
+					@path = @path[0..$_];
+					last;
+				}
+			}
+			@prefix = @path;
+		} else {
+			foreach ( 0 .. $#prefix ) {
+				unless ( $prefix[$_] eq $path[$_] ) {
+					@prefix = @prefix[0..$_];
+					last;
+				}
+			}
+		}
+	}
+
+	return @prefix;
+}
+
+# Build a page id to label map
+sub labels {
+	my $self   = shift;
+	my @prefix = $self->prefix;
+	my @labels = ();
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		my $document = $self->GetPage($i)->{Document};
+		unless ( $document ) {
+			push @labels, undef;
+			next;
+		}
+
+		# "Untitled N" files
+		my $file = $document->file;
+		unless ( $file ) {
+			my $title = $self->GetPageText($i);
+			$title =~ s/[ *]+//;
+			push @labels, $title;
+			next;
+		}
+
+		# Show local files relative to the common prefix
+		if ( $file->isa('Padre::File::Local') ) {
+			my @path = $file->splitall;
+			@path = @path[ scalar(@prefix) .. $#path ];
+			push @labels, File::Spec->catfile(@path);
+			next;
+		}
+
+		# Show the full path to non-local files
+		push @labels, $file->{filename};
+	}
+
+	return @labels;
 }
 
 1;
