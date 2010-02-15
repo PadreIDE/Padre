@@ -323,9 +323,10 @@ sub _refresh_list {
 		$item->SetId(0);
 		$item->SetColumn(0);
 		$item->SetText( defined( $document->project ) ? $document->project->name : '' );
-		push @{ $self->{items} }, { page => $page };
 		$item->SetData( $#{ $self->{items} } );
 		my $idx = $list->InsertItem($item);
+		splice @{ $self->{items} },$idx,0, { page => $page };
+
 		$list->SetItem( $idx, 1, $filename );
 		$list->SetItem( $idx, 2, Wx::gettext( $document->is_modified ? 'CHANGED' : 'fresh' ) );
 
