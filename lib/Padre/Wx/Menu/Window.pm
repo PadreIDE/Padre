@@ -113,7 +113,7 @@ sub refresh {
 
 	# Add or remove menu entries as needed
 	if ($pages) {
-		my $config_shorten_path = $main->ide->config->window_list_shorten_path;
+		my $config_shorten_path = $main->config->window_list_shorten_path;
 		my $prefix              = 0;
 		my $prefix_length       = 0;
 		if ($config_shorten_path) {
