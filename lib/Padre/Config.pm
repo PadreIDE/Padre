@@ -1,8 +1,6 @@
 package Padre::Config;
 
-#
 # Configuration subsystem for Padre
-#
 
 # To help force the break from the first-generate HASH based configuration
 # over to thdee second-generation method based configuration, initially we
@@ -26,21 +24,24 @@ use Padre::Config::Upgrade ();
 
 our $VERSION = '0.56';
 
-# Master storage of the settings
-our %SETTING = ();
+our (%SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON);
+BEGIN {
+	# Master storage of the settings
+	%SETTING = ();
 
-# A cache for the defaults
-our %DEFAULT = ();
+	# A cache for the defaults
+	%DEFAULT = ();
 
-# A cache for the settings that need to be added to startup.yml
-our %STARTUP = ();
+	# A cache for startup.yml settings
+	%STARTUP = ();
 
-# The configuration revision.
-# (Functionally similar to the database revision)
-our $REVISION = 1;
+	# The configuration revision.
+	# (Functionally similar to the database revision)
+	$REVISION = 1;
 
-# Storage for the default config object
-our $SINGLETON = undef;
+	# Storage for the default config object
+	$SINGLETON = undef;
+}
 
 # Accessor generation
 use Class::XSAccessor::Array {
@@ -93,6 +94,189 @@ sub setting {
 
 	return 1;
 }
+
+
+
+
+
+#####################################################################
+# Constructor and Input/Output
+
+sub new {
+	my $class = shift;
+	my $host  = shift;
+	my $human = shift;
+	unless ( Params::Util::_INSTANCE( $host, 'Padre::Config::Host' ) ) {
+		Carp::croak("Did not provide a host config to Padre::Config->new");
+	}
+	unless ( Params::Util::_INSTANCE( $human, 'Padre::Config::Human' ) ) {
+		Carp::croak("Did not provide a user config to Padre::Config->new");
+	}
+
+	# Create the basic object with the two required elements
+	my $self = bless [ $host, $human, undef ], $class;
+
+	# Add the optional third element
+	if (@_) {
+		my $project = shift;
+		unless ( Params::Util::_INSTANCE( $project, 'Padre::Config::Project' ) ) {
+			Carp::croak("Did not provide a project config to Padre::Config->new");
+		}
+		$self->[Padre::Constant::PROJECT] = $project;
+	}
+
+	return $self;
+}
+
+sub read {
+	my $class = shift;
+
+	unless ($SINGLETON) {
+
+		# Load the host configuration
+		my $host = Padre::Config::Host->read;
+
+		# Load the user configuration
+		my $human = Padre::Config::Human->read
+			|| Padre::Config::Human->create;
+
+		# Hand off to the constructor
+		$SINGLETON = $class->new( $host, $human );
+
+		Padre::Config::Upgrade::check($SINGLETON);
+	}
+
+	return $SINGLETON;
+}
+
+sub write {
+	my $self = shift;
+
+	# Save the user configuration
+	$self->[Padre::Constant::HUMAN]->{version} = $REVISION;
+	$self->[Padre::Constant::HUMAN]->write;
+
+	# Save the host configuration
+	$self->[Padre::Constant::HOST]->{version} = $REVISION;
+	$self->[Padre::Constant::HOST]->write;
+
+	# Write the startup subset copy of the configuration
+	my %startup = map { $_ => $self->$_() } sort keys %STARTUP;
+	YAML::Tiny::DumpFile(
+		Padre::Constant::CONFIG_STARTUP,
+		\%startup,
+	);
+
+	return 1;
+}
+
+
+
+
+
+######################################################################
+# Main Methods
+
+# Fetches an explicitly named default
+sub default {
+	my $self = shift;
+	my $name = shift;
+
+	# Does the setting exist?
+	unless ( $SETTING{$name} ) {
+		Carp::croak("The configuration setting '$name' does not exist");
+	}
+
+	return $DEFAULT{$name};
+}
+
+sub set {
+	my $self  = shift;
+	my $name  = shift;
+	my $value = shift;
+
+	# Does the setting exist?
+	my $setting = $SETTING{$name};
+	unless ($setting) {
+		Carp::croak("The configuration setting '$name' does not exist");
+	}
+
+	# All types are Padre::Constant::ASCII-like
+	unless ( defined $value and not ref $value ) {
+		Carp::croak("Missing or non-scalar value for setting '$name'");
+	}
+
+	# We don't need to do additional checks on Padre::Constant::ASCII
+	my $type = $setting->type;
+	if ( $type == Padre::Constant::BOOLEAN ) {
+		$value = 0 if $value eq '';
+		if ( $value ne '1' and $value ne '0' ) {
+			Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
+		}
+	}
+	if ( $type == Padre::Constant::POSINT and not Params::Util::_POSINT($value) ) {
+		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
+	}
+	if ( $type == Padre::Constant::INTEGER and not _INTEGER($value) ) {
+		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
+	}
+	if ( $type == Padre::Constant::PATH and not -e $value ) {
+		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
+	}
+
+	# Set the value into the appropriate backend
+	my $store = $SETTING{$name}->store;
+	$self->[$store]->{$name} = $value;
+
+	return 1;
+}
+
+# Set a value in the configuration and apply the preference change
+# to the application.
+sub apply {
+	my $self    = shift;
+	my $name    = shift;
+	my $value   = shift;
+	my $current = _CURRENT(@_);
+
+	# Set the config value
+	$self->set( $name => $value );
+
+	# Does this setting have an apply hook
+	my $code = $SETTING{$name}->apply;
+	if ($code) {
+		$code->( $current->main, $value );
+	}
+
+	return 1;
+}
+
+sub meta {
+	$SETTING{$_[1]} or die("Missing or invalid setting name '$_[1]'");
+}
+
+
+
+
+
+######################################################################
+# Support Functions
+
+#
+# my $is_integer = _INTEGER( $scalar );
+#
+# return true if $scalar is an integer.
+#
+sub _INTEGER {
+	return defined $_[0] && !ref $_[0] && $_[0] =~ m/^(?:0|-?[1-9]\d*)$/;
+}
+
+
+
+
+
+######################################################################
+# Basic Settings
 
 # User identity (simplistic initial version)
 # Initially, this must be ascii only
@@ -1025,182 +1209,6 @@ setting(
 	store   => Padre::Constant::PROJECT,
 	default => '',
 );
-
-
-
-
-
-#####################################################################
-# Constructor and Accessors
-
-sub new {
-	my $class = shift;
-	my $host  = shift;
-	my $human = shift;
-	unless ( Params::Util::_INSTANCE( $host, 'Padre::Config::Host' ) ) {
-		Carp::croak("Did not provide a host config to Padre::Config->new");
-	}
-	unless ( Params::Util::_INSTANCE( $human, 'Padre::Config::Human' ) ) {
-		Carp::croak("Did not provide a user config to Padre::Config->new");
-	}
-
-	# Create the basic object with the two required elements
-	my $self = bless [ $host, $human, undef ], $class;
-
-	# Add the optional third element
-	if (@_) {
-		my $project = shift;
-		unless ( Params::Util::_INSTANCE( $project, 'Padre::Config::Project' ) ) {
-			Carp::croak("Did not provide a project config to Padre::Config->new");
-		}
-		$self->[Padre::Constant::PROJECT] = $project;
-	}
-
-	return $self;
-}
-
-sub read {
-	my $class = shift;
-
-	unless ($SINGLETON) {
-
-		# Load the host configuration
-		my $host = Padre::Config::Host->read;
-
-		# Load the user configuration
-		my $human = Padre::Config::Human->read
-			|| Padre::Config::Human->create;
-
-		# Hand off to the constructor
-		$SINGLETON = $class->new( $host, $human );
-
-		Padre::Config::Upgrade::check($SINGLETON);
-	}
-
-	return $SINGLETON;
-}
-
-sub write {
-	my $self = shift;
-
-	# Save the user configuration
-	$self->[Padre::Constant::HUMAN]->{version} = $REVISION;
-	$self->[Padre::Constant::HUMAN]->write;
-
-	# Save the host configuration
-	$self->[Padre::Constant::HOST]->{version} = $REVISION;
-	$self->[Padre::Constant::HOST]->write;
-
-	# Write the startup subset copy of the configuration
-	my %startup = map { $_ => $self->$_() } sort keys %STARTUP;
-	YAML::Tiny::DumpFile(
-		Padre::Constant::CONFIG_STARTUP,
-		\%startup,
-	);
-
-	return 1;
-}
-
-
-
-
-
-######################################################################
-# Main Methods
-
-# Fetches an explicitly named default
-sub default {
-	my $self = shift;
-	my $name = shift;
-
-	# Does the setting exist?
-	unless ( $SETTING{$name} ) {
-		Carp::croak("The configuration setting '$name' does not exist");
-	}
-
-	return $DEFAULT{$name};
-}
-
-sub set {
-	my $self  = shift;
-	my $name  = shift;
-	my $value = shift;
-
-	# Does the setting exist?
-	my $setting = $SETTING{$name};
-	unless ($setting) {
-		Carp::croak("The configuration setting '$name' does not exist");
-	}
-
-	# All types are Padre::Constant::ASCII-like
-	unless ( defined $value and not ref $value ) {
-		Carp::croak("Missing or non-scalar value for setting '$name'");
-	}
-
-	# We don't need to do additional checks on Padre::Constant::ASCII
-	my $type = $setting->type;
-	if ( $type == Padre::Constant::BOOLEAN ) {
-		$value = 0 if $value eq '';
-		if ( $value ne '1' and $value ne '0' ) {
-			Carp::croak("Tried to change setting '$name' to non-boolean '$value'");
-		}
-	}
-	if ( $type == Padre::Constant::POSINT and not Params::Util::_POSINT($value) ) {
-		Carp::croak("Tried to change setting '$name' to non-posint '$value'");
-	}
-	if ( $type == Padre::Constant::INTEGER and not _INTEGER($value) ) {
-		Carp::croak("Tried to change setting '$name' to non-integer '$value'");
-	}
-	if ( $type == Padre::Constant::PATH and not -e $value ) {
-		Carp::croak("Tried to change setting '$name' to non-existant path '$value'");
-	}
-
-	# Set the value into the appropriate backend
-	my $store = $SETTING{$name}->store;
-	$self->[$store]->{$name} = $value;
-
-	return 1;
-}
-
-# Set a value in the configuration and apply the preference change
-# to the application.
-sub apply {
-	my $self    = shift;
-	my $name    = shift;
-	my $value   = shift;
-	my $current = _CURRENT(@_);
-
-	# Set the config value
-	$self->set( $name => $value );
-
-	# Does this setting have an apply hook
-	my $code = $SETTING{$name}->apply;
-	if ($code) {
-		$code->( $current->main, $value );
-	}
-
-	return 1;
-}
-
-sub meta {
-	$SETTING{$_[1]} or die("Missing or invalid setting name '$_[1]'");
-}
-
-
-
-
-
-######################################################################
-# Support Functions
-
-#
-# my $is_integer = _INTEGER( $scalar );
-#
-# return true if $scalar is an integer.
-#
-sub _INTEGER {
-	return defined $_[0] && !ref $_[0] && $_[0] =~ m/^(?:0|-?[1-9]\d*)$/;
-}
 
 1;
 
