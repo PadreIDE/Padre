@@ -14,6 +14,14 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
+# Copy menu constants
+use constant {
+	COPY_ALL   => 1,
+	COPY_NAME  => 2,
+	COPY_VALUE => 3
+};
+
+# Padre config type to description hash
 my %TYPES = (
 	Padre::Constant::BOOLEAN => Wx::gettext('Boolean'),
 	Padre::Constant::POSINT  => Wx::gettext('Positive Integer'),
@@ -244,7 +252,7 @@ sub _bind_events {
 		$self,
 		$self->{copy},
 		sub {
-			shift->_on_copy_to_clipboard( @_, "copy" );
+			shift->_on_copy_to_clipboard( @_, COPY_ALL );
 		}
 	);
 
@@ -253,7 +261,7 @@ sub _bind_events {
 		$self,
 		$self->{copy_name},
 		sub {
-			shift->_on_copy_to_clipboard( @_, "copy_name" );
+			shift->_on_copy_to_clipboard( @_, COPY_NAME );
 		}
 	);
 
@@ -262,7 +270,7 @@ sub _bind_events {
 		$self,
 		$self->{copy_value},
 		sub {
-			shift->_on_copy_to_clipboard( @_, "copy_value" );
+			shift->_on_copy_to_clipboard( @_, COPY_VALUE );
 		}
 	);
 
@@ -308,22 +316,22 @@ sub _bind_events {
 
 # Private method to copy preferences to clipboard
 sub _on_copy_to_clipboard {
-	my ( $self, $event, $obj ) = @_;
+	my ( $self, $event, $action ) = @_;
 
 	my $list = $self->{list};
 	my $name = $list->GetItemText( $list->GetFirstSelected );
 	my $pref = $self->{preferences}->{$name};
 
 	my $text;
-	if ( $obj eq "copy" ) {
+	if ( $action == COPY_ALL ) {
 		$text =
 			  $name . ";"
 			. ( $pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set') ) . ";"
 			. $pref->{type_name} . ";"
 			. $pref->{value};
-	} elsif ( $obj eq "copy_name" ) {
+	} elsif ( $action == COPY_NAME ) {
 		$text = $name;
-	} elsif ( $obj eq "copy_value" ) {
+	} elsif ( $action == COPY_VALUE ) {
 		$text = $pref->{value};
 	}
 	if ( $text and Wx::wxTheClipboard->Open() ) {
