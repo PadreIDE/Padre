@@ -377,10 +377,10 @@ sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
 	my $pref  = $self->{preferences}->{ $event->GetLabel };
-	my $type = $pref->{type};
+	my $type  = $pref->{type};
 
-	$self->{value}->SetValue( $self->_displayed_value($type, $pref->{value}) );
-	$self->{default_value}->SetLabel( $self->_displayed_value($type, $pref->{default}) );
+	$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
+	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 
 	$self->{value}->Enable(1);
 	$self->{default_value}->Enable(1);
@@ -430,11 +430,11 @@ sub _update_ui {
 	my $type       = $pref->{type};
 	my $is_default = $pref->{is_default};
 
-	$self->{value}->SetValue( $self->_displayed_value($type, $value) );
-	$self->{default_value}->SetLabel( $self->_displayed_value($type, $value) );
+	$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
+	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $value ) );
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
-	$list->SetItem( $index, 3, $self->_displayed_value($type, $value) );
+	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
 	$self->_set_item_bold_font( $index, not $is_default );
 
 	return;
@@ -442,10 +442,15 @@ sub _update_ui {
 
 # Returns the correct displayed value depending on the type
 sub _displayed_value {
-	my ($self, $type, $value) = @_;
-	
-	return ( $type == Padre::Constant::BOOLEAN ) ?
-		($value ? Wx::gettext('True') : Wx::gettext('False') ) : $value;
+	my ( $self, $type, $value ) = @_;
+
+	return ( $type == Padre::Constant::BOOLEAN )
+		? (
+		$value
+		? Wx::gettext('True')
+		: Wx::gettext('False')
+		)
+		: $value;
 }
 
 # Determines whether the preference value is default or not based on its type
