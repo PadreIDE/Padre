@@ -342,7 +342,7 @@ sub refresh_recent {
 				} else {
 
 					# Handle "File not found" situation
-					Padre::Current->main->lock('UPDATE', 'DB', 'refresh_recent');
+					Padre::Current->main->lock( 'UPDATE', 'DB', 'refresh_recent' );
 					Padre::DB::History->delete(
 						'where name = ? and type = ?',
 						$file, 'files',

@@ -183,14 +183,14 @@ sub dirname {
 }
 
 sub splitvdir {
-	my ($v, $d, $f) = File::Spec->splitpath($_[0]->{filename});
+	my ( $v, $d, $f ) = File::Spec->splitpath( $_[0]->{filename} );
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
 	return $v, @d;
 }
 
 sub splitall {
-	my ($v, $d, $f) = File::Spec->splitpath($_[0]->{filename});
+	my ( $v, $d, $f ) = File::Spec->splitpath( $_[0]->{filename} );
 	my @d = File::Spec->splitdir($d);
 	pop @d if $d[-1] eq '';
 	return $v, @d, $f;

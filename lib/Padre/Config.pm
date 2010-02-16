@@ -24,8 +24,10 @@ use Padre::Config::Upgrade ();
 
 our $VERSION = '0.56';
 
-our (%SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON);
+our ( %SETTING, %DEFAULT, %STARTUP, $REVISION, $SINGLETON );
+
 BEGIN {
+
 	# Master storage of the settings
 	%SETTING = ();
 
@@ -252,7 +254,7 @@ sub apply {
 }
 
 sub meta {
-	$SETTING{$_[1]} or die("Missing or invalid setting name '$_[1]'");
+	$SETTING{ $_[1] } or die("Missing or invalid setting name '$_[1]'");
 }
 
 
@@ -630,9 +632,9 @@ setting(
 
 # Directory Tree Settings
 setting(
-	name    => 'default_projects_directory',
-	type    => Padre::Constant::PATH,
-	store   => Padre::Constant::HOST,
+	name  => 'default_projects_directory',
+	type  => Padre::Constant::PATH,
+	store => Padre::Constant::HOST,
 	default => File::HomeDir->my_documents || '',
 );
 

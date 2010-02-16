@@ -3318,7 +3318,7 @@ sub setup_editor {
 		}
 	}
 
-	my $lock     = $self->lock('REFRESH');
+	my $lock = $self->lock('REFRESH');
 	my $document = Padre::Document->new( filename => $file, );
 
 	# Catch critical errors:

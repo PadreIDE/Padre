@@ -130,14 +130,16 @@ unless ( defined $ACTIONS ) {
 require Padre;
 
 if ($PRELOAD) {
+
 	# Load the entire application into memory immediately
 	Padre->import(':everything');
-#	use Aspect;
-#	aspect( 'NYTProf',
-#		call qr/^Padre::/ &
-#		call qr/\b(?:refresh|update)\w*\z/ & !
-#		call qr/^Padre::(?:Locker|Wx::Progress)::/
-#	);
+
+	#	use Aspect;
+	#	aspect( 'NYTProf',
+	#		call qr/^Padre::/ &
+	#		call qr/\b(?:refresh|update)\w*\z/ & !
+	#		call qr/^Padre::(?:Locker|Wx::Progress)::/
+	#	);
 }
 
 # Build the application

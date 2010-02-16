@@ -106,10 +106,10 @@ sub show_file {
 sub on_auinotebook_page_changed {
 	my $self   = shift;
 	my $main   = $self->main;
-	my $lock   = $main->lock('UPDATE', 'refresh', 'refresh_outline');
+	my $lock   = $main->lock( 'UPDATE', 'refresh', 'refresh_outline' );
 	my $editor = $self->current->editor;
 
-	if ( $editor ) {
+	if ($editor) {
 		my $history = $main->{page_history};
 		my $current = Scalar::Util::refaddr($editor);
 		@$history = grep { $_ != $current } @$history;
@@ -137,8 +137,8 @@ sub prefix {
 	my @prefix = ();
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
 		my $document = $self->GetPage($i)->{Document} or next;
-		my $file     = $document->file                or next;
-		$file->isa('Padre::File::Local')              or next;
+		my $file = $document->file or next;
+		$file->isa('Padre::File::Local') or next;
 		unless ( $found++ ) {
 			@prefix = $file->splitvdir;
 			next;
@@ -149,7 +149,7 @@ sub prefix {
 		if ( @prefix > @path ) {
 			foreach ( 0 .. $#path ) {
 				unless ( $prefix[$_] eq $path[$_] ) {
-					@path = @path[0..$_];
+					@path = @path[ 0 .. $_ ];
 					last;
 				}
 			}
@@ -157,7 +157,7 @@ sub prefix {
 		} else {
 			foreach ( 0 .. $#prefix ) {
 				unless ( $prefix[$_] eq $path[$_] ) {
-					@prefix = @prefix[0..$_];
+					@prefix = @prefix[ 0 .. $_ ];
 					last;
 				}
 			}
@@ -174,14 +174,14 @@ sub labels {
 	my @labels = ();
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
 		my $document = $self->GetPage($i)->{Document};
-		unless ( $document ) {
+		unless ($document) {
 			push @labels, undef;
 			next;
 		}
 
 		# "Untitled N" files
 		my $file = $document->file;
-		unless ( $file ) {
+		unless ($file) {
 			my $title = $self->GetPageText($i);
 			$title =~ s/[ *]+//;
 			push @labels, $title;

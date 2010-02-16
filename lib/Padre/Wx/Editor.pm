@@ -758,7 +758,7 @@ sub on_focus {
 
 	# To show/hide the document specific Perl menu
 	# don't refresh on each focus event
-	my $lock = $main->lock('UPDATE', 'refresh_menu', 'refresh_directory');
+	my $lock = $main->lock( 'UPDATE', 'refresh_menu', 'refresh_directory' );
 
 	# TO DO
 	# this is called even if the mouse is moved away from padre and back again

@@ -547,7 +547,7 @@ sub _update_list {
 		my $is_default = $setting->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
-		if ( $is_default ) {
+		if ($is_default) {
 			$list->SetItem( $index, 1, Wx::gettext('Default') );
 		} else {
 			$list->SetItem( $index, 1, Wx::gettext('User') );
@@ -594,7 +594,7 @@ sub _init_preferences {
 		my $setting   = Padre::Config->meta($name);
 		my $type      = $setting->type;
 		my $type_name = $TYPES{$type};
-		unless ( $type_name ) {
+		unless ($type_name) {
 			warn "Unknown type: $type while reading $name\n";
 			next;
 		}
@@ -621,7 +621,7 @@ sub _resize_columns {
 	my $self = shift;
 
 	# Resize all columns but the last to their biggest item width
-	my $list               = $self->{list};
+	my $list = $self->{list};
 	for ( 0 .. 2 ) {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
@@ -629,7 +629,7 @@ sub _resize_columns {
 	# The second column (status) can be bold
 	$list->SetColumnWidth( 1, $list->GetColumnWidth(1) + 10 );
 
-	# the last column gets a bigger static width. 
+	# the last column gets a bigger static width.
 	# i.e. we do not want to be too long
 	$list->SetColumnWidth( 3, 600 );
 
