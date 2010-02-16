@@ -1278,7 +1278,7 @@ sub refresh_outline {
 	my $self = shift;
 	return unless $self->has_outline;
 	return if $self->locked('REFRESH');
-	return unless $self->menu->view->{show_outline}->IsChecked;
+	return unless $self->menu->view->{outline}->IsChecked;
 	$self->outline->refresh;
 	return;
 }
