@@ -839,6 +839,17 @@ sub dialog {
 	$button_row_sizer->Add( $save, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
 	$save->SetDefault;
 
+	# Quick link to plugin manager
+	my $plugin_manager = Wx::Button->new( $dialog, -1, Wx::gettext('&Plugin manager...') );
+	$button_row_sizer->Add( $plugin_manager, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
+
+	# plugin manager button action
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$plugin_manager,
+		sub { &{Padre->ide->actions->{'plugins.plugin_manager'}->menu_event}(Padre->ide->wx->main); },
+	);
+
 	# Advanced settings (Firefox about:config style)
 	my $advanced = Wx::Button->new( $dialog, -1, Wx::gettext('&Advanced...') );
 	$button_row_sizer->Add( $advanced, 0, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxALL, 5 );
