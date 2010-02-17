@@ -74,9 +74,7 @@ sub new {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('&Run');
+	Wx::gettext('&Run');
 }
 
 sub refresh {
@@ -113,6 +111,7 @@ sub refresh {
 
 	return 1;
 }
+
 
 
 

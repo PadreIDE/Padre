@@ -101,9 +101,7 @@ sub new {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('&Search');
+	Wx::gettext('&Search');
 }
 
 sub refresh {

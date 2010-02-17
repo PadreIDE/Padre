@@ -17,6 +17,10 @@ use Padre::Current qw{_CURRENT};
 our $VERSION = '0.56';
 our @ISA     = 'Padre::Wx::Menu';
 
+
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -55,9 +59,7 @@ sub new {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('Refac&tor');
+	Wx::gettext('Refac&tor');
 }
 
 sub refresh {

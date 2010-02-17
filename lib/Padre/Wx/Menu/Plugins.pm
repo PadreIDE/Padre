@@ -10,7 +10,7 @@ use Padre::Constant ();
 use Padre::Config   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ('_CURRENT');
 
 our $VERSION = '0.56';
 our @ISA     = 'Padre::Wx::Menu';
@@ -31,6 +31,46 @@ sub new {
 
 	# Add additional properties
 	$self->{main} = $main;
+
+	# User Preferences
+	$self->add_menu_action(
+		$self,
+		'edit.preferences',
+	);
+
+	$self->AppendSeparator;
+
+	# Create the module tools submenu
+	my $modules = Wx::Menu->new;
+	$self->Append(
+		-1,
+		Wx::gettext('Module Tools'),
+		$modules,
+	);
+
+	$self->add_menu_action(
+		$modules,
+		'plugins.install_cpan',
+	);
+
+	$self->add_menu_action(
+		$modules,
+		'plugins.install_local',
+	);
+
+	$self->add_menu_action(
+		$modules,
+		'plugins.install_remote',
+	);
+
+	$modules->AppendSeparator;
+
+	$self->add_menu_action(
+		$modules,
+		'plugins.cpan_config',
+	);
+
+	$self->AppendSeparator;
 
 	# Link to the Plugin Manager
 	$self->add_menu_action(
@@ -88,36 +128,6 @@ sub new {
 	#		'plugins.test_a_plugin',
 	#	);
 
-	# Create the module tools submenu
-	my $modules = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext('Module Tools'),
-		$modules,
-	);
-
-	$self->add_menu_action(
-		$modules,
-		'plugins.install_cpan',
-	);
-
-	$self->add_menu_action(
-		$modules,
-		'plugins.install_local',
-	);
-
-	$self->add_menu_action(
-		$modules,
-		'plugins.install_remote',
-	);
-
-	$modules->AppendSeparator;
-
-	$self->add_menu_action(
-		$modules,
-		'plugins.cpan_config',
-	);
-
 	$self->add($main);
 
 	return $self;
@@ -159,7 +169,7 @@ sub add {
 }
 
 sub remove {
-	my $self = shift;
+	my $self    = shift;
 	my $entries = $self->{plugin_menus} || [];
 
 	while (@$entries) {
@@ -172,9 +182,7 @@ sub remove {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('Pl&ugins');
+	Wx::gettext('&Tools');
 }
 
 sub refresh {

@@ -13,6 +13,9 @@ our $VERSION = '0.56';
 our @ISA     = 'Padre::Wx::Menu';
 
 
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -110,9 +113,7 @@ sub new {
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('&Debug');
+	Wx::gettext('&Debug');
 }
 
 sub refresh {
@@ -137,7 +138,6 @@ sub refresh {
 }
 
 1;
-
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE

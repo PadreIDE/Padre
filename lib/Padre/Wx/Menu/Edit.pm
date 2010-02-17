@@ -13,6 +13,9 @@ our $VERSION = '0.56';
 our @ISA     = 'Padre::Wx::Menu';
 
 
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -336,21 +339,11 @@ sub new {
 		'edit.show_as_decimal',
 	);
 
-	$self->AppendSeparator;
-
-	# User Preferences
-	$self->add_menu_action(
-		$self,
-		'edit.preferences',
-	);
-
 	return $self;
 }
 
 sub title {
-	my $self = shift;
-
-	return Wx::gettext('&Edit');
+	Wx::gettext('&Edit');
 }
 
 sub refresh {
