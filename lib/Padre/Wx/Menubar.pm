@@ -115,20 +115,18 @@ sub refresh {
 	# isn't made to stay forever, but it's working for now
 
 	my @items;
-
 	foreach my $item ( split( /\;/, $config->main_menubar_items ) ) {
 		if ( $item eq 'menu._document' ) {
-			next unless defined( $main->current );
-			next unless defined( $main->current->document );
-			next unless $main->current->document->can('menu');
-			next unless defined( $main->current->document->menu );
-			$item = $main->current->document->menu;
-			if ( defined( $main->current->document->{menu} ) ) {
-				$item = [$item] unless ref($item) eq 'ARRAY';
-				if ( ref( $main->current->document->{menu} ) ne 'ARRAY' ) {
-					push @{$item}, $main->current->document->{menu};
+			next unless $document;
+			next unless $document->can('menu');
+			next unless defined $document->menu;
+			$item = $document->menu;
+			if ( defined( $document->{menu} ) ) {
+				$item = [ $item ] unless ref($item) eq 'ARRAY';
+				if ( ref( $document->{menu} ) ne 'ARRAY' ) {
+					push @{$item}, $document->{menu};
 				} else {
-					push @{$item}, @{ $main->current->document->{menu} };
+					push @{$item}, @{ $document->{menu} };
 				}
 			}
 		}
@@ -191,7 +189,7 @@ sub refresh {
 					if ( !defined( $self->{hotkeys}->{$char} ) )
 					or ( $self->{hotkeys}->{$char} eq ref( $self->{$obj} ) );
 			}
-			if ( !defined($hotkey) ) {
+			unless ( defined $hotkey ) {
 
 				# Dynamically set the hotkeys for menu items
 				# only if there is no defined hotkey or there
@@ -233,7 +231,6 @@ sub refresh {
 				$self->{$obj}->refresh($current);
 			}
 		}
-
 	}
 
 	# Remove items if there are more than we replaced
