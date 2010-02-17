@@ -26,6 +26,7 @@ Changes for Perl Application Development and Refactoring Environment
     - Moved padre.exe build from bin to win32-loader folder since bin is a
       bad path for putting the Padre win32 launcher code (SMUELLER, AZAWAWI)
     - Added "Open in File Browser" in the File and right-click menu (AZAWAWI)
+    - Added "Find in Files" to right-click menu (AZAWAWI)
     - No need to launch a command shell to execute explorer.exe on
       win32 (AZAWAWI)
     - Added "Open with Default System Editor" in "File -> Open..." (AZAWAWI)
