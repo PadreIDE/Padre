@@ -39,8 +39,7 @@ sub new {
 		Wx::gettext('Goto'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxRESIZE_BORDER | Wx::wxSYSTEM_MENU |
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX
+		Wx::wxRESIZE_BORDER | Wx::wxSYSTEM_MENU | Wx::wxCAPTION | Wx::wxCLOSE_BOX
 	);
 
 	# Minimum dialog size

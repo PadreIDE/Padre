@@ -169,7 +169,7 @@ sub add {
 }
 
 sub remove {
-	my $self    = shift;
+	my $self = shift;
 	my $entries = $self->{plugin_menus} || [];
 
 	while (@$entries) {

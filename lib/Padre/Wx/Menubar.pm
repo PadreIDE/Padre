@@ -122,7 +122,7 @@ sub refresh {
 			next unless defined $document->menu;
 			$item = $document->menu;
 			if ( defined( $document->{menu} ) ) {
-				$item = [ $item ] unless ref($item) eq 'ARRAY';
+				$item = [$item] unless ref($item) eq 'ARRAY';
 				if ( ref( $document->{menu} ) ne 'ARRAY' ) {
 					push @{$item}, $document->{menu};
 				} else {
