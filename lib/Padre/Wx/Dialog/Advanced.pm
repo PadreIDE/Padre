@@ -326,7 +326,7 @@ sub _on_copy_to_clipboard {
 	if ( $action == COPY_ALL ) {
 		$text =
 			  $name . ";"
-			. ( $pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User set') ) . ";"
+			. ( $pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User') ) . ";"
 			. $pref->{type_name} . ";"
 			. $pref->{value};
 	} elsif ( $action == COPY_NAME ) {
@@ -433,7 +433,7 @@ sub _update_ui {
 	$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $value ) );
 	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User set') );
+	$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User') );
 	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
 	$self->_set_item_bold_font( $index, not $is_default );
 
@@ -636,7 +636,7 @@ sub _resize_columns {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
 
-	# The second column (status) can be bold
+	# some columns can have a bold font
 	$list->SetColumnWidth( 1, $list->GetColumnWidth(1) + 10 );
 
 	# the last column gets a bigger static width.
