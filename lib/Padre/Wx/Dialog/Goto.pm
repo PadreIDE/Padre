@@ -36,11 +36,15 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Go to a line number or position'),
+		Wx::gettext('Goto'),
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxCAPTION | Wx::wxCLOSE_BOX | Wx::wxSYSTEM_MENU
+		Wx::wxRESIZE_BORDER | Wx::wxSYSTEM_MENU |
+		Wx::wxCAPTION | Wx::wxCLOSE_BOX
 	);
+
+	# Minimum dialog size
+	$self->SetMinSize( [ 270, 180 ] );
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -52,7 +56,8 @@ sub new {
 	$self->_bind_events;
 
 	# wrap everything in a vbox to add some padding
-	$self->SetSizerAndFit($sizer);
+	$self->SetSizer($sizer);
+	$self->Fit;
 	$self->CentreOnParent;
 
 	return $self;
@@ -69,18 +74,15 @@ sub _create_controls {
 	$self->{current} = Wx::StaticText->new( $self, -1, '' );
 
 	# Goto line label
-	$self->{goto_label} = Wx::StaticText->new(
-		$self, -1, '', Wx::wxDefaultPosition, [ 250, -1 ],
-	);
+	$self->{goto_label} = Wx::StaticText->new( $self, -1, '' );
 
-	# Field #1: text field for the line number/position
-	$self->{goto_text} = Wx::TextCtrl->new(
-		$self, -1, '', Wx::wxDefaultPosition, Wx::wxDefaultSize,
-	);
+	# Text field for the line number/position
+	$self->{goto_text} = Wx::TextCtrl->new( $self, -1, '' );
 
+	# Status label
 	$self->{status_line} = Wx::StaticText->new( $self, -1, '' );
 
-	# Field #2: Line or position checkbox
+	# Line or position checkbox
 	$self->{line_mode} = Wx::CheckBox->new(
 		$self, -1, Wx::gettext('&Line number or character position?'),
 	);
@@ -118,7 +120,7 @@ sub _create_controls {
 	$vsizer->AddSpacer(5);
 
 	# Wrap with a horizontal sizer to get left/right padding
-	$sizer->Add( $vsizer, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
+	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
 	return;
 
