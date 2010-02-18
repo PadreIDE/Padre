@@ -35,7 +35,10 @@ sub run {
 
 sub finish {
 	my $self = shift;
-	my $main = shift;
+	# my $main = shift; 
+	# really not sure if this is right, but parameter passed in isa Padre::Wx::App, 
+	# not Padre::Wx::Main, however a reference to main is held in Padre::Wx::App
+	my $main = shift->{main}; 
 	return if !$main;
 	my $errorlist = $main->errorlist if $main;
 	my $data      = $self->data;
