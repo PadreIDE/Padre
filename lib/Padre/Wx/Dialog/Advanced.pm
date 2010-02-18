@@ -601,6 +601,10 @@ sub _init_preferences {
 	$self->{preferences} = ();
 	for my $name ( Padre::Config->settings ) {
 		my $setting   = Padre::Config->meta($name);
+
+		# Skip PROJECT settings
+		next if $setting->store == Padre::Constant::PROJECT; 
+
 		my $type      = $setting->type;
 		my $type_name = $TYPES{$type};
 		unless ($type_name) {
