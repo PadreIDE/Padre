@@ -6,7 +6,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 
 sub read {
 	my %config = map { $_->name => $_->value } $_[0]->select;

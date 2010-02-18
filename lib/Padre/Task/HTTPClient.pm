@@ -7,7 +7,7 @@ use Padre::Constant ();
 
 # Use all modules which may provide services for us:
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 our @DRIVERS = qw{
 	Padre::Task::HTTPClient::LWP
 };

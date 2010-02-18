@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION        = '0.56';
+our $VERSION        = '0.57';
 our @ISA            = 'Padre::Task';
 our $thread_running = 0;
 

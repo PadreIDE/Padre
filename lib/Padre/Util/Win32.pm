@@ -35,7 +35,7 @@ if (Padre::Constant::WIN32) {
 	TRACE("WARN: Inefficiently loading Padre::Util::Win32 when not on Win32");
 }
 
-our $VERSION = '0.56';
+our $VERSION = '0.57';
 
 my %Types = ();
 
