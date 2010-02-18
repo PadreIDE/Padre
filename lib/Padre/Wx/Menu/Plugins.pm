@@ -154,7 +154,7 @@ sub add {
 		my @menu = $manager->get_menu( $main, $module ) or next;
 
 		# Did the previous entry needs a separator after it
-		if ( $need ) {
+		if ($need) {
 			push @$entries, $self->AppendSeparator;
 			$need = 0;
 		}
@@ -174,7 +174,7 @@ sub remove {
 	my $self = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while ( @$entries ) {
+	while (@$entries) {
 		$self->Destroy( pop @$entries );
 	}
 

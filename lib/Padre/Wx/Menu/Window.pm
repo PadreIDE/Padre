@@ -122,7 +122,7 @@ sub refresh {
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$menus->[-1],
-			sub { 
+			sub {
 				$_[0]->on_nth_pane($nth);
 			},
 		);
