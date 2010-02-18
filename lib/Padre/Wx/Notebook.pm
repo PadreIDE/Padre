@@ -149,7 +149,7 @@ sub prefix {
 		if ( @prefix > @path ) {
 			foreach ( 0 .. $#path ) {
 				unless ( $prefix[$_] eq $path[$_] ) {
-					@path = @path[ 0 .. $_ ];
+					@path = @path[ 0 .. $_ - 1 ];
 					last;
 				}
 			}
@@ -157,7 +157,7 @@ sub prefix {
 		} else {
 			foreach ( 0 .. $#prefix ) {
 				unless ( $prefix[$_] eq $path[$_] ) {
-					@prefix = @prefix[ 0 .. $_ ];
+					@prefix = @prefix[ 0 .. $_ - 1 ];
 					last;
 				}
 			}

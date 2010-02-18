@@ -43,6 +43,8 @@ Changes for Perl Application Development and Refactoring Environment
     - Fixed ticket #845: Fix relative filenames from commandline (SEWI)
     - Added "Open In Command Line" to File menu (AZAWAWI)
     - Renamed Plugins menus to Tools and moved Preferences into it (ADAMK)
+    - Re-implemented the mechanism for generating a human-oriented list of
+      window names (ADAMK)
 
 0.56 2010.02.01
     - Plugins may now add their GUI elements to the view menu (SEWI)

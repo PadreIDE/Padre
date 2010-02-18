@@ -25,10 +25,7 @@ sub new {
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
-
-	# Add additional properties
 	$self->{main} = $main;
-	$self->{alt}  = [];
 
 	# File Navigation
 	$self->{window_last_visited_file} = $self->add_menu_action(
@@ -86,9 +83,8 @@ sub new {
 		'window.goto_main_window',
 	);
 
-	# We'll need to know the number of menu items there are
-	# by default so we can add and remove window menu items later.
-	$self->{default} = $self->GetMenuItemCount;
+	# Add additional properties
+	$self->{base} = $self->GetMenuItemCount;
 
 	return $self;
 }
@@ -100,96 +96,46 @@ sub title {
 sub refresh {
 	my $self     = shift;
 	my $current  = _CURRENT(@_);
-	my $alt      = $self->{alt};
-	my $default  = $self->{default};
-	my $items    = $self->GetMenuItemCount;
 	my $notebook = $current->notebook;
-	my $pages    = $notebook->GetPageCount;
-	my $main     = $self->{main};
+	my $menus    = $self->{menus};
 
-	# Destroy previous window list so we can add it again
-	$self->Destroy( pop @$alt ) while @$alt;
-	$self->Destroy( delete $self->{separator} ) if $self->{separator};
+	# Destroy previous window list so we can add it again.
+	# The list must be deleted backwards from the bottom to the top.
+	my @delete = ( $self->{base} + 1 .. $self->GetMenuItemCount - 1 );
+	foreach my $i ( reverse @delete ) {
+		$self->Delete( $self->FindItemByPosition($i) );
+	}
 
-	# Add or remove menu entries as needed
-	if ($pages) {
-		my $config_shorten_path = $main->config->window_list_shorten_path;
-		my $prefix              = 0;
-		my $prefix_length       = 0;
-		if ($config_shorten_path) {
+	# Add or remove the separator
+	my $pages = $notebook->GetPageCount;
+	if ( $self->{separator} and not $pages ) {
+		$self->Delete( delete $self->{separator} );
+	} elsif ( $pages and not $self->{separator} ) {
+		$self->{separator} = $self->AppendSeparator;
+	}
 
-			# This only works when there isn't any unsaved tabs
-			$prefix = get_common_prefix( $pages, $notebook );
-			$prefix_length = length $prefix;
-		}
-
-		# Create a list of notebook labels.
-		# A label can be a project (relative/full) path
-		# or unsaved pane label (e.g. Unsaved [0-9]+)
-		my %windows = ();
-		foreach my $tab_index ( 0 .. $pages - 1 ) {
-			my $doc = $notebook->GetPage($tab_index)->{Document} or return;
-			my $label = $doc->filename || $notebook->GetPageText($tab_index);
-			$label =~ s/^\s+//;
-			if ( $prefix_length < length $label ) {
-				$label = File::Spec->abs2rel( $label, $prefix );
-			}
-			$windows{$label} = {
-				pane_index => $tab_index,
-				project    => $doc->project_dir || '',
-			};
-		}
-
-		# A separator is needed here for awesomeness
-		$self->{separator} = $self->AppendSeparator if $pages;
-
-		# Now let us sort by project path and then by label
-		my @sorted_by_project_then_label =
-			sort { $windows{$a}{project} cmp $windows{$a}{project} || $a cmp $b } keys %windows;
-
-		# Add sorted notebook labels and attach event handlers to them
-		foreach my $label (@sorted_by_project_then_label) {
-			my $menu_entry = $self->Append( -1, $label );
-			push @$alt, $menu_entry;
-			Wx::Event::EVT_MENU(
-				$main, $menu_entry,
-				sub { $main->on_nth_pane( $windows{$label}{pane_index} ) }
-			);
-		}
+	# Add all of the window entries
+	$DB::single = 1;
+	my @label = $notebook->labels;
+	foreach my $nth ( sort { $label[$a] cmp $label[$b] } ( 0 .. $#label ) ) {
+		push @$menus, $self->Append( -1, $label[$nth] );
+		Wx::Event::EVT_MENU(
+			$self->{main},
+			$menus->[-1],
+			sub { 
+				$_[0]->on_nth_pane($nth);
+			},
+		);
 	}
 
 	# Toggle window operations based on number of pages
-	$self->{window_next_file}->Enable($pages);
-	$self->{window_previous_file}->Enable($pages);
-	$self->{window_last_visited_file}->Enable($pages);
-	$self->{window_right_click}->Enable($pages);
+	my $enable = $pages ? 1 : 0;
+	$self->{window_next_file}->Enable($enable);
+	$self->{window_previous_file}->Enable($enable);
+	$self->{window_last_visited_file}->Enable($enable);
+	$self->{window_right_click}->Enable($enable);
 
 	return 1;
-}
-
-# Get the common prefix of notebooks
-# Please note that an Unsaved file causes this return undef
-sub get_common_prefix {
-	my ( $count, $notebook ) = @_;
-	my @prefix = ();
-	foreach my $i ( 0 .. $count - 1 ) {
-		my $doc = $notebook->GetPage($i)->{Document} or return;
-		my $label = $doc->filename || $notebook->GetPageText($i);
-		my @label = File::Spec->splitdir($label);
-
-		if ( not @prefix ) {
-			@prefix = @label;
-			next;
-		}
-
-		my $i = 0;
-		while ( $i < @prefix ) {
-			last if $prefix[$i] ne $label[$i];
-			$i++;
-		}
-		splice @prefix, $i;
-	}
-	return File::Spec->catdir(@prefix);
 }
 
 1;
