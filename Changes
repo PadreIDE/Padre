@@ -2,7 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 
 0.58 To Be Released
 
-0.57 - **WARNING Contains new threading code**
+0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that
       master to create worker threads as necessary. Cuts down on memory
       usage and fixes the "Leaked Scalars" warning (BRAMBLE, SMUELLER)
