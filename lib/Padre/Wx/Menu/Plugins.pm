@@ -86,9 +86,11 @@ sub new {
 		$tools,
 	);
 
-	# TO DO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
-	# better yet, by a window that also allows the installation of all the plugins that can take into account
-	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
+	# TO DO: should be replaced by a link to
+	# http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
+	# better yet, by a window that also allows the installation of all the
+	# plugins that can take into account the type of installation we have
+	# (ppm, stand alone, rpm, deb, CPAN, etc)
 	$self->add_menu_action(
 		$tools,
 		'plugins.plugin_list',
@@ -123,10 +125,10 @@ sub new {
 		'plugins.reload_current_plugin',
 	);
 
-	#	$self->add_menu_action(
-	#		$tools,
-	#		'plugins.test_a_plugin',
-	#	);
+	# $self->add_menu_action(
+	#     $tools,
+	#     'plugins.test_a_plugin',
+	# );
 
 	$self->add($main);
 
@@ -152,7 +154,7 @@ sub add {
 		my @menu = $manager->get_menu( $main, $module ) or next;
 
 		# Did the previous entry needs a separator after it
-		if ($need) {
+		if ( $need ) {
 			push @$entries, $self->AppendSeparator;
 			$need = 0;
 		}
@@ -172,7 +174,7 @@ sub remove {
 	my $self = shift;
 	my $entries = $self->{plugin_menus} || [];
 
-	while (@$entries) {
+	while ( @$entries ) {
 		$self->Destroy( pop @$entries );
 	}
 
