@@ -1,9 +1,7 @@
-#
+package Padre::Config::Upgrade;
+
 # This module should do any tasks which are required to upgrade the config
 # from and older version to the current (reading a config written on 0.47 in 0.48)
-#
-
-package Padre::Config::Upgrade;
 
 use 5.008;
 use strict;
@@ -11,11 +9,11 @@ use warnings;
 
 our $VERSION = '0.56';
 
+=pod
 
 =head1 NAME
 
 Padre::Config::Upgrade - Upgrade a configuration file from an older version
-
 
 =head1 DESCRIPTION
 
@@ -28,7 +26,7 @@ it knows how to upgrade the configuration from one version to another.
 
 =head1 PUBLIC METHODS
 
-	$config->check;
+  $config->check;
 
 This method does all the checks when being called on a L<Padre::Config> object.
 
@@ -38,8 +36,7 @@ sub check {
 	my $self = shift;
 
 	foreach my $storage ( 'human', 'host' ) {
-
-		if ( !defined( $self->$storage->{Version} ) ) {
+		unless ( defined $self->$storage->{Version} ) {
 
 			# We have a pre-0.48 - config and this module starts
 			# working at upgrades from 0.48 to higher versions.
@@ -54,7 +51,7 @@ sub check {
 
 		# This is only a sample and should be replaced by the first
 		# real usage of this module
-		if ( ( $storage eq 'human' ) and ( $self->$storage->{Version} == 0.00 ) ) {
+		if ( $storage eq 'human' and $self->$storage->{Version} == 0.00 ) {
 
 			# Call subs or methods here or write short upgrades in this
 			# place.
@@ -65,13 +62,14 @@ sub check {
 			# There is nothing which needs conversation when upgrading from a
 			# config prior 0.48 to our current version, so just update the
 			# config version number
-
 			$self->$storage->{Version} = $VERSION;
 		}
 	}
 }
 
 1;
+
+=pod
 
 =head1 COPYRIGHT & LICENSE
 
@@ -81,7 +79,6 @@ This program is free software; you can redistribute it and/or modify it under th
 same terms as Perl 5 itself.
 
 =cut
-
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE

@@ -1,8 +1,6 @@
-#
-# Configuration and state data related to the host that Padre is running on.
-#
-
 package Padre::Config::Host;
+
+# Configuration and state data related to the host that Padre is running on.
 
 use 5.008;
 use strict;
@@ -90,10 +88,11 @@ sub write {
 
 __END__
 
+=pod
+
 =head1 NAME
 
 Padre::Config::Host - Padre configuration storing host state data
-
 
 =head1 DESCRIPTION
 
@@ -103,7 +102,6 @@ supported by Padre.
 
 All those state data are stored in a database managed with C<Padre::DB>.
 Refer to this module for more information on how this works.
-
 
 =head1 PUBLIC API
 
@@ -120,9 +118,7 @@ case of failure.
 
 No parameters.
 
-
 =back
-
 
 =head2 Object methods
 
@@ -137,7 +133,6 @@ underlying storage later on.
 
 No parameters.
 
-
 =item write
 
     $config->write;
@@ -148,7 +143,6 @@ No parameters.
 
 =back
 
-
 =head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2010 The Padre development team as listed in Padre.pm.
@@ -157,7 +151,6 @@ This program is free software; you can redistribute it and/or modify it under th
 same terms as Perl 5 itself.
 
 =cut
-
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE
