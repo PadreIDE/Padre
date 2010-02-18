@@ -18,7 +18,7 @@ our @ISA     = qw{
 use constant {
 	COPY_ALL   => 1,
 	COPY_NAME  => 2,
-	COPY_VALUE => 3
+	COPY_VALUE => 3,
 };
 
 # Padre config type to description hash
@@ -309,7 +309,6 @@ sub _bind_events {
 			shift->EndModal(Wx::wxID_CANCEL);
 		}
 	);
-
 
 	return;
 }
