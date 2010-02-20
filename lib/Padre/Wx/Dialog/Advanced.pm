@@ -139,6 +139,18 @@ sub _create_controls {
 	);
 	$self->{default_value}->Enable(0);
 
+	# preference options
+	my $options_label = Wx::StaticText->new( $self, -1, Wx::gettext('Options:') );
+	$self->{options} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_READONLY
+	);
+	$self->{options}->Enable(0);
+
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
@@ -180,10 +192,13 @@ sub _create_controls {
 	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# Sizer for default value
-	my $default_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$default_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$default_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	# Sizer for default value and options
+	my $info_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$info_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->AddSpacer(5);
+	$info_sizer->Add( $options_label, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->Add( $self->{options}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -196,7 +211,7 @@ sub _create_controls {
 	$vsizer->Add( $filter_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $value_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $default_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $info_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
