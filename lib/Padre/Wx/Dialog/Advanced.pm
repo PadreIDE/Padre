@@ -325,7 +325,7 @@ sub _on_copy_to_clipboard {
 	if ( $action == COPY_ALL ) {
 		$text =
 			  $name . ";"
-			. ( $pref->{is_default} ? Wx::gettext('Default') : Wx::gettext('User') ) . ";"
+			. ( $pref->{is_default} ? $pref->{store_name} : Wx::gettext('Overriden') ) . ";"
 			. $pref->{type_name} . ";"
 			. $pref->{value};
 	} elsif ( $action == COPY_NAME ) {
@@ -432,7 +432,7 @@ sub _update_ui {
 	$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $value ) );
 	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $index, 1, $is_default ? Wx::gettext('Default') : Wx::gettext('User') );
+	$list->SetItem( $index, 1, $is_default ? $pref->{store_name} : Wx::gettext('Overriden') );
 	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
 	$self->_set_item_bold_font( $index, not $is_default );
 
@@ -556,17 +556,13 @@ sub _update_list {
 		next if $name !~ /$filter/i;
 
 		# Add the setting to the list control
-		my $setting    = $preferences->{$name};
-		my $is_default = $setting->{is_default};
+		my $pref    = $preferences->{$name};
+		my $is_default = $pref->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
-		if ($is_default) {
-			$list->SetItem( $index, 1, Wx::gettext('Default') );
-		} else {
-			$list->SetItem( $index, 1, Wx::gettext('User') );
-		}
-		$list->SetItem( $index, 2, $setting->{type_name} );
-		$list->SetItem( $index, 3, $self->_displayed_value( $setting->{type}, $setting->{value} ) );
+		$list->SetItem( $index, 1, $is_default ? $pref->{store_name} : Wx::gettext('Overriden') );
+		$list->SetItem( $index, 2, $pref->{type_name} );
+		$list->SetItem( $index, 3, $self->_displayed_value( $pref->{type}, $pref->{value} ) );
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
@@ -603,6 +599,7 @@ sub _init_preferences {
 		my $setting = Padre::Config->meta($name);
 
 		# Skip PROJECT settings
+		my $store = $setting->store;
 		next if $setting->store == Padre::Constant::PROJECT;
 
 		my $type      = $setting->type;
@@ -615,12 +612,13 @@ sub _init_preferences {
 		my $value      = $config->$name;
 		my $default    = $setting->default;
 		my $is_default = $self->_is_default( $type, $value, $default );
-
+		my $store_name = ($store == Padre::Constant::HUMAN) ? Wx::gettext('User') : Wx::gettext('Host');
 		$self->{preferences}->{$name} = {
 			'is_default' => $is_default,
 			'default'    => $default,
 			'type'       => $type,
 			'type_name'  => $type_name,
+			'store_name' => $store_name,
 			'value'      => $value,
 			'original'   => $value,
 		};
