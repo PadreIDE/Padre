@@ -556,7 +556,7 @@ sub _update_list {
 		next if $name !~ /$filter/i;
 
 		# Add the setting to the list control
-		my $pref    = $preferences->{$name};
+		my $pref       = $preferences->{$name};
 		my $is_default = $pref->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
@@ -612,7 +612,7 @@ sub _init_preferences {
 		my $value      = $config->$name;
 		my $default    = $setting->default;
 		my $is_default = $self->_is_default( $type, $value, $default );
-		my $store_name = ($store == Padre::Constant::HUMAN) ? Wx::gettext('User') : Wx::gettext('Host');
+		my $store_name = ( $store == Padre::Constant::HUMAN ) ? Wx::gettext('User') : Wx::gettext('Host');
 		$self->{preferences}->{$name} = {
 			'is_default' => $is_default,
 			'default'    => $default,
