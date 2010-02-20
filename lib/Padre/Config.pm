@@ -376,12 +376,12 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'new',
-	options => [
+	options => {
 		'last'    => _T('Previous open files'),
 		'new'     => _T('A new empty file'),
 		'nothing' => _T('No open files'),
 		'session' => _T('Open session'),
-	],
+	},
 );
 
 
@@ -467,11 +467,11 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'alphabetical',
-	options => [
+	options => {
 		'original'                  => _T('Code Order'),
 		'alphabetical'              => _T('Alphabetical Order'),
 		'alphabetical_private_last' => _T('Alphabetical Order (Private Last)'),
-	],
+	},
 );
 setting(
 	name    => 'main_outline',
@@ -490,10 +490,10 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'left',
-	options => [
+	options => {
 		'left'  => _T('Project Tools (Left)'),
 		'right' => _T('Document Tools (Right)'),
-	],
+	},
 	apply => sub {
 		my $main  = shift;
 		my $value = shift;
@@ -680,11 +680,11 @@ setting(
 	type    => Padre::Constant::ASCII,
 	store   => Padre::Constant::HUMAN,
 	default => 'deep',
-	options => [
+	options => {
 		'no'   => _T('No Autoindent'),
 		'same' => _T('Indent to Same Depth'),
 		'deep' => _T('Indent Deeply'),
-	],
+	},
 );
 setting(
 	name    => 'editor_folding',
