@@ -3794,8 +3794,8 @@ sub on_reload_some {
 	Padre::Wx::Dialog::WindowList->new(
 		$self,
 		title      => Wx::gettext('Reload some files'),
-		list_title => Wx::gettext('Select files to reload:'),
-		buttons    => [ [ 'Reload selected', sub { $_[0]->main->reload_some(@_); } ] ],
+		list_title => Wx::gettext('&Select files to reload:'),
+		buttons    => [ [ '&Reload selected', sub { $_[0]->main->reload_some(@_); } ] ],
 	)->show;
 }
 
