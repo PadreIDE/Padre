@@ -1,8 +1,14 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.58 To Be Released
-    - In advanced preferences, display store name when it is default and 'User'
-      is now called 'Overriden' (AZAWAWI)
+    - In advanced preferences, display the storage backend name when it is
+      default and 'User' is now called 'Overriden' (AZAWAWI)
+    - In advanced preferences, display preferences options for non-boolean
+      settings (AZAWAWI) 
+    - In advanced preferences, display a True/False radio button for boolean
+      settings (AZAWAWI)
+    - Fixed an incorrect default value display bug in advanced preferences
+      when it is toggled (AZAWAWI)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that
