@@ -122,7 +122,7 @@ sub _create_controls {
 	$self->{value}->Enable(0);
 
 	# Boolean value radio button fields
-	$self->{true} = Wx::RadioButton->new( $self, -1, Wx::gettext('True') );
+	$self->{true}  = Wx::RadioButton->new( $self, -1, Wx::gettext('True') );
 	$self->{false} = Wx::RadioButton->new( $self, -1, Wx::gettext('False') );
 	$self->{true}->Hide;
 	$self->{false}->Hide;
@@ -185,19 +185,19 @@ sub _create_controls {
 
 	# Bottom preference value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{true},         1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
-	$value_sizer->Add( $self->{false},         1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{false},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 
 	# Sizer for default value and options
 	my $info_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$info_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->AddSpacer(5);
-	$info_sizer->Add( $options_label, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$info_sizer->Add( $options_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->Add( $self->{options}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# button sizer
@@ -208,10 +208,10 @@ sub _create_controls {
 
 	# Create the main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $filter_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $value_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $info_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $info_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -401,18 +401,18 @@ sub _on_list_item_selected {
 	my $pref  = $self->{preferences}->{ $event->GetLabel };
 	my $type  = $pref->{type};
 
-	my $is_boolean = ($pref->{type} == Padre::Constant::BOOLEAN) ? 1 : 0;
-	if($is_boolean) {
+	my $is_boolean = ( $pref->{type} == Padre::Constant::BOOLEAN ) ? 1 : 0;
+	if ($is_boolean) {
 		$self->{true}->SetValue( $pref->{value} );
 		$self->{false}->SetValue( not $pref->{value} );
 	} else {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
 	}
-	$self->{value}->Show(not $is_boolean);
+	$self->{value}->Show( not $is_boolean );
 	$self->{true}->Show($is_boolean);
 	$self->{false}->Show($is_boolean);
 	$self->Layout;
-	
+
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 
 	$self->{value}->Enable(1);
@@ -463,8 +463,8 @@ sub _update_ui {
 	my $type       = $pref->{type};
 	my $is_default = $pref->{is_default};
 
-	if($type == Padre::Constant::BOOLEAN) {
-		$self->{true}->SetValue( $value );
+	if ( $type == Padre::Constant::BOOLEAN ) {
+		$self->{true}->SetValue($value);
 		$self->{false}->SetValue( not $value );
 	} else {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
@@ -513,12 +513,13 @@ sub _on_set_button {
 	#TODO Implement some validation based on the preference type
 
 	#Set the value to the user input
-	my $type          = $pref->{type};
-	my $value         = ($type == Padre::Constant::BOOLEAN) 
+	my $type = $pref->{type};
+	my $value =
+		( $type == Padre::Constant::BOOLEAN )
 		? $self->{true}->GetValue
 		: $self->{value}->GetValue;
 	my $default_value = $pref->{default};
-	my $is_default    = $self->_is_default( $type, $value, $default_value );
+	my $is_default = $self->_is_default( $type, $value, $default_value );
 
 	$pref->{value}      = $value;
 	$pref->{is_default} = $is_default;
