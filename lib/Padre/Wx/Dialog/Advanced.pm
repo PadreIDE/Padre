@@ -388,14 +388,14 @@ sub _on_list_item_selected {
 
 	my $is_boolean = ($pref->{type} == Padre::Constant::BOOLEAN) ? 1 : 0;
 	if($is_boolean) {
-		$self->{true}->SetValue( $pref->{value} ? 1 : 0 );
-		$self->{false}->SetValue( $pref->{value} ? 0 : 1 );
+		$self->{true}->SetValue( $pref->{value} );
+		$self->{false}->SetValue( not $pref->{value} );
 	} else {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
 	}
-	$self->{value}->Show($is_boolean ? 0 : 1);
-	$self->{true}->Show($is_boolean ? 1 : 0);
-	$self->{false}->Show($is_boolean ? 1 : 0);
+	$self->{value}->Show(not $is_boolean);
+	$self->{true}->Show($is_boolean);
+	$self->{false}->Show($is_boolean);
 	$self->Layout;
 	
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
@@ -448,7 +448,12 @@ sub _update_ui {
 	my $type       = $pref->{type};
 	my $is_default = $pref->{is_default};
 
-	$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
+	if($type == Padre::Constant::BOOLEAN) {
+		$self->{true}->SetValue( $value );
+		$self->{false}->SetValue( not $value );
+	} else {
+		$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
+	}
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $value ) );
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $index, 1, $is_default ? $pref->{store_name} : Wx::gettext('Overriden') );
