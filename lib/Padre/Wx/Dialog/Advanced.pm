@@ -93,7 +93,8 @@ sub _create_controls {
 	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter:' );
 
 	# Filter text field
-	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
+	$self->{filter} = Wx::SearchCtrl->new( $self, -1, '' );
+	$self->{filter}->SetDescriptiveText(Wx::gettext('Type filter here'));
 
 	# Filtered preferences list
 	$self->{list} = Wx::ListView->new(
