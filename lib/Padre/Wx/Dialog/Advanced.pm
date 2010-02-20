@@ -497,9 +497,11 @@ sub _on_set_button {
 
 	#TODO Implement some validation based on the preference type
 
-	#Reset the value to the default setting
+	#Set the value to the user input
 	my $type          = $pref->{type};
-	my $value         = $self->{value}->GetValue;
+	my $value         = ($type == Padre::Constant::BOOLEAN) 
+		? $self->{true}->GetValue
+		: $self->{value}->GetValue;
 	my $default_value = $pref->{default};
 	my $is_default    = $self->_is_default( $type, $value, $default_value );
 
