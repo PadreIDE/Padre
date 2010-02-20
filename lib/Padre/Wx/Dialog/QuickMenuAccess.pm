@@ -174,8 +174,7 @@ sub _create_controls {
 		$self, -1,
 		Wx::gettext('&Type a menu item name to access:')
 	);
-	$self->_search_text( Wx::SearchCtrl->new( $self, -1, '' ) );
-	$self->_search_text->SetDescriptiveText(Wx::gettext('Search'));
+	$self->_search_text( Wx::TextCtrl->new( $self, -1, '' ) );
 
 	# matches result list
 	my $matches_label = Wx::StaticText->new(
