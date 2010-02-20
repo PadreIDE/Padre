@@ -121,6 +121,12 @@ sub _create_controls {
 	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
 	$self->{value}->Enable(0);
 
+	# Boolean value radio button fields
+	$self->{true} = Wx::RadioButton->new( $self, -1, Wx::gettext('&True') );
+	$self->{false} = Wx::RadioButton->new( $self, -1, Wx::gettext('&False') );
+	$self->{true}->Hide;
+	$self->{false}->Hide;
+
 	# System default
 	my $default_label = Wx::StaticText->new( $self, -1, Wx::gettext('Default value:') );
 	$self->{default_value} = Wx::TextCtrl->new(
@@ -169,6 +175,8 @@ sub _create_controls {
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{true},         1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
+	$value_sizer->Add( $self->{false},         1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
@@ -378,7 +386,18 @@ sub _on_list_item_selected {
 	my $pref  = $self->{preferences}->{ $event->GetLabel };
 	my $type  = $pref->{type};
 
-	$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
+	my $is_boolean = ($pref->{type} == Padre::Constant::BOOLEAN) ? 1 : 0;
+	if($is_boolean) {
+		$self->{true}->SetValue( $pref->{value} ? 1 : 0 );
+		$self->{false}->SetValue( $pref->{value} ? 0 : 1 );
+	} else {
+		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
+	}
+	$self->{value}->Show($is_boolean ? 0 : 1);
+	$self->{true}->Show($is_boolean ? 1 : 0);
+	$self->{false}->Show($is_boolean ? 1 : 0);
+	$self->Layout;
+	
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 
 	$self->{value}->Enable(1);
