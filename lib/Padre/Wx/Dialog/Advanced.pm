@@ -122,8 +122,8 @@ sub _create_controls {
 	$self->{value}->Enable(0);
 
 	# Boolean value radio button fields
-	$self->{true} = Wx::RadioButton->new( $self, -1, Wx::gettext('&True') );
-	$self->{false} = Wx::RadioButton->new( $self, -1, Wx::gettext('&False') );
+	$self->{true} = Wx::RadioButton->new( $self, -1, Wx::gettext('True') );
+	$self->{false} = Wx::RadioButton->new( $self, -1, Wx::gettext('False') );
 	$self->{true}->Hide;
 	$self->{false}->Hide;
 
