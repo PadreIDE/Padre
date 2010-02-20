@@ -407,6 +407,7 @@ sub _on_list_item_selected {
 		$self->{false}->SetValue( not $pref->{value} );
 	} else {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
+		$self->{options}->SetValue( $pref->{options} );
 	}
 	$self->{value}->Show( not $is_boolean );
 	$self->{true}->Show($is_boolean);
@@ -468,6 +469,7 @@ sub _update_ui {
 		$self->{false}->SetValue( not $value );
 	} else {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
+		$self->{options}->SetValue( $pref->{options} );
 	}
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 	$self->{button_reset}->Enable( not $is_default );
@@ -651,6 +653,10 @@ sub _init_preferences {
 			next;
 		}
 
+		my $options = ($setting->options)
+			? join(',', keys %{$setting->options})
+			: '';
+
 		my $value      = $config->$name;
 		my $default    = $setting->default;
 		my $is_default = $self->_is_default( $type, $value, $default );
@@ -663,6 +669,7 @@ sub _init_preferences {
 			'store_name' => $store_name,
 			'value'      => $value,
 			'original'   => $value,
+			'options'    => $options,
 		};
 	}
 
