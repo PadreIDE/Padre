@@ -454,7 +454,7 @@ sub _update_ui {
 	} else {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
 	}
-	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $value ) );
+	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 	$self->{button_reset}->Enable( not $is_default );
 	$list->SetItem( $index, 1, $is_default ? $pref->{store_name} : Wx::gettext('Overriden') );
 	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
