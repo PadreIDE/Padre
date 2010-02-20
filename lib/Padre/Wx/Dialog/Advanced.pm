@@ -418,6 +418,7 @@ sub _on_list_item_selected {
 
 	$self->{value}->Enable(1);
 	$self->{default_value}->Enable(1);
+	$self->{options}->Enable(1);
 	$self->{button_reset}->Enable( not $pref->{is_default} );
 	$self->{button_set}->Enable(1);
 
