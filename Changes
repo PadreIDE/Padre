@@ -1,6 +1,8 @@
 Changes for Perl Application Development and Refactoring Environment
 
 0.58 To Be Released
+    - In advanced preferences, display store name when it is default and 'User'
+      is now called 'Overriden' (AZAWAWI)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that
