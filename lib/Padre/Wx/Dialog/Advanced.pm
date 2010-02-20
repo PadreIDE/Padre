@@ -512,8 +512,6 @@ sub _on_set_button {
 	my $name  = $list->GetItemText($index);
 	my $pref  = $self->{preferences}->{$name};
 
-	#TODO Implement some validation based on the preference type
-
 	#Set the value to the user input
 	my $type = $pref->{type};
 	my $value =
@@ -653,8 +651,9 @@ sub _init_preferences {
 			next;
 		}
 
-		my $options = ($setting->options)
-			? join(',', keys %{$setting->options})
+		my $options =
+			( $setting->options )
+			? join( ',', keys %{ $setting->options } )
 			: '';
 
 		my $value      = $config->$name;
