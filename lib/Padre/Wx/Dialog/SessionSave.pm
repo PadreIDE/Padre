@@ -183,12 +183,14 @@ sub _create_fields {
 
 	my $Current_Session;
 	if ( defined( Padre->ide->{session} ) ) {
-		$Current_Session = (
-			Padre::DB::Session->select(
+		my $CS = Padre::DB::Session->select(
 				'name where id = ?',
 				Padre->ide->{session}
-			)
-		)[0]->{name};
+			);
+		# was $CS->[0]->{name};
+		# but it crashed
+		# print Data::Dumper::Dumper $CS->[0];
+		$Current_Session = $CS->[0]->[1];
 	}
 	$Current_Session ||= ''; # Empty value for combo box, better than undef
 
