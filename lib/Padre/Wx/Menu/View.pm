@@ -312,6 +312,8 @@ sub new {
 		'view.full_screen',
 	);
 
+	$self->refresh;
+
 	return $self;
 }
 

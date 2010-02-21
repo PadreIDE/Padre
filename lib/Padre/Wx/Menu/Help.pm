@@ -114,6 +114,8 @@ sub new {
 		'help.about',
 	);
 
+	$self->refresh;
+
 	return $self;
 }
 

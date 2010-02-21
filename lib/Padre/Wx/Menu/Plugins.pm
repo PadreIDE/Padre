@@ -132,6 +132,8 @@ sub new {
 
 	$self->add($main);
 
+	$self->refresh;
+
 	return $self;
 }
 

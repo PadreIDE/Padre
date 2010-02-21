@@ -86,6 +86,8 @@ sub new {
 	# Add additional properties
 	$self->{base} = $self->GetMenuItemCount;
 
+	$self->refresh;
+
 	return $self;
 }
 
@@ -96,7 +98,7 @@ sub title {
 sub refresh {
 	my $self     = shift;
 	my $current  = _CURRENT(@_);
-	my $notebook = $current->notebook;
+	my $notebook = $current->notebook or return;
 	my $menus    = $self->{menus};
 
 	# Destroy previous window list so we can add it again.

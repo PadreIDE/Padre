@@ -339,6 +339,8 @@ sub new {
 		'edit.show_as_decimal',
 	);
 
+	$self->refresh;
+
 	return $self;
 }
 

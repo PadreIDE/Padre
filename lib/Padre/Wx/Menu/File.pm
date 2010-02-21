@@ -281,6 +281,8 @@ sub new {
 		'file.quit',
 	);
 
+	$self->refresh;
+
 	return $self;
 }
 
