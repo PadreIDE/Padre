@@ -13,6 +13,8 @@ Changes for Perl Application Development and Refactoring Environment
       (AZAWAWI)
     - Refresh all menus at startup. This prevents "nothing" open mode (i.e. no
       document) from incorrectly showing an enabled menubar (AZAWAWI)
+    - Padre::Util::share() can now get the name of a plugin (e.g. 'Perl6') and
+      return the share directory of that plugin (SZABGAB)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that
