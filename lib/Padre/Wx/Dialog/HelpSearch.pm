@@ -73,7 +73,7 @@ sub _display_help_in_viewer {
 		if ( $topic && $self->_help_provider ) {
 			eval { ( $html, $location ) = $self->_help_provider->help_render($topic); };
 			if ($@) {
-				$self->_main->error( sprintf( Wx::gettext('Error while calling %s'), 'help_render', $@ ) );
+				$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'help_render', $@ ) );
 				return;
 			}
 		}
@@ -296,14 +296,15 @@ sub _search {
 	# a default..
 	my @empty = ();
 	$self->_index( \@empty );
-
+	# TODO: If the _help_provide call crashes then this _search seem to be called in a recursive loop
+	# until the whole applications freezes.
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
 		my $doc = Padre::Current->document;
 		if ($doc) {
 			eval { $self->_help_provider( $doc->get_help_provider ); };
 			if ($@) {
-				$self->_main->error( sprintf( Wx::gettext('Error while calling %s'), 'get_help_provider', $@ ) );
+				$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'get_help_provider', $@ ) );
 				return;
 			}
 			if ( not $self->_help_provider ) {
@@ -323,7 +324,7 @@ sub _search {
 	return if not $self->_help_provider;
 	eval { $self->_index( $self->_help_provider->help_list ); };
 	if ($@) {
-		$self->_main->error( sprintf( Wx::gettext('Error while calling %s'), 'help_list', $@ ) );
+		$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'help_list', $@ ) );
 		return;
 	}
 
