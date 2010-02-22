@@ -186,7 +186,7 @@ sub _create_controls {
 	# Boolean sizer
 	my $boolean_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$boolean_sizer->AddStretchSpacer;
-	$boolean_sizer->Add( $self->{true},   1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$boolean_sizer->Add( $self->{true},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$boolean_sizer->Add( $self->{false}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$boolean_sizer->AddStretchSpacer;
 	$self->{boolean} = $boolean_sizer;
@@ -195,7 +195,7 @@ sub _create_controls {
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $boolean_sizer,         1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
+	$value_sizer->Add( $boolean_sizer,        1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
 	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 
@@ -423,9 +423,9 @@ sub _on_list_item_selected {
 	$self->{false}->Show($is_boolean);
 
 	# Hide spaces infront of true/false radiobuttons
-	$self->{boolean}->Show(0, $is_boolean);
-	$self->{boolean}->Show(3, $is_boolean);
-	
+	$self->{boolean}->Show( 0, $is_boolean );
+	$self->{boolean}->Show( 3, $is_boolean );
+
 	# Recalculate sizers
 	$self->Layout;
 

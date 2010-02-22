@@ -184,9 +184,10 @@ sub _create_fields {
 	my $Current_Session;
 	if ( defined( Padre->ide->{session} ) ) {
 		my $CS = Padre::DB::Session->select(
-				'name where id = ?',
-				Padre->ide->{session}
-			);
+			'name where id = ?',
+			Padre->ide->{session}
+		);
+
 		# was $CS->[0]->{name};
 		# but it crashed
 		# print Data::Dumper::Dumper $CS->[0];

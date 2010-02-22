@@ -302,21 +302,23 @@ sub share {
 
 	if ( $ENV{PADRE_DEV} ) {
 		my $root = File::Spec->rel2abs(
-				File::Spec->catdir(
-					$FindBin::Bin,
-					File::Spec->updir,
-					File::Spec->updir));
-		if (not $plugin) {
-			return File::Spec->catdir($root, 'Padre', 'share');
+			File::Spec->catdir(
+				$FindBin::Bin,
+				File::Spec->updir,
+				File::Spec->updir
+			)
+		);
+		if ( not $plugin ) {
+			return File::Spec->catdir( $root, 'Padre', 'share' );
 		}
 
-		# two cases: share in the Padre-Plugin-Name/share 
+		# two cases: share in the Padre-Plugin-Name/share
 		# or share in the Padre-Plugin-Name/lib/Padre/Plugin/Name/share directory
-		my $plugin_dir = File::Spec->catdir($root, "Padre-Plugin-$plugin", 'share');
-		if (-d $plugin_dir) {
+		my $plugin_dir = File::Spec->catdir( $root, "Padre-Plugin-$plugin", 'share' );
+		if ( -d $plugin_dir ) {
 			return $plugin_dir;
 		}
-		$plugin_dir = File::Spec->catdir($root, "Padre-Plugin-$plugin", 'lib', 'Padre', 'Plugin', $plugin, 'share');
+		$plugin_dir = File::Spec->catdir( $root, "Padre-Plugin-$plugin", 'lib', 'Padre', 'Plugin', $plugin, 'share' );
 		return $plugin_dir;
 	}
 

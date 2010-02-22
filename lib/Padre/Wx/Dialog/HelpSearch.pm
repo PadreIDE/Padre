@@ -296,6 +296,7 @@ sub _search {
 	# a default..
 	my @empty = ();
 	$self->_index( \@empty );
+
 	# TODO: If the _help_provide call crashes then this _search seem to be called in a recursive loop
 	# until the whole applications freezes.
 	# Generate a sorted file-list based on filename
