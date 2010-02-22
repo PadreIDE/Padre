@@ -178,21 +178,28 @@ sub _create_controls {
 	#----- Dialog Layout -------
 	#
 
-	# Top filter sizer
+	# Filter sizer
 	my $filter_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# Bottom preference value setter sizer
+	# Boolean sizer
+	my $boolean_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$boolean_sizer->AddStretchSpacer;
+	$boolean_sizer->Add( $self->{true},   1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$boolean_sizer->Add( $self->{false}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$boolean_sizer->AddStretchSpacer;
+	$self->{boolean} = $boolean_sizer;
+
+	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{true},         1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
-	$value_sizer->Add( $self->{false},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $boolean_sizer,         1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
 	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 
-	# Sizer for default value and options
+	# Default value and options sizer
 	my $info_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$info_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
@@ -200,13 +207,13 @@ sub _create_controls {
 	$info_sizer->Add( $options_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->Add( $self->{options}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# button sizer
+	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$button_sizer->Add( $self->{button_save},   1, 0,          0 );
 	$button_sizer->Add( $self->{button_cancel}, 1, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
-	# Create the main vertical sizer
+	# Main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
@@ -409,9 +416,17 @@ sub _on_list_item_selected {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
 		$self->{options}->SetValue( $pref->{options} );
 	}
+
+	# Toggle visibility of fields depending on preference type
 	$self->{value}->Show( not $is_boolean );
 	$self->{true}->Show($is_boolean);
 	$self->{false}->Show($is_boolean);
+
+	# Hide spaces infront of true/false radiobuttons
+	$self->{boolean}->Show(0, $is_boolean);
+	$self->{boolean}->Show(3, $is_boolean);
+	
+	# Recalculate sizers
 	$self->Layout;
 
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
