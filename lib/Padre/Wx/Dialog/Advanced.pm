@@ -355,7 +355,7 @@ sub _on_copy_to_clipboard {
 	if ( $action == COPY_ALL ) {
 		$text =
 			  $name . ";"
-			. ( $pref->{is_default} ? $pref->{store_name} : Wx::gettext('Overriden') ) . ";"
+			. $self->_status_name($pref) . ";"
 			. $pref->{type_name} . ";"
 			. $pref->{value};
 	} elsif ( $action == COPY_NAME ) {
@@ -369,6 +369,14 @@ sub _on_copy_to_clipboard {
 	}
 
 	return;
+}
+
+# Private method to retrieve the correct value for the preference status column
+sub _status_name {
+	my ($self, $pref) = @_;
+	return $pref->{is_default}
+		? Wx::gettext('Default')
+		: $pref->{store_name};
 }
 
 # Private method to show a popup menu when a list item is right-clicked
@@ -489,7 +497,7 @@ sub _update_ui {
 	}
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $index, 1, $is_default ? $pref->{store_name} : Wx::gettext('Overriden') );
+	$list->SetItem( $index, 1, $self->_status_name( $pref ) );
 	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
 	$self->_set_item_bold_font( $index, not $is_default );
 
@@ -618,7 +626,7 @@ sub _update_list {
 		my $is_default = $pref->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
-		$list->SetItem( $index, 1, $is_default ? $pref->{store_name} : Wx::gettext('Overriden') );
+		$list->SetItem( $index, 1, $self->_status_name( $pref ) );
 		$list->SetItem( $index, 2, $pref->{type_name} );
 		$list->SetItem( $index, 3, $self->_displayed_value( $pref->{type}, $pref->{value} ) );
 
