@@ -450,7 +450,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::QuickMenuAccess - Ecliptic's Quick Menu Access dialog
+Padre::Wx::Dialog::QuickMenuAccess - Quick Menu Access dialog
 
 =head1 DESCRIPTION
 

@@ -571,7 +571,7 @@ __END__
 
 =head1 NAME
 
-Padre::Wx::Dialog::OpenResource - Ecliptic's Open Resource dialog
+Padre::Wx::Dialog::OpenResource - Open Resource dialog
 
 =head1 DESCRIPTION
 
