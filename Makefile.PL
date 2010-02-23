@@ -142,7 +142,7 @@ requires 'Readonly::XS' => '1.05';
 
 requires 'PPIx::Regexp'            => '0.005';
 requires 'Storable'                => '2.15';
-requires 'Template::Tiny'          => '0.03';
+requires 'Template::Tiny'          => '0.11';
 requires 'Term::ReadLine'          => 0;
 requires 'Text::Balanced'          => '2.01';
 requires 'Text::Diff'              => '0.35';

@@ -5814,9 +5814,11 @@ sub on_new_from_template {
 
 	# Generate the full file content
 	require Template::Tiny;
-	my $output = Template::Tiny->new->process(
+	my $output = '';
+	Template::Tiny->new->process(
 		$template,
 		$self->current,
+		\$output,
 	);
 
 	# Create the file from the content
