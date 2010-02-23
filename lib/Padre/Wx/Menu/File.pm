@@ -262,8 +262,8 @@ sub new {
 
 	# NOTE: Do NOT do an initial fill during the constructor
 	# We'll do one later anyway, and the list is premature at this point.
-	# TODO fix this
-	$self->refresh_recent;
+	# NOTE: Do not ignore the above note. I mean it --ADAMK
+	# $self->refresh_recent;
 
 	$self->AppendSeparator;
 
