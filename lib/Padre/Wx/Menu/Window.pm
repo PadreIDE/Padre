@@ -131,7 +131,6 @@ sub refresh_windowlist {
 	}
 
 	# Add all of the window entries
-	#$DB::single = 1;
 	my @label = $notebook->labels;
 	foreach my $nth ( sort { $label[$a] cmp $label[$b] } ( 0 .. $#label ) ) {
 		push @$menus, $self->Append( -1, $label[$nth] );
