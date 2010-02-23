@@ -245,7 +245,7 @@ sub new {
 		$self,
 		Padre::Wx::ID_TIMER_POSTINIT,
 		sub {
-			$_[0]->timer_post_init;
+			$_[0]->timer_start;
 		},
 	);
 	$timer->Start( 1, 1 );
@@ -253,10 +253,95 @@ sub new {
 	return $self;
 }
 
-# When the $Padre::INVISIBLE variable is set (during testing) never show
-# the main window.
+# HACK: When the $Padre::INVISIBLE variable is set (during testing) never
+# show the main window. This exists because people tend to get annoyed when
+# you flicker a bunch of windows on and off the screen during testing.
 sub Show {
 	return shift->SUPER::Show( $Padre::Test::VERSION ? 0 : @_ );
+}
+
+# This is effectively the second half of the constructor, which is delayed
+# until after the window has been shown and the main loop has been started.
+# All loading and initialisation which is expensive or needs a running
+# application (with gui tools and threads and so on) go here.
+sub timer_start {
+	my $self    = shift;
+	my $config  = $self->config;
+	my $manager = $self->ide->plugin_manager;
+
+	# Do an initial Show/paint of the complete-looking main window
+	# without any files loaded. We'll then immediately start an Update lock
+	# so that loading of the files is done in a single render pass.
+	# This gives us an optimum compromise between being PERCEIVED
+	# to start-up quickly, and ACTUALLY starting up quickly.
+	$self->Show(1);
+
+	# If the position mandated by the configuration is now
+	# off the screen (typically because we've changed the screen
+	# size, reposition to the defaults).
+	# This must happen AFTER the initial ->Show(1) because otherwise
+	# ->IsShownOnScreen returns a false-negative result.
+	unless ( $self->IsShownOnScreen and $self->_xy_on_screen ) {
+		$self->SetSize(
+			Wx::Size->new(
+				$config->default('main_width'),
+				$config->default('main_height'),
+			)
+		);
+		$self->CentreOnScreen;
+	}
+
+	# Lock everything during the initial opening of files.
+	# Run a whole bunch of refresh methods when this is done,
+	# as we will be in our final startup editor state and can be
+	# sure it won't change on us in the future.
+	# Anything else that needs to have it's refresh method called
+	# as part of initialisation should be added to the list here.
+	SCOPE: {
+		my $lock = $self->lock( qw{
+			UPDATE  DB
+			refresh refresh_recent
+		} );
+
+		# Load all files and refresh the application so that it
+		# represents the loaded state.
+		$self->load_files;
+
+		# Cannot use the toggle sub here as that one reads from the Menu and
+		# on some machines the Menu is not configured yet at this point.
+		if ( $config->main_statusbar ) {
+			$self->GetStatusBar->Show;
+		} else {
+			$self->GetStatusBar->Hide;
+		}
+		$manager->enable_editors_for_all;
+
+		$self->show_syntax( $config->main_syntaxcheck );
+		if ( $config->main_errorlist ) {
+			$self->errorlist->enable;
+		}
+	}
+
+	# Start the single instance server
+	if ( $config->main_singleinstance ) {
+		$self->single_instance_start;
+	}
+
+	# Check for new plug-ins and alert the user to them
+	$manager->alert_new;
+
+	# Start the change detection timer
+	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
+	Wx::Event::EVT_TIMER(
+		$self,
+		Padre::Wx::ID_TIMER_FILECHECK,
+		sub {
+			$_[0]->timer_check_overwrite;
+		},
+	);
+	$timer->Start( $config->update_file_from_disk_interval * SECONDS, 0 );
+
+	return;
 }
 
 
@@ -653,81 +738,6 @@ sub _xy_on_screen {
 	}
 
 	return 1;
-}
-
-sub timer_post_init {
-	my $self    = shift;
-	my $config  = $self->config;
-	my $manager = $self->ide->plugin_manager;
-
-	# Do an initial Show/paint of the complete-looking main window
-	# without any files loaded. We'll then immediately start an Update lock
-	# so that loading of the files is done in a single render pass.
-	# This gives us an optimum compromise between being PERCEIVED
-	# to start-up quickly, and ACTUALLY starting up quickly.
-	$self->Show(1);
-
-	# If the position mandated by the configuration is now
-	# off the screen (typically because we've changed the screen
-	# size, reposition to the defaults).
-	# This must happen AFTER the initial ->Show(1) because otherwise
-	# ->IsShownOnScreen returns a false-negative result.
-	unless ( $self->IsShownOnScreen and $self->_xy_on_screen ) {
-		$self->SetSize(
-			Wx::Size->new(
-				$config->default('main_width'),
-				$config->default('main_height'),
-			)
-		);
-		$self->CentreOnScreen;
-	}
-
-	# Lock everything during the initial opening of files
-	SCOPE: {
-		my $lock = $self->lock( 'UPDATE', 'DB', 'refresh' );
-
-		# Load all files and refresh the application so that it
-		# represents the loaded state.
-		$self->load_files;
-
-		# Cannot use the toggle sub here as that one reads from the Menu and
-		# on some machines the Menu is not configured yet at this point.
-		if ( $config->main_statusbar ) {
-			$self->GetStatusBar->Show;
-		} else {
-			$self->GetStatusBar->Hide;
-		}
-		$manager->enable_editors_for_all;
-
-		$self->show_syntax( $config->main_syntaxcheck );
-		if ( $config->main_errorlist ) {
-			$self->errorlist->enable;
-		}
-	}
-
-	# Start the single instance server
-	if ( $config->main_singleinstance ) {
-		$self->single_instance_start;
-	}
-
-	# Check for new plug-ins and alert the user to them
-	$manager->alert_new;
-
-	# Start the change detection timer
-	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
-	Wx::Event::EVT_TIMER(
-		$self,
-		Padre::Wx::ID_TIMER_FILECHECK,
-		sub {
-			$_[0]->timer_check_overwrite;
-		},
-	);
-	$timer->Start(
-		$self->ide->config->update_file_from_disk_interval * SECONDS,
-		0
-	);
-
-	return;
 }
 
 =pod
