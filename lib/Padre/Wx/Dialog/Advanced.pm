@@ -189,6 +189,8 @@ sub _create_controls {
 	$boolean_sizer->Add( $self->{true},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$boolean_sizer->Add( $self->{false}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$boolean_sizer->AddStretchSpacer;
+
+	# Store boolean sizer reference for later usage
 	$self->{boolean} = $boolean_sizer;
 
 	# Value setter sizer
@@ -223,6 +225,13 @@ sub _create_controls {
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
+	# Hide value and info sizer at startup
+	$vsizer->Show(2,0);
+	$vsizer->Show(3,0);
+
+	# Store vertical sizer reference for later usage
+	$self->{vsizer} = $vsizer;
+	
 	# Wrap with a horizontal sizer to get left/right padding
 	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
@@ -420,6 +429,10 @@ sub _on_list_item_selected {
 		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
 		$self->{options}->SetValue( $pref->{options} );
 	}
+
+	# Show value and info sizers
+	$self->{vsizer}->Show(2, 1);
+	$self->{vsizer}->Show(3, 1);
 
 	# Toggle visibility of fields depending on preference type
 	$self->{value}->Show( not $is_boolean );
