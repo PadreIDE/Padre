@@ -11,6 +11,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Fixed an incorrect default value display bug in advanced preferences
       when it is toggled (AZAWAWI)
     - In advanced preferences, hide bottom controls at startup (AZAWAWI)
+    - In advanced preferences, Set button is hidden when it is a boolean. 
+      True/false radio buttons handle the switch instead (AZAWAWI)
     - Fixed ticket #858 Recent files does not display anything on Padre startup
       (AZAWAWI)
     - Refresh all menus at startup. This prevents "nothing" open mode (i.e. no

@@ -288,8 +288,8 @@ sub _bind_events {
 
 	# Handle boolean radio buttons state change
 	Wx::Event::EVT_RADIOBUTTON(
-		$self, 
-		$self->{true}, 
+		$self,
+		$self->{true},
 		sub {
 			shift->_on_radiobutton(@_);
 		}
@@ -460,7 +460,7 @@ sub _on_list_item_selected {
 	$self->{boolean}->Show( 3, $is_boolean );
 
 	# Set button is not needed when it is a boolean
-	$self->{button_set}->Show(not $is_boolean);
+	$self->{button_set}->Show( not $is_boolean );
 
 	# Recalculate sizers
 	$self->Layout;
@@ -480,9 +480,9 @@ sub _on_list_item_selected {
 sub _on_radiobutton {
 	my $self  = shift;
 	my $event = shift;
-	my $list = $self->{list};
-	my $name = $list->GetItemText( $list->GetFirstSelected );
-	my $pref = $self->{preferences}->{$name};
+	my $list  = $self->{list};
+	my $name  = $list->GetItemText( $list->GetFirstSelected );
+	my $pref  = $self->{preferences}->{$name};
 
 	# Reverse boolean
 	my $value = $pref->{value} ? 0 : 1;
