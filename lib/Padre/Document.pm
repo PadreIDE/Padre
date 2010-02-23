@@ -742,6 +742,9 @@ sub save_file {
 	# Determine new line type using file content.
 	$self->{newline_type} = Padre::Util::newline_type($content);
 
+	# Update read-only-cache
+	$self->{readonly} = $self->file->readonly;
+
 	return 1;
 }
 
@@ -1281,6 +1284,18 @@ sub get_function_regex {
 
 sub pre_process {
 	return 1;
+}
+
+sub is_readonly {
+	my $self = shift;
+
+	my $file = $self->file;
+	return 0 unless defined($file);
+
+	# Fill the cache if it's empty and assume read-write as a default
+	$self->{readonly} ||= $self->file->readonly || 0;
+	
+	return $self->{readonly};
 }
 
 sub stats {

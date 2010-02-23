@@ -393,9 +393,11 @@ sub _move_bitmap {
 
 sub is_read_only {
 	my ($self) = @_;
-	my $file = $self->current->document->file || '';
-	my $is_rdonly = $file ? $file->readonly : undef;
-	return $is_rdonly ? Wx::gettext('Read Only') : ':)';
+
+	my $document = $self->current->document;
+	return '' unless defined($document);
+
+	return $document->is_readonly ? Wx::gettext('Read Only') : Wx::gettext('R/W');
 }
 
 
