@@ -117,11 +117,11 @@ sub refresh {
 
 	# Add/Remove the Perl menu
 	if ( $perl and not $menu ) {
-		$self->wx->Insert( 4, $self->perl->wx,     $self->perl->title );
-		$self->wx->Insert( 5, $self->refactor->wx, $self->perl->title );
+		$self->insert( 4, $self->perl );
+		$self->insert( 5, $self->refactor );
 	} elsif ( $menu and not $perl ) {
-		$self->wx->Remove(5); # refactor
-		$self->wx->Remove(4); # perl
+		$self->remove(5); # refactor
+		$self->remove(4); # perl
 	}
 
 	# Refresh individual menus
