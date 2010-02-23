@@ -1294,7 +1294,7 @@ sub is_readonly {
 
 	# Fill the cache if it's empty and assume read-write as a default
 	$self->{readonly} ||= $self->file->readonly || 0;
-	
+
 	return $self->{readonly};
 }
 
