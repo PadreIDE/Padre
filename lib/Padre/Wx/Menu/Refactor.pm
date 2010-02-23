@@ -58,7 +58,7 @@ sub new {
 }
 
 sub title {
-	Wx::gettext('Refac&tor');
+	Wx::gettext('Ref&actor');
 }
 
 sub refresh {
