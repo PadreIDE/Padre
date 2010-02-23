@@ -277,12 +277,28 @@ sub _bind_events {
 		}
 	);
 
-	# When an right click is pressed, let us show a popup menu
+	# When a list right click event is fired, let us show a popup menu
 	Wx::Event::EVT_LIST_ITEM_RIGHT_CLICK(
 		$self,
 		$self->{list},
 		sub {
 			shift->_on_list_item_right_click(@_);
+		}
+	);
+
+	# Handle boolean radio buttons state change
+	Wx::Event::EVT_RADIOBUTTON(
+		$self, 
+		$self->{true}, 
+		sub {
+			shift->_on_radiobutton(@_);
+		}
+	);
+	Wx::Event::EVT_RADIOBUTTON(
+		$self,
+		$self->{false},
+		sub {
+			shift->_on_radiobutton(@_);
 		}
 	);
 
@@ -443,6 +459,9 @@ sub _on_list_item_selected {
 	$self->{boolean}->Show( 0, $is_boolean );
 	$self->{boolean}->Show( 3, $is_boolean );
 
+	# Set button is not needed when it is a boolean
+	$self->{button_set}->Show(not $is_boolean);
+
 	# Recalculate sizers
 	$self->Layout;
 
@@ -453,6 +472,26 @@ sub _on_list_item_selected {
 	$self->{options}->Enable(1);
 	$self->{button_reset}->Enable( not $pref->{is_default} );
 	$self->{button_set}->Enable(1);
+
+	return;
+}
+
+# Private method to handle the radio button selection
+sub _on_radiobutton {
+	my $self  = shift;
+	my $event = shift;
+	my $list = $self->{list};
+	my $name = $list->GetItemText( $list->GetFirstSelected );
+	my $pref = $self->{preferences}->{$name};
+
+	# Reverse boolean
+	my $value = $pref->{value} ? 0 : 1;
+	my $is_default = not $pref->{is_default};
+	$pref->{is_default} = $is_default;
+	$pref->{value}      = $value;
+
+	# and update the fields/list items accordingly
+	$self->_update_ui($pref);
 
 	return;
 }
