@@ -125,15 +125,6 @@ sub new {
 		'plugins.reload_current_plugin',
 	);
 
-	# $self->add_menu_action(
-	#     $tools,
-	#     'plugins.test_a_plugin',
-	# );
-
-	$self->add($main);
-
-	$self->refresh;
-
 	return $self;
 }
 
@@ -173,7 +164,7 @@ sub add {
 }
 
 sub remove {
-	my $self = shift;
+	my $self    = shift;
 	my $entries = $self->{plugin_menus} || [];
 
 	while (@$entries) {

@@ -54,8 +54,6 @@ sub new {
 		'refactor.introduce_temporary',
 	);
 
-	$self->refresh;
-
 	return $self;
 }
 

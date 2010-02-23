@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use constant CONFIG_OPTIONS => 113;
+use constant CONFIG_OPTIONS => 112;
 
 # Move of Debug to Run Menu
 use Test::More tests => CONFIG_OPTIONS * 2 + 21;
@@ -51,15 +51,15 @@ foreach my $name (@names) {
 
 # The config version number is a requirement for every config and
 # the only key which is allowed to live in an empty config.
-my %Test_Config = ( Version => $Padre::Config::VERSION );
+my %test_config = ( Version => $Padre::Config::VERSION );
 
 # ... and that they don't leave a permanent state.
 is_deeply(
-	+{ %{ $config->human } }, \%Test_Config,
+	+{ %{ $config->human } }, \%test_config,
 	'Defaults do not leave permanent state (human)',
 );
 is_deeply(
-	+{ %{ $config->host } }, \%Test_Config,
+	+{ %{ $config->host } }, \%test_config,
 	'Defaults do not leave permanent state (host)',
 );
 

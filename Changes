@@ -1,4 +1,5 @@
 Changes for Perl Application Development and Refactoring Environment
+NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.58 To Be Released
     - In advanced preferences, display the storage backend name when it is
@@ -15,6 +16,15 @@ Changes for Perl Application Development and Refactoring Environment
       document) from incorrectly showing an enabled menubar (AZAWAWI)
     - Padre::Util::share() can now get the name of a plugin (e.g. 'Perl6') and
       return the share directory of that plugin (SZABGAB)
+    - Removed the unused concept of user-configurable menus, which was slowing
+      down a ton of different operations that needed a menu refresh (ADAMK)
+    - Removed ->refresh calls during the initial menu construction, as we
+      will be refresh'ing again anyway at the end of the startup, and thus
+      any work done in the menus is completely wasted CPU (ADAMK)
+    - Removed the very expensive window list refresh code from the main menu
+      refresh method into it's own dedicated refresh method. We can fire
+      this directly in the limited number of situations that the notebook
+      adds, removed, or renamed documents (ADAMK)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that

@@ -299,8 +299,10 @@ sub timer_start {
 	# as part of initialisation should be added to the list here.
 	SCOPE: {
 		my $lock = $self->lock( qw{
-			UPDATE  DB
-			refresh refresh_recent
+			UPDATE DB
+			refresh
+			refresh_recent
+			refresh_windowlist
 		} );
 
 		# Load all files and refresh the application so that it
@@ -1324,18 +1326,18 @@ sub refresh_menu_plugins {
 	$self->menu->plugins->refresh($self);
 }
 
-=head3 C<refresh_menu_window>
+=head3 C<refresh_windowlist>
 
-    $main->refresh_menu_window
+    $main->refresh_windowlist
 
-Force a refresh of the window menu
+Force a refresh of the list of windows in the window menu
 
 =cut
 
-sub refresh_menu_window {
+sub refresh_windowlist {
 	my $self = shift;
 	return if $self->locked('REFRESH');
-	$self->menu->window->refresh($self);
+	$self->menu->window->refresh_windowlist($self);
 }
 
 =pod
@@ -4303,12 +4305,12 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock   = $self->lock(
-		qw{
-			REFRESH DB
-			refresh_directory refresh_menu refresh_menu_window
-			}
-	);
+	my $lock   = $self->lock( qw{
+		REFRESH DB
+		refresh_directory
+		refresh_menu
+		refresh_windowlist
+	} );
 	TRACE( join ' ', "Closing ", ref $doc, $doc->filename || 'Unknown' ) if DEBUG;
 
 	if ( $doc->is_modified and not $doc->is_unused ) {

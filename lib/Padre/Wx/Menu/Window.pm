@@ -86,8 +86,6 @@ sub new {
 	# Add additional properties
 	$self->{base} = $self->GetMenuItemCount;
 
-	$self->refresh;
-
 	return $self;
 }
 
@@ -97,6 +95,22 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
+	my $current  = _CURRENT(@_);
+	my $notebook = $current->notebook or return;
+	my $pages    = $notebook->GetPageCount;
+
+	# Toggle window operations based on number of pages
+	my $enable = $pages ? 1 : 0;
+	$self->{window_next_file}->Enable($enable);
+	$self->{window_previous_file}->Enable($enable);
+	$self->{window_last_visited_file}->Enable($enable);
+	$self->{window_right_click}->Enable($enable);
+
+	return 1;
+}
+
+sub refresh_windowlist {
+	my $self = shift;
 	my $current  = _CURRENT(@_);
 	my $notebook = $current->notebook or return;
 	my $menus    = $self->{menus};
@@ -129,13 +143,6 @@ sub refresh {
 			},
 		);
 	}
-
-	# Toggle window operations based on number of pages
-	my $enable = $pages ? 1 : 0;
-	$self->{window_next_file}->Enable($enable);
-	$self->{window_previous_file}->Enable($enable);
-	$self->{window_last_visited_file}->Enable($enable);
-	$self->{window_right_click}->Enable($enable);
 
 	return 1;
 }

@@ -109,8 +109,6 @@ sub new {
 		'debug.quit',
 	);
 
-	$self->refresh;
-
 	return $self;
 }
 

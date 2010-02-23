@@ -56,7 +56,7 @@ sub new {
 	}
 
 	# Create the underlying Wx object
-	my $lock = $main->lock( 'UPDATE', 'refresh_menu_window' );
+	my $lock = $main->lock( 'UPDATE', 'refresh_windowlist' );
 	my $self = $class->SUPER::new($parent);
 
 	# TO DO: Make this suck less
@@ -756,12 +756,15 @@ sub on_focus {
 	my $document = $main->current->document;
 	TRACE( "Focus received file: " . ( $document->filename || '' ) ) if DEBUG;
 
-	# To show/hide the document specific Perl menu
-	# don't refresh on each focus event
-	my $lock = $main->lock( 'UPDATE', 'refresh_menu', 'refresh_directory' );
+	# NOTE: The editor focus event fires a LOT, even for trivial things
+	# like changing focus to another application and immediately back again,
+	# or switching between tools in Padre.
+	# Don't do any refreshing here, it is an excessive waste of resources.
+	# Instead, put them in the events that ACTUALLY change application state.
+	my $lock = $main->lock('UPDATE');
 
 	# TO DO
-	# this is called even if the mouse is moved away from padre and back again
+	# This is called even if the mouse is moved away from padre and back again
 	# we should restrict some of the updates to cases when we switch from one file to
 	# another
 	if ( $self->needs_manual_colorize ) {
@@ -778,7 +781,9 @@ sub on_focus {
 		TRACE("no need to colorize") if DEBUG;
 	}
 
-	$event->Skip(1); # so the cursor will show up
+	# NIOTE: This is so the cursor will show up
+	$event->Skip(1);
+
 	return;
 }
 

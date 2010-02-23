@@ -99,8 +99,6 @@ sub new {
 		'perl.autocomplete_brackets',
 	);
 
-	$self->refresh;
-
 	return $self;
 }
 

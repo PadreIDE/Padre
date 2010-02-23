@@ -27,6 +27,10 @@ my @GUI_ELEMENTS = (
 	'toolbar',
 );
 
+
+
+
+
 #####################################################################
 # Padre::Wx::Menu Methods
 
@@ -311,8 +315,6 @@ sub new {
 		$self,
 		'view.full_screen',
 	);
-
-	$self->refresh;
 
 	return $self;
 }

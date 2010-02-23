@@ -67,9 +67,6 @@ sub new {
 		'run.stop',
 	);
 
-	# Initialise enabled
-	$self->enable;
-
 	return $self;
 }
 

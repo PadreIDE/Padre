@@ -21,13 +21,8 @@ our @ISA     = 'Padre::Wx::Menu';
 # Padre::Wx::Menu Methods
 
 sub new {
-
-	# TO DO: Convert this to Padre::Action::File
-
 	my $class = shift;
 	my $main  = shift;
-
-	my $config = Padre->ide->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
@@ -215,7 +210,7 @@ sub new {
 		'file.save_all',
 	);
 
-	if ( $config->feature_session ) {
+	if ( $main->config->feature_session ) {
 
 		$self->AppendSeparator;
 
@@ -280,8 +275,6 @@ sub new {
 		$self,
 		'file.quit',
 	);
-
-	$self->refresh;
 
 	return $self;
 }

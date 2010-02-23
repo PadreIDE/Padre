@@ -598,32 +598,6 @@ setting(
 );
 
 setting(
-	name  => 'main_menubar_items',
-	type  => Padre::Constant::ASCII,
-	store => Padre::Constant::HUMAN,
-
-	# This lives here until a better place is found:
-	# This is a list of menubar items, seperated by ;
-	# The following items are supported:
-	#   menu.MenuName
-	#     Insert the (sub-)menu MenuName
-	#   some.other_action
-	#     Insert an action
-	#   |
-	#     Insert a seperator
-	default => 'menu.File;'
-		. 'menu.Edit;'
-		. 'menu.Search;'
-		. 'menu.View;'
-		. 'menu._document;'
-		. 'menu.Run;'
-		. 'menu.Debug;'
-		. 'menu.Plugins;'
-		. 'menu.Window;'
-		. 'menu.Help',
-);
-
-setting(
 	name    => 'swap_ctrl_tab_alt_right',
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,

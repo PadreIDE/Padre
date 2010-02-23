@@ -95,8 +95,6 @@ sub new {
 		'search.quick_menu_access',
 	);
 
-	$self->refresh;
-
 	return $self;
 }
 

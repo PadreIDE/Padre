@@ -72,7 +72,7 @@ my %project_dir_cache;
 
 
 #####################################################################
-# Miscellaneous Functions
+# Idioms and Miscellaneous Functions
 
 =pod
 
