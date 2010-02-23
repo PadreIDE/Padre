@@ -226,12 +226,12 @@ sub _create_controls {
 	$vsizer->AddSpacer(5);
 
 	# Hide value and info sizer at startup
-	$vsizer->Show(2,0);
-	$vsizer->Show(3,0);
+	$vsizer->Show( 2, 0 );
+	$vsizer->Show( 3, 0 );
 
 	# Store vertical sizer reference for later usage
 	$self->{vsizer} = $vsizer;
-	
+
 	# Wrap with a horizontal sizer to get left/right padding
 	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 
@@ -431,8 +431,8 @@ sub _on_list_item_selected {
 	}
 
 	# Show value and info sizers
-	$self->{vsizer}->Show(2, 1);
-	$self->{vsizer}->Show(3, 1);
+	$self->{vsizer}->Show( 2, 1 );
+	$self->{vsizer}->Show( 3, 1 );
 
 	# Toggle visibility of fields depending on preference type
 	$self->{value}->Show( not $is_boolean );
