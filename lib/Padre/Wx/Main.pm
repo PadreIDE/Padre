@@ -5347,6 +5347,9 @@ Handler called on every movement of the cursor. No return value.
 
 =cut
 
+# NOTE: Any blocking here is HIGHLY visible to the user
+# so you should be extremely cautious in here. Everything
+# in this sub should be super super fast.
 sub on_stc_update_ui {
 	my $self = shift;
 
@@ -5366,13 +5369,13 @@ sub on_stc_update_ui {
 	# $self->refresh_menu;
 	$self->refresh_toolbar($current);
 
-	#	$self->refresh_status($current);
+	# $self->refresh_status($current);
 	$self->refresh_cursorpos($current);
 
-	$self->refresh_rdstatus($current);
-
-	# $self->refresh_functions;
-	# $self->refresh_syntaxcheck;
+	# This call makes live filesystem calls every time the cursor moves
+	# Clearly this is incredibly evil, commenting out till whoever wrote
+	# this works out what they meant to do and does it better.
+	# $self->refresh_rdstatus($current);
 
 	return;
 }
