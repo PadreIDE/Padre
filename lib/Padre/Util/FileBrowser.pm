@@ -20,8 +20,7 @@ use warnings;
 # package exports and version
 our $VERSION = '0.57';
 
-# module imports
-use Padre::Wx ();
+use Padre::Constant ();
 
 # -- constructor
 sub new {
