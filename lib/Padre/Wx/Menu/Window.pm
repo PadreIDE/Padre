@@ -110,7 +110,7 @@ sub refresh {
 }
 
 sub refresh_windowlist {
-	my $self = shift;
+	my $self     = shift;
 	my $current  = _CURRENT(@_);
 	my $notebook = $current->notebook or return;
 	my $menus    = $self->{menus};

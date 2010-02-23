@@ -22,7 +22,7 @@ use Class::XSAccessor {
 };
 
 # Default implementation of refresh
-sub refresh { 1 }
+sub refresh {1}
 
 # Overrides and then calls XS wx Menu::Append.
 # Adds any hotkeys to global registry of bound keys

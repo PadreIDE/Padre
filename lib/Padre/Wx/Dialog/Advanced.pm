@@ -353,11 +353,7 @@ sub _on_copy_to_clipboard {
 
 	my $text;
 	if ( $action == COPY_ALL ) {
-		$text =
-			  $name . ";"
-			. $self->_status_name($pref) . ";"
-			. $pref->{type_name} . ";"
-			. $pref->{value};
+		$text = $name . ";" . $self->_status_name($pref) . ";" . $pref->{type_name} . ";" . $pref->{value};
 	} elsif ( $action == COPY_NAME ) {
 		$text = $name;
 	} elsif ( $action == COPY_VALUE ) {
@@ -373,7 +369,7 @@ sub _on_copy_to_clipboard {
 
 # Private method to retrieve the correct value for the preference status column
 sub _status_name {
-	my ($self, $pref) = @_;
+	my ( $self, $pref ) = @_;
 	return $pref->{is_default}
 		? Wx::gettext('Default')
 		: $pref->{store_name};
@@ -497,7 +493,7 @@ sub _update_ui {
 	}
 	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
 	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $index, 1, $self->_status_name( $pref ) );
+	$list->SetItem( $index, 1, $self->_status_name($pref) );
 	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
 	$self->_set_item_bold_font( $index, not $is_default );
 
@@ -626,7 +622,7 @@ sub _update_list {
 		my $is_default = $pref->{is_default};
 
 		$list->InsertStringItem( ++$index, $name );
-		$list->SetItem( $index, 1, $self->_status_name( $pref ) );
+		$list->SetItem( $index, 1, $self->_status_name($pref) );
 		$list->SetItem( $index, 2, $pref->{type_name} );
 		$list->SetItem( $index, 3, $self->_displayed_value( $pref->{type}, $pref->{value} ) );
 

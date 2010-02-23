@@ -298,12 +298,14 @@ sub timer_start {
 	# Anything else that needs to have it's refresh method called
 	# as part of initialisation should be added to the list here.
 	SCOPE: {
-		my $lock = $self->lock( qw{
-			UPDATE DB
-			refresh
-			refresh_recent
-			refresh_windowlist
-		} );
+		my $lock = $self->lock(
+			qw{
+				UPDATE DB
+				refresh
+				refresh_recent
+				refresh_windowlist
+				}
+		);
 
 		# Load all files and refresh the application so that it
 		# represents the loaded state.
@@ -4305,12 +4307,14 @@ sub close {
 
 	my $editor = $notebook->GetPage($id) or return;
 	my $doc    = $editor->{Document}     or return;
-	my $lock   = $self->lock( qw{
-		REFRESH DB
-		refresh_directory
-		refresh_menu
-		refresh_windowlist
-	} );
+	my $lock   = $self->lock(
+		qw{
+			REFRESH DB
+			refresh_directory
+			refresh_menu
+			refresh_windowlist
+			}
+	);
 	TRACE( join ' ', "Closing ", ref $doc, $doc->filename || 'Unknown' ) if DEBUG;
 
 	if ( $doc->is_modified and not $doc->is_unused ) {

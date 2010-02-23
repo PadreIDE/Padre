@@ -30,8 +30,8 @@ our $VERSION = '0.57';
 
 use Class::XSAccessor {
 	getters => {
-		wx       => 'wx',
-		main     => 'main',
+		wx   => 'wx',
+		main => 'main',
 
 		# Don't add accessors to here until they have been
 		# upgraded to be fully encapsulated classes.
@@ -106,8 +106,8 @@ sub remove {
 # Reflowing the Menu
 
 sub refresh {
-	my $self     = shift;
-	my $plugins  = shift;
+	my $self    = shift;
+	my $plugins = shift;
 	my $current = _CURRENT(@_);
 	my $menu    = $self->wx->GetMenuCount ne $self->{default};
 	my $perl    = !!(
@@ -133,7 +133,7 @@ sub refresh {
 
 	# Don't do to the effort of refreshing the Perl menu
 	# unless we're actually showing it.
-	if ( $perl ) {
+	if ($perl) {
 		$self->perl->refresh($current);
 		$self->refactor->refresh($current);
 	}
