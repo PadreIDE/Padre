@@ -118,8 +118,6 @@ sub new {
 
 	#NOTE: DO NOT USE "orange" string since it is actually red on win32
 	my $orange = Wx::Colour->new(255, 165, 0);
-	
-	print Wx::Colour->new("orange")->GetAsString(Wx::wxC2S_HTML_SYNTAX) . "\n";
 
 	$self->MarkerDefine(
 		Padre::Wx::MarkError(),
