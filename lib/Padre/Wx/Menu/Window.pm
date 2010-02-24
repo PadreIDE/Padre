@@ -5,6 +5,7 @@ package Padre::Wx::Menu::Window;
 use 5.008;
 use strict;
 use warnings;
+use List::Util      ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
@@ -25,6 +26,7 @@ sub new {
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
+
 	$self->{main} = $main;
 
 	# File Navigation
@@ -83,7 +85,7 @@ sub new {
 		'window.goto_main_window',
 	);
 
-	# Add additional properties
+	# Save everything we need to keep
 	$self->{base} = $self->GetMenuItemCount;
 
 	return $self;
@@ -113,33 +115,49 @@ sub refresh_windowlist {
 	my $self     = shift;
 	my $current  = _CURRENT(@_);
 	my $notebook = $current->notebook or return;
-	my $menus    = $self->{menus};
+	my $previous = $self->GetMenuItemCount - $self->{base} - 1;
+	my $pages    = $notebook->GetPageCount - 1;
+	my @label    = $notebook->labels;
 
-	# Destroy previous window list so we can add it again.
-	# The list must be deleted backwards from the bottom to the top.
-	my @delete = ( $self->{base} + 1 .. $self->GetMenuItemCount - 1 );
-	foreach my $i ( reverse @delete ) {
-		$self->Delete( $self->FindItemByPosition($i) );
+	# If we are changing from none to any, add the separator
+	if ( $previous == -1 ) {
+		$self->AppendSeparator if $pages >= 0;
+	} else {
+		$previous--;
 	}
 
-	# Add or remove the separator
-	my $pages = $notebook->GetPageCount;
-	if ( $self->{separator} and not $pages ) {
-		$self->Delete( delete $self->{separator} );
-	} elsif ( $pages and not $self->{separator} ) {
-		$self->{separator} = $self->AppendSeparator;
+	# Overwrite the labels of existing entries where possible
+	foreach my $nth ( 0 .. List::Util::min($previous, $pages) ) {
+		$self->FindItemByPosition(
+			$self->{base} + $nth + 1
+		)->SetText( $label[$nth] );
 	}
 
-	# Add all of the window entries
-	my @label = $notebook->labels;
-	foreach my $nth ( sort { $label[$a] cmp $label[$b] } ( 0 .. $#label ) ) {
-		push @$menus, $self->Append( -1, $label[$nth] );
+	# Add menu entries if we have extra labels
+	foreach my $nth ( $previous + 1 .. $pages ) {
+		my $item = $self->Append( -1, $label[$nth] );
 		Wx::Event::EVT_MENU(
 			$self->{main},
-			$menus->[-1],
+			$item,
 			sub {
 				$_[0]->on_nth_pane($nth);
 			},
+		);
+	}
+
+	# Remove menu entries if we have too many
+	foreach my $nth ( reverse( $pages + 1 .. $previous ) ) {
+		$self->Delete(
+			$self->FindItemByPosition(
+				$self->{base} + $nth + 1
+			)
+		);
+	}
+
+	# If we have moved from any to no menus, remove the separator
+	if ( $previous >= 0 and $pages == -1 ) {
+		$self->Delete(
+			$self->FindItemByPosition($self->{base})
 		);
 	}
 
