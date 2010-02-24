@@ -42,6 +42,7 @@ use Class::XSAccessor {
 		perl     => 'perl',
 		refactor => 'refactor',
 		run      => 'run',
+		debug    => 'debug',
 		plugins  => 'plugins',
 		window   => 'window',
 		help     => 'help',
@@ -66,6 +67,7 @@ sub new {
 	$self->{refactor} = Padre::Wx::Menu::Refactor->new($main);
 	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}      = Padre::Wx::Menu::Run->new($main);
+	$self->{debug}    = Padre::Wx::Menu::Debug->new($main);
 	$self->{plugins}  = Padre::Wx::Menu::Plugins->new($main);
 	$self->{window}   = Padre::Wx::Menu::Window->new($main);
 	$self->{help}     = Padre::Wx::Menu::Help->new($main);
@@ -119,7 +121,9 @@ sub refresh {
 	if ( $perl and not $menu ) {
 		$self->insert( 4, $self->perl );
 		$self->insert( 5, $self->refactor );
+		$self->insert( 7, $self->debug );
 	} elsif ( $menu and not $perl ) {
+		$self->remove(7); # debug
 		$self->remove(5); # refactor
 		$self->remove(4); # perl
 	}
@@ -136,6 +140,7 @@ sub refresh {
 	if ($perl) {
 		$self->perl->refresh($current);
 		$self->refactor->refresh($current);
+		$self->debug->refresh($current);
 	}
 
 	$self->window->refresh($current);
