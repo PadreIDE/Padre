@@ -112,12 +112,12 @@ sub new {
 	$self->CmdKeyClear( Wx::wxSTC_KEY_SUBTRACT, Wx::wxSTC_SCMOD_CTRL );
 	$self->CmdKeyClear( Wx::wxSTC_KEY_ADD,      Wx::wxSTC_SCMOD_CTRL );
 
-	my $green  = Wx::Colour->new("green");
-	my $red    = Wx::Colour->new("red");
-	my $blue   = Wx::Colour->new("blue");
+	my $green = Wx::Colour->new("green");
+	my $red   = Wx::Colour->new("red");
+	my $blue  = Wx::Colour->new("blue");
 
 	#NOTE: DO NOT USE "orange" string since it is actually red on win32
-	my $orange = Wx::Colour->new(255, 165, 0);
+	my $orange = Wx::Colour->new( 255, 165, 0 );
 
 	$self->MarkerDefine(
 		Padre::Wx::MarkError(),
