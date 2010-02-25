@@ -83,7 +83,7 @@ sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
 	# Filter label
-	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter:' );
+	my $filter_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Filter:') );
 
 	# Filter text field
 	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
@@ -100,38 +100,22 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 1, Wx::gettext('Shortcut') );
 	$self->{list}->InsertColumn( 1, Wx::gettext('Action') );
 
-	# Preference value label
-	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
+	# modifier radio button fields
+	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL');
+	$self->{alt} = Wx::CheckBox->new( $self, -1, 'ALT');
+	$self->{shift} = Wx::CheckBox->new( $self, -1, 'ALT');
 
-	# Preference value text field
-	$self->{value} = Wx::TextCtrl->new( $self, -1, '' );
-	$self->{value}->Enable(0);
+	# + labels
+	my $plus_label_1 = Wx::StaticText->new( $self, -1, '+' );
+	my $plus_label_2 = Wx::StaticText->new( $self, -1, '+' );
 
-	# Boolean value radio button fields
-	$self->{true}  = Wx::RadioButton->new( $self, -1, Wx::gettext('True') );
-	$self->{false} = Wx::RadioButton->new( $self, -1, Wx::gettext('False') );
-	$self->{true}->Hide;
-	$self->{false}->Hide;
-
-	# System default
-	my $default_label = Wx::StaticText->new( $self, -1, Wx::gettext('Default value:') );
-	$self->{default_value} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxTE_READONLY
-	);
-	$self->{default_value}->Enable(0);
-
-	# Set preference value button
+	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
 	);
 	$self->{button_set}->Enable(0);
 
-	# Reset to default key binding value button
+	# Reset to default key binding button
 	$self->{button_reset} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Reset"),
 	);
@@ -158,27 +142,20 @@ sub _create_controls {
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Boolean sizer
-	my $boolean_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$boolean_sizer->AddStretchSpacer;
-	$boolean_sizer->Add( $self->{true},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$boolean_sizer->Add( $self->{false}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$boolean_sizer->AddStretchSpacer;
-
-	# Store boolean sizer reference for later usage
-	$self->{boolean} = $boolean_sizer;
+	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$modifier_sizer->AddStretchSpacer;
+	$modifier_sizer->Add( $self->{ctrl},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->Add( $self->{alt}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->AddStretchSpacer;
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$value_sizer->Add( $value_label,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{value},        1, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $boolean_sizer,        1, Wx::wxALIGN_CENTER_VERTICAL | Wx::wxEXPAND, 5 );
+	$value_sizer->Add( $modifier_sizer,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $plus_label_1,        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{shift}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $plus_label_2,        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-
-	# Default value and options sizer
-	my $info_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$info_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$info_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -191,14 +168,13 @@ sub _create_controls {
 	$vsizer->Add( $filter_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->Add( $value_sizer,  0, Wx::wxALL | Wx::wxEXPAND, 3 );
-	$vsizer->Add( $info_sizer,   0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
 
 	# Hide value and info sizer at startup
-	$vsizer->Show( 2, 0 );
-	$vsizer->Show( 3, 0 );
+	#$vsizer->Show( 2, 0 );
+	#$vsizer->Show( 3, 0 );
 
 	# Store vertical sizer reference for later usage
 	$self->{vsizer} = $vsizer;
