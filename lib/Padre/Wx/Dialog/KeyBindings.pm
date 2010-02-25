@@ -164,6 +164,10 @@ sub _create_controls {
 	for my $key (@keys) {
 		$key =~ s/^\d{2}//;
 	}
+
+	# Store it for later usage
+	$self->{keys} = \@keys;
+
 	$self->{key} = Wx::Choice->new(
 		$self, -1,
 		Wx::wxDefaultPosition,
@@ -344,8 +348,35 @@ sub _on_char {
 sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
-	my $pref  = $self->{bindings}->{ $event->GetLabel };
-	my $type  = $pref->{type};
+	my $list = $self->{list};
+	
+	# Fetch action name
+	my $name = $list->GetItem($list->GetFirstSelected, 2)->GetText;
+	my $binding = $self->{bindings}->{$name};
+
+	# And get it shortcut
+	my $shortcut = lc($binding->{shortcut});
+
+	# Get the regular (i.e. non-modifier) key in the shortcut
+	my $regular = ($shortcut =~ /\-(.+?)$/) ? $1 : $shortcut;
+
+	# Find the regular key index in the choice box
+	my $regular_index = 0;
+	my @keys = @{$self->{keys}};
+	my $index = 0;
+	foreach my $key (@keys) {
+		if($regular eq lc($key)) {
+			$regular_index = $index;
+			last;
+		}
+		$index++;
+	}
+	
+	# and update the UI
+	$self->{key}->SetSelection($regular_index);
+	$self->{ctrl}->SetValue($shortcut =~ /ctrl/ ? 1 : 0);
+	$self->{alt}->SetValue($shortcut =~ /alt/ ? 1 : 0);
+	$self->{shift}->SetValue(($shortcut =~ /shift/) ? 1 : 0);
 
 	return;
 }
