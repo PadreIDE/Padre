@@ -101,9 +101,9 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 1, Wx::gettext('Action') );
 
 	# modifier radio button fields
-	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL');
-	$self->{alt} = Wx::CheckBox->new( $self, -1, 'ALT');
-	$self->{shift} = Wx::CheckBox->new( $self, -1, 'ALT');
+	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL' );
+	$self->{alt}   = Wx::CheckBox->new( $self, -1, 'ALT' );
+	$self->{shift} = Wx::CheckBox->new( $self, -1, 'ALT' );
 
 	# + labels
 	my $plus_label_1 = Wx::StaticText->new( $self, -1, '+' );
@@ -111,61 +111,61 @@ sub _create_controls {
 
 	# key choice list
 	my %keymap = (
-		'00None' => -1,
+		'00None'      => -1,
 		'01Backspace' => Wx::WXK_BACK,
-		'02Tab' => Wx::WXK_TAB,
-		    '03Space' => Wx::WXK_SPACE,
-		    '04Up' => Wx::WXK_UP,
-		    '05Down' => Wx::WXK_DOWN,
-		    '06Left' => Wx::WXK_LEFT,
-		    '07Right' => Wx::WXK_RIGHT,
-		    '08Insert' => Wx::WXK_INSERT,
-		    '09Delete' => Wx::WXK_DELETE,
-		    '10Home' => Wx::WXK_HOME,
-		    '11End' => Wx::WXK_END,
-		    '12Page up' => Wx::WXK_PAGEUP,
-		    '13Page down' => Wx::WXK_PAGEDOWN,
-		'14Enter'=> Wx::WXK_RETURN,
-		 '15Escape' => Wx::WXK_ESCAPE,
-		    '16Numpad 0' => Wx::WXK_NUMPAD0,
-		    '17Numpad 1' => Wx::WXK_NUMPAD1,
-		    '18Numpad 2' => Wx::WXK_NUMPAD2,
-		    '19Numpad 3' => Wx::WXK_NUMPAD3,
-		    '20Numpad 4' => Wx::WXK_NUMPAD4,
-		    '21Numpad 5' => Wx::WXK_NUMPAD5,
-		    '22Numpad 6' => Wx::WXK_NUMPAD6,
-		    '23Numpad 7' => Wx::WXK_NUMPAD7,
-		    '24Numpad 8' => Wx::WXK_NUMPAD8,
-		    '25Numpad 9' => Wx::WXK_NUMPAD9,
-		    '26Numpad *' => Wx::WXK_MULTIPLY,
-		    '27Numpad +' => Wx::WXK_ADD,
-		    '28Numpad -' => Wx::WXK_SUBTRACT,
-		    '29Numpad .' => Wx::WXK_DECIMAL,
-		    '30Numpad /' => Wx::WXK_DIVIDE,
-		    '31F1' => Wx::WXK_F1,
-		    '32F2' => Wx::WXK_F2,
-		    '33F3' => Wx::WXK_F3,
-		    '34F4' => Wx::WXK_F4,
-		    '35F5' => Wx::WXK_F5,
-		    '36F6' => Wx::WXK_F6,
-		    '37F7' => Wx::WXK_F7,
-		    '38F8' => Wx::WXK_F8,
-		    '39F9' => Wx::WXK_F9,
-		    '40F10' => Wx::WXK_F10,
-		    '41F11' => Wx::WXK_F11,
-		    '42F12' => Wx::WXK_F12,
+		'02Tab'       => Wx::WXK_TAB,
+		'03Space'     => Wx::WXK_SPACE,
+		'04Up'        => Wx::WXK_UP,
+		'05Down'      => Wx::WXK_DOWN,
+		'06Left'      => Wx::WXK_LEFT,
+		'07Right'     => Wx::WXK_RIGHT,
+		'08Insert'    => Wx::WXK_INSERT,
+		'09Delete'    => Wx::WXK_DELETE,
+		'10Home'      => Wx::WXK_HOME,
+		'11End'       => Wx::WXK_END,
+		'12Page up'   => Wx::WXK_PAGEUP,
+		'13Page down' => Wx::WXK_PAGEDOWN,
+		'14Enter'     => Wx::WXK_RETURN,
+		'15Escape'    => Wx::WXK_ESCAPE,
+		'16Numpad 0'  => Wx::WXK_NUMPAD0,
+		'17Numpad 1'  => Wx::WXK_NUMPAD1,
+		'18Numpad 2'  => Wx::WXK_NUMPAD2,
+		'19Numpad 3'  => Wx::WXK_NUMPAD3,
+		'20Numpad 4'  => Wx::WXK_NUMPAD4,
+		'21Numpad 5'  => Wx::WXK_NUMPAD5,
+		'22Numpad 6'  => Wx::WXK_NUMPAD6,
+		'23Numpad 7'  => Wx::WXK_NUMPAD7,
+		'24Numpad 8'  => Wx::WXK_NUMPAD8,
+		'25Numpad 9'  => Wx::WXK_NUMPAD9,
+		'26Numpad *'  => Wx::WXK_MULTIPLY,
+		'27Numpad +'  => Wx::WXK_ADD,
+		'28Numpad -'  => Wx::WXK_SUBTRACT,
+		'29Numpad .'  => Wx::WXK_DECIMAL,
+		'30Numpad /'  => Wx::WXK_DIVIDE,
+		'31F1'        => Wx::WXK_F1,
+		'32F2'        => Wx::WXK_F2,
+		'33F3'        => Wx::WXK_F3,
+		'34F4'        => Wx::WXK_F4,
+		'35F5'        => Wx::WXK_F5,
+		'36F6'        => Wx::WXK_F6,
+		'37F7'        => Wx::WXK_F7,
+		'38F8'        => Wx::WXK_F8,
+		'39F9'        => Wx::WXK_F9,
+		'40F10'       => Wx::WXK_F10,
+		'41F11'       => Wx::WXK_F11,
+		'42F12'       => Wx::WXK_F12,
 	);
 	my @keys = sort keys %keymap;
 	for my $key (@keys) {
 		$key =~ s/^\d{2}//;
 	}
 	$self->{key} = Wx::Choice->new(
-			$self, -1,
-			Wx::wxDefaultPosition,
-			Wx::wxDefaultSize,
-			\@keys,
-		);
-		$self->{key}->SetSelection(0);
+		$self, -1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		\@keys,
+	);
+	$self->{key}->SetSelection(0);
 
 	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
@@ -201,24 +201,24 @@ sub _create_controls {
 
 	# CTRL/ALT Modifier sizer
 	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$modifier_sizer->Add( $self->{ctrl},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$modifier_sizer->Add( $self->{alt}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->Add( $self->{alt},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$value_sizer->AddStretchSpacer;
-	$value_sizer->Add( $modifier_sizer,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $modifier_sizer, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $plus_label_1,        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $plus_label_1, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
 	$value_sizer->Add( $self->{shift}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $plus_label_2,        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $plus_label_2, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
-	$value_sizer->Add( $self->{key},        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{key}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
-	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
-	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -347,8 +347,8 @@ sub _on_list_item_selected {
 sub _update_ui {
 	my ( $self, $pref ) = @_;
 
-	my $list       = $self->{list};
-	my $index      = $list->GetFirstSelected;
+	my $list  = $self->{list};
+	my $index = $list->GetFirstSelected;
 
 	return;
 }
@@ -398,16 +398,16 @@ sub _update_list {
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 
-	my $index          = -1;
-	my $bindings    = $self->{bindings};
-	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
+	my $index               = -1;
+	my $bindings            = $self->{bindings};
+	my $alternateColor      = Wx::Colour->new( 0xED, 0xF5, 0xFF );
 	my @sorted_binding_keys = sort { $bindings->{$a}->{label} cmp $bindings->{$b}->{label} } keys %$bindings;
-	foreach my $name ( @sorted_binding_keys ) {
+	foreach my $name (@sorted_binding_keys) {
 
 		# Fetch key binding and label
-		my $binding       = $bindings->{$name};
-		my $label = $binding->{label};
-		
+		my $binding = $bindings->{$name};
+		my $label   = $binding->{label};
+
 		# Ignore the key binding if it does not match the filter
 		next if $label !~ /$filter/i;
 
@@ -440,16 +440,16 @@ sub _set_item_bold_font {
 
 # Private method to initialize a key bindings hash from Padre actions
 sub _init_key_bindings {
-	my $self   = shift;
+	my $self = shift;
 
 
 	my $bindings = ();
-	my %actions      = %{ Padre::ide->actions };
+	my %actions  = %{ Padre::ide->actions };
 	foreach my $name ( keys %actions ) {
 		my $action = $actions{$name};
 		my $shortcut = $action->shortcut ? $action->shortcut : '';
 		$bindings->{$name} = {
-			label 	 => $action->label_text,
+			label    => $action->label_text,
 			shortcut => $shortcut,
 		};
 	}

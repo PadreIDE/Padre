@@ -127,10 +127,8 @@ sub refresh_windowlist {
 	}
 
 	# Overwrite the labels of existing entries where possible
-	foreach my $nth ( 0 .. List::Util::min($previous, $pages) ) {
-		$self->FindItemByPosition(
-			$self->{base} + $nth + 1
-		)->SetText( $label[$nth] );
+	foreach my $nth ( 0 .. List::Util::min( $previous, $pages ) ) {
+		$self->FindItemByPosition( $self->{base} + $nth + 1 )->SetText( $label[$nth] );
 	}
 
 	# Add menu entries if we have extra labels
@@ -147,18 +145,12 @@ sub refresh_windowlist {
 
 	# Remove menu entries if we have too many
 	foreach my $nth ( reverse( $pages + 1 .. $previous ) ) {
-		$self->Delete(
-			$self->FindItemByPosition(
-				$self->{base} + $nth + 1
-			)
-		);
+		$self->Delete( $self->FindItemByPosition( $self->{base} + $nth + 1 ) );
 	}
 
 	# If we have moved from any to no menus, remove the separator
 	if ( $previous >= 0 and $pages == -1 ) {
-		$self->Delete(
-			$self->FindItemByPosition($self->{base})
-		);
+		$self->Delete( $self->FindItemByPosition( $self->{base} ) );
 	}
 
 	return 1;

@@ -4798,7 +4798,7 @@ sub on_key_bindings {
 
 	# Show the key bindings dialog
 	require Padre::Wx::Dialog::KeyBindings;
-	my $key_bindings = Padre::Wx::Dialog::KeyBindings->new( $self );
+	my $key_bindings = Padre::Wx::Dialog::KeyBindings->new($self);
 	$key_bindings->show;
 
 	return;
