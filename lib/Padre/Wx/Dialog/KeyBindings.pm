@@ -368,8 +368,8 @@ sub _update_list {
 		# Add the setting to the list control
 		my $binding       = $bindings->{$name};
 
-		$list->InsertStringItem( ++$index, $binding->{name} );
-		$list->SetItem( $index, 1, $binding->{value} );
+		$list->InsertStringItem( ++$index, $binding->{label} );
+		$list->SetItem( $index, 1, $binding->{shortcut} );
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
@@ -402,9 +402,10 @@ sub _init_key_bindings {
 	my %actions      = %{ Padre::ide->actions };
 	foreach my $name ( keys %actions ) {
 		my $action = $actions{$name};
+		my $shortcut = $action->shortcut ? $action->shortcut : '';
 		$bindings->{$name} = {
-			name  => $name,
-			value => $action->label_text,
+			label 	 => $action->label_text,
+			shortcut => $shortcut,
 		};
 	}
 	$self->{bindings} = $bindings;
