@@ -110,16 +110,62 @@ sub _create_controls {
 	my $plus_label_2 = Wx::StaticText->new( $self, -1, '+' );
 
 	# key choice list
-	my @keys = (
-		'up',
-		'down',
+	my %keymap = (
+		'00None' => -1,
+		'01Backspace' => Wx::WXK_BACK,
+		'02Tab' => Wx::WXK_TAB,
+		    '03Space' => Wx::WXK_SPACE,
+		    '04Up' => Wx::WXK_UP,
+		    '05Down' => Wx::WXK_DOWN,
+		    '06Left' => Wx::WXK_LEFT,
+		    '07Right' => Wx::WXK_RIGHT,
+		    '08Insert' => Wx::WXK_INSERT,
+		    '09Delete' => Wx::WXK_DELETE,
+		    '10Home' => Wx::WXK_HOME,
+		    '11End' => Wx::WXK_END,
+		    '12Page up' => Wx::WXK_PAGEUP,
+		    '13Page down' => Wx::WXK_PAGEDOWN,
+		'14Enter'=> Wx::WXK_RETURN,
+		 '15Escape' => Wx::WXK_ESCAPE,
+		    '16Numpad 0' => Wx::WXK_NUMPAD0,
+		    '17Numpad 1' => Wx::WXK_NUMPAD1,
+		    '18Numpad 2' => Wx::WXK_NUMPAD2,
+		    '19Numpad 3' => Wx::WXK_NUMPAD3,
+		    '20Numpad 4' => Wx::WXK_NUMPAD4,
+		    '21Numpad 5' => Wx::WXK_NUMPAD5,
+		    '22Numpad 6' => Wx::WXK_NUMPAD6,
+		    '23Numpad 7' => Wx::WXK_NUMPAD7,
+		    '24Numpad 8' => Wx::WXK_NUMPAD8,
+		    '25Numpad 9' => Wx::WXK_NUMPAD9,
+		    '26Numpad *' => Wx::WXK_MULTIPLY,
+		    '27Numpad +' => Wx::WXK_ADD,
+		    '28Numpad -' => Wx::WXK_SUBTRACT,
+		    '29Numpad .' => Wx::WXK_DECIMAL,
+		    '30Numpad /' => Wx::WXK_DIVIDE,
+		    '31F1' => Wx::WXK_F1,
+		    '32F2' => Wx::WXK_F2,
+		    '33F3' => Wx::WXK_F3,
+		    '34F4' => Wx::WXK_F4,
+		    '35F5' => Wx::WXK_F5,
+		    '36F6' => Wx::WXK_F6,
+		    '37F7' => Wx::WXK_F7,
+		    '38F8' => Wx::WXK_F8,
+		    '39F9' => Wx::WXK_F9,
+		    '40F10' => Wx::WXK_F10,
+		    '41F11' => Wx::WXK_F11,
+		    '42F12' => Wx::WXK_F12,
 	);
+	my @keys = sort keys %keymap;
+	for my $key (@keys) {
+		$key =~ s/^\d{2}//;
+	}
 	$self->{key} = Wx::Choice->new(
 			$self, -1,
 			Wx::wxDefaultPosition,
 			Wx::wxDefaultSize,
 			\@keys,
 		);
+		$self->{key}->SetSelection(0);
 
 	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
