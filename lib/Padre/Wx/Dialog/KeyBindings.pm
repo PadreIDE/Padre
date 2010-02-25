@@ -161,6 +161,11 @@ sub _create_controls {
 		$keymap{'20' . $alpha} = ord($alpha);
 	}
 
+	# Add symbols
+	for my $symbol ('~', '-', '=', '[', ']', ';', '\'', ',', '.', '/') {
+		$keymap{'50' . $symbol} = ord($symbol);
+	}
+
 	my @keys = sort keys %keymap;
 	for my $key (@keys) {
 		$key =~ s/^\d{2}//;
