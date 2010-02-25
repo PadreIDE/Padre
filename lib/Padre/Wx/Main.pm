@@ -2344,7 +2344,7 @@ sub run_command {
 	# set up the ProcessStream bindings.
 	unless ($Wx::Perl::ProcessStream::VERSION) {
 		require Wx::Perl::ProcessStream;
-		if ( $Wx::Perl::ProcessStream::VERSION < .20 ) {
+		if ( $Wx::Perl::ProcessStream::VERSION < .25 ) {
 			$self->error(
 				sprintf(
 					Wx::gettext(
@@ -2357,6 +2357,12 @@ sub run_command {
 			);
 			return 1;
 		}
+
+		# This is needed to avoid Padre from freezing/hanging when
+		# running print-intensive scripts like the following:
+		# 		while(1) { warn "FREEZE"; };
+		# See ticket:863 "Continous warnings or prints kill Padre"
+		Wx::Perl::ProcessStream->SetDefaultMaxLines(100);
 
 		Wx::Perl::ProcessStream::EVT_WXP_PROCESS_STREAM_STDOUT(
 			$self,
