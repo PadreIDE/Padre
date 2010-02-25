@@ -98,7 +98,7 @@ sub _create_controls {
 	);
 	$self->{list}->InsertColumn( 0, Wx::gettext('Key binding name') );
 	$self->{list}->InsertColumn( 1, Wx::gettext('Shortcut') );
-	$self->{list}->InsertColumn( 1, Wx::gettext('Action') );
+	$self->{list}->InsertColumn( 2, Wx::gettext('Action') );
 
 	# modifier radio button fields
 	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL' );
