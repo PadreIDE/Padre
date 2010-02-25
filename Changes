@@ -31,6 +31,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Speed up status bar updates (ADAMK, SEWI)
     - Warning editor markers are now actually orange on win32 (AZAWAWI)
     - Landed new and much much faster refresh_windowlist (ADAMK)
+    - Fixed ticket:860 "Configurable key bindings dialog" (AZAWAWI)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that
