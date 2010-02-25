@@ -91,6 +91,9 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 1, Wx::gettext('Shortcut') );
 	$self->{list}->InsertColumn( 2, Wx::gettext('Action') );
 
+	# Shortcut label
+	my $shortcut_label = Wx::StaticText->new( $self, -1, Wx::gettext('Sh&ortcut:') );
+
 	# modifier radio button fields
 	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL' );
 	$self->{alt}   = Wx::CheckBox->new( $self, -1, 'ALT' );
@@ -204,10 +207,12 @@ sub _create_controls {
 	# CTRL/ALT Modifier sizer
 	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->AddSpacer(3);
 	$modifier_sizer->Add( $self->{alt},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$value_sizer->Add( $shortcut_label, , 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
 	$value_sizer->Add( $modifier_sizer, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
