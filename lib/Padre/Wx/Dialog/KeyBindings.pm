@@ -151,13 +151,13 @@ sub _create_controls {
 	);
 
 	# Add alphabets
-	for my $alpha ('A'..'Z') {
-		$keymap{'20' . $alpha} = ord($alpha);
+	for my $alpha ( 'A' .. 'Z' ) {
+		$keymap{ '20' . $alpha } = ord($alpha);
 	}
 
 	# Add symbols
-	for my $symbol ('~', '-', '=', '[', ']', ';', '\'', ',', '.', '/') {
-		$keymap{'50' . $symbol} = ord($symbol);
+	for my $symbol ( '~', '-', '=', '[', ']', ';', '\'', ',', '.', '/' ) {
+		$keymap{ '50' . $symbol } = ord($symbol);
 	}
 
 	my @keys = sort keys %keymap;
@@ -212,11 +212,11 @@ sub _create_controls {
 	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$modifier_sizer->Add( $self->{ctrl}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$modifier_sizer->AddSpacer(3);
-	$modifier_sizer->Add( $self->{alt},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$modifier_sizer->Add( $self->{alt}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$value_sizer->Add( $shortcut_label, , 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->Add( $shortcut_label,, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddStretchSpacer;
 	$value_sizer->Add( $modifier_sizer, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$value_sizer->AddSpacer(5);
@@ -348,35 +348,35 @@ sub _on_char {
 sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
-	my $list = $self->{list};
-	
+	my $list  = $self->{list};
+
 	# Fetch action name
-	my $name = $list->GetItem($list->GetFirstSelected, 2)->GetText;
+	my $name = $list->GetItem( $list->GetFirstSelected, 2 )->GetText;
 	my $binding = $self->{bindings}->{$name};
 
 	# And get it shortcut
-	my $shortcut = lc($binding->{shortcut});
+	my $shortcut = lc( $binding->{shortcut} );
 
 	# Get the regular (i.e. non-modifier) key in the shortcut
-	my $regular = ($shortcut =~ /\-(.+?)$/) ? $1 : $shortcut;
+	my $regular = ( $shortcut =~ /\-(.+?)$/ ) ? $1 : $shortcut;
 
 	# Find the regular key index in the choice box
 	my $regular_index = 0;
-	my @keys = @{$self->{keys}};
-	my $index = 0;
+	my @keys          = @{ $self->{keys} };
+	my $index         = 0;
 	foreach my $key (@keys) {
-		if($regular eq lc($key)) {
+		if ( $regular eq lc($key) ) {
 			$regular_index = $index;
 			last;
 		}
 		$index++;
 	}
-	
+
 	# and update the UI
 	$self->{key}->SetSelection($regular_index);
-	$self->{ctrl}->SetValue($shortcut =~ /ctrl/ ? 1 : 0);
-	$self->{alt}->SetValue($shortcut =~ /alt/ ? 1 : 0);
-	$self->{shift}->SetValue(($shortcut =~ /shift/) ? 1 : 0);
+	$self->{ctrl}->SetValue( $shortcut =~ /ctrl/ ? 1 : 0 );
+	$self->{alt}->SetValue( $shortcut  =~ /alt/  ? 1 : 0 );
+	$self->{shift}->SetValue( ( $shortcut =~ /shift/ ) ? 1 : 0 );
 
 	return;
 }

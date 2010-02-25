@@ -64,23 +64,22 @@ sub _external_tools_panel {
 
 	my $diff_tool_path = $config->external_diff_tool;
 	my $perl_tags_path = $config->perl_tags_file;
+
 	# TODO: Really needs a "browse" button. - Done!  Not sure it's such a good way to do it though!
 	# TODO: Need to make the TextCtrl a bit more stretched, it's too narrow.
 	my $table = [
-		[   
-			[ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
-			[ 'Wx::TextCtrl',   'external_diff_tool', $diff_tool_path  ],
-			[ 'Wx::Button',   '_diff_tool_',   Wx::gettext('Browse...') ],
+		[   [ 'Wx::StaticText', undef,                Wx::gettext('Diff tool:') ],
+			[ 'Wx::TextCtrl',   'external_diff_tool', $diff_tool_path ],
+			[ 'Wx::Button',     '_diff_tool_',        Wx::gettext('Browse...') ],
 		],
-		[   
-			[ 'Wx::StaticText', undef,            Wx::gettext('Perl ctags file:') ],
-			[ 'Wx::TextCtrl',   'perl_tags_file', $perl_tags_path ],
-			[ 'Wx::Button',   '_perltags_file_',   Wx::gettext('Browse...') ],
+		[   [ 'Wx::StaticText', undef,             Wx::gettext('Perl ctags file:') ],
+			[ 'Wx::TextCtrl',   'perl_tags_file',  $perl_tags_path ],
+			[ 'Wx::Button',     '_perltags_file_', Wx::gettext('Browse...') ],
 		],
 	];
 
-	
-	my $panel = $self->_new_panel($treebook,3);
+
+	my $panel = $self->_new_panel( $treebook, 3 );
 	$self->fill_panel_by_table( $panel, $table );
 
 	Wx::Event::EVT_BUTTON(
@@ -99,39 +98,39 @@ sub _external_tools_panel {
 }
 
 sub _file_dialog {
-	my($self, $toChoose) = @_;
+	my ( $self, $toChoose ) = @_;
 	my $wildCard = '*';
 	$wildCard = '*.*' if (Padre::Constant::WIN32);
-	
-	
+
+
 	# this comes off as not right
 	my %ext_tool = (
-		'diff'		=> [ 'Diff Tool File', 'external_diff_tool' ],
-		'perltag'	=> [ 'Perl Tag File', 'perl_tags_file'],
-		);
-	
+		'diff'    => [ 'Diff Tool File', 'external_diff_tool' ],
+		'perltag' => [ 'Perl Tag File',  'perl_tags_file' ],
+	);
 
-	my $file =  Wx::FileDialog->new(
-			$self, 			# parent
-			"Choose $ext_tool{$toChoose}->[0]", 	# message
-			"", 			# defaultDir
-			"",			# defaultFile
-			$wildCard,		# wildcard
-			Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST,		# style
-			#[-1,-1],		# position
-			#[400, 450],		# size
-			#'filediag'		# dialog name
-		 );
-	
-	my $ret = $file->ShowModal();
+
+	my $file = Wx::FileDialog->new(
+		$self,                                    # parent
+		"Choose $ext_tool{$toChoose}->[0]",       # message
+		"",                                       # defaultDir
+		"",                                       # defaultFile
+		$wildCard,                                # wildcard
+		Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST, # style
+		                                          #[-1,-1],		# position
+		                                          #[400, 450],		# size
+		                                          #'filediag'		# dialog name
+	);
+
+	my $ret  = $file->ShowModal();
 	my $path = "";
-	if( $ret != Wx::wxID_CANCEL ) {
+	if ( $ret != Wx::wxID_CANCEL ) {
 		$path = $file->GetPath();
 	}
-	if( $path ne '' ) {
-		$self->get_widget($ext_tool{$toChoose}->[1])->ChangeValue($path);
+	if ( $path ne '' ) {
+		$self->get_widget( $ext_tool{$toChoose}->[1] )->ChangeValue($path);
 	}
-	
+
 	#return $path;
 }
 
