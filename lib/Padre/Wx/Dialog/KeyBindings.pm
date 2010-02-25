@@ -109,6 +109,18 @@ sub _create_controls {
 	my $plus_label_1 = Wx::StaticText->new( $self, -1, '+' );
 	my $plus_label_2 = Wx::StaticText->new( $self, -1, '+' );
 
+	# key choice list
+	my @keys = (
+		'up',
+		'down',
+	);
+	$self->{key} = Wx::Choice->new(
+			$self, -1,
+			Wx::wxDefaultPosition,
+			Wx::wxDefaultSize,
+			\@keys,
+		);
+
 	# Set key binding button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
@@ -141,19 +153,24 @@ sub _create_controls {
 	$filter_sizer->Add( $filter_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$filter_sizer->Add( $self->{filter}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
-	# Boolean sizer
+	# CTRL/ALT Modifier sizer
 	my $modifier_sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$modifier_sizer->AddStretchSpacer;
 	$modifier_sizer->Add( $self->{ctrl},  1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$modifier_sizer->Add( $self->{alt}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$modifier_sizer->AddStretchSpacer;
 
 	# Value setter sizer
 	my $value_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$value_sizer->AddStretchSpacer;
 	$value_sizer->Add( $modifier_sizer,          0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->AddSpacer(5);
 	$value_sizer->Add( $plus_label_1,        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->AddSpacer(5);
 	$value_sizer->Add( $self->{shift}, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$value_sizer->AddSpacer(5);
 	$value_sizer->Add( $plus_label_2,        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->AddSpacer(5);
+	$value_sizer->Add( $self->{key},        0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
+	$value_sizer->AddStretchSpacer;
 	$value_sizer->Add( $self->{button_set},   0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 	$value_sizer->Add( $self->{button_reset}, 0, Wx::wxALIGN_CENTER_VERTICAL,                5 );
 
