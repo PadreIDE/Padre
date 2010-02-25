@@ -59,7 +59,7 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 500, 550 ] );
+	$self->SetMinSize( [ 450, 550 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -88,7 +88,7 @@ sub _create_controls {
 	# Filter text field
 	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
 
-	# Filtered preferences list
+	# Filtered key bindings list
 	$self->{list} = Wx::ListView->new(
 		$self,
 		-1,
@@ -96,10 +96,8 @@ sub _create_controls {
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL,
 	);
-	$self->{list}->InsertColumn( 0, Wx::gettext('Preference Name') );
-	$self->{list}->InsertColumn( 1, Wx::gettext('Status') );
-	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
-	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
+	$self->{list}->InsertColumn( 0, Wx::gettext('Key binding name') );
+	$self->{list}->InsertColumn( 1, Wx::gettext('Shortcut') );
 
 	# Preference value label
 	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
@@ -126,25 +124,13 @@ sub _create_controls {
 	);
 	$self->{default_value}->Enable(0);
 
-	# preference options
-	my $options_label = Wx::StaticText->new( $self, -1, Wx::gettext('Options:') );
-	$self->{options} = Wx::TextCtrl->new(
-		$self,
-		-1,
-		'',
-		Wx::wxDefaultPosition,
-		Wx::wxDefaultSize,
-		Wx::wxTE_READONLY
-	);
-	$self->{options}->Enable(0);
-
 	# Set preference value button
 	$self->{button_set} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Set"),
 	);
 	$self->{button_set}->Enable(0);
 
-	# Reset to default preference value button
+	# Reset to default key binding value button
 	$self->{button_reset} = Wx::Button->new(
 		$self, -1, Wx::gettext("&Reset"),
 	);
@@ -192,9 +178,6 @@ sub _create_controls {
 	my $info_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$info_sizer->Add( $default_label,         0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 	$info_sizer->Add( $self->{default_value}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$info_sizer->AddSpacer(5);
-	$info_sizer->Add( $options_label,   0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$info_sizer->Add( $self->{options}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -255,31 +238,6 @@ sub _bind_events {
 		}
 	);
 
-	# When an item is activated (e.g. double-clicked, space-ed or enter-ed)
-	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self->{list},
-		sub {
-			shift->_on_list_item_activated(@_);
-		}
-	);
-
-	# Handle boolean radio buttons state change
-	Wx::Event::EVT_RADIOBUTTON(
-		$self,
-		$self->{true},
-		sub {
-			shift->_on_radiobutton(@_);
-		}
-	);
-	Wx::Event::EVT_RADIOBUTTON(
-		$self,
-		$self->{false},
-		sub {
-			shift->_on_radiobutton(@_);
-		}
-	);
-
 	# Set button
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -319,14 +277,6 @@ sub _bind_events {
 	return;
 }
 
-# Private method to retrieve the correct value for the preference status column
-sub _status_name {
-	my ( $self, $pref ) = @_;
-	return $pref->{is_default}
-		? Wx::gettext('Default')
-		: $pref->{store_name};
-}
-
 # Private method to handle on character pressed event
 sub _on_char {
 	my $self  = shift;
@@ -343,173 +293,34 @@ sub _on_char {
 	return;
 }
 
-# Private method to handle the selection of a preference item
+# Private method to handle the selection of a key binding item
 sub _on_list_item_selected {
 	my $self  = shift;
 	my $event = shift;
-	my $pref  = $self->{preferences}->{ $event->GetLabel };
+	my $pref  = $self->{bindings}->{ $event->GetLabel };
 	my $type  = $pref->{type};
 
-	my $is_boolean = ( $pref->{type} == Padre::Constant::BOOLEAN ) ? 1 : 0;
-	if ($is_boolean) {
-		$self->{true}->SetValue( $pref->{value} );
-		$self->{false}->SetValue( not $pref->{value} );
-	} else {
-		$self->{value}->SetValue( $self->_displayed_value( $type, $pref->{value} ) );
-		$self->{options}->SetValue( $pref->{options} );
-	}
-
-	# Show value and info sizers
-	$self->{vsizer}->Show( 2, 1 );
-	$self->{vsizer}->Show( 3, 1 );
-
-	# Toggle visibility of fields depending on preference type
-	$self->{value}->Show( not $is_boolean );
-	$self->{true}->Show($is_boolean);
-	$self->{false}->Show($is_boolean);
-
-	# Hide spaces infront of true/false radiobuttons
-	$self->{boolean}->Show( 0, $is_boolean );
-	$self->{boolean}->Show( 3, $is_boolean );
-
-	# Set button is not needed when it is a boolean
-	$self->{button_set}->Show( not $is_boolean );
-
-	# Recalculate sizers
-	$self->Layout;
-
-	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
-
-	$self->{value}->Enable(1);
-	$self->{default_value}->Enable(1);
-	$self->{options}->Enable(1);
-	$self->{button_reset}->Enable( not $pref->{is_default} );
-	$self->{button_set}->Enable(1);
-
 	return;
 }
 
-# Private method to handle the radio button selection
-sub _on_radiobutton {
-	my $self  = shift;
-	my $event = shift;
-	my $list  = $self->{list};
-	my $name  = $list->GetItemText( $list->GetFirstSelected );
-	my $pref  = $self->{preferences}->{$name};
-
-	# Reverse boolean
-	my $value = $pref->{value} ? 0 : 1;
-	my $is_default = not $pref->{is_default};
-	$pref->{is_default} = $is_default;
-	$pref->{value}      = $value;
-
-	# and update the fields/list items accordingly
-	$self->_update_ui($pref);
-
-	return;
-}
-
-# Private method to handle item activation
-# (i.e. the list item is SPACEd, ENTERed, or double-clicked).
-# It toggles the status of a boolean preference or changes focus
-# to the value text field if it is not a boolean
-sub _on_list_item_activated {
-	my $self  = shift;
-	my $event = shift;
-	my $index = $event->GetIndex;
-	my $list  = $self->{list};
-	my $pref  = $self->{preferences}->{ $event->GetLabel };
-
-	if ( $pref->{type} == Padre::Constant::BOOLEAN ) {
-
-		# Reverse boolean
-		my $value = $pref->{value} ? 0 : 1;
-		my $is_default = not $pref->{is_default};
-		$pref->{is_default} = $is_default;
-		$pref->{value}      = $value;
-
-		# and update the fields/list items accordingly
-		$self->_update_ui($pref);
-	} else {
-
-		# Focus on the text value so we can edit it...
-		$self->{value}->SetFocus;
-	}
-
-	return;
-}
-
-# Private method to update the UI from the provided preference
+# Private method to update the UI from the provided key binding
 sub _update_ui {
 	my ( $self, $pref ) = @_;
 
 	my $list       = $self->{list};
 	my $index      = $list->GetFirstSelected;
-	my $value      = $pref->{value};
-	my $type       = $pref->{type};
-	my $is_default = $pref->{is_default};
-
-	if ( $type == Padre::Constant::BOOLEAN ) {
-		$self->{true}->SetValue($value);
-		$self->{false}->SetValue( not $value );
-	} else {
-		$self->{value}->SetValue( $self->_displayed_value( $type, $value ) );
-		$self->{options}->SetValue( $pref->{options} );
-	}
-	$self->{default_value}->SetLabel( $self->_displayed_value( $type, $pref->{default} ) );
-	$self->{button_reset}->Enable( not $is_default );
-	$list->SetItem( $index, 1, $self->_status_name($pref) );
-	$list->SetItem( $index, 3, $self->_displayed_value( $type, $value ) );
-	$self->_set_item_bold_font( $index, not $is_default );
 
 	return;
-}
-
-# Returns the correct displayed value depending on the type
-sub _displayed_value {
-	my ( $self, $type, $value ) = @_;
-
-	return ( $type == Padre::Constant::BOOLEAN )
-		? (
-		$value
-		? Wx::gettext('True')
-		: Wx::gettext('False')
-		)
-		: $value;
-}
-
-# Determines whether the preference value is default or not based on its type
-sub _is_default {
-	my ( $self, $type, $value, $default_value ) = @_;
-
-	return ( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH )
-		? $value eq $default_value
-		: $value == $default_value;
 }
 
 # Private method to handle the pressing of the set value button
 sub _on_set_button {
 	my $self = shift;
 
-	# Prepare the preferences
+	# Prepare the key binding
 	my $list  = $self->{list};
 	my $index = $list->GetFirstSelected;
 	my $name  = $list->GetItemText($index);
-	my $pref  = $self->{preferences}->{$name};
-
-	#Set the value to the user input
-	my $type = $pref->{type};
-	my $value =
-		( $type == Padre::Constant::BOOLEAN )
-		? $self->{true}->GetValue
-		: $self->{value}->GetValue;
-	my $default_value = $pref->{default};
-	my $is_default = $self->_is_default( $type, $value, $default_value );
-
-	$pref->{value}      = $value;
-	$pref->{is_default} = $is_default;
-
-	$self->_update_ui($pref);
 
 	return;
 }
@@ -518,18 +329,10 @@ sub _on_set_button {
 sub _on_reset_button {
 	my $self = shift;
 
-	# Prepare the preferences
+	# Prepare the key binding
 	my $list  = $self->{list};
 	my $index = $list->GetFirstSelected;
 	my $name  = $list->GetItemText($index);
-	my $pref  = $self->{preferences}->{$name};
-
-	#Reset the value to the default setting
-	my $value = $pref->{default};
-	$pref->{value}      = $pref->{default};
-	$pref->{is_default} = 1;
-
-	$self->_update_ui($pref);
 
 	return;
 }
@@ -546,37 +349,30 @@ sub _on_save_button {
 	return;
 }
 
-# Private method to update the preferences list
+# Private method to update the key bindings list
 sub _update_list {
 	my $self   = shift;
-	my $config = $self->main->config;
 	my $filter = quotemeta $self->{filter}->GetValue;
 
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 
 	my $index          = -1;
-	my $preferences    = $self->{preferences};
+	my $bindings    = $self->{bindings};
 	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	foreach my $name ( sort keys %$preferences ) {
+	foreach my $name ( sort keys %$bindings ) {
 
 		# Ignore setting if it does not match the filter
 		next if $name !~ /$filter/i;
 
 		# Add the setting to the list control
-		my $pref       = $preferences->{$name};
-		my $is_default = $pref->{is_default};
+		my $binding       = $bindings->{$name};
 
-		$list->InsertStringItem( ++$index, $name );
-		$list->SetItem( $index, 1, $self->_status_name($pref) );
-		$list->SetItem( $index, 2, $pref->{type_name} );
-		$list->SetItem( $index, 3, $self->_displayed_value( $pref->{type}, $pref->{value} ) );
+		$list->InsertStringItem( ++$index, $binding->{name} );
+		$list->SetItem( $index, 1, $binding->{value} );
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
-
-		# User-set or non-default preferences have bold font
-		$self->_set_item_bold_font( $index, not $is_default );
 	}
 
 	return;
@@ -597,46 +393,21 @@ sub _set_item_bold_font {
 	return;
 }
 
-# Private method to initialize a preferences hash from the local configuration
-sub _init_preferences {
+# Private method to initialize a key bindings hash from Padre actions
+sub _init_key_bindings {
 	my $self   = shift;
-	my $config = $self->main->config;
 
-	$self->{preferences} = ();
-	for my $name ( Padre::Config->settings ) {
-		my $setting = Padre::Config->meta($name);
 
-		# Skip PROJECT settings
-		my $store = $setting->store;
-		next if $setting->store == Padre::Constant::PROJECT;
-
-		my $type      = $setting->type;
-		my $type_name = $TYPES{$type};
-		unless ($type_name) {
-			warn "Unknown type: $type while reading $name\n";
-			next;
-		}
-
-		my $options =
-			( $setting->options )
-			? join( ',', keys %{ $setting->options } )
-			: '';
-
-		my $value      = $config->$name;
-		my $default    = $setting->default;
-		my $is_default = $self->_is_default( $type, $value, $default );
-		my $store_name = ( $store == Padre::Constant::HUMAN ) ? Wx::gettext('User') : Wx::gettext('Host');
-		$self->{preferences}->{$name} = {
-			'is_default' => $is_default,
-			'default'    => $default,
-			'type'       => $type,
-			'type_name'  => $type_name,
-			'store_name' => $store_name,
-			'value'      => $value,
-			'original'   => $value,
-			'options'    => $options,
+	my $bindings = ();
+	my %actions      = %{ Padre::ide->actions };
+	foreach my $name ( keys %actions ) {
+		my $action = $actions{$name};
+		$bindings->{$name} = {
+			name  => $name,
+			value => $action->label_text,
 		};
 	}
+	$self->{bindings} = $bindings;
 
 	return;
 }
@@ -647,16 +418,9 @@ sub _resize_columns {
 
 	# Resize all columns but the last to their biggest item width
 	my $list = $self->{list};
-	for ( 0 .. 2 ) {
+	for ( 0 .. 1 ) {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
-
-	# some columns can have a bold font
-	$list->SetColumnWidth( 1, $list->GetColumnWidth(1) + 10 );
-
-	# the last column gets a bigger static width.
-	# i.e. we do not want to be too long
-	$list->SetColumnWidth( 3, 600 );
 
 	return;
 }
@@ -674,8 +438,8 @@ Shows the dialog. Returns C<undef>.
 sub show {
 	my $self = shift;
 
-	# Initialize Preferences
-	$self->_init_preferences;
+	# Initialize Key Bindings
+	$self->_init_key_bindings;
 
 	# Set focus on the filter text field
 	$self->{filter}->SetFocus;
