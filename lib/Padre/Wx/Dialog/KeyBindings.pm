@@ -14,13 +14,6 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
-# Copy menu constants
-use constant {
-	COPY_ALL   => 1,
-	COPY_NAME  => 2,
-	COPY_VALUE => 3,
-};
-
 # Padre config type to description hash
 my %TYPES = (
 	Padre::Constant::BOOLEAN => Wx::gettext('Boolean'),
@@ -107,12 +100,6 @@ sub _create_controls {
 	$self->{list}->InsertColumn( 1, Wx::gettext('Status') );
 	$self->{list}->InsertColumn( 2, Wx::gettext('Type') );
 	$self->{list}->InsertColumn( 3, Wx::gettext('Value') );
-
-	# Popup right-click menu
-	$self->{popup}      = Wx::Menu->new;
-	$self->{copy}       = $self->{popup}->Append( -1, Wx::gettext("Copy") );
-	$self->{copy_name}  = $self->{popup}->Append( -1, Wx::gettext("Copy Name") );
-	$self->{copy_value} = $self->{popup}->Append( -1, Wx::gettext("Copy Value") );
 
 	# Preference value label
 	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
@@ -277,15 +264,6 @@ sub _bind_events {
 		}
 	);
 
-	# When a list right click event is fired, let us show a popup menu
-	Wx::Event::EVT_LIST_ITEM_RIGHT_CLICK(
-		$self,
-		$self->{list},
-		sub {
-			shift->_on_list_item_right_click(@_);
-		}
-	);
-
 	# Handle boolean radio buttons state change
 	Wx::Event::EVT_RADIOBUTTON(
 		$self,
@@ -299,33 +277,6 @@ sub _bind_events {
 		$self->{false},
 		sub {
 			shift->_on_radiobutton(@_);
-		}
-	);
-
-	# Copy everything to clipboard
-	Wx::Event::EVT_MENU(
-		$self,
-		$self->{copy},
-		sub {
-			shift->_on_copy_to_clipboard( @_, COPY_ALL );
-		}
-	);
-
-	# Copy name to clipboard
-	Wx::Event::EVT_MENU(
-		$self,
-		$self->{copy_name},
-		sub {
-			shift->_on_copy_to_clipboard( @_, COPY_NAME );
-		}
-	);
-
-	# Copy value to clipboard
-	Wx::Event::EVT_MENU(
-		$self,
-		$self->{copy_value},
-		sub {
-			shift->_on_copy_to_clipboard( @_, COPY_VALUE );
 		}
 	);
 
@@ -368,50 +319,12 @@ sub _bind_events {
 	return;
 }
 
-# Private method to copy preferences to clipboard
-sub _on_copy_to_clipboard {
-	my ( $self, $event, $action ) = @_;
-
-	my $list = $self->{list};
-	my $name = $list->GetItemText( $list->GetFirstSelected );
-	my $pref = $self->{preferences}->{$name};
-
-	my $text;
-	if ( $action == COPY_ALL ) {
-		$text = $name . ";" . $self->_status_name($pref) . ";" . $pref->{type_name} . ";" . $pref->{value};
-	} elsif ( $action == COPY_NAME ) {
-		$text = $name;
-	} elsif ( $action == COPY_VALUE ) {
-		$text = $pref->{value};
-	}
-	if ( $text and Wx::wxTheClipboard->Open() ) {
-		Wx::wxTheClipboard->SetData( Wx::TextDataObject->new($text) );
-		Wx::wxTheClipboard->Close();
-	}
-
-	return;
-}
-
 # Private method to retrieve the correct value for the preference status column
 sub _status_name {
 	my ( $self, $pref ) = @_;
 	return $pref->{is_default}
 		? Wx::gettext('Default')
 		: $pref->{store_name};
-}
-
-# Private method to show a popup menu when a list item is right-clicked
-sub _on_list_item_right_click {
-	my $self  = shift;
-	my $event = shift;
-
-	$self->{list}->PopupMenu(
-		$self->{popup},
-		$event->GetPoint->x,
-		$event->GetPoint->y,
-	);
-
-	return;
 }
 
 # Private method to handle on character pressed event
@@ -621,30 +534,11 @@ sub _on_reset_button {
 	return;
 }
 
-# Private method to handle the pressing of the save button
+# Private method to handle the save action
 sub _on_save_button {
 	my $self = shift;
 
-	#Save only changed stuff to config
-	my $config = $self->main->config;
-	my $prefs  = $self->{preferences};
-	for my $name ( sort keys %$prefs ) {
-		my $pref     = $prefs->{$name};
-		my $type     = $pref->{type};
-		my $value    = $pref->{value};
-		my $original = $pref->{original};
-		my $changed =
-			( $type == Padre::Constant::ASCII or $type == Padre::Constant::PATH )
-			? $value ne $original
-			: $value != $original;
-
-		if ($changed) {
-			$config->set( $name, $value );
-		}
-	}
-
-	# And commit configuration...
-	$config->write;
+	#TODO Implement saving of *Changed* key bindings
 
 	# Bye bye dialog
 	$self->EndModal(Wx::wxID_OK);
