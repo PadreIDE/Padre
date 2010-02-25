@@ -59,7 +59,7 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 450, 550 ] );
+	$self->SetMinSize( [ 517, 550 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -98,6 +98,7 @@ sub _create_controls {
 	);
 	$self->{list}->InsertColumn( 0, Wx::gettext('Key binding name') );
 	$self->{list}->InsertColumn( 1, Wx::gettext('Shortcut') );
+	$self->{list}->InsertColumn( 1, Wx::gettext('Action') );
 
 	# Preference value label
 	my $value_label = Wx::StaticText->new( $self, -1, '&Value:' );
@@ -354,22 +355,27 @@ sub _update_list {
 	my $self   = shift;
 	my $filter = quotemeta $self->{filter}->GetValue;
 
+	# Clear list
 	my $list = $self->{list};
 	$list->DeleteAllItems;
 
 	my $index          = -1;
 	my $bindings    = $self->{bindings};
 	my $alternateColor = Wx::Colour->new( 0xED, 0xF5, 0xFF );
-	foreach my $name ( sort keys %$bindings ) {
+	my @sorted_binding_keys = sort { $bindings->{$a}->{label} cmp $bindings->{$b}->{label} } keys %$bindings;
+	foreach my $name ( @sorted_binding_keys ) {
 
-		# Ignore setting if it does not match the filter
-		next if $name !~ /$filter/i;
-
-		# Add the setting to the list control
+		# Fetch key binding and label
 		my $binding       = $bindings->{$name};
+		my $label = $binding->{label};
+		
+		# Ignore the key binding if it does not match the filter
+		next if $label !~ /$filter/i;
 
+		# Add the key binding to the list control
 		$list->InsertStringItem( ++$index, $binding->{label} );
 		$list->SetItem( $index, 1, $binding->{shortcut} );
+		$list->SetItem( $index, 2, $name );
 
 		# Alternating table colors
 		$list->SetItemBackgroundColour( $index, $alternateColor ) unless $index % 2;
@@ -419,7 +425,7 @@ sub _resize_columns {
 
 	# Resize all columns but the last to their biggest item width
 	my $list = $self->{list};
-	for ( 0 .. 1 ) {
+	for ( 0 .. $list->GetColumnCount - 1 ) {
 		$list->SetColumnWidth( $_, Wx::wxLIST_AUTOSIZE );
 	}
 
