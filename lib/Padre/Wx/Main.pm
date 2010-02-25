@@ -4785,6 +4785,27 @@ sub on_preferences {
 
 =pod
 
+=head3 C<on_key_bindings>
+
+    $main->on_key_bindings;
+
+Opens the key bindings dialog
+
+=cut
+
+sub on_key_bindings {
+	my $self = shift;
+
+	# Show the key bindings dialog
+	require Padre::Wx::Dialog::KeyBindings;
+	my $key_bindings = Padre::Wx::Dialog::KeyBindings->new( $self );
+	$key_bindings->show;
+
+	return;
+}
+
+=pod
+
 =head3 C<on_toggle_line_numbers>
 
     $main->on_toggle_line_numbers;

@@ -38,6 +38,12 @@ sub new {
 		'edit.preferences',
 	);
 
+	# Key bindings
+	$self->add_menu_action(
+		$self,
+		'tools.key_bindings',
+	);
+
 	$self->AppendSeparator;
 
 	# Create the module tools submenu

@@ -31,6 +31,16 @@ sub new {
 	# Add additional properties
 	$self->{main} = $main;
 
+	# Key Bindings action
+	Padre::Action->new(
+		name       => 'tools.key_bindings',
+		label      => Wx::gettext('Key Bindings'),
+		comment    => Wx::gettext('Show the key bindings dialog to configure Padre shortcuts'),
+		menu_event => sub {
+			$_[0]->on_key_bindings;
+		},
+	);
+
 	# Link to the Plugin Manager
 	Padre::Action->new(
 		name       => 'plugins.plugin_manager',
