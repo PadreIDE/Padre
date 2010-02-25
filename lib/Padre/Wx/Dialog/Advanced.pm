@@ -90,7 +90,7 @@ sub _create_controls {
 	my ( $self, $sizer ) = @_;
 
 	# Filter label
-	my $filter_label = Wx::StaticText->new( $self, -1, '&Filter:' );
+	my $filter_label = Wx::StaticText->new( $self, -1, Wx::gettext('&Filter:') );
 
 	# Filter text field
 	$self->{filter} = Wx::TextCtrl->new( $self, -1, '' );
