@@ -14,15 +14,6 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
-# Padre config type to description hash
-my %TYPES = (
-	Padre::Constant::BOOLEAN => Wx::gettext('Boolean'),
-	Padre::Constant::POSINT  => Wx::gettext('Positive Integer'),
-	Padre::Constant::INTEGER => Wx::gettext('Integer'),
-	Padre::Constant::ASCII   => Wx::gettext('String'),
-	Padre::Constant::PATH    => Wx::gettext('File/Directory'),
-);
-
 =pod
 
 =head1 NAME
