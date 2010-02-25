@@ -103,7 +103,7 @@ sub _create_controls {
 	# modifier radio button fields
 	$self->{ctrl}  = Wx::CheckBox->new( $self, -1, 'CTRL' );
 	$self->{alt}   = Wx::CheckBox->new( $self, -1, 'ALT' );
-	$self->{shift} = Wx::CheckBox->new( $self, -1, 'ALT' );
+	$self->{shift} = Wx::CheckBox->new( $self, -1, 'Shift' );
 
 	# + labels
 	my $plus_label_1 = Wx::StaticText->new( $self, -1, '+' );
@@ -127,34 +127,40 @@ sub _create_controls {
 		'13Page down' => Wx::WXK_PAGEDOWN,
 		'14Enter'     => Wx::WXK_RETURN,
 		'15Escape'    => Wx::WXK_ESCAPE,
-		'16Numpad 0'  => Wx::WXK_NUMPAD0,
-		'17Numpad 1'  => Wx::WXK_NUMPAD1,
-		'18Numpad 2'  => Wx::WXK_NUMPAD2,
-		'19Numpad 3'  => Wx::WXK_NUMPAD3,
-		'20Numpad 4'  => Wx::WXK_NUMPAD4,
-		'21Numpad 5'  => Wx::WXK_NUMPAD5,
-		'22Numpad 6'  => Wx::WXK_NUMPAD6,
-		'23Numpad 7'  => Wx::WXK_NUMPAD7,
-		'24Numpad 8'  => Wx::WXK_NUMPAD8,
-		'25Numpad 9'  => Wx::WXK_NUMPAD9,
-		'26Numpad *'  => Wx::WXK_MULTIPLY,
-		'27Numpad +'  => Wx::WXK_ADD,
-		'28Numpad -'  => Wx::WXK_SUBTRACT,
-		'29Numpad .'  => Wx::WXK_DECIMAL,
-		'30Numpad /'  => Wx::WXK_DIVIDE,
-		'31F1'        => Wx::WXK_F1,
-		'32F2'        => Wx::WXK_F2,
-		'33F3'        => Wx::WXK_F3,
-		'34F4'        => Wx::WXK_F4,
-		'35F5'        => Wx::WXK_F5,
-		'36F6'        => Wx::WXK_F6,
-		'37F7'        => Wx::WXK_F7,
-		'38F8'        => Wx::WXK_F8,
-		'39F9'        => Wx::WXK_F9,
-		'40F10'       => Wx::WXK_F10,
-		'41F11'       => Wx::WXK_F11,
-		'42F12'       => Wx::WXK_F12,
+		'21Numpad 0'  => Wx::WXK_NUMPAD0,
+		'22Numpad 1'  => Wx::WXK_NUMPAD1,
+		'23Numpad 2'  => Wx::WXK_NUMPAD2,
+		'24Numpad 3'  => Wx::WXK_NUMPAD3,
+		'25Numpad 4'  => Wx::WXK_NUMPAD4,
+		'26Numpad 5'  => Wx::WXK_NUMPAD5,
+		'27Numpad 6'  => Wx::WXK_NUMPAD6,
+		'28Numpad 7'  => Wx::WXK_NUMPAD7,
+		'29Numpad 8'  => Wx::WXK_NUMPAD8,
+		'30Numpad 9'  => Wx::WXK_NUMPAD9,
+		'31Numpad *'  => Wx::WXK_MULTIPLY,
+		'32Numpad +'  => Wx::WXK_ADD,
+		'33Numpad -'  => Wx::WXK_SUBTRACT,
+		'34Numpad .'  => Wx::WXK_DECIMAL,
+		'35Numpad /'  => Wx::WXK_DIVIDE,
+		'36F1'        => Wx::WXK_F1,
+		'37F2'        => Wx::WXK_F2,
+		'38F3'        => Wx::WXK_F3,
+		'39F4'        => Wx::WXK_F4,
+		'40F5'        => Wx::WXK_F5,
+		'41F6'        => Wx::WXK_F6,
+		'42F7'        => Wx::WXK_F7,
+		'43F8'        => Wx::WXK_F8,
+		'44F9'        => Wx::WXK_F9,
+		'45F10'       => Wx::WXK_F10,
+		'46F11'       => Wx::WXK_F11,
+		'47F12'       => Wx::WXK_F12,
 	);
+
+	# Add alphabets
+	for my $alpha ('A'..'Z') {
+		$keymap{'20' . $alpha} = ord($alpha);
+	}
+
 	my @keys = sort keys %keymap;
 	for my $key (@keys) {
 		$key =~ s/^\d{2}//;
