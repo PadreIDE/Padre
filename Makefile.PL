@@ -5,7 +5,7 @@
 use 5.008005;
 use strict;
 use lib 'privinc';
-use inc::Module::Install 0.91;
+use inc::Module::Install 0.94;
 use POSIX qw(locale_h);
 
 # Workaround for the fact that Module::Install loads the modules
