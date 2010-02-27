@@ -150,9 +150,9 @@ sub _create_controls {
 		'47F12'       => Wx::WXK_F12,
 	);
 
-	# Add alphabets
-	for my $alpha ( 'A' .. 'Z' ) {
-		$keymap{ '20' . $alpha } = ord($alpha);
+	# Add alphanumerics
+	for my $alphanum ( 'A' .. 'Z', '0' .. '9' ) {
+		$keymap{ '20' . $alphanum } = ord($alphanum);
 	}
 
 	# Add symbols
