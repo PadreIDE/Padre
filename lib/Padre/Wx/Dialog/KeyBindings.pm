@@ -358,7 +358,8 @@ sub _on_list_item_selected {
 	my $shortcut = lc( $binding->{shortcut} );
 
 	# Get the regular (i.e. non-modifier) key in the shortcut
-	my $regular = ( $shortcut =~ /\-(.+?)$/ ) ? $1 : $shortcut;
+	my @parts = split /-/, $shortcut;
+	my $regular = @parts ? $parts[-1] : '';
 
 	# Find the regular key index in the choice box
 	my $regular_index = 0;
