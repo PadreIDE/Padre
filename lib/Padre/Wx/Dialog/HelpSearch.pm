@@ -275,11 +275,14 @@ sub show {
 			$self,
 			sub {
 				$self->_index(undef);
-				$self->_update_list_box;
-				$self->_search_text->Enable(1);
-				$self->_topic_selector->Enable(1);
-				$self->_list->Enable(1);
-				$self->_search_text->SetFocus();
+				if( $self->_update_list_box ) {
+					$self->_search_text->Enable(1);
+					$self->_topic_selector->Enable(1);
+					$self->_list->Enable(1);
+					$self->_search_text->SetFocus();
+				} else {
+					$self->_search_text->ChangeValue('');
+				}
 				Wx::Event::EVT_IDLE( $self, undef );
 			}
 		);
@@ -295,12 +298,6 @@ sub show {
 sub _search {
 	my $self = shift;
 
-	# a default..
-	my @empty = ();
-	$self->_index( \@empty );
-
-	# TODO: If the _help_provide call crashes then this _search seem to be called in a recursive loop
-	# until the whole applications freezes.
 	# Generate a sorted file-list based on filename
 	if ( not $self->_help_provider ) {
 		my $doc = Padre::Current->document;
@@ -370,15 +367,17 @@ sub find_help_topic {
 sub _update_list_box {
 	my $self = shift;
 
-	if ( not $self->_index ) {
-		$self->_search;
-	}
+	# Clear the list
+	$self->_list->Clear();
+
+	# Try to fetch a help index and return nothing if otherwise
+	$self->_search unless $self->_index;
+	return unless $self->_index;
 
 	my $search_expr = $self->_search_text->GetValue();
 	$search_expr = quotemeta $search_expr;
 
 	#Populate the list box now
-	$self->_list->Clear();
 	my $pos = 0;
 	foreach my $target ( @{ $self->_index } ) {
 		if ( $target =~ /^$search_expr$/i ) {
@@ -395,7 +394,7 @@ sub _update_list_box {
 	$self->_status->SetLabel("Found $pos help topic(s)\n");
 	$self->_display_help_in_viewer;
 
-	return;
+	return 1;
 }
 
 #
