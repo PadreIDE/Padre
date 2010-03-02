@@ -322,7 +322,7 @@ sub _search {
 			$self->_help_provider( Padre::Document::Perl::Help->new );
 		}
 	}
-	return if not $self->_help_provider;
+	return unless $self->_help_provider;
 	eval { $self->_index( $self->_help_provider->help_list ); };
 	if ($@) {
 		$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'help_list', $@ ) );
@@ -339,7 +339,7 @@ sub find_help_topic {
 	my $self = shift;
 
 	my $doc = Padre::Current->document;
-	return '' if not $doc;
+	return '' unless $doc;
 
 	my $topic = $doc->find_help_topic;
 
