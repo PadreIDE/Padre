@@ -119,7 +119,7 @@ sub set_highlighter {
 	# configuration variable
 	my $limit;
 	if ( $module eq 'Padre::Document::Perl::PPILexer' ) {
-		$limit = 4000;
+		$limit = $self->current->config->perl_ppi_lexer_limit;
 	} elsif ( $module eq 'Padre::Document::Perl::Lexer' ) {
 		$limit = 4000;
 	} elsif ( $module eq 'Padre::Plugin::Kate' ) {

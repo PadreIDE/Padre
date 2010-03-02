@@ -824,6 +824,12 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 3,
 );
+setting(
+	name    => 'perl_ppi_lexer_limit',
+	type    => Padre::Constant::POSINT,
+	store   => Padre::Constant::HUMAN,
+	default => 4000,
+);
 
 # Behaviour Tuning
 # When running a script from the application some of the files might have
