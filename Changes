@@ -38,6 +38,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Bumped Wx::Perl::ProcessStream version requirement to 0.25 (AZAWAWI)
     - Added promised PPI lexer configurable max-length limit for azawawi (ADAMK)
     - Fixed ticket #867: Padre dies when hitting Ctrl-. (AZAWAWI)
+    - Fixed ticket #807: F2 is broken (AZAWAWI)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that

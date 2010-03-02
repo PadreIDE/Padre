@@ -60,8 +60,8 @@ sub new {
 
 # Display a message in the help html window in big bold letters
 sub _display_msg {
-	my ($self, $text) = @_;
-	$self->_help_viewer->SetPage( qq{<b><font size="+2">$text</font></b>} );
+	my ( $self, $text ) = @_;
+	$self->_help_viewer->SetPage(qq{<b><font size="+2">$text</font></b>});
 }
 
 #
@@ -275,7 +275,7 @@ sub show {
 			$self,
 			sub {
 				$self->_index(undef);
-				if( $self->_update_list_box ) {
+				if ( $self->_update_list_box ) {
 					$self->_search_text->Enable(1);
 					$self->_topic_selector->Enable(1);
 					$self->_list->Enable(1);
