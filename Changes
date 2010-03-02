@@ -36,6 +36,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Fixed ticket:863 "Continous warnings or prints kill Padre"
       (AZAWAWI, KTHAKORE)
     - Bumped Wx::Perl::ProcessStream version requirement to 0.25 (AZAWAWI)
+    - Added promised PPI lexer configurable max-length limit for azawawi (ADAMK)
 
 0.57 2010.02.18 - **WARNING Contains new threading code**
     - Spawn a master thread very early in the startup process. Use that
