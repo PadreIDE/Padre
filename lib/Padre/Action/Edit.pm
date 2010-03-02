@@ -235,7 +235,7 @@ sub new {
 		comment     => Wx::gettext('Jumpt to the code that triggered the next error'),
 		shortcut    => 'Ctrl-.',
 		menu_event  => sub {
-			$main->{syntax}->select_next_problem;
+			$main->{syntax}->select_next_problem if $main->{syntax};
 		},
 	);
 
