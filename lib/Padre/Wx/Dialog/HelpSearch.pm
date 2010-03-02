@@ -58,6 +58,11 @@ sub new {
 	return $self;
 }
 
+# Display a message in the help html window in big bold letters
+sub _display_msg {
+	my ($self, $text) = @_;
+	$self->_help_viewer->SetPage( qq{<b><font size="+2">$text</font></b>} );
+}
 
 #
 # Fetches the current selection's help HTML
@@ -73,7 +78,7 @@ sub _display_help_in_viewer {
 		if ( $topic && $self->_help_provider ) {
 			eval { ( $html, $location ) = $self->_help_provider->help_render($topic); };
 			if ($@) {
-				$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'help_render', $@ ) );
+				$self->_display_msg( sprintf( Wx::gettext('Error while calling %s %s'), 'help_render', $@ ) );
 				return;
 			}
 		}
@@ -265,15 +270,12 @@ sub show {
 		$self->_search_text->Enable(0);
 		$self->_topic_selector->Enable(0);
 		$self->_list->Enable(0);
-		$self->_help_viewer->SetPage(
-			'<b><font size="+2">' . Wx::gettext('Reading items. Please wait') . '</font></b>' );
+		$self->_display_msg( Wx::gettext('Reading items. Please wait') );
 		Wx::Event::EVT_IDLE(
 			$self,
 			sub {
-				return if $self->{canceled};
-				if ( $self->_search ) {
-					$self->_update_list_box;
-				}
+				$self->_index(undef);
+				$self->_update_list_box;
 				$self->_search_text->Enable(1);
 				$self->_topic_selector->Enable(1);
 				$self->_list->Enable(1);
@@ -305,14 +307,12 @@ sub _search {
 		if ($doc) {
 			eval { $self->_help_provider( $doc->get_help_provider ); };
 			if ($@) {
-				$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'get_help_provider', $@ ) );
+				$self->_display_msg( sprintf( Wx::gettext('Error while calling %s %s'), 'get_help_provider', $@ ) );
 				return;
 			}
 			if ( not $self->_help_provider ) {
-				$self->{canceled} = 1;
-				$self->_main->error( Wx::gettext("Could not find a help provider for ")
+				$self->_display_msg( Wx::gettext("Could not find a help provider for ")
 						. Padre::MimeTypes->get_mime_type_name( $doc->mimetype ) );
-				exit if ++$self->{errorcount} > 5;
 				return;
 			}
 		} else {
@@ -325,7 +325,7 @@ sub _search {
 	return unless $self->_help_provider;
 	eval { $self->_index( $self->_help_provider->help_list ); };
 	if ($@) {
-		$self->_main->error( sprintf( Wx::gettext('Error while calling %s %s'), 'help_list', $@ ) );
+		$self->_display_msg( sprintf( Wx::gettext('Error while calling %s %s'), 'help_list', $@ ) );
 		return;
 	}
 
