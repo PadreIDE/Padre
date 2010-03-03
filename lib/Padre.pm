@@ -1121,6 +1121,8 @@ Breno G. de Oliveira (GARU)
 
 Brian Cassidy (BRICAS)
 
+Burak Gürsoy (BURAK) E<lt>burak@cpan.orgE<gt>
+
 Cezary Morga (THEREK) E<lt>cm@therek.netE<gt>
 
 Chris Dolan (CHRISDOLAN)
