@@ -395,14 +395,14 @@ BEGIN {
 			supported => 1,
 		},
 
-		'tr-tr' => {
+		'tr' => {
 			gettext   => _T('Turkish'),
 			utf8text  => 'Türkçe',
 			iso639    => 'tr',
 			iso3166   => 'TR',
 			wxid      => Wx::wxLANGUAGE_TURKISH,
-			fallback  => ['en-us'],
-			supported => 0,
+			fallback  => [],
+			supported => 1,
 		},
 
 		'zh' => {
