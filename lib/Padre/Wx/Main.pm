@@ -1443,12 +1443,14 @@ Force a refresh of the function list on the right.
 # this even though that should not be necessary can that be
 # eliminated ?
 sub refresh_functions {
-	my $self = shift;
-	return unless $self->has_functions;
-	return if $self->locked('REFRESH');
-	return unless $self->menu->view->{functions}->IsChecked;
-	$self->functions->refresh(@_);
-	return;
+    my $self = shift;
+    return unless $self->has_functions;
+    return if $self->locked('REFRESH');
+    return unless $self->menu->view->{functions}->IsChecked;
+    my @windows = @_;
+    push @windows, $self->current unless @windows;
+    $self->functions->refresh(@windows);
+    return;
 }
 
 # TO DO now on every ui change (move of the mouse) we refresh
