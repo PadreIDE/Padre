@@ -367,8 +367,9 @@ sub find_help_topic {
 sub _update_list_box {
 	my $self = shift;
 
-	# Clear the list
+	# Clear the list and status
 	$self->_list->Clear();
+	$self->_status->SetLabel('');
 
 	# Try to fetch a help index and return nothing if otherwise
 	$self->_search unless $self->_index;
