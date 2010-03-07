@@ -269,8 +269,10 @@ sub _refresh_combo {
 
 	# clear list & fill it again
 	my $combo = $self->_combo;
+	my $preselection = $combo->GetValue;
 	$combo->Clear;
 	$combo->Append($_) foreach @names;
+	$combo->SetStringSelection( $preselection );
 }
 
 1;
