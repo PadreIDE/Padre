@@ -43,7 +43,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
-		Wx::gettext('Key Bindings'),
+		Wx::gettext('Key Bindings') . ' (Work in progress... Not finished)' ,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
