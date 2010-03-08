@@ -244,6 +244,20 @@ sub find_clicked {
 		$opts{l} = $opts{v} = 1;
 	}
 
+	# karl: borrowed this from ack hoping that will fix the ignore-case bug
+	my $file_matching = $opts{f} || $opts{lines};
+	if ( !$file_matching ) {
+		$opts{regex} = App::Ack::build_regex( $opts{regex} , \%opts );
+	}
+
+	# check that all regexes do compile fine
+	eval { App::Ack::check_regex( $opts{regex} ) };
+	if ($@) {
+		$main->error("Find in Files: error in regex " . $opts{regex});
+		return;
+	}
+
+
 	my $what = App::Ack::get_starting_points( [ $search->{dir} ], \%opts );
 	$iter = App::Ack::get_iterator( $what, \%opts );
 	App::Ack::filetype_setup();
