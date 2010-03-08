@@ -4,7 +4,7 @@ package Padre::SlaveDriver;
 
 =head1 NAME
 
-Padre::SlaveDriver - Padre thread spawner
+Padre::SlaveDriver - Padre thread spawning
 
 =head1 SYNOPSIS
 
@@ -20,7 +20,7 @@ if run in the main (GUI) thread.
 
 This class is a helper that will spawn new worker on demand. It
 keeps a single model thread around that was (or should have been)
-created very early in the startup process of Padre. Therefore,
+created very early in the start-up process of Padre. Therefore,
 the threads' memory consumption will be significantly lower than
 if one created new worker (slave) threads from the main Padre thread.
 
@@ -103,9 +103,9 @@ sub _init_events {
 
 =head2 Object methods
 
-=head3 spawn
+=head3 C<spawn>
 
-Takes the Padre::TaskManager object as argument.
+Takes the L<Padre::TaskManager> object as argument.
 Returns a new worker thread object.
 
 =cut
@@ -120,7 +120,7 @@ sub spawn {
 
 =pod
 
-=head3 task_queue
+=head3 C<task_queue>
 
 Returns the task queue (C<Thread::Queue> object) for use by the
 L<Padre::TaskManager> for passing processing tasks to the worker
@@ -137,9 +137,9 @@ sub task_queue {
 
 =pod
 
-=head3 cleanup
+=head3 C<cleanup>
 
-Reaps the master thread. Will be called by the TaskManager on shutdown and
+Reaps the master thread. Will be called by the C<TaskManager> on shutdown and
 on global destruction.
 
 =cut

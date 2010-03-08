@@ -796,7 +796,7 @@ This should make operations with a high GUI intensity both simpler and
 faster.
 
 The name of the lowercase MUST be the name of a Padre::Wx::Main method,
-which will be fired (with no params) when the method lock expires.
+which will be fired (with no parameters) when the method lock expires.
 
 =cut
 
@@ -1318,7 +1318,7 @@ sub refresh_menu {
 
     $main->refresh_menu_plugins;
 
-Force a refresh of the plugin menus.
+Force a refresh of the plug-in menus.
 
 =cut
 
@@ -1485,7 +1485,7 @@ sub refresh_directory {
 
 =head2 C<refresh_aui>
 
-This is a refresh method wrapper around the AUI C<Update> method so
+This is a refresh method wrapper around the C<AUI> C<Update> method so
 that it can be lock-managed by the existing locking system.
 
 =cut
@@ -1755,7 +1755,7 @@ sub _show_functions {
 
     $main->show_todo( $visible );
 
-Show the todo panel on the right if C<$visible> is true. Hide it
+Show the I<to do> panel on the right if C<$visible> is true. Hide it
 otherwise. If C<$visible> is not provided, the method defaults to show
 the panel.
 
@@ -2991,7 +2991,7 @@ sub on_comment_block {
 
     $main->on_autocompletion;
 
-Try to auto-complete current word being typed, depending on
+Try to auto complete current word being typed, depending on
 document type.
 
 =cut
@@ -3036,7 +3036,7 @@ sub on_autocompletion {
 
     $main->on_goto;
 
-Prompt user for a line or character position, and jump to this line 
+Prompt user for a line or character position, and jump to this line
 or character position in current document.
 
 =cut

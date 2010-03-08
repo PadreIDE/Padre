@@ -13,7 +13,7 @@ our $VERSION = '0.58';
 # the previously instantiated handlers.
 our %RegisteredModules;
 
-=pod
+=encoding UTF-8
 
 =head1 NAME
 
@@ -27,13 +27,13 @@ call to the currently used transport stream.
 
 =head1 METHODS
 
-=head2 RegisterProtocol
+=head2 C<RegisterProtocol>
 
   Padre::File->RegisterProtocol($RegExp, $Module);
 
 Class method, may not be called on an object.
 
-A plug-in could call C<Padre::File->RegisterProtocol> to register a new protocol to
+A plug-in could call C<< Padre::File->RegisterProtocol >> to register a new protocol to
 C<Padre::File> and enable Padre to use URLs handled by this module.
 
 Example:
@@ -71,7 +71,7 @@ sub RegisterProtocol {
 }
 
 
-=head2 DropProtocol
+=head2 C<DropProtocol>
 
 Drops a previously registered protocol handler. First argument must
 be the same regular expression (matching a protocol from an URI)
@@ -246,10 +246,10 @@ Leave out the protocol and server name for remote protocols, for example
   my $file = Padre::File->new('http://perlide.org/current/foo.html');
   $file->browse_mtime('/archive/bar.html');
 
-This returns the mtime of http://perlide.org/archive/bar.html
+This returns the modification time of C<http://perlide.org/archive/bar.html>
 
-The default uses one Padre::File clone per request which is a reasonable
-fallback but very inefficient! Please add browse_ - methods to the
+The default uses one C<Padre::File> clone per request which is a reasonable
+fallback but very inefficient! Please add C<browse_…> methods to the
 subclass module whenever possible.
 
 =cut
@@ -268,29 +268,33 @@ sub browse_mtime {
 
   $file->browse_url_join($server, $path, $basename);
 
-Merges a servername, pathname and a filename to a complete url.
+Merges a server name, path name and a file name to a complete URL.
 
-A "path" in this function is meant to be the local path on the server,
-not the Padre path (which includes the servername).
+A C<path> in this function is meant to be the local path on the server,
+not the Padre path (which includes the server name).
 
 You may think of
+
   /tmp + padre.$$                       => /tmp/padre.$$
   C:\\temp + padre.$$                   => C:\\temp\\padre.$$
 
 ...but also remember
+
   http://perlide.org + about.html       => http://perlide.org/about.html
 
 Datapoint created a file syntax...
+
   common + program/text                 => program/text:common
-This could happen once someone adds a Padre::File::DBCFS for using
-a DB/C FS fileserver. "program" is the filename, "text" the extension
+
+This could happen once someone adds a C<Padre::File::DBCFS> for using
+a C<DB/C FS> file server. C<program> is the file name, C<text> the extension
 and "common" is what we call a directory.
 
-The most common seems to be a / as the directory seperator char, so
+The most common seems to be a C</> as the directory separator character, so
 we'll use this as the default.
 
-This method should care about merging double / to one if this should
-be done on this filesystem (even if the default doesn't care).
+This method should care about merging double C</> to one if this should
+be done on this file system (even if the default doesn't care).
 
 =cut
 
@@ -369,7 +373,7 @@ brand new Padre::File object.
 NOTICE: If you request a clone which is located on another server, you'll
         get a Padre::File object using the original connection to the
         original server and the original authentication data but the new
-        path and filename!
+        path and file name!
 
 Returns a new C<Padre::File> or dies on error.
 
@@ -394,11 +398,17 @@ The C<clone> constructor lets you create a new C<Padre::File> object reusing
 an existing connection.
 
 Takes one or two arguments:
- - either the complete path + filename of an URL
- - or the path and filename as seperate arguments
+
+=over
+
+=item either the complete path + file name of an URL
+
+=item or the path and file name as separate arguments
+
+=back
 
 If the protocol doesn't know about (server) connections/sessions, returns a
-brand new Padre::File object.
+brand new C<Padre::File> object.
 
 Returns a new C<Padre::File> or dies on error.
 
@@ -552,7 +562,7 @@ sub mime {
   $file->mode;
 
 Returns the file mode (type and rights). See also: L<perlfunc/stat>.
-To get the Unixy file I<permissions> as the usual octal I<number>
+To get the POSIX file I<permissions> as the usual octal I<number>
 (as opposed to a I<string>) use:
 
   use Fcntl ':mode';
@@ -619,7 +629,7 @@ C<error> method.
 Returns the server name for this module - if the protocol knows about a
 server, local files don't.
 
-WARNING: The Padre "path" includes the servername in a protocol dependent
+WARNING: The Padre C<path> includes the server name in a protocol dependent
          syntax!
 
 =cut
@@ -745,7 +755,7 @@ sub write { }
 
   $file->_info($message);
 
-Shows $message to the user as an information. The output is guranteed to
+Shows $message to the user as an information. The output is guaranteed to
 be non-blocking and messages shown this way must be safe to be ignored by
 the user.
 

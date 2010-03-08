@@ -225,23 +225,23 @@ Padre::DB::Migrate - Extremely light weight SQLite-specific schema migration
 
   # migrate-1.pl - A trivial schema patch
   #!/usr/bin/perl
-  
+
   use strict;
   use DBI ();
-  
+
   # Locate the SQLite database
   my $file = <STDIN>;
   chomp($file);
   unless ( -f $file and -w $file ) {
       die "SQLite file $file does not exist";
   }
-  
+
   # Connect to the SQLite database
   my $dbh = DBI->connect("dbi:SQLite(RaiseError=>1):$file");
   unless ( $dbh ) {
     die "Failed to connect to $file";
   }
-  
+
   $dbh->do( <<'END_SQL' );
   create table foo (
       id integer not null primary key,
@@ -273,7 +273,7 @@ provided, which should point to a directory containing standalone
 migration scripts.
 
 These patch scripts are named in the form F<migrate-$version.pl>, where
-C<$version> is the schema version to migrate to. A typical timeline
+C<$version> is the schema version to migrate to. A typical time line
 directory will look something like the following.
 
   migrate-01.pl
@@ -294,21 +294,21 @@ migration script that has the version C<user_version + 1>.
 It will continue stepping forwards until it runs out of patches to
 execute.
 
-If L<Padre::DB::Migrate> is also invoked with a C<user_version> param 
+If L<Padre::DB::Migrate> is also invoked with a C<user_version> parameter
 (to ensure the schema matches the code correctly) the plan will be
 checked in advance to ensure that the migration will end at the value
-specified by the C<user_version> param.
+specified by the C<user_version> parameter.
 
 Because the migration plan can be calculated from any arbitrary starting
 version, it is possible for any user of an older application version to
-install the most current version of an application and be ugraded safely.
+install the most current version of an application and be upgraded safely.
 
-The recommended location to store the migration timeline is a shared files
+The recommended location to store the migration time line is a shared files
 directory, locatable using one of the functions from L<File::ShareDir>.
 
 =head1 SUPPORT
 
-Bugs should be reported via the CPAN bug tracker at
+Bugs should be reported via the C<CPAN> bug tracker at
 
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=ORLite-Migrate>
 

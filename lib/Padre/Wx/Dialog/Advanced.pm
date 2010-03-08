@@ -38,8 +38,8 @@ Padre::Wx::Dialog::Advanced - a dialog to show and configure advanced preference
 
 =head1 DESCRIPTION
 
-The idea is to implement a Mozilla-style about:config for Padre. This will make
-playing with experimental, advanced, and sekrit settings a breeze.
+The idea is to implement a Mozilla-style C<about:config> for Padre. This will make
+playing with experimental, advanced, and secret settings a breeze.
 
 =head1 PUBLIC API
 

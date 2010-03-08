@@ -33,8 +33,8 @@ our $VERSION = '0.58';
 
 Note: this only works under WIN32
 
-Returns Padre's executable path and parent folder as (padre_exe, padre_exe_dir). 
-Returns undef if not found.
+Returns Padre's executable path and parent folder as C<(padre_exe, padre_exe_dir)>.
+Returns C<undef> if not found.
 
 =cut
 

@@ -253,7 +253,7 @@ sub get_function_regex {
 
 =head2 get_command
 
-Returns the full command (interpreter, filename (maybe temporary) and arguments
+Returns the full command (interpreter, file name (maybe temporary) and arguments
 for both of them) for running the current document.
 
 Accepts one optional argument: a debug flag.
@@ -406,9 +406,9 @@ sub _check_syntax_internals {
 
 =head2 beginner_check
 
-Run the beginer error checks on the current document.
+Run the beginner error checks on the current document.
 
-Shows a popup message for the first error.
+Shows a pop-up message for the first error.
 
 Always returns 1 (true).
 
@@ -1023,18 +1023,22 @@ sub perltags_parser {
 
 =pod
 
-=head2 autocomplete
+=head2 C<autocomplete>
 
 This method is called on two events:
- - Manually using the autocomplete-action (via menu, toolbar, hotkey)
- - on every char typed by the user if the "autocomplete-always" config option
-   is active
 
-Arguments:
- - The event object (optional)
+=over
 
-Returns the prefix length and an array of suggestions. prefix_length is the
-number of chars left to the cursor position which need to be replaced if
+=item Manually using the C<autocomplete-action> (via menu, toolbar, hot key)
+
+=item on every char typed by the user if the C<autocomplete-always> configuration option is active
+
+=back
+
+Arguments: The event object (optional)
+
+Returns the prefix length and an array of suggestions. C<prefix_length> is the
+number of characters left to the cursor position which need to be replaced if
 a suggestion is accepted.
 
 WARNING: This method runs very often (on each keypress), keep it as efficient
@@ -1319,7 +1323,7 @@ Arguments: Current editor object, current event object
 Returns nothing useful.
 
 Notice: The char being typed has not been inserted into the editor at the run
-        time of this method. It could be read using $event->GetUnicodeKey
+        time of this method. It could be read using C<< $event->GetUnicodeKey >>
 
 WARNING: This method runs very often (on each keypress), keep it as efficient
          and fast as possible!
@@ -1666,11 +1670,11 @@ sub menu {
 
 =pod
 
-=head2 project_tagsfile
+=head2 C<project_tagsfile>
 
 No arguments.
 
-Returns the full path and filename of the (perl))tagsfile for the current
+Returns the full path and file name of the Perl tags file for the current
 document.
 
 =cut
@@ -1687,10 +1691,10 @@ sub project_tagsfile {
 
 =pod
 
-=head2 project_create_tagsfile
+=head2 C<project_create_tagsfile>
 
-Creates a tagsfile for the project of the current document. Includes all Perl
-source files within the project excluding blib.
+Creates a tags file for the project of the current document. Includes all Perl
+source files within the project excluding F<blib>.
 
 =cut
 

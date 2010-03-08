@@ -1246,14 +1246,14 @@ sub guess_filename {
   my $subpath = $document->guess_subpath;
 
 When called on a new unsaved file, this method attempts to guess what the
-subpath of the file should be inside of the current project, based purely
+sub-path of the file should be inside of the current project, based purely
 on the content of the file.
 
 In the base implementation, this returns a null list to indicate that the
 method cannot make a reasonable guess at the name of the file.
 
 Your MIME type specific document subclass should implement any file name
-detection as it sees fit, returning the project-rooted subpath as a list
+detection as it sees fit, returning the project-rooted sub-path as a list
 of directory names.
 
 These directory names do not need to exist, they only represent intent.

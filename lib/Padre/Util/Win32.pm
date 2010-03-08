@@ -44,7 +44,7 @@ my %Types = ();
   Padre::Util::Win32::GetLongPathName($path);
 
 Converts the specified path C<$path> to its long form.
-Returns undef for failure, or the long form of the specified path
+Returns C<undef> for failure, or the long form of the specified path
 
 =cut
 
@@ -76,7 +76,7 @@ CODE
   Padre::Util::Win32::Recycle($file_to_recycle);
 
 Move C<$file_to_recycle> to recycle bin
-Returns undef (failed), zero (aborted) or one (success)
+Returns C<undef> (failed), zero (aborted) or one (success)
 
 =cut
 

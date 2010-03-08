@@ -89,7 +89,7 @@ This is a simple slurp implementation, provided as a convenience for
 internal Padre use when loading trivial unimportant files for which
 we don't need anything more robust.
 
-All file reading is done with binmode enabled, and data is returned by
+All file reading is done with C<binmode> enabled, and data is returned by
 reference to avoid needless copying.
 
 Returns the content of the file as a SCALAR reference if the file exists
@@ -291,9 +291,9 @@ sub svn_directory_revision {
 
 =head2 C<share>
 
-If called without a paramter returns the share directory of Padre. 
-If called with a parameter (e.g. 'Perl6') returns the share directory 
-of Padre::Plugin::Perl6
+If called without a parameter returns the share directory of Padre.
+If called with a parameter (e.g. C<Perl6>) returns the share directory
+of L<Padre::Plugin::Perl6>
 
 =cut
 

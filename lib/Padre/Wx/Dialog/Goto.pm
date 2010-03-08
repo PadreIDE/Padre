@@ -16,7 +16,7 @@ our @ISA     = qw{
 
 =head1 NAME
 
-Padre::Wx::Dialog::Goto - a dialog to jump to a user-specifed line/position
+Padre::Wx::Dialog::Goto - a dialog to jump to a user-specified line/position
 
 =head1 PUBLIC API
 
@@ -299,7 +299,7 @@ sub _update_from_editor {
 
   $goto->show($main);
 
-Show the dialog that the user can use to goto to a line number or character 
+Show the dialog that the user can use to go to to a line number or character
 position. Returns C<undef>.
 
 =cut

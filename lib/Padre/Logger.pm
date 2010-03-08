@@ -12,22 +12,22 @@ Padre::Logger - Compile-time logging library for Padre
   BEGIN {
       $Padre::Logger::DEBUG = 1;
   }
-  
+
   use Padre;
-  
+
   # In each Padre::Foo class
   use Padre::Logger;
-  
+
   sub method {
       TRACE('->method') if DEBUG;
-      
+
       # Your code as normal
   }
 
 =head1 DESCRIPTION
 
 This is a logging utility class for Padre. It provides a basic set of
-simple functionality that allows for loggin/debugging/tracing statements to be
+simple functionality that allows for logging/debugging/tracing statements to be
 used in Padre that will compile out of the application when not in use.
 
 =cut

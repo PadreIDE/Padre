@@ -174,7 +174,8 @@ Operating Systems.
 
 =head2 C<WXWIN32>, C<WXMAC>, C<WXGTK>
 
-Padre targets the three largest Wx backends and maps to the OS constants.
+Padre targets the three largest Wx back-ends and maps to the OS constants.
+
 	WXWIN32 => WIN32,
 	WXMAC   => MAC,
 	WXGTK   => UNIX,
@@ -189,7 +190,7 @@ Settings storage back-ends.
 
 =head2 C<PADRE_REVISION>
 
-The SVN Revision ( when running dev ).
+The SVN Revision (when running a development build).
 
 =head2 C<PADRE_BLACK>, C<PADRE_BLUE>, C<PADRE_RED>, C<PADRE_GREEN>, C<PADRE_MAGENTA>, C<PADRE_ORANGE>,
 C<PADRE_DIM_GRAY>, C<PADRE_CRIMSON>, C<PADRE_BROWN>
