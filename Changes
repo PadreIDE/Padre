@@ -1,7 +1,10 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.58 To Be Released
+0.59 To Be Released
+
+
+0.58 2010.03.08
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
     - In advanced preferences, display the storage backend name when it is
       default and 'User' is now called 'Overriden' (AZAWAWI)
