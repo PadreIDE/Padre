@@ -37,7 +37,7 @@ use strict;
 use warnings;
 use Padre::Constant ();
 
-our $VERSION = '0.57';
+our $VERSION = '0.58';
 
 sub import {
 	my $pkg = ( caller() )[0];

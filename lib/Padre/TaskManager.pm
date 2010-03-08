@@ -65,7 +65,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.57';
+our $VERSION = '0.58';
 
 use Params::Util qw{_INSTANCE};
 

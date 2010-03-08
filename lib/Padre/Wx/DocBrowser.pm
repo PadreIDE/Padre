@@ -21,7 +21,7 @@ use Padre::DocBrowser       ();
 use Padre::Util qw( _T );
 use Wx::Perl::Dialog::Simple ();
 
-our $VERSION = '0.57';
+our $VERSION = '0.58';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor {
