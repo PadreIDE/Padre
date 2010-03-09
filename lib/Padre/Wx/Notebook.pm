@@ -58,7 +58,7 @@ sub new {
 	Wx::Event::EVT_AUINOTEBOOK_PAGE_CHANGED(
 		$self, $self,
 		sub {
-			$_[0]->on_auinotebook_page_changed( $_[1] );
+			shift->on_auinotebook_page_changed(@_);
 		},
 	);
 
