@@ -2,7 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.59 To Be Released
-
+    - Don't crash open file list dialog on unsaved files or without files
+      (SEWI)
 
 0.58 2010.03.08
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)

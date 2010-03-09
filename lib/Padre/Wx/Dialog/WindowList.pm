@@ -53,8 +53,14 @@ sub new {
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
+	if (!scalar(Padre->ide->wx->main->pages)) {
+print "EMPTY\n";
+		$self->{_empty} = 1;
+	} else {
+
 	# create dialog
 	$self->_create;
+	}
 
 	return $self;
 }
@@ -63,6 +69,11 @@ sub new {
 
 sub show {
 	my $self = shift;
+
+	if ($self->{_empty}) {
+		$self->Destroy;
+		return 0;
+	}
 
 	$self->{visible} = 1;
 
@@ -309,13 +320,21 @@ sub _refresh_list {
 
 		my $document = $page->{Document};
 
-		my $filename    = $document->file->filename;
+		my $filename;
+
+		my $documentfile = $document->file;
+		if (defined($documentfile)) {
+
+		$filename    = $documentfile->filename;
 		my $project_dir = $document->project_dir;
 		$filename =~ s/^\Q$project_dir\E// if defined($project_dir);
 
 		# Apply filter (if any)
 		if ( defined( $self->{filter} ) ) {
 			next unless &{ $self->{filter} }( $page, $project_dir, $filename, $document );
+		}
+		} else {
+			$filename = $document->get_title;
 		}
 
 		# inserting the file in the list
