@@ -77,11 +77,16 @@ SCOPE: {
 			task_queue => Thread::Queue->new,
 		} => $class;
 		$SlaveDriver->_init_events;
+
+		# There is no database/locking protection
+		# here, so this must happen before we make
+		# a long-term connection to the database.
 		$SlaveDriver->{master} = threads->create(
 			\&_slave_driver_loop,
 			$SlaveDriver->{cmd_queue},
 			$SlaveDriver->{tid_queue}
 		);
+
 		return $SlaveDriver;
 	}
 
@@ -212,9 +217,26 @@ sub _slave_driver_loop {
 	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
 		my $task_queue    = Padre::SlaveDriver->new->task_queue;
+
+		# Apply the database anti-lock, so there are no active DBI connection
+		# handles at the time we spawn the thread.
+		# If Padre::DB is not loaded at all, the following returns false and
+		# we never make the calls to the non-existant class.
+		my $locked = Padre::DB->can('connected') && Padre::DB->connected;
+		if ( $locked ) {
+			Padre::DB->commit;
+		}
+
+		# Do the actual thread spawn
 		my $worker_thread = threads->create( \&_worker_loop, $task_queue );
-		my $tid           = $worker_thread->tid;
-		$outqueue->enqueue($tid);
+
+		# Release the anti-lock on the database
+		if ( $locked ) {
+			Padre::DB->begin;
+		}
+
+		# Continue onwards with thready stuff
+		$outqueue->enqueue($worker_thread->tid);
 	}
 	return 1;
 }
