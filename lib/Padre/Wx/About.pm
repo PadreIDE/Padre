@@ -232,14 +232,15 @@ sub _content_translators {
             <br>
             <b>French</b><br>
             Jérôme Quelin<br>
-            <br>
-            <b>German</b><br>
-            Heiko Jansen<br>
-            Sebastian Willing
           </p>
         </td>
         <td valign="top">
           <p>
+            <b>German</b><br>
+            Heiko Jansen<br>
+            Sebastian Willing<br>
+            Zeno Gantner<br>
+            <br>
             <b>Hebrew</b><br>
             Omer Zak - עומר זק<br>
             Shlomi Fish - שלומי פיש<br>
@@ -253,13 +254,13 @@ sub _content_translators {
             <br>
             <b>Japanese</b><br>
             Kenichi Ishigaki - 石垣憲一<br>
-            <br>
-            <b>Korean</b><br>
-            Keedi Kim - 김도형
           </p>
         </td>
         <td valign="top">
           <p>
+            <b>Korean</b><br>
+            Keedi Kim - 김도형<br>
+            <br>
             <b>Norwegian</b><br>
             Kjetil Skotheim<br>
             <br>
