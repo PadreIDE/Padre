@@ -216,7 +216,7 @@ sub _slave_driver_loop {
 
 	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		my $task_queue    = Padre::SlaveDriver->new->task_queue;
+		my $task_queue = Padre::SlaveDriver->new->task_queue;
 
 		# Apply the database anti-lock, so there are no active DBI connection
 		# handles at the time we spawn the thread.
