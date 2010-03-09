@@ -95,7 +95,9 @@ use Class::XSAccessor {
 # This event is triggered by a worker thread DURING ->run to incrementally
 # communicate to the main thread over the life of a service.
 our $SERVICE_POLL_EVENT : shared;
-BEGIN { $SERVICE_POLL_EVENT = Wx::NewEventType; }
+BEGIN {
+	$SERVICE_POLL_EVENT = Wx::NewEventType;
+}
 
 # remember whether the event handlers were initialized...
 our $EVENTS_INITIALIZED = 0;
@@ -108,8 +110,11 @@ our $SINGLETON;
 
 sub new {
 	my $class = shift;
+	$DB::single = 1;
 
 	return $SINGLETON if defined $SINGLETON;
+
+	my $driver = Padre::SlaveDriver->new;
 
 	my $self = $SINGLETON = bless {
 		min_no_workers => 2,    # there were config settings for
@@ -119,8 +124,8 @@ sub new {
 		@_,
 		workers => [],
 
-		# grab a copy of the task_queue that's now handled by the slave driver
-		task_queue    => Padre::SlaveDriver->new()->task_queue,
+		# Grab a copy of the task_queue that's now handled by the slave driver
+		task_queue    => $driver->task_queue,
 		running_tasks => {},
 	}, $class;
 
@@ -143,9 +148,14 @@ sub new {
 		my $timerid = Wx::NewId();
 		$REAP_TIMER = Wx::Timer->new( $main, $timerid );
 		Wx::Event::EVT_TIMER(
-			$main, $timerid, sub { $SINGLETON->reap(); },
+			$main, $timerid, sub {
+				$SINGLETON->reap;
+			},
 		);
-		$REAP_TIMER->Start( $self->reap_interval, Wx::wxTIMER_CONTINUOUS );
+		$REAP_TIMER->Start(
+			$self->reap_interval,
+			Wx::wxTIMER_CONTINUOUS,
+		);
 	}
 
 	#	if ( not defined $SERVICE_TIMER and $self->use_threads ) {
@@ -422,7 +432,7 @@ sub cleanup {
 	}
 
 	# cleanup master thread, too
-	Padre::SlaveDriver->new->cleanup();
+	Padre::SlaveDriver->new->cleanup;
 
 	# didn't work the nice way?
 	while ( threads->list(threads::running) >= 1 ) {
@@ -502,8 +512,7 @@ Returns B<a list> of the worker threads.
 =cut
 
 sub workers {
-	my $self = shift;
-	return @{ $self->{workers} };
+	$_[0]->{workers};
 }
 
 =pod
@@ -521,7 +530,8 @@ because C<finish> most likely updates the GUI.)
 =cut
 
 sub on_task_done_event {
-	my ( $main, $event ) = @_; @_ = (); # hack to avoid "Scalars leaked"
+	my ( $main, $event ) = @_;
+	@_ = (); # hack to avoid "Scalars leaked"
 	my $frozen = $event->GetData;
 
 	# FIXME - can we know the _real_ class so the an extender
