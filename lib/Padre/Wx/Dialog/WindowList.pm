@@ -54,7 +54,6 @@ sub new {
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	if (!scalar(Padre->ide->wx->main->pages)) {
-print "EMPTY\n";
 		$self->{_empty} = 1;
 	} else {
 
