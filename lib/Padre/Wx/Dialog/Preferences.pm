@@ -14,8 +14,8 @@ our $VERSION = '0.58';
 our @ISA     = 'Padre::Wx::Dialog';
 
 our %PANELS = (
-	'Padre::Wx::Dialog::Preferences::File'             => 'Local/Remote File Access',
-	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => 'Perl Auto Complete'
+	'Padre::Wx::Dialog::Preferences::File'             => Wx::gettext('Local/Remote File Access'),
+	'Padre::Wx::Dialog::Preferences::PerlAutoComplete' => Wx::gettext('Perl Auto Complete')
 );
 
 =pod
@@ -947,6 +947,7 @@ sub run {
 		Wx::gettext('new'),
 		Wx::gettext('nothing'),
 		Wx::gettext('last'),
+		Wx::gettext('session'),
 		Wx::gettext('no'),
 		Wx::gettext('same_level'),
 		Wx::gettext('deep'),
