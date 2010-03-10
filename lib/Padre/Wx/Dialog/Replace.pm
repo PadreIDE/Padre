@@ -571,12 +571,12 @@ sub replace_all {
 	# Apply the search to the current editor
 	my $changes = $main->replace_all($search);
 	if ($changes) {
-		$main->message(
+		$main->info(
 			sprintf( Wx::gettext('Replaced %d matches'), $changes ),
 			Wx::gettext('Search and Replace')
 		);
 	} else {
-		$main->message(
+		$main->info(
 			Wx::gettext('No matches found'),
 			Wx::gettext('Search and Replace'),
 		);

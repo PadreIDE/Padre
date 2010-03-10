@@ -190,7 +190,7 @@ sub count_all {
 	if ( _INSTANCE( $_[0], 'Padre::Wx::Editor' ) ) {
 		return $self->editor_count_all(@_);
 	}
-	die("Missing or invalid ccontent object to search in");
+	die("Missing or invalid content object to search in");
 }
 
 

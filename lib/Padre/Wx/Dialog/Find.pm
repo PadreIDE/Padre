@@ -327,7 +327,7 @@ sub find_button {
 	if ( $self->{find_first}->GetValue ) {
 		$self->Hide;
 	} elsif ( not $Result ) {
-		$main->error(
+		$main->info(
 			Wx::gettext('No matches found'),
 			Wx::gettext('Search')
 		);
