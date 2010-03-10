@@ -81,7 +81,7 @@ sub _regex_groups {
 			label => Wx::gettext('&POSIX Character classes'),
 			value => {
 				'00[:alpha:]'  => Wx::gettext('Alphabetic characters'),
-				'01[:alnum:])' => Wx::gettext('Alphanumeric characters'),
+				'01[:alnum:]' => Wx::gettext('Alphanumeric characters'),
 				'02[:ascii:]'  => Wx::gettext('7-bit US-ASCII character'),
 				'03[:blank:]'  => Wx::gettext('Space and tab'),
 				'04[:cntrl:]'  => Wx::gettext('Control characters'),
