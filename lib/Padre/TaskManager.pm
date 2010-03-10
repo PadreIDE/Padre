@@ -425,9 +425,19 @@ sub cleanup {
 	TRACE('Tell all tasks to stop') if DEBUG;
 	my @workers = $self->workers;
 	$self->task_queue->insert( 0, ("STOP") x scalar(@workers) );
-	while ( threads->list(threads::running) >= 2 ) {
-		$_->join for threads->list(threads::joinable);
+
+	my $loopcount;
+# Changing the selection seems to solve the endless-loop problem
+#	while ( threads->list(threads::running) >= 2 ) {
+	while ( threads->list(threads::joinable) >= 2 ) {
+		for (threads->list(threads::joinable)) {
+			$_->join;
+		}
+		last if $loopcount > 125; # Wait no more than two minutes
+		# Pass time slices to the threads for finishing
+		sleep 1 if ++$loopcount > 5;
 	}
+
 	foreach my $thread ( threads->list(threads::joinable) ) {
 		TRACE( 'Joining thread ' . $thread->tid ) if DEBUG;
 		$thread->join;
