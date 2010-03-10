@@ -53,12 +53,12 @@ sub new {
 
 	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
-	if (!scalar(Padre->ide->wx->main->pages)) {
+	if ( !scalar( Padre->ide->wx->main->pages ) ) {
 		$self->{_empty} = 1;
 	} else {
 
-	# create dialog
-	$self->_create;
+		# create dialog
+		$self->_create;
 	}
 
 	return $self;
@@ -69,7 +69,7 @@ sub new {
 sub show {
 	my $self = shift;
 
-	if ($self->{_empty}) {
+	if ( $self->{_empty} ) {
 		$self->Destroy;
 		return 0;
 	}
@@ -322,16 +322,16 @@ sub _refresh_list {
 		my $filename;
 
 		my $documentfile = $document->file;
-		if (defined($documentfile)) {
+		if ( defined($documentfile) ) {
 
-		$filename    = $documentfile->filename;
-		my $project_dir = $document->project_dir;
-		$filename =~ s/^\Q$project_dir\E// if defined($project_dir);
+			$filename = $documentfile->filename;
+			my $project_dir = $document->project_dir;
+			$filename =~ s/^\Q$project_dir\E// if defined($project_dir);
 
-		# Apply filter (if any)
-		if ( defined( $self->{filter} ) ) {
-			next unless &{ $self->{filter} }( $page, $project_dir, $filename, $document );
-		}
+			# Apply filter (if any)
+			if ( defined( $self->{filter} ) ) {
+				next unless &{ $self->{filter} }( $page, $project_dir, $filename, $document );
+			}
 		} else {
 			$filename = $document->get_title;
 		}

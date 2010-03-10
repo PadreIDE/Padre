@@ -127,13 +127,9 @@ sub spawn {
 	my $task_manager = shift;
 
 	require Storable;
-	$self->{cmd_queue}->enqueue(
-		Storable::freeze( [ $task_manager->task_queue ] )
-	);
+	$self->{cmd_queue}->enqueue( Storable::freeze( [ $task_manager->task_queue ] ) );
 
-	return threads->object(
-		$self->{tid_queue}->dequeue
-	);
+	return threads->object( $self->{tid_queue}->dequeue );
 }
 
 =pod
@@ -191,7 +187,7 @@ sub DESTROY {
 # Worker thread main loop
 
 sub _worker_loop {
-	my ( $queue ) = @_;
+	my ($queue) = @_;
 	@_ = (); # Hack to avoid "Scalars leaked"
 
 	require Storable;
@@ -243,9 +239,9 @@ sub _slave_driver_loop {
 
 	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		my $task_queue    = Padre::SlaveDriver->new->task_queue;
+		my $task_queue = Padre::SlaveDriver->new->task_queue;
 		my $worker_thread = threads->create( \&_worker_loop, $task_queue );
-		$outqueue->enqueue($worker_thread->tid);
+		$outqueue->enqueue( $worker_thread->tid );
 	}
 
 	return 1;
