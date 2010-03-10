@@ -144,6 +144,11 @@ sub new {
 		$self,
 		'edit.brace_match',
 	);
+	
+	$self->{brace_match_select} = $self->add_menu_action(
+		$self,
+		'edit.brace_match_select',
+	);
 
 	$self->{join_lines} = $self->add_menu_action(
 		$self,
@@ -361,6 +366,7 @@ sub refresh {
 	$self->{quick_fix}->Enable($hasdoc);
 	$self->{autocomp}->Enable($hasdoc);
 	$self->{brace_match}->Enable($hasdoc);
+	$self->{brace_match_select}->Enable($hasdoc);
 	$self->{join_lines}->Enable($hasdoc);
 
 	$self->{insert_special}->Enable($hasdoc);

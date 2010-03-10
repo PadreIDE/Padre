@@ -318,6 +318,34 @@ sub new {
 			Padre::Wx::Main::on_brace_matching(@_);
 		},
 	);
+	
+	Padre::Action->new(
+		name        => 'edit.brace_match_select',
+		need_editor => 1,
+		label       => Wx::gettext('&Select to matching brace'),
+		comment     => Wx::gettext('Select to the matching opening or closing brace: {, }, (, )'),
+		shortcut    => 'Ctrl-4',
+		menu_event  => sub {
+			my $self = shift;
+			my $INVALID_POSITION = Wx::wxSTC_INVALID_POSITION;
+			my $page = $self->current->editor;
+			my $pos1 = $page->GetCurrentPos;
+			my $pos2 = $page->BraceMatch($pos1);
+			if ( $pos2 == $INVALID_POSITION ) { #Wx::wxSTC_INVALID_POSITION
+				if ( $pos1 > 0 ) {
+					$pos1--;
+					$pos2 = $page->BraceMatch($pos1);
+				}
+			}
+
+			if ( $pos2 != $INVALID_POSITION ) { #Wx::wxSTC_INVALID_POSITION
+				my $start = $page->GetSelectionStart();
+				$page->SetSelection($start, $pos2+1);
+			}
+
+			return;			
+		},
+	);
 
 	Padre::Action->new(
 		name           => 'edit.join_lines',
