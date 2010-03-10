@@ -102,9 +102,9 @@ sub _regex_groups {
 				'00*'     => Wx::gettext('Match 0 or more times'),
 				'01+'     => Wx::gettext('Match 1 or more times'),
 				'02?'     => Wx::gettext('Match 1 or 0 times'),
-				'03{m}'   => Wx::gettext('Match exactly n times'),
+				'03{m}'   => Wx::gettext('Match exactly m times'),
 				'05{n,}'  => Wx::gettext('Match at least n times'),
-				'05{m,n}' => Wx::gettext('Match at least n but not more than m times'),
+				'05{m,n}' => Wx::gettext('Match at least m but not more than n times'),
 			}
 		},
 		'03' => {
