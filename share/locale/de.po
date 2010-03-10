@@ -158,7 +158,7 @@ msgstr "Klingonisch"
 
 #: lib/Padre/Document.pm:212
 msgid "Error while opening file: no file object"
-msgstr "Fehler beim Öffnen der Datei: Kein file - Objekt"
+msgstr "Fehler beim Öffnen der Datei: Kein file-Objekt"
 
 #: lib/Padre/Document.pm:236
 #, perl-format
@@ -660,7 +660,7 @@ msgstr "&Alle kopieren"
 
 #: lib/Padre/Wx/Left.pm:49
 msgid "Project Tools"
-msgstr "Projekt Tools"
+msgstr "Projekt-Tools"
 
 #: lib/Padre/Wx/Right.pm:49
 msgid "Document Tools"
@@ -738,7 +738,7 @@ msgstr "Aktuelles Dokument hat keinen Dateinamen"
 
 #: lib/Padre/Wx/Main.pm:2256
 msgid "Current document is not a .t file"
-msgstr "Aktuelles Dokument ist keine .t - Datei!"
+msgstr "Aktuelles Dokument ist keine .t-Datei!"
 
 #: lib/Padre/Wx/Main.pm:2412
 #, perl-format
@@ -1128,7 +1128,7 @@ msgstr "Versteckte Dateien ignorieren"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:416
 msgid "Skip CVS/.svn/.git/blib folders"
-msgstr "CSV/.svn/.git/blib - Verzeichnisse überspringen"
+msgstr "CSV/.svn/.git/blib-Verzeichnisse überspringen"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:432
 msgid "Change project directory"
@@ -1194,7 +1194,7 @@ msgstr "Notepad++"
 #: lib/Padre/Wx/Menu/View.pm:213 lib/Padre/Wx/Menu/View.pm:237
 #, perl-format
 msgid "Switch highlighting colors to %s style"
-msgstr "Syntax-Hervorhebung zum %s - Stil ändern "
+msgstr "Syntax-Hervorhebung zum %s-Stil ändern"
 
 #: lib/Padre/Wx/Menu/View.pm:258
 msgid "Language"
@@ -1207,7 +1207,7 @@ msgstr "System-Vorgabe"
 #: lib/Padre/Wx/Menu/View.pm:267
 #, perl-format
 msgid "Switch menus to the default %s"
-msgstr "Menüs zum %s - Standard wechseln"
+msgstr "Menüs zum %s-Standard wechseln"
 
 #: lib/Padre/Wx/Menu/View.pm:301
 #, perl-format
@@ -1284,9 +1284,8 @@ msgid "Plug-in Tools"
 msgstr "Plugin-Werkzeuge"
 
 #: lib/Padre/Wx/Menu/Plugins.pm:186
-#, fuzzy
 msgid "&Tools"
-msgstr "&Tools"
+msgstr "&Werkzeuge"
 
 #: lib/Padre/Wx/Menu/Debug.pm:116
 msgid "&Debug"
@@ -1464,7 +1463,7 @@ msgstr "Ignoriere Groß-/Kleinschreibung"
 
 #: lib/Padre/Wx/Dialog/Search.pm:184
 msgid "Use rege&x"
-msgstr "Verwende RegE&x"
+msgstr "Verwende Rege&x"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:35 lib/Padre/Action/Plugins.pm:47
 msgid "Plug-in Manager"
@@ -1810,9 +1809,8 @@ msgid "Use Splash Screen?"
 msgstr "Splash (Logo bei Programmstart) anzeigen"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:436
-#, fuzzy
 msgid "Window title:"
-msgstr "Fensterliste"
+msgstr "Fenstertitel"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:443
 msgid "Colored text in output window (ANSI)"
@@ -2034,7 +2032,7 @@ msgstr "%d Ersetzungen durchgeführt."
 
 #: lib/Padre/Wx/Dialog/Warning.pm:41
 msgid "See http://padre.perlide.org/ for update information"
-msgstr "Update - Informationen: http://padre.perlide.org/"
+msgstr "Update-Informationen: http://padre.perlide.org/"
 
 #: lib/Padre/Wx/Dialog/Warning.pm:49
 msgid "Do not show this again"
@@ -2119,9 +2117,8 @@ msgid "Copy"
 msgstr "Kopieren"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:114
-#, fuzzy
 msgid "Copy Name"
-msgstr "Dateiname kopieren"
+msgstr "Name kopieren"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:115
 msgid "Copy Value"
@@ -2328,7 +2325,7 @@ msgstr "Aktion: %s"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:54
 msgid "CTRL"
-msgstr "STRG"
+msgstr "Strg"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:61 lib/Padre/Wx/Dialog/Shortcut.pm:75
 #: lib/Padre/Wx/Dialog/Shortcut.pm:89
@@ -2337,11 +2334,11 @@ msgstr "+"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:68
 msgid "ALT"
-msgstr "ALT"
+msgstr "Alt"
 
 #: lib/Padre/Wx/Dialog/Shortcut.pm:82
 msgid "SHIFT"
-msgstr "SHIFT"
+msgstr "Umschalt"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:33 lib/Padre/Action/Edit.pm:580
 msgid "Regex Editor"
@@ -2349,169 +2346,163 @@ msgstr "Regex-Editor"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:69
 msgid "&Character classes"
-msgstr ""
+msgstr "&Zeichenklassen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:71
 msgid "Any character except a newline"
-msgstr ""
+msgstr "Jedes Zeichen außer Newline"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:72
 msgid "Any decimal digit"
-msgstr ""
+msgstr "Jede Dezimalziffer"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:73
 msgid "Any non-digit"
-msgstr ""
+msgstr "Jede Nicht-Ziffer"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:74
 msgid "Any whitespace character"
-msgstr ""
+msgstr "Jedes Zwischenraumzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:75
 msgid "Any non-whitespace character"
-msgstr ""
+msgstr "Jedes Nicht-Zwischenraumzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:76
 msgid "Any word character"
-msgstr ""
+msgstr "Jedes Wortzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:77
 msgid "Any non-word character"
-msgstr ""
+msgstr "Jedes Nicht-Wortzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:81
 msgid "&POSIX Character classes"
-msgstr ""
+msgstr "&POSIX-Zeichenklassen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:83
-#, fuzzy
 msgid "Alphabetic characters"
-msgstr "alphabetisch"
+msgstr "Alphabet-Zeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:84
 msgid "Alphanumeric characters"
-msgstr ""
+msgstr "Alphanumerische Zeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:85
 msgid "7-bit US-ASCII character"
-msgstr ""
+msgstr "7-Bit-US-ASCII-Zeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:86
-#, fuzzy
 msgid "Space and tab"
-msgstr "In Tabulatoren wandeln..."
+msgstr "Leer- und Tabulatorzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:87
 msgid "Control characters"
-msgstr ""
+msgstr "Steuerzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:88
 msgid "Digits"
-msgstr ""
+msgstr "Ziffern"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:89
-#, fuzzy
 msgid "Visible characters"
-msgstr "Trace deaktivieren"
+msgstr "Sichtbare Zeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:90
 msgid "Lowercase characters"
-msgstr ""
+msgstr "Kleinbuchstaben"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:91
 msgid "Visible characters and spaces"
-msgstr ""
+msgstr "Sichtbare Zeichen und Leerzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:92
 msgid "Punctuation characters"
-msgstr ""
+msgstr "Satzzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:93
 msgid "Whitespace characters"
-msgstr ""
+msgstr "Zwischenraumzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:94
 msgid "Uppercase characters"
-msgstr ""
+msgstr "Großbuchstaben"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:95
 msgid "Alphanumeric characters plus \"_\""
-msgstr ""
+msgstr "Alphanumerische Zeichen plus \"_\""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:96
 msgid "Hexadecimal digits"
-msgstr ""
+msgstr "Hexadezimalzeichen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:100
 msgid "&Quantifiers"
-msgstr ""
+msgstr "&Quantifikatoren"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:102
 msgid "Match 0 or more times"
-msgstr ""
+msgstr "Keine oder mehrere Übereinstimmungen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:103
 msgid "Match 1 or more times"
-msgstr ""
+msgstr "1 oder mehrere Übereinstimmungen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:104
 msgid "Match 1 or 0 times"
-msgstr ""
+msgstr "1 oder 0 Übereinstimmungen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:105
 msgid "Match exactly n times"
-msgstr ""
+msgstr "Genau n Übereinstimmungen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:106
 msgid "Match at least n times"
-msgstr ""
+msgstr "Mindestens n Übereinstimmungen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:107
 msgid "Match at least n but not more than m times"
-msgstr ""
+msgstr "Mindestens n, aber nicht mehr als m Übereinstimmungen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:111
 msgid "&Miscellaneous"
-msgstr ""
+msgstr "&Sonstige"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:113
-#, fuzzy
 msgid "Alternation"
-msgstr "Übersetzung"
+msgstr "Alternation (Oder)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:114
 msgid "Character set"
-msgstr ""
+msgstr "Zeichensatz"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:115
 msgid "Beginning of line"
-msgstr ""
+msgstr "Zeilenanfang"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:116
-#, fuzzy
 msgid "End of line"
-msgstr "Kommandozeile"
+msgstr "Zeilenende"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:117
 msgid "A word boundary"
-msgstr ""
+msgstr "Wortgrenze"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:118
 msgid "Not a word boundary"
-msgstr ""
+msgstr "Keine Wortgrenze"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:119
-#, fuzzy
 msgid "A comment"
-msgstr "Kein Dokument"
+msgstr "Kommentar"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:123
 msgid "&Grouping constructs"
-msgstr ""
+msgstr "&Gruppierungs-Konstrukte"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:125
 msgid "A group"
-msgstr ""
+msgstr "Eine Gruppe"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:126
 msgid "Non-capturing group"
@@ -2535,56 +2526,50 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:131
 msgid "Backreference to the nth group"
-msgstr ""
+msgstr "Rückwärtsreferenz zur n-ten Gruppe"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:143
-#, fuzzy
 msgid "&Regular expression:"
-msgstr "&Regulärer Ausdruck"
+msgstr "&Regulärer Ausdruck:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:150
-#, fuzzy
 msgid "&Replace text with:"
-msgstr "Ersetzen durch:"
+msgstr "&Ersetze Text durch:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:157
-#, fuzzy
 msgid "&Description:"
-msgstr "Beschreibung:"
+msgstr "&Beschreibung:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:164
-#, fuzzy
 msgid "&Original text:"
-msgstr "wie in der Datei"
+msgstr "&Originaltext:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:171
-#, fuzzy
 msgid "&Matched text:"
-msgstr "Gefundene Ele&mente:"
+msgstr "&Gefundener Text:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:178
 msgid "&Result from replace:"
-msgstr ""
+msgstr "&Ergebnis der Ersetzung:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:347
-#, fuzzy, perl-format
+#, perl-format
 msgid "&Ignore case (%s)"
-msgstr "Groß-/Kleinschreibung ignorieren (%s)"
+msgstr "Groß-/Kleinschreibung &ignorieren (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:348
-#, fuzzy, perl-format
+# perl-format
 msgid "&Single-line (%s)"
-msgstr "Eine Zeile (%s)"
+msgstr "Ein&zeilig (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:349
-#, fuzzy, perl-format
+#, perl-format
 msgid "&Multi-line (%s)"
-msgstr "Mehrere Zeilen (%s)"
+msgstr "&Mehrzeilig (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:350
-#, fuzzy, perl-format
 msgid "&Extended (%s)"
-msgstr "Erweitert (%s)"
+msgstr "&Erweitert (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:351
 #, perl-format
@@ -2799,7 +2784,7 @@ msgstr "Aktuellen Bericht anzeigen"
 
 #: lib/Padre/Plugin/PopularityContest.pm:298
 msgid "Popularity Contest Report"
-msgstr "Beliebtheitsbericht - Bericht"
+msgstr "Popularity-Contest-Bericht"
 
 #: lib/Padre/Document/Perl.pm:436
 msgid "Error: "
@@ -2898,7 +2883,7 @@ msgstr "Schnell finden"
 
 #: lib/Padre/Action/Search.pm:102
 msgid "Incremental search seen at the bottom of the window"
-msgstr "Alle Treffern anzeigen"
+msgstr "Alle Treffer anzeigen"
 
 #: lib/Padre/Action/Search.pm:120
 msgid ""
@@ -2918,7 +2903,7 @@ msgstr "Findet den vorherigen Treffer der Such-Toolbar"
 
 #: lib/Padre/Action/Search.pm:143
 msgid "Find a text and replace it"
-msgstr "Text Suchen und ersetzen"
+msgstr "Text suchen und ersetzen"
 
 #: lib/Padre/Action/Search.pm:154
 msgid "Find in Fi&les..."
@@ -2957,7 +2942,7 @@ msgstr ""
 
 #: lib/Padre/Action/Run.pm:55
 msgid "Run Script (debug info)"
-msgstr "Skript ausführen (Debug Info)"
+msgstr "Skript ausführen (Debug-Info)"
 
 #: lib/Padre/Action/Run.pm:56
 msgid "Run the current document but include debug info in the output."
@@ -3091,7 +3076,7 @@ msgstr "Die Statuszeile anzeigen/ausblenden"
 
 #: lib/Padre/Action/View.pm:137
 msgid "Show Toolbar"
-msgstr "Zeige Werkzeugleiste"
+msgstr "Werkzeugleiste zeigen"
 
 #: lib/Padre/Action/View.pm:138
 msgid "Show/hide the toolbar at the top of the editor"
@@ -3578,11 +3563,11 @@ msgstr "Die Kodierung der aktuellen Datei dem Betriebssystem-Standard anpassen"
 
 #: lib/Padre/Action/Edit.pm:422
 msgid "Encode document to utf-8"
-msgstr "Dokument in utf-8 konvertieren"
+msgstr "Dokument nach utf-8 konvertieren"
 
 #: lib/Padre/Action/Edit.pm:423
 msgid "Change the encoding of the current document to utf-8"
-msgstr "Kodierung in UTF8 ändern"
+msgstr "Kodierung nach utf-8 ändern"
 
 #: lib/Padre/Action/Edit.pm:434
 msgid "Select an encoding and encode the document to that"
@@ -3590,17 +3575,17 @@ msgstr "Die Kodierung der Datei ändern"
 
 #: lib/Padre/Action/Edit.pm:444
 msgid "EOL to Windows"
-msgstr "Zeilenende ins Windows-Format"
+msgstr "Zeilenenden ins Windows-Format"
 
 #: lib/Padre/Action/Edit.pm:446
 msgid ""
 "Change the end of line character of the current document to those used in "
 "files on MS Windows"
-msgstr "Windows - Zeilenenden verwenden"
+msgstr "Zeilenenden in dieser Datei in das Windows-Format ändern"
 
 #: lib/Padre/Action/Edit.pm:455
 msgid "EOL to Unix"
-msgstr "Zeilenende ins Unix-Format"
+msgstr "Zeilenenden ins Unix-Format"
 
 #: lib/Padre/Action/Edit.pm:457
 msgid ""
@@ -3628,7 +3613,7 @@ msgstr "Alle Tabulatorzeichen in Leerzeichen konvertieren"
 
 #: lib/Padre/Action/Edit.pm:487
 msgid "Spaces to Tabs..."
-msgstr "In Tabulatoren wandeln..."
+msgstr "Leerzeichen in Tabulatoren umwandeln..."
 
 #: lib/Padre/Action/Edit.pm:488
 msgid "Convert all the spaces to tabs in the current document"
@@ -3719,7 +3704,7 @@ msgstr "Hexadezimaldarstellung des aktuell ausgewählten Textes anzeigen"
 
 #: lib/Padre/Action/Edit.pm:601
 msgid "Show as decimal"
-msgstr "Zeige als dezimal"
+msgstr "Zeige als Dezimalzahlen"
 
 #: lib/Padre/Action/Edit.pm:602
 msgid ""
@@ -3745,7 +3730,7 @@ msgstr "Kontexthilfe"
 
 #: lib/Padre/Action/Help.pm:64
 msgid "Show the help article for the current context"
-msgstr "Padre-Hifle für den aktuellen Kontext anzeigen"
+msgstr "Padre-Hilfe für den aktuellen Kontext anzeigen"
 
 #: lib/Padre/Action/Help.pm:76
 msgid "Current Document"
@@ -3921,15 +3906,15 @@ msgstr "Installiere Distribution von entferntem Ort"
 
 #: lib/Padre/Action/Plugins.pm:169
 msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
-msgstr "Eine tar.gz - Datei runterladen und mit CPAN installieren"
+msgstr "Eine tar.gz-Datei runterladen und mit CPAN installieren"
 
 #: lib/Padre/Action/Plugins.pm:177
 msgid "Open CPAN Config File"
-msgstr "Öffne CPAN Konfigurationsdatei"
+msgstr "Öffne CPAN-Konfigurationsdatei"
 
 #: lib/Padre/Action/Plugins.pm:178
 msgid "Open CPAN::MyConfig.pm for manual editing by experts"
-msgstr "CPAN - Konfiguration aufrufen"
+msgstr "CPAN-Konfiguration aufrufen"
 
 #: lib/Padre/Action/Plugins.pm:197
 msgid "Select distribution to install"
@@ -4233,9 +4218,8 @@ msgid "Open In Command Line"
 msgstr "In der Kommandozeile öffnen"
 
 #: lib/Padre/Action/File.pm:145
-#, fuzzy
 msgid "Opens a command line using the current document folder"
-msgstr "Ein Patch auf das aktuelle Dokument anwenden"
+msgstr "Öffnet eine Befehlszeile für den aktuellen Ordner"
 
 #: lib/Padre/Action/File.pm:154
 msgid "Open Example"
@@ -4314,9 +4298,8 @@ msgid "Reload Some Dialog..."
 msgstr "Ausgewählte Dateien neu laden..."
 
 #: lib/Padre/Action/File.pm:273
-#, fuzzy
 msgid "Select some open files for reload"
-msgstr "Einige Dateien auswählen, die geschlossen werden sollen."
+msgstr "Einige Dateien auswählen, die erneut geöffnet werden sollen"
 
 #: lib/Padre/Action/File.pm:286
 msgid "Save current document"
@@ -4421,30 +4404,29 @@ msgstr ""
 #: lib/Padre/File/HTTP.pm:48
 #, perl-format
 msgid "Sending HTTP request %s..."
-msgstr ""
+msgstr "Sende HTTP-Anfrage %s..."
 
 #: lib/Padre/File/FTP.pm:37
 msgid "Looking for Net::FTP..."
-msgstr ""
+msgstr "Suche nach Net::FTP..."
 
 #: lib/Padre/File/FTP.pm:84
 #, perl-format
 msgid "Connecting to FTP server %s..."
-msgstr ""
+msgstr "Verbinde zum FTP-Server %s---"
 
 #: lib/Padre/File/FTP.pm:101
 #, perl-format
 msgid "Logging into FTP server as %s..."
-msgstr ""
+msgstr "Anmeldung am FTP-Server als %s..."
 
 #: lib/Padre/File/FTP.pm:115
 msgid "Connection to FTP server successful!"
-msgstr ""
+msgstr "Verbindung zum FTP-Server aufgebaut!"
 
 #: lib/Padre/File/FTP.pm:243
-#, fuzzy
 msgid "Reading file from FTP server..."
-msgstr "Lese Daten, bitte warten..."
+msgstr "Lade Datei vom FTP-Server..."
 
 #: lib/Padre/File/FTP.pm:266
 msgid "Writing file to FTP server..."
@@ -4532,13 +4514,11 @@ msgstr "&Gehe zu Element"
 #~ msgid "Found %d files\n"
 #~ msgstr "%d Dateien gefunden"
 
-#, fuzzy
 #~ msgid "Found %d files and %d matches\n"
-#~ msgstr "Es konnte kein Treffer gefunden werden."
+#~ msgstr "%d Dateien und %d Treffer gefunden\n"
 
-#, fuzzy
 #~ msgid "'%s' missing in file '%s'\n"
-#~ msgstr "Konnte Datei '%s' nicht finden"
+#~ msgstr "'%s' fehlt in Datei '%s'\n"
 
 #~ msgid "Select all\tCtrl-A"
 #~ msgstr "Alles auswählen\tStrg+A"
@@ -4561,9 +4541,8 @@ msgstr "&Gehe zu Element"
 #~ msgid "&Uncomment Selected Lines\tCtrl-Shift-M"
 #~ msgstr "Ausgewählte Zeilen: Kommentar &entfernen\tStrg+Umschalt+M"
 
-#, fuzzy
 #~ msgid "Document encoded to (%s)"
-#~ msgstr "(Dokument nicht gespeichert)"
+#~ msgstr "Dokument als '%s' kodiert"
 
 #~ msgid "Error while calling help_render: "
 #~ msgstr "Fehler beim Aufruf von help_render:"
@@ -4709,7 +4688,7 @@ msgstr "&Gehe zu Element"
 #~ msgstr "&Neu\tStrg+N"
 
 #~ msgid "Open Selection\tCtrl-Shift-O"
-#~ msgstr "Öffne Auswahl\tStrg+Umschalt+O"
+#~ msgstr "Auswahl öffnen\tStrg+Umschalt+O"
 
 #~ msgid "Open Session...\tCtrl-Alt-O"
 #~ msgstr "Öffne Sitzung...\tStrg+Umschalt+O"
