@@ -3,8 +3,8 @@ package Padre::Wx::Dialog::WhereFrom;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx         ();
-use Padre::Wx::Dialog ();
+use Padre::Wx               ();
+use Padre::Wx::Dialog       ();
 use Padre::Task::HTTPClient ();
 
 our $VERSION = '0.58';
@@ -31,7 +31,7 @@ sub new {
 				]
 			],
 		],
-		[   [ 'Wx::Button', '_ok_',     Wx::wxID_OK ],[],
+		[   [ 'Wx::Button', '_ok_', Wx::wxID_OK ], [],
 			[ 'Wx::Button', '_cancel_', Wx::gettext("Skip feedback") ],
 		],
 	);
@@ -58,9 +58,9 @@ sub WhereFrom_cancel_clicked {
 
 	my $config = Padre->ide->config;
 
-	if (! $config->feedback_done) {
-	$config->set('feedback_done',1);
-	$config->write;
+	if ( !$config->feedback_done ) {
+		$config->set( 'feedback_done', 1 );
+		$config->write;
 	}
 
 	$dialog->Destroy;
@@ -75,17 +75,17 @@ sub WhereFrom_ok_clicked {
 	my $data   = $dialog->get_data;
 	$dialog->Destroy;
 
-	if (! $config->feedback_done) {
+	if ( !$config->feedback_done ) {
 
-	my $url = 'http://padre.perlide.org/wherefrom.cgi';
-	my $args = {from => $data->{_referer_}};
-	my $http = Padre::Task::HTTPClient->new(
-		URL => $url,
-		query => $args,
-	)->run;
+		my $url  = 'http://padre.perlide.org/wherefrom.cgi';
+		my $args = { from => $data->{_referer_} };
+		my $http = Padre::Task::HTTPClient->new(
+			URL   => $url,
+			query => $args,
+		)->run;
 
-	$config->set('feedback_done',1);
-	$config->write;
+		$config->set( 'feedback_done', 1 );
+		$config->write;
 
 	}
 
