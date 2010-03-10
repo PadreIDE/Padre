@@ -58,6 +58,7 @@ use Padre::Wx::AuiManager         ();
 use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
+use Padre::Wx::Dialog::WhereFrom  ();
 use Padre::Logger;
 
 our $VERSION = '0.58';
@@ -249,6 +250,8 @@ sub new {
 		},
 	);
 	$timer->Start( 1, 1 );
+
+	Padre::Wx::Dialog::WhereFrom->new($self);
 
 	return $self;
 }

@@ -3,7 +3,8 @@ package Padre::Task::HTTPClient;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant ();
+
+use Padre::Util::SVN ();
 
 # Use all modules which may provide services for us:
 
@@ -49,8 +50,7 @@ sub new {
 	}
 
 	# Prepare information
-	require Padre::Util::SVN;
-	my $revision = Padre::Util::SVN::padre_version();
+	my $revision = Padre::Util::SVN->padre_revision();
 	$args{method} ||= 'GET';
 	$args{headers}->{'X-Padre'} ||= "Padre version $VERSION $revision";
 

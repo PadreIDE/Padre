@@ -1192,6 +1192,14 @@ setting(
 	default => '',
 );
 
+# Save if feedback has been send or not
+setting(
+	name    => 'feedback_done',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 1;
 
 __END__
