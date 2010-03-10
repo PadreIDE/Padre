@@ -220,6 +220,7 @@ sub _content_translators {
             <br>
             <b>Chinese (Simplified)</b><br>
             Fayland Lam<br>
+	    Chuanren Wu<br>
             <br>
             <b>Chinese (Traditional)</b><br>
             Matthew Lien - 練喆明<br>
