@@ -95,6 +95,7 @@ use Class::XSAccessor {
 # This event is triggered by a worker thread DURING ->run to incrementally
 # communicate to the main thread over the life of a service.
 our $SERVICE_POLL_EVENT : shared;
+
 BEGIN {
 	$SERVICE_POLL_EVENT = Wx::NewEventType;
 }
@@ -148,7 +149,8 @@ sub new {
 		my $timerid = Wx::NewId();
 		$REAP_TIMER = Wx::Timer->new( $main, $timerid );
 		Wx::Event::EVT_TIMER(
-			$main, $timerid, sub {
+			$main, $timerid,
+			sub {
 				$SINGLETON->reap;
 			},
 		);
