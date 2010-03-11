@@ -58,7 +58,6 @@ use Padre::Wx::AuiManager         ();
 use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
-use Padre::Wx::Dialog::WhereFrom  ();
 use Padre::Logger;
 
 our $VERSION = '0.58';
@@ -251,8 +250,6 @@ sub new {
 	);
 	$timer->Start( 1, 1 );
 
-	Padre::Wx::Dialog::WhereFrom->new($self);
-
 	return $self;
 }
 
@@ -336,6 +333,11 @@ sub timer_start {
 
 	# Check for new plug-ins and alert the user to them
 	$manager->alert_new;
+
+	unless ( $Padre::Test::VERSION ) {
+		require Padre::Wx::Dialog::WhereFrom;
+		Padre::Wx::Dialog::WhereFrom->new($self);
+	}
 
 	# Start the change detection timer
 	my $timer = Wx::Timer->new( $self, Padre::Wx::ID_TIMER_FILECHECK );
