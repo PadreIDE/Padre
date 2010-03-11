@@ -75,6 +75,7 @@ use Params::Util qw{_INSTANCE};
 use threads;
 use threads::shared;
 use Thread::Queue 2.11;
+use Time::HiRes qw(gettimeofday tv_interval);
 
 require Padre;
 use Padre::Task    ();
@@ -425,7 +426,7 @@ sub cleanup {
 	my @workers = $self->workers;
 	$self->task_queue->insert( 0, ("STOP") x scalar(@workers) );
 
-	my $loopcount;
+	my $waitstart = [gettimeofday()];
 
 	# Changing the selection seems to solve the endless-loop problem
 	#	while ( threads->list(threads::running) >= 2 ) {
@@ -433,9 +434,12 @@ sub cleanup {
 		for ( threads->list(threads::joinable) ) {
 			$_->join;
 		}
-		last    if $loopcount > 125; # Wait no more than two minutes
-		                             # Pass time slices to the threads for finishing
-		sleep 1 if ++$loopcount > 5;
+
+		# Wait no more than two minutes
+		last    if( tv_interval($waitstart) >= (2*60) );
+
+		# Pass time slices to the threads for finishing
+		threads->yield();
 	}
 
 	foreach my $thread ( threads->list(threads::joinable) ) {
