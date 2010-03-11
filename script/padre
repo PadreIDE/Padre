@@ -73,6 +73,7 @@ END_USAGE
 
 # Padre version
 if ($VERSION) {
+	require Padre;
 	my $msg = "Perl Application Development and Refactoring Environment $Padre::VERSION\n";
 	if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
 
