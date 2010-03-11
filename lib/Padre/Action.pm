@@ -9,12 +9,12 @@ use Padre::Action::View     ();
 use Padre::Action::File     ();
 use Padre::Action::Help     ();
 use Padre::Action::Edit     ();
-use Padre::Action::Perl     ();
-use Padre::Action::Plugins  ();
-use Padre::Action::Refactor ();
-use Padre::Action::Debug    ();
-use Padre::Action::Run      ();
 use Padre::Action::Search   ();
+use Padre::Action::Perl     ();
+use Padre::Action::Refactor ();
+use Padre::Action::Run      ();
+use Padre::Action::Debug    ();
+use Padre::Action::Tools    ();
 use Padre::Action::Window   ();
 use Padre::Action::Internal ();
 
@@ -47,18 +47,18 @@ use Class::XSAccessor {
 sub create {
 	my $main = shift;
 
-	Padre::Action::View->new($main);
-	Padre::Action::File->new($main);
-	Padre::Action::Help->new($main);
-	Padre::Action::Edit->new($main);
-	Padre::Action::Perl->new($main);
-	Padre::Action::Plugins->new($main);
-	Padre::Action::Refactor->new($main);
-	Padre::Action::Debug->new($main);
-	Padre::Action::Run->new($main);
-	Padre::Action::Search->new($main);
-	Padre::Action::Window->new($main);
 	Padre::Action::Internal->new($main);
+	Padre::Action::File->new($main);
+	Padre::Action::Edit->new($main);
+	Padre::Action::Search->new($main);
+	Padre::Action::View->new($main);
+	Padre::Action::Perl->new($main);
+	Padre::Action::Refactor->new($main);
+	Padre::Action::Run->new($main);
+	Padre::Action::Debug->new($main);
+	Padre::Action::Tools->new($main);
+	Padre::Action::Window->new($main);
+	Padre::Action::Help->new($main);
 
 	# This is made for usage by the developers to create a complete
 	# list of all actions used in Padre. It outputs some warnings

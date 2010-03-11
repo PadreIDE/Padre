@@ -1,4 +1,4 @@
-package Padre::Action::Plugins;
+package Padre::Action::Tools;
 
 # Fully encapsulated Run menu
 
@@ -19,7 +19,7 @@ our $VERSION = '0.58';
 
 
 #####################################################################
-# Padre::Action::Plugins Methods
+# Padre::Action::Tools Methods
 
 sub new {
 	my $class = shift;

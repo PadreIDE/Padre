@@ -25,21 +25,21 @@ plug-ins, as well as providing part of the interface to plug-in writers.
 use 5.008;
 use strict;
 use warnings;
-use lib                      ();
-use Carp                     ();
-use File::Copy               ();
-use File::Glob               ();
-use File::Path               ();
-use File::Spec               ();
-use File::Basename           ();
-use Scalar::Util             ();
-use Params::Util             ();
-use Padre::Constant          ();
-use Padre::Current           ();
-use Padre::Util              ();
-use Padre::PluginHandle      ();
-use Padre::Wx                ();
-use Padre::Wx::Menu::Plugins ();
+use lib                    ();
+use Carp                   ();
+use File::Copy             ();
+use File::Glob             ();
+use File::Path             ();
+use File::Spec             ();
+use File::Basename         ();
+use Scalar::Util           ();
+use Params::Util           ();
+use Padre::Constant        ();
+use Padre::Current         ();
+use Padre::Util            ();
+use Padre::PluginHandle    ();
+use Padre::Wx              ();
+use Padre::Wx::Menu::Tools ();
 
 our $VERSION = '0.58';
 

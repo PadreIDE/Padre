@@ -15,7 +15,7 @@ use Padre::Wx::Menu::Perl     ();
 use Padre::Wx::Menu::Refactor ();
 use Padre::Wx::Menu::Run      ();
 use Padre::Wx::Menu::Debug    ();
-use Padre::Wx::Menu::Plugins  ();
+use Padre::Wx::Menu::Tools    ();
 use Padre::Wx::Menu::Window   ();
 use Padre::Wx::Menu::Help     ();
 
@@ -68,7 +68,7 @@ sub new {
 	$self->{perl}     = Padre::Wx::Menu::Perl->new($main);
 	$self->{run}      = Padre::Wx::Menu::Run->new($main);
 	$self->{debug}    = Padre::Wx::Menu::Debug->new($main);
-	$self->{plugins}  = Padre::Wx::Menu::Plugins->new($main);
+	$self->{plugins}  = Padre::Wx::Menu::Tools->new($main);
 	$self->{window}   = Padre::Wx::Menu::Window->new($main);
 	$self->{help}     = Padre::Wx::Menu::Help->new($main);
 

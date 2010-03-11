@@ -47,7 +47,7 @@ my %TODO = map {$_ => 1} qw(
 	Padre::Action::Edit
 	Padre::Action::View
 	Padre::Action::File
-	Padre::Action::Plugins
+	Padre::Action::Tools
 	Padre::Action::Queue
 	Padre::Action::Refactor
 	Padre::Action::Search

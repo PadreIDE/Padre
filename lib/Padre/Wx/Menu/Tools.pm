@@ -1,4 +1,4 @@
-package Padre::Wx::Menu::Plugins;
+package Padre::Wx::Menu::Tools;
 
 # Fully encapsulated Run menu
 
