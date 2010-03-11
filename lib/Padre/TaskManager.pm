@@ -430,7 +430,7 @@ sub cleanup {
 
 	# Changing the selection seems to solve the endless-loop problem
 	#	while ( threads->list(threads::running) >= 2 ) {
-	while ( threads->list(threads::joinable) >= 2 ) {
+	while ( threads->list(threads::joinable) > 0 ) {
 		for ( threads->list(threads::joinable) ) {
 			$_->join;
 		}
