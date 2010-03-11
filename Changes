@@ -12,6 +12,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       interpreter copy. On Win32 the per-thread cost drops from
       34.1meg to 20meg with a reduction in total memory use for a
       typical user of about 20% (ADAMK)
+    - Add language names/translated texts to select_language list (SEWI)
 
 0.58 2010.03.08
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)

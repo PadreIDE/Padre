@@ -474,7 +474,7 @@ grep { defined $RFC4646{$_}->{wxid} } sort keys %RFC4646;
 # Find the rfc4646 to use by default
 sub rfc4646 {
 	my $config = Padre::Config->read;
-	my $locale = $config->locale;
+	my $locale = $#_ >= 1 ? $_[1] : $config->locale;
 
 	if ( $locale and not $RFC4646{$locale} ) {
 
@@ -506,9 +506,11 @@ sub system_iso639 {
 # Given a rfc4646 identifier, sets the language globally
 # and returns the relevant Wx::Locale object.
 sub object {
-	my $id     = rfc4646();
+	my $langcode = shift;
+	undef $langcode if ref($langcode);
+	my $id     = rfc4646(@_);
 	my $lang   = $RFC4646{$id}->{wxid};
-	my $locale = Wx::Locale->new($lang);
+	my $locale = Wx::Locale->new($langcode);
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
 	unless ( $locale->IsLoaded($id) ) {
 		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';

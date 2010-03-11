@@ -27,7 +27,9 @@ my @GUI_ELEMENTS = (
 	'toolbar',
 );
 
-
+my %lang_labels = (
+	'de'	=> 'Deutsch',
+);
 
 
 
@@ -293,6 +295,9 @@ sub new {
 			# speakers, non-English localisations do NOT show this.
 			$label = "English (New Britstralian)";
 		}
+
+		my $langobj = Padre::Locale::object($name);
+		$label .= ' ('.($lang_labels{$name} || $name).')';
 
 		my $radio = $self->add_radio_menu_item(
 			$self->{language},
