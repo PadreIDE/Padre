@@ -521,9 +521,9 @@ sub system_iso639 {
 sub object {
 	my $langcode = shift;
 	undef $langcode if ref($langcode);
-	my $id     = rfc4646(@_);
+	my $id     = rfc4646($langcode);
 	my $lang   = $RFC4646{$id}->{wxid};
-	my $locale = Wx::Locale->new($langcode);
+	my $locale = Wx::Locale->new($lang);
 	$locale->AddCatalogLookupPathPrefix( Padre::Util::sharedir('locale') );
 	unless ( $locale->IsLoaded($id) ) {
 		my $file = Padre::Util::sharefile( 'locale', $id ) . '.mo';
