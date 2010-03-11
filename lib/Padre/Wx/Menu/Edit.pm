@@ -320,13 +320,6 @@ sub new {
 
 	$self->AppendSeparator;
 
-	$self->add_menu_action(
-		$self,
-		'edit.regex',
-	);
-
-	$self->AppendSeparator;
-
 	$self->{show_as_number} = Wx::Menu->new;
 	$self->Append(
 		-1,

@@ -44,6 +44,12 @@ sub new {
 		'tools.key_bindings',
 	);
 
+	# Regex Editor
+	$self->add_menu_action(
+		$self,
+		'edit.regex',
+	);
+
 	$self->AppendSeparator;
 
 	# Create the module tools submenu
