@@ -59,6 +59,7 @@ sub startup {
 		main_singleinstance      => Padre::Constant::DEFAULT_SINGLEINSTANCE,
 		main_singleinstance_port => Padre::Constant::DEFAULT_SINGLEINSTANCE_PORT,
 		startup_splash           => 1,
+		threads                  => 1,
 	);
 
 	# Load and overlay the startup.yml file
@@ -158,6 +159,14 @@ sub startup {
 				3500, undef, -1
 			);
 		}
+	}
+
+	# If we are going to use threading, spawn off the slave
+	# driver as early as we possibly can so we reduce the amount of
+	# wasted memory copying to a minimum.
+	if ( $setting{threads} ) {
+		require Padre::SlaveDriver;
+		Padre::SlaveDriver->new;
 	}
 
 	return 1;
