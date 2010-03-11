@@ -111,7 +111,6 @@ our $SINGLETON;
 
 sub new {
 	my $class = shift;
-	$DB::single = 1;
 
 	return $SINGLETON if defined $SINGLETON;
 
