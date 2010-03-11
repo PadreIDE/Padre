@@ -294,13 +294,13 @@ sub new {
 		}
 
 		my $langobj = Padre::Locale::object($name);
-		$label .= ' (' . Padre::Locale::label($name) . ')';
+		my $utf8txt = ' (' . Padre::Locale::label($name) . ')';
 
 		my $radio = $self->add_radio_menu_item(
 			$self->{language},
 			name       => $tag,
-			label      => $label,
-			comment    => sprintf( Wx::gettext('Switch menus to %s'), $label ),
+			label      => $label . $utf8txt,
+			comment    => sprintf( Wx::gettext('Switch menus to %s'), $label ) . $utf8txt,
 			menu_event => sub {
 				$_[0]->change_locale($name);
 			},

@@ -63,13 +63,13 @@ my %RFC4646;
 # file:///usr/share/locale/*/LC_MESSAGES/iso_639.mo
 # file:///usr/share/xml/iso-codes/iso_639.xml
 # http://pkg-isocodes.alioth.debian.org/
-my %lang_labels = (
-	'de'	=> 'Deutsch',
-);
+#my %lang_labels = (
+#	'de'	=> 'Deutsch',
+#);
 
 sub label {
 	my $name = shift;
-	return $lang_labels{$name} || $name
+	return $RFC4646{$name}{utf8text} || $name
 }
 
 BEGIN {
