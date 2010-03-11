@@ -27,13 +27,6 @@ my @GUI_ELEMENTS = (
 	'toolbar',
 );
 
-# taken from gettext translations of the iso-codes package
-# file:///usr/share/locale/*/LC_MESSAGES/iso_639.mo
-# file:///usr/share/xml/iso-codes/iso_639.xml
-# http://pkg-isocodes.alioth.debian.org/
-my %lang_labels = (
-	'de'	=> 'Deutsch',
-);
 
 
 
@@ -301,7 +294,7 @@ sub new {
 		}
 
 		my $langobj = Padre::Locale::object($name);
-		$label .= ' ('.($lang_labels{$name} || $name).')';
+		$label .= ' (' . Padre::Locale::label($name) . ')';
 
 		my $radio = $self->add_radio_menu_item(
 			$self->{language},

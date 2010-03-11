@@ -59,6 +59,19 @@ our $VERSION = '0.58';
 # simplicity (for now) we list them all as lower-case.
 my %RFC4646;
 
+# taken from gettext translations of the iso-codes package
+# file:///usr/share/locale/*/LC_MESSAGES/iso_639.mo
+# file:///usr/share/xml/iso-codes/iso_639.xml
+# http://pkg-isocodes.alioth.debian.org/
+my %lang_labels = (
+	'de'	=> 'Deutsch',
+);
+
+sub label {
+	my $name = shift;
+	return $lang_labels{$name} || $name
+}
+
 BEGIN {
 	%RFC4646 = (
 
