@@ -346,18 +346,18 @@ sub _refresh_list {
 		splice @{ $self->{items} }, $idx, 0, { page => $page };
 
 		$list->SetItem( $idx, 1, $filename );
-		$list->SetItem( $idx, 2, Wx::gettext( $document->is_modified ? 'CHANGED' : 'fresh' ) );
+		$list->SetItem( $idx, 2, $document->is_modified ? Wx::gettext('CHANGED') : Wx::gettext('fresh') );
 
 		my $disk_state = $document->has_changed_on_disk;
 		my $disk_text;
 		if ( $disk_state == 0 ) {
-			$disk_text = 'fresh';
+			$disk_text = Wx::gettext('fresh');
 		} elsif ( $disk_state == -1 ) {
-			$disk_text = 'DELETED';
+			$disk_text = Wx::gettext('DELETED');
 		} else {
-			$disk_text = 'CHANGED';
+			$disk_text = Wx::gettext('CHANGED');
 		}
-		$list->SetItem( $idx, 3, Wx::gettext($disk_text) );
+		$list->SetItem( $idx, 3, $disk_text);
 	}
 
 	# auto-resize columns

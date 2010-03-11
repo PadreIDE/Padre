@@ -312,7 +312,7 @@ sub new {
 		name        => 'edit.brace_match',
 		need_editor => 1,
 		label       => Wx::gettext('&Brace matching'),
-		comment     => Wx::gettext('Jump to the matching opening or closing brace: {, }, (, )'),
+		comment     => Wx::gettext('Jump to the matching opening or closing brace: { }, ( ), [ ], < >'),
 		shortcut    => 'Ctrl-1',
 		menu_event  => sub {
 			Padre::Wx::Main::on_brace_matching(@_);
@@ -323,7 +323,7 @@ sub new {
 		name        => 'edit.brace_match_select',
 		need_editor => 1,
 		label       => Wx::gettext('&Select to matching brace'),
-		comment     => Wx::gettext('Select to the matching opening or closing brace: {, }, (, )'),
+		comment     => Wx::gettext('Select to the matching opening or closing brace: { }, ( ), [ ], < >'),
 		shortcut    => 'Ctrl-4',
 		menu_event  => sub {
 			my $self = shift;

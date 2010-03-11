@@ -244,7 +244,7 @@ BEGIN {
 		},
 
 		'fr-ca' => {
-			gettext   => _T('French (France)'),
+			gettext   => _T('French (Canada)'),
 			utf8text  => 'Français (Canada)',
 			iso639    => 'fr',
 			iso3166   => 'CA',
