@@ -918,6 +918,7 @@ setting(
 	type    => Padre::Constant::BOOLEAN,
 	store   => Padre::Constant::HUMAN,
 	default => 1,
+	startup => 1,
 );
 setting(
 	name    => 'locale',
