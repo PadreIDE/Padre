@@ -98,6 +98,7 @@ sub startup {
 				}
 			}
 			foreach my $file (@ARGV) {
+				require File::Spec;
 				my $path = File::Spec->rel2abs($file);
 				$socket->print("open $path\n");
 			}
@@ -105,6 +106,17 @@ sub startup {
 			$socket->close;
 			return 0;
 		}
+	}
+
+	# NOTE: Replace the following with if ( 0 ) will disable the
+	# slave master quick-spawn optimisation.
+
+	# If we are going to use threading, spawn off the slave
+	# driver as early as we possibly can so we reduce the amount of
+	# wasted memory copying to a minimum.
+	if ( $setting{threads} ) {
+		require Padre::SlaveDriver;
+		Padre::SlaveDriver->new;
 	}
 
 	# Show the splash image now we are starting a new instance
@@ -159,14 +171,6 @@ sub startup {
 				3500, undef, -1
 			);
 		}
-	}
-
-	# If we are going to use threading, spawn off the slave
-	# driver as early as we possibly can so we reduce the amount of
-	# wasted memory copying to a minimum.
-	if ( $setting{threads} and 0 ) {
-		require Padre::SlaveDriver;
-		Padre::SlaveDriver->new;
 	}
 
 	return 1;

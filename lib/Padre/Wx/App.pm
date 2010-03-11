@@ -30,8 +30,7 @@ From the main L<Padre> object, it can be accessed via the C<wx> method.
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
-use Params::Util qw{ _INSTANCE };
+use Carp      ();
 use Padre::Wx ();
 
 our $VERSION = '0.58';
@@ -44,15 +43,15 @@ our @ISA     = 'Wx::App';
 #####################################################################
 # Constructor and Accessors
 
-sub new {
-	my $class = shift;
-	my $ide   = shift;
-	unless ( _INSTANCE( $ide, 'Padre' ) ) {
-		Carp::croak("Did not provide the ide object to Padre::App->new");
-	}
+sub create {
+	my $self = shift->new;
 
-	# Create the Wx object
-	my $self = $class->SUPER::new;
+	# Check IDE param
+	my $ide = shift;
+	require Params::Util;
+	unless ( Params::Util::_INSTANCE($ide, 'Padre') ) {
+		Carp::croak("Did not provide the ide object to Padre::App->create");
+	}
 
 	# Save a link back to the parent ide
 	$self->{ide} = $ide;

@@ -148,7 +148,7 @@ sub new {
 
 	# Create the main window
 	require Padre::Wx::App;
-	$self->{wx} = Padre::Wx::App->new($self);
+	$self->{wx} = Padre::Wx::App->create($self);
 
 	# Create the task manager
 	require Padre::TaskManager;
@@ -157,7 +157,7 @@ sub new {
 	);
 
 	# Create the action queue
-	$self->{actionqueue} = Padre::Action::Queue->new();
+	$self->{actionqueue} = Padre::Action::Queue->new;
 
 	# Startup completed, let go of the database
 	Padre::DB->commit;

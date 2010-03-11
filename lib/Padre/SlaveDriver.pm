@@ -79,6 +79,7 @@ SCOPE: {
 		} => $class;
 
 		# Wx must be loaded before this code fires
+		require Wx;
 		require Wx::Event;
 		$TASK_DONE_EVENT  = Wx::NewEventType() unless defined $TASK_DONE_EVENT;
 		$TASK_START_EVENT = Wx::NewEventType() unless defined $TASK_START_EVENT;
@@ -122,12 +123,12 @@ Returns a new worker thread object.
 =cut
 
 sub spawn {
-	my $self         = shift;
-	my $task_manager = shift;
+	my $self    = shift;
+	my $manager = shift;
 
 	require Storable;
 	$self->{cmd_queue}->enqueue(
-		Storable::freeze( [ $task_manager->task_queue ] )
+		Storable::freeze( [ $manager->task_queue ] )
 	);
 
 	return threads->object(
@@ -193,58 +194,57 @@ sub _worker_loop {
 	my ($queue) = @_;
 	@_ = (); # Hack to avoid "Scalars leaked"
 
-	require Storable;
-	require Padre::TaskManager;
+	# warn threads->tid . " -- Hi, I'm a thread.";
 
-	# Set the thread-specific main-window pointer
-	my $wx = Padre->ide->wx;
+	# Hold a pointer to the global application root
+	require Padre::Wx::App;
+	my $wx = Padre::Wx::App->new;
 
-	# warn threads->tid() . " -- Hi, I'm a thread.";
+	while ( my $frozen = $queue->dequeue ) {
 
-	while ( my $frozen_task = $queue->dequeue ) {
-
-		# warn threads->tid() . " -- got task.";
+		# warn threads->tid . " -- got task.";
 
 		# warn("THREAD TERMINATING"), return 1 if not ref($task) and $task eq 'STOP';
-		return 1 if not ref($frozen_task) and $frozen_task eq 'STOP';
+		return 1 if not ref($frozen) and $frozen eq 'STOP';
 
-		my $task = Padre::Task->deserialize( \$frozen_task );
+		require Padre::Task;
+		my $task = Padre::Task->deserialize( \$frozen );
 		$task->{__thread_id} = threads->tid;
 
-		my $thread_start_event = Wx::PlThreadEvent->new(
+		my $before = Wx::PlThreadEvent->new(
 			-1,
 			$TASK_START_EVENT,
 			$task->{__thread_id} . ";" . ref($task),
 		);
-		Wx::PostEvent( $wx, $thread_start_event );
+		Wx::PostEvent( $wx, $before );
 
 		# RUN
 		$task->run;
 
 		# FREEZE THE PROCESS AND PASS IT BACK
-		undef $frozen_task;
-		$task->serialize( \$frozen_task );
+		undef $frozen;
+		$task->serialize( \$frozen );
 
-		my $thread_done_event = Wx::PlThreadEvent->new(
+		my $after = Wx::PlThreadEvent->new(
 			-1,
 			$TASK_DONE_EVENT,
-			$frozen_task,
+			$frozen,
 		);
-		Wx::PostEvent( $wx, $thread_done_event );
+		Wx::PostEvent( $wx, $after );
 
-		# warn threads->tid() . " -- done with task.";
+		# warn threads->tid . " -- done with task.";
 	}
 }
 
 sub _slave_driver_loop {
-	my ( $inqueue, $outqueue ) = @_;
-	@_ = (); # hack to avoid "Scalars leaked"
+	my ( $in, $out ) = @_;
+	@_ = (); # Hack to avoid "Scalars leaked"
 
-	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
+	while ( my $args = $in->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		my $task_queue    = Padre::SlaveDriver->new->task_queue;
-		my $worker_thread = threads->create( \&_worker_loop, $task_queue );
-		$outqueue->enqueue( $worker_thread->tid );
+		my $queue  = Padre::SlaveDriver->new->task_queue;
+		my $worker = threads->create( \&_worker_loop, $queue );
+		$out->enqueue( $worker->tid );
 	}
 
 	return 1;

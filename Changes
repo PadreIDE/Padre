@@ -2,14 +2,16 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.59 To Be Released
-    - Don't crash open file list dialog on unsaved files or without files
-      (SEWI)
+    - Don't crash open file list dialog on unsaved files or without
+      files (SEWI)
     - Added a small survey for new Padre installation (SEWI)
     - Resolved the clash between threads and SQLite by temporarily
       disconnecting from SQLite during a thread spawn (ADAMK)
-    - Move the slave driver spawn into Padre::Startup, so that
-      we get much much smaller thread spawn memory penalty from the
-      interpreter copy (ADAMK)
+    - Slave master quick-spawning in Padre::Startup, so that
+      we get smaller thread spawn memory penalty from the
+      interpreter copy. On Win32 the per-thread cost drops from
+      34.1meg to 20meg with a reduction in total memory use for a
+      typical user of about 20% (ADAMK)
 
 0.58 2010.03.08
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
