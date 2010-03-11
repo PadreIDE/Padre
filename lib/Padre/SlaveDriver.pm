@@ -33,17 +33,16 @@ and should generally be kept low on memory overhead.
 
 =cut
 
-use 5.008;
+use 5.008005;
 use strict;
 use warnings;
-
-our $VERSION = '0.58';
-
-# According to Wx docs this MUST be loaded before Wx,
-# so this also happens in the script.
 use threads;
 use threads::shared;
+
+# This has a version to prevent known cases of people not upgrading
 use Thread::Queue 2.11;
+
+our $VERSION = '0.58';
 
 # This event is triggered by the worker thread main loop after
 # finishing a task.
@@ -80,7 +79,7 @@ SCOPE: {
 		} => $class;
 
 		# Wx must be loaded before this code fires
-		require Padre::Wx;
+		require Wx::Event;
 		$TASK_DONE_EVENT  = Wx::NewEventType() unless defined $TASK_DONE_EVENT;
 		$TASK_START_EVENT = Wx::NewEventType() unless defined $TASK_START_EVENT;
 
@@ -127,9 +126,13 @@ sub spawn {
 	my $task_manager = shift;
 
 	require Storable;
-	$self->{cmd_queue}->enqueue( Storable::freeze( [ $task_manager->task_queue ] ) );
+	$self->{cmd_queue}->enqueue(
+		Storable::freeze( [ $task_manager->task_queue ] )
+	);
 
-	return threads->object( $self->{tid_queue}->dequeue );
+	return threads->object(
+		$self->{tid_queue}->dequeue
+	);
 }
 
 =pod
@@ -239,7 +242,7 @@ sub _slave_driver_loop {
 
 	while ( my $args = $inqueue->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		my $task_queue = Padre::SlaveDriver->new->task_queue;
+		my $task_queue    = Padre::SlaveDriver->new->task_queue;
 		my $worker_thread = threads->create( \&_worker_loop, $task_queue );
 		$outqueue->enqueue( $worker_thread->tid );
 	}
