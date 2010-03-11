@@ -59,17 +59,15 @@ our $VERSION = '0.58';
 # simplicity (for now) we list them all as lower-case.
 my %RFC4646;
 
-# taken from gettext translations of the iso-codes package
+# The utf8text could/should be taken from gettext translations of the iso-codes package
 # file:///usr/share/locale/*/LC_MESSAGES/iso_639.mo
 # file:///usr/share/xml/iso-codes/iso_639.xml
 # http://pkg-isocodes.alioth.debian.org/
-#my %lang_labels = (
-#	'de'	=> 'Deutsch',
-#);
 
 sub label {
 	my $name = shift;
-	return $RFC4646{$name}{utf8text} || $name
+	require Encode;
+	return $RFC4646{$name}{utf8text} ? Encode::decode('utf8', $RFC4646{$name}{utf8text}) : $name
 }
 
 BEGIN {
