@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-12 11:42+0100\n"
+"POT-Creation-Date: 2010-03-12 12:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -113,7 +113,7 @@ msgid "Dutch (Belgium)"
 msgstr ""
 
 #: lib/Padre/Locale.pm:360
-msgid "Norwegian (Norway)"
+msgid "Norwegian"
 msgstr ""
 
 #: lib/Padre/Locale.pm:370
@@ -548,7 +548,7 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:294
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:295
 #: lib/Padre/Task/SyntaxChecker.pm:146
 msgid "Info"
 msgstr ""
@@ -561,15 +561,15 @@ msgstr ""
 msgid "The Padre Translation Team"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:296
+#: lib/Padre/Wx/About.pm:297
 msgid "Config dir:"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:310
+#: lib/Padre/Wx/About.pm:311
 msgid "Uptime"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:315
+#: lib/Padre/Wx/About.pm:316
 msgid "unsupported"
 msgstr ""
 

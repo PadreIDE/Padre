@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-12 11:30+0100\n"
+"POT-Creation-Date: 2010-03-12 12:13+0100\n"
 "PO-Revision-Date: 2010-02-01 10:30+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
@@ -117,8 +117,8 @@ msgid "Dutch (Belgium)"
 msgstr "Niederländisch (Belgien)"
 
 #: lib/Padre/Locale.pm:360
-msgid "Norwegian (Norway)"
-msgstr "Norwegisch (Norwegen)"
+msgid "Norwegian"
+msgstr "Norwegisch"
 
 #: lib/Padre/Locale.pm:370
 msgid "Polish"
@@ -574,7 +574,7 @@ msgstr "Entwicklung"
 msgid "Translation"
 msgstr "Übersetzung"
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:294
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:295
 #: lib/Padre/Task/SyntaxChecker.pm:146
 msgid "Info"
 msgstr "Info"
@@ -587,15 +587,15 @@ msgstr "Das Padre-Entwicklerteam"
 msgid "The Padre Translation Team"
 msgstr "Das Padre-Übersetzerteam"
 
-#: lib/Padre/Wx/About.pm:296
+#: lib/Padre/Wx/About.pm:297
 msgid "Config dir:"
 msgstr "Konfigurationsverzeichnis:"
 
-#: lib/Padre/Wx/About.pm:310
+#: lib/Padre/Wx/About.pm:311
 msgid "Uptime"
 msgstr "Laufzeit"
 
-#: lib/Padre/Wx/About.pm:315
+#: lib/Padre/Wx/About.pm:316
 msgid "unsupported"
 msgstr "nicht unterstützt"
 
@@ -4545,6 +4545,9 @@ msgstr "Test abgeschlossen"
 #: lib/Padre/Task/Outline/Perl.pm:199
 msgid "&GoTo Element"
 msgstr "&Gehe zu Element"
+
+#~ msgid "Norwegian (Norway)"
+#~ msgstr "Norwegisch (Norwegen)"
 
 #~ msgid ""
 #~ "File has been deleted on disk, do you want to CLEAR the editor window?"

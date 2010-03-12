@@ -207,6 +207,7 @@ sub _content_translators {
 	# Create the content for the Translation team
 	my $self                   = shift;
 	my $padre_translation_team = Wx::gettext('The Padre Translation Team');
+	my %language               = Padre::Locale::menu_view_languages();
 	$self->{translators}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -215,68 +216,68 @@ sub _content_translators {
       <tr>
         <td valign="top">
           <p>
-            <b>Arabic</b><br>
+            <b>$language{'ar'}</b><br>
             Ahmad Zawawi - أحمد محمد زواوي<br>
             <br>
-            <b>Chinese (Simplified)</b><br>
+            <b>$language{'zh-cn'}</b><br>
             Fayland Lam<br>
 	    Chuanren Wu<br>
             <br>
-            <b>Chinese (Traditional)</b><br>
+            <b>$language{'zh-tw'}</b><br>
             Matthew Lien - 練喆明<br>
             <br>
-            <b>Czech</b><br>
+            <b>$language{'cz'}</b><br>
             Marcela Mašláňová<br>
             <br>
-            <b>Dutch</b><br>
+            <b>$language{'nl-nl'}</b><br>
             Dirk De Nijs<br>
             <br>
-            <b>French</b><br>
+            <b>$language{'fr-fr'}</b><br>
             Jérôme Quelin<br>
           </p>
         </td>
         <td valign="top">
           <p>
-            <b>German</b><br>
+            <b>$language{'de'}</b><br>
             Heiko Jansen<br>
             Sebastian Willing<br>
             Zeno Gantner<br>
             <br>
-            <b>Hebrew</b><br>
+            <b>$language{'he'}</b><br>
             Omer Zak - עומר זק<br>
             Shlomi Fish - שלומי פיש<br>
             Amir E. Aharoni - אמיר א. אהרוני<br>
             <br>
-            <b>Hungarian</b><br>
+            <b>$language{'hu'}</b><br>
             György Pásztor<br>
             <br>
-            <b>Italian</b><br>
+            <b>$language{'it-it'}</b><br>
             Simone Blandino<br>
             <br>
-            <b>Japanese</b><br>
+            <b>$language{'ja'}</b><br>
             Kenichi Ishigaki - 石垣憲一<br>
           </p>
         </td>
         <td valign="top">
           <p>
-            <b>Korean</b><br>
+            <b>$language{'ko'}</b><br>
             Keedi Kim - 김도형<br>
             <br>
-            <b>Norwegian</b><br>
+            <b>$language{'no'}</b><br>
             Kjetil Skotheim<br>
             <br>
-            <b>Polish</b><br>
+            <b>$language{'pl'}</b><br>
             Cezary Morga<br>
             <br>
-            <b>Portuguese (Brazil)</b><br>
+            <b>$language{'pt-br'}</b><br>
             Breno G. de Oliveira<br>
             Gabriel Vieira<br>
             <br>
-            <b>Spanish</b><br>
+            <b>$language{'es-es'}</b><br>
             Paco Alguacil<br>
             Enrique Nell<br>
             <br>
-            <b>Russian</b><br>
+            <b>$language{'ru'}</b><br>
             Andrew Shitov
           </p>
         </td>

@@ -334,7 +334,7 @@ BEGIN {
 
 		'nl-nl' => {
 
-			# Simplify until there's another Italian
+			# Simplify until there's another Dutch
 			# gettext   => 'Dutch (Netherlands)',
 			# utf8text  => 'Nederlands (Nederlands)',
 			gettext   => _T('Dutch'),
@@ -357,8 +357,8 @@ BEGIN {
 		},
 
 		'no' => {
-			gettext   => _T('Norwegian (Norway)'),
-			utf8text  => 'Norsk (Norge)',
+			gettext   => _T('Norwegian'),
+			utf8text  => 'Norsk',
 			iso639    => 'no',
 			iso3166   => 'NO',
 			wxid      => Wx::wxLANGUAGE_NORWEGIAN_BOKMAL,
