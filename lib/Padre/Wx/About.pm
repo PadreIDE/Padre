@@ -99,6 +99,10 @@ sub _content_about {
 	# Create the content for the About window
 	my $self   = shift;
 	my $splash = Padre::Util::splash();
+	my $created_by         = Wx::gettext('Created by');
+	my $padre_dev_team     = Wx::gettext('The Padre Development Team');
+	my $splash_name        = Wx::gettext('Blue butterfly on a green leaf');
+	my $splash_description = Wx::gettext('splash image is based on work by');
 	$self->{about}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -106,10 +110,9 @@ sub _content_about {
     <font size="+4">Padre $VERSION</font>
     <font size="+1">&nbsp;&nbsp;Perl Application Development and Refactoring Environment</font>
     </strong>
-    <p>Created by Gábor Szabó</p>
-    <p>Copyright 2008 - 2010 The Padre Development Team</p>
-    <p>"Blue butterfly on a green leaf" splash image is based on work by 
-    Jerry Charlotte (blackbutterfly)</p>
+    <p>$created_by Gábor Szabó</p>
+    <p>Copyright 2008 - 2010 $padre_dev_team</p>
+    <p>"$splash_name" - $splash_description Jerry Charlotte (blackbutterfly)</p>
     <p>
     <center>
         <img src="$splash">
