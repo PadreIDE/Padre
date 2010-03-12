@@ -1,5 +1,5 @@
 # German translations for Padre package.
-# Copyright (C) 2008 THE Padre'S COPYRIGHT HOLDER
+# Copyright (C) 2008, 2009, 2010 THE Padre'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Padre package.
 # Heiko Jansen <heiko_jansen@web.de>, 2008.
 #
@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-11 13:36+0100\n"
+"POT-Creation-Date: 2010-03-12 11:30+0100\n"
 "PO-Revision-Date: 2010-02-01 10:30+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
@@ -28,131 +28,131 @@ msgstr ""
 "speichern Sie das aktuelle Dokument unter einem anderen Namen oder schließen "
 "es."
 
-#: lib/Padre/Locale.pm:74
+#: lib/Padre/Locale.pm:85
 msgid "English (United Kingdom)"
 msgstr "Englisch (Vereinigtes Königreich)"
 
-#: lib/Padre/Locale.pm:113
+#: lib/Padre/Locale.pm:124
 msgid "English (Australian)"
 msgstr "Englisch (Australien)"
 
-#: lib/Padre/Locale.pm:131 lib/Padre/Wx/Main.pm:3434
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3434
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: lib/Padre/Locale.pm:145
+#: lib/Padre/Locale.pm:156
 msgid "Arabic"
 msgstr "Arabisch"
 
-#: lib/Padre/Locale.pm:155
+#: lib/Padre/Locale.pm:166
 msgid "Czech"
 msgstr "Tschechisch"
 
-#: lib/Padre/Locale.pm:165
+#: lib/Padre/Locale.pm:176
 msgid "German"
 msgstr "Deutsch"
 
-#: lib/Padre/Locale.pm:175
+#: lib/Padre/Locale.pm:186
 msgid "English"
 msgstr "Englisch"
 
-#: lib/Padre/Locale.pm:184
+#: lib/Padre/Locale.pm:195
 msgid "English (Canada)"
 msgstr "Englisch (Kanada)"
 
-#: lib/Padre/Locale.pm:193
+#: lib/Padre/Locale.pm:204
 msgid "English (New Zealand)"
 msgstr "Englisch (Neuseeland)"
 
-#: lib/Padre/Locale.pm:204
+#: lib/Padre/Locale.pm:215
 msgid "English (United States)"
 msgstr "Englisch (Vereinigte Staaten)"
 
-#: lib/Padre/Locale.pm:213
+#: lib/Padre/Locale.pm:224
 msgid "Spanish (Argentina)"
 msgstr "Spanisch (Argentinien)"
 
-#: lib/Padre/Locale.pm:227
+#: lib/Padre/Locale.pm:238
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: lib/Padre/Locale.pm:237
+#: lib/Padre/Locale.pm:248
 msgid "Persian (Iran)"
 msgstr "Persisch (Iran)"
 
-#: lib/Padre/Locale.pm:247
+#: lib/Padre/Locale.pm:258
 msgid "French (Canada)"
 msgstr "Französisch (Kanada)"
 
-#: lib/Padre/Locale.pm:261
+#: lib/Padre/Locale.pm:272
 msgid "French"
 msgstr "Französisch"
 
-#: lib/Padre/Locale.pm:271
+#: lib/Padre/Locale.pm:282
 msgid "Hebrew"
 msgstr "Hebräisch"
 
-#: lib/Padre/Locale.pm:281
+#: lib/Padre/Locale.pm:292
 msgid "Hungarian"
 msgstr "Ungarisch"
 
-#: lib/Padre/Locale.pm:295
+#: lib/Padre/Locale.pm:306
 msgid "Italian"
 msgstr "Italienisch"
 
-#: lib/Padre/Locale.pm:305
+#: lib/Padre/Locale.pm:316
 msgid "Japanese"
 msgstr "Japanisch"
 
-#: lib/Padre/Locale.pm:315
+#: lib/Padre/Locale.pm:326
 msgid "Korean"
 msgstr "Koreanisch"
 
-#: lib/Padre/Locale.pm:329
+#: lib/Padre/Locale.pm:340
 msgid "Dutch"
 msgstr "Niederländisch"
 
-#: lib/Padre/Locale.pm:339
+#: lib/Padre/Locale.pm:350
 msgid "Dutch (Belgium)"
 msgstr "Niederländisch (Belgien)"
 
-#: lib/Padre/Locale.pm:349
+#: lib/Padre/Locale.pm:360
 msgid "Norwegian (Norway)"
 msgstr "Norwegisch (Norwegen)"
 
-#: lib/Padre/Locale.pm:359
+#: lib/Padre/Locale.pm:370
 msgid "Polish"
 msgstr "Polnisch"
 
-#: lib/Padre/Locale.pm:369
+#: lib/Padre/Locale.pm:380
 msgid "Portuguese (Brazil)"
 msgstr "Portugiesisch (Brasilien)"
 
-#: lib/Padre/Locale.pm:379
+#: lib/Padre/Locale.pm:390
 msgid "Portuguese (Portugal)"
 msgstr "Portugiesisch (Portugal)"
 
-#: lib/Padre/Locale.pm:389
+#: lib/Padre/Locale.pm:400
 msgid "Russian"
 msgstr "Russisch"
 
-#: lib/Padre/Locale.pm:399
+#: lib/Padre/Locale.pm:410
 msgid "Turkish"
 msgstr "Türkisch"
 
-#: lib/Padre/Locale.pm:409
+#: lib/Padre/Locale.pm:420
 msgid "Chinese"
 msgstr "Chinesisch"
 
-#: lib/Padre/Locale.pm:419
+#: lib/Padre/Locale.pm:430
 msgid "Chinese (Simplified)"
 msgstr "Chinesisch (Vereinfacht)"
 
-#: lib/Padre/Locale.pm:429
+#: lib/Padre/Locale.pm:440
 msgid "Chinese (Traditional)"
 msgstr "Chinesisch (Traditionell)"
 
-#: lib/Padre/Locale.pm:443
+#: lib/Padre/Locale.pm:454
 msgid "Klingon"
 msgstr "Klingonisch"
 
@@ -403,7 +403,7 @@ msgstr "Projekt-Tools (Links)"
 
 #: lib/Padre/Config.pm:495
 msgid "Document Tools (Right)"
-msgstr "Dokumenten-Tools (Rechts)msgme"
+msgstr "Dokumenten-Tools (Rechts)"
 
 #: lib/Padre/Config.pm:658
 msgid "No Autoindent"
@@ -561,7 +561,7 @@ msgstr "Ack"
 msgid "About"
 msgstr "Über"
 
-#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Menu/View.pm:200
+#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Menu/View.pm:197
 #: lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr "Padre"
@@ -963,6 +963,14 @@ msgstr "Fehler: %s"
 msgid "Internal error"
 msgstr "Interner Fehler"
 
+#: lib/Padre/Wx/Main.pm:5512 lib/Padre/Plugin/Devel.pm:140
+msgid "No file is open"
+msgstr "Keine geöffnete Datei"
+
+#: lib/Padre/Wx/Main.pm:5512 lib/Padre/Wx/Main.pm:5549
+msgid "Stats"
+msgstr "Dokument-Statistiken"
+
 #: lib/Padre/Wx/Main.pm:5524
 msgid "(Document not on disk)"
 msgstr "(Dokument nicht gespeichert)"
@@ -1015,6 +1023,10 @@ msgstr "keine"
 #, perl-format
 msgid "Filename: %s"
 msgstr "Dateiname: %s"
+
+#: lib/Padre/Wx/Main.pm:5546
+msgid "File is read-only.\n"
+msgstr "Datei ist schreibgeschützt.\n"
 
 #: lib/Padre/Wx/Main.pm:5573
 msgid "Space to Tab"
@@ -1162,63 +1174,63 @@ msgstr "&Suche"
 msgid "&Run"
 msgstr "Ausfüh&ren"
 
-#: lib/Padre/Wx/Menu/View.pm:81
+#: lib/Padre/Wx/Menu/View.pm:78
 msgid "View Document As..."
 msgstr "Dokument betrachten als..."
 
-#: lib/Padre/Wx/Menu/View.pm:95
+#: lib/Padre/Wx/Menu/View.pm:92
 #, perl-format
 msgid "Switch document type to %s"
 msgstr "Dokumentenart zu %s ändern"
 
-#: lib/Padre/Wx/Menu/View.pm:174
+#: lib/Padre/Wx/Menu/View.pm:171
 msgid "Font Size"
 msgstr "Schriftgröße"
 
-#: lib/Padre/Wx/Menu/View.pm:196
+#: lib/Padre/Wx/Menu/View.pm:193
 msgid "Style"
 msgstr "Stil"
 
-#: lib/Padre/Wx/Menu/View.pm:201
+#: lib/Padre/Wx/Menu/View.pm:198
 msgid "Evening"
 msgstr "Nachmittag"
 
-#: lib/Padre/Wx/Menu/View.pm:202
+#: lib/Padre/Wx/Menu/View.pm:199
 msgid "Night"
 msgstr "Nacht"
 
-#: lib/Padre/Wx/Menu/View.pm:203
+#: lib/Padre/Wx/Menu/View.pm:200
 msgid "Ultraedit"
 msgstr "Ultraedit"
 
-#: lib/Padre/Wx/Menu/View.pm:204
+#: lib/Padre/Wx/Menu/View.pm:201
 msgid "Notepad++"
 msgstr "Notepad++"
 
-#: lib/Padre/Wx/Menu/View.pm:215 lib/Padre/Wx/Menu/View.pm:239
+#: lib/Padre/Wx/Menu/View.pm:212 lib/Padre/Wx/Menu/View.pm:236
 #, perl-format
 msgid "Switch highlighting colors to %s style"
 msgstr "Syntax-Hervorhebung zum %s-Stil ändern"
 
-#: lib/Padre/Wx/Menu/View.pm:260
+#: lib/Padre/Wx/Menu/View.pm:257
 msgid "Language"
 msgstr "Sprache"
 
-#: lib/Padre/Wx/Menu/View.pm:268
+#: lib/Padre/Wx/Menu/View.pm:265
 msgid "System Default"
 msgstr "System-Vorgabe"
 
-#: lib/Padre/Wx/Menu/View.pm:269
+#: lib/Padre/Wx/Menu/View.pm:266
 #, perl-format
 msgid "Switch menus to the default %s"
 msgstr "Menüs zum %s-Standard wechseln"
 
-#: lib/Padre/Wx/Menu/View.pm:306
+#: lib/Padre/Wx/Menu/View.pm:303
 #, perl-format
 msgid "Switch menus to %s"
 msgstr "Menü zu %s wechseln"
 
-#: lib/Padre/Wx/Menu/View.pm:328
+#: lib/Padre/Wx/Menu/View.pm:325
 msgid "&View"
 msgstr "&Ansicht"
 
@@ -1263,11 +1275,11 @@ msgstr "Groß-/Kleinschreibung"
 msgid "Diff Tools"
 msgstr "Diff-Tools"
 
-#: lib/Padre/Wx/Menu/Edit.pm:333
+#: lib/Padre/Wx/Menu/Edit.pm:326
 msgid "Show as ..."
 msgstr "Zeige als..."
 
-#: lib/Padre/Wx/Menu/Edit.pm:351 lib/Padre/Wx/Dialog/Snippets.pm:26
+#: lib/Padre/Wx/Menu/Edit.pm:344 lib/Padre/Wx/Dialog/Snippets.pm:26
 msgid "&Edit"
 msgstr "&Bearbeiten"
 
@@ -1279,18 +1291,6 @@ msgstr "Live-Support"
 msgid "&Help"
 msgstr "&Hilfe"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:53
-msgid "Module Tools"
-msgstr "Modul-Werkzeuge"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:91
-msgid "Plug-in Tools"
-msgstr "Plugin-Werkzeuge"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:186
-msgid "&Tools"
-msgstr "&Werkzeuge"
-
 #: lib/Padre/Wx/Menu/Debug.pm:116
 msgid "&Debug"
 msgstr "&Debugging"
@@ -1298,6 +1298,18 @@ msgstr "&Debugging"
 #: lib/Padre/Wx/Menu/Perl.pm:106
 msgid "&Perl"
 msgstr "&Perl"
+
+#: lib/Padre/Wx/Menu/Tools.pm:59
+msgid "Module Tools"
+msgstr "Modul-Werkzeuge"
+
+#: lib/Padre/Wx/Menu/Tools.pm:97
+msgid "Plug-in Tools"
+msgstr "Plugin-Werkzeuge"
+
+#: lib/Padre/Wx/Menu/Tools.pm:192
+msgid "&Tools"
+msgstr "&Werkzeuge"
 
 #: lib/Padre/Wx/Menu/File.pm:42
 msgid "New..."
@@ -1469,7 +1481,7 @@ msgstr "Ignoriere Groß-/Kleinschreibung"
 msgid "Use rege&x"
 msgstr "Verwende Rege&x"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:35 lib/Padre/Action/Plugins.pm:47
+#: lib/Padre/Wx/Dialog/PluginManager.pm:35 lib/Padre/Action/Tools.pm:47
 msgid "Plug-in Manager"
 msgstr "Plugin-Manager"
 
@@ -2270,7 +2282,7 @@ msgstr "Lese Daten, bitte warten..."
 msgid "Could not find a help provider for "
 msgstr "Konnte keinen Hilfe-Anbieter finden:"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:46 lib/Padre/Action/Plugins.pm:37
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:46 lib/Padre/Action/Tools.pm:37
 msgid "Key Bindings"
 msgstr "Tastenkombinationen"
 
@@ -2801,10 +2813,6 @@ msgstr "Live-Support für wxPerl"
 #: lib/Padre/Plugin/Devel.pm:110 lib/Padre/Plugin/Devel.pm:111
 msgid "Expression"
 msgstr "Ausdruck"
-
-#: lib/Padre/Plugin/Devel.pm:140
-msgid "No file is open"
-msgstr "Keine geöffnete Datei"
 
 #: lib/Padre/Plugin/Devel.pm:158
 msgid "No Perl 5 file is open"
@@ -3347,7 +3355,7 @@ msgstr "Einen Klick der rechten Maustaste simulieren"
 
 #: lib/Padre/Action/Window.pm:103
 msgid "GoTo Functions Window"
-msgstr "Funktions-Fenster"
+msgstr "Funktions-Bereich"
 
 #: lib/Padre/Action/Window.pm:104
 msgid "Set the focus to be the functions window"
@@ -3371,7 +3379,7 @@ msgstr "Die Dokumentstruktur auswählen"
 
 #: lib/Padre/Action/Window.pm:139
 msgid "GoTo Output Window"
-msgstr "Ausgabe-Bereich\tAlt-O"
+msgstr "Ausgabe-Bereich"
 
 #: lib/Padre/Action/Window.pm:140
 msgid "Set the focus to be the output window"
@@ -3552,7 +3560,8 @@ msgstr "&Auswählen bis zur passenden Klammer"
 #: lib/Padre/Action/Edit.pm:326
 msgid "Select to the matching opening or closing brace: { }, ( ), [ ], < >"
 msgstr ""
-"&Auswählen bis zur passenden öffnenden oder schließenden Klammer: { }, ( ), [ ], < >"
+"&Auswählen bis zur passenden öffnenden oder schließenden Klammer: { }, ( ), "
+"[ ], < >"
 
 #: lib/Padre/Action/Edit.pm:354
 msgid "&Join lines"
@@ -3823,7 +3832,7 @@ msgstr ""
 
 #: lib/Padre/Action/Help.pm:111
 msgid "Win32 Questions (English)"
-msgstr "Win32 Fragen (Englisch)"
+msgstr "Win32-Fragen (Englisch)"
 
 #: lib/Padre/Action/Help.pm:113
 msgid ""
@@ -3874,129 +3883,6 @@ msgstr "Ü&ber"
 #: lib/Padre/Action/Help.pm:165
 msgid "Show the about-Padre information"
 msgstr "Informationsseite zu Padre und den Entwicklern anzeigen."
-
-#: lib/Padre/Action/Plugins.pm:38
-msgid "Show the key bindings dialog to configure Padre shortcuts"
-msgstr "Konfiguriere die Tastenkombinationen für Padre"
-
-#: lib/Padre/Action/Plugins.pm:48
-msgid "Show the Padre plug-in manager to enable or disable plug-ins"
-msgstr "Plugins können im Plugin-Manager aktiviert und deaktiviert werden."
-
-#: lib/Padre/Action/Plugins.pm:63
-msgid "Plug-in List (CPAN)"
-msgstr "Plugin-Liste (CPAN)"
-
-#: lib/Padre/Action/Plugins.pm:64
-msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
-msgstr "Padre::Plugin - Liste im Browser anzeigen"
-
-#: lib/Padre/Action/Plugins.pm:72
-msgid "Edit My Plug-in"
-msgstr "Editiere 'Mein Plugin'"
-
-#: lib/Padre/Action/Plugins.pm:73
-msgid ""
-"My Plug-in is a plug-in where developers could extend their Padre "
-"installation"
-msgstr ""
-"My-Plugin erlaubt es jedem Entwickler, die lokale Padre-Installation zu "
-"erweitern."
-
-#: lib/Padre/Action/Plugins.pm:79
-msgid "Could not find the Padre::Plugin::My plug-in"
-msgstr "Konnte das Plugin Padre::Plugin::My nicht finden"
-
-#: lib/Padre/Action/Plugins.pm:89
-msgid "Reload My Plug-in"
-msgstr "Lade 'Mein Plugin' erneut"
-
-#: lib/Padre/Action/Plugins.pm:90
-msgid "This function reloads the My plug-in without restarting Padre"
-msgstr ""
-"Diese Funktion aktualisiert das My-Plugin ohne dass Padre neu gestartet "
-"werden muss."
-
-#: lib/Padre/Action/Plugins.pm:98 lib/Padre/Action/Plugins.pm:102
-#: lib/Padre/Action/Plugins.pm:103
-msgid "Reset My plug-in"
-msgstr "Setze 'Mein Plugin' zurück"
-
-#: lib/Padre/Action/Plugins.pm:99
-msgid "Reset the My plug-in to the default"
-msgstr "Setzt My-Plugin auf den Standard-Dateiinhalt zurück."
-
-#: lib/Padre/Action/Plugins.pm:118
-msgid "Reload All Plug-ins"
-msgstr "Lade alle Plugins neu"
-
-#: lib/Padre/Action/Plugins.pm:119
-msgid "Reload all plug-ins from disk"
-msgstr "Lade alle Plugins neu"
-
-#: lib/Padre/Action/Plugins.pm:127
-msgid "(Re)load Current Plug-in"
-msgstr "Lade aktuelles Plugin (erneut)"
-
-#: lib/Padre/Action/Plugins.pm:128
-msgid "Reloads (or initially loads) the current plug-in"
-msgstr "Lädt das aktuelle Plugin oder aktualisiert es"
-
-#: lib/Padre/Action/Plugins.pm:146
-msgid "Install CPAN Module"
-msgstr "Installiere CPAN-Modul"
-
-#: lib/Padre/Action/Plugins.pm:147
-msgid "Install a Perl module from CPAN"
-msgstr "Ein Perl-Modul vom CPAN installieren"
-
-#: lib/Padre/Action/Plugins.pm:159
-msgid "Install Local Distribution"
-msgstr "Installiere Distribution von lokalem Ort"
-
-#: lib/Padre/Action/Plugins.pm:160
-msgid "Using CPAN.pm to install a CPAN like package opened locally"
-msgstr "Ein lokales CPAN-Paket mittels CPAN.pm installieren"
-
-#: lib/Padre/Action/Plugins.pm:168
-msgid "Install Remote Distribution"
-msgstr "Installiere Distribution von entferntem Ort"
-
-#: lib/Padre/Action/Plugins.pm:169
-msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
-msgstr "Eine tar.gz-Datei runterladen und mit CPAN installieren"
-
-#: lib/Padre/Action/Plugins.pm:177
-msgid "Open CPAN Config File"
-msgstr "Öffne CPAN-Konfigurationsdatei"
-
-#: lib/Padre/Action/Plugins.pm:178
-msgid "Open CPAN::MyConfig.pm for manual editing by experts"
-msgstr "CPAN-Konfiguration aufrufen"
-
-#: lib/Padre/Action/Plugins.pm:197
-msgid "Select distribution to install"
-msgstr "Distribution zur Installation auswählen"
-
-#: lib/Padre/Action/Plugins.pm:210 lib/Padre/Action/Plugins.pm:235
-msgid "Did not provide a distribution"
-msgstr "Stellte keine Distribution bereit"
-
-#: lib/Padre/Action/Plugins.pm:225
-msgid ""
-"Enter URL to install\n"
-"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-msgstr ""
-"URL zur Installation angeben\n"
-"z.B. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-
-#: lib/Padre/Action/Plugins.pm:252
-msgid "pip is unexpectedly not installed"
-msgstr "pip ist wider Erwarten nicht installiert"
-
-#: lib/Padre/Action/Plugins.pm:298
-msgid "Failed to find your CPAN configuration"
-msgstr "Konnte CPAN-Konfiguration nicht finden"
 
 #: lib/Padre/Action/Debug.pm:41
 msgid "Step In"
@@ -4189,6 +4075,129 @@ msgstr "Automatische Klammer-Ergänzung"
 #: lib/Padre/Action/Perl.pm:147
 msgid "When typing { insert a closing } automatically"
 msgstr "Klammern automatisch ergänzen"
+
+#: lib/Padre/Action/Tools.pm:38
+msgid "Show the key bindings dialog to configure Padre shortcuts"
+msgstr "Konfiguriere die Tastenkombinationen für Padre"
+
+#: lib/Padre/Action/Tools.pm:48
+msgid "Show the Padre plug-in manager to enable or disable plug-ins"
+msgstr "Plugins können im Plugin-Manager aktiviert und deaktiviert werden."
+
+#: lib/Padre/Action/Tools.pm:63
+msgid "Plug-in List (CPAN)"
+msgstr "Plugin-Liste (CPAN)"
+
+#: lib/Padre/Action/Tools.pm:64
+msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
+msgstr "Padre::Plugin - Liste im Browser anzeigen"
+
+#: lib/Padre/Action/Tools.pm:72
+msgid "Edit My Plug-in"
+msgstr "Editiere 'Mein Plugin'"
+
+#: lib/Padre/Action/Tools.pm:73
+msgid ""
+"My Plug-in is a plug-in where developers could extend their Padre "
+"installation"
+msgstr ""
+"My-Plugin erlaubt es jedem Entwickler, die lokale Padre-Installation zu "
+"erweitern."
+
+#: lib/Padre/Action/Tools.pm:79
+msgid "Could not find the Padre::Plugin::My plug-in"
+msgstr "Konnte das Plugin Padre::Plugin::My nicht finden"
+
+#: lib/Padre/Action/Tools.pm:89
+msgid "Reload My Plug-in"
+msgstr "Lade 'Mein Plugin' erneut"
+
+#: lib/Padre/Action/Tools.pm:90
+msgid "This function reloads the My plug-in without restarting Padre"
+msgstr ""
+"Diese Funktion aktualisiert das My-Plugin ohne dass Padre neu gestartet "
+"werden muss."
+
+#: lib/Padre/Action/Tools.pm:98 lib/Padre/Action/Tools.pm:102
+#: lib/Padre/Action/Tools.pm:103
+msgid "Reset My plug-in"
+msgstr "Setze 'Mein Plugin' zurück"
+
+#: lib/Padre/Action/Tools.pm:99
+msgid "Reset the My plug-in to the default"
+msgstr "Setzt My-Plugin auf den Standard-Dateiinhalt zurück."
+
+#: lib/Padre/Action/Tools.pm:118
+msgid "Reload All Plug-ins"
+msgstr "Lade alle Plugins neu"
+
+#: lib/Padre/Action/Tools.pm:119
+msgid "Reload all plug-ins from disk"
+msgstr "Lade alle Plugins neu"
+
+#: lib/Padre/Action/Tools.pm:127
+msgid "(Re)load Current Plug-in"
+msgstr "Lade aktuelles Plugin (erneut)"
+
+#: lib/Padre/Action/Tools.pm:128
+msgid "Reloads (or initially loads) the current plug-in"
+msgstr "Lädt das aktuelle Plugin oder aktualisiert es"
+
+#: lib/Padre/Action/Tools.pm:146
+msgid "Install CPAN Module"
+msgstr "Installiere CPAN-Modul"
+
+#: lib/Padre/Action/Tools.pm:147
+msgid "Install a Perl module from CPAN"
+msgstr "Ein Perl-Modul vom CPAN installieren"
+
+#: lib/Padre/Action/Tools.pm:159
+msgid "Install Local Distribution"
+msgstr "Installiere Distribution von lokalem Ort"
+
+#: lib/Padre/Action/Tools.pm:160
+msgid "Using CPAN.pm to install a CPAN like package opened locally"
+msgstr "Ein lokales CPAN-Paket mittels CPAN.pm installieren"
+
+#: lib/Padre/Action/Tools.pm:168
+msgid "Install Remote Distribution"
+msgstr "Installiere Distribution von entferntem Ort"
+
+#: lib/Padre/Action/Tools.pm:169
+msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
+msgstr "Eine tar.gz-Datei runterladen und mit CPAN installieren"
+
+#: lib/Padre/Action/Tools.pm:177
+msgid "Open CPAN Config File"
+msgstr "Öffne CPAN-Konfigurationsdatei"
+
+#: lib/Padre/Action/Tools.pm:178
+msgid "Open CPAN::MyConfig.pm for manual editing by experts"
+msgstr "CPAN-Konfiguration aufrufen"
+
+#: lib/Padre/Action/Tools.pm:197
+msgid "Select distribution to install"
+msgstr "Distribution zur Installation auswählen"
+
+#: lib/Padre/Action/Tools.pm:210 lib/Padre/Action/Tools.pm:235
+msgid "Did not provide a distribution"
+msgstr "Stellte keine Distribution bereit"
+
+#: lib/Padre/Action/Tools.pm:225
+msgid ""
+"Enter URL to install\n"
+"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+msgstr ""
+"URL zur Installation angeben\n"
+"z.B. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+
+#: lib/Padre/Action/Tools.pm:252
+msgid "pip is unexpectedly not installed"
+msgstr "pip ist wider Erwarten nicht installiert"
+
+#: lib/Padre/Action/Tools.pm:298
+msgid "Failed to find your CPAN configuration"
+msgstr "Konnte CPAN-Konfiguration nicht finden"
 
 #: lib/Padre/Action/File.pm:31
 msgid "&New"
@@ -4659,7 +4668,7 @@ msgstr "&Gehe zu Element"
 #~ msgstr "Verwende Rege&x"
 
 #~ msgid "Close Window on &hit"
-#~ msgstr "Fenster schließuen bei &Treffer"
+#~ msgstr "Fenster schließen bei &Treffer"
 
 #~ msgid "%s occurences were replaced"
 #~ msgstr "%s Vorkommen wurden ersetzt"
@@ -4769,7 +4778,7 @@ msgstr "&Gehe zu Element"
 #~ msgstr "Stop\tF6"
 
 #~ msgid "Use PPI Syntax Highlighting"
-#~ msgstr "Verwende PPI Syntax-Hervorhebung"
+#~ msgstr "Verwende PPI-Syntax-Hervorhebung"
 
 #~ msgid "Disable Experimental Mode"
 #~ msgstr "Experimentellen Modus abschalten"

@@ -5509,7 +5509,7 @@ sub on_doc_stats {
 
 	my $doc = $self->current->document;
 	if ( not $doc ) {
-		$self->message( 'No file is open', 'Stats' );
+		$self->message( Wx::gettext('No file is open'), Wx::gettext('Stats') );
 		return;
 	}
 
@@ -5543,10 +5543,10 @@ sub on_doc_stats {
 	my $message = join $/, @messages;
 
 	if ($is_readonly) {
-		$message .= "File is read-only.\n";
+		$message .= Wx::gettext("File is read-only.\n");
 	}
 
-	$self->message( $message, 'Stats' );
+	$self->message( $message, Wx::gettext('Stats') );
 	return;
 }
 
