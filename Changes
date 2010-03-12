@@ -13,8 +13,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       34.1meg to 20meg with a reduction in total memory use for a
       typical user of about 20% (ADAMK)
     - Add language names/translated texts to select_language list (SEWI)
+    - Fixed ticket #865 Wrong document type in View Document As (PLAVEN)
 
-0.58 2010.03.08
+0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
     - In advanced preferences, display the storage backend name when it is
       default and 'User' is now called 'Overriden' (AZAWAWI)
