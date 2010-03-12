@@ -1130,6 +1130,8 @@ sub refresh {
 	$self->refresh_functions($current);
 	$self->refresh_directory($current);
 	$self->refresh_status($current);
+	$self->refresh_view_document_as($current);
+	
 
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
@@ -1376,6 +1378,21 @@ sub refresh_recent {
 	return if $self->locked('REFRESH');
 	$self->menu->file->refresh_recent;
 }
+
+=pod
+
+=head3 C<refresh_view_document_as>
+
+Specifically refresh the View/View Document As list
+
+=cut
+
+sub refresh_view_document_as {
+	my $self = shift;
+	return if $self->locked('REFRESH');
+	$self->menu->view->refresh;
+}
+
 
 =pod
 
