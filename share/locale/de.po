@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-12 18:03+0100\n"
+"POT-Creation-Date: 2010-03-12 20:51+0100\n"
 "PO-Revision-Date: 2010-02-01 10:30+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
@@ -574,16 +574,15 @@ msgstr "Entwicklung"
 msgid "Translation"
 msgstr "Übersetzung"
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:299
-#: lib/Padre/Task/SyntaxChecker.pm:146
-msgid "Info"
-msgstr "Info"
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:298
+msgid "System Info"
+msgstr "System-Info"
 
 #: lib/Padre/Wx/About.pm:102
 msgid "Created by"
 msgstr "Ins Leben gerufen von"
 
-#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:131
+#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:130
 msgid "The Padre Development Team"
 msgstr "Padre-Entwicklerteam"
 
@@ -595,19 +594,19 @@ msgstr "Blauer Schmetterling auf einem grünen Blatt"
 msgid "splash image is based on work by"
 msgstr "Start-Bild basiert auf einem Werk von"
 
-#: lib/Padre/Wx/About.pm:213
+#: lib/Padre/Wx/About.pm:212
 msgid "The Padre Translation Team"
 msgstr "Das Padre-Übersetzerteam"
 
-#: lib/Padre/Wx/About.pm:301
+#: lib/Padre/Wx/About.pm:300
 msgid "Config dir:"
 msgstr "Konfigurationsverzeichnis:"
 
-#: lib/Padre/Wx/About.pm:315
+#: lib/Padre/Wx/About.pm:314
 msgid "Uptime"
 msgstr "Laufzeit"
 
-#: lib/Padre/Wx/About.pm:320
+#: lib/Padre/Wx/About.pm:319
 msgid "unsupported"
 msgstr "nicht unterstützt"
 
@@ -4509,6 +4508,10 @@ msgstr "Lade Datei vom FTP-Server..."
 #: lib/Padre/File/FTP.pm:266
 msgid "Writing file to FTP server..."
 msgstr "Sende Datei zum FTP-Server..."
+
+#: lib/Padre/Task/SyntaxChecker.pm:146
+msgid "Info"
+msgstr "Info"
 
 #: lib/Padre/Task/SyntaxChecker.pm:156
 #, perl-format

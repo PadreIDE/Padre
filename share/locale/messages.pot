@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-12 18:03+0100\n"
+"POT-Creation-Date: 2010-03-12 20:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -548,16 +548,15 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:299
-#: lib/Padre/Task/SyntaxChecker.pm:146
-msgid "Info"
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:298
+msgid "System Info"
 msgstr ""
 
 #: lib/Padre/Wx/About.pm:102
 msgid "Created by"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:131
+#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:130
 msgid "The Padre Development Team"
 msgstr ""
 
@@ -569,19 +568,19 @@ msgstr ""
 msgid "splash image is based on work by"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:213
+#: lib/Padre/Wx/About.pm:212
 msgid "The Padre Translation Team"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:301
+#: lib/Padre/Wx/About.pm:300
 msgid "Config dir:"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:315
+#: lib/Padre/Wx/About.pm:314
 msgid "Uptime"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:320
+#: lib/Padre/Wx/About.pm:319
 msgid "unsupported"
 msgstr ""
 
@@ -4409,6 +4408,10 @@ msgstr ""
 
 #: lib/Padre/File/FTP.pm:266
 msgid "Writing file to FTP server..."
+msgstr ""
+
+#: lib/Padre/Task/SyntaxChecker.pm:146
+msgid "Info"
 msgstr ""
 
 #: lib/Padre/Task/SyntaxChecker.pm:156

@@ -71,7 +71,7 @@ sub new {
 	);
 	$self->{notebook}->AddPage(
 		$self->{info},
-		'  ' . Wx::gettext('Info') . '  ',
+		'  ' . Wx::gettext('System Info') . '  ',
 		1,
 	);
 	$self->{notebook}->SetSelection(0);
@@ -295,7 +295,7 @@ END_HTML
 # Create the content for the Info page
 sub _content_info {
 	my $self           = shift;
-	my $padre_info     = Wx::gettext('Info');
+	my $padre_info     = Wx::gettext('System Info');
 	my $wx_widgets     = Wx::wxVERSION_STRING();
 	my $config_dir_txt = Wx::gettext('Config dir:');
 	my $config_dir     = Padre::Constant::CONFIG_DIR;
