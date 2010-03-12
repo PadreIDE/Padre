@@ -83,7 +83,7 @@ sub new {
 	foreach my $name ( sort { lc($a) cmp lc($b) } keys %mimes ) {
 		my $label = $name;
 		$label =~ s/^\d+//;
-		my $tag = "view.view_as" . lc $label;
+		my $tag = "view.view_as_" . lc $label;
 		$tag =~ s/\s/_/g;
 		$self->add_radio_menu_item(
 			$self->{view_as_highlighting},
@@ -368,7 +368,7 @@ sub refresh {
 		my $has_checked = 0;
 		if ( $document->mimetype ) {
 			my %mimes = Padre::MimeTypes::menu_view_mimes();
-			my @mimes = sort keys %mimes;
+			my @mimes = sort { lc($a) cmp lc($b) } keys %mimes;
 			foreach my $pos ( 0 .. scalar @mimes - 1 ) {
 				my $radio = $self->{view_as_highlighting}->FindItemByPosition($pos);
 				if ( $document->mimetype eq $mimes{ $mimes[$pos] } ) {
