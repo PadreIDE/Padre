@@ -50,6 +50,24 @@ sub new {
 		},
 	);
 
+	# Delay the action queue
+	Padre::Action->new(
+		name       => 'internal.wait10',
+		label      => Wx::gettext('Delay the action queue for 10 seconds'),
+		comment    => Wx::gettext('Stops processing of other action queue items for 10 seconds'),
+		menu_event => sub {
+			sleep 10;
+		},
+	);
+	Padre::Action->new(
+		name       => 'internal.wait30',
+		label      => Wx::gettext('Delay the action queue for 30 seconds'),
+		comment    => Wx::gettext('Stops processing of other action queue items for 30 seconds'),
+		menu_event => sub {
+			sleep 30;
+		},
+	);
+
 	return $self;
 }
 
