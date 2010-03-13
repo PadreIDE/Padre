@@ -149,31 +149,6 @@ sub refresh {
 	return 1;
 }
 
-sub refresh_top {
-	my $self    = shift;
-	my $current = _CURRENT(@_);
-	my $menu    = $self->wx->GetMenuCount ne $self->{default};
-
-	return 1; # This needs to be changed to match ->refresh, otherwise it breaks the menu
-
-	# Commented out temporarily to appease xt/critic.t
-	#	my $perl = !!(
-	#		   _INSTANCE( $current->document, 'Padre::Document::Perl' )
-	#		or _INSTANCE( $current->project, 'Padre::Project::Perl' )
-	#	);
-	#
-	#	# Add/Remove the Perl menu
-	#	if ( $perl and not $menu ) {
-	#		$self->wx->Insert( 4, $self->perl->wx,     Wx::gettext("&Perl") );
-	#		$self->wx->Insert( 5, $self->refactor->wx, Wx::gettext("Ref&actor") );
-	#	} elsif ( $menu and not $perl ) {
-	#		$self->wx->Remove(5); # refactor
-	#		$self->wx->Remove(4); # perl
-	#	}
-	#
-	#	return 1;
-}
-
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

@@ -1125,13 +1125,11 @@ sub refresh {
 	# and work downwards and slower from there.
 	# Humans tend to look at the top of the screen first.
 	$self->refresh_title($current);
-	$self->refresh_menubar($current);
+	$self->refresh_menu($current);
 	$self->refresh_toolbar($current);
 	$self->refresh_functions($current);
 	$self->refresh_directory($current);
 	$self->refresh_status($current);
-	
-	
 
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
@@ -1325,7 +1323,7 @@ sub refresh_menu {
 
     $main->refresh_menu_plugins;
 
-Force a refresh of the plug-in menus.
+Force a refresh of just the plug-in menus.
 
 =cut
 
@@ -1347,22 +1345,6 @@ sub refresh_windowlist {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->menu->window->refresh_windowlist($self);
-}
-
-=pod
-
-=head3 C<refresh_menubar>
-
-    $main->refresh_menubar;
-
-Force a refresh of Padre's menu bar.
-
-=cut
-
-sub refresh_menubar {
-	my $self = shift;
-	return if $self->locked('REFRESH');
-	$self->menu->refresh_top;
 }
 
 =pod
