@@ -227,7 +227,9 @@ build_padre_exe if win32;
 
 install_share_with_mofiles;
 
-auto_provides;
+auto_provides if -f 'MANIFEST';
+
+
 
 
 
