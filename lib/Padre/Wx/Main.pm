@@ -99,18 +99,35 @@ sub new {
 	Wx::Log::SetActiveTarget( Wx::LogStderr->new );
 	Wx::InitAllImageHandlers();
 
-	# Determine the initial frame style
-	my $config = $ide->config;
-	my $style  = Wx::wxDEFAULT_FRAME_STYLE;
+	# Initialise the style and position
+	my $config   = $ide->config;
+	my $size     = [ $config->main_width, $config->main_height ];
+	my $position = [ $config->main_left, $config->main_top ];
+	my $style    = Wx::wxDEFAULT_FRAME_STYLE;
+
+	# If we closed while maximized on the previous run,
+	# the previous size is completely suspect.
 	if ( $config->main_maximized ) {
-		$style |= Wx::wxMAXIMIZE;
+		$style   |= Wx::wxMAXIMIZE;
+		$size     = [ -1, -1 ];
+		$position = [ -1, -1 ];
+	}
+
+	# Generate a smarter default size than Wx does
+	if ( $size->[0] == -1 ) {
+		require Padre::Wx::Display;
+		my $rect  = Padre::Wx::Display::primary_default();
+		$size     = $rect->GetSize;
+		$position = $rect->GetPosition;
 	}
 
 	# Create the underlying Wx frame
 	my $self = $class->SUPER::new(
-		undef, -1, 'Padre: New window',
-		[ $config->main_left, $config->main_top, ],
-		[ $config->main_width, $config->main_height, ], $style,
+		undef, -1,
+		'Padre',
+		$position,
+		$size,
+		$style,
 	);
 
 	# Start with a simple placeholder title

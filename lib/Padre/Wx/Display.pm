@@ -66,11 +66,11 @@ on the primary display with a 10% margin.
 
 sub primary_default {
 	my $primary = primary();
-	return _rect_scale(
-		_rect_golden(
-			$primary->GetClientArea
+	return _rect_golden(
+		_rect_scale_margin(
+			$primary->GetClientArea,
+			0.9,
 		),
-		0.8,
 	);
 }
 
@@ -103,22 +103,38 @@ sub _rect_scale {
 	my $rect   = shift;
 	my $ratio  = shift;
 	my $margin = (1 - $ratio) / 2;
-	$rect->x( $rect->x + int($rect->width  * $margin) );
-	$rect->y( $rect->y + int($rect->height * $margin) );
 	$rect->width( int( $rect->width * $ratio ) );
 	$rect->height( int( $rect->height * $ratio ) );
+	$rect->x( $rect->x + int($rect->width  * $margin) );
+	$rect->y( $rect->y + int($rect->height * $margin) );
+	return $rect;
+}
+
+# Scale a rect by some ration at the centre,
+# while retaining a consistent margin.
+sub _rect_scale_margin {
+	my $rect    = shift;
+	my $ratio   = shift;
+	my $marginr = (1 - $ratio) / 2;
+	my $marginx = int($rect->width  * $marginr);
+	my $marginy = int($rect->height * $marginr);
+	my $margin  = ($marginx > $marginy) ? $marginy : $marginx;
+	$rect->width( $rect->width - $margin * 2 );
+	$rect->height( $rect->height - $margin * 2 );
+	$rect->x( $rect->x + $margin );
+	$rect->y( $rect->y + $margin );
 	return $rect;
 }
 
 # Shrink long size to meet the (landscape) golden (aspect) ratio.
 sub _rect_golden {
 	my $rect = shift;
-	if ( $rect->width > $rect->height * GOLDEN ) {
+	if ( $rect->width > ($rect->height * GOLDEN) ) {
 		# Shrink left from the right
-		$rect->width( int($rect->height * GOLDEN) );
+		$rect->width( int($rect->height / GOLDEN) );
 	} else {
 		# Shrink up from the bottom
-		$rect->height( int($rect->width * GOLDEN) );
+		$rect->height( int($rect->width / GOLDEN) );
 	}
 	return $rect;
 }
