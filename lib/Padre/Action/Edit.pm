@@ -232,7 +232,7 @@ sub new {
 		name        => 'edit.next_problem',
 		need_editor => 1,
 		label       => Wx::gettext('&Next Problem'),
-		comment     => Wx::gettext('Jumpt to the code that triggered the next error'),
+		comment     => Wx::gettext('Jump to the code that triggered the next error'),
 		shortcut    => 'Ctrl-.',
 		menu_event  => sub {
 			$main->{syntax}->select_next_problem if $main->{syntax};
