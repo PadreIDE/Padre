@@ -66,13 +66,22 @@ is called in the main thread. You can use this to pass references
 to GUI objects and similar things to the finish event handler
 since these must not be accessed from worker threads.
 
+However, you should be cautious when keeping references to GUI
+elements in your tasks, in case the GUI wants to destroy them
+before your task returns.
+
+Instead, it is better if your C<finish> method knows how to
+relocate the GUI element from scratch (and can safely handle
+the situation when the GUI element is gone, or has changed enough
+to make the task response irrelevent).
+
 =head1 DESCRIPTION
 
-This is the base class of all background operations in Padre. The SYNOPSIS
-explains the basic usage, but in a nutshell, you create a subclass, implement
-your own custom C<run> method, create a new instance, and call C<schedule>
-on it to run it in a worker thread. When the scheduler has a free worker
-thread for your task, the following steps happen:
+This is the base class of all background operations in Padre.
+The SYNOPSIS explains the basic usage, but in a nutshell, you create a
+subclass, implement your own custom C<run> method, create a new instance,
+and call C<schedule> on it to run it in a worker thread. When the scheduler
+has a free worker thread for your task, the following steps happen:
 
 =over 2
 
@@ -119,7 +128,7 @@ our $VERSION = '0.58';
 our $STDOUT_EVENT : shared;
 our $STDERR_EVENT : shared;
 
-# TO DO: Why are there require?
+# TO DO: Why are these require?
 require Padre;
 require Padre::Wx;
 require Wx;
@@ -141,7 +150,6 @@ inherit. It simply stores all provided data in the internal
 hash reference.
 
 =cut
-
 
 sub new {
 	my $class = shift;
@@ -226,7 +234,6 @@ You do not have to implement this method in the subclass.
 =cut
 
 sub prepare {
-	my $self = shift;
 	return 1;
 }
 
@@ -248,7 +255,6 @@ You do not have to implement this method in the subclass.
 =cut
 
 sub finish {
-	my $self = shift;
 	return 1;
 }
 
