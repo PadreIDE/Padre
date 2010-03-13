@@ -66,7 +66,7 @@ sub menu_plugins_simple {
 		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
 		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
 		Wx::gettext('Dump %INC and @INC')    => 'dump_inc',
-		Wx::gettext('Dump Display Data')     => 'dump_display',
+		Wx::gettext('Dump Display Geometry') => 'dump_display',
 		Wx::gettext('Start/Stop sub trace')  => 'trace_sub_startstop',
 
 		'---' => undef,
@@ -131,7 +131,6 @@ sub eval_selection {
 	return $self->_dump_eval( $self->current->text );
 }
 
-
 sub dump_document {
 	my $self     = shift;
 	my $current  = $self->current;
@@ -182,22 +181,43 @@ sub dump_inc {
 
 sub dump_display {
 	my $self     = shift;
-	my $count    = Wx::Display->GetCount;
 	my @displays = ();
-	foreach ( 0 .. $count ) {
-		my $display = Wx::Display->new($_);
+
+	# Due to the way it is mapped into Wx.pm
+	# this must NOT be called as a method.
+	my $count = Wx::Display::GetCount();
+
+	foreach ( 0 .. $count - 1 ) {
+		my $display  = Wx::Display->new($_);
 		push @displays,
 			{
 			IsPrimary     => $display->IsPrimary,
-			GetGeometry   => $display->GetGeometry,
-			GetClientArea => $display->GetClientArea,
+			GetGeometry   => $self->_rect($display->GetGeometry),
+			GetClientArea => $self->_rect($display->GetClientArea),
 			};
 	}
 	$self->_dump(
-		{   GetCount    => $count,
+		{  GetCount    => $count,
 			DisplayList => \@displays,
 		}
 	);
+}
+
+sub _rect {
+	my $self = shift;
+	my $rect = shift;
+	my %hash = map {
+		$_ => $rect->$_()
+	} qw{
+		GetTop
+		GetBottom
+		GetLeft
+		GetRight
+		GetHeight
+		GetWidth
+	};
+	$hash{wx} = $rect;
+	return \%hash;
 }
 
 sub trace_sub_startstop {
