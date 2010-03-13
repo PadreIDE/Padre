@@ -1383,11 +1383,14 @@ sub refresh_recent {
 
 =head3 C<refresh_view_document_as>
 
-Specifically refresh the View/View Document As list
+Specifically refresh the View menu.
 
 =cut
 
-sub refresh_view_document_as {
+# This was added to make sure the view
+# menu updates the View Document As 
+# each time a document changes.
+sub refresh_view_menu {
 	my $self = shift;
 	return if $self->locked('REFRESH');
 	$self->menu->view->refresh;
