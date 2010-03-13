@@ -15,9 +15,10 @@ our @ISA     = qw{
 };
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
-	my $aui   = $main->aui;
+	my $class  = shift;
+	my $main   = shift;
+	my $aui    = $main->aui;
+	my $unlock = $main->config->main_lockinterface ? 0 : 1;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
@@ -33,20 +34,22 @@ sub new {
 		$self,
 		Padre::Wx->aui_pane_info(
 			Name           => 'left',
+			CaptionVisible => $unlock,
+			Floatable      => $unlock,
+			Dockable       => $unlock,
+			Movable        => $unlock,
 			Resizable      => 1,
 			PaneBorder     => 0,
-			Movable        => 1,
-			CaptionVisible => 1,
 			CloseButton    => 0,
 			DestroyOnClose => 0,
 			MaximizeButton => 0,
-			Floatable      => 1,
-			Dockable       => 1,
 			Position       => 4,
 			Layer          => 2,
 			)->Left->Hide,
 	);
-	$aui->caption( 'left' => Wx::gettext('Project Tools') );
+	$aui->caption(
+		left => Wx::gettext('Project Tools'),
+	);
 
 	return $self;
 }

@@ -20,13 +20,8 @@ our $VERSION = '0.58';
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $config = Padre->ide->config;
-
-	# Create the empty menu as normal
-	my $self = bless {}, $class;
-
-	# Add additional properties
-	$self->{main} = $main;
+	my $self   = bless { main => $main }, $class;
+	my $config = $main->config;
 
 	# Can the user move stuff around
 	Padre::Action->new(

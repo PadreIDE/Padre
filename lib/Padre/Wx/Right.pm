@@ -18,13 +18,14 @@ sub new {
 	my $class = shift;
 	my $main  = shift;
 	my $aui   = $main->aui;
+	my $unlock = $main->config->main_lockinterface ? 0 : 1;
 
 	# Create the basic object
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::wxDefaultPosition,
-		Wx::Size->new( 180, 500 ), # Used when floating
+		Wx::Size->new( 160, 500 ), # Used when floating
 		Wx::wxAUI_NB_SCROLL_BUTTONS | Wx::wxAUI_NB_TOP | Wx::wxBORDER_NONE
 	);
 
@@ -33,20 +34,22 @@ sub new {
 		$self,
 		Padre::Wx->aui_pane_info(
 			Name           => 'right',
+			CaptionVisible => $unlock,
+			Floatable      => $unlock,
+			Dockable       => $unlock,
+			Movable        => $unlock,
 			Resizable      => 1,
 			PaneBorder     => 0,
-			Movable        => 1,
-			CaptionVisible => 1,
 			CloseButton    => 0,
 			DestroyOnClose => 0,
 			MaximizeButton => 0,
-			Floatable      => 1,
-			Dockable       => 1,
 			Position       => 3,
 			Layer          => 3,
 			)->Right->Hide,
 	);
-	$aui->caption( 'right' => Wx::gettext('Document Tools') );
+	$aui->caption(
+		right => Wx::gettext('Document Tools'),
+	);
 
 	return $self;
 }
