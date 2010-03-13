@@ -503,11 +503,30 @@ sub get_brace_type {
 # 
 #
 
+sub apply_style {
+	my ($self, $style_info) = @_;
+	my %previous_style = %$style_info;
+	$previous_style{style} = $self->GetStyleAt($style_info->{start});
+	
+	$self->StartStyling( $style_info->{start}, 0xFF );
+	$self->SetStyling( $style_info->{len}, $style_info->{style} );
+	
+	return \%previous_style;
+}
+
+
+my $previous_expr_hiliting_style;
 sub highlight_braces {
 	my ($self) = @_;
 	
+	my $expression_highlighting = $self->get_config->editor_brace_expression_highlighting;
+	
 	# remove current highlighting if any
 	$self->BraceHighlight( $STC_INVALID_POSITION, $STC_INVALID_POSITION  );
+	if ($previous_expr_hiliting_style) {
+		$self->apply_style($previous_expr_hiliting_style);
+		$previous_expr_hiliting_style = undef;
+	}
 	
 	my $pos1 = $self->GetCurrentPos;
 	my $info1 = $self->get_brace_info($pos1) or return;
@@ -519,9 +538,43 @@ sub highlight_braces {
 	return if $actual_pos2 == $STC_INVALID_POSITION; #Wx::wxSTC_INVALID_POSITION  #????
 
 	$self->BraceHighlight( $actual_pos1, $actual_pos2 );
+	
+	if ($expression_highlighting) {
+		my $pos2  = $self->find_matching_brace($pos1) or return;
+		my %style = (start => $pos1 < $pos2 ? $pos1 : $pos2, 
+			len => abs($pos1-$pos2), style => Wx::wxSTC_STYLE_DEFAULT);
+		$previous_expr_hiliting_style = $self->apply_style(\%style);
+	}
+
 
 	return;
 }
+
+
+=head2 find_matching_brace
+
+Find the position of to the matching brace if any. If the cursor is inside the braces the destination 
+will be inside too, same it is outside.
+
+	Params:
+		pos - the cursor position in the editor [defaults to cursor position) : int
+		
+	Return:
+		matching_pos - the matching position, or undef if none
+
+=cut
+sub find_matching_brace {
+	my ($self, $pos) = @_;
+	$pos = $self->GetCurrentPos unless defined $pos;
+	my $info1 = $self->get_brace_info($pos) or return;
+	my ($actual_pos1, $brace, $is_after, $is_opening) = @$info1;
+	
+	my $actual_pos2 = $self->BraceMatch($actual_pos1);
+	return if $actual_pos2 == $STC_INVALID_POSITION;
+	$actual_pos2++ if $is_after; # ensure is stays inside if origin is inside, same four outside
+	return $actual_pos2;
+}
+
 
 =head2 goto_matching_brace
 
@@ -532,21 +585,10 @@ will be inside too, same it is outside.
 		pos - the cursor position in the editor [defaults to cursor position) : int
 		
 
-
 =cut
 sub goto_matching_brace {
 	my ($self, $pos) = @_;
-	$pos = $self->GetCurrentPos unless defined $pos;
-	my $info1 = $self->get_brace_info($pos) or return;
-	my ($actual_pos1, $brace, $is_after, $is_opening) = @$info1;
-	
-	my $actual_pos2 = $self->BraceMatch($actual_pos1);
-	return if $actual_pos2 == $STC_INVALID_POSITION;
-	
-	# several cases:
-	my $pos2 = $actual_pos2;
-	$pos2++ if $is_after; # ensure is stays inside if origin is inside, same four outside
-
+	my $pos2  = $self->find_matching_brace($pos) or return;
 	$self->GotoPos($pos2);
 }
 
@@ -565,19 +607,8 @@ will be inside too, same it is outside.
 sub select_to_matching_brace {
 	my ($self, $pos) = @_;
 	$pos = $self->GetCurrentPos unless defined $pos;
-
-
-	my $info1 = $self->get_brace_info($pos) or return;
-	my ($actual_pos1, $brace, $is_after, $is_opening) = @$info1;
-	
-	my $actual_pos2 = $self->BraceMatch($actual_pos1);
-	return if $actual_pos2 == $STC_INVALID_POSITION;
-	
-	# several cases:
-	my $pos2 = $actual_pos2;
-	$pos2++ if $is_after; # ensure is stays inside if origin is inside, same four outside
-
-	my $start = $is_opening ? $self->GetSelectionStart() : $self->GetSelectionEnd();
+	my $pos2  = $self->find_matching_brace($pos) or return;
+	my $start = ($pos < $pos2) ? $self->GetSelectionStart() : $self->GetSelectionEnd();
 	$self->SetSelection($start, $pos2);
 		
 }
@@ -1020,7 +1051,7 @@ sub on_smart_highlight_begin {
 	if ( scalar @{ $self->{styles} } > 1 ) {
 		foreach my $style ( @{ $self->{styles} } ) {
 			$self->StartStyling( $style->{start}, 0xFF );
-			$self->SetStyling( $style->{len}, 32 );
+			$self->SetStyling( $style->{len}, Wx::wxSTC_STYLE_DEFAULT );
 		}
 	}
 

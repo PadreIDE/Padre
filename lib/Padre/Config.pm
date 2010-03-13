@@ -672,6 +672,14 @@ setting(
 	store   => Padre::Constant::HUMAN,
 	default => 0,
 );
+
+setting(
+	name    => 'editor_brace_expression_highlighting',
+	type    => Padre::Constant::BOOLEAN,
+	store   => Padre::Constant::HUMAN,
+	default => 0,
+);
+
 setting(
 	name    => 'save_autoclean',
 	type    => Padre::Constant::BOOLEAN,
