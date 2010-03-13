@@ -64,10 +64,9 @@ worker threads. Default: 15000ms
 use 5.008;
 use strict;
 use warnings;
+use Params::Util ();
 
 our $VERSION = '0.58';
-
-use Params::Util qw{_INSTANCE};
 
 # According to Wx docs,
 # this MUST be loaded before Wx,
@@ -119,7 +118,7 @@ sub new {
 
 	my $self = $SINGLETON = bless {
 		min_no_workers => 2,    # there were config settings for
-		max_no_workers => 6,    #  these long ago?
+		max_no_workers => 6,    # these long ago?
 		use_threads    => 1,    # can be explicitly disabled
 		reap_interval  => 15000,
 		@_,
@@ -211,10 +210,10 @@ proxy to this method for convenience.
 
 sub schedule {
 	my $self = shift;
-	my $task = _INSTANCE( shift, 'Padre::Task' )
+	my $task = Params::Util::_INSTANCE( shift, 'Padre::Task' )
 		or die "Invalid task scheduled!"; # TO DO: grace
 
-	if ( _INSTANCE( $task, 'Padre::Service' ) ) {
+	if ( Params::Util::_INSTANCE( $task, 'Padre::Service' ) ) {
 		$self->{running_services}{$task} = $task;
 	}
 
