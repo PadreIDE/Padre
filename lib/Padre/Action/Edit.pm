@@ -323,28 +323,9 @@ sub new {
 		name        => 'edit.brace_match_select',
 		need_editor => 1,
 		label       => Wx::gettext('&Select to matching brace'),
-		comment     => Wx::gettext('Select to the matching opening or closing brace: { }, ( ), [ ], < >'),
+		comment     => Wx::gettext('Select to the matching opening or closing brace'),
 		shortcut    => 'Ctrl-4',
-		menu_event  => sub {
-			my $self = shift;
-			my $INVALID_POSITION = Wx::wxSTC_INVALID_POSITION;
-			my $page = $self->current->editor;
-			my $pos1 = $page->GetCurrentPos;
-			my $pos2 = $page->BraceMatch($pos1);
-			if ( $pos2 == $INVALID_POSITION ) { #Wx::wxSTC_INVALID_POSITION
-				if ( $pos1 > 0 ) {
-					$pos1--;
-					$pos2 = $page->BraceMatch($pos1);
-				}
-			}
-
-			if ( $pos2 != $INVALID_POSITION ) { #Wx::wxSTC_INVALID_POSITION
-				my $start = $page->GetSelectionStart();
-				$page->SetSelection($start, $pos2+1);
-			}
-
-			return;			
-		},
+		menu_event  => sub { shift->current->editor->select_to_matching_brace }
 	);
 
 	Padre::Action->new(

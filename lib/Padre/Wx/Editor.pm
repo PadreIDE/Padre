@@ -38,6 +38,14 @@ our %MIME_STYLE = (
 	'application/x-php'  => 'perl', # temporary solution
 );
 
+# Karl
+# these are the allowed braces for brace highlighting and brace matching
+# this has to be subset of  ( ) [ ] { } < > since we use the scintilla
+# Brace* methods
+# always altern opening and starting braces in the constant
+my $BRACES = '{}[]()';
+my $STC_INVALID_POSITION =  Wx::wxSTC_INVALID_POSITION;
+
 my $data;
 my $data_name;
 my $data_private;
@@ -150,6 +158,22 @@ sub new {
 sub main {
 	$_[0]->GetGrandParent;
 }
+
+# convenience accessor method (and to ensure consistency)
+# return the Padre::Config instance
+sub get_config {
+	return shift->main->ide->config;
+}
+
+# convenience methods
+# return the character at a given position as a perl string
+sub get_character_at {
+	my ($self, $pos) = @_;
+	return chr( $self->GetCharAt($pos) );
+}
+
+
+
 
 sub data {
 	my $name    = shift;
@@ -397,32 +421,167 @@ sub _color {
 	return Wx::Colour->new(@c);
 }
 
+
+
+	
+	
+
+
+
+=head2 get_brace_info
+
+Look at a given position in the editor if there is a brace (according to the 
+setting editor_braces) before or after, and return the information about the context
+It always look first at the character after the position.
+
+	Params:
+		pos - the cursor position in the editor [defaults to cursor position) : int
+		
+	Return:
+		undef if no brace, otherwise [brace, actual_pos, is_after, is_opening]
+		where:
+			brace - the brace char at actual_pos
+			actual_pos - the actual position where the brace has been found
+			is_after - true iff the brace is after the cursor : boolean
+			is_opening - true iff only the brace is an opening one
+			
+	Examples:
+
+		|{} => should find the { : [0,{,1,1] 
+		{|} => should find the } : [1,},1,0]
+		{| } => should find the { : [0,{,0,1]
+
+=cut
+
+
+sub get_brace_info {
+	my ($self, $pos) = @_;
+	$pos = $self->GetCurrentPos unless defined $pos;
+	 
+	# try the after position first (default one for BraceMatch)
+	my $is_after = 1;
+	my $brace = $self->get_character_at($pos);
+	my $is_brace = $self->get_brace_type($brace);
+	if (!$is_brace && $pos > 0) { # try the before position
+		$brace = $self->get_character_at(--$pos);
+		$is_brace  = $self->get_brace_type($brace) or return undef;
+		$is_after = 0;
+	}
+	my $is_opening = $is_brace % 2; # odd values are opening
+	return [$pos, $brace, $is_after, $is_opening];
+}
+
+
+=head2 get_brace_type
+
+Tell if a character is a brace, and if it is an opening or a closing one
+
+	Params:
+		char - a character : string
+		
+	Return:
+		int : 0 if this is not a brace, an odd value if it is an opening brace and an even
+		one for a closing brace
+
+=cut
+my %_cached_braces;
+sub get_brace_type {
+	my ($self, $char) = @_;
+	unless (%_cached_braces) {
+		my $i = 1; # start from one so that all values are true
+		$_cached_braces{$_} = $i++ foreach (split //, $BRACES);
+	}
+	my $v = $_cached_braces{$char} or return 0;
+	return $v;
+}
+
+
+
+# some uncorrect behaviour (| is the cursor)
+# {} : never highlighted
+# { } : always correct
+# 
+#
+
 sub highlight_braces {
 	my ($self) = @_;
-
-	$self->BraceHighlight( -1, -1 ); # Wx::wxSTC_INVALID_POSITION
+	
+	# remove current highlighting if any
+	$self->BraceHighlight( $STC_INVALID_POSITION, $STC_INVALID_POSITION  );
+	
 	my $pos1 = $self->GetCurrentPos;
-	my $chr  = chr( $self->GetCharAt($pos1) );
+	my $info1 = $self->get_brace_info($pos1) or return;
+	my ($actual_pos1) = @$info1;
+	
+	my $actual_pos2 = $self->BraceMatch($actual_pos1);
+#	return if abs( $pos1 - $pos2 ) < 2;
 
-	my @braces = ( '{', '}', '(', ')', '[', ']' );
-	if ( not grep { $chr eq $_ } @braces ) {
-		if ( $pos1 > 0 ) {
-			$pos1--;
-			$chr = chr( $self->GetCharAt($pos1) );
-			return unless grep { $chr eq $_ } @braces;
-		}
-	}
+	return if $actual_pos2 == $STC_INVALID_POSITION; #Wx::wxSTC_INVALID_POSITION  #????
 
-	my $pos2 = $self->BraceMatch($pos1);
-	return if abs( $pos1 - $pos2 ) < 2;
-
-	return if $pos2 == -1; #Wx::wxSTC_INVALID_POSITION  #????
-
-	$self->BraceHighlight( $pos1, $pos2 );
+	$self->BraceHighlight( $actual_pos1, $actual_pos2 );
 
 	return;
 }
 
+=head2 goto_matching_brace
+
+Move the cursor to the matching brace if any. If the cursor is inside the braces the destination 
+will be inside too, same it is outside.
+
+	Params:
+		pos - the cursor position in the editor [defaults to cursor position) : int
+		
+
+
+=cut
+sub goto_matching_brace {
+	my ($self, $pos) = @_;
+	$pos = $self->GetCurrentPos unless defined $pos;
+	my $info1 = $self->get_brace_info($pos) or return;
+	my ($actual_pos1, $brace, $is_after, $is_opening) = @$info1;
+	
+	my $actual_pos2 = $self->BraceMatch($actual_pos1);
+	return if $actual_pos2 == $STC_INVALID_POSITION;
+	
+	# several cases:
+	my $pos2 = $actual_pos2;
+	$pos2++ if $is_after; # ensure is stays inside if origin is inside, same four outside
+
+	$self->GotoPos($pos2);
+}
+
+=head2 select_to_matching_brace
+
+Select to the matching opening or closing brace. If the cursor is inside the braces the destination 
+will be inside too, same it is outside.
+
+	Params:
+		pos - the cursor position in the editor [defaults to cursor position) : int
+		
+
+
+=cut
+
+sub select_to_matching_brace {
+	my ($self, $pos) = @_;
+	$pos = $self->GetCurrentPos unless defined $pos;
+
+
+	my $info1 = $self->get_brace_info($pos) or return;
+	my ($actual_pos1, $brace, $is_after, $is_opening) = @$info1;
+	
+	my $actual_pos2 = $self->BraceMatch($actual_pos1);
+	return if $actual_pos2 == $STC_INVALID_POSITION;
+	
+	# several cases:
+	my $pos2 = $actual_pos2;
+	$pos2++ if $is_after; # ensure is stays inside if origin is inside, same four outside
+
+	my $start = $is_opening ? $self->GetSelectionStart() : $self->GetSelectionEnd();
+	$self->SetSelection($start, $pos2);
+		
+}
+		
 # currently if there are 9 lines we set the margin to 1 width and then
 # if another line is added it is not seen well.
 # actually I added some improvement allowing a 50% growth in the file

@@ -2911,24 +2911,7 @@ Jump to brace matching current the one at current position.
 =cut
 
 sub on_brace_matching {
-	my $self = shift;
-	my $page = $self->current->editor;
-	my $pos1 = $page->GetCurrentPos;
-	my $pos2 = $page->BraceMatch($pos1);
-	if ( $pos2 == -1 ) { #Wx::wxSTC_INVALID_POSITION
-		if ( $pos1 > 0 ) {
-			$pos1--;
-			$pos2 = $page->BraceMatch($pos1);
-		}
-	}
-
-	if ( $pos2 != -1 ) { #Wx::wxSTC_INVALID_POSITION
-		$page->GotoPos($pos2);
-	}
-
-	# TO DO: or any nearby position.
-
-	return;
+	shift->current->editor->goto_matching_brace;
 }
 
 =pod
