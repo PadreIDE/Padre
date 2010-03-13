@@ -1130,7 +1130,7 @@ sub refresh {
 	$self->refresh_functions($current);
 	$self->refresh_directory($current);
 	$self->refresh_status($current);
-	$self->refresh_view_document_as($current);
+	$self->refresh_view_menu($current);
 	
 
 	# Now signal the refresh to all remaining listeners
