@@ -110,9 +110,6 @@ if ($DESKTOP) {
 	exit(1);
 }
 
-require threads;
-require threads::shared;
-
 # local $ENV{PADRE_PAR_PATH} = $ENV{PAR_TEMP} || '';
 
 # If we have an action queue then we are running for automation reasons.
