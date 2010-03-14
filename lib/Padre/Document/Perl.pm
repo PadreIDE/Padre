@@ -1292,22 +1292,15 @@ sub newline_keep_column {
 	my $pos    = $editor->GetCurrentPos;
 	my $line   = $editor->LineFromPosition($pos);
 	my $first  = $editor->PositionFromLine($line);
-	my $col    = $pos - $editor->PositionFromLine( $editor->LineFromPosition($pos) );
-	my $text   = $editor->GetTextRange( $first, ( $pos - $first ) );
+	my $col    = $pos - $first;
+	my $text   = $editor->GetTextRange($first, $pos);
 
 	$editor->AddText( $self->newline );
 
-	$pos   = $editor->GetCurrentPos;
-	$first = $editor->PositionFromLine( $editor->LineFromPosition($pos) );
-
-	#	my $col2 = $pos - $first;
-	#	$editor->AddText( ' ' x ( $col - $col2 ) );
-
-	# TO DO: Remove the part made by auto-ident before addtext:
-	$text =~ s/[^\s\t\r\n]/ /g;
+	$text =~ s/\S/ /g;
 	$editor->AddText($text);
 
-	$editor->SetCurrentPos( $first + $col );
+	$editor->SetCurrentPos( $pos + $col + 1);
 
 	return 1;
 }
