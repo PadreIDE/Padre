@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-14 15:47+0100\n"
+"POT-Creation-Date: 2010-03-14 22:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -290,8 +290,8 @@ msgid "No document open"
 msgstr ""
 
 #: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Main.pm:5525
-#: lib/Padre/Util/FileBrowser.pm:47 lib/Padre/Util/FileBrowser.pm:87
-#: lib/Padre/Util/FileBrowser.pm:135
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:160 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr ""
 
@@ -1228,7 +1228,7 @@ msgstr ""
 msgid "Copy specials"
 msgstr ""
 
-#: lib/Padre/Wx/Menu/Edit.pm:159
+#: lib/Padre/Wx/Menu/Edit.pm:121
 msgid "Insert"
 msgstr ""
 
@@ -1398,7 +1398,7 @@ msgid "Options"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Find.pm:331 lib/Padre/Wx/Dialog/Replace.pm:535
-#: lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:581
 msgid "No matches found"
 msgstr ""
 
@@ -2065,12 +2065,17 @@ msgstr ""
 msgid "Replace Text:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:576
-#: lib/Padre/Wx/Dialog/Replace.pm:581
+#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:577
+#: lib/Padre/Wx/Dialog/Replace.pm:582
 msgid "Search and Replace"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:575
+#: lib/Padre/Wx/Dialog/Replace.pm:574
+#, perl-format
+msgid "Replaced %d match"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Replace.pm:574
 #, perl-format
 msgid "Replaced %d matches"
 msgstr ""
@@ -2112,7 +2117,7 @@ msgid "Current Directory: "
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:263
-msgid "Skip VCS files"
+msgid "Skip version control system files"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:265
@@ -2864,33 +2869,33 @@ msgstr ""
 msgid "Current '%s' not found"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1495 lib/Padre/Action/Perl.pm:69
+#: lib/Padre/Document/Perl.pm:1488 lib/Padre/Action/Perl.pm:69
 msgid "Find Variable Declaration"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1507 lib/Padre/Action/Refactor.pm:49
+#: lib/Padre/Document/Perl.pm:1500 lib/Padre/Action/Refactor.pm:49
 msgid "Lexically Rename Variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1519 lib/Padre/Document/Perl.pm:1520
+#: lib/Padre/Document/Perl.pm:1512 lib/Padre/Document/Perl.pm:1513
 #: lib/Padre/Action/Refactor.pm:57 lib/Padre/Action/Refactor.pm:58
 msgid "Replacement"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1535 lib/Padre/Action/Perl.pm:81
+#: lib/Padre/Document/Perl.pm:1528 lib/Padre/Action/Perl.pm:81
 msgid "Find Method Declaration"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1554 lib/Padre/Action/Refactor.pm:102
+#: lib/Padre/Document/Perl.pm:1547 lib/Padre/Action/Refactor.pm:102
 msgid "Introduce Temporary Variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1567 lib/Padre/Document/Perl.pm:1568
+#: lib/Padre/Document/Perl.pm:1560 lib/Padre/Document/Perl.pm:1561
 #: lib/Padre/Action/Refactor.pm:110 lib/Padre/Action/Refactor.pm:111
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1579
+#: lib/Padre/Document/Perl.pm:1572
 msgid "Edit with Regex Editor"
 msgstr ""
 

@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-14 15:47+0100\n"
+"POT-Creation-Date: 2010-03-14 22:11+0100\n"
 "PO-Revision-Date: 2010-02-01 10:30+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n !E= 1);\n"
 
 #: lib/Padre/Project.pm:41
 #, perl-format
@@ -308,8 +308,8 @@ msgid "No document open"
 msgstr "Kein geöffnetes Dokument"
 
 #: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Main.pm:5525
-#: lib/Padre/Util/FileBrowser.pm:47 lib/Padre/Util/FileBrowser.pm:87
-#: lib/Padre/Util/FileBrowser.pm:135
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:160 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr "Kein Dateiname"
 
@@ -707,7 +707,7 @@ msgstr "Suchergebnisse ("
 
 #: lib/Padre/Wx/FindResult.pm:99 lib/Padre/Wx/FindResult.pm:178
 msgid "Line No"
-msgstr "Zeile Nr."
+msgstr "Zeilennummer"
 
 #: lib/Padre/Wx/FindResult.pm:124
 msgid "Related Editor Has been Closed"
@@ -1041,11 +1041,11 @@ msgstr "Datei ist schreibgeschützt.\n"
 
 #: lib/Padre/Wx/Main.pm:5557
 msgid "Space to Tab"
-msgstr "In Tabulatoren wandeln..."
+msgstr "In Tabulatoren umwandeln..."
 
 #: lib/Padre/Wx/Main.pm:5558
 msgid "Tab to Space"
-msgstr "In Leerzeichen wandeln..."
+msgstr "In Leerzeichen umwandeln..."
 
 #: lib/Padre/Wx/Main.pm:5563
 msgid "How many spaces for each tab:"
@@ -1262,7 +1262,7 @@ msgstr "Auswählen"
 msgid "Copy specials"
 msgstr "Spezielle Kopierfunktionen"
 
-#: lib/Padre/Wx/Menu/Edit.pm:159
+#: lib/Padre/Wx/Menu/Edit.pm:121
 msgid "Insert"
 msgstr "Einfügen"
 
@@ -1432,7 +1432,7 @@ msgid "Options"
 msgstr "Optionen"
 
 #: lib/Padre/Wx/Dialog/Find.pm:331 lib/Padre/Wx/Dialog/Replace.pm:535
-#: lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:581
 msgid "No matches found"
 msgstr "Nichts gefunden"
 
@@ -2109,12 +2109,17 @@ msgstr "E&rsetzen"
 msgid "Replace Text:"
 msgstr "Ersetzen durch:"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:576
-#: lib/Padre/Wx/Dialog/Replace.pm:581
+#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:577
+#: lib/Padre/Wx/Dialog/Replace.pm:582
 msgid "Search and Replace"
 msgstr "Suchen und ersetzen"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:575
+#: lib/Padre/Wx/Dialog/Replace.pm:574
+#, perl-format
+msgid "Replaced %d match"
+msgstr "%d Ersetzung durchgeführt."
+
+#: lib/Padre/Wx/Dialog/Replace.pm:574
 #, perl-format
 msgid "Replaced %d matches"
 msgstr "%d Ersetzungen durchgeführt."
@@ -2125,11 +2130,11 @@ msgstr "Update-Informationen: http://padre.perlide.org/"
 
 #: lib/Padre/Wx/Dialog/Warning.pm:49
 msgid "Do not show this again"
-msgstr "Nicht noch einmal anzeigen."
+msgstr "Nicht noch einmal anzeigen"
 
 #: lib/Padre/Wx/Dialog/Encode.pm:53
 msgid "Encode to:"
-msgstr "Enkodieren zu:"
+msgstr "Kodieren als:"
 
 #: lib/Padre/Wx/Dialog/Encode.pm:63 lib/Padre/Action/Edit.pm:442
 msgid "Encode document to..."
@@ -2158,12 +2163,12 @@ msgid "Current Directory: "
 msgstr "Aktuelles Verzeichnis:"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:263
-msgid "Skip VCS files"
-msgstr "VCS-Dateien ignorieren"
+msgid "Skip version control system files"
+msgstr "Versionskontrollsystem-Dateien ignorieren"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:265
 msgid "Skip using MANIFEST.SKIP"
-msgstr "Überspringen mittels MANIFEST.SKIP"
+msgstr "Dateien in MANIFEST.SKIP ignorieren"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:26
 msgid "Boolean"
@@ -2911,33 +2916,33 @@ msgstr "Cursor zeigt offenbar nicht auf eine Methode"
 msgid "Current '%s' not found"
 msgstr "%s nicht gefunden."
 
-#: lib/Padre/Document/Perl.pm:1495 lib/Padre/Action/Perl.pm:69
+#: lib/Padre/Document/Perl.pm:1488 lib/Padre/Action/Perl.pm:69
 msgid "Find Variable Declaration"
 msgstr "Variablen-Deklaration suchen"
 
-#: lib/Padre/Document/Perl.pm:1507 lib/Padre/Action/Refactor.pm:49
+#: lib/Padre/Document/Perl.pm:1500 lib/Padre/Action/Refactor.pm:49
 msgid "Lexically Rename Variable"
 msgstr "Variable lexikalisch umbenennen"
 
-#: lib/Padre/Document/Perl.pm:1519 lib/Padre/Document/Perl.pm:1520
+#: lib/Padre/Document/Perl.pm:1512 lib/Padre/Document/Perl.pm:1513
 #: lib/Padre/Action/Refactor.pm:57 lib/Padre/Action/Refactor.pm:58
 msgid "Replacement"
 msgstr "Ersatz"
 
-#: lib/Padre/Document/Perl.pm:1535 lib/Padre/Action/Perl.pm:81
+#: lib/Padre/Document/Perl.pm:1528 lib/Padre/Action/Perl.pm:81
 msgid "Find Method Declaration"
 msgstr "Methoden-Deklaration suchen"
 
-#: lib/Padre/Document/Perl.pm:1554 lib/Padre/Action/Refactor.pm:102
+#: lib/Padre/Document/Perl.pm:1547 lib/Padre/Action/Refactor.pm:102
 msgid "Introduce Temporary Variable"
 msgstr "Temporäre Variable einführen"
 
-#: lib/Padre/Document/Perl.pm:1567 lib/Padre/Document/Perl.pm:1568
+#: lib/Padre/Document/Perl.pm:1560 lib/Padre/Document/Perl.pm:1561
 #: lib/Padre/Action/Refactor.pm:110 lib/Padre/Action/Refactor.pm:111
 msgid "Variable Name"
 msgstr "Variablenname"
 
-#: lib/Padre/Document/Perl.pm:1579
+#: lib/Padre/Document/Perl.pm:1572
 msgid "Edit with Regex Editor"
 msgstr "Mit Regex-Editor editieren"
 
@@ -2976,7 +2981,7 @@ msgstr "Führt den letzten Suchvorgang in umgekehrter Suchrichtung aus"
 
 #: lib/Padre/Action/Search.pm:101
 msgid "Quick Find"
-msgstr "Schnell finden"
+msgstr "Schnell suchen"
 
 #: lib/Padre/Action/Search.pm:102
 msgid "Incremental search seen at the bottom of the window"
@@ -3272,7 +3277,7 @@ msgstr "Leerraum zeigen"
 
 #: lib/Padre/Action/View.pm:229
 msgid "Show/hide the tabs and the spaces with special characters"
-msgstr "Tabs und Leerzeichen als spezielle Zeichen anzeigen"
+msgstr "Tabulator- und Leerzeichen als spezielle Zeichen anzeigen"
 
 #: lib/Padre/Action/View.pm:238
 msgid "Show Indentation Guide"
@@ -3381,7 +3386,7 @@ msgstr "Älteste aufgerufene Datei"
 
 #: lib/Padre/Action/Window.pm:43
 msgid "Put focus on tab visited the longest time ago."
-msgstr "Das älteste besuchte Tab auswählen"
+msgstr "Den ältesten besuchten Reiter auswählen"
 
 #: lib/Padre/Action/Window.pm:53
 msgid "Next File"
@@ -3389,7 +3394,7 @@ msgstr "Nächste Datei"
 
 #: lib/Padre/Action/Window.pm:54
 msgid "Put focus on the next tab to the right"
-msgstr "Das nächste (rechter Nachbar) Tab auswählen"
+msgstr "Den nächsten (rechter Nachbar) Reiter auswählen"
 
 #: lib/Padre/Action/Window.pm:64
 msgid "Previous File"
@@ -3397,7 +3402,7 @@ msgstr "V&orherige Datei"
 
 #: lib/Padre/Action/Window.pm:65
 msgid "Put focus on the previous tab to the left"
-msgstr "Das vorherige (linker Nachbar) Tab auswählen"
+msgstr "Den vorherigen (linker Nachbar) Reiter auswählen"
 
 #: lib/Padre/Action/Window.pm:78
 msgid "???"
@@ -3730,7 +3735,7 @@ msgstr "Alten Mac-Standard für Zeilenenden verwenden"
 
 #: lib/Padre/Action/Edit.pm:486
 msgid "Tabs to Spaces..."
-msgstr "In Leerzeichen wandeln..."
+msgstr "Tabulator- zu Leerzeichen umwandeln..."
 
 #: lib/Padre/Action/Edit.pm:487
 msgid "Convert all tabs to spaces in the current document"
@@ -4391,7 +4396,7 @@ msgstr "Alle anderen Dateien schließen"
 
 #: lib/Padre/Action/File.pm:233
 msgid "Close all the files except the current one"
-msgstr "Alle Dateien bis auf die gerade ausgewählte schließen"
+msgstr "Alle Dateien bis auf die aktuelle Datei schließen"
 
 #: lib/Padre/Action/File.pm:242
 msgid "Close Files Dialog..."

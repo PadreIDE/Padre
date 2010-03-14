@@ -569,10 +569,12 @@ sub replace_all {
 	}
 
 	# Apply the search to the current editor
-	my $changes = $main->replace_all($search);
-	if ($changes) {
+	my $number_of_changes = $main->replace_all($search);
+	if ($number_of_changes) {
+		my $message_text = $number_of_changes == 1 ? Wx::gettext('Replaced %d match') : Wx::gettext('Replaced %d matches');
+		# remark: It would be better to use gettext for plural handling, but wxperl does not seem to support this at the moment.
 		$main->info(
-			sprintf( Wx::gettext('Replaced %d matches'), $changes ),
+			sprintf($message_text,	$number_of_changes),
 			Wx::gettext('Search and Replace')
 		);
 	} else {
