@@ -23,6 +23,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       state is consistent with the main_lockinterface config setting (ADAMK)
     - Local file and remote file installation switched from pip to
       cpanm (ADAMK)
+    - Completed the 'Insert Special Value' functionality (Zeno Gantner)
+    - updated German translation (Zeno Gantner)
 
 0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)

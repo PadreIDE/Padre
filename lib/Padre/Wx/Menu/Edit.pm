@@ -117,6 +117,24 @@ sub new {
 		'edit.paste',
 	);
 
+	my $submenu = Wx::Menu->new;
+	$self->{insert_submenu} = $self->AppendSubMenu( $submenu, Wx::gettext('Insert') );
+
+	$self->{insert_special} = $self->add_menu_action(
+		$submenu,
+		'edit.insert.insert_special',
+	);
+
+	$self->{snippets} = $self->add_menu_action(
+		$submenu,
+		'edit.insert.snippets',
+	);
+
+	$self->{insert_from_file} = $self->add_menu_action(
+		$submenu,
+		'edit.insert.from_file',
+	);
+
 	$self->AppendSeparator;
 
 	# Miscellaneous Actions
@@ -153,24 +171,6 @@ sub new {
 	$self->{join_lines} = $self->add_menu_action(
 		$self,
 		'edit.join_lines',
-	);
-
-	my $submenu = Wx::Menu->new;
-	$self->{insert_submenu} = $self->AppendSubMenu( $submenu, Wx::gettext('Insert') );
-
-	$self->{insert_special} = $self->add_menu_action(
-		$submenu,
-		'edit.insert.insert_special',
-	);
-
-	$self->{snippets} = $self->add_menu_action(
-		$submenu,
-		'edit.insert.snippets',
-	);
-
-	$self->{insert_from_file} = $self->add_menu_action(
-		$submenu,
-		'edit.insert.from_file',
 	);
 
 	$self->AppendSeparator;
