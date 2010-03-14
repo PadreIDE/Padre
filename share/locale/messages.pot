@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-14 22:11+0100\n"
+"POT-Creation-Date: 2010-03-15 00:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1398,7 +1398,7 @@ msgid "Options"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Find.pm:331 lib/Padre/Wx/Dialog/Replace.pm:535
-#: lib/Padre/Wx/Dialog/Replace.pm:581
+#: lib/Padre/Wx/Dialog/Replace.pm:582
 msgid "No matches found"
 msgstr ""
 
@@ -2065,8 +2065,8 @@ msgstr ""
 msgid "Replace Text:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:577
-#: lib/Padre/Wx/Dialog/Replace.pm:582
+#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:578
+#: lib/Padre/Wx/Dialog/Replace.pm:583
 msgid "Search and Replace"
 msgstr ""
 
@@ -4510,4 +4510,16 @@ msgstr ""
 
 #: lib/Padre/Task/Outline/Perl.pm:199
 msgid "&GoTo Element"
+msgstr ""
+
+#: lib/Padre/Task/Outline/Perl.pm:265
+msgid "Pragmata"
+msgstr ""
+
+#: lib/Padre/Task/Outline/Perl.pm:266
+msgid "Modules"
+msgstr ""
+
+#: lib/Padre/Task/Outline/Perl.pm:267
+msgid "Methods"
 msgstr ""
