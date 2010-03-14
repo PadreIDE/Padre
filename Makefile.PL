@@ -45,7 +45,7 @@ configure_requires 'ExtUtils::MakeMaker' => '6.52';
 configure_requires 'Alien::wxWidgets' => '0.46';
 
 my $wxw = eval { use Alien::wxWidgets; 1; };
-if ( $@ || !$wxw ) {
+if ( $@ or not $wxw ) {
 	print STDERR "Warning: prerequisite Alien::wxWidgets not found.\n";
 	exit 0;
 }
@@ -70,6 +70,7 @@ author 'Gabor Szabo';
 all_from 'lib/Padre.pm';
 requires 'perl'                  => '5.008005';
 requires 'App::Ack'              => '1.86';
+requires 'App::cpanminus'        => '0.9922';
 requires 'Class::Adapter'        => '1.05';
 requires 'Class::Unload'         => '0.03';
 requires 'Class::XSAccessor'     => '1.05';
@@ -123,7 +124,6 @@ requires 'ORLite'          => '1.41';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.11';
 requires 'Parse::ExuberantCTags'    => '1.00';
-requires 'pip'                      => '0.13';
 requires 'Pod::POM'                 => '0.17';
 requires 'Pod::Simple'              => '3.07';
 requires 'Pod::Simple::XHTML'       => '3.04';

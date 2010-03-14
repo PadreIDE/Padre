@@ -21,6 +21,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       and size (ADAMK)
     - When showing a toolbar panel for the first time, make sure it's lock
       state is consistent with the main_lockinterface config setting (ADAMK)
+    - Local file and remote file installation switched from pip to
+      cpanm (ADAMK)
 
 0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
