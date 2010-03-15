@@ -4,53 +4,93 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Wx               ();
-use Padre::Wx::Dialog       ();
 use Padre::Task::HTTPClient ();
 
 our $VERSION = '0.58';
 
+our @ISA     = qw{
+	Padre::Wx::Role::MainChild
+	Wx::Dialog
+};
+
 sub new {
-	my ( $class, $window ) = @_;
+	my ( $class, $main ) = @_;
 
 	my $config = Padre->ide->config;
-	return if $config->feedback_done;
+	#return if $config->feedback_done;
 
-	my @layout = (
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Where did you hear about Padre?') ],
-			[   'Wx::ComboBox',
-				'_referer_',
-				'',
-				[   'Google',
-					Wx::gettext('Other searchengine'),
-					'FOSDEM',
-					'CeBit',
-					Wx::gettext('Other event'),
-					Wx::gettext('Friend'),
-					Wx::gettext('Reinstalling/Installing on other computer'),
-					Wx::gettext('Other (Please fill in here)'),
-				]
-			],
-		],
-		[   [ 'Wx::Button', '_ok_', Wx::wxID_OK ], [],
-			[ 'Wx::Button', '_cancel_', Wx::gettext("Skip feedback") ],
-		],
+	# Create the Wx dialog
+	my $dialog = $class->SUPER::new(
+		$main,
+		-1,
+		Wx::gettext('New installation survey'),
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxDEFAULT_FRAME_STYLE,
 	);
 
-	my $dialog = Padre::Wx::Dialog->new(
-		parent => $window,
-		title  => Wx::gettext("New installation survey"),
-		layout => \@layout,
-		width  => [ 200, 300 ],
-		bottom => 20,
-	);
-	$dialog->{_widgets_}{_ok_}->SetDefault;
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_ok_},     \&WhereFrom_ok_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}{_cancel_}, \&WhereFrom_cancel_clicked );
+	# Minimum dialog size
+	$dialog->SetMinSize( [ 200, 300 ] );
 
-	$dialog->{_widgets_}{_referer_}->SetFocus;
+	# Create sizer that will host all controls
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+
+	# Create the controls
+	$dialog->_create_controls($sizer);
+
+	# Bind the control events
+	$dialog->_bind_events;
+
+	# Wrap everything in a vbox to add some padding
+	$dialog->SetSizer($sizer);
+	$dialog->Fit;
+	$dialog->CentreOnParent;
+
+	$dialog->{combo}->SetFocus;
 	$dialog->Show(1);
 
-	return 1;
+	return $dialog;
+}
+
+sub _create_controls {
+	my $dialog = shift;
+
+	# "Where did you hear..." label
+	my $label = Wx::StaticText->new( $dialog, -1, Wx::gettext('Where did you hear about Padre?') );
+
+	my $options = [   
+		'Google',
+		Wx::gettext('Other searchengine'),
+		'FOSDEM',
+		'CeBit',
+		Wx::gettext('Other event'),
+		Wx::gettext('Friend'),
+		Wx::gettext('Reinstalling/Installing on other computer'),
+		Wx::gettext('Other (Please fill in here)'),
+	];
+	
+	$dialog->{combo} = Wx::ComboBox->new( $dialog, -1, '' );
+	
+	# OK button
+	$dialog->{button_ok} = Wx::Button->new(
+		$dialog, Wx::wxID_OK, Wx::gettext("OK"),
+	);
+	$dialog->{button_ok}->SetDefault;
+
+	# Cancel button
+	$dialog->{button_cancel} = Wx::Button->new(
+		$dialog, Wx::wxID_CANCEL, 
+		Wx::gettext("Skip question without giving feedback"),
+	);
+	
+	
+}
+
+
+sub _bind_events {
+	my $dialog = shift;
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{button_ok},     \&WhereFrom_ok_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{button_cancel}, \&WhereFrom_cancel_clicked );
 }
 
 sub WhereFrom_cancel_clicked {
