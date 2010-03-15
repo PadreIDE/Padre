@@ -1304,30 +1304,19 @@ sub stats {
 	my ( $lines, $chars_with_space, $chars_without_space, $words, $is_readonly ) = (0) x 5;
 
 	my $editor = $self->editor;
-	my $src    = $editor->GetSelectedText;
-	my $code;
-	if ($src) {
-		$code = $src;
+	my $code = $self->text_get;
 
-		my $code2 = $code; # it's ugly, need improvement
-		$code2 =~ s/\r\n/\n/g;
-		$lines = 1;        # by default
-		$lines++ while ( $code2 =~ /[\r\n]/g );
-		$chars_with_space = length($code);
-	} else {
-		$code = $self->text_get;
-
-		# I trust editor more
-		$lines            = $editor->GetLineCount();
-		$chars_with_space = $editor->GetTextLength();
-		$is_readonly      = $editor->GetReadOnly();
-	}
+	$lines            = $editor->GetLineCount();
+	$chars_with_space = $editor->GetTextLength();
+	$is_readonly      = $editor->GetReadOnly();
 
 	# avoid slow calculation on large files
-	# TO DO or improve them ?
-	if ( length($code) < 100_000 ) {
+	# TODO or improve them?
+	if ( length($code) < 500_000 ) {
+		my $whitespace_chars = 0;
 		$words++               while ( $code =~ /\b\w+\b/g );
-		$chars_without_space++ while ( $code =~ /\S/g );
+		$chars_without_space = $chars_with_space;
+		$chars_without_space-- while ( $code =~ /\s/g );
 	} else {
 		$words               = Wx::gettext("Skipped for large files");
 		$chars_without_space = Wx::gettext("Skipped for large files");
@@ -1339,7 +1328,7 @@ sub stats {
 	# allow the upgread of ascii to utf-8
 	require Padre::Locale;
 	if ( not $self->{encoding} or $self->{encoding} eq 'ascii' ) {
-		$self->{encoding} = Padre::Locale::encoding_from_string($src);
+		$self->{encoding} = Padre::Locale::encoding_from_string($code);
 	}
 	return (
 		$lines, $chars_with_space, $chars_without_space, $words, $is_readonly, $filename, $self->{newline_type},
