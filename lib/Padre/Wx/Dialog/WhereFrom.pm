@@ -8,15 +8,12 @@ use Padre::Task::HTTPClient ();
 
 our $VERSION = '0.58';
 
-our @ISA = qw{
-	Padre::Wx::Role::MainChild
-	Wx::Dialog
-};
+our @ISA = 'Wx::Dialog';
 
 sub new {
 	my ( $class, $main ) = @_;
 
-	my $config = Padre->ide->config;
+	my $config = $main->config;
 	return if $config->feedback_done;
 
 	# Create the Wx dialog
