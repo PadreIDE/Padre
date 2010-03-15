@@ -17,8 +17,7 @@ sub new {
 	my ( $class, $main ) = @_;
 
 	my $config = Padre->ide->config;
-
-	#return if $config->feedback_done;
+	return if $config->feedback_done;
 
 	# Create the Wx dialog
 	my $dialog = $class->SUPER::new(
