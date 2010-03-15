@@ -30,7 +30,7 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$dialog->SetMinSize( [ 200, 300 ] );
+	$dialog->SetMinSize( [ 350, 100 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -46,19 +46,23 @@ sub new {
 	$dialog->Fit;
 	$dialog->CentreOnParent;
 
-	$dialog->{combo}->SetFocus;
+	$dialog->{wherefrom}->SetFocus;
 	$dialog->Show(1);
 
 	return $dialog;
 }
 
 sub _create_controls {
-	my $dialog = shift;
+	my ($dialog, $sizer) = @_;
 
 	# "Where did you hear..." label
-	my $label = Wx::StaticText->new( $dialog, -1, Wx::gettext('Where did you hear about Padre?') );
+	my $wherefrom_label = Wx::StaticText->new( 
+		$dialog, 
+		-1, 
+		Wx::gettext('Where did you hear about Padre?')
+	);
 
-	my $options = [   
+	my $choices = [
 		'Google',
 		Wx::gettext('Other searchengine'),
 		'FOSDEM',
@@ -69,7 +73,14 @@ sub _create_controls {
 		Wx::gettext('Other (Please fill in here)'),
 	];
 	
-	$dialog->{combo} = Wx::ComboBox->new( $dialog, -1, '' );
+	$dialog->{wherefrom} = Wx::ComboBox->new( 
+		$dialog, 
+		-1, 
+		'', 
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		$choices
+	);
 	
 	# OK button
 	$dialog->{button_ok} = Wx::Button->new(
@@ -83,14 +94,50 @@ sub _create_controls {
 		Wx::gettext("Skip question without giving feedback"),
 	);
 	
+	# where from...? sizer
+	my $wherefrom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$wherefrom_sizer->Add( $wherefrom_label,, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$wherefrom_sizer->AddSpacer(5);
+	$wherefrom_sizer->Add( $dialog->{wherefrom}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+
+	# Button sizer
+	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$button_sizer->Add( $dialog->{button_ok},   0, 0,          0 );
+	$button_sizer->Add( $dialog->{button_cancel}, 0, Wx::wxLEFT, 5 );
+	$button_sizer->AddSpacer(5);
+
+	# Main vertical sizer
+	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
+	$vsizer->Add( $wherefrom_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->AddSpacer(5);
+	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
+	$vsizer->AddSpacer(5);
+
+	# Wrap with a horizontal sizer to get left/right padding
+	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
 	
+	return;
 }
 
 
 sub _bind_events {
 	my $dialog = shift;
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{button_ok},     \&WhereFrom_ok_clicked );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{button_cancel}, \&WhereFrom_cancel_clicked );
+	
+	# Ok button
+	Wx::Event::EVT_BUTTON( 
+		$dialog, 
+		$dialog->{button_ok},     
+		\&WhereFrom_ok_clicked 
+	);
+	
+	# Cancel or Skip feedback button
+	Wx::Event::EVT_BUTTON( 
+		$dialog, 
+		$dialog->{button_cancel}, 
+		\&WhereFrom_cancel_clicked
+	);
+
+	return;
 }
 
 sub WhereFrom_cancel_clicked {
@@ -104,6 +151,8 @@ sub WhereFrom_cancel_clicked {
 	}
 
 	$dialog->Destroy;
+
+	return;
 }
 
 sub WhereFrom_ok_clicked {
@@ -112,13 +161,12 @@ sub WhereFrom_ok_clicked {
 	my $config = Padre->ide->config;
 
 	my $window = $dialog->GetParent;
-	my $data   = $dialog->get_data;
 	$dialog->Destroy;
 
 	if ( !$config->feedback_done ) {
 
 		my $url  = 'http://padre.perlide.org/wherefrom.cgi';
-		my $args = { from => $data->{_referer_} };
+		my $args = { from => $dialog->{wherefrom}->GetValue };
 		my $http = Padre::Task::HTTPClient->new(
 			URL   => $url,
 			query => $args,
