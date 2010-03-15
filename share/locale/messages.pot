@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 00:12+0100\n"
+"POT-Creation-Date: 2010-03-15 12:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -456,6 +456,19 @@ msgstr ""
 msgid "Expr"
 msgstr ""
 
+#: lib/Padre/Wx/DocBrowser.pm:83 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+#: lib/Padre/Action/Help.pm:37
+msgid "Help"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:113 lib/Padre/Wx/DocBrowser.pm:130
+msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:126
+msgid "Search:"
+msgstr ""
+
 #: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/About.pm:86
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239 lib/Padre/Action/File.pm:166
@@ -464,6 +477,20 @@ msgstr ""
 
 #: lib/Padre/Wx/DocBrowser.pm:307
 msgid "Untitled"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:371
+#, perl-format
+msgid "DocBrowser: no viewer for %s"
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:404
+#, perl-format
+msgid "Searched for '%s' and failed..."
+msgstr ""
+
+#: lib/Padre/Wx/DocBrowser.pm:405
+msgid "Help not found."
 msgstr ""
 
 #: lib/Padre/Wx/DocBrowser.pm:427
@@ -1598,10 +1625,6 @@ msgstr ""
 msgid "Window"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397 lib/Padre/Action/Help.pm:37
-msgid "Help"
-msgstr ""
-
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
 msgid "Module Name:"
 msgstr ""
@@ -2280,6 +2303,11 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:311
 msgid "Could not find a help provider for "
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:395
+#, perl-format
+msgid "Found %s help topic(s)\n"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:46 lib/Padre/Action/Tools.pm:38
@@ -3778,6 +3806,10 @@ msgstr ""
 
 #: lib/Padre/Action/Help.pm:45
 msgid "Search Help"
+msgstr ""
+
+#: lib/Padre/Action/Help.pm:46
+msgid "Search the Perl help pages (perldoc)"
 msgstr ""
 
 #: lib/Padre/Action/Help.pm:63

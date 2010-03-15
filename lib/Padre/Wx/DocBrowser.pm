@@ -80,7 +80,7 @@ sub new {
 	my $self = $class->SUPER::new(
 		undef,
 		-1,
-		'Help',
+		Wx::gettext('Help'),
 		Wx::wxDefaultPosition,
 		[ 750, 700 ],
 		Wx::wxDEFAULT_FRAME_STYLE,
@@ -110,7 +110,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
-	$entry->SetToolTip( Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP") );
+	$entry->SetToolTip( Wx::ToolTip->new(Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP')) );
 
 	Wx::Event::EVT_TEXT_ENTER(
 		$self, $entry,
@@ -123,11 +123,11 @@ sub new {
 	$self->{_searchEntry} = $entry;
 
 	my $label = Wx::StaticText->new(
-		$self, -1, 'Search',
+		$self, -1, Wx::gettext('Search:'),
 		Wx::wxDefaultPosition, [ 50, -1 ],
 		Wx::wxALIGN_RIGHT
 	);
-	$label->SetToolTip( Wx::ToolTip->new("Search for perldoc - eg Padre::Task, Net::LDAP") );
+	$label->SetToolTip( Wx::ToolTip->new(Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP')) );
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 
@@ -358,7 +358,7 @@ sub NewPage {
 			my $class = $VIEW{$mime};
 			unless ( $class->VERSION ) {
 				eval "require $class;";
-				die("Failed to load $class: $@") if $@;
+				die "Failed to load $class: $@" if $@;
 			}
 			my $panel = $class->new($self);
 			Wx::Event::EVT_HTML_LINK_CLICKED(
@@ -368,7 +368,7 @@ sub NewPage {
 			$self->notebook->AddPage( $panel, $title, 1 );
 			$panel;
 		} else {
-			$self->debug("DocBrowser: no viewer for $mime");
+			$self->debug( sprintf(Wx::gettext('DocBrowser: no viewer for %s'), $mime) );
 		}
 	};
 	return $page;
@@ -401,8 +401,8 @@ sub not_found {
 	use Wx qw(wxOK wxCENTRE wxICON_INFORMATION);
 	my $notFound = Wx::MessageDialog->new(
 		$self,
-		"Searched for '$query' and failed...",
-		'Help not found.',
+		sprintf(Wx::gettext("Searched for '%s' and failed..."), $query),
+		Wx::gettext('Help not found.'),
 		wxOK | wxCENTRE | wxICON_INFORMATION
 	);
 

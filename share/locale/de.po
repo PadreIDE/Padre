@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 00:12+0100\n"
+"POT-Creation-Date: 2010-03-15 12:17+0100\n"
 "PO-Revision-Date: 2010-02-01 10:30+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
@@ -478,6 +478,19 @@ msgstr "Ausdruck:"
 msgid "Expr"
 msgstr "Expr"
 
+#: lib/Padre/Wx/DocBrowser.pm:83 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+#: lib/Padre/Action/Help.pm:37
+msgid "Help"
+msgstr "Hilfe"
+
+#: lib/Padre/Wx/DocBrowser.pm:113 lib/Padre/Wx/DocBrowser.pm:130
+msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
+msgstr "Perl-Dokumentation durchsuchen - z.B. Padre::Task, Net::LDAP"
+
+#: lib/Padre/Wx/DocBrowser.pm:126
+msgid "Search:"
+msgstr "Suchen:"
+
 #: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/About.pm:86
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239 lib/Padre/Action/File.pm:166
@@ -487,6 +500,20 @@ msgstr "S&chließen"
 #: lib/Padre/Wx/DocBrowser.pm:307
 msgid "Untitled"
 msgstr "Unbenannt"
+
+#: lib/Padre/Wx/DocBrowser.pm:371
+#, perl-format
+msgid "DocBrowser: no viewer for %s"
+msgstr "DocBrowser: kein Anzeigeprogramm für %s"
+
+#: lib/Padre/Wx/DocBrowser.pm:404
+#, perl-format
+msgid "Searched for '%s' and failed..."
+msgstr "Suche nach '%s' fehlgeschlagen..."
+
+#: lib/Padre/Wx/DocBrowser.pm:405
+msgid "Help not found."
+msgstr "Hilfe nicht gefunden."
 
 #: lib/Padre/Wx/DocBrowser.pm:427
 msgid "NAME"
@@ -542,7 +569,7 @@ msgstr "I&gnoriere versteckte Unterverzeichnisse"
 
 #: lib/Padre/Wx/Ack.pm:129
 msgid "Show only files that don't match"
-msgstr "Nur Dateien zeigen, die nicht übereinstimmen"
+msgstr "Nur Dateien zeigen die nicht übereinstimmen"
 
 #: lib/Padre/Wx/Ack.pm:145
 msgid "Find in Files"
@@ -1632,10 +1659,6 @@ msgstr "Plugins"
 msgid "Window"
 msgstr "Fenster"
 
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397 lib/Padre/Action/Help.pm:37
-msgid "Help"
-msgstr "&Hilfe"
-
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
 msgid "Module Name:"
 msgstr "Modul-Name:"
@@ -2314,11 +2337,11 @@ msgstr "Hilfe-&Thema auswählen"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:146
 msgid "Type a help &keyword to read:"
-msgstr "Suchbegriff:"
+msgstr "Suchbegriff eingeben:"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:153
 msgid "&Matching Help Topics:"
-msgstr "Gefundene Ele&mente:"
+msgstr "Gefundene Hilfe-Themen:"
 
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:273
 msgid "Reading items. Please wait"
@@ -2327,6 +2350,11 @@ msgstr "Lese Daten, bitte warten..."
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:311
 msgid "Could not find a help provider for "
 msgstr "Konnte keinen Hilfe-Anbieter finden:"
+
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:395
+#, perl-format
+msgid "Found %s help topic(s)\n"
+msgstr "%s Hilfethemen gefunden\n"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:46 lib/Padre/Action/Tools.pm:38
 msgid "Key Bindings"
@@ -3854,13 +3882,17 @@ msgstr "Padre-Hilfe anzeigen"
 msgid "Search Help"
 msgstr "Hilfe durchsuchen"
 
+#: lib/Padre/Action/Help.pm:46
+msgid "Search the Perl help pages (perldoc)"
+msgstr "Perl-Hilfeseiten (perldoc) durchsuchen"
+
 #: lib/Padre/Action/Help.pm:63
 msgid "Context Help"
 msgstr "Kontexthilfe"
 
 #: lib/Padre/Action/Help.pm:64
 msgid "Show the help article for the current context"
-msgstr "Padre-Hilfe für den aktuellen Kontext anzeigen"
+msgstr "Hilfe für den aktuellen Kontext anzeigen"
 
 #: lib/Padre/Action/Help.pm:76
 msgid "Current Document"
@@ -3868,7 +3900,7 @@ msgstr "Aktuelles Dokument"
 
 #: lib/Padre/Action/Help.pm:77
 msgid "Show the POD (Perldoc) version of the current document"
-msgstr "POD/Perldoc-Version des aktuellen Dokuments anzeigen"
+msgstr "POD/Perldoc für das aktuelle Dokument anzeigen"
 
 #: lib/Padre/Action/Help.pm:87
 msgid "Padre Support (English)"
@@ -3902,7 +3934,7 @@ msgid ""
 "Open the Perl/Win32 live support in your default web browser and chat to "
 "others who may help you with your problem"
 msgstr ""
-"Den Perl/Win32-Livesupport-Chat aufrufen um von anderen Nutzern Hilfe zu "
+"Den Perl/Win32-Livesupport-Chat aufrufen, um von anderen Nutzern Hilfe zu "
 "erhalten."
 
 #: lib/Padre/Action/Help.pm:124
