@@ -247,8 +247,8 @@ sub _create_controls {
 	$vsizer->AddSpacer(5);
 
 	# Hide value and info sizer at startup
-	#$vsizer->Show( 2, 0 );
-	#$vsizer->Show( 3, 0 );
+	$vsizer->Show( 2, 0 );
+	$vsizer->Show( 3, 0 );
 
 	# Store vertical sizer reference for later usage
 	$self->{vsizer} = $vsizer;
@@ -378,6 +378,11 @@ sub _on_list_item_selected {
 	$self->{ctrl}->SetValue( $shortcut =~ /ctrl/ ? 1 : 0 );
 	$self->{alt}->SetValue( $shortcut  =~ /alt/  ? 1 : 0 );
 	$self->{shift}->SetValue( ( $shortcut =~ /shift/ ) ? 1 : 0 );
+
+	# Make sure the value and info sizer are not hidden
+	$self->{vsizer}->Show( 2, 1 );
+	$self->{vsizer}->Show( 3, 1 );
+	$self->{vsizer}->Layout;
 
 	return;
 }
