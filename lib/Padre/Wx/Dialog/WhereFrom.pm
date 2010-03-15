@@ -8,7 +8,7 @@ use Padre::Task::HTTPClient ();
 
 our $VERSION = '0.58';
 
-our @ISA     = qw{
+our @ISA = qw{
 	Padre::Wx::Role::MainChild
 	Wx::Dialog
 };
@@ -17,6 +17,7 @@ sub new {
 	my ( $class, $main ) = @_;
 
 	my $config = Padre->ide->config;
+
 	#return if $config->feedback_done;
 
 	# Create the Wx dialog
@@ -53,12 +54,12 @@ sub new {
 }
 
 sub _create_controls {
-	my ($dialog, $sizer) = @_;
+	my ( $dialog, $sizer ) = @_;
 
 	# "Where did you hear..." label
-	my $wherefrom_label = Wx::StaticText->new( 
-		$dialog, 
-		-1, 
+	my $wherefrom_label = Wx::StaticText->new(
+		$dialog,
+		-1,
 		Wx::gettext('Where did you hear about Padre?')
 	);
 
@@ -72,16 +73,16 @@ sub _create_controls {
 		Wx::gettext('Reinstalling/Installing on other computer'),
 		Wx::gettext('Other (Please fill in here)'),
 	];
-	
-	$dialog->{wherefrom} = Wx::ComboBox->new( 
-		$dialog, 
-		-1, 
-		'', 
+
+	$dialog->{wherefrom} = Wx::ComboBox->new(
+		$dialog,
+		-1,
+		'',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		$choices
 	);
-	
+
 	# OK button
 	$dialog->{button_ok} = Wx::Button->new(
 		$dialog, Wx::wxID_OK, Wx::gettext("OK"),
@@ -90,10 +91,10 @@ sub _create_controls {
 
 	# Cancel button
 	$dialog->{button_cancel} = Wx::Button->new(
-		$dialog, Wx::wxID_CANCEL, 
+		$dialog, Wx::wxID_CANCEL,
 		Wx::gettext("Skip question without giving feedback"),
 	);
-	
+
 	# where from...? sizer
 	my $wherefrom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$wherefrom_sizer->Add( $wherefrom_label,, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
@@ -102,7 +103,7 @@ sub _create_controls {
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $dialog->{button_ok},   0, 0,          0 );
+	$button_sizer->Add( $dialog->{button_ok},     0, 0,          0 );
 	$button_sizer->Add( $dialog->{button_cancel}, 0, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
@@ -115,25 +116,25 @@ sub _create_controls {
 
 	# Wrap with a horizontal sizer to get left/right padding
 	$sizer->Add( $vsizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
-	
+
 	return;
 }
 
 
 sub _bind_events {
 	my $dialog = shift;
-	
+
 	# Ok button
-	Wx::Event::EVT_BUTTON( 
-		$dialog, 
-		$dialog->{button_ok},     
-		\&WhereFrom_ok_clicked 
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{button_ok},
+		\&WhereFrom_ok_clicked
 	);
-	
+
 	# Cancel or Skip feedback button
-	Wx::Event::EVT_BUTTON( 
-		$dialog, 
-		$dialog->{button_cancel}, 
+	Wx::Event::EVT_BUTTON(
+		$dialog,
+		$dialog->{button_cancel},
 		\&WhereFrom_cancel_clicked
 	);
 

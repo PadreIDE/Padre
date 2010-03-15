@@ -110,7 +110,7 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
-	$entry->SetToolTip( Wx::ToolTip->new(Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP')) );
+	$entry->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
 	Wx::Event::EVT_TEXT_ENTER(
 		$self, $entry,
@@ -127,7 +127,7 @@ sub new {
 		Wx::wxDefaultPosition, [ 50, -1 ],
 		Wx::wxALIGN_RIGHT
 	);
-	$label->SetToolTip( Wx::ToolTip->new(Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP')) );
+	$label->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 
@@ -368,7 +368,7 @@ sub NewPage {
 			$self->notebook->AddPage( $panel, $title, 1 );
 			$panel;
 		} else {
-			$self->debug( sprintf(Wx::gettext('DocBrowser: no viewer for %s'), $mime) );
+			$self->debug( sprintf( Wx::gettext('DocBrowser: no viewer for %s'), $mime ) );
 		}
 	};
 	return $page;
@@ -401,7 +401,7 @@ sub not_found {
 	use Wx qw(wxOK wxCENTRE wxICON_INFORMATION);
 	my $notFound = Wx::MessageDialog->new(
 		$self,
-		sprintf(Wx::gettext("Searched for '%s' and failed..."), $query),
+		sprintf( Wx::gettext("Searched for '%s' and failed..."), $query ),
 		Wx::gettext('Help not found.'),
 		wxOK | wxCENTRE | wxICON_INFORMATION
 	);

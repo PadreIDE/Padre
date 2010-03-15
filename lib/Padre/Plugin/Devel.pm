@@ -188,16 +188,16 @@ sub dump_display {
 	my $count = Wx::Display::GetCount();
 
 	foreach ( 0 .. $count - 1 ) {
-		my $display  = Wx::Display->new($_);
+		my $display = Wx::Display->new($_);
 		push @displays,
 			{
 			IsPrimary     => $display->IsPrimary,
-			GetGeometry   => $self->_rect($display->GetGeometry),
-			GetClientArea => $self->_rect($display->GetClientArea),
+			GetGeometry   => $self->_rect( $display->GetGeometry ),
+			GetClientArea => $self->_rect( $display->GetClientArea ),
 			};
 	}
 	$self->_dump(
-		{  GetCount    => $count,
+		{   GetCount    => $count,
 			DisplayList => \@displays,
 		}
 	);
@@ -206,9 +206,7 @@ sub dump_display {
 sub _rect {
 	my $self = shift;
 	my $rect = shift;
-	my %hash = map {
-		$_ => $rect->$_()
-	} qw{
+	my %hash = map { $_ => $rect->$_() } qw{
 		GetTop
 		GetBottom
 		GetLeft

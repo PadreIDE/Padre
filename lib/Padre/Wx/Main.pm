@@ -108,7 +108,7 @@ sub new {
 	# If we closed while maximized on the previous run,
 	# the previous size is completely suspect.
 	if ( $config->main_maximized ) {
-		$style   |= Wx::wxMAXIMIZE;
+		$style |= Wx::wxMAXIMIZE;
 		$size     = [ -1, -1 ];
 		$position = [ -1, -1 ];
 	}
@@ -116,7 +116,7 @@ sub new {
 	# Generate a smarter default size than Wx does
 	if ( $size->[0] == -1 ) {
 		require Padre::Wx::Display;
-		my $rect  = Padre::Wx::Display::primary_default();
+		my $rect = Padre::Wx::Display::primary_default();
 		$size     = $rect->GetSize;
 		$position = $rect->GetPosition;
 	}
@@ -351,7 +351,7 @@ sub timer_start {
 	# Check for new plug-ins and alert the user to them
 	$manager->alert_new;
 
-	unless ( $Padre::Test::VERSION ) {
+	unless ($Padre::Test::VERSION) {
 		require Padre::Wx::Dialog::WhereFrom;
 		Padre::Wx::Dialog::WhereFrom->new($self);
 	}

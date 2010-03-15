@@ -43,8 +43,8 @@ our %MIME_STYLE = (
 # this has to be subset of  ( ) [ ] { } < > since we use the scintilla
 # Brace* methods
 # always altern opening and starting braces in the constant
-my $BRACES = '{}[]()';
-my $STC_INVALID_POSITION =  Wx::wxSTC_INVALID_POSITION;
+my $BRACES               = '{}[]()';
+my $STC_INVALID_POSITION = Wx::wxSTC_INVALID_POSITION;
 
 my $data;
 my $data_name;
@@ -168,7 +168,7 @@ sub get_config {
 # convenience methods
 # return the character at a given position as a perl string
 sub get_character_at {
-	my ($self, $pos) = @_;
+	my ( $self, $pos ) = @_;
 	return chr( $self->GetCharAt($pos) );
 }
 
@@ -423,9 +423,6 @@ sub _color {
 
 
 
-	
-	
-
 
 
 =head2 get_brace_info
@@ -455,20 +452,20 @@ It always look first at the character after the position.
 
 
 sub get_brace_info {
-	my ($self, $pos) = @_;
+	my ( $self, $pos ) = @_;
 	$pos = $self->GetCurrentPos unless defined $pos;
-	 
+
 	# try the after position first (default one for BraceMatch)
 	my $is_after = 1;
-	my $brace = $self->get_character_at($pos);
+	my $brace    = $self->get_character_at($pos);
 	my $is_brace = $self->get_brace_type($brace);
-	if (!$is_brace && $pos > 0) { # try the before position
-		$brace = $self->get_character_at(--$pos);
-		$is_brace  = $self->get_brace_type($brace) or return undef;
+	if ( !$is_brace && $pos > 0 ) { # try the before position
+		$brace    = $self->get_character_at( --$pos );
+		$is_brace = $self->get_brace_type($brace) or return undef;
 		$is_after = 0;
 	}
 	my $is_opening = $is_brace % 2; # odd values are opening
-	return [$pos, $brace, $is_after, $is_opening];
+	return [ $pos, $brace, $is_after, $is_opening ];
 }
 
 
@@ -484,12 +481,14 @@ Tell if a character is a brace, and if it is an opening or a closing one
 		one for a closing brace
 
 =cut
+
 my %_cached_braces;
+
 sub get_brace_type {
-	my ($self, $char) = @_;
+	my ( $self, $char ) = @_;
 	unless (%_cached_braces) {
 		my $i = 1; # start from one so that all values are true
-		$_cached_braces{$_} = $i++ foreach (split //, $BRACES);
+		$_cached_braces{$_} = $i++ foreach ( split //, $BRACES );
 	}
 	my $v = $_cached_braces{$char} or return 0;
 	return $v;
@@ -500,50 +499,54 @@ sub get_brace_type {
 # some uncorrect behaviour (| is the cursor)
 # {} : never highlighted
 # { } : always correct
-# 
+#
 #
 
 sub apply_style {
-	my ($self, $style_info) = @_;
+	my ( $self, $style_info ) = @_;
 	my %previous_style = %$style_info;
-	$previous_style{style} = $self->GetStyleAt($style_info->{start});
-	
+	$previous_style{style} = $self->GetStyleAt( $style_info->{start} );
+
 	$self->StartStyling( $style_info->{start}, 0xFF );
 	$self->SetStyling( $style_info->{len}, $style_info->{style} );
-	
+
 	return \%previous_style;
 }
 
 
 my $previous_expr_hiliting_style;
+
 sub highlight_braces {
 	my ($self) = @_;
-	
+
 	my $expression_highlighting = $self->get_config->editor_brace_expression_highlighting;
-	
+
 	# remove current highlighting if any
-	$self->BraceHighlight( $STC_INVALID_POSITION, $STC_INVALID_POSITION  );
+	$self->BraceHighlight( $STC_INVALID_POSITION, $STC_INVALID_POSITION );
 	if ($previous_expr_hiliting_style) {
 		$self->apply_style($previous_expr_hiliting_style);
 		$previous_expr_hiliting_style = undef;
 	}
-	
-	my $pos1 = $self->GetCurrentPos;
-	my $info1 = $self->get_brace_info($pos1) or return;
+
+	my $pos1          = $self->GetCurrentPos;
+	my $info1         = $self->get_brace_info($pos1) or return;
 	my ($actual_pos1) = @$info1;
-	
+
 	my $actual_pos2 = $self->BraceMatch($actual_pos1);
-#	return if abs( $pos1 - $pos2 ) < 2;
+
+	#	return if abs( $pos1 - $pos2 ) < 2;
 
 	return if $actual_pos2 == $STC_INVALID_POSITION; #Wx::wxSTC_INVALID_POSITION  #????
 
 	$self->BraceHighlight( $actual_pos1, $actual_pos2 );
-	
+
 	if ($expression_highlighting) {
-		my $pos2  = $self->find_matching_brace($pos1) or return;
-		my %style = (start => $pos1 < $pos2 ? $pos1 : $pos2, 
-			len => abs($pos1-$pos2), style => Wx::wxSTC_STYLE_DEFAULT);
-		$previous_expr_hiliting_style = $self->apply_style(\%style);
+		my $pos2 = $self->find_matching_brace($pos1) or return;
+		my %style = (
+			start => $pos1 < $pos2 ? $pos1 : $pos2,
+			len => abs( $pos1 - $pos2 ), style => Wx::wxSTC_STYLE_DEFAULT
+		);
+		$previous_expr_hiliting_style = $self->apply_style( \%style );
 	}
 
 
@@ -563,12 +566,13 @@ will be inside too, same it is outside.
 		matching_pos - the matching position, or undef if none
 
 =cut
+
 sub find_matching_brace {
-	my ($self, $pos) = @_;
+	my ( $self, $pos ) = @_;
 	$pos = $self->GetCurrentPos unless defined $pos;
 	my $info1 = $self->get_brace_info($pos) or return;
-	my ($actual_pos1, $brace, $is_after, $is_opening) = @$info1;
-	
+	my ( $actual_pos1, $brace, $is_after, $is_opening ) = @$info1;
+
 	my $actual_pos2 = $self->BraceMatch($actual_pos1);
 	return if $actual_pos2 == $STC_INVALID_POSITION;
 	$actual_pos2++ if $is_after; # ensure is stays inside if origin is inside, same four outside
@@ -586,9 +590,10 @@ will be inside too, same it is outside.
 		
 
 =cut
+
 sub goto_matching_brace {
-	my ($self, $pos) = @_;
-	my $pos2  = $self->find_matching_brace($pos) or return;
+	my ( $self, $pos ) = @_;
+	my $pos2 = $self->find_matching_brace($pos) or return;
 	$self->GotoPos($pos2);
 }
 
@@ -605,14 +610,14 @@ will be inside too, same it is outside.
 =cut
 
 sub select_to_matching_brace {
-	my ($self, $pos) = @_;
+	my ( $self, $pos ) = @_;
 	$pos = $self->GetCurrentPos unless defined $pos;
-	my $pos2  = $self->find_matching_brace($pos) or return;
-	my $start = ($pos < $pos2) ? $self->GetSelectionStart() : $self->GetSelectionEnd();
-	$self->SetSelection($start, $pos2);
-		
+	my $pos2 = $self->find_matching_brace($pos) or return;
+	my $start = ( $pos < $pos2 ) ? $self->GetSelectionStart() : $self->GetSelectionEnd();
+	$self->SetSelection( $start, $pos2 );
+
 }
-		
+
 # currently if there are 9 lines we set the margin to 1 width and then
 # if another line is added it is not seen well.
 # actually I added some improvement allowing a 50% growth in the file

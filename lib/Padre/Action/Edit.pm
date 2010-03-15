@@ -318,7 +318,7 @@ sub new {
 			Padre::Wx::Main::on_brace_matching(@_);
 		},
 	);
-	
+
 	Padre::Action->new(
 		name        => 'edit.brace_match_select',
 		need_editor => 1,

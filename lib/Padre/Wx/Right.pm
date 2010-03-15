@@ -15,9 +15,9 @@ our @ISA     = qw{
 };
 
 sub new {
-	my $class = shift;
-	my $main  = shift;
-	my $aui   = $main->aui;
+	my $class  = shift;
+	my $main   = shift;
+	my $aui    = $main->aui;
 	my $unlock = $main->config->main_lockinterface ? 0 : 1;
 
 	# Create the basic object

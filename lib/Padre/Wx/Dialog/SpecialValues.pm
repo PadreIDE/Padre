@@ -13,10 +13,10 @@ our $VERSION = '0.58';
 
 my $categories = {
 	Wx::gettext('Date/Time') => [
-		{ label => Wx::gettext('Now'),       action => _get_date_info('now') },
-		{ label => Wx::gettext('Today'),     action => _get_date_info('today') },
-		{ label => Wx::gettext('Year'),      action => _get_date_info('year') },
-		{ label => Wx::gettext('Epoch'),     action => _get_date_info('epoch') },
+		{ label => Wx::gettext('Now'),   action => _get_date_info('now') },
+		{ label => Wx::gettext('Today'), action => _get_date_info('today') },
+		{ label => Wx::gettext('Year'),  action => _get_date_info('year') },
+		{ label => Wx::gettext('Epoch'), action => _get_date_info('epoch') },
 	],
 	Wx::gettext('File') => [
 		{ label => Wx::gettext('Size'),            action => _get_file_info('size') },
@@ -91,6 +91,7 @@ sub get_value {
 	my $cat_name  = _get_cat_name($dialog);
 	my $value_ind = $data->{_find_specialvalue_};
 	my $text      = &{ $categories->{$cat_name}[$value_ind]{action} };
+
 	#warn "cat : $cat_name, value $value_ind, text : $text\n";
 
 	my $editor = Padre::Current->editor;
@@ -122,60 +123,54 @@ sub _get_date_info {
 	if ( $type eq 'now' ) {
 		return sub {
 			return scalar localtime;
-		}
-	}
-	elsif ( $type eq 'today' ) {
+			}
+	} elsif ( $type eq 'today' ) {
 		return sub {
 			my @localtime = localtime(time);
 			return sprintf "%s-%02s-%02s", $localtime[5] + 1900, $localtime[4], $localtime[3];
-		}
-	}
-	elsif ( $type eq 'year' ) {
+			}
+	} elsif ( $type eq 'year' ) {
 		return sub {
 			my @localtime = localtime(time);
 			return $localtime[5] + 1900;
-		}
-	}
-	elsif ( $type eq 'epoch' ) {
+			}
+	} elsif ( $type eq 'epoch' ) {
 		return sub {
 			return time;
-		}
-	}
-	else {
+			}
+	} else {
 		return sub {
 			warn "date info $type not implemented yet\n";
 			return '';
-		}
+			}
 	}
 }
 
 sub _get_file_info {
-	my $type = shift;
+	my $type     = shift;
 	my $document = Padre::Current->document;
-	my ( $lines, $chars_with_space, $chars_without_space, $words, $is_readonly,
-	     $filename, $newline_type, $encoding ) = $document->stats;
-	
+	my ($lines,    $chars_with_space, $chars_without_space, $words, $is_readonly,
+		$filename, $newline_type,     $encoding
+	) = $document->stats;
+
 	if ( $type eq 'name' ) {
 		return sub {
 			return defined $filename ? $filename : Wx::gettext("No filename");
 		};
-	}
-	elsif ( $type eq 'size' ) {
+	} elsif ( $type eq 'size' ) {
 		return sub {
 			my $filename = $document->filename || $document->tempfile;
 			return ($filename) ? -s $filename : 0;
 		};
-	}
-	elsif ( $type eq 'number of lines' ) {
+	} elsif ( $type eq 'number of lines' ) {
 		return sub {
 			return $lines;
 		};
-	}
-	else {
+	} else {
 		return sub {
 			warn "file info $type not implemented yet\n";
 			return '';
-		}
+			}
 	}
 }
 

@@ -392,7 +392,7 @@ sub _update_list_box {
 	if ( $pos > 0 ) {
 		$self->_list->Select(0);
 	}
-	$self->_status->SetLabel( sprintf(Wx::gettext("Found %s help topic(s)\n"), $pos) );
+	$self->_status->SetLabel( sprintf( Wx::gettext("Found %s help topic(s)\n"), $pos ) );
 	$self->_display_help_in_viewer;
 
 	return 1;

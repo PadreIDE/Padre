@@ -162,7 +162,7 @@ sub new {
 		$self,
 		'edit.brace_match',
 	);
-	
+
 	$self->{brace_match_select} = $self->add_menu_action(
 		$self,
 		'edit.brace_match_select',

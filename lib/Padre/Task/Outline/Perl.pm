@@ -270,13 +270,12 @@ sub _add_subtree {
 	my $type_elem = undef;
 	if ( defined( $pkg->{$type} ) && scalar( @{ $pkg->{$type} } ) > 0 ) {
 		my $type_caption = ucfirst($type);
-		if (exists $type_caption{$type}) {
+		if ( exists $type_caption{$type} ) {
 			$type_caption = $type_caption{$type};
-		}
-		else {
+		} else {
 			warn "Type not translated: $type_caption\n";
 		}
-		
+
 		$type_elem = $outlinebar->AppendItem(
 			$root,
 			$type_caption,

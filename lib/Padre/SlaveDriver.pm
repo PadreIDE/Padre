@@ -127,13 +127,9 @@ sub spawn {
 	my $manager = shift;
 
 	require Storable;
-	$self->{cmd_queue}->enqueue(
-		Storable::freeze( [ $manager->task_queue ] )
-	);
+	$self->{cmd_queue}->enqueue( Storable::freeze( [ $manager->task_queue ] ) );
 
-	return threads->object(
-		$self->{tid_queue}->dequeue
-	);
+	return threads->object( $self->{tid_queue}->dequeue );
 }
 
 =pod
@@ -242,7 +238,7 @@ sub _slave_driver_loop {
 
 	while ( my $args = $in->dequeue ) { # args is frozen [$main, $queue]
 		last if $args eq 'STOP';
-		my $queue  = Padre::SlaveDriver->new->task_queue;
+		my $queue = Padre::SlaveDriver->new->task_queue;
 		my $worker = threads->create( \&_worker_loop, $queue );
 		$out->enqueue( $worker->tid );
 	}

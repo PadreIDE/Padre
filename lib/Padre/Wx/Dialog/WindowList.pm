@@ -357,7 +357,7 @@ sub _refresh_list {
 		} else {
 			$disk_text = Wx::gettext('CHANGED');
 		}
-		$list->SetItem( $idx, 3, $disk_text);
+		$list->SetItem( $idx, 3, $disk_text );
 	}
 
 	# auto-resize columns

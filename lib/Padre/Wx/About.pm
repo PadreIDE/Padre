@@ -97,8 +97,8 @@ sub new {
 sub _content_about {
 
 	# Create the content for the About window
-	my $self   = shift;
-	my $splash = Padre::Util::splash();
+	my $self               = shift;
+	my $splash             = Padre::Util::splash();
 	my $created_by         = Wx::gettext('Created by');
 	my $padre_dev_team     = Wx::gettext('The Padre Development Team');
 	my $splash_name        = Wx::gettext('Blue butterfly on a green leaf');

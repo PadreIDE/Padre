@@ -49,7 +49,7 @@ sub create {
 	# Check IDE param
 	my $ide = shift;
 	require Params::Util;
-	unless ( Params::Util::_INSTANCE($ide, 'Padre') ) {
+	unless ( Params::Util::_INSTANCE( $ide, 'Padre' ) ) {
 		Carp::croak("Did not provide the ide object to Padre::App->create");
 	}
 

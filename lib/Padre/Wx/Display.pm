@@ -102,11 +102,11 @@ sub _rect_from_string {
 sub _rect_scale {
 	my $rect   = shift;
 	my $ratio  = shift;
-	my $margin = (1 - $ratio) / 2;
+	my $margin = ( 1 - $ratio ) / 2;
 	$rect->width( int( $rect->width * $ratio ) );
 	$rect->height( int( $rect->height * $ratio ) );
-	$rect->x( $rect->x + int($rect->width  * $margin) );
-	$rect->y( $rect->y + int($rect->height * $margin) );
+	$rect->x( $rect->x + int( $rect->width * $margin ) );
+	$rect->y( $rect->y + int( $rect->height * $margin ) );
 	return $rect;
 }
 
@@ -115,10 +115,10 @@ sub _rect_scale {
 sub _rect_scale_margin {
 	my $rect    = shift;
 	my $ratio   = shift;
-	my $marginr = (1 - $ratio) / 2;
-	my $marginx = int($rect->width  * $marginr);
-	my $marginy = int($rect->height * $marginr);
-	my $margin  = ($marginx > $marginy) ? $marginy : $marginx;
+	my $marginr = ( 1 - $ratio ) / 2;
+	my $marginx = int( $rect->width * $marginr );
+	my $marginy = int( $rect->height * $marginr );
+	my $margin  = ( $marginx > $marginy ) ? $marginy : $marginx;
 	$rect->width( $rect->width - $margin * 2 );
 	$rect->height( $rect->height - $margin * 2 );
 	$rect->x( $rect->x + $margin );
@@ -129,12 +129,14 @@ sub _rect_scale_margin {
 # Shrink long size to meet the (landscape) golden (aspect) ratio.
 sub _rect_golden {
 	my $rect = shift;
-	if ( $rect->width > ($rect->height * GOLDEN) ) {
+	if ( $rect->width > ( $rect->height * GOLDEN ) ) {
+
 		# Shrink left from the right
-		$rect->width( int($rect->height / GOLDEN) );
+		$rect->width( int( $rect->height / GOLDEN ) );
 	} else {
+
 		# Shrink up from the bottom
-		$rect->height( int($rect->width / GOLDEN) );
+		$rect->height( int( $rect->width / GOLDEN ) );
 	}
 	return $rect;
 }

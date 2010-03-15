@@ -252,12 +252,8 @@ sub install_cpanm {
 
 	# Find 'cpanm', used to install modules
 	require Config;
-	my %seen  = ();
-	my @where = grep {
-		defined $_ and length $_ and not $seen{$_}++
-	} map {
-		$Config::Config{$_}
-	} qw{
+	my %seen = ();
+	my @where = grep { defined $_ and length $_ and not $seen{$_}++ } map { $Config::Config{$_} } qw{
 		sitescriptexp
 		sitebinexp
 		vendorscriptexp
@@ -266,14 +262,15 @@ sub install_cpanm {
 		binexp
 	};
 	my $cpanm = '';
-	foreach my $dir ( @where ) {
+
+	foreach my $dir (@where) {
 		my $path = File::Spec->catfile( $dir, 'cpanm' );
 		if ( -f $path ) {
 			$cpanm = $path;
 			last;
 		}
 	}
-	unless ( $cpanm ) {
+	unless ($cpanm) {
 		$main->error( Wx::gettext("cpanm is unexpectedly not installed") );
 		return;
 	}

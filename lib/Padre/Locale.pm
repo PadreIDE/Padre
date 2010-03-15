@@ -67,7 +67,7 @@ my %RFC4646;
 sub label {
 	my $name = shift;
 	require Encode;
-	return $RFC4646{$name}{utf8text} ? Encode::decode('utf8', $RFC4646{$name}{utf8text}) : $name
+	return $RFC4646{$name}{utf8text} ? Encode::decode( 'utf8', $RFC4646{$name}{utf8text} ) : $name;
 }
 
 BEGIN {
