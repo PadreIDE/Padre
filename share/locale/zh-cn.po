@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-16 16:04+0100\n"
-"PO-Revision-Date: 2010-03-16 18:13+0100\n"
+"PO-Revision-Date: 2010-03-16 19:24+0100\n"
 "Last-Translator: jagd <wuchuanren@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -1721,7 +1721,7 @@ msgstr ""
 
 #: lib/Padre/Action/File.pm:311
 msgid "Save Intuition"
-msgstr "据直觉保存"
+msgstr "凭直觉保存"
 
 #: lib/Padre/Action/File.pm:313
 msgid "For new document try to guess the filename based on the file content and offer to save it."
@@ -2063,10 +2063,11 @@ msgstr "替换操作已取消"
 msgid "Current cursor does not seem to point at a variable"
 msgstr "当前光标不像指在一个变量上"
 
+# !!!!! not sure, thx for daxim to point out
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:91
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:105
 msgid "No declaration could be found for the specified (lexical?) variable"
-msgstr "未能发现这个特殊(词法)变量的声明"
+msgstr "未能发现此变量的声明"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:96
 msgid "Search Canceled"
