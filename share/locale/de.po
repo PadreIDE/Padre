@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-15 12:17+0100\n"
+"POT-Creation-Date: 2010-03-16 18:26+0100\n"
 "PO-Revision-Date: 2010-02-01 10:30+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
@@ -166,8 +166,8 @@ msgid ""
 "Cannot open %s as it is over the arbitrary file size limit of Padre which is "
 "currently %s"
 msgstr ""
-"Kann %s nicht öffnen: Überschreitet das aktuelle Dateigrößen-Limit von Padre "
-"von derzeit %s"
+"Kann %s nicht öffnen: Überschreitet das Dateigrößen-Limit von Padre von "
+"derzeit %s"
 
 #: lib/Padre/Document.pm:393 lib/Padre/Wx/Editor.pm:210
 #: lib/Padre/Wx/Syntax.pm:93 lib/Padre/Wx/Syntax.pm:96
@@ -202,7 +202,7 @@ msgstr "Warnung: Datei speichern"
 msgid "Unsaved %d"
 msgstr "Ungesichert %d"
 
-#: lib/Padre/Document.pm:1332 lib/Padre/Document.pm:1333
+#: lib/Padre/Document.pm:1321 lib/Padre/Document.pm:1322
 msgid "Skipped for large files"
 msgstr "Übersprungen für große Dateien"
 
@@ -308,7 +308,7 @@ msgid "No document open"
 msgstr "Kein geöffnetes Dokument"
 
 #: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Main.pm:5525
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:160 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:158 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr "Kein Dateiname"
@@ -519,11 +519,11 @@ msgstr "Hilfe nicht gefunden."
 msgid "NAME"
 msgstr "NAME"
 
-#: lib/Padre/Wx/Editor.pm:1563
+#: lib/Padre/Wx/Editor.pm:1568
 msgid "You must select a range of lines"
 msgstr "Sie müssen mehrere Zeilen auswählen"
 
-#: lib/Padre/Wx/Editor.pm:1579
+#: lib/Padre/Wx/Editor.pm:1584
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
 "Erstes Zeichen der Auswahl muss ein Nicht-Wort-Zeichen zur Ausrichtung sein"
@@ -992,7 +992,7 @@ msgstr "Vergleich nicht möglich ohne vorheriges speichern"
 msgid "There are no differences\n"
 msgstr "Keine Unterschiede\n"
 
-#: lib/Padre/Wx/Main.pm:5303 lib/Padre/Plugin/Devel.pm:310
+#: lib/Padre/Wx/Main.pm:5303 lib/Padre/Plugin/Devel.pm:308
 #, perl-format
 msgid "Error: %s"
 msgstr "Fehler: %s"
@@ -1459,7 +1459,7 @@ msgid "Options"
 msgstr "Optionen"
 
 #: lib/Padre/Wx/Dialog/Find.pm:331 lib/Padre/Wx/Dialog/Replace.pm:535
-#: lib/Padre/Wx/Dialog/Replace.pm:582
+#: lib/Padre/Wx/Dialog/Replace.pm:584
 msgid "No matches found"
 msgstr "Nichts gefunden"
 
@@ -1561,37 +1561,41 @@ msgstr "Zeige Fehlermeldung"
 msgid "Disable"
 msgstr "Deaktivieren"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:19
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:23
+msgid "New installation survey"
+msgstr "Neuinstallations-Umfrage"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:59
 msgid "Where did you hear about Padre?"
 msgstr "Woher weißt Du von Padre?"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:24
-msgid "Other searchengine"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:64
+msgid "Other search engine"
 msgstr "Andere Suchmaschine"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:27
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:67
 msgid "Other event"
-msgstr "Anderer Anlass"
+msgstr "Andere Veranstaltung"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:28
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:68
 msgid "Friend"
-msgstr "Freund"
+msgstr "Freund/Freundin"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:29
-msgid "Reinstalling/Installing on other computer"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:69
+msgid "Reinstalling/installing on other computer"
 msgstr "Reinstallation/Installation auf einem weiteren Computer"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:30
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:70
 msgid "Other (Please fill in here)"
 msgstr "Sonstiges (Bitte hier eintragen)"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:35
-msgid "Skip feedback"
-msgstr "Feedback überspringen"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:84
+msgid "OK"
+msgstr "OK"
 
-#: lib/Padre/Wx/Dialog/WhereFrom.pm:41
-msgid "New installation survey"
-msgstr "Neuinstallations-Umfrage"
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:91
+msgid "Skip question without giving feedback"
+msgstr "Überspringen"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:38 lib/Padre/Action/Search.pm:179
 msgid "Quick Menu Access"
@@ -2132,17 +2136,17 @@ msgstr "E&rsetzen"
 msgid "Replace Text:"
 msgstr "Ersetzen durch:"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:578
-#: lib/Padre/Wx/Dialog/Replace.pm:583
+#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:585
 msgid "Search and Replace"
 msgstr "Suchen und ersetzen"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:574
+#: lib/Padre/Wx/Dialog/Replace.pm:575
 #, perl-format
 msgid "Replaced %d match"
 msgstr "%d Ersetzung durchgeführt."
 
-#: lib/Padre/Wx/Dialog/Replace.pm:574
+#: lib/Padre/Wx/Dialog/Replace.pm:575
 #, perl-format
 msgid "Replaced %d matches"
 msgstr "%d Ersetzungen durchgeführt."
@@ -2185,11 +2189,11 @@ msgstr "Gefundene Ele&mente:"
 msgid "Current Directory: "
 msgstr "Aktuelles Verzeichnis:"
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:263
+#: lib/Padre/Wx/Dialog/OpenResource.pm:264
 msgid "Skip version control system files"
 msgstr "Versionskontrollsystem-Dateien ignorieren"
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:265
+#: lib/Padre/Wx/Dialog/OpenResource.pm:266
 msgid "Skip using MANIFEST.SKIP"
 msgstr "Dateien in MANIFEST.SKIP ignorieren"
 
@@ -2762,11 +2766,11 @@ msgstr "Beim Schreiben automatisch vervollständigen"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:41
 msgid "Autocomplete new methods in packages"
-msgstr "Neue Methoden automatisch vervollständigen"
+msgstr "Neue Methoden in Packages automatisch vervollständigen"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:48
 msgid "Autocomplete new subroutines in scripts"
-msgstr "Neue Methoden automatisch vervollständigen"
+msgstr "Neue Subroutinen in Skripten automatisch vervollständigen"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:52
 msgid "Min. length of suggestions:"
@@ -2892,19 +2896,19 @@ msgstr "Ausdruck"
 msgid "No Perl 5 file is open"
 msgstr "Keine Perl-5-Datei geöffnet"
 
-#: lib/Padre/Plugin/Devel.pm:230
+#: lib/Padre/Plugin/Devel.pm:228
 msgid "Sub-tracing stopped"
 msgstr "Sub-trace gestoppt"
 
-#: lib/Padre/Plugin/Devel.pm:236
+#: lib/Padre/Plugin/Devel.pm:234
 msgid "Error while loading Aspect, is it installed?"
 msgstr "Fehler beim Laden von Aspect."
 
-#: lib/Padre/Plugin/Devel.pm:248
+#: lib/Padre/Plugin/Devel.pm:246
 msgid "Sub-tracing started"
 msgstr "Sub-trace gestartet"
 
-#: lib/Padre/Plugin/Devel.pm:266
+#: lib/Padre/Plugin/Devel.pm:264
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr "Sammlung von Werkzeugen, die die Padre Entwickler verwenden\n"
 
@@ -2916,61 +2920,61 @@ msgstr "Aktuellen Bericht anzeigen"
 msgid "Popularity Contest Report"
 msgstr "Popularity-Contest-Bericht"
 
-#: lib/Padre/Document/Perl.pm:438
+#: lib/Padre/Document/Perl.pm:444
 msgid "Error: "
 msgstr "Fehler: "
 
-#: lib/Padre/Document/Perl.pm:440
+#: lib/Padre/Document/Perl.pm:446
 msgid "No errors found."
 msgstr "Keine Fehler gefunden."
 
-#: lib/Padre/Document/Perl.pm:562 lib/Padre/Document/Perl.pm:747
+#: lib/Padre/Document/Perl.pm:568 lib/Padre/Document/Perl.pm:753
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Cursor zeigt offenbar nicht auf eine Variable"
 
-#: lib/Padre/Document/Perl.pm:563 lib/Padre/Document/Perl.pm:587
-#: lib/Padre/Document/Perl.pm:622 lib/Padre/Document/Perl.pm:748
+#: lib/Padre/Document/Perl.pm:569 lib/Padre/Document/Perl.pm:593
+#: lib/Padre/Document/Perl.pm:628 lib/Padre/Document/Perl.pm:754
 msgid "Check cancelled"
 msgstr "Check abgebrochen"
 
-#: lib/Padre/Document/Perl.pm:586
+#: lib/Padre/Document/Perl.pm:592
 msgid "Current cursor does not seem to point at a method"
 msgstr "Cursor zeigt offenbar nicht auf eine Methode"
 
-#: lib/Padre/Document/Perl.pm:621
+#: lib/Padre/Document/Perl.pm:627
 #, perl-format
 msgid "Current '%s' not found"
 msgstr "%s nicht gefunden."
 
-#: lib/Padre/Document/Perl.pm:1488 lib/Padre/Action/Perl.pm:69
+#: lib/Padre/Document/Perl.pm:1494 lib/Padre/Action/Perl.pm:69
 msgid "Find Variable Declaration"
 msgstr "Variablen-Deklaration suchen"
 
-#: lib/Padre/Document/Perl.pm:1500 lib/Padre/Action/Refactor.pm:49
+#: lib/Padre/Document/Perl.pm:1506 lib/Padre/Action/Refactor.pm:49
 msgid "Lexically Rename Variable"
 msgstr "Variable lexikalisch umbenennen"
 
-#: lib/Padre/Document/Perl.pm:1512 lib/Padre/Document/Perl.pm:1513
+#: lib/Padre/Document/Perl.pm:1518 lib/Padre/Document/Perl.pm:1519
 #: lib/Padre/Action/Refactor.pm:57 lib/Padre/Action/Refactor.pm:58
 msgid "Replacement"
 msgstr "Ersatz"
 
-#: lib/Padre/Document/Perl.pm:1528 lib/Padre/Action/Perl.pm:81
+#: lib/Padre/Document/Perl.pm:1534 lib/Padre/Action/Perl.pm:81
 msgid "Find Method Declaration"
 msgstr "Methoden-Deklaration suchen"
 
-#: lib/Padre/Document/Perl.pm:1547 lib/Padre/Action/Refactor.pm:102
+#: lib/Padre/Document/Perl.pm:1553 lib/Padre/Action/Refactor.pm:102
 msgid "Introduce Temporary Variable"
 msgstr "Temporäre Variable einführen"
 
-#: lib/Padre/Document/Perl.pm:1560 lib/Padre/Document/Perl.pm:1561
+#: lib/Padre/Document/Perl.pm:1566 lib/Padre/Document/Perl.pm:1567
 #: lib/Padre/Action/Refactor.pm:110 lib/Padre/Action/Refactor.pm:111
 msgid "Variable Name"
 msgstr "Variablenname"
 
-#: lib/Padre/Document/Perl.pm:1572
+#: lib/Padre/Document/Perl.pm:1578
 msgid "Edit with Regex Editor"
 msgstr "Mit Regex-Editor editieren"
 
@@ -4286,11 +4290,11 @@ msgstr ""
 "URL zur Installation angeben\n"
 "z.B. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
 
-#: lib/Padre/Action/Tools.pm:277
+#: lib/Padre/Action/Tools.pm:274
 msgid "cpanm is unexpectedly not installed"
 msgstr "cpanm ist wider Erwarten nicht installiert"
 
-#: lib/Padre/Action/Tools.pm:320
+#: lib/Padre/Action/Tools.pm:317
 msgid "Failed to find your CPAN configuration"
 msgstr "Konnte CPAN-Konfiguration nicht finden"
 
@@ -4656,6 +4660,9 @@ msgstr "Module"
 #: lib/Padre/Task/Outline/Perl.pm:267
 msgid "Methods"
 msgstr "Methoden"
+
+#~ msgid "Skip feedback"
+#~ msgstr "Feedback überspringen"
 
 #~ msgid "Yesterday"
 #~ msgstr "Gestern"
