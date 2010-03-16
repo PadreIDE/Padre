@@ -61,12 +61,12 @@ sub _create_controls {
 
 	my $choices = [
 		'Google',
-		Wx::gettext('Other searchengine'),
+		Wx::gettext('Other search engine'),
 		'FOSDEM',
 		'CeBit',
 		Wx::gettext('Other event'),
 		Wx::gettext('Friend'),
-		Wx::gettext('Reinstalling/Installing on other computer'),
+		Wx::gettext('Reinstalling/installing on other computer'),
 		Wx::gettext('Other (Please fill in here)'),
 	];
 
