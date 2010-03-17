@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+ #!/usr/bin/perl
 
 ###
 # This is mostly a demo test script for using the action queue for testing
@@ -38,12 +38,15 @@ for ('.','blib/lib','lib') {
 use_ok('Padre::Perl');
 
 my $cmd;
-if ($^O eq 'MSWin32') {
- # Look for Perl on Windows
- $cmd = Padre::Perl::cperl();
- plan skip_all => 'Need some Perl for this test' unless defined($cmd);
- $cmd .= ' ';
+for my $prefix ('',Padre::Perl::cperl().' ','"'.$^X.'" ','perl ','wperl ','/usr/bin/perl ','C:\\strawberry\\perl\\bin\\perl.exe ','/usr/pkg/bin/perl ') {
+ next unless `$prefix$devpl --help` =~ /(run Padre in the command line|\-\-fulltrace|\-\-actionqueue)/;
+ $cmd = $prefix;
+ last;
 }
+
+plan skip_all => 'Need some Perl for this test' unless defined($cmd);
+
+ok(1,'Using Perl: '.$cmd);
 
 #plan( tests => scalar( keys %TEST ) * 2 + 20 );
 
