@@ -114,7 +114,7 @@ sub startup {
 	# If we are going to use threading, spawn off the slave
 	# driver as early as we possibly can so we reduce the amount of
 	# wasted memory copying to a minimum.
-	if ( $setting{threads} ) {
+	if ( 0 ) { # $setting{threads} ) {
 		require Padre::SlaveDriver;
 		Padre::SlaveDriver->new;
 	}
