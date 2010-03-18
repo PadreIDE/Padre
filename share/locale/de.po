@@ -1080,7 +1080,7 @@ msgstr "Anzahl Leerzeichen pro Tabulator:"
 
 #: lib/Padre/Wx/Main.pm:6036
 msgid "Need to select text in order to translate to hex"
-msgstr "Zur Umwandlung in Hex muß Text markiert sein."
+msgstr "Zur Umwandlung in Hex muss Text markiert sein."
 
 #: lib/Padre/Wx/Main.pm:6178
 #, perl-format
@@ -1206,7 +1206,7 @@ msgstr "Auf anderes Panel verschieben"
 
 #: lib/Padre/Wx/Menu/Search.pm:102
 msgid "&Search"
-msgstr "&Suche"
+msgstr "&Suchen"
 
 #: lib/Padre/Wx/Menu/Run.pm:74
 msgid "&Run"
@@ -1331,7 +1331,7 @@ msgstr "&Hilfe"
 
 #: lib/Padre/Wx/Menu/Debug.pm:116
 msgid "&Debug"
-msgstr "&Debugging"
+msgstr "Debu&gging"
 
 #: lib/Padre/Wx/Menu/Perl.pm:106
 msgid "&Perl"
@@ -2139,7 +2139,7 @@ msgstr "Ersetzen durch:"
 #: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:580
 #: lib/Padre/Wx/Dialog/Replace.pm:585
 msgid "Search and Replace"
-msgstr "Suchen und ersetzen"
+msgstr "Suchen und Ersetzen"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:575
 #, perl-format
