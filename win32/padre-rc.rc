@@ -12,6 +12,10 @@
 
 IDI_APP ICON DISCARDABLE "padre.ico"
 
+// Embed the manifest in the exe
+// http://msdn.microsoft.com/fr-fr/library/bb773175%28en-us,VS.85%29.aspx
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "padre.exe.manifest"
+
 
 // Languages list:
 // http://msdn.microsoft.com/en-us/library/dd318693%28VS.85%29.aspx
@@ -20,7 +24,7 @@ STRINGTABLE DISCARDABLE
 LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
 BEGIN
    IDS_APP_TITLE,  "Padre"
-   IDS_ERR_WPERL,  "Fichier « WPerl.exe » introuvable !"
+   IDS_ERR_WPERL,  "Programme « WPerl.exe » introuvable !"
    IDS_ERR_SCRIPT, "Script « padre » introuvable !"
    IDS_ERR_RUN,    "Echec du lancement du script avec « padre » avec « WPerl.exe » !"
 END

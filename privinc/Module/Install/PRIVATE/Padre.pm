@@ -8,6 +8,10 @@ use Module::Install::Base;
 use FindBin    ();
 use File::Find ();
 
+# For building the Win32 launcher
+use Config;
+use ExtUtils::Embed;
+
 our $VERSION = '0.26';
 use base qw{ Module::Install::Base };
 
@@ -245,20 +249,23 @@ sub build_padre_exe {
 	# Create the blib/bin folder
 	system $^X , qw[-MExtUtils::Command -e mkpath --], $bin;
 
+	# TODO update the version number in win32/padre.exe.manifest
+
 	# Step 1: Make sure we do not have old files
-	unlink "$src/padre-rc.o" if -f "$src/padre-rc.o";
+	my @temp_files = map {"$src/$_"} qw[ padre-rc.res perlxsi.c ];
+	map { unlink } (grep { -f } @temp_files);
 
 	# Step 2: Build Padre's win32 resource using windres
-	system qq[cd $src && windres padre-rc.rc padre-rc.o];
+	system qq[cd $src && windres --input padre-rc.rc --output padre-rc.res --output-format=coff];
 
-	# Step 3: Build padre.exe using gcc
-	system "cd $src && gcc -Wall -Os -mwin32 -mwindows -Wl,-s padre.c padre-rc.o -o ../$bin/padre.exe";
+	# Step 3: Generate xs_init() function for static libraries
+	xsinit("$src/perlxsi.c", 0);
 
-	# Step 4: Remove temporary files
-	unlink "$src/padre-rc.o" if -f "$src/padre-rc.o";
+	# Step 4: Build padre.exe using $Config{cc}
+	system "cd $src && $Config{cc} -mwin32 -mwindows -Wl,-s padre.c perlxsi.c padre-rc.res -o ../$bin/padre.exe ".ccopts.ldopts;
 
-	# Step 5: Install XP manifest to get a themed Padre
-	system $^X , qw[-MExtUtils::Command -e cp --], "$src/wperl.exe.manifest", "$bin/wperl.exe.manifest";
+	# Step 5: Remove temporary files
+	map { unlink } (grep { -f } @temp_files);
 }
 
 1;

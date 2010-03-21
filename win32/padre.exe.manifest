@@ -2,12 +2,12 @@
 <assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
 
 	<assemblyIdentity
-		version="5.0.0.0"
+		version="0.58.0.0"
 		processorArchitecture="x86"
-		name="wperl.exe"
+		name="Padre"
 		type="win32"
 	/>
-	<description>wperl</description>
+	<description>Padre - The Perl IDE</description>
 
 	<!-- Enable XP/Vista-style themes -->
 	<dependency>
