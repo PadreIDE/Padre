@@ -1147,6 +1147,8 @@ Kenichi Ishigaki - 石垣憲一 (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
 
 Max Maischein (CORION)
 
+Olivier MenguE<eacute> (DOLMEN)
+
 Patrick Donelan (PDONELAN) E<lt>pat@patspam.comE<gt>
 
 Paweł Murias (PMURIAS)
@@ -1186,6 +1188,8 @@ Everyone on the team
 =head3 French
 
 Jérôme Quelin (JQUELIN)
+
+Olivier MenguE<eacute> (DOLMEN)
 
 =head3 German
 

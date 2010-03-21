@@ -186,6 +186,8 @@ sub _content_developers {
             <br>
             Max Maischein<br>
             <br>
+            Olivier Mengué<br>
+            <br>
             Patrick Donelan<br>
             <br>
             Paweł Murias<br>
@@ -224,7 +226,7 @@ sub _content_translators {
             <br>
             <b>$language{'zh-cn'}</b><br>
             Fayland Lam<br>
-	    Chuanren Wu<br>
+            Chuanren Wu<br>
             <br>
             <b>$language{'zh-tw'}</b><br>
             Matthew Lien - 練喆明<br>
@@ -237,6 +239,7 @@ sub _content_translators {
             <br>
             <b>$language{'fr-fr'}</b><br>
             Jérôme Quelin<br>
+            Olivier Mengué<br>
           </p>
         </td>
         <td valign="top">
