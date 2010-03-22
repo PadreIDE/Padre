@@ -53,6 +53,12 @@ sub PADRE {
 	return icon('logo');
 }
 
+# On windows, you actually need to provide it with a native icon file that
+# contains multiple sizes so it can choose from it.
+sub PADRE_ICON_FILE {
+	my $ico = File::Spec->catfile(ICONS, 'padre', 'all', 'padre.ico');
+	return Wx::IconBundle->new( $ico );
+}
 
 
 
