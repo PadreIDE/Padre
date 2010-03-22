@@ -366,7 +366,8 @@ sub _build_layout {
 	# Add top margin
 	$box->Add( 0, $args{top}, 0 ) if $args{top};
 
-	foreach my $i ( 0 .. @{ $args{layout} } - 1 ) {
+	ROW:
+	foreach my $i ( 0 .. @{ $args{layout} } - 1 ) {  ## Z-TODO: normal for loop
 		my $row = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 		$box->Add( 0, $args{element_spacing}[1], 0 ) if $args{element_spacing}[1] and $i;
 		$box->Add($row);
@@ -374,7 +375,8 @@ sub _build_layout {
 		# Add left margin
 		$row->Add( $args{left}, 0, 0 ) if $args{left};
 
-		foreach my $j ( 0 .. @{ $args{layout}[$i] } - 1 ) {
+		COL:
+		foreach my $j ( 0 .. @{ $args{layout}[$i] } - 1 ) {  ## Z-TODO: normal for loop
 			my $width = [ $args{width}[$j], -1 ];
 
 			if ( not @{ $args{layout}[$i][$j] } ) { # [] means Expand

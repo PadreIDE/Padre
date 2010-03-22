@@ -149,9 +149,8 @@ sub _get_date_info {
 sub _get_file_info {
 	my $type     = shift;
 	my $document = Padre::Current->document;
-	my ($lines,    $chars_with_space, $chars_without_space, $words, $is_readonly,
-		$filename, $newline_type,     $encoding
-	) = $document->stats;
+	my ($lines, $chars_with_space, $chars_without_space, $words, $newline_type,
+	    $encoding) = $document->stats;
 
 	if ( $type eq 'name' ) {
 		return sub {

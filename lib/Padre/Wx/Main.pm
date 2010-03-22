@@ -3509,7 +3509,10 @@ sub on_open_selection {
 	@files = grep { !$seen{$_}++ } @files;
 
 	require Wx::Perl::Dialog::Simple;
-	my $file = Wx::Perl::Dialog::Simple::single_choice( choices => \@files );
+	my $file = Wx::Perl::Dialog::Simple::single_choice(
+						title   => Wx::gettext('Choose File'),
+						choices => \@files
+	);
 
 	if ($file) {
 		$self->setup_editors($file);
@@ -3624,7 +3627,7 @@ sub open_file_dialog {
 		Wx::gettext("Ruby Files"),
 		"*.rb;*.RB",
 		Wx::gettext("SQL Files"),
-		"*.slq;*.SQL",
+		"*.sql;*.SQL",
 		Wx::gettext("Text Files"),
 		"*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
 		Wx::gettext("Web Files"),
@@ -5504,41 +5507,8 @@ sub on_doc_stats {
 		return;
 	}
 
-	my ($lines,    $chars_with_space, $chars_without_space, $words, $is_readonly,
-		$filename, $newline_type,     $encoding
-	) = $doc->stats;
-
-	my $disksize = '';
-	if ( defined($doc) and defined( $doc->{file} ) ) {
-		$disksize = Padre::Util::humanbytes( $doc->{file}->size );
-	} else {
-		$disksize = Wx::gettext('(Document not on disk)');
-	}
-
-	my @messages = (
-		sprintf( Wx::gettext("Words: %s"),                $words ),
-		sprintf( Wx::gettext("Lines: %d"),                $lines ),
-		sprintf( Wx::gettext("Chars without spaces: %s"), $chars_without_space ),
-		sprintf( Wx::gettext("Chars with spaces: %d"),    $chars_with_space ),
-		sprintf( Wx::gettext("Newline type: %s"),         $newline_type ),
-		sprintf( Wx::gettext('Size on disk: %s'),         $disksize ),
-		sprintf( Wx::gettext("Encoding: %s"),             $encoding ),
-		sprintf(
-			Wx::gettext("Document type: %s"),
-			( defined ref($doc) ? ref($doc) : Wx::gettext("none") )
-		),
-		defined $filename
-		? sprintf( Wx::gettext("Filename: %s"), $filename )
-		: Wx::gettext("No filename"),
-	);
-	my $message = join $/, @messages;
-
-	if ($is_readonly) {
-		$message .= Wx::gettext("File is read-only.\n");
-	}
-
-	$self->message( $message, Wx::gettext('Stats') );
-	return;
+	require Padre::Wx::Dialog::DocStats;
+	Padre::Wx::Dialog::DocStats->new($self)->Show;
 }
 
 =pod
