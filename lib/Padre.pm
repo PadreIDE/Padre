@@ -1145,6 +1145,8 @@ Keedi Kim - 김도형 (KEEDI)
 
 Kenichi Ishigaki - 石垣憲一 (ISHIGAKI) E<lt>ishigaki@cpan.orgE<gt>
 
+Mark Grimes E<lt>mgrimes@cpan.orgE<gt>
+
 Max Maischein (CORION)
 
 Olivier MenguE<eacute> (DOLMEN)
@@ -1161,7 +1163,7 @@ Sebastian Willing (SEWI)
 
 Steffen Müller (TSEE) E<lt>smueller@cpan.orgE<gt>
 
-Mark Grimes E<lt>mgrimes@cpan.orgE<gt>
+Zeno Gantner
 
 =head2 Translators
 

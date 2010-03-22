@@ -22,7 +22,7 @@ sub new {
 	my $self  = $class->SUPER::new(
 		undef,
 		-1,
-		Wx::gettext('About'),
+		Wx::gettext('About Padre'),
 		Wx::wxDefaultPosition,
 		[ 700, 530 ],
 	);
@@ -153,13 +153,13 @@ sub _content_developers {
             Chris Dolan<br>
             <br>
             Claudio Ramirez<br>
+            <br>
+            code4pay (pseudonym only)<br>            
           </p>
         </td>
         <td valign="top">
           <p>
             <br>
-            <br>
-            code4pay (pseudonym only)<br>
             <br>
             Fayland Lam<br>
             <br>
@@ -176,13 +176,13 @@ sub _content_developers {
             Kartik Thakore<br>
             <br>
             Keedi Kim - 김도형<br>
+            <br>
+            Kenichi Ishigaki - 石垣憲一<br>
           </p>
         </td>
         <td valign="top">
           <p>
             <br>
-            <br>
-            Kenichi Ishigaki - 石垣憲一<br>
             <br>
             Max Maischein<br>
             <br>
@@ -199,6 +199,8 @@ sub _content_developers {
             Sebastian Willing<br>
             <br>
             Steffen Müller<br>
+            <br>
+            Zeno Gantner<br>
           </p>
         </td>
       </td>
