@@ -1304,7 +1304,7 @@ sub stats {
 	my ( $lines, $chars_with_space, $chars_without_space, $words, $is_readonly ) = (0) x 5;
 
 	my $editor = $self->editor;
-	my $code = $self->text_get;
+	my $code   = $self->text_get;
 
 	$lines            = $editor->GetLineCount();
 	$chars_with_space = $editor->GetTextLength();
@@ -1314,7 +1314,7 @@ sub stats {
 	# TODO or improve them?
 	if ( length($code) < 500_000 ) {
 		my $whitespace_chars = 0;
-		$words++               while ( $code =~ /\b\w+\b/g );
+		$words++ while ( $code =~ /\b\w+\b/g );
 		$chars_without_space = $chars_with_space;
 		$chars_without_space-- while ( $code =~ /\s/g );
 	} else {

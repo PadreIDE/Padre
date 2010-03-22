@@ -234,7 +234,8 @@ sub new {
 	Wx::Event::EVT_STC_DWELLSTART( $self, -1, \&on_stc_dwell_start );
 
 	# Use Padre's icon
-	if(Padre::Constant::WIN32) {
+	if (Padre::Constant::WIN32) {
+
 		# Windows needs its ICOn file for Padre to look cooler in the
 		# task bar, task switch bar and task manager
 		$self->SetIcons(Padre::Wx::Icon::PADRE_ICON_FILE);

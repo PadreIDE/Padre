@@ -220,7 +220,7 @@ sub refresh {
 		( length($mime_type_name) + 2 ) * $width,
 		( length($newline) + 2 ) * $width,
 		( $length + 2 ) * $width,
-		( length($rdstatus ) + 2 ) * $width,
+		( length($rdstatus) + 2 ) * $width,
 	);
 
 	# Move the static bitmap holding the task load status

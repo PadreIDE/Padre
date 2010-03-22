@@ -7,24 +7,27 @@ use Test::More;
 use Test::NoWarnings;
 use Padre::Document::Perl::Beginner;
 
-package Padre; 
-# Fake the Padre instance, P::D::P::Beginner only needs Padre->ide->config 
-use Padre::Config(); 
-my $SINGLETON = undef; 
-sub ide { 
-	my $class = shift; 
-	return $SINGLETON if $SINGLETON; 
-	$SINGLETON = bless {}, $class; 
-	$SINGLETON->{config} = Padre::Config->read; 
-	return $SINGLETON; 
-} 
-sub config { 
-	my $self = shift; 
-	return $self->{config}; 
-} 
- 
-package main; 
- 
+package Padre;
+
+# Fake the Padre instance, P::D::P::Beginner only needs Padre->ide->config
+use Padre::Config();
+my $SINGLETON = undef;
+
+sub ide {
+	my $class = shift;
+	return $SINGLETON if $SINGLETON;
+	$SINGLETON = bless {}, $class;
+	$SINGLETON->{config} = Padre::Config->read;
+	return $SINGLETON;
+}
+
+sub config {
+	my $self = shift;
+	return $self->{config};
+}
+
+package main;
+
 our $SKIP;
 
 unless ( $ENV{AUTOMATED_TESTING} ) {

@@ -129,29 +129,23 @@ sub refresh_windowlist {
 
 	# Overwrite the labels of existing entries where possible
 	foreach my $nth ( 0 .. List::Util::min( $previous, $pages ) ) {
-		$self->FindItemByPosition(
-			$self->{base} + $nth + 1
-		)->SetText( $label[$order[$nth]] );
+		$self->FindItemByPosition( $self->{base} + $nth + 1 )->SetText( $label[ $order[$nth] ] );
 	}
 
 	# Add menu entries if we have extra labels
 	foreach my $nth ( $previous + 1 .. $pages ) {
 		Wx::Event::EVT_MENU(
 			$self->{main},
-			$self->Append( -1, $label[$order[$nth]] ),
+			$self->Append( -1, $label[ $order[$nth] ] ),
 			sub {
-				$_[0]->on_nth_pane($order[$nth]);
+				$_[0]->on_nth_pane( $order[$nth] );
 			},
 		);
 	}
 
 	# Remove menu entries if we have too many
 	foreach my $nth ( reverse( $pages + 1 .. $previous ) ) {
-		$self->Delete(
-			$self->FindItemByPosition(
-				$self->{base} + $nth + 1
-			)
-		);
+		$self->Delete( $self->FindItemByPosition( $self->{base} + $nth + 1 ) );
 	}
 
 	# If we have moved from any to no menus, remove the separator

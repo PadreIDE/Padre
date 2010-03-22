@@ -116,6 +116,7 @@ sub startup {
 	# wasted memory copying to a minimum.
 	if ( $setting{threads} ) {
 		require Padre::SlaveDriver;
+
 		# Padre::SlaveDriver->new;
 	}
 
