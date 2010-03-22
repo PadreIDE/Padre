@@ -121,8 +121,8 @@ BEGIN {
 		# Example entry for an language which is not supported directly,
 		# but which Padre is aware of.
 		'en-au' => {
-			gettext  => _T('English (Australian)'),
-			utf8text => 'English (Australian)',
+			gettext  => _T('English (Australia)'),
+			utf8text => 'English (Australia)',
 			iso639   => 'en',
 			iso3166  => 'AU',
 			wxid     => Wx::wxLANGUAGE_ENGLISH_AUSTRALIA,
