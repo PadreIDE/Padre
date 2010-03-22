@@ -54,8 +54,8 @@ sub new {
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("Replacement"),
-				Wx::gettext("Replacement"),
+				Wx::gettext('New name'),
+				Wx::gettext('Rename variable'),
 				'$foo',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;
@@ -83,8 +83,8 @@ sub new {
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("Please enter a name for the new subroutine"),
-				Wx::gettext("New Subroutine Name"),
+				Wx::gettext('Name for the new subroutine'),
+				Wx::gettext('Extract Subroutine'),
 				'$foo',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;
@@ -107,8 +107,8 @@ sub new {
 			require Padre::Wx::History::TextEntryDialog;
 			my $dialog = Padre::Wx::History::TextEntryDialog->new(
 				$_[0],
-				Wx::gettext("Variable Name"),
-				Wx::gettext("Variable Name"),
+				Wx::gettext('Variable Name'),
+				Wx::gettext('Introduce Temporary Variable'),
 				'$tmp',
 			);
 			return if $dialog->ShowModal == Wx::wxID_CANCEL;
