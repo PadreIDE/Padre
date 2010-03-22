@@ -50,14 +50,14 @@ sub dialog {
 	my $layout = get_layout($config);
 	my $dialog = Padre::Wx::Dialog->new(
 		parent => $parent,
-		title  => Wx::gettext("Insert Special Values"),
+		title  => Wx::gettext('Insert Special Values'),
 		layout => $layout,
 		width  => [ 150, 200 ],
 	);
 
 	Wx::Event::EVT_CHOICE( $dialog, $dialog->{_widgets_}->{_find_cat_}, \&find_category );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_insert_}, \&get_value );
-	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_}, \&cancel_clicked );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_insert_},   \&get_value );
+	Wx::Event::EVT_BUTTON( $dialog, $dialog->{_widgets_}->{_cancel_},   \&cancel_clicked );
 
 	$dialog->{_widgets_}->{_find_cat_}->SetFocus;
 	$dialog->{_widgets_}->{_insert_}->SetDefault;
@@ -91,8 +91,6 @@ sub get_value {
 	my $cat_name  = _get_cat_name($dialog);
 	my $value_ind = $data->{_find_specialvalue_};
 	my $text      = &{ $categories->{$cat_name}[$value_ind]{action} };
-
-	#warn "cat : $cat_name, value $value_ind, text : $text\n";
 
 	my $editor = Padre::Current->editor;
 	$editor->ReplaceSelection('');
@@ -148,17 +146,17 @@ sub _get_date_info {
 
 sub _get_file_info {
 	my $type     = shift;
-	my $document = Padre::Current->document;
+	my $doc = Padre::Current->document;
 	my ($lines, $chars_with_space, $chars_without_space, $words, $newline_type,
-	    $encoding) = $document->stats;
+	    $encoding) = $doc->stats;
 
 	if ( $type eq 'name' ) {
 		return sub {
-			return defined $filename ? $filename : Wx::gettext("No filename");
+			return defined $doc->file ? $doc->{file}->filename : $doc->get_title;;
 		};
 	} elsif ( $type eq 'size' ) {
 		return sub {
-			my $filename = $document->filename || $document->tempfile;
+			my $filename = $doc->filename || $doc->tempfile;
 			return ($filename) ? -s $filename : 0;
 		};
 	} elsif ( $type eq 'number of lines' ) {
@@ -172,7 +170,6 @@ sub _get_file_info {
 			}
 	}
 }
-
 
 1;
 
