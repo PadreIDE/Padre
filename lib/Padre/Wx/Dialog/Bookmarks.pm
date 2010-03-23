@@ -172,8 +172,8 @@ sub goto_bookmark {
 	}
 
 	# Is the file already open
-	my $file   = $bookmark->{file};
-	my $line   = $bookmark->{line};
+	my $file   = $bookmark->file;
+	my $line   = $bookmark->line;
 	my $pageid = $main->find_editor_of_file($file);
 
 	unless ( defined $pageid ) {
