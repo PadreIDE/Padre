@@ -13,12 +13,6 @@ our @ISA     = qw{
 	Wx::Dialog
 };
 
-# TODO:
-#  proper alignment (right) of numbers
-#  proper margins
-#  exit on escape
-#  Update button should be large enough for German message
-
 =pod
 
 =head1 NAME
@@ -67,6 +61,7 @@ sub new {
 
 	my $update_button = Wx::Button->new( $self, -1,	Wx::gettext('&Update') );
 	   $update_button->SetDefault;
+	   $update_button->SetFocus;
 	Wx::Event::EVT_BUTTON(
 		$self,
 		$update_button,
@@ -142,8 +137,8 @@ sub new {
 	$main_sizer->Add($self->horizontal_line, 1, Wx::wxEXPAND, 0);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	   $buttons->Add($self->{close_button},  0, Wx::wxGROW | Wx::wxRIGHT,      $border_margin);
-	   $buttons->Add($update_button, 0, Wx::wxGROW | Wx::wxLEFT,       $border_margin);
+	   $buttons->Add($self->{close_button},  0, Wx::wxGROW | Wx::wxRIGHT, $border_margin);
+	   $buttons->Add($update_button, 0, Wx::wxGROW | Wx::wxLEFT, $border_margin);
 	$main_sizer->Add($buttons,  0, Wx::wxALIGN_RIGHT | Wx::wxALL, $border_margin);
 	
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
