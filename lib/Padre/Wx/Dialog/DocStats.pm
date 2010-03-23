@@ -17,6 +17,7 @@ our @ISA     = qw{
 #  proper alignment (right) of numbers
 #  proper margins
 #  exit on escape
+#  Update button should be large enough for German message
 
 =pod
 
@@ -62,15 +63,9 @@ sub new {
 	$self->{encoding}     = $self->label(' ');
 	$self->{doc_type}     = $self->label(' ' x 15);
 
-	my $close_button  = Wx::Button->new( $self, Wx::wxID_CLOSE, Wx::gettext('Close') );
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$close_button,
-		sub {
-			$_[0]->Close;
-		}
-	);	
-	my $update_button = Wx::Button->new( $self, -1,	Wx::gettext('Update') );
+	$self->{close_button}  = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
+
+	my $update_button = Wx::Button->new( $self, -1,	Wx::gettext('&Update') );
 	   $update_button->SetDefault;
 	Wx::Event::EVT_BUTTON(
 		$self,
@@ -97,62 +92,65 @@ sub new {
 	my $vertical_grid_margin   = 4;
 	my $horizontal_grid_margin = 10;
 			           
-	my $grid_sizer_data = Wx::FlexGridSizer->new(21, 3, $vertical_grid_margin, $horizontal_grid_margin);
-	   $grid_sizer_data->AddGrowableCol(1);
-	   $grid_sizer_data->AddGrowableCol(2);
+	my $data_sizer = Wx::FlexGridSizer->new(21, 3, $vertical_grid_margin, $horizontal_grid_margin);
+	   $data_sizer->AddGrowableCol(1);
+	   $data_sizer->AddGrowableCol(2);
 	
-	$grid_sizer_data->Add($self->label(' '), 0, Wx::wxEXPAND, 0);
-	$grid_sizer_data->Add($self->label( Wx::gettext('Document') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{selection}, 0, 0, 0);
+	$data_sizer->AddSpacer(0);
+	$data_sizer->Add($self->label( Wx::gettext('Document') ), 0, 0, 0);
+	$data_sizer->Add($self->{selection}, 0, 0, 0);
 	
-	$grid_sizer_data->Add($self->label( Wx::gettext('Lines') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{lines_1}, 0, Wx::wxALIGN_RIGHT, 0);
-	$grid_sizer_data->Add($self->{lines_2}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->label( Wx::gettext('Lines') ), 0, 0, 0);
+	$data_sizer->Add($self->{lines_1}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->{lines_2}, 0, Wx::wxALIGN_RIGHT, 0);
 	
-	$grid_sizer_data->Add($self->label( Wx::gettext('Words') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{words_1}, 0, Wx::wxALIGN_RIGHT, 0);
-	$grid_sizer_data->Add($self->{words_2}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->label( Wx::gettext('Words') ), 0, 0, 0);
+	$data_sizer->Add($self->{words_1}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->{words_2}, 0, Wx::wxALIGN_RIGHT, 0);
 	
-	$grid_sizer_data->Add($self->label( Wx::gettext('Characters (including whitespace)') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{chars_1}, 0, Wx::wxALIGN_RIGHT, 0);
-	$grid_sizer_data->Add($self->{chars_2}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->label( Wx::gettext('Characters (including whitespace)') ), 0, 0, 0);
+	$data_sizer->Add($self->{chars_1}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->{chars_2}, 0, Wx::wxALIGN_RIGHT, 0);
 	
-	$grid_sizer_data->Add($self->label( Wx::gettext('Non-whitespace characters') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{nwcs_1}, 0, Wx::wxALIGN_RIGHT, 0);
-	$grid_sizer_data->Add($self->{nwcs_2}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->label( Wx::gettext('Non-whitespace characters') ), 0, 0, 0);
+	$data_sizer->Add($self->{nwcs_1}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->Add($self->{nwcs_2}, 0, Wx::wxALIGN_RIGHT, 0);
 	
-	$grid_sizer_data->Add($self->label( Wx::gettext('Kilobytes (kB)') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{kbytes},   0, Wx::wxALIGN_RIGHT, 0);
-	$grid_sizer_data->Add($self->label(' '), 0, Wx::wxEXPAND, 0);
+	$data_sizer->Add($self->label( Wx::gettext('Kilobytes (kB)') ), 0, 0, 0);
+	$data_sizer->Add($self->{kbytes}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->AddSpacer(0);
 
-	$grid_sizer_data->Add($self->label( Wx::gettext('Kibibytes (kiB)') ), 0, 0, 0);
-	$grid_sizer_data->Add($self->{kibytes},  0, Wx::wxALIGN_RIGHT, 0);
-	$grid_sizer_data->Add($self->label(' '), 0, Wx::wxEXPAND, 0);
+	$data_sizer->Add($self->label( Wx::gettext('Kibibytes (kiB)') ), 0, 0, 0);
+	$data_sizer->Add($self->{kibytes}, 0, Wx::wxALIGN_RIGHT, 0);
+	$data_sizer->AddSpacer(0);
 	
-	my $grid_sizer_main = Wx::FlexGridSizer->new(5, 1, $vertical_grid_margin * 2, 0);
-	   $grid_sizer_main->AddGrowableCol(0);
+	my $main_sizer = Wx::FlexGridSizer->new(5, 1, $vertical_grid_margin * 2, 0);
+	   $main_sizer->AddGrowableCol(0);
 	
-	   $grid_sizer_main->Add($self->{filename}, 0, 0, $border_margin);
-	   $grid_sizer_main->Add($grid_sizer_data,  1, Wx::wxEXPAND, $border_margin);
+	   $main_sizer->Add($self->{filename}, 0, 0, $border_margin);
+	   $main_sizer->Add($data_sizer,  1, Wx::wxEXPAND, $border_margin);
 	
-	my $grid_sizer_type = Wx::FlexGridSizer->new(6, 2, $vertical_grid_margin, $horizontal_grid_margin);
-  	   $grid_sizer_type->Add($self->label( Wx::gettext('Line break mode') ), 0, 0, 0);
-	   $grid_sizer_type->Add($self->{newline_type}, 0, 0, 0);
-	   $grid_sizer_type->Add($self->label( Wx::gettext('Encoding') ), 0, 0, 0);
-	   $grid_sizer_type->Add($self->{encoding}, 0, 0, 0);
-	   $grid_sizer_type->Add($self->label( Wx::gettext('Document type') ), 0, 0, 0);
-	   $grid_sizer_type->Add($self->{doc_type}, 0, 0, 0);
-	$grid_sizer_main->Add($grid_sizer_type, 1, Wx::wxEXPAND, 0);
+	my $type_sizer = Wx::FlexGridSizer->new(6, 2, $vertical_grid_margin, $horizontal_grid_margin);
+  	   $type_sizer->Add($self->label( Wx::gettext('Line break mode') ), 0, 0, 0);
+	   $type_sizer->Add($self->{newline_type}, 0, 0, 0);
+	   $type_sizer->Add($self->label( Wx::gettext('Encoding') ), 0, 0, 0);
+	   $type_sizer->Add($self->{encoding}, 0, 0, 0);
+	   $type_sizer->Add($self->label( Wx::gettext('Document type') ), 0, 0, 0);
+	   $type_sizer->Add($self->{doc_type}, 0, 0, 0);
+	$main_sizer->Add($type_sizer, 1, Wx::wxEXPAND, 0);
 
-	$grid_sizer_main->Add($self->horizontal_line, 1, Wx::wxEXPAND, 0);
+	$main_sizer->Add($self->horizontal_line, 1, Wx::wxEXPAND, 0);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	   $buttons->Add($close_button,  0, Wx::wxGROW | Wx::wxRIGHT,      $border_margin);
+	   $buttons->Add($self->{close_button},  0, Wx::wxGROW | Wx::wxRIGHT,      $border_margin);
 	   $buttons->Add($update_button, 0, Wx::wxGROW | Wx::wxLEFT,       $border_margin);
-	$grid_sizer_main->Add($buttons,  0, Wx::wxALIGN_RIGHT | Wx::wxALL, $border_margin);
+	$main_sizer->Add($buttons,  0, Wx::wxALIGN_RIGHT | Wx::wxALL, $border_margin);
 	
-	$self->SetSizer($grid_sizer_main);
-	$grid_sizer_main->Fit($self);
+	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$sizer->Add( $main_sizer, 1, Wx::wxALL | Wx::wxEXPAND, 5 );
+
+	$self->SetSizer($sizer);
+	$sizer->Fit($self);
 
 	return $self;
 }
@@ -175,10 +173,6 @@ sub update_document {
 		warn "Document not defined.\n";
 		return;
 	}
-	
-	my $file_id = defined($doc->file) ? $doc->{file}->filename : $doc->get_title;
-	return 0 if exists $self->{file_id} and $self->{file_id} eq $file_id;
-	$self->{file_id} = $file_id;
 
 	my ( $lines, $chars_with_space, $chars_without_space, $words,
 	     $newline_type, $encoding ) = $doc->stats;
@@ -219,6 +213,8 @@ sub update_selection {
 		$self->grey_selection_data;
 		$self->{lines_2}->SetLabel( 0 );
 	}
+	
+	$self->Layout;
 }
 
 sub ungrey_selection_data {
