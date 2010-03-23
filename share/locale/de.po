@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-22 12:28+0100\n"
+"POT-Creation-Date: 2010-03-23 12:48+0100\n"
 "PO-Revision-Date: 2010-03-19 17:02+0100\n"
 "Last-Translator: Zeno Gantner <zeno.gantner@gmail.com>\n"
 "Language-Team: German\n"
@@ -307,7 +307,7 @@ msgstr "Fehler beim Aufruf von menu für das Plugin"
 msgid "No document open"
 msgstr "Kein geöffnetes Dokument"
 
-#: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Dialog/SpecialValues.pm:157
+#: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Dialog/SpecialValues.pm:160
 #: lib/Padre/Util/FileBrowser.pm:47 lib/Padre/Util/FileBrowser.pm:87
 #: lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
@@ -492,7 +492,7 @@ msgid "Search:"
 msgstr "Suchen:"
 
 #: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/About.pm:86
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:179
+#: lib/Padre/Wx/Dialog/DocStats.pm:66 lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239 lib/Padre/Action/File.pm:166
 msgid "&Close"
 msgstr "S&chließen"
@@ -583,10 +583,9 @@ msgstr "Verzeichnis wählen"
 msgid "Ack"
 msgstr "Ack"
 
-#: lib/Padre/Wx/About.pm:25 lib/Padre/Plugin/Devel.pm:92
-#: lib/Padre/Plugin/PopularityContest.pm:197
-msgid "About"
-msgstr "Über"
+#: lib/Padre/Wx/About.pm:25
+msgid "About Padre"
+msgstr "Über Padre"
 
 #: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Menu/View.pm:198
 #: lib/Padre/Wx/Dialog/Form.pm:98
@@ -601,7 +600,7 @@ msgstr "Entwicklung"
 msgid "Translation"
 msgstr "Übersetzung"
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:301
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:303
 msgid "System Info"
 msgstr "System-Info"
 
@@ -621,19 +620,19 @@ msgstr "Blauer Schmetterling auf einem grünen Blatt"
 msgid "splash image is based on work by"
 msgstr "Start-Bild basiert auf einem Werk von"
 
-#: lib/Padre/Wx/About.pm:214
+#: lib/Padre/Wx/About.pm:216
 msgid "The Padre Translation Team"
 msgstr "Das Padre-Übersetzerteam"
 
-#: lib/Padre/Wx/About.pm:303
+#: lib/Padre/Wx/About.pm:305
 msgid "Config dir:"
 msgstr "Konfigurationsverzeichnis:"
 
-#: lib/Padre/Wx/About.pm:317
+#: lib/Padre/Wx/About.pm:319
 msgid "Uptime"
 msgstr "Laufzeit"
 
-#: lib/Padre/Wx/About.pm:322
+#: lib/Padre/Wx/About.pm:324
 msgid "unsupported"
 msgstr "nicht unterstützt"
 
@@ -932,7 +931,7 @@ msgstr "Erneutes Laden gescheitert: %s"
 
 #: lib/Padre/Wx/Main.pm:4008
 msgid "Save file as..."
-msgstr "Speichere Datei als..."
+msgstr "Speichere Datei unter..."
 
 #: lib/Padre/Wx/Main.pm:4035
 msgid "File already exists. Overwrite it?"
@@ -1441,7 +1440,7 @@ msgid "Open"
 msgstr "Öffnen"
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:291
-#: lib/Padre/Wx/Dialog/DocStats.pm:65 lib/Padre/Wx/Dialog/PluginManager.pm:145
+#: lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:282
 #: lib/Padre/Wx/Dialog/SessionSave.pm:230
 msgid "Close"
@@ -1467,63 +1466,63 @@ msgstr "Ignoriere Groß-/Kleinschreibung"
 msgid "Use rege&x"
 msgstr "Verwende Rege&x"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:36 lib/Padre/Action/File.pm:410
+#: lib/Padre/Wx/Dialog/DocStats.pm:37 lib/Padre/Action/File.pm:410
 msgid "Document Statistics"
 msgstr "Dokument-Statistik"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:46
+#: lib/Padre/Wx/Dialog/DocStats.pm:47
 msgid "Filename"
 msgstr "Dateiname"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:47
+#: lib/Padre/Wx/Dialog/DocStats.pm:48
 msgid "Selection"
 msgstr "Auswahl"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:73
-msgid "Update"
-msgstr "Aktualisieren"
+#: lib/Padre/Wx/Dialog/DocStats.pm:68
+msgid "&Update"
+msgstr "&Aktualisieren"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:105
+#: lib/Padre/Wx/Dialog/DocStats.pm:100
 msgid "Document"
 msgstr "Dokument"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:108
+#: lib/Padre/Wx/Dialog/DocStats.pm:103
 msgid "Lines"
 msgstr "Zeilen"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:112
+#: lib/Padre/Wx/Dialog/DocStats.pm:107
 msgid "Words"
 msgstr "Wörter"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:116
+#: lib/Padre/Wx/Dialog/DocStats.pm:111
 msgid "Characters (including whitespace)"
 msgstr "Zeichen (mit Leerzeichen)"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:120
+#: lib/Padre/Wx/Dialog/DocStats.pm:115
 msgid "Non-whitespace characters"
 msgstr "Zeichen (ohne Leerzeichen)"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:124
+#: lib/Padre/Wx/Dialog/DocStats.pm:119
 msgid "Kilobytes (kB)"
 msgstr "Kilobyte (kB)"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:128
+#: lib/Padre/Wx/Dialog/DocStats.pm:123
 msgid "Kibibytes (kiB)"
 msgstr "Kibibyte (kiB)"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:139
+#: lib/Padre/Wx/Dialog/DocStats.pm:134
 msgid "Line break mode"
 msgstr "Zeilenumbruch"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:141
+#: lib/Padre/Wx/Dialog/DocStats.pm:136
 msgid "Encoding"
 msgstr "Zeichensatz"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:143
+#: lib/Padre/Wx/Dialog/DocStats.pm:138
 msgid "Document type"
 msgstr "Dokumententyp"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:188
+#: lib/Padre/Wx/Dialog/DocStats.pm:182
 msgid "none"
 msgstr "keine"
 
@@ -2328,6 +2327,10 @@ msgstr "GELÖSCHT"
 msgid "Open URL"
 msgstr "URL öffnen"
 
+#: lib/Padre/Wx/Dialog/OpenURL.pm:92
+msgid "e.g."
+msgstr "z.B."
+
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:39 lib/Padre/Wx/Dialog/HelpSearch.pm:96
 msgid "Help Search"
 msgstr "In der Hilfe suchen"
@@ -2894,6 +2897,10 @@ msgstr "STC-Referenz"
 #: lib/Padre/Plugin/Devel.pm:86
 msgid "wxPerl Live Support"
 msgstr "Live-Support für wxPerl"
+
+#: lib/Padre/Plugin/Devel.pm:92 lib/Padre/Plugin/PopularityContest.pm:197
+msgid "About"
+msgstr "Über"
 
 #: lib/Padre/Plugin/Devel.pm:110 lib/Padre/Plugin/Devel.pm:111
 msgid "Expression"

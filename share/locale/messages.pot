@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-22 12:28+0100\n"
+"POT-Creation-Date: 2010-03-23 12:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -289,7 +289,7 @@ msgstr ""
 msgid "No document open"
 msgstr ""
 
-#: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Dialog/SpecialValues.pm:157
+#: lib/Padre/PluginManager.pm:909 lib/Padre/Wx/Dialog/SpecialValues.pm:160
 #: lib/Padre/Util/FileBrowser.pm:47 lib/Padre/Util/FileBrowser.pm:87
 #: lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
@@ -470,7 +470,7 @@ msgid "Search:"
 msgstr ""
 
 #: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/About.pm:86
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:179
+#: lib/Padre/Wx/Dialog/DocStats.pm:66 lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239 lib/Padre/Action/File.pm:166
 msgid "&Close"
 msgstr ""
@@ -557,9 +557,8 @@ msgstr ""
 msgid "Ack"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:25 lib/Padre/Plugin/Devel.pm:92
-#: lib/Padre/Plugin/PopularityContest.pm:197
-msgid "About"
+#: lib/Padre/Wx/About.pm:25
+msgid "About Padre"
 msgstr ""
 
 #: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Menu/View.pm:198
@@ -575,7 +574,7 @@ msgstr ""
 msgid "Translation"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:301
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:303
 msgid "System Info"
 msgstr ""
 
@@ -595,19 +594,19 @@ msgstr ""
 msgid "splash image is based on work by"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:214
+#: lib/Padre/Wx/About.pm:216
 msgid "The Padre Translation Team"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:303
+#: lib/Padre/Wx/About.pm:305
 msgid "Config dir:"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:317
+#: lib/Padre/Wx/About.pm:319
 msgid "Uptime"
 msgstr ""
 
-#: lib/Padre/Wx/About.pm:322
+#: lib/Padre/Wx/About.pm:324
 msgid "unsupported"
 msgstr ""
 
@@ -1407,7 +1406,7 @@ msgid "Open"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:291
-#: lib/Padre/Wx/Dialog/DocStats.pm:65 lib/Padre/Wx/Dialog/PluginManager.pm:145
+#: lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:282
 #: lib/Padre/Wx/Dialog/SessionSave.pm:230
 msgid "Close"
@@ -1433,63 +1432,63 @@ msgstr ""
 msgid "Use rege&x"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:36 lib/Padre/Action/File.pm:410
+#: lib/Padre/Wx/Dialog/DocStats.pm:37 lib/Padre/Action/File.pm:410
 msgid "Document Statistics"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:46
+#: lib/Padre/Wx/Dialog/DocStats.pm:47
 msgid "Filename"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:47
+#: lib/Padre/Wx/Dialog/DocStats.pm:48
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:73
-msgid "Update"
+#: lib/Padre/Wx/Dialog/DocStats.pm:68
+msgid "&Update"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:105
+#: lib/Padre/Wx/Dialog/DocStats.pm:100
 msgid "Document"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:108
+#: lib/Padre/Wx/Dialog/DocStats.pm:103
 msgid "Lines"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:112
+#: lib/Padre/Wx/Dialog/DocStats.pm:107
 msgid "Words"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:116
+#: lib/Padre/Wx/Dialog/DocStats.pm:111
 msgid "Characters (including whitespace)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:120
+#: lib/Padre/Wx/Dialog/DocStats.pm:115
 msgid "Non-whitespace characters"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:124
+#: lib/Padre/Wx/Dialog/DocStats.pm:119
 msgid "Kilobytes (kB)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:128
+#: lib/Padre/Wx/Dialog/DocStats.pm:123
 msgid "Kibibytes (kiB)"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:139
+#: lib/Padre/Wx/Dialog/DocStats.pm:134
 msgid "Line break mode"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:141
+#: lib/Padre/Wx/Dialog/DocStats.pm:136
 msgid "Encoding"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:143
+#: lib/Padre/Wx/Dialog/DocStats.pm:138
 msgid "Document type"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:188
+#: lib/Padre/Wx/Dialog/DocStats.pm:182
 msgid "none"
 msgstr ""
 
@@ -2282,6 +2281,10 @@ msgstr ""
 msgid "Open URL"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/OpenURL.pm:92
+msgid "e.g."
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:39 lib/Padre/Wx/Dialog/HelpSearch.pm:96
 msgid "Help Search"
 msgstr ""
@@ -2846,6 +2849,10 @@ msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:86
 msgid "wxPerl Live Support"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:92 lib/Padre/Plugin/PopularityContest.pm:197
+msgid "About"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:110 lib/Padre/Plugin/Devel.pm:111
