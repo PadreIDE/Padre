@@ -53,6 +53,7 @@ sub new {
 		Wx::wxCB_DROPDOWN
 	);
 	$self->{openurl_text}->SetSelection(-1);
+	$self->{openurl_text}->SetFocus;
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
@@ -75,13 +76,6 @@ sub new {
 		Wx::wxID_CANCEL,
 		Wx::gettext("&Cancel"),
 	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_cancel},
-		sub {
-			$_[0]->cancel_button;
-		}
-	);
 
 	# Form Layout
 
@@ -89,7 +83,7 @@ sub new {
 	my $openurl_label = Wx::StaticText->new(
 		$self,
 		-1,
-		"http://svn.perlide.org/padre/trunk/Padre/Makefile.PL",
+		Wx::gettext('e.g.') . ' http://svn.perlide.org/padre/trunk/Padre/Makefile.PL',
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);

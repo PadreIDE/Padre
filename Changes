@@ -38,6 +38,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       48x48) (AZAWAWI)
     - Improved messages in the Refactoring dialogs (Zeno Gantner)
     - New document statistics dialog (Zeno Gantner)
+    - Improved "Open URL" dialog: mark example as such, set focus to input
+      field (Zeno Gantner)
 
 0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
