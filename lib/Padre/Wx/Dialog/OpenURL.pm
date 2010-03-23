@@ -61,13 +61,6 @@ sub new {
 		Wx::wxID_OK,
 		Wx::gettext("&OK"),
 	);
-	Wx::Event::EVT_BUTTON(
-		$self,
-		$self->{button_ok},
-		sub {
-			$_[0]->ok_button;
-		},
-	);
 	$self->{button_ok}->SetDefault;
 
 	# Cancel button (obviously)
@@ -149,34 +142,6 @@ sub modal {
 		: undef;
 	$self->Destroy;
 	return $rv;
-}
-
-=pod
-
-=head2 C<ok_button>
-
-  $self->ok_button
-
-Attempt to open the specified URL
-
-=cut
-
-sub ok_button {
-	$_[0]->EndModal(Wx::wxID_OK);
-}
-
-=pod
-
-=head2 C<cancel_button>
-
-  $self->cancel_button
-
-Hide dialog when pressed cancel button.
-
-=cut
-
-sub cancel_button {
-	$_[0]->EndModal(Wx::wxID_CANCEL);
 }
 
 1;
