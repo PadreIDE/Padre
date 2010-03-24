@@ -81,7 +81,7 @@ sub dialog {
 	if ( $config->license ) {
 		$dialog->{_widgets_}->{_license_choice_}->SetValue( $config->license );
 	} else {
-		$dialog->{_widgets_}->{_license_choice_}->SetValue('restrictive');
+		$dialog->{_widgets_}->{_license_choice_}->SetValue( Wx::gettext('restrictive') );
 	}
 	$dialog->{_widgets_}->{_directory_}->SetPath( $config->module_start_directory );
 
