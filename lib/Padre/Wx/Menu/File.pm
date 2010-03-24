@@ -39,7 +39,7 @@ sub new {
 	my $file_new = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("New..."),
+		Wx::gettext('New'),
 		$file_new,
 	);
 	$self->add_menu_action(
@@ -83,7 +83,7 @@ sub new {
 	my $file_open = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Open..."),
+		Wx::gettext('Open'),
 		$file_open,
 	);
 
@@ -127,7 +127,7 @@ sub new {
 	my $file_close = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Close..."),
+		Wx::gettext('Close'),
 		$file_close,
 	);
 
@@ -166,7 +166,7 @@ sub new {
 	my $file_reload = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Reload..."),
+		Wx::gettext('Reload'),
 		$file_reload,
 	);
 

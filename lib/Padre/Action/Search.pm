@@ -33,7 +33,7 @@ sub new {
 		name        => 'search.find',
 		id          => Wx::wxID_FIND,
 		need_editor => 1,
-		label       => Wx::gettext('&Find'),
+		label       => Wx::gettext('&Find...'),
 		comment     => Wx::gettext('Find text or regular expressions using a traditional dialog'),
 		shortcut    => 'Ctrl-F',
 		toolbar     => 'actions/edit-find',
@@ -139,7 +139,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'search.replace',
 		need_editor => 1,
-		label       => Wx::gettext('Replace'),
+		label       => Wx::gettext('Replace...'),
 		comment     => Wx::gettext('Find a text and replace it'),
 		shortcut    => 'Ctrl-R',
 		toolbar     => 'actions/edit-find-replace',
@@ -162,7 +162,7 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'search.open_resource',
-		label      => Wx::gettext('Open Resource'),
+		label      => Wx::gettext('Open Resource...'),
 		comment    => Wx::gettext('Type in a filter to select a file'),
 		shortcut   => 'Ctrl-Shift-R',
 		toolbar    => 'places/folder-saved-search',
@@ -176,7 +176,7 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'search.quick_menu_access',
-		label      => Wx::gettext('Quick Menu Access'),
+		label      => Wx::gettext('Quick Menu Access...'),
 		comment    => Wx::gettext('Quick access to all menu functions'),
 		shortcut   => 'Ctrl-3',
 		toolbar    => 'status/info',

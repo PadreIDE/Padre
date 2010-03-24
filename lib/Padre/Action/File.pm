@@ -77,7 +77,7 @@ sub new {
 	# Split projects from files
 	Padre::Action->new(
 		name       => 'file.new_p5_distro',
-		label      => Wx::gettext('Perl Distribution (Module::Starter)'),
+		label      => Wx::gettext('Perl Distribution (Module::Starter)...'),
 		comment    => Wx::gettext('Setup a skeleton Perl distribution using Module::Starter'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::ModuleStart;

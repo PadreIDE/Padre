@@ -343,8 +343,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.insert.insert_special',
 		need_editor => 1,
-		label       => Wx::gettext('Insert Special Value'),
-		comment     => Wx::gettext('Select a Date, Filename or other value and insert at the current location'),
+		label       => Wx::gettext('Special Value...'),
+		comment     => Wx::gettext('Select a date, filename or other value and insert at the current location'),
 		shortcut    => 'Ctrl-Shift-I',
 		menu_event  => sub {
 			require Padre::Wx::Dialog::SpecialValues;
@@ -356,7 +356,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.insert.snippets',
 		need_editor => 1,
-		label       => Wx::gettext('Snippets'),
+		label       => Wx::gettext('Snippets...'),
 		comment     => Wx::gettext('Select and insert a snippet at the current location'),
 		shortcut    => 'Ctrl-Shift-A',
 		menu_event  => sub {
@@ -368,7 +368,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.insert.from_file',
 		need_editor => 1,
-		label       => Wx::gettext('Insert From File...'),
+		label       => Wx::gettext('File...'),
 		comment     => Wx::gettext('Select a file and insert its content at the current location'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_insert_from_file(@_);
@@ -577,7 +577,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.filter_tool',
 		need_editor => 1,
-		label       => Wx::gettext('Filter through external tool'),
+		label       => Wx::gettext('Filter through external tool...'),
 		comment     => Wx::gettext('Filters the selection (or the whole document) through any external command.'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_filter_tool(@_);

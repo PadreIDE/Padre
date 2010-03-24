@@ -46,7 +46,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'refactor.rename_variable',
 		need_editor => 1,
-		label       => Wx::gettext('Lexically Rename Variable'),
+		label       => Wx::gettext('Rename Variable...'),
 		comment => Wx::gettext('Prompt for a replacement variable name and replace all occurrences of this variable'),
 		menu_event => sub {
 			my $doc = $_[0]->current->document or return;
@@ -69,7 +69,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'refactor.extract_subroutine',
 		need_editor => 1,
-		label       => Wx::gettext('Extract Subroutine'),
+		label       => Wx::gettext('Extract Subroutine...'),
 		comment     => Wx::gettext(
 			      'Cut the current selection and create a new sub from it. '
 				. 'A call to this sub is added in the place where the selection was.'
@@ -99,7 +99,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'refactor.introduce_temporary',
 		need_editor => 1,
-		label       => Wx::gettext('Introduce Temporary Variable'),
+		label       => Wx::gettext('Introduce Temporary Variable...'),
 		comment     => Wx::gettext('Assign the selected expression to a newly declared variable'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document or return;
