@@ -4005,10 +4005,12 @@ sub on_save_as {
 
 	while (1) {
 		my $dialog = Wx::FileDialog->new(
-			$self, Wx::gettext("Save file as..."),
+			$self, Wx::gettext('Save file as...'),
 			$self->{cwd},
 			$filename,
-			"*.*",
+			Padre::Constant::WIN32
+				? Wx::gettext('All Files') . '|*.*|'
+				: Wx::gettext('All Files') . '|*|',
 			Wx::wxFD_SAVE,
 		);
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
