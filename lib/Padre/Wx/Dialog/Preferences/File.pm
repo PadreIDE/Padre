@@ -36,7 +36,7 @@ sub panel {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('File access via HTTP') ],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout (in seconds):') ],
 			[ 'Wx::SpinCtrl', 'file_http_timeout', $config->file_http_timeout, 10, 900 ]
 		],
 
@@ -44,7 +44,7 @@ sub panel {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('File access via FTP') ],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Timeout (in seconds):') ],
 			[ 'Wx::SpinCtrl', 'file_ftp_timeout', $config->file_ftp_timeout, 10, 900 ]
 		],
 		[   [   'Wx::CheckBox', 'file_ftp_passive', ( $config->file_ftp_passive ? 1 : 0 ),
