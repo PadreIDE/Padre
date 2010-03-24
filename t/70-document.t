@@ -36,7 +36,7 @@ my %MIMES = (
 	'eg/perl6/Perl6Class.pm'          => 'application/x-perl6',
 );
 
-plan tests => 11;
+plan tests => 14;
 
 # This should only be used to skip dependencies out of the Document.pm - scope
 # which are not required for testing, like Padre->ide. Never skip larger blocks
@@ -44,12 +44,14 @@ plan tests => 11;
 $ENV{PADRE_IS_TEST} = 1;
 
 use Test::NoWarnings;
+use Encode ();
 use File::Spec ();
 use t::lib::Padre;
 use t::lib::Padre::Editor;
 use Padre::Document;
 use Padre::Document::Perl;
 use Padre::MimeTypes;
+use Padre::Locale ();
 
 my $config = PadreTest::Config->new();
 
@@ -83,6 +85,27 @@ foreach my $file ( keys %MIMES ) {
 	);
 	is( $doc->guess_mimetype, $MIMES{$file}, "mime of $file" );
 }
+
+# The following tests are for verifying that 
+# "ticket #889: Padre saves non-ASCII characters as \x{XXXX}"
+# does not happen again
+my ($encoding, $content);
+
+# English (ASCII)
+$encoding = Padre::Locale::encoding_from_string(q{say "Hello!";});
+is( $encoding, 'ascii', "Encoding should be ascii for English" );
+
+# Russian (UTF-8)
+$content = q{say "Превед!";};
+Encode::_utf8_on($content);
+$encoding = Padre::Locale::encoding_from_string($content);
+is( $encoding, 'utf8', "Encoding should be utf8 for Russian" );
+
+# Arabic (UTF-8)
+$content = q{say "مرحبا!"; };
+Encode::_utf8_on($content);
+$encoding = Padre::Locale::encoding_from_string($content);
+is( $encoding, 'utf8', "Encoding should be utf8 for Arabic" );
 
 END {
 	unlink for
