@@ -146,6 +146,7 @@ sub new {
 
 	$self->SetSizer($sizer);
 	$sizer->Fit($self);
+	$self->CentreOnParent;
 
 	return $self;
 }
