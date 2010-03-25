@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-24 14:51+0100\n"
+"POT-Creation-Date: 2010-03-25 11:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1787,7 +1787,7 @@ msgid "Use Tabs"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:252
-msgid "TAB display size (in spaces):"
+msgid "Tab display size (in spaces):"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:255
@@ -1869,7 +1869,7 @@ msgid "Enable Smart highlighting while typing"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:356
-msgid "Shorten the common path in window list?"
+msgid "Shorten the common path in window list"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:363
@@ -1881,7 +1881,31 @@ msgid "RegExp for TODO-panel:"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:373
-msgid "Use Splash Screen?"
+msgid "Use Splash Screen"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:410
+msgid "Project name"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:411
+msgid "Padre version"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:412
+msgid "Current filename"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:413
+msgid "Current file's dirname"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:414
+msgid "Current file's basename"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:415
+msgid "Current filename relative to project"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:436
@@ -2791,7 +2815,7 @@ msgid "Run Selection inside Padre"
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:64
-msgid "Dump Expression"
+msgid "Dump Expression..."
 msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:65
@@ -2869,6 +2893,16 @@ msgstr ""
 
 #: lib/Padre/Plugin/Devel.pm:264
 msgid "A set of unrelated tools used by the Padre developers\n"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:285
+#, perl-format
+msgid "Found %s unloaded modules"
+msgstr ""
+
+#: lib/Padre/Plugin/Devel.pm:297
+#, perl-format
+msgid "Loaded %s modules"
 msgstr ""
 
 #: lib/Padre/Plugin/PopularityContest.pm:198

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-24 14:51+0100\n"
+"POT-Creation-Date: 2010-03-25 11:07+0100\n"
 "PO-Revision-Date: 2010-03-19 17:02+0100\n"
 "Last-Translator: Zeno Gantner <zeno.gantner@gmail.com>\n"
 "Language-Team: German\n"
@@ -1795,7 +1795,7 @@ msgstr "Durchsuchen..."
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:75
 msgid "Perl ctags file:"
-msgstr "Perl-ctags-Datei"
+msgstr "Perl-ctags-Datei:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:144
 msgid "File type:"
@@ -1823,7 +1823,7 @@ msgid "Use Tabs"
 msgstr "Verwende Tabulatoren"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:252
-msgid "TAB display size (in spaces):"
+msgid "Tab display size (in spaces):"
 msgstr "Anzeigebreite (in Leerzeichen) für Tabulatoren:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:255
@@ -1907,8 +1907,8 @@ msgid "Enable Smart highlighting while typing"
 msgstr "Smart highlighting während des Schreibens aktivieren"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:356
-msgid "Shorten the common path in window list?"
-msgstr "Gemeinsamen Pfad in Fensterliste verkürzen?"
+msgid "Shorten the common path in window list"
+msgstr "Gemeinsamen Pfad in Fensterliste verkürzen"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:363
 msgid "Use X11 middle button paste style"
@@ -1919,12 +1919,36 @@ msgid "RegExp for TODO-panel:"
 msgstr "Regex für die TODO-Suche:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:373
-msgid "Use Splash Screen?"
-msgstr "Splash (Logo bei Programmstart) anzeigen"
+msgid "Use Splash Screen"
+msgstr "Logo beim Programmstart anzeigen"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:410
+msgid "Project name"
+msgstr "Projektname"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:411
+msgid "Padre version"
+msgstr "Padre-Version"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:412
+msgid "Current filename"
+msgstr "Name der aktuellen Datei"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:413
+msgid "Current file's dirname"
+msgstr "Verzeichnis der aktuellen Datei"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:414
+msgid "Current file's basename"
+msgstr "Name (ohne Pfad) der aktuellen Datei"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:415
+msgid "Current filename relative to project"
+msgstr "Name der aktuellen Datei relativ zum Projekt"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:436
 msgid "Window title:"
-msgstr "Fenstertitel"
+msgstr "Fenstertitel:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:443
 msgid "Colored text in output window (ANSI)"
@@ -1932,7 +1956,9 @@ msgstr "Farbiger Text im Ausgabefenster (ANSI)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:448
 msgid "Show low-priority info messages on statusbar (not in a popup)"
-msgstr "Nachrichten niedriger Priorität in der Statuszeile anzeigen"
+msgstr ""
+"Nachrichten niedriger Priorität in der Statuszeile statt in einem Fenster "
+"anzeigen"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:453
 msgid "Show right margin at column:"
@@ -2793,7 +2819,7 @@ msgstr "Dateizugriff über HTTP"
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:39
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:47
 msgid "Timeout (in seconds):"
-msgstr ""
+msgstr "Timeout (in Sekunden):"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
 msgid "File access via FTP"
@@ -2827,7 +2853,7 @@ msgstr "Konnte weder KDE noch GNOME finden"
 
 #: lib/Padre/Plugin/Devel.pm:25
 msgid "Padre Developer Tools"
-msgstr "Padre Entwickler Werkzeuge"
+msgstr "Werkzeuge für die Padre-Entwicklung"
 
 #: lib/Padre/Plugin/Devel.pm:59
 msgid "Run Document inside Padre"
@@ -2838,8 +2864,8 @@ msgid "Run Selection inside Padre"
 msgstr "Auswahl in Padre ausführen"
 
 #: lib/Padre/Plugin/Devel.pm:64
-msgid "Dump Expression"
-msgstr "Ausdruck ausgeben"
+msgid "Dump Expression..."
+msgstr "Ausdruck ausgeben..."
 
 #: lib/Padre/Plugin/Devel.pm:65
 msgid "Dump Current Document"
@@ -2855,7 +2881,7 @@ msgstr "Aktuelles Dokument als PPI-Baum dumpen"
 
 #: lib/Padre/Plugin/Devel.pm:68
 msgid "Dump %INC and @INC"
-msgstr "%INC und @INC ausgebena"
+msgstr "%INC und @INC ausgeben"
 
 #: lib/Padre/Plugin/Devel.pm:69
 msgid "Dump Display Geometry"
@@ -2863,7 +2889,7 @@ msgstr "Anzeige-Geometrie ausgeben"
 
 #: lib/Padre/Plugin/Devel.pm:70
 msgid "Start/Stop sub trace"
-msgstr "sub-Trace starten/beenden"
+msgstr "Sub-Trace starten/beenden"
 
 #: lib/Padre/Plugin/Devel.pm:74
 msgid "Load All Padre Modules"
@@ -2880,7 +2906,7 @@ msgstr "Abstürzende Hintergrund-Funktion simulieren"
 #: lib/Padre/Plugin/Devel.pm:80
 #, perl-format
 msgid "wxWidgets %s Reference"
-msgstr "wxWidgets %s Referenz"
+msgstr "wxWidgets-%s-Referenz"
 
 #: lib/Padre/Plugin/Devel.pm:83
 msgid "STC Reference"
@@ -2916,7 +2942,17 @@ msgstr "Sub-trace gestartet"
 
 #: lib/Padre/Plugin/Devel.pm:264
 msgid "A set of unrelated tools used by the Padre developers\n"
-msgstr "Sammlung von Werkzeugen, die die Padre Entwickler verwenden\n"
+msgstr "Sammlung von Werkzeugen, die die Padre-Entwickler verwenden\n"
+
+#: lib/Padre/Plugin/Devel.pm:285
+#, perl-format
+msgid "Found %s unloaded modules"
+msgstr "%s nicht geladene Module gefunden"
+
+#: lib/Padre/Plugin/Devel.pm:297
+#, perl-format
+msgid "Loaded %s modules"
+msgstr "%s Module geladen"
 
 #: lib/Padre/Plugin/PopularityContest.pm:198
 msgid "Show current report"
@@ -4798,9 +4834,6 @@ msgstr "Methoden"
 
 #~ msgid "Line %d: "
 #~ msgstr "Zeile %d: "
-
-#~ msgid "Found %d files\n"
-#~ msgstr "%d Dateien gefunden"
 
 #~ msgid "Found %d files and %d matches\n"
 #~ msgstr "%d Dateien und %d Treffer gefunden\n"
