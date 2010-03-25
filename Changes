@@ -39,6 +39,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Small improvements/fixes to some dialogs: Refactoring dialogs, Open URL,
       Save as, Preferences, Insert File, New Perl Distribution (Zeno Gantner)
     - New document statistics dialog (Zeno Gantner)
+    - Redirect stdout/err IO handles to the WinNT+ NUL device when started under
+      wperl.exe or padre.exe. This prevents Module Tools from crashing Padre (AZAWAWI)
 
 0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
