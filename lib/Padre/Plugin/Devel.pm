@@ -61,7 +61,7 @@ sub menu_plugins_simple {
 
 		'---' => undef,
 
-		Wx::gettext('Dump Expression')       => 'dump_expression',
+		Wx::gettext('Dump Expression...')       => 'dump_expression',
 		Wx::gettext('Dump Current Document') => 'dump_document',
 		Wx::gettext('Dump Top IDE Object')   => 'dump_padre',
 		Wx::gettext('Dump Current PPI Tree') => 'dump_ppi',
@@ -282,7 +282,7 @@ sub load_everything {
 		grep { defined( $_->[1] ) and $_->[1] eq $VERSION }
 		map { [ $_, ExtUtils::MM_Unix->parse_version( File::Spec->catfile( $parent, $_ ) ) ] }
 		File::Find::Rule->name('*.pm')->file->relative->in($parent);
-	$main->message( "Found " . scalar(@children) . " unloaded modules" );
+	$main->message( sprintf(Wx::gettext('Found %s unloaded modules'), scalar @children) );
 	return unless @children;
 
 	# Load all of them (ignoring errors)
@@ -294,7 +294,7 @@ sub load_everything {
 	}
 
 	# Say how many classes we loaded
-	$main->message("Loaded $loaded modules");
+	$main->message( sprintf(Wx::gettext('Loaded %s modules'), $loaded) );
 }
 
 # Takes a string, which it evals and then dumps to Output
