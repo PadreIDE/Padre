@@ -41,6 +41,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - New document statistics dialog (Zeno Gantner)
     - Redirect stdout/err IO handles to the WinNT+ NUL device when started under
       wperl.exe or padre.exe. This prevents Module Tools from crashing Padre (AZAWAWI)
+    - Added missing File::pushd Padre dependency (AZAWAWI)
 
 0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
