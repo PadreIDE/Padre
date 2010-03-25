@@ -249,7 +249,7 @@ sub _indentation_panel {
 		[   [ 'Wx::CheckBox', 'editor_indent_tab', ( $config->editor_indent_tab ? 1 : 0 ), Wx::gettext('Use Tabs') ],
 			[]
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('TAB display size (in spaces):') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Tab display size (in spaces):') ],
 			[ 'Wx::SpinCtrl', 'editor_indent_tab_width', $config->editor_indent_tab_width, 0, 32 ]
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Indentation width (in columns):') ],
@@ -353,7 +353,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'window_list_shorten_path',
 				( $config->window_list_shorten_path ? 1 : 0 ),
-				Wx::gettext("Shorten the common path in window list?")
+				Wx::gettext("Shorten the common path in window list")
 			],
 			[]
 		],
@@ -370,7 +370,7 @@ sub _behaviour_panel {
 		[   [   'Wx::CheckBox',
 				'startup_splash',
 				( $config->startup_splash ? 1 : 0 ),
-				Wx::gettext("Use Splash Screen?")
+				Wx::gettext("Use Splash Screen")
 			],
 			[]
 		],
@@ -407,12 +407,12 @@ sub _appearance_panel {
 		: '#ffff04';
 
 	my %main_title_vars = (
-		'%p' => 'Project name',
-		'%v' => 'Padre version',
-		'%f' => 'Current filename',
-		'%d' => 'Current files dirname',
-		'%b' => 'Current files basename',
-		'%F' => 'Current filename relative to project',
+		'%p' => Wx::gettext('Project name'),
+		'%v' => Wx::gettext('Padre version'),
+		'%f' => Wx::gettext('Current filename'),
+		'%d' => Wx::gettext("Current file's dirname"),
+		'%b' => Wx::gettext("Current file's basename"),
+		'%F' => Wx::gettext('Current filename relative to project'),
 	);
 	my @main_title_keys = sort { lc($a) cmp lc($b); } ( keys(%main_title_vars) );
 	my $main_title_left;
@@ -421,12 +421,12 @@ sub _appearance_panel {
 	while ( $#main_title_keys > -1 ) {
 
 		my $key = shift @main_title_keys;
-		$main_title_left .= $key . ' => ' . Wx::gettext( $main_title_vars{$key} ) . "\n";
+		$main_title_left .= $key . ' => ' . $main_title_vars{$key} . "\n";
 
 		last if $#main_title_keys < 0;
 
 		$key = shift @main_title_keys;
-		$main_title_right .= $key . ' => ' . Wx::gettext( $main_title_vars{$key} ) . "\n";
+		$main_title_right .= $key . ' => ' . $main_title_vars{$key} . "\n";
 
 	}
 	$main_title_left  =~ s/\n$//;
@@ -436,8 +436,8 @@ sub _appearance_panel {
 		[   [ 'Wx::StaticText', 'undef',      Wx::gettext('Window title:') ],
 			[ 'Wx::TextCtrl',   'main_title', $config->main_title ],
 		],
-		[   [ 'Wx::StaticText', 'undef', Wx::gettext($main_title_left) ],
-			[ 'Wx::StaticText', 'undef', Wx::gettext($main_title_right) ],
+		[   [ 'Wx::StaticText', 'undef', $main_title_left ],
+			[ 'Wx::StaticText', 'undef', $main_title_right ],
 		],
 		[   [   'Wx::CheckBox', 'main_output_ansi', ( $config->main_output_ansi ? 1 : 0 ),
 				Wx::gettext('Colored text in output window (ANSI)')
