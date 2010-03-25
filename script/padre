@@ -15,7 +15,8 @@ local $SIG{__DIE__} =
 # (i.e. no console), STDOUT/ERR handles are closed by default
 # We will redirect them for now to the \Device\nul device
 # to prevent various crashes in the future
-if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
+#TODO fix $^X =~ /wperl\.exe/ context issue
+if ( $^O eq 'MSWin32' and $^X . '' =~ /wperl\.exe/ ) {
 	require IO::Handle;
 	open OUTPUT, '>', "NUL" or die $!;
 	open ERROR,  '>', "NUL" or die $!;
