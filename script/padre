@@ -11,19 +11,6 @@ local $SIG{__DIE__} =
 	? sub { print STDERR Carp::longmess "\nDIE: @_\n" . ( "-" x 80 ) . "\n" }
 	: $SIG{__DIE__};
 
-# Under wperl.exe which is a win32 GUI detached process
-# (i.e. no console), STDOUT/ERR handles are closed by default
-# We will redirect them for now to the \Device\nul device
-# to prevent various crashes in the future
-#TODO fix $^X =~ /wperl\.exe/ context issue
-if ( $^O eq 'MSWin32' and $^X . '' =~ /wperl\.exe/ ) {
-	require IO::Handle;
-	open OUTPUT, '>', "NUL" or die $!;
-	open ERROR,  '>', "NUL" or die $!;
-	STDOUT->fdopen( \*OUTPUT, 'w' ) or die $!;
-	STDERR->fdopen( \*ERROR,  'w' ) or die $!;
-}
-
 # Must run using wxPerl on OS X.
 if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
 	require File::Which;
@@ -138,6 +125,19 @@ unless ( defined $ACTIONS ) {
 	}
 }
 
+# Under wperl.exe which is a win32 GUI detached process
+# (i.e. no console), STDOUT/ERR handles are closed by default
+# We will redirect them for now to the \Device\nul device
+# to prevent various crashes in the future
+#TODO fix $^X =~ /wperl\.exe/ context issue
+if ( $^O eq 'MSWin32' and $^X . '' =~ /wperl\.exe/ ) {
+	require IO::Handle;
+	open OUTPUT, '>', "NUL" or die $!;
+	open ERROR,  '>', "NUL" or die $!;
+	STDOUT->fdopen( \*OUTPUT, 'w' ) or die $!;
+	STDERR->fdopen( \*ERROR,  'w' ) or die $!;
+}
+
 require Padre;
 
 if ($PRELOAD) {
@@ -152,6 +152,7 @@ if ($PRELOAD) {
 	#		call qr/^Padre::(?:Locker|Wx::Progress)::/
 	#	);
 }
+
 
 # Build the application
 my $ide = Padre->new(
