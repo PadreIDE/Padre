@@ -44,7 +44,7 @@ plan tests => 14;
 $ENV{PADRE_IS_TEST} = 1;
 
 use Test::NoWarnings;
-use Encode ();
+use Encode     ();
 use File::Spec ();
 use t::lib::Padre;
 use t::lib::Padre::Editor;
@@ -86,10 +86,10 @@ foreach my $file ( keys %MIMES ) {
 	is( $doc->guess_mimetype, $MIMES{$file}, "mime of $file" );
 }
 
-# The following tests are for verifying that 
+# The following tests are for verifying that
 # "ticket #889: Padre saves non-ASCII characters as \x{XXXX}"
 # does not happen again
-my ($encoding, $content);
+my ( $encoding, $content );
 
 # English (ASCII)
 $encoding = Padre::Locale::encoding_from_string(q{say "Hello!";});

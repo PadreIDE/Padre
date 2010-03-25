@@ -18,7 +18,7 @@ local $SIG{__DIE__} =
 if ( $^O eq 'MSWin32' and $^X =~ /wperl\.exe/ ) {
 	require IO::Handle;
 	open OUTPUT, '>', "NUL" or die $!;
-	open ERROR,  '>', "NUL"  or die $!;
+	open ERROR,  '>', "NUL" or die $!;
 	STDOUT->fdopen( \*OUTPUT, 'w' ) or die $!;
 	STDERR->fdopen( \*ERROR,  'w' ) or die $!;
 }
