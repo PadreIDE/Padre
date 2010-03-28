@@ -66,7 +66,7 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 800, 600 ] );
+	$self->SetMinSize( [ 750, 550 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
