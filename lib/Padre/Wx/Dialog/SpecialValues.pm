@@ -19,9 +19,9 @@ my $categories = {
 		{ label => Wx::gettext('Epoch'), action => _get_date_info('epoch') },
 	],
 	Wx::gettext('File') => [
-		{ label => Wx::gettext('Size'),            action => _get_file_info('size') },
-		{ label => Wx::gettext('Name'),            action => _get_file_info('name') },
-		{ label => Wx::gettext('Number of lines'), action => _get_file_info('number of lines') },
+		{ label => Wx::gettext('Size'),            action => sub { _get_file_info('size') } },
+		{ label => Wx::gettext('Name'),            action => sub { _get_file_info('name') } },
+		{ label => Wx::gettext('Number of lines'), action => sub { _get_file_info('number of lines') } },
 	],
 };
 
@@ -151,23 +151,15 @@ sub _get_file_info {
 	    $encoding) = $doc->stats;
 
 	if ( $type eq 'name' ) {
-		return sub {
-			return defined $doc->file ? $doc->{file}->filename : $doc->get_title;;
-		};
+		return defined $doc->file ? $doc->{file}->filename : $doc->get_title;;
 	} elsif ( $type eq 'size' ) {
-		return sub {
-			my $filename = $doc->filename || $doc->tempfile;
-			return ($filename) ? -s $filename : 0;
-		};
+		my $filename = $doc->filename || $doc->tempfile;
+		return ($filename) ? -s $filename : 0;
 	} elsif ( $type eq 'number of lines' ) {
-		return sub {
-			return $lines;
-		};
+		return $lines;
 	} else {
-		return sub {
-			warn "file info $type not implemented yet\n";
-			return '';
-			}
+		warn "file info $type not implemented yet\n";
+		return '';
 	}
 }
 
