@@ -6,9 +6,6 @@
 
 use strict;
 use warnings;
-
-# The real test...
-package main;
 use Test::More;
 
 #use Test::NoWarnings;
