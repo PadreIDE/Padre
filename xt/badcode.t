@@ -5,6 +5,7 @@ use warnings;
 use Test::More;
 
 BEGIN {
+
 	# Don't run tests for installs
 	unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 		plan( skip_all => "Author tests not required for installation" );
@@ -43,7 +44,7 @@ foreach my $module ( sort keys %modules ) {
 }
 
 # list of non-Wx modules still having Wx code
-my %TODO = map {$_ => 1} qw(
+my %TODO = map { $_ => 1 } qw(
 	Padre::Action::Edit
 	Padre::Action::View
 	Padre::Action::File
@@ -73,26 +74,25 @@ my %TODO = map {$_ => 1} qw(
 );
 
 foreach my $module ( sort keys %modules ) {
-	my $content = read_file($modules{$module});
+	my $content = read_file( $modules{$module} );
 
 	# Checking if only modules with Wx in their name depend on Wx
-	if ($module =~ /^Padre::Wx/ or $module =~ /^Wx::/) {
+	if ( $module =~ /^Padre::Wx/ or $module =~ /^Wx::/ ) {
 		my $Test = Test::Builder->new;
 		$Test->skip("$module is a Wx module");
 	} else {
 		my ($error) = $content =~ m/^use\s+.*Wx.*;/gmx;
 		my $Test = Test::Builder->new;
-		if ($TODO{$module}) {
+		if ( $TODO{$module} ) {
 			$Test->todo_start("$module should not contain Wx but it still does");
 		}
-		ok(!$error, "$module does not use Wx") or diag $error;
-		if ($TODO{$module}) {
+		ok( !$error, "$module does not use Wx" ) or diag $error;
+		if ( $TODO{$module} ) {
 			$Test->todo_end;
 		}
 	}
 
-	ok(
-		$content !~ /\$DB\:\:single/,
+	ok( $content !~ /\$DB\:\:single/,
 		$module . ' uses $DB::Single - please remove before release',
 	);
 
@@ -162,22 +162,24 @@ foreach my $module ( sort keys %modules ) {
 		my $good = !$document->find_any(
 			sub {
 				$_[1]->isa('PPI::Token::Operator') or return '';
-				$_[1]->content eq '->'             or return '';
+				$_[1]->content eq '->' or return '';
 
 				# Get the method name
-				my $name = $_[1]->snext_sibling    or return '';
-				$name->isa('PPI::Token::Word')     or return '';
-				$name->content =~ /::/             or return '';
-				$name->content !~ /^SUPER::\w+$/   or return '';
+				my $name = $_[1]->snext_sibling or return '';
+				$name->isa('PPI::Token::Word') or return '';
+				$name->content =~ /::/ or return '';
+				$name->content !~ /^SUPER::\w+$/ or return '';
 
 				# Naughty naughty
-				diag("$module: Evil method name '$name', it should probably be a function call... maybe. Change it, but be careful.");
+				diag(
+					"$module: Evil method name '$name', it should probably be a function call... maybe. Change it, but be careful."
+				);
 				return 1;
 			}
 		);
 		ok( $good, "$module: Don't use extended Method::name other than SUPER::name" );
 	}
-	
+
 	# Avoid expensive regexp result variables
 	SKIP: {
 		if ( $module eq 'Padre::Wx::Dialog::RegexEditor' ) {

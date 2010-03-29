@@ -19,7 +19,7 @@ my $categories = {
 		{ label => Wx::gettext('Epoch'), action => _get_date_info('epoch') },
 	],
 	Wx::gettext('File') => [
-		{   label => Wx::gettext('Size'),
+		{   label  => Wx::gettext('Size'),
 			action => sub { _get_file_info('size') }
 		},
 		{   label  => Wx::gettext('Name'),

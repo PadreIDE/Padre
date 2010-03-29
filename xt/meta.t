@@ -4,6 +4,7 @@
 # Test that our META.yml file matches the current specification.
 
 use strict;
+
 BEGIN {
 	$|  = 1;
 	$^W = 1;
@@ -19,10 +20,10 @@ unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 
 # Load the testing module
 eval "use $MODULE";
-if ( $@ ) {
+if ($@) {
 	$ENV{RELEASE_TESTING}
-	? die( "Failed to load required release-testing module $MODULE" )
-	: plan( skip_all => "$MODULE not available for testing" );
+		? die("Failed to load required release-testing module $MODULE")
+		: plan( skip_all => "$MODULE not available for testing" );
 }
 
 meta_yaml_ok();

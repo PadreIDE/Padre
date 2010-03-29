@@ -19,11 +19,11 @@ sub gettext {
 package Padre;
 
 sub ide {
- return bless {},__PACKAGE__;
+	return bless {}, __PACKAGE__;
 }
 
 sub config {
- return $_[0];
+	return $_[0];
 }
 
 sub begerror_chomp { 1; }

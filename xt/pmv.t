@@ -4,6 +4,7 @@
 # Test that our declared minimum Perl version matches our syntax
 
 use strict;
+
 BEGIN {
 	$|  = 1;
 	$^W = 1;
@@ -21,12 +22,12 @@ unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 }
 
 # Load the testing modules
-foreach my $MODULE ( @MODULES ) {
+foreach my $MODULE (@MODULES) {
 	eval "use $MODULE";
-	if ( $@ ) {
+	if ($@) {
 		$ENV{RELEASE_TESTING}
-		? die( "Failed to load required release-testing module $MODULE" )
-		: plan( skip_all => "$MODULE not available for testing" );
+			? die("Failed to load required release-testing module $MODULE")
+			: plan( skip_all => "$MODULE not available for testing" );
 	}
 }
 
