@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-29 21:01+0200\n"
-"PO-Revision-Date: 2010-03-29 21:37+0100\n"
+"PO-Revision-Date: 2010-03-29 22:09+0100\n"
 "Last-Translator: jagd <wuchuanren@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -1566,11 +1566,11 @@ msgstr "新建一个具有 Perl 6 脚本骨架的文档"
 
 #: lib/Padre/Action/File.pm:80
 msgid "Perl Distribution..."
-msgstr "Perl 发行版..."
+msgstr "Perl 发行包..."
 
 #: lib/Padre/Action/File.pm:81
 msgid "Setup a skeleton Perl module distribution"
-msgstr "设置一个 Perl模块 发布包的骨架"
+msgstr "设置一个 Perl 模块的发行包骨架"
 
 #: lib/Padre/Action/File.pm:95
 msgid "&Open"
