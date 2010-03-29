@@ -4683,6 +4683,10 @@ sub on_join_lines {
 	# find positions
 	my $pos1 = $page->GetCurrentPos;
 	my $line = $page->LineFromPosition($pos1);
+
+	# Don't crash if cursor at the last line
+	return if ($line + 1 == $page->GetLineCount);
+
 	my $pos2 = $page->PositionFromLine( $line + 1 );
 
 	# Remove leading spaces/tabs from the second line
