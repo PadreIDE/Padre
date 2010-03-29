@@ -1304,14 +1304,18 @@ sub selection_stats {
 	my $text = $self->editor->GetSelectedText;
 
 	my $chars_with_space    = length $text;
-	my $chars_without_space = $chars_with_space;
 
 	my $words   = 0;
 	my $lines   = 1;
 	my $newline = $self->newline;
 	$lines++               while ( $text =~ /$newline/g );
-	$words++               while ( $text =~ /\b\w+\b/g );
-	$chars_without_space-- while ( $text =~ /\s/g );
+	$words++               while ( $text =~ /\s+/g );
+	
+	my $whitespace = "\n\r\t ";
+	# TODO: make this depend on the current character set
+	#       see http://en.wikipedia.org/wiki/Whitespace_character
+	my $chars_without_space = $chars_with_space - ( $text =~ tr/$whitespace// );
+
 
 	return ( $lines, $chars_with_space, $chars_without_space, $words );
 }
@@ -1319,20 +1323,22 @@ sub selection_stats {
 sub stats {
 	my ($self) = @_;
 
-	my ( $lines, $chars_with_space, $chars_without_space, $words ) = (0) x 4;
+	my ( $chars_without_space, $words ) = (0) x 2;
 
 	my $editor = $self->editor;
-	my $text   = $self->text_get; # TODO: for big files, it may be
+	my $text   = $self->text_get;
 
-	$lines            = $editor->GetLineCount();
-	$chars_with_space = $editor->GetTextLength();
+	my $lines            = $editor->GetLineCount();
+	my $chars_with_space = $editor->GetTextLength();
 
-	# avoid slow calculation on large files
-	# TODO or improve them?
-	if ( length($text) < 500_000 ) {
-		$words++ while ( $text =~ /\b\w+\b/g );
-		$chars_without_space = $chars_with_space;
-		$chars_without_space-- while ( $text =~ /\s/g );
+	# TODO: Remove this limit? Right now, it is greater than the default file size limit.
+	if ( length $text < 2_500_000 ) {
+		$words++ while ( $text =~ /\s+/g );
+
+		my $whitespace = "\n\r\t ";
+		# TODO: make this depend on the current character set
+		#       see http://en.wikipedia.org/wiki/Whitespace_character
+		$chars_without_space = $chars_with_space - ( $text =~ tr/$whitespace// );
 	} else {
 		$words               = Wx::gettext('Skipped for large files');
 		$chars_without_space = Wx::gettext('Skipped for large files');
