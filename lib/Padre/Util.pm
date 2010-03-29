@@ -172,10 +172,11 @@ backward match must end before this.
 
 sub get_matches {
 	my ( $text, $regex, $from, $to, $backward ) = @_;
-	die "missing parameters" if @_ < 4;
+	die 'missing parameters' if @_ < 4;
 
 	use Encode;
-	$text = Encode::encode( 'utf-8', $text );
+	$text  = Encode::encode( 'utf-8', $text );
+	$regex = Encode::encode( 'utf-8', $regex );
 
 	my @matches;
 	while ( $text =~ /$regex/mg ) {

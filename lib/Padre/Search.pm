@@ -363,7 +363,8 @@ sub matches {
 	my $text = Encode::encode( 'utf-8', shift );
 
 	# Find all matches for the regex
-	my $regex   = shift;
+	my $regex = shift;
+	$regex = Encode::encode( 'utf-8', $regex );
 	my @matches = ();
 	while ( $text =~ /$regex/g ) {
 		push @matches, [ $-[0], $+[0] ];

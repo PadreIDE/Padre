@@ -41,6 +41,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - New document statistics dialog, faster computation of document statistics
       (Zeno Gantner)
     - Added missing File::pushd Padre dependency (AZAWAWI)
+    - Fixed ticket #894: search for non-ASCII characters (Zeno Gantner)
 
 0.58 2010.03.08  **WARNING Still not stable**
     - Fixed "Open File In Existing Padre" for non-win32 (PDONELAN)
