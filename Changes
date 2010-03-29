@@ -36,9 +36,10 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       and must be removed. (DOLMEN)
     - Fixed ticket #904: Win32 taskbar icon is only 16x16 (Windows 7 may uses
       48x48) (AZAWAWI)
-    - Small improvements/fixes to some dialogs: Refactoring dialogs, Open URL,
+    - Small improvements/fixes to some dialogs: Refactoring, Open URL, Goto,
       Save as, Preferences, Insert File, New Perl Distribution (Zeno Gantner)
-    - New document statistics dialog (Zeno Gantner)
+    - New document statistics dialog, faster computation of document statistics
+      (Zeno Gantner)
     - Added missing File::pushd Padre dependency (AZAWAWI)
 
 0.58 2010.03.08  **WARNING Still not stable**

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-25 11:07+0100\n"
+"POT-Creation-Date: 2010-03-29 16:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,7 +173,7 @@ msgstr ""
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:810
 #: lib/Padre/Wx/Dialog/PluginManager.pm:349
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:153
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:172
 #: lib/Padre/Wx/Dialog/OpenResource.pm:128 lib/Padre/Task/SyntaxChecker.pm:183
 msgid "Error"
 msgstr ""
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Unsaved %d"
 msgstr ""
 
-#: lib/Padre/Document.pm:1337 lib/Padre/Document.pm:1338
+#: lib/Padre/Document.pm:1343 lib/Padre/Document.pm:1344
 msgid "Skipped for large files"
 msgstr ""
 
@@ -469,7 +469,7 @@ msgid "Search:"
 msgstr ""
 
 #: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/About.pm:86
-#: lib/Padre/Wx/Dialog/DocStats.pm:60 lib/Padre/Wx/Dialog/HelpSearch.pm:179
+#: lib/Padre/Wx/Dialog/DocStats.pm:58 lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239 lib/Padre/Action/File.pm:166
 msgid "&Close"
 msgstr ""
@@ -1357,7 +1357,7 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/Preferences.pm:912 lib/Padre/Wx/Dialog/Replace.pm:192
 #: lib/Padre/Wx/Dialog/OpenResource.pm:192 lib/Padre/Wx/Dialog/Advanced.pm:174
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/KeyBindings.pm:199
-#: lib/Padre/Wx/Dialog/Goto.pm:99
+#: lib/Padre/Wx/Dialog/Goto.pm:100
 msgid "&Cancel"
 msgstr ""
 
@@ -1388,7 +1388,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:225
 #: lib/Padre/Wx/Dialog/PluginManager.pm:66
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:23
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:25
 msgid "Name"
 msgstr ""
 
@@ -1424,15 +1424,15 @@ msgstr ""
 msgid "Document Statistics"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:41
+#: lib/Padre/Wx/Dialog/DocStats.pm:39
 msgid "Filename"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:42
+#: lib/Padre/Wx/Dialog/DocStats.pm:40
 msgid "Selection"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:62
+#: lib/Padre/Wx/Dialog/DocStats.pm:60
 msgid "&Update"
 msgstr ""
 
@@ -1476,7 +1476,7 @@ msgstr ""
 msgid "Document type"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:178
+#: lib/Padre/Wx/Dialog/DocStats.pm:179
 msgid "none"
 msgstr ""
 
@@ -1568,7 +1568,7 @@ msgstr ""
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:150
 #: lib/Padre/Wx/Dialog/OpenResource.pm:188 lib/Padre/Wx/Dialog/OpenURL.pm:62
-#: lib/Padre/Wx/Dialog/Goto.pm:92
+#: lib/Padre/Wx/Dialog/Goto.pm:93
 msgid "&OK"
 msgstr ""
 
@@ -1623,65 +1623,101 @@ msgstr ""
 msgid "Window"
 msgstr ""
 
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:16
+msgid "Apache License"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:17
+msgid "Artistic License 1.0"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:18
+msgid "Artistic License 2.0"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:19
+msgid "Revised BSD License"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:20
+msgid "GPL 2 or later"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:21
+msgid "LGPL 2.1 or later"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:22
+msgid "MIT License"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:23
+msgid "Mozilla Public License"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:24
+msgid "Open Source"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:25
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:100
+msgid "Perl licensing terms"
+msgstr ""
+
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
-msgid "Module Name:"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:29
-msgid "Author:"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:32
-msgid "Email:"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:35
-msgid "Builder:"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:38
-msgid "License:"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:41
-msgid "Parent Directory:"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:42
-msgid "Pick parent directory"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:68
-msgid "Module Start"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:84
 msgid "restrictive"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:118
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:27
+msgid "unrestricted"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:40
+msgid "Module Name:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:43
+msgid "Author:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:46
+msgid "Email Address:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:49
+msgid "Builder:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:52
+msgid "License:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:57
+msgid "Parent Directory:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:58
+msgid "Pick parent directory"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:84
+msgid "Module Start"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:134
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:119
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:135
 msgid "missing field"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:150
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:169
 #, perl-format
 msgid ""
 "An error has occured while generating '%s':\n"
 "%s"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:161
-#, perl-format
-msgid "%s apparently created. Do you want to open it now?"
-msgstr ""
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:162
-msgid "Done"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:15
@@ -1708,24 +1744,24 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:24
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:30
 msgid "Number of lines"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:36 lib/Padre/Wx/Dialog/Snippets.pm:22
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:46 lib/Padre/Wx/Dialog/Snippets.pm:22
 msgid "Class:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:37
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:47
 msgid "Special Value:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:40 lib/Padre/Wx/Dialog/Snippets.pm:24
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:50 lib/Padre/Wx/Dialog/Snippets.pm:24
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:234
 msgid "&Insert"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:53
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:63
 msgid "Insert Special Values"
 msgstr ""
 
@@ -2405,34 +2441,43 @@ msgid "Goto"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Goto.pm:86
-msgid "&Line number or character position?"
+msgid "Position type"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:224
-#, perl-format
-msgid "&Enter a line number between 1 and %s:"
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
+#: lib/Padre/Wx/Dialog/Goto.pm:223 lib/Padre/Wx/Dialog/Goto.pm:250
+msgid "Line number"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:231
+msgid "Character position"
 msgstr ""
 
 #: lib/Padre/Wx/Dialog/Goto.pm:225
 #, perl-format
-msgid "&Enter a position between 1 and %s:"
+msgid "&Enter a line number between 1 and %s:"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:229
+#: lib/Padre/Wx/Dialog/Goto.pm:228
 #, perl-format
 msgid "Current line number: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:230
+#: lib/Padre/Wx/Dialog/Goto.pm:233
+#, perl-format
+msgid "&Enter a position between 1 and %s:"
+msgstr ""
+
+#: lib/Padre/Wx/Dialog/Goto.pm:236
 #, perl-format
 msgid "Current position: %s"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:253
+#: lib/Padre/Wx/Dialog/Goto.pm:262
 msgid "Not a positive number!"
 msgstr ""
 
-#: lib/Padre/Wx/Dialog/Goto.pm:262
+#: lib/Padre/Wx/Dialog/Goto.pm:271
 msgid "Out of range!"
 msgstr ""
 
@@ -2913,60 +2958,60 @@ msgstr ""
 msgid "Popularity Contest Report"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:444
+#: lib/Padre/Document/Perl.pm:446
 msgid "Error: "
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:446
+#: lib/Padre/Document/Perl.pm:448
 msgid "No errors found."
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:568 lib/Padre/Document/Perl.pm:753
+#: lib/Padre/Document/Perl.pm:570 lib/Padre/Document/Perl.pm:755
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
 msgid "Current cursor does not seem to point at a variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:569 lib/Padre/Document/Perl.pm:593
-#: lib/Padre/Document/Perl.pm:628 lib/Padre/Document/Perl.pm:754
+#: lib/Padre/Document/Perl.pm:571 lib/Padre/Document/Perl.pm:595
+#: lib/Padre/Document/Perl.pm:630 lib/Padre/Document/Perl.pm:756
 msgid "Check cancelled"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:592
+#: lib/Padre/Document/Perl.pm:594
 msgid "Current cursor does not seem to point at a method"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:627
+#: lib/Padre/Document/Perl.pm:629
 #, perl-format
 msgid "Current '%s' not found"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1494 lib/Padre/Action/Perl.pm:69
+#: lib/Padre/Document/Perl.pm:1496 lib/Padre/Action/Perl.pm:69
 msgid "Find Variable Declaration"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1506
+#: lib/Padre/Document/Perl.pm:1508
 msgid "Lexically Rename Variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1518 lib/Padre/Document/Perl.pm:1519
+#: lib/Padre/Document/Perl.pm:1520 lib/Padre/Document/Perl.pm:1521
 msgid "Replacement"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1534 lib/Padre/Action/Perl.pm:81
+#: lib/Padre/Document/Perl.pm:1536 lib/Padre/Action/Perl.pm:81
 msgid "Find Method Declaration"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1553 lib/Padre/Action/Refactor.pm:111
+#: lib/Padre/Document/Perl.pm:1555 lib/Padre/Action/Refactor.pm:111
 msgid "Introduce Temporary Variable"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1566 lib/Padre/Document/Perl.pm:1567
+#: lib/Padre/Document/Perl.pm:1568 lib/Padre/Document/Perl.pm:1569
 #: lib/Padre/Action/Refactor.pm:110
 msgid "Variable Name"
 msgstr ""
 
-#: lib/Padre/Document/Perl.pm:1578
+#: lib/Padre/Document/Perl.pm:1580
 msgid "Edit with Regex Editor"
 msgstr ""
 
@@ -3610,7 +3655,7 @@ msgid "Paste the clipboard to the current location"
 msgstr ""
 
 #: lib/Padre/Action/Edit.pm:223
-msgid "&Goto"
+msgid "&Goto..."
 msgstr ""
 
 #: lib/Padre/Action/Edit.pm:224
@@ -4320,11 +4365,11 @@ msgid "Open a document with a skeleton Perl 6 script"
 msgstr ""
 
 #: lib/Padre/Action/File.pm:80
-msgid "Perl Distribution (Module::Starter)..."
+msgid "Perl Distribution..."
 msgstr ""
 
 #: lib/Padre/Action/File.pm:81
-msgid "Setup a skeleton Perl distribution using Module::Starter"
+msgid "Setup a skeleton Perl module distribution"
 msgstr ""
 
 #: lib/Padre/Action/File.pm:95
