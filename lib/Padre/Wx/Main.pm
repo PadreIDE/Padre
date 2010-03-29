@@ -3510,8 +3510,8 @@ sub on_open_selection {
 
 	require Wx::Perl::Dialog::Simple;
 	my $file = Wx::Perl::Dialog::Simple::single_choice(
-						title   => Wx::gettext('Choose File'),
-						choices => \@files
+		title   => Wx::gettext('Choose File'),
+		choices => \@files
 	);
 
 	if ($file) {
@@ -4008,7 +4008,7 @@ sub on_save_as {
 			$self, Wx::gettext('Save file as...'),
 			$self->{cwd},
 			$filename,
-			Wx::gettext('All Files') . (Padre::Constant::WIN32 ? '|*.*|' : '|*|'),
+			Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*|' : '|*|' ),
 			Wx::wxFD_SAVE,
 		);
 		if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
@@ -5190,9 +5190,9 @@ sub on_insert_from_file {
 		$self->{cwd} = File::Basename::dirname($last_filename);
 	}
 	my $dialog = Wx::FileDialog->new(
-		$self, Wx::gettext('Open file'),
-		$self->cwd, '', 
-		Wx::gettext('All Files') . (Padre::Constant::WIN32 ? '|*.*|' : '|*|'),
+		$self,      Wx::gettext('Open file'),
+		$self->cwd, '',
+		Wx::gettext('All Files') . ( Padre::Constant::WIN32 ? '|*.*|' : '|*|' ),
 		Wx::wxFD_OPEN,
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {

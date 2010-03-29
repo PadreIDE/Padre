@@ -184,6 +184,7 @@ sub main {
 
 	# Last resort fallback
 	require Padre;
+
 	# Whe whole idea of loading Padre at this point does not look good.
 	# It should have already be done in the padre script so loading here again seems incorrect
 	# anyway. Does this only serve the testsing? ~ szabgab

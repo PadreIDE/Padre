@@ -12,28 +12,29 @@ use Padre::Wx::Dialog ();
 
 our $VERSION = '0.58';
 
-our %license_id = (     # TODO: check for other module builders as well
-			Wx::gettext('Apache License')         => 'apache',     ## TODO: does not work w/ Module::Build
-			Wx::gettext('Artistic License 1.0')   => 'artistic',   ## TODO: does not work w/ Module::Build
-			Wx::gettext('Artistic License 2.0')   => 'artistic_2', ## TODO: does not work w/ Module::Build
-			Wx::gettext('Revised BSD License')    => 'bsd',
-			Wx::gettext('GPL 2 or later')         => 'gpl',
-			Wx::gettext('LGPL 2.1 or later')      => 'lgpl',
-			Wx::gettext('MIT License')            => 'mit',
-			Wx::gettext('Mozilla Public License') => 'mozilla',     ## TODO: does not work w/ Module::Build
-			Wx::gettext('Open Source')            => 'open_source', ## TODO: does not work w/ Module::Build
-			Wx::gettext('Perl licensing terms')   => 'perl',
-			Wx::gettext('restrictive')            => 'restrictive', ## TODO: does not work w/ Module::Build
-			Wx::gettext('unrestricted')           => 'unrestricted',## TODO: does not work w/ Module::Build
-	          );
-	# licenses list taken from
-	# http://search.cpan.org/dist/Module-Build/lib/Module/Build/API.pod
-	# even though it should be in http://module-build.sourceforge.net/META-spec.html
-	# and we should fetch it from Module::Start or maybe Software::License
+our %license_id = ( # TODO: check for other module builders as well
+	Wx::gettext('Apache License')         => 'apache',       ## TODO: does not work w/ Module::Build
+	Wx::gettext('Artistic License 1.0')   => 'artistic',     ## TODO: does not work w/ Module::Build
+	Wx::gettext('Artistic License 2.0')   => 'artistic_2',   ## TODO: does not work w/ Module::Build
+	Wx::gettext('Revised BSD License')    => 'bsd',
+	Wx::gettext('GPL 2 or later')         => 'gpl',
+	Wx::gettext('LGPL 2.1 or later')      => 'lgpl',
+	Wx::gettext('MIT License')            => 'mit',
+	Wx::gettext('Mozilla Public License') => 'mozilla',      ## TODO: does not work w/ Module::Build
+	Wx::gettext('Open Source')            => 'open_source',  ## TODO: does not work w/ Module::Build
+	Wx::gettext('Perl licensing terms')   => 'perl',
+	Wx::gettext('restrictive')            => 'restrictive',  ## TODO: does not work w/ Module::Build
+	Wx::gettext('unrestricted')           => 'unrestricted', ## TODO: does not work w/ Module::Build
+);
+
+# licenses list taken from
+# http://search.cpan.org/dist/Module-Build/lib/Module/Build/API.pod
+# even though it should be in http://module-build.sourceforge.net/META-spec.html
+# and we should fetch it from Module::Start or maybe Software::License
 
 
 sub get_layout {
-	my @builders   = ( 'Module::Build', 'ExtUtils::MakeMaker', 'Module::Install' ); # TODO: what about Module::Starter?
+	my @builders = ( 'Module::Build', 'ExtUtils::MakeMaker', 'Module::Install' ); # TODO: what about Module::Starter?
 
 	my @layout = (
 		[   [ 'Wx::StaticText', undef,           Wx::gettext('Module Name:') ],
@@ -48,8 +49,9 @@ sub get_layout {
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Builder:') ],
 			[ 'Wx::ComboBox', '_builder_choice_', '', \@builders, Wx::wxCB_READONLY ],
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('License:') ],
-			[ 'Wx::ComboBox', '_license_choice_', '', [keys %license_id], Wx::wxCB_SORT ],
+		[   [ 'Wx::StaticText', undef,              Wx::gettext('License:') ],
+			[ 'Wx::ComboBox',   '_license_choice_', '', [ keys %license_id ], Wx::wxCB_SORT ],
+
 			# TODO: SORT does not seem to work on Linux
 		],
 		[   [ 'Wx::StaticText', undef, Wx::gettext('Parent Directory:') ],
@@ -154,8 +156,8 @@ sub ok_clicked {
 			'--email',   $data->{_email_},
 			'--builder', $data->{_builder_choice_},
 			'--license', exists $license_id{ $data->{_license_choice_} }
-					? $license_id{ $data->{_license_choice_} }
-					: $data->{_license_choice_},
+			? $license_id{ $data->{_license_choice_} }
+			: $data->{_license_choice_},
 		);
 		Module::Starter::App->run;
 	};
@@ -176,7 +178,7 @@ sub ok_clicked {
 
 	my $module_name = $data->{_module_name_};
 	($module_name) = split( ',', $module_name ); # for Foo::Bar,Foo::Bat
-		                                             # prepare Foo-Bar/lib/Foo/Bar.pm
+	                                             # prepare Foo-Bar/lib/Foo/Bar.pm
 	my @parts = split( '::', $module_name );
 	my $dir_name = join( '-', @parts );
 	$parts[-1] .= '.pm';
