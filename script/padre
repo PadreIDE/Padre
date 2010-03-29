@@ -132,10 +132,10 @@ unless ( defined $ACTIONS ) {
 #TODO fix $^X =~ /wperl\.exe/ context issue
 if ( $^O eq 'MSWin32' and $^X . '' =~ /wperl\.exe/ ) {
 	require IO::Handle;
-	open OUTPUT, '>', "NUL" or die $!;
-	open ERROR,  '>', "NUL" or die $!;
-	STDOUT->fdopen( \*OUTPUT, 'w' ) or die $!; ## no critic (ProhibitBarewordFileHandles) (RequireBriefOpen)
-	STDERR->fdopen( \*ERROR,  'w' ) or die $!; ## no critic (ProhibitBarewordFileHandles) (RequireBriefOpen)
+	open my $OUTPUT, '>', "NUL" or die $!;
+	open my $ERROR,  '>', "NUL" or die $!;
+	STDOUT->fdopen( $OUTPUT, 'w' ) or die $!;
+	STDERR->fdopen( $ERROR,  'w' ) or die $!;
 }
 
 require Padre;
