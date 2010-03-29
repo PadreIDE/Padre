@@ -43,7 +43,7 @@ sub new {
 	);
 
 	# Minimum dialog size
-	$self->SetMinSize( [ 270, 180 ] );
+	$self->SetMinSize( [ 330, 180 ] );
 
 	# create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -81,22 +81,23 @@ sub _create_controls {
 	# Status label
 	$self->{status_line} = Wx::StaticText->new( $self, -1, '' );
 
-	# Line or position checkbox
-	$self->{line_mode} = Wx::CheckBox->new(
-		$self, -1, Wx::gettext('&Line number or character position?'),
+	# Line or position choice
+	$self->{line_mode} = Wx::RadioBox->new(
+		$self,                 -1, Wx::gettext('Position type'),
+		Wx::wxDefaultPosition, Wx::wxDefaultSize,
+		[ Wx::gettext('Line number'), Wx::gettext('Character position') ]
 	);
-	$self->{line_mode}->SetValue(1);
 
 	# OK button (obviously)
 	$self->{button_ok} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext("&OK"),
+		$self, Wx::wxID_OK, Wx::gettext('&OK'),
 	);
 	$self->{button_ok}->SetDefault;
 	$self->{button_ok}->Enable(0);
 
 	# Cancel button (obviously)
 	$self->{button_cancel} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext("&Cancel"),
+		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
 	);
 
 	#----- Dialog Layout
@@ -151,7 +152,7 @@ sub _bind_events {
 		}
 	);
 
-	Wx::Event::EVT_CHECKBOX(
+	Wx::Event::EVT_RADIOBOX(
 		$self,
 		$self->{line_mode},
 		sub {
@@ -189,7 +190,7 @@ sub _on_ok_button {
 	my $self = shift;
 
 	# Fetch values
-	my $line_mode = $self->{line_mode}->IsChecked;
+	my $line_mode = $self->{line_mode}->GetStringSelection eq Wx::gettext('Line number');
 	my $value     = $self->{goto_text}->GetValue;
 	my $editor    = $self->current->editor;
 
@@ -218,18 +219,18 @@ sub _on_ok_button {
 #
 sub _update_label {
 	my $self      = shift;
-	my $line_mode = $self->{line_mode}->IsChecked;
-	$self->{goto_label}->SetLabel(
-		$line_mode
-		? sprintf( Wx::gettext("&Enter a line number between 1 and %s:"), $self->{max_line_number} )
-		: sprintf( Wx::gettext("&Enter a position between 1 and %s:"),    $self->{max_position} )
-	);
-	$self->{current}->SetLabel(
-		$line_mode
-		? sprintf( Wx::gettext("Current line number: %s"), $self->{current_line_number} )
-		: sprintf( Wx::gettext("Current position: %s"),    $self->{current_position} )
-	);
-
+	my $line_mode = $self->{line_mode}->GetStringSelection;
+	if ( $line_mode eq Wx::gettext('Line number') ) {
+		$self->{goto_label}
+			->SetLabel( sprintf( Wx::gettext('&Enter a line number between 1 and %s:'), $self->{max_line_number} ) );
+		$self->{current}->SetLabel( sprintf( Wx::gettext('Current line number: %s'), $self->{current_line_number} ) );
+	} elsif ( $line_mode eq Wx::gettext('Character position') ) {
+		$self->{goto_label}
+			->SetLabel( sprintf( Wx::gettext('&Enter a position between 1 and %s:'), $self->{max_position} ) );
+		$self->{current}->SetLabel( sprintf( Wx::gettext('Current position: %s'), $self->{current_position} ) );
+	} else {
+		warn "Invalid choice value '$line_mode'\n";
+	}
 }
 
 #
@@ -238,8 +239,8 @@ sub _update_label {
 sub _validate {
 	my $self = shift;
 
-	my $line_mode = $self->{line_mode}->IsChecked;
-	my $value     = $self->{goto_text}->GetValue;
+	my $line_mode = $self->{line_mode}->GetStringSelection eq Wx::gettext('Line number');
+	my $value = $self->{goto_text}->GetValue;
 
 	# If it is empty, do not warn about it but disable it though
 	if ( $value eq '' ) {
