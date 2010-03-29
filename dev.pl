@@ -41,7 +41,7 @@ BEGIN {
 		'fulltrace'   => \$FULLTRACE,
 		'invisible'   => \$INVISIBLE,
 		'include|i:s' => \@INCLUDE,
-	);
+	) or $USAGE = 1;
 }
 
 $ENV{PADRE_DEV}  = 1;
