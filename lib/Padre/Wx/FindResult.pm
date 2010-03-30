@@ -79,7 +79,7 @@ Sets the label of the tab. Called automatically when the object is created.
 =cut
 
 sub gettext_label {
-	Wx::gettext( 'Find Results (' . $LineCount . ')' );
+	sprintf( Wx::gettext('Find Results (%s)'), $LineCount );
 }
 
 
