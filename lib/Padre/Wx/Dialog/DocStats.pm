@@ -137,8 +137,8 @@ sub new {
 	$main_sizer->Add( $self->horizontal_line, 1, Wx::wxEXPAND, 0 );
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$buttons->Add( $self->{close_button}, 0, Wx::wxGROW | Wx::wxRIGHT, $border_margin );
-	$buttons->Add( $update_button,        0, Wx::wxGROW | Wx::wxLEFT,  $border_margin );
+	$buttons->Add( $update_button,        0, 0,          $border_margin );
+	$buttons->Add( $self->{close_button}, 0, Wx::wxLEFT, $border_margin );
 	$main_sizer->Add( $buttons, 0, Wx::wxALIGN_RIGHT | Wx::wxALL, $border_margin );
 
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
