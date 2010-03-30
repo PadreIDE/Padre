@@ -29,11 +29,11 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Fixed ticket #889: Padre saves non-ASCII characters as \x{XXXX} (AZAWAWI)
     - New Win32 launcher #677: the Padre process is now named "padre.exe"
       in the Task Manager (instead of wperl.exe) and it embeds the Perl
-      interpreter instead of being just a launcher.
+      interpreter instead of being just a launcher (DOLMEN)
     - On Win32 the manifest file (which tells Windows to use new Vista/7
       styles on such systems) is now embedded as a resource in the binary, so
       any wperl.exe.manifest containing the string 'name="Padre"' is obsolete
-      and must be removed. (DOLMEN)
+      and must be removed (DOLMEN)
     - Fixed ticket #904: Win32 taskbar icon is only 16x16 (Windows 7 may uses
       48x48) (AZAWAWI)
     - Small improvements/fixes to some dialogs: Refactoring, Open URL, Goto,
