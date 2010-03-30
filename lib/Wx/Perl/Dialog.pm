@@ -324,12 +324,14 @@ sub _build_multipage_layout {
 		my $size = Wx::Button::GetDefaultSize;
 
 		my $ok_btn = Wx::Button->new( $dialog, Wx::wxID_OK, '', Wx::wxDefaultPosition, $size );
-		if ( my $ok_id = ( defined $multipage->{ok_widgetid} ? $multipage->{ok_widgetid} : '' ) ) {
+		my $ok_id = ( defined $multipage->{ok_widgetid} ? $multipage->{ok_widgetid} : '' );
+		if ( $ok_id ) {
 			$dialog->{_widgets_}{$ok_id} = $ok_btn;
 		}
 
 		my $cancel_btn = Wx::Button->new( $dialog, Wx::wxID_CANCEL, '', Wx::wxDefaultPosition, $size );
-		if ( my $cancel_id = ( defined $multipage->{cancel_id} ? $multipage->{cancel_id} : '' ) ) {
+		my $cancel_id = ( defined $multipage->{cancel_id} ? $multipage->{cancel_id} : '' );
+		if ( $cancel_id ) {
 			$dialog->{_widgets_}{$cancel_id} = $cancel_btn;
 		}
 

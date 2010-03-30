@@ -59,7 +59,7 @@ foreach my $file (@files) {
 
 	$b->check( slurp( 'lib/' . $file ) );
 	my $result = $b->error || '';
-	ok( ( $result eq '' ), "Check $file: $result" );
+	is( $result, '', "Check $file" );
 }
 
 
