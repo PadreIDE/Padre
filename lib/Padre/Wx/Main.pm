@@ -2737,6 +2737,7 @@ button. No return value.
 
 sub error {
 	my ( $self, $message ) = @_;
+	$message ||= Wx::gettext('Unknown error from ').caller;
 	my $styles = Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_HAND;
 	Wx::MessageBox( $message, Wx::gettext('Error'), $styles, $self );
 }
