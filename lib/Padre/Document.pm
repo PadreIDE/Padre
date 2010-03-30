@@ -1304,13 +1304,13 @@ sub selection_stats {
 	my $text = $self->editor->GetSelectedText;
 
 	my $words   = 0;
-	my $lines   = 1;
 	my $newline = $self->newline;
+	my $lines   = 1;
 	$lines++ while ( $text =~ /$newline/g );
 	$words++ while ( $text =~ /\s+/g );
 
-	my $chars_with_space = length $text;
-	my $whitespace = "\n\r\t ";
+	my $chars_with_space    = length $text;
+	my $whitespace          = "\n\r\t ";
 	my $chars_without_space = $chars_with_space - ( $text =~ tr/$whitespace// );
 
 	return ( $lines, $chars_with_space, $chars_without_space, $words );
