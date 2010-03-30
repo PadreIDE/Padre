@@ -69,9 +69,9 @@ unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 # enable NoWarning if this is fixed
 
 my %TEST = (
-	'split1.pl'                 => "Line 1: The second parameter of split is a string, not an array",
-	'split2.pl'                 => "Line 1: The second parameter of split is a string, not an array",
-	'warning.pl'                => "Line 1: You need to write use warnings (with an s at the end) and not use warning.",
+	'split1.pl'                 => "Line 6: The second parameter of split is a string, not an array",
+	'split2.pl'                 => "Line 6: The second parameter of split is a string, not an array",
+	'warning.pl'                => "Line 3: You need to write use warnings (with an s at the end) and not use warning.",
 	'boolean_expressions_or.pl' => 'TODO',
 	'boolean_expressions_pipes.pl' => 'TODO',
 	'match_default_scalar.pl'      => 'TODO',
@@ -81,14 +81,14 @@ my %TEST = (
 	'return_stronger_than_or.pl'   => 'TODO',
 	'grep_always_true.pl'          => 'TODO',
 	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
-	'else_if.pl' => "Line 1: 'else if' is wrong syntax, correct if 'elsif'.",
+	'else_if.pl' => "Line 9: 'else if' is wrong syntax, correct if 'elsif'.",
 
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA,
 	# other special variables ? $a, $b, $ARGV, $AUTOLOAD, etc ? $_ in perls older than 5.10?
 	# @_ ?
 );
 
-plan( tests => scalar( keys %TEST ) * 2 + 19 );
+plan( tests => scalar( keys %TEST ) * 2 + 20 );
 
 use Padre::Document::Perl::Beginner;
 my $b = Padre::Document::Perl::Beginner->new( document => { editor => bless {}, 'local::t75' } );
@@ -140,56 +140,59 @@ $b->check("=pod\n\nThis is a typical POD test with bad stuff.\npackage DB; if (\
 ok( !defined( $b->error ), 'No check of POD stuff' );
 
 $b->check('join(",",map { 1; } (@INC),"a");');
-ok( $b->error =~ /map/, 'map arguments' );
+is( $b->error, q(Line 1: map (),x uses x also as list value for map.), 'map arguments' );
 
 $b->check('package DB;');
-ok( $b->error =~ /DB/, 'kill Perl debugger (1)' );
+is( $b->error, q(Line 1: This file uses the DB-namespace which is used by the Perl Debugger.), 'kill Perl debugger (1)' );
 
 $b->check('package DB::Connect;');
-ok( $b->error =~ /DB/, 'kill Perl debugger (2)' );
+is( $b->error, q(Line 1: This file uses the DB-namespace which is used by the Perl Debugger.), 'kill Perl debugger (2)' );
 
 $b->check('$X = chomp($ARGV[0]);');
-ok( $b->error =~ /chomp/, 'chomp return value' );
+is( $b->error, q(Line 1: chomp doesn't return the chomped value, it modifies the variable given as argument.), 'chomp return value' );
 
 $b->check('join(",",map { s/\//\,/g; } (@INC),"a");');
-ok( $b->error =~ /map/, 'substitution in map (1)' );
+is( $b->error, q(Line 1: map (),x uses x also as list value for map.), 'substitution in map (1)' );
 
 $b->check('join(",",map { $_ =~ s/\//\,/g; } (@INC),"a");');
-ok( $b->error =~ /map/, 'substitution in map (2)' );
+is( $b->error, q(Line 1: map (),x uses x also as list value for map.), 'substitution in map (2)' );
 
 $b->check('for (<@INC>) { 1; }');
-ok( $b->error =~ /Perl6/, 'Perl6 loop syntax in Perl5' );
+is( $b->error, q(Line 1: (<@Foo>) is Perl6 syntax and usually not valid in Perl5.), 'Perl6 loop syntax in Perl5' );
 
 $b->check('if ($_ = 1) { 1; }');
-ok( $b->error =~ /\=/, 'assign instead of compare' );
+is( $b->error, q(Line 1: A single = in a if-condition is usually a typo, use == or eq to compare.), 'assign instead of compare' );
 
 $b->check('open file,"free|tail"');
-ok( $b->error =~ /open/, 'pipe-open without in or out redirection (2 args)' );
+is( $b->error, q(Line 1: Using a | char in open without a | at the beginning or end is usually a typo.), 'pipe-open without in or out redirection (2 args)' );
 
 $b->check('open file,">","free|tail"');
-ok( $b->error =~ /open/, 'pipe-open3 without in or out redirection (3 args)' );
+is( $b->error, q(Line 1: Using a | char in open without a | at the beginning or end is usually a typo.), 'pipe-open3 without in or out redirection (3 args)' );
 
 $b->check('open file,"|cat|"');
-ok( $b->error =~ /open/, 'pipe-open with in and out redirection (2 args)' );
+is( $b->error, q(Line 1: You can't use open to pipe to and from a command at the same time.), 'pipe-open with in and out redirection (2 args)' );
 
 $b->check('open file,"|cat|"');
-ok( $b->error =~ /open/, 'pipe-open with in and out redirection (3 args)' );
+is( $b->error, q(Line 1: You can't use open to pipe to and from a command at the same time.), 'pipe-open with in and out redirection (3 args)' );
 
 # Thanks to meironC for this sample:
 $b->check('open LYNX, "lynx -source http://www.perl.com |" or die " Cant open lynx: $!";');
 ok( !$b->error, 'Open with pipe and result check' );
 
 $b->check('elseif');
-ok( $b->error =~ /elseif.*elsif/, 'elseif - typo' );
+is( $b->error, q(Line 1: 'elseif' is wrong syntax, correct if 'elsif'.), 'elseif - typo' );
 
 $b->check('$x=~/+/');
-ok( $b->error =~ /regular expression.*quantifier/, 'RegExp with quantifier (1)' );
+is( $b->error, q(Line 1: A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \.), 'RegExp with quantifier (1)' );
 
 $b->check('$x =~ /*/');
-ok( $b->error =~ /regular expression.*quantifier/, 'RegExp with quantifier (2)' );
+is( $b->error, q(Line 1: A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \.), 'RegExp with quantifier (2)' );
 
 $b->check('close; ');
-ok( $b->error =~ /close.+STDOUT/, 'close;' );
+is( $b->error, q(Line 1: close; usually closes STDIN, STDOUT or something else you don't want.), 'close;' );
+
+$b->check("\nclose; ");
+is( $b->error, q(Line 2: close; usually closes STDIN, STDOUT or something else you don't want.), 'close;' );
 
 sub slurp {
 	my $file = shift;

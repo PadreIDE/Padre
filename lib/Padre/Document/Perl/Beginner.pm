@@ -64,14 +64,20 @@ sub _report {
 	my $prematch = shift;
 	my @samples  = @_;
 
-	my $document = $self->{document};
-	my $editor   = $document->{editor};
+	# The internal _text field is used instead of the document to make sure the
+	# tests can also use it. We will also need to separate from the Padre document class
+	# so this code can be factored out to a stand alone module
+
+	#my $document = $self->{document};
+	#my $editor   = $document->{editor};
 
 	$prematch ||= '';
 	my $error_start_position = length($prematch);
 
-	my $line = $editor->LineFromPosition($error_start_position);
-	++$line; # Editor starts counting at 0
+	#my $line = $editor->LineFromPosition($error_start_position);
+	my @lines = split /[\r\n]/, substr($self->{_text}, 0, $error_start_position), -1;
+	my $line = @lines || 1;
+	#++$line; # Editor starts counting at 0
 
 	# These are two lines to enable the translators to use argument numbers:
 	$self->{error} = Wx::gettext( sprintf( 'Line %d: ', $line ) ) . Wx::gettext( sprintf( $text, @_ ) );
@@ -83,6 +89,8 @@ sub check {
 	my ( $self, $text ) = @_;
 
 	$self->{error} = undef;
+
+	$self->{_text} = $text;
 
 	# Fast exits if there is nothing to check:
 	return 1 if !defined($text);
