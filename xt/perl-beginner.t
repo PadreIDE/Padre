@@ -82,6 +82,7 @@ my %TEST = (
 	'grep_always_true.pl'          => 'TODO',
 	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
 	'else_if.pl' => "Line 9: 'else if' is wrong syntax, correct if 'elsif'.",
+	'elseif.pl'  => "Line 9: 'elseif' is wrong syntax, correct if 'elsif'.",
 	'SearchTask.pm' => undef,
 
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA,

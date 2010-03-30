@@ -6,7 +6,8 @@ use warnings;
 
 
 #
-# Task thread subroutine
+# Various code snippets that used to generate false positive errors
+# in the beginner error code checking
 #
 sub run {
 	my $self = shift;
@@ -28,5 +29,19 @@ sub run {
 
 # if
 my $x = 23;
+
+print "OK";
+
+if ( my $y = 42 ) {
+	print "OK";
+}
+
+if ( $x =~ /42/ ) {
+	print "OK";
+}
+
+
+my $name = 'begerror_elseif';
+
 
 1;

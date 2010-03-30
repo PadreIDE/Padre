@@ -229,7 +229,7 @@ to actually change the array via s///.
 
 # TODO if ( my $x = 23 ) {  should be OK I think, that is when we declare the variable with the if construct
 
-	if ( $config->begerror_ifsetvar and $text =~ m/\A([\x00-\xff]*?)  ^[^#]* if\b  \s*  (  \(?  [\$\s\w]+ = [\s\$\w] )/xsm ) {
+	if ( $config->begerror_ifsetvar and $text =~ m/\A([\x00-\xff]*?  ^[^#]*) if\b  \s*  (  \(\s*  (?<!my)\s*[\$\@\%]\w+  \s*=[^=~]  )/xsm ) {
 		$self->_report("A single = in a if-condition is usually a typo, use == or eq to compare.", $1);
 		return;
 	}
@@ -286,7 +286,7 @@ Regular expression starting with a quantifier such as
 
 =cut
 
-	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)else[\s\t\r\n]+if/ ) {
+	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)\belse\s+if\b/ ) {
 		$self->_report("'else if' is wrong syntax, correct if 'elsif'.", $1);
 		return;
 	}
@@ -297,7 +297,7 @@ Regular expression starting with a quantifier such as
 
 =cut
 
-	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)elseif/ ) {
+	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)\belseif\b/ ) {
 		$self->_report("'elseif' is wrong syntax, correct if 'elsif'.", $1);
 		return;
 	}
