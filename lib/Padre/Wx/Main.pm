@@ -4686,7 +4686,7 @@ sub on_join_lines {
 	my $line = $page->LineFromPosition($pos1);
 
 	# Don't crash if cursor at the last line
-	return if ($line + 1 == $page->GetLineCount);
+	return if ($line > 0) and ($line + 1 == $page->GetLineCount);
 
 	my $pos2 = $page->PositionFromLine( $line + 1 );
 
