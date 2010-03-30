@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-29 16:00+0200\n"
+"POT-Creation-Date: 2010-03-30 10:54+0200\n"
 "PO-Revision-Date: 2010-03-19 17:02+0100\n"
 "Last-Translator: Zeno Gantner <zeno.gantner@gmail.com>\n"
 "Language-Team: German\n"
@@ -202,7 +202,7 @@ msgstr "Warnung: Datei speichern"
 msgid "Unsaved %d"
 msgstr "Ungesichert %d"
 
-#: lib/Padre/Document.pm:1343 lib/Padre/Document.pm:1344
+#: lib/Padre/Document.pm:1339 lib/Padre/Document.pm:1340
 msgid "Skipped for large files"
 msgstr "Übersprungen für große Dateien"
 
@@ -325,7 +325,7 @@ msgstr ""
 "Plugin '%s' konnte nicht geladen werden\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5193
+#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5197
 msgid "Open file"
 msgstr "Öffne Datei"
 
@@ -570,7 +570,7 @@ msgstr "I&gnoriere versteckte Unterverzeichnisse"
 msgid "Show only files that don't match"
 msgstr "Nur Dateien zeigen die nicht übereinstimmen"
 
-#: lib/Padre/Wx/Ack.pm:145
+#: lib/Padre/Wx/Ack.pm:145 lib/Padre/Wx/Ack.pm:338 lib/Padre/Wx/Ack.pm:362
 msgid "Find in Files"
 msgstr "In Dateien suchen"
 
@@ -578,9 +578,25 @@ msgstr "In Dateien suchen"
 msgid "Select directory"
 msgstr "Verzeichnis wählen"
 
-#: lib/Padre/Wx/Ack.pm:338 lib/Padre/Wx/Ack.pm:362
-msgid "Ack"
-msgstr "Ack"
+#: lib/Padre/Wx/Ack.pm:428
+#, perl-format
+msgid "Found %d files\n"
+msgstr "%d Dateien gefunden\n"
+
+#: lib/Padre/Wx/Ack.pm:436
+#, perl-format
+msgid "Found %d files and %d matches\n"
+msgstr "%d Dateien und %d Treffer gefunden\n"
+
+#: lib/Padre/Wx/Ack.pm:474
+#, perl-format
+msgid "'%s' missing in file '%s'\n"
+msgstr "'%s' fehlt in Datei '%s'\n"
+
+#: lib/Padre/Wx/Ack.pm:486
+#, perl-format
+msgid "Found '%s' in '%s':\n"
+msgstr "'%s' in '%s' gefunden:"
 
 #: lib/Padre/Wx/About.pm:25
 msgid "About Padre"
@@ -716,7 +732,7 @@ msgstr "Nur-Lesen"
 
 #: lib/Padre/Wx/StatusBar.pm:400
 msgid "R/W"
-msgstr ""
+msgstr "R/W"
 
 #: lib/Padre/Wx/FunctionList.pm:211
 msgid "Functions"
@@ -727,8 +743,9 @@ msgid "Outline"
 msgstr "Übersicht"
 
 #: lib/Padre/Wx/FindResult.pm:82
-msgid "Find Results ("
-msgstr "Suchergebnisse ("
+#, perl-format
+msgid "Find Results (%s)"
+msgstr "Suchergebnisse (%s)"
 
 #: lib/Padre/Wx/FindResult.pm:99 lib/Padre/Wx/FindResult.pm:178
 msgid "Line No"
@@ -879,7 +896,7 @@ msgid "Web Files"
 msgstr "WWW-Dateien"
 
 #: lib/Padre/Wx/Main.pm:3638 lib/Padre/Wx/Main.pm:3639
-#: lib/Padre/Wx/Main.pm:4011 lib/Padre/Wx/Main.pm:5195
+#: lib/Padre/Wx/Main.pm:4011 lib/Padre/Wx/Main.pm:5199
 msgid "All Files"
 msgstr "Alle Dateien"
 
@@ -995,40 +1012,40 @@ msgstr "Vergleich nicht möglich ohne vorheriges speichern"
 msgid "There are no differences\n"
 msgstr "Keine Unterschiede\n"
 
-#: lib/Padre/Wx/Main.pm:5312 lib/Padre/Plugin/Devel.pm:308
+#: lib/Padre/Wx/Main.pm:5316 lib/Padre/Plugin/Devel.pm:308
 #, perl-format
 msgid "Error: %s"
 msgstr "Fehler: %s"
 
-#: lib/Padre/Wx/Main.pm:5313
+#: lib/Padre/Wx/Main.pm:5317
 msgid "Internal error"
 msgstr "Interner Fehler"
 
-#: lib/Padre/Wx/Main.pm:5505 lib/Padre/Plugin/Devel.pm:139
+#: lib/Padre/Wx/Main.pm:5509 lib/Padre/Plugin/Devel.pm:139
 msgid "No file is open"
 msgstr "Keine geöffnete Datei"
 
-#: lib/Padre/Wx/Main.pm:5505
+#: lib/Padre/Wx/Main.pm:5509
 msgid "Stats"
 msgstr "Dokument-Statistiken"
 
-#: lib/Padre/Wx/Main.pm:5533
+#: lib/Padre/Wx/Main.pm:5537
 msgid "Space to Tab"
 msgstr "In Tabulatoren umwandeln..."
 
-#: lib/Padre/Wx/Main.pm:5534
+#: lib/Padre/Wx/Main.pm:5538
 msgid "Tab to Space"
 msgstr "In Leerzeichen umwandeln..."
 
-#: lib/Padre/Wx/Main.pm:5539
+#: lib/Padre/Wx/Main.pm:5543
 msgid "How many spaces for each tab:"
 msgstr "Anzahl Leerzeichen pro Tabulator:"
 
-#: lib/Padre/Wx/Main.pm:6012
+#: lib/Padre/Wx/Main.pm:6016
 msgid "Need to select text in order to translate to hex"
 msgstr "Zur Umwandlung in Hex muss Text markiert sein."
 
-#: lib/Padre/Wx/Main.pm:6154
+#: lib/Padre/Wx/Main.pm:6158
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -1037,7 +1054,7 @@ msgstr ""
 "Fehler beim Ausführen des Filters:\n"
 "%s"
 
-#: lib/Padre/Wx/Main.pm:6169
+#: lib/Padre/Wx/Main.pm:6173
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
@@ -2493,11 +2510,11 @@ msgid "Position type"
 msgstr "Positionstyp"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
-#: lib/Padre/Wx/Dialog/Goto.pm:223 lib/Padre/Wx/Dialog/Goto.pm:250
+#: lib/Padre/Wx/Dialog/Goto.pm:223 lib/Padre/Wx/Dialog/Goto.pm:242
 msgid "Line number"
 msgstr "Zeilennummer"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:231
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:227
 msgid "Character position"
 msgstr "Zeichenposition"
 
@@ -2506,26 +2523,26 @@ msgstr "Zeichenposition"
 msgid "&Enter a line number between 1 and %s:"
 msgstr "Zeilennummer zwischen 1 und %s &eingeben:"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:228
+#: lib/Padre/Wx/Dialog/Goto.pm:226
 #, perl-format
 msgid "Current line number: %s"
 msgstr "Aktuelle Zeilennummer: %s"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:233
+#: lib/Padre/Wx/Dialog/Goto.pm:229
 #, perl-format
 msgid "&Enter a position between 1 and %s:"
 msgstr "Position zwischen 1 und %s &eingeben:"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:236
+#: lib/Padre/Wx/Dialog/Goto.pm:230
 #, perl-format
 msgid "Current position: %s"
 msgstr "Aktuelle Position: %s"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:262
+#: lib/Padre/Wx/Dialog/Goto.pm:254
 msgid "Not a positive number!"
 msgstr "Keine positive Zahl!"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:271
+#: lib/Padre/Wx/Dialog/Goto.pm:263
 msgid "Out of range!"
 msgstr "Außerhalb des zulässigen Bereichs!"
 
@@ -4783,6 +4800,9 @@ msgstr "Module"
 msgid "Methods"
 msgstr "Methoden"
 
+#~ msgid "Ack"
+#~ msgstr "Ack"
+
 #~ msgid "%s apparently created. Do you want to open it now?"
 #~ msgstr "%s wurde offenbar erstellt. Jetzt öffnen?"
 
@@ -4888,12 +4908,6 @@ msgstr "Methoden"
 
 #~ msgid "Line %d: "
 #~ msgstr "Zeile %d: "
-
-#~ msgid "Found %d files and %d matches\n"
-#~ msgstr "%d Dateien und %d Treffer gefunden\n"
-
-#~ msgid "'%s' missing in file '%s'\n"
-#~ msgstr "'%s' fehlt in Datei '%s'\n"
 
 #~ msgid "Select all\tCtrl-A"
 #~ msgstr "Alles auswählen\tStrg+A"
