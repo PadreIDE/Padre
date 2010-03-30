@@ -227,6 +227,8 @@ to actually change the array via s///.
 
 =cut
 
+# TODO if ( my $x = 23 ) {  should be OK I think, that is when we declare the variable with the if construct
+
 	if ( $config->begerror_ifsetvar and $text =~ m/\A([\x00-\xff]*?)  ^[^#]* if\b  \s*  (  \(?  [\$\s\w]+ = [\s\$\w] )/xsm ) {
 		$self->_report("A single = in a if-condition is usually a typo, use == or eq to compare.", $1);
 		return;
