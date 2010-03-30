@@ -227,7 +227,7 @@ to actually change the array via s///.
 
 =cut
 
-	if ( $config->begerror_ifsetvar and $text =~ /^([\x00-\xff]*?)if[\s\t\r\n]*\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w]/ ) {
+	if ( $config->begerror_ifsetvar and $text =~ /^([\x00-\xff]*?)if\b[\s\t\r\n]*(\(?[\$\s\t\r\n\w]+\=[\s\t\r\n\$\w])/ ) {
 		$self->_report("A single = in a if-condition is usually a typo, use == or eq to compare.", $1);
 		return;
 	}

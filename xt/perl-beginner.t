@@ -82,6 +82,7 @@ my %TEST = (
 	'grep_always_true.pl'          => 'TODO',
 	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
 	'else_if.pl' => "Line 9: 'else if' is wrong syntax, correct if 'elsif'.",
+	'SearchTask.pm' => undef,
 
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA,
 	# other special variables ? $a, $b, $ARGV, $AUTOLOAD, etc ? $_ in perls older than 5.10?
@@ -120,7 +121,7 @@ isa_ok $b, 'Padre::Document::Perl::Beginner';
 #
 
 foreach my $file ( keys %TEST ) {
-	if ( $TEST{$file} eq 'TODO' ) {
+	if ( defined $TEST{$file} and $TEST{$file} eq 'TODO' ) {
 		TODO: {
 			local $TODO = "$file not yet implemented";
 			ok(0);
@@ -130,7 +131,12 @@ foreach my $file ( keys %TEST ) {
 	}
 
 	my $data = slurp( File::Spec->catfile( 't', 'files', 'beginner', $file ) );
-	ok( !defined( $b->check($data) ), $file );
+	my $result = $b->check($data);
+	if ( defined $TEST{$file} ) {
+		is( $result, undef, $file ) or diag "Result: '$result'";
+	} else {
+		is( $result, 1, $file );
+	}
 	is( $b->error, $TEST{$file}, "$file error" );
 }
 
