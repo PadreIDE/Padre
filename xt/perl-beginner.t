@@ -81,8 +81,8 @@ my %TEST = (
 	'return_stronger_than_or.pl'   => 'TODO',
 	'grep_always_true.pl'          => 'TODO',
 	'my_argv.pl'                   => 'TODO', # "my" variable @ARGV masks global variable at ...
-	'else_if.pl' => "Line 9: 'else if' is wrong syntax, correct if 'elsif'.",
-	'elseif.pl'  => "Line 9: 'elseif' is wrong syntax, correct if 'elsif'.",
+	'else_if.pl'    => "Line 9: 'else if' is wrong syntax, correct if 'elsif'.",
+	'elseif.pl'     => "Line 9: 'elseif' is wrong syntax, correct if 'elsif'.",
 	'SearchTask.pm' => undef,
 
 	# @ARGV, $ARGV, @INC, %INC, %ENV, %SIG, @ISA,
@@ -150,13 +150,16 @@ $b->check('join(",",map { 1; } (@INC),"a");');
 is( $b->error, q(Line 1: map (),x uses x also as list value for map.), 'map arguments' );
 
 $b->check('package DB;');
-is( $b->error, q(Line 1: This file uses the DB-namespace which is used by the Perl Debugger.), 'kill Perl debugger (1)' );
+is( $b->error, q(Line 1: This file uses the DB-namespace which is used by the Perl Debugger.),
+	'kill Perl debugger (1)' );
 
 $b->check('package DB::Connect;');
-is( $b->error, q(Line 1: This file uses the DB-namespace which is used by the Perl Debugger.), 'kill Perl debugger (2)' );
+is( $b->error, q(Line 1: This file uses the DB-namespace which is used by the Perl Debugger.),
+	'kill Perl debugger (2)' );
 
 $b->check('$X = chomp($ARGV[0]);');
-is( $b->error, q(Line 1: chomp doesn't return the chomped value, it modifies the variable given as argument.), 'chomp return value' );
+is( $b->error, q(Line 1: chomp doesn't return the chomped value, it modifies the variable given as argument.),
+	'chomp return value' );
 
 $b->check('join(",",map { s/\//\,/g; } (@INC),"a");');
 is( $b->error, q(Line 1: map (),x uses x also as list value for map.), 'substitution in map (1)' );
@@ -168,19 +171,24 @@ $b->check('for (<@INC>) { 1; }');
 is( $b->error, q(Line 1: (<@Foo>) is Perl6 syntax and usually not valid in Perl5.), 'Perl6 loop syntax in Perl5' );
 
 $b->check('if ($_ = 1) { 1; }');
-is( $b->error, q(Line 1: A single = in a if-condition is usually a typo, use == or eq to compare.), 'assign instead of compare' );
+is( $b->error, q(Line 1: A single = in a if-condition is usually a typo, use == or eq to compare.),
+	'assign instead of compare' );
 
 $b->check('open file,"free|tail"');
-is( $b->error, q(Line 1: Using a | char in open without a | at the beginning or end is usually a typo.), 'pipe-open without in or out redirection (2 args)' );
+is( $b->error, q(Line 1: Using a | char in open without a | at the beginning or end is usually a typo.),
+	'pipe-open without in or out redirection (2 args)' );
 
 $b->check('open file,">","free|tail"');
-is( $b->error, q(Line 1: Using a | char in open without a | at the beginning or end is usually a typo.), 'pipe-open3 without in or out redirection (3 args)' );
+is( $b->error, q(Line 1: Using a | char in open without a | at the beginning or end is usually a typo.),
+	'pipe-open3 without in or out redirection (3 args)' );
 
 $b->check('open file,"|cat|"');
-is( $b->error, q(Line 1: You can't use open to pipe to and from a command at the same time.), 'pipe-open with in and out redirection (2 args)' );
+is( $b->error, q(Line 1: You can't use open to pipe to and from a command at the same time.),
+	'pipe-open with in and out redirection (2 args)' );
 
 $b->check('open file,"|cat|"');
-is( $b->error, q(Line 1: You can't use open to pipe to and from a command at the same time.), 'pipe-open with in and out redirection (3 args)' );
+is( $b->error, q(Line 1: You can't use open to pipe to and from a command at the same time.),
+	'pipe-open with in and out redirection (3 args)' );
 
 # Thanks to meironC for this sample:
 $b->check('open LYNX, "lynx -source http://www.perl.com |" or die " Cant open lynx: $!";');
@@ -190,10 +198,14 @@ $b->check('elseif');
 is( $b->error, q(Line 1: 'elseif' is wrong syntax, correct if 'elsif'.), 'elseif - typo' );
 
 $b->check('$x=~/+/');
-is( $b->error, q(Line 1: A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \.), 'RegExp with quantifier (1)' );
+is( $b->error,
+	q(Line 1: A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \.),
+	'RegExp with quantifier (1)' );
 
 $b->check('$x =~ /*/');
-is( $b->error, q(Line 1: A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \.), 'RegExp with quantifier (2)' );
+is( $b->error,
+	q(Line 1: A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \.),
+	'RegExp with quantifier (2)' );
 
 $b->check('close; ');
 is( $b->error, q(Line 1: close; usually closes STDIN, STDOUT or something else you don't want.), 'close;' );

@@ -75,8 +75,9 @@ sub _report {
 	my $error_start_position = length($prematch);
 
 	#my $line = $editor->LineFromPosition($error_start_position);
-	my @lines = split /[\r\n]/, substr($self->{_text}, 0, $error_start_position), -1;
+	my @lines = split /[\r\n]/, substr( $self->{_text}, 0, $error_start_position ), -1;
 	my $line = @lines || 1;
+
 	#++$line; # Editor starts counting at 0
 
 	# These are two lines to enable the translators to use argument numbers:
@@ -115,9 +116,9 @@ Here @data is in scalar context returning the number of elements. Spotted in thi
 
 	if ( $config->begerror_split and $text =~ m/^([\x00-\xff]*?)split([^;]+);/ ) {
 		my $prematch = $1;
-		my $cont = $2;
+		my $cont     = $2;
 		if ( $cont =~ m{\@} ) {
-			$self->_report("The second parameter of split is a string, not an array", $prematch);
+			$self->_report( "The second parameter of split is a string, not an array", $prematch );
 			return;
 		}
 	}
@@ -131,7 +132,7 @@ s is missing at the end.
 =cut
 
 	if ( $config->begerror_warning and $text =~ /^([\x00-\xff]*?)use\s+warning\s*;/ ) {
-		$self->_report("You need to write use warnings (with an s at the end) and not use warning.", $1);
+		$self->_report( "You need to write use warnings (with an s at the end) and not use warning.", $1 );
 		return;
 	}
 
@@ -152,7 +153,7 @@ which means: map all C<@items> and them add C<$extra_item> without mapping it.
 =cut
 
 	if ( $config->begerror_map and $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{.+?\}[\s\t\r\n]*\(.+?\)[\s\t\r\n]*\,/ ) {
-		$self->_report("map (),x uses x also as list value for map.", $1);
+		$self->_report( "map (),x uses x also as list value for map.", $1 );
 		return;
 	}
 
@@ -165,7 +166,7 @@ Warn about Perl-standard package names being reused
 =cut
 
 	if ( $config->begerror_DB and $text =~ /^([\x00-\xff]*?)package DB[\;\:]/ ) {
-		$self->_report("This file uses the DB-namespace which is used by the Perl Debugger.", $1);
+		$self->_report( "This file uses the DB-namespace which is used by the Perl Debugger.", $1 );
 		return;
 	}
 
@@ -184,7 +185,7 @@ Warn about Perl-standard package names being reused
 	# (Ticket #675)
 
 	if ( $config->begerror_chomp and $text =~ /^([\x00-\xff]*?)(print|[\=\.\,])[\s\t\r\n]*chomp\b/ ) {
-		$self->_report("chomp doesn't return the chomped value, it modifies the variable given as argument.", $1);
+		$self->_report( "chomp doesn't return the chomped value, it modifies the variable given as argument.", $1 );
 		return;
 	}
 
@@ -205,7 +206,7 @@ to actually change the array via s///.
 	if (    $config->begerror_map2
 		and $text =~ /^([\x00-\xff]*?)map[\s\t\r\n]*\{[\s\t\r\n]*(\$_[\s\t\r\n]*\=\~[\s\t\r\n]*)?s\// )
 	{
-		$self->_report("Substitute (s///) doesn't return the changed value even if map.", $1);
+		$self->_report( "Substitute (s///) doesn't return the changed value even if map.", $1 );
 		return;
 	}
 
@@ -216,7 +217,7 @@ to actually change the array via s///.
 =cut
 
 	if ( $config->begerror_perl6 and $text =~ /^([\x00-\xff]*?)\(\<\@\w+\>\)/ ) {
-		$self->_report("(<\@Foo>) is Perl6 syntax and usually not valid in Perl5.", $1);
+		$self->_report( "(<\@Foo>) is Perl6 syntax and usually not valid in Perl5.", $1 );
 		return;
 	}
 
@@ -227,10 +228,12 @@ to actually change the array via s///.
 
 =cut
 
-# TODO if ( my $x = 23 ) {  should be OK I think, that is when we declare the variable with the if construct
+	# TODO if ( my $x = 23 ) {  should be OK I think, that is when we declare the variable with the if construct
 
-	if ( $config->begerror_ifsetvar and $text =~ m/\A([\x00-\xff]*?  ^[^#]*) if\b  \s*  (  \(\s*  (?<!my)\s*[\$\@\%]\w+  \s*=[^=~]  )/xsm ) {
-		$self->_report("A single = in a if-condition is usually a typo, use == or eq to compare.", $1);
+	if (    $config->begerror_ifsetvar
+		and $text =~ m/\A([\x00-\xff]*?  ^[^#]*) if\b  \s*  (  \(\s*  (?<!my)\s*[\$\@\%]\w+  \s*=[^=~]  )/xsm )
+	{
+		$self->_report( "A single = in a if-condition is usually a typo, use == or eq to compare.", $1 );
 		return;
 	}
 
@@ -248,7 +251,7 @@ Pipe | in open() not at the end or the beginning.
 		and ( length($5) > 0 )
 		)
 	{
-		$self->_report("Using a | char in open without a | at the beginning or end is usually a typo.", $1);
+		$self->_report( "Using a | char in open without a | at the beginning or end is usually a typo.", $1 );
 		return;
 	}
 
@@ -261,7 +264,7 @@ Pipe | in open() not at the end or the beginning.
 	if (    $config->begerror_pipe2open
 		and $text =~ /^([\x00-\xff]*?)open[\s\t\r\n]*\(?\$?\w+[\s\t\r\n]*\,(.+?\,)?([\"\'])\|.+?\|\3/ )
 	{
-		$self->_report("You can't use open to pipe to and from a command at the same time.", $1);
+		$self->_report( "You can't use open to pipe to and from a command at the same time.", $1 );
 		return;
 	}
 
@@ -275,8 +278,8 @@ Regular expression starting with a quantifier such as
 
 	if ( $config->begerror_regexq and $text =~ m/^([\x00-\xff]*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs ) {
 		$self->_report(
-			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.", $1
-		);
+			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.",
+			$1 );
 		return;
 	}
 
@@ -287,7 +290,7 @@ Regular expression starting with a quantifier such as
 =cut
 
 	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)\belse\s+if\b/ ) {
-		$self->_report("'else if' is wrong syntax, correct if 'elsif'.", $1);
+		$self->_report( "'else if' is wrong syntax, correct if 'elsif'.", $1 );
 		return;
 	}
 
@@ -298,7 +301,7 @@ Regular expression starting with a quantifier such as
 =cut
 
 	if ( $config->begerror_elseif and $text =~ /^([\x00-\xff]*?)\belseif\b/ ) {
-		$self->_report("'elseif' is wrong syntax, correct if 'elsif'.", $1);
+		$self->_report( "'elseif' is wrong syntax, correct if 'elsif'.", $1 );
 		return;
 	}
 
@@ -309,7 +312,7 @@ Regular expression starting with a quantifier such as
 =cut
 
 	if ( $config->begerror_close and $text =~ /^(.*?[^>]?)close;/ ) { # don't match Socket->close;
-		$self->_report("close; usually closes STDIN, STDOUT or something else you don't want.", $1);
+		$self->_report( "close; usually closes STDIN, STDOUT or something else you don't want.", $1 );
 		return;
 	}
 

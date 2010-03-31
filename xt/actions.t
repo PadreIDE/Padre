@@ -37,9 +37,10 @@ for ( '.', 'blib/lib', 'lib' ) {
 use_ok('Padre::Perl');
 
 my $cmd;
-my @chances =
-	( Padre::Perl::cperl() . ' ', '"' . $^X . '" ', 'perl ', 'wperl ', '/usr/bin/perl ',
-	'C:\\strawberry\\perl\\bin\\perl.exe ', '/usr/pkg/bin/perl ' );
+my @chances = (
+	Padre::Perl::cperl() . ' ',             '"' . $^X . '" ', 'perl ', 'wperl ', '/usr/bin/perl ',
+	'C:\\strawberry\\perl\\bin\\perl.exe ', '/usr/pkg/bin/perl '
+);
 unshift @chances, '' if $^O eq 'linux';
 push @chances, '' if $^O ne 'linux';
 for my $prefix (@chances) {

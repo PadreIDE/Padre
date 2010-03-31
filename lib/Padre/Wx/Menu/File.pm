@@ -322,7 +322,7 @@ sub refresh_recent {
 
 	# menu entry count starts at 0
 	# first 3 entries are "open all", "clean list" and a separator
-	foreach my $i ( reverse (3 .. $self->{recentfiles}->GetMenuItemCount - 1) ) {
+	foreach my $i ( reverse( 3 .. $self->{recentfiles}->GetMenuItemCount - 1 ) ) {
 		if ( my $item = $self->{recentfiles}->FindItemByPosition($i) ) {
 			$self->{recentfiles}->Delete($item);
 		}

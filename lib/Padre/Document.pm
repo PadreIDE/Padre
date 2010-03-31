@@ -1332,6 +1332,7 @@ sub stats {
 		$words++ while ( $text =~ /\s+/g );
 
 		my $whitespace = "\n\r\t ";
+
 		# TODO: make this depend on the current character set
 		#       see http://en.wikipedia.org/wiki/Whitespace_character
 		$chars_without_space = $chars_with_space - ( $text =~ tr/$whitespace// );

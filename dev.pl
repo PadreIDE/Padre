@@ -4,7 +4,7 @@
 # its development location
 #
 # It should not be distributed on CPAN or downstream distributions
- 
+
 use 5.008005;
 use strict;
 use warnings;

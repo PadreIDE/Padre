@@ -346,6 +346,7 @@ sub pre_process {
 # Implemented as a task. See Padre::Task::SyntaxChecker::Perl
 sub check_syntax {
 	shift->_check_syntax_internals(
+
 		# Passing all arguments is ok, but critic complains
 		{   @_, ## no critic (ProhibitCommaSeparatedStatements)
 			background => 0
@@ -355,6 +356,7 @@ sub check_syntax {
 
 sub check_syntax_in_background {
 	shift->_check_syntax_internals(
+
 		# Passing all arguments is ok, but critic complains
 		{   @_, ## no critic (ProhibitCommaSeparatedStatements)
 			background => 1
