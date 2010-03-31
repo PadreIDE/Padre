@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-03-29 21:01+0200\n"
-"PO-Revision-Date: 2010-03-29 22:09+0100\n"
+"PO-Revision-Date: 2010-03-31 21:53+0100\n"
 "Last-Translator: jagd <wuchuanren@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -31,13 +31,13 @@ msgid "The following tasks are currently executing in the background:\n"
 msgstr "以下任务正在后台运行中：\n"
 
 #: lib/Padre/TaskManager.pm:644
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "- %s of type '%s':\n"
 "  (in thread(s) %s)\n"
 msgstr ""
-"- %s of type '%s':\n"
-"  (in thread(s) %s)\n"
+"- %s  拥有类型 '%s':\n"
+"  (在线程 %s)\n"
 
 #: lib/Padre/TaskManager.pm:656
 #, perl-format
@@ -744,7 +744,7 @@ msgstr "找出所选变量是在哪儿用 \"my\" 定义的,  并把焦点放在�
 #: lib/Padre/Action/Perl.pm:81
 #: lib/Padre/Document/Perl.pm:1536
 msgid "Find Method Declaration"
-msgstr "找到方法申明"
+msgstr "查找方法申明"
 
 #: lib/Padre/Action/Perl.pm:82
 msgid "Find where the selected function was defined and put the focus there."
@@ -902,7 +902,7 @@ msgstr "提取子程序..."
 
 #: lib/Padre/Action/Refactor.pm:74
 msgid "Cut the current selection and create a new sub from it. A call to this sub is added in the place where the selection was."
-msgstr ""
+msgstr "剪切当前所选, 并根据它创建一个新的子程序. 在所选处将会调用该子程序."
 
 #: lib/Padre/Action/Refactor.pm:86
 msgid "Name for the new subroutine"
@@ -918,7 +918,7 @@ msgstr "引入临时变量..."
 
 #: lib/Padre/Action/Refactor.pm:103
 msgid "Assign the selected expression to a newly declared variable"
-msgstr ""
+msgstr "赋值所选表达式给一个新定义的变量"
 
 #: lib/Padre/Action/Refactor.pm:110
 #: lib/Padre/Document/Perl.pm:1568
@@ -1109,7 +1109,7 @@ msgstr "代码片段..."
 
 #: lib/Padre/Action/Edit.pm:360
 msgid "Select and insert a snippet at the current location"
-msgstr ""
+msgstr "在当前位置选择并插入一个代码片断"
 
 #: lib/Padre/Action/Edit.pm:371
 msgid "File..."
@@ -1170,7 +1170,7 @@ msgstr "选择一个编码， 并用来编码该文档"
 
 #: lib/Padre/Action/Edit.pm:453
 msgid "EOL to Windows"
-msgstr "EOL to Windows"
+msgstr "EOL 转为 Windows 风格"
 
 #: lib/Padre/Action/Edit.pm:455
 msgid "Change the end of line character of the current document to those used in files on MS Windows"
@@ -1178,7 +1178,7 @@ msgstr "改变当前文件的行尾符到 MS Windows 风格"
 
 #: lib/Padre/Action/Edit.pm:464
 msgid "EOL to Unix"
-msgstr "EOL to Unix"
+msgstr "EOL 转为 Windows 风格"
 
 #: lib/Padre/Action/Edit.pm:466
 msgid "Change the end of line character of the current document to that used on Unix, Linux, Mac OSX"
@@ -1186,7 +1186,7 @@ msgstr "改变当前文件的行尾符到 Unix, Linux, Mac OSX 风格"
 
 #: lib/Padre/Action/Edit.pm:475
 msgid "EOL to Mac Classic"
-msgstr "EOL to Mac Classic"
+msgstr "EOL 转为 Mac 经典风格"
 
 #: lib/Padre/Action/Edit.pm:476
 msgid "Change the end of line character of the current document to that used on Mac Classic"
@@ -1313,7 +1313,7 @@ msgstr "锁定用户界面"
 
 #: lib/Padre/Action/View.pm:30
 msgid "Allow the user to move around some of the windows"
-msgstr ""
+msgstr "允许用户移动一些窗口"
 
 #: lib/Padre/Action/View.pm:40
 msgid "Show Output"
@@ -1321,7 +1321,7 @@ msgstr "显示输出"
 
 #: lib/Padre/Action/View.pm:42
 msgid "Show the window displaying the standard output and standard error of the running scripts"
-msgstr ""
+msgstr "显示提供运行中脚本的标准输出和标准错误信息的窗口"
 
 #: lib/Padre/Action/View.pm:51
 msgid "Show Functions"
@@ -1329,7 +1329,7 @@ msgstr "显示函数列表"
 
 #: lib/Padre/Action/View.pm:52
 msgid "Show a window listing all the functions in the current document"
-msgstr ""
+msgstr "显示一个窗口, 其中列出当前文档的所有函数"
 
 #: lib/Padre/Action/View.pm:66
 msgid "Show To-do List"
@@ -1337,7 +1337,7 @@ msgstr "显示待办(To-do)列表"
 
 #: lib/Padre/Action/View.pm:67
 msgid "Show a window listing all todo items in the current document"
-msgstr ""
+msgstr "显示一个窗口, 其中列出当前文档的所有待办项目"
 
 #: lib/Padre/Action/View.pm:82
 msgid "Show Outline"
@@ -1345,7 +1345,7 @@ msgstr "显示提纲"
 
 #: lib/Padre/Action/View.pm:83
 msgid "Show a window listing all the parts of the current file (functions, pragmas, modules)"
-msgstr ""
+msgstr "显示一个窗口, 其中列出当前文件的所有部分(函数, 编译选项, 模块)"
 
 #: lib/Padre/Action/View.pm:92
 msgid "Show Directory Tree"
@@ -1353,7 +1353,7 @@ msgstr "显示目录树"
 
 #: lib/Padre/Action/View.pm:93
 msgid "Show a window with a directory browser of the current project"
-msgstr ""
+msgstr "显示当前工程目录的目录浏览器窗口"
 
 #: lib/Padre/Action/View.pm:102
 msgid "Show Syntax Check"
@@ -1369,7 +1369,7 @@ msgstr "显示错误列表"
 
 #: lib/Padre/Action/View.pm:113
 msgid "Show the list of errors received during execution of a script"
-msgstr ""
+msgstr "显示脚本执行时所收到的错误列表"
 
 #: lib/Padre/Action/View.pm:122
 msgid "Show Status Bar"
@@ -1441,7 +1441,7 @@ msgstr "显示右间距"
 
 #: lib/Padre/Action/View.pm:208
 msgid "Show a vertical line indicating the right margin"
-msgstr ""
+msgstr "显示一条铅直的直线来指出右边界"
 
 #: lib/Padre/Action/View.pm:218
 msgid "Show Newlines"
@@ -1449,7 +1449,7 @@ msgstr "显示 EOL"
 
 #: lib/Padre/Action/View.pm:219
 msgid "Show/hide the newlines with special character"
-msgstr ""
+msgstr "显示/隐藏换行时带的特殊字符"
 
 #: lib/Padre/Action/View.pm:228
 msgid "Show Whitespaces"
@@ -1457,7 +1457,7 @@ msgstr "显示空格"
 
 #: lib/Padre/Action/View.pm:229
 msgid "Show/hide the tabs and the spaces with special characters"
-msgstr ""
+msgstr "显示/隐藏 TAB 和空格为特殊字符"
 
 #: lib/Padre/Action/View.pm:238
 msgid "Show Indentation Guide"
@@ -1465,7 +1465,7 @@ msgstr "显示缩进指导"
 
 #: lib/Padre/Action/View.pm:239
 msgid "Show/hide vertical bars at every indentation position on the left of the rows"
-msgstr ""
+msgstr "显示/隐藏每个行左端缩进位置的竖条"
 
 #: lib/Padre/Action/View.pm:248
 msgid "Word-Wrap"
@@ -1481,7 +1481,7 @@ msgstr "增大字号"
 
 #: lib/Padre/Action/View.pm:260
 msgid "Make the letters bigger in the editor window"
-msgstr ""
+msgstr "使编辑窗中的字符增大"
 
 #: lib/Padre/Action/View.pm:269
 msgid "Decrease Font Size"
@@ -1489,7 +1489,7 @@ msgstr "缩小字号"
 
 #: lib/Padre/Action/View.pm:270
 msgid "Make the letters smaller in the editor window"
-msgstr ""
+msgstr "使编辑窗中的字符减小"
 
 #: lib/Padre/Action/View.pm:279
 msgid "Reset Font Size"
@@ -1497,7 +1497,7 @@ msgstr "重置字体大小"
 
 #: lib/Padre/Action/View.pm:280
 msgid "Reset the size of the letters to the default in the editor window"
-msgstr ""
+msgstr "重置编辑窗中的字符大小"
 
 #: lib/Padre/Action/View.pm:291
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:56
@@ -1506,7 +1506,7 @@ msgstr "设置书签"
 
 #: lib/Padre/Action/View.pm:292
 msgid "Create a bookmark in the current file current row"
-msgstr ""
+msgstr "在当前文件的当前行建立一个书签"
 
 #: lib/Padre/Action/View.pm:302
 msgid "Goto Bookmark"
@@ -1514,7 +1514,7 @@ msgstr "跳转至书签"
 
 #: lib/Padre/Action/View.pm:303
 msgid "Select a bookmark created earlier and jump to that position"
-msgstr ""
+msgstr "选择一个先前建立的书签并跳至那个位置"
 
 #: lib/Padre/Action/View.pm:315
 msgid "&Full Screen"
@@ -1718,7 +1718,7 @@ msgstr "另存为(&A)"
 
 #: lib/Padre/Action/File.pm:299
 msgid "Allow the selection of another name to save the current document"
-msgstr ""
+msgstr "允许选择另一个名字来存储当前文档"
 
 #: lib/Padre/Action/File.pm:311
 msgid "Save Intuition"
@@ -1726,7 +1726,7 @@ msgstr "凭直觉保存"
 
 #: lib/Padre/Action/File.pm:313
 msgid "For new document try to guess the filename based on the file content and offer to save it."
-msgstr ""
+msgstr "对于新的文档， 根据文件内容尝试猜测文件名， 并试图保存。"
 
 #: lib/Padre/Action/File.pm:323
 msgid "Save All"
@@ -1743,7 +1743,7 @@ msgstr "打开所选"
 
 #: lib/Padre/Action/File.pm:335
 msgid "List the files that match the current selection and let the user pick one to open"
-msgstr ""
+msgstr "列出符合当前选择的文件， 然后让用户选择某个以打开"
 
 #: lib/Padre/Action/File.pm:344
 msgid "Open Session"
@@ -1751,7 +1751,7 @@ msgstr "打开会话"
 
 #: lib/Padre/Action/File.pm:346
 msgid "Select a session. Close all the files currently open and open all the listed in the session"
-msgstr ""
+msgstr "选择一个会话。 关闭当前打开的文件， 然后打开所有会话中的文件"
 
 #: lib/Padre/Action/File.pm:356
 msgid "Save Session"
@@ -1759,7 +1759,7 @@ msgstr "保存会话"
 
 #: lib/Padre/Action/File.pm:357
 msgid "Ask for a session name and save the list of files currently opened"
-msgstr ""
+msgstr "询问一个会话各并保存当前已打开文件的列表"
 
 #: lib/Padre/Action/File.pm:371
 msgid "&Print"
@@ -1775,7 +1775,7 @@ msgstr "打开所有最近文件"
 
 #: lib/Padre/Action/File.pm:392
 msgid "Open all the files listed in the recent files list"
-msgstr ""
+msgstr "打开所有列在“最近的文件”列表中的文件"
 
 #: lib/Padre/Action/File.pm:399
 msgid "Clean Recent Files List"
@@ -1783,7 +1783,7 @@ msgstr "清空最近文件列表"
 
 #: lib/Padre/Action/File.pm:400
 msgid "Remove the entries from the recent files list"
-msgstr ""
+msgstr "移除“最近的文件”列表中的条目"
 
 #: lib/Padre/Action/File.pm:410
 #: lib/Padre/Wx/Dialog/DocStats.pm:31
@@ -1792,7 +1792,7 @@ msgstr "文档统计"
 
 #: lib/Padre/Action/File.pm:411
 msgid "Word count and other statistics of the current document"
-msgstr ""
+msgstr "当前文档的单词计数和其它统计"
 
 #: lib/Padre/Action/File.pm:422
 msgid "&Quit"
@@ -1800,7 +1800,7 @@ msgstr "退出(&Q)"
 
 #: lib/Padre/Action/File.pm:423
 msgid "Ask if unsaved files should be saved and then exit Padre"
-msgstr ""
+msgstr "询问当前未保存文件是否需要保存， 并且退出 Padre"
 
 #: lib/Padre/Action/Search.pm:36
 msgid "&Find..."
@@ -1808,7 +1808,7 @@ msgstr "查找(&F)..."
 
 #: lib/Padre/Action/Search.pm:37
 msgid "Find text or regular expressions using a traditional dialog"
-msgstr ""
+msgstr "使用传统对话框查找文本或正则表达式"
 
 #: lib/Padre/Action/Search.pm:47
 #: lib/Padre/Action/Search.pm:119
@@ -1817,7 +1817,7 @@ msgstr "查找下一个"
 
 #: lib/Padre/Action/Search.pm:49
 msgid "Repeat the last find to find the next match"
-msgstr ""
+msgstr "重复上次的查找， 找到下个匹配"
 
 #: lib/Padre/Action/Search.pm:81
 msgid "Failed to find any matches"
@@ -1829,7 +1829,7 @@ msgstr "查找上一个(&F)"
 
 #: lib/Padre/Action/Search.pm:90
 msgid "Repeat the last find, but backwards to find the previous match"
-msgstr ""
+msgstr "重复上次的查找， 但是返回前个匹配"
 
 #: lib/Padre/Action/Search.pm:101
 msgid "Quick Find"
@@ -1837,11 +1837,11 @@ msgstr "快速查找"
 
 #: lib/Padre/Action/Search.pm:102
 msgid "Incremental search seen at the bottom of the window"
-msgstr ""
+msgstr "在窗口㡳部显示增量搜索"
 
 #: lib/Padre/Action/Search.pm:120
 msgid "Find next matching text using a toolbar-like dialog at the bottom of the editor"
-msgstr ""
+msgstr "使用编辑器㡳部类似工具栏的对话框， 找到下一个匹配文本"
 
 #: lib/Padre/Action/Search.pm:130
 msgid "Find Previous"
@@ -1849,7 +1849,7 @@ msgstr "查找上一个"
 
 #: lib/Padre/Action/Search.pm:131
 msgid "Find previous matching text using a toolbar-like dialog at the bottom of the editor"
-msgstr ""
+msgstr "使用编辑器㡳部类似工具栏的对话框， 找到前一个匹配文本"
 
 #: lib/Padre/Action/Search.pm:142
 msgid "Replace..."
@@ -1873,7 +1873,7 @@ msgstr "打开资源..."
 
 #: lib/Padre/Action/Search.pm:166
 msgid "Type in a filter to select a file"
-msgstr ""
+msgstr "输入一个过滤选项来选择一个文件"
 
 #: lib/Padre/Action/Search.pm:179
 msgid "Quick Menu Access..."
@@ -1881,7 +1881,7 @@ msgstr "菜单快捷入口..."
 
 #: lib/Padre/Action/Search.pm:180
 msgid "Quick access to all menu functions"
-msgstr ""
+msgstr "快速访问所有的菜单功能"
 
 #: lib/Padre/Action/Debug.pm:41
 msgid "Step In"
@@ -1889,7 +1889,7 @@ msgstr "跨入 Step In"
 
 #: lib/Padre/Action/Debug.pm:43
 msgid "Execute the next statement, enter subroutine if needed. (Start debugging if it is not yet running)"
-msgstr ""
+msgstr "执行下一条语句， 如果有必要则进入子程序。 （若调试器未运行则启动调试器）"
 
 #: lib/Padre/Action/Debug.pm:57
 msgid "Step Over"
@@ -1897,7 +1897,7 @@ msgstr "跨过 Step Over"
 
 #: lib/Padre/Action/Debug.pm:59
 msgid "Execute the next statement, If it is a subroutine call, stop only after it returned. (Start debugging if it is not yet running)"
-msgstr ""
+msgstr "执行下一条语句， 如果它是一个子程序， 只在它返回后停止。 （若调试器未运行则启动调试器）"
 
 #: lib/Padre/Action/Debug.pm:75
 msgid "Step Out"
@@ -1905,7 +1905,7 @@ msgstr "跨出 Step Out"
 
 #: lib/Padre/Action/Debug.pm:76
 msgid "If withing a subroutine, run till return is called and then stop."
-msgstr ""
+msgstr "若在一个子程序中， 运行到它返回然后停止"
 
 #: lib/Padre/Action/Debug.pm:90
 msgid "Run till breakpoint"
@@ -1913,7 +1913,7 @@ msgstr "运行到断点"
 
 #: lib/Padre/Action/Debug.pm:91
 msgid "Start running and/or continue running till next breakpoint or watch"
-msgstr ""
+msgstr "运行或继续运行直到下个断点"
 
 #: lib/Padre/Action/Debug.pm:104
 msgid "Jump to current execution line"
@@ -1921,15 +1921,16 @@ msgstr "跳到当前运行的语句"
 
 #: lib/Padre/Action/Debug.pm:105
 msgid "Set focus to the line where the current statement is in the debugging process"
-msgstr ""
+msgstr "在被调试的当前语句所在的行上设置焦点"
 
 #: lib/Padre/Action/Debug.pm:119
 msgid "Set breakpoint"
 msgstr "设置断点"
 
+# 好像条件断点功能还没被实现
 #: lib/Padre/Action/Debug.pm:120
 msgid "Set a breakpoint to the current location of the cursor with a condition"
-msgstr ""
+msgstr "在当前光标所在位置设置断点"
 
 #: lib/Padre/Action/Debug.pm:133
 msgid "Remove breakpoint"
@@ -1937,7 +1938,7 @@ msgstr "移除断点"
 
 #: lib/Padre/Action/Debug.pm:134
 msgid "Remove the breakpoint at the current location of the cursor"
-msgstr ""
+msgstr "在当前光标处移除断点"
 
 #: lib/Padre/Action/Debug.pm:147
 msgid "List all the breakpoints"
@@ -1961,7 +1962,7 @@ msgstr "显示堆栈踪迹"
 
 #: lib/Padre/Action/Debug.pm:177
 msgid "When in a subroutine call show all the calls since the main of the program"
-msgstr ""
+msgstr "在一个子程序中调用时, 显示所有从主命名空间开始的调用"
 
 #: lib/Padre/Action/Debug.pm:191
 msgid "Display value"
@@ -1969,7 +1970,7 @@ msgstr "跟踪值"
 
 #: lib/Padre/Action/Debug.pm:192
 msgid "Display the current value of a variable in the right hand side debugger pane"
-msgstr ""
+msgstr "在右手边调试面板，显示变量的当前值"
 
 #: lib/Padre/Action/Debug.pm:205
 msgid "Show Value"
@@ -1985,7 +1986,7 @@ msgstr "执行表达式"
 
 #: lib/Padre/Action/Debug.pm:220
 msgid "Type in any expression and evaluate it in the debugged process"
-msgstr ""
+msgstr "输入任意一个表达式并在被调试的进程中执行"
 
 #: lib/Padre/Action/Debug.pm:234
 msgid "Quit Debugger"
@@ -2005,19 +2006,19 @@ msgstr "导出全部的 Padre 对象到标准输出(STDOUT)"
 
 #: lib/Padre/Action/Internal.pm:56
 msgid "Delay the action queue for 10 seconds"
-msgstr ""
+msgstr "延迟动作队列 10 秒"
 
 #: lib/Padre/Action/Internal.pm:57
 msgid "Stops processing of other action queue items for 10 seconds"
-msgstr ""
+msgstr "停止处理动作队列中的其它项目 10 秒钟"
 
 #: lib/Padre/Action/Internal.pm:64
 msgid "Delay the action queue for 30 seconds"
-msgstr ""
+msgstr "延迟动作队列 30 秒"
 
 #: lib/Padre/Action/Internal.pm:65
 msgid "Stops processing of other action queue items for 30 seconds"
-msgstr ""
+msgstr "停止处理动作队列中的其它项目 30 秒钟"
 
 #: lib/Padre/Task/SyntaxChecker.pm:146
 msgid "Info"
@@ -2315,7 +2316,7 @@ msgstr "工程工具"
 #: lib/Padre/Wx/DocBrowser.pm:113
 #: lib/Padre/Wx/DocBrowser.pm:130
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
-msgstr ""
+msgstr "搜索 perldoc, 例如 Padre::Task, Net::LDAP"
 
 #: lib/Padre/Wx/DocBrowser.pm:126
 msgid "Search:"
@@ -3630,11 +3631,12 @@ msgstr "默认对所有文件开启换行"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:290
 msgid "Use panel order for Ctrl-Tab (not usage history)"
-msgstr ""
+msgstr "为 Ctrl-Tab 使用面板顺序 (而非使用历史)"
 
+# 尚未实现?
 #: lib/Padre/Wx/Dialog/Preferences.pm:297
 msgid "Clean up file content on saving (for supported document types)"
-msgstr ""
+msgstr "存储时清理文件内容 （对于支持的文档类型）"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:302
 msgid "Auto-fold POD markup when code folding enabled"
@@ -3686,7 +3688,7 @@ msgstr "开启输入过程中的智能加亮"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:356
 msgid "Shorten the common path in window list"
-msgstr ""
+msgstr "在窗口列表中缩短路径"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:363
 msgid "Use X11 middle button paste style"
@@ -3722,7 +3724,7 @@ msgstr "当前文件的基础名"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:415
 msgid "Current filename relative to project"
-msgstr ""
+msgstr "当前文档在工程中的相对文件名"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:436
 msgid "Window title:"
@@ -3730,7 +3732,7 @@ msgstr "窗口标题:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:443
 msgid "Colored text in output window (ANSI)"
-msgstr "输出窗口中的加色文字 (ANSI)"
+msgstr "输出加色的文字 (ANSI)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:448
 msgid "Show low-priority info messages on statusbar (not in a popup)"
@@ -3908,7 +3910,7 @@ msgstr "选择函数"
 msgid ""
 "Select which subroutine you want the new subroutine\n"
 "inserted before."
-msgstr ""
+msgstr "在哪个子程序之前安插新子程序"
 
 #: lib/Padre/Wx/Dialog/RefactorSelectFunction.pm:104
 msgid "Function"
@@ -4437,7 +4439,7 @@ msgstr "Kibibytes (kiB)"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:129
 msgid "Line break mode"
-msgstr ""
+msgstr "断行模式"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:131
 msgid "Encoding"
