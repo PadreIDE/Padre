@@ -350,18 +350,15 @@ Go to F<Config.pm>, look for the beginner error checks configuration and add a n
 setting for your new check there. It defaults to 1 (run the check), but a user
 could turn it off by setting this to 0 within the Padre configuration file.
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
 Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 
-=head1 LICENSE
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
 
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl 5 itself.
-
-=head1 WARRANTY
-
-There is no warranty whatsoever.
+The full text of the license can be found in the
+LICENSE file included with this module.
 
 =cut
 

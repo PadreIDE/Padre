@@ -312,20 +312,15 @@ sub message {
 
 See L<http://padre.perlide.org/>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
-Copyright 2008 Gábor Szabó. L<http://www.szabgab.com/>
+Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 
-=head1 LICENSE
+This program is free software; you can redistribute
+it and/or modify it under the same terms as Perl itself.
 
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl 5 itself.
-
-=head1 WARRANTY
-
-There is no warranty whatsoever.
-If you lose data or your hair because of this program,
-that's your problem.
+The full text of the license can be found in the
+LICENSE file included with this module.
 
 =head1 CREDITS and THANKS
 
