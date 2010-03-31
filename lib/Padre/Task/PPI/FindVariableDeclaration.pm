@@ -7,7 +7,7 @@ use Padre::Wx                                  ();
 use Padre::Task::PPI                           ();
 use PPIx::EditorTools::FindVariableDeclaration ();
 
-our $VERSION = '0.58';
+our $VERSION = '0.59';
 our @ISA     = 'Padre::Task::PPI';
 
 =pod

@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION = '0.58';
+our $VERSION = '0.59';
 
 sub select_names {
 	Padre::DB->selectcol_arrayref('select name from bookmark order by name');

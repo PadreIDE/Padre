@@ -7,7 +7,7 @@ use Padre::Perl                ();
 use Padre::Constant            ();
 use Padre::Task::SyntaxChecker ();
 
-our $VERSION = '0.58';
+our $VERSION = '0.59';
 our @ISA     = 'Padre::Task::SyntaxChecker';
 
 use version;

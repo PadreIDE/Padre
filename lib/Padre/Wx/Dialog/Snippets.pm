@@ -9,7 +9,7 @@ use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 use Padre::Current    ();
 
-our $VERSION = '0.58';
+our $VERSION = '0.59';
 
 sub get_layout {
 	my ($config) = @_;

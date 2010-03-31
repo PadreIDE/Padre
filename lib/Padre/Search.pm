@@ -32,7 +32,7 @@ use Encode     ();
 use List::Util ();
 use Params::Util '_INSTANCE';
 
-our $VERSION = '0.58';
+our $VERSION = '0.59';
 
 use Class::XSAccessor {
 	getters => {
