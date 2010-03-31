@@ -65,9 +65,9 @@ trac to the appropriate ticket.
 =head2 Branching
 
 Usually we use the trunk for all the development work so we can see issues
-and fix them quickly. At least some of use already use Padre for the
+and fix them quickly. At least some of us already use Padre for the
 development work running it from the workspace so if someone breaks trunk
-that will immediately effect some of the developers.
+that will immediately affect some of the developers.
 
 So please don't B<intentionally> break the trunk!
 
