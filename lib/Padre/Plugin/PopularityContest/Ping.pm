@@ -30,7 +30,7 @@ sub new {
 	}
 
 	# Generate the request URL
-	my $url = URI->new('http://perlide.org/popularity/v1/ping');
+	my $url = URI->new('http://perlide.org/popularity/v1/ping.html');
 	$url->query_form( \%data, ';' );
 
 	# Hand off to the parent constructor

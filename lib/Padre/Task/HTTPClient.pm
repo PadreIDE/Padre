@@ -50,7 +50,7 @@ sub new {
 	}
 
 	# Prepare information
-	my $revision = Padre::Util::SVN->padre_revision();
+	my $revision = Padre::Util::SVN->padre_revision() || 'na';
 	$args{method} ||= 'GET';
 	$args{headers}->{'X-Padre'} ||= "Padre version $VERSION $revision";
 
