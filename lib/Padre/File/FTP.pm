@@ -99,11 +99,20 @@ sub _ftp {
 
 	# NOOP is used to check if the connection is alive, the server will return
 	# 200 if the command is successful
-	# 500 is the command is not supported
-	# But and return code means that the connection is still alive, so it doesn't
-	# matter as long as there is any (not null) return code
-	return $connection_cache{$cache_key} if defined($connection_cache{$cache_key}) and $connection_cache{$cache_key}->quot('NOOP');
-	
+	if (defined($connection_cache{$cache_key})){
+		if (($self->{_last_noop} || 0) == time) {
+			return $connection_cache{$cache_key};
+		}elsif ($self->{_no_noop}) {
+			$self->{_last_noop} = time;
+			# NOOP is not supported
+			return $connection_cache{$cache_key} if $connection_cache{$cache_key}->quot('PWD');
+		} else {
+			$self->{_last_noop} = time;
+			# NOOP is supported
+			return $connection_cache{$cache_key} if $connection_cache{$cache_key}->quot('NOOP') == 2;
+		}
+	}
+
 	# Create FTP object and connection
 	$self->_info( sprintf( Wx::gettext('Connecting to FTP server %s...'), $self->{_host} . ':' . $self->{_port} ) );
 	my $ftp = Net::FTP->new(
@@ -111,7 +120,7 @@ sub _ftp {
 		Port    => $self->{_port},
 		Timeout => $self->{_timeout},
 		Passive => $self->{_passive},
-		# Debug => 3, # Enable for FTP-debugging to STDERR
+#		Debug => 3, # Enable for FTP-debugging to STDERR
 	);
 
 	if ( !defined( $ftp ) ) {
@@ -127,11 +136,15 @@ sub _ftp {
 		return $self;
 	}
 
+	$self->{_no_noop} = 1 unless $ftp->quot('NOOP') == 2;
+
 	$ftp->binary;
 
 	$connection_cache{$cache_key} = $ftp;
 
 	$self->_info( Wx::gettext('Connection to FTP server successful.') );
+
+	$self->{_last_noop} = time;
 	
 	return $ftp;
 }

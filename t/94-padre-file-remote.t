@@ -14,7 +14,7 @@ if ( !$ENV{PADRE_NETWORK_T} ) {
 	exit;
 }
 
-plan( tests => 75 );
+plan( tests => 80 );
 
 package Wx;
 
@@ -124,4 +124,13 @@ ok( $clone->exists,   'FTP: Clone exists' );
 
 is( $firstfile->mtime, $clone->browse_mtime('/pub/CPAN/README'), 'FTP: browse_mtime' );
 
+$file = Padre::File->new('ftp://ftp.cpan.org/pub/CPAN/README');
+my $file2 = Padre::File->new('ftp://ftp.cpan.org/pub/CPAN/README');
+is($file->size,$file2->size,'Check file size for two connections');
+is($file->_ftp,$file2->_ftp,'Verify connection caching/sharing');
+my $oldconn = $file->_ftp;
+is($file->_ftp->quit,1,'Badly disconnect a connection');
+sleep 1; # Required to finish the disconnect
+is($file->_ftp,$file2->_ftp,'Try auto-reestablishing of the connection');
+isnt($file->_ftp,$oldconn,'Check if a new connection was created');
 done_testing();
