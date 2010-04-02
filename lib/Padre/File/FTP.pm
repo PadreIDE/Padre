@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use Padre::File;
-use Wx::Perl::Dialog::Simple qw( password );
+use Wx::Perl::Dialog::Simple ();
 use File::Temp;
 
 our $VERSION = '0.59';
@@ -75,7 +75,7 @@ sub new {
 ##### END URL parsing, regex is allowed again #####
 
 	if ( !defined( $self->{_pass} ) ) {
-		$self->{_pass} = password(
+		$self->{_pass} = Wx::Perl::Dialog::Simple::password(
 			title  => Wx::gettext('FTP Password'),
 			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
 		);
