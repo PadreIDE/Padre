@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Padre::File;
+use Wx::Perl::Dialog::Simple qw( password );
 use File::Temp;
 
 our $VERSION = '0.59';
@@ -74,11 +75,14 @@ sub new {
 ##### END URL parsing, regex is allowed again #####
 
 	if ( !defined( $self->{_pass} ) ) {
-
-		# TO DO: Ask the user for a password
+		$self->{_pass} = password(
+			title  => Wx::gettext('FTP Password'),
+			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
+		);
+		# TODO: offer an option to store the password
 	}
 
-	# TO DO: Handle aborted/timed out connections
+	# TO DO: Handle aborted/timed out connections	
 
 	# Create FTP object and connection
 	$self->_info( sprintf( Wx::gettext('Connecting to FTP server %s...'), $self->{_host} . ':' . $self->{_port} ) );
@@ -92,16 +96,14 @@ sub new {
 	);
 
 	if ( !defined( $self->{_ftp} ) ) {
-
-		$self->{error} = 'Error connecting to ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
+		$self->{error} = sprintf( Wx::gettext('Error connecting to %s:%s: %s'), $self->{_host}, $self->{_port}, $@ );
 		return $self;
 	}
 
 	# Log into the FTP server
 	$self->_info( sprintf( Wx::gettext('Logging into FTP server as %s...'), $self->{_user} ) );
 	if ( !$self->{_ftp}->login( $self->{_user}, $self->{_pass} ) ) {
-
-		$self->{error} = 'Error logging in on ' . $self->{_host} . ':' . $self->{_port} . ': ' . $@;
+		$self->{error} = sprintf( Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port}, defined $@ ? $@ : Wx::gettext('Unknown error') );
 		return $self;
 	}
 
@@ -112,7 +114,7 @@ sub new {
 	$self->{_file_temp} = File::Temp->new( UNLINK => 1 );
 	$self->{_tmpfile} = $self->{_file_temp}->filename;
 
-	$self->_info( Wx::gettext('Connection to FTP server successful!') );
+	$self->_info( Wx::gettext('Connection to FTP server successful.') );
 
 	return $self;
 }
@@ -139,7 +141,7 @@ sub clone {
 
 		# URL parsing failed
 		# TO DO: Warning should go to a user popup not to the text console
-		$self->{error} = 'Unable to parse ' . $url;
+		$self->{error} = sprintf( Wx::gettext('Unable to parse %s'), $url );
 		return $self;
 	}
 
