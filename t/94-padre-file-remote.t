@@ -9,7 +9,7 @@ use Padre::File;
 if ( !$ENV{PADRE_NETWORK_T} ) {
 	plan( tests => 1 );
 	SKIP: {
-		skip 'This test file requires permission to connect to the internet.', 1;
+		skip 'This test file requires permission to connect to the internet, set PADRE_NETWORK_T=1 if you want this', 1;
 	}
 	exit;
 }
