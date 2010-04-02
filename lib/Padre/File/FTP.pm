@@ -17,10 +17,6 @@ use Class::XSAccessor {
 	false => [qw/can_run/],
 };
 
-# TODO:
-#  fix crash after cancel in password dialog
-#  what happens if we encounter a directory?
-
 sub new {
 	my $class = shift;
 	my $url   = shift;
@@ -115,7 +111,7 @@ sub _ftp {
 
 	if ( !defined( $ftp ) ) {
 		$self->{error} = sprintf( Wx::gettext('Error connecting to %s:%s: %s'), $self->{_host}, $self->{_port}, $@ );
-		return undef;
+		return;
 	}
 
 	if ( !defined( $self->{_pass} ) ) {
@@ -130,7 +126,7 @@ sub _ftp {
 	$self->_info( sprintf( Wx::gettext('Logging into FTP server as %s...'), $self->{_user} ) );
 	if ( !$ftp->login( $self->{_user}, $self->{_pass} ) ) {
 		$self->{error} = sprintf( Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port}, defined $@ ? $@ : Wx::gettext('Unknown error') );
-		return $self;
+		return;
 	}
 
 	$self->{_no_noop} = 1 unless $ftp->quot('NOOP') == 2;
@@ -220,12 +216,14 @@ sub browse_mtime {
 
 sub exists {
 	my $self = shift;
-	return if !defined( $self->_ftp );
+	
+	my $ftp = $self->_ftp;
+	return if !defined $ftp;
 
 	# Cache basename value
 	my $basename = $self->basename;
 
-	for ( $self->_ftp->ls( $self->{_file} ) ) {
+	for ( $ftp->ls( $self->{_file} ) ) {
 		return 1 if $_ eq $self->{_file};
 		return 1 if $_ eq $basename;
 	}
