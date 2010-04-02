@@ -17,6 +17,10 @@ use Class::XSAccessor {
 	false => [qw/can_run/],
 };
 
+# TODO:
+#  fix crash after cancel in password dialog
+#  what happens if we encounter a directory?
+
 sub new {
 	my $class = shift;
 	my $url   = shift;
@@ -29,18 +33,12 @@ sub new {
 	if ( defined($config) ) {
 		$self->{_timeout} = $config->file_ftp_timeout;
 		$self->{_passive} = $config->file_ftp_passive;
-	} else {
-
-		# Use defaults if we have no config
-		$self->{_timeout} = 60;
-		$self->{_passive} = 1;
 	}
 
 	# Don't add a new overall-dependency to Padre:
 	$self->_info( Wx::gettext('Looking for Net::FTP...') );
 	eval { require Net::FTP; };
 	if ($@) {
-
 		$self->{error} = 'Net::FTP is not installed, Padre::File::FTP currently depends on it.';
 		return $self;
 	}
@@ -76,14 +74,6 @@ sub new {
 
 ##### END URL parsing, regex is allowed again #####
 
-	if ( !defined( $self->{_pass} ) ) {
-		$self->{_pass} = Wx::Perl::Dialog::Simple::password(
-			title  => Wx::gettext('FTP Password'),
-			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
-		) || ''; # Use empty password (not undef) if nothing was entered
-		# TODO: offer an option to store the password
-	}
-
 	$self->{protocol} = 'ftp'; # Should not be overridden
 
 	$self->{_file_temp} = File::Temp->new( UNLINK => 1 );
@@ -94,15 +84,15 @@ sub new {
 
 sub _ftp {
 	my $self = shift;
-	
-	my $cache_key = join("\x00",$self->{_host},$self->{_port},$self->{_user},$self->{_pass});
+
+	my $cache_key = join("\x00", $self->{_host}, $self->{_port}, $self->{_user});
 
 	# NOOP is used to check if the connection is alive, the server will return
 	# 200 if the command is successful
 	if (defined($connection_cache{$cache_key})){
 		if (($self->{_last_noop} || 0) == time) {
 			return $connection_cache{$cache_key};
-		}elsif ($self->{_no_noop}) {
+		} elsif ($self->{_no_noop}) {
 			$self->{_last_noop} = time;
 			# NOOP is not supported
 			return $connection_cache{$cache_key} if $connection_cache{$cache_key}->quot('PWD');
@@ -112,14 +102,14 @@ sub _ftp {
 			return $connection_cache{$cache_key} if $connection_cache{$cache_key}->quot('NOOP') == 2;
 		}
 	}
-
+	
 	# Create FTP object and connection
 	$self->_info( sprintf( Wx::gettext('Connecting to FTP server %s...'), $self->{_host} . ':' . $self->{_port} ) );
 	my $ftp = Net::FTP->new(
 		Host    => $self->{_host},
 		Port    => $self->{_port},
-		Timeout => $self->{_timeout},
-		Passive => $self->{_passive},
+		exists $self->{_timeout} ? (Timeout => $self->{_timeout}) : (),
+		exists $self->{_passive} ? (Passive => $self->{_passive}) : (),
 #		Debug => 3, # Enable for FTP-debugging to STDERR
 	);
 
@@ -128,10 +118,17 @@ sub _ftp {
 		return undef;
 	}
 
+	if ( !defined( $self->{_pass} ) ) {
+		$self->{_pass} = Wx::Perl::Dialog::Simple::password(
+			title  => Wx::gettext('FTP Password'),
+			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
+		) || ''; # Use empty password (not undef) if nothing was entered
+		# TODO: offer an option to store the password
+	}
+
 	# Log into the FTP server
 	$self->_info( sprintf( Wx::gettext('Logging into FTP server as %s...'), $self->{_user} ) );
 	if ( !$ftp->login( $self->{_user}, $self->{_pass} ) ) {
-		# TODO: Move the password question dialog out of ->new and call it from here in case of bad password reply
 		$self->{error} = sprintf( Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port}, defined $@ ? $@ : Wx::gettext('Unknown error') );
 		return $self;
 	}
@@ -159,7 +156,7 @@ sub clone {
 	my $self = bless { filename => $url }, ref($origin);
 
 	# Copy the common values
-	for ( '_timeout', '_passive', '_user', '_pass', '_port', '_host', '_ftp' ) {
+	for ( '_timeout', '_passive', '_user', '_pass', '_port', '_host' ) {
 		$self->{$_} = $origin->{$_};
 	}
 

@@ -53,6 +53,7 @@ my %TODO = map { $_ => 1 } qw(
 	Padre::Action::Refactor
 	Padre::Action::Search
 	Padre::Document
+	Padre::File::FTP
 	Padre::Locale
 	Padre::MimeTypes
 	Padre::Plugin
