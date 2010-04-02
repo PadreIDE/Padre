@@ -80,7 +80,7 @@ sub new {
 		$self->{_pass} = Wx::Perl::Dialog::Simple::password(
 			title  => Wx::gettext('FTP Password'),
 			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
-		);
+		) || ''; # Use empty password (not undef) if nothing was entered
 		# TODO: offer an option to store the password
 	}
 
