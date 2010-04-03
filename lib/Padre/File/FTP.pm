@@ -29,6 +29,11 @@ sub new {
 	if ( defined($config) ) {
 		$self->{_timeout} = $config->file_ftp_timeout;
 		$self->{_passive} = $config->file_ftp_passive;
+	} else {
+
+		# Use defaults if we have no config
+		$self->{_timeout} = 60;
+		$self->{_passive} = 1;
 	}
 
 	# Don't add a new overall-dependency to Padre:
