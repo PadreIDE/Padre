@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan tests => 13;
+	plan tests => 15;
 }
 use Test::NoWarnings;
 use t::lib::Padre;
@@ -70,6 +70,13 @@ SCOPE: {
 	my (@matches) = Padre::Util::get_matches( $str, qr/(perl)/, 0, 0 );
 
 	# TODO are these really correct numbers?
-	is_deeply( \@matches, [ 1, 5, [ 1, 5 ], [ 28, 32 ] ], '2 matches with unicode' );
+	is_deeply( \@matches, [ 1, 5, [ 1, 5 ], [ 28, 32 ] ], 'two matches with unicode' );
 	is( substr( $str, 1, 4 ), 'perl' );
+}
+
+SCOPE: {
+	my $str = 'müssen';
+	my (@matches) = Padre::Util::get_matches( $str, qr/(üss)/, 0, 0 );
+	is_deeply( \@matches, [ 1, 7, [ 1, 7 ] ], 'one match with unicode regex' );
+	is( substr( $str, 1, 4 ), 'üss' );
 }
