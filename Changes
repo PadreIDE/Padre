@@ -3,6 +3,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.60 To Be Released
     - Add FTP connection caching/sharing (SEWI)
+    - Add interactive template functions (SEWI)
 
 
 0.59 2010.03.31 

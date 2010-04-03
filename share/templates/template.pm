@@ -1,14 +1,14 @@
-package Module::Name;
+package [% util.new_modulename %];
 
 =pod
 
 =head1 NAME
 
-Module::Name - My author was too lazy to write an abstract
+[% util.new_modulename %] - My author was too lazy to write an abstract
 
 =head1 SYNOPSIS
 
-  my $object = Module::Name->new(
+  my $object = [% util.new_modulename %]->new(
       foo  => 'bar',
       flag => 1,
   );
@@ -33,15 +33,15 @@ our $VERSION = '0.01';
 
 =head2 new
 
-  my $object = Module::Name->new(
+  my $object = [% util.new_modulename %]->new(
       foo => 'bar',
   );
 
-The C<new> constructor lets you create a new B<Module::Name> object.
+The C<new> constructor lets you create a new B<[% util.new_modulename %]> object.
 
 So no big surprises there...
 
-Returns a new B<Module::Name> or dies on error.
+Returns a new B<[% util.new_modulename %]> or dies on error.
 
 =cut
 

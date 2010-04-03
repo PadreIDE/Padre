@@ -46,6 +46,7 @@ use Padre::Current                ();
 use Padre::Document               ();
 use Padre::DB                     ();
 use Padre::Locker                 ();
+use Padre::Util::Template  ();
 use Padre::Wx                     ();
 use Padre::Wx::Icon               ();
 use Padre::Wx::Debugger           ();
@@ -5814,12 +5815,15 @@ sub on_new_from_template {
 		$self->error("Failed to find template '$file'");
 	}
 
+	my $data = {config => $self->{config},
+		    util => Padre::Util::Template->new,};
+
 	# Generate the full file content
 	require Template::Tiny;
 	my $output = '';
 	Template::Tiny->new->process(
 		$template,
-		$self->current,
+		$data,
 		\$output,
 	);
 
