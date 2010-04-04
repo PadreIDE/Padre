@@ -584,6 +584,7 @@ sub guess_mimetype {
 		undef $file;
 	}
 
+
 	# Try derive the mime type from the file extension
 	if ( $filename and $filename =~ /\.([^.]+)$/ ) {
 		my $ext = lc $1;
@@ -608,93 +609,98 @@ sub guess_mimetype {
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
 	if ( defined $text ) {
+		eval {
 
-		# Is this a script of some kind?
-		if ( $text =~ /\A#!/m ) {
-			if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
-				return $self->perl_mime_type($text);
-			}
-			if ( $text =~ /\A#![^\n]*\b(?:z|k|ba)?sh\b/ ) {
-				return 'application/x-shellscript';
-			}
-		}
-
-		# YAML will start with a ---
-		if ( $text =~ /\A---/ ) {
-			return 'text/x-yaml';
-		}
-
-		# Try to identify Perl Scripts based on soft criterias as a last resort
-		# TO DO: Improve the tests
-		SCOPE: {
-			my $score = 0;
-			if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )           { $score += 2; }
-			if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ )                         { $score += 1; }
-			if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ )      { $score += 1; }
-			if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{([\s\t]+\#.+)?[\r\n]/ ) { $score += 1; }
-			if ( $text =~ /\=\~ ?[sm]?\// )                                     { $score += 1; }
-			if ( $text =~ /\bmy [\$\%\@]/ )                                     { $score += .5; }
-			if ( $text =~ /1\;[\r\n]+$/ )                                       { $score += .5; }
-			if ( $text =~ /\$\w+\{/ )                                           { $score += .5; }
-			if ( $text =~ /\bsplit[ \(]\// )                                    { $score += .5; }
-			return $self->perl_mime_type($text) if $score >= 3;
-		}
-
-		# Look for Template::Toolkit syntax
-		#  - traditional syntax:
-		return 'text/x-perltt'
-			if $text =~ /\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\]/;
-
-		#  - default alternate styles (match 2 tags)
-		return 'text/x-perltt'
-			if $text
-				=~ /(\%\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\%.*){2}/s;
-		return 'text/x-perltt'
-			if $text
-				=~ /(\[\*[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\*\].*){2}/s;
-
-		#  - other languages defaults (match 3 tags)
-		return 'text/x-perltt'
-			if $text
-				=~ /(\<([\?\%])[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\1\>.*){3}/s;
-		return 'text/x-perltt'
-			if $text =~ /(\<\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\>.*){3}/s;
-		return 'text/x-perltt'
-			if $text
-				=~ /(\<\!\-\-[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\-\-\>.*){3}/s;
-
-		#  - traditional, but lowercase syntax (3 tags)
-		return 'text/x-perltt'
-			if $text
-				=~ /(\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\].*){3}/si;
-
-		# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
-		if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
-
-			# Is it Template Toolkit HTML?
-			# Only try to text the default [% %]
-			if ( $text =~ /\[\%\-?\s+\w+(?:\.\w+)*\s+\-?\%\]/ ) {
-				return 'text/x-perltt';
+			# Is this a script of some kind?
+			if ( $text =~ /\A#!/m ) {
+				if ( $text =~ /\A#![^\n]*\bperl6?\b/m ) {
+					return $self->perl_mime_type($text);
+				}
+				if ( $text =~ /\A#![^\n]*\b(?:z|k|ba)?sh\b/ ) {
+					return 'application/x-shellscript';
+				}
 			}
 
-			return 'text/html';
+			# YAML will start with a ---
+			if ( $text =~ /\A---/ ) {
+				return 'text/x-yaml';
+			}
+
+			# Try to identify Perl Scripts based on soft criterias as a last resort
+			# TO DO: Improve the tests
+			SCOPE: {
+				my $score = 0;
+				if ( $text =~ /(use \w+\:\:\w+.+?\;[\r\n][\r\n.]*){3,}/ )           { $score += 2; }
+				if ( $text =~ /use \w+\:\:\w+.+?\;[\r\n]/ )                         { $score += 1; }
+				if ( $text =~ /require ([\"\'])[a-zA-Z0-9\.\-\_]+\1\;[\r\n]/ )      { $score += 1; }
+				if ( $text =~ /[\r\n]sub \w+ ?(\(\$*\))? ?\{([\s\t]+\#.+)?[\r\n]/ ) { $score += 1; }
+				if ( $text =~ /\=\~ ?[sm]?\// )                                     { $score += 1; }
+				if ( $text =~ /\bmy [\$\%\@]/ )                                     { $score += .5; }
+				if ( $text =~ /1\;[\r\n]+$/ )                                       { $score += .5; }
+				if ( $text =~ /\$\w+\{/ )                                           { $score += .5; }
+				if ( $text =~ /\bsplit[ \(]\// )                                    { $score += .5; }
+				return $self->perl_mime_type($text) if $score >= 3;
+			}
+
+			# Look for Template::Toolkit syntax
+			#  - traditional syntax:
+			return 'text/x-perltt'
+				if $text =~ /\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\]/;
+
+			#  - default alternate styles (match 2 tags)
+			return 'text/x-perltt'
+				if $text
+					=~ /(\%\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\%.*){2}/s;
+			return 'text/x-perltt'
+				if $text
+					=~ /(\[\*[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\*\].*){2}/s;
+
+			#  - other languages defaults (match 3 tags)
+			return 'text/x-perltt'
+				if $text
+					=~ /(\<([\?\%])[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\1\>.*){3}/s;
+			return 'text/x-perltt'
+				if $text
+					=~ /(\<\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\>.*){3}/s;
+			return 'text/x-perltt'
+				if $text
+					=~ /(\<\!\-\-[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\-\-\>.*){3}/s;
+
+			#  - traditional, but lowercase syntax (3 tags)
+			return 'text/x-perltt'
+				if $text
+					=~ /(\[\%[\+\-\=\~]? (PROCESS|WRAPPER|FOREACH|BLOCK|END|INSERT|INCLUDE)\b .* [\+\-\=\~]?\%\].*){3}/si;
+
+			# Look for HTML (now we can be relatively confident it's not HTML inside Perl)
+			if ( $text =~ /\<\/(?:html|body|div|p|table)\>/ ) {
+
+				# Is it Template Toolkit HTML?
+				# Only try to text the default [% %]
+				if ( $text =~ /\[\%\-?\s+\w+(?:\.\w+)*\s+\-?\%\]/ ) {
+					return 'text/x-perltt';
+				}
+
+				return 'text/html';
+			}
+
+			# Try to detect plain CSS without HTML around it
+			return 'text/css'
+				if ( $text !~ /\<\w+\/?\>/ )
+				and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/ );
+
+			# LUA detection
+			my $lua_score = 0;
+			for ( 'end', 'it', 'in', 'nil', 'repeat', '...', '~=' ) {
+				$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
+			}
+			$lua_score += 2.01 if $text =~ /^[\s\t]?function[\s\t]+\w+[\s\t]*\([\w\,]*\)[\s\t\r\n]+[^\{]/;
+			$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
+			$lua_score += 3.04 if $text =~ /\-\-\[.+?\]\]\-\-/s; # Comment
+			return 'text/x-lua' if $lua_score >= 5;
+		};
+		if ($@) {
+			return;
 		}
-
-		# Try to detect plain CSS without HTML around it
-		return 'text/css'
-			if ( $text !~ /\<\w+\/?\>/ )
-			and ( $text =~ /^([\.\#]?\w+( [\.\#]?\w+)*)(\,[\s\t\r\n]*([\.\#]?\w+( [\.\#]?\w+)*))*[\s\t\r\n]*\{/ );
-
-		# LUA detection
-		my $lua_score = 0;
-		for ( 'end', 'it', 'in', 'nil', 'repeat', '...', '~=' ) {
-			$lua_score += 1.1 if $text =~ /[\s\t]$_[\s\t]/;
-		}
-		$lua_score += 2.01 if $text =~ /^[\s\t]?function[\s\t]+\w+[\s\t]*\([\w\,]*\)[\s\t\r\n]+[^\{]/;
-		$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
-		$lua_score += 3.04 if $text =~ /\-\-\[.+?\]\]\-\-/s; # Comment
-		return 'text/x-lua' if $lua_score >= 5;
-
 	}
 
 	# Fallback mime-type of new files, should be configurable in the GUI

@@ -249,7 +249,17 @@ sub new {
 	}
 
 	unless ( $self->mimetype ) {
-		$self->set_mimetype( $self->guess_mimetype );
+		my $mimetype = $self->guess_mimetype;
+		if ( defined $mimetype ) {
+			$self->set_mimetype($mimetype);
+		} else {
+			$self->error(
+				Wx::gettext(
+					"Error while determining MIME type.\nThis is possibly an encoding problem.\nAre you trying to load a binary file?"
+				)
+			);
+			return;
+		}
 	}
 
 	$self->rebless;
@@ -1148,7 +1158,7 @@ sub filename_relative {
 # Unreliable methods that provide heuristic best-attempts at automatically
 # determining various document properties.
 
-# Left here a it is used in many places.
+# Left here as it is used in many places.
 # Maybe we need to remove this sub.
 sub guess_mimetype {
 	my $self = shift;
