@@ -609,7 +609,7 @@ sub guess_mimetype {
 	# Hardcode this for now for the cases that we care about and
 	# are obvious.
 	if ( defined $text ) {
-		eval {
+		my $eval_mime_type = eval {
 
 			# Is this a script of some kind?
 			if ( $text =~ /\A#!/m ) {
@@ -697,10 +697,11 @@ sub guess_mimetype {
 			$lua_score -= 5.02 if $text =~ /[\{\}]/; # Not used in lua
 			$lua_score += 3.04 if $text =~ /\-\-\[.+?\]\]\-\-/s; # Comment
 			return 'text/x-lua' if $lua_score >= 5;
+
+			return '';
 		};
-		if ($@) {
-			return;
-		}
+		return if $@;
+		return $eval_mime_type if $eval_mime_type;
 	}
 
 	# Fallback mime-type of new files, should be configurable in the GUI
