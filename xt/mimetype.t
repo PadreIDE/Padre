@@ -32,9 +32,14 @@ my %test_files = (
 	'foo.bar'    => 'text/plain',
 );
 
+my %existing_test_files = (
+	'broken.bin' => undef, # regression test for ticket #900
+	'lexical_replace_stress_test.pl' => 'application/x-perl',
+);
+
 my @files = File::Find::Rule->relative->file->name('*.pm')->in('lib');
 
-plan( tests => ( 2 * @files ) + 1 + scalar( keys(%test_texts) ) + scalar( keys(%test_files) ) );
+plan( tests => ( 2 * @files ) + 1 + scalar( keys(%test_texts) ) + scalar( keys(%test_files) ) + scalar( keys(%existing_test_files) ) );
 
 use_ok('Padre::MimeTypes');
 
@@ -61,6 +66,18 @@ foreach my $text ( sort( keys(%test_texts) ) ) {
 foreach my $file ( sort( keys(%test_files) ) ) {
 	is( Padre::MimeTypes->guess_mimetype( '', $file ), $test_files{$file}, $file );
 }
+
+# Some files that actually exist on-disk
+foreach my $file ( sort keys %existing_test_files ) {
+	my $text = slurp("xt/files/$file");
+
+	require Padre::Locale;
+	my $encoding = Padre::Locale::encoding_from_string($text);
+	$text = Encode::decode( $encoding, $text );
+
+	is( Padre::MimeTypes->guess_mimetype( $text, '' ), $existing_test_files{$file}, $file . ' without filename' );
+}
+
 
 ######################################################################
 # Support Functions
