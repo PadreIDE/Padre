@@ -5,7 +5,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Add FTP connection caching/sharing (SEWI)
     - Add interactive template functions (SEWI)
     - Fixed ticket #900: opening binary files may crash Padre (Zeno Gantner)
-
+    - Improved some menu entries: added missing "...", better labels, better
+      comments (Zeno Gantner)
+    - Clearer error message if debugger is not started yet (Zeno Gantner)
 
 0.59 2010.03.31 
     - Don't crash open file list dialog on unsaved files or without

@@ -186,7 +186,12 @@ sub debugger_is_running {
 	my $main = Padre->ide->wx->main;
 
 	if ( not $self->{_debugger_} ) {
-		$main->error( Wx::gettext('Debugger not running') );
+		$main->message(
+			Wx::gettext(
+				"The debugger is not running.\nYou can start the debugger using one of the step commands in the Debug menu."
+			),
+			Wx::gettext('Debugger not running')
+		);
 		return;
 	}
 	my $editor = $main->current->editor;
