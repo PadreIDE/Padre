@@ -100,8 +100,8 @@ sub new {
 	# Window Navigation
 	Padre::Action->new(
 		name       => 'window.goto_functions_window',
-		label      => Wx::gettext('GoTo Functions Window'),
-		comment    => Wx::gettext('Set the focus to be the functions window'),
+		label      => Wx::gettext('Go to Functions Window'),
+		comment    => Wx::gettext('Set the focus to the "Functions" window'),
 		shortcut   => 'Alt-N',
 		menu_event => sub {
 			$_[0]->refresh_functions( $_[0]->current );
@@ -113,8 +113,8 @@ sub new {
 	# Window Navigation
 	Padre::Action->new(
 		name       => 'window.goto_todo_window',
-		label      => Wx::gettext('GoTo Todo Window'),
-		comment    => Wx::gettext('Set the focus to be the todo window'),
+		label      => Wx::gettext('Go to Todo Window'),
+		comment    => Wx::gettext('Set the focus to the "Todo" window'),
 		shortcut   => 'Alt-T',
 		menu_event => sub {
 			$_[0]->refresh_todo( $_[0]->current );
@@ -125,8 +125,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'window.goto_outline_window',
-		label      => Wx::gettext('GoTo Outline Window'),
-		comment    => Wx::gettext('Set the focus to be the outline window'),
+		label      => Wx::gettext('Go to Outline Window'),
+		comment    => Wx::gettext('Set the focus to the "Outline" window'),
 		shortcut   => 'Alt-L',
 		menu_event => sub {
 			$_[0]->show_outline(1);
@@ -136,8 +136,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'window.goto_output_window',
-		label      => Wx::gettext('GoTo Output Window'),
-		comment    => Wx::gettext('Set the focus to be the output window'),
+		label      => Wx::gettext('Go to Output Window'),
+		comment    => Wx::gettext('Set the focus to the "Output" window'),
 		shortcut   => 'Alt-O',
 		menu_event => sub {
 			$_[0]->show_output(1);
@@ -147,8 +147,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'window.goto_syntax_check_window',
-		label      => Wx::gettext('GoTo Syntax Check Window'),
-		comment    => Wx::gettext('Set the focus to be the syntax check window'),
+		label      => Wx::gettext('Go to Syntax Check Window'),
+		comment    => Wx::gettext('Set the focus to the "Syntax Check" window'),
 		shortcut   => 'Alt-C',
 		menu_event => sub {
 			$_[0]->show_syntax(1);
@@ -158,8 +158,8 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'window.goto_main_window',
-		label      => Wx::gettext('GoTo Main Window'),
-		comment    => Wx::gettext('Set the focus to be the main editor window'),
+		label      => Wx::gettext('Go to Main Window'),
+		comment    => Wx::gettext('Set the focus to the main editor window'),
 		shortcut   => 'Alt-M',
 		menu_event => sub {
 			my $editor = $_[0]->current->editor or return;

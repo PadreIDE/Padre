@@ -83,7 +83,7 @@ sub new {
 	my $file_open = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext('Open'),
+		Wx::gettext('Open...'),
 		$file_open,
 	);
 

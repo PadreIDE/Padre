@@ -196,7 +196,7 @@ sub _on_tree_item_right_click {
 	my $itemData = $outlinebar->GetPlData( $event->GetItem );
 
 	if ( defined($itemData) && defined( $itemData->{line} ) && $itemData->{line} > 0 ) {
-		my $goTo = $menu->Append( -1, Wx::gettext("&GoTo Element") );
+		my $goTo = $menu->Append( -1, Wx::gettext("&Go to Element") );
 		Wx::Event::EVT_MENU(
 			$outlinebar, $goTo,
 			sub { $outlinebar->on_tree_item_set_focus($event); },

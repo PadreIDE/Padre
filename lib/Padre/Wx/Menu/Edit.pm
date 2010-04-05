@@ -323,7 +323,7 @@ sub new {
 	$self->{show_as_number} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Show as ..."),
+		Wx::gettext('Show as'),
 		$self->{show_as_number}
 	);
 

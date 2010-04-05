@@ -220,8 +220,8 @@ sub new {
 	# Miscellaneous Actions
 	Padre::Action->new(
 		name       => 'edit.goto',
-		label      => Wx::gettext('&Goto...'),
-		comment    => Wx::gettext('Ask the user for a line number or a character position and jump there'),
+		label      => Wx::gettext('&Go to...'),
+		comment    => Wx::gettext('Jump to a specific line number or character position'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
 			Padre::Wx::Main::on_goto(@_);
@@ -597,8 +597,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
-		label       => Wx::gettext('Show as hexa'),
-		comment     => Wx::gettext('Show the ASCII values of the selected text in hexa in the output window'),
+		label       => Wx::gettext('Show as hexadecimal'),
+		comment     => Wx::gettext('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
 		menu_event  => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'hex' );
 		},

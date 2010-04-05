@@ -27,7 +27,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'view.lockinterface',
 		label       => Wx::gettext('Lock User Interface'),
-		comment     => Wx::gettext('Allow the user to move around some of the windows'),
+		comment     => Wx::gettext('If activated, do not allow moving around some of the windows'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
 			$_[0]->on_toggle_lockinterface( $_[1] );

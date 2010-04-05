@@ -295,7 +295,7 @@ sub new {
 		name        => 'file.save_as',
 		id          => Wx::wxID_SAVEAS,
 		need_editor => 1,
-		label       => Wx::gettext('Save &As'),
+		label       => Wx::gettext('Save &As...'),
 		comment     => Wx::gettext('Allow the selection of another name to save the current document'),
 		shortcut    => 'F12',
 		toolbar     => 'actions/document-save-as',
@@ -341,7 +341,7 @@ sub new {
 
 	Padre::Action->new(
 		name  => 'file.open_session',
-		label => Wx::gettext('Open Session'),
+		label => Wx::gettext('Open Session...'),
 		comment =>
 			Wx::gettext('Select a session. Close all the files currently open and open all the listed in the session'),
 		shortcut   => 'Ctrl-Alt-O',
@@ -353,7 +353,7 @@ sub new {
 
 	Padre::Action->new(
 		name       => 'file.save_session',
-		label      => Wx::gettext('Save Session'),
+		label      => Wx::gettext('Save Session...'),
 		comment    => Wx::gettext('Ask for a session name and save the list of files currently opened'),
 		shortcut   => 'Ctrl-Alt-S',
 		menu_event => sub {
@@ -368,7 +368,7 @@ sub new {
 
 		# TO DO: As long as the ID is here, the shortcut won't work on Ubuntu.
 		id         => Wx::wxID_PRINT,
-		label      => Wx::gettext('&Print'),
+		label      => Wx::gettext('&Print...'),
 		comment    => Wx::gettext('Print the current document'),
 		shortcut   => 'Ctrl-P',
 		menu_event => sub {
