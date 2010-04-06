@@ -8,6 +8,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Improved some menu entries: added missing "...", better labels, better
       comments (Zeno Gantner)
     - Clearer error message if debugger is not started yet (Zeno Gantner)
+    - Complete language/locale switch on Unix platforms: also correctly
+      translate the Wx default labels (Zeno Gantner)
 
 0.59 2010.03.31 
     - Don't crash open file list dialog on unsaved files or without

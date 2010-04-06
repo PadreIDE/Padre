@@ -46,7 +46,7 @@ use Padre::Current                ();
 use Padre::Document               ();
 use Padre::DB                     ();
 use Padre::Locker                 ();
-use Padre::Util::Template  ();
+use Padre::Util::Template         ();
 use Padre::Wx                     ();
 use Padre::Wx::Icon               ();
 use Padre::Wx::Debugger           ();
@@ -1568,6 +1568,12 @@ sub change_locale {
 	# Reset the locale
 	delete $self->{locale};
 	$self->{locale} = Padre::Locale::object();
+
+	if (Padre::Constant::UNIX) { # make WxWidgets translate the default buttons etc.
+		## no critic (RequireLocalizedPunctuationVars)
+		$ENV{LANGUAGE} = $name;
+		## use critic
+	}
 
 	# Run the "relocale" process to update the GUI
 	$self->relocale;
@@ -5815,8 +5821,10 @@ sub on_new_from_template {
 		$self->error("Failed to find template '$file'");
 	}
 
-	my $data = {config => $self->{config},
-		    util => Padre::Util::Template->new,};
+	my $data = {
+		config => $self->{config},
+		util   => Padre::Util::Template->new,
+	};
 
 	# Generate the full file content
 	require Template::Tiny;
