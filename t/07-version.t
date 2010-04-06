@@ -5,6 +5,13 @@ use strict;
 use warnings;
 use Test::More;
 
+BEGIN {
+        unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+            plan skip_all => 'Needs DISPLAY';
+	    exit 0;
+        }
+}
+                                                
 plan( tests => 4 );
 
 # Search for Padre version
