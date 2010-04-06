@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tr-0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-09 23:51+0200\n"
+"POT-Creation-Date: 2010-04-06 20:12+0300\n"
 "PO-Revision-Date: 2010-01-21 03:05+0200\n"
 "Last-Translator: Burak Gürsoy <burak@cpan.org>\n"
 "Language-Team: Turkish\n"
@@ -78,10 +78,20 @@ msgid ""
 msgstr ""
 "%s, Padre'nin dosya boyutu sınırının (%s) üstünde olduğu için açılamıyor"
 
-#: lib/Padre/Document.pm:393 lib/Padre/Task/SyntaxChecker.pm:183
-#: lib/Padre/Wx/Editor.pm:186 lib/Padre/Wx/Main.pm:2728
-#: lib/Padre/Wx/Main.pm:4249 lib/Padre/Wx/Syntax.pm:93
-#: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Dialog/ModuleStart.pm:153
+#: lib/Padre/Document.pm:258
+msgid ""
+"Error while determining MIME type.\n"
+"This is possibly an encoding problem.\n"
+"Are you trying to load a binary file?"
+msgstr ""
+"MIME türü tanımlanırken hata oluştu.\n"
+"Bu, muhtemelen bir kodlama sorunu.\n"
+"İkili bir dosya mı yüklemeye çalışıyorsunuz?"
+
+#: lib/Padre/Document.pm:403 lib/Padre/Task/SyntaxChecker.pm:183
+#: lib/Padre/Wx/Editor.pm:210 lib/Padre/Wx/Main.pm:2749
+#: lib/Padre/Wx/Main.pm:4256 lib/Padre/Wx/Syntax.pm:93
+#: lib/Padre/Wx/Syntax.pm:96 lib/Padre/Wx/Dialog/ModuleStart.pm:172
 #: lib/Padre/Wx/Dialog/OpenResource.pm:128
 #: lib/Padre/Wx/Dialog/PluginManager.pm:349
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
@@ -93,7 +103,7 @@ msgstr ""
 msgid "Error"
 msgstr "Hata"
 
-#: lib/Padre/Document.pm:707
+#: lib/Padre/Document.pm:717
 #, perl-format
 msgid ""
 "Visual filename %s does not match the internal filename %s, do you want to "
@@ -102,144 +112,144 @@ msgstr ""
 "Görsel dosya adı %s, iç dosya adı %s ile eşleşmiyor. Kaydetmeyi iptal etmek "
 "istiyor musunuz?"
 
-#: lib/Padre/Document.pm:711
+#: lib/Padre/Document.pm:721
 msgid "Save Warning"
 msgstr "Kaydetme Uyarısı"
 
-#: lib/Padre/Document.pm:926
+#: lib/Padre/Document.pm:936
 #, perl-format
 msgid "Unsaved %d"
 msgstr "Kaydedilmemiş %d"
 
-#: lib/Padre/Document.pm:1332 lib/Padre/Document.pm:1333
+#: lib/Padre/Document.pm:1350 lib/Padre/Document.pm:1351
 msgid "Skipped for large files"
 msgstr "Geniş dosyalar için atlandı"
 
-#: lib/Padre/Locale.pm:74
+#: lib/Padre/Locale.pm:85
 msgid "English (United Kingdom)"
 msgstr "İngilizce (Birleşik Krallık)"
 
-#: lib/Padre/Locale.pm:113
-msgid "English (Australian)"
+#: lib/Padre/Locale.pm:124
+msgid "English (Australia)"
 msgstr "İngilizce (Avustralya)"
 
-#: lib/Padre/Locale.pm:131 lib/Padre/Wx/Main.pm:3429
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3433
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: lib/Padre/Locale.pm:145
+#: lib/Padre/Locale.pm:156
 msgid "Arabic"
 msgstr "Arapça"
 
-#: lib/Padre/Locale.pm:155
+#: lib/Padre/Locale.pm:166
 msgid "Czech"
 msgstr "Çekçe"
 
-#: lib/Padre/Locale.pm:165
+#: lib/Padre/Locale.pm:176
 msgid "German"
 msgstr "Almanca"
 
-#: lib/Padre/Locale.pm:175
+#: lib/Padre/Locale.pm:186
 msgid "English"
 msgstr "İngilizce"
 
-#: lib/Padre/Locale.pm:184
+#: lib/Padre/Locale.pm:195
 msgid "English (Canada)"
 msgstr "İngilizce (Kanada)"
 
-#: lib/Padre/Locale.pm:193
+#: lib/Padre/Locale.pm:204
 msgid "English (New Zealand)"
 msgstr "İngilizce (Yeni Zelanda)"
 
-#: lib/Padre/Locale.pm:204
+#: lib/Padre/Locale.pm:215
 msgid "English (United States)"
 msgstr "İngilizce (A.B.D.)"
 
-#: lib/Padre/Locale.pm:213
+#: lib/Padre/Locale.pm:224
 msgid "Spanish (Argentina)"
 msgstr "İspanyolca (Arjantin)"
 
-#: lib/Padre/Locale.pm:227
+#: lib/Padre/Locale.pm:238
 msgid "Spanish"
 msgstr "İspanyolca"
 
-#: lib/Padre/Locale.pm:237
+#: lib/Padre/Locale.pm:248
 msgid "Persian (Iran)"
 msgstr "Farsça (İran)"
 
-#: lib/Padre/Locale.pm:247
-msgid "French (France)"
-msgstr "Fransızca (Fransa)"
+#: lib/Padre/Locale.pm:258
+msgid "French (Canada)"
+msgstr "Fransızca (Kanada)"
 
-#: lib/Padre/Locale.pm:261
+#: lib/Padre/Locale.pm:272
 msgid "French"
 msgstr "Fransızca"
 
-#: lib/Padre/Locale.pm:271
+#: lib/Padre/Locale.pm:282
 msgid "Hebrew"
 msgstr "İbranice"
 
-#: lib/Padre/Locale.pm:281
+#: lib/Padre/Locale.pm:292
 msgid "Hungarian"
 msgstr "Macarca"
 
-#: lib/Padre/Locale.pm:295
+#: lib/Padre/Locale.pm:306
 msgid "Italian"
 msgstr "İtalyanca"
 
-#: lib/Padre/Locale.pm:305
+#: lib/Padre/Locale.pm:316
 msgid "Japanese"
 msgstr "Japonca"
 
-#: lib/Padre/Locale.pm:315
+#: lib/Padre/Locale.pm:326
 msgid "Korean"
 msgstr "Korece"
 
-#: lib/Padre/Locale.pm:329
+#: lib/Padre/Locale.pm:340
 msgid "Dutch"
 msgstr "Hollandaca"
 
-#: lib/Padre/Locale.pm:339
+#: lib/Padre/Locale.pm:350
 msgid "Dutch (Belgium)"
 msgstr "Hollandaca (Belçika)"
 
-#: lib/Padre/Locale.pm:349
-msgid "Norwegian (Norway)"
-msgstr "Norveççe (Norveç)"
+#: lib/Padre/Locale.pm:360
+msgid "Norwegian"
+msgstr "Norveççe"
 
-#: lib/Padre/Locale.pm:359
+#: lib/Padre/Locale.pm:370
 msgid "Polish"
 msgstr "Lehçe"
 
-#: lib/Padre/Locale.pm:369
+#: lib/Padre/Locale.pm:380
 msgid "Portuguese (Brazil)"
 msgstr "Portekizce (Brezilya)"
 
-#: lib/Padre/Locale.pm:379
+#: lib/Padre/Locale.pm:390
 msgid "Portuguese (Portugal)"
 msgstr "Portekizce (Portekiz)"
 
-#: lib/Padre/Locale.pm:389
+#: lib/Padre/Locale.pm:400
 msgid "Russian"
 msgstr "Rusça"
 
-#: lib/Padre/Locale.pm:399
+#: lib/Padre/Locale.pm:410
 msgid "Turkish"
 msgstr "Türkçe"
 
-#: lib/Padre/Locale.pm:409
+#: lib/Padre/Locale.pm:420
 msgid "Chinese"
 msgstr "Çince"
 
-#: lib/Padre/Locale.pm:419
+#: lib/Padre/Locale.pm:430
 msgid "Chinese (Simplified)"
 msgstr "Çince (Basitleştirilmiş)"
 
-#: lib/Padre/Locale.pm:429
+#: lib/Padre/Locale.pm:440
 msgid "Chinese (Traditional)"
 msgstr "Çince (Geleneksel)"
 
-#: lib/Padre/Locale.pm:443
+#: lib/Padre/Locale.pm:454
 msgid "Klingon"
 msgstr "Klingonca"
 
@@ -352,7 +362,7 @@ msgstr "%s olayında eklenti hatası: %s"
 msgid "(core)"
 msgstr "(çekirdek)"
 
-#: lib/Padre/PluginManager.pm:781
+#: lib/Padre/PluginManager.pm:781 lib/Padre/File/FTP.pm:133
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
 #: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:107
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:107
@@ -368,14 +378,13 @@ msgstr "Eklenti (%s)"
 msgid "Error when calling menu for plug-in"
 msgstr "Eklenti için menü çağrılırken hata oluştu"
 
-#: lib/Padre/PluginManager.pm:905 lib/Padre/Wx/Main.pm:2140
-#: lib/Padre/Wx/Main.pm:2195 lib/Padre/Wx/Main.pm:2247
+#: lib/Padre/PluginManager.pm:905 lib/Padre/Wx/Main.pm:2160
+#: lib/Padre/Wx/Main.pm:2215 lib/Padre/Wx/Main.pm:2267
 msgid "No document open"
 msgstr "Herhangi bir belge açık değil"
 
 #: lib/Padre/PluginManager.pm:909 lib/Padre/Util/FileBrowser.pm:47
 #: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
-#: lib/Padre/Wx/Main.pm:5536
 msgid "No filename"
 msgstr "Dosya adı yok"
 
@@ -392,7 +401,7 @@ msgstr ""
 "'%s' eklentisi yüklenemedi\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5194
+#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5205
 msgid "Open file"
 msgstr "Dosya aç"
 
@@ -412,20 +421,20 @@ msgstr ""
 "yolaçacaktır. Lütfen, ne yaptığınızın farkında değilseniz, bu dosyayı "
 "kapatın veya farklı kaydedin."
 
-#: lib/Padre/TaskManager.pm:615
+#: lib/Padre/TaskManager.pm:630
 #, perl-format
 msgid "%s worker threads are running.\n"
 msgstr "%s çalışan iş parçacığı yürütülüyor.\n"
 
-#: lib/Padre/TaskManager.pm:617
+#: lib/Padre/TaskManager.pm:632
 msgid "Currently, no background tasks are being executed.\n"
 msgstr "Şu anda hiç bir arkaplan görevi çalıştırılmıyor.\n"
 
-#: lib/Padre/TaskManager.pm:623
+#: lib/Padre/TaskManager.pm:638
 msgid "The following tasks are currently executing in the background:\n"
 msgstr "Şu anda şu görevler arkaplanda çalıştırılıyor:\n"
 
-#: lib/Padre/TaskManager.pm:629
+#: lib/Padre/TaskManager.pm:644
 #, perl-format
 msgid ""
 "- %s of type '%s':\n"
@@ -434,7 +443,7 @@ msgstr ""
 "- %s türü '%s':\n"
 "  (%s iş parçacığı içinde)\n"
 
-#: lib/Padre/TaskManager.pm:641
+#: lib/Padre/TaskManager.pm:656
 #, perl-format
 msgid ""
 "\n"
@@ -449,7 +458,7 @@ msgstr "İçeri Adımla"
 
 #: lib/Padre/Action/Debug.pm:43
 msgid ""
-"Execute the next statement, enter subroutine if needed. (Start debugging if "
+"Execute the next statement, enter subroutine if needed. (Start debugger if "
 "it is not yet running)"
 msgstr ""
 "Sıradaki ifadeyi çalıştır, eğer gerekliyse altrutine gir. (Hata ayıklamayı "
@@ -461,8 +470,8 @@ msgstr "Üstüne Adımla"
 
 #: lib/Padre/Action/Debug.pm:59
 msgid ""
-"Execute the next statement, If it is a subroutine call, stop only after it "
-"returned. (Start debugging if it is not yet running)"
+"Execute the next statement. If it is a subroutine call, stop only after it "
+"returned. (Start debugger if it is not yet running)"
 msgstr ""
 "Sıradaki ifadeyi çalıştır, eğer bir altrutin çağrısı ise, sadece geri "
 "döndüğünde durdur. (Eğer halen yürütülmüyorsa, hata ayıklamayı başlat)"
@@ -472,7 +481,7 @@ msgid "Step Out"
 msgstr "Dışarı Adımla"
 
 #: lib/Padre/Action/Debug.pm:76
-msgid "If withing a subroutine, run till return is called and then stop."
+msgid "If within a subroutine, run till return is called and then stop."
 msgstr ""
 "Eğer bir altrutin içindeyse, geri dönüş çağrılana kadar yürüt ve sonrasında "
 "dur."
@@ -677,19 +686,19 @@ msgid "Paste the clipboard to the current location"
 msgstr "Panoyu geçerli konuma yapıştır"
 
 #: lib/Padre/Action/Edit.pm:223
-msgid "&Goto"
-msgstr "Satıra &Git"
+msgid "&Go to..."
+msgstr "Satıra &Git..."
 
 #: lib/Padre/Action/Edit.pm:224
-msgid "Ask the user for a line number or a character position and jump there"
-msgstr "Kullanıcıya bir satır numarası veya karakter konumu sor ve oraya zıpla"
+msgid "Jump to a specific line number or character position"
+msgstr "Belirli bir satır numarasına veya damga konumuna zıpla"
 
 #: lib/Padre/Action/Edit.pm:234
 msgid "&Next Problem"
 msgstr "S&onraki Sorun"
 
 #: lib/Padre/Action/Edit.pm:235
-msgid "Jumpt to the code that triggered the next error"
+msgid "Jump to the code that triggered the next error"
 msgstr "Sonraki hatayı tetikleyen koda zıpla"
 
 #: lib/Padre/Action/Edit.pm:245
@@ -717,183 +726,191 @@ msgid "&Brace matching"
 msgstr "Parantez eşleme"
 
 #: lib/Padre/Action/Edit.pm:315
-msgid "Jump to the matching opening or closing brace: {, }, (, )"
-msgstr "Eşleşen açılış veya kapanış parantezine zıpla: {, }, (, )"
+msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
+msgstr "Eşleşen açılış veya kapanış parantezine zıpla: { }, ( ), [ ], < >"
+
+#: lib/Padre/Action/Edit.pm:325
+msgid "&Select to matching brace"
+msgstr "Eşleşen paranteze kadar &seç"
 
 #: lib/Padre/Action/Edit.pm:326
+msgid "Select to the matching opening or closing brace"
+msgstr "Eşleşen açılış veya kapanış parantezine kadar seç"
+
+#: lib/Padre/Action/Edit.pm:335
 msgid "&Join lines"
 msgstr "&Satırları birleştir"
 
-#: lib/Padre/Action/Edit.pm:327
+#: lib/Padre/Action/Edit.pm:336
 msgid "Join the next line to the end of the current line."
 msgstr "Sonraki satırı geçerli satırın sonuna birleştir."
 
-#: lib/Padre/Action/Edit.pm:337
-msgid "Insert Special Value"
-msgstr "Özel Değer Ekle"
+#: lib/Padre/Action/Edit.pm:346
+msgid "Special Value..."
+msgstr "Özel Değer..."
 
-#: lib/Padre/Action/Edit.pm:338
+#: lib/Padre/Action/Edit.pm:347
 msgid ""
-"Select a Date, Filename or other value and insert at the current location"
+"Select a date, filename or other value and insert at the current location"
 msgstr "Bir Tarih, Dosya Adı veya başka bir değeri seç ve geçerli konuma ekle"
 
-#: lib/Padre/Action/Edit.pm:350 lib/Padre/Wx/Dialog/Snippets.pm:39
-msgid "Snippets"
-msgstr "Ufak kodlar"
+#: lib/Padre/Action/Edit.pm:359
+msgid "Snippets..."
+msgstr "Ufak kodlar..."
 
-#: lib/Padre/Action/Edit.pm:351
+#: lib/Padre/Action/Edit.pm:360
 msgid "Select and insert a snippet at the current location"
 msgstr "Bir ufak kod seçerek gerçerli konuma ekleyin"
 
-#: lib/Padre/Action/Edit.pm:362
-msgid "Insert From File..."
-msgstr "Dosyadan Ekle..."
+#: lib/Padre/Action/Edit.pm:371
+msgid "File..."
+msgstr "Dosya..."
 
-#: lib/Padre/Action/Edit.pm:363
+#: lib/Padre/Action/Edit.pm:372
 msgid "Select a file and insert its content at the current location"
 msgstr "Bir dosya seç ve içeriğini geçerli konuma ekle"
 
-#: lib/Padre/Action/Edit.pm:374
+#: lib/Padre/Action/Edit.pm:383
 msgid "&Toggle Comment"
 msgstr "&Yorumu Aç/Kapa"
 
-#: lib/Padre/Action/Edit.pm:375
+#: lib/Padre/Action/Edit.pm:384
 msgid "Comment out or remove comment out of selected lines in the document"
 msgstr ""
 "Belgedeki seçili satırları yorum haline getirin veya yorumları koda çevirin"
 
-#: lib/Padre/Action/Edit.pm:387
+#: lib/Padre/Action/Edit.pm:396
 msgid "&Comment Selected Lines"
 msgstr "Seçilmiş Satırları Yorumla"
 
-#: lib/Padre/Action/Edit.pm:388
+#: lib/Padre/Action/Edit.pm:397
 msgid "Comment out selected lines in the document"
 msgstr "Belgedeki seçilmiş satırları yorum haline getir"
 
-#: lib/Padre/Action/Edit.pm:399
+#: lib/Padre/Action/Edit.pm:408
 msgid "&Uncomment Selected Lines"
 msgstr "Seçilmiş Satırlardan Yorumu Kaldır"
 
-#: lib/Padre/Action/Edit.pm:400
+#: lib/Padre/Action/Edit.pm:409
 msgid "Remove comment out of selected lines in the document"
 msgstr ""
 "Belgedeki seçili satırlardaki yorum haline getirilmiş kısımları koda çevir"
 
-#: lib/Padre/Action/Edit.pm:411
+#: lib/Padre/Action/Edit.pm:420
 msgid "Encode document to System Default"
 msgstr "Belgeyi Sistem Varsayılanına kodla"
 
-#: lib/Padre/Action/Edit.pm:412
+#: lib/Padre/Action/Edit.pm:421
 msgid ""
 "Change the encoding of the current document to the default of the operating "
 "system"
 msgstr "Belgenin kodlamasını işletim sisteminin varsayılanı olarak değiştir"
 
-#: lib/Padre/Action/Edit.pm:422
+#: lib/Padre/Action/Edit.pm:431
 msgid "Encode document to utf-8"
 msgstr "Belgeyi utf-8 olarak kodla"
 
-#: lib/Padre/Action/Edit.pm:423
+#: lib/Padre/Action/Edit.pm:432
 msgid "Change the encoding of the current document to utf-8"
 msgstr "Geçerli belgenin kodlamasını utf-8 olarak değiştir"
 
-#: lib/Padre/Action/Edit.pm:433 lib/Padre/Wx/Dialog/Encode.pm:63
+#: lib/Padre/Action/Edit.pm:442 lib/Padre/Wx/Dialog/Encode.pm:63
 msgid "Encode document to..."
 msgstr "Belgenin kodlaması..."
 
-#: lib/Padre/Action/Edit.pm:434
+#: lib/Padre/Action/Edit.pm:443
 msgid "Select an encoding and encode the document to that"
 msgstr "Bir kodlama seçin ve belgenin kodlamasını buna dönüştürün"
 
-#: lib/Padre/Action/Edit.pm:444
+#: lib/Padre/Action/Edit.pm:453
 msgid "EOL to Windows"
 msgstr "Windows satır sonu"
 
-#: lib/Padre/Action/Edit.pm:446
+#: lib/Padre/Action/Edit.pm:455
 msgid ""
 "Change the end of line character of the current document to those used in "
 "files on MS Windows"
 msgstr ""
-"Geçerli belgenin satır sonu karakterini MS Windows içinde kullanılan ile "
+"Geçerli belgenin satır sonu damgasını MS Windows içinde kullanılan ile "
 "değiştir"
 
-#: lib/Padre/Action/Edit.pm:455
+#: lib/Padre/Action/Edit.pm:464
 msgid "EOL to Unix"
 msgstr "Unix satır sonu"
 
-#: lib/Padre/Action/Edit.pm:457
+#: lib/Padre/Action/Edit.pm:466
 msgid ""
 "Change the end of line character of the current document to that used on "
 "Unix, Linux, Mac OSX"
 msgstr ""
-"Geçerli belgenin satır sonu karakterini Unix, Linux ve Mac OSX içinde "
+"Geçerli belgenin satır sonu damgasını Unix, Linux ve Mac OSX içinde "
 "kullanılan ile değiştir"
 
-#: lib/Padre/Action/Edit.pm:466
+#: lib/Padre/Action/Edit.pm:475
 msgid "EOL to Mac Classic"
 msgstr "Mac satır sonu"
 
-#: lib/Padre/Action/Edit.pm:467
+#: lib/Padre/Action/Edit.pm:476
 msgid ""
 "Change the end of line character of the current document to that used on Mac "
 "Classic"
 msgstr ""
-"Geçerli belgenin satır sonu karakterini Mac Classic içinde kullanılan ile "
+"Geçerli belgenin satır sonu damgasını Mac Classic içinde kullanılan ile "
 "değiştir"
 
-#: lib/Padre/Action/Edit.pm:477
+#: lib/Padre/Action/Edit.pm:486
 msgid "Tabs to Spaces..."
 msgstr "Sekmeleri Boşluğa Çevir..."
 
-#: lib/Padre/Action/Edit.pm:478
+#: lib/Padre/Action/Edit.pm:487
 msgid "Convert all tabs to spaces in the current document"
 msgstr "Geçerli belgedeki bütün sekmeleri boşluğa çevir"
 
-#: lib/Padre/Action/Edit.pm:487
+#: lib/Padre/Action/Edit.pm:496
 msgid "Spaces to Tabs..."
 msgstr "Boşlukları Sekmelere Çevir..."
 
-#: lib/Padre/Action/Edit.pm:488
+#: lib/Padre/Action/Edit.pm:497
 msgid "Convert all the spaces to tabs in the current document"
 msgstr "Geçerli belgedeki bütün boşlukları sekmeye çevir"
 
-#: lib/Padre/Action/Edit.pm:497
+#: lib/Padre/Action/Edit.pm:506
 msgid "Delete Trailing Spaces"
 msgstr "Sondaki Boşlukları Sil"
 
-#: lib/Padre/Action/Edit.pm:498
+#: lib/Padre/Action/Edit.pm:507
 msgid "Remove the spaces from the end of the selected lines"
 msgstr "Seçili satırların sonundaki boşlukları sil"
 
-#: lib/Padre/Action/Edit.pm:507
+#: lib/Padre/Action/Edit.pm:516
 msgid "Delete Leading Spaces"
 msgstr "Baştaki Boşlukları Sil"
 
-#: lib/Padre/Action/Edit.pm:508
+#: lib/Padre/Action/Edit.pm:517
 msgid "Remove the spaces from the beginning of the selected lines"
 msgstr "Seçili satırların başındaki boşlukları sil"
 
-#: lib/Padre/Action/Edit.pm:518
+#: lib/Padre/Action/Edit.pm:527
 msgid "Upper All"
 msgstr "Hepsini Büyük Harf Yap"
 
-#: lib/Padre/Action/Edit.pm:519
+#: lib/Padre/Action/Edit.pm:528
 msgid "Change the current selection to upper case"
 msgstr "Geçerli seçimi büyük harfe çevir"
 
-#: lib/Padre/Action/Edit.pm:529
+#: lib/Padre/Action/Edit.pm:538
 msgid "Lower All"
 msgstr "Hepsini Küçük Harf Yap"
 
-#: lib/Padre/Action/Edit.pm:530
+#: lib/Padre/Action/Edit.pm:539
 msgid "Change the current selection to lower case"
 msgstr "Geçerli seçimi küçük harfe çevir"
 
-#: lib/Padre/Action/Edit.pm:540
+#: lib/Padre/Action/Edit.pm:549
 msgid "Diff to Saved Version"
 msgstr "Kaydedilmiş Sürümle Karşılaştır"
 
-#: lib/Padre/Action/Edit.pm:542
+#: lib/Padre/Action/Edit.pm:551
 msgid ""
 "Compare the file in the editor to that on the disk and show the diff in the "
 "output window"
@@ -901,66 +918,68 @@ msgstr ""
 "Düzenleyici içindeki  dosyayı diskteki ile karşılaştır ve sonucu çıktı "
 "penceresinde görüntüle"
 
-#: lib/Padre/Action/Edit.pm:550
+#: lib/Padre/Action/Edit.pm:559
 msgid "Apply Diff to File"
 msgstr "Farkı Dosyaya Uygula"
 
-#: lib/Padre/Action/Edit.pm:551
+#: lib/Padre/Action/Edit.pm:560
 msgid "Apply a patch file to the current document"
 msgstr "Bir yama dosyasını geçerli belgeye uygula"
 
-#: lib/Padre/Action/Edit.pm:559
+#: lib/Padre/Action/Edit.pm:568
 msgid "Apply Diff to Project"
 msgstr "Farkı Projeye Uygula"
 
-#: lib/Padre/Action/Edit.pm:560
+#: lib/Padre/Action/Edit.pm:569
 msgid "Apply a patch file to the current project"
 msgstr "Geçerli projeye bir yama dosyası uygula"
 
-#: lib/Padre/Action/Edit.pm:571
-msgid "Filter through external tool"
-msgstr "Dış araç ile süzgeçten geçir"
+#: lib/Padre/Action/Edit.pm:580
+msgid "Filter through external tool..."
+msgstr "Dış araç ile süzgeçten geçir..."
 
-#: lib/Padre/Action/Edit.pm:572
+#: lib/Padre/Action/Edit.pm:581
 msgid ""
 "Filters the selection (or the whole document) through any external command."
 msgstr ""
 "Seçimi (veya tüm belgeyi) herhangi bir dış komut ile süzgeçten geçirir."
 
-#: lib/Padre/Action/Edit.pm:580 lib/Padre/Wx/Dialog/RegexEditor.pm:33
+#: lib/Padre/Action/Edit.pm:589 lib/Padre/Wx/Dialog/RegexEditor.pm:33
 msgid "Regex Editor"
 msgstr "Düzenli İfade Düzenleyicisi"
 
-#: lib/Padre/Action/Edit.pm:581
+#: lib/Padre/Action/Edit.pm:590
 msgid "Open the regular expression editing window"
 msgstr "Düzenli ifade düzenleyicisi penceresini aç"
 
-#: lib/Padre/Action/Edit.pm:591
-msgid "Show as hexa"
-msgstr "Onaltılık olarak görüntüle"
-
-#: lib/Padre/Action/Edit.pm:592
-msgid "Show the ASCII values of the selected text in hexa in the output window"
-msgstr ""
-"Onaltılık olarak seçilmiş metnin ASCII değerlerini çıktı penceresinde göster"
+#: lib/Padre/Action/Edit.pm:600
+msgid "Show as hexadecimal"
+msgstr "Onaltılık olarak göster"
 
 #: lib/Padre/Action/Edit.pm:601
+msgid ""
+"Show the ASCII values of the selected text in hexadecimal notation in the "
+"output window"
+msgstr ""
+"Onaltılk gösterimdeki seçili metnin ASCII değerlerini çıktı penceresinde göster"
+
+#: lib/Padre/Action/Edit.pm:610
 msgid "Show as decimal"
 msgstr "Onluk oalrak göster"
 
-#: lib/Padre/Action/Edit.pm:602
+#: lib/Padre/Action/Edit.pm:611
 msgid ""
 "Show the ASCII values of the selected text in decimal numbers in the output "
 "window"
 msgstr ""
 "Onluk olarak seçilmiş metnin ASCII değerlerini çıktı penceresinde göster"
 
-#: lib/Padre/Action/Edit.pm:611 lib/Padre/Wx/Dialog/PluginManager.pm:131
+#: lib/Padre/Action/Edit.pm:620 lib/Padre/Wx/Dialog/PluginManager.pm:131
 #: lib/Padre/Wx/Dialog/Preferences.pm:801
 msgid "Preferences"
 msgstr "Seçenekler"
 
-#: lib/Padre/Action/Edit.pm:612
+#: lib/Padre/Action/Edit.pm:621
 msgid "Edit the user preferences"
 msgstr "Kullanıcı seçeneklerini düzenle"
 
@@ -1005,12 +1024,12 @@ msgid "Open a document with a skeleton Perl 6 script"
 msgstr "Bir belgeyi bir Perl 6 betik iskeleti ile aç"
 
 #: lib/Padre/Action/File.pm:80
-msgid "Perl Distribution (Module::Starter)"
-msgstr "Perl Dağıtımı (Module::Starter)"
+msgid "Perl Distribution..."
+msgstr "Perl Dağıtımı..."
 
 #: lib/Padre/Action/File.pm:81
-msgid "Setup a skeleton Perl distribution using Module::Starter"
-msgstr "Module::Starter kullanarak bir iskelet Perl dağıtımı hazırla"
+msgid "Setup a skeleton Perl module distribution"
+msgstr "Bir iskelet Perl dağıtımı hazırla"
 
 #: lib/Padre/Action/File.pm:95
 msgid "&Open"
@@ -1061,7 +1080,8 @@ msgid "Browse the directory of the installed examples to open one file"
 msgstr "Bir dosya açmak için yüklenmiş örneklerin bulunduğu dizine gözatın"
 
 #: lib/Padre/Action/File.pm:166 lib/Padre/Wx/About.pm:86
-#: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/Dialog/HelpSearch.pm:179
+#: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/Dialog/DocStats.pm:58
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239
 msgid "&Close"
 msgstr "&Kapat"
@@ -1148,8 +1168,8 @@ msgid "Save current document"
 msgstr "Geçerli dosyayı kaydet"
 
 #: lib/Padre/Action/File.pm:298
-msgid "Save &As"
-msgstr "&Farklı Kaydet"
+msgid "Save &As..."
+msgstr "&Farklı Kaydet..."
 
 #: lib/Padre/Action/File.pm:299
 msgid "Allow the selection of another name to save the current document"
@@ -1174,7 +1194,7 @@ msgstr "Hepsini Kaydet"
 msgid "Save all the files"
 msgstr "Tüm dosyaları kaydet"
 
-#: lib/Padre/Action/File.pm:334 lib/Padre/Wx/Main.pm:3506
+#: lib/Padre/Action/File.pm:334 lib/Padre/Wx/Main.pm:3510
 msgid "Open Selection"
 msgstr "Seçimi Aç"
 
@@ -1187,8 +1207,8 @@ msgstr ""
 "açmasına izin ver"
 
 #: lib/Padre/Action/File.pm:344
-msgid "Open Session"
-msgstr "Oturum Aç"
+msgid "Open Session..."
+msgstr "Oturum Aç..."
 
 #: lib/Padre/Action/File.pm:346
 msgid ""
@@ -1199,16 +1219,16 @@ msgstr ""
 "listelenenlerin hepsini açın"
 
 #: lib/Padre/Action/File.pm:356
-msgid "Save Session"
-msgstr "Oturumu Kaydet"
+msgid "Save Session..."
+msgstr "Oturumu Kaydet..."
 
 #: lib/Padre/Action/File.pm:357
 msgid "Ask for a session name and save the list of files currently opened"
 msgstr "Bir oturum adı sor ve şu an açık olan dosyaların listesini kaydet"
 
 #: lib/Padre/Action/File.pm:371
-msgid "&Print"
-msgstr "&Yazdır"
+msgid "&Print..."
+msgstr "&Yazdır..."
 
 #: lib/Padre/Action/File.pm:372
 msgid "Print the current document"
@@ -1230,7 +1250,7 @@ msgstr "Son Kullanılan Dosyalar Listesini Sil"
 msgid "Remove the entries from the recent files list"
 msgstr "Son kullanılan dosyalar listesindeki girdileri sil"
 
-#: lib/Padre/Action/File.pm:410
+#: lib/Padre/Action/File.pm:410 lib/Padre/Wx/Dialog/DocStats.pm:31
 msgid "Document Statistics"
 msgstr "Belge İstatistikleri"
 
@@ -1247,7 +1267,8 @@ msgid "Ask if unsaved files should be saved and then exit Padre"
 msgstr ""
 "Kaydedilmemiş dosyaların kayıt edilip edilmeyeceğini sor ve Padre' den çık"
 
-#: lib/Padre/Action/Help.pm:37 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+#: lib/Padre/Action/Help.pm:37 lib/Padre/Wx/DocBrowser.pm:83
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
 msgid "Help"
 msgstr "Yardım"
 
@@ -1258,6 +1279,10 @@ msgstr "Padre Yardımını Göster"
 #: lib/Padre/Action/Help.pm:45
 msgid "Search Help"
 msgstr "Arama Yardımı"
+
+#: lib/Padre/Action/Help.pm:46
+msgid "Search the Perl help pages (perldoc)"
+msgstr "Perl yardım dosyalarında ara (perldoc)"
 
 #: lib/Padre/Action/Help.pm:63
 msgid "Context Help"
@@ -1364,6 +1389,22 @@ msgid "Dumps the complete Padre object to STDOUT for testing/debugging."
 msgstr ""
 "Padre nesnesinin tamamını deneme/hat ayıklama için STDOUT kanalına yazdırır"
 
+#: lib/Padre/Action/Internal.pm:56
+msgid "Delay the action queue for 10 seconds"
+msgstr "Eylem kuyruğunu 10 saniyeliğine geciktir"
+
+#: lib/Padre/Action/Internal.pm:57
+msgid "Stops processing of other action queue items for 10 seconds"
+msgstr "Diğer eylem kuyruğu elemanlarını 10 saniyeliğine durdurur"
+
+#: lib/Padre/Action/Internal.pm:64
+msgid "Delay the action queue for 30 seconds"
+msgstr "Eylem kuyruğunu 30 saniyeliğine geciktir"
+
+#: lib/Padre/Action/Internal.pm:65
+msgid "Stops processing of other action queue items for 30 seconds"
+msgstr "Diğer eylem kuyruğu elemanlarını 30 saniyeliğine durdurur"
+
 #: lib/Padre/Action/Perl.pm:45
 msgid "Check for common (beginner) errors"
 msgstr "(Yeni başlayanların yaptığı) ortak hataları denetle"
@@ -1382,7 +1423,7 @@ msgid ""
 "part."
 msgstr "Kaynak kodu, eşleşmeyen (açılış/kapanış) parantezleri için tarar"
 
-#: lib/Padre/Action/Perl.pm:69 lib/Padre/Document/Perl.pm:1493
+#: lib/Padre/Action/Perl.pm:69 lib/Padre/Document/Perl.pm:1498
 msgid "Find Variable Declaration"
 msgstr "Değişken Bildirimini Bul"
 
@@ -1393,7 +1434,7 @@ msgid ""
 msgstr ""
 "Seçili değişkenin \"my\" ile bildirildiği konumu bul ve odağı oraya yerleştir"
 
-#: lib/Padre/Action/Perl.pm:81 lib/Padre/Document/Perl.pm:1533
+#: lib/Padre/Action/Perl.pm:81 lib/Padre/Document/Perl.pm:1538
 msgid "Find Method Declaration"
 msgstr "Yöntem Bildirimini Bul"
 
@@ -1439,141 +1480,11 @@ msgstr "Otomatik parantez tamamlama"
 
 #: lib/Padre/Action/Perl.pm:147
 msgid "When typing { insert a closing } automatically"
-msgstr "{ yazıldığında } kapanış karakterini otomatik yerleştir"
+msgstr "{ yazıldığında } kapanış damgasını otomatik yerleştir"
 
-#: lib/Padre/Action/Plugins.pm:37 lib/Padre/Wx/Dialog/KeyBindings.pm:46
-msgid "Key Bindings"
-msgstr "Tuş Atamaları"
-
-#: lib/Padre/Action/Plugins.pm:38
-msgid "Show the key bindings dialog to configure Padre shortcuts"
-msgstr "Padre kısayollarını ayarlamak için tuş atamaları iletişimini göster"
-
-#: lib/Padre/Action/Plugins.pm:47 lib/Padre/Wx/Dialog/PluginManager.pm:35
-msgid "Plug-in Manager"
-msgstr "Eklenti Yöneticisi"
-
-#: lib/Padre/Action/Plugins.pm:48
-msgid "Show the Padre plug-in manager to enable or disable plug-ins"
-msgstr "Eklentileri açmak veya kapamak için Padre eklenti yöneticisini göster"
-
-#: lib/Padre/Action/Plugins.pm:63
-msgid "Plug-in List (CPAN)"
-msgstr "Eklenti Listesi (CPAN)"
-
-#: lib/Padre/Action/Plugins.pm:64
-msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
-msgstr ""
-"Padre::Plugin paketleri için CPAN arama sonuçlarını gösteren bir tarayıcı aç"
-
-#: lib/Padre/Action/Plugins.pm:72
-msgid "Edit My Plug-in"
-msgstr "My Eklentisini Düzenle"
-
-#: lib/Padre/Action/Plugins.pm:73
-msgid ""
-"My Plug-in is a plug-in where developers could extend their Padre "
-"installation"
-msgstr ""
-"My Eklentisi, geliştiricilerin, kendi Padre kurulumlarını "
-"özelleştirebilecekleri bir eklentidir"
-
-#: lib/Padre/Action/Plugins.pm:79
-msgid "Could not find the Padre::Plugin::My plug-in"
-msgstr "Padre::Plugin::My eklentisi bulunamıyor"
-
-#: lib/Padre/Action/Plugins.pm:89
-msgid "Reload My Plug-in"
-msgstr "My Eklentisini Yeniden Yükle"
-
-#: lib/Padre/Action/Plugins.pm:90
-msgid "This function reloads the My plug-in without restarting Padre"
-msgstr "Bu işlev Padre' yi yeniden başlatmadan My eklentisini yeniden yükler"
-
-#: lib/Padre/Action/Plugins.pm:98 lib/Padre/Action/Plugins.pm:102
-#: lib/Padre/Action/Plugins.pm:103
-msgid "Reset My plug-in"
-msgstr "My eklentisini sıfırla"
-
-#: lib/Padre/Action/Plugins.pm:99
-msgid "Reset the My plug-in to the default"
-msgstr "My eklentisini varsayılana sıfırla"
-
-#: lib/Padre/Action/Plugins.pm:118
-msgid "Reload All Plug-ins"
-msgstr "Tüm Eklentileri Yeniden Yükle"
-
-#: lib/Padre/Action/Plugins.pm:119
-msgid "Reload all plug-ins from disk"
-msgstr "Tüm eklentileri diskten tekrar yükle"
-
-#: lib/Padre/Action/Plugins.pm:127
-msgid "(Re)load Current Plug-in"
-msgstr "Geçerli Eklentiyi (Tekrar) Yükle"
-
-#: lib/Padre/Action/Plugins.pm:128
-msgid "Reloads (or initially loads) the current plug-in"
-msgstr "Geçerli eklentiyi yeniden (veya ilk defa) yükler"
-
-#: lib/Padre/Action/Plugins.pm:146
-msgid "Install CPAN Module"
-msgstr "CPAN Modülü Kur"
-
-#: lib/Padre/Action/Plugins.pm:147
-msgid "Install a Perl module from CPAN"
-msgstr "CPAN' dan bir Perl modülü kur"
-
-#: lib/Padre/Action/Plugins.pm:159
-msgid "Install Local Distribution"
-msgstr "Yerel Dağıtım Kur"
-
-#: lib/Padre/Action/Plugins.pm:160
-msgid "Using CPAN.pm to install a CPAN like package opened locally"
-msgstr "Yerel olarak açılmış CPAN türü bir paketi kurmak için CPAN.pm kullanır"
-
-#: lib/Padre/Action/Plugins.pm:168
-msgid "Install Remote Distribution"
-msgstr "Uzak Dağıtım Kur"
-
-#: lib/Padre/Action/Plugins.pm:169
-msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
-msgstr "Bir tar.gz dosyası indirmek ve CPAN.pm ile kurmak için pip kullanılır"
-
-#: lib/Padre/Action/Plugins.pm:177
-msgid "Open CPAN Config File"
-msgstr "CPAN Ayar Dosyasını Aç"
-
-#: lib/Padre/Action/Plugins.pm:178
-msgid "Open CPAN::MyConfig.pm for manual editing by experts"
-msgstr "Uzmanların düzenlemesi için CPAN::MyConfig.pm dosyasını aç"
-
-#: lib/Padre/Action/Plugins.pm:197
-msgid "Select distribution to install"
-msgstr "Kurulacak dağıtımı seç"
-
-#: lib/Padre/Action/Plugins.pm:210 lib/Padre/Action/Plugins.pm:235
-msgid "Did not provide a distribution"
-msgstr "Bir dağıtım sağlamadı"
-
-#: lib/Padre/Action/Plugins.pm:225
-msgid ""
-"Enter URL to install\n"
-"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-msgstr ""
-"Kurulum için bir URL girin\n"
-"örnek: http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
-
-#: lib/Padre/Action/Plugins.pm:252
-msgid "pip is unexpectedly not installed"
-msgstr "pip henüz sisteminize kurulmamış"
-
-#: lib/Padre/Action/Plugins.pm:298
-msgid "Failed to find your CPAN configuration"
-msgstr "CPAN ayarlarınız bulunamadı"
-
-#: lib/Padre/Action/Refactor.pm:49 lib/Padre/Document/Perl.pm:1505
-msgid "Lexically Rename Variable"
-msgstr "Değişkeni Sözcüksel Olarak Yeniden Adlandır"
+#: lib/Padre/Action/Refactor.pm:49
+msgid "Rename Variable..."
+msgstr "Değişkeni Yeniden Adlandır..."
 
 #: lib/Padre/Action/Refactor.pm:50
 msgid ""
@@ -1583,14 +1494,17 @@ msgstr ""
 "Değiştirilecek değişken adı için sorgu penceresi aç ve bu değişkenin tüm "
 "kayıtlarını değiştir"
 
-#: lib/Padre/Action/Refactor.pm:57 lib/Padre/Action/Refactor.pm:58
-#: lib/Padre/Document/Perl.pm:1517 lib/Padre/Document/Perl.pm:1518
-msgid "Replacement"
-msgstr "Değiştir"
+#: lib/Padre/Action/Refactor.pm:57
+msgid "New name"
+msgstr "Yeni ad"
+
+#: lib/Padre/Action/Refactor.pm:58
+msgid "Rename variable"
+msgstr "Değişkeni yeniden adlandır"
 
 #: lib/Padre/Action/Refactor.pm:72
-msgid "Extract Subroutine"
-msgstr "Altrutini Çıkart"
+msgid "Extract Subroutine..."
+msgstr "Altrutini Çıkart..."
 
 #: lib/Padre/Action/Refactor.pm:74
 msgid ""
@@ -1601,64 +1515,68 @@ msgstr ""
 "konuma bu yeni altrutine ait bir çağrı eklenecektir."
 
 #: lib/Padre/Action/Refactor.pm:86
-msgid "Please enter a name for the new subroutine"
-msgstr "Lütfen yeni altrutin için bir ad girin."
+msgid "Name for the new subroutine"
+msgstr "Yeni altrutinin adı"
 
 #: lib/Padre/Action/Refactor.pm:87
-msgid "New Subroutine Name"
-msgstr "Yeni Altrutin Adı"
+msgid "Extract Subroutine"
+msgstr "Altrutini Çıkart"
 
-#: lib/Padre/Action/Refactor.pm:102 lib/Padre/Document/Perl.pm:1552
-msgid "Introduce Temporary Variable"
-msgstr "Geçici Değişken Tanıt"
+#: lib/Padre/Action/Refactor.pm:102
+msgid "Introduce Temporary Variable..."
+msgstr "Geçici Değişken Tanıt..."
 
 #: lib/Padre/Action/Refactor.pm:103
 msgid "Assign the selected expression to a newly declared variable"
 msgstr "Seçili ifadeyi yeni bildirilmiş değişkene ata"
 
-#: lib/Padre/Action/Refactor.pm:110 lib/Padre/Action/Refactor.pm:111
-#: lib/Padre/Document/Perl.pm:1565 lib/Padre/Document/Perl.pm:1566
+#: lib/Padre/Action/Refactor.pm:110 lib/Padre/Document/Perl.pm:1570
+#: lib/Padre/Document/Perl.pm:1571
 msgid "Variable Name"
 msgstr "Değişken Adı"
 
-#: lib/Padre/Action/Run.pm:39
+#: lib/Padre/Action/Refactor.pm:111 lib/Padre/Document/Perl.pm:1557
+msgid "Introduce Temporary Variable"
+msgstr "Geçici Değişken Tanıt"
+
+#: lib/Padre/Action/Run.pm:43
 msgid "Run Script"
 msgstr "Betiği Yürüt"
 
-#: lib/Padre/Action/Run.pm:40
+#: lib/Padre/Action/Run.pm:44
 msgid "Runs the current document and shows its output in the output panel."
 msgstr "Geçerli belgeyi yürütür ve çıktısını çıktı panelinde gösterir."
 
-#: lib/Padre/Action/Run.pm:55
+#: lib/Padre/Action/Run.pm:59
 msgid "Run Script (debug info)"
 msgstr "Betiği Yürüt (hata ayıklama bilgisi)"
 
-#: lib/Padre/Action/Run.pm:56
+#: lib/Padre/Action/Run.pm:60
 msgid "Run the current document but include debug info in the output."
 msgstr ""
 "Geçerli belgeyi yürüt fakat çıktı içinde hata ayıklama bilgisini de göster"
 
-#: lib/Padre/Action/Run.pm:65
+#: lib/Padre/Action/Run.pm:69
 msgid "Run Command"
 msgstr "Komut Çalıştır"
 
-#: lib/Padre/Action/Run.pm:66
+#: lib/Padre/Action/Run.pm:70
 msgid "Runs a shell command and shows the output."
 msgstr "Bir kabuk programını çalıştırır ve çıktısını gösterir."
 
-#: lib/Padre/Action/Run.pm:76
+#: lib/Padre/Action/Run.pm:80
 msgid "Run Build and Tests"
 msgstr "İnşa etmeye başla ve testleri yürüt"
 
-#: lib/Padre/Action/Run.pm:77
+#: lib/Padre/Action/Run.pm:81
 msgid "Builds the current project, then run all tests."
 msgstr "Geçerli projeyi inşa eder ve bütün testleri yürütür."
 
-#: lib/Padre/Action/Run.pm:88
+#: lib/Padre/Action/Run.pm:92
 msgid "Run Tests"
 msgstr "Testleri Yürüt"
 
-#: lib/Padre/Action/Run.pm:90
+#: lib/Padre/Action/Run.pm:94
 msgid ""
 "Run all tests for the current project or document and show the results in "
 "the output panel."
@@ -1666,25 +1584,25 @@ msgstr ""
 "Geçerli projeye veya dosyaya ait bütün testeri yürüt ve sonuçları çıktı "
 "panelinde göster."
 
-#: lib/Padre/Action/Run.pm:109
+#: lib/Padre/Action/Run.pm:113
 msgid "Run This Test"
 msgstr "Bu Testi Yürüt"
 
-#: lib/Padre/Action/Run.pm:110
+#: lib/Padre/Action/Run.pm:114
 msgid "Run the current test if the current document is a test. (prove -bv)"
 msgstr "Eğer geçerli belge bir test ise, geçerli testi yürüt. (prove -bv)"
 
-#: lib/Padre/Action/Run.pm:122
+#: lib/Padre/Action/Run.pm:126
 msgid "Stop execution"
 msgstr "Çalışmayı Durdur"
 
-#: lib/Padre/Action/Run.pm:123
+#: lib/Padre/Action/Run.pm:127
 msgid "Stop a running task."
 msgstr "Çalışan bir görevi durdur."
 
-#: lib/Padre/Action/Search.pm:36 lib/Padre/Wx/Dialog/Replace.pm:151
-msgid "&Find"
-msgstr "&Bul"
+#: lib/Padre/Action/Search.pm:36
+msgid "&Find..."
+msgstr "&Bul..."
 
 #: lib/Padre/Action/Search.pm:37
 msgid "Find text or regular expressions using a traditional dialog"
@@ -1737,9 +1655,9 @@ msgid ""
 msgstr ""
 "Önceki eşleşen metni düzenleyicinin altındaki araççubuğu-gibi diyalog ile bul"
 
-#: lib/Padre/Action/Search.pm:142 lib/Padre/Wx/Dialog/Replace.pm:241
-msgid "Replace"
-msgstr "Değiştir"
+#: lib/Padre/Action/Search.pm:142
+msgid "Replace..."
+msgstr "Değiştir..."
 
 #: lib/Padre/Action/Search.pm:143
 msgid "Find a text and replace it"
@@ -1753,63 +1671,193 @@ msgstr "&Dosyalarda Bul"
 msgid "Search for a text in all files below a given directory"
 msgstr "Bir metni, belirtilen dizinin altındaki bütün dizinlerde ara"
 
-#: lib/Padre/Action/Search.pm:165 lib/Padre/Wx/Dialog/OpenResource.pm:90
-msgid "Open Resource"
-msgstr "Kaynak Aç"
+#: lib/Padre/Action/Search.pm:165
+msgid "Open Resource..."
+msgstr "Kaynak Aç..."
 
 #: lib/Padre/Action/Search.pm:166
 msgid "Type in a filter to select a file"
 msgstr "Bir dosya seçmek için süzgeç girin"
 
-#: lib/Padre/Action/Search.pm:179 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:38
-msgid "Quick Menu Access"
-msgstr "Hızlı Menü Erişimi"
+#: lib/Padre/Action/Search.pm:179
+msgid "Quick Menu Access..."
+msgstr "Hızlı Menü Erişimi..."
 
 #: lib/Padre/Action/Search.pm:180
 msgid "Quick access to all menu functions"
 msgstr "Bütün menü işlevlerine hızlı erişim"
 
-#: lib/Padre/Action/View.pm:34
+#: lib/Padre/Action/Tools.pm:38 lib/Padre/Wx/Dialog/KeyBindings.pm:46
+msgid "Key Bindings"
+msgstr "Tuş Atamaları"
+
+#: lib/Padre/Action/Tools.pm:39
+msgid "Show the key bindings dialog to configure Padre shortcuts"
+msgstr "Padre kısayollarını ayarlamak için tuş atamaları iletişimini göster"
+
+#: lib/Padre/Action/Tools.pm:48 lib/Padre/Wx/Dialog/PluginManager.pm:35
+msgid "Plug-in Manager"
+msgstr "Eklenti Yöneticisi"
+
+#: lib/Padre/Action/Tools.pm:49
+msgid "Show the Padre plug-in manager to enable or disable plug-ins"
+msgstr "Eklentileri açmak veya kapamak için Padre eklenti yöneticisini göster"
+
+#: lib/Padre/Action/Tools.pm:64
+msgid "Plug-in List (CPAN)"
+msgstr "Eklenti Listesi (CPAN)"
+
+#: lib/Padre/Action/Tools.pm:65
+msgid "Open browser to a CPAN search showing the Padre::Plugin packages"
+msgstr ""
+"Padre::Plugin paketleri için CPAN arama sonuçlarını gösteren bir tarayıcı aç"
+
+#: lib/Padre/Action/Tools.pm:73
+msgid "Edit My Plug-in"
+msgstr "My Eklentisini Düzenle"
+
+#: lib/Padre/Action/Tools.pm:74
+msgid ""
+"My Plug-in is a plug-in where developers could extend their Padre "
+"installation"
+msgstr ""
+"My Eklentisi, geliştiricilerin, kendi Padre kurulumlarını "
+"özelleştirebilecekleri bir eklentidir"
+
+#: lib/Padre/Action/Tools.pm:80
+msgid "Could not find the Padre::Plugin::My plug-in"
+msgstr "Padre::Plugin::My eklentisi bulunamıyor"
+
+#: lib/Padre/Action/Tools.pm:90
+msgid "Reload My Plug-in"
+msgstr "My Eklentisini Yeniden Yükle"
+
+#: lib/Padre/Action/Tools.pm:91
+msgid "This function reloads the My plug-in without restarting Padre"
+msgstr "Bu işlev Padre' yi yeniden başlatmadan My eklentisini yeniden yükler"
+
+#: lib/Padre/Action/Tools.pm:99 lib/Padre/Action/Tools.pm:103
+#: lib/Padre/Action/Tools.pm:104
+msgid "Reset My plug-in"
+msgstr "My eklentisini sıfırla"
+
+#: lib/Padre/Action/Tools.pm:100
+msgid "Reset the My plug-in to the default"
+msgstr "My eklentisini varsayılana sıfırla"
+
+#: lib/Padre/Action/Tools.pm:119
+msgid "Reload All Plug-ins"
+msgstr "Tüm Eklentileri Yeniden Yükle"
+
+#: lib/Padre/Action/Tools.pm:120
+msgid "Reload all plug-ins from disk"
+msgstr "Tüm eklentileri diskten tekrar yükle"
+
+#: lib/Padre/Action/Tools.pm:128
+msgid "(Re)load Current Plug-in"
+msgstr "Geçerli Eklentiyi (Tekrar) Yükle"
+
+#: lib/Padre/Action/Tools.pm:129
+msgid "Reloads (or initially loads) the current plug-in"
+msgstr "Geçerli eklentiyi yeniden (veya ilk defa) yükler"
+
+#: lib/Padre/Action/Tools.pm:147
+msgid "Install CPAN Module"
+msgstr "CPAN Modülü Kur"
+
+#: lib/Padre/Action/Tools.pm:148
+msgid "Install a Perl module from CPAN"
+msgstr "CPAN' dan bir Perl modülü kur"
+
+#: lib/Padre/Action/Tools.pm:160
+msgid "Install Local Distribution"
+msgstr "Yerel Dağıtım Kur"
+
+#: lib/Padre/Action/Tools.pm:161
+msgid "Using CPAN.pm to install a CPAN like package opened locally"
+msgstr "Yerel olarak açılmış CPAN türü bir paketi kurmak için CPAN.pm kullanır"
+
+#: lib/Padre/Action/Tools.pm:169
+msgid "Install Remote Distribution"
+msgstr "Uzak Dağıtım Kur"
+
+#: lib/Padre/Action/Tools.pm:170
+msgid "Using pip to download a tar.gz file and install it using CPAN.pm"
+msgstr "Bir tar.gz dosyası indirmek ve CPAN.pm ile kurmak için pip kullanılır"
+
+#: lib/Padre/Action/Tools.pm:178
+msgid "Open CPAN Config File"
+msgstr "CPAN Ayar Dosyasını Aç"
+
+#: lib/Padre/Action/Tools.pm:179
+msgid "Open CPAN::MyConfig.pm for manual editing by experts"
+msgstr "Uzmanların düzenlemesi için CPAN::MyConfig.pm dosyasını aç"
+
+#: lib/Padre/Action/Tools.pm:202
+msgid "Select distribution to install"
+msgstr "Kurulacak dağıtımı seç"
+
+#: lib/Padre/Action/Tools.pm:215 lib/Padre/Action/Tools.pm:240
+msgid "Did not provide a distribution"
+msgstr "Bir dağıtım sağlamadı"
+
+#: lib/Padre/Action/Tools.pm:230
+msgid ""
+"Enter URL to install\n"
+"e.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+msgstr ""
+"Kurulum için bir URL girin\n"
+"örnek: http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"
+
+#: lib/Padre/Action/Tools.pm:274
+msgid "cpanm is unexpectedly not installed"
+msgstr "cpanm henüz sisteminize kurulmamış"
+
+#: lib/Padre/Action/Tools.pm:317
+msgid "Failed to find your CPAN configuration"
+msgstr "CPAN ayarlarınız bulunamadı"
+
+#: lib/Padre/Action/View.pm:29
 msgid "Lock User Interface"
 msgstr "Kullanıcı Arayüzünü Kilitle"
 
-#: lib/Padre/Action/View.pm:35
-msgid "Allow the user to move around some of the windows"
-msgstr "KUllanıcıların bazı pencereleri yerinden oynatmasına izin ver"
+#: lib/Padre/Action/View.pm:30
+msgid "If activated, do not allow moving around some of the windows"
+msgstr "Eğer etkileştirildiyse, bazı pencerelerin yerinden oynatılmasını engelle"
 
-#: lib/Padre/Action/View.pm:45
+#: lib/Padre/Action/View.pm:40
 msgid "Show Output"
 msgstr "Çıktıyı Göster"
 
-#: lib/Padre/Action/View.pm:47
+#: lib/Padre/Action/View.pm:42
 msgid ""
 "Show the window displaying the standard output and standard error of the "
 "running scripts"
 msgstr ""
 "Yürütülen betiklere ait standart çıktı ve standart hata pencerelerini göster"
 
-#: lib/Padre/Action/View.pm:56
+#: lib/Padre/Action/View.pm:51
 msgid "Show Functions"
 msgstr "İşlevleri göster"
 
-#: lib/Padre/Action/View.pm:57
+#: lib/Padre/Action/View.pm:52
 msgid "Show a window listing all the functions in the current document"
 msgstr "Geçerli belgedeki bütün işlevleri gösteren bir pencere göster"
 
-#: lib/Padre/Action/View.pm:71
+#: lib/Padre/Action/View.pm:66
 msgid "Show To-do List"
 msgstr "Yapılacaklar Listesini Göster"
 
-#: lib/Padre/Action/View.pm:72
+#: lib/Padre/Action/View.pm:67
 msgid "Show a window listing all todo items in the current document"
 msgstr ""
 "Geçerli belgedeki bütün yapılacak unsurları gösteren bir pencere göster"
 
-#: lib/Padre/Action/View.pm:87
+#: lib/Padre/Action/View.pm:82
 msgid "Show Outline"
 msgstr "Özeti Göster"
 
-#: lib/Padre/Action/View.pm:88
+#: lib/Padre/Action/View.pm:83
 msgid ""
 "Show a window listing all the parts of the current file (functions, pragmas, "
 "modules)"
@@ -1817,63 +1865,63 @@ msgstr ""
 "Geçerli dosyanın tüm bölümlerini (işlevler, pragmalar, modüller) listeleyen "
 "bir pencere göster"
 
-#: lib/Padre/Action/View.pm:97
+#: lib/Padre/Action/View.pm:92
 msgid "Show Directory Tree"
 msgstr "Dizin Ağacını Göster"
 
-#: lib/Padre/Action/View.pm:98
+#: lib/Padre/Action/View.pm:93
 msgid "Show a window with a directory browser of the current project"
 msgstr "Geçerli projenin dizin gözatıcısını içeren bir pencere göster"
 
-#: lib/Padre/Action/View.pm:107
+#: lib/Padre/Action/View.pm:102
 msgid "Show Syntax Check"
 msgstr "Sözdizimi Denetimini Göster"
 
-#: lib/Padre/Action/View.pm:108
+#: lib/Padre/Action/View.pm:103
 msgid ""
 "Turn on syntax checking of the current document and show output in a window"
 msgstr ""
 "Geçerli belgenin sözdizim denetimini aç ve çıktıyı bir pencerede göster"
 
-#: lib/Padre/Action/View.pm:117
+#: lib/Padre/Action/View.pm:112
 msgid "Show Error List"
 msgstr "Hata Listesini Göster"
 
-#: lib/Padre/Action/View.pm:118
+#: lib/Padre/Action/View.pm:113
 msgid "Show the list of errors received during execution of a script"
 msgstr "Bir betiğin çalıştırılması esnasında alınan hataların listesini göster"
 
-#: lib/Padre/Action/View.pm:127
+#: lib/Padre/Action/View.pm:122
 msgid "Show Status Bar"
 msgstr "Durum Çubuğunu Göster"
 
-#: lib/Padre/Action/View.pm:128
+#: lib/Padre/Action/View.pm:123
 msgid "Show/hide the status bar at the bottom of the screen"
 msgstr "Ekranın altındaki durum çubuğubu göster/gizle"
 
-#: lib/Padre/Action/View.pm:137
+#: lib/Padre/Action/View.pm:132
 msgid "Show Toolbar"
 msgstr "Araç Çubuğunu Göster"
 
-#: lib/Padre/Action/View.pm:138
+#: lib/Padre/Action/View.pm:133
 msgid "Show/hide the toolbar at the top of the editor"
 msgstr "Ekranın altındaki araç çubuğubu göster/gizle"
 
-#: lib/Padre/Action/View.pm:148
+#: lib/Padre/Action/View.pm:143
 msgid "Show Line Numbers"
 msgstr "Satır Numaralarını Göster"
 
-#: lib/Padre/Action/View.pm:149
+#: lib/Padre/Action/View.pm:144
 msgid ""
 "Show/hide the line numbers of all the documents on the left side of the "
 "window"
 msgstr "Pencerenin solundaki bütün belgelerin satır numaralarını göster/gizle"
 
-#: lib/Padre/Action/View.pm:158
+#: lib/Padre/Action/View.pm:153
 msgid "Show Code Folding"
 msgstr "Kod Kıvrımlanmasını Göster"
 
-#: lib/Padre/Action/View.pm:159
+#: lib/Padre/Action/View.pm:154
 msgid ""
 "Show/hide a vertical line on the left hand side of the window to allow "
 "folding rows"
@@ -1881,130 +1929,130 @@ msgstr ""
 "Satırları kıvrımlamak için pencerenin sol tarafındaki dikey çizgiyi göster/"
 "gizle"
 
-#: lib/Padre/Action/View.pm:168
+#: lib/Padre/Action/View.pm:163
 msgid "Fold all"
 msgstr "Hepsini Kıvrımla"
 
-#: lib/Padre/Action/View.pm:169
+#: lib/Padre/Action/View.pm:164
 msgid "Fold all the blocks that can be folded (need folding to be enabled)"
 msgstr "Kıvrımlanabilen tüm öbekleri kıvrımla (kıvrımlanma açık olmalıdır)"
 
-#: lib/Padre/Action/View.pm:178
+#: lib/Padre/Action/View.pm:173
 msgid "Unfold all"
 msgstr "Tüm kıvrımlanmayı kaldır"
 
-#: lib/Padre/Action/View.pm:179
+#: lib/Padre/Action/View.pm:174
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 "Kıvrımlanabilen tüm öbeklerin kıvrımlanmasını kaldır (kıvrımlanma açık "
 "olmalıdır)"
 
-#: lib/Padre/Action/View.pm:188
+#: lib/Padre/Action/View.pm:183
 msgid "Show Call Tips"
 msgstr "Çağrı Yardımlarını Göster"
 
-#: lib/Padre/Action/View.pm:189
+#: lib/Padre/Action/View.pm:184
 msgid "When typing in functions allow showing short examples of the function"
 msgstr ""
 "Bir işlev yazarken, ilgili işleve ait kısa örnekler göstermeye izin ver"
 
-#: lib/Padre/Action/View.pm:202
+#: lib/Padre/Action/View.pm:197
 msgid "Show Current Line"
 msgstr "Geçerli Satırı Göster"
 
-#: lib/Padre/Action/View.pm:203
+#: lib/Padre/Action/View.pm:198
 msgid "Highlight the line where the cursor is"
 msgstr "İşlecin olduğu satırı aydınlat"
 
-#: lib/Padre/Action/View.pm:212
+#: lib/Padre/Action/View.pm:207
 msgid "Show Right Margin"
 msgstr "Sağ Kenarlığı Göster"
 
-#: lib/Padre/Action/View.pm:213
+#: lib/Padre/Action/View.pm:208
 msgid "Show a vertical line indicating the right margin"
 msgstr "Sağ kenarlığı belirten dikey bir çizgi göster"
 
-#: lib/Padre/Action/View.pm:223
+#: lib/Padre/Action/View.pm:218
 msgid "Show Newlines"
 msgstr "Yeni Satırları Göster"
 
-#: lib/Padre/Action/View.pm:224
+#: lib/Padre/Action/View.pm:219
 msgid "Show/hide the newlines with special character"
-msgstr "Yeni satırları belirtmek için özel bir karakteri göster/gizle"
+msgstr "Yeni satırları belirtmek için özel bir damgayı göster/gizle"
 
-#: lib/Padre/Action/View.pm:233
+#: lib/Padre/Action/View.pm:228
 msgid "Show Whitespaces"
 msgstr "Beyaz Boşlukları Göster"
 
-#: lib/Padre/Action/View.pm:234
+#: lib/Padre/Action/View.pm:229
 msgid "Show/hide the tabs and the spaces with special characters"
-msgstr "Sekme ve beyaz boşlukları özel karakterle göster/gizle"
+msgstr "Sekme ve beyaz boşlukları özel damgayla göster/gizle"
 
-#: lib/Padre/Action/View.pm:243
+#: lib/Padre/Action/View.pm:238
 msgid "Show Indentation Guide"
 msgstr "Girintileme Kılavuzunu Göster"
 
-#: lib/Padre/Action/View.pm:244
+#: lib/Padre/Action/View.pm:239
 msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr ""
 "Satırların solundaki girintileme konumunu gösteren dikey çubukları göster/"
 "gizle"
 
-#: lib/Padre/Action/View.pm:253
+#: lib/Padre/Action/View.pm:248
 msgid "Word-Wrap"
 msgstr "Sözcük Kaydır"
 
-#: lib/Padre/Action/View.pm:254
+#: lib/Padre/Action/View.pm:249
 msgid "Wrap long lines"
 msgstr "Uzun satırları kaydır"
 
-#: lib/Padre/Action/View.pm:264
+#: lib/Padre/Action/View.pm:259
 msgid "Increase Font Size"
 msgstr "Yazı Yüzü Boyutunu Büyüt"
 
-#: lib/Padre/Action/View.pm:265
+#: lib/Padre/Action/View.pm:260
 msgid "Make the letters bigger in the editor window"
 msgstr "Düzenleyici penceresindeki yazıları büyütür"
 
-#: lib/Padre/Action/View.pm:274
+#: lib/Padre/Action/View.pm:269
 msgid "Decrease Font Size"
 msgstr "Yazı Yüzü Boyutunu Küçült"
 
-#: lib/Padre/Action/View.pm:275
+#: lib/Padre/Action/View.pm:270
 msgid "Make the letters smaller in the editor window"
 msgstr "Düzenleyici penceresindeki yazıları küçültür"
 
-#: lib/Padre/Action/View.pm:284
+#: lib/Padre/Action/View.pm:279
 msgid "Reset Font Size"
 msgstr "Yazı Yüzü Boyutunu Sıfırla"
 
-#: lib/Padre/Action/View.pm:285
+#: lib/Padre/Action/View.pm:280
 msgid "Reset the size of the letters to the default in the editor window"
 msgstr ""
 "Düzenleyici penceresindeki yazıların boyutunu varsayılan değere sıfırlar"
 
-#: lib/Padre/Action/View.pm:296 lib/Padre/Wx/Dialog/Bookmarks.pm:56
+#: lib/Padre/Action/View.pm:291 lib/Padre/Wx/Dialog/Bookmarks.pm:56
 msgid "Set Bookmark"
 msgstr "Yer İmi Ata"
 
-#: lib/Padre/Action/View.pm:297
+#: lib/Padre/Action/View.pm:292
 msgid "Create a bookmark in the current file current row"
 msgstr "Geçerli dosyanın geçerli satırında bir yer imi oluştur"
 
-#: lib/Padre/Action/View.pm:307
+#: lib/Padre/Action/View.pm:302
 msgid "Goto Bookmark"
 msgstr "Yer İmine Git"
 
-#: lib/Padre/Action/View.pm:308
+#: lib/Padre/Action/View.pm:303
 msgid "Select a bookmark created earlier and jump to that position"
 msgstr "Daha önce oluşturulmuş bir yer imini seç ve o konuma zıpla"
 
-#: lib/Padre/Action/View.pm:320
+#: lib/Padre/Action/View.pm:315
 msgid "&Full Screen"
 msgstr "&Tam Ekran"
 
-#: lib/Padre/Action/View.pm:321
+#: lib/Padre/Action/View.pm:316
 msgid "Set Padre in full screen mode"
 msgstr "Padre' yi tam ekran kipinde çalıştır"
 
@@ -2056,51 +2104,51 @@ msgid "Imitate clicking on the right mouse button"
 msgstr "Sağ fare düğmesine tıklamayı taklit et"
 
 #: lib/Padre/Action/Window.pm:103
-msgid "GoTo Functions Window"
+msgid "Go to Functions Window"
 msgstr "İşlevler Penceresine Git"
 
 #: lib/Padre/Action/Window.pm:104
-msgid "Set the focus to be the functions window"
-msgstr "Odağı işlev penceresi olark ayarla"
+msgid "Set the focus to the \"Functions\" window"
+msgstr "Odağı \"İşlevler\" penceresine ayarla"
 
 #: lib/Padre/Action/Window.pm:116
-msgid "GoTo Todo Window"
+msgid "Go to Todo Window"
 msgstr "Yapılacaklar Penceresine Git"
 
 #: lib/Padre/Action/Window.pm:117
-msgid "Set the focus to be the todo window"
-msgstr "Odağı yapılacaklar penceresi olarak değiştir"
+msgid "Set the focus to the \"Todo\" window"
+msgstr "Odağı \"Yapılacaklar\" penceresine ayarla"
 
 #: lib/Padre/Action/Window.pm:128
-msgid "GoTo Outline Window"
+msgid "Go to Outline Window"
 msgstr "Taslak Penceresine Git"
 
 #: lib/Padre/Action/Window.pm:129
-msgid "Set the focus to be the outline window"
-msgstr "Odağı özet penceresine ayarla"
+msgid "Set the focus to the \"Outline\" window"
+msgstr "Odağı \"Taslak\" penceresine ayarla"
 
 #: lib/Padre/Action/Window.pm:139
-msgid "GoTo Output Window"
+msgid "Go to Output Window"
 msgstr "Çıktı Penceresine Git"
 
 #: lib/Padre/Action/Window.pm:140
-msgid "Set the focus to be the output window"
-msgstr "Odağı çıktı penceresi olarak ayarla"
+msgid "Set the focus to the \"Output\" window"
+msgstr "Odağı \"Çıktı\" penceresine ayarla"
 
 #: lib/Padre/Action/Window.pm:150
-msgid "GoTo Syntax Check Window"
+msgid "Go to Syntax Check Window"
 msgstr "Sözdizim Denetimi Penceresine Git"
 
 #: lib/Padre/Action/Window.pm:151
-msgid "Set the focus to be the syntax check window"
-msgstr "Odağı sözdizim penceresi olarak ayarla"
+msgid "Set the focus to the \"Syntax Check\" window"
+msgstr "Odağı \"Sözdizim Denetimi\" penceresine ayarla"
 
 #: lib/Padre/Action/Window.pm:161
-msgid "GoTo Main Window"
+msgid "Go to Main Window"
 msgstr "Ana Pencereye Git"
 
 #: lib/Padre/Action/Window.pm:162
-msgid "Set the focus to be the main editor window"
+msgid "Set the focus to the main editor window"
 msgstr "Odağı ana düzenleyici penceresi olarak değiştir"
 
 #: lib/Padre/Document/Perl.pm:286
@@ -2117,39 +2165,47 @@ msgstr ""
 msgid "Run"
 msgstr "Yürüt"
 
-#: lib/Padre/Document/Perl.pm:436
+#: lib/Padre/Document/Perl.pm:448
 msgid "Error: "
 msgstr "Hata: "
 
-#: lib/Padre/Document/Perl.pm:438
+#: lib/Padre/Document/Perl.pm:450
 msgid "No errors found."
 msgstr "Hiç bir hata bulunamadı."
 
-#: lib/Padre/Document/Perl.pm:560 lib/Padre/Document/Perl.pm:745
+#: lib/Padre/Document/Perl.pm:572 lib/Padre/Document/Perl.pm:757
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Geçerli imleç bir değişkene işaret etmiyor gibi gözükmekte"
 
-#: lib/Padre/Document/Perl.pm:561 lib/Padre/Document/Perl.pm:585
-#: lib/Padre/Document/Perl.pm:620 lib/Padre/Document/Perl.pm:746
+#: lib/Padre/Document/Perl.pm:573 lib/Padre/Document/Perl.pm:597
+#: lib/Padre/Document/Perl.pm:632 lib/Padre/Document/Perl.pm:758
 msgid "Check cancelled"
 msgstr "İşaret iptal edildi"
 
-#: lib/Padre/Document/Perl.pm:584
+#: lib/Padre/Document/Perl.pm:596
 msgid "Current cursor does not seem to point at a method"
 msgstr "Geçerli imleç bir yönteme işaret etmiyor gibi gözükmekte"
 
-#: lib/Padre/Document/Perl.pm:619
+#: lib/Padre/Document/Perl.pm:631
 #, perl-format
 msgid "Current '%s' not found"
 msgstr "Geçerli '%s' bulunamadı"
 
-#: lib/Padre/Document/Perl.pm:1577
+#: lib/Padre/Document/Perl.pm:1510
+msgid "Lexically Rename Variable"
+msgstr "Değişkeni Sözcüksel Olarak Yeniden Adlandır"
+
+#: lib/Padre/Document/Perl.pm:1522 lib/Padre/Document/Perl.pm:1523
+msgid "Replacement"
+msgstr "Değiştir"
+
+#: lib/Padre/Document/Perl.pm:1582
 msgid "Edit with Regex Editor"
 msgstr "Düzenli İfade Düzenleyicisi İle Düzenle"
 
-#: lib/Padre/Document/Perl/Beginner.pm:76
+#: lib/Padre/Document/Perl/Beginner.pm:84
 #, perl-format
 msgid "Line %d: "
 msgstr "Satır %d: "
@@ -2163,29 +2219,53 @@ msgstr "(Perl %s sürümünden beri)"
 msgid "- DEPRECATED!"
 msgstr "- ONAYSIZ!"
 
-#: lib/Padre/File/FTP.pm:37
+#: lib/Padre/File/FTP.pm:40
 msgid "Looking for Net::FTP..."
 msgstr "Net::FTP denetleniyor"
 
-#: lib/Padre/File/FTP.pm:84
+#: lib/Padre/File/FTP.pm:108
 #, perl-format
 msgid "Connecting to FTP server %s..."
 msgstr "%s FTP sunucusuna bağlanılıyor..."
 
-#: lib/Padre/File/FTP.pm:101
+#: lib/Padre/File/FTP.pm:118
+#, perl-format
+msgid "Error connecting to %s:%s: %s"
+msgstr "%s:%s konumuna bağlanılırken bir hata oluştu: %s"
+
+#: lib/Padre/File/FTP.pm:124
+msgid "FTP Password"
+msgstr "FTP Parolası"
+
+#: lib/Padre/File/FTP.pm:125
+#, perl-format
+msgid "Password for user '%s' at %s:"
+msgstr "%2$s için '%1$s' kullanıcısının parolası"
+
+#: lib/Padre/File/FTP.pm:131
 #, perl-format
 msgid "Logging into FTP server as %s..."
 msgstr "FTP sunucusuna %s olarak bağlanılıyor..."
 
-#: lib/Padre/File/FTP.pm:115
-msgid "Connection to FTP server successful!"
-msgstr "FTP sunucusuna bağlantı başarılı!"
+#: lib/Padre/File/FTP.pm:133
+#, perl-format
+msgid "Error logging in on %s:%s: %s"
+msgstr "%s:%s konumuna giriş yapılırken bir hata oluştu: %s"
 
-#: lib/Padre/File/FTP.pm:243
+#: lib/Padre/File/FTP.pm:143
+msgid "Connection to FTP server successful."
+msgstr "FTP sunucusuna bağlantı başarılı."
+
+#: lib/Padre/File/FTP.pm:173
+#, perl-format
+msgid "Unable to parse %s"
+msgstr "%s ayrıştırılamıyor"
+
+#: lib/Padre/File/FTP.pm:276
 msgid "Reading file from FTP server..."
 msgstr "Dosya FTP sunucusundan okunuyor..."
 
-#: lib/Padre/File/FTP.pm:266
+#: lib/Padre/File/FTP.pm:299
 msgid "Writing file to FTP server..."
 msgstr "Dosya FTP sunucusuna yazılıyor..."
 
@@ -2207,8 +2287,8 @@ msgid "Run Selection inside Padre"
 msgstr "Seçimi Padre içinde yürüt"
 
 #: lib/Padre/Plugin/Devel.pm:64
-msgid "Dump Expression"
-msgstr "İfadeyi Dökümle"
+msgid "Dump Expression..."
+msgstr "İfadeyi Dökümle..."
 
 #: lib/Padre/Plugin/Devel.pm:65
 msgid "Dump Current Document"
@@ -2227,8 +2307,8 @@ msgid "Dump %INC and @INC"
 msgstr "%INC ve @INC Değişkenlerini Dökümle"
 
 #: lib/Padre/Plugin/Devel.pm:69
-msgid "Dump Display Data"
-msgstr "Görüntüleme Verisini Dök"
+msgid "Dump Display Geometry"
+msgstr "Görüntüleme Geometrisini Dökümle"
 
 #: lib/Padre/Plugin/Devel.pm:70
 msgid "Start/Stop sub trace"
@@ -2260,7 +2340,6 @@ msgid "wxPerl Live Support"
 msgstr "wxPerl Canlık Destek"
 
 #: lib/Padre/Plugin/Devel.pm:92 lib/Padre/Plugin/PopularityContest.pm:197
-#: lib/Padre/Wx/About.pm:25
 msgid "About"
 msgstr "Hakkında"
 
@@ -2268,32 +2347,42 @@ msgstr "Hakkında"
 msgid "Expression"
 msgstr "İfade"
 
-#: lib/Padre/Plugin/Devel.pm:140
+#: lib/Padre/Plugin/Devel.pm:139 lib/Padre/Wx/Main.pm:5517
 msgid "No file is open"
 msgstr "Hiç bir dosya açılmadı"
 
-#: lib/Padre/Plugin/Devel.pm:158
+#: lib/Padre/Plugin/Devel.pm:157
 msgid "No Perl 5 file is open"
 msgstr "Hiç bir Perl 5 dosyası açılmadı"
 
-#: lib/Padre/Plugin/Devel.pm:210
+#: lib/Padre/Plugin/Devel.pm:228
 msgid "Sub-tracing stopped"
 msgstr "Altrutin izlemesi bitti"
 
-#: lib/Padre/Plugin/Devel.pm:216
+#: lib/Padre/Plugin/Devel.pm:234
 msgid "Error while loading Aspect, is it installed?"
 msgstr "Aspect yüklenemedi. Kurduğunuzdan emin misiniz?"
 
-#: lib/Padre/Plugin/Devel.pm:228
+#: lib/Padre/Plugin/Devel.pm:246
 msgid "Sub-tracing started"
 msgstr "Altrutin izlemesi başladı"
 
-#: lib/Padre/Plugin/Devel.pm:246
+#: lib/Padre/Plugin/Devel.pm:264
 msgid "A set of unrelated tools used by the Padre developers\n"
 msgstr ""
 "Padre geliştiricileri tarafından kullanılan bazı alakasız araçlar listesi\n"
 
-#: lib/Padre/Plugin/Devel.pm:290 lib/Padre/Wx/Main.pm:5314
+#: lib/Padre/Plugin/Devel.pm:285
+#, perl-format
+msgid "Found %s unloaded modules"
+msgstr "%s adet yüklenmemiş modül bulundu\n"
+
+#: lib/Padre/Plugin/Devel.pm:297
+#, perl-format
+msgid "Loaded %s modules"
+msgstr "%s modül yüklendi"
+
+#: lib/Padre/Plugin/Devel.pm:308 lib/Padre/Wx/Main.pm:5324
 #, perl-format
 msgid "Error: %s"
 msgstr "Hata: %s"
@@ -2306,8 +2395,7 @@ msgstr "Geçerli raporu göster"
 msgid "Popularity Contest Report"
 msgstr "Gözdelik Yarışması Raporu"
 
-#: lib/Padre/Task/SyntaxChecker.pm:146 lib/Padre/Wx/About.pm:74
-#: lib/Padre/Wx/About.pm:293
+#: lib/Padre/Task/SyntaxChecker.pm:146
 msgid "Info"
 msgstr "Bilgi"
 
@@ -2320,8 +2408,8 @@ msgstr "%s içinde herhangi bir hata veya uyarı bulunmadı."
 msgid "No errors or warnings found."
 msgstr "Herhangi bir hata veya uyarı bulunmadı."
 
-#: lib/Padre/Task/SyntaxChecker.pm:183 lib/Padre/Wx/Main.pm:2480
-#: lib/Padre/Wx/Main.pm:3120 lib/Padre/Wx/Syntax.pm:93
+#: lib/Padre/Task/SyntaxChecker.pm:183 lib/Padre/Wx/Main.pm:2500
+#: lib/Padre/Wx/Main.pm:3124 lib/Padre/Wx/Syntax.pm:93
 #: lib/Padre/Wx/Syntax.pm:94 lib/Padre/Wx/Dialog/Warning.pm:64
 msgid "Warning"
 msgstr "Uyarı"
@@ -2335,12 +2423,24 @@ msgid "Outline"
 msgstr "Taslak"
 
 #: lib/Padre/Task/Outline/Perl.pm:199
-msgid "&GoTo Element"
+msgid "&Go to Element"
 msgstr "Unsura &Git"
 
 #: lib/Padre/Task/Outline/Perl.pm:211 lib/Padre/Wx/Directory/TreeCtrl.pm:820
 msgid "Open &Documentation"
 msgstr "&Belge Aç"
+
+#: lib/Padre/Task/Outline/Perl.pm:265
+msgid "Pragmata"
+msgstr "Derleyici Talimatları"
+
+#: lib/Padre/Task/Outline/Perl.pm:266
+msgid "Modules"
+msgstr "Modüller"
+
+#: lib/Padre/Task/Outline/Perl.pm:267
+msgid "Methods"
+msgstr "Yöntemler"
 
 #: lib/Padre/Task/PPI/FindUnmatchedBrace.pm:79
 msgid "All braces appear to be matched"
@@ -2362,7 +2462,7 @@ msgstr "Arama İptal Edildi"
 
 #: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:103
 msgid "First character of selection does not seem to point at a token."
-msgstr "Seçimin ilk karakteri bir andaca işaret etmiyor gibi gözükmekte."
+msgstr "Seçimin ilk damgası bir andaca işaret etmiyor gibi gözükmekte."
 
 #: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:105
 msgid "Selection not part of a Perl statement?"
@@ -2387,6 +2487,18 @@ msgstr "Sürecin çalıştırılması başarısız oldu\n"
 msgid "Could not find KDE or GNOME"
 msgstr "KDE veya GNOME bulunamadı"
 
+#: lib/Padre/Util/Template.pm:53
+msgid "New module"
+msgstr "Yeni Modül"
+
+#: lib/Padre/Util/Template.pm:53
+msgid "Module name:"
+msgstr "Modül adı:"
+
+#: lib/Padre/Wx/About.pm:25
+msgid "About Padre"
+msgstr "Padre Hakkında"
+
 #: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Dialog/Form.pm:98
 #: lib/Padre/Wx/Menu/View.pm:198
 msgid "Padre"
@@ -2400,23 +2512,39 @@ msgstr "Geliştirim"
 msgid "Translation"
 msgstr "Çeviri"
 
-#: lib/Padre/Wx/About.pm:127
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:303
+msgid "System Info"
+msgstr "Dizge Bilgisi"
+
+#: lib/Padre/Wx/About.pm:102
+msgid "Created by"
+msgstr "Oluşturan:"
+
+#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:130
 msgid "The Padre Development Team"
 msgstr "Padre Geliştirim Takımı"
 
-#: lib/Padre/Wx/About.pm:209
+#: lib/Padre/Wx/About.pm:104
+msgid "Blue butterfly on a green leaf"
+msgstr "Yeşil yaprak üzerinde mavi kelebek"
+
+#: lib/Padre/Wx/About.pm:105
+msgid "splash image is based on work by"
+msgstr "açılış resminin yararlanldığı sanatçı"
+
+#: lib/Padre/Wx/About.pm:216
 msgid "The Padre Translation Team"
 msgstr "Padre Çeviri Takımı"
 
-#: lib/Padre/Wx/About.pm:295
+#: lib/Padre/Wx/About.pm:305
 msgid "Config dir:"
 msgstr "Ayar dizini:"
 
-#: lib/Padre/Wx/About.pm:309
+#: lib/Padre/Wx/About.pm:319
 msgid "Uptime"
 msgstr "Çalışma Süresi"
 
-#: lib/Padre/Wx/About.pm:314
+#: lib/Padre/Wx/About.pm:324
 msgid "unsupported"
 msgstr "desteklenmiyor"
 
@@ -2448,7 +2576,7 @@ msgstr "&Gizlenmiş Altdizinleri Yoksay"
 msgid "Show only files that don't match"
 msgstr "Sadece eşleşmeyen dosyaları göster"
 
-#: lib/Padre/Wx/Ack.pm:145
+#: lib/Padre/Wx/Ack.pm:145 lib/Padre/Wx/Ack.pm:338 lib/Padre/Wx/Ack.pm:362
 msgid "Find in Files"
 msgstr "Dosyalar içinde Bul"
 
@@ -2456,31 +2584,27 @@ msgstr "Dosyalar içinde Bul"
 msgid "Select directory"
 msgstr "Dizin Seç"
 
-#: lib/Padre/Wx/Ack.pm:338 lib/Padre/Wx/Ack.pm:362
-msgid "Ack"
-msgstr "Ack"
-
 #: lib/Padre/Wx/Ack.pm:428
 #, perl-format
 msgid "Found %d files\n"
 msgstr "%d dosya bulundu\n"
 
-#: lib/Padre/Wx/Ack.pm:437
+#: lib/Padre/Wx/Ack.pm:436
 #, perl-format
 msgid "Found %d files and %d matches\n"
 msgstr "%d dosya ve %d eşleşme bulundu\n"
 
-#: lib/Padre/Wx/Ack.pm:477
+#: lib/Padre/Wx/Ack.pm:474
 #, perl-format
 msgid "'%s' missing in file '%s'\n"
 msgstr "'%s', '%s' dosyası içinde bulunamadı\n"
 
-#: lib/Padre/Wx/Ack.pm:491
+#: lib/Padre/Wx/Ack.pm:486
 #, perl-format
 msgid "Found '%s' in '%s':\n"
 msgstr "'%s', '%s' içinde bulundu:\n"
 
-#: lib/Padre/Wx/Bottom.pm:50
+#: lib/Padre/Wx/Bottom.pm:52
 msgid "Output View"
 msgstr "Çıktı Görünümü"
 
@@ -2492,32 +2616,40 @@ msgstr "Hata ayıklayıcı zaten çalışıyor"
 msgid "Not a Perl document"
 msgstr "Bir Perl belgesi değil"
 
-#: lib/Padre/Wx/Debugger.pm:189 lib/Padre/Wx/Debugger.pm:294
-#: lib/Padre/Wx/Debugger.pm:320 lib/Padre/Wx/Debugger.pm:360
-#: lib/Padre/Wx/Debugger.pm:383
+#: lib/Padre/Wx/Debugger.pm:191
+msgid ""
+"The debugger is not running.\n"
+"You can start the debugger using one of the step commands in the Debug menu."
+msgstr ""
+"Hata ayıklayıcı çalışmıyor\n"
+"Hata ayıklayıcıyı, hata ayıklama menüsündeki adımlama komutlarından birisini kullanarak başlatabilirsiniz."
+
+#: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:299
+#: lib/Padre/Wx/Debugger.pm:325 lib/Padre/Wx/Debugger.pm:365
+#: lib/Padre/Wx/Debugger.pm:388
 msgid "Debugger not running"
 msgstr "Hata ayıklayıcı çalışmıyor"
 
-#: lib/Padre/Wx/Debugger.pm:242
+#: lib/Padre/Wx/Debugger.pm:247
 #, perl-format
 msgid "Could not set breakpoint on file '%s' row '%s'"
 msgstr "'%s' dosyasındaki '%s' satırına bir kırılma noktası atanamıyor"
 
-#: lib/Padre/Wx/Debugger.pm:424
+#: lib/Padre/Wx/Debugger.pm:429
 #, perl-format
 msgid "Could not evaluate '%s'"
 msgstr "'%s' değerlendirilemiyor"
 
-#: lib/Padre/Wx/Debugger.pm:442
+#: lib/Padre/Wx/Debugger.pm:447
 #, perl-format
 msgid "'%s' does not look like a variable"
 msgstr "'%s' bir değişkene benzemiyor"
 
-#: lib/Padre/Wx/Debugger.pm:478
+#: lib/Padre/Wx/Debugger.pm:483
 msgid "Expression:"
 msgstr "İfade:"
 
-#: lib/Padre/Wx/Debugger.pm:479
+#: lib/Padre/Wx/Debugger.pm:484
 msgid "Expr"
 msgstr "İfade"
 
@@ -2533,22 +2665,44 @@ msgstr "Dizin"
 msgid "Choose a directory"
 msgstr "Bir dizin seç"
 
+#: lib/Padre/Wx/DocBrowser.pm:113 lib/Padre/Wx/DocBrowser.pm:130
+msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
+msgstr "perldoc için arama - ör: Padre::Task, Net::LDAP"
+
+#: lib/Padre/Wx/DocBrowser.pm:126
+msgid "Search:"
+msgstr "Ara:"
+
 #: lib/Padre/Wx/DocBrowser.pm:307
 msgid "Untitled"
 msgstr "Başlıksız"
+
+#: lib/Padre/Wx/DocBrowser.pm:371
+#, perl-format
+msgid "DocBrowser: no viewer for %s"
+msgstr "Belge Tarayıcı: %s için bir görüntüleyici yok"
+
+#: lib/Padre/Wx/DocBrowser.pm:404
+#, perl-format
+msgid "Searched for '%s' and failed..."
+msgstr "'%s' araması başarısız oldu..."
+
+#: lib/Padre/Wx/DocBrowser.pm:405
+msgid "Help not found."
+msgstr "Yardım bulunamadı."
 
 #: lib/Padre/Wx/DocBrowser.pm:427
 msgid "NAME"
 msgstr "AD"
 
-#: lib/Padre/Wx/Editor.pm:1373
+#: lib/Padre/Wx/Editor.pm:1587
 msgid "You must select a range of lines"
 msgstr "Birden çok satır seçerek bir aralık belirtmelisiniz"
 
-#: lib/Padre/Wx/Editor.pm:1389
+#: lib/Padre/Wx/Editor.pm:1603
 msgid "First character of selection must be a non-word character to align"
 msgstr ""
-"Seçimin ilk karakteri, hizalamak için, kelime olmayan bir karakter olmak "
+"Seçimin ilk damgası, hizalamak için, kelime olmayan bir damga olmak "
 "zorunda"
 
 #: lib/Padre/Wx/ErrorList.pm:93
@@ -2564,8 +2718,9 @@ msgid "Diagnostics"
 msgstr "Teşhis"
 
 #: lib/Padre/Wx/FindResult.pm:82
-msgid "Find Results ("
-msgstr "Sonuçları Bul ("
+#, perl-format
+msgid "Find Results (%s)"
+msgstr "Sonuçları Bul (%s)"
 
 #: lib/Padre/Wx/FindResult.pm:99 lib/Padre/Wx/FindResult.pm:178
 msgid "Line No"
@@ -2592,49 +2747,49 @@ msgstr "Hepsini Kopy&ala"
 msgid "Functions"
 msgstr "İşlevler"
 
-#: lib/Padre/Wx/Left.pm:49
+#: lib/Padre/Wx/Left.pm:51
 msgid "Project Tools"
 msgstr "Proje Araçları"
 
-#: lib/Padre/Wx/Main.pm:680
+#: lib/Padre/Wx/Main.pm:710
 #, perl-format
 msgid "No such session %s"
 msgstr "Geçersiz oturum: %s"
 
-#: lib/Padre/Wx/Main.pm:855
+#: lib/Padre/Wx/Main.pm:885
 msgid "Failed to create server"
 msgstr "Sunucu oluşturma işlemi başarısız oldu"
 
-#: lib/Padre/Wx/Main.pm:2110
+#: lib/Padre/Wx/Main.pm:2130
 msgid "Command line"
 msgstr "Komut Satırı"
 
-#: lib/Padre/Wx/Main.pm:2111
+#: lib/Padre/Wx/Main.pm:2131
 msgid "Run setup"
 msgstr "Kurulumu yürüt"
 
-#: lib/Padre/Wx/Main.pm:2146 lib/Padre/Wx/Main.pm:2207
-#: lib/Padre/Wx/Main.pm:2262
+#: lib/Padre/Wx/Main.pm:2166 lib/Padre/Wx/Main.pm:2227
+#: lib/Padre/Wx/Main.pm:2282
 msgid "Could not find project root"
 msgstr "Proje kökü bulunamadı"
 
-#: lib/Padre/Wx/Main.pm:2173
+#: lib/Padre/Wx/Main.pm:2193
 msgid "No Build.PL nor Makefile.PL nor dist.ini found"
 msgstr "Build.PL veya Makefile.PL veya dist.ini bulunamadı"
 
-#: lib/Padre/Wx/Main.pm:2176
+#: lib/Padre/Wx/Main.pm:2196
 msgid "Could not find perl executable"
 msgstr "Perl ikilisi bulunamadı"
 
-#: lib/Padre/Wx/Main.pm:2201 lib/Padre/Wx/Main.pm:2253
+#: lib/Padre/Wx/Main.pm:2221 lib/Padre/Wx/Main.pm:2273
 msgid "Current document has no filename"
 msgstr "Geçerli belgenin bir dosya adı yok"
 
-#: lib/Padre/Wx/Main.pm:2256
+#: lib/Padre/Wx/Main.pm:2276
 msgid "Current document is not a .t file"
 msgstr "Geçerli belge bir .t dosyası değil"
 
-#: lib/Padre/Wx/Main.pm:2353 lib/Padre/Wx/Output.pm:115
+#: lib/Padre/Wx/Main.pm:2373 lib/Padre/Wx/Output.pm:115
 #, perl-format
 msgid ""
 "Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
@@ -2645,288 +2800,252 @@ msgstr ""
 "komutu çalıştırarak, en azından 0.20 sürümünü kurun\n"
 "cpan Wx::Perl::ProcessStream"
 
-#: lib/Padre/Wx/Main.pm:2412
+#: lib/Padre/Wx/Main.pm:2432
 #, perl-format
 msgid "Failed to start '%s' command"
 msgstr "'%s' komutu başlatılamadı"
 
-#: lib/Padre/Wx/Main.pm:2437
+#: lib/Padre/Wx/Main.pm:2457
 msgid "No open document"
 msgstr "Açık hiç bir belge yok"
 
-#: lib/Padre/Wx/Main.pm:2454
+#: lib/Padre/Wx/Main.pm:2474
 msgid "No execution mode was defined for this document"
 msgstr "Bu belge için herhangi bir çalıştırma kipi tanımlanmadı"
 
-#: lib/Padre/Wx/Main.pm:2479
+#: lib/Padre/Wx/Main.pm:2499
 msgid "Do you want to continue?"
 msgstr "Devam etmek istiyor musunuz?"
 
-#: lib/Padre/Wx/Main.pm:2565
+#: lib/Padre/Wx/Main.pm:2585
 #, perl-format
 msgid "Opening session %s..."
 msgstr "%s oturumu açılıyor..."
 
-#: lib/Padre/Wx/Main.pm:2594
+#: lib/Padre/Wx/Main.pm:2614
 msgid "Restore focus..."
 msgstr "Odağı eski haline getir"
 
-#: lib/Padre/Wx/Main.pm:2677
+#: lib/Padre/Wx/Main.pm:2697
 msgid "Message"
 msgstr "İleti"
 
-#: lib/Padre/Wx/Main.pm:2962
+#: lib/Padre/Wx/Main.pm:2747
+msgid "Unknown error from "
+msgstr "Şuradan bilinmeyen bir hata alındı: "
+
+#: lib/Padre/Wx/Main.pm:2966
 #, perl-format
 msgid "Could not determine the comment character for %s document type"
-msgstr "%s belge türü için yorum karakteri saptanamıyor"
+msgstr "%s belge türü için yorum damgayı saptanamıyor"
 
-#: lib/Padre/Wx/Main.pm:3011
+#: lib/Padre/Wx/Main.pm:3015
 msgid "Autocompletion error"
 msgstr "Otomatik tamamlama hatası"
 
-#: lib/Padre/Wx/Main.pm:3119
+#: lib/Padre/Wx/Main.pm:3123
 msgid "You still have a running process. Do you want to kill it and exit?"
 msgstr ""
 "Halen yürütülen bir süreciniz mevcut. Süreci sonlandırmak ve çıkmak istiyor "
 "musunuz?"
 
-#: lib/Padre/Wx/Main.pm:3335
+#: lib/Padre/Wx/Main.pm:3339
 #, perl-format
 msgid "Cannot open a Directory: %s"
 msgstr "Dizin açılamadı: %s"
 
-#: lib/Padre/Wx/Main.pm:3463
+#: lib/Padre/Wx/Main.pm:3467
 msgid "Nothing selected. Enter what should be opened:"
 msgstr "Hiç bir şey seçilmedi. Açılması gereen şeyi girin:"
 
-#: lib/Padre/Wx/Main.pm:3464
+#: lib/Padre/Wx/Main.pm:3468
 msgid "Open selection"
 msgstr "Seçimi aç"
 
-#: lib/Padre/Wx/Main.pm:3505
+#: lib/Padre/Wx/Main.pm:3509
 #, perl-format
 msgid "Could not find file '%s'"
 msgstr "'%s' dosyası bulunamıyor"
 
-#: lib/Padre/Wx/Main.pm:3620
+#: lib/Padre/Wx/Main.pm:3521
+msgid "Choose File"
+msgstr "Dosya Seç"
+
+#: lib/Padre/Wx/Main.pm:3627
 msgid "JavaScript Files"
 msgstr "JavaScript Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3622
+#: lib/Padre/Wx/Main.pm:3629
 msgid "Perl Files"
 msgstr "Perl Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3624
+#: lib/Padre/Wx/Main.pm:3631
 msgid "PHP Files"
 msgstr "PHP Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3626
+#: lib/Padre/Wx/Main.pm:3633
 msgid "Python Files"
 msgstr "Python Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3628
+#: lib/Padre/Wx/Main.pm:3635
 msgid "Ruby Files"
 msgstr "Ruby Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3630
+#: lib/Padre/Wx/Main.pm:3637
 msgid "SQL Files"
 msgstr "SQL Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3632
+#: lib/Padre/Wx/Main.pm:3639
 msgid "Text Files"
 msgstr "Text Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3634
+#: lib/Padre/Wx/Main.pm:3641
 msgid "Web Files"
 msgstr "Ağ Dosyaları"
 
-#: lib/Padre/Wx/Main.pm:3639 lib/Padre/Wx/Main.pm:3640
+#: lib/Padre/Wx/Main.pm:3646 lib/Padre/Wx/Main.pm:3647
+#: lib/Padre/Wx/Main.pm:4019 lib/Padre/Wx/Main.pm:5207
 msgid "All Files"
 msgstr "Tüm Dosyalar"
 
-#: lib/Padre/Wx/Main.pm:3642
+#: lib/Padre/Wx/Main.pm:3649
 msgid "Open File"
 msgstr "Dosya Aç"
 
-#: lib/Padre/Wx/Main.pm:3679
+#: lib/Padre/Wx/Main.pm:3686
 #, perl-format
 msgid ""
 "File name %s contains * or ? which are special chars on most computers. Skip?"
 msgstr ""
 "Belirttiğiniz dosya adı (%s), çoğu bilgisayarda özel anlamlara sahip olan * "
-"veya ? karakterini içeriyor. Atlayalım mı?"
+"veya ? damgasını içeriyor. Atlayalım mı?"
 
-#: lib/Padre/Wx/Main.pm:3682 lib/Padre/Wx/Main.pm:3702
+#: lib/Padre/Wx/Main.pm:3689 lib/Padre/Wx/Main.pm:3709
 msgid "Open Warning"
 msgstr "Dosya Açma Uyarısı"
 
-#: lib/Padre/Wx/Main.pm:3699
+#: lib/Padre/Wx/Main.pm:3706
 #, perl-format
 msgid "File name %s does not exist on disk. Skip?"
 msgstr "Belirttiğiniz dosya adı (%s) diskte bulunamadı. Atlayalım mı?"
 
-#: lib/Padre/Wx/Main.pm:3787
+#: lib/Padre/Wx/Main.pm:3794
 msgid "Reload all files"
 msgstr "Tüm dosyaları yeniden yükle"
 
-#: lib/Padre/Wx/Main.pm:3818
+#: lib/Padre/Wx/Main.pm:3825
 msgid "Reload some files"
 msgstr "Bazı dosyaları yeniden yükle"
 
-#: lib/Padre/Wx/Main.pm:3819
+#: lib/Padre/Wx/Main.pm:3826
 msgid "&Select files to reload:"
 msgstr "Yeniden yüklenecek dosyaları &seçin:"
 
-#: lib/Padre/Wx/Main.pm:3834
+#: lib/Padre/Wx/Main.pm:3827
+msgid "&Reload selected"
+msgstr "Seçilenle&ri yeniden yükle"
+
+#: lib/Padre/Wx/Main.pm:3841
 msgid "Reload some"
 msgstr "Bazılarını Yeniden Yükle"
 
-#: lib/Padre/Wx/Main.pm:3896
+#: lib/Padre/Wx/Main.pm:3903
 #, perl-format
 msgid "Could not reload file: %s"
 msgstr "Dosya yeniden yüklenemiyor: %s"
 
-#: lib/Padre/Wx/Main.pm:4009
+#: lib/Padre/Wx/Main.pm:4016
 msgid "Save file as..."
 msgstr "Dosyayı Farklı Kaydet..."
 
-#: lib/Padre/Wx/Main.pm:4036
+#: lib/Padre/Wx/Main.pm:4043
 msgid "File already exists. Overwrite it?"
 msgstr "Dosya zaten mevcut. Üstüne yazılsın mı?"
 
-#: lib/Padre/Wx/Main.pm:4037
+#: lib/Padre/Wx/Main.pm:4044
 msgid "Exist"
 msgstr "Mevcut"
 
-#: lib/Padre/Wx/Main.pm:4133 lib/Padre/Wx/Directory/TreeCtrl.pm:538
+#: lib/Padre/Wx/Main.pm:4140 lib/Padre/Wx/Directory/TreeCtrl.pm:538
 msgid "File already exists"
 msgstr "Dosya zaten mevcut"
 
-#: lib/Padre/Wx/Main.pm:4147
+#: lib/Padre/Wx/Main.pm:4154
 #, perl-format
 msgid "Failed to create path '%s'"
 msgstr "'%s' yolu oluşturulamadı"
 
-#: lib/Padre/Wx/Main.pm:4238
+#: lib/Padre/Wx/Main.pm:4245
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
 msgstr ""
 "Dosya diske kaydedildiği andan sonra değişikliğe uğradı. Üstüne yazmak "
 "istiyor musunuz?"
 
-#: lib/Padre/Wx/Main.pm:4239
+#: lib/Padre/Wx/Main.pm:4246
 msgid "File not in sync"
 msgstr "Dosya eşlenik değil"
 
-#: lib/Padre/Wx/Main.pm:4248
+#: lib/Padre/Wx/Main.pm:4255
 msgid "Could not save file: "
 msgstr "Dosya kaydedilemiyor: "
 
-#: lib/Padre/Wx/Main.pm:4330
+#: lib/Padre/Wx/Main.pm:4337
 msgid "File changed. Do you want to save it?"
 msgstr "Dosya değişti. Kaydetmek istiyor musunuz?"
 
-#: lib/Padre/Wx/Main.pm:4331
+#: lib/Padre/Wx/Main.pm:4338
 msgid "Unsaved File"
 msgstr "Kaydedilmemiş Dosya"
 
-#: lib/Padre/Wx/Main.pm:4414
+#: lib/Padre/Wx/Main.pm:4421
 msgid "Close all"
 msgstr "Hepsini Kapat"
 
-#: lib/Padre/Wx/Main.pm:4454
+#: lib/Padre/Wx/Main.pm:4461
 msgid "Close some files"
 msgstr "Bazı dosyaları kapat"
 
-#: lib/Padre/Wx/Main.pm:4455
+#: lib/Padre/Wx/Main.pm:4462
 msgid "Select files to close:"
 msgstr "Kapatılacak dosyaları seçin:"
 
-#: lib/Padre/Wx/Main.pm:4470
+#: lib/Padre/Wx/Main.pm:4477
 msgid "Close some"
 msgstr "Bazılarını kapat"
 
-#: lib/Padre/Wx/Main.pm:4632
+#: lib/Padre/Wx/Main.pm:4639
 msgid "Cannot diff if file was never saved"
 msgstr "Dosya kaydedilmemişse, karşılaştırma için kullanılamaz"
 
-#: lib/Padre/Wx/Main.pm:4656
+#: lib/Padre/Wx/Main.pm:4663
 msgid "There are no differences\n"
 msgstr "Herhangi bir fark bulunamadı\n"
 
-#: lib/Padre/Wx/Main.pm:5315
+#: lib/Padre/Wx/Main.pm:5325
 msgid "Internal error"
 msgstr "İç hata"
 
-#: lib/Padre/Wx/Main.pm:5519
-msgid "(Document not on disk)"
-msgstr "(belge disk üzerinde mevcut değil)"
+#: lib/Padre/Wx/Main.pm:5517
+msgid "Stats"
+msgstr "Durum"
 
-#: lib/Padre/Wx/Main.pm:5523
-#, perl-format
-msgid "Words: %s"
-msgstr "Kelimeler: %s"
-
-#: lib/Padre/Wx/Main.pm:5524
-#, perl-format
-msgid "Lines: %d"
-msgstr "Satırlar: %d"
-
-#: lib/Padre/Wx/Main.pm:5525
-#, perl-format
-msgid "Chars without spaces: %s"
-msgstr "Beyaz boşluk içermeyen karakterler: %s"
-
-#: lib/Padre/Wx/Main.pm:5526
-#, perl-format
-msgid "Chars with spaces: %d"
-msgstr "Beyaz boşluk içeren karakterler: %d"
-
-#: lib/Padre/Wx/Main.pm:5527
-#, perl-format
-msgid "Newline type: %s"
-msgstr "Yeni satır türü: %s"
-
-#: lib/Padre/Wx/Main.pm:5528
-#, perl-format
-msgid "Size on disk: %s"
-msgstr "Diskteki boyut: %s"
-
-#: lib/Padre/Wx/Main.pm:5529
-#, perl-format
-msgid "Encoding: %s"
-msgstr "Kodlama: %s"
-
-#: lib/Padre/Wx/Main.pm:5531
-#, perl-format
-msgid "Document type: %s"
-msgstr "Belge türü: %s"
-
-#: lib/Padre/Wx/Main.pm:5532
-msgid "none"
-msgstr "hiçbiri"
-
-#: lib/Padre/Wx/Main.pm:5535
-#, perl-format
-msgid "Filename: %s"
-msgstr "Dosya adı: %s"
-
-#: lib/Padre/Wx/Main.pm:5568
+#: lib/Padre/Wx/Main.pm:5545
 msgid "Space to Tab"
 msgstr "Boşluğu sekmeye çevir"
 
-#: lib/Padre/Wx/Main.pm:5569
+#: lib/Padre/Wx/Main.pm:5546
 msgid "Tab to Space"
 msgstr "Sekmeyi boşluğa çevir"
 
-#: lib/Padre/Wx/Main.pm:5574
+#: lib/Padre/Wx/Main.pm:5551
 msgid "How many spaces for each tab:"
 msgstr "Her sekme için kaç boşluk kullanılsın:"
 
-#: lib/Padre/Wx/Main.pm:6047
+#: lib/Padre/Wx/Main.pm:6029
 msgid "Need to select text in order to translate to hex"
 msgstr "Onaltılığa çevirmek için seçili bir dizgi olması gerekiyor"
 
-#: lib/Padre/Wx/Main.pm:6189
+#: lib/Padre/Wx/Main.pm:6171
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -2935,7 +3054,7 @@ msgstr ""
 "Süzgeç aracı çalıştırılırken bir hata oluştu:\n"
 "%s"
 
-#: lib/Padre/Wx/Main.pm:6204
+#: lib/Padre/Wx/Main.pm:6186
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
@@ -2956,7 +3075,7 @@ msgstr "Çıktı"
 msgid "Please wait..."
 msgstr "Lütfen bekleyin..."
 
-#: lib/Padre/Wx/Right.pm:49
+#: lib/Padre/Wx/Right.pm:51
 msgid "Document Tools"
 msgstr "Belge araçları"
 
@@ -3082,8 +3201,8 @@ msgid "S&ave"
 msgstr "K&aydet"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:174 lib/Padre/Wx/Dialog/Find.pm:160
-#: lib/Padre/Wx/Dialog/Goto.pm:99 lib/Padre/Wx/Dialog/KeyBindings.pm:199
-#: lib/Padre/Wx/Dialog/OpenResource.pm:192 lib/Padre/Wx/Dialog/OpenURL.pm:76
+#: lib/Padre/Wx/Dialog/Goto.pm:100 lib/Padre/Wx/Dialog/KeyBindings.pm:199
+#: lib/Padre/Wx/Dialog/OpenResource.pm:192 lib/Padre/Wx/Dialog/OpenURL.pm:70
 #: lib/Padre/Wx/Dialog/Preferences.pm:912
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:154
 #: lib/Padre/Wx/Dialog/Replace.pm:192
@@ -3128,6 +3247,62 @@ msgstr "%s satır %s: %s"
 msgid "The bookmark '%s' no longer exists"
 msgstr "'%s' yer imi artık yok"
 
+#: lib/Padre/Wx/Dialog/DocStats.pm:39
+msgid "Filename"
+msgstr "Dosya adı"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:40
+msgid "Selection"
+msgstr "Seçim"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:60
+msgid "&Update"
+msgstr "&Güncelle"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:95
+msgid "Document"
+msgstr "Belge"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:98
+msgid "Lines"
+msgstr "Satırlar"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:102
+msgid "Words"
+msgstr "Kelimeler"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:106
+msgid "Characters (including whitespace)"
+msgstr "Damgalar (beyaz boşluk dahil)"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:110
+msgid "Non-whitespace characters"
+msgstr "Beyaz boşluk olmayan damgalar"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:114
+msgid "Kilobytes (kB)"
+msgstr "Kilobayt (kB)"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:118
+msgid "Kibibytes (kiB)"
+msgstr "Kibibayt (kiB)"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:129
+msgid "Line break mode"
+msgstr "Satır sonu kipi"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:131
+msgid "Encoding"
+msgstr "Kodlama"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:133
+msgid "Document type"
+msgstr "Belge türü"
+
+#: lib/Padre/Wx/Dialog/DocStats.pm:179
+msgid "none"
+msgstr "hiçbiri"
+
 #: lib/Padre/Wx/Dialog/Encode.pm:22
 #, perl-format
 msgid "Document encoded to (%s)"
@@ -3149,7 +3324,7 @@ msgstr "Sizgeç komutu:"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:145
 #: lib/Padre/Wx/Dialog/SessionManager.pm:291
 #: lib/Padre/Wx/Dialog/SessionSave.pm:230
-#: lib/Padre/Wx/Dialog/WindowList.pm:282
+#: lib/Padre/Wx/Dialog/WindowList.pm:282 lib/Padre/Wx/Menu/File.pm:130
 msgid "Close"
 msgstr "Kapat"
 
@@ -3191,7 +3366,7 @@ msgid "Options"
 msgstr "Seçenekler"
 
 #: lib/Padre/Wx/Dialog/Find.pm:331 lib/Padre/Wx/Dialog/Replace.pm:535
-#: lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:584
 msgid "No matches found"
 msgstr "Hiç bir eşleşme bulunamadı"
 
@@ -3226,40 +3401,49 @@ msgid "Goto"
 msgstr "Git"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:86
-msgid "&Line number or character position?"
-msgstr "B&ir satır numarası mı yoksa konum mu?"
+msgid "Position type"
+msgstr "Konum türü"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:92 lib/Padre/Wx/Dialog/OpenResource.pm:188
-#: lib/Padre/Wx/Dialog/OpenURL.pm:61
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
+#: lib/Padre/Wx/Dialog/Goto.pm:223 lib/Padre/Wx/Dialog/Goto.pm:242
+msgid "Line number"
+msgstr "Satır numarası"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:227
+msgid "Character position"
+msgstr "Damga konumu"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:93 lib/Padre/Wx/Dialog/OpenResource.pm:188
+#: lib/Padre/Wx/Dialog/OpenURL.pm:62
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:150
 msgid "&OK"
 msgstr "&TAMAM"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:224
+#: lib/Padre/Wx/Dialog/Goto.pm:225
 #, perl-format
 msgid "&Enter a line number between 1 and %s:"
 msgstr "(1-%s) arası satır numarası girin:"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:225
-#, perl-format
-msgid "&Enter a position between 1 and %s:"
-msgstr "1 ile %s arasın&da bir konum girin:"
-
-#: lib/Padre/Wx/Dialog/Goto.pm:229
+#: lib/Padre/Wx/Dialog/Goto.pm:226
 #, perl-format
 msgid "Current line number: %s"
 msgstr "Geçerli satır numarası: %s"
+
+#: lib/Padre/Wx/Dialog/Goto.pm:229
+#, perl-format
+msgid "&Enter a position between 1 and %s:"
+msgstr "1 ile %s arasın&da bir konum girin:"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:230
 #, perl-format
 msgid "Current position: %s"
 msgstr "Geçerli konum: %s"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:253
+#: lib/Padre/Wx/Dialog/Goto.pm:254
 msgid "Not a positive number!"
 msgstr "Pozitif bir sayı değil!"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:262
+#: lib/Padre/Wx/Dialog/Goto.pm:263
 msgid "Out of range!"
 msgstr "Aralık dışında!"
 
@@ -3297,6 +3481,11 @@ msgstr "Maddeler okunuyor. Lütfen bekleyin"
 msgid "Could not find a help provider for "
 msgstr "Bir yardım sağlayıcı bulunamadı: "
 
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:395
+#, perl-format
+msgid "Found %s help topic(s)\n"
+msgstr "%s yardım başlığı bulundu"
+
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:90
 msgid "Key binding name"
 msgstr "Tuş ataması adı"
@@ -3313,48 +3502,97 @@ msgstr "Eylem"
 msgid "Sh&ortcut:"
 msgstr "Kısay&ol"
 
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:16
+msgid "Apache License"
+msgstr "Apache Lisansı"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:17
+msgid "Artistic License 1.0"
+msgstr "Sanatsal Lisans 1.0"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:18
+msgid "Artistic License 2.0"
+msgstr "Sanatsal Lisans 2.0"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:19
+msgid "Revised BSD License"
+msgstr "Gözden geçirilmiş BSD Lisansı"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:20
+msgid "GPL 2 or later"
+msgstr "GPL (GNU Genel Kamu Lisansı) 2 veya daha yeni"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:21
+msgid "LGPL 2.1 or later"
+msgstr "LGPL (GNU Kısıtlı Genel Kamu Lisansı) 2.1 veya daha yeni"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:22
+msgid "MIT License"
+msgstr "MIT Lisansı"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:23
+msgid "Mozilla Public License"
+msgstr "Mozilla Kamu Lisansı"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:24
+msgid "Open Source"
+msgstr "Kaynak Aç"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:25
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:100
+msgid "Perl licensing terms"
+msgstr "Perl lisanslama koşulları"
+
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
+msgid "restrictive"
+msgstr "kısıtlı"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:27
+msgid "unrestricted"
+msgstr "kısıtsız"
+
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:40
 msgid "Module Name:"
 msgstr "Modül Adı:"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:29
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:43
 msgid "Author:"
 msgstr "Yazar:"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:32
-msgid "Email:"
-msgstr "Eposta:"
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:46
+msgid "Email Address:"
+msgstr "Eposta Adresi:"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:35
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:49
 msgid "Builder:"
 msgstr "Oluşturan:"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:38
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:52
 msgid "License:"
 msgstr "Lisans"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:41
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:57
 msgid "Parent Directory:"
 msgstr "Ana Dizin"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:42
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:58
 msgid "Pick parent directory"
 msgstr "Ana dizin seçin"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:68
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:84
 msgid "Module Start"
 msgstr "Modül Başlangıcı"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:118
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:134
 #, perl-format
 msgid "Field %s was missing. Module not created."
 msgstr "%s alanı boş. Modül oluşturulmadı."
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:119
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:135
 msgid "missing field"
 msgstr "boş alan"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:150
+#: lib/Padre/Wx/Dialog/ModuleStart.pm:169
 #, perl-format
 msgid ""
 "An error has occured while generating '%s':\n"
@@ -3363,14 +3601,9 @@ msgstr ""
 "'%s' oluşturulurken bir hata meydana geldi:\n"
 "%s"
 
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:161
-#, perl-format
-msgid "%s apparently created. Do you want to open it now?"
-msgstr "%s oluşturuldu. Şimdi açmak istiyor musunuz?"
-
-#: lib/Padre/Wx/Dialog/ModuleStart.pm:162
-msgid "Done"
-msgstr "Tamamlandı"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:90
+msgid "Open Resource"
+msgstr "Kaynak Aç"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:127
 msgid "Error while trying to perform Padre action"
@@ -3379,7 +3612,7 @@ msgstr "Padre eylemi gerçekleştirilirken bir hata oluştu"
 #: lib/Padre/Wx/Dialog/OpenResource.pm:213
 msgid "&Select an item to open (? = any character, * = any string):"
 msgstr ""
-"Açmak için bir unsur &seçin (? = herhangi bir karakter, * = herhangi bir "
+"Açmak için bir unsur &seçin (? = herhangi bir damga, * = herhangi bir "
 "dizgi):"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:225
@@ -3390,11 +3623,11 @@ msgstr "Eşleşen &Unsurlar:"
 msgid "Current Directory: "
 msgstr "Geçerli Dizin: "
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:263
-msgid "Skip VCS files"
+#: lib/Padre/Wx/Dialog/OpenResource.pm:264
+msgid "Skip version control system files"
 msgstr "Sürüm Denetim Dizgesi dosyalarını atla"
 
-#: lib/Padre/Wx/Dialog/OpenResource.pm:265
+#: lib/Padre/Wx/Dialog/OpenResource.pm:266
 msgid "Skip using MANIFEST.SKIP"
 msgstr "MANIFEST.SKIP kullanarak atla"
 
@@ -3402,8 +3635,13 @@ msgstr "MANIFEST.SKIP kullanarak atla"
 msgid "Open URL"
 msgstr "URL Aç"
 
+#: lib/Padre/Wx/Dialog/OpenURL.pm:79
+msgid "e.g."
+msgstr "ör:"
+
 #: lib/Padre/Wx/Dialog/PluginManager.pm:66
 #: lib/Padre/Wx/Dialog/SessionManager.pm:225
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:25
 msgid "Name"
 msgstr "Ad"
 
@@ -3433,6 +3671,14 @@ msgstr "Hata iletisini göster"
 #: lib/Padre/Wx/Dialog/PluginManager.pm:505
 msgid "Disable"
 msgstr "Etkisizleştir"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:17
+msgid "Local/Remote File Access"
+msgstr "Yerel/Uzak Dosya Erişimi"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:18
+msgid "Perl Auto Complete"
+msgstr "Perl Otomatik Tamamlası"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:38
 msgid "Enable bookmarks"
@@ -3484,8 +3730,8 @@ msgid "Use Tabs"
 msgstr "Sekme Kullan"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:252
-msgid "TAB display size (in spaces):"
-msgstr "SEKME görüntülenme boyutu (boşluk olarak):"
+msgid "Tab display size (in spaces):"
+msgstr "Sekme görüntülenme boyutu (boşluk olarak):"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:255
 msgid "Indentation width (in columns):"
@@ -3570,8 +3816,8 @@ msgid "Enable Smart highlighting while typing"
 msgstr "Yazarken akıllı renklendirmeyi aç"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:356
-msgid "Shorten the common path in window list?"
-msgstr "Pencere listesinde ortak yolu kısalt?"
+msgid "Shorten the common path in window list"
+msgstr "Pencere listesinde ortak yolu kısalt"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:363
 msgid "Use X11 middle button paste style"
@@ -3582,8 +3828,32 @@ msgid "RegExp for TODO-panel:"
 msgstr "Yapılacaklar listesi için düzenli ifade:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:373
-msgid "Use Splash Screen?"
-msgstr "Açılış Ekranı Kullan?"
+msgid "Use Splash Screen"
+msgstr "Açılış Ekranı Kullan"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:410
+msgid "Project name"
+msgstr "Proje adı"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:411
+msgid "Padre version"
+msgstr "Padre sürümü"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:412
+msgid "Current filename"
+msgstr "Geçerli dosya adı"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:413
+msgid "Current file's dirname"
+msgstr "Geçerli dosyanın dizin adı"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:414
+msgid "Current file's basename"
+msgstr "Geçerli dosyanın taban adı"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:415
+msgid "Current filename relative to project"
+msgstr "Projeye göreceli olarak geçerli dosya adı"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:436
 msgid "Window title:"
@@ -3728,39 +3998,47 @@ msgid "last"
 msgstr "en son"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:950
+msgid "session"
+msgstr "oturum"
+
+#: lib/Padre/Wx/Dialog/Preferences.pm:951
 msgid "no"
 msgstr "hayır"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:951
+#: lib/Padre/Wx/Dialog/Preferences.pm:952
 msgid "same_level"
 msgstr "aynı_seviye"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:952
+#: lib/Padre/Wx/Dialog/Preferences.pm:953
 msgid "deep"
 msgstr "derin"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:953
+#: lib/Padre/Wx/Dialog/Preferences.pm:954
 msgid "alphabetical"
 msgstr "abecesel"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:954
+#: lib/Padre/Wx/Dialog/Preferences.pm:955
 msgid "original"
 msgstr "özgün"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:955
+#: lib/Padre/Wx/Dialog/Preferences.pm:956
 msgid "alphabetical_private_last"
 msgstr "abecesel_özel_en_son"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:1113
+#: lib/Padre/Wx/Dialog/Preferences.pm:1114
 #, perl-format
 msgid "%s seems to be no executable Perl interpreter, abandon the new value?"
 msgstr ""
 "%s çalıştırılabilir bir Perl yorumlayıcısına benzemiyor. Yeni değer yok "
 "sayılsın mı?"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:1116
+#: lib/Padre/Wx/Dialog/Preferences.pm:1117
 msgid "Save settings"
 msgstr "Ayarları kaydet"
+
+#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:38
+msgid "Quick Menu Access"
+msgstr "Hızlı Menü Erişimi"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:88
 #, perl-format
@@ -3780,6 +4058,7 @@ msgid "Reading items. Please wait..."
 msgstr "Unsurlar Okunuyor. Lütfen bekleyin..."
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:387
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:21
 #: lib/Padre/Wx/Dialog/WindowList.pm:226
 msgid "File"
 msgstr "Dosya"
@@ -3945,16 +4224,16 @@ msgid "Match 1 or 0 times"
 msgstr "1 veya 0 kere eşleş"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:105
-msgid "Match exactly n times"
-msgstr "Tam olarak n kere eşleş"
+msgid "Match exactly m times"
+msgstr "Tam olarak m kere eşleş"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:106
 msgid "Match at least n times"
 msgstr "En az n kere eşleş"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:107
-msgid "Match at least n but not more than m times"
-msgstr "En az n kere, en çok m kere eşleş"
+msgid "Match at least m but not more than n times"
+msgstr "En az m kere, en çok n kere eşleş"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:111
 msgid "&Miscellaneous"
@@ -4045,7 +4324,7 @@ msgid "&Result from replace:"
 msgstr "Değişti&rme sonucu:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:234 lib/Padre/Wx/Dialog/Snippets.pm:24
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:41
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:50
 msgid "&Insert"
 msgstr "&Arasına Ekle"
 
@@ -4100,6 +4379,10 @@ msgstr "Düzenli İfad&e"
 msgid "Replace &All"
 msgstr "Hepsi&ni Değiştir"
 
+#: lib/Padre/Wx/Dialog/Replace.pm:151
+msgid "&Find"
+msgstr "&Bul"
+
 #: lib/Padre/Wx/Dialog/Replace.pm:171
 msgid "&Replace"
 msgstr "&Değiştir"
@@ -4108,14 +4391,23 @@ msgstr "&Değiştir"
 msgid "Find Text:"
 msgstr "Metin Bul:"
 
+#: lib/Padre/Wx/Dialog/Replace.pm:241
+msgid "Replace"
+msgstr "Değiştir"
+
 #: lib/Padre/Wx/Dialog/Replace.pm:249
 msgid "Replace Text:"
 msgstr "Metni Değiştir:"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:576
-#: lib/Padre/Wx/Dialog/Replace.pm:581
+#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:585
 msgid "Search and Replace"
 msgstr "Ara ve Değiştir"
+
+#: lib/Padre/Wx/Dialog/Replace.pm:575
+#, perl-format
+msgid "Replaced %d match"
+msgstr "%d eşleşme değiştirildi"
 
 #: lib/Padre/Wx/Dialog/Replace.pm:575
 #, perl-format
@@ -4206,7 +4498,7 @@ msgstr "SHIFT"
 msgid "All"
 msgstr "Tümü"
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:22 lib/Padre/Wx/Dialog/SpecialValues.pm:37
+#: lib/Padre/Wx/Dialog/Snippets.pm:22 lib/Padre/Wx/Dialog/SpecialValues.pm:46
 msgid "Class:"
 msgstr "Sınıf:"
 
@@ -4214,13 +4506,17 @@ msgstr "Sınıf:"
 msgid "Snippet:"
 msgstr "Örnek kod:"
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:26 lib/Padre/Wx/Menu/Edit.pm:346
+#: lib/Padre/Wx/Dialog/Snippets.pm:26 lib/Padre/Wx/Menu/Edit.pm:344
 msgid "&Edit"
 msgstr "&Düzenle"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:26
 msgid "&Add"
 msgstr "&Ekle"
+
+#: lib/Padre/Wx/Dialog/Snippets.pm:39
+msgid "Snippets"
+msgstr "Ufak kodlar"
 
 #: lib/Padre/Wx/Dialog/Snippets.pm:111
 msgid "Category:"
@@ -4234,11 +4530,39 @@ msgstr "Ad:"
 msgid "Edit/Add Snippets"
 msgstr "Örnek Kod Değiştir/Ekle"
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:38
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:15
+msgid "Date/Time"
+msgstr "Tarih/Zaman"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:16
+msgid "Now"
+msgstr "Şimdi"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:17
+msgid "Today"
+msgstr "Bugün"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:18
+msgid "Year"
+msgstr "Yıl"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:19
+msgid "Epoch"
+msgstr "Devir"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:22
+msgid "Size"
+msgstr "Boyut"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:30
+msgid "Number of lines"
+msgstr "Satır sayısı"
+
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:47
 msgid "Special Value:"
 msgstr "Özel Değer:"
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:54
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:63
 msgid "Insert Special Values"
 msgstr "Özel Değerler Ekle"
 
@@ -4249,6 +4573,42 @@ msgstr "Güncelleme bilgisi için http://padre.perlide.org/ adresine bakın"
 #: lib/Padre/Wx/Dialog/Warning.pm:49
 msgid "Do not show this again"
 msgstr "Bunu tekrar gösterme"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:23
+msgid "New installation survey"
+msgstr "Yeni kurulum anketi"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:59
+msgid "Where did you hear about Padre?"
+msgstr "Padre'den nasıl haberiniz oldu?"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:64
+msgid "Other search engine"
+msgstr "Diğer arama motoru"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:67
+msgid "Other event"
+msgstr "Diğer etkinlik"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:68
+msgid "Friend"
+msgstr "Arkadaş"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:69
+msgid "Reinstalling/installing on other computer"
+msgstr "Diğer bir bilgisayara yeniden/yeni kurulum yapılırken"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:70
+msgid "Other (Please fill in here)"
+msgstr "Diğer (Lütfen burayı doldurun)"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:84
+msgid "OK"
+msgstr "TAMAM"
+
+#: lib/Padre/Wx/Dialog/WhereFrom.pm:91
+msgid "Skip question without giving feedback"
+msgstr "Bir geri bildirimde bulunmadan soruyu atla"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:37
 msgid "Window list"
@@ -4266,14 +4626,26 @@ msgstr "Düzenleyici"
 msgid "Disk"
 msgstr "Disk"
 
+#: lib/Padre/Wx/Dialog/WindowList.pm:349 lib/Padre/Wx/Dialog/WindowList.pm:358
+msgid "CHANGED"
+msgstr "DEĞİŞTİRİLDİ"
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:349 lib/Padre/Wx/Dialog/WindowList.pm:354
+msgid "fresh"
+msgstr "taze"
+
+#: lib/Padre/Wx/Dialog/WindowList.pm:356
+msgid "DELETED"
+msgstr "SİLİNDİ"
+
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:36
 msgid "File access via HTTP"
 msgstr "HTTP ile dosya erişimi"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:39
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:47
-msgid "Timeout:"
-msgstr "Zama aşımı:"
+msgid "Timeout (in seconds):"
+msgstr "Zaman aşımı (saniye cinsinden)"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
 msgid "File access via FTP"
@@ -4305,7 +4677,7 @@ msgstr "Önerilerin en çok uzunluğu:"
 
 #: lib/Padre/Wx/Dialog/Preferences/PerlAutoComplete.pm:60
 msgid "Min. chars for autocompletion:"
-msgstr "Otomatik tamamlama için en az karakter sayısı:"
+msgstr "Otomatik tamamlama için en az damga sayısı:"
 
 #: lib/Padre/Wx/Directory/SearchCtrl.pm:401
 msgid "Skip hidden files"
@@ -4371,7 +4743,7 @@ msgstr "Bu unsuru silmek istediğinize emin misiniz?"
 msgid "Show hidden files"
 msgstr "Gizli dosyaları gözter"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:859
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:859 lib/Padre/Wx/Menu/File.pm:169
 msgid "Reload"
 msgstr "Yeniden Yükle"
 
@@ -4383,49 +4755,41 @@ msgstr "&Hata Ayıkla"
 msgid "Copy specials"
 msgstr "Özelleri kopyala"
 
-#: lib/Padre/Wx/Menu/Edit.pm:154
+#: lib/Padre/Wx/Menu/Edit.pm:121
 msgid "Insert"
 msgstr "Araya Ekle"
 
-#: lib/Padre/Wx/Menu/Edit.pm:195
+#: lib/Padre/Wx/Menu/Edit.pm:200
 msgid "Convert Encoding"
 msgstr "Kodlamayı Değiştir"
 
-#: lib/Padre/Wx/Menu/Edit.pm:217
+#: lib/Padre/Wx/Menu/Edit.pm:222
 msgid "Convert EOL"
 msgstr "Satır Sonunu Değiştir"
 
-#: lib/Padre/Wx/Menu/Edit.pm:240
+#: lib/Padre/Wx/Menu/Edit.pm:245
 msgid "Tabs and Spaces"
 msgstr "Sekmeler ve Boşluklar"
 
-#: lib/Padre/Wx/Menu/Edit.pm:270
+#: lib/Padre/Wx/Menu/Edit.pm:275
 msgid "Upper/Lower Case"
 msgstr "Büyük/Küçük Harf"
 
-#: lib/Padre/Wx/Menu/Edit.pm:290
+#: lib/Padre/Wx/Menu/Edit.pm:295
 msgid "Diff Tools"
 msgstr "Fark Araçları"
 
-#: lib/Padre/Wx/Menu/Edit.pm:328
-msgid "Show as ..."
-msgstr "Farklı göster..."
+#: lib/Padre/Wx/Menu/Edit.pm:326
+msgid "Show as"
+msgstr "Farklı göster"
 
 #: lib/Padre/Wx/Menu/File.pm:42
-msgid "New..."
-msgstr "Yeni..."
+msgid "New"
+msgstr "Yeni"
 
 #: lib/Padre/Wx/Menu/File.pm:86
 msgid "Open..."
 msgstr "Aç..."
-
-#: lib/Padre/Wx/Menu/File.pm:130
-msgid "Close..."
-msgstr "Kapat..."
-
-#: lib/Padre/Wx/Menu/File.pm:169
-msgid "Reload..."
-msgstr "Yeniden Yükle..."
 
 #: lib/Padre/Wx/Menu/File.pm:244
 msgid "&Recent Files"
@@ -4456,18 +4820,6 @@ msgstr "&Yardım"
 msgid "&Perl"
 msgstr "&Perl"
 
-#: lib/Padre/Wx/Menu/Plugins.pm:53
-msgid "Module Tools"
-msgstr "Modül Araçları"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:91
-msgid "Plug-in Tools"
-msgstr "Eklenti Araçları"
-
-#: lib/Padre/Wx/Menu/Plugins.pm:186
-msgid "&Tools"
-msgstr "Ara&çlar"
-
 #: lib/Padre/Wx/Menu/Refactor.pm:61
 msgid "Ref&actor"
 msgstr "Yeniden y&apılandır"
@@ -4480,6 +4832,18 @@ msgstr "&Yürüt"
 msgid "&Search"
 msgstr "&Ara"
 
+#: lib/Padre/Wx/Menu/Tools.pm:59
+msgid "Module Tools"
+msgstr "Modül Araçları"
+
+#: lib/Padre/Wx/Menu/Tools.pm:97
+msgid "Plug-in Tools"
+msgstr "Eklenti Araçları"
+
+#: lib/Padre/Wx/Menu/Tools.pm:192
+msgid "&Tools"
+msgstr "Ara&çlar"
+
 #: lib/Padre/Wx/Menu/View.pm:79
 msgid "View Document As..."
 msgstr "Belgeyi Görüntüleme Biçimi"
@@ -4491,7 +4855,7 @@ msgstr "Belge türünü %s olarak değiştir"
 
 #: lib/Padre/Wx/Menu/View.pm:172
 msgid "Font Size"
-msgstr "Font Boyutu"
+msgstr "Yazı Yüzü Boyutu"
 
 #: lib/Padre/Wx/Menu/View.pm:194
 msgid "Style"
@@ -4531,12 +4895,12 @@ msgstr "Sistem Varsayılanı"
 msgid "Switch menus to the default %s"
 msgstr "Menüleri varsayılan %s olarak değiştir"
 
-#: lib/Padre/Wx/Menu/View.pm:301
+#: lib/Padre/Wx/Menu/View.pm:304
 #, perl-format
 msgid "Switch menus to %s"
 msgstr "Menüleri %s olarak değiştir"
 
-#: lib/Padre/Wx/Menu/View.pm:323
+#: lib/Padre/Wx/Menu/View.pm:326
 msgid "&View"
 msgstr "&Görüntüle"
 
