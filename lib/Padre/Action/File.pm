@@ -93,7 +93,7 @@ sub new {
 		name       => 'file.open',
 		id         => Wx::wxID_OPEN,
 		label      => Wx::gettext('&Open'),
-		comment    => Wx::gettext('Browse directory of the current document to open a file'),
+		comment    => Wx::gettext('Browse directory of the current document to open one or several files'),
 		shortcut   => 'Ctrl-O',
 		toolbar    => 'actions/document-open',
 		menu_event => sub {
