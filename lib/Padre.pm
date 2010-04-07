@@ -1249,6 +1249,10 @@ Marcela Mašláňová (mmaslano)
 
 Kjetil Skotheim (KJETIL)
 
+=head3 Turkish
+
+Burak Gürsoy (BURAK) E<lt>burak@cpan.orgE<gt>
+
 =head2 Thanks
 
 Mattia Barbon for providing wxPerl.

@@ -286,7 +286,10 @@ sub _content_translators {
             Enrique Nell<br>
             <br>
             <b>$language{'ru'}</b><br>
-            Andrew Shitov
+            Andrew Shitov<br>
+            <br>
+            <b>$language{'tr'}</b><br>
+            Burak Gürsoy
           </p>
         </td>
       </td>
