@@ -101,6 +101,7 @@ sub _content_about {
 	my $splash             = Padre::Util::splash();
 	my $created_by         = Wx::gettext('Created by');
 	my $padre_dev_team     = Wx::gettext('The Padre Development Team');
+	my $license_info       = Wx::gettext('Padre is free software; you can redistribute it and/or modify it under the same terms as Perl 5.');
 	my $splash_name        = Wx::gettext('Blue butterfly on a green leaf');
 	my $splash_description = Wx::gettext('splash image is based on work by');
 	$self->{about}->SetPage( $self->_rtl(<<"END_HTML") );
@@ -112,6 +113,7 @@ sub _content_about {
     </strong>
     <p>$created_by Gábor Szabó</p>
     <p>Copyright 2008 - 2010 $padre_dev_team</p>
+    <p>$license_info</p>
     <p>"$splash_name" - $splash_description Jerry Charlotte (blackbutterfly)</p>
     <p>
     <center>
