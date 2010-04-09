@@ -14,6 +14,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       (reported by leprevost)
     - Updated German and Turkish translation (Zeno Gantner and Burak Gürsoy)
     - Added licensing information to About dialog (Zeno Gantner)
+    - Skip '.' when indexing installed modules in @INC (dam)
 
 0.59 2010.03.31 
     - Don't crash open file list dialog on unsaved files or without
