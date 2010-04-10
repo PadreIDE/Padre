@@ -86,8 +86,8 @@ sub new {
 		name    => 'help.live_support',
 		label   => Wx::gettext('Padre Support (English)'),
 		comment => Wx::gettext(
-			      'Open the Padre live support in your default web browser '
-				. 'and chat to others who may help you with your problem'
+			      'Open the Padre live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('padre');
@@ -98,8 +98,8 @@ sub new {
 		name    => 'help.perl_help',
 		label   => Wx::gettext('Perl Help'),
 		comment => Wx::gettext(
-			      'Open the Perl live support in your default web browser '
-				. 'and chat to others who may help you with your problem'
+			      'Open the Perl live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('general');
@@ -110,8 +110,8 @@ sub new {
 		name    => 'help.win32_questions',
 		label   => Wx::gettext('Win32 Questions (English)'),
 		comment => Wx::gettext(
-			      'Open the Perl/Win32 live support in your default web browser '
-				. 'and chat to others who may help you with your problem'
+			      'Open the Perl/Win32 live support chat in your web browser '
+				. 'and talk to others who may help you with your problem'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_irc('win32');
@@ -123,7 +123,7 @@ sub new {
 		name    => 'help.visit_perlmonks',
 		label   => Wx::gettext('Visit the PerlMonks'),
 		comment => Wx::gettext(
-			'Open perlmonks.org, one of the biggest Perl community sites ' . 'in your default web browser'
+			'Open perlmonks.org, one of the biggest Perl community sites, in your default web browser'
 		),
 		menu_event => sub {
 			Padre::Wx::launch_browser('http://perlmonks.org/');
@@ -162,7 +162,7 @@ sub new {
 		name       => 'help.about',
 		id         => Wx::wxID_ABOUT,
 		label      => Wx::gettext('&About'),
-		comment    => Wx::gettext('Show the about-Padre information'),
+		comment    => Wx::gettext('Show information about Padre'),
 		menu_event => sub {
 			$_[0]->about->ShowModal;
 		},
