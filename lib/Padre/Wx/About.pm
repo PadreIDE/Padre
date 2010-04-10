@@ -112,13 +112,15 @@ sub _content_about {
     <font size="+1">&nbsp;&nbsp;Perl Application Development and Refactoring Environment</font>
     </strong>
     <p>$created_by Gábor Szabó</p>
-    <p>Copyright 2008 - 2010 $padre_dev_team</p>
-    <p>$license_info</p>
-    <p>"$splash_name" - $splash_description Jerry Charlotte (blackbutterfly)</p>
     <p>
     <center>
         <img src="$splash">
     </center>
+    </p>
+    <p><small>"$splash_name" - $splash_description Jerry Charlotte (blackbutterfly)</small></p>
+    <p>
+      Copyright 2008 - 2010 $padre_dev_team<br>
+      $license_info
     </p>
   </body>
 </html>
