@@ -1413,18 +1413,18 @@ sub comment_lines {
 		## it is not enough, only current position to check :(
 		# my $is_first_column = $self->GetColumn( $self->GetCurrentPos ) == 0;
 		# if ( $is_first_column && $end > $begin ) {
-			# $end--;
+		# $end--;
 		# }
 
 		foreach my $line ( $begin .. $end ) {
-			my $text  = _get_line_by_number( $self, $line );
+			my $text = _get_line_by_number( $self, $line );
 
 			# next if (length($text) == 0);  # should i do this?
 
-			if ($text =~ /^(\s*)/) {
+			if ( $text =~ /^(\s*)/ ) {
 				my $pos = $self->PositionFromLine($line);
 				$pos += length($1);
-				$self->InsertText( $pos, $str.' ');
+				$self->InsertText( $pos, $str . ' ' );
 			}
 		}
 
@@ -1459,17 +1459,18 @@ sub uncomment_lines {
 			$self->ReplaceSelection('');
 		}
 	} else {
+
 		# my $is_first_column = $self->GetColumn( $self->GetCurrentPos ) == 0;
 		# if ( $is_first_column && $end > $begin ) {
-			# $end--;
+		# $end--;
 		# }
-		foreach my $line ($begin .. $end) {
-			my $text  = _get_line_by_number( $self, $line );
+		foreach my $line ( $begin .. $end ) {
+			my $text = _get_line_by_number( $self, $line );
 
 			# the first line starting with '#!' can't be uncommented!
-			next if ($line == 0 && $text =~ /^#!/ );
+			next if ( $line == 0 && $text =~ /^#!/ );
 
-			if ($text =~ /^(\s*)(\Q$str\E\s*)/) {
+			if ( $text =~ /^(\s*)(\Q$str\E\s*)/ ) {
 				my $start = $self->PositionFromLine($line) + length($1);
 
 				$self->SetSelection( $start, $start + length($2) );

@@ -279,7 +279,8 @@ Regular expression starting with a quantifier such as
 	if ( $config->begerror_regexq and $text =~ m/^([\x00-\xff]*?)\=\~  [\s\t\r\n]*  \/ \^?  [\+\*\?\{] /xs ) {
 		$self->_report(
 			"A regular expression starting with a quantifier ( + * ? { ) doesn't make sense, you may want to escape it with a \\.",
-			$1 );
+			$1
+		);
 		return;
 	}
 

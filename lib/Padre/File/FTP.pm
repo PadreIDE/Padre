@@ -86,35 +86,38 @@ sub new {
 sub _ftp {
 	my $self = shift;
 
-	my $cache_key = join("\x00", $self->{_host}, $self->{_port}, $self->{_user});
+	my $cache_key = join( "\x00", $self->{_host}, $self->{_port}, $self->{_user} );
 
 	# NOOP is used to check if the connection is alive, the server will return
 	# 200 if the command is successful
-	if (defined($connection_cache{$cache_key})){
-		if (($self->{_last_noop} || 0) == time) {
+	if ( defined( $connection_cache{$cache_key} ) ) {
+		if ( ( $self->{_last_noop} || 0 ) == time ) {
 			return $connection_cache{$cache_key};
-		} elsif ($self->{_no_noop}) {
+		} elsif ( $self->{_no_noop} ) {
 			$self->{_last_noop} = time;
+
 			# NOOP is not supported
 			return $connection_cache{$cache_key} if $connection_cache{$cache_key}->quot('PWD');
 		} else {
 			$self->{_last_noop} = time;
+
 			# NOOP is supported
 			return $connection_cache{$cache_key} if $connection_cache{$cache_key}->quot('NOOP') == 2;
 		}
 	}
-	
+
 	# Create FTP object and connection
 	$self->_info( sprintf( Wx::gettext('Connecting to FTP server %s...'), $self->{_host} . ':' . $self->{_port} ) );
 	my $ftp = Net::FTP->new(
-		Host    => $self->{_host},
-		Port    => $self->{_port},
-		exists $self->{_timeout} ? (Timeout => $self->{_timeout}) : (),
-		exists $self->{_passive} ? (Passive => $self->{_passive}) : (),
-#		Debug => 3, # Enable for FTP-debugging to STDERR
+		Host => $self->{_host},
+		Port => $self->{_port},
+		exists $self->{_timeout} ? ( Timeout => $self->{_timeout} ) : (),
+		exists $self->{_passive} ? ( Passive => $self->{_passive} ) : (),
+
+		#		Debug => 3, # Enable for FTP-debugging to STDERR
 	);
 
-	if ( !defined( $ftp ) ) {
+	if ( !defined($ftp) ) {
 		$self->{error} = sprintf( Wx::gettext('Error connecting to %s:%s: %s'), $self->{_host}, $self->{_port}, $@ );
 		return;
 	}
@@ -124,13 +127,15 @@ sub _ftp {
 			title  => Wx::gettext('FTP Password'),
 			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
 		) || ''; # Use empty password (not undef) if nothing was entered
-		# TODO: offer an option to store the password
+		         # TODO: offer an option to store the password
 	}
 
 	# Log into the FTP server
 	$self->_info( sprintf( Wx::gettext('Logging into FTP server as %s...'), $self->{_user} ) );
 	if ( !$ftp->login( $self->{_user}, $self->{_pass} ) ) {
-		$self->{error} = sprintf( Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port}, defined $@ ? $@ : Wx::gettext('Unknown error') );
+		$self->{error} =
+			sprintf( Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port},
+			defined $@ ? $@ : Wx::gettext('Unknown error') );
 		return;
 	}
 
@@ -143,7 +148,7 @@ sub _ftp {
 	$self->_info( Wx::gettext('Connection to FTP server successful.') );
 
 	$self->{_last_noop} = time;
-	
+
 	return $ftp;
 }
 
@@ -221,7 +226,7 @@ sub browse_mtime {
 
 sub exists {
 	my $self = shift;
-	
+
 	my $ftp = $self->_ftp;
 	return if !defined $ftp;
 

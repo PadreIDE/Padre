@@ -598,8 +598,9 @@ sub new {
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
 		label       => Wx::gettext('Show as hexadecimal'),
-		comment     => Wx::gettext('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
-		menu_event  => sub {
+		comment =>
+			Wx::gettext('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
+		menu_event => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'hex' );
 		},
 	);

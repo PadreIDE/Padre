@@ -62,10 +62,11 @@ sub new {
 
 			return unless -e $path;
 
-            my $main = Padre::Current->main; 
-            # N.B. using $self->main instead causes Padre::Plugin::Plack::Panel's
-            # link clicking to die with "Can't locate object method "setup_editor" via package "Padre::Wx::Bottom"
-            
+			my $main = Padre::Current->main;
+
+			# N.B. using $self->main instead causes Padre::Plugin::Plack::Panel's
+			# link clicking to die with "Can't locate object method "setup_editor" via package "Padre::Wx::Bottom"
+
 			$main->setup_editor($path);
 			if ( $main->current->document->filename eq $path ) {
 				$main->current->editor->goto_line_centerize( $line - 1 );

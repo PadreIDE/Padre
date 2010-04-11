@@ -23,16 +23,16 @@ use 5.008;
 use strict;
 use warnings;
 
-our $VERSION   = '0.59';
+our $VERSION = '0.59';
 
 # This is a Padre::Util module where the subs should be called as functions,
 # but Template::Tiny requires us to use a blessed package and we could use
 # the object as a cache.
 sub new {
 	my $class = shift;
-	
-	my $self = bless {},$class;
-	
+
+	my $self = bless {}, $class;
+
 	return $self;
 }
 
@@ -49,9 +49,10 @@ Return the user replied value on subsequent calls.
 
 sub new_modulename {
 	my $self = shift;
-	
-	$self->{_modulename} ||= Padre->ide->wx->main->prompt(Wx::gettext('New module'),Wx::gettext('Module name:')) || 'New::Module';
-	
+
+	$self->{_modulename} ||= Padre->ide->wx->main->prompt( Wx::gettext('New module'), Wx::gettext('Module name:') )
+		|| 'New::Module';
+
 	return $self->{_modulename};
 }
 
