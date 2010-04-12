@@ -165,6 +165,7 @@ requires 'Pod::Functions'          => 0;
 requires 'Module::CoreList'        => 0;
 test_requires 'Capture::Tiny'      => '0.06';
 test_requires 'Test::More'         => '0.88';
+test_requires 'Test::MockObject'   => '1.09';
 test_requires 'Test::Script'       => '1.07';
 test_requires 'Test::Exception'    => '0.27';
 test_requires 'Test::NoWarnings'   => '0.084';
