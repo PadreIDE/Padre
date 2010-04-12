@@ -19,10 +19,14 @@ our @ISA = 'Wx::RichTextCtrl';
 sub new {
 	my $class = shift;
 	my $main  = shift;
+	
+	# Bottom defaults to $main's bottom panel, but can be
+	# something different (for example see Padre::Plugin::Plack's usage)
+	my $bottom = shift || $main->bottom;
 
 	# Create the underlying object
 	my $self = $class->SUPER::new(
-		$main->bottom,
+		$bottom,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
@@ -37,6 +41,7 @@ sub new {
 	$self->clear;
 	$self->set_font;
 	$self->{main} = $main;
+	$self->{bottom} = $bottom;
 
 	# see #351: output should be blank by default at start-up.
 	#$self->AppendText( Wx::gettext('No output') );
@@ -62,11 +67,7 @@ sub new {
 
 			return unless -e $path;
 
-			my $main = Padre::Current->main;
-
-			# N.B. using $self->main instead causes Padre::Plugin::Plack::Panel's
-			# link clicking to die with "Can't locate object method "setup_editor" via package "Padre::Wx::Bottom"
-
+			my $main = $self->main;
 			$main->setup_editor($path);
 			if ( $main->current->document->filename eq $path ) {
 				$main->current->editor->goto_line_centerize( $line - 1 );
@@ -80,11 +81,11 @@ sub new {
 }
 
 sub bottom {
-	$_[0]->GetParent;
+	$_[0]->{bottom} || $_[0]->GetParent;
 }
 
 sub main {
-	$_[0]->GetGrandParent;
+	$_[0]->{main} || $_[0]->GetGrandParent;
 }
 
 sub current {
