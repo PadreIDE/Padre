@@ -3624,30 +3624,32 @@ sub open_file_dialog {
 	# But I don't think Wx + Motif is in use nowadays
 	my $wildcards = join(
 		'|',
-		Wx::gettext("JavaScript Files"),
-		"*.js;*.JS",
-		Wx::gettext("Perl Files"),
-		"*.pm;*.PM;*.pl;*.PL",
-		Wx::gettext("PHP Files"),
-		"*.php;*.php5;*.PHP",
-		Wx::gettext("Python Files"),
-		"*.py;*.PY",
-		Wx::gettext("Ruby Files"),
-		"*.rb;*.RB",
-		Wx::gettext("SQL Files"),
-		"*.sql;*.SQL",
-		Wx::gettext("Text Files"),
-		"*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI",
-		Wx::gettext("Web Files"),
-		"*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS",
+		Wx::gettext('JavaScript Files'),
+		'*.js;*.JS',
+		Wx::gettext('Perl Files'),
+		'*.pm;*.PM;*.pl;*.PL',
+		Wx::gettext('PHP Files'),
+		'*.php;*.php5;*.PHP',
+		Wx::gettext('Python Files'),
+		'*.py;*.PY',
+		Wx::gettext('Ruby Files'),
+		'*.rb;*.RB',
+		Wx::gettext('SQL Files'),
+		'*.sql;*.SQL',
+		Wx::gettext('Text Files'),
+		'*.txt;*.TXT;*.yml;*.conf;*.ini;*.INI;.*rc',
+		Wx::gettext('Web Files'),
+		'*.html;*.HTML;*.htm;*.HTM;*.css;*.CSS',
+		Wx::gettext('Script Files'),
+		'*.sh;*.bat;*.BAT',
 	);
 	$wildcards =
 		Padre::Constant::WIN32
-		? Wx::gettext("All Files") . "|*.*|" . $wildcards
-		: Wx::gettext("All Files") . "|*|" . $wildcards;
+		? Wx::gettext('All Files') . '|*.*|' . $wildcards
+		: Wx::gettext('All Files') . '|*|' . $wildcards;
 	my $dialog = Wx::FileDialog->new(
-		$self, Wx::gettext("Open File"),
-		$self->cwd, "", $wildcards, Wx::wxFD_MULTIPLE,
+		$self, Wx::gettext('Open File'),
+		$self->cwd, '', $wildcards, Wx::wxFD_MULTIPLE,
 	);
 	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		return;
