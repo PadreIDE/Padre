@@ -19,6 +19,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       (Sam Crawley)
     - Added file type filter "script file" (which includes Unix shell scripts
       and Windows .bat files) to the Open dialog (Zeno Gantner)
+    - MIME types: added .mo to the list of binary file extensions, 
+      improved/gettext-ified some descriptions, changed LaTeX extension from
+      latex to tex (Zeno Gantner)
 
 0.59 2010.03.31 
     - Don't crash open file list dialog on unsaved files or without

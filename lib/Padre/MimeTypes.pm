@@ -64,7 +64,6 @@ sub _initialize {
 		html  => 'text/html',
 		js    => 'application/javascript',
 		json  => 'application/json',
-		latex => 'application/x-latex',
 		lsp   => 'application/x-lisp',
 		lua   => 'text/x-lua',
 		mak   => 'text/x-makefile',
@@ -84,6 +83,7 @@ sub _initialize {
 		pod   => \&perl_mime_type,
 		psgi  => 'application/x-psgi',
 		t     => \&perl_mime_type,
+		tex   => 'application/x-latex',
 
 		# Lacking a better solution, define our own MIME
 		xs => 'text/x-perlxs',
@@ -178,7 +178,7 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_HTML,    # CONFIRMED
 		},
 		'application/javascript' => {
-			name  => 'Javascript',
+			name  => 'JavaScript',
 			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
 		'application/json' => {
@@ -186,7 +186,7 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_ESCRIPT, # CONFIRMED
 		},
 		'application/x-latex' => {
-			name  => 'Latex',
+			name  => 'LaTeX',
 			lexer => Wx::wxSTC_LEX_LATEX,   # CONFIRMED
 		},
 		'application/x-lisp' => {
@@ -194,7 +194,7 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_LISP,    # CONFIRMED
 		},
 		'application/x-shellscript' => {
-			name  => 'Shellscript',
+			name  => Wx::gettext('Shell Script'),
 			lexer => Wx::wxSTC_LEX_BASH,
 		},
 		'text/x-lua' => {
@@ -277,7 +277,7 @@ sub _initialize {
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
 		},
 		'text/plain' => {
-			name  => 'Text',
+			name  => Wx::gettext('Text'),
 			lexer => Wx::wxSTC_LEX_NULL, # CONFIRMED
 		},
 
