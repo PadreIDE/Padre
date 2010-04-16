@@ -3015,8 +3015,13 @@ sub on_autocompletion {
 		$self->message( $length, Wx::gettext("Autocompletion error") );
 	}
 	if (@words) {
+		my $ide    = $self->ide;
+		my $config = $ide->config;		
 		my $editor = $document->editor;
+		
+		$editor->AutoCompSetChooseSingle($config->autocomplete_always ? 0 : 1);
 		$editor->AutoCompSetSeparator( ord ' ' );
+						
 		$editor->AutoCompShow( $length, join " ", @words );
 
 		# Cancel the auto completion list when Padre loses focus

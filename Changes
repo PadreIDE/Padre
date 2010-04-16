@@ -22,6 +22,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - MIME types: added .mo to the list of binary file extensions, 
       improved/gettext-ified some descriptions, changed LaTeX extension from
       latex to tex (Zeno Gantner)
+    - Autocomplete no longer displays the dialog when only one option is
+      available (unless 'Autcomplete while typing' is on) (Sam Crawley - #927)
 
 0.59 2010.03.31 
     - Don't crash open file list dialog on unsaved files or without
