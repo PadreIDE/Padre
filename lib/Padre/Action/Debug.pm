@@ -202,8 +202,8 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Value') . ' (&x) ',
-		comment      => Wx::gettext('Show the value of a variable.'),
+		label        => Wx::gettext('Show Value now') . ' (&x) ',
+		comment      => Wx::gettext('Show the value of a variable now in a pop-up window.'),
 
 		#shortcut     => 'Shift-F5',
 		menu_event => sub {
@@ -216,7 +216,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Evaluate Expression'),
+		label        => Wx::gettext('Evaluate Expression...'),
 		comment      => Wx::gettext('Type in any expression and evaluate it in the debugged process'),
 
 		#shortcut     => 'Shift-F5',

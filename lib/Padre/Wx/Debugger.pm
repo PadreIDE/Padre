@@ -499,6 +499,9 @@ sub quit {
 
 1;
 
+# TODO:
+# Keep the debugger window open even after ending the script
+# 
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.
 # LICENSE
