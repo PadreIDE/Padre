@@ -444,7 +444,7 @@ sub _debug_get_variable {
 	return unless $current->editor;
 	my $text = $current->text;
 	if ( not $text or $text !~ /^[\$@%\\]/ ) {
-		$main->error( sprintf( Wx::gettext("'%s' does not look like a variable"), $text ) );
+		$main->error( sprintf( Wx::gettext("'%s' does not look like a variable. First select a variable in the code and then try again."), $text ) );
 		return;
 	}
 	return $text;
