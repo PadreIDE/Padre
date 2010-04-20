@@ -133,9 +133,10 @@ sub _ftp {
 	# Log into the FTP server
 	$self->_info( sprintf( Wx::gettext('Logging into FTP server as %s...'), $self->{_user} ) );
 	if ( !$ftp->login( $self->{_user}, $self->{_pass} ) ) {
-		$self->{error} =
-			sprintf( Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port},
-			defined $@ ? $@ : Wx::gettext('Unknown error') );
+		$self->{error} = sprintf(
+			Wx::gettext('Error logging in on %s:%s: %s'), $self->{_host}, $self->{_port},
+			defined $@ ? $@ : Wx::gettext('Unknown error')
+		);
 		return;
 	}
 

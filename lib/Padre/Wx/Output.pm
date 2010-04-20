@@ -19,7 +19,7 @@ our @ISA = 'Wx::RichTextCtrl';
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	
+
 	# Bottom defaults to $main's bottom panel, but can be
 	# something different (for example see Padre::Plugin::Plack's usage)
 	my $bottom = shift || $main->bottom;
@@ -40,7 +40,7 @@ sub new {
 	# Do custom start-up stuff here
 	$self->clear;
 	$self->set_font;
-	$self->{main} = $main;
+	$self->{main}   = $main;
 	$self->{bottom} = $bottom;
 
 	# see #351: output should be blank by default at start-up.
