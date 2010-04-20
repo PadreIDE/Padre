@@ -8,7 +8,7 @@ use Padre::Wx       ();
 use Padre::Wx::Icon ();
 use Padre::Logger;
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 our @ISA     = 'Wx::ListView';
 
 sub new {

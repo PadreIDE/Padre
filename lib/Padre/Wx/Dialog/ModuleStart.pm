@@ -10,7 +10,7 @@ use File::Spec        ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 
 our %license_id = ( # TODO: check for other module builders as well
 	Wx::gettext('Apache License')         => 'apache',       ## TODO: does not work w/ Module::Build

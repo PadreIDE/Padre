@@ -8,7 +8,7 @@ use Padre::Constant ();
 use Padre::Wx       ();
 use Padre::Locale   ();
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 our @ISA     = 'Wx::TreeCtrl';
 
 use Class::XSAccessor {

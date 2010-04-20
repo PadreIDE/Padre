@@ -26,7 +26,7 @@ use warnings;
 use List::Util ();
 use Padre::Wx  ();
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 
 use constant GOLDEN => 1.618;
 

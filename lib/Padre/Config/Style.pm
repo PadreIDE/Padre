@@ -9,7 +9,7 @@ use Carp         ();
 use Params::Util ();
 use YAML::Tiny   ();
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 
 
 

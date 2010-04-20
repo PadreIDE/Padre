@@ -32,7 +32,7 @@ use warnings;
 use Module::Build   ();
 use Padre::Constant ();
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 our @ISA     = 'Module::Build';
 
 sub ACTION_plugin {

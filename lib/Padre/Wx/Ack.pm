@@ -22,7 +22,7 @@ use Padre::DB         ();
 use Padre::Wx         ();
 use Padre::Wx::Dialog ();
 
-our $VERSION = '0.59';
+our $VERSION = '0.60';
 
 my $iter;
 my %opts;
