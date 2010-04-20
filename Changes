@@ -1,7 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.60 To Be Released
+0.61 To Be Released
+
+0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)
     - Add interactive template functions (SEWI)
     - Fixed ticket #900: opening binary files may crash Padre (Zeno Gantner)
