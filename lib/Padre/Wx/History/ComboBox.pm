@@ -16,7 +16,10 @@ sub new {
 	my $class  = shift;
 	my @params = @_;
 	my $type   = $params[5];
+
 	$params[5] = [ Padre::DB::History->recent($type) ];
+	$params[2] ||= $params[5][0] || ''; # Initial text set to first history item by default
+
 	my $self = $class->SUPER::new(@params);
 	$self->{type} = $type;
 	$self;

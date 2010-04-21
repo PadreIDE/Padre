@@ -153,15 +153,15 @@ sub new {
 		},
 	);
 
-	# The "Cancel" button
-	$self->{button_cancel} = Wx::Button->new(
+	# The "Close" button
+	$self->{button_close} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		Wx::gettext("&Cancel"),
+		Wx::gettext("&Close"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->{button_cancel},
+		$self->{button_close},
 		sub {
 			$_[0]->cancel_button;
 		}
@@ -222,7 +222,7 @@ sub new {
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$bottom->Add( $self->{button_find},    0, Wx::wxGROW | Wx::wxLEFT,  5 );
 	$bottom->Add( $self->{findall_button}, 0, Wx::wxGROW,               5 );
-	$bottom->Add( $self->{button_cancel},  0, Wx::wxGROW | Wx::wxRIGHT, 5 );
+	$bottom->Add( $self->{button_close},  0, Wx::wxGROW | Wx::wxRIGHT, 5 );
 
 	# Fill the sizer for the overall dialog
 	my $sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
@@ -272,7 +272,7 @@ sub find {
 
 	# Clear out and reset the dialog, then prepare the new find
 	$self->{find_text}->refresh;
-	$self->{find_text}->SetValue($text);
+	$self->{find_text}->SetValue($text) if $text;
 	$self->{find_text}->SetFocus;
 
 	if ( $self->IsShown ) {

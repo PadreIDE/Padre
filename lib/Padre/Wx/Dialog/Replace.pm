@@ -185,11 +185,11 @@ sub new {
 	);
 	$self->{replace}->SetDefault;
 
-	# The "Cancel" button
+	# The "Close" button
 	$self->{cancel_button} = Wx::Button->new(
 		$self,
 		Wx::wxID_CANCEL,
-		Wx::gettext("&Cancel"),
+		Wx::gettext("&Close"),
 	);
 	Wx::Event::EVT_BUTTON(
 		$self,
