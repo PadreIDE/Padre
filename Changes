@@ -4,6 +4,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 0.61 To Be Released
     - MIME types: added a few C++ file extensions, added LaTeX .sty files
       (Zeno Gantner)
+    - About dialog: increase height of the window so that the translated
+      licensing terms also fit in without a scrollbar (Zeno Gantner)
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)

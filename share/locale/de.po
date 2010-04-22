@@ -2398,7 +2398,7 @@ msgid ""
 "same terms as Perl 5."
 msgstr ""
 "Padre ist freie Software und kann zu den gleichen Bedingungen kopiert, "
-"verteilt und geändert werden, wie Perl 5."
+"weitergegeben und geändert werden wie Perl 5."
 
 #: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"

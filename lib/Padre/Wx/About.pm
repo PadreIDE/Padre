@@ -24,7 +24,7 @@ sub new {
 		-1,
 		Wx::gettext('About Padre'),
 		Wx::wxDefaultPosition,
-		[ 700, 530 ],
+		[ 700, 600 ],
 	);
 
 	# Until we get a real icon use the same one as the others
