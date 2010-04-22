@@ -2,6 +2,8 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.61 To Be Released
+    - MIME types: added a few C++ file extensions, added LaTeX .sty files
+      (Zeno Gantner)
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)

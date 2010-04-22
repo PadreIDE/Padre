@@ -55,13 +55,22 @@ sub _initialize {
 		bat   => 'text/x-bat',
 		bml   => 'text/x-bml',            # dreamwidth file format
 		c     => 'text/x-c',
+		cc    => 'text/x-c++src',
 		cpp   => 'text/x-c++src',
+		cxx   => 'text/x-c++src',
+		'c++' => 'text/x-c++src',
+		hh    => 'text/x-c++src',
+		hpp   => 'text/x-c++src',
+		hxx   => 'text/x-c++src',
+		'h++' => 'text/x-c++src',
 		css   => 'text/css',
 		diff  => 'text/x-patch',
 		e     => 'text/x-eiffel',
 		f     => 'text/x-fortran',
 		htm   => 'text/html',
 		html  => 'text/html',
+		i     => 'text/x-c',              # C code that should not be preprocessed
+		ii    => 'text/x-c++src',         # C++ code that should not be preprocessed
 		js    => 'application/javascript',
 		json  => 'application/json',
 		lsp   => 'application/x-lisp',
@@ -82,6 +91,7 @@ sub _initialize {
 		pm    => \&perl_mime_type,
 		pod   => \&perl_mime_type,
 		psgi  => 'application/x-psgi',
+		sty   => 'application/x-latex',
 		t     => \&perl_mime_type,
 		tex   => 'application/x-latex',
 
