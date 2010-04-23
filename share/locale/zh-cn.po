@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-20 19:43+0200\n"
-"PO-Revision-Date: 2010-04-20 19:49+0100\n"
+"POT-Creation-Date: 2010-04-23 15:37+0200\n"
+"PO-Revision-Date: 2010-04-23 15:40+0100\n"
 "Last-Translator: jagd <wuchuanren@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -101,31 +101,31 @@ msgstr "深度缩进"
 msgid "Project directory %s does not exist (any longer). This is fatal and will cause problems, please close or save-as this file unless you know what you are doing."
 msgstr "工程目录 %s 不(复)存在. 这是致命的, 並且会导致一些问题. 若您已明确应如何操作, 请关闭该文件或者将其另存."
 
-#: lib/Padre/MimeTypes.pm:197
+#: lib/Padre/MimeTypes.pm:207
 msgid "Shell Script"
 msgstr "Shell 脚本"
 
-#: lib/Padre/MimeTypes.pm:280
+#: lib/Padre/MimeTypes.pm:290
 msgid "Text"
 msgstr "文本"
 
-#: lib/Padre/MimeTypes.pm:303
+#: lib/Padre/MimeTypes.pm:313
 msgid "Fast but might be out of date"
 msgstr "快速但是可能已过期"
 
-#: lib/Padre/MimeTypes.pm:312
+#: lib/Padre/MimeTypes.pm:322
 msgid "PPI Experimental"
 msgstr "实验性 PPI"
 
-#: lib/Padre/MimeTypes.pm:313
+#: lib/Padre/MimeTypes.pm:323
 msgid "Slow but accurate and we have full control so bugs can be fixed"
 msgstr "慢但是准确，我们有全部的控制权限所以臭虫能被消灭"
 
-#: lib/Padre/MimeTypes.pm:317
+#: lib/Padre/MimeTypes.pm:327
 msgid "PPI Standard"
 msgstr "标准 PPI"
 
-#: lib/Padre/MimeTypes.pm:318
+#: lib/Padre/MimeTypes.pm:328
 msgid "Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter."
 msgstr "比原来的 PPI 要快一点。大文件将返回到原始的 Scintilla 加亮。"
 
@@ -1642,6 +1642,8 @@ msgstr "浏览预装样例所在目录来打开一个文件"
 #: lib/Padre/Action/File.pm:166
 #: lib/Padre/Wx/About.pm:86
 #: lib/Padre/Wx/DocBrowser.pm:132
+#: lib/Padre/Wx/Dialog/Find.pm:160
+#: lib/Padre/Wx/Dialog/Replace.pm:192
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:239
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:179
 #: lib/Padre/Wx/Dialog/DocStats.pm:58
@@ -2322,7 +2324,7 @@ msgstr "Padre 是一个自由软件; 您可以在与 Perl 5 相同的条款下�
 
 #: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"
-msgstr "蓝蝶栖绿叶"
+msgstr "翠叶栖蓝蝶"
 
 #: lib/Padre/Wx/About.pm:107
 msgid "splash image is based on work by"
@@ -3103,8 +3105,6 @@ msgstr "&OK"
 #: lib/Padre/Wx/Dialog/OpenURL.pm:70
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:199
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:154
-#: lib/Padre/Wx/Dialog/Find.pm:160
-#: lib/Padre/Wx/Dialog/Replace.pm:192
 #: lib/Padre/Wx/Dialog/OpenResource.pm:192
 #: lib/Padre/Wx/Dialog/Preferences.pm:912
 #: lib/Padre/Wx/Dialog/Advanced.pm:174
