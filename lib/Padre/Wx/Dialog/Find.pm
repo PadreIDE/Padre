@@ -222,7 +222,7 @@ sub new {
 	my $bottom = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$bottom->Add( $self->{button_find},    0, Wx::wxGROW | Wx::wxLEFT,  5 );
 	$bottom->Add( $self->{findall_button}, 0, Wx::wxGROW,               5 );
-	$bottom->Add( $self->{button_close},  0, Wx::wxGROW | Wx::wxRIGHT, 5 );
+	$bottom->Add( $self->{button_close},   0, Wx::wxGROW | Wx::wxRIGHT, 5 );
 
 	# Fill the sizer for the overall dialog
 	my $sizer = Wx::FlexGridSizer->new( 1, 1, 0, 0 );
