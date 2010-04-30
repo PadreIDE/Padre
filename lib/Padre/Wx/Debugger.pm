@@ -188,7 +188,7 @@ sub debugger_is_running {
 	if ( not $self->{_debugger_} ) {
 		$main->message(
 			Wx::gettext(
-				"The debugger is not running.\nYou can start the debugger using one of the step commands in the Debug menu."
+				"The debugger is not running.\nYou can start the debugger using one of the commands 'Step In', 'Step Over', or 'Run till Breakpoint' in the Debug menu."
 			),
 			Wx::gettext('Debugger not running')
 		);
@@ -437,12 +437,12 @@ sub debug_perl_show_value {
 sub _debug_get_variable {
 	my $self = shift;
 
-	my $main = Padre->ide->wx->main;
+	my $main     = Padre->ide->wx->main;
+	my $document = $main->current->document;
+	return unless $document;
 
-	my $current = $main->current;
-
-	return unless $current->editor;
-	my $text = $current->text;
+	#my $text = $current->text;
+	my ( $location, $text ) = $document->get_current_symbol();
 	if ( not $text or $text !~ /^[\$@%\\]/ ) {
 		$main->error(
 			sprintf(
@@ -475,8 +475,6 @@ sub debug_perl_display_value {
 	#	} else {
 	#		$debugger->SetItem( $idx, 1, $value );
 	#	}
-
-	return;
 }
 
 sub debug_perl_evaluate_expression {
