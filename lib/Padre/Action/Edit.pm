@@ -69,7 +69,7 @@ sub new {
 		name        => 'edit.select_all',
 		id          => Wx::wxID_SELECTALL,
 		need_editor => 1,
-		label       => Wx::gettext('Select all'),
+		label       => Wx::gettext('Select All'),
 		comment     => Wx::gettext('Select all the text in the current document'),
 		shortcut    => 'Ctrl-A',
 		toolbar     => 'actions/edit-select-all',
@@ -82,7 +82,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.mark_selection_start',
 		need_editor => 1,
-		label       => Wx::gettext('Mark selection start'),
+		label       => Wx::gettext('Mark Selection Start'),
 		comment     => Wx::gettext('Mark the place where the selection should start'),
 		shortcut    => 'Ctrl-[',
 		menu_event  => sub {
@@ -94,7 +94,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.mark_selection_end',
 		need_editor => 1,
-		label       => Wx::gettext('Mark selection end'),
+		label       => Wx::gettext('Mark Selection End'),
 		comment     => Wx::gettext('Mark the place where the selection should end'),
 		shortcut    => 'Ctrl-]',
 		menu_event  => sub {
@@ -106,7 +106,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.clear_selection_marks',
 		need_editor => 1,
-		label       => Wx::gettext('Clear selection marks'),
+		label       => Wx::gettext('Clear Selection Marks'),
 		comment     => Wx::gettext('Remove all the selection marks'),
 		menu_event  => sub {
 			require Padre::Wx::Editor;
@@ -151,7 +151,7 @@ sub new {
 		name        => 'edit.copy_filename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Copy full filename'),
+		label       => Wx::gettext('Copy Full Filename'),
 		comment     => Wx::gettext('Put the full path of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
@@ -165,7 +165,7 @@ sub new {
 		name        => 'edit.copy_basename',
 		need_editor => 1,
 		need_file   => 1,
-		label       => Wx::gettext('Copy filename'),
+		label       => Wx::gettext('Copy Filename'),
 		comment     => Wx::gettext('Put the name of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
@@ -179,7 +179,7 @@ sub new {
 		name        => 'edit.copy_dirname',
 		need_file   => 1,
 		need_editor => 1,
-		label       => Wx::gettext('Copy directory name'),
+		label       => Wx::gettext('Copy Directory Name'),
 		comment     => Wx::gettext('Put the full path of the directory of the current file in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
@@ -192,7 +192,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.copy_content',
 		need_editor => 1,
-		label       => Wx::gettext('Copy editor content'),
+		label       => Wx::gettext('Copy Editor Content'),
 		comment     => Wx::gettext('Put the content of the current document in the clipboard'),
 		menu_event  => sub {
 			my $document = Padre::Current->document;
@@ -220,7 +220,7 @@ sub new {
 	# Miscellaneous Actions
 	Padre::Action->new(
 		name       => 'edit.goto',
-		label      => Wx::gettext('&Go to...'),
+		label      => Wx::gettext('&Go To...'),
 		comment    => Wx::gettext('Jump to a specific line number or character position'),
 		shortcut   => 'Ctrl-G',
 		menu_event => sub {
@@ -300,7 +300,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.autocomp',
 		need_editor => 1,
-		label       => Wx::gettext('&AutoComplete'),
+		label       => Wx::gettext('&Autocomplete'),
 		comment     => Wx::gettext('Offer completions to the current string. See Preferences'),
 		shortcut    => 'Ctrl-Space',
 		menu_event  => sub {
@@ -311,7 +311,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.brace_match',
 		need_editor => 1,
-		label       => Wx::gettext('&Brace matching'),
+		label       => Wx::gettext('&Brace Matching'),
 		comment     => Wx::gettext('Jump to the matching opening or closing brace: { }, ( ), [ ], < >'),
 		shortcut    => 'Ctrl-1',
 		menu_event  => sub {
@@ -322,7 +322,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.brace_match_select',
 		need_editor => 1,
-		label       => Wx::gettext('&Select to matching brace'),
+		label       => Wx::gettext('&Select to Matching Brace'),
 		comment     => Wx::gettext('Select to the matching opening or closing brace'),
 		shortcut    => 'Ctrl-4',
 		menu_event  => sub { shift->current->editor->select_to_matching_brace }
@@ -332,7 +332,7 @@ sub new {
 		name           => 'edit.join_lines',
 		need_editor    => 1,
 		need_selection => 1,
-		label          => Wx::gettext('&Join lines'),
+		label          => Wx::gettext('&Join Lines'),
 		comment        => Wx::gettext('Join the next line to the end of the current line.'),
 		shortcut       => 'Ctrl-J',
 		menu_event     => sub {
@@ -417,7 +417,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_system',
 		need_editor => 1,
-		label       => Wx::gettext('Encode document to System Default'),
+		label       => Wx::gettext('Encode Document to System Default'),
 		comment    => Wx::gettext('Change the encoding of the current document to the default of the operating system'),
 		menu_event => sub {
 			require Padre::Wx::Dialog::Encode;
@@ -428,7 +428,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_utf8',
 		need_editor => 1,
-		label       => Wx::gettext('Encode document to utf-8'),
+		label       => Wx::gettext('Encode Document to utf-8'),
 		comment     => Wx::gettext('Change the encoding of the current document to utf-8'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
@@ -439,7 +439,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.convert_encoding_to',
 		need_editor => 1,
-		label       => Wx::gettext('Encode document to...'),
+		label       => Wx::gettext('Encode Document to...'),
 		comment     => Wx::gettext('Select an encoding and encode the document to that'),
 		menu_event  => sub {
 			require Padre::Wx::Dialog::Encode;
@@ -577,7 +577,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.filter_tool',
 		need_editor => 1,
-		label       => Wx::gettext('Filter through external tool...'),
+		label       => Wx::gettext('Filter through External Tool...'),
 		comment     => Wx::gettext('Filters the selection (or the whole document) through any external command.'),
 		menu_event  => sub {
 			Padre::Wx::Main::on_filter_tool(@_);
@@ -597,7 +597,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.show_as_hex',
 		need_editor => 1,
-		label       => Wx::gettext('Show as hexadecimal'),
+		label       => Wx::gettext('Show as Hexadecimal'),
 		comment =>
 			Wx::gettext('Show the ASCII values of the selected text in hexadecimal notation in the output window'),
 		menu_event => sub {
@@ -608,7 +608,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'edit.show_as_decimal',
 		need_editor => 1,
-		label       => Wx::gettext('Show as decimal'),
+		label       => Wx::gettext('Show as Decimal'),
 		comment    => Wx::gettext('Show the ASCII values of the selected text in decimal numbers in the output window'),
 		menu_event => sub {
 			Padre::Wx::Main::show_as_numbers( @_, 'decimal' );

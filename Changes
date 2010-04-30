@@ -7,6 +7,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - About dialog: increase height of the window so that the translated
       licensing terms also fit in without a scrollbar (Zeno Gantner)
     - Debugger: improved variable detection in the document (Zeno Gantner)
+    - Menu: More consistent capitalization of menu entries (Zeno Gantner)
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)

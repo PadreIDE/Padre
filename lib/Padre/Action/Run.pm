@@ -56,7 +56,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Run Script (debug info)'),
+		label        => Wx::gettext('Run Script (Debug Info)'),
 		comment      => Wx::gettext( 'Run the current document but include ' . 'debug info in the output.' ),
 		shortcut     => 'Shift-F5',
 		menu_event   => sub {
@@ -123,7 +123,7 @@ sub new {
 			my %objects = @_;
 			return $main->{command} ? 1 : 0;
 		},
-		label      => Wx::gettext('Stop execution'),
+		label      => Wx::gettext('Stop Execution'),
 		comment    => Wx::gettext('Stop a running task.'),
 		shortcut   => 'F6',
 		toolbar    => 'actions/stop',

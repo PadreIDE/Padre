@@ -87,7 +87,7 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_tools-macro',
-		label        => Wx::gettext('Run till breakpoint') . ' (&c) ',
+		label        => Wx::gettext('Run till Breakpoint') . ' (&c) ',
 		comment      => Wx::gettext('Start running and/or continue running till next breakpoint or watch'),
 
 		#shortcut     => 'Shift-F5',
@@ -101,7 +101,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Jump to current execution line'),
+		label        => Wx::gettext('Jump to Current Execution Line'),
 		comment      => Wx::gettext('Set focus to the line where the current statement is in the debugging process'),
 
 		#shortcut     => 'Shift-F5',
@@ -116,7 +116,7 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
-		label        => Wx::gettext('Set breakpoint') . ' (&b) ',
+		label        => Wx::gettext('Set Breakpoint') . ' (&b) ',
 		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
 
 		#shortcut     => 'Shift-F5',
@@ -130,7 +130,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Remove breakpoint'),
+		label        => Wx::gettext('Remove Breakpoint'),
 		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
 
 		#shortcut     => 'Shift-F5',
@@ -144,7 +144,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('List all the breakpoints'),
+		label        => Wx::gettext('List All Breakpoints'),
 		comment      => Wx::gettext('List all the breakpoints on the console'),
 
 		#shortcut     => 'Shift-F5',
@@ -158,7 +158,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Run to cursor'),
+		label        => Wx::gettext('Run to Cursor'),
 		comment      => Wx::gettext('Set a breakpoint at the line where to cursor is and run till there'),
 
 		#shortcut     => 'Shift-F5',
@@ -188,7 +188,7 @@ sub new {
 		need_runable => 1,
 		need_file    => 1,
 		toolbar      => 'stock/code/stock_macro-watch-variable',
-		label        => Wx::gettext('Display value'),
+		label        => Wx::gettext('Display Value'),
 		comment      => Wx::gettext('Display the current value of a variable in the right hand side debugger pane'),
 
 		#shortcut     => 'Shift-F5',
@@ -202,7 +202,7 @@ sub new {
 		need_editor  => 1,
 		need_runable => 1,
 		need_file    => 1,
-		label        => Wx::gettext('Show Value now') . ' (&x) ',
+		label        => Wx::gettext('Show Value Now') . ' (&x) ',
 		comment      => Wx::gettext('Show the value of a variable now in a pop-up window.'),
 
 		#shortcut     => 'Shift-F5',

@@ -42,8 +42,8 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.beginner_check',
 		need_editor => 1,
-		label       => Wx::gettext('Check for common (beginner) errors'),
-		comment     => Wx::gettext('Check the current file'),
+		label       => Wx::gettext('Check for Common (Beginner) Errors'),
+		comment     => Wx::gettext('Check the current file for common beginner errors'),
 		menu_event  => sub {
 			my $doc = $_[0]->current->document;
 			return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
@@ -101,9 +101,9 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.newline_keep_column',
 		need_editor => 1,
-		label       => Wx::gettext('Newline same column'),
+		label       => Wx::gettext('Newline Same Column'),
 		comment     => Wx::gettext(
-			'Like pressing ENTER somewhere on a line but use the current position as ident for the new line.'),
+			'Like pressing ENTER somewhere on a line, but use the current position as ident for the new line.'),
 		shortcut   => 'Ctrl-Enter',
 		menu_event => sub {
 			my $document = $_[0]->current->document or return;
@@ -115,7 +115,7 @@ sub new {
 	Padre::Action->new(
 		name        => 'perl.create_tagsfile',
 		need_editor => 1,
-		label       => Wx::gettext('Create project tagsfile'),
+		label       => Wx::gettext('Create Project Tagsfile'),
 		comment =>
 			Wx::gettext('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
 		menu_event => sub {
@@ -143,7 +143,7 @@ sub new {
 		menu_method => 'AppendCheckItem',
 		name        => 'perl.autocomplete_brackets',
 		need_editor => 1,
-		label       => Wx::gettext('Automatic bracket completion'),
+		label       => Wx::gettext('Automatic Bracket Completion'),
 		comment     => Wx::gettext('When typing { insert a closing } automatically'),
 		menu_event  => sub {
 
