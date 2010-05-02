@@ -40,6 +40,16 @@ use Padre::Task::Outline ();
 our $VERSION = '0.60';
 our @ISA     = 'Padre::Task::Outline';
 
+sub new {
+	my $class = shift;
+	my $self  = $class->SUPER::new(@_);
+
+	my %args = @_;
+	$self->{filename} = $args{filename};
+
+	return $self;
+}
+
 sub run {
 	my $self = shift;
 	$self->_get_outline;
@@ -124,68 +134,16 @@ sub _get_outline {
 	push @{$outline}, $cur_pkg;
 
 	$self->{outline} = $outline;
+
 	return;
 }
 
 sub update_gui {
-	my $self         = shift;
-	my $last_outline = shift;
-	my $outline      = $self->{outline};
-	my $outlinebar   = Padre->ide->wx->main->outline;
-	my $editor       = $self->{main_thread_only}->{editor};
+	my $self       = shift;
+	my $outline    = $self->{outline};
+	my $outlinebar = Padre->ide->wx->main->outline;
 
-	$outlinebar->Freeze;
-
-	# Clear out the existing stuff
-	# TO DO extract data for keeping (sub)trees collapsed/expanded (see below)
-	#if ( $outlinebar->GetCount > 0 ) {
-	#	my $r = $outlinebar->GetRootItem;
-	#	warn ref $r;
-	#	use Data::Dumper;
-	#	my ( $fc, $cookie ) = $outlinebar->GetFirstChild($r);
-	#	warn ref $fc;
-	#	warn $outlinebar->GetItemText($fc) . ': ' . Dumper( $outlinebar->GetPlData($fc) );
-	#}
-	$outlinebar->clear;
-
-	require Padre::Wx;
-
-	# If there is no structure, clear the outline pane and return.
-	unless ($outline) {
-		return;
-	}
-
-	# Again, slightly differently
-	unless (@$outline) {
-		return 1;
-	}
-
-	# Add the hidden unused root
-	my $root = $outlinebar->AddRoot(
-		Wx::gettext('Outline'),
-		-1,
-		-1,
-		Wx::TreeItemData->new('')
-	);
-
-	# Update the outline pane
-	_update_treectrl( $outlinebar, $outline, $root );
-
-	# Set Perl5 specific event handler
-	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
-		$outlinebar,
-		$outlinebar,
-		\&_on_tree_item_right_click,
-	);
-
-	# TO DO Expanding all is not acceptable: We need to keep the state
-	# (i.e., keep the pragmata subtree collapsed if it was collapsed
-	# by the user)
-	#$outlinebar->ExpandAll;
-	$outlinebar->GetBestSize;
-	$outlinebar->Thaw;
-
-	return 1;
+	$outlinebar->update_data( $outline, $self->{filename}, \&_on_tree_item_right_click );
 }
 
 sub _on_tree_item_right_click {
@@ -231,103 +189,6 @@ sub _on_tree_item_right_click {
 		my $y = $event->GetPoint->y;
 		$outlinebar->PopupMenu( $menu, $x, $y );
 	}
-	return;
-}
-
-sub _update_treectrl {
-	my ( $outlinebar, $outline, $root ) = @_;
-
-	foreach my $pkg ( @{$outline} ) {
-		my $branch = $outlinebar->AppendItem(
-			$root,
-			$pkg->{name},
-			-1, -1,
-			Wx::TreeItemData->new(
-				{   line => $pkg->{line},
-					name => $pkg->{name},
-					type => 'package',
-				}
-			)
-		);
-		foreach my $type (qw(pragmata modules attributes methods events)) {
-			_add_subtree( $outlinebar, $pkg, $type, $branch );
-		}
-		$outlinebar->Expand($branch);
-	}
-
-	return;
-}
-
-sub _add_subtree {
-	my ( $outlinebar, $pkg, $type, $root ) = @_;
-
-	my %type_caption = (
-		pragmata => Wx::gettext('Pragmata'),
-		modules  => Wx::gettext('Modules'),
-		methods  => Wx::gettext('Methods'),
-	);
-
-	my $type_elem = undef;
-	if ( defined( $pkg->{$type} ) && scalar( @{ $pkg->{$type} } ) > 0 ) {
-		my $type_caption = ucfirst($type);
-		if ( exists $type_caption{$type} ) {
-			$type_caption = $type_caption{$type};
-		} else {
-			warn "Type not translated: $type_caption\n";
-		}
-
-		$type_elem = $outlinebar->AppendItem(
-			$root,
-			$type_caption,
-			-1,
-			-1,
-			Wx::TreeItemData->new()
-		);
-
-		my @sorted_entries = ();
-		if ( $type eq 'methods' ) {
-			my $config = Padre->ide->config;
-			if ( $config->main_functions_order eq 'original' ) {
-
-				# That should be the one we got
-				@sorted_entries = @{ $pkg->{$type} };
-			} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
-
-				# ~ comes after \w
-				my @pre = map { $_->{name} =~ s/^_/~/; $_ } @{ $pkg->{$type} };
-				@pre = sort { $a->{name} cmp $b->{name} } @pre;
-				@sorted_entries = map { $_->{name} =~ s/^~/_/; $_ } @pre;
-			} else {
-
-				# Alphabetical (aka 'abc')
-				@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
-			}
-		} else {
-			@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
-		}
-
-		foreach my $item (@sorted_entries) {
-			$outlinebar->AppendItem(
-				$type_elem,
-				$item->{name},
-				-1, -1,
-				Wx::TreeItemData->new(
-					{   line => $item->{line},
-						name => $item->{name},
-						type => $type,
-					}
-				)
-			);
-		}
-	}
-	if ( defined $type_elem ) {
-		if ( $type eq 'methods' ) {
-			$outlinebar->Expand($type_elem);
-		} else {
-			$outlinebar->Collapse($type_elem);
-		}
-	}
-
 	return;
 }
 

@@ -9,6 +9,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Debugger: improved variable detection in the document (Zeno Gantner)
     - Menu: More consistent capitalization of menu entries (Zeno Gantner)
     - Updated German translation (Zeno Gantner)
+    - fixed ticket #538: "outline view info takes too long to refresh" by
+      adding an outline cache (Zeno Gantner)
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)

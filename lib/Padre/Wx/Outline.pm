@@ -47,6 +47,8 @@ sub new {
 
 	$self->Hide;
 
+	$self->{cache} = {};
+
 	return $self;
 }
 
@@ -63,7 +65,190 @@ sub gettext_label {
 }
 
 sub clear {
-	$_[0]->DeleteAllItems;
+	my ($self) = @_;
+	$self->DeleteAllItems;
+	return;
+}
+
+################################################################
+# Cache routines
+
+sub store_in_cache {
+	my ( $self, $cache_key, $content ) = @_;
+
+	if ( defined $cache_key ) {
+		$self->{cache}->{$cache_key} = $content;
+	}
+	return;
+}
+
+sub get_from_cache {
+	my ( $self, $cache_key ) = @_;
+
+	if ( defined $cache_key and exists $self->{cache}->{$cache_key} ) {
+		return $self->{cache}->{$cache_key};
+	}
+	return;
+}
+
+#####################################################################
+# GUI routines
+
+sub update_data {
+	my ( $self, $outline_data, $filename, $right_click_handler ) = @_;
+
+	$self->Freeze;
+
+	# Clear out the existing stuff
+	# TO DO extract data for keeping (sub)trees collapsed/expanded (see below)
+	#if ( $self->GetCount > 0 ) {
+	#	my $r = $self->GetRootItem;
+	#	warn ref $r;
+	#	use Data::Dumper;
+	#	my ( $fc, $cookie ) = $self->GetFirstChild($r);
+	#	warn ref $fc;
+	#	warn $self->GetItemText($fc) . ': ' . Dumper( $self->GetPlData($fc) );
+	#}
+	$self->clear;
+
+	require Padre::Wx;
+
+	# If there is no structure, clear the outline pane and return.
+	unless ($outline_data) {
+		return;
+	}
+
+	# Again, slightly differently
+	unless (@$outline_data) {
+		return 1;
+	}
+
+	# Add the hidden unused root
+	my $root = $self->AddRoot(
+		Wx::gettext('Outline'),
+		-1,
+		-1,
+		Wx::TreeItemData->new('')
+	);
+
+	# Update the outline pane
+	_update_treectrl( $self, $outline_data, $root );
+
+	# Set MIME type specific event handler
+	if ( defined $right_click_handler ) {
+		Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
+			$self,
+			$self,
+			$right_click_handler,
+		);
+	}
+
+	# TO DO Expanding all is not acceptable: We need to keep the state
+	# (i.e., keep the pragmata subtree collapsed if it was collapsed
+	# by the user)
+	#$self->ExpandAll;
+	$self->GetBestSize;
+	$self->Thaw;
+
+	$self->store_in_cache( $filename, [ $outline_data, $right_click_handler ] );
+
+	return 1;
+}
+
+sub _update_treectrl {
+	my ( $outlinebar, $outline, $root ) = @_;
+
+	foreach my $pkg ( @{$outline} ) {
+		my $branch = $outlinebar->AppendItem(
+			$root,
+			$pkg->{name},
+			-1, -1,
+			Wx::TreeItemData->new(
+				{   line => $pkg->{line},
+					name => $pkg->{name},
+					type => 'package',
+				}
+			)
+		);
+		foreach my $type (qw(pragmata modules attributes methods events)) {
+			_add_subtree( $outlinebar, $pkg, $type, $branch );
+		}
+		$outlinebar->Expand($branch);
+	}
+
+	return;
+}
+
+sub _add_subtree {
+	my ( $self, $pkg, $type, $root ) = @_;
+
+	my %type_caption = (
+		pragmata => Wx::gettext('Pragmata'),
+		modules  => Wx::gettext('Modules'),
+		methods  => Wx::gettext('Methods'),
+	);
+
+	my $type_elem = undef;
+	if ( defined( $pkg->{$type} ) && scalar( @{ $pkg->{$type} } ) > 0 ) {
+		my $type_caption = ucfirst($type);
+		if ( exists $type_caption{$type} ) {
+			$type_caption = $type_caption{$type};
+		} else {
+			warn "Type not translated: $type_caption\n";
+		}
+
+		$type_elem = $self->AppendItem(
+			$root,
+			$type_caption,
+			-1,
+			-1,
+			Wx::TreeItemData->new()
+		);
+
+		my @sorted_entries = ();
+		if ( $type eq 'methods' ) {
+			my $config = $self->main->{ide}->config;
+			if ( $config->main_functions_order eq 'original' ) {
+
+				# That should be the one we got
+				@sorted_entries = @{ $pkg->{$type} };
+			} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
+
+				# ~ comes after \w
+				my @pre = map { $_->{name} =~ s/^_/~/; $_ } @{ $pkg->{$type} };
+				@pre = sort { $a->{name} cmp $b->{name} } @pre;
+				@sorted_entries = map { $_->{name} =~ s/^~/_/; $_ } @pre;
+			} else {
+
+				# Alphabetical (aka 'abc')
+				@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
+			}
+		} else {
+			@sorted_entries = sort { $a->{name} cmp $b->{name} } @{ $pkg->{$type} };
+		}
+
+		foreach my $item (@sorted_entries) {
+			$self->AppendItem(
+				$type_elem,
+				$item->{name},
+				-1, -1,
+				Wx::TreeItemData->new(
+					{   line => $item->{line},
+						name => $item->{name},
+						type => $type,
+					}
+				)
+			);
+		}
+	}
+	if ( defined $type_elem ) {
+		if ( $type eq 'methods' ) {
+			$self->Expand($type_elem);
+		} else {
+			$self->Collapse($type_elem);
+		}
+	}
+
 	return;
 }
 
@@ -116,7 +301,16 @@ sub stop {
 
 sub refresh {
 	my $self = shift;
+
 	$self->clear;
+
+	my $filename         = Padre::Current->filename;
+	my $outline_data_ref = $self->get_from_cache($filename);
+	if ( defined $outline_data_ref ) {
+		my ( $outline_data, $right_click_handler ) = @$outline_data_ref;
+		$self->update_data( $outline_data, $filename, $right_click_handler );
+	}
+
 	$self->force_next(1);
 }
 

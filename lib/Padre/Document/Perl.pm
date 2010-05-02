@@ -475,8 +475,9 @@ sub get_outline {
 	$self->{last_outline_md5} = $md5;
 
 	my %check = (
-		editor => $self->editor,
-		text   => $text,
+		editor   => $self->editor,
+		text     => $text,
+		filename => $self->filename,
 	);
 	if ( $self->project ) {
 		$check{cwd}      = $self->project->root;
