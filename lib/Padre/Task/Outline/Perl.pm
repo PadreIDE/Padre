@@ -44,9 +44,6 @@ sub new {
 	my $class = shift;
 	my $self  = $class->SUPER::new(@_);
 
-	my %args = @_;
-	$self->{filename} = $args{filename};
-
 	return $self;
 }
 
@@ -141,9 +138,15 @@ sub _get_outline {
 sub update_gui {
 	my $self       = shift;
 	my $outline    = $self->{outline};
+	my $filename   = $self->{filename};
 	my $outlinebar = Padre->ide->wx->main->outline;
 
-	$outlinebar->update_data( $outline, $self->{filename}, \&_on_tree_item_right_click );
+	# only update the outline pane if we still have the same filename
+	if ( $filename eq Padre::Current->filename ) {
+		$outlinebar->update_data( $outline, $filename, \&_on_tree_item_right_click );
+	} else {
+		$outlinebar->store_in_cache( $filename, [ $outline, \&_on_tree_item_right_click ] );
+	}
 }
 
 sub _on_tree_item_right_click {

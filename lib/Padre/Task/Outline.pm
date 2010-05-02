@@ -79,6 +79,9 @@ sub new {
 		$self->{text} = Padre::Current->document->text_get;
 	}
 
+	my %args = @_;
+	$self->{filename} = $args{filename};
+
 	# put notebook page and callback into main-thread-only storage
 	$self->{main_thread_only} ||= {};
 
