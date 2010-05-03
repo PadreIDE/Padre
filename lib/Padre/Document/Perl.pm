@@ -1510,7 +1510,7 @@ sub event_on_right_down {
 			},
 		);
 
-		my $lexRepl = $menu->Append( -1, Wx::gettext("Lexically Rename Variable") );
+		my $lexRepl = $menu->Append( -1, Wx::gettext('Rename Variable') );
 		Wx::Event::EVT_MENU(
 			$editor, $lexRepl,
 			sub {
