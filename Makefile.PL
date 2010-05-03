@@ -130,6 +130,7 @@ requires 'Pod::Simple'              => '3.07';
 requires 'Pod::Simple::XHTML'       => '3.04';
 requires 'Pod::Abstract'            => '0.16';
 requires 'Pod::Perldoc'             => '3.15';
+requires 'POD2::Base'               => '0.043';
 
 # Add later, once we native support portability
 #requires 'Portable'                => '0.12' if win32;
