@@ -13,6 +13,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       adding an outline cache (Zeno Gantner)
     - fixed ticket #541: "wrong outline can get displayed for a document"
       (Zeno Gantner)
+    - fixed ticket #940: "crashes when right clicking in code editing area"
+      (Zeno Gantner)
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)

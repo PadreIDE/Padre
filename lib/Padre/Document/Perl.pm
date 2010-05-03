@@ -1492,7 +1492,7 @@ sub event_on_right_down {
 
 	my $introduced_separator = 0;
 
-	my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
+	my ( $location, $token ) = $self->get_current_symbol($pos);
 
 	# Append variable specific menu items if it's a variable
 	if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
