@@ -1196,7 +1196,9 @@ Olivier MenguE<eacute> (DOLMEN)
 =head3 German
 
 Heiko Jansen (HJANSEN)
+
 Sebastian Willing (SEWI)
+
 Zeno Gantner
 
 =head3 Hebrew
