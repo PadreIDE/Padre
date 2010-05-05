@@ -67,7 +67,8 @@ sub config {
 }
 
 sub enable {
-	my $self     = shift;
+	my $self = shift;
+
 	my $main     = $self->main;
 	my $bottom   = $self->bottom;
 	my $position = $bottom->GetPageCount;
@@ -79,7 +80,8 @@ sub enable {
 }
 
 sub disable {
-	my $self     = shift;
+	my $self = shift;
+
 	my $main     = $self->main;
 	my $bottom   = $self->bottom;
 	my $position = $bottom->GetPageIndex($self);

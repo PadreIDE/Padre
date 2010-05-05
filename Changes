@@ -17,6 +17,10 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       (Zeno Gantner)
     - fixed ticket #878: "Tabs like 'Outline', 'Functions'... should have
       a close button, just like the documents tabs" (Zeno Gantner)
+    - fixed behaviour of the close button for the bottom tabs (Output,
+      Errors, Syntax Check): closing a tab now toggles the corresponding
+      menu and config items (Zeno Gantner)
+      
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)

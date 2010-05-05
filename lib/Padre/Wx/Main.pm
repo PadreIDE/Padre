@@ -4967,6 +4967,7 @@ Toggle visibility of error-list panel. No return value.
 sub on_toggle_errorlist {
 	my $self  = shift;
 	my $event = shift;
+
 	$self->config->set( 'main_errorlist', $event->IsChecked ? 1 : 0, );
 	if ( $self->config->main_errorlist ) {
 		$self->errorlist->enable;
