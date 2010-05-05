@@ -90,7 +90,7 @@ sub disable {
 }
 
 sub gettext_label {
-	return Wx::gettext("Error List");
+	return Wx::gettext('Errors');
 }
 
 sub populate {

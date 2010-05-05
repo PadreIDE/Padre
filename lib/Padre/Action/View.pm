@@ -109,7 +109,7 @@ sub new {
 
 	Padre::Action->new(
 		name        => 'view.show_errorlist',
-		label       => Wx::gettext('Show Error List'),
+		label       => Wx::gettext('Show Errors'),
 		comment     => Wx::gettext('Show the list of errors received during execution of a script'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
