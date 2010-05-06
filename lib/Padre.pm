@@ -1179,6 +1179,8 @@ Fayland Lam (FAYLAND)
 
 BlueT - Matthew Lien - 練喆明 (BLUET) E<lt>bluet@cpan.orgE<gt>
 
+Chuanren Wu
+
 =head3 Dutch
 
 Dirk De Nijs (ddn123456)

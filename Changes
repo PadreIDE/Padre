@@ -20,6 +20,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - fixed behaviour of the close button for the bottom tabs (Output,
       Errors, Syntax Check): closing a tab now toggles the corresponding
       menu and config items (Zeno Gantner)
+    - Updated German and Chinese translation (Zeno Gantner and Chuanren Wu)
       
 
 0.60 2010.04.20

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-02 00:57+0200\n"
+"POT-Creation-Date: 2010-05-06 17:40+0200\n"
 "PO-Revision-Date: 2010-04-11 18:49+0100\n"
 "Last-Translator: Sebastian Willing\n"
 "Language-Team: German\n"
@@ -335,7 +335,7 @@ msgstr ""
 "Plugin '%s' konnte nicht geladen werden\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5212
+#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5213
 msgid "Open file"
 msgstr "Öffne Datei"
 
@@ -473,8 +473,8 @@ msgid ""
 "or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 "Der Debugger läuft noch nicht.\n"
-"Sie können den Debugger starten, indem Sie 'Step In', 'Step Over' oder "
-"'Bis zum Haltepunkt ausführen' im Debugging-Menü auswählen."
+"Sie können den Debugger starten, indem Sie 'Step In', 'Step Over' oder 'Bis "
+"zum Haltepunkt ausführen' im Debugging-Menü auswählen."
 
 #: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:299
 #: lib/Padre/Wx/Debugger.pm:325 lib/Padre/Wx/Debugger.pm:365
@@ -706,15 +706,15 @@ msgstr "Verzeichnis wählen"
 msgid "Output View"
 msgstr "Ausgabe"
 
-#: lib/Padre/Wx/ErrorList.pm:93
-msgid "Error List"
-msgstr "Fehlerliste"
+#: lib/Padre/Wx/ErrorList.pm:95
+msgid "Errors"
+msgstr "Fehler"
 
-#: lib/Padre/Wx/ErrorList.pm:129
+#: lib/Padre/Wx/ErrorList.pm:131
 msgid "No diagnostics available for this error!"
 msgstr "Keine 'diagnostics'-Informationen zu diesem Fehler verfügbar"
 
-#: lib/Padre/Wx/ErrorList.pm:138
+#: lib/Padre/Wx/ErrorList.pm:140
 msgid "Diagnostics"
 msgstr "Diagnose"
 
@@ -777,9 +777,21 @@ msgstr "R/W"
 msgid "Functions"
 msgstr "Funktionen"
 
-#: lib/Padre/Wx/Outline.pm:62 lib/Padre/Task/Outline/Perl.pm:165
+#: lib/Padre/Wx/Outline.pm:64 lib/Padre/Wx/Outline.pm:128
 msgid "Outline"
 msgstr "Übersicht"
+
+#: lib/Padre/Wx/Outline.pm:186
+msgid "Pragmata"
+msgstr "Pragmata"
+
+#: lib/Padre/Wx/Outline.pm:187
+msgid "Modules"
+msgstr "Module"
+
+#: lib/Padre/Wx/Outline.pm:188
+msgid "Methods"
+msgstr "Methoden"
 
 #: lib/Padre/Wx/FindResult.pm:82
 #, perl-format
@@ -791,7 +803,7 @@ msgid "Line No"
 msgstr "Zeilennummer"
 
 #: lib/Padre/Wx/FindResult.pm:124
-msgid "Related Editor Has been Closed"
+msgid "Related editor has been closed"
 msgstr "Das betreffende Dokument wurde geschlossen."
 
 #: lib/Padre/Wx/Main.pm:710
@@ -943,7 +955,7 @@ msgid "Script Files"
 msgstr "Skript-Dateien"
 
 #: lib/Padre/Wx/Main.pm:3653 lib/Padre/Wx/Main.pm:3654
-#: lib/Padre/Wx/Main.pm:4026 lib/Padre/Wx/Main.pm:5214
+#: lib/Padre/Wx/Main.pm:4026 lib/Padre/Wx/Main.pm:5215
 msgid "All Files"
 msgstr "Alle Dateien"
 
@@ -1059,40 +1071,40 @@ msgstr "Vergleich nicht möglich ohne vorheriges speichern"
 msgid "There are no differences\n"
 msgstr "Keine Unterschiede\n"
 
-#: lib/Padre/Wx/Main.pm:5331 lib/Padre/Plugin/Devel.pm:308
+#: lib/Padre/Wx/Main.pm:5332 lib/Padre/Plugin/Devel.pm:308
 #, perl-format
 msgid "Error: %s"
 msgstr "Fehler: %s"
 
-#: lib/Padre/Wx/Main.pm:5332
+#: lib/Padre/Wx/Main.pm:5333
 msgid "Internal error"
 msgstr "Interner Fehler"
 
-#: lib/Padre/Wx/Main.pm:5524 lib/Padre/Plugin/Devel.pm:139
+#: lib/Padre/Wx/Main.pm:5525 lib/Padre/Plugin/Devel.pm:139
 msgid "No file is open"
 msgstr "Keine geöffnete Datei"
 
-#: lib/Padre/Wx/Main.pm:5524
+#: lib/Padre/Wx/Main.pm:5525
 msgid "Stats"
 msgstr "Dokument-Statistiken"
 
-#: lib/Padre/Wx/Main.pm:5552
+#: lib/Padre/Wx/Main.pm:5553
 msgid "Space to Tab"
 msgstr "In Tabulatoren umwandeln..."
 
-#: lib/Padre/Wx/Main.pm:5553
+#: lib/Padre/Wx/Main.pm:5554
 msgid "Tab to Space"
 msgstr "In Leerzeichen umwandeln..."
 
-#: lib/Padre/Wx/Main.pm:5558
+#: lib/Padre/Wx/Main.pm:5559
 msgid "How many spaces for each tab:"
 msgstr "Anzahl Leerzeichen pro Tabulator:"
 
-#: lib/Padre/Wx/Main.pm:6036
+#: lib/Padre/Wx/Main.pm:6037
 msgid "Need to select text in order to translate to hex"
 msgstr "Zur Umwandlung in Hex muss Text markiert sein."
 
-#: lib/Padre/Wx/Main.pm:6178
+#: lib/Padre/Wx/Main.pm:6179
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -1101,7 +1113,7 @@ msgstr ""
 "Fehler beim Ausführen des Filters:\n"
 "%s"
 
-#: lib/Padre/Wx/Main.pm:6193
+#: lib/Padre/Wx/Main.pm:6194
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
@@ -1169,7 +1181,7 @@ msgstr "Löschen"
 msgid "Are you sure you want to delete this item?"
 msgstr "Soll dieses Objekt unwiederbringbar gelöscht werden?"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:820 lib/Padre/Task/Outline/Perl.pm:211
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:820 lib/Padre/Task/Outline/Perl.pm:172
 msgid "Open &Documentation"
 msgstr "Öffne &Dokumentation"
 
@@ -2879,7 +2891,7 @@ msgstr "Vorhandene Lesezeichen:"
 msgid "Delete &All"
 msgstr "Entferne &alle"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:56 lib/Padre/Action/View.pm:291
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:56 lib/Padre/Action/View.pm:286
 msgid "Set Bookmark"
 msgstr "Setze Lesezeichen"
 
@@ -3091,52 +3103,52 @@ msgstr "Fehler: "
 msgid "No errors found."
 msgstr "Keine Fehler gefunden."
 
-#: lib/Padre/Document/Perl.pm:574 lib/Padre/Document/Perl.pm:759
+#: lib/Padre/Document/Perl.pm:575 lib/Padre/Document/Perl.pm:760
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Cursor zeigt offenbar nicht auf eine Variable"
 
-#: lib/Padre/Document/Perl.pm:575 lib/Padre/Document/Perl.pm:599
-#: lib/Padre/Document/Perl.pm:634 lib/Padre/Document/Perl.pm:760
+#: lib/Padre/Document/Perl.pm:576 lib/Padre/Document/Perl.pm:600
+#: lib/Padre/Document/Perl.pm:635 lib/Padre/Document/Perl.pm:761
 msgid "Check cancelled"
 msgstr "Check abgebrochen"
 
-#: lib/Padre/Document/Perl.pm:598
+#: lib/Padre/Document/Perl.pm:599
 msgid "Current cursor does not seem to point at a method"
 msgstr "Cursor zeigt offenbar nicht auf eine Methode"
 
-#: lib/Padre/Document/Perl.pm:633
+#: lib/Padre/Document/Perl.pm:634
 #, perl-format
 msgid "Current '%s' not found"
 msgstr "%s nicht gefunden."
 
-#: lib/Padre/Document/Perl.pm:1500 lib/Padre/Action/Perl.pm:69
+#: lib/Padre/Document/Perl.pm:1501 lib/Padre/Action/Perl.pm:69
 msgid "Find Variable Declaration"
 msgstr "Variablen-Deklaration suchen"
 
-#: lib/Padre/Document/Perl.pm:1512
-msgid "Lexically Rename Variable"
-msgstr "Variable lexikalisch umbenennen"
+#: lib/Padre/Document/Perl.pm:1513
+msgid "Rename Variable"
+msgstr "Variable umbenennen"
 
-#: lib/Padre/Document/Perl.pm:1524 lib/Padre/Document/Perl.pm:1525
+#: lib/Padre/Document/Perl.pm:1525 lib/Padre/Document/Perl.pm:1526
 msgid "Replacement"
 msgstr "Ersatz"
 
-#: lib/Padre/Document/Perl.pm:1540 lib/Padre/Action/Perl.pm:81
+#: lib/Padre/Document/Perl.pm:1541 lib/Padre/Action/Perl.pm:81
 msgid "Find Method Declaration"
 msgstr "Methoden-Deklaration suchen"
 
-#: lib/Padre/Document/Perl.pm:1559 lib/Padre/Action/Refactor.pm:111
+#: lib/Padre/Document/Perl.pm:1560 lib/Padre/Action/Refactor.pm:111
 msgid "Introduce Temporary Variable"
 msgstr "Temporäre Variable einführen"
 
-#: lib/Padre/Document/Perl.pm:1572 lib/Padre/Document/Perl.pm:1573
+#: lib/Padre/Document/Perl.pm:1573 lib/Padre/Document/Perl.pm:1574
 #: lib/Padre/Action/Refactor.pm:110
 msgid "Variable Name"
 msgstr "Variablenname"
 
-#: lib/Padre/Document/Perl.pm:1584
+#: lib/Padre/Document/Perl.pm:1585
 msgid "Edit with Regex Editor"
 msgstr "Mit Regex-Editor editieren"
 
@@ -3355,202 +3367,202 @@ msgstr "Funktionen zeigen"
 msgid "Show a window listing all the functions in the current document"
 msgstr "Alle Funktionen (Methoden, Subs) im aktuellen Dokument anzeigen"
 
-#: lib/Padre/Action/View.pm:66
+#: lib/Padre/Action/View.pm:61
 msgid "Show To-do List"
 msgstr "TODO-Liste zeigen"
 
-#: lib/Padre/Action/View.pm:67
+#: lib/Padre/Action/View.pm:62
 msgid "Show a window listing all todo items in the current document"
 msgstr "Alle TODOs für das aktuelle Dokument zeigen"
 
-#: lib/Padre/Action/View.pm:82
+#: lib/Padre/Action/View.pm:77
 msgid "Show Outline"
 msgstr "Übersicht zeigen"
 
-#: lib/Padre/Action/View.pm:83
+#: lib/Padre/Action/View.pm:78
 msgid ""
 "Show a window listing all the parts of the current file (functions, pragmas, "
 "modules)"
 msgstr ""
 "Die Struktur (Funktionen, Pragmas, Module) des aktuellen Dokuments anzeigen"
 
-#: lib/Padre/Action/View.pm:92
+#: lib/Padre/Action/View.pm:87
 msgid "Show Directory Tree"
 msgstr "Verzeichnis-Baum zeigen"
 
-#: lib/Padre/Action/View.pm:93
+#: lib/Padre/Action/View.pm:88
 msgid "Show a window with a directory browser of the current project"
 msgstr "Den Verzeichnisbaum (komplett oder für das aktuelle Projekt) anzeigen"
 
-#: lib/Padre/Action/View.pm:102
+#: lib/Padre/Action/View.pm:97
 msgid "Show Syntax Check"
 msgstr "Syntax-Check ausführen"
 
-#: lib/Padre/Action/View.pm:103
+#: lib/Padre/Action/View.pm:98
 msgid ""
 "Turn on syntax checking of the current document and show output in a window"
 msgstr "Syntax-Hervorhebung aktivieren"
 
-#: lib/Padre/Action/View.pm:112
-msgid "Show Error List"
-msgstr "Fehlerliste zeigen"
+#: lib/Padre/Action/View.pm:107
+msgid "Show Errors"
+msgstr "Fehler zeigen"
 
-#: lib/Padre/Action/View.pm:113
+#: lib/Padre/Action/View.pm:108
 msgid "Show the list of errors received during execution of a script"
 msgstr "Ausführungsfehler eines Skriptes anzeigen"
 
-#: lib/Padre/Action/View.pm:122
+#: lib/Padre/Action/View.pm:117
 msgid "Show Status Bar"
 msgstr "Statuszeile zeigen"
 
-#: lib/Padre/Action/View.pm:123
+#: lib/Padre/Action/View.pm:118
 msgid "Show/hide the status bar at the bottom of the screen"
 msgstr "Die Statuszeile anzeigen/ausblenden"
 
-#: lib/Padre/Action/View.pm:132
+#: lib/Padre/Action/View.pm:127
 msgid "Show Toolbar"
 msgstr "Werkzeugleiste zeigen"
 
-#: lib/Padre/Action/View.pm:133
+#: lib/Padre/Action/View.pm:128
 msgid "Show/hide the toolbar at the top of the editor"
 msgstr "Toolbar anzeigen/ausblenden"
 
-#: lib/Padre/Action/View.pm:143
+#: lib/Padre/Action/View.pm:138
 msgid "Show Line Numbers"
 msgstr "Zeilennummern zeigen"
 
-#: lib/Padre/Action/View.pm:144
+#: lib/Padre/Action/View.pm:139
 msgid ""
 "Show/hide the line numbers of all the documents on the left side of the "
 "window"
 msgstr "Zeilennummern anzeigen bzw. ausblenden"
 
-#: lib/Padre/Action/View.pm:153
+#: lib/Padre/Action/View.pm:148
 msgid "Show Code Folding"
 msgstr "Code-Ausblenden verwenden"
 
-#: lib/Padre/Action/View.pm:154
+#: lib/Padre/Action/View.pm:149
 msgid ""
 "Show/hide a vertical line on the left hand side of the window to allow "
 "folding rows"
 msgstr "Einklappen von Sourcecode-Teilen ermöglichen"
 
-#: lib/Padre/Action/View.pm:163
+#: lib/Padre/Action/View.pm:158
 msgid "Fold all"
 msgstr "Alle einklappen"
 
-#: lib/Padre/Action/View.pm:164
+#: lib/Padre/Action/View.pm:159
 msgid "Fold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 "Alle möglichen Blöcke einklappen (sofern einklappbarer Code aktiviert ist)"
 
-#: lib/Padre/Action/View.pm:173
+#: lib/Padre/Action/View.pm:168
 msgid "Unfold all"
 msgstr "Alle ausklappen"
 
-#: lib/Padre/Action/View.pm:174
+#: lib/Padre/Action/View.pm:169
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr ""
 "Alle möglichen Blöcke aufklappen (sofern einklappbarer Code aktiviert ist)"
 
-#: lib/Padre/Action/View.pm:183
+#: lib/Padre/Action/View.pm:178
 msgid "Show Call Tips"
 msgstr "Aufruf-Tipps zeigen"
 
-#: lib/Padre/Action/View.pm:184
+#: lib/Padre/Action/View.pm:179
 msgid "When typing in functions allow showing short examples of the function"
 msgstr "Kurzhilfe zu Funktionen anzeigen während sie eingegeben werden"
 
-#: lib/Padre/Action/View.pm:197
+#: lib/Padre/Action/View.pm:192
 msgid "Show Current Line"
 msgstr "Aktuelle Zeile hervorheben"
 
-#: lib/Padre/Action/View.pm:198
+#: lib/Padre/Action/View.pm:193
 msgid "Highlight the line where the cursor is"
 msgstr "Die aktuelle Zeile einfärben"
 
-#: lib/Padre/Action/View.pm:207
+#: lib/Padre/Action/View.pm:202
 msgid "Show Right Margin"
 msgstr "Zeige rechten Rand"
 
-#: lib/Padre/Action/View.pm:208
+#: lib/Padre/Action/View.pm:203
 msgid "Show a vertical line indicating the right margin"
 msgstr "Eine vertikale Linie anzeigen um die rechte Begrenzung darzustellen"
 
-#: lib/Padre/Action/View.pm:218
+#: lib/Padre/Action/View.pm:213
 msgid "Show Newlines"
 msgstr "Zeilenumbrüche zeigen"
 
-#: lib/Padre/Action/View.pm:219
+#: lib/Padre/Action/View.pm:214
 msgid "Show/hide the newlines with special character"
 msgstr "Zeilenumbrüche mit einem speziellen Zeichen darstellen"
 
-#: lib/Padre/Action/View.pm:228
+#: lib/Padre/Action/View.pm:223
 msgid "Show Whitespaces"
 msgstr "Leerraum zeigen"
 
-#: lib/Padre/Action/View.pm:229
+#: lib/Padre/Action/View.pm:224
 msgid "Show/hide the tabs and the spaces with special characters"
 msgstr "Tabulator- und Leerzeichen als spezielle Zeichen anzeigen"
 
-#: lib/Padre/Action/View.pm:238
+#: lib/Padre/Action/View.pm:233
 msgid "Show Indentation Guide"
 msgstr "Einrückungshilfen zeigen"
 
-#: lib/Padre/Action/View.pm:239
+#: lib/Padre/Action/View.pm:234
 msgid ""
 "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr "Einrückungen graphisch darstellen"
 
-#: lib/Padre/Action/View.pm:248
+#: lib/Padre/Action/View.pm:243
 msgid "Word-Wrap"
 msgstr "Automatischer Zeilenumbruch"
 
-#: lib/Padre/Action/View.pm:249
+#: lib/Padre/Action/View.pm:244
 msgid "Wrap long lines"
 msgstr "Lange Zeilen umbrechen"
 
-#: lib/Padre/Action/View.pm:259
+#: lib/Padre/Action/View.pm:254
 msgid "Increase Font Size"
 msgstr "Schrift vergrößern"
 
-#: lib/Padre/Action/View.pm:260
+#: lib/Padre/Action/View.pm:255
 msgid "Make the letters bigger in the editor window"
 msgstr "Schrift größer darstellen"
 
-#: lib/Padre/Action/View.pm:269
+#: lib/Padre/Action/View.pm:264
 msgid "Decrease Font Size"
 msgstr "Schrift verkleinern"
 
-#: lib/Padre/Action/View.pm:270
+#: lib/Padre/Action/View.pm:265
 msgid "Make the letters smaller in the editor window"
 msgstr "Schrift kleiner darstellen"
 
-#: lib/Padre/Action/View.pm:279
+#: lib/Padre/Action/View.pm:274
 msgid "Reset Font Size"
 msgstr "Schriftgröße zurücksetzen"
 
-#: lib/Padre/Action/View.pm:280
+#: lib/Padre/Action/View.pm:275
 msgid "Reset the size of the letters to the default in the editor window"
 msgstr "Standard-Schriftgröße wiederherstellen"
 
-#: lib/Padre/Action/View.pm:292
+#: lib/Padre/Action/View.pm:287
 msgid "Create a bookmark in the current file current row"
 msgstr "Ein Lesezeichen erstellen"
 
-#: lib/Padre/Action/View.pm:302
+#: lib/Padre/Action/View.pm:297
 msgid "Goto Bookmark"
 msgstr "Gehe zu Lesezeichen"
 
-#: lib/Padre/Action/View.pm:303
+#: lib/Padre/Action/View.pm:298
 msgid "Select a bookmark created earlier and jump to that position"
 msgstr "Zu einem Lesezeichen springen"
 
-#: lib/Padre/Action/View.pm:315
+#: lib/Padre/Action/View.pm:310
 msgid "&Full Screen"
 msgstr "&Vollbild"
 
-#: lib/Padre/Action/View.pm:316
+#: lib/Padre/Action/View.pm:311
 msgid "Set Padre in full screen mode"
 msgstr "Vollbildmodus aktivieren"
 
@@ -4870,21 +4882,15 @@ msgstr "Alle Klammern haben Gegenstücke"
 msgid "Check Complete"
 msgstr "Test abgeschlossen"
 
-#: lib/Padre/Task/Outline/Perl.pm:199
+#: lib/Padre/Task/Outline/Perl.pm:160
 msgid "&Go to Element"
 msgstr "&Gehe zu Element"
 
-#: lib/Padre/Task/Outline/Perl.pm:265
-msgid "Pragmata"
-msgstr "Pragmata"
+#~ msgid "Error List"
+#~ msgstr "Fehlerliste"
 
-#: lib/Padre/Task/Outline/Perl.pm:266
-msgid "Modules"
-msgstr "Module"
-
-#: lib/Padre/Task/Outline/Perl.pm:267
-msgid "Methods"
-msgstr "Methoden"
+#~ msgid "Lexically Rename Variable"
+#~ msgstr "Variable lexikalisch umbenennen"
 
 #~ msgid "Open In File Browser"
 #~ msgstr "Im Dateibrowser öffnen"
