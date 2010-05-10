@@ -474,18 +474,18 @@ sub get_outline {
 	}
 	$self->{last_outline_md5} = $md5;
 
-	my %check = (
+	my %arg = (
 		editor   => $self->editor,
 		text     => $text,
-		filename => $self->filename,
+		filename => defined $self->filename ? $self->filename : $self->get_title,
 	);
 	if ( $self->project ) {
-		$check{cwd}      = $self->project->root;
-		$check{perl_cmd} = ['-Ilib'];
+		$arg{cwd}      = $self->project->root;
+		$arg{perl_cmd} = ['-Ilib'];
 	}
 
 	require Padre::Task::Outline::Perl;
-	my $task = Padre::Task::Outline::Perl->new(%check);
+	my $task = Padre::Task::Outline::Perl->new(%arg);
 
 	# asynchronous execution (see on_finish hook)
 	$task->schedule;
