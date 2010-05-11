@@ -2094,7 +2094,7 @@ msgstr ""
 #: lib/Padre/Action/Perl.pm:106
 msgid ""
 "Like pressing ENTER somewhere on a line, but use the current position as "
-"ident for the new line."
+"indent for the new line."
 msgstr ""
 
 #: lib/Padre/Action/Perl.pm:118
