@@ -24,7 +24,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Updated Chinese translation (Chuanren Wu)
     - fixed ticket #939: "Padre 'help' depends on POD2-Base on Strawberry
       Perl on Windows XP" (ADAMK)
-    - Updated Italian translation (Simone Blandino)
+    - Updated Italian translation (SBLANDIN)
+    - Updated Brazilian Portugese translation (GARU)
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)
