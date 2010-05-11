@@ -997,15 +997,15 @@ msgstr "Variable umbenennen"
 
 #: lib/Padre/Action/Refactor.pm:72
 msgid "Extract Subroutine..."
-msgstr "Sub aus Markierung erstellen..."
+msgstr "Subroutine extrahieren..."
 
 #: lib/Padre/Action/Refactor.pm:74
 msgid ""
 "Cut the current selection and create a new sub from it. A call to this sub "
 "is added in the place where the selection was."
 msgstr ""
-"Schneidet die aktuelle Auswahl aus und erstelle eine neue Sub daraus. Ein "
-"Aufruf dieser Sub wird an Stelle der Auswahl eingefügt."
+"Schneidet die aktuelle Auswahl aus und erstelle eine neue Subroutine daraus. Ein "
+"Aufruf dieser Subroutine wird an Stelle der Auswahl eingefügt."
 
 #: lib/Padre/Action/Refactor.pm:86
 msgid "Name for the new subroutine"
@@ -1013,7 +1013,7 @@ msgstr "Name der neuen Subroutine"
 
 #: lib/Padre/Action/Refactor.pm:87
 msgid "Extract Subroutine"
-msgstr "Sub aus Markierung erstellen"
+msgstr "Subroutine extrahieren"
 
 #: lib/Padre/Action/Refactor.pm:102
 msgid "Introduce Temporary Variable..."
@@ -2484,7 +2484,8 @@ msgstr "Konnte %s nicht ausführen"
 msgid ""
 "'%s' does not look like a variable. First select a variable in the code and "
 "then try again."
-msgstr ""
+msgstr "'%s' scheint keine Variable zu sein. Bewegen Sie den Textcursor auf eine"
+"Variable und versuchen Sie es noch einmal."
 
 #: lib/Padre/Wx/Debugger.pm:487
 msgid "Expression:"
