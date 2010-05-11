@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-05 21:40+0200\n"
-"PO-Revision-Date: 2010-05-05 21:54+0100\n"
+"POT-Creation-Date: 2010-05-11 11:25+0200\n"
+"PO-Revision-Date: 2010-05-11 11:47+0100\n"
 "Last-Translator: jagd <wuchuanren@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -203,7 +203,7 @@ msgid "Plugin %s"
 msgstr "插件 %s"
 
 #: lib/Padre/PluginManager.pm:871
-msgid "Error when calling menu for plug-in"
+msgid "Error when calling menu for plug-in "
 msgstr "为插件调出菜单出错"
 
 #: lib/Padre/PluginManager.pm:905
@@ -235,7 +235,7 @@ msgstr ""
 "%s"
 
 #: lib/Padre/PluginManager.pm:983
-#: lib/Padre/Wx/Main.pm:5212
+#: lib/Padre/Wx/Main.pm:5213
 msgid "Open file"
 msgstr "打开文件"
 
@@ -521,11 +521,11 @@ msgstr "所选区域的首字符不像一个 token"
 msgid "Selection not part of a Perl statement?"
 msgstr "选区非 Perl 声明？"
 
-#: lib/Padre/Task/Outline/Perl.pm:160
+#: lib/Padre/Task/Outline/Perl.pm:162
 msgid "&Go to Element"
 msgstr "跳至元素(&G)"
 
-#: lib/Padre/Task/Outline/Perl.pm:172
+#: lib/Padre/Task/Outline/Perl.pm:174
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:820
 msgid "Open &Documentation"
 msgstr "打开文档(&D)"
@@ -785,7 +785,7 @@ msgstr "脚本文件"
 #: lib/Padre/Wx/Main.pm:3653
 #: lib/Padre/Wx/Main.pm:3654
 #: lib/Padre/Wx/Main.pm:4026
-#: lib/Padre/Wx/Main.pm:5214
+#: lib/Padre/Wx/Main.pm:5215
 msgid "All Files"
 msgstr "所有文件"
 
@@ -899,42 +899,42 @@ msgstr "无法对未保存文件进行比较"
 msgid "There are no differences\n"
 msgstr "无差异\n"
 
-#: lib/Padre/Wx/Main.pm:5331
+#: lib/Padre/Wx/Main.pm:5332
 #: lib/Padre/Plugin/Devel.pm:308
 #, perl-format
 msgid "Error: %s"
 msgstr "错误: %s"
 
-#: lib/Padre/Wx/Main.pm:5332
+#: lib/Padre/Wx/Main.pm:5333
 msgid "Internal error"
 msgstr "内部错误"
 
-#: lib/Padre/Wx/Main.pm:5524
+#: lib/Padre/Wx/Main.pm:5525
 #: lib/Padre/Plugin/Devel.pm:139
 msgid "No file is open"
 msgstr "没有打开文件"
 
-#: lib/Padre/Wx/Main.pm:5524
+#: lib/Padre/Wx/Main.pm:5525
 msgid "Stats"
 msgstr "状态"
 
-#: lib/Padre/Wx/Main.pm:5552
+#: lib/Padre/Wx/Main.pm:5553
 msgid "Space to Tab"
 msgstr "转换空格为制表符"
 
-#: lib/Padre/Wx/Main.pm:5553
+#: lib/Padre/Wx/Main.pm:5554
 msgid "Tab to Space"
 msgstr "转换制表符为空格"
 
-#: lib/Padre/Wx/Main.pm:5558
+#: lib/Padre/Wx/Main.pm:5559
 msgid "How many spaces for each tab:"
 msgstr "一个制表符转为多个个空格:"
 
-#: lib/Padre/Wx/Main.pm:6036
+#: lib/Padre/Wx/Main.pm:6037
 msgid "Need to select text in order to translate to hex"
 msgstr "请选择文本来显示为十六进制"
 
-#: lib/Padre/Wx/Main.pm:6178
+#: lib/Padre/Wx/Main.pm:6179
 #, perl-format
 msgid ""
 "Error running filter tool:\n"
@@ -943,7 +943,7 @@ msgstr ""
 "运行过滤工具错误:\n"
 "%s"
 
-#: lib/Padre/Wx/Main.pm:6193
+#: lib/Padre/Wx/Main.pm:6194
 #, perl-format
 msgid ""
 "Error returned by filter tool:\n"
@@ -1026,15 +1026,15 @@ msgstr "输出视图"
 msgid "Files"
 msgstr "文件"
 
-#: lib/Padre/Wx/ErrorList.pm:93
+#: lib/Padre/Wx/ErrorList.pm:95
 msgid "Errors"
 msgstr "错误"
 
-#: lib/Padre/Wx/ErrorList.pm:129
+#: lib/Padre/Wx/ErrorList.pm:131
 msgid "No diagnostics available for this error!"
 msgstr "该错误没有诊断信息"
 
-#: lib/Padre/Wx/ErrorList.pm:138
+#: lib/Padre/Wx/ErrorList.pm:140
 msgid "Diagnostics"
 msgstr "诊断"
 
@@ -1088,7 +1088,7 @@ msgstr "翠叶栖蓝蝶"
 
 #: lib/Padre/Wx/About.pm:107
 msgid "splash image is based on work by"
-msgstr ""
+msgstr "闪屏画面的原作者"
 
 #: lib/Padre/Wx/About.pm:221
 msgid "The Padre Translation Team"
@@ -1574,7 +1574,7 @@ msgid "Delete &All"
 msgstr "删除所有(&A)"
 
 #: lib/Padre/Wx/Dialog/Bookmarks.pm:56
-#: lib/Padre/Action/View.pm:291
+#: lib/Padre/Action/View.pm:286
 msgid "Set Bookmark"
 msgstr "设置书签"
 
@@ -3578,191 +3578,191 @@ msgstr "显示函数列表"
 msgid "Show a window listing all the functions in the current document"
 msgstr "显示一个窗口, 其中列出当前文档的所有函数"
 
-#: lib/Padre/Action/View.pm:66
+#: lib/Padre/Action/View.pm:61
 msgid "Show To-do List"
 msgstr "显示待办(To-do)列表"
 
-#: lib/Padre/Action/View.pm:67
+#: lib/Padre/Action/View.pm:62
 msgid "Show a window listing all todo items in the current document"
 msgstr "显示一个窗口, 其中列出当前文档的所有待办项目"
 
-#: lib/Padre/Action/View.pm:82
+#: lib/Padre/Action/View.pm:77
 msgid "Show Outline"
 msgstr "显示提纲"
 
-#: lib/Padre/Action/View.pm:83
+#: lib/Padre/Action/View.pm:78
 msgid "Show a window listing all the parts of the current file (functions, pragmas, modules)"
 msgstr "显示一个窗口, 其中列出当前文件的所有部分(函数, 编译选项, 模块)"
 
-#: lib/Padre/Action/View.pm:92
+#: lib/Padre/Action/View.pm:87
 msgid "Show Directory Tree"
 msgstr "显示目录树"
 
-#: lib/Padre/Action/View.pm:93
+#: lib/Padre/Action/View.pm:88
 msgid "Show a window with a directory browser of the current project"
 msgstr "显示当前工程目录的目录浏览器窗口"
 
-#: lib/Padre/Action/View.pm:102
+#: lib/Padre/Action/View.pm:97
 msgid "Show Syntax Check"
 msgstr "显示语法检查"
 
-#: lib/Padre/Action/View.pm:103
+#: lib/Padre/Action/View.pm:98
 msgid "Turn on syntax checking of the current document and show output in a window"
 msgstr "为当前文档打开语法检查, 并在一个窗口中显示结果"
 
-#: lib/Padre/Action/View.pm:112
+#: lib/Padre/Action/View.pm:107
 msgid "Show Errors"
 msgstr "显示错误列表"
 
-#: lib/Padre/Action/View.pm:113
+#: lib/Padre/Action/View.pm:108
 msgid "Show the list of errors received during execution of a script"
 msgstr "显示脚本执行时所收到的错误列表"
 
-#: lib/Padre/Action/View.pm:122
+#: lib/Padre/Action/View.pm:117
 msgid "Show Status Bar"
 msgstr "显示状态栏"
 
-#: lib/Padre/Action/View.pm:123
+#: lib/Padre/Action/View.pm:118
 msgid "Show/hide the status bar at the bottom of the screen"
 msgstr "显示/隐藏屏幕底部的状态栏"
 
-#: lib/Padre/Action/View.pm:132
+#: lib/Padre/Action/View.pm:127
 msgid "Show Toolbar"
 msgstr "显示工具栏"
 
-#: lib/Padre/Action/View.pm:133
+#: lib/Padre/Action/View.pm:128
 msgid "Show/hide the toolbar at the top of the editor"
 msgstr "显示/隐藏编辑窗顶部的工具栏"
 
-#: lib/Padre/Action/View.pm:143
+#: lib/Padre/Action/View.pm:138
 msgid "Show Line Numbers"
 msgstr "显示行号"
 
-#: lib/Padre/Action/View.pm:144
+#: lib/Padre/Action/View.pm:139
 msgid "Show/hide the line numbers of all the documents on the left side of the window"
 msgstr "显示/隐藏所有文档的窗口左边行号"
 
-#: lib/Padre/Action/View.pm:153
+#: lib/Padre/Action/View.pm:148
 msgid "Show Code Folding"
 msgstr "显示代码折叠"
 
-#: lib/Padre/Action/View.pm:154
+#: lib/Padre/Action/View.pm:149
 msgid "Show/hide a vertical line on the left hand side of the window to allow folding rows"
 msgstr "显示/隐藏窗口左侧的竖条，以允许折叠"
 
-#: lib/Padre/Action/View.pm:163
+#: lib/Padre/Action/View.pm:158
 msgid "Fold all"
 msgstr "展开所有"
 
-#: lib/Padre/Action/View.pm:164
+#: lib/Padre/Action/View.pm:159
 msgid "Fold all the blocks that can be folded (need folding to be enabled)"
 msgstr "折叠所有能折的代码块 (需要开启折叠功能)"
 
-#: lib/Padre/Action/View.pm:173
+#: lib/Padre/Action/View.pm:168
 msgid "Unfold all"
 msgstr "收拢所有"
 
-#: lib/Padre/Action/View.pm:174
+#: lib/Padre/Action/View.pm:169
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
 msgstr "展开所有能折叠的代码块 (需要开启折叠功能)"
 
-#: lib/Padre/Action/View.pm:183
+#: lib/Padre/Action/View.pm:178
 msgid "Show Call Tips"
 msgstr "显示提示"
 
-#: lib/Padre/Action/View.pm:184
+#: lib/Padre/Action/View.pm:179
 msgid "When typing in functions allow showing short examples of the function"
 msgstr "键入函数时允许显示该函数的简短样例"
 
-#: lib/Padre/Action/View.pm:197
+#: lib/Padre/Action/View.pm:192
 msgid "Show Current Line"
 msgstr "显示当前行"
 
-#: lib/Padre/Action/View.pm:198
+#: lib/Padre/Action/View.pm:193
 msgid "Highlight the line where the cursor is"
 msgstr "高亮显示光标所在行"
 
-#: lib/Padre/Action/View.pm:207
+#: lib/Padre/Action/View.pm:202
 msgid "Show Right Margin"
 msgstr "显示右间距"
 
-#: lib/Padre/Action/View.pm:208
+#: lib/Padre/Action/View.pm:203
 msgid "Show a vertical line indicating the right margin"
 msgstr "显示一条铅直的直线来指出右边界"
 
-#: lib/Padre/Action/View.pm:218
+#: lib/Padre/Action/View.pm:213
 msgid "Show Newlines"
 msgstr "显示 EOL"
 
-#: lib/Padre/Action/View.pm:219
+#: lib/Padre/Action/View.pm:214
 msgid "Show/hide the newlines with special character"
 msgstr "显示/隐藏换行时带的特殊字符"
 
-#: lib/Padre/Action/View.pm:228
+#: lib/Padre/Action/View.pm:223
 msgid "Show Whitespaces"
 msgstr "显示空格"
 
-#: lib/Padre/Action/View.pm:229
+#: lib/Padre/Action/View.pm:224
 msgid "Show/hide the tabs and the spaces with special characters"
 msgstr "显示/隐藏 TAB 和空格为特殊字符"
 
-#: lib/Padre/Action/View.pm:238
+#: lib/Padre/Action/View.pm:233
 msgid "Show Indentation Guide"
 msgstr "显示缩进指导"
 
-#: lib/Padre/Action/View.pm:239
+#: lib/Padre/Action/View.pm:234
 msgid "Show/hide vertical bars at every indentation position on the left of the rows"
 msgstr "显示/隐藏每个行左端缩进位置的竖条"
 
-#: lib/Padre/Action/View.pm:248
+#: lib/Padre/Action/View.pm:243
 msgid "Word-Wrap"
 msgstr "单词换行"
 
-#: lib/Padre/Action/View.pm:249
+#: lib/Padre/Action/View.pm:244
 msgid "Wrap long lines"
 msgstr "自动换行"
 
-#: lib/Padre/Action/View.pm:259
+#: lib/Padre/Action/View.pm:254
 msgid "Increase Font Size"
 msgstr "增大字号"
 
-#: lib/Padre/Action/View.pm:260
+#: lib/Padre/Action/View.pm:255
 msgid "Make the letters bigger in the editor window"
 msgstr "使编辑窗中的字符增大"
 
-#: lib/Padre/Action/View.pm:269
+#: lib/Padre/Action/View.pm:264
 msgid "Decrease Font Size"
 msgstr "缩小字号"
 
-#: lib/Padre/Action/View.pm:270
+#: lib/Padre/Action/View.pm:265
 msgid "Make the letters smaller in the editor window"
 msgstr "使编辑窗中的字符减小"
 
-#: lib/Padre/Action/View.pm:279
+#: lib/Padre/Action/View.pm:274
 msgid "Reset Font Size"
 msgstr "重置字体大小"
 
-#: lib/Padre/Action/View.pm:280
+#: lib/Padre/Action/View.pm:275
 msgid "Reset the size of the letters to the default in the editor window"
 msgstr "重置编辑窗中的字符大小"
 
-#: lib/Padre/Action/View.pm:292
+#: lib/Padre/Action/View.pm:287
 msgid "Create a bookmark in the current file current row"
 msgstr "在当前文件的当前行建立一个书签"
 
-#: lib/Padre/Action/View.pm:302
+#: lib/Padre/Action/View.pm:297
 msgid "Goto Bookmark"
 msgstr "跳转至书签"
 
-#: lib/Padre/Action/View.pm:303
+#: lib/Padre/Action/View.pm:298
 msgid "Select a bookmark created earlier and jump to that position"
 msgstr "选择一个先前建立的书签并跳至那个位置"
 
-#: lib/Padre/Action/View.pm:315
+#: lib/Padre/Action/View.pm:310
 msgid "&Full Screen"
 msgstr "全屏(&F)"
 
-#: lib/Padre/Action/View.pm:316
+#: lib/Padre/Action/View.pm:311
 msgid "Set Padre in full screen mode"
 msgstr "设置 Padre 到全屏模式"
 
@@ -4709,7 +4709,7 @@ msgstr "导出窗口的几何参数"
 
 #: lib/Padre/Plugin/Devel.pm:70
 msgid "Start/Stop sub trace"
-msgstr ""
+msgstr "开启/停止 sub trace"
 
 #: lib/Padre/Plugin/Devel.pm:74
 msgid "Load All Padre Modules"
@@ -4752,7 +4752,7 @@ msgstr "没有 Perl 5 打开文件"
 
 #: lib/Padre/Plugin/Devel.pm:228
 msgid "Sub-tracing stopped"
-msgstr ""
+msgstr "Sub-tracing 己停止"
 
 #: lib/Padre/Plugin/Devel.pm:234
 msgid "Error while loading Aspect, is it installed?"
@@ -4760,7 +4760,7 @@ msgstr "加载 Aspect 失败， 它被安装了吗?"
 
 #: lib/Padre/Plugin/Devel.pm:246
 msgid "Sub-tracing started"
-msgstr ""
+msgstr "Sub-tracing 己开启"
 
 #: lib/Padre/Plugin/Devel.pm:264
 msgid "A set of unrelated tools used by the Padre developers\n"
@@ -4782,7 +4782,7 @@ msgstr "显示当前报告"
 
 #: lib/Padre/Plugin/PopularityContest.pm:298
 msgid "Popularity Contest Report"
-msgstr ""
+msgstr "流行度报告"
 
 #: lib/Padre/File/HTTP.pm:48
 #, perl-format
