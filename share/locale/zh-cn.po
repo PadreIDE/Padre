@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Padre 0.34\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-05-11 11:25+0200\n"
-"PO-Revision-Date: 2010-05-11 11:47+0100\n"
+"PO-Revision-Date: 2010-05-11 12:47+0100\n"
 "Last-Translator: jagd <wuchuanren@gmail.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
@@ -2824,7 +2824,7 @@ msgstr "插入特殊值"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:38
 msgid "Quick Menu Access"
-msgstr "菜单快捷入口"
+msgstr "菜单快捷通道"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:88
 #, perl-format
@@ -3316,11 +3316,11 @@ msgstr "输入一个过滤选项来选择一个文件"
 
 #: lib/Padre/Action/Search.pm:179
 msgid "Quick Menu Access..."
-msgstr "菜单快捷入口..."
+msgstr "菜单快捷通道..."
 
 #: lib/Padre/Action/Search.pm:180
 msgid "Quick access to all menu functions"
-msgstr "快速访问所有的菜单功能"
+msgstr "快速调用菜单中的所有功能"
 
 #: lib/Padre/Action/Debug.pm:41
 msgid "Step In"
