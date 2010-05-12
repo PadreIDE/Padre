@@ -8,12 +8,13 @@ msgstr ""
 "Project-Id-Version: 0.15\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-05-11 10:05+0200\n"
-"PO-Revision-Date: 2010-05-12 01:15+0100\n"
+"PO-Revision-Date: 2010-05-12 07:40+0100\n"
 "Last-Translator: ddn <ddn123456 at gmail.com>\n"
 "Language-Team: ddn <ddn123456 at gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Bookmarks: -1,-1,-1,-1,-1,-1,876,-1,-1,-1\n"
 
 #: lib/Padre/MimeTypes.pm:207
 msgid "Shell Script"
@@ -461,7 +462,7 @@ msgstr "Op zoek naar Net::FTP..."
 #: lib/Padre/File/FTP.pm:110
 #, perl-format
 msgid "Connecting to FTP server %s..."
-msgstr ""
+msgstr "Aan het verbinden met FTP server %s..."
 
 #: lib/Padre/File/FTP.pm:121
 #, perl-format
@@ -470,17 +471,17 @@ msgstr "Fout bij het verbinden me '%s': %s"
 
 #: lib/Padre/File/FTP.pm:127
 msgid "FTP Password"
-msgstr ""
+msgstr "FTP Wachtwoord"
 
 #: lib/Padre/File/FTP.pm:128
 #, perl-format
 msgid "Password for user '%s' at %s:"
-msgstr ""
+msgstr "Wachtwoord voor gebruiker '%s' te %s:"
 
 #: lib/Padre/File/FTP.pm:134
 #, perl-format
 msgid "Logging into FTP server as %s..."
-msgstr ""
+msgstr "Aan het inloggen op FTP server als %s..."
 
 #: lib/Padre/File/FTP.pm:137
 #, perl-format
@@ -489,7 +490,7 @@ msgstr "Fout bij het inloggen op '%s': %s"
 
 #: lib/Padre/File/FTP.pm:149
 msgid "Connection to FTP server successful."
-msgstr ""
+msgstr "Verbinding met FTP server geslaagd."
 
 #: lib/Padre/File/FTP.pm:179
 #, perl-format
@@ -502,12 +503,12 @@ msgstr "Bestand aan het inlezen van FTP server..."
 
 #: lib/Padre/File/FTP.pm:305
 msgid "Writing file to FTP server..."
-msgstr ""
+msgstr "Bestand aan het schrijven naar FTP server..."
 
 #: lib/Padre/File/HTTP.pm:48
 #, perl-format
 msgid "Sending HTTP request %s..."
-msgstr ""
+msgstr "HTTP request %s aan het zenden..."
 
 #: lib/Padre/Action/Run.pm:43
 msgid "Run Script"
@@ -671,11 +672,11 @@ msgstr "Plak de klembord-inhoud naar de huidige locatie"
 
 #: lib/Padre/Action/Edit.pm:223
 msgid "&Go To..."
-msgstr ""
+msgstr "&Ga Naar..."
 
 #: lib/Padre/Action/Edit.pm:224
 msgid "Jump to a specific line number or character position"
-msgstr ""
+msgstr "Ga naar een specifieke lijnnummer of karakterpositie"
 
 #: lib/Padre/Action/Edit.pm:234
 msgid "&Next Problem"
@@ -715,7 +716,7 @@ msgstr "Ga naar het overeenstemmende openings- of sluitings- haakje: {, }, (, )"
 
 #: lib/Padre/Action/Edit.pm:325
 msgid "&Select to Matching Brace"
-msgstr ""
+msgstr "&Selecteeer tot Overeenstemmend Haakje"
 
 #: lib/Padre/Action/Edit.pm:326
 msgid "Select to the matching opening or closing brace"
@@ -1293,7 +1294,7 @@ msgstr "Hulp Doorzoeken"
 
 #: lib/Padre/Action/Help.pm:46
 msgid "Search the Perl help pages (perldoc)"
-msgstr ""
+msgstr "Doorzoek de Perl helpteksten (perldoc)"
 
 #: lib/Padre/Action/Help.pm:63
 msgid "Context Help"
@@ -1602,19 +1603,19 @@ msgstr "Dump het complete Padre object naar STDOUT voor testen/debuggen."
 
 #: lib/Padre/Action/Internal.pm:56
 msgid "Delay the action queue for 10 seconds"
-msgstr ""
+msgstr "Vertraag de actie-wachtrij voor 10 seconden"
 
 #: lib/Padre/Action/Internal.pm:57
 msgid "Stops processing of other action queue items for 10 seconds"
-msgstr ""
+msgstr "Stop 10 seconden met het verwerken van andere actie wachtrij items"
 
 #: lib/Padre/Action/Internal.pm:64
 msgid "Delay the action queue for 30 seconds"
-msgstr ""
+msgstr "Vertraag 30 seconden de actie wachtrij."
 
 #: lib/Padre/Action/Internal.pm:65
 msgid "Stops processing of other action queue items for 30 seconds"
-msgstr ""
+msgstr "Stop 30 seconden met het verwerken van andere actie wachtrij items"
 
 #: lib/Padre/Action/File.pm:31
 msgid "&New"
@@ -1691,7 +1692,7 @@ msgstr "Plaats de huidige document m.b.v. de Verkenner"
 
 #: lib/Padre/Action/File.pm:130
 msgid "Open with Default System Editor"
-msgstr ""
+msgstr "Openen met de Standaard Systeem Editor"
 
 #: lib/Padre/Action/File.pm:133
 msgid "Opens the file with the default system editor"
@@ -1771,7 +1772,7 @@ msgstr "Sluit Bestanden"
 
 #: lib/Padre/Action/File.pm:243
 msgid "Select some open files for closing"
-msgstr ""
+msgstr "Selecteer sommige open bestanden om te sluiten"
 
 #: lib/Padre/Action/File.pm:252
 msgid "Reload File"
@@ -1795,7 +1796,7 @@ msgstr "Bepaalde Herladen"
 
 #: lib/Padre/Action/File.pm:273
 msgid "Select some open files for reload"
-msgstr ""
+msgstr "Selecteer sommige open bestanden voor te herladen"
 
 #: lib/Padre/Action/File.pm:285
 #: lib/Padre/Wx/Dialog/Snippets.pm:114
@@ -1900,11 +1901,11 @@ msgstr "Vraag of niet bewaarde bestanden moeten opgeslagen worden en verlaat dan
 #: lib/Padre/Action/Tools.pm:38
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:46
 msgid "Key Bindings"
-msgstr ""
+msgstr "Key Bindings"
 
 #: lib/Padre/Action/Tools.pm:39
 msgid "Show the key bindings dialog to configure Padre shortcuts"
-msgstr ""
+msgstr "Toon het key bindings dialoogvenster om de Padre shortcuts te configureren"
 
 #: lib/Padre/Action/Tools.pm:48
 #: lib/Padre/Wx/Dialog/PluginManager.pm:35
@@ -2162,11 +2163,11 @@ msgstr "Dump %INC en @INC"
 
 #: lib/Padre/Plugin/Devel.pm:69
 msgid "Dump Display Geometry"
-msgstr ""
+msgstr "Dump Display Geometrie"
 
 #: lib/Padre/Plugin/Devel.pm:70
 msgid "Start/Stop sub trace"
-msgstr ""
+msgstr "Start/Stop sub trace"
 
 #: lib/Padre/Plugin/Devel.pm:74
 msgid "Load All Padre Modules"
@@ -2209,15 +2210,15 @@ msgstr "Geen Perl 5 bestand is geopend"
 
 #: lib/Padre/Plugin/Devel.pm:228
 msgid "Sub-tracing stopped"
-msgstr ""
+msgstr "Sub-tracing gestopt"
 
 #: lib/Padre/Plugin/Devel.pm:234
 msgid "Error while loading Aspect, is it installed?"
-msgstr ""
+msgstr "Fout opgetreden bij het laden van Aspect, is het geïnstalleerd?"
 
 #: lib/Padre/Plugin/Devel.pm:246
 msgid "Sub-tracing started"
-msgstr ""
+msgstr "Sub-tracing gestart"
 
 #: lib/Padre/Plugin/Devel.pm:264
 msgid "A set of unrelated tools used by the Padre developers\n"
@@ -2226,7 +2227,7 @@ msgstr "Een verzameling van niet-gerelateerde tools door de Padre ontwikkelaars\
 #: lib/Padre/Plugin/Devel.pm:285
 #, perl-format
 msgid "Found %s unloaded modules"
-msgstr ""
+msgstr "%s niet geladen modules gevonden"
 
 #: lib/Padre/Plugin/Devel.pm:297
 #, perl-format
@@ -2261,7 +2262,7 @@ msgstr "Enkel Leesbaar"
 
 #: lib/Padre/Wx/StatusBar.pm:400
 msgid "R/W"
-msgstr ""
+msgstr "R/W"
 
 #: lib/Padre/Wx/About.pm:25
 msgid "About Padre"
@@ -2288,7 +2289,7 @@ msgstr "Systeem Info"
 
 #: lib/Padre/Wx/About.pm:102
 msgid "Created by"
-msgstr ""
+msgstr "Gemaakt door"
 
 #: lib/Padre/Wx/About.pm:103
 #: lib/Padre/Wx/About.pm:135
@@ -2297,15 +2298,15 @@ msgstr "Het Padre Ontwikkelaars Team"
 
 #: lib/Padre/Wx/About.pm:105
 msgid "Padre is free software; you can redistribute it and/or modify it under the same terms as Perl 5."
-msgstr ""
+msgstr "Padre is gratis software; je kan het herverdelen en/of wijzigen onder dezelfde voorwaarden als Perl 5."
 
 #: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"
-msgstr ""
+msgstr "Blauwe vlinder op een groen blad"
 
 #: lib/Padre/Wx/About.pm:107
 msgid "splash image is based on work by"
-msgstr ""
+msgstr "splash afbeelding is gebaseerd op werk van"
 
 #: lib/Padre/Wx/About.pm:221
 msgid "The Padre Translation Team"
@@ -2330,7 +2331,7 @@ msgstr "Uitlijning"
 
 #: lib/Padre/Wx/Outline.pm:186
 msgid "Pragmata"
-msgstr ""
+msgstr "Pragmata"
 
 #: lib/Padre/Wx/Outline.pm:187
 msgid "Modules"
@@ -2357,6 +2358,8 @@ msgid ""
 "The debugger is not running.\n"
 "You can start the debugger using one of the commands 'Step In', 'Step Over', or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
+"De debugger is niet aan het draaien.\n"
+"Je kan de debugger starten met de commando's 'Stap In', 'Stap Over', of  'Voer uit tot breekpunt' in het Debug menu."
 
 #: lib/Padre/Wx/Debugger.pm:193
 #: lib/Padre/Wx/Debugger.pm:299
@@ -2379,7 +2382,7 @@ msgstr "Kon '%s' niet evalueren"
 #: lib/Padre/Wx/Debugger.pm:450
 #, perl-format
 msgid "'%s' does not look like a variable. First select a variable in the code and then try again."
-msgstr ""
+msgstr "'%s' lijkt niet op een variable. Gelieve eerst een variabele in de code te selecteren en probeer dan opnieuw."
 
 #: lib/Padre/Wx/Debugger.pm:487
 msgid "Expression:"
@@ -2445,11 +2448,11 @@ msgstr "'%s' ontbrekend in bestand '%s'\n"
 #: lib/Padre/Wx/Ack.pm:486
 #, perl-format
 msgid "Found '%s' in '%s':\n"
-msgstr ""
+msgstr "'%s' gevonden in '%s':\n"
 
 #: lib/Padre/Wx/TodoList.pm:138
 msgid "To-do"
-msgstr ""
+msgstr "Te Doen"
 
 #: lib/Padre/Wx/Directory.pm:77
 #: lib/Padre/Wx/Dialog/WindowList.pm:225
@@ -2468,7 +2471,7 @@ msgstr "Selecteer map"
 #: lib/Padre/Wx/DocBrowser.pm:113
 #: lib/Padre/Wx/DocBrowser.pm:130
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
-msgstr ""
+msgstr "Zoek perldoc op - bvb. Padre::Task, Net::LDAP"
 
 #: lib/Padre/Wx/DocBrowser.pm:126
 msgid "Search:"
@@ -2481,12 +2484,12 @@ msgstr "Naamloos"
 #: lib/Padre/Wx/DocBrowser.pm:371
 #, perl-format
 msgid "DocBrowser: no viewer for %s"
-msgstr ""
+msgstr "DocBrowser: geen voorvertoning voor %s"
 
 #: lib/Padre/Wx/DocBrowser.pm:404
 #, perl-format
 msgid "Searched for '%s' and failed..."
-msgstr ""
+msgstr "Gezocht naar '%s' en gefaald..."
 
 #: lib/Padre/Wx/DocBrowser.pm:405
 msgid "Help not found."
@@ -2630,7 +2633,7 @@ msgstr "Niet bekende fout van"
 #: lib/Padre/Wx/Main.pm:2966
 #, perl-format
 msgid "Could not determine the comment character for %s document type"
-msgstr ""
+msgstr "Het commentaar karakter voor het document type %s kon niet vastgesteld worden"
 
 #: lib/Padre/Wx/Main.pm:3015
 msgid "Autocompletion error"
@@ -2801,7 +2804,7 @@ msgstr "Sluit Bepaalde  Bestanden"
 
 #: lib/Padre/Wx/Main.pm:4469
 msgid "Select files to close:"
-msgstr ""
+msgstr "Selecteer de te sluiten bestanden:"
 
 #: lib/Padre/Wx/Main.pm:4484
 msgid "Close some"
@@ -2903,7 +2906,7 @@ msgstr "Booleaans"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:27
 msgid "Positive Integer"
-msgstr ""
+msgstr "Positieve Integer"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:28
 msgid "Integer"
@@ -2957,7 +2960,7 @@ msgstr "Kopiëer Waarde"
 #: lib/Padre/Wx/Dialog/Advanced.pm:125
 #: lib/Padre/Wx/Dialog/Advanced.pm:562
 msgid "True"
-msgstr ""
+msgstr "Waar"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:126
 #: lib/Padre/Wx/Dialog/Advanced.pm:563
@@ -3008,7 +3011,7 @@ msgstr "Gebruiker"
 
 #: lib/Padre/Wx/Dialog/Advanced.pm:734
 msgid "Host"
-msgstr ""
+msgstr "Gastheer"
 
 #: lib/Padre/Wx/Dialog/Search.pm:135
 msgid "Find:"
@@ -3091,7 +3094,7 @@ msgstr "Toon dit niet opnieuw"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:90
 msgid "Key binding name"
-msgstr ""
+msgstr "Key binding naam"
 
 #: lib/Padre/Wx/Dialog/KeyBindings.pm:91
 #: lib/Padre/Wx/Dialog/Shortcut.pm:113
@@ -3108,7 +3111,7 @@ msgstr "Snelkoppeling:"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:39
 msgid "Goto"
-msgstr ""
+msgstr "Ga naar"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:86
 msgid "Position type"
@@ -3124,7 +3127,7 @@ msgstr "Lijnnummer"
 #: lib/Padre/Wx/Dialog/Goto.pm:88
 #: lib/Padre/Wx/Dialog/Goto.pm:227
 msgid "Character position"
-msgstr ""
+msgstr "Karakter positie"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:93
 #: lib/Padre/Wx/Dialog/OpenResource.pm:188
@@ -3146,7 +3149,7 @@ msgstr "Huidig lijnnummer: %s"
 #: lib/Padre/Wx/Dialog/Goto.pm:229
 #, perl-format
 msgid "&Enter a position between 1 and %s:"
-msgstr ""
+msgstr "Vo&eg een positie in tussen 1 en %s:"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:230
 #, perl-format
@@ -3159,7 +3162,7 @@ msgstr "Geen positief nummer!"
 
 #: lib/Padre/Wx/Dialog/Goto.pm:263
 msgid "Out of range!"
-msgstr ""
+msgstr "Buiten bereik!"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:90
 msgid "Open Resource"
@@ -3183,7 +3186,7 @@ msgstr "Huidige map:"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:264
 msgid "Skip version control system files"
-msgstr ""
+msgstr "Sla versie controle systeem bestanden over"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:266
 msgid "Skip using MANIFEST.SKIP"
@@ -3355,7 +3358,7 @@ msgstr "Geen hulp provider gevonden voor"
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:395
 #, perl-format
 msgid "Found %s help topic(s)\n"
-msgstr ""
+msgstr "%s help topic(s) gevonden\n"
 
 #: lib/Padre/Wx/Dialog/SessionManager.pm:37
 msgid "Session Manager"
@@ -3426,39 +3429,39 @@ msgstr "Geen geldige zoekopdracht"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:69
 msgid "&Character classes"
-msgstr ""
+msgstr "Karakter klassen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:71
 msgid "Any character except a newline"
-msgstr ""
+msgstr "Om het even welk karakter behalve een newline"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:72
 msgid "Any decimal digit"
-msgstr ""
+msgstr "Om het even welk decimaal cijfer"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:73
 msgid "Any non-digit"
-msgstr ""
+msgstr "Om het even welk karakter dat geen cijfer is"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:74
 msgid "Any whitespace character"
-msgstr ""
+msgstr "Om het even welk witspatie karakter"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:75
 msgid "Any non-whitespace character"
-msgstr ""
+msgstr "Om het even welk karakter dat geen witspatie is"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:76
 msgid "Any word character"
-msgstr ""
+msgstr "Om het even welk woord karakter"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:77
 msgid "Any non-word character"
-msgstr ""
+msgstr "Om het even welk niet-woord karakter"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:81
 msgid "&POSIX Character classes"
-msgstr ""
+msgstr "&POSIX Karakter klassen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:83
 msgid "Alphabetic characters"
@@ -3466,11 +3469,11 @@ msgstr "Alfabetische karakters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:84
 msgid "Alphanumeric characters"
-msgstr ""
+msgstr "Alphanumerieke karakters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:85
 msgid "7-bit US-ASCII character"
-msgstr ""
+msgstr "7-bit US-ASCII karakter"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:86
 msgid "Space and tab"
@@ -3478,11 +3481,11 @@ msgstr "Spatie en Tab"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:87
 msgid "Control characters"
-msgstr ""
+msgstr "Controle karakters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:88
 msgid "Digits"
-msgstr ""
+msgstr "Cijfers"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:89
 msgid "Visible characters"
@@ -3490,63 +3493,63 @@ msgstr "Zichtbare karakters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:90
 msgid "Lowercase characters"
-msgstr ""
+msgstr "Kleine letters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:91
 msgid "Visible characters and spaces"
-msgstr ""
+msgstr "Zichtbare karakters en spaties"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:92
 msgid "Punctuation characters"
-msgstr ""
+msgstr "Leestekens"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:93
 msgid "Whitespace characters"
-msgstr ""
+msgstr "Witspatie karakters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:94
 msgid "Uppercase characters"
-msgstr ""
+msgstr "Hoofdletters"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:95
 msgid "Alphanumeric characters plus \"_\""
-msgstr ""
+msgstr "Alfanumerieke karakters plus \"_\""
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:96
 msgid "Hexadecimal digits"
-msgstr ""
+msgstr "Hexadecimale cijfers"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:100
 msgid "&Quantifiers"
-msgstr ""
+msgstr "Kwantoren"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:102
 msgid "Match 0 or more times"
-msgstr ""
+msgstr "Stemt 0 of meerdere keren overeen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:103
 msgid "Match 1 or more times"
-msgstr ""
+msgstr "Stemt 1 of meerdere keren overeen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:104
 msgid "Match 1 or 0 times"
-msgstr ""
+msgstr "Stemt 1 of 0 keer overeen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:105
 msgid "Match exactly m times"
-msgstr ""
+msgstr "Stem exact m keer overeen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:106
 msgid "Match at least n times"
-msgstr ""
+msgstr "Stem tenminste n keer overeen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:107
 msgid "Match at least m but not more than n times"
-msgstr ""
+msgstr "Stem tenminste m maar niet meer dan n keer overeen"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:111
 msgid "&Miscellaneous"
-msgstr ""
+msgstr "Varia"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:113
 msgid "Alternation"
@@ -3554,11 +3557,11 @@ msgstr "Afwisseling"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:114
 msgid "Character set"
-msgstr ""
+msgstr "Karakterreeks"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:115
 msgid "Beginning of line"
-msgstr ""
+msgstr "Lijnbegin"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:116
 msgid "End of line"
@@ -3566,11 +3569,11 @@ msgstr "Lijneinde"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:117
 msgid "A word boundary"
-msgstr ""
+msgstr "Een woordbegrenzing"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:118
 msgid "Not a word boundary"
-msgstr ""
+msgstr "Geen woordbegrenzing"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:119
 msgid "A comment"
@@ -3578,35 +3581,35 @@ msgstr "Een commentaar"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:123
 msgid "&Grouping constructs"
-msgstr ""
+msgstr "&Groeperende constructies"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:125
 msgid "A group"
-msgstr ""
+msgstr "Een groep"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:126
 msgid "Non-capturing group"
-msgstr ""
+msgstr "Niet weerhoudende groep"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:127
 msgid "Positive lookahead assertion"
-msgstr ""
+msgstr "Positive lookahead assertie"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:128
 msgid "Negative lookahead assertion"
-msgstr ""
+msgstr "Negative lookahead assertie"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:129
 msgid "Positive lookbehind assertion"
-msgstr ""
+msgstr "Positive lookbehind assertie"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:130
 msgid "Negative lookbehind assertion"
-msgstr ""
+msgstr "Negative lookbehind assertie"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:131
 msgid "Backreference to the nth group"
-msgstr ""
+msgstr "Backreference tot de n-de groep"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:143
 msgid "&Regular expression:"
@@ -3630,7 +3633,7 @@ msgstr "&Overeenstemmende tekst:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:178
 msgid "&Result from replace:"
-msgstr ""
+msgstr "Vervangings&resultaat:"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:347
 #, perl-format
@@ -3655,17 +3658,17 @@ msgstr "Uitgebreid (%s)"
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:351
 #, perl-format
 msgid "&Global (%s)"
-msgstr ""
+msgstr "&Globaal (%s)"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:479
 #, perl-format
 msgid "Match failure in %s:  %s"
-msgstr ""
+msgstr "Stem overeen met faling in %s:  %s"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:486
 #, perl-format
 msgid "Match warning in %s:  %s"
-msgstr ""
+msgstr "Stem overeen met waarschuwing in %s:  %s"
 
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:505
 msgid "No match"
@@ -3811,19 +3814,19 @@ msgstr "Encodeer Document Als..."
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:23
 msgid "New installation survey"
-msgstr ""
+msgstr "Nieuw installatie enquête"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:59
 msgid "Where did you hear about Padre?"
-msgstr ""
+msgstr "Van waar ken je Padre?"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:64
 msgid "Other search engine"
-msgstr ""
+msgstr "Andere zoekmachine"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:67
 msgid "Other event"
-msgstr ""
+msgstr "Andere gebeurtenis"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:68
 msgid "Friend"
@@ -3831,11 +3834,11 @@ msgstr "Vriend"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:69
 msgid "Reinstalling/installing on other computer"
-msgstr ""
+msgstr "(Her)Installeren op een andere computer"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:70
 msgid "Other (Please fill in here)"
-msgstr ""
+msgstr "Andere (Gelieve hier in te vullen)"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:84
 msgid "OK"
@@ -3843,19 +3846,19 @@ msgstr "OK"
 
 #: lib/Padre/Wx/Dialog/WhereFrom.pm:91
 msgid "Skip question without giving feedback"
-msgstr ""
+msgstr "Sla deze vraag over zonder antwoord"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:15
 msgid "Date/Time"
-msgstr ""
+msgstr "Datum/Tijd"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:16
 msgid "Now"
-msgstr ""
+msgstr "Nu"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:17
 msgid "Today"
-msgstr ""
+msgstr "Vandaag"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:18
 msgid "Year"
@@ -3863,7 +3866,7 @@ msgstr "Jaar"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:19
 msgid "Epoch"
-msgstr ""
+msgstr "Epoch"
 
 #: lib/Padre/Wx/Dialog/SpecialValues.pm:22
 msgid "Size"
@@ -3883,7 +3886,7 @@ msgstr "Voeg Speciale Waarden in"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:17
 msgid "Local/Remote File Access"
-msgstr ""
+msgstr "Lokale/Afstandelijke BestandsToegang"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:18
 msgid "Perl Auto Complete"
@@ -4029,11 +4032,11 @@ msgstr "Gebruik de X11 middel knop plak stijl"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:367
 msgid "RegExp for TODO-panel:"
-msgstr ""
+msgstr "RegExp voor het  Taken-paneel:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:373
 msgid "Use Splash Screen"
-msgstr ""
+msgstr "Maak gebruik van het Splash Screen"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:410
 msgid "Project name"
@@ -4049,7 +4052,7 @@ msgstr "Huidige bestandsnaam"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:413
 msgid "Current file's dirname"
-msgstr ""
+msgstr "Map naam van het huidig bestand"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:414
 msgid "Current file's basename"
@@ -4057,7 +4060,7 @@ msgstr "Huidige bestands basisnaam"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:415
 msgid "Current filename relative to project"
-msgstr ""
+msgstr "Huidig bestandsnaam relatief tot het project"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:436
 msgid "Window title:"
@@ -4183,7 +4186,7 @@ msgstr "Externe Tools"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:899
 msgid "&Advanced..."
-msgstr ""
+msgstr "Gevorderd..."
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:947
 msgid "new"
@@ -4247,23 +4250,23 @@ msgstr "Apache Licentie"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:17
 msgid "Artistic License 1.0"
-msgstr ""
+msgstr "Artistieke Licentie 1.0"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:18
 msgid "Artistic License 2.0"
-msgstr ""
+msgstr "Artistieke Licentie 2.0"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:19
 msgid "Revised BSD License"
-msgstr ""
+msgstr "Gereviseerde BSD Licentie"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:20
 msgid "GPL 2 or later"
-msgstr ""
+msgstr "GPL 2 of later"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:21
 msgid "LGPL 2.1 or later"
-msgstr ""
+msgstr "LGPL 2.1 of later"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:22
 msgid "MIT License"
@@ -4271,7 +4274,7 @@ msgstr "MIT Licentie"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:23
 msgid "Mozilla Public License"
-msgstr ""
+msgstr "Mozilla Publieke Licentie"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:24
 msgid "Open Source"
@@ -4280,11 +4283,11 @@ msgstr "Open Source"
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:25
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:100
 msgid "Perl licensing terms"
-msgstr ""
+msgstr "Perl licentie voorwaarden"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:26
 msgid "restrictive"
-msgstr ""
+msgstr "restrictief"
 
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:27
 msgid "unrestricted"
@@ -4366,21 +4369,21 @@ msgstr "Editor"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:228
 msgid "Disk"
-msgstr ""
+msgstr "Schijf"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:349
 #: lib/Padre/Wx/Dialog/WindowList.pm:358
 msgid "CHANGED"
-msgstr ""
+msgstr "GEWIJZIGD"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:349
 #: lib/Padre/Wx/Dialog/WindowList.pm:354
 msgid "fresh"
-msgstr ""
+msgstr "vers"
 
 #: lib/Padre/Wx/Dialog/WindowList.pm:356
 msgid "DELETED"
-msgstr ""
+msgstr "VERWIJDERD"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:39
 msgid "Filename"
@@ -4408,23 +4411,23 @@ msgstr "Woorden"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:106
 msgid "Characters (including whitespace)"
-msgstr ""
+msgstr "Karakters (inclusief witspaties)"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:110
 msgid "Non-whitespace characters"
-msgstr ""
+msgstr "Niet-witspatie karakters"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:114
 msgid "Kilobytes (kB)"
-msgstr ""
+msgstr "Kilobytes (kB)"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:118
 msgid "Kibibytes (kiB)"
-msgstr ""
+msgstr "Kibibytes (kiB)"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:129
 msgid "Line break mode"
-msgstr ""
+msgstr "Line break modus"
 
 #: lib/Padre/Wx/Dialog/DocStats.pm:131
 msgid "Encoding"
@@ -4469,7 +4472,7 @@ msgstr "Bestandstoegang via HTTP"
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:39
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:47
 msgid "Timeout (in seconds):"
-msgstr ""
+msgstr "Timeout (in seconden):"
 
 #: lib/Padre/Wx/Dialog/Preferences/File.pm:44
 msgid "File access via FTP"
@@ -4821,11 +4824,11 @@ msgstr "Bewerk met Regex Editor"
 #: lib/Padre/Document/Perl/Help.pm:241
 #, perl-format
 msgid "(Since Perl v%s)"
-msgstr ""
+msgstr "(Sinds Perl v%s)"
 
 #: lib/Padre/Document/Perl/Help.pm:244
 msgid "- DEPRECATED!"
-msgstr ""
+msgstr "- GELAAKT!"
 
 #~ msgid "Norwegian (Norway)"
 #~ msgstr "Noorweegs (Noorwegen)"
