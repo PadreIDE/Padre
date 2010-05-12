@@ -8,7 +8,7 @@ use Padre::Current        ('_CURRENT');
 use Padre::Wx             ();
 use Padre::Wx::Role::View ();
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 our @ISA     = qw{
 	Padre::Wx::Role::View
 	Wx::Panel

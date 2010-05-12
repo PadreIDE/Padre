@@ -66,7 +66,7 @@ use strict;
 use warnings;
 use Params::Util ();
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 # According to Wx docs,
 # this MUST be loaded before Wx,

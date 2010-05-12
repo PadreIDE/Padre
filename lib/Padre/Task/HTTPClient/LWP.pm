@@ -6,7 +6,7 @@ use warnings;
 use Params::Util qw{_CODE _INSTANCE};
 use Padre::Task::HTTPClient;
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 our @ISA     = 'Padre::Task::HTTPClient';
 
 =pod

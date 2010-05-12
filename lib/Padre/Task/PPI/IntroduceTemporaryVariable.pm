@@ -7,7 +7,7 @@ use Padre::Wx                                     ();
 use Padre::Task::PPI                              ();
 use PPIx::EditorTools::IntroduceTemporaryVariable ();
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 our @ISA     = 'Padre::Task::PPI';
 
 =pod

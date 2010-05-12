@@ -11,7 +11,7 @@ use File::Basename ();
 use Padre::Config  ();
 use Padre::Current ();
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 use Class::XSAccessor {
 	getters => {

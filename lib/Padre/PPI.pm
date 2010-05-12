@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use PPI;
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 #####################################################################
 # Assorted Search Functions

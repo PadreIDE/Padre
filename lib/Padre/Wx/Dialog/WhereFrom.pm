@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx               ();
 use Padre::Task::HTTPClient ();
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 our @ISA = 'Wx::Dialog';
 
