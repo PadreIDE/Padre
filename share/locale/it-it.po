@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Padre_IT\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-06 17:40+0200\n"
+"POT-Creation-Date: 2010-05-12 10:17+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simone Blandino <simone.blandino@gmail.com>\n"
 "Language-Team:  <simone.blandino@gmail.com>\n"
@@ -17,8 +17,14 @@ msgstr ""
 
 #: lib/Padre/Project.pm:41
 #, perl-format
-msgid "Project directory %s does not exist (any longer). This is fatal and will cause problems, please close or save-as this file unless you know what you are doing."
-msgstr "La cartella di progetto %s non esiste (più). Si tratta di una situazione irreversibile che causerà problemi, chiudi o salva con nome questo file a meno che non sappiate cosa state facendo."
+msgid ""
+"Project directory %s does not exist (any longer). This is fatal and will "
+"cause problems, please close or save-as this file unless you know what you "
+"are doing."
+msgstr ""
+"La cartella di progetto %s non esiste (più). Si tratta di una situazione "
+"irreversibile che causerà problemi, chiudi o salva con nome questo file a "
+"meno che non sappiate cosa state facendo."
 
 #: lib/Padre/Locale.pm:85
 msgid "English (United Kingdom)"
@@ -28,8 +34,7 @@ msgstr "Inglese (Regno Unito)"
 msgid "English (Australia)"
 msgstr "Inglese (Australia)"
 
-#: lib/Padre/Locale.pm:142
-#: lib/Padre/Wx/Main.pm:3438
+#: lib/Padre/Locale.pm:142 lib/Padre/Wx/Main.pm:3438
 msgid "Unknown"
 msgstr "Sconosciuto"
 
@@ -155,8 +160,12 @@ msgstr "Si è verificato un errore aprendo un file: nessun oggetto file"
 
 #: lib/Padre/Document.pm:236
 #, perl-format
-msgid "Cannot open %s as it is over the arbitrary file size limit of Padre which is currently %s"
-msgstr "Impossibile aprire %s perchè supera il limite arbitrario delle dimensioni di un file in Padre, che attualmente è %s"
+msgid ""
+"Cannot open %s as it is over the arbitrary file size limit of Padre which is "
+"currently %s"
+msgstr ""
+"Impossibile aprire %s perchè supera il limite arbitrario delle dimensioni di "
+"un file in Padre, che attualmente è %s"
 
 #: lib/Padre/Document.pm:258
 msgid ""
@@ -168,12 +177,9 @@ msgstr ""
 "Può essere un problema di codifica\n"
 "Stai cercando di caricare un file binario?"
 
-#: lib/Padre/Document.pm:403
-#: lib/Padre/Wx/Editor.pm:210
-#: lib/Padre/Wx/Syntax.pm:93
-#: lib/Padre/Wx/Syntax.pm:96
-#: lib/Padre/Wx/Main.pm:2749
-#: lib/Padre/Wx/Main.pm:4263
+#: lib/Padre/Document.pm:403 lib/Padre/Wx/Editor.pm:210
+#: lib/Padre/Wx/Syntax.pm:93 lib/Padre/Wx/Syntax.pm:96
+#: lib/Padre/Wx/Main.pm:2749 lib/Padre/Wx/Main.pm:4263
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:440
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:474
 #: lib/Padre/Wx/Directory/TreeCtrl.pm:663
@@ -182,15 +188,18 @@ msgstr ""
 #: lib/Padre/Wx/Dialog/PluginManager.pm:349
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:89
 #: lib/Padre/Wx/Dialog/ModuleStart.pm:172
-#: lib/Padre/Wx/Dialog/OpenResource.pm:128
-#: lib/Padre/Task/SyntaxChecker.pm:183
+#: lib/Padre/Wx/Dialog/OpenResource.pm:128 lib/Padre/Task/SyntaxChecker.pm:183
 msgid "Error"
 msgstr "Errore"
 
 #: lib/Padre/Document.pm:717
 #, perl-format
-msgid "Visual filename %s does not match the internal filename %s, do you want to abort saving?"
-msgstr "Il nome file %s visualizzato non corrisponde al nome file interno %s, vuoi interrompere il salvataggio?"
+msgid ""
+"Visual filename %s does not match the internal filename %s, do you want to "
+"abort saving?"
+msgstr ""
+"Il nome file %s visualizzato non corrisponde al nome file interno %s, vuoi "
+"interrompere il salvataggio?"
 
 #: lib/Padre/Document.pm:721
 msgid "Save Warning"
@@ -201,8 +210,7 @@ msgstr "Salva segnalazione"
 msgid "Unsaved %d"
 msgstr "Da salvare %d"
 
-#: lib/Padre/Document.pm:1350
-#: lib/Padre/Document.pm:1351
+#: lib/Padre/Document.pm:1350 lib/Padre/Document.pm:1351
 msgid "Skipped for large files"
 msgstr "Evitato per file di grandi dimensioni"
 
@@ -286,8 +294,7 @@ msgstr "Errore del Plugin sull'evento %s: %s"
 msgid "(core)"
 msgstr "(nucleo)"
 
-#: lib/Padre/PluginManager.pm:781
-#: lib/Padre/File/FTP.pm:138
+#: lib/Padre/PluginManager.pm:781 lib/Padre/File/FTP.pm:138
 #: lib/Padre/Task/PPI/IntroduceTemporaryVariable.pm:107
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:93
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:107
@@ -300,20 +307,16 @@ msgid "Plugin %s"
 msgstr "Plugin %s"
 
 #: lib/Padre/PluginManager.pm:871
-msgid "Error when calling menu for plug-in"
+msgid "Error when calling menu for plug-in "
 msgstr "Errore richiamando il menù dei plugin"
 
-#: lib/Padre/PluginManager.pm:905
-#: lib/Padre/Wx/Main.pm:2160
-#: lib/Padre/Wx/Main.pm:2215
-#: lib/Padre/Wx/Main.pm:2267
+#: lib/Padre/PluginManager.pm:905 lib/Padre/Wx/Main.pm:2160
+#: lib/Padre/Wx/Main.pm:2215 lib/Padre/Wx/Main.pm:2267
 msgid "No document open"
 msgstr "Nessun documento aperto"
 
-#: lib/Padre/PluginManager.pm:909
-#: lib/Padre/Util/FileBrowser.pm:47
-#: lib/Padre/Util/FileBrowser.pm:87
-#: lib/Padre/Util/FileBrowser.pm:135
+#: lib/Padre/PluginManager.pm:909 lib/Padre/Util/FileBrowser.pm:47
+#: lib/Padre/Util/FileBrowser.pm:87 lib/Padre/Util/FileBrowser.pm:135
 msgid "No filename"
 msgstr "Nessun nome file"
 
@@ -321,8 +324,7 @@ msgstr "Nessun nome file"
 msgid "Could not locate project dir"
 msgstr "Impossibile localizzare la cartella del progetto"
 
-#: lib/Padre/PluginManager.pm:933
-#: lib/Padre/PluginManager.pm:1029
+#: lib/Padre/PluginManager.pm:933 lib/Padre/PluginManager.pm:1029
 #, perl-format
 msgid ""
 "Failed to load the plug-in '%s'\n"
@@ -331,8 +333,7 @@ msgstr ""
 "Errore nel Caricamento del plug-in '%s'\n"
 "%s"
 
-#: lib/Padre/PluginManager.pm:983
-#: lib/Padre/Wx/Main.pm:5213
+#: lib/Padre/PluginManager.pm:983 lib/Padre/Wx/Main.pm:5213
 msgid "Open file"
 msgstr "Apri file"
 
@@ -341,8 +342,7 @@ msgstr "Apri file"
 msgid "Plug-in must have '%s' as base directory"
 msgstr "Il Plug-in deve avere '%s' come cartella base"
 
-#: lib/Padre/PluginHandle.pm:89
-#: lib/Padre/Wx/Dialog/PluginManager.pm:480
+#: lib/Padre/PluginHandle.pm:89 lib/Padre/Wx/Dialog/PluginManager.pm:480
 msgid "error"
 msgstr "errore"
 
@@ -354,18 +354,15 @@ msgstr "Scaricato"
 msgid "loaded"
 msgstr "Caricato"
 
-#: lib/Padre/PluginHandle.pm:92
-#: lib/Padre/Wx/Dialog/PluginManager.pm:492
+#: lib/Padre/PluginHandle.pm:92 lib/Padre/Wx/Dialog/PluginManager.pm:492
 msgid "incompatible"
 msgstr "Incompatibile"
 
-#: lib/Padre/PluginHandle.pm:93
-#: lib/Padre/Wx/Dialog/PluginManager.pm:519
+#: lib/Padre/PluginHandle.pm:93 lib/Padre/Wx/Dialog/PluginManager.pm:519
 msgid "disabled"
 msgstr "Disabilitato"
 
-#: lib/Padre/PluginHandle.pm:94
-#: lib/Padre/Wx/Dialog/PluginManager.pm:507
+#: lib/Padre/PluginHandle.pm:94 lib/Padre/Wx/Dialog/PluginManager.pm:507
 msgid "enabled"
 msgstr "Abilitato"
 
@@ -445,15 +442,21 @@ msgstr "PPI Sperimentale"
 
 #: lib/Padre/MimeTypes.pm:323
 msgid "Slow but accurate and we have full control so bugs can be fixed"
-msgstr "Lento ma accurato e abbiamo controllo completo così i bug possono essere eliminati"
+msgstr ""
+"Lento ma accurato e abbiamo controllo completo così i bug possono essere "
+"eliminati"
 
 #: lib/Padre/MimeTypes.pm:327
 msgid "PPI Standard"
 msgstr "PPI Standard"
 
 #: lib/Padre/MimeTypes.pm:328
-msgid "Hopefully faster than the PPI Traditional. Big file will fall back to Scintilla highlighter."
-msgstr "Forse più veloce del tradizionale PPI. I file di grandi dimensioni ricorreranno all'evidenziatore di Scintilla."
+msgid ""
+"Hopefully faster than the PPI Traditional. Big file will fall back to "
+"Scintilla highlighter."
+msgstr ""
+"Forse più veloce del tradizionale PPI. I file di grandi dimensioni "
+"ricorreranno all'evidenziatore di Scintilla."
 
 #: lib/Padre/Wx/Debugger.pm:55
 msgid "Debugger is already running"
@@ -466,15 +469,15 @@ msgstr "Non è un documento Perl"
 #: lib/Padre/Wx/Debugger.pm:191
 msgid ""
 "The debugger is not running.\n"
-"You can start the debugger using one of the commands 'Step In', 'Step Over', or 'Run till Breakpoint' in the Debug menu."
+"You can start the debugger using one of the commands 'Step In', 'Step Over', "
+"or 'Run till Breakpoint' in the Debug menu."
 msgstr ""
 "Il debugger non è in esecuzione\n"
-"Puoi avviare il debugger usando uno dei seguenti comandi nel menu Debug: 'Esegui', 'Salta', 'Esegui fino al punto d'interruzione'."
+"Puoi avviare il debugger usando uno dei seguenti comandi nel menu Debug: "
+"'Esegui', 'Salta', 'Esegui fino al punto d'interruzione'."
 
-#: lib/Padre/Wx/Debugger.pm:193
-#: lib/Padre/Wx/Debugger.pm:299
-#: lib/Padre/Wx/Debugger.pm:325
-#: lib/Padre/Wx/Debugger.pm:365
+#: lib/Padre/Wx/Debugger.pm:193 lib/Padre/Wx/Debugger.pm:299
+#: lib/Padre/Wx/Debugger.pm:325 lib/Padre/Wx/Debugger.pm:365
 #: lib/Padre/Wx/Debugger.pm:388
 msgid "Debugger not running"
 msgstr "Il debugger non è in esecuzione"
@@ -482,7 +485,8 @@ msgstr "Il debugger non è in esecuzione"
 #: lib/Padre/Wx/Debugger.pm:247
 #, perl-format
 msgid "Could not set breakpoint on file '%s' row '%s'"
-msgstr "Impossibile impostare un punto d'interruzione alla riga '%s' del file '%s'"
+msgstr ""
+"Impossibile impostare un punto d'interruzione alla riga '%s' del file '%s'"
 
 #: lib/Padre/Wx/Debugger.pm:429
 #, perl-format
@@ -491,8 +495,12 @@ msgstr "Impossibile valutare  '%s'"
 
 #: lib/Padre/Wx/Debugger.pm:450
 #, perl-format
-msgid "'%s' does not look like a variable. First select a variable in the code and then try again."
-msgstr "'%s' non sembra una variabile. Prima seleziona una variabile nel codice e riprova."
+msgid ""
+"'%s' does not look like a variable. First select a variable in the code and "
+"then try again."
+msgstr ""
+"'%s' non sembra una variabile. Prima seleziona una variabile nel codice e "
+"riprova."
 
 #: lib/Padre/Wx/Debugger.pm:487
 msgid "Expression:"
@@ -502,14 +510,12 @@ msgstr "Espressione:"
 msgid "Expr"
 msgstr "Espr"
 
-#: lib/Padre/Wx/DocBrowser.pm:83
-#: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
+#: lib/Padre/Wx/DocBrowser.pm:83 lib/Padre/Wx/Dialog/QuickMenuAccess.pm:397
 #: lib/Padre/Action/Help.pm:37
 msgid "Help"
 msgstr "Aiuto"
 
-#: lib/Padre/Wx/DocBrowser.pm:113
-#: lib/Padre/Wx/DocBrowser.pm:130
+#: lib/Padre/Wx/DocBrowser.pm:113 lib/Padre/Wx/DocBrowser.pm:130
 msgid "Search for perldoc - e.g. Padre::Task, Net::LDAP"
 msgstr "Ricerca perldoc - es. Padre::Task, Net::LDAP"
 
@@ -517,14 +523,10 @@ msgstr "Ricerca perldoc - es. Padre::Task, Net::LDAP"
 msgid "Search:"
 msgstr "Cerca:"
 
-#: lib/Padre/Wx/DocBrowser.pm:132
-#: lib/Padre/Wx/About.pm:86
-#: lib/Padre/Wx/Dialog/Find.pm:160
-#: lib/Padre/Wx/Dialog/DocStats.pm:58
-#: lib/Padre/Wx/Dialog/Replace.pm:192
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:179
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:239
-#: lib/Padre/Action/File.pm:166
+#: lib/Padre/Wx/DocBrowser.pm:132 lib/Padre/Wx/About.pm:86
+#: lib/Padre/Wx/Dialog/Find.pm:160 lib/Padre/Wx/Dialog/DocStats.pm:58
+#: lib/Padre/Wx/Dialog/Replace.pm:192 lib/Padre/Wx/Dialog/HelpSearch.pm:179
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:239 lib/Padre/Action/File.pm:166
 msgid "&Close"
 msgstr "&Chiudi"
 
@@ -556,20 +558,22 @@ msgstr "Devi selezionare un insieme di righe"
 
 #: lib/Padre/Wx/Editor.pm:1604
 msgid "First character of selection must be a non-word character to align"
-msgstr "Per allineare, il primo carattere della selezione non deve essere alfabetico"
+msgstr ""
+"Per allineare, il primo carattere della selezione non deve essere alfabetico"
 
 #: lib/Padre/Wx/Output.pm:96
 msgid "Output"
 msgstr "Output"
 
-#: lib/Padre/Wx/Output.pm:121
-#: lib/Padre/Wx/Main.pm:2373
+#: lib/Padre/Wx/Output.pm:121 lib/Padre/Wx/Main.pm:2373
 #, perl-format
 msgid ""
-"Wx::Perl::ProcessStream is version %s which is known to cause problems. Get at least 0.20 by typing\n"
+"Wx::Perl::ProcessStream is version %s which is known to cause problems. Get "
+"at least 0.20 by typing\n"
 "cpan Wx::Perl::ProcessStream"
 msgstr ""
-"La versione di Wx::Perl::ProcessStream è la %s che notoriamente causa problemi. Scarica almeno la 0.20\n"
+"La versione di Wx::Perl::ProcessStream è la %s che notoriamente causa "
+"problemi. Scarica almeno la 0.20\n"
 "digitando cpan WX::Perl::ProcessStream"
 
 #: lib/Padre/Wx/Ack.pm:103
@@ -600,9 +604,7 @@ msgstr "I&gnora sottocartelle nascoste"
 msgid "Show only files that don't match"
 msgstr "Mostra solo i file che non corrispondono"
 
-#: lib/Padre/Wx/Ack.pm:145
-#: lib/Padre/Wx/Ack.pm:338
-#: lib/Padre/Wx/Ack.pm:362
+#: lib/Padre/Wx/Ack.pm:145 lib/Padre/Wx/Ack.pm:338 lib/Padre/Wx/Ack.pm:362
 msgid "Find in Files"
 msgstr "Trova nei file"
 
@@ -634,8 +636,7 @@ msgstr "Trovato '%s' in '%s':\n"
 msgid "About Padre"
 msgstr "Informazioni su Padre"
 
-#: lib/Padre/Wx/About.pm:59
-#: lib/Padre/Wx/Menu/View.pm:198
+#: lib/Padre/Wx/About.pm:59 lib/Padre/Wx/Menu/View.pm:198
 #: lib/Padre/Wx/Dialog/Form.pm:98
 msgid "Padre"
 msgstr "Padre"
@@ -648,8 +649,7 @@ msgstr "Sviluppo"
 msgid "Translation"
 msgstr "Traduzione"
 
-#: lib/Padre/Wx/About.pm:74
-#: lib/Padre/Wx/About.pm:311
+#: lib/Padre/Wx/About.pm:74 lib/Padre/Wx/About.pm:311
 msgid "System Info"
 msgstr "Informazioni di sistema"
 
@@ -657,14 +657,17 @@ msgstr "Informazioni di sistema"
 msgid "Created by"
 msgstr "Creato da"
 
-#: lib/Padre/Wx/About.pm:103
-#: lib/Padre/Wx/About.pm:135
+#: lib/Padre/Wx/About.pm:103 lib/Padre/Wx/About.pm:135
 msgid "The Padre Development Team"
 msgstr "Il gruppo di sviluppo di Padre"
 
 #: lib/Padre/Wx/About.pm:105
-msgid "Padre is free software; you can redistribute it and/or modify it under the same terms as Perl 5."
-msgstr "Padre è un software libero; puoi redistribuirlo e/o modificarlo negli stessi termini di Perl 5."
+msgid ""
+"Padre is free software; you can redistribute it and/or modify it under the "
+"same terms as Perl 5."
+msgstr ""
+"Padre è un software libero; puoi redistribuirlo e/o modificarlo negli stessi "
+"termini di Perl 5."
 
 #: lib/Padre/Wx/About.pm:106
 msgid "Blue butterfly on a green leaf"
@@ -690,13 +693,11 @@ msgstr "Uptime"
 msgid "unsupported"
 msgstr "Non supportato"
 
-#: lib/Padre/Wx/Directory.pm:77
-#: lib/Padre/Wx/Dialog/WindowList.pm:225
+#: lib/Padre/Wx/Directory.pm:77 lib/Padre/Wx/Dialog/WindowList.pm:225
 msgid "Project"
 msgstr "Progetto"
 
-#: lib/Padre/Wx/Directory.pm:79
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:101
+#: lib/Padre/Wx/Directory.pm:79 lib/Padre/Wx/Directory/TreeCtrl.pm:101
 msgid "Directory"
 msgstr "Cartella"
 
@@ -724,38 +725,30 @@ msgstr "Diagnostica"
 msgid "Syntax Check"
 msgstr "Verifica sintassi"
 
-#: lib/Padre/Wx/Syntax.pm:89
-#: lib/Padre/Wx/Syntax.pm:294
+#: lib/Padre/Wx/Syntax.pm:89 lib/Padre/Wx/Syntax.pm:294
 #: lib/Padre/Wx/FindResult.pm:179
 msgid "Line"
 msgstr "Riga"
 
-#: lib/Padre/Wx/Syntax.pm:93
-#: lib/Padre/Wx/Syntax.pm:94
-#: lib/Padre/Wx/Main.pm:2500
-#: lib/Padre/Wx/Main.pm:3129
-#: lib/Padre/Wx/Dialog/Warning.pm:64
-#: lib/Padre/Task/SyntaxChecker.pm:183
+#: lib/Padre/Wx/Syntax.pm:93 lib/Padre/Wx/Syntax.pm:94
+#: lib/Padre/Wx/Main.pm:2500 lib/Padre/Wx/Main.pm:3129
+#: lib/Padre/Wx/Dialog/Warning.pm:64 lib/Padre/Task/SyntaxChecker.pm:183
 msgid "Warning"
 msgstr "Attenzione"
 
-#: lib/Padre/Wx/Syntax.pm:295
-#: lib/Padre/Wx/Dialog/Advanced.pm:108
+#: lib/Padre/Wx/Syntax.pm:295 lib/Padre/Wx/Dialog/Advanced.pm:108
 msgid "Type"
 msgstr "Tipo"
 
-#: lib/Padre/Wx/Syntax.pm:296
-#: lib/Padre/Wx/Dialog/SessionManager.pm:226
+#: lib/Padre/Wx/Syntax.pm:296 lib/Padre/Wx/Dialog/SessionManager.pm:226
 msgid "Description"
 msgstr "Descrizione"
 
-#: lib/Padre/Wx/Syntax.pm:327
-#: lib/Padre/Wx/FindResult.pm:227
+#: lib/Padre/Wx/Syntax.pm:327 lib/Padre/Wx/FindResult.pm:227
 msgid "Copy &Selected"
 msgstr "Copia &selezione"
 
-#: lib/Padre/Wx/Syntax.pm:352
-#: lib/Padre/Wx/FindResult.pm:250
+#: lib/Padre/Wx/Syntax.pm:352 lib/Padre/Wx/FindResult.pm:250
 msgid "Copy &All"
 msgstr "Copia &tutto"
 
@@ -787,8 +780,7 @@ msgstr "R/W"
 msgid "Functions"
 msgstr "Funzioni"
 
-#: lib/Padre/Wx/Outline.pm:64
-#: lib/Padre/Wx/Outline.pm:128
+#: lib/Padre/Wx/Outline.pm:64 lib/Padre/Wx/Outline.pm:128
 msgid "Outline"
 msgstr "Schema"
 
@@ -809,8 +801,7 @@ msgstr "Metodi"
 msgid "Find Results (%s)"
 msgstr "Risultati della ricerca (%s)"
 
-#: lib/Padre/Wx/FindResult.pm:99
-#: lib/Padre/Wx/FindResult.pm:178
+#: lib/Padre/Wx/FindResult.pm:99 lib/Padre/Wx/FindResult.pm:178
 msgid "Line No"
 msgstr "Riga n."
 
@@ -835,8 +826,7 @@ msgstr "Riga di comando"
 msgid "Run setup"
 msgstr "Esegui setup"
 
-#: lib/Padre/Wx/Main.pm:2166
-#: lib/Padre/Wx/Main.pm:2227
+#: lib/Padre/Wx/Main.pm:2166 lib/Padre/Wx/Main.pm:2227
 #: lib/Padre/Wx/Main.pm:2282
 msgid "Could not find project root"
 msgstr "Impossibile trovare la radice del progetto"
@@ -849,8 +839,7 @@ msgstr "Impossibile trovare Build.PL, Makefile.PL o dist.ini"
 msgid "Could not find perl executable"
 msgstr "Impossibile trovare l'eseguibile perl"
 
-#: lib/Padre/Wx/Main.pm:2221
-#: lib/Padre/Wx/Main.pm:2273
+#: lib/Padre/Wx/Main.pm:2221 lib/Padre/Wx/Main.pm:2273
 msgid "Current document has no filename"
 msgstr "Il documento corrente non ha un nome file"
 
@@ -895,7 +884,8 @@ msgstr "Errore sconosciuto da"
 #: lib/Padre/Wx/Main.pm:2966
 #, perl-format
 msgid "Could not determine the comment character for %s document type"
-msgstr "Impossibile determinare il carattere di commento per il documento di tipo %s"
+msgstr ""
+"Impossibile determinare il carattere di commento per il documento di tipo %s"
 
 #: lib/Padre/Wx/Main.pm:3015
 msgid "Autocompletion error"
@@ -923,8 +913,7 @@ msgstr "Apri selezione"
 msgid "Could not find file '%s'"
 msgstr "Impossibile trovare il file '%s'"
 
-#: lib/Padre/Wx/Main.pm:3515
-#: lib/Padre/Action/File.pm:334
+#: lib/Padre/Wx/Main.pm:3515 lib/Padre/Action/File.pm:334
 msgid "Open Selection"
 msgstr "Apri selezione"
 
@@ -968,10 +957,8 @@ msgstr "File Web"
 msgid "Script Files"
 msgstr "File di script"
 
-#: lib/Padre/Wx/Main.pm:3653
-#: lib/Padre/Wx/Main.pm:3654
-#: lib/Padre/Wx/Main.pm:4026
-#: lib/Padre/Wx/Main.pm:5215
+#: lib/Padre/Wx/Main.pm:3653 lib/Padre/Wx/Main.pm:3654
+#: lib/Padre/Wx/Main.pm:4026 lib/Padre/Wx/Main.pm:5215
 msgid "All Files"
 msgstr "Tutti i file"
 
@@ -981,11 +968,13 @@ msgstr "Apri file"
 
 #: lib/Padre/Wx/Main.pm:3693
 #, perl-format
-msgid "File name %s contains * or ? which are special chars on most computers. Skip?"
-msgstr "Il nome file %s contiene * o ? che sono caratteri speciali per molti computer. Ignorare?"
+msgid ""
+"File name %s contains * or ? which are special chars on most computers. Skip?"
+msgstr ""
+"Il nome file %s contiene * o ? che sono caratteri speciali per molti "
+"computer. Ignorare?"
 
-#: lib/Padre/Wx/Main.pm:3696
-#: lib/Padre/Wx/Main.pm:3716
+#: lib/Padre/Wx/Main.pm:3696 lib/Padre/Wx/Main.pm:3716
 msgid "Open Warning"
 msgstr "Segnalazione riguardo l'apertura"
 
@@ -1031,8 +1020,7 @@ msgstr "Il file è esistente. Sovrascriverlo?"
 msgid "Exist"
 msgstr "Esiste"
 
-#: lib/Padre/Wx/Main.pm:4147
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:538
+#: lib/Padre/Wx/Main.pm:4147 lib/Padre/Wx/Directory/TreeCtrl.pm:538
 msgid "File already exists"
 msgstr "Il file è già esistente."
 
@@ -1043,7 +1031,8 @@ msgstr "Impossibile creare il percorso '%s'"
 
 #: lib/Padre/Wx/Main.pm:4252
 msgid "File changed on disk since last saved. Do you want to overwrite it?"
-msgstr "Il file è stato modificato su disco dall'ultimo salvataggio. Sovrascriverlo?"
+msgstr ""
+"Il file è stato modificato su disco dall'ultimo salvataggio. Sovrascriverlo?"
 
 #: lib/Padre/Wx/Main.pm:4253
 msgid "File not in sync"
@@ -1085,8 +1074,7 @@ msgstr "Impossibile eseguire diff se il file non è mai stato salvato"
 msgid "There are no differences\n"
 msgstr "Non ci sono differenze\n"
 
-#: lib/Padre/Wx/Main.pm:5332
-#: lib/Padre/Plugin/Devel.pm:308
+#: lib/Padre/Wx/Main.pm:5332 lib/Padre/Plugin/Devel.pm:308
 #, perl-format
 msgid "Error: %s"
 msgstr "Errore: %s"
@@ -1095,8 +1083,7 @@ msgstr "Errore: %s"
 msgid "Internal error"
 msgstr "Errore interno"
 
-#: lib/Padre/Wx/Main.pm:5525
-#: lib/Padre/Plugin/Devel.pm:139
+#: lib/Padre/Wx/Main.pm:5525 lib/Padre/Plugin/Devel.pm:139
 msgid "No file is open"
 msgstr "Nessun file aperto"
 
@@ -1175,8 +1162,7 @@ msgstr "Annulla"
 msgid "folder"
 msgstr "cartella"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:738
-#: lib/Padre/Action/File.pm:120
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:738 lib/Padre/Action/File.pm:120
 msgid "Open in File Browser"
 msgstr "Apri in esplorazione file"
 
@@ -1198,8 +1184,7 @@ msgstr "Cancella"
 msgid "Are you sure you want to delete this item?"
 msgstr "Sei sicuro di voler eliminare questo elemento?"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:820
-#: lib/Padre/Task/Outline/Perl.pm:172
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:820 lib/Padre/Task/Outline/Perl.pm:174
 msgid "Open &Documentation"
 msgstr "Apri &Documentazione"
 
@@ -1207,13 +1192,11 @@ msgstr "Apri &Documentazione"
 msgid "Show hidden files"
 msgstr "Mostra file nascosti"
 
-#: lib/Padre/Wx/Directory/TreeCtrl.pm:859
-#: lib/Padre/Wx/Menu/File.pm:169
+#: lib/Padre/Wx/Directory/TreeCtrl.pm:859 lib/Padre/Wx/Menu/File.pm:169
 msgid "Reload"
 msgstr "Ricarica"
 
-#: lib/Padre/Wx/Directory/SearchCtrl.pm:27
-#: lib/Padre/Wx/Dialog/Find.pm:332
+#: lib/Padre/Wx/Directory/SearchCtrl.pm:27 lib/Padre/Wx/Dialog/Find.pm:332
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:389
 msgid "Search"
 msgstr "Cerca"
@@ -1287,8 +1270,7 @@ msgstr "Ultraedit"
 msgid "Notepad++"
 msgstr "Notepad++"
 
-#: lib/Padre/Wx/Menu/View.pm:213
-#: lib/Padre/Wx/Menu/View.pm:237
+#: lib/Padre/Wx/Menu/View.pm:213 lib/Padre/Wx/Menu/View.pm:237
 #, perl-format
 msgid "Switch highlighting colors to %s style"
 msgstr "Modifica lo stile dei colori di evidenziazione in %s"
@@ -1360,8 +1342,7 @@ msgstr "Strumenti per le differenze:"
 msgid "Show as"
 msgstr "Mostra come"
 
-#: lib/Padre/Wx/Menu/Edit.pm:344
-#: lib/Padre/Wx/Dialog/Snippets.pm:26
+#: lib/Padre/Wx/Menu/Edit.pm:344 lib/Padre/Wx/Dialog/Snippets.pm:26
 msgid "&Edit"
 msgstr "&Modifica"
 
@@ -1401,11 +1382,9 @@ msgstr "Nuovo"
 msgid "Open..."
 msgstr "Apri..."
 
-#: lib/Padre/Wx/Menu/File.pm:130
-#: lib/Padre/Wx/Dialog/SessionManager.pm:291
+#: lib/Padre/Wx/Menu/File.pm:130 lib/Padre/Wx/Dialog/SessionManager.pm:291
 #: lib/Padre/Wx/Dialog/PluginManager.pm:145
-#: lib/Padre/Wx/Dialog/FilterTool.pm:152
-#: lib/Padre/Wx/Dialog/WindowList.pm:282
+#: lib/Padre/Wx/Dialog/FilterTool.pm:152 lib/Padre/Wx/Dialog/WindowList.pm:282
 #: lib/Padre/Wx/Dialog/SessionSave.pm:230
 msgid "Close"
 msgstr "Chiudi"
@@ -1443,8 +1422,7 @@ msgstr ""
 msgid "Function"
 msgstr "Funzione"
 
-#: lib/Padre/Wx/Dialog/Form.pm:32
-#: lib/Padre/Wx/Dialog/Warning.pm:32
+#: lib/Padre/Wx/Dialog/Form.pm:32 lib/Padre/Wx/Dialog/Warning.pm:32
 #: lib/Padre/Wx/Dialog/Shortcut.pm:32
 msgid "A Dialog"
 msgstr "Una finestra di dialogo"
@@ -1461,14 +1439,12 @@ msgstr "Seconda etichetta"
 msgid "Whatever"
 msgstr "Qualsiasi"
 
-#: lib/Padre/Wx/Dialog/Find.pm:53
-#: lib/Padre/Wx/Dialog/Find.pm:177
+#: lib/Padre/Wx/Dialog/Find.pm:53 lib/Padre/Wx/Dialog/Find.pm:177
 #: lib/Padre/Wx/Dialog/Replace.pm:209
 msgid "Find"
 msgstr "Trova"
 
-#: lib/Padre/Wx/Dialog/Find.pm:75
-#: lib/Padre/Wx/Dialog/Replace.pm:81
+#: lib/Padre/Wx/Dialog/Find.pm:75 lib/Padre/Wx/Dialog/Replace.pm:81
 msgid "Case &sensitive"
 msgstr "&Ignora maiuscole/minuscole"
 
@@ -1476,13 +1452,11 @@ msgstr "&Ignora maiuscole/minuscole"
 msgid "&Regular Expression"
 msgstr "Espressioni &Regolari"
 
-#: lib/Padre/Wx/Dialog/Find.pm:103
-#: lib/Padre/Wx/Dialog/Replace.pm:109
+#: lib/Padre/Wx/Dialog/Find.pm:103 lib/Padre/Wx/Dialog/Replace.pm:109
 msgid "Close Window on &Hit"
 msgstr "Chiudi la finestra se trovato"
 
-#: lib/Padre/Wx/Dialog/Find.pm:117
-#: lib/Padre/Wx/Dialog/Replace.pm:123
+#: lib/Padre/Wx/Dialog/Find.pm:117 lib/Padre/Wx/Dialog/Replace.pm:123
 msgid "Search &Backwards"
 msgstr "Cerca in &precedenza"
 
@@ -1498,13 +1472,11 @@ msgstr "Trova t&utti"
 msgid "Find &Text:"
 msgstr "Trova il &testo:"
 
-#: lib/Padre/Wx/Dialog/Find.pm:210
-#: lib/Padre/Wx/Dialog/Replace.pm:295
+#: lib/Padre/Wx/Dialog/Find.pm:210 lib/Padre/Wx/Dialog/Replace.pm:295
 msgid "Options"
 msgstr "Opzioni"
 
-#: lib/Padre/Wx/Dialog/Find.pm:331
-#: lib/Padre/Wx/Dialog/Replace.pm:535
+#: lib/Padre/Wx/Dialog/Find.pm:331 lib/Padre/Wx/Dialog/Replace.pm:535
 #: lib/Padre/Wx/Dialog/Replace.pm:584
 msgid "No matches found"
 msgstr "Nessuna corrispondenza"
@@ -1559,8 +1531,7 @@ msgstr "Ignora maiuscole/minuscole"
 msgid "Use rege&x"
 msgstr "Usa espressioni regolari"
 
-#: lib/Padre/Wx/Dialog/DocStats.pm:31
-#: lib/Padre/Action/File.pm:410
+#: lib/Padre/Wx/Dialog/DocStats.pm:31 lib/Padre/Action/File.pm:410
 msgid "Document Statistics"
 msgstr "Statistiche documento"
 
@@ -1620,8 +1591,7 @@ msgstr "Tipo documento"
 msgid "none"
 msgstr "nessuno"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:35
-#: lib/Padre/Action/Tools.pm:48
+#: lib/Padre/Wx/Dialog/PluginManager.pm:35 lib/Padre/Action/Tools.pm:48
 msgid "Plug-in Manager"
 msgstr "Gestore plug-in"
 
@@ -1629,10 +1599,8 @@ msgstr "Gestore plug-in"
 msgid "Version"
 msgstr "Versione"
 
-#: lib/Padre/Wx/Dialog/PluginManager.pm:68
-#: lib/Padre/Wx/Dialog/Advanced.pm:107
-#: lib/Padre/Wx/CPAN/Listview.pm:32
-#: lib/Padre/Wx/CPAN/Listview.pm:64
+#: lib/Padre/Wx/Dialog/PluginManager.pm:68 lib/Padre/Wx/Dialog/Advanced.pm:107
+#: lib/Padre/Wx/CPAN/Listview.pm:32 lib/Padre/Wx/CPAN/Listview.pm:64
 msgid "Status"
 msgstr "Stato"
 
@@ -1646,8 +1614,7 @@ msgid "Enable"
 msgstr "Abilita"
 
 #: lib/Padre/Wx/Dialog/PluginManager.pm:131
-#: lib/Padre/Wx/Dialog/Preferences.pm:801
-#: lib/Padre/Action/Edit.pm:621
+#: lib/Padre/Wx/Dialog/Preferences.pm:801 lib/Padre/Action/Edit.pm:621
 msgid "Preferences"
 msgstr "Preferenze"
 
@@ -1711,18 +1678,15 @@ msgid "Error while trying to perform Padre action: %s"
 msgstr "Errore nell'esecuzione di un'azione di Padre: %s"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:150
-#: lib/Padre/Wx/Dialog/OpenResource.pm:188
-#: lib/Padre/Wx/Dialog/OpenURL.pm:62
+#: lib/Padre/Wx/Dialog/OpenResource.pm:188 lib/Padre/Wx/Dialog/OpenURL.pm:62
 #: lib/Padre/Wx/Dialog/Goto.pm:93
 msgid "&OK"
 msgstr "&OK"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:154
 #: lib/Padre/Wx/Dialog/Preferences.pm:912
-#: lib/Padre/Wx/Dialog/OpenResource.pm:192
-#: lib/Padre/Wx/Dialog/Advanced.pm:174
-#: lib/Padre/Wx/Dialog/OpenURL.pm:70
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:199
+#: lib/Padre/Wx/Dialog/OpenResource.pm:192 lib/Padre/Wx/Dialog/Advanced.pm:174
+#: lib/Padre/Wx/Dialog/OpenURL.pm:70 lib/Padre/Wx/Dialog/KeyBindings.pm:199
 #: lib/Padre/Wx/Dialog/Goto.pm:100
 msgid "&Cancel"
 msgstr "&Annulla"
@@ -1762,8 +1726,7 @@ msgid "Refactor"
 msgstr "Refactor"
 
 #: lib/Padre/Wx/Dialog/QuickMenuAccess.pm:393
-#: lib/Padre/Wx/Dialog/FilterTool.pm:151
-#: lib/Padre/Document/Perl.pm:289
+#: lib/Padre/Wx/Dialog/FilterTool.pm:151 lib/Padre/Document/Perl.pm:289
 msgid "Run"
 msgstr "Esegui"
 
@@ -1906,8 +1869,7 @@ msgstr "DimensioneDimensione carattere"
 msgid "Number of lines"
 msgstr "Numero di righe"
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:46
-#: lib/Padre/Wx/Dialog/Snippets.pm:22
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:46 lib/Padre/Wx/Dialog/Snippets.pm:22
 msgid "Class:"
 msgstr "Classe:"
 
@@ -1915,8 +1877,7 @@ msgstr "Classe:"
 msgid "Special Value:"
 msgstr "Valore speciale:"
 
-#: lib/Padre/Wx/Dialog/SpecialValues.pm:50
-#: lib/Padre/Wx/Dialog/Snippets.pm:24
+#: lib/Padre/Wx/Dialog/SpecialValues.pm:50 lib/Padre/Wx/Dialog/Snippets.pm:24
 #: lib/Padre/Wx/Dialog/RegexEditor.pm:234
 msgid "&Insert"
 msgstr "&Inserisci"
@@ -1949,8 +1910,7 @@ msgstr "Abilita gestione delle sessioni"
 msgid "Diff tool:"
 msgstr "Strumento per le differenze:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:73
-#: lib/Padre/Wx/Dialog/Preferences.pm:77
+#: lib/Padre/Wx/Dialog/Preferences.pm:73 lib/Padre/Wx/Dialog/Preferences.pm:77
 msgid "Browse..."
 msgstr "Sfoglia..."
 
@@ -2009,15 +1969,20 @@ msgstr "A  capo automatico di default per ciascun file"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:290
 msgid "Use panel order for Ctrl-Tab (not usage history)"
-msgstr "Usa l'ordine delle schede per CTRL-TAB (non la cronologia dell'utilizzo)"
+msgstr ""
+"Usa l'ordine delle schede per CTRL-TAB (non la cronologia dell'utilizzo)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:297
 msgid "Clean up file content on saving (for supported document types)"
-msgstr "Ripulisci il contenuto del file durante il salvataggio (per i tipi di documento supportati)"
+msgstr ""
+"Ripulisci il contenuto del file durante il salvataggio (per i tipi di "
+"documento supportati)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:302
 msgid "Auto-fold POD markup when code folding enabled"
-msgstr "Coprimi automaticamente il markup POD quando la compressione del codice è abilitata"
+msgstr ""
+"Coprimi automaticamente il markup POD quando la compressione del codice è "
+"abilitata"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:307
 msgid "Perl beginner mode"
@@ -2056,8 +2021,12 @@ msgid "Check for file updates on disk every (seconds):"
 msgstr "Verifica aggiornamenti al file ogni (secondi):"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:342
-msgid "Add another closing bracket if there is already one (and the auto-bracket-function is enabled)"
-msgstr "Aggiungi una parentesi chiusa se ce n'è già una (e la funzione delle parentesi automatiche è abilitata)"
+msgid ""
+"Add another closing bracket if there is already one (and the auto-bracket-"
+"function is enabled)"
+msgstr ""
+"Aggiungi una parentesi chiusa se ce n'è già una (e la funzione delle "
+"parentesi automatiche è abilitata)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:349
 msgid "Enable Smart highlighting while typing"
@@ -2113,7 +2082,9 @@ msgstr "Testo colorato nella finestra di output (ANSI)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:448
 msgid "Show low-priority info messages on statusbar (not in a popup)"
-msgstr "Mostra i messaggi informativi a bassa priorità nella barra di stato (non in un popup)"
+msgstr ""
+"Mostra i messaggi informativi a bassa priorità nella barra di stato (non in "
+"un popup)"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:453
 msgid "Show right margin at column:"
@@ -2197,8 +2168,7 @@ msgstr "Nome documento:"
 msgid "Document location:"
 msgstr "Posizione documento:"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:778
-#: lib/Padre/Wx/Dialog/Advanced.pm:399
+#: lib/Padre/Wx/Dialog/Preferences.pm:778 lib/Padre/Wx/Dialog/Advanced.pm:399
 msgid "Default"
 msgstr "Predefinito"
 
@@ -2231,8 +2201,7 @@ msgstr "Indentazione"
 msgid "External Tools"
 msgstr "Strumento esterno"
 
-#: lib/Padre/Wx/Dialog/Preferences.pm:890
-#: lib/Padre/Wx/Dialog/Snippets.pm:114
+#: lib/Padre/Wx/Dialog/Preferences.pm:890 lib/Padre/Wx/Dialog/Snippets.pm:114
 #: lib/Padre/Action/File.pm:285
 msgid "&Save"
 msgstr "&Salva"
@@ -2317,8 +2286,7 @@ msgstr "Sostituisci"
 msgid "Replace Text:"
 msgstr "Testo sostitutivo"
 
-#: lib/Padre/Wx/Dialog/Replace.pm:536
-#: lib/Padre/Wx/Dialog/Replace.pm:580
+#: lib/Padre/Wx/Dialog/Replace.pm:536 lib/Padre/Wx/Dialog/Replace.pm:580
 #: lib/Padre/Wx/Dialog/Replace.pm:585
 msgid "Search and Replace"
 msgstr "Trova e sostituisci"
@@ -2359,7 +2327,9 @@ msgstr "Errore nell'esecuzione di un'azione di Padre"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:213
 msgid "&Select an item to open (? = any character, * = any string):"
-msgstr "&Seleziona un elemento da aprire (? = qualsiasi carattere, * = qualsiasi stringa)"
+msgstr ""
+"&Seleziona un elemento da aprire (? = qualsiasi carattere, * = qualsiasi "
+"stringa)"
 
 #: lib/Padre/Wx/Dialog/OpenResource.pm:225
 msgid "&Matching Items:"
@@ -2401,8 +2371,7 @@ msgstr "File/Cartella"
 msgid "Advanced Settings"
 msgstr "Impostazioni avanzate"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:93
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:77
+#: lib/Padre/Wx/Dialog/Advanced.pm:93 lib/Padre/Wx/Dialog/KeyBindings.pm:77
 msgid "&Filter:"
 msgstr "&Filtro"
 
@@ -2410,8 +2379,7 @@ msgstr "&Filtro"
 msgid "Preference Name"
 msgstr "Nome preferenze"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:109
-#: lib/Padre/Wx/Debugger/View.pm:103
+#: lib/Padre/Wx/Dialog/Advanced.pm:109 lib/Padre/Wx/Debugger/View.pm:103
 msgid "Value"
 msgstr "Valore"
 
@@ -2427,13 +2395,11 @@ msgstr "Copia il nome"
 msgid "Copy Value"
 msgstr "Copia il valore"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:125
-#: lib/Padre/Wx/Dialog/Advanced.pm:562
+#: lib/Padre/Wx/Dialog/Advanced.pm:125 lib/Padre/Wx/Dialog/Advanced.pm:562
 msgid "True"
 msgstr "Vero"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:126
-#: lib/Padre/Wx/Dialog/Advanced.pm:563
+#: lib/Padre/Wx/Dialog/Advanced.pm:126 lib/Padre/Wx/Dialog/Advanced.pm:563
 msgid "False"
 msgstr "Falso"
 
@@ -2445,18 +2411,15 @@ msgstr "Valore predefinito"
 msgid "Options:"
 msgstr "Opzioni:"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:156
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:181
+#: lib/Padre/Wx/Dialog/Advanced.pm:156 lib/Padre/Wx/Dialog/KeyBindings.pm:181
 msgid "&Set"
 msgstr "&Imposta"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:162
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:187
+#: lib/Padre/Wx/Dialog/Advanced.pm:162 lib/Padre/Wx/Dialog/KeyBindings.pm:187
 msgid "&Reset"
 msgstr "&Reset"
 
-#: lib/Padre/Wx/Dialog/Advanced.pm:168
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:193
+#: lib/Padre/Wx/Dialog/Advanced.pm:168 lib/Padre/Wx/Dialog/KeyBindings.pm:193
 msgid "S&ave"
 msgstr "S&alva"
 
@@ -2492,13 +2455,11 @@ msgstr "Edtor"
 msgid "Disk"
 msgstr "Disco"
 
-#: lib/Padre/Wx/Dialog/WindowList.pm:349
-#: lib/Padre/Wx/Dialog/WindowList.pm:358
+#: lib/Padre/Wx/Dialog/WindowList.pm:349 lib/Padre/Wx/Dialog/WindowList.pm:358
 msgid "CHANGED"
 msgstr "MODIFICATO"
 
-#: lib/Padre/Wx/Dialog/WindowList.pm:349
-#: lib/Padre/Wx/Dialog/WindowList.pm:354
+#: lib/Padre/Wx/Dialog/WindowList.pm:349 lib/Padre/Wx/Dialog/WindowList.pm:354
 msgid "fresh"
 msgstr "nuovo"
 
@@ -2514,13 +2475,11 @@ msgstr "Apri URL"
 msgid "e.g."
 msgstr "es."
 
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:39
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:96
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:39 lib/Padre/Wx/Dialog/HelpSearch.pm:96
 msgid "Help Search"
 msgstr "Cerca nella guida"
 
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:81
-#: lib/Padre/Wx/Dialog/HelpSearch.pm:307
+#: lib/Padre/Wx/Dialog/HelpSearch.pm:81 lib/Padre/Wx/Dialog/HelpSearch.pm:307
 #: lib/Padre/Wx/Dialog/HelpSearch.pm:325
 #, perl-format
 msgid "Error while calling %s %s"
@@ -2555,8 +2514,7 @@ msgstr "Impossibile trovare un provider dell'help per"
 msgid "Found %s help topic(s)\n"
 msgstr "Trovato(i) %s argomento(i) d'aiuto\n"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:46
-#: lib/Padre/Action/Tools.pm:38
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:46 lib/Padre/Action/Tools.pm:38
 msgid "Key Bindings"
 msgstr "Scorciatoie da tastiera"
 
@@ -2564,8 +2522,7 @@ msgstr "Scorciatoie da tastiera"
 msgid "Key binding name"
 msgstr "Nome scorciatoia"
 
-#: lib/Padre/Wx/Dialog/KeyBindings.pm:91
-#: lib/Padre/Wx/Dialog/Shortcut.pm:113
+#: lib/Padre/Wx/Dialog/KeyBindings.pm:91 lib/Padre/Wx/Dialog/Shortcut.pm:113
 msgid "Shortcut"
 msgstr "Scorciatoia"
 
@@ -2581,8 +2538,7 @@ msgstr "Sc&orciatoia"
 msgid "All"
 msgstr "Tutto"
 
-#: lib/Padre/Wx/Dialog/Snippets.pm:23
-#: lib/Padre/Wx/Dialog/Snippets.pm:113
+#: lib/Padre/Wx/Dialog/Snippets.pm:23 lib/Padre/Wx/Dialog/Snippets.pm:113
 msgid "Snippet:"
 msgstr "Frammento:"
 
@@ -2626,15 +2582,12 @@ msgstr "Vai a"
 msgid "Position type"
 msgstr "Tipo posizione"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:88
-#: lib/Padre/Wx/Dialog/Goto.pm:193
-#: lib/Padre/Wx/Dialog/Goto.pm:223
-#: lib/Padre/Wx/Dialog/Goto.pm:242
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:193
+#: lib/Padre/Wx/Dialog/Goto.pm:223 lib/Padre/Wx/Dialog/Goto.pm:242
 msgid "Line number"
 msgstr "Numero riga"
 
-#: lib/Padre/Wx/Dialog/Goto.pm:88
-#: lib/Padre/Wx/Dialog/Goto.pm:227
+#: lib/Padre/Wx/Dialog/Goto.pm:88 lib/Padre/Wx/Dialog/Goto.pm:227
 msgid "Character position"
 msgstr "Posizione carattere"
 
@@ -2675,8 +2628,7 @@ msgstr "Azione: %s"
 msgid "CTRL"
 msgstr "CTRL"
 
-#: lib/Padre/Wx/Dialog/Shortcut.pm:61
-#: lib/Padre/Wx/Dialog/Shortcut.pm:75
+#: lib/Padre/Wx/Dialog/Shortcut.pm:61 lib/Padre/Wx/Dialog/Shortcut.pm:75
 #: lib/Padre/Wx/Dialog/Shortcut.pm:89
 msgid "+"
 msgstr "+"
@@ -2689,8 +2641,7 @@ msgstr "ALT"
 msgid "SHIFT"
 msgstr "SHIFT"
 
-#: lib/Padre/Wx/Dialog/RegexEditor.pm:33
-#: lib/Padre/Action/Edit.pm:589
+#: lib/Padre/Wx/Dialog/RegexEditor.pm:33 lib/Padre/Action/Edit.pm:589
 msgid "Regex Editor"
 msgstr "Editor espressioni regolari"
 
@@ -2949,8 +2900,7 @@ msgstr "Segnalibri esistenti:"
 msgid "Delete &All"
 msgstr "Cancella &tutto"
 
-#: lib/Padre/Wx/Dialog/Bookmarks.pm:56
-#: lib/Padre/Action/View.pm:286
+#: lib/Padre/Wx/Dialog/Bookmarks.pm:56 lib/Padre/Action/View.pm:286
 msgid "Set Bookmark"
 msgstr "Imposta segnalibro"
 
@@ -3029,8 +2979,7 @@ msgstr "Nuovo modulo"
 msgid "Module name:"
 msgstr "Nome modulo:"
 
-#: lib/Padre/Util/FileBrowser.pm:63
-#: lib/Padre/Util/FileBrowser.pm:110
+#: lib/Padre/Util/FileBrowser.pm:63 lib/Padre/Util/FileBrowser.pm:110
 #: lib/Padre/Util/FileBrowser.pm:153
 #, perl-format
 msgid "Unsupported OS: %s"
@@ -3109,13 +3058,11 @@ msgstr "Documentazione di riferimento STC"
 msgid "wxPerl Live Support"
 msgstr "Supporto Live wxPerl"
 
-#: lib/Padre/Plugin/Devel.pm:92
-#: lib/Padre/Plugin/PopularityContest.pm:197
+#: lib/Padre/Plugin/Devel.pm:92 lib/Padre/Plugin/PopularityContest.pm:197
 msgid "About"
 msgstr "&Informazioni su..."
 
-#: lib/Padre/Plugin/Devel.pm:110
-#: lib/Padre/Plugin/Devel.pm:111
+#: lib/Padre/Plugin/Devel.pm:110 lib/Padre/Plugin/Devel.pm:111
 msgid "Expression"
 msgstr "Espressione"
 
@@ -3165,17 +3112,14 @@ msgstr "Errore:"
 msgid "No errors found."
 msgstr "Nessun errore trovato"
 
-#: lib/Padre/Document/Perl.pm:575
-#: lib/Padre/Document/Perl.pm:760
+#: lib/Padre/Document/Perl.pm:575 lib/Padre/Document/Perl.pm:760
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:89
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:103
 msgid "Current cursor does not seem to point at a variable"
 msgstr "Il cursore non sembra puntare ad una variabile"
 
-#: lib/Padre/Document/Perl.pm:576
-#: lib/Padre/Document/Perl.pm:600
-#: lib/Padre/Document/Perl.pm:635
-#: lib/Padre/Document/Perl.pm:761
+#: lib/Padre/Document/Perl.pm:576 lib/Padre/Document/Perl.pm:600
+#: lib/Padre/Document/Perl.pm:635 lib/Padre/Document/Perl.pm:761
 msgid "Check cancelled"
 msgstr "Verifica cancellata"
 
@@ -3188,8 +3132,7 @@ msgstr "Il cursore corrente non sembra puntare ad un metodo"
 msgid "Current '%s' not found"
 msgstr "'%s' corrente non trovato"
 
-#: lib/Padre/Document/Perl.pm:1501
-#: lib/Padre/Action/Perl.pm:69
+#: lib/Padre/Document/Perl.pm:1501 lib/Padre/Action/Perl.pm:69
 msgid "Find Variable Declaration"
 msgstr "Trova dichiarazione variabile"
 
@@ -3197,23 +3140,19 @@ msgstr "Trova dichiarazione variabile"
 msgid "Rename Variable"
 msgstr "Rinomina variabile"
 
-#: lib/Padre/Document/Perl.pm:1525
-#: lib/Padre/Document/Perl.pm:1526
+#: lib/Padre/Document/Perl.pm:1525 lib/Padre/Document/Perl.pm:1526
 msgid "Replacement"
 msgstr "Sostituzione"
 
-#: lib/Padre/Document/Perl.pm:1541
-#: lib/Padre/Action/Perl.pm:81
+#: lib/Padre/Document/Perl.pm:1541 lib/Padre/Action/Perl.pm:81
 msgid "Find Method Declaration"
 msgstr "Cerca dichiarazione del metodo"
 
-#: lib/Padre/Document/Perl.pm:1560
-#: lib/Padre/Action/Refactor.pm:111
+#: lib/Padre/Document/Perl.pm:1560 lib/Padre/Action/Refactor.pm:111
 msgid "Introduce Temporary Variable"
 msgstr "Introduci variabile temporanea"
 
-#: lib/Padre/Document/Perl.pm:1573
-#: lib/Padre/Document/Perl.pm:1574
+#: lib/Padre/Document/Perl.pm:1573 lib/Padre/Document/Perl.pm:1574
 #: lib/Padre/Action/Refactor.pm:110
 msgid "Variable Name"
 msgstr "Nome variabile"
@@ -3239,8 +3178,7 @@ msgstr "Tro&va..."
 msgid "Find text or regular expressions using a traditional dialog"
 msgstr "Cerca testo o espressione regolare usando una dialog tradizionale"
 
-#: lib/Padre/Action/Search.pm:47
-#: lib/Padre/Action/Search.pm:119
+#: lib/Padre/Action/Search.pm:47 lib/Padre/Action/Search.pm:119
 msgid "Find Next"
 msgstr "Trova successivo"
 
@@ -3258,7 +3196,9 @@ msgstr "&Trova precedente"
 
 #: lib/Padre/Action/Search.pm:90
 msgid "Repeat the last find, but backwards to find the previous match"
-msgstr "Ripeti l'ultima ricerca, ma all'indietro, fino a trovare la corrispondenza precedente"
+msgstr ""
+"Ripeti l'ultima ricerca, ma all'indietro, fino a trovare la corrispondenza "
+"precedente"
 
 #: lib/Padre/Action/Search.pm:101
 msgid "Quick Find"
@@ -3269,16 +3209,24 @@ msgid "Incremental search seen at the bottom of the window"
 msgstr "La ricerca incrementale ha superato il fondo della finestra"
 
 #: lib/Padre/Action/Search.pm:120
-msgid "Find next matching text using a toolbar-like dialog at the bottom of the editor"
-msgstr "Trova la corrispondenza successiva usando la barra degli strumenti al fondo dell'editor"
+msgid ""
+"Find next matching text using a toolbar-like dialog at the bottom of the "
+"editor"
+msgstr ""
+"Trova la corrispondenza successiva usando la barra degli strumenti al fondo "
+"dell'editor"
 
 #: lib/Padre/Action/Search.pm:130
 msgid "Find Previous"
 msgstr "Trova precedente"
 
 #: lib/Padre/Action/Search.pm:131
-msgid "Find previous matching text using a toolbar-like dialog at the bottom of the editor"
-msgstr "Trova la corrispondenza precedente usando la barra degli strumenti al fondo dell'editor"
+msgid ""
+"Find previous matching text using a toolbar-like dialog at the bottom of the "
+"editor"
+msgstr ""
+"Trova la corrispondenza precedente usando la barra degli strumenti al fondo "
+"dell'editor"
 
 #: lib/Padre/Action/Search.pm:142
 msgid "Replace..."
@@ -3326,7 +3274,9 @@ msgstr "Ritarda di 10 secondi la coda delle azioni"
 
 #: lib/Padre/Action/Internal.pm:57
 msgid "Stops processing of other action queue items for 10 seconds"
-msgstr "Interrompi per 10 secondi l'esecuzione degli altri elementi della coda delle azioni"
+msgstr ""
+"Interrompi per 10 secondi l'esecuzione degli altri elementi della coda delle "
+"azioni"
 
 #: lib/Padre/Action/Internal.pm:64
 msgid "Delay the action queue for 30 seconds"
@@ -3334,7 +3284,9 @@ msgstr "Ritarda di 30 secondi la coda delle azioni"
 
 #: lib/Padre/Action/Internal.pm:65
 msgid "Stops processing of other action queue items for 30 seconds"
-msgstr "Interrompi per 30 secondi l'esecuzione degli altri elementi della coda delle azioni"
+msgstr ""
+"Interrompi per 30 secondi l'esecuzione degli altri elementi della coda delle "
+"azioni"
 
 #: lib/Padre/Action/Run.pm:43
 msgid "Run Script"
@@ -3342,7 +3294,8 @@ msgstr "Esegui script"
 
 #: lib/Padre/Action/Run.pm:44
 msgid "Runs the current document and shows its output in the output panel."
-msgstr "Esegui il documento corrente e mostrane l'output nella finestra di output."
+msgstr ""
+"Esegui il documento corrente e mostrane l'output nella finestra di output."
 
 #: lib/Padre/Action/Run.pm:59
 msgid "Run Script (Debug Info)"
@@ -3350,7 +3303,8 @@ msgstr "Esegui script (con informazioni di debug)"
 
 #: lib/Padre/Action/Run.pm:60
 msgid "Run the current document but include debug info in the output."
-msgstr "Esegui il documento corrente ma includi le informazionidi debug nell'output."
+msgstr ""
+"Esegui il documento corrente ma includi le informazionidi debug nell'output."
 
 #: lib/Padre/Action/Run.pm:69
 msgid "Run Command"
@@ -3373,8 +3327,12 @@ msgid "Run Tests"
 msgstr "Esegui test"
 
 #: lib/Padre/Action/Run.pm:94
-msgid "Run all tests for the current project or document and show the results in the output panel."
-msgstr "Esegui tutti i test del progetto corrente o del documento e mostra il risultato nella finestra di output."
+msgid ""
+"Run all tests for the current project or document and show the results in "
+"the output panel."
+msgstr ""
+"Esegui tutti i test del progetto corrente o del documento e mostra il "
+"risultato nella finestra di output."
 
 #: lib/Padre/Action/Run.pm:113
 msgid "Run This Test"
@@ -3398,15 +3356,20 @@ msgstr "Blocca l'interfaccia utente"
 
 #: lib/Padre/Action/View.pm:30
 msgid "If activated, do not allow moving around some of the windows"
-msgstr "Se attivato, non consentire all'utente di spostare alcune delle finestre"
+msgstr ""
+"Se attivato, non consentire all'utente di spostare alcune delle finestre"
 
 #: lib/Padre/Action/View.pm:40
 msgid "Show Output"
 msgstr "Mostra output"
 
 #: lib/Padre/Action/View.pm:42
-msgid "Show the window displaying the standard output and standard error of the running scripts"
-msgstr "Mostra le finestre che contengono il flusso di output e il flusso di errore degli script in esecuzione"
+msgid ""
+"Show the window displaying the standard output and standard error of the "
+"running scripts"
+msgstr ""
+"Mostra le finestre che contengono il flusso di output e il flusso di errore "
+"degli script in esecuzione"
 
 #: lib/Padre/Action/View.pm:51
 msgid "Show Functions"
@@ -3414,7 +3377,8 @@ msgstr "Mostra funzioni"
 
 #: lib/Padre/Action/View.pm:52
 msgid "Show a window listing all the functions in the current document"
-msgstr "Mostra una finestra che elenca tutte le funzioni nel documento corrente"
+msgstr ""
+"Mostra una finestra che elenca tutte le funzioni nel documento corrente"
 
 #: lib/Padre/Action/View.pm:61
 msgid "Show To-do List"
@@ -3422,15 +3386,20 @@ msgstr "Mostra elenco delle attività"
 
 #: lib/Padre/Action/View.pm:62
 msgid "Show a window listing all todo items in the current document"
-msgstr "Mostra una finestra che elenca tutte le attività nel documento corrente"
+msgstr ""
+"Mostra una finestra che elenca tutte le attività nel documento corrente"
 
 #: lib/Padre/Action/View.pm:77
 msgid "Show Outline"
 msgstr "Visualizza schema"
 
 #: lib/Padre/Action/View.pm:78
-msgid "Show a window listing all the parts of the current file (functions, pragmas, modules)"
-msgstr "Mostra una finestra che elenca tutte le parti del file corrente (funzioni, pragma, moduli)"
+msgid ""
+"Show a window listing all the parts of the current file (functions, pragmas, "
+"modules)"
+msgstr ""
+"Mostra una finestra che elenca tutte le parti del file corrente (funzioni, "
+"pragma, moduli)"
 
 #: lib/Padre/Action/View.pm:87
 msgid "Show Directory Tree"
@@ -3438,15 +3407,20 @@ msgstr "Mostra la gerarchia delle cartelle"
 
 #: lib/Padre/Action/View.pm:88
 msgid "Show a window with a directory browser of the current project"
-msgstr "Mostra una finestra per esplorare la struttura della directory del progetto corrente"
+msgstr ""
+"Mostra una finestra per esplorare la struttura della directory del progetto "
+"corrente"
 
 #: lib/Padre/Action/View.pm:97
 msgid "Show Syntax Check"
 msgstr "Mostra verifica sintassi"
 
 #: lib/Padre/Action/View.pm:98
-msgid "Turn on syntax checking of the current document and show output in a window"
-msgstr "Abilita la verifica della sintassi per il documento corrente e mostra l'output in una finestra"
+msgid ""
+"Turn on syntax checking of the current document and show output in a window"
+msgstr ""
+"Abilita la verifica della sintassi per il documento corrente e mostra "
+"l'output in una finestra"
 
 #: lib/Padre/Action/View.pm:107
 msgid "Show Errors"
@@ -3454,7 +3428,8 @@ msgstr "Mostra errori"
 
 #: lib/Padre/Action/View.pm:108
 msgid "Show the list of errors received during execution of a script"
-msgstr "Mostra l'elenco degli errori riscontrati durante l'esecuzione dello script"
+msgstr ""
+"Mostra l'elenco degli errori riscontrati durante l'esecuzione dello script"
 
 #: lib/Padre/Action/View.pm:117
 msgid "Show Status Bar"
@@ -3477,16 +3452,24 @@ msgid "Show Line Numbers"
 msgstr "Mostra numeri di riga"
 
 #: lib/Padre/Action/View.pm:139
-msgid "Show/hide the line numbers of all the documents on the left side of the window"
-msgstr "Mostra/nasconde i numeri di riga di tutti i documenti sulla sinistra della finestra"
+msgid ""
+"Show/hide the line numbers of all the documents on the left side of the "
+"window"
+msgstr ""
+"Mostra/nasconde i numeri di riga di tutti i documenti sulla sinistra della "
+"finestra"
 
 #: lib/Padre/Action/View.pm:148
 msgid "Show Code Folding"
 msgstr "Mostra raggruppamento codice"
 
 #: lib/Padre/Action/View.pm:149
-msgid "Show/hide a vertical line on the left hand side of the window to allow folding rows"
-msgstr "Mostra/nasconde una linea verticale sul lato sinistro della finestra per consentire di comprimere le righe"
+msgid ""
+"Show/hide a vertical line on the left hand side of the window to allow "
+"folding rows"
+msgstr ""
+"Mostra/nasconde una linea verticale sul lato sinistro della finestra per "
+"consentire di comprimere le righe"
 
 #: lib/Padre/Action/View.pm:158
 msgid "Fold all"
@@ -3494,7 +3477,9 @@ msgstr "Ripiega tutto"
 
 #: lib/Padre/Action/View.pm:159
 msgid "Fold all the blocks that can be folded (need folding to be enabled)"
-msgstr "Comprime tutti i blocchi che possono essere compressi (è necessario che la compressione sia attiva)"
+msgstr ""
+"Comprime tutti i blocchi che possono essere compressi (è necessario che la "
+"compressione sia attiva)"
 
 #: lib/Padre/Action/View.pm:168
 msgid "Unfold all"
@@ -3502,7 +3487,9 @@ msgstr "Dispiega tutto"
 
 #: lib/Padre/Action/View.pm:169
 msgid "Unfold all the blocks that can be folded (need folding to be enabled)"
-msgstr "Espande tutti i blocchi che possono essere espansi (è necessario che la compressione sia attiva)"
+msgstr ""
+"Espande tutti i blocchi che possono essere espansi (è necessario che la "
+"compressione sia attiva)"
 
 #: lib/Padre/Action/View.pm:178
 msgid "Show Call Tips"
@@ -3510,7 +3497,8 @@ msgstr "Mostra suggerimenti"
 
 #: lib/Padre/Action/View.pm:179
 msgid "When typing in functions allow showing short examples of the function"
-msgstr "Permette di mostrare un breve esempio di una funzione mentre la si digita"
+msgstr ""
+"Permette di mostrare un breve esempio di una funzione mentre la si digita"
 
 #: lib/Padre/Action/View.pm:192
 msgid "Show Current Line"
@@ -3542,15 +3530,19 @@ msgstr "Mostra spazi vuoti"
 
 #: lib/Padre/Action/View.pm:224
 msgid "Show/hide the tabs and the spaces with special characters"
-msgstr "Mostra/nasconde le tabulazioni e gli spazi con un carattere particolare"
+msgstr ""
+"Mostra/nasconde le tabulazioni e gli spazi con un carattere particolare"
 
 #: lib/Padre/Action/View.pm:233
 msgid "Show Indentation Guide"
 msgstr "Mostra guide d'indentazione"
 
 #: lib/Padre/Action/View.pm:234
-msgid "Show/hide vertical bars at every indentation position on the left of the rows"
-msgstr "Mostra/nasconde una riga verticale sulla sinistra della riga ad ogni posizione d'indentazione "
+msgid ""
+"Show/hide vertical bars at every indentation position on the left of the rows"
+msgstr ""
+"Mostra/nasconde una riga verticale sulla sinistra della riga ad ogni "
+"posizione d'indentazione "
 
 #: lib/Padre/Action/View.pm:243
 msgid "Word-Wrap"
@@ -3594,7 +3586,8 @@ msgstr "Vai al segnalibro"
 
 #: lib/Padre/Action/View.pm:298
 msgid "Select a bookmark created earlier and jump to that position"
-msgstr "Seleziona un segnalibro creato in precedenza e si sposta in quella posizione"
+msgstr ""
+"Seleziona un segnalibro creato in precedenza e si sposta in quella posizione"
 
 #: lib/Padre/Action/View.pm:310
 msgid "&Full Screen"
@@ -3609,8 +3602,11 @@ msgid "Rename Variable..."
 msgstr "Rinomina variabile..."
 
 #: lib/Padre/Action/Refactor.pm:50
-msgid "Prompt for a replacement variable name and replace all occurrences of this variable"
-msgstr "Richiede un nuovo nome per la variabile e ne sostituisce tutte le occorrenze"
+msgid ""
+"Prompt for a replacement variable name and replace all occurrences of this "
+"variable"
+msgstr ""
+"Richiede un nuovo nome per la variabile e ne sostituisce tutte le occorrenze"
 
 #: lib/Padre/Action/Refactor.pm:57
 msgid "New name"
@@ -3625,8 +3621,12 @@ msgid "Extract Subroutine..."
 msgstr "Estrai subroutine..."
 
 #: lib/Padre/Action/Refactor.pm:74
-msgid "Cut the current selection and create a new sub from it. A call to this sub is added in the place where the selection was."
-msgstr "Taglia la selezione corrente e trasformala in una nuova sub. Verrà aggiunta una chiamata a questa sub al posto della selezione."
+msgid ""
+"Cut the current selection and create a new sub from it. A call to this sub "
+"is added in the place where the selection was."
+msgstr ""
+"Taglia la selezione corrente e trasformala in una nuova sub. Verrà aggiunta "
+"una chiamata a questa sub al posto della selezione."
 
 #: lib/Padre/Action/Refactor.pm:86
 msgid "Name for the new subroutine"
@@ -3644,14 +3644,17 @@ msgstr "Introduci variabile temporanea..."
 msgid "Assign the selected expression to a newly declared variable"
 msgstr "Assegna l'espressione selezionata a una nuova variabile"
 
-#: lib/Padre/Action/Window.pm:31
-#: lib/Padre/Action/Window.pm:77
+#: lib/Padre/Action/Window.pm:31 lib/Padre/Action/Window.pm:77
 msgid "Last Visited File"
 msgstr "Ultimo file visualizzato"
 
 #: lib/Padre/Action/Window.pm:32
-msgid "Switch to edit the file that was previously edited (can switch back and forth)"
-msgstr "Spostamento sul file che veniva modificato  precedentemente (lo spostamneto va avanti e indietro)"
+msgid ""
+"Switch to edit the file that was previously edited (can switch back and "
+"forth)"
+msgstr ""
+"Spostamento sul file che veniva modificato  precedentemente (lo spostamneto "
+"va avanti e indietro)"
 
 #: lib/Padre/Action/Window.pm:42
 msgid "Oldest Visited File"
@@ -3823,7 +3826,9 @@ msgstr "Copia il nome della cartella"
 
 #: lib/Padre/Action/Edit.pm:183
 msgid "Put the full path of the directory of the current file in the clipboard"
-msgstr "Mette negli appunti il percorso completo della cartella che contiene il file corrente"
+msgstr ""
+"Mette negli appunti il percorso completo della cartella che contiene il file "
+"corrente"
 
 #: lib/Padre/Action/Edit.pm:195
 msgid "Copy Editor Content"
@@ -3883,7 +3888,9 @@ msgstr "Co&rrispondenza parentesi"
 
 #: lib/Padre/Action/Edit.pm:315
 msgid "Jump to the matching opening or closing brace: { }, ( ), [ ], < >"
-msgstr "Vai alla parentesi di chiusura o di apertura corrispondente: { }, ( ), [ ], < >"
+msgstr ""
+"Vai alla parentesi di chiusura o di apertura corrispondente: { }, ( ), [ ], "
+"< >"
 
 #: lib/Padre/Action/Edit.pm:325
 msgid "&Select to Matching Brace"
@@ -3906,8 +3913,11 @@ msgid "Special Value..."
 msgstr "Valore speciale..."
 
 #: lib/Padre/Action/Edit.pm:347
-msgid "Select a date, filename or other value and insert at the current location"
-msgstr "Seleziona una data, un nome file o un altro valore e lo inserisce nella posizione corrente"
+msgid ""
+"Select a date, filename or other value and insert at the current location"
+msgstr ""
+"Seleziona una data, un nome file o un altro valore e lo inserisce nella "
+"posizione corrente"
 
 #: lib/Padre/Action/Edit.pm:359
 msgid "Snippets..."
@@ -3954,8 +3964,12 @@ msgid "Encode Document to System Default"
 msgstr "Codifica il documento con la modalità predefinita del sistema"
 
 #: lib/Padre/Action/Edit.pm:421
-msgid "Change the encoding of the current document to the default of the operating system"
-msgstr "Cambia la codifica del documento corrente in quella predefinita del sistema operativo"
+msgid ""
+"Change the encoding of the current document to the default of the operating "
+"system"
+msgstr ""
+"Cambia la codifica del documento corrente in quella predefinita del sistema "
+"operativo"
 
 #: lib/Padre/Action/Edit.pm:431
 msgid "Encode Document to utf-8"
@@ -3978,24 +3992,36 @@ msgid "EOL to Windows"
 msgstr "Fine riga in formato Windows"
 
 #: lib/Padre/Action/Edit.pm:455
-msgid "Change the end of line character of the current document to those used in files on MS Windows"
-msgstr "Modifica il terminatore di riga del documento corrente in quello utilizzato per i file di MS Windows"
+msgid ""
+"Change the end of line character of the current document to those used in "
+"files on MS Windows"
+msgstr ""
+"Modifica il terminatore di riga del documento corrente in quello utilizzato "
+"per i file di MS Windows"
 
 #: lib/Padre/Action/Edit.pm:464
 msgid "EOL to Unix"
 msgstr "Fine riga in formato Unix"
 
 #: lib/Padre/Action/Edit.pm:466
-msgid "Change the end of line character of the current document to that used on Unix, Linux, Mac OSX"
-msgstr "Modifica il terminatore di riga del documento corrente in quello utilizzato per i file di Unix, Linux, Mac OSX"
+msgid ""
+"Change the end of line character of the current document to that used on "
+"Unix, Linux, Mac OSX"
+msgstr ""
+"Modifica il terminatore di riga del documento corrente in quello utilizzato "
+"per i file di Unix, Linux, Mac OSX"
 
 #: lib/Padre/Action/Edit.pm:475
 msgid "EOL to Mac Classic"
 msgstr "Fine riga in formato Mac Classic"
 
 #: lib/Padre/Action/Edit.pm:476
-msgid "Change the end of line character of the current document to that used on Mac Classic"
-msgstr "Modifica il terminatore di riga del documento corrente in quello utilizzato per i file di Mac Classic"
+msgid ""
+"Change the end of line character of the current document to that used on Mac "
+"Classic"
+msgstr ""
+"Modifica il terminatore di riga del documento corrente in quello utilizzato "
+"per i file di Mac Classic"
 
 #: lib/Padre/Action/Edit.pm:486
 msgid "Tabs to Spaces..."
@@ -4050,8 +4076,12 @@ msgid "Diff to Saved Version"
 msgstr "Differenze rispetto alla versione salvata"
 
 #: lib/Padre/Action/Edit.pm:551
-msgid "Compare the file in the editor to that on the disk and show the diff in the output window"
-msgstr "Confronta il file nell'editor con quello su disco e mostra le differenze nella finestra di output"
+msgid ""
+"Compare the file in the editor to that on the disk and show the diff in the "
+"output window"
+msgstr ""
+"Confronta il file nell'editor con quello su disco e mostra le differenze "
+"nella finestra di output"
 
 #: lib/Padre/Action/Edit.pm:559
 msgid "Apply Diff to File"
@@ -4074,8 +4104,11 @@ msgid "Filter through External Tool..."
 msgstr "Filtra mediante uno strumento esterno..."
 
 #: lib/Padre/Action/Edit.pm:581
-msgid "Filters the selection (or the whole document) through any external command."
-msgstr "Filtra la selezione (o l'intero documento) attraverso un qualsiasi comando esterno."
+msgid ""
+"Filters the selection (or the whole document) through any external command."
+msgstr ""
+"Filtra la selezione (o l'intero documento) attraverso un qualsiasi comando "
+"esterno."
 
 #: lib/Padre/Action/Edit.pm:590
 msgid "Open the regular expression editing window"
@@ -4086,16 +4119,24 @@ msgid "Show as Hexadecimal"
 msgstr "Mostra come esadecimale"
 
 #: lib/Padre/Action/Edit.pm:602
-msgid "Show the ASCII values of the selected text in hexadecimal notation in the output window"
-msgstr "Mostra il valori ASCII del testo selezionato nella finestra di output in notazione esadecimale "
+msgid ""
+"Show the ASCII values of the selected text in hexadecimal notation in the "
+"output window"
+msgstr ""
+"Mostra il valori ASCII del testo selezionato nella finestra di output in "
+"notazione esadecimale "
 
 #: lib/Padre/Action/Edit.pm:611
 msgid "Show as Decimal"
 msgstr "Mostra come decimale"
 
 #: lib/Padre/Action/Edit.pm:612
-msgid "Show the ASCII values of the selected text in decimal numbers in the output window"
-msgstr "Mostra il valori ASCII del testo selezionato nella finestra di output in decimale"
+msgid ""
+"Show the ASCII values of the selected text in decimal numbers in the output "
+"window"
+msgstr ""
+"Mostra il valori ASCII del testo selezionato nella finestra di output in "
+"decimale"
 
 #: lib/Padre/Action/Edit.pm:622
 msgid "Edit the user preferences"
@@ -4134,32 +4175,48 @@ msgid "Padre Support (English)"
 msgstr "Supporto Padre (Inglese)"
 
 #: lib/Padre/Action/Help.pm:89
-msgid "Open the Padre live support chat in your web browser and talk to others who may help you with your problem"
-msgstr "Apri il supporto live di Padre nel browser predefinito e chatta con chi potrebbe aiutarti col tuo problema"
+msgid ""
+"Open the Padre live support chat in your web browser and talk to others who "
+"may help you with your problem"
+msgstr ""
+"Apri il supporto live di Padre nel browser predefinito e chatta con chi "
+"potrebbe aiutarti col tuo problema"
 
 #: lib/Padre/Action/Help.pm:99
 msgid "Perl Help"
 msgstr "Aiuto riguardo Perl"
 
 #: lib/Padre/Action/Help.pm:101
-msgid "Open the Perl live support chat in your web browser and talk to others who may help you with your problem"
-msgstr "Apri il supporto live di Perl nel browser predefinito e chatta con chi potrebbe aiutarti col tuo problema"
+msgid ""
+"Open the Perl live support chat in your web browser and talk to others who "
+"may help you with your problem"
+msgstr ""
+"Apri il supporto live di Perl nel browser predefinito e chatta con chi "
+"potrebbe aiutarti col tuo problema"
 
 #: lib/Padre/Action/Help.pm:111
 msgid "Win32 Questions (English)"
 msgstr "Domande riguardo Win32 (Inglese)"
 
 #: lib/Padre/Action/Help.pm:113
-msgid "Open the Perl/Win32 live support chat in your web browser and talk to others who may help you with your problem"
-msgstr "Apri il supporto live di Perl per Win32 nel browser predefinito e chatta con chi potrebbe aiutarti col tuo problema"
+msgid ""
+"Open the Perl/Win32 live support chat in your web browser and talk to others "
+"who may help you with your problem"
+msgstr ""
+"Apri il supporto live di Perl per Win32 nel browser predefinito e chatta con "
+"chi potrebbe aiutarti col tuo problema"
 
 #: lib/Padre/Action/Help.pm:124
 msgid "Visit the PerlMonks"
 msgstr "Visita Perl Monks"
 
 #: lib/Padre/Action/Help.pm:126
-msgid "Open perlmonks.org, one of the biggest Perl community sites, in your default web browser"
-msgstr "Apri perlmonks.org , uno dei più grandi siti della comunità Perl, nel browser predefinito"
+msgid ""
+"Open perlmonks.org, one of the biggest Perl community sites, in your default "
+"web browser"
+msgstr ""
+"Apri perlmonks.org , uno dei più grandi siti della comunità Perl, nel "
+"browser predefinito"
 
 #: lib/Padre/Action/Help.pm:135
 msgid "Report a New &Bug"
@@ -4198,16 +4255,25 @@ msgid "Step In"
 msgstr "Esegui"
 
 #: lib/Padre/Action/Debug.pm:43
-msgid "Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)"
-msgstr "Esegue l'istruzione successiva, entrando nella subroutine se necessario. (Avvia il debug se non è ancora in esecuzione)"
+msgid ""
+"Execute the next statement, enter subroutine if needed. (Start debugger if "
+"it is not yet running)"
+msgstr ""
+"Esegue l'istruzione successiva, entrando nella subroutine se necessario. "
+"(Avvia il debug se non è ancora in esecuzione)"
 
 #: lib/Padre/Action/Debug.pm:57
 msgid "Step Over"
 msgstr "Salta"
 
 #: lib/Padre/Action/Debug.pm:59
-msgid "Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)"
-msgstr "Esegue l'istruzione successiva, se è la chiamata ad una subroutine, si ferma solo dopo che restituisce un valore. (Avvia il debug se non è ancora in esecuzione)"
+msgid ""
+"Execute the next statement. If it is a subroutine call, stop only after it "
+"returned. (Start debugger if it is not yet running)"
+msgstr ""
+"Esegue l'istruzione successiva, se è la chiamata ad una subroutine, si ferma "
+"solo dopo che restituisce un valore. (Avvia il debug se non è ancora in "
+"esecuzione)"
 
 #: lib/Padre/Action/Debug.pm:75
 msgid "Step Out"
@@ -4215,7 +4281,8 @@ msgstr "Esci"
 
 #: lib/Padre/Action/Debug.pm:76
 msgid "If within a subroutine, run till return is called and then stop."
-msgstr "Se è all'interno di una subroutine, la esegue fino al return e poi si ferma"
+msgstr ""
+"Se è all'interno di una subroutine, la esegue fino al return e poi si ferma"
 
 #: lib/Padre/Action/Debug.pm:90
 msgid "Run till Breakpoint"
@@ -4223,14 +4290,17 @@ msgstr "Esegui fino al breakpoint"
 
 #: lib/Padre/Action/Debug.pm:91
 msgid "Start running and/or continue running till next breakpoint or watch"
-msgstr "Avvia e/o continua l'esecuzione fino al punto di interruzioneo l'espressione di controllo successiva"
+msgstr ""
+"Avvia e/o continua l'esecuzione fino al punto di interruzioneo l'espressione "
+"di controllo successiva"
 
 #: lib/Padre/Action/Debug.pm:104
 msgid "Jump to Current Execution Line"
 msgstr "Vai alla riga attualmente in esecuzione"
 
 #: lib/Padre/Action/Debug.pm:105
-msgid "Set focus to the line where the current statement is in the debugging process"
+msgid ""
+"Set focus to the line where the current statement is in the debugging process"
 msgstr "Sposta il focus sull'istruzione corrente del processo di dbug"
 
 #: lib/Padre/Action/Debug.pm:119
@@ -4239,7 +4309,9 @@ msgstr "Imposta il punto d'interruzione"
 
 #: lib/Padre/Action/Debug.pm:120
 msgid "Set a breakpoint to the current location of the cursor with a condition"
-msgstr "Imposta il punto d'interruzione nella posizione corrente del cursore, specificando una condizione"
+msgstr ""
+"Imposta il punto d'interruzione nella posizione corrente del cursore, "
+"specificando una condizione"
 
 #: lib/Padre/Action/Debug.pm:133
 msgid "Remove Breakpoint"
@@ -4263,23 +4335,30 @@ msgstr "Esegui fino al cursore"
 
 #: lib/Padre/Action/Debug.pm:162
 msgid "Set a breakpoint at the line where to cursor is and run till there"
-msgstr "Imposta un punto di interruzione sulla riga dove si trova il cursore, ed esegui fino a quel punto"
+msgstr ""
+"Imposta un punto di interruzione sulla riga dove si trova il cursore, ed "
+"esegui fino a quel punto"
 
 #: lib/Padre/Action/Debug.pm:176
 msgid "Show Stack Trace"
 msgstr "Mostra il contenuto dello stack"
 
 #: lib/Padre/Action/Debug.pm:177
-msgid "When in a subroutine call show all the calls since the main of the program"
-msgstr "Quando ci si trova in una subroutine, mostra tutte le chiamate dal programma principale"
+msgid ""
+"When in a subroutine call show all the calls since the main of the program"
+msgstr ""
+"Quando ci si trova in una subroutine, mostra tutte le chiamate dal programma "
+"principale"
 
 #: lib/Padre/Action/Debug.pm:191
 msgid "Display Value"
 msgstr "Mostra valore"
 
 #: lib/Padre/Action/Debug.pm:192
-msgid "Display the current value of a variable in the right hand side debugger pane"
-msgstr "Mostra il valore corrente di una variabile nel pannello di debug sulla destra"
+msgid ""
+"Display the current value of a variable in the right hand side debugger pane"
+msgstr ""
+"Mostra il valore corrente di una variabile nel pannello di debug sulla destra"
 
 #: lib/Padre/Action/Debug.pm:205
 msgid "Show Value Now"
@@ -4295,7 +4374,8 @@ msgstr "Valuta espressione..."
 
 #: lib/Padre/Action/Debug.pm:220
 msgid "Type in any expression and evaluate it in the debugged process"
-msgstr "Digita una qualsiasi espressione e valutala nel processo sottoposto a debug"
+msgstr ""
+"Digita una qualsiasi espressione e valutala nel processo sottoposto a debug"
 
 #: lib/Padre/Action/Debug.pm:234
 msgid "Quit Debugger"
@@ -4318,16 +4398,25 @@ msgid "Find Unmatched Brace"
 msgstr "Trova parentesi senza corrispondenza"
 
 #: lib/Padre/Action/Perl.pm:58
-msgid "Searches the source code for brackets with lack a matching (opening/closing) part."
-msgstr "Cerca nel codice sorgente delle parentesi a cui manca una parte (apertura/chiusura) corrispondente"
+msgid ""
+"Searches the source code for brackets with lack a matching (opening/closing) "
+"part."
+msgstr ""
+"Cerca nel codice sorgente delle parentesi a cui manca una parte (apertura/"
+"chiusura) corrispondente"
 
 #: lib/Padre/Action/Perl.pm:70
-msgid "Find where the selected variable was declared using \"my\" and put the focus there."
-msgstr "Cerca dove è stata dichiarata la varibile selezionata usando \"my\" e vi sposta il focus."
+msgid ""
+"Find where the selected variable was declared using \"my\" and put the focus "
+"there."
+msgstr ""
+"Cerca dove è stata dichiarata la varibile selezionata usando \"my\" e vi "
+"sposta il focus."
 
 #: lib/Padre/Action/Perl.pm:82
 msgid "Find where the selected function was defined and put the focus there."
-msgstr "Cerca dove è stata definita la funzione selezionata e vi sposta il focus."
+msgstr ""
+"Cerca dove è stata definita la funzione selezionata e vi sposta il focus."
 
 #: lib/Padre/Action/Perl.pm:93
 msgid "Vertically Align Selected"
@@ -4342,16 +4431,24 @@ msgid "Newline Same Column"
 msgstr "Nuova riga, stessa colonna"
 
 #: lib/Padre/Action/Perl.pm:106
-msgid "Like pressing ENTER somewhere on a line, but use the current position as ident for the new line."
-msgstr "Come premere ENTER da qualche parte in una riga, ma usa la posizione corrente per indentare la nuova riga"
+msgid ""
+"Like pressing ENTER somewhere on a line, but use the current position as "
+"ident for the new line."
+msgstr ""
+"Come premere ENTER da qualche parte in una riga, ma usa la posizione "
+"corrente per indentare la nuova riga"
 
 #: lib/Padre/Action/Perl.pm:118
 msgid "Create Project Tagsfile"
 msgstr "Crea i tagfile del progetto"
 
 #: lib/Padre/Action/Perl.pm:120
-msgid "Creates a perltags - file for the current project supporting find_method and autocomplete."
-msgstr "Crea un file perltag per il progetto corrente, per supportare i find_method e completamento automatico"
+msgid ""
+"Creates a perltags - file for the current project supporting find_method and "
+"autocomplete."
+msgstr ""
+"Crea un file perltag per il progetto corrente, per supportare i find_method "
+"e completamento automatico"
 
 #: lib/Padre/Action/Perl.pm:146
 msgid "Automatic Bracket Completion"
@@ -4363,7 +4460,9 @@ msgstr "Quando si digita { inserisce automaticamente }"
 
 #: lib/Padre/Action/Tools.pm:39
 msgid "Show the key bindings dialog to configure Padre shortcuts"
-msgstr "Mostra la finestra di dialogo per configurare le scorciatoie da tastiera di Padre"
+msgstr ""
+"Mostra la finestra di dialogo per configurare le scorciatoie da tastiera di "
+"Padre"
 
 #: lib/Padre/Action/Tools.pm:49
 msgid "Show the Padre plug-in manager to enable or disable plug-ins"
@@ -4382,8 +4481,12 @@ msgid "Edit My Plug-in"
 msgstr "Modifica My Plug-in"
 
 #: lib/Padre/Action/Tools.pm:74
-msgid "My Plug-in is a plug-in where developers could extend their Padre installation"
-msgstr "My Plug-in è il plug-in in cui gli sviluppatori possono estendere la loro installazione di Padre"
+msgid ""
+"My Plug-in is a plug-in where developers could extend their Padre "
+"installation"
+msgstr ""
+"My Plug-in è il plug-in in cui gli sviluppatori possono estendere la loro "
+"installazione di Padre"
 
 #: lib/Padre/Action/Tools.pm:80
 msgid "Could not find the Padre::Plugin::My plug-in"
@@ -4397,8 +4500,7 @@ msgstr "Ricarica My Plug-in"
 msgid "This function reloads the My plug-in without restarting Padre"
 msgstr "Questa funzione ricarica My plug-in senza riavviare Padre"
 
-#: lib/Padre/Action/Tools.pm:99
-#: lib/Padre/Action/Tools.pm:103
+#: lib/Padre/Action/Tools.pm:99 lib/Padre/Action/Tools.pm:103
 #: lib/Padre/Action/Tools.pm:104
 msgid "Reset My plug-in"
 msgstr "Resetta My Plug-in"
@@ -4459,8 +4561,7 @@ msgstr "Apre CPAN::MyConfig.pm per modificarlo manualmente (per esperti)"
 msgid "Select distribution to install"
 msgstr "Seleziona la distribuzione da installare"
 
-#: lib/Padre/Action/Tools.pm:215
-#: lib/Padre/Action/Tools.pm:240
+#: lib/Padre/Action/Tools.pm:215 lib/Padre/Action/Tools.pm:240
 msgid "Did not provide a distribution"
 msgstr "Non è stata fornita un distribuzione"
 
@@ -4562,7 +4663,8 @@ msgstr "Apri nella riga di comando"
 
 #: lib/Padre/Action/File.pm:145
 msgid "Opens a command line using the current document folder"
-msgstr "Apre un terminale a riga di comando usando la cartella del documento corrente"
+msgstr ""
+"Apre un terminale a riga di comando usando la cartella del documento corrente"
 
 #: lib/Padre/Action/File.pm:154
 msgid "Open Example"
@@ -4584,8 +4686,7 @@ msgstr "Chiudi questo progetto"
 msgid "Close all the files belonging to the current project"
 msgstr "Chiudi tutti i file che appartengono al progetto corrente"
 
-#: lib/Padre/Action/File.pm:187
-#: lib/Padre/Action/File.pm:208
+#: lib/Padre/Action/File.pm:187 lib/Padre/Action/File.pm:208
 msgid "File is not in a project"
 msgstr "Il file non appartiene ad un progetto"
 
@@ -4662,8 +4763,12 @@ msgid "Save Intuition"
 msgstr "Salva intuizione"
 
 #: lib/Padre/Action/File.pm:313
-msgid "For new document try to guess the filename based on the file content and offer to save it."
-msgstr "Cerca di determinare in base al contenuto, il nome file per un nuovo documento e propone di salvarlo"
+msgid ""
+"For new document try to guess the filename based on the file content and "
+"offer to save it."
+msgstr ""
+"Cerca di determinare in base al contenuto, il nome file per un nuovo "
+"documento e propone di salvarlo"
 
 #: lib/Padre/Action/File.pm:323
 msgid "Save All"
@@ -4674,16 +4779,24 @@ msgid "Save all the files"
 msgstr "Salva tutti i file"
 
 #: lib/Padre/Action/File.pm:335
-msgid "List the files that match the current selection and let the user pick one to open"
-msgstr "Elenca i file che corrispondono alla selezione corrente e consente all'utente di scegliere quale aprire"
+msgid ""
+"List the files that match the current selection and let the user pick one to "
+"open"
+msgstr ""
+"Elenca i file che corrispondono alla selezione corrente e consente "
+"all'utente di scegliere quale aprire"
 
 #: lib/Padre/Action/File.pm:344
 msgid "Open Session..."
 msgstr "Apri una sessione..."
 
 #: lib/Padre/Action/File.pm:346
-msgid "Select a session. Close all the files currently open and open all the listed in the session"
-msgstr "Seleziona una sessione. Chiude tutti i file aperti e apre tutti quelli associati alla sessione"
+msgid ""
+"Select a session. Close all the files currently open and open all the listed "
+"in the session"
+msgstr ""
+"Seleziona una sessione. Chiude tutti i file aperti e apre tutti quelli "
+"associati alla sessione"
 
 #: lib/Padre/Action/File.pm:356
 msgid "Save Session..."
@@ -4727,7 +4840,8 @@ msgstr "&Esci"
 
 #: lib/Padre/Action/File.pm:423
 msgid "Ask if unsaved files should be saved and then exit Padre"
-msgstr "Richiede se i file non salvati debbano essere salvati e poi esce da Padre"
+msgstr ""
+"Richiede se i file non salvati debbano essere salvati e poi esce da Padre"
 
 #: lib/Padre/File/HTTP.pm:48
 #, perl-format
@@ -4817,7 +4931,9 @@ msgstr "Operazione di sostituzione annullata"
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:91
 #: lib/Padre/Task/PPI/LexicalReplaceVariable.pm:105
 msgid "No declaration could be found for the specified (lexical?) variable"
-msgstr "Impossibile trovare una dichiarazione per la variabile (lessicale?) specificata"
+msgstr ""
+"Impossibile trovare una dichiarazione per la variabile (lessicale?) "
+"specificata"
 
 #: lib/Padre/Task/PPI/FindVariableDeclaration.pm:96
 msgid "Search Canceled"
@@ -4831,7 +4947,7 @@ msgstr "Tutte le parentesi sembrano corrispondere"
 msgid "Check Complete"
 msgstr "Verifica completata"
 
-#: lib/Padre/Task/Outline/Perl.pm:160
+#: lib/Padre/Task/Outline/Perl.pm:162
 msgid "&Go to Element"
 msgstr "&Vai all'elemento"
 
