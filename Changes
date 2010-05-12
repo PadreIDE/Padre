@@ -26,6 +26,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       Perl on Windows XP" (ADAMK)
     - Updated Italian translation (SBLANDIN)
     - Updated Brazilian Portuguese translation (GARU)
+    - Updated Dutch translation (Dirk De Nijs)
+    - Updated Spanish translation
 
 0.60 2010.04.20
     - Add FTP connection caching/sharing (SEWI)
