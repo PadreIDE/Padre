@@ -1,7 +1,9 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.61 To Be Released
+0.62 To Be Released
+
+0.61 2010.05.12
     - MIME types: added a few C++ file extensions, added LaTeX .sty files
       (Zeno Gantner)
     - About dialog: increase height of the window so that the translated
