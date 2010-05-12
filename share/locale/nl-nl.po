@@ -4032,7 +4032,7 @@ msgstr "Gebruik de X11 middel knop plak stijl"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:367
 msgid "RegExp for TODO-panel:"
-msgstr "RegExp voor het  Taken-paneel:"
+msgstr "RegExp voor het Taken-paneel:"
 
 #: lib/Padre/Wx/Dialog/Preferences.pm:373
 msgid "Use Splash Screen"
