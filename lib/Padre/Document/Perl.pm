@@ -1614,7 +1614,7 @@ sub event_on_left_up {
 			$editor->GetCurrentPos();
 		}
 
-		my ( $location, $token ) = _get_current_symbol( $self->editor, $pos );
+		my ( $location, $token ) = $self->get_current_symbol( $self->editor, $pos );
 
 		# Does it look like a variable?
 		if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
