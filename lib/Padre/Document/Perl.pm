@@ -523,9 +523,11 @@ sub get_current_symbol {
 
 	my $editor = $self->editor;
 	$pos = $editor->GetCurrentPos if not defined $pos;
+
 	my $line         = $editor->LineFromPosition($pos);
 	my $line_start   = $editor->PositionFromLine($line);
 	my $line_end     = $editor->GetLineEndPosition($line);
+
 	my $cursor_col   = $pos - $line_start;
 	my $line_content = $editor->GetTextRange( $line_start, $line_end );
 	$cursor_col = length($line_content) - 1 if $cursor_col >= length($line_content);
@@ -1603,25 +1605,13 @@ sub event_on_left_up {
 	my $event  = shift;
 
 	if ( $event->ControlDown ) {
-
-		my $pos;
-		if ( $event->isa("Wx::MouseEvent") ) {
-			my $point = $event->GetPosition();
-			$pos = $editor->PositionFromPoint($point);
-		} else {
-
-			# Fall back to the cursor position
-			$editor->GetCurrentPos();
-		}
-
-		my ( $location, $token ) = $self->get_current_symbol( $self->editor, $pos );
+		my ( $location, $token ) = $self->get_current_symbol( $self->editor );
 
 		# Does it look like a variable?
 		if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
-
-			# FIX ME editor document accessor?
-			$editor->{Document}->find_variable_declaration();
+			$self->find_variable_declaration();
 		}
+		
 
 		# Does it look like a function?
 		elsif ( defined $location ) {
@@ -1630,8 +1620,8 @@ sub event_on_left_up {
 				$self->get_function_regex($token),
 				$editor->GetSelection, # Provides two params
 			);
+			
 			if ( defined $start ) {
-
 				# Move the selection to the sub location
 				$editor->goto_pos_centerize($start);
 			}
