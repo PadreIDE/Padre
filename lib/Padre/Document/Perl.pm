@@ -1605,7 +1605,7 @@ sub event_on_left_up {
 	my $event  = shift;
 
 	if ( $event->ControlDown ) {
-		my ( $location, $token ) = $self->get_current_symbol( $self->editor );
+		my ( $location, $token ) = $self->get_current_symbol;
 
 		# Does it look like a variable?
 		if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
