@@ -203,6 +203,16 @@ sub labels {
 	return @labels;
 }
 
+sub find_pane_by_label {
+	my $self  = shift;
+	my $label = shift;
+
+	my @labels = $self->labels;
+	my ($id) = grep {$label eq $labels[$_]} 0..$#labels;
+
+	return $id;
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

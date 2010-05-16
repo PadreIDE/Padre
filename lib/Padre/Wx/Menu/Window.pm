@@ -129,16 +129,25 @@ sub refresh_windowlist {
 
 	# Overwrite the labels of existing entries where possible
 	foreach my $nth ( 0 .. List::Util::min( $previous, $pages ) ) {
-		$self->FindItemByPosition( $self->{base} + $nth + 1 )->SetText( $label[ $order[$nth] ] );
+		my $item = $self->FindItemByPosition( $self->{base} + $nth + 1 );
+		$item->SetText( $label[ $order[$nth] ] );
+		$item->SetHelp( $label[ $order[$nth] ] );
 	}
 
 	# Add menu entries if we have extra labels
 	foreach my $nth ( $previous + 1 .. $pages ) {
+		my $item = $self->Append( -1, $label[ $order[$nth] ] );
+		$item->SetHelp( $label[ $order[$nth] ] );
 		Wx::Event::EVT_MENU(
 			$self->{main},
-			$self->Append( -1, $label[ $order[$nth] ] ),
+			$item,
 			sub {
-				$_[0]->on_nth_pane( $order[$nth] );
+				# we need to use the Help here only as the Text seems to be
+				# slightly corrupted: if filename has underscores 
+				# they will be doubled in the GetText
+				my $id = $notebook->find_pane_by_label($item->GetHelp);
+				return if not defined $id; # TODO warn if this happens!
+				$_[0]->on_nth_pane( $id );
 			},
 		);
 	}
