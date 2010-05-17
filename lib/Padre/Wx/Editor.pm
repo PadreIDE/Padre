@@ -283,14 +283,14 @@ sub on_key_up {
 	if ( $self->main->ide->config->editor_smart_highlight_enable && $event->ShiftDown ) {
 		$self->on_smart_highlight_begin($event);
 	}
-	
+
 	# Doc specific processing
 	my $doc = $self->{Document};
-	if ($doc->can('event_key_up')) {
-		$doc->event_key_up($self, $event);	
-	}	
+	if ( $doc->can('event_key_up') ) {
+		$doc->event_key_up( $self, $event );
+	}
 
-	$event->Skip(1);     # we need to keep processing this event
+	$event->Skip(1); # we need to keep processing this event
 
 }
 
@@ -1105,20 +1105,20 @@ sub on_left_up {
 }
 
 sub on_mouse_moving {
-	my ( $self, $event ) = @_;	
-	
-	if ($event->Moving) {		
+	my ( $self, $event ) = @_;
+
+	if ( $event->Moving ) {
 		my $doc = $self->{Document};
 		if ( $doc->can('event_mouse_moving') ) {
 			$doc->event_mouse_moving( $self, $event );
 		}
-	}
-	else {
+	} else {
+
 		# For a drag event...
 	}
-	
+
 	$event->Skip;
-	
+
 }
 
 sub on_middle_up {

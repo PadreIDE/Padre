@@ -140,9 +140,9 @@ sub refresh_windowlist {
 			$self->{main},
 			$item,
 			sub {
-				my $id = $notebook->find_pane_by_label($item->GetLabel);
+				my $id = $notebook->find_pane_by_label( $item->GetLabel );
 				return if not defined $id; # TODO warn if this happens!
-				$_[0]->on_nth_pane( $id );
+				$_[0]->on_nth_pane($id);
 			},
 		);
 	}

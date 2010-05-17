@@ -208,7 +208,7 @@ sub find_pane_by_label {
 	my $label = shift;
 
 	my @labels = $self->labels;
-	my ($id) = grep {$label eq $labels[$_]} 0..$#labels;
+	my ($id) = grep { $label eq $labels[$_] } 0 .. $#labels;
 
 	return $id;
 }
