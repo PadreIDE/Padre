@@ -157,14 +157,15 @@ my $unsaved_number = 0;
 
 use Class::XSAccessor {
 	getters => {
-		filename    => 'filename',   # setter is defined as normal function
-		file        => 'file',       # Padre::File - object
-		editor      => 'editor',
-		timestamp   => 'timestamp',
-		mimetype    => 'mimetype',
-		errstr      => 'errstr',
-		tempfile    => 'tempfile',
-		highlighter => 'highlighter',
+		filename     => 'filename',   # setter is defined as normal function
+		file         => 'file',       # Padre::File - object
+		editor       => 'editor',
+		timestamp    => 'timestamp',
+		mimetype     => 'mimetype',
+		errstr       => 'errstr',
+		tempfile     => 'tempfile',
+		highlighter  => 'highlighter',
+		outline_data => 'outline_data', 
 	},
 	setters => {
 		set_editor       => 'editor',
@@ -174,6 +175,7 @@ use Class::XSAccessor {
 		set_errstr       => 'errstr',
 		set_tempfile     => 'tempfile',
 		set_highlighter  => 'highlighter',
+		set_outline_data => 'outline_data',
 	},
 };
 

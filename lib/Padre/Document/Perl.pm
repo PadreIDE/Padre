@@ -532,6 +532,7 @@ sub get_current_symbol {
 	my $line_content = $editor->GetTextRange( $line_start, $line_end );
 	$cursor_col = length($line_content) - 1 if $cursor_col >= length($line_content);
 	my $col = $cursor_col;
+	my $symbol_start_pos = $pos;
 
 	# find start of symbol
 	# TO DO: This could be more robust, no?
@@ -541,6 +542,7 @@ sub get_current_symbol {
 	while (1) {
 		last if $col <= 0 or substr( $line_content, $col, 1 ) =~ /^[^#\w:\']$/;
 		$col--;
+		$symbol_start_pos--;
 	}
 
 	return () if $col >= length($line_content);
@@ -565,7 +567,7 @@ sub get_current_symbol {
 	# not a variable (Example: ->foo becomes >foo but should be foo)
 	$token =~ s/^[^\w\$\@\%\*\&:]//;
 
-	return ( [ $line + 1, $col + 1 ], $token );
+	return ( [ $line + 1, $col + 1, $symbol_start_pos + 1 ], $token );
 }
 
 sub find_variable_declaration {
@@ -730,10 +732,19 @@ sub _find_method {
 	return;
 }
 
-# TO DO temp function given a name of a subroutine and move the cursor
-# to its develaration, need to be improved ~ szabgab
+# Go to the named subroutine
+# Uses the outline if there is one (if the user has opened the outline tree)
+# If not, falls back to a regex, which is pretty basic at the moment
+# Perhaps we could always run the outline task, even if the tree is not open?
 sub goto_sub {
 	my ( $self, $name ) = @_;
+	
+	if (my $line = $self->get_sub_line_number($name)) {
+		$self->editor->goto_line_centerize($line);
+		return;
+	}	
+	
+	# Fall back to regexs if there's no outline
 	my $text = $self->text_get;
 	my @lines = split /\n/, $text;
 
@@ -749,6 +760,32 @@ sub goto_sub {
 	return;
 }
 
+# Check the outline data to see if we have a particular sub
+sub has_sub {
+	my $self = shift;
+	my $sub = shift;
+	
+	return $self->get_sub_line_number($sub) ? 1 : 0;
+}
+
+# Returns the line number of a sub (or undef if it doesn't exist) based on the outline data 
+sub get_sub_line_number {
+	my $self = shift;
+	my $sub = shift;	
+	
+	return unless $sub;
+	
+	return unless $self->outline_data;	
+	
+	foreach my $package (@{$self->outline_data}) {
+		foreach my $method (@{$package->{methods}}) {
+			return $method->{line} if $method->{name} eq $sub;
+		}
+	}
+		
+	return;
+		
+}
 
 #####################################################################
 # Padre::Document Document Manipulation
@@ -1610,23 +1647,67 @@ sub event_on_left_up {
 		# Does it look like a variable?
 		if ( defined $location and $token =~ /^[\$\*\@\%\&]/ ) {
 			$self->find_variable_declaration();
-		}
-		
+		}		
 
 		# Does it look like a function?
-		elsif ( defined $location ) {
-			my ( $start, $end ) = Padre::Util::get_matches(
-				$editor->GetText,
-				$self->get_function_regex($token),
-				$editor->GetSelection, # Provides two params
-			);
-			
-			if ( defined $start ) {
-				# Move the selection to the sub location
-				$editor->goto_pos_centerize($start);
-			}
+		elsif ( defined $location && $self->has_sub($token) ) {
+			$self->goto_sub($token);
 		}
 	} # end if control-click
+}
+
+sub event_mouse_moving {
+	my $self   = shift;
+	my $editor = shift;
+	my $event  = shift;
+
+	if ( $event->Moving && $event->ControlDown ) {
+		# Mouse is moving with ctrl pressed. If anything under the cursor looks like it can be
+		#  clicked on to take us somewhere, highlight it.
+		# TODO: currently only supports subs/methods in the same file
+		my $point = $event->GetPosition();
+		my $pos = $editor->PositionFromPoint($point);
+		my ( $location, $token ) = $self->get_current_symbol($pos);
+		
+		$token ||= '';
+		
+		if ($self->{last_highlight} && $token ne $self->{last_highlight}{token}) {
+			# No longer mousing over the same token, so un-highlight it
+			$self->_clear_highlight($editor);
+		}
+		
+		return unless $self->has_sub($token);
+
+		$editor->StartStyling($location->[2], Wx::wxSTC_INDICS_MASK);
+		$editor->SetStyling(length($token), Wx::wxSTC_INDIC2_MASK );
+		
+		$self->{last_highlight} = {
+			token => $token,
+			pos => $location->[2],
+		};
+	}
+}
+
+sub event_key_up {
+	my $self   = shift;
+	my $editor = shift;
+	my $event  = shift;
+	
+	if ( $event->GetKeyCode == Wx::WXK_CONTROL) {
+		# Ctrl key has been released, clear any highlighting
+		$self->_clear_highlight($editor);
+	}		
+}
+
+sub _clear_highlight {
+	my $self = shift;
+	my $editor = shift;
+	
+	return unless $self->{last_highlight};
+	
+	$editor->StartStyling($self->{last_highlight}{pos}, Wx::wxSTC_INDICS_MASK);
+	$editor->SetStyling(length($self->{last_highlight}{token}), 0 );	
+	undef $self->{last_highlight};		
 }
 
 #

@@ -131,6 +131,7 @@ sub _get_outline {
 	push @{$outline}, $cur_pkg;
 
 	$self->{outline} = $outline;
+	Padre::Current->document->set_outline_data($outline);
 
 	return;
 }

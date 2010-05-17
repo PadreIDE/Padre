@@ -6,6 +6,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       stretched middle column. (PLAVEN)
     - Add a warning for versions of Wx.pm with broken HTML rendering
       (ZENOG)
+    - Mousing over a sub/method name with ctrl pressed now highlights it
+      to indicate it can be clicked on (Sam Crawley) 
  
 0.61 2010.05.12
     - MIME types: added a few C++ file extensions, added LaTeX .sty files
