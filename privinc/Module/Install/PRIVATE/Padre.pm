@@ -75,7 +75,6 @@ sub check_wx_version {
 		nono("Padre needs at least version 2.8.8 of wxWidgets. You have wxWidgets $widgets_human");
 	}
 
-
 	
 	# Can we find Wx.pm
 	my $wx_file = _module_file('Wx');
@@ -90,7 +89,11 @@ sub check_wx_version {
 	}
 	my $wx_pm = _path_version($wx_path);
 	print "Found Wx.pm     $wx_pm\n";
-
+	if ($wx_pm < 0.97 && $wx_pm > 0.94) {
+		warn "** Wx.pm version $wx_pm has problems with HTML rendering\n";
+		warn "** You can use it to run Padre, but the help documents may not be displayed correctly.\n";
+		warn "** Consider installing the latest version from CPAN\n";
+	}
 
 	# this part still needs the DISPLAY 
 	# so check only if there is one

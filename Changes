@@ -4,6 +4,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 0.62 To Be Released
     - Any 3 column table layout in the preferences dialog now has a 
       stretched middle column. (PLAVEN)
+    - Add a warning for versions of Wx.pm with broken HTML rendering
+      (ZENOG)
  
 0.61 2010.05.12
     - MIME types: added a few C++ file extensions, added LaTeX .sty files
