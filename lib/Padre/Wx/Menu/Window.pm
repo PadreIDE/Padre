@@ -136,7 +136,6 @@ sub refresh_windowlist {
 	# Add menu entries if we have extra labels
 	foreach my $nth ( $previous + 1 .. $pages ) {
 		my $item = $self->Append( -1, $label[ $order[$nth] ] );
-		$item->SetHelp( $label[ $order[$nth] ] );
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$item,
