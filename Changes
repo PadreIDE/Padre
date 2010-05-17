@@ -8,6 +8,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       (ZENOG)
     - Mousing over a sub/method name with ctrl pressed now highlights it
       to indicate it can be clicked on (Sam Crawley) 
+    - Regex editor: Support global flag for substitute (ZENOG)
  
 0.61 2010.05.12
     - MIME types: added a few C++ file extensions, added LaTeX .sty files
