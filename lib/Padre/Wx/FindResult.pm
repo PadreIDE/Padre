@@ -21,7 +21,7 @@ use Padre::Wx;
 use Wx::Event qw( EVT_BUTTON );
 
 
-our $VERSION = '0.61';
+our $VERSION = '0.62';
 our @ISA     = 'Wx::ListView';
 my $LineCount; # Global fid count so it can be used in the label
 

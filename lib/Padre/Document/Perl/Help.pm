@@ -9,7 +9,7 @@ use Padre::Util ();
 use Padre::Help ();
 use Padre::Logger;
 
-our $VERSION = '0.61';
+our $VERSION = '0.62';
 our @ISA     = 'Padre::Help';
 
 # for caching help list (for faster access)

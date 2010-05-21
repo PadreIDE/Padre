@@ -33,7 +33,7 @@ use warnings;
 use Carp      ();
 use Padre::Wx ();
 
-our $VERSION = '0.61';
+our $VERSION = '0.62';
 our @ISA     = 'Wx::App';
 
 
