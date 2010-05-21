@@ -2,6 +2,7 @@ Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.63 To be released
+    - Autocomplete "sub new" for Perl modules (SEWI)
 
 0.62 2010.05.21
     - Any 3 column table layout in the preferences dialog now has a 
@@ -63,7 +64,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       improved/gettext-ified some descriptions, changed LaTeX extension from
       latex to tex (Zeno Gantner)
     - Autocomplete no longer displays the dialog when only one option is
-      available (unless 'Autcomplete while typing' is on) (Sam Crawley - #927)
+      available (unless 'Autocomplete while typing' is on) (Sam Crawley - #927)
 
 0.59 2010.03.31 
     - Don't crash open file list dialog on unsaved files or without
