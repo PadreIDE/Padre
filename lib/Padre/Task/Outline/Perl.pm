@@ -135,7 +135,7 @@ sub _get_outline {
 	my $current_filename =
 		defined Padre::Current->filename ? Padre::Current->filename : Padre::Current->document->get_title;
 	if ( $self->{filename} eq $current_filename ) {
-		 Padre::Current->document->set_outline_data($outline);
+		Padre::Current->document->set_outline_data($outline);
 	}
 
 	return;
