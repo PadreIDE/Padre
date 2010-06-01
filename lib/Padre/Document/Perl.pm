@@ -1452,11 +1452,15 @@ sub event_on_char {
 				# Add the default skeleton of a method
 				my $newline            = $self->newline;
 				my $text_before_cursor = " {$newline${indent_string}my \$self = shift;$newline$indent_string";
-				$text_before_cursor = " {$newline${indent_string}my \$class = shift;$newline$newline".
-							$indent_string."my \$self = bless {\@_}, \$class;$newline$newline".
-							$indent_string if $subname eq 'new';
-				my $text_after_cursor  = "$newline}$newline";
-				$text_after_cursor = $newline.$indent_string."return \$self;".$text_after_cursor if $subname eq 'new';
+				$text_before_cursor =
+					  " {$newline${indent_string}my \$class = shift;$newline$newline"
+					. $indent_string
+					. "my \$self = bless {\@_}, \$class;$newline$newline"
+					. $indent_string
+					if $subname eq 'new';
+				my $text_after_cursor = "$newline}$newline";
+				$text_after_cursor = $newline . $indent_string . "return \$self;" . $text_after_cursor
+					if $subname eq 'new';
 				$editor->AddText( $text_before_cursor . $text_after_cursor );
 
 				# Ready for typing in the new method:
