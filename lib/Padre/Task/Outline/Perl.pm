@@ -132,12 +132,6 @@ sub _get_outline {
 
 	$self->{outline} = $outline;
 
-	my $current_filename =
-		defined Padre::Current->filename ? Padre::Current->filename : Padre::Current->document->get_title;
-	if ( $self->{filename} eq $current_filename ) {
-		Padre::Current->document->set_outline_data($outline);
-	}
-
 	return;
 }
 
@@ -148,10 +142,14 @@ sub update_gui {
 	my $outlinebar = Padre->ide->wx->main->outline;
 
 	# only update the outline pane if we still have the same filename
-	my $current_filename =
-		defined Padre::Current->filename ? Padre::Current->filename : Padre::Current->document->get_title;
+	my $current_filename = Padre::Current->filename;
+	$current_filename = Padre::Current->document->get_title if !defined($current_filename);
+
 	if ( $filename eq $current_filename ) {
 		$outlinebar->update_data( $outline, $filename, \&_on_tree_item_right_click );
+
+		# store data for further use by other components
+		Padre::Current->document->set_outline_data($outline);
 	} else {
 		$outlinebar->store_in_cache( $filename, [ $outline, \&_on_tree_item_right_click ] );
 	}
