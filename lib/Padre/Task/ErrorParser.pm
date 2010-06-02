@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Padre::Task ();
 
-our $VERSION = '0.62';
+our $VERSION = '0.63';
 our @ISA     = 'Padre::Task';
 
 use Class::XSAccessor {

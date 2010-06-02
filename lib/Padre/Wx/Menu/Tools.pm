@@ -12,7 +12,7 @@ use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
 
-our $VERSION = '0.62';
+our $VERSION = '0.63';
 our @ISA     = 'Padre::Wx::Menu';
 
 

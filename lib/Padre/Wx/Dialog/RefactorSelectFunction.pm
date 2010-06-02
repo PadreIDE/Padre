@@ -10,7 +10,7 @@ use warnings;
 use Padre::Wx       ();
 use Padre::Wx::Icon ();
 
-our $VERSION = '0.62';
+our $VERSION = '0.63';
 our @ISA     = 'Wx::Dialog';
 
 use Class::XSAccessor {

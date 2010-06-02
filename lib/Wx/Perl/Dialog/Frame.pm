@@ -7,7 +7,7 @@ use File::Spec       ();
 use Wx::Perl::Dialog ();
 use Wx::STC          ();
 
-our $VERSION = '0.62';
+our $VERSION = '0.63';
 our @ISA     = 'Wx::Frame';
 
 sub new {
