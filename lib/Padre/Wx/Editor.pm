@@ -11,7 +11,7 @@ use Padre::Wx                 ();
 use Padre::Wx::FileDropTarget ();
 use Padre::Logger;
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 our @ISA     = 'Wx::StyledTextCtrl';
 
 # End-Of-Line modes:

@@ -42,7 +42,7 @@ use threads::shared;
 # This has a version to prevent known cases of people not upgrading
 use Thread::Queue 2.11;
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 # This event is triggered by the worker thread main loop after
 # finishing a task.

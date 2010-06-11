@@ -11,7 +11,7 @@ use Class::Adapter::Builder
 	ISA      => 'Wx::TextEntryDialog',
 	AUTOLOAD => 1;
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 sub new {
 	my $class  = shift;

@@ -122,7 +122,7 @@ use IO::String   ();
 use Scalar::Util ();
 use Params::Util '_INSTANCE';
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 # set up the stdout/stderr printing events => initialized during run time
 our $STDOUT_EVENT : shared;

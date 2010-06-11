@@ -18,7 +18,7 @@ use Padre::DB::Migrate::Patch ();
 
 use vars qw{@ISA};
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 
 BEGIN {

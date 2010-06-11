@@ -136,7 +136,7 @@ use Padre::MimeTypes ();
 use Padre::File      ();
 use Padre::Logger;
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 
 

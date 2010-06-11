@@ -17,7 +17,7 @@ use 5.008005;
 use strict;
 use warnings;
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 # Disable the splash screen
 $ENV{PADRE_NOSPLASH} = 1; ## no critic (RequireLocalizedPunctuationVars)

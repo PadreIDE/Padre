@@ -24,7 +24,7 @@ use Padre::Action ();
 use Padre::Current qw{_CURRENT};
 use Padre::Constant();
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 #####################################################################
 

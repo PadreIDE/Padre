@@ -23,7 +23,7 @@ use strict;
 use warnings;
 use Params::Util qw{ _INSTANCE };
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 
 #####################################################################
 # Constructor
