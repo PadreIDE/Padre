@@ -3,14 +3,18 @@ package Padre::Wx::FunctionList;
 use 5.008005;
 use strict;
 use warnings;
-use Params::Util          ('_STRING');
-use Padre::Current        ('_CURRENT');
-use Padre::Wx             ();
-use Padre::Wx::Role::View ();
+use Scalar::Util               ();
+use Params::Util               ();
+use Padre::Role::Task          ();
+use Padre::Wx::Role::View      ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx                  ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
+	Padre::Role::Task
 	Padre::Wx::Role::View
+	Padre::Wx::Role::Main
 	Wx::Panel
 };
 
@@ -26,7 +30,7 @@ sub new {
 	my $main  = shift;
 	my $panel = shift || $main->right;
 
-	# Create the parent panel, which will contain the search and tree
+	# Create the parent panel which will contain the search and tree
 	my $self = $class->SUPER::new(
 		$panel,
 		-1,
@@ -34,11 +38,11 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	# Store main for other methods
-	$self->{main} = $main;
-
 	# Temporary store for the function list.
-	$self->{names} = [];
+	$self->{model} = [];
+
+	# Remember the last document we were looking at
+	$self->{document} = '';
 
 	# Create the search control
 	$self->{search} = Wx::TextCtrl->new(
@@ -49,7 +53,7 @@ sub new {
 	);
 
 	# Create the functions list
-	$self->{functions} = Wx::ListBox->new(
+	$self->{list} = Wx::ListBox->new(
 		$self,
 		-1,
 		Wx::wxDefaultPosition,
@@ -62,7 +66,7 @@ sub new {
 	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$sizerv->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND );
-	$sizerv->Add( $self->{functions}, 1, Wx::wxALL | Wx::wxEXPAND );
+	$sizerv->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND );
 	$sizerh->Add( $sizerv,            1, Wx::wxALL | Wx::wxEXPAND );
 
 	# Fits panel layout
@@ -71,7 +75,7 @@ sub new {
 
 	# Grab the kill focus to prevent deselection
 	Wx::Event::EVT_KILL_FOCUS(
-		$self->{functions},
+		$self->{list},
 		sub {
 			return;
 		},
@@ -80,7 +84,7 @@ sub new {
 	# Double-click a function name
 	Wx::Event::EVT_LISTBOX_DCLICK(
 		$self,
-		$self->{functions},
+		$self->{list},
 		sub {
 			$self->on_list_item_activated( $_[1] );
 		}
@@ -88,7 +92,7 @@ sub new {
 
 	# Handle key events
 	Wx::Event::EVT_KEY_UP(
-		$self->{functions},
+		$self->{list},
 		sub {
 			my ( $this, $event ) = @_;
 			if ( $event->GetKeyCode == Wx::WXK_RETURN ) {
@@ -108,23 +112,20 @@ sub new {
 			if ( $code == Wx::WXK_DOWN || $code == Wx::WXK_UP || $code == Wx::WXK_RETURN ) {
 
 				# Up/Down and return keys focus on the functions lists
-				$self->{functions}->SetFocus;
-				my $selection = $self->{functions}->GetSelection;
-				if ( $selection == -1 && $self->{functions}->GetCount > 0 ) {
+				$self->{list}->SetFocus;
+				my $selection = $self->{list}->GetSelection;
+				if ( $selection == -1 && $self->{list}->GetCount > 0 ) {
 					$selection = 0;
 				}
-				$self->{functions}->Select($selection);
+				$self->{list}->Select($selection);
 
 			} elsif ( $code == Wx::WXK_ESCAPE ) {
 
 				# Escape key clears search and returns focus
 				# to the editor
 				$self->{search}->SetValue('');
-				my $current  = _CURRENT( $self->{main}->current );
-				my $document = $current->document;
-				if ($document) {
-					$document->editor->SetFocus;
-				}
+				my $editor = $self->current->editor;
+				$editor->SetFocus if $editor;
 			}
 
 			$event->Skip(1);
@@ -136,7 +137,7 @@ sub new {
 		$self,
 		$self->{search},
 		sub {
-			$self->_update_functions_list;
+			$self->render;
 		}
 	);
 
@@ -158,6 +159,10 @@ sub view_label {
 	shift->gettext_label;
 }
 
+sub view_close {
+	shift->main->show_functions(0);
+}
+
 
 
 
@@ -166,17 +171,17 @@ sub view_label {
 # Event Handlers
 
 sub on_list_item_activated {
-	my ( $self, $event ) = @_;
+	my $self  = shift;
+	my $event = shift;
 
 	# Which sub did they click
-	my $subname = $self->{functions}->GetStringSelection;
-	unless ( defined _STRING($subname) ) {
+	my $subname = $self->{list}->GetStringSelection;
+	unless ( defined Params::Util::_STRING($subname) ) {
 		return;
 	}
 
 	# Locate the function
-	my $current  = _CURRENT( $self->{main}->current );
-	my $document = $current->document or return;
+	my $document = $self->current->document or return;
 	my $editor   = $document->editor;
 	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
@@ -211,92 +216,83 @@ sub gettext_label {
 	Wx::gettext('Functions');
 }
 
-# Refresh the functions list
 sub refresh {
-	my ( $self, $current ) = @_;
-
-	# Flush the list if there is no active document
-	return unless $current;
-	my $document  = $current->document;
-	my $functions = $self->{functions};
+	my $self     = shift;
+	my $current  = shift or return;
+	my $document = $current->document;
+	my $search   = $self->{search};
+	my $list     = $self->{list};
 
 	# Hide the widgets when no files are open
-	if ($document) {
-		$self->{search}->Show(1);
-		$self->{functions}->Show(1);
-	} else {
-		$functions->Clear;
-		$self->{search}->Hide;
-		$self->{functions}->Hide;
-		$self->{names} = [];
+	unless ( $document ) {
+		$search->Hide;
+		$list->Hide;
+		$list->Clear;
+		$self->{model}    = [];
+		$self->{document} = '';
 		return;
 	}
+
+	# Ensure the widget is visible
+	$search->Show(1);
+	$list->Show(1);
 
 	# Clear search when it is a different document
-	if ( $self->{_document} && $document != $self->{_document} ) {
-		$self->{search}->ChangeValue('');
-	}
-	$self->{_document} = $document;
-
-	my $config  = $self->{main}->config;
-	my @methods = $document->get_functions;
-
-	if ( scalar @methods == 0 ) {
-		$functions->Clear;
-		$self->{names} = [];
-		return;
+	my $id = Scalar::Util::refaddr($document);
+	if ( $id ne $self->{document} ) {
+		$search->ChangeValue('');
+		$self->{document} = $id;
 	}
 
-	if ( $config->main_functions_order eq 'original' ) {
+	# Launch the background task
+	my $task = $document->task_functions or return;
+	$self->task_request(
+		task  => $task,
+		text  => $document->text_get,
+		order => $current->config->main_functions_order,
+	);
 
-		# That should be the one we got from get_functions
-	} elsif ( $config->main_functions_order eq 'alphabetical_private_last' ) {
+	return 1;
+}
 
-		# ~ comes after \w
-		tr/_/~/ foreach @methods;
-		@methods = sort { lc($a) cmp lc($b) } @methods;
-		tr/~/_/ foreach @methods;
-	} else {
-
-		# Alphabetical (aka 'abc')
-		@methods = sort { lc($a) cmp lc($b) } @methods;
-	}
-
-	if ( scalar(@methods) == scalar( @{ $self->{names} } ) ) {
-		my $new = join ';', @methods;
-		my $old = join ';', @{ $self->{names} };
-		return if $old eq $new;
-	}
-
-	$self->{names} = \@methods;
-
-	# Show them again
-	$self->{search}->Show;
-	$self->{functions}->Show;
-
-	$self->_update_functions_list;
+# Set an updated method list from the task
+sub task_response {
+	my $self = shift;
+	my $task = shift;
+	my $list = $task->{list} or return;
+	$self->{model} = $list;
+	$self->render;
 }
 
 # Populate the functions list with search results
-sub _update_functions_list {
-	my $self      = shift;
-	my $functions = $self->{functions};
+sub render {
+	my $self   = shift;
+	my $model  = $self->{model};
+	my $search = $self->{search};
+	my $list   = $self->{list};
 
-	#quote the search string to make it safer
-	my $search_expr = $self->{search}->GetValue();
-	if ( $search_expr eq '' ) {
-		$search_expr = '.*';
+	# Quote the search string to make it safer
+	my $string = $search->GetValue;
+	if ( $string eq '' ) {
+		$string = '.*';
 	} else {
-		$search_expr = quotemeta $search_expr;
+		$string = quotemeta $string;
 	}
 
-	# Populate the function list with matching functions
-	$functions->Clear;
-	foreach my $method ( reverse @{ $self->{names} } ) {
-		if ( $method =~ /$search_expr/i ) {
-			$functions->Insert( $method, 0 );
+	# Show the components and populate the function list
+	SCOPE: {
+		my $lock = $self->main->lock('UPDATE');
+		$search->Show(1);
+		$list->Show(1);
+		$list->Clear;
+		foreach my $method ( reverse @$model ) {
+			if ( $method =~ /$string/i ) {
+				$list->Insert( $method, 0 );
+			}
 		}
 	}
+
+	return 1;
 }
 
 1;

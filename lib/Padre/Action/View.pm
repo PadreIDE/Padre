@@ -5,14 +5,15 @@ package Padre::Action::View;
 use 5.008;
 use strict;
 use warnings;
-use File::Glob      ();
 use Padre::Constant ();
-use Padre::Current qw{_CURRENT};
-use Padre::Wx       ();
-use Padre::Wx::Menu ();
 use Padre::Locale   ();
+use Padre::Wx       ();
 
 our $VERSION = '0.64';
+
+
+
+
 
 #####################################################################
 # Padre::Wx::Menu Methods
@@ -34,7 +35,8 @@ sub new {
 		},
 	);
 
-	# Show or hide GUI elements
+	# Visible GUI Elements
+
 	Padre::Action->new(
 		name  => 'view.output',
 		label => Wx::gettext('Show Output'),
@@ -62,16 +64,10 @@ sub new {
 		comment     => Wx::gettext('Show a window listing all todo items in the current document'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			if ( $_[1]->IsChecked ) {
-				$_[0]->refresh_todo( $_[0]->current );
-				$_[0]->show_todo(1);
-			} else {
-				$_[0]->show_todo(0);
-			}
+			$_[0]->show_todo( $_[1]->IsChecked );
 		},
 	);
 
-	# Show or hide GUI elements
 	Padre::Action->new(
 		name    => 'view.outline',
 		label   => Wx::gettext('Show Outline'),
@@ -98,7 +94,7 @@ sub new {
 		comment     => Wx::gettext('Turn on syntax checking of the current document and show output in a window'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_syntax_check( $_[1] );
+			$_[0]->show_syntax( $_[1]->IsChecked );
 		},
 	);
 
@@ -108,7 +104,7 @@ sub new {
 		comment     => Wx::gettext('Show the list of errors received during execution of a script'),
 		menu_method => 'AppendCheckItem',
 		menu_event  => sub {
-			$_[0]->on_toggle_errorlist( $_[1] );
+			$_[0]->show_errorlist( $_[1]->IsChecked );
 		},
 	);
 
@@ -133,6 +129,7 @@ sub new {
 	);
 
 	# Editor Functionality
+
 	Padre::Action->new(
 		name        => 'view.lines',
 		label       => Wx::gettext('Show Line Numbers'),
@@ -208,6 +205,7 @@ sub new {
 	);
 
 	# Editor Whitespace Layout
+
 	Padre::Action->new(
 		name        => 'view.eol',
 		label       => Wx::gettext('Show Newlines'),
@@ -249,6 +247,7 @@ sub new {
 	);
 
 	# Font Size
+
 	Padre::Action->new(
 		name       => 'view.font_increase',
 		label      => Wx::gettext('Increase Font Size'),
@@ -281,6 +280,7 @@ sub new {
 	);
 
 	# Bookmark Support
+
 	Padre::Action->new(
 		name       => 'view.bookmark_set',
 		label      => Wx::gettext('Set Bookmark'),
@@ -303,8 +303,8 @@ sub new {
 		},
 	);
 
-
 	# Window Effects
+
 	Padre::Action->new(
 		name        => 'view.full_screen',
 		label       => Wx::gettext('&Full Screen'),

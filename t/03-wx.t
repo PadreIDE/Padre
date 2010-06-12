@@ -196,7 +196,7 @@ my @events = (
 			my $main = $ide->wx->main;
 			$T->diag( "syntaxcheck_panel: " . $main->syntax );
 			$main->menu->view->{show_syntaxcheck}->Check(1);
-			$main->on_toggle_syntax_check( event( checked => 1 ) );
+			$main->show_syntax(1);
 			$T->ok( $main->syntax->isa('Wx::ListView'), 'is a Wx::ListView' );
 		},
 	},

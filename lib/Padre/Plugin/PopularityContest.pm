@@ -113,11 +113,10 @@ this plug-in entirely.
 use 5.008;
 use strict;
 use warnings;
-use Config        ();
-use Scalar::Util  ();
-use Padre::Plugin ();
-use Padre::Task::HTTPClient;
-use Padre::Constant();
+use Config          ();
+use Scalar::Util    ();
+use Padre::Plugin   ();
+use Padre::Constant ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Plugin';
@@ -276,10 +275,12 @@ sub report {
 	my $report = $self->_generate;
 
 	# TO DO: Enable as soon as the server is functional:
-	#	my $response = Padre::Task::HTTPClient->new(
-	#		URL   => 'http://padre.perlide.org/popularity_contest.cgi',
-	#		query => \%STATS, method => 'POST'
-	#	)->run;
+	#	$self->task_request(
+	#		task   => 'Padre::Task::LWP'->new(
+	#		method => 'POST',
+	#		url    => 'http://padre.perlide.org/popularity_contest.cgi',
+	#		query  => \%STATS,
+	#	);
 
 	return 1;
 }

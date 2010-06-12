@@ -823,8 +823,8 @@ sub _on_tree_item_menu {
 			sub {
 
 				# TO DO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
-				require Padre::Wx::DocBrowser;
-				my $help = Padre::Wx::DocBrowser->new;
+				require Padre::Wx::Browser;
+				my $help = Padre::Wx::Browser->new;
 				$help->help( $node_data->{name} );
 				$help->SetFocus;
 				$help->Show(1);

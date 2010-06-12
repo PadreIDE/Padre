@@ -3,35 +3,48 @@ package Padre::Wx::Outline;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util   ();
-use Padre::Wx      ();
-use Padre::Current ();
+use Scalar::Util               ();
+use Params::Util               ();
+use Padre::Role::Task          ();
+use Padre::Wx::Role::View      ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx                  ();
 use Padre::Logger;
 
 our $VERSION = '0.64';
-our @ISA     = 'Wx::TreeCtrl';
-
-use Class::XSAccessor {
-	accessors => {
-		force_next => 'force_next',
-	}
+our @ISA     = qw{
+	Padre::Role::Task
+	Padre::Wx::Role::View
+	Padre::Wx::Role::Main
+	Wx::TreeCtrl
 };
+
+
+
+
+
+
+######################################################################
+# Constructor and Accessors
 
 sub new {
 	my $class = shift;
 	my $main  = shift;
-	my $self  = $class->SUPER::new(
-		$main->right,
+	my $panel = shift || $main->right;
+
+	# This tool is just a single tree control
+	my $self = $class->SUPER::new(
+		$panel,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_HAS_BUTTONS | Wx::wxTR_LINES_AT_ROOT
 	);
 	$self->SetIndent(10);
-	$self->{force_next} = 0;
 
 	Wx::Event::EVT_COMMAND_SET_FOCUS(
-		$self, $self,
+		$self,
+		$self,
 		sub {
 			$self->on_tree_item_set_focus( $_[1] );
 		},
@@ -39,7 +52,8 @@ sub new {
 
 	# Double-click a function name
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self,
+		$self,
+		$self,
 		sub {
 			$self->on_tree_item_activated( $_[1] );
 		}
@@ -47,81 +61,50 @@ sub new {
 
 	$self->Hide;
 
-	$self->{cache} = {};
+	# Track state so we can do shortcutting
+	$self->{document} = '';
+	$self->{length}   = -1;
+
+	# Cache document metadata for use when changing documents.
+	# By substituting old metadata before we scan for new metadata,
+	# we can make the widget APPEAR to be faster than it is and
+	# offset the cost of doing the PPI parse in the background.
+	# $self->{cache} = {};
 
 	return $self;
 }
 
-sub right {
-	$_[0]->GetParent;
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	return 'right';
 }
 
-sub main {
-	$_[0]->GetGrandParent;
+sub view_label {
+	shift->gettext_label;
 }
 
-sub gettext_label {
-	Wx::gettext('Outline');
+sub view_close {
+	shift->main->show_outline(0);
 }
 
-sub clear {
-	my ($self) = @_;
-	$self->DeleteAllItems;
-	return;
-}
 
-################################################################
-# Cache routines
 
-sub store_in_cache {
-	my ( $self, $cache_key, $content ) = @_;
 
-	if ( defined $cache_key ) {
-		$self->{cache}->{$cache_key} = $content;
-	}
-	return;
-}
 
-sub get_from_cache {
-	my ( $self, $cache_key ) = @_;
+######################################################################
+# Padre::Role::Task Methods
 
-	if ( defined $cache_key and exists $self->{cache}->{$cache_key} ) {
-		return $self->{cache}->{$cache_key};
-	}
-	return;
-}
-
-#####################################################################
-# GUI routines
-
-sub update_data {
-	my ( $self, $outline_data, $filename, $right_click_handler ) = @_;
-
-	$self->Freeze;
-
-	# Clear out the existing stuff
-	# TO DO extract data for keeping (sub)trees collapsed/expanded (see below)
-	#if ( $self->GetCount > 0 ) {
-	#	my $r = $self->GetRootItem;
-	#	warn ref $r;
-	#	use Data::Dumper;
-	#	my ( $fc, $cookie ) = $self->GetFirstChild($r);
-	#	warn ref $fc;
-	#	warn $self->GetItemText($fc) . ': ' . Dumper( $self->GetPlData($fc) );
-	#}
-	$self->clear;
-
-	require Padre::Wx;
-
-	# If there is no structure, clear the outline pane and return.
-	unless ($outline_data) {
-		return;
-	}
-
-	# Again, slightly differently
-	unless (@$outline_data) {
-		return 1;
-	}
+sub task_response {
+	my $self = shift;
+	my $task = shift;
+	my $data = Params::Util::_ARRAY($task->{data}) or return;
+	my $lock = $self->main->lock('UPDATE');
 
 	# Add the hidden unused root
 	my $root = $self->AddRoot(
@@ -131,35 +114,9 @@ sub update_data {
 		Wx::TreeItemData->new('')
 	);
 
-	# Update the outline pane
-	_update_treectrl( $self, $outline_data, $root );
-
-	# Set MIME type specific event handler
-	if ( defined $right_click_handler ) {
-		Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
-			$self,
-			$self,
-			$right_click_handler,
-		);
-	}
-
-	# TO DO Expanding all is not acceptable: We need to keep the state
-	# (i.e., keep the pragmata subtree collapsed if it was collapsed
-	# by the user)
-	#$self->ExpandAll;
-	$self->GetBestSize;
-	$self->Thaw;
-
-	$self->store_in_cache( $filename, [ $outline_data, $right_click_handler ] );
-
-	return 1;
-}
-
-sub _update_treectrl {
-	my ( $outlinebar, $outline, $root ) = @_;
-
-	foreach my $pkg ( @{$outline} ) {
-		my $branch = $outlinebar->AppendItem(
+	# Add the packge trees
+	foreach my $pkg ( @$data ) {
+		my $branch = $self->AppendItem(
 			$root,
 			$pkg->{name},
 			-1, -1,
@@ -171,15 +128,232 @@ sub _update_treectrl {
 			)
 		);
 		foreach my $type (qw(pragmata modules attributes methods events)) {
-			_add_subtree( $outlinebar, $pkg, $type, $branch );
+			$self->add_subtree( $pkg, $type, $branch );
 		}
-		$outlinebar->Expand($branch);
+		$self->Expand($branch);
+	}
+
+	# Set MIME type specific event handler
+	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
+		$self,
+		$self,
+		sub {
+			$_[0]->on_tree_item_right_click($_[1]);
+		},
+	);
+
+	# TO DO Expanding all is not acceptable: We need to keep the state
+	# (i.e., keep the pragmata subtree collapsed if it was collapsed
+	# by the user)
+	#$self->ExpandAll;
+	$self->GetBestSize;
+
+	# Disable caching for the moment
+	# $self->store_in_cache( $filename, [ $data, $right_click_handler ] );
+
+	return 1;
+}
+
+
+
+
+
+#####################################################################
+# Timer Control
+
+sub running {
+	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
+}
+
+sub start {
+	my $self = shift;
+	TRACE("Starting Outline timer") if DEBUG;
+
+	# Set up or reinitialise the timer
+	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
+		$self->{timer}->Stop if $self->{timer}->IsRunning;
+	} else {
+		$self->{timer} = Wx::Timer->new(
+			$self,
+			Padre::Wx::ID_TIMER_OUTLINE
+		);
+		Wx::Event::EVT_TIMER(
+			$self,
+			Padre::Wx::ID_TIMER_OUTLINE,
+			sub {
+				$_[0]->on_timer( $_[1], $_[2] );
+			},
+		);
+	}
+	$self->{timer}->Start(5000);
+
+	return;
+}
+
+sub stop {
+	my $self = shift;
+	TRACE("Stopping Outline timer") if DEBUG;
+
+	# Stop the timer
+	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
+		$self->{timer}->Stop if $self->{timer}->IsRunning;
+	}
+
+	return;
+}
+	
+
+
+
+
+#####################################################################
+# Event Handlers
+
+sub on_timer {
+	my $self  = shift;
+	my $event = shift;
+
+	# Clear the event
+	$event->Skip(0) if defined $event;
+
+	# Reuse the refresh logic here
+	$self->refresh;
+}
+
+sub on_tree_item_right_click {
+	my $self   = shift;
+	my $event  = shift;
+	my $show   = 0;
+	my $menu   = Wx::Menu->new;
+	my $pldata = $self->GetPlData( $event->GetItem );
+
+	if ( defined($pldata) && defined( $pldata->{line} ) && $pldata->{line} > 0 ) {
+		my $goto = $menu->Append( -1, Wx::gettext('&Go to Element') );
+		Wx::Event::EVT_MENU(
+			$self, $goto,
+			sub {
+				$self->on_tree_item_set_focus($event);
+			},
+		);
+		$show++;
+	}
+
+	if (   defined($pldata)
+		&& defined( $pldata->{type} )
+		&& ( $pldata->{type} eq 'modules' || $pldata->{type} eq 'pragmata' ) )
+	{
+		my $pod = $menu->Append( -1, Wx::gettext('Open &Documentation') );
+		Wx::Event::EVT_MENU(
+			$self,
+			$pod,
+			sub {
+
+				# TO DO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
+				require Padre::Wx::Browser;
+				my $help = Padre::Wx::Browser->new;
+				$help->help( $pldata->{name} );
+				$help->SetFocus;
+				$help->Show(1);
+				return;
+			},
+		);
+		$show++;
+	}
+
+	if ( $show > 0 ) {
+		my $x = $event->GetPoint->x;
+		my $y = $event->GetPoint->y;
+		$self->PopupMenu( $menu, $x, $y );
 	}
 
 	return;
 }
 
-sub _add_subtree {
+# Method alias
+sub on_tree_item_activated {
+	shift->on_tree_item_set_focus(@_);
+}
+
+sub on_tree_item_set_focus {
+	my $self      = shift;
+	my $event     = shift;
+	my $selection = $self->GetSelection();
+	if ( $selection and $selection->IsOk ) {
+		my $item = $self->GetPlData($selection);
+		if ( defined $item ) {
+			$self->select_line_in_editor( $item->{line} );
+		}
+	}
+	return;
+}
+
+
+
+
+
+################################################################
+# Cache routines
+
+# sub store_in_cache {
+	# my ( $self, $cache_key, $content ) = @_;
+# 
+	# if ( defined $cache_key ) {
+		# $self->{cache}->{$cache_key} = $content;
+	# }
+	# return;
+# }
+# 
+# sub get_from_cache {
+	# my ( $self, $cache_key ) = @_;
+# 
+	# if ( defined $cache_key and exists $self->{cache}->{$cache_key} ) {
+		# return $self->{cache}->{$cache_key};
+	# }
+	# return;
+# }
+
+
+
+
+
+######################################################################
+# General Methods
+
+sub gettext_label {
+	Wx::gettext('Outline');
+}
+
+sub clear {
+	$_[0]->DeleteAllItems;
+}
+
+sub refresh {
+	my $self = shift;
+
+	# Shortcut if nothing has changed.
+	# NOTE: Given the speed at which the timer fires,
+	# a cheap length check is better than an expensive MD5 check.
+	my $document = $self->current->document or return;
+	my $length   = $document->text_length;
+	if ( $document eq $self->{document} and $length eq $self->{length} ) {
+		return;
+	}
+	$self->{document} = $document;
+	$self->{length}   = $length;
+
+	# We need to refresh, so flush out old state
+	$self->clear;
+	$self->task_reset;
+
+	# Fire the task to generate the new outline
+	my $task = $document->task_outline or return;
+	$self->task_request(
+		task => $task,
+		text => $document->text_get,
+	);
+}
+
+sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
 
 	my %type_caption = (
@@ -252,139 +426,22 @@ sub _add_subtree {
 	return;
 }
 
-#####################################################################
-# Timer Control
-
-sub start {
-	my $self = shift; @_ = (); # Feeble attempt to kill Scalars Leaked ($self is leaking)
-
-	# TO DO: GUI on-start initialisation here
-
-	# Set up or reinitialise the timer
-	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		$self->{timer}->Stop if $self->{timer}->IsRunning;
-	} else {
-		$self->{timer} = Wx::Timer->new(
-			$self,
-			Padre::Wx::ID_TIMER_OUTLINE
-		);
-		Wx::Event::EVT_TIMER(
-			$self,
-			Padre::Wx::ID_TIMER_OUTLINE,
-			sub {
-				$self->on_timer( $_[1], $_[2] );
-			},
-		);
-	}
-	$self->{timer}->Start(1000);
-	$self->on_timer( undef, 1 );
-
-	return ();
-}
-
-sub stop {
-	my $self = shift;
-
-	TRACE("stopping Outline") if DEBUG;
-
-	# Stop the timer
-	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
-		$self->{timer}->Stop if $self->{timer}->IsRunning;
-	}
-
-	$self->clear;
-
-	# TO DO: GUI on-stop cleanup here
-
-	return ();
-}
-
-sub refresh {
-	my $self = shift;
-
-	$self->clear;
-
-	my $filename         = Padre::Current->filename;
-	my $outline_data_ref = $self->get_from_cache($filename);
-	if ( defined $outline_data_ref ) {
-		my ( $outline_data, $right_click_handler ) = @$outline_data_ref;
-		$self->update_data( $outline_data, $filename, $right_click_handler );
-	}
-
-	$self->force_next(1);
-}
-
-sub running {
-	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
-}
-
-#####################################################################
-# Event Handlers
-
-sub on_tree_item_set_focus {
-	my ( $self, $event ) = @_;
-	my $main      = Padre::Current->main($self);
-	my $page      = $main->current->editor;
-	my $selection = $self->GetSelection();
-	if ( $selection and $selection->IsOk ) {
-		my $item = $self->GetPlData($selection);
-		if ( defined $item ) {
-			$self->select_line_in_editor( $item->{line} );
-		}
-	}
-	return;
-}
-
-sub on_tree_item_activated {
-	on_tree_item_set_focus(@_);
-	return;
-}
-
 sub select_line_in_editor {
-	my ( $self, $line_number ) = @_;
-	my $main = Padre::Current->main($self);
-	my $page = $main->current->editor;
-	if (   defined $line_number
-		&& ( $line_number =~ /^\d+$/o )
-		&& ( defined $page )
-		&& ( $line_number <= $page->GetLineCount ) )
+	my $self   = shift;
+	my $line   = shift;
+	my $editor = $self->current->editor;
+	if (   defined $line
+		&& ( $line =~ /^\d+$/o )
+		&& ( defined $editor )
+		&& ( $line <= $editor->GetLineCount ) )
 	{
-		$line_number--;
-		$page->EnsureVisible($line_number);
-		$page->goto_pos_centerize( $page->GetLineIndentPosition($line_number) );
-		$page->SetFocus;
+		$line--;
+		$editor->EnsureVisible($line);
+		$editor->goto_pos_centerize(
+			$editor->GetLineIndentPosition($line)
+		);
+		$editor->SetFocus;
 	}
-	return;
-}
-
-sub on_timer {
-	my ( $self, $event, $force ) = @_;
-
-	### NOTE:
-	# floating windows, when undocked (err... "floating"), will
-	# return Wx::AuiFloatingFrame as their parent. So floating
-	# windows should always get their "main" from Padre::Current->main
-	# and -not- from $self->main.
-	my $main = Padre::Current->main($self);
-
-	my $document = $main->current->document or return;
-
-	unless ( $document->can('get_outline') ) {
-		$self->clear;
-		return;
-	}
-
-	if ( $self->force_next ) {
-		$force = 1;
-		$self->force_next(0);
-	}
-
-	$document->get_outline( force => $force );
-
-	if ( defined($event) ) {
-		$event->Skip(0);
-	}
-
 	return;
 }
 

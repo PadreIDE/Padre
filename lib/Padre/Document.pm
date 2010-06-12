@@ -143,6 +143,21 @@ our $VERSION = '0.64';
 
 
 #####################################################################
+# Task Integration
+
+sub task_functions {
+	return '';
+}
+
+sub task_outline {
+	return '';
+}
+
+
+
+
+
+#####################################################################
 # Document Registration
 
 # NOTE: This is probably a bad place to store this
@@ -847,6 +862,10 @@ sub remove_tempfile {
 
 sub text_get {
 	$_[0]->editor->GetText;
+}
+
+sub text_length {
+	$_[0]->editor->GetLength;
 }
 
 sub text_set {

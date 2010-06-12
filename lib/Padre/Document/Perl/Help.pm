@@ -253,8 +253,8 @@ sub help_render {
 	}
 
 	# Render using perldoc pseudo code package
-	require Padre::DocBrowser::POD;
-	my $pod      = Padre::DocBrowser::POD->new;
+	require Padre::Browser::POD;
+	my $pod      = Padre::Browser::POD->new;
 	my $doc      = $pod->resolve( $topic, $hints );
 	my $pod_html = $pod->render($doc);
 	if ($pod_html) {

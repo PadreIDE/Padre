@@ -11,7 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
-plan( tests => 37 );
+plan( tests => 44 );
 
 use Test::Script;
 use Test::NoWarnings;
@@ -37,6 +37,15 @@ use_ok('Padre');
 use_ok('Padre::Pod2HTML');
 use_ok('Padre::Plugin::Devel');
 use_ok('Padre::Plugin::My');
+
+# Load all the second-generation modules
+use_ok('Padre::Task'       );
+use_ok('Padre::TaskThread' );
+use_ok('Padre::TaskHandle' );
+use_ok('Padre::TaskManager');
+use_ok('Padre::TaskProcess');
+use_ok('Padre::TaskWorker' );
+use_ok('Padre::Role::Task'  );
 
 # Now load everything else
 my $loaded = Padre->import(':everything');

@@ -3,9 +3,7 @@ package Padre::Task::PPI::FindVariableDeclaration;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                                  ();
-use Padre::Task::PPI                           ();
-use PPIx::EditorTools::FindVariableDeclaration ();
+use Padre::Task::PPI ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task::PPI';
@@ -18,13 +16,13 @@ Padre::Task::PPI::FindVariableDeclaration - Finds where a variable was declared 
 
 =head1 SYNOPSIS
 
-  # finds declaration of variable at cursor
-  my $declfinder = Padre::Task::PPI::FindVariableDeclaration->new(
+  # Find declaration of variable at cursor
+  my $task = Padre::Task::PPI::FindVariableDeclaration->new(
           document => $document_obj,
-          location => [$line, $column], # ppi-style location is okay, too
+          location => [ $line, $column ], # ppi-style location is okay, too
   );
 
-  $declfinder->schedule();
+  $task->schedule;
 
 =head1 DESCRIPTION
 
@@ -34,34 +32,12 @@ that glorious fact. If a declaration is found, the cursor will jump to it.
 
 =cut
 
-sub prepare {
-	my $self = shift;
-	$self->SUPER::prepare(@_);
-
-	# move the document to the main-thread-only storage
-	my $mto = $self->{main_thread_only} ||= {};
-	$mto->{document} = $self->{document}
-		if defined $self->{document};
-	delete $self->{document};
-	if ( not defined $mto->{document} ) {
-		require Carp;
-		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the FindVariableDeclaration task");
-	}
-
-	if ( not defined $self->{location} ) {
-		require Carp;
-		Carp::croak("Need a {location}!");
-	}
-
-	return ();
-}
-
-sub process_ppi {
+sub process {
 	my $self     = shift;
 	my $ppi      = shift or return;
 	my $location = $self->{location};
-
-	my $declaration = eval {
+	my $result  = eval {
+		require PPIx::EditorTools::FindVariableDeclaration;
 		PPIx::EditorTools::FindVariableDeclaration->new->find(
 			ppi    => $ppi,
 			line   => $location->[0],
@@ -73,31 +49,12 @@ sub process_ppi {
 		return;
 	}
 
-	$self->{declaration_location} = $declaration->element->location;
-	return ();
-}
-
-sub finish {
-	my $self = shift;
-	if ( defined $self->{declaration_location} ) {
-
-		# GUI update
-		$self->{main_thread_only}->{document}->ppi_select( $self->{declaration_location} );
-	} else {
-		my $text;
-		if ( $self->{error} =~ /no token/ ) {
-			$text = Wx::gettext("Current cursor does not seem to point at a variable");
-		} elsif ( $self->{error} =~ /no declaration/ ) {
-			$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
-		} else {
-			$text = Wx::gettext("Unknown error");
-		}
-		Wx::MessageBox(
-			$text,    Wx::gettext("Search Canceled"),
-			Wx::wxOK, Padre->ide->wx->main
-		);
+	# If we found it, save the location
+	if ( defined $result ) {
+		$self->{location} = $result->element->location;
 	}
-	return ();
+
+	return;
 }
 
 1;

@@ -28,7 +28,7 @@ use Padre::Wx  ();
 
 our $VERSION = '0.64';
 
-use constant GOLDEN => 1.618;
+use constant GOLDEN_RATIO => 1.618;
 
 
 
@@ -36,6 +36,49 @@ use constant GOLDEN => 1.618;
 
 ######################################################################
 # Main Functions
+
+=pod
+
+=head2 perfect
+
+  my $boolean = Padre::Wx::Display->perfect(
+      Padre::Current->main
+  );
+
+The default Wx implementation of IsShownOnScreen is a bit weird, and while
+it may be technically correct as far as Wx is concerned it does not
+necesarily represent what a typical human expects, which is that the
+application is on an active plugged in monitor and that it is entirely on
+the monitor.
+
+The C<perfect> method takes a L<Wx::TopLevelWindow> object (which
+incorporates either a L<Wx::Dialog> or a L<Wx::Frame>) and determines if
+the window meets the warm and fuzzy human criteria for a usable location.
+
+Returns true if so, or false otherwise.
+
+=cut
+
+sub perfect {
+	my $class  = shift;
+	my $window = shift;
+
+	# Anything that isn't a regular framed window is acceptable
+	return 1 if $window->IsIconized;
+	return 1 if $window->IsMaximized;
+	return 1 if $window->IsFullScreen;
+
+	# Are we entirely within the usable area of a single display.
+	my $rect = $window->GetScreenRect;
+	foreach ( 0 .. Wx::Display::GetCount() - 1 ) {
+		my $display = Wx::Display->new($_);
+		if ( $display->GetGeometry->ContainsRect($rect) ) {
+			return 1;
+		}
+	}
+
+	return 0;
+}
 
 =pod
 
@@ -129,14 +172,14 @@ sub _rect_scale_margin {
 # Shrink long size to meet the (landscape) golden (aspect) ratio.
 sub _rect_golden {
 	my $rect = shift;
-	if ( $rect->width > ( $rect->height * GOLDEN ) ) {
+	if ( $rect->width > ( $rect->height * GOLDEN_RATIO ) ) {
 
 		# Shrink left from the right
-		$rect->width( int( $rect->height / GOLDEN ) );
+		$rect->width( int( $rect->height / GOLDEN_RATIO ) );
 	} else {
 
 		# Shrink up from the bottom
-		$rect->height( int( $rect->width / GOLDEN ) );
+		$rect->height( int( $rect->width / GOLDEN_RATIO ) );
 	}
 	return $rect;
 }

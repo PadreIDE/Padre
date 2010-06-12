@@ -3,22 +3,44 @@ package Padre::Document::Perl;
 use 5.008;
 use strict;
 use warnings;
-use Carp                            ();
-use Encode                          ();
-use File::Spec                      ();
-use File::Temp                      ();
-use File::Find::Rule                ();
-use Params::Util                    ('_INSTANCE');
-use YAML::Tiny                      ();
-use Padre::Util                     ();
-use Padre::Perl                     ();
-use Padre::Document                 ();
-use Padre::File                     ();
-use Padre::Document::Perl::Beginner ();
+use Carp              ();
+use Encode            ();
+use File::Spec        ();
+use File::Temp        ();
+use File::Find::Rule  ();
+use Params::Util      ('_INSTANCE');
+use YAML::Tiny        ();
+use Padre::Util       ();
+use Padre::Perl       ();
+use Padre::Document   ();
+use Padre::File       ();
+use Padre::Role::Task ();
 use Padre::Logger;
 
 our $VERSION = '0.64';
-our @ISA     = 'Padre::Document';
+our @ISA     = qw{
+	Padre::Role::Task
+	Padre::Document
+};
+
+
+
+
+
+#####################################################################
+# Task Integration
+
+sub task_functions {
+	return 'Padre::Document::Perl::FunctionList';
+}
+
+sub task_outline {
+	return 'Padre::Document::Perl::Outline';
+}
+
+sub task_syntax {
+	return 'Padre::Document::Perl::Syntax';
+}
 
 
 
@@ -30,7 +52,7 @@ our @ISA     = 'Padre::Document';
 # Ticket #637:
 # TO DO watch out! These PPI methods may be VERY expensive!
 # (Ballpark: Around 1 Gigahertz-second of *BLOCKING* CPU per 1000 lines)
-# Check out Padre::Task::PPI and its subclasses instead!
+# Check out Padre::Task::PPI and children instead!
 sub ppi_get {
 	my $self = shift;
 	my $text = $self->text_get;
@@ -225,12 +247,20 @@ sub keywords {
 	return $keywords;
 }
 
-sub get_functions {
-	my $self = shift;
+# This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without
+# triggering a "Variable length lookbehind not implemented" error.
+# return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
+sub get_function_regex {
+	qr/(?:^|[^# \t])[ \t]*(sub\s+$_[1])\b/;
+}
 
-	# Filter out POD
+sub get_functions {
+	$_[0]->find_functions( $_[0]->text_get );
+}
+
+sub find_functions {
 	my $n = "\\cM?\\cJ";
-	return grep { defined $_ } $self->text_get =~ m/
+	return grep { defined $_ } $_[1] =~ m/
 		(?:
 		(?:$n)*__(?:DATA|END)__\b.*
 		|
@@ -239,14 +269,6 @@ sub get_functions {
 		(?:^|$n)\s*sub\s+(\w+(?:::\w+)*)
 		)
 	/sgx;
-}
-
-sub get_function_regex {
-
-	# This emulates qr/(?<=^|[\012\015])sub\s$name\b/ but without
-	# triggering a "Variable length lookbehind not implemented" error.
-	#	return qr/(?:(?<=^)\s*sub\s+$_[1]|(?<=[\012\015])\s*sub\s+$_[1])\b/;
-	return qr/(?:^|[^# \t])[ \t]*(sub\s+$_[1])\b/;
 }
 
 =pod
@@ -343,7 +365,7 @@ sub pre_process {
 
 # Checks the syntax of a Perl document.
 # Documented in Padre::Document!
-# Implemented as a task. See Padre::Task::SyntaxChecker::Perl
+# Implemented as a task. See Padre::Document::Perl::Syntax
 sub check_syntax {
 	shift->_check_syntax_internals(
 
@@ -384,33 +406,23 @@ sub _check_syntax_internals {
 	}
 	$self->{last_syncheck_md5} = $md5;
 
-	my $nlchar = $self->newline;
-
-	require Padre::Task::SyntaxChecker::Perl;
-	my %check = (
-		editor   => $self->editor,
-		text     => $text,
-		newlines => $nlchar,
+	require Padre::Document::Perl::Syntax;
+	my $task = Padre::Document::Perl::Syntax->new(
+		document => $self,
 	);
-	if ( exists $args->{on_finish} ) {
-		$check{on_finish} = $args->{on_finish};
-	}
-	if ( $self->project ) {
-		$check{cwd}      = $self->project->root;
-		$check{perl_cmd} = ['-Ilib'];
-	}
-	my $task = Padre::Task::SyntaxChecker::Perl->new(%check);
+
 	if ( $args->{background} ) {
 
 		# asynchroneous execution (see on_finish hook)
 		$task->schedule;
-		return ();
+		return;
 	} else {
 
 		# serial execution, returning the result
-		return () if $task->prepare() =~ /^break$/;
-		$task->run();
-		return $task->{syntax_check};
+		$task->prepare or return;
+		$task->run;
+		$task->finish;
+		return $task->{model};
 	}
 }
 
@@ -435,6 +447,7 @@ sub beginner_check {
 	# it should at least go to the line it's complaining about.
 	# Ticket #534
 
+	require Padre::Document::Perl::Beginner;
 	my $Beginner = Padre::Document::Perl::Beginner->new(
 		document => $self,
 		editor   => $self->editor
@@ -453,64 +466,44 @@ sub beginner_check {
 	return 1;
 }
 
-sub get_outline {
-	my $self = shift;
-	my %args = @_;
-
-	my $text = $self->text_get;
-	unless ( defined $text and $text ne '' ) {
-		return [];
-	}
-
-	# Do we really need an update?
-	require Digest::MD5;
-	my $md5 = Digest::MD5::md5_hex( Encode::encode_utf8($text) );
-	unless ( $args{force} ) {
-		if ( defined( $self->{last_outline_md5} )
-			and $self->{last_outline_md5} eq $md5 )
-		{
-			return;
-		}
-	}
-	$self->{last_outline_md5} = $md5;
-
-	my %arg = (
-		editor   => $self->editor,
-		text     => $text,
-		filename => defined $self->filename ? $self->filename : $self->get_title,
-	);
-	if ( $self->project ) {
-		$arg{cwd}      = $self->project->root;
-		$arg{perl_cmd} = ['-Ilib'];
-	}
-
-	require Padre::Task::Outline::Perl;
-	my $task = Padre::Task::Outline::Perl->new(%arg);
-
-	# asynchronous execution (see on_finish hook)
-	$task->schedule;
-	return;
-}
-
 sub comment_lines_str {
 	return '#';
 }
 
 sub find_unmatched_brace {
-	my ($self) = @_;
+	TRACE("find_unmatched_brace") if DEBUG;
+	my $self = shift;
 
-	# create a new object of the task class and schedule it
-	require Padre::Task::PPI::FindUnmatchedBrace;
-	Padre::Task::PPI::FindUnmatchedBrace->new(
-
-		# for parsing
-		text => $self->text_get,
-
-		# will be available in "finish" but not in "run"/"process_ppi"
+	# Fire the task
+	$self->task_request(
+		task     => 'Padre::Task::PPI::FindUnmatchedBrace',
 		document => $self,
-	)->schedule;
+		callback => 'find_unmatched_brace_response',
+	);
 
-	return ();
+	return;
+}
+
+sub find_unmatched_brace_response {
+	TRACE("find_unmatched_brace_response") if DEBUG;
+	my $self = shift;
+	my $task = shift;
+
+	# Found what we were looking for
+	if ( $task->{location} ) {
+		$self->ppi_select( $task->{location} );
+		return;
+	}
+
+	# Must have been a clean result
+	# TO DO: Convert this to a call to ->main that doesn't require
+	# us to use Wx directly.
+	Wx::MessageBox(
+		Wx::gettext("All braces appear to be matched"),
+		Wx::gettext("Check Complete"),
+		Wx::wxOK,
+		$self->current->main,
+	);
 }
 
 # finds the start of the current symbol.
@@ -571,7 +564,7 @@ sub get_current_symbol {
 }
 
 sub find_variable_declaration {
-	my ($self) = @_;
+	my $self = shift;
 
 	my ( $location, $token ) = $self->get_current_symbol;
 	unless ( defined $location ) {
@@ -579,19 +572,49 @@ sub find_variable_declaration {
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
-			Padre->ide->wx->main
+			$self->current->main,
 		);
-		return ();
+		return;
 	}
 
-	# create a new object of the task class and schedule it
-	require Padre::Task::PPI::FindVariableDeclaration;
-	Padre::Task::PPI::FindVariableDeclaration->new(
+	# Create a new object of the task class and schedule it
+	$self->task_request(
+		task     => 'Padre::Task::PPI::FindVariableDeclaration',
 		document => $self,
 		location => $location,
-	)->schedule;
+		callback => 'find_variable_declaration_response',
+	);
 
-	return ();
+	return;
+}
+
+sub find_variable_declaration_response {
+	my $self = shift;
+	my $task = shift;
+
+	# Found what we were looking for
+	if ( $task->{location} ) {
+		$self->ppi_select( $task->{location} );
+		return;
+	}
+
+	# Couldn't find the variable declaration.
+	# TO DO: Convert this to a call to ->main that doesn't require
+	# us to use Wx directly.
+	my $text;
+	if ( $self->{error} =~ /no token/ ) {
+		$text = Wx::gettext("Current cursor does not seem to point at a variable");
+	} elsif ( $self->{error} =~ /no declaration/ ) {
+		$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
+	} else {
+		$text = Wx::gettext("Unknown error");
+	}
+	Wx::MessageBox(
+		$text,
+		Wx::gettext("Search Canceled"),
+		Wx::wxOK,
+		$self->current->main,
+	);
 }
 
 sub find_method_declaration {
@@ -791,47 +814,111 @@ sub get_sub_line_number {
 # Padre::Document Document Manipulation
 
 sub lexical_variable_replacement {
-	my ( $self, $replacement ) = @_;
+	my $self = shift;
+	my $name = shift;
 
+	# Can we find something to replace
 	my ( $location, $token ) = $self->get_current_symbol;
 	if ( not defined $location ) {
 		Wx::MessageBox(
 			Wx::gettext("Current cursor does not seem to point at a variable"),
 			Wx::gettext("Check cancelled"),
 			Wx::wxOK,
-			Padre->ide->wx->main
+			$self->current->main,
 		);
-		return ();
+		return;
 	}
 
-	# create a new object of the task class and schedule it
-	require Padre::Task::PPI::LexicalReplaceVariable;
-	Padre::Task::PPI::LexicalReplaceVariable->new(
-		document    => $self,
-		location    => $location,
-		replacement => $replacement,
-	)->schedule;
+	# Launch the background task
+	$self->task_request(
+		task => 'Padre::Task::PPI::LexicalReplaceVariable',
+		document => $self,
+		location => $location,
+		replacement => $name,
+		callback => 'lexical_variable_replacement_response',
+	);
 
-	return ();
+	return;
+}
+
+sub lexical_variable_replacement_response {
+	my $self = shift;
+	my $task = shift;
+
+	if ( defined $task->{munged} ) {
+
+		# GUI update
+		# TO DO: What if the document changed? Bad luck for now.
+		$self->editor->SetText( $task->{munged} );
+		$self->ppi_select( $task->{location} );
+		return;
+	}
+
+	# Explain why it didn't work
+	my $text;
+	my $error = $self->{error} || '';
+	if ( $error =~ /no token/ ) {
+		$text = Wx::gettext("Current cursor does not seem to point at a variable");
+	} elsif ( $error =~ /no declaration/ ) {
+		$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
+	} else {
+		$text = Wx::gettext("Unknown error");
+	}
+	Wx::MessageBox(
+		$text,
+		Wx::gettext("Replace Operation Canceled"),
+		Wx::wxOK,
+		$self->current->main,
+	);
 }
 
 sub introduce_temporary_variable {
-	my ( $self, $varname ) = @_;
+	my $self   = shift;
+	my $name   = shift;
+	my $editor = $self->editor;
 
-	my $editor         = $self->editor;
-	my $start_position = $editor->GetSelectionStart;
-	my $end_position   = $editor->GetSelectionEnd - 1;
-
-	# create a new object of the task class and schedule it
-	require Padre::Task::PPI::IntroduceTemporaryVariable;
-	Padre::Task::PPI::IntroduceTemporaryVariable->new(
+	# Run the replacement in the background
+	$self->task_request(
+		task           => 'Padre::Task::PPI::IntroduceTemporaryVariable',
 		document       => $self,
-		start_location => $start_position,
-		end_location   => $end_position,
-		varname        => $varname,
-	)->schedule;
+		varname        => $name,
+		start_location => $editor->GetSelectionStart,
+		end_location   => $editor->GetSelectionEnd - 1,
+		callback       => 'introduce_temporary_variable_response',
+	);
 
-	return ();
+	return;
+}
+
+sub introduce_temporary_variable_response {
+	my $self = shift;
+	my $task = shift;
+
+	if ( defined $task->{munged} ) {
+
+		# GUI update
+		# TO DO: What if the document changed? Bad luck for now.
+		$self->editor->SetText( $task->{munged} );
+		$self->ppi_select( $task->{location} );
+		return;
+	}
+
+	# Explain why it didn't work
+	my $text;
+	my $error = $self->{error} || '';
+	if ( $error =~ /no token/ ) {
+		$text = Wx::gettext("First character of selection does not seem to point at a token.");
+	} elsif ( $error =~ /no statement/ ) {
+		$text = Wx::gettext("Selection not part of a Perl statement?");
+	} else {
+		$text = Wx::gettext("Unknown error");
+	}
+	Wx::MessageBox(
+		$text,
+		Wx::gettext("Replace Operation Canceled"),
+		Wx::wxOK,
+		$self->current->main,
+	);
 }
 
 # this method takes the new subroutine name
@@ -1554,7 +1641,7 @@ sub event_on_right_down {
 			sub {
 				my $editor = shift;
 				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
-				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 				$doc->find_variable_declaration;
 			},
 		);
@@ -1567,7 +1654,7 @@ sub event_on_right_down {
 				# FIX ME near duplication of the code in Padre::Wx::Menu::Perl
 				my $editor = shift;
 				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
-				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 				require Padre::Wx::History::TextEntryDialog;
 				my $dialog = Padre::Wx::History::TextEntryDialog->new(
 					$editor->main,
@@ -1593,7 +1680,7 @@ sub event_on_right_down {
 			sub {
 				my $editor = shift;
 				my $doc    = $self; # FIX ME if Padre::Wx::Editor had a method to access its Document...
-				return unless Params::Util::_INSTANCE( $doc, 'Padre::Document::Perl' );
+				return unless _INSTANCE( $doc, 'Padre::Document::Perl' );
 				$doc->find_method_declaration;
 			},
 		);

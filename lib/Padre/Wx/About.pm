@@ -334,6 +334,9 @@ sub _content_info {
 	# Yes, THIS variable should have this upper case char :-)
 	my $Perl_version = $^V || $];
 
+	# How many threads are running
+	my $threads = $INC{'threads.pm'} ? scalar(threads->list) : 'disabled';
+
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>
   <body bgcolor="#EEEEEE">
@@ -392,6 +395,14 @@ sub _content_info {
         </td>
         <td>
         $ram
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">
+        Threads:
+        </td>
+        <td>
+        $threads
         </td>
       </tr>
     </table>

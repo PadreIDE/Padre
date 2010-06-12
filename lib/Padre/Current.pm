@@ -51,7 +51,7 @@ sub _CURRENT {
 
 # Get the project from the document (and don't cache)
 sub project {
-	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
+	my $self     = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $document = $self->document;
 	if ( defined $document ) {
 		return $document->project;
@@ -62,10 +62,13 @@ sub project {
 
 # Get the text from the editor (and don't cache)
 sub text {
-	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
+	my $self   = ref( $_[0] ) ? $_[0] : $_[0]->new;
 	my $editor = $self->editor;
-	return '' unless defined $editor;
-	return $editor->GetSelectedText;
+	if ( defined $editor ) {
+		return $editor->GetSelectedText;
+	} else {
+		return '';
+	}
 }
 
 # Get the title of the current editor window (and don't cache)
@@ -143,7 +146,6 @@ sub notebook {
 # Get the current configuration from the main window (and don't cache).
 sub config {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
-
 	if ( defined $self->main ) {
 		return $self->main->config;
 	} elsif ( $self->ide ) {
@@ -196,6 +198,7 @@ sub main {
 # Convenience method
 sub ide {
 	my $self = ref( $_[0] ) ? $_[0] : $_[0]->new;
+
 	if ( defined $self->{ide} ) {
 		return $self->{ide};
 	}
@@ -225,8 +228,8 @@ Padre::Current - convenient access to current objects within Padre
 
 =head1 SYNOPSIS
 
-	my $main = Padre::Current->main;
-	...
+    my $main = Padre::Current->main;
+    # ...
 
 =head1 DESCRIPTION
 
@@ -242,11 +245,11 @@ retrieve whatever current object you need.
 
 =head2 new
 
-  # Vanilla constructor
-  Padre::Current->new;
-
-  # Seed the object with some context
-  Padre::Current->new( document => $document );
+    # Vanilla constructor
+    Padre::Current->new;
+    
+    # Seed the object with some context
+    Padre::Current->new( document => $document );
 
 The C<new> constructor creates a new context object, it optionally takes
 one or more named parameters which should be any context the caller is

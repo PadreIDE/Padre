@@ -3,9 +3,7 @@ package Padre::Task::PPI::IntroduceTemporaryVariable;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                                     ();
-use Padre::Task::PPI                              ();
-use PPIx::EditorTools::IntroduceTemporaryVariable ();
+use Padre::Task::PPI ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task::PPI';
@@ -25,7 +23,7 @@ Padre::Task::PPI::IntroduceTemporaryVariable - Introduces a temporary variable u
           varname        => '$foo',
   );
 
-  $tempvarmaker->schedule();
+  $tempvarmaker->schedule;
 
 =head1 DESCRIPTION
 
@@ -38,39 +36,13 @@ and C<end_position> to C<< $editor->GetSelectionEnd() - 1 >>.
 
 =cut
 
-sub prepare {
+sub process {
 	my $self = shift;
-	$self->SUPER::prepare(@_);
+	my $ppi  = shift or return;
 
-	# move the document to the main-thread-only storage
-	my $mto = $self->{main_thread_only} ||= {};
-	$mto->{document} = $self->{document}
-		if defined $self->{document};
-	delete $self->{document};
-	if ( not defined $mto->{document} ) {
-		require Carp;
-		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the temporary-variable task");
-	}
-
-	foreach my $key (qw(start_location end_location)) {
-		if ( not defined $self->{$key} ) {
-			require Carp;
-			Carp::croak("Need a {$key}!");
-		} elsif ( not ref( $self->{$key} ) ) {
-			my $doc = $mto->{document};
-			$self->{$key} = $doc->character_position_to_ppi_location( $self->{$key} );
-		}
-	}
-
-	return ();
-}
-
-sub process_ppi {
-	my $self     = shift;
-	my $ppi      = shift or return;
-	my $location = $self->{start_location};
-
+	# Transform the document
 	my $munged = eval {
+		require PPIx::EditorTools::IntroduceTemporaryVariable;
 		PPIx::EditorTools::IntroduceTemporaryVariable->new->introduce(
 			ppi            => $ppi,
 			start_location => $self->{start_location},
@@ -78,40 +50,16 @@ sub process_ppi {
 			varname        => $self->{varname},
 		);
 	};
-	if ($@) {
+	if ( $@ ) {
 		$self->{error} = $@;
 		return;
 	}
-
+	
 	# TO DO: passing this back and forth is probably hyper-inefficient, but such is life.
-	$self->{updated_document_string} = $munged->code;
-	$self->{location}                = $munged->element->location;
-	return ();
-}
+	$self->{munged}   = $munged->code;
+	$self->{location} = $munged->element->location;
 
-sub finish {
-	my $self = shift;
-	if ( defined $self->{updated_document_string} ) {
-
-		# GUI update
-		# TO DO: What if the document changed? Bad luck for now.
-		$self->{main_thread_only}->{document}->editor->SetText( $self->{updated_document_string} );
-		$self->{main_thread_only}->{document}->ppi_select( $self->{location} );
-	} else {
-		my $text;
-		if ( $self->{error} =~ /no token/ ) {
-			$text = Wx::gettext("First character of selection does not seem to point at a token.");
-		} elsif ( $self->{error} =~ /no statement/ ) {
-			$text = Wx::gettext("Selection not part of a Perl statement?");
-		} else {
-			$text = Wx::gettext("Unknown error");
-		}
-		Wx::MessageBox(
-			$text,    Wx::gettext("Replace Operation Canceled"),
-			Wx::wxOK, Padre->ide->wx->main
-		);
-	}
-	return ();
+	return;
 }
 
 1;

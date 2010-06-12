@@ -111,13 +111,12 @@ sub startup {
 	# NOTE: Replace the following with if ( 0 ) will disable the
 	# slave master quick-spawn optimisation.
 
-	# If we are going to use threading, spawn off the slave
-	# driver as early as we possibly can so we reduce the amount of
-	# wasted memory copying to a minimum.
+	# Second-generation version of the threading optimisation.
+	# This one is much safer because we start with zero existing tasks
+	# and no expectation of existing load behaviour.
 	if ( $setting{threads} ) {
-		require Padre::SlaveDriver;
-
-		# Padre::SlaveDriver->new;
+		require Padre::TaskThread;
+		Padre::TaskThread->master;
 	}
 
 	# Show the splash image now we are starting a new instance
@@ -136,6 +135,7 @@ sub startup {
 			my $share = undef;
 			if ( $ENV{PADRE_DEV} ) {
 				require FindBin;
+				no warnings;
 				$share = File::Spec->catdir(
 					$FindBin::Bin,
 					File::Spec->updir,

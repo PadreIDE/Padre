@@ -7,14 +7,14 @@ use strict;
 use warnings;
 use Padre::Wx                  ();
 use Padre::Wx::Icon            ();
-use Padre::Wx::Role::MainChild ();
+use Padre::Wx::Role::Main ();
 
 # RichTextCtrl
 use Wx::RichText ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
-	Padre::Wx::Role::MainChild
+	Padre::Wx::Role::Main
 	Wx::Dialog
 };
 

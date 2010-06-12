@@ -22,13 +22,13 @@ use Padre::Current               ();
 use Padre::Search                ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
-use Padre::Wx::Role::MainChild   ();
+use Padre::Wx::Role::Main   ();
 use Padre::Wx::History::ComboBox ();
 use Padre::Wx::FindResult        ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
-	Padre::Wx::Role::MainChild
+	Padre::Wx::Role::Main
 	Wx::Dialog
 };
 

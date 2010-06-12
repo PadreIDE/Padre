@@ -3,26 +3,38 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util    ();
-use Padre::Wx       ();
-use Padre::Wx::Icon ();
+use Params::Util               ();
+use Padre::Role::Task          ();
+use Padre::Wx::Role::View      ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx                  ();
+use Padre::Wx::Icon            ();
 use Padre::Logger;
 
 our $VERSION = '0.64';
-our @ISA     = 'Wx::ListView';
+our @ISA     = qw{
+	Padre::Role::Task
+	Padre::Wx::Role::View
+	Padre::Wx::Role::Main
+	Wx::ListView
+};
 
 sub new {
 	my $class = shift;
 	my $main  = shift;
+	my $panel = shift || $main->bottom;
 
 	# Create the underlying object
 	my $self = $class->SUPER::new(
-		$main->bottom,
+		$panel,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
+
+	# The data model for the results
+	$self->{model} = [];
 
 	my $list = Wx::ImageList->new( 16, 16 );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
@@ -30,16 +42,23 @@ sub new {
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
 	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
 
-	$self->InsertColumn( $_, _get_title($_) ) for 0 .. 2;
+	my @titles = $self->titles;
+	foreach ( 0 .. 2 ) {
+		$self->InsertColumn( $_, $titles[$_] );
+	}
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self, $self,
+		$self,
+		$self,
 		sub {
-			$self->on_list_item_activated( $_[1] );
+			shift->on_list_item_activated(@_);
 		},
 	);
 	Wx::Event::EVT_RIGHT_DOWN(
-		$self, \&on_right_down,
+		$self,
+		sub {
+			shift->on_right_down(@_);
+		},
 	);
 
 	$self->Hide;
@@ -47,70 +66,36 @@ sub new {
 	return $self;
 }
 
-sub bottom {
-	$_[0]->GetParent;
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	return 'bottom';
 }
 
-sub main {
-	$_[0]->GetGrandParent;
+sub view_label {
+	shift->gettext_label(@_);
 }
 
-sub current {
-	Padre::Current->new( main => $_[0]->main );
+sub view_close {
+	shift->main->show_syntax(0);
 }
 
-sub gettext_label {
-	Wx::gettext('Syntax Check');
-}
 
-# Remove all markers and empty the list
-sub clear {
-	my $self = shift;
 
-	# Remove the margins for the syntax markers
-	foreach my $editor ( $self->main->editors ) {
-		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
-		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
-	}
 
-	# Remove all items from the tool
-	$self->DeleteAllItems;
-
-	return;
-}
-
-sub set_column_widths {
-	my $self      = shift;
-	my $ref_entry = shift;
-	if ( !defined $ref_entry ) {
-		$ref_entry = { line => ' ', };
-	}
-
-	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 16;
-	my $width0         = $self->GetCharWidth * length( $ref_entry->{line} x 2 ) + 14;
-
-	my $refStr = '';
-	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
-		$refStr = Wx::gettext('Warning');
-	} else {
-		$refStr = Wx::gettext('Error');
-	}
-
-	my $width1 = $self->GetCharWidth * ( length($refStr) + 2 );
-	my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
-
-	$self->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
-	$self->SetColumnWidth( 1, $width1 );
-	$self->SetColumnWidth( 2, $width2 );
-
-	return;
-}
 
 #####################################################################
 # Timer Control
 
 sub start {
 	my $self = shift;
+	$self->running and return;
+	TRACE('Starting the syntax checker') if DEBUG;
 
 	# Add the margins for the syntax markers
 	foreach my $editor ( $self->main->editors ) {
@@ -121,8 +106,6 @@ sub start {
 		# Set margin 1 16 px wide
 		$editor->SetMarginWidth( 1, 16 );
 	}
-
-	TRACE('still starting the syntax checker') if DEBUG;
 
 	# List appearance: Initialize column widths
 	$self->set_column_widths;
@@ -150,19 +133,21 @@ sub start {
 
 sub stop {
 	my $self = shift;
+	$self->running or return;
+	TRACE('Stopping the syntax checker') if DEBUG;
 
 	# Stop the timer
 	if ( Params::Util::_INSTANCE( $self->{timer}, 'Wx::Timer' ) ) {
 		$self->{timer}->Stop;
 	}
 
-	# Clear out the existing data
-	$self->clear;
-
 	# Remove the editor margin
 	foreach my $editor ( $self->main->editors ) {
 		$editor->SetMarginWidth( 1, 0 );
 	}
+
+	# Clear out the existing data
+	$self->clear;
 
 	return;
 }
@@ -170,6 +155,10 @@ sub stop {
 sub running {
 	!!( $_[0]->{timer} and $_[0]->{timer}->IsRunning );
 }
+
+
+
+
 
 #####################################################################
 # Event Handlers
@@ -192,127 +181,10 @@ sub on_list_item_activated {
 	return;
 }
 
-# Selects the problemistic line :)
-sub select_problem {
-	my $self   = shift;
-	my $line   = shift;
-	my $editor = $self->current->editor or return;
-	$editor->EnsureVisible($line);
-	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
-	$editor->SetFocus;
-}
-
-# Selects the next problem in the editor.
-# Wraps to the first one when at the end.
-sub select_next_problem {
-	my $self   = shift;
-	my $editor = $self->current->editor or return;
-	my $line   = $editor->LineFromPosition( $editor->GetCurrentPos );
-
-	my $first_line = undef;
-	foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
-
-		# Get the line and check that it is a valid line number
-		my $line = $self->GetItem($i)->GetText;
-		next
-			if ( not defined($line) )
-			or ( $line !~ /^\d+$/o )
-			or ( $line > $editor->GetLineCount );
-		$line--;
-
-		if ( not $first_line ) {
-
-			# record the position of the first problem
-			$first_line = $line;
-		}
-
-		if ( $line > $line ) {
-
-			# select the next problem
-			$self->select_problem($line);
-
-			# no need to wrap around...
-			$first_line = undef;
-
-			# and we're done here...
-			last;
-		}
-	}
-
-	# The next problem is simply the first (wrap around)
-	$self->select_problem($first_line) if $first_line;
-}
-
-sub on_timer {
-	my $self     = shift;
-	my $event    = shift;
-	my $force    = shift;
-	my $editor   = $self->current->editor or return;
-	my $document = $editor->{Document};
-
-	# Don't check without document of if the document has no checker
-	unless ( $document and $document->can('check_syntax') ) {
-		$self->clear;
-		return;
-	}
-
-	# Don't really check while typing but check if typing pauses,
-	# because the user usually won't stop typing to correct a
-	# syntax error but finish the current line and then fix the typo
-	if ( defined( $document->{last_char_time} ) ) {
-		if ( $self->main->ide->{has_Time_HiRes} ) {
-
-			# Not typing for 500ms usually means that you got
-			# time to look at the syntax check results
-			return if ( Time::HiRes::time() - $document->{last_char_time} ) < .5;
-		} else {
-
-			# Without HiRes, we could only set the timeout to
-			# one second, but this is very inaccurate
-			return if $document->{last_char_time} == time;
-		}
-	}
-
-	my $pre_exec_result = $document->check_syntax_in_background( force => $force );
-
-	# In case we have created a new and still completely empty doc we
-	# need to clean up the message list
-	if ( ref $pre_exec_result eq 'ARRAY' and not @{$pre_exec_result} ) {
-		$self->clear;
-	}
-
-	if ( defined $event ) {
-		$event->Skip(0);
-	}
-
-	return;
-}
-
-sub _get_title {
-	my $c = shift;
-
-	return Wx::gettext('Line')        if $c == 0;
-	return Wx::gettext('Type')        if $c == 1;
-	return Wx::gettext('Description') if $c == 2;
-
-	die "invalid value '$c'";
-}
-
-sub relocale {
-	my $self = shift;
-
-	foreach my $i ( 0 .. 2 ) {
-		my $col = $self->GetColumn($i);
-		$col->SetText( _get_title($i) );
-		$self->SetColumn( $i, $col );
-	}
-
-	return;
-}
-
 # Called when the user presses a right click or a context menu key (on win32)
 sub on_right_down {
-	my ( $self, $event ) = @_;
+	my $self  = shift;
+	my $event = shift;
 
 	return if $self->GetItemCount == 0;
 
@@ -375,6 +247,224 @@ sub on_right_down {
 	} else { #Wx::CommandEvent
 		$self->PopupMenu( $menu, 50, 50 ); # TO DO better location
 	}
+}
+
+sub on_timer {
+	my $self  = shift;
+	my $event = shift;
+	$event->Skip(0) if defined $event;
+	$self->refresh;
+}
+
+
+
+
+
+
+#####################################################################
+# General Methods
+
+sub bottom {
+	TRACE("DEPRECATED") if DEBUG;
+	shift->main->bottom;
+}
+
+sub gettext_label {
+	Wx::gettext('Syntax Check');
+}
+
+sub titles {
+	return (
+		Wx::gettext('Line'),
+		Wx::gettext('Type'),
+		Wx::gettext('Description'),
+	);
+}
+
+# Remove all markers and empty the list
+sub clear {
+	my $self = shift;
+	my $lock = $self->main->lock('UPDATE');
+
+	# Remove the margins for the syntax markers
+	foreach my $editor ( $self->main->editors ) {
+		$editor->MarkerDeleteAll(Padre::Wx::MarkError);
+		$editor->MarkerDeleteAll(Padre::Wx::MarkWarn);
+	}
+
+	# Remove all items from the tool
+	$self->DeleteAllItems;
+
+	return;
+}
+
+sub relocale {
+	my $self   = shift;
+	my @titles = $self->titles;
+	foreach my $i ( 0 .. 2 ) {
+		my $col = $self->GetColumn($i);
+		$col->SetText( $titles[$i] );
+		$self->SetColumn( $i, $col );
+	}
+	return;
+}
+
+sub refresh {
+	my $self     = shift;
+	my $document = $self->current->document or return;
+	unless ( $document->can('task_syntax') ) {
+		$self->clear;
+		return;
+	}
+
+	# Initiate the background task
+	$self->task_request(
+		task     => $document->task_syntax,
+		document => $document,
+	);
+
+	return;
+}
+
+sub task_response {
+	my $self = shift;
+	my $task = shift;
+	$self->{model} = $task->{model};
+	$self->render;
+}
+
+sub render {
+	my $self     = shift;
+	my $model    = $self->{model} || [];
+	my $current  = $self->current;
+	my $editor   = $current->editor;
+	my $document = $current->document;
+	my $filename = $current->filename;
+	my $lock     = $self->main->lock('UPDATE');
+
+	# Flush old results
+	$self->main->lock('UPDATE');
+	$self->clear;
+
+	# If there are no errors clear the synax checker pane
+	unless ( Params::Util::_ARRAY($model) ) {
+		my $i = $self->InsertStringImageItem( 0, '', 2 );
+		$self->SetItemData( $i, 0 );
+		$self->SetItem( $i, 1, Wx::gettext('Info') );
+
+		# Relative-to-the-project filename.
+		# Check that the document has been saved.
+		if ( defined $filename ) {
+			my $project_dir = $document->project_dir;
+			if ( defined $project_dir ) {
+				$project_dir = quotemeta $project_dir;
+				$filename =~ s/^$project_dir//;
+			}
+			$self->SetItem( $i, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
+		} else {
+			$self->SetItem( $i, 2, Wx::gettext('No errors or warnings found.') );
+		}
+		return;
+	}
+
+	# Eliminate some warnings
+	foreach my $hint ( @$model ) {
+		$hint->{line} = 0  unless defined $hint->{line};
+		$hint->{msg}  = '' unless defined $hint->{msg};
+	}
+
+	my @MARKER = ( Padre::Wx::MarkError(), Padre::Wx::MarkWarn() );
+	my @LABEL  = ( Wx::gettext('Warning'), Wx::gettext('Error')  );
+
+	my $i = 0;
+	foreach my $hint ( sort { $a->{line} <=> $b->{line} } @$model ) {
+		my $line     = $hint->{line} - 1;
+		my $severity = $hint->{severity};
+		$editor->MarkerAdd( $line, $MARKER[$severity] );
+		my $item = $self->InsertStringImageItem( $i++, $line + 1, $severity );
+		$self->SetItemData( $item, 0 );
+		$self->SetItem( $item, 1, $LABEL[$severity] );
+		$self->SetItem( $item, 2, $hint->{msg}      );
+	}
+
+	$self->set_column_widths($model->[-1]);
+
+	return 1;
+}
+
+sub set_column_widths {
+	my $self = shift;
+	my $item = shift || { line => ' ' };
+
+	my $width0_default = $self->GetCharWidth * length( Wx::gettext("Line") ) + 16;
+	my $width0         = $self->GetCharWidth * length( $item->{line} x 2 ) + 14;
+
+	my $ref_str = '';
+	if ( length( Wx::gettext('Warning') ) > length( Wx::gettext('Error') ) ) {
+		$ref_str = Wx::gettext('Warning');
+	} else {
+		$ref_str = Wx::gettext('Error');
+	}
+
+	my $width1 = $self->GetCharWidth * ( length($ref_str) + 2 );
+	my $width2 = $self->GetSize->GetWidth - $width0 - $width1 - $self->GetCharWidth * 4;
+
+	$self->SetColumnWidth( 0, ( $width0_default > $width0 ? $width0_default : $width0 ) );
+	$self->SetColumnWidth( 1, $width1 );
+	$self->SetColumnWidth( 2, $width2 );
+
+	return;
+}
+
+# Selects the problemistic line :)
+sub select_problem {
+	my $self   = shift;
+	my $line   = shift;
+	my $editor = $self->current->editor or return;
+	$editor->EnsureVisible($line);
+	$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
+	$editor->SetFocus;
+}
+
+# Selects the next problem in the editor.
+# Wraps to the first one when at the end.
+sub select_next_problem {
+	my $self   = shift;
+	my $editor = $self->current->editor or return;
+	my $line   = $editor->LineFromPosition( $editor->GetCurrentPos );
+
+	my $first_line = undef;
+	foreach my $i ( 0 .. $self->GetItemCount - 1 ) {
+
+		# Get the line and check that it is a valid line number
+		my $line = $self->GetItem($i)->GetText;
+		next
+			if ( not defined($line) )
+			or ( $line !~ /^\d+$/o )
+			or ( $line > $editor->GetLineCount );
+		$line--;
+
+		if ( not $first_line ) {
+
+			# record the position of the first problem
+			$first_line = $line;
+		}
+
+		if ( $line > $line ) {
+
+			# select the next problem
+			$self->select_problem($line);
+
+			# no need to wrap around...
+			$first_line = undef;
+
+			# and we're done here...
+			last;
+		}
+	}
+
+	# The next problem is simply the first (wrap around)
+	$self->select_problem($first_line) if $first_line;
 }
 
 1;

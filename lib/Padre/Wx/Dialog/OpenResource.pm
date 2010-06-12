@@ -3,39 +3,27 @@ package Padre::Wx::Dialog::OpenResource;
 use 5.008;
 use strict;
 use warnings;
-use Cwd              ();
-use Padre::DB        ();
-use Padre::Wx        ();
-use Padre::Wx::Icon  ();
-use Padre::MimeTypes ();
+use Cwd                        ();
+use Padre::DB                  ();
+use Padre::Wx                  ();
+use Padre::Wx::Icon            ();
+use Padre::Wx::Role::Main ();
+use Padre::MimeTypes           ();
+use Padre::Role::Task          ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
-	Padre::Wx::Role::MainChild
+	Padre::Role::Task
+	Padre::Wx::Role::Main
 	Wx::Dialog
-};
-
-use Class::XSAccessor {
-	accessors => {
-		_sizer                    => '_sizer',                    # window sizer
-		_search_text              => '_search_text',              # search text control
-		_matches_list             => '_matches_list',             # matches list
-		_status_text              => '_status_text',              # status label
-		_directory                => '_directory',                # searched directory
-		_matched_files            => '_matched_files',            # matched files list
-		_copy_button              => '_copy_button',              # copy button
-		_popup_button             => '_popup_button',             # popup button for options
-		_popup_menu               => '_popup_menu',               # options popup menu
-		_skip_vcs_files           => '_skip_vcs_files',           # Skip VCS files menu item
-		_skip_using_manifest_skip => '_skip_using_manifest_skip', # Skip using MANIFEST.SKIP menu item
-	}
 };
 
 # -- constructor
 sub new {
-	my ( $class, $main ) = @_;
+	my $class = shift;
+	my $main  = shift;
 
-	# create object
+	# Create object
 	my $self = $class->SUPER::new(
 		$main,
 		-1,
@@ -48,9 +36,9 @@ sub new {
 	$self->init_search;
 
 	# Dialog's icon as is the same as Padre
-	$self->SetIcon(Padre::Wx::Icon::PADRE);
+	$self->SetIcon( Padre::Wx::Icon::PADRE );
 
-	# create dialog
+	# Create dialog
 	$self->_create;
 
 	return $self;
@@ -61,33 +49,27 @@ sub new {
 # Initialize search
 #
 sub init_search {
-	my $self = shift;
+	my $self     = shift;
+	my $current  = $self->current;
+	my $document = $current->document;
+	my $filename = $current->filename;
 
-	#Check if we have an open file so we can use its directory
-	my $doc = $self->current->document;
-	my $filename = ( defined $doc ) ? $doc->filename : undef;
-	my $dir;
-	if ($filename) {
+	# Check if we have an open file so we can use its directory
+	my $directory = $filename
+		# Current document's project or base directory
+		? Padre::Util::get_project_dir($filename)
+			|| File::Basename::dirname($filename)
+		# Current working directory
+		: Cwd::getcwd();
 
-		# current document's project or base directory
-		$dir = Padre::Util::get_project_dir($filename)
-			|| File::Basename::dirname($filename);
-	} else {
-
-		# current working directory
-		$dir = Cwd::getcwd();
+	# Restart search if the project/current directory is different
+	my $previous = $self->{directory};
+	if ( $previous && $previous ne $directory ) {
+		$self->{matched_files} = undef;
 	}
 
-
-	my $old_dir = $self->_directory;
-	if ( $old_dir && $old_dir ne $dir ) {
-
-		# Restart search if the project/current directory is different
-		$self->_matched_files(undef);
-	}
-
-	$self->_directory($dir);
-	$self->SetLabel( Wx::gettext('Open Resource') . ' - ' . $dir );
+	$self->{directory} = $directory;
+	$self->SetLabel( Wx::gettext('Open Resource') . ' - ' . $directory );
 }
 
 # -- event handler
@@ -95,26 +77,29 @@ sub init_search {
 #
 # handler called when the ok button has been clicked.
 #
-sub _on_ok_button_clicked {
-	my ($self) = @_;
-
+sub ok_button {
+	my $self = shift;
 	my $main = $self->main;
+
 	$self->Hide;
 
 	#Open the selected resources here if the user pressed OK
-	my @selections = $self->_matches_list->GetSelections();
-	foreach my $selection (@selections) {
-		my $filename = $self->_matches_list->GetClientData($selection);
+	my @selections = $self->{matches_list}->GetSelections;
+	foreach my $selection ( @selections ) {
+		my $filename = $self->{matches_list}->GetClientData($selection);
 
 		# Fetch the recently used files from the database
 		require Padre::DB::RecentlyUsed;
-		my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ? and value = ?", 'RESOURCE', $filename )
-			|| [];
+		my $recently_used = Padre::DB::RecentlyUsed->select(
+			"where type = ? and value = ?",
+			'RESOURCE',
+			$filename,
+		) || [];
+
 		my $found = scalar @$recently_used > 0;
 
 		eval {
-
-			# try to open the file now
+			# Try to open the file now
 			if ( my $id = $main->find_editor_of_file($filename) ) {
 				my $page = $main->notebook->GetPage($id);
 				$page->SetFocus;
@@ -122,7 +107,7 @@ sub _on_ok_button_clicked {
 				$main->setup_editors($filename);
 			}
 		};
-		if ($@) {
+		if ( $@ ) {
 			Wx::MessageBox(
 				Wx::gettext('Error while trying to perform Padre action'),
 				Wx::gettext('Error'),
@@ -133,17 +118,17 @@ sub _on_ok_button_clicked {
 
 			# And insert a recently used tuple if it is not found
 			# and the action is successful.
-			if ( not $found ) {
+			if ( $found ) {
+				Padre::DB->do(
+					"update recently_used set last_used = ? where name = ? and type = ?",
+					{}, time(), $filename, 'RESOURCE',
+				);
+			} else {
 				Padre::DB::RecentlyUsed->create(
 					name      => $filename,
 					value     => $filename,
 					type      => 'RESOURCE',
 					last_used => time(),
-				);
-			} else {
-				Padre::DB->do(
-					"update recently_used set last_used = ? where name = ? and type = ?",
-					{}, time(), $filename, 'RESOURCE',
 				);
 			}
 		}
@@ -158,11 +143,10 @@ sub _on_ok_button_clicked {
 # create the dialog itself.
 #
 sub _create {
-	my ($self) = @_;
+	my $self = shift;
 
 	# create sizer that will host all controls
-	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$self->_sizer($sizer);
+	$self->{sizer} = Wx::BoxSizer->new(Wx::wxVERTICAL);
 
 	# create the controls
 	$self->_create_controls;
@@ -170,7 +154,7 @@ sub _create {
 
 	# wrap everything in a vbox to add some padding
 	$self->SetMinSize( [ 360, 340 ] );
-	$self->SetSizer($sizer);
+	$self->SetSizer( $self->{sizer} );
 
 	# center/fit the dialog
 	$self->Fit;
@@ -181,112 +165,125 @@ sub _create {
 # create the buttons pane.
 #
 sub _create_buttons {
-	my ($self) = @_;
-	my $sizer = $self->_sizer;
+	my $self  = shift;
 
 	$self->{ok_button} = Wx::Button->new(
-		$self, Wx::wxID_OK, Wx::gettext('&OK'),
+		$self,
+		Wx::wxID_OK,
+		Wx::gettext('&OK'),
 	);
 	$self->{ok_button}->SetDefault;
 	$self->{cancel_button} = Wx::Button->new(
-		$self, Wx::wxID_CANCEL, Wx::gettext('&Cancel'),
+		$self,
+		Wx::wxID_CANCEL,
+		Wx::gettext('&Cancel'),
 	);
 
 	my $buttons = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$buttons->AddStretchSpacer;
 	$buttons->Add( $self->{ok_button},     0, Wx::wxALL | Wx::wxEXPAND, 5 );
 	$buttons->Add( $self->{cancel_button}, 0, Wx::wxALL | Wx::wxEXPAND, 5 );
-	$sizer->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
+	$self->{sizer}->Add( $buttons, 0, Wx::wxALL | Wx::wxEXPAND | Wx::wxALIGN_CENTER, 5 );
 
-	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&_on_ok_button_clicked );
+	Wx::Event::EVT_BUTTON( $self, Wx::wxID_OK, \&ok_button );
 }
 
 #
 # create controls in the dialog
 #
 sub _create_controls {
-	my ($self) = @_;
+	my $self = shift;
 
 	# search textbox
 	my $search_label = Wx::StaticText->new(
-		$self, -1,
+		$self,
+		-1,
 		Wx::gettext('&Select an item to open (? = any character, * = any string):')
 	);
-	$self->_search_text(
-		Wx::TextCtrl->new(
-			$self,                 -1, '',
-			Wx::wxDefaultPosition, Wx::wxDefaultSize,
-		)
+	$self->{search_text} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
 	);
 
 	# matches result list
 	my $matches_label = Wx::StaticText->new(
-		$self, -1,
+		$self,
+		-1,
 		Wx::gettext('&Matching Items:')
 	);
 
-	$self->_matches_list(
-		Wx::ListBox->new(
-			$self, -1, Wx::wxDefaultPosition, Wx::wxDefaultSize, [],
-			Wx::wxLB_EXTENDED
-		)
+	$self->{matches_list} = Wx::ListBox->new(
+		$self,
+		-1,
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		[],
+		Wx::wxLB_EXTENDED,
 	);
 
 	# Shows how many items are selected and information about what is selected
-	$self->_status_text(
-		Wx::TextCtrl->new(
-			$self,                 -1,                Wx::gettext('Current Directory: ') . $self->_directory,
-			Wx::wxDefaultPosition, Wx::wxDefaultSize, Wx::wxTE_READONLY
-		)
+	$self->{status_text} = Wx::TextCtrl->new(
+		$self,
+		-1,
+		Wx::gettext('Current Directory: ') . $self->{directory},
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_READONLY,
 	);
 
 	my $folder_image = Wx::StaticBitmap->new(
-		$self, -1,
+		$self,
+		-1,
 		Padre::Wx::Icon::find("places/stock_folder")
 	);
 
-	$self->_copy_button(
-		Wx::BitmapButton->new(
-			$self, -1,
-			Padre::Wx::Icon::find("actions/edit-copy")
-		)
+	$self->{copy_button} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Padre::Wx::Icon::find("actions/edit-copy"),
 	);
 
-
-	$self->_popup_button(
-		Wx::BitmapButton->new(
-			$self, -1,
-			Padre::Wx::Icon::find("actions/down")
-		)
+	$self->{popup_button} = Wx::BitmapButton->new(
+		$self,
+		-1,
+		Padre::Wx::Icon::find("actions/down")
 	);
-	$self->_popup_menu( Wx::Menu->new );
-	$self->_skip_vcs_files(
-		$self->_popup_menu->AppendCheckItem( -1, Wx::gettext("Skip version control system files") ) );
-	$self->_skip_using_manifest_skip(
-		$self->_popup_menu->AppendCheckItem( -1, Wx::gettext("Skip using MANIFEST.SKIP") ) );
 
-	$self->_skip_vcs_files->Check(1);
-	$self->_skip_using_manifest_skip->Check(1);
+	$self->{popup_menu} = Wx::Menu->new;
+	$self->{skip_vcs_files} = $self->{popup_menu}->AppendCheckItem(
+		-1,
+		Wx::gettext("Skip version control system files"),
+	);
+	$self->{skip_using_manifest_skip} = $self->{popup_menu}->AppendCheckItem(
+		-1,
+		Wx::gettext("Skip using MANIFEST.SKIP"),
+	);
+
+	$self->{skip_vcs_files}->Check(1);
+	$self->{skip_using_manifest_skip}->Check(1);
 
 	my $hb;
-	$self->_sizer->AddSpacer(10);
-	$self->_sizer->Add( $search_label, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
+	$self->{sizer}->AddSpacer(10);
+	$self->{sizer}->Add( $search_label, 0, Wx::wxALL | Wx::wxEXPAND, 2 );
 	$hb = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hb->AddSpacer(2);
-	$hb->Add( $self->_search_text,  1, Wx::wxALIGN_CENTER_VERTICAL, 2 );
-	$hb->Add( $self->_popup_button, 0, Wx::wxALL | Wx::wxEXPAND,    2 );
+	$hb->Add( $self->{search_text},  1, Wx::wxALIGN_CENTER_VERTICAL, 2 );
+	$hb->Add( $self->{popup_button}, 0, Wx::wxALL | Wx::wxEXPAND,    2 );
 	$hb->AddSpacer(1);
-	$self->_sizer->Add( $hb,                  0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
-	$self->_sizer->Add( $matches_label,       0, Wx::wxALL | Wx::wxEXPAND,    2 );
-	$self->_sizer->Add( $self->_matches_list, 1, Wx::wxALL | Wx::wxEXPAND,    2 );
+	$self->{sizer}->Add( $hb,                  0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$self->{sizer}->Add( $matches_label,       0, Wx::wxALL | Wx::wxEXPAND,    2 );
+	$self->{sizer}->Add( $self->{matches_list}, 1, Wx::wxALL | Wx::wxEXPAND,    2 );
 	$hb = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hb->AddSpacer(2);
 	$hb->Add( $folder_image,       0, Wx::wxALL | Wx::wxEXPAND,    1 );
-	$hb->Add( $self->_status_text, 1, Wx::wxALIGN_CENTER_VERTICAL, 1 );
-	$hb->Add( $self->_copy_button, 0, Wx::wxALL | Wx::wxEXPAND,    1 );
+	$hb->Add( $self->{status_text}, 1, Wx::wxALIGN_CENTER_VERTICAL, 1 );
+	$hb->Add( $self->{copy_button}, 0, Wx::wxALL | Wx::wxEXPAND,    1 );
 	$hb->AddSpacer(1);
-	$self->_sizer->Add( $hb, 0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
-	$self->_setup_events();
+	$self->{sizer}->Add( $hb, 0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$self->_setup_events;
 
 	return;
 }
@@ -298,13 +295,13 @@ sub _setup_events {
 	my $self = shift;
 
 	Wx::Event::EVT_CHAR(
-		$self->_search_text,
+		$self->{search_text},
 		sub {
 			my $this  = shift;
 			my $event = shift;
 			my $code  = $event->GetKeyCode;
 
-			$self->_matches_list->SetFocus
+			$self->{matches_list}->SetFocus
 				if ( $code == Wx::WXK_DOWN )
 				or ( $code == Wx::WXK_NUMPAD_PAGEDOWN )
 				or ( $code == Wx::WXK_PAGEDOWN );
@@ -315,34 +312,34 @@ sub _setup_events {
 
 	Wx::Event::EVT_TEXT(
 		$self,
-		$self->_search_text,
+		$self->{search_text},
 		sub {
-
-			if ( not $self->_matched_files ) {
-				$self->_search();
+			unless ( $self->{matched_files} ) {
+				$self->search;
 			}
-			$self->_update_matches_list_box;
-
+			$self->render;
 			return;
 		}
 	);
 
 	Wx::Event::EVT_LISTBOX(
 		$self,
-		$self->_matches_list,
+		$self->{matches_list},
 		sub {
 			my $self         = shift;
-			my @matches      = $self->_matches_list->GetSelections();
+			my @matches      = $self->{matches_list}->GetSelections;
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
-				$self->_status_text->ChangeValue( $self->_path( $self->_matches_list->GetClientData( $matches[0] ) ) );
-				$self->_copy_button->Enable(1);
+				$self->{status_text}->ChangeValue(
+					$self->_path( $self->{matches_list}->GetClientData( $matches[0] ) )
+				);
+				$self->{copy_button}->Enable(1);
 			} elsif ( $num_selected > 1 ) {
-				$self->_status_text->ChangeValue( $num_selected . " items selected" );
-				$self->_copy_button->Enable(0);
+				$self->{status_text}->ChangeValue( $num_selected . " items selected" );
+				$self->{copy_button}->Enable(0);
 			} else {
-				$self->_status_text->ChangeValue('');
-				$self->_copy_button->Enable(0);
+				$self->{status_text}->ChangeValue('');
+				$self->{copy_button}->Enable(0);
 			}
 
 			return;
@@ -351,23 +348,24 @@ sub _setup_events {
 
 	Wx::Event::EVT_LISTBOX_DCLICK(
 		$self,
-		$self->_matches_list,
+		$self->{matches_list},
 		sub {
-			$self->_on_ok_button_clicked();
+			$self->ok_button;
 		}
 	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->_copy_button,
+		$self->{copy_button},
 		sub {
-			my @matches      = $self->_matches_list->GetSelections();
+			my @matches      = $self->{matches_list}->GetSelections();
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
-				if ( Wx::wxTheClipboard->Open() ) {
+				if ( Wx::wxTheClipboard->Open ) {
 					Wx::wxTheClipboard->SetData(
-						Wx::TextDataObject->new( $self->_matches_list->GetClientData( $matches[0] ) ) );
-					Wx::wxTheClipboard->Close();
+						Wx::TextDataObject->new( $self->{matches_list}->GetClientData( $matches[0] ) )
+					);
+					Wx::wxTheClipboard->Close;
 				}
 			}
 		}
@@ -375,24 +373,29 @@ sub _setup_events {
 
 	Wx::Event::EVT_MENU(
 		$self,
-		$self->_skip_vcs_files,
-		sub { $self->_restart_search; },
+		$self->{skip_vcs_files},
+		sub {
+			$self->restart;
+		},
 	);
 	Wx::Event::EVT_MENU(
 		$self,
-		$self->_skip_using_manifest_skip,
-		sub { $self->_restart_search; },
+		$self->{skip_using_manifest_skip},
+		sub {
+			$self->restart;
+		},
 	);
 
 	Wx::Event::EVT_BUTTON(
 		$self,
-		$self->_popup_button,
+		$self->{popup_button},
 		sub {
 			my ( $self, $event ) = @_;
 			$self->PopupMenu(
-				$self->_popup_menu,
-				$self->_popup_button->GetPosition->x,
-				$self->_popup_button->GetPosition->y + $self->_popup_button->GetSize->GetHeight
+				$self->{popup_menu},
+				$self->{popup_button}->GetPosition->x,
+				$self->{popup_button}->GetPosition->y +
+				$self->{popup_button}->GetSize->GetHeight
 			);
 		}
 	);
@@ -403,10 +406,10 @@ sub _setup_events {
 #
 # Restarts search
 #
-sub _restart_search {
+sub restart {
 	my $self = shift;
-	$self->_search();
-	$self->_update_matches_list_box;
+	$self->search;
+	$self->render;
 }
 
 #
@@ -425,13 +428,13 @@ sub show {
 			my $selection        = $editor->GetSelectedText;
 			my $selection_length = length $selection;
 			if ( $selection_length > 0 ) {
-				$self->_search_text->ChangeValue($selection);
-				$self->_restart_search;
+				$self->{search_text}->ChangeValue($selection);
+				$self->restart;
 			} else {
-				$self->_search_text->ChangeValue('');
+				$self->{search_text}->ChangeValue('');
 			}
 		} else {
-			$self->_search_text->ChangeValue('');
+			$self->{search_text}->ChangeValue('');
 		}
 
 		$self->_show_recent_while_idle;
@@ -452,7 +455,7 @@ sub _show_recent_while_idle {
 			$self->_show_recently_opened_resources;
 
 			# focus on the search text box
-			$self->_search_text->SetFocus;
+			$self->{search_text}->SetFocus;
 
 			# unregister from idle event
 			Wx::Event::EVT_IDLE( $self, undef );
@@ -468,61 +471,72 @@ sub _show_recently_opened_resources {
 
 	# Fetch them from Padre's RecentlyUsed database table
 	require Padre::DB::RecentlyUsed;
-	my $recently_used = Padre::DB::RecentlyUsed->select( "where type = ?", 'RESOURCE' ) || [];
-	my @recent_files = ();
-	foreach my $e (@$recently_used) {
+	my $recently_used = Padre::DB::RecentlyUsed->select( 'where type = ?', 'RESOURCE' ) || [];
+	my @recent_files  = ();
+	foreach my $e ( @$recently_used ) {
 		push @recent_files, $self->_path( $e->value );
 	}
-	@recent_files = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recent_files;
+	@recent_files = sort {
+		File::Basename::fileparse($a) cmp File::Basename::fileparse($b)
+	} @recent_files;
 
 	# Show results in matching items list
-	$self->_matched_files( \@recent_files );
-	$self->_update_matches_list_box;
+	$self->{matched_files} = \@recent_files;
+	$self->render;
 
 	# No need to store them anymore
-	$self->_matched_files(undef);
+	$self->{matched_files} = undef;
 }
 
 #
 # Search for files and cache result
 #
-sub _search {
+sub search {
 	my $self = shift;
 
-	$self->_status_text->ChangeValue( Wx::gettext("Reading items. Please wait...") );
-
-	require Padre::Task::OpenResource::SearchTask;
-	my $search_task = Padre::Task::OpenResource::SearchTask->new(
-		dialog                   => $self,
-		directory                => $self->_directory,
-		skip_vcs_files           => $self->_skip_vcs_files->IsChecked,
-		skip_using_manifest_skip => $self->_skip_using_manifest_skip->IsChecked,
+	$self->{status_text}->ChangeValue(
+		Wx::gettext('Reading items. Please wait...')
 	);
-	$search_task->schedule;
+
+	# Kick off the resource search
+	$self->task_request(
+		task                     => 'Padre::Task::OpenResource',
+		directory                => $self->{directory},
+		skip_vcs_files           => $self->{skip_vcs_files}->IsChecked,
+		skip_using_manifest_skip => $self->{skip_using_manifest_skip}->IsChecked,
+	);
 
 	return;
+}
+
+sub task_response {
+	my $self    = shift;
+	my $task    = shift;
+	my $matched = $task->{matched} or return;
+	$self->{matched} = $matched;
+	$self->render;
+	return 1;
 }
 
 #
 # Update matches list box from matched files list
 #
-sub _update_matches_list_box {
+sub render {
 	my $self = shift;
+	return unless $self->{matched_files};
 
-	return if not $self->_matched_files;
+	my $search_expr = $self->{search_text}->GetValue;
 
-	my $search_expr = $self->_search_text->GetValue();
-
-	#quote the search string to make it safer
-	#and then tranform * and ? into .* and .
+	# Quote the search string to make it safer
+	# and then tranform * and ? into .* and .
 	$search_expr = quotemeta $search_expr;
 	$search_expr =~ s/\\\*/.*?/g;
 	$search_expr =~ s/\\\?/./g;
 
 	#Populate the list box now
-	$self->_matches_list->Clear();
+	$self->{matches_list}->Clear;
 	my $pos = 0;
-	foreach my $file ( @{ $self->_matched_files } ) {
+	foreach my $file ( @{ $self->{matched_files} } ) {
 		my $filename = File::Basename::fileparse($file);
 		if ( $filename =~ /^$search_expr/i ) {
 
@@ -535,20 +549,22 @@ sub _update_matches_list_box {
 					$pkg = "  ($1)";
 				}
 			}
-			$self->_matches_list->Insert( $filename . $pkg, $pos, $file );
+			$self->{matches_list}->Insert( $filename . $pkg, $pos, $file );
 			$pos++;
 		}
 	}
 	if ( $pos > 0 ) {
-		$self->_matches_list->Select(0);
-		$self->_status_text->ChangeValue( $self->_path( $self->_matches_list->GetClientData(0) ) );
-		$self->_status_text->Enable(1);
-		$self->_copy_button->Enable(1);
+		$self->{matches_list}->Select(0);
+		$self->{status_text}->ChangeValue(
+			$self->_path( $self->{matches_list}->GetClientData(0) )
+		);
+		$self->{status_text}->Enable(1);
+		$self->{copy_button}->Enable(1);
 		$self->{ok_button}->Enable(1);
 	} else {
-		$self->_status_text->ChangeValue('');
-		$self->_status_text->Enable(0);
-		$self->_copy_button->Enable(0);
+		$self->{status_text}->ChangeValue('');
+		$self->{status_text}->Enable(0);
+		$self->{copy_button}->Enable(0);
 		$self->{ok_button}->Enable(0);
 	}
 
@@ -559,8 +575,9 @@ sub _update_matches_list_box {
 # Cleans a path on various platforms
 #
 sub _path {
-	my ( $self, $path ) = @_;
-	if (Padre::Constant::WIN32) {
+	my $self = shift;
+	my $path = shift;
+	if ( Padre::Constant::WIN32 ) {
 		$path =~ s/\//\\/g;
 	}
 	return $path;
@@ -569,6 +586,8 @@ sub _path {
 1;
 
 __END__
+
+=pod
 
 =head1 NAME
 
@@ -589,7 +608,7 @@ You can simply ignore F<CVS>, F<.svn> and F<.git> folders using a simple check-b
 
 =head1 AUTHOR
 
-Ahmad M. Zawawi C<< <ahmad.zawawi at gmail.com> >>
+Ahmad M. Zawawi E<lt>ahmad.zawawi at gmail.comE<gt>
 
 =head1 COPYRIGHT & LICENSE
 

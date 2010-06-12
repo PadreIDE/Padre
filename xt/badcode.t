@@ -43,7 +43,10 @@ foreach my $module ( sort keys %modules ) {
 	ok( $module->VERSION, "$module: Found \$VERSION" );
 }
 
-# list of non-Wx modules still having Wx code
+# List of non-Wx modules still having Wx code.
+# This list is way-the-hell too long, stop putting stuff in here just
+# to prevent failing the test. It should be an absolute last resort.
+# Go away and try to find a way to not have Wx stuff in your code first.
 my %TODO = map { $_ => 1 } qw(
 	Padre::Action::Edit
 	Padre::Action::View
@@ -60,18 +63,11 @@ my %TODO = map { $_ => 1 } qw(
 	Padre::Plugin::Devel
 	Padre::Plugin::My
 	Padre::PluginManager
-	Padre::Service
 	Padre::Splash
 	Padre::Task::LaunchDefaultBrowser
-	Padre::Task::Outline
-	Padre::Task::PPI::FindUnmatchedBrace
-	Padre::Task::PPI::FindVariableDeclaration
-	Padre::Task::PPI::IntroduceTemporaryVariable
-	Padre::Task::PPI::LexicalReplaceVariable
-	Padre::Task::SyntaxChecker
+	Padre::TaskThread
+	Padre::TaskHandle
 	Padre::TaskManager
-
-	Padre::Task::Examples::WxEvent
 );
 
 foreach my $module ( sort keys %modules ) {
@@ -111,7 +107,7 @@ foreach my $module ( sort keys %modules ) {
 	SKIP: {
 		unless (eval { $module->can('current') }
 			and $module ne 'Padre::Current'
-			and $module ne 'Padre::Wx::Role::MainChild' )
+			and $module ne 'Padre::Wx::Role::Main' )
 		{
 			skip( "No ->current method", 1 );
 		}

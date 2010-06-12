@@ -42,7 +42,7 @@ use Padre::Current             ();
 use Padre::Util                ();
 use Padre::Wx                  ();
 use Padre::Wx::Icon            ();
-use Padre::Wx::Role::MainChild ();
+use Padre::Wx::Role::Main ();
 use Padre::MimeTypes           ();
 
 use Class::XSAccessor {
@@ -55,7 +55,7 @@ use Class::XSAccessor {
 
 our $VERSION = '0.64';
 our @ISA     = qw{
-	Padre::Wx::Role::MainChild
+	Padre::Wx::Role::Main
 	Wx::StatusBar
 };
 
@@ -101,14 +101,14 @@ sub new {
 	my $sbmp = Wx::StaticBitmap->new( $self, -1, Wx::wxNullBitmap );
 	$self->_task_sbmp($sbmp);
 	$self->_task_status('foobar'); # init status to sthg defined
-	Wx::Event::EVT_LEFT_DOWN(
-		$sbmp,
-		sub {
-			require Padre::TaskManager;
-			Padre::TaskManager::on_dump_running_tasks(@_);
-		},
-	);
-
+	# Wx::Event::EVT_LEFT_DOWN(
+		# $sbmp,
+		# sub {
+			# require Padre::TaskManager;
+			# Padre::TaskManager::on_dump_running_tasks(@_);
+		# },
+	# );
+ 
 	# Set up the fields
 	$self->SetFieldsCount(7);
 
@@ -357,7 +357,7 @@ sub on_resize {
 #
 sub _get_task_status {
 	my $self    = shift;
-	my $manager = $self->current->ide->task_manager;
+	my $manager = undef; # $self->current->ide->task_manager;
 
 	# still in editor start-up phase, default to idle
 	return 'idle' unless defined $manager;

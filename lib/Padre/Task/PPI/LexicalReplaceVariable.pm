@@ -3,9 +3,7 @@ package Padre::Task::PPI::LexicalReplaceVariable;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                         ();
-use Padre::Task::PPI                  ();
-use PPIx::EditorTools::RenameVariable ();
+use Padre::Task::PPI ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task::PPI';
@@ -20,7 +18,7 @@ Padre::Task::PPI::LexicalReplaceVariable - Lexically variable replace using L<PP
 
   my $replacer = Padre::Task::PPI::LexicalReplaceVariable->new(
           document    => $document_obj,
-          location    => [$line, $column], # the position of *any* occurrence of the variable
+          location    => [ $line, $column ], # the position of *any* occurrence of the variable
           replacement => '$foo',
   );
   $replacer->schedule();
@@ -33,41 +31,13 @@ and B<lexically> replaces all occurrences with another variable.
 
 =cut
 
-sub prepare {
-	my $self = shift;
-	$self->SUPER::prepare(@_);
-
-	# move the document to the main-thread-only storage
-	my $mto = $self->{main_thread_only} ||= {};
-	$mto->{document} = $self->{document}
-		if defined $self->{document};
-	delete $self->{document};
-	if ( not defined $mto->{document} ) {
-		require Carp;
-		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the brace-finder task");
-	}
-
-	if ( not defined $self->{replacement} ) {
-		require Carp;
-		Carp::croak("Need a {replacement}!");
-	}
-
-	if ( not defined $self->{location} ) {
-		require Carp;
-		Carp::croak("Need a {location}!");
-	}
-
-	return ();
-}
-
-sub process_ppi {
-
-	# find bad braces
+sub process {
 	my $self     = shift;
 	my $ppi      = shift or return;
 	my $location = $self->{location};
 
 	my $munged = eval {
+		require PPIx::EditorTools::RenameVariable;
 		PPIx::EditorTools::RenameVariable->new->rename(
 			ppi         => $ppi,
 			line        => $location->[0],
@@ -80,38 +50,11 @@ sub process_ppi {
 		return;
 	}
 
-	# for moving the cursor after updating the text
-	$self->{token_location} = $munged->element->location;
+	# Save the results
+	$self->{munged}   = $munged->code;
+	$self->{location} = $munged->element->location;
 
-	# TO DO: passing this back and forth is probably hyper-inefficient, but such is life.
-	$self->{updated_document_string} = $munged->code;
-
-	return ();
-}
-
-sub finish {
-	my $self = shift;
-	if ( defined $self->{updated_document_string} ) {
-
-		# GUI update
-		# TO DO: What if the document changed? Bad luck for now.
-		$self->{main_thread_only}->{document}->editor->SetText( $self->{updated_document_string} );
-		$self->{main_thread_only}->{document}->ppi_select( $self->{token_location} );
-	} else {
-		my $text;
-		if ( $self->{error} =~ /no token/ ) {
-			$text = Wx::gettext("Current cursor does not seem to point at a variable");
-		} elsif ( $self->{error} =~ /no declaration/ ) {
-			$text = Wx::gettext("No declaration could be found for the specified (lexical?) variable");
-		} else {
-			$text = Wx::gettext("Unknown error");
-		}
-		Wx::MessageBox(
-			$text,    Wx::gettext("Replace Operation Canceled"),
-			Wx::wxOK, Padre->ide->wx->main
-		);
-	}
-	return ();
+	return;
 }
 
 1;

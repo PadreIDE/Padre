@@ -8,25 +8,37 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Encode       ();
-use Params::Util ();
-use Padre::Wx    ();
+use Encode                     ();
+use File::Spec                 ();
+use Params::Util               ();
+use Padre::Wx::Role::View      ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx                  ();
+use Padre::Logger;
+use Wx::RichText; # Is this necesary?
 
 our $VERSION = '0.64';
-use Wx::RichText;
-our @ISA = 'Wx::RichTextCtrl';
+our @ISA     = qw{
+	Padre::Wx::Role::View
+	Padre::Wx::Role::Main
+	Wx::RichTextCtrl
+};
+
+
+
+
+
+######################################################################
+# Constructor
 
 sub new {
 	my $class = shift;
 	my $main  = shift;
-
-	# Bottom defaults to $main's bottom panel, but can be
-	# something different (for example see Padre::Plugin::Plack's usage)
-	my $bottom = shift || $main->bottom;
+	my $panel = shift || $main->bottom;
 
 	# Create the underlying object
 	my $self = $class->SUPER::new(
-		$bottom,
+		$panel,
 		-1,
 		"",
 		Wx::wxDefaultPosition,
@@ -40,61 +52,73 @@ sub new {
 	# Do custom start-up stuff here
 	$self->clear;
 	$self->set_font;
-	$self->{main}   = $main;
-	$self->{bottom} = $bottom;
 
 	# see #351: output should be blank by default at start-up.
 	#$self->AppendText( Wx::gettext('No output') );
 
-	use Padre::Logger;
 	Wx::Event::EVT_TEXT_URL(
-		$self, $self,
+		$self,
+		$self,
 		sub {
-			my $self       = shift;
-			my $event      = shift;
-			my $uri_string = $event->GetString or return;
-			require URI;
-			require File::Spec;
-			my $uri = URI->new($uri_string) or return;
-			TRACE(" onclick for URI: $uri") if DEBUG;
-
-			my $file = $uri->file or return;
-			my $path = File::Spec->rel2abs($file) or return;
-			my $line = $uri->fragment || 1;
-
-			#TRACE(" path: $path") if DEBUG;
-			#TRACE(" line: $line") if DEBUG;
-
-			return unless -e $path;
-
-			my $main = $self->main;
-			$main->setup_editor($path);
-			if ( $main->current->document->filename eq $path ) {
-				$main->current->editor->goto_line_centerize( $line - 1 );
-			} else {
-				TRACE(" Current doc does not match our expectations") if DEBUG;
-			}
+			shift->on_text_url(@_);
 		},
 	);
 
 	return $self;
 }
 
-sub bottom {
-	$_[0]->{bottom} || $_[0]->GetParent;
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	return 'bottom';
 }
 
-sub main {
-	$_[0]->{main} || $_[0]->GetGrandParent;
+sub view_label {
+	shift->gettext_label(@_);
 }
 
-sub current {
-	Padre::Current->new( main => $_[0]->main );
+sub view_close {
+	shift->main->show_output(0);
 }
 
-sub gettext_label {
-	Wx::gettext('Output');
-}
+
+
+
+
+######################################################################
+# Event Handlers
+
+sub on_text_url {
+	my $self   = shift;
+	my $event  = shift;
+	my $string = $event->GetString or return;
+
+	require URI;
+	my $uri = URI->new($string) or return;
+	TRACE("Output URI clicked: $uri") if DEBUG;
+
+	my $file = $uri->file or return;
+	my $path = File::Spec->rel2abs($file) or return;
+	my $line = $uri->fragment || 1;
+	return unless -e $path;
+
+	TRACE("Output Path: $path") if DEBUG;
+	TRACE("Output Line: $line") if DEBUG;
+
+	# Open the file and jump to the appropriate line
+	$self->main->setup_editor($path);
+	my $current = $self->current;
+	if ( $current->filename eq $path ) {
+		$current->editor->goto_line_centerize( $line - 1 );
+	} else {
+		TRACE(" Current doc does not match our expectations") if DEBUG;
+	}
+};
 
 
 
@@ -108,14 +132,11 @@ sub gettext_label {
 sub setup_bindings {
 	my $self = shift;
 
-	if ($Wx::Perl::ProcessStream::VERSION) {
-		return 1;
-	}
-
+	return 1 if $Wx::Perl::ProcessStream::VERSION;
 	require Wx::Perl::ProcessStream;
 
 	if ( $Wx::Perl::ProcessStream::VERSION < .20 ) {
-		$self->{main}->error(
+		$self->main->error(
 			sprintf(
 				Wx::gettext(
 					      'Wx::Perl::ProcessStream is version %s'
@@ -166,6 +187,15 @@ sub setup_bindings {
 
 #####################################################################
 # General Methods
+
+sub bottom {
+	warn "Unexpectedly called Padre::Wx::Output::bottom, it should be deprecated";
+	shift->main->bottom;
+}
+
+sub gettext_label {
+	Wx::gettext('Output');
+}
 
 # From Sean Healy on wxPerl mailing list.
 # Tweaked to avoid strings copying as much as possible.
@@ -223,24 +253,24 @@ SCOPE: {
 		my $self    = shift;
 		my $newtext = shift;
 
-		# read the next TEXT CONTROL-SEQUENCE pair
+		# Read the next TEXT CONTROL-SEQUENCE pair
 		my $style      = $self->GetDefaultStyle;
 		my $ansi_found = 0;
 		while ( $newtext =~ m{ \G (.*?) \033\[ ( (?: \d+ (?:;\d+)* )? ) m }xcg ) {
 			$ansi_found = 1;
 			my $ctrl = $2;
 
-			# first print the text preceding the control sequence
+			# First print the text preceding the control sequence
 			$self->_handle_links($1);
 
-			# split the sequence on ; -- this may be specific to the graphics 'm' sequences, but
+			# Split the sequence on ; -- this may be specific to the graphics 'm' sequences, but
 			# we don't handle any others at the moment (see regexp above)
 			my @cmds = split /;/, $ctrl;
 
 			foreach my $cmd (@cmds) {
 				if ( $cmd >= 0 and $cmd < 30 ) {
 
-					# for all these, we need the font object:
+					# For all these, we need the font object:
 					my $font = $style->GetFont;
 					if ( $cmd == 0 ) { # reset
 						$style->SetTextColour( $fg_colors->[9] );       # reset text color
@@ -314,6 +344,7 @@ SCOPE: {
 			my ( $file, $line ) = ( $2, $3 );
 
 			# first print the text preceding the link
+			# TO DO: You can't make SUPER calls to different methods
 			$self->SUPER::AppendText($1);
 			$self->SUPER::AppendText(' at ');
 
@@ -330,7 +361,7 @@ SCOPE: {
 		}
 
 		# the remaining text
-		if ( defined( pos($newtext) ) ) {
+		if ( defined pos($newtext) ) {
 			$self->SUPER::AppendText( substr( $newtext, pos($newtext) ) );
 		}
 		unless ($link_found) {
@@ -384,16 +415,15 @@ sub style_busy {
 }
 
 sub set_font {
-	my $self   = shift;
-	my $config = $self->main->config;
-	my $font   = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
-	if ( defined $config->editor_font && length $config->editor_font > 0 ) { # empty default...
-		$font->SetNativeFontInfoUserDesc( $config->editor_font );
+	my $self = shift;
+	my $font = Wx::Font->new( 10, Wx::wxTELETYPE, Wx::wxNORMAL, Wx::wxNORMAL );
+	my $name = $self->config->editor_font;
+	if ( defined $name and length $name ) {
+		$font->SetNativeFontInfoUserDesc($name);
 	}
 	my $style = $self->GetDefaultStyle;
 	$style->SetFont($font);
 	$self->SetDefaultStyle($style);
-
 	return;
 }
 

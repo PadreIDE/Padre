@@ -1,16 +1,17 @@
 package Padre::Wx::Right;
 
-# The right-hand notebook
+# The right notebook for tool views
 
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant ();
-use Padre::Wx       ();
+use Padre::Constant            ();
+use Padre::Wx                  ();
+use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
-	Padre::Wx::Role::MainChild
+	Padre::Wx::Role::Main
 	Wx::AuiNotebook
 };
 
@@ -45,7 +46,7 @@ sub new {
 			Floatable      => $unlock,
 			Dockable       => $unlock,
 			Movable        => $unlock,
-			)->Right->Hide,
+		)->Right->Hide,
 	);
 	$aui->caption(
 		right => Wx::gettext('Document Tools'),
@@ -62,7 +63,8 @@ sub new {
 # Page Management
 
 sub show {
-	my ( $self, $page, $on_close ) = @_;
+	my $self = shift;
+	my $page = shift;
 
 	# Are we currently showing the page
 	my $position = $self->GetPageIndex($page);
@@ -74,6 +76,7 @@ sub show {
 	}
 
 	# Add the page
+	# NOTE: Only the Right panel adds tools at the left, the rest do so on the right
 	$self->InsertPage(
 		0,
 		$page,
@@ -84,7 +87,13 @@ sub show {
 	$self->Show;
 	$self->aui->GetPane($self)->Show;
 
-	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE( $self, $self, \&_on_close );
+	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE(
+		$self,
+		$self,
+		sub {
+			shift->on_close(@_);
+		}
+	);
 
 	return;
 }
@@ -112,6 +121,15 @@ sub hide {
 	return;
 }
 
+# Allows for content-adaptive labels
+sub refresh {
+	my $self = shift;
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+	}
+	return;
+}
+
 sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
@@ -121,38 +139,24 @@ sub relocale {
 	return;
 }
 
-sub _on_close {
-	my ( $self, $event ) = @_;
+# It is unscalable for the view notebooks to have to know what they might contain
+# and then re-implement the show/hide logic (probably wrong).
+# Instead, tunnel the close action to the tool and let the tool decide how to go
+# about closing itself (which will usually be by delegating up to the main window).
+sub on_close {
+	my $self  = shift;
+	my $event = shift;
 
-	my $pos  = $event->GetSelection;
-	my $type = ref $self->GetPage($pos);
-	$self->RemovePage($pos);
-
-	# De-activate in the menu
-	my %menu_name = (
-		'Padre::Wx::Outline'      => 'outline',
-		'Padre::Wx::TodoList'     => 'todo',
-		'Padre::Wx::FunctionList' => 'functions',
-	);
-	my %config_name = (
-		'Padre::Wx::Outline'      => 'main_outline',
-		'Padre::Wx::TodoList'     => 'main_todo',
-		'Padre::Wx::FunctionList' => 'main_functions',
-	);
-	if ( exists $menu_name{$type} ) {
-		$self->main->menu->view->{ $menu_name{$type} }->Check(0);
-		$self->main->config->set( $config_name{$type}, 0 );
-	} else {
-		warn "Unknown page type: '$type'\n";
+	# Tunnel the request through to the tool if possible.
+	my $position = $event->GetSelection;
+	my $tool     = $self->GetPage($position);
+	unless ( $tool->can('view_close') ) {
+		# HACK: Crash in a controller manner for the moment.
+		# Later just let this crash uncontrolably :)
+		my $class = ref $tool;
+		die "Panel tool $class does define 'view_close' method";
 	}
-
-	# Is this the last page?
-	if ( $self->GetPageCount == 0 ) {
-		$self->Hide;
-		$self->aui->GetPane($self)->Hide;
-	}
-
-	return;
+	$tool->view_close;
 }
 
 1;

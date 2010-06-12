@@ -32,9 +32,25 @@ use strict;
 use warnings;
 use Carp      ();
 use Padre::Wx ();
+# use Padre::Logger;
 
 our $VERSION = '0.64';
 our @ISA     = 'Wx::App';
+
+
+
+
+
+######################################################################
+# Singleton Support
+
+my $SINGLETON = undef;
+
+sub new {
+	# TRACE($_[0]) if DEBUG;
+	$SINGLETON or
+	$SINGLETON = shift->SUPER::new;
+}
 
 
 
@@ -44,21 +60,15 @@ our @ISA     = 'Wx::App';
 # Constructor and Accessors
 
 sub create {
+	# TRACE($_[0]) if DEBUG;
 	my $self = shift->new;
 
-	# Check IDE param
-	my $ide = shift;
-	require Params::Util;
-	unless ( Params::Util::_INSTANCE( $ide, 'Padre' ) ) {
-		Carp::croak("Did not provide the ide object to Padre::App->create");
-	}
-
 	# Save a link back to the parent ide
-	$self->{ide} = $ide;
+	$self->{ide} = shift;
 
 	# Immediately populate the main window
 	require Padre::Wx::Main;
-	$self->{main} = Padre::Wx::Main->new($ide);
+	$self->{main} = Padre::Wx::Main->new( $self->{ide} );
 
 	return $self;
 }
@@ -69,6 +79,14 @@ sub create {
 
 The C<ide> accessor provides a link back to the parent L<Padre> IDE object.
 
+=cut
+
+sub ide {
+	$_[0]->{ide};
+}
+
+=pod
+
 =head2 C<main>
 
 The C<main> accessor returns the L<Padre::Wx::Main> object for the
@@ -76,12 +94,9 @@ application.
 
 =cut
 
-use Class::XSAccessor {
-	getters => {
-		ide  => 'ide',
-		main => 'main',
-	}
-};
+sub main {
+	$_[0]->{main};
+}
 
 =pod
 
@@ -92,6 +107,7 @@ The C<config> accessor returns the L<Padre::Config> for the application.
 =cut
 
 sub config {
+	# TRACE($_[0]) if DEBUG;
 	$_[0]->ide->config;
 }
 
@@ -102,7 +118,13 @@ sub config {
 #####################################################################
 # Wx Methods
 
-sub OnInit {1}
+sub OnInit {
+	# TRACE($_[0]) if DEBUG;
+	if ( $_[0]->can('event_target_init') ) {
+		$_[0]->event_target_init;
+	}
+	return 1;
+}
 
 1;
 

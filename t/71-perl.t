@@ -42,11 +42,11 @@ SCOPE: {
 	is_deeply(
 		$msgs,
 		[   {   'msg'      => 'Missing right curly or square bracket, at end of line',
-				'severity' => 'E',
+				'severity' => 0,
 				'line'     => '17'
 			},
 			{   'msg'      => 'syntax error, at EOF',
-				'severity' => 'E',
+				'severity' => 0,
 				'line'     => '17'
 			}
 		]
@@ -192,7 +192,7 @@ SCOPE: {
 	is_deeply(
 		$end,
 		{   'msg'      => $msg,
-			'severity' => 'W',
+			'severity' => 1,
 			'line'     => '1',
 		}
 	);

@@ -3,21 +3,32 @@ package Padre::Wx::Dialog::WhereFrom;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx               ();
-use Padre::Task::HTTPClient ();
+use Padre::Role::Task          ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx                  ();
 
 our $VERSION = '0.64';
+our @ISA     = qw{
+	Padre::Role::Task
+	Padre::Wx::Role::Main
+	Wx::Dialog
+};
 
-our @ISA = 'Wx::Dialog';
+use constant SERVER => 'http://perlide.org/popularity/v1/wherefrom.html';
+
+
+
+
+
+######################################################################
+# Constructor
 
 sub new {
-	my ( $class, $main ) = @_;
-
-	my $config = $main->config;
-	return if $config->feedback_done;
+	my $class = shift;
+	my $main  = shift;
 
 	# Create the Wx dialog
-	my $dialog = $class->SUPER::new(
+	my $self = $class->SUPER::new(
 		$main,
 		-1,
 		Wx::gettext('New installation survey'),
@@ -25,36 +36,50 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxDEFAULT_FRAME_STYLE,
 	);
-
-	# Minimum dialog size
-	$dialog->SetMinSize( [ 350, 100 ] );
+	$self->SetMinSize( [ 350, 100 ] );
 
 	# Create sizer that will host all controls
 	my $sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 
 	# Create the controls
-	$dialog->_create_controls($sizer);
+	$self->_create_controls($sizer);
 
-	# Bind the control events
-	$dialog->_bind_events;
+	# Ok button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_ok},
+		sub {
+			$_[0]->button_ok($_[1]);
+		},
+	);
+
+	# Cancel or Skip feedback button
+	Wx::Event::EVT_BUTTON(
+		$self,
+		$self->{button_cancel},
+		sub {
+			$_[0]->button_cancel($_[1]);
+		},
+	);
 
 	# Wrap everything in a vbox to add some padding
-	$dialog->SetSizer($sizer);
-	$dialog->Fit;
-	$dialog->CentreOnParent;
+	$self->SetSizer($sizer);
+	$self->Fit;
+	$self->CentreOnParent;
 
-	$dialog->{wherefrom}->SetFocus;
-	$dialog->Show(1);
+	$self->{from}->SetFocus;
+	$self->Show(1);
 
-	return $dialog;
+	return $self;
 }
 
 sub _create_controls {
-	my ( $dialog, $sizer ) = @_;
+	my $self  = shift;
+	my $sizer = shift;
 
 	# "Where did you hear..." label
-	my $wherefrom_label = Wx::StaticText->new(
-		$dialog,
+	my $from_label = Wx::StaticText->new(
+		$self,
 		-1,
 		Wx::gettext('Where did you hear about Padre?')
 	);
@@ -70,8 +95,8 @@ sub _create_controls {
 		Wx::gettext('Other (Please fill in here)'),
 	];
 
-	$dialog->{wherefrom} = Wx::ComboBox->new(
-		$dialog,
+	$self->{from} = Wx::ComboBox->new(
+		$self,
 		-1,
 		'',
 		Wx::wxDefaultPosition,
@@ -80,32 +105,32 @@ sub _create_controls {
 	);
 
 	# OK button
-	$dialog->{button_ok} = Wx::Button->new(
-		$dialog, Wx::wxID_OK, Wx::gettext("OK"),
+	$self->{button_ok} = Wx::Button->new(
+		$self, Wx::wxID_OK, Wx::gettext("OK"),
 	);
-	$dialog->{button_ok}->SetDefault;
+	$self->{button_ok}->SetDefault;
 
 	# Cancel button
-	$dialog->{button_cancel} = Wx::Button->new(
-		$dialog, Wx::wxID_CANCEL,
+	$self->{button_cancel} = Wx::Button->new(
+		$self, Wx::wxID_CANCEL,
 		Wx::gettext("Skip question without giving feedback"),
 	);
 
 	# where from...? sizer
-	my $wherefrom_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$wherefrom_sizer->Add( $wherefrom_label,, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
-	$wherefrom_sizer->AddSpacer(5);
-	$wherefrom_sizer->Add( $dialog->{wherefrom}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	my $from_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
+	$from_sizer->Add( $from_label,, 0, Wx::wxALIGN_CENTER_VERTICAL, 5 );
+	$from_sizer->AddSpacer(5);
+	$from_sizer->Add( $self->{from}, 1, Wx::wxALIGN_CENTER_VERTICAL, 5 );
 
 	# Button sizer
 	my $button_sizer = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$button_sizer->Add( $dialog->{button_ok},     0, 0,          0 );
-	$button_sizer->Add( $dialog->{button_cancel}, 0, Wx::wxLEFT, 5 );
+	$button_sizer->Add( $self->{button_ok},     0, 0,          0 );
+	$button_sizer->Add( $self->{button_cancel}, 0, Wx::wxLEFT, 5 );
 	$button_sizer->AddSpacer(5);
 
 	# Main vertical sizer
 	my $vsizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
-	$vsizer->Add( $wherefrom_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
+	$vsizer->Add( $from_sizer, 0, Wx::wxALL | Wx::wxEXPAND, 3 );
 	$vsizer->AddSpacer(5);
 	$vsizer->Add( $button_sizer, 0, Wx::wxALIGN_RIGHT, 5 );
 	$vsizer->AddSpacer(5);
@@ -117,62 +142,44 @@ sub _create_controls {
 }
 
 
-sub _bind_events {
-	my $dialog = shift;
 
-	# Ok button
-	Wx::Event::EVT_BUTTON(
-		$dialog,
-		$dialog->{button_ok},
-		\&WhereFrom_ok_clicked
-	);
 
-	# Cancel or Skip feedback button
-	Wx::Event::EVT_BUTTON(
-		$dialog,
-		$dialog->{button_cancel},
-		\&WhereFrom_cancel_clicked
-	);
 
-	return;
-}
+######################################################################
+# Event Handlers
 
-sub WhereFrom_cancel_clicked {
-	my ( $dialog, $event ) = @_;
+sub button_cancel {
+	my $self   = shift;
+	my $event  = shift;
+	my $config = $self->config;
+	$self->Destroy;
+	return if $config->feedback_done;
 
-	my $config = Padre->ide->config;
-
-	if ( !$config->feedback_done ) {
-		$config->set( 'feedback_done', 1 );
-		$config->write;
-	}
-
-	$dialog->Destroy;
+	# Don't ask again
+	$config->set( feedback_done => 1 );
+	$config->write;
 
 	return;
 }
 
-sub WhereFrom_ok_clicked {
-	my ( $dialog, $event ) = @_;
+sub button_ok {
+	my $self   = shift;
+	my $event  = shift;
+	my $from   = $self->{from}->GetValue;
+	my $config = $self->config;
+	$self->Destroy;
+	return if $config->feedback_done;
 
-	my $config = Padre->ide->config;
+	# Fire and forget the HTTP request to the server
+	$self->task_request(
+		task => 'Padre::Task::LWP',
+		url   => SERVER,
+		query => { from => $from },
+	);
 
-	my $window = $dialog->GetParent;
-	$dialog->Destroy;
-
-	if ( !$config->feedback_done ) {
-
-		my $url  = 'http://perlide.org/popularity/v1/wherefrom.html';
-		my $args = { from => $dialog->{wherefrom}->GetValue };
-		my $http = Padre::Task::HTTPClient->new(
-			URL   => $url,
-			query => $args,
-		)->run;
-
-		$config->set( 'feedback_done', 1 );
-		$config->write;
-
-	}
+	# Don't ask again
+	$config->set( feedback_done => 1 );
+	$config->write;
 
 	return;
 }

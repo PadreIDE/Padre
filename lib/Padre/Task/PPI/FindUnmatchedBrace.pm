@@ -3,9 +3,8 @@ package Padre::Task::PPI::FindUnmatchedBrace;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                             ();
-use Padre::Task::PPI                      ();
-use PPIx::EditorTools::FindUnmatchedBrace ();
+use Padre::Task::PPI ();
+use Padre::Logger;
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task::PPI';
@@ -18,13 +17,10 @@ Padre::Task::PPI::FindUnmatchedBrace - C<PPI> based unmatched brace finder
 
 =head1 SYNOPSIS
 
-  my $bracefinder = Padre::Task::PPI::FindUnmatchedBrace->new(
-          document => $document_obj,
+  my $task = Padre::Task::PPI::FindUnmatchedBrace->new(
+          document => $padre_document,
   );
-  # pass "text => 'foo'" if you want to set the code manually
-  # otherwise, the current document will be used
-
-  $bracefinder->schedule();
+  $task->schedule;
 
 =head1 DESCRIPTION
 
@@ -34,59 +30,34 @@ that glorious fact. If there is one, the cursor will jump to it.
 
 =cut
 
-sub prepare {
-	my $self = shift;
-	$self->SUPER::prepare(@_);
-
-	# move the document to the main-thread-only storage
-	my $mto = $self->{main_thread_only} ||= {};
-	$mto->{document} = $self->{document}
-		if defined $self->{document};
-	delete $self->{document};
-	if ( not defined $mto->{document} ) {
-		require Carp;
-		Carp::croak("Missing Padre::Document::Perl object as {document} attribute of the brace-finder task");
-	}
-	return ();
-}
-
-sub process_ppi {
-
-	# find bad braces
-	my $self = shift;
-	my $ppi = shift or return;
-
-	my $brace = eval { PPIx::EditorTools::FindUnmatchedBrace->new->find( ppi => $ppi ); };
-	if ($@) {
+sub process {
+	TRACE('process') if DEBUG;
+	my $self   = shift;
+	my $ppi    = shift or return;
+	my $result = eval {
+		require PPIx::EditorTools::FindUnmatchedBrace;
+		PPIx::EditorTools::FindUnmatchedBrace->new->find( ppi => $ppi );
+	};
+	if ( $@ ) {
 		$self->{error} = $@;
 		return;
 	}
-	if ( defined($brace) ) { # An undef brace throws a die here. undef = no error found.
-		$self->{bad_element} = $brace->element->location; # remember for gui update
+
+	# An undef brace throws a die here.
+	# undef = no error found.
+	if ( defined $result ) {
+		# Remember for gui update
+		$self->{location} = $result->element->location;
 	}
 
-	return ();
-}
-
-sub finish {
-	my $self = shift;
-	if ( defined $self->{bad_element} ) {
-
-		# GUI update
-		$self->{main_thread_only}->{document}->ppi_select( $self->{bad_element} );
-	} else {
-		Wx::MessageBox(
-			Wx::gettext("All braces appear to be matched"),
-			Wx::gettext("Check Complete"),
-			Wx::wxOK, Padre->ide->wx->main
-		);
-	}
-	return ();
+	return;
 }
 
 1;
 
 __END__
+
+=pod
 
 =head1 SEE ALSO
 

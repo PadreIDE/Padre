@@ -1,17 +1,17 @@
 package Padre::Wx::Bottom;
 
-# The bottom notebook
+# The bottom notebook for tool views
 
 use 5.008;
 use strict;
 use warnings;
 use Padre::Constant            ();
 use Padre::Wx                  ();
-use Padre::Wx::Role::MainChild ();
+use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
-	Padre::Wx::Role::MainChild
+	Padre::Wx::Role::Main
 	Wx::AuiNotebook
 };
 
@@ -63,7 +63,8 @@ sub new {
 # Page Management
 
 sub show {
-	my ( $self, $page ) = @_;
+	my $self = shift;
+	my $page = shift;
 
 	# Are we currently showing the page
 	my $position = $self->GetPageIndex($page);
@@ -75,8 +76,7 @@ sub show {
 	}
 
 	# Add the page
-	$self->InsertPage(
-		0,
+	$self->AddPage(
 		$page,
 		$page->gettext_label,
 		1,
@@ -85,7 +85,13 @@ sub show {
 	$self->Show;
 	$self->aui->GetPane($self)->Show;
 
-	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE( $self, $self, \&_on_close );
+	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE(
+		$self,
+		$self,
+		sub {
+			shift->on_close(@_);
+		}
+	);
 
 	return;
 }
@@ -113,6 +119,15 @@ sub hide {
 	return;
 }
 
+# Allows for content-adaptive labels
+sub refresh {
+	my $self = shift;
+	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
+		$self->SetPageText( $i, $self->GetPage($i)->gettext_label );
+	}
+	return;
+}
+
 sub relocale {
 	my $self = shift;
 	foreach my $i ( 0 .. $self->GetPageCount - 1 ) {
@@ -120,6 +135,28 @@ sub relocale {
 	}
 
 	return;
+}
+
+# It is unscalable for the view notebooks to have to know what they might contain
+# and then re-implement the show/hide logic (probably wrong).
+# Instead, tunnel the close action to the tool and let the tool decide how to go
+# about closing itself (which will usually be by delegating up to the main window).
+sub on_close {
+	my $self  = shift;
+	my $event = shift;
+
+	# Tunnel the request through to the tool if possible.
+	my $position = $event->GetSelection;
+	my $tool     = $self->GetPage($position);
+	unless ( $tool->can('view_close') ) {
+		# HACK: Crash in a controller manner for the moment.
+		# Later just let this crash uncontrolably :)
+		# DOUBLE HACK: Just warn, and pass through for now.
+		my $class = ref $tool;
+		warn "Panel tool $class does define 'view_close' method";
+		return $self->_on_close($event);
+	}
+	$tool->view_close;
 }
 
 sub _on_close {
@@ -132,13 +169,9 @@ sub _on_close {
 	# De-activate in the menu and in the configuration
 	my %menu_name = (
 		'Padre::Wx::ErrorList' => 'show_errorlist',
-		'Padre::Wx::Syntax'    => 'show_syntaxcheck',
-		'Padre::Wx::Output'    => 'output',
 	);
 	my %config_name = (
 		'Padre::Wx::ErrorList' => 'main_errorlist',
-		'Padre::Wx::Syntax'    => 'main_syntaxcheck',
-		'Padre::Wx::Output'    => 'main_output',
 	);
 	if ( exists $menu_name{$type} ) {
 		$self->main->menu->view->{ $menu_name{$type} }->Check(0);

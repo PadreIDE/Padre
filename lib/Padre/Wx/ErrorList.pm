@@ -3,13 +3,20 @@ package Padre::Wx::ErrorList;
 use 5.008;
 use strict;
 use warnings;
-use Encode          ();
-use Padre::Constant ();
-use Padre::Wx       ();
-use Padre::Locale   ();
+use Encode                     ();
+use Padre::Constant            ();
+use Padre::Locale              ();
+use Padre::Wx::Role::View      ();
+use Padre::Wx::Role::Main ();
+use Padre::Wx                  ();
+use Padre::Logger;
 
 our $VERSION = '0.64';
-our @ISA     = 'Wx::TreeCtrl';
+our @ISA     = qw{
+	Padre::Wx::Role::View
+	Padre::Wx::Role::Main
+	Wx::TreeCtrl
+};
 
 use Class::XSAccessor {
 	getters => {
@@ -18,21 +25,30 @@ use Class::XSAccessor {
 		enabled => 'enabled',
 		index   => 'index',
 		lang    => 'lang',
-		parser  => 'parser',
 	}
 };
+
+
+
+
+
+######################################################################
+# Constructor
 
 sub new {
 	my $class = shift;
 	my $main  = shift;
+	my $panel = shift || $main->bottom;
 
 	# Create the Wx object
 	my $self = $class->SUPER::new(
-		$main->bottom,
+		$panel,
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HAS_BUTTONS | Wx::wxTR_HIDE_ROOT | Wx::wxTR_LINES_AT_ROOT
+		Wx::wxTR_HAS_BUTTONS
+			| Wx::wxTR_HIDE_ROOT
+			| Wx::wxTR_LINES_AT_ROOT
 	);
 
 	$self->Hide;
@@ -45,81 +61,41 @@ sub new {
 	);
 
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self, $self,
+		$self,
+		$self,
 		sub {
-			$self->on_tree_item_activated( $_[1] );
+			$_[0]->on_tree_item_activated( $_[1] );
 		},
 	);
 
 	return $self;
 }
 
-sub bottom {
-	$_[0]->GetParent;
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	return 'bottom';
 }
 
-sub main {
-	$_[0]->GetGrandParent;
+sub view_label {
+	shift->gettext_label(@_);
 }
 
-sub config {
-	$_[0]->GetGrandParent->config;
+sub view_close {
+	shift->main->show_errorlist(0);
 }
 
-sub enable {
-	my $self = shift;
 
-	my $main     = $self->main;
-	my $bottom   = $self->bottom;
-	my $position = $bottom->GetPageCount;
-	$bottom->InsertPage( $position, $self, gettext_label(), 0 );
-	$self->Show;
-	$bottom->SetSelection($position);
-	$main->aui->Update;
-	$self->{enabled} = 1;
-}
 
-sub disable {
-	my $self = shift;
 
-	my $main     = $self->main;
-	my $bottom   = $self->bottom;
-	my $position = $bottom->GetPageIndex($self);
-	$self->Hide;
-	$bottom->RemovePage($position);
-	$main->aui->Update;
-	$self->{enabled} = 0;
-}
 
-sub gettext_label {
-	return Wx::gettext('Errors');
-}
-
-sub populate {
-	my $self = shift;
-	return unless $self->enabled;
-
-	my $lang = $self->config->locale_perldiag;
-	$lang =~ s/^\s*//;
-	$lang =~ s/\s*$//;
-	$lang = '' if $lang eq 'EN';
-	my $old = $self->lang;
-	$self->{lang} = $lang;
-
-	my $data = $self->data;
-	$self->{data} = "";
-	return unless $data;
-
-	require Padre::Task::ErrorParser;
-	my $task = Padre::Task::ErrorParser->new(
-		parser   => $self->parser,
-		cur_lang => $lang,
-		old_lang => $old,
-		data     => $data,
-	);
-
-	$task->schedule;
-}
+######################################################################
+# Event Handlers
 
 sub on_menu_help_context_help {
 	my $self  = shift;
@@ -171,6 +147,73 @@ sub on_tree_item_activated {
 	$editor->goto_line_centerize($line);
 }
 
+
+
+
+
+######################################################################
+# General Methods
+
+sub bottom {
+	TRACE("DEPRECATED") if DEBUG;
+	shift->main->bottom;
+}
+
+sub gettext_label {
+	Wx::gettext('Errors');
+}
+
+sub clear {
+	my $self = shift;
+	$self->DeleteChildren( $self->root );
+}
+
+sub enable {
+	TRACE("DEPRECATED") if DEBUG;
+	my $self = shift;
+	$self->bottom->AddPage( $self, $self->gettext_label, 1 );
+	$self->Show;
+	$self->main->aui->Update;
+	$self->{enabled} = 1;
+}
+
+sub disable {
+	TRACE("DEPRECATED") if DEBUG;
+	my $self     = shift;
+	my $bottom   = $self->bottom;
+	my $position = $bottom->GetPageIndex($self);
+	$self->Hide;
+	$bottom->RemovePage($position);
+	$self->main->aui->Update;
+	$self->{enabled} = 0;
+}
+
+sub populate {
+	my $self = shift;
+	return unless $self->enabled;
+
+	my $lang = $self->config->locale_perldiag;
+	$lang =~ s/^\s*//;
+	$lang =~ s/\s*$//;
+	$lang = '' if $lang eq 'EN';
+	my $old = $self->lang;
+	$self->{lang} = $lang;
+
+	my $data = $self->data;
+	$self->{data} = "";
+	return unless $data;
+
+	# Kick off the parsing
+	$self->task_request(
+		task     => 'Padre::Task::ErrorList',
+		text     => $data,
+		cur_lang => $lang,
+		old_lang => $old,
+	);
+
+	return 1;
+}
+
 sub collect_data {
 	my $self = shift;
 	return unless $self->enabled;
@@ -182,11 +225,6 @@ sub collect_data {
 	#}
 	$self->{data} .= $line;
 	$self->{data} .= "\n";
-}
-
-sub clear {
-	my $self = shift;
-	$self->DeleteChildren( $self->root );
 }
 
 1;

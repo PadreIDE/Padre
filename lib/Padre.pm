@@ -153,7 +153,8 @@ sub new {
 	# Create the task manager
 	require Padre::TaskManager;
 	$self->{task_manager} = Padre::TaskManager->new(
-		use_threads => $self->config->threads,
+		threads => 1,
+		conduit => $self->{wx}->{main},
 	);
 
 	# Create the action queue
