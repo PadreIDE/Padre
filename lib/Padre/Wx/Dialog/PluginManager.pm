@@ -190,6 +190,8 @@ sub new {
 	$self->Fit;
 	$self->CentreOnParent;
 
+	$self->{list}->SetFocus;
+
 	return $self;
 }
 
