@@ -1,11 +1,29 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.65 Post Task API merge to trunk - Unstable!
-
+0.65 to be released
+    - Task 2.0 API landed on trunk (and everything breaks) (ADAMK)
+    - Converted the FunctionList GUI component to work via a task (ADAMK)
+    - Padre::Role::Task role added to allow any object in Padre
+      to be the "owner" of task and automatically handle which
+      tasks are still relevant to the UI state at the time the task
+      is completed, and ignore the ones that aren't (ADAMK)
+    - New compulsory Padre::Wx::Role::View for editor GUI componants
+      that want to live in the left/right/bottom tool panels (ADAMK)
+    - Renamed a number of classes to simpler names. Because we are
+      breaking everything anyway, this is an opportune time to lump
+      in these low-importance changes (ADAMK)
+    - Renamed Padre::DocBrowser to Padre::Browser (ADAMK)
+    - Renamed Padre::Wx::DocBrowser to Padre::Wx::Browser (ADAMK)
+    - Renamed Padre::Wx::Role::MainChild to Padre::Wx::Role::Main (ADAMK)
+    - Language-specific task sub-classes now live under the document class
+      instead of under the Padre::Task tree, to encourage concentration
+      of language-specific code within the document tree (ADAMK)
+    - Padre::Task::Perl::Syntax is now Padre::Document::Perl::Syntax (ADAMK)
+    - Padre::Task::Perl::Outline is now Padre::Document::Perl::Outline (ADAMK)
 
 0.64 2010.06.12
-    - Last Stable before merge of new Task API
+    - Last Stable before merge of new Task 2.0 API
     - zh-cn translation updated (jagd)
 
 0.63 2010.06.02
