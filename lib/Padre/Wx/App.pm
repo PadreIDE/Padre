@@ -120,8 +120,8 @@ sub config {
 
 sub OnInit {
 	# TRACE($_[0]) if DEBUG;
-	if ( $_[0]->can('event_target_init') ) {
-		$_[0]->event_target_init;
+	if ( $_[0]->can('conduit_init') ) {
+		$_[0]->conduit_init;
 	}
 	return 1;
 }

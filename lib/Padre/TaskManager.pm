@@ -39,7 +39,7 @@ sub new {
 	unless ( Params::Util::_INSTANCE($conduit, 'Padre::Wx::Role::Conduit') ) {
 		die("Failed to provide an event conduit for the TaskManager");
 	}
-	$conduit->event_target_init($self);
+	$conduit->conduit_init($self);
 
 	return $self;
 }

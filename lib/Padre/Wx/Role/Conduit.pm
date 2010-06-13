@@ -39,7 +39,7 @@ sub handler {
 	$HANDLER = $_[1];
 }
 
-sub event_target_init {
+sub conduit_init {
 	TRACE($_[0]) if DEBUG;
 	$CONDUIT = $_[0];
 	$HANDLER = $_[1];

@@ -38,7 +38,7 @@ sub new {
 
 	# Register outself as the event conduit from child workers
 	# to the parent thread.
-	$self->event_target_init;
+	$self->conduit_init;
 	
 	return $self;
 }
