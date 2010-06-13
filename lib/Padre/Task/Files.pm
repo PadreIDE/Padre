@@ -43,6 +43,7 @@ sub run {
 
 	if ( $self->{recurse} ) {
 		# Handle recursive mode fairly simplistically
+		require File::Find::Rule;
 		$self->{files} = [
 			File::Find::Rule->file->in( $self->{root} )
 		];
