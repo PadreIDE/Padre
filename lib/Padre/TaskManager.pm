@@ -4,9 +4,9 @@ use 5.008005;
 use strict;
 use warnings;
 use Params::Util             ();
-use Padre::TaskHandle       ();
-use Padre::TaskThread       ();
-use Padre::TaskWorker       ();
+use Padre::TaskHandle        ();
+use Padre::TaskThread        ();
+use Padre::TaskWorker        ();
 use Padre::Wx                ();
 use Padre::Wx::Role::Conduit ();
 use Padre::Logger;
@@ -119,7 +119,7 @@ sub next_thread {
 # Task Management
 
 sub schedule {
-	TRACE($_[0]) if DEBUG;
+	TRACE($_[1]) if DEBUG;
 	my $self = shift;
 	my $task = Params::Util::_INSTANCE(shift, 'Padre::Task');
 	unless ( $task ) {
