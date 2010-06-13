@@ -16,13 +16,13 @@ use Thread::Queue 2.11;
 # Load every exportable constant into here, so that they come into
 # existence in the Wx:: packages, allowing everywhere else in the code to
 # use them without braces.
-use Wx          (':everything');
-use Wx          ('wxTheClipboard');
-use Wx::Event   (':everything');
-use Wx::DND     ();
-use Wx::STC     ();
-use Wx::AUI     ();
-use Wx::Locale  ();
+use Wx         (':everything');
+use Wx         ('wxTheClipboard');
+use Wx::Event  (':everything');
+use Wx::DND    ();
+use Wx::STC    ();
+use Wx::AUI    ();
+use Wx::Locale ();
 
 our $VERSION = '0.64';
 
