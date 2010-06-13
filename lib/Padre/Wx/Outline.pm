@@ -328,28 +328,29 @@ sub clear {
 }
 
 sub refresh {
-	my $self = shift;
-
-	# Shortcut if nothing has changed.
-	# NOTE: Given the speed at which the timer fires,
-	# a cheap length check is better than an expensive MD5 check.
+	my $self     = shift;
 	my $document = $self->current->document or return;
 	my $length   = $document->text_length;
-	if ( $document eq $self->{document} and $length eq $self->{length} ) {
-		return;
+
+	if ( $document eq $self->{document} ) {
+		# Shortcut if nothing has changed.
+		# NOTE: Given the speed at which the timer fires a cheap
+		# length check is better than an expensive MD5 check.
+		if ( $length eq $self->{length} ) {
+			return;
+		}
+	} else {
+		# New file, don't keep the current list visible
+		$self->clear;
 	}
 	$self->{document} = $document;
 	$self->{length}   = $length;
 
-	# We need to refresh, so flush out old state
-	$self->clear;
+	# Fire the background task discarding old results
 	$self->task_reset;
-
-	# Fire the task to generate the new outline
-	my $task = $document->task_outline or return;
 	$self->task_request(
-		task => $task,
-		text => $document->text_get,
+		task     => $document->task_outline,
+		document => $document,
 	);
 }
 

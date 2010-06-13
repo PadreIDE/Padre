@@ -15,6 +15,31 @@ our @ISA     = 'Padre::Task';
 
 
 ######################################################################
+# Constructor
+
+sub new {
+	my $self = shift->SUPER::new(@_);
+
+	# Just convert the document to text for now.
+	# Later, we'll suck in more data from the project and
+	# other related documents to do syntax checks more awesomely.
+	unless ( _INSTANCE($self->{document}, 'Padre::Document') ) {
+		die "Failed to provide a document to the syntax check task";
+	}
+
+	# Remove the document entirely as we do this,
+	# as it won't be able to survive serialisation.
+	my $document = delete $self->{document};
+	$self->{text} = $document->text_get;
+
+	return $self;
+}
+
+
+
+
+
+######################################################################
 # Padre::Task Methods
 
 sub run {

@@ -3,12 +3,12 @@ package Padre::Wx::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util               ();
-use Padre::Role::Task          ();
-use Padre::Wx::Role::View      ();
+use Params::Util          ();
+use Padre::Role::Task     ();
+use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx                  ();
-use Padre::Wx::Icon            ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 use Padre::Logger;
 
 our $VERSION = '0.64';
@@ -33,15 +33,19 @@ sub new {
 		Wx::wxLC_REPORT | Wx::wxLC_SINGLE_SEL
 	);
 
-	# The data model for the results
-	$self->{model} = [];
+	# Additional properties
+	$self->{model}    = [];
+	$self->{document} = '';
+	$self->{length}   = -1;
 
+	# Prepare the available images
 	my $list = Wx::ImageList->new( 16, 16 );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-error') );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-warning') );
 	$list->Add( Padre::Wx::Icon::icon('status/padre-syntax-ok') );
 	$self->AssignImageList( $list, Wx::wxIMAGE_LIST_SMALL );
 
+	# Flesh out the columns
 	my @titles = $self->titles;
 	foreach ( 0 .. 2 ) {
 		$self->InsertColumn( $_, $titles[$_] );
@@ -312,18 +316,28 @@ sub relocale {
 sub refresh {
 	my $self     = shift;
 	my $document = $self->current->document or return;
-	unless ( $document->can('task_syntax') ) {
-		$self->clear;
-		return;
-	}
+	my $length   = $document->text_length;
 
-	# Initiate the background task
+	if ( $document eq $self->{document} ) {
+		# Shortcut if nothing has changed.
+		# NOTE: Given the speed at which the timer fires a cheap
+		# length check is better than an expensive MD5 check.
+		if ( $length eq $self->{length} ) {
+			return;
+		}
+	} else {
+		# New file, don't keep the current list visible
+		$self->clear;
+	}
+	$self->{document} = $document;
+	$self->{length}   = $length;
+
+	# Fire the background task discarding old results
+	$self->task_reset;
 	$self->task_request(
 		task     => $document->task_syntax,
 		document => $document,
 	);
-
-	return;
 }
 
 sub task_response {
@@ -343,7 +357,6 @@ sub render {
 	my $lock     = $self->main->lock('UPDATE');
 
 	# Flush old results
-	$self->main->lock('UPDATE');
 	$self->clear;
 
 	# If there are no errors clear the synax checker pane

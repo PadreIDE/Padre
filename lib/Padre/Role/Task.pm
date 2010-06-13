@@ -70,16 +70,22 @@ sub task_owner {
 sub task_request {
 	my $self  = shift;
 	my %param = @_;
+
+	# Check and load the task
+	# Support a convenience shortcut where a false value
+	# for task means don't run a task at all.
+	my $task  = delete $param{task} or return;
 	my $class = Params::Util::_DRIVER(
-		delete $param{task},
+		$task,
 		'Padre::Task',
-	) or Carp::croak("Missing or invalid task param");
+	) or die "Missing or invalid task class '$task'";
 
 	# Create and start the task with ourself as the owner
 	$class->new( owner => $self, %param )->schedule;
 }
 
-# By default, ignore task responses
+# By default explode to highlight task requesters that
+# have not implemented an appropriate response handler.
 sub task_response {
 	my $class = ref($_[0]) || $_[0];
 	my $task  = ref($_[1]) || $_[1];
