@@ -233,7 +233,10 @@ sub on_signal {
 
 		# Remove from the task list to destroy the task
 		delete $self->{handles}->{$hid};
-		return;
+
+		# This should have released a worker to process
+		# a new task, kick off the next scheduling iteration.
+		return $self->step;
 	}
 
 	# Pass the message through to the handle
