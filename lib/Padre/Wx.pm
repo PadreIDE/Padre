@@ -23,7 +23,6 @@ use Wx::DND     ();
 use Wx::STC     ();
 use Wx::AUI     ();
 use Wx::Locale  ();
-use Padre::Util ();
 
 our $VERSION = '0.64';
 
