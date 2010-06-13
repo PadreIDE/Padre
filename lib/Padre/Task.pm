@@ -75,6 +75,14 @@ sub prepare {
 # Variables saved to the object in the C<prepare> method will be
 # available in the C<run> method.
 sub run {
+	my $self = shift;
+
+	# If we have an owner, and it has moved on to a different state
+	# while we have been waiting to be executed abort the run.
+	if ( $self->{owner} ) {
+		$self->owner or return 0;
+	}
+
 	return 1;
 }
 
