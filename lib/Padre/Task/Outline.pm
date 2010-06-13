@@ -5,7 +5,8 @@ package Padre::Task::Outline;
 use 5.008005;
 use strict;
 use warnings;
-use Padre::Task   ();
+use Params::Util ('_INSTANCE');
+use Padre::Task  ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task';
