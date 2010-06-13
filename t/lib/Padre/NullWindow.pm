@@ -15,6 +15,7 @@ our @ISA     = qw{
 	Wx::Frame
 };
 
+# NOTE: This is just a test window so don't add Wx::gettext
 use constant NAME => 'Padre Null Test Window';
 
 sub new {
