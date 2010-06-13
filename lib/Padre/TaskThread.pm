@@ -10,7 +10,12 @@ use threads;
 use threads::shared;
 use Thread::Queue 2.11;
 use Scalar::Util ();
-use Padre::Wx    (); # HACK - Temporary workaround
+
+# NOTE: Don't use Padre::Wx here, by only loading the Wx core
+# we can have less of Wx loaded when we spawn the master thread.
+# Given that background threads shouldn't be using Wx anyway,
+# loaded less code now cuts the per-thread cost of several meg.
+use Wx ();
 
 our $VERSION = '0.64';
 
