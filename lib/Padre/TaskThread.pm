@@ -9,11 +9,10 @@ use warnings;
 use threads;
 use threads::shared;
 use Thread::Queue 2.11;
-use Scalar::Util   ();
-use Padre::Wx      (); # HACK - Temporary workaround
-use Padre::Wx::App (); # HACK - Temporary workaround
+use Scalar::Util ();
+use Padre::Wx    (); # HACK - Temporary workaround
 
-our $VERSION = '0.59';
+our $VERSION = '0.64';
 
 # Worker id sequence, so identifiers will be available in objects
 # across all instances and threads before the thread has been spawned.
@@ -30,14 +29,8 @@ my %WID2TID  : shared = ();
 my $SINGLETON = undef;
 
 sub master {
-	my $class = shift;
-	unless ( $SINGLETON ) {
-		# Make sure the root application object exists before
-		# we spawn the first thread.
-		Padre::Wx::App->new;
-		$SINGLETON = $class->new->spawn;
-	}
-	return $SINGLETON;
+	$SINGLETON or
+	$SINGLETON = shift->new->spawn;
 }
 
 # Handle master initialisation
