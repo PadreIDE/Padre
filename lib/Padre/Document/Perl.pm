@@ -476,7 +476,7 @@ sub find_unmatched_brace {
 
 	# Fire the task
 	$self->task_request(
-		task     => 'Padre::Task::PPI::FindUnmatchedBrace',
+		task     => 'Padre::Task::FindUnmatchedBrace',
 		document => $self,
 		callback => 'find_unmatched_brace_response',
 	);
@@ -579,7 +579,7 @@ sub find_variable_declaration {
 
 	# Create a new object of the task class and schedule it
 	$self->task_request(
-		task     => 'Padre::Task::PPI::FindVariableDeclaration',
+		task     => 'Padre::Task::FindVariableDeclaration',
 		document => $self,
 		location => $location,
 		callback => 'find_variable_declaration_response',
@@ -831,7 +831,7 @@ sub lexical_variable_replacement {
 
 	# Launch the background task
 	$self->task_request(
-		task => 'Padre::Task::PPI::LexicalReplaceVariable',
+		task => 'Padre::Task::LexicalReplaceVariable',
 		document => $self,
 		location => $location,
 		replacement => $name,
@@ -879,7 +879,7 @@ sub introduce_temporary_variable {
 
 	# Run the replacement in the background
 	$self->task_request(
-		task           => 'Padre::Task::PPI::IntroduceTemporaryVariable',
+		task           => 'Padre::Task::IntroduceTemporaryVariable',
 		document       => $self,
 		varname        => $name,
 		start_location => $editor->GetSelectionStart,

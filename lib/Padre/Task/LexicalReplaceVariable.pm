@@ -1,4 +1,4 @@
-package Padre::Task::PPI::LexicalReplaceVariable;
+package Padre::Task::LexicalReplaceVariable;
 
 use 5.008;
 use strict;
@@ -12,11 +12,11 @@ our @ISA     = 'Padre::Task::PPI';
 
 =head1 NAME
 
-Padre::Task::PPI::LexicalReplaceVariable - Lexically variable replace using L<PPI>
+Padre::Task::LexicalReplaceVariable - Lexically variable replace using L<PPI>
 
 =head1 SYNOPSIS
 
-  my $replacer = Padre::Task::PPI::LexicalReplaceVariable->new(
+  my $replacer = Padre::Task::LexicalReplaceVariable->new(
           document    => $document_obj,
           location    => [ $line, $column ], # the position of *any* occurrence of the variable
           replacement => '$foo',

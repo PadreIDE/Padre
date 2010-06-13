@@ -1,4 +1,4 @@
-package Padre::Task::PPI::FindVariableDeclaration;
+package Padre::Task::FindVariableDeclaration;
 
 use 5.008;
 use strict;
@@ -12,12 +12,12 @@ our @ISA     = 'Padre::Task::PPI';
 
 =head1 NAME
 
-Padre::Task::PPI::FindVariableDeclaration - Finds where a variable was declared using L<PPI>
+Padre::Task::FindVariableDeclaration - Finds where a variable was declared using L<PPI>
 
 =head1 SYNOPSIS
 
   # Find declaration of variable at cursor
-  my $task = Padre::Task::PPI::FindVariableDeclaration->new(
+  my $task = Padre::Task::FindVariableDeclaration->new(
           document => $document_obj,
           location => [ $line, $column ], # ppi-style location is okay, too
   );

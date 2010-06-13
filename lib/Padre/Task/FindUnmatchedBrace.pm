@@ -1,4 +1,4 @@
-package Padre::Task::PPI::FindUnmatchedBrace;
+package Padre::Task::FindUnmatchedBrace;
 
 use 5.008;
 use strict;
@@ -13,11 +13,11 @@ our @ISA     = 'Padre::Task::PPI';
 
 =head1 NAME
 
-Padre::Task::PPI::FindUnmatchedBrace - C<PPI> based unmatched brace finder
+Padre::Task::FindUnmatchedBrace - C<PPI> based unmatched brace finder
 
 =head1 SYNOPSIS
 
-  my $task = Padre::Task::PPI::FindUnmatchedBrace->new(
+  my $task = Padre::Task::FindUnmatchedBrace->new(
           document => $padre_document,
   );
   $task->schedule;

@@ -1,4 +1,4 @@
-package Padre::Task::PPI::IntroduceTemporaryVariable;
+package Padre::Task::IntroduceTemporaryVariable;
 
 use 5.008;
 use strict;
@@ -12,11 +12,11 @@ our @ISA     = 'Padre::Task::PPI';
 
 =head1 NAME
 
-Padre::Task::PPI::IntroduceTemporaryVariable - Introduces a temporary variable using L<PPI>
+Padre::Task::IntroduceTemporaryVariable - Introduces a temporary variable using L<PPI>
 
 =head1 SYNOPSIS
 
-  my $tempvarmaker = Padre::Task::PPI::IntroduceTemporaryVariable->new(
+  my $tempvarmaker = Padre::Task::IntroduceTemporaryVariable->new(
           document       => $document_obj,
           start_location => [$line, $column], # or just character position
           end_location   => [$line, $column], # or ppi-style location

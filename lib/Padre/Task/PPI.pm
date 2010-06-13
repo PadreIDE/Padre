@@ -16,7 +16,7 @@ Padre::Task::PPI - Generic L<PPI> background processing task
 
 =head1 SYNOPSIS
 
-  package Padre::Task::PPI::MyFancyTest;
+  package Padre::Task::MyFancyTest;
   
   use base 'Padre::Task::PPI';
   
@@ -33,7 +33,7 @@ Padre::Task::PPI - Generic L<PPI> background processing task
   
   # elsewhere:
   
-  Padre::Task::PPI::MyFancyTest->new(
+  Padre::Task::MyFancyTest->new(
       text => 'parse-this!',
   )->schedule;
 
