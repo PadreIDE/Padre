@@ -13,7 +13,10 @@ our $VERSION = '0.59';
 
 use Class::XSAccessor {
 	getters => {
-		handle   => 'handle',
+		handle  => 'handle',
+	},
+	predicate => {
+		running => 'handle',
 	},
 };
 
@@ -36,10 +39,6 @@ sub new {
 	}
 
 	return $self;
-}
-
-sub running {
-	defined $_[0]->{handle};
 }
 
 sub owner {
