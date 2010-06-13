@@ -11,15 +11,6 @@ use Padre::Role::Task ();
 
 our $VERSION = '0.59';
 
-use Class::XSAccessor {
-	getters => {
-		handle  => 'handle',
-	},
-	predicate => {
-		running => 'handle',
-	},
-};
-
 sub new {
 	my $class = shift;
 	my $self  = bless { @_ }, $class;
@@ -39,6 +30,14 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub handle {
+	$_[0]->{handle};
+}
+
+sub running {
+	defined $_[0]->{handle};
 }
 
 sub owner {
