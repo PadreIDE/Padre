@@ -5,8 +5,6 @@ package Padre::Wx;
 use 5.008;
 use strict;
 use warnings;
-use FindBin;
-use File::Spec ();
 
 # Threading must be loaded before Wx loads
 use threads;
