@@ -157,20 +157,24 @@ sub step {
 
 	# Run the pre-run step in the main thread
 	unless ( $handle->prepare ) {
-		die "Task ->prepare method failed";
+		# Task wishes to abort itself. Oblige it.
+		undef $handle;
+
+		# Move on to the next task
+		return $self->step;
 	}
 
 	# Register the handle for Wx event callbacks
 	$handles->{$hid} = $handle;
 
-	# Find the next available worker
-	my $worker = $self->next_thread;
-	unless ( $worker ) {
-		die "Unexpectedly failed to find a free worker thread";
-	}
+	# Is there an available worker?
+	my $worker = $self->next_thread or return;
 
-	# Send the message into the worker
+	# Send the message into the worker to start the task
 	$worker->send( 'task', $handle->as_array );
+
+	# Continue to the next iteration
+	return $self->step;
 }
 
 
