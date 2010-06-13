@@ -1157,7 +1157,9 @@ sub refresh {
 	$self->refresh_functions($current);
 	$self->refresh_directory($current);
 	$self->refresh_status($current);
-
+	$self->refresh_outline($current);
+	$self->refresh_syntaxcheck($current);
+	
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
 	@{ $self->{refresh_listeners} } = grep { ; defined } @{ $self->{refresh_listeners} };
@@ -1174,7 +1176,6 @@ sub refresh {
 		my $id = $notebook->GetSelection;
 		if ( defined $id and $id >= 0 ) {
 			$notebook->GetPage($id)->SetFocus;
-			$self->refresh_syntaxcheck;
 		}
 		$self->aui->GetPane('notebook')->PaneBorder(0);
 	} else {

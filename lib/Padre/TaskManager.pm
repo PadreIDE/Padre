@@ -105,7 +105,7 @@ sub next_thread {
 	TRACE($_[0]) if DEBUG;
 	my $self = shift;
 	foreach my $worker ( @{$self->{workers}} ) {
-		# HACK: Always run it in the first one
+		next if $worker->handle;
 		return $worker;
 	}
 	return undef;
@@ -167,8 +167,10 @@ sub step {
 	# Register the handle for Wx event callbacks
 	$handles->{$hid} = $handle;
 
-	# Is there an available worker?
+	# Find a worker and register worker/thread relationship
 	my $worker = $self->next_thread or return;
+	$worker->handle($hid);
+	$handle->{worker} = $worker->wid;
 
 	# Send the message into the worker to start the task
 	$worker->send( 'task', $handle->as_array );
@@ -205,11 +207,7 @@ sub on_signal {
 
 	# Fine the task handle for the task
 	my $hid    = shift @$message;
-	my $handle = $self->{handles}->{$hid};
-	unless ( $handle ) {
-		# warn("Received message for a task that is not running");
-		return;
-	}
+	my $handle = $self->{handles}->{$hid} or return;
 
 	# Handle the special startup message
 	my $method = shift @$message;
@@ -230,6 +228,14 @@ sub on_signal {
 		# Remove from the running list to guarentee no more events
 		# will be sent to the handle (and thus to the task)
 		delete $self->{running}->{$hid};
+
+		# Free up the worker thread for other tasks
+		foreach my $worker ( @{$self->{workers}} ) {
+			next unless defined $worker->handle;
+			next unless $worker->handle == $hid;
+			$worker->handle(undef);
+			last;
+		}
 
 		# Fire the post-process/cleanup finish method, passing in the
 		# completed (and serialised) task object.

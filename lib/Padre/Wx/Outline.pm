@@ -3,12 +3,12 @@ package Padre::Wx::Outline;
 use 5.008;
 use strict;
 use warnings;
-use Scalar::Util               ();
-use Params::Util               ();
-use Padre::Role::Task          ();
-use Padre::Wx::Role::View      ();
+use Scalar::Util          ();
+use Params::Util          ();
+use Padre::Role::Task     ();
+use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx                  ();
+use Padre::Wx             ();
 use Padre::Logger;
 
 our $VERSION = '0.64';
@@ -101,6 +101,7 @@ sub view_close {
 # Padre::Role::Task Methods
 
 sub task_response {
+	TRACE($_[1]) if DEBUG;
 	my $self = shift;
 	my $task = shift;
 	my $data = Params::Util::_ARRAY($task->{data}) or return;
@@ -210,6 +211,7 @@ sub stop {
 # Event Handlers
 
 sub on_timer {
+	TRACE($_[1]) if DEBUG;
 	my $self  = shift;
 	my $event = shift;
 
@@ -328,6 +330,7 @@ sub clear {
 }
 
 sub refresh {
+	TRACE($_[0]) if DEBUG;
 	my $self     = shift;
 	my $document = $self->current->document or return;
 	my $length   = $document->text_length;

@@ -5,17 +5,12 @@ package Padre::TaskWorker;
 use 5.008005;
 use strict;
 use warnings;
-use Scalar::Util       ();
+use Scalar::Util      ();
 use Padre::TaskThread ();
 use Padre::Logger;
 
 our $VERSION = '0.59';
 our @ISA     = 'Padre::TaskThread';
-
-sub handle {
-	TRACE($_[0]) if DEBUG;
-	$_[0]->{handle};
-}
 
 
 
@@ -23,6 +18,12 @@ sub handle {
 
 #######################################################################
 # Main Thread Methods
+
+sub handle {
+	my $self = shift;
+	$self->{handle} = shift if @_;
+	return $self->{handle};
+}
 
 
 
