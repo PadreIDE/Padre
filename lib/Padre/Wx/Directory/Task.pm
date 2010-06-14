@@ -1,4 +1,4 @@
-package Padre::Task::Files;
+package Padre::Wx::Directory::Task;
 
 # This is a simple flexible task that fetches lists of file names
 # (but does not look inside of those files)
@@ -6,6 +6,7 @@ package Padre::Task::Files;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Wx::Directory::Path ();
 
 our $VERSION = '0.64';
 
@@ -18,10 +19,6 @@ our $VERSION = '0.64';
 
 sub new {
 	my $self = shift->SUPER::new(@_);
-
-	# Default expansion-controlling variables
-	$self->{recurse} ||= 0;
-	$self->{expand}  ||= {};
 
 	# Automatic project integration
 	if ( exists $self->{project} ) {
@@ -39,17 +36,19 @@ sub new {
 # Padre::Task Methods
 
 sub run {
-	my $self = shift;
+	my $self  = shift;
+	my @files = ();
+	my @queue = ( $self->{root} );
 
-	if ( $self->{recurse} ) {
-		# Handle recursive mode fairly simplistically
-		require File::Find::Rule;
-		$self->{files} = [
-			File::Find::Rule->file->in( $self->{root} )
-		];
-	} else {
-		# TO BE COMPLETED
-		$self->{files} = [ ];
+	# Recursively scan for files
+	local *DIR;
+	while ( @queue ) {
+		my $directory = shift @queue;
+		opendir DIR, $directory or die "opendir($directory): $!";
+		my @buffer = readdir DIR;
+		closedir DIR;
+
+		
 	}
 
 	return 1;
