@@ -37,18 +37,20 @@ sub new {
 
 sub run {
 	my $self  = shift;
+	my $root  = $self->{root};
+	my @queue = Padre::Wx::Directory::Path->directory;
 	my @files = ();
-	my @queue = ( $self->{root} );
 
 	# Recursively scan for files
 	local *DIR;
 	while ( @queue ) {
-		my $directory = shift @queue;
-		opendir DIR, $directory or die "opendir($directory): $!";
+		my $path = shift @queue;
+		my $dir  = File::Spec->catdir( $root, $path->spec );
+		opendir DIR, $dir or die "opendir($dir): $!";
 		my @buffer = readdir DIR;
 		closedir DIR;
 
-		
+
 	}
 
 	return 1;
