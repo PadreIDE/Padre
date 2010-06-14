@@ -153,6 +153,10 @@ sub task_outline {
 	return '';
 }
 
+sub task_syntax {
+	return '';
+}
+
 
 
 
