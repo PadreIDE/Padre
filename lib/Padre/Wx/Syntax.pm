@@ -371,7 +371,7 @@ sub render {
 			my $project_dir = $document->project_dir;
 			if ( defined $project_dir ) {
 				$project_dir = quotemeta $project_dir;
-				$filename =~ s/^$project_dir//;
+				$filename =~ s/^$project_dir[\\\/]?//;
 			}
 			$self->SetItem( $i, 2, sprintf( Wx::gettext('No errors or warnings found in %s.'), $filename ) );
 		} else {
