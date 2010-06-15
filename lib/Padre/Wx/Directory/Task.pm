@@ -6,9 +6,11 @@ package Padre::Wx::Directory::Task;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Task                ();
 use Padre::Wx::Directory::Path ();
 
 our $VERSION = '0.64';
+our @ISA     = 'Padre::Task';
 
 
 
@@ -19,6 +21,9 @@ our $VERSION = '0.64';
 
 sub new {
 	my $self = shift->SUPER::new(@_);
+
+	# Default the skip rules
+	$self->{skip} ||= [ ];
 
 	# Automatic project integration
 	if ( exists $self->{project} ) {
@@ -36,22 +41,54 @@ sub new {
 # Padre::Task Methods
 
 sub run {
+	require Module::Manifest;
 	my $self  = shift;
 	my $root  = $self->{root};
 	my @queue = Padre::Wx::Directory::Path->directory;
 	my @files = ();
 
+	# Prepare the skip rules
+	my $rule = Module::Manifest->new;
+	$rule->parse( skip => $self->{skip} );
+
 	# Recursively scan for files
-	local *DIR;
 	while ( @queue ) {
-		my $path = shift @queue;
-		my $dir  = File::Spec->catdir( $root, $path->spec );
-		opendir DIR, $dir or die "opendir($dir): $!";
-		my @buffer = readdir DIR;
-		closedir DIR;
+		my $parent = shift @queue;
+		my @path   = $parent->path;
+		my $dir    = File::Spec->catdir( $root, @path );
 
+		# Read the file list for the directory
+		opendir DIRECTORY, $dir or die "opendir($dir): $!";
+		my @list = readdir DIRECTORY;
+		closedir DIRECTORY;
 
+		foreach my $file ( @list ) {
+			next if $file =~ /^\.+\z/;
+			if ( -f File::Spec->catfile( $dir, $file ) ) {
+				my $object = Padre::Wx::Directory::Path->file(@path, $file);
+				unless ( $rule->skipped($object->unix) ) {
+					push @files, $object;
+				}
+				next;
+			}
+			if ( -d File::Spec->catdir( $dir, $file ) ) {
+				my $object = Padre::Wx::Directory::Path->directory(@path, $file);
+				unless ( $rule->skipped($object->unix) ) {
+					push @files, $object;
+					push @queue, $object;
+				}
+				next;
+			}
+			warn "Unknown or unsupported file type";
+		}
 	}
+
+	# Sort the files for the convenience of the caller
+	$self->{model} = [
+		sort {
+			$a->unix cmp $b->unix
+		} @files
+	];
 
 	return 1;
 }

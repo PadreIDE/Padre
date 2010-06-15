@@ -3,7 +3,7 @@ package Padre::Wx::Directory::Path;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec ();
+use File::Spec::Unix ();
 
 our $VERSION = '0.64';
 
@@ -23,7 +23,7 @@ sub file {
 	my $class = shift;
 	return bless [
 		FILE,
-		File::Spec->catfile(@_),
+		File::Spec::Unix->catfile(@_),
 		@_,
 	], $class;
 }
@@ -32,7 +32,7 @@ sub directory {
 	my $class = shift;
 	return bless [
 		DIRECTORY,
-		File::Spec->catfile(@_),
+		File::Spec::Unix->catfile(@_),
 		@_,
 	], $class;
 }
@@ -48,7 +48,7 @@ sub type {
 	$_[0]->[0];
 }
 
-sub spec {
+sub unix {
 	$_[0]->[1];
 }
 
