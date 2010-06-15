@@ -182,7 +182,8 @@ sub start {
 			$self,
 			Padre::Wx::ID_TIMER_OUTLINE,
 			sub {
-				$_[0]->on_timer( $_[1], $_[2] );
+				$_[1]->Skip(0);
+				$_[0]->refresh;
 			},
 		);
 	}
@@ -209,18 +210,6 @@ sub stop {
 
 #####################################################################
 # Event Handlers
-
-sub on_timer {
-	TRACE($_[1]) if DEBUG;
-	my $self  = shift;
-	my $event = shift;
-
-	# Clear the event
-	$event->Skip(0) if defined $event;
-
-	# Reuse the refresh logic here
-	$self->refresh;
-}
 
 sub on_tree_item_right_click {
 	my $self   = shift;
