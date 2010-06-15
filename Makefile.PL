@@ -68,113 +68,116 @@ name 'Padre';
 license 'perl';
 author 'Gabor Szabo';
 all_from 'lib/Padre.pm';
-requires 'perl'                  => '5.008005';
-requires 'App::Ack'              => '1.86';
-requires 'App::cpanminus'        => '0.9923';
-requires 'Class::Adapter'        => '1.05';
-requires 'Class::Unload'         => '0.03';
-requires 'Class::XSAccessor'     => '1.05';
-requires 'Cwd'                   => '3.2701';
-requires 'Data::Dumper'          => 0;
-requires 'DBD::SQLite'           => '1.27';
-requires 'DBI'                   => '1.58';
-requires 'Debug::Client'         => '0.11';
-requires 'Devel::Dumpvar'        => '0.04';
-requires 'Devel::Refactor'       => '0.05';
-requires 'Digest::MD5'           => 0;
-requires 'Encode'                => '2.26';
-requires 'ExtUtils::MakeMaker'   => '6.56';
-requires 'File::Basename'        => 0;
-requires 'File::Glob'            => 0;
-requires 'File::Glob::Windows'   => '0.1.3' if win32;
-requires 'File::Copy::Recursive' => '0.37';
-requires 'File::Find::Rule'      => '0.30';
-requires 'File::HomeDir'         => '0.84';
-requires 'File::Next'            => '1.06';          # Force-bump ack dep
-requires 'File::Path'            => '2.07';
-requires 'File::Remove'          => '1.42';
-requires 'File::ShareDir'        => '1.00';
-requires 'File::Spec'            => '3.2701';
-requires 'File::Spec::Functions' => '3.2701';
-requires 'File::Temp'            => 0;
-requires 'File::Which'           => '1.08';
-requires 'File::pushd'           => '1.00';
-requires 'FindBin'               => 0;
-requires 'Format::Human::Bytes'  => '0.04';
-requires 'Getopt::Long'          => 0;
-requires 'HTML::Entities'        => '3.57';
-requires 'HTML::Parser'          => '3.58';
+requires 'perl' => '5.008005';
 
-# In the Padre.ppd file we need to list IO-stringy instead
-requires 'IO::Scalar' => '2.110';
-
-requires 'IO::Socket'      => '1.30';
-requires 'IO::String'      => '1.08';
-requires 'IPC::Open2'      => 0;
-requires 'IPC::Open3'      => 0;
-requires 'List::Util'      => '1.18';
-requires 'List::MoreUtils' => '0.22';
-requires 'LWP'             => '5.815';
-requires 'Module::Build'   => '0.3603';
-requires 'Module::Refresh' => '0.13';
-requires 'Module::Starter' => '1.50';
-requires 'ORLite'          => '1.41';
-
-# Temporarily disabled as we have cloned a private copy
-# requires 'ORLite::Migrate' => '1.06';
-
+# General dependencies
+requires 'App::Ack'                 => '1.86';
+requires 'App::cpanminus'           => '0.9923';
+requires 'Class::Adapter'           => '1.05';
+requires 'Class::Unload'            => '0.03';
+requires 'Class::XSAccessor'        => '1.05';
+requires 'Cwd'                      => '3.2701';
+requires 'Data::Dumper'             => 0;
+requires 'DBD::SQLite'              => '1.27';
+requires 'DBI'                      => '1.58';
+requires 'Debug::Client'            => '0.11';
+requires 'Devel::Dumpvar'           => '0.04';
+requires 'Devel::Refactor'          => '0.05';
+requires 'Digest::MD5'              => 0;
+requires 'Encode'                   => '2.26';
+requires 'ExtUtils::MakeMaker'      => '6.56';
+requires 'ExtUtils::Manifest'       => '1.56';
+requires 'File::Basename'           => 0;
+requires 'File::Glob'               => 0;
+requires 'File::Glob::Windows'      => '0.1.3' if win32;
+requires 'File::Copy::Recursive'    => '0.37';
+requires 'File::Find::Rule'         => '0.30';
+requires 'File::HomeDir'            => '0.84';
+requires 'File::Path'               => '2.07';
+requires 'File::Remove'             => '1.42';
+requires 'File::ShareDir'           => '1.00';
+requires 'File::Spec'               => '3.2701';
+requires 'File::Spec::Functions'    => '3.2701';
+requires 'File::Temp'               => 0;
+requires 'File::Which'              => '1.08';
+requires 'File::pushd'              => '1.00';
+requires 'FindBin'                  => 0;
+requires 'Format::Human::Bytes'     => '0.04';
+requires 'Getopt::Long'             => 0;
+requires 'HTML::Entities'           => '3.57';
+requires 'HTML::Parser'             => '3.58';
+requires 'IO::Socket'               => '1.30';
+requires 'IO::String'               => '1.08';
+requires 'IPC::Open2'               => 0;
+requires 'IPC::Open3'               => 0;
+requires 'List::Util'               => '1.18';
+requires 'List::MoreUtils'          => '0.22';
+requires 'LWP'                      => '5.815';
+requires 'Module::Build'            => '0.3603';
+requires 'Module::CoreList'         => 0;
+requires 'Module::Manifest'         => '1.08';
+requires 'Module::Refresh'          => '0.13';
+requires 'Module::Starter'          => '1.50';
+requires 'ORLite'                   => '1.41';
 requires 'Params::Util'             => '0.33';
 requires 'Parse::ErrorString::Perl' => '0.11';
 requires 'Parse::ExuberantCTags'    => '1.00';
+requires 'Pod::Functions'           => 0;
 requires 'Pod::POM'                 => '0.17';
 requires 'Pod::Simple'              => '3.07';
 requires 'Pod::Simple::XHTML'       => '3.04';
 requires 'Pod::Abstract'            => '0.16';
 requires 'Pod::Perldoc'             => '3.15';
 requires 'POD2::Base'               => '0.043';
+requires 'POSIX'                    => 0;
+requires 'PPI'                      => '1.205';
+requires 'PPIx::EditorTools'        => '0.09';
+requires 'PPIx::Regexp'             => '0.005';
+requires 'Storable'                 => '2.15';
+requires 'Template::Tiny'           => '0.11';
+requires 'Term::ReadLine'           => 0;
+requires 'Text::Balanced'           => '2.01';
+requires 'Text::Diff'               => '0.35';
+requires 'Text::FindIndent'         => '0.06';
+requires 'Thread::Queue'            => '2.11';
+requires 'threads'                  => '1.71';
+requires 'threads::shared'          => '1.26';
+requires 'URI'                      => '0';
+requires 'version'                  => '0.80';
+requires 'Win32'                    => '0.31' if win32;
+requires 'Win32::API'               => '0.58' if win32;
+requires 'Win32::Shortcut'          => '0.07' if win32;
+requires 'Win32::TieRegistry'       => '0.26' if win32;
+requires 'Wx'                       => ( win32 and $] >= 5.01 ) ? '0.94' : '0.91';
+requires 'Wx::Perl::ProcessStream'  => '0.25';
+requires 'YAML::Tiny'               => '1.32';
+test_requires 'Capture::Tiny'       => '0.06';
+test_requires 'Test::More'          => '0.88';
+test_requires 'Test::MockObject'    => '1.09';
+test_requires 'Test::Script'        => '1.07';
+test_requires 'Test::Exception'     => '0.27';
+test_requires 'Test::NoWarnings'    => '0.084';
+
+# Special dependencies
+
+# Force-bump ack dep, removed once we remove Ack
+requires 'File::Next' => '1.06';
+
+# In the Padre.ppd file we need to list IO-stringy instead
+requires 'IO::Scalar' => '2.110';
+
+# Temporarily disabled as we have cloned a private copy
+# requires 'ORLite::Migrate' => '1.06';
 
 # Add later, once we native support portability
-#requires 'Portable'                => '0.12' if win32;
-
-requires 'POSIX'             => 0;
-requires 'PPI'               => '1.205';
-requires 'PPIx::EditorTools' => '0.09';
+# requires 'Portable' => '0.12' if win32;
 
 # For PPIx::Regexp Readonly dependency
 requires 'Readonly::XS' => '1.05';
 
-requires 'PPIx::Regexp'            => '0.005';
-requires 'Storable'                => '2.15';
-requires 'Template::Tiny'          => '0.11';
-requires 'Term::ReadLine'          => 0;
-requires 'Text::Balanced'          => '2.01';
-requires 'Text::Diff'              => '0.35';
-requires 'Text::FindIndent'        => '0.06';
-requires 'Thread::Queue'           => '2.11';
-requires 'threads'                 => '1.71';
-requires 'threads::shared'         => '1.26';
-requires 'URI'                     => '0';
-requires 'version'                 => '0.80';
-requires 'Win32'                   => '0.31' if win32;
-requires 'Win32::API'              => '0.58' if win32;
-requires 'Win32::Shortcut'         => '0.07' if win32;
-requires 'Win32::TieRegistry'      => '0.26' if win32;
-requires 'Wx'                      => ( win32 and $] >= 5.01 ) ? '0.94' : '0.91';
-requires 'Wx::Perl::ProcessStream' => '0.25';
-requires 'YAML::Tiny'              => '1.32';
-requires 'ExtUtils::Manifest'      => '1.56';
-requires 'Pod::Functions'          => 0;
-requires 'Module::CoreList'        => 0;
-test_requires 'Capture::Tiny'      => '0.06';
-test_requires 'Test::More'         => '0.88';
-test_requires 'Test::MockObject'   => '1.09';
-test_requires 'Test::Script'       => '1.07';
-test_requires 'Test::Exception'    => '0.27';
-test_requires 'Test::NoWarnings'   => '0.084';
-
 # PAR support disabled for now
-#requires 'File::ShareDir::PAR' => '0.04';
-#requires 'PAR'                 => '0.989';
+# requires 'File::ShareDir::PAR' => '0.04';
+# requires 'PAR'                 => '0.989';
 
 my $locale = setlocale(LC_CTYPE);
 print "Found locale    $locale\n";
