@@ -493,7 +493,7 @@ sub parse_version {
 	my $result;
 	local $/ = "\n";
 	local $_;
-	open( my $fh, '<', $parsefile ) ## no critic (RequireBriefOpen)
+	open( my $fh, '<', $parsefile ) #-# no critic (RequireBriefOpen)
 		or die "Could not open '$parsefile': $!";
 	my $inpod = 0;
 	while (<$fh>) {

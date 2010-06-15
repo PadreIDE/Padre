@@ -52,7 +52,7 @@ our $VERSION = '0.64';
 our @ISA     = 'Exporter';
 
 # I'd change this, but I suspect it's rather breaky
-our @EXPORT = ## no critic (ProhibitAutomaticExportation)
+our @EXPORT = #-# no critic (ProhibitAutomaticExportation)
 	qw(
 	entry
 	password

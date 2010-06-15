@@ -236,11 +236,11 @@ sub task {
 ######################################################################
 # Support Methods
 
-sub _ARRAY ($) {
+sub _ARRAY {
 	(ref $_[0] eq 'ARRAY' and @{$_[0]}) ? $_[0] : undef;
 }
 
-sub _CAN ($$) {
+sub _CAN {
 	(Scalar::Util::blessed($_[0]) and $_[0]->can($_[1])) ? $_[0] : undef;
 }
 

@@ -173,10 +173,9 @@ sub startup {
 }
 
 sub startup_config {
-	local *FILE;
-	open( FILE, '<', Padre::Constant::CONFIG_STARTUP ) or return ();
-	my @buffer = <FILE>;
-	close FILE or return ();
+	open( my $FILE, '<', Padre::Constant::CONFIG_STARTUP ) or return ();
+	my @buffer = <$FILE>;
+	close $FILE or return ();
 	chomp @buffer;
 	return @buffer;
 }
