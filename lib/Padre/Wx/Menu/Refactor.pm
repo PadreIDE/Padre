@@ -5,14 +5,13 @@ package Padre::Wx::Menu::Refactor;
 use 5.008;
 use strict;
 use warnings;
-use List::Util    ();
-use File::Spec    ();
-use File::HomeDir ();
-use Params::Util qw{_INSTANCE};
+use List::Util      ();
+use File::Spec      ();
+use File::HomeDir   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Wx::Menu';
@@ -63,8 +62,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $current  = _CURRENT(@_);
-	my $config   = $current->config;
+	my $current  = Padre::Current::_CURRENT(@_);
 	my $document = $current->document;
 
 	$self->{rename_variable}->Enable( $document->can('lexical_variable_replacement')     ? 1 : 0 );
