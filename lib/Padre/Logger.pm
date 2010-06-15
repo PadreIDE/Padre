@@ -44,7 +44,7 @@ our $VERSION = '0.64';
 # Handle the PADRE_DEBUG environment variable
 BEGIN {
 	if ( $ENV{PADRE_DEBUG} ) {
-		if ( $ENV{PADRE_DEBEG} eq '1' ) {
+		if ( $ENV{PADRE_DEBUG} eq '1' ) {
 			# Debug everything
 			$Padre::Logger::DEBUG = 1;
 		} else {
@@ -63,11 +63,7 @@ sub import {
 package $pkg;
 
 use constant DEBUG => !! (
-	defined(\$${pkg}::DEBUG)
-		? \$${pkg}::DEBUG
-		: defined(\$Padre::Logger::DEBUG)
-			? \$Padre::Logger::DEBUG
-			: 0;
+	defined(\$${pkg}::DEBUG) ? \$${pkg}::DEBUG : \$Padre::Logger::DEBUG
 );
 
 BEGIN {
