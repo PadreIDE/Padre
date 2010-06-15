@@ -22,8 +22,13 @@ our @ISA     = 'Padre::Task';
 sub new {
 	my $self = shift->SUPER::new(@_);
 
-	# Default the skip rules
-	$self->{skip} ||= [ ];
+	# Property defaults
+	unless ( defined $self->{skip} ) {
+		$self->{skip} = [ ];
+	}
+	unless ( defined $self->{recursive} ) {
+		$self->{recursive} = 1;
+	}
 
 	# Automatic project integration
 	if ( exists $self->{project} ) {
@@ -66,20 +71,21 @@ sub run {
 			next if $file =~ /^\.+\z/;
 			if ( -f File::Spec->catfile( $dir, $file ) ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
-				unless ( $rule->skipped($object->unix) ) {
-					push @files, $object;
-				}
-				next;
-			}
-			if ( -d File::Spec->catdir( $dir, $file ) ) {
+				next if $rule->skipped($object->unix);
+				push @files, $object;
+
+			} elsif ( -d File::Spec->catdir( $dir, $file ) ) {
 				my $object = Padre::Wx::Directory::Path->directory(@path, $file);
-				unless ( $rule->skipped($object->unix) ) {
-					push @files, $object;
-					push @queue, $object;
-				}
-				next;
+				next if $rule->skipped($object->unix);
+				push @files, $object;
+
+				# Continue down within it?
+				next unless $self->{recursive};
+				push @queue, $object;
+
+			} else {
+				warn "Unknown or unsupported file type";
 			}
-			warn "Unknown or unsupported file type";
 		}
 	}
 

@@ -4,15 +4,19 @@ use 5.008;
 use strict;
 use warnings;
 use File::Copy;
-use File::Spec      ();
-use File::Basename  ();
-use Padre::Current  ();
-use Padre::Util     ();
-use Padre::Wx       ();
-use Padre::Constant ();
+use File::Spec            ();
+use File::Basename        ();
+use Padre::Constant       ();
+use Padre::Current        ();
+use Padre::Util           ();
+use Padre::Wx             ();
+use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';
-our @ISA     = 'Wx::TreeCtrl';
+our @ISA     = qw{
+	Padre::Wx::Role::Main
+	Wx::TreeCtrl
+};
 
 # Creates a new Directory Browser object
 sub new {
@@ -23,8 +27,12 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
-			| Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE
+		Wx::wxTR_HIDE_ROOT
+			| Wx::wxTR_SINGLE
+			| Wx::wxTR_FULL_ROW_HIGHLIGHT
+			| Wx::wxTR_HAS_BUTTONS
+			| Wx::wxTR_LINES_AT_ROOT
+			| Wx::wxBORDER_NONE
 	);
 
 	# Files that must be skipped
@@ -37,13 +45,25 @@ sub new {
 	my $images = Wx::ImageList->new( 16, 16 );
 	$self->{file_types} = {
 		upper => $images->Add(
-			Wx::ArtProvider::GetBitmap( 'wxART_GO_DIR_UP', 'wxART_OTHER_C', [ 16, 16 ] ),
+			Wx::ArtProvider::GetBitmap(
+				'wxART_GO_DIR_UP',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
 		),
 		folder => $images->Add(
-			Wx::ArtProvider::GetBitmap( 'wxART_FOLDER', 'wxART_OTHER_C', [ 16, 16 ] ),
+			Wx::ArtProvider::GetBitmap(
+				'wxART_FOLDER',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
 		),
 		package => $images->Add(
-			Wx::ArtProvider::GetBitmap( 'wxART_NORMAL_FILE', 'wxART_OTHER_C', [ 16, 16 ] ),
+			Wx::ArtProvider::GetBitmap(
+				'wxART_NORMAL_FILE',
+				'wxART_OTHER_C',
+				[ 16, 16 ],
+			),
 		),
 	};
 	$self->AssignImageList($images);
@@ -57,7 +77,7 @@ sub new {
 	Wx::Event::EVT_SET_FOCUS(
 		$self,
 		sub {
-			$_[0]->parent->refresh;
+			$_[0]->GetParent->refresh;
 		},
 	);
 
@@ -114,29 +134,15 @@ sub new {
 	return $self;
 }
 
-# Returns the Directory Panel object reference
-sub parent {
-	$_[0]->GetParent;
-}
-
 # Traverse to the search widget
 sub search {
 	$_[0]->GetParent->search;
 }
 
-# Returns the main object reference
-sub main {
-	$_[0]->GetParent->main;
-}
-
-sub current {
-	Padre::Current->new( main => $_[0]->main );
-}
-
 # Updates the gui if needed
 sub refresh {
 	my $self   = shift;
-	my $parent = $self->parent;
+	my $parent = $self->GetParent;
 	my $search = $parent->search;
 
 	# Gets the last and current actived projects
@@ -179,7 +185,7 @@ sub refresh {
 sub _append_upper {
 	my $self        = shift;
 	my $root        = $self->GetRootItem;
-	my $project_dir = $self->parent->project_dir;
+	my $project_dir = $self->GetParent->project_dir;
 
 	# Gets the current directory path
 	my $current_base_dir = File::Basename::dirname($project_dir);
@@ -242,7 +248,7 @@ sub readdir {
 # Called when turned beteween projects
 sub _update_root_data {
 	my $self    = shift;
-	my $project = $self->parent->project_dir;
+	my $project = $self->GetParent->project_dir;
 
 	# Splits the path to get the Root folder name and its path
 	my ( $volume, $path, $name ) = File::Spec->splitpath($project);
@@ -318,7 +324,7 @@ sub _updated_dir {
 	my $dir    = shift;
 	my $cached = $self->{CACHED}->{$dir};
 
-	my $file = $self->parent->{file};
+	my $file = $self->GetParent->{file};
 	my $mtime;
 
 	if ( defined($file) ) {
@@ -344,7 +350,7 @@ sub _updated_dir {
 # has changed and updates it                                                   #
 sub _update_subdirs {
 	my ( $self, $root ) = @_;
-	my $parent  = $self->parent;
+	my $parent  = $self->GetParent;
 	my $project = $parent->project_dir;
 
 	my $cookie;
@@ -403,7 +409,7 @@ sub _rename_or_move {
 	if ( rename $old_file, $new_file ) {
 
 		# Sets the new file to be selected
-		my $project = $self->parent->project_dir;
+		my $project = $self->GetParent->project_dir;
 		$self->{current_item}->{$project} = $new_file;
 
 		# Expands the node's parent (one level expand)
@@ -454,7 +460,7 @@ sub _copy {
 	if ( copy( $old_file, $new_file ) ) {
 
 		# Sets the new file to be selected
-		my $project = $self->parent->project_dir;
+		my $project = $self->GetParent->project_dir;
 		$self->{current_item}->{$project} = $new_file;
 		$self->{select_item} = 1;
 
@@ -480,7 +486,7 @@ sub _copy {
 # Called when the item is actived
 sub _on_tree_item_activated {
 	my ( $self, $event ) = @_;
-	my $parent    = $self->parent;
+	my $parent    = $self->GetParent;
 	my $node      = $event->GetItem;
 	my $node_data = $self->GetPlData($node);
 
@@ -560,11 +566,11 @@ sub _on_tree_end_label_edit {
 # Called when a item is selected
 sub _on_tree_sel_changed {
 	my ( $self, $event ) = @_;
-	return if not $self->parent->can('project_dir');
+	return if not $self->GetParent->can('project_dir');
 	my $node_data = $self->GetPlData( $event->GetItem );
 
 	# Caches the item path
-	$self->{current_item}->{ $self->parent->project_dir } =
+	$self->{current_item}->{ $self->GetParent->project_dir } =
 		File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 }
 
@@ -577,13 +583,13 @@ sub _on_tree_item_expanding {
 
 	# Returns if a search is being done (expands only the browser listing)
 	return if !defined( $self->search );
-	return if $self->search->{in_use}->{ $self->parent->project_dir };
+	return if $self->search->{in_use}->{ $self->GetParent->project_dir };
 
 	# The item complete path
 	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
 
 	# Cache the expanded state of the node
-	$self->{CACHED}->{ $self->parent->project_dir }->{Expanded}->{$path} = 1;
+	$self->{CACHED}->{ $self->GetParent->project_dir }->{Expanded}->{$path} = 1;
 
 	# Updates the node content if it changed or has no child
 	if ( $self->_updated_dir($path) or !$self->GetChildrenCount($node) ) {
@@ -597,7 +603,7 @@ sub _on_tree_item_collapsing {
 	my ( $self, $event ) = @_;
 	my $node        = $event->GetItem;
 	my $node_data   = $self->GetPlData($node);
-	my $project_dir = $self->parent->project_dir;
+	my $project_dir = $self->GetParent->project_dir;
 
 	# If it is the Root node, set Expanded to 0
 	if ( $node == $self->GetRootItem ) {
