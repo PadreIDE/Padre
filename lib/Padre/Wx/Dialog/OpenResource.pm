@@ -513,7 +513,7 @@ sub task_response {
 	my $self    = shift;
 	my $task    = shift;
 	my $matched = $task->{matched} or return;
-	$self->{matched} = $matched;
+	$self->{matched_files} = $matched;
 	$self->render;
 	return 1;
 }
