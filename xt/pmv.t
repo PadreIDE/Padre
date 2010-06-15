@@ -11,8 +11,8 @@ BEGIN {
 }
 
 my @MODULES = (
-	'Perl::MinimumVersion 1.20',
-	'Test::MinimumVersion 0.008',
+	'Perl::MinimumVersion 1.25',
+	'Test::MinimumVersion 0.101080',
 );
 
 # Don't run tests for installs
