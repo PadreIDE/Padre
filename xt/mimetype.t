@@ -1,5 +1,13 @@
 #!/usr/bin/perl
 
+###############################################################################
+### NOTE:
+### This test issues "malformed UTF8" warnings while texting
+### xt/files/broken.bin. This is the expected behaviour because broken.bin
+### really has malformed UTF8 chars which are topic of this test
+###############################################################################
+
+
 use strict;
 use warnings;
 use Test::More;
@@ -73,7 +81,6 @@ foreach my $file ( sort( keys(%test_files) ) ) {
 # Some files that actually exist on-disk
 foreach my $file ( sort keys %existing_test_files ) {
 	my $text = slurp("xt/files/$file");
-
 	require Padre::Locale;
 	my $encoding = Padre::Locale::encoding_from_string($text);
 	$text = Encode::decode( $encoding, $text );
