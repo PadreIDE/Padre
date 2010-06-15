@@ -21,6 +21,7 @@ use Padre::Config::Human   ();
 use Padre::Config::Project ();
 use Padre::Config::Host    ();
 use Padre::Config::Upgrade ();
+use Padre::Logger;
 
 our $VERSION = '0.64';
 
@@ -131,6 +132,7 @@ sub new {
 }
 
 sub read {
+	TRACE($_[0]) if DEBUG;
 	my $class = shift;
 
 	unless ($SINGLETON) {
@@ -152,6 +154,7 @@ sub read {
 }
 
 sub write {
+	TRACE($_[0]) if DEBUG;
 	my $self = shift;
 
 	# Save the user configuration
@@ -196,6 +199,7 @@ sub default {
 }
 
 sub set {
+	TRACE($_[0]) if DEBUG;
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;
@@ -239,6 +243,7 @@ sub set {
 # Set a value in the configuration and apply the preference change
 # to the application.
 sub apply {
+	TRACE($_[0]) if DEBUG;
 	my $self    = shift;
 	my $name    = shift;
 	my $value   = shift;
