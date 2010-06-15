@@ -41,6 +41,19 @@ use Padre::Constant ();
 
 our $VERSION = '0.64';
 
+# Handle the PADRE_DEBUG environment variable
+BEGIN {
+	if ( $ENV{PADRE_DEBUG} ) {
+		if ( $ENV{PADRE_DEBEG} eq '1' ) {
+			# Debug everything
+			$Padre::Logger::DEBUG = 1;
+		} else {
+			# Debug a single class
+			eval "\$$ENV{PADRE_DEBUG}::DEBUG = 1;";
+		}
+	}
+}
+
 sub import {
 	if ( $_[1] and $_[1] eq ':ALL' ) {
 		$Padre::Logger::DEBUG = 1;
@@ -48,15 +61,20 @@ sub import {
 	my $pkg = ( caller() )[0];
 	eval <<"END_PERL";
 package $pkg;
+
 use constant DEBUG => !! (
-	defined(\$${pkg}::DEBUG) ? \$${pkg}::DEBUG :
-	defined(\$Padre::Logger::DEBUG) ? \$Padre::Logger::DEBUG :
-	\$ENV{PADRE_DEBUG}
+	defined(\$${pkg}::DEBUG)
+		? \$${pkg}::DEBUG
+		: defined(\$Padre::Logger::DEBUG)
+			? \$Padre::Logger::DEBUG
+			: 0;
 );
+
 BEGIN {
 	*TRACE = *Padre::Logger::TRACE;
 	TRACE('::DEBUG enabled') if DEBUG;
 }
+
 1;
 END_PERL
 	die("Failed to enable debugging for $pkg") if $@;
