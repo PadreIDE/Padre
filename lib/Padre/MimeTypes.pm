@@ -620,6 +620,10 @@ sub guess_mimetype {
 	# are obvious.
 	if ( defined $text ) {
 		my $eval_mime_type = eval {
+			local $SIG{__WARN__} = sub {
+				 print STDERR $_[0].' while looking for mime type of $filename'
+				 unless $_[0] =~ /Malformed UTF\-8 char/;
+				 };
 
 			# Is this a script of some kind?
 			if ( $text =~ /\A#!/m ) {
