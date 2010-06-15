@@ -10,6 +10,7 @@ use Time::HiRes ();
 use Padre::Logger;
 use Padre::TaskManager       ();
 use Padre::Task::Addition    ();
+use Padre::Wx::App           ();
 use t::lib::Padre::NullWindow ();
 
 # Do we start with no threads as expected
