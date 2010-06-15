@@ -64,12 +64,7 @@ sub startup {
 
 	# Load and overlay the startup.yml file
 	if ( -f Padre::Constant::CONFIG_STARTUP ) {
-		require YAML::Tiny;
-		my $yaml = YAML::Tiny::LoadFile(Padre::Constant::CONFIG_STARTUP);
-		foreach ( sort keys %setting ) {
-			next unless exists $yaml->{$_};
-			$setting{$_} = $yaml->{$_};
-		}
+		%setting = ( %setting, startup_config() );
 	}
 
 	# Attempt to connect to the single instance server
@@ -175,6 +170,15 @@ sub startup {
 	}
 
 	return 1;
+}
+
+sub startup_config {
+	local *FILE;
+	open( FILE, '<', Padre::Constant::CONFIG_STARTUP ) or return ();
+	my @buffer = <FILE>;
+	close FILE or return ();
+	chomp @buffer;
+	return @buffer;
 }
 
 # Destroy the splash screen if it exists

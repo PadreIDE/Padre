@@ -106,7 +106,7 @@ use constant PLUGIN_DIR     => File::Spec->catdir(  CONFIG_DIR, 'plugins' );
 use constant PLUGIN_LIB     => File::Spec->catdir(  PLUGIN_DIR, 'Padre', 'Plugin' );
 use constant CONFIG_HOST    => File::Spec->catfile( CONFIG_DIR, 'config.db' );
 use constant CONFIG_HUMAN   => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
-use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.yml' );
+use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.txt' );
 
 # Do the initialisation in a function,
 # so we can run it again later if needed.

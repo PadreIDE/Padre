@@ -13,14 +13,17 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Renamed a number of classes to simpler names. Because we are
       breaking everything anyway, this is an opportune time to lump
       in these low-importance changes (ADAMK)
-    - Renamed Padre::DocBrowser to Padre::Browser (ADAMK)
-    - Renamed Padre::Wx::DocBrowser to Padre::Wx::Browser (ADAMK)
-    - Renamed Padre::Wx::Role::MainChild to Padre::Wx::Role::Main (ADAMK)
+    - Padre::DocBrowser --> Padre::Browser (ADAMK)
+    - Padre::Wx::DocBrowser --> Padre::Wx::Browser (ADAMK)
+    - Padre::Wx::Role::MainChild --> Padre::Wx::Role::Main (ADAMK)
     - Language-specific task sub-classes now live under the document class
       instead of under the Padre::Task tree, to encourage concentration
       of language-specific code within the document tree (ADAMK)
-    - Padre::Task::Perl::Syntax is now Padre::Document::Perl::Syntax (ADAMK)
-    - Padre::Task::Perl::Outline is now Padre::Document::Perl::Outline (ADAMK)
+    - Padre::Task::Perl::Syntax --> Padre::Document::Perl::Syntax (ADAMK)
+    - Padre::Task::Perl::Outline --> Padre::Document::Perl::Outline (ADAMK)
+    - Startup config file now uses a custom hyper-minimalist format
+      which avoids the need to load YAML::Tiny before the first thread
+      spawn, saving about 400k per thread (ADAMK)
 
 0.64 2010.06.12
     - Last Stable before merge of new Task 2.0 API

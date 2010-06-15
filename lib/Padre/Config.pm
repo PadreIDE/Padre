@@ -162,12 +162,15 @@ sub write {
 	$self->[Padre::Constant::HOST]->{version} = $REVISION;
 	$self->[Padre::Constant::HOST]->write;
 
-	# Write the startup subset copy of the configuration
+	# Write the startup subset of the configuration.
+	# NOTE: Use a hyper-minimalist listified key/value file format
+	# so that we don't need to load YAML::Tiny before the thread fork.
+	# This should save around 400k of memory per background thread.
 	my %startup = map { $_ => $self->$_() } sort keys %STARTUP;
-	YAML::Tiny::DumpFile(
-		Padre::Constant::CONFIG_STARTUP,
-		\%startup,
-	);
+	local *FILE;
+	open( FILE, '>', Padre::Constant::CONFIG_STARTUP )         or return 1;
+	print FILE map { "$_\n$startup{$_}\n" } sort keys %startup or return 1;
+	close FILE                                                 or return 1;
 
 	return 1;
 }
