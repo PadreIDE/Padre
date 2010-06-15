@@ -34,13 +34,17 @@ BEGIN {
 	Getopt::Long::GetOptions(
 		'usage|help'  => \$USAGE,
 		'debug|d'     => \$DEBUG,
-		'trace'       => sub { $ENV{PADRE_DEBUG} = 1 },
-		'die'         => sub { $ENV{PADRE_DIE} = 1 },
 		'profile'     => \$PROFILE,
 		'a'           => \$PLUGINS,
 		'fulltrace'   => \$FULLTRACE,
 		'invisible'   => \$INVISIBLE,
 		'include|i:s' => \@INCLUDE,
+		'trace:s'     => sub {
+			$ENV{PADRE_DEBUG} = $_[1] || '1'
+		},
+		'die'         => sub {
+			$ENV{PADRE_DIE} = 1;
+		},
 	) or $USAGE = 1;
 }
 
