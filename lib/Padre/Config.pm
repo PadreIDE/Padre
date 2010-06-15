@@ -132,10 +132,10 @@ sub new {
 }
 
 sub read {
-	TRACE($_[0]) if DEBUG;
 	my $class = shift;
 
 	unless ($SINGLETON) {
+		TRACE("Loading configuration for $class") if DEBUG;
 
 		# Load the host configuration
 		my $host = Padre::Config::Host->read;
@@ -199,7 +199,7 @@ sub default {
 }
 
 sub set {
-	TRACE($_[0]) if DEBUG;
+	TRACE($_[1]) if DEBUG;
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;

@@ -251,14 +251,16 @@ sub new {
 	# Show the tools that the configuration dictates.
 	# Use the fast and crude internal versions here only,
 	# so we don't accidentally trigger any configuration writes.
-	$self->_show_todo( $self->config->main_todo );
-	$self->_show_functions( $self->config->main_functions );
-	$self->_show_outline( $self->config->main_outline );
-	$self->_show_directory( $self->config->main_directory );
-	$self->_show_output( $self->config->main_output );
+	$self->_show_todo( $config->main_todo );
+	$self->_show_functions( $config->main_functions );
+	$self->_show_outline( $config->main_outline );
+	$self->_show_directory( $config->main_directory );
+	$self->_show_output( $config->main_output );
+	$self->_show_syntax( $config->main_syntaxcheck );
+	$self->_show_errorlist( $config->main_errorlist );
 
 	# Lock the panels if needed
-	$self->aui->lock_panels( $self->config->main_lockinterface );
+	$self->aui->lock_panels( $config->main_lockinterface );
 
 	$self->{_debugger_} = Padre::Wx::Debugger->new;
 
@@ -343,11 +345,6 @@ sub timer_start {
 			$self->GetStatusBar->Hide;
 		}
 		$manager->enable_editors_for_all;
-
-		$self->show_syntax( $config->main_syntaxcheck );
-		if ( $config->main_errorlist ) {
-			$self->errorlist->enable;
-		}
 	}
 
 	# Start the single instance server
