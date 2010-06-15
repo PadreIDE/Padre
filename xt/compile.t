@@ -42,6 +42,13 @@ foreach my $file (@files) {
 		}
 		next;
 	}
+	if ($^O ne 'MSWin32' and $file eq 'Padre/Util/Win32.pm') {
+		foreach ( 1 .. 2 ) {
+			Test::More->builder->skip("'$file' is for Windows only");
+		}
+		next;
+	}
+
 	system qq($^X -e "require $module; print 'ok';" > $out 2>$err);
 	my $err_data = slurp($err);
 	is( $err_data, '', "STDERR of $file" );
