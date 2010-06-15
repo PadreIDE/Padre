@@ -1,13 +1,5 @@
 #!/usr/bin/perl
 
-###############################################################################
-### NOTE:
-### This test issues "malformed UTF8" warnings while texting
-### xt/files/broken.bin. This is the expected behaviour because broken.bin
-### really has malformed UTF8 chars which are topic of this test
-###############################################################################
-
-
 use strict;
 use warnings;
 use Test::More;

@@ -620,6 +620,12 @@ sub guess_mimetype {
 	# are obvious.
 	if ( defined $text ) {
 		my $eval_mime_type = eval {
+			
+			# Working on content with malformed/bad UTF-8 chars may drop warnings
+			# which just say that there are bad UTF-8 chars in the file currently
+			# being checked. Maybe they are no UTF-8 chars at all but just a line
+			# of bits and Padre/Perl simply has the wrong point of view (UTF-8),
+			# so we drop these warnings:
 			local $SIG{__WARN__} = sub {
 				 print STDERR $_[0].' while looking for mime type of $filename'
 				 unless $_[0] =~ /Malformed UTF\-8 char/;
