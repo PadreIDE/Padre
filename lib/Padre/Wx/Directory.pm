@@ -6,9 +6,16 @@ use warnings;
 use Padre::Wx                        ();
 use Padre::Wx::Directory::TreeCtrl   ();
 use Padre::Wx::Directory::SearchCtrl ();
+use Padre::Wx::Role::Main            ();
+use Padre::Wx::Role::View            ();
+use Padre::Role::Task                ();
 
 our $VERSION = '0.64';
-our @ISA     = 'Wx::Panel';
+our @ISA     = qw{
+	Padre::Role::Task
+	Padre::Wx::Role::Main
+	Wx::Panel
+};
 
 use Class::XSAccessor {
 	getters => {
@@ -23,6 +30,13 @@ use Class::XSAccessor {
 		previous_dir_original => 'previous_dir_original',
 	},
 };
+
+
+
+
+
+######################################################################
+# Constructor
 
 # Creates the Directory Left Panel with a Search field
 # and the Directory Browser
@@ -56,24 +70,41 @@ sub new {
 	return $self;
 }
 
+
+
+
+
+######################################################################
+# Padre::Wx::Role::View Methods
+
+sub view_panel {
+	shift->side(@_);
+}
+
+sub view_label {
+	shift->gettext_label(@_);
+}
+
+sub view_close {
+	shift->main->show_directory(0);
+}
+
+
+
+
+
+######################################################################
+# General Methods
+
 # The parent panel
 sub panel {
 	$_[0]->GetParent;
 }
 
-# Returns the main object reference
-sub main {
-	$_[0]->GetGrandParent;
-}
-
-sub current {
-	Padre::Current->new( main => $_[0]->main );
-}
-
 # Returns the window label
 sub gettext_label {
 	my $self = shift;
-	if ( defined( $self->mode ) and ( $self->mode eq 'tree' ) ) {
+	if ( defined $self->mode and $self->mode eq 'tree' ) {
 		return Wx::gettext('Project');
 	} else {
 		return Wx::gettext('Directory');
@@ -94,6 +125,7 @@ sub refresh {
 	my $self     = shift;
 	my $current  = $self->current;
 	my $document = $current->document;
+	my $project  = $current->project;
 
 	# Finds project base
 	my $dir;
@@ -135,6 +167,21 @@ sub refresh {
 	# Update the panel label
 	$self->panel->refresh;
 
+	# Trigger the second-generation refresh task
+	$self->task_request(
+		task      => 'Padre::Wx::Directory::Task',
+		callback  => 'refresh_response',
+		project   => $project,
+		recursive => 0,
+	);
+
+	return 1;
+}
+
+sub refresh_response {
+	my $self = shift;
+	my $task = shift;
+	$self->{model} = $task->{model};
 	return 1;
 }
 
@@ -152,6 +199,13 @@ sub _change_project_dir {
 	$self->{projects_dirs}->{ $self->project_dir_original } = $dialog->GetPath;
 	$self->refresh;
 }
+
+
+
+
+
+######################################################################
+# Panel Migration Support
 
 # What side of the application are we on
 sub side {
