@@ -348,7 +348,7 @@ sub refresh {
 
 sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
-
+	
 	my %type_caption = (
 		pragmata => Wx::gettext('Pragmata'),
 		modules  => Wx::gettext('Modules'),
@@ -412,7 +412,9 @@ sub add_subtree {
 		if ( $type eq 'methods' ) {
 			$self->Expand($type_elem);
 		} else {
-			$self->Collapse($type_elem);
+			if( $self->IsExpanded($type_elem) ) {
+				$self->Collapse($type_elem);
+			}
 		}
 	}
 
