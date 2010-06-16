@@ -96,6 +96,13 @@ sub ignore_rule {
 	};
 }
 
+sub ignore_skip {
+	return [
+		'(?:^|\\/)\\.',
+		'(?:^|\\/)(?:blib|_build|inc|Makefile|pm_to_blib)\z',
+	];
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

@@ -22,17 +22,19 @@ our @ISA     = 'Padre::Task';
 sub new {
 	my $self = shift->SUPER::new(@_);
 
+	# Automatic project integration
+	if ( exists $self->{project} ) {
+		$self->{root} = $self->{project}->root;
+		$self->{skip} = $self->{project}->ignore_skip;
+		delete $self->{project};
+	}
+
 	# Property defaults
 	unless ( defined $self->{skip} ) {
 		$self->{skip} = [ ];
 	}
 	unless ( defined $self->{recursive} ) {
 		$self->{recursive} = 1;
-	}
-
-	# Automatic project integration
-	if ( exists $self->{project} ) {
-		$self->{root} = $self->{project}->root;
 	}
 
 	return $self;
@@ -89,10 +91,15 @@ sub run {
 		}
 	}
 
-	# Sort the files for the convenience of the caller
+	# Case insensitive Schwartzian sort so the caller doesn't have to
+	# do the sort while blocking.
 	$self->{model} = [
-		sort {
-			$a->unix cmp $b->unix
+		map {
+			$_->[0]
+		} sort {
+			$a->[1] cmp $b->[1]
+		} map {
+			[ $_, lc $_->unix ]
 		} @files
 	];
 

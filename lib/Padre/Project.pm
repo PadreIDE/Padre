@@ -284,11 +284,18 @@ sub ignore_rule {
 	};
 }
 
+# Alternate form
+sub ignore_skip {
+	return [
+		'(?:^|\\/)\\.',
+	];
+}
+
 sub name {
 	my $self = shift;
 	my $name = ( reverse( File::Spec->splitdir( $self->root ) ) )[0];
 
-	if ( !defined $name or $name eq '' ) { # Fallback
+	if ( ! defined $name or $name eq '' ) { # Fallback
 		$name = $self->root;
 		$name =~ s/^.*[\/\\]//;
 	}

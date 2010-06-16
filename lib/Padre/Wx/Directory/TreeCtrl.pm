@@ -180,6 +180,19 @@ sub refresh {
 	_update_subdirs( $self, $root );
 }
 
+sub task_request {
+	my $self    = shift;
+	$self->task_request(
+		task      => 'Padre::Wx::Directory::Task',
+		project   => $self->current->project,
+		recursive => 1,
+	);
+}
+
+sub task_response {
+
+}
+
 # Appends an Upper item to the node beginning
 # if the current dir is not the system root
 sub _append_upper {
