@@ -3,16 +3,17 @@ package Padre::Wx::Directory;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                        ();
+use Padre::Role::Task                ();
+use Padre::Wx::Role::View            ();
+use Padre::Wx::Role::Main            ();
 use Padre::Wx::Directory::TreeCtrl   ();
 use Padre::Wx::Directory::SearchCtrl ();
-use Padre::Wx::Role::Main            ();
-use Padre::Wx::Role::View            ();
-use Padre::Role::Task                ();
+use Padre::Wx                        ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
 	Padre::Role::Task
+	Padre::Wx::Role::View
 	Padre::Wx::Role::Main
 	Wx::Panel
 };
@@ -51,6 +52,9 @@ sub new {
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
 	);
+
+	# Data model storage
+	$self->{model} = [ ];
 
 	# Creates the Search Field and the Directory Browser
 	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
@@ -167,13 +171,20 @@ sub refresh {
 	# Update the panel label
 	$self->panel->refresh;
 
+	# NOTE: Without a file open, Padre does not consider itself to have
+	# a "current project". We should probably try to find a way to correct
+	# this in future.
+	my @options = $project
+		? ( project => $project )
+		: ( root    => $dir     );
+
 	# Trigger the second-generation refresh task
 	$self->task_request(
 		task      => 'Padre::Wx::Directory::Task',
 		callback  => 'refresh_response',
-		project   => $project,
 		recursive => 0,
-	);
+		@options,
+	) if 0; ### REMOVE THIS TO ENABLE THE NEW REFRESH CODE
 
 	return 1;
 }
@@ -182,6 +193,29 @@ sub refresh_response {
 	my $self = shift;
 	my $task = shift;
 	$self->{model} = $task->{model};
+	$self->render;
+}
+
+# This is a primitive first attempt to get familiar with the tree API
+sub render {
+	my $self = shift;
+	my $tree = $self->tree;
+	my $root = $tree->GetRootItem;
+	my $lock = $self->main->lock('UPDATE');
+
+	# Flush and refill
+	$tree->DeleteChildren($root);
+	foreach my $path ( @{$self->{model}} ) {
+		my $image = $path->type ? 'folder' : 'package';
+		my $item  = $tree->AppendItem(
+			$root,                        # Parent node
+			$path->name,                  # Label
+			$tree->{images}->{$image},    # Icon
+			-1,                           # Wx Identifier
+			Wx::TreeItemData->new($path), # Embedded data
+		);
+	}
+
 	return 1;
 }
 

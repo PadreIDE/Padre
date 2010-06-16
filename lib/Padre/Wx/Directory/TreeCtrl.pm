@@ -43,7 +43,7 @@ sub new {
 
 	# Create the image list
 	my $images = Wx::ImageList->new( 16, 16 );
-	$self->{file_types} = {
+	$self->{images} = {
 		upper => $images->Add(
 			Wx::ArtProvider::GetBitmap(
 				'wxART_GO_DIR_UP',
@@ -204,7 +204,7 @@ sub _append_upper {
 	# Inserts the Upper item to the root node
 	$self->InsertItem(
 		$root, 0, '..',
-		$self->{file_types}->{upper},
+		$self->{images}->{upper},
 		-1,
 		Wx::TreeItemData->new(
 			{   name => $name,
@@ -302,7 +302,7 @@ sub _list_dir {
 		my $new_elem = $self->AppendItem(
 			$node,
 			$each->{name},
-			$self->{file_types}->{ $each->{type} },
+			$self->{images}->{ $each->{type} },
 			-1,
 			Wx::TreeItemData->new(
 				{   name => $each->{name},
