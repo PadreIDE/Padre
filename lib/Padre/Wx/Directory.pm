@@ -23,13 +23,6 @@ use Class::XSAccessor {
 		tree   => 'tree',
 		search => 'search',
 	},
-	accessors => {
-		mode                  => 'mode',
-		project_dir           => 'project_dir',
-		previous_dir          => 'previous_dir',
-		project_dir_original  => 'project_dir_original',
-		previous_dir_original => 'previous_dir_original',
-	},
 };
 
 
@@ -53,8 +46,8 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	# Data model storage
-	$self->{model} = [ ];
+	# State storage
+	$self->{files} = [ ];
 
 	# Creates the Search Field and the Directory Browser
 	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
@@ -105,20 +98,30 @@ sub panel {
 	$_[0]->GetParent;
 }
 
+# The current directory
+sub root {
+	my $self    = shift;
+	my $current = $self->current;
+	my $project = $current->project;
+	if ( $project ) {
+		return $project->root;
+	} else {
+		return $current->config->default_projects_directory;
+	}
+}
+
 # Returns the window label
 sub gettext_label {
-	my $self = shift;
-	if ( defined $self->mode and $self->mode eq 'tree' ) {
-		return Wx::gettext('Project');
-	} else {
-		return Wx::gettext('Directory');
-	}
+	Wx::gettext('Project');
 }
 
 # Updates the gui, so each compoment can update itself
 # according to the new state
 sub clear {
-	$_[0]->refresh;
+	my $self = shift;
+	my $tree = $self->tree;
+	my $root = $tree->GetRootItem;
+	$tree->DeleteChildren($root);
 	return;
 }
 
@@ -126,57 +129,15 @@ sub clear {
 # refresh function.
 # Called outside Directory.pm, on directory browser focus and item dragging
 sub refresh {
-	my $self     = shift;
-	my $current  = $self->current;
-	my $document = $current->document;
-	my $project  = $current->project;
+	my $self = shift;
 
-	# Finds project base
-	my $dir;
-	if ( defined($document) ) {
-		$dir = $document->project_dir;
-		$self->{file} = $document->{file};
-	} else {
-		$dir = $self->main->config->default_projects_directory;
-		delete $self->{file};
-	}
-
-	# Shortcut if there's no directory, or we haven't changed directory
-	return unless $dir;
-	if ( defined $self->project_dir and $self->project_dir eq $dir ) {
-		return;
-	}
-
-	$self->{projects}->{$dir}->{dir} ||= $dir;
-	$self->{projects}->{$dir}->{mode} ||=
-		$document->{is_project}
-		? 'tree'
-		: 'navigate';
-
-	# The currently view mode
-	$self->mode( $self->{projects}->{$dir}->{mode} );
-
-	# Save the current project path
-	$self->project_dir( $self->{projects}->{$dir}->{dir} );
-	$self->project_dir_original($dir);
-
-	# Calls Searcher and Browser refresh
-	$self->tree->refresh;
-	$self->search->refresh;
-
-	# Sets the last project to the current one
-	$self->previous_dir( $self->{projects}->{$dir}->{dir} );
-	$self->previous_dir_original($dir);
-
-	# Update the panel label
-	$self->panel->refresh;
-
-	# NOTE: Without a file open, Padre does not consider itself to have
-	# a "current project". We should probably try to find a way to correct
-	# this in future.
+	# NOTE: Without a file open, Padre does not consider itself to
+	# have a "current project". We should probably try to find a way
+	# to correct this in future.
+	my $project = $self->current->project;
 	my @options = $project
-		? ( project => $project )
-		: ( root    => $dir     );
+		? ( project => $project    )
+		: ( root    => $self->root );
 
 	# Trigger the second-generation refresh task
 	$self->task_request(
@@ -184,7 +145,7 @@ sub refresh {
 		callback  => 'refresh_response',
 		recursive => 1,
 		@options,
-	); # if 0; ### REMOVE THIS TO ENABLE THE NEW REFRESH CODE
+	);
 
 	return 1;
 }
@@ -192,26 +153,24 @@ sub refresh {
 sub refresh_response {
 	my $self = shift;
 	my $task = shift;
-	$self->{model} = $task->{model};
+	$self->{files} = $task->{model};
 	$self->render;
 }
 
 # This is a primitive first attempt to get familiar with the tree API
 sub render {
-	$DB::single = $DB::single = 1;
 	my $self = shift;
 	my $tree = $self->tree;
-	my $root = $tree->GetRootItem;
 	my $lock = $self->main->lock('UPDATE');
 
-	# Flush the old records
-	$tree->DeleteChildren($root);
+	# Flush the old state
+	$self->clear;
 
 	# Fill the new tree
 	my @stack = ();
-	my @model = @{$self->{model}};
-	while ( @model ) {
-		my $path  = shift @model;
+	my @files = @{$self->{files}};
+	while ( @files ) {
+		my $path  = shift @files;
 		my $image = $path->type ? 'folder' : 'package';
 		while ( @stack ) {
 			# If we are not the child of the deepest element in
@@ -221,7 +180,7 @@ sub render {
 		}
 
 		# If there is anything left on the stack it is our parent
-		my $parent = $stack[-1] || $root;
+		my $parent = $stack[-1] || $tree->GetRootItem;
 
 		# Add the next item to that parent
 		my $item = $tree->AppendItem(
@@ -240,21 +199,6 @@ sub render {
 	}
 
 	return 1;
-}
-
-# When a project folder is changed
-sub _change_project_dir {
-	my $self   = shift;
-	my $dialog = Wx::DirDialog->new(
-		undef,
-		Wx::gettext('Choose a directory'),
-		$self->project_dir,
-	);
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-		return;
-	}
-	$self->{projects_dirs}->{ $self->project_dir_original } = $dialog->GetPath;
-	$self->refresh;
 }
 
 
