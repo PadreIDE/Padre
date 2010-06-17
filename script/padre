@@ -12,7 +12,7 @@ local $SIG{__DIE__} =
 	: $SIG{__DIE__};
 
 # Must run using wxPerl on OS X.
-if ( $^O eq 'darwin' and $^X !~ m{/wxPerl\.app/} ) {
+if ( $^O eq 'darwin' and $^X !~ m{/wxPerl} ) {
 	require File::Which;
 	my $perl = scalar File::Which::which('wxPerl');
 	chomp($perl);
