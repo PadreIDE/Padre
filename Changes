@@ -33,6 +33,7 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       writing back to the config. We no longer need to write the config
       at all during startup, making startup faster (ADAMK)
     - Scroll the output window down on outputs (kthakore)
+    - Directory browser rewritten to operate in the background (ADAMK)
 
 0.64 2010.06.12
     - Last Stable before merge of new Task 2.0 API

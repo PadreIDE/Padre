@@ -74,13 +74,6 @@ sub new {
 		}
 	);
 
-	Wx::Event::EVT_SET_FOCUS(
-		$self,
-		sub {
-			shift->GetParent->refresh;
-		},
-	);
-
 	Wx::Event::EVT_TREE_ITEM_MENU(
 		$self,
 		$self,
@@ -90,17 +83,7 @@ sub new {
 	);
 
 	# Set up the root
-	my $root = $self->AddRoot(
-		Wx::gettext('Directory'),
-		-1,
-		-1,
-		Wx::TreeItemData->new(
-			{   dir  => '',
-				name => '',
-				type => 'folder',
-			}
-		),
-	);
+	$self->AddRoot( Wx::gettext('Directory'), -1, -1 );
 
 	# Ident to sub nodes
 	$self->SetIndent(10);
@@ -155,7 +138,7 @@ sub on_tree_item_menu {
 	# Generate the context menu for this file
 	my $menu = Wx::Menu->new;
 	my $file = File::Spec->catfile(
-		$self->GetParent->directory,
+		$self->GetParent->root,
 		$data->path,
 	);
 

@@ -47,7 +47,7 @@ sub new {
 	);
 
 	# State storage
-	$self->{files} = [ ];
+	$self->{files}  = [ ];
 
 	# Creates the Search Field and the Directory Browser
 	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
@@ -93,11 +93,6 @@ sub view_close {
 ######################################################################
 # General Methods
 
-# The parent panel
-sub panel {
-	$_[0]->GetParent;
-}
-
 # The current directory
 sub root {
 	my $self    = shift;
@@ -116,7 +111,7 @@ sub gettext_label {
 }
 
 # Updates the gui, so each compoment can update itself
-# according to the new state
+# according to the new state.
 sub clear {
 	my $self = shift;
 	my $tree = $self->tree;
@@ -221,11 +216,15 @@ sub side {
 	die "Bad parent panel";
 }
 
-# Moves the panel to the other side
+# Moves the panel to the other side.
+# To prevent corrupting the layout engine we do this in a specific order.
+# Hide, Reconfigure, Show
 sub move {
 	my $self   = shift;
-	my $config = $self->main->config;
+	my $main   = $self->main;
+	my $config = $main->config;
 	my $side   = $config->main_directory_panel;
+	$main->show_directory(0);
 	if ( $side eq 'left' ) {
 		$config->apply( main_directory_panel => 'right' );
 	} elsif ( $side eq 'right' ) {
@@ -233,6 +232,8 @@ sub move {
 	} else {
 		die "Bad main_directory_panel setting '$side'";
 	}
+	$main->show_directory(1);
+	return 1;
 }
 
 1;

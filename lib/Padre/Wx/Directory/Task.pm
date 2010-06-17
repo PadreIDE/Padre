@@ -65,7 +65,9 @@ sub run {
 		my $dir    = File::Spec->catdir( $root, @path );
 
 		# Read the file list for the directory
-		opendir DIRECTORY, $dir or die "opendir($dir): $!";
+		# NOTE: Silently ignore any that fail. Anything we don't have
+		# permission to see inside of them will just be invisible.
+		opendir DIRECTORY, $dir or next;
 		my @list = readdir DIRECTORY;
 		closedir DIRECTORY;
 
