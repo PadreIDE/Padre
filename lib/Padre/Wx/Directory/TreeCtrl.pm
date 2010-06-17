@@ -6,6 +6,7 @@ use warnings;
 use File::Copy;
 use File::Spec            ();
 use File::Basename        ();
+use Params::Util          ();
 use Padre::Constant       ();
 use Padre::Current        ();
 use Padre::Util           ();
@@ -485,27 +486,43 @@ sub _copy {
 # Action that must be executaded when a item is activated
 # Called when the item is actived
 sub _on_tree_item_activated {
-	my ( $self, $event ) = @_;
-	my $parent    = $self->GetParent;
-	my $node      = $event->GetItem;
-	my $node_data = $self->GetPlData($node);
+	my $self   = shift;
+	my $item   = shift->GetItem;
+	my $data   = $self->GetPlData($item);
+	my $parent = $self->GetParent;
+
+	if ( Params::Util::_INSTANCE($data, 'Padre::Wx::Directory::Path') ) {
+		# If a folder, toggle the expand/collanse state
+		if ( $data->type == 1 ) {
+			$self->Toggle($item);
+			return;
+		}
+
+		# Open the selected file
+		my $current = $self->current;
+		my $main    = $current->main;
+		my $project = $current->project;
+		my $file    = File::Spec->catfile( $project->root, $data->path );
+		$main->setup_editor($file);
+		return;
+	}
 
 	# If its a folder expands/collapses it and returns
 	# or makes it the current project folder, depending
 	# of the mode view
-	if ( $node_data->{type} eq 'folder' or $node_data->{type} eq 'upper' ) {
+	if ( $data->{type} eq 'folder' or $data->{type} eq 'upper' ) {
 		if ( $parent->mode eq 'navigate' ) {
 			$parent->{projects}->{ $parent->project_dir_original }->{dir} =
-				File::Spec->catdir( $node_data->{dir}, $node_data->{name} );
+				File::Spec->catdir( $data->{dir}, $data->{name} );
 			$parent->refresh;
 		} else {
-			$self->Toggle($node);
+			$self->Toggle($item);
 		}
 		return;
 	}
 
 	# Returns if the selected FILE have no path
-	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	my $path = File::Spec->catfile( $data->{dir}, $data->{name} );
 	return if not defined $path;
 
 	# Opens the selected file
@@ -565,55 +582,67 @@ sub _on_tree_end_label_edit {
 # Caches the item path as current selected item
 # Called when a item is selected
 sub _on_tree_sel_changed {
-	my ( $self, $event ) = @_;
-	return if not $self->GetParent->can('project_dir');
-	my $node_data = $self->GetPlData( $event->GetItem );
+	my $self = shift;
+	my $item = shift->GetItem;
+	my $data = $self->GetPlData($item);
+
+	# Shortcut if it's a new type path
+	return if Params::Util::_INSTANCE($data, 'Padre::Wx::Directory::Path');
 
 	# Caches the item path
+	return unless $self->GetParent->can('project_dir');
 	$self->{current_item}->{ $self->GetParent->project_dir } =
-		File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+		File::Spec->catfile( $data->{dir}, $data->{name} );
 }
 
 # Expands the node and loads its content.
 # Called when a folder is expanded.
 sub _on_tree_item_expanding {
-	my ( $self, $event ) = @_;
-	my $node      = $event->GetItem;
-	my $node_data = $self->GetPlData($node);
+	my $self = shift;
+	my $item = shift->GetItem;
+	my $data = $self->GetPlData($item);
+
+	# Shortcut if it's a new type path
+	return if Params::Util::_INSTANCE($data, 'Padre::Wx::Directory::Path');
 
 	# Returns if a search is being done (expands only the browser listing)
-	return if !defined( $self->search );
+	return unless defined $self->search;
 	return if $self->search->{in_use}->{ $self->GetParent->project_dir };
 
 	# The item complete path
-	my $path = File::Spec->catfile( $node_data->{dir}, $node_data->{name} );
+	my $path = File::Spec->catfile( $data->{dir}, $data->{name} );
 
 	# Cache the expanded state of the node
 	$self->{CACHED}->{ $self->GetParent->project_dir }->{Expanded}->{$path} = 1;
 
 	# Updates the node content if it changed or has no child
-	if ( $self->_updated_dir($path) or !$self->GetChildrenCount($node) ) {
-		$self->_list_dir($node);
+	if ( $self->_updated_dir($path) or not $self->GetChildrenCount($item) ) {
+		$self->_list_dir($item);
 	}
 }
 
 # Deletes nodes Expanded cache param.
 # Called when a folder is collapsed.
 sub _on_tree_item_collapsing {
-	my ( $self, $event ) = @_;
-	my $node        = $event->GetItem;
-	my $node_data   = $self->GetPlData($node);
+	my $self = shift;
+	my $item = shift->GetItem;
+	my $data = $self->GetPlData($item);
+
+	# Shortcut if it's a new type path
+	return if Params::Util::_INSTANCE($data, 'Padre::Wx::Directory::Path');
+
 	my $project_dir = $self->GetParent->project_dir;
 
 	# If it is the Root node, set Expanded to 0
-	if ( $node == $self->GetRootItem ) {
+	if ( $item == $self->GetRootItem ) {
 		$self->{CACHED}->{$project_dir}->{Expanded}->{$project_dir} = 0;
 		return;
 	}
 
 	# Deletes cache expanded state of the node
-	delete $self->{CACHED}->{$project_dir}->{Expanded}
-		->{ File::Spec->catfile( $node_data->{dir}, $node_data->{name} ) };
+	delete $self->{CACHED}->{$project_dir}->{Expanded}->{
+		File::Spec->catfile( $data->{dir}, $data->{name} )
+	};
 }
 
 # If the item is not the root node let it to be dragged.

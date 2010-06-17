@@ -68,6 +68,49 @@ sub is_directory {
 	($_[0]->[0] == DIRECTORY) ? 1 : 0;
 }
 
+# Is this path the immediate parent of another path
+sub is_parent {
+	my $self = shift;
+	my $path = shift;
+
+	# If it is our child, it will be one element longer than us
+	unless ( @$path == @$self + 1 ) {
+		return 0;
+	}
+
+	# All the elements of our path will be identical in it
+	foreach my $i ( 2 .. $#$self ) {
+		return 0 unless $self->[$i] eq $path->[$i];
+	}
+
+	return 1;
+}
+
+# Compare two paths for the purpose of file sorting
+sub compare {
+	my $self = shift;
+	my $path = shift;
+	my $i    = 1;
+	while ( ++$i ) {
+		my $left  = $self->[$i];
+		my $right = $path->[$i];
+		unless ( defined $left ) {
+			return 0 unless defined $right;
+			return -1;
+		}
+		return 1 unless defined $right;
+
+		# Try to sort case insensitive first
+		my $result = ( lc($left) cmp lc($right) );
+		return $result if $result;
+
+		# To prevent nesting problems, repeat case sensitive
+		# before we descend to the next level.
+		$result = ( $left cmp $right ) or next;
+		return $result;		
+	}
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

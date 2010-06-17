@@ -94,13 +94,7 @@ sub run {
 	# Case insensitive Schwartzian sort so the caller doesn't have to
 	# do the sort while blocking.
 	$self->{model} = [
-		map {
-			$_->[0]
-		} sort {
-			$a->[1] cmp $b->[1]
-		} map {
-			[ $_, lc $_->unix ]
-		} @files
+		sort { $a->compare($b) } @files
 	];
 
 	return 1;

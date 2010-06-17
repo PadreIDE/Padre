@@ -182,9 +182,9 @@ sub refresh {
 	$self->task_request(
 		task      => 'Padre::Wx::Directory::Task',
 		callback  => 'refresh_response',
-		recursive => 0,
+		recursive => 1,
 		@options,
-	) if 0; ### REMOVE THIS TO ENABLE THE NEW REFRESH CODE
+	); # if 0; ### REMOVE THIS TO ENABLE THE NEW REFRESH CODE
 
 	return 1;
 }
@@ -198,22 +198,45 @@ sub refresh_response {
 
 # This is a primitive first attempt to get familiar with the tree API
 sub render {
+	$DB::single = $DB::single = 1;
 	my $self = shift;
 	my $tree = $self->tree;
 	my $root = $tree->GetRootItem;
 	my $lock = $self->main->lock('UPDATE');
 
-	# Flush and refill
+	# Flush the old records
 	$tree->DeleteChildren($root);
-	foreach my $path ( @{$self->{model}} ) {
+
+	# Fill the new tree
+	my @stack = ();
+	my @model = @{$self->{model}};
+	while ( @model ) {
+		my $path  = shift @model;
 		my $image = $path->type ? 'folder' : 'package';
-		my $item  = $tree->AppendItem(
-			$root,                        # Parent node
+		while ( @stack ) {
+			# If we are not the child of the deepest element in
+			# the stack, move up a level and try again
+			last if $tree->GetPlData($stack[-1])->is_parent($path);
+			pop @stack;
+		}
+
+		# If there is anything left on the stack it is our parent
+		my $parent = $stack[-1] || $root;
+
+		# Add the next item to that parent
+		my $item = $tree->AppendItem(
+			$parent,                      # Parent node
 			$path->name,                  # Label
 			$tree->{images}->{$image},    # Icon
 			-1,                           # Wx Identifier
 			Wx::TreeItemData->new($path), # Embedded data
 		);
+
+		# If it is a folder, it goes onto the stack
+		if ( $path->type == 1 ) {
+			push @stack, $item;
+			$tree->Expand($item);
+		}
 	}
 
 	return 1;
