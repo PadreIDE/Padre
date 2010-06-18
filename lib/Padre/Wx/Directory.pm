@@ -288,6 +288,13 @@ sub render {
 		}
 	}
 
+	# When in search mode, force the scroll position to the top after
+	# every refresh. It tends to want to scroll to the bottom.
+	if ( $search ) {
+		my ($first, $cookie) = $tree->GetFirstChild($root);
+		$tree->ScrollTo($first) if $first;
+	}
+
 	return 1;
 }
 
