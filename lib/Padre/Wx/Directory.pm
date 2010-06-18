@@ -7,7 +7,6 @@ use Padre::Role::Task                ();
 use Padre::Wx::Role::View            ();
 use Padre::Wx::Role::Main            ();
 use Padre::Wx::Directory::TreeCtrl   ();
-use Padre::Wx::Directory::SearchCtrl ();
 use Padre::Wx                        ();
 
 our $VERSION = '0.64';
@@ -49,9 +48,50 @@ sub new {
 	# State storage
 	$self->{files}  = [ ];
 
-	# Creates the Search Field and the Directory Browser
+	# Create the tree control
 	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
-	$self->{search} = Padre::Wx::Directory::SearchCtrl->new($self);
+
+	# Create the search control
+	my $search = $self->{search} = Wx::SearchCtrl->new(
+		$self,
+		-1,
+		'',
+		Wx::wxDefaultPosition,
+		Wx::wxDefaultSize,
+		Wx::wxTE_PROCESS_ENTER
+	);
+	$search->SetDescriptiveText( Wx::gettext('Search') );
+
+	Wx::Event::EVT_TEXT(
+		$self,
+		$search,
+		sub {
+			$DB::single = 1;
+			shift->on_text(@_);
+		},
+	);
+
+	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
+		$self,
+		$search,
+		sub {
+			shift->{search}->SetValue('');
+		},
+	);
+
+	# Create the search control menu
+	my $menu = Wx::Menu->new;
+	Wx::Event::EVT_MENU(
+		$self,
+		$menu->Append(
+			-1,
+			Wx::gettext('Move to other panel')
+		),
+		sub {
+			shift->move;
+		}
+	);
+	$search->SetMenu( $menu );
 
 	# Fill the panel
 	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
@@ -85,6 +125,27 @@ sub view_label {
 sub view_close {
 	shift->main->show_directory(0);
 }
+
+
+
+
+
+######################################################################
+# Event Handlers
+
+# If it is a project, caches search field content while it is typed and
+# searchs for files that matchs the type word.
+sub on_text {
+	my $self   = shift;
+	my $search = $self->{search};
+
+	# Show or hide the cancel button
+	$search->ShowCancelButton( $search->IsEmpty ? 0 : 1 );
+
+	# The changed search state requires a rerender
+	$self->render;
+}
+
 
 
 
