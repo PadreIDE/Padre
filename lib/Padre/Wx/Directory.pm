@@ -70,7 +70,6 @@ sub new {
 		$self,
 		$search,
 		sub {
-			$DB::single = 1;
 			shift->on_text(@_);
 		},
 	);
