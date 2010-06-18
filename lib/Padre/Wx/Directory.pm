@@ -164,13 +164,24 @@ sub gettext_label {
 	Wx::gettext('Project');
 }
 
+# The search term if we have one
+sub term {
+	$_[0]->{search}->GetValue;
+}
+
+# Are we in search mode?
+sub searching {
+	$_[0]->{search}->IsEmpty ? 0 : 1;
+}
+
 # Updates the gui, so each compoment can update itself
 # according to the new state.
 sub clear {
 	my $self = shift;
-	my $tree = $self->tree;
-	my $root = $tree->GetRootItem;
-	$tree->DeleteChildren($root);
+	my $lock = $self->main->lock('UPDATE');
+	$self->{search}->SetValue('');
+	$self->{search}->ShowCancelButton(0);
+	$self->{tree}->DeleteChildren( $self->{tree}->GetRootItem );
 	return;
 }
 
@@ -219,15 +230,22 @@ sub refresh_response {
 sub render {
 	my $self   = shift;
 	my $tree   = $self->tree;
+	my $root   = $tree->GetRootItem;
 	my $expand = $self->{expand};
-	my $lock   = $self->main->lock('UPDATE');
 
-	# Flush the old state
-	$self->clear;
+	# Prepare search mode if needed
+	my $search = $self->searching;
+	my @files  = $search ? $self->filter( $self->term ) : @{$self->{files}};
+
+	# Flush the old tree contents
+	# TO DO: This is inefficient, upgrade to something that does the
+	# equivalent of a treewise diff application, modifying the tree
+	# to get the result we want instead of rebuilding it entirely.
+	my $lock = $self->main->lock('UPDATE');
+	$tree->DeleteChildren($root);
 
 	# Fill the new tree
 	my @stack = ();
-	my @files = @{$self->{files}};
 	while ( @files ) {
 		my $path  = shift @files;
 		my $image = $path->type ? 'folder' : 'package';
@@ -238,14 +256,14 @@ sub render {
 
 			# We have finished filling the directory.
 			# Now it (maybe) has children, we can expand it.
-			my $filled = pop @stack;
-			if ( $expand->{ $tree->GetPlData($filled)->unix } ) {
-				$tree->Expand($filled);
+			my $complete = pop @stack;
+			if ( $search or $expand->{ $tree->GetPlData($complete)->unix } ) {
+				$tree->Expand($complete);
 			}
 		}
 
 		# If there is anything left on the stack it is our parent
-		my $parent = $stack[-1] || $tree->GetRootItem;
+		my $parent = $stack[-1] || $root;
 
 		# Add the next item to that parent
 		my $item = $tree->AppendItem(
@@ -262,7 +280,51 @@ sub render {
 		}
 	}
 
+	# Apply the same Expand logic above to any remaining stack elements
+	while ( @stack ) {
+		my $complete = pop @stack;
+		if ( $search or $expand->{ $tree->GetPlData($complete)->unix } ) {
+			$tree->Expand($complete);
+		}
+	}
+
 	return 1;
+}
+
+# Filter the file list to remove all files that do not match a search term
+# TO DO: I believe that the two phases shown below can be merged into one.
+sub filter {
+	my $self  = shift;
+	my $term  = shift;
+
+	# Apply a simple substring match on the file name only
+	my $quote = quotemeta $term;
+	my $regex = qr/$quote/i;
+	my @match = grep {
+		$_->is_directory
+		or
+		$_->name =~ $regex
+	} @{$self->{files}};
+
+	# Prune empty directories
+	# NOTE: This is tricky and hard to make sense of, but damned fast :)
+	foreach my $i ( reverse 0 .. $#match ) {
+		my $path  = $match[$i];
+		my $after = $match[$i + 1];
+		my $prune = (
+			$path->is_directory
+			and not (
+				defined $after
+				and
+				$after->depth - $path->depth == 1
+			)
+		);
+		if ( $prune ) {
+			splice @match, $i, 1;
+		}
+	}
+
+	return @match;
 }
 
 
@@ -270,7 +332,7 @@ sub render {
 
 
 ######################################################################
-# Panel Migration Support
+# Panel Migration (Experimental)
 
 # What side of the application are we on
 sub side {
@@ -288,6 +350,9 @@ sub side {
 # Moves the panel to the other side.
 # To prevent corrupting the layout engine we do this in a specific order.
 # Hide, Reconfigure, Show
+# TO DO: This results in loss of all state, and the need to rescan the tree.
+# Come up with a saner approach to migrating views between arbitrary panels
+# that we can expand out so all views can potentially be moved around.
 sub move {
 	my $self   = shift;
 	my $main   = $self->main;
