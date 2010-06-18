@@ -19,6 +19,7 @@ our @ISA     = qw{
 
 use Class::XSAccessor {
 	getters => {
+		root   => 'root',
 		tree   => 'tree',
 		search => 'search',
 	},
@@ -45,11 +46,14 @@ sub new {
 		Wx::wxDefaultSize,
 	);
 
-	# State storage
-	$self->{files}  = [ ];
+	# Where is the current root directory of the tree
+	$self->{root} = '';
 
-	# Create the tree control
-	$self->{tree}   = Padre::Wx::Directory::TreeCtrl->new($self);
+	# The list of all files to build into the tree
+	$self->{files} = [ ];
+
+	# The directories in the tree that should be expanded
+	$self->{expand} = { };
 
 	# Create the search control
 	my $search = $self->{search} = Wx::SearchCtrl->new(
@@ -93,12 +97,15 @@ sub new {
 	);
 	$search->SetMenu( $menu );
 
+	# Create the tree control
+	$self->{tree} = Padre::Wx::Directory::TreeCtrl->new($self);
+
 	# Fill the panel
 	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizerv->Add( $self->search, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerv->Add( $self->tree,   1, Wx::wxALL | Wx::wxEXPAND, 0 );
-	$sizerh->Add( $sizerv,       1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerv->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerv->Add( $self->{tree},   1, Wx::wxALL | Wx::wxEXPAND, 0 );
+	$sizerh->Add( $sizerv,         1, Wx::wxALL | Wx::wxEXPAND, 0 );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);
@@ -150,21 +157,8 @@ sub on_text {
 
 
 
-
 ######################################################################
 # General Methods
-
-# The current directory
-sub root {
-	my $self    = shift;
-	my $current = $self->current;
-	my $project = $current->project;
-	if ( $project ) {
-		return $project->root;
-	} else {
-		return $current->config->default_projects_directory;
-	}
-}
 
 # Returns the window label
 sub gettext_label {
@@ -187,13 +181,22 @@ sub clear {
 sub refresh {
 	my $self = shift;
 
+	# Save the list of expanded directories
+	$self->{expand} = $self->tree->expanded;
+
 	# NOTE: Without a file open, Padre does not consider itself to
 	# have a "current project". We should probably try to find a way
 	# to correct this in future.
-	my $project = $self->current->project;
-	my @options = $project
-		? ( project => $project    )
-		: ( root    => $self->root );
+	my $current = $self->current;
+	my $project = $current->project;
+	my @options = ();
+	if ( $project ) {
+		$self->{root} = $project->root;
+		@options      = ( project => $project );
+	} else {
+		$self->{root} = $current->config->default_projects_directory;
+		@options      = ( root => $self->{root} );
+	}
 
 	# Trigger the second-generation refresh task
 	$self->task_request(
@@ -215,9 +218,10 @@ sub refresh_response {
 
 # This is a primitive first attempt to get familiar with the tree API
 sub render {
-	my $self = shift;
-	my $tree = $self->tree;
-	my $lock = $self->main->lock('UPDATE');
+	my $self   = shift;
+	my $tree   = $self->tree;
+	my $expand = $self->{expand};
+	my $lock   = $self->main->lock('UPDATE');
 
 	# Flush the old state
 	$self->clear;
@@ -232,7 +236,13 @@ sub render {
 			# If we are not the child of the deepest element in
 			# the stack, move up a level and try again
 			last if $tree->GetPlData($stack[-1])->is_parent($path);
-			pop @stack;
+
+			# We have finished filling the directory.
+			# Now it (maybe) has children, we can expand it.
+			my $filled = pop @stack;
+			if ( $expand->{ $tree->GetPlData($filled)->unix } ) {
+				$tree->Expand($filled);
+			}
 		}
 
 		# If there is anything left on the stack it is our parent
@@ -250,7 +260,6 @@ sub render {
 		# If it is a folder, it goes onto the stack
 		if ( $path->type == 1 ) {
 			push @stack, $item;
-			$tree->Expand($item);
 		}
 	}
 

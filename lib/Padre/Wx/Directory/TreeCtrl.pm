@@ -188,9 +188,24 @@ sub on_tree_item_menu {
 ######################################################################
 # General Methods
 
-# Traverse to the search widget
-sub search {
-	$_[0]->GetParent->search;
+# Scan the tree to find all directory nodes which are expanded.
+# Returns a reference to a HASH of ->unix path strings.
+sub expanded {
+	my $self   = shift;
+	my @queue  = $self->GetRootItem;
+	my %expand = ();
+	while ( @queue ) {
+		my $parent = shift @queue;
+		my ($child, $cookie) = $self->GetFirstChild($parent);
+		while ( $child ) {
+			if ( $self->IsExpanded($child) ) {
+				$expand{ $self->GetPlData($child)->unix } = 1;
+				push @queue, $child;
+			}
+			($child, $cookie) = $self->GetNextChild($parent, $cookie);
+		}
+	}
+	return \%expand;
 }
 
 1;
