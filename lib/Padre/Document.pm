@@ -336,7 +336,7 @@ sub current {
 # PPI::Cache Integration
 
 sub DESTROY {
-	PPI::Cache::release($_[0]);
+	PPI::Cache::release($_[0]->{filename});
 }
 
 
