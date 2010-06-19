@@ -191,21 +191,29 @@ sub clear {
 sub refresh {
 	my $self = shift;
 
-	# Save the list of expanded directories
-	$self->{expand} = $self->tree->expanded;
-
 	# NOTE: Without a file open, Padre does not consider itself to
 	# have a "current project". We should probably try to find a way
 	# to correct this in future.
 	my $current = $self->current;
 	my $project = $current->project;
+	my $root    = '';
 	my @options = ();
 	if ( $project ) {
-		$self->{root} = $project->root;
-		@options      = ( project => $project );
+		$root    = $project->root;
+		@options = ( project => $project );
 	} else {
-		$self->{root} = $current->config->default_projects_directory;
-		@options      = ( root => $self->{root} );
+		$root    = $current->config->default_projects_directory;
+		@options = ( root => $root );
+	}
+
+	# Are we refreshing the same project, or changing projects?
+	if ( $self->{root} eq $root ) {
+		# Save the list of expanded directories
+		$self->{expand} = $self->tree->expanded;
+	} else {
+		$self->{root}   = $root;
+		$self->{expand} = { };
+		$self->clear;
 	}
 
 	# Trigger the second-generation refresh task
