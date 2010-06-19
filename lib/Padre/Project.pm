@@ -10,6 +10,7 @@ use File::Path     ();
 use File::Basename ();
 use Padre::Config  ();
 use Padre::Current ();
+use Padre::Cache   ();
 
 our $VERSION = '0.64';
 
@@ -301,6 +302,17 @@ sub name {
 	}
 
 	return $name;
+}
+
+
+
+
+
+######################################################################
+# PPI::Cache Integration
+
+sub DESTROY {
+	PPI::Cache::release($_[0]);
 }
 
 1;
