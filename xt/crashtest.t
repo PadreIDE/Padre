@@ -7,18 +7,21 @@
 use strict;
 use warnings;
 use Test::More;
-
-#use Test::NoWarnings;
+# use Test::NoWarnings;
 use File::Temp ();
-use File::Spec();
-
-plan skip_all => 'DISPLAY not set'
-	unless $ENV{DISPLAY}
-		or ( $^O eq 'MSWin32' );
+use File::Spec ();
 
 # Don't run tests for installs
 unless ( $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 	plan( skip_all => "Author tests not required for installation" );
+}
+
+unless ( $ENV{DISPLAY} or $^O eq 'MSWin32' ) {
+	plan skip_all => 'DISPLAY not set';
+}
+
+if ( $^O eq 'MSWin32' ) {
+	plan skip_all => 'Crashing currently blocks the entire test suite on Win32';
 }
 
 my $devpl;
@@ -54,8 +57,9 @@ $ENV{PADRE_HOME} = $dir->dirname;
 # Complete the dev.pl - command
 $cmd .= $devpl . ' --invisible -- --home=' . $dir->dirname;
 $cmd .= ' ' . File::Spec->catfile( $dir->dirname, 'newfile.txt' );
-$cmd
-	.= ' --actionqueue=file.new,edit.goto,edit.join_lines,edit.comment_toggle,edit.comment,edit.uncomment,edit.tabs_to_spaces,edit.spaces_to_tabs,edit.show_as_hex,help.current,help.about,file.quit';
+$cmd .= ' --actionqueue=file.new,edit.goto,edit.join_lines,edit.comment_toggle';
+$cmd .= ',edit.comment,edit.uncomment,edit.tabs_to_spaces,edit.spaces_to_tabs';
+$cmd .= ',edit.show_as_hex,help.current,help.about,file.quit';
 
 my $output = `$cmd 2>&1`;
 
