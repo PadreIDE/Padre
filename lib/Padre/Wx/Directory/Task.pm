@@ -73,12 +73,20 @@ sub run {
 
 		foreach my $file ( @list ) {
 			next if $file =~ /^\.+\z/;
-			if ( -f File::Spec->catfile( $dir, $file ) ) {
+			
+			my $fullname = File::Spec->catdir( $dir, $file );
+			
+			# readlink may die if symlinks are not implemented
+			eval {
+				$fullname = readlink $fullname;
+			} if -l $fullname;
+			
+			if ( -f $fullname ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
 				next if $rule->skipped($object->unix);
 				push @files, $object;
 
-			} elsif ( -d File::Spec->catdir( $dir, $file ) ) {
+			} elsif ( -d $fullname  ) {
 				my $object = Padre::Wx::Directory::Path->directory(@path, $file);
 				next if $rule->skipped($object->unix);
 				push @files, $object;
@@ -88,7 +96,7 @@ sub run {
 				push @queue, $object;
 
 			} else {
-				warn "Unknown or unsupported file type";
+				warn "Unknown or unsupported file type for $fullname";
 			}
 		}
 	}
