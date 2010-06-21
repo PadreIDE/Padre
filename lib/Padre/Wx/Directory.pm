@@ -3,6 +3,7 @@ package Padre::Wx::Directory;
 use 5.008;
 use strict;
 use warnings;
+use Padre::Cache                     ();
 use Padre::Role::Task                ();
 use Padre::Wx::Role::View            ();
 use Padre::Wx::Role::Main            ();
@@ -206,17 +207,53 @@ sub refresh {
 		@options = ( root => $root );
 	}
 
-	# Are we refreshing the same project, or changing projects?
-	if ( $self->{root} eq $root ) {
-		# Save the list of expanded directories
-		$self->{expand} = $self->tree->expanded;
-	} else {
+	# Before we change anything, store the expansion state
+	$self->{expand} = $self->tree->expanded;
+
+	# Switch project states if needed
+	unless ( $self->{root} eq $root ) {
+		my $ide = $current->ide;
+
+		# Save the current model data to the cache
+		# if we potentially need it again later.
+		if ( $ide->project_exists( $self->{root} ) ) {
+			my $stash = Padre::Cache::stash(
+				__PACKAGE__,
+				$ide->project( $self->{root} ),
+			);
+			%$stash = (
+				root   => $self->{root},
+				files  => $self->{files},
+				expand => $self->{expand},
+			);
+		}
+
+		# Flush the now-unusable state
 		$self->{root}   = $root;
+		$self->{files}  = [ ];
 		$self->{expand} = { };
-		$self->clear;
+
+		# Do we have an (out of date) cached state we can use?
+		# If so, display it immediately and update it later.
+		if ( $project ) {
+			my $stash = Padre::Cache::stash(
+				__PACKAGE__,
+				$project,
+			);
+			if ( $stash->{root} ) {
+				# We have a cached state
+				$self->{files}  = $stash->{files};
+				$self->{expand} = $stash->{expand};
+			}
+		}
+
+		# Flush the search box and rerender the tree
+		$self->{search}->SetValue('');
+		$self->{search}->ShowCancelButton(0);
+		$self->render;
 	}
 
-	# Trigger the second-generation refresh task
+	# Trigger the refresh task to update the temporary state
 	$self->task_request(
 		task      => 'Padre::Wx::Directory::Task',
 		callback  => 'refresh_response',

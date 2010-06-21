@@ -309,10 +309,10 @@ sub name {
 
 
 ######################################################################
-# PPI::Cache Integration
+# Padre::Cache Integration
 
 sub DESTROY {
-	PPI::Cache::release($_[0]->{root});
+	Padre::Cache::release($_[0]->{root});
 }
 
 1;

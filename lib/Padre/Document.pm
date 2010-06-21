@@ -333,10 +333,10 @@ sub current {
 
 
 ######################################################################
-# PPI::Cache Integration
+# Padre::Cache Integration
 
 sub DESTROY {
-	PPI::Cache::release($_[0]->{filename});
+	Padre::Cache::release($_[0]->{filename});
 }
 
 

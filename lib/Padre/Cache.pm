@@ -14,26 +14,25 @@ my %DATA = ();
 
 sub stash {
 	my $owner = shift;
-	my $key   = key(shift);
+	my $key   = shift;
+
+	# We need an instantiated cache target
+	# NOTE: The defined is needed because Padre::Project::Null
+	# boolifies to false. In retrospect, that may have been a bad idea.
+	if ( defined Params::Util::_INSTANCE($key, 'Padre::Project') ) {
+		$key = $key->root;
+	} elsif ( Params::Util::_INSTANCE($key, 'Padre::Document') ) {
+		$key = $key->filename;
+	} else {
+		die "Missing or invalid cache key";
+	}
+
 	$DATA{$key}->{$owner} or
-	$DATA{$key}->{$owner} = {};
+	$DATA{$key}->{$owner} = { };
 }
 
 sub release {
-	my $owner = shift;
-	my $key   = key(shift);
-	delete $DATA{$key};
-	return 1;
-}
-
-sub key {
-	if ( Params::Util::_INSTANCE($_[0], 'Padre::Project') ) {
-		return shift->root;
-	}
-	if ( Params::Util::_INSTANCE($_[0], 'Padre::Document') ) {
-		return shift->filename;
-	}
-	return shift;
+	delete $DATA{$_[0]};
 }
 
 1;
