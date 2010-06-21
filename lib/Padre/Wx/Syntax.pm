@@ -318,7 +318,7 @@ sub refresh {
 	my $document = $self->current->document or return;
 	my $length   = $document->text_length;
 
-	if ( $document eq $self->{document} ) {
+	if ( $document->filename eq $self->{document} ) {
 		# Shortcut if nothing has changed.
 		# NOTE: Given the speed at which the timer fires a cheap
 		# length check is better than an expensive MD5 check.
@@ -329,7 +329,7 @@ sub refresh {
 		# New file, don't keep the current list visible
 		$self->clear;
 	}
-	$self->{document} = $document;
+	$self->{document} = $document->filename;
 	$self->{length}   = $length;
 
 	# Fire the background task discarding old results
