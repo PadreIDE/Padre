@@ -218,7 +218,7 @@ sub refresh {
 
 		# Save the current model data to the cache
 		# if we potentially need it again later.
-		if ( $ide->project_exists( $self->{root} ) ) {
+		if ( $ide->project( $self->{root} ) ) {
 			my $stash = Padre::Cache::stash(
 				__PACKAGE__,
 				$ide->project( $self->{root} ),
