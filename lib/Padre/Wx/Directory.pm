@@ -208,7 +208,9 @@ sub refresh {
 	}
 
 	# Before we change anything, store the expansion state
-	$self->{expand} = $self->tree->expanded;
+	unless ( $self->searching ) {
+		$self->{expand} = $self->tree->expanded;
+	}
 
 	# Switch project states if needed
 	unless ( $self->{root} eq $root ) {
