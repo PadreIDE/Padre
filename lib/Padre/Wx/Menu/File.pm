@@ -5,6 +5,8 @@ package Padre::Wx::Menu::File;
 use 5.008;
 use strict;
 use warnings;
+use Fcntl;
+
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Current  ('_CURRENT');
@@ -329,7 +331,11 @@ sub refresh_recent {
 	}
 
 	my $idx = 0;
-	foreach my $file ( grep { -f if $_ } Padre::DB::History->recent('files') ) {
+	foreach my $file ( Padre::DB::History->recent('files') ) {
+		# Try a non-blocking "-f" (doesn't work in all cases)
+		sysopen my $fh,$file,O_RDONLY|O_NDELAY or next; # File does not exist or is not accessable
+		close $fh;
+		
 		Wx::Event::EVT_MENU(
 			$self->{main},
 			$self->{recentfiles}->Append(
