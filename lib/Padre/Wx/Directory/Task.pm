@@ -58,6 +58,8 @@ sub run {
 	my $rule = Module::Manifest->new;
 	$rule->parse( skip => $self->{skip} );
 
+	my %path_cache = (File::Spec->catdir($queue[0]->path,$queue[0]->name) => $queue[0]);
+
 	# Recursively scan for files
 	while ( @queue ) {
 		my $parent = shift @queue;
@@ -75,10 +77,22 @@ sub run {
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 			
-			# readlink may die if symlinks are not implemented
-			# eval {
-				# $fullname = readlink $fullname;
-			# } if -l $fullname;
+			while (-l $fullname) {
+
+				# readlink may die if symlinks are not implemented
+				eval {
+					$fullname = readlink $fullname;
+				};
+
+				# Get it from the cache in case of loops:
+				if (exists $path_cache{$fullname}) {
+					push @files,$path_cache{$fullname} if defined($path_cache{$fullname});
+					next;
+				}
+
+				# Prepare a cache object to step out of symlink loops
+				$path_cache{$fullname} = undef;
+			}
 			
 			if ( -f $fullname ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
@@ -93,6 +107,7 @@ sub run {
 				# Continue down within it?
 				next unless $self->{recursive};
 				push @queue, $object;
+				$path_cache{$fullname} = $object;
 
 			} else {
 				warn "Unknown or unsupported file type for $fullname";
