@@ -60,6 +60,9 @@ sub run {
 
 	my %path_cache = (File::Spec->catdir($queue[0]->path,$queue[0]->name) => $queue[0]);
 
+	# Get the device of the root path
+	my $dev = stat($root);
+
 	# Recursively scan for files
 	while ( @queue ) {
 		my $parent = shift @queue;
@@ -76,12 +79,17 @@ sub run {
 		foreach my $file ( @list ) {
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
+
+			if ($dev != stat($fullname)) {
+				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)";
+				next;
+			}
 			
 			while (-l $fullname) {
 
 				# readlink may die if symlinks are not implemented
 				eval {
-					$fullname = readlink $fullname;
+					$fullname = File::Spec->canonpath(File::Spec->catdir( $dir, readlink $fullname));
 				};
 
 				# Get it from the cache in case of loops:
