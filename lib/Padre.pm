@@ -271,6 +271,10 @@ sub project {
 	return $self->{project}->{$root};
 }
 
+sub project_exists {
+	defined $_[0]->{project}->{$_[1]};
+}
+
 1;
 
 __END__
