@@ -73,13 +73,12 @@ sub run {
 
 		foreach my $file ( @list ) {
 			next if $file =~ /^\.+\z/;
-			
 			my $fullname = File::Spec->catdir( $dir, $file );
 			
 			# readlink may die if symlinks are not implemented
-			eval {
-				$fullname = readlink $fullname;
-			} if -l $fullname;
+			# eval {
+				# $fullname = readlink $fullname;
+			# } if -l $fullname;
 			
 			if ( -f $fullname ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
