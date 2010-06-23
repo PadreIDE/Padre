@@ -61,7 +61,7 @@ sub run {
 	my %path_cache = (File::Spec->catdir($queue[0]->path,$queue[0]->name) => $queue[0]);
 
 	# Get the device of the root path
-	my $dev = stat($root);
+	my $dev = (stat($root))[0];
 
 	# Recursively scan for files
 	while ( @queue ) {
@@ -83,12 +83,20 @@ sub run {
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 
-			while (-l $fullname) {
+			while (1) {
+
+				my $target;
 
 				# readlink may die if symlinks are not implemented
 				eval {
-					$fullname = File::Spec->canonpath(File::Spec->catdir( $dir, readlink $fullname));
+					$target = readlink($fullname);
 				};
+				last if $@; # readlink failed
+				last unless defined($target); # not a link
+				
+				# Target may be "/home/user/foo" or "../foo" or "bin/foo"
+				$fullname = File::Spec->file_name_is_absolute($target) ? $target :
+					File::Spec->canonpath(File::Spec->catdir( $dir, $target));
 
 				# Get it from the cache in case of loops:
 				if (exists $path_cache{$fullname}) {
@@ -102,17 +110,23 @@ sub run {
 			}
 			next if $skip;
 			
-			if ($dev != stat($fullname)) {
+			my @fstat = stat($fullname);
+			
+			# File doesn't exist, either a directory error, symlink to nowhere or something unexpected.
+			# Don't worry, just skip, because we can't show it in the dir browser anyway
+			next if $#fstat == -1;
+			
+			if ($dev != $fstat[0]) {
 				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)";
 				next;
 			}
 			
-			if ( -f $fullname ) {
+			if ( -f _ ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
 				next if $rule->skipped($object->unix);
 				push @files, $object;
 
-			} elsif ( -d $fullname  ) {
+			} elsif ( -d _  ) {
 				my $object = Padre::Wx::Directory::Path->directory(@path, $file);
 				next if $rule->skipped($object->unix);
 				push @files, $object;
