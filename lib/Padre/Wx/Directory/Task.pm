@@ -77,6 +77,9 @@ sub run {
 		closedir DIRECTORY;
 
 		foreach my $file ( @list ) {
+
+			my $skip = 0;
+
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 
@@ -95,12 +98,14 @@ sub run {
 				# Get it from the cache in case of loops:
 				if (exists $path_cache{$fullname}) {
 					push @files,$path_cache{$fullname} if defined($path_cache{$fullname});
-					next;
+					$skip = 1;
+					last;
 				}
 
 				# Prepare a cache object to step out of symlink loops
 				$path_cache{$fullname} = undef;
 			}
+			next if $skip;
 			
 			if ( -f $fullname ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
