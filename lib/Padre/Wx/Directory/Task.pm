@@ -83,11 +83,6 @@ sub run {
 			next if $file =~ /^\.+\z/;
 			my $fullname = File::Spec->catdir( $dir, $file );
 
-			if ($dev != stat($fullname)) {
-				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)";
-				next;
-			}
-			
 			while (-l $fullname) {
 
 				# readlink may die if symlinks are not implemented
@@ -106,6 +101,11 @@ sub run {
 				$path_cache{$fullname} = undef;
 			}
 			next if $skip;
+			
+			if ($dev != stat($fullname)) {
+				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)";
+				next;
+			}
 			
 			if ( -f $fullname ) {
 				my $object = Padre::Wx::Directory::Path->file(@path, $file);
