@@ -312,7 +312,9 @@ sub name {
 # Padre::Cache Integration
 
 sub DESTROY {
-	Padre::Cache::release($_[0]->{root});
+	if ( defined $_[0]->{root} ) {
+		Padre::Cache::release($_[0]->{root});
+	}
 }
 
 1;

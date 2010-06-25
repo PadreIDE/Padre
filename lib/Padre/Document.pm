@@ -336,7 +336,9 @@ sub current {
 # Padre::Cache Integration
 
 sub DESTROY {
-	Padre::Cache::release($_[0]->{filename});
+	if ( defined $_[0]->{filename} ) {
+		Padre::Cache::release($_[0]->{filename});
+	}
 }
 
 
