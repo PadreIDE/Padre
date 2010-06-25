@@ -316,9 +316,13 @@ sub relocale {
 sub refresh {
 	my $self     = shift;
 	my $document = $self->current->document or return;
+	
+	# allows us to check when an empty document is open
+	my $filename = defined($document->filename) ? $document->filename : '';
+	
 	my $length   = $document->text_length;
 
-	if ( $document->filename eq $self->{document} ) {
+	if ( $filename eq $self->{document} ) {
 		# Shortcut if nothing has changed.
 		# NOTE: Given the speed at which the timer fires a cheap
 		# length check is better than an expensive MD5 check.
@@ -329,7 +333,7 @@ sub refresh {
 		# New file, don't keep the current list visible
 		$self->clear;
 	}
-	$self->{document} = $document->filename;
+	$self->{document} = $filename;
 	$self->{length}   = $length;
 
 	# Fire the background task discarding old results
