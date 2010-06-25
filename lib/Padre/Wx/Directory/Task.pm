@@ -12,7 +12,7 @@ use Padre::Wx::Directory::Path ();
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task';
 
-
+use constant NO_WARN => 1;
 
 
 
@@ -117,7 +117,7 @@ sub run {
 			next if $#fstat == -1;
 			
 			if ($dev != $fstat[0]) {
-				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)";
+				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)" unless NO_WARN;
 				next;
 			}
 			
@@ -137,7 +137,7 @@ sub run {
 				$path_cache{$fullname} = $object;
 
 			} else {
-				warn "Unknown or unsupported file type for $fullname";
+				warn "Unknown or unsupported file type for $fullname" unless NO_WARN;
 			}
 		}
 	}

@@ -333,7 +333,7 @@ sub refresh_recent {
 	my $idx = 0;
 	foreach my $file ( Padre::DB::History->recent('files') ) {
 		# Try a non-blocking "-f" (doesn't work in all cases)
-		sysopen my $fh,$file,O_RDONLY|O_NDELAY or next; # File does not exist or is not accessable
+		sysopen my $fh,$file,O_RDONLY|O_NONBLOCK or next; # File does not exist or is not accessable
 		close $fh;
 		
 		Wx::Event::EVT_MENU(
