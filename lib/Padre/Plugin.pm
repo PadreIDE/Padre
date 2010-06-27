@@ -106,8 +106,12 @@ sub plugin_directory_share {
 	$class =~ s/\=HASH\(.+?\)$//;
 
 	if ( $ENV{PADRE_DEV} ) {
+		my $bin = do {
+			no warnings;
+			$FindBin::Bin;
+		};
 		my $root = File::Spec->catdir(
-			$FindBin::Bin,
+			$bin,
 			File::Spec->updir,
 			File::Spec->updir,
 			$class,
@@ -125,7 +129,9 @@ sub plugin_directory_share {
 	}
 
 	# Find the distribution directory
-	my $dist = eval { File::ShareDir::dist_dir($class) };
+	my $dist = eval {
+		File::ShareDir::dist_dir($class)
+	};
 	return $@ ? undef : $dist;
 }
 
@@ -687,7 +693,13 @@ sub _menu_plugins_submenu {
 
 			# Convert to a function reference
 			my $method = $value;
-			$value = sub { $self->$method(@_) };
+			$value = sub {
+				local $@;
+				eval {
+					$self->$method(@_);
+				};
+				$main->error("Unhandled exception in plugin menu: $@") if $@;
+			};
 		}
 
 		# Function Reference
@@ -696,8 +708,11 @@ sub _menu_plugins_submenu {
 				$main,
 				$menu->Append( -1, $label ),
 				sub {
-					eval { $value->(@_) };
-					Carp::cluck($@) if $@;
+					local $@;
+					eval {
+						$value->(@_);
+					};
+					$main->error("Unhandled exception in plugin menu: $@") if $@;
 				},
 			);
 			next;
