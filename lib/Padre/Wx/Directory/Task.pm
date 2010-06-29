@@ -58,7 +58,17 @@ sub run {
 	my $rule = Module::Manifest->new;
 	$rule->parse( skip => $self->{skip} );
 
-	my %path_cache = (File::Spec->catdir($queue[0]->path,$queue[0]->name) => $queue[0]);
+	# WARNING!!! 
+	# what should really happen here?
+	# I'm only initialising the values here as 
+	# t/62-directory-task.t and t/63-directory-project.t
+	# fails the no warnings test
+	# but I'm quite sure you don't want an empty string
+	# should it test and return maybe?
+	my $path = defined($queue[0]->path) ? $queue[0]->path : "";
+	my $name = defined($queue[0]->name) ? $queue[0]->name : "";
+	
+	my %path_cache = (File::Spec->catdir($path,$name) => $queue[0]);
 
 	# Get the device of the root path
 	my $dev = (stat($root))[0];
