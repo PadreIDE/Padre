@@ -120,15 +120,16 @@ sub new {
 	}
 
 	# Generate a smarter default size than Wx does
-	if ( $size->[0] == -1 ) {
+	if ( grep { defined $_ and $_ eq '-1' } ( @$size, @$position ) ) {
 		my $rect = Padre::Wx::Display::primary_default();
 		$size     = $rect->GetSize;
 		$position = $rect->GetPosition;
 	}
 
 	# Create the underlying Wx frame
-	my $self = $class->SUPER::new(
-		undef, -1,
+	my $self = $class->SUPER::new( 
+		undef,
+		-1,
 		'Padre',
 		$position,
 		$size,
@@ -211,7 +212,7 @@ sub new {
 	Wx::Event::EVT_AUI_PANE_CLOSE(
 		$self,
 		sub {
-			$_[0]->on_aui_pane_close( $_[1] );
+			shift->on_aui_pane_close(@_);
 		},
 	);
 
@@ -241,8 +242,8 @@ sub new {
 	# Use Padre's icon
 	if (Padre::Constant::WIN32) {
 
-		# Windows needs its ICOn file for Padre to look cooler in the
-		# task bar, task switch bar and task manager
+		# Windows needs its ICO'n file for Padre to look cooler in
+		# the task bar, task switch bar and task manager
 		$self->SetIcons(Padre::Wx::Icon::PADRE_ICON_FILE);
 	} else {
 		$self->SetIcon(Padre::Wx::Icon::PADRE);
