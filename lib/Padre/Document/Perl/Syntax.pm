@@ -3,7 +3,7 @@ package Padre::Document::Perl::Syntax;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant      ();
+use Padre::Constant     ();
 use Padre::Task::Syntax ();
 
 our $VERSION = '0.64';
@@ -27,7 +27,7 @@ sub syntax {
 		require File::Temp;
 		my $file = File::Temp->new( UNLINK => 1 );
 		binmode( $file, ":utf8" );
-		$file->print( $text );
+		$file->print($text);
 		$file->close;
 		$filename = $file->filename;
 
@@ -45,18 +45,19 @@ sub syntax {
 		$err->close;
 
 		# Redirect perl's output to temporary file
-		push @cmd, (
+		push @cmd,
+			(
 			'-Mdiagnostics',
 			'-c',
 			$file->filename,
 			'2>' . $err->filename,
-		);
+			);
 
 		# We need shell redirection (list context does not give that)
 		my $cmd = join ' ', @cmd;
 
 		# Make sure we execute from the correct directory
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
 			require Padre::Util::Win32;
 			Padre::Util::Win32::ExecuteProcessAndWait(
 				directory  => $self->{project},

@@ -1,6 +1,6 @@
 package Padre::TaskThread;
 
-# Cleanly encapsulated object for a thread that does work based 
+# Cleanly encapsulated object for a thread that does work based
 # on packaged method calls passed via a shared queue.
 
 use 5.008005;
@@ -23,7 +23,7 @@ our $VERSION = '0.64';
 # across all instances and threads before the thread has been spawned.
 # We map the worker ID to the thread id, once it exists.
 my $SEQUENCE : shared = 0;
-my %WID2TID  : shared = ();
+my %WID2TID : shared  = ();
 
 
 
@@ -34,8 +34,8 @@ my %WID2TID  : shared = ();
 my $SINGLETON = undef;
 
 sub master {
-	$SINGLETON or
-	$SINGLETON = shift->new->spawn;
+	$SINGLETON
+		or $SINGLETON = shift->new->spawn;
 }
 
 # Handle master initialisation
@@ -53,19 +53,23 @@ sub import {
 # Constructor and Accessors
 
 sub new {
+
 	# TRACE($_[0]) if DEBUG;
 	bless {
 		wid   => ++$SEQUENCE,
 		queue => Thread::Queue->new,
-	}, $_[0];
+		},
+		$_[0];
 }
 
 sub wid {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[0]->{wid};
 }
 
 sub queue {
+
 	# TRACE($_[0])          if DEBUG;
 	# TRACE($_[0]->{queue}) if DEBUG;
 	$_[0]->{queue};
@@ -75,11 +79,11 @@ sub queue {
 
 
 
-
 ######################################################################
 # Main Methods
 
 sub spawn {
+
 	# TRACE($_[0]) if DEBUG;
 	my $self = shift;
 
@@ -95,36 +99,43 @@ sub spawn {
 }
 
 sub tid {
+
 	# TRACE($_[0]) if DEBUG;
-	$WID2TID{$_[0]->{wid}};
+	$WID2TID{ $_[0]->{wid} };
 }
 
 sub thread {
+
 	# TRACE($_[0]) if DEBUG;
 	threads->object( $_[0]->tid );
 }
 
 sub join {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[0]->thread->join;
 }
 
 sub is_thread {
+
 	# TRACE($_[0]) if DEBUG;
-	$_[0]->tid == threads->self->tid
+	$_[0]->tid == threads->self->tid;
 }
 
 sub is_running {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[0]->thread->is_running;
 }
 
 sub is_joinable {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[0]->thread->is_joinable;
 }
 
 sub is_detached {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[0]->thread->is_detached;
 }
@@ -137,10 +148,11 @@ sub is_detached {
 # Parent Thread Methods
 
 sub send {
+
 	# TRACE($_[0]) if DEBUG;
 	my $self   = shift;
 	my $method = shift;
-	unless ( _CAN($self, $method) ) {
+	unless ( _CAN( $self, $method ) ) {
 		die("Attempted to send message to non-existant method '$method'");
 	}
 
@@ -152,12 +164,14 @@ sub send {
 
 # Add a worker object to the pool, spawning it from the master
 sub start {
+
 	# TRACE($_[0]) if DEBUG;
-	shift->send('start_child', @_);
+	shift->send( 'start_child', @_ );
 }
 
 # Immediately detach and terminate when queued jobs are completed
 sub stop {
+
 	# TRACE($_[0]) if DEBUG;
 	# TRACE("Detaching thread") if DEBUG;
 	$_[0]->thread->detach;
@@ -172,6 +186,7 @@ sub stop {
 # Child Thread Methods
 
 sub run {
+
 	# TRACE($_[0]) if DEBUG;
 	my $self  = shift;
 	my $queue = $self->{queue};
@@ -179,15 +194,18 @@ sub run {
 	# Loop over inbound requests
 	# TRACE("Entering worker run-time loop") if DEBUG;
 	while ( my $message = $queue->dequeue ) {
+
 		# TRACE("Worker received message '$message->[0]'") if DEBUG;
 		unless ( _ARRAY($message) ) {
+
 			# warn("Message is not an ARRAY reference");
 			next;
 		}
 
 		# Check the message type
 		my $method = shift @$message;
-		unless ( _CAN($self, $method) ) {
+		unless ( _CAN( $self, $method ) ) {
+
 			# warn("Illegal message type");
 			next;
 		}
@@ -211,6 +229,7 @@ sub run {
 
 # Spawn a worker object off the current thread
 sub start_child {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[1]->spawn;
 	return 1;
@@ -218,15 +237,17 @@ sub start_child {
 
 # Stop the current child
 sub stop_child {
+
 	# TRACE($_[0]) if DEBUG;
-	return 0;	
+	return 0;
 }
 
 # Execute a task
 sub task {
+
 	# TRACE($_[0]) if DEBUG;
 	require Padre::TaskHandle;
-	Padre::TaskHandle->from_array($_[1]);
+	Padre::TaskHandle->from_array( $_[1] );
 }
 
 
@@ -237,11 +258,11 @@ sub task {
 # Support Methods
 
 sub _ARRAY {
-	(ref $_[0] eq 'ARRAY' and @{$_[0]}) ? $_[0] : undef;
+	( ref $_[0] eq 'ARRAY' and @{ $_[0] } ) ? $_[0] : undef;
 }
 
 sub _CAN {
-	(Scalar::Util::blessed($_[0]) and $_[0]->can($_[1])) ? $_[0] : undef;
+	( Scalar::Util::blessed( $_[0] ) and $_[0]->can( $_[1] ) ) ? $_[0] : undef;
 }
 
 1;

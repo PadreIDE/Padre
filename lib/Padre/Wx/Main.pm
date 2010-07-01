@@ -1156,7 +1156,7 @@ sub refresh {
 	$self->refresh_status($current);
 	$self->refresh_outline($current);
 	$self->refresh_syntaxcheck($current);
-	
+
 	# Now signal the refresh to all remaining listeners
 	# weed out expired weak references
 	@{ $self->{refresh_listeners} } = grep { ; defined } @{ $self->{refresh_listeners} };
@@ -2012,7 +2012,7 @@ sub _show_syntax {
 sub show_errorlist {
 	my $self = shift;
 	my $on   = ( @_ ? ( $_[0] ? 1 : 0 ) : 1 );
-	my $lock = $self->lock( 'UPDATE' );
+	my $lock = $self->lock('UPDATE');
 	unless ( $on == $self->menu->view->{show_errorlist}->IsChecked ) {
 		$self->menu->view->{show_errorlist}->Check($on);
 	}
@@ -5378,7 +5378,7 @@ sub on_stc_update_ui {
 	return if $self->{_in_stc_update_ui};
 	local $self->{_in_stc_update_ui} = 1;
 
-	# Check for brace, on current position, higlight the matching brace
+	# Check for brace, on current position, highlight the matching brace
 	my $current = $self->current;
 	my $editor  = $current->editor;
 	return if not defined $editor;

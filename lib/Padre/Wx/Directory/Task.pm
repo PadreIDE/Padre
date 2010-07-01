@@ -31,7 +31,7 @@ sub new {
 
 	# Property defaults
 	unless ( defined $self->{skip} ) {
-		$self->{skip} = [ ];
+		$self->{skip} = [];
 	}
 	unless ( defined $self->{recursive} ) {
 		$self->{recursive} = 1;
@@ -58,23 +58,23 @@ sub run {
 	my $rule = Module::Manifest->new;
 	$rule->parse( skip => $self->{skip} );
 
-	# WARNING!!! 
+	# WARNING!!!
 	# what should really happen here?
-	# I'm only initialising the values here as 
+	# I'm only initialising the values here as
 	# t/62-directory-task.t and t/63-directory-project.t
 	# fails the no warnings test
 	# but I'm quite sure you don't want an empty string
 	# should it test and return maybe?
-	my $path = defined($queue[0]->path) ? $queue[0]->path : "";
-	my $name = defined($queue[0]->name) ? $queue[0]->name : "";
-	
-	my %path_cache = (File::Spec->catdir($path,$name) => $queue[0]);
+	my $path = defined( $queue[0]->path ) ? $queue[0]->path : "";
+	my $name = defined( $queue[0]->name ) ? $queue[0]->name : "";
+
+	my %path_cache = ( File::Spec->catdir( $path, $name ) => $queue[0] );
 
 	# Get the device of the root path
-	my $dev = (stat($root))[0];
+	my $dev = ( stat($root) )[0];
 
 	# Recursively scan for files
-	while ( @queue ) {
+	while (@queue) {
 		my $parent = shift @queue;
 		my @path   = $parent->path;
 		my $dir    = File::Spec->catdir( $root, @path );
@@ -86,7 +86,7 @@ sub run {
 		my @list = readdir DIRECTORY;
 		closedir DIRECTORY;
 
-		foreach my $file ( @list ) {
+		foreach my $file (@list) {
 
 			my $skip = 0;
 
@@ -98,19 +98,19 @@ sub run {
 				my $target;
 
 				# readlink may die if symlinks are not implemented
-				eval {
-					$target = readlink($fullname);
-				};
+				eval { $target = readlink($fullname); };
 				last if $@; # readlink failed
 				last unless defined($target); # not a link
-				
+
 				# Target may be "/home/user/foo" or "../foo" or "bin/foo"
-				$fullname = File::Spec->file_name_is_absolute($target) ? $target :
-					File::Spec->canonpath(File::Spec->catdir( $dir, $target));
+				$fullname =
+					File::Spec->file_name_is_absolute($target)
+					? $target
+					: File::Spec->canonpath( File::Spec->catdir( $dir, $target ) );
 
 				# Get it from the cache in case of loops:
-				if (exists $path_cache{$fullname}) {
-					push @files,$path_cache{$fullname} if defined($path_cache{$fullname});
+				if ( exists $path_cache{$fullname} ) {
+					push @files, $path_cache{$fullname} if defined( $path_cache{$fullname} );
 					$skip = 1;
 					last;
 				}
@@ -119,26 +119,27 @@ sub run {
 				$path_cache{$fullname} = undef;
 			}
 			next if $skip;
-			
+
 			my @fstat = stat($fullname);
-			
+
 			# File doesn't exist, either a directory error, symlink to nowhere or something unexpected.
 			# Don't worry, just skip, because we can't show it in the dir browser anyway
 			next if $#fstat == -1;
-			
-			if ($dev != $fstat[0]) {
-				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)" unless NO_WARN;
+
+			if ( $dev != $fstat[0] ) {
+				warn "DirectoryBrowser root-dir $root is on a different device than $fullname, skipping (FIX REQUIRED!)"
+					unless NO_WARN;
 				next;
 			}
-			
+
 			if ( -f _ ) {
-				my $object = Padre::Wx::Directory::Path->file(@path, $file);
-				next if $rule->skipped($object->unix);
+				my $object = Padre::Wx::Directory::Path->file( @path, $file );
+				next if $rule->skipped( $object->unix );
 				push @files, $object;
 
-			} elsif ( -d _  ) {
-				my $object = Padre::Wx::Directory::Path->directory(@path, $file);
-				next if $rule->skipped($object->unix);
+			} elsif ( -d _ ) {
+				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
+				next if $rule->skipped( $object->unix );
 				push @files, $object;
 
 				# Continue down within it?
@@ -154,9 +155,7 @@ sub run {
 
 	# Case insensitive Schwartzian sort so the caller doesn't have to
 	# do the sort while blocking.
-	$self->{model} = [
-		sort { $a->compare($b) } @files
-	];
+	$self->{model} = [ sort { $a->compare($b) } @files ];
 
 	return 1;
 }

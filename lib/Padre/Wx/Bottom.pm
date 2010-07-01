@@ -5,8 +5,8 @@ package Padre::Wx::Bottom;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant            ();
-use Padre::Wx                  ();
+use Padre::Constant       ();
+use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';
@@ -86,8 +86,7 @@ sub show {
 	$self->aui->GetPane($self)->Show;
 
 	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_close(@_);
 		}
@@ -149,6 +148,7 @@ sub on_close {
 	my $position = $event->GetSelection;
 	my $tool     = $self->GetPage($position);
 	unless ( $tool->can('view_close') ) {
+
 		# HACK: Crash in a controller manner for the moment.
 		# Later just let this crash uncontrolably :)
 		# DOUBLE HACK: Just warn, and pass through for now.

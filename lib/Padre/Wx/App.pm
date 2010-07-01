@@ -32,6 +32,7 @@ use strict;
 use warnings;
 use Carp      ();
 use Padre::Wx ();
+
 # use Padre::Logger;
 
 our $VERSION = '0.64';
@@ -47,9 +48,10 @@ our @ISA     = 'Wx::App';
 my $SINGLETON = undef;
 
 sub new {
+
 	# TRACE($_[0]) if DEBUG;
-	$SINGLETON or
-	$SINGLETON = shift->SUPER::new;
+	$SINGLETON
+		or $SINGLETON = shift->SUPER::new;
 }
 
 
@@ -60,6 +62,7 @@ sub new {
 # Constructor and Accessors
 
 sub create {
+
 	# TRACE($_[0]) if DEBUG;
 	my $self = shift->new;
 
@@ -107,6 +110,7 @@ The C<config> accessor returns the L<Padre::Config> for the application.
 =cut
 
 sub config {
+
 	# TRACE($_[0]) if DEBUG;
 	$_[0]->ide->config;
 }
@@ -119,6 +123,7 @@ sub config {
 # Wx Methods
 
 sub OnInit {
+
 	# TRACE($_[0]) if DEBUG;
 	if ( $_[0]->can('conduit_init') ) {
 		$_[0]->conduit_init;

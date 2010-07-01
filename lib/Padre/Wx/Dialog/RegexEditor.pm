@@ -5,8 +5,8 @@ package Padre::Wx::Dialog::RegexEditor;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                  ();
-use Padre::Wx::Icon            ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
 
 # RichTextCtrl

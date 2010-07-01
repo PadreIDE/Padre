@@ -51,6 +51,7 @@ our @ISA      = 'Padre::Task';
 our $AUTOLOAD = undef;
 
 sub prepare {
+
 	# Only optionally override
 	unless ( exists $_[0]->{prepare} ) {
 		return shift->SUPER::prepare(@_);
@@ -63,6 +64,7 @@ sub prepare {
 }
 
 sub run {
+
 	# Only optionally override
 	unless ( exists $_[0]->{run} ) {
 		return shift->SUPER::run(@_);
@@ -75,6 +77,7 @@ sub run {
 }
 
 sub finish {
+
 	# Only optionally override
 	unless ( exists $_[0]->{run} ) {
 		return shift->SUPER::finish(@_);

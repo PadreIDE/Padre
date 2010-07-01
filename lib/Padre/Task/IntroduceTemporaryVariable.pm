@@ -38,7 +38,7 @@ and C<end_position> to C<< $editor->GetSelectionEnd() - 1 >>.
 
 sub process {
 	my $self = shift;
-	my $ppi  = shift or return;
+	my $ppi = shift or return;
 
 	# Transform the document
 	my $munged = eval {
@@ -50,11 +50,11 @@ sub process {
 			varname        => $self->{varname},
 		);
 	};
-	if ( $@ ) {
+	if ($@) {
 		$self->{error} = $@;
 		return;
 	}
-	
+
 	# TO DO: passing this back and forth is probably hyper-inefficient, but such is life.
 	$self->{munged}   = $munged->code;
 	$self->{location} = $munged->element->location;

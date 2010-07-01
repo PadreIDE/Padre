@@ -29,6 +29,7 @@ sub find {
 	require PPI::Find;
 	my @things = PPI::Find->new(
 		sub {
+
 			# This is a fairly ugly search
 			return 1 if ref $_[0] eq 'PPI::Statement::Package';
 			return 1 if ref $_[0] eq 'PPI::Statement::Include';
@@ -41,7 +42,7 @@ sub find {
 	my @outline       = ();
 	my $cur_pkg       = {};
 	my $not_first_one = 0;
-	foreach my $thing ( @things ) {
+	foreach my $thing (@things) {
 		if ( ref $thing eq 'PPI::Statement::Package' ) {
 			if ($not_first_one) {
 				if ( not $cur_pkg->{name} ) {

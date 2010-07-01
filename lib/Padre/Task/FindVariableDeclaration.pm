@@ -36,7 +36,7 @@ sub process {
 	my $self     = shift;
 	my $ppi      = shift or return;
 	my $location = $self->{location};
-	my $result  = eval {
+	my $result   = eval {
 		require PPIx::EditorTools::FindVariableDeclaration;
 		PPIx::EditorTools::FindVariableDeclaration->new->find(
 			ppi    => $ppi,

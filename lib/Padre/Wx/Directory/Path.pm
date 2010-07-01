@@ -57,19 +57,19 @@ sub unix {
 }
 
 sub path {
-	@{$_[0]}[2 .. $#{$_[0]}];
+	@{ $_[0] }[ 2 .. $#{ $_[0] } ];
 }
 
 sub depth {
-	$#{$_[0]} - 1;
+	$#{ $_[0] } - 1;
 }
 
 sub is_file {
-	($_[0]->[0] == FILE) ? 1 : 0;
+	( $_[0]->[0] == FILE ) ? 1 : 0;
 }
 
 sub is_directory {
-	($_[0]->[0] == DIRECTORY) ? 1 : 0;
+	( $_[0]->[0] == DIRECTORY ) ? 1 : 0;
 }
 
 # Is this path the immediate parent of another path
@@ -111,7 +111,7 @@ sub compare {
 		# To prevent nesting problems, repeat case sensitive
 		# before we descend to the next level.
 		$result = ( $left cmp $right ) or next;
-		return $result;		
+		return $result;
 	}
 }
 

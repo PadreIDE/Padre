@@ -129,9 +129,7 @@ sub plugin_directory_share {
 	}
 
 	# Find the distribution directory
-	my $dist = eval {
-		File::ShareDir::dist_dir($class)
-	};
+	my $dist = eval { File::ShareDir::dist_dir($class) };
 	return $@ ? undef : $dist;
 }
 
@@ -695,9 +693,7 @@ sub _menu_plugins_submenu {
 			my $method = $value;
 			$value = sub {
 				local $@;
-				eval {
-					$self->$method(@_);
-				};
+				eval { $self->$method(@_); };
 				$main->error("Unhandled exception in plugin menu: $@") if $@;
 			};
 		}
@@ -709,9 +705,7 @@ sub _menu_plugins_submenu {
 				$menu->Append( -1, $label ),
 				sub {
 					local $@;
-					eval {
-						$value->(@_);
-					};
+					eval { $value->(@_); };
 					$main->error("Unhandled exception in plugin menu: $@") if $@;
 				},
 			);

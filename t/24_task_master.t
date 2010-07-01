@@ -17,7 +17,7 @@ use Padre::TaskThread ':master';
 
 # Do we start with one thread as expected
 sleep 0.1;
-is( scalar(threads->list), 1, 'One thread exists' );
+is( scalar( threads->list ), 1, 'One thread exists' );
 
 # Fetch the master, is it the existing one?
 my $master1 = Padre::TaskThread->master;

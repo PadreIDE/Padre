@@ -5,7 +5,7 @@ package Padre::Plugin::PopularityContest::Ping;
 use 5.008;
 use strict;
 use warnings;
-use URI               ();
+use URI              ();
 use Padre::Task::LWP ();
 
 our $VERSION = '0.64';

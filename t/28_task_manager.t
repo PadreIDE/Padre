@@ -11,8 +11,8 @@ use Storable                  ();
 use Time::HiRes               ();
 use Padre::Wx                 ();
 use Padre::Wx::App            ();
-use Padre::TaskManager       ();
-use Padre::Task::Addition    ();
+use Padre::TaskManager        ();
+use Padre::Task::Addition     ();
 use t::lib::Padre::NullWindow ();
 
 
@@ -54,14 +54,14 @@ $timer2->Start( 10000, 1 );
 # Main Process
 
 # We start with no threads
-is( scalar(threads->list), 0, 'No threads' );
+is( scalar( threads->list ), 0, 'No threads' );
 
 # Enter the wx loop
 # $window->Show(1) if $window;
 $wxapp->MainLoop;
 
 # We end with no threads
-is( scalar(threads->list), 0, 'No threads' );
+is( scalar( threads->list ), 0, 'No threads' );
 
 
 
@@ -71,10 +71,11 @@ is( scalar(threads->list), 0, 'No threads' );
 # Basic Creation
 
 sub startup {
+
 	# Run the startup process
 	ok( $manager->start, '->start ok' );
-	Time::HiRes::sleep( 1 );
-	is( scalar(threads->list), 3, 'Three threads exists' );
+	Time::HiRes::sleep(1);
+	is( scalar( threads->list ), 3, 'Three threads exists' );
 
 	# Create the sample task
 	my $addition = Padre::Task::Addition->new(
@@ -91,11 +92,13 @@ sub startup {
 }
 
 sub timeout {
+
 	# Run the shutdown process
 	$timer1 = undef;
 	$timer2 = undef;
 	ok( $manager->stop, '->stop ok' );
 	sleep(1);
+
 	# $window->Show(0) if $window;
 	$wxapp->ExitMainLoop;
 }

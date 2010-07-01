@@ -3,12 +3,12 @@ package Padre::Wx::FunctionList;
 use 5.008005;
 use strict;
 use warnings;
-use Scalar::Util               ();
-use Params::Util               ();
-use Padre::Role::Task          ();
-use Padre::Wx::Role::View      ();
+use Scalar::Util          ();
+use Params::Util          ();
+use Padre::Role::Task     ();
+use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx                  ();
+use Padre::Wx             ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
@@ -65,9 +65,9 @@ sub new {
 	# Create a sizer
 	my $sizerv = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $sizerh = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
-	$sizerv->Add( $self->{search},    0, Wx::wxALL | Wx::wxEXPAND );
-	$sizerv->Add( $self->{list}, 1, Wx::wxALL | Wx::wxEXPAND );
-	$sizerh->Add( $sizerv,            1, Wx::wxALL | Wx::wxEXPAND );
+	$sizerv->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND );
+	$sizerv->Add( $self->{list},   1, Wx::wxALL | Wx::wxEXPAND );
+	$sizerh->Add( $sizerv,         1, Wx::wxALL | Wx::wxEXPAND );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizerh);
@@ -182,7 +182,7 @@ sub on_list_item_activated {
 
 	# Locate the function
 	my $document = $self->current->document or return;
-	my $editor   = $document->editor;
+	my $editor = $document->editor;
 	my ( $start, $end ) = Padre::Util::get_matches(
 		$editor->GetText,
 		$document->get_function_regex($subname),
@@ -224,7 +224,7 @@ sub refresh {
 	my $list     = $self->{list};
 
 	# Hide the widgets when no files are open
-	unless ( $document ) {
+	unless ($document) {
 		$search->Hide;
 		$list->Hide;
 		$list->Clear;

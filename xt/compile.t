@@ -42,7 +42,7 @@ foreach my $file (@files) {
 		}
 		next;
 	}
-	if ($^O ne 'MSWin32' and $file eq 'Padre/Util/Win32.pm') {
+	if ( $^O ne 'MSWin32' and $file eq 'Padre/Util/Win32.pm' ) {
 		foreach ( 1 .. 2 ) {
 			Test::More->builder->skip("'$file' is for Windows only");
 		}

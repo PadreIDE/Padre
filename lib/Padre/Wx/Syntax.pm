@@ -52,8 +52,7 @@ sub new {
 	}
 
 	Wx::Event::EVT_LIST_ITEM_ACTIVATED(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_list_item_activated(@_);
 		},
@@ -264,7 +263,6 @@ sub on_timer {
 
 
 
-
 #####################################################################
 # General Methods
 
@@ -314,15 +312,16 @@ sub relocale {
 }
 
 sub refresh {
-	my $self     = shift;
+	my $self = shift;
 	my $document = $self->current->document or return;
-	
+
 	# allows us to check when an empty or unsaved document is open
-	my $filename = defined($document->filename) ? $document->filename : '';
-	
-	my $length   = $document->text_length;
+	my $filename = defined( $document->filename ) ? $document->filename : '';
+
+	my $length = $document->text_length;
 
 	if ( $filename eq $self->{document} ) {
+
 		# Shortcut if nothing has changed.
 		# NOTE: Given the speed at which the timer fires a cheap
 		# length check is better than an expensive MD5 check.
@@ -330,6 +329,7 @@ sub refresh {
 			return;
 		}
 	} else {
+
 		# New file, don't keep the current list visible
 		$self->clear;
 	}
@@ -385,13 +385,13 @@ sub render {
 	}
 
 	# Eliminate some warnings
-	foreach my $hint ( @$model ) {
+	foreach my $hint (@$model) {
 		$hint->{line} = 0  unless defined $hint->{line};
 		$hint->{msg}  = '' unless defined $hint->{msg};
 	}
 
 	my @MARKER = ( Padre::Wx::MarkError(), Padre::Wx::MarkWarn() );
-	my @LABEL  = ( Wx::gettext('Warning'), Wx::gettext('Error')  );
+	my @LABEL = ( Wx::gettext('Warning'), Wx::gettext('Error') );
 
 	my $i = 0;
 	foreach my $hint ( sort { $a->{line} <=> $b->{line} } @$model ) {
@@ -401,10 +401,10 @@ sub render {
 		my $item = $self->InsertStringImageItem( $i++, $line + 1, $severity );
 		$self->SetItemData( $item, 0 );
 		$self->SetItem( $item, 1, $LABEL[$severity] );
-		$self->SetItem( $item, 2, $hint->{msg}      );
+		$self->SetItem( $item, 2, $hint->{msg} );
 	}
 
-	$self->set_column_widths($model->[-1]);
+	$self->set_column_widths( $model->[-1] );
 
 	return 1;
 }

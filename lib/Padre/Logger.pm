@@ -45,9 +45,11 @@ our $VERSION = '0.64';
 BEGIN {
 	if ( $ENV{PADRE_DEBUG} ) {
 		if ( $ENV{PADRE_DEBUG} eq '1' ) {
+
 			# Debug everything
 			$Padre::Logger::DEBUG = 1;
 		} else {
+
 			# Debug a single class
 			eval "\$$ENV{PADRE_DEBUG}::DEBUG = 1;";
 		}
@@ -80,13 +82,16 @@ END_PERL
 # Global trace function
 sub TRACE {
 	my $time    = scalar localtime time;
-	my $caller  = (caller(1))[3];
+	my $caller  = ( caller(1) )[3];
 	my $logfile = Padre::Constant::LOG_FILE;
-	my $thread  = ($INC{'threads.pm'} and threads->self->tid)
-		? ('(Thread ' . threads->self->tid . ') ')
+	my $thread =
+		  ( $INC{'threads.pm'} and threads->self->tid )
+		? ( '(Thread ' . threads->self->tid . ') ' )
 		: '';
+
 	# open my $fh, '>>', $logfile or return;
-	foreach ( @_ ) {
+	foreach (@_) {
+
 		# print $fh sprintf(
 		print sprintf(
 			"# %s %s%s %s\n",
@@ -96,6 +101,7 @@ sub TRACE {
 			string($_),
 		);
 	}
+
 	# close $fh;
 	return;
 }
@@ -103,12 +109,10 @@ sub TRACE {
 sub string {
 	require Devel::Dumpvar;
 	my $object = shift;
-	my $shared = (
-		$INC{'threads/shared.pm'}
-		and
-		threads::shared::is_shared($object)
-	) ? ' : shared' : '';
-	my $string = ref($object)
+	my $shared =
+		( $INC{'threads/shared.pm'} and threads::shared::is_shared($object) ) ? ' : shared' : '';
+	my $string =
+		ref($object)
 		? Devel::Dumpvar->_refstring($object)
 		: Devel::Dumpvar->_scalar($object);
 	return $string . $shared;

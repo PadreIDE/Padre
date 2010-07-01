@@ -3,10 +3,10 @@ package Padre::Wx::Dialog::QuickMenuAccess;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Util                ();
-use Padre::DB                  ();
-use Padre::Wx                  ();
-use Padre::Wx::Icon            ();
+use Padre::Util           ();
+use Padre::DB             ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
 use Padre::Logger;
 

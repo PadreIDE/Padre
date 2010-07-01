@@ -30,12 +30,8 @@ sub new {
 		-1,
 		Wx::wxDefaultPosition,
 		Wx::wxDefaultSize,
-		Wx::wxTR_HIDE_ROOT
-			| Wx::wxTR_SINGLE
-			| Wx::wxTR_FULL_ROW_HIGHLIGHT
-			| Wx::wxTR_HAS_BUTTONS
-			| Wx::wxTR_LINES_AT_ROOT
-			| Wx::wxBORDER_NONE
+		Wx::wxTR_HIDE_ROOT | Wx::wxTR_SINGLE | Wx::wxTR_FULL_ROW_HIGHLIGHT | Wx::wxTR_HAS_BUTTONS
+			| Wx::wxTR_LINES_AT_ROOT | Wx::wxBORDER_NONE
 	);
 
 	# Create the image list
@@ -67,16 +63,14 @@ sub new {
 
 	# Set up the events
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_tree_item_activated(@_);
 		}
 	);
 
 	Wx::Event::EVT_TREE_ITEM_MENU(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_tree_item_menu(@_);
 		},
@@ -164,8 +158,7 @@ sub on_tree_item_menu {
 	# Updates the directory listing
 	my $refresh = $menu->Append( -1, Wx::gettext('Refresh') );
 	Wx::Event::EVT_MENU(
-		$self,
-		$refresh,
+		$self, $refresh,
 		sub {
 			shift->GetParent->refresh;
 		}
@@ -194,15 +187,15 @@ sub expanded {
 	my $self   = shift;
 	my @queue  = $self->GetRootItem;
 	my %expand = ();
-	while ( @queue ) {
+	while (@queue) {
 		my $parent = shift @queue;
-		my ($child, $cookie) = $self->GetFirstChild($parent);
-		while ( $child ) {
+		my ( $child, $cookie ) = $self->GetFirstChild($parent);
+		while ($child) {
 			if ( $self->IsExpanded($child) ) {
 				$expand{ $self->GetPlData($child)->unix } = 1;
 				push @queue, $child;
 			}
-			($child, $cookie) = $self->GetNextChild($parent, $cookie);
+			( $child, $cookie ) = $self->GetNextChild( $parent, $cookie );
 		}
 	}
 	return \%expand;

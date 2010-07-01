@@ -3,9 +3,9 @@ package Padre::Wx::Dialog::WhereFrom;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Role::Task          ();
+use Padre::Role::Task     ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx                  ();
+use Padre::Wx             ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
@@ -49,7 +49,7 @@ sub new {
 		$self,
 		$self->{button_ok},
 		sub {
-			$_[0]->button_ok($_[1]);
+			$_[0]->button_ok( $_[1] );
 		},
 	);
 
@@ -58,7 +58,7 @@ sub new {
 		$self,
 		$self->{button_cancel},
 		sub {
-			$_[0]->button_cancel($_[1]);
+			$_[0]->button_cancel( $_[1] );
 		},
 	);
 
@@ -172,7 +172,7 @@ sub button_ok {
 
 	# Fire and forget the HTTP request to the server
 	$self->task_request(
-		task => 'Padre::Task::LWP',
+		task  => 'Padre::Task::LWP',
 		url   => SERVER,
 		query => { from => $from },
 	);

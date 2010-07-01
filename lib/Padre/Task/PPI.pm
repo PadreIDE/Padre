@@ -61,7 +61,7 @@ of a C<Padre::Task::PPI> object.
 sub new {
 	my $self = shift->SUPER::new(@_);
 	if ( $self->{document} ) {
-		$self->{text} = delete($self->{document})->text_get;
+		$self->{text} = delete( $self->{document} )->text_get;
 	}
 	return $self;
 }
@@ -72,9 +72,7 @@ sub run {
 
 	# Parse the document and hand off to the task
 	require PPI::Document;
-	$self->process(
-		PPI::Document->new( \$text )
-	);
+	$self->process( PPI::Document->new( \$text ) );
 
 	return 1;
 }

@@ -28,22 +28,22 @@ SCOPE: {
 	);
 	isa_ok( $task, 'Padre::Task::Eval' );
 	is( $task->{prepare}, '1 + 2', '->{prepare} is false' );
-	is( $task->{run},     '3 + 4', '->{run} is false'     );
-	is( $task->{finish},  '5 + 6', '->{finish} is false'  );
+	is( $task->{run},     '3 + 4', '->{run} is false' );
+	is( $task->{finish},  '5 + 6', '->{finish} is false' );
 
 	# Wrap a handle around it
-	my $handle = Padre::TaskHandle->new( $task );		
-	isa_ok( $handle, 'Padre::TaskHandle' );
+	my $handle = Padre::TaskHandle->new($task);
+	isa_ok( $handle,       'Padre::TaskHandle' );
 	isa_ok( $handle->task, 'Padre::Task::Eval' );
 	is( $handle->hid, 1, '->hid ok' );
 
 	# Run the task
-	is( $handle->prepare, 1,  '->prepare ok'        );
+	is( $handle->prepare, 1,  '->prepare ok' );
 	is( $task->{prepare}, 3,  '->{prepare} is true' );
-	is( $handle->run,     1,  '->run ok'            );
-	is( $task->{run},     7,  '->{run} is true'     );
-	is( $handle->finish,  1,  '->finish ok'         );
-	is( $task->{finish},  11, '->{finish} is true'  );
+	is( $handle->run,     1,  '->run ok' );
+	is( $task->{run},     7,  '->{run} is true' );
+	is( $handle->finish,  1,  '->finish ok' );
+	is( $task->{finish},  11, '->{finish} is true' );
 }
 
 
@@ -63,8 +63,8 @@ SCOPE: {
 
 	# Do they throw normal exceptions
 	throws_ok( sub { $task->prepare }, qr/foo/ );
-	throws_ok( sub { $task->run     }, qr/bar/ );
-	throws_ok( sub { $task->finish  }, qr/baz/ );
+	throws_ok( sub { $task->run },     qr/bar/ );
+	throws_ok( sub { $task->finish },  qr/baz/ );
 }
 
 
@@ -80,12 +80,12 @@ SCOPE: {
 		run     => 'die "bar";',
 		finish  => 'die "baz";',
 	);
-	my $handle = Padre::TaskHandle->new( $task );
+	my $handle = Padre::TaskHandle->new($task);
 	isa_ok( $task,   'Padre::Task::Eval' );
 	isa_ok( $handle, 'Padre::TaskHandle' );
 
 	# Do they throw normal exceptions
 	is( $handle->prepare, '', '->prepare ok' );
-	is( $handle->run,     '', '->run ok'     );
-	is( $handle->finish,  '', '->finish ok'  );
+	is( $handle->run,     '', '->run ok' );
+	is( $handle->finish,  '', '->finish ok' );
 }

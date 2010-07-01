@@ -28,6 +28,7 @@ use Padre::Logger;
 our $VERSION = '0.64';
 
 our $SIGNAL : shared;
+
 BEGIN {
 	$SIGNAL = Wx::NewEventType();
 }
@@ -40,7 +41,7 @@ sub handler {
 }
 
 sub conduit_init {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	$CONDUIT = $_[0];
 	$HANDLER = $_[1];
 	Wx::Event::EVT_COMMAND( $CONDUIT, -1, $SIGNAL, \&on_signal );
@@ -48,21 +49,19 @@ sub conduit_init {
 }
 
 sub signal {
-	TRACE($_[0]) if DEBUG;
-	$CONDUIT->AddPendingEvent(
-		Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] )
-	) if $CONDUIT;
+	TRACE( $_[0] ) if DEBUG;
+	$CONDUIT->AddPendingEvent( Wx::PlThreadEvent->new( -1, $SIGNAL, $_[1] ) ) if $CONDUIT;
 	TRACE('->AddPendingEvent ok') if DEBUG;
 }
 
 sub on_signal {
-	TRACE($_[0]) if DEBUG;
-	TRACE($_[1]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
+	TRACE( $_[1] ) if DEBUG;
 	my $self  = shift;
 	my $event = shift;
 
 	# Pass the event through to the event handler
-	$HANDLER->on_signal( $event ) if $HANDLER;
+	$HANDLER->on_signal($event) if $HANDLER;
 
 	return 1;
 }

@@ -25,10 +25,10 @@ use URI                      ();
 use Encode                   ();
 use Scalar::Util             ();
 use List::MoreUtils          ();
-use Params::Util             ( qw{ _INSTANCE _INVOCANT _HASH _STRING } );
+use Params::Util             (qw{ _INSTANCE _INVOCANT _HASH _STRING });
 use Padre::Util              ('_T');
-use Padre::Browser        ();
-use Padre::Task::Browser    ();
+use Padre::Browser           ();
+use Padre::Task::Browser     ();
 use Padre::Wx                ();
 use Padre::Wx::HtmlWindow    ();
 use Padre::Wx::Icon          ();
@@ -72,7 +72,7 @@ sub new {
 	$self->{provider} = Padre::Browser->new;
 
 	# Until we get a real icon use the same one as the others
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	my $top_s = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	my $but_s = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
@@ -92,17 +92,13 @@ sub new {
 		Wx::wxDefaultSize,
 		Wx::wxTE_PROCESS_ENTER
 	);
-	$self->{search}->SetToolTip(
-		Wx::ToolTip->new(
-			Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP')
-		)
-	);
+	$self->{search}->SetToolTip( Wx::ToolTip->new( Wx::gettext('Search for perldoc - e.g. Padre::Task, Net::LDAP') ) );
 
 	Wx::Event::EVT_TEXT_ENTER(
 		$self,
 		$self->{search},
 		sub {
-			$self->on_search_text_enter($self->{search});
+			$self->on_search_text_enter( $self->{search} );
 		}
 	);
 
@@ -115,12 +111,12 @@ sub new {
 
 	my $close_button = Wx::Button->new( $self, Wx::wxID_CANCEL, Wx::gettext('&Close') );
 
-	$but_s->Add( $label, 0, Wx::wxALIGN_CENTER_VERTICAL );
+	$but_s->Add( $label,          0, Wx::wxALIGN_CENTER_VERTICAL );
 	$but_s->Add( $self->{search}, 1, Wx::wxALIGN_LEFT | Wx::wxALIGN_CENTER_VERTICAL );
 	$but_s->AddStretchSpacer(2);
 	$but_s->Add( $close_button, 0, Wx::wxALIGN_RIGHT | Wx::wxALIGN_CENTER_VERTICAL );
 
-	$top_s->Add( $but_s,    0, Wx::wxEXPAND );
+	$top_s->Add( $but_s,            0, Wx::wxEXPAND );
 	$top_s->Add( $self->{notebook}, 1, Wx::wxGROW );
 	$self->SetSizer($top_s);
 
@@ -184,7 +180,7 @@ sub on_search_text_enter {
 sub on_html_link_clicked {
 	my $self = shift;
 	my $uri  = URI->new( $_[0]->GetLinkInfo->GetHref );
-	if ( $self->{provider}->accept($uri->scheme) ) {
+	if ( $self->{provider}->accept( $uri->scheme ) ) {
 		$self->resolve($uri);
 	} else {
 		Padre::Wx::launch_browser($uri);
@@ -210,9 +206,9 @@ displayed in a new tab.
 =cut
 
 sub help {
-	my $self  = shift;
+	my $self     = shift;
 	my $document = shift;
-	my $hint  = shift;
+	my $hint     = shift;
 
 	if ( _INSTANCE( $document, 'Padre::Document' ) ) {
 		$document = $self->padre2docbrowser($document);
@@ -327,10 +323,10 @@ sub task_response {
 	my $result   = $task->{result};
 	if ( $then eq 'display' ) {
 		return $self->not_found($document) unless $result;
-		return $self->display($result, $document);
+		return $self->display( $result, $document );
 	}
 	if ( $then eq 'help' ) {
-		return $self->help($result, { referrer => $document } );
+		return $self->help( $result, { referrer => $document } );
 	}
 	return 1;
 }
@@ -365,10 +361,11 @@ sub show_page {
 	while ( $i < $found ) {
 		my $page = $self->{notebook}->GetPage($i);
 		if ( $self->{notebook}->GetPageText($i) eq $title ) {
-			push @opened, {
+			push @opened,
+				{
 				page  => $page,
 				index => $i,
-			};
+				};
 		}
 		$i++;
 	}
@@ -394,7 +391,8 @@ sub new_page {
 	my $mime  = shift;
 	my $title = shift;
 	my $page  = eval {
-		if ( exists $VIEW{$mime} ) {
+		if ( exists $VIEW{$mime} )
+		{
 			my $class = $VIEW{$mime};
 			unless ( $class->VERSION ) {
 				eval "require $class;";
@@ -402,8 +400,7 @@ sub new_page {
 			}
 			my $panel = $class->new($self);
 			Wx::Event::EVT_HTML_LINK_CLICKED(
-				$self,
-				$panel,
+				$self, $panel,
 				sub {
 					shift->on_html_link_clicked(@_);
 				},
@@ -472,7 +469,7 @@ sub _hints {
 }
 
 sub viewer_for {
-	my $self     = shift;
+	my $self = shift;
 	my $mimetype = shift or return;
 	if ( exists $VIEW{$mimetype} ) {
 		return $VIEW{$mimetype};

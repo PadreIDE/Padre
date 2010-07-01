@@ -33,14 +33,14 @@ sub handle {
 # Worker Thread Methods
 
 sub task {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# Deserialize the task handle
 	TRACE("Loading Padre::TaskHandle") if DEBUG;
 	require Padre::TaskHandle;
 	TRACE("Inflating handle object") if DEBUG;
-	my $handle = Padre::TaskHandle->from_array( shift );
+	my $handle = Padre::TaskHandle->from_array(shift);
 
 	# Execute the task (ignore the result) and signal as we go
 	eval {
@@ -51,9 +51,9 @@ sub task {
 		TRACE("Calling ->stopped") if DEBUG;
 		$handle->stopped;
 	};
-	if ( $@ ) {
+	if ($@) {
 		TRACE($@) if DEBUG;
-	};
+	}
 
 	# Continue to the next task
 	return 1;

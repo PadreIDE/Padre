@@ -38,7 +38,7 @@ sub process {
 		require PPIx::EditorTools::FindUnmatchedBrace;
 		PPIx::EditorTools::FindUnmatchedBrace->new->find( ppi => $ppi );
 	};
-	if ( $@ ) {
+	if ($@) {
 		$self->{error} = $@;
 		return;
 	}
@@ -46,6 +46,7 @@ sub process {
 	# An undef brace throws a die here.
 	# undef = no error found.
 	if ( defined $result ) {
+
 		# Remember for gui update
 		$self->{location} = $result->element->location;
 	}

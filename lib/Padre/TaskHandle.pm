@@ -22,20 +22,21 @@ our $SEQUENCE = 0;
 # Constructor and Accessors
 
 sub new {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	bless {
 		hid  => ++$SEQUENCE,
 		task => $_[1],
-	}, $_[0];
+		},
+		$_[0];
 }
 
 sub hid {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	$_[0]->{hid};
 }
 
 sub task {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	$_[0]->{task};
 }
 
@@ -47,31 +48,27 @@ sub task {
 # Parent Methods
 
 sub prepare {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->{task};
-	my $rv   = eval {
-		$task->prepare;
-	};
-	if ( $@ ) {
+	my $rv   = eval { $task->prepare; };
+	if ($@) {
 		TRACE("Exception in task during 'prepare': $@") if DEBUG;
-		return ! 1;
+		return !1;
 	}
-	return !! $rv;
+	return !!$rv;
 }
 
 sub finish {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->{task};
-	my $rv   = eval {
-		$task->finish;
-	};
-	if ( $@ ) {
+	my $rv   = eval { $task->finish; };
+	if ($@) {
 		TRACE("Exception in task during 'finish': $@") if DEBUG;
-		return ! 1;
+		return !1;
 	}
-	return !! $rv;
+	return !!$rv;
 }
 
 
@@ -82,7 +79,7 @@ sub finish {
 # Worker Methods
 
 sub run {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->task;
 
@@ -90,18 +87,16 @@ sub run {
 	$task->{handle} = $self;
 
 	# Call the task's run method
-	eval {
-		$task->run();
-	};
+	eval { $task->run(); };
 
 	# Clean up the circular
 	delete $task->{handle};
 
 	# Save the exception if thrown
-	if ( $@ ) {
+	if ($@) {
 		TRACE("Exception in task during 'run': $@") if DEBUG;
 		$self->{exception} = $@;
-		return ! 1;
+		return !1;
 	}
 
 	return 1;
@@ -115,7 +110,7 @@ sub run {
 # Message Passing
 
 sub as_array {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 	my $task = $self->task;
 	return [
@@ -126,7 +121,7 @@ sub as_array {
 }
 
 sub from_array {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $class = shift;
 	my $array = shift;
 
@@ -143,19 +138,18 @@ sub from_array {
 
 # Serialize and pass-through to the Wx signal dispatch
 sub message {
-	TRACE($_[0]) if DEBUG;
-	Padre::Wx::Role::Conduit->signal(
-		Storable::freeze( [ shift->hid, @_ ] )
-	);
+	TRACE( $_[0] ) if DEBUG;
+	Padre::Wx::Role::Conduit->signal( Storable::freeze( [ shift->hid, @_ ] ) );
 }
 
 sub on_message {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self   = shift;
 	my $method = shift;
 
 	# Does the method exist
 	unless ( $self->{task}->can($method) ) {
+
 		# A method name provided directly by the Task
 		# doesn't exist in the Task. Naughty Task!!!
 		# Lacking anything more sane to do, squelch it.
@@ -164,10 +158,9 @@ sub on_message {
 
 	# Pass the call down to the task and protect it from itself
 	local $@;
-	eval {
-		$self->{task}->$method(@_);
-	};
-	if ( $@ ) {
+	eval { $self->{task}->$method(@_); };
+	if ($@) {
+
 		# A method in the main thread blew up.
 		# Beyond catching it and preventing it killing
 		# Padre entirely, I'm not sure what else we can
@@ -180,8 +173,8 @@ sub on_message {
 
 # Task startup handling
 sub started {
-	TRACE($_[0]) if DEBUG;
-	$_[0]->message( 'STARTED' );
+	TRACE( $_[0] ) if DEBUG;
+	$_[0]->message('STARTED');
 }
 
 # There is no on_stopped atm... not sure if it's needed.
@@ -189,12 +182,12 @@ sub started {
 
 # Task shutdown handling
 sub stopped {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	$_[0]->message( 'STOPPED', $_[0]->{task} );
 }
 
 sub on_stopped {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# The first parameter is the updated Task object.
@@ -207,10 +200,9 @@ sub on_stopped {
 
 	# Execute the finish method in the updated Task object
 	local $@;
-	eval {
-		$self->{task}->finish;
-	};
-	if ( $@ ) {
+	eval { $self->{task}->finish; };
+	if ($@) {
+
 		# A method in the main thread blew up.
 		# Beyond catching it and preventing it killing
 		# Padre entirely, I'm not sure what else we can

@@ -4,7 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use File::Basename;
-use Padre::Wx                  ();
+use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';

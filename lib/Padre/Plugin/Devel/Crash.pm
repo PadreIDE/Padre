@@ -27,7 +27,7 @@ our @ISA     = 'Padre::Task';
 
 sub run {
 	sleep 5;
-	die "This is a debugging task that simply crashes after running for 5 seconds!"
+	die "This is a debugging task that simply crashes after running for 5 seconds!";
 }
 
 sub finish {

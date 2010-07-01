@@ -21,7 +21,7 @@ use Params::Util qw{_STRING};
 use Padre::Current               ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
-use Padre::Wx::Role::Main   ();
+use Padre::Wx::Role::Main        ();
 use Padre::Wx::History::ComboBox ();
 
 our $VERSION = '0.64';

@@ -335,7 +335,7 @@ sub _content_info {
 	my $Perl_version = $^V || $];
 
 	# How many threads are running
-	my $threads = $INC{'threads.pm'} ? scalar(threads->list) : 'disabled';
+	my $threads = $INC{'threads.pm'} ? scalar( threads->list ) : 'disabled';
 
 	$self->{info}->SetPage( $self->_rtl(<<"END_HTML") );
 <html>

@@ -28,19 +28,18 @@ sub run {
 
 	# Build the parser
 	require Parse::ErrorString::Perl;
-	my $parser = $self->{cur_lang}
+	my $parser =
+		$self->{cur_lang}
 		? Parser::ErrorString::Perl->new(
-			lang => $self->{cur_lang},
+		lang => $self->{cur_lang},
 		)
 		: Parser::ErrorString::Perl->new;
 
 	# Parse and process the file to produce the model
 	my @model  = ();
 	my @errors = $parser->parse_string( delete $self->{text} );
-	foreach my $error ( @errors ) {
-		my $line = $error->message
-		         . " at " . $error->file
-		         . " line " . $error->line;
+	foreach my $error (@errors) {
+		my $line = $error->message . " at " . $error->file . " line " . $error->line;
 
 		#$line = encode('utf8', $line);
 		if ( $error->near ) {
@@ -59,9 +58,7 @@ sub run {
 		push @model, [ 0, $line, $error ];
 
 		foreach my $stack ( $error->stack ) {
-			my $line = $stack->sub
-			         . " called at " . $stack->file
-			         . " line " . $stack->line;
+			my $line = $stack->sub . " called at " . $stack->file . " line " . $stack->line;
 			push @model, [ 1, $line, $stack ];
 		}
 	}

@@ -13,12 +13,12 @@ our $VERSION = '0.64';
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# Check parameters for the object that owns the task
 	if ( exists $self->{owner} ) {
 		if ( exists $self->{callback} ) {
-			unless ( Params::Util::_IDENTIFIER($self->{callback}) ) {
+			unless ( Params::Util::_IDENTIFIER( $self->{callback} ) ) {
 				die "Task 'callback' must be a method name";
 			}
 		}
@@ -41,7 +41,7 @@ sub running {
 }
 
 sub owner {
-	Padre::Role::Task->task_owner($_[0]->{owner});
+	Padre::Role::Task->task_owner( $_[0]->{owner} );
 }
 
 sub callback {
@@ -95,9 +95,9 @@ sub run {
 sub finish {
 	my $self = shift;
 	if ( $self->{owner} ) {
-		my $owner    = $self->owner or return;
+		my $owner = $self->owner or return;
 		my $callback = $self->callback;
-		$owner->$callback( $self );
+		$owner->$callback($self);
 	}
 	return 1;
 }
@@ -111,14 +111,15 @@ sub finish {
 
 # my $string = $task->as_string;
 sub as_string {
-	Storable::nfreeze($_[0]);
+	Storable::nfreeze( $_[0] );
 }
 
 # my $task = Class::Name->from_string($string);
 sub from_string {
 	my $class = shift;
-	my $self  = Storable::thaw($_[0]);
+	my $self  = Storable::thaw( $_[0] );
 	unless ( Scalar::Util::blessed($self) eq $class ) {
+
 		# Because this is an internal API we can be brutally
 		# unforgiving is we aren't use the right way.
 		die("Task unexpectedly did not deserialize as a $class");

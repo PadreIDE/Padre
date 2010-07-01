@@ -5,8 +5,8 @@ package Padre::Wx::Left;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Constant            ();
-use Padre::Wx                  ();
+use Padre::Constant       ();
+use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';
@@ -46,7 +46,7 @@ sub new {
 			MaximizeButton => 0,
 			Position       => 4,
 			Layer          => 2,
-		)->Left->Hide,
+			)->Left->Hide,
 	);
 	$aui->caption(
 		left => Wx::gettext('Project Tools'),
@@ -86,8 +86,7 @@ sub show {
 	$self->aui->GetPane($self)->Show;
 
 	Wx::Event::EVT_AUINOTEBOOK_PAGE_CLOSE(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_close(@_);
 		}
@@ -148,6 +147,7 @@ sub on_close {
 	my $position = $event->GetSelection;
 	my $tool     = $self->GetPage($position);
 	unless ( $tool->can('view_close') ) {
+
 		# HACK: Crash in a controller manner for the moment.
 		# Later just let this crash uncontrolably :)
 		my $class = ref $tool;

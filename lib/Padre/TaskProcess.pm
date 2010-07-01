@@ -3,7 +3,7 @@ package Padre::TaskProcess;
 use 5.008;
 use strict;
 use warnings;
-use Carp         ();
+use Carp        ();
 use Padre::Task ();
 
 our $VERSION = '0.64';
@@ -30,7 +30,7 @@ sub message {
 	}
 
 	# Hand off to our parent handle
-	$self->handle->message($method, @_);
+	$self->handle->message( $method, @_ );
 }
 
 1;

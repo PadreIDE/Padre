@@ -3,12 +3,12 @@ package Padre::Wx::TodoList;
 use 5.008005;
 use strict;
 use warnings;
-use Scalar::Util               ();
-use Params::Util               ();
-use Padre::Role::Task          ();
-use Padre::Wx::Role::View      ();
+use Scalar::Util          ();
+use Params::Util          ();
+use Padre::Role::Task     ();
+use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx                  ();
+use Padre::Wx             ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
@@ -67,7 +67,7 @@ sub new {
 	# Create a sizer
 	my $sizer = Wx::BoxSizer->new(Wx::wxVERTICAL);
 	$sizer->Add( $self->{search}, 0, Wx::wxALL | Wx::wxEXPAND );
-	$sizer->Add( $self->{list},  1, Wx::wxALL | Wx::wxEXPAND );
+	$sizer->Add( $self->{list},   1, Wx::wxALL | Wx::wxEXPAND );
 
 	# Fits panel layout
 	$self->SetSizerAndFit($sizer);
@@ -86,7 +86,7 @@ sub new {
 		$self,
 		$self->{list},
 		sub {
-			$_[0]->on_list_item_activated($_[1]);
+			$_[0]->on_list_item_activated( $_[1] );
 		}
 	);
 
@@ -95,8 +95,9 @@ sub new {
 		$self->{list},
 		sub {
 			if ( $_[1]->GetKeyCode == Wx::WXK_RETURN ) {
+
 				# EVT_KEY_UP always binds to a single thing
-				$_[0]->GetParent->on_list_item_activated($_[1]);
+				$_[0]->GetParent->on_list_item_activated( $_[1] );
 			}
 			$_[1]->Skip(1);
 		}
@@ -210,7 +211,7 @@ sub refresh {
 	my $list     = $self->{list};
 
 	# Flush and hide the list if there is no active document
-	unless ( $document ) {
+	unless ($document) {
 		my $lock = $self->main->lock('UPDATE');
 		$search->Hide;
 		$list->Hide;

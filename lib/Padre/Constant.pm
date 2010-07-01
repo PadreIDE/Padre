@@ -14,8 +14,8 @@ our $VERSION = '0.64';
 
 # Convenience constants for the operating system
 use constant WIN32 => !!( ( $^O eq 'MSWin32' ) or ( $^O eq 'cygwin' ) );
-use constant MAC   => !!( $^O eq 'darwin' );
-use constant UNIX  => !( WIN32 or MAC );
+use constant MAC => !!( $^O eq 'darwin' );
+use constant UNIX => !( WIN32 or MAC );
 
 # Padre targets the three largest Wx backends
 # 1. Win32 Native
@@ -101,9 +101,9 @@ use constant CONFIG_DIR => File::Spec->rel2abs(
 	)
 );
 
-use constant LOG_FILE       => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
-use constant PLUGIN_DIR     => File::Spec->catdir(  CONFIG_DIR, 'plugins' );
-use constant PLUGIN_LIB     => File::Spec->catdir(  PLUGIN_DIR, 'Padre', 'Plugin' );
+use constant LOG_FILE => File::Spec->catfile( CONFIG_DIR, 'debug.log' );
+use constant PLUGIN_DIR => File::Spec->catdir( CONFIG_DIR, 'plugins' );
+use constant PLUGIN_LIB => File::Spec->catdir( PLUGIN_DIR, 'Padre', 'Plugin' );
 use constant CONFIG_HOST    => File::Spec->catfile( CONFIG_DIR, 'config.db' );
 use constant CONFIG_HUMAN   => File::Spec->catfile( CONFIG_DIR, 'config.yml' );
 use constant CONFIG_STARTUP => File::Spec->catfile( CONFIG_DIR, 'startup.txt' );
@@ -140,9 +140,7 @@ BEGIN {
 # system-installed Padre while running the test suite.
 # NOTE: The only reason this is here is that it is needed both during
 # main configuration, and also during Padre::Startup.
-use constant DEFAULT_SINGLEINSTANCE => (
-	WIN32 and not ( $ENV{HARNESS_ACTIVE} or $^P )
-) ? 1 : 0;
+use constant DEFAULT_SINGLEINSTANCE => ( WIN32 and not( $ENV{HARNESS_ACTIVE} or $^P ) ) ? 1 : 0;
 use constant DEFAULT_SINGLEINSTANCE_PORT => 4444;
 
 1;

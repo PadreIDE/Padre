@@ -831,11 +831,11 @@ sub lexical_variable_replacement {
 
 	# Launch the background task
 	$self->task_request(
-		task => 'Padre::Task::LexicalReplaceVariable',
-		document => $self,
-		location => $location,
+		task        => 'Padre::Task::LexicalReplaceVariable',
+		document    => $self,
+		location    => $location,
 		replacement => $name,
-		callback => 'lexical_variable_replacement_response',
+		callback    => 'lexical_variable_replacement_response',
 	);
 
 	return;

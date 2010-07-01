@@ -5,9 +5,9 @@ package Padre::Wx::Dialog::PluginManager;
 use 5.008;
 use strict;
 use warnings;
-use Carp                       ();
-use Padre::Wx                  ();
-use Padre::Wx::Icon            ();
+use Carp                  ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';

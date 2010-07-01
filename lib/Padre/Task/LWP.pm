@@ -29,7 +29,7 @@ use warnings;
 use Params::Util   ();
 use HTTP::Request  ();
 use HTTP::Response ();
-use Padre::Task   ();
+use Padre::Task    ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task';
@@ -71,7 +71,7 @@ sub new {
 		@_,
 
 		# Temporarily disable the ability to fully specify the request
-		request  => undef, 
+		request  => undef,
 		response => undef,
 	);
 	unless ( $self->{url} ) {
@@ -113,13 +113,12 @@ sub run {
 	my $url    = $self->{url};
 	my $query  = $self->{query};
 	if ( Params::Util::_HASH0($query) ) {
-		$query = join '&',
-			map {
-				my $value = $query->{$_} || '';
-				$value =~ s/(\W)/"%".uc(unpack("H*",$1))/ge;
-				$value =~ s/\%20/\+/g;
-				$_ . '=' . $value;
-			} ( sort keys %$query );
+		$query = join '&', map {
+			my $value = $query->{$_} || '';
+			$value =~ s/(\W)/"%".uc(unpack("H*",$1))/ge;
+			$value =~ s/\%20/\+/g;
+			$_ . '=' . $value;
+		} ( sort keys %$query );
 	}
 	if ( $method eq 'GET' and defined $query ) {
 		$url .= '?' . $query;
@@ -129,7 +128,7 @@ sub run {
 		$request->content_type( $self->{content_type} || 'application/x-www-form-urlencoded' );
 		$request->content( $query || '' );
 	}
-	my $headers = Params::Util::_HASH0($self->{headers}) || {};
+	my $headers = Params::Util::_HASH0( $self->{headers} ) || {};
 	foreach my $name ( sort keys %$headers ) {
 		$request->header( $name => $headers->{$name} );
 	}
@@ -146,7 +145,7 @@ sub run {
 	# Execute the request.
 	# It's not up to us to judge success or failure at this point,
 	# we just do the heavy lifting of the request itself.
-	$self->{response} = $useragent->request( $request );
+	$self->{response} = $useragent->request($request);
 
 	# Remove the CODE references from the response.
 	# They aren't needed any more, and they won't survive

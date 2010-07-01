@@ -3,12 +3,12 @@ package Padre::Wx::Directory;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Cache                     ();
-use Padre::Role::Task                ();
-use Padre::Wx::Role::View            ();
-use Padre::Wx::Role::Main            ();
-use Padre::Wx::Directory::TreeCtrl   ();
-use Padre::Wx                        ();
+use Padre::Cache                   ();
+use Padre::Role::Task              ();
+use Padre::Wx::Role::View          ();
+use Padre::Wx::Role::Main          ();
+use Padre::Wx::Directory::TreeCtrl ();
+use Padre::Wx                      ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
@@ -51,10 +51,10 @@ sub new {
 	$self->{root} = '';
 
 	# The list of all files to build into the tree
-	$self->{files} = [ ];
+	$self->{files} = [];
 
 	# The directories in the tree that should be expanded
-	$self->{expand} = { };
+	$self->{expand} = {};
 
 	# Create the search control
 	my $search = $self->{search} = Wx::SearchCtrl->new(
@@ -68,16 +68,14 @@ sub new {
 	$search->SetDescriptiveText( Wx::gettext('Search') );
 
 	Wx::Event::EVT_TEXT(
-		$self,
-		$search,
+		$self, $search,
 		sub {
 			shift->on_text(@_);
 		},
 	);
 
 	Wx::Event::EVT_SEARCHCTRL_CANCEL_BTN(
-		$self,
-		$search,
+		$self, $search,
 		sub {
 			shift->{search}->SetValue('');
 		},
@@ -95,7 +93,7 @@ sub new {
 			shift->move;
 		}
 	);
-	$search->SetMenu( $menu );
+	$search->SetMenu($menu);
 
 	# Create the tree control
 	$self->{tree} = Padre::Wx::Directory::TreeCtrl->new($self);
@@ -199,11 +197,11 @@ sub refresh {
 	my $project = $current->project;
 	my $root    = '';
 	my @options = ();
-	if ( $project ) {
-		$root    = $project->root;
+	if ($project) {
+		$root = $project->root;
 		@options = ( project => $project );
 	} else {
-		$root    = $current->config->default_projects_directory;
+		$root = $current->config->default_projects_directory;
 		@options = ( root => $root );
 	}
 
@@ -232,17 +230,18 @@ sub refresh {
 
 		# Flush the now-unusable state
 		$self->{root}   = $root;
-		$self->{files}  = [ ];
-		$self->{expand} = { };
+		$self->{files}  = [];
+		$self->{expand} = {};
 
 		# Do we have an (out of date) cached state we can use?
 		# If so, display it immediately and update it later.
-		if ( $project ) {
+		if ($project) {
 			my $stash = Padre::Cache::stash(
 				__PACKAGE__,
 				$project,
 			);
 			if ( $stash->{root} ) {
+
 				# We have a cached state
 				$self->{files}  = $stash->{files};
 				$self->{expand} = $stash->{expand};
@@ -282,7 +281,7 @@ sub render {
 
 	# Prepare search mode if needed
 	my $search = $self->searching;
-	my @files  = $search ? $self->filter( $self->term ) : @{$self->{files}};
+	my @files = $search ? $self->filter( $self->term ) : @{ $self->{files} };
 
 	# Flush the old tree contents
 	# TO DO: This is inefficient, upgrade to something that does the
@@ -293,13 +292,14 @@ sub render {
 
 	# Fill the new tree
 	my @stack = ();
-	while ( @files ) {
-		my $path  = shift @files;
+	while (@files) {
+		my $path = shift @files;
 		my $image = $path->type ? 'folder' : 'package';
-		while ( @stack ) {
+		while (@stack) {
+
 			# If we are not the child of the deepest element in
 			# the stack, move up a level and try again
-			last if $tree->GetPlData($stack[-1])->is_parent($path);
+			last if $tree->GetPlData( $stack[-1] )->is_parent($path);
 
 			# We have finished filling the directory.
 			# Now it (maybe) has children, we can expand it.
@@ -328,7 +328,7 @@ sub render {
 	}
 
 	# Apply the same Expand logic above to any remaining stack elements
-	while ( @stack ) {
+	while (@stack) {
 		my $complete = pop @stack;
 		if ( $search or $expand->{ $tree->GetPlData($complete)->unix } ) {
 			$tree->Expand($complete);
@@ -337,8 +337,8 @@ sub render {
 
 	# When in search mode, force the scroll position to the top after
 	# every refresh. It tends to want to scroll to the bottom.
-	if ( $search ) {
-		my ($first, $cookie) = $tree->GetFirstChild($root);
+	if ($search) {
+		my ( $first, $cookie ) = $tree->GetFirstChild($root);
 		$tree->ScrollTo($first) if $first;
 	}
 
@@ -348,32 +348,25 @@ sub render {
 # Filter the file list to remove all files that do not match a search term
 # TO DO: I believe that the two phases shown below can be merged into one.
 sub filter {
-	my $self  = shift;
-	my $term  = shift;
+	my $self = shift;
+	my $term = shift;
 
 	# Apply a simple substring match on the file name only
 	my $quote = quotemeta $term;
 	my $regex = qr/$quote/i;
-	my @match = grep {
-		$_->is_directory
-		or
-		$_->name =~ $regex
-	} @{$self->{files}};
+	my @match =
+		grep { $_->is_directory or $_->name =~ $regex } @{ $self->{files} };
 
 	# Prune empty directories
 	# NOTE: This is tricky and hard to make sense of, but damned fast :)
 	foreach my $i ( reverse 0 .. $#match ) {
 		my $path  = $match[$i];
-		my $after = $match[$i + 1];
+		my $after = $match[ $i + 1 ];
 		my $prune = (
-			$path->is_directory
-			and not (
-				defined $after
-				and
-				$after->depth - $path->depth == 1
-			)
+			$path->is_directory and not( defined $after
+				and $after->depth - $path->depth == 1 )
 		);
-		if ( $prune ) {
+		if ($prune) {
 			splice @match, $i, 1;
 		}
 	}

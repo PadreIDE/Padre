@@ -3,13 +3,13 @@ package Padre::Wx::Dialog::OpenResource;
 use 5.008;
 use strict;
 use warnings;
-use Cwd                        ();
-use Padre::DB                  ();
-use Padre::Wx                  ();
-use Padre::Wx::Icon            ();
+use Cwd                   ();
+use Padre::DB             ();
+use Padre::Wx             ();
+use Padre::Wx::Icon       ();
 use Padre::Wx::Role::Main ();
-use Padre::MimeTypes           ();
-use Padre::Role::Task          ();
+use Padre::MimeTypes      ();
+use Padre::Role::Task     ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{
@@ -36,7 +36,7 @@ sub new {
 	$self->init_search;
 
 	# Dialog's icon as is the same as Padre
-	$self->SetIcon( Padre::Wx::Icon::PADRE );
+	$self->SetIcon(Padre::Wx::Icon::PADRE);
 
 	# Create dialog
 	$self->_create;
@@ -56,9 +56,11 @@ sub init_search {
 
 	# Check if we have an open file so we can use its directory
 	my $directory = $filename
+
 		# Current document's project or base directory
 		? Padre::Util::get_project_dir($filename)
-			|| File::Basename::dirname($filename)
+		|| File::Basename::dirname($filename)
+
 		# Current working directory
 		: Cwd::getcwd();
 
@@ -85,7 +87,7 @@ sub ok_button {
 
 	#Open the selected resources here if the user pressed OK
 	my @selections = $self->{matches_list}->GetSelections;
-	foreach my $selection ( @selections ) {
+	foreach my $selection (@selections) {
 		my $filename = $self->{matches_list}->GetClientData($selection);
 
 		# Fetch the recently used files from the database
@@ -99,6 +101,7 @@ sub ok_button {
 		my $found = scalar @$recently_used > 0;
 
 		eval {
+
 			# Try to open the file now
 			if ( my $id = $main->find_editor_of_file($filename) ) {
 				my $page = $main->notebook->GetPage($id);
@@ -107,7 +110,7 @@ sub ok_button {
 				$main->setup_editors($filename);
 			}
 		};
-		if ( $@ ) {
+		if ($@) {
 			Wx::MessageBox(
 				Wx::gettext('Error while trying to perform Padre action'),
 				Wx::gettext('Error'),
@@ -118,7 +121,7 @@ sub ok_button {
 
 			# And insert a recently used tuple if it is not found
 			# and the action is successful.
-			if ( $found ) {
+			if ($found) {
 				Padre::DB->do(
 					"update recently_used set last_used = ? where name = ? and type = ?",
 					{}, time(), $filename, 'RESOURCE',
@@ -165,7 +168,7 @@ sub _create {
 # create the buttons pane.
 #
 sub _create_buttons {
-	my $self  = shift;
+	my $self = shift;
 
 	$self->{ok_button} = Wx::Button->new(
 		$self,
@@ -252,7 +255,7 @@ sub _create_controls {
 		Padre::Wx::Icon::find("actions/down")
 	);
 
-	$self->{popup_menu} = Wx::Menu->new;
+	$self->{popup_menu}     = Wx::Menu->new;
 	$self->{skip_vcs_files} = $self->{popup_menu}->AppendCheckItem(
 		-1,
 		Wx::gettext("Skip version control system files"),
@@ -273,12 +276,12 @@ sub _create_controls {
 	$hb->Add( $self->{search_text},  1, Wx::wxALIGN_CENTER_VERTICAL, 2 );
 	$hb->Add( $self->{popup_button}, 0, Wx::wxALL | Wx::wxEXPAND,    2 );
 	$hb->AddSpacer(1);
-	$self->{sizer}->Add( $hb,                  0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
-	$self->{sizer}->Add( $matches_label,       0, Wx::wxALL | Wx::wxEXPAND,    2 );
+	$self->{sizer}->Add( $hb,                   0, Wx::wxBOTTOM | Wx::wxEXPAND, 5 );
+	$self->{sizer}->Add( $matches_label,        0, Wx::wxALL | Wx::wxEXPAND,    2 );
 	$self->{sizer}->Add( $self->{matches_list}, 1, Wx::wxALL | Wx::wxEXPAND,    2 );
 	$hb = Wx::BoxSizer->new(Wx::wxHORIZONTAL);
 	$hb->AddSpacer(2);
-	$hb->Add( $folder_image,       0, Wx::wxALL | Wx::wxEXPAND,    1 );
+	$hb->Add( $folder_image,        0, Wx::wxALL | Wx::wxEXPAND,    1 );
 	$hb->Add( $self->{status_text}, 1, Wx::wxALIGN_CENTER_VERTICAL, 1 );
 	$hb->Add( $self->{copy_button}, 0, Wx::wxALL | Wx::wxEXPAND,    1 );
 	$hb->AddSpacer(1);
@@ -330,9 +333,8 @@ sub _setup_events {
 			my @matches      = $self->{matches_list}->GetSelections;
 			my $num_selected = scalar @matches;
 			if ( $num_selected == 1 ) {
-				$self->{status_text}->ChangeValue(
-					$self->_path( $self->{matches_list}->GetClientData( $matches[0] ) )
-				);
+				$self->{status_text}
+					->ChangeValue( $self->_path( $self->{matches_list}->GetClientData( $matches[0] ) ) );
 				$self->{copy_button}->Enable(1);
 			} elsif ( $num_selected > 1 ) {
 				$self->{status_text}->ChangeValue( $num_selected . " items selected" );
@@ -363,8 +365,7 @@ sub _setup_events {
 			if ( $num_selected == 1 ) {
 				if ( Wx::wxTheClipboard->Open ) {
 					Wx::wxTheClipboard->SetData(
-						Wx::TextDataObject->new( $self->{matches_list}->GetClientData( $matches[0] ) )
-					);
+						Wx::TextDataObject->new( $self->{matches_list}->GetClientData( $matches[0] ) ) );
 					Wx::wxTheClipboard->Close;
 				}
 			}
@@ -394,8 +395,7 @@ sub _setup_events {
 			$self->PopupMenu(
 				$self->{popup_menu},
 				$self->{popup_button}->GetPosition->x,
-				$self->{popup_button}->GetPosition->y +
-				$self->{popup_button}->GetSize->GetHeight
+				$self->{popup_button}->GetPosition->y + $self->{popup_button}->GetSize->GetHeight
 			);
 		}
 	);
@@ -472,13 +472,11 @@ sub _show_recently_opened_resources {
 	# Fetch them from Padre's RecentlyUsed database table
 	require Padre::DB::RecentlyUsed;
 	my $recently_used = Padre::DB::RecentlyUsed->select( 'where type = ?', 'RESOURCE' ) || [];
-	my @recent_files  = ();
-	foreach my $e ( @$recently_used ) {
+	my @recent_files = ();
+	foreach my $e (@$recently_used) {
 		push @recent_files, $self->_path( $e->value );
 	}
-	@recent_files = sort {
-		File::Basename::fileparse($a) cmp File::Basename::fileparse($b)
-	} @recent_files;
+	@recent_files = sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } @recent_files;
 
 	# Show results in matching items list
 	$self->{matched_files} = \@recent_files;
@@ -494,9 +492,7 @@ sub _show_recently_opened_resources {
 sub search {
 	my $self = shift;
 
-	$self->{status_text}->ChangeValue(
-		Wx::gettext('Reading items. Please wait...')
-	);
+	$self->{status_text}->ChangeValue( Wx::gettext('Reading items. Please wait...') );
 
 	# Kick off the resource search
 	$self->task_request(
@@ -555,9 +551,7 @@ sub render {
 	}
 	if ( $pos > 0 ) {
 		$self->{matches_list}->Select(0);
-		$self->{status_text}->ChangeValue(
-			$self->_path( $self->{matches_list}->GetClientData(0) )
-		);
+		$self->{status_text}->ChangeValue( $self->_path( $self->{matches_list}->GetClientData(0) ) );
 		$self->{status_text}->Enable(1);
 		$self->{copy_button}->Enable(1);
 		$self->{ok_button}->Enable(1);
@@ -577,7 +571,7 @@ sub render {
 sub _path {
 	my $self = shift;
 	my $path = shift;
-	if ( Padre::Constant::WIN32 ) {
+	if (Padre::Constant::WIN32) {
 		$path =~ s/\//\\/g;
 	}
 	return $path;

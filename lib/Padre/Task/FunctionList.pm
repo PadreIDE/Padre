@@ -5,7 +5,7 @@ package Padre::Task::FunctionList;
 use 5.008005;
 use strict;
 use warnings;
-use Padre::Task   ();
+use Padre::Task ();
 
 our $VERSION = '0.64';
 our @ISA     = 'Padre::Task';
@@ -18,20 +18,22 @@ our @ISA     = 'Padre::Task';
 # Padre::Task Methods
 
 sub run {
-	my $self  = shift;
+	my $self = shift;
 
 	# Pull the text off the task so we won't need to serialize
 	# it back up to the parent Wx thread at the end of the task.
 	my $text = delete $self->{text};
 
 	# Get the function list
-	my @functions = $self->find( $text );
+	my @functions = $self->find($text);
 
 	# Sort it appropriately
 	if ( $self->{order} eq 'alphabetical' ) {
+
 		# Alphabetical (aka 'abc')
 		@functions = sort { lc($a) cmp lc($b) } @functions;
 	} elsif ( $self->{order} eq 'alphabetical_private_last' ) {
+
 		# ~ comes after \w
 		tr/_/~/ foreach @functions;
 		@functions = sort { lc($a) cmp lc($b) } @functions;

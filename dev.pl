@@ -40,9 +40,9 @@ BEGIN {
 		'invisible'   => \$INVISIBLE,
 		'include|i:s' => \@INCLUDE,
 		'trace:s'     => sub {
-			$ENV{PADRE_DEBUG} = $_[1] || '1'
+			$ENV{PADRE_DEBUG} = $_[1] || '1';
 		},
-		'die'         => sub {
+		'die' => sub {
 			$ENV{PADRE_DIE} = 1;
 		},
 	) or $USAGE = 1;

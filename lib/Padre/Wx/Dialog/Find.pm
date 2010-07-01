@@ -22,7 +22,7 @@ use Padre::Current               ();
 use Padre::Search                ();
 use Padre::DB                    ();
 use Padre::Wx                    ();
-use Padre::Wx::Role::Main   ();
+use Padre::Wx::Role::Main        ();
 use Padre::Wx::History::ComboBox ();
 use Padre::Wx::FindResult        ();
 

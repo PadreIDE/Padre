@@ -154,7 +154,7 @@ sub read {
 }
 
 sub write {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self = shift;
 
 	# Save the user configuration
@@ -170,9 +170,9 @@ sub write {
 	# so that we don't need to load YAML::Tiny before the thread fork.
 	# This should save around 400k of memory per background thread.
 	my %startup = map { $_ => $self->$_() } sort keys %STARTUP;
-	open( my $FILE, '>', Padre::Constant::CONFIG_STARTUP )         or return 1;
-	print $FILE map { "$_\n$startup{$_}\n" } sort keys %startup or return 1;
-	close $FILE                                                 or return 1;
+	open( my $FILE, '>', Padre::Constant::CONFIG_STARTUP ) or return 1;
+	print $FILE map {"$_\n$startup{$_}\n"} sort keys %startup or return 1;
+	close $FILE or return 1;
 
 	return 1;
 }
@@ -198,7 +198,7 @@ sub default {
 }
 
 sub set {
-	TRACE($_[1]) if DEBUG;
+	TRACE( $_[1] ) if DEBUG;
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;
@@ -242,7 +242,7 @@ sub set {
 # Set a value in the configuration and apply the preference change
 # to the application.
 sub apply {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self    = shift;
 	my $name    = shift;
 	my $value   = shift;

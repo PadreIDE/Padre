@@ -3,9 +3,9 @@ package Padre::Wx::Dialog::Form;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Wx                  ();
+use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
-use Padre::Locale              ();
+use Padre::Locale         ();
 
 our $VERSION = '0.64';
 our @ISA     = qw{

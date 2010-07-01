@@ -25,8 +25,8 @@ SCOPE: {
 		y => 3,
 	);
 	isa_ok( $addition, 'Padre::Task::Addition' );
-	is( $addition->{x}, 2, '->{x} matches expected' );
-	is( $addition->{y}, 3, '->{y} matches expected' );
+	is( $addition->{x}, 2,     '->{x} matches expected' );
+	is( $addition->{y}, 3,     '->{y} matches expected' );
 	is( $addition->{z}, undef, '->{z} matches expected' );
 
 	# Run the task
@@ -39,20 +39,19 @@ SCOPE: {
 	is( $addition->{run}, 1, '->{run} is true' );
 
 	is( $addition->{finish}, 0, '->{finish} is false' );
-	is( $addition->finish,   1, '->finish ok'  );
+	is( $addition->finish,   1, '->finish ok' );
 	is( $addition->{finish}, 1, '->{finish} is true' );
 
-	is( $addition->{x},     2, '->{x} matches expected' );
-	is( $addition->{y},     3, '->{y} matches expected' );
-	is( $addition->{z},     5, '->{z} matches expected' );
+	is( $addition->{x}, 2, '->{x} matches expected' );
+	is( $addition->{y}, 3, '->{y} matches expected' );
+	is( $addition->{z}, 5, '->{z} matches expected' );
 
 	# Check task round-trip serialization
 	my $string = $addition->as_string;
-	ok(
-		(defined $string and ! ref $string and length $string),
+	ok( ( defined $string and !ref $string and length $string ),
 		'->as_string ok',
 	);
-	my $round = Padre::Task::Addition->from_string( $string );
+	my $round = Padre::Task::Addition->from_string($string);
 	isa_ok( $round, 'Padre::Task::Addition' );
 	is_deeply( $round, $addition, 'Task round-trips ok' );
 }
@@ -65,22 +64,22 @@ SCOPE: {
 # Run the task via a handle object
 
 SCOPE: {
-	my $task   = Padre::Task::Addition->new( x => 2, y => 3 );
-	my $handle = Padre::TaskHandle->new( $task );		
-	isa_ok( $handle, 'Padre::TaskHandle' );
+	my $task = Padre::Task::Addition->new( x => 2, y => 3 );
+	my $handle = Padre::TaskHandle->new($task);
+	isa_ok( $handle,       'Padre::TaskHandle' );
 	isa_ok( $handle->task, 'Padre::Task::Addition' );
-	is( $handle->hid, 1, '->hid ok' );
-	is( $handle->task->{x}, 2, '->{x} matches expected' );
-	is( $handle->task->{y}, 3, '->{y} matches expected' );
+	is( $handle->hid,       1,     '->hid ok' );
+	is( $handle->task->{x}, 2,     '->{x} matches expected' );
+	is( $handle->task->{y}, 3,     '->{y} matches expected' );
 	is( $handle->task->{z}, undef, '->{z} matches expected' );
 
 	# Run the task
-	is( $task->{prepare},   0, '->{prepare} is false' );
+	is( $task->{prepare}, 0, '->{prepare} is false' );
 	is( $handle->prepare, 1, '->prepare ok' );
-	is( $task->{prepare},   1, '->{prepare} is true' );
+	is( $task->{prepare}, 1, '->{prepare} is true' );
 
 	is( $task->{run}, 0, '->{run} is false' );
-	is( $handle->run, 1, '->run ok'     );
+	is( $handle->run, 1, '->run ok' );
 	is( $task->{run}, 1, '->{run} is true' );
 
 	is( $task->{finish}, 0, '->{finish} is false' );

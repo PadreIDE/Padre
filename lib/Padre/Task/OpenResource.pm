@@ -32,18 +32,17 @@ sub run {
 			require ExtUtils::Manifest;
 			ExtUtils::Manifest->import('maniskip');
 			my $maniskip = maniskip($manifest_skip);
-			$rule->exec( sub {
-				return not $maniskip->( $_[2] );
-			} );
+			$rule->exec(
+				sub {
+					return not $maniskip->( $_[2] );
+				}
+			);
 		}
 	}
 
 	# Generate a sorted file list based on filename
-	$self->{matched} = [
-		sort {
-			File::Basename::fileparse($a) cmp File::Basename::fileparse($b)
-		} $rule->in( $self->{directory} )
-	];
+	$self->{matched} =
+		[ sort { File::Basename::fileparse($a) cmp File::Basename::fileparse($b) } $rule->in( $self->{directory} ) ];
 
 	return 1;
 }

@@ -120,6 +120,7 @@ sub db_decrement {
 sub config_increment {
 	my $self = shift;
 	unless ( $self->{config_depth}++ ) {
+
 		# TO DO: Initiate config locking here
 		# NOTE: Pretty sure we don't need to do anything specific
 		# here for the config file stuff.
@@ -130,6 +131,7 @@ sub config_increment {
 sub config_decrement {
 	my $self = shift;
 	unless ( $self->{config_depth}-- ) {
+
 		# Write the config file here
 		$self->owner->config->write;
 	}

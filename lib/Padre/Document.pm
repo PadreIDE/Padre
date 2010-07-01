@@ -214,7 +214,7 @@ MIME type is defined by the C<guess_mimetype> function.
 
 sub new {
 	my $class = shift;
-	my $self  = bless { @_ }, $class;
+	my $self = bless {@_}, $class;
 
 	# This sub creates the document object and is allowed to use self->filename,
 	# once noone else uses it, it shout be deleted from the $self - hash before
@@ -337,7 +337,7 @@ sub current {
 
 sub DESTROY {
 	if ( defined $_[0]->{filename} ) {
-		Padre::Cache::release($_[0]->{filename});
+		Padre::Cache::release( $_[0]->{filename} );
 	}
 }
 

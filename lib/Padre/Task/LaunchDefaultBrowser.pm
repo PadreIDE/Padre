@@ -14,6 +14,7 @@ our $VERSION = '0.64';
 our @ISA     = 'Padre::Task';
 
 sub run {
+
 	# We don't need to load all of Padre::Wx for this,
 	# but we do need the minimum bits of wxWidgets.
 	require Wx;

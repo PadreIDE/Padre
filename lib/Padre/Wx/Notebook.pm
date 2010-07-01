@@ -3,8 +3,8 @@ package Padre::Wx::Notebook;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util               ();
-use Padre::Wx                  ();
+use Params::Util          ();
+use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
 our $VERSION = '0.64';

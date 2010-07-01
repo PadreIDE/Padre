@@ -44,9 +44,9 @@ sub task_revision {
 
 	# Optimisation hack: Only populate the index when
 	# the revision is queried from the view.
-	unless ( exists $INDEX{$self->{task_revision}} ) {
-		$INDEX{$self->{task_revision}} = $self;
-		Scalar::Util::weaken($INDEX{$self->{task_revision}});
+	unless ( exists $INDEX{ $self->{task_revision} } ) {
+		$INDEX{ $self->{task_revision} } = $self;
+		Scalar::Util::weaken( $INDEX{ $self->{task_revision} } );
 	}
 
 	return $self->{task_revision};
@@ -56,14 +56,14 @@ sub task_revision {
 sub task_reset {
 	my $self = shift;
 	if ( $self->{task_revision} ) {
-		delete $INDEX{$self->{task_revision}};
+		delete $INDEX{ $self->{task_revision} };
 	}
 	$self->{task_revision} = ++$SEQUENCE;
 }
 
 # Locate an object by revision
 sub task_owner {
-	$INDEX{$_[1]};
+	$INDEX{ $_[1] };
 }
 
 # Create a new task bound to the owner
@@ -74,7 +74,7 @@ sub task_request {
 	# Check and load the task
 	# Support a convenience shortcut where a false value
 	# for task means don't run a task at all.
-	my $task  = delete $param{task} or return;
+	my $task = delete $param{task} or return;
 	my $class = Params::Util::_DRIVER(
 		$task,
 		'Padre::Task',
@@ -87,8 +87,8 @@ sub task_request {
 # By default explode to highlight task requesters that
 # have not implemented an appropriate response handler.
 sub task_response {
-	my $class = ref($_[0]) || $_[0];
-	my $task  = ref($_[1]) || $_[1];
+	my $class = ref( $_[0] ) || $_[0];
+	my $task  = ref( $_[1] ) || $_[1];
 	die "Unhandled task_response for $class (recieved $task)";
 }
 

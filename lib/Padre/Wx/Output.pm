@@ -8,12 +8,12 @@ use 5.008;
 use strict;
 use warnings;
 use utf8;
-use Encode                     ();
-use File::Spec                 ();
-use Params::Util               ();
-use Padre::Wx::Role::View      ();
+use Encode                ();
+use File::Spec            ();
+use Params::Util          ();
+use Padre::Wx::Role::View ();
 use Padre::Wx::Role::Main ();
-use Padre::Wx                  ();
+use Padre::Wx             ();
 use Padre::Logger;
 use Wx::RichText; # Is this necesary?
 
@@ -57,8 +57,7 @@ sub new {
 	#$self->AppendText( Wx::gettext('No output') );
 
 	Wx::Event::EVT_TEXT_URL(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			shift->on_text_url(@_);
 		},
@@ -118,7 +117,7 @@ sub on_text_url {
 	} else {
 		TRACE(" Current doc does not match our expectations") if DEBUG;
 	}
-};
+}
 
 
 
@@ -216,10 +215,11 @@ sub AppendText {
 			$self->SUPER::AppendText($text);
 		}
 	}
+
 	# Scroll down to the latest position
 	# Maybe we should check for a setting
 	# so user can set if they want scroll
-	$self->ShowPosition($self->GetLastPosition());
+	$self->ShowPosition( $self->GetLastPosition() );
 	return ();
 }
 

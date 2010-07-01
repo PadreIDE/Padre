@@ -23,7 +23,6 @@ our @ISA     = qw{
 
 
 
-
 ######################################################################
 # Constructor and Accessors
 
@@ -43,8 +42,7 @@ sub new {
 	$self->SetIndent(10);
 
 	Wx::Event::EVT_COMMAND_SET_FOCUS(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			$self->on_tree_item_set_focus( $_[1] );
 		},
@@ -52,8 +50,7 @@ sub new {
 
 	# Double-click a function name
 	Wx::Event::EVT_TREE_ITEM_ACTIVATED(
-		$self,
-		$self,
+		$self, $self,
 		sub {
 			$self->on_tree_item_activated( $_[1] );
 		}
@@ -101,10 +98,10 @@ sub view_close {
 # Padre::Role::Task Methods
 
 sub task_response {
-	TRACE($_[1]) if DEBUG;
+	TRACE( $_[1] ) if DEBUG;
 	my $self = shift;
 	my $task = shift;
-	my $data = Params::Util::_ARRAY($task->{data}) or return;
+	my $data = Params::Util::_ARRAY( $task->{data} ) or return;
 	my $lock = $self->main->lock('UPDATE');
 
 	# Add the hidden unused root
@@ -116,7 +113,7 @@ sub task_response {
 	);
 
 	# Add the packge trees
-	foreach my $pkg ( @$data ) {
+	foreach my $pkg (@$data) {
 		my $branch = $self->AppendItem(
 			$root,
 			$pkg->{name},
@@ -136,10 +133,9 @@ sub task_response {
 
 	# Set MIME type specific event handler
 	Wx::Event::EVT_TREE_ITEM_RIGHT_CLICK(
-		$self,
-		$self,
+		$self, $self,
 		sub {
-			$_[0]->on_tree_item_right_click($_[1]);
+			$_[0]->on_tree_item_right_click( $_[1] );
 		},
 	);
 
@@ -203,7 +199,7 @@ sub stop {
 
 	return;
 }
-	
+
 
 
 
@@ -235,8 +231,7 @@ sub on_tree_item_right_click {
 	{
 		my $pod = $menu->Append( -1, Wx::gettext('Open &Documentation') );
 		Wx::Event::EVT_MENU(
-			$self,
-			$pod,
+			$self, $pod,
 			sub {
 
 				# TO DO Fix this wasting of objects (cf. Padre::Wx::Menu::Help)
@@ -286,21 +281,21 @@ sub on_tree_item_set_focus {
 # Cache routines
 
 # sub store_in_cache {
-	# my ( $self, $cache_key, $content ) = @_;
-# 
-	# if ( defined $cache_key ) {
-		# $self->{cache}->{$cache_key} = $content;
-	# }
-	# return;
+# my ( $self, $cache_key, $content ) = @_;
+#
+# if ( defined $cache_key ) {
+# $self->{cache}->{$cache_key} = $content;
 # }
-# 
+# return;
+# }
+#
 # sub get_from_cache {
-	# my ( $self, $cache_key ) = @_;
-# 
-	# if ( defined $cache_key and exists $self->{cache}->{$cache_key} ) {
-		# return $self->{cache}->{$cache_key};
-	# }
-	# return;
+# my ( $self, $cache_key ) = @_;
+#
+# if ( defined $cache_key and exists $self->{cache}->{$cache_key} ) {
+# return $self->{cache}->{$cache_key};
+# }
+# return;
 # }
 
 
@@ -319,12 +314,13 @@ sub clear {
 }
 
 sub refresh {
-	TRACE($_[0]) if DEBUG;
+	TRACE( $_[0] ) if DEBUG;
 	my $self     = shift;
 	my $document = $self->current->document or return;
 	my $length   = $document->text_length;
 
 	if ( $document eq $self->{document} ) {
+
 		# Shortcut if nothing has changed.
 		# NOTE: Given the speed at which the timer fires a cheap
 		# length check is better than an expensive MD5 check.
@@ -332,6 +328,7 @@ sub refresh {
 			return;
 		}
 	} else {
+
 		# New file, don't keep the current list visible
 		$self->clear;
 	}
@@ -348,7 +345,7 @@ sub refresh {
 
 sub add_subtree {
 	my ( $self, $pkg, $type, $root ) = @_;
-	
+
 	my %type_caption = (
 		pragmata => Wx::gettext('Pragmata'),
 		modules  => Wx::gettext('Modules'),
@@ -412,7 +409,7 @@ sub add_subtree {
 		if ( $type eq 'methods' ) {
 			$self->Expand($type_elem);
 		} else {
-			if( $self->IsExpanded($type_elem) ) {
+			if ( $self->IsExpanded($type_elem) ) {
 				$self->Collapse($type_elem);
 			}
 		}
@@ -432,9 +429,7 @@ sub select_line_in_editor {
 	{
 		$line--;
 		$editor->EnsureVisible($line);
-		$editor->goto_pos_centerize(
-			$editor->GetLineIndentPosition($line)
-		);
+		$editor->goto_pos_centerize( $editor->GetLineIndentPosition($line) );
 		$editor->SetFocus;
 	}
 	return;

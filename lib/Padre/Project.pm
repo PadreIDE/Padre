@@ -296,7 +296,7 @@ sub name {
 	my $self = shift;
 	my $name = ( reverse( File::Spec->splitdir( $self->root ) ) )[0];
 
-	if ( ! defined $name or $name eq '' ) { # Fallback
+	if ( !defined $name or $name eq '' ) { # Fallback
 		$name = $self->root;
 		$name =~ s/^.*[\/\\]//;
 	}
@@ -313,7 +313,7 @@ sub name {
 
 sub DESTROY {
 	if ( defined $_[0]->{root} ) {
-		Padre::Cache::release($_[0]->{root});
+		Padre::Cache::release( $_[0]->{root} );
 	}
 }
 
