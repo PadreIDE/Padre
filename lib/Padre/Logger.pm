@@ -109,8 +109,7 @@ sub TRACE {
 sub string {
 	require Devel::Dumpvar;
 	my $object = shift;
-	my $shared =
-		( $INC{'threads/shared.pm'} and threads::shared::is_shared($object) ) ? ' : shared' : '';
+	my $shared = ( $INC{'threads/shared.pm'} and threads::shared::is_shared($object) ) ? ' : shared' : '';
 	my $string =
 		ref($object)
 		? Devel::Dumpvar->_refstring($object)

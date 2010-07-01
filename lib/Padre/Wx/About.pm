@@ -317,7 +317,7 @@ sub _content_info {
 	$wx_widgets =~ s/^wx\w+\s+//;
 
 	# Calculate the process uptime
-	my $uptime       = time - $^T;
+	my $uptime = time - $^T;
 	my @uptime_parts = ( 0, 0, 0 );
 	if ( $uptime > 3600 ) {
 		$uptime_parts[0] = int( $uptime / 3600 );

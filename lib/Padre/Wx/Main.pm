@@ -127,7 +127,7 @@ sub new {
 	}
 
 	# Create the underlying Wx frame
-	my $self = $class->SUPER::new( 
+	my $self = $class->SUPER::new(
 		undef,
 		-1,
 		'Padre',

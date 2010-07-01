@@ -332,9 +332,10 @@ sub refresh_recent {
 
 	my $idx = 0;
 	foreach my $file ( Padre::DB::History->recent('files') ) {
-		if ( Padre::Constant::WIN32 ) {
+		if (Padre::Constant::WIN32) {
 			next unless -f $file;
 		} else {
+
 			# Try a non-blocking "-f" (doesn't work in all cases)
 			# File does not exist or is not accessable.
 			# NOTE: O_NONBLOCK does not exist on Windows, kaboom
