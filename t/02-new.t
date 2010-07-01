@@ -67,10 +67,10 @@ SCOPE: {
 	is( $config->locale_perldiag          => '' );
 	is( $config->editor_style             => 'default' );
 	is( $config->main_maximized           => 0 );
-	is( $config->main_top                 => 40 );
-	is( $config->main_left                => 20 );
-	is( $config->main_width               => 600 );
-	is( $config->main_height              => 400 );
+	is( $config->main_top                 => -1 );
+	is( $config->main_left                => -1 );
+	is( $config->main_width               => -1 );
+	is( $config->main_height              => -1 );
 }
 
 
