@@ -208,8 +208,18 @@ sub method_decrement {
 
 		# Run all of the pending methods
 		foreach ( keys %{ $self->{method_pending} } ) {
-			next if $_ eq uc($_);
-			$self->{owner}->$_();
+			next if $_ eq uc $_;
+
+			# This call is sent into what is essentially
+			# arbitrary code, and it's easy for exceptions
+			# under here to cause the entire locking sub-system
+			# to crash. Trap and ignore errors so we can attempt
+			# to retain the integrity of the locking subsystem
+			# as a whole.
+			local $@;
+			eval {
+				$self->{owner}->$_();
+			};
 		}
 		$self->{method_pending} = {};
 	}
