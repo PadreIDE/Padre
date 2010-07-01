@@ -3,6 +3,9 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
 0.66 To Be Released
     - Improved the quality and integration of the default window size (ADAMK)
+    - The non-blocking IO upgrade in 0.65 meant that Padre could no longer
+      open files on Windows. Fixed (ADAMK)
+    - Minor improvements to the About dialog (ADAMK)
 
 0.65 2010.07.01
     - Task 2.0 API landed on trunk (and everything breaks) (ADAMK)

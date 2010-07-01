@@ -5,10 +5,10 @@ package Padre::Wx::Menu::File;
 use 5.008;
 use strict;
 use warnings;
-use Fcntl;
-
+use Fcntl           ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
+use Padre::Constant ();
 use Padre::Current  ('_CURRENT');
 use Padre::Logger;
 
@@ -332,10 +332,19 @@ sub refresh_recent {
 
 	my $idx = 0;
 	foreach my $file ( Padre::DB::History->recent('files') ) {
-
-		# Try a non-blocking "-f" (doesn't work in all cases)
-		sysopen my $fh, $file, O_RDONLY | O_NONBLOCK or next; # File does not exist or is not accessable
-		close $fh;
+		if ( Padre::Constant::WIN32 ) {
+			next unless -f $file;
+		} else {
+			# Try a non-blocking "-f" (doesn't work in all cases)
+			# File does not exist or is not accessable.
+			# NOTE: O_NONBLOCK does not exist on Windows, kaboom
+			sysopen(
+				my $fh,
+				$file,
+				Fcntl::O_RDONLY | Fcntl::O_NONBLOCK
+			) or next;
+			close $fh;
+		}
 
 		Wx::Event::EVT_MENU(
 			$self->{main},
