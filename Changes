@@ -1,7 +1,10 @@
 Changes for Perl Application Development and Refactoring Environment
 NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
 
-0.65 to be released
+0.66 To Be Released
+
+
+0.65 2010.07.01
     - Task 2.0 API landed on trunk (and everything breaks) (ADAMK)
     - Converted the FunctionList GUI component to work via a task (ADAMK)
     - Padre::Role::Task role added to allow any object in Padre
