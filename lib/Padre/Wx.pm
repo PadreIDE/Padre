@@ -22,7 +22,7 @@ use Wx::STC    ();
 use Wx::AUI    ();
 use Wx::Locale ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 # Hard version lock on a new-enough Wx.pm
 BEGIN {

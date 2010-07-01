@@ -8,7 +8,7 @@ use warnings;
 use File::Spec     ();
 use Padre::Project ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = 'Padre::Project';
 
 

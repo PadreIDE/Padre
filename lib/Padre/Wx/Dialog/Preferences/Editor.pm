@@ -6,7 +6,7 @@ use warnings;
 
 use Padre::Wx::Editor;
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = 'Padre::Wx::Editor';
 
 sub main {

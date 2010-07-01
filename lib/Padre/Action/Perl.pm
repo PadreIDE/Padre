@@ -22,7 +22,7 @@ use Params::Util qw{_INSTANCE};
 use Padre::Locale ();
 use Padre::Current qw{_CURRENT};
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = 'Padre::Wx::Menu';
 
 sub new {

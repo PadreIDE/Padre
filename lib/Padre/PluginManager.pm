@@ -41,7 +41,7 @@ use Padre::PluginHandle    ();
 use Padre::Wx              ();
 use Padre::Wx::Menu::Tools ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 
 

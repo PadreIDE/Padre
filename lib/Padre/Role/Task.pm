@@ -19,7 +19,7 @@ use strict;
 use warnings;
 use Scalar::Util ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 # Use a shared sequence for object revisioning greatly
 # simplifies the indexing process.

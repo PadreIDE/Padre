@@ -38,7 +38,7 @@ use Padre::Role::Task        ();
 use Wx::Perl::Dialog::Simple ();
 use Padre::Logger;
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = qw{
 	Padre::Role::Task
 	Wx::Dialog

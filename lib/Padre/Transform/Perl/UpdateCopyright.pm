@@ -34,7 +34,7 @@ use Params::Util qw{ _STRING };
 use Padre::Current         ();
 use Padre::Transform::Perl ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = 'Padre::Transform::Perl';
 
 #####################################################################

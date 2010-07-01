@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Wx::Perl::Dialog;
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 =head1 NAME
 

@@ -8,7 +8,7 @@ use Padre::File;
 use Wx::Perl::Dialog::Simple ();
 use File::Temp;
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = 'Padre::File';
 
 my %connection_cache;

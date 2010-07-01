@@ -9,7 +9,7 @@ use Params::Util      ();
 use Padre::Current    ();
 use Padre::Role::Task ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 sub new {
 	my $class = shift;

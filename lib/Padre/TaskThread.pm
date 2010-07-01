@@ -17,7 +17,7 @@ use Scalar::Util ();
 # loaded less code now cuts the per-thread cost of several meg.
 use Wx ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 # Worker id sequence, so identifiers will be available in objects
 # across all instances and threads before the thread has been spawned.

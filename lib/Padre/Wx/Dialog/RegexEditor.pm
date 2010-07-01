@@ -12,7 +12,7 @@ use Padre::Wx::Role::Main ();
 # RichTextCtrl
 use Wx::RichText ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog

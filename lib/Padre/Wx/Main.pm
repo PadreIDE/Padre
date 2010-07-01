@@ -63,7 +63,7 @@ use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Role::Conduit      ();
 use Padre::Logger;
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = qw{
 	Padre::Wx::Role::Conduit
 	Wx::Frame

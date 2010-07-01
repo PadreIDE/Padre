@@ -6,7 +6,7 @@ use warnings;
 use Padre::Wx             ();
 use Padre::Wx::Role::Main ();
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 our @ISA     = qw{
 	Padre::Wx::Role::Main
 	Wx::Dialog
