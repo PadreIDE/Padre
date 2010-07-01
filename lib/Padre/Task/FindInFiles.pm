@@ -99,7 +99,7 @@ sub run {
 				unshift @queue, $object;
 
 			} else {
-				warn "Unknown or unsupported file type for $fullname" unless NO_WARN;
+				warn "Unknown or unsupported file type for $fullname";
 			}
 
 		}
