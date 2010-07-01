@@ -175,7 +175,7 @@ sub _rect_golden {
 	if ( $rect->width > ( $rect->height * GOLDEN_RATIO ) ) {
 
 		# Shrink left from the right
-		$rect->width( int( $rect->height / GOLDEN_RATIO ) );
+		$rect->width( int( $rect->height * GOLDEN_RATIO ) );
 	} else {
 
 		# Shrink up from the bottom
