@@ -6,7 +6,7 @@ use warnings;
 
 use Padre::Wx::Dialog::Preferences ();
 
-our $VERSION = '0.64';
+our $VERSION = '0.65';
 our @ISA     = 'Padre::Wx::Dialog::Preferences';
 
 =pod

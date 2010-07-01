@@ -7,7 +7,7 @@ use Padre::Role::Task     ();
 use Padre::Wx::Role::Main ();
 use Padre::Wx             ();
 
-our $VERSION = '0.64';
+our $VERSION = '0.65';
 our @ISA     = qw{
 	Padre::Role::Task
 	Padre::Wx::Role::Main

@@ -9,7 +9,7 @@ use warnings;
 use Padre::Task                ();
 use Padre::Wx::Directory::Path ();
 
-our $VERSION = '0.64';
+our $VERSION = '0.65';
 our @ISA     = 'Padre::Task';
 
 use constant NO_WARN => 1;

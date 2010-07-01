@@ -12,7 +12,7 @@ use Padre::Config  ();
 use Padre::Current ();
 use Padre::Cache   ();
 
-our $VERSION = '0.64';
+our $VERSION = '0.65';
 
 use Class::XSAccessor {
 	getters => {

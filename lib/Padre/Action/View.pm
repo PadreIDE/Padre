@@ -9,7 +9,7 @@ use Padre::Constant ();
 use Padre::Locale   ();
 use Padre::Wx       ();
 
-our $VERSION = '0.64';
+our $VERSION = '0.65';
 
 
 
