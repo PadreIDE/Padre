@@ -53,6 +53,7 @@ is( Padre::Util::get_project_dir( File::Spec->rootdir() ),
 # and certain other things need to be in place before running
 # Padre::Action::create($main)
 use Padre::Action;
+use Padre::Actions;
 sub Padre::ide { return bless { shortcuts => {} }, 'Padre::IDE'; }
 sub Padre::IDE::actions { return {} }
 sub Padre::IDE::config { return bless {}, 'Padre::Config' }
@@ -61,5 +62,6 @@ SKIP: {
 	# TODO check if every action has a comment as required
 	skip 'Fix this test!', 1;
 	Padre::Action::create( bless {}, 'Padre::IDE' );
+	Padre::Actions->init( bless {}, 'Padre::IDE' );
 	ok(1);
 }

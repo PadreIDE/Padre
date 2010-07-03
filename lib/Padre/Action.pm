@@ -6,17 +6,13 @@ use warnings;
 
 use Padre::Constant         ();
 use Padre::Action::View     ();
-use Padre::Action::File     ();
 use Padre::Action::Help     ();
-use Padre::Action::Edit     ();
-use Padre::Action::Search   ();
 use Padre::Action::Perl     ();
 use Padre::Action::Refactor ();
 use Padre::Action::Run      ();
 use Padre::Action::Debug    ();
 use Padre::Action::Tools    ();
 use Padre::Action::Window   ();
-use Padre::Action::Internal ();
 
 our $VERSION = '0.66';
 
@@ -47,10 +43,6 @@ use Class::XSAccessor {
 sub create {
 	my $main = shift;
 
-	Padre::Action::Internal->new($main);
-	Padre::Action::File->new($main);
-	Padre::Action::Edit->new($main);
-	Padre::Action::Search->new($main);
 	Padre::Action::View->new($main);
 	Padre::Action::Perl->new($main);
 	Padre::Action::Refactor->new($main);
@@ -82,8 +74,11 @@ sub create {
 
 sub new {
 	my $class = shift;
-	Carp::confess( Data::Dumper::Dumper \@_ ) if @_ % 2;
-	my $self = bless {@_}, $class;
+	if ( @_ % 2 ) {
+		require Data::Dumper;
+		Carp::confess( Data::Dumper::Dumper(\@_) );
+	}
+	my $self = bless { @_ }, $class;
 	$self->{id} ||= -1;
 
 	if ( ( !defined( $self->{name} ) ) or ( $self->{name} eq '' ) ) {
