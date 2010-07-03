@@ -2731,19 +2731,17 @@ The dialog has only a OK button and there is no return value.
 =cut
 
 sub info {
-	my $self    = shift;
-	my $message = shift;
-	my $title   = shift;
+	my $self = shift;
 
-	if ( $self->config->info_on_statusbar ) {
-		$message =~ s/[\r\n]+/ /g;
-		$self->{infomessage}         = $message;
-		$self->{infomessage_timeout} = time + 10;
-		$self->refresh_status;
-	} else {
-		$self->message( $message, $title );
+	unless ( $self->config->info_on_statusbar ) {
+		return $self->message(@_);
 	}
 
+	my $message = shift;
+	$message =~ s/[\r\n]+/ /g;
+	$self->{infomessage}         = $message;
+	$self->{infomessage_timeout} = time + 10;
+	$self->refresh_status;
 	return;
 }
 
