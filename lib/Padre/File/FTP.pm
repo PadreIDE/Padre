@@ -3,10 +3,9 @@ package Padre::File::FTP;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::File;
-use Wx::Perl::Dialog::Simple ();
-use File::Temp;
+use File::Temp     ();
+use Padre::File    ();
+use Padre::Current ();
 
 our $VERSION = '0.66';
 our @ISA     = 'Padre::File';
@@ -14,7 +13,9 @@ our @ISA     = 'Padre::File';
 my %connection_cache;
 
 use Class::XSAccessor {
-	false => [qw/can_run/],
+	false => [
+		'can_run',
+	],
 };
 
 sub new {
@@ -22,10 +23,12 @@ sub new {
 	my $url   = shift;
 
 	# Create myself
-	my $self = bless { filename => $url }, $class;
+	my $self = bless {
+		filename => $url,
+	}, $class;
 
 	# Using the config is optional, tests and other usages should run without
-	my $config = eval { return Padre->ide->config; };
+	my $config = Padre::Current->config;
 	if ( defined($config) ) {
 		$self->{_timeout} = $config->file_ftp_timeout;
 		$self->{_passive} = $config->file_ftp_passive;
@@ -123,9 +126,13 @@ sub _ftp {
 	}
 
 	if ( !defined( $self->{_pass} ) ) {
-		$self->{_pass} = Wx::Perl::Dialog::Simple::password(
-			title  => Wx::gettext('FTP Password'),
-			prompt => sprintf( Wx::gettext("Password for user '%s' at %s:"), $self->{_user}, $self->{_host} ),
+		$self->{_pass} = Padre::Current->main->password(
+			sprintf(
+				Wx::gettext("Password for user '%s' at %s:"),
+				$self->{_user},
+				$self->{_host},
+			),
+			Wx::gettext('FTP Password'),
 		) || ''; # Use empty password (not undef) if nothing was entered
 		         # TODO: offer an option to store the password
 	}

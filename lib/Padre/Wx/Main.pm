@@ -34,6 +34,7 @@ use File::HomeDir                 ();
 use File::Basename                ();
 use File::Temp                    ();
 use List::Util                    ();
+use List::MoreUtils               ();
 use Scalar::Util                  ();
 use Params::Util                  ();
 use Time::HiRes                   ();
@@ -2794,6 +2795,60 @@ sub prompt {
 
 =pod
 
+=head3 C<password>
+
+Generate a standard L<Wx> password dialog, using the internal
+L<Wx::PasswordEntryDialog> class.
+
+=cut
+
+sub password {
+	my $self   = shift;
+	my $dialog = Wx::PasswordEntryDialog->new( $self, @_ );
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return undef;
+	}
+	return $dialog->GetValue;
+}
+
+=pod
+
+=head3 C<single_choice>
+
+Generates a standard L<Wx> single-choice dialog, using the standard
+internal L<Wx::SingleChoiceDialog> class.
+
+=cut
+
+sub single_choice {
+	my $self    = shift;
+	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return undef;
+	}
+	return $_[2]->[ $dialog->GetSelection ];
+}
+
+=pod
+
+=head3 C<multi_choice>
+
+Generates a standard L<Wx> multi-choice dialog, using the internal
+L<Wx::MultiChoiceDialog> class.
+
+=cut
+
+sub multi_choice {
+	my $self    = shift;
+	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return ();
+	}
+	return map { $_[2]->[$_] } $dialog->GetSelections;
+}
+
+=pod
+
 =head2 Search and Replace
 
 These methods provide the highest level abstraction for entry into the various
@@ -3530,17 +3585,13 @@ sub on_open_selection {
 		return;
 	}
 
-	# eliminate duplicates
-	my %seen;
-	@files = grep { !$seen{$_}++ } @files;
-
-	require Wx::Perl::Dialog::Simple;
-	my $file = Wx::Perl::Dialog::Simple::single_choice(
-		title   => Wx::gettext('Choose File'),
-		choices => \@files
+	# Pick a file
+	my $file = $self->single_choice(
+		Wx::gettext('Choose File'),
+		'',
+		[ List::MoreUtils::uniq @files ],
 	);
-
-	if ($file) {
+	if ( defined $file ) {
 		$self->setup_editors($file);
 	}
 
