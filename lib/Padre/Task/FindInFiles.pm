@@ -3,7 +3,8 @@ package Padre::Task::FindInFiles;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec ();
+use File::Spec  ();
+use Time::HiRes ();
 
 our $VERSION = '0.66';
 
@@ -45,6 +46,7 @@ sub run {
 	my $self  = shift;
 	my $root  = $self->{root};
 	my @queue = Padre::Wx::Directory::Path->directory;
+	my $timer = 0;
 	my @files = ();
 
 	# Prepare the search regex
@@ -91,7 +93,11 @@ sub run {
 			if ( -f _ ) {
 				my $object = Padre::Wx::Directory::Path->file( @path, $file );
 				next if $rule->skipped( $object->unix );
-				$self->file( $regexp => $object );
+				my $lines = $self->file( $regexp => $object );
+				my $now   = Time::HiRes::time();
+				if ( @$lines or $now - $timer > 1 ) {
+					$self->message( found => $file->name, $lines );
+				}
 
 			} elsif ( -d _ ) {
 				my $object = Padre::Wx::Directory::Path->directory( @path, $file );
@@ -114,7 +120,17 @@ sub file {
 	my $file = shift;
 
 	# Load the file
+	local *FILE;
+	open( FILE, '<', $file->name ) or return [];
+	my @lines = <FILE>;
+	close FILE;
+
 	die "CODE INCOMPLETE";
+}
+
+sub found {
+	require Padre::Current;
+	Padre::Current->main->error($_[1]);
 }
 
 1;
