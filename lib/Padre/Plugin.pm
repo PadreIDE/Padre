@@ -219,6 +219,16 @@ sub padre_interfaces {
 	return ();
 }
 
+# Convenience integration with Class::Unload
+sub unload {
+	require Class::Unload;
+	my $either = shift;
+	foreach my $package ( @_ ) {
+		Class::Unload->unload($package);
+	}
+	return 1;
+}
+
 
 
 
