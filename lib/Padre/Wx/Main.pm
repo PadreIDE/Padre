@@ -2735,10 +2735,7 @@ sub info {
 	my $message = shift;
 	my $title   = shift;
 
-	my $ide    = $self->ide;
-	my $config = $ide->config;
-
-	if ( $config->info_on_statusbar ) {
+	if ( $self->config->info_on_statusbar ) {
 		$message =~ s/[\r\n]+/ /g;
 		$self->{infomessage}         = $message;
 		$self->{infomessage_timeout} = time + 10;
