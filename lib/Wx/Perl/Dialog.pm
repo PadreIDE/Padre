@@ -229,8 +229,9 @@ sub get_data {
 #
 
 sub _extract_data {
-	my ( $dialog, $layout ) = @_;
-	my %data = ();
+	my $dialog = shift;
+	my $layout = shift;
+	my %data   = ();
 
 	foreach my $i ( 0 .. @$layout - 1 ) {
 		foreach my $j ( 0 .. @{ $layout->[$i] } - 1 ) {
@@ -268,15 +269,13 @@ Helper function that will probably change soon...
 =cut
 
 sub show_modal {
-	my ($dialog) = @_;
-
-	my $ret = $dialog->ShowModal;
-	if ( $ret eq Wx::wxID_CANCEL ) {
+	my $dialog = shift;
+	my $rv     = $dialog->ShowModal;
+	if ( $rv eq Wx::wxID_CANCEL ) {
 		$dialog->Destroy;
 		return;
-	} else {
-		return $ret;
 	}
+	return $rv;
 }
 
 # Internal function
