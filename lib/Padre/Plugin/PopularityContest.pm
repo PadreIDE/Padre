@@ -181,8 +181,7 @@ sub plugin_disable {
 	}
 
 	# Make sure our task class is unloaded
-	require Class::Unload;
-	Class::Unload->unload('Padre::Plugin::PopularityContext::Ping');
+	$self->unload('Padre::Plugin::PopularityContext::Ping');
 
 	$self->SUPER::plugin_disable;
 }
