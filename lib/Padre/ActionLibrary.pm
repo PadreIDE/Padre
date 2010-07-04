@@ -2114,7 +2114,7 @@ sub init {
 				Padre::Constant::CONFIG_DIR,
 				qw{ plugins Padre Plugin My.pm }
 			);
-			return $self->error(
+			return $_[0]->error(
 				Wx::gettext("Could not find the Padre::Plugin::My plug-in")
 			) unless -e $file;
 
@@ -2397,7 +2397,7 @@ sub init {
 		},
 	);
 
-	$self->{current} = Padre::Action->new(
+	Padre::Action->new(
 		name        => 'help.current',
 		need_editor => 1,
 		label       => Wx::gettext('Current Document'),
