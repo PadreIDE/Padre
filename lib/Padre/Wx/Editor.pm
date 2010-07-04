@@ -90,6 +90,7 @@ sub new {
 	Wx::Event::EVT_SET_FOCUS( $self, \&on_focus );
 	Wx::Event::EVT_MIDDLE_UP( $self, \&on_middle_up );
 	Wx::Event::EVT_MOTION( $self, \&on_mouse_moving );
+	Wx::Event::EVT_MOUSEWHEEL( $self, \&on_mousewheel );
 
 	# Smart highlighting:
 	# Selecting a word or small block of text causes all other occurrences to be highlighted
@@ -162,8 +163,8 @@ sub main {
 
 # convenience accessor method (and to ensure consistency)
 # return the Padre::Config instance
-sub get_config {
-	return shift->main->ide->config;
+sub config {
+	$_[0]->main->config;
 }
 
 # convenience methods
@@ -526,7 +527,7 @@ my $previous_expr_hiliting_style;
 sub highlight_braces {
 	my ($self) = @_;
 
-	my $expression_highlighting = $self->get_config->editor_brace_expression_highlighting;
+	my $expression_highlighting = $self->config->editor_brace_expression_highlighting;
 
 	# remove current highlighting if any
 	$self->BraceHighlight( $STC_INVALID_POSITION, $STC_INVALID_POSITION );
@@ -1207,6 +1208,28 @@ sub on_mouse_motion {
 	} else {
 		$self->CallTipCancel;
 	}
+
+	return;
+}
+
+# Convert the Ctrl-Scroll behaviour of changing the font size
+# to the non-Ctrl behaviour of scrolling.
+sub on_mousewheel {
+	my $self  = shift;
+	my $event = shift;
+
+	# Behave normally if Ctrl isn't down
+	unless ( $event->ControlDown and $self->config->feature_fontsize ) {
+		$event->Skip(1);
+		return;
+	}
+
+	# Behave as if Ctrl wasn't down
+	$self->ScrollLines(
+		$event->GetLinesPerAction * int(
+			$event->GetWheelRotation / $event->GetWheelDelta * -1
+		)
+	);
 
 	return;
 }
