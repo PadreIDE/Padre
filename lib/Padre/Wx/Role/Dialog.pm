@@ -1,0 +1,126 @@
+package Padre::Wx::Role::Dialog;
+
+=pod
+
+=head1 NAME
+
+Padre::Wx::Role::Dialog - Allow dialogs or frames to host simple common dialogs
+
+=head1 SYNOPSIS
+
+  package MyDialog;
+  
+  use Padre::Wx               ();
+  use Padre::Wx::Role::Dialog ();
+  
+  @ISA = qw{
+      Padre::Wx::Role::Dialog
+      Wx::Dialog
+  };
+  
+  # ...
+  
+  sub foo {
+      my $self = shift;
+  
+      # Say something
+      $self->message("Hello World!");
+  
+      return 1;
+  }
+
+=head1 DESCRIPTION
+
+In a large Wx application with multiple dialogs or windows, many different
+parts of the application may want to post messages or prompt the user.
+
+The C<Padre::Wx::Role::Dialog> role allows dialog or window classes to
+"host" these messages.
+
+Providing these as a role means that each part of your application can post
+messages and have the positioning of the dialogs be made appropriate for
+each dialog.
+
+=head1 METHODS
+
+=cut
+
+use 5.008005;
+use strict;
+use warnings;
+use Padre::Wx ();
+
+our $VERSION = '0.66';
+
+=pod
+
+=head2 C<message>
+
+  $parent->message( $text, $title );
+
+Open a dialog box with C<$text> as the main text and C<$title> (title
+defaults to C<Message>). There's only one OK button. No return value.
+
+=cut
+
+sub message {
+	my $self    = shift;
+	my $message = shift;
+	my $title   = shift || Wx::gettext('Message');
+	Wx::MessageBox(
+		$message,
+		$title,
+		Wx::wxOK | Wx::wxCENTRE,
+		$self,
+	);
+	return;
+}
+
+=pod
+
+=head3 C<error>
+
+  $parent->error( $text );
+
+Open an error dialog box with C<$text> as main text. There's only one OK
+button. No return value.
+
+=cut
+
+sub error {
+	my $self    = shift;
+	my $message = shift || Wx::gettext('Unknown error from ') . caller;
+	Wx::MessageBox(
+		$message,
+		Wx::gettext('Error'),
+		Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_HAND,
+		$self,
+	);
+}
+
+=pod
+
+=head3 C<password>
+
+Generate a standard L<Wx> password dialog, using the internal
+L<Wx::PasswordEntryDialog> class.
+
+=cut
+
+sub password {
+	my $self   = shift;
+	my $dialog = Wx::PasswordEntryDialog->new( $self, @_ );
+	my $result = undef;
+	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		$result = $dialog->GetValue;
+	}
+	$dialog->Destroy;
+	return $result;
+}
+
+1;
+
+# Copyright 2008-2010 The Padre development team as listed in Padre.pm.
+# LICENSE
+# This program is free software; you can redistribute it and/or
+# modify it under the same terms as Perl 5 itself.

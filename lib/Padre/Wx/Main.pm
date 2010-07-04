@@ -63,11 +63,13 @@ use Padre::Wx::FileDropTarget     ();
 use Padre::Wx::Dialog::Text       ();
 use Padre::Wx::Dialog::FilterTool ();
 use Padre::Wx::Role::Conduit      ();
+use Padre::Wx::Role::Dialog       ();
 use Padre::Logger;
 
 our $VERSION = '0.66';
 our @ISA     = qw{
 	Padre::Wx::Role::Conduit
+	Padre::Wx::Role::Dialog
 	Wx::Frame
 };
 
@@ -2695,24 +2697,7 @@ sub save_current_session {
 
 Various methods to help send information to user.
 
-=head3 C<message>
-
-    $main->message( $msg, $title );
-
-Open a dialog box with C<$msg> as main text and C<$title> (title
-defaults to C<Message>). There's only one OK button. No return value.
-
-=cut
-
-sub message {
-	my $self    = shift;
-	my $message = shift;
-	my $title   = shift || Wx::gettext('Message');
-	Wx::MessageBox( $message, $title, Wx::wxOK | Wx::wxCENTRE, $self );
-	return;
-}
-
-=pod
+Some methods are inherited from L<Padre::Wx::Role::Dialog>.
 
 =head3 C<info>
 
@@ -2737,24 +2722,6 @@ sub info {
 	$self->{infomessage_timeout} = time + 10;
 	$self->refresh_status;
 	return;
-}
-
-=pod
-
-=head3 C<error>
-
-    $main->error( $msg );
-
-Open an error dialog box with C<$msg> as main text. There's only one OK
-button. No return value.
-
-=cut
-
-sub error {
-	my ( $self, $message ) = @_;
-	$message ||= Wx::gettext('Unknown error from ') . caller;
-	my $styles = Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_HAND;
-	Wx::MessageBox( $message, Wx::gettext('Error'), $styles, $self );
 }
 
 =pod
@@ -2784,24 +2751,6 @@ sub prompt {
 	my $value = $dialog->GetValue;
 	$dialog->Destroy;
 	return $value;
-}
-
-=pod
-
-=head3 C<password>
-
-Generate a standard L<Wx> password dialog, using the internal
-L<Wx::PasswordEntryDialog> class.
-
-=cut
-
-sub password {
-	my $self   = shift;
-	my $dialog = Wx::PasswordEntryDialog->new( $self, @_ );
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-		return undef;
-	}
-	return $dialog->GetValue;
 }
 
 =pod
