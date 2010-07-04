@@ -102,6 +102,8 @@ sub error {
 
 =head3 C<password>
 
+  my $password = $parent->password( $message, $title );
+
 Generate a standard L<Wx> password dialog, using the internal
 L<Wx::PasswordEntryDialog> class.
 
@@ -122,6 +124,16 @@ sub password {
 
 =head3 C<single_choice>
 
+  my $choice = $parent->single_choice(
+      $message,
+      $title,
+      [
+          'Option One',
+          'Option Two',
+          'Option Three',
+      ],
+  );
+
 Generates a standard L<Wx> single-choice dialog, using the standard
 internal L<Wx::SingleChoiceDialog> class.
 
@@ -141,6 +153,16 @@ sub single_choice {
 =pod
 
 =head3 C<multi_choice>
+
+  my @choices = $parent->multi_choice(
+      $message,
+      $title,
+      [
+          'Option One',
+          'Option Two',
+          'Option Three',
+      ],
+  );
 
 Generates a standard L<Wx> multi-choice dialog, using the internal
 L<Wx::MultiChoiceDialog> class.
