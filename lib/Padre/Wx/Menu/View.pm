@@ -289,13 +289,13 @@ sub new {
 			# people in total British English instead of American
 			# English CLEARLY it is a FAR better default for us to
 			# use.
-			# Because it's something of an in joke to English
+			# Because it's something of an in-joke to English
 			# speakers, non-English localisations do NOT show this.
 			$label = "English (New Britstralian)";
 		}
 
 		my $langobj = Padre::Locale::object($name);
-		my $utf8txt = ' (' . Padre::Locale::label($name) . ')';
+		my $utf8txt = ' - ' . Padre::Locale::label($name);
 
 		my $radio = $self->add_radio_menu_item(
 			$self->{language},
