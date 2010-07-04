@@ -50,6 +50,7 @@ foreach my $module ( sort keys %modules ) {
 my %TODO = map { $_ => 1 } qw(
 	Padre::ActionLibrary
 	Padre::ActionQueue
+	Padre::CPAN
 	Padre::Document
 	Padre::File::FTP
 	Padre::Locale
