@@ -171,7 +171,7 @@ L<Wx::MultiChoiceDialog> class.
 
 sub multi_choice {
 	my $self    = shift;
-	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
+	my $dialog  = Wx::MultiChoiceDialog->new( $self, @_ );
 	my @result  = ();
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		@result = map { $_[2]->[$_] } $dialog->GetSelections;
