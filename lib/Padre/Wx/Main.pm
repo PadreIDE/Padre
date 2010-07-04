@@ -1638,18 +1638,10 @@ sub relocale {
 
 	# Update window manager captions
 	$self->aui->relocale;
-	if ( $self->has_left ) {
-		$self->left->relocale;
-	}
-	if ( $self->has_right ) {
-		$self->right->relocale;
-	}
-	if ( $self->has_bottom ) {
-		$self->bottom->relocale;
-	}
-	if ( $self->has_syntax ) {
-		$self->syntax->relocale;
-	}
+	$self->left->relocale   if $self->has_left;
+	$self->right->relocale  if $self->has_right;
+	$self->bottom->relocale if $self->has_bottom;
+	$self->syntax->relocale if $self->has_syntax;
 
 	return;
 }
