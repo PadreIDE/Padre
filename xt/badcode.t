@@ -48,10 +48,8 @@ foreach my $module ( sort keys %modules ) {
 # to prevent failing the test. It should be an absolute last resort.
 # Go away and try to find a way to not have Wx stuff in your code first.
 my %TODO = map { $_ => 1 } qw(
-	Padre::Action::View
 	Padre::Action::Tools
 	Padre::Action::Queue
-	Padre::Action::Refactor
 	Padre::Actions
 	Padre::Document
 	Padre::File::FTP

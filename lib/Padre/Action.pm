@@ -3,16 +3,7 @@ package Padre::Action;
 use 5.008;
 use strict;
 use warnings;
-
-use Padre::Constant         ();
-use Padre::Action::View     ();
-use Padre::Action::Help     ();
-use Padre::Action::Perl     ();
-use Padre::Action::Refactor ();
-use Padre::Action::Run      ();
-use Padre::Action::Debug    ();
-use Padre::Action::Tools    ();
-use Padre::Action::Window   ();
+use Padre::Constant ();
 
 our $VERSION = '0.66';
 
@@ -43,15 +34,6 @@ use Class::XSAccessor {
 sub create {
 	my $main = shift;
 
-	Padre::Action::View->new($main);
-	Padre::Action::Perl->new($main);
-	Padre::Action::Refactor->new($main);
-	Padre::Action::Run->new($main);
-	Padre::Action::Debug->new($main);
-	Padre::Action::Tools->new($main);
-	Padre::Action::Window->new($main);
-	Padre::Action::Help->new($main);
-
 	# This is made for usage by the developers to create a complete
 	# list of all actions used in Padre. It outputs some warnings
 	# while dumping, but they're ignored for now as it should never
@@ -60,8 +42,15 @@ sub create {
 		require Data::Dumper;
 		require File::Spec;
 		$Data::Dumper::Purity = 1;
-		open my $action_export_fh, '>', File::Spec->catfile( Padre::Constant::CONFIG_DIR, 'actions.dump' );
-		print $action_export_fh Data::Dumper::Dumper( Padre->ide->actions );
+		open(
+			my $action_export_fh,
+			'>',
+			File::Spec->catfile(
+				Padre::Constant::CONFIG_DIR,
+				'actions.dump',
+			),
+		);
+		print $action_export_fh Data::Dumper::Dumper( $_[0]->ide->actions );
 		close $action_export_fh;
 	}
 

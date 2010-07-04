@@ -7,8 +7,11 @@ package Padre::Actions;
 use 5.008005;
 use strict;
 use warnings;
+use File::Spec      ();
+use Params::Util    ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
+use Padre::Constant ();
 use Padre::Current  ();
 use Padre::Action   ();
 use Padre::Logger;
@@ -34,7 +37,6 @@ sub init {
 		label      => Wx::gettext('Dump the Padre object to STDOUT'),
 		comment    => Wx::gettext('Dumps the complete Padre object to STDOUT for testing/debugging.'),
 		menu_event => sub {
-			require File::Spec;
 			require Data::Dumper;
 			open(
 				my $dumpfh,
@@ -1253,6 +1255,1268 @@ sub init {
 			Padre::Wx::Dialog::QuickMenuAccess->new($_[0])->ShowModal;
 		},
 	);
+
+	# Can the user move stuff around
+
+	Padre::Action->new(
+		name        => 'view.lockinterface',
+		label       => Wx::gettext('Lock User Interface'),
+		comment     => Wx::gettext('If activated, do not allow moving around some of the windows'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			shift->on_toggle_lockinterface(@_);
+		},
+	);
+
+	# Visible GUI Elements
+
+	Padre::Action->new(
+		name  => 'view.output',
+		label => Wx::gettext('Show Output'),
+		comment =>
+			Wx::gettext('Show the window displaying the standard output and standard error of the running scripts'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_output( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.functions',
+		label       => Wx::gettext('Show Functions'),
+		comment     => Wx::gettext('Show a window listing all the functions in the current document'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_functions( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.todo',
+		label       => Wx::gettext('Show To-do List'),
+		comment     => Wx::gettext('Show a window listing all todo items in the current document'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_todo( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name    => 'view.outline',
+		label   => Wx::gettext('Show Outline'),
+		comment => Wx::gettext('Show a window listing all the parts of the current file (functions, pragmas, modules)'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_outline( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.directory',
+		label       => Wx::gettext('Show Directory Tree'),
+		comment     => Wx::gettext('Show a window with a directory browser of the current project'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_directory( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.show_syntaxcheck',
+		label       => Wx::gettext('Show Syntax Check'),
+		comment     => Wx::gettext('Turn on syntax checking of the current document and show output in a window'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_syntax( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.show_errorlist',
+		label       => Wx::gettext('Show Errors'),
+		comment     => Wx::gettext('Show the list of errors received during execution of a script'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->show_errorlist( $_[1]->IsChecked );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.statusbar',
+		label       => Wx::gettext('Show Status Bar'),
+		comment     => Wx::gettext('Show/hide the status bar at the bottom of the screen'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_statusbar( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.toolbar',
+		label       => Wx::gettext('Show Toolbar'),
+		comment     => Wx::gettext('Show/hide the toolbar at the top of the editor'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_toolbar( $_[1] );
+		},
+	);
+
+	# Editor Functionality
+
+	Padre::Action->new(
+		name        => 'view.lines',
+		label       => Wx::gettext('Show Line Numbers'),
+		comment     => Wx::gettext('Show/hide the line numbers of all the documents on the left side of the window'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_line_numbers( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name    => 'view.folding',
+		label   => Wx::gettext('Show Code Folding'),
+		comment => Wx::gettext('Show/hide a vertical line on the left hand side of the window to allow folding rows'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_code_folding( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.fold_all',
+		label       => Wx::gettext('Fold all'),
+		comment     => Wx::gettext('Fold all the blocks that can be folded (need folding to be enabled)'),
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->current->editor->fold_all;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.unfold_all',
+		label       => Wx::gettext('Unfold all'),
+		comment     => Wx::gettext('Unfold all the blocks that can be folded (need folding to be enabled)'),
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->current->editor->unfold_all;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.show_calltips',
+		label       => Wx::gettext('Show Call Tips'),
+		comment     => Wx::gettext('When typing in functions allow showing short examples of the function'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->config->set(
+				'editor_calltips',
+				$_[1]->IsChecked ? 1 : 0,
+			);
+			$_[0]->config->write;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.currentline',
+		label       => Wx::gettext('Show Current Line'),
+		comment     => Wx::gettext('Highlight the line where the cursor is'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_currentline( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.rightmargin',
+		label       => Wx::gettext('Show Right Margin'),
+		comment     => Wx::gettext('Show a vertical line indicating the right margin'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_right_margin( $_[1] );
+		},
+	);
+
+	# Editor Whitespace Layout
+
+	Padre::Action->new(
+		name        => 'view.eol',
+		label       => Wx::gettext('Show Newlines'),
+		comment     => Wx::gettext('Show/hide the newlines with special character'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_eol( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.whitespaces',
+		label       => Wx::gettext('Show Whitespaces'),
+		comment     => Wx::gettext('Show/hide the tabs and the spaces with special characters'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_whitespaces( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.indentation_guide',
+		label       => Wx::gettext('Show Indentation Guide'),
+		comment     => Wx::gettext('Show/hide vertical bars at every indentation position on the left of the rows'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_toggle_indentation_guide( $_[1] );
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'view.word_wrap',
+		label       => Wx::gettext('Word-Wrap'),
+		comment     => Wx::gettext('Wrap long lines'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			$_[0]->on_word_wrap( $_[1]->IsChecked );
+		},
+	);
+
+	# Font Size
+
+	Padre::Action->new(
+		name       => 'view.font_increase',
+		label      => Wx::gettext('Increase Font Size'),
+		comment    => Wx::gettext('Make the letters bigger in the editor window'),
+		shortcut   => 'Ctrl-+',
+		menu_event => sub {
+			$_[0]->zoom(+1);
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'view.font_decrease',
+		label      => Wx::gettext('Decrease Font Size'),
+		comment    => Wx::gettext('Make the letters smaller in the editor window'),
+		shortcut   => 'Ctrl--',
+		menu_event => sub {
+			$_[0]->zoom(-1);
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'view.font_reset',
+		label      => Wx::gettext('Reset Font Size'),
+		comment    => Wx::gettext('Reset the size of the letters to the default in the editor window'),
+		shortcut   => 'Ctrl-0',
+		menu_event => sub {
+			my $editor = $_[0]->current->editor or return;
+			$_[0]->zoom( -1 * $editor->GetZoom );
+		},
+	);
+
+	# Bookmark Support
+
+	Padre::Action->new(
+		name       => 'view.bookmark_set',
+		label      => Wx::gettext('Set Bookmark'),
+		comment    => Wx::gettext('Create a bookmark in the current file current row'),
+		shortcut   => 'Ctrl-B',
+		menu_event => sub {
+			require Padre::Wx::Dialog::Bookmarks;
+			Padre::Wx::Dialog::Bookmarks->set_bookmark( $_[0] );
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'view.bookmark_goto',
+		label      => Wx::gettext('Goto Bookmark'),
+		comment    => Wx::gettext('Select a bookmark created earlier and jump to that position'),
+		shortcut   => 'Ctrl-Shift-B',
+		menu_event => sub {
+			require Padre::Wx::Dialog::Bookmarks;
+			Padre::Wx::Dialog::Bookmarks->goto_bookmark( $_[0] );
+		},
+	);
+
+	# Window Effects
+
+	Padre::Action->new(
+		name        => 'view.full_screen',
+		label       => Wx::gettext('&Full Screen'),
+		comment     => Wx::gettext('Set Padre in full screen mode'),
+		shortcut    => 'F11',
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			if ( $_[0]->IsFullScreen ) {
+				$_[0]->ShowFullScreen(0);
+			} else {
+				$_[0]->ShowFullScreen(
+					1,
+					Wx::wxFULLSCREEN_NOCAPTION | Wx::wxFULLSCREEN_NOBORDER
+				);
+			}
+			return;
+		},
+	);
+
+	# Perl-Specific Searches
+
+	Padre::Action->new(
+		name        => 'perl.beginner_check',
+		need_editor => 1,
+		label       => Wx::gettext('Check for Common (Beginner) Errors'),
+		comment     => Wx::gettext('Check the current file for common beginner errors'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->beginner_check;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.find_brace',
+		need_editor => 1,
+		label       => Wx::gettext('Find Unmatched Brace'),
+		comment    => Wx::gettext('Searches the source code for brackets with lack a matching (opening/closing) part.'),
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->find_unmatched_brace;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.find_variable',
+		need_editor => 1,
+		label       => Wx::gettext('Find Variable Declaration'),
+		comment     => Wx::gettext('Find where the selected variable was declared using "my" and put the focus there.'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->find_variable_declaration;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.find_method',
+		need_editor => 1,
+		label       => Wx::gettext('Find Method Declaration'),
+		comment     => Wx::gettext('Find where the selected function was defined and put the focus there.'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->find_method_declaration;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.vertically_align_selected',
+		need_editor => 1,
+		label       => Wx::gettext('Vertically Align Selected'),
+		comment     => Wx::gettext('Align a selection of text to the same left column.'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->editor->vertically_align;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.newline_keep_column',
+		need_editor => 1,
+		label       => Wx::gettext('Newline Same Column'),
+		comment     => Wx::gettext(
+			'Like pressing ENTER somewhere on a line, but use the current position as ident for the new line.'),
+		shortcut   => 'Ctrl-Enter',
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->newline_keep_column;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.create_tagsfile',
+		need_editor => 1,
+		label       => Wx::gettext('Create Project Tagsfile'),
+		comment =>
+			Wx::gettext('Creates a perltags - file for the current project supporting find_method and autocomplete.'),
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			$document->project_create_tagsfile;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'perl.autocomplete_brackets',
+		need_editor => 1,
+		label       => Wx::gettext('Automatic Bracket Completion'),
+		comment     => Wx::gettext('When typing { insert a closing } automatically'),
+		menu_method => 'AppendCheckItem',
+		menu_event  => sub {
+			# Update the saved config setting
+			my $checked = $_[1]->IsChecked ? 1 : 0;
+			$_[0]->config->set(
+				autocomplete_brackets => $checked,
+			);
+		}
+	);
+
+	# Perl-Specific Refactoring
+
+	Padre::Action->new(
+		name        => 'refactor.rename_variable',
+		need_editor => 1,
+		label       => Wx::gettext('Rename Variable...'),
+		comment => Wx::gettext('Prompt for a replacement variable name and replace all occurrences of this variable'),
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('lexical_variable_replacement') or return;
+			require Padre::Wx::History::TextEntryDialog;
+			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+				$_[0],
+				Wx::gettext('New name'),
+				Wx::gettext('Rename variable'),
+				'$foo',
+			);
+			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			my $replacement = $dialog->GetValue;
+			$dialog->Destroy;
+			return unless defined $replacement;
+			$document->lexical_variable_replacement($replacement);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'refactor.extract_subroutine',
+		need_editor => 1,
+		label       => Wx::gettext('Extract Subroutine...'),
+		comment     => Wx::gettext(
+			      'Cut the current selection and create a new sub from it. '
+				. 'A call to this sub is added in the place where the selection was.'
+		),
+		menu_event => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('extract_subroutine') or return;
+			require Padre::Wx::History::TextEntryDialog;
+			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+				$_[0],
+				Wx::gettext('Name for the new subroutine'),
+				Wx::gettext('Extract Subroutine'),
+				'$foo',
+			);
+			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			my $newname = $dialog->GetValue;
+			$dialog->Destroy;
+			return unless defined $newname;
+			$document->extract_subroutine($newname);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'refactor.introduce_temporary',
+		need_editor => 1,
+		label       => Wx::gettext('Introduce Temporary Variable...'),
+		comment     => Wx::gettext('Assign the selected expression to a newly declared variable'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->can('introduce_temporary_variable') or return;
+			require Padre::Wx::History::TextEntryDialog;
+			my $dialog = Padre::Wx::History::TextEntryDialog->new(
+				$_[0],
+				Wx::gettext('Variable Name'),
+				Wx::gettext('Introduce Temporary Variable'),
+				'$tmp',
+			);
+			return if $dialog->ShowModal == Wx::wxID_CANCEL;
+			my $replacement = $dialog->GetValue;
+			$dialog->Destroy;
+			return unless defined $replacement;
+			$document->introduce_temporary_variable($replacement);
+		},
+	);
+
+	# Script Execution
+
+	Padre::Action->new(
+		name         => 'run.run_document',
+		need_editor  => 1,
+		need_runable => 1,
+		label        => Wx::gettext('Run Script'),
+		comment      => Wx::gettext('Runs the current document and shows its output in the output panel.'),
+		shortcut     => 'F5',
+		need_file    => 1,
+		toolbar      => 'actions/player_play',
+		menu_event   => sub {
+			$_[0]->run_document;
+			$_[0]->refresh_toolbar( $_[0]->current );
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'run.run_document_debug',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Run Script (Debug Info)'),
+		comment      => Wx::gettext( 'Run the current document but include ' . 'debug info in the output.' ),
+		shortcut     => 'Shift-F5',
+		menu_event   => sub {
+			# Enable debug info
+			$_[0]->run_document(1);
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'run.run_command',
+		label      => Wx::gettext('Run Command'),
+		comment    => Wx::gettext('Runs a shell command and shows the output.'),
+		shortcut   => 'Ctrl-F5',
+		menu_event => sub {
+			$_[0]->on_run_command;
+		},
+	);
+	Padre::Action->new(
+		name        => 'run.run_tdd_tests',
+		need_file   => 1,
+		need_editor => 1,
+		label       => Wx::gettext('Run Build and Tests'),
+		comment     => Wx::gettext('Builds the current project, then run all tests.'),
+		shortcut    => 'Ctrl-Shift-F5',
+		menu_event  => sub {
+			$_[0]->on_run_tdd_tests;
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'run.run_tests',
+		need_editor => 1,
+		need_file   => 1,
+		label       => Wx::gettext('Run Tests'),
+		comment     => Wx::gettext(
+			'Run all tests for the current project or document and show the results in ' . 'the output panel.'
+		),
+		need_editor => 1,
+		menu_event  => sub {
+			$_[0]->on_run_tests;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'run.run_this_test',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		need         => sub {
+			my %objects = @_;
+			return 0 unless defined $objects{document};
+			return 0 unless defined $objects{document}->{file};
+			return $objects{document}->{file}->{filename} =~ /\.t$/;
+		},
+		label      => Wx::gettext('Run This Test'),
+		comment    => Wx::gettext('Run the current test if the current document is a test. (prove -bv)'),
+		menu_event => sub {
+			$_[0]->on_run_this_test;
+		},
+	);
+
+	Padre::Action->new(
+		name => 'run.stop',
+		need => sub {
+			my %objects = @_;
+			return $main->{command} ? 1 : 0;
+		},
+		label      => Wx::gettext('Stop Execution'),
+		comment    => Wx::gettext('Stop a running task.'),
+		shortcut   => 'F6',
+		toolbar    => 'actions/stop',
+		menu_event => sub {
+			if ( $_[0]->{command} ) {
+				if ( Padre::Constant::WIN32 ) {
+					$_[0]->{command}->KillProcess;
+				} else {
+					$_[0]->{command}->TerminateProcess;
+				}
+			}
+			delete $_[0]->{command};
+			$_[0]->refresh_toolbar( $_[0]->current );
+			return;
+		},
+	);
+
+	# Debugging
+
+	Padre::Action->new(
+		name         => 'debug.step_in',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-stop-after-command',
+		label        => Wx::gettext('Step In') . ' (&s) ',
+		comment      => Wx::gettext(
+			'Execute the next statement, enter subroutine if needed. (Start debugger if it is not yet running)'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_step_in;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.step_over',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-stop-after-procedure',
+		label        => Wx::gettext('Step Over') . ' (&n) ',
+		comment      => Wx::gettext(
+			'Execute the next statement. If it is a subroutine call, stop only after it returned. (Start debugger if it is not yet running)'
+		),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_step_over;
+		},
+	);
+
+
+	Padre::Action->new(
+		name         => 'debug.step_out',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-jump-back',
+		label        => Wx::gettext('Step Out') . ' (&r) ',
+		comment      => Wx::gettext('If within a subroutine, run till return is called and then stop.'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_step_out;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.run',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'stock/code/stock_tools-macro',
+		label        => Wx::gettext('Run till Breakpoint') . ' (&c) ',
+		comment      => Wx::gettext('Start running and/or continue running till next breakpoint or watch'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_run;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.jump_to',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Jump to Current Execution Line'),
+		comment      => Wx::gettext('Set focus to the line where the current statement is in the debugging process'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_jumpt_to;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.set_breakpoint',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-insert-breakpoint',
+		label        => Wx::gettext('Set Breakpoint') . ' (&b) ',
+		comment      => Wx::gettext('Set a breakpoint to the current location of the cursor with a condition'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_set_breakpoint;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.remove_breakpoint',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Remove Breakpoint'),
+		comment      => Wx::gettext('Remove the breakpoint at the current location of the cursor'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_remove_breakpoint;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.list_breakpoints',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('List All Breakpoints'),
+		comment      => Wx::gettext('List all the breakpoints on the console'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_list_breakpoints;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.run_to_cursor',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Run to Cursor'),
+		comment      => Wx::gettext('Set a breakpoint at the line where to cursor is and run till there'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_run_to_cursor;
+		},
+	);
+
+
+	Padre::Action->new(
+		name         => 'debug.show_stack_trace',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Show Stack Trace') . ' (&T) ',
+		comment      => Wx::gettext('When in a subroutine call show all the calls since the main of the program'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_show_stack_trace;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.display_value',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'stock/code/stock_macro-watch-variable',
+		label        => Wx::gettext('Display Value'),
+		comment      => Wx::gettext('Display the current value of a variable in the right hand side debugger pane'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_display_value;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.show_value',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Show Value Now') . ' (&x) ',
+		comment      => Wx::gettext('Show the value of a variable now in a pop-up window.'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_show_value;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.evaluate_expression',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		label        => Wx::gettext('Evaluate Expression...'),
+		comment      => Wx::gettext('Type in any expression and evaluate it in the debugged process'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_evaluate_expression;
+		},
+	);
+
+	Padre::Action->new(
+		name         => 'debug.quit',
+		need_editor  => 1,
+		need_runable => 1,
+		need_file    => 1,
+		toolbar      => 'actions/stop',
+		label        => Wx::gettext('Quit Debugger') . ' (&q) ',
+		comment      => Wx::gettext('Quit the process being debugged'),
+
+		#shortcut     => 'Shift-F5',
+		menu_event => sub {
+			$_[0]->{_debugger_} or return;
+			$_[0]->{_debugger_}->debug_perl_quit;
+		},
+	);
+
+	# Key Bindings action
+
+	Padre::Action->new(
+		name       => 'tools.key_bindings',
+		label      => Wx::gettext('Key Bindings'),
+		comment    => Wx::gettext('Show the key bindings dialog to configure Padre shortcuts'),
+		menu_event => sub {
+			$_[0]->on_key_bindings;
+		},
+	);
+
+	# Link to the Plugin Manager
+
+	Padre::Action->new(
+		name       => 'plugins.plugin_manager',
+		label      => Wx::gettext('Plug-in Manager'),
+		comment    => Wx::gettext('Show the Padre plug-in manager to enable or disable plug-ins'),
+		menu_event => sub {
+			require Padre::Wx::Dialog::PluginManager;
+			Padre::Wx::Dialog::PluginManager->new(
+				$_[0],
+				$_[0]->ide->plugin_manager,
+			)->show;
+		},
+	);
+
+	# TO DO: should be replaced by a link to http://cpan.uwinnipeg.ca/chapter/World_Wide_Web_HTML_HTTP_CGI/Padre
+	# better yet, by a window that also allows the installation of all the plug-ins that can take into account
+	# the type of installation we have (ppm, stand alone, rpm, deb, CPAN, etc.)
+	Padre::Action->new(
+		name       => 'plugins.plugin_list',
+		label      => Wx::gettext('Plug-in List (CPAN)'),
+		comment    => Wx::gettext('Open browser to a CPAN search showing the Padre::Plugin packages'),
+		menu_event => sub {
+			Padre::Wx::launch_browser('http://cpan.uwinnipeg.ca/search?query=Padre%3A%3APlugin%3A%3A&mode=dist');
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.edit_my_plugin',
+		label      => Wx::gettext('Edit My Plug-in'),
+		comment    => Wx::gettext('My Plug-in is a plug-in where developers could extend their Padre installation'),
+		menu_event => sub {
+			my $file = File::Spec->catfile(
+				Padre::Constant::CONFIG_DIR,
+				qw{ plugins Padre Plugin My.pm }
+			);
+			return $self->error(
+				Wx::gettext("Could not find the Padre::Plugin::My plug-in")
+			) unless -e $file;
+
+			# Use the plural so we get the "close single unused document"
+			# behaviour, and so we get a free freezing and refresh calls.
+			$_[0]->setup_editors($file);
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.reload_my_plugin',
+		label      => Wx::gettext('Reload My Plug-in'),
+		comment    => Wx::gettext('This function reloads the My plug-in without restarting Padre'),
+		menu_event => sub {
+			$_[0]->ide->plugin_manager->reload_plugin('Padre::Plugin::My');
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.reset_my_plugin',
+		label      => Wx::gettext('Reset My plug-in'),
+		comment    => Wx::gettext('Reset the My plug-in to the default'),
+		menu_event => sub {
+			my $ret = Wx::MessageBox(
+				Wx::gettext("Reset My plug-in"),
+				Wx::gettext("Reset My plug-in"),
+				Wx::wxOK | Wx::wxCANCEL | Wx::wxCENTRE,
+				$main,
+			);
+			if ( $ret == Wx::wxOK ) {
+				my $manager = $_[0]->ide->plugin_manager;
+				$manager->unload_plugin('Padre::Plugin::My');
+				$manager->reset_my_plugin(1);
+				$manager->load_plugin('Padre::Plugin::My');
+			}
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.reload_all_plugins',
+		label      => Wx::gettext('Reload All Plug-ins'),
+		comment    => Wx::gettext('Reload all plug-ins from disk'),
+		menu_event => sub {
+			$_[0]->ide->plugin_manager->reload_plugins;
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.reload_current_plugin',
+		label      => Wx::gettext('(Re)load Current Plug-in'),
+		comment    => Wx::gettext('Reloads (or initially loads) the current plug-in'),
+		menu_event => sub {
+			$_[0]->ide->plugin_manager->reload_current_plugin;
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.install_cpan',
+		label      => Wx::gettext("Install CPAN Module"),
+		comment    => Wx::gettext('Install a Perl module from CPAN'),
+		menu_event => sub {
+			require Padre::CPAN;
+			require Padre::Wx::CPAN;
+			my $cpan = Padre::CPAN->new;
+			my $gui  = Padre::Wx::CPAN->new( $cpan, $_[0] );
+			$gui->show;
+		}
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.install_local',
+		label      => Wx::gettext("Install Local Distribution"),
+		comment    => Wx::gettext('Using CPAN.pm to install a CPAN like package opened locally'),
+		menu_event => sub {
+			require Padre::CPAN;
+			Padre::CPAN->install_file($_[0]);
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.install_remote',
+		label      => Wx::gettext("Install Remote Distribution"),
+		comment    => Wx::gettext('Using pip to download a tar.gz file and install it using CPAN.pm'),
+		menu_event => sub {
+			require Padre::CPAN;
+			Padre::CPAN->install_url($_[0]);
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'plugins.cpan_config',
+		label      => Wx::gettext("Open CPAN Config File"),
+		comment    => Wx::gettext('Open CPAN::MyConfig.pm for manual editing by experts'),
+		menu_event => sub {
+			require Padre::CPAN;
+			Padre::CPAN->cpan_config($_[0]);
+		},
+	);
+
+	# File Navigation
+
+	Padre::Action->new(
+		name        => 'window.last_visited_file',
+		label       => Wx::gettext('Last Visited File'),
+		comment     => Wx::gettext('Switch to edit the file that was previously edited (can switch back and forth)'),
+		shortcut    => 'Ctrl-Tab',
+		need_editor => 1,
+		menu_event  => sub {
+			shift->on_last_visited_pane(@_);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'window.oldest_visited_file',
+		label       => Wx::gettext('Oldest Visited File'),
+		comment     => Wx::gettext('Put focus on tab visited the longest time ago.'),
+		shortcut    => 'Ctrl-Shift-Tab',
+		need_editor => 1,
+		menu_event  => sub {
+			shift->on_oldest_visited_pane(@_);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'window.next_file',
+		label       => Wx::gettext('Next File'),
+		comment     => Wx::gettext('Put focus on the next tab to the right'),
+		shortcut    => 'Alt-Right',
+		need_editor => 1,
+		menu_event  => sub {
+			shift->on_next_pane(@_);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'window.previous_file',
+		label       => Wx::gettext('Previous File'),
+		comment     => Wx::gettext('Put focus on the previous tab to the left'),
+		shortcut    => 'Alt-Left',
+		need_editor => 1,
+		menu_event  => sub {
+			shift->on_prev_pane(@_);
+		},
+	);
+
+	# TODO: Remove this and the menu option as soon as #750 is fixed
+	#       as it's the same like Ctrl-Tab
+	Padre::Action->new(
+		name        => 'window.last_visited_file_old',
+		label       => Wx::gettext('Last Visited File'),
+		comment     => Wx::gettext('???'),
+		shortcut    => 'Ctrl-Shift-P',
+		need_editor => 1,
+		menu_event  => sub {
+			shift->on_last_visited_pane(@_);
+		},
+	);
+
+	Padre::Action->new(
+		name        => 'window.right_click',
+		label       => Wx::gettext('Right Click'),
+		comment     => Wx::gettext('Imitate clicking on the right mouse button'),
+		shortcut    => 'Alt-/',
+		need_editor => 1,
+		menu_event  => sub {
+			my $editor = $_[0]->current->editor or return;
+			$editor->on_right_down( $_[1] );
+		},
+	);
+
+	# Window Navigation
+
+	Padre::Action->new(
+		name       => 'window.goto_functions_window',
+		label      => Wx::gettext('Go to Functions Window'),
+		comment    => Wx::gettext('Set the focus to the "Functions" window'),
+		shortcut   => 'Alt-N',
+		menu_event => sub {
+			$_[0]->refresh_functions( $_[0]->current );
+			$_[0]->show_functions(1);
+			$_[0]->functions->focus_on_search;
+		},
+	);
+
+	# Window Navigation
+
+	Padre::Action->new(
+		name       => 'window.goto_todo_window',
+		label      => Wx::gettext('Go to Todo Window'),
+		comment    => Wx::gettext('Set the focus to the "Todo" window'),
+		shortcut   => 'Alt-T',
+		menu_event => sub {
+			$_[0]->refresh_todo( $_[0]->current );
+			$_[0]->show_todo(1);
+			$_[0]->todo->focus_on_search;
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'window.goto_outline_window',
+		label      => Wx::gettext('Go to Outline Window'),
+		comment    => Wx::gettext('Set the focus to the "Outline" window'),
+		shortcut   => 'Alt-L',
+		menu_event => sub {
+			$_[0]->show_outline(1);
+			$_[0]->outline->SetFocus;
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'window.goto_output_window',
+		label      => Wx::gettext('Go to Output Window'),
+		comment    => Wx::gettext('Set the focus to the "Output" window'),
+		shortcut   => 'Alt-O',
+		menu_event => sub {
+			$_[0]->show_output(1);
+			$_[0]->output->SetFocus;
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'window.goto_syntax_check_window',
+		label      => Wx::gettext('Go to Syntax Check Window'),
+		comment    => Wx::gettext('Set the focus to the "Syntax Check" window'),
+		shortcut   => 'Alt-C',
+		menu_event => sub {
+			$_[0]->show_syntax(1);
+			$_[0]->syntax->SetFocus;
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'window.goto_main_window',
+		label      => Wx::gettext('Go to Main Window'),
+		comment    => Wx::gettext('Set the focus to the main editor window'),
+		shortcut   => 'Alt-M',
+		menu_event => sub {
+			my $editor = $_[0]->current->editor or return;
+			$editor->SetFocus;
+		},
+	);
+
+	# Add the POD-based help launchers
+
+	Padre::Action->new(
+		name       => 'help.help',
+		id         => Wx::wxID_HELP,
+		label      => Wx::gettext('Help'),
+		comment    => Wx::gettext('Show the Padre help'),
+		menu_event => sub {
+			$_[0]->help('Padre');
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'help.context_help',
+		label      => Wx::gettext('Search Help'),
+		comment    => Wx::gettext('Search the Perl help pages (perldoc)'),
+		shortcut   => 'F1',
+		menu_event => sub {
+			my $focus = Wx::Window::FindFocus();
+			if ( Params::Util::_INSTANCE($focus, 'Padre::Wx::ErrorList') ){
+				$_[0]->errorlist->on_menu_help_context_help;
+			} else {
+				# Show help for selected text
+				$_[0]->help( $_[0]->current->text );
+				return;
+			}
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'help.search',
+		label      => Wx::gettext('Context Help'),
+		comment    => Wx::gettext('Show the help article for the current context'),
+		shortcut   => 'F2',
+		menu_event => sub {
+			# Show Help Search with no topic...
+			$_[0]->help_search;
+		},
+	);
+
+	$self->{current} = Padre::Action->new(
+		name        => 'help.current',
+		need_editor => 1,
+		label       => Wx::gettext('Current Document'),
+		comment     => Wx::gettext('Show the POD (Perldoc) version of the current document'),
+		menu_event  => sub {
+			$_[0]->help( $_[0]->current->document );
+		},
+	);
+
+	# Live Support
+
+	Padre::Action->new(
+		name    => 'help.live_support',
+		label   => Wx::gettext('Padre Support (English)'),
+		comment => Wx::gettext(
+			'Open the Padre live support chat in your web browser '
+			. 'and talk to others who may help you with your problem'
+		),
+		menu_event => sub {
+			Padre::Wx::launch_irc('padre');
+		},
+	);
+
+	Padre::Action->new(
+		name    => 'help.perl_help',
+		label   => Wx::gettext('Perl Help'),
+		comment => Wx::gettext(
+			'Open the Perl live support chat in your web browser '
+			. 'and talk to others who may help you with your problem'
+		),
+		menu_event => sub {
+			Padre::Wx::launch_irc('general');
+		},
+	);
+
+	Padre::Action->new(
+		name    => 'help.win32_questions',
+		label   => Wx::gettext('Win32 Questions (English)'),
+		comment => Wx::gettext(
+			'Open the Perl/Win32 live support chat in your web browser '
+			. 'and talk to others who may help you with your problem'
+		),
+		menu_event => sub {
+			Padre::Wx::launch_irc('win32');
+		},
+	);
+
+	# Add interesting and helpful websites
+
+	Padre::Action->new(
+		name    => 'help.visit_perlmonks',
+		label   => Wx::gettext('Visit the PerlMonks'),
+		comment => Wx::gettext(
+			'Open perlmonks.org, one of the biggest Perl community sites, '
+			. 'in your default web browser'
+		),
+		menu_event => sub {
+			Padre::Wx::launch_browser('http://perlmonks.org/');
+		},
+	);
+
+	# Add Padre website tools
+
+	Padre::Action->new(
+		name       => 'help.report_a_bug',
+		label      => Wx::gettext('Report a New &Bug'),
+		comment    => Wx::gettext('Send a bug report to the Padre developer team'),
+		menu_event => sub {
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/Tickets');
+		},
+	);
+	Padre::Action->new(
+		name       => 'help.view_all_open_bugs',
+		label      => Wx::gettext('View All &Open Bugs'),
+		comment    => Wx::gettext('View all known and currently unsolved bugs in Padre'),
+		menu_event => sub {
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/report/1');
+		},
+	);
+
+	Padre::Action->new(
+		name       => 'help.translate_padre',
+		label      => Wx::gettext('&Translate Padre...'),
+		comment    => Wx::gettext('Help by translating Padre to your local language'),
+		menu_event => sub {
+			Padre::Wx::launch_browser('http://padre.perlide.org/trac/wiki/TranslationIntro');
+		},
+	);
+
+	# Add the About
+
+	Padre::Action->new(
+		name       => 'help.about',
+		id         => Wx::wxID_ABOUT,
+		label      => Wx::gettext('&About'),
+		comment    => Wx::gettext('Show information about Padre'),
+		menu_event => sub {
+			$_[0]->about->ShowModal;
+		},
+	);
+
+	# This is made for usage by the developers to create a complete
+	# list of all actions used in Padre. It outputs some warnings
+	# while dumping, but they're ignored for now as it should never
+	# run within a productional copy.
+	if ( $ENV{PADRE_EXPORT_ACTIONS} ) {
+		require Data::Dumper;
+		$Data::Dumper::Purity = 1;
+		open(
+			my $action_export_fh,
+			'>',
+			File::Spec->catfile(
+				Padre::Constant::CONFIG_DIR,
+				'actions.dump',
+			),
+		);
+		print $action_export_fh Data::Dumper::Dumper( $_[0]->ide->actions );
+		close $action_export_fh;
+	}
 
 	return 1;
 }

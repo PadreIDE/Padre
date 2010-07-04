@@ -3,33 +3,39 @@ package Padre::CPAN;
 use 5.008;
 use strict;
 use warnings;
-use Carp ();
+use File::Spec    ();
+use File::HomeDir ();
+use Padre::Wx     ();
 
 our $VERSION = '0.66';
 
-use CPAN ();
 
-my $SINGLETON;
+
+
+
+######################################################################
+# Integration with CPAN.pm 
+
+my $SINGLETON = undef;
 
 sub new {
-	my ($class) = @_;
-	return $SINGLETON if $SINGLETON;
-
-	my $self = bless {}, $class;
-	CPAN::HandleConfig->load(
-		be_silent => 1,
-	);
-	my @modules = map { $_->id } CPAN::Shell->expand( 'Module', '/^/' );
-	$self->{modules} = \@modules;
-
-	$SINGLETON = $self;
-
-	return $self;
+	my $class = shift;
+	unless ( $SINGLETON ) {
+		require CPAN;
+		$SINGLETON = bless {}, $class;
+		CPAN::HandleConfig->load(
+			be_silent => 1,
+		);
+		$SINGLETON->{modules} = [
+			map { $_->id } CPAN::Shell->expand( 'Module', '/^/' )
+		];
+	}
+	return $SINGLETON;
 }
 
 sub get_modules {
-	my ( $self, $regex ) = @_;
-
+	my $self  = shift;
+	my $regex = shift;
 	$regex ||= '^';
 	$regex =~ s/ //g;
 
@@ -46,9 +52,147 @@ sub get_modules {
 }
 
 sub install {
-	my ( $self, $module ) = @_;
-	CPAN::Shell->install($module);
+	require CPAN;
+	CPAN::Shell->install($_[1]);
+}
 
+sub cpan_config {
+	my $class = shift;
+	my $main  = shift;
+
+	# Locate the CPAN config file(s)
+	my $default_dir = '';
+	eval {
+		require CPAN;
+		$default_dir = $INC{'CPAN.pm'};
+		$default_dir =~ s/\.pm$//is; # remove .pm
+	};
+
+	# Load the main config first
+	if ( $default_dir ne '' ) {
+		my $core = File::Spec->catfile( $default_dir, 'Config.pm' );
+		if ( -e $core ) {
+			$main->setup_editors($core);
+			return;
+		}
+	}
+
+	# Fallback to a personal config
+	my $user = File::Spec->catfile(
+		File::HomeDir->my_home,
+		'.cpan', 'CPAN', 'MyConfig.pm'
+	);
+	if ( -e $user ) {
+		$main->setup_editors($user);
+		return;
+	}
+
+	$main->error( Wx::gettext("Failed to find your CPAN configuration") );
+}
+
+
+
+
+
+######################################################################
+# Integration with cpanm
+
+sub install_file {
+	my $class = shift;
+	my $main  = shift;
+
+	# Ask what we should install
+	my $dialog = Wx::FileDialog->new(
+		$main,
+		Wx::gettext("Select distribution to install"),
+		'',                                  # Default directory
+		'',                                  # Default file
+		'CPAN Packages (*.tar.gz)|*.tar.gz', # wildcard
+		Wx::wxFD_OPEN | Wx::wxFD_FILE_MUST_EXIST
+	);
+	$dialog->CentreOnParent;
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	my $string = $dialog->GetPath;
+	$dialog->Destroy;
+	unless ( defined $string and $string =~ /\S/ ) {
+		$main->error( Wx::gettext("Did not provide a distribution") );
+		return;
+	}
+
+	$class->install_cpanm( $main, $string );
+}
+
+sub install_url {
+	my $class = shift;
+	my $main  = shift;
+
+	# Ask what we should install
+	my $dialog = Wx::TextEntryDialog->new(
+		$main,
+		Wx::gettext("Enter URL to install\ne.g. http://svn.ali.as/cpan/releases/Config-Tiny-2.00.tar.gz"),
+		"pip",
+		'',
+	);
+	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		return;
+	}
+	my $string = $dialog->GetValue;
+	$dialog->Destroy;
+	unless ( defined $string and $string =~ /\S/ ) {
+		$main->error( Wx::gettext("Did not provide a distribution") );
+		return;
+	}
+
+	$class->install_cpanm( $main, $string );
+}
+
+sub install_cpanm {
+	my $class  = shift;
+	my $main   = shift;
+	my $module = shift;
+
+	# Find 'cpanm', used to install modules
+	require Config;
+	my %seen = ();
+	my @where = grep {
+		defined $_
+		and
+		length $_
+		and not
+		$seen{$_}++
+	} map {
+		$Config::Config{$_}
+	} qw{
+		sitescriptexp
+		sitebinexp
+		vendorscriptexp
+		vendorbinexp
+		scriptdirexp
+		binexp
+	};
+	my $cpanm = '';
+
+	foreach my $dir ( @where ) {
+		my $path = File::Spec->catfile( $dir, 'cpanm' );
+		if ( -f $path ) {
+			$cpanm = $path;
+			last;
+		}
+	}
+	unless ( $cpanm ) {
+		$main->error( Wx::gettext("cpanm is unexpectedly not installed") );
+		return;
+	}
+
+	# Create the command
+	require Padre::Perl;
+	my $perl = Padre::Perl::cperl();
+	my $cmd  = qq{"$perl" "$cpanm" "$module"};
+	$main->run_command($cmd);
+
+	return;
 }
 
 1;
