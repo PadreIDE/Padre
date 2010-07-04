@@ -37,7 +37,7 @@ my @GUI_ELEMENTS = (
 sub new {
 	my $class  = shift;
 	my $main   = shift;
-	my $config = Padre->ide->config;
+	my $config = $main->config;
 
 	# Create the empty menu as normal
 	my $self = $class->SUPER::new(@_);
@@ -166,26 +166,28 @@ sub new {
 	}
 
 	# Font Size
-	$self->{font_size} = Wx::Menu->new;
-	$self->Append(
-		-1,
-		Wx::gettext("Font Size"),
-		$self->{font_size}
-	);
-	$self->{font_increase} = $self->add_menu_action(
-		$self->{font_size},
-		'view.font_increase',
-	);
+	if ( $config->feature_fontsize ) {
+		$self->{font_size} = Wx::Menu->new;
+		$self->Append(
+			-1,
+			Wx::gettext("Font Size"),
+			$self->{font_size}
+		);
+		$self->{font_increase} = $self->add_menu_action(
+			$self->{font_size},
+			'view.font_increase',
+		);
 
-	$self->{font_decrease} = $self->add_menu_action(
-		$self->{font_size},
-		'view.font_decrease',
-	);
+		$self->{font_decrease} = $self->add_menu_action(
+			$self->{font_size},
+			'view.font_decrease',
+		);
 
-	$self->{font_reset} = $self->add_menu_action(
-		$self->{font_size},
-		'view.font_reset',
-	);
+		$self->{font_reset} = $self->add_menu_action(
+			$self->{font_size},
+			'view.font_reset',
+		);
+	}
 
 	# Editor Look and Feel
 	$self->{style} = Wx::Menu->new;

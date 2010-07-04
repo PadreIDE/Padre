@@ -12,7 +12,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Don't show a additional translated string for the language that is
       currently active (ADAMK)
     - When the advanced setting "feature_fontsize" is disabled, Padre will
-      not change the font size in an editor on Ctrl-Scroll (ADAMK)
+      remove the Font Size menu, disable Ctrl-+ and Ctrl--, and (most importantly)
+      will not change the font size in an editor on Ctrl-Scroll (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
