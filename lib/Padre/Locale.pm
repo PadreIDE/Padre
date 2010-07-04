@@ -461,8 +461,8 @@ BEGIN {
 		},
 	);
 
-	# Post-process to find the language each language
-	# will actually fall back to.
+	# Post-process to find the language that each language
+	# will actually fall back to, rather than prefer to fall back to.
 	foreach my $id ( keys %RFC4646 ) {
 		my $lang = $RFC4646{$id};
 		$lang->{actual} = List::Util::first {

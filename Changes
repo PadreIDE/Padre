@@ -6,6 +6,11 @@ o.67 to be released
       artificially broke it up based on menu structure. The new layout
       also makes it simpler to do further refactorings (ADAMK)
     - Removed half the usages of Wx::Perl::Dialog (ADAMK)
+    - Use a hyphen to a separate the current vs native names of the languages
+      in the View menu, as the bracing looked weird with the bracing of some
+      of the languages themselves (ADAMK)
+    - Don't show a additional translated string for the language that is
+      currently active (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)

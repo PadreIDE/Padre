@@ -294,9 +294,13 @@ sub new {
 			$label = "English (New Britstralian)";
 		}
 
-		my $langobj = Padre::Locale::object($name);
-		my $utf8txt = ' - ' . Padre::Locale::label($name);
-
+		# Append the language's description of itself.
+		# Skip the active language so we don't show the same string twice.
+		my $utf8txt = '';
+		if ( $current ne $name ) {
+			my $langobj = Padre::Locale::object($name);
+			$utf8txt = ' - ' . Padre::Locale::label($name);
+		}
 		my $radio = $self->add_radio_menu_item(
 			$self->{language},
 			name       => $tag,
