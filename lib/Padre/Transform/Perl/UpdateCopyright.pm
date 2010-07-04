@@ -30,7 +30,7 @@ if it does not already do so.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{ _STRING };
+use Params::Util           ();
 use Padre::Current         ();
 use Padre::Transform::Perl ();
 
@@ -61,13 +61,13 @@ sub new {
 	my $self = shift->SUPER::new(@_);
 
 	# We need a name
-	unless ( defined _STRING( $self->name ) ) {
+	unless ( defined Params::Util::_STRING( $self->name ) ) {
 
 		# Try to pull a name from your config
 		$self->{name} = Padre::Current->config->identity_name;
 	}
-	unless ( defined _STRING( $self->name ) ) {
-		die("Did not provide a valid name param");
+	unless ( defined Params::Util::_STRING( $self->name ) ) {
+		die 'Did not provide a valid name param';
 	}
 
 	return $self;
@@ -90,8 +90,8 @@ sub name {
 # Transform Methods
 
 sub document {
-	my $self = shift;
-	my $document = _INSTANCE( shift, 'PPI::Document' ) or return;
+	my $self     = shift;
+	my $document = Params::Util::_INSTANCE(shift, 'PPI::Document') or return;
 
 	# Find things to transform
 	my $name     = quotemeta $self->name;
@@ -164,7 +164,7 @@ sub document {
 
 =head1 TO DO
 
-- May need to overload some methods to forcefully prevent Document
+May need to overload some methods to forcefully prevent Document
 objects becoming children of another Node.
 
 =head1 SUPPORT
