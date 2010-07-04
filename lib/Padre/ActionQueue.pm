@@ -1,4 +1,4 @@
-package Padre::Action::Queue;
+package Padre::ActionQueue;
 
 # Basic scripting for Padre
 
@@ -6,7 +6,7 @@ package Padre::Action::Queue;
 
 =head1 NAME
 
-Padre::Action::Queue doesn't create any actions itself but it provides a basic
+Padre::ActionQueue doesn't create any actions itself but it provides a basic
 scripting option for Padre, the Action Queue.
 
 =cut

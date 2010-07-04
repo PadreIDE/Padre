@@ -39,7 +39,7 @@ use Scalar::Util                  ();
 use Params::Util                  ();
 use Time::HiRes                   ();
 use Padre::Action                 ();
-use Padre::Actions                ();
+use Padre::ActionLibrary          ();
 use Padre::Constant               ();
 use Padre::Util                   ('_T');
 use Padre::Perl                   ();
@@ -190,8 +190,7 @@ sub new {
 	$self->{marker} = {};
 
 	# Create the actions
-	Padre::Action::create($self);
-	Padre::Actions->init($self);
+	Padre::ActionLibrary->init($self);
 
 	# Create the menu bar
 	$self->{menu} = Padre::Wx::Menubar->new($self);
@@ -1627,8 +1626,7 @@ sub relocale {
 	$self->ide->actions( \%actions );
 
 	# Create the actions (again)
-	Padre::Action::create($self);
-	Padre::Actions->init($self);
+	Padre::ActionLibrary->init($self);
 
 	# The menu doesn't support relocale, replace it
 	delete $self->{menu};

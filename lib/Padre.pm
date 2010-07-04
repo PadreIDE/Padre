@@ -28,10 +28,10 @@ our $VERSION = '0.66';
 
 # Since everything is used OO-style, we will be require'ing
 # everything other than the bare essentials
-use Padre::Constant ();
-use Padre::Config   ();
-use Padre::DB       ();
-use Padre::Action::Queue;
+use Padre::Constant    ();
+use Padre::Config      ();
+use Padre::DB          ();
+use Padre::ActionQueue ();
 
 # Generate faster accessors
 use Class::XSAccessor 1.05 {
@@ -158,7 +158,7 @@ sub new {
 	);
 
 	# Create the action queue
-	$self->{actionqueue} = Padre::Action::Queue->new;
+	$self->{actionqueue} = Padre::ActionQueue->new;
 
 	# Startup completed, let go of the database
 	Padre::DB->commit;

@@ -1,4 +1,4 @@
-package Padre::Actions;
+package Padre::ActionLibrary;
 
 # Defines all the core actions for Padre.
 # It's a little on the bloaty side, but splitting it into different files

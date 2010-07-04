@@ -11,6 +11,7 @@ BEGIN {
 		exit 0;
 	}
 }
+
 plan( tests => 4 );
 use Padre::Util;
 use File::Basename ();
@@ -43,17 +44,17 @@ is( Padre::Util::get_project_dir($current_dir),
 );
 
 # the OS's root directory should not be a project
-# TODO: improve this test
-is( Padre::Util::get_project_dir( File::Spec->rootdir() ),
+# TODO: Improve this test
+is(
+	Padre::Util::get_project_dir( File::Spec->rootdir ),
 	undef,
 	'Searching for a non-existant project'
 );
 
-# TODO we need to pass the $main object to the create function
+# TODO: We need to pass the $main object to the create function
 # and certain other things need to be in place before running
-# Padre::Action::create($main)
 use Padre::Action;
-use Padre::Actions;
+use Padre::ActionLibrary;
 sub Padre::ide { return bless { shortcuts => {} }, 'Padre::IDE'; }
 sub Padre::IDE::actions { return {} }
 sub Padre::IDE::config { return bless {}, 'Padre::Config' }
@@ -61,7 +62,6 @@ SKIP: {
 
 	# TODO check if every action has a comment as required
 	skip 'Fix this test!', 1;
-	Padre::Action::create( bless {}, 'Padre::IDE' );
-	Padre::Actions->init( bless {}, 'Padre::IDE' );
+	Padre::ActionLibrary->init( bless {}, 'Padre::IDE' );
 	ok(1);
 }
