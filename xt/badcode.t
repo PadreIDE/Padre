@@ -59,7 +59,6 @@ my %TODO = map { $_ => 1 } qw(
 	Padre::Plugin::Devel
 	Padre::Plugin::My
 	Padre::PluginManager
-	Padre::Splash
 	Padre::Task::LaunchDefaultBrowser
 	Padre::TaskThread
 	Padre::TaskHandle
