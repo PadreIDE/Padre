@@ -118,6 +118,46 @@ sub password {
 	return $result;
 }
 
+=pod
+
+=head3 C<single_choice>
+
+Generates a standard L<Wx> single-choice dialog, using the standard
+internal L<Wx::SingleChoiceDialog> class.
+
+=cut
+
+sub single_choice {
+	my $self    = shift;
+	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
+	my $result  = undef;
+	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		$result = $_[2]->[ $dialog->GetSelection ];
+	}
+	$dialog->Destroy;
+	return $result;
+}
+
+=pod
+
+=head3 C<multi_choice>
+
+Generates a standard L<Wx> multi-choice dialog, using the internal
+L<Wx::MultiChoiceDialog> class.
+
+=cut
+
+sub multi_choice {
+	my $self    = shift;
+	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
+	my @result  = ();
+	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
+		@result = map { $_[2]->[$_] } $dialog->GetSelections;
+	}
+	$dialog->Destroy;
+	return @result;
+}
+
 1;
 
 # Copyright 2008-2010 The Padre development team as listed in Padre.pm.

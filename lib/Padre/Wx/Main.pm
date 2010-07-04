@@ -2755,42 +2755,6 @@ sub prompt {
 
 =pod
 
-=head3 C<single_choice>
-
-Generates a standard L<Wx> single-choice dialog, using the standard
-internal L<Wx::SingleChoiceDialog> class.
-
-=cut
-
-sub single_choice {
-	my $self    = shift;
-	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-		return undef;
-	}
-	return $_[2]->[ $dialog->GetSelection ];
-}
-
-=pod
-
-=head3 C<multi_choice>
-
-Generates a standard L<Wx> multi-choice dialog, using the internal
-L<Wx::MultiChoiceDialog> class.
-
-=cut
-
-sub multi_choice {
-	my $self    = shift;
-	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
-	if ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
-		return ();
-	}
-	return map { $_[2]->[$_] } $dialog->GetSelections;
-}
-
-=pod
-
 =head2 Search and Replace
 
 These methods provide the highest level abstraction for entry into the various
