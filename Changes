@@ -5,6 +5,7 @@ o.67 to be released
     - Refactored the Action subsystem into a simpler model. The old layout
       artificially broke it up based on menu structure. The new layout
       also makes it simpler to do further refactorings (ADAMK)
+    - Removed half the usages of Wx::Perl::Dialog (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
