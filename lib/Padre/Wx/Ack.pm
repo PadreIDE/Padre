@@ -144,7 +144,7 @@ sub dialog {
 		parent => $main,
 		title  => Wx::gettext("Find in Files"),
 		layout => $layout,
-		width  => [ 190, 210 ],
+		width  => [ 190,410 ],
 		size   => Wx::wxDefaultSize,
 		pos    => Wx::wxDefaultPosition,
 	);
@@ -204,6 +204,11 @@ sub find_clicked {
 	$search->{dir} ||= '.';
 	return if not $search->{term};
 
+	my $term = $search->{term};
+	# really need to handle special characters.
+	$term =~ s!([\$\+\\\^\?])!\\$1!g;
+	# Ctrl+F $string
+	#print "Search term: " . $search->{term} .  " and after: $term\n";
 	my $main = Padre->ide->wx->main;
 
 	@_ = (); # cargo cult or bug? see Wx::Thread / Creating new threads
@@ -212,7 +217,8 @@ sub find_clicked {
 
 	# prepare \%opts
 	%opts = ();
-	$opts{regex} = $search->{term};
+	
+	$opts{regex} = $term;
 
 	# ignore_hidden_subdirs
 	if ( $search->{ignore_hidden_subdirs} ) {
@@ -256,7 +262,7 @@ sub find_clicked {
 		$main->error( "Find in Files: error in regex " . $opts{regex} );
 		return;
 	}
-
+	print $opts{regex};
 
 	my $what = App::Ack::get_starting_points( [ $search->{dir} ], \%opts );
 	$iter = App::Ack::get_iterator( $what, \%opts );
