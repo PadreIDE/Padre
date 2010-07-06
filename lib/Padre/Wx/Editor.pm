@@ -1219,7 +1219,7 @@ sub on_mousewheel {
 	my $event = shift;
 
 	# Behave normally if Ctrl isn't down
-	unless ( $event->ControlDown and $self->config->feature_fontsize ) {
+	unless ( $event->ControlDown and not $self->config->feature_fontsize ) {
 		$event->Skip(1);
 		return;
 	}
