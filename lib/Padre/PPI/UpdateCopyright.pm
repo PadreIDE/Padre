@@ -1,23 +1,22 @@
-package Padre::Transform::Perl::UpdateCopyright;
+package Padre::PPI::UpdateCopyright;
 
 =pod
 
 =head1 NAME
 
-Padre::Transform::Perl::UpdateCopyright - Demonstration Padre::Transform class
+Padre::PPI::UpdateCopyright - Demonstration transform
 
 =head1 SYNOPSIS
 
-  my $transform = Padre::Transform::Perl::UpdateCopyright->new(
+  my $transform = Padre::PPI::UpdateCopyright->new(
       name => 'Adam Kennedy'
   );
-
   $transform->apply( Padre::Current->document );
 
 =head1 DESCRIPTION
 
-C<Padre::Transform::Perl::UpdateCopyright> provides a demonstration of a
-typical L<Padre::Transform> class.
+C<Padre::PPI::UpdateCopyright> provides a demonstration of a typical
+L<Padre::Transform> class.
 
 This class implements a document transform that will take the name of an
 author and update the copyright statement to refer to the current year,
@@ -30,12 +29,16 @@ if it does not already do so.
 use 5.008;
 use strict;
 use warnings;
-use Params::Util           ();
-use Padre::Current         ();
-use Padre::Transform::Perl ();
+use Params::Util          ();
+use Padre::Current        ();
+use Padre::PPI::Transform ();
 
 our $VERSION = '0.66';
-our @ISA     = 'Padre::Transform::Perl';
+our @ISA     = 'Padre::PPI::Transform';
+
+
+
+
 
 #####################################################################
 # Constructor and Accessors
@@ -44,7 +47,7 @@ our @ISA     = 'Padre::Transform::Perl';
 
 =head2 new
 
-  my $transform = PPI::Transform::UpdateCopyright->new(
+  my $transform = Padre::PPI::UpdateCopyright->new(
       name => 'Adam Kennedy'
   );
 
@@ -86,6 +89,10 @@ sub name {
 	$_[0]->{name};
 }
 
+
+
+
+
 #####################################################################
 # Transform Methods
 
@@ -95,7 +102,7 @@ sub document {
 
 	# Find things to transform
 	my $name     = quotemeta $self->name;
-	my $regexp   = qr/\bcopyright\b.*$name/m;
+	my $regexp   = qr/\bcopyright\b.*$name/mi;
 	my $elements = $document->find(
 		sub {
 			$_[1]->isa('PPI::Token::Pod') or return '';
@@ -145,14 +152,14 @@ sub document {
 			}
 		}
 
-		# huh?
+		# Huh?
 		die "Invalid or unknown copyright line '$copyright'";
 	};
 
 	# Attempt to transform each element
-	my $pattern = qr/\b(copyright.*\d)({4}(?:\s*-\s*\d{4})?)(.*$name)/mi;
+	my $pattern = qr/\b(copyright.*?)((?:\d{4}\s*-\s*)?\d{4})(.*$name)/mi;
 	foreach my $element (@$elements) {
-		$element =~ s/$pattern/$1 . $change->($2) . $2/eg;
+		$element->{content} =~ s/$pattern/$1 . $change->($2) . $3/eg;
 	}
 
 	return $changes;

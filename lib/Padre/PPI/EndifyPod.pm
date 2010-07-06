@@ -74,12 +74,17 @@ sub document {
 
 		# Append the merged Pod
 		$end->add_element($merged);
+
 	} else {
-		# The document needs an end block
+		# Generate the end block
 		my $statement = PPI::Statement::End->new;
 		$statement->add_element( PPI::Token::Separator->new("__END__") );
-		$statement->add_element( PPI::Token::Separator->new("\n") );
+		$statement->add_element( PPI::Token::Whitespace->new("\n") );
+		$statement->add_element( PPI::Token::End->new("\n") );
 		$statement->add_element( $merged );
+
+		# Add it to the document
+		$document->add_element( PPI::Token::Whitespace->new("\n") );
 		$document->add_element( $statement );
 	}
 

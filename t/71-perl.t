@@ -9,7 +9,7 @@ BEGIN {
 		plan skip_all => 'Needs DISPLAY';
 		exit 0;
 	}
-	plan( tests => 27 );
+	plan( tests => 39 );
 }
 use Test::NoWarnings;
 use File::Spec::Functions ':ALL';
@@ -242,6 +242,79 @@ END_PERL
 	# Check the subpath
 	my @subpath = $doc->guess_subpath;
 	is_deeply( \@subpath, [qw{ lib Foo Bar }], '->guess_subpath' );
+}
+
+# Test POD endification
+SCOPE: {
+	use_ok('Padre::PPI::EndifyPod');
+	my $merge = Padre::PPI::EndifyPod->new;
+	isa_ok( $merge, 'Padre::PPI::EndifyPod' );
+	my $document = PPI::Document->new( \<<'END_PERL' );
+package Foo;
+
+=pod
+
+This is POD
+
+=cut
+
+use strict;
+
+=pod
+
+This is also POD
+
+=cut
+
+1;
+END_PERL
+	isa_ok( $document, 'PPI::Document' );
+	ok( $merge->apply($document), 'Transform applied ok' );
+	is( $document->serialize, <<'END_PERL', 'Transformed ok' );
+package Foo;
+
+
+use strict;
+
+
+1;
+
+__END__
+
+=pod
+
+This is POD
+
+This is also POD
+
+=cut
+END_PERL
+}
+
+# Test copyright updating
+SCOPE: {
+	use_ok('Padre::PPI::UpdateCopyright');
+	my $copyright = Padre::PPI::UpdateCopyright->new(
+		name => 'Adam Kennedy',
+	);
+	isa_ok( $copyright, 'Padre::PPI::UpdateCopyright' );
+	my $document = PPI::Document->new( \<<'END_PERL' );
+package Foo;
+
+=pod
+
+Copyright 2008 - 2009 Adam Kennedy.
+
+=cut
+
+1;
+END_PERL
+	isa_ok( $document, 'PPI::Document' );
+	ok( $copyright->apply($document), 'Transform applied ok' );
+	my $serialized = $document->serialize;
+	ok( $serialized =~ /2008 - (\d\d\d\d)/, 'Found copyright statement' );
+	ok( $1 ne '2009', 'Copyright year has changed' );
+	ok( $1 > 2009, 'Copyright year is newer' );
 }
 
 
