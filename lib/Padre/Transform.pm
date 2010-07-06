@@ -21,7 +21,7 @@ I'll document this more later...
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{ _INSTANCE };
+use Params::Util ();
 
 our $VERSION = '0.66';
 
@@ -59,10 +59,10 @@ or throws an exception on error.
 =cut
 
 sub apply {
-	my $self = shift;
-	my $document = _INSTANCE( shift, 'Padre::Document' );
+	my $self     = shift;
+	my $document = Params::Util::_INSTANCE(shift, 'Padre::Document');
 	unless ($document) {
-		die('Did not provide a Padre::Document object to apply');
+		die 'Did not provide a Padre::Document object to apply';
 	}
 
 	# Null transform
