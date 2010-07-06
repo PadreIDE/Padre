@@ -3,7 +3,7 @@ package Padre::PPI;
 use 5.008;
 use strict;
 use warnings;
-use PPI;
+use PPI ();
 
 our $VERSION = '0.66';
 
@@ -54,7 +54,7 @@ sub get_all_variable_declarations {
 	my %package;
 	foreach my $decl (@$declarations) {
 		if ( $decl->isa('PPI::Statement::Variable') ) {
-			my $type     = $decl->type();
+			my $type     = $decl->type;
 			my @vars     = $decl->variables;
 			my $location = $decl->location;
 
@@ -123,11 +123,11 @@ sub find_token_at_location {
 		Carp::croak("find_token_at_location() requires a PPI::Document and a PPI-style location as arguments");
 	}
 
-	$document->index_locations();
+	$document->index_locations;
 
 	foreach my $token ( $document->tokens ) {
 		my $tloc = $token->location;
-		return $token->previous_token()
+		return $token->previous_token
 			if $tloc->[0] > $location->[0]
 				or (    $tloc->[0] == $location->[0]
 					and $tloc->[1] > $location->[1] );
@@ -176,7 +176,7 @@ sub find_variable_declaration {
 
 	$varname =~ s/^\$\#/@/;
 
-	my $document = $cursor->top();
+	my $document = $cursor->top;
 	my $declaration;
 	my $prev_cursor;
 	while (1) {
