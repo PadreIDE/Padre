@@ -1610,6 +1610,7 @@ sub init {
 	Padre::Action->new(
 		name        => 'perl.vertically_align_selected',
 		need_editor => 1,
+		shortcut    => 'Ctrl-Shift-Space',
 		label       => Wx::gettext('Vertically Align Selected'),
 		comment     => Wx::gettext('Align a selection of text to the same left column.'),
 		menu_event  => sub {
