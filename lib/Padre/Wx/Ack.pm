@@ -204,10 +204,11 @@ sub find_clicked {
 	$search->{dir} ||= '.';
 	return if not $search->{term};
 
-	my $term = $search->{term};
+
+	
 	# really need to handle special characters.
-	$term =~ s!([\$\+\\\^\?])!\\$1!g;
-	# Ctrl+F $string
+	my $term = quotemeta $search->{term};
+	# Ctrl+F $string - testing string to find
 	#print "Search term: " . $search->{term} .  " and after: $term\n";
 	my $main = Padre->ide->wx->main;
 
@@ -219,6 +220,7 @@ sub find_clicked {
 	%opts = ();
 	
 	$opts{regex} = $term;
+	$opts{search_term} = $search->{term};
 
 	# ignore_hidden_subdirs
 	if ( $search->{ignore_hidden_subdirs} ) {
@@ -262,7 +264,7 @@ sub find_clicked {
 		$main->error( "Find in Files: error in regex " . $opts{regex} );
 		return;
 	}
-	print $opts{regex};
+	
 
 	my $what = App::Ack::get_starting_points( [ $search->{dir} ], \%opts );
 	$iter = App::Ack::get_iterator( $what, \%opts );
@@ -478,7 +480,7 @@ sub print_results {
 		if ( $opts{l} ) {
 			$text = sprintf(
 				Wx::gettext("'%s' missing in file '%s'\n"),
-				$opts{regex},
+				$opts{search_term}, #$opts{regex},
 				$text
 			);
 		}
@@ -490,7 +492,7 @@ sub print_results {
 			chop($text);
 			$text = sprintf(
 				Wx::gettext("Found '%s' in '%s':\n"),
-				$opts{regex},
+				$opts{search_term}, #$opts{regex},
 				$text,
 			);
 		}
