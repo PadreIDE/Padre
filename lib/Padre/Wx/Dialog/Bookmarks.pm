@@ -54,7 +54,7 @@ sub dialog {
 	my $title =
 		$text
 		? Wx::gettext("Set Bookmark")
-		: Wx::gettext("GoTo Bookmark");
+		: Wx::gettext("Go to Bookmark");
 
 	my $layout = get_layout( $text, $names );
 	$dialog = Padre::Wx::Dialog->new(
