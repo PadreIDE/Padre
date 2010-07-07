@@ -1370,7 +1370,7 @@ sub autocomplete {
 	my $regex;
 	eval { $regex = qr{\b(\Q$prefix\E\w+(?:::\w+)*)\b} };
 	if ($@) {
-		return ("Cannot build regex for '$prefix'");
+		return ("Cannot build regular expression for '$prefix'.");
 	}
 
 	my %seen;
