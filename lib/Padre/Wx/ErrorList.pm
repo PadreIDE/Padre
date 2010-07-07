@@ -101,7 +101,7 @@ sub on_menu_help_context_help {
 	if ( $error->isa('Parse::ErrorString::Perl::StackItem') ) {
 		return;
 	}
-	my $diagnostics = Wx::gettext("No diagnostics available for this error!");
+	my $diagnostics = Wx::gettext("No diagnostics available for this error.");
 	if ( $error->diagnostics ) {
 		$diagnostics = $error->diagnostics;
 		$diagnostics =~ s/[A-Z]<(.*?)>/$1/sg;
