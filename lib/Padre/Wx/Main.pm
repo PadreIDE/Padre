@@ -4538,6 +4538,7 @@ sub on_nth_pane {
 		$self->notebook->SetSelection($id);
 		$self->refresh_status( $self->current );
 		$page->{Document}->set_indentation_style(); # TO DO: encapsulation?
+		$page->SetFocus;
 
 		$manager->plugin_event('editor_changed');
 
