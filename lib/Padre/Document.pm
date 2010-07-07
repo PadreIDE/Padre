@@ -1523,7 +1523,7 @@ sub autocomplete {
 	my $post = $editor->GetTextRange( $first, $last );
 
 	my $regex = eval {qr{\b(\Q$prefix\E\w+)\b}};
-	return ("Cannot build regex for '$prefix'") if $@;
+	return ("Cannot build regular expression for '$prefix'.") if $@;
 
 	my %seen;
 	my @words;
