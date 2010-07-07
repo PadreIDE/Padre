@@ -96,6 +96,7 @@ sub error {
 		Wx::wxOK | Wx::wxCENTRE | Wx::wxICON_HAND,
 		$self,
 	);
+	return;
 }
 
 =pod
@@ -113,6 +114,7 @@ sub password {
 	my $self   = shift;
 	my $dialog = Wx::PasswordEntryDialog->new( $self, @_ );
 	my $result = undef;
+	$dialog->CenterOnParent;
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		$result = $dialog->GetValue;
 	}
@@ -143,6 +145,7 @@ sub single_choice {
 	my $self    = shift;
 	my $dialog  = Wx::SingleChoiceDialog->new( $self, @_ );
 	my $result  = undef;
+	$dialog->CenterOnParent;
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		$result = $_[2]->[ $dialog->GetSelection ];
 	}
@@ -173,6 +176,7 @@ sub multi_choice {
 	my $self    = shift;
 	my $dialog  = Wx::MultiChoiceDialog->new( $self, @_ );
 	my @result  = ();
+	$dialog->CenterOnParent;
 	unless ( $dialog->ShowModal == Wx::wxID_CANCEL ) {
 		@result = map { $_[2]->[$_] } $dialog->GetSelections;
 	}
