@@ -1527,7 +1527,7 @@ sub init {
 
 	Padre::Action->new(
 		name       => 'view.bookmark_goto',
-		label      => Wx::gettext('Goto Bookmark'),
+		label      => Wx::gettext('Go to Bookmark'),
 		comment    => Wx::gettext('Select a bookmark created earlier and jump to that position'),
 		shortcut   => 'Ctrl-Shift-B',
 		menu_event => sub {
