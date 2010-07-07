@@ -580,10 +580,13 @@ sub load_file {
 	#warn $self->{encoding};
 	$content = Encode::decode( $self->{encoding}, $content );
 
-	$self->{original_content} = $content;
-
 	# Determine new line type using file content.
 	$self->{newline_type} = Padre::Util::newline_type($content);
+
+	# Cache the original value of various things so we can do
+	# smart things at save time later.
+	$self->{original_content} = $content;
+	$self->{original_newline} = $self->{newline_type};
 
 	return 1;
 }
