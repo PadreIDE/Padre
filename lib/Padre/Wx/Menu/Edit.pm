@@ -219,7 +219,7 @@ sub new {
 	$self->{convert_nl} = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Convert EOL"),
+		Wx::gettext("Convert Line Endings"),
 		$self->{convert_nl}
 	);
 
