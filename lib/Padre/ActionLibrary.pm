@@ -1736,6 +1736,19 @@ sub init {
 		},
 	);
 
+	Padre::Action->new(
+		name        => 'perl.endify_pod',
+		need_editor => 1,
+		label       => Wx::gettext('Move POD to __END__'),
+		comment     => Wx::gettext('Combine scattered POD at the end of the document'),
+		menu_event  => sub {
+			my $document = $_[0]->current->document or return;
+			$document->isa('Padre::Document::Perl') or return;
+			require Padre::PPI::EndifyPod;
+			Padre::PPI::EndifyPod->new->apply($document);
+		},
+	);
+
 	# Script Execution
 
 	Padre::Action->new(

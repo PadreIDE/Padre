@@ -36,7 +36,6 @@ sub new {
 	# Cache the configuration
 	$self->{config} = Padre->ide->config;
 
-
 	# Perl-Specific Refactoring
 	$self->{rename_variable} = $self->add_menu_action(
 		$self,
@@ -51,6 +50,13 @@ sub new {
 	$self->{introduce_temporary} = $self->add_menu_action(
 		$self,
 		'perl.introduce_temporary',
+	);
+
+	$self->AppendSeparator;
+
+	$self->{endify_pod} = $self->add_menu_action(
+		$self,
+		'perl.endify_pod',
 	);
 
 	return $self;
@@ -68,6 +74,7 @@ sub refresh {
 	$self->{rename_variable}->Enable( $document->can('lexical_variable_replacement')     ? 1 : 0 );
 	$self->{introduce_temporary}->Enable( $document->can('introduce_temporary_variable') ? 1 : 0 );
 	$self->{extract_subroutine}->Enable( $document->can('extract_subroutine')            ? 1 : 0 );
+	$self->{endify_pod}->Enable( $document->isa('Padre::Document::Perl')                 ? 1 : 0 );
 
 	return;
 }

@@ -12,8 +12,14 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Don't show a additional translated string for the language that is
       currently active (ADAMK)
     - When the advanced setting "feature_fontsize" is disabled, Padre will
-      remove the Font Size menu, disable Ctrl-+ and Ctrl--, and (most importantly)
-      will not change the font size in an editor on Ctrl-Scroll (ADAMK)
+      remove the Font Size menu, disable Ctrl-+ and Ctrl--, and (most
+      importantly) will not change the font size in an editor on
+      Ctrl-Scroll (ADAMK)
+    - Added integration with the PPI::Transform API for modifying Perl
+      documents, so the transform objects can modify Padre documents (ADAMK)
+    - Added the "Move POD to __END__" refactoring that lets you extract all
+      the POD scattered through a document, merge it together, and move it
+      to the bottom of the file after an __END__ statement (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
