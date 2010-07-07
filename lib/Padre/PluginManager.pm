@@ -911,7 +911,7 @@ sub reload_current_plugin {
 
 	# TO DO: locate project
 	my $dir = Padre::Util::get_project_dir($filename);
-	return $main->error( Wx::gettext('Could not locate project dir') ) if not $dir;
+	return $main->error( Wx::gettext('Could not locate project directory.') ) if not $dir;
 
 	# TO DO shall we relax the assumption of a lib subdir?
 	$dir = File::Spec->catdir( $dir, 'lib' );
