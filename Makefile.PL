@@ -185,7 +185,9 @@ print "Found locale    $locale\n";
 # What tests should we run?
 my @TESTS = 't/*.t';
 if ( win32 and $locale =~ /^English/ ) {
-	push @TESTS, 't/win32/*.t';
+	if ( author_context or $ENV{RELEASE_TESTING} ) {
+		push @TESTS, 't/win32/*.t';
+	}
 }
 if ( author_context or $ENV{AUTOMATED_TESTING} or $ENV{RELEASE_TESTING} ) {
 	push @TESTS, 'xt/*.t';
