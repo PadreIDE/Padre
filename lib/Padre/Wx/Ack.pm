@@ -100,15 +100,15 @@ sub get_layout {
 	my $config = Padre->ide->config;
 
 	my @layout = (
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Term:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Search Term:') ],
 			[ 'Wx::ComboBox', '_ack_term_', $term, $search ],
 			[ 'Wx::Button',   '_find_',     Wx::wxID_FIND ],
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('Dir:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Search Directory:') ],
 			[ 'Wx::ComboBox', '_ack_dir_',  $dir, $in_dir ],
 			[ 'Wx::Button',   '_pick_dir_', Wx::gettext('Pick &directory') ],
 		],
-		[   [ 'Wx::StaticText', undef, Wx::gettext('In Files/Types:') ],
+		[   [ 'Wx::StaticText', undef, Wx::gettext('Search in Files/Types:') ],
 			[ 'Wx::ComboBox', '_file_types_', '', $types ],
 			[ 'Wx::Button',   '_cancel_',     Wx::wxID_CANCEL ],
 		],
