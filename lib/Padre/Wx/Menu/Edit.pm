@@ -87,7 +87,7 @@ sub new {
 	my $edit_copy = Wx::Menu->new;
 	$self->Append(
 		-1,
-		Wx::gettext("Copy specials"),
+		Wx::gettext("Copy Specials"),
 		$edit_copy
 	);
 
