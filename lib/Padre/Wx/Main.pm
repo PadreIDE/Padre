@@ -3436,8 +3436,8 @@ No return value.
 sub on_open_selection {
 	my $self    = shift;
 	my $current = $self->current;
-	return unless $current->editor;
-	my $text = $current->text;
+	my $editor  = $current->editor or return;
+	my $text    = $current->text;
 
 	# get selection, ask for it if needed
 	unless ( length $text ) {
@@ -3479,8 +3479,8 @@ sub on_open_selection {
 		}
 	}
 	unless (@files) {
-		my $doc = $self->current->document;
-		push @files, $doc->guess_filename_to_open($text);
+		my $document = $current->document;
+		push @files, $document->guess_filename_to_open($text);
 	}
 
 	unless (@files) {
@@ -3492,13 +3492,16 @@ sub on_open_selection {
 	}
 
 	# Pick a file
-	my $file = $self->single_choice(
-		Wx::gettext('Choose File'),
-		'',
-		[ List::MoreUtils::uniq @files ],
-	);
-	if ( defined $file ) {
-		$self->setup_editors($file);
+	@files = List::MoreUtils::uniq @files;
+	if ( @files > 1 ) {
+		my $file = $self->single_choice(
+			Wx::gettext('Choose File'),
+			'',
+			[ List::MoreUtils::uniq @files ],
+		);
+		$self->setup_editors($file) if defined $file;
+	} else {
+		$self->setup_editors($files[0]);
 	}
 
 	return;

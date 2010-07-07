@@ -20,6 +20,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
     - Added the "Move POD to __END__" refactoring that lets you extract all
       the POD scattered through a document, merge it together, and move it
       to the bottom of the file after an __END__ statement (ADAMK)
+    - If the Open Selection expression only matches one file, immediately
+      open it without showing a pointless dialog (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
