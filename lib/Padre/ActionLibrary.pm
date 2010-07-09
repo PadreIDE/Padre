@@ -374,6 +374,7 @@ sub init {
 		label       => Wx::gettext('Save All'),
 		comment     => Wx::gettext('Save all the files'),
 		toolbar     => 'actions/stock_data-save',
+		shortcut    => 'Alt-F12',
 		menu_event  => sub {
 			$_[0]->on_save_all;
 		},
