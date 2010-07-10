@@ -3,8 +3,8 @@ package Padre::Wx::Menubar;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util              ('_INSTANCE');
-use Padre::Current            ('_CURRENT');
+use Params::Util              ();
+use Padre::Current            ();
 use Padre::Util               ();
 use Padre::Wx                 ();
 use Padre::Wx::Menu::File     ();
@@ -110,11 +110,12 @@ sub remove {
 sub refresh {
 	my $self    = shift;
 	my $plugins = shift;
-	my $current = _CURRENT(@_);
+	my $current = Padre::Current::_CURRENT(@_);
 	my $menu    = $self->wx->GetMenuCount ne $self->{default};
-	my $perl    = !!(
-		   _INSTANCE( $current->document, 'Padre::Document::Perl' )
-		or _INSTANCE( $current->project, 'Padre::Project::Perl' )
+	my $perl    = !! (
+		Params::Util::_INSTANCE( $current->document, 'Padre::Document::Perl' )
+		or
+		Params::Util::_INSTANCE( $current->project, 'Padre::Project::Perl' )
 	);
 
 	# Add/Remove the Perl menu
