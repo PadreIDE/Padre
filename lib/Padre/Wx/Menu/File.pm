@@ -287,8 +287,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $current  = Padre::Current::_CURRENT(@_);
-	my $document = $current->document ? 1 : 0;
+	my $document = Padre::Current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
 	if (Padre::Constant::WIN32) {
