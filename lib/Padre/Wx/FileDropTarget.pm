@@ -3,8 +3,8 @@ package Padre::Wx::FileDropTarget;
 use 5.008;
 use strict;
 use warnings;
-use Params::Util qw{ _INSTANCE };
-use Padre::Wx ();
+use Params::Util ();
+use Padre::Wx    ();
 
 our $VERSION = '0.66';
 our @ISA     = 'Wx::FileDropTarget';
@@ -18,7 +18,7 @@ sub new {
 
 sub set {
 	my $self = shift;
-	unless ( _INSTANCE( $self, 'Padre::Wx::FileDropTarget' ) ) {
+	unless ( Params::Util::_INSTANCE( $self, 'Padre::Wx::FileDropTarget' ) ) {
 		$self = $self->new(@_);
 	}
 	$self->{main}->SetDropTarget($self);
