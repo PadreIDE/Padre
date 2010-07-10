@@ -19,9 +19,8 @@ our @ISA     = 'Padre::Project';
 # Configuration and Intuition
 
 sub headline {
-	my $self = shift;
-	$self->{headline}
-		or $self->{headline} = $self->_headline;
+	$_[0]->{headline} or
+	$_[0]->{headline} = $_[0]->_headline;
 }
 
 sub _headline {
@@ -44,7 +43,7 @@ sub _headline {
 		closedir(DIRECTORY) or last;
 
 		# Can we find a single dominant module?
-		my @modules = grep {/\.pm\z/} @files;
+		my @modules = grep { /\.pm\z/ } @files;
 		if ( @modules == 1 ) {
 			return File::Spec->catfile( $cursor, $modules[0] );
 		}

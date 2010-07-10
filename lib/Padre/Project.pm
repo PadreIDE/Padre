@@ -5,21 +5,9 @@ package Padre::Project;
 use 5.008;
 use strict;
 use warnings;
-use File::Spec     ();
-use File::Path     ();
-use File::Basename ();
-use Padre::Config  ();
-use Padre::Current ();
-use Padre::Cache   ();
+use File::Spec ();
 
 our $VERSION = '0.66';
-
-use Class::XSAccessor {
-	getters => {
-		root      => 'root',
-		padre_yml => 'padre_yml',
-	}
-};
 
 
 
@@ -36,7 +24,8 @@ sub class {
 		# Carp::croak("Project directory '$root' does not exist");
 		# Project root doesn't exist, this might cause problems
 		# but croaking completly crashs Padre. Fix for #819
-		Padre->ide->wx->main->error(
+		require Padre::Current;
+		Padre::Current->main->error(
 			sprintf(
 				Wx::gettext(
 					      'Project directory %s does not exist (any longer). '
@@ -170,6 +159,14 @@ sub from_file {
 	);
 }
 
+sub root {
+	$_[0]->{root};
+}
+
+sub padre_yml {
+	$_[0]->{padre_yml};
+}
+
 
 
 
@@ -180,7 +177,10 @@ sub from_file {
 sub documents {
 	my $self = shift;
 	my $root = $self->root;
-	return grep { $_->project_dir eq $root } Padre::Current->main->documents;
+	require Padre::Current;
+	return grep {
+		$_->project_dir eq $root
+	} Padre::Current->main->documents;
 }
 
 
@@ -195,10 +195,12 @@ sub config {
 	unless ( $self->{config} ) {
 
 		# Get the default config object
+		require Padre::Current;
 		my $config = Padre::Current->config;
 
 		# If we have a padre.yml file create a custom config object
 		if ( $self->{padre_yml} ) {
+			require Padre::Config;
 			require Padre::Config::Project;
 			$self->{config} = Padre::Config->new(
 				$config->host,
@@ -208,6 +210,7 @@ sub config {
 				),
 			);
 		} else {
+			require Padre::Config;
 			$self->{config} = Padre::Config->new(
 				$config->host,
 				$config->human,
@@ -253,8 +256,11 @@ sub temp_sync {
 	foreach my $document (@changed) {
 		my $relative = $document->filename_relative;
 		my $tempfile = File::Spec->rel2abs( $relative, $root );
-		my $tempdir  = File::Basename::basedir($tempfile);
-		File::Path::mkpath($tempdir);
+		require File::Path;
+		require File::Basename;
+		File::Path::mkpath(
+			File::Basename::basedir($tempfile)
+		);
 		my $file = Padre::File->new($tempfile);
 		$document->write($file) and $files++;
 	}
@@ -313,6 +319,7 @@ sub name {
 
 sub DESTROY {
 	if ( defined $_[0]->{root} ) {
+		require Padre::Cache;
 		Padre::Cache::release( $_[0]->{root} );
 	}
 }
