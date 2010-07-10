@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use utf8;
 use Padre::Constant ();
-use Padre::Current '_CURRENT';
+use Padre::Current  ();
 use Padre::Locale   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
@@ -123,7 +123,7 @@ sub title {
 
 sub refresh {
 	my $self    = shift;
-	my $current = _CURRENT(@_);
+	my $current = Params::Util::_CURRENT(@_);
 	my $hasdoc  = $current->document ? 1 : 0;
 
 	# Don't show "Current Document" unless there is one

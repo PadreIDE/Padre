@@ -5,11 +5,10 @@ package Padre::Wx::Menu::Search;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Search ();
-use Padre::Current qw{_CURRENT};
+use Padre::Search   ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
-use Padre::Current();
+use Padre::Current  ();
 
 our $VERSION = '0.66';
 our @ISA     = 'Padre::Wx::Menu';

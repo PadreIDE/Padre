@@ -7,7 +7,7 @@ use strict;
 use warnings;
 use File::Glob      ();
 use Padre::Constant ();
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Locale   ();
@@ -334,7 +334,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $current  = _CURRENT(@_);
+	my $current  = Params::Util::_CURRENT(@_);
 	my $config   = $current->config;
 	my $document = $current->document;
 	my $doc      = $document ? 1 : 0;

@@ -9,7 +9,7 @@ use Fcntl           ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 use Padre::Constant ();
-use Padre::Current  ('_CURRENT');
+use Padre::Current  ();
 use Padre::Logger;
 
 our $VERSION = '0.66';
@@ -287,7 +287,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $current  = _CURRENT(@_);
+	my $current  = Params::Util::_CURRENT(@_);
 	my $document = $current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);
