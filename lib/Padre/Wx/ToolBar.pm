@@ -3,18 +3,18 @@ package Padre::Wx::ToolBar;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current qw{_CURRENT};
+use Padre::Current    ();
 use Padre::Wx         ();
 use Padre::Wx::Icon   ();
 use Padre::Wx::Editor ();
-use Padre::Constant();
+use Padre::Constant   ();
 
 our $VERSION = '0.66';
 our @ISA     = 'Wx::ToolBar';
 
 # NOTE: Something is wrong with dockable toolbars on Windows
 #       so disable them for now.
-use constant DOCKABLE => !Padre::Constant::WXWIN32;
+use constant DOCKABLE => ! Padre::Constant::WXWIN32;
 
 sub new {
 	my $class = shift;
@@ -132,7 +132,7 @@ sub add_tool_item {
 
 sub refresh {
 	my $self      = shift;
-	my $current   = _CURRENT(@_);
+	my $current   = Padre::Current::_CURRENT(@_);
 	my $editor    = $current->editor;
 	my $document  = $current->document;
 	my $text      = $current->text;
