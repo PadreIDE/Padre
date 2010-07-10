@@ -15,21 +15,32 @@ sub syntax {
 
 	# Localise newlines using Adam's magic "Universal Newline"
 	# regex conveniently stolen from File::LocalizeNewlines.
-	# (Conveniently adding a bunch of dependencies for one regex)
+	# (i.e. conveniently avoiding a bunch of dependencies for one regex)
 	$text =~ s/(?:\015{1,2}\012|\015|\012)/\n/sg;
 
 	# Execute the syntax check
 	my $stderr   = '';
 	my $filename = undef;
 	SCOPE: {
-
 		# Create a temporary file with the Perl text
 		require File::Temp;
-		my $file = File::Temp->new( UNLINK => 1 );
+		my $file  = File::Temp->new( UNLINK => 1 );
+		$filename = $file->filename;
 		binmode( $file, ":utf8" );
+
+		# If this is a module, we will need to hook %INC to avoid the module
+		# loading another module, which loads the system installed equivalent
+		# of the package we are currently compile-testing.
+		if ( $text =~ /^\s*package ([\w:]+)/ ) {
+			my $hook = $1 . ".pm";
+			$hook =~ s/::/\//g;
+			$file->print("BEGIN {\n");
+			$file->print("\t\$INC{$hook} = '$file';\n");
+			$file->print("}\n\n");
+		}
+
 		$file->print($text);
 		$file->close;
-		$filename = $file->filename;
 
 		# Run with console Perl to prevent unexpected results under wperl
 		require Padre::Perl;
