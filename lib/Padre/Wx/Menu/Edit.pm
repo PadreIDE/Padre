@@ -5,7 +5,7 @@ package Padre::Wx::Menu::Edit;
 use 5.008;
 use strict;
 use warnings;
-use Padre::Current qw{_CURRENT};
+use Padre::Current  ();
 use Padre::Wx       ();
 use Padre::Wx::Menu ();
 
@@ -346,7 +346,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $current  = _CURRENT(@_);
+	my $current  = Padre::Current::_CURRENT(@_);
 	my $editor   = $current->editor || 0;
 	my $text     = $current->text;
 	my $document = $current->document;
