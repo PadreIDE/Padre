@@ -36,7 +36,8 @@ sub syntax {
 			$hook =~ s/::/\//g;
 			$file->print("BEGIN {\n");
 			$file->print("\t\$INC{$hook} = '$file';\n");
-			$file->print("}\n\n");
+			$file->print("}\n");
+			$file->print("#line 0\n");
 		}
 
 		$file->print($text);
@@ -44,7 +45,9 @@ sub syntax {
 
 		# Run with console Perl to prevent unexpected results under wperl
 		require Padre::Perl;
-		my @cmd = ( Padre::Perl::cperl() );
+		my @cmd = (
+			Padre::Perl::cperl()
+		);
 
 		# Append Perl command line options
 		if ( $self->{project} ) {
