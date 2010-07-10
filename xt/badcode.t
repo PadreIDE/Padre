@@ -26,7 +26,43 @@ my %modules = map {
 	$class =~ s/\.pm$//;
 	$class => "lib/$_"
 } File::Find::Rule->relative->name('*.pm')->file->in('lib');
-plan( tests => scalar( keys %modules ) * 9 );
+my @t_files = glob "t/*.t";
+#map {"t/$_"} File::Find::Rule->relative->name('*.t')->file->in('t');
+plan( tests => scalar( keys %modules ) * 9 + scalar( @t_files ) );
+
+my %SKIP = map { ("t/$_" => 1) } qw(
+	01-load.t
+	06-utils.t
+	07-version.t
+	08-style.t
+	14-warnings.t
+	21_task_thread.t
+	22_task_worker.t
+	23_task_chain.t
+	24_task_master.t
+	25_task_handle.t
+	26_task_eval.t
+	41-perl-project.t
+	42-perl-project-temp.t
+	61-directory-path.t
+	62-directory-task.t
+	63-directory-project.t
+	83-autosave.t
+	92-padre-file.t
+	93-padre-filename-win.t
+	94-padre-file-remote.t
+);
+# A pathetic way to try to avod tests that would use the real ~/.padre of the user
+# that would be especially problematic if ran under root
+foreach my $t_file (@t_files) {
+	if ($SKIP{$t_file}) {
+		my $Test = Test::Builder->new;
+		$Test->skip($t_file);
+	} else {
+		my $content = read_file($t_file);
+		ok $content =~ qr/PADRE_HOME|use\s+t::lib::Padre/, $t_file;
+	}
+}
 
 # Compile all of Padre
 use File::Temp;
