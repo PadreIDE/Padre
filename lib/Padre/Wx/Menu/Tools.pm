@@ -194,7 +194,7 @@ sub title {
 
 sub refresh {
 	my $self = shift;
-	my $main = Params::Util::_CURRENT(@_)->main;
+	my $main = Padre::Current::_CURRENT(@_)->main;
 
 	$self->remove;
 	$self->add($main);
