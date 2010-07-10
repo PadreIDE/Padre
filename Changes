@@ -22,6 +22,8 @@ NOTE: Do not "tidy" or change the indenting here, or we break svn annotate
       to the bottom of the file after an __END__ statement (ADAMK)
     - If the Open Selection expression only matches one file, immediately
       open it without showing a pointless dialog (ADAMK)
+    - Removed Wx::Perl::Dialog by inlining it into Padre::Wx::Dialog, this
+      will remove the need to import ':everything', saving 50-100k (ADAMK)
 
 0.66 2010.07.01
     - Improved the quality and integration of the default window size (ADAMK)
