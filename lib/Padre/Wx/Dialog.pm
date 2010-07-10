@@ -3,9 +3,12 @@ package Padre::Wx::Dialog;
 use 5.008;
 use strict;
 use warnings;
+
+use Wx ();
 use Padre::Wx ();
 
 our $VERSION = '0.66';
+our @ISA = ('Wx::Dialog');
 
 sub create_widget {
 	my $self        = shift;
