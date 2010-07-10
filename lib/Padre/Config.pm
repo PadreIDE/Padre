@@ -15,7 +15,7 @@ use YAML::Tiny             ();
 use Params::Util           ();
 use Padre::Constant        ();
 use Padre::Util            ('_T');
-use Padre::Current         ('_CURRENT');
+use Padre::Current         ();
 use Padre::Config::Setting ();
 use Padre::Config::Human   ();
 use Padre::Config::Project ();
@@ -246,7 +246,7 @@ sub apply {
 	my $self    = shift;
 	my $name    = shift;
 	my $value   = shift;
-	my $current = _CURRENT(@_);
+	my $current = Padre::Current::_CURRENT(@_);
 
 	# Set the config value
 	$self->set( $name => $value );
