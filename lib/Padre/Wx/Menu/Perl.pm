@@ -108,7 +108,7 @@ sub title {
 
 sub refresh {
 	my $self    = shift;
-	my $current = Params::Util::_CURRENT(@_);
+	my $current = Padre::Current::_CURRENT(@_);
 	my $config  = $current->config;
 	my $perl    = !! Params::Util::_INSTANCE(
 		$current->document,

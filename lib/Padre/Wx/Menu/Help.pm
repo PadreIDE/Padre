@@ -123,7 +123,7 @@ sub title {
 
 sub refresh {
 	my $self    = shift;
-	my $current = Params::Util::_CURRENT(@_);
+	my $current = Padre::Current::_CURRENT(@_);
 	my $hasdoc  = $current->document ? 1 : 0;
 
 	# Don't show "Current Document" unless there is one

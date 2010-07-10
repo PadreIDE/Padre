@@ -287,7 +287,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $current  = Params::Util::_CURRENT(@_);
+	my $current  = Padre::Current::_CURRENT(@_);
 	my $document = $current->document ? 1 : 0;
 
 	$self->{open_in_file_browser}->Enable($document);

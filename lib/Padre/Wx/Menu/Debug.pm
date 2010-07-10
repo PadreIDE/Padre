@@ -118,7 +118,7 @@ sub title {
 
 sub refresh {
 	my $self     = shift;
-	my $document = Params::Util::_CURRENT(@_)->document;
+	my $document = Padre::Current::_CURRENT(@_)->document;
 	my $hasdoc   = $document ? 1 : 0;
 
 	$self->{debug_step_in}->Enable($hasdoc);
