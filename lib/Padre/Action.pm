@@ -4,6 +4,7 @@ use 5.008;
 use strict;
 use warnings;
 use Padre::Constant ();
+use Padre::Wx       ();
 
 our $VERSION = '0.66';
 
